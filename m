@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064453;
-	b=bEN9MqGK0cCicZYLID9CQRTZ0Pn3WcEio2sVx5FRwgBICBp1C52f7jFwgGkUFidyHEfw
-	 1Hn4iuhTD2RY7nw7tlRkPocBydPO67H8T8/CqQkmCLY4Mb+6TaOLDpx0U6VBs4EzwltOA
-	 YQo07R5wGKrlPCpeVZhhtpwXJHu5pYATAOqSucV0cHn6tHDWhhmMn/cN7WAb4mwNCw+rX
-	 09tMQGddHOkT80E8tHyH3ZzkTsXkWxlZd/HbbCsP5r0CT+5kg3qh0nUDDRbrVbIUklCn3
-	 IZsPvxGag3k7vCN579X7oglvC0m6RdtGlrWXfQ8h2iq3swj5vTpZUEaH40Dqi9ujJRg==
+	t=1794064454;
+	b=kBjPYa8Eg9zgms3DlFkbdfAYG0EgS09Np0wLP/3Ty/7RfREn8OYbivso/nA2ShgSzXJU
+	 C0TuWWPK/CAlUvhRi4ztc9L55JlBa/E1BT5Oylcd4CN+AstH5gF3ahJMxIuttdICV3CfY
+	 imtME3QUFjPtnPXdIrD9Oq0xiJcsBBvoZdng7I/Wak54cdfH8ki77XaMqWkKKCX+AscFZ
+	 G+dfkPu7X/xV0B0Eahotmz/9Jz6g+TuF3wdZZfETWkiUFHhTCWAbXjcyYcO4iH36zbXUf
+	 lJZeAZPVZEs6z9WKlcVrapU/hny6NcmCk3NwqSJgW/tL3GnlflEQpdptN+ujuFEj2TA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064453;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rP/3nVExHH5ZCWxBLn5e2X/6zMYMOC1JMC8MBHxb5Lg=;
-	b=BYMxK+rWF6i1BVMZRR1usc/EC4g3PT2XbSmKKdnw48TNOm1rYwiL+y6stD85zKKsvkfs
-	 XDYl89I9GQlDgbYYK3RlBYLKqcOkbaFN6XCQNZnu5MjDJruDaFeBCbnLEYMmuPE3jjh1A
-	 P7J/zEt6t+5zhaboB51HaL5LJLM+4lJSMt/JLxg8dMv0ULui8dm1fUugdISgzB5omK0y4
-	 53ZMqHrQ5q5S3CunLbEMFP3a/sDvl6QrhFFhoBMDTEEEQL7alP0b5ltlv70J7LBrqq09i
-	 jdCGarb9/H1syKs8MIn1HcN9ilsWcuQgiVBl09u0q9+S0s/8z1mbfXBlKOntoufVTXg==
+	bh=qwmYtXxQEgplPS/AOS1DXRBJwy6jbCsj8QR1rOyURX8=;
+	b=HkaAMYKMZ00NHVi2wmd0AlsKaWGBc/j90Vua8STEPLEMc3Kb1l0blMXCt+P7QQg8zZiV
+	 lFdN4jDy7w4tbktBHNGctp+uYf6sKHH+8QAYeD7sbTgA/yOWxiOpO0WLPWO5gUHOgjrJ8
+	 nyUsEEQt/eDeyDSDquL2AdWlUA2Ojr5+QlztneyB2ZRz8OcY1ZfTJLToNvujLNucXw+4P
+	 pfXPCKRqg6LN8zBJQJlVsxM/YbfLKizcut2vVAyeD0pW0YzEk1mKqulWvlcCahB7gjFSP
+	 W7TSMEWJEEwoSwqL+yYzIUNV3DUGei+kMjXBUtUX6HrYpuVj9EEc+K3w8gla8RBfSFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbsxUZKN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8oJZaCx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D2C606EEB5;
-	Sat,  7 Nov 2026 15:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3A4606C008;
+	Sat,  7 Nov 2026 15:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JbsxUZKN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858BD1F008A5;
-	Sat,  7 Nov 2026 15:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K8oJZaCx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D989C1F008A4;
+	Sat,  7 Nov 2026 15:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064452;
-	bh=rP/3nVExHH5ZCWxBLn5e2X/6zMYMOC1JMC8MBHxb5Lg=;
+	s=korg; t=1794064454;
+	bh=qwmYtXxQEgplPS/AOS1DXRBJwy6jbCsj8QR1rOyURX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JbsxUZKNF4tYHwbIrQDQ8lAq0L6prlECYoeGVlC6cjtUqUPfRKZ1Q7slgU6j4QAJi
-	 uHcs9hbbBpUoRieysDQoxhCXiFRBcKKSQ1zY4iXBROrGQVVca2MgDyqkxJfiuXZsTL
-	 ebPeW30YW3VTUNDtwccWfCdkq5dEf3snbkwFFeMk=
+	b=K8oJZaCxhQBfxTWcDoM3dG+d6pPBEiKJTKiB7KfQuQVKdZXAwL9ItWzwhLEqFBx1/
+	 e7eSIDzX2ZJnCPoS36WGQpzTyTfJa3AJ/3K9+z0fZTsS3oRJFKWXEBVOn3+vMnTHnJ
+	 WrwVFH+CdTuzRAzt3el9RRCKNW0DoNnabG6FgYWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Jia <jiahao1@lixiang.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Rik van Riel <riel@surriel.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Brian Geffon <bgeffon@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0495/1257] zram: fix idle age_sec underflow in idle_store()
-Date: Sat,  7 Nov 2026 08:46:31 -0500
-Message-ID: <20261107134953.107048709@linuxfoundation.org>
+Subject: [PATCH 7.3 0496/1257] mm/memcontrol: fix stuck FLUSHING_CACHED_CHARGE bit on isolated cpus
+Date: Sat,  7 Nov 2026 08:46:32 -0500
+Message-ID: <20261107134953.134273955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -72,102 +73,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Jia <jiahao1@lixiang.com>
+From: Rik van Riel <riel@surriel.com>
 
-[ Upstream commit 59042a88efe1d5ddc457f192f4c6368909693133 ]
+[ Upstream commit d2f28a1a652e0a43f6f63de9b4e4d8d5f2716803 ]
 
-After commit 2e8ff2f51dde ("zram: use u32 for entry ac_time tracking"),
-idle_store() computes the idle cutoff as:
+When drain_all_stock() sets FLUSHING_CACHED_CHARGE before checking
+isolation, schedule_drain_work() can drop the work in a separate RCU
+critical section, and housekeeping_update()'s synchronize_rcu() can race
+that second check, leaving the flag set.
 
-	cutoff = ktime_sub((u32)ktime_get_boottime_seconds(), age_sec);
+drain_local_stock() only clears the bit for work that ran, so the flag
+remains set and the stock is never drained again.
 
-Because the left operand is cast to u32, when age_sec exceeds the current
-uptime the subtraction wraps modulo 2^32 and the huge result is
-zero-extended into the s64 cutoff.  mark_idle() then marks every entry as
-idle instead of matching nothing.  For instance, running
+Have schedule_drain_work() return whether the work was queued, and clear
+FLUSHING_CACHED_CHARGE in drain_all_stock() when the remote CPU is
+isolated, so future drains can retry.
 
-	echo 86400 > /sys/block/zramX/idle
-
-on a machine up for only two minutes marks all newly written pages idle
-and hands them to idle writeback and recompression.
-
-No slot can have been accessed before the system booted, so an age_sec
-that reaches back past uptime cannot match any slot.  Return early in that
-case, without walking the table or taking any slot locks.
-
-Track the cutoff as time64_t rather than ktime_t.  Both cutoff and ac_time
-are boot-time values in seconds, so a plain arithmetic comparison against
-ac_time in mark_idle() is correct and no ktime helpers are needed.
-
-Link: https://lore.kernel.org/20260828083149.45760-1-jiahao.kernel@gmail.com
-Fixes: 2e8ff2f51dde ("zram: use u32 for entry ac_time tracking")
-Signed-off-by: Hao Jia <jiahao1@lixiang.com>
+Link: https://lore.kernel.org/20260828135036.7d44361f@fangorn
+Fixes: 6a792697a53a ("memcg: do not drain charge pcp caches on remote isolated cpus")
+Suggested-by: Michal Hocko <mhocko@suse.com>
+Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
+Signed-off-by: Rik van Riel <riel@surriel.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zram/zram_drv.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ mm/memcontrol.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index a9b3bb1d3bef3..4ba0f77b2abd8 100644
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -415,7 +415,7 @@ static ssize_t mem_used_max_store(struct device *dev,
-  * Mark all pages which are older than or equal to cutoff as IDLE.
-  * Callers should hold the zram init lock in read mode
-  */
--static void mark_idle(struct zram *zram, ktime_t cutoff)
-+static void mark_idle(struct zram *zram, time64_t cutoff)
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index d399710e9799a..814eb56feb6f5 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2306,7 +2306,7 @@ static bool is_memcg_drain_needed(struct memcg_stock_pcp *stock,
+ 	return flush;
+ }
+ 
+-static void schedule_drain_work(int cpu, struct work_struct *work)
++static bool schedule_drain_work(int cpu, struct work_struct *work)
  {
- 	int is_idle = 1;
- 	unsigned long nr_pages = zram->disksize >> PAGE_SHIFT;
-@@ -439,7 +439,7 @@ static void mark_idle(struct zram *zram, ktime_t cutoff)
- 
- #ifdef CONFIG_ZRAM_TRACK_ENTRY_ACTIME
- 		is_idle = !cutoff ||
--			ktime_after(cutoff, zram->table[index].attr.ac_time);
-+			cutoff > zram->table[index].attr.ac_time;
- #endif
- 		if (is_idle)
- 			set_slot_flag(zram, index, ZRAM_IDLE);
-@@ -453,21 +453,26 @@ static ssize_t idle_store(struct device *dev, struct device_attribute *attr,
- 			  const char *buf, size_t len)
- {
- 	struct zram *zram = dev_to_zram(dev);
--	ktime_t cutoff = 0;
-+	time64_t cutoff = 0;
- 
- 	if (!sysfs_streq(buf, "all")) {
- 		/*
- 		 * If it did not parse as 'all' try to treat it as an integer
- 		 * when we have memory tracking enabled.
- 		 */
-+		time64_t uptime;
- 		u32 age_sec;
- 
--		if (IS_ENABLED(CONFIG_ZRAM_TRACK_ENTRY_ACTIME) &&
--		    !kstrtouint(buf, 0, &age_sec))
--			cutoff = ktime_sub((u32)ktime_get_boottime_seconds(),
--					   age_sec);
--		else
-+		if (!IS_ENABLED(CONFIG_ZRAM_TRACK_ENTRY_ACTIME) ||
-+		    kstrtouint(buf, 0, &age_sec))
- 			return -EINVAL;
+ 	/*
+ 	 * Protect housekeeping cpumask read and work enqueue together
+@@ -2315,8 +2315,11 @@ static void schedule_drain_work(int cpu, struct work_struct *work)
+ 	 * pending work on newly isolated CPUs.
+ 	 */
+ 	guard(rcu)();
+-	if (!cpu_is_isolated(cpu))
+-		queue_work_on(cpu, memcg_wq, work);
++	if (cpu_is_isolated(cpu))
++		return false;
 +
-+		/* No slot can be older than the system uptime */
-+		uptime = ktime_get_boottime_seconds();
-+		if (age_sec >= uptime)
-+			return len;
-+
-+		cutoff = uptime - age_sec;
++	queue_work_on(cpu, memcg_wq, work);
++	return true;
+ }
+ 
+ /*
+@@ -2348,8 +2351,9 @@ void drain_all_stock(struct mem_cgroup *root_memcg)
+ 				      &memcg_st->flags)) {
+ 			if (cpu == curcpu)
+ 				drain_local_memcg_stock(&memcg_st->work);
+-			else
+-				schedule_drain_work(cpu, &memcg_st->work);
++			else if (!schedule_drain_work(cpu, &memcg_st->work))
++				clear_bit(FLUSHING_CACHED_CHARGE,
++					  &memcg_st->flags);
+ 		}
+ 
+ 		if (!test_bit(FLUSHING_CACHED_CHARGE, &obj_st->flags) &&
+@@ -2358,8 +2362,9 @@ void drain_all_stock(struct mem_cgroup *root_memcg)
+ 				      &obj_st->flags)) {
+ 			if (cpu == curcpu)
+ 				drain_local_obj_stock(&obj_st->work);
+-			else
+-				schedule_drain_work(cpu, &obj_st->work);
++			else if (!schedule_drain_work(cpu, &obj_st->work))
++				clear_bit(FLUSHING_CACHED_CHARGE,
++					  &obj_st->flags);
+ 		}
  	}
- 
- 	guard(rwsem_read)(&zram->dev_lock);
+ 	migrate_enable();
 -- 
 2.53.0
 
