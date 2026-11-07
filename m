@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063191;
-	b=HXwUS9VfB7VtgLpo4j+ZZLsJ+xlKu6HQ1YhxOp5OSG0smiFIgKYd7VL5soU307wi9vBy
-	 tZA4OFk+FVTSUzDUdu2Zpc431Sv+6v2vX01JPemgfwi7gXtCOHCDDp684w02DVbrKX+d3
-	 8Z3914gIVvzNkHnR/+RS33EVAb3BYMg8V2/yQC3WEXwHQGg4Sj92702Yyoiry0Tg0VGaC
-	 8X0BP88iOeAq5yGA3eNoYOc6f27GA1i7fUaSqWrnOhu2+3CJc5vmRppmHcSZwsEP2QXlh
-	 s0HMc/MsFTFFifZMlsYUfrelFv0OFFZYeWUHg63T9jozLNi3wupcuiWzHjBE0Ht5TmQ==
+	t=1794063192;
+	b=KTDpOXFpWLosasJ8ei5ofmPL2OxPwPhtrHNhJisu88iaGYagLshlJ8kwAhPPIgDktpUh
+	 VAdJmm607vQmPowcsnnK+YjUBWngwnXXGh+PLuDDhvM1OQi1LirECsoP0gcemR2QbUhB9
+	 ONtA1YDRde/MeB9zyT2n8GEkH26dc3ZpEhOzb/kqr0kfXCIkNhtAnPQVrha/LdeXpcZm6
+	 onQuao5LrII1Atgik8/eUgidKXiW9siSVfamJui2ILaggK3d0LzvaDJzyvKiUGSRQdDH1
+	 kfLF6tz245B5Nhwp7/EEaJz+VyDWTevfpxl83tgMCQLSxrUN8I8weKC0/u2yytgUIBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063192;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6ABzEt9WXJRQ65KVYmrPBMxoVPwghZ3v7iivzYoGuxQ=;
-	b=OxVKqhnTgGIVuFClV3mlCPUzLdCT0nZ04isvtz/nIpWPEQZh6DL5F3rrAKpkGAzP6Cki
-	 cVAcymRGEgEwMpm53QFa03tZKlFOLtAOFWpAUuZFsbURgOayqYCwQOwd9fpwuDzq+/wav
-	 LyvjEJh9c8mma0WhQmFsKEfB/BC+KwG8pE2ryLABpfD3/ju3GeE2dDOsXNeRzT722Skia
-	 YJeUYLWZWEY/FKxAb70SGac+la7tasO5JhmS/sZWFSntk4sEGvCpzo6hqWnkzLaMLuOdr
-	 0wlBABInULa0Uefn7hnI59adZ0pR+hi7E5OSUjlGuFgjzJA0TFqF0BxP/Qok3XTRIEg==
+	bh=yeCgLEG+K3Vj1SG4ZU75bptThEYtItbSLB9dMJeCrRc=;
+	b=bBz3xDdeEuDcpjCh1g6GcyVAjGcONub0dxBFJ4MVIxOsfeCQozUt5UBkY/ywunWEzOJV
+	 onIXfuhDYaPLWMoGnKQ6u6vZxXnGqTJrguAhmmG1MNiMBAHL1/vi+vgrpQCh5kuqndj9C
+	 o/4YkIww0OAXZABxhD+CE60Y9fg9S9zX7WvllrJ3O5yuuPs2GthgLoo6ZSdwYwISs4puv
+	 GR7rJ3oakHypMxbvqYhcXPMZ/vjV0lp6PaMugQfbuhAsi2pCOHtvBlIsiELGfLMsjz8QD
+	 wMolMcZyGBPCHEncUTSX1p1Ys5T0uU+nhHK2vt1DXunFjHdBhMj4db2KixsTpFu3osw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="D/127myN";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2awRZYh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF4E606D81F;
-	Sat,  7 Nov 2026 14:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D30606D81F;
+	Sat,  7 Nov 2026 14:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D/127myN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B26B1F0089F;
-	Sat,  7 Nov 2026 14:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2awRZYh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333751F0089F;
+	Sat,  7 Nov 2026 14:53:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063191;
-	bh=6ABzEt9WXJRQ65KVYmrPBMxoVPwghZ3v7iivzYoGuxQ=;
+	s=korg; t=1794063192;
+	bh=yeCgLEG+K3Vj1SG4ZU75bptThEYtItbSLB9dMJeCrRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D/127myNfOy0V8IFMRGA48HsY7O6ACevuG+258JyFQFVUly8Ad3Z5gkI1qGaMxgiy
-	 3w5+uepQUK1YeNM7tBXqEd62REKfl+ZSuWMmPASZtMJOtFvOV4c/PU5eUx7HIG3WQr
-	 0orYRg3llWk93BcZ1Xb+nBleJ8YCObBrzSyxYbyw=
+	b=O2awRZYhXg0aDvL2guf9MjMV70ycZ4GLY44MiC6zwW2EaTVqDLi9yUU1NNO2YQtFO
+	 eeeQbXyge5v6kjkoEE/KfYfb088/EUZlO1y4sQ/tkRE14kr8yZroVuLZ4w76FlI1pU
+	 hkzonqsRp5Q22+nQS2cvr9k0oqEuUKETLRAIb4eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Baruch Siach <baruch@tkos.co.il>,
+	Pin-Hao Chen <billy920225@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 407/869] clocksource/drivers/digicolor: Fix clk reference leak on request_irq failure
-Date: Sat,  7 Nov 2026 08:51:29 -0500
-Message-ID: <20261107134907.159221356@linuxfoundation.org>
+Subject: [PATCH 6.18 408/869] spi: stm32: fix double free of SRAM buffer on MDMA fallback
+Date: Sat,  7 Nov 2026 08:51:30 -0500
+Message-ID: <20261107134907.185860632@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,43 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Pin-Hao Chen <billy920225@gmail.com>
 
-[ Upstream commit 9cc2e18b32f12d26ae6729c62a03640423956b17 ]
+[ Upstream commit 0c5b0c3eb1d6daa1117dacd32589196f52109cab ]
 
-digicolor_timer_init() obtains the timer clock with of_clk_get() and
-enables it, but the request_irq() failure path returns without releasing
-the clock reference, leaking both the enable/prepare state and the
-reference itself.
+When the "rxm2m" MDMA channel cannot be obtained, the driver frees the
+SRAM buffer and falls back to DMA-only mode. However, sram_rx_buf is
+left pointing to the freed buffer.
 
-Disable and put the clock before returning on the request_irq() failure
-path. The success path keeps the clock enabled for the lifetime of the
-timer and is left untouched.
+As a result, stm32_spi_unprepare_msg() may clear the released SRAM
+area, while stm32_spi_remove() or a later probe error path may free the
+buffer again, triggering BUG_ON() in gen_pool_free_owner().
 
-Fixes: 9b8bb7736b78 ("clocksource: Driver for Conexant Digicolor SoC timer")
+The probe error path also checks sram_pool instead of sram_rx_buf. If
+the SRAM allocation failed and a later probe step fails,
+gen_pool_free() may therefore be called with an unallocated buffer.
+
+Clear sram_rx_buf after freeing it on the MDMA fallback path and use
+the buffer pointer to determine whether cleanup is needed.
+
+Fixes: d17dd2f1d8a1 ("spi: stm32: use STM32 DMA with STM32 MDMA to enhance DDR use")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Acked-by: Baruch Siach <baruch@tkos.co.il>
-Link: https://patch.msgid.link/20260915045242.1726702-1-vulab@iscas.ac.cn
+Signed-off-by: Pin-Hao Chen <billy920225@gmail.com>
+Link: https://patch.msgid.link/20261005220528.7199-1-billy920225@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-digicolor.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-stm32.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/timer-digicolor.c b/drivers/clocksource/timer-digicolor.c
-index 559aa96089c34..46e0c329957a2 100644
---- a/drivers/clocksource/timer-digicolor.c
-+++ b/drivers/clocksource/timer-digicolor.c
-@@ -190,6 +190,8 @@ static int __init digicolor_timer_init(struct device_node *node)
- 			  &dc_timer_dev.ce);
- 	if (ret) {
- 		pr_warn("request of timer irq %d failed (%d)\n", irq, ret);
-+		clk_disable_unprepare(clk);
-+		clk_put(clk);
- 		return ret;
- 	}
- 
+diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
+index 7a6ee93be9bd4..e5d483a9d38b1 100644
+--- a/drivers/spi/spi-stm32.c
++++ b/drivers/spi/spi-stm32.c
+@@ -2454,6 +2454,7 @@ static int stm32_spi_probe(struct platform_device *pdev)
+ 					gen_pool_free(spi->sram_pool,
+ 						      (unsigned long)spi->sram_rx_buf,
+ 						      spi->sram_rx_buf_size);
++					spi->sram_rx_buf = NULL;
+ 					dev_warn(&pdev->dev,
+ 						 "failed to request rx mdma channel, DMA only\n");
+ 				}
+@@ -2491,7 +2492,7 @@ static int stm32_spi_probe(struct platform_device *pdev)
+ 	if (spi->mdma_rx)
+ 		dma_release_channel(spi->mdma_rx);
+ err_pool_free:
+-	if (spi->sram_pool)
++	if (spi->sram_rx_buf)
+ 		gen_pool_free(spi->sram_pool, (unsigned long)spi->sram_rx_buf,
+ 			      spi->sram_rx_buf_size);
+ err_dma_release:
 -- 
 2.53.0
 
