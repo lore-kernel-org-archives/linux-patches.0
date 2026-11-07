@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061796;
-	b=hj4sZ4D5/uL1e81o6g4+HZNQtUi1zglvVSBdPavRngQBjruj35RYe6k8tJQNl3NLRJwM
-	 8QESek3YqV70XdwQ5uxVa0KBXQGgPt62IcgJjSneHskRqIeGgVXAhVgBrsPJHvJF+hoTO
-	 Fux8BHeqrviEmQV4b/3b3VzM2lEG+kziZ1wjQhVkL2y/GB8XIFCz58I2mAumklOd8o2yz
-	 cVaojLosi5sWtRoJbfr4gFbzZVpqp4nO1Dq7UT+Edimrc2cMHmW7Bru6O+Inbqn6nUmmh
-	 ACdVwBKcVQijVJUAnsWT5bOHfijTvn1U4Ys4u/gxWnbH8YWpeXwtjQHL5Ye1Y0ahX0Q==
+	t=1794061797;
+	b=a7f1ug6Rullwa4n8pVr6vIYqmPpZusaCGLIxUVjf+40wMRy1JkrDdCMbqxnpHwMeZek4
+	 L49F8cZlb4yyv4BZjv2oMMGO6PD0a/u1NHsqB1k5hxQkozHjf2lTvCZgXY1GEpgefNWLY
+	 4KTR6/l/9iVAJVz1s1FXOAjku8xChFjOZjY2G4rfWs76V/VKkBo6NnIEOVuZ7X52B6jRZ
+	 4OlqZY/5UIQaG1cemO8vm1TxTHmxb2tjaazJgbbQ7nGu1NSBFd8e+OaWk8brm82ZLjw1l
+	 AH720lqfQbj1VUoFYn+NuoZSUCYRx1qtNsOzRoZpIsLJtlabveDeJ0NDq/Sb/f66/HQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zuh5mVYj/DJfefZyiVyJEqUYipi2WUxxqOZ0Y3HfPFs=;
-	b=oR8r9kGURxhKk/+gWhc6VNFn2jpcDzjqyRS16xfXXZ7asJGbmS0Xs4S18LjmbchybVg6
-	 Wcj2x6q/b5tB0Uv5Y7qbYahCihQNXMd5OjGlCYVj1ZcK46oRxpiDHpLGchSeQpz8BjvM/
-	 ugD1gdja/qSi9xDXEYbtqQDDNmhPkSlH7tkTywZCUgILVVRUWtJl7leWNMAp5cRKWM6Ay
-	 aM7PxFUqd9wben7miGZ3xchJpTWlQe9PcI7B8OLml1xQGB8OMHO7J1mJsKwEe928Axx9O
-	 XP/EKDFRGt4ArXYGm4NhJCISc/qLqaj/eTOxQ3nKnlpaJ/4DxQQP2NtNWEA4mbgDlPg==
+	bh=KUa7puAtYviN+BgpEQpPYZ4lTKnzFIO4wwV4toTegIo=;
+	b=d+JdCTwpmdUDzrO8y0Y5WVBD42caMjw33RlUNKJfRlAMmHhB83paMwXLgFh05GyY+hLy
+	 j7vj1GziU8eT+6cjSLcpB8R+RI8A3HneAsGD39pq0O6TzilcXs0cI3zg5mF0zKAeO3Mrn
+	 /e37YEbur4jm3jPtq40iuBF4yJZh658fAGdeys7bJIhw8EICUFmPub4Un4PElpDUUe6kO
+	 /T166YCI2Ix8fay4E+5kyC+4PwWL7tfUaK9SfqKJawrNl+65Mnh8oMyBsGfYE0F/jAjW7
+	 60Nhoza7gAf7jYeBMIFtHB7mvmpprW5e0e4hVGrrYY4jo0grphYvJzGjVP+hjJsjxUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1V7DYmwC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SydqczD/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540AD606A32C;
-	Sat,  7 Nov 2026 14:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AF1606A332;
+	Sat,  7 Nov 2026 14:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1V7DYmwC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026101F0089F;
-	Sat,  7 Nov 2026 14:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SydqczD/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A5A1F0089F;
+	Sat,  7 Nov 2026 14:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061796;
-	bh=zuh5mVYj/DJfefZyiVyJEqUYipi2WUxxqOZ0Y3HfPFs=;
+	s=korg; t=1794061797;
+	bh=KUa7puAtYviN+BgpEQpPYZ4lTKnzFIO4wwV4toTegIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1V7DYmwC8lKYU9hs8yGK9cVuLptqyJmWxX1WZf2cpIUMcKmNH6Tbt+UPnfnABdAop
-	 /pOqCeWXS5knWlmd1ZCC0qHxMz6GpyKQ3hPLjJKQ/B8Lit3EU818AiCbOvD2JZtcr0
-	 f9nzGfI72BpoT7P07vlIHrvBXF4QK6ixTjdAtWOc=
+	b=SydqczD/bYYG35ESdpHuMy3noRWFzbWqKhF5r5pSnkiP6PGC9+dftO2EB39teZ663
+	 EoDzrxoUZ8NdaQ5DiP3k3wCwJ2rE0p8+Xq1ZS5b9ijeDUR41wxN6EuGkdBonc05H64
+	 OfN4RYoxrhEPZ08GShAtSm1QNQnSgjeKqipEsiso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.12 0823/1536] HID: roccat: kovaplus: reject short button reports
-Date: Sat,  7 Nov 2026 08:47:19 -0500
-Message-ID: <20261107135020.658268899@linuxfoundation.org>
+	Ameer Hamza <ameer.hamza@truenas.com>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.12 0788/1536] sunrpc: treat empty auth.unix.gid replies as negative entries
+Date: Sat,  7 Nov 2026 08:46:44 -0500
+Message-ID: <20261107135019.672426009@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,39 +67,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Ameer Hamza <ameer.hamza@truenas.com>
 
-commit e95917a606f486e46f5136fc1b72190742a091d6 upstream.
+commit a12cc0930235b86b934ade7c077a1935c2ac333d upstream.
 
-The raw event callback runs before HID core validates and zero-pads the
-report.  It passes the buffer to helpers which inspect data[0] and read a
-complete struct kovaplus_mouse_report_button for button reports.  A
-truncated report can therefore cause an out-of-bounds read.
+When rpc.mountd cannot resolve a uid (getpwuid() or getgrouplist()
+failure, e.g. while winbind or sssd is briefly unreachable), it
+answers the auth.unix.gid upcall with zero groups. unix_gid_parse()
+installs that as a valid positive entry, and svcauth_unix_set_client()
+then replaces the credential's group list with the empty one on
+every request, RPCSEC_GSS included via svcauth_gss_set_client().
+One failed lookup strips that uid of all supplementary groups on
+every export for up to mountd's configured TTL (30 minutes by
+default), long after the NSS backend has recovered.
 
-Require enough data for the button report before calling either helper.
-Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
-sequence") added the same kind of raw-event length validation to hid-asus.
+mountd cannot send an empty list for a successful lookup, since
+getgrouplist(3) always includes at least the user's primary group,
+so a zero-group reply can only mean the lookup failed. Record it as
+a negative entry: unix_gid_find() then returns -ENOENT and
+svcauth_unix_set_client() keeps the groups the RPC credential
+already carries. This is the fallback that
+commit 3fc605a2aa38 ("[PATCH] knfsd: allow the server to provide a
+gid list when using AUTH_UNIX authentication") promised when no
+answer is available, and the same state try_to_negate_entry()
+already creates when no listener holds the channel open.
 
-Fixes: 0e70f97f257e ("HID: roccat: Add support for Kova[+] mouse")
+Fixes: 3fc605a2aa38 ("[PATCH] knfsd: allow the server to provide a gid list when using AUTH_UNIX authentication")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Ameer Hamza <ameer.hamza@truenas.com>
+Link: https://patch.msgid.link/20260814221953.108837-2-ameer.hamza@truenas.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-roccat-kovaplus.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sunrpc/svcauth_unix.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/hid/hid-roccat-kovaplus.c
-+++ b/drivers/hid/hid-roccat-kovaplus.c
-@@ -614,6 +614,9 @@ static int kovaplus_raw_event(struct hid
- 	if (kovaplus == NULL)
- 		return 0;
- 
-+	if (size < sizeof(struct kovaplus_mouse_report_button))
-+		return 0;
-+
- 	kovaplus_keep_values_up_to_date(kovaplus, data);
- 
- 	if (kovaplus->roccat_claimed)
+--- a/net/sunrpc/svcauth_unix.c
++++ b/net/sunrpc/svcauth_unix.c
+@@ -537,6 +537,13 @@ static int unix_gid_parse(struct cache_d
+ 	if (ugp) {
+ 		struct cache_head *ch;
+ 		ug.h.flags = 0;
++		/*
++		 * mountd sends at least the user's primary group on
++		 * success, so an empty list can only mean the lookup
++		 * failed. Keep the credential's own groups instead.
++		 */
++		if (gids == 0)
++			set_bit(CACHE_NEGATIVE, &ug.h.flags);
+ 		ug.h.expiry_time = expiry;
+ 		ch = sunrpc_cache_update(cd,
+ 					 &ug.h, &ugp->h,
 
 
