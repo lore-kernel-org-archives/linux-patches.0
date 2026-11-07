@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065602;
-	b=J4Onz12BjGjDXTlyNJek73YdcFY6nt1dJ7KVgK6S9wQX3m1cCKAxsDR1wwDsEudIOLb6
-	 gZ5xoJH+fckvIzhPkGTMN1MzigZspCNhqHX3takDrHzOWPSR5lQEQ39WWN52XCXdQzRVw
-	 ci9z3OKbVzb4sHB6ZdF0g3iuqM3vMGLcmGXVflcvhFDjLZGSB/poryF+s13k2h6CM6YJS
-	 0PPkVbG3f3ISO+8H05/shpS4cT6paO5/61l0B9svCDbD+TqMJ/wg4AjZbZjjCdQXikfto
-	 cn4jtZKfDEoNj1eq6sDiKJfiIKzRK3D5A69RmpsbLZr4QXzRdOct37qxWqVHzdyH6tQ==
+	t=1794065603;
+	b=5YA3gH9qZE6fYMRS1NzNS79Kc7M3Hq3xiF8N8qWagbVmQK9/imEf9X0FMoVwpVpFElGv
+	 S5IQ8h93czCzbM63q7Wr+elBljyna5iXg56Jqp+Rx+dkYYfnAd1WtlW83dodwOn6mztka
+	 P2fyEi94qx/hRGUYoULyZoSFsd/Ss3ZrjTbha/RSgpIiuGSmx7XclN4KiLya4dpHQ1GZj
+	 Mgi/U8/cklVTgPAqO6MmDQqaJC3KembtXpZlkJa9uSrg19WjqwV67X85lnGoHmuKg7O0g
+	 moeTFi3zauzaVw2LUTGUCO+EOnZmQKbU57GN0gplEHr3rQRmSO/Rdl3yGMyvAiIKTiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065602;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065603;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dpd1YXeDnarZPNawIHXfYOdREDFhcguoFU7y13k0YW4=;
-	b=FSraT0SToziiBauQj/3cAqFO1TTlsk+kp/fJ8NS0TZd5jstrSoM2d1eU4Lo6sOZXR3JH
-	 zPvGg3M84esecugKufGkWqg1hRYI8r87SReBLXAjDwRrzHuH6hikJ2QrElJCx8OmNdEPl
-	 JgqH1Ms9oAggrJ5IPrVQ9LGRBk5KzzUH6DLgXBguIcTggeuGARO9/h7kSAVg4f1Mgggny
-	 pYNCxcq7ktqvFawettZ3FEpzg8fpYk/FScwvx7w6c3YIW4222oR0RHzbgAAKpRAwbZe3X
-	 hcz37OW+HAwtH+6JouE71i04gr+U+DEZNK+YmRozeklIVDCTpP1h7N3IZwJEN5AeaYg==
+	bh=AwBuojXDfc7LVwgepm2tP/1e5xTMDbKNTJgUgJhg8Wg=;
+	b=3T+ev2fgGz1xrQEW82x+u9RQKSc3p+K8rky7Bz3WRHAMQH1fi2VsSkT0SXOr3R/LhxIA
+	 Piyb8QS8p2l5aWalX54XjsYLfxhF+nlbvlwZl7C0n30Sx1qmFUO9EGJoYkpKbXaHGXJGK
+	 PqUKVdFcGgPPXCDUmUCh+TnC0KbaVI8ZxwdluTGZmXTfeda42wmdz1XGrINuMpQLCQZjR
+	 T6sZ0bu0F4BP2AUPXCziJewDeN8ObByUonYAaNiRKWoGNapzQYNgnpg0UKUE3xd+O8kka
+	 d5ed3ULW5n7kwbMFsOMVpz2GjI0GBWia6BfupRAKnvUA9AtZsCwS39wOfW60EBjItUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BgmHkWm8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a4JxQOfm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B39606A32C;
-	Sat,  7 Nov 2026 15:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A90E606A32C;
+	Sat,  7 Nov 2026 15:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BgmHkWm8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A2D1F008A1;
-	Sat,  7 Nov 2026 15:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a4JxQOfm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484A51F008A1;
+	Sat,  7 Nov 2026 15:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065602;
-	bh=dpd1YXeDnarZPNawIHXfYOdREDFhcguoFU7y13k0YW4=;
+	s=korg; t=1794065603;
+	bh=AwBuojXDfc7LVwgepm2tP/1e5xTMDbKNTJgUgJhg8Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BgmHkWm8qA62Yekp7YI9IlNp1yHdNwSTczAQC3h/1nIiDWbzOs8n4HJsxkskwMGwg
-	 9NFY+ltSSXcVgpp2vNHQDQEKPihKalLgcdIdhk/O71HyobXoUhW8WTlugpo5RoGw5D
-	 ml3rtOcCqNAQycWIw42UlkJch6WVq4A+oj5fvmpQ=
+	b=a4JxQOfmv3t2VyqEfszBwwfasYCHraoYvqIXTvA9Re4t/3jVmyB44QbCOdDiHPY22
+	 BXmOr/MwXMvdreQtXL/0gt4URc/5diwCo38STOuCqftuO6vW6IGIV1Yf6VPwYrYezr
+	 uq2pVQ+kn9b3qHfia/fbTTTO/8O5jAoWBNcNEP8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	Chris Mason <mason@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1257/1257] apparmor: on failed load ensure profile files are removed before parent
-Date: Sat,  7 Nov 2026 08:59:13 -0500
-Message-ID: <20261107135014.023622479@linuxfoundation.org>
+Subject: [PATCH 7.3 1246/1257] backing-file: enforce append-only and immutable backing inodes
+Date: Sat,  7 Nov 2026 08:59:02 -0500
+Message-ID: <20261107135013.739648775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,45 +69,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 97ba44a2aa4c7ab011a93ce94cb595200fe4ea4f ]
+[ Upstream commit 19b18e01d0361ce495be153ecce80b581086ab3f ]
 
-The load interface does not guarantee the order profiles are loaded.
-When a parent is loaded after its child, and the load fails, the
-current code will issue a warning, and leak a dentry.
+FUSE passthrough opens the backing file anew whenever the FUSE file is
+opened. fuse_passthrough_open() passes the flags of that open to
+backing_file_open() which opens the backing file with vfs_open() and the
+credentials of the server. But vfs_open() doesn't go through may_open().
+So the backing inode is never checked for S_APPEND and S_IMMUTABLE. The
+checks that did run were done on the FUSE inode and that one never has
+either flag.
 
-For the loaded set of profiles, ensure that on failure list is ordered
-is traversed in reverse so any children processed after their parent
-is freed first. We do not need to deal with the cases where the
-children are processed before their parent, because either a parent
-outside the list already exists or a dummy parent outside of the list
-is created, and the list walk will not put those parents before their
-children.
+So anyone who may open the FUSE file for writing can overwrite an
+append-only backing file anywhere or write to an immutable one. The
+server only has to register the file and a read-only or even an O_PATH
+file descriptor is enough for that. Registering requires CAP_SYS_ADMIN
+but the writer can be any user that the server lets open the file.
 
-Fixes: 6ec46f8f1977d ("apparmor: remove fs entries created by a failed policy load")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+The FUSE inode is checked instead of the backing inode in a few more
+places:
+
+- do_mmap() refuses a shared mapping of an append-only file that was
+  opened for writing. A FUSE file opened with O_RDWR | O_APPEND passes
+  the open check and can then be mapped shared and written to at any
+  offset.
+
+- fcntl(F_SETFL) and RWF_NOAPPEND refuse to take append mode away from a
+  file on an append-only inode. On the FUSE file both succeed. A
+  synchronous write still appends because the backing file was opened
+  with O_APPEND. But an asynchronous write is submitted with the flags
+  of the user's kiocb and lands at the given offset.
+
+Do the checks on the backing inode. backing_file_open() refuses to open
+an immutable inode for writing and an append-only inode for writing
+without O_APPEND, just like may_open(). backing_file_mmap() refuses a
+shared mapping of an append-only inode, just like do_mmap(). And writes
+and splices to a backing file in append mode fail if append mode was
+taken away from the user file.
+
+A FUSE file that was opened before the backing file became append-only
+can still write anywhere. That's what happens on the native filesystem
+as well and the backing file of such a file isn't in append mode. Two
+differences remain. F_SETFL succeeds and the next write fails. And FUSE
+reports EIO for a refused open because it turns every error from opening
+the backing file into EIO.
+
+overlayfs uses the same helpers but it mirrors S_APPEND and S_IMMUTABLE
+in its own inode and a chattr through the overlay never sets them on the
+upper inode. So for overlayfs this only changes something if the upper
+inode is changed behind the overlay's back.
+
+Fixes: 4a90451bbc7f ("fuse: implement open in passthrough mode")
+Reported-by: Chris Mason <mason@kernel.org>
+Cc: stable@vger.kernel.org # v6.9+
+Link: https://patch.msgid.link/20261029-work-fs-ai-fixes-v1-2-88f22792f6f7@kernel.org
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/backing-file.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index 8f23f99d2a58f..63f7821b4dfff 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1432,8 +1432,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	 * them yet, and leaving them behind would leak the new profiles
- 	 * (their dents pin the proxy) and make the next load at the same,
- 	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
-+	 * ensure children (which are at the end of the list are removed
-+	 * before their parent
- 	 */
--	list_for_each_entry(tmp, &lh, list) {
-+	list_for_each_entry_reverse(tmp, &lh, list) {
- 		if (!tmp->old)
- 			__aafs_profile_rmdir(tmp->new);
- 	}
+diff --git a/fs/backing-file.c b/fs/backing-file.c
+index cc101143f9212..37253f2e3084f 100644
+--- a/fs/backing-file.c
++++ b/fs/backing-file.c
+@@ -36,9 +36,21 @@ struct file *backing_file_open(const struct file *user_file, int flags,
+ 			       const struct cred *cred)
+ {
+ 	const struct path *user_path = file_user_path(user_file);
++	struct inode *real_inode = d_inode(real_path->dentry);
+ 	struct file *f;
+ 	int error;
+ 
++	/*
++	 * may_open() checked the inode of the user file, which need not carry
++	 * S_APPEND and S_IMMUTABLE of the backing inode.
++	 */
++	if ((flags & O_ACCMODE) != O_RDONLY) {
++		if (IS_IMMUTABLE(real_inode))
++			return ERR_PTR(-EPERM);
++		if (IS_APPEND(real_inode) && !(flags & O_APPEND))
++			return ERR_PTR(-EPERM);
++	}
++
+ 	f = alloc_empty_backing_file(flags, cred, user_file);
+ 	if (IS_ERR(f))
+ 		return f;
+@@ -263,6 +275,14 @@ ssize_t backing_file_write_iter(struct file *file, struct iov_iter *iter,
+ 	if (!iov_iter_count(iter))
+ 		return 0;
+ 
++	/*
++	 * F_SETFL and RWF_NOAPPEND can take append mode away from the user
++	 * file. They checked its inode, not the backing one.
++	 */
++	if ((file->f_flags & O_APPEND) && !(flags & IOCB_APPEND) &&
++	    IS_APPEND(file_inode(file)))
++		return -EPERM;
++
+ 	ret = file_remove_privs(iocb->ki_filp);
+ 	if (ret)
+ 		return ret;
+@@ -309,6 +329,10 @@ ssize_t backing_file_splice_write(struct pipe_inode_info *pipe,
+ 	if (!out->f_op->splice_write)
+ 		return -EINVAL;
+ 
++	/* splice refuses a user file in append mode, so F_SETFL cleared it */
++	if ((out->f_flags & O_APPEND) && IS_APPEND(file_inode(out)))
++		return -EPERM;
++
+ 	ret = file_remove_privs(iocb->ki_filp);
+ 	if (ret)
+ 		return ret;
+@@ -338,6 +362,10 @@ int backing_file_mmap(struct file *file, struct vm_area_struct *vma,
+ 	if (!can_mmap_file(file))
+ 		return -ENODEV;
+ 
++	/* do_mmap() checked the inode of the user file */
++	if ((vma->vm_flags & VM_SHARED) && IS_APPEND(file_inode(file)))
++		return -EACCES;
++
+ 	vma_set_file(vma, file);
+ 
+ 	scoped_with_creds(ctx->cred) {
 -- 
 2.53.0
 
