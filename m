@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062092;
-	b=kWYE3ZGdDmJ0MS7l7Va4YuMjkk30acUAj9IHfPbJ4Eaj7J/UHV+nhsUENsT4rs47BRpK
-	 /CROX+JC90YcBa6Zwhj8URFuaLTyp9xnQpI2kceH54Fyo979sjbd57jBYkdOG7ii2ZXg8
-	 YoGAPZLmGCIitaRQpmUy06aq59+VU7G+Ot2hcnuOw9EhLP0WbFHZFWa9jjJyYQxQS8iaz
-	 bkuIqYqNYVEy5nerM/U/1K038t64UBcXO5mComM9gCJ/H/eQDnSohZBdtuk7WiQ3jZ5ho
-	 KLIDYtgUH7LI91c/cdakN5Q/3D9RPSw8C8vttmmI8UUNV5IyvaiyAaxrqcV9XaFukmw==
+	t=1794062093;
+	b=hKOYsaPB4w4KSfZY7Y6doyUQsCVv+rVLnyfY3p2sWk9o84doPEctjsKG2djM5n05VRin
+	 jrTs0nSs9MlCjQCYD6viHftvUKZvrUsKD1sKCK3T8aE1QmRdVFEoIB4Cg5C+7hnEsWDA9
+	 xJPwiTGSchnHbCp7mK0XDjX0y1i1u8693Ea/6DHqPFg/XIqJfEni0OLVLhpEeio0ghkNM
+	 UuVrAjba8ku2K/vCIEHTcKyBtZgPuC+ybf/kuEGq/vua0iNAqLLZ++JzcLrzfkPpeGrMx
+	 MdS5vKt1Pi+T0BAIc7MmsqU63hvY4MZF8AA/BOYh5xb7ufwHMjzfnz9TKBXP9MKsWwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062092;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062093;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=GMPIV7xCBxHv7RoI3GK3oxSdm0W3O62xDx/X8tlozuU=;
-	b=cWMy+yJP2moEpQwUiUI0RxmtiWBGpdpUPIctK0ugefHLzr6Y2BZsuVQnPOzEUqTy8Wvm
-	 xhrZBuQwYlTwsBCYvZacRwDans73V+TDYrFuO5qBsANP7Y22NLfqniCMqvMuM9ERfv/fM
-	 WUVtrLmIlwwtR2DSrwGycUTPSI94MhRO6VAam93G74tcPfAsVu0pggCKyvLZfeLbnCEgH
-	 kvPUTKZuAkdFhNoDe+mn8vFbeTiHy5spzGy877qINFYEBv+MGLhvzoiWT13ORmfHlIy5k
-	 Z0LRe0jKhnV3YI0bap2V4FV/D9jhK9UrI4rOiD1KzFhN8E87cgVes2n44jIyBOIE28Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=zMLpLdTj0jI5/9iDO6tSZKMda+NDZwAK+1mMP3e/eRU=;
+	b=Aw/A7j+IXoVK6/9PmQ0vhVbjcRte8V8fDGgELjrLotLz7JEyYDLG4VjaUOpa/E8/+fDG
+	 N0uIfcrD54u4jln0866af/Ja5aAZKh+L+nQ8jZBmpYygpWNw2O67w8VadVl1a1GMGGFYu
+	 JMih54pbzAeySCQ/UJNNC4urNL9urzW+nohXBU54Zg5MUSiULfKffMnOMFEkcqO20E0Rk
+	 FPae0GIPgJ2T3xT1r0s7dfsYinWk7uu11IyThvnLsDqMSS9VlJ8t/mQWdtBMa5LejyGCv
+	 eBZZJ1BGVLDSUMubYBG2KM702glTiTUQ3U6vvROB/frSKbQjp4Sn2/O9iXzUWpolyug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kc+8XFPv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ciu0dhxU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B1B6083615;
-	Sat,  7 Nov 2026 14:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D646083615;
+	Sat,  7 Nov 2026 14:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kc+8XFPv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FC61F008A3;
-	Sat,  7 Nov 2026 14:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ciu0dhxU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0511F008A1;
+	Sat,  7 Nov 2026 14:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062091;
-	bh=GMPIV7xCBxHv7RoI3GK3oxSdm0W3O62xDx/X8tlozuU=;
+	s=korg; t=1794062092;
+	bh=zMLpLdTj0jI5/9iDO6tSZKMda+NDZwAK+1mMP3e/eRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kc+8XFPvTuV8ADO+RqNiN/HWVAEbb/b+GE3dZGGSw1A4BZKuqoRza04RHCLYQOl7n
-	 j+ZDJ53T9c1oSaJaLXVpOb4gH+dZjc2vdikmuOoOx81ybl1rv2rqZ/8ZEij8wTqkqb
-	 3bAz9gRU8L9XWSJ6T+izPNixUghdtScQAqnrKDkU=
+	b=Ciu0dhxUe7mMKdh5eDVgTWRZsqH4IiGEBzVwTd8NJIEpor5OaMIwuHPbGfGFY5QHs
+	 kIwDho70VPjL4tJhIy6SKrVVNbJnZUmfHEuhAYZR+Pv0RaRxNC0i3MBZA6m65ezfrV
+	 mf9MV11BnNlQLKQh6XzaHfpmIQAPFEaa9JDoV2Bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1065/1536] platform/x86/intel/pmt: Block mmap when callback is present
-Date: Sat,  7 Nov 2026 08:51:21 -0500
-Message-ID: <20261107135027.597855770@linuxfoundation.org>
+Subject: [PATCH 6.12 1066/1536] mtd: rawnand: atmel: Fix MCK clock leak in atmel_nand_controller_init()
+Date: Sat,  7 Nov 2026 08:51:22 -0500
+Message-ID: <20261107135027.627610976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,57 +62,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael J. Ruhl <michael.j.ruhl@intel.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 0d4cd92b41dd33a3112959f9be86002ff309de73 ]
+[ Upstream commit 94edcda45d888c3bb1310de11e10e4537c166f00 ]
 
-With the introduction of the .read_telem() callback, control
-for access to a devices data area must be done by the callback
-owner.
+atmel_nand_controller_init() takes a reference to the MCK clock with
+of_clk_get() and keeps it in nc->mck for the lifetime of the
+controller.  If the "atmel,smc" phandle is missing or the SMC regmap
+cannot be obtained afterwards, the error path jumps to out_release_dma
+which only releases the DMA channel, so the clock reference is leaked.
+The callers return the error directly and never run
+atmel_nand_controller_cleanup(), where the clock is normally put.
 
-This means that an area cannot be mmap-ed with the default PMT
-handler.
+Release the reference on those error paths.  The path on which
+of_clk_get() itself fails keeps jumping to out_release_dma, as nc->mck
+only holds an error pointer there.
 
-If the .read_telem() callback is present, do not support mmap.
-
-Fixes: 045a513040cc ("platform/x86/intel/pmt: Use PMT callbacks")
+Fixes: f9ce2eddf176 ("mtd: nand: atmel: Add ->setup_data_interface() hooks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Link: https://patch.msgid.link/20260910135954.1586360-2-michael.j.ruhl@intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/pmt/class.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/atmel/nand-controller.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/pmt/class.c b/drivers/platform/x86/intel/pmt/class.c
-index d2f0aea6ea500..072460ad5fa3f 100644
---- a/drivers/platform/x86/intel/pmt/class.c
-+++ b/drivers/platform/x86/intel/pmt/class.c
-@@ -308,7 +308,14 @@ static int intel_pmt_dev_register(struct intel_pmt_entry *entry,
- 	sysfs_bin_attr_init(&entry->pmt_bin_attr);
- 	entry->pmt_bin_attr.attr.name = ns->name;
- 	entry->pmt_bin_attr.attr.mode = 0440;
--	entry->pmt_bin_attr.mmap = intel_pmt_mmap;
-+
-+	/*
-+	 * The read_telem callback controls access to the memory area. Block
-+	 * usage if the read_telem callback is present.
-+	 */
-+	if (!(entry->cb && entry->cb->read_telem))
-+		entry->pmt_bin_attr.mmap = intel_pmt_mmap;
-+
- 	entry->pmt_bin_attr.read = intel_pmt_read;
- 	entry->pmt_bin_attr.size = entry->size;
+diff --git a/drivers/mtd/nand/raw/atmel/nand-controller.c b/drivers/mtd/nand/raw/atmel/nand-controller.c
+index 543a0be9dc645..a6a621b3da782 100644
+--- a/drivers/mtd/nand/raw/atmel/nand-controller.c
++++ b/drivers/mtd/nand/raw/atmel/nand-controller.c
+@@ -2081,7 +2081,7 @@ static int atmel_nand_controller_init(struct atmel_nand_controller *nc,
+ 	if (!np) {
+ 		dev_err(dev, "Missing or invalid atmel,smc property\n");
+ 		ret = -EINVAL;
+-		goto out_release_dma;
++		goto out_put_mck;
+ 	}
  
+ 	nc->smc = syscon_node_to_regmap(np);
+@@ -2089,11 +2089,13 @@ static int atmel_nand_controller_init(struct atmel_nand_controller *nc,
+ 	if (IS_ERR(nc->smc)) {
+ 		ret = PTR_ERR(nc->smc);
+ 		dev_err(dev, "Could not get SMC regmap (err = %d)\n", ret);
+-		goto out_release_dma;
++		goto out_put_mck;
+ 	}
+ 
+ 	return 0;
+ 
++out_put_mck:
++	clk_put(nc->mck);
+ out_release_dma:
+ 	if (nc->dmac)
+ 		dma_release_channel(nc->dmac);
 -- 
 2.53.0
 
