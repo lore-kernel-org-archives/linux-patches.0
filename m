@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063107;
-	b=wlzBFYvtlkz8HKkPlSDYq6nVLnXRwtdG/yJvCNUS9zuXxJjjge4DaNIfSIyl6HEny8yC
-	 K42t4AJpl7+1tIccUU2HTSU1z7TkRmZSy1r2hMTbn4k6IiBDWUu/6xkw4qDq2voWwaOdz
-	 EdMlmle3TdtVlU1f0xdeMxrQF7u85Fq+TgrOXiWBbF9qtR98vXRVnYAW8fv7gvtEh1v2K
-	 1lLVTovtnapMQlcHLU0m4uUSXic/JC3IDeuC3zQyUWF7EF1hITOMXTGSL6tu9PkYRPMr5
-	 /aCJItAvKjSrS5d0mc9/JxxrI5F4mHSEMIM92IJVg5c2++FTkny7sOZ2uTEpCemdHvA==
+	t=1794063108;
+	b=ITjPU8v7PoeXpXVSCgh1HiitY0lyz7aYJlKaUUDaqYejN3R6PJxiH4Sf/BYzjU3P92Gr
+	 AzDyT/RUQlFtwzW9qS6k3kd7TFQ3YIktMplQSk4ey5s0dNks2y8nR/r7ZzwhsDFSDRRqh
+	 pIOu9NRIwVtea86/BZDQMU+OBLSbQ9HOakeXdSJD9fTzYW0YCd4JGEszh//k0Dcqu/Gev
+	 92NIUv4xcKoBTFfAtAeXQQs+NKqJP0yA01+87ARuDERXQMqCmNcAppPyJL/ICZmJ6g+uM
+	 8B8DhRMMQtk4+50kaKOpr8sXRur6E3x0mHllR61nj7QYnkfG1R2O9nX3WXaWevTBTSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D4NV2anmyJzzJQvtGW4Q0GOFBdJ5O6vkbVoQRvhqFAg=;
-	b=qoYmw86IAk6dn9lJp/djnWPTlgsG0ouMO8VYpraeOJS1AIB/UDXW/4LYsFoRHhyz67de
-	 jLgCSQml6cfdLq3gMGaJTBaNUWT/sBT1CsG1Q0gfen2QxDZBfOEtzAGCbzC2pNwipohb3
-	 F/8V6tubYTpqQmbVIS8pCPaf9/lWol/lGWYZbsyaw/oY3Vq7Xk1PVc2nvJBpukfAedFGT
-	 rhvlQtzhDxRG5aaTbJAy5yagUN0dr+g1ubWm6ILtlS+++atPWiAppPyu+geYom/kynv5o
-	 H4uebZbbvV06dJ72K1PFA7R1N5cuDtEgbyZjZ9+CzFeEw34K38RL3Amj3SU5E0jbJQA==
+	bh=3UVB3YKySoZKuOV7PxcAVkYu/FhgZuHbJt6lLQawYzI=;
+	b=jl0s6x9Zjg//zckVj8hL44YnM1R2MjKRcPVrVOcJzHZ3kGpkl3banqKzYJ4ZY5LO6uu4
+	 1kjA7ufu2yLjhqkRefJ+pPRcEBwQe15djQKGFHNUyh5HKppUzcOMvNJ8sdruBna+QDO30
+	 qTPPbvINS1KigpXnupYRCXRxSwKchZISm+nzJ1e6heEY0jj34pjmaqa1RB+S11JvyAhgr
+	 MdsKUb0OtkLZEzOz5Uv+pjHRRBse99NN9Jz3Z+WIzDW4uRNeTYtH4YJTIn2pBxUG40jWX
+	 T4EoXzz1aMGlPDV3tFPYNkLYGvwMq1nulY40ZerUStl699vulcH7u0cnq0iPa6CX11Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A1cxXv2Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4H7HF5h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4C6606EE8A;
-	Sat,  7 Nov 2026 14:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FCB606A33B;
+	Sat,  7 Nov 2026 14:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A1cxXv2Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6251E1F008A1;
-	Sat,  7 Nov 2026 14:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4H7HF5h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7C41F0089F;
+	Sat,  7 Nov 2026 14:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063106;
-	bh=D4NV2anmyJzzJQvtGW4Q0GOFBdJ5O6vkbVoQRvhqFAg=;
+	s=korg; t=1794063107;
+	bh=3UVB3YKySoZKuOV7PxcAVkYu/FhgZuHbJt6lLQawYzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A1cxXv2QNgLnDacY8ulo8d+VD/WIzPDMTpsjz7N32hRrOrLgHFRKUjsJGY4kH6KaD
-	 3WuifrGXRSLQsJz/t7f3fxAg51G+5dpZbRDpcouCdIkv5ooCYaATUxsUIXcq3e1gST
-	 s7bsmJ/Nf/dg8T14K9OPot6dy15tBDfVwhID8KNg=
+	b=c4H7HF5hdO3rzyneg47n2muGRRXGnVb6mjj4PGzHY3Td+HzVtD6AdnkbSaKQXUMcL
+	 L7UAhteo1dOneucxXVdYruR+84kJj5mpq3LWl1gY5RAwnXNPLTnMek3w5VbQh7PL0Y
+	 E8W99GPAz5IhvYTWuQGcFeOwQfMZMcStxTvZ+Cls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nas Chung <nas.chung@chipsnmedia.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 339/869] media: v4l2-common: Fix P010 format info
-Date: Sat,  7 Nov 2026 08:50:21 -0500
-Message-ID: <20261107134903.890792345@linuxfoundation.org>
+Subject: [PATCH 6.18 340/869] media: sti: delta: use unaligned accessors for MJPEG SOF fields
+Date: Sat,  7 Nov 2026 08:50:22 -0500
+Message-ID: <20261107134903.919220563@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,39 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nas Chung <nas.chung@chipsnmedia.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 8761a87aff8259eab0add8a9428cee2c280fb6eb ]
+[ Upstream commit fdc5bf02aeaef04e7d13895db9b6eaf8083953f9 ]
 
-V4L2_PIX_FMT_P010 is a 10-bit 4:2:0 semi-planar format, but its
-v4l2_format_info() entry described a 4:2:2 layout with a half-width
-chroma plane. Correct bpp and vdiv to match P010's real layout,
-consistent with the other semi-planar formats.
+delta_mjpeg_read_header() scans a compressed MJPEG access unit byte by
+byte and passes the bytes after an SOF marker to delta_mjpeg_read_sof().
+The SOF parser then reads 16-bit big-endian fields directly from that
+byte stream.
 
+The SOF payload is not an aligned object. The marker scan can find the
+payload at any byte position, and the SOF layout also puts frame_height
+and frame_width after a one-byte sample_precision field. Those fields
+therefore sit at odd offsets within the payload even when the payload
+base happens to be 2-byte aligned.
+
+Avoid casting the byte stream to __be16 pointers and use
+get_unaligned_be16() for the SOF length, height, and width fields.
+
+This issue was detected by our static analysis tool and confirmed by
+manual audit. A focused UBSAN alignment validation of the same typed
+load shape reported a misaligned __be16 access in delta_mjpeg_read_sof().
+
+Fixes: 433ff5b4a29b ("[media] st-delta: add mjpeg support")
 Cc: stable@vger.kernel.org
-Fixes: 5374d8fb75f3 ("media: Add P010 video format")
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-common.c b/drivers/media/v4l2-core/v4l2-common.c
-index 524c11e92aec5..0ca98df9e60b5 100644
---- a/drivers/media/v4l2-core/v4l2-common.c
-+++ b/drivers/media/v4l2-core/v4l2-common.c
-@@ -296,7 +296,7 @@ const struct v4l2_format_info *v4l2_format_info(u32 format)
- 		{ .format = V4L2_PIX_FMT_NV20,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 5, 10, 0, 0 }, .bpp_div = { 4, 4, 1, 1 }, .hdiv = 2, .vdiv = 1 },
- 		{ .format = V4L2_PIX_FMT_NV24,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 1, 2, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 1, .vdiv = 1 },
- 		{ .format = V4L2_PIX_FMT_NV42,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 1, 2, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 1, .vdiv = 1 },
--		{ .format = V4L2_PIX_FMT_P010,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 2, 2, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 1 },
-+		{ .format = V4L2_PIX_FMT_P010,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 2, 4, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 2 },
- 		{ .format = V4L2_PIX_FMT_P012,    .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 2, .bpp = { 2, 4, 0, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 2, .vdiv = 2 },
+diff --git a/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c b/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c
+index 90e5b2f72c82b..849a5e118aec4 100644
+--- a/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c
++++ b/drivers/media/platform/st/sti/delta/delta-mjpeg-hdr.c
+@@ -4,6 +4,7 @@
+  * Author: Hugues Fruchet <hugues.fruchet@st.com> for STMicroelectronics.
+  */
  
- 		{ .format = V4L2_PIX_FMT_YUV410,  .pixel_enc = V4L2_PIXEL_ENC_YUV, .mem_planes = 1, .comp_planes = 3, .bpp = { 1, 1, 1, 0 }, .bpp_div = { 1, 1, 1, 1 }, .hdiv = 4, .vdiv = 4 },
++#include <linux/unaligned.h>
+ #include "delta.h"
+ #include "delta-mjpeg.h"
+ 
+@@ -48,13 +49,13 @@ static int delta_mjpeg_read_sof(struct delta_ctx *pctx,
+ 		goto err_no_more;
+ 
+ 	memset(header, 0, sizeof(*header));
+-	header->length           = be16_to_cpu(*(__be16 *)(data + offset));
++	header->length           = get_unaligned_be16(data + offset);
+ 	offset += sizeof(u16);
+ 	header->sample_precision = *(u8 *)(data + offset);
+ 	offset += sizeof(u8);
+-	header->frame_height     = be16_to_cpu(*(__be16 *)(data + offset));
++	header->frame_height     = get_unaligned_be16(data + offset);
+ 	offset += sizeof(u16);
+-	header->frame_width      = be16_to_cpu(*(__be16 *)(data + offset));
++	header->frame_width      = get_unaligned_be16(data + offset);
+ 	offset += sizeof(u16);
+ 	header->nb_of_components = *(u8 *)(data + offset);
+ 	offset += sizeof(u8);
 -- 
 2.53.0
 
