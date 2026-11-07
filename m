@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065605;
-	b=nZKwNdyg8yyiqkMKSzti1mtW0qYNcLE5LmWWnzJTQYAQp3uds4IV+asftRueTJS60QnC
-	 FSfeedYhN0tKAKL30kW3SONb50QsTbnU5HRsATELyE/co11OqtuYl1NyQ1MaEQGLVLRLO
-	 sXpHhT/WPquncnLVu7E9o8SHhjOh4lukVICVeCRD/InR8aydtc/RRXwDuNK4moCW+rClK
-	 ImP7bLEM1BWXrqxZ0rsdgn1BxpN6xU1kayn4sCkGW3H+K9Gx4EttROHu0ddCHyRLKZo39
-	 vBbOIi9bqKV7H66MA4xYrXtmUZqbJ7Q+ssC3uw4ZrVy178Hv/9H281JHWfbddXjARVQ==
+	t=1794065606;
+	b=uIXXQCZYyVmvJr0+ZZNU1meLeyi4QfY5e7cc5cRKN/jnVV/chy0BkxTLTaX1ar/gcO6Y
+	 YR0wHAL7ueG4dGZ4KGUepo2/YM+XzBceDKBJ/kyoYuZAtVRMJqBogtnQ4vBqNWflLtH5b
+	 yS4qrthoI2BSawtn7ulQG5CqvolKwTD+Izp4c3sqD1AJl1vTm1IPuXXLlJvyDb0OJFLFl
+	 WS50LE5R2Pudn4Jogm4plcb1BLtGKnZCI1PMSGLTWVsWDuQw3Tat59mKQso1BeZYVhvTF
+	 urmuBbXa4RjET8cpy8JKZE91Ug5UBctDxqMNK40P7Bfa7MOmMNvqMXwimHdkt0mP4mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065606;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4bQ/0300rd2BEZnuwS4TE0Xe1CaGoX0NIm9uaR5Q+JU=;
-	b=K9OZMwgQpHqKouHxw+TCZAYFIROTRS9TgQ3uqrtT6JCm4UzY3LQqxn9ggQ2FRhoarpmB
-	 b9WsZu9/KQSbEwcvFWJ/eRXJLsyJtlcVR8fbfLALaFB7zuMMo8V/k2jtjyGT5eYlsSbtK
-	 P+o3/mpL3o5b/+oAtH1s5ep+7+r7X5x8R1EPeH4nqh8nMh+yj0dpwLavvlVsbRqvCWKQp
-	 v2gw7mDKpbEZ0dJcbyCn3EDg1ZY7np47wTGRUEd1x082cU++Qs/XlsyFzlCIOAK/jezzX
-	 /rtUliXTZr6jdDYccRyXLK8+JJ/gQcYL+HH0Ga3T7zhRRegklcA/ctHa3p/9xggf0gg==
+	bh=nkLV0j2/2ibUcVqdZZlZnTUEtwJkeR+9+dMi4dtImaE=;
+	b=HL/IWAUyVieuTRghIwA3fKKDWJYZLevPuto0XSjsovP5wgyYEwIfuKmVaJTlT8/1vy/z
+	 sSHeE/Hd/Ba4W3fVfsw7o5CluCM3qBRR3Oy0deAwqxtkfuVvqEpGxH/rBeUAK3L9i1beC
+	 DuyXLb8TKgOZ3qQuLQ2eNb/BPzUfWbO88IcDUS2yV+310suWugzl3P1B/akrJjneFNGqr
+	 GSYpQEI+t+AQSDigJ3Uco4QNYdg/1CIP565vfjReiITAXH5eZMWsADWULcePEQ4iVYlM4
+	 n4pRV4EzEudatun5/+ahKxeDDS7cWN/PZTq8jbO98nx7FKtyw3hh1rsSLwm0b6MyjxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LHb16vce;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S77FNTH8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D038C606A32C;
-	Sat,  7 Nov 2026 15:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32761606A32C;
+	Sat,  7 Nov 2026 15:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LHb16vce
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B4B1F0089F;
-	Sat,  7 Nov 2026 15:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S77FNTH8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68D61F0089F;
+	Sat,  7 Nov 2026 15:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065604;
-	bh=4bQ/0300rd2BEZnuwS4TE0Xe1CaGoX0NIm9uaR5Q+JU=;
+	s=korg; t=1794065606;
+	bh=nkLV0j2/2ibUcVqdZZlZnTUEtwJkeR+9+dMi4dtImaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LHb16vcers5pvop58JTHzFms/UtD0gzx2w8HOeDTJuhHA1LD/J5nWk0KCva3cujrH
-	 1K33SefhyyYfpTP96rD1IszRNySP8em/4upE6gIbQciONcNxlD6FgfUFH08o+MZZ/v
-	 odeRq4qcfnmwITVzQVvZjMgYeaeMfINjgL39yw3Y=
+	b=S77FNTH8dC+SG2YspyKmAK6fmX0vVzF+nG0tS+F6TtdHYAVd9X3rXnHaQkvnjoUsI
+	 KGX3jE1P7MNBJ4+FETI62Euh1rz2NUiaWbUVEs4EZy9/rOnl42uJ6YAn47y20WjcqN
+	 XHoJQRypsygT8VCTBppVJRGFBRv+dVM5cTjkCcwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1247/1257] iov_iter: fix NULL deref in iov_iter_alignment()
-Date: Sat,  7 Nov 2026 08:59:03 -0500
-Message-ID: <20261107135013.765657474@linuxfoundation.org>
+Subject: [PATCH 7.3 1248/1257] backing-file: always end a queued write
+Date: Sat,  7 Nov 2026 08:59:04 -0500
+Message-ID: <20261107135013.791601989@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,54 +71,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit a290a9e5cf5fbba05d6c59b94b36d00f4fc15ef2 ]
+[ Upstream commit 627cdcbc2a2eceb0452078a0c14370f9f1f17a91 ]
 
-Since commit 111a12b422a8 ("io_uring/rsrc: reject zero-length fixed
-buffer import") io_import_fixed() hands out an empty ITER_BVEC for a
-zero-length request. Its count is 0 and its bvec array is NULL.
+Writes to a loop device with direct I/O on an overlay file make the
+next freeze of the upper filesystem hang for ever.
 
-iov_iter_alignment() only checks the count for ITER_UBUF. For ITER_BVEC
-it calls iov_iter_alignment_bvec() and the do-while loop in there reads
-bvec->bv_len before it looks at the count. So it dereferences NULL.
+Every kiocb_start_write() needs a kiocb_end_write(). For a write that
+is queued, vfs_iocb_iter_write() leaves the end to the completion, and
+backing_aio_rw_complete() only calls kiocb_end_write() when IOCB_WRITE
+is set in the flags copied from the submitter. In-kernel submitters
+such as loop do not set that flag, so each queued write keeps the
+freeze protection of the backing filesystem.
 
-btrfs checks the alignment of a direct read with iov_iter_alignment()
-before it looks at the count and f2fs does the same. So any user that
-can open a file on btrfs can oops the kernel with a single zero-length
-IORING_OP_READ_FIXED on an O_DIRECT file descriptor. With IOSQE_ASYNC
-the oops happens in an io-wq worker. The dead worker stays on the worker
-list and when the task that submitted the request exits io-wq writes to
-the freed task_struct of the worker. That's just fallout from the oops
-though.
+Direct writes to a loop device with direct I/O backed by an overlay
+file left fsfreeze of the ext4 upper filesystem, and a later touch
+there, blocked in D state. It takes write access to the node of the
+loop device, which root has by default, to attach the file and to write.
 
-Empty iterators with a NULL array aren't unusual. afs, tls and tipc
-create them as well. So leave io_uring alone and make
-iov_iter_alignment() return 0 for an empty iterator of any type.
+The fix used here is to mark a write in struct backing_aio and to call
+kiocb_end_write() on completion of every marked write.
 
-Fixes: 111a12b422a8 ("io_uring/rsrc: reject zero-length fixed buffer import")
+Reproduced under qemu without KVM, on v7.3-rc6-21-g602042bf29f6 with
+earlier fixes of this series applied, with and without this change,
+once each. The kernel was not changed for the run. With this change
+fsfreeze finished in about a second. Not run: the nvmet and LIO file
+backends, which do not set IOCB_WRITE either, FUSE passthrough, and an
+xfs upper filesystem.
+
+Fixes: 2406a307ac7d ("ovl: implement async IO routines")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
-Link: https://patch.msgid.link/20261029-work-fs-ai-fixes-v1-3-88f22792f6f7@kernel.org
+[amir: use aio->is_write to explicitly mark a write aio]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20261029180319.2852090-1-amir73il@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/iov_iter.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/backing-file.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/lib/iov_iter.c b/lib/iov_iter.c
-index 2072c04e99d05..56c59a2b589d3 100644
---- a/lib/iov_iter.c
-+++ b/lib/iov_iter.c
-@@ -848,6 +848,10 @@ unsigned long iov_iter_alignment(const struct iov_iter *i)
- 		return 0;
- 	}
+diff --git a/fs/backing-file.c b/fs/backing-file.c
+index 37253f2e3084f..83f0ba241fb0b 100644
+--- a/fs/backing-file.c
++++ b/fs/backing-file.c
+@@ -96,6 +96,7 @@ struct backing_aio {
+ 	refcount_t ref;
+ 	struct kiocb *orig_iocb;
+ 	/* used for aio completion */
++	bool is_write;
+ 	void (*end_write)(struct kiocb *iocb, ssize_t);
+ 	struct work_struct work;
+ 	long res;
+@@ -136,7 +137,8 @@ static void backing_aio_rw_complete(struct kiocb *iocb, long res)
+ 	struct backing_aio *aio = container_of(iocb, struct backing_aio, iocb);
+ 	struct kiocb *orig_iocb = aio->orig_iocb;
  
-+	/* An empty iterator may have no segment array at all. */
-+	if (!i->count)
-+		return 0;
-+
- 	/* iovec and kvec have identical layouts */
- 	if (likely(iter_is_iovec(i) || iov_iter_is_kvec(i)))
- 		return iov_iter_alignment_iovec(i);
+-	if (iocb->ki_flags & IOCB_WRITE)
++	/* Pairs with kiocb_start_write() in vfs_iocb_iter_write() */
++	if (aio->is_write)
+ 		kiocb_end_write(iocb);
+ 
+ 	backing_aio_cleanup(aio, res);
+@@ -251,6 +253,7 @@ static int do_backing_file_write_iter(struct file *file, struct iov_iter *iter,
+ 		return -ENOMEM;
+ 
+ 	aio->orig_iocb = iocb;
++	aio->is_write = true;
+ 	aio->end_write = end_write;
+ 	kiocb_clone(&aio->iocb, iocb, get_file(file));
+ 	aio->iocb.ki_flags = flags;
 -- 
 2.53.0
 
