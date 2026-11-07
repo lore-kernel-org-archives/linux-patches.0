@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062719;
-	b=2syI7PwNHByyQKXTqJBIMggvzus943sAuws1hY3tNTWRj7HQiuu0t/KwQfq7BN4bdAQT
-	 gdRJT5HhnUb0A/JYWqxKoggwKs44eVDYMoyvgN0psZAFPedyciPCiM1r9DVUEIxHt9717
-	 3ZlXpBNnemmsLdqT0T6d7kECJiV/lUj5Z4QtjEl9SEoKTdRvUAFmJtAIjHQOyrOWUgbm8
-	 YWmX6rWlOdi/Gqb/YaR+27uQt9YSLO7PXSwAwlbEX8/F9jntCN/OUnlVmj3U7Zfh6g3gO
-	 1Au9j3WuKAeyJGSpl+9/aZOjJ9qHFZ/1R+USNBPPCor+nXHx+VoeZt50428WsVQiNFA==
+	t=1794062721;
+	b=BZv4kN881xSHxu3vjAVEIUt6WtqCP9SGKZ3BUiJ/D+usYZA76cto2Dtj4ZSWrVZxSNDB
+	 YMGio3iTLWYP72y2M/Xr9oaeRxSESRKblmi0/AriLOatZbNdy6wj7utuP8fm57KprlKgY
+	 CzvFPVNfHTz+Ft5+XqskBsGBpb1NcWg7NepPvMF5+Dj1H4sdwNC6q1NtvRTW/KlMGRRne
+	 Avb/k4vgLNHKcSMOz1OfbQYw3dbpdcEEu9350/VpSW7EEw7Fw5xC8y3QagnpR7/IEDsQO
+	 qFF/JTKRgy1FwqESkz4AaLpzzXks+gcKG5QyUtCr970Zw02LL/w/HwdM0ar9LljsF+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062721;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xXW+6iSzm9XSpKA6sRfsHKHEUfplsiAYHuF+K22d4fw=;
-	b=GkrsMWV4XCUr2vznmV9kvMNTJYASnJH40laecwXQwfhEdIAYRGNw9e9UBji4ol3p1h2O
-	 ns7mdNbRDwzjE2bxgpJQqbqEeXrfdlq2IzeC0lPPqUHFnntRV/DUW3tehmYKcYqpuXxwC
-	 0LgrgzG9q9XsI4A3CKwGAp5uy9nFtQOQMrpTeeL7LeuSTdvu5KbSBUiOlokfFz8hpIg8B
-	 IW6jZzINsGNaolrXEVyqepSiTSv6i6LpM3qNWfCNDyyFKiHJmSN8q2ogTHh9KoDmgahho
-	 YzCW5KbSoAWZ3zTOkrbcS4mu6//w0IUK9LgnAe13fpXbSWoJrBA+9u51gk2OwvLTIkw==
+	bh=d/vZmOpG4a54uQpPrvAOnEhWCb0FThuMLvfOfGFOrA0=;
+	b=EKJtksfGfx27olZHlBW8Uc0CPLxO8fL/l1Rh1IXDLY56wX0NRTvk7HRQyGPjEGmKdmt6
+	 yV20MrM/w3fZcqATZChwcyTGFf4r3rBPR8s/7nCFxvEUKObmgyUJCil48YhWQ68g46Rpf
+	 s0z4bjYC1bpW6FD22+iXfVmhIK+6OepwV5dbYIBzchKM6DExi/6+Phw7fvyClrqmGTev1
+	 PcH++z+mgQmZunCo93ut0lfTTVGZdiWyRL+HTRxTYsgmvXHYU3Zq4RSpF6lTi9lwQkZhX
+	 3SkyH54lpDXCG4IvR6cJ/G7VfGfClmX1Y3BGcalFAh2auVXMp7xbPDZVetGK3E8akeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sWeibCyS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yO0sSEbL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009CA606A326;
-	Sat,  7 Nov 2026 14:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0F0606A32C;
+	Sat,  7 Nov 2026 14:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sWeibCyS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8801F0089F;
-	Sat,  7 Nov 2026 14:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yO0sSEbL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CA11F0089F;
+	Sat,  7 Nov 2026 14:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062718;
-	bh=xXW+6iSzm9XSpKA6sRfsHKHEUfplsiAYHuF+K22d4fw=;
+	s=korg; t=1794062720;
+	bh=d/vZmOpG4a54uQpPrvAOnEhWCb0FThuMLvfOfGFOrA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sWeibCySyolccFXTVWKsXytei3prya9Rw0visMGX/oySuBsXzK3mMRwmvWjy9qT60
-	 hHxLbNF3jAHllXZLrBhzKL8el2geHEsxfl/EamVk/l4TGW8gFvA1Az6S5garLVpDNg
-	 J0yKvBl1Chl+ZQF/viTvsvhPq+MJiv8pwxIrBUmc=
+	b=yO0sSEbL8lhKT44MQ03n7JQS5bcBMU5xEXxDmxPX+wU60AXXJWSOCrGj29SFOWiKv
+	 wUDg4jfbPqrpHUaeEvz2GIvVk290SKH16MqE+/esosNOMsb2EcVyXcs7R8VZ2FEnBc
+	 u0N7+oo/jPbqu9+SB6kYOSCmSR6fNv3pEBjDqbYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 038/869] media: ir-hix5hd2: Ensure rdev is setup before interrupts are enabled
-Date: Sat,  7 Nov 2026 08:45:20 -0500
-Message-ID: <20261107134853.459860990@linuxfoundation.org>
+Subject: [PATCH 6.18 039/869] media: imx-jpeg: finish the job on device_run() error paths
+Date: Sat,  7 Nov 2026 08:45:21 -0500
+Message-ID: <20261107134853.488776040@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,45 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit f7509d2567cf92eeccc31c363a2e2ae43188930c ]
+[ Upstream commit 30b35fd2b999e1b8c26f8191d974d20c8848d2d6 ]
 
-Once the interrupt handler is enabled, priv->rdev can be used. Ensure
-it is setup correctly so there is no race condition.
+mxc_jpeg_device_run() returns early through a shared "end" label on several
+error paths (no free slot, mxc_jpeg_alloc_slot_data() failure, or missing
+buffers or queue data), and none of them calls v4l2_m2m_job_finish().
+Since the delayed work is queued only after the hardware is started, those
+paths neither finish the job directly nor queue timeout work that could
+finish it later. The job is left with TRANS_RUNNING set, so the
+wait_event() in v4l2_m2m_cancel_job() (reached from v4l2_m2m_ctx_release()
+at close) waits indefinitely and the close hangs.
 
-Fixes: a84fcdaa9058 ("[media] rc: Introduce hix5hd2 IR transmitter driver")
-Signed-off-by: Sean Young <sean@mess.org>
+mxc_jpeg_alloc_slot_data() uses dma_alloc_coherent(), so the failure path
+is reachable under memory pressure.
+
+Return the src/dst buffers with VB2_BUF_STATE_ERROR and call
+v4l2_m2m_job_finish() on those paths: paths that have buffers use a
+"buf_finish" label; the no-buffer path uses "job_finish" directly. This
+mirrors the existing jpeg_parse_error path.
+
+This bug was found by static analysis.
+
+Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/ir-hix5hd2.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .../media/platform/nxp/imx-jpeg/mxc-jpeg.c    | 21 +++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/rc/ir-hix5hd2.c b/drivers/media/rc/ir-hix5hd2.c
-index bb0f95833df57..04982ffde68f9 100644
---- a/drivers/media/rc/ir-hix5hd2.c
-+++ b/drivers/media/rc/ir-hix5hd2.c
-@@ -316,6 +316,9 @@ static int hix5hd2_ir_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto clkerr;
- 
-+	priv->rdev = rdev;
-+	priv->dev = dev;
-+
- 	if (devm_request_irq(dev, priv->irq, hix5hd2_ir_rx_interrupt,
- 			     0, pdev->name, priv) < 0) {
- 		dev_err(dev, "IRQ %d register failed\n", priv->irq);
-@@ -323,8 +326,6 @@ static int hix5hd2_ir_probe(struct platform_device *pdev)
- 		goto regerr;
+diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
+index 4ac4f576fdd10..9f0794dd5c544 100644
+--- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
++++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
+@@ -1525,15 +1525,15 @@ static void mxc_jpeg_device_run(void *priv)
+ 	dst_buf = v4l2_m2m_next_dst_buf(ctx->fh.m2m_ctx);
+ 	if (!src_buf || !dst_buf) {
+ 		dev_err(dev, "Null src or dst buf\n");
+-		goto end;
++		goto job_finish;
  	}
  
--	priv->rdev = rdev;
--	priv->dev = dev;
- 	platform_set_drvdata(pdev, priv);
+ 	q_data_cap = mxc_jpeg_get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_CAPTURE);
+ 	if (!q_data_cap)
+-		goto end;
++		goto buf_finish;
+ 	q_data_out = mxc_jpeg_get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_OUTPUT);
+ 	if (!q_data_out)
+-		goto end;
++		goto buf_finish;
+ 	src_buf->sequence = q_data_out->sequence++;
+ 	dst_buf->sequence = q_data_cap->sequence++;
  
- 	return ret;
+@@ -1571,11 +1571,11 @@ static void mxc_jpeg_device_run(void *priv)
+ 	ctx->slot = mxc_get_free_slot(&jpeg->slot_data);
+ 	if (ctx->slot < 0) {
+ 		dev_err(dev, "No more free slots\n");
+-		goto end;
++		goto buf_finish;
+ 	}
+ 	if (!mxc_jpeg_alloc_slot_data(jpeg)) {
+ 		dev_err(dev, "Cannot allocate slot data\n");
+-		goto end;
++		goto buf_finish;
+ 	}
+ 
+ 	mxc_jpeg_enable_slot(reg, ctx->slot);
+@@ -1597,8 +1597,17 @@ static void mxc_jpeg_device_run(void *priv)
+ 		mxc_jpeg_dec_mode_go(dev, reg);
+ 	}
+ 	schedule_delayed_work(&ctx->task_timer, msecs_to_jiffies(hw_timeout));
+-end:
++
+ 	spin_unlock_irqrestore(&ctx->mxc_jpeg->hw_lock, flags);
++	return;
++buf_finish:
++	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
++	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
++	v4l2_m2m_buf_done(src_buf, VB2_BUF_STATE_ERROR);
++	v4l2_m2m_buf_done(dst_buf, VB2_BUF_STATE_ERROR);
++job_finish:
++	spin_unlock_irqrestore(&ctx->mxc_jpeg->hw_lock, flags);
++	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
+ }
+ 
+ static int mxc_jpeg_decoder_cmd(struct file *file, void *priv,
 -- 
 2.53.0
 
