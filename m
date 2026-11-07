@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065503;
-	b=JwPl0OZt9l+7MwpCgOfnN3t81+8ra7DFz3/AR4J5l01LLbN3eFQp4jZ7aeEctM9G5udC
-	 YMHcfUCpTGb4N0m3nz3DG1H4cI95Qvm/7eP+lj+qV0MG7rC1RNJBkMFwhGSgdp/aHh/K6
-	 OTgaeyW/reiKdXtVvMqM9XvfSUy33zejjXzMXkk7aBzYobvL38W6eTqA+gMdzk78DEfR8
-	 K4Fn7jwQadtVsu2cP6i2Gps0Oz7aMzApruGk0YEAOF8q5CbmmShBqeoye+xDFb9WbJNO2
-	 4RwYk6K8fgFBNzWjAHwjj4li7W/pGRsqoR0kvuLtfnjiI0PQVnHgfuUJ69GV7PCoTcQ==
+	t=1794065505;
+	b=Ru1dgiyPpaxX/bCSzwZA35Y23/rd6N9/KgkFV1h9jVwQjF59bn6WD/f6IwpaVJ+C0oxt
+	 CC/LQ5dXyRv9jh2MgepAkVpfIsziqJthsratdZILMEAQkPkO17dyf7YqDOU0E39IMU9s1
+	 k9d/uu6YEAlHRutdt/70AgV3KpUv+ckexXXQAwF9ILfis2F8j8Jvk2A2ozd5NqQyi8KDA
+	 W3o4uuRwczBs9kWdb1eEqKG9fAoO2igvWpj3EjuPqgVH69vOqSDYo43sZErixxG1ND7EB
+	 eQh3anCkifjZjAm1CedGcd5QRS7HmM8LOBAGfhsxzRtVdlGSl4cXbyqOey+aj1qt0Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065503;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065505;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OMYDJ8nnfYGyCD8jha9STV8fQ4K9zpav1SLPL7FRx5A=;
-	b=sWrWMZaNyhVhc32WCh24J6gvgKcEriARaIxYAsaK84BYDPyj/ViPoWzFu7s0PVCfGxH2
-	 DOcWQOwtjhA+I1wYfBtX9+ptZegcoLKYKEiayJOUOWkmoWjnpSKKFm+Jt0PqSmOLSHHxf
-	 LvPduIHetluK6u49rmNa2mX3pYS+8dNd2EfvkwP3dM07lp4Erby7vK8axMxBpqJ20ka8D
-	 o38gHUBC33FkSn3xYnMplKOfAsy6YqsQ6pP91aABn+mDtIf7d2+7+deb2aRFKQ7IVwRDM
-	 NkYtRDosIKHF65Vkta6AdN73fAaJbvuDFu11bLQoChTq48l2FjURW/4ihADS/1AsAeQ==
+	bh=znTt627akDosM1wO6GWhJm+ZIftBnXyRQdMlzEXd0GI=;
+	b=y0VinXrAZDZkn0j4SWEBKSbFCQoap/ROiGToY5/35YGMBVaIMbcUmAz/dnASd1dY5rb0
+	 FoQcNrYJYw7SL2BUggUxUPs47asvrTZ9F//9BdYmkUdvfYoKQkZ8lPcE52TFechaVXBn8
+	 DNgEg1j95g4uNSostEIL6TGiJbrLGjFT3goB2J2g7nh0bt3AQ4Bv9Zrao65Osfs/W8bOQ
+	 RMPKelxuBf47+kNflsJmgBn6UVAte4M9a4pOtVuqjt13usL+EVMQN5Xv7Nv8A8iCUYSAp
+	 uc1bouh+fY9Qia3IGTS1QbHYjCs8y2KsvTcLuRhJbmQ5yzMZ7He6d9XOsFIZgU0Mwzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQ3f0xgA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="irmsv/nS";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA1F606D808;
-	Sat,  7 Nov 2026 15:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE10606A33A;
+	Sat,  7 Nov 2026 15:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQ3f0xgA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E451F0089F;
-	Sat,  7 Nov 2026 15:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=irmsv/nS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42841F0089F;
+	Sat,  7 Nov 2026 15:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065503;
-	bh=OMYDJ8nnfYGyCD8jha9STV8fQ4K9zpav1SLPL7FRx5A=;
+	s=korg; t=1794065505;
+	bh=znTt627akDosM1wO6GWhJm+ZIftBnXyRQdMlzEXd0GI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQ3f0xgAXRo9cgNL6oREqFwlJm1Dh8IzeYiW8xPXpMz65GBzyK0DW+D+IpIDOD9oF
-	 EhS9XMvZ8F5Gn2SPtKdV4nASL6fMdyBGXisa9ov60cMHiT3OGq3z6I8ViSN+xKFwU9
-	 zNAn7EOXkG4PpJSkij/2+jBRhcy12TCf8u64cxbM=
+	b=irmsv/nSooiBjZ2Rh2Focu//JAUVLZcY2ybBDujNxH5Xgg4tTe5RXqT8qfvRHoiEE
+	 4wsTW76M7e6gB8U+u0W2p8bXs9OAfdKR4zeQLKrk/c8n/MyvoWmszBQAir7fC8Y5tL
+	 NXyNps5rYJDA5Aa24vLosFsb1KxU+iq87vxLE9wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Karthikeyan B <karthikeyan.b@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Kamil Sawicki <user148783812897@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1190/1257] drm/amd/display: Poll passive DVI sinks for EDID readiness
-Date: Sat,  7 Nov 2026 08:58:06 -0500
-Message-ID: <20261107135012.035961571@linuxfoundation.org>
+Subject: [PATCH 7.3 1191/1257] net: limit priority VLAN untag depth
+Date: Sat,  7 Nov 2026 08:58:07 -0500
+Message-ID: <20261107135012.061179322@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -72,92 +71,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangzhi Zuo <jerry.zuo@amd.com>
+From: Kamil Sawicki <user148783812897@gmail.com>
 
-[ Upstream commit e9ddfb93fafa50f92165d2b48c7728720999b117 ]
+[ Upstream commit d3ff07f5acc573e5f72bf1c581bae5d05191ba61 ]
 
-A passive DP-DVI adapter is identified when the adapter DDC probe does not
-respond, but the downstream monitor's EDID EEPROM may still need time to
-become available after resume. Poll the downstream DDC address for passive
-DP-DVI links before reading and parsing the EDID.
+The priority VLAN receive path can repeatedly remove VID 0 tags and retry
+packet processing. Unlike the read-only VLAN protocol parser, this path has
+no limit on the number of nested tags it consumes.
 
-Keep the eDP detection optimization without adding a generic EDID retry
-delay or a deferred connector reprobe.
+Each skb_vlan_untag() advances skb->data and resets header offsets. The
+offsets are stored in 16-bit fields. With enough nested tags, the network
+or transport offset can wrap. A later protocol handler can then derive a
+large pull length from the wrapped offsets and access memory outside the
+skb allocation.
 
-Revert commit 3001d2073d65 ("drm/amd/display: Exit IPS before connector
-detection on resume") and rely on targeted passive DP-DVI EDID readiness
-polling instead of the generic pre-detection IPS exit.
+Apply the existing VLAN_MAX_DEPTH limit to the exceptional VID 0 retry.
+Count the tag already stored in skb VLAN metadata as the first level, then
+stop before untagging a ninth level. Keep the accounting inside this
+uncommon branch so the regular VLAN receive path is unaffected.
 
-Fixes: d1d51519bc3b ("drm/amd/display: Skip eDP detection when no sink")
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Karthikeyan B <karthikeyan.b@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8297e1c724733fc59027b717df73680eaf03dd56)
+A single VID 0 priority tag before a real VLAN tag is valid. No normal
+deployment was found that intentionally emits multiple consecutive VID 0
+tags; permitting eight levels is therefore conservative.
+
+The issue was found while researching the Linux network receive path for
+Google kvmCTF, with OpenAI Codex (gpt-5.6-sol) assisting the analysis. The
+affected path, reproducer and fix were manually reviewed and tested.
+
+Fixes: 36b2f61a42c2 ("net: handle 802.1P vlan 0 packets properly")
 Cc: stable@vger.kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Kamil Sawicki <user148783812897@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261024004835.17862-1-user148783812897@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  4 ----
- .../amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 22 +++++++++++++++++++
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ net/core/dev.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 0c92f9c5d5825..f3551bd0b0a4f 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1979,10 +1979,6 @@ static int dm_resume(struct amdgpu_ip_block *ip_block)
- 	/* On resume we need to rewrite the MSTM control bits to enable MST*/
- 	s3_handle_mst(ddev, false);
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 3f39d953eb480..cc7b32ab56085 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -6201,6 +6201,8 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
+ 	}
  
--	/* Exit IPS before the detection loop's first AUX/DDC access. */
--	scoped_guard(mutex, &dm->dc_lock)
--		dc_exit_ips_for_hw_access(dm->dc);
--
- 	/* Do detection*/
- 	drm_connector_list_iter_begin(ddev, &iter);
- 	drm_for_each_connector_iter(connector, &iter) {
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-index bf6f013fdfc58..673b3cede7ddf 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -1218,6 +1218,26 @@ void populate_hdmi_info_from_connector(bool enable_frl, struct drm_hdmi_info *hd
- }
- EXPORT_IF_KUNIT(populate_hdmi_info_from_connector);
- 
-+static void dm_helpers_wait_for_edid_ready(struct dc_link *link,
-+					   struct i2c_adapter *ddc)
-+{
-+	const unsigned int retry_count = 50;
-+	const unsigned int retry_interval_ms = 20;
-+	unsigned int retry;
+ 	if (unlikely(skb_vlan_tag_present(skb)) && !netdev_uses_dsa(skb->dev)) {
++		unsigned int priority_tag_depth = 1;
 +
-+	if (!ddc || link->dpcd_caps.dongle_type !=
-+			DISPLAY_DONGLE_DP_DVI_DONGLE)
-+		return;
+ check_vlan_id:
+ 		if (skb_vlan_tag_get_id(skb)) {
+ 			/* Vlan id is non 0 and vlan_do_receive() above couldn't
+@@ -6212,6 +6214,12 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
+ 			 * 802.1Q or 802.1AD and vlan_do_receive() above could
+ 			 * not find vlan dev for vlan id 0.
+ 			 */
++			if (unlikely(priority_tag_depth >= VLAN_MAX_DEPTH)) {
++				drop_reason = SKB_DROP_REASON_RECURSION_LIMIT;
++				goto drop;
++			}
 +
-+	for (retry = 0; retry < retry_count; retry++) {
-+		if (drm_probe_ddc(ddc))
-+			return;
-+
-+		if (retry + 1 < retry_count)
-+			msleep(retry_interval_ms);
-+	}
-+}
-+
- enum dc_edid_status dm_helpers_read_local_edid(
- 		struct dc_context *ctx,
- 		struct dc_link *link,
-@@ -1242,6 +1262,8 @@ enum dc_edid_status dm_helpers_read_local_edid(
- 	if (link->dc->hwss.prepare_ddc)
- 		link->dc->hwss.prepare_ddc(link);
- 
-+	dm_helpers_wait_for_edid_ready(link, ddc);
-+
- 	/* some dongles read edid incorrectly the first time,
- 	 * do check sum and retry to make sure read correct edid.
- 	 */
++			priority_tag_depth++;
+ 			__vlan_hwaccel_clear_tag(skb);
+ 			skb = skb_vlan_untag(skb);
+ 			if (unlikely(!skb))
 -- 
 2.53.0
 
