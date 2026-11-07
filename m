@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061882;
-	b=aJS/mVmmj9nCe6pz7X6DxO5qDZec8rLLKHo6aGp9GPeCfDxKUaOfIQUq3Dik+McKbHYu
-	 BJTkTa0pOprEV6dXn06xSU+ytLkzBRH5AyZCuLJCe+erdTL10g5oZ4rCz/Y3ZkRtv0hYL
-	 L8SP6DivPgiWWgkj15F1Eqh2WDF0yTwLDiIvUIkkxguP835fKsSJuzjG3Hx9EMMdt06oy
-	 JlXYnLoXbyq89gf5fwEXE5lvorF4yS8ZrsQ0cPtuuoDvAWodBK+1HfSj8tmiXiW//Dw0r
-	 OtZ0kjnBIIrZMGMdRalut5jtrC/3rfHf5l1f2oCikULldTYMTRj/u5XC0Ls5hyEBsdA==
+	t=1794061883;
+	b=uYsqWvRYVrIZzS1zd0L65rJgJHIERL0Z8z9aYS7l6h+FKN/WaMwZD4EItfSwbG5Wp6aB
+	 pBF5HI88IqsWaDZ0CmqJA8lpmUWdZAxlV96QsIUfQA4q/X/evNLCbRSnnzpevJ23Dwh9i
+	 yikaUJ3MJklOgENIjUHOBeZXWOIBb0LgC1geWkZEo/+zRpF/RaQxIbAjj7ogGUrcnjZ3C
+	 Aj1nGlhNDQnLcXvsU556nMHLjlirJMxmcO803QEG/Y0p4sV8gtZrWRa/4TCvopPxcIAel
+	 VlBM40u7QNIwq0/kJ0cHUGpiVit5A8x+B1peVEvYj3fy6G6aCjX37n4mlrzqjM2i1Wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061882;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061883;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w0FCXAsxoynDRFp3LIPcmvF2Sh8xsmh518Y+u3AWsvs=;
-	b=clPU9QWhfddtefXoegqPBHxxDPU8ogt0LCIf/LYEPXa2k1fjmWTHP82te+k2FVKoLMbH
-	 qjCT9ELPymiarSvVwY1AvUq4c0u6bhWwUBJcfzorSKKDVhF6M+W3B4VxHGqRIgA0WjGDp
-	 rIMrC+5hURACovPBYFU3aYCScxekgZsbVNIF/pwCh87CvZAdTZBOXUK6/uAu3n2LyDblp
-	 LdImn8URMnEp4Z+zW8cjViJ7jhSBbnUzBlpzSllbkIrxGvAvCSIq/njREt7Teqyo/kHPD
-	 QQxq8OuNS5IQV6efl0NM+Pp/dgGYBn8G+NqkCsN76GTG2mWSwMdogTZVweFqhToD1vw==
+	bh=QqvXoqV6/2vooffGFf1jSTq1bUQUyLLq3Ti9ToLS/EY=;
+	b=ryYr1VA4ELrenWT3R7uhcEKACpT9EsSQzNafqd5U4O17g49mG1Dp9FZXtipMAiXF+kkj
+	 lH09jQHG96Y+L+kcYpMPF8VMeitr1Nurh3rLMmkKI1TCRMVrHtnwGB9sXE0HXFfVP8fBS
+	 g1UXBMU3CHX5jMHhSXsndz8PV6lf10Je69je3PaKrZQi26ojTwtb28vZNfHBD4Y+YXeHt
+	 MLyz/zvOUY2lqohkrMcIEfzgr5VmknrVp2Qv3cE/K+CZVxM8a4rtjU4tWKwgYWATheCZ+
+	 4jVtuGMZHcvFaCTFf8J+1oaoJS7FqrEsC+Wu5lJSR8OrNMLpzm0QCm2OKqdoiq5P+Jg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9vMvqBe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RlILXqwR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED8F606A32E;
-	Sat,  7 Nov 2026 14:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C8B606A326;
+	Sat,  7 Nov 2026 14:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9vMvqBe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8921F0089F;
-	Sat,  7 Nov 2026 14:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RlILXqwR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6031F0089F;
+	Sat,  7 Nov 2026 14:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061882;
-	bh=w0FCXAsxoynDRFp3LIPcmvF2Sh8xsmh518Y+u3AWsvs=;
+	s=korg; t=1794061883;
+	bh=QqvXoqV6/2vooffGFf1jSTq1bUQUyLLq3Ti9ToLS/EY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9vMvqBeLXFtiozrTZQxLsK/xFeueaD5EmffM99vl3TKAFAxLRKBk92/7P1qfItIY
-	 T/YUt2MOA1CXqp0Sde6FPglqOv1TsjFiVE6o/wMVtBvUqtF5aVdTG5L9RoYtlZcpGo
-	 ID661a2P5P8eLMDRWYb4S8YT4A4SAWOaAbBHJgz4=
+	b=RlILXqwR3TCsV0U7+W4vTFGnF5drmrYpkpe1X693C59IWUr8HG46DwX6I2mf2XnpA
+	 Fbdr5rHhUJdd5JNoo9yK1BVOAcuZh/JjAEeuWL/igRGUUigb2hapL4+cu/+ziLhTlu
+	 5lNFDcsBuS/fh55VSHvWqTZRypToRm61zM3V7m+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0894/1536] media: redrat3: Ensure we dont read beyond the end of the packet
-Date: Sat,  7 Nov 2026 08:48:30 -0500
-Message-ID: <20261107135022.740050556@linuxfoundation.org>
+Subject: [PATCH 6.12 0895/1536] media: redrat3: Ensure all urbs are suspended
+Date: Sat,  7 Nov 2026 08:48:31 -0500
+Message-ID: <20261107135022.769019190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,49 +70,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Young <sean@mess.org>
 
-[ Upstream commit cd49f62f4161c7340d9c9f53b67757575900c0bc ]
+[ Upstream commit 1582f545273f2aa4eb4ee6f3a89b433f5c85c68f ]
 
-The length and offset is provided by the usb device, so it should be
-validated.
+Ensure that the learn urb is stopped before suspend.
 
-Fixes: 2154be651b90 ("[media] redrat3: new rc-core IR transceiver device driver")
+Fixes: c49fcdde38cb ("[media] redrat3: enable carrier reports using wideband receiver")
 Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
 Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/redrat3.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/media/rc/redrat3.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/media/rc/redrat3.c b/drivers/media/rc/redrat3.c
-index 3170bd72a8e6f..4cbbe16a8ac47 100644
+index 4cbbe16a8ac47..c9a5c030f7726 100644
 --- a/drivers/media/rc/redrat3.c
 +++ b/drivers/media/rc/redrat3.c
-@@ -358,8 +358,24 @@ static void redrat3_process_ir_data(struct redrat3_dev *rr3)
+@@ -1170,6 +1170,7 @@ static int redrat3_dev_suspend(struct usb_interface *intf, pm_message_t message)
+ 	usb_kill_urb(rr3->narrow_urb);
+ 	usb_kill_urb(rr3->wide_urb);
+ 	usb_kill_urb(rr3->flash_urb);
++	usb_kill_urb(rr3->learn_urb);
+ 	return 0;
+ }
  
- 	/* process each rr3 encoded byte into an int */
- 	sig_size = be16_to_cpu(rr3->irdata.sig_size);
-+
-+	/*
-+	 * Note we are not checking if we are reading beyond the end of the
-+	 * packet which was sent, and reading stale data. If the device
-+	 * sends a packet which is short then we get garbage IR, but no
-+	 * out of bounds read.
-+	 */
-+	if (sig_size > RR3_MAX_SIG_SIZE) {
-+		dev_err(dev, "length %u is incorrect\n", sig_size);
-+		return;
-+	}
-+
- 	for (i = 0; i < sig_size; i++) {
- 		offset = rr3->irdata.sigdata[i];
-+		if (offset >= RR3_DRIVER_MAXLENS) {
-+			dev_err(dev, "offset %u is incorrect\n", offset);
-+			return;
-+		}
- 		val = get_unaligned_be16(&rr3->irdata.lens[offset]);
- 
- 		/* we should always get pulse/space/pulse/space samples */
 -- 
 2.53.0
 
