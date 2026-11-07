@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064739;
-	b=xqlWrM8tFkD9NGt2NuvTXEamBpaDkG5EFQJMdwU2COcxixEojJpQqDSNzX+UIKI5L7kL
-	 zS2jwovQKLYUXCZK/0L0zJbDnBSpav8PZWp2bcxbsAXcf5LGvdhb+JvnKzl1AM90Q7xLy
-	 FYnvFiM8lA2x6ZAmfW3gxdhq95RFbLCHKUCp1/0ZzMZL/REmsmMUfLpLLJINa0bFH+HKf
-	 9nURj5Jt70UteuJWxnN2NSSk5hne5g/4rtXSDLluISxuhIsMMt5+GGv83gA0j2XnMGqOz
-	 PX3pvqtSPJeXvP9n8utq9J0wcUJJKq9KEc7q7DrI9NMtpkoWDOPbsD1bzDWzE9e0y/g==
+	t=1794064740;
+	b=L4340rE7R/LcQPS7FZt+6Umf/NNYlO1l0GRT22O1wUVTIpVHRhjHpktpbt+jfbGDfTZ2
+	 IUIhdxXKhvYWU1AUIwtRXiGBEWUlMk9tyWTAhdD1QUmCrokGijkFodT6jVA7Otc/t1aVk
+	 amF0DVhVReXVSDsU+e5f1jCJLxM9HQW8eyg86AJT1PpJe3JTKfRc61YohosUGhh4PE91O
+	 M21xxdjUbNpecOAMYDF44uNUfkvehFpayPN0LEg4TEmGnEwDOOQDgRFUYXy9HBM5Wootj
+	 bag4UafTdQpuS/O0YsGlFb8KitDYbm69iBBlYBR3dQbxOHWnk2rJkin85WLu61d5ZRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n6KgWXviOqxWrJ+Kf+wXtBfRrechNNbDLaeKYl3d7u8=;
-	b=YOfbYMWSYDiYzXzr5huTL6oEE31PwAqIl6107d9wgL3b0SJmo3aD9W6Z4E5JybwfFvNe
-	 znomKLjnw+10eF+asxl2IiNd7fsGbi6es+OGyopO4X1FqQfQOZgchF+T91QwRKOVBX8e5
-	 B2w6KXrrPrc85gjmrmTb9PiWWHUvIvnJh4hCQmZZrh8/uch8C7JQ6DOd6bqfassxHw154
-	 YfjzBjjL+6QNDWDcGAwW7U/GDPGUqulx8Cs9qiWx6qmuWknIZzB80WJLUDWopJdpPbMOw
-	 iCiUbEOy4TS63QkhC/B243JSCWVbPSA069ntrzLqeIJqM1uBSmJYWkX/FJR4ICNANCw==
+	bh=QUmqT3yKPp04nyqmjGBR7zu6nOJ4ZKrqvU76ygCEnbY=;
+	b=3d0DENZoY7R25MR6+Y3tqEBp36kL+bBtJ3Dq2ZBvCv1B4at0U9JlNWTd4nW5QINq0XNm
+	 GF0MdeJ/IDx0FFxCneB2ak730ks/pUV7H8G9A/8m78UvWbTlLHQzznftgccae4fJWAAXy
+	 lFlWoqdAIs5nD9CGahytQuaYbygWQ7M3LtDVHkawC4syVg9QY9QuCykfCkCZRhorHdfEt
+	 Rk08QAT8r9cBcohF8HWHGhpFDYaI+Ad/7z9HCorEAB2lLEVnQebzgeJNNNnqzEJfu7A8k
+	 dEKqlvj7eRqlRSQ04dCW1ppnTsF3k6zvsbCZMPyiBGPzKE8PIxscycZ2eYqGdiakjSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJx5ojnw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C14pnd4t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FB8606A9C9;
-	Sat,  7 Nov 2026 15:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48E5606D820;
+	Sat,  7 Nov 2026 15:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mJx5ojnw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612C01F008A1;
-	Sat,  7 Nov 2026 15:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C14pnd4t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E691F008A1;
+	Sat,  7 Nov 2026 15:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064738;
-	bh=n6KgWXviOqxWrJ+Kf+wXtBfRrechNNbDLaeKYl3d7u8=;
+	s=korg; t=1794064739;
+	bh=QUmqT3yKPp04nyqmjGBR7zu6nOJ4ZKrqvU76ygCEnbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mJx5ojnwaCQXdQdddbizXwI/SQ6rHGVaf7cVqgYWQCDusQkD4cDiwzIf/80F+dB+b
-	 S9Q3Vs3r7qNLYeFOfCfUgRwqjfuNdampCvofI4Fez9isD8/w19X7vCEyUfNbM3gusz
-	 rALkT9tSpq8nJ5nz+iS16fsuLbpbjt4BX8NZxqZw=
+	b=C14pnd4tenRd/x50t387cc1ty+lD8uz6iU+2/JHviCHgKCANGkxRS77fk46tReWOg
+	 eJ4wPGD6Q80xmsyUz8Iy0Yb2e51tGyZR1vG3tnd7+QX+9IJ86ktTMdo+djD7vOTymP
+	 yahJCQmveo/zz0qWyBtLPcvvSvKVHmG7IpImw24I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <david@davidgow.net>,
+	Christoph Hellwig <hch@lst.de>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0665/1257] mm/damon/core: charge only the part of a region the filter left
-Date: Sat,  7 Nov 2026 08:49:21 -0500
-Message-ID: <20261107134957.620039228@linuxfoundation.org>
+Subject: [PATCH 7.3 0708/1257] nvmet: fix preempt of another registrant by the reservation holder
+Date: Sat,  7 Nov 2026 08:50:04 -0500
+Message-ID: <20261107134958.807440997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,70 +69,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit 4ff3b4a54a32142497fb44b79d0920aa6ba3393d ]
+[ Upstream commit d9e84d4e19994818b80846bd2abb7b396e4116a9 ]
 
-Patch series "mm/damon/core: fix the size charged for a filter-trimmed
-region", v2.
+Unless the reservation is of an All Registrants type, nvmet_pr_preempt()
+treats every Reservation Acquire command with the Preempt or Preempt and
+Abort action that is sent by the reservation holder as the holder
+preempting itself.  It updates the reservation type to RTYPE and
+completes the command successfully without looking at PRKEY.
 
-An address range DAMOS filter that partially overlaps a monitoring region
-splits it, so the scheme action reaches only one side of the boundary.
-damos_apply_scheme() reads the region size before that split and never
-re-reads it, so the quota charge and schemes/<S>/stats/sz_tried account
-for the whole original region.
+NVMe Base Specification 2.1, section 8.1.22.7 makes the action depend
+on PRKEY for these reservation types, no matter which registrant sends
+the command:
 
-Patch 1 re-reads the size after the core filters have run.  Patch 2 adds
-KUnit coverage for what the function charges and reports, for the trimmed
-cases and for the cases that must not change.
+ - PRKEY matches the key of the reservation holder: the reservation is
+   preempted.  This is how a holder preempts itself.
+ - PRKEY does not match the key of the holder and is not 0h: the
+   registrants whose key matches PRKEY are unregistered.
+ - PRKEY does not match the key of the holder and is 0h: the command is
+   aborted with Invalid Field in Command.
 
-This patch (of 2):
+With the current code, a holder that preempts with the key of another
+registrant leaves that registrant registered, changes the reservation
+type to RTYPE and still gets a successful completion.  With hosts A, B
+and C registered with the keys 0xa, 0xb and 0xc, and A holding an
+Exclusive Access - Registrants Only reservation, A sends:
 
-An address range DAMOS filter that partially overlaps a monitoring region
-splits the region at the filter boundary, so the scheme action is applied
-to only one side of it.  damos_apply_scheme() reads the region size once
-on entry, before damos_core_filter_out() performs that split.
+  # nvme resv-acquire /dev/nvme1 -n 1 --crkey=0xa --prkey=0xb \
+        --rtype=4 --racqa=1
+  NVME Reservation Acquire success
+  # nvme resv-report /dev/nvme1 -n 1 --eds | grep '^regctl '
+  regctl    : 3
 
-The quota charge and the statistics update therefore account for the
-region as it was before the trim.  schemes/<S>/stats/sz_tried counts
-memory the filter excluded, which Documentation/mm/damon/design.rst says
-is not counted as tried, and with quotas/bytes set the excluded part is
-charged against the budget, throttling the scheme to a fraction of what
-was configured.
+and B can still write to the namespace.  Preempt and Abort (--racqa=2)
+gives the same result.  When C sends the preempt instead (--crkey=0xc),
+B is unregistered and its writes fail with Reservation Conflict.
 
-User impact is that DAMOS could unexpectedly slowly run, due to
-over-charged quota.  DAMOS stat could also be confusing.  No critical
-events such as crashes or leask happen.
+This defeats fencing in the pNFS SCSI layout server.  nfsd holds the
+reservation and fences a client that does not return its layout by
+calling pr_preempt() with the key of that client and the abort flag,
+which is the command RFC 9561 section 2.2.3 asks for.  On an nvmet
+namespace the preempt succeeds, nfsd logs the client as fenced, and the
+client keeps writing to the device.  In a test with an nfsd server and
+two clients on an nvmet-tcp namespace, the namespace still had three
+registrants after the fence and the fenced client went on writing to
+it.  With this patch two registrants are left and the writes of the
+fenced client fail with a reservation conflict.
 
-Re-read the region size after the core filters have run.
+Take the self preempt path only when PRKEY is the key of the holder.
+Any other PRKEY sent by the holder is then handled by the code that
+already serves a non-holder registrant, for Preempt and for Preempt and
+Abort.  For a host that holds the reservation this changes the
+following:
 
-Link: https://lore.kernel.org/20260921152443.80132-1-sj@kernel.org
-Link: https://lore.kernel.org/20260921152443.80132-2-sj@kernel.org
-Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos filter")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <david@davidgow.net>
-Cc: <stable@vger.kernel.org>
+ - A preempt with the key of another registrant unregisters the
+   registrants with that key, sends them the registration preempted
+   notification and leaves the reservation type alone.
+ - A preempt with PRKEY 0h fails with Invalid Field in Command.  A
+   holder that changed its reservation type this way has to pass its
+   own key in PRKEY, which works with and without this patch.
+ - A preempt with a PRKEY that matches no registrant fails with
+   Reservation Conflict.  The specification defines that status only
+   for the All Registrants types.  It is what nvmet already returns to
+   a non-holder registrant in this case and what the SCSI target
+   returns for an unregistered key.  nfsd treats it as a successful
+   fence.
+
+Not changed: when the holder preempts itself, registrants that share
+its key stay registered.
+
+Fixes: 5a47c2080a73 ("nvmet: support reservation feature")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/target/pr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index a4542a49ff80a..4290e2a1c7e8d 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2653,6 +2653,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		}
- 		if (damos_core_filter_out(c, t, r, s))
- 			return;
-+		sz = damon_sz_region(r);
- 		ktime_get_coarse_ts64(&begin);
- 		trace_damos_before_apply(cidx, sidx, tidx, r, nr_accesses,
- 				damon_nr_regions(t), do_trace);
+diff --git a/drivers/nvme/target/pr.c b/drivers/nvme/target/pr.c
+index ad13a93afb782..14eaa99f98fa3 100644
+--- a/drivers/nvme/target/pr.c
++++ b/drivers/nvme/target/pr.c
+@@ -589,7 +589,7 @@ static u16 nvmet_pr_preempt(struct nvmet_req *req,
+ 				&ctrl->hostid, abort);
+ 	}
+ 
+-	if (holder == reg) {
++	if (holder == reg && prkey == holder->rkey) {
+ 		status = nvmet_pr_update_reg_attr(pr, holder,
+ 				nvmet_pr_update_holder_rtype, &rtype);
+ 		if (!status && original_rtype != rtype)
 -- 
 2.53.0
 
