@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062254;
-	b=ShUGNTD7E//UL/kPGuD9XfX2AFgNVO8YjbBWZDSdQHino1LVE2stNUzxB7L1cyThFbLQ
-	 rAtDjsXqfHOtoPwNi19IGSQb4wzpwuewhGLzY5WAq04/CM6GrLFmNIKG9zoGvdznryxhf
-	 Ixlv8Ocq6/MkEm/Q5I57YQUfPY6Mz53icctnYnPvi7pw2X7c6bgnwIpPQVNwukkOBpEkW
-	 B4BAiM/CM3SG2zY/JhQrEzGAgUeZsdOq1voIBiJl/SwGZlcNrOfgtlwAsuSzy5PNMUXmr
-	 u4TRigTVMfUP14cN1ZkHQgdNwfNppu/RL/Jus1oTDeESbSkaEuQCL6HVgsEHg6UPtOw==
+	t=1794062256;
+	b=MnXAb7+fB08ZekAlZ2zjlsITw+t+KQ55THkJqXlDRpBY7/NAoAYw5meRDb3HpP+9QPGC
+	 ngNjVx/FxR/462hb3xL072REyXsEsJPXa+CsYJ/NFbDN7+5F1/iKAEcKByq2SPtKZJ2Sa
+	 R29ty/H3oFMJvzi3MGKa+iHWlijQ+WBak37OhPIxniNfFgnCYs5bcEuwjx/jq6zBOvXcq
+	 pvmjrDbXGUWajfpIQUkniRxkKn8SA/8eR4BZoJtWpYFEAIqDxAqEjhEzgHENKD9aT61eG
+	 NL+u+DM/pmpbjmAcbadt8XZiA133QxTcXTWgirbD6ZD4tAfbGMR2dXw9pWCkOdIXD2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062254;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062256;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fvcFgP0z4Yc9+wUdmw1ruElIni+xlI7efO3xbWB/cNw=;
-	b=C8ElsQ4LagT1u5dLjei2oYuptcuD66vrIUlRuWY2N9wlrMNksqgX6WFZXT6rAEgupvYL
-	 NOvgnaZwlK5X4Uli/vEWTVG8ftNwvpVxZzOX65UUnXsazQo01ph+XmU5Kn9DLFukUIazT
-	 bZnj+E1O+Kf0YVt5grLTtOoCviIET+lpz1aoq9uvu65NEqJ8lSrk7n0dpPKCunb/z/7TW
-	 xdm1KW3b40dAiu9C9hWJphL8XW8tAsrGbHueb03zzZ+JBKmXpTCE1mZkLYu0SoFeRRbO5
-	 DXv+OM/cibjWfB+V9aASPELfH8BVE3z340qoXQc9VLKyH/eQRuljqR95eUJbV/BFQ+Q==
+	bh=3/Yc13taLKLj6bz3X6rEcNK/91hEcwcxmbA36pbb/zs=;
+	b=HCPgCmTpb2CSr7QXlmTsS1JoeJEYWpbij8Mh8jPzpxo968Rkhb1j3Od7Un/ho+faA9sU
+	 VuV6KspMhVpLvyU4jrCLRgozJVTLIWLplPhZsSVInuj8NG3NfhExvJEhaZ0gCVbTsh/gN
+	 9PnZBw47T/GrytDBsVWN1zNdb3EX62e86bkUSbx6grEsgby8cdh6F4IEAJt/Qri4xTSSh
+	 t2jBLUWtfcruDTRAVMn13ctB5FSMgTDI2Ysux5OQe0gt6/Zl7Y9vss2aruicVB4iylWUh
+	 KY8FUchozgNhw+F2/TiXJIKCcZQukYLuYoEKBbqG6zvaTwPvTxikPUei+UVZ3eC5YPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eaeRdJTS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NOHpZyrL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABA660A261C;
-	Sat,  7 Nov 2026 14:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD37A606EE82;
+	Sat,  7 Nov 2026 14:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eaeRdJTS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE1E1F008A2;
-	Sat,  7 Nov 2026 14:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NOHpZyrL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17DA41F008A2;
+	Sat,  7 Nov 2026 14:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062254;
-	bh=fvcFgP0z4Yc9+wUdmw1ruElIni+xlI7efO3xbWB/cNw=;
+	s=korg; t=1794062255;
+	bh=3/Yc13taLKLj6bz3X6rEcNK/91hEcwcxmbA36pbb/zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eaeRdJTSdyAtwyGqGVnEOkERXKDq1+7hA7Bk6PJViuX5GNFz+uhiGm2tkK1Byqt78
-	 Yh1wVbaaxfNiX5rDy6bdbddi8HLkiRG/xJtEzuA4aO5XZ2ecgZZYUz78ce0mmVhmpj
-	 Q2WVVVMlNY5LzGWOUPeJ0TjmkntraBc8ds/TkXYo=
+	b=NOHpZyrLx2Rs+Jnn3vskEj/giiW63SgZdUgYzPhOOke6KJj4NmaVdRqIQbAm3VpwO
+	 flWISV0OpBT7tI7j3MklAzOvQi6ejOYDed4DHqRQFkfVm4gqF8QxUeIqUfaGK7RMp+
+	 Cflg0h0WHFOlgebQVJT8Q1yXm+LWswxk3d0u818k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Will Deacon <will@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1159/1536] perf: xgene: initialize lock before requesting IRQ
-Date: Sat,  7 Nov 2026 08:52:55 -0500
-Message-ID: <20261107135030.279234217@linuxfoundation.org>
+Subject: [PATCH 6.12 1160/1536] svcrdma: Grant credits from the clamped sc_max_requests
+Date: Sat,  7 Nov 2026 08:52:56 -0500
+Message-ID: <20261107135030.307562105@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,50 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit d4b7b0c77142b3bc535192fa65130474a129c487 ]
+[ Upstream commit b7037e5da3fb81abcd6309daecb112f1d5926760 ]
 
-xgene_pmu_probe() requests the PMU IRQ before initializing
-xgene_pmu->lock. request_irq() enables IRQ handling before it returns,
-so xgene_pmu_isr() can run in this window and acquire the uninitialized
-raw spinlock.
+svc_rdma_accept() computes sc_fc_credits from sc_max_requests before
+the Receive Queue depth is checked against the device's max_qp_wr.
+When that check lowers sc_max_requests, the credit grant keeps the
+original value, so the server advertises more credits than it has
+Receives posted. A client that uses the full grant overruns the
+Receive Queue, and the connection is lost with an RNR error.
 
-Initialize the lock before requesting the IRQ so the handler always sees a
-valid lock.
+Set sc_fc_credits after the clamp so the grant matches the number
+of Receives the server posts.
 
-Fixes: 832c927d119b ("perf: xgene: Add APM X-Gene SoC Performance Monitoring Unit driver")
+Fixes: fc2e69db82c1 ("svcrdma: Clean up comment in svc_rdma_accept()")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://patch.msgid.link/20260828135036.796842-2-cel@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/xgene_pmu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sunrpc/xprtrdma/svc_rdma_transport.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/perf/xgene_pmu.c b/drivers/perf/xgene_pmu.c
-index c01466ae1e3d9..45bc62cf3f783 100644
---- a/drivers/perf/xgene_pmu.c
-+++ b/drivers/perf/xgene_pmu.c
-@@ -1873,6 +1873,8 @@ static int xgene_pmu_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return -EINVAL;
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+index b6044a1911ee9..65a9df7a4a7b7 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -467,7 +467,6 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+ 	newxprt->sc_max_requests = svcrdma_max_requests;
+ 	newxprt->sc_max_bc_requests = svcrdma_max_bc_requests;
+ 	newxprt->sc_recv_batch = RPCRDMA_MAX_RECV_BATCH;
+-	newxprt->sc_fc_credits = cpu_to_be32(newxprt->sc_max_requests);
  
-+	raw_spin_lock_init(&xgene_pmu->lock);
+ 	/* Qualify the transport's resource defaults with the
+ 	 * capabilities of this particular device.
+@@ -488,6 +487,8 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
+ 		newxprt->sc_max_bc_requests = 2;
+ 	}
+ 
++	newxprt->sc_fc_credits = cpu_to_be32(newxprt->sc_max_requests);
 +
- 	rc = devm_request_irq(&pdev->dev, irq, xgene_pmu_isr,
- 				IRQF_NOBALANCING | IRQF_NO_THREAD,
- 				dev_name(&pdev->dev), xgene_pmu);
-@@ -1883,8 +1885,6 @@ static int xgene_pmu_probe(struct platform_device *pdev)
- 
- 	xgene_pmu->irq = irq;
- 
--	raw_spin_lock_init(&xgene_pmu->lock);
--
- 	/* Check for active MCBs and MCUs */
- 	rc = xgene_pmu_probe_active_mcb_mcu_l3c(xgene_pmu, pdev);
- 	if (rc) {
+ 	/* Estimate the needed number of rdma_rw contexts. The maximum
+ 	 * Read and Write chunks have one segment each. Each request
+ 	 * can involve one Read chunk and either a Write chunk or Reply
 -- 
 2.53.0
 
