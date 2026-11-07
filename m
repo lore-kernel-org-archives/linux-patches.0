@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062708;
-	b=0rAFp6N2aDuEqAS3L5v7QN2rjPp25CfZOMH9MWbXKkNsEyF2XsXycJ8CmqFcbfCAhQyZ
-	 zn60sHtCQ1jGT7pHA11bPtY1Tu2SLBmmp3RWLdeQN17lKieXhNDx467bssQ2sX69ezKF4
-	 0zSO9Z7CbgObpVKyozkciP5uqHk3ckyNKMUS9OGmHxjROHeCCv2DKgo9RTOj5VM6JkbpZ
-	 YHN1iIm3y3oBFOOUYlGZZjJX27jOX+dl1GkMl4TPB8CX0DB17FxENRZNccIDWEsc+F1FZ
-	 2IrNuLYlK2naHYwewwS/9C68fL4IesirlW+n5fF6ovWK9h6R2npTJNb280GEQEF3z9A==
+	t=1794062709;
+	b=0j19Ur1YYg6IMhxDVPILG3svLhYGdmu54WPZZ/IvxK5g/XJ75quQOepXsfKDGq0wiyUl
+	 I0g0LOjF7Q0BEOgt223xQ68nou5SV17zAUTH94/24Wt3x+Xwt0rWZ4hiY4VyXEHijocLJ
+	 kGJqIWLs+p7Vetthsso5Qliqga6g1v2tTIpofWk5mHQCsD0Jfbx1vhKF1fbC7hGQOGZEa
+	 SoM0WbdPMMA1Eg+FWjg/9NWBIf/yx8DoEOrXJmDUh+pE+ZqbO4GYktVe8xm7B5cFmTlKE
+	 qfEbqoPBC02exfgaOYvfGAltRjeVkmgIiPsLyab9TZsBdcKPc8Bl1pVSMbTjXWaeMgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062708;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062709;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nggnBON95X9X7HwPYkxrlJm7+A3GcFwHIOaOpvp9lOQ=;
-	b=QlVRWYhDwzrck6B4oIAljBomm7d5bzH6YfKeFLCGsb9XKjY9SblyVHtguCweTei7fi+2
-	 /YX/z3/88nIushmPXoWq1S/BQ+NAdud93FoJDM7O9Tz9LCVqReA2JvDJ8DZY9n6EvLRvu
-	 tZ/dR8QFgT7Jncqc/A8Rfv6YIdGcuQz07+WRD211WEjLJ0CEqPPljvJoUgotLZZDAQq47
-	 09IzysvwbmE4RPhWyB3rNPegDgcFbA7AqSfWA1VbcEYG4NB1zOf9L3uWzEs2He3+iUcD+
-	 ZA5oX33EFJUClwI1rz4Q8L2ictFAYavC0oD2Nsw8fwAAAp4ZNnPH92CUUCyNhpskzlw==
+	bh=XFyNqvhncddMVdDuNZg1CNc39milrJ8VSUcM/KuNM6I=;
+	b=gtvrzE0wFeB9QwYAFlgHDQFL61nDrf0j0SSd99e5po78T6WXkQ8zwN2p0vKOJdeK0LdW
+	 +gdTiUfJk3SCd5ArGZMedjkMENaHeXnpUqX14KxIN6kKaax2rMFUCj9v4jl3YmiDMw/QM
+	 Iia0mc1A0ieX45ymS+GuJQki7ssP5JG7zu47IDxgoIGm83sSfClcWMhAX25lE+8pWNMG3
+	 Owu+bKmvH+Q+qFB6LRzGh8HdM+3O4Xwyjmq71fwEXkOu3Ca9AcYYYmSwlINn+lWTmeaLB
+	 EFoJolAMx/M+7gZnIIv4nY1XPtXgCz4Iy4KYZ2U+RmVR5UNmBfYKF9Of+QgmtZjO6qA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tTzyR3U8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TxdVQl+g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC471606A32C;
-	Sat,  7 Nov 2026 14:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD5F606A334;
+	Sat,  7 Nov 2026 14:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tTzyR3U8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172B01F0089F;
-	Sat,  7 Nov 2026 14:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TxdVQl+g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EBA1F0089F;
+	Sat,  7 Nov 2026 14:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062707;
-	bh=nggnBON95X9X7HwPYkxrlJm7+A3GcFwHIOaOpvp9lOQ=;
+	s=korg; t=1794062708;
+	bh=XFyNqvhncddMVdDuNZg1CNc39milrJ8VSUcM/KuNM6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tTzyR3U8/GM+dxhovNbteGGsS3i6jBGhNUPgw88HpMO8TO7gejzoyp8VHTfkqmq6+
-	 nuT6+p5/cqZXc6cWeKR5Mv1W8QOHp8qlB9lCsuXpFlYl9kTYOlDE1DiY2ueoaxFxoM
-	 Kp50Y8FtTJemvLlityTQtBUsUvpP7FaDk/K+y7P8=
+	b=TxdVQl+gQHprK1fuNUq4mn5/4B9pWwQTlGKRGXI9uXNNIzs1DXo/r7xX89qd/G6kJ
+	 Zad5jcnxkZqfFPBGCPStkjAtTcaO6robijeOOv3MyQfeIFCrQSEixIC6WEz3BrFY0S
+	 uzFK9W2QbK1YzZavaLxVwAb6WSQt/a1vP8zKbQgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Schwierzeck <daniel.schwierzeck@gmail.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/869] cpufreq: airoha: fix probe failure with correct error check
-Date: Sat,  7 Nov 2026 08:45:12 -0500
-Message-ID: <20261107134853.175111415@linuxfoundation.org>
+Subject: [PATCH 6.18 031/869] media: streamzap: Add missing rc_unregister_device()
+Date: Sat,  7 Nov 2026 08:45:13 -0500
+Message-ID: <20261107134853.221636962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,42 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Schwierzeck <daniel.schwierzeck@gmail.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 801ade22c4fc078ea9b11e1f3fe3aae8b8bef886 ]
+[ Upstream commit 3982d2eeb1bdf7a9c14e4ff69015cb456f11da51 ]
 
-dev_pm_domain_attach_list() returns the number of attached PM domains
-on success (a positive count), or a negative error code on failure.
-The driver checks "if (ret)" which treats a successful attachment of
-one or more PM domains as an error, causing the probe to fail with
-return code 1.
+If usb_submit_urb() fails during probe, then the error path is missing a
+call to rc_unregister_device(), which will leak various things like the
+input device.
 
-Fix by checking "if (ret < 0)" like all other users of this API.
-
+Fixes: 42844992664f ("media: rc: streamzap: Error handling in probe")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Fixes: 84cf9e541ccc ("cpufreq: airoha: Add EN7581 CPUFreq SMCCC driver")
-Signed-off-by: Daniel Schwierzeck <daniel.schwierzeck@gmail.com>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/airoha-cpufreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/rc/streamzap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cpufreq/airoha-cpufreq.c b/drivers/cpufreq/airoha-cpufreq.c
-index b6b1cdc4d11d6..ec9b2fc00f5e0 100644
---- a/drivers/cpufreq/airoha-cpufreq.c
-+++ b/drivers/cpufreq/airoha-cpufreq.c
-@@ -64,7 +64,7 @@ static int airoha_cpufreq_probe(struct platform_device *pdev)
- 	/* Attach PM for OPP */
- 	ret = dev_pm_domain_attach_list(cpu_dev, &attach_data,
- 					&priv->pd_list);
--	if (ret)
-+	if (ret < 0)
- 		goto clear_opp_config;
+diff --git a/drivers/media/rc/streamzap.c b/drivers/media/rc/streamzap.c
+index 8c85b9f30a3a9..e91cf2ffbc876 100644
+--- a/drivers/media/rc/streamzap.c
++++ b/drivers/media/rc/streamzap.c
+@@ -365,6 +365,7 @@ static int streamzap_probe(struct usb_interface *intf,
  
- 	cpufreq_dt = platform_device_register_simple("cpufreq-dt", -1, NULL, 0);
+ 	return 0;
+ rc_submit_fail:
++	rc_unregister_device(sz->rdev);
+ 	rc_free_device(sz->rdev);
+ 	usb_set_intfdata(intf, NULL);
+ rc_dev_fail:
 -- 
 2.53.0
 
