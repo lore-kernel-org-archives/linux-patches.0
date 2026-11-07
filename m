@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063414;
-	b=puu3pfAHhvkhit4Qe386QK8RtlMbMBmoCC+nOTUx68qTeA/aK+vXo+yN1jDwjjTwuk+g
-	 OJD9usgc1c7KCeelkeEAYDMFq3I/lcdhZxLooGY2t7f7nGKzRbmtonbUKgLRyUos+Ou9u
-	 yN/jifxhnFbLvrADQMB49sVfEN5rWngFprFqdqcT7pnvwp5FjBNG0rxuuK0Y/QmtWIPfy
-	 QmAKeSyprl353Sj/xaioRoCC/HFA9Nf2nrsIrH4q8HOgWkGzWOWbsAIzAukbkx/uUYUKO
-	 8qyzVuVgGOiwca7+UuJNbkruAjOLlh6AfI7WzBTfpbzM06/OD8ahBpkFcrt2waHAYXQ==
+	t=1794063415;
+	b=1cOrLdIJyGUWwnSChjhADujlDFYTuycyiK0zlaPMHu2PgAILJaJhzuwi05wqJu7k6c4V
+	 xKYQdOpJfd+4pMAIfi1arqqDy5rmPuwq34Zgvfj380FgcZYMDJmfyvGi4braTE9AuWPyB
+	 CSzhNbJnQUUM6FX7j0otySdsXVpG8AKxbV58PdImWjeH7PiM7AiqpoPCgYywgJ6Hgb4q/
+	 ho68JOLSDfl7iQrc/d72kZ0zwOa+gJcCJtVhIEqZtWERNx+AaCgKy7IdtkIiB3rPsmxhC
+	 RcgIKwPVw6kbYhnQtRETNZ5HP9y4CmgyxLHhaUrmdlywbtjYJNiGFwYmj7RoLA4Bitg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063415;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tpbCCPx5PPzskpo1MFvp3MFScU2WqoI0UHu2JlM6p6w=;
-	b=tuZZn6in9TMEAJY8A8eunawo+YTWEWIdJ1efsnr8h5q3t8zQzV07pVm0dStYfxzJjdzk
-	 eP9I5rDVr4sJ/dCsANcIGO1B9svOjarc13Hn2q/afL6iwNYx25W1k0s/rZ0lOJ7MMBXL7
-	 enudi7LcS/vny+aRx0/vRWbzDl044Egs0WNEPJmWch6Q27vkdf4+NVVhiCanLJr/M/UNz
-	 1lMh8/0mVkXaEWcI+G1cA/aciP2o/ZMIEGE0Y6kmDzDQr3uzAp3PELPQIICsnqArIz9tl
-	 MJJBOf7Yr9pacbzUpIPKaOgDX9Z2TRR5B5oa7grx51onSs/0dJ88hE1eahK/g7L6jWA==
+	bh=U5G3wNM0xceQ3VuuaXR/n71QjuaecDz2ArBVBm54CyQ=;
+	b=dOUSKEZe2ABVxbJm90M5x3JOljAMIax80sUCWv+9h/2gTbZ8l3a3SuSV+oHbnSJKB9nY
+	 Jg3X26tRklL2mhHOptGjBhwQG6tOPFYrutRKEY7FpR8c1yQyneX0hiFx/Ug28MLmPaUGq
+	 hTFYxdyp3T+Saxufm5n/Gtj1NASZmdX54tWcTNeAIKSzLMdbRMxnR07wL+uUHsDMOlY99
+	 UywND4LhvdCzKWeCZdG8wm6jJw00ZJgfUbO/ShFTtPAMyaxcSCZIqUmsiglSZjVAHrSJB
+	 //LUrBZYmsq3ynJOFNy8phb3fgaLyBX5zo+VG43wJoW/k2xARud9yhG3n4F2YpuNRew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6tK6HOk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=heXsuE2a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B972606A336;
-	Sat,  7 Nov 2026 14:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558FB606A336;
+	Sat,  7 Nov 2026 14:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6tK6HOk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85411F0089F;
-	Sat,  7 Nov 2026 14:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=heXsuE2a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0450B1F008A1;
+	Sat,  7 Nov 2026 14:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063414;
-	bh=tpbCCPx5PPzskpo1MFvp3MFScU2WqoI0UHu2JlM6p6w=;
+	s=korg; t=1794063415;
+	bh=U5G3wNM0xceQ3VuuaXR/n71QjuaecDz2ArBVBm54CyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e6tK6HOk9TXWtY1d1Wz/Ous7IUxl8bYA5MMWdOn0Nj7wkFqQC4RWDjPv2OOixU2mv
-	 B0ne4qzywf/Cy8iwdGdVyuMSH/+ZoIik/m+s7j6OJHi5qM7Iw5bvh553tOr1B8RUOj
-	 MCabJ1ZCYyA8Y2NygTXdiLPHydXcXi30rPBuvJ/M=
+	b=heXsuE2aRagPUNHuUR3eU1RMMuD8meEz601ar/6zp6PsFZv9CoYqmctzZeBUx3gXk
+	 7/GDxpvDWOc2LA1OIq+/JyTswUv5dXMPW/2PC4GNY4ECs7JivI7j2+GwJKXqX35VGU
+	 AFfb4WmyYKY0Pb0D1JYWTckDntiXQNVCLf1FtOQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 582/869] spi: jcore: fix divide-by-zero when speed_hz is zero
-Date: Sat,  7 Nov 2026 08:54:24 -0500
-Message-ID: <20261107134912.905418909@linuxfoundation.org>
+Subject: [PATCH 6.18 583/869] efi/libstub: arm64: Dont use the platform register x18
+Date: Sat,  7 Nov 2026 08:54:25 -0500
+Message-ID: <20261107134912.932606527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,51 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 7db773075501248893c22b11bedc6745d6d0be45 ]
+[ Upstream commit 4c86b5f3fa78347fa9cbc9e8ec06615b2f80e397 ]
 
-jcore_spi_baudrate() computes hw->clock_freq / 2 / speed without
-validating speed. The SPI core fills transfer.speed_hz from
-spi->max_speed_hz when it is zero, and jcore_spi_probe() never sets
-host->max_speed_hz, so the clamp in __spi_setup() is skipped. A
-spi_device created via the sysfs new_device interface (or a DT node
-without spi-max-frequency) therefore has max_speed_hz == 0, and any
-SPI_IOC_MESSAGE transfer reaches jcore_spi_baudrate() with speed == 0,
-causing a division by zero and a kernel panic.
+The UEFI specification designates x18, the platform register, as "do not
+use" on AArch64, so that UEFI code is compatible both with an OS that
+assigns a fixed role to x18, and with one that uses it as a temporary
+register.
 
-Clamp speed to a minimum of 1 Hz before the division so the divisor is
-never zero. The computed divider then truncates to the register field
-width and the transfer simply runs at the slowest supported rate.
+The arm64 EFI stub and the EFI zboot decompressor only avoid x18 if the
+kernel is built with shadow call stacks, as that is the only case where
+-ffixed-x18 is added to KBUILD_CFLAGS, which the stub inherits.
+Otherwise, the compiler is free to use x18 as a temporary register, and
+it does so.
 
-Verified by inspection of the __spi_setup() clamp and
-__spi_validate()'s speed_hz handling; the division-by-zero path
-requires the J-Core controller, which was not available.
+So pass -ffixed-x18 unconditionally when building the stub for arm64,
+so that the image can be run by loaders that rely on x18 being left
+alone, such as a kernel that uses it for its shadow call stack.
 
-Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Fixes: 2cb1b3b3ac0a ("spi: add driver for J-Core SPI controller")
-Cc: stable@vger.kernel.org # 4.9+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261014-spi-jcore-divzero-v1-1-a8205d30f2d1@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-jcore.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firmware/efi/libstub/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-jcore.c b/drivers/spi/spi-jcore.c
-index e37ca22e04ba6..2bde899eb2b49 100644
---- a/drivers/spi/spi-jcore.c
-+++ b/drivers/spi/spi-jcore.c
-@@ -84,6 +84,8 @@ static void jcore_spi_baudrate(struct jcore_spi *hw, int speed)
- {
- 	if (speed == hw->speed_hz)
- 		return;
-+	if (speed <= 0)
-+		speed = 1;
- 	hw->speed_hz = speed;
- 	if (speed >= hw->clock_freq / 2)
- 		hw->speed_reg = 0;
+diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
+index 94b05e4451dd3..c532ba5503522 100644
+--- a/drivers/firmware/efi/libstub/Makefile
++++ b/drivers/firmware/efi/libstub/Makefile
+@@ -22,7 +22,7 @@ cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -std=gnu11 \
+ 
+ # arm64 uses the full KBUILD_CFLAGS so it's necessary to explicitly
+ # disable the stackleak plugin
+-cflags-$(CONFIG_ARM64)		+= -fpie $(DISABLE_KSTACK_ERASE) \
++cflags-$(CONFIG_ARM64)		+= -fpie $(DISABLE_KSTACK_ERASE) -ffixed-x18 \
+ 				   -fno-unwind-tables -fno-asynchronous-unwind-tables
+ cflags-$(CONFIG_ARM)		+= -DEFI_HAVE_STRLEN -DEFI_HAVE_STRNLEN \
+ 				   -DEFI_HAVE_MEMCHR -DEFI_HAVE_STRRCHR \
 -- 
 2.53.0
 
