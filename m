@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064291;
-	b=sbuQFJa2HRC96MjuRdJ7S/DVEfMYc58Cm7o2ccoIavilHGFEhdddr+ZwRZdnWiEEg4Fg
-	 XSjjEZL3PFmN29diSGD424HbHCb+KszLGlLYxWJ6MF5Rp1hMHKueY4wBrFTCwgo5b3gaS
-	 qDXx6w//UzFDLRHsiRkKnYu0CrgO1DKESQQm3WwoB0JECBurlSUYmcDRLzqm9WAaFN+cD
-	 7R/DR09HsOIa0aKFvpyfXACGZXHewWlkfVTahKBKeY7JpFpLC1cGjKuUjY0Mt37Q/pKiX
-	 CI5zDmkWKpu4L1vLqD/T9R3FXSQanBLfEGOsTqfg9SNR+RgqKEkUgS/OPrn5VY4G/Cg==
+	t=1794064293;
+	b=RGku4W5yTL8oS5+SxhSSTwnL5dZ/PdlxwvALRQ74nwwDkE0iegC4aH7i3kh/mxK0xK+y
+	 7g6vYz7RyzI1aEuSmJroxxB2lUogHGcv69wuoEWmPuAj9h07v9a98dT3Hl77YY/6T/irN
+	 xzzqOnnWXIuUUvHJIRPBVGouQGCeBWKHlsuoidTqgvDAESVPLP0HO+K+cJbWNes4ZjAvY
+	 Z9bb97uTFVJjBmAJafam3hQIR9nJ5nrm+hEO8hjjvM325BpRXPSiYv8CsuFCbhmOciocl
+	 MMFJESPn/rIbeFKgzt5mjixl2aFJ437sTUNLQCaUgo15QqS/rCVUPkTnQfEQkNeb/Ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064293;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z1k3I8ckO4x8njv6A4H55MVOrJG71WkIP2qSC51Hj1M=;
-	b=sUKSafpgrTnRgUdmEC7K/UZCChsWVw+kFZnWUF8oeUCKBcM9ytBcnuoJA04Vs3vYGMqR
-	 bXTIG4H8zVka2aS/HBIMJSJAdgN9RE8fRK2NNyfUNeJxQ3YMYT9uIBkOVlYyiEWHfHYhR
-	 nCUo+VABcdfEwRe93DNQU0G5i6Y3TfJg5JK9p9Y6pBw1Byp2IUTsG/wbtv+hcO5SEYMUQ
-	 a9+LAUV8E9s9Ej1i6AUFPuFhOFSdUJQ8JLh+t9t1V2evloFGZCKv9XEK5gnQW5QVzsRbO
-	 mMVt7I/YHw62he3qlL1J9WC9QZQr8GW4ZqJoDyI7i2kJg7qzuPWN7mgbhDBzXyB1Gdw==
+	bh=HS+vrenvi4zngz7dg3CzNtH+vfBiZTiNFObcbIXHNbA=;
+	b=bpET3oZUOxg73tHgwTboJaWsRCHh6zsIvYQaZdT8XY0d/W5KkuV18ci0dKIBGk3NgGmv
+	 eHjIis0taYQH1cmbixz6BL50x9atzlCHHevdMPbqP/09ZCOb7X/5FHDixL1RmTtS5F5ab
+	 BDJot9WLFTqopAZOsqEGn9ZGYbLGXdJPaSyvh14Hcm2FVDo3DAZIVeCw3wJuZFvYUGI7Y
+	 gyUll1gXQHifd360NLemPVSijwWk7p5arAYbNcTpmHvdf+D6HHxS0i/xdIQCcfDTvsF5J
+	 wJ/p35vWfoAe4T8weN9CjoVL3IVdvJqoDG4wk6ikOEw/Kqy8oT8JXqAaJ3udjhM8Lrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rNo4LrYz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWZrIjZe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E176606A9E6;
-	Sat,  7 Nov 2026 15:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF44A606A9D4;
+	Sat,  7 Nov 2026 15:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rNo4LrYz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9601F0089F;
-	Sat,  7 Nov 2026 15:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWZrIjZe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEE81F0089F;
+	Sat,  7 Nov 2026 15:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064291;
-	bh=z1k3I8ckO4x8njv6A4H55MVOrJG71WkIP2qSC51Hj1M=;
+	s=korg; t=1794064292;
+	bh=HS+vrenvi4zngz7dg3CzNtH+vfBiZTiNFObcbIXHNbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rNo4LrYz28+Y/fMWh45oKU+5w6jECQCTFOYuRR7qNaGZQbx5I+GOtjzXy2V25CnL/
-	 YCdGhOdm+2Gh++Z01ee5zIsFEsJXV9kGZ435q11zVbPOpBxAqGwPcAs5Zlqw4OkEHT
-	 S/wUhspC0RbABWHMkismj3ZO+0pSsQFnLfI87+z4=
+	b=fWZrIjZe/bhQeFsg4ls4aO7nddatDVpOnm0oj/alT4cPp+fngTMfCqcEG9SqaI2A5
+	 c/+tbhAdMOestyDkyxPArDojnwmfSCWk+48y28oGeE71BH0XAaIXHLNJ6TJkzOZKvz
+	 BXDz5n8Ufab8aVFEH1OCGD28aTIXc2pFLu7hU9RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0386/1257] ASoC: pcm6240: do not free an unrequested IRQ
-Date: Sat,  7 Nov 2026 08:44:42 -0500
-Message-ID: <20261107134950.210546318@linuxfoundation.org>
+Subject: [PATCH 7.3 0387/1257] nilfs2: clear dirty flag on bdev buffers on log write failure
+Date: Sat,  7 Nov 2026 08:44:43 -0500
+Message-ID: <20261107134950.239004268@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,40 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 995b96380ba5d98131acc162608da3538e1395d8 ]
+[ Upstream commit 6faad04a002603d800134398fcd042b403b32d35 ]
 
-The driver obtains an IRQ number from device tree but never requests an
-IRQ handler for the PCM6240 device.  Removing the device must not pass
-that number to free_irq().
+Since the commit referenced in the Fixes tag stopped directly calling
+inode_attach_wb(), a dirty flag is set on buffers (with
+mark_buffer_dirty()) allocated to the backing device for segment
+summaries and the super root block during log writes.
 
-Leave IRQ ownership to a matching request path if one is added later.
+While this dirty flag is cleared upon a successful log write, it remains
+uncleared if the log write fails.
 
-Fixes: 1324eafd37aa ("ASoc: PCM6240: Create PCM6240 Family driver code")
+Consequently, when a log write fails, these backing device buffers are
+left in an inconsistent state where their uptodate flag and the dirty
+flag of the containing page/folio are cleared, but the buffer's dirty
+flag remains as stale garbage.
+
+Particularly when the block size is smaller than the page size, if other
+buffers on the same page/folio become dirty, this buffer unexpectedly
+becomes a target for writeback again.  As a result, if the block is
+later reused for other data or metadata, that contents risks being
+corrupted.
+
+Fix this issue by calling clear_buffer_dirty() for the backing device
+buffers when aborting log writes in nilfs_abort_logs().
+
+Fixes: 68142cb628f7 ("nilfs2: do not call inode_attach_wb() directly")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260929095920.2092147-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/pcm6240.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/nilfs2/segment.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/pcm6240.c b/sound/soc/codecs/pcm6240.c
-index db85ae2f8aed0..7a8c8f53f04c5 100644
---- a/sound/soc/codecs/pcm6240.c
-+++ b/sound/soc/codecs/pcm6240.c
-@@ -2019,8 +2019,6 @@ static const struct regmap_config pcmdevice_i2c_regmap = {
- 
- static void pcmdevice_remove(struct pcmdevice_priv *pcm_dev)
- {
--	if (pcm_dev->irq)
--		free_irq(pcm_dev->irq, pcm_dev);
- 	mutex_destroy(&pcm_dev->codec_lock);
- }
- 
+diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
+index 829573cb61316..2f0e59847d026 100644
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -1829,6 +1829,7 @@ static void nilfs_abort_logs(struct list_head *logs, int err)
+ 	list_for_each_entry(segbuf, logs, sb_list) {
+ 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
+ 				    b_assoc_buffers) {
++			clear_buffer_dirty(bh);
+ 			clear_buffer_uptodate(bh);
+ 			if (bh->b_folio != bd_folio) {
+ 				if (bd_folio)
+@@ -1840,6 +1841,7 @@ static void nilfs_abort_logs(struct list_head *logs, int err)
+ 		list_for_each_entry(bh, &segbuf->sb_payload_buffers,
+ 				    b_assoc_buffers) {
+ 			if (bh == segbuf->sb_super_root) {
++				clear_buffer_dirty(bh);
+ 				clear_buffer_uptodate(bh);
+ 				if (bh->b_folio != bd_folio) {
+ 					folio_end_writeback(bd_folio);
 -- 
 2.53.0
 
