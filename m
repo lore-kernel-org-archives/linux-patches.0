@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063027;
-	b=f8nuYnzHaQ5GwTUzq2QZqb1O9Li/nZLPxkziji4sSRZtB7aRcjf6M7sLW0zKZdNKohnP
-	 ntcAY2E1/KpTjPK9zMNWAFqh6kHXMEHtaTe8J7GaQUsmSyzQTvfjS0yaN4AyuDMATt6XR
-	 xcPURURWQeimgXwp36ef5RXkBQh+oE3YgwafxBp2fc8T85t5tDQxBac6ic0erEV8Mcw3Q
-	 Pmlc5lYG5+Ilu2iGz1uMjqwFNqEOfJFGaOX6Dpukann1asm4fNgSVKV7uMx4aOLsYFKAo
-	 EnEOYEFk+h3jkBk7JA1pC+QasAqdGYVTI3eyVHAn+SeBXt4IGTUb2JlL3C2QI8ftx0A==
+	t=1794063028;
+	b=PHahH+h8uqw79Vle1El1u/nhlWXWf1ETOI61VtOTbWn4OKu3nnqoiHXBMNIi+zpFtNOo
+	 2AWDbt0xmMf8WIEO0RF+htbVxcOFS7vQX/5TDQEDfc/iUShlq19IWLjcNLX3mfTpMazzO
+	 JqvY9ss6109fzK2ZSi941rApbjaWThhPOj8/+4lLSHezSl1QiH+0sYhhJFKTJ9Ed+zB5z
+	 oadN8NlreVEIecCBGu10uqNi2cy5tkPRJZvHVKoM8noh/UFj2cs669hf6dPu97mF8EJj6
+	 VBZyUFxdiXWFCGLyGGYtkvt+dHxuqroI1e27g9G97C8mwexm2iGYYHvbExqs3sJHfgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063027;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063028;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iUMy67ig1Ws++7GHkGMNrrY99wjTCNPdFw5bRd67fSA=;
-	b=Ya+GZovaVYzumzcweAxUdAHZDU/+/TsDtr2OT0k5+RTHlwbYa8VyPPWihRWg+gkH7422
-	 0RBX9v6yBYAiFvIWzKCgp2o7f6akphZhH6I+AACr3emrJvqenLaMAKf6qMHIDyVxBz1wh
-	 StEOByg+fCfhq9yOXADDfDhWi26phgzGkQyYEip3M2xQbXHHMmS57EVfgrDEg+ShWaK+W
-	 a3Ub2ousX5Cj+/mxOXnK0uV7MEtAKIH6JyD8mOWmsXEQ8tL8B0W8oMrALGkMulAytm5tn
-	 BfItk5jle5ySh6HJdEENpSqLVhrScYPQi0TNHdaauQuN2w4YiPT/RoJ8xUuO0Hsj33w==
+	bh=GnFy9/F1FITb8aPtNuQCNPeuaG8LJNgjOBbGSI+BXwg=;
+	b=06p9TQ62iNSXGNxVoQGbtNyJ3BVHwor/alztOgGAKGnzQXKeFZCYbFsllmX/ZjhBiSvN
+	 TeXWVUYS1XPvu9vfvanzTHcqXI2gpEDSNmnKTYkthYijXPhFJc6bjJpBW25mQTW++EfJl
+	 bnX5UllxORBkAJpqlgnOTSAwUSy333BDaBRAt6gsPAIycoWy8zqU7c0UQi4MYtF6DWdfV
+	 0wKYdxyscok7AJYMFv8ugd030Uj8YLr9iuoSPS0cT2J+VvxZVzUYNFwxjSoZH1p5xWQT4
+	 37WQ4iowCODCel7maCZG7LtCRZNp/ZN4JZCDX7DKNsUErXg7qp29WcHv2XQC//qs4Fw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L14+rWaA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EB9UsfPE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53EB606D80E;
-	Sat,  7 Nov 2026 14:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F38606EEA1;
+	Sat,  7 Nov 2026 14:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L14+rWaA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA641F0089F;
-	Sat,  7 Nov 2026 14:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EB9UsfPE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB7D1F008A3;
+	Sat,  7 Nov 2026 14:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063026;
-	bh=iUMy67ig1Ws++7GHkGMNrrY99wjTCNPdFw5bRd67fSA=;
+	s=korg; t=1794063027;
+	bh=GnFy9/F1FITb8aPtNuQCNPeuaG8LJNgjOBbGSI+BXwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L14+rWaACcDDroNldgmBcnzXf/E+uukWks3QN4P2c7Vcazr+HVKMlvG/7WnuZDByR
-	 Ouksb7gxPqeU8V0tUX79gTQHrGkJ1sCEYK/HX8cASaspHCbWVHzb6EkO7k8rEwqQjJ
-	 9gsEiXVpX79WXzzolhtc3yZ+vrrPbR+jR1th6owI=
+	b=EB9UsfPERYbc8jYnOPe3X/iiAkMclPhjlcBxyvZ8cHG8jLK2GVdrjDCQ/SORBNAxz
+	 WamE4awpUY5/7Gr+nXlWT6HR9gt8n4F9jSyKjEvPbnt9GYHiSjuyXOWUFS37aVGXmo
+	 UdMp26Z2vkrYyMFZs2y4fZTB4bvLKUtnNoISRZfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
+	Cheick Traore <cheick.traore-ext@st.com>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 269/869] iio: imu: adis16400: validate SPI match data
-Date: Sat,  7 Nov 2026 08:49:11 -0500
-Message-ID: <20261107134900.817354620@linuxfoundation.org>
+Subject: [PATCH 6.18 278/869] iio: adc: stm32: fix minimum sampling time values
+Date: Sat,  7 Nov 2026 08:49:20 -0500
+Message-ID: <20261107134901.125505546@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,39 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Cheick Traore <cheick.traore-ext@st.com>
 
-[ Upstream commit 2c01a0a1c5550b4f502c7747c06d2e57a240cd87 ]
+[ Upstream commit ef04fdc999ee40a58d513ea48d391c7dc78c908c ]
 
-A device bound through driver_override need not match an entry in the
-driver tables. In that case spi_get_device_match_data() returns NULL,
-but adis16400_probe() immediately dereferences the result.
+- On stm32mp15: vddcpu and vddq_ddr are not connected to internal
+channel, so their sampling time shouldn't be set.
 
-Validate the match data before it is used.
+- On stm32mp13: vddcpu and vddq_ddr are connected to internal channels
+and the value for vddcore was not correct. Values from the datasheet
+are 1us (e.g. 1000ns) for ts_vddcore, ts_vddcpu and ts_vddq_ddr.
 
-Fixes: 2ef920e0e5c0 ("iio: imu: adis16400: Use separate structures rather than an array for chip info")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Fixes: 7cb2303dd024 ("iio: adc: stm32: manage min sampling time on all internal channels")
 Cc: stable@vger.kernel.org
+Signed-off-by: Cheick Traore <cheick.traore-ext@st.com>
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis16400.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/adc/stm32-adc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/imu/adis16400.c b/drivers/iio/imu/adis16400.c
-index 7e85c1b8dc160..9f8721c196a95 100644
---- a/drivers/iio/imu/adis16400.c
-+++ b/drivers/iio/imu/adis16400.c
-@@ -1150,6 +1150,9 @@ static int adis16400_probe(struct spi_device *spi)
+diff --git a/drivers/iio/adc/stm32-adc.c b/drivers/iio/adc/stm32-adc.c
+index dae35ab929b62..ab4433210ad09 100644
+--- a/drivers/iio/adc/stm32-adc.c
++++ b/drivers/iio/adc/stm32-adc.c
+@@ -2743,7 +2743,7 @@ static const struct stm32_adc_cfg stm32h7_adc_cfg = {
+ 	.set_ovs = stm32h7_adc_set_ovs,
+ };
  
- 	/* setup the industrialio driver allocated elements */
- 	st->variant = spi_get_device_match_data(spi);
-+	if (!st->variant)
-+		return -ENODATA;
-+
- 	indio_dev->name = spi_get_device_id(spi)->name;
- 	indio_dev->channels = st->variant->channels;
- 	indio_dev->num_channels = st->variant->num_channels;
+-static const unsigned int stm32_adc_min_ts_mp1[] = { 100, 100, 100, 4300, 9800 };
++static const unsigned int stm32_adc_min_ts_mp1[] = { 100, 0, 0, 4300, 9800 };
+ static_assert(ARRAY_SIZE(stm32_adc_min_ts_mp1) == STM32_ADC_INT_CH_NB);
+ 
+ static const struct stm32_adc_cfg stm32mp1_adc_cfg = {
+@@ -2765,7 +2765,7 @@ static const struct stm32_adc_cfg stm32mp1_adc_cfg = {
+ 	.set_ovs = stm32h7_adc_set_ovs,
+ };
+ 
+-static const unsigned int stm32_adc_min_ts_mp13[] = { 100, 0, 0, 4300, 9800 };
++static const unsigned int stm32_adc_min_ts_mp13[] = { 1000, 1000, 1000, 4300, 9800 };
+ static_assert(ARRAY_SIZE(stm32_adc_min_ts_mp13) == STM32_ADC_INT_CH_NB);
+ 
+ static const struct stm32_adc_cfg stm32mp13_adc_cfg = {
 -- 
 2.53.0
 
