@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062899;
-	b=rq31O00wIM0OvQr2qEAyq7V2q9v6tEll6zMUC1v4Cf11hcraZPbg+1UwhFxVumxtj43J
-	 J0e1NizkU2wKMJG73KJ2jkkduzU6rAUDjES9dCWEszap3kiDXF22S3aGvK1NBWcr/bRjw
-	 PCkEWEUYJxPSGDfAdgxFSNv43rIVuoYDEuSByXSlZ3jPZ/HdgL1F48NX2ctrIohwrza7K
-	 ZSLav1SJv/f1WRXYLnKcs5mtPsnIecUwQ/iz3XEnVuuR3xBZmuPcn0+Dgw/6D6B0v3FV4
-	 HSq/6Bvrr8wFO0sgYYeB8Zd39fxaf739g3kDvPqHlQtDvKP+3AiUngM+UOd6SggN58g==
+	t=1794062900;
+	b=PCrT9rEBT6M3gIZyXSBDtrVyMUsVrUJElcbKPUyoSpzO/DWyjz5YBbLOHSr2skMfFaBk
+	 o6+BI1GqRe6KvnGTGJbs43eOIfeDHyEFeU3XBJhw2pbpXpqHZ2pmSmTpA3D3DHxOgu3nP
+	 gdbnx3nFqSh+4gXQexM5uUSMNYR2WCdfYu3fqRkyCgRG3hi3IubUBy2U6mPbV4/GtiNdU
+	 wuBOfjBr8iN1rc19legGrdsPVmrxeEILTkn6ClvwnwkFFM/6N9RI71dE7LvQqsleco640
+	 5WOZz4ScGDBcbjruuCqGcQn/8D+jqBeRzUwiaiB5tTbjHYST1xPSALeeJttroo5Uc/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062900;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uBBz+TuEMvx1QhR6uS4yQYz61ayXhYtNIvrUtAqnE5w=;
-	b=xIbiueVQumi3IJTJjx04061ypp75gl+A4KFIOZbtBDRBY0pxm3NQBOGPGQFJz/XusXM2
-	 Mm89u9B6FxH9ruTqcu91gGKkiDgOlxCqesCwVNRD7EA3khrJoqjkQSTtcv6ZzTErMe6HD
-	 PeocQvh1vaR/61/eBeeXfoDUJLZG9AEhT96zJDT1TKbX6NIbSqLw3KPlAXAVCdL1efYUM
-	 svNT/tqFupn/PY0jSYQDjj3XNwJnTw7s2OPN0vRHxeuiNrtTt4Z7fswj0r09vXBGvHRpr
-	 0UM1DBg75xQXek0cBqd+ZZ6m3nnhDvG/g2AM/fOo0BkCeIJEBUyrpjpHhsx1Vcaj05g==
+	bh=bXGDltaaKOfB9xDSaVKqEZsGOi5SyX2/qlCZFNbrW7E=;
+	b=q62TYH2yKesHQiwoERH8xcy2mw5LQylLgW1mHbwBiE/6A5nOM73M3cbE6U0FVTyeobpd
+	 3TWLG3RA+maJOhIFpMZ1b/3SHM0p1DY2QUUbgSFPL1BC8A9JYv+Vgc37iYam2RsEiW0h7
+	 Jcc+7ZjOr6kRlmIky/67UCzyW32StjrsOU8CkVxvzvJuI/nju+jfysMf84N9djQM6W8Db
+	 MBG6jPLnvQ5XHTjTAp6/71NWVu7rIJjgsB/sJLJ/Ty49RTNIqv+fvTwZFCIlkipC+tDU4
+	 xux2GIuV9OV/AYNZ3jaPH1dwMQv0Oi+KW1GoKu/T0Y5O1yjb3nuCZVH8nNh9CUPE6wg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X3vwKJVo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgO9XYJp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DC9606A326;
-	Sat,  7 Nov 2026 14:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E260606A32D;
+	Sat,  7 Nov 2026 14:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X3vwKJVo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AA51F008A1;
-	Sat,  7 Nov 2026 14:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgO9XYJp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06A31F0089F;
+	Sat,  7 Nov 2026 14:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062898;
-	bh=uBBz+TuEMvx1QhR6uS4yQYz61ayXhYtNIvrUtAqnE5w=;
+	s=korg; t=1794062899;
+	bh=bXGDltaaKOfB9xDSaVKqEZsGOi5SyX2/qlCZFNbrW7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X3vwKJVoTD+f8PbbNsBsfuDJ3qHOGSNV4hDJ0nUAlnPg3XPFd2RFRxODgA4A3eTi5
-	 +Kx1NOxUccCqcj5yElNsd5ZKOzkDs6acghnQdQp8Tu3Kjn8ufFZoqD9I1FWSlUH9rs
-	 ktU+wnsVVIxUhuo4Yjx0JqkOD4l9NFu7ttQ6PD8I=
+	b=hgO9XYJpK2F56U9n2hbwqjbk7o6GcWl0T9SP44P1954MzrqLyHX2iyqA9oupvX284
+	 boy+HClJgEGkPQEQsrroO5CKPdLLqnlFCmtcNRna7uAzqhcapjT4+sHYyzXoRKDjfA
+	 H4wRXG9wEBJa8ng+rjJ6FzjcyBULILawYlvUdgvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 174/869] i3c: master: Fix out-of-bounds read in DMA bounce buffer setup
-Date: Sat,  7 Nov 2026 08:47:36 -0500
-Message-ID: <20261107134858.087859397@linuxfoundation.org>
+Subject: [PATCH 6.18 175/869] i3c: mipi-i3c-hci: Bounce short reads irrespective of the IOMMU
+Date: Sat,  7 Nov 2026 08:47:37 -0500
+Message-ID: <20261107134858.114663361@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,59 +71,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 35b028b25451e17d63b2cd36a11a86c5e18df1b9 ]
+[ Upstream commit b1a25e8e143ef880450e6399fb0733b66a1c29f0 ]
 
-When a bounce buffer is required for DMA_TO_DEVICE transfers,
-i3c_master_dma_map_single() rounds the DMA mapping length up to a
-cache-line boundary:
+The controller writes whole DWORDs, so a read whose length is not a
+multiple of 4 overwrites up to 3 bytes past the end of the destination
+buffer. That is a property of the controller, not of the IOMMU, but the
+bounce buffer that works around it was used only when the device was
+IOMMU mapped. Everywhere else the buffer is left unprotected.
 
-	map_len = ALIGN(len, cache_line_size());
+Drop the device_iommu_mapped() condition.
 
-It then allocates the bounce buffer with:
+The overrun is easily seen with CONFIG_SLUB_DEBUG=y and kernel command
+line options intel_iommu=off slub_debug=FZPU, which reports it as a
+kmalloc redzone overwrite, like:
 
-	kmemdup(buf, map_len, GFP_KERNEL);
+  [kmalloc Redzone overwritten] 0xffff8a354561570e-0xffff8a354561570f @offset=1806. First byte 0x15 instead of 0xcc
+  =============================================================================
+  BUG kmalloc-8 (Not tainted): Object corrupt
+  Allocated in i3c_master_retrieve_dev_info+0xc1/0x760 age=40 cpu=6 pid=1
+  ...
+  Freed in i3c_master_enec_disec_locked+0xeb/0x140 age=40 cpu=6 pid=1
+  ...
+  WARNING: mm/slub.c:1233 at object_err+0x1c1/0x1cf, CPU#6: swapper/0/1
+  ...
 
-kmemdup() copies the full allocation size, causing it to read map_len
-bytes from buf even though only len bytes are valid.  This results in an
-out-of-bounds read of up to cache_line_size() - 1 bytes past the end of
-the caller's buffer.
-
-Fix the issue by allocating the bounce buffer with kzalloc() and copying
-only len bytes from the original buffer.  The remaining bytes up to
-map_len stay zero-filled, avoiding both the out-of-bounds read and
-exposure of unrelated memory contents to the DMA engine.
-
-Fixes: f8d9e56aeb87 ("i3c: master: Add helpers for DMA mapping and bounce buffer handling")
+Fixes: 9e23897bca62 ("i3c: mipi-i3c-hci: Use physical device pointer with DMA API")
 Cc: stable@vger.kernel.org
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260920151248.46936-2-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260920151248.46936-3-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 038f7b2ec8c48..0dbcfb1a52049 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1955,12 +1955,11 @@ struct i3c_dma *i3c_master_dma_map_single(struct device *dev, void *buf,
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index 37717e530a250..15a34429197b5 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -376,7 +376,7 @@ static void hci_dma_unmap_xfer(struct i3c_hci *hci,
+ static struct i3c_dma *hci_dma_map_xfer(struct device *dev, struct hci_xfer *xfer)
+ {
+ 	enum dma_data_direction dir = xfer->rnw ? DMA_FROM_DEVICE : DMA_TO_DEVICE;
+-	bool need_bounce = device_iommu_mapped(dev) && xfer->rnw && (xfer->data_len & 3);
++	bool need_bounce = xfer->rnw && (xfer->data_len & 3);
  
- 	if (force_bounce) {
- 		dma_xfer->map_len = ALIGN(len, cache_line_size());
--		if (dir == DMA_FROM_DEVICE)
--			bounce = kzalloc(dma_xfer->map_len, GFP_KERNEL);
--		else
--			bounce = kmemdup(buf, dma_xfer->map_len, GFP_KERNEL);
-+		bounce = kzalloc(dma_xfer->map_len, GFP_KERNEL);
- 		if (!bounce)
- 			return NULL;
-+		if (dir != DMA_FROM_DEVICE)
-+			memcpy(bounce, buf, len);
- 		dma_buf = bounce;
- 	}
- 
+ 	return i3c_master_dma_map_single(dev, xfer->data, xfer->data_len, need_bounce, dir);
+ }
 -- 
 2.53.0
 
