@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060864;
-	b=uqdlBi8HGYzKp1Llzy+6BnA6LNnpLVE+hu0JMNfHTB8ukKHuPrpQx2jfQyGvGg42w52Q
-	 ty+12m1r54LPjtVQ3gAsHPuALGJSyg57CaVcG9tCo+xn9bKBSujq6RNVQjg2U4Kvjj546
-	 0m5cWy+slIPcdXLD1Gozy+hAoAoNzjaapiPG+U11gIg/PJ+qxaOxp3WIC+CCQRGVLUH5K
-	 g/lSkXTu4ej2MInsHmv08Co5Q8GhCF0fX/m/Gx1SRPSqQ85oY3Z9/AsqW4mNs+UNh0mzS
-	 Voox/9TvvbAg06aGG58jG/Ftg5EzPNuvuWEiekjH3/+FMEoty23o5lhU4c0Ffhwiiwg==
+	t=1794060866;
+	b=xOs9lijujJXBo7GrmI2OMrElqblPohP+GZ+H3pJZrknci3OO4wzNBThxPO66Tz4xpHvf
+	 S3VrnBrCsPAXDq1dPlzIi6LfXu0LDXEGT20hpiCdnLjxewQFa9lfa1AK2Vh3eHQB+LRT8
+	 UZRAUnv+vEpEIWSoRZEXbrjaTxorSll6XXrrxQQph4WinvI5OfqZNyTMQv5VlOrilXfM0
+	 cnWIO+wSq9LLe+jTLT0CXUTS5FE6rJokS0+07rerq6FNNoYjVqLU7n8al47Nl537Zndie
+	 C2spD06NUGO2VLmx0iSYpCS3R/4lyu3SqIEf1eqzVd9BevEh4ZKYKrn/qtsUMN1jSsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060866;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QKx613dasEPvth/LkrRrgAX/SZPKUgMh3IRB808pXns=;
-	b=aAhwm8TgDRu9sPJ1ddu4nLXw0JieVwkYptf2fR1OnLULmDF3nCki9aOWa/gF96iuIwdB
-	 jR7HhpAL7Q8IQ7kyiaQXYY/I/XH3Qu44XJih2F1sv9TKBW3VmNbU+tR8om4rBVgood7kC
-	 qf3pDcBK1wMFBn7JzInTiGF0wn0rfo8F/MnKSZae6UeC1pbe6twKDQdC28BZCE6nmqRgL
-	 BUeYywgwpl/PHF6W3z40gxscXnlwXjKyPe2eTye+CXkiMmClxcCWzJ7f9eptQyF0c9Cyg
-	 p++DPVQkdijLioGtJrqYMq6rYp4P8N31HmvhdhIosnyVRcl38IAT1ki57pwxJHtAilQ==
+	bh=ocNZjVLObrygYe1s6QQ72tCg5fpHtw9vmBXUYPrVv7c=;
+	b=pK8i6p4fW0tD6kxqufEY6akmk79Ygp9IXX3jk/kMHwDPBhMyOiDZNU+W2qxmSWEteDsL
+	 DRC/AedMJLiaL16VHJl97BEdMHE2u6Di5T0TS7VOqnWvTCPeOfO4JxhVjWQZ40iNqM/rt
+	 ZWBsQkth/o/zkDuJObUBra8epfufg4V6IJsC0QFHe/Q47Whqqk3Ztl2GgX9HWp/DCz6L/
+	 rKvpjtSHITB2UKQA4GmDhBCcAnsU7OeqIASaf9EIk/EsAwo+3NQSljp0gYrhplURQYOJH
+	 RmH7HWOiaebU13S+cpC8+X42zX54rDfL8glFyRFpv+bXQioh9l/ooTJ1Nmv7Pep7ekw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e+Kqd4k+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="G3Ffq1a/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78751606A338;
-	Sat,  7 Nov 2026 14:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37EE606A338;
+	Sat,  7 Nov 2026 14:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e+Kqd4k+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1148A1F0089F;
-	Sat,  7 Nov 2026 14:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G3Ffq1a/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685611F0089F;
+	Sat,  7 Nov 2026 14:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060864;
-	bh=QKx613dasEPvth/LkrRrgAX/SZPKUgMh3IRB808pXns=;
+	s=korg; t=1794060865;
+	bh=ocNZjVLObrygYe1s6QQ72tCg5fpHtw9vmBXUYPrVv7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e+Kqd4k+akscBj5nEFKeioVoBCG9hUae3fAYSlTu90XhFr0EmfmaLUuxY2rkgjm2Y
-	 og8uJaKVcK5+YP2W5bw0vr/fuusjYKVYEKGQ5hF3mkfvAQvKMIsNxR+R9GNpcRaSCp
-	 yDde4I3EVe/Xyu0rNJJVjOPdYVGCTtYuSuyCyz9o=
+	b=G3Ffq1a/tJYsIeMptiQQAQhEmWKCKNZKSZTG5PHIGHjXDFkOd1Xq+x7H5ZgWs43Ld
+	 Qx4qn+p5PNvuaNAwzzUVh8eTNZzs5QuLJIbugHVlG7F4UguATH0e678RBgR6qCr/BI
+	 JXFyVpXF4MDsBZwkG+hrl/VgDX2VEQnp3bDl4QgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashant Rahul <prashantrahul23@gmail.com>,
+	Ahmed Naseef <naseefkm@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0245/1536] wifi: mt76: mt7921: fix memory leak when skb_linearize fails in mcu rx event
-Date: Sat,  7 Nov 2026 08:37:41 -0500
-Message-ID: <20261107135004.562760261@linuxfoundation.org>
+Subject: [PATCH 6.12 0246/1536] wifi: mt76: mt7603: add 0x7592 EEPROM chip ID
+Date: Sat,  7 Nov 2026 08:37:42 -0500
+Message-ID: <20261107135004.590119340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,52 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashant Rahul <prashantrahul23@gmail.com>
+From: Ahmed Naseef <naseefkm@gmail.com>
 
-[ Upstream commit 4361f1660101270611eb5dc39799f620b35f2e4d ]
+[ Upstream commit d16447d7470502e998d82e806ca7ed49d1baa853 ]
 
-The ownership of sk_buff skb is passed to mt7921_queue_rx_skb, each
-path inside it under the switch case handles cleaning of skb and it
-is true for mt7921_mcu_rx_event as well.
+Some EcoNet based routers ship an on-flash EEPROM whose chip-id is
+0x7592 instead of the expected 0x7603. The device probes as PCI
+14c3:7603 and the hardware MT_HW_CHIPID register reports 0x7603,
+independent of the EEPROM value.
 
-mt7921_mcu_rx_event, on a success path, either queues skb via
-mt76_mcu_rx_event or cleans it immediately inside
-mt7921_mcu_uni_rx_unsolicited_event.
+This is seen across multiple EcoNet EN751221 and EN7528 based devices
+(for example the Genexis Platinum 4410).
 
-However inside mt7921_mcu_rx_event, if skb_linearize fails, the function
-returns immediately and never bothers cleaning skb which leaks skb.
-
-Since skb is fully owned at this point, it is safe to call
-dev_kfree_skb which fixes the leak.
-
-Granted, the skb_linearize failure is rare as it can only fail under
-heavy memory usage, but at the same time, leaking memory under heavy
-memory usage can worsen the OOM condition.
-
-Signed-off-by: Prashant Rahul <prashantrahul23@gmail.com>
-Link: https://patch.msgid.link/20260716-mt7921-mem-leak-v1-1-6e9c0ea19f63@gmail.com
+Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
+Link: https://patch.msgid.link/20260719082530.3879831-1-naseefkm@gmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-index 6caf8fbd6a7f2..bc7a99b58ba48 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-@@ -348,8 +348,10 @@ void mt7921_mcu_rx_event(struct mt792x_dev *dev, struct sk_buff *skb)
- {
- 	struct mt76_connac2_mcu_rxd *rxd;
- 
--	if (skb_linearize(skb))
-+	if (skb_linearize(skb)) {
-+		dev_kfree_skb(skb);
- 		return;
-+	}
- 
- 	rxd = (struct mt76_connac2_mcu_rxd *)skb->data;
- 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
+index 88382b537a33b..06f61988655e5 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/eeprom.c
+@@ -142,6 +142,7 @@ static int mt7603_check_eeprom(struct mt76_dev *dev)
+ 	case 0x7628:
+ 	case 0x7603:
+ 	case 0x7600:
++	case 0x7592:
+ 		return 0;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.53.0
 
