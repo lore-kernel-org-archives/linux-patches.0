@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062659;
-	b=5UXihh22GhV280AXJ61T1ni692xzp7e7TrjkCSDwXcYBSA6kGDcyQ678nJ59nv7sDWg8
-	 5goJnU505U9UNPl2vX6ViVaKtCW1Z8D00h4+Wv3NGzLUJsPng7PMQs8zxcf7neoxLtmyt
-	 CFXV+3esT5X0D0usUqN2cHgsmvUtVzBpw4qZVeSz1LEeqiGOipyDvud57hd6W2oOK1PFN
-	 uyZfC0ID2htB0KNkTSQHXt5lXIRij0n19jKumxvvWEedkoSUZPBWye9COPdYh4HCaCzTD
-	 5VKDt8MbG2DARm3P2clVbWJJoY5rOnZUG2986tZylT5CcR+O/Mnp4J3g2+1YBvihmPQ==
+	t=1794062660;
+	b=du443J/5yCKgwz7dwriyiLV5/8EZQcK0IPeuvk73D7rffbcmcA+vYvyBFHkAShbqg8qO
+	 X0YSNfUHjASh8mteADJUBTrWbOacdDaJCzKyLZfRfroxkKVk8pBjBKsic9KWeBYOUQxZN
+	 3HBchUanHlfUFsV5V1NsupAnOAUmhU2Cv5BKoIY2xPGNKJO5H0U2rylQ75cEk8QXfr7FG
+	 lkpVZ3yzQYnPsJQsXXISP2Cy9+HPYEU1MyzvVWojs+S8V92IC+gNEjJ0hR06LYRCGnbCG
+	 XTff+KCotmDK7FpZ8RyazK64FAXJqwsEgmkxRtAK2p22LsZt1ytv7OEdg/Y9q64k2yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062659;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062660;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2wPBwVgiEvodq3x0z0IGSdpMrhTaEFtYMtymAxQcXHA=;
-	b=upqhjInkK2v7qqPCAbPdGde/iYh6a3NJEfOWVLgzey/hwzrTCDTit2IDHN/0kN2IFPTl
-	 4vArWPAaxBtksZ1xvI81/HwC2U1DGMkCcwJvTDIVG1XZdeLboVjoHuPxVvvZTCgsYI+Jh
-	 iCgZlS3YH0mSpPNWvLoQA5wiwc6zcCUrNyRWe7BSXPbnResZ5wPTAHjPV4PHOXhVj3PYd
-	 1nziUR4uHOynAEPYcM8/D4hvKawUTAws/Qn/QJ63sEbax8UkaUevcnXyiS/o9FdT6n4CF
-	 BdB19PQIau0EtuhQVhDidg3BVj7oVz5sK+winTf6EZ28pLRgfacNkC1b1Rz05gFi5vA==
+	bh=77FNc77tD/Rg4XT0/EcQF7H0hQY+DSVtlREOQfGtrSo=;
+	b=WNy5S5oy0xdm70/gTSEc6dHn9pGeNyU5cQCeaEU/xMX/usMhi+7vnwN2ou9IlFqEUjll
+	 MOds3SxSfsYxuqgutBhz8nn5EiK6YZhfrlBD3Z4MzsMy2+xR5BI2YKCQA9tAmy3XuDazl
+	 HBVIWEZ6Q/bE5icm67mtCjKT07odDavxgEwa8yMojqLXk40vKj8PmGHpIKjH+NyWrFhpb
+	 jfeSjgU5BBU/P6ZNxYJoZidDlMPjW2AdWwQlJRQVM8sXN+iF4l0TnZBmLPVNdEFawTmJ6
+	 BLs2wbM0OfVqLg8GDwpcqsp9Vz7Cv2ry4fZnpVDdtWDwdqQ3g80y3VQ8EMe4tLFgHpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jG3MXpiM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/8uOeFx";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B18D606A333;
-	Sat,  7 Nov 2026 14:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A85606A333;
+	Sat,  7 Nov 2026 14:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jG3MXpiM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8771F0089F;
-	Sat,  7 Nov 2026 14:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/8uOeFx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287101F0089F;
+	Sat,  7 Nov 2026 14:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062659;
-	bh=2wPBwVgiEvodq3x0z0IGSdpMrhTaEFtYMtymAxQcXHA=;
+	s=korg; t=1794062660;
+	bh=77FNc77tD/Rg4XT0/EcQF7H0hQY+DSVtlREOQfGtrSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jG3MXpiMTb3iL6szqrjLamYq6miKaPudJGa5EpjeEqGgiLWuUmCf4C9ZPVZadcNXd
-	 9K0XSy0+dANb//mp4DM9sbIDBfuAXFdc3y8N+AEozBdtewh+33ceTq5OauGBPP0dhs
-	 jA3i2+ICkUd0jgOaewy3XJ0RO+T8P0cuDvzxuAg8=
+	b=a/8uOeFxvNtfg3FrB5fc3h/tTqbK2Z+UH+WzEyl9bAmVtRjMBllKorBnyeHa8WI0I
+	 /8oZty6D+7HSJB1FNCm2DIVWNNntaVXKGnqsW34TNCku9nqpvwv71gljYENN6oyVWq
+	 Ec0zCR3uPg0MMlAik9H37mYanKCj2U+sYknXw+o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunhai Dai <daikunhai@didiglobal.com>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Vincent Li <vincent.mc.li@gmail.com>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1522/1536] blk-iocost: abort weight transfer on invalid donation weights
-Date: Sat,  7 Nov 2026 08:58:58 -0500
-Message-ID: <20261107135040.625765885@linuxfoundation.org>
+Subject: [PATCH 6.12 1487/1536] LoongArch: Remove arch-specific __smp_mb__{before,after}_atomic()
+Date: Sat,  7 Nov 2026 08:58:23 -0500
+Message-ID: <20261107135039.618939105@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,56 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunhai Dai <daikunhai@didiglobal.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit c810ee88cdab27f443c32270dc7c0eaad2cca3f8 ]
+[ Upstream commit 85cebdfee765e92e748e71b9b91889eef5988282 ]
 
-transfer_surpluses() warns and then keeps going when the donation
-calculation produced invalid weights.  The following propagation can then
-divide by a zero hweight_inuse, so the warning is immediately followed by a
-divide error.
+When running BPF selftest "test_progs -t timer_lockup" on a LoongArch
+machine, the kernel intermittently experiences soft lockups and panics
+in hrtimer_cancel().
 
-When the check trips, abandon this period's donation transfer and release
-the walk lists.  This trades one period without donation for not crashing;
-the invalid state is not expected on the normal path.
+The root cause is that the bpf_timer_cancel() implementation relies on
+smp_mb__after_atomic() to provide a full data barrier after a relaxed
+atomic_inc() to ensure the proper store-load ordering before performing
+lockless dependency checks on weakly-ordered architectures, such as on
+LoongArch, but the current definition of smp_mb__after_atomic() is just
+a plain compiler barrier.
 
-Developed with assistance from Claude Code (Anthropic): the assistant
-analysed the failure path, drafted the change and ran the checks listed
-below.  The author reviewed the result and remains responsible for it.
+This allows a subsequent read to bypass the prior write due to store-
+load reordering, enabling concurrent CPUs to simultaneously bypass the
+software deadlock detection, enter hrtimer_cancel(), and then trigger a
+severe ABBA deadlock in the hrtimer core.
 
-Fixes: e08d02aa5fc9 ("blk-iocost: implement Andy's method for donation weight updates")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kunhai Dai <daikunhai@didiglobal.com>
-Tested-by: Tao Cui <cuitao@kylinos.cn>
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261019125412.3123895-2-daikunhai@didiglobal.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Moreover, there are hundreds of smp_mb__after_atomic() call sites across
+the core kernel (kernel/, drivers/, mm/, net/, fs/) that currently lack
+necessary full data barriers on LoongArch, which have potential risks.
+
+To comply with the LKMM specification, fix this by removing the arch-
+specific definition of __smp_mb__after_atomic(), so that this macro can
+automatically fall back to the generic definition in asm-generic that
+maps to __smp_mb() and emits the required hardware DBAR instruction.
+
+While at it, do the same thing for __smp_mb__before_atomic().
+
+With this patch the BPF timer_lockup selftest was stressed for millions
+consecutive loops on a physical LoongArch machine, without encountering
+any further lockups.
+
+Cc: stable@vger.kernel.org # 6.7+
+Fixes: affef66b65889a0e ("LoongArch: Relax memory ordering for atomic operations")
+Closes: https://lore.kernel.org/loongarch/CAK3+h2xOSEZUHhou7N2cRL-aGrZCNSm45g+P7thObMe+fpgYCA@mail.gmail.com/
+Reported-by: Vincent Li <vincent.mc.li@gmail.com>
+Reviewed-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/loongarch/include/asm/barrier.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 8b775dd95ba57..4707b93493055 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -1965,6 +1965,7 @@ static void transfer_surpluses(struct list_head *surpluses, struct ioc_now *now)
- 			pr_cont(": active=%u donating=%u after=%u\n",
- 				iocg->hweight_active, iocg->hweight_donating,
- 				iocg->hweight_after_donation);
-+			goto out;
- 		}
- 	}
+diff --git a/arch/loongarch/include/asm/barrier.h b/arch/loongarch/include/asm/barrier.h
+index 4b663f1977061..84c6d739119d1 100644
+--- a/arch/loongarch/include/asm/barrier.h
++++ b/arch/loongarch/include/asm/barrier.h
+@@ -57,9 +57,6 @@
+ #define __WEAK_LLSC_MB		"			\n"
+ #endif
  
-@@ -2063,6 +2064,7 @@ static void transfer_surpluses(struct list_head *surpluses, struct ioc_now *now)
- 		__propagate_weights(iocg, iocg->active, inuse, true, now);
- 	}
- 
-+out:
- 	/* walk list should be dissolved after use */
- 	list_for_each_entry_safe(iocg, tiocg, &inner_walk, walk_list)
- 		list_del_init(&iocg->walk_list);
+-#define __smp_mb__before_atomic()	barrier()
+-#define __smp_mb__after_atomic()	barrier()
+-
+ /**
+  * array_index_mask_nospec() - generate a ~0 mask when index < size, 0 otherwise
+  * @index: array element index
 -- 
 2.53.0
 
