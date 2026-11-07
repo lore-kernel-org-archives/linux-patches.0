@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062275;
-	b=aiKAVBm8KrZGcvXsuFBXrRH+6kshXDleIphNA3pOQ7NadW+j/n3q8Q+sfVh2nfXtnHWI
-	 jSd3nXmKoqIpJJGUjZUjmhZiXUAShjSarAtnYmKuTX9w2IX3lZzZAdixf2Uic35M+fie2
-	 fvoT0ifGvoXDmYK43m1+10E73hL4WrgnGyhshVGtUfXFBxf9JqEPAE7xZvxMaw25ysp+i
-	 yjb8BKvkJw3CDE+IU0/vDsqZfGWjgHeFrv9R8UMLqLaorpw0ApmeabnChjnUU4zGr5LRx
-	 IOQC0Pvv0t6SH1GLwtGu9thNUOLODYuFTSpYNYCKCZvTXkmhy61X157KLNX3wQlvyaw==
+	t=1794062276;
+	b=IPiMnfEbxl8JD4CWC4Hwdblakq81Im7wKkcT/RnqoGrBYb7zYP6NwRE1O9sVjOq1J8XZ
+	 sZ3cONPAyKmQLko/JKyi4KuMpwtOedrJmpSY80O71s6QR6ahE7RKwfTDOmHdElfPBk3WX
+	 LcWD06/5o5C2C7V/k6Tq+K7pmVpG2R+0ftRubHJ93inGG3mM7xtm/ShtgjQ3a9Hc0n9J9
+	 BvTEQHyhuSVfA7lQrFJfWr+uz7rsWY+Pkj8U0i5SqzTMGsZadGxBFEwt+KZVkiq+j2AUR
+	 gtUWqYqPradZoPZ7xACk7sjTWKZo0GDQ7aY0sv8MgrMNAHtr7nsr7xRV/cEcf4XfcLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PphhB/YBDzSORAOzhvU5/V4FOu+HQlhMbFWp2RWcKPU=;
-	b=YMGspcx9ZIElWZw9W+0hSWnwPhLO/TzO97Tb5bXBZeYMif3SdDuJszc8iIFQgRNHacJg
-	 xne7igoE1YCyQJ2n13k0GrPlnVBUqTDNfn5ucx1iSbz+NslzAj+nSs0382TWFxrZvObzz
-	 inw5LUZmw3OWmnJTvCXPgJvy5vj3MoIIzz46EOkDKepqtUNoD7oVivsSkYfDMm27N14zd
-	 uexOTLeDVpif7VamQxZbJUrP6KUN5wUX2JGRhaCVT+NAgFWt/GvP6FgrlTvUIGJ8WRc/0
-	 ObQzwkwSXvXfz/rToyorlx7jN7TJoNP3ZZmnjDjNAzuPuAaB/B6O4BX80HJOMtBopUQ==
+	bh=LCGd8AP2I0+fWR3XpL8OFOrs/ALXMAJvVBJuWRIJJVc=;
+	b=kCdnJfW5dcbekRSHFH77DVcOp3kAacp23JuHafZ/OIwMLBR7E6ImDMREzOvxGUmvxhny
+	 1e2orp57Ao4O+cZbvNi7dSUyw+GSkq8b2qe4EUHIv9aTA8nmTHtz6X+X5Nr8teX+oK26o
+	 3dxiSQMdNMPeaRXPciuX/0R9LeFZ9t8pOwpRdiFcNJHIhowj1pBBZiYyUwBba0bD7vwZT
+	 qwfRuF+Mk7zJ+5ZJxODNxbgywnQI0zgqofksveWNfkLtnAKY10EGBC+6/LovvmN6h84Pg
+	 oREMYJcNQewqNN5B9+krtjrqQexRUKjvuF0r7j+vhCJQ285EtnN+H2QwqkCfhX+bh7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0SXjRDAv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VxIFf+DA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23D260A380D;
-	Sat,  7 Nov 2026 14:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02115606D804;
+	Sat,  7 Nov 2026 14:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0SXjRDAv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613EF1F0089F;
-	Sat,  7 Nov 2026 14:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VxIFf+DA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43881F0089F;
+	Sat,  7 Nov 2026 14:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062274;
-	bh=PphhB/YBDzSORAOzhvU5/V4FOu+HQlhMbFWp2RWcKPU=;
+	s=korg; t=1794062275;
+	bh=LCGd8AP2I0+fWR3XpL8OFOrs/ALXMAJvVBJuWRIJJVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0SXjRDAvWumxvCZmfYhxzS+mauIqLqa/j0p7uezlt3rPNMoyXZUuxl9siqdqdl4CT
-	 11U7NEI1tFzmbDyFUbGN27Lm+TYH7tEmYEPeIgL4gQnoRhou2RnxmMCxkYsG0tCBzn
-	 GDX4o191z042e9XsSviCYsF7AKtyilU3v5ZYZgY0=
+	b=VxIFf+DANyy3U1oR9odGW1Iw1WuHbMupvcvRUfnpdspwZFodpYHtbxsbuabjs5/P9
+	 zsakoueiVlLbq1U3szyRiVFiFqk01L27iFDmsfGAZ50CqUd8jbusGDJIBPcaDeTbI1
+	 6lmCP3J6F8jKJxiNqdC/HkP8y/TZnagebvLBbzVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Wyraz <michael@wyraz.de>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Oliver Neukum <oliver@neukum.org>,
 	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1215/1536] USB: serial: option: add support for ASR 1286:4e3c modem
-Date: Sat,  7 Nov 2026 08:53:51 -0500
-Message-ID: <20261107135031.882833765@linuxfoundation.org>
+Subject: [PATCH 6.12 1216/1536] USB: serial: usb_wwan: fix urb leak on disconnect
+Date: Sat,  7 Nov 2026 08:53:52 -0500
+Message-ID: <20261107135031.910285582@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,36 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Wyraz <michael@wyraz.de>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 87c56085bcdfec305f5c350fe1c58a62a7f65843 ]
+[ Upstream commit c78dd373b5c56a5a02da591b583c6b48d0d62954 ]
 
-The ASR modem used in the Tuoshi LT22M exposes an RNDIS function on
-interfaces 0 and 1, a diagnostic port on interface 2, and AT ports on
-interfaces 3 and 4. Match only the vendor-specific serial interfaces
-so option does not bind to the RNDIS function.
+Make sure to drop the reference taken by usb_anchor_urb() when removing
+URBs from the delayed URB anchor to prevent them from leaking when the
+device is later disconnected.
 
-Link: https://lore.kernel.org/all/d12635f9-9706-4dbd-8adb-d673c6a77202@wyraz.de/
-Signed-off-by: Michael Wyraz <michael@wyraz.de>
-Cc: stable@vger.kernel.org
+Fixes: 383cedc3bb43 ("USB: serial: full autosuspend support for the option driver")
+Reported-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/20260916165608.2085613-1-vulab@iscas.ac.cn
+Cc: stable@vger.kernel.org	# 2.6.32
+Cc: Oliver Neukum <oliver@neukum.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/usb_wwan.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/serial/option.c b/drivers/usb/serial/option.c
-index 416ec012b0ace..2f83e7b866f60 100644
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2444,6 +2444,7 @@ static const struct usb_device_id option_ids[] = {
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x30) },	/* Compal EXM-G1x */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x60) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x1286, 0x4e3c, 0xff) },			/* ASR modem */
- 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
- 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
- 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
+diff --git a/drivers/usb/serial/usb_wwan.c b/drivers/usb/serial/usb_wwan.c
+index 0017f6e969e12..67e1820bbbafe 100644
+--- a/drivers/usb/serial/usb_wwan.c
++++ b/drivers/usb/serial/usb_wwan.c
+@@ -402,6 +402,7 @@ void usb_wwan_close(struct usb_serial_port *port)
+ 		urb = usb_get_from_anchor(&portdata->delayed);
+ 		if (!urb)
+ 			break;
++		usb_put_urb(urb);
+ 		unbusy_queued_urb(urb, portdata);
+ 		usb_autopm_put_interface_async(serial->interface);
+ 	}
+@@ -579,6 +580,8 @@ static int usb_wwan_submit_delayed_urbs(struct usb_serial_port *port)
+ 		if (!urb)
+ 			break;
+ 
++		usb_put_urb(urb);
++
+ 		err = usb_submit_urb(urb, GFP_ATOMIC);
+ 		if (err) {
+ 			dev_err(&port->dev, "%s: submit urb failed: %d\n",
 -- 
 2.53.0
 
