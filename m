@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065274;
-	b=I+kkeY5hI6S2WUsG9ZGiUZlHYOswBXU1Pj36KjOzcrDaft83Ydo/nh4L5E4JtRpw2y0G
-	 DsStrghl4w4sys/iRMwQ0BifA0YSZQXIVpIdt4/OZ8YrxKiA9THNb27LILJgca98t+XXe
-	 EZpU6dSkhHWGyuvPlxM0f0Z7JRqFsRK1TOvg33TWJLo9HajLIXkDA95wy3NLti7pCSX4j
-	 8SuFzU6TNqK4F31BlJ68F36WpRLon/7raxz4ruVuELoKxgER3D0NvZjV0lxGHreK1JZ01
-	 iIToPgzp4mE7UPXmG6A8jnjhuN208k75eOIeOLlt8QbMVJoI/fUC55UG7aAdVJP43Pg==
+	t=1794065276;
+	b=hpP/zfjDIMgpMKNSpeCnrheQ4jE6P4Z2d7npjkBjzAJIjAZDZzUg3EfVBf1L+nbf6Gn/
+	 PJFlh0OBjMLboP1Mt0dUDUEhUxUVJEZtPUKAj0BidTgT8mGeJVrLNWdYk4Z7T9PrRwx0F
+	 LQg135Sh1iHpcRAFHMn+nLOBLuZnC7LPDbRh8NZ1FCHk88a4A8kFXJnsrqqPbKfkRw2+i
+	 vSIryW0FihVeKcVB/pIw9JMHBnMj2z2U0XGqXew/rc0TIw3YazA2hp6IgqbwvYuHs6jc5
+	 FFv29gAMYEl4lj2Jgj3OxmN7JozM4lORkSyAojgzvnRU8TvLShN+cOaSbox6SCKWzCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065274;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u213L9ZNZond1RKs5ldxZTfbsYU+m/K0hIOt3pYSCbE=;
-	b=eiTnhBUqyrYuQrwEoWXFSXX5+cXxL0Jki1x8xwDhijufafwAAQvvjJ5MY7wRQjoaGvzd
-	 tGvKPdx8JN0r7y6oHwb7ashMH0keOInQRmYZMp0omZEqj2+Kg8mVgnfIKMMzu9gkfZJoq
-	 YfC06cY7fCoW/o86pVOYUcLDLU3HlxyliqaIkyrf7ZXWLEDxt2HC1NxKtRZzs2XVKJKcF
-	 /9Y27DMW1fmAPBtbqm/mwW1tEK08JbgOR1A7iFWmn8OwO95EZDbhTdziuqv95oDoGXQLb
-	 oNO87wLbF/WQi77Bh2RhWZ2eXhs+0rBlKkXr1DPsqY02GS2/datgHyaKpTBCXpduSRA==
+	bh=EOLAHHGBkelDAre/mfxA50LgSLtD73R5jsy33ZJKn/4=;
+	b=pfJ6yf3k2s7qi8bLMJQpve6mhWef693gfh6vlMciMfU/lpC0YOnwoVkvmGtR2prJsdL/
+	 JSerjQQQJxpDq3f0ebj3oYjUAj9BxyZyKhg+yboqXwQVeuA6W6ULoKhm4dn6jHfqrCjRz
+	 BqM7Y9xyAw76Ayd+LTUt5d8NNs0xDRSREzq/O/dTxQiw9F/kSxBzcckmOeiXG3hstEJ5R
+	 DtNOPqsBslLD52mGRRg645mqEQhcb8oogi5vSbP4oFmUr/dERGax55S7L/i0kBjvh3Ij/
+	 x92cwFP0aAcjGmX6BJYsASPJASRsfZKQyYABaXmjdM/qXfXnjo8SHAtYisJsat01K1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWpYcRHa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUIMv2l9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57071606A330;
-	Sat,  7 Nov 2026 15:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3611606A339;
+	Sat,  7 Nov 2026 15:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWpYcRHa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0326D1F008A1;
-	Sat,  7 Nov 2026 15:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUIMv2l9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E991F008A1;
+	Sat,  7 Nov 2026 15:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065274;
-	bh=u213L9ZNZond1RKs5ldxZTfbsYU+m/K0hIOt3pYSCbE=;
+	s=korg; t=1794065275;
+	bh=EOLAHHGBkelDAre/mfxA50LgSLtD73R5jsy33ZJKn/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vWpYcRHaT0vykMxvvnqU8YIG+L6Io4MuS/on46bZxOgrnSdztDNgfF8quT8wskq+1
-	 NpAeUYCv+/J9RpVB7urOfIJf56JihXPCS3Yo+Gx5L9ONCLr1iw5FTMMStzfcYdJQhX
-	 bMQN4C5xuVNzb8G3FMwTJY/ZhmqVQMKzeRSADktI=
+	b=vUIMv2l957D9Szr0PYVwWNqi7iqgSN3cx4xe3/EdLCAkJKTIW7L6q3ZvJj5hZg08X
+	 VELY6/5J0I+cFt3vjL2L3r4f6uDu4YpyEAM2ufU9COmZr+Murxzzm4DB6UBNgOFLe5
+	 2yIU9rkgHnHG5uRbLB8Omk5FgKYrAIkLooxnEi60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaus Kusche <klaus.kusche@computerix.info>,
-	Kayra Cizmeci <kayracizmeci@gmail.com>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ricardo Neri <ricardo.neri@intel.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
 	Chen Yu <yu.c.chen@intel.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1037/1257] sched/cache: Honor asym packing over cache aware scheduling on hybrid systems
-Date: Sat,  7 Nov 2026 08:55:33 -0500
-Message-ID: <20261107135007.960161707@linuxfoundation.org>
+Subject: [PATCH 7.3 1038/1257] sched: fix stale get_pref_llc() stub for !CONFIG_SCHED_CACHE
+Date: Sat,  7 Nov 2026 08:55:34 -0500
+Message-ID: <20261107135007.987800177@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -72,102 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Chen <tim.c.chen@linux.intel.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit ee92b7ef4c1e271b3c1ea2a8b13034bdc62422a7 ]
+[ Upstream commit cac037a85c1971ec75c4d3edf5a28af9ec2a089c ]
 
-A regression was reported on an AMD Ryzen AI HX 370 running a cache
-intensive Clang full-LTO link. The little cores run at a much lower
-frequency (3.3 GHz vs 5.1 GHz) and have only half of the L3 cache
-(8 MB vs 16 MB), so pinning such a task to the little-core LLC
-hurts twice, and full-LTO builds slow down dramatically compared to
-pre-cache-aware-scheduling kernels.
+Commit b636fef85bda ("sched/cache: Introduce task_struct->sched_cache_grp
+to fix UAF") switched get_pref_llc() from taking a struct mm_struct * to
+taking the task's struct sched_cache_group *, but only updated the
+CONFIG_SCHED_CACHE definition and its caller: the stub in the
+!CONFIG_SCHED_CACHE branch kept the old mm_struct parameter.
 
-Asym packing and cache aware scheduling express conflicting placement
-strategies. Asym packing wants a task to run on the highest priority CPU,
-whereas cache aware scheduling wants to co-locate the tasks of a process
-on one LLC regardless of the priority of CPUs in that LLC.
-
-When asym packing tries to migrate task to an idle core that has higher
-priority than source cpu, let asym packing win.  Moving tasks to a higher
-performing idle core will buy more performance than cache co-location.
-
-Prioritize asym packing over LLC balancing for regular and active load
-balancing.
-
-Fixes: 23b2b5ccc45c ("sched/cache: Introduce helper functions to enforce LLC migration policy")
-Closes: https://lore.kernel.org/lkml/2180ea5a-eb28-4152-8d4d-cd00b0c24b2e@computerix.info/
-Reported-by: Klaus Kusche <klaus.kusche@computerix.info>
-Suggested-by: Kayra Cizmeci <kayracizmeci@gmail.com>
-Signed-off-by: Tim Chen <tim.c.chen@linux.intel.com>
+Fixes: b636fef85bda ("sched/cache: Introduce task_struct->sched_cache_grp to fix UAF")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kayra Cizmeci <kayracizmeci@gmail.com>
-Tested-by: Klaus Kusche <klaus.kusche@computerix.info>
-Tested-by: Ricardo Neri <ricardo.neri@intel.com>
-Tested-by: Chen Yu <yu.c.chen@intel.com>
-Cc: stable@vger.kernel.org
-Cc: stable@vger.kernel.org # 7.2.x
-Link: https://patch.msgid.link/b29badede27bb6bfb4a759e06754cb19657f0778.1791308631.git.tim.c.chen@linux.intel.com
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
+Cc: <stable@vger.kernel.org> #v7.2.x
+Link: https://patch.msgid.link/20261023023105.28829-2-laoar.shao@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ kernel/sched/fair.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index b336048eafa2c..b1e9ac883efae 100644
+index b1e9ac883efae..b35e23f93bcd2 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -10945,6 +10945,8 @@ static inline bool task_misfits_asym_cpu(struct lb_env *env, struct task_struct
- 	return false;
- }
+@@ -2194,7 +2194,7 @@ void init_sched_mm(struct task_struct *p) { }
+ static void task_tick_cache(struct rq *rq, struct task_struct *p) { }
  
-+static inline bool sched_asym(struct sched_domain *sd, int dst_cpu, int src_cpu);
-+
- /*
-  * Check if task p can migrate from source LLC to
-  * destination LLC in terms of cache aware load balance.
-@@ -10969,6 +10971,10 @@ static enum llc_mig can_migrate_llc_task(struct lb_env *env,
- 	if (cpu < 0 || cpus_share_cache(src_cpu, dst_cpu))
- 		return mig_unrestricted;
- 
-+	/* Prioritize asym packing to idle core over cache awareness */
-+	if (env->idle && sched_asym(env->sd, dst_cpu, src_cpu))
-+		return mig_unrestricted;
-+
- 	/* skip cache aware load balance for too many threads */
- 	if (invalid_llc_nr(grp, p, dst_cpu) ||
- 	    exceed_llc_capacity(grp, dst_cpu)) {
-@@ -12165,6 +12171,14 @@ static inline bool llc_balance(struct lb_env *env, struct sg_lb_stats *sgs,
- 	    sgs->group_misfit_task_load)
- 		return false;
- 
-+	/*
-+	 * On asym packing domains, if the destination CPU
-+	 * has higher priority than all CPUs in the source group,
-+	 * prioritize asym packing.
-+	 */
-+	if (sgs->group_asym_packing)
-+		return false;
-+
- 	/*
- 	 * Skip cache aware tagging if nr_balanced_failed is sufficiently high.
- 	 * Threshold of cache_nice_tries is set to 1 higher than nr_balance_failed
-@@ -13580,12 +13594,12 @@ static int need_active_balance(struct lb_env *env)
+ static inline int get_pref_llc(struct task_struct *p,
+-			       struct mm_struct *mm)
++			       struct sched_cache_group *grp)
  {
- 	struct sched_domain *sd = env->sd;
- 
--	if (alb_break_llc(env))
--		return 0;
--
- 	if (asym_active_balance(env))
- 		return 1;
- 
-+	if (alb_break_llc(env))
-+		return 0;
-+
- 	if (imbalanced_active_balance(env))
- 		return 1;
- 
+ 	return -1;
+ }
 -- 
 2.53.0
 
