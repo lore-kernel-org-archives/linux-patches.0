@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061943;
-	b=A29eFNfpwfaqu8lmsxpO6h0jDxbqH/jiKXp95BYWirYegGj51psVejRRn0XIkSD1fcMF
-	 nFFuiW7GqbtXOEDe2kZ1kzNtnQdGZIDckIEVBYYie0tcmyqHuu0n89FRgNNkqsWIaUof+
-	 T3hpcC5vras4R97O83eoz2IFUWDm+LuuPhsO2zSs7IypI7OlPIAngrbuimQ1tAhr8GVg8
-	 f7tFI3iVXTHs1xSTum512R6g6aBbk5vGig0nnxrzwgm0rbPdFr/yex3++KKZWxGlCVPjU
-	 vANRiHbAl8m/xV+vrDeRU/h7aDc2G3wPvAzfwSdiHwCZiyTSsv2VygK6ZdA/JM3sS0Q==
+	t=1794061944;
+	b=U1708xJ7JYcns14ibgW9dVEVlEETlgTF64HxCyW8mNGiGH6pASbyob8pGndqTQjQprl0
+	 I1GDaGppPfI7zsGIg7lNsFy7UJfHH6qDNQRTdFOoqvm+BOAlpGsg7xrPInmTLjuoCZR31
+	 NuF1kg4NaW0KQGsI3loWHSwk7D/i/V9xpH9+LPu7Ig943nMrtKZX7GGL+DqO2fBrm7Lbe
+	 Nqi/JJjBTES3n/f4w5FgCm4YqfMLE667tu6uQH507kZRjPGzCoCaSFyqmJiceDf0CgYxO
+	 utMk9EWBYR76gtow+rdyEtMbxHlsIUj0EaFE98LiJccaBvb0bDKZlSINffY490InEQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061944;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=90pxFOE05kirlsQEA9n3e3H2eJcf3xKBP9/bEooWDWQ=;
-	b=oBEGvp37XW2of7WLA8wQKas/iWoyfHrax7/3Yq4gns/tepr/F0MtswK4l15lzN0qUFoi
-	 g2DVEtH//oM7rDPKbo+0WFr06xdBHv6jVlCP/ncbGNZrrgOmEmWtSafPgiZV7pa5Tbvv2
-	 ZqAy74ghUJ7lp9SjDScflaUGVaSvqHH6CntNLBjh6E3pCmlMDL929hIX0N5yLYAJ0GDG9
-	 2+h+PkkKdjsUbr2VgDT3P78yGn1jgj49X/NjULZXKxtLq+ZROaiCErB20WKNTnOCGvRG7
-	 ALa6SykfEoQ4fPINE577JoCtOec5AP5c8Dc1ACpmvN7PUuQ7o+SVdFbZclqtnJmPSMw==
+	bh=ZqXucCzi94zUSIusJea/hDW9QeHBGAF5vfHuOuh84oE=;
+	b=Hroo75YZwNKlGEEjCNQWfyEqefX2W0g5QC+f1f2bBe2SmxTcsxjtheKJCNyqBojkWXgY
+	 FPMehD9BlSl/0bAPr6gjYwE5C5jVyzSBVCkS7mpGEERcgAAmUlLyjJ7hRXZdpQW42EqY5
+	 jU+foBmTqqMOcJsmt1rGwzO8Z/KZQ6q9qq2M0yptji9P6U/cfZJ3frnlGaLgKqUHAKyGq
+	 mPbySFG9J8Fkga4zckp/wbiP1ZOGNzuRYw6jw+/fsSl/VavgLhd1/8eJ+rWfWGlyDnBJL
+	 Xq/aUy81KiGgwiWIKxsXe/DXrcpgevNUNB5G9viE+oyYVfFeDIVPNfjkQm7yFMf8fEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yx3S2oa5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X9rAbxku;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE87606A326;
-	Sat,  7 Nov 2026 14:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9C0606A326;
+	Sat,  7 Nov 2026 14:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yx3S2oa5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441161F0089F;
-	Sat,  7 Nov 2026 14:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X9rAbxku
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0915C1F0089F;
+	Sat,  7 Nov 2026 14:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061942;
-	bh=90pxFOE05kirlsQEA9n3e3H2eJcf3xKBP9/bEooWDWQ=;
+	s=korg; t=1794061944;
+	bh=ZqXucCzi94zUSIusJea/hDW9QeHBGAF5vfHuOuh84oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yx3S2oa5LrY0xKhr9BFrdxqd2DPrjObrqj+qnOx7xHSGj8ejXGKeGERG5Nvbw36OJ
-	 76UfrjJt3sn7AZtitpbOGmQU6Eq3iq7quZy5dH/Iycn+YpvhqT3+snBSuecmPhT7s4
-	 43Zx+YfLiIrOc99+TRWyjEbjiD6Ka/LWBPJBXCpM=
+	b=X9rAbxkuljEsgtkJp4Z9xrXS083nn2keUqGfV3lA/ZbDleQAPLFssjejXl/Z4V7Ks
+	 OAiJFDrG0wcKUNdsCorcu4ts+7CwTtnYz5MzmosS4n7P9b6x1t3BZzkide3mGaIHhs
+	 fv2hjSA4S64RNjEpNGovgHNPeSLLRYXayie7RxOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c7fc4794e59786f5b4dc@syzkaller.appspotmail.com,
-	Jeffin Philip <jeffinphilip14@gmail.com>,
+	Julian Braha <julianbraha@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0942/1536] media: vidtv: fix uaf in vidtv_bridge_on_new_pkts_avail
-Date: Sat,  7 Nov 2026 08:49:18 -0500
-Message-ID: <20261107135024.110706902@linuxfoundation.org>
+Subject: [PATCH 6.12 0943/1536] media: marvell-cam: fix unmet dependency for VIDEO_MMP_CAMERA
+Date: Sat,  7 Nov 2026 08:49:19 -0500
+Message-ID: <20261107135024.137522005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,45 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffin Philip <jeffinphilip14@gmail.com>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 2af02ccd048b77713695d7817cf645ca50bf349e ]
+[ Upstream commit 1179929b3abd4adb6ca7fae91d649c64a7293aca ]
 
-Attempting to unbind a dvbdevice that is in the process of feeding
-data causes a UAF as we free the underlying device without
-stopping the feed first. Fix this by stopping the stream first using
-vidtv_stop_streaming(). However, our codepath in the reproducer
-(mentioned in the below reply) does not decrement our users
-(dmxdev->dvr_dvbdev->users) to 1 after it has been incremented to 2
-by our read() in the reproducer, that is only possible on .release.
-This can cause a task hang as dvb_dmxdev_release() uses wait_event()
-in the wait_queue unless we use a close(fd)(in the reproducer).
-Is this a problem? Please advise.
+VIDEO_MMP_CAMERA selects I2C_GPIO without ensuring
+'GPIOLIB || COMPILE_TEST' is enabled, despite I2C_GPIO depending on it.
 
-Reported-by: syzbot+c7fc4794e59786f5b4dc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c7fc4794e59786f5b4dc
-Fixes: f90cf6079bf6 ("media: vidtv: add a bridge driver")
+Let's add the same dependency to VIDEO_MMP_CAMERA.
+
+This unmet dependency bug was found by kconfirm, a static analysis tool for
+Kconfig.
+
+Fixes: 67a8dbbc4e04 ("[media] marvell-cam: Basic working MMP camera driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_bridge.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/marvell/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/test-drivers/vidtv/vidtv_bridge.c b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-index 03982fedf4579..a1e638b599c6b 100644
---- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-@@ -551,6 +551,8 @@ static void vidtv_bridge_remove(struct platform_device *pdev)
- 
- 	mutex_destroy(&dvb->feed_lock);
- 
-+	vidtv_stop_streaming(dvb);
-+
- 	for (i = 0; i < NUM_FE; ++i) {
- 		dvb_unregister_frontend(dvb->fe[i]);
- 		dvb_frontend_detach(dvb->fe[i]);
+diff --git a/drivers/media/platform/marvell/Kconfig b/drivers/media/platform/marvell/Kconfig
+index d31f4730f2a38..ab58175e433c3 100644
+--- a/drivers/media/platform/marvell/Kconfig
++++ b/drivers/media/platform/marvell/Kconfig
+@@ -22,6 +22,7 @@ config VIDEO_MMP_CAMERA
+ 	depends on V4L_PLATFORM_DRIVERS
+ 	depends on I2C && VIDEO_DEV
+ 	depends on ARCH_MMP || COMPILE_TEST
++	depends on GPIOLIB || COMPILE_TEST
+ 	depends on COMMON_CLK
+ 	select VIDEO_OV7670 if MEDIA_SUBDRV_AUTOSELECT && VIDEO_CAMERA_SENSOR
+ 	select I2C_GPIO
 -- 
 2.53.0
 
