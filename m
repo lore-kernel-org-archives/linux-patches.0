@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062876;
-	b=kTZUH8C+tZnvxxVm/JnoQ2Awd9Nw2K5TjtfOLrv86KPunFFJbvU/tmsCN3gVAgJqdeow
-	 TZq+xYEE+awjV1gnZsbe4BRSkxrNVSZOYBYrSmBqo5A/rmji05Pzg7Ttc2CHrLVQtsD27
-	 mWAjpF6gSbX5EbBw2tmsDqa1Y7gUG/DY0M325DE5bpA6nekHdIgorD+aO518ucHU5TOEe
-	 Q/C1UPr+YAsgJV+11fChRDZYLDIkV6g6h3jIoOzgFSnab+/1xZfCCaWQAVxjAX2IBOL6+
-	 fIqDAoF5Ib9Eq6li0KJ+UFADokLCJNxN0FfGHzFZfqtKofrKW2K9FxSV3xIKcBDyinA==
+	t=1794062877;
+	b=kSDQNVSaOB7XuqvWOWBha9aiHkA728oBww6Zi5HCGHRYt9kw31uvT+PTkQhuJIw/lHL4
+	 IL+qdrjxUatLSMCkgUD7FW8UO/aSxCjaOIfkqtjtYlysKBj0Ov71Ax2+NJ3sT4PIKcWRw
+	 G6aJ9k6PK8MAHXNce07HQUPxc/o9wzXCReulJkw1yq8qHrL/DL3hluGZajHdgWvqVCOVJ
+	 fu4437oQOm1qppCUKAIzFvPmIeIe6CJVuZ6F+GLMrfHIYDcQjwpl+Rr0kTxQmmPQcspR4
+	 Vwbp85jpVOoH4GEqXJgnETXLond//c0/pASyKBoR6Z5CL8ASvdEZH5B0Bs9LB373G3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062876;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062877;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=byWd/+B0hbO5fGMboAq7x41t3IVHRFbwHGNtZKZDQHc=;
-	b=1I4fHZUtKZ0lMwLwA5FJV/AByzaZjliDVZHdnSL69HpxjwPmrNVBWf9erSeFkvBlLah2
-	 Y2D8JxE4Ti/aF+sX9pGOFxiqtc+9QAc24/JoGNCyhUpiUgPYwhybSGZHP2FUQRub6ytZ3
-	 LS1XnuuNNzDLBmdV9SOM9cNXbPzy8cEOpgCAZq0Aesj7g25FZFvTQIJwFahIQuQ5lGoAS
-	 1cqll+L4g/KusY63MI2ZsX5kM/ke20tawfph489CIn04WpEHwav75H9oOO7/bkMRYYU7E
-	 fcbxT1gqmFE2DSGL87kVh1lWI6HTfFbgdOSxMenaOoH6m6Z25wB3VNhoJ8sSNC0eWmw==
+	bh=vAJLn9l1IDK95Swaw3OyqQRAMHaFjMpF01y5dH2ocwE=;
+	b=QZ7QDvbGvSP+3JaeBHhPYMicyibYyTejsVJVD3nOF3EIWmrPQ1SSyCT3nUs1R/AZiqHg
+	 dXf2/TWKQGeTeKT7NGERF4MHPqzPq9TKr4QLs5eZEUEHJgG1+VoIco2H2tK/KVgGzMGvv
+	 qkr9MAcXzI5IX7phSawtEn/FDOAuUV0p5r4O4ddciMOAqYQnPrPJ1v8GITUCEN8p5b9X4
+	 SQ2itkqg1PlVBJBQxKuTZsW4btSw75QXB0RsFsw84l5XV3Tnn11nQDJvm+J0XZ39bquk2
+	 +PJ/1IdzaAmlR+Vtq5B9i0Ia5I9HCDpih51Qf+gNOUF5mHzarKc7j+Q70MBfTUlyEwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tpHYjM/K";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3RuPrtS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4C7606A334;
-	Sat,  7 Nov 2026 14:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2994606A32F;
+	Sat,  7 Nov 2026 14:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tpHYjM/K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C8711F0089F;
-	Sat,  7 Nov 2026 14:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3RuPrtS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A691F0089F;
+	Sat,  7 Nov 2026 14:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062875;
-	bh=byWd/+B0hbO5fGMboAq7x41t3IVHRFbwHGNtZKZDQHc=;
+	s=korg; t=1794062876;
+	bh=vAJLn9l1IDK95Swaw3OyqQRAMHaFjMpF01y5dH2ocwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tpHYjM/Kc+PMUzGbLK74kZxcEO2wNdKLeWNBARycNKQag2lrNno32BfgNi+mf7gHx
-	 P5He6Wvy69mDQ0ICq+xKiiSP0mHKm3jSl5+Jryp+5ZSMWugU+C71wjJpqB0H65LOqG
-	 rtu/cyW9RsC2R8WW62jSJ3KHwZn0k2VWZCAkTvBY=
+	b=h3RuPrtSmX2ds71uwp5Cdo5r23Bd4yKk3WpT2K4jSmWdz/KNrPvAtw/K3iELPxWSY
+	 g+P7GIQhssjrtm0zNczVOjnOPwnkauaqh8cbDl991Sfn4U1FGMSyFdrzYNpcBedBb8
+	 xgX1uqh/qn38MzZQ26jDPbTtoL0nV0kl0RC3oGzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Johan Alvarado <contact@c127.dev>,
-	Mark Brown <broonie@kernel.org>,
+	Luo Haiyang <luo.haiyang@zte.com.cn>,
+	Run Zhang <zhang.run@zte.com.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Shengming Hu <hu.shengming@zte.com.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 158/869] spi: spi-qpic-snand: publish the ECC context to snandc->qspi
-Date: Sat,  7 Nov 2026 08:47:20 -0500
-Message-ID: <20261107134857.653931579@linuxfoundation.org>
+Subject: [PATCH 6.18 159/869] cpufreq: conservative: Restrict deferred downscaling to low load
+Date: Sat,  7 Nov 2026 08:47:21 -0500
+Message-ID: <20261107134857.682006044@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,94 +71,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Alvarado <contact@c127.dev>
+From: Shengming Hu <hu.shengming@zte.com.cn>
 
-[ Upstream commit f94c9b68bb5fdbef9f841da493d5305ff634ebb5 ]
+[ Upstream commit 0fa55c5539173bceaeb400c69b1974aaa0cdb8dc ]
 
-qcom_spi_ooblayout_ecc() and qcom_spi_ooblayout_free() read the ECC
-configuration through snandc->qspi->ecc. qcom_spi_probe() points it at a
-zeroed scratch struct and only qcom_spi_ecc_prepare_io_req_pipelined(),
-which runs on page I/O, ever updates it. qcom_spi_ecc_init_ctx_pipelined()
-installs the ooblayout but does not publish the context it just
-allocated, and qcom_spi_ecc_cleanup_ctx_pipelined() frees that context
-without clearing the pointer.
+For a shared cpufreq policy, dbs_update() derives the load used for the
+frequency decision from the maximum load among its CPUs, but it may
+also record deferred idle periods accumulated by an idle CPU in the
+policy.
 
-spinand_init() calls mtd_ooblayout_count_freebytes() right after the ECC
-context is created and before any page I/O, so the ooblayout always runs
-against a pointer that does not describe the current context:
+Consequently, a single update can contain both a high decision load
+from one CPU and multiple deferred idle periods from another CPU. The
+conservative governor applies the deferred down steps before evaluating
+the decision load. If that load subsequently triggers an up step, the
+deferred down steps can outweigh the single up step and produce a net
+frequency reduction.
 
-  - On a first probe it reads the zeroed struct from qcom_spi_probe(),
-    so steps, bytes and bbm_size are 0. The count then returns 0 rather
-    than an error, so the probe continues with mtd->oobavail set to 0.
+This was observed on a policy shared by CPUs 2 and 3. A CPU-bound
+SCHED_EXT task kept CPU 2 fully utilized while CPU 3 remained idle.
+On this system, SCHED_EXT generated update-util callbacks less
+frequently than CFS, resulting in sparse DBS updates such as:
 
-  - On a probe retry it reads the ecc_cfg the previous attempt freed.
+ load=100 idle_periods=7 interval=59 ms
+ load=100 idle_periods=4 interval=39 ms
+ load=100 idle_periods=2 interval=19 ms
+ load=100 idle_periods=7 interval=59 ms
 
-A retry is easy to hit. On IPQ5018 with the qcom,smem-part parser the
-partition parse returns -EPROBE_DEFER until SMEM has probed, so the
-first spi-nand probe defers. It defers inside
-mtd_device_parse_register(), after mtd_otp_nvmem_add() has already read
-the factory OTP - that read goes through prepare_io_req and leaves
-snandc->qspi->ecc pointing at the context that spinand_cleanup() then
-frees. The second probe allocates a new context, never publishes it, and
-computes the OOB layout from the freed one. Once the slab has been
-reused, qecc->steps holds garbage and
+With the default 5% frequency step and a 2.6 GHz policy maximum, seven
+deferred periods reduce the requested frequency by seven 130 MHz steps
+before the high decision load adds only one step. Repeated updates
+therefore keep the policy near 530 MHz even though CPU 2 is fully
+utilized.
 
-  oobregion->length = qecc->steps * 4;
+There are two load values relevant to this behavior:
 
-goes negative. qcom_spi_ooblayout_free() only reports -ERANGE for
-section 1 and later, so mtd_ooblayout_count_bytes() sums the regions and
-returns that negative length as the byte count. The -512 below is
-steps * 4 with steps == -128. It is a byte count that happens to
-collide with -ERESTARTSYS, not an error the driver returned.
-spinand_init() takes it as an error, and because it is not
--EPROBE_DEFER the driver core never retries and the NAND never appears:
+  * sample_load is calculated from the busy and elapsed time of the
+    current sample.
 
-  spi-nand spi0.0: ESMT SPI NAND was found.
-  spi-nand spi0.0: probe with driver spi-nand failed with error -512
-  UBI error: cannot open mtd rootfs, error -2
-  Waiting for root device /dev/ubiblock0_1...
+  * decision_load is returned by dbs_update() for the governor's
+    frequency decision. After a long idle interval, it may reuse
+    prev_load to improve the response to a waking task and can therefore
+    differ from sample_load.
 
-On a Mercusys MR80X (IPQ5018, ESMT F50D1G41LB) about half of the boots
-failed to mount the rootfs, the outcome depending on whether the freed
-memory had been overwritten yet.
+The problem is that idle_periods is derived from accumulated idle time
+and is applied independently of whether the current sample load is in
+the conservative governor's downscaling region. A high sample load and
+multiple deferred idle periods can therefore coexist, particularly
+when updates are sparse.
 
-Publish the context when it is created and clear the pointer when it is
-destroyed. Clearing leaves snandc->qspi->ecc NULL after cleanup, which
-is safe: the mtd is unregistered before cleanup_ctx runs, so no
-ooblayout callback can follow.
+As suggested by Zhongqiu Han, calculate the sample load separately from
+the decision load. If no time has elapsed, use prev_load for the sample
+load as the existing load calculation does, since no load can be
+calculated for that interval.
 
-Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
-Cc: stable@vger.kernel.org
-Tested-by: Gabor Juhos <j4g8y7@gmail.com>
-Signed-off-by: Johan Alvarado <contact@c127.dev>
-Link: https://patch.msgid.link/20260911184416.109790-2-contact@c127.dev
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Record the maximum sample load for the policy and apply deferred down
+steps only when it is below down_threshold. This makes deferred
+downscaling follow the same threshold that the conservative governor
+normally uses to determine whether the policy load is low enough to
+reduce the frequency.
+
+The existing code applies deferred down steps whenever idle_periods is
+valid, regardless of the sample load. When the decision load is in the
+hold region, the locally adjusted frequency is not submitted unless
+another frequency-update branch is taken. Thus, when the sample and
+decision loads are the same and both are in the hold region, this
+change does not alter the requested frequency.
+
+The difference becomes visible when the decision load causes a
+frequency update. In particular, if it exceeds up_threshold, the
+governor applies a single up step after the deferred down steps and
+submits the resulting request. Multiple deferred down steps can then
+outweigh that up step and cause a frequency reduction even when the
+sample load is above down_threshold.
+
+With this change, deferred down steps are skipped whenever the maximum
+sample load is at or above down_threshold, keeping deferred downscaling
+consistent with the conservative governor's threshold semantics. The
+requested frequency may therefore be higher than with the existing
+behavior when deferred idle periods are present and the decision load
+causes a frequency update. This is intentional, because the lower
+request previously resulted from applying deferred downscaling while
+the sampled policy load was outside the governor's downscaling region.
+Accelerated deferred downscaling remains available when the policy
+sample load is below down_threshold, including after a workload has
+completed and the policy has become idle.
+
+Fixes: 00bfe05889e9 ("cpufreq: conservative: Decrease frequency faster for deferred updates")
+Cc: All applicable <stable@vger.kernel.org>
+Reviewed-by: Luo Haiyang <luo.haiyang@zte.com.cn>
+Reviewed-by: Run Zhang <zhang.run@zte.com.cn>
+Suggested-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
+Link: https://patch.msgid.link/20260916140926740-DCokXh6dAgtqDn1EWdCh@zte.com.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-qpic-snand.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/cpufreq/cpufreq_conservative.c |  8 ++++---
+ drivers/cpufreq/cpufreq_governor.c     | 29 +++++++++++++++++++-------
+ drivers/cpufreq/cpufreq_governor.h     |  2 ++
+ 3 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 919e847c061db..567485785ec96 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -391,6 +391,8 @@ static int qcom_spi_ecc_init_ctx_pipelined(struct nand_device *nand)
- 	dev_dbg(snandc->dev, "ECC strength: %u bits per %u bytes\n",
- 		ecc_cfg->strength, ecc_cfg->step_size);
+diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
+index 60bab2b71b1b9..4ee6990ab2ba9 100644
+--- a/drivers/cpufreq/cpufreq_conservative.c
++++ b/drivers/cpufreq/cpufreq_conservative.c
+@@ -85,10 +85,12 @@ static unsigned int cs_dbs_update(struct cpufreq_policy *policy)
+ 	freq_step = get_freq_step(cs_tuners, policy);
  
-+	snandc->qspi->ecc = ecc_cfg;
+ 	/*
+-	 * Decrease requested_freq one freq_step for each idle period that
+-	 * we didn't update the frequency.
++	 * Apply deferred down steps only when the policy sample load is
++	 * below down_threshold. Otherwise, multiple deferred down steps may
++	 * cause a net frequency decrease outside the downscaling region.
+ 	 */
+-	if (policy_dbs->idle_periods < UINT_MAX) {
++	if (policy_dbs->max_sample_load < cs_tuners->down_threshold &&
++	    policy_dbs->idle_periods < UINT_MAX) {
+ 		unsigned int freq_steps = policy_dbs->idle_periods * freq_step;
+ 
+ 		if (requested_freq > policy->min + freq_steps)
+diff --git a/drivers/cpufreq/cpufreq_governor.c b/drivers/cpufreq/cpufreq_governor.c
+index 00a26fa6292c5..a10cf44600ffa 100644
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -116,7 +116,8 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 	struct policy_dbs_info *policy_dbs = policy->governor_data;
+ 	struct dbs_data *dbs_data = policy_dbs->dbs_data;
+ 	unsigned int ignore_nice = dbs_data->ignore_nice_load;
+-	unsigned int max_load = 0, idle_periods = UINT_MAX;
++	unsigned int max_load = 0, max_sample_load = 0;
++	unsigned int idle_periods = UINT_MAX;
+ 	unsigned int sampling_rate, io_busy, j;
+ 
+ 	/*
+@@ -138,7 +139,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 		struct cpu_dbs_info *j_cdbs = &per_cpu(cpu_dbs, j);
+ 		u64 update_time, cur_idle_time;
+ 		unsigned int idle_time, time_elapsed;
+-		unsigned int load;
++		unsigned int load, sample_load;
+ 
+ 		cur_idle_time = get_cpu_idle_time(j, &update_time, io_busy);
+ 
+@@ -171,6 +172,20 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 			j_cdbs->prev_cpu_nice = cur_nice;
+ 		}
+ 
++		/*
++		 * Compute the sample load separately from the prev_load value
++		 * that may be reused after a long idle interval. The conservative
++		 * governor uses it to decide whether to apply deferred down steps.
++		 * If no time has elapsed, retain the existing behavior and use
++		 * prev_load.
++		 */
++		if (unlikely(!time_elapsed))
++			sample_load = j_cdbs->prev_load;
++		else if (time_elapsed > idle_time)
++			sample_load = 100 * (time_elapsed - idle_time) / time_elapsed;
++		else
++			sample_load = 0;
 +
- 	return 0;
+ 		if (unlikely(!time_elapsed)) {
+ 			/*
+ 			 * That can only happen when this function is called
+@@ -205,11 +220,7 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
+ 			load = j_cdbs->prev_load;
+ 			j_cdbs->prev_load = 0;
+ 		} else {
+-			if (time_elapsed > idle_time)
+-				load = 100 * (time_elapsed - idle_time) / time_elapsed;
+-			else
+-				load = 0;
+-
++			load = sample_load;
+ 			j_cdbs->prev_load = load;
+ 		}
  
- err_free_ecc_cfg:
-@@ -407,6 +409,7 @@ static void qcom_spi_ecc_cleanup_ctx_pipelined(struct nand_device *nand)
+@@ -222,9 +233,13 @@ unsigned int dbs_update(struct cpufreq_policy *policy)
  
- 	kfree(snandc->qspi->oob_buf);
- 	snandc->qspi->oob_buf = NULL;
-+	snandc->qspi->ecc = NULL;
- 	kfree(ecc_cfg);
+ 		if (load > max_load)
+ 			max_load = load;
++
++		if (sample_load > max_sample_load)
++			max_sample_load = sample_load;
+ 	}
+ 
+ 	policy_dbs->idle_periods = idle_periods;
++	policy_dbs->max_sample_load = max_sample_load;
+ 
+ 	return max_load;
  }
- 
+diff --git a/drivers/cpufreq/cpufreq_governor.h b/drivers/cpufreq/cpufreq_governor.h
+index 1462d59277bd1..ceb33336b2b30 100644
+--- a/drivers/cpufreq/cpufreq_governor.h
++++ b/drivers/cpufreq/cpufreq_governor.h
+@@ -94,6 +94,8 @@ struct policy_dbs_info {
+ 	/* Multiplier for increasing sample delay temporarily. */
+ 	unsigned int rate_mult;
+ 	unsigned int idle_periods;	/* For conservative */
++	/* Maximum load from the current policy sample. */
++	unsigned int max_sample_load;
+ 	/* Status indicators */
+ 	bool is_shared;		/* This object is used by multiple CPUs */
+ 	bool work_in_progress;	/* Work is being queued up or in progress */
 -- 
 2.53.0
 
