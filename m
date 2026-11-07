@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065142;
-	b=dKDP4RZaitL080r6FNFW/tfQznRBmiPr5hSzRkAZV9L9BVkARUz6wxT6GfFhTm36bPH7
-	 6pzCMQWLhU5WY1JfrB0Ovm0+8qcINQNA15h0aZv+zQBDBrlB2FjQsOU51Cpe2rrtq96cW
-	 8pIOjwmlzK5PsTZttZKqFRZCSZrj2MPiYWwAK8XG+2hbbdWReHZ2rb7i/dm9ETgyyOYQl
-	 8blrkP2deYijpWcy7Yez/n5uVhAGXoLDCS2PUAYuUeoJBTd+6Wb4TntyxUZBCla1dvC7e
-	 7RDOtTQN+RU72a1chpcG/1X/s+wtrM278yVonHUPwZpJgKFsytkMT5Tr+Q8LC50z95A==
+	t=1794065143;
+	b=r2LUwZ3suUdnj8Ctukw14+oOH9+DUUSK8rDBU4WK0JFJXI1mbB6dA9yLJnbsAZcRZT8S
+	 pPqNlbdnF66SzPBbTiLi3HeWyfPgF1W502NMx9EwN+sQCLJAtp67xuoiEqMQWPwSdTFIA
+	 rtNYV+SEqj+V9Lo9bLxZ5erJk/9gWqR49xZELJl3Ahk8+LwFptJxBeYSwgkr70qWUq91y
+	 Y+VJ5lBT+KPLb/5+f05P7BGSZW8S8/IsuwIz7oKeJMTBn6uoX63p1fqo+MJpJUJWzNGtx
+	 6VSv9/NdKsYBFxSsbMrCzq1icrLY2i1MyK5/RLsoFGJ3PGIqt6jiRfVUv5Kf0leykvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065142;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=V1yvmyQqjrveK1yWdqq3m0hLAp6Yu64ro4vqkjEKRN4=;
-	b=G6Mc74x5Hyb4ClsXgg6GzYeYyCQ9wBi8eDXPwIgfaf4kL5wknftrSB0TSZBmWMiWqX7T
-	 VhWNbm8AqXsLnk3qNwNgkXea6i+GMWXn1ypE1kJY0ocqgs4obR/R6LZp13gkz4r9qiMAa
-	 xzfIXOrSx4AJBKUrvqRVREqkn83WSuVszE4dOaWvVbFkOauAzbNIWMmJjfWRNHyz4HQTq
-	 oFyffWwoUGcQ3DR1NPN/jaHkgBbi6SIKn3NZTYB6bXS/r8bPhIZjPpk2p9KWbj7O89rmn
-	 s8Vor4lySd0silHwTtFxySBdD9VrD3F/acSAPDiCttkzHRyG6Ix+Gg7UmysWwNoPYrg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=qrJ/dTmjFKmdFgSlIEB/WVBC8lhwYvls2SJADAxpaI4=;
+	b=06OlzhKHtNYKB0GN5jJG4ARmP4ZCXmEg16VGmf9/CNXvUDF4aourFEoWFKAQacR6vq4A
+	 iKQJfigApWq/g6EzQCdetHUvvMpAhs4CjDxMghNccpsG0ipwKanTCYBmv08Hawjxy4/Um
+	 p1ylCpxKoLC2xxJzdaac5w3rY7Ulyzvh3GsVrLupQKdWASuFgtAXTDvaQoRhCKbbhjgX6
+	 3ueROYnehtRSHXozEFCAtqCiydBboDDslNlsjh6qhjnc8l+vq34mkNK7HHG9wNMZSvtNH
+	 ACN+lHdkU8Z6LN/qXKztpSnhLGL1Mzb0jKDsAw1+67V8IzO/vmkop2OpbT9T6FrJBxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e4lzHozg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMvEIjUY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43750606A32F;
-	Sat,  7 Nov 2026 15:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67178606A338;
+	Sat,  7 Nov 2026 15:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e4lzHozg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F1D1F0089F;
-	Sat,  7 Nov 2026 15:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMvEIjUY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7641F0089F;
+	Sat,  7 Nov 2026 15:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065141;
-	bh=V1yvmyQqjrveK1yWdqq3m0hLAp6Yu64ro4vqkjEKRN4=;
+	s=korg; t=1794065143;
+	bh=qrJ/dTmjFKmdFgSlIEB/WVBC8lhwYvls2SJADAxpaI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e4lzHozgrjfojXOgeDnQeCtjJ2T3NQHhsBp8CHqhFVcqZUc+u2+MLs5VzQdURpwOu
-	 lg/etyuFo04gW5nCLgnmSB1wbpLIn8L+aaCmxkBFa5NzUo24Gj7nhW5RHpUAIQFbOQ
-	 sx0awXtBSrTxoED2uxzZRmhaAWy54RzRoZDFcvD0=
+	b=xMvEIjUYuiqFSmfG0xth93BeT4spxRviKpnLxm5OAEUr3UIb/yDZgjj77Oztzi2R3
+	 kCpvdC3dC+t2OUkpEtjHT0RABPhiV2QsICkvvLhUhoQ7mJHp8gaUByfSJGcJXwjyJ9
+	 JzDdsuGyoBvKlHaJ1Bx59zrGyKttX2Yp/6ROZtkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0923/1257] ntfs: check the dirty-state commit on remount and unmount
-Date: Sat,  7 Nov 2026 08:53:39 -0500
-Message-ID: <20261107135004.846017922@linuxfoundation.org>
+Subject: [PATCH 7.3 0959/1257] drm/amdgpu: reject ANONONLY userptrs that span multiple VMAs
+Date: Sat,  7 Nov 2026 08:54:15 -0500
+Message-ID: <20261107135005.827227024@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -64,167 +66,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 1a3883b3685cc4c8bc41927cc9df539239d7c961 ]
+[ Upstream commit d577b68a854d0f590f480777249b041507d0708c ]
 
-The remount-to-read-only path commits the updated volume flags with
-ntfs_commit_inode(), a void wrapper around __ntfs_write_inode(), and
-ignores the blkdev_issue_flush() return value, so a failed commit or
-flush is reported as success.  Once the remount has succeeded no
-persistence point is ever reached again: ntfs_put_super() skips
-read-only superblocks and the VFS never syncs one, so fail the
-remount unless the commit and the flush succeed.  The superblock
-then stays read-write and ntfs_put_super() retries the persistence
-at unmount.  The errors=remount-ro downgrade does not go through
-ntfs_reconfigure() and is unchanged.
+For AMDGPU_GEM_USERPTR_ANONONLY, amdgpu_ttm_tt_get_user_pages() only
+checks the VMA at the start of the range for a backing file, and
+amdgpu_hmm_range_get_pages() then faults in the whole range, across any
+other VMAs. The check used to reject ranges ending beyond the first VMA
+(vma->vm_end < end), which got lost when the code moved to HMM.
 
-A zero-return commit is not trusted blindly: write_mft_record()
-redirties the record on allocation failure and reports success, so
-the $Volume inode is required to be clean afterwards.
+An ANONONLY userptr over one page of file-backed memory is rejected
+with -EPERM, but one over an anonymous page followed by the same
+file-backed page is accepted.
 
-ntfs_put_super() discards the same commit error.  Call
-__ntfs_write_inode() there with the same dirty re-check and warn on
-failure, as put_super() cannot return an error.  The commit is
-skipped when the dirty-state sync itself failed, as that could write
-back an inconsistent flag state; a record left dirty by an earlier
-update is still committed at evict time.
+Restore the check and reject ANONONLY userptrs that cross more than one
+VMA. The second userptr is now rejected too.
 
-NVolErrors() is deliberately not used to detect the failure: it is
-sticky for the lifetime of the mount, so it cannot distinguish a
-fresh commit failure from errors recorded before the remount.
+v2: reject ranges spanning multiple VMAs instead of walking every VMA
+    (Christian)
+v3: cast num_pages to u64 to avoid an overflow (Christian)
 
-Hibernated volumes: ntfs_sync_volume_dirty_state() is a no-op for
-them and never dirties the $Volume inode on such a mount, since the
-on-disk flags are already dirty and ntfs_set_volume_flags() has
-nothing to change.  The commit only runs if something dirtied the
-inode independently, as before this patch; mounting hibernated
-volumes read-only removes even that.
-
-Reported-by: Baolin Liu <liubaolin@kylinos.cn>
+Fixes: 6826cb3b92a3 ("drm/amdgpu: support userptr cross VMAs case with HMM")
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Philip Yang <Philip.Yang@amd.com>
+Cc: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Acked-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 75d753ed4704d5efc72164d9e546b2a282e42ae2)
 Cc: stable@vger.kernel.org
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
-Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/super.c | 76 +++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 54 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
-index c3d73cd6909eb..486336508b8c7 100644
---- a/fs/ntfs/super.c
-+++ b/fs/ntfs/super.c
-@@ -269,6 +269,7 @@ static int ntfs_reconfigure(struct fs_context *fc)
- {
- 	struct super_block *sb = fc->root->d_sb;
- 	struct ntfs_volume *vol = NTFS_SB(sb);
-+	int err;
- 
- 	ntfs_debug("Entering with remount");
- 
-@@ -331,14 +332,39 @@ static int ntfs_reconfigure(struct fs_context *fc)
- 		 * and ntfs_put_super() skips them, so the only remaining
- 		 * write would be the evict-time commit at unmount, which
- 		 * a crash never reaches.  An error recorded only after
--		 * the remount is still never persisted.
-+		 * the remount is still never persisted; a failed commit
-+		 * or flush fails the remount, leaving the superblock
-+		 * read-write so ntfs_put_super() retries at unmount.
- 		 */
--		if (ntfs_sync_volume_dirty_state(vol)) {
-+		err = ntfs_sync_volume_dirty_state(vol);
-+		if (err) {
- 			ntfs_warning(sb,
- 				"Failed to update dirty bit in volume information flags.  Run chkdsk.");
--		} else if (NInoDirty(NTFS_I(vol->vol_ino))) {
--			ntfs_commit_inode(vol->vol_ino);
--			blkdev_issue_flush(sb->s_bdev);
-+			return err;
-+		}
-+		if (NInoDirty(NTFS_I(vol->vol_ino))) {
-+			/* ntfs_commit_inode() would discard the error. */
-+			err = __ntfs_write_inode(vol->vol_ino, 1);
-+			if (err) {
-+				ntfs_warning(sb,
-+					"Failed to commit volume information flags.  Run chkdsk.");
-+				return err;
-+			}
-+			/*
-+			 * write_mft_record() redirties the record on
-+			 * -ENOMEM and still reports success.
-+			 */
-+			if (NInoDirty(NTFS_I(vol->vol_ino))) {
-+				ntfs_warning(sb,
-+					"Volume information flags remain dirty after commit.  Run chkdsk.");
-+				return -EIO;
-+			}
-+			err = blkdev_issue_flush(sb->s_bdev);
-+			if (err) {
-+				ntfs_warning(sb,
-+					"Failed to flush volume information flags.  Run chkdsk.");
-+				return err;
-+			}
- 		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+index 83968886c29a6..364be96c08dfe 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -777,7 +777,8 @@ int amdgpu_ttm_tt_get_user_pages(struct amdgpu_bo *bo,
+ 		goto out_unlock;
  	}
- 
-@@ -1950,26 +1976,32 @@ static void ntfs_put_super(struct super_block *sb)
- 		if (ntfs_sync_volume_dirty_state(vol)) {
- 			ntfs_warning(sb,
- 				"Failed to sync dirty bit in volume information flags.  Run chkdsk.");
--		} else if (NVolErrors(vol)) {
-+		} else {
- 			/*
--			 * The dirty bit is on disk now; only warn when the
--			 * sync actually succeeded, or this message would
--			 * contradict the one above.
-+			 * __ntfs_write_inode(), not the void
-+			 * ntfs_commit_inode() wrapper: the error can only
-+			 * be warned about here.  The mirror inode is only
-+			 * released below: writing the $Volume record (mft
-+			 * record number 3, below vol->mftmirr_size) mirrors
-+			 * it through ntfs_sync_mft_mirror(), which fails
-+			 * with -EIO once vol->mftmirr_ino is gone.
- 			 */
--			ntfs_warning(sb,
--				"Volume has errors.  Leaving volume marked dirty.  Run chkdsk.");
-+			if (__ntfs_write_inode(vol->vol_ino, 1)) {
-+				ntfs_warning(sb,
-+					"Failed to commit volume information flags.  Run chkdsk.");
-+			} else if (NInoDirty(NTFS_I(vol->vol_ino))) {
-+				ntfs_warning(sb,
-+					"Volume information flags remain dirty after commit.  Run chkdsk.");
-+			} else if (NVolErrors(vol)) {
-+				/*
-+				 * Only warn once the commit has succeeded,
-+				 * or this could contradict a failure
-+				 * reported above.
-+				 */
-+				ntfs_warning(sb,
-+					"Volume has errors.  Leaving volume marked dirty.  Run chkdsk.");
-+			}
- 		}
--		/*
--		 * Commits the updated volume flags if they were written.
--		 * The mft mirror must still be around for this: the
--		 * $Volume record (mft record number 3, below
--		 * vol->mftmirr_size) is mirrored by write_mft_record()
--		 * through ntfs_sync_mft_mirror(), which fails with -EIO
--		 * and leaves the mirror stale once vol->mftmirr_ino is
--		 * gone, so the mirror inode is only released after this
--		 * commit.
--		 */
--		ntfs_commit_inode(vol->vol_ino);
+ 	if (unlikely((gtt->userflags & AMDGPU_GEM_USERPTR_ANONONLY) &&
+-		vma->vm_file)) {
++		     (vma->vm_file ||
++		      vma->vm_end < start + (u64)ttm->num_pages * PAGE_SIZE))) {
+ 		r = -EPERM;
+ 		goto out_unlock;
  	}
- 
- 	/*
 -- 
 2.53.0
 
