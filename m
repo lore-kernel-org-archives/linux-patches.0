@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060998;
-	b=n/aCwJSaaFkykQtJMN2U2Yvp5Uiq1Vq9MyhSiKJRuYfYuVzMzEmOMoDjPy3GEJwRsE66
-	 9HYbA4h5OplwSvbR3591XQSc787HP7CjshJwaqejYvJvxX107V1HysLD3LvMIJeLD2ezk
-	 /Ij+Y2NT+Uhgxu03rh+87mp7ZwbtMwuLIHnWsHHTCKIzxzpDwyTnlPs0kaf0WPjE0nOJH
-	 m1Max83soDvFcyQvdts16GJ1nW+60Sam1x3+IBujfoJ7ZVIN3MEoCM7zAcR11Ayj5Wrvv
-	 PLEb1Ss75ge3xjXqn/rP7lhopcvwKqsAPJb4fBlMSaEUmQoHnuFUR5311uoTp2R9VsQ==
+	t=1794060999;
+	b=FOw3CvUGkyLjm/gWCE2UOobNqzJDWTepbZU3QdkTv+FVz+NrnzvofahNLE6Vz2dmUiIY
+	 TNtReieiUCoicN+fAwL1tPjAhjFipUmauwRfglKc5onmMegsRX+C86RspYVTGCcDoEliA
+	 /tQDxE5rrBhN8Q38bVUFicKs4vsY1oKM3/2WfdysqJUo2HMoID+nue8AN1JmchoDPmvMo
+	 tdNo+QQbu0H7r9Om6VCKf2x09J1AyJI6MzeydV1xOyMvklfvNnQxGlRq3Nz73wgz8Que7
+	 o04OrwlMaISjldOc2Q4mcltrCVRr3RfQCjNzGcs84jLfUfS9AYbClXiv0Ydi0IbyMWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060998;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060999;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ybxw+WDY2jzZQS/mzPGtPnfSWUQjrIiaInLGVepDX/Q=;
-	b=c28C6ODuWttazOHxxRR3P83bND2GnLIhbUvOJRCV8Q/VIipB1EWgpbnXvjS1TU+XIV32
-	 u20gas11Kt0FZlQ8L4scTrss0T16uDZvK742ty7x/S7PtUEn+AJRCW0W6OtUio0XbK8We
-	 W42BG06dzeuUtmSBteNe1hl8KVIDupP+0IF1qaE6ijZGl+C2ccXeyAjSLJX7wh9VpWnkc
-	 +GuCDbJtHozHP7QVKFsYUm3Q3eVOke6uqfr5ud0ATozj4myysMipDKkUFNcqVcsgbuqF5
-	 fZ64nmSAhfnWu8JqHwrG5kISLM9o1JRIPJ581/YEVJfrVyFSCmi2J6vMNNfMr1vDoOg==
+	bh=CxB0eyWAdOK1mzUzhCCy+eXIjfh/x4I+Mc+rZIXeJhI=;
+	b=DHN5iRdgh9ELA2zdhLehQjjnWq0kbb5iFI7r+fybyoRG1gvQ/FYPXiG21l+lrCqB9YJ3
+	 Xam4b0mbNYDUA9gnaNqz4zQjgWbxg4wYDq1+FtNF9+nf0qKnvn1FcI9xok1bN4wJBH3z+
+	 hi2jgmSbIOUKlA3bnIBIYdAjGeWQJYYmTHg0y38Qhnf/rYTW8zIfJ861IrfVfXFbOtTks
+	 ZKmk94CsnAlbSMLbrD6CXMXLl/xOMmSo85WF9edkW0yMuzUj/8wd+w/25HtjZcKMDqkCI
+	 fJUj3b+I5OO8dRMVZobLBDKuPnrfKZ2rNtNv4EnvvdovW4+7O0d9Am/YdTZ9WxTkt4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ClQ8oBKf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FX8QTqAc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15C9606EE8C;
-	Sat,  7 Nov 2026 14:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BF5606D827;
+	Sat,  7 Nov 2026 14:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ClQ8oBKf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E291F008A6;
-	Sat,  7 Nov 2026 14:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FX8QTqAc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0A71F008A2;
+	Sat,  7 Nov 2026 14:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060994;
-	bh=Ybxw+WDY2jzZQS/mzPGtPnfSWUQjrIiaInLGVepDX/Q=;
+	s=korg; t=1794060998;
+	bh=CxB0eyWAdOK1mzUzhCCy+eXIjfh/x4I+Mc+rZIXeJhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ClQ8oBKf5ZpSC1O40icf7eQlP7SiPKLJ/deGAnZMXe2f7jrMiPcMcn1xWg7Flxjyu
-	 FSMxbhG5A0I+VEm7ZZVbnV+s/xMuOl4bf/xQKZ+wz6iKjO7FW7eJMNbsTOpkFO979S
-	 xF7Y5hTvcKsvZmE5SlWRsIaa//mHhrkdhFK5RQws=
+	b=FX8QTqAcc/WsQM6JkmFfwhCr1ETZfwGd4+BPqFCaJxmcuQpWxKWDumJKKkUuIDojP
+	 0cd15MBaoe7ZGcMe6FwRObQo6BqkZEdKThrepbCXJT2gq2YJjYDWVcYwxhZsqxQYZA
+	 M99itFA2GbpBGbjPzB/fgrMKj19yWjjVA00A1mp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gael Blivet <gael.blivet@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0342/1536] ksmbd: fix off-by-one rejecting minimal COPYCHUNK query-limits request
-Date: Sat,  7 Nov 2026 08:39:18 -0500
-Message-ID: <20261107135007.290016994@linuxfoundation.org>
+Subject: [PATCH 6.12 0345/1536] ksmbd: honor byte-range locks for zero data
+Date: Sat,  7 Nov 2026 08:39:21 -0500
+Message-ID: <20261107135007.368695725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,43 +67,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gael Blivet <gael.blivet@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit d68d4b3293034f549d55f407a23b4c0a6c90e50a ]
+[ Upstream commit 8b57448a147d2378088e63cd473e7f2a967d6802 ]
 
-The FSCTL_COPYCHUNK/FSCTL_COPYCHUNK_WRITE input length check uses
-in_buf_len <= sizeof(struct copychunk_ioctl_req), which rejects a
-buffer that is exactly sizeof(struct copychunk_ioctl_req) bytes -- the
-minimal, valid request containing only the fixed header with
-ChunkCount=0 and no chunk entries, used by clients to query the
-server's copy limits before issuing a real copychunk.
+FSCTL_SET_ZERO_DATA changes file allocation state and must respect
+byte-range locks over the affected part of the file. Check the requested
+range, clipped to EOF, before issuing the fallocate operation.
 
-Since copychunk_ioctl_req ends in a flexible array member, the correct
-minimum is that the buffer covers the fixed header, so use
-offsetof(..., Chunks) with '<' instead of '<=' against sizeof(): same
-value, but the boundary case is now correctly accepted.
+Return STATUS_FILE_LOCK_CONFLICT when the range conflicts with an
+existing lock. Ranges starting past EOF are left untouched by the lock
+check so they continue to succeed.
 
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |  7 ++++++-
+ fs/smb/server/vfs.c     | 12 ++++++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 5ec635d840cad..678db1aaeba55 100644
+index 2c74e0fd82b9a..f95487b25b664 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -8532,7 +8532,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 			goto out;
- 		}
+@@ -8621,8 +8621,13 @@ int smb2_ioctl(struct ksmbd_work *work)
  
--		if (in_buf_len <= sizeof(struct copychunk_ioctl_req)) {
-+		if (in_buf_len < offsetof(struct copychunk_ioctl_req, Chunks)) {
- 			ret = -EINVAL;
- 			goto out;
+ 			ret = ksmbd_vfs_zero_data(work, fp, off, len);
+ 			ksmbd_fd_put(work, fp);
+-			if (ret < 0)
++			if (ret == -EAGAIN) {
++				rsp->hdr.Status = STATUS_FILE_LOCK_CONFLICT;
++				ret = 0;
+ 				goto out;
++			} else if (ret < 0) {
++				goto out;
++			}
  		}
+ 		break;
+ 	}
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 9b973d7064988..32ef9618a4af6 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1000,6 +1000,18 @@ int ksmbd_vfs_zero_data(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 	int err;
+ 
+ 	smb_break_all_levII_oplock(work, fp, 1);
++	if (!work->tcon->posix_extensions) {
++		loff_t size = i_size_read(file_inode(fp->filp));
++
++		if (off < size) {
++			err = check_lock_range(fp->filp, off,
++					       min(off + len, size) - 1,
++					       WRITE);
++			if (err)
++				return -EAGAIN;
++		}
++	}
++
+ 	saved_cred = override_creds(fp->filp->f_cred);
+ 	if (fp->f_ci->m_fattr & FILE_ATTRIBUTE_SPARSE_FILE_LE)
+ 		err = vfs_fallocate(fp->filp,
 -- 
 2.53.0
 
