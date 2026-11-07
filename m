@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061876;
-	b=pSzkpai0R11gSaDTud5AV2hjkQJvEDlvClyAzaFkJcTNlJjCiDcUNQZDypz4HdlD3OG6
-	 Y30QlYniBWrlnBpTy64381E723I2sWt/a+8eN/0qOv5cjytOXTIg3L7BSlGikTrcZrQqf
-	 2WGmfdFKsFjGTCYzfLIM8JnwHRaKr2HoWYXg+5LDWRv5uTAKnpa2HNvZ6Dv/zyWShTmgq
-	 FPlIOhGqZCT/hq3e7kVBQptFDz0YMhpd4aHH9EC5rTykWFl529WMI8s/b3SInw4pX4J8O
-	 FXaA704sNDQq74ooBYlbglLvIfDDDL3zzVkx9h8sC6ULecdYB8QThrLoMYxAGcZ4Imw==
+	t=1794061877;
+	b=VAfUR6W5a/SibYiin7+C2zeXjSxb4d3w2CFe+Q2NmmCuixJEO7Yna2FtK+uVoBLTkcOc
+	 5ncCb0TYSUMwurgA1lhCMuIgPnFd7njLmat/agC4tOKslINeP/7PjJEJx+BseWps/HEGE
+	 dkHBF/LT4nYGg4bQGEjaa4VsoEp2XAf8l5KsJMhVEUoCcfnjkpk6htyd5qoUXiRi3OA9M
+	 BIrrOdHHe48lHCERdLKEPJmOp9/XT8P+STDnyCSZid7UBXv7PJBJ5utxrrJwvK6ylRVos
+	 bPD3KlJ8GSuNi/egoi/jWf9Sb8l9dj2KpUSr3pbOln25FjoKJL/Enb9K365CBxDRd9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061876;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061877;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=TsReOO5c389YUyNIdUqss2OG8Xie3jFhq0efJ6nSx8o=;
-	b=0ebWZ4GF2VqhIUndrhOjhESlUYKZsy2MMGk1XlGmiCE/3uZK8vf3vcrIFFJo1gJ/zCeA
-	 uaw2rb0kwsmMgPcmKH2Z6MQrNIdcd8xR1unic1jI9D0VXKBbrzl99GnUP6nXNJ3ZQOzwv
-	 uVULYW76Yp/oPZRgiTm1Myanh80sy0Ya9T38f27zdNBpwMZ92sT4CgJGolTm5eC0ZqGRf
-	 Y2YBaPaM360OmF86rqnlPE8qnIJTN7vp3a+cyJLpua8TCiYTncmaVrx/ddPC0W9XCDHhm
-	 XwlkvVGXoInrwNXvNlHyOUGAlZtyROnmsIBI861lo4jiXTIk1Mp/dP8PX8z+hgTDqcQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=oacZ/60t5J7vhMdTTSWblsUrI14MJ/Pc9R+HXhdBr9o=;
+	b=acJpd+irs2Fwg/duLqyUFekqVN4xbuoXKIxMh1jMXuSWGRbRas1QopQPZTNAMqV1TWbC
+	 4tH2Ylp9pQZtH+S9AWnfxkddtKVbzrNpctxTIGRn9xQUjhRkmMiPllFc7IAEojX7pNam/
+	 Z2zKwV1nYTIyrmsWpmnV/GYQLp2hlgq+OcsN9PLnaqKMKlbE3y48wCf61p8e3e5IuymAC
+	 JDyWNRmCkz4oi/mqFnqwkPAzhH1Ch66NAdRXfyQjqgTTrXf0zoOOn3VEvZSVHNnuP19b+
+	 LJV4QCGSQGUzlHT+GXcRDxVOaRcfgsyqZUlwKMor8BB/HwTHqvYALBNK7Zp3Z8eAg/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYo7XFPA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kj/gvJ4S";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B49606A32C;
-	Sat,  7 Nov 2026 14:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91057606A326;
+	Sat,  7 Nov 2026 14:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYo7XFPA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D851F008A1;
-	Sat,  7 Nov 2026 14:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kj/gvJ4S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD111F0089F;
+	Sat,  7 Nov 2026 14:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061876;
-	bh=TsReOO5c389YUyNIdUqss2OG8Xie3jFhq0efJ6nSx8o=;
+	s=korg; t=1794061877;
+	bh=oacZ/60t5J7vhMdTTSWblsUrI14MJ/Pc9R+HXhdBr9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YYo7XFPArpH+dl1/p+LFCdZas8vfbGIczVRH3kpsNDsajhg/7yH0aSTLAp07GmHNy
-	 DCVK/kKEBssR9n/v/hPY8XiH+Y2mmC08JTn3KNK7dps2FPpfQf6wN1Er05OKEbQKdx
-	 I44RsQvt/MQovcUNobXgqgnWJUR2QRmQzmQ88t6k=
+	b=kj/gvJ4SNUF7V8FGJ5dR3+O7JtjIbF7QtgkPkLIshU7ij1edMCLiEceG8GqrjTxAu
+	 2hWfYAuDOfYJrFH/bsEuud0fQie8S7qmZzw8g1PtwsnRxOvYGbm/856CkU0gpd4Ugk
+	 P+qvRTI74xzC/mp00Rw/ltGfvm5J3iq7GJycwpr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Czernohous <marek@czernohous.de>,
-	Lyude Paul <lyude@redhat.com>,
+	YuBiao Wang <YuBiao.Wang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0890/1536] drm/nouveau: dont dereference outp before checking it in nouveau_dp_irq
-Date: Sat,  7 Nov 2026 08:48:26 -0500
-Message-ID: <20261107135022.622692847@linuxfoundation.org>
+Subject: [PATCH 6.12 0891/1536] drm/amdgpu: recompute the dw estimate after allocating a new VM update job
+Date: Sat,  7 Nov 2026 08:48:27 -0500
+Message-ID: <20261107135022.650214258@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,73 +63,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Czernohous <marek@czernohous.de>
+From: YuBiao Wang <YuBiao.Wang@amd.com>
 
-[ Upstream commit 843bc34db94bff0612c8294861b156489958897b ]
+[ Upstream commit a74c7832b11827907de560169c7d4ac94505fd87 ]
 
-nouveau_dp_irq() looks the encoder up and dereferences it in the same
-breath, five lines before testing it:
+amdgpu_vm_sdma_update() keeps the number of free dwords of the current
+job in a local variable. When the job runs out of room it is committed
+and a new one is allocated, but that local variable is not refreshed and
+still describes the job which was just submitted.
 
-	struct nouveau_encoder *outp = find_encoder(connector, DCB_OUTPUT_DP);
-	struct nouveau_drm *drm = nouveau_drm(outp->base.base.dev);
-	...
-	if (!outp)
-		return;
+The stale value is then used to decide how many PTEs fit into the new
+job. If it happens to be copy_pte_num_dw + 7, or one more than that, the
+result is zero. copy_pte() encodes the transfer size as count * 8 - 1,
+so a count of zero asks the engine for a 1GB copy starting inside the IB
+pool. That runs off the end of the pool, faults on the first unmapped
+GART page above it and hangs the ring.
 
-find_encoder() walks the connector's possible encoders and returns NULL
-when none of them matches the requested type, so the NULL test is not
-decoration: it is the author saying this can happen. The initialiser
-above it dereferences the same pointer regardless.
+Re-initialize the estimate from the newly allocated job, which is empty
+and therefore has its full budget available.
 
-The NULL test predates the dereference. commit 773eb04d14a1
-("drm/nouveau/disp: expose conn event class") turned nouveau_dp_irq()
-into a work callback, and since the drm pointer was no longer passed in
-as an argument it was recovered from the encoder in the declaration
-block, which put the dereference above the existing test.
-
-Move the drm lookup below the test. No functional change when outp is
-non-NULL.
-
-Fixes: 773eb04d14a1 ("drm/nouveau/disp: expose conn event class")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Marek Czernohous <marek@czernohous.de>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/178682366004.3748010.14933649768375463967@gmail.com
+Signed-off-by: YuBiao Wang <YuBiao.Wang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_dp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_dp.c b/drivers/gpu/drm/nouveau/nouveau_dp.c
-index bcda0105160f1..213f5e005e1a7 100644
---- a/drivers/gpu/drm/nouveau/nouveau_dp.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_dp.c
-@@ -499,7 +499,7 @@ nouveau_dp_irq(struct work_struct *work)
- 		container_of(work, typeof(*nv_connector), irq_work);
- 	struct drm_connector *connector = &nv_connector->base;
- 	struct nouveau_encoder *outp = find_encoder(connector, DCB_OUTPUT_DP);
--	struct nouveau_drm *drm = nouveau_drm(outp->base.base.dev);
-+	struct nouveau_drm *drm;
- 	struct nv50_mstm *mstm;
- 	u64 hpd = 0;
- 	int ret;
-@@ -507,6 +507,8 @@ nouveau_dp_irq(struct work_struct *work)
- 	if (!outp)
- 		return;
- 
-+	drm = nouveau_drm(outp->base.base.dev);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+index 36805dcfa1598..902d0a538e419 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+@@ -254,6 +254,11 @@ static int amdgpu_vm_sdma_update(struct amdgpu_vm_update_params *p,
+ 						     AMDGPU_KERNEL_JOB_ID_VM_UPDATE);
+ 			if (r)
+ 				return r;
 +
- 	mstm = outp->dp.mstm;
- 	NV_DEBUG(drm, "service %s\n", connector->name);
++			/* The estimate above describes the job which was just
++			 * submitted, take the budget of the newly allocated one.
++			 */
++			ndw = p->num_dw_left;
+ 		}
  
+ 		if (!p->pages_addr) {
 -- 
 2.53.0
 
