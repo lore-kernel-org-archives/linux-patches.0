@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061160;
-	b=QYw6L74xIkbEyRRQk+K+voSH1kdBVpdfQNPL2pL2YMzPD5PSQBkdpSQz/d6st6J0NMcl
-	 CsvkihK4XymZlE4N3KIcXR02sFxLkaRI/OTLJneLJiV09mehuLO6psl4zafAMEH8SOYxl
-	 S7UFIwati8rG0Dt8kKAQ3YDx3Y8MFIJM68IwOH8nkU5GPIExCOqTe2WpyewvWxgN5Fkvd
-	 2Z6l6lZdJ61zrHf+TyxydN5PD1xe0aGhMQtKRjEubgOXJV9jawGsN6OGUSJfqkVG4wJsx
-	 6Rh/qhfposvyg6egVGiY5hkt7Yu89RG+R6+qDcj4YUT5gGWXLU87Wwp5F17nA1P0IFg==
+	t=1794061161;
+	b=KLO0lAwUraaXdaUJyn25OjBHI1R74HtGVVWxUU4LKd7rioBX5h2vavZt90kP7YsokcQK
+	 H/4Cj+d3p0AvLNoLEHmmhYEvZEc1nx1RJVoYvkFrHXZ7+U+9XsWjQCwo2BKFfmuCYroQG
+	 DtnYUsSorSXAK5HqqHvKgPOh3t2wXk34s41fstKQ6nUBrjBL3MJBhdWxz8TSwV6L/lzKO
+	 zWCnw9Bj4GwnAjcYxLPDf8Whd+uUJXRphLDRGAd++AFPL/OothCBrinfggVKAU9fVpGOy
+	 D1z9SPi6w2SLbUDHkau42piOeZmJfpmMTAeFZH90hGT4RPTIb+UxnKSblrqmyOJZ5Sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061160;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061161;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9qG6avX9JWsH5N54g7WyEGTX+T7xiOWxyq0CLFT8AbQ=;
-	b=S2QBfFeczNTxzvbh/4JnjjCXBgDAIRDQAHthgFPFf1J3GLSr3gUTycBsU7C+OFa62ry/
-	 ntbAq7+ZA9aH5dLmsHz0MTFgMlAZc84/qVOzeuXEpWoOoN6xNrbnp8N/e+snOkWTc5NZx
-	 pBvAIMm3rUg44rHoG7QtCdtGW0ClH6TmMISGSVw8dJMbdjvNVFQ+4FjH8rUno+3my+jIw
-	 HM8s3oTHByYZnAu12Ia6xeUryhNR5cyEA9masXGgPReXhfvwKElrUQvq2hrcV2laItkUU
-	 tlBMxj/Ow7saehDD0sg7+aHK3nHNcqOXnatfe/0gV7GQ7UO/S2Y0Zt7/N9DIxH7XFRQ==
+	bh=StEarqO0f/9HitMmJp3S8NsrFJz0KNSM7wz1+OC8MEI=;
+	b=LUowz8DJvSRkrb91upMn5GT0hFhN174MLdDw7sVa7wSvR9Q1qmHPFsJXAUwz/0CGF/UN
+	 HMBGrbZ7fNt1oI8n102HWbd059BxtpcTE1yUGHoMlX+lIjfnguzsEpboF8MFvUfoFQT1C
+	 jxYZ4VKVy2smoakMCVFtk0anbB10D4Gw31OWdeHCC4ew1eopCGL1RGaJCf+V+q2GTHrwm
+	 zeAWuR6JGkqoRK55CadF2QlImwK4/CwzdcsgKXW7MHtaR/fL7lPyn+EezxdIoN9rM4i2H
+	 BbMHNAJSNLbIdUFa1gtWXWcT7KPXOkmpXMAjWxe5fVYVCdplz3AWRiRRYRmW5ndlREQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DB3w5iSH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XOn0NWq9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42BC606D805;
-	Sat,  7 Nov 2026 14:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4DA606D805;
+	Sat,  7 Nov 2026 14:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DB3w5iSH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512D31F0089F;
-	Sat,  7 Nov 2026 14:19:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XOn0NWq9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895651F0089F;
+	Sat,  7 Nov 2026 14:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061159;
-	bh=9qG6avX9JWsH5N54g7WyEGTX+T7xiOWxyq0CLFT8AbQ=;
+	s=korg; t=1794061160;
+	bh=StEarqO0f/9HitMmJp3S8NsrFJz0KNSM7wz1+OC8MEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DB3w5iSHpkiRvg+4Su/dAawICRbGj6fIjJzLq/CWnKdBS5PRKzBf0ds/lG8zrIKkD
-	 pn/Cl6fVKGb7vsK3wzq0YmdJLB9pyz9s5TV9dM5H+I7Gb677+ndnPal8UGaTMlqMkB
-	 2uqHuOS6EVoo/dGgfQrTLu3zXGxzVwf6Cqlf7dC4=
+	b=XOn0NWq9kNRTZLWFVle8yeNRAw7yu/2eC0BDzXcM3WyVWnSe8PA6MDrkqhTx08p75
+	 ctSgy9jx/xmHDhALRxxUL9cVe8SiftPZOZyR3h9+QxYIMVWrj7a9SeI/8NcpgGir47
+	 n2OysXW5JPxhFKpS9j3NMWhhQHfIJYzSrKTQ34uI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sami Tolvanen <samitolvanen@google.com>,
 	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0466/1536] module: Factor out elf_validity_ehdr
-Date: Sat,  7 Nov 2026 08:41:22 -0500
-Message-ID: <20261107135010.602342253@linuxfoundation.org>
+Subject: [PATCH 6.12 0467/1536] module: Factor out elf_validity_cache_sechdrs
+Date: Sat,  7 Nov 2026 08:41:23 -0500
+Message-ID: <20261107135010.631944165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,9 +71,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Maurer <mmaurer@google.com>
 
-[ Upstream commit 90f8f312db720dbabec7c6258ef580b50129cc21 ]
+[ Upstream commit c92aab819d56d51631f0484ed7af11d9d8ff4cb0 ]
 
-Factor out verification of the ELF header and document what is checked.
+Factor out and document the validation of section headers.
+
+Because we now validate all section offsets and lengths before accessing
+them, we can remove the ad-hoc checks.
 
 Signed-off-by: Matthew Maurer <mmaurer@google.com>
 Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
@@ -81,98 +84,176 @@ Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Stable-dep-of: 9a5ff4568932 ("module: validate string table section types")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/main.c | 70 +++++++++++++++++++++++++++++---------------
- 1 file changed, 47 insertions(+), 23 deletions(-)
+ kernel/module/main.c | 125 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 82 insertions(+), 43 deletions(-)
 
 diff --git a/kernel/module/main.c b/kernel/module/main.c
-index ad58c44fb74fd..33fe360e928ef 100644
+index 33fe360e928ef..4a458c36405ba 100644
 --- a/kernel/module/main.c
 +++ b/kernel/module/main.c
-@@ -1673,6 +1673,50 @@ static int validate_section_offset(struct load_info *info, Elf_Shdr *shdr)
+@@ -1717,6 +1717,87 @@ static int elf_validity_ehdr(const struct load_info *info)
  	return 0;
  }
  
 +/**
-+ * elf_validity_ehdr() - Checks an ELF header for module validity
-+ * @info: Load info containing the ELF header to check
++ * elf_validity_cache_sechdrs() - Cache section headers if valid
++ * @info: Load info to compute section headers from
 + *
-+ * Checks whether an ELF header could belong to a valid module. Checks:
++ * Checks:
 + *
-+ * * ELF header is within the data the user provided
-+ * * ELF magic is present
-+ * * It is relocatable (not final linked, not core file, etc.)
-+ * * The header's machine type matches what the architecture expects.
-+ * * Optional arch-specific hook for other properties
-+ *   - module_elf_check_arch() is currently only used by PPC to check
-+ *   ELF ABI version, but may be used by others in the future.
++ * * ELF header is valid (see elf_validity_ehdr())
++ * * Section headers are the size we expect
++ * * Section array fits in the user provided data
++ * * Section index 0 is NULL
++ * * Section contents are inbounds
 + *
-+ * Return: %0 if valid, %-ENOEXEC on failure.
++ * Then updates @info with a &load_info->sechdrs pointer if valid.
++ *
++ * Return: %0 if valid, negative error code if validation failed.
 + */
-+static int elf_validity_ehdr(const struct load_info *info)
++static int elf_validity_cache_sechdrs(struct load_info *info)
 +{
-+	if (info->len < sizeof(*(info->hdr))) {
-+		pr_err("Invalid ELF header len %lu\n", info->len);
++	Elf_Shdr *sechdrs;
++	Elf_Shdr *shdr;
++	int i;
++	int err;
++
++	err = elf_validity_ehdr(info);
++	if (err < 0)
++		return err;
++
++	if (info->hdr->e_shentsize != sizeof(Elf_Shdr)) {
++		pr_err("Invalid ELF section header size\n");
 +		return -ENOEXEC;
 +	}
-+	if (memcmp(info->hdr->e_ident, ELFMAG, SELFMAG) != 0) {
-+		pr_err("Invalid ELF header magic: != %s\n", ELFMAG);
++
++	/*
++	 * e_shnum is 16 bits, and sizeof(Elf_Shdr) is
++	 * known and small. So e_shnum * sizeof(Elf_Shdr)
++	 * will not overflow unsigned long on any platform.
++	 */
++	if (info->hdr->e_shoff >= info->len
++	    || (info->hdr->e_shnum * sizeof(Elf_Shdr) >
++		info->len - info->hdr->e_shoff)) {
++		pr_err("Invalid ELF section header overflow\n");
 +		return -ENOEXEC;
 +	}
-+	if (info->hdr->e_type != ET_REL) {
-+		pr_err("Invalid ELF header type: %u != %u\n",
-+		       info->hdr->e_type, ET_REL);
++
++	sechdrs = (void *)info->hdr + info->hdr->e_shoff;
++
++	/*
++	 * The code assumes that section 0 has a length of zero and
++	 * an addr of zero, so check for it.
++	 */
++	if (sechdrs[0].sh_type != SHT_NULL
++	    || sechdrs[0].sh_size != 0
++	    || sechdrs[0].sh_addr != 0) {
++		pr_err("ELF Spec violation: section 0 type(%d)!=SH_NULL or non-zero len or addr\n",
++		       sechdrs[0].sh_type);
 +		return -ENOEXEC;
 +	}
-+	if (!elf_check_arch(info->hdr)) {
-+		pr_err("Invalid architecture in ELF header: %u\n",
-+		       info->hdr->e_machine);
-+		return -ENOEXEC;
++
++	/* Validate contents are inbounds */
++	for (i = 1; i < info->hdr->e_shnum; i++) {
++		shdr = &sechdrs[i];
++		switch (shdr->sh_type) {
++		case SHT_NULL:
++		case SHT_NOBITS:
++			/* No contents, offset/size don't mean anything */
++			continue;
++		default:
++			err = validate_section_offset(info, shdr);
++			if (err < 0) {
++				pr_err("Invalid ELF section in module (section %u type %u)\n",
++				       i, shdr->sh_type);
++				return err;
++			}
++		}
 +	}
-+	if (!module_elf_check_arch(info->hdr)) {
-+		pr_err("Invalid module architecture in ELF header: %u\n",
-+		       info->hdr->e_machine);
-+		return -ENOEXEC;
-+	}
++
++	info->sechdrs = sechdrs;
++
 +	return 0;
 +}
 +
  /*
   * Check userspace passed ELF module against our expectations, and cache
   * useful variables for further processing as we go.
-@@ -1702,30 +1746,10 @@ static int elf_validity_cache_copy(struct load_info *info, int flags)
+@@ -1746,29 +1827,10 @@ static int elf_validity_cache_copy(struct load_info *info, int flags)
  	unsigned int num_info_secs = 0, info_idx;
  	unsigned int num_sym_secs = 0, sym_idx;
  
--	if (info->len < sizeof(*(info->hdr))) {
--		pr_err("Invalid ELF header len %lu\n", info->len);
--		goto no_exec;
--	}
-+	err = elf_validity_ehdr(info);
-+	if (err < 0)
-+		return err;
+-	err = elf_validity_ehdr(info);
++	err = elf_validity_cache_sechdrs(info);
+ 	if (err < 0)
+ 		return err;
  
--	if (memcmp(info->hdr->e_ident, ELFMAG, SELFMAG) != 0) {
--		pr_err("Invalid ELF header magic: != %s\n", ELFMAG);
+-	if (info->hdr->e_shentsize != sizeof(Elf_Shdr)) {
+-		pr_err("Invalid ELF section header size\n");
 -		goto no_exec;
 -	}
--	if (info->hdr->e_type != ET_REL) {
--		pr_err("Invalid ELF header type: %u != %u\n",
--		       info->hdr->e_type, ET_REL);
+-
+-	/*
+-	 * e_shnum is 16 bits, and sizeof(Elf_Shdr) is
+-	 * known and small. So e_shnum * sizeof(Elf_Shdr)
+-	 * will not overflow unsigned long on any platform.
+-	 */
+-	if (info->hdr->e_shoff >= info->len
+-	    || (info->hdr->e_shnum * sizeof(Elf_Shdr) >
+-		info->len - info->hdr->e_shoff)) {
+-		pr_err("Invalid ELF section header overflow\n");
 -		goto no_exec;
 -	}
--	if (!elf_check_arch(info->hdr)) {
--		pr_err("Invalid architecture in ELF header: %u\n",
--		       info->hdr->e_machine);
--		goto no_exec;
+-
+-	info->sechdrs = (void *)info->hdr + info->hdr->e_shoff;
+-
+ 	/*
+ 	 * Verify if the section name table index is valid.
+ 	 */
+@@ -1781,11 +1843,6 @@ static int elf_validity_cache_copy(struct load_info *info, int flags)
+ 	}
+ 
+ 	strhdr = &info->sechdrs[info->hdr->e_shstrndx];
+-	err = validate_section_offset(info, strhdr);
+-	if (err < 0) {
+-		pr_err("Invalid ELF section hdr(type %u)\n", strhdr->sh_type);
+-		return err;
 -	}
--	if (!module_elf_check_arch(info->hdr)) {
--		pr_err("Invalid module architecture in ELF header: %u\n",
--		       info->hdr->e_machine);
--		goto no_exec;
--	}
- 	if (info->hdr->e_shentsize != sizeof(Elf_Shdr)) {
- 		pr_err("Invalid ELF section header size\n");
+ 
+ 	/*
+ 	 * The section name table must be NUL-terminated, as required
+@@ -1802,18 +1859,6 @@ static int elf_validity_cache_copy(struct load_info *info, int flags)
  		goto no_exec;
+ 	}
+ 
+-	/*
+-	 * The code assumes that section 0 has a length of zero and
+-	 * an addr of zero, so check for it.
+-	 */
+-	if (info->sechdrs[0].sh_type != SHT_NULL
+-	    || info->sechdrs[0].sh_size != 0
+-	    || info->sechdrs[0].sh_addr != 0) {
+-		pr_err("ELF Spec violation: section 0 type(%d)!=SH_NULL or non-zero len or addr\n",
+-		       info->sechdrs[0].sh_type);
+-		goto no_exec;
+-	}
+-
+ 	for (i = 1; i < info->hdr->e_shnum; i++) {
+ 		shdr = &info->sechdrs[i];
+ 		switch (shdr->sh_type) {
+@@ -1832,12 +1877,6 @@ static int elf_validity_cache_copy(struct load_info *info, int flags)
+ 			sym_idx = i;
+ 			fallthrough;
+ 		default:
+-			err = validate_section_offset(info, shdr);
+-			if (err < 0) {
+-				pr_err("Invalid ELF section in module (section %u type %u)\n",
+-					i, shdr->sh_type);
+-				return err;
+-			}
+ 			if (strcmp(info->secstrings + shdr->sh_name,
+ 				   ".gnu.linkonce.this_module") == 0) {
+ 				num_mod_secs++;
 -- 
 2.53.0
 
