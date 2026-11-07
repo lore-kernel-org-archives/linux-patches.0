@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063317;
-	b=A4AmH87FyDlKJ7QJ3+mEVFoGvsQk6A8EW5/dufz/RytwO7te/giOXGVxUQPbW7iYMDxe
-	 eLykSAzjD+C4Mq0Jj8mIM4b3JT5NxlrYXANywKmlpYamsPVXn5V75YDipWVezWGkq33la
-	 JJrVTeR6xyCu8BhgPGnKBBMJAwfbwZb5OT608X85EcqUKEq3tlXUjUlpXo26+Yfg3Duq1
-	 exkviNOeEF44jpjLTzoM6YEyPOz27W3Yz9baDfWee/LYmf1Gl9BnDU8/4Fa1SvkH8Ej9/
-	 aIroEI6SMPFl65IdqaJ4x0lEcFwj5h91nvP0oT/kZSXvY+x1GLz8D6fuOAzXA88SF3A==
+	t=1794063318;
+	b=yhpBlmr0Hyk+YfHM5+D+cDBh3WmLFcppbyhitpPa0WmPPiKK/afm1E6F4L7lhjTTRhXL
+	 6ONTyFXYsV3pC1HiGDiOdJQJ4OQhDOpKCBAjTuuubODdpqvOHYC2SqBSOuFRA9utqoK8n
+	 I4l9aqyt9PtQqlGeyZLI/bRZ+tDeKBvxFusRcjL6RJf+J8xhcZQGTksAsRI5ivalfpOIR
+	 s1jvrDpZCvys8p2eGnAImSptD06pMk2SGpdLdvkGnIV4i3yKe/70OvKf2w0COUa1h7sq2
+	 cNV3rToUFPuRGC5qLPpkp80rEWPLIFqPV0GwJQ5y2pp2kYoCXWtgUBipkCgnsq9KY5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063318;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0+81CuiEoFhGRnec2Hj6IXt6HmKFmoTYgAjAtRDAANE=;
-	b=ksWvmVUB3v4eeagvFGMAhjOkjRMTHlkzm4ve1NaGYhjc1vuMmVgXzbU1QtishJw0+mb1
-	 ges0eQIGowF6dlfdjO5xrn2a4gg53ywNhHde0ZirFMTCppN+4PTCtZ4VsnyWJCLrLhI5E
-	 X0OOsK59vo5XdcaFmI6lf3IQI/cnlmHpjjcJmyYKwJuMB4jopGoF55vgZxlNyEOld+tIN
-	 hhS47nt+bXx6j2xpbfzxiammDpR7rxkCnjv7ny4h7sqWzDeppUPgirl9YXdi9auC6rsJt
-	 hT0j9euQvubM3cVKJa3WE4VdCzcBMWHIYIsngmCcXQGoMhP7/1+761WCLzOEVQ8D+yw==
+	bh=e5Z3UO/+98IxhQX7Ws+H+bwwTXDCswjWqJ8m/rXqUsw=;
+	b=1C4nIxLOrXwBn1oZul49JLyC/6DXK8UukEXJsHUsB7d19z3GglUckX6rc6yEFFl8WOtM
+	 X89RAJ+E+Qlb4kfs6+XjYursvBoISai28Iek9mUSGd2+2Po7d3XBADtrSkbcaG59jZX1y
+	 Jg0VTJVlz1UT5YTrkfDGERpj1MWEtWwL/z8apWL4Ky5CQtvU+m/vTk62fCpMkJvs6ghx5
+	 igvfwdsLbr7dP8PJ0uKrSlOnBjEmjU0C4cQNN4nVJOJINoFWLCPS0mo0Op1SchPU2cZ0f
+	 qfMTogo5eCUyzDxt7M0hGUZ6XY+wS5A9KoHRkYCUFWCIqrW8tKa4Q19XpTAGxCdgTPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rJmL5y1n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wPxgOemz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66441606A32C;
-	Sat,  7 Nov 2026 14:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F69606A32C;
+	Sat,  7 Nov 2026 14:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rJmL5y1n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1425E1F0089F;
-	Sat,  7 Nov 2026 14:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wPxgOemz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483EC1F008A2;
+	Sat,  7 Nov 2026 14:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063317;
-	bh=0+81CuiEoFhGRnec2Hj6IXt6HmKFmoTYgAjAtRDAANE=;
+	s=korg; t=1794063318;
+	bh=e5Z3UO/+98IxhQX7Ws+H+bwwTXDCswjWqJ8m/rXqUsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rJmL5y1nkMiZtiKk9fD1+bK7A3jgIYGhDE6YjMPUbGRnITKkqlY3nuBAcZ/RyMjEb
-	 ZXUFOsZvXPr4igU8L10TfzwNf07LJ+hyL9droOU59f7GYEfgDUib6IuuSfNXskdCas
-	 mbToWOJVmhaKUF7vlhJOSbh+Wm3ViibOgTbYHkLM=
+	b=wPxgOemz2dQXfxFqmR5MzDq5sVpR156p+UmLXKKyFskVJraeSmnBdOgQR+YvfvdQH
+	 qKQ5zPl2wCekWfT/T8tEg3d3agGSJ+5gJgSLwsqIZr9xSjvqO3WOmvcCzLLUgTegqF
+	 igz/E4+A9sY8DyCMtDrHmBqwe67PzeJFiJN4pqrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 477/869] PCI: Avoid D3 on PLX PEX 8532/8533/8548 downstream ports
-Date: Sat,  7 Nov 2026 08:52:39 -0500
-Message-ID: <20261107134909.780549753@linuxfoundation.org>
+Subject: [PATCH 6.18 504/869] fbdev: sh_mobile_lcdc: check for fb_deferred_io_init() error
+Date: Sat,  7 Nov 2026 08:53:06 -0500
+Message-ID: <20261107134910.694976193@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,60 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 8e923e51892c7da91687dd5b8081ddb1f0fb395a ]
+[ Upstream commit 5192201aaac2a923ff98306e3ccda58718ee395f ]
 
-Runtime PM suspends an idle downstream port of a PLX/Broadcom PEX
-8532/8533/8548 switch to D3hot, but that takes the whole switch down
-with it: any device behind another port of the same switch then
-faults with a fatal bus error on its next access, e.g. mptsas probe
-on a Sun Ultra 45.
+fb_deferred_io_init() allocates deferred I/O state, populating
+info->fbdefio_state, or leaving it NULL if an error occurs.
 
-This surfaced on sparc64 once commit a5fb3ff63287 ("PCI: Allow PCI
-bridges to go to D3Hot on all non-x86") let bridges enter D3hot. Keep
-these downstream ports out of D3 by setting PCI_DEV_FLAGS_NO_D3.
+Currently sh_mobile_lcdc_start() ignores its return value.
 
-Fixes: a5fb3ff63287 ("PCI: Allow PCI bridges to go to D3Hot on all non-x86")
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Therefore if an error arises in fb_deferred_io_init() (for instance, due
+to an allocation failure) info->fbdefio_state is left NULL.
+
+When the file is subsequently opened, fb_open() will dereference a NULL
+pointer (calling fb_deferred_io_open()).
+
+Fix this by checking for the error.
+
+Also clear info->fbdefio in that case, so that sh_mobile_lcdc_stop() does
+not attempt to clean up deferred I/O state that was never initialised.
+
+Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260927105609.8813-1-kaloz@kernel.org
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/video/fbdev/sh_mobile_lcdcfb.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index d29ff1da29b17..812b01d24fc47 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -2386,6 +2386,24 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_PLX, PCI_DEVICE_ID_PLX_9050,
- DECLARE_PCI_FIXUP_HEADER(0x1402, 0x2000, quirk_plx_pci9050);
- DECLARE_PCI_FIXUP_HEADER(0x1402, 0x2600, quirk_plx_pci9050);
+diff --git a/drivers/video/fbdev/sh_mobile_lcdcfb.c b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+index 6038f217ab427..c6da5a62f8c5f 100644
+--- a/drivers/video/fbdev/sh_mobile_lcdcfb.c
++++ b/drivers/video/fbdev/sh_mobile_lcdcfb.c
+@@ -1042,7 +1042,11 @@ static int sh_mobile_lcdc_start(struct sh_mobile_lcdc_priv *priv)
+ 			ch->defio.deferred_io = sh_mobile_lcdc_deferred_io;
+ 			ch->defio.delay = msecs_to_jiffies(tmp);
+ 			ch->info->fbdefio = &ch->defio;
+-			fb_deferred_io_init(ch->info);
++			ret = fb_deferred_io_init(ch->info);
++			if (ret) {
++				ch->info->fbdefio = NULL;
++				return ret;
++			}
+ 		}
  
-+/*
-+ * An idle downstream port of a PLX/Broadcom PEX 8532/8533/8548 switch
-+ * autosuspends into D3hot, and that takes the whole switch down with
-+ * it -- any device behind another port of the same switch then sees a
-+ * fatal, non-recoverable bus fault on its next access. Keep these
-+ * ports out of D3 entirely.
-+ */
-+static void quirk_plx_pex_no_d3(struct pci_dev *dev)
-+{
-+	if (pci_pcie_type(dev) == PCI_EXP_TYPE_DOWNSTREAM) {
-+		dev->dev_flags |= PCI_DEV_FLAGS_NO_D3;
-+		pci_info(dev, "avoiding D3 on this downstream port\n");
-+	}
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_PLX, 0x8532, quirk_plx_pex_no_d3);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_PLX, 0x8533, quirk_plx_pex_no_d3);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_PLX, 0x8548, quirk_plx_pex_no_d3);
-+
- static void quirk_netmos(struct pci_dev *dev)
- {
- 	unsigned int num_parallel = (dev->subsystem_device & 0xf0) >> 4;
+ 		sh_mobile_lcdc_display_on(ch);
 -- 
 2.53.0
 
