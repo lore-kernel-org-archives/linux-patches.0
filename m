@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065386;
-	b=g/+UGjq8ldII2SYAOnRJ50TTtXdCDhvw54Uqt7T9V7qUFoiZhKggF0hNDqFXaKR+xNwC
-	 PYuB/vO1Sq0AD22YA5BXFRLKjnsw/QVfZ2JMm1ecgFsWZ4GlVGS68iOtNLZv6bCYQUC6P
-	 3tAmAegtNIXspRRUomnY+Lhh/sOLNRQ3JD2RK7wxLLMdG46mWyDzqRyypA1RX5pobyre5
-	 hPkrPyG2V5tKBk0iV+Cd0aaTukrCkxehelUTfgYu2r7Nz4CBRM4teIa9m6TRJqdlw/Igi
-	 nOkgOg+gtP9q7vs3IBnfRaGfR0qOSg2LwWx716UlknIBaNLYPCKChk0uyl2NWMrkPfQ==
+	t=1794065388;
+	b=ZB/uJQdEBoccUCbeL7VPc6bn4pzpd1r5FT/PVzFL/1IdJZ+WU54Jyzgw5YhcwMex0t4K
+	 Q0VQXPQi41WuVmGY5OKmvfSMqgCLWIW/H0sWrhe0W0w8Uo9GnG4w9GjUDPAjiQTKDbYwP
+	 a2tVu5R+kPKULLRRWHZWpP2jqumFIQuQ7H5eNlvs02eifDFx1Tfx6Aj33zDaK+fPxf894
+	 gbKVC67ZDtctoGk6YsyHTG0hUJxKuCJmrwwKIuhnbhCzC8S4V0y/ZA35/jUK+MkBqnxLB
+	 AaN6wTOvj4+SsIK8yqO8dT2Dj1ZiPs29givVGAr9IrpdOrlQLsRL6fN6EFxZm7ZpFgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065386;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065388;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LUQazszkW3uf64Sf8hCR9IPGkjMOtOmTWE8OuV5toOE=;
-	b=vEVBiR/WHevKba+Hwp+0T5nLdBRm47bNc1E74F47lFukRDT/H69kC5/SgQ5y6DoeB5i+
-	 ulQHi/WoBBJf0FwnbowSMZp6BBPNIkHrqu2lYPl5ahJqUTYBKg1jlYDvqSMqHGKnZ2cE+
-	 WeZuWkvDPV+nFMWr3B654HXDP/LgitETZEI8WZzXW7jftv4GFjhqvOrO0CMTGc73n7j7y
-	 ozcNUbg9oneUHcURFGMNmQ9btu5McVQYJG9DucL+UdVInBlmtK4tbQNVobPYWaMCVXTdB
-	 Tpu8GCySVfIxdSU9ibs07hLPGhM3vcEpJkwWUelL2WyQTo/8e7Awje0EIOqRwjqGofQ==
+	bh=ZiDkEdb4c77byVRX+GNrYGu32/O+mPv9IZaPt7Q3whI=;
+	b=t/k7rQldjYFjnvfrotWiqw7Xcwx3/7k5X4VZdAYZZpPt+3Mn3OlpujXu7O+OLRJVYajF
+	 RQn0JkJ68HoAb+3zvmC5LOWBkfeSHHpmsQovRtNyTNkcWUhEuEvvLVW0vVGEHyRv5IqEJ
+	 PBXtFf543zWg+XUussK0bQcl5dMvd83xPzlVGYOcG2+adX+Z7vxlF6NdYJvUusMcZPtTJ
+	 QO3rnP1K1e8B5n31FPTiYqxuDahT0B99i7EJp9Vt7byGi2Nipd5VY7tfcTMbt8vvdBj/z
+	 IteoBjQtfyTg6POe0hmsXT8ltIrcl/98JDs6f57G5TNR4NuLoAj41SxWDBLVfyXBm8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PjAdZJ9x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YU/eSkKf";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030AE606A32C;
-	Sat,  7 Nov 2026 15:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04DF606A32C;
+	Sat,  7 Nov 2026 15:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PjAdZJ9x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B3B1F0089F;
-	Sat,  7 Nov 2026 15:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YU/eSkKf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2B61F0089F;
+	Sat,  7 Nov 2026 15:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065385;
-	bh=LUQazszkW3uf64Sf8hCR9IPGkjMOtOmTWE8OuV5toOE=;
+	s=korg; t=1794065387;
+	bh=ZiDkEdb4c77byVRX+GNrYGu32/O+mPv9IZaPt7Q3whI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PjAdZJ9x7ttjBo5qkkffP9M00BihCKeZsPrShg11j+3uNy5ZzxqQ7Y5cqX+wBPX69
-	 TlIkohWzPfZaJVClZ5zFE++qCoj4pK2o2aql+TDQtiUj7KP/mBaj4On9xhSd0CrFgc
-	 +JicPGcA4D70L04noxNhgmEaBRMWEn4IXsXX7XOg=
+	b=YU/eSkKfMotRldA9fVKbW4k5poYK3RucAARmBVt+oZZ5Ki/R18nk/Bkr3Su1SabWK
+	 HxhKEXIeUiyjhVMOxv0cH7toNIYQUNd92D3iiyCy3SYtFAI1jBH3CubIL+wUEFIDaj
+	 O7GhCXPeZUXa4U1440DTIaeEeoKZ9C9zSwuo3gPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	He Rongguang <herongguang@linux.alibaba.com>,
-	Peng Wang <peng_wang@linux.alibaba.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1110/1257] tick/nohz: Reevaluate the tick for kicks flushed outside hardirq
-Date: Sat,  7 Nov 2026 08:56:46 -0500
-Message-ID: <20261107135009.906996990@linuxfoundation.org>
+Subject: [PATCH 7.3 1111/1257] KVM: arm64: Set HCR_EL2.BSU to Inner Shareable for guests
+Date: Sat,  7 Nov 2026 08:56:47 -0500
+Message-ID: <20261107135009.931873941@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,63 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Wang <peng_wang@linux.alibaba.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit e389ae428847a2e6a3b698b5967df68ccf90361c ]
+[ Upstream commit 00e73757518020273ccf6308a51f214e58c21ad5 ]
 
-The nohz full kick relies on interrupt exit to reevaluate the
-tick. However, a remote kick can also be flushed from task context without
-an interrupt exit guaranteed to follow. If a tick dependency is set or an
-earlier timer is queued after the idle-exit reevaluation, the required tick
-update can be delayed until another interrupt.
+KVM sets HCR_EL2.BSU to Inner Shareable for guests, so that a guest's
+barriers cover the TLB and I-cache invalidations that HCR_EL2.FB
+broadcasts. However, since HCR_BSU_IS became an alias of the generated
+HCR_EL2_BSU_IS, it is the unshifted field value 0b01, which sets bit
+0 (VM, already set) and leaves BSU at 0b00. A guest's DSB NSH is then
+not required to wait for a broadcast TLBI to complete on other CPUs.
 
-Reevaluate the tick directly from the callback outside hardirq context.
-Keep the existing interrupt exit handling for hardirq callbacks. The
-offline flush remains harmless because tick_sched_timer_dying() has already
-cleared TS_FLAG_NOHZ.
+Build the field with SYS_FIELD_PREP_ENUM().
 
-Fixes: 4b44a21dd640 ("irq_work, smp: Allow irq_work on call_single_queue")
-Fixes: a5183862e76f ("tick/nohz: Conditionally restart tick on idle exit")
-Suggested-by: Frederic Weisbecker <frederic@kernel.org>
-Co-developed-by: He Rongguang <herongguang@linux.alibaba.com>
-Signed-off-by: He Rongguang <herongguang@linux.alibaba.com>
-Signed-off-by: Peng Wang <peng_wang@linux.alibaba.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Fixes: d0f39259eff4 ("arm64: sysreg: Add layout for HCR_EL2")
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261016081558.805411-1-fuad.tabba@linux.dev
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261023145101.8217-1-peng_wang@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-sched.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/kvm_arm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
-index 6c3fea3867139..baa3ac9b48f88 100644
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -400,9 +400,21 @@ static bool can_stop_full_tick(int cpu, struct tick_sched *ts)
- 	return true;
- }
- 
-+static void tick_nohz_full_update_tick(struct tick_sched *ts);
-+
- static void nohz_full_kick_func(struct irq_work *work)
- {
--	/* Empty, the tick restart happens on tick_nohz_irq_exit() */
-+	struct tick_sched *ts = this_cpu_ptr(&tick_cpu_sched);
-+
-+	if (WARN_ON_ONCE(!tick_nohz_full_cpu(smp_processor_id())))
-+		return;
-+
-+	/* Task-context flushes may not be followed by an IRQ exit. */
-+	if (!in_hardirq()) {
-+		if (WARN_ON_ONCE(tick_sched_flag_test(ts, TS_FLAG_INIDLE)))
-+			return;
-+		tick_nohz_full_update_tick(ts);
-+	}
- }
- 
- static DEFINE_PER_CPU(struct irq_work, nohz_full_kick_work) =
+diff --git a/arch/arm64/include/asm/kvm_arm.h b/arch/arm64/include/asm/kvm_arm.h
+index 4bfbd827c5aa7..b3e9dd302730e 100644
+--- a/arch/arm64/include/asm/kvm_arm.h
++++ b/arch/arm64/include/asm/kvm_arm.h
+@@ -98,7 +98,7 @@
+  * TID1:	Trap REVIDR_EL1, AIDR_EL1, and SMIDR_EL1
+  */
+ #define HCR_GUEST_FLAGS (HCR_TSC | HCR_TSW | HCR_TWE | HCR_TWI | HCR_VM | \
+-			 HCR_BSU_IS | HCR_FB | HCR_TACR | \
++			 SYS_FIELD_PREP_ENUM(HCR_EL2, BSU, IS) | HCR_EL2_FB | HCR_EL2_TACR | \
+ 			 HCR_AMO | HCR_SWIO | HCR_TIDCP | HCR_RW | HCR_TLOR | \
+ 			 HCR_FMO | HCR_IMO | HCR_PTW | HCR_TID3 | HCR_TID1)
+ #define HCR_HOST_NVHE_FLAGS (HCR_RW | HCR_API | HCR_APK)
 -- 
 2.53.0
 
