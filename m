@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062058;
-	b=d+/Zwm0Ey2LzEnv/GKOXJ89Bb0tcFkIO6a32nexGVjJMaZGEBI3/j6A+Ql1ios4/5Rpr
-	 oh/Zh5BB3FMyUtpAQ9obJarS3yTNhHcyyjbALohV/zVBT1JNYzSB7adBsrNNv72vHPOff
-	 +XMsmhsAfCEJE7SlitqK014pQET4eWd7yWeVSUxxv8eeF9Q3yJauk2CEcD3pcO/vWuvS+
-	 UMoqyeNvdALB9no4xK2d5r+JeiREkpzSkYzHjeJGiGHsnXYRIAmYIw7Lr7Bp9xmBiqs1A
-	 OQWKagmFl3daHUtC/nBdyJ75sX66w4xD3uXSmd/qqeQry6sNqxQQYMj37A8H9GKNEuw==
+	t=1794062059;
+	b=A95O9XcOw84NiS3DVUh9CWHND6UO1LeHWSFuau5vYYQXKYNcNKBKKIiB+O6EVvb4N1dQ
+	 romfhFHQ5duoVOTaGz7MqoFP9Lqj4tsDUWcsqK1NhlDQGQJctmkUeCflOScCN4zCY0Cy3
+	 RRqV0AQu8RNbaiIoraivhqiJFDdpdfJjWeMrzYov/HjS6YzsTl02zjHrXW39NWThiU0cP
+	 +jPQ4wpYz+zvvnePHf4+iNFrfKPJs7MNxrW1k+7q8i2nebbPIG90nP6EeVfmvshVa4obU
+	 uayVUtaUMVS7eAI0mCF7B6R/oAx6hgMSH/Oqurc8MBCPMpHl5HUxMWdCdqbc9cMncHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062058;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062059;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zn5olvCFCP4m0V/3uuBvKqjo9Mhd7d7E0TKizipFuQU=;
-	b=PtO6lrbhXrKRvJBX4buREW+rp17wURQRtfJAGc+v9548CiHUxZkkuDKgwhR96Xir5xpp
-	 uxpVpozhDIjOgyGRdl64T4cVecjzL+tF/oE7AnA9OjFmyJp6nENH/cy8ysr+iV947ZX9Y
-	 zegPDoXQxad3L3inf3i3QE99E+CJrHzIuzB5wdpaWwd7LjCCZr/crrTH0/OYgUrrCOUAa
-	 2t/ETqWPC5CZv8Cg56HR+GwhVIn4qYY1Sj5kVsvAtYSQPbUtTscTdpFlUudofkOBZARzi
-	 5TibOLoxEYyClHdOzBZ0mR07Hb5ZPt4UxwerXwXfcBGQ81tvhigDzQST+fbKitiOKPw==
+	bh=3czAOHcCYmlULUVDZ/n+3Vg7eNjz6fqFlPnRWJCA53Y=;
+	b=cD8bUKgjBBftcBZOjboV+9UmtEWvEZ7Ioj4BTZTfBAdlGqpsAgPzDvxL4w/jz05Iwfft
+	 0Qw7TJlVYwmZVynAVUIotjXGC2JiuPA4GueQFDkN8iQLKHYCseba+KZmBiicurYAC4/q1
+	 y3/30pQTk6NXHwnrM/tnf7mCAshxGiuuxaTDCj0QFzvl6LJcKuXzhK5lo6ZjOlh2qT2Jh
+	 zZbw6hwZ7D4W3tfcqyi6nixRY+T9sNo83u30RfzM3gMFZhNFoO0/6pu6sGQylomh539cm
+	 U1CNSqrQ/Y2NTAdWRTIXVCH7HaN4pmK/U2TrtrQPO6zt9uXZSV9OGI+6Al4/Zr53/QQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ys+w+VXm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RbzAtMIz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51D4606A332;
-	Sat,  7 Nov 2026 14:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9A2606A332;
+	Sat,  7 Nov 2026 14:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ys+w+VXm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F3E1F0089F;
-	Sat,  7 Nov 2026 14:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RbzAtMIz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2981F008BF;
+	Sat,  7 Nov 2026 14:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062057;
-	bh=Zn5olvCFCP4m0V/3uuBvKqjo9Mhd7d7E0TKizipFuQU=;
+	s=korg; t=1794062059;
+	bh=3czAOHcCYmlULUVDZ/n+3Vg7eNjz6fqFlPnRWJCA53Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ys+w+VXmibiF4aJBK3W/lkU/qmp54PiaHps8RXOBfI99bxxrcrrvNZXBZBf8FGpIb
-	 WJ/eWnf9M9ocqFsP3cjOC0VkOf+gs4DWLvSSLwisonZS4o6eElp6mqCejUE2xzEsGi
-	 g6PrKTNz09D15jJ9+HcWBVQ0y/CE37Nr+brFtSTk=
+	b=RbzAtMIzfXDP8P4Sb/IJ2YdGbsLzQ3/vz3qDnP+id5/1v9bD2zuKKIgSasTIpuNys
+	 HHoTWTeX/2PFILngzqQ1F/emSxjFVXRWYCY+2bdF7uq+i4RRxML51UGtKO1tVNXmhN
+	 U1uW1/vOeIDLBVCOTXt3mfgnCTvbRbNiWsg8bMCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1039/1536] crypto: qat - zero the VF migration state buffer on save
-Date: Sat,  7 Nov 2026 08:50:55 -0500
-Message-ID: <20261107135026.857035586@linuxfoundation.org>
+Subject: [PATCH 6.12 1040/1536] media: cec: extron: clear response tail before dispatch
+Date: Sat,  7 Nov 2026 08:50:56 -0500
+Message-ID: <20261107135026.885146683@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,53 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 5d504e65516dde8c88117378292e9c78f3d2cf58 ]
+[ Upstream commit a601427f03e015e3d4d2ba44cfa6e0de144983b9 ]
 
-The QAT VF migration state buffer is allocated with kmalloc(), while
-qat_vf_save_state() exposes all state_size bytes to userspace. The state
-manager writes only the serialized sections, leaving the unused tail
-unchanged. The first save can therefore disclose stale heap contents,
-and subsequent saves can disclose data left by an earlier migration.
+The serial receive buffer is reused between responses. Terminating a
+short response with one NUL leaves bytes from the previous response
+behind it, while the dispatcher also checks fixed offsets beyond some
+prefixes. Those checks can consume stale tail bytes.
 
-Zero the whole buffer before writing the setup data. Once the setup data
-is present, preserve it and zero the remaining state area before each
-state save.
+Clear up to ten bytes at the end of each completed response, limited by
+the remaining array capacity. This includes the terminator and covers
+the dispatcher's fixed-offset tests without adding a separate length
+condition to every prefix branch.
 
-Fixes: f0bbfc391aa7 ("crypto: qat - implement interface for live migration")
+The issue was found by our static-analysis tool.
+
+Fixes: 056f2821b631 ("media: cec: extron-da-hd-4k-plus: add the Extron DA HD 4K Plus CEC driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_gen4_vf_mig.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen4_vf_mig.c b/drivers/crypto/intel/qat/qat_common/adf_gen4_vf_mig.c
-index a62eb5e8dbe6a..d9f96b02c9401 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_gen4_vf_mig.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_gen4_vf_mig.c
-@@ -836,6 +836,9 @@ static int adf_gen4_vfmig_save_state(struct qat_mig_dev *mdev)
- 		return ret;
- 	}
- 
-+	memset(mdev->state + mdev->setup_size, 0,
-+	       mdev->state_size - mdev->setup_size);
-+
- 	adf_mstate_mgr_init(vfmig->mstate_mgr, mdev->state + mdev->setup_size,
- 			    mdev->state_size - mdev->setup_size);
- 	if (!adf_mstate_preamble_add(vfmig->mstate_mgr))
-@@ -933,6 +936,8 @@ static int adf_gen4_vfmig_save_setup(struct qat_mig_dev *mdev)
- 	if (mdev->setup_size)
- 		return 0;
- 
-+	memset(mdev->state, 0, mdev->state_size);
-+
- 	adf_mstate_mgr_init(vfmig->mstate_mgr, mdev->state, mdev->state_size);
- 	if (!adf_mstate_preamble_add(vfmig->mstate_mgr))
- 		return -EINVAL;
+diff --git a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
+index ac1013e114304..4f0a216352252 100644
+--- a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
++++ b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
+@@ -846,7 +846,9 @@ static irqreturn_t extron_interrupt(struct serio *serio, unsigned char data,
+ 			return IRQ_HANDLED;
+ 		memcpy(extron->data, extron->buf, extron->idx);
+ 		extron->len = extron->idx;
+-		extron->data[extron->len] = 0;
++		/* Keep fixed-offset response tests from using stale tail bytes. */
++		memset(extron->data + extron->len, 0,
++		       min_t(size_t, 10, sizeof(extron->data) - extron->len));
+ 		if (debug)
+ 			dev_info(extron->dev, "received %s\n", extron->data);
+ 		extron->idx = 0;
 -- 
 2.53.0
 
