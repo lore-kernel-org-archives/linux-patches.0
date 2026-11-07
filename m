@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062064;
-	b=t2iDU8f9P/RWb6PRCtTqQppWRS41SZmjh2ei9aQl/F2lFi7wgVjEFe4BSRVR6wkVuzwH
-	 KKCMZ12N+MRCYMXX+FAZDYTtPx32eS//wnyPaGZkSbQQ8j923/rhIXPqKMl1R43mWG8hE
-	 o2vcdv8W3rUwiKIek/nM9k7CZDQT61c7nU4MaL+E7fghItXOOKENl9gTQ3261NL7Xa4ov
-	 fAnPPtJFvcIfGlZwAuPvwVrM5qjw0mI3uJjR1Fxe3lX2zkYOOiAytD3tkiT2exqYFZL6q
-	 0N/KF9Ce46cemip9A4xtP2L0JTfU9NIQFZ4YZgXqSOzK5lg7CACfJSkc9mS9HZxWAOw==
+	t=1794062065;
+	b=F0qxh6gh+H/fPeYHVo3dRiFxbe81C+HgfOAFMsSUtof/IdMtQ+RDzX1SHa/d4Zsp1U9q
+	 Sli1xSVjTOgmCkt+CFMGsDN1Uo3W2mcumF/iadgqGtksLJcs2ZOsbctJSH4v/7lPr4Lq3
+	 MBfmJdkFHW+7H6qBRA00NLxrIm5nsGkXtqD5tUHpV9hM2wz+AS9Z56O6UB2188N0/KlOT
+	 xzlFe8mMenRqAUsJ7ch8DA5NOxOwnVoCFxi8nuvDtRuM62rRfGlM7k+NMIo00WhmeEMGa
+	 5JtPx1ZVVb4/mQBOo1Y3LUS4HanaVw4NhddvPHMH2EHsO8hGfUOI1X0TAe0lZPCQVcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062064;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062065;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v4n4+NLATxheyyNbC2dZUjTx0y+JSjEX2nqpXkDVR/o=;
-	b=KHtTKyZEdqxAOwPFFx6pSoZ6oWz2/XKeHHTmRhl4bcORc6OH5y/uY4WLX3OcDWpgiXTl
-	 Oucwoqq1EoX5BTFp9AxM2DEAX8P9F8ZGO6bIsuO7tUBH5ctmXGi7Te/kMbVLtsTX0pKCs
-	 aLw8mNNzeeRE9wrB7eO+IXwGgNUbadlmlEHuTkjZ/KibcwTTRvTEngkzmWsOqO+eq0sBX
-	 +0kzmaZwv5JO/2hM7cQ+mnh1yZnOyZTnWPeUD51Jo/aOYDyeDMWQeowwm9yJ15GjmdOOC
-	 u+zgNxxcS+Zz6Tk7MlC9zWpREhyIvXR7Gn83ZUGfJ1xgh3t7f7Fhtcd+x7RPgvuI4TQ==
+	bh=D55TV0F6pi356WNd1dk69oequciUtKwfBGGRXBc5vQ4=;
+	b=GjnX5TDg3Lgj5oyU+4cUFdjeKVQ/4+xD0w6sA0BO9sXzDvUkeOX9zvdQaM6Y+s44qQIO
+	 DNdsbIYVEkQPY9xLtkLHfhbDaZWOqqrSNVTT2rcEYCNkHPJT1tiQKJI2NoIdbM8iTvmkf
+	 J1MP7ZdNW6wFY3GYtsS97RC4HoIFLlCRCueUZB5cNRtqufJE5nW9XuWHGThDXyQOBjHiZ
+	 SNxKFti/zKJpmCaEGPwaNSlgJQOf8Mvsv0sIvVccCbflP4PzX6sAema55WHr8KOf4ttMc
+	 sFqoj+rMyzikH56s47Dg5MciKjIAxYIf5pcay/hEcz+BxV+XY+O5I7tCFLLra6qEh/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t5b0Rnt9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQJG+wiP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31212606D80D;
-	Sat,  7 Nov 2026 14:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620CC606D80D;
+	Sat,  7 Nov 2026 14:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t5b0Rnt9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3EA41F0089F;
-	Sat,  7 Nov 2026 14:34:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQJG+wiP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104DA1F008A1;
+	Sat,  7 Nov 2026 14:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062064;
-	bh=v4n4+NLATxheyyNbC2dZUjTx0y+JSjEX2nqpXkDVR/o=;
+	s=korg; t=1794062065;
+	bh=D55TV0F6pi356WNd1dk69oequciUtKwfBGGRXBc5vQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t5b0Rnt9SkJ5ToDttNSFCtVBlH0noib4MOE5ZFfq+Zo01zAa4Zk6tGLsKCQxXsHnZ
-	 hHwqV+citTuZtmZH63mykrCgCZPyJLPFcFeZKRIsqCkC91HOUgfLv0ZvxUIYgdg1Cz
-	 IXjSDebcW+Qi+zUONzUANr0x1xTlI1WjEkG/T6hI=
+	b=zQJG+wiPephqOIyBuc2yY32eXnB1f2DxL3onxWCkVr0QZK4PQ6aGqy1QWGo0g0/io
+	 JzHTnuamR1JQV40n/gB7alnPfmI6RNivvwn7lQv72RgpZ8QnYzzznl0v6Apzea2H9S
+	 nPpBiUdgtSb4TlQ7l/sGv9pJp9/ve1xdcB/OqSRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Myeonghun Pak <mhun512@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1044/1536] media: cx18: Disable PCI device on probe failure
-Date: Sat,  7 Nov 2026 08:51:00 -0500
-Message-ID: <20261107135026.998308897@linuxfoundation.org>
+Subject: [PATCH 6.12 1045/1536] media: tw68: balance PCI enable on cleanup
+Date: Sat,  7 Nov 2026 08:51:01 -0500
+Message-ID: <20261107135027.027054440@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,72 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 2aefbc29765641e1e1a26b96cee194ac7d34ff49 ]
+[ Upstream commit fc02261fdca3ea95e4dcb6b38ab77f0f197c3750 ]
 
-cx18_setup_pci() enables the PCI device but does not disable it when
-DMA mask setup or the memory-region reservation fails. Later probe
-failure paths release the region without balancing the enable either.
+tw68_initdev() leaves the PCI device enabled after a later probe failure
+or tw68_finidev(). Use pcim_enable_device() to balance the enable reference
+when the driver is detached or probe fails.
 
-Unwind the enable inside cx18_setup_pci() when that helper fails after
-enabling the device. Once setup succeeds, disable it in the probe
-cleanup after releasing the memory region. Setup failures skip that
-cleanup, so each successful enable is balanced exactly once.
-
-Keep the existing error codes and normal removal path unchanged.
+The managed disable runs after the managed IRQ has been released.
 
 This issue was identified during our ongoing static-analysis research
 while reviewing kernel code.
 
-Fixes: 1c1e45d17b66 ("V4L/DVB (7786): cx18: new driver for the Conexant CX23418 MPEG encoder chip")
+Fixes: e15d1c12c587 ("[media] tw68: refactor and cleanup the tw68 driver")
 Cc: stable@vger.kernel.org
+Assisted-by: LLM
 Co-developed-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Assisted-by: OpenAI:GPT-5.6
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cx18/cx18-driver.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/pci/tw68/tw68-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/cx18/cx18-driver.c b/drivers/media/pci/cx18/cx18-driver.c
-index 743fcc9613744..7c6de8ceb909d 100644
---- a/drivers/media/pci/cx18/cx18-driver.c
-+++ b/drivers/media/pci/cx18/cx18-driver.c
-@@ -806,12 +806,12 @@ static int cx18_setup_pci(struct cx18 *cx, struct pci_dev *pci_dev,
- 	}
- 	if (dma_set_mask(&pci_dev->dev, DMA_BIT_MASK(32))) {
- 		CX18_ERR("No suitable DMA available, card %d\n", cx->instance);
--		return -EIO;
-+		goto err_disable_device;
- 	}
- 	if (!request_mem_region(cx->base_addr, CX18_MEM_SIZE, "cx18 encoder")) {
- 		CX18_ERR("Cannot request encoder memory region, card %d\n",
- 			 cx->instance);
--		return -EIO;
-+		goto err_disable_device;
- 	}
+diff --git a/drivers/media/pci/tw68/tw68-core.c b/drivers/media/pci/tw68/tw68-core.c
+index 35dd19b2427ec..577035fdd7c2d 100644
+--- a/drivers/media/pci/tw68/tw68-core.c
++++ b/drivers/media/pci/tw68/tw68-core.c
+@@ -228,7 +228,7 @@ static int tw68_initdev(struct pci_dev *pci_dev,
  
- 	/* Enable bus mastering and memory mapped IO for the CX23418 */
-@@ -835,6 +835,10 @@ static int cx18_setup_pci(struct cx18 *cx, struct pci_dev *pci_dev,
- 		   cx->pci_dev->irq, pci_latency, (u64)cx->base_addr);
- 
- 	return 0;
-+
-+err_disable_device:
-+	pci_disable_device(pci_dev);
-+	return -EIO;
- }
- 
- static void cx18_init_subdevs(struct cx18 *cx)
-@@ -1121,6 +1125,7 @@ static int cx18_probe(struct pci_dev *pci_dev,
- 	cx18_iounmap(cx);
- free_mem:
- 	release_mem_region(cx->base_addr, CX18_MEM_SIZE);
-+	pci_disable_device(pci_dev);
- free_workqueues:
- 	destroy_workqueue(cx->in_work_queue);
- err:
+ 	/* pci init */
+ 	dev->pci = pci_dev;
+-	if (pci_enable_device(pci_dev)) {
++	if (pcim_enable_device(pci_dev)) {
+ 		err = -EIO;
+ 		goto fail1;
+ 	}
 -- 
 2.53.0
 
