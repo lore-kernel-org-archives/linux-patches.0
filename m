@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065187;
-	b=MmJ43qWHIoaBea2bKfoAWSsPOUpYLEkAov3EDHb5znFk2BhtcJKog2rqjaLc/IX/6BZL
-	 1jL5VCqfjiLkoP9v1bo5Z3qqA64WpWHwZkaTUMajIwFRDcGVnO69IWdd0A/c/hUwnMACS
-	 DCKjx8yfL0VFZQYf1X0YMxiLNx0qFvAS1pWJf8IPmGQMugmRi35zKoULc4L7J69Hd6bGA
-	 LBv7GqAKxMfdtjM4++I61dR5poPilac9BSnQOpsY9jDb3anF2zNMGmkn1OV+8JRxuJgE3
-	 Q+3vLq3pqafRDTmEm2+PP+o4iCCyjUUAcxmV21hhxcpvhb+tdIYoNk9TEiJQ8/B9pWQ==
+	t=1794065188;
+	b=f9+2tZY/b1RvbeCIvEcQLDmmgt6O/gNad+TZMS51tnvVOKf6Yjs+AruxXCihq3HMs0cl
+	 P9EmoyLHpbuJg5TqD4xC4BcduelqPL1A8eOcGk1qGu9XnSbn8hWjm+ZxSpSiMuDxXR6Cn
+	 vhXB/D1aRnFmWXjDQn5/5Pxn1DYaOLFUbYpkqCAMwGEBffE8gzDxijbxz9WqtG4H3K2+N
+	 cedEuc/Th+gRUs/KDtjm8GetSG5DyQf8wu0gv3d8KsepyhTigdxklwpFdyquqLrG5ATYV
+	 hkWrR1iHMMeFE+yxcTPIbR9Neg5mCb8Mcw2etT1DQ3X6CB+YrbeFYveqpomojSe/CXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065187;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065188;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/5wNocl6IE6fyS+A0Ga4ErfkjWuuCXFv4eSqK4ue7QU=;
-	b=Vr/fee7pFIiQDc8te6ZlOWqbEgaMBIzCt2IY/9MOzdgWZXAhhMQLLNZOskDrxtjJeNKd
-	 jDCxNxclGEJ4Mojh+DKUbLIB3tJKF8gSB6VWK8UyDAMTx4Pr4PbptUpvRNdpBZkDWns10
-	 N2mICzElwkzt94HSIU/7WF9wnz9D/4UmfjNcBw9XGSfK/ApuFK2r9SKfkOb3QL4RCBFdC
-	 2L5Enc709p1oQigpIr9+jnBI3B0W3xADwWTYsdkaFMMo3bQNYn9721BTOZO9qRf+T5XHz
-	 sDWtMAv0Zkgguy7widPhWfAQbhnaggDTuO647w5LUVOGPRUHsjUO1tSRzk6pjjlfm+A==
+	bh=wXcMrEEvgsP83QeyO90WrBUSVrdyckT05YVTqKyWJ5o=;
+	b=giytb34fBxqKVzN9R+Uk+IAHzQ/sbPob6jKN7l7d+/Q1x0MbEKqx+Qnj9R7JfEOqKUKM
+	 lGKLjoz55GuG/oDduDd65+aUp+YnTW0P8TB9xmIZV5M1VYy4JE6CaTpy3cTh1qegQqcyF
+	 fR2W/lTRm4H7hkqP0dHPyBJwEOy/+zNvlUZRNwjNp1xqBuYAUGLeQXkSLNgQaRz0gWFvU
+	 075PnYqsgUhMqFX8U+DOACMGKBTPPN21/1tetTMFFiU+3CQ0NZ3BiQ8Leq9xUiNJwZ6IK
+	 5UuY5tAMPmvOze9/8rPlYWPzmIttGscC4XvUaUyHj8CIULE0waIRpZlm4nIwD2oKPcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gRtS/uyV";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MniZBXXd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA53606A335;
-	Sat,  7 Nov 2026 15:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B7F606A335;
+	Sat,  7 Nov 2026 15:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRtS/uyV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4971F0089F;
-	Sat,  7 Nov 2026 15:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MniZBXXd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE89A1F0089F;
+	Sat,  7 Nov 2026 15:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065186;
-	bh=/5wNocl6IE6fyS+A0Ga4ErfkjWuuCXFv4eSqK4ue7QU=;
+	s=korg; t=1794065188;
+	bh=wXcMrEEvgsP83QeyO90WrBUSVrdyckT05YVTqKyWJ5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRtS/uyVQruL+/hU6ZNez1n6lLC9+Y+CRyAME3OPsB7ANp6ND6C4uxNx004OO90XL
-	 isOI5I+nKd6SnHVAM/hsQ0pf+8NaYCS+3iqqompZtpXBdu9zT8mGinIWl5j0W2lebk
-	 fsGcXOQ9HDn+D/X6agrTrAcMrjXgrOfqAF2R+1LI=
+	b=MniZBXXd3esif/WMMHZG74d+ttSsC7pZWCXwsLqr4UZ8j/joOtORvJvmXNKQc+RnN
+	 Bzabf0eG5SwKF9Cl5nCN160x7b4FOMQqe2QTXjIAPgOLoaxC7IXqZo65+zQ14KM1Ma
+	 myi8rtOR4/27Cvn2cKdCh1BYEGLUo+cKh5VUOXHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Hengyu Liang <hengyul@cs.unc.edu>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0990/1257] exfat: mark straddling folio RO and zero the post-EOF range
-Date: Sat,  7 Nov 2026 08:54:46 -0500
-Message-ID: <20261107135006.709014705@linuxfoundation.org>
+Subject: [PATCH 7.3 0991/1257] exfat: free clusters beyond EOF when a write fails or is short
+Date: Sat,  7 Nov 2026 08:54:47 -0500
+Message-ID: <20261107135006.736583587@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,143 +68,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Hengyu Liang <hengyul@cs.unc.edu>
 
-[ Upstream commit 1043264c3cfa43b0668f7472a749868c1e21749b ]
+[ Upstream commit b4c282c0d82e8715ea9ed0b35813a3f365e3f952 ]
 
-When extending a file across a non-page-aligned EOF, the folio
-containing the old EOF must be marked RO so that subsequent mmap
-writes trigger ->page_mkwrite() and update valid_size.
+Commit 82a81a7352bc ("exfat: add iomap buffered I/O support") and commit
+867b9c96dc83 ("exfat: add iomap direct I/O support") made a write
+allocate the clusters for its whole range in one step. They also dropped
+exfat_write_failed(), which freed the clusters beyond the end of the
+file after a failed or short write.
 
-The straddling folio remains mapped to the same filesystem block
-after the file is extended. As a result, the existing writable PTE
-may remain in place, allowing mmap writes to bypass ->page_mkwrite()
-and leave valid_size unchanged.
+However, a write can stop early, for example when the process is killed
+or when a part of the buffer cannot be read. As of now, the clusters for
+the part that was not written stay allocated beyond the end of the file.
+exfat_cont_expand() does not expect them, so a later write or truncate
+that extends the file fails with ENOSPC. The directory entry records
+only the size of the file, so the space can be lost for good once the
+volume is unmounted.
 
-Furthermore, writes to the post-EOF range may occur between
-truncate_pagecache() and locking the folio. So the post-EOF range
-should be zeroed after marking the straddling folio RO, and using
-truncate_pagecache() to zero out the post-EOF range is redundant.
+The issue can be reproduced on a 64M volume made by mkfs.exfat and
+mounted on /mnt, with a write of 1M from a buffer that has only its
+first 4K mapped:
 
-Introduce exfat_pagecache_isize_extended() to mark the straddling
-folio RO and zero the post-EOF range after clearing writable mapping.
-This ensures that data written beyond the old EOF before the extension
-is not exposed as valid file data, and that subsequent mmap writes
-trigger ->page_mkwrite() to update valid_size.
+    #include <fcntl.h>
+    #include <stdio.h>
+    #include <sys/mman.h>
+    #include <sys/stat.h>
+    #include <unistd.h>
+
+    int main(void)
+    {
+            char *p = mmap(NULL, 8192, PROT_READ | PROT_WRITE,
+                           MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+            int fd = open("/mnt/f", O_CREAT | O_WRONLY, 0644);
+            struct stat st;
+
+            munmap(p + 4096, 4096);
+            printf("write: %zd\n", write(fd, p, 1 << 20));
+            fstat(fd, &st);
+            printf("blocks: %ld\n", (long)st.st_blocks);
+            printf("ftruncate: %d\n", ftruncate(fd, 1 << 16));
+            return 0;
+    }
+
+Before commit 82a81a7352bc ("exfat: add iomap buffered I/O support"),
+the result is:
+
+    write: 4096
+    blocks: 8
+    ftruncate: 0
+
+After that commit, the result is:
+
+    write: 4096
+    blocks: 2048
+    ftruncate: -1
+
+This patch will bring back exfat_write_failed() and call it when a write
+ends before the end of its range, so that the clusters beyond the end of
+the file are freed again. It waits for direct I/O in flight first, as
+exfat_setattr() does before it frees clusters.
 
 Fixes: 82a81a7352bc ("exfat: add iomap buffered I/O support")
+Fixes: 867b9c96dc83 ("exfat: add iomap direct I/O support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Assisted-by: LLM
+Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/file.c | 72 ++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 63 insertions(+), 9 deletions(-)
+ fs/exfat/file.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index d24f0650bfc88..f106db945d8dd 100644
+index f106db945d8dd..dc57d2c2f0f0f 100644
 --- a/fs/exfat/file.c
 +++ b/fs/exfat/file.c
-@@ -17,11 +17,70 @@
- #include <linux/fileattr.h>
- #include <linux/iomap.h>
- #include <linux/pagemap.h>
-+#include <linux/rmap.h>
- 
- #include "exfat_raw.h"
- #include "exfat_fs.h"
- #include "iomap.h"
+@@ -804,6 +804,19 @@ static int exfat_extend_valid_size(struct inode *inode, loff_t new_valid_size)
+ 	return ret;
+ }
  
 +/*
-+ * Unlike pagecache_isize_extended(), this function updates i_size while
-+ * holding the straddling folio lock, and does not skip the straddling
-+ * folio when the filesystem block size is >= PAGE_SIZE or when 'from'
-+ * and 'to' fall within the same filesystem block.
-+ *
-+ * This ensures that the folio is marked RO and the post-EOF range is
-+ * zeroed before readers or writeback can observe the updated i_size.
++ * The clusters for a write are allocated before the data is copied. Free the
++ * ones that a failed or short write has left beyond the end of the file.
 + */
-+static void exfat_pagecache_isize_extended(struct inode *inode, loff_t from,
-+					   loff_t to)
++static void exfat_write_failed(struct inode *inode)
 +{
-+	struct folio *folio;
-+
-+	if (!(from & (PAGE_SIZE - 1))) {
-+		i_size_write(inode, to);
-+		return;
-+	}
-+
-+	folio = filemap_lock_folio(inode->i_mapping, from >> PAGE_SHIFT);
-+
-+	/* Folio not cached? Nothing to do */
-+	if (IS_ERR(folio)) {
-+		i_size_write(inode, to);
-+		return;
-+	}
-+
-+	/*
-+	 * See folio_clear_dirty_for_io() for details why folio_mark_dirty()
-+	 * is needed.
-+	 */
-+	if (folio_mkclean(folio))
-+		folio_mark_dirty(folio);
-+
-+	/*
-+	 * Zero the post-EOF range before publishing the new size. Writeback
-+	 * normally does this, but the extension would expose the tail to
-+	 * readers before writeback gets a chance to zero it.
-+	 */
-+	if (folio_test_dirty(folio)) {
-+		loff_t offset, end;
-+
-+		offset = from - folio_pos(folio);
-+		end = min_t(loff_t, to - folio_pos(folio),
-+			    folio_size(folio));
-+		folio_zero_segment(folio, offset, end);
-+	}
-+
-+	/*
-+	 * Publish the new size after zeroing the tail. Uptodate folios can
-+	 * be read without taking the folio lock.
-+	 */
-+	i_size_write(inode, to);
-+
-+	folio_unlock(folio);
-+	folio_put(folio);
++	inode_dio_wait(inode);
++	filemap_invalidate_lock(inode->i_mapping);
++	truncate_pagecache(inode, i_size_read(inode));
++	exfat_truncate(inode);
++	filemap_invalidate_unlock(inode->i_mapping);
 +}
 +
- static int exfat_cont_expand(struct inode *inode, loff_t size)
+ static ssize_t exfat_fallback_buffered_write(struct kiocb *iocb,
+ 		struct iov_iter *from)
  {
- 	int ret;
-@@ -32,8 +91,6 @@ static int exfat_cont_expand(struct inode *inode, loff_t size)
- 	struct exfat_chain clu;
- 	loff_t oldsize = i_size_read(inode);
+@@ -862,7 +875,7 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	struct file *file = iocb->ki_filp;
+ 	struct inode *inode = file_inode(file);
+ 	struct exfat_inode_info *ei = EXFAT_I(inode);
+-	loff_t pos, valid_size;
++	loff_t pos, valid_size, end;
+ 	int err;
  
--	truncate_pagecache(inode, oldsize);
--
- 	ret = inode_newsize_ok(inode, size);
- 	if (ret)
- 		return ret;
-@@ -81,15 +138,12 @@ static int exfat_cont_expand(struct inode *inode, loff_t size)
+ 	if (unlikely(exfat_forced_shutdown(inode->i_sb)))
+@@ -881,6 +894,7 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	}
  
- out:
- 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
--	/* Expanded range not zeroed, do not update valid_size */
--	i_size_write(inode, size);
- 	/*
--	 * When extending file size, call truncate_pagecache() first,
--	 * then update i_size, and call pagecache_isize_extended()
--	 * to ensures the straddling folio is properly marked RO so
--	 * page_mkwrite() is called and post-EOF area is zeroed.
-+	 * When extending file size, call exfat_pagecache_isize_extended()
-+	 * to update i_size and ensure the straddling folio is properly
-+	 * marked RO so page_mkwrite() is called and post-EOF area is zeroed.
- 	 */
--	pagecache_isize_extended(inode, oldsize, inode->i_size);
-+	exfat_pagecache_isize_extended(inode, oldsize, size);
+ 	pos = iocb->ki_pos;
++	end = pos + iov_iter_count(iter);
+ 	if (pos > i_size_read(inode))
+ 		truncate_pagecache(inode, i_size_read(inode));
  
- 	inode->i_blocks = round_up(size, sbi->cluster_size) >> 9;
- 	mark_inode_dirty(inode);
+@@ -909,6 +923,8 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 		ret = iomap_file_buffered_write(iocb, iter,
+ 				&exfat_write_iomap_ops, NULL, NULL);
+ 	}
++	if (ret != -EIOCBQUEUED && end > i_size_read(inode))
++		exfat_write_failed(inode);
+ 	if (ret < 0)
+ 		goto unlock;
+ 
 -- 
 2.53.0
 
