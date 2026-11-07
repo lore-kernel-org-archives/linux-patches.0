@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061544;
-	b=2uqDrgEDFWCSBoPeottP59NAsISJFbUAFTdAx+Kjca3lkfJDzpeOli03VkS76Gfkr3du
-	 +4OZ/Yqv2ZcPkscECcr4zaQr+H2w7L2lB2o/7xzspvWR9NxRotgDxpXzcPLjU8gQeYj9j
-	 C38PeNZX5fl5mqFDcEpoUj8ki8G89sJ6wXd4OifjExrxrKlLkHT2+JLrP1epeFA3EXqaH
-	 Wq24gOgTIAZBowtp3ANDBKyoinPCyGwdlydZREm86wXwWnWItr7hGBkeG2v3nT56eJbXZ
-	 W6T1M7Q2yn4zfyJW38Tr1xEOsWwLDBLGUxdZyra1A6eEDPipiEqhDrlFoeNjyG6ccgA==
+	t=1794061546;
+	b=F9FgEiyNZgRyGbdujBt9FT650OnZWckKQpxrprIEVF1I2n+0qIgZDXYR3oVzZZnW6g2n
+	 FkSbSnchS5N3zQXeYpjiBnR0Rc528RwLWFLmhsO2d1Cir2EHs7obBzjg2U+l7s9KZiIRM
+	 svzR7lBK+g/NfsQLVwr0MbNzUs3RAPeJlAcQ9NdRVjT9pIcB+cBIvTuoju0zLd83/TUeb
+	 lLHo3FI9K3AsqgOqW/7t9E62mp5mRTIiQVumO9kHeFlyc4Pa8CoRmAaifppF5x58wdXnx
+	 UM64ZFZMfJBFKU+NURTXtHAZjmS++nru81Di7+M/YdYVnbYIwUug/CX0dvz0izcEWIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061544;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MkhghfqilhVT/ckmRUQBhllwVdUXmL2prpoVCxMOAT8=;
-	b=xKUaBYD7MN77grV+z80jvaYfl7al9mJi6Noq/Hgndexfq0/SGwJVpxHyubxcVAaIeTuX
-	 h8Xk3NoRktC/PYoUYIx84BD/UCpuRZ3yP2KYp2qQ1qmr5TS+M7g7BkI7oZNbT4PI/G0yA
-	 yCYeR7Mxs0g+QxxTFn/nP8E5wT+r9uPk+xQBngjqdpJY3P5b0mptnU10Y9ZKbAOgtVS8L
-	 7Jnkw2D+wWGdTlByCr5qjrajKOjFx7BwPvVUblq7YJzNdKNbMXjUI+eSZBVulyX+5PMyD
-	 GMzDty5ak/95Fa4CSpv7+HWc2KWREbHxR/4qq+VrTbTsHsSG0KMK4u4soCa6iYa8LtQ==
+	bh=2COiG95nJcJIIRYRD2M3Nt/peGv0FtcfHVJIzHaLf3M=;
+	b=yrbMFX+EJjy7hKHhWpNd6L9AJgmN7XxFFqcetvU3U1qnObQia3J7uMdGW1dFid/78Jy2
+	 lwMeEuSgl8DG4UGSQLAVTZlxmVN45mhl+0LcL1xalIVEekTjuZDb7qmfTkHWMKHZt4DgW
+	 boQvchpz8KjMezWsYkZ0SCIQlT25GyYQ91AYP8AE4KcV7laYdC0vZp3j8d/dsoTjI0ukK
+	 ujT/utDAlP1N6d2a4yk3yfd339bKJIv7BDZuP/rBxPHg/mbYulVQV1RQP0W0dEs+lO9k1
+	 qRX+MqNQ/pwYatI6fTVub2uciTCNxjEBcCU/Ehhmp7+ekwb3a/vXF8hI9MuZBu06YrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=brp1MH+5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=khRtNRk4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720B5606A326;
-	Sat,  7 Nov 2026 14:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8D1606A32D;
+	Sat,  7 Nov 2026 14:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=brp1MH+5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E1C1F0089F;
-	Sat,  7 Nov 2026 14:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=khRtNRk4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9581F0089F;
+	Sat,  7 Nov 2026 14:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061544;
-	bh=MkhghfqilhVT/ckmRUQBhllwVdUXmL2prpoVCxMOAT8=;
+	s=korg; t=1794061545;
+	bh=2COiG95nJcJIIRYRD2M3Nt/peGv0FtcfHVJIzHaLf3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=brp1MH+5dcxmCUB+2FFrr675wYDU1S4F7YO/WGJABzDXb2lOamiICh0zi9vbnrl4L
-	 H1O/kJwqbPyDQrIfrjYckAamj3Br+x5c/kcfkH7/mNWLZVWnTIwJ0++AfGXJk26s77
-	 fTm8OWNtPOa/hcls9blX3ihlaFxyWNKDrKnWRz5U=
+	b=khRtNRk4VRcqDpfDk4+wwh6+qox76UDq3j05bMtc8uavbtpnaTmm0ypqX6KI174c/
+	 +03ztEq9idml5J7qKgZDoXRY4/K1Hswrz/aAK6NoDqorIJbDxcl8Yu2Vl5zQDQ8lpc
+	 SZjTuS5qr7uk63HOkoB7HfF2mxSLYEyG3d2mJna8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 0629/1536] objtool/rust: add one more `noreturn` Rust function for Rust 1.101.0
-Date: Sat,  7 Nov 2026 08:44:05 -0500
-Message-ID: <20261107135015.198812153@linuxfoundation.org>
+	Yuan Tan <ytan089@ucr.edu>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Priya Bala Govindasamy <pgovind2@uci.edu>
+Subject: [PATCH 6.12 0630/1536] rust: block: fix `Send` bound for `GenDisk`
+Date: Sat,  7 Nov 2026 08:44:06 -0500
+Message-ID: <20261107135015.226523646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,49 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Andreas Hindborg <a.hindborg@kernel.org>
 
-commit 6b704ec9007a3f23ec5ded8f320825ac444f307d upstream.
+commit e502b667ee70a7fa2a578e7722672ecd4fe0eb81 upstream.
 
-Starting with Rust 1.101.0 (expected 2026-12-24), `objtool` may report:
+The `Send` implementation for `GenDisk<T>` was conditioned on `T: Send`.
+This constrains the wrong type. `T` is the `Operations` implementation,
+which is typically a zero-sized marker type that carries no data, so `T:
+Send` says nothing about whether the data a `GenDisk` actually owns can be
+moved to another thread.
 
-    rust/kernel.o: warning: objtool: _R..._4core6result13unwrap_failed...()
-    falls through to next function _R..._4core6result13unwrap_failed...()
+A `GenDisk<T>` owns the queue data `T::QueueData` (stored as the
+`gendisk`'s `queuedata` and dropped when the `GenDisk` is dropped) and an
+`Arc<TagSet<T>>`. These are the values transferred when a `GenDisk` is sent
+across a thread boundary, so the `Send` bound must constrain exactly them.
+Bound `T::QueueData: Send` and `Arc<TagSet<T>>: Send` instead.
 
-(and others) due to calls to the `noreturn` symbol:
-
-    core::result::unwrap_failed::unwrap_failed_inner
-
-Rust introduced this helper when making `unwrap_failed` generic [1]. The
-existing entry for `unwrap_failed` does not match the new helper.
-
-Thus add the mangled one to the list so that `objtool` knows it is
-actually `noreturn`.
-
-See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-for more details.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://github.com/rust-lang/rust/pull/164059 [1]
-Assisted-by: LLM
-Link: https://patch.msgid.link/20261018131313.59391-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
+Cc: stable@vger.kernel.org
+Reported-by: Priya Bala Govindasamy <pgovind2@uci.edu>, Dylan Zueck <dzueck@uci.edu>, Yuan Tan <ytan089@ucr.edu>
+Closes: https://lore.kernel.org/all/cover.1780633578.git.ytan089@ucr.edu
+Signed-off-by: Yuan Tan <ytan089@ucr.edu>
+Link: https://msgid.link/20260709100100.604252-1-yuantan098@gmail.com
+[ Andreas: Fix tags to make checkpatch happy. Change summary line. ]
+Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
+Link: https://patch.msgid.link/20260929-rust-block-for-v7-4-rc1-b4-v1-4-642a4c1aebd7@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/objtool/check.c |    1 +
- 1 file changed, 1 insertion(+)
+ rust/kernel/block/mq/gen_disk.rs |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -213,6 +213,7 @@ static bool is_rust_noreturn(const struc
- 	       str_ends_with(func->name, "_4core6option13expect_failed")				||
- 	       str_ends_with(func->name, "_4core6option13unwrap_failed")				||
- 	       str_ends_with(func->name, "_4core6result13unwrap_failed")				||
-+	       str_ends_with(func->name, "_4core6result13unwrap_failed19unwrap_failed_inner")		||
- 	       str_ends_with(func->name, "_4core9panicking5panic")					||
- 	       str_ends_with(func->name, "_4core9panicking9panic_fmt")					||
- 	       str_ends_with(func->name, "_4core9panicking14panic_explicit")				||
+--- a/rust/kernel/block/mq/gen_disk.rs
++++ b/rust/kernel/block/mq/gen_disk.rs
+@@ -191,8 +191,14 @@ pub struct GenDisk<T: Operations> {
+ }
+ 
+ // SAFETY: `GenDisk` is an owned pointer to a `struct gendisk` and an `Arc` to a
+-// `TagSet` It is safe to send this to other threads as long as T is Send.
+-unsafe impl<T: Operations + Send> Send for GenDisk<T> {}
++// `TagSet`. It is safe to send this to other threads as long as these two are `Send`.
++unsafe impl<T> Send for GenDisk<T>
++where
++    T: Operations,
++    T::QueueData: Send,
++    Arc<TagSet<T>>: Send,
++{
++}
+ 
+ impl<T: Operations> Drop for GenDisk<T> {
+     fn drop(&mut self) {
 
 
