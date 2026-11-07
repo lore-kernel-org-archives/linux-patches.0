@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060602;
-	b=AA9LdIi3IDzp5VPW50TyatD2UKxps5b2CRJp08fXn+AA+upul4GlF+h9oBmcz/LMq2E7
-	 tMiwyOdWjgYEldyVy+oC5mk91xhNoCFhWipR1ynRNk02gMrCx7X15DfpIbNystYiO6TJQ
-	 jtGBAz9fnpGJGOAXla8SP7Kle5FrGJCb5DepID1DJ3S4ryDK9w1IdYg5MiFIJOp0h6IPf
-	 RGrhbwjrveD/O7av0kcSvlOHzKUtFfaoa515pnMcgXiQ+TJJAgzDs62z52f8AOWm7VxsY
-	 62tfpEY5lc0zoUYoWfE8RrEs3GvZ0gzyZsyA0AxlhP4r5YZmZf0p+dtG0e/fY6hwp8Q==
+	t=1794060603;
+	b=KfgZ7RWBdySmEglyEZ3lRoTgiF9H4MBgY3coWQEvdDEq0sRrsEnk6l546qRaaPYFb6M5
+	 uYNppEIzTEOXJni2+iY4b3WCKP7e5EVZS+fBTLypLwxgHHZWk6pABlnpZaeXENjz6NuTO
+	 8iQO0Iged9tOrKGdXkD8/e5Jvt3VDiIEdgQqB60SQ6yLI9Xic+WUeksDnC10kBP6sQBDj
+	 hUvjbR2HMWog3FombwVx/iutKxLvZXPMnqD89LwcA1QwhUrnG4Kt6HE/4u/0Rx6Zu9zCa
+	 hZh5Dxh1ejXE3dUX+ITIej+Bqcr61iLGYvU4Kavh2qznbUDMdDw0C0nkdHxvJaRodPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060602;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060603;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bxuU7MPmSOSh0sw9wgg6QwupPLxlVB8tag09DuC4sH8=;
-	b=IOzYYiaCKGK2xy1mRpyASSwWJyKuEQ2NsKZ+ssq/QPA1YLdjDDZNWeC82csrO8pIYtOd
-	 xbxl21Y8Gh3/izDHrcp0HlgloBMllctobt9BaR5bVF6qdrtQoXh1cNc8bOMUQ+Efd9M2K
-	 iOLKfIK5PF1ZXfpArkewdexIEK0aI3FUcQ1cDhFJIebKGwY3E4mkvTRqKzt3UEsOtFDYD
-	 ta0kV4lH9ABj75++0RYjPAYzbKz3FGlgriQkTlsaokp4nzjwQl9lp7OkOxRR2KsTag+XC
-	 d/uMBuvkiE57jkcgwUZ+KwtEtqGxxebwczzNsKPjuseR5sfrwLXEq4P+ORgnFoZPiIQ==
+	bh=+R1kdQ1BW9yBcU2T8Vze5S3DmjHxhBlJnhwuPaC1cyM=;
+	b=rITzbi4iTekdpLqrIJCkbZ6rhZjaME0ZtKRn6LQDLE9XB1xsrABfWmgY+Ax0O6NncRQy
+	 j/uEOigFBzSZXsoDXDV6ccEyhoSSy7QpaoTaJg6ES0DgjvsIr36bn6blAlcruRleyTXio
+	 5FmE+Ik2vPc7LE0ZHxiopm9mCgy/pfdzm4DpwKp0sEoWcrwyTkLbYGWsbraW70wcAeewa
+	 /luvyhH91AmJVhEWoCKcHzDucVDQ9ks6ejlNSzIc024lC2q1IQ2DVmI6Mu4Xdb6mn65bw
+	 FKuVFCEtGZjWiruTe4j4EZMcYvMv/TQZuodrMB1K/VCwru2Ju2gysBEI+7rrJHFmJ1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CzeKQZ05;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e0BkvF06;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8F6606A32C;
-	Sat,  7 Nov 2026 14:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88A3606A326;
+	Sat,  7 Nov 2026 14:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CzeKQZ05
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397B11F0089F;
-	Sat,  7 Nov 2026 14:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e0BkvF06
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929A91F0089F;
+	Sat,  7 Nov 2026 14:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060601;
-	bh=bxuU7MPmSOSh0sw9wgg6QwupPLxlVB8tag09DuC4sH8=;
+	s=korg; t=1794060602;
+	bh=+R1kdQ1BW9yBcU2T8Vze5S3DmjHxhBlJnhwuPaC1cyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CzeKQZ058l9PSB0xpoYdyeBi/NJ+7ZyKRYjLlbq4dh/kFXzuQZauWMa8JTtD3mV7a
-	 gNzzmAMh4JEvhQbdokKZWaYY/m7qmZ1CMK65qoZQl0Lc+aGjeG/6cdgvO4EWqvzUu+
-	 7FjGRiOWJ6ILcbMA9aOCUAFrTuCN9vc0d69SIfik=
+	b=e0BkvF06puxvoM3a/l0z9zjPTVRE+Te19t4J1bTbIYGaHA8wDJum5w2mCwcG5MzTg
+	 T7USE4aapAlyrIiD249zh7VjcbMYHctm5G+1iGiNIpWe45cPZUurXwj/yZXOuvut1t
+	 rMr7W7+khSooIgpJMpvQ263VPyflpux6j2IYM/ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Matthew Jacob <mjacob@feralsw.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0038/1536] ASoC: hdac_hdmi: Fix resource cleanup on probe failure
-Date: Sat,  7 Nov 2026 08:34:14 -0500
-Message-ID: <20261107134958.733967084@linuxfoundation.org>
+Subject: [PATCH 6.12 0056/1536] drm/amdgpu: Support some Barco AMD based graphics adapters
+Date: Sat,  7 Nov 2026 08:34:32 -0500
+Message-ID: <20261107134959.236699283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,69 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Matthew Jacob <mjacob@feralsw.com>
 
-[ Upstream commit 785903b7770f19ea05b8a76081dff691c56fa771 ]
+[ Upstream commit 3dc4d68ee26a7ac12069ff0562ad8935106c79b6 ]
 
-hdac_hdmi_dev_probe() gets the HDA link before allocating and
-initializing the HDMI codec private data. Several later error
-paths return directly without dropping the link reference,
-leaving the hlink refcount unbalanced.
+These adapters typically are only supported by Barco on the
+Windows platform. However, with these changes in the linux
+driver, multiple monitor support should work correctly.
 
-Release the link reference on probe failures. Also turn display
-power off if the failure happens after it has been enabled.
-
-This issue was dicussed in:
-https://lore.kernel.org/all/s5h1s0esk8o.wl-tiwai@suse.de/
-I think the paths fixed here are probe failure paths: the device
-has not been fully initialized or bound, and runtime PM suspend
-cannot be relied on to balance the reference taken during probe.
-
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260622151127.1198196-1-haoxiang_li2024@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Matthew Jacob <mjacob@feralsw.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hdmi.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
-index 183c5a50a4e37..eef142ac4ad76 100644
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -2164,8 +2164,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	snd_hdac_ext_bus_link_get(hdev->bus, hlink);
- 
- 	hdmi_priv = devm_kzalloc(&hdev->dev, sizeof(*hdmi_priv), GFP_KERNEL);
--	if (hdmi_priv == NULL)
-+	if (hdmi_priv == NULL) {
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 		return -ENOMEM;
-+	}
- 
- 	snd_hdac_register_chmap_ops(hdev, &hdmi_priv->chmap);
- 	hdmi_priv->chmap.ops.get_chmap = hdac_hdmi_get_chmap;
-@@ -2174,8 +2176,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	hdmi_priv->chmap.ops.get_spk_alloc = hdac_hdmi_get_spk_alloc;
- 	hdmi_priv->hdev = hdev;
- 
--	if (!hdac_id)
-+	if (!hdac_id) {
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 		return -ENODEV;
-+	}
- 
- 	if (hdac_id->driver_data)
- 		hdmi_priv->drv_data =
-@@ -2200,6 +2204,8 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	if (ret < 0) {
- 		dev_err(&hdev->dev,
- 			"Failed in parse and map nid with err: %d\n", ret);
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
-+		snd_hdac_display_power(hdev->bus, hdev->addr, false);
- 		return ret;
- 	}
- 	snd_hdac_refresh_widgets(hdev);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 958cfc29315c0..cc95cc43a3e86 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -1904,6 +1904,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x6646, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE|AMD_IS_MOBILITY},
+ 	{0x1002, 0x6647, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE|AMD_IS_MOBILITY},
+ 	{0x1002, 0x6649, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
++	{0x1002, 0x664D, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+ 	{0x1002, 0x6650, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+ 	{0x1002, 0x6651, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+ 	{0x1002, 0x6658, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_BONAIRE},
+@@ -1973,6 +1974,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x6930, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
+ 	{0x1002, 0x6938, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
+ 	{0x1002, 0x6939, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
++	{0x1002, 0x693B, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_TONGA},
+ 	/* fiji */
+ 	{0x1002, 0x7300, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_FIJI},
+ 	{0x1002, 0x730F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_FIJI},
+@@ -2001,6 +2003,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x67C4, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67C7, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67D0, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
++	{0x1002, 0x67D4, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67DF, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67C8, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+ 	{0x1002, 0x67C9, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS10},
+@@ -2014,6 +2017,7 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x6985, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6986, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6987, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
++	{0x1002, 0x698F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6995, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x6997, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
+ 	{0x1002, 0x699F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_POLARIS12},
 -- 
 2.53.0
 
