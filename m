@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063382;
-	b=1t9C35c0bpq3kIy7hGzGFtwfQycLPCWWGK9qJauNznsp/Pxgn54Ka8ekhJzpCylgfC4G
-	 dJVUdY52uGOaf5C9zQ44lHWCfmm9C0gVFTaaihlS42anji1wWU80D38R+Zx4Y1a3pEOVv
-	 7x+COCrAq+5SHXSsi119Gf1zdyYQ60NCA8BU7GTrnT93dpn0by5lbyTLIBSsHf/vYQEPS
-	 63E1TQV/i07taRYWNsRcjbazfW4hwhcSpdDmxCy/FNIijRxrm6LGkCBaFXNr6sIwoHa1n
-	 x4zvlBX65IWnvnwFUHMrGwiehQ6gO0yqGIRrKSkKnkM80gEX/5SS23VpzpaDiz4WcZw==
+	t=1794063383;
+	b=z1CS0cgXQ+TvR7EVnUxVzs7BYE+eX+9jtNBpjcvzeCMB5539EQDhzut+54uHZxCgd8nY
+	 dWjPJxjie/+vLLR0UZp7I9U4UTGp7SP3pdN1qlzowzlUD+BOgOfzfsDw7uhOAzT+ofqWS
+	 paEecjsoJIxM9jT6DQwpms+xDGiGsPhDkqiVKxAVWSxYtEXA6O10JUhg5WW0q8b3OAy8C
+	 2BFsBrxgGhjs13a+9wYn3IkXl7UE/0TmHT5w7GBTR7Py5FS7kBkdOKLNZ7JZ6DSlCjWdf
+	 4LcccyAhoeHdxKgYrroXJ3AS1YF5Evdd5wblNOaZ7l0Z4weyIw3Dltn824ljmkfdb9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063382;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z11U8F7m4jv4/3Sl1t6vaGIcyJfMk8/8Iy9JiT6z3uc=;
-	b=esE43fdnX3vaXp0itSU5zG13+M58fLNEab9KuHoh+r+vd4lIhvuYYiuBkbke+2lmBqpo
-	 JBC/7PBltfeIDYXvR187Na7gloYiDDgru5gaCqJ4YI0Gc2pF4B4sEKUH95QZqsnR+903j
-	 PAt3/Wmr0TuvYz/pwivF8JSP5/o7G1OCrRZa/u8ZfD2ybgwK2/uC2nSdf8XuZ6/rzSJ/g
-	 12rtdJaSOZPeNSG+0tBY5/UYPqLyIsy1YnYfXLIQrYmEzLnatJp/OsJYxH/prx6ATpiZT
-	 UjRRfSO9+W6BCw2TjlIYTDZsEt4Z3TB69zRtnovx+WvziCLwMK/FzfLX5SarVu6gOkg==
+	bh=7sMsRLl4HcEn01YJXHWFu/pWwFFnpNQTqC0gM+eghv8=;
+	b=mAmAYTYMSsQ2xClH/6Cn3G/4PcW3j0s313jrIaXbGVppC4yM+B0Bc2vKvkJNbdqUGB0g
+	 0Z/w5vFqR/5DZYQTaRxmZR6xSNLxaaJFs2uLHeHASEFiqzSskTDJgaBD0w78bT9pHMhxv
+	 RnHC7F8/KX+10R0zR6tCmiHP7GpojNcSGUnU8l9yq6Gf5Z0EEtkoXs9JeskNJMB11uvRu
+	 AKiVKYyC38dn2Rf605ZtyglmzAPbzqlPguhQ4wsearPHJPoOG/7WwuvHotTyG9377bobZ
+	 jEzEKyn7uYg1cHBwXprLnMj2M0eEs2+znugE5FRz0kPxacHAP1R7wr98pdx51w53+jA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7rIXda0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOoxRsvJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D1A606D810;
-	Sat,  7 Nov 2026 14:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEC5606D810;
+	Sat,  7 Nov 2026 14:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7rIXda0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA1C1F0089F;
-	Sat,  7 Nov 2026 14:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOoxRsvJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C122A1F0089F;
+	Sat,  7 Nov 2026 14:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063381;
-	bh=Z11U8F7m4jv4/3Sl1t6vaGIcyJfMk8/8Iy9JiT6z3uc=;
+	s=korg; t=1794063383;
+	bh=7sMsRLl4HcEn01YJXHWFu/pWwFFnpNQTqC0gM+eghv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x7rIXda0iihaHGgxH3++YRW3tS1VxWao1fKRoz7+CZMFV3D68+lLByy37Bxw8TU8e
-	 4gTXgg4tPhxOXkgsCkmmVXg9njg4l2A9nDLhIN/AbjxW5/lPKP/Os7AP9qY7VMd0dN
-	 aOp2izX3XOIyxV+SpWLQsVW/o3dTvKLFHBMqyhYg=
+	b=EOoxRsvJy+C4OO0HfqhLz5p9XhWSzD+137yQwBSMLK9WFxGJ0HfFlmawtwRc68I0e
+	 HyUEWafMZP2AKjYX2/qAhNsZrPp3AQEuaNQSA08rroKY5RIu0iVioc9Uja7zOR3Lcv
+	 3wLMVd2KdENGbkOlTbcaySlFptV0epPyfYbV0BVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 519/869] nvmet: require authentication before property set
-Date: Sat,  7 Nov 2026 08:53:21 -0500
-Message-ID: <20261107134911.125025295@linuxfoundation.org>
+Subject: [PATCH 6.18 555/869] spi: cadence-xspi: fix stack buffer overflow in the Marvell b0 path
+Date: Sat,  7 Nov 2026 08:53:57 -0500
+Message-ID: <20261107134912.159347618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,52 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit 44512543ff0413031516a02cde67323a55e0f769 ]
+[ Upstream commit ef9690269999ddf9b204731baca1bd6b7aea1aa7 ]
 
-I/O queues do not perform independent DH-HMAC-CHAP authentication.  They
-instead rely on authentication of the controller's admin queue.  Fabrics
-property commands, however, are dispatched before the general admin command
-authentication check.
+transfer_one_message_b0() falls back to a 10-byte stack buffer for
+transfers which carry no TX data and points both in_buffer and
+out_buffer into it.
 
-An unauthenticated peer can consequently set CC.EN, connect an I/O queue,
-and access a namespace after admin CONNECT reported that authentication was
-required.  Reject PROPERTY_SET until the admin queue has authenticated.
-Targets without a configured authentication key are unchanged.
+With a transfer longer than 10 bytes the SDMA branch of the loop moves
+up to MRVL_XFER_QWORD_COUNT * MRVL_XFER_QWORD_BYTECOUNT (256) bytes
+through those pointers and then advances them by the same amount, so
+both directions overflow the scratch buffer: a read transaction copies
+SDMA data past the end of the buffer, a write transaction sends stack
+contents from beyond it to the SPI bus.
 
-This was found by source review with AI assistance.  A localhost NVMe/TCP
-wire reproducer retrieved a known 4 KiB namespace block in two independent
-boots without completing AUTH_SEND or AUTH_RECEIVE.  With this change,
-PROPERTY_SET returned NVME_SC_AUTH_REQUIRED and the namespace data was not
-returned; the no-authentication control continued to work.
+Size the scratch buffer for the largest chunk the loop can request,
+keep the buffer pointers pinned to it when the message does not carry
+the corresponding TX or RX data, and only advance the pointers which
+reference real transfer buffers. Also zero-initialize the scratch
+buffer so that padding bytes sent for TX-less transfers no longer leak
+uninitialized stack contents.
 
-Fixes: c91a20129185 ("nvmet-auth: authenticate on admin queue only")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 5cb7651f78e1 ("Marvell HW overlay support for Cadence xSPI")
+Cc: stable@vger.kernel.org # 6.11+
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20260929081146.41041-3-liuwb@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/spi/spi-cadence-xspi.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
-index bc837fbfada15..9aedab2603bdd 100644
---- a/drivers/nvme/target/fabrics-cmd.c
-+++ b/drivers/nvme/target/fabrics-cmd.c
-@@ -14,6 +14,10 @@ static void nvmet_execute_prop_set(struct nvmet_req *req)
+diff --git a/drivers/spi/spi-cadence-xspi.c b/drivers/spi/spi-cadence-xspi.c
+index 6dcba0e0ddaa3..c3676b21e8167 100644
+--- a/drivers/spi/spi-cadence-xspi.c
++++ b/drivers/spi/spi-cadence-xspi.c
+@@ -268,6 +268,7 @@
+ #define MRVL_XFER_FUNC_START		 BIT(0)
+ #define MRVL_XFER_QWORD_COUNT		 32
+ #define MRVL_XFER_QWORD_BYTECOUNT	 8
++#define MRVL_XFER_MAX_LEN (MRVL_XFER_QWORD_COUNT * MRVL_XFER_QWORD_BYTECOUNT)
  
- 	if (!nvmet_check_transfer_len(req, 0))
- 		return;
-+	if (!nvmet_check_auth_status(req)) {
-+		status = NVME_SC_AUTH_REQUIRED | NVME_STATUS_DNR;
-+		goto out;
-+	}
+ #define MRVL_XSPI_POLL_TIMEOUT_US	1000
+ #define MRVL_XSPI_POLL_DELAY_US		10
+@@ -1047,7 +1048,7 @@ static int cdns_xspi_transfer_one_message_b0(struct spi_controller *controller,
+ 	struct spi_device *spi = m->spi;
+ 	struct spi_transfer *t = NULL;
  
- 	if (req->cmd->prop_set.attrib & 1) {
- 		req->error_loc =
+-	const unsigned int max_len = MRVL_XFER_QWORD_BYTECOUNT * MRVL_XFER_QWORD_COUNT;
++	const unsigned int max_len = MRVL_XFER_MAX_LEN;
+ 	int current_transfer_len;
+ 	int cs = spi_get_chipselect(spi, 0);
+ 	int cs_change = 0;
+@@ -1070,13 +1071,16 @@ static int cdns_xspi_transfer_one_message_b0(struct spi_controller *controller,
+ 	list_for_each_entry(t, &m->transfers, transfer_list) {
+ 		u8 *txd = (u8 *) t->tx_buf;
+ 		u8 *rxd = (u8 *) t->rx_buf;
+-		u8 data[10];
++		u8 data[MRVL_XFER_MAX_LEN] = {0};
+ 		u32 cmd_regs[6];
+ 
+ 		if (!txd)
+ 			txd = data;
+ 
+-		cdns_xspi->in_buffer = txd + 1;
++		if (rxd)
++			cdns_xspi->in_buffer = rxd;
++		else
++			cdns_xspi->in_buffer = data;
+ 		cdns_xspi->out_buffer = txd + 1;
+ 
+ 		while (t->len) {
+@@ -1101,8 +1105,10 @@ static int cdns_xspi_transfer_one_message_b0(struct spi_controller *controller,
+ 				if (!cdns_xspi_is_stig_ready(cdns_xspi, true))
+ 					return -EIO;
+ 
+-				cdns_xspi->in_buffer += current_transfer_len;
+-				cdns_xspi->out_buffer += current_transfer_len;
++				if (rxd)
++					cdns_xspi->in_buffer += current_transfer_len;
++				if (t->tx_buf)
++					cdns_xspi->out_buffer += current_transfer_len;
+ 			}
+ 
+ 			if (rxd) {
 -- 
 2.53.0
 
