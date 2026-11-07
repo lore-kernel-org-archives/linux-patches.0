@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063352;
-	b=qKE2yXZEV86MUWOgUJStOzPW1d3MYptmMLdZaYz7nxPB1NXLkZ3UxwKxCZTuecXHx7Jy
-	 ZWs7vwEXlbmH6xK8VTpUVL5JZRGXlz4giPy9Hwd/sjxmZlaEKxE72MCacJvLf7Mc4SmDV
-	 sPUM29IuFV/7u7nBc4OmTqqH8pi6k+vz8hJ6jGpcrukzTKZzLLGURjOEWMfAOna82HzfQ
-	 lr2ewZFGzeNgwirc7ndT8zWthTYGQer4T8WzVlrRsrJRrfTny9DRYM/d4lk4wFruChZ7A
-	 bvlo2L7wLP+rxfFiEIqzzPpkgcVXqDdSKCOPLQ42hWs668h4I5bwT/XyMXSGU5Sbnzw==
+	t=1794063353;
+	b=1q0QbBOrvfxMJI1OjXa9c1d65w3Z6K+sZtdkzlvYJosAs70RuTt/G4Jh279+Io62bk6C
+	 U9glPfjJmdCmJFDv8lt83x9rBZz/1ZS+QFD/+JUKTCPEf1/Fs9ZYDhlLALhwaQ/kHWqL6
+	 HUZy6oOLTlZ0LQdp2vk/e2/rHeti7DvkwfVAdIKvIgpWY7Fmn15SvKQPR6E2fjlkjQGkL
+	 EndA1hXMVOmzHueRy3CV7YVHb1D8T71n2IsX6GpqQVNa0xPbOwzQNcm12SdM1Czw1kto8
+	 2I+462XwoQC1A+eoN6auyYiYJUeR93KOxSe76+l4QH5iDTycG49U1Dg667OKaMBp+OA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063353;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xa21/t6bEsrKIr9rN+DO74cyFUBoQrX8LqGliNxTWZw=;
-	b=AskqllLuYlOMcoo6U/ZiVvs5UxlALtT9oCInvKIzU2ft26cQo8xaBaErhVMYIWm2+8CP
-	 cm4k9EQWR0LbTIJRFRO2JOJ0aGHK0xOkdx3GNcNW9VTDtpO6QMdIU+nLXbJuH84dv58nj
-	 I3O/1VeK1ZEcDXTnB1Yr1RLEb3mvq04rrZ7648kB2v6CFq59p20VrSWTRcKYcXdQoIsYK
-	 g1NMEY20H78hNZTsmnaIRBnEvPFaDg5nHqT3Wsh+Zty2BFJP+Yx+MFoYRKekt5YfeoNga
-	 OwK7MHqbdmAmze3rWHZq2GTbQvHLA1mK8Z+oYDSspT+Vm8JVq95D9O40IR1vJFWsT6A==
+	bh=41N83LF452JgH7PxB+wKg0d7J4canzoumYXQlKPrm4k=;
+	b=IYNcY7pW5ANeptzY1+Yp9dse5eZ7zGvfL9rvWRMTbxCsVnx++8EEWYfdP5KW/XgdOMvx
+	 Esd0Cf77YQwxikW8GG6oylsgdCjNextDUq3UGAg/S5JUsWKELM4br9x/7uSHTFKG0AKyY
+	 znmjKIH5j6UB27G+kPvgxWCRwVptFJDBa9uWu6FWAk1DFzI04xjz9KcHes5Uv5OrUGr8V
+	 xrQacHcKMbPojZ+S+iPAXQH6FwWm7FNadU+NKOHgZc7EPiup8I8IgNBAenkm16h/SSduj
+	 +bO8SeFgds79Q2UeWHppStocEV+r7FeHF1mFh9kH6PkTRwOQ1Hu0q8fA0NQGcq1rTmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gnvtUkdb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2AuNsyL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529A7606D808;
-	Sat,  7 Nov 2026 14:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C14606D808;
+	Sat,  7 Nov 2026 14:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gnvtUkdb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE8D1F0089F;
-	Sat,  7 Nov 2026 14:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2AuNsyL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A0B1F0089F;
+	Sat,  7 Nov 2026 14:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063352;
-	bh=xa21/t6bEsrKIr9rN+DO74cyFUBoQrX8LqGliNxTWZw=;
+	s=korg; t=1794063353;
+	bh=41N83LF452JgH7PxB+wKg0d7J4canzoumYXQlKPrm4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gnvtUkdbBh7Oib5QiSrVWN2kQsaS66b+tEc8Bl0ky5L+2cv8CkMz5cV4BtJpyuZwR
-	 NFxDs16enWBas0i66stN84apOgiDANTb9hF+OgaxXly6P1IxqACuLoZBFRzfvLLlT7
-	 tNmHQyUaiGJhxlLPnfkJNivy8hzvAKaL+RpV29zo=
+	b=G2AuNsyLultm5LcTXaJObhP0wG/SJEw6AOC0wd7T2v28C6RRNiBgSFFVLxifBshyr
+	 QgUDrVIhWfOXxm++nqFHBkVOcD+gkOth/Wr8avEhDItwbRg/sme+t07jputHmN8WSm
+	 2oOIAhS8tJSKTE0zcOEcU9jdZfdxVy1knQ+GPWoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ma Ke <make_ruc2021@163.com>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 533/869] spi: ljca: validate the response length before copying the data
-Date: Sat,  7 Nov 2026 08:53:35 -0500
-Message-ID: <20261107134911.526122087@linuxfoundation.org>
+Subject: [PATCH 6.18 534/869] pinctrl: stm32: Fix fwnode reference leak in stm32_gpiolib_register_bank()
+Date: Sat,  7 Nov 2026 08:53:36 -0500
+Message-ID: <20261107134911.557672082@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,53 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 0fe4573c822c4c9152e2fd5269ab85410c9e458f ]
+[ Upstream commit 54c66b5e47a9b10cbf4a1efe9b01301b7ffee205 ]
 
-ljca_spi_read_write() only checks that the response from the adapter
-carries the packet header and a non-zero payload length before copying
-r_packet->len bytes from the response into the transfer buffer.
+stm32_gpiolib_register_bank() walks the "gpio-ranges" property with
+fwnode_property_get_reference_args().  As documented in
+drivers/base/property.c:
 
-The payload length is taken from the packet the device sent back and is
-neither bounded by the number of bytes actually received nor by the
-size of the requested transfer: a misbehaving adapter can announce a
-payload larger than what it actually sent, and the memcpy then reads
-past the end of the 60-byte input buffer and writes past the end of the
-caller's transfer buffer.
+ * The caller is responsible for calling fwnode_handle_put() on the
+ * returned @args->fwnode pointer.
 
-Check that the response carries the full header before reading
-r_packet->len, then reject responses whose payload is not contained in
-the data received or is longer than the requested transfer.
+The returned reference is never put.  The function calls the helper
+twice, once directly and then repeatedly in a while loop, and each
+call overwrites args, so only the last reference is even reachable
+and all the earlier ones are leaked for good.
 
-Fixes: caee8e38da67 ("spi: Add support for Intel LJCA USB SPI driver")
-Cc: stable@vger.kernel.org # 6.8+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261013031717.3933277-1-liuwb@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Put the reference as soon as args.args[] has been consumed, both for
+the initial call and for every iteration of the loop.
+
+Found by code review.
+
+Cc: stable@vger.kernel.org
+Fixes: bb949ed9b16b ("pinctrl: stm32: Switch to use for_each_gpiochip_node() helper")
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ljca.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-ljca.c b/drivers/spi/spi-ljca.c
-index 3f412cf8f1cd9..1b745a55d8c8a 100644
---- a/drivers/spi/spi-ljca.c
-+++ b/drivers/spi/spi-ljca.c
-@@ -105,7 +105,12 @@ static int ljca_spi_read_write(struct ljca_spi_dev *ljca_spi, const u8 *w_data,
- 			    (u8 *)r_packet, LJCA_SPI_BUF_SIZE);
- 	if (ret < 0)
- 		return ret;
--	else if (ret < sizeof(*r_packet) || r_packet->len <= 0)
-+
-+	if (ret < sizeof(*r_packet))
-+		return -EIO;
-+
-+	if (!r_packet->len || ret < sizeof(*r_packet) + r_packet->len ||
-+	    r_packet->len > len)
- 		return -EIO;
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index e73feb8ac90d1..f64dbb29a99dc 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -1452,8 +1452,12 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
  
- 	if (r_data)
+ 		/* get the last defined gpio line (offset + nb of pins) */
+ 		npins = args.args[0] + args.args[2];
+-		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args))
++		fwnode_handle_put(args.fwnode);
++
++		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args)) {
+ 			npins = max(npins, (int)(args.args[0] + args.args[2]));
++			fwnode_handle_put(args.fwnode);
++		}
+ 	} else {
+ 		bank_nr = pctl->nbanks;
+ 		bank->gpio_chip.base = bank_nr * STM32_GPIO_PINS_PER_BANK;
 -- 
 2.53.0
 
