@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065606;
-	b=uIXXQCZYyVmvJr0+ZZNU1meLeyi4QfY5e7cc5cRKN/jnVV/chy0BkxTLTaX1ar/gcO6Y
-	 YR0wHAL7ueG4dGZ4KGUepo2/YM+XzBceDKBJ/kyoYuZAtVRMJqBogtnQ4vBqNWflLtH5b
-	 yS4qrthoI2BSawtn7ulQG5CqvolKwTD+Izp4c3sqD1AJl1vTm1IPuXXLlJvyDb0OJFLFl
-	 WS50LE5R2Pudn4Jogm4plcb1BLtGKnZCI1PMSGLTWVsWDuQw3Tat59mKQso1BeZYVhvTF
-	 urmuBbXa4RjET8cpy8JKZE91Ug5UBctDxqMNK40P7Bfa7MOmMNvqMXwimHdkt0mP4mw==
+	t=1794065607;
+	b=axgItTQTBi9jN5ryx6rWV5n5ct9MsgD/CqUr9P4w1d0zl/iCQATVrpO8q6ZnA7Q2QDK3
+	 oWZJIS73A4C1bpUiySDevlDyPUKt04t7WeAuDg4C16OHK0T66QqGdHFFRH+S5nhOE79BG
+	 +cfugl5pLIx1r3vmaAr9m4xTne2hZ+3Sb6fgWWyjPmhNKESi2uY/zi13PFWxQOIUI9/tz
+	 nXj8/1ls+rWSFQdIKCAHyYLg/OAjFHJa0MLbLrHjx7yNiZ8JWoSNuFhqziTmi++q6pUJD
+	 zzoiuKn2vFsHwy/P6kZQuSeeoPyb6K1z5tCSaoXWZrHVCte0n+Qy9bNh7EIocD6Yydw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065606;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nkLV0j2/2ibUcVqdZZlZnTUEtwJkeR+9+dMi4dtImaE=;
-	b=HL/IWAUyVieuTRghIwA3fKKDWJYZLevPuto0XSjsovP5wgyYEwIfuKmVaJTlT8/1vy/z
-	 sSHeE/Hd/Ba4W3fVfsw7o5CluCM3qBRR3Oy0deAwqxtkfuVvqEpGxH/rBeUAK3L9i1beC
-	 DuyXLb8TKgOZ3qQuLQ2eNb/BPzUfWbO88IcDUS2yV+310suWugzl3P1B/akrJjneFNGqr
-	 GSYpQEI+t+AQSDigJ3Uco4QNYdg/1CIP565vfjReiITAXH5eZMWsADWULcePEQ4iVYlM4
-	 n4pRV4EzEudatun5/+ahKxeDDS7cWN/PZTq8jbO98nx7FKtyw3hh1rsSLwm0b6MyjxA==
+	bh=vK+K3JNgfDXjS4SMHc64qI4UPjfgxw+WmfIWmK722XQ=;
+	b=0YeQ5o2GF6O1xfwdcgEH5oNGjXY0tNN+ft9h+p/Fdb1nPY6n4zVUs/FyQLZD6cW6S6/0
+	 lg/I5OxmE6KHzlQcvHkOjtd3mCb2TdrcTenrpa04txqGSlr9dFqk7rAbcsL1BwMAVToPP
+	 /5kUfOIGNgsk8knf7CGHNekCj2mTC13oGsxWCDaLa+/THlnDCMIM2wVb6riVqrRuADHfp
+	 Xhm0E/7SnPO0dL+BHQV6siPge3K9s380Hk8sdfwDOr7pj96/Sz7l2qcR1ufPYak30zZv1
+	 Ya+RxRf3MPbXXSMWwSzCyIKd41RuAHJN4mt6BivODTxOl9VKGmrwgC6mNO24v2kDMjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S77FNTH8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yR6LQrzG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32761606A32C;
-	Sat,  7 Nov 2026 15:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F73606A32C;
+	Sat,  7 Nov 2026 15:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S77FNTH8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68D61F0089F;
-	Sat,  7 Nov 2026 15:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yR6LQrzG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2215C1F0089F;
+	Sat,  7 Nov 2026 15:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065606;
-	bh=nkLV0j2/2ibUcVqdZZlZnTUEtwJkeR+9+dMi4dtImaE=;
+	s=korg; t=1794065607;
+	bh=vK+K3JNgfDXjS4SMHc64qI4UPjfgxw+WmfIWmK722XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S77FNTH8dC+SG2YspyKmAK6fmX0vVzF+nG0tS+F6TtdHYAVd9X3rXnHaQkvnjoUsI
-	 KGX3jE1P7MNBJ4+FETI62Euh1rz2NUiaWbUVEs4EZy9/rOnl42uJ6YAn47y20WjcqN
-	 XHoJQRypsygT8VCTBppVJRGFBRv+dVM5cTjkCcwU=
+	b=yR6LQrzGm1f0V4+TwNM/LGhbYuKixOUm89Gqm6YHmKCjNNGmUhbjos2nWyRbqG+8d
+	 kfhk0hCNuAD71P+1pHRt9kIIrVzXA2qzUcUrZ2nGSiIc9lmjimlfU+p4E021PBuadc
+	 6IuLOyJoYtbAQ+mti67WcU2eiL14j8EtOdGhFKOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1248/1257] backing-file: always end a queued write
-Date: Sat,  7 Nov 2026 08:59:04 -0500
-Message-ID: <20261107135013.791601989@linuxfoundation.org>
+Subject: [PATCH 7.3 1249/1257] splice: avoid stale f_pos writeback on error
+Date: Sat,  7 Nov 2026 08:59:05 -0500
+Message-ID: <20261107135013.816356152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,77 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 627cdcbc2a2eceb0452078a0c14370f9f1f17a91 ]
+[ Upstream commit 79b496ebe382866e3a05090b7dc9ae95e85e65b2 ]
 
-Writes to a loop device with direct I/O on an overlay file make the
-next freeze of the upper filesystem hang for ever.
+do_splice() snapshots an implicit file position before calling the splice
+helper. Since splice does not take f_pos_lock, another operation on the
+same open file description can update f_pos while the helper is blocked.
+If the helper then fails, the unconditional writeback restores the stale
+snapshot.
 
-Every kiocb_start_write() needs a kiocb_end_write(). For a write that
-is queued, vfs_iocb_iter_write() leaves the end to the completion, and
-backing_aio_rw_complete() only calls kiocb_end_write() when IOCB_WRITE
-is set in the flags copied from the submitter. In-kernel submitters
-such as loop do not set that flag, so each queued write keeps the
-freeze protection of the backing filesystem.
+For a directory without ->splice_read, a file-to-pipe splice fails with
+-EINVAL. A concurrent directory mutation and getdents() call can advance
+f_pos and refresh the filesystem's revalidation cookie before that failure
+restores only the old position. The next ext2 readdir can then trust an
+offset inside a directory entry and copy data from the adjacent page to
+userspace.
 
-Direct writes to a loop device with direct I/O backed by an overlay
-file left fsfreeze of the ext4 upper filesystem, and a later touch
-there, blocked in D state. It takes write access to the node of the
-loop device, which root has by default, to attach the file and to write.
+Only update an implicit file position when splice returns a non-negative
+result, matching read and write. Keep explicit offset updates unchanged.
 
-The fix used here is to mark a write in struct backing_aio and to call
-kiocb_end_write() on completion of every marked write.
-
-Reproduced under qemu without KVM, on v7.3-rc6-21-g602042bf29f6 with
-earlier fixes of this series applied, with and without this change,
-once each. The kernel was not changed for the run. With this change
-fsfreeze finished in about a second. Not run: the nvmet and LIO file
-backends, which do not set IOCB_WRITE either, FUSE passthrough, and an
-xfs upper filesystem.
-
-Fixes: 2406a307ac7d ("ovl: implement async IO routines")
+Fixes: 7995bd287134 ("splice: don't pass the address of ->f_pos to methods")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[amir: use aio->is_write to explicitly mark a write aio]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20261029180319.2852090-1-amir73il@gmail.com
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20261018051708.2422394-1-4ncienth@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/backing-file.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/splice.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/backing-file.c b/fs/backing-file.c
-index 37253f2e3084f..83f0ba241fb0b 100644
---- a/fs/backing-file.c
-+++ b/fs/backing-file.c
-@@ -96,6 +96,7 @@ struct backing_aio {
- 	refcount_t ref;
- 	struct kiocb *orig_iocb;
- 	/* used for aio completion */
-+	bool is_write;
- 	void (*end_write)(struct kiocb *iocb, ssize_t);
- 	struct work_struct work;
- 	long res;
-@@ -136,7 +137,8 @@ static void backing_aio_rw_complete(struct kiocb *iocb, long res)
- 	struct backing_aio *aio = container_of(iocb, struct backing_aio, iocb);
- 	struct kiocb *orig_iocb = aio->orig_iocb;
+diff --git a/fs/splice.c b/fs/splice.c
+index 9d8f63e2fd1ab..96378d3e65580 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -1349,10 +1349,10 @@ ssize_t do_splice(struct file *in, loff_t *off_in, struct file *out,
+ 		ret = do_splice_from(ipipe, out, &offset, len, flags);
+ 		file_end_write(out);
  
--	if (iocb->ki_flags & IOCB_WRITE)
-+	/* Pairs with kiocb_start_write() in vfs_iocb_iter_write() */
-+	if (aio->is_write)
- 		kiocb_end_write(iocb);
+-		if (!off_out)
+-			out->f_pos = offset;
+-		else
++		if (off_out)
+ 			*off_out = offset;
++		else if (ret >= 0)
++			out->f_pos = offset;
+ 	} else if (opipe) {
+ 		if (off_out)
+ 			return -ESPIPE;
+@@ -1373,10 +1373,10 @@ ssize_t do_splice(struct file *in, loff_t *off_in, struct file *out,
  
- 	backing_aio_cleanup(aio, res);
-@@ -251,6 +253,7 @@ static int do_backing_file_write_iter(struct file *file, struct iov_iter *iter,
- 		return -ENOMEM;
+ 		ret = splice_file_to_pipe(in, opipe, &offset, len, flags);
  
- 	aio->orig_iocb = iocb;
-+	aio->is_write = true;
- 	aio->end_write = end_write;
- 	kiocb_clone(&aio->iocb, iocb, get_file(file));
- 	aio->iocb.ki_flags = flags;
+-		if (!off_in)
+-			in->f_pos = offset;
+-		else
++		if (off_in)
+ 			*off_in = offset;
++		else if (ret >= 0)
++			in->f_pos = offset;
+ 	} else {
+ 		ret = -EINVAL;
+ 	}
 -- 
 2.53.0
 
