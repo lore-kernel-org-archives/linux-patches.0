@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063139;
-	b=A66SJ2cWjTU3wvBqrPe04ahIz+2q0SFmK6D4/3b2goPjYOsEi8NUQQtz6c08BDUjV5F9
-	 zuCRoFrWw699AocwPkWbxMyNgxEOK+tmRqtwlUmQEA0GbqFJCor9wfv2p/P11xcYZZrdy
-	 v20S1G/2RKSOAX4pUJ9xzhNvt8EDtn9Pjnp7O1uKcRDM2vSLCejk6XKHMIe2sgyPcoLpP
-	 656Ve7FmUIrDWmh4iXUbz+eG7LpseRu+lJ/0LJ5O9jKZRXBAUWU6Cx2PO+hLV+W6DSwOf
-	 QzL90YX9RZ7SwrpSvrQvrDYeUq66cA5IqxoV/+ZUCPXFHwVnWSzz1qBrTnv8PcKXJZQ==
+	t=1794063140;
+	b=jBM0ws/4pLqcogyXm6rWveeQCtOAdJhdgHw7ap0mAYQk1XOKqydkezu+jjoFZjEOw4YK
+	 9w/Ne6QcLesk/81EuC3kTRl42aNnzisZfETY0ma0mH/tCBzO3ncGcIuz9K8vROqCNqmm/
+	 KZ2+a0FYIRrGr07zUoeXN9lluAm6ne9EZ3D0414vJDjM/hp4rZFIQONJh+RHKuJT2pg3z
+	 N2OYiaFaSC8db7gFPJV1oCrcSlFg502Q9XUyMb4luBqnt0pvtD3nP+/ugj8Zn7SixIYmz
+	 fpTPwgjGzXlN+aOCUaJRIDAi8oluuIJiudsLbat4//cLgF1qxUKoXZ4649Nj+8JLgLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R5ZqkqJ2EQYVkfdQu5MphuMGJEhKc5jMbZ35ToRXMSk=;
-	b=EQUavfrgXY5D8VOwhiWt3V+xNmdshAaDEZe+DNRi1luRCO/sdXWwM9Vfh7YWM9D3FA/+
-	 fY00k0a/DXCvKdN+kt3gTdL9UHTvXA39BE0KI7vckHROtO5zx5FmzB7gUzwmrOtRtRCoA
-	 wGagx6ApEAawBoiPy9eVYa8oZeTKcEFQQgbQvSGN2iPsfiAPmzGRvSA6AurlLoeZ215QU
-	 MK949wFEtoK589x2Felqer1ABFzz7vGAi6560Ac7G4AiguC8MYESFJsLtk+T/YywhH7+M
-	 NcFuhPdtwavSVuaVE7r9pmW9PKSeUH1UqHswCy2AzEVDAjlqkBOKRpoovaw7RygkQ9w==
+	bh=MFlqvonMCUOCw5dPfBfepIgH2qYNVxQqWOR350LHNdI=;
+	b=4BeAWkIT+msdLEczeqAXRZdieeOp7cV2UjYrxQtLXOKUnmhSdzO1l0ca0hyO6OhZtoZG
+	 lDbAoNvqc/mDXQgSOUs20UpmUsf7vaZXbLbYn44NaidAe2bvegfFAZnMaKrDo50kat9pY
+	 Kc+37FPMw77Bt2XItp1xKF+pkdIMVUVcUdNiSx9VWFooc5rrOXE2WowcZ/ZBXtlBxow1J
+	 np0VgNXNfxgcnN/qjaDgST88RLtEgrKcmJBTD37QbbplLY/z8QDqqwblFrj8yIU1zvONn
+	 sETJ2XTqjdoyZtDUCEughfvAQx/RV4arBH3vVfpqBCWPBD6WsYSVO0ZHKPw65yVEEqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9ZRqRjq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="QHs6r/sE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE13606D81A;
-	Sat,  7 Nov 2026 14:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A687606D805;
+	Sat,  7 Nov 2026 14:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9ZRqRjq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BCC21F008A1;
-	Sat,  7 Nov 2026 14:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QHs6r/sE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F231F008A1;
+	Sat,  7 Nov 2026 14:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063138;
-	bh=R5ZqkqJ2EQYVkfdQu5MphuMGJEhKc5jMbZ35ToRXMSk=;
+	s=korg; t=1794063139;
+	bh=MFlqvonMCUOCw5dPfBfepIgH2qYNVxQqWOR350LHNdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P9ZRqRjq5QKgdDRuKW7quMwuCPqjcsAFQ9cfsuMcFy0vjh6rnfJsRa4jvFjy8SklG
-	 RbzhwuXA348FhaBHd3GxWRFnlNiiJgxs1cukQYLNBmWS6ACaC5b+PWGwZkR8KYGKIn
-	 RWQV8e+yexX+lhMnJm7g7USdu8Gm0PUYt+a9mnEE=
+	b=QHs6r/sEVAhNhjv52MUUSuls+Zz7YVUkPMB73HT4dx0lWJ827DClot8SDQAjbEo4t
+	 Y8Ebd2aTbZHG/U/2ueLYGWV0AnC01eb9o3uVQgX2mGk9Ede8AzVQhHpakCl2eg6iQX
+	 sD8jDJ97Q1ncyVjIWKx8cTqI1UVBfGo2s22uevoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+874c2707f97fac24b090@syzkaller.appspotmail.com,
+	"Denis Efremov (Oracle)" <efremov@linux.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 367/869] ASoC: codecs: rt5682s: disable jack detection work on shutdown
-Date: Sat,  7 Nov 2026 08:50:49 -0500
-Message-ID: <20261107134905.187975578@linuxfoundation.org>
+Subject: [PATCH 6.18 368/869] floppy: dont store a stack buffer in timeout_message
+Date: Sat,  7 Nov 2026 08:50:50 -0500
+Message-ID: <20261107134905.257975896@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,51 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Denis Efremov (Oracle) <efremov@linux.com>
 
-[ Upstream commit ca552e3140e736ed6704fe5d47439d8f2d40b42e ]
+[ Upstream commit 66be62ee5d64b6ad1285978644798d8611add931 ]
 
-The jack detection and button check works can queue each other. The
-shutdown path cancels jack_detect_work first, but jd_check_work can
-queue it again after that cancellation returns. Canceling jd_check_work
-then leaves jack_detect_work pending or running while the device is
-reset and, on removal, its managed resources are released.
+request_done() formats "request done %d" into a buffer on its stack and
+passes it to reschedule_timeout(), which keeps the pointer in
+timeout_message. show_floppy() prints timeout_message long after
+request_done() has returned, e.g. from result() in the interrupt
+handler, and reads a dead stack frame:
 
-Disable and drain both delayed works so neither callback can revive the
-other after its cancellation. The I2C remove callback uses the same
-shutdown path.
+  BUG: KASAN: stack-out-of-bounds in string+0x39c/0x3d0 lib/vsprintf.c:720
+  Read of size 1 at addr ffffc900003cfc70 by task swapper/3/0
+  Call Trace:
+   <IRQ>
+   ...
+   show_floppy+0xb1/0x45f drivers/block/floppy.c:1838
+   result.cold+0x2b/0x30 drivers/block/floppy.c:1183
+   floppy_interrupt+0x191/0x340 drivers/block/floppy.c:1755
+   floppy_hardint+0x1a7/0x200 arch/x86/include/asm/floppy.h:66
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+uptodate is either 0 or 1, so pass one of two string literals instead.
 
-Fixes: c07ac3ee76e5 ("ASoC: rt5682s: Fix the wrong jack type detected")
-Cc: stable@vger.kernel.org # 6.10+
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20261003041045.650207-1-mhun512@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 73507e6cd8dc ("drivers/block/floppy.c: remove unnecessary argument from [__]reschedule_timeout")
+Reported-by: syzbot+874c2707f97fac24b090@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=874c2707f97fac24b090
+Link: https://patch.msgid.link/20260924094839.3239569-1-efremov@linux.com
+Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5682s.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/block/floppy.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5682s.c b/sound/soc/codecs/rt5682s.c
-index 1d80a4b862e27..1147b332c83a3 100644
---- a/sound/soc/codecs/rt5682s.c
-+++ b/sound/soc/codecs/rt5682s.c
-@@ -3300,8 +3300,8 @@ static void rt5682s_i2c_shutdown(struct i2c_client *client)
- 	struct rt5682s_priv *rt5682s = i2c_get_clientdata(client);
+diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
+index c28786e0fe1c8..3ec5453672c15 100644
+--- a/drivers/block/floppy.c
++++ b/drivers/block/floppy.c
+@@ -2278,11 +2278,10 @@ static void request_done(int uptodate)
+ {
+ 	struct request *req = current_req;
+ 	int block;
+-	char msg[sizeof("request done ") + sizeof(int) * 3];
  
- 	disable_irq(client->irq);
--	cancel_delayed_work_sync(&rt5682s->jack_detect_work);
--	cancel_delayed_work_sync(&rt5682s->jd_check_work);
-+	disable_delayed_work_sync(&rt5682s->jack_detect_work);
-+	disable_delayed_work_sync(&rt5682s->jd_check_work);
+ 	probing = 0;
+-	snprintf(msg, sizeof(msg), "request done %d", uptodate);
+-	reschedule_timeout(MAXTIMEOUT, msg);
++	reschedule_timeout(MAXTIMEOUT,
++			   uptodate ? "request done 1" : "request done 0");
  
- 	rt5682s_reset(rt5682s);
- }
+ 	if (!req) {
+ 		pr_info("floppy.c: no request in request_done\n");
 -- 
 2.53.0
 
