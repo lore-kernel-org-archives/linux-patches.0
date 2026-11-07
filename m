@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061732;
-	b=p6GQD5VyoSPHTHyoxBgza7hFeNLtsVfXTzEjenE3kLjT0uqO/gBmdSkaBn1h+7ZHLFb7
-	 qqt7ubZFWWeteaaLwuucNUQuAV6oQjzRvzPhbIwtcTSiReI3kYe9VI+vHE5e1KiO7/PQs
-	 WFE5KHtMFu34tNJE260pJoYzjv4ljJrVJkFpQQQIfBgEv8+uQKBDLFv5VfaCFWWnIyqEo
-	 f0gj17Q9alrut/zvwxJeUiYW2iDKLxc1V5efD5FLEeRK7pZy993Ao9N7sts7VZljwBheG
-	 0o2QHYEkEc6qPyJwSiXwwdWgmJXFhsxALdVAi7JBq5yW0nUcQIkcVGxnRQ/7dTEIw+w==
+	t=1794061733;
+	b=RWxr+W6JAHiGJx1/540HYWBwfzddZ1qiC1TSuxSN9YXoAew9aRHW/yBmTdHGV3penN+S
+	 vldNSevz/7ek5QNOGBCdY1/LsD9XcWiCpZuCT4o26F+9yWtNeuRuICziqKR1qpf4v2ZEy
+	 ISlyw7h5gj1QeHlfMrRJmf29sX9ukcM2hUj4bH0hkrz1l+QI7+JCOfHE2hBZYiM9QE4eq
+	 L0hoKVfOXdwk8RHQUgs22P/Wo+j106Ahcvk2gHwWeqUs6Qy5RIRJVxMFscApZY71LDcr5
+	 yJ9EkJkU89fTKt5DvfIMjUtRXRDfE2IEexN0HAygOl0uAQi2ci7uscthX5tJiyMONeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061733;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PvOVIqybI3uVfq7H979AF+15XTNtbb7V+h4o3Fcggxc=;
-	b=oHoLYEtZcsnZfTyfze5WwmsFQBQOsb08D0Fh40feF4IyhMdMTGWsG7mUy0gtqdaoPIVi
-	 6DKgma6umLxKQa5DIE356JruWMevSEYwsh21JvrIjaMC5TJvYoaPhf6QHb3XLddkJLFGr
-	 T1l+J2zCNbF06z1H9cCgxhjFRm1ShzckEFQhgaJPzqqB0PIwc+geHcNx5O89z/ldmJ0rT
-	 jRNqH/3lz3ku9q+17Fv9DCaref/AAWeAIu8gQkZNjckLUEZHmUJy2Gosxl7cNKBlHac4I
-	 BluHiBlicQgfLynu2wDbrb9gz5dP0VvN0hso/UIMl1bxY8cxUp7guepdy2iuAIS2Q/g==
+	bh=xPczKp8X0mG2XmzKN5iwbPdFU+qKCMK4KkMmR/6NoHg=;
+	b=O6mSohymW4bWVWZlv3oMP2htMs4TLhfHf2txLTwIdP2gP5sKlp3VLrBdEkVGcJy8Qxpg
+	 pGZ1Lr5KvjkEciVnektLcjvbKrq+TyHHY8VJDVjCOggAMAqjA97rz0LSPRzE9TdFMa2VG
+	 fUYZAY0+a5ZEdKBq2mM4hBnjSAhPvYkUIwF3HgE6eAjKnwr8UXgPhQiHEk3oqS7JGjyNy
+	 aTTSIUIgFSn1CcVHEVPrD3pqIyMpu1jqtoL6SkRLg9k8FchWOxexG3A7xWefJXIhVNBLo
+	 slurovulTi217FrU3FKEQOO8btIf0J3H+ROCoYSniANpJONcyMcgFFXzX+2ao4ZlRdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzxKUq6u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o67OtZx4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FB0606A32E;
-	Sat,  7 Nov 2026 14:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF4A606A326;
+	Sat,  7 Nov 2026 14:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzxKUq6u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A821F0089F;
-	Sat,  7 Nov 2026 14:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o67OtZx4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999711F008A1;
+	Sat,  7 Nov 2026 14:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061731;
-	bh=PvOVIqybI3uVfq7H979AF+15XTNtbb7V+h4o3Fcggxc=;
+	s=korg; t=1794061732;
+	bh=xPczKp8X0mG2XmzKN5iwbPdFU+qKCMK4KkMmR/6NoHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZzxKUq6u03CRQC09mdsKXAxfsVrMELrXaU+YWBthBcDftw7IdSSXdVafaQTHg4x5z
-	 hMXF2sP7nk1X9PFVISQsSebzBLeNNC8K/4uqd4bHHNv4WeW5Dk81s/NCfudD/y8j71
-	 mdXq2hfm9YApKBrNypxTI7kMq3TVuBqO//3nplr4=
+	b=o67OtZx43dn4j1Z6u8aw3JSaFLR4JsKd8Px6fx3c1K8HZjvQU0c+YVxDDoHGW1+Yk
+	 yu9iw5ftmV2RutUjZM1dCjCypbxidFAbawmCwpy/ztrlVaOeigOuxHDwl2gffWhrPJ
+	 WhCVQdHg8pr5W6Y2knCvHBEkoOcF7lHBBanuwtSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jeff Layton <jlayton@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0773/1536] NFSD: Reject an oversized principal hash from nfsdcld
-Date: Sat,  7 Nov 2026 08:46:29 -0500
-Message-ID: <20261107135019.243077193@linuxfoundation.org>
+Subject: [PATCH 6.12 0774/1536] NFSD: Resolve the recall-any mask names in the trace format
+Date: Sat,  7 Nov 2026 08:46:30 -0500
+Message-ID: <20261107135019.270006586@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,44 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-commit dbed9418c48906dae1a7bc328fb3bc0d0d0020c8 upstream.
+commit c563a1f0679566d7d586802e5346591d0af8da78 upstream.
 
-__cld_pipe_inprogress_downcall() takes the principal hash length
-from the daemon's GraceStart downcall without checking it against
-the cc_princhash payload it describes, which holds at most
-SHA256_DIGEST_SIZE bytes. The length is stored verbatim in the
-reclaim record, and nfsd4_cld_check_v2() later hands it to memcmp()
-against a digest array of SHA256_DIGEST_SIZE bytes on the stack. A
-length up to U8_MAX reads past the end of that array, and the stray
-bytes can only make the comparison fail, denying the client its
-reclaim. The pipe is mode 0600 in rpc_pipefs, so the trigger is a
-broken or hostile nfsdcld rather than an unprivileged task.
+RCA4_TYPE_MASK_* are enum constants, so the preprocessor cannot fold
+them into the print format that show_rca_mask() builds for the
+nfsd_cb_recall_any event. Nothing declares an eval map for them
+either, so trace_event_eval_update() has no substitution to apply at
+module load, and the event's format file ships the enumerator names
+verbatim. trace-cmd and perf cannot decode the bmval0 field.
 
-Reject a length larger than the wire field, as the existing check
-on the client name length does.
+Declare the eval maps for the nine mask bits show_rca_mask() decodes.
+The format then carries the shift counts as integers, the same shape
+the SUNRPC trace points already emit from their BIT() flag decoders.
 
-Fixes: 6ee95d1c8991 ("nfsd: add support for upcall version 2")
+Fixes: 638593be55c0 ("NFSD: add CB_RECALL_ANY tracepoints")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260901-alemi-v2-4-e163f94a3a6e@kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260818184151.31180-1-cel@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4recover.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/trace/misc/nfs.h |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -809,6 +809,11 @@ __cld_pipe_inprogress_downcall(const str
- 			name.len = namelen;
- 			if (get_user(princhashlen, &ci->cc_princhash.cp_len))
- 				return -EFAULT;
-+			if (princhashlen > SHA256_DIGEST_SIZE) {
-+				dprintk("%s: invalid princhashlen (%u)",
-+					__func__, princhashlen);
-+				return -EINVAL;
-+			}
- 			if (princhashlen > 0) {
- 				princhashcopy = memdup_user(
- 					&ci->cc_princhash.cp_data,
+--- a/include/trace/misc/nfs.h
++++ b/include/trace/misc/nfs.h
+@@ -358,6 +358,16 @@ TRACE_DEFINE_ENUM(IOMODE_ANY);
+ 		{ IOMODE_RW,			"RW" }, \
+ 		{ IOMODE_ANY,			"ANY" })
+ 
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_RDATA_DLG);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_WDATA_DLG);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_DIR_DLG);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_FILE_LAYOUT);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_BLK_LAYOUT);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MIN);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MAX);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MIN);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MAX);
++
+ #define show_rca_mask(x) \
+ 	__print_flags(x, "|", \
+ 		{ BIT(RCA4_TYPE_MASK_RDATA_DLG),	"RDATA_DLG" }, \
 
 
