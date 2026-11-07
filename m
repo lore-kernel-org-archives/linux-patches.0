@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064742;
-	b=JrGyVhjNcETACVdmWa1F2DD9KAvOPHHC8RuhlnzM5RiGpHAaNZcSiO9Ha0/ayM/j8bcz
-	 9chFfJa+TokAZwFNy25UYXTcOWStuHTxIBijvqQbO/AkCjGrKyn6uPxQsxzKOYPmhMp/7
-	 Q/Uhl7W46JWOyDa7F0vpN2FAeUYMxDlhkO7Dgm+A36n/MOPU7rW2NxS+dEunfqzxaeqQN
-	 WXnfeK6Qv2ao/k5HRuFksnUQ/nugv1smVW+7fbkwseZ4EFQvPcupj9Z8aiTeMeWUQ9QQK
-	 XvBsxrMUmf0kHmlaVOCK1cHBGxkePjL+wW+iHrEF2ZyGCFEiY6kQyZY2ENjLM2BnQ7A==
+	t=1794064744;
+	b=wdL9Gz3emxF8iPHqk4k9GIpw8H9+2/PUpBh20BC1WcS4l9orHP+O9DlkyjqKn/AYxZ68
+	 N8gmZct72wZLoFSI05JrB9C1li79YcIvfXoKMafGpxF1RT0WdSUBJ5QE45NbNLhjIxeTl
+	 tviogM+S3SGGy9NNuyr3LJb5zNGEAqyBVXCQarKg7ENO7mJRg02NvPzx17++VFd9hpI/4
+	 mslRi6NT0ABSPVihu0+i8s+GgQnV8CFAMaMtx51buLhJSRNQtx7aSHPHeblvUzcui/wLw
+	 rtZX/WKnWL/0DLKxAI/2nhoRHSb2s2wU34Nf9fk+oAgu/KpqSeHSNpQ3ALZ6ETaJVJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064742;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eNte88nego8p6jeYZUFESIL0iF/jGB+JJIXzRJ2t90Q=;
-	b=hJaYs/y81claOefYnXX7DCasMm6pP+AOa4UMVL7Vmyi3HZfnzlyK64jkzzapHB3eLCSa
-	 o2Ei+doF3UxduyD5LbLS75ZOdoTyaP00PBJNNh2A0oQ1Pwc6601gtUBz7eujJeQoXLIsc
-	 orcb85J5wY2uUC5IPJ2k/ZFC7OExN8jvscYTYlHZrzbMa2Q1DeVbnarEHCSnBvZaEkqxG
-	 ALbQ5t1LW59G3FLF1gJWjecGMZ8yCtRTA/sCcNMyXDheIQKNrk46ICWigleODT4294S9R
-	 kyJS/EeuccjB+8emFHaC1QGEB/5SgUkpSHR7jz+w3SMTByo00ymCk46OFvGQK2q89LA==
+	bh=Qi20VI8+sNWBNICvJQo2vY3Gx6INytMUPhZy/zkMpQ8=;
+	b=tbaLOL98HuSagjQKuUdn8EJrxg6OWf+ijbmbTbkU3D7xLKqVzpGER1fl/NZ+Jj4uP1eI
+	 DMAqt9T5DzoX7nalLcNOwspTl9IKcugJ+WwNnb3Z4sj0J8dR5GiU+dDxXkc+KF5JrF8NI
+	 FZafER3qYfbyDzh2HehBXUiVjanNJrpjZ5y//NJkhdGArAHqm8O7gryeUwc91o2JP/nbZ
+	 4hyH3cULmnFjlT/0r3WZEkWSRqTCed3aD2Nu81ULAsrJqH0b91/vu72F5z9IrDylY3w8a
+	 9kUP8/fLUiKZgidjdxlBlPe7HhSR6oFh+mDS3Gujr5vu8iIx/BwjDllllLtLX1CdXbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqPND7cw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jmuBscKB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70865606D834;
-	Sat,  7 Nov 2026 15:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEE3606D81C;
+	Sat,  7 Nov 2026 15:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqPND7cw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216F21F008A3;
-	Sat,  7 Nov 2026 15:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jmuBscKB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3EB1F0089F;
+	Sat,  7 Nov 2026 15:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064742;
-	bh=eNte88nego8p6jeYZUFESIL0iF/jGB+JJIXzRJ2t90Q=;
+	s=korg; t=1794064743;
+	bh=Qi20VI8+sNWBNICvJQo2vY3Gx6INytMUPhZy/zkMpQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eqPND7cwTmBjiV9Oqbt8n0VyLjB5P/d563WRLHzG0otrjHnpQld1gEhmMHC99IvgH
-	 9Q8oyxcJvpKCo/F8moX6J9mlQuaL+7KseBvVtlHjlcQuqpti2oMHqedeKFxq42Fw7d
-	 YtgCCZCmIvvsAfAxSIvd7kI/r6+8zsbTfwPD3yag=
+	b=jmuBscKBTaa6ZpBlB/IEHm+8LbBEV5iK+kR8YEOCPmt8LVxfukcN+nGeyDWZqIcxI
+	 j54xuUpejGBYs7wZNMPvLEhd8LU/a90hVpMatpzF8cUpF1HjFmJZguIkmo5/F0viLE
+	 HvIlRWX8bF9T8SL0DMGW3fLMJu8tsLAPAPPPLlvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0718/1257] sh: intc: Sort the prio and sense lists after filling them
-Date: Sat,  7 Nov 2026 08:50:14 -0500
-Message-ID: <20261107134959.092178552@linuxfoundation.org>
+Subject: [PATCH 7.3 0719/1257] accel/qaic: Cancel Sahara read data work on removal
+Date: Sat,  7 Nov 2026 08:50:15 -0500
+Message-ID: <20261107134959.120394621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,77 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 94a219eda3b5fb1d1753a5ecf28b171c8f308a27 ]
+[ Upstream commit 018e5a021904707b91cecd77e7f759937ec04643 ]
 
-register_intc_controller() sorts d->prio and d->sense right after
-allocating them, with hw->nr_prio_regs and hw->nr_sense_regs as the
-element count. The lists hold hw->nr_vectors entries and are only
-filled later, by intc_register_irq().
+Sahara removal cancels fw_work and dump_work, but leaves read_data_work
+pending or running. The latter accesses the firmware and the device-managed
+context and transfer buffer, which are released during removal.
 
-On SH7785, sh7785-irq0123 and sh7785-irq4567 have four vectors but the
-SoC's eleven priority registers, so sort() swaps 88 bytes in a 32 byte
-kmalloc object at boot. slub_debug=FZPU reports "Right Redzone
-overwritten" in kmalloc-32, and v6.5 and v6.6 panic in
-__kmem_cache_alloc_node() while registering sh7785-irq0123.
+Cancel read_data_work after fw_work, which can schedule it, and before
+releasing the firmware. The MHI core suspends and resets the channels
+before invoking the driver's remove callback.
 
-Found with a custom QEMU model of the SH7785LCR. On it, v6.4
-sh7785lcr_defconfig boots with SLAB, the defconfig default before v6.5,
-and hangs before the console is up when built with SLUB.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code. The same omission was also reported by the
+Sashiko bot while reviewing the Sahara relocation series.
 
-Sort the lists once all vectors are registered, with the number of
-entries that were added.
-
-Fixes: b59f9f9775e6 ("sh: intc: optimize intc IRQ lookup")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Assisted-by: LLM
+Fixes: 7fb19ea1ec6a ("accel/qaic: Support the new READ_DATA implementation")
 Cc: stable@vger.kernel.org
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/all/20260701105055.8D4371F00A3A@smtp.kernel.org/
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+[jhugo: reorder cancel_work_sync() calls]
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260917192512.56205-1-mhun512@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/sh/intc/core.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/accel/qaic/sahara.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/sh/intc/core.c b/drivers/sh/intc/core.c
-index aa68fe190865d..ffbe60234eefc 100644
---- a/drivers/sh/intc/core.c
-+++ b/drivers/sh/intc/core.c
-@@ -275,9 +275,6 @@ int __init register_intc_controller(struct intc_desc *desc)
- 			k += save_reg(d, k, hw->prio_regs[i].set_reg, smp);
- 			k += save_reg(d, k, hw->prio_regs[i].clr_reg, smp);
- 		}
--
--		sort(d->prio, hw->nr_prio_regs, sizeof(*d->prio),
--		     intc_handle_int_cmp, NULL);
- 	}
+diff --git a/drivers/accel/qaic/sahara.c b/drivers/accel/qaic/sahara.c
+index c7c0b3eb4b65f..6333c45ef7d2a 100644
+--- a/drivers/accel/qaic/sahara.c
++++ b/drivers/accel/qaic/sahara.c
+@@ -880,6 +880,7 @@ static void sahara_mhi_remove(struct mhi_device *mhi_dev)
  
- 	if (hw->sense_regs) {
-@@ -287,9 +284,6 @@ int __init register_intc_controller(struct intc_desc *desc)
- 
- 		for (i = 0; i < hw->nr_sense_regs; i++)
- 			k += save_reg(d, k, hw->sense_regs[i].reg, 0);
--
--		sort(d->sense, hw->nr_sense_regs, sizeof(*d->sense),
--		     intc_handle_int_cmp, NULL);
- 	}
- 
- 	if (hw->subgroups)
-@@ -357,6 +351,11 @@ int __init register_intc_controller(struct intc_desc *desc)
- 		}
- 	}
- 
-+	sort(d->prio, d->nr_prio, sizeof(*d->prio),
-+	     intc_handle_int_cmp, NULL);
-+	sort(d->sense, d->nr_sense, sizeof(*d->sense),
-+	     intc_handle_int_cmp, NULL);
-+
- 	intc_subgroup_init(desc, d);
- 
- 	/* enable bits matching force_enable after registering irqs */
+ 	cancel_work_sync(&context->fw_work);
+ 	cancel_work_sync(&context->dump_work);
++	cancel_work_sync(&context->read_data_work);
+ 	vfree(context->mem_dump);
+ 	sahara_release_image(context);
+ 	mhi_unprepare_from_transfer(mhi_dev);
 -- 
 2.53.0
 
