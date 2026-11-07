@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063546;
-	b=nd32pVh7SBEwmLHPLfsyGfFdzY+osu+zfdHUzOi28duJ3QZjPg3pLolwjWx+etkIc2Xn
-	 RssJD25/UGohnHc9bUfmgFqYhAOfYyZ7jlFpsutJ97TbTr2NcuRMRutG+3b/KH+GyNbX0
-	 0oYLuyxTycPlThOd49D9ze1DuvPjG/TQbEW+eWxujhmyjpjgLAoRUwzYmkeALpKij/tsl
-	 88Mx1IBiUYejYFPPE2Jwu6+1aqtU6BF2W7BnBE9xOQCj9WfjXrn1uco4jpyfGPulI0qVd
-	 eG5lT50o/usMFWCFUQKXpixwiyryDX/q4li8wuI0JypB7ywMB6LYz+5wUcFX+3i13AA==
+	t=1794063548;
+	b=nlhgyYFPSpbmBXs2LvfL5yGgEno7orehAn0D6o3gu4XP4XB9kC2tWLmJNzDPzIzmMpng
+	 XIRQXzKVwtiTKK9RF/i9c8RNe3XRPOkRYAHoY290/Jb3yiDk2YTno028MUYUkOTzoXkbj
+	 g2aA5fADDwJ3YiLgYZUwTGpQ671YpFoQs7sw6N+DtxBH/9Ip1W1iqRMjmUBdSG/badML+
+	 W1ovhQ9Vwyn8m1FWV1SMY9cqBMs1crb1le5ldbBqKw+wtWkTPzisF6FfYdEl0LATYRGcR
+	 +7914OiJ/Vg0UpeD0cAKl99LIo5lXEiuEEuXaKWNkbJ/pdjrTE6HKNN0t/4l6H/Le4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063548;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Y7WXjM2xUb9WZHSnNxNKtEMj+P3wMtr223PVRS8jvJs=;
-	b=J43VlnB46GnMVW8DH/OzKfPikVpDejwwMcUSbCPmHiC6LZbCFImPV3Vd3+6glT7jhLoW
-	 8H5LPXEsnnSQF9aRvB6pp+29NhFVjd2T2gTnX9p18BA1MHn6XZ7WiwygMT/0Hb3gXFaSF
-	 3+BRCvO9Dz/f4wWCl7uYaabtTvi3+5yvdR456BqgFpaDCZVjNCUxU36xm7W/jTGuvB3ef
-	 qX8pWyLPkOYEBoJO4137hB8To9hY06NOTQCag69QLJciMb2+eLscPZgBSPSm6aRn3nKvC
-	 pRanqRcNI+mWlSOyJMPhzh/JzrP6ltQlniw8y2RAoQ3XXjipgv/xArDuZ+32fCd8rKQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=/ocyamQba2lZDbXFPojCqTcqB+o+G8bKVJrDNzU3dSI=;
+	b=HOI5136d+Ukd4Ku8G9Z9Ng87SzywsoKVTW0kDOSqf525X0STJ8oSBfviuTiEXQQ2DSzG
+	 ubue64yImk/eQQ7gOMlMJWX4Ncoe1dz71n2ax6ORCbHf+6u3CRdCU8uRfgvuNHBcy9pr0
+	 IEQzPBkbxus/G0hc7ZHc6oEb3axQejpNOB7cRBE4nxsNYTeX/j/2IcVD2HtUERa4Y/6DX
+	 VaHQCK6VdJOg5iNAVnhzkplUEu0evuwRDDpGkk9/M51F2x79T1kgBdaeQLNQtF9fKvN0g
+	 deJNaiRsOcs2M85GntsajlQXfIgUF2Rk3aFCaTChgFhFfMvfPdWqjr1uNMw0+1eYdxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u2+07ehP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upPfmq7s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721216083611;
-	Sat,  7 Nov 2026 14:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88F36082BCB;
+	Sat,  7 Nov 2026 14:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u2+07ehP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207601F0089F;
-	Sat,  7 Nov 2026 14:59:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upPfmq7s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A191F0089F;
+	Sat,  7 Nov 2026 14:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063546;
-	bh=Y7WXjM2xUb9WZHSnNxNKtEMj+P3wMtr223PVRS8jvJs=;
+	s=korg; t=1794063547;
+	bh=/ocyamQba2lZDbXFPojCqTcqB+o+G8bKVJrDNzU3dSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u2+07ehPZX5DJnPU4p2iWqmGXGFy4Hbbu6jwN2x/s8nqE0qINCokTlgxA18euij/M
-	 rhe3NZvX+I80b5PyZk2i66peeFuMw2nqvk22S4u1oyEDgLORyv+BpHCd6NUH2mN8Wz
-	 Z+WkXGFbK4a4WCncW+I1EJMhLLqS0ZztwgPHNDmM=
+	b=upPfmq7shNxgiGNyrpd13+5ZOzUq/nto/Vqq+ccsUSPO2l1YOcUoOXJhysZc+8GEp
+	 gPdLSYxsMAWsb5iaRaHr+w2JdB1DsFonqu1Eul1KCt2l1d8iCkyIEj1CNEUp1PagbP
+	 FOwfbXaFf2WUsw8IzvqaviiaIHwBjzLD/vFtb3O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Tosatti <mtosatti@redhat.com>,
-	Ximing Zhang <xzhangjr@gmail.com>,
-	=?UTF-8?q?Asaf=20Nuri=20Bertizlio=C4=9Flu?= <ycistak@gmail.com>,
+	Jiale Yao <yaojiale02@163.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 644/869] hwmon: (coretemp) Fix handling of isolated SMT siblings
-Date: Sat,  7 Nov 2026 08:55:26 -0500
-Message-ID: <20261107134914.774184786@linuxfoundation.org>
+Subject: [PATCH 6.18 645/869] hwmon: (gigabyte_waterforce) reject short input reports
+Date: Sat,  7 Nov 2026 08:55:27 -0500
+Message-ID: <20261107134914.824136747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -64,127 +62,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ximing Zhang <xzhangjr@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 37c1974a0ec4ec4624a270291a179c53f8f4fbca ]
+[ Upstream commit 400be69515c327ced60082b27ede902a8d93cbdb ]
 
-Commit 0f8b916bc5b5 ("hwmon: (coretemp) avoid RDMSR interrupts to
-isolated CPUs") prevents create_core_data() from creating temperature
-data for an isolated CPU. coretemp_cpu_online(), however, still adds
-that CPU to pdata->cpumask.
+The HID raw_event callback runs before HID core validates the received
+report length. waterforce_raw_event() reads command bytes and then accesses
+fixed offsets for firmware or status data without any length checks. A
+truncated report can therefore cause out-of-bounds reads and update hwmon
+state with unrelated data.
 
-When an isolated SMT thread is processed before a housekeeping sibling,
-the mask makes coretemp_cpu_online() believe that the core is already
-represented. The housekeeping sibling then gets no temperature
-attributes. Package attributes are similarly not retried when the first
-CPU processed in a die is isolated.
+Require every report to contain the firmware response fields, which also
+covers both command bytes. After identifying a status response, require
+the byte at the highest status offset before accessing its payload.
 
-The mask is also used to select a replacement CPU when a sensor target
-goes offline. Including isolated CPUs permits the driver to retarget a
-sensor to one, causing subsequent sysfs reads to send an RDMSR IPI to an
-isolated CPU.
-
-Keep isolated CPUs out of pdata->cpumask by moving the housekeeping check
-to coretemp_cpu_online(). Sensor creation is then deferred to an eligible
-CPU, and hotplug replacement targets remain on housekeeping CPUs.
-
-Tested on an Intel Core i7-10510U running 6.18.50-3-cachyos-lts, with
-nohz_full=1 on CPU 1 and its housekeeping SMT sibling on CPU 5. The stock
-driver omitted Core 1 after module load and retained its readable sensor
-after CPU 5 was offlined. The patched driver exposed Core 1, removed it
-when CPU 5 went offline, and restored it when CPU 5 returned.
-
-Fixes: 0f8b916bc5b5 ("hwmon: (coretemp) avoid RDMSR interrupts to isolated CPUs")
+Fixes: 42ac68e3d4ba ("hwmon: Add driver for Gigabyte AORUS Waterforce AIO coolers")
 Cc: stable@vger.kernel.org
-Cc: Marcelo Tosatti <mtosatti@redhat.com>
-Signed-off-by: Ximing Zhang <xzhangjr@gmail.com>
-Tested-by: Asaf Nuri Bertizlioğlu <ycistak@gmail.com>
-Link: https://patch.msgid.link/20261016-codex-coretemp-housekeeping-v1-1-96618c5676b2@gmail.com
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260927084959.893708-1-yaojiale02@163.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/hwmon/gigabyte_waterforce.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index e8697d6b9998a..c9b7e435eda81 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -559,9 +559,6 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
- 	u32 eax, edx;
- 	int err;
+diff --git a/drivers/hwmon/gigabyte_waterforce.c b/drivers/hwmon/gigabyte_waterforce.c
+index 4eea05f8b569c..f4d0376dd68e0 100644
+--- a/drivers/hwmon/gigabyte_waterforce.c
++++ b/drivers/hwmon/gigabyte_waterforce.c
+@@ -257,6 +257,9 @@ static int waterforce_raw_event(struct hid_device *hdev, struct hid_report *repo
+ {
+ 	struct waterforce_data *priv = hid_get_drvdata(hdev);
  
--	if (!housekeeping_cpu(cpu, HK_TYPE_MISC))
--		return 0;
--
- 	tdata = init_temp_data(pdata, cpu, pkg_flag);
- 	if (!tdata)
- 		return -ENOMEM;
-@@ -681,6 +678,14 @@ static int coretemp_cpu_online(unsigned int cpu)
- 	if (!cpu_has(c, X86_FEATURE_DTHERM))
- 		return -ENODEV;
- 
-+	/*
-+	 * Keep isolated CPUs out of pdata->cpumask. Besides tracking the CPUs
-+	 * available to this driver, the mask is used to select the CPU on which
-+	 * to read the temperature MSRs.
-+	 */
-+	if (!housekeeping_cpu(cpu, HK_TYPE_MISC))
++	if (size <= FIRMWARE_VER_START_OFFSET_2)
 +		return 0;
 +
- 	pdata = platform_get_drvdata(pdev);
- 	if (!pdata->hwmon_dev) {
- 		struct device *hwmon;
-@@ -710,8 +715,8 @@ static int coretemp_cpu_online(unsigned int cpu)
- 	}
+ 	if (data[0] == get_firmware_ver_cmd[0] && data[1] == get_firmware_ver_cmd[1]) {
+ 		/* Received a firmware version report */
+ 		priv->firmware_version =
+@@ -269,6 +272,8 @@ static int waterforce_raw_event(struct hid_device *hdev, struct hid_report *repo
  
- 	/*
--	 * Check whether a thread sibling is already online. If not add the
--	 * interface for this CPU core.
-+	 * Check whether a housekeeping thread sibling is already online. If
-+	 * not, add the interface for this CPU core.
- 	 */
- 	if (!cpumask_intersects(&pdata->cpumask, topology_sibling_cpumask(cpu)))
- 		coretemp_add_core(pdev, cpu, 0);
-@@ -741,9 +746,9 @@ static int coretemp_cpu_offline(unsigned int cpu)
- 	cpumask_clear_cpu(cpu, &pd->cpumask);
+ 	if (data[0] != get_status_cmd[0] || data[1] != get_status_cmd[1])
+ 		return 0;
++	if (size <= WATERFORCE_TEMP_SENSOR)
++		return 0;
  
- 	/*
--	 * If this is the last thread sibling, remove the CPU core
--	 * interface, If there is still a sibling online, transfer the
--	 * target cpu of that core interface to it.
-+	 * If this is the last housekeeping thread sibling, remove the CPU core
-+	 * interface. If there is still a housekeeping sibling online, transfer
-+	 * the target CPU of that core interface to it.
- 	 */
- 	target = cpumask_any_and(&pd->cpumask, topology_sibling_cpumask(cpu));
- 	if (target >= nr_cpu_ids) {
-@@ -755,7 +760,8 @@ static int coretemp_cpu_offline(unsigned int cpu)
- 	}
- 
- 	/*
--	 * If all cores in this pkg are offline, remove the interface.
-+	 * If all housekeeping cores in this pkg are offline, remove the
-+	 * interface.
- 	 */
- 	tdata = get_temp_data(pd, -1);
- 	if (cpumask_empty(&pd->cpumask)) {
-@@ -768,7 +774,7 @@ static int coretemp_cpu_offline(unsigned int cpu)
- 
- 	/*
- 	 * Check whether this core is the target for the package
--	 * interface. We need to assign it to some other cpu.
-+	 * interface. We need to assign it to some other housekeeping CPU.
- 	 */
- 	if (tdata && tdata->cpu == cpu) {
- 		target = cpumask_first(&pd->cpumask);
+ 	priv->temp_input[0] = data[WATERFORCE_TEMP_SENSOR] * 1000;
+ 	priv->speed_input[0] = get_unaligned_le16(data + WATERFORCE_FAN_SPEED);
 -- 
 2.53.0
 
