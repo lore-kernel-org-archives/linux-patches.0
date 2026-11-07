@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061097;
-	b=OCsjYI11AdBLM2djITsudclH9KOvPUslBxgAL4ucdfZKXVSTJYuqe8TOdak1JIIiP+rY
-	 DAvWWNRdl/nzG8zXmRnHLVY/sdgq+8OlIQgD+o+JTeOxk8sKOPjW9x2+qgDAH31DCGYM5
-	 oFvKKnGNqX3k3Di7YLvlSNMNPiszV0lYW6eFGSpIAsAk6x2jayIC39UtFhRe+ZlZ4D5a2
-	 C9KaAozXMvrqx6tScut/J8ei+4yhQWDgtpp74y22nZR14Tj/ehI6o088Jcy19WW1ulskH
-	 Ch3otblABM2IpQhOksoEPeYK5YF6Y0rrSXGd1eE8FwCHrlArhJ79yi3GnT4FyIxo4ZA==
+	t=1794061099;
+	b=BHhjFq6PhVki2/7mFJ2HM/Po1fduX4NFSWBxvAzDFzT2omcOjvqzaBdbI2kPQYmbCLvJ
+	 4a4BUoUW9BndrlyzVe1p643aXT8hxXJKPcxF9vXNLJEThSTgEYiwmHyt5rP3FWubBTBV2
+	 vDaemB4rlGmIdq1eeIeo4IrVrsb3lBP+1dPL8FKObdWyOmRadEr7A76hriX1sQIdZEYD3
+	 Q0sBSaZ4zGLjyk2Q1KytBIz/S59/DyWXLLbMNeFeVhhuCBMnLWyUXzZJLpYyunbejzbK/
+	 fMXf8WeeeONFc6mgiClVBHiMzZRtxazOCklCf0ZcMCq/gWVxpF69xTjP9ANH1+klS4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061097;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qURZPpFr78LVU6wb5nyoX3EdNgA2OGoAGi4Z5TWWgs0=;
-	b=cZi5npL4mW2wweinTuK66athUP4aJGLZYxPhMPArjCAtyezLb55TQbfnYSjmGOrHzc5c
-	 KfOd+UzV4w2WmFnivn+Z4Lx5qmcPd4+sqy7rzG4uZAXTdaS5Rm+ceNetgMwXb1eQpjLSO
-	 QgccLnLD5ZNDVuYzcahM8SsxJU1ji3lz7PCJx5A5MQ+d32PT+uulCNFwpmWtJDi79s3DX
-	 AXN6LPzCgGzWBfP09w1HsFIUx57Rp2NN4WJ9ajeHnAukVUd3FNLOtQSKyTmwqAocCO3bL
-	 KXNsMYutM8xXAfxJOsv14f/ZzNKn3n8pyq1G2SEhRiMi4cM5eRDvO9K6cvfDdstw35A==
+	bh=03iKMbvikphZXGA4rV3s4GGQBc8xhqxR3/Z9x8MJyV8=;
+	b=2RsLNiXPa4uBd/38s4WZdvHlipKBLSdGP1LTDyYmQSrB42XZzWu8jc8TzOE+yHnB+B7b
+	 6krhpr0eyfheUQfW3AtE5TBVJ/W4cZYrqs5brx7Uw9f7uqx7wrmnojeHPlFPwwZMd7nmm
+	 VClresNqfZ7wZYyQe/IwzayLkChMuQQzaks1iENI7qOwebd4j/nzxgLrGEr8R4IeiaNku
+	 gUN1uCHJbJLJkjZt49ILQZtj7wk6IfYMc+n6O90HV5jA82s4cOFh0/GCpe4lrhsTR3pDK
+	 cZeVavXupnfRkdljabEJ7UghXhVCkTcRNG4lWzkTnIe3JR5OMS+vAwSOKUD4VJJJOWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="acgJrvV/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EuaEqrAc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B2C606D837;
-	Sat,  7 Nov 2026 14:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE5C606D837;
+	Sat,  7 Nov 2026 14:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=acgJrvV/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E541F008A1;
-	Sat,  7 Nov 2026 14:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EuaEqrAc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0FA81F008A1;
+	Sat,  7 Nov 2026 14:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061097;
-	bh=qURZPpFr78LVU6wb5nyoX3EdNgA2OGoAGi4Z5TWWgs0=;
+	s=korg; t=1794061098;
+	bh=03iKMbvikphZXGA4rV3s4GGQBc8xhqxR3/Z9x8MJyV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=acgJrvV/+A452Vqpddkbar1dx/YBz9KYOfuviDY9J7c0z+freeDl96B5iwc6Xd4Il
-	 bb1Ydm8Mu34SQY5ayN9fm5Z0skl3DtA9/ATJ+UPHoRjw2sC/2WseArbuNB0HBFHUV9
-	 DWOBEcBgD7g1CFtZW1ryA4n1GI/0AzHRcdakx3vk=
+	b=EuaEqrAcPHJ3M83Sg69Js3YQoRgjBFumx+S0TnELHZrNY2qNDrRe0KXrjFjdqCR0Y
+	 R7xcihn7oxqzXPx3xqo8OmPSc/og6ddCFcQ7QpwJQcSpmDbbM6FmAXpCgJAmihsGWj
+	 p54X9PUkBUvO8zEr/XLBPX8RPux9RQ/JikzeZRlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0378/1536] sched_ext/scx_flatcg: expire cached hweights on weight changes
-Date: Sat,  7 Nov 2026 08:39:54 -0500
-Message-ID: <20261107135008.245050605@linuxfoundation.org>
+Subject: [PATCH 6.12 0369/1536] rtc: ab-eoz9: add missing MODULE_DEVICE_TABLE()
+Date: Sat,  7 Nov 2026 08:39:45 -0500
+Message-ID: <20261107135008.013718135@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,45 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 94c20e1fb334c2082b443c4470a86ad982f67282 ]
+[ Upstream commit 7490b8356e52e09c196645912f2c054f79aa5f3a ]
 
-fcg_cgroup_set_weight() updates cgc->weight and the parent's
-child_weight_sum but doesn't bump hweight_gen, so the hweights cached by
-cgrp_refresh_hweight() stay stale until some task activation bumps the
-generation. For cgroups whose tasks never go through a 0->n runnable
-transition (e.g. persistently busy ones), a cpu.weight change never
-propagates to scheduling at all.
+The driver has a match table for the i2c bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Bump hweight_gen on weight changes so the next refresh recomputes with
-the new weight.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Verified on a flatcg VM: a live cpu.weight 100->800 change on a busy
-cgroup leaves HWT update at 0 and the distribution unchanged; with it,
-hweight_gen increments and the refresh recomputes.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704152528.53258-1-pengpeng@iscas.ac.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/sched_ext/scx_flatcg.bpf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/rtc/rtc-ab-eoz9.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index 05e3b4495ac5c..d9cd322210799 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -606,6 +606,9 @@ void BPF_STRUCT_OPS(fcg_cgroup_set_weight, struct cgroup *cgrp, u32 weight)
- 		pcgc->child_weight_sum += (s64)weight - cgc->weight;
- 	cgc->weight = weight;
- 	bpf_spin_unlock(&cgv_tree_lock);
-+
-+	/* expire cached hweights so the new weight propagates */
-+	__sync_fetch_and_add(&hweight_gen, 1);
- }
+diff --git a/drivers/rtc/rtc-ab-eoz9.c b/drivers/rtc/rtc-ab-eoz9.c
+index e17bce9a27468..2d7b7535ea520 100644
+--- a/drivers/rtc/rtc-ab-eoz9.c
++++ b/drivers/rtc/rtc-ab-eoz9.c
+@@ -571,6 +571,7 @@ static const struct i2c_device_id abeoz9_id[] = {
+ 	{ "abeoz9" },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(i2c, abeoz9_id);
  
- static bool try_pick_next_cgroup(u64 *cgidp)
+ static struct i2c_driver abeoz9_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
