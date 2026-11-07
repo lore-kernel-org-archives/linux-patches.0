@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063013;
-	b=you/7DXhIg7Jl+wLRi0sxtTFMzVYSmUifOy2JqYfKotQXhgssSpnA0d8hsvv9vZgxYcz
-	 eC9f0jc99sqB2apc53NPc8GgJplGz1ttw5naTSh0OftRyRKLBvT1AJE2w/rUnVdaRRpZC
-	 X1KXbnODUCAOQco+no0sUDmu1G1jfzfjQLp19A5Q4X8nRlBqEXSoq36S5y8Miy92krA1s
-	 fLI1GOkjF8nCzyB0lED303THXswJI0jkvwD3RhDFIVrAt2gjogkxVcUqSOLoq5Xg3dcms
-	 fXAmhTnI3S5uXhuFu3/2NYc45gucxl6Lp3/uvdvsUdeB6RJEdN8M1W/KiQ+Oi1U7VXA==
+	t=1794063014;
+	b=JebGcsFKnGyI5mj5gafInR6erafdfZJk1DG87DIFvM602+rHLfpXvCbtX84qfUYPfKc9
+	 RpNqjOEPr+vyCDsRGSrBH8Nt1iBVllfMFG02anJlWfjmJearb+LTt7Lle+hJnxIIoRLZz
+	 BPGnyw5naA7J4bSAgK/hr/3unp7YtzFxhJrcJDZ7rjkSlTzIVov1lLkv6OsFCQo6V14dT
+	 Y7GzgPauJqTKZI4JkmGu4CnlEhF5M9JcVZAPoLln3fWEeDHc6Z7ecuv53NW9MpfcTVOiO
+	 AQLOCl4jjp0JtYKAqnvZ41B2BTJ6jEOGH74AuJEDDE1QfEdpDD8JJhi1ztVF01Vg2dQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063013;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063014;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N8qatMfzpB0FjSpYdStFKE23H4ucO3uoPPnxWsA0Ly8=;
-	b=EFiF+kEumnmgb9brOxVxyJooghoVP8pzurOzGXHv0FyquwoLjgziW2ADnp1VEEdjyUq8
-	 l4+VkT14OGRdWlXiuJjxKwg950slHyCC8Vpm4VcMkUvfVETWlQ+sL/+n9Wn0EgW2txV3O
-	 wu+C/7Fh9GUWLO8v+jHj4M+0wsjPPwd0OcN1er35cKP0Y6DiKmzzBwgf3vQEjZs2d1FSX
-	 Ruu8bFpDgUlOLIFMfwv4QuANYNoJo4EpA7vhWAu1b+Heib39YCb/DyzcaNlyNP401PqCZ
-	 IgJmnM73e+fuzFXbC9Uz7FJgwpAW+ovBeNChhQNek1ySKrnYTysDgxDSZSqEZViQU5g==
+	bh=VK72/8ueYghPhD5K+T/8HC65OJm993N8CLLGV/GnG+k=;
+	b=La3wqRHk2b0lQ+KWXG8hC2H+sEMSyIlRvP22B8V2Zp0Se9fQSJG1K/2m8cE9dmWCw8cX
+	 vE+QToOK1Qd7KRZt5/3fZi5cLI2yfA5PEOdoKh+6rOBinNpn/+xwm1y008TwgA3ScMUUM
+	 NP9d/g/3tVQ2lRZbQewuI+dO5Bzn4zID4K2gIGKk5kPDmZ8rlpH/hFT+kiM6PncbwM6uJ
+	 7MABc2tdZC6Jh+Nd5CD0cL714DVIVzOPMk/xSmr9dxaDfy3lfaQxiI1PGABV4Vms/Z9Cc
+	 qGb2La2JN1I4KhsuncpDcnnzsK7PxMKLKhO4IqBwbTZa8rHDDJTPCrInzoZmjmRSQCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kdqweuiq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AWJuWT6X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAE9606D80D;
-	Sat,  7 Nov 2026 14:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC18606D801;
+	Sat,  7 Nov 2026 14:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kdqweuiq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEA61F0089F;
-	Sat,  7 Nov 2026 14:50:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AWJuWT6X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4E01F008A1;
+	Sat,  7 Nov 2026 14:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063013;
-	bh=N8qatMfzpB0FjSpYdStFKE23H4ucO3uoPPnxWsA0Ly8=;
+	s=korg; t=1794063014;
+	bh=VK72/8ueYghPhD5K+T/8HC65OJm993N8CLLGV/GnG+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kdqweuiqI5NFgbdlL/S375udT+OvU15ZAaZbIKCjrN5M0Sm5XJK2ucDSJ5qqF1Csd
-	 dHng4LZEK/ZsX+OFfco4EYtWUqi2sPRawP9RwYnN8NVF8FNzlr7AvxcyleHiISJUX4
-	 0NV+4eEVrtCHwy9W0oCRsZ6T9hN5jirGnBm+QZIM=
+	b=AWJuWT6XfuczHBdvq+Pj7NxOUhIuZp7YTymKIhq0nS7X+whumXBFUmWxu2+saiy8d
+	 irvONZ+JGzGDMROC4edST+r4p3B98u22AyLzuxU6HEgE3cEgrRC6GATQK+P7kYKbQo
+	 qD/bLyQaSxEEGZSFNo0ZzpSEaE+VD4VLNW/V0aes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 264/869] iommu/vt-d: Avoid out-of-range shift in qi_desc_dev_iotlb_pasid()
-Date: Sat,  7 Nov 2026 08:49:06 -0500
-Message-ID: <20261107134900.681113438@linuxfoundation.org>
+Subject: [PATCH 6.18 265/869] ALSA: mpu401: shut down timer before freeing MPU
+Date: Sat,  7 Nov 2026 08:49:07 -0500
+Message-ID: <20261107134900.709501223@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,113 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit ddea230c9fc28d1f2090ceeab3d66ce2bea658e9 ]
+[ Upstream commit 9332af5220d42341bb1446a62c545c0518e990ef ]
 
-Callers request a full Device-TLB flush by passing MAX_AGAW_PFN_WIDTH
-(64 - VTD_PAGE_SHIFT == 52) as @size_order.  Two expressions in
-qi_desc_dev_iotlb_pasid() are not prepared for a value that large:
+When an MPU401 interface has no usable IRQ, the driver polls raw-MIDI
+input and output with a timer. During raw-MIDI teardown, the timer callback
+can already be running when snd_mpu401_uart_remove_timer() clears the last
+mode bit and calls timer_delete(). That API neither waits for a running
+callback nor prevents it from rearming the timer, and free_irq() does not
+synchronize timer callbacks. snd_mpu401_uart_free() can therefore release
+mpu while the timer callback still uses it.
 
-  unsigned long mask = 1UL << (VTD_PAGE_SHIFT + size_order - 1);
-  ...
-  if (!IS_ALIGNED(addr, VTD_PAGE_SIZE << size_order))
+Initialize the timer once when the MPU object is created and only rearm it
+while a timer mode is active. Shut it down synchronously after freeing the
+IRQ so an in-flight callback completes before mpu and its resources are
+released.
 
-The second evaluates to 1UL << 64, which is undefined on all
-architectures.  On x86_64 the shift count masks to zero, IS_ALIGNED(addr,
-1) is trivially true, and the alignment sanity check silently degrades
-into a no-op.
-
-The first evaluates to 1UL << 63.  That is well defined on 64-bit builds,
-where unsigned long is 64 bits wide, but is undefined on 32-bit ones.  In
-practice x86 masks the shift count to five bits, so the expression yields
-1UL << 31 and ~mask becomes 0x7fffffff.  That value is zero-extended when
-applied to the 64-bit descriptor, so
-
-  desc->qw1 &= ~mask;
-
-clears qw1[63:32] as well as bit 31, collapsing the ADDR field that had
-just been filled with ones.  Reaching that requires a scalable-mode PASID
-configuration on 32-bit x86, which is not a realistic deployment, but the
-construct is wrong regardless.
-
-Compute the mask with BIT_ULL() so that it is 64-bit on every
-architecture, and skip the alignment check for a full flush, where it is
-both meaningless and the source of the out-of-range shift.
-
-Note that @size_order must not be clamped below 64 - VTD_PAGE_SHIFT.  With
-S set, hardware derives the invalidation range from the least significant
-zero bit N of ADDR and matches bits [63:N+1] of the incoming address.  For
-size_order 52 the descriptor sets ADDR[63:12] and clears bit 63, making
-N = 63 and the comparison range empty, so everything is invalidated.
-Reducing @size_order to 51 would instead leave N = 62 and cause hardware
-to compare address bit 63; since callers pass an address of 0, only the
-lower half of the address space would be invalidated.  Bound @size_order
-at 64 - VTD_PAGE_SHIFT so that a bogus caller cannot reintroduce an
-out-of-range shift, without altering the full-flush encoding.
-
-The non-PASID variant qi_desc_dev_iotlb() already uses 1ULL and is
-unaffected.
-
-Fixes: f701c9f36bcb7 ("iommu/vt-d: Factor out invalidation descriptor composition")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260623060122.3796325-1-guanghuifeng%40linux.alibaba.com
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260927093809.681726-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.h | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ sound/drivers/mpu401/mpu401_uart.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index e696e019e9697..33c9e06df63f9 100644
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -1183,12 +1183,20 @@ static inline void qi_desc_dev_iotlb_pasid(u16 sid, u16 pfsid, u32 pasid,
- 					   unsigned int size_order,
- 					   struct qi_desc *desc)
- {
--	unsigned long mask = 1UL << (VTD_PAGE_SHIFT + size_order - 1);
--
- 	desc->qw0 = QI_DEV_EIOTLB_PASID(pasid) | QI_DEV_EIOTLB_SID(sid) |
- 		QI_DEV_EIOTLB_QDEP(qdep) | QI_DEIOTLB_TYPE |
- 		QI_DEV_IOTLB_PFSID(pfsid);
+diff --git a/sound/drivers/mpu401/mpu401_uart.c b/sound/drivers/mpu401/mpu401_uart.c
+index 4af89822bf32b..94213c1ff1700 100644
+--- a/sound/drivers/mpu401/mpu401_uart.c
++++ b/sound/drivers/mpu401/mpu401_uart.c
+@@ -155,20 +155,20 @@ static void snd_mpu401_uart_timer(struct timer_list *t)
  
-+	/*
-+	 * The widest range the descriptor can express is a full flush, encoded
-+	 * by making bit 63 the least significant zero bit of ADDR, that is
-+	 * @size_order == 64 - VTD_PAGE_SHIFT.  Bound @size_order there so that
-+	 * a caller passing something larger cannot produce an out-of-range
-+	 * shift below.
-+	 */
-+	if (size_order > 64 - VTD_PAGE_SHIFT)
-+		size_order = 64 - VTD_PAGE_SHIFT;
-+
- 	/*
- 	 * If S bit is 0, we only flush a single page. If S bit is set,
- 	 * The least significant zero bit indicates the invalidation address
-@@ -1198,7 +1206,8 @@ static inline void qi_desc_dev_iotlb_pasid(u16 sid, u16 pfsid, u32 pasid,
- 	 * Max Invs Pending (MIP) is set to 0 for now until we have DIT in
- 	 * ECAP.
- 	 */
--	if (!IS_ALIGNED(addr, VTD_PAGE_SIZE << size_order))
-+	if (size_order < 64 - VTD_PAGE_SHIFT &&
-+	    !IS_ALIGNED(addr, BIT_ULL(VTD_PAGE_SHIFT + size_order)))
- 		pr_warn_ratelimited("Invalidate non-aligned address %llx, order %d\n",
- 				    addr, size_order);
- 
-@@ -1214,7 +1223,7 @@ static inline void qi_desc_dev_iotlb_pasid(u16 sid, u16 pfsid, u32 pasid,
- 		desc->qw1 |= GENMASK_ULL(size_order + VTD_PAGE_SHIFT - 1,
- 					VTD_PAGE_SHIFT);
- 		/* Clear size_order bit to indicate size */
--		desc->qw1 &= ~mask;
-+		desc->qw1 &= ~BIT_ULL(VTD_PAGE_SHIFT + size_order - 1);
- 		/* Set the S bit to indicate flushing more than 1 page */
- 		desc->qw1 |= QI_DEV_EIOTLB_SIZE;
+ 	scoped_guard(spinlock_irqsave, &mpu->timer_lock) {
+ 		/*mpu->mode |= MPU401_MODE_TIMER;*/
+-		mod_timer(&mpu->timer,  1 + jiffies);
++		if (mpu->timer_invoked)
++			mod_timer(&mpu->timer,  1 + jiffies);
  	}
+ 	if (mpu->rmidi)
+ 		_snd_mpu401_uart_interrupt(mpu);
+ }
+ 
+ /*
+- * initialize the timer callback if not programmed yet
++ * arm the timer if it is not already active
+  */
+ static void snd_mpu401_uart_add_timer (struct snd_mpu401 *mpu, int input)
+ {
+ 	guard(spinlock_irqsave)(&mpu->timer_lock);
+ 	if (mpu->timer_invoked == 0) {
+-		timer_setup(&mpu->timer, snd_mpu401_uart_timer, 0);
+ 		mod_timer(&mpu->timer, 1 + jiffies);
+ 	} 
+ 	mpu->timer_invoked |= input ? MPU401_MODE_INPUT_TIMER :
+@@ -474,6 +474,7 @@ static void snd_mpu401_uart_free(struct snd_rawmidi *rmidi)
+ 	struct snd_mpu401 *mpu = rmidi->private_data;
+ 	if (mpu->irq >= 0)
+ 		free_irq(mpu->irq, (void *) mpu);
++	timer_shutdown_sync(&mpu->timer);
+ 	release_and_free_resource(mpu->res);
+ 	kfree(mpu);
+ }
+@@ -528,6 +529,7 @@ int snd_mpu401_uart_new(struct snd_card *card, int device,
+ 	spin_lock_init(&mpu->input_lock);
+ 	spin_lock_init(&mpu->output_lock);
+ 	spin_lock_init(&mpu->timer_lock);
++	timer_setup(&mpu->timer, snd_mpu401_uart_timer, 0);
+ 	mpu->hardware = hardware;
+ 	mpu->irq = -1;
+ 	mpu->rmidi = rmidi;
 -- 
 2.53.0
 
