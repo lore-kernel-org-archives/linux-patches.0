@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063732;
-	b=Ap7o7IobF7yz8ulxTDvLpclfihOVbMYJsbjMqLObgruqAdr3NPg6RmlQHt7dMuKy9kpV
-	 Of1LfSraeBS6X8SnmSC7cdNrDdf17NJCxIaZkhULfQ2Xz7DadcYsqPg1gKMOFCS9IIZEC
-	 n2O7uxJeIAj3ljfK8dEYPeJZiz7GWZ7Rlb4t4cqclpdOPKGNwaJjueZEtjEVsRhZuM9xD
-	 K3G/tTSJxTROjI3n4Da1HKE8Q49YUxJ3YPyCtt+kV4XYAEOsQ2Y57yD5j+oAFfAzHAnBC
-	 QrRQSwLi/usKmUazZBvLI9nvHmOZIFCk44R+oxOF4OFq8s9HmTbUBc+cTgVkSLwcUFA==
+	t=1794063733;
+	b=j/RR7vLKbfzRCd96ridb06MGDFTlJfvZJ8X4Ak4+twvG23kAFfhgL0HkBtmvWYWVihmz
+	 5JFgWm23YY/qbGKq3WSvuz0z0ED0mgzLP5D9rN9Y6wd1c/8TG+mxPrti5kgqb3bFGQ54s
+	 C9MivUfc5jbt1nS0jxc9iI6S5GXFlu/U/E+w4rQxU/UL69LbuXDf9Hc8VKlFVtZcT92G4
+	 pxoCvoN5YG/795A2xQIGPWGtPmdIIswSvLQNhTaskr7E1WAq/JU0jM6qX8Adb4msUVlM2
+	 P2AYNOreuFTTfdYREZRNxjQONOAmYYpgWAhESKjyQ0yemdgxCvita4y8pOn4ZL32paA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063733;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oU9S3KHybpBbGAmaWhF0McqqvJ86JKYulrmr2YfP0WI=;
-	b=Jhj3/7g5jmgYgpiQbczcsSBMa4Z1EC5kdbSjryY5w3SsNR2YwcxHiNW4izJdd8VBToJs
-	 LmAQC6D1XzT8xoeIaD+miuLyUs+z4ic9NlwXDkRIj17i01EBKNx+fnP96C9ZQFA9CFMd7
-	 MyL78KYCD6Su/7cBpiWdtwSnmh/wfNiDA9jgzTMvk4c/Tytbyh2zISWs4UDuG/qcQ8I7n
-	 KdJefkQq1q0iNo+x9QlGC62+83Kr+MglP88+RB0NwaWE+UjaDBFcuje3M5ioliH0DXcH5
-	 balFuQk7ue0wciwuMhnzKpSxrzK/Q2iDCRZYl/UWbg4ZV2m+l+Z6DY81see/UAR30Ww==
+	bh=iY/9DmiB+x9Q0yiWokyqLum/xCjj6r7CEq0m+l3KcmA=;
+	b=sTe5+xuip5jZGJcGRqQZ5yqaAkyqbZsFrX2K+xOW2tdgTMFSuUBpaFslXY48wm8aMTOH
+	 m7ucmMRZbD1wa7EI5yTd4TKtM684kSDHLrct5rawAktY+G0+X4ocyEGDYsdU5yNYifZ1G
+	 EyqVbCzdCUIE198uCkJ+d6BHl/oodo7vuQc4oHIcCklXFAkOxAuYdpwPUCVAiNbeg1RYd
+	 itvyq5s4A2V7ePgDf8vdJtOwmEvHxzX0Aq5iY/VqG+8T8QV1OPuoN0HeU7trP9eIhwc9q
+	 B8mstZT6V3EAyUi9HDvo6PDGjfSLht32Y6dG7utOxijV0GIizLaRVwBVHwncZ8fgL+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WfAq8Axu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wSpQNDz3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CD6606EEB8;
-	Sat,  7 Nov 2026 15:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A8F606D802;
+	Sat,  7 Nov 2026 15:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WfAq8Axu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DB21F008A5;
-	Sat,  7 Nov 2026 15:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wSpQNDz3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1911F0089F;
+	Sat,  7 Nov 2026 15:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063731;
-	bh=oU9S3KHybpBbGAmaWhF0McqqvJ86JKYulrmr2YfP0WI=;
+	s=korg; t=1794063733;
+	bh=iY/9DmiB+x9Q0yiWokyqLum/xCjj6r7CEq0m+l3KcmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WfAq8Axuf0/68XaZ/y0pIa0EWy1YUZNWDrwvG7KTJv1SMmAdWAszhLAWA0GcI6mZQ
-	 oAcJFOU8YGLLWj9CDRA0nS3VMiAD8ksodDmv9GAxSCcsXXODdOx7Ewvq3y6wv848p8
-	 3tECD5W9JstZPsfrlGIQ2zPIU9Mng+TZkYdxkAKs=
+	b=wSpQNDz3Qx7nVgEN1d78KLOJb2ZSqSR6ffaQm6UyELM9jZ+BjJ884VTRtsMVximIA
+	 8+GhcohN89NR4RB3zDMOF8Ln5tKlTrE547Qln5ojm3C4Kusd6sIWkEAkmyr21SJdte
+	 LI18+MKjOo/BFaBQ/UkJb3w3+UrN4FQRcOCY26YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
+	Niklas Cassel <cassel@kernel.org>,
 	Andrea Parri <parri.andrea@gmail.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 829/869] nvmet-fc: only send read data for successful commands
-Date: Sat,  7 Nov 2026 08:58:31 -0500
-Message-ID: <20261107134921.044160471@linuxfoundation.org>
+Subject: [PATCH 6.18 830/869] nvmet: pci-epf: report transport errors in command completions
+Date: Sat,  7 Nov 2026 08:58:32 -0500
+Message-ID: <20261107134921.071780753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,58 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 94f93c61b1a5dd08d011be58172ce4392b849008 ]
+[ Upstream commit 46ed7310a60029826eedb01081a4556643ed5f3b ]
 
-When a read command completes with an error,
-__nvmet_fc_fcp_nvme_cmd_done() still pushes the whole data buffer to
-the host before the response. nvmet_fc_alloc_tgt_pgs() allocates that
-buffer with sgl_alloc() and no __GFP_ZERO, and a command rejected by
-nvmet_check_transfer_len() leaves it untouched, so the host receives
-stale target memory.
+When the PCI endpoint target fails a command itself, the host receives a
+successful completion. This happens for a data length above MDTS,
+malformed PRPs or SGLs, a buffer allocation failure, an SQ that is not
+live, and a failed DMA of the command data. A write whose data cannot be
+fetched from the host is thus reported as written, though nothing was
+executed.
 
-The buffer is as large as the data length in the command IU, so the
-amount of stale memory returned is up to the host.
+Each of these paths sets iod->status and calls
+nvmet_pci_epf_complete_iod(), which then reloads iod->status from
+iod->cqe.status. The nvmet core only fills that field when it completes
+the request, which these paths never do, so it is still zero and
+nvmet_pci_epf_cq_work() posts a success status to the host.
 
-The tcp and rdma targets send data only when cqe->status is zero (see
-nvmet_tcp_need_data_out() and nvmet_rdma_need_data_out()), so no nvmet
-command can rely on returning data with an error status. Do the same
-for fc. The ERSP then reports a transferred length of fod->offset,
-which is 0, matching what nvme_fc_fcpio_done() checks on the host.
+Drop the reload. Every path already sets iod->status before completion:
+nvmet_pci_epf_queue_response() copies it from the request's CQE, and
+the transport error paths set it themselves.
 
-Tested over nvme-fcloop: a failed read command no longer transfers
-data and still completes with its error status, and successful reads
-are unaffected.
+Found by code inspection.
 
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
+Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Tested-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvme/target/pci-epf.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index 1880fc7804326..ec08992668b99 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -2493,11 +2493,11 @@ __nvmet_fc_fcp_nvme_cmd_done(struct nvmet_fc_tgtport *tgtport,
- 	} else {
+diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
+index e3815be98ee6e..a85f21a593706 100644
+--- a/drivers/nvme/target/pci-epf.c
++++ b/drivers/nvme/target/pci-epf.c
+@@ -1174,7 +1174,6 @@ static void nvmet_pci_epf_complete_iod(struct nvmet_pci_epf_iod *iod)
+ 	unsigned long flags;
  
- 		/*
--		 * try to push the data even if the SQE status is non-zero.
--		 * There may be a status where data still was intended to
--		 * be moved
-+		 * A failed command may not have filled its read buffer, so
-+		 * only push data for success, as the tcp and rdma targets do.
- 		 */
--		if ((fod->io_dir == NVMET_FCP_READ) && (fod->data_sg_cnt)) {
-+		if (fod->io_dir == NVMET_FCP_READ && fod->data_sg_cnt &&
-+		    !cqe->status) {
- 			/* push the data over before sending rsp */
- 			nvmet_fc_transfer_fcp_data(tgtport, fod,
- 						NVMET_FCOP_READDATA);
+ 	/* Print an error message for failed commands, except AENs. */
+-	iod->status = le16_to_cpu(iod->cqe.status) >> 1;
+ 	if (iod->status && iod->cmd.common.opcode != nvme_admin_async_event)
+ 		dev_err(iod->ctrl->dev,
+ 			"CQ[%d]: Command %s (0x%x) status 0x%0x\n",
 -- 
 2.53.0
 
