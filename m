@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064173;
-	b=NMm9fOS22x4IQ5ycEgvsRAa2eNcluK6oXzdAz33a2zWnLlkDpGG0To8ue13RbLE+c0gV
-	 qthxF89Dzd7n0JVH/tppecrhqp4eNIwql5iIKifhGGso3UJlrqUwSiru2lJHHfhz6vsWV
-	 VjjB7aESVB1A3E8mBw9IgyV1c6X0TQsZrxwxHdNtum4lLhGgEhxLSGUtZnbYIRaekIvwk
-	 fE0n+9Z3BYfm67qX3RuMs8zltYm7gv2MmO0gELnEIEFw5aTgD00jH9HS0KU4+wNprCnLR
-	 46JuAOm/R4uIkAd+32Oeviaew5zw/M0AROgT6kBXehctgi100Dohb7oNR2v6i7+jdyg==
+	t=1794064174;
+	b=2Y9WIqqjG77lt7cMIrkg1XYZgtUuSlOsoIL4NHusc9DdYRIMA6eCSxvqYXwhdKMbq5Du
+	 RSukDT0lcbVxHIrAP1ujhMnQJCc08kWATxJI5igCOqqqMm7xLewu1oHXiXEm+7cKSEGvO
+	 Iyohm0Nq4xS9/zLvSvo4wC/kKZfBILEqze3ndBRo+8yJXwvgbIpHfJ367ubY0HzCGZiSk
+	 o1TbXHL88ioUyzMGpu26SyUS2LxsByrJwfbFPw1lqZmG+Ak70ZTNMMAatGmDdF5tQC/il
+	 s3Kw3owVLqSa0FkS+DsFgrbfYnFcjvTqiOUrBsNWkXnoiMMaBAvhOX01/QwZ61XX1Ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OslPp6orxgXmt3hPxh8H57a0CtFrcoNULnZPuo8xT30=;
-	b=IVM5ODnZeMWdDuBGoxf8GjgT/eHmlzcd5Q77qUz3D4Z8WKyDd6dk8gN0ZmMJO/zkyaqv
-	 OmFwrFbfiqt//qCG7qVo1etUdfXo8CJS8Eat9j9MgHDvf2dlhhrqPV7C7/RqzzYxc1W1+
-	 GGtAftanlOdD0ort6O87eCrIHgr06mjPyXHMms/Q+Nsj1kQKyD+scFqTBzGDQY0CUZ+g0
-	 N4XcMFg4vAbyyfTCWGjsrNHzKbiW1cTz+sVI4epR8XQOWyZWJQhKujWJvVqDDzzTKy/Nv
-	 JMA2+X+3xBOI3KWZlUvPX3O0NgqYCehYvvJFL/Ba+O5XvojzNtjBSwHe5z9zqLffHxQ==
+	bh=V98vovM5HAsAX/U6Y5gs8H6hRMbqUpzJG0Tf4M1YE3Q=;
+	b=t1mDLhSxoNjPd25MAeDnX19VeyMZsf11JsMhdn/VkpbOmCmx06m6hFOuUTqKB4a8yDg+
+	 JdWw5qp0BqOWb9qyq6Cx5By94Ml1dTJ3e7BdzEEMXKj/iy+saHsYNy6/vrjw1YqIar4WF
+	 U+MXQzDmJL1yKHhH3HsuLM/43N3gc+Kotd6J9iK2bWCG6zm9Y82anmp7KoceXnFyRb/+c
+	 nW55FiujYo0bc8Z0yMSiUQVPtAPP+NXRETZJ+FR4/iasyVnTGcs20yiNXii2t9k8Vqsm2
+	 Uibcfk8XiXNfxAnC/N4GDdjzLZAC9jKZ+D2/7uMq7qUAG/4jlk1dDYFUMv6+e31Lw0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d3VyIqZ3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJJarE4b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568C8606D810;
-	Sat,  7 Nov 2026 15:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311C5606D810;
+	Sat,  7 Nov 2026 15:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d3VyIqZ3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD3C1F0089F;
-	Sat,  7 Nov 2026 15:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJJarE4b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D460A1F0089F;
+	Sat,  7 Nov 2026 15:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064172;
-	bh=OslPp6orxgXmt3hPxh8H57a0CtFrcoNULnZPuo8xT30=;
+	s=korg; t=1794064174;
+	bh=V98vovM5HAsAX/U6Y5gs8H6hRMbqUpzJG0Tf4M1YE3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d3VyIqZ3YssRCoGhHqkXXxBR5os9DNmh+1Iw6eXdaluE2zKWxasdL9zCS8Dzoc1+d
-	 3QbDkeAuwgzjssuzYpF4KCj00MeSbm9XoYYiJ7C1Tsh1FmW4DaNzVP2Qk1aqbhHdTk
-	 PmhO17x4dpc9qCSTkR2vEh4lWr3RVMeuaEvtvXKA=
+	b=wJJarE4bGdzotq1nAf+LyTTu3piF6fbl9u4hDB5E6BLnB6D38CoSV0dgiKOUQJ6tU
+	 xyh6ia9Utd1b0CsrK0Mq87H3kmuCuVIQPbMmOdy5bGp7vJzosYzUR48mGw9I0Db9bd
+	 AQU7HoaFByAH/yJiPoQ67jGD6PNt+IRTeLDf2378=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Verdonck <tom.verdonck@inspiral.be>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Orgad Shaneh <orgads@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0318/1257] hwmon: (tmp108) Fix jiffies wraparound in conversion-ready check
-Date: Sat,  7 Nov 2026 08:43:34 -0500
-Message-ID: <20261107134948.213196221@linuxfoundation.org>
+Subject: [PATCH 7.3 0319/1257] MIPS: mm: align hugetlb mappings in arch_get_unmapped_area()
+Date: Sat,  7 Nov 2026 08:43:35 -0500
+Message-ID: <20261107134948.240000736@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,80 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Verdonck <tom.verdonck@inspiral.be>
+From: Orgad Shaneh <orgads@gmail.com>
 
-[ Upstream commit 6b8b1d1d7bc7e579b53fc7c3293b787d68de702a ]
+[ Upstream commit 975d4a6a6d4d23a39e2f49cafcc082d937960bc4 ]
 
-tmp108 records a one-shot deadline in ->ready_time at probe (and resume)
-and, on every temperature read, refuses the read with -EAGAIN while
-time_before(jiffies, ready_time) is true, in order to skip the initial
-conversion.
+Since hugetlb mappings were made to go through the architecture's
+arch_get_unmapped_area{,_topdown}(), every architecture that implements
+those has to align hugetlb files itself. The generic implementation and
+loongarch do it with huge_page_mask_align(); MIPS was left out.
 
-->ready_time is an unsigned long compared with time_before(), whose
-signed difference is only meaningful while the two values are within
-LONG_MAX jiffies of each other. Because ->ready_time is set once and
-never refreshed, jiffies keeps advancing away from it, and after 2^31
-jiffies the difference flips sign. On a 32-bit HZ=100 kernel that
-happens ~248.5 days after boot: time_before() then permanently reports
-"not ready" and the driver returns -EAGAIN on every read, without ever
-touching the sensor, until the next reboot. The continuous-mode path,
-which sets ->ready_time to jiffies with no added conversion delay, wraps
-the same way.
+A non-MAP_FIXED mmap() of a hugetlbfs file therefore returns an address
+that is only SHMLBA aligned, and the kernel then installs 2 MB PMDs for
+a VMA that starts in the middle of a PMD. The consequences on an
+Octeon (CN63XX) board running a process that links libhugetlbfs with
+HUGETLB_ELFMAP=R and HUGETLB_MORECORE=yes, all within a minute of
+start: the neighbouring 4 KB page table is clobbered, the TLB ends up
+with overlapping entries ("Caught Machine Check exception - caused by
+multiple matching entries in the TLB"), process exit trips
+BUG_ON(start & ~huge_page_mask(h)) in __unmap_hugepage_range(), and
+freed pages leak into unrelated kernel structures (oopses in the irq
+maple tree, in pte_offset_map, ...).
 
-Store the deadline as a 64-bit jiffies value and compare it with
-get_jiffies_64()/time_before64(), which does not wrap in any practical
-uptime.
+Do what loongarch does in commit 3109d5ff484b ("LoongArch: Set hugetlb
+mmap base address aligned with pmd size"): when the file is a hugetlb
+file, use its page mask as the search alignment instead of the cache
+colour mask.
 
-Fixes: 66e1c9171339 ("hwmon: Add Texas Instruments TMP108 temperature sensor driver.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tom Verdonck <tom.verdonck@inspiral.be>
-Link: https://patch.msgid.link/525fa49d8c50922344fa53e22be5e6133c9bbb62.1790358356.git.tom.verdonck@inspiral.be
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 7bd3f1e1a9ae ("mm: make hugetlb mappings go through mm_get_unmapped_area_vmflags")
+Cc: stable@vger.kernel.org # 6.13+
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp108.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/mips/mm/mmap.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/tmp108.c b/drivers/hwmon/tmp108.c
-index 9fa31bd66ff69..91d20a1ce1120 100644
---- a/drivers/hwmon/tmp108.c
-+++ b/drivers/hwmon/tmp108.c
-@@ -78,7 +78,7 @@
- struct tmp108 {
- 	struct regmap *regmap;
- 	u16 orig_config;
--	unsigned long ready_time;
-+	u64 ready_time;
- 	const struct tmp108_params *params;
- };
- 
-@@ -138,7 +138,7 @@ static int tmp108_read(struct device *dev, enum hwmon_sensor_types type,
- 	switch (attr) {
- 	case hwmon_temp_input:
- 		/* Is it too early to return a conversion ? */
--		if (time_before(jiffies, tmp108->ready_time)) {
-+		if (time_before64(get_jiffies_64(), tmp108->ready_time)) {
- 			dev_dbg(dev, "%s: Conversion not ready yet..\n",
- 				__func__);
- 			return -EAGAIN;
-@@ -477,7 +477,7 @@ static int tmp108_common_probe(struct device *dev, struct regmap *regmap, char *
- 		return err;
+diff --git a/arch/mips/mm/mmap.c b/arch/mips/mm/mmap.c
+index 5d2a1225785b8..119edaa928f33 100644
+--- a/arch/mips/mm/mmap.c
++++ b/arch/mips/mm/mmap.c
+@@ -9,6 +9,7 @@
+ #include <linux/compiler.h>
+ #include <linux/elf-randomize.h>
+ #include <linux/errno.h>
++#include <linux/hugetlb.h>
+ #include <linux/mm.h>
+ #include <linux/mman.h>
+ #include <linux/export.h>
+@@ -72,8 +73,11 @@ static unsigned long arch_get_unmapped_area_common(struct file *filp,
  	}
  
--	tmp108->ready_time = jiffies;
-+	tmp108->ready_time = get_jiffies_64();
- 	if ((tmp108->orig_config & TMP108_CONF_MODE_MASK) ==
- 	    TMP108_MODE_SHUTDOWN)
- 		tmp108->ready_time +=
-@@ -528,7 +528,7 @@ static int tmp108_resume(struct device *dev)
+ 	info.length = len;
+-	info.align_mask = do_color_align ? (PAGE_MASK & shm_align_mask) : 0;
+ 	info.align_offset = pgoff << PAGE_SHIFT;
++	if (filp && is_file_hugepages(filp))
++		info.align_mask = huge_page_mask_align(filp);
++	else
++		info.align_mask = do_color_align ? (PAGE_MASK & shm_align_mask) : 0;
  
- 	err = regmap_update_bits(tmp108->regmap, TMP108_REG_CONF,
- 				 TMP108_CONF_MODE_MASK, TMP108_MODE_CONTINUOUS);
--	tmp108->ready_time = jiffies +
-+	tmp108->ready_time = get_jiffies_64() +
- 			     msecs_to_jiffies(TMP108_CONVERSION_TIME_MS);
- 	return err;
- }
+ 	if (dir == DOWN) {
+ 		info.flags = VM_UNMAPPED_AREA_TOPDOWN;
 -- 
 2.53.0
 
