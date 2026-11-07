@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061964;
-	b=hlpp6Hd+I0J+4qjYrR6AZT4eZJhNHA84mWUzDFRWt8vGQkgGTJwRcOOxpNAy2MtsIfr9
-	 EAGvugXTlDW6qrOogLOmFNJW28usYXagui8CQ8XXjAOdlxoImNuqyEVk4cFWqSZgO1Pj7
-	 hQTAU9Nt5Q1/5bpQLfRQqfxbqtWSyln3587LOHsQoQENcQ+bEtcNJuWwOdSii9sbhXJSA
-	 yuhSESypa+eZcRJ1KP2yK09bIbj5mRrspLZeMj1gb5lIj/CeN4rrPnatZ5VVOjwzR+0cF
-	 1HMa8Hw4yTsG+ASQq023vWZYOX8qRlZkBvUsvIWnmrD4eTDvJyWxIBisaWeLAeD5HOw==
+	t=1794061965;
+	b=ihDodHu1y64PHFOrEgmCvBJ47B1Mob1u6UYN+JVg3mDQV4aqgYpNqpumcBdrTINQUBiU
+	 odNrWVgsrPUxa4h4iLsnA0D9hMnOmT+LSFt4JEhc0Xue8ViBIVZuOr5Id8f0fKjX49QcJ
+	 nU/nRq0tjqjZJos1ctOvhXG0qLo+PbiQJY/GGt/pNrlWt5wnsrQMbO9b9TjpIA1ZF/o1Z
+	 9jDx+BylRm227OmmkHJwrw0ll9Ie3SB9Ey1Myvb3weqH5qISHy3J9XJyh6q2UNAT/BWT4
+	 D13ZUeVh1ThorwM1RkNA4BDAqomFaSyypmEAcJp4CWChor7u09ru3iqC0yOuRreNZPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ofm7yYeU+56+TjidE0SGgbh4fo4b034B1j7V/0P/SLU=;
-	b=E2HdWekM1+GNnS59gPe65PRCSaRqIsSBrrn/JsysEv4MLUXOcv+X9ldX/qQDpca+eHZD
-	 lKCqdnJFJWz6/lsEVX1VBY2dzWSkdFiNr5RRG7iB6wVF0JSP9ZsyUfW6FGBD6+OGs8Mq9
-	 cScopgePMwnloEynhnJJ/H1ZkD2FHJpu7lmi4swQhDJ5n37e1uh720fDJpaOPp4477iId
-	 ubZ8nYL30q80sn/AJGidUb/yxFkNHYqtGnVfMFN3BOJKN2bGkA8D37GGU9UynxXwFor/7
-	 aE/g0L+NP8gT0rihOGbQr4//xOSx6otlPEoefgwq+LWklSCOWBS1+DZmXlEcXlS4Wqw==
+	bh=z4RO40POcRCdnDWELn1+evAioDidJmFq6BEZOODW4DM=;
+	b=wssi4kaYpsOmKhPO7PJ7KHgviA/1bQQBs83tZrhRoa3p6nb5X9KPvyf5/M7MpwuhkOoH
+	 CF9w2kC/5RUMhVp85dYG+nNGg+8TuEynHU2/+rtMkdi5UExEH7Fxpz2l2XzFxGNZ1T0/A
+	 ibwE7sl0oI/bzVbGx8JUYAbIdqiNApNe/mA6JvBrXmFFLcE0MSjswEwbsTjpvHlt6dEDn
+	 aOv9i+e8KlUV5/Nx2zXdqY+DG9H9CdkL9cPl9C/jtqzGlRZWZtkL+fKHvCzJO93MXsTux
+	 T86fYjm0gImzYkA1H72MANcsCL3YBi2RQnEo7ecD1zmhY+chTotmxMordFKFAbLLvsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x+kPkMDD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fOF+tafa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C889F606A32E;
-	Sat,  7 Nov 2026 14:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7AB606A32E;
+	Sat,  7 Nov 2026 14:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x+kPkMDD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2081F0089F;
-	Sat,  7 Nov 2026 14:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fOF+tafa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8881F0089F;
+	Sat,  7 Nov 2026 14:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061963;
-	bh=Ofm7yYeU+56+TjidE0SGgbh4fo4b034B1j7V/0P/SLU=;
+	s=korg; t=1794061964;
+	bh=z4RO40POcRCdnDWELn1+evAioDidJmFq6BEZOODW4DM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x+kPkMDD2R47qWRu/We3fo6QGxgtJyDi0+yYa17jwUlQkX4HrK5AG3U3LsKzd5FqK
-	 /Th52uiAjAzpqy9UvuHFlNSLDjGJNPSLzBpTyHp7dHqqU6tFcDIcdhajQxr5gQ5lrp
-	 gOzJd+YYtrPOTQDSab+zcveiOws8S/9WnyjNK1ng=
+	b=fOF+tafa8GzoOHdr4jy/EfyGDh5zFXFu76WiAe2rkEBmZrp6kEehcavS1mcn7ikGK
+	 egeINb4CYZd5izkKd2705nqEmEpd4nyeL3KLW80l4CwYhUPmWP+MWn5TBeEehFK/dc
+	 HtXWb62FY2+dUc/2duNSpDwDf8OXYNO5rKK9BZbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Robin Snyders <robin@snyders.xyz>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0961/1536] ACPI: pfr_update: zero-initialize capability query result
-Date: Sat,  7 Nov 2026 08:49:37 -0500
-Message-ID: <20261107135024.642993820@linuxfoundation.org>
+Subject: [PATCH 6.12 0962/1536] power: supply: qcom_smbx: include base when petting watchdog
+Date: Sat,  7 Nov 2026 08:49:38 -0500
+Message-ID: <20261107135024.669951030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,50 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Robin Snyders <robin@snyders.xyz>
 
-[ Upstream commit d776369a9eded071df83e4738e1572c4c5b912d7 ]
+[ Upstream commit 2f0dec12007891398e6e3041aca0b8656918973d ]
 
-query_capability() copies four ACPI buffers into fixed-size fields using
-the firmware-supplied lengths.  The existing overflow guard rejects
-oversized buffers, but shorter buffers are accepted and leave trailing
-bytes of the stack-allocated cap_hdr uninitialized.  PFRU_IOC_QUERY_CAP
-then copies the entire structure to userspace.
+BARK_BITE_WDOG_PET is an offset from the charger peripheral base, but
+the watchdog bark handler writes it as an absolute SPMI address. This can
+write another PMIC peripheral and leave the charger watchdog unserviced.
 
-Zero-initialize cap_hdr before querying the firmware.  This preserves the
-existing handling of short firmware responses while preventing disclosure
-of kernel stack data.  Oversized buffers remain rejected.
+Add the charger base, as all other qcom_smbx register accesses do.
 
-A QEMU _DSM returning one-byte buffers reproduced nonzero stack suffix
-bytes in all four fields.  With this change, the ioctl still succeeds and
-each unwritten suffix is zero-filled, while 64-byte buffers continue to
-return -EINVAL.
-
-Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/1a001e1fee9.637da6dc3533246.238498880682901704%40a0rg.com
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260827053741.79425-1-kmehltretter@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Robin Snyders <robin@snyders.xyz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260812-qcom-smbx-fixes-v1-1-eb48246be599@snyders.xyz
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pfr_update.c | 2 +-
+ drivers/power/supply/qcom_pmi8998_charger.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/pfr_update.c b/drivers/acpi/pfr_update.c
-index be9b3b5e00c56..a9fa2f23c4ec6 100644
---- a/drivers/acpi/pfr_update.c
-+++ b/drivers/acpi/pfr_update.c
-@@ -395,7 +395,7 @@ static int start_update(int action, struct pfru_device *pfru_dev)
+diff --git a/drivers/power/supply/qcom_pmi8998_charger.c b/drivers/power/supply/qcom_pmi8998_charger.c
+index 81acbd8b2169c..6e5d78232f388 100644
+--- a/drivers/power/supply/qcom_pmi8998_charger.c
++++ b/drivers/power/supply/qcom_pmi8998_charger.c
+@@ -757,7 +757,7 @@ static irqreturn_t smb2_handle_wdog_bark(int irq, void *data)
  
- static long pfru_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
- {
--	struct pfru_update_cap_info cap_hdr;
-+	struct pfru_update_cap_info cap_hdr = {};
- 	struct pfru_device *pfru_dev = to_pfru_dev(file);
- 	void __user *p = (void __user *)arg;
- 	u32 rev;
+ 	power_supply_changed(chip->chg_psy);
+ 
+-	rc = regmap_write(chip->regmap, BARK_BITE_WDOG_PET,
++	rc = regmap_write(chip->regmap, chip->base + BARK_BITE_WDOG_PET,
+ 			  BARK_BITE_WDOG_PET_BIT);
+ 	if (rc < 0)
+ 		dev_err(chip->dev, "Couldn't pet the dog rc=%d\n", rc);
 -- 
 2.53.0
 
