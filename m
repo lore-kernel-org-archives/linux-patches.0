@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063514;
-	b=enYNqyieCDoEmgi1sbHU+MEZIEP3D4+zNHOFBr2G90tIzJxZJpBpzW9HUZrx0XT48cfI
-	 9tVhvLV2x6HZ0hlD7qA9+rdwXKPh4TnpUstDfeWINI9JYs4TOjysN+DB5PWCUTuaJ9ChR
-	 lYiaWITh67zSKbsycCY6YkKxqLrgP60EMYDkX324ElFS/EvdW4G0tDdXx/7AOTRXlxueS
-	 /fM5G4RGhBRnchmGsBG8WG9DUBpaX53xUoG1j9C7FxGfmO+aFYoypkMUp9OiKDJL/C4sm
-	 OC5OUXFMmgaQXiQF4Cwx00c48k3gluNYL9G2dUjzrVtcESX9A0q+Lbvhtc0g1a+ypOw==
+	t=1794063515;
+	b=ziV2AKstk5So3fKyDpnATSirUuvuy+RzQMO9XDscg/HSebMirq8VUTcz31vJI79R/uxP
+	 /mCrW6sHOV4grmEhbk0/RbGUq7ursgw79m+6lWIRQJVSF/3yBR6SQp/2vF0Utt1LrNAvJ
+	 YW7X8eCNGDiG+VW0tRdc9ZpG0T7g0CrjzMOvLxnMtNdVyrUmKh5adOYqoHTy1/EqNWzVb
+	 12Hh8zoKzk8GzkMGUIevcQd4VO+Ve/VbFqNKOcvlWvBGnW0QF/hwgkfB96DUuxxgoaRsu
+	 z/42zz5OG08KRXrVXDe/bJAoW8+qqEvXIamMNxi/N8CMaBJJXEO5H78FpnGT6qN2Deg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063514;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f2i6gcwO5rqlD4U/5ptAnjntY+qMkXNmzM/lAsqdJVA=;
-	b=29DwOKBMUHPqXBLlgQuYGA5uxzdZTW8zTIpYtEFIcUTFVdsqSS7LormSZYdQ+7llXCVq
-	 cAJYdWzxcxpzQonUXYnoyVljSZaOZ4CxBaT1WGdW0fgW44YGGdsFm+fHCDK/wrExvzu1r
-	 mWAMxkPKulsW+Nc32g158gXQQtIA5WFYnvx2LHLBiAx8mSN++DisteU4oeDdeYb5linJH
-	 QufkUUT8PP5szAkOq+K4L8vAL9gGLOL43rqRSuxu8nohV8jfS/6CGzSFq7KiU0dsbDlX6
-	 3aTtTUD1W+h6ZMPEQrtFVa8vjJHecNIaqSIhsypRL7CU38+iGe8L2qv94hY/4zufIbQ==
+	bh=6RXR6BJ4hMJMJZnQLcRK/8EUEzWh+ODIkKCWxObJWP4=;
+	b=cN6/RAntLiaBIrID8sF7AATDZJqIcsqGvW070oqsJUWdxpPOtlc9ozjkk1ursfMl917b
+	 hVqlm5Q5yMF1rePbeWB0djQ+BAL6SHtZI+i6GMVmsLXFa9JrtE9gkHCb2jppwmLeJ7Et5
+	 HjU2eNQHsfWvPDNdW7ypw+ci/vl9iDSB4rbmYiucuZYyGp3oE7zIQsVEaZfZc7h33IrAz
+	 Fk5/uxC0+Pmg9JFSXejiYmtLWlTfE3bFjDeKHOeut2wIp8DUUd8LlCTaZ68fIxe+7wup/
+	 8YeW4vTh2JITXf9CQ/5+GKXc1xec9f2ZY5CGSYEvwGfINpKVBRuvaGXjVEbY4QiaM1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XGEIIGUL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwVwq9Ii;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E57606B8AF;
-	Sat,  7 Nov 2026 14:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D774606B8AF;
+	Sat,  7 Nov 2026 14:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XGEIIGUL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F571F008A2;
-	Sat,  7 Nov 2026 14:58:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwVwq9Ii
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BBE1F008A5;
+	Sat,  7 Nov 2026 14:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063514;
-	bh=f2i6gcwO5rqlD4U/5ptAnjntY+qMkXNmzM/lAsqdJVA=;
+	s=korg; t=1794063515;
+	bh=6RXR6BJ4hMJMJZnQLcRK/8EUEzWh+ODIkKCWxObJWP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XGEIIGULj96xLuX41W1wQCIkU1TPBzdv+MTu/dd//nRUvOyIWfd0jpvOvYOhubBkq
-	 okmhYPLr70us87cYUAFw++uB1wHUtyb1w7L/++7q8IP9Zirk6FuhDdRyMj4dE5gpbI
-	 CMqpxs7rLiVe53Mg8k18MvWG+LeFVOdP4znFeijY=
+	b=jwVwq9IizYmDnxs0+13YBrcbSKGSsoNlpr1RHXo5TGcbizdfAFEFKMwjh00TJ9ArT
+	 J/AHg+NXQUMWNvdi9HpJhgB855RMuSbzlEiWaOlno9sxN4/BvxnR/lqtR7pDlytep1
+	 GDhRj1Au7aeffzHrENRbYWT035HpTyOz+TkLY0lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sorah Fukumori <her@sorah.jp>,
+	Chase Hiltz <me@chasehil.tz>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 657/869] netdevsim: reject cls_bpf programs bound to another device
-Date: Sat,  7 Nov 2026 08:55:39 -0500
-Message-ID: <20261107134915.361888754@linuxfoundation.org>
+Subject: [PATCH 6.18 658/869] net: gro: dont chain linear parts larger than gso_size into frag_list
+Date: Sat,  7 Nov 2026 08:55:40 -0500
+Message-ID: <20261107134915.389848438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,83 +71,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Sorah Fukumori <her@sorah.jp>
 
-[ Upstream commit 5820ca58b409402505b9e904d1ded4908e0b6b81 ]
+[ Upstream commit 679f6929a66db9f5a6611dad37545fbd705962d5 ]
 
-The issue:
-nsim_bpf_setup_tc_block_cb() installs any device-bound SCHED_CLS program
-without checking that its offload device matches the target netdev.  The
-core cls_bpf attach path rejects a mismatching program, but a netdev that
-joins a shared block later is replayed the stored filter by
-cls_bpf_reoffload() before it is inserted into block->ports, so the
-attach-time check cannot see it.  The driver callback is the
-authoritative per-device acceptance boundary and must enforce the match
-itself, as nfp already does in nfp_net_bpf_offload().
+skb_gro_receive() chains an skb into the frag_list of the held packet
+when its payload cannot be attached as page frags: when its head is
+not a page fragment and still holds payload, or when its head and
+frags would overflow the frags[] array of the last packet. Since commit
+5eddb24901ee ("gro: add support of (hw)gro packets to gro stack"), that
+skb may itself be a GSO packet whose linear part holds several
+gso_size segments. skb_segment() cannot split the linear part of a
+frag_list member across segments, so segmenting the aggregate in
+software, e.g. when forwarding it to a device without NETIF_F_FRAGLIST,
+hits
 
-Without the check, replaying a device-bound program onto a different
-bpf_offload_dev installs it into that device's netdevsim state, which
-trips the WARN in nsim_bpf_uninit() (ns->bpf_offloaded set on a foreign
-device) and can dereference a NULL prog->aux->offload in
-nsim_prog_set_loaded().
+  BUG_ON(skb_headlen(list_skb) > len);
 
-The Fix:
-Reject a device-bound program whose offload device does not match the
-target netdev, with -EINVAL and an extack so the rejected replay is not
-silent.  The check is intentionally narrower than nfp's: it fires only
-for a dev-bound program, so nsim's bpf_tc_non_bound_accept mode (which
-admits an unbound program onto the device) is unaffected.  Teardown is
-never blocked: the guard is on the program being installed and an unbind
-passes cls_bpf.prog = NULL.
+Fully linear GSO packets come from generic XDP. When the program does
+not support frags, netif_skb_check_for_xdp() linearizes any nonlinear
+skb with pskb_expand_head() and skb_linearize() and keeps its GSO
+metadata. GRO on the device runs before generic XDP, so each aggregate
+passed by the program carries all of its payload in a kmalloc'ed head.
+A tunnel that decapsulates these packets and runs GRO again through
+gro_cells then builds the bad frag_list. This was first seen on a
+router that forwards TCP received over VXLAN, with a non-frags XDP
+program attached in SKB mode to the underlying bond because one slave
+lacks native XDP:
 
-Conditions to recreate the bug:
-  - CONFIG_NETDEVSIM=y, CONFIG_NET_CLS_BPF=y
-  - load and pin a dev-bound SCHED_CLS program for netdevsim device B
-  - install the program on a shared block owned by B
-  - add an independently backed netdevsim device C to that block; the
-    bind replays the filter to C's callback, and C's
-    ports/0/bpf_offloaded_id takes the B-bound program id.
+  kernel BUG at net/core/skbuff.c:4917!
+  RIP: 0010:skb_segment+0xbb6/0xf40
+  Call Trace:
+   tcp_gso_segment
+   ipv6_gso_segment
+   skb_mac_gso_segment
+   __skb_gso_segment
+   validate_xmit_skb
+   __dev_queue_xmit
+   ip6_output
+   ip6_sublist_rcv_finish
+   ipv6_list_rcv
+   netif_receive_skb_list_internal
+   gro_complete
+   dev_gro_receive
+   gro_receive_skb
+   gro_cell_poll
+   __napi_poll
+   net_rx_action
 
-The reported Sashiko review is at
-https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260809094418.901607-1-jhs@mojatatu.com
+It reproduces with three network namespaces: TCP sent over VXLAN on an
+IPv6 veth link to a router namespace that has an XDP_PASS program
+without frags support attached to the underlay veth in generic mode
+and GRO enabled on its VXLAN device, and forwards to a veth with
+tx-scatter-gather-fraglist disabled.
 
-Fixes: 31d3ad832948 ("netdevsim: add bpf offload support")
-Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/netdev/20260809094418.901607-1-jhs@mojatatu.com/
-Link: https://lore.kernel.org/netdev/QDISC-PYC7.v1.20261003103747@mojatatu.com/
+A program with frags support in generic mode gives similar packets.
+skb_pp_cow_data() rebuilds the skb with up to about a page of linear
+data in a page_pool head_frag and keeps the GSO metadata, so once
+frags[] is full the next such packet is chained through frag_list
+with more than gso_size bytes in its head as well.
+
+Refuse the merge when the linear part to be chained exceeds the held
+packet's gso_size. tcp_gro_receive() then flushes the held packet and
+the skb starts a new GRO packet as its head, whose linear length
+skb_segment() handles.
+
+Fixes: 5eddb24901ee ("gro: add support of (hw)gro packets to gro stack")
 Cc: stable@vger.kernel.org
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-PYC7.v2.20261010165947-2@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: claude-opus-5-5
+Signed-off-by: Sorah Fukumori <her@sorah.jp>
+Tested-by: Chase Hiltz <me@chasehil.tz>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://patch.msgid.link/20261013130250.3643916-1-her@sorah.jp
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/bpf.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/core/gro.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/netdevsim/bpf.c b/drivers/net/netdevsim/bpf.c
-index 5f17f68f3c083..319f75e42f7c3 100644
---- a/drivers/net/netdevsim/bpf.c
-+++ b/drivers/net/netdevsim/bpf.c
-@@ -150,6 +150,17 @@ int nsim_bpf_setup_tc_block_cb(enum tc_setup_type type,
- 		return -EOPNOTSUPP;
+diff --git a/net/core/gro.c b/net/core/gro.c
+index 252d7851d1aee..f96e5024758e2 100644
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -192,6 +192,10 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
  	}
  
-+	/* A dev-bound program can be replayed here when a netdev joins
-+	 * a shared block, after the core attach-time check has run;
-+	 * enforce the device match as nfp does.
-+	 */
-+	if (prog && bpf_prog_is_dev_bound(prog->aux) &&
-+	    !bpf_offload_dev_match(prog, ns->netdev)) {
-+		NSIM_EA(cls_bpf->common.extack,
-+			"program bound to a different device");
-+		return -EINVAL;
-+	}
+ merge:
++	/* skb_segment() cannot split the linear part of a frag_list member. */
++	if (unlikely(headlen > offset + skb_shinfo(p)->gso_size))
++		return -E2BIG;
 +
- 	if (cls_bpf->command != TC_CLSBPF_OFFLOAD)
- 		return -EOPNOTSUPP;
- 
+ 	/* sk ownership - if any - completely transferred to the aggregated packet */
+ 	skb->destructor = NULL;
+ 	skb->sk = NULL;
 -- 
 2.53.0
 
