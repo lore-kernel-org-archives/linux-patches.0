@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061014;
-	b=t2+P/icxcrxjuD7Yb4jWLTAWBMBbxTV9a09SRsIoYG3+p4tpjcePpK7zCkNdYdarf3SJ
-	 LwrjZp9zgUetKfbhTUMSXr0H/yjhxKgaJ8zvBUyjHFnQmcAvwrePs49eUsG6r+BfRPr0W
-	 IuLIjndWcnyevi4TsPglEqvGJBN0nJ0el7wz0ySYWFKWJxoKWLhA0UEWFP3eyrkwr9Asy
-	 CTPFQnDK/ga4ZFWSYGZWRfXEcc3Wg2weSmQ2tuvM3+J2ySWWVUPgje5k/me/QrA8WcAdM
-	 eJsHQEsG5yCq8a4FYMW/VVyda/qVXwhPYzyNLjRkLhLqa4C6tss0ZCjUOAH8CxKkBFQ==
+	t=1794061016;
+	b=3WRJa4HZlpCqpWTrsggbdAZ1n6h0vaZAxYE6GhKNEdCTTj7OcHpnCRati0G6J5v4MAEF
+	 rJgG53pZ888cibR9/7SIXeIFg65nwSsnSPVwnJTkja/qis0T8Er3WJdRxlgJNu7/LW+LZ
+	 1RGMF48PXAeb6Id47gNu8WU7LrRVzbiKk9jdr+R94hrdZc3tjKKdJcU47Jw5vOpEjdgyv
+	 jDKQt/wbTJJIVA3YJX+SG19S2J3cNRf6E9KN9jEnlWac31oXcZsFrhcauNnUhd5WiUlMV
+	 7ca9bJWGwVJVRc7PHUFjEF3bgV3gYmSarDpNdkbgT/5LPKpd4iFpGDoDCPx+juDeIBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061014;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061016;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rT7RXQFHJWBYdAudgObgoURTzci2CZOPRXiN3R+L/PE=;
-	b=M2aFG0yqydXkIR09OyLcM1eFoeO560Q0k+EG3rx7Y99x/wyrO6+SvzjqsZe4IXDqAN/7
-	 RIVFfxZZuJi8D5ArMcTSpuMDWCO56XxCKKyu9OYURAgYpHrAyf5sDGH4yEH2gWGgXQlea
-	 ZPxVQzg6ug7EIi4Db5CWJi0dU2bI7mhf7Ke2SrlTjDToJ/xNCCqUDmbD74q9+Q7hS74R4
-	 JMhv3PYmKPdJj2+uJNsjTkkD56YN845G3RffCABAyGqU/vRi3v/TBm+wNg03TSiB4Qd/r
-	 GIc0AGTlUSMOCaTDoU8k6Haq19SSa3rop1pgDBXvowlQKAys4ob7ONKydcbicdeCUEQ==
+	bh=6Al8XY2H+0b1rrFIpPCsIa+u8xx/0sEvNkdHYsMbjqI=;
+	b=sy2xOLrdUX3BBqrPP0ZkMIyVoTki05rgLa3P+fECs/I5XICp1w5ONhqWCdxBbgF0fs7E
+	 s5bySTyLLvC59sa8G5KnxjBdpRdrnaWZFaT5Db3qTSJIL2fG7t4UxWQlgeZfhXz/DIgUs
+	 zLNQq5gD2Hwd270bNu9fq8FQfX54odPw4ZATIodgy4CMz30KB02D68Wy9IgZS4XcFvO/M
+	 EE8BPAdfajL4dfhu6MlbZktFwBX9KsYQwveP+jaLEZ+8fsFl7tJZFAjssvpMCDnimBilx
+	 jxltXDDWyLUzooSksXIds7/QegRr/OZ5ljns/oaJkbZQLK8skmm5fxLZiiiLZD9LLvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NJVZlKLt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l5odjjbs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6548C606D80E;
-	Sat,  7 Nov 2026 14:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9413606EE9C;
+	Sat,  7 Nov 2026 14:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NJVZlKLt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9241F0089F;
-	Sat,  7 Nov 2026 14:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l5odjjbs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54ECB1F0089F;
+	Sat,  7 Nov 2026 14:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061014;
-	bh=rT7RXQFHJWBYdAudgObgoURTzci2CZOPRXiN3R+L/PE=;
+	s=korg; t=1794061015;
+	bh=6Al8XY2H+0b1rrFIpPCsIa+u8xx/0sEvNkdHYsMbjqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NJVZlKLtZ0BSZTmmDxx5CLMVHNfd5Kv5wPmrdsRJJHdUDk4I4x69XsOFzbz3/M8Dk
-	 TZ2ZIGlIFBpESBOfgq624mgDOPXPnQ+vs9Alg2EdU5T6A8KNAoM1bunE9asoSrJMxh
-	 Riroq6IPsWCAD4zTQgPcmv5H5eGwMdRQO9rBL98I=
+	b=l5odjjbs/oOIK2LcK6Xf8u+iiyOJS3mo82g+hVQAKxwtGNeWnsRJ6DHKWIeZWAQ4e
+	 /VxoMyP92QIsuEtmrV6Fy3DQHuD3LqXLUgmFfU+BAD2R4tB8nRdmE5vqMJa2h9ICu4
+	 wBhUL5K1xvlcf9pSjF0fLxvAskrdCn+bDbDeHRDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com,
+	Anuj Bolewar <bolewara@gmail.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0356/1536] pNFS: honor clora_changed when recalling a layout
-Date: Sat,  7 Nov 2026 08:39:32 -0500
-Message-ID: <20261107135007.661864531@linuxfoundation.org>
+Subject: [PATCH 6.12 0330/1536] drm/virtio: reclaim pending vbufs before tearing down vqs
+Date: Sat,  7 Nov 2026 08:39:06 -0500
+Message-ID: <20261107135006.973329915@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,163 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Anuj Bolewar <bolewara@gmail.com>
 
-[ Upstream commit aceaa5991bdf744e9c3fa1e5ad73405b1801eaab ]
+[ Upstream commit 61d85f99b5a55d4f717c4bb2f4c4acabf22ee3fc ]
 
-When the metadata server recalls a layout with clora_changed FALSE, the
-layout is not changing and the client may complete its modified writes to
-the storage devices before returning the layout (RFC 8881, Section
-20.3.3).  Only when clora_changed is TRUE -- the server is restriping, or
-a storage device has failed -- should the client stop writing to the
-storage devices and redirect through the metadata server.
+virtio_gpu_free_vbufs() destroys the vbufs kmem_cache after the virtqueues
+have already been released. Commands that were queued but never completed
+by the device leave their vbuffers stranded in the virtqueue, so the cache
+still holds live objects when virtio_gpu_deinit() tears everything down.
+This triggers a WARNING in virtio_gpu_free_vbufs:
 
-Since commit b739a5bd9d9f ("NFSv4/flexfiles: Cancel I/O if the layout is
-recalled or revoked") the client cancels in-flight I/O on every recall,
-regardless of clora_changed.  For an unchanged recall this abandons
-writes whose data may already have reached the storage device; such a
-write can then land after the LAYOUTRETURN, which the server sees as a
-write without a layout.
+    BUG virtio-gpu-vbufs (Not tainted): Objects remaining in cache
+    on __kmem_cache_shutdown()
 
-Pass the recall's clora_changed value through
-pnfs_mark_matching_lsegs_return() and only cancel in-flight I/O when the
-layout is actually changing.  When it is not, the existing deferred
-return path waits for the in-flight writes to drain before sending the
-LAYOUTRETURN.  Other callers, which are tearing down or returning the
-layout for their own reasons, continue to cancel as before.
+Drain any buffers still sitting in the control and cursor virtqueues in
+virtio_gpu_deinit() after the device has been reset and before the
+virtqueues are deleted, following the same pattern used by virtio_console's
+remove_vqs(). Each reclaimed buffer is released with free_vbuf(), dropping
+the reference on any GEM objects it holds. Pending RESOURCE_UNREF
+commands are handled as well: their resp_cb_data still references a GEM
+object, so it is cleaned up with virtio_gpu_cleanup_object() to avoid
+leaking it on teardown.
 
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reported-by: syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=06f9b2a53ba4a5a47644
+Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260802-virtio-gpu-reclaim-vbufs-v2-1-5767fb860691@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/callback_proc.c |  3 ++-
- fs/nfs/pnfs.c          | 22 +++++++++++++---------
- fs/nfs/pnfs.h          |  2 +-
- 3 files changed, 16 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_drv.h |  1 +
+ drivers/gpu/drm/virtio/virtgpu_kms.c |  1 +
+ drivers/gpu/drm/virtio/virtgpu_vq.c  | 15 +++++++++++++++
+ 3 files changed, 17 insertions(+)
 
-diff --git a/fs/nfs/callback_proc.c b/fs/nfs/callback_proc.c
-index b70ae09aeac15..4e2dfecf2b948 100644
---- a/fs/nfs/callback_proc.c
-+++ b/fs/nfs/callback_proc.c
-@@ -288,7 +288,8 @@ static u32 initiate_file_draining(struct nfs_client *clp,
- 	pnfs_set_layout_stateid(lo, &args->cbl_stateid, NULL, true);
- 	switch (pnfs_mark_matching_lsegs_return(lo, &free_me_list,
- 				&args->cbl_range,
--				be32_to_cpu(args->cbl_stateid.seqid))) {
-+				be32_to_cpu(args->cbl_stateid.seqid),
-+				args->cbl_layoutchanged)) {
- 	case 0:
- 	case -EBUSY:
- 		/* There are layout segments that need to be returned */
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 41081f393d393..c70d1dbf73b7d 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -434,7 +434,8 @@ bool nfs4_layout_refresh_old_stateid(nfs4_stateid *dst,
- 			goto out;
- 		}
- 		/* Try to update the seqid to the most recent */
--		err = pnfs_mark_matching_lsegs_return(lo, &head, &range, 0);
-+		err = pnfs_mark_matching_lsegs_return(lo, &head, &range, 0,
-+						      true);
- 		if (err != -EBUSY) {
- 			dst->seqid = lo->plh_stateid.seqid;
- 			*dst_range = range;
-@@ -488,7 +489,7 @@ static int pnfs_mark_layout_stateid_return(struct pnfs_layout_hdr *lo,
- 		.length = NFS4_MAX_UINT64,
- 	};
- 
--	return pnfs_mark_matching_lsegs_return(lo, lseg_list, &range, seq);
-+	return pnfs_mark_matching_lsegs_return(lo, lseg_list, &range, seq, true);
+diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.h b/drivers/gpu/drm/virtio/virtgpu_drv.h
+index a597c73a2bf1a..a8ff06df7e3f4 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.h
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
+@@ -351,6 +351,7 @@ void virtio_gpu_array_put_free_work(struct work_struct *work);
+ /* virtgpu_vq.c */
+ int virtio_gpu_alloc_vbufs(struct virtio_gpu_device *vgdev);
+ void virtio_gpu_free_vbufs(struct virtio_gpu_device *vgdev);
++void virtio_gpu_reclaim_vbufs(struct virtio_gpu_device *vgdev);
+ void virtio_gpu_cmd_create_resource(struct virtio_gpu_device *vgdev,
+ 				    struct virtio_gpu_object *bo,
+ 				    struct virtio_gpu_object_params *params,
+diff --git a/drivers/gpu/drm/virtio/virtgpu_kms.c b/drivers/gpu/drm/virtio/virtgpu_kms.c
+index ec31a41d33d67..f402bef3998c2 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_kms.c
++++ b/drivers/gpu/drm/virtio/virtgpu_kms.c
+@@ -289,6 +289,7 @@ void virtio_gpu_deinit(struct drm_device *dev)
+ 	flush_work(&vgdev->cursorq.dequeue_work);
+ 	flush_work(&vgdev->config_changed_work);
+ 	virtio_reset_device(vgdev->vdev);
++	virtio_gpu_reclaim_vbufs(vgdev);
+ 	vgdev->vdev->config->del_vqs(vgdev->vdev);
  }
  
- static int
-@@ -526,7 +527,7 @@ pnfs_layout_io_set_failed(struct pnfs_layout_hdr *lo, u32 iomode)
+diff --git a/drivers/gpu/drm/virtio/virtgpu_vq.c b/drivers/gpu/drm/virtio/virtgpu_vq.c
+index 9bf7e69b85aa6..3a7e54d65c32a 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_vq.c
++++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
+@@ -179,6 +179,21 @@ static void free_vbuf(struct virtio_gpu_device *vgdev,
+ 	kmem_cache_free(vgdev->vbufs, vbuf);
+ }
  
- 	spin_lock(&inode->i_lock);
- 	pnfs_layout_set_fail_bit(lo, pnfs_iomode_to_fail_bit(iomode));
--	pnfs_mark_matching_lsegs_return(lo, &head, &range, 0);
-+	pnfs_mark_matching_lsegs_return(lo, &head, &range, 0, true);
- 	spin_unlock(&inode->i_lock);
- 	pnfs_free_lseg_list(&head);
- 	dprintk("%s Setting layout IOMODE_%s fail bit\n", __func__,
-@@ -1474,7 +1475,7 @@ _pnfs_return_layout(struct inode *ino)
- 	}
- 	valid_layout = pnfs_layout_is_valid(lo);
- 	pnfs_clear_layoutcommit(ino, &tmp_list);
--	pnfs_mark_matching_lsegs_return(lo, &tmp_list, &range, 0);
-+	pnfs_mark_matching_lsegs_return(lo, &tmp_list, &range, 0, true);
- 
- 
- 	/* Don't send a LAYOUTRETURN if list was initially empty */
-@@ -2603,7 +2604,7 @@ pnfs_layout_process(struct nfs4_layoutget *lgp)
- 			.iomode = IOMODE_ANY,
- 			.length = NFS4_MAX_UINT64,
- 		};
--		pnfs_mark_matching_lsegs_return(lo, &free_me, &range, 0);
-+		pnfs_mark_matching_lsegs_return(lo, &free_me, &range, 0, true);
- 		goto out_forget;
- 	} else {
- 		/* We have a completely new layout */
-@@ -2635,6 +2636,7 @@ pnfs_layout_process(struct nfs4_layoutget *lgp)
-  * @tmp_list: list header to be used with pnfs_free_lseg_list()
-  * @return_range: describe layout segment ranges to be returned
-  * @seq: stateid seqid to match
-+ * @cancel_io: signal io be cancelled
-  *
-  * This function is mainly intended for use by layoutrecall. It attempts
-  * to free the layout segment immediately, or else to mark it for return
-@@ -2649,7 +2651,7 @@ int
- pnfs_mark_matching_lsegs_return(struct pnfs_layout_hdr *lo,
- 				struct list_head *tmp_list,
- 				const struct pnfs_layout_range *return_range,
--				u32 seq)
-+				u32 seq, bool cancel_io)
++void virtio_gpu_reclaim_vbufs(struct virtio_gpu_device *vgdev)
++{
++	struct virtio_gpu_vbuffer *vbuf;
++
++	while ((vbuf = virtqueue_detach_unused_buf(vgdev->ctrlq.vq))) {
++		if (vbuf->objs)
++			virtio_gpu_array_put_free(vbuf->objs);
++		if (vbuf->resp_cb_data)
++			virtio_gpu_cleanup_object(vbuf->resp_cb_data);
++		free_vbuf(vgdev, vbuf);
++	}
++	while ((vbuf = virtqueue_detach_unused_buf(vgdev->cursorq.vq)))
++		free_vbuf(vgdev, vbuf);
++}
++
+ static void reclaim_vbufs(struct virtqueue *vq, struct list_head *reclaim_list)
  {
- 	struct pnfs_layout_segment *lseg, *next;
- 	struct nfs_server *server = NFS_SERVER(lo->plh_inode);
-@@ -2675,7 +2677,8 @@ pnfs_mark_matching_lsegs_return(struct pnfs_layout_hdr *lo,
- 				continue;
- 			remaining++;
- 			set_bit(NFS_LSEG_LAYOUTRETURN, &lseg->pls_flags);
--			pnfs_lseg_cancel_io(server, lseg);
-+			if (cancel_io)
-+				pnfs_lseg_cancel_io(server, lseg);
- 		}
- 
- 	if (remaining) {
-@@ -2710,7 +2713,8 @@ pnfs_mark_layout_for_return(struct inode *inode,
- 	 * segments at hand when sending layoutreturn. See pnfs_put_lseg()
- 	 * for how it works.
- 	 */
--	if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs, range, 0) != -EBUSY) {
-+	if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs, range, 0,
-+					    true) != -EBUSY) {
- 		const struct cred *cred;
- 		nfs4_stateid stateid;
- 		enum pnfs_iomode iomode;
-@@ -2825,7 +2829,7 @@ static int pnfs_layout_return_unused_byserver(struct nfs_server *server,
- 		pnfs_get_layout_hdr(lo);
- 		pnfs_set_plh_return_info(lo, range->iomode, 0);
- 		if (pnfs_mark_matching_lsegs_return(lo, &lo->plh_return_segs,
--						    range, 0) != 0 ||
-+						    range, 0, true) != 0 ||
- 		    !pnfs_prepare_layoutreturn(lo, &stateid, &cred, &iomode)) {
- 			spin_unlock(&inode->i_lock);
- 			rcu_read_unlock();
-diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
-index 7b3ba2e64e6f3..14d2a91250f24 100644
---- a/fs/nfs/pnfs.h
-+++ b/fs/nfs/pnfs.h
-@@ -301,7 +301,7 @@ int pnfs_mark_matching_lsegs_invalid(struct pnfs_layout_hdr *lo,
- int pnfs_mark_matching_lsegs_return(struct pnfs_layout_hdr *lo,
- 				struct list_head *tmp_list,
- 				const struct pnfs_layout_range *recall_range,
--				u32 seq);
-+				u32 seq, bool cancel_io);
- int pnfs_mark_layout_stateid_invalid(struct pnfs_layout_hdr *lo,
- 		struct list_head *lseg_list);
- bool pnfs_roc(struct inode *ino, struct nfs4_layoutreturn_args *args,
+ 	struct virtio_gpu_vbuffer *vbuf;
 -- 
 2.53.0
 
