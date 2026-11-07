@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062748;
-	b=h51mJaQ4j2CGhwzmH3yEFWTmiqvk0c212s9+ChRCwTpEOO2IubyKM/7Mkx1EXbLeKHE4
-	 Q788MSYnZ9cloO+tf1e9gsSdx5p2oGdZenKKvDXsipRh4dNrFnwzaSisyqOwvJkRngxAi
-	 niLKQ5U0WDiYRJbX6k2CwT4E9s8I+ZcjL3rYrSYUDcPgSRV9YYKUQVSkfoROeSR5K2X+/
-	 HtZe2fa1gfVg7PJ+MlLf6lCUVwNRJN/I9BHsaBxs2+z0qkso3cWgBB/3ewIR76Qxqg+Vk
-	 DYmYYRuq4758mbVlBsJe0sXHyZRtbG+JUWYCxxvQPiw5uiRrSae2MjjVtvEy0wS+7sg==
+	t=1794062750;
+	b=RJcXD2R+Cie24l8xRksCj+Ad+QBhLG3tlVQLP0ekksALTlMh885UYDWhwwYUZBPwnQAR
+	 HI5KEHC0mFaWUmD7nSjlXZiZ7RpTbzQ2fDZ3xW2Kka/yde2sqFD+a2fQv7NamjIg5UCj2
+	 m5GPU+hBW9Gutp/a50nWX0lPvwyPGl5q6hg5RBWK89AdtTmkslycirAT0sLJtpNgIrB0W
+	 VDimY/nsN4Wg2QrZRCR5hG9WrYYPJCzh3xt/OJLFcOm8wZfEEZTiP4rz8pp75b5z12yv6
+	 ZQ25nM8cRgMnvQfpb0gqmmYyNDBBOWRJBaTXbpioSK/lTwjeRYwE/x3UNosl0Otj2qw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062748;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062750;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uJt0BWV0xMmP2iRi8nymPQBBRcYwM0x9jwAbMNotYgg=;
-	b=OrqobSynFsoZEJ2vn2Y8dzFBukoSuyZhg/xaAtpTrg0ULUp14hO8sDM7zI6tjLdstpSY
-	 Exe35GL8ZAN2wH+yV1q/8neQrzYBCmipQjnpQNoCBzPK98Ib0KmBuqHj2v9IMa/8A0YaE
-	 EaxigJFfjy7/tWcKHDMpMNfDlCW5WAK/chVbcRb3LohaZJj41dvCY6+dULuq+dTFBzWSo
-	 0k1px0Be9H6nYiJc+ytqorjiPNfusHHGNbRFYgm+NkbblqWKN5oLrxFw8gHwe64h2Waav
-	 v1jdTP91+edd+BDhrxM+1qQuv8Pww3q5ib7JiFHVnlfMy9DS66hXhsOv/kUUHNcYV6w==
+	bh=+UUxmzkzSqkdtqb3nda5TyBfVVqiXxN0LZV9sh1XR+U=;
+	b=0wcsMh/7HRPvIIhTR6AM2sJHJvCUaO9vrujRfze+iWniU/o1KOByDw0iBIHnPRR/Zf43
+	 MJ6GKSfOMedEHGMfTe4dHZKoKUIRsqk8XOvvkdAmRe5947Xh6yBSBHR0z9+y86cSEPFP+
+	 3Tsjy3L+LEz8RwiydIRQnaWcLZnEkGLkQDueUiFmo+/37G1Iw7EuZRLoDh5NRR59bTSej
+	 Kgw7lxW8xRrSQk7z0V9AviSq5mZ7jPMN7wmA6xiWy2yQO2iRtnTMhCkaPy6O2CFnq2AQE
+	 MKfT2Yfq64QNirfJft3p1kz5RzJYlseA5BxMM1B+jWiU7IOCfScUvy+i5qqPEr2DVkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1FPjU7f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COpjDJ7r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74450606A32C;
-	Sat,  7 Nov 2026 14:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC22606A32E;
+	Sat,  7 Nov 2026 14:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1FPjU7f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBE11F0089F;
-	Sat,  7 Nov 2026 14:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COpjDJ7r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD011F0089F;
+	Sat,  7 Nov 2026 14:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062748;
-	bh=uJt0BWV0xMmP2iRi8nymPQBBRcYwM0x9jwAbMNotYgg=;
+	s=korg; t=1794062749;
+	bh=+UUxmzkzSqkdtqb3nda5TyBfVVqiXxN0LZV9sh1XR+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k1FPjU7fznXTi2njgbuRBb0phcrCuGKuuzB7/kGcwc9aEyqqihxtXcTQwLU2FEAFG
-	 mb3oNKUbfi4Sppt4g288KtxKkkulJ5BsSkrvlFFhd52txeU0dCg5e2sC/yG881AaaW
-	 TGy5UR90cdycafgG5EeAjy3jut8y6AIJezX/bSY4=
+	b=COpjDJ7rg3WEgR2jMkH4Ndas2WLedYz2NldXzPDa/4B5Bqmr80PlfNijnmxjgaXYE
+	 Rm35xw7aWaxGZ7Iuq6ON/k12JbBpr4MqrO82Uqxr+XGiaoQSI2vK12+wEHcYn3bKxs
+	 nfPMNAbXsIbiovnC7iGnM/0w/HDaY+p1ALu2yFmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Dipen Patel <dipenp@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 062/869] bpf: Fix queue/stack map u32 index overflow
-Date: Sat,  7 Nov 2026 08:45:44 -0500
-Message-ID: <20261107134854.390135853@linuxfoundation.org>
+Subject: [PATCH 6.18 063/869] hte: tegra194: Initialize slice locks before registering chip
+Date: Sat,  7 Nov 2026 08:45:45 -0500
+Message-ID: <20261107134854.447704478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,54 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 802a30c5db726639df7f93b3a1982ecc64202abe ]
+[ Upstream commit 1329abe1bae416ab2cff89c3312d33f745d341c7 ]
 
-The queue/stack map addresses elements[] with the product of a u32
-head/tail index and value_size, but the storage itself is allocated in
-64-bit arithmetic.  When max_entries * value_size reaches or exceeds
-U32_MAX, the product wraps and push/peek/pop operate on the wrong
-element, corrupting map data and leaking stale values to user space.
-max_entries == U32_MAX would also make the u32 capacity counter
-qs->size (max_entries + 1) wrap to 0 and permanently break the map.
+Registering the HTE chip publishes its request callbacks to consumers.
+Initialize every slice lock before registration so a concurrent HTE
+request cannot use an uninitialized lock.
 
-The original bound check was removed by commit a37fb7ef24a4 ("bpf:
-Eliminate rlimit-based memory accounting for queue_stack_maps maps"),
-which deleted the bpf_map_charge_init() call and with it the
-U32_MAX - PAGE_SIZE check that had earlier been moved into
-bpf_map_charge_init() by c85d69135a91.  Oversized queue/stack maps can
-therefore be created again.
-
-Restore the bound in queue_stack_map_alloc_check() with a single
-comparison that rejects any max_entries/value_size combination whose
-element storage would reach or exceed U32_MAX bytes, keeping the u32
-index multiplication overflow-free and the capacity counter valid.
-
-Fixes: a37fb7ef24a4 ("bpf: Eliminate rlimit-based memory accounting for queue_stack_maps maps")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Fixes: 09574cca6ad6 ("hte: Add Tegra194 HTE kernel provider")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20260831063226.621309-2-chenyuan_fl@163.com
+Acked-by: Dipen Patel <dipenp@nvidia.com>
+Signed-off-by: Dipen Patel <dipenp@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/queue_stack_maps.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hte/hte-tegra194.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/queue_stack_maps.c b/kernel/bpf/queue_stack_maps.c
-index c1c9dee4dcdd0..b5628e4149817 100644
---- a/kernel/bpf/queue_stack_maps.c
-+++ b/kernel/bpf/queue_stack_maps.c
-@@ -59,6 +59,9 @@ static int queue_stack_map_alloc_check(union bpf_attr *attr)
- 		 */
- 		return -E2BIG;
+diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
+index 690eb9be30fb8..4644677370022 100644
+--- a/drivers/hte/hte-tegra194.c
++++ b/drivers/hte/hte-tegra194.c
+@@ -787,17 +787,17 @@ static int tegra_hte_probe(struct platform_device *pdev)
  
-+	if (attr->max_entries >= U32_MAX / attr->value_size)
-+		return -E2BIG;
+ 	hte_dev->chip = gc;
+ 
++	for (i = 0; i < slices; i++) {
++		hte_dev->sl[i].flags = 0;
++		spin_lock_init(&hte_dev->sl[i].s_lock);
++	}
 +
- 	return 0;
- }
+ 	ret = devm_hte_register_chip(hte_dev->chip);
+ 	if (ret) {
+ 		dev_err(gc->dev, "hte chip register failed");
+ 		return ret;
+ 	}
  
+-	for (i = 0; i < slices; i++) {
+-		hte_dev->sl[i].flags = 0;
+-		spin_lock_init(&hte_dev->sl[i].s_lock);
+-	}
+-
+ 	val = HTE_TECTRL_ENABLE_ENABLE |
+ 	      (HTE_TECTRL_INTR_ENABLE << HTE_TECTRL_INTR_SHIFT) |
+ 	      (hte_dev->itr_thrshld << HTE_TECTRL_OCCU_SHIFT);
 -- 
 2.53.0
 
