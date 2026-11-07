@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063681;
-	b=hxx/ZXCBikVkpmfcYMYsCjvgo9IbGkqefhRKLUZb2lpVH3E3AxImt8j+YJOl/VZGSZYJ
-	 b8jasm5mt4mNfmwJCvAj/Blm6u1EzCBeElXCENDSP1CWQtkFCJ5BGIrd1s+I+XgEpV0lp
-	 jeehtLV7kppO6AyVL8zSrvyvUl3hXmwFhD31BQGfdF+qLkPb0ZASGBdA6wp/8P2OTvz6k
-	 8j0IvTh/kxyvZqEO7ScsUnV2KMHYYMePaSykqiMJGmuI7W7Gaveal8pANWZZKVdFWCd4X
-	 x//H43uxRWc14u3Ef0yE7bQ6HdpD4MmwHZloIZx2sdPh4h/N/RTYMQPpg00y2AHa8BQ==
+	t=1794063683;
+	b=qnuIC2E/qHNOR4J7dLMHjB3ph8MX83VJPQGqOHHm5J9ySPiKjkB0sRFhCsRP9G77LczN
+	 kR/kZCkbzUuFnapaBJ0/aGzYSF7E6KNgnbPd66GumKQmnjDEHbPR4oPvNDumiAMLiFfRe
+	 NrS8pAoPe9tnaaV92OlbAA0WDwMymCK7W0KnuBpW+iQyDvPfOeb8oe1SopVWct3DrbdWM
+	 Lk+yj5rDJMNTXi3oV8s7wbZMgSoAEr8wDUh8LrULos0rZwVh1dOrCrd1o84p0/Y4vAyTA
+	 MxXy2mABa3bEFAw48RIMYxnTX1pQAaGoayCGFlaDBObhrE3t2nmNQOP43caeREtmdCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063681;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063683;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QyxaOKH7L6JtAyOjNEGoHnxO8cHAJY3Y0smlpThTXm8=;
-	b=oWA+xIhBmw5zZYU9i1WKeAO7JN9pJ7084A2dUvUxlCOOtR5umTTVjhqHnddwE+huZggB
-	 oy73hiEDmpdMClg06m6Sje3Ttgk8D0/1AaGUBgcQY+Loxj0ZIiUsi+TNjpHH9+DjacjKr
-	 +Cb0mFGyiXsxZYGlXAV1n8+/p0h/Gu2UEA+H/lqYotaZ5ThMI/RAi7kYFrq1rrbafp7kI
-	 TM1wD6Kvww0C4Bb++xOqxXu6XcOyn0pMxWlVrasICVfxFv4uZOmiUXsoYGcgrsLIww47i
-	 xd5Y0y6Z+Ew14RwpNqEHvLy8+oOPJEOMn0dYEVsQH2Mx6lSOSmU/One/XdV0Yznjp8w==
+	bh=OND/fIeSD98YIMMDzR24XjItMnvOpjYkbsT1Fb1kS6A=;
+	b=bWg0BBrASgc+yaPEUhXwit8of42n8W5yDT3sHCeJykQouf/tABcKupI1Dj9ZywzChFyZ
+	 6vmBCkdGDhQTSPDmw4OYbPWFyOtc/qwEAbCVTi/uKNrGKYt0iCRb1Oixl4S1P0Vb2FdRB
+	 DmZdfruL+Wmzul2nr6z1ULVdibdwTber3PAUsdZ4qDJZobMQ/yLqV7hliLtas7OHfDUmB
+	 vsFbkMDT1kFfcWxRk2NZNjGDgtBdlxQq9SQWQLVphsM2W5EZdnMOXZ25dyg5o7VwP1qYW
+	 /urJDpQ1m00TiGkPIpbX6u7+lGjjtJVSix78BrS2UjSSY3KWs/AubRXHzcEQZIP89zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f2dpgzjm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YW1OLW/h";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F15A606A32C;
-	Sat,  7 Nov 2026 15:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04A5606A33C;
+	Sat,  7 Nov 2026 15:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f2dpgzjm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B06F1F0089F;
-	Sat,  7 Nov 2026 15:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YW1OLW/h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8691F0089F;
+	Sat,  7 Nov 2026 15:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063681;
-	bh=QyxaOKH7L6JtAyOjNEGoHnxO8cHAJY3Y0smlpThTXm8=;
+	s=korg; t=1794063682;
+	bh=OND/fIeSD98YIMMDzR24XjItMnvOpjYkbsT1Fb1kS6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f2dpgzjmEjF4a95oUZxudx/xn7fCrUpCfngs+xFJMe64+cAAomfcgakbh01s/kvtw
-	 N9MPN87BQOSmFbBfSttzoa5YHvAhRLrrHzBpft8hOBqT1SqKEEx3/SSfGnf+T72nG8
-	 pSM8uM1rkWtV16mHtX1mFsz6E6Yq9V2ejaV5FZV4=
+	b=YW1OLW/haSnnBDUoZi4KzDBg6U2X2JrzGxSimc4G/sFNqPOwEJIG+PwBDZJMUTbRD
+	 ygnA9Nys+fvQhRw1R4YN4tLeNfUAaGUBHbBwmvYWpRfhpJ5AplCS3AiDGqveKksFJF
+	 117Ra9n6aX3NtSiqUF0d6PCRbuoB5sj27riwheEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Wei Jie Law <law.wei.jie@gt.tech.gov.sg>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 790/869] ASoC: codecs: wsa883x: Accept temperatures across the full trim range
-Date: Sat,  7 Nov 2026 08:57:52 -0500
-Message-ID: <20261107134919.524541748@linuxfoundation.org>
+Subject: [PATCH 6.18 791/869] net: usb: pegasus: check rx pkt_len against the received length
+Date: Sat,  7 Nov 2026 08:57:53 -0500
+Message-ID: <20261107134919.571014457@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,66 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
 
-[ Upstream commit 6a55cf0d9dd2e2493a5030a4f7b0413d31165e45 ]
+[ Upstream commit efee699f6de06611234ef9b0abd52db1340e5452 ]
 
-wsa883x_get_temp() rejects any reading outside 5..45 degC with -EAGAIN,
-so a speaker that has been playing, or sits in a warm chassis, becomes
-unreadable above 45 degC.
+read_bulk_callback() takes the frame length from the device, from the
+receive header on the 0x8513 and from the trailing status bytes on the
+other chips, and only checks it against PEGASUS_MTU before passing that
+many bytes up the stack. In two cases the stack then uses bytes that the
+device did not send:
 
-Bound the check by the -10..150 degC two-point trim range instead, and
-use inclusive comparisons, as in_range() excludes the upper bound.
+- A device that sends a short transfer but claims a long frame gets the
+  stale or uninitialized remainder of the receive skb delivered as
+  packet data.
 
-Fixes: a02c42d41af7 ("ASoC: codecs: wsa883x: Implement temperature reading and hwmon")
+- A device that claims a frame shorter than an Ethernet header gets
+  past the check as well. eth_type_trans() takes pkt_type from h_dest
+  and the protocol from h_proto without checking skb->len. If the
+  transfer is also short, those come from bytes left in the skb by an
+  earlier transfer, or from uninitialized memory.
+
+Drop frames shorter than ETH_HLEN, and frames whose claimed length, plus
+the 0x8513 header, does not fit in the bytes actually received, and
+count them as length errors. urb->actual_length never exceeds the
+PEGASUS_MTU sized transfer buffer, so this also covers the existing
+PEGASUS_MTU check. Valid Ethernet frames are at least 60 bytes long
+without the FCS, so they are not affected.
+
+Found by code review with LLM assistance. With an emulated USB device,
+a 101-byte transfer claiming a 1500-byte frame was passed up as a
+1500-byte packet before this change and is dropped after it, and
+frames claiming 0, 4 and 13 bytes were passed up and are now dropped
+and counted in rx_length_errors. The extra bytes happened to be zero
+in the first test, so disclosure of actual kernel data was not
+demonstrated.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261023171316.819857-4-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261021020310.34045-3-law.wei.jie@gt.tech.gov.sg
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa883x.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/usb/pegasus.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
-index 5f2ced650dcc8..6fb50b6e5e188 100644
---- a/sound/soc/codecs/wsa883x.c
-+++ b/sound/soc/codecs/wsa883x.c
-@@ -455,10 +455,11 @@
- 
- /*
-  * Device will report senseless data in many cases, so discard any measurements
-- * outside of valid range.
-+ * outside of the two-point trim range. Do not narrow this to ambient: a
-+ * speaker that has been playing easily runs well above 45 degC.
-  */
--#define WSA883X_LOW_TEMP_THRESHOLD	5
--#define WSA883X_HIGH_TEMP_THRESHOLD	45
-+#define WSA883X_LOW_TEMP_THRESHOLD	WSA883X_T1_TEMP
-+#define WSA883X_HIGH_TEMP_THRESHOLD	WSA883X_T2_TEMP
- 
- struct wsa883x_priv {
- 	struct regmap *regmap;
-@@ -1430,7 +1431,7 @@ static int wsa883x_get_temp(struct wsa883x_priv *wsa883x, long *temp)
- 	unsigned int dmeas_msb = 0, dmeas_lsb = 0;
- 	int d1, d2, dmeas;
- 	unsigned int mask;
--	int ret, range;
-+	int ret;
- 	long val;
- 
- 	guard(mutex)(&wsa883x->sp_lock);
-@@ -1493,8 +1494,8 @@ static int wsa883x_get_temp(struct wsa883x_priv *wsa883x, long *temp)
+diff --git a/drivers/net/usb/pegasus.c b/drivers/net/usb/pegasus.c
+index f5a26a0bc679a..69445a94ee6ff 100644
+--- a/drivers/net/usb/pegasus.c
++++ b/drivers/net/usb/pegasus.c
+@@ -523,11 +523,17 @@ static void read_bulk_callback(struct urb *urb)
  	}
  
- 	val = WSA883X_T1_TEMP + (((dmeas - d1) * (WSA883X_T2_TEMP - WSA883X_T1_TEMP)) / (d2 - d1));
--	range = WSA883X_HIGH_TEMP_THRESHOLD - WSA883X_LOW_TEMP_THRESHOLD;
--	if (in_range(val, WSA883X_LOW_TEMP_THRESHOLD, range)) {
-+	if (val >= WSA883X_LOW_TEMP_THRESHOLD &&
-+	    val <= WSA883X_HIGH_TEMP_THRESHOLD) {
- 		wsa883x->temperature = val;
- 		*temp = val * 1000;
- 		ret = 0;
+ 	/*
+-	 * If the packet is unreasonably long, quietly drop it rather than
+-	 * kernel panicing by calling skb_put.
++	 * Drop frames shorter than an Ethernet header, because
++	 * eth_type_trans() reads the header whatever the length, and frames
++	 * longer than what was actually received. Passing either up would
++	 * expose stale buffer contents, and skb_put() could panic on the
++	 * latter. count is at most PEGASUS_MTU.
+ 	 */
+-	if (pkt_len > PEGASUS_MTU - rx_offset)
++	if (pkt_len < ETH_HLEN || pkt_len + rx_offset > count) {
++		net->stats.rx_errors++;
++		net->stats.rx_length_errors++;
+ 		goto goon;
++	}
+ 
+ 	/*
+ 	 * at this point we are sure pegasus->rx_skb != NULL
 -- 
 2.53.0
 
