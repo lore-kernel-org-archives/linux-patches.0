@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063066;
-	b=oG5ZdD+iAS/FsdmEM2OpYGvEcgUaAsHNJ7dRzwKgnken2uAPHrbO2r9OhrhFh/hUn4RE
-	 NPOEnzvrwtZNWLLBEP4uQ+DqC0b2/bT3G28pbSFWcA+o/h0Lxsd1WCWQE/2LyZIQRyPQG
-	 pfR+3MvzqF4ExWPLXAW0LqHOgYiDYdbQH/oPRfAaS4WG2DKoKxa31ss5/ISDFnoahZkzk
-	 0ftAs/bBiXKuekbdWyczU7UEaiOpdhuKgxqDqN0QfG9LJ/sV3fKfJMeqo0TN1lYKhGJdP
-	 EhbWoc4aNMgxPfE88bjhTv5gx5QbMfhXF9LVmr5bwr6c2x3VYWpcQ7ivnKbSqhFBpnw==
+	t=1794063068;
+	b=eFA9JAjEQCVi0n2rYQmxHLjOToO5X/LzVFRsPT3Bd4Acjjfh1ykjAmfotgeS2aQBrTga
+	 F2vnJUVWUNuuVavYoChs6pIbPREGNtIf2VQpOCP0I2U7gti4ASbbFx8f8dE3EzmIoUSRi
+	 UFJKYv40WwmHfAq2NAVhdXbpM4C7Y+MphjS//uaxlnoZiW0wWH6RzMjWYTktmBs0aTkG8
+	 DIOvPz0r9xbZZ7ny9jLOQ/KeEAuPKcpWQigvnELrlt00FtXAvhJCOABNKKDS3i1tht2Aj
+	 fNb8RoYjMOGa/yXIKK8mWS9ql17CjslYIJdphfB5Ob4uwbxMgXSM/y6ZEoXugKAVpxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eTmO/+yEMYHfC7jcxTcCmT3JgLNLS943c5Vfe0Hq/l8=;
-	b=VUZUeWJZMI8Mp5S1K6aIyc6oIsM0gr115WXMKynk64WGCrlJs3+8JHKvTM1Ve7RuwPPn
-	 fzkIL/duyJ8vE7OXGxHcuKM+y5lcJGxjFPZEaMDenpj+8RZyHUA5MaKfO6R+n0MNoZ987
-	 lJrnJgjx1cqA4dLktHFI4hJSy+gC85nyUEgZd7BVj1WZZjlEhnASARBcHgUsoykWjv3dx
-	 xS0KrPmpgDNHGuSDkskZfD6FkgfqyMDIk2NpsEbAVlReXk10TBFf/DKMfmO7m4mU1Tsvq
-	 YG1gIYn2+UdHrvyFZA8T0E1u3SdQgt/0QuScycPQedFroLOD+CTyzob7kpu/0EuJ16w==
+	bh=w1lIVpswErODzGvLzlmwdAA07A460Tkj60E+IHw33Rs=;
+	b=EXygPqxA0TtWc2NRB1esHVJUE7NMc8y4gVn49kXVlc824JpbeEfAHpcNZP5Y2qZFnWAd
+	 IKAt2stUU3Dkn1Ckauh0H4mXKR9wUFv4VLa/9u5uF7Y+7uvgz7hu/obaqgxVI/V6RMXPk
+	 QbQ8abcuwF1b8iIJI9HfiINHFFFTXyqwtUwCxKo/Sa0hYYtShHOmIef9U2clwhc5132S9
+	 2I2Zyej4IIXhtmxG8txskobZDS0IkdcZ3QgpbO1roCFDNMLbG4/ZXLKYW5T+bYQCVxB9K
+	 hs80xdV58wi8tney/oQNgV90/4g1Vmh3e0OUoV209ghXTSbEggm0+hdnXPnrzV4/Nng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BKzGqwti;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1uPMlRS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9529A606D82F;
-	Sat,  7 Nov 2026 14:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5AF606D825;
+	Sat,  7 Nov 2026 14:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BKzGqwti
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4274C1F0089F;
-	Sat,  7 Nov 2026 14:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1uPMlRS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB171F0089F;
+	Sat,  7 Nov 2026 14:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063066;
-	bh=eTmO/+yEMYHfC7jcxTcCmT3JgLNLS943c5Vfe0Hq/l8=;
+	s=korg; t=1794063067;
+	bh=w1lIVpswErODzGvLzlmwdAA07A460Tkj60E+IHw33Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BKzGqwtiqkLpMlQH905Q2bpekmi+kmW6tWiLctIDaWBl68diBQ+9IvPiF3bDbCQyV
-	 jxQ9tMPl8LOf3EPI1RPo/faszGr9HCK7j6f/SyFbK/Db9EwkN6a0+zmXluJA8XucAn
-	 msHoPg+CjSPQSexXy+9meq+izzAGZCiwL955AC/8=
+	b=T1uPMlRSbZ6Td/C2dzrNuXqQ3tmd+SGW9zEwtHkZKoDRQfLmMrxGQqSLEnJZlTyeI
+	 ugIMnsrOFUjadiS6rs55kKzApgFGOsGPz5wWnpJQpIBYGRDGrvvzMVeEwd8PO5BmM0
+	 ADM1uv8bfggvtBM1f3ooZqerx4uS3ynF96hRzym4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Rob Clark <rob.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 307/869] drm/msm/dsi: Fix VM leak in dsi_tx_buf_alloc_6g()
-Date: Sat,  7 Nov 2026 08:49:49 -0500
-Message-ID: <20261107134902.946298047@linuxfoundation.org>
+Subject: [PATCH 6.18 272/869] iio: adc: ad7606: reject devices without match data
+Date: Sat,  7 Nov 2026 08:49:14 -0500
+Message-ID: <20261107134900.898237871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,45 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit ab91ba61871a896ca2ecc6e048d80a152136da44 ]
+[ Upstream commit 7830650d5293a0f412a869225262ca51b661e49f ]
 
-dsi_tx_buf_alloc_6g() takes a reference to the kms VM with
-drm_gpuvm_get() and stores it in msm_host->vm.  If
-msm_gem_kernel_new() fails, the function returns early without
-dropping that reference.  Since msm_host->tx_gem_obj is cleared on
-the error path, msm_dsi_tx_buf_free() will never see a non-NULL
-tx_gem_obj and thus never calls drm_gpuvm_put(), leaking the VM
-reference.
+SPI driver_override allows a device to bind to this driver without
+matching either the OF or SPI device ID table. In that case,
+spi_get_device_match_data() returns NULL.
 
-Drop the VM reference and clear msm_host->vm on the error path.
+ad7606_spi_probe() dereferences the returned bus information to pass
+the chip information and bus operations to the core, causing a NULL
+pointer dereference.
 
-Fixes: 5e05be782645 ("drm/msm/dsi: free TX buffer in unbind")
+Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
+data") fixed the same driver_override issue in another SPI driver.
+Reject devices without match data before entering the core.
+
+Fixes: bc69e9fffde4 ("iio: adc: ad7606: Add compatibility to fw_nodes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/754332/
-Link: https://lore.kernel.org/r/20260916175738.2089950-1-vulab@iscas.ac.cn
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/ad7606_spi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 4e93f8dd39d7d..1827af24a3fa1 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1254,6 +1254,8 @@ int dsi_tx_buf_alloc_6g(struct msm_dsi_host *msm_host, int size)
+diff --git a/drivers/iio/adc/ad7606_spi.c b/drivers/iio/adc/ad7606_spi.c
+index f28e4ca377076..bec3f656406bf 100644
+--- a/drivers/iio/adc/ad7606_spi.c
++++ b/drivers/iio/adc/ad7606_spi.c
+@@ -456,7 +456,11 @@ static const struct ad7606_bus_info ad7616_bus_info = {
  
- 	if (IS_ERR(data)) {
- 		msm_host->tx_gem_obj = NULL;
-+		drm_gpuvm_put(msm_host->vm);
-+		msm_host->vm = NULL;
- 		return PTR_ERR(data);
- 	}
+ static int ad7606_spi_probe(struct spi_device *spi)
+ {
+-	const struct ad7606_bus_info *bus_info = spi_get_device_match_data(spi);
++	const struct ad7606_bus_info *bus_info;
++
++	bus_info = spi_get_device_match_data(spi);
++	if (!bus_info)
++		return -ENODATA;
  
+ 	return ad7606_probe(&spi->dev, spi->irq, NULL,
+ 			    bus_info->chip_info, bus_info->bops);
 -- 
 2.53.0
 
