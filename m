@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060619;
-	b=yZaC8fdmlef3/XrGiqThp4QzjU73THd2vD/KVnHZVJ5/BEpZOn4GRS4CLGeJzOc5S2H4
-	 D5PMI3mMsZRwy88AdKPchEwTquuS5XAw14PXvzrLxg9Nygn3yl74+YjsZybXXBOkCT9Yy
-	 J6LU0hWwvDZjRwWhkGBKFv0cNgKbfw7j1uriH+rP9IANQdObYhuYLWV7LBogVuW71xrlw
-	 2r0VYYZy0VXnS/0VGUhUSmBAg6RRhf/qo0SFqK0rQzlOS6utGSio+CEVCNmLXbV9C/xQo
-	 1U1wsXmob441zjbdyPgO10mAJIV8ljwwWPxH3jCf0QOATHj8yRCdotgoAcHlVRawoaw==
+	t=1794060620;
+	b=On5FyzuCTOVnqr7U0X9byQFHLEPB2NdNEFJgPSUfRCd9mFyHYNyYi78fbSJcMiOeNYRl
+	 oPIQWr4lm4H8ujlL/0QNQ/4opKa7R4p+SKcjRhdc5IZ9wlotoqppohcwiY/VkzTZHaLql
+	 w9BogR2cus90mUt4iObvN7y3HEWPGGOSct3cDhKEcmTUGmMN4j1KpsIzPuCsk3svcbeSv
+	 E+UHgPEY/S+MX6yqMi96yhSb99R48Mc1p3eSSr8PLxQRsjR/6BvhKhblHcm9edO8tqGHZ
+	 pkgAn8CIMTGhuVpWq56dJqjvsNnP5e7mHCGMzE0SISQY2fR1fGfUSfvPHylL2dNNaxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060619;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9EOqs1SLoikJo7oX5RA4RuFpepzu4JiembWU3t/Kuqo=;
-	b=EiDtaaOITeqqQtp3DeevN6q4c2w0IqFksvjCF0aC2MtbWUChlOIakPGj7z+HlaRQOqJO
-	 VvZt9AFLlaY7SMLFJZu5tw/Rn4yY9QhKEYtdWfTtNE5wcIO61m2PwNks+m1ZfEK7YDquw
-	 MGWpA+FxrhTi9zTjsG4UhLfat52TO/eYvNESIjofb0+Kv9Axar/vN/BnRU67h73mxVp/8
-	 6iR48RCA/4TNsB0CLvC9vXyYbNdeDg2Cr3CHxi95JFVr6pJclkpCyv8A6B0RhkF7XGoL7
-	 M1PkUMnvsxk27QSxnS49z67ChCZ+VvSUqCQW5UUa6T1eulv30ImmjlSQoS2klDcIf2Q==
+	bh=eRogNeIJIatqYSEsJ54yemguGavcJ5YC55/3crxfB+4=;
+	b=xOB4MWnK55sGDOoYvtPwB34u2Oil73obFDEkSQzhp3f6zAP9CK7G5WRtjtRsh44nzgbv
+	 8EkPR+GSrcjJuYicBMUX6j3BRF6597BI9InyI/i0W+NcmU/dESEZbymGGtMX8Y/bHVemW
+	 Q5tfnWqgi0bsz7mdiWkhCLOpqsX8QKMiX5gvSkoBvFjXyQHvdRJqmENmTVMiylE2pSx+8
+	 qQOG8+iglVV7D+WJpYCaSCvXRsRXxfFQypgPaJiAqoIUBwitOe6MU6N0gaTvQl7rUQvOB
+	 qkMTbSbCeLJQn2wWn/mNGjfIG45xT9uTWOxxvwGAugsH2GbW4vcMyWXtZBebRtwigrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hhe0CrH1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=06tl1dTS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE15606A326;
-	Sat,  7 Nov 2026 14:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E89606A326;
+	Sat,  7 Nov 2026 14:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hhe0CrH1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 610701F0089F;
-	Sat,  7 Nov 2026 14:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=06tl1dTS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB9A1F0089F;
+	Sat,  7 Nov 2026 14:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060618;
-	bh=9EOqs1SLoikJo7oX5RA4RuFpepzu4JiembWU3t/Kuqo=;
+	s=korg; t=1794060620;
+	bh=eRogNeIJIatqYSEsJ54yemguGavcJ5YC55/3crxfB+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hhe0CrH1UmriLPz1u0QesuDeLnOTQ6/ZPuSjor1df8NQwwwQXF+DQNFmM3yMACay0
-	 UZDfCmk9C4ZdujqDJxJ5fVpHXSPFQCHqSRdDMbM7IlaxCU2JF4vYpGgy0vnBBnpgv9
-	 cziuq+P1IG2dpIoPktR5lRwGWtFOxYO+aoQqp28w=
+	b=06tl1dTST9cSbw5cYjTD6wsjyUdeCAED9ticWTtX7LpX8hB98ofPUazcfjy0bH7zS
+	 ySW1t3xjwWjQ2tz0m1KXDfZ0WbCZnq2+ZhxE6D2VQMXNGHx3aCGzT1w3r7ifErGEqz
+	 NjwfqO4zUWprcSIxZDuGFYZy67IGbAOgWIwUv6YU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haikun Zhou <zhouhaikun5@huaqin.corp-partner.google.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0067/1536] drm/panel-edp: Support MB116AS013 edp panel
-Date: Sat,  7 Nov 2026 08:34:43 -0500
-Message-ID: <20261107134959.548762308@linuxfoundation.org>
+Subject: [PATCH 6.12 0068/1536] libbpf: Skip bpf_object__probe_loading() when BPF token is in use
+Date: Sat,  7 Nov 2026 08:34:44 -0500
+Message-ID: <20261107134959.577022292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,50 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haikun Zhou <zhouhaikun5@huaqin.corp-partner.google.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 844e71ba7d7a50c5ffa29d147afaeaafb19b39e4 ]
+[ Upstream commit d262a25d8b58b697b2a1a2fe4b0078446cc00e11 ]
 
-MB116AS01'3 raw edid:
-00 ff ff ff ff ff ff 00 21 63 03 12 00 00 00 00
-00 23 01 04 95 1a 0e 78 23 e7 05 9c 5b 56 93 27
-21 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-01 01 01 01 01 01 36 1c 56 92 50 00 1c 30 60 18
-a8 00 00 90 10 00 00 18 00 00 00 fd 00 28 3c 30
-30 07 01 0a 20 20 20 20 20 20 00 00 00 fe 00 48
-4b 43 20 4d 59 20 20 20 20 0a 20 20 00 00 00 fe
-00 4d 42 31 31 36 41 53 30 31 27 33 20 20 01 cb
+bpf_object__probe_loading() tries to load trivial SOCKET_FILTER and
+TRACEPOINT programs to verify the BPF environment works.  When a
+BPF token is in use with restricted program type permissions, these
+probe loads may fail because the token does not allow the specific
+program types, even though BPF loading is perfectly functional.
 
-70 20 79 02 00 22 00 14 1c 1a 01 84 55 05 91 00
-5f 00 17 00 ff 02 1b 00 09 00 07 00 2b 00 06 27
-00 28 3b 00 00 81 00 13 72 1a 00 00 03 01 28 3c
-00 00 00 00 00 00 3c 00 00 00 00 25 01 09 1c 1a
-01 1c 1a 01 28 3c 80 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 00 00 e7 90
+Fix by skipping the probe when a token FD is present: BPF token
+creation itself proves the kernel has a working BPF subsystem.
+Real BPF issues will be caught during actual program and map loading.
 
-Signed-off-by: Haikun Zhou <zhouhaikun5@huaqin.corp-partner.google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260701013018.2621972-1-zhouhaikun5@huaqin.corp-partner.google.com
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260610145059.113412-2-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-edp.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/lib/bpf/libbpf.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index a67386a1ac89c..6f5d83dc08c32 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1957,6 +1957,7 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('C', 'S', 'W', 0x1100, &delay_200_500_e80_d50, "MNB601LS1-1"),
- 	EDP_PANEL_ENTRY('C', 'S', 'W', 0x1104, &delay_200_500_e50, "MNB601LS1-4"),
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 214f8b48c1ea3..59ba53f1e77cd 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -4993,12 +4993,8 @@ bpf_object__probe_loading(struct bpf_object *obj)
+ 		BPF_EXIT_INSN(),
+ 	};
+ 	int ret, insn_cnt = ARRAY_SIZE(insns);
+-	LIBBPF_OPTS(bpf_prog_load_opts, opts,
+-		.token_fd = obj->token_fd,
+-		.prog_flags = obj->token_fd ? BPF_F_TOKEN_FD : 0,
+-	);
  
-+	EDP_PANEL_ENTRY('H', 'K', 'C', 0x1203, &delay_200_500_e80, "MB116AS01'3"),
- 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d51, &delay_200_500_e200, "Unknown"),
- 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d5b, &delay_200_500_e200, "MB116AN01"),
- 	EDP_PANEL_ENTRY('H', 'K', 'C', 0x2d5c, &delay_200_500_e200, "MB116AN01-2"),
+-	if (obj->gen_loader)
++	if (obj->gen_loader || obj->token_fd)
+ 		return 0;
+ 
+ 	ret = bump_rlimit_memlock();
+@@ -5006,9 +5002,9 @@ bpf_object__probe_loading(struct bpf_object *obj)
+ 		pr_warn("Failed to bump RLIMIT_MEMLOCK (err = %d), you might need to do it explicitly!\n", ret);
+ 
+ 	/* make sure basic loading works */
+-	ret = bpf_prog_load(BPF_PROG_TYPE_SOCKET_FILTER, NULL, "GPL", insns, insn_cnt, &opts);
++	ret = bpf_prog_load(BPF_PROG_TYPE_SOCKET_FILTER, NULL, "GPL", insns, insn_cnt, NULL);
+ 	if (ret < 0)
+-		ret = bpf_prog_load(BPF_PROG_TYPE_TRACEPOINT, NULL, "GPL", insns, insn_cnt, &opts);
++		ret = bpf_prog_load(BPF_PROG_TYPE_TRACEPOINT, NULL, "GPL", insns, insn_cnt, NULL);
+ 	if (ret < 0) {
+ 		ret = errno;
+ 		cp = libbpf_strerror_r(ret, errmsg, sizeof(errmsg));
 -- 
 2.53.0
 
