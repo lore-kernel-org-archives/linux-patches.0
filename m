@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060739;
-	b=JbLeGwHeXtxoXhp0NOebMaW0dnhgRUCD0aRC56PMrMsjhXiebW1A9aaH1a7zp2/ncPq7
-	 BEuRlZprIKATwSBIyo6lVwRmJfN7klo19wCppDibD6BITFvqtSZ2/3sTr5osllL119wrD
-	 4d6oZkijY47w8tz5afB2L2AJHoFnY70Qsi5JaHyCNc/obuCCrVqZkglgrgy2Y58r/O7pm
-	 7T9GEDHERVS0P7zBJ457j3LS4OYFUJpUEjJdfeLYMOp6pBD+HARTwWo43fppd/LItq9DN
-	 XZ0FCM2NMDX1vbN0CYK04itgrNOMFWNp7b+eDahN1H/gITbbtieZdx7QnJ5NEYvg4kA==
+	t=1794060740;
+	b=xj4G2pGJaFJ6dwd9oX1oMdOXoCFIkvKuYCwtDeavQMk+YGj5AMmWTol4nFDEpv7QQbiB
+	 nXqfEc2u8aC3foPoejROX9otlnTNvqlZX2DzF2gi7QZ5sNznnM4cD54wcgy3za90GeJXb
+	 muoe3IWqudZheh+w3671aasSLCnjM9zja1xwDLSMFE6u+7v7jpcoeO14OTgy/Fcwt0vee
+	 zhfaFllfAqTuPFhalEeL3bErW35VbXdZUNI9jNZGFuYSYHLHDl4zMKxNzzzXmnsl1W3MA
+	 urEJUbS5QoPMFoIiEev/EjkmcpuUyR8dAwWFBav8r78pr6YBKk86xQi0NWT8iVq//YA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fojnrgH65hH/mWvb07oVB3Oa/EGRonzhOxxr+XLEtzM=;
-	b=U1MywTpWXkDEjuMEOnruvv2wX1mEKDinasqlU+0GV4r9+HPcgusQubsmPtJMKz1ljxD2
-	 9TGgZUc6tG7qaFU+FSro0Io/ty2YQ2Z//vhV20tzcB+LGKwRAvmvDJWlEaoBSXPWOIcZQ
-	 PUh4debGPw7Cs+DvK+GOFFItu5MWfTzyfzZKt6dcrE7hh3Et21qKOa1NbyLInL8EtRvaE
-	 1rBwS+EDHX+GsNBdsHCsOHJ79m0xcq2FnzjKhLPsecFHb9HmWpihQO3rEiDUwjDHnmr8P
-	 uLnEYsDZkBmG9mP8vV3WsFnUV1FxnLRQZpfc1eu7jK8RSbyBVWkyA98BBVyuUeIz1TA==
+	bh=9/NeLg/vglHpBL4kftUcU6tFXjUrvj1OLIeEgeNA5Ao=;
+	b=VEaIDvTbAI5+DBjE14sqynq4uzwTDezhLkthSSmR0gF97BHwcsXtDlXBoNJrQPLvXYde
+	 xx3rALHDDsrqsMqsmUVHHcW/cGUQGVWmSoxig9QwVTO/ita104dENbcNVB+lw3FgXoFFd
+	 V2ZPLpPZjH9+UuWmXqgiLGyw9kWmi3op5JZWU72ccByEmG9Jg9gNpzSiZL4VMBVMsuUAp
+	 mkE+X3QUZrnHQhy8AjtA86Ksjkxwk7mFi1IVHXB18OnNR/XZrlcffuXZ3YoS+Orboc7ww
+	 EO27j7F3TW4Agd+RK/3qlKzYx/erm/OY3haIbIvCVvSv4Q5sDMlBEh4VxPJi1tvkCzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f2APgXzi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1rfkI0lR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057A7606A326;
-	Sat,  7 Nov 2026 14:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A701606A326;
+	Sat,  7 Nov 2026 14:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f2APgXzi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25631F0089F;
-	Sat,  7 Nov 2026 14:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1rfkI0lR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF581F0089F;
+	Sat,  7 Nov 2026 14:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060738;
-	bh=fojnrgH65hH/mWvb07oVB3Oa/EGRonzhOxxr+XLEtzM=;
+	s=korg; t=1794060740;
+	bh=9/NeLg/vglHpBL4kftUcU6tFXjUrvj1OLIeEgeNA5Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f2APgXziQt2XfJ5hxbZOiZaUmcKRbEDWC9DgPBO66MPrkLrbAbLxx1p68iy0r5916
-	 YPUVRPjSq7GE8HsB7n2vC6bCDKMsbKFZwUvJm4HihhGGhbSRigof1DeL/OsKRF7Yq8
-	 TsmNwOcw8cc1Jg6M/Xzwh3e8LIEcLx38oIgBMZf4=
+	b=1rfkI0lRHnwcVYpfTBB7awLAp9xWPaDO2RFFmHujU7zXkXp9AcjEXB48ktsFJxYs8
+	 Ad57dcdVJB6jxJdZ5itJwoJkNjPg8f1v1R/i2D6orRUuZ5ic07/JlhlhruxEnBAJSG
+	 luahSE4702f9GbP8Mi4/2FPLtsoKgsv0kDpmNa1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0155/1536] misc: bcm-vk: validate write size before allocation
-Date: Sat,  7 Nov 2026 08:36:11 -0500
-Message-ID: <20261107135002.033133832@linuxfoundation.org>
+Subject: [PATCH 6.12 0156/1536] misc: genwqe: handle a first DMA address of zero
+Date: Sat,  7 Nov 2026 08:36:12 -0500
+Message-ID: <20261107135002.060716519@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,89 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit f66c40cd90954f52809b3eabd386137f56bb6215 ]
+[ Upstream commit d401772a9e18e837631450844f835229354528a4 ]
 
-bcm_vk_write() uses the user-supplied write count to size a
-flexible-array work entry and then copies count bytes into that array.
-The allocation expression is evaluated before any overflow check, so a
-very large count can wrap the allocation smaller than the subsequent
-copy.
+genwqe_setup_sgl() uses zero as the initial previous DMA address. DMA
+address zero is valid, so a first entry at that address enters the
+merge path before last_s has been assigned and dereferences NULL.
 
-Reject empty writes, check the allocation arithmetic before kzalloc(),
-and initialize the __counted_by field before copying into to_v_msg[].
+Only merge adjacent mappings after an SGL data entry has been created.
 
 Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260629160605.29412-1-alhouseenyousef@gmail.com
+Link: https://patch.msgid.link/20260630104923.53827-1-alhouseenyousef@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/bcm-vk/bcm_vk_msg.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/misc/genwqe/card_utils.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/misc/bcm-vk/bcm_vk_msg.c b/drivers/misc/bcm-vk/bcm_vk_msg.c
-index a36a6c7d384a9..4663d758de3ce 100644
---- a/drivers/misc/bcm-vk/bcm_vk_msg.c
-+++ b/drivers/misc/bcm-vk/bcm_vk_msg.c
-@@ -9,6 +9,7 @@
- #include <linux/interrupt.h>
- #include <linux/list.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/poll.h>
- #include <linux/sizes.h>
- #include <linux/spinlock.h>
-@@ -1090,6 +1091,7 @@ ssize_t bcm_vk_write(struct file *p_file,
- 	u32 q_num;
- 	u32 msg_size;
- 	u32 msgq_size;
-+	size_t entry_size;
+diff --git a/drivers/misc/genwqe/card_utils.c b/drivers/misc/genwqe/card_utils.c
+index a2c4a9b4f871c..e3b5fb337182e 100644
+--- a/drivers/misc/genwqe/card_utils.c
++++ b/drivers/misc/genwqe/card_utils.c
+@@ -413,7 +413,7 @@ int genwqe_setup_sgl(struct genwqe_dev *cd, struct genwqe_sgl *sgl,
+ 			size -= size_to_map;
+ 			map_offs = 0;
  
- 	if (!bcm_vk_drv_access_ok(vk))
- 		return -EPERM;
-@@ -1097,20 +1099,26 @@ ssize_t bcm_vk_write(struct file *p_file,
- 	dev_dbg(dev, "Msg count %zu\n", count);
+-			if (prev_daddr == daddr) {
++			if (last_s && prev_daddr == daddr) {
+ 				u32 prev_len = be32_to_cpu(last_s->len);
  
- 	/* first, do sanity check where count should be multiple of basic blk */
--	if (count & (VK_MSGQ_BLK_SIZE - 1)) {
--		dev_err(dev, "Failure with size %zu not multiple of %zu\n",
-+	if (!count || count & (VK_MSGQ_BLK_SIZE - 1)) {
-+		dev_err(dev, "Failure with size %zu not a positive multiple of %zu\n",
- 			count, VK_MSGQ_BLK_SIZE);
- 		rc = -EINVAL;
- 		goto write_err;
- 	}
- 
-+	if (check_add_overflow(sizeof(*entry), count, &entry_size) ||
-+	    check_add_overflow(entry_size, vk->ib_sgl_size, &entry_size)) {
-+		rc = -EOVERFLOW;
-+		goto write_err;
-+	}
-+
- 	/* allocate the work entry + buffer for size count and inband sgl */
--	entry = kzalloc(sizeof(*entry) + count + vk->ib_sgl_size,
--			GFP_KERNEL);
-+	entry = kzalloc(entry_size, GFP_KERNEL);
- 	if (!entry) {
- 		rc = -ENOMEM;
- 		goto write_err;
- 	}
-+	entry->to_v_blks = count >> VK_MSGQ_BLK_SZ_SHIFT;
- 
- 	/* now copy msg from user space, and then formulate the work entry */
- 	if (copy_from_user(&entry->to_v_msg[0], buf, count)) {
-@@ -1118,7 +1126,6 @@ ssize_t bcm_vk_write(struct file *p_file,
- 		goto write_free_ent;
- 	}
- 
--	entry->to_v_blks = count >> VK_MSGQ_BLK_SZ_SHIFT;
- 	entry->ctx = ctx;
- 
- 	/* do a check on the blk size which could not exceed queue space */
-@@ -1355,4 +1362,3 @@ void bcm_vk_msg_remove(struct bcm_vk *vk)
- 	bcm_vk_drain_all_pend(&vk->pdev->dev, &vk->to_v_msg_chan, NULL);
- 	bcm_vk_drain_all_pend(&vk->pdev->dev, &vk->to_h_msg_chan, NULL);
- }
--
+ 				/* pr_info("daddr combining: "
 -- 
 2.53.0
 
