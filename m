@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062560;
-	b=LM3iiueCrWV7owxLc5Os8/1Nj2EuJkpgdlQyVrD5dXcB4XPN0nVVRNTlEPmvuJ3c8/vz
-	 biej+d+IjWZlAEyoDNdCQMgkVGwsOeC7YkGRe8bWf8aIJTjYdctAklmUKNr4NfcqvYTI4
-	 +i2nZw91bsZ59ecfnFhOxETQ4hBaQ5FGTQecqzc5qQkIPYpWdItqesgHzbQQN7gWdazIz
-	 8poeL5Xx0mnZfUySGOA4cVreGvzBxtXu94LxlfdY6NqoStbQFFdOnsSRlWzhjGvOUZtag
-	 ZCem7veRvLF6MhPkcXJ58apBlUpWBikTRIgt+Vjf9jkwjGyEo3rWZpQmGEKnsPNLNvg==
+	t=1794062561;
+	b=dxjFXKOJ4RKEvhNvSQSEz9Cbo00mvDFO12tqQbEJxZFsJX3fjBl6YwvxqYDFwFfvhpWv
+	 ZRDLZemekGya3zx0eGvFGILNidPqnEJm5Kwui32Xiw27Fo4ySWNNiIIjuOO57vg/WMEgV
+	 5CBqM1z8VMrTLMfdDr73h7BmXdcKCxBPAoFJD8p/qUT/O2Q0eXfZA/c3ZE1PQhZh+7Oje
+	 sm4Y9/uIJ1qO/w/nPj7B/t88lB4YJzVJ0CeT6kE0/FpTz/YqQ7nOLtKmJDGKLie+YskpK
+	 r+54yLeeVvRLLj8Wyw3b68Sqr9FDmROHWPh1ERqZp18o4v7APGXJpi+syFi3wmneB+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062560;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062561;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5gHr/VMr5D40rp+7dnt4QqbC8x0qsA184t7mWU/nU+g=;
-	b=X59cG7jt+q6v/1zKlmEDJH9wfBqveXHEw9UmFtQePv2SxdJ9Xp5DZ9VkdVifSBgash9r
-	 vqxJlm7QONEv/n4CeyKOgMeeoO3QgRDSufKuc1LJIx0/74W6Q1bAw8Y66UE4gNKbxxQEr
-	 3WABRXaqs42hu8nOZmLNRVDBB3ZzZtolbkRKckybmUxsBXGGRti//PeHYwpxR7RyK/5Cp
-	 pnbkFi8hjb5Sa5SD0n5G7NKRUEx+CzZonDxVARpXYerNQ9ptEMC4I9AEppp70HoZcW70u
-	 wt8Y7rzhr/yHl2zOGOT7dc/GZ3oMF3bDYifE8IvjgLiu0/9Ed7Y5nduJMD3NFuD+O5w==
+	bh=vpfREyNDvdkqCDYf/Rx4qmhaHMH5i1LbQh/IwxtLe0s=;
+	b=sCEuINioAC1jqWP8s5uk7ydlf5M0aR8MTjbihU3rlYpaBg5Lf/kAw5dlRVP2nqM40hEl
+	 LVTqtHkmGTv/HQ7YNYdqyLxyTG9OZzlNq+Hh1JasRnkpFKofoIrPlyzEQ+f5iLER1qbtB
+	 VzM8RgHVG+zSDW2PJdX5TN0TOv+dGY3SypmKwdTvQDzsdtsO50RYIpslnash/I2jtfAaH
+	 NJCmwD8C3nmPPdhnMjxW8BZcNlOBMiWa+vmfHpAQ7XkPRZkNQoGp+AK8DzDYNmjNybZ1p
+	 qB01G7rtH9HfO/v+CRFZ7i3Xf9v6veteKgTd6P20aNItbT1ycFEE58f86ovSfjQo1wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ab6BkF7u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tPwDSlgP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20380606A642;
-	Sat,  7 Nov 2026 14:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AA8606A333;
+	Sat,  7 Nov 2026 14:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ab6BkF7u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4541F008AB;
-	Sat,  7 Nov 2026 14:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tPwDSlgP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EF11F008BE;
+	Sat,  7 Nov 2026 14:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062560;
-	bh=5gHr/VMr5D40rp+7dnt4QqbC8x0qsA184t7mWU/nU+g=;
+	s=korg; t=1794062561;
+	bh=vpfREyNDvdkqCDYf/Rx4qmhaHMH5i1LbQh/IwxtLe0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ab6BkF7uqLtrX+8ODn5itFyV9vb6meRYmuTQ1odCnPQRbVs4sJx4j99AWx/bj2f0M
-	 fFdyQK3lTUDs4UC+WVEK/4btBA5Ftkp+rin3onUvFEp9TeeInyz+Bc+FT68r7ykuy0
-	 liTluantZXZ/4AQMF35aksR+KFgW7hY0GDxfKlVk=
+	b=tPwDSlgPujvORoCxyZaaxH4mm+D12tFgD9r+P6ICphK/Iw0Ml7YxWm0yW0E+m6OT9
+	 D6+yYxvagmIVrzss3w9i6IOEgdw3eWPyZukbgpvWYIgwPqATnhc6eJgyWu/f1Xocf+
+	 3nU0gUwQZOAiVGqXPh+qRNMjqcHqfz2U8yd+Sgm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrik Enquist <henrik.enquist@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Florian Fuchs <fuchsfl@gmail.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1406/1536] ALSA: aloop: Update the PCM Slave controls for a matching playback
-Date: Sat,  7 Nov 2026 08:57:02 -0500
-Message-ID: <20261107135037.315502139@linuxfoundation.org>
+Subject: [PATCH 6.12 1407/1536] sh: maple: Use the matching IRQ cookie when invoking free_irq()
+Date: Sat,  7 Nov 2026 08:57:03 -0500
+Message-ID: <20261107135037.341635786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,67 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrik Enquist <henrik.enquist@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit c3bde2beacbcb40790f0e3c3f909f9e16bbced9c ]
+[ Upstream commit e3ef44e77b40e3cecfb34757ff3c15ecceea0309 ]
 
-The "PCM Slave" format, rate, channels and access controls report the
-parameters of the playback side of a cable. loopback_check_format()
-updates them when a playback starts, but returns early when a capture
-is open and its parameters match. The controls then keep the module
-defaults, or the parameters of an earlier stream.
+The Maple DMA and VBLANK handlers are registered with
+&maple_unsupported_device as their dev_id. Passing NULL to free_irq()
+cannot find either action, so the handlers remain registered and the
+IRQ core warns.
 
-A playback that joins an open capture with the same parameters is the
-normal case without notify, where it is constrained to the capture's
-parameters, and also with notify whenever the player happens to use
-them. An application that reads the controls to find the playback's
-parameters, for example to reopen the capture side at the right rate
-after a restart, then gets the wrong values.
+Use the same cookie when freeing both handlers on the error paths.
 
-Only skip the capture stop when the parameters match, and update the
-controls in every case. A value event is still sent only for a control
-whose value changes.
-
-Reproducer:
-  arecord -D hw:Loopback,1,0 -r 44100 -f S16_LE -c 2 /dev/null &
-  aplay -D hw:Loopback,0,0 -t raw -r 44100 -f S16_LE -c 2 /dev/zero &
-  amixer -c Loopback cget "iface=PCM,name='PCM Slave Rate',device=1"
-Before: the control reports 48000, the module default.
-After: it reports 44100.
-
-Fixes: 597603d615d2 ("ALSA: introduce the snd-aloop module for the PCM loopback")
+Fixes: b3c69e248176 ("maple: more robust device detection.")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Signed-off-by: Henrik Enquist <henrik.enquist@gmail.com>
-Link: https://patch.msgid.link/20261021-aloop-slave-controls-v1-1-62297727177f@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Tested-by: Florian Fuchs <fuchsfl@gmail.com>
+Reviewed-By: Florian Fuchs <fuchsfl@gmail.com>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/sh/maple/maple.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index bb75051be5ee1..50b8e7b3d8179 100644
---- a/sound/drivers/aloop.c
-+++ b/sound/drivers/aloop.c
-@@ -364,11 +364,14 @@ static int loopback_check_format(struct loopback_cable *cable, int stream)
- 			runtime->channels != cruntime->channels ||
- 			is_access_interleaved(runtime->access) !=
- 			is_access_interleaved(cruntime->access);
--			if (!check)
--				return 0;
--			if (stream == SNDRV_PCM_STREAM_CAPTURE)
-+			/*
-+			 * Matching params also go on to the update below, so that
-+			 * the setup controls follow a playback that joins an open
-+			 * capture.
-+			 */
-+			if (check && stream == SNDRV_PCM_STREAM_CAPTURE)
- 				return -EIO;
--			else if (cruntime->state == SNDRV_PCM_STATE_RUNNING) {
-+			else if (check && cruntime->state == SNDRV_PCM_STATE_RUNNING) {
- 				/* close must not free the peer runtime below */
- 				atomic_inc(&cable->stop_count);
- 				stop_capture = true;
+diff --git a/drivers/sh/maple/maple.c b/drivers/sh/maple/maple.c
+index 6dc0549f79005..3d3302c900caf 100644
+--- a/drivers/sh/maple/maple.c
++++ b/drivers/sh/maple/maple.c
+@@ -863,10 +863,10 @@ static int __init maple_bus_init(void)
+ 	kmem_cache_destroy(maple_queue_cache);
+ 
+ cleanup_bothirqs:
+-	free_irq(HW_EVENT_VSYNC, 0);
++	free_irq(HW_EVENT_VSYNC, &maple_unsupported_device);
+ 
+ cleanup_irq:
+-	free_irq(HW_EVENT_MAPLE_DMA, 0);
++	free_irq(HW_EVENT_MAPLE_DMA, &maple_unsupported_device);
+ 
+ cleanup_dma:
+ 	free_pages((unsigned long) maple_sendbuf, MAPLE_DMA_PAGES);
 -- 
 2.53.0
 
