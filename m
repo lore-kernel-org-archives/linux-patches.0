@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063754;
-	b=S5x57I8h9Gi02jC4aq4Hy6ev/7gS8hVdhWZY3tEQYAUKtmjVIuvfWmTd1oVu5oKwVUCr
-	 kn5cnDHCrHnyG79qe6i/7oovcHB4sTguve3FgGTcrXav1oKULjAdNpQjaRuifZtbEKPmm
-	 0ik22tzPeyVfkYGSwrpbazYDyhpP7AKwpk0k5arx7HdTaDtORMzndEd1IS30ncnFJHmeo
-	 hjA4TGs+lqlW9YZI82jojU82OC/YEA3C0w4ZCaUy3+N1u/7qZhuGEmj1LH7Q/lfXID1Mv
-	 JoK16maxgQ4n6Ey4DSv9P/wsEUtlEc3hBbX9fu6CUBPZ1CIx2YTVnoLiFctEK5y3lig==
+	t=1794063755;
+	b=JBLGfvpOfvrb1R2cGwKuVrx2yH0Uwll7SGTIQci5ZUfTaReHVKjL7Ruq8DxzTqw/MgMf
+	 FOb/BkJbqH5FWv94RC7pa3M6kS3G9E01QOvmCn5piDkbZM0oLcxowyzdkhLoAC3HQ3use
+	 FG62AjSmtHESNMu0kUnRDyXfSST4zUACfPk3ID2gVEIkNdnexhKX36vaaXZg1e0So7GNO
+	 sjIRiPhHHXZmxSTQjA9GE3lWiC55DQQt5HTsNCez/juW4qTZ4GYlmlH50J52K/NXW/u0T
+	 jcGItclGokQf65s/G5Y4DkFUv7VvYWzItD2U0+9n16BmPLzTxIsQgQ5HhqoX2mLE78g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063754;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063755;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fQ7bpkQsliQd0NnweLBp9i/mIWCkyOIIWxeMnoIoa+M=;
-	b=uhJJPlhMvBbwQuosyHW2VCwRU3bGTXkQsW9jWquLgHkO2dmgkdf3xT2q3yMJ+EfoYjCi
-	 ZKeK6dO2G7W3EGwsIY2r39Kxol8/O5hAbTjZywqFrYReOYV18FpjQJcZ95UontftaTHO8
-	 rqvUOgodyR+gmxnCgSJnduOPgL7E76m4uAxPq8Dk0599K3SG3eLPHzM0fYNiwhNUTMLri
-	 csOIgbXK2I/4hLyGrYP7I+MLnFhj7rONckJ4kyjby60wrJ4RIC2rBz0v8xbLwPyZrOz8M
-	 N+ryRBQ1hSVRCnEZxaOVOub8nfr+Yc22L7KaFQaHc/gKgcNn2lPB/O/bKl99KP2YJpQ==
+	bh=raSa26pDbYd8w4xQL9UVkTi3Ob0+NS5iM940IHp7Osg=;
+	b=LZtgPXA/0SHX56Tum6/IXcxGtxKpGNKP0zAKX/WpKLNBWFYHzDNvCNUqHNNezNedcRc9
+	 Vqh4LwYxTPPlyT0JKPy/VNOgAIekO5YQ2FNmHE6QuXgWsorFi9MTET2gDVlbXtoXZW5eq
+	 nu3cy82huk762kxsN42W8Q5H+8xZ1nf5/qDvwpZTBlRfC6FL6oXgBd3DEn7XtamX5bJ8o
+	 PVOegWMO0aw8vHCsPDB8AeRHIcRMDnLUdkL7J+MVH7nNfds/oGAKaY6GIMJQk3iHtL9+H
+	 LZDeKpME+9iDKRPzNuqfebHZuiTgeeJdVvcwM0l/yRtIpVbTo2KU1h1R4oEX3S3laTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KKZU5RU7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AKkx3W2y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B27606D804;
-	Sat,  7 Nov 2026 15:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FC8608362E;
+	Sat,  7 Nov 2026 15:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KKZU5RU7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570111F008BD;
-	Sat,  7 Nov 2026 15:02:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AKkx3W2y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8617A1F0089F;
+	Sat,  7 Nov 2026 15:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063753;
-	bh=fQ7bpkQsliQd0NnweLBp9i/mIWCkyOIIWxeMnoIoa+M=;
+	s=korg; t=1794063754;
+	bh=raSa26pDbYd8w4xQL9UVkTi3Ob0+NS5iM940IHp7Osg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KKZU5RU7J9hkDVzZgqvDXDBYGIbkbflYkvJb+Z40tmchaHpcEesTaVFWogRflbzmK
-	 kg9Kt8pOc2jYX78myYPjr/bi0ma4U6cmQnNCVOTeWykvvOy1rFFqRppXQEjE10gPHb
-	 aZgl4J8gdj7xTSu+xzz0lCV7t8ef3b+IMBqNHBIA=
+	b=AKkx3W2yaGlzYHfDQqk9dF9HFolOtJm3ZweUZ4ImHi1HduVcERlih4LjhFQj+QcgQ
+	 8++/YcP07c/NkxkAfOjX10cmWWymWdwkkLok6rIhit/VDCTu+bU4lY49c34BPzckuf
+	 aYetzic9lw7RY39zSML4nabyQ5I/IkQrDfCEs/lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 809/869] LoongArch: Fix perf hardware breakpoint failure via installation
-Date: Sat,  7 Nov 2026 08:58:11 -0500
-Message-ID: <20261107134920.460654661@linuxfoundation.org>
+Subject: [PATCH 6.18 810/869] cpufreq: stats: Fix potential out-of-bounds access in deferred reset
+Date: Sat,  7 Nov 2026 08:58:12 -0500
+Message-ID: <20261107134920.506682606@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,99 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 
-[ Upstream commit f5c0f8427469e703465c719c4304ce91282a32eb ]
+[ Upstream commit 8a702989677216489e471a6f27599da53f753567 ]
 
-In hw_breakpoint_control(), the logic to enable CSR_PRMD_PWE (global
-watchpoint enable) incorrectly relies on TIF_LOAD_WATCH. This thread
-flag is only set during ptrace operations, meaning that the standard
-hardware breakpoints created via perf_event_open() will never have
-this flag set.
+cpufreq_stats_create_table() sets stats->last_index to -1 if policy->cur
+is not in the frequency table. It then stays at -1, because
+cpufreq_stats_record_transition() returns early on old_index == -1 before
+it gets to update last_index.
 
-As a result, the CSR_PRMD_PWE switch is skipped, leaving the hardware
-breakpoint completely inactive in perf usage.
+Commit 46a310b80bc2 ("[CPUFREQ] Don't set stat->last_index to -1 if
+the pol->cur has incorrect value.") added that check. However, since
+commit 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to
+cpufreq_stats_record_transition()"), the stats reset is deferred to the
+beginning of cpufreq_stats_record_transition(), before that check, and
+cpufreq_stats_reset_table() ends with an unconditional
+cpufreq_stats_update(). So if the "reset" attribute is written while
+last_index is -1, the next frequency transition accesses
+time_in_state[-1].
 
-Fix this by decoupling the CSR_PRMD_PWE from the ptrace specific flag
-TIF_LOAD_WATCH, which ensures that CSR_PRMD_PWE is enabled whenever a
-hardware breakpoint is installed.
+Fix it by also returning early on last_index == -1 in
+cpufreq_stats_reset_table().
 
-Here is a user-space reproducer to demonstrate the issue:
-
-(1) Test program (test_perf_install.c):
-
-  #include <stdio.h>
-  #include <unistd.h>
-  #include <sys/syscall.h>
-  #include <sys/ioctl.h>
-  #include <linux/perf_event.h>
-  #include <linux/hw_breakpoint.h>
-
-  static int var = 0;
-
-  int main(void)
-  {
-  	size_t count = 0;
-  	struct perf_event_attr attr = {
-  		.type = PERF_TYPE_BREAKPOINT,
-  		.size = sizeof(attr),
-  		.bp_type = HW_BREAKPOINT_W,
-  		.bp_addr = (unsigned long)&var,
-  		.bp_len = HW_BREAKPOINT_LEN_1,
-  		.exclude_kernel = 1,
-  	};
-
-  	int fd = syscall(__NR_perf_event_open, &attr, 0, -1, -1, 0);
-  	ioctl(fd, PERF_EVENT_IOC_ENABLE, 0);
-
-  	asm volatile("st.b %1, %0" : "=m"(var) : "r"(11) : "memory");
-
-  	ioctl(fd, PERF_EVENT_IOC_DISABLE, 0);
-  	read(fd, &count, sizeof(size_t));
-
-  	printf("Watchpoint counts: expected = 1, actual = %zu\n", count);
-
-  	close(fd);
-  	return 0;
-  }
-
-(2) Test steps:
-
-  $ gcc test_perf_install.c -o test_perf_install
-  $ ./test_perf_install
-
-(3) Test results:
-
-Without this patch:
-
-  Watchpoint counts: expected = 1, actual = 0
-
-With this patch:
-
-  Watchpoint counts: expected = 1, actual = 1
-
-Cc: stable@vger.kernel.org
-Fixes: 3892b11eac5a ("LoongArch: Check TIF_LOAD_WATCH to enable user space watchpoint")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to cpufreq_stats_record_transition()")
+Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
+Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027133332.377546-1-zhongqiu.han@oss.qualcomm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/hw_breakpoint.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq_stats.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
-index d009ed780cf02..1a05350159f7b 100644
---- a/arch/loongarch/kernel/hw_breakpoint.c
-+++ b/arch/loongarch/kernel/hw_breakpoint.c
-@@ -233,7 +233,7 @@ static int hw_breakpoint_control(struct perf_event *bp,
- 		}
- 		enable = csr_read64(LOONGARCH_CSR_CRMD);
- 		csr_write64(CSR_CRMD_WE | enable, LOONGARCH_CSR_CRMD);
--		if (bp->hw.target && test_tsk_thread_flag(bp->hw.target, TIF_LOAD_WATCH))
-+		if (bp->hw.target)
- 			regs->csr_prmd |= CSR_PRMD_PWE;
- 		break;
- 	case HW_BREAKPOINT_UNINSTALL:
+diff --git a/drivers/cpufreq/cpufreq_stats.c b/drivers/cpufreq/cpufreq_stats.c
+index 40a9ff18da068..d457848b3eabd 100644
+--- a/drivers/cpufreq/cpufreq_stats.c
++++ b/drivers/cpufreq/cpufreq_stats.c
+@@ -52,6 +52,10 @@ static void cpufreq_stats_reset_table(struct cpufreq_stats *stats)
+ 	 * reset_pending accesses in cpufreq_stats_record_transition().
+ 	 */
+ 	smp_rmb();
++
++	if (stats->last_index == -1)
++		return;
++
+ 	cpufreq_stats_update(stats, READ_ONCE(stats->reset_time));
+ }
+ 
 -- 
 2.53.0
 
