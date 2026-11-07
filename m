@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061573;
-	b=BpIBBmtqIKIsd+Q7O+LSursjFKiV9lag+wasIb1SrI/Q/h0PxqM04lWsFgllETBVzcOM
-	 vN0rIoU05S9F4qTSzbt/UbhNdsHxun65SD2GVWcZ+GYsrCL/20X0toBoTaoK+qEZWxgDr
-	 /epO4wYxK1ygjHcnHNYgx/mixFRL+nkdXgjWYKN+vN/rxx7TjDuGVnDE2NM3D0UV0nFzZ
-	 xuvi351WOdxZsu2oYAJ1HIwpSA2HkcrnTEkDTCzBEjTJGD6nKPzAHzkrzqxPmhY2nixy2
-	 NBG+drf1v02UFbXWSTqo86BHfmM88IKJoBMxMNaZq3N+/62pH/bItVBsVF4/acTcyNw==
+	t=1794061574;
+	b=KU8lYFp4RnRqq0lx0bUvsG+A038k/i2ozWzfricJ+6RmbCRsgDVcvACZVXZm3/ra1dSY
+	 VpKQnpKVuS4KqDVDOn6wkHbq4RK9OT8s2+wttXZHfKDNxaPtlRwoFxJKIpe8n+4tXdy6z
+	 vVrTRlO0tveSF9MvgWZXViF8akbAQ7zWp8df7QmxtfjWzrkmg2zMz2bb+Wb0uOKsWbZ0i
+	 1gWytKHMZTZ7ApGZriGxssTDFdVMW9dPhvLreFWsk/Pe2ZWBcii1Sy0UZiUorsCnANCFa
+	 RP7ATlyiVkue+Z1WkXwI4NGJQO65O8EkaXqMM0NvnCQFAbFhKM8a4d3vt2fSOOMhMdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061574;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=awjgh4/Xyi0k7wmkSEbXURmtl4PrwMIQtd1RABh0UP4=;
-	b=2XBbLur6+E47BZGECDaTxbHnMRbB/vxxk5N+C5V8+86aqMD57y1sbESwN84RhlvyvNqk
-	 YO0VLHLgxj5JWCVy4jkLVwiQQBXgGxcrUNZFKL813DhUC4CnkhbTcQbXFuNk8HK5IXaYv
-	 3NdgrOHG3gDBi9JOExi0JZqAk4nUysejUmf9CwLoTbTcvoIN540F4eZqs+bbHZ3BqAVBN
-	 n8WZtfAsQp2ysi6mGmdm+GqMNj0GM0mAPigbysLCfAipiX8DAs4NYWl89nvXc2vWRw4Jb
-	 979saYQOpZmT9Hrz5jssTPRjUv2CIxB9sdMekXSf9iomZNFMaKU/91ZzeQgIGV0nCrA==
+	bh=G0EZudA3RjnRfBjs6AF4hK1IfOorzyX244Gws7hW5rY=;
+	b=Q1Nig5QD3RSfHFDqtDeS15sgz3XgHoBdRbIQaclP1at0wrxgkGAfCxVVAKXcK/RcqNZO
+	 Vx9pMZeCxvcicvhQ0wEPkKDDrQ2VdM1KZv60csQTeBsqab5F8/EBP9JV7UuZSCCXdceiA
+	 bUEes0arEGTjQaI5I0nTQPk5OeIZoduCJi6ZJaH5zSB3aouxLRE7C7p7lsV8xA0Uxafut
+	 P1A5LktDII+El7MsTjiPY2pI5k6+/PLPpbe1L7MZk0ngtN6GfyaRHAKxWsheQvogtOVMl
+	 9Kk6NoJ5/PlAOVJqev7PN4cQ5BvGDh3lNmjlZBIah/YsDA+LtC9FiS96ho+Ng28KAfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IfNF+ZtL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDcnm8b8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEEF606A326;
-	Sat,  7 Nov 2026 14:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A265606A32D;
+	Sat,  7 Nov 2026 14:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IfNF+ZtL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855401F0089F;
-	Sat,  7 Nov 2026 14:26:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDcnm8b8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4361F0089F;
+	Sat,  7 Nov 2026 14:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061572;
-	bh=awjgh4/Xyi0k7wmkSEbXURmtl4PrwMIQtd1RABh0UP4=;
+	s=korg; t=1794061574;
+	bh=G0EZudA3RjnRfBjs6AF4hK1IfOorzyX244Gws7hW5rY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IfNF+ZtL9hR/nHarJ8SvA+wHOmwPbb++38wS7Qg8oHSrjuL8r2/yBHoL+DvUnq9xs
-	 v1ubYdvgCVU0mftQi+HnJ7ekmwLZSfA6iGpe2ySaFqtXK1eF1j6Im79hlwEVSlViQy
-	 U2AMThTbKiWALHMCbxhiK1PJABxe80kkLnfhhMTg=
+	b=qDcnm8b8Rpr9lCg0zodtDV7arIIdcZJlUNl+g3Vzf5X0oON2Jmsri6LqjTFMu/VLZ
+	 o2DmExVyjCgVvYsSPBnYz2G+iEuDz5q+2ENs1u+kRgmlF2e6Kopwb+lZSg1IXl/tnE
+	 ZEeDESz15s7yj5jtfICdQrtep3tWM3GivV+LLyUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Subject: [PATCH 6.12 0650/1536] mm/slab: sample slab_state once in kmem_cache_destroy()
-Date: Sat,  7 Nov 2026 08:44:26 -0500
-Message-ID: <20261107135015.783357395@linuxfoundation.org>
+	Vernon Yang <yanglincheng@kylinos.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Zach OKeefe <zokeefe@google.com>
+Subject: [PATCH 6.12 0651/1536] mm: khugepaged: fix folio is used after folio_put/unlock()
+Date: Sat,  7 Nov 2026 08:44:27 -0500
+Message-ID: <20261107135015.812602408@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,132 +74,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Vernon Yang <yanglincheng@kylinos.cn>
 
-commit 088bfdc0d7947d623f4899b9011c866e4445074d upstream.
+commit 9010383e71e6ce75fcd3c8f87133c8ce6c0e6ab4 upstream.
 
-kmem_cache_release() tests slab_state >= FULL after kmem_cache_destroy()
-has dropped slab_mutex and unlinked the cache, and for a
-SLAB_TYPESAFE_BY_RCU cache after rcu_barrier(). If slab_late_init() runs
-before that test it sets slab_state to FULL but skips the unlinked cache,
-which never got a sysfs entry, so sysfs_slab_release() calls kobject_put()
-on a kobject that was never initialized:
+On the rollback path, folio_put() has already dropped the last reference
+of new_folio.  On the success path, new_folio is already unlocked and can
+be freed concurrently.  The trace_mm_khugepaged_collapse_file() is left
+with a dangling folio pointer.
 
-  WARNING: lib/kobject.c:734 at kobject_put+0x64/0x2c0, CPU#1: kworker/u8:3/55
-  kobject: '(null)' ((____ptrval____)): is not initialized, yet kobject_put() is being called.
-  refcount_t: underflow; use-after-free.
-  kobject_put+0x64/0x2c0
-  sysfs_slab_release+0xc/0x20
-  kmem_cache_destroy+0x104/0x1e0
-  bioset_exit+0x13c/0x1e0
-  disk_release+0x54/0x140
-  put_disk+0x18/0x40
-  floppy_async_init+0xbec/0xd10
+So using the folio_pfn() before dropping the reference, closing
+use-after-free window.
 
-slab_state >= FULL asks whether the cache has a kobject, which cache
-creation skips while slab_state <= UP. UP is the state just below FULL,
-so a false sample cannot skip a kobject_put() that was owed.
-
-Seen on sparc64 at boot, where the asynchronous floppy init tears down
-its bio slab while the late initcalls are running.
-
-Sample slab_state once, under slab_mutex which slab_late_init() holds
-when it sets FULL, and use the result for both the unlink and the
-release.
-
-The history of this problem dates back to v3.2:
-
-  Commit 69cb8e6b7c29 ("slub: free slabs without holding locks") in
-  v3.2 moved sysfs_slab_remove() outside slub_lock and introduced
-  a race condition between kmem_cache_destroy() and slab_sysfs_init().
-
-  Commit 945cf2b6199be ("mm/sl[aou]b: Extract a common function for
-  kmem_cache_destroy") in v3.7 accidentally closed the race while
-  extracting a common implementation for kmem_cache_destroy().
-
-  Commit 5413dfba88d6 ("slub: drop mutex before deleting sysfs entry")
-  in v3.8 re-opened the race by dropping slab_mutex around
-  sysfs_slab_remove() in __kmem_cache_shutdown(), to avoid a lockdep
-  splat between slab_mutex and the sysfs lock.
-
-  Commit 657dc2f97220 ("slab: remove synchronous rcu_barrier() call in
-  memcg cache release path") in v4.11 shifted from synchronous
-  rcu_barrier() to asynchronous RCU work for SLAB_TYPESAFE_BY_RCU caches.
-  That commit, again, accidentally closed the race by moving
-  sysfs_slab_release() to shutdown_cache(), but only for
-  !SLAB_TYPESAFE_BY_RCU caches because destruction of
-  SLAB_TYPESAFE_BY_RCU caches is done in an RCU work.
-
-  Commit 0495e337b703 ("mm/slab_common: Deleting kobject in
-  kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock") in
-  v6.0 re-introduced the race for !SLAB_TYPESAFE_BY_RCU caches.
-
-Fixes: 69cb8e6b7c29 ("slub: free slabs without holding locks")
-Fixes: 5413dfba88d6 ("slub: drop mutex before deleting sysfs entry")
-Fixes: 0495e337b703 ("mm/slab_common: Deleting kobject in kmem_cache_destroy() without holding slab_mutex/cpu_hotplug_lock")
-Cc: stable@vger.kernel.org
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
-Link: https://patch.msgid.link/20261014150844.8536-1-kaloz@kernel.org
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
+Link: https://lore.kernel.org/20260909025804.3233645-4-vernon2gm@gmail.com
+Fixes: 4c9473e87e75 ("mm/khugepaged: add tracepoint to collapse_file()")
+Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Zach O'Keefe <zokeefe@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slab_common.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ include/trace/events/huge_memory.h |    6 +++---
+ mm/khugepaged.c                    |    4 +++-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -487,10 +487,10 @@ EXPORT_SYMBOL(kmem_buckets_create);
-  * and release of the kobject does not need slab_mutex or cpu_hotplug_lock
-  * protection. So they are now done without holding those locks.
-  */
--static void kmem_cache_release(struct kmem_cache *s)
-+static void kmem_cache_release(struct kmem_cache *s, bool sysfs_ready)
- {
- 	kfence_shutdown_cache(s);
--	if (__is_defined(SLAB_SUPPORTS_SYSFS) && slab_state >= FULL)
-+	if (__is_defined(SLAB_SUPPORTS_SYSFS) && sysfs_ready)
- 		sysfs_slab_release(s);
- 	else
- 		slab_kmem_cache_release(s);
-@@ -505,6 +505,7 @@ void slab_kmem_cache_release(struct kmem
+--- a/include/trace/events/huge_memory.h
++++ b/include/trace/events/huge_memory.h
+@@ -207,10 +207,10 @@ TRACE_EVENT(mm_khugepaged_scan_file,
+ );
  
- void kmem_cache_destroy(struct kmem_cache *s)
- {
-+	bool sysfs_ready;
- 	int err;
+ TRACE_EVENT(mm_khugepaged_collapse_file,
+-	TP_PROTO(struct mm_struct *mm, struct folio *new_folio, pgoff_t index,
++	TP_PROTO(struct mm_struct *mm, unsigned long new_pfn, pgoff_t index,
+ 			unsigned long addr, bool is_shmem, struct file *file,
+ 			int nr, int result),
+-	TP_ARGS(mm, new_folio, index, addr, is_shmem, file, nr, result),
++	TP_ARGS(mm, new_pfn, index, addr, is_shmem, file, nr, result),
+ 	TP_STRUCT__entry(
+ 		__field(struct mm_struct *, mm)
+ 		__field(unsigned long, hpfn)
+@@ -224,7 +224,7 @@ TRACE_EVENT(mm_khugepaged_collapse_file,
  
- 	if (unlikely(!s) || !kasan_check_byte(s))
-@@ -549,10 +550,18 @@ void kmem_cache_destroy(struct kmem_cach
+ 	TP_fast_assign(
+ 		__entry->mm = mm;
+-		__entry->hpfn = new_folio ? folio_pfn(new_folio) : -1;
++		__entry->hpfn = new_pfn;
+ 		__entry->index = index;
+ 		__entry->addr = addr;
+ 		__entry->is_shmem = is_shmem;
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1811,6 +1811,7 @@ static int collapse_file(struct mm_struc
+ 	struct address_space *mapping = file->f_mapping;
+ 	struct page *dst;
+ 	struct folio *folio, *tmp, *new_folio;
++	unsigned long new_pfn = -1;
+ 	pgoff_t index = 0, end = start + HPAGE_PMD_NR;
+ 	LIST_HEAD(pagelist);
+ 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
+@@ -1823,6 +1824,7 @@ static int collapse_file(struct mm_struc
+ 	result = alloc_charge_folio(&new_folio, mm, cc);
+ 	if (result != SCAN_SUCCEED)
+ 		goto out;
++	new_pfn = folio_pfn(new_folio);
  
- 	list_del(&s->list);
+ 	mapping_set_update(&xas, mapping);
  
-+	/*
-+	 * slab_late_init() sets slab_state to FULL under slab_mutex and adds
-+	 * sysfs entries only for caches still on the list. Sample the state
-+	 * here, so that a cache unlinked before that point is not handed to
-+	 * sysfs_slab_release() with an uninitialized kobject.
-+	 */
-+	sysfs_ready = slab_state >= FULL;
-+
- 	mutex_unlock(&slab_mutex);
- 	cpus_read_unlock();
- 
--	if (slab_state >= FULL)
-+	if (sysfs_ready)
- 		sysfs_slab_unlink(s);
- 	debugfs_slab_release(s);
- 
-@@ -562,7 +571,7 @@ void kmem_cache_destroy(struct kmem_cach
- 	if (s->flags & SLAB_TYPESAFE_BY_RCU)
- 		rcu_barrier();
- 
--	kmem_cache_release(s);
-+	kmem_cache_release(s, sysfs_ready);
+@@ -2242,7 +2244,7 @@ rollback:
+ 	folio_put(new_folio);
+ out:
+ 	VM_BUG_ON(!list_empty(&pagelist));
+-	trace_mm_khugepaged_collapse_file(mm, new_folio, index, addr, is_shmem, file, HPAGE_PMD_NR, result);
++	trace_mm_khugepaged_collapse_file(mm, new_pfn, index, addr, is_shmem, file, HPAGE_PMD_NR, result);
+ 	return result;
  }
- EXPORT_SYMBOL(kmem_cache_destroy);
  
 
 
