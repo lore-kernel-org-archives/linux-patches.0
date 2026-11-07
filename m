@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061482;
-	b=UTMpa/U6yZSoGSjA0eGcjQmeEf6JsHVhk4H92i/7OFbKXMWxkicSpQSFgaLUITBZwBIF
-	 P6gruSYjHYK4J2H/FcnxzJPR+Nxo2yHUtheWZYnt1NvU/S5zo3qLje5x8+iN72ZMAkvM0
-	 2veFwIYv6l0DxiSbgGHskQkkwjuPl+Fdz9AtzAn2AAOSMnGzy9IOIBmHkk3PFBvvDSv3Z
-	 vc8U8XKrgkuYArtinv2Kaaq2luguNKbDCaRA1RveekWdXfmM9XdBIGNZsTBmnF4b/p5cL
-	 R3+mAyNfrjDTaBC0oDMgExRa9WSDMIp22sF5Y5y56OWLnFZglXynzVMNcZuE+6wnbjQ==
+	t=1794061483;
+	b=1Vg1lmUIyK79asXSokA4sqPx+Mt5grpGBU+lLRKxk8Wj8Kx4NR9Pv3tRyNqYdfkuSbkT
+	 JPOmd+Av41p+sh5NXycP5M2u9R/mmJs64DCZy/ejvpHBAULJ9d9gYBFv0+WESSdkjC6E/
+	 ZCwkMKQaY6cH2Sv/jLCRqkbcpwua/x6F6bGy36SAsUZyoowa/yBya+ywVmktskdSZB+mS
+	 iuwG5jEOaYB1g88WLFtKz1Qt8e2IZECLDfliTuTQT1qPdas+N5mgSBiys9y6lR7TkSzv5
+	 l40JvTglCwv2ilU7Pdazl6JPBqvoWVsG6n4T/w6UZUZxOed/o6qnB0hzlN1MZ6qVNWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061482;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gHg2XMSRlDvIpLRRg3IjINZxjNRh3iuywGZwmICk8J8=;
-	b=DmUduxf1d3pUi9uxr2/s/kxXYgIb8hIi++RaQlD4ahC+IaCWgVMd80JYZdEQD0/iaS8x
-	 dXZjSf8ud9xcgV9yzpI2XD79O7qyBBTQXNrIzbjtdM8wHXAFmi8w27yTmAeNoRDkv9ah4
-	 fTUMiYXMFsteMrUwMNiTn00fkJiGhqR/An+u6X6dv77MuUJXTGo5pmvea+Nb+jBSCTPzt
-	 zGIvf7zpO6+u8i2VmkSLReInjB9TXKq1kK3adz2IRF+GBaBGNVy5Swb/EvghW9C6ZfvpD
-	 6q/XsWhciwibvbT4kSxQD+e8OhzYq4+amsS5tirl6hSY0xzkEtFac10+dol63jUx2Fg==
+	bh=JzDQUaUNKqEnIrkfNycqqBBhHq3jH5BBnI65FfO6V/A=;
+	b=iqD8WxP6Q42n2BXdKyh1BoEqyUfrpM+SFb9cltBOyo2QXdphjXqTKAHS4+gFSUMN6qhM
+	 FlrWHfcWMd4HDuhyL+w4xCYa/7z69REsAIOocX1FPeieN3FtyT9fwfNyVMmpwEasFgTwf
+	 CHTtjufcE9vl+H+GxwEMyJNwdAVRZZnz2N0T64qpnmnQylNBFSBdyZe1A1N7jNBzWNtDY
+	 i+jHgqYc78tLkl0M8Ra8AvHYv0REC/k9HRF2CkN7ib8HuC0f4ejmshzcEIWSTmWNQyZ8o
+	 cSrvxaTseR2EDVIgD9y21FY6ZzjKPb0Stj9XcLlibMWxG3YcD1KTBENNdqGoF0vsZhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mw63PuoG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0/yx/63E";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD313606A326;
-	Sat,  7 Nov 2026 14:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B9C606A326;
+	Sat,  7 Nov 2026 14:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mw63PuoG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601AD1F0089F;
-	Sat,  7 Nov 2026 14:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0/yx/63E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94751F0089F;
+	Sat,  7 Nov 2026 14:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061481;
-	bh=gHg2XMSRlDvIpLRRg3IjINZxjNRh3iuywGZwmICk8J8=;
+	s=korg; t=1794061483;
+	bh=JzDQUaUNKqEnIrkfNycqqBBhHq3jH5BBnI65FfO6V/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mw63PuoGz6Est/IOeoT/FiGSdJL8GqWJky62hSV2E51HRAqbNWBiSxvt/bC2YykOz
-	 zP6/Pt34odmwDcLMy74+Mjqp8VVt+6bXxaZKHiHdSq/4V4FmDb0iiLJo8LJqPQuqlG
-	 feZjtK+/t0hY2w6GweNbhoKjCAKeEbgt/F+2281Q=
+	b=0/yx/63ETWQQFyOsFRyo9taoZj47YDain/UhksJHR/osvqIjtQZQv4lg3ztl3cFb7
+	 6jlmNrRfpjfCxc2ehWmRks9CnIy0rOdtU3Hd297e1PhUcyRm4cjTdqpQe3LPdhVZhh
+	 67HtLC6VV/9nAP+Nu2zS5RFuFdo6G1ro8RxVxGs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -51,9 +51,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tom Talpey <tom@talpey.com>,
 	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0541/1536] smb: client: flush and commit data before querying allocated ranges
-Date: Sat,  7 Nov 2026 08:42:37 -0500
-Message-ID: <20261107135012.820356525@linuxfoundation.org>
+Subject: [PATCH 6.12 0542/1536] smb: client: flush dirty data before zeroing a range
+Date: Sat,  7 Nov 2026 08:42:38 -0500
+Message-ID: <20261107135012.848745496@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -77,38 +77,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit aa994489bd835547c191827acc460192e147032d ]
+[ Upstream commit 8f8d32c1044f70e46e87550e039a15ff20a4b21c ]
 
-The mode 0 / FALLOC_FL_KEEP_SIZE fallocate emulation for small interior
-ranges in smb3_simple_fallocate_range() issues
-FSCTL_QUERY_ALLOCATED_RANGES and zero-fills any sub-range the server
-reports as an unallocated hole, to force block allocation without
-changing file contents.
+smb3_zero_range() emulates FALLOC_FL_ZERO_RANGE by invalidating the
+page cache over the target range with truncate_pagecache_range() and
+then issuing FSCTL_SET_ZERO_DATA to the server.
 
-This is unsafe against Windows servers.  Per the Win32 documentation,
-FSCTL_QUERY_ALLOCATED_RANGES only reports ranges that *may* contain
-nonzero data and is explicitly not coherent with recently written data:
+Dirty data was only flushed conditionally, when the range reached or
+extended EOF.  For a purely interior zero range that does not reach
+EOF, no flush happened, so a dirty folio overlapping the range could
+be written back to the server after the FSCTL and refill the range
+that was just zeroed with stale data.
 
-  "a call to FSCTL_QUERY_ALLOCATED_RANGES [after writing to a network
-   file] would not necessarily return a correct list of allocated
-   regions.  To ensure coherency [...] flush the data to the file"
+Fix this by unconditionally flushing and waiting for dirty data in the
+range before invalidating the page cache and issuing
+FSCTL_SET_ZERO_DATA, exactly as was done for smb3_punch_hole() in
+commit d7d2adcd022b ("smb/client: flush dirty data before punching a
+hole"); the two paths are structurally identical here.
 
-fsx (generic/363) reproduces the resulting corruption against Windows
-Server 2022: a range is written, an uncached read returns the data, yet
-the next FSCTL_QUERY_ALLOCATED_RANGES on that range reports it as a whole
-hole, so the emulation overwrites live data with zeroes.  A network trace
-confirmed the WRITE, the READ returning data and the query returning an
-empty range list within microseconds.  Samba does not exhibit this; its
-query is coherent with the written data.
+This is observed as generic/363 randomly reading stale data where a
+zeroed range is expected against Windows Server.
 
-Write back the dirty pages, drain any outstanding I/O and issue an SMB2
-FLUSH to force the server to commit the data before querying the
-allocated ranges, so the query reflects the data actually present.
-
-With this, generic/363 passes against both Windows Server 2022 and Samba
-over 100000 fsx operations.
-
-Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
+Fixes: 91d1dfae4649 ("cifs: Fix FALLOC_FL_ZERO_RANGE to preflush buffered part of target region")
 Reviewed-by: David Howells <dhowells@redhat.com>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
@@ -119,112 +109,45 @@ Cc: Shyam Prasad N <sprasad@microsoft.com>
 Cc: Tom Talpey <tom@talpey.com>
 Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-[ sashal: Added a local inode variable and moved the lock release into a single out_unlock label, since buf is allocated after the query here and no out: label is needed. ]
+[ sashal: Adapted to the branch's i_size_read() size handling instead of netfs_read_sizes(), and dropped the now-unused remote_size and ictx variables after removing the conditional flush. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 36 ++++++++++++++++++++++++++++--------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ fs/smb/client/smb2ops.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
 diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index f2a78aee07e3b..1a205f20e55c5 100644
+index 1a205f20e55c5..14ccca3f209db 100644
 --- a/fs/smb/client/smb2ops.c
 +++ b/fs/smb/client/smb2ops.c
-@@ -3683,6 +3683,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 				       struct cifsFileInfo *cfile,
- 				       loff_t off, loff_t len)
- {
-+	struct inode *inode = d_inode(cfile->dentry);
- 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
- 	u32 out_data_len;
- 	char *buf = NULL;
-@@ -3690,6 +3691,24 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 	loff_t l;
- 	int rc;
+@@ -3486,8 +3486,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 	struct inode *inode = file_inode(file);
+ 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
+ 	struct cifsFileInfo *cfile = file->private_data;
+-	struct netfs_inode *ictx = netfs_inode(inode);
+-	unsigned long long i_size, new_size, remote_size;
++	unsigned long long i_size, new_size;
+ 	long rc;
+ 	unsigned int xid;
  
-+	filemap_invalidate_lock(inode->i_mapping);
-+
-+	/*
-+	 * Flush and commit the data to the server, otherwise
-+	 * FSCTL_QUERY_ALLOCATED_RANGES might report recently written data as
-+	 * unallocated holes on Windows Servers, and the loop below would
-+	 * then zero-fill them and corrupt the file.
-+	 */
-+	rc = filemap_write_and_wait_range(inode->i_mapping, off,
-+					  off + len - 1);
-+	if (rc)
-+		goto out_unlock;
-+	netfs_wait_for_outstanding_io(inode);
-+	rc = SMB2_flush(xid, tcon, cfile->fid.persistent_fid,
-+			cfile->fid.volatile_fid);
-+	if (rc)
-+		goto out_unlock;
-+
- 	in_data.file_offset = cpu_to_le64(off);
- 	in_data.length = cpu_to_le64(len);
- 	rc = SMB2_ioctl(xid, tcon, cfile->fid.persistent_fid,
-@@ -3699,12 +3718,12 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 			1024 * sizeof(struct file_allocated_range_buffer),
- 			(char **)&out_data, &out_data_len);
- 	if (rc)
--		goto out;
-+		goto out_unlock;
+@@ -3506,14 +3505,11 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 	filemap_invalidate_lock(inode->i_mapping);
  
- 	buf = kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE), GFP_KERNEL);
- 	if (buf == NULL) {
- 		rc = -ENOMEM;
--		goto out;
-+		goto out_unlock;
- 	}
+ 	i_size = i_size_read(inode);
+-	remote_size = ictx->remote_i_size;
+-	if (offset + len >= remote_size && offset < i_size) {
+-		unsigned long long top = umin(offset + len, i_size);
  
- 	tmp_data = out_data;
-@@ -3715,12 +3734,12 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 		if (out_data_len == 0) {
- 			rc = smb3_simple_fallocate_write_range(xid, tcon,
- 					       cfile, off, len, buf);
--			goto out;
-+			goto out_unlock;
- 		}
+-		rc = filemap_write_and_wait_range(inode->i_mapping, offset, top - 1);
+-		if (rc < 0)
+-			goto zero_range_exit;
+-	}
++	rc = filemap_write_and_wait_range(inode->i_mapping, offset,
++					  offset + len - 1);
++	if (rc < 0)
++		goto zero_range_exit;
  
- 		if (out_data_len < sizeof(struct file_allocated_range_buffer)) {
- 			rc = -EINVAL;
--			goto out;
-+			goto out_unlock;
- 		}
- 
- 		range_start = le64_to_cpu(tmp_data->file_offset);
-@@ -3728,7 +3747,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 		if (check_add_overflow(range_start, range_len, &range_end) ||
- 		    range_end > S64_MAX) {
- 			rc = -EINVAL;
--			goto out;
-+			goto out_unlock;
- 		}
- 
- 		if (off < range_start) {
-@@ -3743,11 +3762,11 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 			rc = smb3_simple_fallocate_write_range(xid, tcon,
- 					       cfile, off, l, buf);
- 			if (rc)
--				goto out;
-+				goto out_unlock;
- 			off = off + l;
- 			len = len - l;
- 			if (len == 0)
--				goto out;
-+				goto out_unlock;
- 		}
- 		/*
- 		 * We are at a section of allocated data, just skip forward
-@@ -3766,7 +3785,8 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 		out_data_len -= sizeof(struct file_allocated_range_buffer);
- 	}
- 
-- out:
-+ out_unlock:
-+	filemap_invalidate_unlock(inode->i_mapping);
- 	kfree(out_data);
- 	kvfree(buf);
- 	return rc;
+ 	/*
+ 	 * We zero the range through ioctl, so we need remove the page caches
 -- 
 2.53.0
 
