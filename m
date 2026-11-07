@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062431;
-	b=jwzB49DulnRPhCV4dAwKdnPOWTeAQbN6du4yG6MjcZpOAiwwL/ARfEjbLOa147726Yd1
-	 Hs6MTGkDhWes2H2FGCkny5+2Yga9A4KrnMjsHeadeRTIgYX07GAWATqtNgKuzJL2ScjTe
-	 nY5pe0nvuFNgR597UU/cdm1RDjHZRBxOVodKFd09QuIaLOmNjADTplmWSoGYMI5jBukgd
-	 wYKbF1dRolsY5ro7Ttz6EWiQRjEiKfVyK8YTx4NAkBhpTMP10bt6QBBFeDQlREgz6Soht
-	 OmDU8B8nN5DfBitW9zIzYtthtTq7+j3OHxQ5DnTLKdQFdxUCp0/z7tOFFSW5fcUanEg==
+	t=1794062433;
+	b=h5ins392yjIC4BMyjzClLGD62Mqkyy7mf4lqmQ//xa80eZV6xMAAlXCq50QJihkpempj
+	 zaoe1kvTQ06ccdW7zQgl7HkgyXZDW7mM5V/QxA5rz+ditYfrGF4dpg8ATCdhluCRn6qvq
+	 AOOY87Xz0uEGBdcDWkCQQ1T9rDGkLixcm5BE/FE+bcBYFJtGvWNYFST3mwJq9PqDmwK2b
+	 M+vaYzRjVxiP+8+mH8uJaR+iyvxN/c8eAkhZJrkAUGWo07tFBx/lwiUgQlDr/35EWXytu
+	 uhRMtmO0/x0FpKsVPTqT5RRe0z1BVy0XSoA4R0d5NMD33XCYvrOmgGJzU6rTL1uqdtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062433;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8fHlRGu6jJ+x6sXjOT9oHG4MH0U0egaoeZPPNp/zwY8=;
-	b=NgTuut1Y9yiABK+tUWnh/5nohaksZ/sFgMbWkW7KtsPnwGkCXm7Eu3BBXdnh26Nyt3EY
-	 LA3HPs6vlU5DptgQocU53l3PvYDohuFN4KUinSOAi9toaSjiPQEDqSXEaAlcJXWE8oY6D
-	 Fkt+ndI4yWhXXBZNr/P5lTtCFwBVxGm+vuUrF13YZ46xJwgVvXNgCAxcVcsUDnI2qNvxf
-	 nggWgn0+eCp+l1BDxWOIxo1Jk4dcDZ+YDfSAIyhgp9nF50l6W3XN7yZXB+qo55KSGnN+C
-	 gkVUaUnk3zHaG3NgPn8XC7ZyTIenrpIi4gGqV4tCKloUzCvRliDuBVpgMZgOKaFhiIQ==
+	bh=Yd7GYqznL7EL1v+NWdDdh8F9hhNtM0X7r6nB6Eu/pyg=;
+	b=P13yidQbr1pJSkvWAxQDt2E845pvtnDXXxLTosnUnpUMXGwwF2O+eHQw+hf4XPz0QEMI
+	 D1uQJZy/L7zMzMVSrjNdB55BaZOIhsTpB54KO6wJBuJfk9s8iN2xOzmcsEm7uukjYRUq4
+	 qZ98JSLaNKj0BHoO8svT7YsnIi1Sum4LqBuzfa1GqLXX9bzVhUvQD4kRM00Z3BAnsBsJq
+	 EnlWXiLwfT/fi8C3uvYX9ThfRehvy/uu+fcN8gBciLLaUDZZYypn/m6LrOKUus/MwxUTZ
+	 Wp2rrIplPwaSoHaEHXmtwCo9zPrwe2Y+vv1nABLMaoSxu4rot3XBdJCENmA0rC68abQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWWckGLu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uyUF7UBl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7D560A2630;
-	Sat,  7 Nov 2026 14:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D2D606EE8D;
+	Sat,  7 Nov 2026 14:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWWckGLu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1C31F008A2;
-	Sat,  7 Nov 2026 14:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uyUF7UBl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DACF1F0089F;
+	Sat,  7 Nov 2026 14:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062431;
-	bh=8fHlRGu6jJ+x6sXjOT9oHG4MH0U0egaoeZPPNp/zwY8=;
+	s=korg; t=1794062432;
+	bh=Yd7GYqznL7EL1v+NWdDdh8F9hhNtM0X7r6nB6Eu/pyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RWWckGLuEUoUoCPXYiqvpm2avifObSxuvkdNLn9qVFSgNSB+Z7BIrVisw5S0UYFCO
-	 fOb4ajjfiPBqjAic0LU2LkTi6gx2VO5KB0iHH8tWCTXo7Ona8l2eVHc+FO3q0l3wPu
-	 SpBm1uoHmBa7BtAJCZMediXheWGLShEh+VQSGvBY=
+	b=uyUF7UBlYrAu+BcaEM3bSPkmhBiiOA9s1pOU5D2C4kD4pGTu4HOSVUd9b93f9QapY
+	 f1yccY1wUrlMShhrQXntv7bzb+OH1C+hPKQdTMjjNpyNNecY1U26uxBO3kqV9rs54i
+	 /zyCaSfNKOppo6p1Zj8wv2Iwb04rbpLnjW4LLZnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matt Turner <mattst88@gmail.com>,
 	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1343/1536] alpha: load the MMU context when switch_mm() switches the current task
-Date: Sat,  7 Nov 2026 08:55:59 -0500
-Message-ID: <20261107135035.542774574@linuxfoundation.org>
+Subject: [PATCH 6.12 1344/1536] alpha: run check_mmu_context() from finish_arch_post_lock_switch()
+Date: Sat,  7 Nov 2026 08:56:00 -0500
+Message-ID: <20261107135035.572884770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,92 +70,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit 9b8be19d5dc9525a408942e2e8012873199e7455 ]
+[ Upstream commit 020d2e70b7538b66eee3c3480d2b8921fb182f0c ]
 
-ev5_switch_mm() only prepares the incoming PCB. The context is installed
-by PAL_swpctx, which alpha_switch_to() issues against that PCB on the way
-out of the scheduler.
+check_mmu_context() clears asn_lock and acts on need_new_asn, but it
+runs only as the tail of switch_to(), after alpha_switch_to() returns.
 
-Direct callers reach switch_mm() without going through alpha_switch_to():
-kthread_use_mm(), which borrows an mm for the current kernel thread,
-sched_force_init_mm() on the CPU-hotplug teardown path, and
-do_shoot_lazy_tlb(), which switches to init_mm from an IPI. None explicitly
-loads the context, so the task can carry on running under whatever was
-loaded before. For kthread_use_mm(), current->mm then names the borrowed
-mm even though its context has not been loaded. The other two callers
-change active_mm while leaving current->mm NULL.
+A newly forked user task never gets there: its first context switch
+resumes at ret_from_fork and reaches schedule_tail() without returning
+to the code following alpha_switch_to().
 
-The stale page-table root need not be swapper_pg_dir; it may belong to a
-user process that ran on the CPU earlier, and the kthread's user accesses
-can then read and write that process's memory wherever the stale mappings
-allow. Translations taken that way can also end up tagged with the
-borrowed mm's ASN: ev5_switch_mm() writes that ASN into the PCB, which the
-next PAL_swpctx installs against the stale ptbr. An address the stale
-tables do not map faults instead, and since do_page_fault() resolves
-faults against current->mm without reloading the context, the same access
-can fault again on return.
+asn_lock is left set on that CPU, so the new user task can run with
+interrupts enabled while shootdown IPIs keep taking the deferred path.
+The handshake meant to complete those invalidations never runs.
 
-sched_force_init_mm() needs CONFIG_HOTPLUG_CPU and do_shoot_lazy_tlb()
-needs CONFIG_MMU_LAZY_TLB_SHOOTDOWN. Alpha selects neither, so only
-kthread_use_mm() is reachable in practice. Test the caller's identity
-rather than special-casing individual callers.
+New kernel threads also reach schedule_tail(), but context_switch()
+does not call switch_mm() for a task without an mm. They therefore do
+not set asn_lock in the first place and are not affected by this bug.
 
-The scheduler passes the incoming task, which is not current until
-alpha_switch_to() runs; all three direct callers pass current. Test for
-that and load the context the way activate_mm() does. All three run with
-interrupts disabled across the switch, so this completes before any
-shootdown can be taken and needs no asn_lock handshake.
+Move check_mmu_context() to finish_arch_post_lock_switch(), which is
+called by finish_task_switch() for both existing and newly created tasks.
+Drop the now redundant call from switch_to().
+
+The hook runs after finish_lock_switch() releases the rq lock and enables
+interrupts. An IPI arriving before asn_lock is cleared retires the slot
+through flush_tlb_other(); an IPI arriving afterwards can flush directly,
+since PAL_swpctx has already installed the incoming context.
+
+Set need_new_asn whether ev5_switch_mm() reuses or allocates an ASN. An
+IPI in that interval can zero either slot. Without this, the allocated
+case can return to user space with a live ASN but a zero context slot,
+which a later context-based shootdown shortcut could mistake for an
+inactive CPU. check_mmu_context() reloads only when the slot is zero.
+
+Call the hook unconditionally. Alpha selects ARCH_NO_PREEMPT, and neither
+kthread_use_mm() nor sched_force_init_mm() sleeps between the direct
+switch and this hook. RCU_STRICT_GRACE_PERIOD can enable PREEMPT_COUNT,
+but cannot make those callers migrate there. Testing preemptible() would
+only leave asn_lock set in that configuration.
+
+This requires the preceding direct-switch fix, "alpha: load the MMU
+context when switch_mm() switches the current task". It installs the
+borrowed context before kthread_use_mm() reaches this hook, so clearing
+asn_lock cannot expose a targeted invalidate against the wrong context.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Tested-by: Matt Turner <mattst88@gmail.com>
 Reviewed-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20261010142533.974797-2-linmag7@gmail.com
+Link: https://lore.kernel.org/r/20261010142533.974797-3-linmag7@gmail.com
 Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/include/asm/mmu_context.h | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/alpha/include/asm/mmu_context.h | 15 +++++++++++++--
+ arch/alpha/include/asm/switch_to.h   |  1 -
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
 diff --git a/arch/alpha/include/asm/mmu_context.h b/arch/alpha/include/asm/mmu_context.h
-index eee8fe836a59e..d366f89fee585 100644
+index d366f89fee585..f41d7c73fdd64 100644
 --- a/arch/alpha/include/asm/mmu_context.h
 +++ b/arch/alpha/include/asm/mmu_context.h
-@@ -130,6 +130,8 @@ __get_new_mm_context(struct mm_struct *mm, long cpu)
- 	return next;
- }
+@@ -162,8 +162,8 @@ ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
+ 		next_mm->context[cpu] = mmc;
+ 	}
+ #ifdef CONFIG_SMP
+-	else
+-		cpu_data[cpu].need_new_asn = 1;
++	/* A deferred shootdown can also invalidate a newly allocated ASN. */
++	cpu_data[cpu].need_new_asn = 1;
+ #endif
  
-+extern void __load_new_mm_context(struct mm_struct *);
+ 	/* Always update the PCB ASN.  Another thread may have allocated
+@@ -192,6 +192,17 @@ do {								\
+ #define check_mmu_context()  do { } while(0)
+ #endif
+ 
++/*
++ * Also called from kthread_use_mm() with preemption enabled. Alpha has
++ * no kernel preemption, so the task is still on the CPU that ran
++ * switch_mm().
++ */
++#define finish_arch_post_lock_switch finish_arch_post_lock_switch
++static inline void finish_arch_post_lock_switch(void)
++{
++	check_mmu_context();
++}
 +
  __EXTERN_INLINE void
- ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
- 	      struct task_struct *next)
-@@ -139,6 +141,16 @@ ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
- 	unsigned long mmc;
- 	long cpu = smp_processor_id();
+ ev5_activate_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm)
+ {
+diff --git a/arch/alpha/include/asm/switch_to.h b/arch/alpha/include/asm/switch_to.h
+index 762b7f975310c..35c4b2c9d9923 100644
+--- a/arch/alpha/include/asm/switch_to.h
++++ b/arch/alpha/include/asm/switch_to.h
+@@ -9,7 +9,6 @@ extern struct task_struct *alpha_switch_to(unsigned long, struct task_struct *);
+ #define switch_to(P,N,L)						 \
+   do {									 \
+     (L) = alpha_switch_to(virt_to_phys(&task_thread_info(N)->pcb), (P)); \
+-    check_mmu_context();						 \
+   } while (0)
  
-+	/*
-+	 * kthread_use_mm(), sched_force_init_mm() and do_shoot_lazy_tlb()
-+	 * switch current's mm without alpha_switch_to(), which loads the
-+	 * context. The latter two require options Alpha does not select.
-+	 */
-+	if (next == current) {
-+		__load_new_mm_context(next_mm);
-+		return;
-+	}
-+
- #ifdef CONFIG_SMP
- 	cpu_data[cpu].asn_lock = 1;
- 	barrier();
-@@ -160,7 +172,6 @@ ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
- 	task_thread_info(next)->pcb.asn = mmc & HARDWARE_ASN_MASK;
- }
- 
--extern void __load_new_mm_context(struct mm_struct *);
- asmlinkage void do_page_fault(unsigned long address, unsigned long mmcsr,
- 			      long cause, struct pt_regs *regs);
- 
+ #endif /* __ALPHA_SWITCH_TO_H */
 -- 
 2.53.0
 
