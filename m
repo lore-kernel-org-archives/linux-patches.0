@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061504;
-	b=F5+VkBY4jxPizZjI3n/R51PHFh88GMHMxuyZ4Ru6RsNn5WzjxthMr5HFUDnx2Bu1Q9eY
-	 ZAA78elGigGv+kcP9/+irnDw66xWhnCVv9fd/sQC3IwCr7PPH+d2S7Qo5KMzVMcPZ+f6x
-	 7tFEPzFyvKHtBtm8DaX4eWmcffs84DFIzIVLSUJvvp2gCicsZR8eSyWaugdhzvGaccXZx
-	 pzv3xF5VEZjY9is/zdRF/+Abx/qp68Xee5+nqlaLDzm529nqXgg3C0v66nUs4lCeKQO52
-	 IP+GVw8MsliQxMBQnuv/YdiMoNo/Ty+YPMrUHLnwrcmYHd8xUCokhVpV82m0ftAtm0A==
+	t=1794061506;
+	b=T/Y3piOQ1UgESsvwRCZN3zRby2suMC2spL7pIbsbNEl5/LPn4wvkDC7sXRwFMNaqOZXu
+	 yuq8r1Kl+ORzSPW53QOuvw44Zu2I2wcQYYVNtVsP07U5e4QEt3HtWgnPqlL/thD0nH3eg
+	 h5IU7LGI2GWL93I2mDOSL+1T6dMAfyQOPcO4yoVFau6qk+qjUGUNB3pK+5W+mv5/dF8a6
+	 zvs1EX676LqIfnfv6YolBLhGV+dVyhcYUVN7mOlb+F3NhjrlrbHgZUyKd2C0Rhs5BxMKi
+	 Ee8e/QnFjVaNS74K2BzXDVurmax3YSp3nrXszgWdMwktWu0BsBTK4ed94hJcAL5n5cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061504;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061506;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qMQxC8Puwl1NsbmD3zJkaAWNiKvwGLa/TEuFkJlIwCA=;
-	b=WEtIBRz8QiXKFN3Cua70grm8cy2QMD7sPf9A9PG8MAwdba5ze7cTRVvYwk4GNU9Etvoh
-	 RIW2E2F5d2BIe75sKWDjGI06FQqwwAQQvbJyGqE7kjLPBW4196aGXwLrRl/1rNJMobwr+
-	 ZMkJxjbKywseVxySHYAEsJNJJGAxZDPTnAFoXF/j+ntmFVJBK9TiKYo/mQnsRR5Sk551k
-	 inDkBG2PJRL16AJsYy2mD5y9vTPg6xU6RYzzOxP9uxF47DH9EcKEnjouVVa74aQeJJZkv
-	 doq64PbbeKNRSx8RVq/H9PZXdRH40h3+s7ToGN+WvOLyCMD8AnG1D8ibhUYmSplonkQ==
+	bh=AAOoSANg/HU1P0s6pK4bH2FFsSvTHRSYOqUul/EsUQ0=;
+	b=ntL+r/LGRbOrP+nE6PBNvfqF2tH2CPpW5ppPYWNrTkzpCV8vCsv4Dk0w9vDUSQ/LZz8d
+	 Ue3cwXTe1iuUf8M5bP4M7tpJMQUlW9AzKRsE2pZ+Hxd/wsqPXNhL3IlH1T9VCvaKC2KIh
+	 RcHaH8uwfwvOpuIXFS56pVaNDOAD4F20BfBCG5FWNTjCY/2eyNP7MLOv/hPdvhiSv0jk2
+	 bx4rHy8hED1uY198Keu9T2tw1uSgWQdCAS0x6WggPYOGWf57OIsrvYJWGe4LhJ91S4HMW
+	 VYysBFrHFDgR3BP8NojsoIMJOfVDfEHjzgGiw3KDESGwfUTG+EDhjnp9tK3sZt7bX1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sJdjQlMd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P5K2ZMZS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD279606A326;
-	Sat,  7 Nov 2026 14:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5FF606A326;
+	Sat,  7 Nov 2026 14:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sJdjQlMd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794F81F0089F;
-	Sat,  7 Nov 2026 14:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P5K2ZMZS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C131F0089F;
+	Sat,  7 Nov 2026 14:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061503;
-	bh=qMQxC8Puwl1NsbmD3zJkaAWNiKvwGLa/TEuFkJlIwCA=;
+	s=korg; t=1794061506;
+	bh=AAOoSANg/HU1P0s6pK4bH2FFsSvTHRSYOqUul/EsUQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sJdjQlMdUbEQjrTAH7Je0nbzhKdgaQAHvyZbxJ8NG0tzYiopzGl7j20KyhBDdtAPM
-	 UGYWb49BE56/PoL3SUC2UdF1Yxl4q8j3RkkCA3qCYcshLC/Fod8q8DVYiWp2Auws+E
-	 ar0G13O1V90p/dbsWjo0pPtOTgAy05wK6dasYLhU=
+	b=P5K2ZMZSxVB9V98H3HZj25p7gyDclkX12wRuq3oKHsOByiEyHNcUoUf20AoEW50qj
+	 461TDBzzHwwhvGVu++SzQLfW8UOrOmDM2vSxqFUL/DH/C47mc0PSeYXJX76N3jMUmJ
+	 +UiJbBsOlZBrUeiz/1d3mqMM3yy+A8791NK78Gsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.12 0580/1536] backlight: qcom-wled: Fix unbalanced OVP IRQ enable at probe
-Date: Sat,  7 Nov 2026 08:43:16 -0500
-Message-ID: <20261107135013.843865306@linuxfoundation.org>
+	David Riley <d.riley@proxmox.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Bjoern Doebel <doebel@amazon.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0598/1536] KVM: x86/mmu: pass PFERR_GUEST_PAGE/FINAL_MASK to kvm_translate_gpa
+Date: Sat,  7 Nov 2026 08:43:34 -0500
+Message-ID: <20261107135014.339596492@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,149 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit 5eda6b51461932f9fd835ef9e4574650c69c4fe8 upstream.
+[ Upstream commit bd1c40114b02cf63ba33da8e7df71ed0fc2a3019 ]
 
-wled_configure_ovp_irq() derives the initial state of the OVP interrupt
-from the hardware:
+The XS/XU bit for EPT are only applied to final accesses, and use the
+U bit from the page walk itself.  While strictly speaking not necessary
+(any value of PFERR_USER_MASK would be the same for page table accesses,
+because they're reads and writes only), it is clearer and less hackish
+to only apply MBEC to PFERR_GUEST_FINAL_MASK.  Allow kvm-intel.ko to
+distinguish the two cases.
 
-        /* Keep OVP irq disabled until module is enabled */
-        if (!(val & WLED3_CTRL_REG_MOD_EN_MASK))
-                disable_irq(wled->ovp_irq);
-
-but wled->brightness, which is what the rest of the driver uses to tell
-whether the module is on, is left at zero.
-
-On boards where the bootloader hands the kernel a lit backlight the two
-disagree. MOD_EN is already set, so the interrupt is left enabled, while
-wled_update_status() still believes the backlight is off and takes
-
-        if (!!brightness != !!wled->brightness)
-                rc = wled_module_enable(wled, !!brightness);
-
-on the first backlight update. wled_module_enable() then schedules
-wled_ovp_work(), which calls enable_irq() on the already enabled
-interrupt:
-
-  Unbalanced enable for IRQ 176
-  WARNING: CPU: 0 PID: 160 at kernel/irq/manage.c:774 __enable_irq+0x50/0x80
-  Hardware name: Xiaomi Pocophone F1 (DT)
-  Workqueue: events wled_ovp_work
-  Call trace:
-   __enable_irq+0x50/0x80
-   enable_irq+0x48/0xa0
-   wled_ovp_work+0x18/0x24
-   process_one_work+0x1d0/0x350
-   worker_thread+0x13c/0x460
-   kthread+0x110/0x114
-   ret_from_fork+0x10/0x20
-
-The bootloader is not the only way to get there. The readback runs after
-wledN_setup(), and wled4_setup() sets MOD_EN itself on the path where the
-sink configuration does not already match, as does the tail of
-wled_auto_string_detection(), which all three setup paths can reach
-through wled_auto_detection_at_init(). A cold-booted board with a dark
-panel can therefore reach the same disagreement.
-
-Move the MOD_EN readback into wled_probe() and use it to seed
-wled->brightness, so the driver starts out agreeing with the hardware,
-and key the OVP interrupt off wled->brightness instead. The first
-backlight update then only reprograms the brightness registers and
-leaves both the module and the interrupt alone. The OVP interrupt also
-stays armed from probe whenever the module is already enabled, rather
-than being disabled at probe and only enabled once something writes
-brightness.
-
-Note that a backlight update requesting brightness 0 before any non-zero
-one now really does turn the module off wherever MOD_EN was already set,
-where before it was silently ignored.
-
-wled->brightness is seeded with default-brightness rather than the level
-the bootloader actually programmed, so the first update can still step
-the brightness. Reading that level back is version specific and is done
-in a follow-up, to keep this fix small enough to backport.
-
-Assisted-by: LLM
-Fixes: 8663c188beea ("backlight: qcom-wled: Add auto string detection logic")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Link: https://patch.msgid.link/20260921-qcom-wled-backlight-v4-3-bab8c7ef73cb@ixit.cz
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-by: David Riley <d.riley@proxmox.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[doebel: load_pdptrs() lives in arch/x86/kvm/regs.c in this tree; keep
+this tree's mmu_is_nested() in the Hyper-V hunk]
+Stable-dep-of: 96b067b59ad9 ("KVM: VMX: Synthesize nested EPT violation GVA_IS_VALID/GVA_TRANSLATED bits")
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/qcom-wled.c |   32 +++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ arch/x86/kvm/hyperv.c          | 3 ++-
+ arch/x86/kvm/mmu/mmu.c         | 3 ++-
+ arch/x86/kvm/mmu/paging_tmpl.h | 7 +++++--
+ arch/x86/kvm/regs.c            | 3 ++-
+ 4 files changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/video/backlight/qcom-wled.c
-+++ b/drivers/video/backlight/qcom-wled.c
-@@ -1627,7 +1627,6 @@ static int wled_configure_ovp_irq(struct
- 				  struct platform_device *pdev)
- {
- 	int rc;
--	u32 val;
- 
- 	wled->ovp_irq = platform_get_irq_byname(pdev, "ovp");
- 	if (wled->ovp_irq < 0) {
-@@ -1645,13 +1644,8 @@ static int wled_configure_ovp_irq(struct
- 		return 0;
+diff --git a/arch/x86/kvm/hyperv.c b/arch/x86/kvm/hyperv.c
+index 40660da6b7737..8987d8da4baac 100644
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -2055,7 +2055,8 @@ static u64 kvm_hv_flush_tlb(struct kvm_vcpu *vcpu, struct kvm_hv_hcall *hc)
+ 	 * read with kvm_read_guest().
+ 	 */
+ 	if (!hc->fast && mmu_is_nested(vcpu)) {
+-		hc->ingpa = translate_nested_gpa(vcpu, hc->ingpa, 0, NULL);
++		hc->ingpa = translate_nested_gpa(vcpu, hc->ingpa,
++					PFERR_GUEST_FINAL_MASK, NULL);
+ 		if (unlikely(hc->ingpa == INVALID_GPA))
+ 			return HV_STATUS_INVALID_HYPERCALL_INPUT;
  	}
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 2ff392fa15518..a47ccba3dc7a9 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -4138,7 +4138,8 @@ static gpa_t nonpaging_gva_to_gpa(struct kvm_vcpu *vcpu, struct kvm_mmu *mmu,
+ {
+ 	if (exception)
+ 		exception->error_code = 0;
+-	return kvm_translate_gpa(vcpu, mmu, vaddr, access, exception);
++	return kvm_translate_gpa(vcpu, mmu, vaddr, access | PFERR_GUEST_FINAL_MASK,
++				 exception);
+ }
  
--	rc = regmap_read(wled->regmap, wled->ctrl_addr +
--			 WLED3_CTRL_REG_MOD_EN, &val);
--	if (rc < 0)
--		return rc;
--
--	/* Keep OVP irq disabled until module is enabled */
--	if (!(val & WLED3_CTRL_REG_MOD_EN_MASK))
-+	/* Keep the OVP irq disabled until the module is enabled */
-+	if (!wled->brightness)
- 		disable_irq(wled->ovp_irq);
+ static bool mmio_info_in_cache(struct kvm_vcpu *vcpu, u64 addr, bool direct)
+diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
+index ce467bc3383c9..9e17ebcc4c318 100644
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -377,7 +377,8 @@ static int FNAME(walk_addr_generic)(struct guest_walker *walker,
+ 		walker->pte_gpa[walker->level - 1] = pte_gpa;
  
- 	return 0;
-@@ -1667,6 +1661,7 @@ static int wled_probe(struct platform_de
- 	struct backlight_device *bl;
- 	struct wled *wled;
- 	struct regmap *regmap;
-+	u32 mod_en;
- 	u32 val;
- 	int rc;
+ 		real_gpa = kvm_translate_gpa(vcpu, mmu, gfn_to_gpa(table_gfn),
+-					     nested_access, &walker->fault);
++					     nested_access | PFERR_GUEST_PAGE_MASK,
++					     &walker->fault);
  
-@@ -1737,6 +1732,24 @@ static int wled_probe(struct platform_de
+ 		/*
+ 		 * FIXME: This can happen if emulation (for of an INS/OUTS
+@@ -445,7 +446,9 @@ static int FNAME(walk_addr_generic)(struct guest_walker *walker,
+ 		gfn += pse36_gfn_delta(pte);
+ #endif
  
- 	INIT_DELAYED_WORK(&wled->ovp_work, wled_ovp_work);
+-	real_gpa = kvm_translate_gpa(vcpu, mmu, gfn_to_gpa(gfn), access, &walker->fault);
++	real_gpa = kvm_translate_gpa(vcpu, mmu, gfn_to_gpa(gfn),
++				     access | PFERR_GUEST_FINAL_MASK,
++				     &walker->fault);
+ 	if (real_gpa == INVALID_GPA)
+ 		return 0;
  
-+	val = WLED_DEFAULT_BRIGHTNESS;
-+	of_property_read_u32(pdev->dev.of_node, "default-brightness", &val);
-+
-+	/*
-+	 * The module may already be enabled, either by a bootloader that left
-+	 * the backlight lit or by the setup above. Record that, so that the
-+	 * first brightness update does not enable an already enabled module,
-+	 * and so that the OVP irq is armed from probe rather than from that
-+	 * first update.
-+	 */
-+	rc = regmap_read(wled->regmap, wled->ctrl_addr + WLED3_CTRL_REG_MOD_EN,
-+			 &mod_en);
-+	if (rc < 0)
-+		return rc;
-+
-+	if (mod_en & WLED3_CTRL_REG_MOD_EN_MASK)
-+		wled->brightness = val;
-+
- 	rc = wled_configure_short_irq(wled, pdev);
- 	if (rc < 0)
- 		return rc;
-@@ -1745,9 +1758,6 @@ static int wled_probe(struct platform_de
- 	if (rc < 0)
- 		return rc;
+diff --git a/arch/x86/kvm/regs.c b/arch/x86/kvm/regs.c
+index 49afacc9b0990..ffc518cc93079 100644
+--- a/arch/x86/kvm/regs.c
++++ b/arch/x86/kvm/regs.c
+@@ -166,7 +166,8 @@ int load_pdptrs(struct kvm_vcpu *vcpu, unsigned long cr3)
+ 	 * to an L1 GPA.
+ 	 */
+ 	real_gpa = kvm_translate_gpa(vcpu, mmu, gfn_to_gpa(pdpt_gfn),
+-				     PFERR_USER_MASK | PFERR_WRITE_MASK, NULL);
++				     PFERR_USER_MASK | PFERR_WRITE_MASK |
++				     PFERR_GUEST_PAGE_MASK, NULL);
+ 	if (real_gpa == INVALID_GPA)
+ 		return 0;
  
--	val = WLED_DEFAULT_BRIGHTNESS;
--	of_property_read_u32(pdev->dev.of_node, "default-brightness", &val);
--
- 	memset(&props, 0, sizeof(struct backlight_properties));
- 	props.type = BACKLIGHT_RAW;
- 	props.brightness = val;
+-- 
+2.53.0
+
 
 
