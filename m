@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061170;
-	b=0dl3rm+Ibo6hccqTg0UvIHF7RfEdFhvwWPOaaEDMh5cONzBZK9TDUKYEdKgeg9quR0f4
-	 i/z5xJtj9wv7FUOkVxnC76szzQppRr8PplRck+NS+d1kY5Wf4Jmnz5rfDKv77iD0yAcl8
-	 MB3mG3Tn0fZufxuqyCfgoqIGwKKajif7Rs9sQGxCvgDwXP8GZlUAck+3plfrzP+aXx6OZ
-	 f0nlbXbcD9ED0siBvJCrw3XM0g4AlR6MDaPJi+ewUQDQdW8ijoVRSDz5XFayfd2MtrOqL
-	 86QYHdGWTov/k5wGHumaF9pJ0zwgDPotTQEyqKJeWnoV98rZKQtLRlM/PCNu+Jmb+5A==
+	t=1794061347;
+	b=Eh/X6/dtlBoYYkzzt0Njczfz6So5ViBJfD12wBn1sk5NB7GiLr7VrWz26Cs9ODgzZzLB
+	 G+uiyPC3acp+6VpKPtrdoFghJggQG/66G9rlCkq0V50RAl7iTbll8uwLMF8NhTFxgWQIl
+	 xv7/U9X2lR7FCcYhPz/ToXHQa40AA2w+g7e37haD8zVIrpft3w+ZajTjdAOoUq3jI/FH2
+	 K0ZfA2nUjVycVp30INjqMvIByxtUsTTLFsQc10wiOJc4X7Yd8+HpJde38/Atg/VxzOp1L
+	 D04Z7UjVCYCCjLzzxbRagsh0hbweZ5B4dFmbqK1GrXwal5FyPm5YOCOIRfBxTou8AGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061170;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XaKL6IvyoxkYunVVJANL09DHZCG4M8ImxOAJq4Cnxbc=;
-	b=Eg2DViL3TaJBXjUrI6PY3fzPl2966gTN2eZvcifW5Ppx+eHlIDKjP01AIjE5ThiCzoh9
-	 Gtp4Yy2KKPJDWUO6++GohKBJH6OTtPejkO9k1XR+QP5zYNYUoX00mBrAmlbCIb1qfyMvX
-	 S1Xf5vsP/4GNo7WaSGKsFkvHX30qQ84w7kt3uOWGcY78IcihtTxvfv7d4mRe2rO7o0U25
-	 twxZHqOESeqpp6kXOACJ5BRWzQ03ZAbOUh31BVdrWlWwdrTBKWjeMnFxRIPfBd/QnVaUu
-	 fc90An9ls1es4P37Io6JSLzp3voVGIRULlF+57lNOO5TIkGOaXMr6BO2oq1kjHDwkPg==
+	bh=HbX8UOGx8AJ+mI66TRFXIAUXioHP/gxSHQfoS3zbTZA=;
+	b=EYQDsZAkoFPPK1pOlKwcwqfzf8KW9K2e9MWCoWM6XwPjdL5gWtM/gI1FaJO/M5b+5+Zm
+	 8tVYs792jT+aetPQqJeJLvV9mVRehEfuy4e0BDsek3FGBZhdHP7QBz9d6kmZR90/bBeTA
+	 QwZZ4/x4tjLCSGlmyoIyQz+7pfNcgB4dcif8HDbkVeCI5v1uKRN1fRX1TUZFZyY+/hD4z
+	 FhtShC8i+DS8EuZONEP6mhfsvboGqDxJqlJw/Ub2RArsKJ4+BnOQVJ12kKSGxC+oDK9kJ
+	 3Ksd5fmr6pBsG5wrn/+F0H7PQJq7fJSp9k1BlzW5dMIRInkq5ds/wrUZ/YWRcrAfWRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NLGhDmeQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gD+2einQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A878606A33A;
-	Sat,  7 Nov 2026 14:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1582606A326;
+	Sat,  7 Nov 2026 14:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NLGhDmeQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F141F0089F;
-	Sat,  7 Nov 2026 14:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gD+2einQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621F21F0089F;
+	Sat,  7 Nov 2026 14:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061170;
-	bh=XaKL6IvyoxkYunVVJANL09DHZCG4M8ImxOAJq4Cnxbc=;
+	s=korg; t=1794061346;
+	bh=HbX8UOGx8AJ+mI66TRFXIAUXioHP/gxSHQfoS3zbTZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NLGhDmeQcXBGlqu0nN41lTD5E/2m0Oedw0YckiI8MR6jPxGLKZrlA78LEAqc+kvzs
-	 oMiWHnNIXnZGv9Rahh5Gt2BMiYZiGDLhoQGBfXThzx8+tNMPwimo6+Dx/QQ6EfnXNY
-	 FfOAMq8W4ISatqGIEa2ASZAX6XfSbAnxIQSBesNw=
+	b=gD+2einQJleA9OBzN9ZVpt1uxOpYiFoNCu0wLAhAurAlmdSJygylHkgr6PPSYtz/F
+	 JoHv9VNWF8IDVHvhCxNw+enlb18B+D5ajBSznNSQ0la6sSTI7EmrN1PFJsz0yy33ms
+	 PNe1l8Urj2W1CI/oIQFBsBLdFCeM+zN7CVF9vQbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keren Sun <kerensun@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Michal Hocko <mhocko@suse.com>,
 	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
 	Muchun Song <muchun.song@linux.dev>,
 	Shakeel Butt <shakeel.butt@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0474/1536] mm: remove unnecessary whitespace before a quoted newline
-Date: Sat,  7 Nov 2026 08:41:30 -0500
-Message-ID: <20261107135010.817057879@linuxfoundation.org>
+Subject: [PATCH 6.12 0475/1536] mm: memcg-v1: fix wrong linux-mm list address in deprecation warnings
+Date: Sat,  7 Nov 2026 08:41:31 -0500
+Message-ID: <20261107135010.841528424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -73,55 +73,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keren Sun <kerensun@google.com>
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-[ Upstream commit 91478b238e584d0ec1ea8c58ef46e4e14d58e526 ]
+[ Upstream commit 45b1ec4887bdcc58af885540d9fefa8b67d17d57 ]
 
-Remove whitespaces before newlines for strings in pr_warn_once()
+The deprecation warnings for memory.oom_control and memory.pressure_level
+use linux-mm-@kvack.org instead of the linux-mm mailing list address.
+Remove the extra hyphen.
 
-Link: https://lkml.kernel.org/r/20241115235744.1419580-3-kerensun@google.com
-Signed-off-by: Keren Sun <kerensun@google.com>
-Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://lore.kernel.org/20260713085756.2973549-1-guopeng.zhang@linux.dev
+Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 45b1ec4887bd ("mm: memcg-v1: fix wrong linux-mm list address in deprecation warnings")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  mm/memcontrol-v1.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/mm/memcontrol-v1.c b/mm/memcontrol-v1.c
-index 1bad668aa337b..afc9660c9f945 100644
+index afc9660c9f945..6e4e39a367e57 100644
 --- a/mm/memcontrol-v1.c
 +++ b/mm/memcontrol-v1.c
-@@ -2020,13 +2020,13 @@ static ssize_t memcg_write_event_control(struct kernfs_open_file *of,
+@@ -2019,13 +2019,13 @@ static ssize_t memcg_write_event_control(struct kernfs_open_file *of,
+ 		event->unregister_event = mem_cgroup_usage_unregister_event;
  	} else if (!strcmp(name, "memory.oom_control")) {
  		pr_warn_once("oom_control is deprecated and will be removed. "
- 			     "Please report your usecase to linux-mm-@kvack.org"
--			     " if you depend on this functionality. \n");
-+			     " if you depend on this functionality.\n");
+-			     "Please report your usecase to linux-mm-@kvack.org"
++			     "Please report your usecase to linux-mm@kvack.org"
+ 			     " if you depend on this functionality.\n");
  		event->register_event = mem_cgroup_oom_register_event;
  		event->unregister_event = mem_cgroup_oom_unregister_event;
  	} else if (!strcmp(name, "memory.pressure_level")) {
  		pr_warn_once("pressure_level is deprecated and will be removed. "
- 			     "Please report your usecase to linux-mm-@kvack.org "
--			     "if you depend on this functionality. \n");
-+			     "if you depend on this functionality.\n");
+-			     "Please report your usecase to linux-mm-@kvack.org "
++			     "Please report your usecase to linux-mm@kvack.org "
+ 			     "if you depend on this functionality.\n");
  		event->register_event = vmpressure_register_event;
  		event->unregister_event = vmpressure_unregister_event;
- 	} else if (!strcmp(name, "memory.memsw.usage_in_bytes")) {
-@@ -2884,7 +2884,7 @@ static int mem_cgroup_oom_control_write(struct cgroup_subsys_state *css,
+@@ -2883,7 +2883,7 @@ static int mem_cgroup_oom_control_write(struct cgroup_subsys_state *css,
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
  
  	pr_warn_once("oom_control is deprecated and will be removed. "
- 		     "Please report your usecase to linux-mm-@kvack.org if you "
--		     "depend on this functionality. \n");
-+		     "depend on this functionality.\n");
+-		     "Please report your usecase to linux-mm-@kvack.org if you "
++		     "Please report your usecase to linux-mm@kvack.org if you "
+ 		     "depend on this functionality.\n");
  
  	/* cannot set to root cgroup and only 0 and 1 are allowed */
- 	if (mem_cgroup_is_root(memcg) || !((val == 0) || (val == 1)))
 -- 
 2.53.0
 
