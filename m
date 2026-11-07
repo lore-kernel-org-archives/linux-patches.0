@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065460;
-	b=2PuAKS76Sp4RxUSCtvZRzEqqIu0VaKdT4Z0Y2vANVpB+6yiG6yEDGwvJhbK8oYg3HVaN
-	 hkRfDampgd7Ah8VPSudkOIByHlSopZWMgGuGnNwsJ37ZdWVFQVk9zlTtSRizjvHe8W5f6
-	 8T2DeDG+81uYO1gPfV4X9YM07TILU33SzjKiOPwMctycQzVoaCLaMHbNe5iV7Nhk7ikp+
-	 0xzs/Pc9xGEoL8a7P0i+HuS2FQsnFidMmqWr4iSEef0ALPF+Qj1GjTl8OQsLwhU9BmdCR
-	 aNmmqN+HLQxaDnrtqGVAjqpywstHC43pH98jOH3DaS2axESoKPQ8+UECfN9XJSGlkAA==
+	t=1794065462;
+	b=xI5bCyfkcOgGedSk8OdyTMxpL4RaoRx/p+EzhcAgVHEXc6dLRvCGn90bbD93zu6+kSgZ
+	 S7TSIaDelznuXc0rVMSnWrp5Kq+JNcqi2948/IxHCAnO9RUcBhc9sRC69l8rV+aldXWGB
+	 /0LzmNkSd9mpWDwLKWBJeE6dgR3hXrVzGuYSw94+afrtEdjoOp4PLWwmJpQ2PaC/sH1kC
+	 /ZyFhWAObq42GR1GHrghq1Q4nY13bt7IZvQiRVipRdwrW2ryqwdFYwZAe/ZWW0nl/XMVe
+	 IqTt29lFKXUtBCf44XfjdYSvkH8gaGlt2nHIUFao4HKsNIr8EY/aYMKJN76hEgxxYhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065460;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065462;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n9FWybeX4D4RI7Iss/3+wxTekuCho5Nji6SsMpTM9bo=;
-	b=Q9ZdE8eNp6176oWUieOAK9HsZtpJFjepSetguhQVLmkZggKOD3vYtSl0R/CsMFWCKWg8
-	 fY2mZUyzOtBzzXbKKHwIR8PJiMDzw0k6UTDt5hC4XcR0ZZiQ1arnoZ2ldPrToxNPt3jxe
-	 XH5gLA7QgnF0lO1jSA+9wWGnG7LS2UiCl/OrPrRH9v00i7RhNEk5JR1jJAYfCDgcIkTPZ
-	 BSYd2237O69Y1/wEGt7iyVgxdNJSyjwdH/wt59rbx2Q+m3ROYOrHZwyKMa27o74Wos8EM
-	 1pd5fK+9dqU7efGUwJqkz1iwELik+Xp9JHds14wW9eBKKkWKaPJHldMAAqrYLv5rG3Q==
+	bh=5oXBRh6hsS5oLv7yc/eXXgSsXahx44Y3ceEzoySJ8ss=;
+	b=burhrsaYjo3MrrMLTT0MUsPDeJd6aCTIU5LzLPwu/BjInMBVkQY8zekzSI+J3Fq1nHMW
+	 gSms5cpCAlx/bmaWY+1mB+UpGO9Ekq9NImekMy0uj1SLR6SM04KTxsTGvin5aTFz+6Zxy
+	 js6ok/+Isj2pxBDELg34ZyfayF5a1y7txkiZlF9D9MOB9A3SjnGGV4KD7Q/cRZuCydHyp
+	 /Zb6xpNn+K9FJ3cgOdUOc7o0swRj1rpiai5sVyUYOMQcdUPhv9+LB3PuuX0s/avsTDLvv
+	 GG3TXTX3twXYJ4K4oMa3vRYK6tSsud4AVYqdJJcR9MYFAizol8SG13zUt6txoOAr2eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gbn1CK8R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cFwDbWmF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D262606A32C;
-	Sat,  7 Nov 2026 15:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A828C606A32C;
+	Sat,  7 Nov 2026 15:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gbn1CK8R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1105A1F0089F;
-	Sat,  7 Nov 2026 15:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cFwDbWmF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612B61F0089F;
+	Sat,  7 Nov 2026 15:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065460;
-	bh=n9FWybeX4D4RI7Iss/3+wxTekuCho5Nji6SsMpTM9bo=;
+	s=korg; t=1794065461;
+	bh=5oXBRh6hsS5oLv7yc/eXXgSsXahx44Y3ceEzoySJ8ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gbn1CK8RZ/ddNE+e9Mu/Qz1kjtkODq9WFsb9zTi8c3YmMJsGN3uZB70ka8UPf59sm
-	 1xqqS55F/LkMaU2AeA3IBibqV9m9fGfdIJ1m39IYoNT3Xcgxy3RS2Z9qMpWPEitBKA
-	 POShsKkuwoJlVEyw9zWZy+N0eyeZVKiO4utSJP5M=
+	b=cFwDbWmFiZpopT223BMe3Y1wPZxJk7nYapU+P9+Uz+9nE8/5SdmAB3IAiMRViZCia
+	 K7H/KNqX6dp2U8Yxc2Blzf6rhHPG0cJ6rOorJmbCLRvw60ZOCCa5cnTzU2tdHTPqzh
+	 WerLRyQpYvvPDYm+ZnBz0+wMQ4rKOs+bvgrp7KME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1158/1257] sched_ext: Fix the stall watchdog testing and blaming the wrong sched under bypass
-Date: Sat,  7 Nov 2026 08:57:34 -0500
-Message-ID: <20261107135011.183356614@linuxfoundation.org>
+Subject: [PATCH 7.3 1159/1257] ALSA: hda: Reject codec reset on ASoC (ext_ops) buses
+Date: Sat,  7 Nov 2026 08:57:35 -0500
+Message-ID: <20261107135011.209511884@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,137 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 93b1512ca69fbe3da66bbd2bab76e9ed74277679 ]
+[ Upstream commit a4311e9447bbb219044db38897f95be112f46a8a ]
 
-While a sched is bypassing, its tasks are run by its host, the nearest
-ancestor that isn't bypassing. check_rq_for_timeouts() tests a runnable task
-against its owner's timeout. Since 2c91169377f4 ("sched_ext: Blame the DSQ's
-owning scheduler for a runnable stall"), it ejects the sched owning the DSQ
-the task waits on. The sched tested, the sched ejected and the sched running
-the task can all differ.
+Writing to the reconfig or clear sysfs nodes of a codec handled by ASoC
+(SOF via hdac_hda, AVS via codecs/hda) hangs the writer.
 
-- Timeouts are per sched. A bypassing sub-scheduler with a 2s timeout under
-  a root with the default 30s has its tasks on the root's bypass DSQ. The
-  root, not bypassing itself, consumes that DSQ before calling
-  ops.dispatch() only on every other pass, and on the others only after
-  ops.dispatch() yields nothing. A task that waits 2s there ejects the root,
-  disabling all of sched_ext.
+snd_hda_codec_reset() sets card->shutdown and calls
+device_release_driver(). With ext_ops the driver unbind unregisters the
+ASoC component, which unbinds and frees the whole ASoC card:
+- snd_card_disconnect() returns early as card->shutdown is already set,
+  so the card's child devices are not removed and snd_card_free() waits
+  for the card release forever.
+- Even without that, freeing the card removes the codec's hwdep device,
+  which owns the sysfs node the reset was issued from, deadlocking in
+  kernfs while waiting for the active write to finish.
 
-- A bypassing owner's task on the local DSQ is blamed on the owner, which
-  places nothing while bypassing. If the owner is already exiting, e.g.
-  during its own disable, the exit is a no-op and nothing is ejected. If the
-  host isn't running the task, the owner's disable, which waits on it, may
-  never finish.
+The legacy HDA driver keeps the card across a driver rebind, ASoC does
+not, so the reset cannot be supported there. Return -EOPNOTSUPP and skip
+the misleading "codec is being used" messages in the callers.
 
-- The wait isn't restarted when bypass moves a task. The time it waited
-  under its owner counts against the host once it is on the host's bypass
-  DSQ, and its time there against the owner once bypass lifts.
-
-The sched running a task is its owner, or the host while the owner is
-bypassing. Test the task against that sched's timeout and blame it. A bypass
-requeue can change the sched running a task, so restart the wait of every
-task scx_bypass() requeues except the root's own, which the root runs
-bypassing or not. Single-scheduler behavior is unchanged.
-
-A task that migrates while scx_bypass() works through the cpus, leaving one
-before its requeue and arriving on another after it, is requeued by neither
-and keeps its wait, which then counts against the sched now running it. That
-is what happened to every task before this patch. This might be worth
-addressing in the future, but the race is rare and the real-world
-implications should be limited.
-
-Fixes: 2c91169377f4 ("sched_ext: Blame the DSQ's owning scheduler for a runnable stall")
-Cc: stable@vger.kernel.org # v7.3+: 30fb2b1e4d41: sched_ext: Fix the running task keeping its protection into bypass
-Cc: stable@vger.kernel.org # v7.3+: 5809f749fbdb: sched_ext: Fix a bypassed task stalling on a cpu its scheduler has no caps on
-Cc: stable@vger.kernel.org # v7.3+
-Reported-by: Andrea Righi <arighi@nvidia.com>
-Link: https://lore.kernel.org/all/at4l0yXTk7T_ouk0@gpd4/
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Fixes: 6bae5ea94989 ("ASoC: hdac_hda: add asoc extension for legacy HDA codec drivers")
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222182
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261027072835.4796-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext/ext.c | 38 +++++++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 15 deletions(-)
+ sound/hda/common/codec.c | 6 ++++++
+ sound/hda/common/sysfs.c | 4 ++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 84774147a1d5b..28e04d1043a28 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -2235,7 +2235,8 @@ static void ops_dequeue(struct rq *rq, struct task_struct *p, u64 deq_flags)
- 	/*
- 	 * Don't reset runnable_at. If @p is waiting, the wait continues across
- 	 * temporary dequeues, e.g. for a migration or an attribute change.
--	 * scx_disable_task() ends it if @p leaves its scheduler.
-+	 * scx_disable_task() ends it if @p leaves its scheduler. scx_bypass()
-+	 * restarts it when its requeue can change the sched running @p.
- 	 */
- 	clr_task_runnable(p, false);
+diff --git a/sound/hda/common/codec.c b/sound/hda/common/codec.c
+index 5d9b53bd64ea0..7c2b967aebe95 100644
+--- a/sound/hda/common/codec.c
++++ b/sound/hda/common/codec.c
+@@ -1800,6 +1800,12 @@ int snd_hda_codec_reset(struct hda_codec *codec)
+ {
+ 	struct hda_bus *bus = codec->bus;
  
-@@ -3844,24 +3845,17 @@ static bool check_rq_for_timeouts(struct rq *rq)
- 		goto out_unlock;
- 
- 	list_for_each_entry(p, &rq->scx.runnable_list, scx.runnable_node) {
--		struct scx_sched *sch = scx_task_sched(p);
-+		/*
-+		 * @p's owner schedules @p, or its host while the owner is
-+		 * bypassing. Test @p against that sched's timeout and blame it.
-+		 */
-+		struct scx_sched *sch = scx_exec_sched(scx_task_sched(p), cpu_of(rq));
- 		unsigned long last_runnable = p->scx.runnable_at;
- 
- 		if (unlikely(time_after(jiffies,
- 					last_runnable + READ_ONCE(sch->watchdog_timeout)))) {
--			struct scx_dispatch_q *dsq = READ_ONCE(p->scx.dsq);
- 			u32 dur_ms = jiffies_to_msecs(jiffies - last_runnable);
- 
--			/*
--			 * A task can be stuck on a DSQ that a sched other than
--			 * its owner is responsible for draining, e.g. an
--			 * ancestor's bypass DSQ while the owner is bypassing.
--			 * Blame the drainer. The local DSQ is consumed by the
--			 * cpu itself and keeps blame on the owner.
--			 */
--			if (dsq && dsq->sched && dsq->id != SCX_DSQ_LOCAL)
--				sch = dsq->sched;
--
- 			__scx_exit(sch, SCX_EXIT_ERROR_STALL, 0, cpu_of(rq),
- 				   "%s[%d] failed to run for %u.%03us",
- 				   p->comm, p->pid, dur_ms / 1000,
-@@ -6369,7 +6363,9 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
- 		 */
- 		list_for_each_entry_safe_reverse(p, n, &rq->scx.runnable_list,
- 						 scx.runnable_node) {
--			if (!scx_is_descendant(scx_task_sched(p), sch))
-+			struct scx_sched *owner = scx_task_sched(p);
++	/* ASoC: driver unbind frees the card, incl. the hwdep issuing the reset */
++	if (bus->core.ext_ops) {
++		codec_err(codec, "Codec reset is not supported with ASoC\n");
++		return -EOPNOTSUPP;
++	}
 +
-+			if (!scx_is_descendant(owner, sch))
- 				continue;
+ 	if (snd_hda_lock_devices(bus) < 0)
+ 		return -EBUSY;
  
- 			/*
-@@ -6381,7 +6377,19 @@ void scx_bypass(struct scx_sched *sch, bool bypass)
+diff --git a/sound/hda/common/sysfs.c b/sound/hda/common/sysfs.c
+index bedf10b308850..bf65223fde10d 100644
+--- a/sound/hda/common/sysfs.c
++++ b/sound/hda/common/sysfs.c
+@@ -117,6 +117,8 @@ static int clear_codec(struct hda_codec *codec)
+ 	int err;
  
- 			/* cycling deq/enq is enough, see the function comment */
- 			scoped_guard (sched_change, p, DEQUEUE_SAVE | DEQUEUE_MOVE) {
--				/* nothing */ ;
-+				/*
-+				 * The requeue can change the sched running @p,
-+				 * and the watchdog counts @p's wait against
-+				 * that sched. Restart the wait unless @owner is
-+				 * the root, which runs its own tasks bypassing
-+				 * or not.
-+				 *
-+				 * A dispatch in flight writes p->scx.flags
-+				 * without @p's rq lock. The dequeue waits it
-+				 * out, so set the flag after it.
-+				 */
-+				if (scx_parent(owner))
-+					p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
- 			}
- 		}
- 
+ 	err = snd_hda_codec_reset(codec);
++	if (err == -EOPNOTSUPP)
++		return err;
+ 	if (err < 0) {
+ 		codec_err(codec, "The codec is being used, can't free.\n");
+ 		return err;
+@@ -132,6 +134,8 @@ static int reconfig_codec(struct hda_codec *codec)
+ 	CLASS(snd_hda_power, pm)(codec);
+ 	codec_info(codec, "hda-codec: reconfiguring\n");
+ 	err = snd_hda_codec_reset(codec);
++	if (err == -EOPNOTSUPP)
++		return err;
+ 	if (err < 0) {
+ 		codec_err(codec,
+ 			   "The codec is being used, can't reconfigure.\n");
 -- 
 2.53.0
 
