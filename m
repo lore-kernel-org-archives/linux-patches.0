@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065420;
-	b=rEnZFhZZEpMBv/R0ekCiRWsrK8vyy+q8ThgG2MfaGAxwzG6dQv2AB9kfNJoDYtvQ6tVp
-	 j0bDECvApAWFh/7KxgRm7ioVwTSFdGBdao7JocOUPIhA4AEDWL8CKRuomQjqn+2yEb8CJ
-	 k3211M78PjcbZzShOVApYGqqRHqbh3nOSpQhkm7ZxNISMYqC6YSci3RbufdDn4OEUdicp
-	 PBhgerSKRQDd58DG4ziAMvlt/VRNWRujXl9E9Qf8fkFbDSUIydNSS9IndmX0TTnH/xtV4
-	 Iwrf+0ZAQztvbOJbkJNLS9Eg7LI0OhXXn2wI7sXeuEzi9c9e8yhjYLCvKqUiYWQ3qHA==
+	t=1794065422;
+	b=2SAWIbdp7t87U1lSONJuZ/UQdEgm8FLKpLPA7SYbmvmTAQOUmsE/SRX/AuKOwYaM4lDn
+	 Kvs/DivNVjTdvxy2vX62nhMO6xeUhRojUGvoBftGfxBSjkpBTFrSt5pVehPmJCTHaexrJ
+	 r0/yXrVqcTbXQBFqVrpof1PkYp3xLFRj4vKqKSwXZSC/s+ONgvOUuJ0bvAgmOABR6P98l
+	 l6dQLBy4VgfRLNehwwPLEG7OCZh/zoJKa9wjDaygSrhxTXTui/AFwLAoRDAOPjRLQ1J7a
+	 fpSo7LvkwMt8utJ4vgVyPrZEw7WQpfGnbYG1Cewkl2mJ1tOBxomDyhN1LHCiX2tLCSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jmxJYTNzvliaDzQeko/LCqp6qE5xlJEarxgpRdLhbrA=;
-	b=p6UhazXQh6anpTzxzaqiSW0VRHRDZGiVoaAu8Yn0lNgSOabxywCyT9fAGOQTDpYiy3ny
-	 hAhApC7m6PdizsZa9nuLwxHddB4kYyEs5U0snYWqFC7TuQ8w506qS1ChDAOtM4JiXoopm
-	 awg5uL89lQjm2VpUPZ3syYHCozFTOhuuM9DbM9nDFfJHyejO/DmLUOomV1H3/aGJuzUES
-	 xcp9kQVLunmuSUyYlQwy1vS9lXWzJ/s/T/6WM4VP4YzdD+3DP+QGTK6ukaMR3wJh3hog1
-	 qvpMkY1oxXhneHyv2rk69IulBIyobnGr56tgKuzhfyh0Vbm/T4jSOHZioglHGTSaElg==
+	bh=iYUboRX4lpuJGp74VIWAPKgoQCDxCgKW6ivZPYWnkrE=;
+	b=ELLADhHmuViWORBZ0zvsxZJyfh5G/fntZSlWHc37jvtD7BcP+RYzwvyRAP3SSn4A2GPk
+	 /eDnzDm6+mPh2Iym0nKsO6P/tmqd9KIS34F0rUp4O/f7iXSG4Oba/MkO0KNasr1LTvqSt
+	 irrQgaRbZSA+54NFv5gBgjSGjVTwTtmZIV8lj5xRb2v71iE3uJRFbl0HYDUTm78YxLj6I
+	 /4Q1mpjtrKNjHj7g3aGiaYGH6xioUdaK56u8Wb9rSeDivYkhjscRSsrdiiFy0jeAAARdx
+	 TZuz7mMrJQS63lnlV505YDyDmOsdHKqBz+Wv4cVCIf9kIooZKj8hQeIlyRqZZ7iXhig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LCXE8Ex8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ctG1/GYp";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0198606A32C;
-	Sat,  7 Nov 2026 15:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B810B606D80C;
+	Sat,  7 Nov 2026 15:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LCXE8Ex8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A96F1F0089F;
-	Sat,  7 Nov 2026 15:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ctG1/GYp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE511F0089F;
+	Sat,  7 Nov 2026 15:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065419;
-	bh=jmxJYTNzvliaDzQeko/LCqp6qE5xlJEarxgpRdLhbrA=;
+	s=korg; t=1794065421;
+	bh=iYUboRX4lpuJGp74VIWAPKgoQCDxCgKW6ivZPYWnkrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LCXE8Ex8/LX9utKOZLiUmipN2JGJLUqA1RDuXZKUj9TkK/H7Leo2CFQD4uTRoDCv3
-	 /vg9D+jvWnXK1zCkZBJcHNKSON5Wt8kad30RQqv09oHEz1weU2BNsPoFwKbLYorxQl
-	 p2vfsnpF5xC+Ah6Bd6xjK4Fz/n0nUW9xz7Yc6miU=
+	b=ctG1/GYpOPP+AlSIoJmBJ3z/XzPfC9jszTGiERZxAFHxhx8vKyKIsw/bsf7PuRrgn
+	 cj5iRSy1PNt/YYVk7mREqoCFujANSYMnmokhvvtQDWxDRXn/nr7hzZEpgCLZ0V7xDf
+	 xY4Jehjl7DSdsaErSdVJuD+mumfSLLz4ytK5kOcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1134/1257] ceph: validate MDS reply fragtree split array length
-Date: Sat,  7 Nov 2026 08:57:10 -0500
-Message-ID: <20261107135010.548700473@linuxfoundation.org>
+Subject: [PATCH 7.3 1135/1257] ceph: validate encoded xattr name lengths
+Date: Sat,  7 Nov 2026 08:57:11 -0500
+Message-ID: <20261107135010.573893441@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,66 +71,68 @@ Content-Transfer-Encoding: 8bit
 
 From: sung byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit 8cab7e7461f81ea1e0fd45082b50bb3c04c0bb10 ]
+[ Upstream commit 166375898d29fea050a9abec855da6075050d5c9 ]
 
-parse_reply_info_in() advances over the fragtree split array using an
-unchecked count multiplication.  On a 32-bit client, nsplits=0x20000000
-wraps the byte length to zero, so the reply is accepted and
-ceph_fill_fragtree() sorts far beyond the message front.
+__build_xattrs() advances over an MDS-provided name length before checking
+that the name remains in the encoded xattr blob.  On 32-bit clients,
+UINT_MAX wraps the cursor and is stored as a negative internal name
+length.  A later ordinary listxattr() converts it back to a UINT_MAX memcpy
+size and corrupts kernel memory.
 
-Compute the split length with size_mul() and require the complete array to
-remain in the inode record before advancing the cursor.
+Check the name range before advancing and reject name, value, or aggregate
+sizes that overflow the signed internal accounting.
 
-The malformed reply faulted in frag_tree_split_cmp() twice on the tested
-i386 baseline.  It was rejected without a fault twice after this change,
-while a normal reply and a one-split control remained functional.
+The malformed blob corrupted kernel state in two baseline boots.  It was
+rejected cleanly twice with this change, while normal and length-only
+controls remained safe.
 
 Cc: stable@vger.kernel.org
-Fixes: 2f2dc053404f ("ceph: MDS client")
+Fixes: 355da1eb7a1f ("ceph: inode operations")
 Assisted-by: LLM
 Signed-off-by: sung byeongchan <tjdqudcks0424@naver.com>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/ceph/xattr.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index b354c3296de36..1806cdc202718 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -15,6 +15,7 @@
- #include <linux/ktime.h>
- #include <linux/bitmap.h>
- #include <linux/mnt_idmapping.h>
+diff --git a/fs/ceph/xattr.c b/fs/ceph/xattr.c
+index cc4ffbbcb719a..ff70e4df9331c 100644
+--- a/fs/ceph/xattr.c
++++ b/fs/ceph/xattr.c
+@@ -11,6 +11,7 @@
+ #include <linux/security.h>
+ #include <linux/posix_acl_xattr.h>
+ #include <linux/slab.h>
 +#include <linux/overflow.h>
  
- #include "super.h"
- #include "mds_client.h"
-@@ -120,6 +121,7 @@ static int parse_reply_info_in(void **p, void *end,
- 			       struct ceph_mds_client *mdsc)
- {
- 	int err = 0;
-+	size_t splits_len;
- 	u8 struct_v = 0;
- 	u8 struct_compat = 0;
- 	u32 struct_len = 0;
-@@ -140,9 +142,11 @@ static int parse_reply_info_in(void **p, void *end,
+ #define XATTR_CEPH_PREFIX "ceph."
+ #define XATTR_CEPH_PREFIX_LEN (sizeof (XATTR_CEPH_PREFIX) - 1)
+@@ -843,14 +844,23 @@ static int __build_xattrs(struct inode *inode)
+ 		}
+ 		err = -EIO;
+ 		while (numattr--) {
++			int names_size, vals_size;
++
+ 			ceph_decode_32_safe(&p, end, len, bad);
+ 			namelen = len;
+ 			name = p;
++			ceph_decode_need(&p, end, namelen, bad);
+ 			p += len;
+ 			ceph_decode_32_safe(&p, end, len, bad);
+ 			ceph_decode_need(&p, end, len, bad);
+ 			val = p;
+ 			p += len;
++			if (namelen > INT_MAX || len > INT_MAX ||
++			    check_add_overflow(ci->i_xattrs.names_size,
++					       (int)namelen, &names_size) ||
++			    check_add_overflow(ci->i_xattrs.vals_size,
++					       (int)len, &vals_size))
++				goto bad;
  
- 	ceph_decode_need(p, end, sizeof(struct ceph_mds_reply_inode), bad);
- 	info->in = *p;
--	*p += sizeof(struct ceph_mds_reply_inode) +
--		sizeof(*info->in->fragtree.splits) *
--		le32_to_cpu(info->in->fragtree.nsplits);
-+	splits_len = size_mul(sizeof(*info->in->fragtree.splits),
-+			      le32_to_cpu(info->in->fragtree.nsplits));
-+	*p += sizeof(struct ceph_mds_reply_inode);
-+	ceph_decode_need(p, end, splits_len, bad);
-+	*p += splits_len;
- 
- 	ceph_decode_32_safe(p, end, info->symlink_len, bad);
- 	ceph_decode_need(p, end, info->symlink_len, bad);
+ 			err = __set_xattr(ci, name, namelen, val, len,
+ 					  0, 0, &xattrs[numattr]);
 -- 
 2.53.0
 
