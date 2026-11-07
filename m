@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063423;
-	b=PGOoPDsvTWl4outlmabiKEe04tYIlxTBSBC1fcjziBwqSVuXQFoVC6F6xeLT9MhS6rxV
-	 3ag+rThmlQWLFY8AfIQOU7svRAnmommUt+UkrriME0rOu4WObFq33lH6Q1A5qdbNv+nXL
-	 1SByhP80xhmtbc6CiRww10Xj7yew7m80LjPIiIorALfvWEcii1LJ8LUnbjRv2UihMQVvX
-	 lKuG4ioOL6jYTs2dpqM5+hAhE3bhFbgWa39YDn28c1uRQbJswIaX4BK3n7LSDdYWrtKnZ
-	 PZjxvmE0dBPOy0nYFBXOf3f/rzqnQR0OPnFUdc64JFIq+Ged4e5LHsc1a7elfT/bQZA==
+	t=1794063424;
+	b=qtFZTdtKr2ogLBwAxkT0C4WN9JBP9IfcN1RI25lBdWj98gMseYaqCrSfN617M2QDOiv2
+	 guVojUjUj6ppKZ6YkDs1ge9T6QOF7rdfcaAWmQNYbFaXsJ1c7CDY4Yl99ARYzZS5Xtqp+
+	 D4rvhjw1pgVDs5uyPWjpnUQrTlWqygQcK7YVwehb45iF5fN3P/lfYO6py2tfhUOVWiyYw
+	 HbhbMPNTBvH1MCrPwxIrg6i+QQVwlhr8ga1GVbMaioEnAqipq9ufIPZb3OS22rTicWBk+
+	 /BrVFfY+OAbXFRIrANbsBuiZge5A/njoY6rRgYICKJG2KtuG5Yiv76whXNs10MX319g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063423;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063424;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n175f0mNId89ynQmtiJkOgfGeOOEZ3HjkW4XlOmGOhQ=;
-	b=fgaSHEmj9dfQfjqZdi8FpXGhjp1SfJVbBph5SmbMpkj53jGUNKNqRrajXzAWEZQa4cgN
-	 yC/Lq4ENHtzSxPn00jpGDbHADAUtFcJS5L8uZZQp9bpB/5dpP5T+aGnlEbu5Vs8/srMqr
-	 DD8JXWeD+mbv1t+AEpIp2B6soUUD5te6kvatLejsLfbbRikVxKFxRvzju00SQNkScdSAK
-	 LLJElwq3oH/JplZvpCV4MJAZJp2wLH60fB1tplLOEPA8OXipRRSgSS8Tx+o2VHlGOLInj
-	 aZbQLUtguveJUiLgvpYcR3BYTQWKo0heRE81GqFXmmCsj7xQzQQ4PLnwN6vz74orHgw==
+	bh=2uBkqtHQ7qhMKUskQSEwyfZfJcik9NTD/AGNEc6FDME=;
+	b=njJK3Lu6fEPuPBjuqJHnSOkI8mRQOEjE9YHNSAW/k9NCJy9Uj4Um1Q8b8ync1mY8W8g1
+	 pE7BgcgpbocSlfNOCxxTwiJ54Pwm5bN0u16+JJMVpDCHziBtv6jNMfbvoasyOOasI2EB0
+	 AXMzJnLrDmQQ1KnrwkxcTEWL/VAvn0nBdpPM5QMtTIV7Sg5jMkOzYNf2cThRLW8GYJFr0
+	 ZIcY0NZJqI8T7V8vhRNQSf/EfN6JACm4kTbvzcTI28RsnsBOFLSEOCh6OsqwU5YZfQqx+
+	 6FcH9aU+z8xY3YH4VI4m2A4DLizllmLfaXbTjsYu2wamZEn+MBFtHoBLa4QiiynZHUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d73xskl3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fyMN/2BR";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B1F606EE83;
-	Sat,  7 Nov 2026 14:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2190A606EE83;
+	Sat,  7 Nov 2026 14:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d73xskl3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866141F0089F;
-	Sat,  7 Nov 2026 14:57:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fyMN/2BR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41B71F0089F;
+	Sat,  7 Nov 2026 14:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063422;
-	bh=n175f0mNId89ynQmtiJkOgfGeOOEZ3HjkW4XlOmGOhQ=;
+	s=korg; t=1794063424;
+	bh=2uBkqtHQ7qhMKUskQSEwyfZfJcik9NTD/AGNEc6FDME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d73xskl3zIRCLRlqYN4K2W8/ymct8pvCwH/N9VXDL9mKhUcKCFEQpM9XeuO2XLIJZ
-	 HCjEIQfvyyHDDZGgVFx6NaeK4ghpNTWAdhYRWIX6ChxOVTHsrN3G6nykSQ1jybF6C+
-	 ZSbsSFfgN9EpRXjGYo8aLU4YO4iPIVp2iQPOc/Gs=
+	b=fyMN/2BRbyHK6CJhS24RcqHxKwRR0HxsdGxts6HTJdRLYuZUik28sMjoslttNp7yt
+	 /BsbX6RZMYX9E8+q/4dLUq+f/eIO2QU/JYj5m4zzJe1gDSY175H7dn72nW4Ls+/Qwp
+	 PSrNvWfEEstH9bKVySY4GGGjUpiqRUD6tQ3WVIFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 588/869] spi: npcm-fiu: limit UMA data_size to the 16-byte staging buffer
-Date: Sat,  7 Nov 2026 08:54:30 -0500
-Message-ID: <20261107134913.071260361@linuxfoundation.org>
+Subject: [PATCH 6.18 589/869] mfd: tps65217: Fix NULL pointer dereference on IRQ init failure
+Date: Sat,  7 Nov 2026 08:54:31 -0500
+Message-ID: <20261107134913.101403092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,64 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
 
-[ Upstream commit f0be928a41384ea93c876364f360779f70359249 ]
+[ Upstream commit 0473a5b0663663b75573bf284beb77459e07c461 ]
 
-npcm_fiu_uma_read() and npcm_fiu_uma_write() use a 16-byte on-stack
-staging buffer (u32 data_reg[4]) and move data_size bytes to or from
-it. data_size comes straight from op->data.nbytes, which is supplied
-by the SPI MEM operation and is not bounded by the driver:
-npcm_fiu_exec_op() only validates op->addr.nbytes, and no
-adjust_op_size callback truncates the transfer to the controller FIFO
-size.
+tps65217_probe() ignores the return value of tps65217_irq_init(), so
+when the irq domain creation fails the probe still completes and the
+driver ends up bound with a NULL tps->irq_domain. Unloading the
+module then makes tps65217_remove() call irq_domain_remove() on the
+NULL pointer and oops the kernel. On top of that, irq_find_mapping()
+may fall back to the default irq domain and dispose of mappings that
+belong to other interrupt controllers.
 
-A SPI MEM operation with addr.nbytes == 0 and data.nbytes > 16
-therefore overflows data_reg[] on the kernel stack (write path) or
-reads past it (read path), corrupting the stack.
+Check the return value and abort the probe on failure so the error
+is reported and no inconsistent state is left for removal.
 
-Reject data_size larger than the staging buffer in both UMA helpers
-by returning -EOPNOTSUPP, so spi_mem falls back to the generic SPI
-message path. The chunked path in npcm_fiu_manualwrite() always passes
-at most CHUNK_SIZE bytes, so it is unaffected.
-
-Fixes: ace55c411b11 ("spi: npcm-fiu: add NPCM FIU controller driver")
-Cc: stable@vger.kernel.org # 5.4+
-Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261015-npcm-fiu-uma-datasize-v1-1-7dee91cadee6@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6556bdacf646fcaa ("mfd: tps65217: Add support for IRQs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
+Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20261002113624.178588-2-r.zhambakiev@prosoftsystems.ru
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-npcm-fiu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/mfd/tps65217.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-npcm-fiu.c b/drivers/spi/spi-npcm-fiu.c
-index cccd17f247754..79328ae89fbb7 100644
---- a/drivers/spi/spi-npcm-fiu.c
-+++ b/drivers/spi/spi-npcm-fiu.c
-@@ -343,6 +343,10 @@ static int npcm_fiu_uma_read(struct spi_mem *mem,
- 	u32 val;
- 	u32 i;
+diff --git a/drivers/mfd/tps65217.c b/drivers/mfd/tps65217.c
+index c240fac0ede76..2d04d9e0ae29c 100644
+--- a/drivers/mfd/tps65217.c
++++ b/drivers/mfd/tps65217.c
+@@ -333,7 +333,9 @@ static int tps65217_probe(struct i2c_client *client)
+ 	}
  
-+	/* data_reg holds at most 16 bytes */
-+	if (data_size > sizeof(data_reg))
-+		return -EOPNOTSUPP;
-+
- 	regmap_update_bits(fiu->regmap, NPCM_FIU_UMA_CTS,
- 			   NPCM_FIU_UMA_CTS_DEV_NUM,
- 			   (spi_get_chipselect(mem->spi, 0) <<
-@@ -398,6 +402,10 @@ static int npcm_fiu_uma_write(struct spi_mem *mem,
- 	u32 val;
- 	u32 i;
+ 	if (client->irq) {
+-		tps65217_irq_init(tps, client->irq);
++		ret = tps65217_irq_init(tps, client->irq);
++		if (ret)
++			return ret;
+ 	} else {
+ 		int i;
  
-+	/* data_reg holds at most 16 bytes */
-+	if (data_size > sizeof(data_reg))
-+		return -EOPNOTSUPP;
-+
- 	regmap_update_bits(fiu->regmap, NPCM_FIU_UMA_CTS,
- 			   NPCM_FIU_UMA_CTS_DEV_NUM,
- 			   (spi_get_chipselect(mem->spi, 0) <<
 -- 
 2.53.0
 
