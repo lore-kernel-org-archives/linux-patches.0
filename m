@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060979;
-	b=KXsnFcp6UAR+lpPTlsrhSsMA5br6lQD6IAadtYppwzdVrB3F18NZTzkGiBKEtQuR/QuD
-	 VuJnQI4LdNfcqABOn+iUHbXZ+tpbJN+93ytYKT8HA1V3K4LyvWwrSZjEXLonrkTQcg1QU
-	 Mg98yzLIY2TIH8enNqQcTZPvKUIZqNmZnRcQQDXhe4IAOE5JA4ZrEcMIoUeX/gROkHnKm
-	 LGmTGvIOZLkzq4uvjMFqHjMjnJ+4mu1tbzJRLRKr+aECwYbFxuf+2ybTsZwNemkv0CIFi
-	 ThEb0AvrSX6THGBDaNoeuj5SjrMgDIi7GGynQPH82FcVjkxpi8bLrgKQHm0WRyzGQPg==
+	t=1794060980;
+	b=pvNitFLdpEY//0e/aKJl8rXs/M12oKk4YXp8mf8AgH6nsCX2TfZHF+n+jbof11x66uPm
+	 p88cJMHSsKj6qreQqarzAQoaG7mvE6ec3+dxY925jIrVhq57y2l14V7VonjmrtKN+UG+B
+	 MraVogC803AsRAvtM6jTUz1N5K7EDEDtUHsWZCWos46Mc6ew2m/irOMCedOxh7D9+7cfr
+	 i9wNclYfxZibhBI2oahsXgqR9L/hdnxnzjewKTVuQ0k7xkrvVMohXj9mNDqhE+QV3czzU
+	 6umZqS6gETVKYBB8a3qIT2Aw33Huq3+BOdh/OTjcHQ7Mu/xD0aePngJQyGHy91oB2pA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060979;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kBmfn9QQoCSd87n5G5ANn2uOmk/kEYb88ow+rDA/cH8=;
-	b=TBK/4iJ/z0ogDHHSprvMIOQjB0h2NjHAQlHkC7hMwtObKQQr3851MZV4IKlTtjNoCR2V
-	 ijFKxo8Fg1fff98tuZUujbxzx1mey+ofUhppaBsz3XZpAF+b8t0vE/6CNbJMM69n46q9r
-	 j77oRndM1BeLu82GdHsDVTfucyiZ16K1cXsHWpvgekf6R/vJ027dKSO/tv9a8r3mj2TgC
-	 sHmhlFmTr8C+BvWNMk8K9x7PWjD33ELhoXbJCibVnsY8Z27I/ocQuf4bSVxAmJRV3M2qm
-	 gazCAkxJR1ezUOxSAK/AQHdDMMqlAHm01fZ0tpiL7z4qmNyC2vpgPCPR+P2g++ZsCGA==
+	bh=mAcr55Rj4Vz7RWTcONmTVIJXrEkhLlpQDc4+F02ZWbY=;
+	b=X04Rp4b1deksftqLYrYpJgdfsmRCBDId9c5f0Q7nRTe2PA+VW2nlXfT5/jKAk7vhelBr
+	 dgsmqsEnbI6mooh3bKv2PCOXaiJThAY42n5/lwbsdR1mNEyrmkjoyQCAjDY+uGIlH4O2U
+	 XzGva2F0kN5PSHg5nQceZJBgfpd/9N/EeUG9+GKMW13mQ6YooKFi0NjF6gw4Ybeipru/W
+	 xRlSUrXZ0/PoDtw/ejJf2dWISyOSACZQHf56odcHbtyvS4sXDwmj4ES2casUY1Kzsm2dd
+	 F3QINV1fkoEmJ0LvB8tgltUR6lsKwUHT0OlRARowjOFsKNrrW/K+20uYcc9szhn7ihQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="y/wPBhY7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcF1YGkz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B957B606A33C;
-	Sat,  7 Nov 2026 14:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F16606A33C;
+	Sat,  7 Nov 2026 14:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y/wPBhY7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F811F0089F;
-	Sat,  7 Nov 2026 14:16:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcF1YGkz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41341F0089F;
+	Sat,  7 Nov 2026 14:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060978;
-	bh=kBmfn9QQoCSd87n5G5ANn2uOmk/kEYb88ow+rDA/cH8=;
+	s=korg; t=1794060979;
+	bh=mAcr55Rj4Vz7RWTcONmTVIJXrEkhLlpQDc4+F02ZWbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y/wPBhY7owij7/4vXFnCQIAcFo6tqC16L0cDFE8snfa/9/cqSSNgHgtryUZfgkbl3
-	 9/hp5ZnJIIIkEVCZG8E7kYGT2UxaY4GkZRFY+76WtU1C0U0e89Yz9ETRw9pw6+JRf1
-	 0MGXKGrqLZQxpYEJQaFZpccgqq2xOVYCop7U9nYM=
+	b=XcF1YGkz6wr6z+DAIPnRVOU/zyynfl54BmpbJpcH+XGcmPYD/DcTLnyRY1ZTZQpfK
+	 NClrr9elZf2q1749FNsQCyiJ2nm/Vsns1Jyr0HO6v+nxRM2FNugA5XS2OaxMRZNG5L
+	 xe/LZESbT4VKCJNqkN8HD2IU3Vw4FFZznffaXvks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Laxman Acharya <acharyalaxman8848@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0296/1536] net: dsa: mt7530: error out on failed PHY_IAC command writes
-Date: Sat,  7 Nov 2026 08:38:32 -0500
-Message-ID: <20261107135006.045797213@linuxfoundation.org>
+Subject: [PATCH 6.12 0297/1536] Bluetooth: hci_event: fix out-of-bounds read in LE PA report reassembly
+Date: Sat,  7 Nov 2026 08:38:33 -0500
+Message-ID: <20261107135006.072323660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,96 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Laxman Acharya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit 1c95dcb7e923beebccdc79adc3dc1ec8c52295d0 ]
+[ Upstream commit e3643fbddb257c928c075cab05bbd929106b56ee ]
 
-MT7531_PHY_ACS_ST is only ever set by the command write that precedes
-each poll in the MT7531 indirect PHY access functions, and that
-write's return value is discarded. A failed write leaves ACS_ST at 0
-from the previous access, so the poll succeeds on its first iteration
-and the functions return stale IAC contents as if they were fresh PHY
-data. Check the writes and bail out before polling.
+hci_le_per_adv_report_evt() is dispatched with a minimum length of
+sizeof(struct hci_ev_le_per_adv_report), which only covers the fixed
+part of the event and not the trailing data[] array:
 
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/c34602e63a20ebbfb97babd145c82832d7a0b523.1785811140.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	struct hci_ev_le_per_adv_report {
+		__le16   sync_handle;
+		__u8     tx_power;
+		__u8     rssi;
+		__u8     cte_type;
+		__u8     data_status;
+		__u8     length;
+		__u8     data[];
+	} __packed;
+
+The handler notifies the ISO layer via hci_proto_connect_ind(), which
+reaches iso_connect_ind(). That function retrieves the stored event with
+hci_recv_event_data() and, while reassembling the periodic advertising
+data, does:
+
+	memcpy(hcon->le_per_adv_data + hcon->le_per_adv_data_offset,
+	       ev->data, ev->length);
+
+ev->length is taken directly from the event and is never validated
+against the amount of data the event actually carries.  A controller
+that reports a length larger than the received event therefore causes
+the memcpy() to read past the end of the event buffer.  The leaked bytes
+are stored in hcon->le_per_adv_data and can subsequently be read back
+from user space via getsockopt(BT_ISO_BASE).
+
+Validate that the event contains ev->length data bytes before it is
+consumed, mirroring the check already performed by
+hci_le_ext_adv_report_evt() and hci_le_adv_report_evt().
+
+Signed-off-by: Laxman Acharya <acharyalaxman8848@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ net/bluetooth/hci_event.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index b13e905833c3f..4718f1fcca6d8 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -585,7 +585,9 @@ mt7531_ind_c45_phy_read(struct mt7530_priv *priv, int port, int devad,
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index cbb1c3ee07525..0716b1a9ddc3f 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -6490,6 +6490,13 @@ static void hci_le_per_adv_report_evt(struct hci_dev *hdev, void *data,
  
- 	reg = MT7531_MDIO_CL45_ADDR | MT7531_MDIO_PHY_ADDR(port) |
- 	      MT7531_MDIO_DEV_ADDR(devad) | regnum;
--	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
-+	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
-+	if (ret < 0)
-+		goto out;
+ 	bt_dev_dbg(hdev, "sync_handle 0x%4.4x", le16_to_cpu(ev->sync_handle));
  
- 	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
- 				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
-@@ -596,7 +598,9 @@ mt7531_ind_c45_phy_read(struct mt7530_priv *priv, int port, int devad,
++	/* The reassembly in iso_connect_ind() copies ev->length bytes from the
++	 * stored event, so make sure the event actually carries that many data
++	 * bytes before it is consumed.
++	 */
++	if (!hci_le_ev_skb_pull(hdev, skb, HCI_EV_LE_PER_ADV_REPORT, ev->length))
++		return;
++
+ 	hci_dev_lock(hdev);
  
- 	reg = MT7531_MDIO_CL45_READ | MT7531_MDIO_PHY_ADDR(port) |
- 	      MT7531_MDIO_DEV_ADDR(devad);
--	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
-+	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
-+	if (ret < 0)
-+		goto out;
- 
- 	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
- 				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
-@@ -630,7 +634,9 @@ mt7531_ind_c45_phy_write(struct mt7530_priv *priv, int port, int devad,
- 
- 	reg = MT7531_MDIO_CL45_ADDR | MT7531_MDIO_PHY_ADDR(port) |
- 	      MT7531_MDIO_DEV_ADDR(devad) | regnum;
--	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
-+	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
-+	if (ret < 0)
-+		goto out;
- 
- 	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
- 				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
-@@ -641,7 +647,9 @@ mt7531_ind_c45_phy_write(struct mt7530_priv *priv, int port, int devad,
- 
- 	reg = MT7531_MDIO_CL45_WRITE | MT7531_MDIO_PHY_ADDR(port) |
- 	      MT7531_MDIO_DEV_ADDR(devad) | data;
--	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
-+	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
-+	if (ret < 0)
-+		goto out;
- 
- 	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
- 				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
-@@ -674,7 +682,9 @@ mt7531_ind_c22_phy_read(struct mt7530_priv *priv, int port, int regnum)
- 	val = MT7531_MDIO_CL22_READ | MT7531_MDIO_PHY_ADDR(port) |
- 	      MT7531_MDIO_REG_ADDR(regnum);
- 
--	mt7530_mii_write(priv, MT7531_PHY_IAC, val | MT7531_PHY_ACS_ST);
-+	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, val | MT7531_PHY_ACS_ST);
-+	if (ret < 0)
-+		goto out;
- 
- 	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
- 				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
-@@ -709,7 +719,9 @@ mt7531_ind_c22_phy_write(struct mt7530_priv *priv, int port, int regnum,
- 	reg = MT7531_MDIO_CL22_WRITE | MT7531_MDIO_PHY_ADDR(port) |
- 	      MT7531_MDIO_REG_ADDR(regnum) | data;
- 
--	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
-+	ret = mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
-+	if (ret < 0)
-+		goto out;
- 
- 	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, reg,
- 				       !(reg & MT7531_PHY_ACS_ST), 20, 100000);
+ 	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, PA_LINK, &flags);
 -- 
 2.53.0
 
