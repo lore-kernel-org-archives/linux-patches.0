@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063752;
-	b=hRitPsbrvTyY1mxwyzYioet/vK12m0cKNJAggeDuOJmGD+jWX2d7V8XiUXUwhPLiJ/QD
-	 50+jhlMaeA1YiL209wFqzAD+X5x/0GGKaYOEuvrCpfmVIs3mI4MsCZ9QC5jZ2eB382iJ5
-	 QktXPsyqbe9oCzVUKrWI6rmgFh4akEYgJDiKODQG5iWHC4Bqnqf9ko6zVqdhCGdZSWL5R
-	 VajQFw0ihmnLvd1BSZ1MZiD5lm7DVs0kOkmDRs1Fi8q1NnWEU/wxgGMHo9CWZVD0JHYde
-	 hPkCPcYOghYAERGgTfScL1ngcXbKNvRRmS+T9p9Q1gmixIzatA4GoV0WH5jMxdwkAsQ==
+	t=1794063758;
+	b=d1M1xy2EQEZJOUTM8Xorz45JkUvi9kYXKLs2sW5lFC5tIkc2FwWpGXw40ibLJ3F7HAH/
+	 Li+L/HhYEekW1AP7wt+WJwJ0sBtWGHE3Z4886vhBN1NI0WlkUF04xcjHQmhiXaR8jUZHB
+	 k5ERM0FP4ZlIagE8CPj/2IYlrf5HkLbvtaNzckwCsXJlULIQrhacgb7+vi/oqH8TQQgKs
+	 VDFobIFrS0pFLuBUwvhGOuGLcO3qUY0B1IiqUpjj4Jz26WluTLYp6RsPDUqM3oPjQpT4Q
+	 tLA8wnZcYbB8rynTR24KRPg/h4hj6q208592qmKWvc4Ll5gBtg1qEWkKQTTekwS8APA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063752;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063758;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1vYUu3ScqDo9Y5xjO+dMWSx9IUKkIK6laJS9mcCP5Fo=;
-	b=IqiOjt6D4tDF8V2pZSv89Y5P+CRpEvjpKtwYDb9xp4iV00C3cKgXbq2iqaoqqQlaWSmm
-	 pJx3+kviCWFm1zm/H4a2PmHgJPIvI9mVrJAwAQtqzpjBM6imKx6rg5bRJ4Q1hTqRL3J80
-	 oHpAq2iIc1vnoS92BxiCogpwTxXaDMENfNxKtvPPwGocU9cMeWn9bhal67kfTSomK36ev
-	 2mIxAp4N5n6K42gD3ULTeJ2kb8ecAdzV1i3ckvZQJh37IuATEce7hM/qqSQ5/f/7e136j
-	 N4PdLJDF5uJNrZGo2ZuuIDUMslG8XODaA4fXzAl0ZI1xYBGjpwZddCzuN4Jtsbkbo0A==
+	bh=HV0OHLJT2r3SIImdBsAy6/EQJyINJf0K1Y1WVDsDIXA=;
+	b=saS5NBN3ndUO3+UFa+y7HxSCvEoxSQa65yPwBeqIPzpivdXgG0rIMfFLEg7ofeUgeIms
+	 yaWXRmA5Eqb7Sjktxz/7HhoUPagn3nPQ98Bh2FiHdmJg1ZlTAtGGiGFQwwFuAVCUteXsr
+	 aYCzhBwc8FRyN6cTNP9YJ17zeXqeHnrooV4Z6pe97KGaX034cd426qEA29s5VfJXSG7Re
+	 lIpcnsmhr4W/D/PRPIvfN2O4YawDBvFilkJIXC88qRMdogsIVhVSzeQWzhDL2mbAy4Ioh
+	 MzYpcnZ6Ep/3yWnTO25VORELO8OIUQFEJtM7eI5DTJ25xCcvCLTsFw3A0qT7ZsuxzZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tPZkuHVd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BR2tJFNR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE20606D809;
-	Sat,  7 Nov 2026 15:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90195606D81B;
+	Sat,  7 Nov 2026 15:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tPZkuHVd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2885A1F008A1;
-	Sat,  7 Nov 2026 15:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BR2tJFNR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3ED1F008A1;
+	Sat,  7 Nov 2026 15:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063752;
-	bh=1vYUu3ScqDo9Y5xjO+dMWSx9IUKkIK6laJS9mcCP5Fo=;
+	s=korg; t=1794063758;
+	bh=HV0OHLJT2r3SIImdBsAy6/EQJyINJf0K1Y1WVDsDIXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tPZkuHVdgffe+SxmUUMADOCaYNARF78zXm1f66x2YshFYA8MZ2jZuW7R9/FpClWKL
-	 T/MOxKxbYdYdK5rUMWNOvNZXIAVeVNCZ2sYai2pJLI43Z1pAfjYg9xgIZ/4y4xO4uR
-	 llaUn0pd/8Y0nDWrzgXqiKTod8aOzIRVyKeGaGho=
+	b=BR2tJFNRJ1Ls2Id1QsCgY9wLNYPg2wSbvNC/ejos5892dGRynoTxmbxN7NMnEFi+n
+	 zs0p7FUAEuX5vLfSO044W2D62xoLrhGzsk7AhsI2Z9roFRZAovOoS8Q6tx7cNRtRih
+	 z5p24rUL7+SxsnqXO1O2b9oDXP5tOHaUWGL6w+DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 808/869] LoongArch: Only send SIGTRAP signal if necessary in do_watch()
-Date: Sat,  7 Nov 2026 08:58:10 -0500
-Message-ID: <20261107134920.405737893@linuxfoundation.org>
+Subject: [PATCH 6.18 803/869] LoongArch: Use pa_to_nid()/nid_to_addrbase() rather than hard-code
+Date: Sat,  7 Nov 2026 08:58:05 -0500
+Message-ID: <20261107134920.149493564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,145 +67,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit f087903018e35d38b8932e18b010ee2e8699d1a1 ]
+[ Upstream commit 244eb26bbd152896f976db6415550993cd60b46d ]
 
-In do_watch(), the kernel unconditionally forces a SIGTRAP signal at the
-end of the handler via force_sig(SIGTRAP). This is essential for ptrace
-operations, but it severely disrupts standard perf_event usage.
-
-Under normal perf usage, it is not necessary to force a SIGTRAP signal
-on every hit. Forcing it unnecessarily aborts the target process if no
-user-space signal handler is registered, which violates performance
-monitoring behaviors and injects context switch overheads.
-
-However, a conditional check using only 'current->ptrace' would block
-legitimate user-requested signals when a perf_event is configured with
-'attr.sigtrap = 1' for asynchronous user-space tracking.
-
-Fix this by refactoring breakpoint_handler() and watchpoint_handler()
-to return a boolean status indicating whether any triggered breakpoint
-explicitly requires a signal notification. Update do_watch() to enforce
-the SIGTRAP signal only when the process is actively being debugged via
-ptrace, or when the underlying perf_event infrastructure specifically
-demands it via 'attr.sigtrap'.
+NODE_ADDRSPACE_SHIFT is 44 now but may be changed in future, so use
+pa_to_nid()/nid_to_addrbase() rather than hard-code.
 
 Cc: stable@vger.kernel.org
-Fixes: 424421a7f34c ("LoongArch: ptrace: Add hardware single step support")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/hw_breakpoint.h |  4 ++--
- arch/loongarch/kernel/hw_breakpoint.c      | 18 ++++++++++++++++--
- arch/loongarch/kernel/traps.c              |  9 ++++++---
- 3 files changed, 24 insertions(+), 7 deletions(-)
+ arch/loongarch/include/asm/numa.h | 2 +-
+ arch/loongarch/kernel/irq.c       | 3 ++-
+ arch/loongarch/pci/pci.c          | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/hw_breakpoint.h b/arch/loongarch/include/asm/hw_breakpoint.h
-index 5faa97a87a9e2..d202052df8a16 100644
---- a/arch/loongarch/include/asm/hw_breakpoint.h
-+++ b/arch/loongarch/include/asm/hw_breakpoint.h
-@@ -116,8 +116,8 @@ extern void arch_uninstall_hw_breakpoint(struct perf_event *bp);
- extern int hw_breakpoint_slots(int type);
- extern void hw_breakpoint_pmu_read(struct perf_event *bp);
+diff --git a/arch/loongarch/include/asm/numa.h b/arch/loongarch/include/asm/numa.h
+index bbf9f70bd25f4..c9654ff900a3a 100644
+--- a/arch/loongarch/include/asm/numa.h
++++ b/arch/loongarch/include/asm/numa.h
+@@ -14,7 +14,7 @@
+ #define NODE_ADDRSPACE_SHIFT 44
  
--void breakpoint_handler(struct pt_regs *regs);
--void watchpoint_handler(struct pt_regs *regs);
-+bool breakpoint_handler(struct pt_regs *regs);
-+bool watchpoint_handler(struct pt_regs *regs);
+ #define pa_to_nid(addr)		(((addr) & 0xf00000000000) >> NODE_ADDRSPACE_SHIFT)
+-#define nid_to_addrbase(nid)	(_ULCAST_(nid) << NODE_ADDRSPACE_SHIFT)
++#define nid_to_addrbase(nid)	(_U64CAST_(nid) << NODE_ADDRSPACE_SHIFT)
  
- #ifdef CONFIG_HAVE_HW_BREAKPOINT
- extern void ptrace_hw_copy_thread(struct task_struct *task);
-diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
-index 7f69cf361a5e2..d009ed780cf02 100644
---- a/arch/loongarch/kernel/hw_breakpoint.c
-+++ b/arch/loongarch/kernel/hw_breakpoint.c
-@@ -482,9 +482,10 @@ NOKPROBE_SYMBOL(update_bp_registers);
- /*
-  * Debug exception handlers.
-  */
--void breakpoint_handler(struct pt_regs *regs)
-+bool breakpoint_handler(struct pt_regs *regs)
+ #ifdef CONFIG_NUMA
+ 
+diff --git a/arch/loongarch/kernel/irq.c b/arch/loongarch/kernel/irq.c
+index 80946cafaec1b..130954ab9ee20 100644
+--- a/arch/loongarch/kernel/irq.c
++++ b/arch/loongarch/kernel/irq.c
+@@ -19,6 +19,7 @@
+ 
+ #include <asm/irq.h>
+ #include <asm/loongson.h>
++#include <asm/numa.h>
+ #include <asm/setup.h>
+ 
+ DEFINE_PER_CPU(unsigned long, irq_stack);
+@@ -68,7 +69,7 @@ static int __init early_pci_mcfg_parse(struct acpi_table_header *header)
+ 
+ 	for (i = 0; i < n; i++, mptr++) {
+ 		msi_group[i].pci_segment = mptr->pci_segment;
+-		pch_group[i].node = msi_group[i].node = (mptr->address >> 44) & 0xf;
++		pch_group[i].node = msi_group[i].node = pa_to_nid(mptr->address);
+ 	}
+ 
+ 	return 0;
+diff --git a/arch/loongarch/pci/pci.c b/arch/loongarch/pci/pci.c
+index f33c7ea1443d9..0b99b32110a5d 100644
+--- a/arch/loongarch/pci/pci.c
++++ b/arch/loongarch/pci/pci.c
+@@ -12,6 +12,7 @@
+ #include <linux/io-64-nonatomic-lo-hi.h>
+ #include <asm/cacheflush.h>
+ #include <asm/loongson.h>
++#include <asm/numa.h>
+ 
+ #define PCI_DEVICE_ID_LOONGSON_HOST     0x7a00
+ #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
+@@ -43,7 +44,7 @@ int raw_pci_write(unsigned int domain, unsigned int bus, unsigned int devfn,
+ 
+ phys_addr_t mcfg_addr_init(int node)
  {
- 	int i;
-+	bool need_sigtrap = false;
- 	struct perf_event *bp, **slots;
- 
- 	slots = this_cpu_ptr(bp_on_reg);
-@@ -494,17 +495,24 @@ void breakpoint_handler(struct pt_regs *regs)
- 			bp = slots[i];
- 			if (bp == NULL)
- 				continue;
-+
- 			perf_bp_event(bp, regs);
-+			if (bp->attr.sigtrap)
-+				need_sigtrap = true;
-+
- 			csr_write32(0x1 << i, LOONGARCH_CSR_FWPS);
- 			update_bp_registers(regs, 0, 0);
- 		}
- 	}
-+
-+	return need_sigtrap;
+-	return (((u64)node << 44) | MCFG_EXT_PCICFG_BASE);
++	return (nid_to_addrbase(node) | MCFG_EXT_PCICFG_BASE);
  }
- NOKPROBE_SYMBOL(breakpoint_handler);
  
--void watchpoint_handler(struct pt_regs *regs)
-+bool watchpoint_handler(struct pt_regs *regs)
- {
- 	int i;
-+	bool need_sigtrap = false;
- 	struct perf_event *wp, **slots;
- 
- 	slots = this_cpu_ptr(wp_on_reg);
-@@ -514,11 +522,17 @@ void watchpoint_handler(struct pt_regs *regs)
- 			wp = slots[i];
- 			if (wp == NULL)
- 				continue;
-+
- 			perf_bp_event(wp, regs);
-+			if (wp->attr.sigtrap)
-+				need_sigtrap = true;
-+
- 			csr_write32(0x1 << i, LOONGARCH_CSR_MWPS);
- 			update_bp_registers(regs, 0, 1);
- 		}
- 	}
-+
-+	return need_sigtrap;
- }
- NOKPROBE_SYMBOL(watchpoint_handler);
- 
-diff --git a/arch/loongarch/kernel/traps.c b/arch/loongarch/kernel/traps.c
-index 4c2e5a13f07e4..9ce12327d64ea 100644
---- a/arch/loongarch/kernel/traps.c
-+++ b/arch/loongarch/kernel/traps.c
-@@ -807,6 +807,8 @@ asmlinkage void noinstr do_watch(struct pt_regs *regs)
- #ifndef CONFIG_HAVE_HW_BREAKPOINT
- 	pr_warn("Hardware watch point handler not implemented!\n");
- #else
-+	bool need_sigtrap = !!current->ptrace;
-+
- 	if (kgdb_breakpoint_handler(regs))
- 		goto out;
- 
-@@ -843,11 +845,12 @@ asmlinkage void noinstr do_watch(struct pt_regs *regs)
- 			}
- 		}
- 	} else {
--		breakpoint_handler(regs);
--		watchpoint_handler(regs);
-+		need_sigtrap |= breakpoint_handler(regs);
-+		need_sigtrap |= watchpoint_handler(regs);
- 	}
- 
--	force_sig(SIGTRAP);
-+	if (need_sigtrap)
-+		force_sig(SIGTRAP);
- out:
- #endif
- 	irqentry_exit(regs, state);
+ static int __init pcibios_init(void)
 -- 
 2.53.0
 
