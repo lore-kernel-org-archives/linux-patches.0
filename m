@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064625;
-	b=DDkrs+Fq+9MTOlZ/bqWALukhWQh3PxLY67jyupCQOgv0rsybcRqQmo9ZmdKYDuIUs3zS
-	 Z/1T4BHejE0bVQXD4naAcXNv1AHvuOUzP6PLxnCsk511d8LmYh6XUER/dm2BjAUbIjyqb
-	 BHrC2BUbZsmMs52+m+rn+9nOWRQ/9zIPRdavBRemA3Pxxjt3hJxu/W+LKjDziwKohkzPE
-	 z9NqY0cZOP8e2uld50pe4QVB3kSKNNU2XXNgi116gwNEnM+rBNYt5ZtfqI8VO1tyy1pxD
-	 8pINhYOhQF1fVbxC4Yk7BZm2xDwtCp69wSPoUpmOYv+dfrLn9J4X8poTsb68YsIBS8w==
+	t=1794064626;
+	b=aw3txTEg1C6PjNSsynF0/ZATpc4fl665ThJx3IRpF1zHrsI3A/olcYpDkh4vTgDaQcs4
+	 nAnG9LbIitP+m75o35Nx6voZ0sPqA9PrS/Nl334sHF9p37fdIW6EfbSHtR7v+Uu02Pj1q
+	 v7CDmUxeIDIf1mt8c8YBZ47N9M0Pdt4tyMw+LXA5Wygx+E28SCc8SiiDZgT8NOz2qsPm3
+	 jEtntn5BW8J5EIRtv8MvUNVYVESGUmu5vMI6vLkJ/qicMtsIQ/I1NQ7HOURnwIsGKPa/p
+	 6pu84l38VY3+sTkWOKScEoj25vWTW84dJE7vz8gB1stE6aVN7rcdpDU/HRLNygPca/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064625;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ClnY2YjkhvpCJjXF+Me6soxnttz9zf81pBGR+vXCbBA=;
-	b=MVZ7nM2Zx+ChyUXS5BFLGXIk5DbRFqnY6AQRjtd1I82d8aF1BzlxNUvVlecWbrX0MC8g
-	 LfKgQ3ZhYlTIh2nEBfeVeVrwqfUtiedt0IDRg97gCpF73/3JKSnUZExXE+CtNdET7gvAO
-	 CccEDTubgtwSDPDKnLOzF1a+nQf1joYoRRSOojwNmvia1BZ9zNzd8gGW6efVRExKetnhc
-	 qFEOQnKG7bUMMmzdsoQZcFM7lHYuN1sgJjPrVRiLGDYQhByXBPjjvbFZtM4ePuOUf1kpu
-	 xa/gAG2qTUwbJWGisCaa3hSN7AaeF0Rh9BadmA0f+oHV4j/Lg//gNM45f0ybOiEwlDw==
+	bh=a24KP7CK+A4JxKLPjDbgI3gTAy8YQeV5blJCmdXRxw0=;
+	b=XE1YEDb4/hWTHoLvu/3w0/Wy0w5VPUhMS43bsP2UB/5rLe8Rz+FSyAgfNCunoS0oIlY2
+	 KtJowbUlZe8LFOpMI134bNAJN/1Ypvg/CTQbZzlXipB1l47o9q7ZXjCHQBJhOOePwqfRl
+	 9/eJQxxRxgO4nKPdjNA3OqwEEe9rE/59CUUZjWuhklW2G6lsfe4jhtffVlSnER32ZaFW/
+	 wNl36OAW/hxV1K1EknBmvWI+onCWOZSz6s5ZMV+aTytelbL1noV3IQTGJuv87PUIL1fuh
+	 ruTYImJDOyzCFSeilRY/JgSKCfvn8YnTz0vAW79pdPgJxWoOnuJZW/AI5/zABTM+hEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9JSXy5J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fkL9Lbxo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3B4606C007;
-	Sat,  7 Nov 2026 15:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232A3606C008;
+	Sat,  7 Nov 2026 15:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9JSXy5J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5D41F0089F;
-	Sat,  7 Nov 2026 15:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fkL9Lbxo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA1C1F0089F;
+	Sat,  7 Nov 2026 15:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064624;
-	bh=ClnY2YjkhvpCJjXF+Me6soxnttz9zf81pBGR+vXCbBA=;
+	s=korg; t=1794064626;
+	bh=a24KP7CK+A4JxKLPjDbgI3gTAy8YQeV5blJCmdXRxw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t9JSXy5JMIE0RQo+PjTi86Oq65n2A3losJj8D3SJqobfsZpvolbbFgiTsKCD5v7xe
-	 eUJw0c7BG6aY8vbw5Qn9oXuSXTtRblkTS0TZlE5gkA528Xuvr0UAxhSDVKjXRkEgx8
-	 iDQIql4yDJTh5BBFL0/rhjyG1i4eFYTk/xv2jRVQ=
+	b=fkL9LbxoEEQr0J1k+Ef6HdpeQXDugFFkSbHw5uAai4Bc7Sizx87KdspSMqNoyHAD6
+	 vvUI3HysqOLSZ9XANhbKDCFuQcl4GseCPQcBSOimLo/H/yU1aLlu531opGWyLxlMCB
+	 Qi/+VNTzhepUMpTbGiAOguUJCPyiyGtQ0rko1tmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0634/1257] mailbox: mtk-cmdq: Fix runtime PM leak in cmdq_mbox_flush()
-Date: Sat,  7 Nov 2026 08:48:50 -0500
-Message-ID: <20261107134956.796543172@linuxfoundation.org>
+Subject: [PATCH 7.3 0635/1257] mailbox: qcom-ipcc: Guard against NULL con_priv in send_data()
+Date: Sat,  7 Nov 2026 08:48:51 -0500
+Message-ID: <20261107134956.821068487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,52 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
 
-[ Upstream commit 18e3e979826795b62e8916743bec4de660e7cb22 ]
+[ Upstream commit 7b3cc361b5942ac600f38e5dff7aed009be34964 ]
 
-pm_runtime_get_sync() leaves the runtime PM usage counter incremented
-even when it fails, but cmdq_mbox_flush() returns the error without
-dropping it.  The same happens when the GCE thread does not drain in
-time and the function bails out with -EFAULT.
+qcom_ipcc_mbox_shutdown() clears chan->con_priv with no locking.
+qcom_ipcc_mbox_send_data() dereferences the same field without
+checking for NULL first, so a send racing a concurrent shutdown can
+crash:
 
-Undo the reference on both error paths.
+  mchan = chan->con_priv;
+  ...
+  hwirq = qcom_ipcc_get_hwirq(mchan->client_id, mchan->signal_id);
 
-Fixes: b0524f7c9635 ("mailbox: mediatek: implement flush function")
+Add the same NULL guard mbox_send_message() already uses for
+chan->cl, and bail out before dereferencing a cleared con_priv.
+
+To close the remaining race where send_data() reads con_priv a moment
+before a concurrent shutdown clears it, acquire the spinlock in
+qcom_ipcc_mbox_shutdown() using the modern guard(spinlock_irqsave)
+primitive before setting con_priv to NULL.
+
+Fixes: d6fbfdbc1274 ("mailbox: qcom-ipcc: Fix IPCC mbox channel exhaustion")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mtk-cmdq-mailbox.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/mailbox/qcom-ipcc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
-index e523c84b48088..96462ca844715 100644
---- a/drivers/mailbox/mtk-cmdq-mailbox.c
-+++ b/drivers/mailbox/mtk-cmdq-mailbox.c
-@@ -565,8 +565,10 @@ static int cmdq_mbox_flush(struct mbox_chan *chan, unsigned long timeout)
- 	int ret;
+diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+index 185b63f724d4f..387aa72aeedf1 100644
+--- a/drivers/mailbox/qcom-ipcc.c
++++ b/drivers/mailbox/qcom-ipcc.c
+@@ -10,6 +10,7 @@
+ #include <linux/mailbox_controller.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
++#include <linux/spinlock.h>
  
- 	ret = pm_runtime_get_sync(cmdq->mbox.dev);
--	if (ret < 0)
-+	if (ret < 0) {
-+		pm_runtime_put_noidle(cmdq->mbox.dev);
- 		return ret;
-+	}
+ #include <dt-bindings/mailbox/qcom-ipcc.h>
  
- 	spin_lock_irqsave(&thread->chan->lock, flags);
- 	if (list_empty(&thread->task_busy_list))
-@@ -603,6 +605,9 @@ static int cmdq_mbox_flush(struct mbox_chan *chan, unsigned long timeout)
- 		dev_err(cmdq->mbox.dev, "Fail to wait GCE thread 0x%x done\n",
- 			(u32)(thread->base - cmdq->base));
+@@ -151,6 +152,9 @@ static int qcom_ipcc_mbox_send_data(struct mbox_chan *chan, void *data)
+ 	struct qcom_ipcc_chan_info *mchan = chan->con_priv;
+ 	u32 hwirq;
  
-+		pm_runtime_mark_last_busy(cmdq->mbox.dev);
-+		pm_runtime_put_autosuspend(cmdq->mbox.dev);
++	if (!mchan)
++		return -EINVAL;
 +
- 		return -EFAULT;
- 	}
- 	pm_runtime_mark_last_busy(cmdq->mbox.dev);
+ 	hwirq = qcom_ipcc_get_hwirq(mchan->client_id, mchan->signal_id);
+ 	writel(hwirq, ipcc->base + IPCC_REG_SEND_ID);
+ 
+@@ -159,6 +163,8 @@ static int qcom_ipcc_mbox_send_data(struct mbox_chan *chan, void *data)
+ 
+ static void qcom_ipcc_mbox_shutdown(struct mbox_chan *chan)
+ {
++	guard(spinlock_irqsave)(&chan->lock);
++
+ 	chan->con_priv = NULL;
+ }
+ 
 -- 
 2.53.0
 
