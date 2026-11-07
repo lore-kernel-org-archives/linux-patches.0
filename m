@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064910;
-	b=EyIe0vMTFjzk2eD3+UqFc1tNjn5umUewiiEgSb4cccN6WjMKnZFktemHAqg+NUGs5HGU
-	 Ff9fHGCULm4DisJK/V0vy0dXo4csJKYL5OE7dNQVi5+OeiauhGXTEFdcXLX5cFaDYFGO0
-	 On0KxMaKu7oqpHyERzFPM3WFh5jEVe9mWNxiS+mjSV84tRPN84Wv1vYeKLdO5NmgAyaJv
-	 y+IiAcFKhYjC4e1k9VfPcj4V7XdJlLsnvsMCVU/nId1J03VLIIvekUivn6J74wv6g4D2R
-	 Xf8RXzNXGUf9N5OUgcA0+Ay9AM4r5oeqlk+yFXfuOzpXSYoYga0X119PPemKIRHUYnA==
+	t=1794064912;
+	b=VjKr/aX3eoXAU9UsffeTGqiOMNXuB+CuOhUmUmaBT+gspNvO96VEiOsznm/84yDhs0Vg
+	 t/SUWD14pR2RsM95HnjI4yPDqfuZWaLgD9vcQu4S9/Jmk1Zi6xppBEM0CFUUcPv618utq
+	 49eWdahn9FDZ5trAWVGioJDF7Gmsg3csz7NCW89z9mS2ma9x2cZetMt9VqzWpMxk4+ghU
+	 e+HxxY9qbVxzpaq+DbmFg8IECsrlums019T4qlVO+PY7vrOeuUGGaMivz29POw9RNdhRn
+	 NnEDF3732ogKR0yAK/pbsdmTwJ5ILA5hb2vP5vlzL6sU4OxVGpH6ubs+qFFIUakOdKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064910;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064912;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ygvwXRl1h+Q0gh5KUKxStNzw4XVc+smOlKMlXoatgbs=;
-	b=or6BhqM8niiYBpgVUsnGMbKCtCThp5kij/EGWzgSN7/xydNRr1kE+EpAktOe+zQXUCwK
-	 hp8S6fEkQVIln4u8SKtdvmiTnMRQPRn3KPgls74mZCOjoM8lm0Z/SBnGMp9n+iNeTg4++
-	 vMYe1zaT4ST0w0sy9Ot08fGxgv58VyPoy1KLzM+09jv5i9qBf+mxr5Nc1vZRTonJQBr3x
-	 tVIUV1so+b/2cdB4Zxt6MRnazksWVHV4Ft6PJcjShhzAQPKRbb0E99hD+228COPYIpE0X
-	 GRCLxShyHxFfXGaNn3Bjy9rfUui+OxCxPeN3be5Q3QJ3n/TlKdnirukFVrarBMhYhGg==
+	bh=iXXCk2OjJBm5cHaajZtBz3AAFiR6O4gQXWIdp6RbKn0=;
+	b=X+kMkiCaUsCzW0pRF7uOnTcVh5g41dPBMC38ndjMnxMQfrwLthNg5QsLhBEY8tMHB/Ie
+	 yhld/vdafJVgzkgsDzTWlWycPUO5h3zWaAmS/EEtXg8v3C6CdlqmAYK3oN4HGz5jfE3p1
+	 ES9RjgKUBq+UJlYc7yVK7X6v97ffeqbNy1XMFIOXuJtZIgHV6ygBTYi75VpxIXuer6Jg4
+	 /R2T4xh23Ms1OJnQnfZ/f1Xnb5Wb6Hwl/llcDgvngklcMXVSq+XIuKiZxZKCmuCMpWOEv
+	 o9INlL9GXw/GpnTQ5a51gwpJAC6vlgGyC43pV+GwoN5z01ogGsIvTlJMXUom8Bz935A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bVGHhcL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pzEqwydf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2B1606A9F0;
-	Sat,  7 Nov 2026 15:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6E7606A9EF;
+	Sat,  7 Nov 2026 15:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bVGHhcL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DB91F0089F;
-	Sat,  7 Nov 2026 15:21:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pzEqwydf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723D61F0089F;
+	Sat,  7 Nov 2026 15:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064910;
-	bh=ygvwXRl1h+Q0gh5KUKxStNzw4XVc+smOlKMlXoatgbs=;
+	s=korg; t=1794064911;
+	bh=iXXCk2OjJBm5cHaajZtBz3AAFiR6O4gQXWIdp6RbKn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0bVGHhcLTL/r6uA28Bagb9/Bb3GaUMSoNQYwfn29Vm0e0v8SxW3vK9FSJh9FS14Lm
-	 WI9I9JhljMDE/dnsEN/godKzeNLVqkQtjOegVTq4qyvIRIKUX0St73KGZUmZAXYNWA
-	 qkrTGypDY5l7OjHrIQ+ISr+JWnkhhhB9kq1MMAs4=
+	b=pzEqwydfuSZokaW1pgH47lutJze3g4bEITVDgabqCHG8MOKP+sGq9oohEedNh9Tr5
+	 pxtKyqr7zv4AO0I2QS9EHC5uhRi/ectKtn7e2roGhS6USC8Cyy9o9ywOhfR0Hnog7c
+	 LRmAm/nPAz39/QUUqvoB4bF7mOMli7oSAB0ttx4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samarth Narang <samarth.colleges@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0811/1257] iommupt: Do not allow PTEs to be split when dirty logging
-Date: Sat,  7 Nov 2026 08:51:47 -0500
-Message-ID: <20261107135001.742105428@linuxfoundation.org>
+Subject: [PATCH 7.3 0812/1257] spi: bcm-qspi: reject oversized dummy bytes in mspi exec_mem_op
+Date: Sat,  7 Nov 2026 08:51:48 -0500
+Message-ID: <20261107135001.772741061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,130 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit 04bcf84613346b973a8cc0c59238b6b5bc902688 ]
+[ Upstream commit 9e44f0df3fff215d9033089e85980048c3ac132a ]
 
-If a single PTE cannot be stored in the current bitmap that should be a
-failure and reported back to userspace. Allowing a PTE to be split creates
-a possibility that dirty memory will be reported as clean.
+bcm_qspi_mspi_exec_mem_op() builds a local command buffer cmd[6]
+holding one opcode byte, up to four address bytes and one spare
+byte, and sets t[0].len = op->addr.nbytes + op->dummy.nbytes + 1.
+bcm_qspi_exec_mem_op() only validates op->addr.nbytes <= 4 and never
+bounds op->dummy.nbytes, which spi_mem_check_op() also leaves
+unrestricted. With addr.nbytes = 4 and dummy.nbytes >= 2 the length
+becomes 7 or more, so write_to_hw() reads past cmd[] on the kernel
+stack and pushes the leaked bytes into the hardware TXRAM.
 
-The gather must also cover the entire PTE that is being cleaned, not just
-the part that fits within the bitmap.
+Reject operations whose dummy phase does not fit the remaining byte
+of cmd[] by requiring op->dummy.nbytes <= 1, so such transfers fall
+back to the generic SPI path instead of overrunning the buffer.
 
-Fix both issues by computing the full IOVA range of every PTE and using
-that to update the bitmap and the gather. The bitmap code now rejects
-ranges that don't fit in it, and the gather always combined ranges.
-
-The selftest quietly relied on a bug where the CONT was split, that is why
-the half page size for the mock domain saw alternating dirties. Increase
-the dirty test page size to PAGE_SIZE so it still works as intended.
-
-Cc: stable@vger.kernel.org
-Fixes: 4a00f9434891 ("iommupt: Add read_and_clear_dirty op")
-Reported-by: Samarth Narang <samarth.colleges@gmail.com>
-Closes: https://lore.kernel.org/all/20261013165814.309255
-Link: https://patch.msgid.link/r/0-v1-5bb926ff73ec+576-iommufd_dirty_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Fixes: 5f195ee7d830c ("spi: bcm-qspi: Implement the spi_mem interface")
+Cc: stable@vger.kernel.org # 4.18+
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261015-bcm-qspi-dummy-bytes-v1-1-c319da3c2497@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/generic_pt/iommu_pt.h     | 30 +++++++------------------
- tools/testing/selftests/iommu/iommufd.c | 10 ++++-----
- 2 files changed, 13 insertions(+), 27 deletions(-)
+ drivers/spi/spi-bcm-qspi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
-index 07ec2b3ab986a..837d835e4fad8 100644
---- a/drivers/iommu/generic_pt/iommu_pt.h
-+++ b/drivers/iommu/generic_pt/iommu_pt.h
-@@ -240,27 +240,14 @@ struct pt_iommu_dirty_args {
- };
+diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
+index 0f96ac59da114..5031b21424795 100644
+--- a/drivers/spi/spi-bcm-qspi.c
++++ b/drivers/spi/spi-bcm-qspi.c
+@@ -1197,8 +1197,9 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
+ 	u32 addr = 0, len;
+ 	u_char *buf;
  
- static void record_dirty(struct pt_state *pts,
--			 struct pt_iommu_dirty_args *dirty,
--			 unsigned int num_contig_lg2)
-+			 struct pt_iommu_dirty_args *dirty)
- {
--	pt_vaddr_t dirty_len;
--
--	if (num_contig_lg2 != ilog2(1)) {
--		unsigned int index = pts->index;
--		unsigned int end_index = log2_set_mod_max_t(
--			unsigned int, pts->index, num_contig_lg2);
--
--		/* Adjust for being contained inside a contiguous page */
--		end_index = min(end_index, pts->end_index);
--		dirty_len = (end_index - index) *
--				log2_to_int(pt_table_item_lg2sz(pts));
--	} else {
--		dirty_len = log2_to_int(pt_table_item_lg2sz(pts));
--	}
-+	unsigned int lg2sz = pt_entry_oa_lg2sz(pts);
-+	pt_vaddr_t start_va = log2_set_mod(pts->range->va, 0, lg2sz);
-+	pt_vaddr_t dirty_len = log2_to_int(lg2sz);
++	/* cmd[] holds 1 opcode + 4 address + 1 dummy byte at most */
+ 	if (!op->data.nbytes || !op->addr.nbytes || op->addr.nbytes > 4 ||
+-	    op->data.dir != SPI_MEM_DATA_IN)
++	    op->dummy.nbytes > 1 || op->data.dir != SPI_MEM_DATA_IN)
+ 		return -EOPNOTSUPP;
  
- 	if (dirty->dirty->bitmap)
--		iova_bitmap_set(dirty->dirty->bitmap, pts->range->va,
--				dirty_len);
-+		iova_bitmap_set(dirty->dirty->bitmap, start_va, dirty_len);
- 
- 	if (!(dirty->flags & IOMMU_DIRTY_NO_CLEAR)) {
- 		/*
-@@ -268,8 +255,8 @@ static void record_dirty(struct pt_state *pts,
- 		 * dirty tracking bits can't work together
- 		 */
- 		pt_entry_make_write_clean(pts);
--		iommu_iotlb_gather_add_range(dirty->dirty->gather,
--					     pts->range->va, dirty_len);
-+		iommu_iotlb_gather_add_range(dirty->dirty->gather, start_va,
-+					     dirty_len);
- 	}
- }
- 
-@@ -289,8 +276,7 @@ static inline int __read_and_clear_dirty(struct pt_range *range, void *arg,
- 			continue;
- 		}
- 		if (pts.type == PT_ENTRY_OA && pt_entry_is_write_dirty(&pts))
--			record_dirty(&pts, dirty,
--				     pt_entry_num_contig_lg2(&pts));
-+			record_dirty(&pts, dirty);
- 	}
- 	return 0;
- }
-diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
-index d44b34b05757e..22af28aef13b4 100644
---- a/tools/testing/selftests/iommu/iommufd.c
-+++ b/tools/testing/selftests/iommu/iommufd.c
-@@ -2175,9 +2175,9 @@ FIXTURE_SETUP(iommufd_dirty_tracking)
- 	test_ioctl_ioas_alloc(&self->ioas_id);
- 
- 	/*
--	 * For dirty testing it is important that the page size fed into
--	 * the iommu page tables matches the size the dirty logic
--	 * expects, or set_dirty can touch too much stuff.
-+	 * Disabling huge pages maps in PAGE_SIZE units, which can span
-+	 * multiple contiguous MOCK_PAGE_SIZE entries. The dirty tests must
-+	 * expect the entire mapping to be reported dirty.
- 	 */
- 	cmd.object_id = self->ioas_id;
- 	if (!variant->hugepages)
-@@ -2335,7 +2335,7 @@ TEST_F(iommufd_dirty_tracking, device_dirty_capability)
- 
- TEST_F(iommufd_dirty_tracking, get_dirty_bitmap)
- {
--	uint32_t page_size = MOCK_PAGE_SIZE;
-+	uint32_t page_size = PAGE_SIZE;
- 	uint32_t ioas_id = self->ioas_id;
- 	uint32_t hwpt_id;
- 
-@@ -2377,7 +2377,7 @@ TEST_F(iommufd_dirty_tracking, get_dirty_bitmap)
- 
- TEST_F(iommufd_dirty_tracking, get_dirty_bitmap_no_clear)
- {
--	uint32_t page_size = MOCK_PAGE_SIZE;
-+	uint32_t page_size = PAGE_SIZE;
- 	uint32_t ioas_id = self->ioas_id;
- 	uint32_t hwpt_id;
- 
+ 	buf = op->data.buf.in;
 -- 
 2.53.0
 
