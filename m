@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064081;
-	b=HZKNFbTqkBIspN+tobBoN1fRVENTjIRr2QVAuTs+ShUnJav+zbmAIKT9GqvSJZoX3oGO
-	 9okrodcBczqMZ70aEKXIflsJ34aUvECR8l5HEsJLxSsJJok8p7AhEkpb9rOtRKL7o72mD
-	 qddX+a/gGyybWKPjR5n/EnzKn0W4Qpe7dK95OQ6iiNfohTCt2N7f4ag3bpFmjzmDaaoBY
-	 wSbgFtcuDY1/7MDSkA961rhKsAWoi6zgqbIzRvhkgFqTxsnZG1K56lhDDI4b+/R1z/KPl
-	 rXgIpitGuADEt1T4Cf/+B/3icNuaiAN49U+5z3oyZljBVl/G5UnIGpwn73d4SAfePoQ==
+	t=1794064083;
+	b=POc4oyiZvjeiVlRohoofxD+/vSTy11TbPvmXeS+mCzcLizdw1g6d31292D+dTH4P9Ua1
+	 PYh+wDQ2XJ/wZkYi4pOIJj5MxBX+kIUR81t55CXb39FkhEiAbiHWwZYRSSVPHzTduQlya
+	 qBEZhd7VOR0udmr+85CetEc/uA/tGXAGGper8VT9QAw9JsxlLhkT/61Cngrd8fWj1x8sR
+	 kYnXhhK7/7InSQenxPkb1PrpsGOGd3tPEsfTGpDiTmvvl4Suapy7IixMAQ66CI4oeMCDy
+	 tfPSgrSibVkQz0XDHV/j7jUI3p7qMBz6ONnILRSPV6IiuGMcOEEQOO3CSHpaFY8GmWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064081;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064083;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B5zZ+GCK8AbDU5kpxYXVsc0Ll3GfmCsQOEfGLNhjlzE=;
-	b=5e4ttVPafFvVQJ98GBQnOX88xEzM1VrQ5PlUq75eyumZ0SLp/mglsN1I05T1Mixa1AEP
-	 V3JMtcTN/o64a7kGBGbzOOBEOCXDtErXze167txyqIVvzjntNSYVKd70ktCGkbcp/kVSK
-	 7HcUmRzEDRAzaVXU3Rn5eZ2r+j4lG9fe7jtU4ihz3X2hVXjBovVwKeTFDtwj6St/iS1ie
-	 uyLgFbF6H95WlNhz7n7+h4iDD19tNzXsE5mDv+w0GtZnPkvW/12tSdz6kW1ZO8ynhb4Lb
-	 mn1HcjwiuBPM3Hxn1JO6acO6DexFMRAEKHfdoyPVnZR0hJaXdIM9rWevh4fr2NkU2yQ==
+	bh=2sRcyCzOPo4YFPjEaFy/VcFIKJLI/dFV0pUcNqqvn3U=;
+	b=bX3CyyiQ5BtBuFMYRXpmW3tbnQFI8dQGX8P8wn+b2eAgcIb9Y9Qkq8BXlyRZHMhh5gzL
+	 VC7yLspjieGgGizo/f4rRq6ZgoUwv3mtOsF4A8mquEzg/o7HNfsGBvvNgYuwvcjy5nnLu
+	 D0ITawJmuY0y4FoqUhgpXhgA2swwpRPL6xDOtdPMP95dzJj8sozFqStZsXWkmWEK4f/t4
+	 ii1EoNOhj6O5/xyEZOuKqDudD83c6at6WA6wUl+wlV/wnlQ2JthZ5RPW/jwKlJYR9pDJf
+	 XlwB7uLiRs4NYFdnV6LLnLXMJSn2HAXygVLe9KG6nuODR+0tgjyJ+lY9gKloC0KjrdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DceCcyuk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbDmwDji;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDF660A5BE8;
-	Sat,  7 Nov 2026 15:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BF9606A9F2;
+	Sat,  7 Nov 2026 15:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DceCcyuk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6B71F008A3;
-	Sat,  7 Nov 2026 15:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbDmwDji
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1E61F0089F;
+	Sat,  7 Nov 2026 15:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064081;
-	bh=B5zZ+GCK8AbDU5kpxYXVsc0Ll3GfmCsQOEfGLNhjlzE=;
+	s=korg; t=1794064082;
+	bh=2sRcyCzOPo4YFPjEaFy/VcFIKJLI/dFV0pUcNqqvn3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DceCcyukzrUzWaHuVXdOCZbUaZ+CfgYUs21WmbFrrH6Z/mPFt2eqVzaT59xnn1BEv
-	 f0qZwcpUeRWh6bdYRrctvYw1GkxvLu1fivT6uFZdlgySAIG3S0kG2eCDsOBQqNG3B3
-	 hmt3LZYtem7/Atl6lxPLbkccVzNxMgWJPJvPcgrg=
+	b=vbDmwDjirvqfpIfF7jyaIGhPCoqc0jgZuYTE9J4/8Utopn1tWSUgDRzy/TYAwJyZ5
+	 d7HG5Ddfn2ceMTHVdFPncYlJHxFMjeQ3EiYx4im6dmph8uVTs/xdol3hs014SxYtvs
+	 DeR9DzUpQtWu0fi6rMXQK8vVInbgpGoDtkWbw1JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	sashiko-bot@kernel.org,
+	Ariana Lazar <ariana.lazar@microchip.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0246/1257] drm/mali-dp: Fix runtime PM leak in malidp_crtc_atomic_enable()
-Date: Sat,  7 Nov 2026 08:42:22 -0500
-Message-ID: <20261107134946.306951404@linuxfoundation.org>
+Subject: [PATCH 7.3 0211/1257] iio: dac: mcp47feb02: Fix gain field initialization for active channels
+Date: Sat,  7 Nov 2026 08:41:47 -0500
+Message-ID: <20261107134945.369503843@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,43 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Ariana Lazar <ariana.lazar@microchip.com>
 
-[ Upstream commit 73ef663c75688168e31dbe9c585b939be410a945 ]
+[ Upstream commit 29491c675c2babb9a4a8cf9b33b38347e4565dee ]
 
-malidp_crtc_atomic_enable() resumes the device with
-pm_runtime_get_sync() and returns early when the resume fails.  The
-runtime PM usage count is incremented by pm_runtime_get_sync() even
-when the resume fails, so returning without dropping the reference
-leaks it and, once the error has been hit, prevents the device from
-ever suspending again.
+As per MCP47FXBX48 Datasheet, in the format of the Gain Control and System
+Status Register each DAC channel has one bit to control its gain,
+starting at bit 8, while bits 0-7 contain status or unimplemented bits.
 
-Drop the runtime PM reference with pm_runtime_put_noidle() on the
-resume failure path before returning.
+The previous formula didn't initialize correctly all channels, being
+replaced by using field_get() with the already defined macro used in write
+operations where needed in the rest of the driver implementation.
+DAC_GAIN_MASK(i) extracts the gain control bit for each active channel
+correctly in one step.
 
-Fixes: 85f6421889ec ("drm: mali-dp: Enable power management for the device.")
+Fixes: bf394cc80369 ("iio: dac: adding support for Microchip MCP47FEB02")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260804134616.1D8A21F00A3E@smtp.kernel.org/
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260916102112.2018372-1-vulab@iscas.ac.cn
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Ariana Lazar <ariana.lazar@microchip.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/malidp_crtc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/dac/mcp47feb02.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/arm/malidp_crtc.c b/drivers/gpu/drm/arm/malidp_crtc.c
-index ebe8e10787772..af62bc1027648 100644
---- a/drivers/gpu/drm/arm/malidp_crtc.c
-+++ b/drivers/gpu/drm/arm/malidp_crtc.c
-@@ -56,6 +56,7 @@ static void malidp_crtc_atomic_enable(struct drm_crtc *crtc,
+diff --git a/drivers/iio/dac/mcp47feb02.c b/drivers/iio/dac/mcp47feb02.c
+index 6a3875e1d6a2c..1b1a4972f7719 100644
+--- a/drivers/iio/dac/mcp47feb02.c
++++ b/drivers/iio/dac/mcp47feb02.c
+@@ -36,7 +36,6 @@
+ #define MCP47FEB02_DAC_CTRL_MASK			GENMASK(1, 0)
  
- 	if (err < 0) {
- 		DRM_DEBUG_DRIVER("Failed to enable runtime power management: %d\n", err);
-+		pm_runtime_put_noidle(crtc->dev->dev);
- 		return;
- 	}
+ #define MCP47FEB02_GAIN_CTRL_STATUS_REG_ADDR		0x50
+-#define MCP47FEB02_GAIN_BIT_MASK			BIT(0)
+ #define MCP47FEB02_GAIN_BIT_STATUS_EEWA_MASK		BIT(6)
+ #define MCP47FEB02_GAIN_BITS_MASK			GENMASK(15, 8)
  
+@@ -1016,7 +1015,6 @@ static int mcp47feb02_init_ctrl_regs(struct mcp47feb02_data *data)
+ 	if (ret)
+ 		return ret;
+ 
+-	gain_ch = gain_ch & MCP47FEB02_GAIN_BITS_MASK;
+ 	for_each_set_bit(i, &data->active_channels_mask, data->phys_channels) {
+ 		struct device *dev = regmap_get_device(data->regmap);
+ 		unsigned int pd_tmp, dac_val;
+@@ -1027,7 +1025,7 @@ static int mcp47feb02_init_ctrl_regs(struct mcp47feb02_data *data)
+ 		data->chdata[i].dac_data = dac_val;
+ 
+ 		data->chdata[i].ref_mode = (vref_ch >> (2 * i)) & MCP47FEB02_DAC_CTRL_MASK;
+-		data->chdata[i].use_2x_gain = (gain_ch >> i)  & MCP47FEB02_GAIN_BIT_MASK;
++		data->chdata[i].use_2x_gain = field_get(DAC_GAIN_MASK(i), gain_ch);
+ 
+ 		/*
+ 		 * Inform the user that the current voltage reference read from the volatile
 -- 
 2.53.0
 
