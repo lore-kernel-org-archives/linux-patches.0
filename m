@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064912;
-	b=VjKr/aX3eoXAU9UsffeTGqiOMNXuB+CuOhUmUmaBT+gspNvO96VEiOsznm/84yDhs0Vg
-	 t/SUWD14pR2RsM95HnjI4yPDqfuZWaLgD9vcQu4S9/Jmk1Zi6xppBEM0CFUUcPv618utq
-	 49eWdahn9FDZ5trAWVGioJDF7Gmsg3csz7NCW89z9mS2ma9x2cZetMt9VqzWpMxk4+ghU
-	 e+HxxY9qbVxzpaq+DbmFg8IECsrlums019T4qlVO+PY7vrOeuUGGaMivz29POw9RNdhRn
-	 NnEDF3732ogKR0yAK/pbsdmTwJ5ILA5hb2vP5vlzL6sU4OxVGpH6ubs+qFFIUakOdKw==
+	t=1794064913;
+	b=HFdmH2kXL8kTKj3dvsXEzJ235ferc0gxAJwMEog1gn9ruqUzz2K5POEe43YZmzxfupxF
+	 h83/6QifX/tOSfcOOMdR+Q2Jt1wDG23pTsucdWcHqMxwth/ocgcM/mydGCNMxrOZgTKUT
+	 VzuhrWLnKzbwb+5r5Q+b+HhXTkCxZWNDhUg+NfdDPAJCcXsy9dOzD3atoW80KhwH5NfgM
+	 UvJGAIpXvTcz4d9XKZfjjt0aONIdTf8V1sT9Uv1J83d3d6kBqeTK1OCbF2yTqIXCmaV4W
+	 e7HRxojxwZt5FM87XOq1gmmp3K4tAGIMwDj7YVr2tCuZLEpLyXRodB3Pl/PYFrP4cRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064913;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iXXCk2OjJBm5cHaajZtBz3AAFiR6O4gQXWIdp6RbKn0=;
-	b=X+kMkiCaUsCzW0pRF7uOnTcVh5g41dPBMC38ndjMnxMQfrwLthNg5QsLhBEY8tMHB/Ie
-	 yhld/vdafJVgzkgsDzTWlWycPUO5h3zWaAmS/EEtXg8v3C6CdlqmAYK3oN4HGz5jfE3p1
-	 ES9RjgKUBq+UJlYc7yVK7X6v97ffeqbNy1XMFIOXuJtZIgHV6ygBTYi75VpxIXuer6Jg4
-	 /R2T4xh23Ms1OJnQnfZ/f1Xnb5Wb6Hwl/llcDgvngklcMXVSq+XIuKiZxZKCmuCMpWOEv
-	 o9INlL9GXw/GpnTQ5a51gwpJAC6vlgGyC43pV+GwoN5z01ogGsIvTlJMXUom8Bz935A==
+	bh=C57y+wgr5Qh1Tpit4GlQyCKmxGMroKzXYci/0fMrG6s=;
+	b=vj5ftdsdiiAeLDsLPVaqeW1xEgoSnqPhxprjovTxar40ffHmoGW78zdK0d7bBf4kQIBF
+	 WyrfzfGdQfBsQqvxKeo1WKKZwswSr7HXJwQh+hJ3cDX2AbT/6wESWdXttPf6CzumsrOE3
+	 MvELu5YVg+f/8xKpokDSys79zUzOLcnEzjFxFajlp6zkE5luiH3xIYiC8ef9e9Jyqta46
+	 4kVMGGJahIKWwcrzlmDDHN9C+JWcz/p3OIaVWqTGqOG4ej5SNqMlCptlJxlGGnZaat7/i
+	 UBYzqP/bg9qdSYlvQZnItHulvFeGZc2FCnufScb2vNDs6xlE13DeW7ffNDSgPPc9LNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pzEqwydf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKlznTjz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6E7606A9EF;
-	Sat,  7 Nov 2026 15:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EA9606A9EF;
+	Sat,  7 Nov 2026 15:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pzEqwydf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723D61F0089F;
-	Sat,  7 Nov 2026 15:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKlznTjz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CAF1F0089F;
+	Sat,  7 Nov 2026 15:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064911;
-	bh=iXXCk2OjJBm5cHaajZtBz3AAFiR6O4gQXWIdp6RbKn0=;
+	s=korg; t=1794064913;
+	bh=C57y+wgr5Qh1Tpit4GlQyCKmxGMroKzXYci/0fMrG6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pzEqwydfuSZokaW1pgH47lutJze3g4bEITVDgabqCHG8MOKP+sGq9oohEedNh9Tr5
-	 pxtKyqr7zv4AO0I2QS9EHC5uhRi/ectKtn7e2roGhS6USC8Cyy9o9ywOhfR0Hnog7c
-	 LRmAm/nPAz39/QUUqvoB4bF7mOMli7oSAB0ttx4Y=
+	b=lKlznTjz/FMWwgHz4ZrUFMsLxXh1OzPaOVeR2oJa/UX0xEAkOFT0Afjseq55KJT9v
+	 6lnviL1XMEwZriIxOwQT3VdHaq+RHPCwis2G9xuBPLqcKpr/O7CQD9DFzHvW9Qkek3
+	 9zVqfJLv6vJ9m8P7Fse/PWjT8LoYKgn1b8uxkIps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0812/1257] spi: bcm-qspi: reject oversized dummy bytes in mspi exec_mem_op
-Date: Sat,  7 Nov 2026 08:51:48 -0500
-Message-ID: <20261107135001.772741061@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Keng-Yu Lin <keng-yu.lin@hpe.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Desnes Nunes <desnesn@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>
+Subject: [PATCH 7.3 0813/1257] PCI/PM: Restore BARs after powering up during enumeration
+Date: Sat,  7 Nov 2026 08:51:49 -0500
+Message-ID: <20261107135001.798364762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,49 +72,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Keng-Yu Lin <keng-yu.lin@hpe.com>
 
-[ Upstream commit 9e44f0df3fff215d9033089e85980048c3ac132a ]
+[ Upstream commit f043083843cac1105206437d8c58e725b6412fad ]
 
-bcm_qspi_mspi_exec_mem_op() builds a local command buffer cmd[6]
-holding one opcode byte, up to four address bytes and one spare
-byte, and sets t[0].len = op->addr.nbytes + op->dummy.nbytes + 1.
-bcm_qspi_exec_mem_op() only validates op->addr.nbytes <= 4 and never
-bounds op->dummy.nbytes, which spi_mem_check_op() also leaves
-unrestricted. With addr.nbytes = 4 and dummy.nbytes >= 2 the length
-becomes 7 or more, so write_to_hw() reads past cmd[] on the kernel
-stack and pushes the leaked bytes into the hardware TXRAM.
+Commit 4d4c10f763d7 ("PCI: Explicitly put devices into D0 when
+initializing") added pci_pm_power_up_and_verify_state() to pci_pm_init().
+The helper ignores pci_power_up()'s return value indicating that BARs need
+restoring. Its resume callers restore saved configuration afterwards;
+pci_pm_init() does not.
 
-Reject operations whose dummy phase does not fit the remaining byte
-of cmd[] by requiring op->dummy.nbytes <= 1, so such transfers fall
-back to the generic SPI path instead of overrunning the buffer.
+D3hot-to-D0 may reset a device and lose its BARs (PCI PM 1.2, sec 5.4.1).
+After enumeration powers it up, pci_enable_device() reads D0 and skips the
+full power-up path. Previously, a device still in D3hot at enable time took
+that path, including BAR restoration.
 
-Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Fixes: 5f195ee7d830c ("spi: bcm-qspi: Implement the spi_mem interface")
-Cc: stable@vger.kernel.org # 4.18+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261015-bcm-qspi-dummy-bytes-v1-1-c319da3c2497@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+On AMD Venice SP7, two AMD xHCI controllers [1022:17d2] are in runtime
+D3hot with No_Soft_Reset clear before kdump. Diagnostic reads on
+v7.3-rc6-37 show the following for 0000:01:00.4 in the crash kernel:
+
+                                   PMCSR      BAR0
+  before the platform power call   0003       f4100004
+  after the platform power call    0003       f4100004
+  after native D0 power-up         0000       00000004
+
+The upper BAR DWORD stays zero. pci_power_up() returns 1, but the BAR
+address remains zero while dev->resource[0] still contains 0xf4100000.
+Without BAR restoration, the crash kernel hangs during boot. The last
+console output includes:
+
+  pci 0000:01:00.4: enabling device (0000 -> 0002)
+
+Restoring both controllers' BARs gives matching readbacks and allows kdump
+to save a vmcore and reboot. An AMD Turin xHCI [1022:1557] shows the same
+BAR loss; restoring its BAR also allows kdump to complete.
+
+Read the initial power state first. Otherwise, pci_power_up() may request a
+BAR restore based on a cached PCI_UNKNOWN state, even when the device is
+already in D0.
+
+For devices already in D0, only synchronize the platform state so
+that ACPI calls such as _REG still run. For other states, use
+pci_set_full_power_state() to power up the device and restore BARs
+when needed.
+
+Fixes: 4d4c10f763d7 ("PCI: Explicitly put devices into D0 when initializing")
+Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
+Suggested-by: Rafael J. Wysocki <rafael@kernel.org>
+Link: https://lore.kernel.org/r/CAJZ5v0ie2AvCbdv8-zkpYzHLcTwUPUj+=WWOQjDAPmSepSAQPg@mail.gmail.com/
+Signed-off-by: Keng-Yu Lin <keng-yu.lin@hpe.com>
+[bhelgaas: shorten comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>> ---
+Reviewed-by: Desnes Nunes <desnesn@redhat.com>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261015020811.1132314-1-keng-yu.lin@hpe.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm-qspi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/pci.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
-index 0f96ac59da114..5031b21424795 100644
---- a/drivers/spi/spi-bcm-qspi.c
-+++ b/drivers/spi/spi-bcm-qspi.c
-@@ -1197,8 +1197,9 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
- 	u32 addr = 0, len;
- 	u_char *buf;
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 38c7cb8221223..f85256413cf3d 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -3262,7 +3262,15 @@ void pci_pm_init(struct pci_dev *dev)
+ 	}
  
-+	/* cmd[] holds 1 opcode + 4 address + 1 dummy byte at most */
- 	if (!op->data.nbytes || !op->addr.nbytes || op->addr.nbytes > 4 ||
--	    op->data.dir != SPI_MEM_DATA_IN)
-+	    op->dummy.nbytes > 1 || op->data.dir != SPI_MEM_DATA_IN)
- 		return -EOPNOTSUPP;
+ poweron:
+-	pci_pm_power_up_and_verify_state(dev);
++	pci_update_current_state(dev, PCI_UNKNOWN);
++	if (dev->current_state == PCI_D0) {
++		/* No need for full power-up, just sync-up platform state */
++		platform_pci_set_power_state(dev, PCI_D0);
++	} else {
++		/* Power up the device and restore BARs if necessary */
++		pci_set_full_power_state(dev, false);
++	}
++	pci_update_current_state(dev, PCI_D0);
+ 	pm_runtime_forbid(&dev->dev);
  
- 	buf = op->data.buf.in;
+ 	/*
 -- 
 2.53.0
 
