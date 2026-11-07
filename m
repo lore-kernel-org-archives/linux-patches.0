@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063956;
-	b=3eIzlcoel8NvgBoB6Vxdsn3XV6fxPAUohsAcFqihOkNFLgGu4V5TmGo60obmHaBYjyFA
-	 AG9rC7Wun3hyGMe3/5GG9FCCtzc4zPL1kRNJZL0uRSxK8fIS0oSEjWS7FylY5jUAuIZe5
-	 wf2wvYi1sDk9HAGe2aAcevU1+VgpEndUrJq8xISO6OjVA4+LWYpsv1aW9wdljnGIFtmYw
-	 2E6NVvtCuzVpPgq8v5jbv/kVok6WHcFdtipbWB0ZuqrgYnL3cHbhEBvHWWJSFZ0nvls3O
-	 DcyOBJPGN8F+zaMABJ0gahO7RTbFWHUdpP+A2T7/A7Z95ZQD+Von5UDg5jikKvXxojQ==
+	t=1794063958;
+	b=jdPif6ak7gYZnN7yG+K9nDx6QHMzDbt03M6J7A20ncGBQOq5qpRrdI5WCkh4ObuaDogK
+	 +zTXf1OwrTAM+goXactBnbFEKUN0ekAM0QYRazZmVD9ChlKOy8HBF1PaBKSP/AkdjFUQn
+	 sYZzabDCldNYOAvaBtJ4ppkKCPJEudAu211/rCTvx+P80BAYZcEUGSuK8gyoMGLorpryW
+	 pucjXtagIWupRMjM17wbk6VYe3pV0DkzTMAoZM6VUV/vtR78PruBvy79O7h2CFdt2XDmo
+	 LSRGWLlQNB5l7HLZbHLxgqDSV2wHB6CTxSgYQk0wHMHDtiGuCfNdTcRMVhI5tTYqzaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063956;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G4up1Lwv2yuBL6aszzUL/P7krhsObhItFNWGxao9KgQ=;
-	b=AerfiKVyLA8I9AX1/VREgvxI0n533ndHmKgkwqNkhdgRPnq9jrdri/mofpdmKAgv0Q1c
-	 mmrc3im2rF6T2HCg1tR9pvjkacZXbVaxSr9J4frMUPQmxgP8IiLDc3WykNM6QEz1yFtMP
-	 ogKWNsOgb4Cb9WMNrSPrNYRwtEoqcsrIIEydnxQmnHDVxrUVLuD6FA6rlwxkgIDL4wv7X
-	 AtQ/CUE0VloRreDxmNt1VvEe5FAD67824RKooS6/nvst993NUhaBUqx5kTkY4lCq20Hr7
-	 AHJ7QoLH/fsP8OIb0bvQjMZPoW1PB9GspRtuhdc0DGpuLmDITi+a7+q+T5peFSNrxHg==
+	bh=tUL89zczg/+10RA+b9ON4Tn8dlRAumVcCfUHb4BlrOI=;
+	b=hgyiWI6v3BNXcSD6xOpaPAs/ltuMqAvuFRWQq+r8COpLWJHOaxx/rZ4v25/cNOf3kZNw
+	 h2qPWmT4hMcVzy7MWFWvM5PC1BNAMPBKHWsK+dQLzPQH49Nmpnc/ExMJhIwepAe6Wupqv
+	 VFdbEkjgY64WjQpdlyEYXFH73sxFHv0EOxWsm9pebzmbIDBM4Wj/usGN0fd5QE97JOGn2
+	 6vmk+wW8xMxO3MMuthFTUFRAUW+eVx7Ko0YVeWERn6dZm2Fbe27fHGYZzA7A85TJoEjmO
+	 lvWwV8LrFrQf4sQe7rTwsLCdUPKB4MU9sVoCMNTnavTox2lhJc0hiYeDA7+yEn4vaqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zBE2d2lt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHh4Fses;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487B9608360F;
-	Sat,  7 Nov 2026 15:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03B3608360F;
+	Sat,  7 Nov 2026 15:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zBE2d2lt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABBB1F0089F;
-	Sat,  7 Nov 2026 15:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gHh4Fses
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498BD1F0089F;
+	Sat,  7 Nov 2026 15:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063956;
-	bh=G4up1Lwv2yuBL6aszzUL/P7krhsObhItFNWGxao9KgQ=;
+	s=korg; t=1794063957;
+	bh=tUL89zczg/+10RA+b9ON4Tn8dlRAumVcCfUHb4BlrOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zBE2d2ltfmQNWNRmDN41EIixOGKWzwuy8x/FQegVDld2rYp+Ef01tQuuHN1eHC7gd
-	 kHdve21aERqH4SAksBto0B82U2nv2lP+mEXGePYuXPeiOLpGtEBXmv7sjtaMwWJDbO
-	 ee5YKINVYCeQC+hKSK7Cnn2UNSA9RGdyWu5iGZ+0=
+	b=gHh4Fses+YLQqExqS45vse9gBqf+TWKBTOCZlN2cStMsKYBJppMePyVgS5sOToHGr
+	 +SIydBWY75x+WwpW0aAO0aFT00stO8tA1hVKrkiYW0muqzdccqut1WEJLV5kVhz9Iq
+	 VzLqOrJRz+zrg/AhSkw7JSH983c8NayK1Cvpvfq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thorsten Blum <blum@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0145/1257] media: vicodec: zero-initialize stateful decoder heap buffers
-Date: Sat,  7 Nov 2026 08:40:41 -0500
-Message-ID: <20261107134943.316581924@linuxfoundation.org>
+Subject: [PATCH 7.3 0146/1257] crypto: atmel-tdes - zero-initialize device state
+Date: Sat,  7 Nov 2026 08:40:42 -0500
+Message-ID: <20261107134943.344658991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,50 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 27953c044974baf7e24dee3e9342fe0103dea80c ]
+[ Upstream commit dbe70508d507acd677e67eaf029040f5e3a3b2b3 ]
 
-The stateful decoder leaks uninitialized kernel heap memory to userspace.
-A process that can open the decoder video node gets it back in the CAPTURE
-buffers it dequeues.
+Commit c659d07f11a3 ("crypto: atmel-tdes - Switch to managed version of
+kzalloc") accidentally replaced kzalloc() with devm_kmalloc(), so the
+device state is no longer zeroed.
 
-The reference frame and the compressed frame buffer are allocated with
-kvmalloc() in vicodec_start_streaming(), and the decoder can read them
-before they have been written. The first frame is allowed to be a P-frame,
-in which case it is decoded against a reference frame that was never
-produced, and the padding rows below the visible area are never written
-for any frame.
+atmel_tdes_hw_init() tests dd->flags during probe: a stale TDES_FLAGS_INIT
+skips the hardware reset, and a stale TDES_FLAGS_BUSY makes
+atmel_tdes_handle_queue() treat the engine as permanently busy, leaving
+every request queued and never dispatched.
 
-Use kvzalloc() for both allocations.
+Seen on a SAM9X75 Curiosity: the first TDES request after boot never
+completes and the TDES interrupt count stays at zero, while the AES and
+SHA engines on the same SoC work normally.
 
-Fixes: 256bf813ba39 ("media: vicodec: add the virtual codec driver")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
+Switch to devm_kzalloc(), matching the Atmel AES and SHA drivers.
+
+Fixes: c659d07f11a3 ("crypto: atmel-tdes - Switch to managed version of kzalloc")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Thorsten Blum <blum@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vicodec/vicodec-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/atmel-tdes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
-index 25ec3a43fc712..7ea024b14f0e9 100644
---- a/drivers/media/test-drivers/vicodec/vicodec-core.c
-+++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
-@@ -1605,9 +1605,9 @@ static int vicodec_start_streaming(struct vb2_queue *q,
- 	}
- 	state->ref_stride = q_data->coded_width * info->luma_alpha_step;
+diff --git a/drivers/crypto/atmel-tdes.c b/drivers/crypto/atmel-tdes.c
+index ffea1db74651d..2756dab3f4c7f 100644
+--- a/drivers/crypto/atmel-tdes.c
++++ b/drivers/crypto/atmel-tdes.c
+@@ -933,7 +933,7 @@ static int atmel_tdes_probe(struct platform_device *pdev)
+ 	struct resource *tdes_res;
+ 	int err;
  
--	state->ref_frame.buf = kvmalloc(total_planes_size, GFP_KERNEL);
-+	state->ref_frame.buf = kvzalloc(total_planes_size, GFP_KERNEL);
- 	state->ref_frame.luma = state->ref_frame.buf;
--	new_comp_frame = kvmalloc(ctx->comp_max_size, GFP_KERNEL);
-+	new_comp_frame = kvzalloc(ctx->comp_max_size, GFP_KERNEL);
+-	tdes_dd = devm_kmalloc(&pdev->dev, sizeof(*tdes_dd), GFP_KERNEL);
++	tdes_dd = devm_kzalloc(&pdev->dev, sizeof(*tdes_dd), GFP_KERNEL);
+ 	if (!tdes_dd)
+ 		return -ENOMEM;
  
- 	if (!state->ref_frame.luma || !new_comp_frame) {
- 		kvfree(state->ref_frame.luma);
 -- 
 2.53.0
 
