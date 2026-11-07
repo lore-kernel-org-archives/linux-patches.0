@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061988;
-	b=TJUEZ1stTugfanghJD2UDcHmvb/4Po8UCU6edyqFUS+be80gPfdYiIt6Bn16rn0PsQd0
-	 t0A2MlkVJczL6CqIKDJPWfxDJAeynZJwLLaA0gCYyNlPN/zlb+ytMX9QzBpA3T2cBfX/c
-	 591HUYwWLr3zB0RZwRqQFPTYvR9CemEZP7U+BuiY09tSclKNtlRMTg36vbBiv8se/UjHd
-	 LwnCkBC/gTxPuMjURarOpuNW+bExEY9zUVXBkpxtCrgGpUFjvghRCvltDF0O6PBoCBXYo
-	 DNo/DSqAnKSS5BtDf107xa6YAiaZ5JcyH1gkqP9ARU3CMMSBNQdxCSMM+iPMBkPADHQ==
+	t=1794061989;
+	b=Zj06ukvvc5kdKUPRzBbTk11x/tgBAkQ2Hz3ZZhOb0nk1spMOTWDfEnFArOu9+NspuV9+
+	 iQflla4VI87p38266ITcldi5KQyangqo9v7rutP4s0udIvYNrKn4CpKTIB9YCmFRRZTVc
+	 Bc4byiiyp76baoGw1LrKBLYumAHmjsX6p/t3Q0rX70qycqdhYG7yBOYHpW/nMPvNjQ50M
+	 6KBvB0rBITzAp1R08880909L5P7gAYfbYfypxjZA29aoL4jK4VnG+SXAz0CcO7kKSRRxl
+	 VlVoSKXmqkdWPRlQ9GeMZ0/VNS9HbZMnkYVlFSlx/92/bhyo8iF8plOrazrSjToRgYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061988;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061989;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CGmmdGw0fcK1G1FxqIx5bmQzwBJzqsGQJw/6+CRxktM=;
-	b=PC4E7yRgspbhBUnkdF8RfqQLZ4LMIPp8xLha9I5C1uPaTKcwUiyi2kX8mu61KDpqBKIb
-	 8QbBs7JPv9pVnTyUWxM1+vJkUYxHX7KwW9okRBScYPEKOoAIZqvQb6kHag0cdbhoJLYbj
-	 ov7H+pttRSTFHOj5pxh0nlDh6msmhROubVnQpUlE3PqUMA6jpYOHcT8z4kwTXEhDj53nB
-	 zswoNCXbfQiIuqNZ1gJKKfm5okMNitIRsHkmt+aBhOK3YgoCwLB0spimb4UrxRnEjOalw
-	 1jXyRzicSrjZAIVwpnvIVFM3zcRK/XRkU+a5qYsVx3cxS+mTl5eSjmuFL9sGTXR9c+g==
+	bh=jeKOaFELNvDG3E5v7QKPZIqQMsNiYz4swCAgcxG9nrk=;
+	b=26FQk5VIErK37BnqUOqWfhojRQKCNb1X0DZcqWdrdYKREBCOzeHd9RGQ+89QfyQaNZw2
+	 X6qbs/0XZrl8KUJLqMYx9iQOl9qYBZ94/MJWIfqZHcnJTTrA5xBplhi62iFRpEs/llFtH
+	 TEcRtdC1Dfb5H7/C7Ka/99GFMZkWE7BJHF4TY/zHxJ92In+ZNBEESKDz+8gfcPxca3nVG
+	 WD2MvPZeAzi+94wkRv5p4Ds7k2JIw1f62NJhOJiscWu2NCu0kgjt5DNJ876gzh/dLAZuk
+	 FoKayp4jnTDgnOuFcfpkwZEWlNIpUCgwAQrsP/HETZIMcmOMtZwG8Ps7Com9RdZJYVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aSUS/7l8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KvZ8jXF9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7720606A332;
-	Sat,  7 Nov 2026 14:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C283606A332;
+	Sat,  7 Nov 2026 14:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aSUS/7l8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936AB1F0089F;
-	Sat,  7 Nov 2026 14:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KvZ8jXF9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEA31F0089F;
+	Sat,  7 Nov 2026 14:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061987;
-	bh=CGmmdGw0fcK1G1FxqIx5bmQzwBJzqsGQJw/6+CRxktM=;
+	s=korg; t=1794061989;
+	bh=jeKOaFELNvDG3E5v7QKPZIqQMsNiYz4swCAgcxG9nrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aSUS/7l8wuh+S1IPyuwsd9Jb7MGmCnl9Ga5v8BxZhvx6oqDbYi4QGP8b7e0PgT44l
-	 +9rxdZLtBLjClvauRQrGTukDL4kMwOMii49x7ngKidRPOWUqv5Vi3GsKrgO4MoneXq
-	 3rTUycRtpMKgpsCB2KIloPVBwwWeWuozqhC+TNSE=
+	b=KvZ8jXF9yLug+h2Cn6bNyqCJ5VGclyj0FWM5/2GWqmRaZAHTmNn0oHgOL6p2MmZk2
+	 t3A3M1meRnhv6FK5vLDx4ddf+hsLPjUXWEnXkODmEqccd6vblEm3xYmTUs2LBmfanb
+	 KAVWEYvbZIH9esm8pbdbUscqUuxU1nDPnGREbmv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Sterba <dsterba@suse.com>,
+	Matthew Sakai <msakai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0979/1536] affs: validate blocks before freeing them
-Date: Sat,  7 Nov 2026 08:49:55 -0500
-Message-ID: <20261107135025.148389500@linuxfoundation.org>
+Subject: [PATCH 6.12 0980/1536] dm vdo indexer: prevent delta list overflow on load
+Date: Sat,  7 Nov 2026 08:49:56 -0500
+Message-ID: <20261107135025.175534096@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,48 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Matthew Sakai <msakai@redhat.com>
 
-[ Upstream commit 78ea2058abf3ee053c0bd9c1b9a77304cb4ae58b ]
+[ Upstream commit 936293c9f3f4f2a0d1b80df9332e96c552ac3b37 ]
 
-affs_free_block() accepts block numbers from on-disk file block tables
-when truncating or unlinking files. The function currently rejects only
-block numbers greater than s_partition_size before subtracting
-s_reserved and using the result to index the in-memory bitmap descriptor
-array.
+Check for corrupted delta lists sizes that overflow the
+memory available for the delta_lists. An overflow can
+cause the delta list data to be written outside the
+reserved delta memory space.
 
-That check still accepts reserved blocks and the one-past-end block at
-s_partition_size. A crafted image can therefore make the subtraction
-underflow or make the computed bitmap index equal to s_bmap_count,
-leading to an out-of-bounds access on s_bitmap before the bitmap block is
-read and updated.
-
-Use the existing AFFS block validity helper so freeing uses the same
-range as block reads and writes: s_reserved <= block < s_partition_size.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-CC: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Matthew Sakai <msakai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/affs/bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-vdo/indexer/delta-index.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/fs/affs/bitmap.c b/fs/affs/bitmap.c
-index 5ba9ef2742f6e..f400b28eea28d 100644
---- a/fs/affs/bitmap.c
-+++ b/fs/affs/bitmap.c
-@@ -46,7 +46,7 @@ affs_free_block(struct super_block *sb, u32 block)
+diff --git a/drivers/md/dm-vdo/indexer/delta-index.c b/drivers/md/dm-vdo/indexer/delta-index.c
+index 0ac2443f0df36..a42de1af4b693 100644
+--- a/drivers/md/dm-vdo/indexer/delta-index.c
++++ b/drivers/md/dm-vdo/indexer/delta-index.c
+@@ -803,7 +803,7 @@ static void compute_new_list_offsets(struct delta_zone *delta_zone, u32 growing_
+ 		(delta_zone->size * BITS_PER_BYTE - delta_lists[tail_guard_index].size);
+ }
  
- 	pr_debug("%s(%u)\n", __func__, block);
+-static void rebalance_lists(struct delta_zone *delta_zone)
++static int rebalance_lists(struct delta_zone *delta_zone)
+ {
+ 	struct delta_list *delta_lists;
+ 	u32 i;
+@@ -814,9 +814,17 @@ static void rebalance_lists(struct delta_zone *delta_zone)
+ 	for (i = 0; i <= delta_zone->list_count + 1; i++)
+ 		used_space += get_delta_list_byte_size(&delta_lists[i]);
  
--	if (block > sbi->s_partition_size)
-+	if (!affs_validblock(sb, block))
- 		goto err_range;
++	if (delta_zone->size < used_space) {
++		return vdo_log_warning_strerror(UDS_CORRUPT_DATA,
++						"delta zone lists overflow zone size %zu",
++						delta_zone->size);
++	}
++
+ 	compute_new_list_offsets(delta_zone, 0, 0, used_space);
+ 	for (i = 1; i <= delta_zone->list_count + 1; i++)
+ 		delta_lists[i].start = delta_zone->new_offsets[i];
++
++	return UDS_SUCCESS;
+ }
  
- 	blk     = block - sbi->s_reserved;
+ /* Start restoring a delta index from multiple input streams. */
+@@ -944,8 +952,11 @@ int uds_start_restoring_delta_index(struct delta_index *delta_index,
+ 	}
+ 
+ 	/* Prepare each zone to start receiving the delta list data. */
+-	for (z = 0; z < delta_index->zone_count; z++)
+-		rebalance_lists(&delta_index->delta_zones[z]);
++	for (z = 0; z < delta_index->zone_count; z++) {
++		result = rebalance_lists(&delta_index->delta_zones[z]);
++		if (result != UDS_SUCCESS)
++			return result;
++	}
+ 
+ 	return UDS_SUCCESS;
+ }
 -- 
 2.53.0
 
