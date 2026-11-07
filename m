@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062750;
-	b=RJcXD2R+Cie24l8xRksCj+Ad+QBhLG3tlVQLP0ekksALTlMh885UYDWhwwYUZBPwnQAR
-	 HI5KEHC0mFaWUmD7nSjlXZiZ7RpTbzQ2fDZ3xW2Kka/yde2sqFD+a2fQv7NamjIg5UCj2
-	 m5GPU+hBW9Gutp/a50nWX0lPvwyPGl5q6hg5RBWK89AdtTmkslycirAT0sLJtpNgIrB0W
-	 VDimY/nsN4Wg2QrZRCR5hG9WrYYPJCzh3xt/OJLFcOm8wZfEEZTiP4rz8pp75b5z12yv6
-	 ZQ25nM8cRgMnvQfpb0gqmmYyNDBBOWRJBaTXbpioSK/lTwjeRYwE/x3UNosl0Otj2qw==
+	t=1794062751;
+	b=o49t55PI9jgfFCOOBRIgcri4lYsyWdpQNhGNOTETLAeLxvfRVcZiPI7Bt2vxqqeXiyZB
+	 bjf70cpAJsb1KAp/vjJ5468Wovhvj7z5pFYJtugYn/rThEOWvGTqayU278deQDJIERRya
+	 alfF7ZtR906jRyf2Jxyd4B5JSC2RvSaV10z6yb9nlUiLmca1/aqC0/IU+F6loHiGM6L3i
+	 pIwQfY8H9iSv+3Am/n2qt0sBPTwSEa+ix34CXwZFGrQt+KxvuVy6ncswMK/LkZukf5HVo
+	 DbyauGYUPFCjuTTG2jfJAfgkhTv5iFhSX2J7S97A6C049nsnihY/NbGdDSpexQM1FGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062750;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062751;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+UUxmzkzSqkdtqb3nda5TyBfVVqiXxN0LZV9sh1XR+U=;
-	b=0wcsMh/7HRPvIIhTR6AM2sJHJvCUaO9vrujRfze+iWniU/o1KOByDw0iBIHnPRR/Zf43
-	 MJ6GKSfOMedEHGMfTe4dHZKoKUIRsqk8XOvvkdAmRe5947Xh6yBSBHR0z9+y86cSEPFP+
-	 3Tsjy3L+LEz8RwiydIRQnaWcLZnEkGLkQDueUiFmo+/37G1Iw7EuZRLoDh5NRR59bTSej
-	 Kgw7lxW8xRrSQk7z0V9AviSq5mZ7jPMN7wmA6xiWy2yQO2iRtnTMhCkaPy6O2CFnq2AQE
-	 MKfT2Yfq64QNirfJft3p1kz5RzJYlseA5BxMM1B+jWiU7IOCfScUvy+i5qqPEr2DVkg==
+	bh=xyAXXOA87VRmh5a8BYaQfJ6s2Xlq/veDA2wBHcAZ9dA=;
+	b=t4sHnEr3vZPItGPglJ2MXwYud1CuWzvmQ+5Tuulmki3F0JwFkFBX6w4y0xGy+xFkMs45
+	 11w/kTWFovRcWRp1uQhQtqT9SedOg/iZ2LScoM2pgxoFcUqWXfpJv3M0SOWukNEnK22vW
+	 grZB+IekRZAgQWOhlVGEtAE1imVR+2OO5w4uphBTdXFLgtuJdSl/apyFK08AA/mwlABFM
+	 KSe3WV+dmm9W2crufg/c1UJ+V7TaDXQYHEjrWdyZl4vbq/Vw00/v2J456oqkbccz4FzYC
+	 gVm+yUbrqQve04qSY1vPVm2lzHO/2SX6taUq6Uyi6ubBeaSYeHw9md7MGJ6dsScysVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COpjDJ7r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oC+d+h8s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC22606A32E;
-	Sat,  7 Nov 2026 14:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E297F606A32C;
+	Sat,  7 Nov 2026 14:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=COpjDJ7r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD011F0089F;
-	Sat,  7 Nov 2026 14:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oC+d+h8s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7E41F0089F;
+	Sat,  7 Nov 2026 14:45:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062749;
-	bh=+UUxmzkzSqkdtqb3nda5TyBfVVqiXxN0LZV9sh1XR+U=;
+	s=korg; t=1794062750;
+	bh=xyAXXOA87VRmh5a8BYaQfJ6s2Xlq/veDA2wBHcAZ9dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=COpjDJ7rg3WEgR2jMkH4Ndas2WLedYz2NldXzPDa/4B5Bqmr80PlfNijnmxjgaXYE
-	 Rm35xw7aWaxGZ7Iuq6ON/k12JbBpr4MqrO82Uqxr+XGiaoQSI2vK12+wEHcYn3bKxs
-	 nfPMNAbXsIbiovnC7iGnM/0w/HDaY+p1ALu2yFmI=
+	b=oC+d+h8sWB2WyD6kohdQjOusTQUAo/vlZZ3Nhm3XMy4ilB92t4Bf3xV3WaIONf1w6
+	 nBryKGbfylLUxCEWh3qVviOnkW442+9PmqseERna+5Sp+82aiGq56HHJxNNGOCIluP
+	 sJM9Pkqgi5k5ckHLir7e0Q/lpWj8VCvVwNg0NBAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Dipen Patel <dipenp@nvidia.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 063/869] hte: tegra194: Initialize slice locks before registering chip
-Date: Sat,  7 Nov 2026 08:45:45 -0500
-Message-ID: <20261107134854.447704478@linuxfoundation.org>
+Subject: [PATCH 6.18 064/869] wifi: ath11k: Fix possible memory leak in ath11k_dp_srng_setup()
+Date: Sat,  7 Nov 2026 08:45:46 -0500
+Message-ID: <20261107134854.477505635@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,51 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 1329abe1bae416ab2cff89c3312d33f745d341c7 ]
+[ Upstream commit 6132d70d0890c03546f6970893fd71938efb2a2f ]
 
-Registering the HTE chip publishes its request callbacks to consumers.
-Initialize every slice lock before registration so a concurrent HTE
-request cannot use an uninitialized lock.
+In ath11k_dp_srng_setup(), the memory allocated for
+ring->vaddr_unaligned is not freed in the error paths that follow.
+Fix that by calling ath11k_dp_srng_cleanup() in those error paths.
 
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Fixes: 09574cca6ad6 ("hte: Add Tegra194 HTE kernel provider")
+Compile tested only. Issue found using a prototype static analysis tool
+built on the LLVM compiler infrastructure.
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
 Cc: stable@vger.kernel.org
-Acked-by: Dipen Patel <dipenp@nvidia.com>
-Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+Assisted-by: Claude:claude-sonnet-4-6
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260801114911.91483-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hte/hte-tegra194.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath11k/dp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
-index 690eb9be30fb8..4644677370022 100644
---- a/drivers/hte/hte-tegra194.c
-+++ b/drivers/hte/hte-tegra194.c
-@@ -787,17 +787,17 @@ static int tegra_hte_probe(struct platform_device *pdev)
- 
- 	hte_dev->chip = gc;
- 
-+	for (i = 0; i < slices; i++) {
-+		hte_dev->sl[i].flags = 0;
-+		spin_lock_init(&hte_dev->sl[i].s_lock);
-+	}
-+
- 	ret = devm_hte_register_chip(hte_dev->chip);
- 	if (ret) {
- 		dev_err(gc->dev, "hte chip register failed");
- 		return ret;
+diff --git a/drivers/net/wireless/ath/ath11k/dp.c b/drivers/net/wireless/ath/ath11k/dp.c
+index 68c7ef190780a..5e67f088962e5 100644
+--- a/drivers/net/wireless/ath/ath11k/dp.c
++++ b/drivers/net/wireless/ath/ath11k/dp.c
+@@ -316,6 +316,7 @@ int ath11k_dp_srng_setup(struct ath11k_base *ab, struct dp_srng *ring,
+ 	case HAL_RXDMA_DIR_BUF:
+ 		break;
+ 	default:
++		ath11k_dp_srng_cleanup(ab, ring);
+ 		ath11k_warn(ab, "Not a valid ring type in dp :%d\n", type);
+ 		return -EINVAL;
  	}
+@@ -327,6 +328,7 @@ int ath11k_dp_srng_setup(struct ath11k_base *ab, struct dp_srng *ring,
  
--	for (i = 0; i < slices; i++) {
--		hte_dev->sl[i].flags = 0;
--		spin_lock_init(&hte_dev->sl[i].s_lock);
--	}
--
- 	val = HTE_TECTRL_ENABLE_ENABLE |
- 	      (HTE_TECTRL_INTR_ENABLE << HTE_TECTRL_INTR_SHIFT) |
- 	      (hte_dev->itr_thrshld << HTE_TECTRL_OCCU_SHIFT);
+ 	ret = ath11k_hal_srng_setup(ab, type, ring_num, mac_id, &params);
+ 	if (ret < 0) {
++		ath11k_dp_srng_cleanup(ab, ring);
+ 		ath11k_warn(ab, "failed to setup srng: %d ring_id %d\n",
+ 			    ret, ring_num);
+ 		return ret;
 -- 
 2.53.0
 
