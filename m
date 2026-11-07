@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062593;
-	b=iFrbjapoP07Zu3bGjvqwGpVx6XpKxPxlWu2ZkNJ+4fbLzxuk9QDGrCrQrQcbE1un0TWE
-	 39zZTQp3dX8ezStJoakGUDSTw7expUupzWXxEdvI9TdesfUpGRGxEt0VXXhUkiG5xTI9B
-	 h6wI9cfKUapOhEEVIWDTSCKzAiwnUG+g1Cp8m/xjy2gJR4jLApCXmJCMcVLPacAiNA49z
-	 2kGYJ4ab8Kjv9E8WtVUTgu7wa/FMimpFeyQoUtqxLlocUGVMwnlzcyaYrXjHItchvO3HX
-	 XmWyPb8CUTm7GLS9u1mkZPn/+FDodXOtI+6VA9ClHIG6WBSfhO3VGPuWAds5xaKWdvQ==
+	t=1794062594;
+	b=YoOxV1lQtKBG0EWW4xkxolnN535ZYqZpo3S55hwnPVB+N1BCUkOQFm+gY4mota8sqjUC
+	 nwX1o/zxN7tXTIytpvqS1B6BjjKWmjD+t/hhqZolGm/GgpCGkw7SYCLLrf8NpoS5SvGKd
+	 V4+5hqhiyv6AGMTHl6sNHsjO4/7kNM5zFIOxx7Zmo8Hs5OwBLPOsUj2doWc3rE6SwlUMC
+	 gsgGskSMeRxXoszXu0z9c7S5cQLKing6sKugRZ4P5uELT2LfgbMLEQ8h6g47CCmRidvnF
+	 2pBv/owIiKkG7j7l1EpNYath8hGh8y4C5nqZFjn88JZpMvPBVm0gHQ7TCqGIGdGXmBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062593;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062594;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2kszbeZLNlkb399vzp98idrcXVSyTjx6Sf2hylzwJGQ=;
-	b=joAe3Uawhka/Kngt3vjSdTMFnFwOux/K4LBBuPN0M2COBddfwrpvd0NNX4JAfvaxcaBR
-	 DlQUQafM4vV9R1VOH2cg30LJJtLQ1+IkEiVsTHGNNV/0LcjGAaKodZZEwREGpCveywnyA
-	 9gRduM8E8+n5Ov7d9DJ8mH8YnmvG7OhsnvbNB2oxWS4dX5P1OI1yTl288niWhruVe0hMl
-	 SqJeNdUbejOA4PGwmG9QPG9gnVmvgIDVhmz0UCZtY2Jm69rH8kKyiI8p3OEeYU0OGd63g
-	 j3wXDP8whsFpXWCDPRWof58o0vqeiY/TyLCWxeqP3fuug7VB1b7LwKV9hRZGoknxcSQ==
+	bh=wmjEMVaZwk5240j4NUCUN/GIoNDB4rpDgBMo0qjEMns=;
+	b=LQf6tCIXsXYfbEIVXFmSSDLiQKM2SGoQCtmyH6FbqMBmJ3QLTs3TOc5Tqm/4T9x9B9XW
+	 6Xh8/iiKoWEkTaCBwxz2wi+Io8oQ7BDkTXaGL3ggbFrYuSpfhFP/0kaIvm3LuIZahA+Q4
+	 bMaMDG9eYrT2TO3TLTSZzpzPXt0Lft2YzMWmusVDNLEg9QwGzse/HNxHTI80zrlv+f7MX
+	 rOwfjFneDEvQKkY5qOsoSdyDV3uGup88VKoKN6ojtmuTyNJJDFcjdBF766GUK9tc0FZkO
+	 Di+r+L/XTIAnYRVCwZjgE1DVvOhL2HAXOIov0n2OU5cEzW6clbWb4orWpukulo7A6pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aTLYHdNP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GuVsH1KH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D7C606A330;
-	Sat,  7 Nov 2026 14:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53191606A330;
+	Sat,  7 Nov 2026 14:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aTLYHdNP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77C81F0089F;
-	Sat,  7 Nov 2026 14:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GuVsH1KH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008CA1F008A1;
+	Sat,  7 Nov 2026 14:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062593;
-	bh=2kszbeZLNlkb399vzp98idrcXVSyTjx6Sf2hylzwJGQ=;
+	s=korg; t=1794062594;
+	bh=wmjEMVaZwk5240j4NUCUN/GIoNDB4rpDgBMo0qjEMns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aTLYHdNPW/C/BB1d6ZDPDunJnxwWfhyVIWp7+8Yzilb8KCEmiOUv815U8Z1TLl37n
-	 OEjZE8ddbpIW+15QfbWRgR5SLsiln6QynZfppDSXSaKIb7A1TOZ/Jb64X2VkTPJUQw
-	 N93iozFAhZhlULlETSgIfzQq4Iz7Ykg/a7Fyu/Aw=
+	b=GuVsH1KH6zEIBCaE+/wStfkudEy1MSnTsqQcy+l1Mf2OwvUsFgiDO5fXzyOmScvh7
+	 i5jXC1eOuzrNHSpskqx6Dw92u3CoA1TlYF914F3i9pJYqz0jXscLbnWriIiTpBoa15
+	 UiJuOOFJCXvnTc6S+aBq97b00ZrB7Pu0Fb+qJ/sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sung byeongchan <tjdqudcks0424@naver.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Weilin Tong <tongweilin@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@kernel.org>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1470/1536] ceph: bound name skips in ceph_mdsmap_decode() by the message end
-Date: Sat,  7 Nov 2026 08:58:06 -0500
-Message-ID: <20261107135039.133020166@linuxfoundation.org>
+Subject: [PATCH 6.12 1444/1536] ipc/shm: fix RSS accounting for hugetlb shared memory
+Date: Sat,  7 Nov 2026 08:57:40 -0500
+Message-ID: <20261107135038.393938416@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,56 +75,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: sung byeongchan <tjdqudcks0424@naver.com>
+From: Weilin Tong <tongweilin@linux.alibaba.com>
 
-[ Upstream commit 7f702e1703c9648fcb02a217d66c880d00417150 ]
+[ Upstream commit e387ebe5cd31720b1e0281fd045be4eef36fadb3 ]
 
-ceph_mdsmap_decode() reads two remote u32 name lengths and advances its
-parser cursor without checking that either string remains in the message.
-On a 32-bit client, a sufficiently large length can wrap the cursor below
-`end`.  The following numerical bounds check then succeeds and dereferences
-the wrapped address.
+Commit a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in
+filemap.c") changed mapping->nrpages to count base pages for hugetlb
+folios.  However, shm_add_rss_swap() still multiplies it by
+pages_per_huge_page(), overcounting RSS in both SHM_INFO and
+/proc/sysvipc/shm.
 
-Use ceph_decode_skip_n() for both names so the remaining bytes are checked
-before the cursor advances.
+Use mapping->nrpages for RSS accounting across all backing types, and
+account swap only for non-hugetlb shmem.  Use READ_ONCE() for both
+counters instead of info->lock, which does not protect nrpages and cannot
+provide a consistent snapshot.
 
-The issue produced a page fault in ceph_mdsmap_decode twice on the tested
-i386 baseline.  The same frame was rejected without a fault twice after
-this change, while a normal MDSMap continued to be accepted.
-
-Cc: stable@vger.kernel.org
-Fixes: 2f2dc053404f ("ceph: MDS client")
-Assisted-by: LLM
-Signed-off-by: sung byeongchan <tjdqudcks0424@naver.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://lore.kernel.org/20261014082218.2236088-1-tongweilin@linux.alibaba.com
+Fixes: a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in filemap.c")
+Signed-off-by: Weilin Tong <tongweilin@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Muchun Song <muchun.song@linux.dev>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mdsmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ ipc/shm.c | 23 ++++-------------------
+ 1 file changed, 4 insertions(+), 19 deletions(-)
 
-diff --git a/fs/ceph/mdsmap.c b/fs/ceph/mdsmap.c
-index 0fd578f0b2cd2..d377d13f854d5 100644
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -209,7 +209,7 @@ struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
- 		ceph_decode_need(p, end, sizeof(u64) + sizeof(u32), bad);
- 		*p += sizeof(u64);
- 		namelen = ceph_decode_32(p);  /* skip mds name */
--		*p += namelen;
-+		ceph_decode_skip_n(p, end, namelen, bad);
+diff --git a/ipc/shm.c b/ipc/shm.c
+index f70a503e61295..77ee6d9ebd9d0 100644
+--- a/ipc/shm.c
++++ b/ipc/shm.c
+@@ -934,26 +934,11 @@ static inline unsigned long copy_shminfo_to_user(void __user *buf, struct shminf
+ static void shm_add_rss_swap(struct shmid_kernel *shp,
+ 	unsigned long *rss_add, unsigned long *swp_add)
+ {
+-	struct inode *inode;
++	struct inode *inode = file_inode(shp->shm_file);
  
- 		ceph_decode_32_safe(p, end, mds, bad);
- 		ceph_decode_32_safe(p, end, inc, bad);
-@@ -227,7 +227,7 @@ struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
- 		laggy = laggy_since.tv_sec != 0 || laggy_since.tv_nsec != 0;
- 		*p += sizeof(u32);
- 		ceph_decode_32_safe(p, end, namelen, bad);
--		*p += namelen;
-+		ceph_decode_skip_n(p, end, namelen, bad);
- 		if (info_v >= 2) {
- 			ceph_decode_32_safe(p, end, num_export_targets, bad);
- 			export_targets_len = size_mul(num_export_targets,
+-	inode = file_inode(shp->shm_file);
+-
+-	if (is_file_hugepages(shp->shm_file)) {
+-		struct address_space *mapping = inode->i_mapping;
+-		struct hstate *h = hstate_file(shp->shm_file);
+-		*rss_add += pages_per_huge_page(h) * mapping->nrpages;
+-	} else {
+-#ifdef CONFIG_SHMEM
+-		struct shmem_inode_info *info = SHMEM_I(inode);
+-
+-		spin_lock_irq(&info->lock);
+-		*rss_add += inode->i_mapping->nrpages;
+-		*swp_add += info->swapped;
+-		spin_unlock_irq(&info->lock);
+-#else
+-		*rss_add += inode->i_mapping->nrpages;
+-#endif
+-	}
++	*rss_add += READ_ONCE(inode->i_mapping->nrpages);
++	if (IS_ENABLED(CONFIG_SHMEM) && !is_file_hugepages(shp->shm_file))
++		*swp_add += READ_ONCE(SHMEM_I(inode)->swapped);
+ }
+ 
+ /*
 -- 
 2.53.0
 
