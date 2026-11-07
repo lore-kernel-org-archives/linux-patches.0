@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060764;
-	b=34fkCSSEPMTcrilXIHaK6Ji3aRoh/Qk+4+tiPx9JnqJMVg8gPMT06t9e0YwLv2iYK6PP
-	 ryeRCLiU1EuJpJvtV8HLodl9aLiZQfOBcEzPM7Z1SP/4r4Yb8KCbQA3FCPYHCthAoCd7z
-	 GgFdXbdf/86jNz+fYkyqEhwysCX87/g+3vJfjifub5JtoEe+OY2LB3/OLIkJxuHXj+9Wy
-	 wfsBsrw6qPBc7C8DJxtDh/Xci0/F2ku7Nvu6H/NsvRjyDs5TPfCgjhdueXfEfdbvtAmb2
-	 cqfVIGyzoU98xT8f9/f8rnNXbO87OlW8pLMPxEYklb6OMc/8HzJkyl/fOkxzbUj66pA==
+	t=1794060765;
+	b=48vlH2MZa/Vehxji5jrNQYEnhfrCVWwvKRvUNj04pY144HJFSakK5tAAccJ1+PgZTNDD
+	 l6hx9jFVuk3CdvZjLAHSngjxpTRNtSGZ9yC2SNm9wrWzoqyBxNemvvS4RyvPeBOuYjv4W
+	 GQdhcL2iUxmGdvb9FqyEZLRayp5HFLWakSGRAXNXOajPf198Mvj7o2SzuSP/A/f5xc7M5
+	 IxPvdAVwvyhwsikvbezFRm6DJgQg47DqZVF+C5ZdyB7JHi2zP+RyK1q6lgPO7MyNwF8NQ
+	 SKAJiFfBJsBFu1Sw9/1fobotaIOIHduHqFbBpUVEDOnB4ikbIs/mmRXSaHD0Q060++Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060764;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060765;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wya1U/p1UXzS4wDdjOyJIuSjysjvj/OYBxN6gbo4iZw=;
-	b=oF/XF1onxWg0AAukrbmg3pZvSXaeU6aI7rIjwISJ0nXrVXMOKN0Mu0OOMfXPn0x19g/P
-	 M5xeflnVQZGwc6fIqI05ySGqdvVqgorArugfyZfWhP5oJ3jGpLRbktt8yThAzVEV89nGF
-	 v9O4aimclqxuC3LRACEzr/QXNYm/tUfywTCOl98yCOdJTkzX3LJjHutXqpyIDAG4moZeK
-	 z93jINeN/jRxCWXyjxrtl65TpTiKagHUb80EX6Alw37Nde+zUKb10LP1PKfhDrMNf7l9X
-	 lB9KNsWlohfZdWfW2v+gGRh2a1rc6BGeGbjx/RJB+Q0L0EvaJQPPseSgJ0JglcDqHbA==
+	bh=TgrfGgp+bIjz8FJ5MxX+RDXb559kg7BBdh38LkFhdEQ=;
+	b=l7qzVQ75Ph+Gf9XbxFS5/lV8m82L7+z+PCoGwUeRvYtOF998ax6sGdzKZHJGqMj2MYxp
+	 AGvH79tmF9qZLzCRWc2QwYpqySKUcYLdU2ohvJW+OqXxpE2ILOYTkYvba2WNApauYhmHk
+	 8ftcSe2auPz1QKhICH/ZJFeROHScKxAIWvTRVxCyszXwjOppTCjsAD0Oo2nhi9E67pwIo
+	 LeRPrjBDdGo2654g68CSxqlnpq74NW1WtjYi8w3DBfvBM74FCklnOeEuJbVBmBDrsccgc
+	 igAcz5XWswRuv0XJSglEW0XyN5eOPpRsfYs2WL1d7BUwfBXtCuJcWh+ZMeXjgtx8VRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7CYdTJT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dWXm8bNL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0462606A326;
-	Sat,  7 Nov 2026 14:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42439606A32D;
+	Sat,  7 Nov 2026 14:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7CYdTJT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6681F0089F;
-	Sat,  7 Nov 2026 14:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dWXm8bNL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35B81F0089F;
+	Sat,  7 Nov 2026 14:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060763;
-	bh=Wya1U/p1UXzS4wDdjOyJIuSjysjvj/OYBxN6gbo4iZw=;
+	s=korg; t=1794060765;
+	bh=TgrfGgp+bIjz8FJ5MxX+RDXb559kg7BBdh38LkFhdEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s7CYdTJTX1HDOvYKS4yeLtt9Fc9VAkqlV5RKXpAYUwYv6sTMi57dRTv3XGjHiSMUu
-	 4p0s6ZXk0ngXDyCz0frJ8XLGNDLrT1UofBMPzIzV+jP7ymUtwmJzTiZ5VG6TlP+7RG
-	 MPzKut6owsnQGHUtTW+xR4mXHg77poSIMVyOMFao=
+	b=dWXm8bNLvGdi6UwlC+SrqxKOte2H3ULEYL7XGp2sK3dBrXo1ywg6Wnn0LXURTGFL0
+	 EXdcUw8cMYET0chT1AKiHpaOybCr27/1NFlx//xOpqgCMZ0po6PoAQm6E5h66v7UD+
+	 vPwqsl2p5xZ7zG5p6pimNaO/bW7wSQYW3g47lGh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Tzarfati <shahar.tzarfati@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0176/1536] wifi: mac80211: ibss: read deauth reason_code after frame length check
-Date: Sat,  7 Nov 2026 08:36:32 -0500
-Message-ID: <20261107135002.601676432@linuxfoundation.org>
+Subject: [PATCH 6.12 0177/1536] wifi: mac80211_hwsim: clear PMSR request state on abort
+Date: Sat,  7 Nov 2026 08:36:33 -0500
+Message-ID: <20261107135002.630632326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,44 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Tzarfati <shahar.tzarfati@intel.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit aa4c0a649903567762edf2bbc7fff608953b3ca4 ]
+[ Upstream commit 37a77bd1395e8261d1760ae39c7f5eb637300550 ]
 
-The function was reading reason_code from the frame before validating
-that the frame is at least IEEE80211_DEAUTH_FRAME_LEN bytes long.
+mac80211_hwsim saves the in-flight cfg80211 PMSR request and its wdev
+in data->pmsr_request / data->pmsr_request_wdev when a measurement
+starts, and clears them only when it reports completion.
 
-Move the reason_code read to after the length check so the field is
-guaranteed to be present before it is accessed.
+mac80211_hwsim_abort_pmsr() never cleared that saved state. cfg80211
+owns the request and frees it once the abort callback returns
+(cfg80211_pmsr_process_abort() calls rdev_abort_pmsr() then
+kfree(req)), so after an abort data->pmsr_request dangles. A later
+hwsim PMSR report then dereferences the freed request in
+hwsim_pmsr_report_nl() and completes it; a use-after-free.
 
-Signed-off-by: Shahar Tzarfati <shahar.tzarfati@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715212706.db26604650bd.I2caa73c396b8c9d357224b9334d5df3cafac498e@changeid
+Clear data->pmsr_request and data->pmsr_request_wdev once the abort
+matches the active request. Move the wmediumd/virtio notification check
+below the clear so the saved state is dropped even when no notification
+is sent.
+
+Assisted-by: Codex:gpt-5
+Assisted-by: Claude:opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260708195911.84365-2-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ibss.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/ibss.c b/net/mac80211/ibss.c
-index ce22d4e98efaa..9df43cd76979e 100644
---- a/net/mac80211/ibss.c
-+++ b/net/mac80211/ibss.c
-@@ -917,11 +917,13 @@ static void ieee80211_rx_mgmt_deauth_ibss(struct ieee80211_sub_if_data *sdata,
- 					  struct ieee80211_mgmt *mgmt,
- 					  size_t len)
- {
--	u16 reason = le16_to_cpu(mgmt->u.deauth.reason_code);
-+	u16 reason;
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index f1b96cd1198c5..71f07e1a2a972 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -3609,9 +3609,6 @@ static void mac80211_hwsim_abort_pmsr(struct ieee80211_hw *hw,
+ 	int err = 0;
  
- 	if (len < IEEE80211_DEAUTH_FRAME_LEN)
- 		return;
+ 	data = hw->priv;
+-	_portid = READ_ONCE(data->wmediumd);
+-	if (!_portid && !hwsim_virtio_enabled)
+-		return;
  
-+	reason = le16_to_cpu(mgmt->u.deauth.reason_code);
+ 	mutex_lock(&data->mutex);
+ 
+@@ -3620,6 +3617,13 @@ static void mac80211_hwsim_abort_pmsr(struct ieee80211_hw *hw,
+ 		goto out;
+ 	}
+ 
++	data->pmsr_request = NULL;
++	data->pmsr_request_wdev = NULL;
 +
- 	ibss_dbg(sdata, "RX DeAuth SA=%pM DA=%pM\n", mgmt->sa, mgmt->da);
- 	ibss_dbg(sdata, "\tBSSID=%pM (reason: %d)\n", mgmt->bssid, reason);
- 	sta_info_destroy_addr(sdata, mgmt->sa);
++	_portid = READ_ONCE(data->wmediumd);
++	if (!_portid && !hwsim_virtio_enabled)
++		goto out;
++
+ 	skb = genlmsg_new(GENLMSG_DEFAULT_SIZE, GFP_KERNEL);
+ 	if (!skb) {
+ 		err = -ENOMEM;
 -- 
 2.53.0
 
