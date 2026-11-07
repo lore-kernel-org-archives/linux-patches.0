@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064845;
-	b=xG1Mv1C9S1CQ+upP+FePoCejMqSXQDCEmX20FTfLzXRh+P0Ku6QKunux6cFFPkbhS79x
-	 Sr6Vv4AYL2W5S7nYMuzBvPOWDmhYS9hP/GmTNQR8t7Wx+6AuMOIrs2RGRSVk33I1MquLa
-	 vRBK5HcqCD3jDVmSQ3xBclowKF5UCYbdgNDssCqo1Q98vyWQi+4UUFwNH5+gKKag9iUa5
-	 rzf/bp/Ivv3retE0yQedqdfXhyNLiBA122wwLUbzkNZwa2X+jVwsCPp+QdWKZyLkgNydv
-	 8JjQcTRPi8xxPqtk0h9sLV7p61/7ESu+3AGuDDkKjO2WeMRcbk53Dn6vUq1IydssJug==
+	t=1794064847;
+	b=0YTXUyk3L97wcGZV/jndYEiAHS/wOjf3OmOKpxms0OkPgT17T60f/kFWvtfDHGITdZS1
+	 5s0DtPZD42+Quzs4zasf6uJU731UZJrRIbTyH2gtqFyGacXYgbPt15YptYzrWpLfQzUSx
+	 v1gfaWyfFcV0Pd68TyQ4XR5AX+fkRjgdctFk5BKiknMgV43cKF2+xGJTaJu41MLPuqbkN
+	 XggS5/fh4t5ANZ15zYWwqPfOLUxchDsDBPeAw3uYJOdpBj7iyk6DxkqS/hSwPYNBuX2O4
+	 hOZIZpuGi/QF9fKwbtu4iUXqFwCDSEtJXwyHhGrOCm+6DVyrg4ktJ4j+eAoBk9a+y3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064845;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VmA3YtmMEDM1Y8Ea/efsIU64W0L1kWwX3MYGzx7Se1c=;
-	b=VOMXDOcxquWl2THuFOx9Yczd9o7S9qir17EyMzCi3koEzhSJBwA90BZN316/LPHQ5RK4
-	 W3gYr/I8jVMZ/jAMftOuF9ATX9X1qu2LyTJ5yRc7/iKVTzQetWjDzmjVgFPoualQqTsZ5
-	 mXKVxWxqg1I98Wo65pQK2A6+4YNZwcnBe0SgjOPTyk3Y3gC6ZJuQLFOE4m3325CIcFGyt
-	 1wys9SIxVKCNkqmr71Ns/nMScKlvTfKZC/4pKeUHe4l2Xgn0ZUMspknPqVIuCXDHnMKS9
-	 9l3FQjPtqUaRiv+BfIbcoIPyBBg0zRc3eTpnpL8UBpl8Rz2YQrx8pKsS444s3W7QaWA==
+	bh=grB4I/8AMRzchKzpPmg9Kfgw1lraTkBFUa4GjXG2MDk=;
+	b=TO4KOXIVZL2Q28lhSlyA02GzNLhYjrHI684ajI57aIiwPotzipF1RT0q6CgBdbxQja2l
+	 rGyc8Bek9AgRZATwHU+EJ4qfAXwgfWOiiCP1lYyAd4ZY5yNii/08jhp4UYMjgjs7pfrKu
+	 usdUxq84a3oFZ2SrMWpbKBe+N+2RctQlNL+qTzcKeBT1ifgC7JKMvodiuIIRe4ihQu7sC
+	 EuqkfgDVL6nWsU8ACguu68W3YgXrTJuBMaIepTBiRB2aHPaXP3O+/DtCVgqC4hKsbDEAt
+	 b5EPBpMUJ4k7ZOkDLTpJpqAM1BREgPQ4krbIJd2db1H/9hwuIpmEgwKUMzsdOYWELGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKizY9fr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uNrfiW8Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB724606B8AD;
-	Sat,  7 Nov 2026 15:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F6A606A32D;
+	Sat,  7 Nov 2026 15:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKizY9fr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB9B1F008A1;
-	Sat,  7 Nov 2026 15:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uNrfiW8Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BE11F0089F;
+	Sat,  7 Nov 2026 15:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064844;
-	bh=VmA3YtmMEDM1Y8Ea/efsIU64W0L1kWwX3MYGzx7Se1c=;
+	s=korg; t=1794064846;
+	bh=grB4I/8AMRzchKzpPmg9Kfgw1lraTkBFUa4GjXG2MDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TKizY9frjwZL4UFasDeGKNOVbeYSfqith9dfBQNhMoLar9Xy64ubTA+jKTZn/HJMr
-	 DsAGezlnkpjwppFD8rbmfrfkTKqcDWlt9Wv8MO85C4URsV49REBLL3on/DKYVUPIgt
-	 TXwLFm18CuWuX/8L5LXZO4BjMXQlzhjKgbBFmCj0=
+	b=uNrfiW8YiIexMJe5sY+ICdw/KFFK1tl8Q+EK2AlWkJD9T4zUgJvsOjxSKkj3/Crh6
+	 E8M+xXQSMwZ/xYpOJUWb39YeWE6tZnucLfNdiWs57Uxck8QA71fgFhnp3Frt8Z9I/w
+	 YDECQe4OnevBNx636/WW+/3HRQYfQU/HtJxgyF2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stian Halseth <stian@itx.no>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Tony Rodriguez <unixpro1970@gmail.com>,
+	Francesco Orlando <francesco.orlando99@libero.it>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0770/1257] PCI: Set supported_speeds in set_pcie_port_type()
-Date: Sat,  7 Nov 2026 08:51:06 -0500
-Message-ID: <20261107135000.562022778@linuxfoundation.org>
+Subject: [PATCH 7.3 0771/1257] Input: xpad - add GameSir Nova Lite support
+Date: Sat,  7 Nov 2026 08:51:07 -0500
+Message-ID: <20261107135000.592899956@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,59 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stian Halseth <stian@itx.no>
+From: Francesco Orlando <francesco.orlando99@libero.it>
 
-[ Upstream commit 926767a9be8866d26cc27ca46c46c03d921e2193 ]
+[ Upstream commit 2e6f2e5799f328ca0879dad14d7f3709c7f7496b ]
 
-sparc64 and powerpc create PCI devices from the device tree in
-of_create_pci_dev(), which calls set_pcie_port_type() but not
-pci_setup_device(). Since d2bd39c0456b, supported_speeds is only set in
-pci_setup_device(), so it stays 0 for these devices.
+Add vendor and product ID for GameSir Nova Lite (0x3537:0x1040) in
+XInput mode to enable force feedback rumble support.
 
-pcie_get_speed_cap() then returns PCI_SPEED_UNKNOWN, the sysfs
-'max_link_speed' attribute reads "Unknown", and the failed link retraining
-quirk passes PCI_SPEED_UNKNOWN to pcie_set_target_speed(), which warns on a
-SPARC T7-1:
-
-  WARNING: drivers/pci/pcie/bwctrl.c:125 at pcie_set_target_speed+0x284/0x2e0
-
-Set supported_speeds in set_pcie_port_type(), which all three paths call.
-
-Fixes: d2bd39c0456b ("PCI: Store all PCIe Supported Link Speeds")
-Closes: https://github.com/sparclinux/issues/issues/109
-Signed-off-by: Stian Halseth <stian@itx.no>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Tony Rodriguez <unixpro1970@gmail.com>
+Signed-off-by: Francesco Orlando <francesco.orlando99@libero.it>
+Link: https://patch.msgid.link/20261011165821.72698-1-francesco.orlando99@libero.it
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261007131304.309511-1-stian@itx.no
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/probe.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/input/joystick/xpad.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index 27008e2ea5afc..52a79b033b069 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -1651,6 +1651,8 @@ void set_pcie_port_type(struct pci_dev *pdev)
- 		pdev->aspm_l1_support = 1;
- #endif
- 
-+	pdev->supported_speeds = pcie_get_supported_speeds(pdev);
-+
- 	parent = pci_upstream_bridge(pdev);
- 	if (!parent)
- 		return;
-@@ -2074,9 +2076,6 @@ int pci_setup_device(struct pci_dev *dev)
- 
- 	set_pcie_untrusted(dev);
- 
--	if (pci_is_pcie(dev))
--		dev->supported_speeds = pcie_get_supported_speeds(dev);
--
- 	/* "Unknown power state" */
- 	dev->current_state = PCI_UNKNOWN;
- 
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index 810e52782ae89..d2eb48d98fead 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -408,6 +408,7 @@ static const struct xpad_device {
+ 	{ 0x3537, 0x1004, "GameSir T4 Kaleid", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x100f, "GameSir Nova 2 Lite", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x1010, "GameSir G7 SE", 0, XTYPE_XBOXONE },
++	{ 0x3537, 0x1040, "GameSir Nova Lite", 0, XTYPE_XBOX360 },
+ 	{ 0x3651, 0x1000, "CRKD SG", 0, XTYPE_XBOX360 },
+ 	{ 0x366c, 0x0005, "ByoWave Proteus Controller", MAP_SHARE_BUTTON, XTYPE_XBOXONE, FLAG_DELAY_INIT },
+ 	{ 0x3767, 0x0101, "Fanatec Speedster 3 Forceshock Wheel", 0, XTYPE_XBOX },
 -- 
 2.53.0
 
