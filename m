@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063831;
-	b=titwOaGOSPQUeo/XG1qVk2VjO6+rsYcXyEI4bKghN/88KrjrobDvlgDqYTzNLVJ9LKh7
-	 SkTtDTnqy5AZ7Vw/zTHuQ0zVUWsENhJd2XsYDeeHcb/0/RZEvHilnV0rNOlwcKJSd7fJ8
-	 9CF+2IUIhs1W/eDhUpHiRHEkNBfSaEpHjTNVOvBoL1bH07mkdaAgJZc01p2p/JDZe0oPV
-	 Q1czd9OuloWp3MHsaKT52wgtgK1vqrSiTrmAkHWx9VmUvE71RRYo/zTuGmasFxw3f8+zl
-	 xDsDQZME8XQVHstBKlH2Zg/uVdADtVTa+O6i9tBVOi5+Z21VuLOuHbrcr/NBQF0gzKw==
+	t=1794063833;
+	b=T3j82Hl1j+HSD+H4/o/99kdYbgt0aHd0Z85JLt+p+/IK0rRL5YJMGB9KMY1zyQEHOyxB
+	 Bplty8T6Ith6/EIgsntgknwxOrCZfNunBCmZgu9UqEW27Hm8UFqrbVgVxgYK+kZ0cLcmj
+	 FJ+oiMoU5ub+BTn2V7BvLTOWxvHi+8ljK+XwjrN7r4Nc8IAVnr9ApLF2f2tbLTcbEJd22
+	 Q1cajZu2W9QmkI3hDniiDaU/ZQhmKiGpH8xCrxORUdsfthawZMM9DRZ1Cfg2VWY1vj3NK
+	 zaZHSlG1TXKoqx9ZjCl7I3EUe6lbri3iRiNh8NvP8oWo0CbE5+nR3becIzKr5ykpQOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vY/ZBYbOuo0rM9Z7Sv/+GVasXNJNTNZf7ZqGZtf/KBk=;
-	b=gvQjYi2SM/yYzr7woy3n9bUS0FtGkVSuSFLc87NLUb94MTZhtAXJ711RoEdIfT1MnuK3
-	 utp8Odlom3U/1pIO3lSSAegpTDNGbI5EgYWmsOa5u2+xhP9v4UJG5TRzwAKMhkDAG22Ih
-	 DsDz5JrGf90EAJnuVmPaPSvf/+z6ZJ5mp0G7nA0KvmaCtZclXmhysxzxy4ZD4qYTPr7H5
-	 MCcy4dtI3rLrt7gc9cKGt4UzsjFDFJwiaiAdCU12eOd+gDdihSQ8BFDH/hMmaItJg2l2V
-	 P99mWrAjpTbHKnT/TW0gbssTNrtLqdSUCxyU1bSuu/wdNkikJluO4eUVlCHagStbs7w==
+	bh=5eazfAFn18YsbQC+Z+GxznmK2VhDX3F8TDsH4ObGW40=;
+	b=NIFUqtPMx5MtHxp9pXFkSeRsCUZPojj1OptcE9sTEHx0U0rnKEBwI0fM5U1p5p1kN8zN
+	 nM2/VoxmCR66fpELbtiUJBYOAuXBoa6Aq1re5RDpE1DAGpgjASmxfdRXVFIlWIPtDC/p8
+	 aVfNnuKZ8ZGgCek+R3dED8j7dFQMsZR1aFojWWt5XATvia1aZ4BLIkY315maYz82McV4f
+	 i3nrqK1QQ7HIJqXLzM8M2YMKN+q6wmwr4xDTPk9GzleDuhsJjvnbWIUl+k7R0GVJ8LADE
+	 uHR6t5qolhFoMvA6Xwz6COPlameE8yjqtZUE7R08eqrumon2FUtYhAp3xKwLBZ94WMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HcAnpB5z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHVtmoBR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F344606A326;
-	Sat,  7 Nov 2026 15:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2DD606A326;
+	Sat,  7 Nov 2026 15:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HcAnpB5z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33361F0089F;
-	Sat,  7 Nov 2026 15:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHVtmoBR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6271F0089F;
+	Sat,  7 Nov 2026 15:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063831;
-	bh=vY/ZBYbOuo0rM9Z7Sv/+GVasXNJNTNZf7ZqGZtf/KBk=;
+	s=korg; t=1794063832;
+	bh=5eazfAFn18YsbQC+Z+GxznmK2VhDX3F8TDsH4ObGW40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HcAnpB5zKwIBRTXAlXbTEJye+q6U9ygngUL42+3TKjUQKPobcfTnliWCGfq14HHq9
-	 3PIUtrRFIM9abSAkUZMraDruMRc1dv1NotMimwkM+xPxxoTE1DkL/dqX1k3/HEPC1t
-	 BSftHYMdBNWItO/ChV4y4K5ceeOdpXs0AX553krI=
+	b=nHVtmoBRn1lJrdSjJIhPtvzCOpefWrgBNtr8ueUj89VOQaetAsRBY9EKLBJIizA5o
+	 mhl/Jc4hNbrRs7SwruuXM+Zfz4vS7HZWJnmNgLy5rYtb590CbE2fq02+juayQynCty
+	 89I6KiIxFcI1kF77iF6OADJGIqX0N57KhGSZIVPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0012/1257] alpha: honor force_successful_syscall_return() again
-Date: Sat,  7 Nov 2026 08:38:28 -0500
-Message-ID: <20261107134939.764676153@linuxfoundation.org>
+Subject: [PATCH 7.3 0013/1257] drm/nouveau/gsp/r570: Set GcOff = 0 in fbsr
+Date: Sat,  7 Nov 2026 08:38:29 -0500
+Message-ID: <20261107134939.791496971@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,86 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Lyude Paul <lyude@redhat.com>
 
-This fix is for 7.1.y, 7.2.y and 7.3.y only.  Mainline is not affected
-since commit 83bd31c2840b ("alpha: enable GENERIC_ENTRY") in v7.4-rc1,
-which replaced the saved-r0 check with a flag in thread_info.  That
-conversion is far too large for stable, so this patch fixes the old
-entry code instead.
+[ Upstream commit c7abe771e013848970421e5ca29c6b2f05c31965 ]
 
-Syscalls that return data rather than a status, such as PTRACE_PEEKUSR,
-PTRACE_PEEKTEXT/PEEKDATA, osf_sigprocmask and shmat, call
-force_successful_syscall_return() so that a result with the top bit set
-is not mistaken for an error.  On alpha that clears the saved r0, and
-$syscall_error and $strace_error used to check for this and take the
-success path.
+Previously, it looked as if we were able to fix suspend/resume on some
+desktops by setting Gcoff based on whether or not we were entering runtime
+PM. This was a mistake though - the only time suspend/resume would end up
+actually working was if Gcoff = 0.
 
-Commit 55b22075f784 ("alpha: add support for SECCOMP and
-SECCOMP_FILTER") moved the restart syscall number to r2 and dropped both
-checks, so any negative result now comes back to userspace as an
-error with a3 set.  PTRACE_PEEKUSR of a register holding -1 fails with
-EPERM, which makes sandbox abort when it traces static binaries during
-Gentoo package builds, and PTRACE_PEEKUSR of a register holding
-0xffffffffffffe000 fails with errno 8192, which breaks unwinding of a
-ptrace-stopped thread in elfutils (run-backtrace-native.sh).
+It seems like it's likely the main reason for this is the FBSR GcOff
+argument actually controls GSP's behavior with regards to which buffers it
+decides to save across suspend/resume. When GcOff = 1, RM reserved regions
+are saved unless they are marked as LOST_ON_SUSPEND, and RM channel-context
+and kernel-client buffers are also saved -including- when they are
+LOST_ON_SUSPEND. This means with GcOff = 1, we end up having GSP save and
+restore buffers that actually need to be reinitialized on resume - causing
+the failures we're setting.
 
-Restore the checks on both exit paths.  On the traced path the success
-path also has to stop falling through into
-SYSCALL_SKIP_RETURN_RESTART_GATE, which is meant for skipped syscalls
-and would turn a forced-success result of -1 into ENOSYS.
+Thanks to John Hubbard from Nvidia for providing some background on what
+these options do in the GSP firmware do!
 
-Link: https://bugs.gentoo.org/985765
-Fixes: 55b22075f784 ("alpha: add support for SECCOMP and SECCOMP_FILTER")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Fixes: 53dac0623853 ("drm/nouveau/gsp: add support for 570.144")
+Cc: <stable@vger.kernel.org> # v6.16+
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20260814194542.781955-3-lyude@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/entry.S | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/alpha/kernel/entry.S b/arch/alpha/kernel/entry.S
-index 9f2608de25446..fe88cd598492a 100644
---- a/arch/alpha/kernel/entry.S
-+++ b/arch/alpha/kernel/entry.S
-@@ -603,6 +603,14 @@ ret_to_kernel:
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
+index 469e7eed1d6f8..a93a39ef7c690 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
+@@ -135,7 +135,7 @@ r570_fbsr_init(struct nvkm_gsp *gsp, struct sg_table *sgt, u64 size)
+ 	ctrl->hClient = gsp->internal.client.object.handle;
+ 	ctrl->hSysMem = memlist.handle;
+ 	ctrl->sysmemAddrOfSuspendResumeData = gsp->sr.meta.addr;
+-	ctrl->bEnteringGcoffState = 1;
++	ctrl->bEnteringGcoffState = 0;
  
- 	.align 3
- $syscall_error:
-+	/*
-+	 * force_successful_syscall_return() zeroes the saved r0 (the
-+	 * syscall number): the negative return value is data, not an
-+	 * error number.
-+	 */
-+	ldq	$18, 0($sp)
-+	beq	$18, $ret_success
-+
-         /* Restart syscall nr comes from saved r2 (preserved even if r0 overwritten). */
- 	ldq	$18, 16($sp)	/* old syscall nr for restart */
- 
-@@ -700,9 +708,11 @@ ret_from_straced:
- $strace_success:
- 	stq	$31, 72($sp)		/* a3=0 => no error */
- 	stq	$0, 0($sp)		/* save return value */
-+	br	$strace_leave
- 
- $strace_skip_call:
- 	SYSCALL_SKIP_RETURN_RESTART_GATE
-+$strace_leave:
- 	DO_SWITCH_STACK
- 	jsr	$26, syscall_trace_leave
- 	UNDO_SWITCH_STACK
-@@ -710,6 +720,10 @@ $strace_skip_call:
- 
- 	.align	3
- $strace_error:
-+	/* See $syscall_error. */
-+	ldq	$18, 0($sp)
-+	beq	$18, $strace_success
-+
- 	ldq	$18, 16($sp)	/* restart syscall nr */
- 	ldq	$19, 72($sp)	/* .. and this a3 */
- 
+ 	ret = nvkm_gsp_rm_ctrl_wr(&gsp->internal.device.subdevice, ctrl);
+ 	if (ret)
 -- 
 2.53.0
 
