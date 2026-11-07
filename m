@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061718;
-	b=CxmoAunxI++sT1LIF+v3YvlBI92vSeIYvAIw87pVy8CbJYOo+VwjPnfMuMoooYj/HNih
-	 kckoSh0wJdw679Kq41m3J6fDp4g51K+2V6+C3D0zcT3q34h1pCAj1wyCJg3UoxIYrODEo
-	 P+DDpCvNwrfIq6luuVi8qtGvZHXUNLD5LCbx/+65JU8rExnW66d1SQSq2Y9LVkxFWynFM
-	 FtKqXRhCSrmlBOiW/I5wupLbshXJKbpe12XllQI/SnGC/ZBZbB0mmkgweOkiz5I6H2pgM
-	 6a9j8gzxUTFE5uyOPmE0AVMzrxYRmsJejEOAJqhuhjgIva9N6c4S6plXyLFBwbgOtGw==
+	t=1794061719;
+	b=Mx+9YK3MP2bqL2m8mTeQnL8LgCJAI9UdW5GgFLOyDs0rpxQm+039VcZyzd479T9nGu34
+	 0nXst3OPJK+YJ6TmMikY9uSH1xByf3mrjTcTnTmKCtQ+XZj6kYat8UX8P7wLFX2egZzNC
+	 335RMLgaxiF9EnvEtJbvedV1h3tu5Imk3ltol0pnhXFnxQ4umZ72FX5/Kzjd54Py6XCuw
+	 Ntz010VAh6/SGQRysk1T6NiUBBA87FVvhApUQMjnr7bI/pWVx7zNJdB4JsadlqB1vB3qh
+	 UbHHfmr1i7dNEy7F0lNailVEz7+so4E4AvtDni/jRdxDQ56kKkkPDHzIAJ2PbM66yaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061718;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061719;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mPhZtjaJCDWOWY/xsiZjtdGLbobb0mJGUR/KsDQ3YzU=;
-	b=PBJ/KS1ma+rQe6zXH8qaqK0WBTmfWzffZ1NbnuUfu09jGOootCH+nk0BWiGtLrmMnjYH
-	 Ir4T1a8G3V04an0y8ui0+uIJ8FbGkj8BfftZnuWu0FJq8NAhbMSriBSmIqersfAfBTo9h
-	 vaNsMM+vmf6qMUsm5akHhNRwBWo/bop4p3PLIw/zraWO9TBMCvZvHtvBroTooncNtF44y
-	 EcDw68xiU+tqViv4sxfk6j2tAJeLP16NJIeeWoHm+14Pn8IUbwld29lmivEb5T/e+01up
-	 6fIx2jwTVG3XxZB/mzLaPTtB/p23mOELUgZr7xhGVqsqok87zEGlFMpWaHRhmQgfTrA==
+	bh=1nJODl7i4MbIpLjynXxVybrNfmzZNHOm5DV7MURBZBo=;
+	b=mVC2uA6mVPFQmG7+TfEsfpFZMtpvdh46/SQoGJYKUMgQnggaEkd99y4QnpdGc1Hk75gG
+	 U+zD3lGe1KIgp9BxwooK+92Jg8ppVK8D7zoqKaR//JXANnEadXXlhBrBehun1B5ilbvFW
+	 HfUv00rD3b7EIQv8zG3sfCP5gO6cToa6DIkksZpxHRMiUVSDFiLm53H+SBRMTMsXBVOG3
+	 hEg0CaKwYm/fVsJ2YiByZSD08TOdcIHk3A6tQ7kjJ+4PCl1+TpQOv+gvzulbN4tWL4xWk
+	 vUcKQoAgeUYWrBGWglr5Aj1ww8D/DDYKMsQai6et+GVcKCHpdN5hvcdLoHnx2BJofhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jiLY8gFu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zXd10E5j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD70B606A32E;
-	Sat,  7 Nov 2026 14:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917FC606A32C;
+	Sat,  7 Nov 2026 14:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jiLY8gFu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDE11F008A1;
-	Sat,  7 Nov 2026 14:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zXd10E5j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86B31F0089F;
+	Sat,  7 Nov 2026 14:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061717;
-	bh=mPhZtjaJCDWOWY/xsiZjtdGLbobb0mJGUR/KsDQ3YzU=;
+	s=korg; t=1794061719;
+	bh=1nJODl7i4MbIpLjynXxVybrNfmzZNHOm5DV7MURBZBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jiLY8gFuja5Mj91WmoNdKyHBUQVz3579CbXXf800BrQ2BaxA/G+Zem5xvfJjbMkz7
-	 bYjZakZt0npNemJCaeRBn+eUDKYJG+0mopj4tj6vJT096+wRBCe8TYpZbiOZNUH5LA
-	 kLIK0X4z95Po/vOkhHEo+TvFaHNQoGYCCJ9T2g/A=
+	b=zXd10E5jb4yldZjmMJgdPpNKBc0+1bHOsgvpvUaukqC+gNh+sNXRp4XpQSm85sVZL
+	 yMqx1PtBXylKrJfAtEW28RgGrtOiawwk1+Frg9xNF1Lefs1DaDCPzPkd5mUPAXRRin
+	 go4vWUPj96Th9YEk5iHy+G69TXaHK+teoYKHCNNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Ameer Hamza <ameer.hamza@truenas.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0763/1536] NFSD: Dont complete a cld upcall the daemon has not read
-Date: Sat,  7 Nov 2026 08:46:19 -0500
-Message-ID: <20261107135018.962289817@linuxfoundation.org>
+Subject: [PATCH 6.12 0764/1536] nfsd: dont modify a session slot when replaying its cached reply
+Date: Sat,  7 Nov 2026 08:46:20 -0500
+Message-ID: <20261107135018.992096319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,100 +68,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Ameer Hamza <ameer.hamza@truenas.com>
 
-commit 7f4bf851aca4e18940ebf2bddf4ba6783802ee81 upstream.
+commit 2987838317501ff67b672ac2a441fe34b7729f3d upstream.
 
-cld_pipe_downcall() matches a reply to its upcall on the xid alone.
-A write that arrives before the daemon has read that upcall
-completes __cld_pipe_upcall() while its struct rpc_pipe_msg is still
-queued on the pipe. The waiter returns, its stack frame goes away,
-and the pipe keeps a list_head that points into it. The next
-rpc_queue_upcall() walks that pointer:
+nfsd4_sequence() claims a session slot by setting NFSD4_SLOT_INUSE
+under nn->client_lock. A reply served from the slot's reply cache does
+not claim it, and that distinction lived only in cstate->status, which
+nfsd4_sequence() set to nfserr_replay_cache. Commit cc028a10a48c
+("NFSD: Hoist status code encoding into XDR encoder functions") moved
+nfsd4_proc_compound()'s cstate->status assignment below the out:
+label, and the replay path's goto out was the one path that relied on
+skipping it. The test in nfsd4_sequence_done() therefore no longer
+identifies a replay, and every replay now stores its reply and clears
+NFSD4_SLOT_INUSE as though it owned the slot.
 
-  BUG: KASAN: vmalloc-out-of-bounds in __list_add_valid_or_report
-  Read of size 8 at addr ffffc90007027950 by task syz.0.96/13066
-   __list_add_valid_or_report+0x6a/0x130
-   rpc_queue_upcall
-   cld_pipe_upcall
-   nfsd4_cld_grace_start
-   nfsd4_cld_tracking_init
+NFSD4_SLOT_INUSE is the interlock: check_slot_seqid() rejects every
+sequence id for a slot that is in use, before replay_matches_cache()
+runs. A replay never sets it, so two replays can be in flight on the
+same slot at once. One can read slot->sl_cred under nn->client_lock
+while the other's completion frees and rebuilds it from the XDR
+encoder without that lock. Two completions can also collide with each
+other and release the same group_info twice. free_svc_cred() leaves
+cr_uid, cr_gid and cr_flavor intact, so the reader passes every
+earlier test in same_creds() and dereferences a NULL cr_group_info.
+>From a 6.12.91 production server:
 
-The pipe is mode 0600 in rpc_pipefs, so the trigger is a broken or
-hostile nfsdcld rather than an unprivileged task.
+  BUG: kernel NULL pointer dereference, address: 0000000000000004
+  CPU: 63 UID: 0 PID: 39015 Comm: nfsd
+  RIP: 0010:same_creds+0x38/0xa0 [nfsd]
+  RDX: 0000000000000000
+  Call Trace:
+   nfsd4_sequence+0x6a8/0x910 [nfsd]
+   nfsd4_proc_compound+0x345/0x670 [nfsd]
+   nfsd_dispatch+0x100/0x220 [nfsd]
+   svc_process_common+0x311/0x700 [sunrpc]
+   svc_process+0x131/0x1c0 [sunrpc]
+   svc_recv+0x7ef/0x9c0 [sunrpc]
+   nfsd+0xa3/0x100 [nfsd]
+  Kernel panic - not syncing: Fatal exception
 
-Record whether the daemon has consumed the whole message and
-complete only when it has. cld_pipe_destroy_msg() runs on every path
-by which the pipe releases a message, so it can maintain that flag
-under cn_lock. nfsdcld sends its -EINPROGRESS downcalls only after
-reading the upcall, so the new check does not break the GraceStart
-record stream.
+Since v6.14 a live session's slot table can shrink, and the unowned
+store becomes a use-after-free write. nfsd4_sequence() defers the
+shrink while a slot is in use, but it tests NFSD4_SLOT_INUSE, which a
+replay does not set, so free_session_slots() can kfree() the slot the
+replay still holds in cstate->slot.
 
-Fixes: f3f8014862d8 ("nfsd: add the infrastructure to handle the cld upcall")
+Record the claim in cstate->slot_owned when nfsd4_sequence() accepts a
+request and test that in nfsd4_sequence_done(), so only the request
+that claimed the slot updates its cached reply and clears
+NFSD4_SLOT_INUSE. svc_generic_init_request() zeroes the compound
+response before each request, so the flag starts clear.
+
+Fixes: cc028a10a48c ("NFSD: Hoist status code encoding into XDR encoder functions")
 Cc: stable@vger.kernel.org
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Closes: https://lore.kernel.org/linux-nfs/CA+0ovCjVF58WLeen2ctdzHyWUASAAW3Y=Yjihyq0pFApYawtDg@mail.gmail.com/
-Link: https://patch.msgid.link/20260901-alemi-v2-1-e163f94a3a6e@kernel.org
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Ameer Hamza <ameer.hamza@truenas.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260824173641.3274260-1-ameer.hamza@truenas.com
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4recover.c |   23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c |    7 ++++++-
+ fs/nfsd/xdr4.h      |    1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -728,6 +728,8 @@ struct cld_upcall {
- 	struct list_head	 cu_list;
- 	struct cld_net		*cu_net;
- 	struct completion	 cu_done;
-+	/* daemon has read the whole upcall; protected by cn_lock */
-+	bool			 cu_inflight;
- 	union {
- 		struct cld_msg_hdr	 cu_hdr;
- 		struct cld_msg		 cu_msg;
-@@ -888,6 +890,13 @@ cld_pipe_downcall(struct file *filp, con
- 	spin_lock(&cn->cn_lock);
- 	list_for_each_entry(tmp, &cn->cn_list, cu_list) {
- 		if (get_unaligned(&tmp->cu_u.cu_hdr.cm_xid) == xid) {
-+			/*
-+			 * Completing now would return the waiter
-+			 * while its message is still queued on the
-+			 * pipe.
-+			 */
-+			if (!tmp->cu_inflight)
-+				break;
- 			cup = tmp;
- 			if (status != -EINPROGRESS)
- 				list_del_init(&cup->cu_list);
-@@ -896,9 +905,9 @@ cld_pipe_downcall(struct file *filp, con
- 	}
- 	spin_unlock(&cn->cn_lock);
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4473,6 +4473,7 @@ nfsd4_sequence(struct svc_rqst *rqstp, s
+ 		slot->sl_flags &= ~NFSD4_SLOT_CACHETHIS;
  
--	/* couldn't find upcall? */
-+	/* no upcall to complete? */
- 	if (!cup) {
--		dprintk("%s: couldn't find upcall -- xid=%u\n", __func__, xid);
-+		dprintk("%s: no completable upcall -- xid=%u\n", __func__, xid);
- 		return -EINVAL;
- 	}
+ 	cstate->slot = slot;
++	cstate->slot_owned = true;
+ 	cstate->session = session;
+ 	cstate->clp = clp;
  
-@@ -918,8 +927,16 @@ cld_pipe_destroy_msg(struct rpc_pipe_msg
- 	struct cld_msg *cmsg = msg->data;
- 	struct cld_upcall *cup = container_of(cmsg, struct cld_upcall,
- 						 cu_u.cu_msg);
-+	struct cld_net *cn = cup->cu_net;
-+
-+	/*
-+	 * errno >= 0 means the daemon read the whole message and a
-+	 * downcall will complete the upcall.
-+	 */
-+	spin_lock(&cn->cn_lock);
-+	cup->cu_inflight = msg->errno >= 0;
-+	spin_unlock(&cn->cn_lock);
+@@ -4508,7 +4509,11 @@ nfsd4_sequence_done(struct nfsd4_compoun
+ 	struct nfsd4_compound_state *cs = &resp->cstate;
  
--	/* errno >= 0 means we got a downcall */
- 	if (msg->errno >= 0)
- 		return;
- 
+ 	if (nfsd4_has_session(cs)) {
+-		if (cs->status != nfserr_replay_cache) {
++		/*
++		 * Only the request that claimed the slot may update its
++		 * cached reply and clear NFSD4_SLOT_INUSE.
++		 */
++		if (cs->slot_owned) {
+ 			nfsd4_store_cache_entry(resp);
+ 			cs->slot->sl_flags &= ~NFSD4_SLOT_INUSE;
+ 		}
+--- a/fs/nfsd/xdr4.h
++++ b/fs/nfsd/xdr4.h
+@@ -188,6 +188,7 @@ struct nfsd4_compound_state {
+ 	struct nfsd4_slot	*slot;
+ 	int			data_offset;
+ 	bool                    spo_must_allowed;
++	bool			slot_owned;
+ 	size_t			iovlen;
+ 	u32			minorversion;
+ 	__be32			status;
 
 
