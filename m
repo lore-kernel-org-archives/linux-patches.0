@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061394;
-	b=1o9ETrWMMQqXOeX55BEOLFpRNAT7GV1bJhADVZ9izIXjnQAB/Y/rR6WK7Bs82SKMBsrX
-	 PO7f0phXlhFpJif+t9+RMc6VGQYLXmsmr6j360s0CU9MKDgBj20khK2ZB/mkU0C9WcvFS
-	 XU+o/m7u99OTRclYfF3rVVGtLg6GcKMzn1qqDvZO4Nifkwyul4PT1amONRxse/eFhWwRw
-	 vWueL12iUNv/7yNoMo/tj6K6wtuOwiJMT9K4b1mgGD9Fxx1oaUhtPQJkntiS383vG/M5V
-	 3C3FzirDhaOJCLEqqjcj3AjP7eloMkXFpoz0DikHr0l5fbWXp1zzmfU/5iqksy1i3NQ==
+	t=1794061395;
+	b=uImpmLSMhT6ofAVVdez9fBSllVGcvmvCBk+UBei/NuTcScoj58tfcVYV4VCtLeJiyvwf
+	 mFQXifSccfdm6C0zUSu+5dV5UYo2PVbo50coj0fHRcyTxIHORrku6L5dlVQ0b+M6QRJ/R
+	 eR2cGZczEBio5woCUf23BYXtkSts7UVnA2IdbwVwgeQVH3reXckq0Zf8VprZ3MA/dAgOQ
+	 xzVavO1OeCXedhk1Z0QU3/xHQHj3jg3GJ1hEDE95LSKlWP4F36jftJCDSP1HHbrqpf9qi
+	 mtTHnFI/l7mf0+eesWDl+NYhSnAVq2v3ODICjpXFuLOqVwXZ+O0WuZLipI/T4hMbQCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061394;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pPqo2are8xUVDbfb3qdB1NRHRgfx6ccenWkocDqyFLs=;
-	b=CiNLV5PawrtVZ0vGdmBMiHlHChMX2qFbuVZenGHvwwmCUOlLnQVTjRv/SkoC7w80lE0F
-	 sYoeU1/QVDeiknXnk/ZtAyt8ZBrK3XXP9mzrnpnnYysAE9PMKJQMSgQZgtZ5En3nG403A
-	 Hvgc0Bf6wPmmrfOOKH34yWuTeNK2bwFgIi1Hk5Qarmpcp71mw4ud64ne+J39kdKBg1HGO
-	 xTAam1V4JOdvLSJ0MlARbXvHAYbmT/h3hghocst8C0oBQMDMXLzpjfP8a9Zh6iNym/jdo
-	 yj90Gg5l6TnJuLY0rlgvpOlVjZnOBvVQgjE98xHLREkpn6g1MLWEreEOO5aS3cVW6Og==
+	bh=sut3LLmjSXqBsYOcOEYAbEQDIbekB/OqVKrElqXlNdY=;
+	b=asyZdZg+jQVb9bx1OY0IqY97FQk67Ik/hBK7dQD6iN/LpoUL7etK/Frs4r5WKzMxJyZV
+	 QqJXpY9zLGkl1XBSBA/L84tldTOE3l8IEQZoyjccWbwcQykF2f12DBO9smWyELW50oshn
+	 ErJ29PyCHMWvqVq8z9pRk3bYl1rTdJllwpptsokNeFUl6iMnZC20A05q+lPWzrCt5Iq/W
+	 O1QIR9FnWQlStLJH7J1bd34F8tlzHebfoegjb5CAL4v4elkCKKdPqdNd5sCh2nYePxnLe
+	 zmJLT695I7AHBW9BNqcP1KqjxsdVG5cYbcVoWWyd4MOsiU2p3Tn5BiFK6s1hAlxYdzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hrmh02lZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8ZaZWmz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7158606A333;
-	Sat,  7 Nov 2026 14:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00035606A331;
+	Sat,  7 Nov 2026 14:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hrmh02lZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BDE1F0089F;
-	Sat,  7 Nov 2026 14:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8ZaZWmz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A321E1F0089F;
+	Sat,  7 Nov 2026 14:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061393;
-	bh=pPqo2are8xUVDbfb3qdB1NRHRgfx6ccenWkocDqyFLs=;
+	s=korg; t=1794061394;
+	bh=sut3LLmjSXqBsYOcOEYAbEQDIbekB/OqVKrElqXlNdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hrmh02lZqlKhXqBUNJQ5dWO1hu79qbu/vNgvuvg7H3gyUmvs8/DUHtwPEWqr87ImI
-	 AhJy6ECCiNwgwGnbHD+VG/xi+tjpODQO/hTuEfbY1WK2bCTj0RMTmDgBG8SWewXyMz
-	 sTgEpH8ZD3vsSVtFdYBPZwCaWByznfjNgzpsUxTo=
+	b=P8ZaZWmzaHkhmw+GcVFhyv9+fVJEbXqve3xc54SWfRawIeSE4Olw11kS6WHUUy0g6
+	 f0wDMej1uP5Mpthw/8JF7yZy6qTzul/HzQYsgFflAsI3askBXYpiirZPs35cookG7B
+	 eHMWXSEor3xwf2xhuBUc3elQlWn74Rt+hxcUzHew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0496/1536] i2c: qcom-cci: Do not check return value of cci_init()
-Date: Sat,  7 Nov 2026 08:41:52 -0500
-Message-ID: <20261107135011.392852101@linuxfoundation.org>
+Subject: [PATCH 6.12 0514/1536] drm/amdgpu/pm: add workload profile pause helper
+Date: Sat,  7 Nov 2026 08:42:10 -0500
+Message-ID: <20261107135011.871878470@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,57 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 17c5d247e3e4708cac05ff087c8013c0dda383a2 ]
+[ Upstream commit 7f991dd3641ef52e0a25b43f27cc61440c4bdcb4 ]
 
-The cci_init() function is not supposed to fail, and it never returns
-a non-zero, so it'd make sense to convert its signature to void.
+To be used for display idle optimizations when
+we want to pause non-default profiles.
 
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260515234121.1607425-3-vladimir.zapolskiy@linaro.org
-Stable-dep-of: f98d49864821 ("i2c: qcom-cci: fix autosuspend cleanup")
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6dafb5d4c7cdfc8f994e789d050e29e0d5ca6efd)
+Stable-dep-of: 1f1d43418d61 ("drm/amdgpu: skip gfx switch_power_profile during GPU reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ .../gpu/drm/amd/include/kgd_pp_interface.h    |  1 +
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c           | 19 +++++++++++++++++++
+ drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h       |  2 ++
+ 3 files changed, 22 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-index 86d45f0752344..5215a003869df 100644
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -247,7 +247,7 @@ static int cci_reset(struct cci *cci)
- 	return 0;
+diff --git a/drivers/gpu/drm/amd/include/kgd_pp_interface.h b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+index 19a48d98830a3..a97b03232c0b9 100644
+--- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
++++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+@@ -388,6 +388,7 @@ struct amd_pm_funcs {
+ 	int (*set_pp_table)(void *handle, const char *buf, size_t size);
+ 	void (*debugfs_print_current_performance_level)(void *handle, struct seq_file *m);
+ 	int (*switch_power_profile)(void *handle, enum PP_SMC_POWER_PROFILE type, bool en);
++	int (*pause_power_profile)(void *handle, bool pause);
+ /* export to amdgpu */
+ 	struct amd_vce_state *(*get_vce_clock_state)(void *handle, u32 idx);
+ 	int (*dispatch_tasks)(void *handle, enum amd_pp_task task_id,
+diff --git a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+index 17c04963a7921..01ce378c36bca 100644
+--- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+@@ -340,6 +340,25 @@ int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
+ 	return ret;
  }
  
--static int cci_init(struct cci *cci)
-+static void cci_init(struct cci *cci)
++int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
++				   bool pause)
++{
++	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
++	int ret = 0;
++
++	if (amdgpu_sriov_vf(adev))
++		return 0;
++
++	if (pp_funcs && pp_funcs->pause_power_profile) {
++		mutex_lock(&adev->pm.mutex);
++		ret = pp_funcs->pause_power_profile(
++			adev->powerplay.pp_handle, pause);
++		mutex_unlock(&adev->pm.mutex);
++	}
++
++	return ret;
++}
++
+ int amdgpu_dpm_set_xgmi_pstate(struct amdgpu_device *adev,
+ 			       uint32_t pstate)
  {
- 	u32 val = CCI_IRQ_MASK_0_I2C_M0_RD_DONE |
- 			CCI_IRQ_MASK_0_I2C_M0_Q0_REPORT |
-@@ -288,8 +288,6 @@ static int cci_init(struct cci *cci)
- 		val = hw->scl_stretch_en << 8 | hw->trdhld << 4 | hw->tsp;
- 		writel(val, cci->base + CCI_I2C_Mm_MISC_CTL(i));
- 	}
--
--	return 0;
- }
+diff --git a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
+index 4d88c0a9f453b..3e27050ccd123 100644
+--- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
++++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
+@@ -405,6 +405,8 @@ int amdgpu_dpm_set_xgmi_pstate(struct amdgpu_device *adev,
+ int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
+ 				    enum PP_SMC_POWER_PROFILE type,
+ 				    bool en);
++int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
++				   bool pause);
  
- static int cci_run_queue(struct cci *cci, u8 master, u8 queue)
-@@ -624,9 +622,7 @@ static int cci_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto error;
+ int amdgpu_dpm_baco_reset(struct amdgpu_device *adev);
  
--	ret = cci_init(cci);
--	if (ret < 0)
--		goto error;
-+	cci_init(cci);
- 
- 	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
- 	pm_runtime_use_autosuspend(dev);
 -- 
 2.53.0
 
