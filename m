@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064439;
-	b=mYLeGJwgxE7EmNXNdDFlwU4Gp2LRnCx6aMRMzmKFOvTwNqFyjmDv2ayS+/ltnMAm3jgu
-	 WK4Y4hXwCGktfeI3MRhlSOLOqR480+GaGb+74SYP3bou1spLGASZ15Dsqd1nbU6gAgWfu
-	 cCtWsYwJ9n62OYk3hvfzNQjHwA7CHdGD6LKDJK3npBUuHGpfdDQcROP8JBO4queC/cmKL
-	 meBBuyqJSkABEdTC3nUVz0pSS9OREMYF8IIFrQsU9slKyhKaSYPN8TpP2Mq6jkf+Ypxr7
-	 eajddlnhN8dslqvqQMUw2wMBjTbc+c1aWrOFQ2cHGHv3A/EFEWkgwK7kyspq4WQyXGg==
+	t=1794064440;
+	b=aK1FW0v08QVM9n8m5oSWdgV6msXg3clc/qW8WXavmZ5usf9KoFn9zvHmW9K205x48SR1
+	 5FnbLUJLJZXLP4G8t+HC4JxPrBDQ8fZ2xTCTMFDhXQiebM17LSoRh/fl3XRORC+r3VoXQ
+	 3aZo56GKyIQt8rZH8cSL7l9MncfaKEXKiVuP9Vm1xcVijRRg7IQJJtVqtTJaC7Ky6v+q4
+	 o4bBfTyTyrM+KwFoSNHRYc88ZnyR4lgRWSDhhKx3sFUJPKKup90fqECAovf+rstW4N93w
+	 ZjMpfwz21RITUBK+2SELBE5stHvv5QLss2Ar3bpvoSZTtZt1opAAHYmHkpcfHF7q8NQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VOPCnKBntPSPPcjB8Rj8/EPv4RPygdHCG2iuYWOOMKw=;
-	b=VBNlr8TnxaOlhRaS0popy57VYnOA4v46RJmC483s+xWLVW/X3bvhFK5QERrELtyLm3wX
-	 +ZmIlYxtvFZ62yBJWoC+4Y0dGOpIiJewXS1Bucp/rty99tldSchV1eeFZ+LPeLOETzXDL
-	 CG3j8QvmpKXYoJgnIwsVsAYJeHbASLD2qDPxpF76LbohCa8+Zi64IjA5lbaonOnR/v/Sj
-	 0ybZNFBIDCnnl29bL956ENc6CsryKaZu98qu26L2gbnlhGqU17CbcuWUTnDVmgpFvdXnz
-	 1AWZ08rUbUk2gdH8jgnjvKnjqilnX1JrGbOJbj/eG1A8NTbMMZ6Ne2nQHwfAGEaS+qA==
+	bh=zuEy4cm0nfI+QJxutiRXDn4TzisQMFrtP7E4tV8JNj0=;
+	b=Pue+Gl87DCgBJWN7tnnKrbSyyBDPQ2Pn2z/4TEhk4vIX/a+XuD99gMzR5jcJRBLxYjUg
+	 kmwWC0HDnrLoI3H+yrcDsIuP3pSyNwnSKmx2HUnj06HcpD/76irhdm1S/Vktus3omNQb0
+	 aErVFiLZvEI9mZP7DrJ1zmiiCQdvhw160E6nsQlv1l6ELvXMzv9B9Ifz6q3B4zTDHln7p
+	 nDYzeaeGKvg6l6q5et+/g3mhmKiNF7dPXlgb5JDHgWXXWn/bFB/FlXHpeAfU9mcvDMGbE
+	 X0EJWOI9E2fat4DpQljkckafa2p5DA+ZV5OsDsL4MS/HeqsqI3xs2oh0Mme1vzVEFwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tHLb/OZC";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cf9tIA9C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC5A606A9DB;
-	Sat,  7 Nov 2026 15:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C1A606A9DB;
+	Sat,  7 Nov 2026 15:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tHLb/OZC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC57F1F0089F;
-	Sat,  7 Nov 2026 15:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cf9tIA9C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08D31F0089F;
+	Sat,  7 Nov 2026 15:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064439;
-	bh=VOPCnKBntPSPPcjB8Rj8/EPv4RPygdHCG2iuYWOOMKw=;
+	s=korg; t=1794064440;
+	bh=zuEy4cm0nfI+QJxutiRXDn4TzisQMFrtP7E4tV8JNj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tHLb/OZCcnnRKoyM2c33+eLs7TFmImyuUj3ZO2eIhHcExvmpGYISrvyq1RNuIAIUv
-	 2la/pKWMuNh4l49Pi4SwyaFXWPvSCwF72WDlgwoCsGLF3DzfvPxG9NluJDYlJFRp/u
-	 Ciggcq7xfm6jx8A0p3Ahx/19zuJd/aCiS8ie1Lxk=
+	b=Cf9tIA9CUi1C5G6vw5tMH+CfAtY44ZTGaLMKqRvDGqPROcreq0qVgFrKylzTetpBk
+	 xwOoqAjlUH9Ycl+B6CUhcxZj/qTItyQ40wJBUhiMSlflqDrmkGz/jePtO1YBleplfW
+	 +pJRbpf6+ohHtPgE6/yDxC9jpLJHgxWmXfIz4KMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	David Teigland <teigland@redhat.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0485/1257] dmaengine: sh: rz-dmac: Fix off-by-one in residue lmdesc lookup
-Date: Sat,  7 Nov 2026 08:46:21 -0500
-Message-ID: <20261107134952.839368220@linuxfoundation.org>
+Subject: [PATCH 7.3 0486/1257] dlm: fix send buffer backpressure handling
+Date: Sat,  7 Nov 2026 08:46:22 -0500
+Message-ID: <20261107134952.867581041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,62 +71,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 9db8e502b34bc1df8078abd0169a4fa0624de3bb ]
+[ Upstream commit e234d7625598b2eaded84fa99f53c8062650828f ]
 
-lmdesc->nxla is the address of the next descriptor, so comparing it
-against CRLA, which is the address of the current descriptor,
-finds the descriptor before the active one, not the active one.
-The residue loops below then summed one lmdesc too many on top of
-that.
+lowcomms.c tests and clears SOCKWQ_ASYNC_NOSPACE in con->sock->flags,
+but this bit has not been stored there for ten years.
 
-Compare each descriptor's own address to CRLA instead, and add tb
-after advancing to the next lmdesc.
+Commit 9cd3e072b0be ("net: rename SOCK_ASYNC_NOSPACE and
+SOCK_ASYNC_WAITDATA") mechanically renamed the two dlm users, then
+commit ceb5d58b2170 ("net: fix sock_wake_async() rcu protection") moved
+the bit from socket->flags to the RCU protected socket_wq->flags, where
+it is reachable only through sk_set_bit() and sk_clear_bit(), and is
+only maintained for sockets having SOCK_FASYNC set.  dlm uses kernel
+sockets, which never have SOCK_FASYNC set, and never sets the bit
+itself, so the test in send_to_sock() has been false ever since.
 
-Fixes: 21323b118c16 ("dmaengine: sh: rz-dmac: Add device_tx_status() callback")
-Fixes: 172bfb57481c ("dmaengine: sh: rz-dmac: Add cyclic DMA support")
+The consequence is that when sock_sendmsg() returns -EAGAIN because the
+socket send buffer is full, dlm no longer sets CF_APP_LIMITED, does not
+increment sk_write_pending, and does not return DLM_IO_END to wait for
+lowcomms_write_space().  It returns DLM_IO_RESCHED instead, and
+process_send_sockets() immediately requeues the send work.  A connection
+to a peer that is slow to drain thus keeps cycling through
+sock_sendmsg() and -EAGAIN, burning CPU, instead of sleeping until TCP
+reports that space is available again.
+
+Test SOCK_NOSPACE instead.  This is the bit that lives in socket->flags,
+that TCP sets whenever sendmsg() returns -EAGAIN for lack of send buffer
+space (tcp_sendmsg_locked() and sk_stream_wait_memory()), and that
+lowcomms_write_space() already clears.  This restores the semantics dlm
+had before the bit moved.
+
+Also remove the clear_bit() of SOCKWQ_ASYNC_NOSPACE from
+lowcomms_write_space(), for the same reason.
+
+SCTP connections are deliberately left as they are.  SCTP does not set
+SOCK_NOSPACE, and it never calls sk->sk_write_space(): sctp_wfree() ends
+up in sctp_wake_up_waiters(), which calls sctp_write_space() directly.
+lowcomms_write_space() is thus never invoked for an SCTP connection, and
+the test added here stays false, so send_to_sock() keeps returning
+DLM_IO_RESCHED as it does today.  This is the only safe behavior, as
+returning DLM_IO_END would wait for a callback that never comes.
+
+Fixes: ceb5d58b2170 ("net: fix sock_wake_async() rcu protection")
 Cc: stable@vger.kernel.org
-Suggested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260922092037.224884-1-claudiu.beznea@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Cc: David Teigland <teigland@redhat.com>
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20260929071743.23624-2-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sh/rz-dmac.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/dlm/lowcomms.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-index ca76f1bb45c41..fdd7131e890ab 100644
---- a/drivers/dma/sh/rz-dmac.c
-+++ b/drivers/dma/sh/rz-dmac.c
-@@ -937,7 +937,7 @@ static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel,
- 	struct rz_dmac *dmac = to_rz_dmac(chan->device);
- 	u32 residue = 0, i = 0;
+diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
+index 2aff1c7c17de4..abe9ae4c643fa 100644
+--- a/fs/dlm/lowcomms.c
++++ b/fs/dlm/lowcomms.c
+@@ -522,10 +522,8 @@ static void lowcomms_write_space(struct sock *sk)
+ 	clear_bit(SOCK_NOSPACE, &con->sock->flags);
  
--	while (lmdesc->nxla != crla) {
-+	while (rz_dmac_lmdesc_addr(channel, lmdesc) != crla) {
- 		lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
- 		if (++i >= DMAC_NR_LMDESC)
- 			return 0;
-@@ -948,13 +948,13 @@ static u32 rz_dmac_calculate_residue_bytes_in_vd(struct rz_dmac_chan *channel,
- 		u32 start_lmdesc_addr = rz_dmac_lmdesc_addr(channel, desc->start_lmdesc);
+ 	spin_lock_bh(&con->writequeue_lock);
+-	if (test_and_clear_bit(CF_APP_LIMITED, &con->flags)) {
++	if (test_and_clear_bit(CF_APP_LIMITED, &con->flags))
+ 		con->sock->sk->sk_write_pending--;
+-		clear_bit(SOCKWQ_ASYNC_NOSPACE, &con->sock->flags);
+-	}
  
- 		while (lmdesc->nxla != start_lmdesc_addr) {
--			residue += lmdesc->tb;
- 			lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
-+			residue += lmdesc->tb;
- 		}
- 	} else {
- 		while (lmdesc->chcfg & CHCFG_DEM) {
--			residue += lmdesc->tb;
- 			lmdesc = rz_dmac_get_next_lmdesc(channel->lmdesc.base, lmdesc);
-+			residue += lmdesc->tb;
- 		}
- 	}
- 
+ 	lowcomms_queue_swork(con);
+ 	spin_unlock_bh(&con->writequeue_lock);
+@@ -1391,7 +1389,7 @@ static int send_to_sock(struct connection *con)
+ 	if (ret == -EAGAIN || ret == 0) {
+ 		lock_sock(con->sock->sk);
+ 		spin_lock_bh(&con->writequeue_lock);
+-		if (test_bit(SOCKWQ_ASYNC_NOSPACE, &con->sock->flags) &&
++		if (test_bit(SOCK_NOSPACE, &con->sock->flags) &&
+ 		    !test_and_set_bit(CF_APP_LIMITED, &con->flags)) {
+ 			/* Notify TCP that we're limited by the
+ 			 * application window size.
 -- 
 2.53.0
 
