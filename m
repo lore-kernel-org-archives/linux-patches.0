@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063433;
-	b=4f5A9zsH6O2IWl1icHFU2ua+lQUg/0lHrxD/5Ldr0/lKksU14+CmZS0GUK9IOdPQv6mK
-	 wNsJ99QtBkpE/GPveUTWjj/umna98hytbfIWFz2Gb2ZmBDPcbOytOqcIwrMBEQoVOcU1x
-	 WFvcYjNRhMfWhXOcyTqTnpHrP85RRxyP5iesUNl9VlpZSt1m6zGS6Nuq9cNxeGzQiTUfl
-	 y898BUNYjWYLaEvXRYpw+zQiaf/cZSBLj6A2JtWhPew+0hZEAwQp2n8Jpyui40VC0AoPJ
-	 Yj3JLlVpK+xUHtANMRMrAEwnIXcQ9gemzWCp7vOn7yfwtpQYmRnCdtnmNKPERE5eR6Q==
+	t=1794063434;
+	b=pnkp+fKYQZCpBD9rFFk8Z9YKIPGElwxFPcNvFoUnXVvD+c5EtaKw0QX8oxVnkOFhfUc7
+	 x0PiHSHklKBPOxhc8e/CWMVrWqpJDcoMmjpQ5O7WaADdX+VGOEc4SzXBklAYc1PsWeTvm
+	 cYqPB3OfRZB9ddcjB5n+uFbXQJg2ziu2d6gTGvH0E2/UiczJsroHgbUIZu2kP/qFDz5bc
+	 ne/XQZQx8CS6aGq7Jami/iUdfz61jxndW2qoNmSRt0QS2T50Fi6B6ZlQTddjPqXXd0gNq
+	 U5Hh8QiQ9L/E0rXprLH91OAB9BKugMY95mgs4IDEfnI32YGkZ7WxPHmLvT248erEkwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063434;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7BHYj3l/75yqdiBRSN7avV4zuNBiJER9SZXNUolnv3c=;
-	b=3D4v9CrvJuWxa/rtBvfQapEDL9cqVCi2gWR0/wRcdnwN8uxDvXprFIzEbYY+inIibbhf
-	 Vf35hMgJ6G8S6Ku9XYAVjX49T3/czJCWqu85RovuxGDJz4Im0uEfsnzkGs411BTqC1qO9
-	 jScNljMTs5w7RBNfMGra7r+h16FprZkGrfgTNUUVGQHB5D4BPdTu0Qcdm9WQTQRoXd4zT
-	 8R8Z9wSFVrQ2cHsXIusO5HJzS44+SnVzV2PoNQNeQyJtdW/pL5BOOcx/WSQRD2kwouPUx
-	 HJqM54GDT6lmRuC3bjcpRs1csGVo+pSZu2VAJyJ1yRyw23FR1beC+lLNoqIuwtzIS3Q==
+	bh=nNO9n5gfmnZUzG44j0mmuQ35Wx5rrQRquyMKBobdea8=;
+	b=pQyzAod0Ew6puWfgIBS93dR4fxdsLPwTuC3Nk96ObLoXxZXcOttVDEZ0x7XAZqOlP768
+	 BCQw+1SXS0p7AcazYJkqeT8VY8T/mdnuxu3LAONunh7QyABZmtdFEuEYhC7MhL7eDAY9T
+	 H3ZqWRyjqMT6dgkHNqrHtLfLcZflfcXADYO2WaR1e6xYNoCC3RQYcM8ITlvKF6fbt7KxE
+	 DOMuBzxRzAMTUc7Gx0x5QqyDRtYHBJZ/3GTM3t6zjuuT8Io9SpkG1WS1kazdP3m+6+bgJ
+	 P4mUd1udqM+ewzRIw5SHGFakPy8d4Mkn/AZe0fx+dV5rowZSAke17+5IStXQQj8ObVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyLVNV06;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXO7fEh2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C819E606D801;
-	Sat,  7 Nov 2026 14:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07625606D801;
+	Sat,  7 Nov 2026 14:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyLVNV06
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704901F0089F;
-	Sat,  7 Nov 2026 14:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IXO7fEh2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C361F008A3;
+	Sat,  7 Nov 2026 14:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063432;
-	bh=7BHYj3l/75yqdiBRSN7avV4zuNBiJER9SZXNUolnv3c=;
+	s=korg; t=1794063433;
+	bh=nNO9n5gfmnZUzG44j0mmuQ35Wx5rrQRquyMKBobdea8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FyLVNV06/i8gcX6k38AuDHktiWXAEr4aUtJYxML/XzCXGqMgjGU3H3OQ3KxEf2obQ
-	 Kakdj6egEISkMTq3VhP1FlbEoNvrogC7CdjvmyBBX3ECU4wi9cXnAZEozg8WzBk66x
-	 bTU2WTmlmGA6y+nyC0wi68UandfMUl3Gfn/XIvbk=
+	b=IXO7fEh2ZkoiJxd6eln/u9MlFq9IPP5otvZIIdWkZTLe4h77kMUl6mHYKAmjQ8ezQ
+	 tYbORN97hN6TCB1s5OH+1oIDyaPbU2U/EkRDCBdFzIxDtJs4QQ5nEO83E42MEqvDP7
+	 DA2USG34EjYkpOJ/6WoJpxZnEKoEgGHDVQO2HYNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gyokhan Kochmarla <gyokhan@amazon.de>,
-	Gao Xiang <xiang@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 596/869] erofs: use on-disk blkszbits for lz4 max pcluster bound
-Date: Sat,  7 Nov 2026 08:54:38 -0500
-Message-ID: <20261107134913.296947209@linuxfoundation.org>
+Subject: [PATCH 6.18 561/869] ARM: 9523/1: topology: allocate the cacheinfo early on the boot CPU
+Date: Sat,  7 Nov 2026 08:54:03 -0500
+Message-ID: <20261107134912.326161472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,65 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gyokhan Kochmarla <gyokhan@amazon.de>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 90b7e4a7a16443d9f6807b5c1dde52074d9f74c0 ]
+[ Upstream commit 2d4234f99900403842b2c031fefb4c5816ac4df8 ]
 
-z_erofs_load_lz4_config() rejects a valid LZ4 image when the kernel's
-page size differs from the image's block size. It bounds the on-disk
-max_pclusterblks with erofs_blknr(sb, Z_EROFS_PCLUSTER_MAX_SIZE), which
-expands to Z_EROFS_PCLUSTER_MAX_SIZE >> sb->s_blocksize_bits.
+ARM secondary CPUs allocate cacheinfo in detect_cache_attributes(),
+called from secondary_start_kernel() with interrupts disabled. With
+PREEMPT_RT, the allocation takes a sleeping lock and triggers
+"BUG: sleeping function called from invalid context".
 
-At the point this runs, sb->s_blocksize_bits still holds PAGE_SHIFT:
-erofs_fc_fill_super() seeds s_blocksize_bits to PAGE_SHIFT before
-reading the superblock, and only corrects it down to the on-disk
-blkszbits after erofs_read_superblock() returns. The LZ4 config is
-parsed inside erofs_read_superblock(), before that correction, so the
-bound is computed with the wrong shift.
+Call fetch_cache_info() for each possible CPU from init_cpu_topology()
+on the boot CPU, following commit 5944ce092b97 ("arch_topology: Build
+cacheinfo from primary CPU"). This supplies the arrays before secondary
+CPUs populate them. Suppress -ENOENT and -EOPNOTSUPP, which leave cache
+detection to the existing late path.
 
-On a 64K-page kernel mounting a 4K-block image (e.g. one built with
-mkfs.erofs -C 262144 on a 4K-page host), the bound evaluates to
-1 MiB >> 16 = 16 blocks instead of the correct 1 MiB >> 12 = 256
-blocks. The image's legitimate max_pclusterblks of 64 then fails the
-check, mount returns -EINVAL, and booting from such an image as the
-root filesystem panics:
+The CLIDR fallback uses the boot CPU's cache geometry. A secondary CPU
+with more cache leaves can still require late reallocation and trigger
+the warning.
 
-  erofs (device dm-0): too large lz4 pclusterblks 64
-  Kernel panic - not syncing: VFS: Unable to mount root fs
+Assisted-by: LLM
 
-sbi->blkszbits already holds the on-disk block size at this point, so
-compute the bound from it directly. This makes the check independent of
-the host page size and of superblock-parse ordering.
-
-commit 3acea5fc3354 ("erofs: avoid hardcoded blocksize for subpage block
-support") already handled the same ordering hazard for the superblock
-checksum path by using sbi->blkszbits in erofs_superblock_csum_verify();
-the lz4 config path was missed.
-
-Fixes: 3acea5fc3354 ("erofs: avoid hardcoded blocksize for subpage block support")
+Fixes: a9ff94477836 ("ARM: 9433/2: implement cacheinfo support")
 Cc: stable@vger.kernel.org
-Assisted-by: Kirocrew:gpt-5.6-sol
-Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20260912195552.76673-5-kmehltretter@gmail.com/
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/decompressor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/kernel/topology.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/fs/erofs/decompressor.c b/fs/erofs/decompressor.c
-index 48a0c84cec755..858fe65ba84d0 100644
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -23,7 +23,7 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
- 		if (!sbi->lz4.max_pclusterblks) {
- 			sbi->lz4.max_pclusterblks = 1;	/* reserved case */
- 		} else if (sbi->lz4.max_pclusterblks >
--			   erofs_blknr(sb, Z_EROFS_PCLUSTER_MAX_SIZE)) {
-+			   Z_EROFS_PCLUSTER_MAX_SIZE >> sbi->blkszbits) {
- 			erofs_err(sb, "too large lz4 pclusterblks %u",
- 				  sbi->lz4.max_pclusterblks);
- 			return -EINVAL;
+diff --git a/arch/arm/kernel/topology.c b/arch/arm/kernel/topology.c
+index 2336ee2aa44a2..e6b50cd43ce53 100644
+--- a/arch/arm/kernel/topology.c
++++ b/arch/arm/kernel/topology.c
+@@ -12,6 +12,7 @@
+  */
+ 
+ #include <linux/arch_topology.h>
++#include <linux/cacheinfo.h>
+ #include <linux/cpu.h>
+ #include <linux/cpufreq.h>
+ #include <linux/cpumask.h>
+@@ -238,8 +239,20 @@ void store_cpu_topology(unsigned int cpuid)
+  */
+ void __init init_cpu_topology(void)
+ {
++	int cpu, ret;
++
+ 	reset_cpu_topology();
+ 	smp_wmb();
+ 
+ 	parse_dt_topology();
++
++	for_each_possible_cpu(cpu) {
++		ret = fetch_cache_info(cpu);
++		if (!ret)
++			continue;
++		/* CPUs without a usable CLIDR return -EOPNOTSUPP. */
++		if (ret != -ENOENT && ret != -EOPNOTSUPP)
++			pr_err("Early cacheinfo failed, ret = %d\n", ret);
++		return;
++	}
+ }
 -- 
 2.53.0
 
