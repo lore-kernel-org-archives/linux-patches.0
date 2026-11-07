@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065579;
-	b=3bJNWVXYpQ9WvBdmPJXiSl/VGsuP33lDjiYxNH2vA2FVODKB5I3fPwvaaX9H1QCyGocB
-	 K8Z6NekPSlL5QEWILqDA3NhYO2N82aPWtZLILJUBk7XU/7MO6e7ewFp0yZgAGkSQF3yiH
-	 Q+IcwMSHPTuUHryJMFk7YPfY/SbhheKWOK2Ry99O9TNo6zOhXULmz/2Azm7A+MSewZ9IF
-	 SR082+jGnI/HllZUFaQ/31Bv0kDopFUleA+zttx8HVEsZ/W6Tw8Sm7L5ejX1xTfxekmHm
-	 sqhcb/EncjZJjmJ62ZCmBZ5R24a7iGaaN2ubMEnwiKyONrPHd9s9kk+4w34j4sQvvsg==
+	t=1794065580;
+	b=ZxdQS6jPto3Zl9e7pUCPnwj2Tg/d4YAmxMXLDbnv0qtHJY0A5EjsrKi5vtaMTm7BmmZ1
+	 jA+18W29tk6SSOS80//Q3059mMT18yN3+sz82+NAWzjXdbARGw9fnzYkM9tAhRuARy8ta
+	 TwBhTkxgj2zKw1KnJyPOSWUy9YYuXiaoerguwVEk0Ci5Gb3VwKYm3v90Ep18SyzfWxaqz
+	 rZWUoO4j8eHEPf4I8zjwDFuMvfPRJ45vmUY1z+KDXXxXVu2lHY0m+Ax+p+wDfcj/I8KJO
+	 z35VkLBk3AwtD1k/LFW0doFLSKA9uKZsgt4OoyxGOg3rNwouOGw+6Bz+zFkjSzgcglg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LM3cTyyDYrPrKJed8rDtRjBWqj5AHz72yOuuszNWd08=;
-	b=3fHKoAo5xb4Gqsyhg7LywXLI+wneP97TW1i/qw4zyOSGhRwuVmPJkm46o/PDWxe60hP7
-	 isphuiR+xTPfOIldaD3ISIhNE7Uyo2dt9vZxp9J5Baoxl/B2TjFZuco19ZGisNZeYZxMV
-	 nsXW6/6LpHRez3TMLNAwmq1j9rTKK6mzkOOMjBfg3C2XY1hr1K/EgAC8Yyn7c0T/MmuEi
-	 F9TlLn2PnnO2UIUHTe77RC0FYkpF0EYk7SkPESgPf/CFoG+D/nayUgaYVa3NbaPvEIoB0
-	 9qOYt2ZfJDwKnL9Udj0TIuOAx77FZ6PVBprrJS9+osQ6S5pmiTMl9hyeWqBDO7k+RZw==
+	bh=gPrE2jrNGhXltXCPgSSRO/2cEGjtyad+Bfd2ZugtYNQ=;
+	b=Ega24YNg8lWgMwO63FznhRDnTFF84ohv85z5KctV/t/cZHnc4jKTSDn5lrx0rtLMS8OT
+	 K5ZQLOPPXQSDZIUjNaSMyRFCi1TYuBc3Inmextg2GVfdrYkdYrtSgw5EUSEijnQlEOcx6
+	 QQMAlplDjeQ2DiHPhuX+FKi1pAsq1leaqKanQqmOO1ypJFavrPu709SNmvqsd9j9mpzey
+	 wrLymVHYX0uKC37E97DgRRqNhV/bQRMesSFaTqgvnBRCWqkM2Si6MkaxxGbgPz1FwSMk8
+	 pDzIT0sSRzwoFQh7m34mRdnZUJPC9NlYpSxrWWHIa1TFAV9rAMar4bbM5zogNZ3S6JA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EnFRz1CW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=woVrcilg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA334606A33A;
-	Sat,  7 Nov 2026 15:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF28C606A32C;
+	Sat,  7 Nov 2026 15:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EnFRz1CW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523CC1F0089F;
-	Sat,  7 Nov 2026 15:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=woVrcilg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE821F0089F;
+	Sat,  7 Nov 2026 15:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065578;
-	bh=LM3cTyyDYrPrKJed8rDtRjBWqj5AHz72yOuuszNWd08=;
+	s=korg; t=1794065579;
+	bh=gPrE2jrNGhXltXCPgSSRO/2cEGjtyad+Bfd2ZugtYNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EnFRz1CWB0A0cUAeigy9g0bwA0B9V0EffzHwRDMHOHmeiguihUWuo00oZ5VVq0Aey
-	 hxzubTI5MBrzi3EUiz88ICDsnW0RBJmBr9c4Aob5QaonpZldZYLVTi5z7h155KX7KY
-	 s/Lly8kuNlJvFrghXzDIXnLUa1YFg63kzXad04Gs=
+	b=woVrcilgleyYL/rnhWpu3BV3nl7u/w1YPPvrLwVsggah4EzxZSXOgu0cSYXJXMBrD
+	 bk7kv5FJJqF2ihMJC+uFWXz4gnRVl/vqJkYCxBI/+drc1fOGtPHtOczUIoVbFaqSM7
+	 /CxH7aeyIC7KmKYdNyp7/q1c6dRtRGPQTquKKsEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1238/1257] apparmor: check accept index + 1 is in bounds
-Date: Sat,  7 Nov 2026 08:58:54 -0500
-Message-ID: <20261107135013.529007242@linuxfoundation.org>
+Subject: [PATCH 7.3 1239/1257] net/packet: check TX_RING fragments before memory accounting
+Date: Sat,  7 Nov 2026 08:58:55 -0500
+Message-ID: <20261107135013.556912957@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,53 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanglei Zhu <zhugl3@xiaopeng.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit afe5d5a747393cb3d00795db31d7fce5108a766a ]
+[ Upstream commit dc4dd12f80e499dc034710cd8195489abcf0b059 ]
 
-aa_lookup_condperms() returns perms[index + 1] when an accept entry has
-ACCEPT_FLAG_OWNER set and the subject uid does not match the file uid,
-so such an entry consumes two slots in the perms table.  But
-verify_dfa_accept_index() only checks that index is within the perms
-table, so a policy that sets the owner flag on the last entry is
-accepted, and the runtime lookup then reads perms[index + 1] one entry
-past the end of the table.
+tpacket_fill_skb() adds the full non-linear payload length to
+skb->truesize and sk_wmem_alloc before checking MAX_SKB_FRAGS. With
+PACKET_VNET_HDR, userspace can submit a ring-sized frame even when it
+greatly exceeds the device MTU.
 
-The perms table is allocated by unpack_perms_table() with a u16 size
-read from the policy blob, so a crafted policy can place the owner flag
-at index size - 1 to reach the out-of-bounds read.
+A near-INT_MAX frame can saturate sk_wmem_alloc before the fragment
+loop rejects it. A subsequent refcount_add(0x40000001) can temporarily
+turn REFCOUNT_SATURATED into 1. A concurrent TX completion can then
+drop that apparent last reference and free the still-live packet
+socket before refcount_warn_saturate() restores the counter.
 
-Check that index + 1 is also in bounds when the owner flag is set.
+Check that the remaining payload fits in MAX_SKB_FRAGS pages before
+accounting it. Include the initial page offset in the calculation,
+and move the existing -EFAULT handling out of the fragment loop.
+This preserves the accepted packet sizes and error code while
+preventing an invalid frame from injecting an oversized byte charge.
 
-Fixes: 6f442d42c0d89 ("apparmor: fix profile verification and enable it")
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+[edumazet: use net_warn_ratelimited() instead of pr_err(), add a Fixes: tag]
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261028181450.2221013-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_unpack.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/packet/af_packet.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
-index f1fc48e72d0e1..1ea89e9c53fff 100644
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -1489,6 +1489,15 @@ static bool verify_dfa_accept_index(const struct aa_dfa *dfa, int table_size)
- 	for (i = 0; i < dfa->tables[YYTD_ID_ACCEPT]->td_lolen; i++) {
- 		if (ACCEPT_TABLE(dfa)[i] >= table_size)
- 			return false;
-+		/*
-+		 * Accept indexes for owner-conditional permissions come in
-+		 * pairs, so the non-owner entry at index + 1 must also be
-+		 * in bounds.
-+		 */
-+		if (dfa->tables[YYTD_ID_ACCEPT2] &&
-+		    (ACCEPT_TABLE2(dfa)[i] & ACCEPT_FLAG_OWNER) &&
-+		    ACCEPT_TABLE(dfa)[i] + 1 >= table_size)
-+			return false;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 52ae3d875e971..515a3e8dc38bd 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2647,6 +2647,12 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
  	}
- 	return true;
- }
+ 
+ 	offset = offset_in_page(data);
++	if (unlikely(to_write > MAX_SKB_FRAGS * PAGE_SIZE - offset)) {
++		net_warn_ratelimited("Packet exceed the number of skb frags(%u)\n",
++				     (unsigned int)MAX_SKB_FRAGS);
++		return -EFAULT;
++	}
++
+ 	len_max = PAGE_SIZE - offset;
+ 	len = ((to_write > len_max) ? len_max : to_write);
+ 
+@@ -2658,12 +2664,6 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+ 	while (likely(to_write)) {
+ 		nr_frags = skb_shinfo(skb)->nr_frags;
+ 
+-		if (unlikely(nr_frags >= MAX_SKB_FRAGS)) {
+-			pr_err("Packet exceed the number of skb frags(%u)\n",
+-			       (unsigned int)MAX_SKB_FRAGS);
+-			return -EFAULT;
+-		}
+-
+ 		page = pgv_to_page(data);
+ 		data += len;
+ 		flush_dcache_page(page);
 -- 
 2.53.0
 
