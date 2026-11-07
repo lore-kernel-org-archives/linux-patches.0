@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061413;
-	b=msd/JDG1nhP3HlwvcSJgm94fzbV+ocL0V0lbhSA/JZNLDxSeKEeeffS8/ucBNSl+/02b
-	 t8mZ6QMV5xyi04l17QpSehT55sDcqDTWdLRT6QpLC3P4H3malCalC3b0+T1ZQ8/iOyL9d
-	 ck3a3UwvkLhpdbDWyJtRllUCLVResvN4v23TAgYj/6QW4kSNuJLb7DWaT8hlqIg7qn5er
-	 +OEcI8+2jbvYk0BK007Vz/TGsKXAjNaOZt6YOeYIylSXgpjj9dTyIKzclpkb2H3a8svEL
-	 pfL1opEiVfPkRVxgJN5vtkFe+Mnou+pxVPF6S7fDgMTT8f/Z2+OOM0doGvuqwokqAcQ==
+	t=1794061414;
+	b=PJ7AQ8MCjac8h3uQPcF1Zd5fBr869g9Ieic3NH9sbezXRCTc72k+Ll/xMZZKwira3qUF
+	 5jB9zCnerhBKFCp8wjXB4375DWS1gzvtsmSRCt72Z/XV1ipUnHWJ449ifBwAENgIxEVCm
+	 VAzPp4kJ6j2qEINk8gy2xFklmzYp4zvCqd/3sIxSkwCpR/m44bNq0Y19rst/d8pywVLVF
+	 VAGvVpGATS8JwrDNV37WbvznjDJV/+Ur5yKdkI518O5KgJhPljN5Gvkor8WlkK59Z7N3h
+	 ibsFmh7Ar/CyQr2Wzpg3Gym3Rp0CdqZw6ug1Z2F1pUD4R6Ag23lHQHj2gUys4b83jaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061413;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061414;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=set2zqwEdNyRWujJIuDBiiPgNttbuArfaZkNDcOdy2U=;
-	b=UgeKFeLWQX8A0AKA+CJGZFCIGzhwC0y16wVda6UvHm2NQPYqH0/TGxodAKMuHDRHNxCY
-	 XxlqwawmgsgTpBfZipOVjmTwE2A4q2n5KKT3zH4UrP+P8wxriaEqBqJCiEyYXeAJu14gB
-	 kBpq5VIGx59oQQx9BnrIJR8rZzCypJfHeBCBtUhd8oAp/r2Yv9o8m98lr+G27VLnaV64H
-	 zJeynNZ+HEIOCIe08+I90qYur7gYnwSd99PxBDRCMA5LeI48YjFwGESddmy0U3kOddSyZ
-	 ufFRBiAA+XWHETYlvymTt5LitZFBFrRlgOefS/IE9ucc72110LEHxQDnrxju839U1iA==
+	bh=NRw9Ffaa0HcIhaeOMxS77zVBqOtkCFTtDz/l43ZO738=;
+	b=sAKjY/c5J6g/yK9pyQshpCsTLPyUWq6evhqYoWuKdrbOxZYzmRSqXDZL6Pz50Vd39zl3
+	 tpj+jyTJRi84yo025on+dD+11EMKapjmVPJwQjYR2YpIIApFIOgZnz7BRaO3OWr7HXqIk
+	 m0aUeO5uimAb5EY4KpQKVIbzskVB7H4aeIDoOG401po1OuYWI8/AKjdrY0qabGlOImf+1
+	 PsPuUQAvxQeb8UP7UbAc27Sj1UhiPjJNJt+yX/zftymSqGan1du+gyuoT0rA1flfS99aD
+	 C77aJjeh7Ercfdlt4LH7RpchmL3A4j2XNJdZ8s8k/Q/62mh6qFBgANmj5dHoiqHggRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBAz0tgn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXvar+5j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3ED6606A32F;
-	Sat,  7 Nov 2026 14:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB47606A32F;
+	Sat,  7 Nov 2026 14:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBAz0tgn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821281F0089F;
-	Sat,  7 Nov 2026 14:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXvar+5j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7D21F0089F;
+	Sat,  7 Nov 2026 14:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061412;
-	bh=set2zqwEdNyRWujJIuDBiiPgNttbuArfaZkNDcOdy2U=;
+	s=korg; t=1794061414;
+	bh=NRw9Ffaa0HcIhaeOMxS77zVBqOtkCFTtDz/l43ZO738=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pBAz0tgnWue8xUGNHZ1CasrEi6PikUO2xrMdw1XL4xv+00q6X/dqZf2T6/Bhty6i6
-	 jRwkfn8ibcxoTbLqFiZWOVJ8KruXsRnpyH7S6KlfFfOb3rUWvxzFMwQTTgzIKUBQUf
-	 /b/IXzb+IPE+TGw5u/rPlMWAfegDe297fI7zE2QQ=
+	b=LXvar+5jK89TXARdoEh69vCitPuJfVPCQDAwgMNeSYV+r8e5yTmUjbPumJdAkGzY6
+	 zKJ5s5zN483YWh5PgCGJwvAnuyJHUo3tOOas+tDLIkOMLtdpoKYpQIZ3Y70ikRsYEH
+	 zlLrkluGH8p73j30yFwrjgYXtrrveib5eYMbEFWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Francis <David.Francis@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0526/1536] drm/amdkfd: Avoid integer underflow with ffs in EOP ring size calc
-Date: Sat,  7 Nov 2026 08:42:22 -0500
-Message-ID: <20261107135012.196737029@linuxfoundation.org>
+Subject: [PATCH 6.12 0527/1536] drm/amdkfd: Avoid integer underflow in EOP ring size calculation.
+Date: Sat,  7 Nov 2026 08:42:23 -0500
+Message-ID: <20261107135012.223036391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,71 +71,79 @@ Content-Transfer-Encoding: 8bit
 
 From: David Francis <David.Francis@amd.com>
 
-[ Upstream commit c883d0a132d430ef7ebb23fd94323be94d0fbdb8 ]
+[ Upstream commit 8ee521b8b189799e361d4233c5180ba56656d4d4 ]
 
 The low 6 bits of cp_hqd_eop_control store the base-2 logarithm
 of the EOP ring size. This was calculated as
 
-ffs(q->eop_ring_buffer_size / sizeof(unsigned int)) - 1 - 1
+order_base_2(q->eop_ring_buffer_size / 4) - 1
 
-But ffs can in theory return 1 or 0, so this could underflow
+But order_base_2 can in theory return 0, so this could underflow
 (although in practice the ring buffer size cannot be less than 4096).
 
 Change this to
 
-ffs(q->eop_ring_buffer_size / sizeof(unsigned int) / 4)
+order_base_2(q->eop_ring_buffer_size / 8)
 
 using properties of logarithms.
+
+Also add to the above comment to make the mathematics more clear.
 
 Reviewed-by: Kent Russell <kent.russell@amd.com>
 Signed-off-by: David Francis <David.Francis@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4f18c56630383c14bfc6b2d65f88f2f895d2121a)
+(cherry picked from commit f0f43fcf8b2b3a924cad9444340921c96ed5f634)
 Cc: stable@vger.kernel.org
-[ sashal: Dropped the hunk for the GFX 12.1 MQD manager file, which doesn't exist in this tree; the other three files take the upstream change unchanged. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c | 2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c | 2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 6 +++++-
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c | 5 ++++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-index d8faaa573e017..4a621791da230 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-@@ -199,7 +199,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
- 	 * is safe, giving a maximum field value of 0xA.
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+index 194a1c79cf042..1e220e8810922 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+@@ -271,6 +271,10 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
+ 		1 << CP_HQD_IB_CONTROL__IB_EXE_DISABLE__SHIFT;
+ 
+ 	/*
++	 * The lowest 6 bits of eop_control store the EOP ring size. If
++	 * their value is X, the ring size is 2^(X + 1) dwords, or
++	 * 2^(X + 3) bytes.
++	 *
+ 	 * HW does not clamp this field correctly. Maximum EOP queue size
+ 	 * is constrained by per-SE EOP done signal count, which is 8-bit.
+ 	 * Limit is 0xFF EOP entries (= 0x7F8 dwords). CP will not submit
+@@ -282,7 +286,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
+ 	 *
  	 */
- 	m->cp_hqd_eop_control = q->eop_ring_buffer_size ? min(0xA,
--		ffs(q->eop_ring_buffer_size / sizeof(unsigned int)) - 1 - 1) : 0;
-+		ffs(q->eop_ring_buffer_size / sizeof(unsigned int) / 4)) : 0;
+ 	m->cp_hqd_eop_control = q->eop_ring_buffer_size ?
+-		min(0xA, order_base_2(q->eop_ring_buffer_size / 4) - 1) : 0;
++		min(0xA, order_base_2(q->eop_ring_buffer_size / 8)) : 0;
+ 
  	m->cp_hqd_eop_base_addr_lo =
  			lower_32_bits(q->eop_ring_buffer_address >> 8);
- 	m->cp_hqd_eop_base_addr_hi =
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-index fd91e5cfbdbf4..ca90454b01acc 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-@@ -252,7 +252,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
+index c55a858d523ab..f0de0893bc597 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
+@@ -203,6 +203,9 @@ static void __update_mqd(struct mqd_manager *mm, void *mqd,
+ 			mtype << CP_HQD_IB_CONTROL__MTYPE__SHIFT;
+ 
+ 	/*
++	 * The lowest 6 bits of eop_control store the EOP ring size. If
++	 * their value is X, the ring size is 2^(X + 1) dwords, or
++	 * 2^(X + 3) bytes.
+ 	 * HW does not clamp this field correctly. Maximum EOP queue size
+ 	 * is constrained by per-SE EOP done signal count, which is 8-bit.
+ 	 * Limit is 0xFF EOP entries (= 0x7F8 dwords). CP will not submit
+@@ -210,7 +213,7 @@ static void __update_mqd(struct mqd_manager *mm, void *mqd,
  	 * is safe, giving a maximum field value of 0xA.
  	 */
- 	m->cp_hqd_eop_control = q->eop_ring_buffer_size ? min(0xA,
--		ffs(q->eop_ring_buffer_size / sizeof(unsigned int)) - 1 - 1) : 0;
-+		ffs(q->eop_ring_buffer_size / sizeof(unsigned int) / 4)) : 0;
- 	m->cp_hqd_eop_base_addr_lo =
- 			lower_32_bits(q->eop_ring_buffer_address >> 8);
- 	m->cp_hqd_eop_base_addr_hi =
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
-index df03938eb11f8..1f6825a91db86 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
-@@ -215,7 +215,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
- 	 * is safe, giving a maximum field value of 0xA.
- 	 */
- 	m->cp_hqd_eop_control = q->eop_ring_buffer_size ? min(0xA,
--		ffs(q->eop_ring_buffer_size / sizeof(unsigned int)) - 1 - 1) : 0;
-+		ffs(q->eop_ring_buffer_size / sizeof(unsigned int) / 4)) : 0;
+ 	m->cp_hqd_eop_control |= q->eop_ring_buffer_size ? min(0xA,
+-		order_base_2(q->eop_ring_buffer_size / 4) - 1) : 0;
++		order_base_2(q->eop_ring_buffer_size / 8)) : 0;
  	m->cp_hqd_eop_base_addr_lo =
  			lower_32_bits(q->eop_ring_buffer_address >> 8);
  	m->cp_hqd_eop_base_addr_hi =
