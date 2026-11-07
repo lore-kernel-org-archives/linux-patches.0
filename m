@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065112;
-	b=lN7NvVRX3tXIN4mOoPafWH/rWWauKMOauCBeKMyDGUt7B/CbhWLOL5SCBFAxLwt6orr6
-	 M4nUbIJcixFJ2r4kI/cmgHVRDH0NJTZUYuDU6aIotIENP3Bljiur4P/L510gXHRrSAE53
-	 RpadJ/ZE4SCynwQ2ZY/sFXMHH/GOEIGsohPifWLz8JT4dH3JA02jCd/8F0zUw5zEq+6So
-	 InbpfT0NCuHWW5alXbJCwsrvKndBXqHe105w+Xh/RNVEh9/LEOEF3Xp8OiFG9TjUnClK4
-	 mKStcLkv5kwHxK6R4pwwZXX1P6/pEPZ4htbqRG+E2x/Uor2CUazjKYqiT2FBXTxgFCQ==
+	t=1794065114;
+	b=iAOeTttHqBTVGeAzCmmBZ/MHR9y4oj1sK8xnr4Ulp2r0FF3n031gHcZO526zwKANFJGy
+	 ++3DRVUKgvOg3behsAyGF0fWl52QHuXq4UyYYMCEvD/pb7HCBWzqLNlLrPi+Sc0fhv0Av
+	 jpiWMNgbDEySG7KECcnb85RpuVdy49eVrDpsu53csvycfwFNiVyOXWjbVZGd/FsXHkfdu
+	 fiqPHKBu60afqaCzrKLA42uNyg0z6pduFHNgnWq86g+WdSua0Lq6hQK3b1LHpKU/eeygf
+	 8wuqffXDDojlzrUSfDe0TENJx/27EMrGrjbQMFTlhAZ0lM53WaldEFG/N+FhLePNgtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065112;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065114;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vmcaYzEaVtfQ3KRsz0s1CJk5NCWB3TxDXhlzn8vUCUk=;
-	b=G3rZTyaLobL+7HZwmMqc+8bmKvXrYg0bHEygBeZreId3fEz6wOMpMrslFXscMf07QDC5
-	 xYy+TU5HrbSnDspVSxSxy9nKzvMW0LZdu6ADDpippiUCmM05+81L96p+QCSmCTcJ5cjFh
-	 RS7I/XR6wtWIPeQlHhftret9hVqP5dsIpfKRhLNKre3Z1Z9oPT5gAJXRUeQQ3k7kdvX6o
-	 of2lDKM1dz/UsyJK5Z6Rox73+EFyYYo2/JAvMJ/w5FcMw6X56+D812meL6HxPMdazkU2r
-	 t3RcU5Xqfwm82h8wyJVo4ZWAEeBYEg6dlzQxRN1TDhsScCeqyIbm90TJFiy9rEcmamA==
+	bh=36JCE9YV5xJ0PXSgPd0oOVRPjCw0V3FyoEKI7pf4RgI=;
+	b=1iBHFzeGeJTG2IGhk+wt+va9uCvwsyd8Efa/kzJuLW5q/pmX4U+zoUnpjytM7kMATBS1
+	 S/GnddUVuaMf3KVB0OLIXX2ykv2y3HcrhkbLVHhORd6GdFQzcEgmGFGUjTfuXln/xAV4B
+	 smYb+cYLg81mKVR+aeqVgnjMU+F3NDKVsx5PWpwJ2VboLoQs/MiZgqQzu9A9SzAvQjmBL
+	 +j/KsAVRSDGAoGBPF6svyo45fAbYZT+gXkLEIa4I61dsFtbhRXanc9r8qzD1bFVtfZEOj
+	 iNoLHPBvQn0YGwOye6HAQNERs3SqU6+VvCtIxIhyGag1cdbSiXREXZcfGq8BUIan9UA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mrOHhLBl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l03HkA0U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C664606A32D;
-	Sat,  7 Nov 2026 15:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36083606A32F;
+	Sat,  7 Nov 2026 15:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mrOHhLBl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5415E1F0089F;
-	Sat,  7 Nov 2026 15:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l03HkA0U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C471F0089F;
+	Sat,  7 Nov 2026 15:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065112;
-	bh=vmcaYzEaVtfQ3KRsz0s1CJk5NCWB3TxDXhlzn8vUCUk=;
+	s=korg; t=1794065114;
+	bh=36JCE9YV5xJ0PXSgPd0oOVRPjCw0V3FyoEKI7pf4RgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mrOHhLBlt7Sia0+ltsyS6/jXshw7ONnxCOqI0sB5INtDfLsW0z8mi7VQRmhVa9Fg/
-	 //phs/4iML/utYPo4x9/jC5EODcI9Dis4nu1WQSJN+NGpn58Af0F5hzRGTGFUcdW9i
-	 3spTwwZ7oTSPBHoeG5uIOHSzW1dJ3xuHdTM/CI5Q=
+	b=l03HkA0U4Jf/wuIEZ+K6D8rjVZLD/OuTvBhnec7TkAm78QgFK3CGRVvvYXuYu4G+a
+	 sTh1LCDRR2F8VE/Yzp+GEV4qMVoaD9OsBH/E18OHzW05TGUb59mIhzAlT4JqkYVbD9
+	 9oGD/48Cv5WNqYqC4d3qzZXMn8NXm9vNoiVi7vOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Baolin Liu <liubaolin@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0939/1257] ntfs: report block device flush failures from fsync
-Date: Sat,  7 Nov 2026 08:53:55 -0500
-Message-ID: <20261107135005.290110678@linuxfoundation.org>
+Subject: [PATCH 7.3 0940/1257] ntfs: flush the block device when syncing a directory
+Date: Sat,  7 Nov 2026 08:53:56 -0500
+Message-ID: <20261107135005.316693172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,33 +71,35 @@ Content-Transfer-Encoding: 8bit
 
 From: DaeMyung Kang <charsyam@gmail.com>
 
-[ Upstream commit 9b32a74f4ef52d26d68ceb3f5e492d5eac26f5fc ]
+[ Upstream commit 569f514f0ec74c4162241e10b7893bff109f8aca ]
 
-ntfs_file_fsync() calls blkdev_issue_flush() after writeback but discards
-its return value. If the device cannot flush its write cache, fsync()
-reports success even though the file is not guaranteed to be durable.
+ntfs_dir_fsync() writes directory metadata and calls sync_blockdev(),
+but does not flush the block device write cache. A successful fsync()
+can therefore leave the directory's metadata in a volatile device cache.
 
-Reproduce this with QEMU blkdebug failing flush_to_disk with -EIO.
-On ntfs-next at 04fb910da2c8, a kretprobe recorded -EIO from
-blkdev_issue_flush() while fsync() returned 0. With this change,
-fsync() returns -EIO and logs the failure. The syncfs() path already
-reports this error.
+Issue a cache flush after successful writeback and return any flush error.
+This matches the regular-file fsync and syncfs paths.
 
-Fixes: 9c87959601e8 ("ntfs: update file operations")
+With QEMU blkdebug injecting -EIO for flush_to_disk, fsync() on an NTFS
+directory returned 0 before this change while syncfs() returned -EIO.
+After this change, both return -EIO. A kretprobe confirmed the flush
+error in the directory fsync path.
+
+Fixes: 1e9ea7e04472 ("Revert "fs: Remove NTFS classic"")
 Cc: stable@vger.kernel.org
 Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
 Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ntfs/dir.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ntfs/file.c b/fs/ntfs/file.c
-index e290616be07d0..f8f4418cbcda8 100644
---- a/fs/ntfs/file.c
-+++ b/fs/ntfs/file.c
-@@ -241,14 +241,14 @@ static int ntfs_file_fsync(struct file *filp, loff_t start, loff_t end,
+diff --git a/fs/ntfs/dir.c b/fs/ntfs/dir.c
+index df60138f9b2d3..09b890b41c4a9 100644
+--- a/fs/ntfs/dir.c
++++ b/fs/ntfs/dir.c
+@@ -1182,6 +1182,8 @@ static int ntfs_dir_fsync(struct file *filp, loff_t start, loff_t end,
  	err = sync_blockdev(vi->i_sb->s_bdev);
  	if (unlikely(err && !ret))
  		ret = err;
@@ -106,14 +108,6 @@ index e290616be07d0..f8f4418cbcda8 100644
  	if (likely(!ret))
  		ntfs_debug("Done.");
  	else
- 		ntfs_warning(vi->i_sb,
- 				"Failed to f%ssync inode 0x%llx.  Error %u.",
- 				datasync ? "data" : "", ni->mft_no, -ret);
--	if (!ret)
--		blkdev_issue_flush(vi->i_sb->s_bdev);
- 	return ret;
- }
- 
 -- 
 2.53.0
 
