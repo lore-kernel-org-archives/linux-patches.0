@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062192;
-	b=tmjuUKn3hTBWChtpJFc336L4h9njqRBAiBBjInNtP+Wk9Ppwn7/iXmvr18+MdBF1oBRH
-	 R+uvg1KVB7zv0SVjBM0Ug0MXOqT6nclfuxC2Vpa+MGIWMiGcQWBmSA9rmfmDsWOE42TVY
-	 6l8nPxJIjvxivqLgW1+sBCObejg2K0Y7J1i30V38hxGLdaxNDtJ3op2palwtDU4uZVGbu
-	 2c/mK7CZr/MRmCqSB8+/YE29g6ploL4l8MQrZdw+wdTcsl3sdePL0dR6B2UEG7EIDvtMU
-	 YiBOg5wO5Ea1kE4O+tZmfK3QKiJLjk3iwlHWk8Qnmzoi7ugYpAhUHYLp36Ok+172Ayw==
+	t=1794062193;
+	b=Cok0qi7jc/WCTnSNoPPMort3n77m5LmZOUpNuIo0areyDIttO2EgI1EdCaEbWgEYBFfg
+	 RCiumYjgKN6+D+tdpynRuljn5xGWjkjozuMFxbZYw5nJyW95jyLjwQldDE6OMlrDWbP0s
+	 xpLuX2QHxt2IY8xaH2u8nH1/qfFtcxaKLZy8qq9S+/QfJAR5zc/nmhkEIWczIQP02Re4j
+	 v+KwHimS8WIyI0SLCAqm3zm4YfODWh5PUZ9JC+cQwNzVMxa5Ir+nNe6RKECAyc7nEVMtB
+	 mR+an4YwG0leB7rBsuz5xBoGz0CHYe40BOFGhI0yyOLC2CekKkh9VE2s6ibRGRlFhww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PK+T5ndCels+cUyi8ln7aaSHGJmUP2bjhiLlI5zFipA=;
-	b=QgqVkJvydV/8OxXDS9DPgv5H2rMkSXXK3Jhs6AloelFZoUxZD1/4yVcDQ5J64RY7olGr
-	 qhngT2q6yfWE8nDUh26Ln41qFmwnddeGu2ORrA23UUr0OVxpeOanK5Jv0Y8PmPZOOEK0z
-	 jguewC8/bGfSVv8DjNTPZxGTytBNFnTuLHFTCZ45Sv74utIflozD1ZxAOkok39vYHauox
-	 UZF8n7caXTiN7gJBLfO/hh4bpvFXevOagIwTZDGcLsgUyZFVobGW8EYKKU8MVG45u+4Dm
-	 P+QEx4L0XyvJMv/q2Vie2Sk73ThEB9bdiWBuF7MXPggTxZAzys4ElpTfvM66008HhsQ==
+	bh=q4czuSOYbkrLSshntGMJYZoHS+aLPioH0PBlbfFy0r4=;
+	b=TrqHCwb7HD8+HTUVm26wJbfjzaoGJtkFgUbfOBevNTlTPlUrzt9HSg/opEHzDHYJ04rx
+	 D/o3PbRnhnY1GRRMS6vY51cIadvOI3y9apjKkJxCmanyBX2e8gf72GBtmWZ8feA799CK1
+	 QMctEh/HAPW+4Q4rQ/4JZdIymiVsOXYX+G0J8QybDMbjf/ITRD9ioeRoBZOVFl9gX+fLv
+	 taxNWzMI28C0FFAepmowSgky1rv3/fRpV24IFZqzOyVPzWYR4LvXjHdnDZUzvmEtWMGzF
+	 iw1z162tGaE7UsEzEVSRKz7EwvRzXpz6UXU+7Egf9zwPTxi2htuRzMletrDcL3kdqXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FcwP1SlB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xd7mOjp9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1072B606A326;
-	Sat,  7 Nov 2026 14:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E8E606A326;
+	Sat,  7 Nov 2026 14:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FcwP1SlB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C171F008A1;
-	Sat,  7 Nov 2026 14:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xd7mOjp9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38DC1F008A7;
+	Sat,  7 Nov 2026 14:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062191;
-	bh=PK+T5ndCels+cUyi8ln7aaSHGJmUP2bjhiLlI5zFipA=;
+	s=korg; t=1794062193;
+	bh=q4czuSOYbkrLSshntGMJYZoHS+aLPioH0PBlbfFy0r4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FcwP1SlBb2bgknXxpEaZqTMcGUkieKfp30CJeia5plDtJL+1nXWjGUjVlMFNCrOw1
-	 6FDt5vvRBSAd23u7vDtZoTOlitIdW8vgQge7z61Zps3gGLgLfuIKGlqCVUjAwQmqcb
-	 LPPrk9ZcA8Kqy8xXpmj8W6Ny961v7KwO+JuPeVGE=
+	b=xd7mOjp912SWf7ba8kmXwIVDYdU163g25+YbZovs9yhBr9TkrkdO6nFsdWv1foTVh
+	 RHn9EXo/Ch5ytQ6bBLWaPftzgL1MnqcYMp+T3v1P11kSSYWVqNOFgCZV5cfO7C2TSc
+	 5QVAXMHnBcx5yXvF3u8DTIwNpEC4cdSFovThs5CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1148/1536] media: mediatek: vcodec: destroy core workqueue on remove
-Date: Sat,  7 Nov 2026 08:52:44 -0500
-Message-ID: <20261107135029.968272845@linuxfoundation.org>
+Subject: [PATCH 6.12 1149/1536] media: mediatek: vpu: release reserved memory on remove
+Date: Sat,  7 Nov 2026 08:52:45 -0500
+Message-ID: <20261107135029.997176770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,22 +71,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit ceb6e96122e1013550f378c738e621a6e82d246b ]
+[ Upstream commit 8af0e2bdd9791848d9caf3761825ac51a67c2b9c ]
 
-The decoder probe allocates core_workqueue for architectures with a
-LAT processor. The probe failure paths destroy the workqueues, but the
-remove() function only destroys decode_workqueue.
+mtk_vpu_probe() may assign a reserved memory region to the VPU device
+with of_reserved_mem_device_init(). The probe failure path releases the
+assignment with of_reserved_mem_device_release(), but the normal remove
+path does not perform the corresponding cleanup.
 
-As a result, removing a decoder on LAT architectures leaves core_workqueue
-allocated after the device lifetime has ended.
+As a result, removing the VPU driver after a successful probe can leave
+the reserved memory assignment associated with the device after its
+lifetime has ended.
 
-Destroy core_workqueue during remove for latency-based decoder
-architectures, matching the cleanup performed by the probe failure
-paths.
+Release the reserved memory assignment after freeing the VPU external
+firmware memory, matching the cleanup performed by the probe failure
+path.
 
 This issue was found by manual code inspection.
 
-Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
+Fixes: 3003a180ef6b ("[media] VPU: mediatek: support Mediatek VPU")
 Cc: stable@vger.kernel.org
 Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
@@ -94,22 +96,21 @@ Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/mediatek/vpu/mtk_vpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c
-index fc920c4d6181a..00a6a50e41350 100644
---- a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c
-@@ -571,6 +571,8 @@ static void mtk_vcodec_dec_remove(struct platform_device *pdev)
- 	struct mtk_vcodec_dec_dev *dev = platform_get_drvdata(pdev);
- 
- 	destroy_workqueue(dev->decode_workqueue);
-+	if (IS_VDEC_LAT_ARCH(dev->vdec_pdata->hw_arch))
-+		destroy_workqueue(dev->core_workqueue);
- 
- 	if (media_devnode_is_registered(dev->mdev_dec.devnode)) {
- 		media_device_unregister(&dev->mdev_dec);
+diff --git a/drivers/media/platform/mediatek/vpu/mtk_vpu.c b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
+index 3d437898e1f47..e0357dd21a427 100644
+--- a/drivers/media/platform/mediatek/vpu/mtk_vpu.c
++++ b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
+@@ -967,6 +967,7 @@ static void mtk_vpu_remove(struct platform_device *pdev)
+ 		destroy_workqueue(vpu->wdt.wq);
+ 	vpu_free_ext_mem(vpu, P_FW);
+ 	vpu_free_ext_mem(vpu, D_FW);
++	of_reserved_mem_device_release(&pdev->dev);
+ 	mutex_destroy(&vpu->vpu_mutex);
+ 	clk_unprepare(vpu->clk);
+ }
 -- 
 2.53.0
 
