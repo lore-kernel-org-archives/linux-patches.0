@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061575;
-	b=jbRsb1QrIavcez6IFs7oqV8T3cH3DqtYZGGWaBepoKCANKvfuiP9M529kwjYE368Or+T
-	 XRysU8ND/U95Lj/yVYwEwY+gcjy8iOpRiGypyebw4rHVZpxyu/eUBR9Ssp5w8h0GU8jc0
-	 iirgU5BVe4pc7giQPV09cjWehGlSEbCPhr8AKbioejfS02fUZCNjLN/msOTgWkAAB5YtE
-	 sDGQMk1xmej5A8HpyxBiOd1zWTqNDvhI5T2ObwdjZ926RGPDSRQ2cktgvYh/nIOAYxCGF
-	 cBPvwXxLmNyL98+Jp4d72mi7XWEd9MhyZC4h/ENSdEm78rTR2YNrrAbkiIXmBWNWKFg==
+	t=1794061577;
+	b=XnoGcYAHe81DN8H6mYtjZu+Yk+NySAQv6YZsIjkILQHeCPKbzPwt0C/Nf0emU7+9dMGP
+	 gQ7AUXqCy0+TzcsjfMffW9FCx97nvbs+0RmUOXrSO+sNH76AIkO0wHHM5S22B55YnpyMp
+	 SlOkoYABvCnHRx60W7WeYQrbrlJeZQS1ddElnO2iCrnngoCUlFs4bgILDTb4W3LkGge77
+	 UaLQus1lgxURAE/QFB+EIyBkn9Qt6pJQFGWPHunek7+0Isq4WrWncytc0ODaLT0RyE55C
+	 PCqKl5vwMpSnizWBh0mYXfdZyf5uFbLEv4tTPhA9UpeGBywKudgD/Kvi7kmqsFb5PVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=OimwYWRR9fWnPsp4kW01WPKNRFxWkSEFxzTYQUNkTL8=;
-	b=Ejqr0rGZbqPijXh02zBxaLpST4Pq6MD8oqa1Wfud1FopM+wLrx/FYXREM99m4EbcMJr0
-	 /WwE3tJNpq9idIN6wHizpPdsykyyViy362hXaopdM29uKJfviO/JbhVC62uwU3CX6ZZct
-	 WSkKM7HAOWSQcgFixtPG9sF6PvLfJLAlvEVj00IW7sYJqXcmnvJs5Dvwf9IhSaHhKGzps
-	 8HtHYwmJwKMAL46qHJLuEKtpUJpPCXVuRhp4XVRxi7UlP7i+veIAsdU7G7UjDNwvXxduh
-	 CCYcQRwPMIfm/SWiwTGgUPA5uxaeWQIyQ6rPulz/Ot3Fqfshe5WirfZSYppbZd04y+A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=m7i/NDz2yNp57KFeupIbTFH2mCdJT9tx6evl57cVaW0=;
+	b=rPUILVjkPhn6pcJLlj/ufhXASmAiubFMcY1tKdRRC+u2dk6c4iZEQzfz2903roKxtr8j
+	 YQ3R6mPPbH4EaMaxa7ml3nlDrT7qsFNABXjwjl4g4eRHbP5GdJ9+5UX/7vM7/MWui048z
+	 +FuTNWmJ46WOjDNL+fk1QyP0Q55nGk19MvLXJC06hNCqAvkL2o+2v+lOeGoiLokxHn02U
+	 Eo8cC8xNHweua1zutb3gvzFtD1ixsn1sm1ARze3jRS/n/IJIYZ8imFnplQYhBiYOYTlBe
+	 LzJqkCs73gnf8Q4ZkU9KCoS/k8ALKYEKBr4e9b21r4ma3Mw977/5z7f2oTLFj12IzWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yvtCa/JM";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lYwvP+xD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E519606A32D;
-	Sat,  7 Nov 2026 14:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8488606A326;
+	Sat,  7 Nov 2026 14:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvtCa/JM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D11F1F0089F;
-	Sat,  7 Nov 2026 14:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lYwvP+xD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555E81F0089F;
+	Sat,  7 Nov 2026 14:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061575;
-	bh=OimwYWRR9fWnPsp4kW01WPKNRFxWkSEFxzTYQUNkTL8=;
+	s=korg; t=1794061576;
+	bh=m7i/NDz2yNp57KFeupIbTFH2mCdJT9tx6evl57cVaW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yvtCa/JMSf9khHrrgOx0ijZvXkmW9MSzukZyrtVFMcqGwv2u0XUkp6tw8VMx50XGU
-	 fz96fb5OtoJNSqpwYnww0zH+mrBebXwgrEKKxQcHSh7y7GIB4pP/+LLHsZyf99zhPo
-	 T8oCTmeARhA35FuA69u18jlQbYXmVi9GOdcTvm68=
+	b=lYwvP+xDfyRVosrSoQZJfQ5azaFhDenps2a2ULFra6DeZCUe9/NDLgFP+phCzX75/
+	 BUA4sT9usYp0l++AbS7lGez7hqVZJL2gFMoqBmuWWJJ9XLqeVpS766oGjP7jI150VH
+	 3IK2UXwxw7NN2B+8V6bYieb+sXGwd8ggIEfHPdO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+843bf2f48f4d12e6682e@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Igor Putko <igorpetindev@gmail.com>
-Subject: [PATCH 6.12 0652/1536] serial: core: shut down initialized port on removal
-Date: Sat,  7 Nov 2026 08:44:28 -0500
-Message-ID: <20261107135015.839279060@linuxfoundation.org>
+	Yuchao Zhang <ndaugoing@gmail.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.12 0653/1536] xen-blkfront: unbind irq before tearing down ring and shadow requests
+Date: Sat,  7 Nov 2026 08:44:29 -0500
+Message-ID: <20261107135015.866742361@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,73 +62,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Igor Putko <igorpetindev@gmail.com>
+From: Yuchao Zhang <ndaugoing@gmail.com>
 
-commit 810d467c11f0c85107874d08dfdd11acba6aa0c0 upstream.
+commit f3e27b7955727a4d7c0e9264a2a209fbba788bdc upstream.
 
-When a serial port configured as a console is opened and subsequently
-closed, tty_port_shutdown() skips invoking port->ops->shutdown() because
-port->console is true. As a result, tty_port_initialized() remains true
-and the port's interrupt handler stays registered in the irq subsystem.
+In blkif_free_ring(), the driver tears down the ring's persistent grants,
+shadow request arrays, and shared ring structure (xenbus_teardown_ring),
+and only calls unbind_from_irqhandler() at the very end.
 
-If the underlying device is later unbound or removed (e.g. via sysfs
-driver unbind or device hot-unplug), serial_core_remove_one_port()
-unregisters the console, frees uport->name via kfree(), and tears down
-the port without shutting it down or freeing its IRQ. Consequently, the
-irqaction descriptor remains registered in genirq with action->name
-pointing to freed memory.
+While blkif_free_ring() is freeing persistent grants and clearing the
+shadow array, the event channel interrupt (blkif_interrupt) is still
+registered and active.  If an interrupt arrives from the backend during
+this teardown window, blkif_interrupt() reads rinfo->ring.sring and,
+via blkif_completion(), accesses rinfo->shadow[id].grants_used and
+rinfo->shadow[id].sg.  blkif_free_ring() tears these structures down
+without holding rinfo->ring_lock, and the handler only checks
+info->connected at entry, so this is a real race resulting in a
+use-after-free or NULL pointer dereference.
 
-This triggers a use-after-free read whenever genirq accesses action->name,
-such as when reading /proc/interrupts:
+Fix this by moving unbind_from_irqhandler() to the beginning of
+blkif_free_ring().  Calling unbind_from_irqhandler() first frees the
+IRQ and synchronizes with any in-flight interrupt handlers on other CPUs
+before ring memory and shadow request structures are deallocated,
+matching the teardown order in drivers/net/xen-netfront.c.
 
-  BUG: KASAN: slab-use-after-free in string+0x476/0x570
-  Call Trace:
-   string+0x476/0x570
-   vsnprintf+0x422/0x1300
-   seq_printf+0x...
-   show_interrupts+...
-
-Fix this by acquiring port->mutex in serial_core_remove_one_port() after
-console unregistration, clearing port->console under the mutex to prevent
-data races with concurrent tty_port_shutdown(), and invoking
-uart_shutdown(NULL, state) if the port remains initialized. This ensures
-that port->ops->shutdown() is called and the IRQ is freed before
-kfree(uport->name).
-
-Reported-by: syzbot+843bf2f48f4d12e6682e@syzkaller.appspotmail.com
-Cc: stable <stable@kernel.org>
-Closes: https://syzkaller.appspot.com/bug?extid=843bf2f48f4d12e6682e
-Fixes: 761ed4a94582 ("tty: serial_core: convert uart_close to use tty_port_close")
-Fixes: f7048b15900f ("tty: serial_core: Add name field to uart_port struct")
-Signed-off-by: Igor Putko <igorpetindev@gmail.com>
-Link: https://patch.msgid.link/20261003163337.45577-1-igorpetindev@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 11659569f720 ("xen/blkfront: split per device io_lock")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
+Acked-by: Roger Pau Monné <roger@xenproject.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260922072155.34625-1-ndaugoing@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/block/xen-blkfront.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -3271,6 +3271,13 @@ static void serial_core_remove_one_port(
- 	if (uart_console(uport))
- 		unregister_console(uport->cons);
+--- a/drivers/block/xen-blkfront.c
++++ b/drivers/block/xen-blkfront.c
+@@ -1212,6 +1212,14 @@ static void blkif_free_ring(struct blkfr
+ 	int i, j, segs;
  
-+	scoped_guard(mutex, &port->mutex) {
-+		port->console = false;
-+
-+		if (tty_port_initialized(port))
-+			uart_shutdown(NULL, state);
-+	}
-+
  	/*
- 	 * Free the port IO and memory resources, if any.
++	 * Interrupt teardown must be done ahead of freeing queue-related
++	 * data, otherwise the interrupt handler can race with the cleanup.
++	 */
++	if (rinfo->irq)
++		unbind_from_irqhandler(rinfo->irq, rinfo);
++	rinfo->evtchn = rinfo->irq = 0;
++
++	/*
+ 	 * Remove indirect pages, this only happens when using indirect
+ 	 * descriptors but not persistent grants
  	 */
+@@ -1293,10 +1301,6 @@ free_shadow:
+ 	/* Free resources associated with old device channel. */
+ 	xenbus_teardown_ring((void **)&rinfo->ring.sring, info->nr_ring_pages,
+ 			     rinfo->ring_ref);
+-
+-	if (rinfo->irq)
+-		unbind_from_irqhandler(rinfo->irq, rinfo);
+-	rinfo->evtchn = rinfo->irq = 0;
+ }
+ 
+ static void blkif_free(struct blkfront_info *info, int suspend)
 
 
