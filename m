@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063950;
-	b=MZge7gDDQi10Pa12wXWFaD5jonbVDyHtC5GEehyT4HcG4/ydy46wtVNATzRA6Yk+VB5M
-	 fq4InqAgDsNOisTIMecY7QPph+0nnhP2W70d9jIZm1gtlQiCP06lIb5bYq77UzTiPBVLw
-	 1dm9oMaaQ0RZAHMVAgwrnF1XVe7rUxnAeYjuxffB+3spVPlGIbBgXK0MR8DdI20vuLKNk
-	 u/4SGbqgKT9GmpeFbXSySDiwtzd9w0hRfKT24STpgN0HE+moDNgF4SDQ29w5f92LRtgXy
-	 nAHMZaPGn+UJ6ZoVPFBNWtdZDIsxxtdS6uL3VO9lMzYBj/qeJkyS6bnYdjY56G3P60A==
+	t=1794063951;
+	b=B7YVOoU7Nj+K9I32pXxBSfQnPgSqQF/vk5HOC+LECsraXofdRXtiFJmixFOAXqDHcYgd
+	 E+DqtyjI9f0yR3QqIGO+n9zWRbKbP7SAq9K95d6dM5sFVwbc0Yv3laxXM7Q+mhoiizoLr
+	 t5s1D55nVjxAtGRUBorpsB1phqUUq91ll6eSRE9MreABpLsTXUwTA0wrEVkH8frPPHNyF
+	 U7CGBuczW5vPd1wbsC/2RbsScqBFqUS0UCpGbD8Pp9bVySGFMgVMCoWHtL2QTpQXMEKF3
+	 sN2r1xF7hOMSP6LTy2WvpW947VXNe4MbdoeCHERqAP5QJ/q1V3Za6BhcD35BBKypuKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063951;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kzekzhk5gFZbb6b20p9jvlXPP7LvYontmZvKrazZWcM=;
-	b=swkhicDKrtbGykKS+NZUh5sgAttg4Ep6Yu1VNgMk/So9+hDvVQbWY1WdkcI4Ic7DjpMy
-	 XwDSsmBKmXdyiRaPEr+oLPLpHSExhLw07xShxR8+9/vHmi78daMeKFyd0nMRlADNUbrbi
-	 YlPloV+rC5a1wlT3R16w9ySskRdhDebjgxc9ShYzNrRPTJFW7YXbtrrPsaFgyTJDMjwxT
-	 mhboAHa58bnO93Ye0GHQx5m9llKVdLj3fIMPhNpblBfE83IUlHPcPpIzsofwp/qxMEQu3
-	 IjW2kFm5qmA1VLzypTLBKO6q+7+eReXRcmV6WFTEoNaRaHRrO6z/MoUrUSfgHpGmlGQ==
+	bh=qCSrklTKTgiStaZfaXrplwXzTegu6lMg7R50p/D1mhA=;
+	b=TChPOAUfee4nNNiuVdooJDwDNBsh/phozObVjyrh7STS9CP1gDbnA7OrXVswmhRO4Vu2
+	 fomU8XXTRBqAVt55jVNqzcriBG8U06EGlrQEp1RQEu0+8g5nekx3XefrYcfipxplRV9tp
+	 CJPKS7E8mAfg6W31ZUgCMZYRJz5ZU3BkJFHvi3a1PYDflqTuisqFhG0FEgCTbKdzX3wfc
+	 HYmSIFBSQ0o78kc8wy4YFAuPEeVqKmv+RqB5wOWVhgJskYapnclcMn+S4WFO3560WZZl2
+	 +f4RV8xBpmfnuLGQRH78XhoNhDkc+BWYZYRHCo31njam3eBMApgG8adc8SaBFhlCiFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mFjqJDw7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a3OxtMwH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B187606D829;
-	Sat,  7 Nov 2026 15:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E139606D829;
+	Sat,  7 Nov 2026 15:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mFjqJDw7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7EDC1F008A1;
-	Sat,  7 Nov 2026 15:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a3OxtMwH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1881F008A2;
+	Sat,  7 Nov 2026 15:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063949;
-	bh=kzekzhk5gFZbb6b20p9jvlXPP7LvYontmZvKrazZWcM=;
+	s=korg; t=1794063951;
+	bh=qCSrklTKTgiStaZfaXrplwXzTegu6lMg7R50p/D1mhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mFjqJDw7vSzO24SNRumYqzIkCD+tTf6FifIBzGJ+c9AX78GzXPcXknC/ouzFsh6rR
-	 Dq+nlmcdcV4kkYsJpm+CqswQpCY3G8Bov2huNgciWmX5uhNuqIh5XEIq2fgYAsDkyw
-	 /bM5wPntFlOjS1z8CDi83B43rl1fXt9We5QYkjPQ=
+	b=a3OxtMwHTOiCx6TisLYpIPGq1fYo9VEahjwoz1uQQqRA8U4f6Cq+67LvXuoGNlSbA
+	 6xxvwobwNQrk08MdfOfjO/4+qVnBnWHAEnyyLvE5IA3HLWQZaAMYbF7xotspqNSCz1
+	 JFa83RZk8rD0CocHI+1x7irs5ZJIoYKT7F52swHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	stable@kernel.org,
+	syzbot+cb43e758a4dc84dd467f@syzkaller.appspotmail.com,
+	Maxim Skokov <skokovmaksimevg@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0141/1257] PCI: rzg3s: Fix IRQ domain initialization error handling
-Date: Sat,  7 Nov 2026 08:40:37 -0500
-Message-ID: <20261107134943.203825013@linuxfoundation.org>
+Subject: [PATCH 7.3 0142/1257] media: vivid: round the height down to the vertical subsampling factor
+Date: Sat,  7 Nov 2026 08:40:38 -0500
+Message-ID: <20261107134943.232387512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,128 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Maxim Skokov <skokovmaksimevg@gmail.com>
 
-[ Upstream commit 5d9e9b3a27994a2fadce283801b7104a68ea4c48 ]
+[ Upstream commit a2ec28dd2a88d0721fc4a30242861e2be01d4023 ]
 
-rzg3s_pcie_init_irqdomain() installs chained handlers for the INTx
-parent interrupts before creating the INTx irqdomain and initializing
-MSI support.
+syzbot reports a vmalloc out-of-bounds write in the test pattern
+generator:
 
-If any subsequent step fails, such as obtaining an INTx IRQ,
-creating the irqdomain, or initializing MSI, the error path returns
-without removing any chained handlers that were already installed.
-This leaves stale handler and data pointers attached to the parent
-interrupts.
+BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_pattern drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2617 [inline]
+BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_buffer+0x2063/0x4160 drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2705
+Write of size 720 at addr ffffc900038f9d50 by task vivid-000-vid-c/6017
 
-Add a helper to tear down the INTx IRQ setup, including removing the IRQ
-domain and clearing the chained handlers. Use it to unwind partially
-completed initialization and from the normal IRQ domain teardown path.
+The reproducer requests a 720x49 NV12 capture format, i.e. an odd
+height for a format whose chroma plane is vertically subsampled.
 
-Fixes: 7ef502fb35b28 ("PCI: Add Renesas RZ/G3S host controller driver")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260811200013.185956-4-prabhakar.mahadev-lad.rj@bp.renesas.com
+The buffer size is derived from the height by a truncating division:
+
+	sizes[p] = (tpg_g_line_width(&dev->tpg, p) * h) /
+		   dev->fmt_cap->vdownsampling[p] +
+		   dev->fmt_cap->data_offset[p];
+
+For a single buffer holding both planes tpg_g_line_width() returns
+720 + 720 / 2 = 1080, so 1080 * 49 = 52920 bytes get allocated.
+
+tpg_fill_plane_buffer() however emits one chroma line for every two
+luma lines, i.e. DIV_ROUND_UP(49, 2) = 25 lines, and thus needs
+49 * 720 + 25 * 720 = 53280 bytes. The memcpy() of the last chroma
+line runs 360 bytes past the end of the buffer.
+
+An odd height is not meaningful for a 4:2:0 format in the first place,
+since the chroma plane would have to hold half a line. Rather than
+fixing up each of the ~10 sites that divide the height by
+vdownsampling[], round the height down to a multiple of the vertical
+subsampling factor where it enters the driver. Adjusting the format is
+what TRY_FMT/S_FMT are for, and it keeps every later division exact.
+
+Formats without vertical subsampling are unaffected and keep accepting
+odd heights.
+
+Tested with the syzbot reproducer, which no longer triggers the splat,
+and by streaming NV12, NV21, YUV420, YVU420 and YUYV at heights 47,
+48, 49, 51, 480, 481 and 1081. v4l2-compliance gives identical results
+before and after (48 of 50 succeeded on the vivid device in both
+cases; the two failures are pre-existing and unrelated).
+
+Fixes: ddcaee9dd4c0 ("[media] vivid: add support for single buffer planar formats")
+Cc: stable@kernel.org
+Reported-by: syzbot+cb43e758a4dc84dd467f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cb43e758a4dc84dd467f
+Signed-off-by: Maxim Skokov <skokovmaksimevg@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rzg3s-host.c | 50 +++++++++++++++++-------
- 1 file changed, 36 insertions(+), 14 deletions(-)
+ drivers/media/test-drivers/vivid/vivid-vid-cap.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/pci/controller/pcie-rzg3s-host.c b/drivers/pci/controller/pcie-rzg3s-host.c
-index f51b5d7c19983..3f7393c49a08c 100644
---- a/drivers/pci/controller/pcie-rzg3s-host.c
-+++ b/drivers/pci/controller/pcie-rzg3s-host.c
-@@ -1006,22 +1006,38 @@ static const struct irq_domain_ops rzg3s_pcie_intx_domain_ops = {
- 	.xlate = irq_domain_xlate_onetwocell,
- };
- 
-+static void rzg3s_pcie_teardown_intx(struct rzg3s_pcie_host *host,
-+				     int count)
-+{
-+	while (--count >= 0) {
-+		irq_set_chained_handler_and_data(host->intx_irqs[count], NULL,
-+						 NULL);
-+	}
-+
-+	if (host->intx_domain)
-+		irq_domain_remove(host->intx_domain);
-+}
-+
- static int rzg3s_pcie_init_irqdomain(struct rzg3s_pcie_host *host)
- {
- 	struct device *dev = host->dev;
- 	struct platform_device *pdev = to_platform_device(dev);
-+	int i, ret;
- 
--	for (int i = 0; i < PCI_NUM_INTX; i++) {
-+	for (i = 0; i < PCI_NUM_INTX; i++) {
- 		char irq_name[5] = {0};
- 		int irq;
- 
- 		scnprintf(irq_name, ARRAY_SIZE(irq_name), "int%c", 'a' + i);
- 
- 		irq = platform_get_irq_byname(pdev, irq_name);
--		if (irq < 0)
--			return dev_err_probe(dev, irq,
--					     "Failed to parse and map INT%c IRQ\n",
--					     'A' + i);
-+		if (irq < 0) {
-+			ret = irq;
-+			dev_err_probe(dev, ret,
-+				      "Failed to parse and map INT%c IRQ\n",
-+				      'A' + i);
-+			goto teardown_intx;
-+		}
- 
- 		host->intx_irqs[i] = irq;
- 		irq_set_chained_handler_and_data(irq,
-@@ -1033,21 +1049,27 @@ static int rzg3s_pcie_init_irqdomain(struct rzg3s_pcie_host *host)
- 						     PCI_NUM_INTX,
- 						     &rzg3s_pcie_intx_domain_ops,
- 						     host);
--	if (!host->intx_domain)
--		return dev_err_probe(dev, -EINVAL,
--				     "Failed to add irq domain for INTx IRQs\n");
-+	if (!host->intx_domain) {
-+		ret = -EINVAL;
-+		dev_err_probe(dev, ret,
-+			      "Failed to add irq domain for INTx IRQs\n");
-+		goto teardown_intx;
-+	}
- 	irq_domain_update_bus_token(host->intx_domain, DOMAIN_BUS_WIRED);
- 
- 	if (IS_ENABLED(CONFIG_PCI_MSI)) {
--		int ret = rzg3s_pcie_init_msi(host);
-+		ret = rzg3s_pcie_init_msi(host);
- 
--		if (ret) {
--			irq_domain_remove(host->intx_domain);
--			return ret;
--		}
-+		if (ret)
-+			goto teardown_intx;
+diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+index e204490847095..147af0f9b0777 100644
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -570,6 +570,7 @@ int vivid_try_fmt_vid_cap(struct file *file, void *priv,
+ 	const struct vivid_fmt *fmt;
+ 	unsigned bytesperline, max_bpl;
+ 	unsigned factor = 1;
++	unsigned int vdiv = 1;
+ 	unsigned w, h;
+ 	unsigned p;
+ 	bool user_set_csc = !!(mp->flags & V4L2_PIX_FMT_FLAG_SET_CSC);
+@@ -622,6 +623,18 @@ int vivid_try_fmt_vid_cap(struct file *file, void *priv,
+ 		mp->height = r.height / factor;
  	}
  
- 	return 0;
++	/*
++	 * The chroma planes of vertically subsampled formats hold
++	 * height / vdownsampling lines. If the height is not a multiple of
++	 * the subsampling factor, then the buffer size calculations round
++	 * that number down while the test pattern generator rounds it up,
++	 * so the generator writes one line past the end of the buffer.
++	 * Round the height down to keep both in sync.
++	 */
++	for (p = 0; p < fmt->planes; p++)
++		vdiv = max(vdiv, fmt->vdownsampling[p]);
++	mp->height = rounddown(mp->height, vdiv);
 +
-+teardown_intx:
-+	rzg3s_pcie_teardown_intx(host, i);
-+
-+	return ret;
- }
+ 	/* This driver supports custom bytesperline values */
  
- static void rzg3s_pcie_teardown_irqdomain(struct rzg3s_pcie_host *host)
-@@ -1055,7 +1077,7 @@ static void rzg3s_pcie_teardown_irqdomain(struct rzg3s_pcie_host *host)
- 	if (IS_ENABLED(CONFIG_PCI_MSI))
- 		rzg3s_pcie_teardown_msi(host);
- 
--	irq_domain_remove(host->intx_domain);
-+	rzg3s_pcie_teardown_intx(host, PCI_NUM_INTX);
- }
- 
- static int rzg3s_pcie_set_max_link_speed(struct rzg3s_pcie_host *host)
+ 	mp->num_planes = fmt->buffers;
 -- 
 2.53.0
 
