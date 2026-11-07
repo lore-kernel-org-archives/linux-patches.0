@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064284;
-	b=koFjj70S8vafYDzP4rraKypDIHTSm1zXuegNtBTZE+cJPwuMiAy6EnfiexOURHBD/aNk
-	 4RZyD6o0kbl2+pqtdetmJ4vPk0/MdMJLcc8Uz7QwIKEm5F07QPgnXO4iZqEOA+4cbz3xR
-	 6myuKYLcdPo3CZi5gcQf1pSfOp7n833HnIODC/V1KbBJRySAvVvOluV7tN807eY5cfX+9
-	 WjfXLzrk/50+XKoD88mqKAKmWq3Vvsf+ZIlVg9K433nyKH+BXZE0r4SXQXX12aT/9uJmw
-	 kg0PPuZwBxz12CkVPYQLITyekV3+9brNDPmGGwSHDNC2KzHnG8r1gN+aICbFkMKuDpg==
+	t=1794064285;
+	b=thpkEnWCOqzlPpxOaFdSb8YCrOWo+ecd38INGX7qW+kWpzU0FfEcJGuvjCtVv9f3/mMf
+	 1vZxedX/SQ/Kxi4mrkZXqr6D6K98n0FEdxQM57JuuggagY+xB+eBzAGnBQ0L86jCk+sP4
+	 ZRABpQ5gP3y1sXwmQ7oC35hIV8r+twJtDUtS5oJIqVoKTgj4ZGQBclKaOQ4fFyEjTNtvL
+	 4GDTbskjrGxnuem+9PFdd6b68advKWSdQKaWXDM2O905GXt3T+6RQ2lNgjjKnIeOgugoC
+	 hhGS78On9S0HagNcAUAUhhvuFsqJHJX39690Mo7m2rgMWZKV0VhvtqWGfokSdsJN+Ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=smv/4FZizouWjAXOg8Zu7NSnnPvNbMr2arwunpH61ik=;
-	b=wpTlYJkl9nBQwxCE1Tk76a/bQJwtTRaB8fXYdCx/2qmpdvjIr+lMqFS7c8heVJw1rHvI
-	 rNF3v/1jeQXeMSJAhiH69jQrOtj4Ks60dMJnl9PE3iWEotrQWiLjbeUqPoaW6sVmMIARo
-	 FAHQoask5dR7wFYRSq03uHtEQfFXGiVbLsRfJc0wlJD4H25TnEgYSVpWJK8DFy0CbQou/
-	 fwFhO3dmEDgwfndaAx5VZbeHzoocexy5KpHQSCDU3uzFmG5ppNECtVAa3snekrEW3qICL
-	 sOeWxMMlzde+AolJBmvc8XxpQeyPTEjCWYOjPrMcKEoZ/pRzoqbPhtiI+UKRNsT05TA==
+	bh=/+1CVgmMHpm8PMnFbTW9zboMDd7JMf0Q1zeJjauGc60=;
+	b=hA6ei5IU42EUHuP1Wp7Fq4ZKyLD1bN1wI2fQDH2x6PXmpuO13QUWFDUVHcL88VgJWfEv
+	 lIRBjUKvtgED338Xro6QZwcBtLp6Vhl9vcHZBnLAf6+57oL5E/9/FeSLjlHjMHb9GQ4YR
+	 DRXMlNmsbrFylOQYl9g97JQOQjlhluzG/BdWIAG0npSyu+msVNt+x93aUubGKisDwRMhR
+	 /pcAokHUjtLGpWvzpMvo20fUW6vCMTEaI4YnoJ3bPj4XcrTUghDdsBGezo2Qz0PIzk/uq
+	 AL4OMVOmOzehf+68ilkoxgOwwqajjnU3ynLIxDggc8uA5d8R/MW/J4R+yrreL4Mszdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvtyPdCm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uKboclDB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DED9606A9E5;
-	Sat,  7 Nov 2026 15:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3AF606A9E5;
+	Sat,  7 Nov 2026 15:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvtyPdCm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADC51F0089F;
-	Sat,  7 Nov 2026 15:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uKboclDB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EB21F0089F;
+	Sat,  7 Nov 2026 15:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064284;
-	bh=smv/4FZizouWjAXOg8Zu7NSnnPvNbMr2arwunpH61ik=;
+	s=korg; t=1794064285;
+	bh=/+1CVgmMHpm8PMnFbTW9zboMDd7JMf0Q1zeJjauGc60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FvtyPdCmQS1yznX5eIqOtRAfwS6tdhJ6E0yCkzndTlqg9XNebnTeRySU5FO1Yjaiz
-	 lCggScrkXW0OQl7PICgLiMIsu1KSZOM0fkUH/wNJYTmPLzmN+GBAPFGxpaE/i+kh5x
-	 sIQ9CUtcol/kYydy9xAThMF4IZHHmWf1+5wyIJkQ=
+	b=uKboclDBRgrOAw5h+sUfu2rl/JJRXVd0Sm9Q5Trks7+92WGQ3OSksb8EgOSCfF7x1
+	 cLauDoQ3hmQNIXCO229O2Hf9MpKmxccRvnbguC49NpZhvIIDsHVgyVNgGDiAmguvCz
+	 5LTGapM2xuxmH3b40uaVglFsaUBt69hxzxcUdgYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiale Yao <yaojiale02@163.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0341/1257] iio: adc: mcp3911: reject devices without match data
-Date: Sat,  7 Nov 2026 08:43:57 -0500
-Message-ID: <20261107134948.821450396@linuxfoundation.org>
+Subject: [PATCH 7.3 0342/1257] iio: adc: ti-adc128s052: validate SPI match data
+Date: Sat,  7 Nov 2026 08:43:58 -0500
+Message-ID: <20261107134948.847151370@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,42 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit d3410a48d5eb9dd8238099cb0ee368d12005a385 ]
+[ Upstream commit 4ac257f2fd2a9cac00e748486fa003b4e1cc453e ]
 
 SPI driver_override allows a device to bind to this driver without
-matching either the OF or SPI device ID table. In that case,
-spi_get_device_match_data() returns NULL.
+matching either the firmware tables or SPI device ID table. In that
+case, spi_get_device_match_data() returns NULL.
 
-mcp3911_probe() stores the result and later calls through chip->config
-and accesses other chip-specific fields, causing a NULL pointer
-dereference.
+adc128_probe() also obtains the IIO device name by dereferencing the
+result of spi_get_device_id(), which is NULL on the same override path.
+The probe can therefore crash before it reaches the match data access.
 
 Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
 data") fixed the same driver_override issue in another SPI driver.
-Reject devices without match data before continuing the probe.
+Reject devices without match data and use the always available SPI
+modalias for the IIO device name.
 
-Fixes: 732ad34260d3 ("iio: adc: mcp3911: add support for the whole MCP39xx family")
+Fixes: d5f0da0c6972 ("iio: adc: ti-adc128s052: Switch to use spi_get_device_match_data()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/mcp3911.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/ti-adc128s052.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/adc/mcp3911.c b/drivers/iio/adc/mcp3911.c
-index 797424f59f74b..90167930f9132 100644
---- a/drivers/iio/adc/mcp3911.c
-+++ b/drivers/iio/adc/mcp3911.c
-@@ -721,6 +721,8 @@ static int mcp3911_probe(struct spi_device *spi)
+diff --git a/drivers/iio/adc/ti-adc128s052.c b/drivers/iio/adc/ti-adc128s052.c
+index 1899813c1aee3..f9a995ff403e0 100644
+--- a/drivers/iio/adc/ti-adc128s052.c
++++ b/drivers/iio/adc/ti-adc128s052.c
+@@ -195,12 +195,14 @@ static int adc128_probe(struct spi_device *spi)
  	adc = iio_priv(indio_dev);
  	adc->spi = spi;
- 	adc->chip = spi_get_device_match_data(spi);
-+	if (!adc->chip)
-+		return -ENODATA;
  
- 	ret = devm_regulator_get_enable_read_voltage(dev, "vref");
- 	if (ret < 0 && ret != -ENODEV)
+-	indio_dev->name = spi_get_device_id(spi)->name;
++	config = spi_get_device_match_data(spi);
++	if (!config)
++		return -ENODATA;
++
++	indio_dev->name = spi->modalias;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 	indio_dev->info = &adc128_info;
+ 
+-	config = spi_get_device_match_data(spi);
+-
+ 	indio_dev->channels = config->channels;
+ 	indio_dev->num_channels = config->num_channels;
+ 
 -- 
 2.53.0
 
