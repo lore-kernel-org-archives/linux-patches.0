@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063932;
-	b=ZmBLGwwQdW+9VD3/+/xhq+gqHifGjfzgUzIFVlsV8ugpr1PMh7Ywa7JFua9jpJEfLDhU
-	 xTZulL6CYpVxqw1lX1Po2BFu08Y3ZXyWWK6zGXdCUS7rHJ9z5NVWlHxzv5CXShbVPGnNI
-	 YpFgzZDbowpVkGPJPl4bh2ecG71IQG3/G2wWq58SOw9JJE1i1msSRc9GK3dsZlE6qFiNd
-	 X/fGtB7cirOcoBVUqUrx9ccwjoyVWvyt9MVEzvJpCwxPQx/p9g1jNzfm7LUdX47/oSjDC
-	 RlA/slX3Jx2IJ+Ln+jdATRYwlwxauzN0AOAtRGUe9PWiKVIQ/HUflSWIjMzd+Lo6nOg==
+	t=1794063934;
+	b=5UUXLvL2L2f9Ym91ODu22WIY9crmb/wRFfcfmwPqO/s3/hDAaIjpVkLbEQd6XtMuZe8m
+	 +SLKMO7+iXxd/QiFiIfdjmBI2WeTjRqZ/pBT8ULRsM1aWSZp7Z1umRNnDBi7Z5m6eAK4f
+	 kEGwXXYoK/4w7FkPxHa2np06sLtz3VrV+zl28DLTTlnGK9ZN8tFCYeLEaxaCSS47Yvmgw
+	 TU6/B9KSaCjKp2cRHP/jzmvcjyiHJhGDIeAH18gRogLMvz4wXjaI4f9b+oX3dHx8NBqRK
+	 iDMaDBSMQGH4joYfhmQo+GSTpX5t+RpGQE1oByzjhxHKqm1TfPEku6LtxQ/TVTuh68A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063932;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063934;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kB1ggAnC6lPPKxV+wQGBU5BhpJGbSmGkxImnPSHD2gU=;
-	b=zC1eAlnJRJChEk1OSkddWuMPRUdQEb5ofLUxMdY23Fv8aAfrbS2oEbUM28Hsfit5Kq0s
-	 PphodblQx+IsZ2egD+ERz1qySD/tccEZsaq0mMlxWT/L+vs2phBvI8uYOeXB0Zj//dd9j
-	 zOKLl8xQQtDERghQlktHCedkNHNoUB+J7+/YlFBC0Gyg2nvvHnDisqwypVFtMoW09a/xj
-	 9R0yRa4kw12AKV32yKEVmwCq/FKPylCiSVK+P57CQIySqqzCwEB4BrED5Jntp1zX9VE0b
-	 7Xu+3inUmySMCxUfD8oT85N15AkA2GSUqK8f3I8txwy2pRGIVsMNXhp2Km9/OzQg3QA==
+	bh=a0RW0k6KcGkI01q9Iuqw7RVI4kS3Y0fIiOD2aU4QHQQ=;
+	b=Q8hLz6wCWXdO6WOgG0DBk/14wzoXJE+obUoJnlZvZVc1KzQy6GEEK03Jxf2IRcxj65kq
+	 00mxyfg39g3JtmZs+maOzRR8evR9SBJwrwPRhvBxhJvc2AZSahpbNT67W/9b8BImq+a5O
+	 WGrCAsQMGETsqxSqnWrgJaqht/QqOPW2Iqo0+/9tpr1O+2nnR6Ri2LuOolnwaW5htwgiu
+	 ASnvlaIIAveOZbkUB4HazEw7EswZboQVI0x8hZvNF4nbOSLvENStwWrcTF2nVOg5DDx20
+	 qkVSoWRSo0z8vIBPR8xUWw7jPXScw9CuOO3HbeOpdjw/eM8CIAHQvUaY9E6HWlIP9pQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IpvJ29kw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aL0G1u+m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4F0606D802;
-	Sat,  7 Nov 2026 15:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D54B606A335;
+	Sat,  7 Nov 2026 15:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IpvJ29kw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBB21F0089F;
-	Sat,  7 Nov 2026 15:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aL0G1u+m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4121F008A1;
+	Sat,  7 Nov 2026 15:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063932;
-	bh=kB1ggAnC6lPPKxV+wQGBU5BhpJGbSmGkxImnPSHD2gU=;
+	s=korg; t=1794063934;
+	bh=a0RW0k6KcGkI01q9Iuqw7RVI4kS3Y0fIiOD2aU4QHQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IpvJ29kw1cOsLOZ1y1P2bX1vfPuvXJaQkz2jrXzqXPZ0C4/tcdE58hB/p5AJ4qwK/
-	 kmvIJpCLo6nfp7+bLNP/r5jx+2huVLwMffX2OGXCZy4rxFvd36g1wZtk7ArGZkhjJX
-	 A13L8etN/Of1slmMQmM9QwMK91BAVP1XTzrCMWVA=
+	b=aL0G1u+mVVKx/7oPimYDPiZ30VgcmEQersDRKUW28ICMVJNFozTVIVMnhcZbSWheE
+	 TKgBy0yatMFUCloImfd1TB7Zon9VBvCORXLRMFcyicvIVq/j+Iphbv1siHyfwa5rxs
+	 p3fhiAmxlST/hSVftvIGp6L8ju7pO3S0VsX5YFF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Tharit Tangkijwanichakul <tharitt97@gmail.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0124/1257] media: v4l2-ctrls: default HEVC SPS chroma format to 4:2:0
-Date: Sat,  7 Nov 2026 08:40:20 -0500
-Message-ID: <20261107134942.752428916@linuxfoundation.org>
+Subject: [PATCH 7.3 0088/1257] media: cx231xx-audio: drain wq_trigger before audio fini
+Date: Sat,  7 Nov 2026 08:39:44 -0500
+Message-ID: <20261107134941.794768801@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,69 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 4f4b6a9220f0401ae84bd2644aabd7221930c1c5 ]
+[ Upstream commit a691c54986412e1fa87f036d2577d5a78a75e658 ]
 
-The default value of a compound control is zero initialized when no
-explicit default is provided. For V4L2_CTRL_TYPE_HEVC_SPS this results
-in chroma_format_idc being set to 0, which represents monochrome video.
+audio_trigger() is deferred work (dev->wq_trigger) armed from
+snd_cx231xx_capture_trigger() on every PCM START/STOP; it dereferences
+dev->adev state and may free the URBs via cx231xx_isoc_audio_deinit().
+cx231xx_audio_fini() tore down that state without draining wq_trigger,
+so work armed before or racing fini ran against freed state.
 
-Most stateless HEVC decoders do not support monochrome video. In
-particular, the VDPU38x variant of rkvdec fails v4l2-compliance in two
-tests related to V4L2_CID_STATELESS_HEVC_SPS.  The Control ioctls test
-reads the control with GET_EXT_CTRLS and writes the same value
-back; TRY_EXT_CTRLS then returns -EINVAL because the VDPU38x
-rkvdec_hevc_validate_sps() rejects sps->chroma_format_idc == 0.
+Use disable_work_sync() in fini to drain the work and prevent further
+queueing.  Initialize the work, lock and stream_started counter at the
+top of cx231xx_audio_init(), before any fallible allocation, and clear
+the partially-built audio state on its error path, so fini is safe even
+if a later step fails.
 
-    v4l2-compliance 1.33.0-5491, 64 bits, 64-bit time_t
-    v4l2-compliance SHA: b32589c51481 2026-07-16 08:51:38
-    Control ioctls:
-        fail: v4l2-test-controls.cpp(942):
-	try_ext_ctrls returned an error (22)
-      test VIDIOC_G/S/TRY_EXT_CTRLS: FAIL
-    Buffer ioctls:
-        fail: v4l2-test-buffers.cpp(3102): node->streamon(q.g_type())
-        fail: v4l2-test-buffers.cpp(3157): testBlockingDQBuf(node, m2m_q)
-      test blocking wait: FAIL
+This issue was found by an in-house static analysis tool.
 
-Set the common HEVC SPS compound control default to
-chroma_format_idc = 1, corresponding to 4:2:0.
-
-Fixes: c9a59dc2acc7 ("media: rkvdec: Add HEVC support for the VDPU381 variant")
-Cc: stable@kernel.org
-Signed-off-by: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+Fixes: 61b04cb24a12 ("[media] cx231xx-audio: fix some locking issues")
+Cc: stable@vger.kernel.org # v6.10+
+Link: https://lore.kernel.org/r/8c7e1294-b906-4636-890c-b64d03b0e1d0@kernel.org
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/usb/cx231xx/cx231xx-audio.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-ctrls-core.c b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-index 648b88c868bc6..47fb60b1f0c07 100644
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -115,6 +115,7 @@ static void std_init_compound(const struct v4l2_ctrl *ctrl, u32 idx,
- 	struct v4l2_ctrl_fwht_params *p_fwht_params;
- 	struct v4l2_ctrl_h264_scaling_matrix *p_h264_scaling_matrix;
- 	struct v4l2_ctrl_av1_sequence *p_av1_sequence;
-+	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
- 	void *p = ptr.p + idx * ctrl->elem_size;
+diff --git a/drivers/media/usb/cx231xx/cx231xx-audio.c b/drivers/media/usb/cx231xx/cx231xx-audio.c
+index b24ceef497e4c..af04fb104cc4e 100644
+--- a/drivers/media/usb/cx231xx/cx231xx-audio.c
++++ b/drivers/media/usb/cx231xx/cx231xx-audio.c
+@@ -581,12 +581,19 @@ static int cx231xx_audio_init(struct cx231xx *dev)
+ 	dev_dbg(dev->dev,
+ 		"probing for cx231xx non standard usbaudio\n");
  
- 	if (ctrl->p_def.p_const)
-@@ -188,6 +189,12 @@ static void std_init_compound(const struct v4l2_ctrl *ctrl, u32 idx,
- 		 */
- 		memset(p_h264_scaling_matrix, 16, sizeof(*p_h264_scaling_matrix));
- 		break;
-+	case V4L2_CTRL_TYPE_HEVC_SPS:
-+		p_hevc_sps = p;
++	/*
++	 * Extension init errors are ignored by the cx231xx core, so fini()
++	 * must be safe even if initialization fails part way through.
++	 */
++	spin_lock_init(&adev->slock);
++	INIT_WORK(&dev->wq_trigger, audio_trigger);
++	atomic_set(&dev->stream_started, 0);
 +
-+		/* 4:2:0 */
-+		p_hevc_sps->chroma_format_idc = 1;
-+		break;
- 	}
- }
+ 	err = snd_card_new(dev->dev, index[devnr], "Cx231xx Audio",
+ 			   THIS_MODULE, 0, &card);
+ 	if (err < 0)
+ 		return err;
  
+-	spin_lock_init(&adev->slock);
+ 	err = snd_pcm_new(card, "Cx231xx Audio", 0, 0, 1, &pcm);
+ 	if (err < 0)
+ 		goto err_free_card;
+@@ -601,8 +608,6 @@ static int cx231xx_audio_init(struct cx231xx *dev)
+ 	strscpy(card->shortname, "Cx231xx Audio", sizeof(card->shortname));
+ 	strscpy(card->longname, "Conexant cx231xx Audio", sizeof(card->longname));
+ 
+-	INIT_WORK(&dev->wq_trigger, audio_trigger);
+-
+ 	err = snd_card_register(card);
+ 	if (err < 0)
+ 		goto err_free_card;
+@@ -656,8 +661,10 @@ static int cx231xx_audio_init(struct cx231xx *dev)
+ 
+ err_free_pkt_size:
+ 	kfree(adev->alt_max_pkt_size);
++	adev->alt_max_pkt_size = NULL;
+ err_free_card:
+ 	snd_card_free(card);
++	adev->sndcard = NULL;
+ 
+ 	return err;
+ }
+@@ -674,6 +681,8 @@ static int cx231xx_audio_fini(struct cx231xx *dev)
+ 		return 0;
+ 	}
+ 
++	disable_work_sync(&dev->wq_trigger);
++
+ 	if (dev->adev.sndcard) {
+ 		snd_card_free_when_closed(dev->adev.sndcard);
+ 		kfree(dev->adev.alt_max_pkt_size);
 -- 
 2.53.0
 
