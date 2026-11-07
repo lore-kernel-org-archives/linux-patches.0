@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064197;
-	b=nBqN7DpLQpwJIq0VD4jT26X8feGDRCvnAHP0aaXrFIfRVY/skuyEyLYr24P8Ca2TZiLg
-	 YsP82bg2TCe3KwyYKVnUGtAH1w8BqVs3+gntPaZaSSw6fU2T+gAijtmNIZgNy5WudfhAf
-	 rgjEpaBdstyMTVE8cd9o2xgj3kiMDhImUuQcmJHiuiIKDpsk8AXy+yZGN4ORKWk6b23G1
-	 pgOr32zSL2gubLkMSRk8srs/yAjco7IfXwzfi5pyx5P3szK/RmkGu3gDkLvTYdeJfQu6w
-	 Tlt1ijxySCc9rqGbPgbZf6IKaR9bouJZRflAV0mG3Yl9c3h12dKfy3xdrE1fuUXQXrw==
+	t=1794064199;
+	b=vw534Jcy3L7dmF3/nV4/X9TQtD01WDRVMY8r84mHVYVrObluSegKvkJo59BVnLLiAsp+
+	 C+q0PO6+aTRHDjWQ8crwC/Tj7MxpM3oDVLAye4fw94yr3oh4W/RHqg8RWWLV+Xb3bZfHo
+	 X1Ph/YXx/IbL2OKUW/V7vayoLdf4xNMmIy0VNXsIzTPKObnr97WpfxL4xemQjh1Y9GjEW
+	 51D+U2L4VgL2hgis53BbaNEXAk/n8wUUp1iJaTlmxO7rohuQUuD6DLB/XoRkmexwtlihR
+	 kGHBBlHoWckf74OJBq7wJJqn+HSG8D3itMVCFVMJeXXpbUky75zP2OTRSpuFEioy4SA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064197;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5i+hfX3wkmpMCkk7aZsb200AAP/mG7F7a/3OoGSMCTE=;
-	b=qRw5pO/GCOdMNO/g3QGVjnf6kFxtZeVNkLuF+2yAA1/AGToMeWmbCYCKOj5GtIBfNCki
-	 4EmKbTkKyac6oNSmRDMpYRgvl9O9haLnQ8dzD0AiJ80aXXrjEk6no9R99zWGwAx3J44Y0
-	 JrgepkUsG4u5f/cQXb9St7CiW5dfHy8CwiAqkaNj+/Jgewl++ErYbjTQDMy+Gqg9EKmrV
-	 Uq5hLnNF0CDaDNNErB5pHVMtuqlmC5MwSzKUzo0jxY8YBJjTKAFJx3/hSdC/Z9VBr78TS
-	 9WYhfbNHKFw4I3e8G+bl+0r+XXqS8CkMM68Z0oC/v5xUkaVpIak0vMHFVb0Ez0w0nHA==
+	bh=Dx1vRwxgW+rt2YzUgdoxCKC39dH8zPP49BQ46ZlggMM=;
+	b=Iv0bs7QY7Jz8La5bq2Db5SGKi4dy7iSrENkp5RY4F1e2l9pR5B2pcoSkCsFr0AfhZVSh
+	 ohw0InRLAjVpfz9v5vGcAV87HQqC/5xilXo64WQGKp7L1awFeObNV3pIx245msfiV1nMp
+	 XPPjiRwZULJn6EDee4gnkzO587JE5i+1dJl7ZtIBF8A7FMEmdTNgv74tZzZOjn8wfmzEx
+	 GLjiTGznuEvmOSpV3Hi7lKvn+9FXPwblutXoWtPO+HI4kE7AkJBns1tfT/PBS2hYUULtQ
+	 AU1/lo/jYDiAqxgrhUBhMoA5XkaNhHRiQjm4yCD6lBsM0dOQvwAl8yh+69znTRkSc+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RdjTS7Jp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpn+0ntZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1A9606EEB2;
-	Sat,  7 Nov 2026 15:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D67606EEB2;
+	Sat,  7 Nov 2026 15:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RdjTS7Jp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8821F008A1;
-	Sat,  7 Nov 2026 15:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpn+0ntZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C12F1F008A2;
+	Sat,  7 Nov 2026 15:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064197;
-	bh=5i+hfX3wkmpMCkk7aZsb200AAP/mG7F7a/3OoGSMCTE=;
+	s=korg; t=1794064198;
+	bh=Dx1vRwxgW+rt2YzUgdoxCKC39dH8zPP49BQ46ZlggMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RdjTS7JptKkuPmxv1i2chBjUfhUO8GQKl1OedAI9BjbYCSRqj0IUsKot/uMXE9M2T
-	 2ccDhyvc9URhB/66Q4jQUNZg/rLUvISgBddbeE8aE1GGi+z7iib89+X/oUIBS/hA/F
-	 fW54fyVWoSrLd2SFKLE2zXAsj++9GFLaLqSjo7M8=
+	b=jpn+0ntZjVEldzsJtUAv+l3ASTZWjTCi1kRLguiqgfwkfGOZ0Bb8H3c/nusl4IY/x
+	 1q5XVFNTQQxyh8kah22r5Cx8TZ0b/khukQKcOrYiQXCe7Om/JrwlNaDSUdCUv8HbvP
+	 vwrkP2yPGQyijRSdJUI47/Wt1He+CUJKSTSMUo8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0298/1257] hwmon: (lm70) Fix rounding of negative temperatures
-Date: Sat,  7 Nov 2026 08:43:14 -0500
-Message-ID: <20261107134947.691581317@linuxfoundation.org>
+Subject: [PATCH 7.3 0299/1257] fuse: dont shorten the folio descriptor at LLONG_MAX
+Date: Sat,  7 Nov 2026 08:43:15 -0500
+Message-ID: <20261107134947.717580456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,66 +69,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit eddb0aaacce4baa9d8176eb2f4bd9e99e867f8fc ]
+[ Upstream commit 4c72635f913850512d5fa74bf3eb7db3670398cf ]
 
-temp1_input_show() drops the low bits of the temperature register by
-dividing the raw value (raw / 32 on the LM70). These bits are not part
-of the temperature: the LM70, LM71, LM74 and TMP122/TMP124 always
-return some of them as 1, and the TMP125 fills them with copies of the
-temperature LSB. Division rounds toward zero, so a negative temperature
-with any of these bits set is reported one LSB too high.
+fuse_send_readpages() and fuse_do_readfolio() both decrement the folio
+descriptor length when handling the overflow case where a read would
+exceed LLONG_MAX after incrementing the file position by the number of
+bytes that need to be read in.
 
-For example, the TMP122 returns 0xffff for -0.0625 degrees C, which the
-driver reports as 0. The LM70 returns 0xf39f for -25 degrees C, which
-the driver reports as -24750.
+Shortening it is unnecessary (and for the virtio-fs paths, a bug), and
+with fuse using iomap for handling reads, shortening it is buggy.
 
-Use an arithmetic right shift instead, which drops the low bits and
-rounds down.
+For fuse_send_readpages(), ap->descs[] is also what fuse_readpages_end()
+reports back to iomap_finish_folio_read(). iomap accounted the full
+length when the range was submitted, so the lengths reported on
+completion have to add up to what was submitted. Reporting one byte less
+leaves ifs->read_bytes_pending nonzero, folio_end_read() is never called,
+and the folio stays locked.
 
-Fixes: e1a8e913f97e ("[PATCH] lm70: New hardware monitoring driver")
-Fixes: a86e94dc946d ("hwmon: (lm70) Add support for LM71 and LM74")
-Fixes: cd929672a9ef ("hwmon: (lm70) Add ti,tmp125 support")
+This is currently reachable on fuseblk mounts configured with block
+sizes smaller than the page size.
+
+Fix this by leaving the descriptor length untouched. The reply will then
+be one byte shorter than what the descriptor lengths add up to, and the
+last byte will be zeroed in fuse_copy_folios().
+
+This also fixes a bug in virtio-fs that existed before any iomap changes
+were added to fuse. For virtio-fs, data there arrives by DMA rather than
+through fuse_copy_folios(), so the only zeroing is in
+virtio_fs_request_complete(), which compares the reply size against the
+descriptor length. With the descriptor length shortened, the two are
+equal and nothing gets zeroed, which means the unrequested byte is left
+holding whatever was in the folio, when the folio is marked uptodate.
+This is both in the fuse_do_readfolio() and fuse_send_readpages() paths.
+This dates back to commit 2f1398291bf3 ("fuse: don't overflow LLONG_MAX
+with end offset").
+
+Fixes: 4ea907108a5c ("fuse: use iomap for readahead")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260924205326.1739229-1-khurana.ridham222@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm70.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/fuse/file.c | 38 +++++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/hwmon/lm70.c b/drivers/hwmon/lm70.c
-index 8b525725fef4f..b29bac7a4cc14 100644
---- a/drivers/hwmon/lm70.c
-+++ b/drivers/hwmon/lm70.c
-@@ -96,21 +96,21 @@ static ssize_t temp1_input_show(struct device *dev,
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index 9a36d0329e221..b52f5b45646c9 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -864,18 +864,29 @@ static int fuse_do_readfolio(struct file *file, struct folio *folio,
+ 
+ 	attr_ver = fuse_get_attr_version(fm->fc);
+ 
+-	/* Don't overflow end offset */
+-	if (pos + (desc.length - 1) == LLONG_MAX)
+-		desc.length--;
++	/*
++	 * Don't overflow end offset.
++	 *
++	 * Ask the server for len - 1 bytes. desc.length still holds the full
++	 * length. When the reply comes back, it will be one byte shorter than
++	 * desc.length and fuse_copy_folios() will zero that last byte.
++	 *
++	 * For this reason, desc.length must not be decremented too. The caller
++	 * reports the full length to iomap_finish_folio_read(), which marks
++	 * every block it covers uptodate. Shortening the descriptor would
++	 * suppress zeroing and leave the last byte holding stale data.
++	 */
++	if (pos + (len - 1) == LLONG_MAX)
++		len--;
+ 
+-	fuse_read_args_fill(&ia, file, pos, desc.length, FUSE_READ);
++	fuse_read_args_fill(&ia, file, pos, len, FUSE_READ);
+ 	res = fuse_simple_request(fm, &ia.ap.args);
+ 	if (res < 0)
+ 		return res;
+ 	/*
+ 	 * Short read means EOF.  If file size is larger, truncate it
  	 */
- 	switch (p_lm70->chip) {
- 	case LM70_CHIP_LM70:
--		val = ((int)raw / 32) * 250;
-+		val = ((int)raw >> 5) * 250;
- 		break;
+-	if (res < desc.length)
++	if (res < len)
+ 		fuse_short_read(inode, attr_ver, res, &ia.ap);
  
- 	case LM70_CHIP_TMP121:
- 	case LM70_CHIP_TMP122:
- 	case LM70_CHIP_LM74:
--		val = ((int)raw / 8) * 625 / 10;
-+		val = ((int)raw >> 3) * 625 / 10;
- 		break;
+ 	return 0;
+@@ -1068,11 +1079,20 @@ static void fuse_send_readpages(struct fuse_io_args *ia, struct file *file,
+ 	ap->args.page_zeroing = true;
+ 	ap->args.page_replace = true;
  
- 	case LM70_CHIP_LM71:
--		val = ((int)raw / 4) * 3125 / 100;
-+		val = ((int)raw >> 2) * 3125 / 100;
- 		break;
+-	/* Don't overflow end offset */
+-	if (pos + (count - 1) == LLONG_MAX) {
++	/*
++	 * Don't overflow end offset.
++	 *
++	 * Ask the server for count - 1 bytes. The reply is then one byte
++	 * shorter than what the descriptor lengths add up to, so
++	 * fuse_copy_folios() zeroes the last byte when it walks the folios.
++	 *
++	 * ap->descs[] must not be decremented here. It is what
++	 * fuse_readpages_end() reports back to iomap_finish_folio_read(), and
++	 * iomap has already accounted the full descriptor length, so shortening
++	 * it would leave ifs->read_bytes_pending nonzero and the folio locked.
++	 */
++	if (pos + (count - 1) == LLONG_MAX)
+ 		count--;
+-		ap->descs[ap->num_folios - 1].length--;
+-	}
+ 	WARN_ON((loff_t) (pos + count) < 0);
  
- 	case LM70_CHIP_TMP125:
--		val = (sign_extend32(raw, 14) / 32) * 250;
-+		val = (sign_extend32(raw, 14) >> 5) * 250;
- 		break;
- 	}
- 
+ 	fuse_read_args_fill(ia, file, pos, count, FUSE_READ);
 -- 
 2.53.0
 
