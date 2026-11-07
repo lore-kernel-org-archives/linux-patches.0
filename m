@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060823;
-	b=JAPtspGxKzyWsYfTeCli1e7YiOYxVaM1sKF+XOBv1BbuMeS++T+ZRvuFx/vtVuwhzMrH
-	 pzbQS9oU5zLzRXJmGfbkqF6gCm9Ny4UleOAYBDna4kzDyR9pmIVSYbwFhu05mE00eDbj2
-	 QdWKrXkWyWCNLrLP5ko9RoTCDTXjDnfa093Q/nXOhwsWSpET2feyW6z81c3X3u0oFoPYk
-	 M5qJeQLN3eQMDzcy7LtUJlNjKXShYga2k8pAXxCGo1TouWEx+380BqOpiMT1J296rzVce
-	 qHKXgd3i+gyq1TMabO5i0a/QYx55PdB8PkpKfbSnUIqmvpT/uPEzWEsR8WZbYQtWGag==
+	t=1794060825;
+	b=1H0nnOqBy02PvwA8VdkUVVUTvmjyFfN48ujuQk0BzIP6hHstigfXsp8TAPD5T0QV7zqh
+	 6obi5nyh7Gogq/qklokW2rHruLpP/mZsrvY4yEP1RSjGAanfPbNGvwTRlLecD7MQj17LW
+	 pj19JLIphuwcuKuK+UezLZXXaknHIgHqlJbSRzFcinQMw1us1zATHDgaGHvXO5ni1OfNG
+	 vKL3jDjtcBpbYq0Wg3CXvlkPskdaSfTs5CWTPXai10zc2fKA4MozzmA2c5gCJRdRS8twf
+	 jlZ8FT0CjKPI1dSNBesfH0MNGmULsyYonh+OTijDUm1J8i/eh/h/bXQBgkm4X8nQpRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060823;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060825;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HYliPzXrjhQRJ9yWGGZ1JX1lhc9XGSguKI0RKC94Qlk=;
-	b=FhobXjdI6M2oWmde5uq4Nrtek+Or7wDNz5FLI/LgkG0MQZSIrYBScfyK+yIJhsE2h7w6
-	 hrKrASmD34FNeCiQ2Csf/d3c2Ho176qz18F+Ww7u0ghiaRXkIe9me0ydcXYzQ3Q3FwBwo
-	 wMRLFTzLLkW9A3AQak4NLMlYqcigBGo6nCYelk9erpbHGp0xVADz8I4bV1EUmmUXel93G
-	 rrj2QLNSd2b8KLRKWkVJdvOIvOnKr023++ez/HKqPOtumJylQffkGvT9gsalWBRNtB04Z
-	 bb+bhIe01wogjBJqyACAa/HMBfgFEyFPrERwkMGiKwt3J29rp34clUnGHeegvM9PmKQ==
+	bh=PhKFaQNvKP30MgvyDlNwPHpJjOmfr69Vs6lSfxvxKOw=;
+	b=e4HqbGAv5mBzWMud0HJH4/PwE6X501uF+3w39gfPbnwPix9cbyg9RqbzLofLK5Pnf7AG
+	 dhcAByt35lA6mDuQAy6K96qBsA/drann+QCxJo9C9NDBlcD2b9QHQFZrDYs6Lr9e/p+uM
+	 wmknLRbwLXOZq8b9B1tJRXzMVYSVKnpLA1giTXJWFflTZwjR5o+JrpsfQvCPbVrzlP1Uk
+	 ClYOlZLREgjgDY3bGkM2DHigEQrcJ7CUzOj9LMxOTxWv2QRaoWu2kvLytofH2R/2hHh0T
+	 StzciUztENNN7Do7o8Z/mdqSXqcvRitH2xuMEj61C0IUcS50wC0m1W14sJYYLJqmXoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EyxwgFVH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=04NT1Sq6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E2D606A335;
-	Sat,  7 Nov 2026 14:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF5D606A336;
+	Sat,  7 Nov 2026 14:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EyxwgFVH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313211F0089F;
-	Sat,  7 Nov 2026 14:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=04NT1Sq6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7BD1F0089F;
+	Sat,  7 Nov 2026 14:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060823;
-	bh=HYliPzXrjhQRJ9yWGGZ1JX1lhc9XGSguKI0RKC94Qlk=;
+	s=korg; t=1794060824;
+	bh=PhKFaQNvKP30MgvyDlNwPHpJjOmfr69Vs6lSfxvxKOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EyxwgFVHQVR8GqWxcukC8Ko39SEHmE+IZlr+D0lU9Znxk+5N3j8MG45EJ8fn/7hXt
-	 TbqcZGC09pAqjeKD5z3cHe78o3l0/TvL3go5wwB7JQ5F1CUOEE5XaqMHqXZc3XDmvB
-	 2w7xZwaUUo70jj4H27ipMq5dzR9IYGWIkHkL43ro=
+	b=04NT1Sq6psXmzyDFrICcSXLyOWG/cbvS+MO6GcRRVrHg9I0XWAQxsll2UalwRPmRk
+	 Q0eE/9X3Za4xCMZPaD+7S1FMDvy3KX5dUe5yoE5Y1Bp9pikVkbl4LyyHFsBh3Pm8Pn
+	 nGHCLREObEVDbJZs94faOdWXXQyLwvcBsl0FF7hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0220/1536] exfat: write moved entry before removing source
-Date: Sat,  7 Nov 2026 08:37:16 -0500
-Message-ID: <20261107135003.844026413@linuxfoundation.org>
+Subject: [PATCH 6.12 0221/1536] iommu/tegra241-cmdqv: Rate-limit the error ISRs log message
+Date: Sat,  7 Nov 2026 08:37:17 -0500
+Message-ID: <20261107135003.873828082@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,53 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 896fcc93574fd511ee04a4110e8ea59d6d8d43d7 ]
+[ Upstream commit a86c36163c9722545d27e92bdad8418fdcaa8b1d ]
 
-exfat_move_file() removes the old directory entry before the new entry
-has been written.  If writing the new entry fails, rename returns an
-error after the source entry has already been marked deleted.
+tegra241_cmdqv_isr() logs the error-map registers on every error interrupt.
+A malfunctioning device, or a guest deliberately faulting its own VCMDQs,
+can raise these interrupts rapidly, and the unconditional dev_warn() then
+floods the kernel log.
 
-Write the new entry first, then remove the old entry and update the
-cached inode location.  This keeps the source entry intact if creating
-the destination entry fails.
+Rate-limit the message with dev_warn_ratelimited(), and pass the error-map
+registers straight to it so their four MMIO reads run only when the limiter
+prints, instead of building the string on every interrupt.
 
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/namei.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
-index 22eca587cb953..80acb54531126 100644
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -1149,11 +1149,6 @@ static int exfat_move_file(struct inode *parent_inode,
- 	exfat_init_ext_entry(&new_es, num_new_entries, p_uniname,
- 			     &mov_es, num_extra_entries);
+diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+index 3207fa9836063..c9940e6f1c174 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
++++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+@@ -282,21 +282,19 @@ static irqreturn_t tegra241_cmdqv_isr(int irq, void *devid)
+ {
+ 	struct tegra241_cmdqv *cmdqv = (struct tegra241_cmdqv *)devid;
+ 	void __iomem *reg_vintf_map = REG_CMDQV(cmdqv, VINTF_ERR_MAP);
+-	char err_str[256];
+ 	u64 vintf_map;
  
--	exfat_remove_entries(parent_inode, &mov_es, ES_IDX_FILE, false);
+ 	/* Use readl_relaxed() as register addresses are not 64-bit aligned */
+ 	vintf_map = (u64)readl_relaxed(reg_vintf_map + 0x4) << 32 |
+ 		    (u64)readl_relaxed(reg_vintf_map);
+ 
+-	snprintf(err_str, sizeof(err_str),
+-		 "vintf_map: %016llx, vcmdq_map %08x:%08x:%08x:%08x", vintf_map,
+-		 readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(3))),
+-		 readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(2))),
+-		 readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(1))),
+-		 readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(0))));
 -
--	ei->dir = newdir;
--	ei->entry = newentry;
--
- 	ret = exfat_put_dentry_set(&new_es, IS_DIRSYNC(parent_inode));
- 	if (ret) {
- 		/* Best-effort delete to avoid duplicate entries */
-@@ -1167,6 +1162,11 @@ static int exfat_move_file(struct inode *parent_inode,
- 		goto put_mov_es;
- 	}
+-	dev_warn(cmdqv->dev, "unexpected error reported. %s\n", err_str);
++	dev_warn_ratelimited(
++		cmdqv->dev,
++		"unexpected error reported. vintf_map: %016llx, vcmdq_map %08x:%08x:%08x:%08x\n",
++		vintf_map, readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(3))),
++		readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(2))),
++		readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(1))),
++		readl_relaxed(REG_CMDQV(cmdqv, CMDQ_ERR_MAP(0))));
  
-+	exfat_remove_entries(parent_inode, &mov_es, ES_IDX_FILE, false);
-+
-+	ei->dir = newdir;
-+	ei->entry = newentry;
-+
- 	return exfat_put_dentry_set(&mov_es, IS_DIRSYNC(parent_inode));
- 
- put_mov_es:
+ 	/* Handle VINTF0 and its LVCMDQs */
+ 	if (vintf_map & BIT_ULL(0)) {
 -- 
 2.53.0
 
