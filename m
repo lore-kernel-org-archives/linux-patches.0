@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063894;
-	b=eUmZDToor2vaMHxylBg+FGsphSKnmmD1e0OGjOfP5KDQHhA++NQjcZQ9edVrgJ2sHx2Y
-	 ZGwcVSybk9ooIDs24tMf9sswc0UJCim8Tz0EibYJbV2SrYkMM5pgp318fCWSmjy1oh9Oj
-	 y+7sXUttVdD1s3USJG4g5bzR2uBAVfstg6vQS9/EcWcPxRhv7ILVOb4yBadHVPHi/e535
-	 Sg36yO3qnmBODpJ70TK+mlQ1yINTEOX1PbOK5yX9w7zwSvjSWQqMzI3r8MkqDCfB7tBqg
-	 6Da6Wk73XVWBLaq3KnaqPGV6K8AkljX9MhfDL9BmUlmeeD8Jh0cygbylbVqlq6MlS8g==
+	t=1794063895;
+	b=oLCbHIWkuXCHigfSkw51bFPNP3fdvnlCrC3dtsVbAgwXJALohmHU2MOZAkjlI2pNNTsJ
+	 eTB8WFYJ2bpM9/NaNqJlMS27M+dl/wn6HRr7o0i3L5i2DGTPiyxv/JjMRDh5x7DN4gAnI
+	 FAY1pZUw3m5S4nEF0JgW2R+rKzn9XlF0qDusyKVpNgd0tsTr0F7I55vmMUtF32wRO3j1w
+	 uWdWA5vFlHu2Iuy4tmqXJIcnOJR1o7OEP2E3VgcFgX9YRA8A+SZfHcoBE8/QY9LwPx/4f
+	 OFyuGVUncmIQmX6L/aTdttcRL9r5cf5/MIiiqfPY6rkxoK6hkIm4iunQisTgCei0c6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063894;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063895;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+i6diQkpj9/Kn//JaXMDzpPF5iluBtQFpQ11p44usuk=;
-	b=jC2P2Y49GJIQVuPl6tTcxqdTxv1Bn8OCz3hX2+uYaaEBYSPKqVdPnfegFx310qz9OILt
-	 G+wIZW5N8UjBlcaL4zH4rnG9y0VYUBU3BDQN9wjtSVA5wIGxz/0cJ7a6Bic8wyBAlMftk
-	 Qi0dIdttj39+3licSYuTpCT7/5TEF5fRwg7hO0OWxbwBeUkZQM3ubi6PjMwkWUkR54i63
-	 8QsElIbCIv9kfVxMW32NeilOo+LmEfIpolSrdgBhhOwWdv6z2MfYgGu8xGya4nquLMrfh
-	 GwVrUhJBuJRtU2qv/VprZt0WNWptYrW4xgxXLm1NG4wKBAjJcdA3/Hq7Y/1jXCfYfGA==
+	bh=dLDz0USCdAB7CF++9qiEMsgk0DkRTwUyTqrfluUvoAA=;
+	b=vs5E2sPbTU5xy6WYr47LKZ1wqzbDVXZ+n8MHr9ezl7KdBtszzWRFVqS0NF9bwEGmx8SL
+	 5kWkP2Tyypp10yH+WFbUO/Y1iQXW6kgo/HYbGn2z9JvpsesvyCnzfyrBK641oLAs9AOSy
+	 cvLNhZ02GYCm542Qt5kiAPNd30QurYH+DAnge+XH1of/Xg3TRBOIJwIvidHcqWpLEjssw
+	 1Ji91B54vQXxd8c8C6Z7B5bpWorXrC9Y8VFg9fVMHb2+T+mW5yyDzFfe49zHUrVGKIHOV
+	 UEg8YxGvFzVUogdL8OheKV/kgoVub+ozngqcjmpj0826MeP/7HF0p0Qp0jwm25thkDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1fR8taZJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aAZv82wX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07786606B8A6;
-	Sat,  7 Nov 2026 15:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B485606B8A6;
+	Sat,  7 Nov 2026 15:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1fR8taZJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FE51F0089F;
-	Sat,  7 Nov 2026 15:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aAZv82wX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7151F0089F;
+	Sat,  7 Nov 2026 15:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063893;
-	bh=+i6diQkpj9/Kn//JaXMDzpPF5iluBtQFpQ11p44usuk=;
+	s=korg; t=1794063895;
+	bh=dLDz0USCdAB7CF++9qiEMsgk0DkRTwUyTqrfluUvoAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1fR8taZJtmirXdKVd/YdeHmSB5XGk1p++B7YtC9UPvuJTbLqPsUKxyo3MBCzI9Kao
-	 rjWU+3lo7VXZlVB+rFRSugmDB03/2wOHZCgJo+/4Wi5kxuNY3yILCov+wA5ch4c2gd
-	 7/5m4UBqTBUwpggRyc2hFsZPUtUQZbC5j6sBAGEQ=
+	b=aAZv82wX3v72juAXvG16JhepC7XKqOTadm0oed3XBt9eXayS3UEEehdDm1JLHy6Me
+	 DlEPvhq0Kbgpshbolh5d/BC5meCf3iiQfiRdhJoEXD8XtcKnF8l6YcuLbykXLctPfv
+	 rxUSfRyc+98i2iNdWBd9Jv8bLb+yxo7y8rj7phtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Faizel K B <faizel.kb@gmail.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0096/1257] media: vimc: sensor: fix pixel_rate type to resolve do_div() warning
-Date: Sat,  7 Nov 2026 08:39:52 -0500
-Message-ID: <20261107134942.010675427@linuxfoundation.org>
+Subject: [PATCH 7.3 0097/1257] media: vicodec: fix out-of-bounds write on under-rounded coded dimensions
+Date: Sat,  7 Nov 2026 08:39:53 -0500
+Message-ID: <20261107134942.036145065@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,55 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Faizel K B <faizel.kb@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit bbc952491f5f05f2274c811d34174d5b88632103 ]
+[ Upstream commit 0183746ebca4c478027e2261b904f844f1443b19 ]
 
-vsensor->pixel_rate->val is a plain s32 field. Declaring the local
-"pixel_rate" variable as u64 misrepresented its actual range and made
-do_div()'s divisor look wider than the 32-bit division it actually
-performs, which is exactly what the do_div() coccinelle check warns.
-Revert pixel_rate back to its original s32 type to match
-vsensor->pixel_rate->val, resolving the warning correctly.
+A capture format whose width or height is one more than a multiple of 16
+makes the FWHT codec write one 8x8 block row, or column, past the end of
+the capture plane, and read the same block out of the reference frame for
+P-coded frames.
 
-Fixes: ec1e620b2454 ("media: vimc: sensor: Add pixel_rate,vblank and hblank configuration")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202604191731.10nxGZ92-lkp@intel.com/
-Link: https://lore.kernel.org/lkml/CANiDSCs9s03DUjKwcPgDtZt2QJ4i0FGwab4zpEP+wCawagSC2Q@mail.gmail.com/
+vic_round_dim() is documented to round a frame dimension up so that both
+the luma and the chroma plane end up a multiple of 8, but it only rounds
+the chroma plane:
+
+	round_up((dim) / (div), 8) * (div)
+
+For div == 2 the result is a multiple of 16 in every case but one: when
+dim % 16 == 1, dim / div is already a multiple of 8 and the macro returns
+dim - 1. encode_plane() and decode_plane() round the same dimension with
+round_up(dim, 8), which yields dim + 7 -- one block more than the coded
+dimension that sized the buffer.
+
+On a KASAN-enabled kernel, a 641x360 YUYV P-frame triggers:
+
+  BUG: KASAN: slab-out-of-bounds in add_deltas+0x450/0xcc0
+  Read of size 1 at addr ffff888009070800 by task trigger_bin/70
+
+  Call Trace:
+   add_deltas+0x450/0xcc0
+   decode_plane+0x1916/0x3390
+   fwht_decode_frame+0x173/0x620
+   v4l2_fwht_decode+0x751/0x1120
+   device_run+0x6bb/0x1850
+
+Round the dimension itself up to a multiple of 8 * div. The rounding
+changes only for div == 2 and dim % 16 == 1, and MAX_WIDTH and MAX_HEIGHT
+are both multiples of 16, so the rounded value still fits the advertised
+limits.
+
+Fixes: 3b15f68e19c2 ("media: vicodec: Add support for resolution change event.")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Faizel K B <faizel.kb@gmail.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vimc/vimc-sensor.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/media/test-drivers/vicodec/codec-fwht.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vimc/vimc-sensor.c b/drivers/media/test-drivers/vimc/vimc-sensor.c
-index 83dcc9d61ee05..7cb544fdfddbb 100644
---- a/drivers/media/test-drivers/vimc/vimc-sensor.c
-+++ b/drivers/media/test-drivers/vimc/vimc-sensor.c
-@@ -97,18 +97,14 @@ static void vimc_sensor_update_frame_timing(struct v4l2_subdev *sd,
- {
- 	struct vimc_sensor_device *vsensor =
- 		container_of(sd, struct vimc_sensor_device, sd);
--	u64 pixel_rate = vsensor->pixel_rate->val;
-+	u32 pixel_rate = vsensor->pixel_rate->val;
- 	u32 hts = width + vsensor->hblank->val;
- 	u32 vts = height + vsensor->vblank->val;
- 	u64 total_pixels = (u64)hts * vts;
- 	u64 frame_interval_ns;
+diff --git a/drivers/media/test-drivers/vicodec/codec-fwht.h b/drivers/media/test-drivers/vicodec/codec-fwht.h
+index 0eab24020e9e6..4b4d390310899 100644
+--- a/drivers/media/test-drivers/vicodec/codec-fwht.h
++++ b/drivers/media/test-drivers/vicodec/codec-fwht.h
+@@ -61,7 +61,7 @@
+  * both luma and chroma components resolutions are rounded up to
+  * a multiple of 8
+  */
+-#define vic_round_dim(dim, div) (round_up((dim) / (div), 8) * (div))
++#define vic_round_dim(dim, div) round_up(dim, 8 * (div))
  
--	/* Sanity check, pixel rate is fixed and fits in 32 bits. */
--	if (WARN_ON(pixel_rate >= 0x100000000))
--		return;
--
- 	frame_interval_ns = total_pixels * NSEC_PER_SEC;
--	do_div(frame_interval_ns, (u32)pixel_rate);
-+	do_div(frame_interval_ns, pixel_rate);
- 	vsensor->hw.fps_jiffies = nsecs_to_jiffies(frame_interval_ns);
- 	if (vsensor->hw.fps_jiffies == 0)
- 		vsensor->hw.fps_jiffies = 1;
+ struct fwht_cframe_hdr {
+ 	u32 magic1;
 -- 
 2.53.0
 
