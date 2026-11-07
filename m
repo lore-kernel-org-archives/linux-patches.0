@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063664;
-	b=W2QYS3IER0U6PV5EeipA/v2tnQAMLZ5lpEW8IN+N822L+ouKGRoQsZ4ceRyd5Dn0vobt
-	 m9vG9w6V2L849MW6uvLY5+g55226ursqiDyg2ejQl6I1dlS2B/S3CFOhZsAm0yNqiLwYF
-	 XSMJMzVldgLvr+7E2XSs3/WuCkylFP6FkUy1KvHIqJorD7xsOS+WzE5pHTzpPTCMrbSaE
-	 e8+UgBQCBEqAtXbm1NPRxW+TcCFoDi5joRz1jR5cMhupC/Wz7s48ORBzisE0nYSaBUzQu
-	 MVAbUqRiyL3TEyisYbW4j6Sw8Zz1FvCMCUoTLeOVzPZoIZyz0Uas50cmGtsC7yFXizw==
+	t=1794063665;
+	b=LBkENQZARmTVivDoH7Y/DeJUWl5kHNEXQsJBDOgFo7zmB5SGKcWC/umYpMR8XBANxMQE
+	 ynXKWR3rf/MIvQnEXUvMLt8xF5Ya/luxIBFmIsDfDLioHTBH1MgvBoZmZ3+rw/yuZR9f8
+	 VZyk3EzXPbcrTomAaRTq9I0EMgU719tdBzelT6pzHjCzcrZchtmqIarbOJujydEk9qFWM
+	 F1ghdlXyLiR71+Xc3PPjsoCb+/9mgYoJ6Ggwjmop9CYm8vYIzkKm/5WeiBnlL2Kl2hAwi
+	 1DnGZaQlFG2PEChrA1TowYVYRj0NHmzxNyacGeXYMuW44NpCLG+1EoQnUUMYRe3JhMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063664;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063665;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=q3AABM1OJgeEaEocR60xaed1gSkKoid+CLjJCCTLsF4=;
-	b=rHbnvy8HqgFgjkPH6QbhGELoDcvxLH9fGLy0NYZdMWS6Lfx0IBuAPcrkW50O1hgN+HE3
-	 uTogxsyv+IrG/S4v2ttI8U/TDEPU1QEO9GJhlWsvVhqRCjCAm/fYgmesPapkiBa3zhy3U
-	 X35qih3KaPbee8rzIME7oFR0+c8NBdKgMyM3yjezeQImpW6nPGP48wUudWsWxDBQrupko
-	 qNDwrRgeHhaPEmKWzTIuAAZirxZNOYh6Zw1e3V+g/aBUrYd9Wn6MM9M0PMj5rFwDsfeMc
-	 KfZPBCHUo8gNoC/ZuQxLx0Qbm3uHpiH7awbZisrfltf6ExKUUAcWJC3ZKYRDnJ13tMg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=cGHqrFoHGG2Dijc7r/68m/aKsY0fekFrDUNU8LaseM4=;
+	b=e+MH+vdxwcw66E0ZGn0YHKAPn26mW9hAZd5e2kjA+4mKUwobdO6klWl79PHxwwGcBPif
+	 fOJVAJq3JVvDzNs+X/nmhRJaiMFW23hGTIHSo5rbrPN1yZ5GsawhrvEceP2Lt09TkQKGR
+	 nuZkFtJ6rq6nDEgtxesJKhtjSk1e3UW3bacFjWDZUdO3o8yTQpnbQAog8DnNThM2fRNFV
+	 Bdw6ZVePmzSCLMySB9G0lDMgUpZ8zAlhQCxHL+AwezJBj0zs/uDR2O59QfXsVgktIfrLe
+	 ej8cHoM1K4WNH+tXIvXw1qL0SLMY6BdaoQGkRlELflt1q/VUfN78AJGmxqWd2tAr0mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dHlKPH+R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wCwF+1zL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC1A606A9CA;
-	Sat,  7 Nov 2026 15:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65334606A9CA;
+	Sat,  7 Nov 2026 15:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dHlKPH+R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24821F0089F;
-	Sat,  7 Nov 2026 15:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wCwF+1zL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1280D1F0089F;
+	Sat,  7 Nov 2026 15:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063664;
-	bh=q3AABM1OJgeEaEocR60xaed1gSkKoid+CLjJCCTLsF4=;
+	s=korg; t=1794063665;
+	bh=cGHqrFoHGG2Dijc7r/68m/aKsY0fekFrDUNU8LaseM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dHlKPH+RivC1xgmvbSi/5fIzn7en4XLAKwQsVEWWw+ykFG5/6ZduwlF7xC6sUfvtY
-	 7rvNFAoLm5xkHH786YKicQCIwgZTYAJEfj5MPzikdO05ewEhihSK9E16Ajrf8rJ5ox
-	 2Cip2IzsuYrERCfmSeltma9eDhJHVYc5mMhrxsxw=
+	b=wCwF+1zLt5ijUcs2GRjC5ysViMMI8Zr/OB9vO+2b+uoL80iPyZx8mQLU2DTytZcxu
+	 WNDJ6EgAzemSfqkozHRalY3Ia3ydAdO7z0xoVFYCKCEY6IsBO+f/cMcetSVmeLsE3t
+	 Pc62ImvnfiqOqtHlvEumu9wc88ucSD/9LltsHw28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 777/869] ceph: Fix mds session leak in __open_export_target_session()
-Date: Sat,  7 Nov 2026 08:57:39 -0500
-Message-ID: <20261107134919.041640158@linuxfoundation.org>
+Subject: [PATCH 6.18 778/869] ceph: fix 32-bit overflow in readdir reply count check
+Date: Sat,  7 Nov 2026 08:57:40 -0500
+Message-ID: <20261107134919.070522365@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -63,50 +63,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 6c80207392fdb86107d7acbdbf4c86cac38da1af ]
+[ Upstream commit 52913831ba56efceaafd80b501d68fa00f79bde6 ]
 
-__open_export_target_session() holds a reference on the target session,
-either from __ceph_lookup_mds_session() or from register_session(),
-which the caller is expected to drop. When __open_session() fails, the
-helper returns ERR_PTR(ret) without dropping that reference, leaking
-one session reference on every open failure.
+parse_reply_info_readdir() checks how many entries are in a readdir
+reply by computing the end pointer of the decoded array. That pointer
+addition can wrap on 32-bit kernels and let an oversized count pass the
+check. For example, a count of 0x40000000 with 156-byte entries wraps
+to a zero offset, so the decoder can write past the preallocated buffer.
 
-Drop the session reference before returning the error.
+Check the count against the number of entries that fit in the allocation
+before publishing dir_nr. Reject oversized replies through the existing
+error path.
 
 Cc: stable@vger.kernel.org
-Fixes: b682c6d41bc2 ("ceph: switch to WARN_ON_ONCE in encode_supported_features()")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Fixes: 54008399dc0c ("ceph: preallocate buffer for readdir reply")
+Assisted-by: LLM
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ceph/mds_client.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index a5bc9f75e0f9c..56d8df7f7ebdd 100644
+index 56d8df7f7ebdd..9e1b4bc3eab7c 100644
 --- a/fs/ceph/mds_client.c
 +++ b/fs/ceph/mds_client.c
-@@ -1758,8 +1758,10 @@ __open_export_target_session(struct ceph_mds_client *mdsc, int target)
- 	if (session->s_state == CEPH_MDS_SESSION_NEW ||
- 	    session->s_state == CEPH_MDS_SESSION_CLOSING) {
- 		ret = __open_session(mdsc, session);
--		if (ret)
-+		if (ret) {
-+			ceph_put_mds_session(session);
- 			return ERR_PTR(ret);
-+		}
+@@ -436,10 +436,8 @@ static int parse_reply_info_readdir(void **p, void *end,
+ 		goto done;
+ 
+ 	BUG_ON(!info->dir_entries);
+-	if ((unsigned long)(info->dir_entries + num) >
+-	    (unsigned long)info->dir_entries + info->dir_buf_size) {
++	if (num > info->dir_buf_size / sizeof(*info->dir_entries)) {
+ 		pr_err_client(cl, "dir contents are larger than expected\n");
+-		WARN_ON(1);
+ 		goto bad;
  	}
  
- 	return session;
 -- 
 2.53.0
 
