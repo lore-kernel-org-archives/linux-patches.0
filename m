@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063288;
-	b=ZeE3KLudvbAv+k52ks4LwY2EtNglBiR4eKX90QWgbcRNbr24gCCsYq602PUwPR46mcT+
-	 cPRcSB3l+YiEzZthCP9SqqK3eWISmTeV53s5oBBMjkopFy+c0Zb+E+6nI105bLCozRL/l
-	 Zj/mK6psGKQsggvI4ViYEu142YcPvDh9ByNwTQU/8WzWcacSa/POgt0Kd9+7BJk45L8HH
-	 4OR9VR6EBvqXFOqydIMdMcb10tIpZDRxFqn0t9tgMmqy2NNlERRoJktWAQ+iRz4dkh7uf
-	 mcmchox1TsuCRfrqqf93fKYps/YERfr0NHYP6y0Zb8X7fZaCbU9jsVgnhIf2eEnIfWg==
+	t=1794063289;
+	b=4HNCAokUEqF3dUfNEe8Ez8Ix3wJGjGMmrmp78N42rmUs5O1dD+AaorZxzfPkOlyJFg97
+	 flHpqSqX3gHjntLuyjeRIoEyvKExrVjURu4NYengMo6pQBfXawCMySiqHu4fe0EQJOML7
+	 M8EK25B7/MLtqs4DITGZ84LG60wZS2/QgUIPcX5Ku7llnSa6EBnf0M0lH+3BU53Vg63zE
+	 UJEbdm/ku+6jV4xxzSGldQTwUeo1Vr+sxMQJG7g7cI2FekZv3EpsL2nHAfPm9tXChnsxm
+	 9he5Lc/OHsC6FT/C+XcWBriPQ4sK5eepwoyUH1Gc4Bil2nZ86xXFvsuWXNp9XSWAdaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063288;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063289;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BOiod6FB1+EltOUkgb+4cYI7ZTvKycRGEYlPWO8eIkU=;
-	b=WVoirvhlz1TX3ZrCKd2b6jAiA3bxCv4l0pcqwjGFI0hQuxyeibPFVwrLbc3rDY3CRsU/
-	 S8PDt12zeGd/EbsBXPUpCm/oZb54qzbEhxiWNvtTqvk3aF/AdK/WH1ktDDS/u1VFgCaK7
-	 h3eR7FJmh7RRaDXGDpekUcLn9tRDv6cQiJCA/j8qYGUzly0jZ+ZNWSz0SFqC805F906Tp
-	 PxE/9IfulTKS5H5KqtOIvMrpp+dL04Gg96J4TcW7f8XCSgIyTSuhd8WLG5QfhJ4E8xa4w
-	 27rHpeN217ZjtA5R1EH8rqHhBBCV5PDpq1rS460Z6/aSFrfSbOSV9fXEfIi3vTPlpTg==
+	bh=LF7esuhXoIb22C7b+sFC+aW0xVhEfrLdtbMi95PNT9g=;
+	b=2Sy1Hn1d5W0fMYKhNrPOBQy5gOP91bzQjry4NKshqB8OJbgWE90tIyB9EU/Ie0slIBe8
+	 zhkycJjfj33V+xD33rZRwxRuDEmcqqeWOhF5yVhUGtmH4YYiCbqlfRA90jQaHb780W4JN
+	 PfoR4o4xZOmOqgb5Nfl2kpuSNrBVzIW8HcWiGjbosIwVXHJktB6pTDAInB5JIc4F2M87g
+	 hHPGw9N7gPbV8ckoNIpNEjmkv2w5tYOo+obl0Jc4HN5QoBvSLKjbNljgGWf3wn8ew0kdR
+	 8WSCGq3+1hmLbm9r8pcbyLQyYlrkggfxt6gm0Ea6oOAIGpBMkiN9JQi5bti+zE+tnUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfOlNqgb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yr9COJ58;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29299606A32C;
-	Sat,  7 Nov 2026 14:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791F5606A32C;
+	Sat,  7 Nov 2026 14:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FfOlNqgb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB77B1F0089F;
-	Sat,  7 Nov 2026 14:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yr9COJ58
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227CF1F0089F;
+	Sat,  7 Nov 2026 14:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063288;
-	bh=BOiod6FB1+EltOUkgb+4cYI7ZTvKycRGEYlPWO8eIkU=;
+	s=korg; t=1794063289;
+	bh=LF7esuhXoIb22C7b+sFC+aW0xVhEfrLdtbMi95PNT9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FfOlNqgbgt9SgIvcFdoxEgHnvGGlRa0RUcYarh9ssObNo8Kd/sRh5YpLTGgya2hce
-	 ktmy1nJKLMg4m1nAIHA/eqJY/dpIyiAHzI9jAMyOzZVyOeBwF6kHlYYN8jJed724q8
-	 5224FZdtampYiX3GbJffzhYlkcW2jFL5xmKHBoKM=
+	b=Yr9COJ58oZsJKu+Caf7NrVzA3mQz/vjS4oDkFnWRXd+S2w8LoeLP5hRKcyHU6hjC/
+	 TO1rnL8lGXCaCNIIkgqkkGtN2GiqE7fzlbaOCrUVF+JudQst/ZHgrgT5a7oNBhpEN7
+	 4zH9WJI0+Vs630uUnKMYeNBcUHutu+TqZRxo1aIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Tim Menninger <tmenninger@everpuredata.com>,
+	Chuck Lever <cel@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 433/869] clk: imx: Fix clock reference leak in imx_obtain_fixed_clock_hw()
-Date: Sat,  7 Nov 2026 08:51:55 -0500
-Message-ID: <20261107134908.488111104@linuxfoundation.org>
+Subject: [PATCH 6.18 475/869] xprtrdma: prevent disconnect feedback during endpoint teardown
+Date: Sat,  7 Nov 2026 08:52:37 -0500
+Message-ID: <20261107134909.722541073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,52 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Tim Menninger <tmenninger@everpuredata.com>
 
-[ Upstream commit 52d4d1b26a5bc64de95099d0a3dd8b90dba1f3a3 ]
+[ Upstream commit 0b5bb4e586f7b0a449f4d90a524f76a3be5db355 ]
 
-imx_obtain_fixed_clock_hw() obtains the clock through
-imx_obtain_fixed_clock_from_dt(), which creates a consumer reference
-via of_clk_get_from_provider(). The reference is discarded right after
-__clk_get_hw() returns the hardware pointer, leaking it.
+xprt_autoclose() clears XPRT_CLOSE_WAIT before invoking the transport's
+->close() operation. For RPC/RDMA, ->close() calls
+rpcrdma_xprt_disconnect(), which disconnects the RDMA CM endpoint and
+drains its QP.
 
-Keep the imx_clk_fixed() fallback unchanged and drop the DT-obtained
-consumer reference with clk_put() once the hardware pointer has been
-extracted.
+Since commit 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on
+connect"), RDMA_CM_EVENT_DISCONNECTED requests a SUNRPC transport
+disconnect. Today that path, along with failed completion handling,
+reaches xprt_force_disconnect() through rpcrdma_force_disconnect().
 
-Fixes: a4a4069f4523 ("clk: imx: Add imx_obtain_fixed_clock clk_hw based variant")
+Commit c487eb7d8e41 ("xprtrdma: Clean up disconnect") later added
+re_force_disconnect to ensure that multiple failure indications request
+only one SUNRPC disconnect. However, the gate remains open when SUNRPC
+itself begins endpoint teardown.
+
+If re_force_disconnect is still clear, either a CM disconnect event or a
+completion error can set XPRT_CLOSE_WAIT again while the current close
+is in progress. When the transport send lock is subsequently released,
+xprt_clear_locked() observes XPRT_CLOSE_WAIT and queues another
+autoclose.
+
+Requesting a disconnect this way is necessary when a connection is lost
+unexpectedly, but not when the event was generated by
+rpcrdma_xprt_disconnect() itself. In that case SUNRPC is already
+committed to closing the transport.
+
+Mark re_force_disconnect before initiating local endpoint teardown so
+that CM events and completion errors caused by that teardown cannot
+request another close. An unexpected error that wins the race before
+local endpoint teardown begins can still request a disconnect normally.
+
+Use a fully ordered exchange so that the gate is globally closed before
+rdma_disconnect() can transition the QP to error and generate the
+callbacks that the gate suppresses.
+
+In 30-second traces of a sustained recovery loop, without this change
+there were 7,693 xprt_force_disconnect() calls, 6,267 SUNRPC autocloses,
+and 172,892 receive-side IB_WC_WR_FLUSH_ERR completions. With this
+change, the same tracepoints recorded 3,512 xprt_force_disconnect()
+calls, 3,212 autocloses, and 131,287 receive-side flush completions.
+Thus QP teardown continues to produce flushed completions, but closing
+the disconnect gate before teardown substantially reduces their
+feedback into the SUNRPC close path.
+
+Fixes: 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on connect")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260915055631.1730231-1-vulab@iscas.ac.cn
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
+Reviewed-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/sunrpc/xprtrdma/verbs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/imx/clk.c b/drivers/clk/imx/clk.c
-index 542b58ccf120b..153e7405eae4d 100644
---- a/drivers/clk/imx/clk.c
-+++ b/drivers/clk/imx/clk.c
-@@ -95,11 +95,16 @@ struct clk_hw *imx_obtain_fixed_clock_hw(
- 			const char *name, unsigned long rate)
- {
- 	struct clk *clk;
-+	struct clk_hw *hw;
- 
- 	clk = imx_obtain_fixed_clock_from_dt(name);
- 	if (IS_ERR(clk))
--		clk = imx_clk_fixed(name, rate);
--	return __clk_get_hw(clk);
-+		return __clk_get_hw(imx_clk_fixed(name, rate));
-+
-+	hw = __clk_get_hw(clk);
-+	clk_put(clk);
-+
-+	return hw;
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 8449107b2a095..111c415f1aeda 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -114,9 +114,9 @@ static void rpcrdma_xprt_drain(struct rpcrdma_xprt *r_xprt)
+ 	rpcrdma_ep_put(ep);
  }
  
- struct clk_hw *imx_obtain_fixed_of_clock(struct device_node *np,
+-/* Ensure xprt_force_disconnect() is invoked exactly once when a
+- * connection is closed or lost. (The important thing is it needs
+- * to be invoked "at least" once).
++/* Ensure xprt_force_disconnect() is invoked at most once for an
++ * unexpected endpoint failure. Local endpoint teardown closes this
++ * gate before it can generate CM events and flushed completions.
+  */
+ void rpcrdma_force_disconnect(struct rpcrdma_ep *ep)
+ {
+@@ -587,6 +587,9 @@ void rpcrdma_xprt_disconnect(struct rpcrdma_xprt *r_xprt)
+ 	if (!ep)
+ 		return;
+ 
++	/* Prevent teardown-generated events from requesting another close. */
++	atomic_xchg(&ep->re_force_disconnect, 1);
++
+ 	id = ep->re_id;
+ 	rc = rdma_disconnect(id);
+ 	trace_xprtrdma_disconnect(r_xprt, rc);
 -- 
 2.53.0
 
