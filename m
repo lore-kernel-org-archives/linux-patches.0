@@ -1,53 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061815;
-	b=G57Koi0Jh+uC8oBU0oIapgjkn4c31XQYcUKm0XlonoFqWYfDsWiaewEIgAKQDZ5ZVQFv
-	 a48+zJMaz4lcOMkXN5d/Aeqhl86irYLgEBCOh390aflgmkmjxgQmLv+OcvTVgDP6IKw+a
-	 wceBqWIJ824wUiJju4w50ywhTMcACcVvxebNPsRKZ/acvj0bbOkOH6ifetY4ntRETihl/
-	 /I/JdGCjJ0ABiqL28+UX0EmJFu5ar+6eTrKoqFzMURnrAkGC1qmFspYnpbRH9DzA/HXly
-	 16w3FkLy4XqpPYQGmSvOdwfNxlpcrwBcSELF+byWLFtlGvNlhazSt/hTdRq4vvU5jEw==
+	t=1794061817;
+	b=DCJJtgNPJgy73pkl2wmjnHlocDHwc226J7KuQ3wXlEMrD1EL4zbz9E6MmnS386c+d7ba
+	 VD8QBBOzY7dtv26XbzoTDGbqcYf4lq3PSISEbZqGTSFppKvAXtTraQypcZcs69dq8q70l
+	 UJIdQGCM/dPf+8s38wA9amJf14qnt7rvK9rt2QtVe0IpoGOZV2gE/+csjGBagX8y72Vu2
+	 c+sI7vmaV+UO+deC6AsYQfa+6JH3KaDFTeXz5lI0aoLOuGiC5O7YDQJU16N8pVzEq+n+e
+	 lThfDTGmj1k4fgfhQ8B4PbyIn2MA1lgNqODsF+2Cy0MIcXcd+B92bUZDwwmrXZmfxCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061815;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=arwiA2m4PPJDzrObrHW23Bypl7CAbR7TD6DR5rgBXAI=;
-	b=Yvy/bBJp1M0CAEzCgwkBL8DzNFsAsg6I+WOgN0HMA71n6zF5xIyOl52+qXbjp2bqS/r/
-	 WWvpnyUDU65F2EPusjiOZuE1tkwtnF30qD9iZShDQhqXr761wlaQtKhw6h26E93He2ve4
-	 hwwSKV6usBFuWznhvU3CUoTCfBgGtX53dumsTXesC3wmfc0Qdh65Z3lZB9cuzXaOUGkBH
-	 DpiezJSPYZMA1YzYLyryoC4tioD2fU6DqkBoTM6bpSzfLArbsIbBifY6pebAze2U+WNjR
-	 xcHM0mNtIZAc6YgLyoNs3Lp4u0yeuh7/nWt3mrje8GtuwC7IhDKw6scA0JxX2WzhYFA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=DIenJ2c6AfWQYRL/wahpDAT4p1SY0EXllO69KxwKpg4=;
+	b=Q863EFxsiEh2T/V9swbn2GjiTsbtqsWjW43ZfjtfKTK5Mr04nfLMykt1Ix82HiU+P5u+
+	 koKdlIQ4DuJ/BEf3IcruL0idhnwptqNXClSAf5jCVxbAO1Sp87bn0q0ESa8CcCGGVwKzC
+	 J/Pde8XS21tzqYULaHYiRYp54FK/vpi6TjC2YXLdKWFPy6RZlOqE3kkBCLBPHezdnCVdo
+	 r2MU/TPq3QLzlt6xLevTVNj2v89FWaf242wJF+WOJL8uxA5lYoQtUdwVVgLK1e9MeqPq+
+	 Um25hEdfrzyYtAxs5dWne37E5OjREsOZcULDMUxdR2WFhTNFabOCGwQFmHS7Q92y+QA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i05BtKBy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDiZMDLn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3CB606A32C;
-	Sat,  7 Nov 2026 14:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC745606A333;
+	Sat,  7 Nov 2026 14:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i05BtKBy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395AB1F0089F;
-	Sat,  7 Nov 2026 14:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDiZMDLn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F771F0089F;
+	Sat,  7 Nov 2026 14:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061815;
-	bh=arwiA2m4PPJDzrObrHW23Bypl7CAbR7TD6DR5rgBXAI=;
+	s=korg; t=1794061816;
+	bh=DIenJ2c6AfWQYRL/wahpDAT4p1SY0EXllO69KxwKpg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i05BtKByqeJSo4nBDqjY25eehMbGeBnJamhEkDuEOtj4ozP8jgQLReANM1x0JxL83
-	 L5xht1QEbEN31+es70C7XRSIbxEihyIys1sj0jbpUDyQPXu1cKKSlNO6/gBvK2LH6Q
-	 gpYYMmJODwrLRTyU162NMHg7tA/7iuxoMOWAAzPk=
+	b=YDiZMDLn60h9BPFV8p+dntZCO+l4J8QFS9qqWRcHmzyC2xNoL5Die7YOHEQWeyjk2
+	 +g+hdMMppMmQYo6j+7EAlivv7ce7BAESF8m9M/c5FxJ6ZS4bx9t35E0ra2QPtCAEeB
+	 Be9pQgeAvZ3pwJQXSCTGTnyOelA6cw3XdLgqmX84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lutomirski <luto@kernel.org>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 0841/1536] tun: Require CAP_NET_ADMIN to attach to an ownerless device
-Date: Sat,  7 Nov 2026 08:47:37 -0500
-Message-ID: <20261107135021.169629946@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"JongHyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
+	Rik van Riel <riel@surriel.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0842/1536] mm/rmap: dont discard lazyfree THPs at PMD level
+Date: Sat,  7 Nov 2026 08:47:38 -0500
+Message-ID: <20261107135021.196846562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -63,124 +72,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Zi Yan <ziy@nvidia.com>
 
-commit ffdf678dd16610e3f006dac904bd37c09684673c upstream.
+[ Upstream commit 984c0700854e35779a2bcce6b02783e709b6efa2 ]
 
-Twenty years ago I made creating a tuntap device require CAP_NET_ADMIN
-in commit ca6bb5d7ab22 ("[NET]: Require CAP_NET_ADMIN to create tuntap
-devices.")
+__discard_anon_folio_pmd_locked() clears a lazyfree THP's PMD before it
+determines whether the folio can be discarded, and restores it if the
+folio is dirty or has extra references.  It is done under only the PMD
+lock and the anon_vma read lock inside try_to_unmap_one() and no mmap lock
+is held.  The temporarily none PMD causes UAF.
 
-The idea was to allow the permissions on /dev/net/tun to be relaxed to
-0666 and thus allow owners of tun devices assigned with TUNSETOWNER to
-actually open it and get at their devices.
+A parallel munmap() or mremap() is supposed to serialize with it on the
+PMD lock, but zap_pmd_range() (called by munmap()) and move_page_tables()
+(called by mremap()) do not take the lock when they see the temporarily
+none PMD and skip the PMD.  There is no more page table walk after the
+none PMD is restored:
 
-What we missed at the time was that persistent devices with *no* owner
-were already essentially world-consumable, and anyone who could open
-the device node could also attach to those.
+- munmap(): free_pgtables() waits in unlink_anon_vmas() for the anon_vma
+  lock, then free_pmd_range() drops the restored PMD as bad without
+  removing the rmap, so the folio keeps a stale mapcount.
 
-Even then, using persistent devices with no explicitly set owner — on
-the (false) presumption that CAP_NET_ADMIN would be required to open
-them — wasn't an egregious userspace bug. There are cases where it does
-make sense to separate the creation/configuration of the netdevice, from
-the process which shovels packets into it.
+- whole-VMA MREMAP_DONTUNMAP: dontunmap_complete() unlinks the source VMA
+  from its anon_vma while the restored PMD still maps the folio.
 
-Since then, TUNSETGROUP was added a year later in commit 8c644623fe7e
-("[NET]: Allow group ownership of TUN/TAP devices."). Its commit message
-noted that if both uid and gid are set, both have to match (in itself a
-bizarre choice) — but still not that with *neither* set, no permission
-at all was required.
+- plain mremap(): the THP is not moved but unmapped, so the THP's data is
+  lost.
 
-Then in 2012 commit c8d68e6be1c3 ("tuntap: multiqueue support") allowed
-new queues to be attached to a device from the moment of its creation,
-with no way for userspace to close the race between creation and a
-subsequent TUNSET{OWNER,GROUP}.
+In the first two cases, the folio stays mapped, but no VMA that maps it is
+linked to its anon_vma.  When the anon_vma is freed, it is still reachable
+when one rmap walks the folio.  Racing lazyfree reclaim against
+MREMAP_DONTUNMAP as an unprivileged user reproduces a KASAN use-after-free
+in folio_lock_anon_vma_read() as reported in the Closes link.
 
-In 2024, commit 3ca459eaba1bf ("tun: fix group permission check") tried
-to fix things to be saner: only require the user *or* the group to
-match, in line with standard POSIX permissions, and require
-CAP_NET_ADMIN if neither the user nor group authorised the access
-(although it put the CAP_NET_ADMIN check first, and would wrongly have
-reported the capability as having been used even when it was not).
+One solution is to use an invalidated PMD instead of a cleared one until
+the discard is committed, but it needs arch fixes first.
+1. GUP-fast still follows an invalidated PMD on riscv, LoongArch and s390.
+2. sparc64 miscounts thp_pte_count when an invalidated PMD is set again or
+   cleared.
 
-That fix was reverted in commit a70c7b3cbc06 ("tun: revert fix group
-permission check") due to allegedly causing a regression in an selinux
-test suite which *expected* the attachment to succeed when authorised
-by none of user, group, nor CAP_NET_ADMIN:
-https://lore.kernel.org/netdev/CAFqZXNtkCBT4f+PwyVRmQGoT3p1eVa01fCG_aNtpt6dakXncUg@mail.gmail.com/
+To keep the fix simple for backport, stop discarding lazyfree THPs at PMD
+level instead. try_to_unmap_one() splits the PMD and discards the folio at
+PTE level.
 
-We should not break UAPI. But we don't have to consider an selinux test
-case which deliberately exercises a security flaw to be UAPI worth
-preserving either. To which end, I have fixed it in selinux-testsuite
-commit b2f894f0016b ("tests/tun_tap: set an owner on the device for the
-relabel tests").
+unmap_huge_pmd_locked() and __discard_anon_folio_pmd_locked() are left in
+place, unused, to minimize this fix for backport and the invalidated PMD
+approach is planned as a follow-up series to use them again.
 
-So: fix the lack of CAP_NET_ADMIN check on devices which *haven't* been
-assigned an owner or group, while leaving the weird tun ownership model
-as it was (user *and* group have to match, if both are set). If someone
-still wants to fix the latter (which wasn't actually the reason the
-previous attempt was reverted), they can do it under separate cover.
-
-Permit attaching to an existing device only if an owner and/or group was
-set and the caller matches all that were set, or if the caller has
-CAP_NET_ADMIN. The only behavioural change is that a device with no
-owner or group now requires CAP_NET_ADMIN to attach — precisely the
-loophole we want to close.
-
-And put the CAP_NET_ADMIN check in the right place this time.
-
-Fixes: ca6bb5d7ab22 ("[NET]: Require CAP_NET_ADMIN to create tuntap devices.")
-Reported-by: Andrew Lutomirski <luto@kernel.org>
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/3c77f88acff5b3c2617b22d64faad15f6212619c.camel@infradead.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/20261012-lazyfree-stable-fix-v2-1-6387d6e30063@nvidia.com
+Fixes: 735ecdfaf4e8 ("mm/vmscan: avoid split lazyfree THP during shrink_folio_list()")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Closes: https://lore.kernel.org/r/20261009165214.40212-2-kylebot@openai.com
+Reviewed-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: JongHyuk Kim(MalHyuk) <malhyuk97@gmail.com>
+  Link: https://lore.kernel.org/CADQRuqvXQ=YE=7T3oR66vTxE33pi=ygEeZKPTOU=cALZL0Figw@mail.gmail.com
+Assisted-by: LLM
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ mm/rmap.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -574,14 +574,18 @@ static u16 tun_select_queue(struct net_d
- 	return ret;
- }
+diff --git a/mm/rmap.c b/mm/rmap.c
+index d165050c2fc56..1bf83e939583f 100644
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -1698,10 +1698,6 @@ static bool try_to_unmap_one(struct folio *folio, struct vm_area_struct *vma,
+ 		}
  
--static inline bool tun_not_capable(struct tun_struct *tun)
-+static inline bool tun_permitted(struct tun_struct *tun)
- {
- 	const struct cred *cred = current_cred();
- 	struct net *net = dev_net(tun->dev);
- 
--	return ((uid_valid(tun->owner) && !uid_eq(cred->euid, tun->owner)) ||
--		(gid_valid(tun->group) && !in_egroup_p(tun->group))) &&
--		!ns_capable(net->user_ns, CAP_NET_ADMIN);
-+	/* If both uid and gid are set, *both* must match */
-+	if ((uid_valid(tun->owner) || gid_valid(tun->group)) &&
-+	    (!uid_valid(tun->owner) || uid_eq(cred->euid, tun->owner)) &&
-+	    (!gid_valid(tun->group) || in_egroup_p(tun->group)))
-+		return true;
-+
-+	return ns_capable(net->user_ns, CAP_NET_ADMIN);
- }
- 
- static void tun_set_real_num_queues(struct tun_struct *tun)
-@@ -2795,7 +2799,7 @@ static int tun_set_iff(struct net *net,
- 		    !!(tun->flags & IFF_MULTI_QUEUE))
- 			return -EINVAL;
- 
--		if (tun_not_capable(tun))
-+		if (!tun_permitted(tun))
- 			return -EPERM;
- 		err = security_tun_dev_open(tun->security);
- 		if (err < 0)
+ 		if (!pvmw.pte) {
+-			if (unmap_huge_pmd_locked(vma, pvmw.address, pvmw.pmd,
+-						  folio))
+-				goto walk_done;
+-
+ 			if (flags & TTU_SPLIT_HUGE_PMD) {
+ 				/*
+ 				 * We temporarily have to drop the PTL and
+-- 
+2.53.0
+
 
 
