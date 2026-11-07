@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062966;
-	b=RxTskI+LTdZdGl+xln0UUqysqYAEUDLpsVQk5aTkw/my/T4LIcsLya7O9S/WGgxM/0Jy
-	 pBccWJbDI9S7cCjOO1LepYFfU/oAmExIGuR04Gln9VPmA0hTR0s/73jJKgMyok78vuCuh
-	 LTqPqhIhsAEDlh9wGDgpLXVSNfLutw0mRcDwAWXs4P0+Yje6R1+HTNCKMNE90yL7s4ECz
-	 aaPkb1ATps6v8rnnRgx8hluIa0VO83RiNvAcIkoqUasEFrkV6Ue9EjaQ9+fvcHLDljZ9A
-	 alVtp4UNamzMZbKk5JkI0YeM1o6Vnu4iKPRJQknn23FqGAOJQ/F2hn3rcVOQV+1x7Fg==
+	t=1794062967;
+	b=0bV/ERC3XHWLD43SiJXagwANLCQn7/lbnL7KJSYIUkO+jtTWXDc3EFNQ1+5IoTvngV7c
+	 euXWqf8Gtm0QPYgKZtu05KuOKaoWJpkrMj4wAUZOkwRKuAx+mPorKEdHNLhFrOnlwhz/m
+	 TS11yFXCdirzQ2L58U9plK+KQ9VK1XankQiA6ielQeV2MZF9Swj2sbhOFd18DkDSvIETx
+	 tiMCNn6wn3m/OWZ2yvp5ALGiOQLbuEEJtvHfGp1HJetzh2HausPIMIhsmRZy0U6WryIW4
+	 F8sbW3ChNVYY40/WR6dkyp+W0kIRvDMB6Rh6CG/c2dua5w0v3s7Ad/S0QI7fzPE3/3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062966;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SfmRZJFaclQHblRCmt5QqeDewN0Q7VhunNZQzsTVmnc=;
-	b=MzFgIvy/PjuSH1i8cpJDqRKCeh1P9+J9KPMjG5gou5VlIs8c3uf3tl+wCtrHlYLmclN5
-	 TqEkb0sLTqOwTQFUmdvD2Syq232FMCkFkBzBz5sRSXtGeQ/kPfc946X05yWGgYwk/AbkN
-	 zBy5Fg6BpTYemrSy88ei8Kadk4MC/Q329vaPTqDhmPGZrnFb4XkgbFIV/Xsr9DnUUc7w1
-	 3k6EJ9zcS2bvkQ/DHYdqMFKXebGGOvJNQ4yjG54xyHUwSBzsDUEV3TL3N8g9BNlzd60sb
-	 RU0mm5sEMnlCrCpI9PxWMqBcZjIH8fl78X17MJ3z+WUyL3LmpVAjstFrEc25QNo3o9Q==
+	bh=Jmsfuq9tod6Ay3+c7NXRsUaJY6gD1SvpdAjny+xdCEk=;
+	b=wo+ZpmZRqJnj9RB1FxJvk1BgdOJTPkKIkIw3Tvi69QSddqlVMM/OssltXFVq/GlroNYk
+	 PB7E05QbyVu99NNmec6Uqn0CAx8uFoOXoOY0/VfBTxXWohG0kDt8HTIVfc3yJrw2vKRAN
+	 +zvbGpe+gtYuA9yCC4tSUvJ3/BwYkFRXoTktu0/4Yw2ENjfWki8TcgFxEDaVG9n7ka+59
+	 pnfpCug3G3rn/9bVjHyoZIvqlFP+MWvW9Bh2pZl0DhU0Gvqli4HJ/lr2GpbKaKNXGr/+2
+	 u9c45cSMrbN/1PIZZP/q2MuAPe3cnjvy3DAJ/jnzv/6L9DBcSPfL/Skne/bOC8vY0BA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUjpAH7s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kz2Khw06;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C966D606A330;
-	Sat,  7 Nov 2026 14:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D94E606A32C;
+	Sat,  7 Nov 2026 14:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUjpAH7s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7440E1F0089F;
-	Sat,  7 Nov 2026 14:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kz2Khw06
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0FD1F0089F;
+	Sat,  7 Nov 2026 14:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062965;
-	bh=SfmRZJFaclQHblRCmt5QqeDewN0Q7VhunNZQzsTVmnc=;
+	s=korg; t=1794062967;
+	bh=Jmsfuq9tod6Ay3+c7NXRsUaJY6gD1SvpdAjny+xdCEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BUjpAH7shgBXIRPi7THr+CMnzTrCjwlh2WJXldj1cEwwojJ1b7NnO6MISfOzkxYjz
-	 1EZC2jCldSgaZ8IEf8kIQ3DmgZWYrvDcz9ox0+Nd39PE9ZD7rVtcbHTWRc2cn1Fw8H
-	 BkJu0EGcIWdOVLj86Eyxay3h4Tj/TElr5fjpCDuE=
+	b=kz2Khw06cRWCcVCnt9y1Ri9T4Hje7AgTjZlqtmVynMYkxU2mmQolWlb2k7TalWl39
+	 joEeEQ++OxElbsEyBAvfjG6kq/3HWL6IytFQxT4Gzd2zBuIZ9lYx3hAfnwiSzKfHhg
+	 dKuJ1mQJuBIVOQGU7dFDCdB3HJ1ayttTLvvDvAx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
-	Stanislaw Pal <kuncy7@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Sen Wang <sen@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 226/869] clk: qcom: gcc-ipq5018: mark gpll0_main clock as critical
-Date: Sat,  7 Nov 2026 08:48:28 -0500
-Message-ID: <20261107134859.535771699@linuxfoundation.org>
+Subject: [PATCH 6.18 184/869] ASoC: ti: davinci-mcasp: Fix runtime PM imbalance in __davinci_mcasp_set_clkdiv()
+Date: Sat,  7 Nov 2026 08:47:46 -0500
+Message-ID: <20261107134858.363201145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,65 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 33f9cb56cc28d002511e471be74f8ff241984178 ]
+[ Upstream commit ba593d662183de74d2b733b4c6e8cd26f04f0a65 ]
 
-On IPQ5018, the APCS core clock feeds the CPUs. It can use
-different clocks as its parent, but during system boot it
-utilizes GPLL0.
+In __davinci_mcasp_set_clkdiv(), pm_runtime_get_sync() is called at the
+entry of the function. If an invalid div_id is provided, the function
+hits the default switch case and directly returns -EINVAL without calling
+pm_runtime_put(), resulting in a runtime PM reference leak.
 
-Under some cicumstances, the 'gpll0_main' clock is getting
-disabled during kernel start which results in a system hang
-then the hardware watchdog restarts the board after a while.
+Add pm_runtime_put() in the default case before returning -EINVAL.
 
-This can happen when a driver gets a clock in its probe function,
-then releases it either directly or by devres cleanup on probe
-failure.
-
-For example, since v6.18 the kernel often fails to boot on the
-TP-Link Archer AX55 v1 board by using the in-tree dts. In the
-failing configuration, the 'ipq-cmn-pll' driver is built into
-the kernel and the problem is caused by the pm_runtim_put()
-call in the ipq_cmn_pll_clk_probe() function. Due to this call,
-runtime pm disables the 'gcc_cmn_blk_ahb_clk' clock asynchronously
-which results in disabling 'gpll0_main' as well.
-
-Mark the clock as critical in order to avoid such hangs.
-
+Fixes: 4ed8c9b737b6 ("ASoC: McASP: add support for clock dividers")
 Cc: stable@vger.kernel.org
-Fixes: e3fdbef1bab8 ("clk: qcom: Add Global Clock controller (GCC) driver for IPQ5018")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Tested-by: Stanislaw Pal <kuncy7@gmail.com>
-Link: https://lore.kernel.org/r/20260918-ipq5018-mark-gpll0_main-critical-v1-1-fbe8f27a0106@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Tested-by: Sen Wang <sen@ti.com>
+Link: https://patch.msgid.link/20260916073136.1971673-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq5018.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/ti/davinci-mcasp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
-index 64792cda06202..e2d01cdc39c96 100644
---- a/drivers/clk/qcom/gcc-ipq5018.c
-+++ b/drivers/clk/qcom/gcc-ipq5018.c
-@@ -69,6 +69,15 @@ static struct clk_alpha_pll gpll0_main = {
- 			.parent_data = gcc_xo_data,
- 			.num_parents = ARRAY_SIZE(gcc_xo_data),
- 			.ops = &clk_alpha_pll_stromer_ops,
-+			/*
-+			 * During system boot, this PLL feeds the CPUs.
-+			 * Mark it as critical to ensure that CCF does
-+			 * not disable it, even if there are no active
-+			 * consumers. This is needed to avoid a system
-+			 * hang caused by turning off the clock driving
-+			 * the CPUs.
-+			 */
-+			.flags = CLK_IS_CRITICAL,
- 		},
- 	},
- };
+diff --git a/sound/soc/ti/davinci-mcasp.c b/sound/soc/ti/davinci-mcasp.c
+index 621a9d5f9377a..23a68ac3a3e3f 100644
+--- a/sound/soc/ti/davinci-mcasp.c
++++ b/sound/soc/ti/davinci-mcasp.c
+@@ -647,6 +647,7 @@ static int __davinci_mcasp_set_clkdiv(struct davinci_mcasp *mcasp, int div_id,
+ 		break;
+ 
+ 	default:
++		pm_runtime_put(mcasp->dev);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
