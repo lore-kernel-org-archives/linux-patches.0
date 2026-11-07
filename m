@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064500;
-	b=eS4t1zOMCHOtGc+xHNTVqYg8s+iQ1NlZnQ7XIniWnLGrxl2ZIcr0K71Eg1LU2H7EfWxI
-	 eG9tgreP8P9Uz3KKzCqsPkdxsJJXNjWFjQb8PSfHkj9LQvjQiog0Us6PblGUWDlisjXVT
-	 fNuFSkzzC20FsP/2MiW+2HoU9b0luk9RRyG8ffzo9+i4Fumr857K80BiEfqci6CJ47FFC
-	 G3w5QY3QDiUlS5mxXW+5Bm5jR7DsXkCE/8kT0oA6vq6Ijj6pndNFyvRZkacY6MwaPtYMK
-	 b/VWKq5i4xyEOKJsxOrNwVbop+jCU+6Au/M0dVe6zg18zdE2IHQ6byex4gJnm9KL6xQ==
+	t=1794064501;
+	b=ABvSxDMaLu4JxN6jZtR3qwAxGEtsBZu3EKyOc9YS45nmOSWU4ySbvkBUjjMzvgQKf/DF
+	 bVbL4ODPo60ckRLGxh96xyh2JxZiZV7XbfKF9dV+QXR2tv5anG1J9B3uk93PiXYC4Wdso
+	 +SsCz9epvP3FAAlbeWuJT7TOp4C6K4DYzHdo1iHY8VpVaTjY9zW+pburlJ9q2S3/dHH+B
+	 bqTq6E0wTHYAd0ZEEq8550kXJ082jBi77Q3BjHv2N5kwPIc41lWV6jx8lpzBqSYjwtZEo
+	 /z65KKlBAln04bbug5xcKBkiVDeixLMUAXDta27M3JBbryliWBH/EVbiF8XoLVWrRbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064500;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064501;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qkj64ZhbrahkNcyQX3Gj7qIiWwASDg/UCWAQahhdUzE=;
-	b=NxKojwIUM6zSiNz8c3uL6208DkkX7G7SfEIpqy/ZXuxsFZt1Ygz8DBznVD6le/HwlI1x
-	 /b2ZHxNtZvEadChhJDmVnsmiloyy0+Wd8QQFtduomGVrmi2DDeVWHu9N84n9NsF9yMZ9w
-	 zbQJ9kHXuLeQbXafEdbZek4LWaHnFGAX6GSZO5tsQvuHmhNX3x8nanxLvNZ8Ckl4VgcNK
-	 ZiyyXUBN31cOJLacdF8KBUyxFt6j7fWAVq9CxC8D01RIX66b54HoAZCUBE0ClUh14Sv17
-	 tWWvTV7OdBNFEQi4ndiEdAbyGRUfamFLiiUoeCkC0cIbnCLtNvgb4//t0T8Mg3Jp71Q==
+	bh=5u5mi6SjX4eGZKXishZ7/DuTtucxhrJPeweljucH904=;
+	b=SurcdMmw+/Aa77QJhAj9nMQEY0lVeBgHEcP6wIgmdTM2GqhHj2TlVNYJpjgWa8pcKx+L
+	 1rg7izwjWyg+DKCJFF48DcTp2gkM9zFfmm/Xd2koeet2+/FDpzK5JGtJlO+e2R1kPpyMl
+	 95eCigC2K8t0n78W1JjrSK+qELebb+7DNTNaI8EBikQx5J6fYpY4jvq6I6URZzrEbCE6P
+	 L9vzhhxI+wceROY2pwHeTNEtbteM8HdvAxz3usD5zfDBkJBcjjM5C6FjV9BqMyI2zFQxz
+	 D7/PD5l87SLFze918iaiuIn4e9Egowh26p5GXUho6XyKIDcy4fYLhjZPpI2I3etgoxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XXZq86gI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FAeijsaS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D44606CE44;
-	Sat,  7 Nov 2026 15:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CF2606CE44;
+	Sat,  7 Nov 2026 15:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XXZq86gI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73C71F008A1;
-	Sat,  7 Nov 2026 15:14:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FAeijsaS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1188F1F008A2;
+	Sat,  7 Nov 2026 15:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064499;
-	bh=Qkj64ZhbrahkNcyQX3Gj7qIiWwASDg/UCWAQahhdUzE=;
+	s=korg; t=1794064501;
+	bh=5u5mi6SjX4eGZKXishZ7/DuTtucxhrJPeweljucH904=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XXZq86gIRa6f4JtpWz77Li8F5TwSm4g+aWPh8MCdr8HXoJW6Bk2xgD0eWo3Pbeuqk
-	 eaIhPQvZohEwupgnwrNj/8kUX1kOL+8Pw9wV1F5k6h/Vnt2XrZcsC2UaXjuPvb2pRb
-	 Ac23fxKeMH+5jkyyhKdmqn8kact61G9O0HBD9qiQ=
+	b=FAeijsaSeqSUL//s+kE0271qvFesnUkmKKcBaGnU8iGkrF79flVHIAQtsu1DGfmDP
+	 51e1FtQlcdEklHUoLLxoFxRWTU41B6nO6Yiy9B2V/SfkE1FPl9wCrx41EmbLjolXv9
+	 uV7TQBgnGOYs1/KvcD651xHeFlUnP2xtt3+3MElU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	ZW Tang <tangzw515@gmail.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0533/1257] ocfs2: skip uninitialized lockres in ocfs2_mark_lockres_freeing()
-Date: Sat,  7 Nov 2026 08:47:09 -0500
-Message-ID: <20261107134954.128613648@linuxfoundation.org>
+Subject: [PATCH 7.3 0534/1257] KVM: arm64: timers: Compute an offset-applied CVAL from the current count
+Date: Sat,  7 Nov 2026 08:47:10 -0500
+Message-ID: <20261107134954.153750204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -75,60 +69,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 6a3ed6b290513859bd27d9fcb67739347d6315fa ]
+[ Upstream commit 49930b1b557ceb698e0ab7f985ea41c99dc8bf22 ]
 
-A hard readonly mount skips ocfs2_dlm_init(), so the per-osb lock
-resources are never initialized and osb->cconn stays NULL.  Before commit
-550842cc60987 ("ocfs2: fix freeing uninitialized resource on
-ocfs2_dlm_shutdown") ocfs2_dismount_volume() only called
-ocfs2_dlm_shutdown() when osb->cconn was set.  It now calls it
-unconditionally, so unmounting a hard readonly mount drops the osb locks
-and takes the never initialized l_lock in ocfs2_mark_lockres_freeing().
-With lockdep enabled this triggers:
+When the hardware won't apply a timer's offset, KVM programs CVAL +
+offset and lets it compare that against the raw counter. The compare is
+unsigned (IsTimerConditionMet, DDI0487M_c J1.4.3.29):
 
-INFO: trying to register non-static key.  The code is fine but needs
-lockdep annotation, or maybe you didn't initialize this object before use?
-turning off the locking correctness validator.
+  condition_met = (UInt(PhysicalCountInt() - offset) -
+                   UInt(compare_value)) >= 0;
 
-ocfs2_drop_lock() and ocfs2_lock_res_free() already skip lock resources
-without OCFS2_LOCK_INITIALIZED.  Add the same check to
-ocfs2_mark_lockres_freeing(), which is reachable before them through
-ocfs2_simple_drop_lockres(), so an uninitialized lockres is never touched.
+so adding the offset to both sides holds only while both sums wrap or
+neither does. A guest whose counter is ahead of the host's by more than
+CVAL has an expired timer that never fires, and one behind it can have
+a far-future timer fire at once.
 
-Link: https://lore.kernel.org/20260903104744.2164235-1-joseph.qi@linux.alibaba.com
-Fixes: 550842cc6098 ("ocfs2: fix freeing uninitialized resource on ocfs2_dlm_shutdown")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: ZW Tang <tangzw515@gmail.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
+On a CNTPOFF_EL2 host the first case livelocks: each entry reloads the
+guest's CVAL, the timer fires, and the exit rewrites it as CVAL + offset
+before the host can take the interrupt. Without CNTPOFF_EL2 the timer
+hangs until the vCPU is next loaded, which is what Zenghui reported on
+a Kunpeng920.
+
+Program the value from the current count instead: CVAL + offset while
+the deadline is ahead, 0 once the timer has expired for the guest, ~0
+past the counter's wrap. KVM recomputes it at load, at exit and on a
+trapped CVAL write, and an expired timer stays expired in between. The
+value can't be inverted, so with an offset timer_save_state() keeps the
+memory copy, and kvm_hyp_handle_timer() returns that copy for a guest
+hypervisor's read of its physical CVAL rather than subtracting the
+offset back out.
+
+Fixes: c605ee245097 ("KVM: arm64: timers: Allow physical offset without CNTPOFF_EL2")
+Fixes: 9404673293b0 ("KVM: arm64: timers: Correctly handle TGE flip with CNTPOFF_EL2")
+Fixes: 0bc9a9e85fcf ("KVM: arm64: Work around x1e's CNTVOFF_EL2 bogosity")
+Reported-by: Zenghui Yu <yuzenghui@huawei.com>
+Closes: https://lore.kernel.org/r/460258be-0102-e922-c342-4e87cd94b9e5@huawei.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261007074343.324269-2-fuad.tabba@linux.dev
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlmglue.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/kvm/arch_timer.c     | 27 ++++++++++++---------------
+ arch/arm64/kvm/hyp/vhe/switch.c | 11 ++++++-----
+ include/kvm/arm_arch_timer.h    | 15 +++++++++++++++
+ 3 files changed, 33 insertions(+), 20 deletions(-)
 
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index 54e8f81119fb1..1a83241b6d41f 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -3527,6 +3527,10 @@ void ocfs2_mark_lockres_freeing(struct ocfs2_super *osb,
- 	struct ocfs2_mask_waiter mw;
- 	unsigned long flags, flags2;
+diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
+index 6ac3321f4c575..9278b5383c044 100644
+--- a/arch/arm64/kvm/arch_timer.c
++++ b/arch/arm64/kvm/arch_timer.c
+@@ -528,17 +528,11 @@ static void timer_save_state(struct arch_timer_context *ctx)
+ 		goto out;
  
-+	/* We didn't get anywhere near actually using this lockres. */
-+	if (!(lockres->l_flags & OCFS2_LOCK_INITIALIZED))
-+		return;
+ 	switch (index) {
+-		u64 cval;
+-
+ 	case TIMER_VTIMER:
+ 	case TIMER_HVTIMER:
+ 		timer_set_ctl(ctx, read_sysreg_el0(SYS_CNTV_CTL));
+-		cval = read_sysreg_el0(SYS_CNTV_CVAL);
+-
+-		if (has_broken_cntvoff())
+-			cval -= timer_get_offset(ctx);
+-
+-		timer_set_cval(ctx, cval);
++		if (!has_broken_cntvoff() || !timer_get_offset(ctx))
++			timer_set_cval(ctx, read_sysreg_el0(SYS_CNTV_CVAL));
+ 
+ 		/* Disable the timer */
+ 		write_sysreg_el0(0, SYS_CNTV_CTL);
+@@ -564,11 +558,12 @@ static void timer_save_state(struct arch_timer_context *ctx)
+ 	case TIMER_PTIMER:
+ 	case TIMER_HPTIMER:
+ 		timer_set_ctl(ctx, read_sysreg_el0(SYS_CNTP_CTL));
+-		cval = read_sysreg_el0(SYS_CNTP_CVAL);
+-
+-		cval -= timer_get_offset(ctx);
+-
+-		timer_set_cval(ctx, cval);
++		/*
++		 * With an offset, memory already holds the guest's CVAL (the
++		 * trap handler or __deactivate_traps() wrote it).
++		 */
++		if (!timer_get_offset(ctx))
++			timer_set_cval(ctx, read_sysreg_el0(SYS_CNTP_CVAL));
+ 
+ 		/* Disable the timer */
+ 		write_sysreg_el0(0, SYS_CNTP_CTL);
+@@ -647,7 +642,8 @@ static void timer_restore_state(struct arch_timer_context *ctx)
+ 		offset = timer_get_offset(ctx);
+ 		if (has_broken_cntvoff()) {
+ 			set_cntvoff(0);
+-			cval += offset;
++			if (offset)
++				cval = timer_apply_offset(cval, offset, kvm_phys_timer_read());
+ 		} else {
+ 			set_cntvoff(offset);
+ 		}
+@@ -660,7 +656,8 @@ static void timer_restore_state(struct arch_timer_context *ctx)
+ 		cval = timer_get_cval(ctx);
+ 		offset = timer_get_offset(ctx);
+ 		set_cntpoff(offset);
+-		cval += offset;
++		if (offset)
++			cval = timer_apply_offset(cval, offset, kvm_phys_timer_read());
+ 		write_sysreg_el0(cval, SYS_CNTP_CVAL);
+ 		isb();
+ 		write_sysreg_el0(timer_get_ctl(ctx), SYS_CNTP_CTL);
+diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+index 7875911c05063..14aada311bac4 100644
+--- a/arch/arm64/kvm/hyp/vhe/switch.c
++++ b/arch/arm64/kvm/hyp/vhe/switch.c
+@@ -175,7 +175,8 @@ static void __deactivate_traps(struct kvm_vcpu *vcpu)
+ 		offset = read_sysreg_s(SYS_CNTPOFF_EL2);
+ 
+ 		if (map.direct_ptimer && offset) {
+-			write_sysreg_el0(val + offset, SYS_CNTP_CVAL);
++			val = timer_apply_offset(val, offset, arch_timer_read_cntpct_el0());
++			write_sysreg_el0(val, SYS_CNTP_CVAL);
+ 			isb();
+ 		}
+ 	}
+@@ -296,10 +297,10 @@ static bool kvm_hyp_handle_timer(struct kvm_vcpu *vcpu, u64 *exit_code)
+ 		break;
+ 	case SYS_CNTP_CVAL_EL0:
+ 		if (vcpu_el2_e2h_is_set(vcpu)) {
+-			val = read_sysreg_el0(SYS_CNTP_CVAL);
+-
+-			if (!has_cntpoff())
+-				val -= timer_get_offset(vcpu_hptimer(vcpu));
++			if (!has_cntpoff() && timer_get_offset(vcpu_hptimer(vcpu)))
++				val = __vcpu_sys_reg(vcpu, CNTHP_CVAL_EL2);
++			else
++				val = read_sysreg_el0(SYS_CNTP_CVAL);
+ 		} else {
+ 			val = __vcpu_sys_reg(vcpu, CNTP_CVAL_EL0);
+ 		}
+diff --git a/include/kvm/arm_arch_timer.h b/include/kvm/arm_arch_timer.h
+index bc6f2fdd7ad33..80f96ea59f1ae 100644
+--- a/include/kvm/arm_arch_timer.h
++++ b/include/kvm/arm_arch_timer.h
+@@ -195,4 +195,19 @@ static inline void timer_set_offset(struct arch_timer_context *ctxt, u64 offset)
+ 	WRITE_ONCE(*ctxt->offset.vm_offset, offset);
+ }
+ 
++/*
++ * CVAL to program when the hardware won't apply the timer's offset, so that
++ * its compare against the raw counter matches the guest's at 'now'. An
++ * expired timer stays expired; one past the wrap never fires.
++ */
++static inline u64 timer_apply_offset(u64 cval, u64 offset, u64 now)
++{
++	u64 hw = cval + offset;
 +
- 	ocfs2_init_mask_waiter(&mw);
- 
- 	spin_lock_irqsave(&lockres->l_lock, flags);
++	if (now - offset >= cval)
++		return 0;
++
++	return hw > now ? hw : U64_MAX;
++}
++
+ #endif
 -- 
 2.53.0
 
