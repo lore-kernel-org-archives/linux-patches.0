@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065584;
-	b=Uq8boBiHtoa1mdqN0b0LomnTuDFDOVO+776BBflb+kXUP3pnOqDorMkZ1Jw6mvsYuM34
-	 aeFEr9FCCROq/yo8RmHLjbuMzA47aJrJUmhgix15mSP7jqKQrw7MIbSjEDS4UkJmDD5Fr
-	 q4XwpBWUWDAmof46TGiE3cK9pXBV5HIx89IW+6wvzI6vXIOBIcZtvrJ1tTEiDXMG+x9LO
-	 56LZi8sncHFVUmipyW3nBm1eoQq/GdJcDFLxbjuDRHZ6m4dRtcGsqzgoal7+ACyQN90xv
-	 jViMPX4OloqSRtw0K1SEL/7tEFAz6EjT5k4oAIDt0FpuFbe5Mpw+yH9qMzE7WFHeR5w==
+	t=1794065585;
+	b=ZchMCKky+q5OrQZmVPYWdjH8cBjJcJv82tKL8KsLBfpNPORtYzPzgMm9GvFTx/aigv4R
+	 T0oxDqxEV1lJm6gfcGbPMBQVbXCXfht1VqJiiC1HhUgz62fmq902P4ayrXRl8/dWOk3fT
+	 EZFbMI8MT8bwCCmpbSxa1wtzqnm/SFsKJTr3YRCAjlTE/WGCGjGb1gA/Yz8Tu4ytY2CpT
+	 H4Rvutyyu4433+gBkMrqJeSe8UcVhVIC/g/6GDVIRrmrfd6l1uGA6bqdEskqVWozwoKb/
+	 2vaSbb76j++wXpJL/X9hPQmjxTWQ0G4Ct1TUCtAUzMAxm+bOtQU6CVUbVHRDpBxjfVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065584;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065585;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+hLcjufXs3wT6XxCteWXzTvXpIVHjJVSFrgb0Ynwu10=;
-	b=dgDEBQpd0Ma3QvvGpQqCSBltRzECzKT+LzsaitCZwseHoStvfk/N20X8LsRF0CAdPFo0
-	 NsoWiuPj1CKG38UHDyCp6ckkhRSEhhLHoMrho9LEoEEyA7fVykEZ9M+p04wb6bTnyeW0V
-	 hJa9Np//x8Y8Me0i7Xh8enYnf/yGnfVaPwuD8gNtDxJfukmmiXDpT9qbyBzsx9uAZbYSO
-	 BubpFlALeN6R7wr+wnRENIy8yqu07m3dnbZQ9Sf4vUddikNkmSFnh7fOLdPkFM4oDsJ1L
-	 Ed/oKf1q8c8qD6IRmUXRUoKDHuFo4o+UH6xGtaKa5C5K/ZDeD5POlsKDx576FNBS9WA==
+	bh=9QxaXnfKiKn025/pCZocNA0U0gcaJrxzydspq4Wl3HQ=;
+	b=mqzfma9RFD5J22j4ZFgeSKE4Q/8BvEOfHmF83a7wykCk/HNu9rV6rBfu3ig8JU5szIbF
+	 JBWLPN4wGzYDK+0NHacJ2rNft5meeWheNgTRDuRIpAm1dtCUc3k5jI9PTwY76oQDWgoqq
+	 qHkg3wNOuOdYOWj6L2mHCxCR3NKZw0NmjAVlK0JHdiVsgTspjACVZV4s4d46HIl7RAVQy
+	 rSBY5HW+CIL2wvYLDkOzzuMgSW02zwq8gWAKSZFniXHe7IdQzj0RNZ8roObB5HD1lh6Pc
+	 xKwSYYW1aPmkGVo2sRAjaj92ol5yK8oELB/p7Yz7oTqVwhhG+Alno3kr9ND0vV3Ea2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lLJj6w3j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQg2uYKb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA213606A32C;
-	Sat,  7 Nov 2026 15:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20433606A32C;
+	Sat,  7 Nov 2026 15:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lLJj6w3j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886511F0089F;
-	Sat,  7 Nov 2026 15:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQg2uYKb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA591F0089F;
+	Sat,  7 Nov 2026 15:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065583;
-	bh=+hLcjufXs3wT6XxCteWXzTvXpIVHjJVSFrgb0Ynwu10=;
+	s=korg; t=1794065585;
+	bh=9QxaXnfKiKn025/pCZocNA0U0gcaJrxzydspq4Wl3HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lLJj6w3jK31hl8glDZgJWak7yKG1H8I4ZMemOUgKVRzMZexCCBY0qnGxgJrOT4W86
-	 pyAmNoq22hgiKMxxZO4cmb5cLRC3FGVGkvT9uKkSIjUUxYSvUnkkPp/4UX84klBKMb
-	 ln2RMBPZhtiHOIhp0GBF7jzxRUFLyj0rU+PKKqns=
+	b=XQg2uYKbCPpFk3kYYJnRJMxosDpDrczbM+KYty7OMOkGuRrcNy/GWYCKULAjB9L8D
+	 jNp5+enAgacBAbYdfq8HW7oTgdzkqJznpdWifjAUNldMYkB2AEI5n0BTzejn+r017Q
+	 nIoqVG/rCGxBpHsrCMAFPz2x1ybcxUPnFF48JkqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Daniel Wagner <dwagner@suse.de>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1242/1257] apparmor: remove fs entries created by a failed policy load
-Date: Sat,  7 Nov 2026 08:58:58 -0500
-Message-ID: <20261107135013.634579677@linuxfoundation.org>
+Subject: [PATCH 7.3 1207/1257] nvmet-fc: Tear down the association when the admin queue allocation fails
+Date: Sat,  7 Nov 2026 08:58:23 -0500
+Message-ID: <20261107135012.680386355@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,75 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgia Garcia <georgia.garcia@canonical.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 6ec46f8f1977d218bf2494ce276152b2d01424af ]
+[ Upstream commit 11db8ab55e1a7533e9cfe57687ab142ba67d3c84 ]
 
-aa_replace_profiles() creates the raw_data/<rev> directory for the
-loaddata and the profile directories for new profiles before the last
-checks that can fail. When one of those checks fails, the fail path
-releases the ns lock without removing what this load created.
+When the initial admin queue allocation fails after a new association
+was created, nvmet_fc_ls_create_association() only drops the
+association reference, which frees the association.  By then the
+association is already on the target port's assoc_list, though, and
+removal from that list only happens in nvmet_fc_delete_target_assoc(),
+which this error path never calls.  The freed association stays on the
+list, where later lookups and the port teardown can access it, and the
+target port reference taken at allocation time leaks.
 
-The raw_data directory is named after the current ns revision, and the
-revision is only bumped by a successful load. The stale directory is
-only removed once the loaddata's last profile reference is dropped, from
-a workqueue. Until then, every load fails to create raw_data/<rev> with
--EEXIST. If the new profiles are never freed, which is the case when
-their dents are left behind pinning the proxy, that never happens and no
-policy can be loaded until reboot.
+A remote host can trigger this reliably with a Create Association LS
+requesting a queue too large to allocate.
 
-While still holding the ns lock in the fail path, remove the profile
-directories of the new profiles and, if this load created it, the
-raw_data directory.
+Schedule the regular association teardown instead of dropping the
+reference directly.  The teardown removes the association from the
+list and releases the target port reference before the final reference
+drop frees it.
 
-Fixes: 5d5182cae401 ("apparmor: move to per loaddata files, instead of replicating in profiles")
+Fixes: 0cab4404874f ("nvme-fc: fix a missing queue put in nvmet_fc_ls_create_association")
 Cc: stable@vger.kernel.org
-Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/nvme/target/fc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index 397f9ff78aeb1..f6f7cdcb62126 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1191,6 +1191,7 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	struct aa_loaddata *rawdata_ent;
- 	const char *op;
- 	ssize_t count, error;
-+	bool rawdata_created = false;
- 	LIST_HEAD(lh);
- 
- 	op = mask & AA_MAY_REPLACE_POLICY ? OP_PROF_REPL : OP_PROF_LOAD;
-@@ -1330,6 +1331,7 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 			ent = NULL;
- 			goto fail_lock;
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index c45a98cc094bb..9b46e16641ed4 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1705,7 +1705,7 @@ nvmet_fc_ls_create_association(struct nvmet_fc_tgtport *tgtport,
+ 					be16_to_cpu(rqst->assoc_cmd.sqsize));
+ 			if (!queue) {
+ 				ret = VERR_QUEUE_ALLOC_FAIL;
+-				nvmet_fc_tgt_a_put(iod->assoc);
++				nvmet_fc_schedule_delete_assoc(iod->assoc);
+ 			}
  		}
-+		rawdata_created = true;
  	}
- 	list_for_each_entry(ent, &lh, list) {
- 		if (!ent->old) {
-@@ -1425,6 +1427,18 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	return udata_sz;
- 
- fail_lock:
-+	/*
-+	 * Remove fs entries created by this load. Nothing else references
-+	 * them yet, and leaving them behind would leak the new profiles
-+	 * (their dents pin the proxy) and make the next load at the same,
-+	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
-+	 */
-+	list_for_each_entry(tmp, &lh, list) {
-+		if (!tmp->old)
-+			__aafs_profile_rmdir(tmp->new);
-+	}
-+	if (rawdata_created)
-+		__aa_fs_remove_rawdata(udata);
- 	mutex_unlock(&ns->lock);
- 
- 	/* audit cause of failure */
 -- 
 2.53.0
 
