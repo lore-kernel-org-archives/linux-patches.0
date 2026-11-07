@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065110;
-	b=VXQ5I6tnKTA3t0CjqU2i85TSHccA6/T8u7IZoWbN00/OEDhFK5IkM+l0u/X8y2pL2eRT
-	 QwG1q95yesj3YO2/VxsFsR0vrKPZ90DuwIH2uBx9RnZiwBslXZ35bF1CjM71W9/+8V3HS
-	 LunyBxKAYgbwy2McpsN//WjuxOz793N9YPSey/nljYWBCxyWCSaTG1WzlczQ1PLPzNOXQ
-	 pVbJqyToREv8POyRZBmwejUQypxWuxbFqQesqXSwDZUcJMhRF2fd2mouVspCfOoMExelC
-	 QmZKkznyd86c55GTGtQfIqCD6OUDQLAH6hXo8SnIqVDTB8dfH6Kdk2tFpAw51IBiJdg==
+	t=1794065111;
+	b=Azd6rBPK5vvRRjonAC1MRr+AjVVqDwUQTaIgsO+QXRkCOHhObdc5w0yagA9tSnPuoMAN
+	 XyyY7T8rzMxWkHOpsJuZKtGB68oaUom7QZcJEPTZbCnf0m8a7JrxyXG0u+AD0whUaSSkK
+	 eZal3Jwz1KoFdj0czY45gWE6re0Y8HdNGj1sDMM0wc16Ul7YUmHhZ3R9j8BKe39modEpy
+	 Sc/c07VGhCjY3tSGhnm4dsgdZBXLJVEtgugv+zjrCMxB8DYlnfD1L4+7xYBtnRofmINkB
+	 aSnbwNGoVZahT1uf0Zne82TcmiyZCJxrmM1GfKTCDWU92TI1B9d57iwJnc2bShB3TtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065111;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pnt1+F2ggJvQLEyw4MAexblBzT61ybpAgOgOwDB+D2I=;
-	b=FotyrmmBdObr8cMoKm7EQPqd9k48wwc1BUgmZSplcZGWTAftvDeEp3Y9iwNkYUki01cn
-	 0S7g12rVUh9pY+WXQYkcJXV4iua9MtmZsKrzvlULyedbYtm6n4LMw/Wllzug83K5F4tOI
-	 irKHbexGdT1y2KSseEuFPWzreLyj/Q+3IoPF27ng87ARpfZn1wWdHFPPNiyFf30Ii1Pm+
-	 zCG02VsZct/EM3Bml1fYY3GONzOJIZiEN+B93uvSgaqAgBEZEUf7MwT5Vgb58YGNn/Tyl
-	 ltBQa/50jrCgTmFxzQyrVw37TvtNNOBI3v7XobSAgV8uSihdBjpD37fnZtOsMwlEgtQ==
+	bh=TlBGdM79/PbgzfBHGorjCvm9bn3p3/udO8wHVKo58po=;
+	b=30cNDi/p5nruQsT4Eg75L05e1KbI0m6Y8Bt6Kl2Vq9NpMYa+iP9GZ6qWPp/DcehUxCfB
+	 Ertv6XcOkNsDUJZPmkO/By+VLXG3nbHKd/z9XCVWD6cXAtLURLB9btVyP35ECwfgQ2baJ
+	 F7ck/ON/MJN53dMkrijE836f/vR/3pLs4jOASHLZKYtZSOsqIy4SaOamVZ9XrACL+0nLg
+	 5Kf+bJbZJG59qYIqUWBkzA3gffpZ7g02pzOO7M0WHWX4s1O3Ocqo+szfSZvzHcx+ziM/X
+	 n3TQx2LtH1U0LYIyKBaNB43g+QqG3caH8ri+334LtN9QEan20E5DHXzl0nQQa+3U78g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2n740kVx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wMeBU8nx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91B9606A32C;
-	Sat,  7 Nov 2026 15:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE9C606A32C;
+	Sat,  7 Nov 2026 15:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2n740kVx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370E41F0089F;
-	Sat,  7 Nov 2026 15:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wMeBU8nx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7C41F0089F;
+	Sat,  7 Nov 2026 15:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065109;
-	bh=Pnt1+F2ggJvQLEyw4MAexblBzT61ybpAgOgOwDB+D2I=;
+	s=korg; t=1794065111;
+	bh=TlBGdM79/PbgzfBHGorjCvm9bn3p3/udO8wHVKo58po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2n740kVxH/b2RQhWuyBK9Q2lotOcnZ4W6YK0WBJnI4yIxNSCATkGNxoqSyEEdGVvm
-	 mo4hWoYxSaCxgYRosAEINNQFRoDThNk/lGSaYg3TRcMBX5YD1K75R3s/gUxa41lRdJ
-	 r27eLMTVEh4RzsbfoXyL9oeM76hDgvgWIG1+Zh9U=
+	b=wMeBU8nxwioS4Y7dbRfKG4U8cZHlbjk0TkZCRDd+wNN3Ha7k40mMhpCY6ZiTbvvHF
+	 L07YdS0CSSJmHqkGobzYqIvseOrx+Ss2ufAXKjGK9FzIzYf3oiJn2oNJR5QeJmvoVV
+	 nO17rP5wA5QqoYwzwpkA8DhdmIZcYxEMGRPAJIZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0938/1257] ntfs: fix kmap_local leak in ntfs_check_logfile()
-Date: Sat,  7 Nov 2026 08:53:54 -0500
-Message-ID: <20261107135005.264172586@linuxfoundation.org>
+Subject: [PATCH 7.3 0921/1257] ntfs: persist the dirty state after the final put_super() commits
+Date: Sat,  7 Nov 2026 08:53:37 -0500
+Message-ID: <20261107135004.788964640@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,95 +70,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit a5ec71084996aec76d07e0e530a345cdd202dc1a ]
+[ Upstream commit 5d0e57ea8e37db3e32d1b1b7fa4f3c7a94ff8e56 ]
 
-ntfs_check_logfile() calls kmap_local_folio() on every iteration of its
-search loop but kunmap_local() only once per folio. The loop visits
-positions 0, 512, 1024, 2048, 4096 and so on. With 4 KiB pages the first
-four are in one page, so a mount whose first LogFile folio is in highmem
-leaves three entries on the kmap_local stack of the mounting task.
-Kernels without HIGHMEM are not affected.
+The just-in-case mftmirr/mft commits and the final write_inode_now()
+in ntfs_put_super() can record NVolErrors() after the dirty state has
+been persisted, so errors from those points would leave the volume
+unmounted with a clean on-disk dirty bit - contradicting the "cannot
+unmount clean" guarantee ntfs_sync_volume_dirty_state() is meant to
+provide.
 
-The leaked entries keep migration disabled. nr_pinned of the runqueue
-the mount ran on stays raised after the task exits, so taking that CPU
-offline blocks forever in balance_hotplug_wait().
+Move the persistence to the end of ntfs_put_super(): keep the gated
+re-commits and the tail commits where they are, run
+ntfs_sync_volume_dirty_state() and the $Volume commit after the last
+write_inode_now(), and release vol->vol_ino only after the sync.
 
-The fifth mount in one task reaches KM_MAX_IDX (12 leaked entries plus
-4 in the loop) and hits the BUG_ON() in kmap_local_idx_push():
+The release order of the special inodes matters for the $Volume
+commit: writing the $Volume record mirrors it through
+ntfs_sync_mft_mirror() (record number 3 is below vol->mftmirr_size),
+which fails with -EIO and leaves the mirror stale once
+vol->mftmirr_ino is gone, so the mirror inode is released only after
+that commit.  vol->vol_ino is then put before vol->mft_ino is dropped:
+if the commit failed before it could clear the dirty flag,
+ntfs_evict_big_inode() commits the inode again on its way out, and
+__ntfs_write_inode() resolves the runlist through vol->mft_ino.
 
-  kernel BUG at mm/highmem.c:480!
-
-On x86-32 the generic entry code also warns on return to user space:
-
-  DEBUG_LOCKS_WARN_ON(current->kmap_ctrl.idx)
-  WARNING: include/linux/highmem-internal.h:17 at __do_fast_syscall_32+0x21e/0x550
-
-Map each page once, when it is read, and unmap that address.
-
-Fixes: 5218cd102aec ("ntfs: update misc operations")
+Reported-by: Baolin Liu <liubaolin@kylinos.cn>
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
 Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/logfile.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/ntfs/super.c | 75 ++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 52 insertions(+), 23 deletions(-)
 
-diff --git a/fs/ntfs/logfile.c b/fs/ntfs/logfile.c
-index 1404664dacc01..ce38ce87f8fc8 100644
---- a/fs/ntfs/logfile.c
-+++ b/fs/ntfs/logfile.c
-@@ -457,7 +457,7 @@ bool ntfs_check_logfile(struct inode *log_vi, struct restart_page_header **rp)
- 	struct ntfs_volume *vol = NTFS_SB(log_vi->i_sb);
- 	struct address_space *mapping = log_vi->i_mapping;
- 	struct folio *folio = NULL;
--	u8 *kaddr = NULL;
-+	u8 *kaddr = NULL, *kbase = NULL;
- 	struct restart_page_header *rstr1_ph = NULL;
- 	struct restart_page_header *rstr2_ph = NULL;
- 	int log_page_size, err;
-@@ -511,7 +511,7 @@ bool ntfs_check_logfile(struct inode *log_vi, struct restart_page_header **rp)
+diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
+index afde27d74ff59..e13ede3cd836f 100644
+--- a/fs/ntfs/super.c
++++ b/fs/ntfs/super.c
+@@ -1886,26 +1886,13 @@ static void ntfs_put_super(struct super_block *sb)
+ 	ntfs_commit_inode(vol->mft_ino);
  
- 		if (!folio || folio->index != idx) {
- 			if (folio) {
--				kunmap_local(kaddr);
-+				kunmap_local(kbase);
- 				folio_put(folio);
- 			}
- 			folio = read_mapping_folio(mapping, idx, NULL);
-@@ -520,8 +520,9 @@ bool ntfs_check_logfile(struct inode *log_vi, struct restart_page_header **rp)
- 						idx);
- 				goto err_out;
- 			}
-+			kbase = kmap_local_folio(folio, 0);
+ 	/*
+-	 * If a read-write mount, persist the error state in the volume flags:
+-	 * mark the volume clean if no volume errors have occurred, and make
+-	 * sure VOLUME_IS_DIRTY is on disk if any have, so chkdsk runs on the
+-	 * next mount.  Also, re-commit all affected inodes.
++	 * If a read-write mount, re-commit all affected inodes once more.
++	 * The dirty state itself is persisted at the end of ntfs_put_super(),
++	 * after the last commits and the final write_inode_now(): those can
++	 * still record errors via __ntfs_write_inode(), and the sync must
++	 * evaluate NVolErrors() with the last setter already run.
+ 	 */
+ 	if (!sb_rdonly(sb)) {
+-		if (ntfs_sync_volume_dirty_state(vol)) {
+-			ntfs_warning(sb,
+-				"Failed to sync dirty bit in volume information flags.  Run chkdsk.");
+-		} else if (NVolErrors(vol)) {
+-			/*
+-			 * The dirty bit is on disk now; only warn when the
+-			 * sync actually succeeded, or this message would
+-			 * contradict the one above.
+-			 */
+-			ntfs_warning(sb,
+-				"Volume has errors.  Leaving volume marked dirty.  Run chkdsk.");
+-		}
+-		/* Commits the updated volume flags if they were written. */
+-		ntfs_commit_inode(vol->vol_ino);
+ 		if (!NVolErrors(vol)) {
+ 			ntfs_commit_inode(vol->root_ino);
+ 			if (vol->mftmirr_ino)
+@@ -1914,9 +1901,6 @@ static void ntfs_put_super(struct super_block *sb)
  		}
--		kaddr = (u8 *)kmap_local_folio(folio, 0) + (pos & ~PAGE_MASK);
-+		kaddr = kbase + (pos & ~PAGE_MASK);
- 		/*
- 		 * A non-empty block means the logfile is not empty while an
- 		 * empty block after a non-empty block has been encountered
-@@ -574,7 +575,7 @@ bool ntfs_check_logfile(struct inode *log_vi, struct restart_page_header **rp)
- 		 * find a valid one further in the file.
- 		 */
- 		if (err != -EINVAL) {
--			kunmap_local(kaddr);
-+			kunmap_local(kbase);
- 			folio_put(folio);
- 			goto err_out;
- 		}
-@@ -583,7 +584,7 @@ bool ntfs_check_logfile(struct inode *log_vi, struct restart_page_header **rp)
- 			pos = NTFS_BLOCK_SIZE >> 1;
  	}
- 	if (folio) {
--		kunmap_local(kaddr);
-+		kunmap_local(kbase);
- 		folio_put(folio);
+ 
+-	iput(vol->vol_ino);
+-	vol->vol_ino = NULL;
+-
+ 	/* NTFS 3.0+ specific clean up. */
+ 	if (vol->major_ver >= 3) {
+ 		if (vol->extend_ino) {
+@@ -1946,8 +1930,6 @@ static void ntfs_put_super(struct super_block *sb)
+ 		/* Re-commit the mft mirror and mft just in case. */
+ 		ntfs_commit_inode(vol->mftmirr_ino);
+ 		ntfs_commit_inode(vol->mft_ino);
+-		iput(vol->mftmirr_ino);
+-		vol->mftmirr_ino = NULL;
  	}
- 	if (logfile_is_empty) {
+ 	/*
+ 	 * We should have no dirty inodes left, due to
+@@ -1957,6 +1939,53 @@ static void ntfs_put_super(struct super_block *sb)
+ 	ntfs_commit_inode(vol->mft_ino);
+ 	write_inode_now(vol->mft_ino, 1);
+ 
++	/*
++	 * If a read-write mount, persist the error state in the volume flags:
++	 * mark the volume clean if no volume errors have occurred, and make
++	 * sure VOLUME_IS_DIRTY is on disk if any have, so chkdsk runs on the
++	 * next mount.
++	 */
++	if (!sb_rdonly(sb)) {
++		if (ntfs_sync_volume_dirty_state(vol)) {
++			ntfs_warning(sb,
++				"Failed to sync dirty bit in volume information flags.  Run chkdsk.");
++		} else if (NVolErrors(vol)) {
++			/*
++			 * The dirty bit is on disk now; only warn when the
++			 * sync actually succeeded, or this message would
++			 * contradict the one above.
++			 */
++			ntfs_warning(sb,
++				"Volume has errors.  Leaving volume marked dirty.  Run chkdsk.");
++		}
++		/*
++		 * Commits the updated volume flags if they were written.
++		 * The mft mirror must still be around for this: the
++		 * $Volume record (mft record number 3, below
++		 * vol->mftmirr_size) is mirrored by write_mft_record()
++		 * through ntfs_sync_mft_mirror(), which fails with -EIO
++		 * and leaves the mirror stale once vol->mftmirr_ino is
++		 * gone, so the mirror inode is only released after this
++		 * commit.
++		 */
++		ntfs_commit_inode(vol->vol_ino);
++	}
++
++	/*
++	 * Release $Volume while the mft inode is still available: if the
++	 * commit above failed before it could clear the dirty flag,
++	 * ntfs_evict_big_inode() commits the inode again on its way out,
++	 * and __ntfs_write_inode() needs vol->mft_ino to look up the
++	 * runlist of the record to write.
++	 */
++	iput(vol->vol_ino);
++	vol->vol_ino = NULL;
++
++	if (vol->mftmirr_ino) {
++		iput(vol->mftmirr_ino);
++		vol->mftmirr_ino = NULL;
++	}
++
+ 	iput(vol->mft_ino);
+ 	vol->mft_ino = NULL;
+ 	blkdev_issue_flush(sb->s_bdev);
 -- 
 2.53.0
 
