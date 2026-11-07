@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061680;
-	b=l4Mw5P6Lk8VzYTPV+bLiSduEpAB+qbNOqN1xsNDASR1Y5O+azMV43pONZ6aA9wi6LAVE
-	 +3nnxl3NXyYd+0JtZDJ/msa6FMRIhpTE7gpuTHFK94iyZBT9RAt2r0rVm3mRddmuiuGkx
-	 ZP2CF6JRaT6n4B9pN5QdjyjMsOHIdmzANbdPh9PCz35ePg6JFQKBja4gZ5Mv8qQS8kz8W
-	 s5s0ERzOvRN8+lg4NmIKdV94NmPz+wN51fxGSAXma7YNhfSwA9yUUIoHv2si3mJLkYUBI
-	 LgxwVk9K9yjKYoUPxLhanRE8DhcGhp/HJCVwQ00HWyNYSLlsFImMJcWoLXBv5b6oH9Q==
+	t=1794061681;
+	b=LjU8E8wiHowYE5XecHj8X4CkTr5PfavQW13QssyWyV4AG20uWsYEP8/oKWI3vqjGko59
+	 0/RKYDFOlGvcutSrJtR3jSby7ape+Pj39jPcjqXX5MYTaxHFhCDOUst2VKiR8DnzWsF9r
+	 vZsBgaty5vDYubL/SdglKgyJ97sc5SLfe0qEcenPyaJ+94z3K2JmgkoQF5TVSVQobWswN
+	 OjIzn3VkQjtco/HPoHWMT109pLUnXv8iflindnXUO2wBKhy+r5eBShc9a00bFczOKhivw
+	 NhKWIGG+7cuNEvwxIt21ncHp13EhdJDi+c8v0csAYhvpQdR/5G9T5cOkG6vyJkhbXNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061680;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061681;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cB7LMLizNmexMKoEzFGV2+FYf26ayD2swAzalKasjMY=;
-	b=G7lEttScFa5Wz7II3JczLIBkFy/CTnRUY3Zh4O6MiUbOc4JeZMdaGfHzV2Hkx1hwKBTe
-	 Tqkifn0vsw+oTrzilsil3tX3yMQaGnwAnEt2Yk1yrrOOHRHMUY28eDz+tDUBIyCyBdBTT
-	 uyfrxxzvJ+0d906cRUpvQdqEcKGz5HDhGY5/Ky3fdSqGHblZlM48/esOoqC+52oYkUAqV
-	 wo8H5SEsVWf7zxjZ4Vn8ZZo/LXp1vl75BwjqgmOmT0pW/aFpcmoJyoF1ldAw77lII2eii
-	 id1g8GX18eNhzGVUsU38ubadmOGklciHT+22MRUnGAQVEI+sY4CeYgZeL04yRhxVa7w==
+	bh=atBqLDt2AR0xbu9dqchtFs6DBn4e8l0cs23qbRYH4i4=;
+	b=y4PiRTI9NRJwEI/Nd6IYyMEJco1x3EvyaFBy4rWDtjqV2RlInN3sUK8B3vu/Tp+m0Hgt
+	 C5fye3C/uQoh+MpsnEGLW4BAHf5Em2WnxyY0jd3HsAC07pqIBe4y7uCftxYlkEt6gQDxo
+	 reYFPmZUhNmBQUcpT5IixL2XyADrG26ngk9guVls54uoKsHunHGI451243Chg9QRwQlAP
+	 YgDtqB/uShHlclvfBUMNL6upiusgNOOmz7y7igz+jI6hZEcitEGecH+az3IKbWbb98o3O
+	 56FJgq363FHYWmyeXeoQit1O7iubVDuFjQKpiRtlqs+82g+4xYnxyoYJ8IpcEIGHfjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iZy3eEp/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ol6IhAwW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3486F606A330;
-	Sat,  7 Nov 2026 14:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69CA606A32F;
+	Sat,  7 Nov 2026 14:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZy3eEp/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4D41F0089F;
-	Sat,  7 Nov 2026 14:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ol6IhAwW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6536C1F008A1;
+	Sat,  7 Nov 2026 14:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061679;
-	bh=cB7LMLizNmexMKoEzFGV2+FYf26ayD2swAzalKasjMY=;
+	s=korg; t=1794061680;
+	bh=atBqLDt2AR0xbu9dqchtFs6DBn4e8l0cs23qbRYH4i4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iZy3eEp/Vjvrw85zgZIkg8X5zxyK2UmtNSbk5CJvV4/6s6c8hHWs9I7hAl+XTFxiM
-	 7LVwqMiPj42/EDEhzt99w1Fsl0fh3nn72jznCYhF0JH7umsd9Gu+MYaU9UIKVBUIvL
-	 hlgpbPBMl/vk9DiHxDxY7efvQmGfu3Gjtul5/qkg=
+	b=Ol6IhAwWIVXzHk9RZfSYfjhbx3oDvAycP5sdI0rG5cgZYf1QMfzijrN4AaouwoNn3
+	 u0UoiFQ80mtS3lsdiLHv39hp4QWxHOyiikVujrqtSEX+4IgODmXb8LvkuGZNaX+E04
+	 6b/t6LXSEK5hG4NbAVG5ReDChJuIBTV+g4hIu/yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0731/1536] xfs: bound inode fork length against the fork size during log recovery
-Date: Sat,  7 Nov 2026 08:45:47 -0500
-Message-ID: <20261107135018.037555085@linuxfoundation.org>
+Subject: [PATCH 6.12 0732/1536] xfs: check for fragments when full-extent sharing matches
+Date: Sat,  7 Nov 2026 08:45:48 -0500
+Message-ID: <20261107135018.070542358@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,75 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 9232301894a06e664d8de2da97175cf98419bd16 upstream.
+commit 95e213c1ddb40dfb0a8178ed35c9f29992a320e1 upstream.
 
-xlog_recover_inode_commit_pass2() copies an inode log item's data/attr
-fork region into the inode buffer using the on-log region length without
-bounding it against the fork capacity, e.g.:
+LOLLM noticed that xchk_refcountbt_process_rmap_fragments returns early
+if there are enough rmap records that overlap the space referenced by a
+refcountbt record to match the refcount in that refcountbt record.
+Unfortunately, it never checks the fragment list in this case, so it
+won't find the discrepancy between the rmap and refcount btrees.
 
-	len = item->ri_buf[2].iov_len;
-	memcpy(XFS_DFORK_DPTR(dip), src, len);
-
-The only guard is an ASSERT, which is a no-op on production kernels
-(CONFIG_XFS_DEBUG off), and xfs_dinode_verify() runs only after the copy.
-A crafted image with a dirty log can therefore drive a heap out-of-bounds
-write at mount time. The XFS_ILOG_DBROOT sibling already passes
-XFS_DFORK_DSIZE as a bound; the DDATA/DEXT and ADATA/AEXT memcpy paths
-did not.
-
-Bound each logged fork region against the destination fork size before
-copying it, and reject the log item with -EFSCORRUPTED when it does not
-fit. Because the recovered inode is only verified after the fork data has
-been copied in, the checks are done up front, before any memcpy into the
-on-disk inode.
-
-Fixes: 658fa68b6f34 ("xfs: refactor log recovery inode item dispatch for pass2 commit functions")
-Cc: stable@vger.kernel.org # v5.8
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Cc: stable@vger.kernel.org # v4.16
+Fixes: dbde19da963706 ("xfs: cross-reference the rmapbt data with the refcountbt")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode_item_recover.c |   20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/refcount.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_inode_item_recover.c
-+++ b/fs/xfs/xfs_inode_item_recover.c
-@@ -468,6 +468,25 @@ xlog_recover_inode_commit_pass2(
- 	ASSERT(!(fields & XFS_ILOG_DFORK) ||
- 	       (len == xlog_calc_iovec_len(in_f->ilf_dsize)));
+--- a/fs/xfs/scrub/refcount.c
++++ b/fs/xfs/scrub/refcount.c
+@@ -174,8 +174,11 @@ xchk_refcountbt_process_rmap_fragments(
+ 	xfs_nlink_t			target_nr;
  
-+	/*
-+	 * The recovered inode is verified only after the fork data has been
-+	 * copied into it, so bound each logged fork region against the size of
-+	 * its fork now, before the memcpy below can overrun the on-disk inode.
-+	 * The DBROOT/ABROOT cases already bound their copies against the fork
-+	 * size.
-+	 */
-+	if ((fields & (XFS_ILOG_DDATA | XFS_ILOG_DEXT)) &&
-+	    item->ri_buf[2].iov_len > XFS_DFORK_DSIZE(dip, mp)) {
-+		error = -EFSCORRUPTED;
-+		goto out_release;
+ 	target_nr = refchk->refcount - refchk->seen;
+-	if (target_nr == 0)
++	if (target_nr == 0) {
++		if (!list_empty(&refchk->fragments))
++			refchk->seen = 0;
+ 		return;
 +	}
-+	if ((fields & (XFS_ILOG_ADATA | XFS_ILOG_AEXT)) &&
-+	    item->ri_buf[(fields & XFS_ILOG_DFORK) ? 3 : 2].iov_len >
-+	    XFS_DFORK_ASIZE(dip, mp)) {
-+		error = -EFSCORRUPTED;
-+		goto out_release;
-+	}
-+
- 	switch (fields & XFS_ILOG_DFORK) {
- 	case XFS_ILOG_DDATA:
- 	case XFS_ILOG_DEXT:
-@@ -507,7 +526,6 @@ xlog_recover_inode_commit_pass2(
- 		case XFS_ILOG_ADATA:
- 		case XFS_ILOG_AEXT:
- 			dest = XFS_DFORK_APTR(dip);
--			ASSERT(len <= XFS_DFORK_ASIZE(dip, mp));
- 			memcpy(dest, src, len);
- 			break;
  
+ 	/*
+ 	 * There are (refchk->rc.rc_refcount - refchk->nr refcount)
 
 
