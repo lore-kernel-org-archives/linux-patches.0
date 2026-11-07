@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065344;
-	b=E+3bAAHq9HAgnBMcNcVRoN2c+vIQ32DS/HHtRkWZu0hZIaTApm0281k74xnPv7RQJVuO
-	 hWwJG2VQDPxLjh/THzU9mfvHAOgDXEUqY0DofRjhAqW/x2l2xEClcaUGheXuX9454U88v
-	 svk4unth1/YaDL1fxqo7BN0CQJ3NXdpRfDxioTBUpEdZKgDaOkbmvD7md6PA0eM9eKNGA
-	 CbR7q04NUiDz7cEWUz0rj7DkhvsVBzYwoRMI+tCAxV6OOJQNVhcAHleGX2zNQQuBYWHnx
-	 le7+Tqf1nYzZMCSX+A3qRo1doaSnJM1wzol8C6czo8iMv/nTcIgCF4N4jrSBG1ILJbg==
+	t=1794065347;
+	b=Wvh4xvu+grKjrqQkfa5/TpM2y6fmPNs3MkT0fDo0VG5RDve4DqaQVct4xy7dJozDHM+3
+	 HnGrCXyI+s7+OI3hCoM6Fk1yyWRgyjM0qBZznZLaFxaL8KLVP19VjpYKPisNHvBPpBqH+
+	 bO6RV/39SYSwIxpihGe7fQLhfPNzHUYNr/KQUK+A9535GSlJYUsFT/Oj8pFhWzckq4D5k
+	 zTsBhjyN7nT02uiNpnD4nItXEEQIMv/qZK40eTASSBXXazXa/W4SzKHI7liW1KmJ3DhbC
+	 kAxykK4d6Kdq1h9nVcWdbHbkaD4DIqSITPk9K02uRRmQdQRkSLDZnhIzcPEULZAkupQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ptnSOVszen+J8UufZiTa/PBGsc0DD9f8VMO8UPL2QPQ=;
-	b=B88S0m36l0CHFZn4MFssKKhrf2aOLqcnbp5dQl5r0x2HgMd7+B9TvoQDlz5uqU2puFtS
-	 YQC7hU+M4j1ybMaW7RcCleLNdoD+i7PKcRz22ai41uaDaPTPSgeNOXsLYC6UvpBKUstQO
-	 s73oXE1e06tLMrchJrxleRHvbB2y6MTQ7nGdGrSlk1pdA4ce+OHw1spOsvyH6TRexuJSx
-	 qa0v3GCVOKlhgCRLZtaqXECarTLQoB3YH9fCElaparwdhA/g1rgq/X3+ac6gBDO4NgrKK
-	 t4sA/2DLgzsc+/XeQd7OT2RQc2Hn907d10++mfPPfg4ZL4VPc5IVrS6KAEo+RmWPseg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=xSe5juUjy+wJVQv7giNB830ZriESdiPDHakjdO8kwic=;
+	b=Qlfbd06aWPtrNZFN3dazyoboPlEeBSBh+vV0djmJHdMvk+wVpntsOXIu0xRhGCEKUMEG
+	 26sKEeGNh5+qzttvIbExVz07Cw90pf38RNU5+Gb+sCHSm39DBXrHUH6iJjRqAmqXjbJNv
+	 DUBJzQbPmgZBBBhUpFTf6pMXIE+HA79sVIPgC9vl9eGjPpQYkzWOJmJdL9N76WgC5GPM7
+	 jy+kD5Gg6eEftWIvltLslUOdNcGvaHQjccJthbhlAKkDwVfs9tlgLUIxp29GDObtO/te5
+	 6seT4bHcwdK9OdGgPCSDD+Tj7KX1Le0tmKTkLppgEA0hiZsw67QyPMNO54Te0c3Z7UQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dgF5sVaN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fs4cIaNZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FCE606A326;
-	Sat,  7 Nov 2026 15:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5EA606A326;
+	Sat,  7 Nov 2026 15:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dgF5sVaN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CB61F0089F;
-	Sat,  7 Nov 2026 15:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fs4cIaNZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF7C1F0089F;
+	Sat,  7 Nov 2026 15:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065344;
-	bh=ptnSOVszen+J8UufZiTa/PBGsc0DD9f8VMO8UPL2QPQ=;
+	s=korg; t=1794065346;
+	bh=xSe5juUjy+wJVQv7giNB830ZriESdiPDHakjdO8kwic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dgF5sVaN4AgPQf9I0B6FZhXSCfCwuHR3VlNF9KHv3gy/40cyhb2SksImYNw9UZmAf
-	 mt1Qb4/a4igBJU4VleJoOAi60piCMfLEJkl171Te4LNWN2Tc8tSNtkWgbZDr6bLH4i
-	 5aJoUNozZ8s0EiLtK8ViK2v8k1vjiqq2kmu3Uq2w=
+	b=fs4cIaNZybtxMGIARv6b1rSVO8TglfGuKoRDIbmQess1UJJ7YKcxyH0aVLXTSAD0O
+	 eE0GREPR8ycV4QzA36f3IbpVa2zq5SfqskbeAecLpVbIRmE4aW3f1Ymnvqa0CzP8Yp
+	 EZ3/TTp2YfeD5YUYPSrZykEE6Z5ZPkOMSvmaCNFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Jean Delu <jeandelu@tutamail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1033/1257] gpiolib: dont report -ENOMEM for a requested line without a label
-Date: Sat,  7 Nov 2026 08:55:29 -0500
-Message-ID: <20261107135007.853882731@linuxfoundation.org>
+Subject: [PATCH 7.3 1034/1257] parisc: eisa_enumerator: Fix out-of-bounds reads of the EEPROM buffer
+Date: Sat,  7 Nov 2026 08:55:30 -0500
+Message-ID: <20261107135007.879562517@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,71 +62,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+From: Jean Delu <jeandelu@tutamail.com>
 
-[ Upstream commit dae739137441667d67fbfcc4d303a0ecc6618662 ]
+[ Upstream commit c0a3e153804f0c14f4159ddbd2b73483c9cb3577 ]
 
-gpiod_request_commit() sets GPIOD_FLAG_REQUESTED, calls ->request() and
-only then sets the label. A line in between has no label, so
-gpiochip_dup_line_label() passes NULL to kstrdup() and returns
-ERR_PTR(-ENOMEM), which for_each_hwgpio() then passes to kfree():
+eisa_enumerator() trusts the contents of the EISA EEPROM.  The number
+of slots is read from the EEPROM header and used to access the slot
+records at HPEE_SLOT_INFO(i) = 20 + 48*i within the fixed-size
+eeprom_buf (HPEE_MAX_LENGTH, 8192 bytes) without any bound check.  As
+struct eeprom_eisa_slot_info is 48 bytes, only 170 records fit into the
+buffer, but num_slots is a u8 and may be up to 255, so a corrupted
+EEPROM makes the code read up to about 4 kB past the end of the buffer
+(e.g. record 254 is accessed at offset 20 + 48*254 = 12212).
 
-  BUG: unable to handle page fault for address: ffcc73074355ffc8
-  Call Trace:
-   gpio_sim_dbg_show
-   gpiolib_seq_show
-   seq_read_iter
+parse_slot_config() has the same kind of problem: it clamps
+config_data_length against HPEE_MAX_LENGTH but does not take
+config_data_offset into account, so the parser can walk past the end of
+the buffer even when the offset itself is valid.
 
-Return NULL for such a line, as for an unrequested one.
+Clamp the number of slots so that all slot records fit into the buffer,
+and hand the number of bytes actually available to parse_slot_config()
+and bound the parse by it.
 
-Reproduced with gpio-sim: reading /sys/kernel/debug/gpio in a loop while
-lines are requested and released oopses within seconds; with this
-change, 100000 cycles pass.
-
-Fixes: 35b545332b80 ("gpio: remove gpio_lock")
+Signed-off-by: Jean Delu <jeandelu@tutamail.com>
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20261020-gpiolib-chip-removal-v3-0-aambrozewicz@nvidia.com?part=2
-Assisted-by: LLM
-Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
-Link: https://patch.msgid.link/20261022083343.3905973-3-aambrozewicz@nvidia.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/parisc/eisa_enumerator.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 239c0d54843b3..226ed5b8d4442 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -2719,6 +2719,7 @@ void gpiod_free(struct gpio_desc *desc)
- char *gpiochip_dup_line_label(struct gpio_chip *gc, unsigned int offset)
- {
- 	struct gpio_desc *desc;
-+	const char *name;
- 	char *label;
+diff --git a/drivers/parisc/eisa_enumerator.c b/drivers/parisc/eisa_enumerator.c
+index e0a57086a8a86..011b9ac6f97be 100644
+--- a/drivers/parisc/eisa_enumerator.c
++++ b/drivers/parisc/eisa_enumerator.c
+@@ -311,6 +311,7 @@ static int configure_function(const unsigned char *buf, int *more)
  
- 	desc = gpiochip_get_desc(gc, offset);
-@@ -2730,7 +2731,11 @@ char *gpiochip_dup_line_label(struct gpio_chip *gc, unsigned int offset)
- 
- 	guard(srcu)(&desc->gdev->desc_srcu);
- 
--	label = kstrdup(gpiod_get_label(desc), GFP_KERNEL);
-+	name = gpiod_get_label(desc);
-+	if (!name)
-+		return NULL;
-+
-+	label = kstrdup(name, GFP_KERNEL);
- 	if (!label)
- 		return ERR_PTR(-ENOMEM);
- 
+ static int parse_slot_config(int slot,
+ 			     const unsigned char *buf,
++			     unsigned int buflen,
+ 			     struct eeprom_eisa_slot_info *es, 
+ 			     struct resource *io_parent,
+ 			     struct resource *mem_parent)
+@@ -333,8 +334,8 @@ static int parse_slot_config(int slot,
+ 	printk(KERN_INFO "EISA slot %d: %s %s ", 
+ 	       slot, board, es->flags&HPEE_FLAG_BOARD_IS_ISA ? "ISA" : "EISA");
+ 	
+-	maxlen = es->config_data_length < HPEE_MAX_LENGTH ?
+-			 es->config_data_length : HPEE_MAX_LENGTH;
++	/* never parse beyond the data that is actually in the buffer */
++	maxlen = min_t(unsigned int, es->config_data_length, buflen);
+ 	while ((pos < maxlen) && (num_func <= es->num_functions)) {
+ 		pos+=configure_function(buf+pos, &function_len); 
+ 		
+@@ -491,6 +492,13 @@ int eisa_enumerator(unsigned long eeprom_addr,
+ 	printk(KERN_INFO "Enumerating EISA bus\n");
+ 		    	
+ 	eh = (struct eeprom_header*)(eeprom_buf);
++	/*
++	 * The EEPROM contents are not to be trusted: clamp the number of
++	 * slots so that all slot records fit into eeprom_buf.
++	 */
++	eh->num_slots = min_t(u8, eh->num_slots,
++				(HPEE_MAX_LENGTH - sizeof(*eh)) /
++				sizeof(struct eeprom_eisa_slot_info));
+ 	for (i=0;i<eh->num_slots;i++) {
+ 		struct eeprom_eisa_slot_info *es;
+ 		
+@@ -503,7 +511,8 @@ int eisa_enumerator(unsigned long eeprom_addr,
+ 		
+ 		if (es->config_data_offset < HPEE_MAX_LENGTH) {
+ 			if (parse_slot_config(i+1, &eeprom_buf[es->config_data_offset],
+-					      es, io_parent, mem_parent)) {
++						HPEE_MAX_LENGTH - es->config_data_offset,
++						es, io_parent, mem_parent)) {
+ 				return -1;
+ 			}
+ 		} else {
 -- 
 2.53.0
 
