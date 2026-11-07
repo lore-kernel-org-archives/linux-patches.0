@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064496;
-	b=jJcrHmxHpeNUTBXqpFXr1x0I7i+ouDgcArlfUTYYFT+ybvIZcKfA9+rtpRgADA2kFiSs
-	 RsVBToIjc1wNxtyJI448UGZ3bc/2H1u5gjBfViRiOV+Zec0XrqXdGflzECykzjL5GMibF
-	 t7JazoIQtASjF5KiTMVWBeKaPzqem5osGK50Ug8rA2yUrfOS3FpdOTAr0qFMnggncQXoJ
-	 pXlAdicB8opfJ2OL9MjmhrgRw1WW9kW/RErh7c3K4yMCFmtM+bGMQ2BN1bMXt6IeamFjZ
-	 1BftSWqVbQ6kUuQngaIoVuRUQXLka9eAR4cH4+aDP5qwIOM7Stq87CzwJEKqyac3bUg==
+	t=1794064498;
+	b=q05y6x0aQhCDVVyfcY4ZNqoYgIE9rEOzw9+WgfocnJkioK76lUhqHSX+kH8I9QzoUzp3
+	 7s4JpZSIKShLvrbIdyhsKUjQ2P3MWrR138f58SjrP3SXLkac+5Hv2vspDremT/kyBkLCW
+	 0pxakkBN+4n2J8ZY3BPUjzBdhPmv7dwAYvlrG5v3mc/zqJlBN5vX+fYstMIdHwpAeqfUf
+	 2eau8ZvSZWgXm5wkzvPZJMujCBPVfhrkrCmlE7t1eHioRMu8r8grzx+pA7J2khH8CAtsh
+	 hjSseSBCLZ1ctfGlQLXc3U1yFE2q9LXucPIIidJVG+UpLBXq3kpsZ2eT2odtCFSCvjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064496;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064498;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tw+BCoNBCGQ7vCsUUrgPkWHUbQT9EKBZKTOfTXpTpbA=;
-	b=NTWqDjRNs6Qe/3M6CmrEspk0N6QDYivnnVnL2UBjTWdrOtS9dI4USdvIrhi0b2IUjpcx
-	 MGZynL0sNDhZdobMBqUzvLowRjIEgeTJksu67s3hscYlGZjUygwJ+q7cWnc5+y8dwFvFm
-	 z3NimDAeW4N5HJZKXvkXfnFkarhBnxOlWDkwy1VGpHxh2Gki3RZOL4eRDrqzEh/pdpsEI
-	 MocK9JlmgMVOONdQFTZRmllRf3WWDrD0G55F+sVJ6cXNXduLhvxNTdWU+Gd+Cpcqo3+kS
-	 3g4jqTecszEGnC/q2hWrsvr1wAR5JiUD4Nqu5gx5AEVT20Y+FV0hhyKTlSmaKU01/4w==
+	bh=KdBbrZ9hOV7leiB9WDbbiPDQeiC78GESPDnc0Zw3z5E=;
+	b=xfwbE2Ma+X9S6hh341RrgdbZFG+GXL8RW4zbouVw8hOyCYLeeIry3rBM0ehi+qn6Oefc
+	 liCqVLcC7QDe4K66f7yvB8y7JMJLUEwfrJQCIYvSOMdtHpXG7Gk403nL5OnQIoc5GmE6o
+	 1C9UmToU5swZQWEmqXVyTiH9ulAKknLIAm530KyXj0iVtgh+hyCtur6ckSNSAXFWqw97y
+	 QErRTId79UNlc/a9CrOOR1672mVqLKUMqXHJPCNUyXXfR0J5Jd6mYmH+VhsZOCbWIDF9S
+	 T3boN+i8xSeZwIqIvNYmaWiLd2w6bam/TENt077qJajXTG97OTEU3C/owmOXI7ZEVnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wiJO99qs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3OKegMc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83967606A336;
-	Sat,  7 Nov 2026 15:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CAE606C03F;
+	Sat,  7 Nov 2026 15:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wiJO99qs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323EA1F008A1;
-	Sat,  7 Nov 2026 15:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3OKegMc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F2D1F008A1;
+	Sat,  7 Nov 2026 15:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064496;
-	bh=Tw+BCoNBCGQ7vCsUUrgPkWHUbQT9EKBZKTOfTXpTpbA=;
+	s=korg; t=1794064497;
+	bh=KdBbrZ9hOV7leiB9WDbbiPDQeiC78GESPDnc0Zw3z5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wiJO99qsRVte9/ayHbP+c6aWAWlACzhk10s5mMqEN0euzBRj+DNtZU5i7Ypq8dU/r
-	 +aALqEPaCW5s9wDzQ4Srxz1uuzEHEs217tsoKt2w/4yMCn7XzvE6eAFqJ1yq4CNWiI
-	 YDUDV1agYebzXh+6awVrxAYVLGvD1DDWr/ICR32M=
+	b=x3OKegMcUWIlkjkTvThtNzUR/tgO1AyI07HuQqh+LPZTaS882Ca2T6OkV8g/WNBvh
+	 F14OoidN2ZrpUioPGDIL4uI9NGJDRFVzpPWFTviiPt6vl06tLCylRJHOebFpKi8ple
+	 tSngwD0WwjaKqpSIS0l5+5ARzIwk6wLZ18C/v8/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Usama Arif <usamaarif642@gmail.com>,
+	Bradley Morgan <include@grrlz.net>,
+	Ingo Molnar <mingo@redhat.com>,
+	Kees Cook <kees@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0504/1257] mm/damon/core: skip applying scheme if region split for quota fails
-Date: Sat,  7 Nov 2026 08:46:40 -0500
-Message-ID: <20261107134953.347816794@linuxfoundation.org>
+Subject: [PATCH 7.3 0531/1257] fork: honor task_structs declared alignment
+Date: Sat,  7 Nov 2026 08:47:07 -0500
+Message-ID: <20261107134954.076151046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,64 +73,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 90c2fa6adfed7abe0935506a43cdff3a05c1fff0 ]
+[ Upstream commit 9decb604dc064099a6249150f0c4909525ed657c ]
 
-Patch series "mm/damon: fix DAMOS bugs in core, paddr and vaddr".
+Since commit cb7ca40a3882 ("x86/fpu: Make task_struct::thread constant
+size"), struct task_struct is declared __attribute__((aligned(64))) on all
+architectures.
 
-Fix misc bugs of DAMOS.  Patch 1 makes DAMOS less stress memory allocator
-under extreme situation.  Patches 2 and 3 fix wrong folios walking in
-DAMON_PADDR.  Patches 4 and 5 fix wrong folios walking in DAMON_VADDR.
-Patches 6-8 handle extreme and unlikely memory situations that can cause
-divide by zero and underflow.
+But fork_init() still sets the task_struct slab cache's alignment to
 
-All bugs are discovered by Sashiko.
+	align = max(L1_CACHE_BYTES, ARCH_MIN_TASKALIGN)
 
-This patch (of 8):
+which is smaller than 64 on architectures whose cache lines are below 64
+bytes: e.g.  32 on ARMv5.
 
-damos_apply_scheme() splits a region and apply the action to the subregion
-if it is needed for not violating the quota.  The split operation
-(damon_split_region_at()) could fail for allocation failure.  In the case,
-the quota could be violated.  From the user's perspective, DAMOS becomes
-more aggressive than expected under the extreme situation.  Handle the
-failure.
+In practice plain SLUB happens to hand out 64-byte-aligned objects anyway.
+With CONFIG_SLUB_DEBUG_ON the red-zone padding shifts objects to the
+requested alignment.
 
-The user impact is not critical.  The failure of damon_split_region_at()
-is unlikely since it is arguably too small to fail.  Also DAMOS being
-aggressive is limited to the single region.  Users can set min_nr_regions
-to set the maximum size of each region.  If it is reasonably set, the
-transient overhead shouldn't be critical.
+With CONFIG_UBSAN_ALIGNMENT=y a boot on QEMU versatilepb (ARM926EJ-S,
+v7.2-rc2, gcc 13.3) floods the console with reports like:
 
-The issue was discovered [1] by Sashiko.
+  UBSAN: misaligned-access in include/linux/sched.h:2087:9
+  member access within misaligned address c295d7e0 for type 'struct task_struct'
+  which requires 64 byte alignment
+  CPU: 0 UID: 0 PID: 15 Comm: pr/ttyAMA-1 Not tainted 7.2.0-rc2 #1 VOLUNTARY
 
-Link: https://lore.kernel.org/20260901131850.98037-1-sj@kernel.org
-Link: https://lore.kernel.org/20260901131850.98037-2-sj@kernel.org
-Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org [1]
-Fixes: 2b8a248d5873 ("mm/damon/schemes: implement size quota for schemes application speed control")
-Signed-off-by: SJ Park <sj@kernel.org>
+Set the slab alignment to at least the type's declared alignment.
+
+Link: https://lore.kernel.org/20260710123957.31774-1-kmehltretter@gmail.com
+Fixes: cb7ca40a3882 ("x86/fpu: Make task_struct::thread constant size")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: <stable@vger.kernel.org> # 5.16.x
+Reviewed-by: Bradley Morgan <include@grrlz.net>
+Assisted-by: Claude:claude-fable-5
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 3 ++-
+ kernel/fork.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 74d22a596fc13..b3390978581a6 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2626,7 +2626,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 					c->min_region_sz);
- 			if (!sz)
- 				goto update_stat;
--			damon_split_region_at(t, r, sz);
-+			if (damon_split_region_at(t, r, sz))
-+				goto update_stat;
- 		}
- 		if (damos_core_filter_out(c, t, r, s))
- 			return;
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 26b666e98bb8a..8ad34646962d2 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -858,7 +858,8 @@ void __init fork_init(void)
+ #ifndef ARCH_MIN_TASKALIGN
+ #define ARCH_MIN_TASKALIGN	0
+ #endif
+-	int align = max_t(int, L1_CACHE_BYTES, ARCH_MIN_TASKALIGN);
++	int align = max3(L1_CACHE_BYTES, ARCH_MIN_TASKALIGN,
++			 __alignof__(struct task_struct));
+ 	unsigned long useroffset, usersize;
+ 
+ 	/* create a slab on which task_structs can be allocated */
 -- 
 2.53.0
 
