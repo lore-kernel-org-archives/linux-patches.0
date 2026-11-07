@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062885;
-	b=1Eeby5N6MHODOaO6tYDkcz/zK1G3kNryy+EVwads6E2sEuSfqKPdwczwWkiomn6AY8rU
-	 qVvAnXkgA/xDJsunhFwhkLcwHr/MaOVuSPW1pCpt2hZX3JYI/ra3SQJZ85c3PBm13Pm4q
-	 mfdI7CBzqliYMa/CHYmdm66TszBTHN6vIYCMb/ONHTdAEK8LuH3Ne5b8bgEGBBg8y9jhM
-	 0PObVjy/JtlLzlcLTXMJNjahdzWn4GOMuTViw+D55HVTnrHvmfxV9Qpk0ysj2Z6c+JO9t
-	 Dqwhc2cx9feKC52cRp7b+n+pOpQd434NbyoRcWIqDpkgrb1OZcHIF2wf7iHgvB0DC9Q==
+	t=1794062886;
+	b=FbX2mQho0lY3OwDN7IG9m3Z9RAPgV1IyZiUzVv4BuypyglzbbUhfbuCZHzJc44rl3iR2
+	 sPWwsvpcDk4rLBmU78K23MZnyTxd7/bPom0mUu9qg3Zy/06/PNkWJOuJ9ZV98M7udh6mR
+	 uyqZmSciYYfQYzCXbJ42bX1j1xbooI88pFqDQh34UE0+kcnMZ4fqLjYb1HiA9EoGU5hxv
+	 Mt33j9L8hrygAsGJbt3gmL7QIrHaGJ9U/cClfPEiJENG+9UUkaH6AXIPdHIEE27ai1aiE
+	 YAslNfqCsG/8Bm6Z7mn7WFFmlTWxAxFRlufAebBjBOcDaxMCFIJ/y5qmQG3BSvT3Nzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062885;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062886;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gn634J/7olAmzweYuKZb2v/WKk/jTtLeMlIod6FbBs0=;
-	b=RfPfYvZxCPJR2F1T3tmzWbGkriVf4tfBck6lqYybjzzvrFEGDFTBc9Pifpx6+fBw82Z1
-	 sk7fDU9P5eZqBbXkzKE585CgCXoIvbYOKUgTVtPrwes4GZ0cVV1Rc7iNLplRdvDvXjRUb
-	 69VwBWdGnXlZYzJ0QMcz2dcb7e6OQrE1qdYEnREgvDrf0n4Sd69SaqGd46Ch96L4sHOCL
-	 7Blv7IfVmx+DbMeYBWNNgon4qsFWImrV+W3H73G9V4tBhrh6X6lm2ml3TZO2T86nULDX6
-	 vAmCzvgAFl9Nj5PTKKHtxiWMc762YxF95t+SygRcUqowsNj8rJBfb33UrJj+jBVw6bg==
+	bh=vR9Ndl4+wBCFaRS7zldUr5RV+/k91ZtVDqVN4ldec9s=;
+	b=st/5is/CJKy68wnT2Q3tQhtoGnJOZ2PyzG3pZnQNZTms8sctUFOa/XKDLNo2pLAYicNK
+	 sqRH/LWZcO/O2iWPJkZbthO3m735nlctpq544l71mTAXgS7AbeEcbTwRXUPpcvh/XTkZz
+	 1at/gBhEY21csVHK1fKGK495UoRekT9pE7EwBkDiue906k2Gi00FiET+5VNfWDrTq+h4e
+	 dJuVdqi2ZTWu3bns9K0ppz0ijwIjd6nQ/0YJqrSMuL8JcHMewnJkbzgLC3uCWVGYfy1zr
+	 igOO6P/X4XpLSXwC0obyqSOuEx8BBHY8fHQl9pgvKCe2JFe0ablzAmtGugrNPWZ5GrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X4xPmFMa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tRuPMr3z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E103606A32C;
-	Sat,  7 Nov 2026 14:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED94606A32C;
+	Sat,  7 Nov 2026 14:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X4xPmFMa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C7D1F0089F;
-	Sat,  7 Nov 2026 14:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tRuPMr3z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8171F0089F;
+	Sat,  7 Nov 2026 14:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062885;
-	bh=gn634J/7olAmzweYuKZb2v/WKk/jTtLeMlIod6FbBs0=;
+	s=korg; t=1794062886;
+	bh=vR9Ndl4+wBCFaRS7zldUr5RV+/k91ZtVDqVN4ldec9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X4xPmFMaB+5mbFExjVIVFBYfFDJQ856dqIPwLiPGXKqJqLEUDe04dD/g4aHHny9sX
-	 KF+SbdssNpGxe0VzYtUPqSBWub8Szz1zsjGTzJTLhAfKJSYf8KPoPGX855yyuFfNYT
-	 7mUwduM6rCnqROwvoL0kkbVnVfa3PWGZ1Yv3n1O8=
+	b=tRuPMr3zJCRhRo7rK5LBVnVsMuPhNQUDDkt3rFa68JqHtKflM337Oq0SIYonJpV/T
+	 7vaTJnhjRjZp5gPEoQcv2sWDZX8Uz8I4+fxyjmzAriGdLsxQzkgmFjRtswtQfR8+aR
+	 vk8Y3zBjwhZqXuZL7ODg+IX8c3TiGA+jHEz2gaG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 164/869] crypto: zynqmp-sha - fix NULL pointer dereference in init_tfm
-Date: Sat,  7 Nov 2026 08:47:26 -0500
-Message-ID: <20261107134857.819146464@linuxfoundation.org>
+Subject: [PATCH 6.18 165/869] crypto: omap-des - fix crypto engine cleanup
+Date: Sat,  7 Nov 2026 08:47:27 -0500
+Message-ID: <20261107134857.846248310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,37 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 016f22d2268e02df705868110fe4e402b51bfffc ]
+[ Upstream commit 5d69ed4cd4f9c68ff9a6ebb2e8a1079223a4ec6e ]
 
-zynqmp_sha_init_tfm() checks crypto_shash_statesize(tfm_ctx->fbk_tfm)
-before assigning the fallback transform to it, which dereferences a NULL
-pointer since the transform context is zero-initialized. Use the local
-fallback_tfm pointer for the size check instead.
+omap_des_probe() allocates and starts a crypto engine, but the remove
+path does not call the matching crypto_engine_exit(). The probe failure
+path already performs this cleanup.
 
-Fixes: c1dd353d18e5 ("crypto: zynqmp-sha - Make descsize an algorithm attribute")
+crypto_engine_alloc_init() creates a kthread worker for processing
+requests. Without crypto_engine_exit() during driver removal, the
+worker is left running after the device is removed.
+
+Call crypto_engine_exit() after unregistering the algorithms and before
+tearing down the remaining request handling resources. This stops the
+engine and destroys its worker.
+
+This issue was found by manual code inspection.
+
+Fixes: f1b77aaca85a ("crypto: omap-des - Integrate with the crypto engine framework")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <blum@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/xilinx/zynqmp-sha.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/omap-des.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/crypto/xilinx/zynqmp-sha.c b/drivers/crypto/xilinx/zynqmp-sha.c
-index 5813017b6b79d..cd051e1f42753 100644
---- a/drivers/crypto/xilinx/zynqmp-sha.c
-+++ b/drivers/crypto/xilinx/zynqmp-sha.c
-@@ -59,7 +59,7 @@ static int zynqmp_sha_init_tfm(struct crypto_shash *hash)
- 		return PTR_ERR(fallback_tfm);
+diff --git a/drivers/crypto/omap-des.c b/drivers/crypto/omap-des.c
+index 16d5c617d5ee8..96b399c7eca69 100644
+--- a/drivers/crypto/omap-des.c
++++ b/drivers/crypto/omap-des.c
+@@ -1084,6 +1084,8 @@ static void omap_des_remove(struct platform_device *pdev)
  
- 	if (crypto_shash_descsize(hash) <
--	    crypto_shash_statesize(tfm_ctx->fbk_tfm)) {
-+	    crypto_shash_statesize(fallback_tfm)) {
- 		crypto_free_shash(fallback_tfm);
- 		return -EINVAL;
- 	}
+ 	omap_des_unregister_algs(dd->pdata);
+ 
++	crypto_engine_exit(dd->engine);
++
+ 	cancel_work_sync(&dd->done_task);
+ 	omap_des_dma_cleanup(dd);
+ 	pm_runtime_disable(dd->dev);
 -- 
 2.53.0
 
