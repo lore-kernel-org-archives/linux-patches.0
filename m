@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062597;
-	b=CJigas4FuNrwl4KW7eUbaiF6BChsZvekYkmAIPB4GBbPtrQPNFL0KMFSTy6bb5H3T2/W
-	 cSersFqRq/rgmFPuZuhvhmbt76mOTo9R7DfMGtXlXdpVrfiyv2kkzmDBNzf7XcVRgt8sc
-	 ZKkbeDPWGirB9aUD9wZfK0OD8pvDtYfMnLX4RUN15laOKJcL+yb30BL/atsZIdI1RlqNo
-	 fi88WJhZiEBcZ4evi8AMJC6JNJezS7Do7vXWONniw4dJDy63bh7EoUQXNKqupHhVwxFW4
-	 sQjZJMEAIFqHPclrBwI6n9bOIeq64BrWQDAisdM945vjCJ50vNryCMkFTyjq1U2XOtA==
+	t=1794062599;
+	b=1hBrVEHFwE4TzwKXSGKrxt9fh1XiJv3iC4ThZuJ81Nua6qryCwRi5jPEwOppb2wVVjWa
+	 TidsqQJCk9VFTK+0Of/vpD0dv/l9iylKHiPfxmWftAeQMrjr0/r9HkFZK2bKc1kr+nxlW
+	 1CntPTc0lLMfSVuiaNNZFoFF2TDHUdPTg2slethRQHiMCYnkRKD4S1KNJEr12Wz/Y6Hvm
+	 kfdVDo+MVTOycYwNwctEhY07geXZE+vk8NZfW5hcvQQwNmiSsUWupdkp/1mF0z4U4gx9V
+	 tGzYowa9vAzlWcY8P70oQGac8aUHxzJo6wgO5f8KeNK1s/9Q5MA2LPsWmpv7/tew1NA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062599;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kRAGwKXzm29apSHO4vC5RSYddwhoAYUO+qbI40cizSo=;
-	b=bD9pKxlzfQEF6GD4GBoECBbQAxz2wx40C3msCbSHl3bih+TxXc7TloSoHEDD2KEaVEz2
-	 p/A/LJlpvTnfZ6azRisokVBHifNbjpNdDzFK06LYgcu0Kby9e3LpQXgleEFmSg2Y+IDkO
-	 2Tv3u1QsOkp7Y5Di4uVb/h4GA8H8I6vX4MM/0HbeN340EWWrpjSEBYhau6FL9QzYX44BV
-	 1a0NGVwkKaFpsrSiUgkQ8dvQJtm74SptciHSkN7oypTMo4y2w6VW6QmTpevAgdIm3F7QK
-	 W8Xt3PKqUTLztyopLmf2u3n0NS4d8MghM3SOHhxAyj3NjqXeD2YEHrrIM5iHE82GT5Q==
+	bh=rEKs8w42PNHfu7UvQILpp6w9ygUzYjzBvNTikpUjbkM=;
+	b=hFz4+qVjrR+W1XCWzY3FGhGdoAVMtNgngy9goYu5unWiLI4RQY12/PQVISunLKgXuD6w
+	 OWijtHMKgnMTEnXduw6u6O/c1OmfseG4Ei1B/Yp9OyW7gfjLZh9MAO8qyCv3dB0N+eDYG
+	 z/QLufJQV7pe0LNh8ghBZ3jxTVl3PRI96rABKsdFCJjQAXe3TgAeC2qFpaWHwd/5zhun6
+	 foVETKWBt/2m8jLyDRnBPcHHGN7HmTtdY42sJjYekuw258BsrJH2rXnr8hg3ELPQW1gdV
+	 HNSFHKNFnY7RlA85ftQHLHbJJtRLkxDW5wM0k6jRAtfS1LCw57UTiaZxoaHySgWW+QA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q3GuwPZW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3G9bceR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B21606A330;
-	Sat,  7 Nov 2026 14:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF6D606D81A;
+	Sat,  7 Nov 2026 14:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q3GuwPZW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD051F0089F;
-	Sat,  7 Nov 2026 14:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3G9bceR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0901F0089F;
+	Sat,  7 Nov 2026 14:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062597;
-	bh=kRAGwKXzm29apSHO4vC5RSYddwhoAYUO+qbI40cizSo=;
+	s=korg; t=1794062598;
+	bh=rEKs8w42PNHfu7UvQILpp6w9ygUzYjzBvNTikpUjbkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q3GuwPZWdrzunRK4rVqFeJy8lGmxfvqW6IW+r9tRM+1Wx9MtIkxDuu/iIkz91aCUr
-	 quZ2Itf4kal4lXhyS8gn45naLfo3LBe95Skdj9BlyLa+mOz6eiPtA/GbYu5+oEzj3H
-	 uFDtrtpzWlnBkaNVIzSGhiOLjD3m+uR2LrKoEV2A=
+	b=g3G9bceRmKegk7lnXt1NXs5tsvOh+4+JA1WMzUNM6mj62u4mJm2p1gk4LXbDB8fxq
+	 ckBan1XziVs3lI7/PNxWQU3fYa5j+0hR9VqpubBRWiWSc/oRhnjrUf6JAaHPPeWufZ
+	 9kI2ex8yOzW1yNp0lhw8xSN5l86xEFXg5QicZQY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sung byeongchan <tjdqudcks0424@naver.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Alex Markuze <amarkuze@redhat.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1472/1536] ceph: validate encoded xattr name lengths
-Date: Sat,  7 Nov 2026 08:58:08 -0500
-Message-ID: <20261107135039.190178691@linuxfoundation.org>
+Subject: [PATCH 6.12 1473/1536] ceph: fix uninitialized err in ceph_netfs_issue_read()
+Date: Sat,  7 Nov 2026 08:58:09 -0500
+Message-ID: <20261107135039.219445185@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,70 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: sung byeongchan <tjdqudcks0424@naver.com>
+From: Alex Markuze <amarkuze@redhat.com>
 
-[ Upstream commit 166375898d29fea050a9abec855da6075050d5c9 ]
+[ Upstream commit 823d21c78453fcdf58dbd8ecefbb41f4f3eb6540 ]
 
-__build_xattrs() advances over an MDS-provided name length before checking
-that the name remains in the encoded xattr blob.  On 32-bit clients,
-UINT_MAX wraps the cursor and is stored as a negative internal name
-length.  A later ordinary listxattr() converts it back to a UINT_MAX memcpy
-size and corrupts kernel memory.
+ceph_netfs_issue_read() declares err without an initializer. On the
+unencrypted, non-sparse success path nothing assigns it, then the
+out: label does if (err) netfs_read_subreq_terminated(subreq).
 
-Check the name range before advancing and reject name, value, or aggregate
-sizes that overflow the signed internal accounting.
+With CONFIG_INIT_STACK_ALL_PATTERN, err is 0xaaaaaaaa (nonzero), so
+the subrequest is terminated while the OSD READ is still in flight.
+netfs then frees the rolling buffer that the OSD iterator still
+points at, causing a KASAN UAF / oops, and finish_netfs_read()
+terminates the same subrequest a second time. CONFIG_INIT_STACK_ALL_ZERO
+hides it because err happens to be 0.
 
-The malformed blob corrupted kernel state in two baseline boots.  It was
-rejected cleanly twice with this change, while normal and length-only
-controls remained safe.
+Restore the err = 0 initializer so a successful submit leaves
+completion to finish_netfs_read() only.
 
 Cc: stable@vger.kernel.org
-Fixes: 355da1eb7a1f ("ceph: inode operations")
-Assisted-by: LLM
-Signed-off-by: sung byeongchan <tjdqudcks0424@naver.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
+Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Alex Markuze <amarkuze@redhat.com>
+Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/xattr.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/ceph/addr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ceph/xattr.c b/fs/ceph/xattr.c
-index defea882812d3..a1e3aed5c277d 100644
---- a/fs/ceph/xattr.c
-+++ b/fs/ceph/xattr.c
-@@ -11,6 +11,7 @@
- #include <linux/security.h>
- #include <linux/posix_acl_xattr.h>
- #include <linux/slab.h>
-+#include <linux/overflow.h>
- 
- #define XATTR_CEPH_PREFIX "ceph."
- #define XATTR_CEPH_PREFIX_LEN (sizeof (XATTR_CEPH_PREFIX) - 1)
-@@ -845,14 +846,23 @@ static int __build_xattrs(struct inode *inode)
- 		}
- 		err = -EIO;
- 		while (numattr--) {
-+			int names_size, vals_size;
-+
- 			ceph_decode_32_safe(&p, end, len, bad);
- 			namelen = len;
- 			name = p;
-+			ceph_decode_need(&p, end, namelen, bad);
- 			p += len;
- 			ceph_decode_32_safe(&p, end, len, bad);
- 			ceph_decode_need(&p, end, len, bad);
- 			val = p;
- 			p += len;
-+			if (namelen > INT_MAX || len > INT_MAX ||
-+			    check_add_overflow(ci->i_xattrs.names_size,
-+					       (int)namelen, &names_size) ||
-+			    check_add_overflow(ci->i_xattrs.vals_size,
-+					       (int)len, &vals_size))
-+				goto bad;
- 
- 			err = __set_xattr(ci, name, namelen, val, len,
- 					  0, 0, &xattrs[numattr]);
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index 611019005f147..aa551d94be1c6 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -352,7 +352,7 @@ static void ceph_netfs_issue_read(struct netfs_io_subrequest *subreq)
+ 	struct ceph_client *cl = fsc->client;
+ 	struct ceph_osd_request *req = NULL;
+ 	struct ceph_vino vino = ceph_vino(inode);
+-	int err;
++	int err = 0;
+ 	u64 len;
+ 	bool sparse = IS_ENCRYPTED(inode) || ceph_test_mount_opt(fsc, SPARSEREAD);
+ 	u64 off = subreq->start;
 -- 
 2.53.0
 
