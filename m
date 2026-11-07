@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064639;
-	b=xxBXzzziTHwxU3Q7KKGE/FLI52hyw4ufgGShZLvkuo5D4MQl8tXImoAf+0GFW7dOaFZ2
-	 6d+ta4pDhBZSoTVhfmxL3AuSx0xQ/NARzbZ/jiGC9lvJehghNFbGg4ad1yD8WEwgzdAWn
-	 QV8+GaMrVs5reOIMbVxMKh5AvABsEyr0y1lr1Pk3uSM0yYH9ZBvn07zNQWR5rTeq6SHgi
-	 foM4yhdO7VY1u7k1HCRjhV2x+1Ncax/zzU6e9bDPrJ4WvI9VPClNMkRCJ/SY4t1OWeKNP
-	 aY7lVDRVLfbBWLvtIL+ugeIaeczetsZ3MZ2UPh6z0WnvIJ+8GU5iifleyY23GrFcWKw==
+	t=1794064640;
+	b=Thd15tDT8HmCQ1X0dku2RrKYYoA+ThRxms4tKL3NGRj/JPZKBQFBOZ/w3XhqYIGjxNfp
+	 ttRMSagk9VdOTs1ffg5z+TFWwTrAsPpuXAaTP0ub2fcmtt95NLrkXfcde/RGSS8W0UYPG
+	 JUnYJuk7HjC3I07sYAFw8CME9wfa5k1gPJ3XfhVuH7FJNJuTRZ7z7uOkLireKTOQfGLLF
+	 I8XedCp1kBIoHC6j+Zuou4r6kcvJm3wQXKblvfAiJR/jsXA4L4aXj1L5hfshLCphPv08r
+	 43VpQ9HrNbItYSknPZsa1tAJlAqiVXPQoRvGl/Pe8yrFfoznhrBbrfDT0SyCfzxxRog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064639;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064640;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rFAh4fhFgav3l7Sr3lLD1Nbowio+9qAvMvvM1T+luLA=;
-	b=4QYLLVx2RBNjZFgu5l5On/4PuRUzb+UypVmNpWntmSt4zYtarZDqgDUjssZQhTRgT2KT
-	 EoVO86HcKCJqzYx4IOy/m3N2xA18CogInXjU3WRQsbiK/x/jVhqqV3L4/pvxWpyPpz0Dl
-	 gE55TA53FvdSOHymbZB1q5vXPGgLvmNNzALCuB7JRZbZ7c7lV352sjQsR6/m527VyswYi
-	 0vFKcacKCXOepx2lpjC9VRBLaV+E2YKP0tNab6cMoixpVjP4APNxwQDksXXTFWhVFmsCM
-	 74opjcBCSw17djDa+WSaBUXQ6sMejyd2ZIUidGo3Cjc++qPatF8Ul2i1JxW7tkM/swg==
+	bh=35xWo8dG0jFHdgttHRB/fPUf/heOWbKZjrACe6O2mkI=;
+	b=WeSOH7fCFVZCwHuka4mRK9oWYLamZzCSIpUAxyeEY9pYy5qzEdsQpB9NmnAHB04G6Lyx
+	 H6m9QiaetncxjpSvlz6QuUlo+SutSH77uiGAE57KWCdQyrikgOCK1DCVRrM1qV2iLpGOs
+	 hk1OL6aN5O2fQd2n/fHdA8CNq6o3VxxHJN2flP0Fb3og/G7kxGgcP7zX0mKTbwKRcXJcF
+	 EU0jZxaBO4MBw2eQclA9xOvD2MvuzqfU62yLR854o/+IiFMeRqDw5KqnQAn5TPD3QMfM9
+	 XuA+h6GHvP88twnOtXRnLIYfeDMRxit7Ixud4kJalSErj1ZC3i+kV7ta4NVUjQUFf/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0GOAlDWI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNUaS0Jh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3D2606A33D;
-	Sat,  7 Nov 2026 15:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67928606A33D;
+	Sat,  7 Nov 2026 15:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0GOAlDWI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6DB1F0089F;
-	Sat,  7 Nov 2026 15:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNUaS0Jh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3FC11F0089F;
+	Sat,  7 Nov 2026 15:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064639;
-	bh=rFAh4fhFgav3l7Sr3lLD1Nbowio+9qAvMvvM1T+luLA=;
+	s=korg; t=1794064640;
+	bh=35xWo8dG0jFHdgttHRB/fPUf/heOWbKZjrACe6O2mkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0GOAlDWIdrPoLCm6sndy8i+dDxyqU8TAqLIZQvBAp3sw2T7xAHqaX0FXeYbtKcpjj
-	 sJkMGk85GTmvjvI5MWTLk6RYQRLTIsrZXCnUkMaoX5iKIUty3XcBQw2WhrYVNmfXfd
-	 i+np0epbGNl5UyqwWoGZLOxtXypysDoQSWbty5Zk=
+	b=RNUaS0Jh3fmj/TrOt8Z72Y2Hifc3kRZfJY/6ODy//eTyPuCPK+0XfOvrDSngsxvGN
+	 YwKqd+71TBeawz9A0ithC5UdtMxf/Gip0ejtd8JjBYfiNw3AockOccLteE3TcBxOeS
+	 UI+ra9Q15FPL8C0UCCm1dy/7UDXX21PR1KmWwqcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Hengyu Liang <hengyul@cs.unc.edu>,
-	David Sterba <dsterba@suse.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0644/1257] btrfs: return -ENOTTY for unknown ioctls on the control device
-Date: Sat,  7 Nov 2026 08:49:00 -0500
-Message-ID: <20261107134957.060886575@linuxfoundation.org>
+Subject: [PATCH 7.3 0645/1257] mtd: rawnand: qcom: fix read location register usage in config_nand_cw_read()
+Date: Sat,  7 Nov 2026 08:49:01 -0500
+Message-ID: <20261107134957.085705634@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,75 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengyu Liang <hengyul@cs.unc.edu>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 9985f1643ac3f8595862e2f82108f0ccae4cf959 ]
+[ Upstream commit 94623942a66e031826756f9c92dbde9a12e2b4d2 ]
 
-Commit 5ab2b180884c ("btrfs: factor out validation of
-btrfs_ioctl_vol_args::name") made btrfs_control_ioctl() store the result
-of btrfs_check_ioctl_vol_args_path() in ret before it looks at the
-command.
+On QPIC v2 controllers, when the last codeword is being read, the read
+location values must be programmed into the READ_LOCATION_LAST_CW_*
+registers. Prior to commit 8c52932da5e6 ("mtd: rawnand: qcom: cleanup
+qcom_nandc driver"), the config_nand_cw_read() function did it right,
+but since then it always writes the read location values to the
+READ_LOCATION_* registers even if the actual codeword is the last one.
 
-However, ret is initialized to -ENOTTY and the switch has no default
-case, so this initial value was what an unknown command returned. As of
-now, every unknown ioctl on /dev/btrfs-control returns 0. A tool that
-tries a control ioctl which the running kernel does not have is told
-that the ioctl succeeded.
+Change the function to always configure the registers corresponding to
+the actual codeword to restore the correct behaviour.
 
-The issue can be reproduced with a simple C program, run as root:
-
-    #include <fcntl.h>
-    #include <stdio.h>
-    #include <sys/ioctl.h>
-
-    int main(void)
-    {
-            static char buf[4096];
-            int fd = open("/dev/btrfs-control", O_RDWR);
-
-            if (ioctl(fd, TCGETS, buf) < 0)
-                    perror("ioctl");
-            else
-                    printf("ioctl succeeded\n");
-            return 0;
-    }
-
-Before commit 5ab2b180884c ("btrfs: factor out validation of
-btrfs_ioctl_vol_args::name"), the result is:
-
-    ioctl: Inappropriate ioctl for device
-
-After that commit, the result is:
-
-    ioctl succeeded
-
-This patch will add a default case that returns -ENOTTY.
-
-Fixes: 5ab2b180884c ("btrfs: factor out validation of btrfs_ioctl_vol_args::name")
-CC: stable@vger.kernel.org
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 8c52932da5e6 ("mtd: rawnand: qcom: cleanup qcom_nandc driver")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/super.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mtd/nand/raw/qcom_nandc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index ddb620ac241b4..2c9b29aa59a2e 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2305,6 +2305,9 @@ static long btrfs_control_ioctl(struct file *file, unsigned int cmd,
- 	case BTRFS_IOC_GET_SUPPORTED_FEATURES:
- 		ret = btrfs_ioctl_get_supported_features((void __user*)arg);
- 		break;
-+	default:
-+		ret = -ENOTTY;
-+		break;
- 	}
+diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+index d7642db2e2df1..170af9f26d471 100644
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -328,14 +328,16 @@ config_nand_cw_read(struct nand_chip *chip, bool use_ecc, int cw)
+ {
+ 	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+ 	struct nand_ecc_ctrl *ecc = &chip->ecc;
+-
+ 	__le32 *reg = &nandc->regs->read_location0;
++	int reg_base = NAND_READ_LOCATION_0;
  
- out:
+-	if (nandc->props->qpic_version2 && qcom_nandc_is_last_cw(ecc, cw))
++	if (nandc->props->qpic_version2 && qcom_nandc_is_last_cw(ecc, cw)) {
+ 		reg = &nandc->regs->read_location_last0;
++		reg_base = NAND_READ_LOCATION_LAST_CW_0;
++	}
+ 
+ 	if (nandc->props->supports_bam)
+-		qcom_write_reg_dma(nandc, reg, NAND_READ_LOCATION_0, 4, NAND_BAM_NEXT_SGL);
++		qcom_write_reg_dma(nandc, reg, reg_base, 4, NAND_BAM_NEXT_SGL);
+ 
+ 	qcom_write_reg_dma(nandc, &nandc->regs->cmd, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
+ 	qcom_write_reg_dma(nandc, &nandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
 -- 
 2.53.0
 
