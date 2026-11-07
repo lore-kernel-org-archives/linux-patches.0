@@ -1,62 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063217;
-	b=I/Z1PrSsHu2Zs5g3RoRrosqoVNcoyagTq4XqGW+QxOMW9JacU7SAFi/nnXnMSGfLQ0MX
-	 qkaN2qykTtONiFKDfeINRTB2Ev8EnJlrZqMGRvszQdamz7VWlR/Xh/MKU/ITstLu/zeMK
-	 QU+yx9C1g+uWC3/OPYh3ySgjMFcLorItLLutMUi6tpEm+GQYdrW6LlK3J9O2PRV0dW6uu
-	 cZqs/ymnmZvH9gNxEgSy3xHgtv5wnmMT3+O4WfVp+SZ3B6xkKfUqmYLYeWAYqIdXdi+uc
-	 ni1rTOinel4ag1nTbsRtGnGRl49K2SjfWvT+EkbRkFSnizqZHDotHUvNLClP+49iQSw==
+	t=1794063218;
+	b=nNMf/i9ATB0y/GIyk02+gtCzfFIG6Ts47rfzb7svsWE/f89AWmrpbjLDZnLmsIv/sxGj
+	 e6mZXxCps7YCPjYNglTXjrZPRNvBFqLwL+gfnEzrmR7VTth75iYkGVelc1RUgHcDL6w2S
+	 vRpPIwxJHb795FjKJX9xRcSEJQVVPThYZ0DTSFutPqGDH0twUPQNvNvL9AkTjk+bO7Rev
+	 3PbrU2ERboNINYWEV1ljtv1OI8c+uoJdsR+DSbDlILbVsuoQvEviXazD3W0kxBYxByoy8
+	 3aNHMXWlEEckkx/Yp2pg1L5igrMOiQaW9/i7y1QqbDLf63Dv2ReZ8Vx+z5H6W+6hvpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063217;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063218;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QNXGdtVmqsnIf4FUyQmCG5l511tkCxbNJia2kXXUcb0=;
-	b=WqbfH51PINe28X64U7omxYZ/Wr2PXs0TCyZ0pjHeq93pwEfzftQVEHs37d3XPiudFmEZ
-	 t2wQ12l+H05WTJ5iX2DsXhqu4PtKAmz9zJ2zuwe4NFqAwMIgRsjDWdsUb774J2QlVkMlG
-	 ZddyveSEQCKPX4jxqiY6cwCaZ5VP0VhhSxMF0x5P2xMaJgxfnMyZuUtCpIWshx1YD0/cP
-	 7Q0zMKYiXtYpO+XtKccem7S7omxru+PZEBQPLJ6YMLQh5RKsREfFyfrf71d74Fbjuhej/
-	 fAneYOB5Zd4P1H+cshYbhTTM78hoJW7QK+BBojle/TDZyc78WWPhqt0+S3HGRUbpVfA==
+	bh=sjy+DvpetCGxH/H93EM9jjN6ENlx7uRStXzr8QNuAIA=;
+	b=VqgGrxA6ACT5RkR9ccjlwmO6Qdp9jPGcmrTpBMjT/RgBeGsgb9D5GGc7mDX/DmLl05yn
+	 7VUlppzWv8LUulNvkBjWuEXi6im5LaNyImltOdSfwpcnOEpUl59XU5X0NnHPIWohWElcA
+	 anOb5CkmAERXCW9Ka4u0gBT40pgYYvvTr0NDteWisbUGEoCmAQXhfR8w7D4hg2gMThRLb
+	 qV2PuBh4eLIJTZISoYic/LJUgR0dA4LnckEl+7CbB+79ixCJqLhNtzOcgAYljnrTqELko
+	 ca3NoKl6vSHBbHN1zwRXfcxRSMsGKFI3jHHGnCj962xkyHu+pirKvYhnuW+lZYZYhdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uzKrogCX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4nWRT9q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595B5606A326;
-	Sat,  7 Nov 2026 14:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6953D606A326;
+	Sat,  7 Nov 2026 14:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uzKrogCX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA031F0089F;
-	Sat,  7 Nov 2026 14:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4nWRT9q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102301F008A2;
+	Sat,  7 Nov 2026 14:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063217;
-	bh=QNXGdtVmqsnIf4FUyQmCG5l511tkCxbNJia2kXXUcb0=;
+	s=korg; t=1794063218;
+	bh=sjy+DvpetCGxH/H93EM9jjN6ENlx7uRStXzr8QNuAIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uzKrogCXhaSOta2mdkXMPMmoJ+pAv8UUYvfj0Mq1NZLLSVHBtBIuRHkx9ru/WyeXi
-	 VwPVTWjlX/sBROL+IEadkY5BXEBHNFfIXlXWeWLreiXRfJtbo14az4njl2EG6lNbku
-	 ULdBk0QSlN9CTZ009nyPZlevZ6mp4sGHyD6cc3MU=
+	b=h4nWRT9qHbLR4MJa9yck+A/Q9fmetUqMM2BBN9HveFwdLzlzevF4yZkOiFMDyyfdp
+	 wlYPNxTCQltInGnE/Dl6sQPQdBpmVibS4bhvOff5EtOamr5DUtG3Exa7/y+vDDCbWe
+	 wwsXKiXm3zrWy2lCjTrYeVRA7wkhGGXGm3uWM3h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Vega <vega@nebusec.ai>,
-	David Hildenbrand <david@kernel.org>,
-	Grazvydas Ignotas <notasas@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jikos@kernel.org>,
+	Luis Chamberalin <mcgrof@kernel.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 426/869] mm/memory: constrain generic_access_phys() to page boundary
-Date: Sat,  7 Nov 2026 08:51:48 -0500
-Message-ID: <20261107134908.306276564@linuxfoundation.org>
+Subject: [PATCH 6.18 427/869] mm/execmem: free ROX cache chunks only when they span an entire vm area
+Date: Sat,  7 Nov 2026 08:51:49 -0500
+Message-ID: <20261107134908.331458183@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -78,91 +72,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit ae0298a5fbeff32951c0d31398ccec97ec6aa0ea ]
+[ Upstream commit 52d95a55a0113408acd2d4ce0294a72c527f5092 ]
 
-This patch addresses an issue in generic_access_phys() where accessing
-memory across page boundaries in PFNMAP VMAs assumes physical pages are
-contiguous, which can lead to accessing unintended physical memory or
-exceeding VMA boundaries.
+Patch series "mm/execmem: fixes and cleanups for the ROX cache".
 
-generic_access_phys() improperly validates the memory access range: it
-only validates the start address using follow_pfnmap_start() and passes
-PAGE_ALIGN(len + offset) to ioremap_prot().
+Sashiko review of the ROX cache refill path asked what happens when the
+PMD_SIZE allocation fails there.  Pulling that thread uncovered a bit more
+than the fallback.
 
-This poses two problems:
-1. In PFNMAP VMAs, consecutive virtual pages are not guaranteed to be
-   physically contiguous, and individual PTEs may have different access
-   permissions or writability.
-2. The mapping may cross VMA boundaries if len extends beyond vma->vm_end.
+Patch 1 fixes a real bug, although rare bug: execmem_cache_clean() can
+free a chunk that is still partially in use, because a PMD sized and PMD
+aligned free range in the middle of a larger chunk looks exactly like a
+chunk that nobody uses.
 
-Constrain the access in generic_access_phys() to at most the current page
-boundary (PAGE_SIZE - offset) and map only a single PAGE_SIZE via
-ioremap_prot().  Since the caller __access_remote_vm() already loops over
-the requested length and handles partial transfers, it will naturally
-iterate over the remaining pages.
+Patch 2 handles maple tree allocation failures in the cache.  They are
+unlikely, but silently dropping an area from the tree is not a great way
+to deal with them.
 
-Also add a missing (resource_size_t) cast during PFN re-validation to
-avoid truncation on 32-bit PAE systems.
+Patch 3 deals with the fallback that started all this.  The cache exists
+to keep the direct map free of unnecessary splits, and the fallback
+happily filled it with base page mapped areas that could never be freed
+from the cache again.  Ask vmalloc for a huge mapping or nothing, and
+serve whatever does not fit outside the cache.
 
-Link: https://lore.kernel.org/e06e28a46c2a176238f03b5740df0913e57c2861.1788842306.git.rakukuip@gmail.com
-Fixes: 9cb12d7b4cca ("mm/memory.c: actually remap enough memory")
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
+Patches 4 and 5 convert the ROX cache to scope based cleanup.
+
+The series was tested on x86 with module load/unload cycles, with PTDUMP
+confirming that the cache is using 2M mappings, and with nohugevmalloc to
+exercise the uncached fallback.
+
+This patch (of 5):
+
+When execmem refills the ROX cache, it vmalloc()s multiples of PMD_SIZE
+aligned to PMD_SIZE.  For every such allocation vmalloc creates a vm area.
+
+The first part of the vmalloc()ed chunk is returned to the allocation that
+triggered the cache refill and the remaining part is added to the cache
+and handed out for subsequent allocations with execmem_alloc().
+
+When only the first part is freed, the entire vm area remains in the ROX
+cache and can be handed out again.
+
+In the case when the first allocation is larger than PMD_SIZE and the
+second allocation from the freed first part of the chunk is exactly
+PMD_SIZE, execmem_cache_clean() will free the entire chunk while part of
+it is still in use.
+
+For example:
+
+	/*
+	 * vmalloc(4M), return p0 to the caller
+	 * add [p0 + 3M, p0 + 4M) to the cache
+	 */
+	p0 = execmem_alloc(3M);
+
+	/* return p0 + 3M from the cache to the caller */
+	p1 = execmem_alloc(1M);
+
+	/* put [p0, p0 + 3M) back into the cache */
+	execmem_free(p0);
+
+	/* return p0 from the cache to the caller */
+	p2 = execmem_alloc(2M);
+
+	/* return p0 + 2M from the cache to the caller */
+	p3 = execmem_alloc(1M);
+
+	/* bah! execmem_cache_clean() frees the entire 4M chunk */
+	execmem_free(p2);
+
+Make sure that the ranges that execmem_cache_clean() frees cover the
+entire vm area.
+
+Link: https://lore.kernel.org/20260903-execmem-rox-cache-pmd-v1-v1-0-11beb2a3d249@kernel.org
+Link: https://lore.kernel.org/20260903-execmem-rox-cache-pmd-v1-v1-1-11beb2a3d249@kernel.org
+Fixes: 2e45474ab14f ("execmem: add support for cache of large ROX pages")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: David Hildenbrand <david@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Assisted-by: LLM
-Cc: Grazvydas Ignotas <notasas@gmail.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Assisted-by: copilot:claude-opus-5
+Cc: Benjamin Tissoires <bentiss@kernel.org>
+Cc: Jiri Kosina <jikos@kernel.org>
+Cc: Luis Chamberalin <mcgrof@kernel.org>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ mm/execmem.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index 72793ec631072..d755b5c1f1287 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -6813,6 +6813,12 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	bool writable;
- 	struct follow_pfnmap_args args = { .vma = vma, .address = addr };
+diff --git a/mm/execmem.c b/mm/execmem.c
+index 084a207e4278b..9560441e57ab1 100644
+--- a/mm/execmem.c
++++ b/mm/execmem.c
+@@ -164,9 +164,11 @@ static void execmem_cache_clean(struct work_struct *work)
  
-+	/*
-+	 * Limit access to one page at a time, as that's what follow_pfnmap_start()
-+	 * guarantees; expect the caller to retry to read larger ranges.
-+	 */
-+	len = min_t(int, len, PAGE_SIZE - offset);
-+
- retry:
- 	if (follow_pfnmap_start(&args))
- 		return -EINVAL;
-@@ -6824,7 +6830,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	if ((write & FOLL_WRITE) && !writable)
- 		return -EINVAL;
+ 	mutex_lock(mutex);
+ 	mas_for_each(&mas, area, ULONG_MAX) {
++		struct vm_struct *vm = find_vm_area(area);
+ 		size_t size = mas_range_len(&mas);
  
--	maddr = ioremap_prot(phys_addr, PAGE_ALIGN(len + offset), prot);
-+	maddr = ioremap_prot(phys_addr, PAGE_SIZE, prot);
- 	if (!maddr)
- 		return -ENOMEM;
+-		if (IS_ALIGNED(size, PMD_SIZE) &&
++		if (vm && get_vm_area_size(vm) == size &&
++		    IS_ALIGNED(size, PMD_SIZE) &&
+ 		    IS_ALIGNED(mas.index, PMD_SIZE)) {
+ 			struct vm_struct *vm = find_vm_area(area);
  
-@@ -6832,7 +6838,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 		goto out_unmap;
- 
- 	if ((pgprot_val(prot) != pgprot_val(args.pgprot)) ||
--	    (phys_addr != (args.pfn << PAGE_SHIFT)) ||
-+	    (phys_addr != ((resource_size_t)args.pfn << PAGE_SHIFT)) ||
- 	    (writable != args.writable)) {
- 		follow_pfnmap_end(&args);
- 		iounmap(maddr);
 -- 
 2.53.0
 
