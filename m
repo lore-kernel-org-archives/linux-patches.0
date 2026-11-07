@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061654;
-	b=jcKBoMlfJV5k4+ti/o4/Dx3mK8N1Ti2arw3HNZVMLs+We6NE4/tNt6v664mIg6fBRBnn
-	 tEbctBagmqKdZgKiPclz3hDDoZdXv6eylG9rf0q9aOn6HUwO2TQ487XZuKjevYV26Qaxh
-	 xLMMkw/D81JAuZE9X04yK/OOP7Jo9yr9A2cYgWa2xnzzJ2bSIdsgM1xAaD2Ft/LiGPTjr
-	 Mj0rYd74XrLjfZ8URyssaIzd3uSMGYajWqNi/9ikDwgCjfQIWCpS6GKCZnRWUmlcSayVm
-	 u6/7KXSJBHhibV9vsILERx3X0K2d/5n4Cxx/YfV7X4SURzm/atE0e8v2fVLYFmJGRig==
+	t=1794061656;
+	b=gQoq+6cbj+pezPGP3duXO1YWlNryADGDGrMqrFB5Dbm5OP63KG1JyrBgR7AiLkQjP61Q
+	 NKQzyNYvxPKKBqgEUt66UxSSP4wBC8e3kt+C6KiRc69bP13e24OImBRCrVQ7Yg34tFmgR
+	 JRjBkq96ZqjN0LobyYNeZ+SKb061MFovEh5pDmudvv1XTiO7rLxjhWx4PvZZdcrDQNp9c
+	 Fh/PQiCbN+DbKleludESkxcEPPyIQtiS6XDU0Z0d9yakEMOrMD5pq0dR/kZh9spxNlD5a
+	 MKh/d3M7nQc/kHCN872PnjZ1c8qyn0V029O/2rBvbSBMJbs/uWfYcRKlTQ7sgW5r7zg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061654;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061656;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u2LvDyIZ1+HJ+Fy6VEZlY9Rqbv21TVSC9LP9ucU7HOM=;
-	b=KsSrpyb5TXc5VxC7jWA9LkatQmhiNIuwGl0Xwkxk4r1oHRNud88KGVV1+ILxuOSjcBEu
-	 vAUKGgZg+AvMSX7YTyqdy7p0jb87qbQufACTPWeCyYUmMNtBgX7SlT5Nu6/bCSLWOuYQU
-	 FLGkL+4OsRd5G3bGbGT5cAyEpg50TygYqmL8QjHh3QoVLO0wJeCi+Wzj025LqiSX7qNhm
-	 SlEGOqHQnYuvZlXMpjTlfaAU8LkXB63VZjZlv0jAjmsGAlT3ZeUjjb0ocHvGbop18RdC2
-	 0+jzTXloOOhhlUUBciLWSV9h53Vur3+l9k4FWXXfV78V+EqJBgjAeo+ubKyQeliNhJQ==
+	bh=D2rLkXtHSgsfQwlKvbQHj43AmZe59HGIN5bdyyAxO3Y=;
+	b=t7mgXD667KrsOB4PCszbtrbMJHN68B9ZcoFE8uvQOa1A1a78jJzECDaz+5mn9RWSSeWd
+	 SWQrrh0qb+TfwIxWmHUizqx+Mg4XfJDDapilO6OKtXvSCNIrINYOa9yohDkp2R+P+4lBa
+	 3C51pIFMnVJxDrUUy6+q5Pf9vTa4eDNMb8RCN0iJe9iS17lS7kWzIioetyiSIHZQWAqr3
+	 QrK4frEL/mSArzMdWDtWu05HzOuLVardmB365yVe4koSA4uZLtNM+qhd46M86Uh7OcpAH
+	 MaagvKeUHcT6NgoSpopFSzVwXJLZmjosmzhtEEbgUTKjEh8PTKquPqb2N+lSr3Hn//A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1pfQwfb+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qBeNomT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3F0606A32D;
-	Sat,  7 Nov 2026 14:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31CB606A32C;
+	Sat,  7 Nov 2026 14:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1pfQwfb+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241AC1F0089F;
-	Sat,  7 Nov 2026 14:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qBeNomT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3B21F0089F;
+	Sat,  7 Nov 2026 14:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061654;
-	bh=u2LvDyIZ1+HJ+Fy6VEZlY9Rqbv21TVSC9LP9ucU7HOM=;
+	s=korg; t=1794061655;
+	bh=D2rLkXtHSgsfQwlKvbQHj43AmZe59HGIN5bdyyAxO3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1pfQwfb+WXCVI3HLTMUHkqJ8Lquc7si354mNiujRJ39XNxpO4OHsl95KWOsTHrPJM
-	 VvhTDFbw0fDRyJqi8FhPFtDZheuFMzmmOKEkiPp45lOPiyj6LSlkWvGC6e0tDJkpDF
-	 8IzDRtVhn74NASaSDhmQObEUgHVNFtzwv4pgQ50M=
+	b=0qBeNomTcNgP2KtwVAJF9i3JcRoQ2wpwR5HneS4SpiCto7VcE7DhGW//Os+lI09uZ
+	 YlVDAJcAwnKeZ9Fjx+XeoUwVy0ERHilLblP95g0+sMDqH9/VtXEizSkZUpmP2fH1i+
+	 +4Zi9ievUtOFETXhd0ahdH8aLjfaaThXeiSmjVYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0714/1536] xfs: fix xchk_stats_estimate_bufsize to allow for the trailing null
-Date: Sat,  7 Nov 2026 08:45:30 -0500
-Message-ID: <20261107135017.554159903@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0715/1536] ALSA: usb-audio: Use the right limit for PCM OOB check
+Date: Sat,  7 Nov 2026 08:45:31 -0500
+Message-ID: <20261107135017.583257073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,38 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 6b8d60784b61a17bd591cb4c6e8aa9ed29c24f5c upstream.
+[ Upstream commit 70b4db7d258118a7464f039112a74ddb49a95b06 ]
 
-LOLLM complains that xchk_stats_estimate_bufsize underestimates the
-buffer size by 1 byte because scnprintf wants to store a null byte after
-the newline in each line.  Each call to scnprintf overwrites the null
-left by the previous call, but we still need the null byte for the last
-line in the file.
+The recent fix commit for addressing the OOB access of PCM URB data
+buffer caused a regression on Behringer UMC2020HD device, resulting in
+choppy sound.  The fix used ep->max_urb_frames for the upper limit
+check, and this is no right value to be referred.
 
-Cc: stable@vger.kernel.org # v6.6
-Fixes: d7a74cad8f4513 ("xfs: track usage statistics of online fsck")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use the actual buffer size (ctx->buffer_size) as the upper limit
+instead, which also avoids the regression on the device above.
+
+Fixes: ef5749ef8b30 ("ALSA: usb-audio: Prevent excessive number of frames")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220997
+Link: https://patch.msgid.link/20260121082025.718748-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: Backport differs from upstream only in indentation, since the for loop sits one block shallower in this tree; the changed lines are otherwise identical. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/stats.c |    3 ++-
+ sound/usb/pcm.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/stats.c
-+++ b/fs/xfs/scrub/stats.c
-@@ -162,7 +162,8 @@ xchk_stats_estimate_bufsize(
- 		ret += field_width + 1;
- 	}
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 3a4666e3bf277..5aadd1221f725 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1505,7 +1505,8 @@ static int prepare_playback_urb(struct snd_usb_substream *subs,
  
--	return ret;
-+	/* null byte for scnprintf */
-+	return ret + 1;
- }
- 
- /* Clear all counters. */
+ 	for (i = 0; i < ctx->packets; i++) {
+ 		counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
+-		if (counts < 0 || frames + counts >= ep->max_urb_frames)
++		if (counts < 0 ||
++		    (frames + counts) * stride > ctx->buffer_size)
+ 			break;
+ 		/* set up descriptor */
+ 		urb->iso_frame_desc[i].offset = frames * stride;
+-- 
+2.53.0
+
 
 
