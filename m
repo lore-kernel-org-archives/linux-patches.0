@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063494;
-	b=5pewq97fozJoz/WWeJtSxZEw5yvDtKYddCdxGNiy25b14L5kxdu1aFW4A4pV15onEeSn
-	 ayPlulIT6hQBIMimCokbdnYhHtYGL7KsP+VvvdI4uSb8CBZvrWjQpwbKN48OKdEKtTnBy
-	 FlDjDLPwTlpThoP0trHLjBzfPAMfP1s0w8LBSAlAYjxHQOo+7rByTU88MqMH2yFv5e0Q3
-	 KKJl3EtOv1ZhKmd7vzHRL0iqq2dGB9RpJ6QTgKDGLCi3n3Dl38/ljCSTsAtgl7o2/hIGi
-	 xDar45XltiXaTZKHmTqYGUXMs+FDypbl5HBfXLRFVazViJEeqT3oa/5oYlf2glxnBAQ==
+	t=1794063495;
+	b=bUH2v/K2PfRU0HKScw4U7+fnV3BYWhL4XjcBJzG4bssEkWxXcWcF/ZBgTM4LYAv5PKss
+	 WhQ6olrV7KSA6OJWtXXCz9vm8cpzXHY7cpvWV+UZ+gtumS+DWfVwXAxQBPHAlxvDMc3H/
+	 ExHvY4FV5Y020Yfe+MlS1xPWRk2vQSPEUakbauyQjiYw7+MJOj7BDRFLNekway2I5TOih
+	 jNtgRMmqVMbgPHHGyiPnd9q0NyV4kl8CwRX99xhlJHhEu9bW098/hWlEXJC7xte3ZMM4a
+	 3JC8PWjWZaFWDQgIQtPcinPh5XHuriJ9XV4hy6B2gbKcphIufPQ4+lbpRqqR2Fa9lyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063495;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/wB83PgTxmnWQ0SLXRqctgvs7oAQtEJYLv9RNNHly68=;
-	b=3YnotDd5joL1prr4UiQELf1Y2Mn3TAI3l1vB5p//H5wqXDzVVEiOPU6zO0Qx7XiKkYa4
-	 f+DKhPaTBrB5tjjkbNnWBQUvlPHUKl51R8lew+Cz2cqwqo6FLBM15SVUykhvFKYhD9hQr
-	 aGmCs2FsThSLwCN2O2gQ1GcQuboW+nT/SvP1qJKguawHmgGBgHkJOLi3YvjxpVRVmnaAV
-	 ris/AgJ9T/vp2Acizgki9dbIJSG1ONi4y0n29FVKgWHlUy0tw0NxUPqEz6NX0E8XuHdqF
-	 DGss35Dm3GoJOcMpbBxJ/dG38GHc+vR1sNNanQOFcSc6MHBklVJk3NAH6fx+K5oW71w==
+	bh=Qv+zamMpVziSFuipxv5Fg/t4mCIFUqRupyGVp3UHVPw=;
+	b=YYjUpXP6h2OnNKTwX4mh+m5pxcLBxz5kWmTIn+u3EqqYBw1k1Dv3SNNBcP9TPu1hptMa
+	 0yvnXotZpmuTKNGL9x1gUrgUCXS1jo3dw3W+fTn1PeVOUknk+xOZAN9eJB8WFmEC0doiZ
+	 6rXBI3hc9kIAnjbslfA2v4GtmA5N8uBKDUsZn0Hzr/lOjK8bKBh1RDd1xqdoblhsvJEoJ
+	 ZG+ZmrFPcALxtT8eTYEnsTXkibAOZ/AlOZjriT5QH4twWLqTsU6+qBeXuK/RdOk64AnHq
+	 9OpUDibFNE9RdzIeqfp0T/rxMltnLJGTRlELL2lpo9Xt3F8fpUTK8p1TCfRsTxspvNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWy1ICrR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aBYqxNpn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3AD606B894;
-	Sat,  7 Nov 2026 14:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C25E606A339;
+	Sat,  7 Nov 2026 14:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWy1ICrR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF21F1F008A2;
-	Sat,  7 Nov 2026 14:58:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aBYqxNpn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD811F008A1;
+	Sat,  7 Nov 2026 14:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063494;
-	bh=/wB83PgTxmnWQ0SLXRqctgvs7oAQtEJYLv9RNNHly68=;
+	s=korg; t=1794063495;
+	bh=Qv+zamMpVziSFuipxv5Fg/t4mCIFUqRupyGVp3UHVPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uWy1ICrRXDrHxisaqMEVfKQnYzPyutNuGT3XXloZMzHpdlZ77v8wB6opYP1q+lpQY
-	 Fl25O7bnYr3jofhGtbAQrNsyaYJO75+znpTII7gW/oS9R4uDKqbBF14ulRkKDnkZlo
-	 AYJkB1ObLFwS8pwtZCHD7zvr+ULISoio4XEkq7SI=
+	b=aBYqxNpnt5X8i1QY0DO/7lgYWAJOIj5O2CqFJKKMaJYUPWHMzYoZU0xM0HRqAx7JM
+	 6wMrtLuVIwVtJByIkx80PhvrciFxh7k/OnNeHPbPqxrq6Bb//g+eZXkyJjS3gGmqi9
+	 /geAO8tP6A3bqlW7bncnStrX0I2URM9NpdUkMIjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Vega <vega@nebusec.ai>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Zixuan Chai <petalzu987@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 638/869] hwmon: (sht4x) Reject incomplete heater command transfers
-Date: Sat,  7 Nov 2026 08:55:20 -0500
-Message-ID: <20261107134914.566031894@linuxfoundation.org>
+Subject: [PATCH 6.18 603/869] ipv6: defrag: orphan skb before queuing
+Date: Sat,  7 Nov 2026 08:54:45 -0500
+Message-ID: <20261107134913.536429068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,41 +72,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+From: Zixuan Chai <petalzu987@gmail.com>
 
-[ Upstream commit 0e1d292233c83d41530df6ffa4ec5a382f118b12 ]
+[ Upstream commit 5dfa91a5ec53cfbf907a1fca095ac3ac7a4e94c9 ]
 
-heater_enable_store() treats a zero return from i2c_master_send() as
-success. It updates the heater state and returns count, so another
-attempt to enable the heater fails with -EBUSY.
+IPv4 and nf_conntrack fragment queues orphan skbs before returning
+-EINPROGRESS, but ip6_frag_queue() leaves the socket association intact.
 
-i2c-virtio can return zero when the first message fails. Require
-SHT4X_CMD_LEN before updating the heater state, as sht4x_probe()
-already does for the reset command.
+Commit 18685451fc4e ("inet: inet_defrag: prevent sk release while still in
+use") moved skb_orphan() into ip_frag_queue() and nf_ct_frag6_queue(), but
+missed ip6_frag_queue().
 
-Fixes: 0eed6fc3d2b9 ("hwmon: (sht4x): add heater support")
+Without orphaning, inet_frag_reasm_finish() clears fp->sk on frag_list
+skbs but leaves fp->destructor set to sock_pfree. Freeing the reassembled
+skb then calls sock_pfree() with a NULL socket. A socket using
+SOCK_RCU_FREE may also be released while its fragment is queued, leaving a
+stale socket pointer; this is a second consequence of the same missing
+orphan.
+
+Orphan the skb before returning -EINPROGRESS so the queued fragment no
+longer retains the socket association or destructor.
+
+Fixes: cf7fbe660f2d ("bpf: Add socket assign support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
-Link: https://patch.msgid.link/20261017205234.1084949-1-pocj8ur4in@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reported-by: Vega <vega@nebusec.ai>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Link: https://patch.msgid.link/5c396b7011168cd98b9812df4d6bbd00a96048e7.1791008591.git.petalzu987@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht4x.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/reassembly.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/sht4x.c b/drivers/hwmon/sht4x.c
-index f757265a82a6d..83dc3ca67046b 100644
---- a/drivers/hwmon/sht4x.c
-+++ b/drivers/hwmon/sht4x.c
-@@ -287,6 +287,8 @@ static ssize_t heater_enable_store(struct device *dev,
- 	ret = i2c_master_send(data->client, &cmd, SHT4X_CMD_LEN);
- 	if (ret < 0)
- 		return ret;
-+	if (ret != SHT4X_CMD_LEN)
-+		return -EIO;
+diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
+index 25ec8001898df..c10a8a9d607e8 100644
+--- a/net/ipv6/reassembly.c
++++ b/net/ipv6/reassembly.c
+@@ -227,6 +227,7 @@ static int ip6_frag_queue(struct net *net,
+ 	}
  
- 	data->heating_complete = get_jiffies_64() + msecs_to_jiffies(heating_time_bound);
- 	data->data_pending = true;
+ 	skb_dst_drop(skb);
++	skb_orphan(skb);
+ 	return -EINPROGRESS;
+ 
+ insert_error:
 -- 
 2.53.0
 
