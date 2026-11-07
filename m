@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060899;
-	b=dEtPFYWPtNrUeifxOJGVcayqVBVjadgYg+wiineVXTsV5lUdpwTkJiL8wNFmK+skHj2L
-	 Qub3dLo/UaGptgzKmNTkxPEcxRsnXtY7A2OlVe1eIk+R4B0vAv2IdpRChx8VO/puEa4nx
-	 LLeq84UPGMvCk9EUkSmQTBU2OeCcUpk2U6yMGZBJt9PuI85JFoC0bvGOymn82TBwX4y5z
-	 pT3C63CfY7jDJa7OKv8XNwNtC4/OShvyo2RghxUuRft9fOvb7WQgFtg4L4LUs60LH/ZPG
-	 6JlZx5Ns/8g2kqkNh9krZFhvOhOXKcdT6YEDby0NSRNP4qZThrrHWb2mHRNq83t9PVw==
+	t=1794060901;
+	b=bmqK5vN5F0ZDzItMVUQvPQQX7ldCZBr02k/m6ExiaS8EuxSqHEHj2y0sGJPIYTQvy7Ru
+	 MkfIVfbk3ZNOWe/othEVsHG2GajFL94hWbV8xDIaNIkYnnQC/DxgUA0RfPDr5OqGzYa1q
+	 UPvQEKzpFEuseyXsRfQmR3tz2QX+XwcwH/tNGFBnHrX+YaWrpBWZ/xy2ytSIb/4vThenj
+	 ldYadTziTuPqCb8ZgvyR90s4LzIjQTMOvAdpOmgOnyE5t5Xc3dmybU6OwEd2Rmacec0Tg
+	 NjWirXe5+JhO9yRLyhP4l4+b5ws9CuLI9qcaoco8C0K/0heQzc3usmJMszrP/S1JZcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060901;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PEn7zrnG+5N2Jn5KV3DG+M+yiumgcTe5MZ5pqoP8ZkM=;
-	b=MQs7+2rAIJsUlzsF3RK//A/0xkxuDhnlv3mC7XbFs8Yl/Wq98FXJAmAcDTPCwM/3Zx6n
-	 iBqJDDyHck8+gM4UhpmEvWHbu9QJA5ZRcTpWTU7T909pGw+z9Kli+HQu/Mq0yc16iOSE6
-	 wjykmDL3dUdxe4C+nnu6mGRCaSoKBPLHE7g7nRe9owhtuKzQmVeklhx6ligdCSpg/LkzH
-	 /86NsRt+0B38EWXQCtSg1F1DQsdXrpL8iautBd77dXFLvF9QkeJdhdyyztYUqtwcI0EGR
-	 dPYH48BPapikdPwnStJhCvLyMiy1LV5SgTmZM8bQ5lh/jClXx2eNm1tRiYqk484GVXg==
+	bh=gV0oHmxGVWtUFUTTXcTBvDa70KfQeB2fwiCATf4ELM4=;
+	b=ADDIXhq6qfKnV7M3rYzNF/QTxD0TLIMMP8QAxPoPiaInbIHQS0mU3UlWZ6iRTH81q6Qk
+	 vjbt7m2MExrik4/cyRJOXZNpH4qs3yKcgWhl/EpZwPhBwWS3ogPWLyhaF1qxCnNKrTeB7
+	 rCp8mGJHFabbBPBigRtIWNfkocMpU3VuL0+kVlgeam7Og3BfVS22JbWi7kpcbZKlxdwWB
+	 2MNM2AX0KRh2OgLLaMkJa4BhbqxAksU6AJdjirsrqrAMnXNPnmbXGleegYRslH/yvce+I
+	 13HL1xzXmqgcZ5fEUE6bpwEb0cMgPXCeQEnZ9ZhsCed7CqdQpwavJIvniM+AgHRs+TQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IkYdia8x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZOD3el1b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD32606D81B;
-	Sat,  7 Nov 2026 14:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C91606D802;
+	Sat,  7 Nov 2026 14:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IkYdia8x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395501F0089F;
-	Sat,  7 Nov 2026 14:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZOD3el1b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12531F0089F;
+	Sat,  7 Nov 2026 14:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060899;
-	bh=PEn7zrnG+5N2Jn5KV3DG+M+yiumgcTe5MZ5pqoP8ZkM=;
+	s=korg; t=1794060900;
+	bh=gV0oHmxGVWtUFUTTXcTBvDa70KfQeB2fwiCATf4ELM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IkYdia8xzDeO/yVcDyRt3e1PIQPE6Oj8yeZ11FII4Qn6IffpgThMcd8UBc+NUBR4H
-	 ms2qBRi++cb8wyuv9f3nasiT7edtCAHEtr6DGfswTvt/Ol/9NRazBba+rUtIwBqkO/
-	 uo0pFHCp4uGEoL56AIlV7yElFeiwiT00mseC+aeM=
+	b=ZOD3el1btrcWK62PLSxFu534cPmDSvv9A010z5Unvxf6prlHPdWji7NUowiznv0JS
+	 we0pieIbs0EtLGpkqv1PDdUmt8rtuhLAma+kjRbcpWynZeUAiW6kYlbXzbVR8MPxx+
+	 +Fls7UD3GhG7xMk/4H0XOVs97ik477kNiYL5cEoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Carl Quist <equalizerjr@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0273/1536] xsk: account ring allocations to memcg
-Date: Sat,  7 Nov 2026 08:38:09 -0500
-Message-ID: <20261107135005.342630472@linuxfoundation.org>
+Subject: [PATCH 6.12 0274/1536] ALSA: hda/realtek: Enable mute LED on HP Laptop 15-dy0xxx
+Date: Sat,  7 Nov 2026 08:38:10 -0500
+Message-ID: <20261107135005.370339393@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,68 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Carl Quist <equalizerjr@gmail.com>
 
-[ Upstream commit b0057c68df711bf6a62033c072ac61c4f9d3cbc1 ]
+[ Upstream commit eb2b516900f2cff6c931a0d664a625ee93855779 ]
 
-AF_XDP rings are allocated from setsockopt() and can be mapped into user
-space.  The shared xskq_create() helper allocates the ring backing memory,
-but the user-controlled and long-lived allocation is not charged as kmem
-to the allocating memory cgroup.
+The mute LED on the HP Laptop 15-dy0xxx (PCI SSID 103c:864f, Realtek
+ALC236) does not work, because the machine has no entry in the quirk
+table. No fixup is applied, so no mute LED classdev is registered and
+nothing ever drives the LED.
 
-The current implementation uses vmalloc_user(), which allocates the
-backing pages with GFP_KERNEL | __GFP_ZERO.  Use the same VM_USERMAP
-vmalloc path, but pass GFP_KERNEL_ACCOUNT so the ring backing pages are
-attributed to memcg/kmem and can be constrained by existing cgroup memory
-limits.  This keeps the existing zeroing and mmap semantics while avoiding
-AF_XDP-specific optmem or RLIMIT_MEMLOCK accounting.
+The LED is controlled by COEF index 0x07, bit 0. This was verified on
+the hardware with hda-verb: setting the bit lights the mute LED and
+clearing it turns the LED off.
 
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260731164623.4694-2-zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  hda-verb /dev/snd/hwC0D0 0x20 SET_COEF_INDEX 0x07
+  hda-verb /dev/snd/hwC0D0 0x20 SET_PROC_COEF 0x1     # LED on
+  hda-verb /dev/snd/hwC0D0 0x20 SET_PROC_COEF 0x200   # LED off
+
+That is exactly what ALC236_FIXUP_HP_MUTE_LED_COEFBIT2 configures, and
+the closely related HP Laptop 15-dw0xxx (103c:85f0) already uses it.
+Bit 9 (0x200) is set by default on this board and is preserved by the
+fixup's read-modify-write.
+
+Tested on an HP Laptop 15-dy0xxx (SKU 7FU54UA#ABA, board 864F,
+BIOS F.40).
+
+Signed-off-by: Carl Quist <equalizerjr@gmail.com>
+Link: https://lore.kernel.org/CAOtcGaxXndKxTK5MVSEcmF-LUy+V51K7fhE=qvLA+VvW5ZyCNA@mail.gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk_queue.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/xdp/xsk_queue.c b/net/xdp/xsk_queue.c
-index d2c2640300171..7069830943ea8 100644
---- a/net/xdp/xsk_queue.c
-+++ b/net/xdp/xsk_queue.c
-@@ -9,6 +9,8 @@
- #include <linux/vmalloc.h>
- #include <net/xdp_sock_drv.h>
- 
-+#include <asm/shmparam.h>
-+
- #include "xsk_queue.h"
- 
- static size_t xskq_get_ring_size(struct xsk_queue *q, bool umem_queue)
-@@ -21,6 +23,14 @@ static size_t xskq_get_ring_size(struct xsk_queue *q, bool umem_queue)
- 	return struct_size(rxtx_ring, desc, q->nentries);
- }
- 
-+static void *xskq_vmalloc_user(unsigned long size)
-+{
-+	return __vmalloc_node_range(size, SHMLBA, VMALLOC_START, VMALLOC_END,
-+				     GFP_KERNEL_ACCOUNT | __GFP_ZERO, PAGE_KERNEL,
-+				     VM_USERMAP, NUMA_NO_NODE,
-+				     __builtin_return_address(0));
-+}
-+
- struct xsk_queue *xskq_create(u32 nentries, bool umem_queue)
- {
- 	struct xsk_queue *q;
-@@ -46,7 +56,7 @@ struct xsk_queue *xskq_create(u32 nentries, bool umem_queue)
- 
- 	size = PAGE_ALIGN(size);
- 
--	q->ring = vmalloc_user(size);
-+	q->ring = xskq_vmalloc_user(size);
- 	if (!q->ring) {
- 		kfree(q);
- 		return NULL;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index bb02bc8962713..cde9e6a252ffe 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10909,6 +10909,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x85de, "HP Envy x360 13-ar0xxx", ALC285_FIXUP_HP_ENVY_X360),
+ 	SND_PCI_QUIRK(0x103c, 0x860f, "HP ZBook 15 G6", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x861f, "HP Elite Dragonfly G1", ALC285_FIXUP_HP_GPIO_AMP_INIT),
++	SND_PCI_QUIRK(0x103c, 0x864f, "HP Laptop 15-dy0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
 -- 
 2.53.0
 
