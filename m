@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060751;
-	b=llEJog/Lyv1rhmUR2P17RZQikD3m0KCAeulP47vtu/5sEQEHNqDmNVOfuVwDz6lnPfY/
-	 BcgyppXx1gVx6ET7npkIGZb3koCb3aDo0SxAiAdLr2fu6Ba5f6/lu0VOFI3kas+b15Nx7
-	 j1ixQnp2AaKEf+dkU7XvznZ+GUDbrzZ0Ab5El5sjNl2IBEjQ5Z1Mt/wiJ/X4z1iFr94oV
-	 /oX0zWPx/KYORvvYsER9d/HAdQN6xx2F7qMzwyMBsE6HQJeYs96FeVPzuXG4KrVQiYBL3
-	 5jSOsQRpE3j08l8vjAGc+l9i7//8gV6ucOmr3CVASiWtqM5tGrC4wwPmhY232Qti7CQ==
+	t=1794060752;
+	b=gI3rHKYuaX+bMmPpY2eJLDgm7LZN0Q4+bpzQbJsHtriPYVJmdtdmGonXBhRpZ+NlbWOM
+	 y8rSpWNvY8SIbnMYwr5erwRf36cHKNoOz2B8h8Ym0PD41sJisu23B5BQ/V3v7APyeH7/k
+	 FMWvVayxg6o+a+WFMru8vkjuazQbYHXASLG+ekX5cTKhFtnMROprLvArKF6xqDURLNC0/
+	 RPXZ9Fuceyteizf97F7xi/MS+cWmm7MZVRwG0Bw8SSN+DAr9ZbdhDP0YZ8oVleWgW04di
+	 MFHxQkZQCMvrYIF/NEJUVWe9bDNop3nkmY1OE/QwkYThe5xF4DnALCX/c8QRoYxE4Qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060751;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060752;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mXG54rltIFtqonIjB7r0l4BQMUfSQfwrQWOMuZ2JoV0=;
-	b=d3zIu7fKZ1Jy8pmgLq6Rw7SHfvaXqJwcKEBVtzjecBOUmZh+8eJF4S3lV6FrdFnshvnV
-	 bZW5wTvwhDpbJL7BQRoSqqxx9BxiGezfT8Wqz1r9d+9nWfdj2sMDKIO3lDklnNafB2IKg
-	 soyCcXSWJUv2dNFj0WrIoWo7bE0ZQYWnfrmc56xE6yiY55MceOlM9kTov/dNAjux58/Bq
-	 +2Ka9h0w6uksqo3bCkqFubLHT7MLz0lM+PWaxNbDt+Xl1Pm0wqk7HtODGTH/z4/kEIdTU
-	 DFisJn5P1k2LS2HFuKwV7K+5C8NbvWLRqQFEFW+wkQkaOFSKQpjwCb7Jj7TnbzUFMcg==
+	bh=xgQI1e8ZfB82jr8tmb+Z7KDZ3L9j+lWiJLfa1IXMD18=;
+	b=MeXOU+2Z5jtFVW9CtSBTArke8eL0oFhplcuGH+wYujCnrZ+Df8uBqXrDbA6n0CQJTsp8
+	 i5KUcv0lRSi2hx6qOIbb0mxh1rX7woyXbq7oRpZ/VaUPj7eYSTpGrz5Kh/q3D1Bd2KHvP
+	 mqCI1u4BGUBxCYyjt2c2/42S9hOVbsH8eQDxcfXh7I7t7N6xvS4FgImuGvNfqqaZGJSEX
+	 BAk6GhYOjHzNsntdckOfGc30mI2MENDamBbpX8hJOh8+dtgvb46qevq/MCFZoPvfVTsb1
+	 4S5PhZyaZNyAa11CT4Y1aGgavAC1veCf1iHoIippDntAh/+VXR5Pvc+ihbQfMsr190g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eL9ZJkDa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V+GeBBMD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F225606A32E;
-	Sat,  7 Nov 2026 14:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD95606A331;
+	Sat,  7 Nov 2026 14:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eL9ZJkDa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70B31F0089F;
-	Sat,  7 Nov 2026 14:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V+GeBBMD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C541F008A3;
+	Sat,  7 Nov 2026 14:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060751;
-	bh=mXG54rltIFtqonIjB7r0l4BQMUfSQfwrQWOMuZ2JoV0=;
+	s=korg; t=1794060752;
+	bh=xgQI1e8ZfB82jr8tmb+Z7KDZ3L9j+lWiJLfa1IXMD18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eL9ZJkDa2Y8GJ1pdXoMrtGVLOfetiLFBOcQpL+/o//xfbRrQWvCSn8YG/qmpKOoZG
-	 CuMWeUlWDKo+R3159yO/QE6mcAKFXfuZKmLnWzLFhIYGCBJhH+KTq0WomSzfWonh7Q
-	 MAlaxy6awkFoAupT+5Ov3R/XLSboILZWd+zdQ8hk=
+	b=V+GeBBMDB/9hgObgu2G1cvKP9sn9GGCzWg/cP+VfCkabHEqzIkKp105RuzuduBJfJ
+	 k+hGi41ry+pUpfMGxXiOH+fIi0WqG0VwAPXNHcHab198/qODTvN43TxTAlG/xkvmfM
+	 XZizHMcLN/G+lv32s8R3F5ey7Xw88pC+SVsK4N8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jurison Murati <eng.juri@gmail.com>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Christian Gmeiner <cgmeiner@igalia.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0126/1536] media: i2c: ov8865: Drop the runtime PM usage count on stream failure
-Date: Sat,  7 Nov 2026 08:35:42 -0500
-Message-ID: <20261107135001.226777890@linuxfoundation.org>
+Subject: [PATCH 6.12 0127/1536] drm/etnaviv: check all modules for idle after reset
+Date: Sat,  7 Nov 2026 08:35:43 -0500
+Message-ID: <20261107135001.253336035@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,54 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jurison Murati <eng.juri@gmail.com>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-[ Upstream commit 3fe797a12bfa9a49aa998ee722e5f25c957b9b15 ]
+[ Upstream commit 1006d1f7c03d92b28c252333836635df8e165401 ]
 
-ov8865_s_stream() takes a runtime PM reference when enabling the
-stream, but returns without releasing it if ov8865_sw_standby()
-fails, leaving the reference unbalanced and the sensor powered
-indefinitely. The same applies to a failure while disabling the
-stream, in which case the reference acquired at stream start is
-never dropped.
+While the FE is an important part of the GPU, which needs to be idle
+after reset, all other modules should be idle after a proper reset.
+Check all present modules for being idle to determine whether the
+reset was successful.
 
-Drop the reference in a single place, both when disabling the
-stream and on failure, and only update the streaming state on
-success.
-
-Signed-off-by: Jurison Murati <eng.juri@gmail.com>
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
+Link: https://patch.msgid.link/20260511085148.652256-1-l.stach@pengutronix.de
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov8865.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/i2c/ov8865.c b/drivers/media/i2c/ov8865.c
-index 95ffe7536aa6a..1f95c5327d0f3 100644
---- a/drivers/media/i2c/ov8865.c
-+++ b/drivers/media/i2c/ov8865.c
-@@ -2629,15 +2629,13 @@ static int ov8865_s_stream(struct v4l2_subdev *subdev, int enable)
- 	ret = ov8865_sw_standby(sensor, !enable);
- 	mutex_unlock(&sensor->mutex);
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+index df0bc828a2348..d2f9ad9d9e89d 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+@@ -558,9 +558,9 @@ static int etnaviv_hw_reset(struct etnaviv_gpu *gpu)
+ 		/* read idle register. */
+ 		idle = gpu_read(gpu, VIVS_HI_IDLE_STATE);
  
--	if (ret)
--		return ret;
--
--	state->streaming = !!enable;
--
--	if (!enable)
-+	if (ret || !enable)
- 		pm_runtime_put(sensor->dev);
+-		/* try resetting again if FE is not idle */
+-		if ((idle & VIVS_HI_IDLE_STATE_FE) == 0) {
+-			dev_dbg(gpu->dev, "FE is not idle\n");
++		/* try resetting again if any module is not idle */
++		if ((idle & gpu->idle_mask) != gpu->idle_mask) {
++			dev_dbg(gpu->dev, "GPU modules not idle\n");
+ 			continue;
+ 		}
  
--	return 0;
-+	if (!ret)
-+		state->streaming = enable;
-+
-+	return ret;
- }
- 
- static const struct v4l2_subdev_video_ops ov8865_subdev_video_ops = {
 -- 
 2.53.0
 
