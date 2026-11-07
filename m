@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064330;
-	b=B0+hUPCndMMGMQRDUADXVYA3KQWW5yrvRrziNG1H5EVn6Xj1x7o+ybEsMSfA5hYCaUyD
-	 IF1XqxT5gfRE2w2fj51P4BaTde7GjiUGG967OGKi1ypYOdTgriHYnIO1tW0//b1DRqNV5
-	 RcZ4WJ8bE5SGeRmKrMKOGpiF3lwpgxj24DnLzUKWh7g+0BTbaoJpdZYv/EbiAmt6jRUkj
-	 gaoVtTW6nLqNjPaaOgl3bDVM2UzBpmGn+//Ziwnj478Q53+qt/ddrybfPD+b5+M3onB8n
-	 ijXncJpupXJBA0a8S/5QPsjaNT/Wo6Xi/1P4cE6IB98mDNzaMA17eDHnBHlNzUZWCgQ==
+	t=1794064331;
+	b=RK4b59S42/npgB1IwMSL1Y7rPGylc+CoWRCSE4hdrYc1U4dycGGgeJ76ZsXtcqjvpCOf
+	 JxiDaez+dzam1hZDNR34B/hd2flDt6N61CqUN9WPuOjtrFqb+LjUy4I5wQ3Ygvlu/nhkk
+	 ddDWYuDU+x3tuIWyoexsfRB0lazDFq84NoE3ggFujBaktc4LiTAkGVkqG0sN9dnHUTN5/
+	 2OG0dmi4Krsz4fd7KtiH7CUJU4tzCmlvkCTKydq+EZTmIoNDF/fd8gh+MBFWtEFinRLIO
+	 pajSWETUuStzG1qM6e4oo7SZzl5NpKTI/n+bj1Phf0EsNVlQhuNf0hxmPneDllpxYJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064331;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cB8A+9I1ju5w81Trj6SQJjDaFTVaiXOORcslOIQNlKU=;
-	b=wMzUafnhlwX3VDjE2AQ0EfvGQPHowfj3lC8udpIUVHb72N2pVykqVNpqqI2a8RwpOrK+
-	 Kd2SefLrh5xKWwemCT9JMg1MlbQbbT7PCdzw6er4HVihtrp8fouOdZ4fiSTSbrCXcko4N
-	 FMtCBxJxi9gurK99ua2zpYlgVWIAk9Qhq5EBWf8GibdUpWwZqmk/tnDMiBhLcTYlUc5Gw
-	 sMkV5FFdPGT3CIFTM+ngtWTFTqCNNdMgXIJt2UsRUYg7GFMUXfrNuxVBO1zam9nedrQOk
-	 5Ce6VztSZLqzVlC3sDjMMdunNNWeHd8IYhclxzr1XDNwbl5B2ZaxAe6atvnYUxctTsg==
+	bh=4ijZ1SUVeenSv/mFdh6xUzQCREqufZXeaBOCZGNgxUE=;
+	b=rLlki9dQifYUcFUu3zN/5SAeoehigvuSOlh/sql5b7+j7S9MXqADyyYaT6MFkmB0CwjI
+	 GNxK2OY6D4vhlUEvgXhJsA+glX/3hCg4HbQsBYiGQsDVn+aphsqArWO+kznH41f45G1Ou
+	 +0XXS7hokkTBtJNYG0Qv/MZW8ypChdgqyvKINgD3uRf8G+76UkkW5yFuidicf3iH/3kLg
+	 m+22rLxeXBHRyCNhrr1FIPMSm9M1KG5l3TUREEozbB61H7DnYY5J0cQjWhAATICajrAdh
+	 jHvhwVvV/a234xxyrrIu8QQ9+a3wSpldQXrCH03SypIsS4Nn8MK/GSHzLdo1kWaxc6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wki1y7hq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uXQYILzv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4109C606A336;
-	Sat,  7 Nov 2026 15:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB54606A336;
+	Sat,  7 Nov 2026 15:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wki1y7hq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E521F0089F;
-	Sat,  7 Nov 2026 15:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uXQYILzv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB4B1F0089F;
+	Sat,  7 Nov 2026 15:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064330;
-	bh=cB8A+9I1ju5w81Trj6SQJjDaFTVaiXOORcslOIQNlKU=;
+	s=korg; t=1794064331;
+	bh=4ijZ1SUVeenSv/mFdh6xUzQCREqufZXeaBOCZGNgxUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wki1y7hq/vWvoU8impEHnzo6GbUzxg1eckbjXCDB8OVjc0RcXInA3qwE0SifQaDt6
-	 kvWkMgm+2fNqo49a3j6PpFY+kgIuAyz68A3U0XgaXedHjTX8/Uzm0nDUQDwsgy96v/
-	 aNSDXcSterLdwtqTb/yoMnjFD4jIa6x76Dp1Q0EA=
+	b=uXQYILzvg2b0NXl773uFOWPrGPFFdQYZRfBABJG8x7G4LM0o088XanKY1QbCAsoe+
+	 VrRpwPb4nqhPHDbbNAA9OLHUsaHRF7E7tfgm+vG3Y0yfNWA5QOEn0r3opRSRPP3N76
+	 jd8ahkpxC+FHXFLXO3K5EaUOtcVOSJeCWE5gb6RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srish Srinivasan <ssrish@linux.ibm.com>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Nayna Jain <nayna@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0380/1257] pseries/plpks: clear sensitive buffers in wrapping operations
-Date: Sat,  7 Nov 2026 08:44:36 -0500
-Message-ID: <20261107134950.045730199@linuxfoundation.org>
+Subject: [PATCH 7.3 0416/1257] dm: fix a bug in dm_accept_partial_bio
+Date: Sat,  7 Nov 2026 08:45:12 -0500
+Message-ID: <20261107134951.000908204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,69 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srish Srinivasan <ssrish@linux.ibm.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 203695c109e37d8fe3531844218f75b98eef8e1f ]
+[ Upstream commit a279804752e6c767b7f9ecbb32a15bdfd2b80aea ]
 
-PLPKS wrapping key generation, object wrapping, and object unwrapping use
-authentication buffers that contain passwords. An object unwrapping failure
-also frees an output buffer that may contain sensitive data. Freeing these
-buffers with kfree(), without wiping the contents, can leave sensitive data
-in memory.
+dm-writecache doesn't work in pmem mode - mkfs.ext4 and the following
+fsck.ext4 fail with data corruption reported.
 
-Use kfree_sensitive() to wipe the buffers when freeing them.
+The commit 7dd76d1feec7 ("dm: improve bio splitting and associated IO
+accounting") introduced a latent bug in dm_accept_partial_bio - it set
+tio->io->sectors = n_sectors;. This is incorrect, according to the
+diagram in the source code at dm_accept_partial_bio, it should be the
+size of regions 1+2, not the region 2 alone.
 
-Fixes: 133aa79e211d ("pseries/plpks: add HCALLs for PowerVM Key Wrapping Module")
-Cc: stable@vger.kernel.org # 7.0
-Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Reviewed-by: Nayna Jain <nayna@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260923182816.151451-6-ssrish@linux.ibm.com
+The latent bug become real bug with the commit 8b211aaccb91 ("dm: add two
+stage requeue mechanism").
+
+dm-writecache in pmem mode is the only target that actually advances bio
+with bio_advance and then calls dm_accept_partial_bio (so, the region 1
+is non-empty). All the other targets call dm_accept_partial_bio with
+region 1 empty, so bug went unnoticed for so long.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-5
+Cc: stable@vger.kernel.org
+Fixes: 8b211aaccb91 ("dm: add two stage requeue mechanism")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/plpks.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/md/dm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
-index 8dbf85e9714c2..17a73a04d45b4 100644
---- a/arch/powerpc/platforms/pseries/plpks.c
-+++ b/arch/powerpc/platforms/pseries/plpks.c
-@@ -975,7 +975,7 @@ int plpks_gen_wrapping_key(void)
- 
- 	kfree(label);
- out:
--	kfree(auth);
-+	kfree_sensitive(auth);
- 	return rc;
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index eb9e32995b79c..1881d86111fb2 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1350,7 +1350,7 @@ void dm_accept_partial_bio(struct bio *bio, unsigned int n_sectors)
+ 	 * for accounting but it is being reduced so update accordingly.
+ 	 */
+ 	dm_io_set_flag(io, DM_IO_WAS_SPLIT);
+-	io->sectors = n_sectors;
++	io->sectors = *tio->len_ptr;
+ 	io->sector_offset = bio_sectors(io->orig_bio);
  }
- EXPORT_SYMBOL_GPL(plpks_gen_wrapping_key);
-@@ -1100,7 +1100,7 @@ int plpks_wrap_object(u8 **input_buf, u32 input_len, u16 wrap_flags,
- out_free_label:
- 	kfree(label);
- out:
--	kfree(auth);
-+	kfree_sensitive(auth);
- 	return rc;
- }
- EXPORT_SYMBOL_GPL(plpks_wrap_object);
-@@ -1177,14 +1177,14 @@ int plpks_unwrap_object(u8 **input_buf, u32 input_len, u8 **output_buf,
- 	if (rc) {
- 		pr_err("H_PKS_UNWRAP_OBJECT failed. pseries_status=%d, rc=%d",
- 		       pseries_status, rc);
--		kfree(*output_buf);
-+		kfree_sensitive(*output_buf);
- 		*output_buf = NULL;
- 	} else {
- 		*output_len = retbuf[1];
- 	}
- 
- out:
--	kfree(auth);
-+	kfree_sensitive(auth);
- 	return rc;
- }
- EXPORT_SYMBOL_GPL(plpks_unwrap_object);
+ EXPORT_SYMBOL_GPL(dm_accept_partial_bio);
 -- 
 2.53.0
 
