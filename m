@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062501;
-	b=tAjXwfJfUBF/5OgIR0RJWYFbnZczU2hmiEQxDpVkSGo0ZkawrFAGqkUfeIVstzkrgZpL
-	 WyTmBrahtUpqjo3VAVMLdoroRuOuN8k/DuK9XBSCXVPYrIcENUEffbbELadaz3WrVMI9U
-	 q83pUe0RFSppxYW3OKeLOpt/pPGLsqvr3JW2rYjFn0Dp/XqPH86MyVqsRZsupf/6TtHyq
-	 g5xH6WLSbWzHeG9BiQxEUtZ1vYoPMcKsJE+0OHMDkeZlNcXzEujEtHPjiLq1TmaQW3Z88
-	 Fm1mJJIXgH0D6nFW36OBWWZXUI8yf13VaYdxnxP5iamCTyc+MRQdcZJedPibU2ll3cA==
+	t=1794062502;
+	b=hJ8QI+wY1CvEhqVkxVXuqO7D+NWrjmQBZY+9orsyXUmbOcOv0Csurrhvd3a9atXNk3Q2
+	 U5ymNAYRUNcTgbOCfwtVeGw74OEZRMOSmrByDSZ4d8xzFwOS0IAmiS0jquqSD/teq7K5T
+	 fMla+lZzQGpG1FBgew4qCPlxskaUTr3hF4xTqnqwVLy8EZi8gby3svUT5wyZjIThUdElI
+	 N5Dei2nXWW6bI/9AMHtHP2HgbGTvN+e+/VhltQwzt+Eqk86OTyHVW1hpdwOVwgMYZ5+94
+	 yYL5VcCa9pDcy0l7Tg8fi9lEQArPHZIdBAE8wth+dVezixgWh377kg5FUoCcsWBMbQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062501;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PnLtMKO/idxJFzGZS04UfaTOfYlwl9gfhUWhUqnrXes=;
-	b=p/0XuXqCzAfiE85xb6x/NLgjTt57N0J192bfArmc5zS/68Hxafb2OkPEhfJRFAgK3Xym
-	 +5IkE5c6aLTZWwRK1ZMMfGevOIbyfntKal+Six0/+z1eOUYYuTrFR2MQ94heJiMDXGnXE
-	 0gvw2JuCFUyomXuGl58Qf6dL7ibnm+OfCIA+frwbLp1xraWqed9xChBlNfDxqOCfJlhUI
-	 wRRhgSWgdJzut7RQ3jU2Mku02m4Fqhtlne+06bodZzykDQ1hXQJnMHhL4KcoKhIF7x6Fs
-	 zb+YEYYQRjdqxj6a8Hg/XSV115KMPlkdW37oufCX8F0s61H2z9me5mEu3xPZlh78uYQ==
+	bh=4ZLYM2evAH74y9rlKZGtl5+Bhh6rkNqkxBwNhFx2DvE=;
+	b=YfS1i8qnWPorrCBVCToVCpJyrq6FjXqdEPF4UYfI3ze/Hk90KhUy7d5ys9wWxT7VKVcn
+	 V+IPnqbavXerI9nV4GbVGYWB+Bt2GrnvyvAj0mF1nTmCM/vGxZASBnxhr1L9P8adf2SBX
+	 VPZ0dSWcskPpWquKjHEtJ0JDyvZ9L2Ya/HJRzs+oHHZFl3GCtpymtr1nTnMr1T9kefnBJ
+	 gx4JTlzbBwUWg5DmUbjOfgi0SqGBBK9hTJsAcRMRIzxuZzVXpofScBJxwMtL7Xbs+STvA
+	 vpzOjlYkBEHtRmQMWBooM9VXPTFxBg2q+nv7j+Gn7UqjcmC7OPiF6avRaEPMdfxt7FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHE1U2cd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tVvVqHcr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBD06082BE4;
-	Sat,  7 Nov 2026 14:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E0E606A331;
+	Sat,  7 Nov 2026 14:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHE1U2cd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AB61F0089F;
-	Sat,  7 Nov 2026 14:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tVvVqHcr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8711F0089F;
+	Sat,  7 Nov 2026 14:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062501;
-	bh=PnLtMKO/idxJFzGZS04UfaTOfYlwl9gfhUWhUqnrXes=;
+	s=korg; t=1794062502;
+	bh=4ZLYM2evAH74y9rlKZGtl5+Bhh6rkNqkxBwNhFx2DvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UHE1U2cd/nD1F23yI/dMHiber0UaGL48hVT0IQnRA5gSRsj3UTqimotCZAaBRnWUB
-	 bro+QlTk4gdGuDxO6jXa6wg86S3X/djkwTcW5/lWNUPci9My/ZqppRkabNDXOwjLBB
-	 zMJODYNm4ElhDsBaxQcs/LwdpMaaoAiwXFSo2bXA=
+	b=tVvVqHcrXDAQdwViAgjuXsrPXAgp+kINjIPnMa+TiuROZZX50RgeV1c8WJ4+20v8Q
+	 idF0N4qLlbWMffT2G5jP6z0g7j9EPuu93JqjzParliVuR6UlhwOF+v2gmeMzGcqEfU
+	 7+5eC3aWOZFQkYCTYdpfVK3WXjDimH+TZxRBn5Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Anderson Ferneda <anderson.ferneda@braza.com.br>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	Ma Ke <make_ruc2021@163.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1398/1536] ocfs2: deal with legacy signed dir index name hash values
-Date: Sat,  7 Nov 2026 08:56:54 -0500
-Message-ID: <20261107135037.088892902@linuxfoundation.org>
+Subject: [PATCH 6.12 1363/1536] platform/x86/amd/pmc: Fix RTC reference leak in amd_pmc_verify_czn_rtc()
+Date: Sat,  7 Nov 2026 08:56:19 -0500
+Message-ID: <20261107135036.118339415@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,247 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit d1b49d5ea1bf43cce2b0e249a7f7a30dde133907 ]
+[ Upstream commit 22b9306f1fcf86f80b55f05f08d10a9951ba970a ]
 
-Patch series "ocfs2: deal with legacy signed name hash values", v2.
+amd_pmc_verify_czn_rtc() opens the RTC with rtc_class_open(), which
+takes both a device reference and a module reference on the RTC
+driver. The matching release is rtc_class_close(), and it is never
+called. Every return path after the device has been opened, the ones
+that return 0 as well as the ones that report an error, leaves both
+references behind, so each S0i3 suspend leaks them.
 
-Commit 3bc753c06dd0 ("kbuild: treat char as always unsigned") turned on
--funsigned-char globally, which changed the result of two naked 'char'
-loads in ocfs2 hashing code:
+Release the reference with a __free() cleanup on the declaration,
+which covers every return path without adding labels.
 
-	str2hashbuf()            val = msg[i] + (val << 8);
-	ocfs2_xattr_name_hash()  hash = (hash << 5) ^ (hash >> 27) ^ *name++;
+rtc_class_close() does not accept a NULL argument, so the cleanup
+helper has to guard against one: rtc_class_open() may fail and the
+declaration still has to be cleaned up.
 
-A name byte >= 0x80 used to sign-extend and now zero-extends.  Both
-results are written to disk, the first into the dx leaf when a directory
-entry is indexed and the second into xe_name_hash when an xattr is
-stored, so anything written by a pre-6.2 kernel is looked up under a
-different hash and is no longer found.  readdir and listxattr still list
-those names because neither of them hashes, which makes this look like
-the filesystem losing entries rather than like a lookup bug.  Anderson
-Ferneda reported it that way for directories with non-ASCII names [1].
+Found by code review.
 
-Patches 1 and 3 do what ext4 did in commit f3bbac32475b2 ("ext4: deal
-with legacy signed xattr name hash values"): look up with the current
-unsigned hash, retry with the legacy signed one on a miss, and always
-store new entries under the unsigned hash.  The retry is skipped when the
-two hashes come out equal, so an ASCII name does not walk the index
-twice.  Both hash functions now spell out the signedness instead of
-leaving it to -funsigned-char, as commit 854f0912f813 ("ext4: make xattr
-char unsignedness in hash explicit") did, so a backport to a kernel
-without the flag still computes both variants correctly.
-
-Patch 2 is a separate fix, placed before patch 3 so that every commit in
-the series is correct on its own.  ocfs2_check_xattr_bucket_collision()
-recomputes the hash of the name to decide whether splitting a full bucket
-can make room for the entry being set.  That is right for a new entry and
-wrong for one that already exists, since an update leaves xe_name_hash
-alone.  Against a bucket holding legacy hashes the comparison does not
-match, so the split goes ahead and cannot help: a bucket whose entries
-all share one hash has no divide position.  How that ends depends on
-where the unsigned hash sorts.  Below the legacy ones, the set fails with
--ENOSPC after growing the tree for nothing.  Above them, it lands in the
-empty bucket the split just appended and stores a second copy of the
-entry there while the original stays behind, so listxattr reports the
-name twice.  Using the stored hash closes both.
-
-Nothing retires a legacy hash at runtime.  Deleting or updating an entry
-does not rewrite it, and the only code that rehashes existing dirents is
-ocfs2_expand_inline_dir() on the inline to extent conversion, so the
-retry stays for as long as the legacy entries do.  Rebuilding the index
-offline is what removes it for good.
-
-This patch (of 3):
-
-Commit 3bc753c06dd0 ("kbuild: treat char as always unsigned") set
--funsigned-char globally, which changed the result of the naked 'char'
-load in str2hashbuf():
-
-	val = msg[i] + (val << 8);
-
-A name byte >= 0x80 used to sign-extend and now zero-extends, so
-ocfs2_dx_dir_name_hash() computes a different hash pair for every name
-containing one.  The pair is written into the dx leaf when the entry is
-created, so an index built by an older kernel no longer matches and
-ocfs2_dx_dir_search() returns -ENOENT for a name that readdir still
-lists.
-
-Search with the current unsigned hash and, on a miss, retry with the
-legacy signed one, as ext4 does in commit f3bbac32475b2 ("ext4: deal
-with legacy signed xattr name hash values").  New entries are always
-indexed under the unsigned hash.  Skip the retry when the two hashes
-are equal, so that a miss on an ASCII name does not walk the index
-twice.
-
-The retry costs a second walk of the dx tree, so a negative lookup of a
-name containing a byte >= 0x80 does twice the work.  That is bounded and
-worth it, and directories whose dx root is still inline pay nothing
-extra, since there the retry only rescans the root block that is already
-loaded.  Nothing retires it at runtime: a legacy entry keeps its legacy
-hash, because neither deleting nor updating an entry rewrites the dx
-hash, and the only code that rehashes existing dirents is
-ocfs2_expand_inline_dir() on the inline to extent conversion.
-Rebuilding the index offline is what removes the cost for good.
-
-Also spell out the signedness in str2hashbuf() instead of leaving the
-current hash to -funsigned-char, as commit 854f0912f813 ("ext4: make
-xattr char unsignedness in hash explicit") did, so that both variants
-stay correct if this is backported to a kernel without the flag.
-
-Link: https://lore.kernel.org/20261009083002.2621201-1-joseph.qi@linux.alibaba.com
-Link: https://lore.kernel.org/20261009083002.2621201-2-joseph.qi@linux.alibaba.com
-Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Anderson Ferneda <anderson.ferneda@braza.com.br>
-Closes: https://lore.kernel.org/ocfs2-devel/CP5P284MB2780AC2C3C2AB2CF2B6CB7AFBE942@CP5P284MB2780.BRAP284.PROD.OUTLOOK.COM/
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org> # 6.2+
+Fixes: 59348401ebed ("platform/x86: amd-pmc: Add special handling for timer based S0i3 wakeup")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20261011121759.3267678-1-make_ruc2021@163.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dir.c | 76 ++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 65 insertions(+), 11 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc.c | 5 +++--
+ include/linux/rtc.h                | 2 ++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/dir.c b/fs/ocfs2/dir.c
-index dc1e379e58d50..d541d41601483 100644
---- a/fs/ocfs2/dir.c
-+++ b/fs/ocfs2/dir.c
-@@ -221,7 +221,8 @@ static void TEA_transform(__u32 buf[4], __u32 const in[])
- 	buf[1] += b1;
- }
+diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
+index 44e6bd91af4ac..821a2f4dc554a 100644
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -14,6 +14,7 @@
+ #include <linux/acpi.h>
+ #include <linux/bitfield.h>
+ #include <linux/bits.h>
++#include <linux/cleanup.h>
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/dmi.h>
+@@ -617,7 +618,6 @@ static int amd_pmc_wa_irq1(struct amd_pmc_dev *pdev)
  
--static void str2hashbuf(const char *msg, int len, __u32 *buf, int num)
-+static void str2hashbuf(const char *msg, int len, __u32 *buf, int num,
-+			bool legacy_signed)
+ static int amd_pmc_verify_czn_rtc(struct amd_pmc_dev *pdev, u32 *arg)
  {
- 	__u32	pad, val;
- 	int	i;
-@@ -235,7 +236,10 @@ static void str2hashbuf(const char *msg, int len, __u32 *buf, int num)
- 	for (i = 0; i < len; i++) {
- 		if ((i % 4) == 0)
- 			val = pad;
--		val = msg[i] + (val << 8);
-+		if (legacy_signed)
-+			val = (signed char)msg[i] + (val << 8);
-+		else
-+			val = (unsigned char)msg[i] + (val << 8);
- 		if ((i % 4) == 3) {
- 			*buf++ = val;
- 			val = pad;
-@@ -248,8 +252,9 @@ static void str2hashbuf(const char *msg, int len, __u32 *buf, int num)
- 		*buf++ = pad;
- }
+-	struct rtc_device *rtc_device;
+ 	time64_t then, now, duration;
+ 	struct rtc_wkalrm alarm;
+ 	struct rtc_time tm;
+@@ -633,7 +633,8 @@ static int amd_pmc_verify_czn_rtc(struct amd_pmc_dev *pdev, u32 *arg)
+ 	if (pdev->major < 64 || (pdev->major == 64 && pdev->minor < 53))
+ 		return 0;
  
--static void ocfs2_dx_dir_name_hash(struct inode *dir, const char *name, int len,
--				   struct ocfs2_dx_hinfo *hinfo)
-+static void __ocfs2_dx_dir_name_hash(struct inode *dir, const char *name,
-+				     int len, struct ocfs2_dx_hinfo *hinfo,
-+				     bool legacy_signed)
- {
- 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
- 	const char	*p;
-@@ -279,7 +284,7 @@ static void ocfs2_dx_dir_name_hash(struct inode *dir, const char *name, int len,
+-	rtc_device = rtc_class_open("rtc0");
++	struct rtc_device *rtc_device __free(rtc_class_close) =
++		rtc_class_open("rtc0");
+ 	if (!rtc_device)
+ 		return 0;
+ 	rc = rtc_read_alarm(rtc_device, &alarm);
+diff --git a/include/linux/rtc.h b/include/linux/rtc.h
+index 3f4d315aaec9e..ca30c0c5a1acd 100644
+--- a/include/linux/rtc.h
++++ b/include/linux/rtc.h
+@@ -13,6 +13,7 @@
+ #define _LINUX_RTC_H_
  
- 	p = name;
- 	while (len > 0) {
--		str2hashbuf(p, len, in, 4);
-+		str2hashbuf(p, len, in, 4, legacy_signed);
- 		TEA_transform(buf, in);
- 		len -= 16;
- 		p += 16;
-@@ -290,6 +295,19 @@ static void ocfs2_dx_dir_name_hash(struct inode *dir, const char *name, int len,
- 	hinfo->minor_hash = buf[1];
- }
  
-+static void ocfs2_dx_dir_name_hash(struct inode *dir, const char *name, int len,
-+				   struct ocfs2_dx_hinfo *hinfo)
-+{
-+	__ocfs2_dx_dir_name_hash(dir, name, len, hinfo, false);
-+}
-+
-+static void ocfs2_dx_dir_name_hash_signed(struct inode *dir, const char *name,
-+					  int len,
-+					  struct ocfs2_dx_hinfo *hinfo)
-+{
-+	__ocfs2_dx_dir_name_hash(dir, name, len, hinfo, true);
-+}
-+
- /*
-  * bh passed here can be an inode block or a dir data block, depending
-  * on the inode inline data flag.
-@@ -953,10 +971,10 @@ static int ocfs2_dx_dir_lookup(struct inode *inode,
- 	return ret;
- }
++#include <linux/cleanup.h>
+ #include <linux/types.h>
+ #include <linux/interrupt.h>
+ #include <linux/nvmem-provider.h>
+@@ -198,6 +199,7 @@ extern void rtc_update_irq(struct rtc_device *rtc,
  
--static int ocfs2_dx_dir_search(const char *name, int namelen,
--			       struct inode *dir,
--			       struct ocfs2_dx_root_block *dx_root,
--			       struct ocfs2_dir_lookup_result *res)
-+static int __ocfs2_dx_dir_search(const char *name, int namelen,
-+				 struct inode *dir,
-+				 struct ocfs2_dx_root_block *dx_root,
-+				 struct ocfs2_dir_lookup_result *res)
- {
- 	int ret, i, found;
- 	u64 phys;
-@@ -969,8 +987,6 @@ static int ocfs2_dx_dir_search(const char *name, int namelen,
- 	struct ocfs2_extent_list *dr_el;
- 	struct ocfs2_dx_entry_list *entry_list;
+ extern struct rtc_device *rtc_class_open(const char *name);
+ extern void rtc_class_close(struct rtc_device *rtc);
++DEFINE_FREE(rtc_class_close, struct rtc_device *, if (_T) rtc_class_close(_T));
  
--	ocfs2_dx_dir_name_hash(dir, name, namelen, &res->dl_hinfo);
--
- 	if (ocfs2_dx_root_inline(dx_root)) {
- 		entry_list = &dx_root->dr_entries;
- 		goto search;
-@@ -1067,6 +1083,44 @@ static int ocfs2_dx_dir_search(const char *name, int namelen,
- 	return ret;
- }
- 
-+static int ocfs2_dx_dir_search(const char *name, int namelen,
-+			       struct inode *dir,
-+			       struct ocfs2_dx_root_block *dx_root,
-+			       struct ocfs2_dir_lookup_result *res)
-+{
-+	struct ocfs2_dx_hinfo legacy;
-+	int ret;
-+
-+	ocfs2_dx_dir_name_hash(dir, name, namelen, &res->dl_hinfo);
-+
-+	ret = __ocfs2_dx_dir_search(name, namelen, dir, dx_root, res);
-+	if (ret != -ENOENT)
-+		return ret;
-+
-+	/*
-+	 * Nothing under the current hash.  The entry may have been indexed by
-+	 * an older kernel, which sign-extended the name bytes when hashing.
-+	 * New entries are always indexed under the unsigned hash, so only fall
-+	 * back to the legacy signed one when it can actually differ: an ASCII
-+	 * name hashes the same either way, and a genuine miss on one should
-+	 * not have to walk the index twice.
-+	 */
-+	ocfs2_dx_dir_name_hash_signed(dir, name, namelen, &legacy);
-+	if (legacy.major_hash == res->dl_hinfo.major_hash &&
-+	    legacy.minor_hash == res->dl_hinfo.minor_hash)
-+		return ret;
-+
-+	res->dl_hinfo = legacy;
-+
-+	ret = __ocfs2_dx_dir_search(name, namelen, dir, dx_root, res);
-+	if (ret)
-+		return ret;
-+
-+	pr_warn_once("ocfs2: directory index with signed name hash\n");
-+
-+	return 0;
-+}
-+
- static int ocfs2_find_entry_dx(const char *name, int namelen,
- 			       struct inode *dir,
- 			       struct ocfs2_dir_lookup_result *lookup)
+ extern int rtc_irq_set_state(struct rtc_device *rtc, int enabled);
+ extern int rtc_irq_set_freq(struct rtc_device *rtc, int freq);
 -- 
 2.53.0
 
