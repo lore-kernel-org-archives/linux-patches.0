@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064608;
-	b=ZkGFTnMzEznuIGL2vr8b4xh8yEIjvYkTEpPHj/wuNT3SAy9i79+OI37Y8OV8RN7K6/ZJ
-	 1sPtTzRU/8oa5a54FMznwfsCRKXneGohOb8XmTAy+nROay53eazWLaA+msUFw2P9uA1qD
-	 0qiCbid096I3BR/T/OpVDlKe+EwMuKb459E3qbWL8hhHlK5OFIoUK7agitAH6G7GippmM
-	 cRPnsEuAlboVB9mpbQzyVpKYZhQ62p5R8VRUCN/ZQGD8IU1ctT/2cTtGH+hkRe1rmeH9r
-	 zfOTTVqDRshzKz1lLpzfNKL9KmyjgwUd6DKG0tyuju0FRTB4OxtDO1oUqTbVbL5lmtA==
+	t=1794064603;
+	b=EvK+u8738ZNQd9BUmo5V79YU9DsV1u3Vm3e5gnJFJ4JyE5w9YZTjiWPJo3ioBn4orpsL
+	 QU20CuFpmo+ZT3cP0rDWNM1cX2SOOY90Czx/mqp+ZmJ3U+oSI0QSrkgq4kgFiFP0fQn+V
+	 XM3/IM3O8ZtHSjV9pvxWvJxN5G2EnvrkoCajXrIZePCk0uPkzIfYHox6Hs2vm4CNZIj34
+	 wd8sCL5FOfdrpojpZrRnC6zWK/EWqDsB/alcCPDhiTqfzBitAMXHvUytfQP6MwQjSn72c
+	 +mmyT8K+uI42R73KcTebwVXsfd7+wjCMZQ/ioduoVuF820Soiqa+jt8pGxxsVhw1vCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064608;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064603;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cp428scmMcMNcwyR4rWToLPyzEMoGHoZDoTRMd/JM9Q=;
-	b=vPQKvPbLo1tUHfi21x8+ZpYcDkF4cRFDTzaY9+g/001OznBPbnQMqoBBL3ttd2y81dEw
-	 aeLq3QyQnUXDg1afnKIfEZUwbx0BtkxeV6ALRUk7e/QM57oG9D/l5TFTNFU6cCLhCCqcc
-	 0dEPvo6ZaN4r2oQgdy6CD6hndDA0dQgg8yHigm47wOjWbrI3Vc/oNRGVX9UdLGG0Pz0vc
-	 fLOVg32kTQjIJXCl5rC7t5hEj8bF/wp1rgwc0KpA18iQfrHRQ/j6S2oLmJRjEftDOLgdr
-	 T5ORvYlXa6vXP3hL5sUBG+UlQBslAnaKF4YlYmsvacFj3fqCAVSR3YclpCG6ocJZW3Q==
+	bh=W05Ez3Vsko8m8WJxqUiLVSaMtq7MTwR+SGR6LZAOObg=;
+	b=qJcPwor5vQxY5DR+ku0F9/e538CF77kSNPzEhpjzEJN0ucrFVTOAsf994yqZBqp0kO+z
+	 3x/qWXtQMNiApFtglTDln0Ev05DFikQ6peF0PuBToZfj8lulsVb3c5LkQzXJQSSqsMNfg
+	 Mb5lv+vaUrAcNqlHIuzDxHHnuwWppuShsnUdt6idekWlDn7Ze3VuBKaMH0uL89vhRwFdC
+	 p9ER09F4gjrHGjUV5UHm9oK2k18KadRBvQbSm428EqBUD3wu0+RvAMPs8lTLdkUsxhSet
+	 05i3N2CvdRJ7hnXCnF8PbUBc3CfUpZ7Qittc57D8EDcQHbpwNERVkNJ3FUXbhN9EoDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnrAu4qh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLp15Qv6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C40E606E8FE;
-	Sat,  7 Nov 2026 15:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22914606E8EF;
+	Sat,  7 Nov 2026 15:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnrAu4qh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE141F008A2;
-	Sat,  7 Nov 2026 15:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLp15Qv6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44D51F0089F;
+	Sat,  7 Nov 2026 15:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064607;
-	bh=Cp428scmMcMNcwyR4rWToLPyzEMoGHoZDoTRMd/JM9Q=;
+	s=korg; t=1794064603;
+	bh=W05Ez3Vsko8m8WJxqUiLVSaMtq7MTwR+SGR6LZAOObg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OnrAu4qhwGlM0R6Ia2jBgbrpT8EfRq30fA+HK+LkaIFdbWCXlWo/InR+15gAxOh44
-	 ZvOcgWZEI1Av7zw8sCfYoEQp6gf+mvv8XoJ99r5p7KSPPexWsnDE+fI+jcNjqRtHlG
-	 WIy2Ae1QWOKOxq6NCtaZcpvIvZe+b1XX/p792Nro=
+	b=YLp15Qv6iMFNxMVd5+7ZwCLBAhVicOo+QmkMI519jBBWhyMV53NyL8iEQB/5WIz3T
+	 x//idTj8kh8BMe6gLhjV9xcVKucMwqilq7HjnbS9/2Y7RyL28LVthIWYTSR2+aVnjf
+	 dbjDT870l6gOdqbSOgs2e/oaq4Wx5MvfM5RMkSsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0619/1257] KVM: arm64: Prevent 64-bit overflow when computing hyp clock rate
-Date: Sat,  7 Nov 2026 08:48:35 -0500
-Message-ID: <20261107134956.396209498@linuxfoundation.org>
+Subject: [PATCH 7.3 0615/1257] cxl/port: Convert PCIe link latency to nanoseconds
+Date: Sat,  7 Nov 2026 08:48:31 -0500
+Message-ID: <20261107134956.288888962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,59 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 6164ce3491bcc3a27a2e2e9260a286eb2df2301e ]
+[ Upstream commit 16440d6e4bf1175cda83438d9f9a8ae84bfcf0ee ]
 
-The hypervisor clock rate is delta_cycles * NSEC_PER_SEC / delta_boot.
-It is computed whenever a deviation occurs. If the delta between two
-rate updates is big enough, delta_cycles * NSEC_PER_SEC will overflow.
+Commit 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
+converted CDAT latencies to nanoseconds and removed the conversion in
+cxl_region_perf_data_calculate(), but left PCIe link latencies in
+picoseconds.
 
-Prevent overflow with mul_u64_u64_div_u64(). And as a bonus, simplify
-the clock estimation with mul_u64_u32_shr().
+This inflates the FlitLatency contribution to region and node latencies
+by a factor of 1000, exposing incorrect values in sysfs. The resulting
+abstract distances can incorrectly reverse the memory tier ordering of
+nodes.
 
-Fixes: b22888917fa4 ("KVM: arm64: Sync boot clock with the nVHE/pKVM hyp")
+Convert the FlitLatency contribution to nanoseconds before adding it to
+the access coordinates, rounding up as cdat_normalize() does.
+
+Fixes: 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261008104212.3134550-2-vdonnefort@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20261009045452.1107921-2-den@valinux.co.jp
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp_trace.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/cxl/core/port.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/kvm/hyp_trace.c b/arch/arm64/kvm/hyp_trace.c
-index 9644c424819b7..c60d7dfbf5e26 100644
---- a/arch/arm64/kvm/hyp_trace.c
-+++ b/arch/arm64/kvm/hyp_trace.c
-@@ -59,14 +59,8 @@ static void __hyp_clock_work(struct work_struct *work)
- 	if (hyp_clock->mult) {
- 		u64 err, cur = delta_cycles;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 6ff3353865e39..cd9e58d8144f1 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -2349,6 +2349,9 @@ EXPORT_SYMBOL_NS_GPL(schedule_cxl_memdev_detach, "CXL");
  
--		if (WARN_ON_ONCE(cur >= hyp_clock->cyc_overflow64)) {
--			__uint128_t tmp = (__uint128_t)cur * hyp_clock->mult;
--
--			cur = tmp >> hyp_clock->shift;
--		} else {
--			cur *= hyp_clock->mult;
--			cur >>= hyp_clock->shift;
--		}
-+		WARN_ON_ONCE(cur >= hyp_clock->cyc_overflow64);
-+		cur = mul_u64_u32_shr(cur, hyp_clock->mult, hyp_clock->shift);
- 		cur += hyp_clock->boot;
- 
- 		err = abs_diff(cur, boot);
-@@ -84,7 +78,7 @@ static void __hyp_clock_work(struct work_struct *work)
- 					    err / NSEC_PER_USEC);
- 	}
- 
--	rate = div64_u64(delta_cycles * NSEC_PER_SEC, delta_boot);
-+	rate = mul_u64_u64_div_u64(delta_cycles, NSEC_PER_SEC, delta_boot);
- 
- 	clocks_calc_mult_shift(&hyp_clock->mult, &hyp_clock->shift,
- 			       rate, NSEC_PER_SEC, CLOCK_MAX_CONVERSION_S);
+ static void add_latency(struct access_coordinate *c, long latency)
+ {
++	/* Convert link latency from picoseconds to nanoseconds. */
++	latency = DIV_ROUND_UP(latency, 1000);
++
+ 	for (int i = 0; i < ACCESS_COORDINATE_MAX; i++) {
+ 		c[i].write_latency += latency;
+ 		c[i].read_latency += latency;
 -- 
 2.53.0
 
