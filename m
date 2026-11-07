@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062651;
-	b=UUF53ya1NZX4gMKihzA4nDDIQxOqC6AQmrE9A8+YpO/g0wizaPcMODwgP3wI6e72F2pe
-	 f0bDQ8emQ50T2TJbWL6Lg2BHQHWahHSXaW/FT5sV/yTCoo/0cz/TwcdIh+aU8HyZnLMVA
-	 D7ducHu1fEkSP2cZ3RN5Tim6YJARLs2TRE+xlggFyVQGsJJdj6y3v01GL58Mh4la8MpPw
-	 AoHCicwo1dl3fikUk3vy62mN9A28FZd9hKexTKtoFouSCeh6SUopcg8Ad6FMX+Sje77Z0
-	 Vh93ZmYFIySBTeEi1ltzi13G2nSsUfAPCuEY4aVDvVGrv+kauAuiX2axwLe9RtIvNjQ==
+	t=1794062652;
+	b=HtM6jlrEdY1IqsVkMBSNulim1/EoHdBGuOnl90JM0U+zD5FQe64SmQzuHcsbhE7CEqTI
+	 T0mwn9XLgsm7qvIbUGpNur9TX/8YcWUJ04VWmWXTIkhioATrc4DAbpEYO/qzVzibTLPsM
+	 E+6AJsA9Nm/+/nAAkXsWN0fmzA4YgfYMHTIEucO+r/LrwJn7IhlOBPJWKLifgtkL6NPfZ
+	 n2qiDA//YrX2QwTW44RIsqL4VzKSn6OimKFm2OOuicbjARhyxnMYh490ZKwD3h/ypQsAT
+	 u9hBG3zi796nDFsxw97ThaMdust1CuE66pO3Oe9cLid6+wTuiYDDltu65jVhrakGVAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062651;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iUoP9TIfV4WNrcT/zlClYeLeo0ivCd1Sr6p1CL2OsWY=;
-	b=dG99iho1fXokjJStBy+5wFhjmdHy6LKstWwBMPGIyL0IJpYQr12FCXBBntoV+t1wS11S
-	 M3vu1Jxwou4rAMmPV8HhxUc3rr/vVBRuaK2SStRE1M3xxPO74c+U5KspLjBfiVraOY/0l
-	 ObKoi3aWaMo9a0Za9GlNJo5rbdXXdLWysC8uZEhARtLBd1iydXK2kPAp2BULjpzCwxt3D
-	 KLCsTX999QKcUcTpD7+TGPQ+xUcNw/vpG1Ic5xm+YxuzRvrA/mn4q1vUfDo5DEo+j9cWb
-	 LqLHGs5iRs7Z1U09plmaFpCLNI6s58obUXXqAJHwJpUUFhnXAvS7LFw4NUPeuQ/TCvw==
+	bh=rivJek0MniA9AUMZzKCp6DeqQuiUkNxJCXGx3fULQOY=;
+	b=33MIqxefy0I9TVCfWTEGEwGJTOrYlfi3eHnbk9jXGIUqjzWfymdjbIdV96AsYqvnoTSV
+	 UigLQevCYT8D9V5LA4em9EfgfwrkQAQ57dkeZywctSSaItKM/W+1bABEXkPoeZCeeLh/p
+	 w55/bUutefpZH4H9MpWlcVeMzm5w6DSmZ3I1GxgdbPk/E9ggpaw/g3183HEdBlq/pIHFQ
+	 cnkCoUXQhabv7iJUo/6D7U7S6sW04+yek/A6GdVWQbhX7eHUbGyU8ELvKgHl+ld7eLBHI
+	 +mC8oFAcYvtmFzYGdWdPaTuAfs2LQRAhcS5/OYAqvtmLUQa1FHyrTRC3nzVg+cndgWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DvTgGLCQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ulijrH8Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42A3606A332;
-	Sat,  7 Nov 2026 14:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C7B606A330;
+	Sat,  7 Nov 2026 14:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DvTgGLCQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4991F0089F;
-	Sat,  7 Nov 2026 14:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ulijrH8Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772931F0089F;
+	Sat,  7 Nov 2026 14:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062650;
-	bh=iUoP9TIfV4WNrcT/zlClYeLeo0ivCd1Sr6p1CL2OsWY=;
+	s=korg; t=1794062651;
+	bh=rivJek0MniA9AUMZzKCp6DeqQuiUkNxJCXGx3fULQOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DvTgGLCQA2b9d98LVIzKk1+dIRaEQQhXP9j1mXKa/3WZKUQCu2Mz+A/L+mJSuNezp
-	 by9uaRT7yB3G4EvijgxGXdyzEa5pQNbDfLwiKVE7O3Q34LfoEQ824fxpzLN7Ra4J02
-	 W7WZknGFOc6rjArv/QLowm+pUaGMgIxJGq/VHe/s=
+	b=ulijrH8Qzb9KVG371ZkBxa6mOLDgaB8668TCRRHBFCsrtvplA3YmGWw07Jyq6y1Qz
+	 dASDcaoQA625kjrssYBsJnCnxI2c26/RZj74bV4f65hQnp/cYOOT8qzCJEw/gKT91b
+	 SzKUy9dw5WRUTVkiX1BEoMMsDyGhaUSLsR5WGbDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fang Xieyan <fangxy@xiaopeng.com>,
-	Douglas Anderson <dianders@chromium.org>,
 	Daniel Thompson <daniel@riscstar.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1515/1536] kgdb: Fix buffer overflow in the m packet handler
-Date: Sat,  7 Nov 2026 08:58:51 -0500
-Message-ID: <20261107135040.417864634@linuxfoundation.org>
+Subject: [PATCH 6.12 1516/1536] kgdb: Fix buffer overflow in the M and X packet handlers
+Date: Sat,  7 Nov 2026 08:58:52 -0500
+Message-ID: <20261107135040.445909103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,69 +70,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Fang Xieyan <fangxy@xiaopeng.com>
 
-[ Upstream commit ac0159129e2cb99a70c4b80cfbf58d03e092dc7b ]
+[ Upstream commit 13962ef7021ef2531a4f6650eca87c363e6c9c32 ]
 
-gdb_cmd_memread() passes the length of the 'm' packet straight to
-kgdb_mem2hex(), which hex-encodes the reply into
-remcom_out_buffer[BUFMAX] without checking that the reply fits. A
-client on the KGDB I/O console can ask for a read of any size, and
-the hex encoding runs off the end of the buffer. kgdb_mem2hex() takes
-that length as an int count, so 2^31 truncates to a negative value
-and copy_from_kernel_nofault() is handed buf + count as its
-destination.
+write_mem_msg() passes the length claimed by an 'M' or 'X' packet directly
+to kgdb_hex2mem() or kgdb_ebin2mem(). A malformed packet can claim more
+data than was actually received, causing the decoders to read past
+remcom_in_buffer.
 
-On x86 BUFMAX is 1024, so a read of 512 bytes overruns by the single
-byte that terminates the hex string:
+Record the received payload length in get_packet() and use it to bound
+the decoders. 'M' carries two hex characters per byte, while 'X' carries
+one byte per output byte except that a 0x7d escape consumes an additional
+input byte. Pass the packet end to kgdb_ebin2mem() so both reads are
+checked against the received data.
 
-  BUG: KASAN: global-out-of-bounds in kgdb_mem2hex+0x1dd/0x230
-  Write of size 1 at addr ffffffff87651780 by task sh/1
-  ...
-  The buggy address belongs to the variable:
-   remcom_out_buffer+0x400/0x420
-
-Bounds check the length before the hex encoding:
-
-		if (length > (BUFMAX - 1) / 2) {
-			error_packet(remcom_out_buffer, -EINVAL);
-			return;
-		}
-
-gdbstub_msg_write() already bounds the count it hex-encodes
-against BUFMAX. Reads over the limit never returned valid data,
-so an error reply loses nothing.
+Keep zero-length 'X' packets valid, as GDB uses them to probe binary
+download support.
 
 Fixes: dc7d55270521 ("kgdb: core")
 Cc: stable@vger.kernel.org
 Assisted-by: Hawkeye:GLM-5.3-flash
 Assisted-by: Qoder:Qwen3.8-Max
 Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20260914180344.15485-1-fangxy@xiaopeng.com
+Link: https://lore.kernel.org/r/20260922154907.90535-1-fangxy@xiaopeng.com
 Signed-off-by: Daniel Thompson <daniel@riscstar.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/debug/gdbstub.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/debug/gdbstub.c | 45 +++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 38 insertions(+), 7 deletions(-)
 
 diff --git a/kernel/debug/gdbstub.c b/kernel/debug/gdbstub.c
-index f625172d4b676..4a17b27b3e5b2 100644
+index 4a17b27b3e5b2..cc3159b0b6ab6 100644
 --- a/kernel/debug/gdbstub.c
 +++ b/kernel/debug/gdbstub.c
-@@ -561,6 +561,14 @@ static void gdb_cmd_memread(struct kgdb_state *ks)
+@@ -41,6 +41,8 @@
+ /* Our I/O buffers. */
+ static char			remcom_in_buffer[BUFMAX];
+ static char			remcom_out_buffer[BUFMAX];
++/* Payload bytes get_packet() stored in remcom_in_buffer, excluding the NUL. */
++static int			remcom_in_len;
+ static int			gdbstub_use_prev_in_buf;
+ static int			gdbstub_prev_in_buf_pos;
  
- 	if (kgdb_hex2long(&ptr, &addr) > 0 && *ptr++ == ',' &&
- 					kgdb_hex2long(&ptr, &length) > 0) {
-+		/*
-+		 * The hex-encoded reply needs 2 * length + 1 bytes
-+		 * in remcom_out_buffer[BUFMAX].
-+		 */
-+		if (length > (BUFMAX - 1) / 2) {
-+			error_packet(remcom_out_buffer, -EINVAL);
-+			return;
+@@ -85,7 +87,7 @@ static int gdbstub_read_wait(void)
+ }
+ #endif
+ /* scan for the sequence $<data>#<checksum> */
+-static void get_packet(char *buffer)
++static int get_packet(char *buffer)
+ {
+ 	unsigned char checksum;
+ 	unsigned char xmitcsum;
+@@ -133,6 +135,8 @@ static void get_packet(char *buffer)
+ 		}
+ 		buffer[count] = 0;
+ 	} while (checksum != xmitcsum);
++
++	return count;
+ }
+ 
+ /*
+@@ -319,16 +323,26 @@ int kgdb_hex2long(char **ptr, unsigned long *long_val)
+  * Copy the binary array pointed to by buf into mem.  Fix $, #, and
+  * 0x7d escaped with 0x7d. Return -EFAULT on failure or 0 on success.
+  * The input buf is overwritten with the result to write to mem.
++ *
++ * buf_end points one past the last byte received for this packet. Each
++ * 0x7d escape consumes a second input byte, so decoding count bytes can
++ * read up to 2 * count input bytes; stop at buf_end rather than running
++ * off the end of remcom_in_buffer.
+  */
+-static int kgdb_ebin2mem(char *buf, char *mem, int count)
++static int kgdb_ebin2mem(char *buf, char *mem, int count, char *buf_end)
+ {
+ 	int size = 0;
+ 	char *c = buf;
+ 
+ 	while (count-- > 0) {
++		if (buf >= buf_end)
++			return -EINVAL;
+ 		c[size] = *buf++;
+-		if (c[size] == 0x7d)
++		if (c[size] == 0x7d) {
++			if (buf >= buf_end)
++				return -EINVAL;
+ 			c[size] = *buf++ ^ 0x20;
 +		}
- 		err = kgdb_mem2hex((char *)addr, remcom_out_buffer, length);
- 		if (!err)
- 			error_packet(remcom_out_buffer, -EINVAL);
+ 		size++;
+ 	}
+ 
+@@ -365,16 +379,33 @@ void gdb_regs_to_pt_regs(unsigned long *gdb_regs, struct pt_regs *regs)
+ static int write_mem_msg(int binary)
+ {
+ 	char *ptr = &remcom_in_buffer[1];
++	char *buf_end = &remcom_in_buffer[remcom_in_len];
+ 	unsigned long addr;
+ 	unsigned long length;
+ 	int err;
+ 
+ 	if (kgdb_hex2long(&ptr, &addr) > 0 && *(ptr++) == ',' &&
+ 	    kgdb_hex2long(&ptr, &length) > 0 && *(ptr++) == ':') {
+-		if (binary)
+-			err = kgdb_ebin2mem(ptr, (char *)addr, length);
+-		else
++		/*
++		 * Trust only the bytes actually received, not length: the
++		 * client can claim more payload than it sent. 'M' decodes two
++		 * hex chars per byte in place, so it needs 2 * length bytes at
++		 * ptr; 'X' decodes one byte per byte, and kgdb_ebin2mem() bounds
++		 * its extra 0x7d-escape reads against buf_end itself.
++		 */
++		if (ptr >= buf_end)
++			return -EINVAL;
++
++		if (binary) {
++			if (length > (unsigned long)(buf_end - ptr))
++				return -EINVAL;
++			err = kgdb_ebin2mem(ptr, (char *)addr, length, buf_end);
++		} else {
++			if (length > (unsigned long)(buf_end - ptr) / 2)
++				return -EINVAL;
+ 			err = kgdb_hex2mem(ptr, (char *)addr, length);
++		}
++
+ 		if (err)
+ 			return err;
+ 		if (CACHE_FLUSH_IS_SAFE)
+@@ -991,7 +1022,7 @@ int gdb_serial_stub(struct kgdb_state *ks)
+ 		/* Clear the out buffer. */
+ 		memset(remcom_out_buffer, 0, sizeof(remcom_out_buffer));
+ 
+-		get_packet(remcom_in_buffer);
++		remcom_in_len = get_packet(remcom_in_buffer);
+ 
+ 		switch (remcom_in_buffer[0]) {
+ 		case '?': /* gdbserial status */
 -- 
 2.53.0
 
