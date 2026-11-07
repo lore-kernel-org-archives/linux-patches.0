@@ -1,63 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063625;
-	b=TZWOqf0Y2s4w5+BDrPCBgDaADAGeBcsLbuhDtGML9e8UUvKVX+oH/n8Ju+xUxkkfJaGo
-	 Rfes3TW92IFT4rPkPhjnTdS1HOPEY3rhrZeD+RnQ8AFDGC/zPpRXCSuL8lTHX3rt+JPYi
-	 iR+RCqw5kyYVXVgWFMa1FFH7nGhrf7S2zHvGmYsLMtBaqV6eo3p7GuP59e46v+qDAoloN
-	 vdVFepCqxwMFzrsH4k7/XDLth3cuDuK8CyKmVNB+BHD+EsnsD5gzLlnKXCsTdJakSklhe
-	 n8a8kQIJo10rpOLr9O238fawniX2QKYdkrHdZHY/XTeLa/GusiXS9FRyvSADUncIb7A==
+	t=1794063626;
+	b=FVSYATsIdMOxN5WiJZBxjtRce0L7tJz7/kTVIxV5d/848oVW10TSOs41G+DfFK+vxkrT
+	 VjvGGFeR+YETgIMqUiIZrbudCfnMNW081BFWBDkJz3BmkVOlycw2hAVgy3kxv683+fUf3
+	 BcDgYVzJiD7pxcvw94qiFsTolFa5cUPyJIRwNk9SFX/kYMgd9HqKvWJ1f0oZVxHahSEeT
+	 Vx+ftJuUddMMSzcoxmS1lHuQZoHXvjFPZ3Fq11Og5vllAqI9NQ7dYVND4w8+BqCS20F7Q
+	 Jpnt4sm9Qi5V+wnsfFlB6zvz0R4kthxv5UXmqoyhN+yJVJdUZZKSRMrj0e6nXWOmvDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063625;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tgbmqQ6cVQYBjQOJak62k8tpv99aRVneFdwEfh3KbLc=;
-	b=Hy2uQREyxpiduO078SXuWzgO13Q+hE+Qehe7H3oxvRBCPfZhsj3RdZua5012f0BBSIWd
-	 qV3E5rACT6fwhaw8yYh/fM/tSh/aUlZLyYqZVt8Y2/N4d2rkRKvPhKb3Yz2c0JeiDJ8UQ
-	 ErcHrgsG/yX2WeB6z5DBOs65aao7bZsoT9iODkDGsMFZfBzGthh30AerpfmEAgVRHa/CE
-	 MdTTXyORwQTM/MEI6BhGPlawNxCk8c9HEeygbdTygQ4DLw/lV8ongOoG9S7gn+suv/wDp
-	 x/+UDMYp/UPoFs1ltcjKMU0lTnRmTF0cKi8gN1Xl0NdSLYuert+waPCS3E1rDjqLvEg==
+	bh=ZWAXOumCFwczrMWOP4ImlEW7R7AmMzXnyKhOqwa7JuU=;
+	b=NzGluHPOjV+6nSzmXkIS8S8P5QY5CKWJEv5HWlkvc7gF4IKI62FhxUBugUM0mROOeS6T
+	 y8CzTJduDPqBb4/GOAGpWDNK0YUcGTrDnJ5aeaiAlllOaaDS1elCzf7n26WXLBszubGRc
+	 sNEzMyOfC2mPRh3wPYojczo3t9xfSkYwXPeJC9oIIDsC+J2r986+P9o4XwWdsabJo3Dzd
+	 1CqhcC24nlDtyH5STgdm0MJPtvXrkROv6zb4Gt2EzyIQbEs4gBsWZ7hfdp7yVhOuuWpoj
+	 tW78bXwuUW/lllKvjoK2FSWDbXaI2wl8/R+RkwA4SqN2utK1nLwrdXoL5LV1u62qg6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IIGZhAKI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XugMcdom;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77D0606A333;
-	Sat,  7 Nov 2026 15:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E762F606A333;
+	Sat,  7 Nov 2026 15:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IIGZhAKI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1601F008A1;
-	Sat,  7 Nov 2026 15:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XugMcdom
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CB31F0089F;
+	Sat,  7 Nov 2026 15:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063624;
-	bh=tgbmqQ6cVQYBjQOJak62k8tpv99aRVneFdwEfh3KbLc=;
+	s=korg; t=1794063625;
+	bh=ZWAXOumCFwczrMWOP4ImlEW7R7AmMzXnyKhOqwa7JuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IIGZhAKIp1B1IWQEWSLXTHYcFpvsIXRD6hqY6r7miI+4lvqglgrp3p+VfHK05TAJB
-	 lZcpVWwG3lBrJtn9ymzf34Rv3Jxq4x7NdiVQj3dNHmDdSaH/r/0EyvaNxXwZX/082t
-	 CYbc6pzE5gExB6wTZhVVcB+bXxtxnQvRstHnphE0=
+	b=XugMcdomc4S9Ikhrt2XkFmN79C9y9Iyr5A6YkYPwzHRmJd1Hu9PiJbnviOoBoSOwb
+	 qHvqIDh3s2jgs0Xye/rFfeLG/AFcfqyVBgbnEY739Ce9UxVnqAxhb8dB9AIK2Fd86t
+	 DyxJT/ZfKofov2FYg9Z032T6COaGu9El94LhDJag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongfu Li <lihongfu@kylinos.cn>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	David Hildenbrand <david@kernel.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Chris Down <chris@chrisdown.name>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>,
+	Rik van Riel <riel@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 743/869] mm/hugetlb: account migration target folio in per-node NR_HUGETLB vmstat
-Date: Sat,  7 Nov 2026 08:57:05 -0500
-Message-ID: <20261107134917.994376518@linuxfoundation.org>
+Subject: [PATCH 6.18 744/869] mm: disallow ioremaping ordinary RAM in generic_access_phys()
+Date: Sat,  7 Nov 2026 08:57:06 -0500
+Message-ID: <20261107134918.022281016@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -79,146 +80,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongfu Li <lihongfu@kylinos.cn>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 92635a3ffe8bb48304f50625dd591a27d7505698 ]
+[ Upstream commit 4590752e20aa393cc0d4fe538c0747d14a98c97a ]
 
-Patch series "mm: fix hugetlb NR_HUGETLB accounting on folio migration", v2.
+generic_access_phys() can end up getting called on CoW PFNMAP mappings,
+resulting in it trying to ioremap anonymous folios, which especially
+the x86 code doesn't enjoy, and which is in general just odd/wrong.
 
-The hugeTLB counters added by 05d4532b60e3 ("memcg/hugetlb: add hugeTLB
-counters to memcg") are maintained in two per-node places:
-  - the per-node vmstat counter NR_HUGETLB, exposed as nr_hugetlb in
-    /proc/vmstat;
-  - the per-node memcg lruvec stat, exposed via memory.numa_stat.
+E.g., with a CoW mapping of a PCI BAR:
 
-Both are accounted against the folio's node, and both drift when a hugetlb
-folio is migrated, though in different ways.
+ioremap on RAM at 0x0000000045623000 - 0x0000000045623fff
+  WARNING: arch/x86/mm/ioremap.c:216 at __ioremap_caller.isra.0+0x4c2/0x5f0
+  Call Trace:
+   generic_access_phys+0x130/0x4d0 mm/memory.c:7178
+   kernfs_vma_access+0x1ce/0x280 fs/kernfs/file.c:437
+   __access_remote_vm+0x58f/0x890 mm/memory.c:7256
+   mem_rw+0x2a1/0x670 fs/proc/base.c:912
 
-A migration target folio is allocated by alloc_hugetlb_folio_nodemask()
-and inherits the old folio's state without ever being accounted, while the
-old folio is freed right after and its free is accounted.  That alone
-loses vmstat accounting: the target node has no matching increment for the
-decrement on the old node, so /proc/vmstat's nr_hugetlb shrinks by
-nr_pages per migration.  Patch 1 accounts the folio where it is obtained,
-so the increment pairs with the free in free_huge_folio() on the
-successful as well as the failed migration path.  The memfd page cache
-preallocation helper has the same asymmetry and is fixed in the same
-patch.
+But more generically, we should disallow access to anything that looks
+like ordinary RAM in the system: including allocating memory (e.g.,
+alloc_pages) and mapping them in a VM_PFNMAP.
 
-The per-node lruvec stat breaks differently.  mem_cgroup_migrate() moves
-the charge to the new folio and drops the old folio's memcg data, so the
-old folio's free right after migration skips the memcg per-node decrement;
-the count stays attributed to the old node for the rest of the charge's
-life, and the target folio never gets an increment on its new node.  Patch
-2 moves that per-node accounting along with the charge, in
-move_hugetlb_state().
+For pages with an online memmap, allow only pages marked as reserved
+(PageReserved). This also includes memblock allocations, however,
+distinguishing them from other MMIO is tricky, and nobody should really
+be mapping them in a PFNMAP (except someone abusing /dev/mem, which we
+do not care about).
 
-This patch (of 2):
+So only allow access if there is no online memmap, or if the pages are
+marked reserved. Reject other pages with -EINVAL.
 
-The NR_HUGETLB vmstat counter is maintained per folio's node: incremented
-when a huge page is handed to a user via hugetlb_alloc_folio() and
-decremented when it is returned to the pool via free_huge_folio().
+Note that, just like other pfn_to_online_page() users, we won't care about
+concurrent memory offlining; mapping memory that can concurrently get
+offlined is highly dubious.
 
-A folio obtained by alloc_hugetlb_folio_nodemask() never goes through
-hugetlb_alloc_folio(), so it is never accounted, while its free always is.
-For a migration target this means the target node gets no matching
-increment for the decrement on the old node, so the global nr_hugetlb in
-/proc/vmstat drops by nr_pages for each migration.  The same asymmetry
-affects the failed migration path, which frees the target again right
-away, and the temporary folio hugetlb_mfill_atomic_pte() takes from the
-same helper.
-
-alloc_hugetlb_folio_reserve(), used to preallocate the memfd page cache
-folios, has the same asymmetry: the folio is handed to a user without
-being accounted, while its free is accounted through free_huge_folio().
-
-Account the folio where it is obtained, in alloc_hugetlb_folio_nodemask()
-and alloc_hugetlb_folio_reserve(), so that the increment pairs with the
-decrement in free_huge_folio(): a successful migration hands the folio to
-a user, a failed one frees it again.
-
-Link: https://lore.kernel.org/20260923-for-hugetlb_state3-v2-0-e8a36245bfab@kylinos.cn
-Link: https://lore.kernel.org/20260923-for-hugetlb_state3-v2-1-e8a36245bfab@kylinos.cn
-Fixes: 05d4532b60e3 ("memcg/hugetlb: add hugeTLB counters to memcg")
-Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
+Link: https://lore.kernel.org/20261013-generic_access_phys-v1-1-b3963ef76e37@kernel.org
+Fixes: 28b2ee20c7cb ("access_process_vm device memory infrastructure")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Tested-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Reported-by: <syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=49b1021becba70c1f3f6
+Reported-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Closes: https://lore.kernel.org/r/20261001152524.171115-1-ngocthang2710.1999@gmail.com/
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Chris Down <chris@chrisdown.name>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Cc: Rik van Riel <riel@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 35 +++++++++++++++++++++++------------
- 1 file changed, 23 insertions(+), 12 deletions(-)
+ mm/memory.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index ed4fb48cb35b8..42aace6e3ca17 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2353,6 +2353,11 @@ struct folio *alloc_hugetlb_folio_reserve(struct hstate *h, int preferred_nid,
- 		h->resv_huge_pages--;
- 
- 	spin_unlock_irq(&hugetlb_lock);
+diff --git a/mm/memory.c b/mm/memory.c
+index d755b5c1f1287..01d14ca0e74d2 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -6808,6 +6808,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 	resource_size_t phys_addr;
+ 	pgprot_t prot = __pgprot(0);
+ 	void __iomem *maddr;
++	struct page *page;
+ 	int offset = offset_in_page(addr);
+ 	int ret = -EINVAL;
+ 	bool writable;
+@@ -6822,6 +6823,19 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ retry:
+ 	if (follow_pfnmap_start(&args))
+ 		return -EINVAL;
 +
-+	if (folio)
-+		lruvec_stat_mod_folio(folio, NR_HUGETLB,
-+				      folio_nr_pages(folio));
-+
- 	return folio;
- }
- 
-@@ -2360,24 +2365,30 @@ struct folio *alloc_hugetlb_folio_reserve(struct hstate *h, int preferred_nid,
- struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
- 		nodemask_t *nmask, gfp_t gfp_mask, bool allow_alloc_fallback)
- {
--	spin_lock_irq(&hugetlb_lock);
--	if (available_huge_pages(h)) {
--		struct folio *folio;
-+	struct folio *folio = NULL;
- 
-+	spin_lock_irq(&hugetlb_lock);
-+	if (available_huge_pages(h))
- 		folio = dequeue_hugetlb_folio_nodemask(h, gfp_mask,
- 						preferred_nid, nmask);
--		if (folio) {
--			spin_unlock_irq(&hugetlb_lock);
--			return folio;
--		}
--	}
- 	spin_unlock_irq(&hugetlb_lock);
- 
--	/* We cannot fallback to other nodes, as we could break the per-node pool. */
--	if (!allow_alloc_fallback)
--		gfp_mask |= __GFP_THISNODE;
-+	if (!folio) {
-+		/*
-+		 * We cannot fallback to other nodes, as we could break the
-+		 * per-node pool.
-+		 */
-+		if (!allow_alloc_fallback)
-+			gfp_mask |= __GFP_THISNODE;
- 
--	return alloc_migrate_hugetlb_folio(h, gfp_mask, preferred_nid, nmask);
-+		folio = alloc_migrate_hugetlb_folio(h, gfp_mask, preferred_nid,
-+						    nmask);
++	/*
++	 * Reject anything that looks like ordinary RAM, including anonymous
++	 * folios in CoW mappings or allocated kernel memory. Note that we
++	 * cannot distinguish memblock allocations from non-RAM reliably, so
++	 * we cannot easily reject them here.
++	 */
++	page = pfn_to_online_page(args.pfn);
++	if (page && !PageReserved(page)) {
++		follow_pfnmap_end(&args);
++		return -EINVAL;
 +	}
 +
-+	if (folio)
-+		lruvec_stat_mod_folio(folio, NR_HUGETLB, folio_nr_pages(folio));
-+
-+	return folio;
- }
- 
- static nodemask_t *policy_mbind_nodemask(gfp_t gfp)
+ 	prot = args.pgprot;
+ 	phys_addr = (resource_size_t)args.pfn << PAGE_SHIFT;
+ 	writable = args.writable;
 -- 
 2.53.0
 
