@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061032;
-	b=zK3CWMD0RylmUxC+aTdLcxehMoWNh5iBfaPK/iSxrniXAOdPCSKXzju9TrRrV+GwOTU3
-	 g1w1Dplgcbysi1foHP1aIHIXroI/KytHZx3KhOEGbH5FJPvls6eTh4lCUQjz9YlLjcjD0
-	 cY2pPmVwpJBSAgqmlkTALe/eQ+3tp7UxyvR+eiJjfhzEUBkI1z6Wt/o16HIu6WWx5HLy5
-	 UICcLFnRTVdn6TMhJ2USy21aoLxPjFAxyDUn7OH7gLlePIo7e9SHIkAuh84rO5aLWBQQX
-	 43ggg8opAKGeqKHIl/uV+wPnxSSZP9gTY5CQKEoL5lq1mFCzf/g4uJtiqrMPDK4UNKA==
+	t=1794061033;
+	b=1PkLIk6yqXrNo0DkhcJ/t3kHPtvYDs3cls355csW702uMR7IqbB3QsbTsfRaYHsOqn7l
+	 M/O9k+MJIixB5/6qHYQYoFvGk/vqnKC+5gr6CAOE1LMU6cVeXjfIYunaHs6RgPN9+VwRR
+	 dhtMzTUHOsrCQjXZ23I5mJtss8R4Sf+hJ6fXqqVMbPjgYochRrK55yHXI4foj3OuZnLpI
+	 ConyKssf4nPM+NngB2IAN11PZcSqpIbhORrl6xZah5337NB6/GXPvWVgEwC8aCWrUNsTS
+	 r8uPwmaFNW9qf8NWCPDZG7+I8Bl+eoWpodiVrYYu022vAnD8P/AMR0//b8+cFM2VO1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uC9+y2lxwg6GnixBYwxOoYJ2GSwkslr62RgQCQiPNO8=;
-	b=nb8SosbP3ZKKjpXVwLpIxdsV6rdEDu8f++/sGMl0AL+bnd0pG9+HTdhqKJKyjIGcKIzY
-	 PP0zrf21IqWr7GMFjF3+JKbKDRIQybrgtn2mJiUU/PIxSGimvNAhYvl+UljFkQkGjT2GA
-	 0xFTzAOP57qBjp8Eyd6sUb1A3H5rAa5XEsIZcI4JkskcHCpNgHFvYps4yh/QcqAVA8DwM
-	 MLMnbui1LAYnm46OA3q/ex/r8hzc/jIDNpRmG2nX9cEnMtEBdG1UhspqPaxOoSfnp6ZEk
-	 ewUgkX+5YPJ2KH3cytg1LFytEaeInM7/uoTkwKWODRpv3TTeH3kvGLXb7CEOv01FyhQ==
+	bh=gGAQT2ByzXE6V9IW5vTX+WGF5ugHcGiicUfqC9D6Hkc=;
+	b=LkM3ATRwfuhSAaxm4/ZolBPn6pDjCt0W3jT+A2tIcCPJdpUxf1I8uPybFPC6vDmJqjfF
+	 VX7YLcjXIBpC5UlnJngl3kLlz1Rsua3xN4bJ5IcGjdhxANb2xTyK1Ih9MXISnJJO3DLCq
+	 WJnySF9cXgfsUihLHG+HT9mgE1F7GZX0O7n4UMYCrs3lx1hxZj+grUHKFNypKiLrUVdb5
+	 geEobA5CPivrozAUUGJPvIOsOWeNBZ2S33QAEvBk3MjGvYkDzCaID1Z6XwhOHcUCfJBVT
+	 BqqyxCKXHyRdE3cFWar92VRm9GyYfPupA2/HqWhczI6tRe/G5JpU6+LibqOIzMnR7fA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lSbH0Lpf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LrVvWw/8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A9A6082BF2;
-	Sat,  7 Nov 2026 14:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5D36082BFB;
+	Sat,  7 Nov 2026 14:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lSbH0Lpf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00471F008AB;
-	Sat,  7 Nov 2026 14:17:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LrVvWw/8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AEAE1F0089F;
+	Sat,  7 Nov 2026 14:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061032;
-	bh=uC9+y2lxwg6GnixBYwxOoYJ2GSwkslr62RgQCQiPNO8=;
+	s=korg; t=1794061033;
+	bh=gGAQT2ByzXE6V9IW5vTX+WGF5ugHcGiicUfqC9D6Hkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lSbH0LpfNl2noYbs3b5O+WB95Hjj4441ogEbAbMatrwBQUhuUN6I97ywqcapWXJbV
-	 NuZjJw6NE4y9mBWxjwoS8tcfm7LpYidUOLxUxD0eiDmgPPP458Y6oY4l4yMY2G5b5Z
-	 /f9zDET8jyx2q5GXpzXmVqhzVPD6+bywAZzzWOJA=
+	b=LrVvWw/8rLo0X9H3QFbMtDk4cIbULRkBr20OMrz1rUhUl14Bo+s/gTcb9Yq5PVOVJ
+	 ZVVO8cEmjrIJLG5S/beXGl5R2jkyaUsRNg3E2TqIv25A0ZiPe3CZh5KRl+jJTzvOMN
+	 jDHKXT9pe++DDvnOxHN3p68og5Tscsd0OJ8eGTN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wen <anmuxixixi@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Weimin Xiong <xiongwm2026@163.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0331/1536] exfat: keep FITRIM within the requested range
-Date: Sat,  7 Nov 2026 08:39:07 -0500
-Message-ID: <20261107135006.998010837@linuxfoundation.org>
+Subject: [PATCH 6.12 0367/1536] vdpa/mlx5: roll back MR update after VQ setup failure
+Date: Sat,  7 Nov 2026 08:39:43 -0500
+Message-ID: <20261107135007.960874642@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,84 +68,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wen <anmuxixixi@gmail.com>
+From: Weimin Xiong <xiongwm2026@163.com>
 
-[ Upstream commit 2de727471b3b13409466a4af4f8824a86073bf4b ]
+[ Upstream commit 11f79e2780043ad94424a8db02a7a9022ba93252 ]
 
-exfat_find_free_bitmap() searches the entire allocation bitmap and may
-wrap around to its beginning. exfat_trim_fs() does not verify that the
-returned cluster is still within the requested FITRIM range.
+mlx5_vdpa_change_map() must install the new MR before rebuilding or
+resuming virtqueues, because both paths read the MR keys from
+mvdev->mres.mr[].
 
-As a result, a partial FITRIM operation may discard free clusters outside
-the user-specified range and report a trimmed length larger than the
-requested length.
+If rebuilding the virtqueue resources fails, the new MR must not remain
+installed after its reference is released. Keep an extra reference to
+the old MR before replacing it. On setup failure, restore the old MR;
+the saved reference then becomes the map reference, while replacing the
+new MR drops its map reference.
 
-Validate each returned cluster against the requested range and stop the
-search when it wraps around or passes the range end.
+Make mlx5_vdpa_change_map() consume new_mr on all error paths so that
+set_map_data() does not release an MR already released during rollback.
 
-Signed-off-by: Yang Wen <anmuxixixi@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+v2:
+- Keep the new MR installed while virtqueues are rebuilt.
+- Restore the old MR only after setup_vq_resources() fails.
+
+Signed-off-by: Weimin Xiong <xiongwm2026@163.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+
+Message-ID: <20260716054353.155805-1-xiongwm2026@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/balloc.c | 31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ drivers/vdpa/mlx5/net/mlx5_vnet.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
-index b2b55ad76b7fd..d5e0db81f7991 100644
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -328,14 +328,27 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
- 	mutex_lock(&sbi->bitmap_lock);
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+index ac4aa2e29fcc0..66d5231f03c22 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+@@ -3044,18 +3044,24 @@ static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev,
+ 				unsigned int asid)
+ {
+ 	struct mlx5_vdpa_net *ndev = to_mlx5_vdpa_ndev(mvdev);
++	struct mlx5_vdpa_mr *old_mr;
+ 	bool teardown = !is_resumable(ndev);
+ 	int err;
  
- 	trim_begin = trim_end = exfat_find_free_bitmap(sb, clu_start);
--	if (trim_begin == EXFAT_EOF_CLUSTER)
-+	/*
-+	 * exfat_find_free_bitmap() may wrap around to the beginning of
-+	 * the bitmap. Reject a cluster outside the requested range.
-+	 */
-+	if (trim_begin == EXFAT_EOF_CLUSTER ||
-+		trim_begin < clu_start || trim_begin > clu_end)
- 		goto unlock;
+ 	suspend_vqs(ndev, 0, ndev->cur_num_vqs);
+ 	if (teardown) {
+ 		err = save_channels_info(ndev);
+-		if (err)
++		if (err) {
++			mlx5_vdpa_put_mr(mvdev, new_mr);
+ 			return err;
++		}
  
--	next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
--	if (next_free_clu == EXFAT_EOF_CLUSTER)
--		goto unlock;
-+	for (;;) {
-+		if (trim_end >= clu_end)
-+			break;
-+
-+		next_free_clu = exfat_find_free_bitmap(sb, trim_end + 1);
-+		/*
-+		 * Stop if the search wrapped around or moved beyond the requested
-+		 * FITRIM range.
-+		 */
-+		if (next_free_clu == EXFAT_EOF_CLUSTER ||
-+			next_free_clu <= trim_end || next_free_clu > clu_end)
-+			break;
+ 		teardown_vq_resources(ndev);
+ 	}
  
--	do {
- 		if (next_free_clu == trim_end + 1) {
- 			/* extend trim range for continuous free cluster */
- 			trim_end++;
-@@ -356,17 +369,11 @@ int exfat_trim_fs(struct inode *inode, struct fstrim_range *range)
- 			trim_begin = trim_end = next_free_clu;
++	/* Keep the old MR alive in case rebuilding the VQs fails. */
++	old_mr = mvdev->mres.mr[asid];
++	mlx5_vdpa_get_mr(mvdev, old_mr);
+ 	mlx5_vdpa_update_mr(mvdev, new_mr, asid);
+ 
+ 	for (int i = 0; i < mvdev->max_vqs; i++)
+@@ -3063,17 +3069,22 @@ static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev,
+ 						MLX5_VIRTQ_MODIFY_MASK_DESC_GROUP_MKEY;
+ 
+ 	if (!(mvdev->status & VIRTIO_CONFIG_S_DRIVER_OK) || mvdev->suspended)
+-		return 0;
++		goto out;
+ 
+ 	if (teardown) {
+ 		restore_channels_info(ndev);
+ 		err = setup_vq_resources(ndev, true);
+-		if (err)
++		if (err) {
++			/* The saved reference becomes the restored map reference. */
++			mlx5_vdpa_update_mr(mvdev, old_mr, asid);
+ 			return err;
++		}
+ 	}
+ 
+ 	resume_vqs(ndev, 0, ndev->cur_num_vqs);
+ 
++out:
++	mlx5_vdpa_put_mr(mvdev, old_mr);
+ 	return 0;
+ }
+ 
+@@ -3357,15 +3368,11 @@ static int set_map_data(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb,
+ 		err = mlx5_vdpa_change_map(mvdev, new_mr, asid);
+ 		if (err) {
+ 			mlx5_vdpa_err(mvdev, "change map failed(%d)\n", err);
+-			goto out_err;
++			return err;
  		}
+ 	}
  
--		if (next_free_clu >= clu_end)
--			break;
+ 	return mlx5_vdpa_update_cvq_iotlb(mvdev, iotlb, asid);
 -
- 		if (fatal_signal_pending(current)) {
- 			err = -ERESTARTSYS;
- 			goto unlock;
- 		}
--
--		next_free_clu = exfat_find_free_bitmap(sb, next_free_clu + 1);
--	} while (next_free_clu != EXFAT_EOF_CLUSTER &&
--			next_free_clu > trim_end);
-+	}
+-out_err:
+-	mlx5_vdpa_put_mr(mvdev, new_mr);
+-	return err;
+ }
  
- 	/* try to trim remainder */
- 	count = trim_end - trim_begin + 1;
+ static int mlx5_vdpa_set_map(struct vdpa_device *vdev, unsigned int asid,
 -- 
 2.53.0
 
