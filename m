@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062437;
-	b=jZtUip/5zIUmCS12ba8KgkedoElUYJdLOdsUXHxQOBHitRemDxqwAOWwNZomebRmRq95
-	 NdvDexDYR9S6qR4Tm7b0pnlbILmxvZt//v6tQHoX3RS2sYqEMzOSGKdDh5MJBrEqidPT/
-	 xRmxEyj4Jkel8rPwot9MTh7q4qx0cyoWijVaktLI/zpKEvMoYFbc2EkpdDMFTz1nMixu9
-	 NcE7yIxFfvcMFFpnEJ9rHXs/OPwdWckWAYyh7jLM4rEdn8zLt8hy2j5JXlJ70UNqZ+Lg3
-	 H20DWGyLGurqK8AyehMVpPNNhDyYj26z65xC3Nc9GwrloZ/DwAlKER8vbvjCAYDLnqw==
+	t=1794062439;
+	b=Wma+BD7lfiMrSYTBuCHpHVijyc/hC8s1jSu6YNc1QhYhkH5oQRTdmkmVXXD5TTrHV3cQ
+	 go5xlnSURsnuL03D1HtCUQyKOEhU/T61UHOKmpBWohk+jxJDQ1uhrnsRo5VeXI0P2/Lkz
+	 8VkBDRC/2CVa40zNt4S+o1lko+c3qsgHj06jm2dSFjxLNYQV4E9EVr+acUlNpE6tOxFcU
+	 amfSZjiROxQxrYx944okt1du/fm4JzoRW1jE36iQ8fHl+FA/ZnzANS6a4BBBHaBPCC3Bz
+	 rlLZ7n5FwVvaXfQ2cDotj5dRDJAf+9p1GSyrjpuYjT0d7tTyDzWKuo76VjqiJNxrGPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DzLGMOy4of8TZBQkKatxiG7IvzCY1W8fBme3dppLRKU=;
-	b=bKY2NJbMK1dBwgGqdVQH4/8QrjZhTQcgnEvtfNj9mmnfwETJL4dYot5JkQFp+kk1FPOz
-	 104N35MUT54v4I3BUxTn8wKLH6ejKPZOCF3ZlYdRiGID4etQ7nvqpzg7ILkMRLtclF9Ri
-	 grnin234DZcFiyL3XDMj3Tg9J99nztqyBiFQN5sc2sCRJb2zkfQdscOA3E/luGLxGGXnR
-	 O/olXQVRksjKrnmnx9dYGXrZozxwNkGUoAkoHSxBJBBaaRiw4vVwyvIWXd7qJ4nVKjBjK
-	 pLC21uSlYovdfp0xSH070KPjLeqcVdRhzrztIuDtjrI98AWXPY8E7bufJKTpIZ5kVlg==
+	bh=xhez4W/RUTCHDu/2tTj8mbiTE04Ob3W1YlH0Y0/jUvE=;
+	b=QLpZQSaugn43pC3m0sniSEtqM3KxML367brwZ2nX99SRaW8lkNuks6HFgA+hdyOYi0Hy
+	 HAZ/XKFY34sdWUoqYZvxixn/IXC7hxIhegm98k8m9VwydSgGmwlhWMT34CPR/p8/wDGZw
+	 wxg3ZZUJ8AoX770D2NTbcUqv6S7vpyeIhM22xkh5+v0Vt3rY6A96qJq03o9UxethzqVr0
+	 fpD+UmLbYjmRp4uGjFiHXPghA1LP1BNteKN38WP3/734EFWpT/3UkVZBEAyeBi/vO22fE
+	 CQDmttk6raFZA6GC1j7vQUuY/nNEtrdDYBXjg4yAA2O7RfYDySY3ODiTX3bi9pndgUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gv+w9MGn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pHbLxp4F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7E6606EE8D;
-	Sat,  7 Nov 2026 14:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6B0606EE8D;
+	Sat,  7 Nov 2026 14:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gv+w9MGn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A281F0089F;
-	Sat,  7 Nov 2026 14:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pHbLxp4F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544121F0089F;
+	Sat,  7 Nov 2026 14:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062437;
-	bh=DzLGMOy4of8TZBQkKatxiG7IvzCY1W8fBme3dppLRKU=;
+	s=korg; t=1794062438;
+	bh=xhez4W/RUTCHDu/2tTj8mbiTE04Ob3W1YlH0Y0/jUvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gv+w9MGnsKgM3NoyvAWuW0MFS7gFAe/5qJm/PSgawlVY1T//jiTCBHkBl4RthKZsQ
-	 WZK2KqtiR/5H9IFMjLyhJdeCXsn9T8HRqRzy8yTY31m307q0akhGWBaNdmf3lBIvVf
-	 ipfE7CHB6T45a5tHpaSPzI+99HwMFQfccwBQg/e0=
+	b=pHbLxp4FCzRIVBIataW5zckI95Lv66l2BcnWmGsSH4fIMz7f4aHTqeON7u9pB4n4/
+	 DUB4qXXsd18QcrE2Yctut+308/jP7iwQlitKJvZRU934OnFhfDFAcirQlljjxGFQnF
+	 Fg+/cYf7Xf0okdkV5pwBlEpCgGPLWRL3Ma79b+so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1321/1536] spi: bcm-qspi: reject oversized dummy bytes in mspi exec_mem_op
-Date: Sat,  7 Nov 2026 08:55:37 -0500
-Message-ID: <20261107135034.910114015@linuxfoundation.org>
+Subject: [PATCH 6.12 1348/1536] alpha: fix the local TLB invalidate in the UP flush_tlb_page()
+Date: Sat,  7 Nov 2026 08:56:04 -0500
+Message-ID: <20261107135035.683815960@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,49 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit 9e44f0df3fff215d9033089e85980048c3ac132a ]
+[ Upstream commit c825bf802a7a43fd302c879ef25c975e067a2e94 ]
 
-bcm_qspi_mspi_exec_mem_op() builds a local command buffer cmd[6]
-holding one opcode byte, up to four address bytes and one spare
-byte, and sets t[0].len = op->addr.nbytes + op->dummy.nbytes + 1.
-bcm_qspi_exec_mem_op() only validates op->addr.nbytes <= 4 and never
-bounds op->dummy.nbytes, which spi_mem_check_op() also leaves
-unrestricted. With addr.nbytes = 4 and dummy.nbytes >= 2 the length
-becomes 7 or more, so write_to_hw() reads past cmd[] on the kernel
-stack and pushes the leaked bytes into the hardware TXRAM.
+The uniprocessor flush_tlb_page() in asm/tlbflush.h has the same wrong
+test as the SMP one: a targeted tbi() is only guaranteed to invalidate
+the intended translations when the target mm's context is loaded, but
+the gate is current->active_mm, which a lazily borrowed mm also
+satisfies.
 
-Reject operations whose dummy phase does not fit the remaining byte
-of cmd[] by requiring op->dummy.nbytes <= 1, so such transfers fall
-back to the generic SPI path instead of overrunning the buffer.
+Test current->mm instead. The else branch it falls to already exists
+here, so unlike the SMP side this is the whole fix.
+arch/alpha/kernel/smp.c is not built with CONFIG_SMP=n, so this is how
+the same defect reaches a uniprocessor, where the flusher kworker
+necessarily shares the only CPU with the writer.
 
-Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Fixes: 5f195ee7d830c ("spi: bcm-qspi: Implement the spi_mem interface")
-Cc: stable@vger.kernel.org # 4.18+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261015-bcm-qspi-dummy-bytes-v1-1-c319da3c2497@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20261010142533.974797-7-linmag7@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm-qspi.c | 3 ++-
+ arch/alpha/include/asm/tlbflush.h | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
-index ae5545be0a45c..de333a4a3200d 100644
---- a/drivers/spi/spi-bcm-qspi.c
-+++ b/drivers/spi/spi-bcm-qspi.c
-@@ -1197,8 +1197,9 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
- 	u32 addr = 0, len;
- 	u_char *buf;
+diff --git a/arch/alpha/include/asm/tlbflush.h b/arch/alpha/include/asm/tlbflush.h
+index 0c8529997f54e..9ae1902faf8ec 100644
+--- a/arch/alpha/include/asm/tlbflush.h
++++ b/arch/alpha/include/asm/tlbflush.h
+@@ -87,7 +87,8 @@ flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
+ {
+ 	struct mm_struct *mm = vma->vm_mm;
  
-+	/* cmd[] holds 1 opcode + 4 address + 1 dummy byte at most */
- 	if (!op->data.nbytes || !op->addr.nbytes || op->addr.nbytes > 4 ||
--	    op->data.dir != SPI_MEM_DATA_IN)
-+	    op->dummy.nbytes > 1 || op->data.dir != SPI_MEM_DATA_IN)
- 		return -EOPNOTSUPP;
- 
- 	buf = op->data.buf.in;
+-	if (mm == current->active_mm)
++	/* A targeted tbi() needs a thread of MM to be current.  */
++	if (mm == current->mm)
+ 		flush_tlb_current_page(mm, vma, addr);
+ 	else
+ 		flush_tlb_other(mm);
 -- 
 2.53.0
 
