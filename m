@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062449;
-	b=s27obG/ADhyKcGwQruwA4qZryyOrYEGF8o1LILPmnArE1KCsxdGNhECPv3Zb5XVXi1XG
-	 sW1KPgbQfQAI37xSMVm3Mkw8aN4Jd+L2uhtz0zbFdxsxuwLt1b+Iez5evOTPxImPL5R0s
-	 30CkRqWfiN/m2H1GUUAhuu0yNfoCNSeWhV1ePPVF+R83K+RlnUvn9XEQBEH20aoFqTg88
-	 d/QWhsSq/UqxZSsWfKtRaqMZzkaiK2W0h+2deHqyGY8D9fFtNdfXS+ZxiQejTwZtpMoqD
-	 BuD7wou7iXom3BdyA3Qj8lqQL3OlgX1pSKZONBkKyrCviUcNkPWC2eKocRLEiX/adUA==
+	t=1794062450;
+	b=m/TfMou88oPhgHdFboeDgEtz77th+rjUci8/U6xZWASq8LvOE2uWkW+j53ggLCsvsdNw
+	 rY1LVFNnn6InsKC/nfpPe73Naguk9QmauKuyNeWlwkrFhKOK9ie2K+MHJhtV0cUgDz6fS
+	 RrEdsXQID5D7q3tyicvwOmzVwTG6aBvekW5u0VIfTM2fgZ0L3e6yoUmcaIIGnac0Jix+8
+	 uOvlxsDJm0zoKk9jjz6KJjrvN299gdZ7tAUsuu/cm9Gzfc8cE+C20x847E7W36yEuEHMg
+	 2gFuIlpuO7ABt4h2GZixPugAqpfBWf2C2G8DHWbbWza4CL6BCS1vQam1pHvktfnbREQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062449;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062450;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OwTgnthf5lrZOTlWp3CIqgTzX16rwVCH5RS9dJXkbtc=;
-	b=1bsPg+gXAeJ58NBxM6xxt2YdAY7sXTC84DVdVDVLIQDdGKSvsexlaAvEoC87NwlDoSjP
-	 HtBwU5/QNcii3bCorVleykR3PY85HU24/8mscv/JTzUCMCvFUqs9TZbqvd3Zl2CiJq4O7
-	 BGbvK9cy1oRU7/JeR9/NSiXzgn5LnO9FDeaS13/2fZpAcGrR4etUh7W/jCzgqGy1uyemD
-	 ztEYXvkRzYcuBfMtuBvQ0+sXsHtDajJYgnCkugC7YwVT8W9xKdWmHkYcLIrS1kw3Y2oUG
-	 XxBq6Stb3fx8Dc1WfIxiolh7Ld5lzXA97Eofr/M52wGtbqzgY1iqBZBx28sdmnRVJLA==
+	bh=CeI1nOgi7OTzC/+QKtQ0Zjwh2nyLQziu+A+OAfLnfRA=;
+	b=D3BkG/00qfp5PY1+lYfYO3Bpu/nlwOYdd9pNgwAnVnlEaUa6sPZ3/8U+e0cPaNXIpsuA
+	 rX8YGEK9I1+QN5g7fuDO8eAcLc0Wj2OeAccdmaxZmkfZd5kPHna5tE8szbKpnteSC+IwJ
+	 NfWOp/qvQJl7VGwGP0BcLz87loyinaQO0slGkyQEnKRiB/8BwXIFkzDuRfk4MjJ6t5XdW
+	 Fp+UEZ3tpC2tJ2TjgzVntNgQI8PXLYHAHZ0EK/9GEki3keHHN5K+dtRwnhkdZz04VSaMm
+	 Fvlehx2/Jnbx/EZfEK+4pWiThKRILOj5dSdxsLCD4fvnYw1v5/DltFktK8u6Ju4ZlEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zGZM0QXx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MakSFmud;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22BB606EEB7;
-	Sat,  7 Nov 2026 14:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF054606D815;
+	Sat,  7 Nov 2026 14:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zGZM0QXx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1B41F0089F;
-	Sat,  7 Nov 2026 14:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MakSFmud
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2651F0089F;
+	Sat,  7 Nov 2026 14:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062448;
-	bh=OwTgnthf5lrZOTlWp3CIqgTzX16rwVCH5RS9dJXkbtc=;
+	s=korg; t=1794062449;
+	bh=CeI1nOgi7OTzC/+QKtQ0Zjwh2nyLQziu+A+OAfLnfRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zGZM0QXxJdJANHVdixl/wN95gdHE54pnbtsC+q3WIpF/Yb5SI/zE2AIxC560sbyzD
-	 2ZrSZT63fqiE67XlIiAMjiFgaCXNoDqDSHdLGOh2Kk/lzuK8LMFMQHv9ez/wpUuQRa
-	 +lmcdViDTqkfaBKk4vrb4/aTHGYETEMQsDg22XvY=
+	b=MakSFmud/G/JFtGBbPAsyu4WUqoTF8Zg0/SrmGxhsr6JAM0W400YzB3DnvkmyxczZ
+	 jqzTrLGFo9/G6zzpUC/9eUNEqJHFE4ZTLDiv6ZQrKrWKHW0sM8WXkEZhpAIGgKC67B
+	 UieTtcfC/j6xB6Fdlz40inD2isMRLb5wF2LvtepE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1356/1536] lib/buildid: reject file offsets that do not fit in pgoff_t
-Date: Sat,  7 Nov 2026 08:56:12 -0500
-Message-ID: <20261107135035.916665226@linuxfoundation.org>
+Subject: [PATCH 6.12 1357/1536] netfilter: nf_reject: initialize IPCB at inet ingress
+Date: Sat,  7 Nov 2026 08:56:13 -0500
+Message-ID: <20261107135035.944530617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,66 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 0007654a7bf13ef2a19afd398bbc6507087f19fd ]
+[ Upstream commit 73a73d442f9986353fe284bd1b504d0313d0f153 ]
 
-On a 32-bit kernel, parsing the build ID of a crafted ELF file can copy
-far more than the intended bytes into a 64-byte on-stack buffer in
-__build_id_parse(), corrupting the stack of whatever context fetches the
-build ID.  This might be reachable without privilege: perf records a build ID
-for PERF_RECORD_MMAP2 on the no-fault path when a process mmaps its own file
-(build_id_parse_nofault() from perf_event_mmap()), and BPF build-id stack
-maps do the same.
+The inet ingress hook runs before ip_rcv_core() and ip6_rcv_core(), so
+neither IPCB nor IP6CB has been initialized when nft_reject_inet passes
+a packet to nf_send_unreach() or nf_send_unreach6(). skb->cb can
+therefore retain metadata from an earlier protocol layer.
 
-freader_get_folio() turns a 64-bit file offset into a page cache index
-with file_off >> PAGE_SHIFT and passes it to filemap_get_folio().
-pgoff_t is unsigned long, 32-bit on a 32-bit kernel, so an ELF64 e_phoff
-of 2^44 + k * PAGE_SIZE truncates to index k.  filemap_get_folio()
-returns the cached folio at index k, whose folio_pos() is far below the
-requested file_off.  In freader_fetch() the folio does not contain
-file_off, so the "crossing folio boundaries" path computes
-part_sz = folio_off + folio_sz - file_off as a large u64 (file_off is
-much larger), and the following memcpy() truncates it to size_t and
-copies a page into the 64-byte buffer.  On a 64-bit kernel the index is
-not truncated, the folio is not cached and the fetch returns -EFAULT, so
-only 32-bit kernels are affected.
+For IPv4, icmp_send() treats IPCB(skb)->opt as parsed IPv4 options.
+Stale option offsets can make __ip_options_echo() copy an
+attacker-controlled length into its 40-byte reply option buffer and
+overflow the stack. On an unpatched v7.2-rc5 kernel, the IPv4
+reproducer produced:
 
-Reject a file offset that cannot be represented as a page cache index
-before the lookup, so such a file fails the build ID parse cleanly as it
-already does on 64-bit.
+  BUG: KASAN: stack-out-of-bounds in __ip_options_echo()
+  Write of size 255
 
-Reproduced on i386 under QEMU with CONFIG_STACKPROTECTOR_STRONG: mmapping
-a crafted ELF (ELFCLASS64, e_phoff = 2^44) while a perf event with
-attr.build_id is open panics with "stack-protector: Kernel stack is
-corrupted in: __build_id_parse"; with this patch the parse returns
--EFAULT and the mmap completes cleanly.  Built for i386 with W=1, no new
-warnings.
+For IPv6, icmpv6_send() consumes IP6CB(skb) as parsed IPv6 metadata. It
+always uses iif for source selection and, when MIP6 is enabled, uses
+dsthao as an extension-header offset. These fields must not be stale.
 
-Fixes: de3ec364c3c3 ("lib/buildid: add single folio-based file reader abstraction")
-Assisted-by: LLM
+For NF_INET_INGRESS, clear the address-family-specific control block and
+restore its input interface before constructing the ICMP error.  This
+matches similar initialization normally performed by ip_rcv_core() and
+ip6_rcv_core().
+
+Fixes: 117ca1f8920c ("netfilter: nft_reject_inet: allow to use reject from inet ingress")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/buildid.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/netfilter/nf_reject_ipv4.c | 5 +++++
+ net/ipv6/netfilter/nf_reject_ipv6.c | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/lib/buildid.c b/lib/buildid.c
-index ef112a7084ef1..015a1f9d2b48b 100644
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -66,6 +66,10 @@ static int freader_get_folio(struct freader *r, loff_t file_off)
+diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
+index 021638aef1706..29c70e92a1722 100644
+--- a/net/ipv4/netfilter/nf_reject_ipv4.c
++++ b/net/ipv4/netfilter/nf_reject_ipv4.c
+@@ -350,6 +350,11 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
+ 	if (!skb_valid_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
+ 		return;
  
- 	freader_put_folio(r);
- 
-+	/* the page index must fit in pgoff_t */
-+	if (file_off < 0 || file_off > MAX_LFS_FILESIZE)
-+		return -EFAULT;
++	if (hook == NF_INET_INGRESS) {
++		memset(IPCB(skb_in), 0, sizeof(*IPCB(skb_in)));
++		IPCB(skb_in)->iif = skb_in->skb_iif;
++	}
 +
- 	/* only use page cache lookup - fail if not already cached */
- 	r->folio = filemap_get_folio(r->file->f_mapping, file_off >> PAGE_SHIFT);
+ 	if (skb_csum_unnecessary(skb_in) ||
+ 	    !nf_reject_verify_csum(skb_in, dataoff, proto)) {
+ 		icmp_send(skb_in, ICMP_DEST_UNREACH, code, 0);
+diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
+index 95ddd533c506c..7beb12046486f 100644
+--- a/net/ipv6/netfilter/nf_reject_ipv6.c
++++ b/net/ipv6/netfilter/nf_reject_ipv6.c
+@@ -431,6 +431,11 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
+ 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
+ 		skb_in->dev = net->loopback_dev;
+ 
++	if (hooknum == NF_INET_INGRESS) {
++		memset(IP6CB(skb_in), 0, sizeof(*IP6CB(skb_in)));
++		IP6CB(skb_in)->iif = skb_in->skb_iif;
++	}
++
+ 	if (!skb_valid_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
+ 		return;
  
 -- 
 2.53.0
