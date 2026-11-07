@@ -1,57 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063360;
-	b=j8MU09eO/T+znUlbp9t4AXw229R0xpZqH1p9H8+Ofb+o8rcjJa+5CC79JAwpRe02o4Cj
-	 O7UvA9VQsV4szSE3g2XuT2CEMJLY0f0xErI+VOGyUL7uyt/UygYh4B1ZmuLQjMybjPExh
-	 0dZQio3oB1m3l12V6tGeJmrfGjLhSkjzGOXc2c4j+sPSP8rx/wNaGfAj8TPsiNAHi67YG
-	 VVTd8VLtHHGZudJr0OeWAPjnOgBm/pkEzJJOGQ5POLshFhQuXez+pnZZCabG5DPyaw5Jj
-	 uiWBT5ZN1zLRyChojid2xnl82D9VyfzQLQ2pTMKlFhAYpQuihwemb2T77Jj+rOaPw5g==
+	t=1794063361;
+	b=zSWZudETvaqa7MIhT9aw+SS4BjCXMTK5Z8E+VcqzquVj8u2hN037bEHtY/CYXBGX0KGC
+	 umVZkyUwAl6d3PKgYMWPwTPDgjFCXIMNiiW1rtklA8XtUwR13O3HfEJkSc/VliJrmmhQX
+	 zxCXksk0xD7X65E70C/BJ2MEjzPCdJWegfGrQLSCsOQAQuS2GDU6smfVbdTuPH0GS58Er
+	 UJaRsjCv/m/gCjFz64ew2RfjV6H2/IHHpEq2rbj+yMr27KML3y84qT1KVzPAGRwhERIPI
+	 BgITuYoxQ7HxJXqSI+bXVO6LjB5IMEKfVZufi5m8zimbY0eWtqki+7HasRu1dDot7TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063360;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063361;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ZbHIAsLhZ7WwnbGyOFhDb/kqSCps787jiAmVKgAu8j4=;
-	b=ACF591dX2KlUbihz+Y9sUErhdE48Ak0c5T1Tnd2xez3l46SDKbGMjVq2HG92baWk4UHb
-	 S/qy+PwRHbe+SUQPriaXO86tC5Ys7jdeu2e6kMeRBZDIe7EyZ0ztM4Io5QY/Hf/Num98H
-	 mg1wPW2YMUDHd2/LxOvUesQ+HSPvCEdlP+QBzPi7RimgNVTiE50/ilU6XFL/fa3W8RMdL
-	 w8CUwG2xYVWF3mQYLHjh7HpJj3TXGhmjzigcUYDwYQ5cDDjhWh3xJ7Ac8iUya845OeGLK
-	 /jpucSMOdoxBUlGCUz2uHwQuFQf0tMDe98s141rDwKD+86NvzpSS5Cc56qLpL9Bjbng==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=2GW2fXoB1j/hBoBqbFVvPalKuytV84wgCupQ6PSI/HI=;
+	b=uwRyhrEml5gnagRZDWV5TCiiOLbfZZvteeWi2fgoUITz6r2OwQIFj3gy73T/9llREG2E
+	 9hS3vp+DhKf+eLnp6VFjFtkrhYY/UT8EJjInZ3/CmpaEYFnMCreD8YhfHiZsshRIwSxG3
+	 lInmtszgD8m+BD36p9kfLG2BS4VAmj0epcox0jKnv7tp3DbIUc4a4VtRKLwtWaz86yEe6
+	 pCp889othWi6lONA5n5KxWpbJE1ILIrXQo7UK7ExtZjNywcFw12sqjEa4jie6PlWb/zHI
+	 BSkLQ+015nf9irFs7E2LP2dAmuG+HmwPKYpft/mOSb8yJiMqqhzYo3MKbY4cp3cWHVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCt9QDdT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6OOSumw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083DE606A330;
-	Sat,  7 Nov 2026 14:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F48606D83B;
+	Sat,  7 Nov 2026 14:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCt9QDdT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12F11F0089F;
-	Sat,  7 Nov 2026 14:55:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6OOSumw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC8C1F0089F;
+	Sat,  7 Nov 2026 14:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063359;
-	bh=ZbHIAsLhZ7WwnbGyOFhDb/kqSCps787jiAmVKgAu8j4=;
+	s=korg; t=1794063361;
+	bh=2GW2fXoB1j/hBoBqbFVvPalKuytV84wgCupQ6PSI/HI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DCt9QDdTn3eXSQj0qvvZfBbily8WmeMo3YfyQ+XQb3n+khRckg342RZ2MuER/6L0+
-	 KqznmB6sbQhjyw/x5XVKW2mPgK+/RZHsva4znnOBDi4DH2Ai8nvf74krt1pblrm/ow
-	 6eQ8m0eC5DIia1vUj1Zzxb7PAlxgc6s2sy1qtOU8=
+	b=K6OOSumw+X2s8WGVr0z3rKapNx1EXWmyS7ZtNzWSi9KZ+aE4X1CMmDRPTcbzCdWhE
+	 BzTMqCquJ86RsoqIEn9bxYWGNsA1GeNPK6cDSHQTd49EbhP5VJbGCYdoBAyRW/YnPp
+	 4oU4P6V5Md0WHoclwuXAYKAgyzPBfk57fWWR8FFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kazuki Hanai <hnkz.64@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Gabriel Krisman Bertazi <gabriel@krisman.be>,
-	Hugh Dickins <hughd@google.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Georg Wenzel <g.wenzel@gmail.com>,
+	Gergo Koteles <soyer@irl.hu>,
+	Philipp Oster <philippdev5396@outlook.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 538/869] tmpfs: fix unicode_map leaks in casefold option handling
-Date: Sat,  7 Nov 2026 08:53:40 -0500
-Message-ID: <20261107134911.671424446@linuxfoundation.org>
+Subject: [PATCH 6.18 539/869] ALSA: hda/tas2781: Skip invalid TAS2563 UEFI calibration data
+Date: Sat,  7 Nov 2026 08:53:41 -0500
+Message-ID: <20261107134911.700930466@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -67,82 +64,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kazuki Hanai <hnkz.64@gmail.com>
+From: Gergo Koteles <soyer@irl.hu>
 
-[ Upstream commit f439d79e8cd19f89e04cbb3b532347edacd72c79 ]
+[ Upstream commit a0f0325e92e505db6a6879d79da5aa88e94a36ab ]
 
-shmem_parse_opt_casefold() stores the unicode_map returned by utf8_load()
-in ctx->encoding.  A filesystem context can receive the casefold parameter
-more than once, and a second successful parse overwrites the stored map
-without releasing it.
+Some Lenovo 14ARB7 laptops do not have proper calibration data.
 
-The map is also leaked when an unmounted filesystem context is freed.
-This includes the temporary context used for remount, because
-shmem_reconfigure() does not take ownership of ctx->encoding.
+Skip these zero calibration values and fall back to the calibration data
+provided by the DSP firmware.
 
-Reject a second casefold setting, clear ctx->encoding after transferring
-ownership to the superblock, and release any remaining map from
-shmem_free_fc().
-
-An unprivileged user can repeatedly create tmpfs filesystem contexts, set
-the casefold parameter, and close them from a user namespace.  This causes
-unbounded kernel memory consumption and can result in a local denial of
-service.
-
-Link: https://lore.kernel.org/20261002081306.637148-1-hnkz.64@gmail.com
-Fixes: 58e55efd6c72 ("tmpfs: Add casefold lookup support")
-Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Gabriel Krisman Bertazi <gabriel@krisman.be>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: André Almeida <andrealmeid@igalia.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: <stable@vger.kernel.org>
+Tested-by: Georg Wenzel <g.wenzel@gmail.com>
+Fixes: c3ca4458cc2f ("ALSA: hda/tas2781: add TAS2563 support for 14ARB7")
+Cc: stable@vger.kernel.org # 6.18
+Signed-off-by: Gergo Koteles <soyer@irl.hu>
+Tested-by: Philipp Oster <philippdev5396@outlook.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/12a1ab265a1dc0e3a062a54287c8ef48682c4efc.1791895478.git.soyer@irl.hu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/hda/codecs/side-codecs/tas2781_hda_i2c.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index f2b5a11e88a55..68a3a0734e3df 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -4595,6 +4595,9 @@ static int shmem_parse_opt_casefold(struct fs_context *fc, struct fs_parameter *
- 	struct unicode_map *encoding;
- 	char *version_str = param->string + 5;
- 
-+	if (ctx->encoding)
-+		return invalfc(fc, "casefold parameter cannot be specified twice\n");
-+
- 	if (!latest_version) {
- 		if (strncmp(param->string, "utf8-", 5))
- 			return invalfc(fc, "Only UTF-8 encodings are supported "
-@@ -5081,6 +5084,7 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
- 
- 	if (ctx->encoding) {
- 		sb->s_encoding = ctx->encoding;
-+		ctx->encoding = NULL;
- 		set_default_d_op(sb, &shmem_ci_dentry_ops);
- 		if (ctx->strict_encoding)
- 			sb->s_encoding_flags = SB_ENC_STRICT_MODE_FL;
-@@ -5177,6 +5181,9 @@ static void shmem_free_fc(struct fs_context *fc)
- 	struct shmem_options *ctx = fc->fs_private;
- 
- 	if (ctx) {
-+#if IS_ENABLED(CONFIG_UNICODE)
-+		utf8_unload(ctx->encoding);
-+#endif
- 		mpol_put(ctx->mpol);
- 		kfree(ctx);
- 	}
+diff --git a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
+index ebfc08b5fb283..6eb9e4b8ba2e8 100644
+--- a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
++++ b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
+@@ -375,6 +375,11 @@ static int tas2563_save_calibration(struct tas2781_hda *h)
+ 					i, j, status);
+ 				return -EINVAL;
+ 			}
++			if (*(uint32_t *)&data[offset] == 0) {
++				dev_warn(p->dev,
++					 "Dev %d: Caldat[%d] is zero\n", i, j);
++				return -EINVAL;
++			}
+ 			bedata = cpu_to_be32(*(uint32_t *)&data[offset]);
+ 			memcpy(&data[offset], &bedata, sizeof(bedata));
+ 			offset += TAS2563_CAL_DATA_SIZE;
 -- 
 2.53.0
 
