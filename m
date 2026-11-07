@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061446;
-	b=VNgmXcH+e0IrxCZdI1EzdqmWjbMezmM0v0iBMH7xAOoqvOQ/SKIW6Ttiob5mBRCVmxCA
-	 HGwbH1tmUtK8ICafBLFH1Wm0hW9XJ10uMJL6MJcdymU/XAfOTdmQ3gEjM1+NfZl2TyZV2
-	 2J+/2ZZZZ9GQEM9t7xYgYDnqaSqgmz/fvyYIPgfmsEPxRT6Dcb3pZ0ThgE6bUlyU8zIXq
-	 Yun7mrFOhDRv5hIcrNiiHBa6BVR0zgVeawXhwsn+6ntMz2TWqiE1UWy6/2YXlNLHGL5dy
-	 yhtJlbhRtlGbYK8zfUNxRsOdZS8qE8pE0/PbaXP6zu/IFkmdS31VOBndRBE2IlICBmg==
+	t=1794061447;
+	b=e5fLph9qf8BKdwVGxmL3hnPAfGXyFdcgc0E5pwNFzan8I8u8tmPLXBKfrqBU5KIG2QcT
+	 biiSAULm/Qz07ONSUpEijcDtffNOSChyEXaWEdhPXBiPy06jJaAd5pXet9mpPDz8uAeBZ
+	 y6xCpBe/IuM0vE/0OA0ItIxi9LKPKMVAQxcky+ooahpSsNzVQLrkdo746hSMfwXQFChrR
+	 ddg4YIdGvB9P9wK7thxGoKkiVxcSYUV5JfbYaiJyyV+haO/spAe+jhXN0+NSJlrEZd3bq
+	 uNQOJoIj9Gl/LrY7NA8bvau3JDteUO7Mlp4haSFy94jXvmakdR+e8hWbmI91f/4GWPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061446;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061447;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+pai83ZrHd9UbLS/x8mpFjUJf3V8hyz9rf/2ikC/EsY=;
-	b=PBN060cFJZDTKggOel2/T4OSx+QCZW9VBHD42jFZmaJvxGJZLpKgl7vQumKGD4kTAfq8
-	 1bWGTc2n/i0S3M/pUdODLSiAiEjB9TIS2SSO38jsnoPJGk+Ra6kVXa5ruNhlheI5ggiRM
-	 myQrXCjDhmIGZqKcAEvwuZTeRTcEUg8ix+jPqD5vtrzJjuwvOCDIGAk0pbokiMVS7BYMK
-	 7sah/oZgf+BheE9fKEi0scYID1aeReDpX0pBJKJkZo8hk/Dv3cxjrldBufM3Z8JOkZpsU
-	 olwiGQm7nU4ZxcIKwPoISMc7ZR87YYn2RuLqi9rAYQSyvTKQjO5nD8LmuwkC3xbwqiA==
+	bh=uoORuVwO5GTtkJkEo1uZlgac7Cbn29Mi/ubeCbJzUJk=;
+	b=aMjvM/hhRjPb8wqLIm5V1DRkmqBkQHQX8b8voHdEvO8VB00baLQBenX3xKI0qjUAMePs
+	 vi4WuxiFog8i96i/urPSC4aU4B+lLC5Z+M3DdWcPctfxMAWirmTQMAwgp1WMwtpQD3rmF
+	 SEKku0sf38Rdz5YQmbuyJ4cyPuCA3OAAAUJw26OUf6gA5Hr4pizlnPIeiJ9cxIngVZ8eR
+	 EQt6tMxY7gRpZjdKkn26lwgtx1mmAUGiWrQrM+fBgcN/zMKUvpGqlmmYIi+TxRyCT+NY5
+	 QyU7AKe3A1u1VlAVC0SOUAmz+kgFHgWLlG+MFHd8fUnjS/D1ns/sxecL++SiGOIVKQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mmg4jwGa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u0e/I69z";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529CD606A336;
-	Sat,  7 Nov 2026 14:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA6E606A333;
+	Sat,  7 Nov 2026 14:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mmg4jwGa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21391F0089F;
-	Sat,  7 Nov 2026 14:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u0e/I69z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6791F0089F;
+	Sat,  7 Nov 2026 14:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061446;
-	bh=+pai83ZrHd9UbLS/x8mpFjUJf3V8hyz9rf/2ikC/EsY=;
+	s=korg; t=1794061447;
+	bh=uoORuVwO5GTtkJkEo1uZlgac7Cbn29Mi/ubeCbJzUJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mmg4jwGa1xo/fGjR0JVgShPdUYhNfQK9KWINiUtT4grE4PYO1sJGgVWQ6Hro27tFh
-	 HA1qf39IkWFKLd1EhFGCH9dZJ+HrM4bwhtXWukvBWJ+0DQ6TNlEbYp1OZr35EdWC5L
-	 /b8szXC4TKnVBKFp1hN3h2lI5i4bv9HOb5iw3P6o=
+	b=u0e/I69zwB0NfG7yGxUErasLE3U7mU5sUO+9x6/uAKXTZT7jThfj0RyWVxhu/VNk7
+	 W74kXqBTNRIAwUXz6DuLBuv/8I8gAl3tadYsn8d5uLESVkEVaTWVYlXTTGH+6qx84o
+	 OrBeDzQj27Vo7nbih2n8qTZ9hwU5IVNLO3SqR2yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Alexey Charkov <alchark@flipper.net>,
-	Mark Brown <broonie@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0553/1536] regulator: of: fill in supply names in of_regulator_bulk_get_all()
-Date: Sat,  7 Nov 2026 08:42:49 -0500
-Message-ID: <20261107135013.129230126@linuxfoundation.org>
+Subject: [PATCH 6.12 0554/1536] net: team: free skb when broadcast has no txable port
+Date: Sat,  7 Nov 2026 08:42:50 -0500
+Message-ID: <20261107135013.155964355@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,102 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Charkov <alchark@flipper.net>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit e2151c29cec73f6cc70abf1c7cbc7b9b202489f5 ]
+[ Upstream commit 489114c9ecae44e523361a4b3e610ee5ebd9189c ]
 
-of_regulator_bulk_get_all() returns an array it allocated itself, and
-fills in only the consumer of each entry. Every other way of getting a
-bulk array has the supply name set, because the caller provides it, and
-the core expects it to be there: regulator_bulk_enable() prints it when
-a supply fails to enable, so a caller that hands such an array to it
-dereferences uninitialised memory on that path.
+bc_transmit() sends the original skb through the last txable port.
+When no port is txable, it returns false without consuming the skb, but
+team_xmit() still returns NETDEV_TX_OK. AF_PACKET sends then retain the
+skb and its socket write-memory charge.
 
-Copy each name into the array's own allocation, right behind the
-entries, so that it shares the array's lifetime and callers still have
-nothing extra to free. That also retires the fixed 64 byte stack buffer
-the names were assembled in, which is_supply_name() never bounded the
-copy against.
+A TX-enabled, link-down port keeps the broadcast transmit op installed.
+Carrier can stay up through a second link-up, TX-disabled port or be
+forced on by userspace. Free the original skb on the no-port path while
+leaving the existing drop accounting intact.
+
+Discovered by Sashiko during review of previous commit.
 
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260928-b4-rk3576-reboot-mode-v1-0-65486b03bd41@flipper.net?part=3
-Fixes: 27b9ecc7a9ba ("regulator: Add of_regulator_bulk_get_all")
-Signed-off-by: Alexey Charkov <alchark@flipper.net>
-Link: https://patch.msgid.link/20260930-regulator-get-all-v2-1-ca82070d22f2@flipper.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: Replaced the kmalloc_array context line with the commit's own kzalloc(size_add(size_mul(...), names_len), ...) allocation, since kmalloc_objs isn't available here. ]
+Fixes: 5fc889911a99 ("team: add broadcast mode")
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20261001182326.572045-3-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/of_regulator.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/net/team/team_mode_broadcast.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/regulator/of_regulator.c b/drivers/regulator/of_regulator.c
-index deab0b95b6637..4570a1910c2ae 100644
---- a/drivers/regulator/of_regulator.c
-+++ b/drivers/regulator/of_regulator.c
-@@ -872,15 +872,15 @@ static int is_supply_name(const char *name)
- int of_regulator_bulk_get_all(struct device *dev, struct device_node *np,
- 			      struct regulator_bulk_data **consumers)
- {
--	int num_consumers = 0;
-+	int num_consumers = 0, names_len = 0;
- 	struct regulator *tmp;
- 	struct regulator_bulk_data *_consumers = NULL;
- 	struct property *prop;
-+	char *names;
- 	int i, n = 0, ret;
--	char name[64];
- 
- 	/*
--	 * first pass: get numbers of xxx-supply
-+	 * first pass: get numbers of xxx-supply and the room their names take
- 	 * second pass: fill consumers
- 	 */
- restart:
-@@ -890,16 +890,19 @@ int of_regulator_bulk_get_all(struct device *dev, struct device_node *np,
- 			continue;
- 		if (!_consumers) {
- 			num_consumers++;
-+			names_len += i + 1;
- 			continue;
- 		} else {
--			memcpy(name, prop->name, i);
--			name[i] = '\0';
--			tmp = regulator_get(dev, name);
-+			memcpy(names, prop->name, i);
-+			names[i] = '\0';
-+			tmp = regulator_get(dev, names);
- 			if (IS_ERR(tmp)) {
- 				ret = PTR_ERR(tmp);
- 				goto error;
- 			}
-+			_consumers[n].supply = names;
- 			_consumers[n].consumer = tmp;
-+			names += i + 1;
- 			n++;
- 			continue;
- 		}
-@@ -910,11 +913,16 @@ int of_regulator_bulk_get_all(struct device *dev, struct device_node *np,
+diff --git a/drivers/net/team/team_mode_broadcast.c b/drivers/net/team/team_mode_broadcast.c
+index 61d7d79f0c363..69dc25a5847a1 100644
+--- a/drivers/net/team/team_mode_broadcast.c
++++ b/drivers/net/team/team_mode_broadcast.c
+@@ -37,6 +37,8 @@ static bool bc_transmit(struct team *team, struct sk_buff *skb)
+ 		ret = !team_dev_queue_xmit(team, last, skb);
+ 		if (!sum_ret)
+ 			sum_ret = ret;
++	} else {
++		dev_kfree_skb_any(skb);
  	}
- 	if (num_consumers == 0)
- 		return 0;
--	_consumers = kmalloc_array(num_consumers,
--				   sizeof(struct regulator_bulk_data),
--				   GFP_KERNEL);
-+	/*
-+	 * The supply names are kept in the same allocation as the array, so
-+	 * that they share its lifetime and the caller has nothing extra to
-+	 * free.
-+	 */
-+	_consumers = kzalloc(size_add(size_mul(num_consumers, sizeof(*_consumers)),
-+				      names_len), GFP_KERNEL);
- 	if (!_consumers)
- 		return -ENOMEM;
-+	names = (char *)(_consumers + num_consumers);
- 	goto restart;
- 
- error:
+ 	return sum_ret;
+ }
 -- 
 2.53.0
 
