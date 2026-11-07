@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062825;
-	b=v26hSU85OqBjWo0vki+v6533Bd8tOODQVvgXwbdFXygT/JV5zfGRPoCefZW57IfHzyOx
-	 eMy3cXmlbY+GK0ggNaQCZYIUAmTqZL6DSCfT/YonISN7GJQ9rthpe8V8MmGryrokZ+vLi
-	 gqgeH1/pqtUM4IWIYXxuu1P94rw0ipwj8HXplt1A97/GOQaYlGq/NYVtuhA76FUswtnSG
-	 9in92TDkxYMDkhPhyTsAYb1tjdHzcZacw+vYwx/hmPXgUQhtwyWBt8pOVFpZ7Ra0byohj
-	 al9b7YeF6dHEcyPHbl2jbc6c4n1UinKcEPFsFBmTL4XnPqgpdNhUYQwTsWrNRqrYNBA==
+	t=1794062826;
+	b=B1RwU32CcsrwJvXlvcFpkqNHGGkAw/sHtpiQbmUWaqHAJOkq/5ALsq7fqdOfZDVdqobY
+	 rENr6p2LoydqexkTqpdOSVG0Azt2VC0XsLxjH5jOrX3m57wfl8a++bLNloKq0XtG8yByx
+	 +mMYRUe+/0v2vv5nEhQC6JPjP7dQ3apayJadmz6Upl4AaPBpQVMFikrb5tH1yrg+E6oMC
+	 XiF2vU5sJckUrj9mQwJKLTej8CJztGYV/vlQi6rjfRWrPfAwZExePht5XI18pnfK1hwep
+	 2NViBsuk426SghgmJFq80fSSSzxMEn/bYYmMje4Bv96U2n8nkaVgNz+pxZNwC0O5gNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062825;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062826;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gMqoG3UtVZyMriuAkD63xclXSz32f/amUyRgKKNaBAk=;
-	b=gSzGF+pdcNqktA4ApNxzTPokXYGjeNZlQ/GxeRFChUFyxnTtX1kKfmlAbw01jjdT4gtO
-	 uK4wS6OnKU80VIOjRXTXmOzNQDER+kIMbmd1FOLF6YKtyoVTE6aIlyEDNoNHCTlgli34K
-	 yw9y9Vaiy5YIkvBo2ay/btlhB/St9fFzmeOad36p4JM9f3nOyzkXPzqsXwgxon7VNubkq
-	 o+5+xvcgNiiE/O6SBqsQXpQiHXQMO4S2bAIYomG1ryVq+6mcNoA8xrD0oiL1+roQIybnf
-	 weyZdR+ZefGRF7DMPqkVWQicH4yyG+Oqf+6ZHnFKqfJX3AA8r1SR83VvaTVD3hmWfmA==
+	bh=WynZQ+H0NSUNs66FiGeYQCF2omQEP8MDqrqpi4HBT1g=;
+	b=AbXCqE5RvKbeeYS0Gut6GJrCFduo8+jBwpXe93pcNmAGfFdw7jHfjd8tFDRNKW4/6R49
+	 5BLC8dw0ckI8SGVXJ7Z1M+He/D+cuUdhPqK0RbNPmyclP4KPUhXTf26I1MrzmKe8Tj8y8
+	 E+ff0d/poJ1khTC0Fuft22+6Fb/pd9VJ/ZWW1PWO38mbiCvAd6AT2IQwieGfLZgX8wMZw
+	 5FCHYscs8S+uxnK+pJNLYF9Lx2I+wWVOd3dTrT2f1xoh9KiTzWL+JuZ0dM06YY5WW2aLf
+	 eAQyJVn8bk9FIqLbxCN+hQlXHVqFadmwZL/FEwHRH0ytukH9y1OsPzO4gQ3+A6FotJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qLFW6g18;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJH+n+Ap;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BB3606A334;
-	Sat,  7 Nov 2026 14:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEC9606D808;
+	Sat,  7 Nov 2026 14:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qLFW6g18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBB11F0089F;
-	Sat,  7 Nov 2026 14:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJH+n+Ap
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2EF1F0089F;
+	Sat,  7 Nov 2026 14:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062824;
-	bh=gMqoG3UtVZyMriuAkD63xclXSz32f/amUyRgKKNaBAk=;
+	s=korg; t=1794062826;
+	bh=WynZQ+H0NSUNs66FiGeYQCF2omQEP8MDqrqpi4HBT1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qLFW6g189JQYEXlECN85FhGWckCww8PLKIF8egZBxR3G0BEQs2o/n8OjuFWRXDrXT
-	 1T443pBFRnKAZd09o7KNDeZseEf0WYUyYgh41bQwstg07Ho7rqX9V2zMKVkzEpjLXO
-	 cUd2mNUz47I2FSNdTOe7akD9rt3khvL7cGLmpG0Q=
+	b=GJH+n+ApwFmd7kdiGbrV1HcdECfvV4c9/8AJN2cSlKyJbJBHyagBnTQvFs4kU2pS+
+	 efAqPtsbg5B54Rc8KhGCJGzp+OwEHYtP5rAy6EficpWw1aSdBQYQvQn1pIPRoc5fyA
+	 dqu0TqeSUtosUiG1uWiDNq4Q1VJaotxN2ZnAwQsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Binwon Song <qlsdnjs236@chungbuk.ac.kr>,
+	Eric Kim <seohyun.kim@outlook.kr>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 085/869] media: vicodec: fix out-of-bounds write on under-rounded coded dimensions
-Date: Sat,  7 Nov 2026 08:46:07 -0500
-Message-ID: <20261107134855.581540486@linuxfoundation.org>
+Subject: [PATCH 6.18 121/869] sched/fair: Reset NUMA fault locality after scan period update
+Date: Sat,  7 Nov 2026 08:46:43 -0500
+Message-ID: <20261107134856.623586752@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,68 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Eric Kim <seohyun.kim@outlook.kr>
 
-[ Upstream commit 0183746ebca4c478027e2261b904f844f1443b19 ]
+[ Upstream commit e81ee06308379a5f2ededf997bcf17551bce5db7 ]
 
-A capture format whose width or height is one more than a multiple of 16
-makes the FWHT codec write one 8x8 block row, or column, past the end of
-the capture plane, and read the same block out of the reference frame for
-P-coded frames.
+When updating the task scan period for NUMA locality checks,
+update_task_scan_period() checks whether there were no faults or failed
+migration on the last scan window, at which it prolongs the scan period.
 
-vic_round_dim() is documented to round a frame dimension up so that both
-the luma and the chroma plane end up a multiple of 8, but it only rounds
-the chroma plane:
+However, p->numa_faults_locality, which is used to check for migration
+failure and number of faults at the previous scan window is not cleared
+after changing the scan period, which unintentionally increases
+numa_scan_period up to numa_scan_period_max even when there were no
+migration failures or no faults at previous scan.
 
-	round_up((dim) / (div), 8) * (div)
+Fix this by jumping to the out label on early exit at this case to
+ensure p->numa_faults_locality is always cleared before returning.
 
-For div == 2 the result is a multiple of 16 in every case but one: when
-dim % 16 == 1, dim / div is already a multiple of 8 and the macro returns
-dim - 1. encode_plane() and decode_plane() round the same dimension with
-round_up(dim, 8), which yields dim + 7 -- one block more than the coded
-dimension that sized the buffer.
-
-On a KASAN-enabled kernel, a 641x360 YUYV P-frame triggers:
-
-  BUG: KASAN: slab-out-of-bounds in add_deltas+0x450/0xcc0
-  Read of size 1 at addr ffff888009070800 by task trigger_bin/70
-
-  Call Trace:
-   add_deltas+0x450/0xcc0
-   decode_plane+0x1916/0x3390
-   fwht_decode_frame+0x173/0x620
-   v4l2_fwht_decode+0x751/0x1120
-   device_run+0x6bb/0x1850
-
-Round the dimension itself up to a multiple of 8 * div. The rounding
-changes only for div == 2 and dim % 16 == 1, and MAX_WIDTH and MAX_HEIGHT
-are both multiples of 16, so the rounded value still fits the advertised
-limits.
-
-Fixes: 3b15f68e19c2 ("media: vicodec: Add support for resolution change event.")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
+Closes: https://lore.kernel.org/all/20250404095354.311156-1-qlsdnjs236@chungbuk.ac.kr/
+Reported-by: Binwon Song <qlsdnjs236@chungbuk.ac.kr>
+Signed-off-by: Eric Kim <seohyun.kim@outlook.kr>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://patch.msgid.link/Message-ID:
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vicodec/codec-fwht.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/fair.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vicodec/codec-fwht.h b/drivers/media/test-drivers/vicodec/codec-fwht.h
-index 0eab24020e9e6..4b4d390310899 100644
---- a/drivers/media/test-drivers/vicodec/codec-fwht.h
-+++ b/drivers/media/test-drivers/vicodec/codec-fwht.h
-@@ -61,7 +61,7 @@
-  * both luma and chroma components resolutions are rounded up to
-  * a multiple of 8
-  */
--#define vic_round_dim(dim, div) (round_up((dim) / (div), 8) * (div))
-+#define vic_round_dim(dim, div) round_up(dim, 8 * (div))
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 67e8c2065d827..fbc277c6963c5 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -2794,7 +2794,7 @@ static void update_task_scan_period(struct task_struct *p,
+ 		p->mm->numa_next_scan = jiffies +
+ 			msecs_to_jiffies(p->numa_scan_period);
  
- struct fwht_cframe_hdr {
- 	u32 magic1;
+-		return;
++		goto out;
+ 	}
+ 
+ 	/*
+@@ -2838,7 +2838,10 @@ static void update_task_scan_period(struct task_struct *p,
+ 
+ 	p->numa_scan_period = clamp(p->numa_scan_period + diff,
+ 			task_scan_min(p), task_scan_max(p));
+-	memset(p->numa_faults_locality, 0, sizeof(p->numa_faults_locality));
++
++out:
++	memset(p->numa_faults_locality, 0,
++	       sizeof(p->numa_faults_locality));
+ }
+ 
+ /*
 -- 
 2.53.0
 
