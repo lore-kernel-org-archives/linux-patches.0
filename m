@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062136;
-	b=ki2CPoCOMnI0ARH74vmP5i6SPXexFhZpXymCdKVbhHTgtvV0KtbupoT+5AGCBWo2lEPb
-	 XwxUe4S86WFhqeVKAehNn17eG6HPtipzgm+usZSU3zZSgeq8ezGPNCd9JOSkyzm4ogF9y
-	 zeUzcJKIr4T7wBBKRfjXufljTG1XlQnViOObCtIPXsw48s2pWioyY0zN58lGpohPbCLOF
-	 JDhTRebAUkE7DM2OdDOguD3NlR5MG/XehK0NOLei00sXXafStZaSKzCMIWIr8rL45bMnR
-	 LYysukkUVE7DMCveOeMekCEFi/vrhOSNKsKLbLvK54eOr+6UjxW6nXK0kBw1ckdeDgw==
+	t=1794062137;
+	b=QRAn8qzQAFL9jOoaxbLRUWM6Rxg25iBPaw+UniGPcmgKiH5QG2cCpmKnkGeJ0nowA0Pr
+	 odwNEqLAPm0hYcDyhVUK2Z1RWd5VOzVIVnuy1Q9KKtrMj8UaRX1DH2RBU44ZTssjIRdZP
+	 jtLsnwE0YhjTyyKqUreU21dsA8mxx9FSAwIj7kX7PKhBIpwnFPUjOPsE4E12XWNqKB8IY
+	 kecR9g3XQeIK382YK6VozQq2ePNVo+8e2rTnOEltjQ0dFsd5+qLW0rY0LeMhretLqHn+g
+	 69wsjQNwvD38lI19XdD3dWYcRNOLW3km4DB2TBbSIPMPNUVb1PF4m97K0v4Kh4ycdZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062136;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062137;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J2ivk++NmjE2KZgNvPDkYUtNpSHPgv8a+BIQXk4/yFU=;
-	b=N5/vd+ji6kyj8lXiSBQCD6QL5RNaPefYIUfbGyjr2GB1OONZAbmSWqiXsfFqG8q+1MjR
-	 AU6YM83yOCH8o5/6q49MgEKuCOOqvcGfQ1PTsg8/xQ3I8RuzgKrRAe9nJr9YrVerpBGP+
-	 t2u0icUaJjPTB0QZu+7kcBJNBOtMIELWgFVQA8NZFRymzor3oq5ZUzatPavmQ4E2OnTh/
-	 WAdJFLfNL2/JCrAaOgHTrgHZaB5NkhyaFu4N04Zj/RGy/B4OUhFLaYoqy1BPBiUaesoAS
-	 yuDJWmHSvWZ8C4Za7McVMHkGEMhwGDjNqieV0kByMDvkAFfBYb90TpuAFjq8YD04DUQ==
+	bh=Q0sMguYZewpExcXJd9eellAXyGXe/qjfpygWaFQQ8t4=;
+	b=Ivb2DQ9GRo5Tuux0RyDwPmYar7DUM4a+04GdnSby18KyPgA12lxJ2iwQc09W2bR33URs
+	 ecr9omfouQUfJiS7KS3evch9Hwj+PtanuXmQN6dsSaRD6/ES+xl7cCkabhy7B3E5N4Hzl
+	 0Ac5LbPncnkygNEXzS3PQiqvBT0ysn5VWLhWRBFewkK8hVucemcRolzz0fbflYzBq9JwJ
+	 sNWo7AKk1ipQol4nffo7WsG9z4iS8EH9EutD5w14ruShyPq2Kcn7L2QECdO//vCLUtCql
+	 /Me+haRSt1Em6B53rvt6NsPUjc+m7CmVvOlXaMMKXDBxZDd4PJuirsv6fOA00xkPZSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mtfhtiH4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y2POzHJm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A403606A653;
-	Sat,  7 Nov 2026 14:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C635606A653;
+	Sat,  7 Nov 2026 14:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mtfhtiH4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF411F0089F;
-	Sat,  7 Nov 2026 14:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y2POzHJm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C2A1F0089F;
+	Sat,  7 Nov 2026 14:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062136;
-	bh=J2ivk++NmjE2KZgNvPDkYUtNpSHPgv8a+BIQXk4/yFU=;
+	s=korg; t=1794062137;
+	bh=Q0sMguYZewpExcXJd9eellAXyGXe/qjfpygWaFQQ8t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mtfhtiH4PbCiavkClx4FTVrWMnGzMGX33ymxs5xc1VbqGVPF2tOodvRRUNb7ijTc+
-	 03kGPsJt+cOVrBMgCmMFOGjI7vSOA9ZdohJbtgEPnejUPstRuGuDMuSJx8JArv8KWH
-	 0aLjpK+rRuS8GG2fMlggEfW9Zn98tDu3sEEsuYzw=
+	b=y2POzHJm2KWh3v+UrzBdJEU1z+h89eygUwnyCkk9ZYnNxtKbGwD1jgm+DPtSf3aFn
+	 BT++BYoz3Czn0Qcyg3SwcgLoqLWHiJGwpnMeA2zH6UcNL5yraCYfhOVB8LE7PBILhk
+	 S89MU0Xa2KQtoNpUH9hnIIMN3ksSV8Ip4Sh77CA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1102/1536] m68k: dmasound: Keep the Q40 IRQ handler registered
-Date: Sat,  7 Nov 2026 08:51:58 -0500
-Message-ID: <20261107135028.652072403@linuxfoundation.org>
+Subject: [PATCH 6.12 1103/1536] ALSA: core: Check shutdown flag at D0 power-state, too
+Date: Sat,  7 Nov 2026 08:51:59 -0500
+Message-ID: <20261107135028.680601367@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,146 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit fa2e77ac5bf81a60864e71fc72196227692d7162 ]
+[ Upstream commit ad63c5b62843895e8c3cd7291ed07cc659df0355 ]
 
-Q40PlayNextFrame() re-registers the sample IRQ after stopping it. This
-function can be called with dmasound.lock held and from the sample IRQ
-handler, so free_irq() and request_irq() can sleep or deadlock. A failed
-re-registration can also leave playback without an IRQ.
+The snd_power_ref_and_wait() skips the card->shutdown check when the
+card is already in D0 state and immediately returns as successful, by
+assuming the all-green in D0.  This assumption makes the code after
+this sync point behaving as if all power is up and ready, even though
+actually it might have been already at the disconnected state.
 
-Register one handler for the lifetime of the driver and select mono or
-stereo sample handling inside that handler. Call the frame completion
-path after releasing dmasound.lock so it can refill the queue safely.
+Add the missing check of shutdown flag there for the more consistent
+behavior.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260929085400.2068977-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260929125346.1478631-2-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/oss/dmasound/dmasound_q40.c | 65 ++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 36 deletions(-)
+ sound/core/init.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/sound/oss/dmasound/dmasound_q40.c b/sound/oss/dmasound/dmasound_q40.c
-index e25a78dd1bf2a..339311e5d8070 100644
---- a/sound/oss/dmasound/dmasound_q40.c
-+++ b/sound/oss/dmasound/dmasound_q40.c
-@@ -49,9 +49,8 @@ static int Q40SetFormat(int format);
- static int Q40SetVolume(int volume);
- static void Q40PlayNextFrame(int index);
- static void Q40Play(void);
--static irqreturn_t Q40StereoInterrupt(int irq, void *dummy);
--static irqreturn_t Q40MonoInterrupt(int irq, void *dummy);
--static void Q40Interrupt(void);
-+static irqreturn_t q40_audio_interrupt(int irq, void *dummy);
-+static void q40_frame_done(void);
- 
- 
- /*** Mid level stuff *********************************************************/
-@@ -372,8 +371,8 @@ static void Q40Free(void *ptr, unsigned int size)
- static int __init Q40IrqInit(void)
+diff --git a/sound/core/init.c b/sound/core/init.c
+index 87c10bd900a73..92dff1736cfe9 100644
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -1143,12 +1143,12 @@ EXPORT_SYMBOL(snd_card_file_remove);
+ int snd_power_ref_and_wait(struct snd_card *card)
  {
- 	/* Register interrupt handler. */
--	if (request_irq(Q40_IRQ_SAMPLE, Q40StereoInterrupt, 0,
--		    "DMA sound", Q40Interrupt))
-+	if (request_irq(Q40_IRQ_SAMPLE, q40_audio_interrupt, 0,
-+			"DMA sound", q40_frame_done))
- 		return 0;
- 
- 	return(1);
-@@ -384,7 +383,7 @@ static int __init Q40IrqInit(void)
- static void Q40IrqCleanUp(void)
- {
-         master_outb(0,SAMPLE_ENABLE_REG);
--	free_irq(Q40_IRQ_SAMPLE, Q40Interrupt);
-+	free_irq(Q40_IRQ_SAMPLE, q40_frame_done);
- }
- #endif /* MODULE */
- 
-@@ -403,7 +402,6 @@ static void Q40PlayNextFrame(int index)
- 	u_char *start;
- 	u_long size;
- 	u_char speed;
--	int error;
- 
- 	/* used by Q40Play() if all doubts whether there really is something
- 	 * to be played are already wiped out.
-@@ -420,15 +418,6 @@ static void Q40PlayNextFrame(int index)
- 	speed=(dmasound.hard.speed==10000 ? 0 : 1);
- 
- 	master_outb( 0,SAMPLE_ENABLE_REG);
--	free_irq(Q40_IRQ_SAMPLE, Q40Interrupt);
--	if (dmasound.soft.stereo)
--		error = request_irq(Q40_IRQ_SAMPLE, Q40StereoInterrupt, 0,
--				    "Q40 sound", Q40Interrupt);
--	  else
--		error = request_irq(Q40_IRQ_SAMPLE, Q40MonoInterrupt, 0,
--				    "Q40 sound", Q40Interrupt);
--	if (error && printk_ratelimit())
--		pr_err("Couldn't register sound interrupt\n");
- 
- 	master_outb( speed, SAMPLE_RATE_REG);
- 	master_outb( 1,SAMPLE_CLEAR_REG);
-@@ -456,31 +445,35 @@ static void Q40Play(void)
- 	spin_unlock_irqrestore(&dmasound.lock, flags);
- }
- 
--static irqreturn_t Q40StereoInterrupt(int irq, void *dummy)
--{
--	spin_lock(&dmasound.lock);
--        if (q40_sc>1){
--            *DAC_LEFT=*q40_pp++;
--	    *DAC_RIGHT=*q40_pp++;
--	    q40_sc -=2;
--	    master_outb(1,SAMPLE_CLEAR_REG);
--	}else Q40Interrupt();
--	spin_unlock(&dmasound.lock);
--	return IRQ_HANDLED;
--}
--static irqreturn_t Q40MonoInterrupt(int irq, void *dummy)
-+static irqreturn_t q40_audio_interrupt(int irq, void *dummy)
- {
-+	bool frame_done = false;
-+
- 	spin_lock(&dmasound.lock);
--        if (q40_sc>0){
--            *DAC_LEFT=*q40_pp;
--	    *DAC_RIGHT=*q40_pp++;
--	    q40_sc --;
--	    master_outb(1,SAMPLE_CLEAR_REG);
--	}else Q40Interrupt();
-+	if (dmasound.hard.stereo) {
-+		if (q40_sc > 1) {
-+			*DAC_LEFT = *q40_pp++;
-+			*DAC_RIGHT = *q40_pp++;
-+			q40_sc -= 2;
-+			master_outb(1, SAMPLE_CLEAR_REG);
-+		} else {
-+			frame_done = true;
-+		}
-+	} else if (q40_sc > 0) {
-+		*DAC_LEFT = *q40_pp;
-+		*DAC_RIGHT = *q40_pp++;
-+		q40_sc--;
-+		master_outb(1, SAMPLE_CLEAR_REG);
-+	} else {
-+		frame_done = true;
+ 	snd_power_ref(card);
+-	if (snd_power_get_state(card) == SNDRV_CTL_POWER_D0)
+-		return 0;
+-	wait_event_cmd(card->power_sleep,
+-		       card->shutdown ||
+-		       snd_power_get_state(card) == SNDRV_CTL_POWER_D0,
+-		       snd_power_unref(card), snd_power_ref(card));
++	if (snd_power_get_state(card) != SNDRV_CTL_POWER_D0) {
++		wait_event_cmd(card->power_sleep,
++			       card->shutdown ||
++			       snd_power_get_state(card) == SNDRV_CTL_POWER_D0,
++			       snd_power_unref(card), snd_power_ref(card));
 +	}
- 	spin_unlock(&dmasound.lock);
-+	if (frame_done)
-+		q40_frame_done();
- 	return IRQ_HANDLED;
- }
--static void Q40Interrupt(void)
-+
-+static void q40_frame_done(void)
- {
- 	if (!write_sq.active) {
- 	          /* playing was interrupted and sq_reset() has already cleared
+ 	if (card->shutdown) {
+ 		snd_power_unref(card);
+ 		return  -ENODEV;
 -- 
 2.53.0
 
