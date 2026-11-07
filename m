@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063598;
-	b=kPsLkeu7vqwCZe4j+TxNgWwhKi7Pdkbn9ybHdKT0+8tU7o9BJIaZ18F6aTlDiYh7P18h
-	 ELcFOyyDVFAZ/ti5plsqpOvM2l64wHraK3KX2xkc71NxIQQT5DyuKHJbB3TEgB90ZDrZn
-	 g5yQu+50FVsnMX27VOBTME5ydr34G98vfMrqIg7p4B0UsL5GFeQaQxd6ihcwNhgNiatCq
-	 sZa5A4ISAB3RwhYU5cvOU3aoeQUI+c0/2OxnxYa2tV9wCnmY5TxoVYkCfKVSlvs6aDEz4
-	 LkoqFN3xKiL3nFFbczLKWsDeUvCTM4lvWKwhV4ga4ikNA8sTv4JmWrCRqtX/XySTsxQ==
+	t=1794063599;
+	b=vsvxPd3OMmtuQudThVSsAt1d1EeaW+ItqWUZAQYojGUh6yviuD7GHzpY6HzmZn7Dk1jK
+	 L6lYmsu5HVMYnHVXxlRsQR2nrcvpAUjAzyG1yLuv0NFNHzLttypRQkvMf6y2Ry7Z/+I2p
+	 G5/bKKgbQWMF+Y8ocub1wqF4OAN9xSd+nd0myBGhrsYtCIDHXrMDS5dFgWnUOnK8n6hzd
+	 e549BhKs0MxSX5ZdU+jw28wiY987CWlb090Vc0NRgKjD1eJR7moJIDDk19MO79ROY+W84
+	 dsWYc5T+9X/EaFM01qw8YGsddLkYy9+lTtkMP4GeLRmyRA8Pn1ph947VNpgOXyIDlVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063598;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063599;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a/OqVThHrXV+EGINJY6Lbn3V45ZbQ142a/Vg8kFKFyo=;
-	b=mANymZK2lbCT5p8RFfwYSRCxeuSVHRU5S/AyNxRISEA52SvPOuJtcqLSgsBi1Ls7Jqg6
-	 mLYgSjE2U6BX5sYHoZyU6Bu45BNp7TJ2aOtH+/plOucQpU2lCmDJ1VNGR2WF9MT0FBc38
-	 3GOxVpibA8aQTxhId5ArtvQJ0jxuAk36WryU+64Q6UgJ0UX7r/8w/hV3mR4Z6w9U+p4TO
-	 Z/TM+bf4SauikkJb3Vywhcs/yMzkRC82q4sbcOeijIDNrP2M5H+t4NjzqTSRXKtpdRG+j
-	 oUwa4tiKmYMnQ90Kr+3jZhpgMmGxM8Zlz63Zs7aatOHbsy6mN5/idWE9ELG5b0QwjyA==
+	bh=WrDZUAJhPiVF3lMDfeYn8uL28pudLz75733sPdfRAw8=;
+	b=EeQF0KXaXnxPGSbpvqSYErXMHVn4KzrEOQqGxAYbnu4l9P0JvPE+A4YeChH82yMxMitt
+	 Tsc0hDunUH7U22fCiVRiY1dGH0mzdvJtSLvtLzBZlB/VZWTr9QLNgaP1zh443wX1ETQMN
+	 EPLu0c72amPBb4TV5CE10DTcwhE/wBjWSp8kkeenikW6pqCTkQIfiV7KmgQRBYOgDYjJd
+	 fJop4sUZ/qHJw10x4IJM/sDimHX8r8GxruxaMK6x5YvX+Tv8SOxuWwRrBDoxvIjdRfZYL
+	 fkDleS9DWpMTgehFKBzosygmVj6xdCAeL2MNKuUvEN3Himid6GJvVGm15IgvS/bJltw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4eKVc8a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oO1rBKlI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F5C6082BD5;
-	Sat,  7 Nov 2026 14:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C466082BD7;
+	Sat,  7 Nov 2026 14:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4eKVc8a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951A21F008A1;
-	Sat,  7 Nov 2026 14:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oO1rBKlI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F481F0089F;
+	Sat,  7 Nov 2026 14:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063597;
-	bh=a/OqVThHrXV+EGINJY6Lbn3V45ZbQ142a/Vg8kFKFyo=;
+	s=korg; t=1794063599;
+	bh=WrDZUAJhPiVF3lMDfeYn8uL28pudLz75733sPdfRAw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p4eKVc8a4Re+BfB1JBy0xfk16BO8fR8OvvxoTToPePCKzPoepwKYcYt7Swk5Uq3mA
-	 YRLoEFKoWQLsTTv1wd0i7s+iy30v4f8z38xQDwt2D1mN4g+NDJZcJbcRosPyc0Gb/A
-	 7G9j17GeVE/a29Obv56uKfEF2WQH4FT+xIK468tY=
+	b=oO1rBKlIiqXNRFgFlQraa0S3MVCfSsmvMj4NemACq/Rq3VDPKJgj3IKF2Hd0LJAtw
+	 pedniUxxyUVnlNtAzz7g6WbkIW28goVkgYyu4uIpZ5kIzeLxhoOxF3YhD1BOwS/AP6
+	 iTtGeZQUAS7erFOo/hB/U6NHaUHvR+bWmqYTcVmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daehyeon Ko <4ncienth@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 685/869] ipv6: remove ifaddr from hash during ifdown list cleanup
-Date: Sat,  7 Nov 2026 08:56:07 -0500
-Message-ID: <20261107134916.267583264@linuxfoundation.org>
+Subject: [PATCH 6.18 686/869] ipv6: serialize address publication with device teardown
+Date: Sat,  7 Nov 2026 08:56:08 -0500
+Message-ID: <20261107134916.295112149@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,61 +71,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 6ace56ed7b13a9c6d4cb7ef0d82d3a3d53324a63 ]
+[ Upstream commit 06227034e2d93942119b922cf05f2de9da0ad848 ]
 
-addrconf_ifdown() clears the address hash before snapshotting the
-per-device address list. A concurrent ipv6_add_addr() can publish an
-address after the hash scan and before the list snapshot.
+ipv6_add_addr() checks idev state before allocating an ifaddr, but
+publishes the object later. addrconf_ifdown() can mark and detach the
+idev between the check and publication.
 
-The ifdown path then removes the address from the device list and drops
-the list-owned reference while it is still linked in the hash. Once the
-remaining references are released, inet6_ifa_finish_destroy() warns, but
-a DEAD address continues to kfree_rcu(). The hash therefore points to
-freed memory that later RCU walkers can dereference.
+This happens when a non-loopback device MTU falls below IPV6_MIN_MTU. A
+forced interleaving published an address on a dead idev, and
+ipv6_get_ifaddr() still returned it after teardown. Later device deletion
+remained blocked with:
 
-This follow-on was found by source review and was not separately
-triggered at runtime.
+  unregister_netdevice: waiting for ac0 to become free. Usage count = 3
 
-Remove each non-kept address from the hash immediately before removing
-it from the per-device list. Keeping it hashed through the delete
-notification blocks same-address publication until NETDEV_DOWN has been
-delivered. hlist_del_init_rcu() is safe when the earlier hash scan
-already removed the address.
+Protect the dead indication with idev->lock and keep that lock across
+both hash and device-list publication. Recheck dead before publishing;
+if teardown wins the lock, reject the unpublished object.
 
-This handles a late publisher captured by the list snapshot. The next
-change serializes publication with teardown so an add cannot miss both
-observations. Both changes are required when backporting the complete fix.
+Non-unregister teardown does not set dead. The preceding change covers an
+add that misses the initial hash scan but reaches the per-device list
+snapshot. Both changes are required when backporting this fix.
 
-Fixes: 73a8bd74e261 ("ipv6: Revert 'administrative down' address handling changes.")
+Fixes: 8814c4b53381 ("[IPV6] ADDRCONF: Convert addrconf_lock to RCU.")
 Cc: stable@vger.kernel.org
-Reported-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/20261004135117.GA206930@shredder
-Link: https://lore.kernel.org/r/179161099539.434549.2238120015372268173@kernel.org
+Link: https://lore.kernel.org/r/179161099408.434549.14449036924552933828@kernel.org
+Link: https://lore.kernel.org/r/20261012145306.GB779501@shredder
 Suggested-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261015050651.1841557-2-4ncienth@gmail.com
+Link: https://patch.msgid.link/20261015050651.1841557-3-4ncienth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv6/addrconf.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 81f5bda2a89fc..067d325291b9f 100644
+index 067d325291b9f..caf8f3bd2372f 100644
 --- a/net/ipv6/addrconf.c
 +++ b/net/ipv6/addrconf.c
-@@ -4006,6 +4006,10 @@ static int addrconf_ifdown(struct net_device *dev, bool unregister)
- 		}
+@@ -1168,14 +1168,18 @@ ipv6_add_addr(struct inet6_dev *idev, struct ifa6_config *cfg,
  
- 		if (!keep) {
-+			spin_lock_bh(&net->ipv6.addrconf_hash_lock);
-+			hlist_del_init_rcu(&ifa->addr_lst);
-+			spin_unlock_bh(&net->ipv6.addrconf_hash_lock);
+ 	rcu_read_lock();
+ 
+-	err = ipv6_add_addr_hash(idev->dev, ifa);
++	write_lock_bh(&idev->lock);
 +
- 			write_lock_bh(&idev->lock);
- 			list_del_rcu(&ifa->if_list);
- 			write_unlock_bh(&idev->lock);
++	if (idev->dead)
++		err = -ENODEV;
++	else
++		err = ipv6_add_addr_hash(idev->dev, ifa);
+ 	if (err < 0) {
++		write_unlock_bh(&idev->lock);
+ 		rcu_read_unlock();
+ 		goto out;
+ 	}
+ 
+-	write_lock_bh(&idev->lock);
+-
+ 	/* Add to inet6_dev unicast addr list. */
+ 	ipv6_link_dev_addr(idev, ifa);
+ 
+@@ -3884,7 +3888,9 @@ static int addrconf_ifdown(struct net_device *dev, bool unregister)
+ 	 *	   Do not dev_put!
+ 	 */
+ 	if (unregister) {
++		write_lock_bh(&idev->lock);
+ 		WRITE_ONCE(idev->dead, 1);
++		write_unlock_bh(&idev->lock);
+ 
+ 		/* protected by rtnl_lock */
+ 		RCU_INIT_POINTER(dev->ip6_ptr, NULL);
 -- 
 2.53.0
 
