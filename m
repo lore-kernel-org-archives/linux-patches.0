@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062284;
-	b=Gi/i5KttwJcKJKb8Kzsyx+/62pAhcOxuTaYPpGPhQUl3Kv0P6k4NUvvK4ddujlDaPQxr
-	 Fq777aRS6pf6YTB/HAH9qGX4GcMr82CGsZow7ii1nVbWsIBy1WJj3rwsD8estXtC0kSdE
-	 ab3BGPC5yAWeN6kmy39WBVZMHjgMZKiFjjDHnr1gJcm8bPPeufAOaxNAy4tC0u1iExHDj
-	 W5Z4a09Tdg7/fGIq0Tw0Xg9I3H95ZK+RF8qynBdXtRDQR3dironKLIxDcGc8jXUPVwEqe
-	 WjwsuW9vrcoe17XvyfZLBdmEh5S4Pk70xntxgt/3eSK17i4gNQZbaV1/jnTPhR7cKMg==
+	t=1794062285;
+	b=Uwq9XmS5v6EyCZv2R1Cj+g/JDOhRQgAk4T+6LZe2needlI3Sv9V8RsNEhmxaoKma9QAE
+	 83qloQV6jwF8l+2JOFMKTaDhMXuWSEEGGlHH6C8ijowM1DKA/073+gstfSl/vBlcXzVbU
+	 qHttK4KIgUaiUTxOTkJvKFCe80msGioUwQDqOS9t05VKxrRAiu+MR5YgOC6XuAWnlpfV7
+	 GXaoAWSJb5Fg1IX8MFR7579qTn7HUF9/cTHuOUUZgTJiv+hP5P0vJDc4T5vcFhPr+E5OA
+	 /jh19DwWChD/hZdGo4KlqFEAcDS65IPbnzofTzhTx5lymDFpn0zTHg0AmDDok19P3WQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7tiMmIvFT3M3CQl2Y92tPs5ixeY9UX5ebf2UkfKvwTI=;
-	b=hYyKQQQEc845/oHz8C3q6zeEuJlYoxFNtP3ELQ3ILp4QeDHYapeqEnrMFann59GC0wfl
-	 go0/iaG+WGJo+eJzZ2Gd++9K5779483j+lAfAvwDGby8xHe/JE/SUt1zt3B+GviQl/PPs
-	 2ll8AySOY3euKV2NishZA3OzM8IDg9tzI7gJwDAM3r2Q88Ox+R6CaS0FWKgIHfifM3KvG
-	 ckR5qJET8/FVSPiUbNBQ5VrKgFoeXqmnrpTX3BaziUHfvUifdWKfQpOMxzyHq/cjOT9yz
-	 6VAhA8jJxdappY1r1BC9u9qhe5i5jiKhlmdUpmCdZniSy5BNvT6PJTwRBO4S+XkSajw==
+	bh=CVpiYbeNWUBdTbcof9a6tHht52XgTDHeUR85yGA0EEA=;
+	b=Vzs3UN4qThs5JG8QT6Co5i2wRLeAW7lpjNOtxR3rVGsZR+rfhnYFTRRJShQ1HrWOvXtn
+	 AShDXVGH+vzdXeBub6nkpmd9XzJ7izcJVkOH6tFHFA10RWGZSQUO8aJQ25JVCVRHA+Zr2
+	 c6Ldsa1T0WT07Xhl3/3PdJw3bcSy+oigUbuQ3+7t1BaMBd5PdnUw0UUgP/iFdoqb3Z4Kt
+	 whmCLXrtMkpyxuF2petVFXVQ+SQjc/GJzwDUYcYEHOOy23mD8lvCTTuETPS4uMB8pB/dP
+	 leKKOklvfmd20OJ/iRH9VVPN9l3XZYL+5j6Wei61DY7Fjd5O5OCh96waXv1TBeAIayw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biGV6m3n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VmlLIWjv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7C5606EEA0;
-	Sat,  7 Nov 2026 14:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DCD606EEA0;
+	Sat,  7 Nov 2026 14:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=biGV6m3n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC741F0089F;
-	Sat,  7 Nov 2026 14:38:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VmlLIWjv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274071F0089F;
+	Sat,  7 Nov 2026 14:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062284;
-	bh=7tiMmIvFT3M3CQl2Y92tPs5ixeY9UX5ebf2UkfKvwTI=;
+	s=korg; t=1794062285;
+	bh=CVpiYbeNWUBdTbcof9a6tHht52XgTDHeUR85yGA0EEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=biGV6m3ngiYSIrjW61XLdlPP+AL9fsLVkfqLbX5wZtMn5BZJuBARUcqZNhyu+a1U1
-	 Y2Svea7WfTxGBlxXLQ9tdGM8kGbCY8V1VO0BBP0zuFBmC8tZd1PcSyFy510NJbpzeH
-	 x/EBPnrVGw8yi3inV9RxwJ31SQRXn+BBdce11tUE=
+	b=VmlLIWjvfVLsd/3fS4xD9n4N6ydCKlvicg3rWAhwdKZ1LrHuxBHVETTanHV5zfuQr
+	 Ekp2zEerL0pOSN/R7Vrp/aTXUXNiWT3XGoGqH2d6KfIoygSPBtFrOl8OxKjvlfNS70
+	 JgYC3eYSA6jueMOZpascfh8qDoxFWuyrRH/2k/Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	"Theodore Tso" <tytso@mit.edu>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1223/1536] cxl/acpi: Convert QTG _DSM latencies to picoseconds
-Date: Sat,  7 Nov 2026 08:53:59 -0500
-Message-ID: <20261107135032.106463647@linuxfoundation.org>
+Subject: [PATCH 6.12 1197/1536] ext4: fix out-of-bounds read in ext4_get_group_info()
+Date: Sat,  7 Nov 2026 08:53:33 -0500
+Message-ID: <20261107135031.368754662@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,65 +74,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 2658c66a5efb5f30f5ced708a5de831845b43f6d ]
+[ Upstream commit b067d3c1f90b536e9aa9f48b19580475a0b34f0f ]
 
-The QTG _DSM expects read and write latencies in picoseconds, as
-specified in CXL 3.0, Table 9-30.
+A plain read of s_groups_count in ext4_get_group_info() allows CPU
+load-load reordering. On weak memory models, speculative prefetch of
+s_group_info prior to the boundary check could lead to an out-of-bounds
+read if a concurrent online resize expands the array and increments
+s_groups_count.
 
-The code base originally kept the latencies passed to the QTG _DSM in
-picoseconds in effect. Commit 51293c565cf4 ("cxl: Fix incorrect region
-perf data calculation") normalized CDAT and host bridge latencies to
-nanoseconds, but did not add a conversion back to picoseconds when
-constructing the _DSM input. Firmware can therefore select QTG IDs using
-understated latencies.
+The data race occurs between the ioctl configuration path (holding the
+resize lock via ext4_resize_begin) and the lockless metadata lookup path:
 
-Convert the latencies to picoseconds when constructing the _DSM input
-package. Multiply in 64 bits and reject latencies that cannot fit in the
-DWORD inputs defined by the specification.
+   CPU 0 (Writer, Resize Lock)                CPU 1 (Reader, Lockless)
+   ---------------------------                ------------------------
+   ext4_ioctl()
+     [EXT4_IOC_GROUP_ADD]
+     ext4_ioctl_group_add()
+       ext4_resize_begin() // Takes lock
+       ext4_group_add()
+         ext4_mb_alloc_groupinfo()
+           // Publishes expanded array via RCU
+           rcu_assign_pointer(s_group_info, ...)
 
-Fixes: 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
+         ext4_flex_group_add()
+           ext4_update_super()
+                                              ext4_get_group_info()
+                                                // Speculative / out-of-order read
+                                                [Loads old/smaller s_group_info pointer]
+             [Plain C store / smp_wmb()]
+             sbi->s_groups_count += ...;
+                                                // Reads new s_groups_count,
+                                                // boundary check passes
+                                                if (group >= s_groups_count)
+
+                                                // Out-of-bounds array access!
+                                                sbi_array_rcu_deref(..., s_group_info)
+
+Fix this by using ext4_get_groups_count() to enforce acquire semantics.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20261009045452.1107921-4-den@valinux.co.jp
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Cc: "Theodore Ts'o" <tytso@mit.edu>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Baokun Li <libaokun@linux.alibaba.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Zhang Yi <yi.zhang@huawei.com>
+Fixes: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
+Link: https://sashiko.dev/#/patchset/20260825095422.3166067-1-ruanjinjie%40huawei.com
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20260902074805.398540-8-ruanjinjie@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/acpi.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/ext4/balloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
-index 0b0937c09f2be..01cc06a75e111 100644
---- a/drivers/cxl/acpi.c
-+++ b/drivers/cxl/acpi.c
-@@ -204,9 +204,10 @@ cxl_acpi_evaluate_qtg_dsm(acpi_handle handle, struct access_coordinate *coord,
- 			  int entries, int *qos_class)
- {
- 	union acpi_object *out_obj, *out_buf, *obj;
-+	/* QTG _DSM expects latencies in picoseconds. */
- 	union acpi_object in_array[4] = {
--		[0].integer = { ACPI_TYPE_INTEGER, coord->read_latency },
--		[1].integer = { ACPI_TYPE_INTEGER, coord->write_latency },
-+		[0].integer = { ACPI_TYPE_INTEGER, coord->read_latency * 1000ULL },
-+		[1].integer = { ACPI_TYPE_INTEGER, coord->write_latency * 1000ULL },
- 		[2].integer = { ACPI_TYPE_INTEGER, coord->read_bandwidth },
- 		[3].integer = { ACPI_TYPE_INTEGER, coord->write_bandwidth },
- 	};
-@@ -224,6 +225,11 @@ cxl_acpi_evaluate_qtg_dsm(acpi_handle handle, struct access_coordinate *coord,
- 	if (!entries)
- 		return -EINVAL;
+diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
+index 0ba91e0fe7665..0e1be1885bac8 100644
+--- a/fs/ext4/balloc.c
++++ b/fs/ext4/balloc.c
+@@ -329,7 +329,7 @@ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
+ 	struct ext4_group_info **grp_info;
+ 	long indexv, indexh;
  
-+	/* Latency inputs must fit in the DWORD fields defined by the spec. */
-+	if (coord->read_latency > U32_MAX / 1000 ||
-+	    coord->write_latency > U32_MAX / 1000)
-+		return -ERANGE;
-+
- 	out_obj = acpi_evaluate_dsm(handle, &acpi_cxl_qtg_id_guid, 1, 1, &in_obj);
- 	if (!out_obj)
- 		return -ENXIO;
+-	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
++	if (unlikely(group >= ext4_get_groups_count(sb)))
+ 		return NULL;
+ 	if (unlikely(!EXT4_SB(sb)->s_group_info))
+ 		return NULL;
 -- 
 2.53.0
 
