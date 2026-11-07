@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060642;
-	b=VgvK9CR/3vLZCmzB4jHE7yeyOLuDx8WnHZN+xMM0UerMW+Ya9h3n2yLbJhutPO246jOY
-	 FR656nVQiAeaWAVpohRHJiEJfzWCigN5X2rXngVhy7Yl2FE3hW2UpyTFDPVDlldJ/mqLZ
-	 a2amG1MQAK/TbZbNMajld+2Tt+qiEGckfgk0Qbj5Ew9SpBD5xFkL1snIktAshYMuxguUs
-	 lP5gkO79WlAG1jmKmlYgDDZVN8+XrECmpRA54Lw1LxW5lZkbCAiIAtXFH25VdEatB31ez
-	 jejED4P4kZFQdzytPe6L1Cbvlnn22MevtLOhN4cIvFnIw0fyn7s901HOmWauXTM4iBg==
+	t=1794060644;
+	b=K1oOqDj/tt+LCwByCrWwRjp83Zy+CpAuMLKA+VQcGymEf2lv510JUK4lPcJY/onsKjJn
+	 ZfECEgBfKQj00lpDCy6SUUMNi5XV+Ryyjc4iKXgvhgeVgfP8TbZUeajv1vY2RPz6AyF1A
+	 I0veujbeDHXVidiku4DchdgKbiXdOGDeIl6whoD6i4ruznHZ6HijkwsZ6GvO5ts5yPile
+	 Ax58MuF5obyECpIFVXPqYX1yrjvpAzGGVeYgzEK0r3qUmAJOjkKQqgkOyVP7Zcbwht6mC
+	 kfYab0HB1LoxZVQ+kbp0g0FoXZKJXvvaug8x1SYYTPygW02/96YRAXyA2JaaKvZGZLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060644;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zzliOqJ2d1GN4FDeEc1v7lCHOOAH1eiwBa74etFUveE=;
-	b=Jyg7S1FFXJ9G5v37P0Df8qhX1za4dcHSkWRl+hLM986WcT6Zgyi5UtLIXupBG0BM+rZi
-	 taLy4nLfbkwCmTx0AXzKsnUo8RsV2QTYZrbDvwHGgiRwF//J4lMQL2sNOjWwgq5vzj0X8
-	 E36Q1KEgi/JhpngyqUE37DIp3IqvgQItS5kBvzNoWsExsw0FvX8xBE6oYvdsb2fJy3o1K
-	 N6MHMX3S+qvKCj8qM9WljGP/tLmvpu69lTQQIRbCaVteTc0iv1xnAAyfgp6o1hz6B2Doo
-	 jdzUOs79NDonDjDsmGJLxgWROBOzXzVFxg+MDDDIJsrAnVx/0vUX4snP+QTAYYjQaTQ==
+	bh=N4kwAPLk7muMpPrr/d7bSBavleRq4VozvMwgCbZf2e4=;
+	b=QJTPeN9PExOMpAtdECd/9l83zHKple+LFljwD24TBClHkCVnVLQrd7kx+RKEPOBJC/+N
+	 oK6vHjuks3PdFvlnFw1L9wjbxRGPyLMvKH+JKppQTmKdkAAzz45aVRtAE4OV1KsHSdO65
+	 iXn5aCyOLL+iPZ8Pj3nOtoYL/D/YUyzL4BS7YW7zvwL1GzJ15cVDoCpbnWEHrgQEKj+T/
+	 R2cG9TJiORhSFwdNCd7pR9U2+KADfn0Frbtpgb+ZXb5RX01ZWYoAAVUDpiXMH2Ry1GAbu
+	 JV8vc9UgSokKRNHpHMaR6g9T3QCKnru4FcA9vQxgdebQXJEwIxjsz22PVTM6dqphKvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dRqMf80A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DzGzGkoJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FEF606A326;
-	Sat,  7 Nov 2026 14:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F000E606A326;
+	Sat,  7 Nov 2026 14:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dRqMf80A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51AE1F0089F;
-	Sat,  7 Nov 2026 14:10:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DzGzGkoJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415E31F0089F;
+	Sat,  7 Nov 2026 14:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060641;
-	bh=zzliOqJ2d1GN4FDeEc1v7lCHOOAH1eiwBa74etFUveE=;
+	s=korg; t=1794060643;
+	bh=N4kwAPLk7muMpPrr/d7bSBavleRq4VozvMwgCbZf2e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dRqMf80ACvSe3kLWfowpORR7+iefrqZO261f3zb1mzgX3forj5yg41eCJO78yyxbV
-	 Q25nRY/NmRUQj+8PGfYmEyjjXOKkonb5uui4pzaRA1Qdh1jYUd0hgsxg6JXA1wVFqy
-	 fvqYR50Ps1gYKCf7gN/R5kNiok4j5ohcuLLW4HaI=
+	b=DzGzGkoJHWe/SpJhShw/r8mw3eGDBnvC8XrpJgTFw6t4GADHfNCL+Di/lqyTm7CSa
+	 z9/ogaq8V3QlWsfZRflMMnP7KsVByolUgLsbvbBO6OhNMVdFHTz6DLlvtuRJg7pSMj
+	 S7T/37cM+eZr04lW9pTYXxfnAJ3kmnjdDN0lFsdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Liu <1298662399@qq.com>,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
+	William Theesfeld <william@theesfeld.net>,
+	Brian Masney <bmasney@redhat.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0045/1536] spi: bcm-qspi: return error from failed controller suspend
-Date: Sat,  7 Nov 2026 08:34:21 -0500
-Message-ID: <20261107134958.924367595@linuxfoundation.org>
+Subject: [PATCH 6.12 0036/1536] clk: zynq: handle kasprintf() failure in periph_clk registration
+Date: Sat,  7 Nov 2026 08:34:12 -0500
+Message-ID: <20261107134958.678077867@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,49 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Liu <1298662399@qq.com>
+From: William Theesfeld <william@theesfeld.net>
 
-[ Upstream commit 44d09ef0ba690ac46d17eb05c12a47a5dd75e231 ]
+[ Upstream commit d4d0d335e8d37c6c7e1c5664c7664288eca5a09b ]
 
-spi_controller_suspend() can fail if the SPI core cannot stop the
-controller. bcm_qspi_suspend() ignored that error, disabled the
-controller clock, uninitialized the hardware, and returned success.
+zynq_clk_register_periph_clk() ignores the return value of the two
+kasprintf() calls used to build the mux and divider clock names, and
+passes the resulting (possibly NULL) pointers straight into
+clk_register_mux(), clk_register_divider() and clk_register_gate() as
+the clock '"'name'"' argument.  On allocation failure that name later
+gets dereferenced by the clock framework (e.g. in debugfs name
+formatting), causing a NULL-pointer dereference.
 
-Return the suspend error before tearing down the clock and hardware
-state.
+Check both kasprintf() returns.  On failure unwind any allocated name
+buffer and the spinlock, then fall through to the existing err label
+which sets clks[] to ERR_PTR(-ENOMEM).  Freeing the spinlock on the
+error path is correct here because no clk_register_*() call has had
+a chance to take ownership of it; the success path intentionally
+hands it off to the registered clocks.
 
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Reviewed-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Link: https://patch.msgid.link/tencent_21BF5F9512F56D45FD9018BAF14ED2805808@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The neighbouring zynq_clk_register_fclk() in the same file already
+uses this per-allocation goto-label cleanup pattern; this change
+brings periph_clk into line with it.
+
+Signed-off-by: William Theesfeld <william@theesfeld.net>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm-qspi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/zynq/clkc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
-index cfdaa5eaec76d..ae5545be0a45c 100644
---- a/drivers/spi/spi-bcm-qspi.c
-+++ b/drivers/spi/spi-bcm-qspi.c
-@@ -1694,13 +1694,17 @@ EXPORT_SYMBOL_GPL(bcm_qspi_remove);
- static int __maybe_unused bcm_qspi_suspend(struct device *dev)
- {
- 	struct bcm_qspi *qspi = dev_get_drvdata(dev);
-+	int ret;
+diff --git a/drivers/clk/zynq/clkc.c b/drivers/clk/zynq/clkc.c
+index c28d3dacf0fb2..db40a9e7dd3d9 100644
+--- a/drivers/clk/zynq/clkc.c
++++ b/drivers/clk/zynq/clkc.c
+@@ -186,7 +186,11 @@ static void __init zynq_clk_register_periph_clk(enum zynq_clk clk0,
+ 	spin_lock_init(lock);
  
- 	/* store the override strap value */
- 	if (!bcm_qspi_bspi_ver_three(qspi))
- 		qspi->s3_strap_override_ctrl =
- 			bcm_qspi_read(qspi, BSPI, BSPI_STRAP_OVERRIDE_CTRL);
+ 	mux_name = kasprintf(GFP_KERNEL, "%s_mux", clk_name0);
++	if (!mux_name)
++		goto err_mux_name;
+ 	div_name = kasprintf(GFP_KERNEL, "%s_div", clk_name0);
++	if (!div_name)
++		goto err_div_name;
  
--	spi_controller_suspend(qspi->host);
-+	ret = spi_controller_suspend(qspi->host);
-+	if (ret)
-+		return ret;
-+
- 	clk_disable_unprepare(qspi->clk);
- 	bcm_qspi_hw_uninit(qspi);
+ 	clk_register_mux(NULL, mux_name, parents, 4,
+ 			CLK_SET_RATE_NO_REPARENT, clk_ctrl, 4, 2, 0, lock);
+@@ -205,6 +209,10 @@ static void __init zynq_clk_register_periph_clk(enum zynq_clk clk0,
  
+ 	return;
+ 
++err_div_name:
++	kfree(mux_name);
++err_mux_name:
++	kfree(lock);
+ err:
+ 	clks[clk0] = ERR_PTR(-ENOMEM);
+ 	if (two_gates)
 -- 
 2.53.0
 
