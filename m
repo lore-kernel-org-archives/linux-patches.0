@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062545;
-	b=jhzTstajeJYwctNipWNbCrDkuj41GmtfA0u0gvcKI6TuPYgrjDzix48dEQ1VlS7elFA5
-	 1BnP1uU3W+rStpkzcFGc0/PId4kG/weGvd2mM1yxdXOz3HhCWMiuZV9cxympnPaEtOfuP
-	 Y4Sb+EEw/dPuRL/VkPllV5k/N9bzeYw7xctLQKQ+LharRS3BVdi+RvP1TeVpZNoOW5L6w
-	 hqBRaBvPN32RywvuTkpMavGIDzrWItShp2hODAizzwmhXmcLpDOpz6LCuwOTcAWfeqc9U
-	 5jaTzpdy3QAOPSE6B8L5fb0OEME716Qyy1PFXY92xsse3FyoZsb0Q7YgVgwqJns1yAQ==
+	t=1794062546;
+	b=2uIPowwOmZk2JLVJsEVq0E69jBNds2pWo5N6657xXEDVL9R7SVJlrhSQxAqMAgQutltK
+	 24r+HHm7Rk20EXN1CaziYYDOYZ/8uafhi1dQVLSboKcHa4XSmiZZC8jA+7ITRkr0ixYFZ
+	 xMjbe5zYQt3OZf4Aqc14YZq/ReC1zjYv3YExTRym6b8MmTtVzZb8XOGSvt+ZaT/ijPs8W
+	 WClo+MJuk31l4z4W0Z4YGkJmp3R4TU3CBxK26NQ8mqRVPw5cRPvnZ07P27yfmpso/jIuc
+	 lWC+ee2wZDl8zYRe8fe4XsZ1E0nA9BmnwMmUrTvrQdztMVNqefjR4SYY746wsrBC32Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062545;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZTRAAIi5RR5TeJzQQ+VxdtOBPruZ4CSEMywkoBnDLUs=;
-	b=rbZWrat4JvLrT6ZwLDzN4IEA0DOEOTDPoD1QNDpZfHv7WKQVM0sanYXKc3knk+iIPESL
-	 HNChoux8REMuvJjJ4Alh1FyywbEPSOk6A+S80X0+UcDwAp3ABaowILxMGb/ZTWNxxIuXa
-	 /3bPoqbbOiK9HnjilTveCNmtGsaYqSmjI6ovquDECdZNagllSWUFtOOB9lQ2p+0Gft1+5
-	 +OAcOzp/mhmVCNmh1P0xlKSiO8a+bLCcgvPICMKFAI+muYkfHQsEdWKb3tqpq9pcok6EB
-	 rVgMcAC2PGGioCNId9a4J0R3JFVLc22VyzRlVlGXkoyEYOZEFNk+spLB0T+5WfHiokg==
+	bh=IA/T3f+2jL1CW7TAmUp6bcikM/RbWuJD3d2UvT/iy0E=;
+	b=cgqz2M3YdXDlJ++4Uqi5f4yIa8hELT6HCM+iHBSV0mjmJqAT3G6F/ppHGAoa27DV8IEh
+	 0ubSv5GObUiIDv+ekeIXWJhVdyh3tygiimLqqagf9WncsX2sPtr20Qce6SSbXffbX/Ciz
+	 15MaZxzOZe3R8C56Iijevo+9eUJmfD4xg4Xp/aBK6Qrzplbx4tIhPqPHaDe15HCg54qDg
+	 7ecGTyhqNTxnk/wDlJj9HDGaCKmSmGkV2xpPvMJvS9h3oA3B+YdqWTWYJka9aSfoFHGWl
+	 QtZB29aJs5n8Z1HyF5yoo8v97THr0pdqJqCfikQESHFFXqUstOtg4Ugm7W4TMQZL5cA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nn3XiDWR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ky5t2VJY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEBD606A33C;
-	Sat,  7 Nov 2026 14:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638FB606A33C;
+	Sat,  7 Nov 2026 14:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nn3XiDWR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D671F008A3;
-	Sat,  7 Nov 2026 14:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ky5t2VJY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1375B1F008A2;
+	Sat,  7 Nov 2026 14:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062545;
-	bh=ZTRAAIi5RR5TeJzQQ+VxdtOBPruZ4CSEMywkoBnDLUs=;
+	s=korg; t=1794062546;
+	bh=IA/T3f+2jL1CW7TAmUp6bcikM/RbWuJD3d2UvT/iy0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nn3XiDWRzOrpINta1TJ+MWnWLfAaq2HBXBFoUkMxUcjPgkYXFmOAkbHcY/1iarv1z
-	 sdrJh/LFj640EeK7QjuOUKQMsLQ982XpMS/WXzaZR39zDL85qZObg2M/mB1ehkPhuS
-	 mvXVZTMGFMkshQScZsgBsjkc3nBA2ga5q7xvS/v0=
+	b=Ky5t2VJYS8hZydR3p759Vz12ZY42skQaAzsXA4YxIKKZxot83QgU65gTCHt8qwgMs
+	 hm1Yo8Ac9BXvkYoAq/7i3KUYWX/ADbd6/YeB55hZARdHD4uvLy/4gBhJ9SspffUXyu
+	 limOnTprIRSKEYpfF0i0u5XHYOEPyaTCaCrg9Sxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bean Huo <beanhuo@micron.com>,
-	Stanley Jhu <stanleyjhu@google.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
+	Chris Leech <cleech@redhat.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1433/1536] scsi: ufs: core: Clear stale UIC result byte before peer DME retries
-Date: Sat,  7 Nov 2026 08:57:29 -0500
-Message-ID: <20261107135038.082981338@linuxfoundation.org>
+Subject: [PATCH 6.12 1434/1536] scsi: libiscsi_tcp: Prevent R2T range check overflow
+Date: Sat,  7 Nov 2026 08:57:30 -0500
+Message-ID: <20261107135038.111649907@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,67 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Jhu <stanleyjhu@google.com>
+From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 
-[ Upstream commit e4a9b7640914b248eb7537d4507aa42db080586a ]
+[ Upstream commit eb7aa7fd673fdc1582223cd133bcc5f54e7af19f ]
 
-Peer DME get and set retry a failed attempt with the same struct
-uic_command. UIC completion ORs the ConfigResultCode into argument2[7:0],
-and nothing clears it before the next attempt. Once an attempt fails, every
-retry keeps reporting that error code, even when the device returns
-success, so a transient failure becomes a hard failure after three
-retries. Each such retry also triggers the WARN_ON_ONCE() in
-ufshcd_dispatch_uic_cmd(). In ufshcd_dme_set_attr(), ufshcd_uic_cmd_compl()
-also overwrites argument3 with the register readback before the next
-attempt.
+An iSCSI target controls the R2T data offset and length as 32-bit
+values. Adding them before comparing the result with the SCSI data buffer
+length can wrap. An R2T with offset 1 and length U32_MAX then passes the
+check for a 4096-byte write.
 
-Clear the result byte and restore argument3 in ufshcd_dme_set_attr() when
-an attempt fails.
+The transmit path treats the wrapped range as valid, exhausts the command
+scatterlist, and dereferences the NULL next entry in
+iscsi_tcp_segment_done().
 
-Fixes: 64238fbd15ea ("scsi: ufs: add retries to dme_peer get and set attribute")
+Check the offset first, then compare the length with the remaining bytes in
+the data buffer.
+
+Fixes: a081c13e39b5 ("[SCSI] iscsi_tcp: split module into lib and lld")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261015001855.3450573-6-stanleyjhu@google.com
+Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+Acked-by: Chris Leech <cleech@redhat.com>
+Link: https://patch.msgid.link/DB5PR08MB100629CD3750FBF71475B5224FD982@DB5PR08MB10062.eurprd08.prod.outlook.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/scsi/libiscsi_tcp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index c8f007f5a0597..69d043053340b 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -4181,9 +4181,12 @@ int ufshcd_dme_set_attr(struct ufs_hba *hba, u32 attr_sel,
- 	do {
- 		/* for peer attributes we retry upon failure */
- 		ret = ufshcd_send_uic_cmd(hba, &uic_cmd);
--		if (ret)
-+		if (ret) {
- 			dev_dbg(hba->dev, "%s: attr-id 0x%x val 0x%x error code %d\n",
- 				set, UIC_GET_ATTR_ID(attr_sel), mib_val, ret);
-+			uic_cmd.argument2 &= ~MASK_UIC_COMMAND_RESULT;
-+			uic_cmd.argument3 = mib_val;
-+		}
- 	} while (ret && peer && --retries);
+diff --git a/drivers/scsi/libiscsi_tcp.c b/drivers/scsi/libiscsi_tcp.c
+index 646a2142ed666..4cce6bfb55c57 100644
+--- a/drivers/scsi/libiscsi_tcp.c
++++ b/drivers/scsi/libiscsi_tcp.c
+@@ -612,7 +612,8 @@ static int iscsi_tcp_r2t_rsp(struct iscsi_conn *conn, struct iscsi_hdr *hdr)
+ 			      data_length, session->max_burst);
  
- 	if (ret)
-@@ -4247,9 +4250,11 @@ int ufshcd_dme_get_attr(struct ufs_hba *hba, u32 attr_sel,
- 	do {
- 		/* for peer attributes we retry upon failure */
- 		ret = ufshcd_send_uic_cmd(hba, &uic_cmd);
--		if (ret)
-+		if (ret) {
- 			dev_dbg(hba->dev, "%s: attr-id 0x%x error code %d\n",
- 				get, UIC_GET_ATTR_ID(attr_sel), ret);
-+			uic_cmd.argument2 &= ~MASK_UIC_COMMAND_RESULT;
-+		}
- 	} while (ret && peer && --retries);
- 
- 	if (ret)
+ 	data_offset = be32_to_cpu(rhdr->data_offset);
+-	if (data_offset + data_length > task->sc->sdb.length) {
++	if (data_offset > task->sc->sdb.length ||
++	    data_length > task->sc->sdb.length - data_offset) {
+ 		iscsi_conn_printk(KERN_ERR, conn,
+ 				  "invalid R2T with data len %u at offset %u "
+ 				  "and total length %d\n", data_length,
 -- 
 2.53.0
 
