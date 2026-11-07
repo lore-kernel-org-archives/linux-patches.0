@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060867;
-	b=DGtrHqjXWh2eWYH1WIMdm42neeOEhxQiWFPhSLG5PGAu2N5kO5J6JcQLUXZZY1VX9dI2
-	 g8s+6YF++k9EoUzPvjV5pCUrvducYwkpszDsJy1JeLtBKWZDWzcV/+IgyNbAHd92riMzj
-	 rrWvNanZK9w2Z7Ni/PSXpByDUmANpg+aWpqpl7Xc9pxAf+8NatSxYsLKoHNPEec1O/opl
-	 Lp9GpNzNTt6qsIC4oY2jzWuG4Q7Fg8gYLk1bRY6TTt2inaBEK4sMdnKDv7PTx96vDcGJ1
-	 NOJqHUbUXym7M2a6BaBqTHA9GOw939c6ygtXF4h099rlOMEbueUH4uW4l4d2JPDo86w==
+	t=1794060868;
+	b=bTDkZrZw04bD6Khadf/x43oMq5+Wu41tFDKnzI3mIC6SQEOTuB/s80GUnQrFAAnF+iZv
+	 /T9Gz2gLt6T/+wG/Fj28dAIqFRnvq1UYgEK6G3QE1ptA6qqSHCBh124S40LA/iK4I7etY
+	 bBxKBU9InHkjK+si87SzFrrp7bY+t4VTv7gLBmlIT3g/BSNh4dvo0LpB3MzlM9VRBEqD1
+	 Mp/w/lhTgDK9XDC6PoRPmKK9u6nT/a9uvaQAjJZ58N/wn8LuEcGMNngxvOxgeyXOOKwQd
+	 gxWOZEO7fOnOEG8hu/dXzxA1Peyaws7Os/8oUQAkeQWjyy1E9It/MwDrmFIazOGT8eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060868;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mCdchWMAx0EI7hEa/1sgDBgoOLk45H0qgMxGG8Rz1ds=;
-	b=uRSoIfZXQ2wok3vkA9k5IQt5VUzk9cnrfUWXgvoPc82/xfITJZJX5stwj7SmVtbktDjv
-	 9MKRTBaDL8XUdWdjRllD/6sNjQBFh/CCTTlYDi3HuXuYcf0VzQr8i1HrIXyWy1aymuWnD
-	 Q5tBwsfiAzRHLL+C+nycKss+xIP3KtZq5YTBPzMrkRH4JPHfpzWfK5sgyX81TiUMvzUXy
-	 x9PE7LPxQwpc1o+wSlxohzOjOpHVYurdcIf/EIOX0s9s2CIPijXXIbrB7yKGjYxzoeXJb
-	 Vy6PELfopPp6wDEEi4QFaK/2EX9vC50i1kdAgnGIoZF0jhHo/ViJq06yl0nZfnKOazA==
+	bh=jWPJBzO1sv+IJYuf/ZidaYBap/NpD6OCy+OilhKUd/U=;
+	b=BZVoudzTyHnjoDiM5JwXXV/nqWD+AMLpO8Y3ob/C95RGhve4D82XEMw34lAryp9G+6Xk
+	 soMCfTqb5XmidfklvTRyQEivXkPuGhrKDhYQgBK0X1+rc+Y729FQtyYhCVCS3bHsfFBDU
+	 8PO22tE1Nw/1ud3nfxbb309zf9oWFHU30anH9xCzjXKIL/0o3i5uuO/RtvFiGzDu484os
+	 bAWRaR7ldksVJLK+QalEhY8SqFX31APaw1qWHtKOdulKWTHTsSTDjs0/O3y+boAATZ6j0
+	 t4R9Cz/hViM7aPmNtIvOLBaXF3z5232nbC6thphDK1Hcap1+8JaM7jHBOipD0GadpWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YqlQhC5N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dw9mGMv4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED2A606D816;
-	Sat,  7 Nov 2026 14:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C74606D809;
+	Sat,  7 Nov 2026 14:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YqlQhC5N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAE81F0089F;
-	Sat,  7 Nov 2026 14:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dw9mGMv4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32021F0089F;
+	Sat,  7 Nov 2026 14:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060866;
-	bh=mCdchWMAx0EI7hEa/1sgDBgoOLk45H0qgMxGG8Rz1ds=;
+	s=korg; t=1794060868;
+	bh=jWPJBzO1sv+IJYuf/ZidaYBap/NpD6OCy+OilhKUd/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YqlQhC5NI9UfuRBDQukmNBV3chV07Y4vNCSQm1ZHhMMnP2yqd0RMqMOzMndDBLshU
-	 Areb1ZPATGIlnT7vpMrYtCLzSOZiYTIlX0biY64ee2ckiyeV8gCTN2G2NZyt9L9I0Y
-	 t2F29YLP0KW66os9L8qCM2BsTliQl4aGDUmLxCYM=
+	b=dw9mGMv4PXFkEx1X1myRSb0nylOAY9+SXKyMspJR69Mz5dSMvIX4cyvh57YCCpY26
+	 ocQgo5BuYa3QWUgEMLpAjDPv9Phngmchkm6U7wHYaMT8f5D1AKcBphI1f7qr2s3JoY
+	 dHoNG6lFYAdQHsGbGkv6ewqZIfmhjebfVGoIbrcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>,
-	Jianjun Chen <jianjun@tsinghua.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0247/1536] netfilter: conntrack: tcp: use UNACK timeout for non-closing RST packets
-Date: Sat,  7 Nov 2026 08:37:43 -0500
-Message-ID: <20261107135004.618250669@linuxfoundation.org>
+Subject: [PATCH 6.12 0210/1536] pinctrl: npcm8xx: enable RMII outputs from RMII groups
+Date: Sat,  7 Nov 2026 08:37:06 -0500
+Message-ID: <20261107135003.555277939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,69 +68,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
+From: Tomer Maimon <tmaimon77@gmail.com>
 
-[ Upstream commit bf80e6802273a900311b44e47c9b1a59c6d2473c ]
+[ Upstream commit c6ccdc305589dd7c7976116e0870a23f291c5fa9 ]
 
-Commit be0502a3f2e9 ("netfilter: conntrack: tcp: only close if RST
-matches exact sequence") keeps an established conntrack entry in
-ESTABLISHED when an in-window RST does not match the expected sequence
-number exactly, so the endpoint can validate the RST with a challenge
-ACK.
+NPCM8xx uses GCR_INTCR4 bits to release the R1, R2 and RMII3
+transmit outputs from Hi-Z.
 
-The timeout selection nevertheless uses the CLOSE timeout for every RST
-packet.  The bug is that timeout selection is based on the packet type,
-not on the state transition result: even when RST validation keeps
-new_state in ESTABLISHED, the timeout is still forced to
-TCP_CONNTRACK_CLOSE.
+Those bits need to follow the mandatory r1, r2 and rmii3 pin
+groups. The R1_OEn, R2_OEn and R3_OEn side groups are optional and
+should not be required just to enable RMII transmit outputs.
 
-Linux TCP independently rate limits challenge ACKs per socket.  A second
-non-exact RST can therefore arrive after the first challenge ACK has
-restored the timeout but before the rate limit expires.  The second RST
-lowers the timeout to 10 seconds again while the endpoint suppresses the
-second challenge ACK, allowing the conntrack entry to expire while both
-TCP endpoints remain established.
+Program the INTCR4 bits when the corresponding RMII groups are
+selected and clear them again when those pins switch back to GPIO or
+another shared function.
 
-Using the ESTABLISHED timeout for such RSTs would avoid this short
-expiration window, but it could also retain stale entries for the
-five-day default because conntrack cannot reliably match the endpoint's
-exact TCP state.
-
-Use the UNACK timeout for RST packets that leave the conntrack entry in
-TCP_CONNTRACK_ESTABLISHED.  Exact-match RSTs and accepted RST packet
-trains still fall through to timeouts[new_state], which preserves the
-CLOSE timeout when conntrack accepts the RST as closing the flow.
-
-This avoids the aggressive 10-second expiration window for non-exact
-RSTs while preserving the short timeout for RSTs that conntrack accepts
-as closing the flow.
-
-Suggested-by: Florian Westphal <fw@strlen.de>
-Reported-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
-Reported-by: Jianjun Chen <jianjun@tsinghua.edu.cn>
-Signed-off-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_tcp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 61 +++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
-index 91da35e2b0d8d..456721e40ed0c 100644
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -1325,8 +1325,9 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
- 	if (ct->proto.tcp.retrans >= tn->tcp_max_retrans &&
- 	    timeouts[new_state] > timeouts[TCP_CONNTRACK_RETRANS])
- 		timeout = timeouts[TCP_CONNTRACK_RETRANS];
--	else if (unlikely(index == TCP_RST_SET))
--		timeout = timeouts[TCP_CONNTRACK_CLOSE];
-+	else if (unlikely(index == TCP_RST_SET &&
-+			  new_state == TCP_CONNTRACK_ESTABLISHED))
-+		timeout = timeouts[TCP_CONNTRACK_UNACK];
- 	else if ((ct->proto.tcp.seen[0].flags | ct->proto.tcp.seen[1].flags) &
- 		 IP_CT_TCP_FLAG_DATA_UNACKNOWLEDGED &&
- 		 timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK])
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+index f6a1e684a3864..430cabf3dc07b 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+@@ -25,6 +25,7 @@
+ #define NPCM8XX_GCR_SRCNT	0x068
+ #define NPCM8XX_GCR_FLOCKR1	0x074
+ #define NPCM8XX_GCR_DSCNT	0x078
++#define NPCM8XX_GCR_INTCR4	0x0c0
+ #define NPCM8XX_GCR_I2CSEGSEL	0x0e0
+ #define NPCM8XX_GCR_MFSEL1	0x260
+ #define NPCM8XX_GCR_MFSEL2	0x264
+@@ -77,6 +78,9 @@
+ #define NPCM8XX_GPIO_PER_BANK	32
+ #define NPCM8XX_GPIO_BANK_NUM	8
+ #define NPCM8XX_GCR_NONE	0
++#define NPCM8XX_INTCR4_R1_RMII_EN	BIT(12)
++#define NPCM8XX_INTCR4_R2_RMII_EN	BIT(13)
++#define NPCM8XX_INTCR4_RMII3_EN	BIT(14)
+ 
+ #define NPCM8XX_DEBOUNCE_MAX		4
+ #define NPCM8XX_DEBOUNCE_NSEC		40
+@@ -1816,6 +1820,61 @@ static const struct pinctrl_pin_desc npcm8xx_pins[] = {
+ 	PINCTRL_PIN(251, "JM2/CP1_GPIO"),
+ 	};
+ 
++static u32 npcm8xx_rmii_output_enable_mask(unsigned int pin)
++{
++	switch (pin) {
++	case 178:
++	case 179:
++	case 180:
++	case 181:
++	case 182:
++	case 193:
++	case 201:
++		return NPCM8XX_INTCR4_R1_RMII_EN;
++	case 84:
++	case 85:
++	case 86:
++	case 87:
++	case 88:
++	case 89:
++	case 200:
++		return NPCM8XX_INTCR4_R2_RMII_EN;
++	case 110:
++	case 111:
++	case 209:
++	case 210:
++	case 211:
++	case 214:
++	case 215:
++		return NPCM8XX_INTCR4_RMII3_EN;
++	default:
++		return 0;
++	}
++}
++
++static void npcm8xx_set_rmii_output_enable(struct regmap *gcr_regmap,
++					   const unsigned int *pin,
++					   int pin_number, int mode)
++{
++	u32 mask = 0;
++	u32 val = 0;
++	u32 bit;
++	int i;
++
++	for (i = 0; i < pin_number; i++) {
++		bit = npcm8xx_rmii_output_enable_mask(pin[i]);
++		mask |= bit;
++
++		if ((mode == fn_r1 && bit == NPCM8XX_INTCR4_R1_RMII_EN) ||
++		    (mode == fn_r2 && bit == NPCM8XX_INTCR4_R2_RMII_EN) ||
++		    (mode == fn_rmii3 && bit == NPCM8XX_INTCR4_RMII3_EN))
++			val |= bit;
++	}
++
++	if (mask)
++		regmap_update_bits(gcr_regmap, NPCM8XX_GCR_INTCR4, mask, val);
++}
++
+ /* Enable mode in pin group */
+ static void npcm8xx_setfunc(struct regmap *gcr_regmap, const unsigned int *pin,
+ 			    int pin_number, int mode)
+@@ -1854,6 +1913,8 @@ static void npcm8xx_setfunc(struct regmap *gcr_regmap, const unsigned int *pin,
+ 						   BIT(cfg->bit4) : 0);
+ 		}
+ 	}
++
++	npcm8xx_set_rmii_output_enable(gcr_regmap, pin, pin_number, mode);
+ }
+ 
+ static int npcm8xx_get_slew_rate(struct npcm8xx_gpio *bank,
 -- 
 2.53.0
 
