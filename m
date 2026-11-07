@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061769;
-	b=L5xmX1s4xMRNhTzx1IP5feDfMFdLdt3MtNrxTV/YvzCGafGUxSU21jD3lMaCzGzV+qNx
-	 rXDkQbtQ8hCaQE8uXQsdQkEU6ei0CEdapZmKGwHQdR1ASUQFGjZRYKjPSP6lxETmczgTe
-	 6gw0EPg/JXKcqwPqIdOFNKb0GDDMCVLyPbruWppLhM7/ZtS3L1pKStb0Xo28fJLJxBl/e
-	 M/p6blES52uww0VUSWgy4rJcchwbKAMHqNGfGh0BAAga+o5uXxbNq0OWDDc4F8J1bZsCU
-	 Uqk0bMbFPWWcKeU0WniYyD3r9OY4fWChiM80OXe9Efisb6TNqtQVRSP8XPtBvivDfnw==
+	t=1794061770;
+	b=yaVsawPMHmwqbVoN7BJ+inKj0oN1z5bPaOTM+5MRqmiZkJfWuCRatDfgb26pqurrmt0K
+	 FvwXyurH9o7ilT+jCxPOxa5BX3pvDZ8tszp2tz65jRlBPEIFQNXm8k3vLrhKfe9f8zTk0
+	 5DEpAskqHbPHQI3kDb8XKDS/LerGc3psfVuCqvseIlVS1ptv+3ulclFMJg982+/pXk8qd
+	 grIAlMfyZXUQXKcjX9eavNheWwsPvlujri6motvC/kAea/rDmeMiqI6VcGWVOth40EMM+
+	 6JOr+Ihs4yGjMSw9igceBFt27fYZuB9zI4wRlU1T9tig8BKBheqQuDNnWVZH/+cp0dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061769;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061770;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GGkyv4CpqGMhqWQDf7xMTU9+nH8GNdg6oBJrFko1eyA=;
-	b=xwNxQh/HnXnKY98fzX+h+cHSKpCT+izBYJwkWiusQanqKmY62Rl0MgjHsndVLLNFT5pR
-	 q0wZwqrf7+ZrC4O3COTWd5LudLAlYajN5x40sYEYgfSamQK9b+6l/koMe5iHrEnLI3D6j
-	 ZYRW0tA6iH9vxVLllOyWTMK6iD7Hs1YOOO1zYiw9MP6NtGweWlUpg/580CgGyWVxWOlIo
-	 HJPUyon00+pay+JCCCNdZEOvrhytJR4A2PjegiFzHspViQbZ3+dqGEzuBzr/dswVmX+yX
-	 zDDgEPlODSEYYBRWQsEz8dEhsLRJTrtVxYjWP6ncFnBHRAOjgnS9VmBCMyV7wC7TDEA==
+	bh=3Gcm99wKy2MrLD4xYuNuxbRLTjvO4HtROfTBxuPkaYA=;
+	b=5QvAZ1vA1ixTZTYz+tSRMsOCN78biPVVZg/068g2rPjpgQ9i3zVW4XoTv40K1P9wTjkK
+	 bOkXkqaNQ7SOhQb5YzbPW4Yp1alARYWF7md+97JlqeeDerHF+Ck/7F5yvOAtMqZhK1i9e
+	 vOyqBOtbN2D4w544h3qM8mnJpGKf52Cq2yDzBP/ssdpgbny/TenKB323DE796Qa7N6CDM
+	 Ngxb3E9JMcIkPXzNhjnT9zwHTj2H8lfoLc+6p6UB0dy0yabLfJPpAynmn130Qhd7xFPsD
+	 zkppl1hlz6f67e4k/kzmr4Vw1szvGSZuee6FsPlMig4xRYuLEYafNcyg5EE10quPx0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pnnTqUSV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDYSVIKF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289AA606A330;
-	Sat,  7 Nov 2026 14:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70005606A32D;
+	Sat,  7 Nov 2026 14:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pnnTqUSV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50B31F008A1;
-	Sat,  7 Nov 2026 14:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDYSVIKF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5861F0089F;
+	Sat,  7 Nov 2026 14:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061769;
-	bh=GGkyv4CpqGMhqWQDf7xMTU9+nH8GNdg6oBJrFko1eyA=;
+	s=korg; t=1794061770;
+	bh=3Gcm99wKy2MrLD4xYuNuxbRLTjvO4HtROfTBxuPkaYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pnnTqUSVlXsvS/FO7aByM+fHiGxtuLaaDgKLNGVHGKic6cMZiIYkLArP/IvOXVGwB
-	 b6UL+FHquoSM1SfAI5zSRSvmRZgSRWCFk1MTVg4K2Q6r892M7tTIvm+kb2i/5AGSP8
-	 TjKa8tVPoPAKXqC41rRol69DAz+JGp/EwxdMCy+E=
+	b=zDYSVIKFDPNWLUY8ko73sElHKvf3uHv+MAajzexJ3oyJ0sFYFVcsshdA9DX+Xz5tV
+	 cJUqzog+kFyEwPPpzWe0EeN/aaxXP0sprge4Ep/NCdjTooLxp8ctig2McMTsorx4gL
+	 Tpno0aNY3dLUAWZuK5LPl+/Z19vIt8+tqaOFxQMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 0803/1536] KVM: x86: Zero reserved synic flags when delivering message to avoid stack leak
-Date: Sat,  7 Nov 2026 08:46:59 -0500
-Message-ID: <20261107135020.099559268@linuxfoundation.org>
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.12 0804/1536] KVM: PPC: Book3S HV: Add preempt_disable() around virtual-mode HPTE bit-lock users
+Date: Sat,  7 Nov 2026 08:47:00 -0500
+Message-ID: <20261107135020.128063635@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,43 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-commit 2616f497506a772db53e7bb1024cde50b4c165e0 upstream.
+commit abbbe5ff83e7c9ed3a4d61b73011f1df7bf87907 upstream.
 
-Ensure all reserved flags are zeroed when setting the msg_pending flag as
-part of SynIC message delivery, as setting only msg_pending can leak seven
-bits of kernel stack data to the guest.  E.g. gcc typically uses a
-bitwise-OR to set the msg_pending flag, without initializing the on-stack
-variable.
+kvmppc_hv_find_lock_hpte() requires virtual-mode callers to run with
+preemption disabled, because it can return with HPTE_V_HVLOCK still held
+until the caller later unlocks the HPTE.  Existing virtual-mode callers
+in book3s_64_mmu_hv.c already follow that rule.
 
-Precisely zero the flags, e.g. as opposed to zeroing the entire structure,
-to make it somewhat more obvious that the flags *need* to be zeroed.  E.g.
-it would be quite easy to misread the initial read of guest memory and
-think that zeroing the entire structure is completely superfluous.
+Two virtual-mode call paths do not:
 
-Fixes: 3a0e7731724f ("x86: kvm: hyperv: simplify SynIC message delivery")
-Cc: stable@vger.kernel.org
-Reported-by: Stefan Teodorescu <fane@google.com>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://patch.msgid.link/20260826184449.814130-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+1. kvmppc_handle_exit_hv() calls kvmppc_hpte_hv_fault() for hash-mode
+   data-side and instruction-side faults after guest exit, with
+   preemption already enabled.  kvmppc_hpte_hv_fault() calls
+   kvmppc_hv_find_lock_hpte() directly.
+
+2. kvmppc_pseries_do_hcall() executes virtual-mode handlers for HPT
+   hcalls via kvmppc_pseries_do_hpt_hcall() with preemption enabled.
+   The handlers for H_ENTER, H_REMOVE, H_READ, H_CLEAR_MOD, H_CLEAR_REF,
+   H_PROTECT, and H_BULK_REMOVE spin on try_lock_hpte() or lock_rmap(),
+   and H_ENTER also reaches kvmppc_do_h_enter(), which uses
+   arch_spin_lock() on kvm->mmu_lock.  That raw lock choice is
+   intentional because kvmppc_do_h_enter() is also used by real-mode
+   callers, so the correct fix is to establish the proper preemption
+   context at the virtual-mode caller boundary.
+
+If a vCPU thread is preempted while holding HPTE_V_HVLOCK, any other
+thread on the same CPU trying to acquire the same bit-lock can spin
+indefinitely.  The same applies to lock_rmap() users and to the H_ENTER
+path while holding the raw mmu_lock.
+
+Fix this by adding preempt_disable()/preempt_enable() pairs around the
+two kvmppc_hpte_hv_fault() call sites in kvmppc_handle_exit_hv(), and
+around the kvmppc_pseries_do_hpt_hcall() invocation in
+kvmppc_pseries_do_hcall().  Targeting only the HPT hcall helper avoids
+wrapping non-HPT hcalls (such as H_RTAS, H_CONFER, H_REGISTER_VPA) that
+perform page faults, blocking memory allocations, or context switches.
+
+Fixes: 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual mode handlers for HPT hcalls and page faults")
+Cc: stable@vger.kernel.org # v5.14+
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260928122837.8782-3-amachhiw@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/hyperv.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/kvm/book3s_hv.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/x86/kvm/hyperv.c
-+++ b/arch/x86/kvm/hyperv.c
-@@ -794,7 +794,9 @@ static int synic_deliver_msg(struct kvm_
- 		if (no_retry)
- 			return 0;
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -1192,9 +1192,11 @@ int kvmppc_pseries_do_hcall(struct kvm_v
+ 	case H_CLEAR_REF:
+ 	case H_PROTECT:
+ 	case H_BULK_REMOVE:
++		preempt_disable();
+ 		idx = srcu_read_lock(&kvm->srcu);
+ 		ret = kvmppc_pseries_do_hpt_hcall(vcpu, req);
+ 		srcu_read_unlock(&kvm->srcu, idx);
++		preempt_enable();
+ 		if (ret == H_TOO_HARD)
+ 			return RESUME_HOST;
+ 		break;
+@@ -1814,8 +1816,10 @@ static int kvmppc_handle_exit_hv(struct
+ 		else
+ 			vsid = vcpu->arch.fault_gpa;
  
-+		hv_hdr.message_flags.asu8 = 0;
- 		hv_hdr.message_flags.msg_pending = 1;
-+
- 		r = kvm_vcpu_write_guest_page(vcpu, msg_page_gfn,
- 					      &hv_hdr.message_flags,
- 					      msg_off +
++		preempt_disable();
+ 		err = kvmppc_hpte_hv_fault(vcpu, vcpu->arch.fault_dar,
+ 				vsid, vcpu->arch.fault_dsisr, true);
++		preempt_enable();
+ 		if (err == 0) {
+ 			r = RESUME_GUEST;
+ 		} else if (err == -1 || err == -2) {
+@@ -1861,8 +1865,10 @@ static int kvmppc_handle_exit_hv(struct
+ 		else
+ 			vsid = vcpu->arch.fault_gpa;
+ 
++		preempt_disable();
+ 		err = kvmppc_hpte_hv_fault(vcpu, vcpu->arch.fault_dar,
+ 				vsid, vcpu->arch.fault_dsisr, false);
++		preempt_enable();
+ 		if (err == 0) {
+ 			r = RESUME_GUEST;
+ 		} else if (err == -1) {
 
 
