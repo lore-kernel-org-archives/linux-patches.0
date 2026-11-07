@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062522;
-	b=heB9T2AjcOmLHu7HtVL2OjKKIWk+WZqnvQ+93gFkJdDDMii2aPoGmHdCr9mF6gNPOMB4
-	 HcdW9c3kH9Tx2QVIkBRB72d5waqUdS2xNQfBzL/Rk0DthKF8uXw/llkw29KZdTLYK14AE
-	 aDRJWf8XijLF9+zd2zIpxYbyGYTMBMXACHlDBocYcDv38EmfCThVKBpaDWKQVxahJNC0x
-	 SMdND2tvK9BimDOzG1cjjBhUPN/26L24XHS1DVHradW+vPjwuHdn+Y89Xg+aCFRa8jtMw
-	 1dfd4gvxWyYHnlMiMS3eO91oFMpBEwXHDe7BKz/uVnjf14kwbhYlrx6c1Km3vRlXEFA==
+	t=1794062523;
+	b=RQfLgn0H0d1Z19V7Rj3zj4Xkn5H+Iciel41/X3gGoced475GbxEP3VPLj9uDcuWW4KQ2
+	 0t3sXsGL+DaKJEOhr3gInC1K9DqZ1eAC8iIesPTggRH059boTMFirJ5cQH27a2x21jNRl
+	 jZQ2BUl6s3HDy9XpAsYOlngNVC9BRyhO1Vg6lQOekmsApKMrQGeT139Qer7xlqxHfF1nA
+	 wrZ9Csp4v/Be0t11/zsnHxnvJWv53MwH8vz354dBxss9hff4Kwjgj+T8THminTrKRCv7M
+	 ymNcEpJjRVrfow8UqYMEYq5ZkiAaSpA1t6uaWlBF6hQRTgb20f1Ba6QGM9/Fro7hGSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062523;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dcu4GUxC2Cny2QZ2c+Ju4c0B4yJiulTAZsxxtoQ/WHE=;
-	b=GutE/Hz6XutukKD1SrMlhpbYhwPBZ2OdHvetnf9UMba3TZdqbjJIXXZTla+iQ1b3Hehp
-	 THu8DWuPw8a2sNpwOGWLqHBBekHvgQvijut8mf2V41gu7OrTFZdou0bo9Dwquc5VSCYEx
-	 xzcbd96ru+tkL/9SC3QvMblGSKshMyGW+yQ6NpjeLYchui/Z+VwXZGjEXkjufsXieuEar
-	 2HWccgFTkEQ09IUHIBmNKoKWB+Zhjc+7qhMw0wJR/58vfW7cdje8PdiMAJ7dHwhQZ0hC5
-	 TqLGr/srX2LO/Ayu/VKa8XqotNbbYVRZYDZe3v/cTfl/YFvzmagVISJAW0ZCZG4Dm9w==
+	bh=ADCOOl4KleEm/VZSZ0GMwLItK1mBw1tj2i+GHyzJCIk=;
+	b=Jw52Aeaodpbq/aKdV62pqRD95DIA3BCfRXptRejpPliRfwDffw/1CG7GB5CDJACNmQtu
+	 MKG2ge25qelHvG3rv04kWpFUmMfJanhfzsksts7JHD10D+Twp5VcZxaU89J1WZf+7QSVi
+	 wNhDmDe1FfnazzYk+8ydHPHVnKyrRbxB88tqBwxZUlpc27aQ9sn1P2ozBlfFjsHJS8jWc
+	 3gct9wmdggijC9k/v+D/ntmO+AfyRcCmXl4aiolB1tE97amiNzUpAPw6x3OkJFvZ42THz
+	 An4ctwUlWnO8kI84tz6I7ZB2R2wzkqtYFYmMsxqCxWFoTnrv0h4ew7CMH+73ckItTgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xPd8EfLD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc8JLeXl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01497606D836;
-	Sat,  7 Nov 2026 14:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE3E60A382D;
+	Sat,  7 Nov 2026 14:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xPd8EfLD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B218E1F008A2;
-	Sat,  7 Nov 2026 14:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc8JLeXl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD531F008A2;
+	Sat,  7 Nov 2026 14:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062521;
-	bh=dcu4GUxC2Cny2QZ2c+Ju4c0B4yJiulTAZsxxtoQ/WHE=;
+	s=korg; t=1794062523;
+	bh=ADCOOl4KleEm/VZSZ0GMwLItK1mBw1tj2i+GHyzJCIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xPd8EfLD6pSQ8YOLZvApo9QbpTD4bOQIib6bj6mAWFWLDwbyY4S1s8z+4Fown24/P
-	 tK+N8+YYIDPYFw7jmsb1TTjQipauCgV0grbv1u3lvK1QACkL0xdQhQOFEO22OeskWU
-	 u2t6/mJCGngN1NdIkDD9PsCc6P0iQnafibl9ygeY=
+	b=sc8JLeXlhUsLX4SK2Yp9uA4KI3qIG/C3r7bnp6N4+2CJq6bbV+XqitRARjqA0SInD
+	 M9aZVdK+2jUQ8VR0ymJnhzFO7IPTTLfOOCUiQUinl2i0Aof77DgN7Rug/8rmICtqY1
+	 8mtkYW9H+IxNZjVV7PCFwDw5fHnmSMp3GWAWZz9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
+	Navon John Lukose <navonjohnlukose@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1416/1536] i2c: acpi: Fix adapter reference leak in i2c_acpi_new_device_by_fwnode()
-Date: Sat,  7 Nov 2026 08:57:12 -0500
-Message-ID: <20261107135037.598632142@linuxfoundation.org>
+Subject: [PATCH 6.12 1417/1536] i2c: designware: queue only one read command for block reads
+Date: Sat,  7 Nov 2026 08:57:13 -0500
+Message-ID: <20261107135037.627683123@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,76 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Navon John Lukose <navonjohnlukose@gmail.com>
 
-[ Upstream commit a65917d0a22f9b10694853b725f9cd399fc3ef4d ]
+[ Upstream commit 73dae605cad7921800677d982bfaeb81cc930dec ]
 
-i2c_acpi_new_device_by_fwnode() obtains an i2c_adapter through
-i2c_acpi_find_adapter_by_handle(). That helper uses bus_find_device()
-internally, so it returns the adapter with a reference held:
+i2c_dw_xfer_msg() pre-queues up to rx_fifo_depth read commands based
+on the initial msg.len. For I2C_M_RECV_LEN transfers the real length
+is unknown until the first byte arrives and i2c_dw_recv_len() runs.
+When a large initial length is passed, the surplus pre-queued reads
+leave rx_outstanding non-zero after i2c_dw_recv_len() adjusts
+msg.len, so the completion condition is never met and the transfer
+times out. In a loop, this repeatedly times out the controller and
+disrupts unrelated driver-bound devices on the same adapter.
 
-        adapter = i2c_verify_adapter(dev);
-        if (!adapter)
-                put_device(dev);
+Queue only one read command while I2C_M_RECV_LEN is pending.
+i2c_dw_recv_len() re-enables TX_EMPTY, and the rest are queued once
+the device-reported length is known.
 
-        return adapter;
-
-The reference is only put on the failure path inside that helper. The
-caller owns it otherwise. i2c_acpi_new_device_by_fwnode() never drops
-it, neither on the -EPROBE_DEFER path nor after
-i2c_new_client_device(), so every call leaks one reference on the
-adapter and the adapter can never be released.
-
-i2c_new_client_device() does not consume that reference. It registers
-the new client with the adapter as its parent, and device_add() takes
-its own reference on the parent, which device_del() releases when the
-client goes away.  The reference obtained by the lookup is a separate
-one and has to be dropped here.
-
-i2c_acpi_notify() in the same file already does exactly this. It takes
-the adapter from the same helper, registers the client through
-i2c_acpi_register_device(), which calls i2c_new_client_device(), and
-then puts the reference.
-
-i2c_new_client_device() gives the client its own reference on the
-adapter, so ours can be dropped unconditionally.
-
-Found by code review.
-
-Fixes: 605f8fc22442 ("i2c: core: Add new i2c_acpi_new_device helper function")
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Cc: <stable@vger.kernel.org> # v4.12+
+Fixes: c3ae106050b9 ("i2c: designware: Implement support for SMBus block read and write")
+Signed-off-by: Navon John Lukose <navonjohnlukose@gmail.com>
+Cc: <stable@vger.kernel.org> # v4.10+
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20261012013421.3597430-1-make_ruc2021@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-acpi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-designware-master.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index b74f41b9515ae..731808ea5c3e7 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -545,6 +545,7 @@ struct i2c_client *i2c_acpi_new_device_by_fwnode(struct fwnode_handle *fwnode,
- {
- 	struct i2c_acpi_lookup lookup;
- 	struct i2c_adapter *adapter;
-+	struct i2c_client *client;
- 	struct acpi_device *adev;
- 	LIST_HEAD(resource_list);
- 	int ret;
-@@ -572,7 +573,10 @@ struct i2c_client *i2c_acpi_new_device_by_fwnode(struct fwnode_handle *fwnode,
- 	if (!adapter)
- 		return ERR_PTR(-EPROBE_DEFER);
+diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
+index 196bb073c6bcc..b2e916ebb5a77 100644
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -495,6 +495,14 @@ i2c_dw_xfer_msg(struct dw_i2c_dev *dev)
+ 				if (dev->rx_outstanding >= dev->rx_fifo_depth)
+ 					break;
  
--	return i2c_new_client_device(adapter, info);
-+	client = i2c_new_client_device(adapter, info);
-+	put_device(&adapter->dev);
++				/*
++				 * For block reads, queue only the length
++				 * byte until i2c_dw_recv_len() runs.
++				 */
++				if ((flags & I2C_M_RECV_LEN) &&
++				    buf_len < msgs[dev->msg_write_idx].len)
++					break;
 +
-+	return client;
- }
- EXPORT_SYMBOL_GPL(i2c_acpi_new_device_by_fwnode);
- 
+ 				regmap_write(dev->map, DW_IC_DATA_CMD,
+ 					     cmd | 0x100);
+ 				rx_limit--;
 -- 
 2.53.0
 
