@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065296;
-	b=E5Y0EB1CPX4HlRbSKD89VP/EtfaID3hKURt4ekxtcr+YOtfm8pxqWGSgZn9nj8ZJiIgm
-	 S7fCU616oqnJ+jYxnyOrlJ0wVGfuwe/PhAV+cm8y4zCsouicwJuPXUmtl9pgq1MmcJ1H4
-	 xstwobNfN5NlOt9ryjFdXxC55JY2CQZ4Tf0ZVODFDxDUPNTJzfz4mTw0esMsTQuMmt/sC
-	 /3SS2/6UvxEihRcNKAh2S1qi95rsZERKGiwj/P1s/q6ht3vENaV76ZyfDx2r12Z9RM0X/
-	 G8jOdGhXh6DOjzOCFU9fl4zmqLfroKGmmtHd3wqTXMjgHnB9Y9Tz48mOPPfWNegnsIw==
+	t=1794065298;
+	b=N3vgn7QGGIPlD9RH1TVm0ibpbUWnJTbCM/6t80F5zvmCO3C3tb5tqeq21akfJPRU9Np1
+	 ei2C+/isqEhWduuJXtFyXpM/dBTCHKWyCFUNKPWjDYe6h/LlS9pXLrf3N2qJbvNJG0Zxc
+	 ZhFfAS0leGgEsxzGHJ/nqd5KVCghJsrL5GcacFw8wObOsOFxAstoevYdTrK5xhDI1OYB9
+	 fAKCPuR+pQhQ2aRXHNxny4YaILwbjVkaV/i6M6qMRsX0z2foAl5b+TFbKMmOLb7YsAlnD
+	 XUWQshljnytgtQVrpBbTXb+rdYbs33zNMf6Dsujz73L2gBAeG1SEN2ulNhc4VJBVhwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065296;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065298;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pBblZpsUMlywdtkJVkSb4OrSpMInCOHJABx2h2t5of4=;
-	b=4X4k8+co5c1kOSrQg9h7uztmwfKbaZpeS9/e3L0fRpAscShA0xpi5b6QOauUOZtv3UnQ
-	 gYEEbDncxWHWHgl0Q3yal4xIVZmyiyQCykkw1OcW/EHX3SAU/Oeq7TcU1kMw8upOFjANR
-	 CVC1gpeTkVrfuCEXS26B5iVCNFmr0ezy2/LMN5X01c+k5b5V8AII4ixBTXsslRJnrbREm
-	 MKVCdRSEzTCBTpGvRo7HOPV1BiL1IfqHBevcfxNmJqG1TqIN80e02ath3jtWjhgsY3bre
-	 SVmulkAdti3xw7zVHKed9zAmXqjXAlEAThzhnk4WBF8P4PHZj0q3/0QIhGivvvr4KRw==
+	bh=bb7iGW8GH6ic1GMnvTcE3/fAt1gBiln3dBAPHKI+j/g=;
+	b=WwD99zahQoqhWHanJMJ2wg6r5NQ71f5jhfXX4me0IiDwi0qb3/F2O9gMhXwaj3qJr26g
+	 tJumPAC2Pb222Kb+BoYn8Rqn9sL/qzDOn/S/gJb1/2vdfKC53lCSzU+pdT8mPIeN7lKk7
+	 cv19o4iX5wRolo5YlfUdepDMZbptcxmW+YCOIfMkGhjhYIaS6H8Np2V35+o90znprOCcu
+	 INi2f31M2nMzVxlGyoUST4Oaya6WTHACgpJZ3s5gjSAGTzwo6QszPlAw5fKXW9RwKIHLB
+	 Cp+kXwxH9nzKxNG2dvqOP76yoG7c1N6PXBJyCpDRK82aFQ1amuARPZspF0a7epBStBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="GUG/svJc";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1g1CQHQC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC71606A326;
-	Sat,  7 Nov 2026 15:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAAD606A326;
+	Sat,  7 Nov 2026 15:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GUG/svJc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027B01F0089F;
-	Sat,  7 Nov 2026 15:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1g1CQHQC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2E91F0089F;
+	Sat,  7 Nov 2026 15:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065296;
-	bh=pBblZpsUMlywdtkJVkSb4OrSpMInCOHJABx2h2t5of4=;
+	s=korg; t=1794065297;
+	bh=bb7iGW8GH6ic1GMnvTcE3/fAt1gBiln3dBAPHKI+j/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GUG/svJce3hSqQiE7R0dNSFSbzFz6m92CIocneWiE0n3duedOgJEpfjVfdANA70CF
-	 Lg6/R46HBZe/Ub3lnmXdvUXEPsdeID/mfrsi9npWGOOZCquiFPeyXmZPKufGgZfxAr
-	 +RGyZr+HE9RXiJIF+VYVrkV6T0trJj3MVXwY8GoY=
+	b=1g1CQHQCJQvK1MgLeLyC2m7TmoroX8bkaaEu6AzgsTEzHXHo77k34uyobrDyGzsqp
+	 ujJR3roI9WuEoFzk6YjFZ2bZza3uQOZGxWxAmSVBHc8YNo+0tUqLSTAyQOC87wfb42
+	 wy3UzjhSUB2OY7F+Lm7BSn3gOtqUIr+k/wNvHZeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bean Huo <beanhuo@micron.com>,
-	Stanley Jhu <stanleyjhu@google.com>,
+	Joonhoe Kim <26rote@gmail.com>,
 	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1052/1257] scsi: ufs: core: Clear stale UIC result byte before peer DME retries
-Date: Sat,  7 Nov 2026 08:55:48 -0500
-Message-ID: <20261107135008.349336541@linuxfoundation.org>
+Subject: [PATCH 7.3 1053/1257] scsi: ufs: core: Fix a deadlock between clock scaling and device commands
+Date: Sat,  7 Nov 2026 08:55:49 -0500
+Message-ID: <20261107135008.376554927@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,67 +69,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Jhu <stanleyjhu@google.com>
+From: Joonhoe Kim <26rote@gmail.com>
 
-[ Upstream commit e4a9b7640914b248eb7537d4507aa42db080586a ]
+[ Upstream commit 2327df6d2a290af62a6da21b2ad301848bb86002 ]
 
-Peer DME get and set retry a failed attempt with the same struct
-uic_command. UIC completion ORs the ConfigResultCode into argument2[7:0],
-and nothing clears it before the next attempt. Once an attempt fails, every
-retry keeps reporting that error code, even when the device returns
-success, so a transient failure becomes a hard failure after three
-retries. Each such retry also triggers the WARN_ON_ONCE() in
-ufshcd_dispatch_uic_cmd(). In ufshcd_dme_set_attr(), ufshcd_uic_cmd_compl()
-also overwrites argument3 with the register readback before the next
-attempt.
+Since commit 08b12cda6c44 ("scsi: ufs: core: Switch to
+scsi_get_internal_cmd()"), device management commands go through
+blk_execute_rq() on the pseudo SCSI device, which shares the tagset with
+the logical units, while ufshcd_dev_man_lock() holds clk_scaling_lock for
+reading.
 
-Clear the result byte and restore argument3 in ufshcd_dme_set_attr() when
-an attempt fails.
+ufshcd_clock_scaling_prepare() and ufshcd_pause_command_processing()
+quiesce the tagset before taking clk_scaling_lock for writing. A device
+management command holding the lock for reading at that point is never
+dispatched and never times out, so the writer waits forever with all
+logical units quiesced. On a Lenovo Legion Tab Y700 Gen 5 this ended in a
+hung task panic.
 
-Fixes: 64238fbd15ea ("scsi: ufs: add retries to dme_peer get and set attribute")
+Take clk_scaling_lock before quiescing the tagset, and in
+ufshcd_clock_scaling_prepare() also wb_mutex, which is always taken before
+clk_scaling_lock. Release them in the reverse order. Commit b52d695d0620
+("scsi: ufs: core: Keep internal commands dispatchable during error
+handling") fixed the same problem in the error handler.
+
+Fixes: 08b12cda6c44 ("scsi: ufs: core: Switch to scsi_get_internal_cmd()")
+Fixes: dc5dcac53278 ("scsi: ufs: core: Add helpers to pause and resume command processing")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Signed-off-by: Joonhoe Kim <26rote@gmail.com>
 Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261015001855.3450573-6-stanleyjhu@google.com
+Link: https://patch.msgid.link/20261016124608.46-1-26rote@gmail.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufshcd.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index ca8329052cbc5..6f92e5b4cc832 100644
+index 6f92e5b4cc832..025a16c50ffe6 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -4359,9 +4359,12 @@ int ufshcd_dme_set_attr(struct ufs_hba *hba, u32 attr_sel,
- 	do {
- 		/* for peer attributes we retry upon failure */
- 		ret = ufshcd_send_uic_cmd(hba, &uic_cmd);
--		if (ret)
-+		if (ret) {
- 			dev_dbg(hba->dev, "%s: attr-id 0x%x val 0x%x error code %d\n",
- 				set, UIC_GET_ATTR_ID(attr_sel), mib_val, ret);
-+			uic_cmd.argument2 &= ~MASK_UIC_COMMAND_RESULT;
-+			uic_cmd.argument3 = mib_val;
-+		}
- 	} while (ret && peer && --retries);
+@@ -1360,13 +1360,13 @@ int ufshcd_pause_command_processing(struct ufs_hba *hba, u64 timeout_us)
+ 	int ret = 0;
  
- 	if (ret)
-@@ -4426,9 +4429,11 @@ int ufshcd_dme_get_attr(struct ufs_hba *hba, u32 attr_sel,
- 	do {
- 		/* for peer attributes we retry upon failure */
- 		ret = ufshcd_send_uic_cmd(hba, &uic_cmd);
--		if (ret)
-+		if (ret) {
- 			dev_dbg(hba->dev, "%s: attr-id 0x%x error code %d\n",
- 				get, UIC_GET_ATTR_ID(attr_sel), ret);
-+			uic_cmd.argument2 &= ~MASK_UIC_COMMAND_RESULT;
-+		}
- 	} while (ret && peer && --retries);
+ 	mutex_lock(&hba->host->scan_mutex);
+-	blk_mq_quiesce_tagset(&hba->host->tag_set);
+ 	down_write(&hba->clk_scaling_lock);
++	blk_mq_quiesce_tagset(&hba->host->tag_set);
  
- 	if (ret)
+ 	if (ufshcd_wait_for_pending_cmds(hba, timeout_us)) {
+ 		ret = -EBUSY;
+-		up_write(&hba->clk_scaling_lock);
+ 		blk_mq_unquiesce_tagset(&hba->host->tag_set);
++		up_write(&hba->clk_scaling_lock);
+ 		mutex_unlock(&hba->host->scan_mutex);
+ 	}
+ 
+@@ -1383,8 +1383,8 @@ void ufshcd_resume_command_processing(struct ufs_hba *hba)
+ 	__releases(&hba->clk_scaling_lock)
+ 	__releases(&hba->host->scan_mutex)
+ {
+-	up_write(&hba->clk_scaling_lock);
+ 	blk_mq_unquiesce_tagset(&hba->host->tag_set);
++	up_write(&hba->clk_scaling_lock);
+ 	mutex_unlock(&hba->host->scan_mutex);
+ }
+ 
+@@ -1461,16 +1461,16 @@ static int ufshcd_clock_scaling_prepare(struct ufs_hba *hba, u64 timeout_us)
+ 	 * clock scaling is in progress
+ 	 */
+ 	mutex_lock(&hba->host->scan_mutex);
+-	blk_mq_quiesce_tagset(&hba->host->tag_set);
+ 	mutex_lock(&hba->wb_mutex);
+ 	down_write(&hba->clk_scaling_lock);
++	blk_mq_quiesce_tagset(&hba->host->tag_set);
+ 
+ 	if (!hba->clk_scaling.is_allowed ||
+ 	    ufshcd_wait_for_pending_cmds(hba, timeout_us)) {
+ 		ret = -EBUSY;
++		blk_mq_unquiesce_tagset(&hba->host->tag_set);
+ 		up_write(&hba->clk_scaling_lock);
+ 		mutex_unlock(&hba->wb_mutex);
+-		blk_mq_unquiesce_tagset(&hba->host->tag_set);
+ 		mutex_unlock(&hba->host->scan_mutex);
+ 		goto out;
+ 	}
+@@ -1487,9 +1487,9 @@ static void ufshcd_clock_scaling_unprepare(struct ufs_hba *hba, int err)
+ 	__releases(&hba->wb_mutex)
+ 	__releases(&hba->host->scan_mutex)
+ {
++	blk_mq_unquiesce_tagset(&hba->host->tag_set);
+ 	up_write(&hba->clk_scaling_lock);
+ 	mutex_unlock(&hba->wb_mutex);
+-	blk_mq_unquiesce_tagset(&hba->host->tag_set);
+ 	mutex_unlock(&hba->host->scan_mutex);
+ 
+ 	/* Enable Write Booster if current gear requires it else disable it */
 -- 
 2.53.0
 
