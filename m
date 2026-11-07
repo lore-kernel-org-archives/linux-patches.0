@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064731;
-	b=lcMz8rj+8QgGXpXQenmXLpNCMZRr/X+e6PSy17EzUfv4w34aF0NUDT4TQYkz4wKnuGWh
-	 Vg35xLngDUfKc7nrzB43BC6WIjjeS2MV6UZfC1b9iR3G4H8rwrtOXPG1hN7efe2ihYeIc
-	 Ej4XKu8gLtNIKt8kVWx0CZ4g6wOHhKU0hNqiQEem72VfUamsHCxPS/c3zZkuXxady+Sit
-	 uRqiZp6Ps9X1F2nIv4QAsZnTeoHKwRb/gHkN1Ns4BsjnExxqz/oe1qQeMEQ6RKU477d5V
-	 df/1K2srjXb9DDuDHVT7lDwksu+MMEvMRBbPR2om/0iHPnkorqXJ7UhsYEyxUA0cgOA==
+	t=1794064732;
+	b=CrJGrDlGmd4x9JIaVSCe2Gm0eudOhB3ee5Obrl0PoYvJXK8eaAUDKkxn99/JklVPWsTH
+	 LdD1XUGFTsC6u/0nsXpVVajDAD8KlsSA0r5ldz2iiruet2n4IokJTsbfjQvJVEfixEWLZ
+	 ImzHETJ0u/g7C0O24PQqE65qINEb3MXo6pooWgEjQ7LWlM1poZ2pA/p7IP1EB+M4KvDPg
+	 AWzZkVVMOWfyoDHXxGapUpzkZGOFjyQDUhUyMbF4EboLyyDMBlOXAwDM1OarAyUugfuz0
+	 lKcfQCtmX48wq+wnl47Q8dPEyyRG3FvSS6gzwxf/zMSHSBxmIFdxmUuH3NEk2llRahQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064731;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064732;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=BU1osPfhF63qk2h4tPzVE3trhYenjbfAHqOnSz0oGtI=;
-	b=ovx3wV0szIWvGbpX9lhj5X/ybCCTGNL4+vRPnhEvvOhIxxXqbZTEy9gAof/KWxXfnpi1
-	 aFydDbWxdJPNGOIiiJiX/39PC683uPC6FyJWGRI7jZLdG31J0606yonOXW6y397CSg1nJ
-	 YyAqVM94BEM8ouyBenHP3mj0lZDzw9/4seqEnSmT/olxLVXkETKZY4ty/1jWcATSRR9s1
-	 Nmj39BOfbuuOZW+rkjn3sl4+i/OOJlPefH7lbITCX6v0Vl43OCU9P+hqCw/bkoFOwSvKN
-	 9R6zYwanTmqNiMGZf4lMpTNlPoFopJXtp1BJq0oNtqoe0gYKzf0YEsKTbYUph+5Zl3w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=cPRIyqLKhWyDkhP/O7MFqu4nUJcFAY+pKC70hfi8SjA=;
+	b=cP7WJKbOBapkY09M5en6LlykJFU9PPWaAA31qofSdDm3OVbFl5zVYMBfi6vs3PZ4P+hi
+	 ul79sefzh27+GuW7vjgIA3/aRIDsssOj8kW+taB8hklHu5mGjI6W3qp4seyMwdapZORZj
+	 YO21PnGGjGfDayr15GkgiXWw2RACyY3xrZswCMJs6TxeZt5bOpz8uEs0mkpvDv33lBn0L
+	 Mz5B0DWRpAvEwWgq0u0249WlTj7eXWsPrzb/6RV6/ux3pp6hLTSYESyFele0cFatJml2G
+	 rTeBrMT880fgp3FQPFWRgDz2kqfc0Umi+YUd/purBh5gzhWVfArZlA5uhGDhYft1tvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq9k6giJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i7zKAoxo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E475C606A9C9;
-	Sat,  7 Nov 2026 15:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8C6606A9C9;
+	Sat,  7 Nov 2026 15:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq9k6giJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 979941F0089F;
-	Sat,  7 Nov 2026 15:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i7zKAoxo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD9A1F008A4;
+	Sat,  7 Nov 2026 15:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064730;
-	bh=BU1osPfhF63qk2h4tPzVE3trhYenjbfAHqOnSz0oGtI=;
+	s=korg; t=1794064732;
+	bh=cPRIyqLKhWyDkhP/O7MFqu4nUJcFAY+pKC70hfi8SjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hq9k6giJxXVQMQjzZu3vSpuQiEzEEdp5WHUM3WDE6LudiCMlmFP6tsumWeW85X4OI
-	 zHEUNlDfdIzsYt/w9m+rHaU8uWSTPBtBn3Hsujx/Yea1lSQzndaKQE8n9WfB/SbM8F
-	 PHgM51Jo7L8GZ/Zs+49ZlDLdF1YXG2yuSBx4t8Fk=
+	b=i7zKAoxoFnDnUDZbq5BoMJE9W242OE6uvHnUUEoVOz/OniiPo7f3hT9RnOVu0wRFp
+	 twzkcs2mJAVXjbqbeW3RyrWGx3ck2+NGItTZcT3FXPDhl9LLHWUXvDxQ3zjI51SAoV
+	 +OePRjAAglW4sNkDTgnn2xRA8FeMvMGAN+MGEUg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Hugo Baigue <hugobaigue2004@gmail.com>,
+	Ponali <ponali2k@gmail.com>,
+	Denis Benato <denis.benato@linux.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0706/1257] iomap: dont lose a failed direct I/O bios error when zeroing the tail
-Date: Sat,  7 Nov 2026 08:50:02 -0500
-Message-ID: <20261107134958.753445717@linuxfoundation.org>
+Subject: [PATCH 7.3 0670/1257] platform/x86: asus-wmi: fix unclear usage of bd->props.power
+Date: Sat,  7 Nov 2026 08:49:26 -0500
+Message-ID: <20261107134957.764215098@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -65,105 +64,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Denis Benato <denis.benato@linux.dev>
 
-[ Upstream commit a9fd24bcbe690ed4a5b8ea6a7516fa297fae9360 ]
+[ Upstream commit fd83d81ddf058d487e6d6489b18094f068e66a59 ]
 
-iomap_dio_bio_iter() falls through to the sub-block tail zeroing when
-the data bio submission fails, so that the rest of the block is still
-zeroed and stale data is not exposed.  The zeroing result was assigned
-to ret, which overwrote the submission error with the successful
-zeroing result (zero) and the failed write was reported as success.
+The bd->props.power is checked in parts of the driver correctly
+comparing with BACKLIGHT_POWER_ON, while in others with a raw usage
+of bd->props.power and !bd->props.power, moreover in certain checks
+the logic has been inverted due to BACKLIGHT_POWER_ON being defined
+as 0: fix both the wrong usage and the inconsistencies by using
+proper comparisons.
 
-iomap_dio_zero() can only return an error from a can't-happen
-WARN_ON_ONCE() (nr_vecs exceeding BIO_MAX_VECS, which the existing
-comment there says "shall never be reached" for any in-tree
-filesystem), so it isn't a real runtime failure worth reporting to
-userspace, let alone one worth losing the actual submission error for.
-Make iomap_dio_zero() return void and drop the error handling at both
-call sites instead of threading the result through a separate
-variable.
-
-Fixes: 10553a91652d ("iomap: fix iomap_dio_zero() for fs bs > system page size")
-Cc: stable@vger.kernel.org # v6.12
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/0cbce1012f5333690be36a9adafb3e190fe2ca77.1790342457.git.parri.andrea@gmail.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 130d29c5627c ("platform/x86: asus-wmi: adjust screenpad power/brightness handling")
+Closes: https://lore.kernel.org/all/178362762638.911488.8564892548331679884@eldamar.lan/
+Closes: https://lore.kernel.org/all/ea9c63d1-4776-49d5-9dc4-6c09498f99c9@linux.dev/
+Tested-by: Hugo Baigue <hugobaigue2004@gmail.com>
+Tested-by: Ponali <ponali2k@gmail.com>
+Cc: stable@vger.kernel.org
+Assisted-by: zcode:glm-5.3-flash
+Signed-off-by: Denis Benato <denis.benato@linux.dev>
+Link: https://patch.msgid.link/20260916143838.170950-2-denis.benato@linux.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/direct-io.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
-index 8b4039d16ce89..7f1e85f95a469 100644
---- a/fs/iomap/direct-io.c
-+++ b/fs/iomap/direct-io.c
-@@ -296,7 +296,7 @@ u32 iomap_finish_ioend_direct(struct iomap_ioend *ioend)
- 	return vec_count;
- }
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index daf8bd17e6380..10c8fcb075b2d 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -4532,7 +4532,8 @@ static int update_screenpad_bl_status(struct backlight_device *bd)
+ 	u32 ctrl_param = bd->props.brightness;
+ 	int err = 0;
  
--static int iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
-+static void iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
- 		loff_t pos, unsigned len)
- {
- 	struct inode *inode = file_inode(dio->iocb->ki_filp);
-@@ -305,14 +305,14 @@ static int iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
- 	int nr_vecs = max(1, i_blocksize(inode) / folio_size(zero_folio));
+-	if (bd->props.power) {
++	switch (bd->props.power) {
++	case BACKLIGHT_POWER_ON:
+ 		err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_POWER, 1, NULL);
+ 		if (err < 0)
+ 			return err;
+@@ -4540,12 +4541,17 @@ static int update_screenpad_bl_status(struct backlight_device *bd)
+ 		err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_LIGHT, ctrl_param, NULL);
+ 		if (err < 0)
+ 			return err;
+-	}
++		break;
  
- 	if (!len)
--		return 0;
-+		return;
- 
- 	/*
- 	 * This limit shall never be reached as most filesystems have a
- 	 * maximum blocksize of 64k.
- 	 */
- 	if (WARN_ON_ONCE(nr_vecs > BIO_MAX_VECS))
--		return -EINVAL;
-+		return;
- 
- 	bio = iomap_dio_alloc_bio(iter, dio, nr_vecs,
- 				  REQ_OP_WRITE | REQ_SYNC | REQ_IDLE);
-@@ -328,8 +328,6 @@ static int iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
- 		len -= io_len;
- 	}
- 	iomap_dio_submit_bio(iter, dio, bio, pos);
--
--	return 0;
- }
- 
- static ssize_t iomap_dio_bio_iter_one(struct iomap_iter *iter,
-@@ -541,10 +539,7 @@ static int iomap_dio_bio_iter(struct iomap_iter *iter, struct iomap_dio *dio)
- 	if (need_zeroout) {
- 		/* zero out from the start of the block to the write offset */
- 		pad = pos & (fs_block_size - 1);
--
--		ret = iomap_dio_zero(iter, dio, pos - pad, pad);
--		if (ret)
--			goto out;
-+		iomap_dio_zero(iter, dio, pos - pad, pad);
+-	if (!bd->props.power) {
++	case BACKLIGHT_POWER_OFF:
+ 		err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_POWER, 0, NULL);
+ 		if (err < 0)
+ 			return err;
++		break;
++
++	default:
++		pr_warn("Invalid screenpad backlight power state: %d\n", bd->props.power);
++		return -EINVAL;
  	}
  
- 	do {
-@@ -582,8 +577,7 @@ static int iomap_dio_bio_iter(struct iomap_iter *iter, struct iomap_dio *dio)
- 		/* zero out from the end of the write to the end of the block */
- 		pad = pos & (fs_block_size - 1);
- 		if (pad)
--			ret = iomap_dio_zero(iter, dio, pos,
--					     fs_block_size - pad);
-+			iomap_dio_zero(iter, dio, pos, fs_block_size - pad);
- 	}
- out:
- 	/* Undo iter limitation to current extent */
+ 	return err;
 -- 
 2.53.0
 
