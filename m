@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063345;
-	b=tvFLQFVa+68T+cT+LFO45fTbF6TMeJYxIJxxfB2j4YKtSND1Xlt9RZ34uoq2XOYwNBWC
-	 Mvt/c3AHahHnkNpNWU5UqbFYEB50ayWpl1BHi2qNJJ0WSLVOEVE5TYM9YKHFcqqUS+gEZ
-	 Aw+BlnazHy9cN2fs8cU4Blzh4Qxf9wRq6Qkg7Gh0WVL3YcCjJEBBYaVLFnGtNYuPtWXjZ
-	 f5bb4+RmSzR862+delIw1x5f0pi1CKQNTcZSi12BBEMI94qmu0lfLxddOMIU9VtdEcNel
-	 2qkKKjkDlHWN0+vv1SXoirp6Zc81WsTjHkpWZqTlRfs4IRkKuXhvuXaCEYxRCPIZ3Yw==
+	t=1794063346;
+	b=tM9vyAzJgJOkz1t2OQKQDkXGb41I7bavQxiTnEFqQK+6cnFrqWq+PHssCTttpamH1Tq5
+	 wUCgVk1JrKo+Jdnef2MvzDO6D1Wb4HKCnA9bCrxTFY14qC2bH8RUzVDiUVnIiGAA+gcX2
+	 B4Mmfvk4DLFoWLXOtLF5+FGvi+4wcBqN35G6V+HFjlsHVLjnJ/KEPV/5gTJYIftf3liV2
+	 UpDodNs9CdjK1Z9a1Ydr0sHoQ2CNvnFziFhQGLeN/co0dcS0olLBKTyP7Rk1C0UY4FAom
+	 r32uJLUgX7wf8uoqcTGuTbDt/Cpk3bM7qNFesDGXQOTyvepiMK7w7SHf2u2kodngY6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063345;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063346;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ct3nn3H9TvxgHsWKJcYD2reM/kfcsXmbkjEB0+cxErw=;
-	b=HVuvsMDf+3JrPxrv87FNxjCsfB2X7WkUn568RtAQ5upJ+p0hGDUr8aqM84bPpAemH3+N
-	 LVfZb6HRSrIkQenRRY08tzLuivkcOLhCHEjp2Z5jF6SwUjhNiOMYmFxLoq7Ha0KLCSz7B
-	 A1HauuDZNPBuaByKnLTHVG48lLt5aY++/8eTvNKPqICbzJKqU2XHzP/cX/qt7OI1p88PF
-	 bagLzINHwF891g3Wmv0gp0T7HxLzh0SdiTXdjE+0D7FFLNAfU4OkxsP+OZSKEcq+/cXJY
-	 j/PoFsQcQUidpIsyYgIghWgb0HbyBCjHbJ66vOeRammPTAlb+A+/7rzp7+gIAX6eZWA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=FQGG67nVSCEmRLMpvuwQujzf2FEzjjJ3tu/mnXQB1DI=;
+	b=x8LyRTPhDijhbLVn1dR/RagguahEB2QLlwjJ/Usqo/XpPeNaNA8tyzPs0fgnDUtzhQHs
+	 t1qxqiPpubTTLGY74Ld4yDTKDzLFgQ12XN9DCmMZf+odAqfE+rDKl6+xF4iiHz2QCZIB1
+	 3b4P0BY2hr4Yh69Fnet0GWneruXqwOoB+aP3AafvKPjk7dz+3htbcB6tVibXLcX2hmSFD
+	 7+fnGaduSuRfReS5cTPI4YvHOiGKLixEsdayeMQZjVmTPamPsJc3wg+hlsksFAsuEk/Lq
+	 pWuST1ToRDDs8n3UyC9Qn132jK3ZhOkPNxPbF6YHcE+UNZG41FzSIs39cfr4BbPgJkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1C04CkQI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vu1hV8zc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14099606A32C;
-	Sat,  7 Nov 2026 14:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40878606EE9E;
+	Sat,  7 Nov 2026 14:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1C04CkQI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B542C1F0089F;
-	Sat,  7 Nov 2026 14:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vu1hV8zc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E181D1F0089F;
+	Sat,  7 Nov 2026 14:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063344;
-	bh=Ct3nn3H9TvxgHsWKJcYD2reM/kfcsXmbkjEB0+cxErw=;
+	s=korg; t=1794063346;
+	bh=FQGG67nVSCEmRLMpvuwQujzf2FEzjjJ3tu/mnXQB1DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1C04CkQI20QNE0bbW/4RWb7kDJPR1tOxC+TGoWENe1SI0V+AcSvn3/r4DEoP4QF/Y
-	 dzpwRFXXZKq4qPM6yHMCYbbNs5M4591SCr/xTfkAielMzD4pMbAunKumW4A255XDoi
-	 3Ow+K6ExZf/7HMH+qZFL8okbG05JtmP+CbVZcKtc=
+	b=Vu1hV8zcQ7att2ja3Oo+39ZNyvpvhjeWo3C8/HqCXghwvgH48E8pmdOirw2TBNkEi
+	 9L+YS42Um5jL/iKTuK/Omm0QowM7egcBpLdQBvWfLwUTZEeL18iI/wBYjG5LfnoJff
+	 PfR6ujHt9HmH3wUKsQsg22Lkrii4nI0SHGsdTieo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
+	Joanne Chang <joannechien@google.com>,
 	Chao Yu <chao@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Nanzhe Zhao <zhaonanzhe@xiaomi.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 527/869] f2fs: remove mappedtodisk flag usage in mmap write path
-Date: Sat,  7 Nov 2026 08:53:29 -0500
-Message-ID: <20261107134911.357353115@linuxfoundation.org>
+Subject: [PATCH 6.18 528/869] f2fs: allow pinning empty compressed files
+Date: Sat,  7 Nov 2026 08:53:30 -0500
+Message-ID: <20261107134911.385070524@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -64,89 +64,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
+From: Joanne Chang <joannechien@google.com>
 
-[ Upstream commit b3c9843589257631bac18f30655e82d88970688a ]
+[ Upstream commit 2eebc31ae5f53e1066bb6238c8087c23b688ad17 ]
 
-PG_mappedtodisk was inherited from the nobh/buffer-head era.  However,
-f2fs has no buffer heads and the flag is no longer meaningful.  The only
-user of the flag is the "no holes" shortcut in f2fs_vm_page_mkwrite(),
-which makes mmap write faults skip marking the folio dirty.  Moreover,
-it causes the following race condition with filesystem freezing:
+Commit a64a3fec11e7 ("f2fs: force out-place update for all writes on
+compressed file") updated f2fs_should_update_outplace() to always
+return true for compressed files. However, this function is also
+called during f2fs_ioc_set_pin_file() validation, so pinning an
+empty file with compression enabled now fails with -EINVAL before the
+compression flag can be stripped.
 
- CPU0 (write fault)     CPU1 (freeze_super)
- ----                   ----
- f2fs_vm_page_mkwrite()
- sb_start_pagefault()
- /* shortcut: no dirty */
- sb_end_pagefault()
+Fix this by guarding the f2fs_compressed_file(inode) check with fio in
+f2fs_should_update_outplace(). This preserves forced OPU for actual
+compressed writes (fio != NULL), while allowing f2fs_ioc_set_pin_file()
+(fio == NULL) to proceed to f2fs_disable_compressed_file(inode).
 
-                        sb_wait_write(SB_FREEZE_PAGEFAULT)
-                        /* no waiter, passes */
-                        sync_filesystem()
-                        /* folio not dirty, skipped */
-
- finish_fault()
- /* PTE writable */
- fault_dirty_shared_page()
- folio_mark_dirty()
- /* dirty folio on a frozen fs */
-
-It will also skip APP_MAPPED_IO iostat/REQ_TIME updates and post-EOF
-folio zeroing.
-
-Remove this shortcut in f2fs_vm_page_mkwrite() and stop setting it in
-f2fs_read_single_page().
-
-Reported-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/linux-f2fs-devel/496b913c-eb81-4fa8-be72-c6a06a10aba2@kernel.org/
+Cc: stable@kernel.org
+Fixes: a64a3fec11e7 ("f2fs: force out-place update for all writes on compressed file")
+Assisted-by: LLM
+Signed-off-by: Joanne Chang <joannechien@google.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Fixes: fbfa2cc58d53 ("f2fs: add file operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 1 -
- fs/f2fs/file.c | 6 ------
- 2 files changed, 7 deletions(-)
+ fs/f2fs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index aa6a844ed34dd..52bdfb2785f06 100644
+index 52bdfb2785f06..eba1e025b9d6e 100644
 --- a/fs/f2fs/data.c
 +++ b/fs/f2fs/data.c
-@@ -2186,7 +2186,6 @@ static int f2fs_read_single_page(struct inode *inode, struct folio *folio,
- got_it:
- 	if ((map->m_flags & F2FS_MAP_MAPPED)) {
- 		block_nr = map->m_pblk + block_in_file - map->m_lblk;
--		folio_set_mappedtodisk(folio);
+@@ -2679,7 +2679,7 @@ bool f2fs_should_update_outplace(struct inode *inode, struct f2fs_io_info *fio)
+ 	 * If IO comes from compressed write path and fallback to raw write,
+ 	 * force out‑place to prevent metadata‑data inconsistency.
+ 	 */
+-	if (f2fs_compressed_file(inode))
++	if (fio && f2fs_compressed_file(inode))
+ 		return true;
  
- 		if (!f2fs_is_valid_blkaddr(F2FS_I_SB(inode), block_nr,
- 						DATA_GENERIC_ENHANCE_READ)) {
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 49febaa660815..e5de7c3557260 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -207,12 +207,6 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
- 	/* wait for GCed page writeback via META_MAPPING */
- 	f2fs_wait_on_block_writeback(inode, dn.data_blkaddr);
- 
--	/*
--	 * check to see if the page is mapped already (no holes)
--	 */
--	if (folio_test_mappedtodisk(folio))
--		goto out_sem;
--
- 	/* page is wholly or partially inside EOF */
- 	if (((loff_t)(folio->index + 1) << PAGE_SHIFT) >
- 						i_size_read(inode)) {
+ 	/* swap file is migrating in aligned write mode */
 -- 
 2.53.0
 
