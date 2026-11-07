@@ -1,55 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063332;
-	b=P9Tpk+vywsx/jDviPtL24Pglo0OTSmE5evJicfZIs4CiNZ7iyjVW0s1C8sqOlNkyYXok
-	 lxCVe0OU3bA7lt+Egj3f8O0YBPfQj+w6XRYY/rRzHpPZ1qbwK8PbOHwginrhAQ/WvWvz4
-	 fVWws0VQl1axhySr01zIXHbAcnbF8Vc62dYwkP/ePH1iPX+plRYXUax3Fedt8Hj8d1zvH
-	 fcGyfayoHpyNQdRToXfK0V2FSeP0oJ+2bZIljst7EiVBdOBV08CTS9JfFsyYDCS0hwvMH
-	 3jjGRY0zu916oIHX47thkA/Rp16zn+TIYNlyMj4ylj5O70nIdahNTYz1pmpbFlvWvEA==
+	t=1794063333;
+	b=cak3MFlQamnEm4Hn3F7SNsbOgU336rBqM7ZeY8sDma5HWgNeSIc2Eyj/jjMR/43Ec+yr
+	 JY8VXTueMqiNvGbjcczig8FAUoRCjx+pep1FAfVcjktuIH+SczFlZ4cL6oUZS3GFW/r11
+	 b7tdX9+gBvslBIiQ17PpWpcP3qNQji2q9T1c8giRKPxz4kmURZO+YZBOGpcpJYqVOcB6A
+	 eF/qD/p8TZ6GDKre2Hm1xKgARYCvAP3NCDkdN27bHeiCOKQrXTBNtLz53tF8xmc4Ip9nR
+	 LrcBPGm/uRFOGWjvd8O5tAK60Z7CF9nfqqxDkY980ArqG7hZ0SjdSSFye7BtjyQKS3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063332;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063333;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=79YwzLtzKid3Nhnwa04hw6hZ0slQBzl8dcYo8JnTkP0=;
-	b=Ic3iT8E09ldit3wdfRjWGUrDVeJL0PxMvNXWG8DM3XVmpj94a5Vnq6mAiu+nuLCgaB3L
-	 XZu26Vez8iFfi7rWCaAH3LDfCzbJK+TfFunYnIItZkBqpS/9WbrOGp3E8GxOqm4AZl+r9
-	 4DkEXObUH6C8onf+diZh8Aaqm8ColwTAoRLSGOBOT4NEQ2bCwHGYvlMZOYKUyd24UuW+h
-	 2zlxDH3GTDvk0ByZPuiNblyw8jfbiw3JDPoQkpaVKo5CfsfJuJ0BbDAdHbsA5q03Qp2wn
-	 GQrTu5itQvC9qaOrG8hDEu2QenBwaNnxY/r1nFDiZ8lhP3gsTN2gPqqKIGg6J3Rq5gg==
+	bh=IXnPo9C3JMg4uAO/pq16zNytysod7FVBeXKC07WXajs=;
+	b=AmpxwkoTBhZImgCjFNyVckzXoeDuT+bHrYbEdf4UOHSLTTw23mWl3Oc2xhiM+SQYl3RU
+	 J50O+FsVyMIArPheMMp0GI5zk0c0PHDG9Rx2Uz6OryofzkKzRZmB/l94jvP9BpjPIzDdE
+	 kDJkFvhW6b6u5V3SYul3XxycnFA0SyC4zyO9kqeffaYGkuBFE/GGPe6OpfBsrodSzqSfX
+	 G9Vrcvg50OisvMaCYpOICGshIMA6cy3ciCq0xv0Weyik4LeJdAuCpC0P553Yj2IrJNlwu
+	 lPEOi4IJQLtFe4KtNW89BMcpplxXCsNZkwKxCf4z/QGqOf/UWL+eMkEdQXzvakt3xTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rvodJ0Bx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipgkh46s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9DA606D809;
-	Sat,  7 Nov 2026 14:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E105606A32C;
+	Sat,  7 Nov 2026 14:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rvodJ0Bx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE2D1F008A1;
-	Sat,  7 Nov 2026 14:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipgkh46s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A641F0089F;
+	Sat,  7 Nov 2026 14:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063332;
-	bh=79YwzLtzKid3Nhnwa04hw6hZ0slQBzl8dcYo8JnTkP0=;
+	s=korg; t=1794063333;
+	bh=IXnPo9C3JMg4uAO/pq16zNytysod7FVBeXKC07WXajs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rvodJ0Bx2LunJPd1YbREk6uphLzm4MRBSBfHruKhZ2abgTFh/cuFziIVJ23Fzdbxc
-	 b96QUFyJkZ/ybcQ19o3uyF8W8Dhoyrb3Y4oMlRNjrncw6jG9agbMq87u8nC4eRNbP0
-	 Cl//AthbNixSPwg1oR07/V+eV3SzkdmWjB1MCvgY=
+	b=ipgkh46sE8GVRHr3j5LBz8TCM6Pm/D5eJ3uATNT/YQgyDPSFCSLB6bjVwP9+/Zrxc
+	 z2Mry8HlyhKFoBmR/6BGyh/ozmH4tGdtUSzdYDqJLeBnspUaUNZjJFO+fI28N4/y+Q
+	 prLI49zPvbjNHdcGywlw0C9b4V5H2mq6pZnQKU9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Jiexun Wang <wangjiexun@tinylab.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 514/869] iomap: dont lose a fiemap iteration error when emitting the last extent
-Date: Sat,  7 Nov 2026 08:53:16 -0500
-Message-ID: <20261107134910.985798236@linuxfoundation.org>
+Subject: [PATCH 6.18 479/869] mm/madvise: reclaim isolated folios if PTE restart fails
+Date: Sat,  7 Nov 2026 08:52:41 -0500
+Message-ID: <20261107134909.836946595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,64 +75,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit 0d0104adc2c8316433b660cdf6d182a09881864f ]
+[ Upstream commit 5445a6359d717354dd76d509b8e693f13403ec61 ]
 
-iomap_fiemap() emits extents one behind: iomap_fiemap_iter() flushes the
-previous extent and remembers the current one, and the remembered extent
-is written with FIEMAP_EXTENT_LAST after the iteration loop.
+MADV_PAGEOUT collects isolated folios on a local list before reclaiming
+them after the PTE walk.  The reschedule path drops the PTE lock and then
+restarts the mapping with pte_offset_map_lock().
 
-That final flush overwrites ret, so when ->iomap_begin() fails partway
-through the iteration the error is replaced by the result of
-iomap_to_fiemap() (zero on success) and iomap_fiemap() returns success
-with a truncated extent list whose last entry is wrongly marked as the
-last extent in the file.  The pre-iomap_iter code returned the error
-from inside the loop, before flushing the pending extent.
+A concurrent operation can remove or replace the PTE table while the lock
+is dropped, causing pte_offset_map_lock() to return NULL.  Returning
+directly in that case bypasses reclaim_pages(), leaving the collected
+folios off the LRU with elevated references.
 
-Check for the iteration error before flushing the pending extent, so
-that real errors are propagated and only a successful iteration emits
-the final FIEMAP_EXTENT_LAST extent.  -ENOENT (no mapping) is still not
-an error, and the pending extent is still emitted in that case.
+This results in a permanent memory leak.  nr_isolated_anon increases
+reliably and does not decrease when the process dies.
 
-Fixes: 7892386d3571 ("iomap: switch iomap_fiemap to use iomap_iter")
-Cc: stable@vger.kernel.org # v5.15
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/250226e33b3b23c6b1714a45dc3c465c2a45cdc0.1790342457.git.parri.andrea@gmail.com
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Route the failure through the existing cleanup path so any isolated folios
+are reclaimed or put back.
+
+Simplest userland pseudo-code reproducer:
+
+p = mmap(PMD_SIZE, ANONYMOUS);
+touch_every_page(p, PMD_SIZE);
+parallel {
+   while (1) madvise(p, PMD_SIZE, MADV_PAGEOUT);
+   while (1) {
+       madvise(p, PMD_SIZE, MADV_DONTNEED);
+       touch_every_page(p, PMD_SIZE);
+   }
+}
+
+Reproduced in qemu trivially with some explicit widening of the race window.
+
+Link: https://lore.kernel.org/20260912110832.3203902-1-gourry@gourry.net
+Fixes: b2f557a21bc8 ("mm/madvise: add cond_resched() in madvise_cold_or_pageout_pte_range()")
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260821150912.183976-1-gourry@gourry.net
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Assisted-by: LLM
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jiexun Wang <wangjiexun@tinylab.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/fiemap.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/madvise.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/iomap/fiemap.c b/fs/iomap/fiemap.c
-index d11dadff82865..54b824b7edb5c 100644
---- a/fs/iomap/fiemap.c
-+++ b/fs/iomap/fiemap.c
-@@ -76,15 +76,15 @@ int iomap_fiemap(struct inode *inode, struct fiemap_extent_info *fi,
- 	while ((ret = iomap_iter(&iter, ops)) > 0)
- 		iter.status = iomap_fiemap_iter(&iter, fi, &prev);
- 
-+	/* inode with no (attribute) mapping will give ENOENT */
-+	if (ret < 0 && ret != -ENOENT)
-+		return ret;
-+
- 	if (prev.type != IOMAP_HOLE) {
- 		ret = iomap_to_fiemap(fi, &prev, FIEMAP_EXTENT_LAST);
- 		if (ret < 0)
- 			return ret;
+diff --git a/mm/madvise.c b/mm/madvise.c
+index b8c25fea4fab9..6b62e01f31911 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -460,7 +460,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ restart:
+ 	start_pte = pte = pte_offset_map_lock(vma->vm_mm, pmd, addr, &ptl);
+ 	if (!start_pte)
+-		return 0;
++		goto out;
+ 	flush_tlb_batched_pending(mm);
+ 	arch_enter_lazy_mmu_mode();
+ 	for (; addr < end; pte += nr, addr += nr * PAGE_SIZE) {
+@@ -564,6 +564,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ 			folio_deactivate(folio);
  	}
--
--	/* inode with no (attribute) mapping will give ENOENT */
--	if (ret < 0 && ret != -ENOENT)
--		return ret;
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(iomap_fiemap);
+ 
++out:
+ 	if (start_pte) {
+ 		arch_leave_lazy_mmu_mode();
+ 		pte_unmap_unlock(start_pte, ptl);
 -- 
 2.53.0
 
