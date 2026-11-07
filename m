@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061086;
-	b=5MLY3J2vM1XowmFQHC7w156n7IX88CxoK1gvYHXyovM0h3O3zP/ZuJfShuP+koAoeFhN
-	 zjyyCFpNFJ4Gnsfc03kCxoFJYtwfyaxb+zeaWeqMLxMqB5FGLeeYdIqyvMTUWbisSekZG
-	 tZeE1bvYZuMYjuGgRnnVA2oqqvAyRg0ixF+yHs+fRaE/h0Xmz2/xi1ifU05bSpoAxGEU7
-	 5VekE+DRjeqXJUjKB9J01c9d0ucB6r5m/CUqQaO3AFhPVNLHdfTb2eKMuYqJggiDyh737
-	 WucsOpEiP4k0prg4acnx0Ka25WRcItZhPMEoMw8zLzZ9wcbE/xNI7RLtdnNFgDI0FuA==
+	t=1794061087;
+	b=I2hPuTjiyEVZe5Hb/1mpoUM8YEpHsPvYLPamB41DbFsPIrdVtVoDMrqfHSZd0dXAd7lv
+	 HSqsPJRrBvCfxhmxEeLpSvFdrzwXHLcOZp4wwAStmelTvwnppOXQX4l6VUWoxYQ8HhU7u
+	 QT+Ra/OjkRs0q6H2XoSVtKBdG2FGbpZ5O9t+VTC0vcww8M+3NuchR6JkUoJCwNDjhtkh5
+	 0T//iJhjQor83KSuuBcZ9vgUL/H+iXwkZTnoTLlsSlIQwKsdLeDJQxutzZJuphSRKKhzw
+	 p2XvMRMBV256ltf2Rss/87kVbtzavs43/Li3CT/ME4LYG5TsOaGRdg737Nxzxd/qRcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061087;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rps7OSWjdXIzK3U4UQrdXmrS6lifzz/SjMJBuuebD9s=;
-	b=nt6AdBuLOap0ZVMfHdDzT8krghhjhvuGhIDq6nW0vgCMX/5yKM5Nuxa6WGeNLvLFlD3d
-	 58BgrmRGGtXvVEhw3vR2iNxGXb44LgOJGjwyeFqsps9D49tGt0K4TZusNUcUvWkklW5dn
-	 ibvRjiPhfCxBVmJN9wyiOFF6ZQJFuW+MsSulQmiNlKEU0GloKfQ1bVppCipGhcnsr4UmQ
-	 OjrBMYhmWg84d1VUGj+PQMi4hhBf/RARlM3St3cgsui98JZp+JSYVt5LYTRm7IV0acjBC
-	 5k9QsDe10KiuPlVpSfFS574lrs8oYhPeItIVcbDykx37tE2l6r+LJUH+iX0nvmCSGjQ==
+	bh=w7jzJWpejuahZjkubuchdT5ws7WlLIqlltHUrltQlEI=;
+	b=INCG+A6Pk07DxXtsTB64AsfkLwBesBjJj0wVyfNeQH6V7Sx2FkXJJ2ZoSQTGaiBcnlBE
+	 hiiGU76WddSCe0jC2Pcao/M9ZwPfsjT5ue6RdjGmZYDaVYL5rvsvJUsPDywgLTD/l9I0E
+	 zRahr+qWkiepQxQL2h+l5RhYacBi2ZEcfBWBkDUNVziQf3slYxv64xwmL8iI570tKkf27
+	 ZHWK/ri6LDJHbT0Lo6uoQSE8Od99CqvL1IKn2z7kc3tfhbpKhCPUIHblomvFBv+5EuZIp
+	 9//T98qXEz4TdNn6AiYkX4YptpIwcYMUEh329H0szYnkRj9DjhUDbTQ3gYPSgIpgjjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0A0tOBRr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gh+Ust1k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AA0608363B;
-	Sat,  7 Nov 2026 14:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B1C606D833;
+	Sat,  7 Nov 2026 14:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0A0tOBRr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1521F008A2;
-	Sat,  7 Nov 2026 14:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gh+Ust1k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4E51F0089F;
+	Sat,  7 Nov 2026 14:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061085;
-	bh=rps7OSWjdXIzK3U4UQrdXmrS6lifzz/SjMJBuuebD9s=;
+	s=korg; t=1794061087;
+	bh=w7jzJWpejuahZjkubuchdT5ws7WlLIqlltHUrltQlEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0A0tOBRrfZ0DfnbPHwTjUl+ZcAhkEqHgGzz5nFlNHm7GTaoM4FA4ic5hvVLORVFsT
-	 WdTeEOMxadNviyMsVevGYUsrLdwkICZlyxHaAebg2yvmfvaeO/1OXUxwnt+nqME+5f
-	 4qmtDXKifV1YrxdGd7FBTr+7PzooJ6waT0EnLU7Q=
+	b=gh+Ust1kuGd8kgsweesTxUTw3ksPR9EWv1Jo1bKbB/64JsqjG0zZZMk+XI7J53MV6
+	 oZUJ/NGij/PKc12eTBmaoJrOTev+ArSWEBroy+ab1TjGOu2e+KC48TB1y8vwwLlQ1o
+	 l0d1z+D0w/ZsS9yDNsJTXzRAOd/d7Zen+K/1ypKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0408/1536] gpio: mvebu: keep resume masks within the irqchip cache
-Date: Sat,  7 Nov 2026 08:40:24 -0500
-Message-ID: <20261107135009.038063656@linuxfoundation.org>
+Subject: [PATCH 6.12 0373/1536] rtc: brcmstb-waketimer: add missing MODULE_DEVICE_TABLE()
+Date: Sat,  7 Nov 2026 08:39:49 -0500
+Message-ID: <20261107135008.117136806@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,106 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 02af7eac17bc62a72335c1fc8c4af4471654f6cc ]
+[ Upstream commit 402c89d28fecd28652a4bfe997f08f6544836381 ]
 
-mvebu_gpio_resume() writes the edge/level mask registers saved at
-suspend time straight back to hardware, bypassing the irqchip's
-mask_cache_priv.  genirq skips mask_irq() for a line it already
-considers masked, so restoring a bit in hardware that genirq thinks
-is still masked leaves that line unmasked behind genirq's back.  An
-asserted level line then has nobody to ack it, and the moment
-interrupts are re-enabled the chained handler storms, hanging resume.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-AND the restored mask values with the matching irqchip mask cache so
-only lines genirq currently considers unmasked are unmasked again.
-Read the caches under gc->lock to keep them consistent with the
-mask/unmask handlers.
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
-Tested on Helios4 (armhf): 5 suspend cycles woken by magic packet,
-no hang; mvebu_gpio_resume() returns in 6 usecs.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
 
-Assisted-by: LLM
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20260915004406.115230-1-rosenp@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704121734.54941-1-pengpeng@iscas.ac.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mvebu.c | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ drivers/rtc/rtc-brcmstb-waketimer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpio/gpio-mvebu.c b/drivers/gpio/gpio-mvebu.c
-index e554bd0fb1a8f..933a335af8c5b 100644
---- a/drivers/gpio/gpio-mvebu.c
-+++ b/drivers/gpio/gpio-mvebu.c
-@@ -1011,6 +1011,8 @@ static int mvebu_gpio_suspend(struct platform_device *pdev, pm_message_t state)
- static int mvebu_gpio_resume(struct platform_device *pdev)
- {
- 	struct mvebu_gpio_chip *mvchip = platform_get_drvdata(pdev);
-+	u32 edge_cache = ~0U, level_cache = ~0U;
-+	unsigned long flags;
- 	int i;
+diff --git a/drivers/rtc/rtc-brcmstb-waketimer.c b/drivers/rtc/rtc-brcmstb-waketimer.c
+index b108e75042eb7..625702fc5eb3c 100644
+--- a/drivers/rtc/rtc-brcmstb-waketimer.c
++++ b/drivers/rtc/rtc-brcmstb-waketimer.c
+@@ -414,6 +414,7 @@ static const __maybe_unused struct of_device_id brcmstb_waketmr_of_match[] = {
+ 	{ .compatible = "brcm,brcmstb-waketimer" },
+ 	{ /* sentinel */ },
+ };
++MODULE_DEVICE_TABLE(of, brcmstb_waketmr_of_match);
  
- 	regmap_write(mvchip->regs, GPIO_OUT_OFF + mvchip->offset,
-@@ -1022,32 +1024,51 @@ static int mvebu_gpio_resume(struct platform_device *pdev)
- 	regmap_write(mvchip->regs, GPIO_IN_POL_OFF + mvchip->offset,
- 		     mvchip->in_pol_reg);
- 
-+	/*
-+	 * genirq skips mask_irq() for a line it already considers masked, so
-+	 * unmasking one behind its back leaves an asserted level line that
-+	 * nobody masks. Restore only bits the irqchip cache still has set.
-+	 *
-+	 * Snapshot the caches under the raw spinlock, but release it before
-+	 * the regmap writes below: regmap_write() takes a sleepable lock on
-+	 * PREEMPT_RT.
-+	 */
-+	if (mvchip->domain) {
-+		struct irq_chip_generic *gc;
-+
-+		gc = irq_get_domain_generic_chip(mvchip->domain, 0);
-+		raw_spin_lock_irqsave(&gc->lock, flags);
-+		level_cache = gc->chip_types[0].mask_cache_priv;
-+		edge_cache = gc->chip_types[1].mask_cache_priv;
-+		raw_spin_unlock_irqrestore(&gc->lock, flags);
-+	}
-+
- 	switch (mvchip->soc_variant) {
- 	case MVEBU_GPIO_SOC_VARIANT_ORION:
- 	case MVEBU_GPIO_SOC_VARIANT_A8K:
- 		regmap_write(mvchip->regs, GPIO_EDGE_MASK_OFF + mvchip->offset,
--			     mvchip->edge_mask_regs[0]);
-+			     mvchip->edge_mask_regs[0] & edge_cache);
- 		regmap_write(mvchip->regs, GPIO_LEVEL_MASK_OFF + mvchip->offset,
--			     mvchip->level_mask_regs[0]);
-+			     mvchip->level_mask_regs[0] & level_cache);
- 		break;
- 	case MVEBU_GPIO_SOC_VARIANT_MV78200:
- 		for (i = 0; i < 2; i++) {
- 			regmap_write(mvchip->regs,
- 				     GPIO_EDGE_MASK_MV78200_OFF(i),
--				     mvchip->edge_mask_regs[i]);
-+				     mvchip->edge_mask_regs[i] & edge_cache);
- 			regmap_write(mvchip->regs,
- 				     GPIO_LEVEL_MASK_MV78200_OFF(i),
--				     mvchip->level_mask_regs[i]);
-+				     mvchip->level_mask_regs[i] & level_cache);
- 		}
- 		break;
- 	case MVEBU_GPIO_SOC_VARIANT_ARMADAXP:
- 		for (i = 0; i < 4; i++) {
- 			regmap_write(mvchip->regs,
- 				     GPIO_EDGE_MASK_ARMADAXP_OFF(i),
--				     mvchip->edge_mask_regs[i]);
-+				     mvchip->edge_mask_regs[i] & edge_cache);
- 			regmap_write(mvchip->regs,
- 				     GPIO_LEVEL_MASK_ARMADAXP_OFF(i),
--				     mvchip->level_mask_regs[i]);
-+				     mvchip->level_mask_regs[i] & level_cache);
- 		}
- 		break;
- 	default:
+ static struct platform_driver brcmstb_waketmr_driver = {
+ 	.probe			= brcmstb_waketmr_probe,
 -- 
 2.53.0
 
