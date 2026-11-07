@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061126;
-	b=UsoVxF5Bd43/KDfLw0nlVLgoi4a12FSbIWX7Y9bQQK39K/oasm8HzDJwSpWOzfXEFv03
-	 OCOLNpNBFVRzpeoqWh/eeWOspVpUu6RochpNkzT68XXHMT9MzUCuLUOskemTRdZrtGxPs
-	 Aw5zRcQYF9kN/EqxKRppjnQ53uczTaR+3aJSuWWaJnlk6yjvFersMZWtn7s1CA0MUcyN5
-	 l/S/t7hwFr7dJ2F/N1i07etd7fOp2pKZyU4vrffKsMtWzCn+byXWRtx01s75PZ00E24br
-	 8ahzFJKo2EmnGIUaBLcFbMFtrArSchzdNERrbcYXelFYPHyIWjtar9r4h5NmgFUN36A==
+	t=1794061127;
+	b=3gRyvi1i+oLJQD2wQk1fd6vKwTGhqT0BQRFq1Ku59J9L1tRf11kPsjcEEOiHqR9TN1+S
+	 AbwoDfHPmfq1hk80G4KKZ5ASrfCqPV2lLrzeZtBTgg4etE65YSDTkJFGW1KZXugtz5qVH
+	 dBeWuRjelKAiW1qfAdexPwIufoXxq7nITFhvcrhviQtglrIy5e3NVnRETTErTirSv8EkH
+	 xwJIo6GDpkDMplBeA2tZtskuo5B/FkFf2JOwEs/weatvrKPKHyTca9o8BeI9nmuTjUpAl
+	 dNw4/PLJey/Ga6MYXMQ1EJb5clk5Kd3fLwF6R8Wsjqo+3ZjVIJA78zwi4hvUV0z0TOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061126;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I19YIzlJ70h2lVMYvTDkU+hxlThlkrJclYGftfL+mIU=;
-	b=QepyE039T6apgmv05eadgBVx5w3R+FXSMFds7CY3JrV79Gc8wiUdkfyVHGZQ5m8pXlP6
-	 vId1x5zMkAQJ9wa8w74Ef55DqWNX7lg1Hg2rvps6ljxlAzXIrpodNd7FZbmPr0RWPubPp
-	 ADb+H+Fqa5nz3cbjS3au4K0UgiDuIBvWPs+T8P1YBDFV3HbqSy3ZWlpBZFj3sofUKNCgS
-	 4dv0lZ/Ebl2Do6/qbaq4cUKiDy05bQdxsqbjnJ8TLW0m9jFv+hLe1S3oqagxvCxNSyAIR
-	 aFwnqxtjWUOhBNAmWsWNzptKewqtubxfhnORfIgpB+GhBoymFUblKXHzF3DWwSn8oig==
+	bh=uqiJxlDXlOK2ECIKfzwnBtq8DQAgGqyyeZl77JQ5s5M=;
+	b=zydKsFKzs4vg0OB17d45XRNgjSfKLUHjuzh5jDddQpMgpIBZaJz2M34BvtENeqg8fEjf
+	 YwkZb4Vxgj45IhutGQXaveagZNKuwHH62nKmowK/Dip1snF1iAfk/PcWvcznosdv4Mgg1
+	 N9d4r4CQBZG77dr10+u0dhgP+73e2J0jpdpG0qZhxJJLY3LbiBHkKTMI5f5g/Mm0BWoWJ
+	 06ofJyGz2dZVhbvRtQuXDqjOIe4UZaz2vrOQV3cAYQBHa9AOp9F1hpaXGABjqGwmrCW/M
+	 yL4ZgmSd0czJUDdCgbX/el97R3TX46VV3V0OYkxrSnYWz7sCuySpZxStJkIyae2zrHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EO20JIEw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q6eXERLF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CD1606A333;
-	Sat,  7 Nov 2026 14:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607BA606A332;
+	Sat,  7 Nov 2026 14:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EO20JIEw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B151F0089F;
-	Sat,  7 Nov 2026 14:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q6eXERLF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AACB1F0089F;
+	Sat,  7 Nov 2026 14:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061126;
-	bh=I19YIzlJ70h2lVMYvTDkU+hxlThlkrJclYGftfL+mIU=;
+	s=korg; t=1794061127;
+	bh=uqiJxlDXlOK2ECIKfzwnBtq8DQAgGqyyeZl77JQ5s5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EO20JIEwbKHoR8N14VzEi0MC/ifNm+/C+lDIqwlB0rWLhOt6j9IdWYy4aTup1Qgvn
-	 B4aNi4PkRcvH4m09VMQTloXTmhGXyAgatKoEg5Hid1NGq7MiD7rlW6iQYupRp+cuZz
-	 3V36cDCNnHyXE/bhr0Pj2ArVk6le5R8FYjS53vX8=
+	b=q6eXERLFeo9VQ5QKz50DnMZWqqvKpzKbCJVU9blKLIvw6ewrIW7yoIVdI3n9ZaLnS
+	 lPxqknP334Bxp6VQDjhwGkrviQys+mEtKPMJ1+aIP8LtyKAN0kGC37zbHO8y4n+rjw
+	 3NChG/egoVzealCBpK688oUZwItVCsU5lcS+ft78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0438/1536] media: go7007: only set audio_enabled if go7007_snd_init() succeeded
-Date: Sat,  7 Nov 2026 08:40:54 -0500
-Message-ID: <20261107135009.855863959@linuxfoundation.org>
+	Eric Dumazet <edumazet@kernel.org>,
+	co+71b6509cb791e531@bugs.sh,
+	Kaho Jiang <kj2864@nyu.edu>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 0439/1536] net: ipv4: add zero check for snd_cwnd_clamp
+Date: Sat,  7 Nov 2026 08:40:55 -0500
+Message-ID: <20261107135009.881398116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,68 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Kaho Jiang <kj2864@nyu.edu>
 
-commit 2eacf058d2dbb0ae3aaf576459da9e5f2b6bbfbd upstream.
+commit 363c8c79220d0db4d65dcd570529ddda15067cb5 upstream.
 
-go7007_register_encoder() sets go->audio_enabled before calling
-go7007_snd_init() and discards its return value.  go7007_snd_init()
-assigns go->snd_context only on success, so a failed ALSA setup leaves
-audio_enabled set with snd_context still NULL.  The disconnect path tests
-audio_enabled and calls go7007_snd_remove(), which dereferences
-snd_context unconditionally.
+When RTAX_CWND is locked, user is able to pass 0 into it.
+This could lead to writing 0 to tp->snd_cwnd, leading to a
+division by zero error.
 
-go7007_snd_init() returns -ENODEV once its never-decremented static card
-counter reaches SNDRV_CARDS, so SNDRV_CARDS attach/detach cycles arm the
-next attach; no memory pressure is needed.
+Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+Call Trace:
+ <IRQ>
+ tcp_reno_cong_avoid (net/ipv4/tcp_cong.c:510 (discriminator 1))
+ tcp_ack (net/ipv4/tcp_input.c:3517 net/ipv4/tcp_input.c:3873 net/ipv4/tcp_input.c:4440)
+ tcp_rcv_established (net/ipv4/tcp_input.c:6685)
+ tcp_v4_do_rcv (net/ipv4/tcp_ipv4.c:1854)
+ tcp_v4_rcv (net/ipv4/tcp_ipv4.c:2248)
+ ip_protocol_deliver_rcu (net/ipv4/ip_input.c:207 (discriminator 1))
+ ip_local_deliver_finish (net/ipv4/ip_input.c:241 (discriminator 1))
+ ip_local_deliver (./include/linux/netfilter.h:325 ./include/linux/netfilter.h:319 net/ipv4/ip_input.c:262)
+ ip_rcv (./include/net/dst.h:481 (discriminator 6) net/ipv4/ip_input.c:492 (discriminator 6) ./include/linux/netfilter.h:325 (discriminator 6) ./include/li)
+ __netif_receive_skb_one_core (net/core/dev.c:6297 (discriminator 4))
+ __netif_receive_skb (net/core/dev.c:6410)
+ process_backlog (net/core/dev.c:6761)
+ __napi_poll.constprop.0 (net/core/dev.c:7830)
+ net_rx_action (net/core/dev.c:7893 net/core/dev.c:8050)
+ handle_softirqs (kernel/softirq.c:645)
+ __irq_exit_rcu (kernel/softirq.c:679 kernel/softirq.c:519 kernel/softirq.c:758)
+ irq_exit_rcu (kernel/softirq.c:775)
+ sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1062 (discriminator 35) arch/x86/kernel/apic/apic.c:1062 (discriminator 35))
+RIP: 0010:tcp_cong_avoid_ai (net/ipv4/tcp_cong.c:482)
 
-Set go->audio_enabled only once go7007_snd_init() has succeeded.
+Fix by checking if user pass in zero as parameter and if lock is present.
 
-  Oops: general protection fault, probably for non-canonical address ...
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  Workqueue: usb_hub_wq hub_event
-  RIP: 0010:go7007_snd_remove (drivers/media/usb/go7007/snd-go7007.c:273)
-  Call Trace:
-   go7007_usb_disconnect (drivers/media/usb/go7007/go7007-usb.c:1336)
-   usb_unbind_interface (drivers/usb/core/driver.c:461)
-   device_remove (drivers/base/dd.c:618)
-   device_release_driver_internal (drivers/base/dd.c:1349)
-   bus_remove_device (drivers/base/bus.c:664)
-   device_del (drivers/base/core.c:3965)
-   usb_disable_device (drivers/usb/core/message.c:1478)
-   usb_disconnect
-   hub_event (drivers/usb/core/hub.c:5966)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  Kernel panic - not syncing: Fatal exception
-
+Fixes: 814d488c6126 ("tcp: fix the timid additive increase on stretch ACKs")
 Cc: stable@vger.kernel.org
-Fixes: 866b8695d67e ("Staging: add the go7007 video driver")
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Suggested-by: Eric Dumazet <edumazet@kernel.org>
+Reported-by: co+71b6509cb791e531@bugs.sh
+Signed-off-by: Kaho Jiang <kj2864@nyu.edu>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261021235732.1313305-2-kj2864@nyu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/go7007/go7007-driver.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/ipv4/metrics.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/usb/go7007/go7007-driver.c
-+++ b/drivers/media/usb/go7007/go7007-driver.c
-@@ -306,10 +306,9 @@ int go7007_register_encoder(struct go700
- 	if (ret < 0)
- 		return ret;
+--- a/net/ipv4/metrics.c
++++ b/net/ipv4/metrics.c
+@@ -60,6 +60,11 @@ static int ip_metrics_convert(struct nla
+ 	if (ecn_ca)
+ 		metrics[RTAX_FEATURES - 1] |= DST_FEATURE_ECN_CA;
  
--	if (go->board_info->flags & GO7007_BOARD_HAS_AUDIO) {
-+	if ((go->board_info->flags & GO7007_BOARD_HAS_AUDIO) &&
-+	    go7007_snd_init(go) == 0)
- 		go->audio_enabled = 1;
--		go7007_snd_init(go);
--	}
++	if ((metrics[RTAX_LOCK - 1] & (1 << RTAX_CWND)) && !metrics[RTAX_CWND - 1]) {
++		NL_SET_ERR_MSG(extack, "Locked cwnd metric must be non zero");
++		return -EINVAL;
++	}
++
  	return 0;
  }
- EXPORT_SYMBOL(go7007_register_encoder);
+ 
 
 
