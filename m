@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062975;
-	b=e3wkiI3pfSTMuj3wGR/fZoXzmWEiovaN08ZqGLUh0EjjtEWlGSfiHFQkKf9Ttu+2NWmA
-	 kh6oJiBmWEMJQk6CSguLl1TM3/VFTOT8W2d0BNW5EYQ6Qmy7QelNowQQ27ANVF1+ouce/
-	 RG0QipU6SwkeaGpiC6B0O3toOrCQ4SlzA8nFJjfBiHmSvoUbuMCxV2iFABUZ2Asf1WgHc
-	 2MTm+3n7uEY2RDEEiL5QzVnnPvUcJJHtumLpTNVx1yS6Fv/ljbtxpL2PmBsTpZwZm1UWw
-	 4sJTkAvueezUoV/RKkq5trZsU1SVW8xX2JEEVpAggnLjwV0pbP8epKITN6C+3/X5Njw==
+	t=1794062976;
+	b=NL06JxKh0XUMJ2AdTfcCi3Vow5c/uHGpDLDhcKy3/mhRAHwmrTVmrWXj8bWmZAnXCnvP
+	 Q6d9QuE/IyN2HrtE6+YXfH+LGtA+9+i7AYsLsglQ3iimEEqtsiPLQUX9B7Xz56y4BqLGx
+	 gT3nXtNl5OgOwKlRqXE9FiGmbaB2kgvCNV2pqw1JNXahpO2Zrjv5UiDRhC8IrSs+ZHCHA
+	 DGLXB8N1/ynoHszYmC8+euLSPWH/xRqHV/RMEIhvPlQsgWejHPIg6awRs9OaGTTTKf76X
+	 XtzADStsQH7EP01dX05jXexZbMYFTZYMucwP2sC1bybJ8mnqkozNYO0w7oc6b+KFZng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062975;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062976;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5aluARpS56yiSGi2EE1fq8mV6PBaHfTtVigx6pSr3Qw=;
-	b=PN1/N8a7sv1A7YN8JQwPp42u4usX0jrurUxeH+d00vfAc08mJ/U/7O79GFnplvQLTX9V
-	 btHls9ndlCuteisutqyqcdvKf0R2zVAdQEM7fevjtkqU5dEFMyU7XHZxN/VMvc5pYc4E8
-	 GFhamzHxAqahUOeL1I8KUYL7tnfUMBuT0OVF4rnIvAL97MHe0rMegBsQ8oIuV9y7Km1/1
-	 3mAXhvMTyRsPDTbJhcQInJMqtbq1Ue1XJMNENibO3UcLZtHndk7AMYhUQD9wM2K3hSXnM
-	 JGpsKRRLAbBEllQZU628HlR9twotPeLZQWWtaJ54rW+kYhBBjMGRS7gzPrdzdU/LlXw==
+	bh=Ccw7mfRDQGYPnWITBpQfUHzSSDCNuBpiuuPeE/FbThY=;
+	b=SOudcjs7NTbkmutueCMXRr2wbfatuGrme14LuB8ri2AXcVGYLnYjML9z0kxZKqW/hvMw
+	 QpVYAvF7P+LwjdHrt7wcCMVnIlbgxw36BqRlOvDAx3RBlKiIWn1mydyEvBA1hEx64vAzh
+	 Vf2LA7dTi28diGVo9uf4cVkdQzKCS3+Au6phnLAyLLJuZhv+uws8HXOla8G5gJm28xFky
+	 aqEW7MTmHJGGsaUcVMVX3Li0ackDIevskFo/fPAQFbVlzmcOp9QqZ9eHvC5i++t5kSoYl
+	 VMMPDLdsPZqLxwgfmOPXTpIeUl/crUpgLw70gAzOV/bDRIZ7C0u4fizwtwtKPFFhecQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NFTyZ/Q/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mg1iBbdQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE32606A32C;
-	Sat,  7 Nov 2026 14:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95CE606A33B;
+	Sat,  7 Nov 2026 14:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NFTyZ/Q/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CEE1F0089F;
-	Sat,  7 Nov 2026 14:49:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mg1iBbdQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878171F0089F;
+	Sat,  7 Nov 2026 14:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062974;
-	bh=5aluARpS56yiSGi2EE1fq8mV6PBaHfTtVigx6pSr3Qw=;
+	s=korg; t=1794062975;
+	bh=Ccw7mfRDQGYPnWITBpQfUHzSSDCNuBpiuuPeE/FbThY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NFTyZ/Q/khsSqprsDzql0m4L1N++GGYj/GG9qZX2rOJVHs48PANHBXbYFbnPXL9uE
-	 ciUFyOLJY9Blyyt9xYfbqSXjg4mrJL5eolkWiFFqLEAes3euAayve8mcKPFUGy5nfb
-	 HyP85l0nK+TlNFUOcnzhGcKqsDWorCfMknB+8Zow=
+	b=mg1iBbdQ1uC6SpJapvdd16deRpXcXBoFVAXp7Q5hS8u6VtTRYl56gL4on7V1etVu/
+	 czVfTrRVkqnhKu+MTfrRnHnvRsF1Bx4mR2yQlROLOIoEPsA24+89kzddh1fFe0wSOl
+	 7wNjRyyRG6XIupbda+mAvVOcwOdAxcT2aee6nndA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Hongyan Xu <getshell@seu.edu.cn>,
+	Junjie Cao <junjie.cao@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 228/869] mfd: da903x: Cancel IRQ work during teardown
-Date: Sat,  7 Nov 2026 08:48:30 -0500
-Message-ID: <20261107134859.589784710@linuxfoundation.org>
+Subject: [PATCH 6.18 237/869] ASoC: rt712-sdca-dmic: fix drvdata type in the gain controls
+Date: Sat,  7 Nov 2026 08:48:39 -0500
+Message-ID: <20261107134859.877637993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,118 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Junjie Cao <junjie.cao@intel.com>
 
-[ Upstream commit fd2258999ecdc7164ef0cda2d4102e4558a5660f ]
+[ Upstream commit 0bc42544a4a06e8d76eb412d2b1414db910a311d ]
 
-The IRQ handler disables the IRQ and schedules irq_work. Releasing the
-IRQ does not drain that work, which can continue to use the devm-allocated
-chip and notifier state.
+rt712_sdca_dmic_set_gain_get() and rt712_sdca_dmic_set_gain_put() take
+the component drvdata as struct rt712_sdca_priv, but this driver stores
+a struct rt712_sdca_dmic_priv.
 
-Manage both IRQ-work cancellation and subdevice removal with devres.
-Register the subdevice-removal action before requesting the IRQ, then add
-the IRQ-work action after the request. This avoids leaving a live IRQ
-without work cancellation if action registration fails. Devres cleanup
-then disables the IRQ and drains the work before releasing the IRQ and
-removing child devices. Register both actions before creating the children
-so partial probe failures use the same ordering.
+regmap and mbq_regmap are at the same offsets in both structs, so the
+register accesses work. slave is not: rt712_sdca_priv has dmic_component
+in front of it, so its slave overlays rt712_sdca_dmic_priv's params,
+which this driver never writes. When regmap_write() fails in the put
+handler, dev_err() is called with &NULL->dev (RSI below):
 
-This issue was found by the author's in-house static analysis tool.
-The patch was reviewed by the author against the latest mainline tree.
+  rt712-sdca-dmic sdw:0:3:025d:1713:01: Defer on undeferrable control: 40800f13
+  BUG: kernel NULL pointer dereference, address: 0000000000000058
+  RIP: 0010:__dev_printk+0x10/0x70
+  RDX: ffffcdac45f83cd0 RSI: 0000000000000008 RDI: ffffffffa09cb5cb
+  Call Trace:
+   _dev_err+0x7f/0x99
+   rt712_sdca_dmic_set_gain_put.cold+0x20/0x25 [snd_soc_rt712_sdca_dmic]
+   snd_ctl_elem_write+0x19a/0x1f0 [snd]
+   snd_ctl_ioctl+0x658/0x8a0 [snd]
 
-Fixes: 26b8f5e1e2d1 ("mfd: add base support for Dialog DA9030/DA9034 PMICs")
+Seen on a Dell Precision 5690 running 7.2.5-200.fc44, with alsactl
+writing the control during boot. Compile-tested only.
+
+Fixes: 63a511284c9e ("ASoC: rt712-sdca: Add RT712 SDCA driver for Mic topology")
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2532834
 Cc: stable@vger.kernel.org
-Suggested-by: Lee Jones <lee@kernel.org>
-Assisted-by: Codex:GPT-5
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://patch.msgid.link/20260814153019.1114-1-getshell@seu.edu.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Link: https://patch.msgid.link/20260920024232.710189-1-junjie.cao@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/da903x.c | 34 +++++++++++++++++++++++++---------
- 1 file changed, 25 insertions(+), 9 deletions(-)
+ sound/soc/codecs/rt712-sdca-dmic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/da903x.c b/drivers/mfd/da903x.c
-index e86b39de3303a..e4ad48e1f139b 100644
---- a/drivers/mfd/da903x.c
-+++ b/drivers/mfd/da903x.c
-@@ -421,6 +421,14 @@ static irqreturn_t da903x_irq_handler(int irq, void *data)
- 	return IRQ_HANDLED;
- }
- 
-+static void da903x_cancel_irq_work(void *data)
-+{
-+	struct da903x_chip *chip = data;
-+
-+	disable_irq(chip->client->irq);
-+	cancel_work_sync(&chip->irq_work);
-+}
-+
- static const struct da903x_chip_ops da903x_ops[] = {
- 	[0] = {
- 		.init_chip	= da9030_init_chip,
-@@ -456,6 +464,13 @@ static int da903x_remove_subdevs(struct da903x_chip *chip)
- 	return device_for_each_child(chip->dev, NULL, __remove_subdev);
- }
- 
-+static void da903x_remove_subdevs_action(void *data)
-+{
-+	struct da903x_chip *chip = data;
-+
-+	da903x_remove_subdevs(chip);
-+}
-+
- static int da903x_add_subdevs(struct da903x_chip *chip,
- 					struct da903x_platform_data *pdata)
+diff --git a/sound/soc/codecs/rt712-sdca-dmic.c b/sound/soc/codecs/rt712-sdca-dmic.c
+index bc5b872f1e42f..bbbea9af73cd2 100644
+--- a/sound/soc/codecs/rt712-sdca-dmic.c
++++ b/sound/soc/codecs/rt712-sdca-dmic.c
+@@ -247,7 +247,7 @@ static int rt712_sdca_dmic_set_gain_get(struct snd_kcontrol *kcontrol,
+ 		struct snd_ctl_elem_value *ucontrol)
  {
-@@ -484,7 +499,6 @@ static int da903x_add_subdevs(struct da903x_chip *chip,
- 	return 0;
- 
- failed:
--	da903x_remove_subdevs(chip);
- 	return ret;
- }
- 
-@@ -520,6 +534,11 @@ static int da903x_probe(struct i2c_client *client)
- 	chip->ops->mask_events(chip, chip->events_mask);
- 	chip->ops->read_events(chip, &tmp);
- 
-+	ret = devm_add_action_or_reset(&client->dev,
-+				       da903x_remove_subdevs_action, chip);
-+	if (ret)
-+		return ret;
-+
- 	ret = devm_request_irq(&client->dev, client->irq, da903x_irq_handler,
- 			IRQF_TRIGGER_FALLING,
- 			"da903x", chip);
-@@ -529,14 +548,12 @@ static int da903x_probe(struct i2c_client *client)
- 		return ret;
- 	}
- 
--	return da903x_add_subdevs(chip, pdata);
--}
--
--static void da903x_remove(struct i2c_client *client)
--{
--	struct da903x_chip *chip = i2c_get_clientdata(client);
-+	ret = devm_add_action_or_reset(&client->dev, da903x_cancel_irq_work,
-+				       chip);
-+	if (ret)
-+		return ret;
- 
--	da903x_remove_subdevs(chip);
-+	return da903x_add_subdevs(chip, pdata);
- }
- 
- static struct i2c_driver da903x_driver = {
-@@ -544,7 +561,6 @@ static struct i2c_driver da903x_driver = {
- 		.name	= "da903x",
- 	},
- 	.probe		= da903x_probe,
--	.remove		= da903x_remove,
- 	.id_table	= da903x_id_table,
- };
- 
+ 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+-	struct rt712_sdca_priv *rt712 = snd_soc_component_get_drvdata(component);
++	struct rt712_sdca_dmic_priv *rt712 = snd_soc_component_get_drvdata(component);
+ 	struct rt712_sdca_dmic_kctrl_priv *p =
+ 		(struct rt712_sdca_dmic_kctrl_priv *)kcontrol->private_value;
+ 	unsigned int regvalue, ctl, i;
+@@ -278,7 +278,7 @@ static int rt712_sdca_dmic_set_gain_put(struct snd_kcontrol *kcontrol,
+ 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+ 	struct rt712_sdca_dmic_kctrl_priv *p =
+ 		(struct rt712_sdca_dmic_kctrl_priv *)kcontrol->private_value;
+-	struct rt712_sdca_priv *rt712 = snd_soc_component_get_drvdata(component);
++	struct rt712_sdca_dmic_priv *rt712 = snd_soc_component_get_drvdata(component);
+ 	unsigned int gain_val[4];
+ 	unsigned int i, adc_vol_flag = 0, changed = 0;
+ 	unsigned int regvalue[4];
 -- 
 2.53.0
 
