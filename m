@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064756;
-	b=Y1getH5vBXrR+ITMOBzNoPrTIi9fQb+4eblPfkh1YMnvA428vDqsD3N+oWKYXnQaa3hv
-	 FbJu+5gfsWDesNgH2fIB/Nh3UiVS7ZHFgylEsF6DRQ355Ylr2SdO2tXzKj3ThRjEtZaba
-	 YrPq5EYcApn1GG2VCxVp/JLV2u5rpzyM1tsYNdC02J+znWwZNFggusiaShF2dNhD5PLgU
-	 J+TDVQqyFaMaFOacb8I7aSeLnY0NzaABFcr6zmjYjMtfcNPnSv0+oMZnpZnzGILYkk2/l
-	 q00PcTqp8vJqrCmPE7JEr+Y3LSTIaxg3hp5nbQlUJV+yN8M+s62ndAiR3isYwjiqZxA==
+	t=1794064758;
+	b=cwltpIr1RvYsxOcP/27AJzcIkiBaEZe1I6ppKeovd9Nj0xuQf3xZ/TDCiJRBMt0JNnXO
+	 z5gYRjzH3nGgEeBlUCuYlpiNDEUYJ7B5ZCktoivLjCUyyXV8QMpBqMus+zqI+xFah7+H/
+	 C7h28TcA+WqvSXFJGAisYWSxZfnZssVGE3ByashATtNmmdC5IaX03SMM4//H/eGe9Xnfc
+	 aQPb0P+MKpryqMosGxxWbE513pm9w4kO6KuXQYTYKLQbZ5UJqoUjfoCgALhu9cqkeGp5y
+	 tzbpFthDfkt8NQKi9woGvhQBAApRmXE8DJcnvhsVB2hl2NC0Ig3s7e74xOnTke5U34Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064756;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064758;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fJ7OivK2pnOl39s1BEfTEfIs+zv3Qu5iXVYt2TrKOSQ=;
-	b=YYCqKn7xe9GBQSNpUYGj7B7hnTSaq0HebjF4356uXcK1OwegADuuFW83MbZ7GOLKV2V3
-	 c0wgte/QwPWX0vhDLOaHn0Tn9Xjp5kHuJpbNQvetcsAWrQ2McWHQxF+hH/kaNF+VDpsgm
-	 LeVO6ODjOzUdneapV+ncZVoIBs5kt+UAKhndiUqUoM0aTFYvM5nt4CVpe3HM9EzEHgfsV
-	 oeAF6bSFRRcpPzMImhIB7eVJfJGxI/MizXitnk0sp9zVF824tcGwNFn/CO17Rul7X/Bxo
-	 ajl+sga0KV1tx+KlTFR8OUN61oCSaS8jtWUJ++BDs6hrTPy2umUarwJjEZTfMM08Yxw==
+	bh=1/jx0p/rxsMpUYEE9kfXcgGY4rOv5fg+Pv3wp7DIJxw=;
+	b=fpN+kGroiP9Iuv7/WmegI9COtvxfV5NWj4TlKqDuEhuSPjQxAaPOkbmobmPvKpqIc/ps
+	 i5y1K23xmNesV7EDyD1RuXTA4En0BQJETU274ir2pQP5fidz+2YXH5TnkMn670GGl2LAD
+	 npXHFn+NZ4UTpyqtk8gKaFv1b5Yvf6Ytrn7ZwU0ZnjYhI3OAnmGCgesEPmTLt5JASi3cD
+	 aDccsDLttspav+NXtEKZ1mD9yDt2UMepIC6lQjzE9PSrpF64RWw0teS+niIv14aiWpdHC
+	 7dxyqL0d55zIKvbWXt6hZ7ggIsyxqN/DK6QGVB225bEIZKYv2OBm4Fk40HQFzGdINcg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZEK23j3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T8kjM1xm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F73606A334;
-	Sat,  7 Nov 2026 15:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDE0606C002;
+	Sat,  7 Nov 2026 15:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZEK23j3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C031F0089F;
-	Sat,  7 Nov 2026 15:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T8kjM1xm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A890F1F008A2;
+	Sat,  7 Nov 2026 15:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064755;
-	bh=fJ7OivK2pnOl39s1BEfTEfIs+zv3Qu5iXVYt2TrKOSQ=;
+	s=korg; t=1794064756;
+	bh=1/jx0p/rxsMpUYEE9kfXcgGY4rOv5fg+Pv3wp7DIJxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ZEK23j3MseIQMK0g+GEU08fnBj9sV6kYVHO5fhK1RkrQAcEmh9RZpIyn6svw+1EQ
-	 PQ3A9Yg0BWzDx+qDRWeUlQmssgxqM3g4sxMxIKbBbe2NtUYmOlSsIXP2f/c7j2yfRI
-	 e5f/nLbA72JRwT+UYn1RmJFxWyyppc7ejNq4Jlww=
+	b=T8kjM1xmfWLCC/p7hjXCSkJEPFtSQthYk9KrDNVQqoUMImgB0WtSThkaZZj5LJEzU
+	 O49WbG1p8mOOBSEGD8E8z8oeXGFfVUzAUL3W2Yiwtr4kvaDVDU583FfdFsE9BC+v/F
+	 4LJ/Ndja4ihfYfDFP3LMWNzyCoIXQFi7wY7x4VtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0727/1257] f2fs: fix to use bio_in_atomic() in f2fs_read_end_io()
-Date: Sat,  7 Nov 2026 08:50:23 -0500
-Message-ID: <20261107134959.347796426@linuxfoundation.org>
+Subject: [PATCH 7.3 0728/1257] spi: ljca: validate the response length before copying the data
+Date: Sat,  7 Nov 2026 08:50:24 -0500
+Message-ID: <20261107134959.376834309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,74 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit a605d5d71a6d280c43c7ede9778dda63fb5c3f22 ]
+[ Upstream commit 0fe4573c822c4c9152e2fd5269ab85410c9e458f ]
 
-f2fs_read_end_io() uses "in_task() && !irqs_disabled()" to decide
-whether it is safe to sleep, the result is passed down as @in_task to:
-- f2fs_put_dic() -> f2fs_free_dic() -> f2fs_release_decomp_mem()
-  -> vm_unmap_ram(), which may sleep.
-- f2fs_end_read_compressed_page() -> f2fs_cache_compressed_page()
-  -> f2fs_grab_cache() -> f2fs_lock_cache(), which may sleep in
-  wait_on_bit_lock().
+ljca_spi_read_write() only checks that the response from the adapter
+carries the packet header and a non-zero payload length before copying
+r_packet->len bytes from the response into the transfer buffer.
 
-However, the check still treats below task contexts as sleepable:
-- with spinlock held via spin_lock(), i.e. preempt count != 0 while
-  irqs are enabled.
-- with BH disabled via local_bh_disable().
-- inside an RCU read lock on kernels with CONFIG_PREEMPTION.
-- with any spinlock held on kernels without CONFIG_PREEMPT_COUNT.
+The payload length is taken from the packet the device sent back and is
+neither bounded by the number of bytes actually received nor by the
+size of the requested transfer: a misbehaving adapter can announce a
+payload larger than what it actually sent, and the memcpy then reads
+past the end of the 60-byte input buffer and writes past the end of the
+caller's transfer buffer.
 
-So the "sleeping function called from invalid context" issue fixed by
-commit 08a7efc5b02a ("f2fs: vm_unmap_ram() may be called from an
-invalid context") can still be triggered.
+Check that the response carries the full header before reading
+r_packet->len, then reject responses whose payload is not contained in
+the data received or is longer than the requested transfer.
 
-The block layer provides bio_in_atomic() for exactly this purpose, it
-checks rcu_preempt_depth() and preemptible(), and conservatively returns
-true if CONFIG_PREEMPT_COUNT is disabled, let's use it instead. The
-difference is as below:
-
- old: intask = in_task() && !irqs_disabled()
- new: intask = !bio_in_atomic()
-
- Context                              | old intask     | new intask
- -------------------------------------+----------------+----------------
- Hard IRQ / softirq                   | false          | false
- IRQs disabled                        | false          | false
- spin_lock() held, IRQs enabled       | true (wrong)   | false
- BH disabled by local_bh_disable()    | true (wrong)   | false
- RCU read lock (CONFIG_PREEMPTION)    | true (wrong)   | false
- Spinlock held, w/o PREEMPT_COUNT     | true (wrong)   | false
-
-Note that on kernels without CONFIG_PREEMPT_COUNT, bio_in_atomic()
-always returns true, so dic freeing will always be offloaded to sbi->wq,
-and compressed pages will not be cached in f2fs_read_end_io(); this is
-the price of correctness, since there is no way to tell whether the
-current context can sleep.
-
-Cc: stable@kernel.org
-Fixes: 08a7efc5b02a ("f2fs: vm_unmap_ram() may be called from an invalid context")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: caee8e38da67 ("spi: Add support for Intel LJCA USB SPI driver")
+Cc: stable@vger.kernel.org # 6.8+
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261013031717.3933277-1-liuwb@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-ljca.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index d8965229e3e7a..cfd81bfc28a22 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -303,7 +303,7 @@ static void f2fs_read_end_io(struct bio *bio)
- {
- 	struct f2fs_sb_info *sbi = F2FS_F_SB(bio_first_folio_all(bio));
- 	struct bio_post_read_ctx *ctx;
--	bool intask = in_task() && !irqs_disabled();
-+	bool intask = !bio_in_atomic();
+diff --git a/drivers/spi/spi-ljca.c b/drivers/spi/spi-ljca.c
+index 0c6e6248d8ba3..8fd001610f67e 100644
+--- a/drivers/spi/spi-ljca.c
++++ b/drivers/spi/spi-ljca.c
+@@ -105,7 +105,12 @@ static int ljca_spi_read_write(struct ljca_spi_dev *ljca_spi, const u8 *w_data,
+ 			    (u8 *)r_packet, LJCA_SPI_BUF_SIZE);
+ 	if (ret < 0)
+ 		return ret;
+-	else if (ret < sizeof(*r_packet) || r_packet->len <= 0)
++
++	if (ret < sizeof(*r_packet))
++		return -EIO;
++
++	if (!r_packet->len || ret < sizeof(*r_packet) + r_packet->len ||
++	    r_packet->len > len)
+ 		return -EIO;
  
- 	iostat_update_and_unbind_ctx(bio);
- 	ctx = bio->bi_private;
+ 	if (r_data)
 -- 
 2.53.0
 
