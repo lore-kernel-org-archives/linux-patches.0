@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063810;
-	b=VrS/J5M2dhqZIEUUk8Jd54cuZmf3NKSldOszjrr50jYX4XqM+d0Dj0lf7x4Y8EqTijpH
-	 5IA+e6grFWTAokNgh1TvLfNyG6IEErFw4qw2WuRUQLKhAg18AocMvW44ZN2cKAC05teAe
-	 o6DbcOfC45cOMlriYOIFybkIcyTupyymyJRQOasrMVy3NkpBUa8MAtvzNJDExzilPSLQw
-	 O54qoS0GX19Cebtm19xFDS/fBXxT5NwGkjAPvfyBJfylUMoZVu9gWxBtB51PN1Jszt4Bh
-	 asfUFqHwQcz9LJnPe9i3Uo60yJy203yPUwVmVDX4wM02itdyCKsd76d28Obf4UiGkSQ==
+	t=1794063811;
+	b=s4eHcXNsGxGiaEhmGoJ8/NvkrYEjdCO4KyIjSPER6p59HX2mZ7jWn5eWol/yKk9tPUPY
+	 HbFWdJUOvuXnct9JAhcxuJgyuN/5t5StD5t1fI8Ob3I23C5BNjdNCN9WwN+C9zoJNNv01
+	 GlAf+zJL9CHuAiwwyu4p0qodErPvV9TvOMU6izi3hXEPHOyNu/VFBDL10z+zUvI038SW3
+	 p9Nu8cNTXw5bqJESxloVA7yR/4sGW1b6yWy7NHd0Rghdg7gmzCW4e9Uvl174pVWa0xilh
+	 aEdVOlZuDE/TUg1wvcySpQA7NgO+ZxQFytqWLcNm90+uqEU+03d1hPI1IZoQ1De2qDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063810;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DJ11ImIzeqkdrjejsV5H+oJrYDAsLfyPqXmkZwItblo=;
-	b=pQ5669UdeLdjjpk5tvRyRmthldbsfUt/3irnlhMcX+PmBLpcp8bF5uLPD1uaQqtfh0yW
-	 Vxe7zAa5FONn+dS8sRXNrMACTSPxcZT4VoavU06G+Lkuc+ZTHca4iZR4DypfdHVMerLA2
-	 vj5yb468JnB/vurszV+NExEXc08zdWpmR6u5mQ5qN8C8dDDb0FDME2Or1NSceDm0TUsmp
-	 91wtMUb5eeUJklvtBgkTADQHbxQ9lsc3yyZlg5PqqxZj0dFj/iaOAsaOc3Bg9mUGjT6Ct
-	 8n6ZOFGiZtQVntzQEEsdW9u2xsLW7+pXVo8MOisaPNsNJD+Bmn+vC23YFK5JqqndEuQ==
+	bh=etwrsGzrsT+li+aMKJECb8VdRd1BaD5UdO+ptay9UGM=;
+	b=0FSH4FvksxDeUmVP/fyICxthycG7PCvzjbiUOi8ZTbmggfT4BC9wzHvu11Bu4YiiHGV6
+	 ekC/ufh1oM0vPpO/HCr3nkAr4D3V+TetFQ6y56C3ZPu9izNtTuYFC/BpaGebmp3hhM5a7
+	 AapCskoMZdToPpJFnJyNNOwkjQ/x1GZk04FnWHDryCLrZcqUYvzuFWPwK5f+VO0QGekMG
+	 qLj+QAuF6Fh6ymaZMCFgzD2ixPbP8ECZ8wAGd8lxknNdtRfz329DItnNuPEmiKQytoGP2
+	 c1Yu4B+WY3/BICVE9wYz0wXrqSGb3tqbM8ZyPwhpJCwTjV+uYm077SN+ucmVTpGQVug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3IMsHSH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SQCs8dP2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51565606EE81;
-	Sat,  7 Nov 2026 15:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BAC6082BF2;
+	Sat,  7 Nov 2026 15:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3IMsHSH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008401F0089F;
-	Sat,  7 Nov 2026 15:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SQCs8dP2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2E91F0089F;
+	Sat,  7 Nov 2026 15:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063810;
-	bh=DJ11ImIzeqkdrjejsV5H+oJrYDAsLfyPqXmkZwItblo=;
+	s=korg; t=1794063811;
+	bh=etwrsGzrsT+li+aMKJECb8VdRd1BaD5UdO+ptay9UGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x3IMsHSHdEWymW1Jza1B0GTdifk2aMj7M5jPzUFo4SPzjmdI64tqRlfUE+oUUolXA
-	 g3vfYkYpV4/fW5RIPpxieYLxnA3jk2RX2qIdv6P+gKkruwsne9iVsr1/gU94FbRNBU
-	 42g5X5SCBapykKB2Lzbm+96VfvfVtxLiKePQxlls=
+	b=SQCs8dP2dt4e3ADvejiEoXgWEgT2xUl6R+7WHSod54hVuOVJJG6oahXzOLE2s7RHd
+	 WEXHgAD6gQHvgwf9Ls0X0KvAykIqdXQpNnL2JxReBGFnSjWLHco2zKYFnu4holvU7D
+	 GH8U/rzAtGOBrJgY9e4o2lW4YTuzbkwZa1icHCAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0028/1257] media: redrat3: Error path leaves device in transmitting state
-Date: Sat,  7 Nov 2026 08:38:44 -0500
-Message-ID: <20261107134940.183581740@linuxfoundation.org>
+Subject: [PATCH 7.3 0029/1257] media: sunxi-cir: Ensure no more interrupts can occur before free
+Date: Sat,  7 Nov 2026 08:38:45 -0500
+Message-ID: <20261107134940.213423470@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,61 +70,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Young <sean@mess.org>
 
-[ Upstream commit 8024d5e84531d828535365718278f1cf0ce67db0 ]
+[ Upstream commit f9b33ec404200c03dd490ec133b8f9bf599c5444 ]
 
-In the allocation failure error path, the transmitting boolean is not
-cleared. If this error path is followed the transmitter cannot be
-used again until the device is replugged or the module reloaded.
+Only call rc_free_device() once the hardware has been stopped.
 
-Fix the error path by moving the assignment statement.
-
-Remove the check for the transmitting state in transmit, since rc-core
-ensures there is never a reentrant call to the driver transmit function;
-the transmit function is always called with dev->lock held.
-
-The transmitting boolean is only used for interpretting firmware errors.
-
-Fixes: fac59136bc22 ("[media] RedRat3: Return directly after a failed kcalloc() in redrat3_transmit_ir()")"
+Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
 Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
 Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/redrat3.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/media/rc/sunxi-cir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/redrat3.c b/drivers/media/rc/redrat3.c
-index fc514d9f868b1..3e82b5e66477e 100644
---- a/drivers/media/rc/redrat3.c
-+++ b/drivers/media/rc/redrat3.c
-@@ -773,17 +773,9 @@ static int redrat3_transmit_ir(struct rc_dev *rcdev, unsigned *txbuf,
- 	u8 curlencheck = 0;
- 	unsigned i, sendbuf_len;
+diff --git a/drivers/media/rc/sunxi-cir.c b/drivers/media/rc/sunxi-cir.c
+index 28e840a7e5b8c..af1ee08ffdbec 100644
+--- a/drivers/media/rc/sunxi-cir.c
++++ b/drivers/media/rc/sunxi-cir.c
+@@ -374,8 +374,8 @@ static void sunxi_ir_remove(struct platform_device *pdev)
+ 	struct sunxi_ir *ir = platform_get_drvdata(pdev);
  
--	if (rr3->transmitting) {
--		dev_warn(dev, "%s: transmitter already in use\n", __func__);
--		return -EAGAIN;
--	}
--
- 	if (count > RR3_MAX_SIG_SIZE - RR3_TX_TRAILER_LEN)
- 		return -EINVAL;
+ 	rc_unregister_device(ir->rc);
+-	rc_free_device(ir->rc);
+ 	sunxi_ir_hw_exit(&pdev->dev);
++	rc_free_device(ir->rc);
+ }
  
--	/* rr3 will disable rc detector on transmit */
--	rr3->transmitting = true;
--
- 	sample_lens = kzalloc_objs(*sample_lens, RR3_DRIVER_MAXLENS);
- 	if (!sample_lens)
- 		return -ENOMEM;
-@@ -794,6 +786,9 @@ static int redrat3_transmit_ir(struct rc_dev *rcdev, unsigned *txbuf,
- 		goto out;
- 	}
- 
-+	/* rr3 will disable rc detector on transmit */
-+	rr3->transmitting = true;
-+
- 	for (i = 0; i < count; i++) {
- 		cur_sample_len = redrat3_us_to_len(txbuf[i]);
- 		if (cur_sample_len > 0xffff) {
+ static void sunxi_ir_shutdown(struct platform_device *pdev)
 -- 
 2.53.0
 
