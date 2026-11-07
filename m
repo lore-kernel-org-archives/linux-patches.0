@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062821;
-	b=FwW1uBGvKIZKoTLpSyBw0EcKpR7jxJWKKoOQwU0bKIIlFWj4KixF1ErG9c+IhMt6ub7j
-	 luo64rGLs+nfvaiO0UDHynECJIfbgbNuE/I55acmiDhpIRAX0oj3uXYUQgGs/zNz129ML
-	 BGk/FvpYVrEeRSgN8AbQhnTaaJyZiXzXrd05DCFZXZYUcf6soJ+WzbJ+W7hvIzY5sidK4
-	 nBCcIrrsctzJyKt3Ukqa54BdSTeupDIQ7qNjDHR9FntbKABsKi/eW5vEcWrwWuBcoaeCu
-	 Cw0KqEInZyiXpLxPje0xUXzzWHjOtOfWbsO1rnb385SLvP6ZgadWUDE8yNZi36WSPIw==
+	t=1794062822;
+	b=1nAlWwo+770Vf98asi1H62IwSqhGimSDNsnz+kOcmK0vpEPke3JJbnjY6pAztdFEENP1
+	 eRh2Aci4276MU8P20+tPY/0In7MuMDo/tMSRJX+iCBpzOofv8cDLab40EwmbotXsLV2qK
+	 KDBEw2DbNyklN+/e/+xTL2bgsOGjI99PaQHw6n8oC2mrxJIH7Y1J+JpM7ciSUfH02YCsE
+	 Gx8RJVwnGp8IXI8f/6fEl9UZ30OJYi8xmY/mobx6lHhC/NFx2kIBZwmEOEMffSutBLvKq
+	 FuoVbDsFXgzUqqeuUFzlcCv9k9yblRQJnzG0MUIYDWyNt36gd+atIWaEOTelrkMsNZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062821;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dhLkB+NyB0hTkq4DVQhoJQvbtSIp9MfuUA4kNbIoCB8=;
-	b=fhqwiME6mOSpWj1+6snwIOmEzzhilttRW/JM/SB+uS3KiOXvqlZXm7N1ByW68De70D4d
-	 nysQdlXqp7SJ4V2pfIJeLXP0O2Emcj/UMPKtsMlYBtmv2HlehHbnpd83q9sGVTf7QsuCt
-	 wPcdRyyypPJzrq4PNSgFkeAL3maueFWCPEoBHbN8OGIufIy78DarG5TpWzkdUC/1xnOuO
-	 Wj+r5Ogux4n2tDNu2iKmx5TTqcw1e0NZ5R/0jU2Tx7DssgZ/0d1IVJQpjpvWMaiKemrHg
-	 5lTJKcJXrlqer7F4MVoEqngDJhsIcnrrKN14MJmQ+pYXHLorICkS+IofFzgeXNx2oIQ==
+	bh=57QiWycvUPmtcigzWDEdXTm0VAO0T/30egl6p0mMY9w=;
+	b=KE+ouT4GLcqih6QFAzdgbZmNRj67EZrhGo8no3V+6St01Tn5o07UMhW3/HfcpMaBSt/f
+	 gVOX0kQG0MTuFUSEq9Xs8XwcHdKqadFgb/IS/Abf7DXfNO1LfSlMSkOg7kb4FnpEpAK6F
+	 Crc5H1FsmFX+PV0Az6EkGqS6Ydg44IPiRmyXXZzxGlIKiuZLehrEFQskgmEuJ+BVIb5xJ
+	 9rNst8gedP2PHXeXoMygijV80Lmz010Ao0vSQa4LMHR9/tt6ZNttK02mFyezsXirT8V97
+	 lJ3Nkcdfh+1uK57eoHsP4RqxDFhuoZeSfVO3DDMDeuPZhOhdbmhdnPKCJ18Weilh+nA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wIVHyfH8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pBoGCA7/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DB6606A336;
-	Sat,  7 Nov 2026 14:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6DC606A336;
+	Sat,  7 Nov 2026 14:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wIVHyfH8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B241F0089F;
-	Sat,  7 Nov 2026 14:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBoGCA7/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361401F0089F;
+	Sat,  7 Nov 2026 14:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062821;
-	bh=dhLkB+NyB0hTkq4DVQhoJQvbtSIp9MfuUA4kNbIoCB8=;
+	s=korg; t=1794062822;
+	bh=57QiWycvUPmtcigzWDEdXTm0VAO0T/30egl6p0mMY9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wIVHyfH8SvD6f02eeyAa7otA0wWdIMN8gkM2dqkfOg1vT5r7qZAbG2nUpJ1MvgrYr
-	 PWPwEWkxsj5Os8TVPjIvs38MR7EoO9bMM2nLrLTPbXfnbCQa8i2KViPQ66PuTEL+Bd
-	 SeoFac2fA+S1tcExdU/3YKr0D5J8AxxbSU2MCVOc=
+	b=pBoGCA7/GC0xsDDuWtx/h5uiNaDBJC4FBTzwNNNGoMJOTq9LVi1MnEaEKr7OtYyI3
+	 vvPBNwbnxFVvTIicRb9w3EFL7cK6PsFziMq0vFtZwG30/kZQDtCOIcsVe6adG0Qo3w
+	 CgtJBPLRFna5g3yRukZJI5U6hZ552UxNOtIovwU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengzhuo Wei <me@cherr.cc>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 118/869] power: supply: bq27xxx: synchronize work cancellation on suspend
-Date: Sat,  7 Nov 2026 08:46:40 -0500
-Message-ID: <20261107134856.538847704@linuxfoundation.org>
+Subject: [PATCH 6.18 119/869] power: supply: bq27xxx: Ensure poll work is cancelled on remove
+Date: Sat,  7 Nov 2026 08:46:41 -0500
+Message-ID: <20261107134856.567374849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,41 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengzhuo Wei <me@cherr.cc>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit f0ff5673aa07ded2bb383ac526c1faee4fe9ca07 ]
+[ Upstream commit db560f4b1c5253853f978385db066220e0c218dc ]
 
-The poll work requeues itself via mod_delayed_work() while the device
-is not removed. cancel_delayed_work() does not wait for a callback
-that is already running, so a poll racing with suspend can keep
-issuing I2C transfers after suspend returns and requeue itself into
-early resume.
+The di->work poll work is queued from the poll callback itself and from
+bq27xxx_external_power_changed(). The cancel_delayed_work_sync() in
+bq27xxx_battery_teardown() runs while the power_supply is still
+registered, so external_power_changed() can re-arm the work after the
+cancel, and it runs after the driver data has been freed.
 
-Use cancel_delayed_work_sync() to quiesce polling before suspend
-completes, as the teardown path already does.
+Register a devm_delayed_work_autocancel() before
+devm_power_supply_register(), so on unwind the power_supply is
+unregistered first, after which no new external_power_changed()
+callback can be dispatched, and the poll work is cancelled only then.
+Drop the now-redundant cancel from bq27xxx_battery_teardown().
 
-Fixes: dfcb264a01a9 ("power: supply: bq27xxx: Stop and start delayed work in suspend and resume")
+This issue was found by an in-house static analysis tool.
+
+Fixes: 740b755a3b34 ("bq27x00: Poll battery state")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shengzhuo Wei <me@cherr.cc>
-Link: https://patch.msgid.link/20260827-bq27xxx-suspend-cancel-sync-v1-1-77a67711cbc3@cherr.cc
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260903081312.225535-1-fanwu01@zju.edu.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/bq27xxx_battery.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 01c9ec1116fa0..4d4809a70b622 100644
+index 4d4809a70b622..cd30993b8a89e 100644
 --- a/drivers/power/supply/bq27xxx_battery.c
 +++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -2291,7 +2291,7 @@ static int bq27xxx_battery_suspend(struct device *dev)
- {
- 	struct bq27xxx_device_info *di = dev_get_drvdata(dev);
+@@ -43,6 +43,7 @@
+  */
  
--	cancel_delayed_work(&di->work);
-+	cancel_delayed_work_sync(&di->work);
- 	return 0;
+ #include <linux/device.h>
++#include <linux/devm-helpers.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+ #include <linux/param.h>
+@@ -2234,7 +2235,6 @@ int bq27xxx_battery_setup(struct bq27xxx_device_info *di)
+ 	};
+ 	int ret;
+ 
+-	INIT_DELAYED_WORK(&di->work, bq27xxx_battery_poll);
+ 	ret = devm_mutex_init(di->dev, &di->lock);
+ 	if (ret)
+ 		return ret;
+@@ -2255,6 +2255,12 @@ int bq27xxx_battery_setup(struct bq27xxx_device_info *di)
+ 	psy_desc->get_property = bq27xxx_battery_get_property;
+ 	psy_desc->external_power_changed = bq27xxx_external_power_changed;
+ 
++	/* Cancel the poll work after the power_supply is unregistered. */
++	ret = devm_delayed_work_autocancel(di->dev, &di->work,
++					   bq27xxx_battery_poll);
++	if (ret)
++		return ret;
++
+ 	di->bat = devm_power_supply_register(di->dev, psy_desc, &psy_cfg);
+ 	if (IS_ERR(di->bat))
+ 		return dev_err_probe(di->dev, PTR_ERR(di->bat),
+@@ -2281,8 +2287,6 @@ void bq27xxx_battery_teardown(struct bq27xxx_device_info *di)
+ 	mutex_lock(&di->lock);
+ 	di->removed = true;
+ 	mutex_unlock(&di->lock);
+-
+-	cancel_delayed_work_sync(&di->work);
  }
+ EXPORT_SYMBOL_GPL(bq27xxx_battery_teardown);
  
 -- 
 2.53.0
