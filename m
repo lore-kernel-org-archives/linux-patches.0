@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064797;
-	b=pdSpgKijUWA+ssF0/5l4iGNTT+5u1fGyWgXYTVBfgQBJV69fcxyA3c4jgclsf+LagPY1
-	 pAl1ePVmFJJ7gEcrE0lJyTKGwRx4qzwmQmuQ2MnEhsNQdrLAahyC/wZYt94Y6URPys55u
-	 W63k9SiYNxcwdixBZYgSy0FGaHWh+029ydpPfsQNXon10pFqbeD3AiZQYDMiNG1Tpb6u/
-	 MGlZ+H5n+7iaBb+ntA8LiHpSg5TpwEJIt9nQSUavwki0kUdx15i4X8fMRWbxPbC94KNhp
-	 fTIDRNAChS4puYTbaolOKu1Pxgm904kdeoA6N0DaROSobGm3pzKUA2Qba6lKmk0X9Mg==
+	t=1794064799;
+	b=D0eOKnrIazdBs0ruz0TaIaaSCWrRM/CAh8C2CyrXjDQ64LHZPRW/S9IP6YDeMquM9R15
+	 T0qhb5wp+FwqkySRlc9l8NrmWg7q9JQ/H5oZq6NEaUtKzhYQWCk0ZiDp53m/vlMsqvbuK
+	 JzA9iLAGFAMMScQr1RerLTaxKZ8Ty4PQYulNgNjqFg4C0xHXn9vcPoxp4WRbfjpA+rqHU
+	 Go+DtBKrHtQmsCKX7iBUfcMSZ5dJ7eXIHJCnap7TnkME/QHu40mPJR4+BYhznrUefTm9G
+	 PlZd+jFud9mT+wL6xcF/4gREZgalE+0BTHzO6XHbl8nSD0gk6aVV1MPzYgN+TVwrgjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064797;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=PQbdSOqTFiAFxCo9VDKPTSfvvrfrGo9Y5UtjZpbCGio=;
-	b=JfJdNIpFX8hPDFLOq9snuRis/9Rq7CU3RQ4HMB0t/RmDqxfPjM4+jpHFK4Nd1Vj20PYO
-	 PiKDnj66pRwLzu5JzyU1UIND62aT8AQJe729KEvxXK2c0JycVBWX1KVaiIK8OFI83xAbw
-	 5g5rz/QCKqpj8GCq7f7IE10+xwE8ZfWtw3NqkxS06qPfn6y9go7HwFVUassJqDJ+558XR
-	 0McU3w/n1m77Bv8owk1hk/2T5A7nbEvjOnrgErbfn07Xbj0Llm7g9uM7iwz6AgBWTVk0E
-	 FaprbjmrnmaIZOg518EKgBTjgxUP6sA4g8XZ6jTWLBCJeS/IfBXYOy9X0ZcBlk2kYcw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=jKLODsr7XEJL1NzJhlX02XXWx5xmSdqePUpQGPet5Sc=;
+	b=XfbvlZM7uVJ6TDfcElPO5WaWMw4SOfVBzQN6A59IDpyWLAr16AR1yWjbHYH1lcwnN110
+	 VUE9JeM8qLBC2ODYY9BgXaUdWqsQk698nvgUIJdKSAplnUE0gbVQort4bx349UCrohmFa
+	 jOnATDI4yYJyUbA+JNltU+v1fJolh00b6cnCNgFXOuoq1GctSaGLyULCY28WATbfXAv8e
+	 RtQkJykBqkWwn+Of2k2V10h8xTaFkTGyNBGnztMxBBNv2S9lMbYfSwT65T8FbkPylekUr
+	 EypgeBgti00Yvom+09QJ49/OmVAOdXQjv1H+TY+qarJpnlPqd0A/kMI9I+rYj8h7USQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j2JR7Wmh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iN1CCZPK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4BE606C01A;
-	Sat,  7 Nov 2026 15:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E991A606A33E;
+	Sat,  7 Nov 2026 15:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j2JR7Wmh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D9C1F0089F;
-	Sat,  7 Nov 2026 15:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iN1CCZPK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6579F1F008A2;
+	Sat,  7 Nov 2026 15:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064797;
-	bh=PQbdSOqTFiAFxCo9VDKPTSfvvrfrGo9Y5UtjZpbCGio=;
+	s=korg; t=1794064798;
+	bh=jKLODsr7XEJL1NzJhlX02XXWx5xmSdqePUpQGPet5Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j2JR7Wmh09Zvr20/rPN88pr0fjUDTjv2+BvQ2rCWzYY7tyJLyQ451IUvKbu6LZAWI
-	 beo/sUpxFNvujXVf87IKUyuzjnXbmSQYpLXOF830/qcM0Q3w3sKcOJ+rARrRNlOJ8s
-	 eALtwzmAbzKTWQl1exzfwhoUOjqQDbpeRRHEc2GU=
+	b=iN1CCZPKek7V5KeUsIIsOiFQtVYW2pz/84P5N3Ej3MjpUky0b/wyqHEADYd3WB9ys
+	 vjHZZjb2ONQo01uc6e4T1vKYktnvbKn/LTI//gFCNoRjrp3lQmYv24HXC/3MG7NFmZ
+	 yARKSKOvcjhpluLMiQDL0AN5eXO100ndlDpAugvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kazuki Hanai <hnkz.64@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Gabriel Krisman Bertazi <gabriel@krisman.be>,
-	Hugh Dickins <hughd@google.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Gergo Koteles <soyer@irl.hu>,
+	Philipp Oster <philippdev5396@outlook.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0740/1257] tmpfs: fix unicode_map leaks in casefold option handling
-Date: Sat,  7 Nov 2026 08:50:36 -0500
-Message-ID: <20261107134959.725539502@linuxfoundation.org>
+Subject: [PATCH 7.3 0741/1257] ALSA: hda/tas2781: Assign total_sz at the end of the function
+Date: Sat,  7 Nov 2026 08:50:37 -0500
+Message-ID: <20261107134959.753790708@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,82 +63,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kazuki Hanai <hnkz.64@gmail.com>
+From: Gergo Koteles <soyer@irl.hu>
 
-[ Upstream commit f439d79e8cd19f89e04cbb3b532347edacd72c79 ]
+[ Upstream commit 35911ab70c41957b4a8ac972af137a8e5ccbe259 ]
 
-shmem_parse_opt_casefold() stores the unicode_map returned by utf8_load()
-in ctx->encoding.  A filesystem context can receive the casefold parameter
-more than once, and a second successful parse overwrites the stored map
-without releasing it.
+In the tas2563_save_calibration() function, cd->total_sz is assigned in
+several error paths.
 
-The map is also leaked when an unmounted filesystem context is freed.
-This includes the temporary context used for remount, because
-shmem_reconfigure() does not take ownership of ctx->encoding.
+Move the assignment to the end of the function.
 
-Reject a second casefold setting, clear ctx->encoding after transferring
-ownership to the superblock, and release any remaining map from
-shmem_free_fc().
-
-An unprivileged user can repeatedly create tmpfs filesystem contexts, set
-the casefold parameter, and close them from a user namespace.  This causes
-unbounded kernel memory consumption and can result in a local denial of
-service.
-
-Link: https://lore.kernel.org/20261002081306.637148-1-hnkz.64@gmail.com
-Fixes: 58e55efd6c72 ("tmpfs: Add casefold lookup support")
-Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Gabriel Krisman Bertazi <gabriel@krisman.be>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: André Almeida <andrealmeid@igalia.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: <stable@vger.kernel.org>
+Fixes: b6016332b889 ("ALSA: hda/tas2781: clear cali_data.total_sz when calibration read fails")
+Cc: stable@vger.kernel.org # 6.18
+Signed-off-by: Gergo Koteles <soyer@irl.hu>
+Tested-by: Philipp Oster <philippdev5396@outlook.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/4b357778dce1b70a647e7e47b5ab3f0a6b2fc0cc.1791895478.git.soyer@irl.hu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/hda/codecs/side-codecs/tas2781_hda_i2c.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 93714b47f414b..de2362209cc38 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -4511,6 +4511,9 @@ static int shmem_parse_opt_casefold(struct fs_context *fc, struct fs_parameter *
- 	struct unicode_map *encoding;
- 	char *version_str = param->string + 5;
- 
-+	if (ctx->encoding)
-+		return invalfc(fc, "casefold parameter cannot be specified twice\n");
-+
- 	if (!latest_version) {
- 		if (strncmp(param->string, "utf8-", 5))
- 			return invalfc(fc, "Only UTF-8 encodings are supported "
-@@ -5000,6 +5003,7 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
- 
- 	if (ctx->encoding) {
- 		sb->s_encoding = ctx->encoding;
-+		ctx->encoding = NULL;
- 		set_default_d_op(sb, &shmem_ci_dentry_ops);
- 		if (ctx->strict_encoding)
- 			sb->s_encoding_flags = SB_ENC_STRICT_MODE_FL;
-@@ -5097,6 +5101,9 @@ static void shmem_free_fc(struct fs_context *fc)
- 	struct shmem_options *ctx = fc->fs_private;
- 
- 	if (ctx) {
-+#if IS_ENABLED(CONFIG_UNICODE)
-+		utf8_unload(ctx->encoding);
-+#endif
- 		mpol_put(ctx->mpol);
- 		kfree(ctx);
+diff --git a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
+index 5e5f46c9fb6b7..cff8fab8133a8 100644
+--- a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
++++ b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
+@@ -335,10 +335,11 @@ static int tas2563_save_calibration(struct tas2781_hda *h)
  	}
+ 
+ 	cd->cali_dat_sz_per_dev = TAS2563_CAL_DATA_SIZE * TASDEV_CALIB_N;
++	cd->total_sz = 0;
+ 
+ 	/* extra byte for each device is the device number */
+-	cd->total_sz = (cd->cali_dat_sz_per_dev + 1) * p->ndev;
+-	data = cd->data = devm_kzalloc(p->dev, cd->total_sz,
++	data = cd->data = devm_kzalloc(p->dev,
++		(cd->cali_dat_sz_per_dev + 1) * p->ndev,
+ 		GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+@@ -352,7 +353,6 @@ static int tas2563_save_calibration(struct tas2781_hda *h)
+ 			if (ret < 0 || ret >= sizeof(var8) - 1) {
+ 				dev_err(p->dev, "%s: Read %s failed\n",
+ 					__func__, var8);
+-				cd->total_sz = 0;
+ 				return -EINVAL;
+ 			}
+ 			/*
+@@ -370,7 +370,6 @@ static int tas2563_save_calibration(struct tas2781_hda *h)
+ 				dev_warn(p->dev,
+ 					"Dev %d: Caldat[%d] read failed %ld\n",
+ 					i, j, status);
+-				cd->total_sz = 0;
+ 				return -EINVAL;
+ 			}
+ 			bedata = cpu_to_be32(*(uint32_t *)&data[offset]);
+@@ -379,12 +378,7 @@ static int tas2563_save_calibration(struct tas2781_hda *h)
+ 		}
+ 	}
+ 
+-	if (cd->total_sz != offset) {
+-		dev_err(p->dev, "%s: tot_size(%lu) and offset(%u) mismatch\n",
+-			__func__, cd->total_sz, offset);
+-		cd->total_sz = 0;
+-		return -EINVAL;
+-	}
++	cd->total_sz = offset;
+ 
+ 	r->r0_reg = TAS2563_CAL_R0;
+ 	r->invr0_reg = TAS2563_CAL_INVR0;
 -- 
 2.53.0
 
