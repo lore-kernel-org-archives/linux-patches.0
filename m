@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064950;
-	b=C6hHgwezOi6qs79X8OEmN4rzF+g0u7Xa5giywRSB8JH9826SB0hYQB9ijx9pGw07kdie
-	 /0JQH7kIFz/LW24cR/qkN15P1vXsZl7YxvgrefCgh/KOu/cnT6zTJDh3S6zoT423z9Rek
-	 7IBVRCEdxmaXvcwYXBxAC08nL0cSIcnB1Wel639g0sP1RDHVGK7TAFKyImj1DtNvpSYqp
-	 a7qmgWVxsJ/VZCFnhdcWecEB4WuPX1ibOCOekRF3o/nFNOii1uQPn9DguQ/BpEqn7zUAd
-	 3raeWtfEpcCuRb1Ez2VET/PqJajSbaUEfHW6WjrGzjjN6QcQZE9ZJDdE9eRb0GftCjQ==
+	t=1794064952;
+	b=gX/h0xYWuC8jjIMtOKPQconMNutf+JZ6VH978xCCGJzKvUp4bC6b8JW47yEaUmCldqpM
+	 Jun926l+hHIybG6VhMjyOJdQZgk8SMc871LLKhpqNaw6USg+9HZqQCnpvuv9gvHIqcrcR
+	 eRv+g3BNum7WWHUa24vQ9gxMU8QozctLxyJ/Bu5PuGnG++OnTuQbYRxhmhTk1cYMS8U9g
+	 FfnSiab5rbl3rTz5PyKsy3jQwftGCDZsUZCOGmN/EV6Rj5V4kxoCa5f+t0q05d206OfLy
+	 kPkJnVmFtZJ2NxSL8s9K+Ds84/1x6nGRFcZ2RSYuRtEP7/Kz5T+WLJ3g7yQ0uTQo90Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5MTf+OFd7PDMOS46slbKsAQHNLM5cwEfeLWqciVDRXA=;
-	b=c0tikaXVfNiDteqEYorXiFFtCzs9QNxMMKuDJMCBAT6XJJUyeHK95oBJ4LQimSzjyaNb
-	 XcKvEDJpKqw5lkHpC5fH9a5M/3cSlYmpLkTZuknz/T87idDCmKxGLJqLwdI7jJ+DY+RJY
-	 eLfd+4KlfrJ7SLWUXIt960p6t6ER/Tx7bPo9VrKxDKqNGb7/sw8h59zHHfteK7mHJdQEh
-	 9UendkBZLwkuHy7Pe08hYmsUz4AGTJyFuRVz7hoUvRRsGBq8gOjIAJLpGzz2UxG5MxE03
-	 0aPTMgepYN581lWdEWqEBZ+WXbY1tS1/dsjpXkfQiPDtc0K2J4ZIs/ZC6d6HgWX7jxg==
+	bh=EdkHJjk3RPPwxpAs7BOL56KjFo9A8JDB/5Tv9AM0lWU=;
+	b=J2GWYE66V1DC7UZ9CD09qr7PgQrajZAxeG9intVC5jxGftmKY8yTO90kzzHqAX0hs4i2
+	 y2OGk1ZW1yNogPFgWGAMu9kb+7SuhFr3o2XsKPUxK67umPkNWiIiDka6Ne+p06wtu0NEF
+	 trKp64UByT/+mdsnoc/b6KXweDuaDwjU3Hxei1BXxmoO2VR84hnEI26shed4ilLZGcPhs
+	 mADE+GoG5JdjlW91MxPeS8NLSPenZTS8DVpI6m6XF6C3ccblSMlLsnoPKLb2Lz9apWSHt
+	 yO01e8mY1Ag66t89X8o+qYujmD4bbJf/hpeiMZEtsEeEhXDCwGsTmH9bXSLQbX/JxCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ttdGUlHo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pDnDHV3G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E59A606A335;
-	Sat,  7 Nov 2026 15:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E07606A335;
+	Sat,  7 Nov 2026 15:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ttdGUlHo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194B71F0089F;
-	Sat,  7 Nov 2026 15:22:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pDnDHV3G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572481F0089F;
+	Sat,  7 Nov 2026 15:22:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064950;
-	bh=5MTf+OFd7PDMOS46slbKsAQHNLM5cwEfeLWqciVDRXA=;
+	s=korg; t=1794064951;
+	bh=EdkHJjk3RPPwxpAs7BOL56KjFo9A8JDB/5Tv9AM0lWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ttdGUlHo8ZjJcyuedQ+LKqrmWBFmjePsGLAK0VYReAdTWG86W9+FURjzJLg/hT7eZ
-	 MvbPYqeJfFIfDhMrDDzrgLY3FO4wKUA/PYzWp9kMI79e8JEH9WMu/jOSisj+z3KbQh
-	 wkwlI7pZ+wuayhv6TO3mb3+Bk3GGvpcMTPa2cPyY=
+	b=pDnDHV3GJjMByFNvIT+t+D1FaLk3YYSzsdnYbfX9xzMaQVMg8xw4Tn+7nJqhi8XSZ
+	 SfukJzzFeBVjEb+FNHHcdGob4vzMmvhqf5gLAOLvht/OpLA9xxfDQbpwJdynwlUtF9
+	 NeMY6EyVJTAOs0/sbmE4/nEO7vc3hZXOeAoA9UXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0798/1257] KVM: arm64: nv: Move L2->L1 switch on interrupt early
-Date: Sat,  7 Nov 2026 08:51:34 -0500
-Message-ID: <20261107135001.371118301@linuxfoundation.org>
+Subject: [PATCH 7.3 0789/1257] irqchip/mchp-eic: Fix clock reference leak in mchp_eic_probe()
+Date: Sat,  7 Nov 2026 08:51:25 -0500
+Message-ID: <20261107135001.119123117@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,108 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 21d3b33234ebbb675c2a2a0fa7b12d2d83953d7a ]
+[ Upstream commit af9c707eb065a7d48eb92dc15acdb4346acf5db0 ]
 
-NV request generation to switch from L2 to L1 on interrupt is buried
-into the vgic flush code, while we should be able to deliver requests
-as early as possible.
+of_clk_get_by_name() returns the clock with an elevated reference count
+that mchp_eic_probe() keeps for the lifetime of the driver, but none of
+the probe error paths drops it, so the reference is leaked whenever
+probe fails after the clock has been obtained.
 
-Similarly, MI generation happens *after* the need for a request has been
-evaluated, which means we potentially delay the maintenance interrupt by
-a full exit/entry cycle.
+Put the reference in the error cleanup.  The clk_prepare_enable()
+failure path must jump there directly as it cannot call
+clk_disable_unprepare() on a clock that was never enabled.
 
-Move these two things to happen much earlier in the entry code, and make
-sure the MI generation and PMU interrupt serve as input to the request
-switching back from L2 to L1.
-
+Fixes: 00fa3461c86d ("irqchip/mchp-eic: Add support for the Microchip EIC")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261015100539.1011760-2-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260916190349.2094401-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/arm.c       | 4 ++--
- arch/arm64/kvm/nested.c    | 8 ++++++++
- arch/arm64/kvm/vgic/vgic.c | 8 +-------
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/irqchip/irq-mchp-eic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 0576c2022ef57..73706464d2653 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1314,11 +1314,11 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
- 		 */
- 		preempt_disable();
+diff --git a/drivers/irqchip/irq-mchp-eic.c b/drivers/irqchip/irq-mchp-eic.c
+index be007d325e672..5250e6baff63c 100644
+--- a/drivers/irqchip/irq-mchp-eic.c
++++ b/drivers/irqchip/irq-mchp-eic.c
+@@ -233,7 +233,7 @@ static int mchp_eic_probe(struct platform_device *pdev, struct device_node *pare
  
--		kvm_nested_flush_hwstate(vcpu);
--
- 		if (kvm_vcpu_has_pmu(vcpu))
- 			kvm_pmu_flush_hwstate(vcpu);
+ 	ret = clk_prepare_enable(eic->clk);
+ 	if (ret)
+-		goto unmap;
++		goto clk_put;
  
-+		kvm_nested_flush_hwstate(vcpu);
-+
- 		local_irq_disable();
+ 	for (i = 0; i < MCHP_EIC_NIRQ; i++) {
+ 		struct of_phandle_args irq;
+@@ -270,6 +270,8 @@ static int mchp_eic_probe(struct platform_device *pdev, struct device_node *pare
  
- 		kvm_vgic_flush_hwstate(vcpu);
-diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-index 41253fe45941c..bbd7042082b68 100644
---- a/arch/arm64/kvm/nested.c
-+++ b/arch/arm64/kvm/nested.c
-@@ -2045,6 +2045,9 @@ void check_nested_vcpu_requests(struct kvm_vcpu *vcpu)
-  *
-  * What follows is some slop to (1) react to exception routing / masking and (2)
-  * preserve the pending SError state across translation regimes.
-+ *
-+ * Also generate the maintenance interrupt state, and finally check that if
-+ * we need to take an interrupt targetting the guest hypervisor.
-  */
- void kvm_nested_flush_hwstate(struct kvm_vcpu *vcpu)
- {
-@@ -2053,6 +2056,11 @@ void kvm_nested_flush_hwstate(struct kvm_vcpu *vcpu)
- 
- 	if (unlikely(vcpu_test_and_clear_flag(vcpu, NESTED_SERROR_PENDING)))
- 		kvm_inject_serror_esr(vcpu, vcpu_get_vsesr(vcpu));
-+
-+	vgic_v3_nested_update_mi(vcpu);
-+
-+	if (vgic_state_is_nested(vcpu) && kvm_vgic_vcpu_pending_irq(vcpu))
-+		kvm_make_request(KVM_REQ_GUEST_HYP_IRQ_PENDING, vcpu);
- }
- 
- void kvm_nested_sync_hwstate(struct kvm_vcpu *vcpu)
-diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
-index 5cf5a1ef86cdd..7061b4ab206c9 100644
---- a/arch/arm64/kvm/vgic/vgic.c
-+++ b/arch/arm64/kvm/vgic/vgic.c
-@@ -1152,7 +1152,7 @@ void kvm_vgic_flush_hwstate(struct kvm_vcpu *vcpu)
- 	 *
- 	 *   We do that by placing a request to ourselves which will
- 	 *   abort the entry procedure and inject the exception at the
--	 *   beginning of the run loop.
-+	 *   beginning of the run loop (see kvm_nested_flush_hwstate()).
- 	 *
- 	 * - Otherwise, do exactly *NOTHING* apart from enabling the virtual
- 	 *   CPU interface. The guest state is already loaded, and we can
-@@ -1162,16 +1162,10 @@ void kvm_vgic_flush_hwstate(struct kvm_vcpu *vcpu)
- 	 * maintenance interrupt state, as it may fire.
- 	 */
- 	if (vgic_state_is_nested(vcpu)) {
--		if (kvm_vgic_vcpu_pending_irq(vcpu))
--			kvm_make_request(KVM_REQ_GUEST_HYP_IRQ_PENDING, vcpu);
--
- 		vgic_v3_flush_nested(vcpu);
- 		return;
- 	}
- 
--	if (vcpu_has_nv(vcpu))
--		vgic_v3_nested_update_mi(vcpu);
--
- 	DEBUG_SPINLOCK_BUG_ON(!irqs_disabled());
- 
- 	vgic_flush_state(vcpu);
+ clk_unprepare:
+ 	clk_disable_unprepare(eic->clk);
++clk_put:
++	clk_put(eic->clk);
+ unmap:
+ 	iounmap(eic->base);
+ free:
 -- 
 2.53.0
 
