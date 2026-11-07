@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063164;
-	b=g3/XCdh6YGQBsKhuAVOi14qc34d27I5gStiHJOtU4X5f6rdUVmwlXIfLZGEg8VWend09
-	 O2fOz0CvmGxGVVe3EVjiOF26g0SpTT2V9qxHtcOkTTSMdusBYCi0vM31yraZEFTcDT1bF
-	 n8weCKd67lsZKrQjg+p4+gJelsksvGjSZ59ZSw9JkcO2zMqwvUpzyvYhRrz8Nprhmot4V
-	 Wl6aCM8bTsddhObMysFzR19ZZapBECNoXVV3Uiec0yHG981oab3Dn/TZypwyloqKl7K8I
-	 1ICKKR84a9ZpPKUAoYpg3MEPeFTlgnhNYuXO04YeE2NKDoWZR81wYvZeXpfA9/QKBdA==
+	t=1794063165;
+	b=l3nd7wjQGpyj+b0rVgnEONAK7ncNBtzaf8Azib3fArmUNFSAYMbGxA7h8/xYPPlQDMG8
+	 Xru1yD6rt+ppE5hFJ0F0kXPPOB+9AURXKPHC9NayTeflFJXHkZrLk8RLu0xjt+tuuMYJ5
+	 vvgYKUIG04zvDLm3LsJgBRq7IGTScy3F2HUmoKrd5k0X+maDd2jx8rd1Q0KIWQ2LK/8pj
+	 HB1akcBCqpxx/wEPoWXE4f8rV6Y26qcBUwgHPxMA64rKZ5BpELouDTJ5AUDlLU19uFTR4
+	 1aaJmceDstm+1WjugvnMMryi4OVmZ9hYDz4cfH/X7cxeE95jC/P/PzQAOtgpJND9zzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063164;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063165;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PE0p5/OeYudstkbIlTRct/yJPqPb6Cj2QRmdxkHCV8E=;
-	b=I2yYj9GlAbLfkyOTL1FXvfQOm7otvKTxWOMcssendKv6SaLHGbjES1w82SVrP1YfeBUL
-	 CfaT+DQAwHPGJqyVopxoZ4hK/B5qeHqTsLv2rvdlSnm+8mT/skCtI7MpMqdvteCtj7mo6
-	 7ysb3pK27P+dLzHlGuhOdcuYi7NpbguJSjhEidbkPjFtO2B6ZRKYTdScE+u1C1KMXdaQd
-	 yn8ZKxRTYAB9F+Cox4TRGY1U60X+3OjXHEHZvIB+bhK8WyBv0hm2QSGDgCwl9+nCsxwjv
-	 AJZcwBKrxNz+WLAWaD7ozRzh9SbxU2GaJJpRSqhhn57l9bmdEDgESHT51SPZZ8t2eLA==
+	bh=IZI6z2m3JMVuc1CEMGIWHqQpid9jAcGqUQPFZ07PXjc=;
+	b=gC5FBjPniX6ohdU6BxdnDYQwblI9MwJRMP3itWNJ5KS5x72EUVuljy+ouPCnLcYce8YP
+	 wOFOTVnh4wmgOmwynaT+EXvwDk60Nt4fabFNS6EOvw/nQDyPZ0kBHLJn6h6yPfn5FLars
+	 Y2aXQnwn+dcvDz8nZN1SgS9TZ+e2pP+zu8aZFxS1Vw/K9fwVkC3syfTcyjsbCsY4G1vIN
+	 vK9+X/aD7Dw0+riG4pGQTwoqkHCs+LQuETJp3tuZKoqm4QSnFOGN207v9nxwlMQ9pVqnb
+	 ipcwUZa1ROBjRbPPoSxHjWcWPG9ASs74P18Xmc350EFbj0UXkvIzLqhi1f6Zn/gz6Lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yp5bgE8Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FsovErWI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1DD606D833;
-	Sat,  7 Nov 2026 14:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22ABF606D80F;
+	Sat,  7 Nov 2026 14:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yp5bgE8Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534CC1F0089F;
-	Sat,  7 Nov 2026 14:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FsovErWI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BA21F0089F;
+	Sat,  7 Nov 2026 14:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063163;
-	bh=PE0p5/OeYudstkbIlTRct/yJPqPb6Cj2QRmdxkHCV8E=;
+	s=korg; t=1794063165;
+	bh=IZI6z2m3JMVuc1CEMGIWHqQpid9jAcGqUQPFZ07PXjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yp5bgE8Zb60/48XHtvKfcdl/mE1gDxLVcddYBTb3b2fYO9GDoCYxVEY2Rw0KGhSM7
-	 QJJ7RxQ/gCA4CGRB2rTJVVUE+18wYag4voRWT9n3HXEEs+eHa6saxOkv2hQ64d62Ee
-	 xhYmEKCOuAYr2DeQIpotVYvBvZX0REnbtDu6BhtQ=
+	b=FsovErWIUtRgN/d/hKx5S2UACYAp43BkQuYmGZtJXOSvO6JLIL/i5UrkxQ7EidhVR
+	 DUhSqWIJWHKL7b4Zws6a1BPaBFK0f2RqCzfZPJSgnu2L/30AegKmQ2ZbCn/vUzuy1T
+	 TcQAbbvKST3m/fXd0miDJ7xIjgbqKFILLi82YRk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
+	DAI RENJIE <drj19981414013@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Lian Wang <lianux.mm@gmail.com>,
-	Kunwu Chan <kunwu.chan@gmail.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Quanmin Yan <yanquanmin1@huawei.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Mark Brown <broonie@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 385/869] mm/damon/sysfs: set next refresh jiffies per sysfs context
-Date: Sat,  7 Nov 2026 08:51:07 -0500
-Message-ID: <20261107134906.437857068@linuxfoundation.org>
+Subject: [PATCH 6.18 386/869] resource: fix lost wakeup when waiting for a muxed region
+Date: Sat,  7 Nov 2026 08:51:08 -0500
+Message-ID: <20261107134906.525810406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -73,85 +72,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: DAI RENJIE <drj19981414013@gmail.com>
 
-[ Upstream commit b9100ecb5411d2de79175ed534df72ec41e94998 ]
+[ Upstream commit 405c00e43a9c72a0b9b318cc2d2e298386ffb58e ]
 
-When 'refresh_ms' is set, DAMON sysfs interface periodically updates
-auto-tuned parameters and DAMOS stats.  The timestamp for the next refresh
-is initialized when a DAMON context starts, and updated in its
-damon_call() callback function.  That is, each DAMON context updates it.
-However, the timestamp is a global variable that is shared with all the
-contexts.  When there are multiple DAMON contexts having different
-refresh_ms, the update frequency will be changed, depending on the order
-of the contexts.  When there are multiple kdamonds, it will be even more
-chaotic.  Fix the problem by having the timestamp per each context.
+A task waiting for a muxed region can sleep forever in
+TASK_UNINTERRUPTIBLE even though the region it waits for is already free.
+__request_region_locked() queues itself on muxed_resource_wait and drops
+resource_lock before setting TASK_UNINTERRUPTIBLE, while
+__release_region() wakes the queue after dropping the same lock.  A wakeup
+landing in between finds TASK_RUNNING, does not match TASK_NORMAL and is
+discarded; callers hold a muxed region only across a bounded transaction,
+so no further release is coming.  The task is unkillable and its caller
+never returns.
 
-The user impact is not very critical.  It does not leak, corrupt or crash.
-The update will not be faster or slower than the lowest and largest
-refresh_ms values of the contexts, respectively.  The user can also
-manually ask the updates on demand using kdamond state commands.  That
-said, clearly this is a bug and can easily be reproduced.
+The window is one store wide, but an interrupt is enough to hold the
+waiter in it, and the machine this was seen on runs PREEMPT_DYNAMIC in its
+voluntary default.  Since v6.11 spd5118 exports the DDR5 sensors of AMD
+boards through i2c-piix4, which takes a muxed region per SMBus
+transaction; a third of the in-tree users of request_muxed_region() are
+hwmon drivers, so reading a world-readable attribute is all an
+unprivileged user needs to drive the contention.  The blocked task sleeps
+holding the i2c adapter bus lock, and 27 more piled up behind it.
 
-Link: https://lore.kernel.org/20260902002725.108635-5-sj@kernel.org
-Fixes: 9fd7bb5083d1 ("mm/damon/sysfs: change next_update_jiffies to a global variable")
-Signed-off-by: SJ Park <sj@kernel.org>
+Reproduced by building a kernel with the two orderings selectable at
+runtime and a 2ms delay inside the window.  Switching only that knob, a
+two-thread barriered reproducer loses the wakeup 200 times out of 200
+before the fix and 0 out of 200 after it; without the delay it goes 20000
+times through the wait path and loses none.
+
+Fix it by setting the task state before dropping resource_lock, as
+prepare_to_wait() does: the releasing side needs resource_lock to unlink
+the resource, so it cannot reach the wakeup before the state is published.
+
+Link: https://lore.kernel.org/20260821-b4-resource-muxed-lost-wakeup-v1-1-37eb6473a76c@gmail.com
+Fixes: 8b6d043b7ee2 ("resource: shared I/O region support")
+Signed-off-by: DAI RENJIE <drj19981414013@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Lian Wang <lianux.mm@gmail.com>
-Tested-by: Lian Wang <lianux.mm@gmail.com>
-Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@davidgow.net>
-Cc: Quanmin Yan <yanquanmin1@huawei.com>
-Cc: <stable@vger.kernel.org> # 6.18.x
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: Claude:claude-opus-5
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/sysfs.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ kernel/resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 3a79d8c89b5bb..1ae026d099a2e 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1199,6 +1199,7 @@ struct damon_sysfs_kdamond {
- 	struct damon_sysfs_contexts *contexts;
- 	struct damon_ctx *damon_ctx;
- 	unsigned int refresh_ms;
-+	unsigned long next_refresh_jiffies;
- };
- 
- static struct damon_sysfs_kdamond *damon_sysfs_kdamond_alloc(void)
-@@ -1567,17 +1568,15 @@ static struct damon_ctx *damon_sysfs_build_ctx(
- 	return ctx;
- }
- 
--static unsigned long damon_sysfs_next_update_jiffies;
--
- static int damon_sysfs_repeat_call_fn(void *data)
- {
- 	struct damon_sysfs_kdamond *sysfs_kdamond = data;
- 
- 	if (!sysfs_kdamond->refresh_ms)
- 		return 0;
--	if (time_before(jiffies, damon_sysfs_next_update_jiffies))
-+	if (time_before(jiffies, sysfs_kdamond->next_refresh_jiffies))
- 		return 0;
--	damon_sysfs_next_update_jiffies = jiffies +
-+	sysfs_kdamond->next_refresh_jiffies = jiffies +
- 		msecs_to_jiffies(sysfs_kdamond->refresh_ms);
- 
- 	if (!mutex_trylock(&damon_sysfs_lock))
-@@ -1645,8 +1644,8 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
- 	}
- 	kdamond->damon_ctx = ctx;
- 
--	damon_sysfs_next_update_jiffies =
--		jiffies + msecs_to_jiffies(kdamond->refresh_ms);
-+	kdamond->next_refresh_jiffies = jiffies +
-+		msecs_to_jiffies(kdamond->refresh_ms);
- 
- 	repeat_call_control->fn = damon_sysfs_repeat_call_fn;
- 	repeat_call_control->data = kdamond;
+diff --git a/kernel/resource.c b/kernel/resource.c
+index fe1327753a135..139fb5e19cbe0 100644
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -1300,8 +1300,8 @@ static int __request_region_locked(struct resource *res, struct resource *parent
+ 		}
+ 		if (conflict->flags & flags & IORESOURCE_MUXED) {
+ 			add_wait_queue(&muxed_resource_wait, &wait);
+-			write_unlock(&resource_lock);
+ 			set_current_state(TASK_UNINTERRUPTIBLE);
++			write_unlock(&resource_lock);
+ 			schedule();
+ 			remove_wait_queue(&muxed_resource_wait, &wait);
+ 			write_lock(&resource_lock);
 -- 
 2.53.0
 
