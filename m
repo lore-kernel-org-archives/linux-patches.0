@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062599;
-	b=1hBrVEHFwE4TzwKXSGKrxt9fh1XiJv3iC4ThZuJ81Nua6qryCwRi5jPEwOppb2wVVjWa
-	 TidsqQJCk9VFTK+0Of/vpD0dv/l9iylKHiPfxmWftAeQMrjr0/r9HkFZK2bKc1kr+nxlW
-	 1CntPTc0lLMfSVuiaNNZFoFF2TDHUdPTg2slethRQHiMCYnkRKD4S1KNJEr12Wz/Y6Hvm
-	 kfdVDo+MVTOycYwNwctEhY07geXZE+vk8NZfW5hcvQQwNmiSsUWupdkp/1mF0z4U4gx9V
-	 tGzYowa9vAzlWcY8P70oQGac8aUHxzJo6wgO5f8KeNK1s/9Q5MA2LPsWmpv7/tew1NA==
+	t=1794062600;
+	b=m8ppeKCOGrNUWsU54rfGB94kU3GnWvTsPm0viCIeg88iViBPLp2GvlLETBx4QErgbq5+
+	 6+Ct/n1zLnA/TUp4BwylrFhjGagHbNiOO9eKrm37GUaQ4VFqVjtvJ8fvkgxukQ/PoQwHS
+	 5eDInlBslNsyU4O/0u8JR7sG+9EodUNb8mP4m29XDlUjGcykNFaFQtx4LznOPmaBoOBsq
+	 5DkLUELz44AmEbGGJW5Nh30W4q0if/wm08oenugl736dLI/xkep8rtIzmlWhgiC9czyix
+	 p4Qlx6HKEVGU0kK985//KJFX1FwKoJLibItaXV08Oy+pYcOb+uWx3QyMEqSmVyuGsxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rEKs8w42PNHfu7UvQILpp6w9ygUzYjzBvNTikpUjbkM=;
-	b=hFz4+qVjrR+W1XCWzY3FGhGdoAVMtNgngy9goYu5unWiLI4RQY12/PQVISunLKgXuD6w
-	 OWijtHMKgnMTEnXduw6u6O/c1OmfseG4Ei1B/Yp9OyW7gfjLZh9MAO8qyCv3dB0N+eDYG
-	 z/QLufJQV7pe0LNh8ghBZ3jxTVl3PRI96rABKsdFCJjQAXe3TgAeC2qFpaWHwd/5zhun6
-	 foVETKWBt/2m8jLyDRnBPcHHGN7HmTtdY42sJjYekuw258BsrJH2rXnr8hg3ELPQW1gdV
-	 HNSFHKNFnY7RlA85ftQHLHbJJtRLkxDW5wM0k6jRAtfS1LCw57UTiaZxoaHySgWW+QA==
+	bh=jzIiOBbm1EFNyI/0D4JgeGH6hMdBjgbDeBKSfgcQPdU=;
+	b=COO11KXW9tQf6w2yfBAymy3wBU4wBuxQTEbD/J6OIDmk7A/ZnV989fX7HiSB7FLUZpjz
+	 MlUsl+MSrh0ho8S8h1+AW800Fozj3TQbILwbZ3B3COjOqc9Zd+mIHIxvJMtPXUAeQjpSh
+	 ndAEVStaU3aosna6m3/MjadKM65y848RZ+zDCiYB0XwUad9EhEd2wVjUvABUPYZ8rd+Sy
+	 ICG3jodoEe1v3P03fEiAHAWK9adtpef800+SqilRQl3xHzIdS30mUeh9O92RFdjipYaBd
+	 yaKe7OniL6h5cgKy6oIeKrzS3/nzq7OE6n0Z99c8YVUPlbb4swSQKf65MTbQAagvEOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3G9bceR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M4lOOuEB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF6D606D81A;
-	Sat,  7 Nov 2026 14:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17060606D81E;
+	Sat,  7 Nov 2026 14:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3G9bceR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0901F0089F;
-	Sat,  7 Nov 2026 14:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M4lOOuEB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42CA1F0089F;
+	Sat,  7 Nov 2026 14:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062598;
-	bh=rEKs8w42PNHfu7UvQILpp6w9ygUzYjzBvNTikpUjbkM=;
+	s=korg; t=1794062599;
+	bh=jzIiOBbm1EFNyI/0D4JgeGH6hMdBjgbDeBKSfgcQPdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g3G9bceRmKegk7lnXt1NXs5tsvOh+4+JA1WMzUNM6mj62u4mJm2p1gk4LXbDB8fxq
-	 ckBan1XziVs3lI7/PNxWQU3fYa5j+0hR9VqpubBRWiWSc/oRhnjrUf6JAaHPPeWufZ
-	 9kI2ex8yOzW1yNp0lhw8xSN5l86xEFXg5QicZQY0=
+	b=M4lOOuEB0gsi0eAibEsT1/l430JUPEnO1CIcyveGHj1UmZt475D1OUMYusry+GYtY
+	 aFONDKWUwudLHwUSDqKdZpSSlEDW4d4BXwPX9OkgjNQ2v1kCVKvZfHzMgx7wzc6hHE
+	 N0MF0Vd7OYiX4T3Qag04La/RVcvxo3vBJAoGSz9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Val Packett <val@packett.cool>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1473/1536] ceph: fix uninitialized err in ceph_netfs_issue_read()
-Date: Sat,  7 Nov 2026 08:58:09 -0500
-Message-ID: <20261107135039.219445185@linuxfoundation.org>
+Subject: [PATCH 6.12 1474/1536] ASoC: qcom: qdsp6: q6afe: fix clk vote response type mismatch
+Date: Sat,  7 Nov 2026 08:58:10 -0500
+Message-ID: <20261107135039.249791410@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,48 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Markuze <amarkuze@redhat.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 823d21c78453fcdf58dbd8ecefbb41f4f3eb6540 ]
+[ Upstream commit f3c7bee984aa0ba2b48a44e16a6f3ec2c27f851e ]
 
-ceph_netfs_issue_read() declares err without an initializer. On the
-unencrypted, non-sparse success path nothing assigns it, then the
-out: label does if (err) netfs_read_subreq_terminated(subreq).
+The response sent by the firmware when requesting a clock vote (opcode
+AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST) does not actually have
+the same opcode + status payload as APR_BASIC_RSP_RESULT. Rather, it
+returns one single u32 which is the client_handle that must be used in
+future unvote requests for the same clock.
 
-With CONFIG_INIT_STACK_ALL_PATTERN, err is 0xaaaaaaaa (nonzero), so
-the subrequest is terminated while the OSD READ is still in flight.
-netfs then frees the rolling buffer that the OSD iterator still
-points at, causing a KASAN UAF / oops, and finish_netfs_read()
-terminates the same subrequest a second time. CONFIG_INIT_STACK_ALL_ZERO
-hides it because err happens to be 0.
+As a result of this type confusion, the status returned by the callback
+to q6afe_vote_lpass_core_hw was actually an out-of-bounds read. It was
+only interpreted as success (0) most of the time due to luck, but there
+are some reports of random errors such as:
 
-Restore the err = 0 initializer so a successful submit leaves
-completion to finish_netfs_read() only.
+[   20.961100] qcom-q6afe aprsvc:service:4:4: AFE failed to vote (3)
+[   20.961131] Failed to prepare clk 'core': -110
+
+Fix by correctly interpreting the response as a single u32, and actually
+store it as the client_handle to ensure unvote would work correctly.
 
 Cc: stable@vger.kernel.org
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Alex Markuze <amarkuze@redhat.com>
-Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://lore.kernel.org/all/5976946.DvuYhMxLoT@antlia/
+Fixes: 55e07531d922 ("ASoC: q6dsp: q6afe: add lpass hw voting support")
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Signed-off-by: Val Packett <val@packett.cool>
+Link: https://patch.msgid.link/20261016063536.598610-1-val@packett.cool
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6afe.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 611019005f147..aa551d94be1c6 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -352,7 +352,7 @@ static void ceph_netfs_issue_read(struct netfs_io_subrequest *subreq)
- 	struct ceph_client *cl = fsc->client;
- 	struct ceph_osd_request *req = NULL;
- 	struct ceph_vino vino = ceph_vino(inode);
--	int err;
-+	int err = 0;
- 	u64 len;
- 	bool sparse = IS_ENCRYPTED(inode) || ceph_test_mount_opt(fsc, SPARSEREAD);
- 	u64 off = subreq->start;
+diff --git a/sound/soc/qcom/qdsp6/q6afe.c b/sound/soc/qcom/qdsp6/q6afe.c
+index ef7557be5d664..f33f1c97c1368 100644
+--- a/sound/soc/qcom/qdsp6/q6afe.c
++++ b/sound/soc/qcom/qdsp6/q6afe.c
+@@ -370,6 +370,7 @@ struct q6afe {
+ 	struct q6core_svc_api_info ainfo;
+ 	struct mutex lock;
+ 	struct aprv2_ibasic_rsp_result_t result;
++	uint32_t vote_result;
+ 	wait_queue_head_t wait;
+ 	struct list_head port_list;
+ 	spinlock_t port_list_lock;
+@@ -874,13 +875,14 @@ static int q6afe_callback(struct apr_device *adev, struct apr_resp_pkt *data)
+ 	struct aprv2_ibasic_rsp_result_t *res;
+ 	struct apr_hdr *hdr = &data->hdr;
+ 	struct q6afe_port *port;
++	uint32_t *vote_res;
+ 
+ 	if (!data->payload_size)
+ 		return 0;
+ 
+-	res = data->payload;
+ 	switch (hdr->opcode) {
+ 	case APR_BASIC_RSP_RESULT: {
++		res = data->payload;
+ 		if (res->status) {
+ 			dev_err(afe->dev, "cmd = 0x%x returned error = 0x%x\n",
+ 				res->opcode, res->status);
+@@ -907,8 +909,10 @@ static int q6afe_callback(struct apr_device *adev, struct apr_resp_pkt *data)
+ 	}
+ 		break;
+ 	case AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST:
++		vote_res = data->payload;
+ 		afe->result.opcode = hdr->opcode;
+-		afe->result.status = res->status;
++		afe->result.status = 0;
++		afe->vote_result = *vote_res;
+ 		wake_up(&afe->wait);
+ 		break;
+ 	default:
+@@ -1722,6 +1726,8 @@ int q6afe_vote_lpass_core_hw(struct device *dev, uint32_t hw_block_id,
+ 			       AFE_CMD_RSP_REMOTE_LPASS_CORE_HW_VOTE_REQUEST);
+ 	if (ret)
+ 		dev_err(afe->dev, "AFE failed to vote (%d)\n", hw_block_id);
++	else
++		*client_handle = afe->vote_result;
+ 
+ 
+ 	kfree(pkt);
 -- 
 2.53.0
 
