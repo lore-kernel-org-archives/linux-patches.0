@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061524;
-	b=2u/z20sGn43d+3uiiZ7yDBLUUATMWObLdDlKmTLEBuYHTK2K8BWLdxPkKfg4nfdGHVzH
-	 mllgzX+UMsANzi/v+Ug+oirAtJLEXN3E85oyEwIAI9cP4zpeWhoJa+gA9NAK7mnWRtGIv
-	 ykY165URVVJJ10cQKUWVsp6Lh2kQ6ywb7A0hTOmt+Fa31u5fmMFtnYR2o6x+rO/2U68a1
-	 GNKnF3uWKdtruZw0KPKI9zTpWBas2EAuCa2pA+mr9eU1QKYcTI09Fv5xi/pGNTtsx4Sht
-	 gb8Us67LyDe7CuF2XC/Morjm8Cs2kVA6Wkkhjqfjzq/IwpdrcRPLNTN7E7b1fUGOTDw==
+	t=1794061525;
+	b=BEnyrR43armNg0+FOtLc5Jf8nzE/MUpS96wv7cwxwOGCAJeayZMD/Ln1W0jXmS1RRblN
+	 A9z3aetJzY4zIGTukHnzeAkTw0UTelEZ5QnRj5Y3juocG9B5Hjdk3XME/WZva6MTYsC1R
+	 mOM9G79fHPDydST7Fi1asiEhxeOaRKRd8/GSVZiM/67RuLyP/0b4C2mctRT8aG34kceyu
+	 pm+73zNL+0WxtzmVXWLmc47ltskiQz37LoMirtogu+Zl050+RjoKut+GEx3cEJktZk9ps
+	 sggjYEwOK9CEGmEO9IQAqa8vR+Z9ZSoOKXGPKHQbEzvGgYhhK4LypMXtrrDH7qfhP0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061525;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7ue+7XqjN5wUM/CF8hgFycdX3HbOCnYGlEnPI6SBgzI=;
-	b=PKm26kCxOC8pNPVTYXILqTc3ugYqor/MKJwslikjIAcKZDGre7ZqE0IwiuZrjQcHjTrw
-	 k7hHPOdIIYogYlTdt1kl/hWpw8mfvzdNSfvIKf8avNNuh5c03Ds/Va3B4Jo+AluxygG5b
-	 l5k2SBXloRjt4xKhHmZuEsc0R6XP8s3bhq93dV6pvPm3OkCZu8ZbU+FEP7QsUYFVIKlDk
-	 zaflYPmS9n6ddDh6oOsc3mowetU3jJOQ5mer+t/5p7WkaLoSBTjJeBuBdXHEjKu9EZ176
-	 j1+ffGGGmd8vU8L0Thu3M4JOMf72Do7JRPCVecZi2XNLTFK52oFVzgHpM8uQ7hZaCUw==
+	bh=3UsMR/moHx29qL5K3SAZ34oxbj9VP43QYRnpZdCKHN4=;
+	b=Bbhy/TL5N6yXL1H66QpY2TiObiUFe+tMuzQJCajkH+sr+MCzpCtomBM3kD5g2j9H9gf6
+	 Vy1D1bkTatknQaEWDgy5A0gTH4Lt9HAlj9XStcMw7iPgjIynkutZvOoTovIeJuNj+GJI1
+	 XnP7OQl/9Z2tIIWyBHrEF+dQdOQniIpXaGRv9RZHoCMX6PR+2RpDJuTSBuko8GdRkUuTH
+	 dSLfQukRmabe9aE0j7wqQLjCRNb9B5rWqwchHQS/EzXD9crZ83fDy4YNfIG8sYxfpU1i4
+	 YXnF3lRvfRa8xnsycHooIUX99vTw1h++FBrbbgmQYteCtV9yhTYzHr+gV5Yk5cDLneA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N99gxO64;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b8iT34RU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C320E606A326;
-	Sat,  7 Nov 2026 14:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204C4606A326;
+	Sat,  7 Nov 2026 14:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N99gxO64
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7138C1F0089F;
-	Sat,  7 Nov 2026 14:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b8iT34RU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B311F0089F;
+	Sat,  7 Nov 2026 14:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061523;
-	bh=7ue+7XqjN5wUM/CF8hgFycdX3HbOCnYGlEnPI6SBgzI=;
+	s=korg; t=1794061525;
+	bh=3UsMR/moHx29qL5K3SAZ34oxbj9VP43QYRnpZdCKHN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N99gxO64icAceDI0AGf2x7Ggbr/OLsjaLuYnKQFdwYaiuOovAC5nnZoZPacaNOGfx
-	 dkT3APz6z/cCBheCHQyKR6AGI4zhE14gYCP1G2IIMWpx6Fs4LExFhiSpm/0rJSdgzP
-	 aRs1tVCOzaRWkAZ2+Jxw+G+azuDk2Ca9euNOdSiw=
+	b=b8iT34RUP+CpV0t51G60RAoaONXpbuoIl4Dy7I6gfUX2i495qE/r5gn4QyAXl/2rp
+	 4GPCC9cyU+WgIFIrr9oQ5HBoX196pbwDjpMa0UsZ1gRbgVlI+RRdrp0CQd5vGUBS4C
+	 brPnwXjXHGpRp7GvPYWHhNNezv5vp7BZDuUvqxsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
+	syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com,
+	Anuj Bolewar <bolewara@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0611/1536] media: cx23885: Fix use-after-free in cx23885_finidev due to race condition
-Date: Sat,  7 Nov 2026 08:43:47 -0500
-Message-ID: <20261107135014.700011068@linuxfoundation.org>
+Subject: [PATCH 6.12 0612/1536] media: hackrf: fix use-after-free in hackrf_alloc_urbs() error path
+Date: Sat,  7 Nov 2026 08:43:48 -0500
+Message-ID: <20261107135014.727002800@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,74 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Anuj Bolewar <bolewara@gmail.com>
 
-commit 75016a992d9b03f5cc6df1414d1da35840d4feeb upstream.
+commit 6802ad4b6b267dda02209b5811edac7825c8a5f6 upstream.
 
-In cx23885_v4l2_dev_notify_init, &dev->cx25840_work is bound with
-cx23885_av_work_handler, and &dev->ir_rx_work and &dev->ir_tx_work
-are bound with cx23885_ir_rx_work_handler and
-cx23885_ir_tx_work_handler. cx23885_irq can schedule these works on
-system_wq when an AV_CORE interrupt is received, and the IR subdevice
-can also schedule the IR works from its interrupt service routine via
-the v4l2_device notify callback.
+hackrf_alloc_urbs() frees the URBs it allocated so far when one
+allocation fails, but leaves the entries in dev->urb_list[] and
+dev->urbs_initialized untouched. The caller, hackrf_start_streaming(),
+then calls hackrf_free_urbs() on the error path, which walks
+dev->urbs_initialized entries and calls usb_free_urb() a second time on
+the already-freed URBs, causing a use-after-free (slab-use-after-free
+Write in usb_free_urb()).
 
-If we remove the device, cx23885_finidev makes cleanup and the memory
-allocated for dev is released by kfree(dev), while the works mentioned
-above may still be pending or running. The sequence of operations that
-may lead to a UAF bug is as follows:
+Drop the redundant cleanup loop inside hackrf_alloc_urbs() and let
+hackrf_free_urbs(), which the caller already invokes on error, own the
+cleanup of the successfully allocated URBs.
 
-CPU0                                      CPU1
-
-                                          | cx23885_irq
-                                          | schedule_work(&dev->cx25840_work)
-cx23885_finidev                           |
-cx23885_input_fini(dev)                   |
-cx23885_ir_fini(dev)                      |
-cx23885_shutdown(dev)                     |
-free_irq(pci_dev->irq, dev)               |
-pci_disable_device(pci_dev)               |
-cx23885_dev_unregister(dev)               |
-v4l2_device_unregister(v4l2_dev)          |
-kfree(dev)                                |
-// dev is freed                           |
-                                          | cx23885_av_work_handler
-                                          | // use dev (use-after-free)
-
-Fix it by canceling the works after the IRQ handler that can schedule
-them has been stopped, and before proceeding with the remaining
-cleanup in cx23885_finidev.
-
-Note that the flush_work() calls in cx23885_input_ir_stop() do not
-close this race: they only wait for works that are already queued or
-running at that moment, they do not prevent the IRQ handler, which is
-still registered at that point, from scheduling the works again
-afterwards, and they are skipped entirely when dev->sd_ir is NULL.
-The cancel_work_sync() calls are therefore placed after free_irq(),
-the only point at which no new work can be scheduled.
-
-Fixes: e5514f104d87 ("V4L/DVB: cx23885: Move AV Core irq handling to a work handler")
+Reported-by: syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=832ce9fa3face1b7d44d
+Fixes: 969ec1f6bd92 ("[media] hackrf: HackRF SDR driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:deepseek-v4-flash
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/cx23885/cx23885-core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/usb/hackrf/hackrf.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/media/pci/cx23885/cx23885-core.c
-+++ b/drivers/media/pci/cx23885/cx23885-core.c
-@@ -2233,6 +2233,10 @@ static void cx23885_finidev(struct pci_d
- 	/* unregister stuff */
- 	free_irq(pci_dev->irq, dev);
+--- a/drivers/media/usb/hackrf/hackrf.c
++++ b/drivers/media/usb/hackrf/hackrf.c
+@@ -665,7 +665,7 @@ static int hackrf_free_urbs(struct hackr
  
-+	cancel_work_sync(&dev->cx25840_work);
-+	cancel_work_sync(&dev->ir_rx_work);
-+	cancel_work_sync(&dev->ir_tx_work);
-+
- 	pci_disable_device(pci_dev);
+ static int hackrf_alloc_urbs(struct hackrf_dev *dev, bool rcv)
+ {
+-	int i, j;
++	int i;
+ 	unsigned int pipe;
+ 	usb_complete_t complete;
  
- 	cx23885_dev_unregister(dev);
+@@ -681,11 +681,8 @@ static int hackrf_alloc_urbs(struct hack
+ 	for (i = 0; i < MAX_BULK_BUFS; i++) {
+ 		dev_dbg(dev->dev, "alloc urb=%d\n", i);
+ 		dev->urb_list[i] = usb_alloc_urb(0, GFP_KERNEL);
+-		if (!dev->urb_list[i]) {
+-			for (j = 0; j < i; j++)
+-				usb_free_urb(dev->urb_list[j]);
++		if (!dev->urb_list[i])
+ 			return -ENOMEM;
+-		}
+ 		usb_fill_bulk_urb(dev->urb_list[i],
+ 				dev->udev,
+ 				pipe,
 
 
