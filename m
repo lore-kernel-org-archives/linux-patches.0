@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064603;
-	b=EvK+u8738ZNQd9BUmo5V79YU9DsV1u3Vm3e5gnJFJ4JyE5w9YZTjiWPJo3ioBn4orpsL
-	 QU20CuFpmo+ZT3cP0rDWNM1cX2SOOY90Czx/mqp+ZmJ3U+oSI0QSrkgq4kgFiFP0fQn+V
-	 XM3/IM3O8ZtHSjV9pvxWvJxN5G2EnvrkoCajXrIZePCk0uPkzIfYHox6Hs2vm4CNZIj34
-	 wd8sCL5FOfdrpojpZrRnC6zWK/EWqDsB/alcCPDhiTqfzBitAMXHvUytfQP6MwQjSn72c
-	 +mmyT8K+uI42R73KcTebwVXsfd7+wjCMZQ/ioduoVuF820Soiqa+jt8pGxxsVhw1vCw==
+	t=1794064610;
+	b=JdogNFJROmyQeZBsh/Jkmmqcs5YAikiLaZm8y/2Tzyi8KAt0zsIjZH0SGZ1uwewuWVXl
+	 KyW++MxZ3vQsWFsklEicoqHYPuNudA+MDkv4Je0XxwtwElP7Kmejk0jk9h1p3vl5PzVb3
+	 99ifLYB+6EGwk9I5GR79RyCkZguvZeMml3hS6JwGV6HYCEq9KkFeYB0Z0f4HLDrfPp8+F
+	 1l6LKXxkrDZfpWDUDnrZxoJZpsZEZc0peqVMQoyCZ+gQZFXjq8Uix+f877T5VSRT3Iyo3
+	 RtK8n5IV35SY832YN4KP8yXqFveZ7vehkKCCC8dnpDhlwkF24Be6zuEdoucbY2p+tqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064603;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064610;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W05Ez3Vsko8m8WJxqUiLVSaMtq7MTwR+SGR6LZAOObg=;
-	b=qJcPwor5vQxY5DR+ku0F9/e538CF77kSNPzEhpjzEJN0ucrFVTOAsf994yqZBqp0kO+z
-	 3x/qWXtQMNiApFtglTDln0Ev05DFikQ6peF0PuBToZfj8lulsVb3c5LkQzXJQSSqsMNfg
-	 Mb5lv+vaUrAcNqlHIuzDxHHnuwWppuShsnUdt6idekWlDn7Ze3VuBKaMH0uL89vhRwFdC
-	 p9ER09F4gjrHGjUV5UHm9oK2k18KadRBvQbSm428EqBUD3wu0+RvAMPs8lTLdkUsxhSet
-	 05i3N2CvdRJ7hnXCnF8PbUBc3CfUpZ7Qittc57D8EDcQHbpwNERVkNJ3FUXbhN9EoDQ==
+	bh=jalbNmZ+GCa+Pzl39MlUQDg+dYDvlik+BG4r20ww36A=;
+	b=Z3MCn4WCeO+TFuq1cXauWQ55fyHHRWxVng5kXzjMOS0zoYwoX2u0u1hfzOpTcn6ctJkp
+	 19jIZQj9CS/P56c/WuBOidGEyHngeD63kg7tUEQySk5QixEKSqnLB0usXA6pri/LUAfBu
+	 zNE7lrPNdkvH2nVYZrcgCtBMXpv7uqUQZYCm0L7A4v8xhSGc1T+muvEo1ALy2PAs0J/pJ
+	 JpyybOoFKPUwASlS0kRs4aft9g9Acf4iTMSdocK+E1QkH1x+KfsmM+4iI6XRT/Hn4oy3s
+	 As/QgS7Y1e+xcOikl5qUNtUtb8XZN6aPykDAab7gJjiMgzXcUp/dMQDkRM2ULVnIsTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLp15Qv6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MT7BB4Q3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22914606E8EF;
-	Sat,  7 Nov 2026 15:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CC0606EE88;
+	Sat,  7 Nov 2026 15:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLp15Qv6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44D51F0089F;
-	Sat,  7 Nov 2026 15:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MT7BB4Q3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759EC1F0089F;
+	Sat,  7 Nov 2026 15:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064603;
-	bh=W05Ez3Vsko8m8WJxqUiLVSaMtq7MTwR+SGR6LZAOObg=;
+	s=korg; t=1794064609;
+	bh=jalbNmZ+GCa+Pzl39MlUQDg+dYDvlik+BG4r20ww36A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YLp15Qv6iMFNxMVd5+7ZwCLBAhVicOo+QmkMI519jBBWhyMV53NyL8iEQB/5WIz3T
-	 x//idTj8kh8BMe6gLhjV9xcVKucMwqilq7HjnbS9/2Y7RyL28LVthIWYTSR2+aVnjf
-	 dbjDT870l6gOdqbSOgs2e/oaq4Wx5MvfM5RMkSsM=
+	b=MT7BB4Q3tOtFMm2VZR9367QlJcrq6vFXCxSjNo1oM1LPjTfhnKH5+PU9iMglMA02K
+	 9YuPY/oMu0zIpvVSTCR5R0h73led1yEjRdLioRs+iXMGJf83mNItz3nOj++ar4dJaX
+	 b3PZUQvGczo/z+/iyxZf8QrzOOyvKUXZM990rVFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Adam Harshbarger <handyhandyman.adam@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	I Hsin Cheng <richard120310@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0615/1257] cxl/port: Convert PCIe link latency to nanoseconds
-Date: Sat,  7 Nov 2026 08:48:31 -0500
-Message-ID: <20261107134956.288888962@linuxfoundation.org>
+Subject: [PATCH 7.3 0620/1257] lib/plist: fix plist_requeue() corrupting order in the last bucket
+Date: Sat,  7 Nov 2026 08:48:36 -0500
+Message-ID: <20261107134956.423417140@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,49 +70,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Adam Harshbarger <handyhandyman.adam@gmail.com>
 
-[ Upstream commit 16440d6e4bf1175cda83438d9f9a8ae84bfcf0ee ]
+[ Upstream commit 43c91b1522435429a63d175f5a953e6f727a4f88 ]
 
-Commit 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
-converted CDAT latencies to nanoseconds and removed the conversion in
-cxl_region_perf_data_calculate(), but left PCIe link latencies in
-picoseconds.
+plist_requeue() is meant to move a node to the end of its own priority
+run.  When the node heads the *last* priority bucket it is instead placed
+at the head of the whole list, leaving the plist unsorted:
 
-This inflates the FlitLatency contribution to region and node latencies
-by a factor of 1000, exposing incorrect values in sysfs. The resulting
-abstract distances can incorrectly reverse the memory tier ordering of
-nodes.
+  built:      A(prio 0) B(prio 1) C(prio 1)
+  requeue(B): B(prio 1) A(prio 0) C(prio 1)
+  expected:   A(prio 0) C(prio 1) B(prio 1)
 
-Convert the FlitLatency contribution to nanoseconds before adding it to
-the access coordinates, rounding up as cdat_normalize() does.
+prio_list is a *headless* circular ring of the nodes that lead each
+priority bucket.  The shortcut added by commit 95d4b3450ebe ("lib/plist.c:
+add shortcut for plist_requeue()") takes
 
-Fixes: 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20261009045452.1107921-2-den@valinux.co.jp
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+	iter = list_entry(iter->prio_list.next, struct plist_node,
+			  prio_list);
+	node_next = &iter->node_list;
+
+which from the last bucket wraps round to the *first* bucket, so node_next
+ends up pointing at the head of the list rather than at its end.  The
+plist_for_each_continue() loop immediately below it computes the correct
+answer (&head->node_list) for that case.
+
+With any bucket after it the shortcut is correct, which is why this went
+unnoticed: the benchmark in that commit measured elapsed time and never
+checked the resulting order.
+
+Keep the shortcut -- it is a real win -- but exclude the case where iter's
+bucket is the last one, which is exactly when its ring successor is the
+first bucket again.
+
+Reachable from mm/swapfile.c, which rotates swap_avail_heads[] with
+plist_requeue().  It takes three or more swap devices: at least two
+distinct priorities, so that a later bucket exists for the ring to wrap
+round from, and two or more devices sharing the lowest priority, so that
+plist_requeue() does not return early.  One device per priority returns
+early at the node->prio != iter->prio test.  A single priority is also
+safe, but for a different reason worth stating: with one bucket no node is
+ever linked onto prio_list at all -- plist_add() skips it for the first
+node and for every node whose predecessor shares its priority -- so
+list_empty(&iter->prio_list) holds and the shortcut is never entered.
+
+Tested by driving three implementations -- the pre-95d4b3450ebe code,
+current mainline, and this patch -- through 1,084,492 identical random
+add/del/requeue operations over 24 nodes and 1..5 distinct priorities,
+comparing the resulting node_list node for node after every operation:
+
+  variant             differs from pre-95d4b3450ebe  left list unsorted
+  pre-95d4b3450ebe    -- (reference)                                  0
+  mainline                                  289,297             276,660
+  this patch                                      0                   0
+
+Link: https://lore.kernel.org/20260903222456.1881786-1-handyhandyman.adam@gmail.com
+Fixes: 95d4b3450ebe ("lib/plist.c: add shortcut for plist_requeue()")
+Signed-off-by: Adam Harshbarger <handyhandyman.adam@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Assisted-by: Claude:claude-opus-5
+Cc: I Hsin Cheng <richard120310@gmail.com>
+Cc: <stable@vger.kernel.org> # v6.15+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 3 +++
- 1 file changed, 3 insertions(+)
+ lib/plist.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 6ff3353865e39..cd9e58d8144f1 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -2349,6 +2349,9 @@ EXPORT_SYMBOL_NS_GPL(schedule_cxl_memdev_detach, "CXL");
- 
- static void add_latency(struct access_coordinate *c, long latency)
- {
-+	/* Convert link latency from picoseconds to nanoseconds. */
-+	latency = DIV_ROUND_UP(latency, 1000);
+diff --git a/lib/plist.c b/lib/plist.c
+index a5bef38add431..b0273533c04d2 100644
+--- a/lib/plist.c
++++ b/lib/plist.c
+@@ -174,8 +174,15 @@ void plist_requeue(struct plist_node *node, struct plist_head *head)
+ 	/*
+ 	 * After plist_del(), iter is the replacement of the node.  If the node
+ 	 * was on prio_list, take shortcut to find node_next instead of looping.
++	 *
++	 * prio_list is a headless ring, so from the LAST bucket ->next wraps
++	 * round to the first one; in that case node_next is the list head.
+ 	 */
+ 	if (!list_empty(&iter->prio_list)) {
++		struct plist_node *first = plist_first(head);
 +
- 	for (int i = 0; i < ACCESS_COORDINATE_MAX; i++) {
- 		c[i].write_latency += latency;
- 		c[i].read_latency += latency;
++		if (iter->prio_list.next == &first->prio_list)
++			goto queue;
+ 		iter = list_entry(iter->prio_list.next, struct plist_node,
+ 				  prio_list);
+ 		node_next = &iter->node_list;
 -- 
 2.53.0
 
