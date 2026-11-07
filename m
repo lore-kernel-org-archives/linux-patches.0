@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061710;
-	b=BstWmTt9jSx7YidoeV9/C0phAE8RsjjQJBixkMp2u3B7Q9ffhUPRwJ+E2hfI3VvgRHel
-	 NCrxl8/1mrx7JME6wQsTJfEET/+t37gYn/TknA/ybOR/OWCNR3t6ktVpOgGCNrpJ2Kr11
-	 zVS5un8+w9S6YWBksNVW2DRTOKHCHMco08WNhqCgLGOE1XaUbV9LLY1SLlMUR2XRfE46R
-	 SGOqDkxefkFcaUh1cr0KEPd0bM7/SJI+VocjzyPEKw1bUWHWQ8dDTo+cXaUvPqjm6GFRS
-	 sQaJmnJY/yLxmWBpaaZhN22nBZJWgRTRpsaLU84muE06b2dGiMLjoV9RwuK5zIAK8Cw==
+	t=1794061712;
+	b=GZgDxw0rN+p9qKU6ttv18ojQA1KjHqvqKW19/0yYteyR9l2Lt5WX2M6BrUp7HriMnT4n
+	 9tyYXlIZyEvPz6d0ox+NEubQtQ15rGT7n1mldo6qFgNm8QFkJbhnLQTbZenxTRxihr4ap
+	 msWZrb3H68h5Gx+mqdvTGxovKr/eOkD72lbqfMorxqpOKVpdPA7UoNkPHtcz+N5BUjreT
+	 kS+MwN0GI3eu/M5DLyfuTow7rOJCwqUyqyT7V8OycwGkkc1pp3UQ5W5qLUxY1tvld+S+k
+	 IQ2I9k0cs71yqd12H8vC6kxjl5LxwrWjNHFIe9M6trEph8VXQd5R6IVr+riz8LD18nA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061710;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061712;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SDgt3JdUTFVa489m+xBuD7BLlDmFCEF2glfnl3N/zow=;
-	b=alcaTxYyyYxjfBhHcNNP+gmhMmZ2/yrcEn1Zf0HvAbCXIurs84Z2QkDTNulK8ObajGvt
-	 i7E61cuQFFyoFkA8azdQzeGJtNgRKgkT8sNuT9UXDd193Zy0hQU5jdtqElveI6m1ZJG5+
-	 z3O44qeR2/T4Ui0lV5IGbYXllDErNTKy+uuoL5LU1MZbJuqVxnvSBelOfY4ygqUc1PAGh
-	 rqeUsoqlrWXYlpXLdOaJK7GeZwtx6mRqmXVaAP+816oytRZ8/j7Edl8NUOWO3O5aocErk
-	 eizkx9lvtsYAzYI+Tq4lOrzlgmrpXgmtMlP6fvWJLfNCKPykTJl/jx23HDBH1f3a/BA==
+	bh=g07LWWIn5kDOiUz+wKL1xUw/DZneuF4vz2iUPuRgJXs=;
+	b=vL8N1s0ipawzRJQb2/OJWA8EIEuTTwrHwKXjK9n3CK6+mgC28Gir/aG0zfD6LDbFu4MB
+	 ZKlmKU/pjfutjcUdlHpOJCxeg4XimqsqMM9X8SnggFG7txMUEejHJVg24F1rP5ZkoARDb
+	 Pc4J1mvVCnAOtdkvxET+DQor+r8Twfwujy7RlpHTUgCvr0WhC7vBAMyze0HsOQ2Zq2YWu
+	 AU+6qM03poO6Ybt34u+nKiR4pDxhy9TlTAdJtHX1ASPvVVCitOb0ecEeabvXzxqKZQMHF
+	 onBDgSW214nN86n7pEwPJhLb50QdHFufsbeaMaoD1zuklObgvPYHdiVMTh1vlsZFVqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxNvADCX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o28uTCGY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6B9606A32F;
-	Sat,  7 Nov 2026 14:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F61606A326;
+	Sat,  7 Nov 2026 14:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cxNvADCX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC461F008A1;
-	Sat,  7 Nov 2026 14:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o28uTCGY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9381F0089F;
+	Sat,  7 Nov 2026 14:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061710;
-	bh=SDgt3JdUTFVa489m+xBuD7BLlDmFCEF2glfnl3N/zow=;
+	s=korg; t=1794061711;
+	bh=g07LWWIn5kDOiUz+wKL1xUw/DZneuF4vz2iUPuRgJXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cxNvADCXNXu6r7KAstErn2nPECBUVMiti+WLZIASSn0p5gmF9jxAaPhI3DSHyHa4P
-	 6g8BvLSipG89XiQ70LsBZGEtgtvtlOOli29denR02aKoRh7SS0R1On+zZKwKsB33XC
-	 jTTgZbvspKWt+0KFAkXYl+gGq+V5bNGYWJBRXVK4=
+	b=o28uTCGYkdzTviuTF9Ei9D8BmYl1g/Bz824PxwUNxVuQT2nQSw2MUR5YI4lqpfzGz
+	 4PgpcaoKDI3hlmZnWZsGx8xW3hmgbzcujmUPHQ+5hP7SiFzV9jPWz0xF7B5AMyXAIG
+	 AL4vK6yI7xbV7ZBGO/hC9A5mH6bcOhOhba+01KK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun Potharaju <arun.potharaju@hammerspace.com>,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>
-Subject: [PATCH 6.12 0758/1536] NFSv4/flexfiles: fail I/O to the data server once a lock is lost
-Date: Sat,  7 Nov 2026 08:46:14 -0500
-Message-ID: <20261107135018.821855796@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.12 0759/1536] NFSD: cap the number of listeners accepted in listener_set
+Date: Sat,  7 Nov 2026 08:46:15 -0500
+Message-ID: <20261107135018.850843487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,211 +67,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@hammerspace.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 7fa2ad367abe6d3155daefb57331e7fce1a17afd upstream.
+commit 9a05e5ee0a98b9550521df86936b5f825bc07ec2 upstream.
 
-When a client loses a byte-range lock, because its lease expired and it
-may not recover the lock (nfs.recover_lost_locks=0) or because reclaim
-failed, it marks the lock state NFS_LOCK_LOST and fails further I/O by
-that lock owner.  Otherwise an application that believes it holds a
-lock over a range is never told that the lock is gone, and can
-overwrite data that another client has since written under its own
-lock on that range.
+nfsd_nl_listener_set_doit() matches each requested listener against the
+existing set. The nested loop that does this is O(N * M), where N is the
+requested count and M is the existing count. The loop runs under sv_lock
+with bottom halves disabled. A userland request with a very large listener
+list can therefore spin in atomic context for a long time.
 
-The NFSv4 READ/WRITE and file layout I/O paths apply this in
-rpc_call_prepare, where nfs4_set_rw_stateid() returns -EIO for a lost
-lock.  The flexfiles data server I/O path does not: the NFSv3 data
-server path never checked, and the check on the NFSv4 path was removed
-when the data server stateid began to be taken from the layout.
+Reject a request that carries more than NFSD_NL_LISTENER_MAX (1024)
+entries. The check goes in nfsd_nl_validate_listeners(), before the code
+takes any lock. The limit is far above any realistic configuration.
 
-Fail read and write RPCs to the data server in rpc_call_prepare when the
-lock is lost.  The data server path has no use for the stateid that
-nfs4_set_rw_stateid() selects, and selecting it looks up a delegation
-or open stateid on every I/O.
-Instead add nfs4_lock_context_lost(), which only tests NFS_LOCK_LOST,
-and check it alongside the open state.  Its lookup,
-__nfs4_lookup_lock_state(), is split out of __nfs4_find_lock_state()
-and takes no reference: a lock state is only unlinked from
-state->lock_states under state->state_lock, so one found while holding
-that lock cannot be freed before it is released.  Use it in
-nfs4_copy_lock_stateid() as well, which only reads the lock state under
-that lock.  That drops a reference get and put from stateid selection
-for all NFSv4 I/O without changing the stateid selected.
+This patch does not cap M. Only the message size bounded N; real sockets
+bound M. A listener_set result set is the requested set, so that path also
+holds M at the cap, but __write_ports_addxprt() adds two listeners per call
+and removes none, so repeated calls can push M past it. The worst case
+under sv_lock is therefore 1024 * M, plus 1024 nla_parse_nested() calls.
+Both interfaces require CAP_NET_ADMIN.
 
-Terminating the RPC in rpc_call_prepare is not enough on its own.  The
-done callback reads the -EIO as a data server connection error, forgets
-the device ID, and resets the I/O to pNFS (or, for an NFSv4 data
-server, possibly to the MDS).  After a reset to pNFS a new LAYOUTGET is
-granted and rpc_call_prepare fails the I/O again, without end.  The
-existing NFS_CONTEXT_BAD check does not loop, since the open state is
-then invalid and pnfs_update_layout() fails the reset I/O, but it still
-forgets the device ID.
-
-So when an RPC that was never sent fails and the open context is bad,
-the open state is invalid, or the lock is lost, complete it with -EIO
-without error handling.  An RPC that was sent and failed is handled as
-before, so a real data server error is still reported to the MDS.
-
-Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
-Fixes: bb21ce0ad227 ("flexfiles: use per-mirror specified stateid for IO")
+Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
 Cc: stable@vger.kernel.org
-Tested-by: Arun Potharaju <arun.potharaju@hammerspace.com>
 Assisted-by: LLM
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-1-a540d86668b0@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayout.c |   25 +++++++++++++++++++--
- fs/nfs/nfs4_fs.h                       |    2 +
- fs/nfs/nfs4state.c                     |   38 +++++++++++++++++++++++++++++----
- 3 files changed, 59 insertions(+), 6 deletions(-)
+ fs/nfsd/nfsctl.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/fs/nfs/flexfilelayout/flexfilelayout.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayout.c
-@@ -1399,12 +1399,27 @@ static void ff_layout_io_track_ds_error(
- 	dprintk("%s: err %d op %d status %u\n", __func__, err, opnum, status);
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1994,21 +1994,22 @@ err_free_msg:
+ 	return err;
  }
  
-+static bool ff_layout_io_state_lost(const struct nfs_pgio_header *hdr)
-+{
-+	struct nfs_open_context *ctx = hdr->args.context;
++/* Upper bound on the number of listeners a single request may carry. */
++#define NFSD_NL_LISTENER_MAX	1024
 +
-+	return test_bit(NFS_CONTEXT_BAD, &ctx->flags) ||
-+	       !nfs4_valid_open_stateid(ctx->state) ||
-+	       nfs4_lock_context_lost(ctx->state, hdr->args.lock_context);
-+}
-+
- /* NFS_PROTO call done callback routines */
- static int ff_layout_read_done_cb(struct rpc_task *task,
- 				struct nfs_pgio_header *hdr)
- {
- 	int err;
- 
-+	if (task->tk_status < 0 && !RPC_WAS_SENT(task) &&
-+	    ff_layout_io_state_lost(hdr)) {
-+		task->tk_status = -EIO;
-+		return 0;
-+	}
-+
- 	if (task->tk_status < 0) {
- 		ff_layout_io_track_ds_error(hdr->lseg, hdr->pgio_mirror_idx,
- 					    hdr->args.offset, hdr->args.count,
-@@ -1492,7 +1507,7 @@ static void ff_layout_read_record_layout
- static int ff_layout_read_prepare_common(struct rpc_task *task,
- 					 struct nfs_pgio_header *hdr)
- {
--	if (unlikely(test_bit(NFS_CONTEXT_BAD, &hdr->args.context->flags))) {
-+	if (unlikely(ff_layout_io_state_lost(hdr))) {
- 		rpc_exit(task, -EIO);
- 		return -EIO;
- 	}
-@@ -1576,6 +1591,12 @@ static int ff_layout_write_done_cb(struc
- 	loff_t end_offs = 0;
- 	int err;
- 
-+	if (task->tk_status < 0 && !RPC_WAS_SENT(task) &&
-+	    ff_layout_io_state_lost(hdr)) {
-+		task->tk_status = -EIO;
-+		return 0;
-+	}
-+
- 	if (task->tk_status < 0) {
- 		ff_layout_io_track_ds_error(hdr->lseg, hdr->pgio_mirror_idx,
- 					    hdr->args.offset, hdr->args.count,
-@@ -1679,7 +1700,7 @@ static void ff_layout_write_record_layou
- static int ff_layout_write_prepare_common(struct rpc_task *task,
- 					  struct nfs_pgio_header *hdr)
- {
--	if (unlikely(test_bit(NFS_CONTEXT_BAD, &hdr->args.context->flags))) {
-+	if (unlikely(ff_layout_io_state_lost(hdr))) {
- 		rpc_exit(task, -EIO);
- 		return -EIO;
- 	}
---- a/fs/nfs/nfs4_fs.h
-+++ b/fs/nfs/nfs4_fs.h
-@@ -520,6 +520,8 @@ extern int nfs4_select_rw_stateid(struct
- 		const struct cred **);
- extern bool nfs4_copy_open_stateid(nfs4_stateid *dst,
- 		struct nfs4_state *state);
-+extern bool nfs4_lock_context_lost(struct nfs4_state *state,
-+		const struct nfs_lock_context *l_ctx);
- 
- extern struct nfs_seqid *nfs_alloc_seqid(struct nfs_seqid_counter *counter, gfp_t gfp_mask);
- extern int nfs_wait_on_sequence(struct nfs_seqid *seqid, struct rpc_task *task);
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -864,10 +864,13 @@ void nfs4_close_sync(struct nfs4_state *
-  * be made.  Failing that, a "consistent" choice is preferable.  The
-  * consistent choice we make is to prefer the first owner, that of a
-  * Posix lock.
-+ *
-+ * Called with state->state_lock held.  No reference is taken: a lock
-+ * state is freed only after it is unlinked under state->state_lock.
+ /**
+  * nfsd_nl_validate_listeners - sanity-check the listener list from userland
+  * @info: netlink metadata and command arguments
+  *
+- * Walk every NFSD_A_SERVER_SOCK_ADDR attribute and confirm that each entry
+- * is well-formed: it parses against the policy, carries both an address and
+- * a transport name, and the address is long enough for its family. Doing
+- * this up front lets the callers below assume every entry is valid and
+- * guarantees we make no changes when the request is malformed.
++ * Walk every NFSD_A_SERVER_SOCK_ADDR attribute and confirm that the list is
++ * not oversized and that each entry is well-formed.
+  *
+  * Return: 0 if every entry is valid, or a negative errno otherwise.
   */
- static struct nfs4_lock_state *
--__nfs4_find_lock_state(struct nfs4_state *state,
--		       fl_owner_t owner, fl_owner_t owner2)
-+__nfs4_lookup_lock_state(struct nfs4_state *state,
-+			 fl_owner_t owner, fl_owner_t owner2)
+ static int nfsd_nl_validate_listeners(struct genl_info *info)
  {
- 	struct nfs4_lock_state *pos, *ret = NULL;
- 	list_for_each_entry(pos, &state->lock_states, ls_locks) {
-@@ -878,6 +881,16 @@ __nfs4_find_lock_state(struct nfs4_state
- 		if (pos->ls_owner == owner2)
- 			ret = pos;
- 	}
-+	return ret;
-+}
-+
-+static struct nfs4_lock_state *
-+__nfs4_find_lock_state(struct nfs4_state *state,
-+		       fl_owner_t owner, fl_owner_t owner2)
-+{
-+	struct nfs4_lock_state *ret;
-+
-+	ret = __nfs4_lookup_lock_state(state, owner, owner2);
- 	if (ret)
- 		refcount_inc(&ret->ls_count);
- 	return ret;
-@@ -1020,7 +1033,7 @@ static int nfs4_copy_lock_stateid(nfs4_s
- 	fl_flock_owner = l_ctx->open_context->flock_owner;
+ 	const struct nlattr *attr;
++	unsigned int count = 0;
+ 	int rem;
  
- 	spin_lock(&state->state_lock);
--	lsp = __nfs4_find_lock_state(state, owner, fl_flock_owner);
-+	lsp = __nfs4_lookup_lock_state(state, owner, fl_flock_owner);
- 	if (lsp && test_bit(NFS_LOCK_LOST, &lsp->ls_flags))
- 		ret = -EIO;
- 	else if (lsp != NULL && test_bit(NFS_LOCK_INITIALIZED, &lsp->ls_flags) != 0) {
-@@ -1028,11 +1041,28 @@ static int nfs4_copy_lock_stateid(nfs4_s
- 		ret = 0;
- 	}
- 	spin_unlock(&state->state_lock);
--	nfs4_put_lock_state(lsp);
- out:
- 	return ret;
- }
+ 	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
+@@ -2017,6 +2018,11 @@ static int nfsd_nl_validate_listeners(st
+ 		struct sockaddr *sa;
+ 		int err;
  
-+bool nfs4_lock_context_lost(struct nfs4_state *state,
-+			    const struct nfs_lock_context *l_ctx)
-+{
-+	struct nfs4_lock_state *lsp;
-+	bool ret;
++		if (++count > NFSD_NL_LISTENER_MAX) {
++			NL_SET_ERR_MSG(info->extack, "too many listeners");
++			return -E2BIG;
++		}
 +
-+	if (!test_bit(LK_STATE_IN_USE, &state->flags))
-+		return false;
-+
-+	spin_lock(&state->state_lock);
-+	lsp = __nfs4_lookup_lock_state(state, l_ctx->lockowner,
-+				       l_ctx->open_context->flock_owner);
-+	ret = lsp && test_bit(NFS_LOCK_LOST, &lsp->ls_flags);
-+	spin_unlock(&state->state_lock);
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(nfs4_lock_context_lost);
-+
- bool nfs4_copy_open_stateid(nfs4_stateid *dst, struct nfs4_state *state)
- {
- 	bool ret;
+ 		err = nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
+ 				       nfsd_sock_nl_policy, info->extack);
+ 		if (err < 0)
 
 
