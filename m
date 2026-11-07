@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060573;
-	b=18s3/IMhCiebsPhCGZRIhB81jPX9bYKmzd7B0S2S37SsNJ11kMjns55kKSPw6cVILovW
-	 XBJVt+XLkVrkmwLJXpmVGRHTtJ1QsavmVVm6PGqhw9UBPSuULhoDlZSJnBwoIprSCYnJQ
-	 abAEJh1+VD6Mr8rkAwQ7+K/jk5bu0EuSTTDgwgCNsjwXfFaja7lzheIUDCfwRShSkSYKd
-	 /lM2ifp1hxD+rQ63EjPLA/iMLTQ9wckxYURsglmVG6ujLUW/T78V66XI9e+47K89daRJX
-	 b23MWpxdN+xKu/v6CEejTMEWySnt6GEELxLVHI4cyHxthVoIIgNH0dFGDPJ9F3UHFtA==
+	t=1794060575;
+	b=1wHjsa5yoQO/2Ja5GcWBGBNzn8BGMp32iy4RHe3eezzDH24bT5d/p8emdGR8I3Is4fx9
+	 yJH5JO4cqFlV1TqBEWNP5OMyd0QgHa9nXGD8NgUDuN5VaJOqiyWdUTQcpTmnQ7wecdSSq
+	 KH7JteDFdVR+aNClaeR4Peqv4eZjpObCcML1W8dPPOc1wInXNRPXkR9KKu2xJi7PpTmLf
+	 InI/wg/BQH1GtP9KAZU2CBq7CRSVv6vIc8ub+TBfFTRUIBCLXHmxVgz9lAOk3F6habsni
+	 /YSxrRnLB0XdEl9tlrIqtNo18Ba8GdvaHpZSIP250+8REOEDHuuAKZaw6JF8N84lUpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=/USbAiXcbsz/57AzdG4Vnwn9skmW5reoe1u3tpNFsUA=;
-	b=i3x/OVL0zEXWgJcCtzX4UZ7OOCaP1iZE9AH2qynlRZVJeX2LU7/ZH8KK+jP5v6IfQBui
-	 UtNZ7rQRP/0uDhxrvMShXUSy4M8cnQHg/0sk3ImJWw8Oxd0tTD1/jcdCrHtzhHR5n8jIB
-	 hFSmKpb0N2wEJwLyAUvFTbDSgXPLeu/m4KwbISu4e0fDm0ZNHICRFtmPvBBy0rkb1hmzr
-	 KOcQQLa2lU++EFuvR7CLhX7dzyaNWSygez/G/REOZvst675u5RHxGrZAo/Tx18JwXSerC
-	 1spo5qRxEYCoQC4jUwHbbLPaIdnUrY01lKAYHPxnRgHUiRH3eNAWjL6W9skepQyrs4A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Q6shfnPZwDviWyKPqbgAEJ+hVvEZR95CKmX4kiwosAE=;
+	b=2ArdXQ601OZxT0sfDFSb4qk6kpct2FHTLvQTTcGOmuhhD37RbwimpSosMAnd4TXg7JFC
+	 ERhzkFOkGQBVKXi8ipA5dMYNirLs6R24S/yVw1ZDozT2x5dYcsfy1wsUqfIBaE80+1qU4
+	 rCW692mTrmo/dNIAX4Qt60vSEaarkbLV2/IPlMHlAumLRRq4W56uEAJDBDzhd6YqWR/hl
+	 +tKhKqV3j6BNUa5URiM+tfG1luXNeuq3SUWjDE2qI5LB772dF+KhrbOFJyA6N5szgGOrh
+	 ydmMayY3BoCfLFK2VOsMy6hf6P8+bwt27IOic0nNdomugmZ3SKpMop1BYbajrAW8bSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLDt3Ssa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LCODALdX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51675606A326;
-	Sat,  7 Nov 2026 14:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEBE606A32C;
+	Sat,  7 Nov 2026 14:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLDt3Ssa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26151F008A1;
-	Sat,  7 Nov 2026 14:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LCODALdX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364511F0089F;
+	Sat,  7 Nov 2026 14:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060573;
-	bh=/USbAiXcbsz/57AzdG4Vnwn9skmW5reoe1u3tpNFsUA=;
+	s=korg; t=1794060574;
+	bh=Q6shfnPZwDviWyKPqbgAEJ+hVvEZR95CKmX4kiwosAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hLDt3SsaNXTMmaUeZDtYfNCyExSfjCPFeueg5KR+ZWZgi89XX5t8itI+z+vuP2iDs
-	 1Ls04h4n9qLadBHGKHlX6QddLJfrdk65LCFHabpjj9FQsGBL+FddLX5TkVsSG1DgEY
-	 p9oB9NppBJHUfxs3cw/dVd6SeN9dqrim3MzZF2bM=
+	b=LCODALdXeOK55u6q2DbqBGjYoNe++ytBDgB2IO4LMll3N1UFhZkAXDsdlA8fXIWU3
+	 5p47em3CvFbS5bbP53U5OAl+7tDz2ZAC09M6IGo3Oa75k2lghNiwLf1wRdjeW6mihl
+	 wGn3hxMPvYXfyzV3uWMAMT5mbVqxYoeepV/9oaLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0033/1536] media: cec: stm32: return an error when log-address wait times out
-Date: Sat,  7 Nov 2026 08:34:09 -0500
-Message-ID: <20261107134958.598405250@linuxfoundation.org>
+Subject: [PATCH 6.12 0034/1536] irqdomain: Plug leak in irq_domain_alloc_irqs_locked() error path
+Date: Sat,  7 Nov 2026 08:34:10 -0500
+Message-ID: <20261107134958.623671980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,67 +62,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 3bc2e4a26465386332ee1a40219d8dafba335b0b ]
+[ Upstream commit 13856e22217fbf7c1200633716ff87ccb50fd89a ]
 
-stm32_cec_adap_log_addr() waits for TXSOM to clear before disabling CEC
-and updating the logical address registers. The wait result is ignored,
-so a timeout can still be reported as a successful logical address
-update.
+When irq_domain_trim_hierarchy() fails in irq_domain_alloc_irqs_locked(),
+the error handling path fails to undo the hierarchy allocations.
 
-Return the polling error before touching the address registers. Compute
-the address mask only for valid logical addresses so the invalid-address
-path does not evaluate a shift based on CEC_LOG_ADDR_INVALID.
+Add the missing cleanup.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ tglx: Massage change log ]
+
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260623075134.4432-2-shikemeng@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/cec/platform/stm32/stm32-cec.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ kernel/irq/irqdomain.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/cec/platform/stm32/stm32-cec.c b/drivers/media/cec/platform/stm32/stm32-cec.c
-index 35f5ea42a802d..dbe0968303c05 100644
---- a/drivers/media/cec/platform/stm32/stm32-cec.c
-+++ b/drivers/media/cec/platform/stm32/stm32-cec.c
-@@ -194,18 +194,24 @@ static int stm32_cec_adap_enable(struct cec_adapter *adap, bool enable)
- static int stm32_cec_adap_log_addr(struct cec_adapter *adap, u8 logical_addr)
- {
- 	struct stm32_cec *cec = adap->priv;
--	u32 oar = (1 << logical_addr) << 16;
- 	u32 val;
-+	int ret;
+diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+index e0bff21f30e0a..675b7a356e595 100644
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -1632,7 +1632,7 @@ static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
+ 	for (i = 0; i < nr_irqs; i++) {
+ 		ret = irq_domain_trim_hierarchy(virq + i);
+ 		if (ret)
+-			goto out_free_irq_data;
++			goto out_free_irqs;
+ 	}
  
- 	/* Poll every 100µs the register CEC_CR to wait end of transmission */
--	regmap_read_poll_timeout(cec->regmap, CEC_CR, val, !(val & TXSOM),
--				 100, CEC_XFER_TIMEOUT_MS * 1000);
-+	ret = regmap_read_poll_timeout(cec->regmap, CEC_CR, val, !(val & TXSOM),
-+				       100, CEC_XFER_TIMEOUT_MS * 1000);
-+	if (ret)
-+		return ret;
-+
- 	regmap_update_bits(cec->regmap, CEC_CR, CECEN, 0);
+ 	for (i = 0; i < nr_irqs; i++)
+@@ -1640,6 +1640,8 @@ static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
  
--	if (logical_addr == CEC_LOG_ADDR_INVALID)
-+	if (logical_addr == CEC_LOG_ADDR_INVALID) {
- 		regmap_update_bits(cec->regmap, CEC_CFGR, OAR, 0);
--	else
-+	} else {
-+		u32 oar = BIT(logical_addr) << 16;
-+
- 		regmap_update_bits(cec->regmap, CEC_CFGR, oar, oar);
-+	}
+ 	return virq;
  
- 	regmap_update_bits(cec->regmap, CEC_CR, CECEN, CECEN);
- 
++out_free_irqs:
++	irq_domain_free_irqs_hierarchy(domain, virq, nr_irqs);
+ out_free_irq_data:
+ 	irq_domain_free_irq_data(virq, nr_irqs);
+ out_free_desc:
 -- 
 2.53.0
 
