@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063065;
-	b=CLdZ6yhpq1pDrkS5Fset/SLvXVxNIKzk8O8WDSB2HZ5djiSn04ishtTtNPdiFw15xjcs
-	 Hy8mRozlHPWzwToN/665qtDBOQtnPELEp2UmgclYR7CLJ/LnTiSY9OPToQgKrJhy6OUPI
-	 oZfQZ5cYMSyHtsyZDx3NJVhWXjF78JXGmY3UjMxN5w0fcT/KaqdxpvAEZspaTWuB71MOV
-	 LYWtblzoT/Du7f5Pjpun9+0Ou8EQMIsYjXUUqglXXaAZg2gkRJBIvGbINGIdOHX+8cHm6
-	 ocgrRFQt5hkW6P6wHUAWipj4BeLVQXo0mvQNnyVcJpdcD/VNQwKcfCNz6tx857BRbaw==
+	t=1794063066;
+	b=oG5ZdD+iAS/FsdmEM2OpYGvEcgUaAsHNJ7dRzwKgnken2uAPHrbO2r9OhrhFh/hUn4RE
+	 NPOEnzvrwtZNWLLBEP4uQ+DqC0b2/bT3G28pbSFWcA+o/h0Lxsd1WCWQE/2LyZIQRyPQG
+	 pfR+3MvzqF4ExWPLXAW0LqHOgYiDYdbQH/oPRfAaS4WG2DKoKxa31ss5/ISDFnoahZkzk
+	 0ftAs/bBiXKuekbdWyczU7UEaiOpdhuKgxqDqN0QfG9LJ/sV3fKfJMeqo0TN1lYKhGJdP
+	 EhbWoc4aNMgxPfE88bjhTv5gx5QbMfhXF9LVmr5bwr6c2x3VYWpcQ7ivnKbSqhFBpnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063066;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3BTsAKovALrp8Dar4xZRYfpFYVmcH1OsyHatqnEWYQo=;
-	b=Fu2IqpZKUuS8CYlMWMB6iztfXfDNBuxtW3wkfYrC/T8mhKGU10wb7NL/HMj2RSwKmMD5
-	 zmJTecMfVEgw5SEzrGkejaIh3W0LON70abaQ5WZ70lonV9PBbB8pU2PmufiTcny/E7wzR
-	 DI3htApfBq/kdJR/51kVAkLYafsknLiAC65NvANth89UTyMH2BhXQVGDDkPu8YuBAdWUv
-	 +SEMjGNtBYXuXCnyHIwQL5jr+TKV+brxzGCvNEPGIo2vR6qWwl5w9f/2VvYQMw+cQM9xN
-	 DmbFE4C0fCinFDwl1pWf2aRittwv9N9cGk856kd5NcsKMWn2yOK4ZYFYJwfl48iBQ5w==
+	bh=eTmO/+yEMYHfC7jcxTcCmT3JgLNLS943c5Vfe0Hq/l8=;
+	b=VUZUeWJZMI8Mp5S1K6aIyc6oIsM0gr115WXMKynk64WGCrlJs3+8JHKvTM1Ve7RuwPPn
+	 fzkIL/duyJ8vE7OXGxHcuKM+y5lcJGxjFPZEaMDenpj+8RZyHUA5MaKfO6R+n0MNoZ987
+	 lJrnJgjx1cqA4dLktHFI4hJSy+gC85nyUEgZd7BVj1WZZjlEhnASARBcHgUsoykWjv3dx
+	 xS0KrPmpgDNHGuSDkskZfD6FkgfqyMDIk2NpsEbAVlReXk10TBFf/DKMfmO7m4mU1Tsvq
+	 YG1gIYn2+UdHrvyFZA8T0E1u3SdQgt/0QuScycPQedFroLOD+CTyzob7kpu/0EuJ16w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6vHvzDK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BKzGqwti;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E38606D82F;
-	Sat,  7 Nov 2026 14:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9529A606D82F;
+	Sat,  7 Nov 2026 14:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6vHvzDK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C5F1F0089F;
-	Sat,  7 Nov 2026 14:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BKzGqwti
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4274C1F0089F;
+	Sat,  7 Nov 2026 14:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063065;
-	bh=3BTsAKovALrp8Dar4xZRYfpFYVmcH1OsyHatqnEWYQo=;
+	s=korg; t=1794063066;
+	bh=eTmO/+yEMYHfC7jcxTcCmT3JgLNLS943c5Vfe0Hq/l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o6vHvzDKJ3oERRgHdiJ2r7/Ms/fA7kdgCZL05p3H1qKYJJenLe3RGS1Y6059yWZ79
-	 S80JTqTkk3h1dmNQV++w9R4M3HISiIOMopIQX5fPyk49eibdSKZSbgEav1nr8qXxIb
-	 aIx/rZH1Qi/v6RtGTgyDqHwiM484WzwFKdEyjGYs=
+	b=BKzGqwtiqkLpMlQH905Q2bpekmi+kmW6tWiLctIDaWBl68diBQ+9IvPiF3bDbCQyV
+	 jxQ9tMPl8LOf3EPI1RPo/faszGr9HCK7j6f/SyFbK/Db9EwkN6a0+zmXluJA8XucAn
+	 msHoPg+CjSPQSexXy+9meq+izzAGZCiwL955AC/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Rob Clark <rob.clark@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 306/869] drm/msm/hdmi_bridge: Correct poweroff/audio cleanup order in post_disable
-Date: Sat,  7 Nov 2026 08:49:48 -0500
-Message-ID: <20261107134902.919759809@linuxfoundation.org>
+Subject: [PATCH 6.18 307/869] drm/msm/dsi: Fix VM leak in dsi_tx_buf_alloc_6g()
+Date: Sat,  7 Nov 2026 08:49:49 -0500
+Message-ID: <20261107134902.946298047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,47 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 0499f0576e4442d67c164119f9d7f75d3cc945e7 ]
+[ Upstream commit ab91ba61871a896ca2ecc6e048d80a152136da44 ]
 
-Turning off the power in msm_hdmi_bridge_atomic_post_disable() should
-follow reverse order of powering up, not only because it is logical, but
-also because msm_hdmi_audio_update() accesses registers thus block
-should still be powered on.
+dsi_tx_buf_alloc_6g() takes a reference to the kms VM with
+drm_gpuvm_get() and stores it in msm_host->vm.  If
+msm_gem_kernel_new() fails, the function returns early without
+dropping that reference.  Since msm_host->tx_gem_obj is cleared on
+the error path, msm_dsi_tx_buf_free() will never see a non-NULL
+tx_gem_obj and thus never calls drm_gpuvm_put(), leaking the VM
+reference.
 
-Depending on specific timing, existing code could have accesses to MMIO
-of powered off block.
+Drop the VM reference and clear msm_host->vm on the error path.
 
+Fixes: 5e05be782645 ("drm/msm/dsi: free TX buffer in unbind")
 Cc: stable@vger.kernel.org
-Fixes: c0c0d9eeeb8d ("drm/msm: hdmi audio support")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/752655/
-Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-3-87bdb9f1987f@oss.qualcomm.com
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/754332/
+Link: https://lore.kernel.org/r/20260916175738.2089950-1-vulab@iscas.ac.cn
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index 45bc4db5f66cd..75dea34c43a88 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -354,10 +354,10 @@ static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
- 	msm_hdmi_phy_powerdown(phy);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 4e93f8dd39d7d..1827af24a3fa1 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1254,6 +1254,8 @@ int dsi_tx_buf_alloc_6g(struct msm_dsi_host *msm_host, int size)
  
- 	if (hdmi->power_on) {
--		power_off(bridge);
- 		hdmi->power_on = false;
- 		if (hdmi->connector->display_info.is_hdmi)
- 			msm_hdmi_audio_update(hdmi);
-+		power_off(bridge);
- 		msm_hdmi_phy_resource_disable(phy);
+ 	if (IS_ERR(data)) {
+ 		msm_host->tx_gem_obj = NULL;
++		drm_gpuvm_put(msm_host->vm);
++		msm_host->vm = NULL;
+ 		return PTR_ERR(data);
  	}
- 	mutex_unlock(&hdmi->state_mutex);
+ 
 -- 
 2.53.0
 
