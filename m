@@ -1,55 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065580;
-	b=ZxdQS6jPto3Zl9e7pUCPnwj2Tg/d4YAmxMXLDbnv0qtHJY0A5EjsrKi5vtaMTm7BmmZ1
-	 jA+18W29tk6SSOS80//Q3059mMT18yN3+sz82+NAWzjXdbARGw9fnzYkM9tAhRuARy8ta
-	 TwBhTkxgj2zKw1KnJyPOSWUy9YYuXiaoerguwVEk0Ci5Gb3VwKYm3v90Ep18SyzfWxaqz
-	 rZWUoO4j8eHEPf4I8zjwDFuMvfPRJ45vmUY1z+KDXXxXVu2lHY0m+Ax+p+wDfcj/I8KJO
-	 z35VkLBk3AwtD1k/LFW0doFLSKA9uKZsgt4OoyxGOg3rNwouOGw+6Bz+zFkjSzgcglg==
+	t=1794065581;
+	b=bYxKjp5pkbeF6NWiBW5IhSe/BXz0BQPJoWfw3jCBXjcFI88hrhlqG7tvop/2b3nr5PnD
+	 VemYLMf7apl64XAdTBUYgSpe6lGjzw5y4plp0cRc5DUyD6PYvVzE9exkPWfrDCqYlQkty
+	 U9lvi4VvDTkplKh2u0upc4MOCdnxpbm7J0oA7yV4AYUgpKCWEsxmOZOvSMJpq3A/F21Lv
+	 FmDOeFXOTaD/QvgeM7Imrv278J3n3vD05+mdw8pAg29bKm97nF0lCAIH4UEdQZ9YFpXK+
+	 AL2N7xw9g7iZlyD+I7KKOOiMgKZV7he+hdKbW6fXKEUCCWMdxvhVojBItfOBPlltfuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065581;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gPrE2jrNGhXltXCPgSSRO/2cEGjtyad+Bfd2ZugtYNQ=;
-	b=Ega24YNg8lWgMwO63FznhRDnTFF84ohv85z5KctV/t/cZHnc4jKTSDn5lrx0rtLMS8OT
-	 K5ZQLOPPXQSDZIUjNaSMyRFCi1TYuBc3Inmextg2GVfdrYkdYrtSgw5EUSEijnQlEOcx6
-	 QQMAlplDjeQ2DiHPhuX+FKi1pAsq1leaqKanQqmOO1ypJFavrPu709SNmvqsd9j9mpzey
-	 wrLymVHYX0uKC37E97DgRRqNhV/bQRMesSFaTqgvnBRCWqkM2Si6MkaxxGbgPz1FwSMk8
-	 pDzIT0sSRzwoFQh7m34mRdnZUJPC9NlYpSxrWWHIa1TFAV9rAMar4bbM5zogNZ3S6JA==
+	bh=0MiKwfTVEN8AuI04Tv/fzmDttg/QuUusirPZuDUgRR0=;
+	b=WoAgXDeCudUSRDNSZH3ciWDEIRE35+w5pmwhSCXThcKETV/kZDuiUD4et/wFethU0UzX
+	 7hsRCVTjeOFLt2g+O0FtU4IN/YuOoajlTscOxfnCBxboP3+4a+q8sCCXr1PIwhZrzMP0v
+	 bI3Jdt+i46yoGm2kHFiuTiMWQxKxkd8rlBSNl4UyvJVK1kvgSiz/KRFgCHU6Tfng0Q+kF
+	 PiaXIXbFrTBx3Xwsv+ekARiLtyP5wbRNXg8oe0/nQefS/69LwBQBLeDZEeTcTfZr95nK3
+	 Tf9Ts1SlOOp4uPMdMArvNuvFZnaILfPbmmbxTxk54kPjZsTDz0tewwoYmFNG9UuGlrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=woVrcilg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ILxWZe/T";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF28C606A32C;
-	Sat,  7 Nov 2026 15:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2E9606A32C;
+	Sat,  7 Nov 2026 15:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=woVrcilg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE821F0089F;
-	Sat,  7 Nov 2026 15:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILxWZe/T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10FB1F0089F;
+	Sat,  7 Nov 2026 15:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065579;
-	bh=gPrE2jrNGhXltXCPgSSRO/2cEGjtyad+Bfd2ZugtYNQ=;
+	s=korg; t=1794065581;
+	bh=0MiKwfTVEN8AuI04Tv/fzmDttg/QuUusirPZuDUgRR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=woVrcilgleyYL/rnhWpu3BV3nl7u/w1YPPvrLwVsggah4EzxZSXOgu0cSYXJXMBrD
-	 bk7kv5FJJqF2ihMJC+uFWXz4gnRVl/vqJkYCxBI/+drc1fOGtPHtOczUIoVbFaqSM7
-	 /CxH7aeyIC7KmKYdNyp7/q1c6dRtRGPQTquKKsEU=
+	b=ILxWZe/TsMmZdlGzwqW+lOEqgJqDFGk7i3cT44PkyMeaT2/2YVXvS79RrWSdVi3rh
+	 oFrlONuWvIxHlnJy3eT5HpMJ0cQbCEzm2Ql5vszM2B9fFmFDtNExXZXZ7LdKeZUrTW
+	 8hy8ayoKM/bP0yoIwKtftDBrt7LDFQ6ATh6M1+5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Kyle Zeng <kylebot@openai.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1239/1257] net/packet: check TX_RING fragments before memory accounting
-Date: Sat,  7 Nov 2026 08:58:55 -0500
-Message-ID: <20261107135013.556912957@linuxfoundation.org>
+Subject: [PATCH 7.3 1240/1257] tcp: fix reordering addition overflow in MTU probing
+Date: Sat,  7 Nov 2026 08:58:56 -0500
+Message-ID: <20261107135013.583576118@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -73,69 +76,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit dc4dd12f80e499dc034710cd8195489abcf0b059 ]
+[ Upstream commit c1df9c0c0536393de43310f84ca4f8b217271a00 ]
 
-tpacket_fill_skb() adds the full non-linear payload length to
-skb->truesize and sk_wmem_alloc before checking MAX_SKB_FRAGS. With
-PACKET_VNET_HDR, userspace can submit a ring-sized frame even when it
-greatly exceeds the device MTU.
+Commit efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and
+MTU probe sizes") widened size_needed and the MSS multiplication, but
+tp->reordering + 1 is still evaluated as u32. RTAX_REORDERING accepts
+an unrestricted u32, and tcp_init_metrics() can install U32_MAX.
 
-A near-INT_MAX frame can saturate sk_wmem_alloc before the fragment
-loop rejects it. A subsequent refcount_add(0x40000001) can temporarily
-turn REFCOUNT_SATURATED into 1. A concurrent TX completion can then
-drop that apparent last reference and free the still-live packet
-socket before refcount_warn_saturate() restores the counter.
+In that case the extra-data requirement becomes zero. A write queue
+with probe_size - 1 data bytes and a FIN satisfies the sequence-space
+check. The coalescing walk can pass the queue head to
+tcp_skb_can_collapse(), and tcp_clone_payload() can produce an skb
+whose advertised payload exceeds the data in its fragments. Local
+delivery followed by TCP_ZEROCOPY_RECEIVE can then walk beyond the
+fragment array. KASAN reports a slab-out-of-bounds read in
+can_map_frag().
 
-Check that the remaining payload fits in MAX_SKB_FRAGS pages before
-accounting it. Include the initial page offset in the calculation,
-and move the existing -EFAULT handling out of the fragment loop.
-This preserves the accepted packet sizes and error code while
-preventing an invalid frame from injecting an oversized byte charge.
+Cast reordering before incrementing it so the arithmetic handles the
+entire u32 metric range. For U32_MAX, the required size exceeds the
+32-bit queue and window limits, so the existing checks skip the probe.
+The calculation is unchanged for all other reordering values.
 
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Fixes: efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes")
 Cc: stable@vger.kernel.org
-Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Cc: Wyatt Feng <bronzed_45_vested@icloud.com>
+Cc: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Kyle Zeng <kylebot@openai.com>
-[edumazet: use net_warn_ratelimited() instead of pr_err(), add a Fixes: tag]
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261028181450.2221013-1-edumazet@kernel.org
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261028160226.2170244-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/ipv4/tcp_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 52ae3d875e971..515a3e8dc38bd 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2647,6 +2647,12 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 	}
- 
- 	offset = offset_in_page(data);
-+	if (unlikely(to_write > MAX_SKB_FRAGS * PAGE_SIZE - offset)) {
-+		net_warn_ratelimited("Packet exceed the number of skb frags(%u)\n",
-+				     (unsigned int)MAX_SKB_FRAGS);
-+		return -EFAULT;
-+	}
-+
- 	len_max = PAGE_SIZE - offset;
- 	len = ((to_write > len_max) ? len_max : to_write);
- 
-@@ -2658,12 +2664,6 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 	while (likely(to_write)) {
- 		nr_frags = skb_shinfo(skb)->nr_frags;
- 
--		if (unlikely(nr_frags >= MAX_SKB_FRAGS)) {
--			pr_err("Packet exceed the number of skb frags(%u)\n",
--			       (unsigned int)MAX_SKB_FRAGS);
--			return -EFAULT;
--		}
--
- 		page = pgv_to_page(data);
- 		data += len;
- 		flush_dcache_page(page);
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index e0c392e29de5a..9f47b6644ed4d 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -2712,7 +2712,7 @@ static int tcp_mtu_probe(struct sock *sk)
+ 	mss_now = tcp_current_mss(sk);
+ 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
+ 				    icsk->icsk_mtup.search_low) >> 1);
+-	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
++	size_needed = probe_size + ((u64)tp->reordering + 1) * tp->mss_cache;
+ 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
+ 	/* When misfortune happens, we are reprobing actively,
+ 	 * and then reprobe timer has expired. We stick with current
 -- 
 2.53.0
 
