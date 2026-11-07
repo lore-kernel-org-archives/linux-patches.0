@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062314;
-	b=Ou3FhNKEl/DFcKJAPqJatxnsHn/xccCe1fjioToGogb3mhh8iXxwZrK4Zf3HwKZLTOS+
-	 lMFmosqNqtSdDtzBoMCGhzLk43KXIm1/ZNz4BSoDJaEeUQeAcnwVoD/Uo6GwRHd6HNdob
-	 C2PSDk/5j7TqNmvl0PotxbmJsA8pafXUfBIy2xgCZ7aF3ADinCl3VStgmJ4gUIPOYd64r
-	 Grgx9OGpBp115vtmgFTLYorovo1C0m2B1Li+Gt1tN35D7o/8KGFjgi4PFiYif5qWOU4ok
-	 5kNaQGCkOR6G+ullrnss+pFu6Qlne/YtLqdYPIxFAu9GYDvT/Eaku2cNtpT5YJvfP8Q==
+	t=1794062316;
+	b=bhogIqLei4upJEcoC7dI+E7ejuT6IunKWK1N/etV7PUK9EE2Z9Utq9a34fGbGxsOu26l
+	 DuiLHb/QARtq9RMVQmOK+8mFTjChuZYS/dhBxSojlJmF5ooD4O3agQuEwUJsuZYghdD6p
+	 ms4LIyJ0GzPUFUnD+L7qvYEWKHfR0u+Y+Up2CBDGFQs9YwWbaVZch8njSqJDr49CNAk4Y
+	 mdq/bTShcd9MA1GA79KaMel9+7xThn4h3A93QnNmgb5JHZSmzz5zK7dBI1Fs8gngMcngy
+	 FE6TFAdc8f6SyL93Ja+FkTS6FmN+FSSX8EZ+1GAloBaMUQzVFKx9aYq8Hw01ZOVRYHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062316;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=5EPcVzYGocP3sFMztJXURoFOrPVqka+RCQonNjreHUw=;
-	b=s6MMCotKK1y3ANWH3drJDdkigeEaeYMu15cEz4dssWmuKdFy6OFjzSemdmbknjZpZsEu
-	 Y8eYHgVN9HJkOaVIAXd8QBUm7+hYICKuHF6HmjdoHr82GMNmPdSE4UraSa69Bhzn4ZXi+
-	 OImJDtG1xO1+SIfgXhOxxGEJratYQSo2gHqat9H6TDY+ik82nlS5xYnQ/87nsBmkr+l6k
-	 7crPflbqHkb0Qk9uryQ3PE5qQDmAJkEvCqF91t5Pleso/P9DZ21Ds1Wgzp34tAZDJCBQF
-	 Ga1TyrltmBz1uSQlbGFdg8qKnWSWHkK4ujH1r3lAJcqcKROKMO3bdTIX+oMsGor1AJg==
+	bh=1r8wmYNiYkJ6x1eTK0lpvO6wXv7mcwSLDwYv1l4hhv4=;
+	b=Zc2jhgr4yZQDcM1RYBck9wu9d/B6BzFcwHGvNLhaz6jk6D/yskqU4B+APgV7y3FNwkDj
+	 WXM25HcaOjkqcMeAbwCCoDzloKTba+/iiQtNYHOZrCBeyncBk3NL20FGQeBjUvqm6oAju
+	 4tVBrrl0uv/cFziWk+B3jy1KqAUXnL+JBhJ0ZtK28wyg0MWQpFZ/oYJDo7Psap+Y+m7ho
+	 pf69kazb2uBvuJcbFlhf30HEEoB57NROhcnodgBgYYVfPriIho+U3OFOOTZH7ebpxR8Vy
+	 RovFctCObpDgeYT+gynEhGmPTD6NHQyU6ym2Wc5xGTkgO6iN2GlqxsXELDidzgGUoPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zXZE9vk4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="I6CQ/ZP5";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8576A606A643;
-	Sat,  7 Nov 2026 14:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13CA606A643;
+	Sat,  7 Nov 2026 14:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zXZE9vk4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325091F0089F;
-	Sat,  7 Nov 2026 14:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6CQ/ZP5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E991F0089F;
+	Sat,  7 Nov 2026 14:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062314;
-	bh=5EPcVzYGocP3sFMztJXURoFOrPVqka+RCQonNjreHUw=;
+	s=korg; t=1794062315;
+	bh=1r8wmYNiYkJ6x1eTK0lpvO6wXv7mcwSLDwYv1l4hhv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zXZE9vk4Iapbr+nQVQMhxyrV4sT08hzkxsdl7cffD61RFz/FkuMTYJ1WL1vYhPrn1
-	 kIXThUI7VeUybNr612HNukjkLIIz/97rXD/v60nLE7eE0U2Z0Vcs7K9VvAia5tcHgD
-	 CcNjH2qU5u9Qm0WjBfT7t9r+Fc403WRarKEaOMd4=
+	b=I6CQ/ZP5YzI+0W4/8WyoLTagpaWFC3fiUPzD4gPg8IwVrSKs6qnfe/Le7p2nbz827
+	 6YvkSNPVYgcHSzuvp+BGfPRr17U7aqzcT1Hwo/TObbn5DSwklLrIEMXXYBKA6c9d24
+	 xgYIysAkj/3BhtI320JMilQSVfK1JP+yqV1fhijQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Snyder <josh@code406.com>,
 	Muhammad Bilal <meatuni001@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1249/1536] platform/x86: hp-bioscfg: fix 16-byte heap overflow for empty auth token
-Date: Sat,  7 Nov 2026 08:54:25 -0500
-Message-ID: <20261107135032.849564819@linuxfoundation.org>
+Subject: [PATCH 6.12 1250/1536] platform/x86: hp-wmi: fix heap OOB read and memory corruption in hp_wmi_perform_query()
+Date: Sat,  7 Nov 2026 08:54:26 -0500
+Message-ID: <20261107135032.879167030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,61 +71,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 540b8ae192afb5566c1b13b6884aee87107a26b9 ]
+[ Upstream commit 6dea092b261f04d632411c2be52d13190f5f67b1 ]
 
-hp_calculate_security_buffer() special-cases an empty authentication
-string and returns a fixed 4 bytes (sizeof(u16) * 2). But
-hp_populate_security_buffer() does not special-case that same input:
-for any authentication string that does not start with BEAM_PREFIX,
-including the empty string, it always builds "UTF_PREFIX +
-authentication" and converts the result to UTF-16, writing a 2-byte
-length header plus 2 bytes per character of "<utf-16/>" (9 characters),
-20 bytes total, regardless of how long "authentication" itself is.
+hp_wmi_perform_query() evaluates an ACPI WMI method and expects a
+struct bios_return header in the returned buffer. However, it only
+checks that the ACPI object type is ACPI_TYPE_BUFFER without verifying
+that obj->buffer.length is at least sizeof(*bios_return) (8 bytes).
 
-The caller, hp_set_attribute(), sizes its kmalloc() buffer using
-hp_calculate_security_buffer()'s return value, so for an empty
-authentication token it allocates 4 bytes for the security area but
-hp_populate_security_buffer() then writes 20 bytes into it, causing a
-16-byte heap buffer overflow.
+If the firmware or ACPI method returns a buffer shorter than 8 bytes:
 
-The authentication token used here is the current admin/setup
-password, which is an empty string by default until one is
-configured. Any write to a writable BIOS attribute while no admin
-password has been set reaches this path.
+1. bios_return->return_code at offset 4 reads out of bounds from the
+   allocated ACPI buffer slab.
 
-Fix by removing the special-case early return for an empty string in
-hp_calculate_security_buffer(). The generic calculation that follows
-already accounts for the UTF_PREFIX correctly, which naturally yields
-the same 20 bytes that hp_populate_security_buffer() writes for an empty
-string, avoiding duplicate logic for special cases.
+2. If return_code evaluates to 0 and outsize is non-zero,
+   (int)(obj->buffer.length - sizeof(*bios_return)) evaluates to a
+   negative integer (e.g. -8 for a 0-length buffer). actual_outsize is
+   set to this negative value and passed to memcpy(buffer, ...,
+   actual_outsize), where the signed negative value is cast to
+   size_t (e.g. 0xfffffffffffffff8), attempting to copy ~18 Exabytes
+   and triggering an immediate kernel crash. Additionally,
+   memset(buffer + actual_outsize, ...) performs an out-of-bounds
+   write before buffer.
 
-Fixes: b2715aa2e135 ("platform/x86: hp-bioscfg: spmobj-attributes")
-Reported-by: Josh Snyder <josh@code406.com>
-Closes: https://lore.kernel.org/platform-driver-x86/20260402-hp-bioscfg-overflow-v1-1-6985f8c9e67c@code406.com/
+Fix this by ensuring obj->buffer.length is at least sizeof(*bios_return)
+before accessing the return code, and compute actual_outsize safely
+using min_t(u32, ...), which is sound specifically because the guard
+above already rules out obj->buffer.length being smaller than
+sizeof(*bios_return) by the time that subtraction runs.
+
+Fixes: c3021ea1beee ("hp-wmi: allow setting input and output buffer sizes separately")
 Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260919060037.84602-1-meatuni001@gmail.com
+Link: https://patch.msgid.link/20260826103012.240453-1-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
-index 4d94e48c1a4c8..abf8ce20fe15c 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
-@@ -47,9 +47,6 @@ size_t hp_calculate_security_buffer(const char *authentication)
- 		return sizeof(u16) * 2;
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index f6853fb746fc5..02227a4392907 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -386,8 +386,9 @@ static int hp_wmi_perform_query(int query, enum hp_wmi_command command,
+ 		goto out_free;
+ 	}
  
- 	authlen = strlen(authentication);
--	if (!authlen)
--		return sizeof(u16) * 2;
--
- 	size = sizeof(u16) + authlen * sizeof(u16);
- 	if (!strstarts(authentication, BEAM_PREFIX))
- 		size += strlen(UTF_PREFIX) * sizeof(u16);
+-	if (obj->type != ACPI_TYPE_BUFFER) {
+-		pr_warn("query 0x%x returned an invalid object 0x%x\n", query, ret);
++	if (obj->type != ACPI_TYPE_BUFFER ||
++	    obj->buffer.length < sizeof(*bios_return)) {
++		pr_warn("query 0x%x returned wrong type or too small buffer\n", query);
+ 		ret = -EINVAL;
+ 		goto out_free;
+ 	}
+@@ -406,7 +407,7 @@ static int hp_wmi_perform_query(int query, enum hp_wmi_command command,
+ 	if (!outsize)
+ 		goto out_free;
+ 
+-	actual_outsize = min(outsize, (int)(obj->buffer.length - sizeof(*bios_return)));
++	actual_outsize = min_t(u32, outsize, obj->buffer.length - sizeof(*bios_return));
+ 	memcpy(buffer, obj->buffer.pointer + sizeof(*bios_return), actual_outsize);
+ 	memset(buffer + actual_outsize, 0, outsize - actual_outsize);
+ 
 -- 
 2.53.0
 
