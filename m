@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064638;
-	b=chB2u2FiFCk+zMOLOXKRcuHEnPVIPECFlJWIQyG4HeKQFiY5+ejwPi0+IwaeXKWkV/Y0
-	 6yNqShoNZxx1UisZNaFBGYHZuUR+mY5OPpsOCudlSSxjwr93N0k1+GpLGqkEEGXmvWPmm
-	 YeLNpTcCCRUyyRTrcOf8LJwxV/slFRkeQjhk+TSdhLbsydobHz7sYvdnfGLVXm3SIEQvT
-	 VdFyq/qmVttUAWwziU4fJ6c2YsmkE0jYt8GrNTadaLJdn8r5ohUtxJDB44A7t8wp9xFsJ
-	 /N0aHYi2I+4+JPRnBQjJS4bHQd2AncQllpuVhyIa5pkgMhnNmDxVH2VRYPfbhnY5QmQ==
+	t=1794064639;
+	b=xxBXzzziTHwxU3Q7KKGE/FLI52hyw4ufgGShZLvkuo5D4MQl8tXImoAf+0GFW7dOaFZ2
+	 6d+ta4pDhBZSoTVhfmxL3AuSx0xQ/NARzbZ/jiGC9lvJehghNFbGg4ad1yD8WEwgzdAWn
+	 QV8+GaMrVs5reOIMbVxMKh5AvABsEyr0y1lr1Pk3uSM0yYH9ZBvn07zNQWR5rTeq6SHgi
+	 foM4yhdO7VY1u7k1HCRjhV2x+1Ncax/zzU6e9bDPrJ4WvI9VPClNMkRCJ/SY4t1OWeKNP
+	 aY7lVDRVLfbBWLvtIL+ugeIaeczetsZ3MZ2UPh6z0WnvIJ+8GU5iifleyY23GrFcWKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064639;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rbuRHzBpb1g5byAvuJG4ltuAHnBj/11U+/5Gbm7RIOU=;
-	b=0yVFxdS+xqEqXhClSmnTVTR20nG1kaZT/mXCOHVXIrf45zYUcMXM/z5+X+7CLlozcexB
-	 3h5geGcK+KrhBlWf+OzHPnmC3bIgcbt6tMyGhjxFkX8wDRJVPvHc22Az3z0phxnUjhrVQ
-	 2iBvKFJJrXs63y1aRVZjEVtiW3BwcHEdIZbhnqiku1IaAgh8roeB4xLMKvEduHaluImcg
-	 ltV5LlvGP/IPZx4+zM9zgsxrph99Y2P0i1q+KUTmquTxQGSfFJaVJWeemtlK9uTViiOBi
-	 FVu2u5QU268qpyGIx/L1ZT/c/RfGT7Gb7ITZcyuAV46GMGHgvmQ35t73wjYRVzQZUCg==
+	bh=rFAh4fhFgav3l7Sr3lLD1Nbowio+9qAvMvvM1T+luLA=;
+	b=4QYLLVx2RBNjZFgu5l5On/4PuRUzb+UypVmNpWntmSt4zYtarZDqgDUjssZQhTRgT2KT
+	 EoVO86HcKCJqzYx4IOy/m3N2xA18CogInXjU3WRQsbiK/x/jVhqqV3L4/pvxWpyPpz0Dl
+	 gE55TA53FvdSOHymbZB1q5vXPGgLvmNNzALCuB7JRZbZ7c7lV352sjQsR6/m527VyswYi
+	 0vFKcacKCXOepx2lpjC9VRBLaV+E2YKP0tNab6cMoixpVjP4APNxwQDksXXTFWhVFmsCM
+	 74opjcBCSw17djDa+WSaBUXQ6sMejyd2ZIUidGo3Cjc++qPatF8Ul2i1JxW7tkM/swg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zPpt8ESw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0GOAlDWI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6174606A33D;
-	Sat,  7 Nov 2026 15:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3D2606A33D;
+	Sat,  7 Nov 2026 15:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zPpt8ESw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831631F0089F;
-	Sat,  7 Nov 2026 15:17:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0GOAlDWI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6DB1F0089F;
+	Sat,  7 Nov 2026 15:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064637;
-	bh=rbuRHzBpb1g5byAvuJG4ltuAHnBj/11U+/5Gbm7RIOU=;
+	s=korg; t=1794064639;
+	bh=rFAh4fhFgav3l7Sr3lLD1Nbowio+9qAvMvvM1T+luLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zPpt8ESwTmHmoVvztDiu2K5AzoAWLt4YTGvqEWP1scRDAmRnq9gj525GYlxHvO5Tz
-	 ipUDdXHiXd/eaUwHMywKTXb9BPBE+B+2V5NveUW/qXzyuY6asAfCA0Tf+c5ozHWPK0
-	 bYxXcLxF2ny4cL9RQrTD9LyNlcmTR3hM04dZxeA4=
+	b=0GOAlDWIdrPoLCm6sndy8i+dDxyqU8TAqLIZQvBAp3sw2T7xAHqaX0FXeYbtKcpjj
+	 sJkMGk85GTmvjvI5MWTLk6RYQRLTIsrZXCnUkMaoX5iKIUty3XcBQw2WhrYVNmfXfd
+	 i+np0epbGNl5UyqwWoGZLOxtXypysDoQSWbty5Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Gris Ge <cnfourt@gmail.com>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Hengyu Liang <hengyul@cs.unc.edu>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0626/1257] usb: typec: ucsi: Skip CAM query when partner has no alt modes
-Date: Sat,  7 Nov 2026 08:48:42 -0500
-Message-ID: <20261107134956.583997297@linuxfoundation.org>
+Subject: [PATCH 7.3 0644/1257] btrfs: return -ENOTTY for unknown ioctls on the control device
+Date: Sat,  7 Nov 2026 08:49:00 -0500
+Message-ID: <20261107134957.060886575@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,50 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gris Ge <cnfourt@gmail.com>
+From: Hengyu Liang <hengyul@cs.unc.edu>
 
-[ Upstream commit 7c590f0716ed3c9ae9809dbc6d488d76c19fdf52 ]
+[ Upstream commit 9985f1643ac3f8595862e2f82108f0ccae4cf959 ]
 
-Since Thunderbolt alternate mode support was added,
-`ucsi_altmode_update_active()` is called on every Connector Partner
-Changed event.  This made the driver send `UCSI_GET_CURRENT_CAM` to
-PPMs even when the partner had no alternate modes registered. Firmware
-that does not support the optional alternate mode details answered Not
-Supported, which produced a spurious error on every partner change:
+Commit 5ab2b180884c ("btrfs: factor out validation of
+btrfs_ioctl_vol_args::name") made btrfs_control_ioctl() store the result
+of btrfs_check_ioctl_vol_args_path() in ret before it looks at the
+command.
 
-```
-ucsi_acpi USBC000:00: GET_CURRENT_CAM command failed
-```
+However, ret is initialized to -ENOTTY and the switch has no default
+case, so this initial value was what an unknown command returned. As of
+now, every unknown ioctl on /dev/btrfs-control returns 0. A tool that
+tries a control ioctl which the running kernel does not have is told
+that the ioctl succeeded.
 
-Fixed by skipping the command when there is nothing to update.
+The issue can be reproduced with a simple C program, run as root:
 
-Fixes: da87d45b1951 ("usb: typec: ucsi: Add Thunderbolt alternate mode support")
-Assisted-by: Codex:deepseek-v4.1-flash
-Cc: stable <stable@kernel.org>
-Signed-off-by: Gris Ge <cnfourt@gmail.com>
-Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260930234611.468765-2-cnfourt@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    #include <fcntl.h>
+    #include <stdio.h>
+    #include <sys/ioctl.h>
+
+    int main(void)
+    {
+            static char buf[4096];
+            int fd = open("/dev/btrfs-control", O_RDWR);
+
+            if (ioctl(fd, TCGETS, buf) < 0)
+                    perror("ioctl");
+            else
+                    printf("ioctl succeeded\n");
+            return 0;
+    }
+
+Before commit 5ab2b180884c ("btrfs: factor out validation of
+btrfs_ioctl_vol_args::name"), the result is:
+
+    ioctl: Inappropriate ioctl for device
+
+After that commit, the result is:
+
+    ioctl succeeded
+
+This patch will add a default case that returns -ENOTTY.
+
+Fixes: 5ab2b180884c ("btrfs: factor out validation of btrfs_ioctl_vol_args::name")
+CC: stable@vger.kernel.org
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/super.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index c1450639c7956..264338fd594a6 100644
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1519,7 +1519,8 @@ static void ucsi_handle_connector_change(struct work_struct *work)
+diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
+index ddb620ac241b4..2c9b29aa59a2e 100644
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -2305,6 +2305,9 @@ static long btrfs_control_ioctl(struct file *file, unsigned int cmd,
+ 	case BTRFS_IOC_GET_SUPPORTED_FEATURES:
+ 		ret = btrfs_ioctl_get_supported_features((void __user*)arg);
+ 		break;
++	default:
++		ret = -ENOTTY;
++		break;
+ 	}
  
- 	if (con->partner && (change & UCSI_CONSTAT_PARTNER_CHANGE)) {
- 		ucsi_partner_change(con);
--		ucsi_altmode_update_active(con);
-+		if (con->partner_altmode[0])
-+			ucsi_altmode_update_active(con);
- 
- 		/* Complete pending data role swap */
- 		if (!completion_done(&con->complete))
+ out:
 -- 
 2.53.0
 
