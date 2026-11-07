@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064847;
-	b=0YTXUyk3L97wcGZV/jndYEiAHS/wOjf3OmOKpxms0OkPgT17T60f/kFWvtfDHGITdZS1
-	 5s0DtPZD42+Quzs4zasf6uJU731UZJrRIbTyH2gtqFyGacXYgbPt15YptYzrWpLfQzUSx
-	 v1gfaWyfFcV0Pd68TyQ4XR5AX+fkRjgdctFk5BKiknMgV43cKF2+xGJTaJu41MLPuqbkN
-	 XggS5/fh4t5ANZ15zYWwqPfOLUxchDsDBPeAw3uYJOdpBj7iyk6DxkqS/hSwPYNBuX2O4
-	 hOZIZpuGi/QF9fKwbtu4iUXqFwCDSEtJXwyHhGrOCm+6DVyrg4ktJ4j+eAoBk9a+y3w==
+	t=1794064848;
+	b=Z1my9rIrI6HmM2RxAeIAbQnhS7MkyC6WFlU3aXau9hqv2/L3k73hzN2whaF3wn/VdM43
+	 qZut/Uz6t7+pAdGSFofkzpVYriungk7J0mEfCZCpo0c9mnT60ZHqk8l4mW8qW7b87yVLt
+	 O/eATj1CfBdL/9FcVfn0/DcaO36tcNV5kt5UIN4/OV5FcS/ts0cXadwU4ZLSVCmtaaGgi
+	 F8Kdd6PUXYKaGgFXEOZKgb5AfKuKgK1EE0t6UaNjiGGd21bS/U+M8ieJ1+n3+RsAJpqBW
+	 /uxrTDfxbu7a8vwd3XsZ+C5S5/CncN4J+0syj8LTcdLqa99VAXBAyilD/yq7XjiZl/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064847;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064848;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=grB4I/8AMRzchKzpPmg9Kfgw1lraTkBFUa4GjXG2MDk=;
-	b=TO4KOXIVZL2Q28lhSlyA02GzNLhYjrHI684ajI57aIiwPotzipF1RT0q6CgBdbxQja2l
-	 rGyc8Bek9AgRZATwHU+EJ4qfAXwgfWOiiCP1lYyAd4ZY5yNii/08jhp4UYMjgjs7pfrKu
-	 usdUxq84a3oFZ2SrMWpbKBe+N+2RctQlNL+qTzcKeBT1ifgC7JKMvodiuIIRe4ihQu7sC
-	 EuqkfgDVL6nWsU8ACguu68W3YgXrTJuBMaIepTBiRB2aHPaXP3O+/DtCVgqC4hKsbDEAt
-	 b5EPBpMUJ4k7ZOkDLTpJpqAM1BREgPQ4krbIJd2db1H/9hwuIpmEgwKUMzsdOYWELGQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=0D5CNtSNvji7nAAH8Y40dAOFhw9zYeWmHGzk0L3AsT0=;
+	b=aSExK7/Lwm5q+RCNc0Sxgm6n19/EmmDQLTYT4E6NRza4kSpDnbQJFrX5g3Uk0+QSYsIz
+	 WMYP4wbmsCMQTdEcjoxADoScooPyqZGq2VM23UM+KqD7sA9oV7qUKC6KW3KR6JhauJv4q
+	 dbY0bHDvIml1vQtAi7rDYZ7b0kgY1fDm9+G3wNnlTVBaUCVmOaXNxIC49icqSkDEV9NYE
+	 cX3jmBKO1v2ZQxyJu9EAk81YZcbTtzsli2LJnpGlthaDWCDlb/7Dj0GkM/9+u3zdpRcgl
+	 IRqCS09yTDuBk+lVb/NaDZZo6K2SM0AwXe9cfKEeVyJskzKAQLNtPh1V+8D50vPc7og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uNrfiW8Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WE2OYCG/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F6A606A32D;
-	Sat,  7 Nov 2026 15:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C5F606B8AD;
+	Sat,  7 Nov 2026 15:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uNrfiW8Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BE11F0089F;
-	Sat,  7 Nov 2026 15:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WE2OYCG/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83691F008A1;
+	Sat,  7 Nov 2026 15:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064846;
-	bh=grB4I/8AMRzchKzpPmg9Kfgw1lraTkBFUa4GjXG2MDk=;
+	s=korg; t=1794064848;
+	bh=0D5CNtSNvji7nAAH8Y40dAOFhw9zYeWmHGzk0L3AsT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uNrfiW8YiIexMJe5sY+ICdw/KFFK1tl8Q+EK2AlWkJD9T4zUgJvsOjxSKkj3/Crh6
-	 E8M+xXQSMwZ/xYpOJUWb39YeWE6tZnucLfNdiWs57Uxck8QA71fgFhnp3Frt8Z9I/w
-	 YDECQe4OnevBNx636/WW+/3HRQYfQU/HtJxgyF2M=
+	b=WE2OYCG/wWQAbJ9ijGunRGjmsXBI/sFoHB9iWKoj2w34vmu1jLBHgMTIUMX5F3BxA
+	 qyyQ/QLBQpo/UPeplxArfav1KU8OMCECKd6nwocdQWtV8l2rUMmtT/vZ4iKbCI1G4T
+	 nBjmMbiBjeieOPq5iIJmDEKPRwR22LwXwXZ8tObE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Orlando <francesco.orlando99@libero.it>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	=?UTF-8?q?Nikolaj=20Klitlund=20B=C3=B8rty?= <nbn@sj.dk>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0771/1257] Input: xpad - add GameSir Nova Lite support
-Date: Sat,  7 Nov 2026 08:51:07 -0500
-Message-ID: <20261107135000.592899956@linuxfoundation.org>
+Subject: [PATCH 7.3 0772/1257] Bluetooth: btusb: Add device ID for Realtek RTL8761BUE (StarTech AV53C1)
+Date: Sat,  7 Nov 2026 08:51:08 -0500
+Message-ID: <20261107135000.618572710@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,40 +62,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Francesco Orlando <francesco.orlando99@libero.it>
+From: Nikolaj Klitlund Børty <nbn@sj.dk>
 
-[ Upstream commit 2e6f2e5799f328ca0879dad14d7f3709c7f7496b ]
+[ Upstream commit 1430308fc9d47a801a305700cd444b1a0051d14a ]
 
-Add vendor and product ID for GameSir Nova Lite (0x3537:0x1040) in
-XInput mode to enable force feedback rumble support.
+Add the USB ID 0x14b0:0x047a for the StarTech AV53C1-USB-BLUETOOTH
+adapter, a Realtek RTL8761BUE based Bluetooth 5.3 dongle.
 
-Signed-off-by: Francesco Orlando <francesco.orlando99@libero.it>
-Link: https://patch.msgid.link/20261011165821.72698-1-francesco.orlando99@libero.it
+Without this entry btusb treats the device as a generic Bluetooth
+adapter and never loads the Realtek firmware, leaving the controller on
+its ROM firmware. In that state it advertises and scans actively, but
+never reports advertisements during passive scanning. LE connections
+initiated by the kernel wait for a passive-scan report before issuing
+LE Create Connection, so connecting and pairing from BlueZ time out
+without any error from the controller.
+
+The same product is also sold with the ID 0x2c0a:0x8761, which is
+already supported.
+
+lsusb -v output for the device:
+
+Bus 001 Device 010: ID 14b0:047a StarTech.com Ltd. Bluetooth Radio
+Device Descriptor:
+  bcdUSB               1.10
+  bDeviceClass          224 Wireless
+  bDeviceSubClass         1 Radio Frequency
+  bDeviceProtocol         1 Bluetooth
+  idVendor           0x14b0 StarTech.com Ltd.
+  idProduct          0x047a
+  bcdDevice            2.00
+  iManufacturer           1 Realtek
+  iProduct                2 Bluetooth Radio
+  iSerial                 3 00E04C239987
+  bNumInterfaces          2
+    Interface Descriptor:
+      bInterfaceClass       224 Wireless
+      bInterfaceSubClass      1 Radio Frequency
+      bInterfaceProtocol      1 Bluetooth
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Nikolaj Klitlund Børty <nbn@sj.dk>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
-index 810e52782ae89..d2eb48d98fead 100644
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -408,6 +408,7 @@ static const struct xpad_device {
- 	{ 0x3537, 0x1004, "GameSir T4 Kaleid", 0, XTYPE_XBOX360 },
- 	{ 0x3537, 0x100f, "GameSir Nova 2 Lite", 0, XTYPE_XBOX360 },
- 	{ 0x3537, 0x1010, "GameSir G7 SE", 0, XTYPE_XBOXONE },
-+	{ 0x3537, 0x1040, "GameSir Nova Lite", 0, XTYPE_XBOX360 },
- 	{ 0x3651, 0x1000, "CRKD SG", 0, XTYPE_XBOX360 },
- 	{ 0x366c, 0x0005, "ByoWave Proteus Controller", MAP_SHARE_BUTTON, XTYPE_XBOXONE, FLAG_DELAY_INIT },
- 	{ 0x3767, 0x0101, "Fanatec Speedster 3 Forceshock Wheel", 0, XTYPE_XBOX },
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index dc7191bf42349..ece1fd426f12b 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -878,6 +878,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x37ad, 0x0600), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x14b0, 0x047a), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 
+ 	/* Additional Realtek 8761CU Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x1bef), .driver_info = BTUSB_REALTEK |
 -- 
 2.53.0
 
