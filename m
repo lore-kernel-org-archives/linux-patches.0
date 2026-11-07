@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062638;
-	b=YkDYhZ1q8M7doQL6xbGdJByid0UkC+exgiD2l9hjlGHCg2tRV7a+TulId77i5xStzwes
-	 lyjhQfMttx++NyaaiQv+G5DtL+pIKVEOFD8lqDTrGbLwc2D+bNnVU/3LjjsxXiRWc6ewI
-	 HElX3norRUcSGyn3fuOpvhOib8wTp7X5/abkpoj4679U6OXh/VcrYu6zlh4G5bb6Sqcly
-	 mjuDRQPyJQCpUy82hcKB2s+0dPmkI2mwoxxG4Ms+2Hqiwdntr8wPJ6np04sXtNL3iYq10
-	 S3qQ/YEJ8hH1kEI6k716dC9NCHGsRZFPF/x9MXJITbAXtO0tHEfiqa0HZt41SDKrYsQ==
+	t=1794062639;
+	b=LQ3gzYS8nScFLNGQhLFVOAhcb4YfijY9JJ/MNsJy7mQS+IRQjahYwfoDHD2aoQrBEbxV
+	 5fVAMA48No2SxyJEsB1I3eMpDq9HqH91nmfjeWzozZyvqf+ckTgLI2A1Ce9DMFK1SpDK5
+	 eXbuKdaI+bL5+8Q+INCWSWU8221aLKsLiGynC/MxEGzndczrmv793Jb4LU/NMDPHbQBSt
+	 RruJ70tUZpm3kCmfH0yXLfp8pFFeQAew4dnsEM1ydvrc2ESBwyICzYIxHpOaqjNe1sQpm
+	 OkR82YSsirtCpRjgdglEgc8U0HE0KCtpDG6OzX4IuOL1EMXqDGHSOUWaLhDkXdpWDKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062639;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vy4dJwN4MqolgXUj/USAuVHaXJ4EUWqX3HE69TxDNBk=;
-	b=qFyzHfiRJpj8znCHDt+PWy+USYNNJrC5EK7pIvYjW7BTQX+hu/3e1iTluWE1qZzv7NOB
-	 9i7QrlNMQPJBn8B279J862Vk9504iczLVy6tiMsjCjnKLtu/RQIQ68Bc79o4BPEi/7CEU
-	 9Fv/mr2Le8LG7q7lpBzvtckjYefSTcBGwFJ+k7T2VS5liQQvIvuZqdEuFq3e8eMQmOTLN
-	 YLJznce4NxHfXzvYYyJzj/Rxz8nEYrzDS+hhhU0ZgM9Sju3OMR0KViPNMtIEEQ0b72x+6
-	 cy3QpaBHxnY+zX1kC7HelgYcseOA3NlgqWFKMNX5dYefXrYwGaePibUrxbMvc8M+Vuw==
+	bh=JEBdU6ISZ2BFvo1PNM+Jsuk5ancC/ATOKz2U7iCA/WU=;
+	b=VugaIOoDBSOq5DYRd+t1lEYcnp9CtO/sSBuGXhj3a1fOEIcEV9zTOy1675w57QdhUYYS
+	 pNADgV4GHmmdocKb3UV8iIElKxdQXqHKWpq7QqAbo2bpC7ot+bW2GHuTRdsnvAwRwTct7
+	 qZ3TCHfkA3fAKKI9w4gcZKUX8w6b/6b0N5kgoe65LcsVxlyrGpSuUaY54Ah/NfhoX8Htk
+	 bj0sUCEPb3eWKDl4uBRIffGiVbtRc5bwBOgE8L3doeY1OUhIzSQBnqRSMrt47jJFtCfkz
+	 /OjSzHu1uEIzOrC1UmypkJdaM6n/jb2YiRDx4z2oUJ2nFXVvOxsWb2X1tG7S8wFweSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTODAxKJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AC7jJi8G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC04606A334;
-	Sat,  7 Nov 2026 14:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7832E606A334;
+	Sat,  7 Nov 2026 14:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTODAxKJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE4A1F0089F;
-	Sat,  7 Nov 2026 14:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AC7jJi8G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252141F0089F;
+	Sat,  7 Nov 2026 14:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062638;
-	bh=Vy4dJwN4MqolgXUj/USAuVHaXJ4EUWqX3HE69TxDNBk=;
+	s=korg; t=1794062639;
+	bh=JEBdU6ISZ2BFvo1PNM+Jsuk5ancC/ATOKz2U7iCA/WU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kTODAxKJ/9nTzKpAwjw0m/6S1gdFC1u+lGQkMbij3s1zlmfcHCJ3QzZsF5yXm32FK
-	 rOlLcPKEBGTqnqbKEYneeIlLRP7oCDObfDIKRbppapg0LwtB0Y5A9Nc1Q7vcKuSnrz
-	 PPGrlCx5gGbEwylZ2l5yeZ9VWGMk/rzUNg3ElxgI=
+	b=AC7jJi8G2nf8hO4hZPuvqRafnI48MwfglTh1G5ho6xDrScZsfsDkrr8fa0PVrMd0t
+	 D0rN3tut8shOYxC0YbsyiJtECXcJN9t/vrV5V1FrTk71pu01QMJI0ShJbghl1LwfZm
+	 b7Ph8JaYnEcOIkTjDExh2rENmeQg6N38EiHXyCIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1506/1536] ASoC: hdac_hda: Keep runtime PM state in sync across codec remove/probe
-Date: Sat,  7 Nov 2026 08:58:42 -0500
-Message-ID: <20261107135040.162316915@linuxfoundation.org>
+Subject: [PATCH 6.12 1507/1536] ppp: fix stale pointer access after pskb_may_pull in ppp_ccp_peek
+Date: Sat,  7 Nov 2026 08:58:43 -0500
+Message-ID: <20261107135040.190388066@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,85 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 99203e8d8968def973e82bb712ea959c6a46c16e ]
+[ Upstream commit 1e860f42f41c6fbf3304f6a52be38245b9394982 ]
 
-After the codec has been removed, its runtime PM status is
-RPM_SUSPENDED while hdac_hda_codec_probe() powers the codec up via
-snd_hda_codec_device_new(). The pm_runtime_put()/snd_hda_power_down()
-calls on probe and registration then see an already suspended device,
-the codec suspend callback is not called and the codec, its HDA link and
-the codec_powered bit stay set, preventing the controller from runtime
-suspending.
+ppp_ccp_peek() caches a pointer to skb->data in dp after the first
+pskb_may_pull(), then uses dp after a second pskb_may_pull(skb, len + 2)
+in the CCP_CONFACK handler. If the second pull triggers
+pskb_expand_head() due to a cloned skb or frag linearization,
+skb->head is freed and reallocated, leaving dp stale.
 
-The remove has a similar problem with the codec link accounting:
-hdac_hda_codec_remove() drops the link reference taken in probe without
-looking at the runtime PM state of the codec. If the codec was already
-runtime suspended, the link reference has been dropped by the codec
-suspend callback and the remove drops it a second time.
+The stale dp is subsequently used in CCP_OPT_LENGTH() and passed to
+decomp_init()/comp_init() which read from the freed memory.
 
-Resume the codec in hdac_hda_codec_remove() before disabling runtime PM
-so that the link reference and the codec_powered bit are always in the
-same state as after the probe, and mark the device active on probe once
-the codec has been powered up.
+Re-derive dp from skb->data after the second pskb_may_pull.
 
-Finally mark the codec device suspended at the end of the remove. Its
-runtime PM is disabled at this point and if only the ASoC card is
-unbound (e.g. by unbinding the machine driver), a following system
-suspend would otherwise call the runtime suspend callback on the already
-cleaned up codec via pm_runtime_force_suspend().
-
-This is a followup patch to address Sashiko reports.
-
-Link: https://lore.kernel.org/linux-sound/20261027083840.28813-4-peter.ujfalusi@linux.intel.com/
-Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
+Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261027144655.31988-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/ppp/ppp_generic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index 9c4a4b5779293..25a145cb8a510 100644
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -517,6 +517,9 @@ static int hdac_hda_codec_probe(struct snd_soc_component *component)
- 		snd_hdac_display_power(hdev->bus,
- 				       HDA_CODEC_IDX_CONTROLLER, false);
- 
-+	/* The codec is in D0, the status is RPM_SUSPENDED after a previous unbind */
-+	pm_runtime_set_active(&hdev->dev);
-+
- 	/* match for forbid call in snd_hda_codec_device_new() */
- 	pm_runtime_allow(&hdev->dev);
- 
-@@ -556,6 +559,12 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
- 		return;
- 	}
- 
-+	/*
-+	 * Resume the codec to have its link reference (dropped below) and
-+	 * codec_powered bit in the same state as after the probe.
-+	 */
-+	pm_runtime_get_sync(&hdev->dev);
-+
- 	/* prevent runtime PM callbacks while the link and the codec are torn down */
- 	pm_runtime_disable(&hdev->dev);
- 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
-@@ -567,6 +576,9 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
- 
- 	/* Balances the disable above, cleanup_for_unbind keeps runtime PM disabled */
- 	pm_runtime_enable(&hdev->dev);
-+	pm_runtime_put_noidle(&hdev->dev);
-+	/* The codec is cleaned up, system suspend must skip it from now on */
-+	pm_runtime_set_suspended(&hdev->dev);
- }
- 
- static const struct snd_soc_dapm_route hdac_hda_dapm_routes[] = {
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 5d6d69632c847..4d4591ea443a9 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -3158,6 +3158,7 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
+ 		len = CCP_LENGTH(dp);
+ 		if (!pskb_may_pull(skb, len + 2))
+ 			return;		/* too short */
++		dp = skb->data + 2;
+ 		dp += CCP_HDRLEN;
+ 		len -= CCP_HDRLEN;
+ 		if (len < CCP_OPT_MINLEN || len < CCP_OPT_LENGTH(dp))
 -- 
 2.53.0
 
