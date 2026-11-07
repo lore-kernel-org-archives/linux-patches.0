@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064921;
-	b=I4fVxTww/B4Vvtro5GfNsFGLFu/LVeF7wTEnvgIG33L2BWTSN6Cf+LvycMehGj/pY0mT
-	 DcAcluT4z5gqVR2hJ7/R9nOmx+XpxrraCz8x8ojZyipMylOC5LUvTlsnUnyVRs5SS0i0V
-	 2/fEWjcPUkYGftHYcZ52qFuHCf4Jl7yRyNCVfYWTcAUCpck+xkk/+HNJl6uVwcSB6r+wP
-	 37GwtHdb/IA+ixyq9viXp2Jt9/51rBLUS8UV+f7HTkvAQ+t6NVwSAhWlJBb8UfcYlJu0q
-	 +iG4y7Py8pErp4AiQkYFdHDyOIuSDOj2c5z/KmPnGSLR/Hryss1RqEFvLUpJVVp0Shg==
+	t=1794064922;
+	b=QASujdJqGirEWLjjIALHimEoTylDyo0qLTZZbgyjL+Gf/Zvr05SZXZbhq8UieA1xTL2h
+	 EJ4Ee+J9MWKACZNSeWz/tOWSqNt5NGTDec/IXp5/Jo4fhPT/UHdcZ5HUhfBFji9fZ1PbW
+	 phgWv7vZ15CU7PTZuq2IOHFT2nZArMgZwJibwapJNBr3ZlRUlasmpW2HhTNwii6UmJrVq
+	 SA1V3ysCHkAiNWsfU2uYsUpPl6Xyli8ip5KFRSf9J75wd3J3csdLam1N1U0+VSfFVs/HU
+	 kDVZD4HBn0yej65VXLSgmVrJpETlVYAKy5aSJwTM5CNuOECEogWf1k9polWavK2dc4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064921;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R2YbCtpvdtXoZ7RTjN5MahljVO6p6M8od2TY62KlNm0=;
-	b=gV6ueVfgq2p8unmhzpIBG4fxt4Njp0eKwysA92HZuRl+noqtkkO8gYZhsL6ci3W0CJFx
-	 gwJ6h2PE7oKCii0jC0f+AgVpFcjBeoiBF3dp3JL6yq7zt03lMUeLi2r4gEGKyvQTzA+9F
-	 neD0vdKFzPxxBqOeXnWZxoxZknudf2H5RtEDi7UZnQrAVt+ig7HC6vtoyKGMY4Yhhfiax
-	 Ns7oy96ivLPS7SehRJPaVEqoOJBnJEEWlw78Mm3OVnPtKZj1HLV2iveVS4w08klFqGguw
-	 44+tQ/frGCX3sVG6znAUYHVZAwvSpzch9Aon9XF4HeZCkS/W6Si/1f/klvGPJKrhMWA==
+	bh=Z+AfgfqUqflqsTkkW3mBdOG7SmHImeitXf6KNFuPK9I=;
+	b=UGvm1awMXDp7H1niYcYVvCnZbs3f8MPy/a91KkCKeq29lsLRogxnEtm75+bJGU+1/P2Q
+	 v13YcmQzEr9znrVFQ5Kmd0a0v8HDxGHpuvhEaOrMkvXIN+/yNMJGDAa5zW0TKxpnAmRZz
+	 BjjyxdO4nMyPLSB9ZvAFKUs158PIKO6ZmcHLFs2KuJhUkdCG7g1HGtA4rf/NGiiDm48sJ
+	 x+e62X6xP4hLBwVbrC40G9j27azCnwv/JGRLodGFkZBXYSFC7y2PGsKYWvsG7IV45OvaQ
+	 UJmYumR5tiuAEnT3IagX/pFAKu7jevEXTTJ8vdVeau1yes/n+uNSs34G7Nub6TfJ2DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="H5c5n/KR";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukLW+UqF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13262606A33E;
-	Sat,  7 Nov 2026 15:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339B4606A33E;
+	Sat,  7 Nov 2026 15:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H5c5n/KR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9215A1F0089F;
-	Sat,  7 Nov 2026 15:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukLW+UqF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22C81F0089F;
+	Sat,  7 Nov 2026 15:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064920;
-	bh=R2YbCtpvdtXoZ7RTjN5MahljVO6p6M8od2TY62KlNm0=;
+	s=korg; t=1794064922;
+	bh=Z+AfgfqUqflqsTkkW3mBdOG7SmHImeitXf6KNFuPK9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H5c5n/KRoIc7DOEE8Llu7Lti0Qtg4TpoIxKHk0UgY1qHV5PKXHufNIQZFk7X5z5Nk
-	 9SKt3mjztE1bOgDMHl7+0hmoOYsbp0cnbWtdLRL8yfpABlaAAH6gceExnXhtBZi2dX
-	 xeawR708DqNtDeNNSDmbDQtb6MQ27MA8dKv+ps44=
+	b=ukLW+UqFGOqgppSeWh85bos21LbmzD6F7WXMHHgtwK2jpsUxBMA6Md23StAHRryeP
+	 vExbLyzdzhLNkehZbbvu+YDzpATESbp35tAlNjGNGa0gqCPlm2enHjNxtm21dPbIPT
+	 5WjkUhxqjoINUNhJCPC8kJjdIodNggm0T5kc7BQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianyun Gao <jianyungao89@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Au Dang <au.dang.jx@renesas.com>,
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0818/1257] dax: fix dax_range_compare_iter() to use correct size and address offset
-Date: Sat,  7 Nov 2026 08:51:54 -0500
-Message-ID: <20261107135001.936124436@linuxfoundation.org>
+Subject: [PATCH 7.3 0792/1257] irqchip/renesas-rzv2h: Preserve TIEN state in rzv2h_tint_set_type()
+Date: Sat,  7 Nov 2026 08:51:28 -0500
+Message-ID: <20261107135001.201194267@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,75 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianyun Gao <jianyungao89@gmail.com>
+From: Au Dang <au.dang.jx@renesas.com>
 
-[ Upstream commit a4bfbfb4e98a62b589ac7ca9e73e9612bfe8cab7 ]
+[ Upstream commit 42bedd4af8cd50c32a1560d8744bd22d25be79cc ]
 
-dax_range_compare_iter() has two bugs in how it calls
-dax_iomap_direct_access() and uses the returned addresses:
+rzv2h_tint_set_type() clears TIEN while switching the TINT source and
+then unconditionally sets it again, enabling the interrupt even if it
+was disabled before the call.
 
-1. The size argument passed to dax_iomap_direct_access() is
-   ALIGN(pos + len, PAGE_SIZE), which is an absolute file offset
-   rather than a length. This causes the underlying dax_direct_access()
-   to request a massively inflated nr_pages via PHYS_PFN(size).
+Restore the previous TIEN state instead of forcing it on.
 
-2. The addresses returned by dax_iomap_direct_access() are page-aligned
-   starting addresses, but memcmp() compares from saddr/daddr directly
-   without adding the page-in-page offset of pos1/pos2. When pos1/pos2
-   are not page-aligned, this compares the wrong data.
-
-Fix the size by computing ALIGN(len + offset_in_page(pos), PAGE_SIZE),
-matching the pattern used in dax_iomap_copy_around(). Fix the address
-by adding offset_in_page(pos1)/offset_in_page(pos2) to saddr/daddr in
-the memcmp() call.
-
-Fixes: 6f7db3894ae2 ("fsdax: dedup file range to use a compare function")
+Fixes: 0d7605e75ac2 ("irqchip: Add RZ/V2H(P) Interrupt Control Unit (ICU) driver")
+Signed-off-by: Au Dang <au.dang.jx@renesas.com>
+Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20261011064840.1296-1-jianyungao89@gmail.com
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20261014095927.635132-1-tommaso.merciai.xr@bp.renesas.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dax.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/irqchip/irq-renesas-rzv2h.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/dax.c b/fs/dax.c
-index 1fbba0d21c13d..dbb58692efecf 100644
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -2200,6 +2200,7 @@ static int dax_range_compare_iter(struct iomap_iter *it_src,
- 	const struct iomap *dmap = &it_dest->iomap;
- 	loff_t pos1 = it_src->pos, pos2 = it_dest->pos;
- 	void *saddr, *daddr;
-+	size_t size1, size2;
- 	int id, ret;
+diff --git a/drivers/irqchip/irq-renesas-rzv2h.c b/drivers/irqchip/irq-renesas-rzv2h.c
+index 1a4703a353e95..485c3eea76328 100644
+--- a/drivers/irqchip/irq-renesas-rzv2h.c
++++ b/drivers/irqchip/irq-renesas-rzv2h.c
+@@ -420,9 +420,9 @@ static void rzv2h_clear_tint_int(struct rzv2h_icu_priv *priv, unsigned int hwirq
+ static int rzv2h_tint_set_type(struct irq_data *d, unsigned int type)
+ {
+ 	u32 titsr, titsr_k, titsel_n, tien;
++	u32 titsr_cur, tssr_cur, tien_cur;
+ 	struct rzv2h_icu_priv *priv;
+ 	u32 tssr, tssr_k, tssel_n;
+-	u32 titsr_cur, tssr_cur;
+ 	unsigned int hwirq;
+ 	u32 tint, sense;
+ 	int tint_nr;
+@@ -477,6 +477,8 @@ static int rzv2h_tint_set_type(struct irq_data *d, unsigned int type)
+ 		if (tssr_cur == tint && titsr_cur == sense)
+ 			goto set_parent_type;
  
- 	len = min(len, min(smap->length, dmap->length));
-@@ -2215,17 +2216,18 @@ static int dax_range_compare_iter(struct iomap_iter *it_src,
++		tien_cur = tssr & tien;
++
+ 		tssr &= ~(ICU_TSSR_TSSEL_MASK(tssel_n, priv->info->field_width) | tien);
+ 		tssr |= ICU_TSSR_TSSEL_PREP(tint, tssel_n, priv->info->field_width);
+ 
+@@ -489,7 +491,7 @@ static int rzv2h_tint_set_type(struct irq_data *d, unsigned int type)
+ 
+ 		rzv2h_clear_tint_int(priv, hwirq);
+ 
+-		writel_relaxed(tssr | tien, priv->base + priv->info->t_offs + ICU_TSSR(tssr_k));
++		writel_relaxed(tssr | tien_cur, priv->base + priv->info->t_offs + ICU_TSSR(tssr_k));
  	}
- 
- 	id = dax_read_lock();
--	ret = dax_iomap_direct_access(smap, pos1, ALIGN(pos1 + len, PAGE_SIZE),
--				      &saddr, NULL);
-+	size1 = ALIGN(len + offset_in_page(pos1), PAGE_SIZE);
-+	ret = dax_iomap_direct_access(smap, pos1, size1, &saddr, NULL);
- 	if (ret < 0)
- 		goto out_unlock;
- 
--	ret = dax_iomap_direct_access(dmap, pos2, ALIGN(pos2 + len, PAGE_SIZE),
--				      &daddr, NULL);
-+	size2 = ALIGN(len + offset_in_page(pos2), PAGE_SIZE);
-+	ret = dax_iomap_direct_access(dmap, pos2, size2, &daddr, NULL);
- 	if (ret < 0)
- 		goto out_unlock;
- 
--	*same = !memcmp(saddr, daddr, len);
-+	*same = !memcmp(saddr + offset_in_page(pos1),
-+			daddr + offset_in_page(pos2), len);
- 	if (!*same)
- 		len = 0;
- 	dax_read_unlock(id);
+ set_parent_type:
+ 	return irq_chip_set_type_parent(d, IRQ_TYPE_LEVEL_HIGH);
 -- 
 2.53.0
 
