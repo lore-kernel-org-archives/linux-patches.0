@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060959;
-	b=l9IHg8/V15q4tZBGHoapTifzAuqTbmloZKDeNKgw0IU4xQW/xTb6DVORJhpEYKufwCn3
-	 CgDRrpltH5Wi3RO8h2l8VxPy1lJLUJqmWWSyfXFrG3a7lOl1skvibD7vwOeob+nuPCOot
-	 zjXXt3DQapcmNnulBsG0WOc6zk/8y3U0uanpMQCT207iWgrSkFvJzY//hLuHkVWpn6A2H
-	 N4U3A5eaSLrzaZwAZ4Hon2e7NaPhKt3l77zKbiZN7O2+Lm1IA9sbFIeG1fzZNmdTuVdVu
-	 7WlkG0ZdavSzH2bPwz1k5A4o1WqCTub4DaE5Uy0HN7w9qXMPFRI//MPP9UZQiA0b2wQ==
+	t=1794060961;
+	b=Q9ygTYYtoi8lugLsJT0rRokJis2NquftNWXLPGXBAqNeGQClCOHj4wXRfon4AB6bR1gw
+	 ud5kl7kC00cN1E6CrOH/LfIpx8Y7st7+k7wMv4blfj7JwrEyAdtv8ZR6syRuAa/ieygAK
+	 Cu4dmTTaA050HOP5Qinz6g4cjGmtqH4mhZ8+Z93oYZUzzqv4Voyb6pg39EST5xU5hi9Gp
+	 /VJdmX+sFQbTfB+MZwWDoI2ei8mHAKN6PevwY90MKQsa//mpvFX0V0EF9J0kZ3YTyvw/+
+	 UvjMC/s5hf5GCewA66TKVCwCFdN9qCzkS4j0NYJSUOYHG+MAxEc1s8w0tWB/z6M8OgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060961;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N0TYYmAKD3ix4Y0qq/p9iQbIUkR+jkiydSIdpHK+QEY=;
-	b=R2KMvFA+fJjW8FZsTLPbRRkIKysrgnSxZIN3RLY7EjRu9m8nB2S6j9RaRnXWprUU3FyP
-	 yIfALyZpVZjmfaMquU4ihkcFuRDojrMfdNoksXnE9jC+vRKljKFY5gwDRvdCkCJPn8yyw
-	 huYomtk8WkGd0m2yU3fdiVV35CA6xf1smxd2p862YrdpaHj1y/Pde2pXTzekFbLBQRqeK
-	 Z/utuJL6UTnUeZGDreJIGFkC2BauCV3oCCzdY41zTZToM668oZM7T6AfztJaLGDVFIXUu
-	 WAN3H8ejIWrlAk8DSS5mdtOerhqUvOl24b9pBIz5aUGE+Vi2wVrtq8XuA6QoBPtADGA==
+	bh=WpdWUCx0s3AMpdxrCtK5ET/XoXIQcZn788hFwSDxfwg=;
+	b=jbOTWJ6tFIhXjen1RX3nZAJ3ujWTul23xPd6hjYdPjR8U639lLV4/8qyCa1VjPJYtlrk
+	 Eu0kNL69wOT6xuwNjy7q5zbBAxS+qZwdoIUXJQKfPTfBhWzBed31iAePmaN1K1UTNy0im
+	 bADNvpbh2MiPkWt8yJkz9isD8otX/HkZPP9Oz1s+Do14pWm/TOEzZQR62W/DiK0Cm91TF
+	 tTiidrb4whF95e2ewJnlLUbJUeq/UKfGakd2kt2hz+NGGIK30hp6wDQSDqrpSi5lDBCtS
+	 1qblcTBbxF6s08IlbWNS+TN42VAABBt+C0pl2bGiAQoyqLeLv0i8Q36Ys2KdM273DmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EGKJyXAW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mxUKA1Hp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B56606D80C;
-	Sat,  7 Nov 2026 14:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2247606A33A;
+	Sat,  7 Nov 2026 14:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EGKJyXAW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247AE1F0089F;
-	Sat,  7 Nov 2026 14:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mxUKA1Hp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDCB1F0089F;
+	Sat,  7 Nov 2026 14:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060959;
-	bh=N0TYYmAKD3ix4Y0qq/p9iQbIUkR+jkiydSIdpHK+QEY=;
+	s=korg; t=1794060960;
+	bh=WpdWUCx0s3AMpdxrCtK5ET/XoXIQcZn788hFwSDxfwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EGKJyXAWHjR1akQKw415ewrZbQZSVy09z3SeMCPH+ulV4OBPUXflw+Zfed1IHKj4T
-	 r/3TC3IBuXg/9yYTXnEybc8tvcTwhGIfoOdg3ZFwkyL40pPXDFAzxXKcdinfWH/Mxs
-	 Qx9IB7JuMJgilOrn6/0Io3P4VENhWP69I+rwpr8M=
+	b=mxUKA1HplUKCycKbeAP4iJULX+IUK0EM6l9KhHrTMzMwX3vXPpD23XSL30TWjgS3v
+	 JRLkpcFCq4W6gl4ivpeHM1fjaMD1eXNXmrenmCmymU4kUDfOuuq4pnT8xirtgdpCqR
+	 eLrY1aTf3HWLVNTHTDOmYJTOXp4V8B8p8/5SojtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaultier Delbarre <Gaultier.Delbarre@amd.com>,
-	Wei Huang <wei.huang2@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Ankit Soni <Ankit.Soni@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	David Heidelberg <david@ixit.cz>,
+	Griffin Kroah-Hartman <griffin@kroah.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0316/1536] iommu/amd: Fix missing CMD_COMPLETE_PPR response for invalid PPR requests
-Date: Sat,  7 Nov 2026 08:38:52 -0500
-Message-ID: <20261107135006.595960181@linuxfoundation.org>
+Subject: [PATCH 6.12 0317/1536] nfc: mrvl: spi: Unregister dev on allocation fail
+Date: Sat,  7 Nov 2026 08:38:53 -0500
+Message-ID: <20261107135006.626308891@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,102 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit bc1f5ec826bfa510e7138e2be5aad23907850874 ]
+[ Upstream commit d832b95697384a2b67f20b35106bbf925358cde9 ]
 
-The AMD IOMMU spec, requires the host to respond with a CMD_COMPLETE_PPR
-command when an EVENT_TYPE_INV_PPR_REQ event is received with the RX bit
-cleared. This response was missing in the current implementation, leaving
-invalid PPR requests unacknowledged.
+Call nfcmrvl_nci_unregister_dev() if nci_spi_allocate_spi() fails,
+unwrapping the previous call to nfcmrvl_nci_register_dev() during the
+nfcmrvl_spi_probe() function.
 
-Introduce amd_iommu_report_ppr_err() to handle EVENT_TYPE_INV_PPR_REQ
-events. The new function logs the invalid PPR request and when the RX
-bit is cleared, sends CMD_COMPLETE_PPR response.
-
-Reported-by: Gaultier Delbarre <Gaultier.Delbarre@amd.com>
-Co-developed-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Assisted-by: gkh-clanker-2000
+Cc: David Heidelberg <david@ixit.cz>
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026070716-crucial-slouchy-b8a9@gregkh
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h |  1 +
- drivers/iommu/amd/iommu.c           | 38 ++++++++++++++++++++++++-----
- 2 files changed, 33 insertions(+), 6 deletions(-)
+ drivers/nfc/nfcmrvl/spi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index b3af429f23143..9d877008fc2d9 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -154,6 +154,7 @@
- #define EVENT_FLAGS_SHIFT	0x10
- #define EVENT_FLAG_RW		0x020
- #define EVENT_FLAG_I		0x008
-+#define EVENT_FLAG_PPR_RX	0x001
+diff --git a/drivers/nfc/nfcmrvl/spi.c b/drivers/nfc/nfcmrvl/spi.c
+index 9c8cde1250fb5..dad07c8e13b84 100644
+--- a/drivers/nfc/nfcmrvl/spi.c
++++ b/drivers/nfc/nfcmrvl/spi.c
+@@ -168,6 +168,10 @@ static int nfcmrvl_spi_probe(struct spi_device *spi)
  
- /* feature control bits */
- #define CONTROL_IOMMU_EN	0
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 3f109a99a9e40..2efa059cc7e80 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -896,10 +896,40 @@ static void amd_iommu_report_page_fault(struct amd_iommu *iommu,
- 		pci_dev_put(pdev);
- }
- 
-+static void amd_iommu_report_ppr_err(struct amd_iommu *iommu, volatile u32 *event,
-+				     u16 devid, u64 address, int flags)
-+{
-+	struct pci_dev *pdev;
-+	struct device *dev = iommu->iommu.dev;
-+	u32 pasid = PPR_PASID(*((u64 *)event));
-+	int tag = event[1] & 0x03FF;
-+
-+	dev_err(dev, "Event logged [INVALID_PPR_REQUEST device=%04x:%02x:%02x.%x pasid=0x%05x address=0x%llx flags=0x%04x tag=0x%03x]\n",
-+		iommu->pci_seg->id, PCI_BUS_NUM(devid), PCI_SLOT(devid), PCI_FUNC(devid),
-+		pasid, address, flags, tag);
-+
-+	/* Skip COMPLETE_PPR_REQUEST response if RX=1 */
-+	if (flags & EVENT_FLAG_PPR_RX)
-+		return;
-+
-+	pdev = pci_get_domain_bus_and_slot(iommu->pci_seg->id, PCI_BUS_NUM(devid),
-+					   devid & 0xff);
-+	if (!pdev)
-+		return;
-+
-+	if (!dev_iommu_priv_get(&pdev->dev)) {
-+		pci_dev_put(pdev);
-+		return;
+ 	drv_data->nci_spi = nci_spi_allocate_spi(drv_data->spi, 0, 10,
+ 						 drv_data->priv->ndev);
++	if (!drv_data->nci_spi) {
++		nfcmrvl_nci_unregister_dev(drv_data->priv);
++		return -ENOMEM;
 +	}
-+
-+	amd_iommu_complete_ppr(&pdev->dev, pasid, IOMMU_PAGE_RESP_FAILURE, tag);
-+	pci_dev_put(pdev);
-+}
-+
- static void iommu_print_event(struct amd_iommu *iommu, void *__evt)
- {
- 	struct device *dev = iommu->iommu.dev;
--	int type, devid, flags, tag;
-+	int type, devid, flags;
- 	volatile u32 *event = __evt;
- 	int count = 0;
- 	u64 address;
-@@ -971,11 +1001,7 @@ static void iommu_print_event(struct amd_iommu *iommu, void *__evt)
- 		amd_iommu_report_rmp_hw_error(iommu, event);
- 		break;
- 	case EVENT_TYPE_INV_PPR_REQ:
--		pasid = PPR_PASID(*((u64 *)__evt));
--		tag = event[1] & 0x03FF;
--		dev_err(dev, "Event logged [INVALID_PPR_REQUEST device=%04x:%02x:%02x.%x pasid=0x%05x address=0x%llx flags=0x%04x tag=0x%03x]\n",
--			iommu->pci_seg->id, PCI_BUS_NUM(devid), PCI_SLOT(devid), PCI_FUNC(devid),
--			pasid, address, flags, tag);
-+		amd_iommu_report_ppr_err(iommu, event, devid, address, flags);
- 		break;
- 	default:
- 		dev_err(dev, "Event logged [UNKNOWN event[0]=0x%08x event[1]=0x%08x event[2]=0x%08x event[3]=0x%08x\n",
+ 
+ 	/* Init completion for slave handshake */
+ 	init_completion(&drv_data->handshake_completion);
 -- 
 2.53.0
 
