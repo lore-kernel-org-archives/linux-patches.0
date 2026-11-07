@@ -1,66 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065353;
-	b=iDdr3j1jwtbNIjgH8GBHAdcQX722IgBZcIrpOFrZdXlCD70+YszhBDc2AWEX/mpIJ18n
-	 tR7TAlvJNqPHVi4wJxHiVjWSpDxhtSzY97Hne9gwlY52lthXLQD+xj/8OB9rQLFpIabha
-	 KmPqdh31hwselIsQacsAj0IC9iK9P60bDUZgZMNEwcw2GApRoDQyb8pd8WQoMQyw5YF+P
-	 +9HiFOo2bddnwgVyoIkj7cXxwlU4B/n0My5Q8f3zK2i4s7QRtrsk4Swt/YMFTGuamNIWD
-	 vED1JwUhOdsi2PLh0ynqHBASCvAASWNNca0Li/WpC2005B4BG2jvrp88Azt4O+pQvIw==
+	t=1794065354;
+	b=RCK2isYC0s7diqRF64DF7PA0VA/dR/IJ55Kjlt6UyAhTBFv0ct9UUNHvl5eTujYA7Kxt
+	 lgHhaPPzLGkjmxqsx9I1hqeOSG3MLDFw0GvnyDE3cghfnmQtXYxApC5vF35qZijv4tS6N
+	 ZWNw6vT2v/KoyVNpY6fgTRhY5lCA8TU4o5mEIh2XhWCmHTQRXiT12J6VQF5sUN7CtbrJE
+	 roZNaIwtBzLnheLM0eqIUFyjGacGaB8xl7dEeYsWHZ4pJ5CH9nIBHrTwRrynmyYGjunex
+	 OlOsBarxZf4ggfhCWxHeXyBlBaFIO8BVza6F8AZJwsz90klg9zRd/+7AJ5TnBBIs4IQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065353;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065354;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VW9WgNBhgPZPxk/jkRJD2LtjD8aIQURj5LboCyFgQcQ=;
-	b=BtxDMLWI1+bVyLu/2Vsq/4TNlm5Jf3VPvgzTW8HD1cf1ahqrhimPoQGPyTgFp97hJ4va
-	 PJN6tpaOyoSksGsA9QiL7CY2S5LjOGiRkwsyoQ4Royzrf3oSZ/ivTDphXFi5gZq9tz57G
-	 RLKrhUWyVk+m2lgFXZ8WaXXls9CM22JVz+J8Hi4LGqFQND0UP+fRnpV56KQylQ4ZQbuS2
-	 8kOB/qF5QyR3SErFsLKbDdSZw6yiP7A6brjNDbWD4NNzS47GpqSgfhyVmGsWsuRwGbSvR
-	 z9Nqz6lwxUKlCdN+ntHLNZNm6mUESxXXt7fvttuDwg7bVVZRGBrsze8umDRFr0RhN0Q==
+	bh=iTs2e6uhC93jTJPIp7tDOKyoKwvb0LaX7bidPJ24Q+E=;
+	b=txmKe7W4WRvAvScibEQvM6jZ+GqgH8CbSv1gphdGz3jY7kvRm91H7wwnsBSZRkshJYE0
+	 iYic+64697awc1Tx4JbG8AN9JNHEcFwsjpNDzntKqVFb/Guri9eJmQVwSM1PjEJ2Bh8ws
+	 nyBe1ixw1qzB3bI0hvFV/LDMDq0s1Qo7CS+zEvWVJBM3TK+diG3+tIm0GGD9BbqPQxU4J
+	 RJQu5H4xbFDKlPUMf5eA+cdtBNIx9UguYCG4TuaCjjUPCCCIJQtOj2s+zZ6rZD9zBPtCU
+	 Ik83KX+DNl922uvGzFQQDdVBuy6rx2zGkhjSCh8HMMMqhEB3mGfcUSJEVDrvwcfmo/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1xKZKvuS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Vim/EBnq";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B9D606A32E;
-	Sat,  7 Nov 2026 15:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7963B606A326;
+	Sat,  7 Nov 2026 15:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1xKZKvuS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AEE1F0089F;
-	Sat,  7 Nov 2026 15:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vim/EBnq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4401F0089F;
+	Sat,  7 Nov 2026 15:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065352;
-	bh=VW9WgNBhgPZPxk/jkRJD2LtjD8aIQURj5LboCyFgQcQ=;
+	s=korg; t=1794065354;
+	bh=iTs2e6uhC93jTJPIp7tDOKyoKwvb0LaX7bidPJ24Q+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1xKZKvuSciW7cd3YRR22QQPK4G7787HWg05zx3wyVxwSDqAvA18/eQCjC4cvhAVg5
-	 ExFz6TmbdDjLMbmOH8mo+/+vnjgsqc3gz9PF/LV++UqyKWbawv/FuCeE24J0CyPiys
-	 IVvgA/Aj+GAqJt6Xl4UWg4Bl30y2ShY8LlvXy8ZI=
+	b=Vim/EBnqqY7i8ErGHji2g1Ak6OdulY/l6NgN6lH3B8b7Y1DDCHosD6Q7g3ucwutRJ
+	 NFRZU4WYSUT0OeC6d2iWCtKjSfwShMVzK9lM5xK1JstabSOdNNYkGQJZpzXccPqKk+
+	 xsPo4kjxaMgcz0ZkqH80LMKrx+TuiACWp11A8XuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Dev Jain <dev.jain@arm.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	Kairui Song <kasong@tencent.com>,
-	Qi Zheng <qi.zheng@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Baoquan He <baoquan.he@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Frank van der Linden <fvdl@google.com>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Brian Foster <bfoster@redhat.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1090/1257] mm/page_alloc: count guard pages as free again when their buddy merges
-Date: Sat,  7 Nov 2026 08:56:26 -0500
-Message-ID: <20261107135009.371227797@linuxfoundation.org>
+Subject: [PATCH 7.3 1091/1257] mm/truncate: fix the zeroing end of pagecache_isize_extended()
+Date: Sat,  7 Nov 2026 08:56:27 -0500
+Message-ID: <20261107135009.399069858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -82,87 +73,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 1503710b3b0cec02b531978129c6c1eb70a7c490 ]
+[ Upstream commit 8f9039840588dd618c72a726c192126bb7b98228 ]
 
-With debug_guardpage_minorder set, expand() turns the unused halves of a
-split into guard pages, which page_del_and_expand() leaves out of the free
-counts.  Freeing the allocated half credits only that half, and
-__free_one_page() then merges the guard buddy with clear_page_guard(),
-which no longer touches the counters.
+A process that extends a file by 4 GiB or more past a dirty folio, on a
+file system whose block size is smaller than the page size (ext4 with 1k
+blocks), reads back the bytes it wrote through a shared mapping beyond the
+old end of file instead of zeroes, and a later write into that block
+carries them to the disk.  With the example of commit 52aecaee1c26 ("mm:
+zero range of eof folio exposed by inode size extension") and the truncate
+taken 4 GiB further (pwrite 2k at 0, mmap the first page and write 'X'
+over [2k, 4k), truncate(2) to 4 GiB + 2k), the read of [2k, 4k) returns
+the 2048 'X' bytes, and a pwrite of 16 bytes at 3k followed by fsync() and
+a remount leaves 1008 'X' bytes on the disk in [3k+16, 4k).  No privilege
+is needed, and every size extension of 4 GiB or more reaches it:
+truncate(2)/ftruncate(2) through truncate_setsize(), writes beyond the end
+of file through generic_write_end(), ext4, iomap, btrfs, exfat, ntfs, afs
+and orangefs.  Affected since v6.13.
 
-The merged block goes on a free list with the guard pages never counted,
-so NR_FREE_PAGES falls behind the free lists by every guard that merges.
-Before commit e0932b6c1f94 ("mm: page_alloc: consolidate free page
-accounting"), __set_page_guard() and __clear_page_guard() adjusted the
-counts themselves; that commit dropped both adjustments but kept the
-subtraction implicit in expand().
+pagecache_isize_extended() zeroes the part of the dirty folio straddling
+the old end of file that the size extension exposes, from the old size to
+the new size or the end of the folio, whichever comes first:
 
-Count the guard pages under the merged block's migratetype when the buddy
-is cleared.  account_freepages() skips an isolated block as it does for
-every other free page, and moving the block off the isolated list counts
-it then.
+	end = min_t(unsigned int, to - folio_pos(folio), folio_size(folio));
 
-Booting a 16GB VM with debug_pagealloc=on debug_guardpage_minorder=1,
-check the difference in free pages reported between /proc/vmstat and
-/proc/buddyinfo.
+min_t() converts both operands to unsigned int before comparing, so the
+loff_t difference to - folio_pos(folio) is reduced modulo 2^32 first.
+When the file grows by 4 GiB or more past the folio, end is that residue
+instead of folio_size(folio): below offset nothing is zeroed, above it
+only [offset, end) is.  The bytes beyond the old end of file stay in the
+dirty folio and, now inside i_size, are file data.
 
-At three points (idle, after a read and file-creation load, after a second
-load), check the difference between nr_free_pages and the buddyinfo
-numbers in the normal zone, as a number of pages:
+Compare in loff_t; the result is at most folio_size(folio) and fits end.
 
-                idle   after load   after second load
-    unpatched   -130        79205               99121
-    patched      -16           45                   0
+Found while formally verifying pagecache_isize_extended() against the
+kernel binary.
 
-The small remaining difference seems to be due to the numbers not being
-read at exactly the same time, and is also seen without guard pages.
-
-Link: https://lore.kernel.org/20261016122304.5b1eba8e@fangorn
-Fixes: e0932b6c1f94 ("mm: page_alloc: consolidate free page accounting")
-Signed-off-by: Rik van Riel <riel@surriel.com>
+Link: https://lore.kernel.org/20261016222721.791785-1-nickolai@csail.mit.edu
+Fixes: 52aecaee1c26 ("mm: zero range of eof folio exposed by inode size extension")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
 Assisted-by: LLM
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Qi Zheng <qi.zheng@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Frank van der Linden <fvdl@google.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Brian Foster <bfoster@redhat.com>
+Cc: Theodore Ts'o <tytso@mit.edu>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/truncate.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index c1cc9c705d2c1..8ca2289d0491b 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -989,10 +989,12 @@ static inline void __free_one_page(struct page *page,
- 		 * Our buddy is free or it is CONFIG_DEBUG_PAGEALLOC guard page,
- 		 * merge with it and move up one order.
- 		 */
--		if (page_is_guard(buddy))
-+		if (page_is_guard(buddy)) {
- 			clear_page_guard(zone, buddy, order);
--		else
-+			account_freepages(zone, 1 << order, migratetype);
-+		} else {
- 			__del_page_from_free_list(buddy, zone, order, buddy_mt);
-+		}
+diff --git a/mm/truncate.c b/mm/truncate.c
+index 7912d3123170e..29782aced8bad 100644
+--- a/mm/truncate.c
++++ b/mm/truncate.c
+@@ -880,8 +880,7 @@ void pagecache_isize_extended(struct inode *inode, loff_t from, loff_t to)
+ 		unsigned int offset, end;
  
- 		if (unlikely(buddy_mt != migratetype)) {
- 			/*
+ 		offset = from - folio_pos(folio);
+-		end = min_t(unsigned int, to - folio_pos(folio),
+-			    folio_size(folio));
++		end = min_t(loff_t, to - folio_pos(folio), folio_size(folio));
+ 		folio_zero_segment(folio, offset, end);
+ 	}
+ 
 -- 
 2.53.0
 
