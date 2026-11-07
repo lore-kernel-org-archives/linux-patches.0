@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064976;
-	b=1Y2X8GbwDtANO+Rfh/VZ/Xh6HIdddDzcawN7O4K0g63BHK0QKjI16l6erpJXxb/UIZzZ
-	 cCTtjCux6viALLeGvVPqSQoUhoR4BjttIRGQ5/yyxwQ0X/uM+RvQJFlbkt8MxwbR4nIf8
-	 OzP6DKW5NuL2hWsUi9VVKB4kAFsOCI6W3cei2X2X7ltq1oYqt0IqJmaTrfIDuxoHQtpQS
-	 RJeI98ZgJtTCxbqksVtnk/+OXTWlNwWll3b5BiDYsIkM/ygR76maIaRIpIV+hy/TLpGyj
-	 OR+FyoRQuWBzmj+/qUNBpyggybEdm2MgHhnLdCJxeCGbWGrzLtnh9Y3hLIxdZEA37sw==
+	t=1794064977;
+	b=SAraZ+GETKgTy5YqDx7g6wnq3z9pH4QP+N7yfkrk13YIMTjJihfViFISWVVQ0g9zj6QH
+	 43m3ddzIEJN1YwiCTe36QLTntevsqMA1HZgw3hI8FWySxVz5Ng7o7atYHifDFoALeG0Lp
+	 mvQ7WFg2AxTd0lJEGWQcHgJyMySk30NB0E1jnX9L+RfWbZc73Ium/mBYJMRukjShJPUbw
+	 raT6goCvtNnBwSWSGn1WIfXN/uhibR0CdsRIeWTyxFZz9tWtNnx7q6Uqkjvpt5o23idRN
+	 xJs1O/NBsR0nXyR0eHPOLCsL6mO5GAIe18PrQaCx+StGG2WrDH76g8lfUk3W7umkJLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C/FcVeubTK6uidqVtWRvnH5e1Cmj4H7HHq6408DyybM=;
-	b=TxSB6kC7GdLwr/aVgdwPrbjx7h5DAZTKxgDaShGYLDWUWDt2kDv0eFuznUK+yvzCrpY8
-	 ap/cysfnvKHpuOZCCGrqcRx/XlvKcBpIqU/GdrpDjx5lz6dCvOSV/USgPs8R+RYEitjPh
-	 cYclplugQkj3R4cqBZxbr5Gd7CS1cJdcL2VjwlMMuIYuA86Rrm9ZofDDuB+pW0nQ8sWDW
-	 iWSCshyhFxfMN5q4vFEM+yniDvyQKPSCERBLjMOPNI6SnuU8URs89eRHyjOEufRUoVM7e
-	 uLs+Z+DAm/Vu4IJyxnRbvSwwIpWNAxiB691Nmt2Y15aumFhnXIauHbwDvB/Pk2Q1KBg==
+	bh=xfj3DP+yPaOXAPkb3o85FeFvysxJpsKO8hnqOSl9oQA=;
+	b=Qj5jC6iLb6tyrJwlBIBWYmSvE2RMIHcCQ/7yDjR3bBWOp29+bm6VAgvesM7uWS9OkDhG
+	 RpIYalNIA9d1iltxUDsULrHTxgF0KkDH/QG0C17k51tTbyYOsApypsqR68p1MJox2ibv5
+	 RP07P41nft65ptcNFIiwu6CNyK6NITGMITT3UuXnBMlsGPoWJrkul0R6GRXIk2ZSvHNss
+	 6HUTOFuSD49MwiNl47+1c6c7nk+1plBxnzTLcbv32mLNl5Ub632pvqB8wzojd8r1kUvdf
+	 BcHVm5AisOsrvnhBLVlkjXpIGvlhh5RcJWtMgameC+5OPURBJIhB5j8jUML3uP4mQUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rnTnmNfK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="AF+/3zTg";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50194606A9DA;
-	Sat,  7 Nov 2026 15:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6700606A9DA;
+	Sat,  7 Nov 2026 15:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rnTnmNfK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71851F0089F;
-	Sat,  7 Nov 2026 15:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AF+/3zTg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305A01F008A1;
+	Sat,  7 Nov 2026 15:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064975;
-	bh=C/FcVeubTK6uidqVtWRvnH5e1Cmj4H7HHq6408DyybM=;
+	s=korg; t=1794064976;
+	bh=xfj3DP+yPaOXAPkb3o85FeFvysxJpsKO8hnqOSl9oQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rnTnmNfKrAUt+sbS6hs8c6I1G8V3kgg1OMWB4wdID5pVtNLa2nK9yrG+hFdbaYTm5
-	 09uAFtP/cTP+6CQeOokaS5UoswY0+BVIibyNmoiGtAMyq7vEbrOzNFqCiPWfdCwR5k
-	 q0V2CTyKBwUO0kPu7cszIhPL7drknZXNce6tukdo=
+	b=AF+/3zTg7xbmXCmxhHHWNjXMvQKO1PY/GaOcvk4HQL5qBLA11yxvYnrtw5o5r+LbH
+	 abhit++Npt/P4ki6aACfqK4RwRp4t0xbPGUqxcpbbNm2Dn4dwprMvJhQMqkhaGLpfm
+	 BIqqK9yhjTlCMcZhxGIF6qfQYfFkh2XyfXrI/Fo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Douglas <me@timdoug.com>,
+	Brandon Williams <turbine.bmw@gmail.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0854/1257] power: supply: generic-adc-battery: fix status with no supplier
-Date: Sat,  7 Nov 2026 08:52:30 -0500
-Message-ID: <20261107135002.920041983@linuxfoundation.org>
+Subject: [PATCH 7.3 0855/1257] power: supply: qcom_battmgr: Notify charger supplies of online changes
+Date: Sat,  7 Nov 2026 08:52:31 -0500
+Message-ID: <20261107135002.946901777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,46 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Douglas <me@timdoug.com>
+From: Brandon Williams <turbine.bmw@gmail.com>
 
-[ Upstream commit 8ae5a3f40045ff486826ed6b6a83e39a0f380073 ]
+[ Upstream commit 87fd20da8ca8bacdaa9bff5860167f208077dc51 ]
 
-power_supply_am_i_supplied() returns -ENODEV when no registered power
-supply supplies the battery. generic-adc-battery's gab_work() tests this
-return value as a boolean, so -ENODEV takes the supplied branch and
-reports CHARGING, or NOT_CHARGING if the charge-finished GPIO is asserted,
-instead of DISCHARGING.
+On SC8280XP and X1E80100 the AC, USB and wireless supplies take their
+online state from the charging source in the battery status response.
+The firmware sends no notification for those supplies when the charging
+source changes, and the driver only announces the battery, so userspace
+never learns that the charger was plugged in or out. UPower keeps the
+state it read at startup: a laptop booted on the charger never goes on
+battery.
 
-This was noticed while bringing up an out-of-tree Linux port to the
-WikiReader: the driver reported CHARGING on a device powered by two AAA
-batteries with no charging hardware.
+Call power_supply_changed() for a supply whose online state changes when
+a status response is parsed. A supply that is not registered yet, when
+the battery is read during probe, reports its state when it registers.
 
-Only a positive return value indicates an online supplier, so treat zero
-and negative returns as discharging.
+Tested on a Microsoft Surface Pro 11 (X1E80100): after restarting UPower
+on the charger, unplugging now sets OnBattery, and plugging in clears it.
 
-Fixes: 46cecd130d55 ("power: supply: Fix power_supply_am_i_supplied to return -ENODEV when apropriate")
+Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tim Douglas <me@timdoug.com>
-Link: https://patch.msgid.link/20261013022153.6707-1-me@timdoug.com
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Brandon Williams <turbine.bmw@gmail.com>
+Link: https://patch.msgid.link/20261013-upstream-battmgr-charger-online-v1-1-731973e133a0@gmail.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/generic-adc-battery.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/qcom_battmgr.c | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/power/supply/generic-adc-battery.c b/drivers/power/supply/generic-adc-battery.c
-index f11a5c794e7e8..937b84e04ba27 100644
---- a/drivers/power/supply/generic-adc-battery.c
-+++ b/drivers/power/supply/generic-adc-battery.c
-@@ -135,7 +135,7 @@ static void gab_work(struct work_struct *work)
- 	adc_bat = container_of(delayed_work, struct gab, bat_work);
- 	status = adc_bat->status;
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index 7716eb9e1aff5..97c8501c29961 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -1254,6 +1254,23 @@ static unsigned int qcom_battmgr_sc8280xp_convert_temp(unsigned int temperature)
+ 	return DIV_ROUND_CLOSEST(temperature, 10);
+ }
  
--	if (!power_supply_am_i_supplied(adc_bat->psy))
-+	if (power_supply_am_i_supplied(adc_bat->psy) <= 0)
- 		adc_bat->status =  POWER_SUPPLY_STATUS_DISCHARGING;
- 	else if (gab_charge_finished(adc_bat))
- 		adc_bat->status = POWER_SUPPLY_STATUS_NOT_CHARGING;
++/*
++ * The charger supplies' online state comes from the battery status response,
++ * and the firmware sends no notification of its own when it changes, so
++ * announce the change here. A supply that is not registered yet announces its
++ * state when it is.
++ */
++static void qcom_battmgr_sc8280xp_set_online(struct power_supply *psy,
++					     bool *online, bool value)
++{
++	if (*online == value)
++		return;
++
++	*online = value;
++	if (psy)
++		power_supply_changed(psy);
++}
++
+ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
+ 					   const struct qcom_battmgr_message *resp,
+ 					   size_t len)
+@@ -1323,9 +1340,12 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
+ 		battmgr->status.temperature = qcom_battmgr_sc8280xp_convert_temp(le32_to_cpu(resp->status.temperature));
+ 
+ 		source = le32_to_cpu(resp->status.charging_source);
+-		battmgr->ac.online = source == BATTMGR_CHARGING_SOURCE_AC;
+-		battmgr->usb.online = source == BATTMGR_CHARGING_SOURCE_USB;
+-		battmgr->wireless.online = source == BATTMGR_CHARGING_SOURCE_WIRELESS;
++		qcom_battmgr_sc8280xp_set_online(battmgr->ac_psy, &battmgr->ac.online,
++						 source == BATTMGR_CHARGING_SOURCE_AC);
++		qcom_battmgr_sc8280xp_set_online(battmgr->usb_psy, &battmgr->usb.online,
++						 source == BATTMGR_CHARGING_SOURCE_USB);
++		qcom_battmgr_sc8280xp_set_online(battmgr->wls_psy, &battmgr->wireless.online,
++						 source == BATTMGR_CHARGING_SOURCE_WIRELESS);
+ 		if (battmgr->info.last_full_capacity != 0) {
+ 			/*
+ 			 * 100 * battmgr->status.capacity can overflow a 32bit
 -- 
 2.53.0
 
