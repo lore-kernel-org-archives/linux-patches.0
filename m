@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065126;
-	b=UxyInaWze1W49hYbNfjxGmJIKlv6WhgFT4MKeErHrAfQ/0MDch2oYAeg+837X/oItGIg
-	 YsXU0uGULYhSMwP0BHb/Goe2KJQtG0OLTTiXR21FAZpmJrMA1PH/eVgE4ErZ3y4SPN+NW
-	 ualOPVwrOlzVkBtE/rsxOwjl7qHJb//zJ+FSi3ykW5zRxrKqayh0E8wzij2aRQN3Hb2ON
-	 hcMcodEeQDmuh4VjqdQTpUVTbyDOEWHBSNkTPJOq4Hd7uC1f7ylS8Crkw35VwNmXzVh1Y
-	 drn7yL31gK6U+I1dVuhuZiw7HcX05sA6PslYNVWNsotqzUOCmr2S2sKvjf8eixI6a9g==
+	t=1794065127;
+	b=akvhlI9PyRrWSFUzuABpCow0LfvCXCTGfPR0aRiSFw7Z/3IdNCuyfHEsrkhLZZvbmv5R
+	 hocFc/uMafOdXPB/sHCjKXZk7CJKr/HZeN0oqtl9Li/77gPUB0ITwNV++W8BMwCsw61r8
+	 8YN+km7oY0m3P1NQrFJkRZsyTezBqgmhy06q3akSUSOaYXaaZN/qFHvfehRbW2SadfnPQ
+	 k+vLa31zc/g+38KnIjcCWcuE9hovcS6LoXYhff1elmi7tJMLXHxwlLB9rjaO1Z8S6Nfe3
+	 tWt8nfm8mgN6IkISXJtiDDmDMzDz+Fv25UCcXbR1dBC4vXEBCO3t2Rtmk9j8OD4Z2+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065126;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=clOSdL3Ulzmse9czI1sKwy3viecDxLzwOxs3VMEZ8RM=;
-	b=pz5NS0hUITeDriKiNeA3fI6u3mSQOVlvab76DjKtN5aiQ2vLyEAxQBMmWFbhbWeqSq8B
-	 UAncs7pp/ETIqYZcF+SoPQJLTQAaMlcwcF+0AQ//CevFBQmM+AiZV+9HYpgyVdIDv+dmE
-	 Q5ORGuEaMjFYkX3g2zwYHQiSJoqXMH+B0CEzXTitBWvmHdbySSLtRSsuQ0esA+YZM9Og9
-	 pjxSABYMzPEUT2KnYT5orl4XGt+qDyWLQIPHT0W9EK/Gylnp3KUyxDGVaiifxLU776iZ5
-	 axeCISf+Uq5a60er1Xvua7009fWbKwnB1Ly9OmLR9bmiWyAi3PMfF/UZa0gIlKcX+oQ==
+	bh=Uk1yk6fKKO/ZJUOxvjL6JN4BdqI23E8HjmPPiUJsr7U=;
+	b=ooiwU+QatDOhkVaTBlqU6nllUsFKGlyHVSwHDQ1cHTc4dbZdkHJlNiqcuhR9TPjMIfZn
+	 d3Xlqy2PsdAFxjqY6ry8BS+r1+qqj92g4JpgrEe+ICnoegL0hNOSzBHakre9qumV+oLSA
+	 3A/yVNHdZ0aVvn6S+3q8W5T9C1+qJOu8lAyJwThW/wZV3NCSQe2WuDERzZV/XIdsV794L
+	 mLfPh3Aha8rR/FDG0nJae/Zz8XoLSktMoK59yOY4S7d/YK1IUhsYLTe/sNTzP++OdlXB2
+	 OT8PP4Sme6vI/KxoyEpGwKa9JedzY7Zq2Zm5RwQmqtzRcrbOWRNQ+6pLbDZtMWfrsQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xgF7XM2T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hr2CPTrl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B88606A32D;
-	Sat,  7 Nov 2026 15:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9A8606A32E;
+	Sat,  7 Nov 2026 15:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xgF7XM2T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005871F0089F;
-	Sat,  7 Nov 2026 15:25:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hr2CPTrl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397D31F0089F;
+	Sat,  7 Nov 2026 15:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065126;
-	bh=clOSdL3Ulzmse9czI1sKwy3viecDxLzwOxs3VMEZ8RM=;
+	s=korg; t=1794065127;
+	bh=Uk1yk6fKKO/ZJUOxvjL6JN4BdqI23E8HjmPPiUJsr7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xgF7XM2TidpJAgjlLTqkOoimVl/jIvvfQwhVOA3faB3bem6L9BGElvGKVxpH9mo8w
-	 ttrruwORU0e+6yV5fwDoeXeoSDsqY9vbXPJTOVvsEn1S+crrWaF4LPbIhc2s81l9RX
-	 fiQuIRY5E8SacS1fk2vk/uSMYvOf3eFUvVSeSlQM=
+	b=Hr2CPTrlPye5sNsaBT63zTj7xCh/ea9acCrXOSczI07wPDLtYOT0E9XJtgHfkXL93
+	 eNfkRCRExG2JLfh+FAiNYyfTpgACubLYZKNWS0lnHdrZEfZNqrhCZuCWSzMG6EmhlQ
+	 cpo6OkvcSjikrZV4159jtrGTGOTy4DIaBX+d0lV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0922/1257] ntfs: do not clear the volume dirty bit during sync
-Date: Sat,  7 Nov 2026 08:53:38 -0500
-Message-ID: <20261107135004.819864153@linuxfoundation.org>
+Subject: [PATCH 7.3 0949/1257] gpio: pca953x: Handle direction register read errors in IRQ paths
+Date: Sat,  7 Nov 2026 08:54:05 -0500
+Message-ID: <20261107135005.557899667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,129 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
 
-[ Upstream commit 4a1bb54f571cbef67a7c470a3139ffec1a15a8e4 ]
+[ Upstream commit a0fe269293509acdd93b9cfb3f46636f7b91b33a ]
 
-ntfs_sync_fs() clears VOLUME_IS_DIRTY while the volume is still mounted
-read-write, so a sync running concurrently with an in-flight metadata
-modification can clear and persist a bit that was just set: the
-modification then lands on a volume that is clean on disk, and a crash
-does not run chkdsk.
+Three IRQ paths ignore the result of reading the direction registers
+and then use the destination bitmap. pca953x_read_regs() does not populate
+that bitmap when regmap_bulk_read() fails, leaving the callers to use
+uninitialized stack data.
 
-Stop clearing the bit in ntfs_sync_fs() and leave the clearing to the
-remount-to-read-only path, which the VFS reaches only after
-sb_prepare_remount_readonly() has drained in-flight writers, and to
-ntfs_put_super(), which runs after evict_inodes() on a quiesced
-filesystem.  A mounted read-write volume now keeps the dirty bit until
-it is dismounted cleanly, which matches the NTFS semantics; the cost is
-a needless chkdsk if the machine crashes between a sync and the unmount.
+This can select incorrect GPIOs for direction changes during IRQ bus
+synchronization, corrupt the saved input state during IRQ setup, or
+produce incorrect pending interrupt decisions.
 
-A recorded error state is still persisted right away when the
-filesystem is synced: with NVolErrors() set,
-ntfs_sync_volume_dirty_state() can only set the bit, never clear it,
-so it cannot lose a modification the way the old unconditional call
-did.  This keeps the error report from being lost to a crash on a
-volume that has seen no modification; an error recorded after the
-last sync is still only persisted at the next quiescent transition.
+Check the read result at all three sites. Release irq_lock without
+changing GPIO directions on failure, leave the IRQ history untouched
+when pending detection fails, and propagate the error from IRQ setup.
+The read helper already logs the error.
 
-sync_blockdev() and blkdev_issue_flush() are both called and the first
-error is returned, so a writeback failure neither hides a flush failure
-nor skips it.
-
-A RWF_NOWAIT write still blocks in the marking when the volume looks
-clean, as it already did on the base; a non-blocking marking is
-follow-up work.
-
-Reported-by: Baolin Liu <liubaolin@kylinos.cn>
+Fixes: 0f25fda840a9 ("gpio: pca953x: Zap ad-hoc reg_direction cache")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
-Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+Link: https://patch.msgid.link/20261018165003.3372368-1-sahaj123.sc@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/file.c  |  7 ++++---
- fs/ntfs/super.c | 31 ++++++++++++++++++++++++-------
- 2 files changed, 28 insertions(+), 10 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ntfs/file.c b/fs/ntfs/file.c
-index e3020a4bf805a..e290616be07d0 100644
---- a/fs/ntfs/file.c
-+++ b/fs/ntfs/file.c
-@@ -637,9 +637,10 @@ static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index 869ed4264d48a..afec5ec236968 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -867,6 +867,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	DECLARE_BITMAP(irq_mask, MAX_LINE);
+ 	DECLARE_BITMAP(reg_direction, MAX_LINE);
+ 	int level;
++	int ret;
  
- 	/*
- 	 * The volume must be marked dirty before the modification is made,
--	 * without an unlocked check of the in-memory flag: ntfs_sync_fs()
--	 * can clear the bit concurrently and the modification would then
--	 * land on a volume that is clean on disk.
-+	 * without an unlocked check of the in-memory flag: the dirty bit
-+	 * is only cleared at the quiescent transitions, under the same
-+	 * $Volume mrec_lock this call takes, so an unlocked skip could
-+	 * lose the set to one of them.
- 	 */
- 	ntfs_set_volume_flags(vol, VOLUME_IS_DIRTY);
+ 	guard(mutex)(&chip->i2c_lock);
  
-diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
-index e13ede3cd836f..c3d73cd6909eb 100644
---- a/fs/ntfs/super.c
-+++ b/fs/ntfs/super.c
-@@ -493,8 +493,9 @@ int ntfs_set_volume_flags(struct ntfs_volume *vol, __le16 flags)
-  * This is the single point that persists the in-memory error state to disk.
-  * The runtime error paths only record NVolErrors() because they run under a
-  * variety of ntfs locks the dirty-bit write cannot be taken under (runlist
-- * locks, vol->lcnbmp_lock, vol->mftbmp_lock, mrec_locks); the first
-- * ntfs_sync_fs(), a remount, or the unmount then persists the flag here.
-+ * locks, vol->lcnbmp_lock, vol->mftbmp_lock, mrec_locks); a sync of a
-+ * volume with recorded errors, a remount to read-only, or the unmount,
-+ * then persists the flag here.
-  *
-  * A hibernated volume is not written from these persistence paths:
-  * resuming Windows from a modified image corrupts it, so the dirty bit
-@@ -2029,7 +2030,7 @@ static void ntfs_shutdown(struct super_block *sb)
- static int ntfs_sync_fs(struct super_block *sb, int wait)
- {
- 	struct ntfs_volume *vol = NTFS_SB(sb);
--	int err = 0;
-+	int ret, err = 0;
- 
- 	if (NVolShutdown(vol))
- 		return -EIO;
-@@ -2037,14 +2038,30 @@ static int ntfs_sync_fs(struct super_block *sb, int wait)
- 	if (!wait)
- 		return 0;
- 
--	/* If there are some dirty buffers in the bdev inode */
--	if (ntfs_sync_volume_dirty_state(vol)) {
-+	/*
-+	 * The volume dirty bit is deliberately not cleared here: a sync
-+	 * running concurrently with an in-flight modification could clear
-+	 * and persist a bit that was just set, leaving the modification
-+	 * on a volume that is clean on disk.  The bit is only cleared at
-+	 * the quiescent state transitions, remounting read-only and clean
-+	 * unmount.  A recorded error state, however, is persisted right
-+	 * away so that it is not lost to a crash on a volume that has
-+	 * seen no modification; with NVolErrors() set this can only set
-+	 * the bit, never clear it.
-+	 */
-+	if (NVolErrors(vol) &&
-+	    ntfs_sync_volume_dirty_state(vol)) {
- 		ntfs_warning(sb, "Failed to sync dirty bit in volume information flags.  Run chkdsk.");
- 		err = -EIO;
+@@ -885,7 +886,9 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
  	}
- 	sync_inodes_sb(sb);
--	sync_blockdev(sb->s_bdev);
--	blkdev_issue_flush(sb->s_bdev);
-+	ret = sync_blockdev(sb->s_bdev);
-+	if (ret && !err)
-+		err = ret;
-+
-+	ret = blkdev_issue_flush(sb->s_bdev);
-+	if (ret && !err)
-+		err = ret;
- 	return err;
+ 
+ 	/* Switch direction to input if needed */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		goto out;
+ 
+ 	bitmap_or(irq_mask, chip->irq_trig_fall, chip->irq_trig_raise, gc->ngpio);
+ 	bitmap_or(irq_mask, irq_mask, chip->irq_trig_level_high, gc->ngpio);
+@@ -895,6 +898,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	for_each_andnot_bit(level, irq_mask, reg_direction, gc->ngpio)
+ 		pca953x_gpio_direction_input_unlocked(&chip->gpio_chip, level);
+ 
++out:
+ 	mutex_unlock(&chip->irq_lock);
  }
+ 
+@@ -989,7 +993,9 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 	}
+ 
+ 	/* Remove output pins from the equation */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		return false;
+ 
+ 	bitmap_copy(old_stat, chip->irq_stat, gc->ngpio);
+ 
+@@ -1089,7 +1095,9 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
+ 	 * interrupt.  We have to rely on the previous read for
+ 	 * this purpose.
+ 	 */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		return ret;
+ 	bitmap_and(chip->irq_stat, irq_stat, reg_direction, gc->ngpio);
+ 	mutex_init(&chip->irq_lock);
  
 -- 
 2.53.0
