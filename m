@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063358;
-	b=tFXKgQNTiJ5bsRdBzlEQbD5N27U/uuGoLAFnU0glUqDV9Fum/rI9Reh/JTIxwWQg7B6x
-	 +5lqsA97qAOxLgBwM18sPRtnADIuaj8eFRZjQKFV9VYwie6ossYXbzcFZc/aCOFW7L3vE
-	 ufYbtkvnO3zTN8/0M6BsscdHk1dSTEW2VKmI2I0MNTE/XzjqI9C6KP16eRIl58WVOAPsR
-	 scWaYyCqezwfosNT4eYnNHkHr1BA2uyQhZ3rU+TiHbUrhTP2HHRfoE1op2chHPXAIdGXY
-	 ePMWu3JfGUKkj53fa/EYTqJ5JX1z5/975OVKuwb5Y8iNxj7jvLxQO/TA2effHSqp6gw==
+	t=1794063360;
+	b=j8MU09eO/T+znUlbp9t4AXw229R0xpZqH1p9H8+Ofb+o8rcjJa+5CC79JAwpRe02o4Cj
+	 O7UvA9VQsV4szSE3g2XuT2CEMJLY0f0xErI+VOGyUL7uyt/UygYh4B1ZmuLQjMybjPExh
+	 0dZQio3oB1m3l12V6tGeJmrfGjLhSkjzGOXc2c4j+sPSP8rx/wNaGfAj8TPsiNAHi67YG
+	 VVTd8VLtHHGZudJr0OeWAPjnOgBm/pkEzJJOGQ5POLshFhQuXez+pnZZCabG5DPyaw5Jj
+	 uiWBT5ZN1zLRyChojid2xnl82D9VyfzQLQ2pTMKlFhAYpQuihwemb2T77Jj+rOaPw5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063360;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=EWEIJuChYGoLJLH6PrNYwVKQ+4fEfyB6P9TmRNy/Q9A=;
-	b=licX5s6KfLJkjx2aQRtqpvr4tUQxuFSOxhykVWEBdBjskHblmuwUHqjtDDK83hu2haQl
-	 QyvhZ3Z0NFkPuN7Tcq7rHgTZA9eH7VmzKyB3GH+HpzwtW8taRlAUwiBKKgZpS4CFl9SP+
-	 vitbSy6Yr3GO/CteOA22jZ3NiL3SgenF9vfJFNHl9K0H5AM7+VeUZEzROKLCMyiJn5gsT
-	 EzVNfL3mIu9Y2xFTd5LYqAZBMB/9ix8ROR6C/YeEzRQFfMMyWr6I9ukYIM0pWP8WALaAs
-	 P4rbuDy7zTDba870T6X02nPyWdueVj84TWSGHKZjhsGm0nGtS/QroFwD+mQX55T/3Xw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ZbHIAsLhZ7WwnbGyOFhDb/kqSCps787jiAmVKgAu8j4=;
+	b=ACF591dX2KlUbihz+Y9sUErhdE48Ak0c5T1Tnd2xez3l46SDKbGMjVq2HG92baWk4UHb
+	 S/qy+PwRHbe+SUQPriaXO86tC5Ys7jdeu2e6kMeRBZDIe7EyZ0ztM4Io5QY/Hf/Num98H
+	 mg1wPW2YMUDHd2/LxOvUesQ+HSPvCEdlP+QBzPi7RimgNVTiE50/ilU6XFL/fa3W8RMdL
+	 w8CUwG2xYVWF3mQYLHjh7HpJj3TXGhmjzigcUYDwYQ5cDDjhWh3xJ7Ac8iUya845OeGLK
+	 /jpucSMOdoxBUlGCUz2uHwQuFQf0tMDe98s141rDwKD+86NvzpSS5Cc56qLpL9Bjbng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Za31+DnB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCt9QDdT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFD4606A336;
-	Sat,  7 Nov 2026 14:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083DE606A330;
+	Sat,  7 Nov 2026 14:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Za31+DnB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475851F0089F;
-	Sat,  7 Nov 2026 14:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCt9QDdT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12F11F0089F;
+	Sat,  7 Nov 2026 14:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063358;
-	bh=EWEIJuChYGoLJLH6PrNYwVKQ+4fEfyB6P9TmRNy/Q9A=;
+	s=korg; t=1794063359;
+	bh=ZbHIAsLhZ7WwnbGyOFhDb/kqSCps787jiAmVKgAu8j4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Za31+DnBwggyKtdyrDJWxwFYx+T6xN/ayOPW4/I12VN3KE7bPKLAkYuFUV3ql6210
-	 uAYKrkYqjIsE/Ki5I+Bovd8cHYUjsDkqVsi8x9hMv+g152FUB6yuVN4jAw1epTJwfa
-	 LGI7CQz4pf8mDDsfh5pkCYOAzUcv9YOmHpPQpKUU=
+	b=DCt9QDdTn3eXSQj0qvvZfBbily8WmeMo3YfyQ+XQb3n+khRckg342RZ2MuER/6L0+
+	 KqznmB6sbQhjyw/x5XVKW2mPgK+/RZHsva4znnOBDi4DH2Ai8nvf74krt1pblrm/ow
+	 6eQ8m0eC5DIia1vUj1Zzxb7PAlxgc6s2sy1qtOU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Kazuki Hanai <hnkz.64@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Alain Knaff <alain@knaff.lu>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Gabriel Krisman Bertazi <gabriel@krisman.be>,
+	Hugh Dickins <hughd@google.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 537/869] lib: decompress_bunzip2: fix integer overflow in run-length decoding
-Date: Sat,  7 Nov 2026 08:53:39 -0500
-Message-ID: <20261107134911.644007068@linuxfoundation.org>
+Subject: [PATCH 6.18 538/869] tmpfs: fix unicode_map leaks in casefold option handling
+Date: Sat,  7 Nov 2026 08:53:40 -0500
+Message-ID: <20261107134911.671424446@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -64,60 +67,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Kazuki Hanai <hnkz.64@gmail.com>
 
-[ Upstream commit b822ad8d702df0be9fe3f24f71caeb0522d72319 ]
+[ Upstream commit f439d79e8cd19f89e04cbb3b532347edacd72c79 ]
 
-The RUNA/RUNB decoder in get_next_block() accumulates a run length into
-the signed int t with no bound.  runPos doubles per symbol, so t grows as
-at least 2^n-1 and reaches INT_MAX after 31 RUNA symbols.  The guard that
-follows, dbufCount+t >= dbufSize, is itself a signed addition, and as the
-kernel builds with -fno-strict-overflow it wraps negative once dbufCount
-is nonzero, so the guard is skipped.  while (t--) dbuf[dbufCount++] = uc
-then writes INT_MAX entries into a buffer holding at most 900000.  One
-literal symbol ahead of the run is enough to make dbufCount nonzero.
+shmem_parse_opt_casefold() stores the unicode_map returned by utf8_load()
+in ctx->encoding.  A filesystem context can receive the casefold parameter
+more than once, and a second successful parse overwrites the stored map
+without releasing it.
 
-Bound t to the block size as it is accumulated.  t only grows within a
-run, so the value tested never exceeds the final run length; any stream
-that decodes today satisfies dbufCount+t < dbufSize at the flush, hence t
-< dbufSize throughout, and no such stream is rejected.  Because t grows as
-at least 2^n-1 the bound trips by the 20th symbol, leaving runPos at most
-2^19, so the following runPos <<= 1 cannot overflow either.
+The map is also leaked when an unmounted filesystem context is freed.
+This includes the temporary context used for remount, because
+shmem_reconfigure() does not take ownership of ctx->encoding.
 
-Link: https://lore.kernel.org/AS8P251MB00010FE5E38D253CF98A652AC8B92@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Reject a second casefold setting, clear ctx->encoding after transferring
+ownership to the superblock, and release any remaining map from
+shmem_free_fc().
+
+An unprivileged user can repeatedly create tmpfs filesystem contexts, set
+the casefold parameter, and close them from a user namespace.  This causes
+unbounded kernel memory consumption and can result in a local denial of
+service.
+
+Link: https://lore.kernel.org/20261002081306.637148-1-hnkz.64@gmail.com
+Fixes: 58e55efd6c72 ("tmpfs: Add casefold lookup support")
+Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: LLM
-Cc: Alain Knaff <alain@knaff.lu>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
+Suggested-by: Gabriel Krisman Bertazi <gabriel@krisman.be>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: André Almeida <andrealmeid@igalia.com>
+Cc: Christian Brauner <brauner@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/decompress_bunzip2.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ mm/shmem.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
-index 4f98cdea7e0b3..b8fb40ed06d22 100644
---- a/lib/decompress_bunzip2.c
-+++ b/lib/decompress_bunzip2.c
-@@ -428,6 +428,10 @@ static int INIT get_next_block(struct bunzip_data *bd)
- 			t += (runPos << nextSym);
- 			/* +runPos if RUNA; +2*runPos if RUNB */
+diff --git a/mm/shmem.c b/mm/shmem.c
+index f2b5a11e88a55..68a3a0734e3df 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -4595,6 +4595,9 @@ static int shmem_parse_opt_casefold(struct fs_context *fc, struct fs_parameter *
+ 	struct unicode_map *encoding;
+ 	char *version_str = param->string + 5;
  
-+			/* Bound the run so t and runPos cannot overflow. */
-+			if (t >= dbufSize)
-+				return RETVAL_DATA_ERROR;
++	if (ctx->encoding)
++		return invalfc(fc, "casefold parameter cannot be specified twice\n");
 +
- 			runPos <<= 1;
- 			continue;
- 		}
+ 	if (!latest_version) {
+ 		if (strncmp(param->string, "utf8-", 5))
+ 			return invalfc(fc, "Only UTF-8 encodings are supported "
+@@ -5081,6 +5084,7 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
+ 
+ 	if (ctx->encoding) {
+ 		sb->s_encoding = ctx->encoding;
++		ctx->encoding = NULL;
+ 		set_default_d_op(sb, &shmem_ci_dentry_ops);
+ 		if (ctx->strict_encoding)
+ 			sb->s_encoding_flags = SB_ENC_STRICT_MODE_FL;
+@@ -5177,6 +5181,9 @@ static void shmem_free_fc(struct fs_context *fc)
+ 	struct shmem_options *ctx = fc->fs_private;
+ 
+ 	if (ctx) {
++#if IS_ENABLED(CONFIG_UNICODE)
++		utf8_unload(ctx->encoding);
++#endif
+ 		mpol_put(ctx->mpol);
+ 		kfree(ctx);
+ 	}
 -- 
 2.53.0
 
