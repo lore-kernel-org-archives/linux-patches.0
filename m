@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061392;
-	b=sH0d4+2Y0sBfzRmRrR7AkNG8csiFQjeNUAKjZ/Dx8REkhPterw9RUoUHFilsCdXrwC6m
-	 gP4tx1cS6kY+2eqX7fe0qi1S5Nqu4T/IbIfv6psa79UK1NFAv4CXJFP1rQCpAkxA/4UF7
-	 PubwiM9IwIF7wkAUAeOqaymMyE0Mn2ynYCwFd4uJQc9Xw85/mNMJyN5MA8H7bC5puFVFr
-	 xURNP98fdbWRF1a5m+PhM6TBdxEV9ubEjwV9EofKZC7l4AJ2k1hv3MQ4KYorSvm2QfC98
-	 JpeQEv6wBromqmAtatEkNWn6PSQMsyJRp9ij4ZAWZ9lQgnJdLHa/1tXcThqXDkjrwFg==
+	t=1794061394;
+	b=1o9ETrWMMQqXOeX55BEOLFpRNAT7GV1bJhADVZ9izIXjnQAB/Y/rR6WK7Bs82SKMBsrX
+	 PO7f0phXlhFpJif+t9+RMc6VGQYLXmsmr6j360s0CU9MKDgBj20khK2ZB/mkU0C9WcvFS
+	 XU+o/m7u99OTRclYfF3rVVGtLg6GcKMzn1qqDvZO4Nifkwyul4PT1amONRxse/eFhWwRw
+	 vWueL12iUNv/7yNoMo/tj6K6wtuOwiJMT9K4b1mgGD9Fxx1oaUhtPQJkntiS383vG/M5V
+	 3C3FzirDhaOJCLEqqjcj3AjP7eloMkXFpoz0DikHr0l5fbWXp1zzmfU/5iqksy1i3NQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061394;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3oeGV2GPu3Mkqa2faAA8Zh/R/d7dxWHCEWyFXWRv1Cw=;
-	b=Q9GExdWkak5UdP/rrtGPN347rFgHT6y9NCxDWbpG1B0GOh2+7w8CbDRqxlYN0BDEfDT4
-	 h3cxKpuLxb38M5rWLs+8dwoZ+2+jKd/8wMoxbMkUtMhzTItqkeJu326G92tNRQRlsRCaB
-	 ApadOyA3gkjAxrm9pUabbdW2oX2oQQlywSHrdFp/DQv+v2nt2LjjVjJAu7xWYtKft9OzP
-	 vwBzcTexakQp3mb2q681dvV44jVKykXP3A9DIVBEmE+bB0sCthKWcHU2F4CJotTQgfI/9
-	 bymLTKrz5zLpx9QDoKLTE5zsuJPWlc2p3vLjvin6JAR6BcKbqGcJqakoL/c3hQ+8FEQ==
+	bh=pPqo2are8xUVDbfb3qdB1NRHRgfx6ccenWkocDqyFLs=;
+	b=CiNLV5PawrtVZ0vGdmBMiHlHChMX2qFbuVZenGHvwwmCUOlLnQVTjRv/SkoC7w80lE0F
+	 sYoeU1/QVDeiknXnk/ZtAyt8ZBrK3XXP9mzrnpnnYysAE9PMKJQMSgQZgtZ5En3nG403A
+	 Hvgc0Bf6wPmmrfOOKH34yWuTeNK2bwFgIi1Hk5Qarmpcp71mw4ud64ne+J39kdKBg1HGO
+	 xTAam1V4JOdvLSJ0MlARbXvHAYbmT/h3hghocst8C0oBQMDMXLzpjfP8a9Zh6iNym/jdo
+	 yj90Gg5l6TnJuLY0rlgvpOlVjZnOBvVQgjE98xHLREkpn6g1MLWEreEOO5aS3cVW6Og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PJY4ZEeX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hrmh02lZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91573606A333;
-	Sat,  7 Nov 2026 14:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7158606A333;
+	Sat,  7 Nov 2026 14:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PJY4ZEeX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3141F0089F;
-	Sat,  7 Nov 2026 14:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hrmh02lZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BDE1F0089F;
+	Sat,  7 Nov 2026 14:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061392;
-	bh=3oeGV2GPu3Mkqa2faAA8Zh/R/d7dxWHCEWyFXWRv1Cw=;
+	s=korg; t=1794061393;
+	bh=pPqo2are8xUVDbfb3qdB1NRHRgfx6ccenWkocDqyFLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PJY4ZEeXUhdETGBPexoAn0mtLt9GsIZz02Mttotgjx+h1YSP7Gof4SZ+b+Eld/Jsl
-	 /l7f5t7o2FDi7/npyJZACw32waG1rmF8y9ZvMloQbK7MYwtOxDuLrXq2xHBOGA+bxa
-	 0hxKAHINSGahH2ZvnF1JCLv8FVOD64REh/MEopKE=
+	b=hrmh02lZqlKhXqBUNJQ5dWO1hu79qbu/vNgvuvg7H3gyUmvs8/DUHtwPEWqr87ImI
+	 AhJy6ECCiNwgwGnbHD+VG/xi+tjpODQO/hTuEfbY1WK2bCTj0RMTmDgBG8SWewXyMz
+	 sTgEpH8ZD3vsSVtFdYBPZwCaWByznfjNgzpsUxTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Arie Miller <renari@arimil.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0513/1536] hwmon: (asus_rog_ryujin) Synchronize HID command and report handling
-Date: Sat,  7 Nov 2026 08:42:09 -0500
-Message-ID: <20261107135011.844007828@linuxfoundation.org>
+Subject: [PATCH 6.12 0496/1536] i2c: qcom-cci: Do not check return value of cci_init()
+Date: Sat,  7 Nov 2026 08:41:52 -0500
+Message-ID: <20261107135011.392852101@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,131 +70,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arie Miller <renari@arimil.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 06d48355bf41028c1321acda6a4391cd70098be8 ]
+[ Upstream commit 17c5d247e3e4708cac05ff087c8013c0dda383a2 ]
 
-rog_ryujin_execute_cmd() holds status_report_request_lock while
-reinitializing a completion, intending to exclude raw-event handling.
-However, rog_ryujin_raw_event() does not acquire the lock when it updates
-the completion. A response can therefore race with reinit_completion() and
-be lost, leaving the command to time out.
+The cci_init() function is not supposed to fail, and it never returns
+a non-zero, so it'd make sense to convert its signature to void.
 
-Hold the lock while parsing reports and updating their completions. Use the
-irqsave variants in both paths because raw-event handling may run in
-interrupt context.
-
-Fixes: ed3e03790c5c ("hwmon: Add driver for ASUS ROG RYUJIN II 360 AIO cooler")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-hwmon/20260812104617.858D01F000E9@smtp.kernel.org/
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol sparse
-Signed-off-by: Arie Miller <renari@arimil.com>
-Link: https://patch.msgid.link/20260904022129.97896-3-renari@arimil.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260515234121.1607425-3-vladimir.zapolskiy@linaro.org
+Stable-dep-of: f98d49864821 ("i2c: qcom-cci: fix autosuspend cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus_rog_ryujin.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/i2c/busses/i2c-qcom-cci.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/asus_rog_ryujin.c b/drivers/hwmon/asus_rog_ryujin.c
-index 593950802b39d..f352036f0e52e 100644
---- a/drivers/hwmon/asus_rog_ryujin.c
-+++ b/drivers/hwmon/asus_rog_ryujin.c
-@@ -173,6 +173,7 @@ static int rog_ryujin_write_expanded(struct rog_ryujin_data *priv, const u8 *cmd
- static int rog_ryujin_execute_cmd(struct rog_ryujin_data *priv, const u8 *cmd, int cmd_length,
- 				  struct completion *status_completion)
- {
-+	unsigned long flags;
- 	int ret;
- 
- 	/*
-@@ -180,9 +181,9 @@ static int rog_ryujin_execute_cmd(struct rog_ryujin_data *priv, const u8 *cmd, i
- 	 * completion. Reinit is done because hidraw could have triggered
- 	 * the raw event parsing and marked the passed in completion as done.
- 	 */
--	spin_lock_bh(&priv->status_report_request_lock);
-+	spin_lock_irqsave(&priv->status_report_request_lock, flags);
- 	reinit_completion(status_completion);
--	spin_unlock_bh(&priv->status_report_request_lock);
-+	spin_unlock_irqrestore(&priv->status_report_request_lock, flags);
- 
- 	/* Send command for getting data */
- 	ret = rog_ryujin_write_expanded(priv, cmd, cmd_length);
-@@ -410,15 +411,18 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 				int size)
- {
- 	struct rog_ryujin_data *priv = hid_get_drvdata(hdev);
-+	unsigned long flags;
- 
- 	if (size < 2 || data[0] != RYUJIN_CMD_PREFIX)
- 		return 0;
- 
-+	spin_lock_irqsave(&priv->status_report_request_lock, flags);
-+
- 	if (data[1] == RYUJIN_GET_COOLER_STATUS_CMD_RESPONSE) {
- 		if (size <= priv->info->temp_offset + 1 ||
- 		    size <= priv->info->pump_speed_offset + 1 ||
- 		    size <= priv->info->fan_speed_offset + 1)
--			return 0;
-+			goto unlock;
- 
- 		/* Received coolant temp and speeds of pump and internal fan */
- 		priv->temp_input[0] = data[priv->info->temp_offset] * 1000 +
-@@ -432,7 +436,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 			complete_all(&priv->cooler_status_received);
- 	} else if (data[1] == RYUJIN_GET_CONTROLLER_SPEED_CMD_RESPONSE) {
- 		if (size <= RYUJIN_CONTROLLER_SPEED_3 + 1)
--			return 0;
-+			goto unlock;
- 
- 		/* Received speeds of four fans attached to the controller */
- 		priv->speed_input[2] = get_unaligned_le16(data + RYUJIN_CONTROLLER_SPEED_1);
-@@ -444,7 +448,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 			complete_all(&priv->controller_status_received);
- 	} else if (data[1] == RYUJIN_GET_COOLER_DUTY_CMD_RESPONSE) {
- 		if (size <= RYUJIN_INTERNAL_FAN_DUTY)
--			return 0;
-+			goto unlock;
- 
- 		/* Received report for pump and internal fan duties (in %) */
- 		if (data[RYUJIN_PUMP_DUTY] == 0 && data[RYUJIN_INTERNAL_FAN_DUTY] == 0) {
-@@ -463,7 +467,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 				 * We're expecting a report, so parse it.
- 				 */
- 				goto read_cooler_duty;
--			return 0;
-+			goto unlock;
- 		}
- read_cooler_duty:
- 		priv->duty_input[0] = rog_ryujin_percent_to_pwm(data[RYUJIN_PUMP_DUTY]);
-@@ -473,7 +477,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 			complete_all(&priv->cooler_duty_received);
- 	} else if (data[1] == RYUJIN_GET_CONTROLLER_DUTY_CMD_RESPONSE) {
- 		if (size <= RYUJIN_CONTROLLER_DUTY)
--			return 0;
-+			goto unlock;
- 
- 		/* Received report for controller duty for fans (in PWM) */
- 		if (data[RYUJIN_CONTROLLER_DUTY] == 0) {
-@@ -492,7 +496,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 				 * We're expecting a report, so parse it.
- 				 */
- 				goto read_controller_duty;
--			return 0;
-+			goto unlock;
- 		}
- read_controller_duty:
- 		priv->duty_input[2] = data[RYUJIN_CONTROLLER_DUTY];
-@@ -501,6 +505,8 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
- 			complete_all(&priv->controller_duty_received);
- 	}
- 
-+unlock:
-+	spin_unlock_irqrestore(&priv->status_report_request_lock, flags);
+diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+index 86d45f0752344..5215a003869df 100644
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -247,7 +247,7 @@ static int cci_reset(struct cci *cci)
  	return 0;
  }
  
+-static int cci_init(struct cci *cci)
++static void cci_init(struct cci *cci)
+ {
+ 	u32 val = CCI_IRQ_MASK_0_I2C_M0_RD_DONE |
+ 			CCI_IRQ_MASK_0_I2C_M0_Q0_REPORT |
+@@ -288,8 +288,6 @@ static int cci_init(struct cci *cci)
+ 		val = hw->scl_stretch_en << 8 | hw->trdhld << 4 | hw->tsp;
+ 		writel(val, cci->base + CCI_I2C_Mm_MISC_CTL(i));
+ 	}
+-
+-	return 0;
+ }
+ 
+ static int cci_run_queue(struct cci *cci, u8 master, u8 queue)
+@@ -624,9 +622,7 @@ static int cci_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		goto error;
+ 
+-	ret = cci_init(cci);
+-	if (ret < 0)
+-		goto error;
++	cci_init(cci);
+ 
+ 	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
+ 	pm_runtime_use_autosuspend(dev);
 -- 
 2.53.0
 
