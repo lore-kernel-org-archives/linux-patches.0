@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062119;
-	b=03iP1w26JMDWvg7vLAVBP+Eq2oIeRCst2b1wY6ABcSwOYFn3kGb+Z7hYJ+w692ITn3ah
-	 tDYUA6TLV4e2TkSI3I2PB72qaFPEj1Te/P4voBervYcp0pCjuo/W7hi3xVda3vyhnPM/K
-	 lF2IruNQ8zRyz2GyWvE5lCkyOkWnIE0lOe5ZZS8D087x+komui2LP77WSmSNf+k5+VQ76
-	 9UBjck0aK+ITVvmlXV5oWmPf4kF+uPXfYbovSYamELvLCaBvuuOszFQCAmfl9esW87UTc
-	 6qvJPEcUik+I0TGjNFjWsqIhg/tw1Quz5yxnhfCZLDeBmzMjqZu/kPpf2PIuRUL+Eqw==
+	t=1794062120;
+	b=VqHcfRos0LuJF7lG+tWpCLMfo0EzZhq4pyL4qwLCEMAR2mfWG8q+Frptdf79kczHuv/E
+	 utHznZZQZOEtz9nfvOOqoZwRz5PeVCZZ74zQCjPqCHKKCbioSASMhyLWUOESqpOjqs+8/
+	 dmpOjH4IVhcn1wl/bJuWy1ouAdTz2EMQvi0dWwTlsCusvdqdlm1PwMrgIWjyqehU3UHHO
+	 dsDenQZa/NUFXFRKZAfkecXD5idFx7pYSKTZhWKpPJZjY2sXafhwDgs6Xh49TTCLn4Bss
+	 JHPtrvzeGiU4H8nxyUuPOzW2MB5JQGHgBmiGU1MBzxB5NY968ZP9kNbgc6Wl54V6+GA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062119;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062120;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vdhboo910tAObMdn7R+AEMDL1vkFkk0HwkOK3IrmceQ=;
-	b=D2TzG6RWUOw9zukt5JwTAv12vDJRmkeifo5xV9bejSKNa4ytCO28acUSMxU7S+gU1MLH
-	 E4MfArGaPHSpOmct0ZmQmXxk+Kw8b2dKghDVZCV5Qh9XcDbmk5ndNmXT6etjyrpXbvSVR
-	 6mjXFeH+VWv/SlPfw2FZIzJn89mJFT58/mQI5sGCWGjGqJqzjjleQ8Xu+nZuhRCckEYV7
-	 +QaDGFF0i9NQEbGDYykZ8G7yBY12tIdgF4kkrMLz2CFzhSqvRWfPG4DZsoK3uHDr210HH
-	 OCHcMX9E5RR4WPh4NbpxXqnSyV3YRirqou72UogDPj2T0y8/6EKrZZL9ztICNiIGs1Q==
+	bh=UJB6qlKGQs/JMNLTceC3BDgfuAZ9BBMssLUrmrH/FSw=;
+	b=TwUlAA1gMN+yMduZvMSEsgVtgsvjZMhMhNE4cmk65lkmqRHlniH+lk+z+LsydAFkgk5d
+	 0B3io6T8kygl4kUfUrizyzH+swsNrbR4KGcRWVMSMWnVAD32Az5CXnlpB66szVRRYE+RO
+	 E16RQYT+MyLdMrFoLiIyEx+IpgN97R8S5IJywWx+rBPrh6hH8cHCC1ep7LmBGjjJkOLJj
+	 6XjhJDirzv0fOvonim5PBvUE7amOAcaWvTZuTdI8bSWHEoLuTtyyvqagbFeFKTDpUJifZ
+	 lmbtbz+7kPnah1IUB1djxR/1qJkT2wfwX4KGWFlVr6bMC47uei74XkPd5MbpMjYw1lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xXMFT+i/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPyuERs3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681FE60A6F4B;
-	Sat,  7 Nov 2026 14:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98914606EE90;
+	Sat,  7 Nov 2026 14:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xXMFT+i/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1361E1F008A1;
-	Sat,  7 Nov 2026 14:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPyuERs3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C591F008A3;
+	Sat,  7 Nov 2026 14:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062119;
-	bh=Vdhboo910tAObMdn7R+AEMDL1vkFkk0HwkOK3IrmceQ=;
+	s=korg; t=1794062120;
+	bh=UJB6qlKGQs/JMNLTceC3BDgfuAZ9BBMssLUrmrH/FSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xXMFT+i/KFRELN6MRxrSZps/LDw+7CdfjGeAOlW/9sYQp2/VqiIdiHC2PQNrkyCBA
-	 sIopURZhkCMEzAm312Wew7RTcPEqwhk9Y5jKYCS969yh8kuLHF1ZnJ7Sh4a9yQ9QcO
-	 In7WJFqJqLv/A5s5/63TnNGmiIZp6eV2ymr8/iYg=
+	b=KPyuERs3ZVO+zwmrNqd1HzNDyKNiWa8H16WbKg4sjdP6qjbpovXXnJFezgpOTpWfN
+	 94r7B4oUuVxQO8OH48DTivWL8Lt7CYc7zo9y+oA5TKfVKk0KpTmtVChAUI/QpFxbRG
+	 iInwmz0GThiIMhO60qieM4CZ2hbLyrwXWXQ8sC7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1072/1536] mtd: mtdsuper: Fix MTD device reference leak in mtd_get_sb()
-Date: Sat,  7 Nov 2026 08:51:28 -0500
-Message-ID: <20261107135027.803139493@linuxfoundation.org>
+Subject: [PATCH 6.12 1090/1536] iio: adc: max11205: reject devices without match data
+Date: Sat,  7 Nov 2026 08:51:46 -0500
+Message-ID: <20261107135028.314762976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,44 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 62ee3da38f41bef83c1cf250f6816a0ee187674b ]
+[ Upstream commit a07b5db685b2a3084240f9b4a9ee44f3b478c6e3 ]
 
-mtd_get_sb() is called with a reference to the MTD device already
-taken by the caller.  When sget_dev() fails, the function returns the
-error without dropping that reference, so the device is never released
-and its refcount never reaches zero.  Every mount attempt on an MTD
-device whose superblock cannot be set up leaks a reference.
+SPI driver_override allows a device to bind to this driver without
+matching either the OF or SPI device ID table. In that case,
+spi_get_device_match_data() returns NULL.
 
-Restore the put_mtd_device() that the fs_context conversion dropped on
-this path.
+max11205_probe() immediately dereferences the returned chip information
+to set the IIO device name, causing a NULL pointer dereference.
 
-Fixes: 0f071004109d ("mtd: Provide fs_context-aware mount_mtd() replacement")
+Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
+data") fixed the same driver_override issue in another SPI driver.
+Reject devices without match data before using the chip information.
+
+Fixes: bf3c855be801 ("iio: adc: max11205: simplify with spi_get_device_match_data()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdsuper.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/adc/max11205.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mtd/mtdsuper.c b/drivers/mtd/mtdsuper.c
-index b7e3763c47f0c..22ddeaa7d5221 100644
---- a/drivers/mtd/mtdsuper.c
-+++ b/drivers/mtd/mtdsuper.c
-@@ -31,8 +31,10 @@ static int mtd_get_sb(struct fs_context *fc,
- 	int ret;
+diff --git a/drivers/iio/adc/max11205.c b/drivers/iio/adc/max11205.c
+index 9d8bc0b154dd3..c14ad055b452d 100644
+--- a/drivers/iio/adc/max11205.c
++++ b/drivers/iio/adc/max11205.c
+@@ -117,6 +117,8 @@ static int max11205_probe(struct spi_device *spi)
+ 	ad_sd_init(&st->sd, indio_dev, spi, &max11205_sigma_delta_info);
  
- 	sb = sget_dev(fc, MKDEV(MTD_BLOCK_MAJOR, mtd->index));
--	if (IS_ERR(sb))
-+	if (IS_ERR(sb)) {
-+		put_mtd_device(mtd);
- 		return PTR_ERR(sb);
-+	}
+ 	st->chip_info = spi_get_device_match_data(spi);
++	if (!st->chip_info)
++		return -ENODATA;
  
- 	if (sb->s_root) {
- 		/* new mountpoint for an already mounted superblock */
+ 	indio_dev->name = st->chip_info->name;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
 -- 
 2.53.0
 
