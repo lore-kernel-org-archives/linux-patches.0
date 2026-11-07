@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064059;
-	b=kxZNMtUcVz4wwVn+a9QMzBQafZkJqN0SqG0kXl3hl0pIIlJc9ZFIma1ZihL18/gJ8qCu
-	 O3/LNv3bdZdE8i2mbXUHVaerpH49VPWEnd82EWl08ghz8Jesfl61urqMz/kzGJ8TUx8X0
-	 3Rb3eBY59HW09AGVBce7ffisK/kPXupqsELSq7wRoKHOxCirGq7Cp2VkZPFLhWphfKZcg
-	 vXGjE2adUY97Dd+0AAEX3jzQ8iNJH62nhCDLNGpbp7/DHCfojgh92gYOGATlT6RZyWExr
-	 6V5q1VQ0DxWRpBNpXw1dFDagf/9Q/X+32zvVLXC6eySi7VGofNoEcYErwIBt3qqvlzQ==
+	t=1794064060;
+	b=AdOatplG56VVRc0G1FN3m8XWYLNRIJmRN7oiEqj+Bh0enCWVlUtl68i2AuYbuor81pQn
+	 Eu1joEt42mFY/5cyKNZ8i8Wq49+y7yJyDmHgmPcBAI2ysmpVxgsSsuAn2h2Ok6r3SMawQ
+	 qYX2uV8rXvpnMu9XhxROWaiiXIPrj6DULQh42Wa4tDdGZBY1kWkXqikrBzpuruMjssxsG
+	 ACXETbTnAQ+BcumOo3xkIsUl58t/QbpZv061SoOdPAqbJiYsEfKWGOrw7lYjt1SVKZmrW
+	 mQh/skwPuYrOXdkAZp+WZZU3zH7/P07bghb4ro1u1ttxUGcr4WytwIZPwE0J2waiOKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GtbFIhOaAEbd1Lq0O6Bwfi6/VrPaxcuwVtHyEsqofq4=;
-	b=Mpn+uQSAmViE/eNFGy6/q7yuRfQMkbj+Bxtmh58yqF6txoCbTo4WOChoCp9SN6J6xmoN
-	 HRCgwMIjfljvyThmHmW/G3FM1e+pB7ZPEF/s91Dv2JB6ta3zbh3aXWpc94QLPNwi2NDKr
-	 w0z9Cnf33JgKG76Hz8uHBS59118wLV9BerYuwntoqwWnJQmvS3ExHIlmlwE17nm0iSkCx
-	 Ze5PwOScoV0zk5UiQ923nexNwLcJHJZwiH/aYnzANV9moGuMDHMfplVCL7voAfnQPni6D
-	 VgDjiP6vOlIGJMiJWjP1+dSehT9ed63r9ZtMq1HBIXFYjFimF4nARapVgz2Yk1/bkIQ==
+	bh=jKiXHCa1A+Nopxa8dc1AMTWyly17TGzKy3XnaC5NkEo=;
+	b=N+iHocy9nx9sfZOGY/UxURn0FSyvprHDwqVYcz3GY4IFX40z9aC8nRgsYJTPAgrYmzMb
+	 /nOntbhBnJdhwtEfzyGPRGKhViqd26eubTsw84eJLncZtp+/gxZJyMbre3g41kAWvhqG9
+	 CDegCVSgj5pc0ncifRIJhMQAmFp55HwQygUhnTWtUpb+AklIoorVCsHZRzZ5R6IsD+Rq5
+	 ej1b3sPdBqt+2jM0GQuHi2Soq/wFHz2jkvwuRdR/iEC01eZfihbHJvRcAxcfUkP4H+A8q
+	 XzZXFYLuOCOduLeOGIudma7hNGDIiORHucVHq7LynnSffQBIPCtQpli2ITDFcM83t6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GBbFuGz2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2G7TcUX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0823B606A9D4;
-	Sat,  7 Nov 2026 15:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F159606A9D4;
+	Sat,  7 Nov 2026 15:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GBbFuGz2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60C21F008A1;
-	Sat,  7 Nov 2026 15:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2G7TcUX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0EC41F008A2;
+	Sat,  7 Nov 2026 15:07:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064058;
-	bh=GtbFIhOaAEbd1Lq0O6Bwfi6/VrPaxcuwVtHyEsqofq4=;
+	s=korg; t=1794064060;
+	bh=jKiXHCa1A+Nopxa8dc1AMTWyly17TGzKy3XnaC5NkEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GBbFuGz2EbWuOkDjG2lshnykoUZioctekeRPZMBrrg4fu+r5e+kziKj8kjjkfkfIc
-	 uLY7ZbYXIiJnjBD19wZWTBbQtmqF13FdVhHathl4hiFisFmiTWeZ3/wj5nLfKFp8RE
-	 B2SF4p7L5n2qjAYmOuFriexwVz/V1UCwDVkjD6Po=
+	b=P2G7TcUX7q7DktyPR+ZQkLLyHGmInce4mWUr8Gnt9PZiDci7bXoVWtyUQXtSkaqAG
+	 spzvyxv1bsJfp/x0ablmXn7o6aHi5U3SYfUC0NUgZ0xgce71bNVce7nE4HTIa75F0R
+	 NhMk1hBzKXbsFYYnhg5dfGbbZenJWkfrVhJKTkHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Sen Wang <sen@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0229/1257] media: meson-ir-tx: Prevent divide by zero in meson_irtx_prepare_pulse()
-Date: Sat,  7 Nov 2026 08:42:05 -0500
-Message-ID: <20261107134945.850093949@linuxfoundation.org>
+Subject: [PATCH 7.3 0230/1257] ASoC: ti: davinci-mcasp: Fix runtime PM imbalance in __davinci_mcasp_set_clkdiv()
+Date: Sat,  7 Nov 2026 08:42:06 -0500
+Message-ID: <20261107134945.879501485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,36 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 05d9c515cf13056875abbf73adb4a19dd7ba32eb ]
+[ Upstream commit ba593d662183de74d2b733b4c6e8cd26f04f0a65 ]
 
-If an excesively high carrier is set, meson_irtx_prepare_pulse() will
-cause a divide by zero if tb_us is 0. Prevent such a carrier from being
-set.
+In __davinci_mcasp_set_clkdiv(), pm_runtime_get_sync() is called at the
+entry of the function. If an invalid div_id is provided, the function
+hits the default switch case and directly returns -EINVAL without calling
+pm_runtime_put(), resulting in a runtime PM reference leak.
 
-Fixes: 49be1c78d575 ("media: rc: introduce Meson IR TX driver")
-Signed-off-by: Sean Young <sean@mess.org>
+Add pm_runtime_put() in the default case before returning -EINVAL.
+
+Fixes: 4ed8c9b737b6 ("ASoC: McASP: add support for clock dividers")
 Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Tested-by: Sen Wang <sen@ti.com>
+Link: https://patch.msgid.link/20260916073136.1971673-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/meson-ir-tx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/ti/davinci-mcasp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/rc/meson-ir-tx.c b/drivers/media/rc/meson-ir-tx.c
-index 1ab898069e67f..a0d07da09f67a 100644
---- a/drivers/media/rc/meson-ir-tx.c
-+++ b/drivers/media/rc/meson-ir-tx.c
-@@ -219,6 +219,9 @@ static int meson_irtx_set_carrier(struct rc_dev *rc, u32 carrier)
- 	if (carrier == 0)
- 		return -EINVAL;
+diff --git a/sound/soc/ti/davinci-mcasp.c b/sound/soc/ti/davinci-mcasp.c
+index 79239131b6598..d3c9797c03dd8 100644
+--- a/sound/soc/ti/davinci-mcasp.c
++++ b/sound/soc/ti/davinci-mcasp.c
+@@ -799,6 +799,7 @@ static int __davinci_mcasp_set_clkdiv(struct davinci_mcasp *mcasp, int div_id,
+ 		break;
  
-+	if (!DIV_ROUND_CLOSEST(USEC_PER_SEC, carrier))
-+		return -EINVAL;
-+
- 	ir->carrier = carrier;
- 	meson_irtx_set_mod(ir);
+ 	default:
++		pm_runtime_put(mcasp->dev);
+ 		return -EINVAL;
+ 	}
  
 -- 
 2.53.0
