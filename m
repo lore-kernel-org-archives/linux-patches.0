@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062088;
-	b=SU6hJvDJKWu+yT9wV+3TbcEeyzYIf2Vz6RZj0hbtxNY3EYMS6fKhMzcIoxDPKvC3HeJD
-	 APPh8u1G8TnrBXeUgPyxVY9eXbFLqONnxhOfsO82Sxal0H/Q4amUecacNMhzeZLcUDw8T
-	 ql9w3lI/UYr06rvyed4JRrrAHk1khTZsst9Q3FQIgo7QC2Vvk2kBi5cPjnCz8FO2EBKjI
-	 GM9iRAGuBWLKEqCLfM4Wj9XzWlOdY+O8nWCX928Prdzcm4OlZuU/ByqWFnbjQzRL1eUkx
-	 dCTTN+3YUlTYrJR8YEQsZkjo+NTtOOl3q6G6Y9oK1WFBDgg0KZFM5K+0/3II3f62SJQ==
+	t=1794062089;
+	b=TsvPgrXp00N9trVb+dYiBj0Z8/t7agHZIEANvk0nJZLXeaRrFUwZYA61cUQjgIHi+Pkk
+	 fDRI13xxtuhTIUZRtHX5gtsw0iMVW/84Lhxy8zdvG93rtHCyEj4h6afKt0tZoYhFSJAXv
+	 EXGhN70LpHUnF/XsQqJCnIARbJK70yVQIr5W7lKYL8FfhQBwDdjqgYnG37qexMDfZS5co
+	 DHI08dWQ1Es4alOisiNoqEKGTmTp34I/30DS5dtRTDFRDRziUFWhusLtSqJS2XNl4+r5Y
+	 BSeMaCpiejjNXR4vxzEK+MceuIDG0D8QT3raKHpOuZVjdZNdbPy6YsJG6F4ANPJfZeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062088;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062089;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xFTQ6OXZZeB3hp38cuS4N75K+jfFM2BPrI81bamS6RA=;
-	b=kFDGTNM9NwqGOgr4o/6JuaQauuTcvoq/IWoADRHrdeQ9gL2KJRMXjeg81xcX0NBWcf02
-	 RvuNqoGif5NqmLcqvNUC4/fFY+Fu2h6zBpS9AFv/F/GybkjzgCbXGrfg2a2YAFveag9p9
-	 UNVaJc9np4cmlYWVBNQxnXecU7dABRjIBx91J6nJkZ5lbVgXMgBBPFM1zlzD54cYtotgR
-	 N3APPXHRXGmoP6t/NUDU7R0wywUXj0VssdOhquDxepj9/FgqZHrC2tQp/7+4nEyBs1nm/
-	 O/0YqM/QY3FxoqayoJ3FnGPqm3zFFLcUbQm5Z34gd0hI65gwUgec5+DrhH6UWFuRsqw==
+	bh=dG+29u5lUcHsQ6GV8nny60Bjd5eVE0a9ybPP8uVu9Eo=;
+	b=eVWOKuyWL4YwwLPFQkCrmdBc3vjhmaQGEt3u9mF8hYtxf2T/7jFQLEeLznFVuAedjKSX
+	 tPfcTVxYhlYgVl1Qlpm2kr2xgNJFixHReFvu6Qu+Qch3CR9hzt7+SQUhwfgOlbTfkNswg
+	 alp0YrpYs/ONahjYx+GMBoBJngu6jPmjJ6al1S1iVcazH1iFd9amOAMuoFV1EH93VXwZc
+	 6K4aIa13R/PA9Xm1hrjLcu9mNkhjduzio3aIdpiCXNHHiEafjT/P107XfGY/F+OVXElgh
+	 dL11U9pywnmT5M+ISsIjbpVOmBH6wEuQH83jcGts3UgoKc2VU2Vll5EN467Xmu7AjFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EzojGb7F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XztOSRuV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C51C606D826;
-	Sat,  7 Nov 2026 14:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459AA606EEBF;
+	Sat,  7 Nov 2026 14:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EzojGb7F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE31A1F008AB;
-	Sat,  7 Nov 2026 14:34:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XztOSRuV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88651F008AB;
+	Sat,  7 Nov 2026 14:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062088;
-	bh=xFTQ6OXZZeB3hp38cuS4N75K+jfFM2BPrI81bamS6RA=;
+	s=korg; t=1794062089;
+	bh=dG+29u5lUcHsQ6GV8nny60Bjd5eVE0a9ybPP8uVu9Eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzojGb7Fbpzm1r/Ztz/K4ZgPlrS5PwSgxblbI2nzy8FDupWSpMEetZIaY/OPjjC1L
-	 pPy8VzAfunMvNrcEalDfVFtCFaZ8PyTPX+andIh5t0DO1+WJ5q3kCFPDyd+ZjfYz46
-	 I7AueBlXsNElflRmcm5z7zfZqMFyjeYm1PJUM76Y=
+	b=XztOSRuV48C+yf2v43iOnjvrzTSNeQGVFi9FrENV8LmXBLbE5nKc9JI6nbsZHe/bJ
+	 Tv4MtNiwflTf8GZqTEZtarDZur+RLaHuEeTdVzkDhTN/PZxmoexiiCgfy4uyJb1rjr
+	 TDqBHhhpdK/c8l+T+/fcbOmZKUE0qpPfEuLE3lc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Brian Masney <bmasney@redhat.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1062/1536] clk: mvebu: ap-cpu-clk: Assign .num before accessing .hws
-Date: Sat,  7 Nov 2026 08:51:18 -0500
-Message-ID: <20261107135027.511564335@linuxfoundation.org>
+Subject: [PATCH 6.12 1063/1536] regulator: core: Fix coupled regulators reference leak on removal
+Date: Sat,  7 Nov 2026 08:51:19 -0500
+Message-ID: <20261107135027.540296181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,64 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit b4243850393f2f24e21b9f4b2c56233e60c904b4 ]
+[ Upstream commit b9205f0837ca91a0bbe6aa9002207656840c1406 ]
 
-Commit f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with
-__counted_by") annotated the hws member of 'struct clk_hw_onecell_data'
-with __counted_by, which informs the bounds sanitizer (UBSAN_BOUNDS)
-about the number of elements in .hws[], so that it can warn when .hws[]
-is accessed out of bounds. As noted in that change, the __counted_by
-member must be initialized with the number of elements before the first
-array access happens, otherwise there will be a warning from each access
-prior to the initialization because the number of elements is zero.
-This occurs in ap_cpu_clock_probe(), which reads .hws[] to skip clusters
-that have already been set up and writes it inside the CPU node loop,
-but only assigns .num after the loop. With CONFIG_UBSAN_BOUNDS and a
-compiler that implements __counted_by (GCC 15.1+ or Clang 20.1+), this
-triggers an array-index-out-of-bounds report during probe of the AP806
-and AP807 CPU clocks, and with CONFIG_UBSAN_TRAP the first access traps.
+of_parse_coupled_regulator() returns the coupled regulator with its
+device reference incremented and regulator_resolve_coupling() stores it
+in coupling_desc.coupled_rdevs[]. regulator_remove_coupling() clears
+those pointers without dropping the references, so they are leaked when
+the couple is torn down.
 
-Initialize .num with nclusters, the number of elements .hws[] was
-allocated with, right after the allocation. For the in-tree AP806 and
-AP807 device trees, which list the CPU nodes in ascending order, this is
-exactly the value the old assignment produced. It is also the correct
-value for any other node order, since of_clk_hw_onecell_get() rejects
-indices at or beyond .num.
+Release the reference of each coupled regulator while removing the
+coupling.
 
+Fixes: d3d64537c339 ("regulator: core: Resolve coupled regulators")
 Cc: stable@vger.kernel.org
-Fixes: f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with __counted_by")
-Assisted-by: LLM
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917143052.2156903-1-vulab@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mvebu/ap-cpu-clk.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/mvebu/ap-cpu-clk.c b/drivers/clk/mvebu/ap-cpu-clk.c
-index 677cc35148497..3cd9693d74cc6 100644
---- a/drivers/clk/mvebu/ap-cpu-clk.c
-+++ b/drivers/clk/mvebu/ap-cpu-clk.c
-@@ -282,6 +282,8 @@ static int ap_cpu_clock_probe(struct platform_device *pdev)
- 	if (!ap_cpu_data)
- 		return -ENOMEM;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 707fa12836471..3361556d1b6ef 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5573,6 +5573,8 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
  
-+	ap_cpu_data->num = nclusters;
+ 		c_desc->coupled_rdevs[i] = NULL;
+ 		c_desc->n_resolved--;
 +
- 	for_each_of_cpu_node(dn) {
- 		char *clk_name = "cpu-cluster-0";
- 		struct clk_init_data init;
-@@ -331,8 +333,6 @@ static int ap_cpu_clock_probe(struct platform_device *pdev)
- 		ap_cpu_data->hws[cluster_index] = &ap_cpu_clk[cluster_index].hw;
++		put_device(&c_rdev->dev);
  	}
  
--	ap_cpu_data->num = cluster_index + 1;
--
- 	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, ap_cpu_data);
- 	if (ret)
- 		dev_err(dev, "failed to register OF clock provider\n");
+ 	if (coupler && coupler->detach_regulator) {
 -- 
 2.53.0
 
