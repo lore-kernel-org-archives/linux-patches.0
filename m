@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062765;
-	b=HMfhYjIZb+U9PgdFgPGBjdwB4Db/GU5G+2nDM2AFiXPLjeqyyXxq+l7or3wqMsOWGFJg
-	 oUSD1ks5LeZCwffLAsVPsoTkxB7xixGQeoT6ycVQ9e3RI/izppo3miqCTX+/ShyXOeE4I
-	 JS9HMvoEBcnFw9tj02ZPQ7slHk2cabauMVxAzDpzAAZkCG71ZKCShjofKYwKjWjZ3N7Ik
-	 oJ+5QLjoehcl/jY4eEuaFOe5+5abvw36QDFqy8HcJ5Pbpt6Ov9s6fwmkCA+GNsZ+uPwYz
-	 F2DSgCi6v5xxDa1z0wtUzi7hOKkjaOi4B34a7bwqS/fZxOekaSex8PZQ0yph4N9swfQ==
+	t=1794062766;
+	b=oaPtx4PM6zC/zQcGnIVw3o5RQfW/Xw4zKKP2NOGC8LhTyFbHj8mRjEMQoJ2iwF6Zru/u
+	 HIK0Rw8SCXSZz5QOx012tMoqfZFIhB5XDA1cPP2rYOAk6SR1vXILdZo0UzdH9xMNwwIKB
+	 yYofhF44z4NKMOH0yymVer/H+JeaubXcPCF3ZHs1Jj3cSPfmcip/qYx6dvGxPagOtUugI
+	 jLMbpq4LNeCXKysPQNKRr0fQNLjoDZ5k/zM6rReO8ynIe/QmRIf5AnrmO+f1X7j7RiF4f
+	 a0tcMkk86NJLUlJPIGir8thL/AYTxqtUKgvvfmDZDT/06VOZyvuACdxdDdcKxq2JsHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062765;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hzaaf1mFEZpuaba4ClFLQQpPrhOPPIN2pnVL4exUDiM=;
-	b=gsTc0Z9tCHE0AGnFZp5MvpjICp/Vayaf1oqtksxtmRfLbhnhWgSLAeCkWc8G37WWqIEU
-	 0WKPyWAYOXfxjgVmndf3x2ikOgaBf5VW6cWwZR6F0pyFXqCslmpROooUKHhcr8EA8YZK/
-	 AIhCjXCm3hMeiQAaXaBNn7Lh+l3HixKT18LmS5nYu/v1Dd315RdNOJaXWKiOAQlJmvY2k
-	 lnBV41eQjVJTVF/sEDJFWWwn45GefffJuM8+6IW0A9W0VysgswWUq1apZ5qFwBPI3RvS2
-	 R19unkQ+tvTPk43+wzCgXjijfdZQ7gOj3eZJWCa8vji0r3xb6xe8hDiYts7BZ37Mlbw==
+	bh=VCAdxGBhyWI0LN4x5ZMEEAIxD+P/let8CrbLcu5Fwes=;
+	b=BOv70kna5K/c2kF4OlKhobzcw8eDBT5DjeBL9PyPTribO2nZ2oLHSo1fZ+kwwleGH97h
+	 VHYuHaUVofaGBhjeE0FSuSChCd40+awZ0+TfzZIiYsZ67BsM4zn+d4WEd5DnKDKjLPygx
+	 0SqkS5zj0lRmYE2HjibMvX6no7y4pzzzx7lTAg/4MHA/oiNmToUgqfWyX6WoCktIhfehy
+	 lofDUDmXr7vtZfHVDtKSchwwwmfCSq6scPIbKeVj5wAiA6rfsPYbJTwFzxRHQTGA2sk3l
+	 K6PtYc4nIPxkO6V94DqkDKmilzh7Pz2PauwwOPLcPCWZ9Oy8MxYqB7ZeT135jLg5Gxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lnwET/28";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lp5PlS8s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9E0606A32E;
-	Sat,  7 Nov 2026 14:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E335606A326;
+	Sat,  7 Nov 2026 14:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lnwET/28
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776D31F0089F;
-	Sat,  7 Nov 2026 14:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lp5PlS8s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF821F0089F;
+	Sat,  7 Nov 2026 14:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062764;
-	bh=hzaaf1mFEZpuaba4ClFLQQpPrhOPPIN2pnVL4exUDiM=;
+	s=korg; t=1794062766;
+	bh=VCAdxGBhyWI0LN4x5ZMEEAIxD+P/let8CrbLcu5Fwes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lnwET/28Ba3DFibpYxaZWuTyfrjUrne/jfpQBtgH3cUvvttQd2KObNgc2pE3vEezG
-	 97cQwpAk2D7oBDOFH60JxABKUn4St4Zp/nLW7agbvaZy93g/9PpLDhRK+d4aX2eHne
-	 GkEzOHQS8yuu7jy7I47Tf/F5sjjVMmt2HFquL5DI=
+	b=Lp5PlS8sPHUEgPDlYcJkpMet21N1uhhQusfR1YGQcpQ869fkVhxmNc9DWWPBKzP+e
+	 zMd57eqgsqZNTtqKOFBlPSpITuW91jQhai0Y0N20msFvh8XULDxKnEKdLgoekHiwO6
+	 ukifzat4P+LedAoOnFzZCMJzCb3Oh4mSyzPygmXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 074/869] thermal: intel: int340x: Fix temperature selection around 0 C
-Date: Sat,  7 Nov 2026 08:45:56 -0500
-Message-ID: <20261107134855.235764954@linuxfoundation.org>
+Subject: [PATCH 6.18 075/869] isofs: fix Rock Ridge CE extent validation on multisession media
+Date: Sat,  7 Nov 2026 08:45:57 -0500
+Message-ID: <20261107134855.297606948@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,62 +68,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Baolin Liu <liubaolin@kylinos.cn>
 
-[ Upstream commit e56e2b49c67d132728e52ce493079e83cc914657 ]
+[ Upstream commit 43de050fa4a31f7e7a73cf8974dcf6037e161a39 ]
 
-Since commit 7251b9e8a007 ("thermal/intel: Fix intel_tcc_get_temp() to
-support negative CPU temperature"), intel_tcc_get_temp() can report
-negative temperatures.
+Commit a36d990f5913 ("isofs: validate Rock Ridge CE continuation extent
+against volume size") compares the CE extent directly with s_nzones.  The
+extent is an absolute block number, while s_nzones is the number of blocks
+relative to the selected ISO session.  The comparison is therefore wrong
+when a multisession disc starts at a non-zero block.
 
-proc_thermal_get_zone_temp() still uses *temp as the current maximum and
-as an implicit "no reading yet" marker. However, this breaks when a CPU
-reports 0 C, because a subsequent negative reading can overwrite it.
+isofs_get_last_session() selects the last session on multisession
+media, and its volume descriptors describe a volume beginning at that
+session's LBA.
+For example, a session beginning at LBA 45447 with 64 blocks can contain a
+valid CE at absolute LBA 45467.  The existing check rejects that CE, so the
+ER continuation record is not read, Rock Ridge is disabled, and the mount
+falls back to Joliet names.
 
-Use bool temp_valid to track whether a valid temperature has been read.
-Initialize *temp with the first valid reading and only update it with
-warmer readings.
+Save the selected session start in filesystem-block units and validate the
+CE extent against the half-open interval [session_start, session_end).
+Scale the session length to the same block units and retain a separate
+block-device limit.  The lower bound is intentional: accepting arbitrary
+blocks before the selected session could make a CE read data from a
+previous session or another filesystem on the device.
 
-Fixes: 7251b9e8a007 ("thermal/intel: Fix intel_tcc_get_temp() to support negative CPU temperature")
-Cc: 6.3+ <stable@vger.kernel.org> # 6.3+
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260826153144.299746-3-blum@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Only apply the bounds check when cont_extent is non-zero.  A zero extent is
+the in-memory sentinel indicating that no CE continuation was found, rather
+than a request to read block zero.
+
+For a single-session image, session_start is zero and the effective volume
+boundary remains unchanged.
+
+Build-tested with:
+
+    make CONFIG_RUST= CONFIG_RUST_DRIVERS= fs/isofs/
+
+Fixes: a36d990f5913 ("isofs: validate Rock Ridge CE continuation extent against volume size")
+Cc: stable@vger.kernel.org
+Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
+Link: https://patch.msgid.link/20260907082602.3777551-1-liubaolin12138@163.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/int340x_thermal/processor_thermal_device.c   | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/isofs/inode.c |  2 ++
+ fs/isofs/isofs.h |  2 ++
+ fs/isofs/rock.c  | 11 +++++++++--
+ 3 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
-index 48e7849d48160..dc9c82e8650e7 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
-@@ -178,17 +178,21 @@ static int proc_thermal_get_zone_temp(struct thermal_zone_device *zone,
- {
- 	int cpu;
- 	int curr_temp, ret;
--
--	*temp = 0;
-+	bool temp_valid = false;
+diff --git a/fs/isofs/inode.c b/fs/isofs/inode.c
+index 3433fa14cd014..8a0da54f391d0 100644
+--- a/fs/isofs/inode.c
++++ b/fs/isofs/inode.c
+@@ -821,6 +821,8 @@ static int isofs_fill_super(struct super_block *s, struct fs_context *fc)
+ 	if (!sb_set_blocksize(s, orig_zonesize))
+ 		goto out_freesbi;
  
- 	for_each_online_cpu(cpu) {
- 		ret = intel_tcc_get_temp(cpu, &curr_temp, false);
- 		if (ret < 0)
- 			return ret;
--		if (!*temp || curr_temp > *temp)
-+		if (!temp_valid || curr_temp > *temp) {
- 			*temp = curr_temp;
-+			temp_valid = true;
-+		}
++	sbi->s_session_start = (sector_t)vol_desc_start <<
++				(ISOFS_BLOCK_BITS - s->s_blocksize_bits);
+ 	sbi->s_nls_iocharset = NULL;
+ 
+ #ifdef CONFIG_JOLIET
+diff --git a/fs/isofs/isofs.h b/fs/isofs/isofs.h
+index 5065558375333..a36a634797435 100644
+--- a/fs/isofs/isofs.h
++++ b/fs/isofs/isofs.h
+@@ -35,6 +35,8 @@ struct isofs_sb_info {
+ 	unsigned long s_firstdatazone;
+ 	unsigned long s_log_zone_size;
+ 	unsigned long s_max_size;
++	/* Session start in filesystem block units. */
++	sector_t s_session_start;
+ 	
+ 	int           s_rock_offset; /* offset of SUSP fields within SU area */
+ 	s32           s_sbsector;
+diff --git a/fs/isofs/rock.c b/fs/isofs/rock.c
+index 869b331eff4f6..a4a337301b6f9 100644
+--- a/fs/isofs/rock.c
++++ b/fs/isofs/rock.c
+@@ -9,6 +9,7 @@
+ 
+ #include <linux/slab.h>
+ #include <linux/pagemap.h>
++#include <linux/blkdev.h>
+ 
+ #include "isofs.h"
+ #include "rock.h"
+@@ -84,6 +85,10 @@ static void init_rock_state(struct rock_state *rs, struct inode *inode)
+  */
+ static int rock_continue(struct rock_state *rs)
+ {
++	struct super_block *sb = rs->inode->i_sb;
++	struct isofs_sb_info *sbi = ISOFS_SB(sb);
++	sector_t session_end = sbi->s_session_start +
++		((sector_t)sbi->s_nzones << (ISOFS_BLOCK_BITS - sb->s_blocksize_bits));
+ 	int ret = 1;
+ 	int blocksize = 1 << rs->inode->i_blkbits;
+ 	const int min_de_size = offsetof(struct rock_ridge, u);
+@@ -101,11 +106,13 @@ static int rock_continue(struct rock_state *rs)
+ 		goto out;
  	}
  
-+	if (!temp_valid)
-+		return -ENODATA;
-+
- 	*temp *= 1000;
- 
- 	return 0;
+-	if ((unsigned)rs->cont_extent >= ISOFS_SB(rs->inode->i_sb)->s_nzones) {
++	if (rs->cont_extent &&
++	    (rs->cont_extent < sbi->s_session_start ||
++	     rs->cont_extent >= session_end)) {
+ 		printk(KERN_NOTICE "rock: corrupted directory entry. "
+ 			"extent=%u out of volume (nzones=%lu)\n",
+ 			(unsigned)rs->cont_extent,
+-			ISOFS_SB(rs->inode->i_sb)->s_nzones);
++			sbi->s_nzones);
+ 		ret = -EIO;
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
