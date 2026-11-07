@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062426;
-	b=YCfFc/rGKmVdinEfsZzipaLb/N39mbrGyyEX6qX6kkP9DwlkA4vqIzDhn5EZh2S3WkD3
-	 hPFhSUv1U2xsVbJEMu+snrk6lFfIYH/BusASR1+Y3nQT4tQJrdapFsaEsaT9/SziRzJGu
-	 tAYpfku4gPLjVxallIPeZAhphSeDmH7R+rEA9DCJmrx16vcJGAayE/lTCB3CSL3+rOmBa
-	 a1/K0UZTuxHF6rCgbjxXOTkjDyZyopI8d46CAHRiYHV13oMvHobQbrF/EhU+9+YuPGHBV
-	 7Wu07g0g83WoWBtrjH5Cui6exIcDrAvWtoX4taR6Pv51OcrJJa+nNM/7e3SSx/WOqQg==
+	t=1794062428;
+	b=AFA+X6pgDfuft9pDDZyzashUFX0OkqNPvZNK4nkZ4so1FDNBww3okRkqSa6rJbe8mpn4
+	 NrCXrSbU6IfQNTsPpV+EOUyTyr+2t3c+4T+R33byXyRNs767NSOrbTHQzef07++lYqpAm
+	 7L8xDZ1ezK0OwCsXE/9KSQ+pnztu45667HABrr5BZ24hPWhafVSesLjKfIodTjCiUk62e
+	 AXy/eR+ZDQmnvHcGTbr+cVlphYXrPefc9gEZtlTR3yMVjkWzeWYCsVeQ03R5BdiOcwxzl
+	 MypDSu9G6HgvkrIP+rYs7+QcuWkk9SttWdcMpJ79VO769PAS1KJDKHYRQx99bi6Hxtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062426;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062428;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F9q+69flnQ9e570X38U946/eagPcR//FlsaV8K/vmhE=;
-	b=YOuWAfJM6HhPrMf/iLErAPqdgT+zLw6dKc83lSfrxhBJMnPMfBGYVnO+B0aYbnb/cCGO
-	 /5tQfLICgj3bde6V4ppcbfR/mJWn2L3JYIHcq2ZbLUvJzNhts0jlZoomQrg20mVeRPloJ
-	 hZN4lPpq+eOmrgEiILUmhGYtbpKUDYU0j8yr6qJ0LlZS2wkaru8ZpKW/j4sxX665Eckq+
-	 cWhvYM9A2mCVy3AY6SDVUlsKm+RSwrVgTdhxPROkb4DH0kjpRc0L/FrMHP/Ej93igk0un
-	 MMCUjJT1KQk27Z9s4+kYHN7TnPVj4BAxjPoyTLNj0DB09lDW6DE8KUXCrwPgcowB9Bw==
+	bh=701SF4TKz3yp3xlcJUMykKSYJA7cY/LutGQ+QWXpLTM=;
+	b=tDszKnyGugv8RAFSF+Q1MuSDRwriPedlJJnacJx5ZdZUjKoqhQaX1IfV4BqQwPZvxht5
+	 fSqHqQi+P/KV8sY/s5GN6Sb4V4ecAFF5abr9mwzXzvQvZFvGcAGy6MvjLuowDZzcFe36d
+	 pHTvFD0rDZ5LvZhGzUrWbIUZctIROdwJ6MzG51g5pdY8bBJwB4Rx/euP4Pnz53Pi0dQpZ
+	 Pj1wSFCl8Z4oyKlANSB2qJ9PSaQB4NLKZdm7IHZrnnYg2wRMg5QAjqy45S3X+e9JsxHOw
+	 pfFBvCUh3IuN6SdEocek/ETIk5KEy6v76P0HsY9jqzS897A1wbDt81YZl2ZfVU9T4Dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AvP2DtXW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B96prUnu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9953C60A261F;
-	Sat,  7 Nov 2026 14:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C242E60A261F;
+	Sat,  7 Nov 2026 14:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AvP2DtXW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450F01F008A2;
-	Sat,  7 Nov 2026 14:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B96prUnu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7162D1F0089F;
+	Sat,  7 Nov 2026 14:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062426;
-	bh=F9q+69flnQ9e570X38U946/eagPcR//FlsaV8K/vmhE=;
+	s=korg; t=1794062427;
+	bh=701SF4TKz3yp3xlcJUMykKSYJA7cY/LutGQ+QWXpLTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AvP2DtXWKnn8VuTQu78DOXWTUN2zgRjtYnk2UFdmn4Ma20NxEzcmFCzyOb2fN0IwL
-	 oHAk4KIQM+Z8wZivHI/FpiV1gzoVJL+bmlUm4siwWRtZZgGCi8V9rtREpQrTfIhNZH
-	 oIVtIip+eE4EF2A2/EKxEG7sAHnh6GvsWf/vuQUI=
+	b=B96prUnu3Ax0k8jYa99CZ2G9wTxa4x8wRpBdFoW1+CDs9YEA0ELqnWspMxdogH7GB
+	 dVgtyEzzXC4ZeLQTqQI9pz5XxI89wxo6qQVI/w+SqnkInN8UT3KdZNAY06CmFwyUWB
+	 P1/mIyIyu6QZrWfGM62pivCLwpp5c65wHMZW+qZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Luis Gerardo Lopez Hernandez <gamaerry@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1339/1536] ALSA: seq: oss: Skip events until fully initialized
-Date: Sat,  7 Nov 2026 08:55:55 -0500
-Message-ID: <20261107135035.425512012@linuxfoundation.org>
+Subject: [PATCH 6.12 1340/1536] ALSA: hda/realtek: Fix internal speakers on Acer Aspire AL16-31P
+Date: Sat,  7 Nov 2026 08:55:56 -0500
+Message-ID: <20261107135035.453030828@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,80 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Luis Gerardo Lopez Hernandez <gamaerry@gmail.com>
 
-[ Upstream commit 68d4a6ea6cc6091a05836f783bc17d525d266d0b ]
+[ Upstream commit d933955c456e0573b40eae4f72a3af37ab1c15c3 ]
 
-When an OSS sequencer device is opened, it creates a sequencer port,
-then further initializes the internal states like a timer instance,
-etc.  Since the sequencer port is published, an event can be already
-delivered, and this may hit unexpected event handling, which can
-eventually cause a NULL dereference (like the timer start/stop event
-triggered before the timer initialization).
+The Acer Aspire AL16-31P (Intel Alder Lake-N, Realtek ALC269VC,
+PCI/codec SSID 2782:1718) has its internal speakers wired to pin 0x1b,
+but the BIOS marks that pin as not connected (0x411111f0) and only
+exposes pin 0x14 as the speaker. As a result the internal speakers are
+silent while headphones, HDMI and Bluetooth work.
 
-For avoiding such a race, introduce a simple guard and skips the event
-processing until the port is fully initialized.
-At releasing the device, in turn, clear this guard, so that any input
-events will be discarded during the teardown.
+This is the same layout as the Infinix Y4 Max and MEDION E15433, which
+share the 0x2782 subsystem vendor. Reuse their fixup, which configures
+pin 0x1b as an internal speaker and limits the internal mic boost.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20261016161930.482309-1-tiwai@suse.de
+Tested by booting with snd-hda-intel model=2782:1705: the fixup is
+picked, pin 0x1b is used as a speaker output, the internal speakers
+work, and they are muted when headphones are plugged in.
+
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Luis Gerardo Lopez Hernandez <gamaerry@gmail.com>
+Link: https://patch.msgid.link/20261017005039.9139-1-gamaerry@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/oss/seq_oss_device.h | 1 +
- sound/core/seq/oss/seq_oss_event.c  | 3 +++
- sound/core/seq/oss/seq_oss_init.c   | 2 ++
- 3 files changed, 6 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/core/seq/oss/seq_oss_device.h b/sound/core/seq/oss/seq_oss_device.h
-index 98dd20b429764..eb1619c96526f 100644
---- a/sound/core/seq/oss/seq_oss_device.h
-+++ b/sound/core/seq/oss/seq_oss_device.h
-@@ -73,6 +73,7 @@ struct seq_oss_devinfo {
- 	int cseq;	/* sequencer client number */
- 	int port;	/* sequencer port number */
- 	int queue;	/* sequencer queue number */
-+	bool initialized;
- 
- 	struct snd_seq_addr addr;	/* address of this device */
- 
-diff --git a/sound/core/seq/oss/seq_oss_event.c b/sound/core/seq/oss/seq_oss_event.c
-index 4699c084d018e..fa91eb1233de3 100644
---- a/sound/core/seq/oss/seq_oss_event.c
-+++ b/sound/core/seq/oss/seq_oss_event.c
-@@ -427,6 +427,9 @@ snd_seq_oss_event_input(struct snd_seq_event *ev, int direct, void *private_data
- 	struct seq_oss_devinfo *dp = (struct seq_oss_devinfo *)private_data;
- 	union evrec *rec;
- 
-+	if (!dp || !smp_load_acquire(&dp->initialized))
-+		return 0; /* ignored */
-+
- 	if (ev->type != SNDRV_SEQ_EVENT_ECHO)
- 		return snd_seq_oss_midi_input(ev, direct, private_data);
- 
-diff --git a/sound/core/seq/oss/seq_oss_init.c b/sound/core/seq/oss/seq_oss_init.c
-index 676246fa02f15..7fb9fce9172e8 100644
---- a/sound/core/seq/oss/seq_oss_init.c
-+++ b/sound/core/seq/oss/seq_oss_init.c
-@@ -258,6 +258,7 @@ snd_seq_oss_open(struct file *file, int level)
- 
- 	client_table[dp->index] = dp;
- 	num_clients++;
-+	smp_store_release(&dp->initialized, true);
- 
- 	return 0;
- 
-@@ -403,6 +404,7 @@ snd_seq_oss_release(struct seq_oss_devinfo *dp)
- 
- 	client_table[dp->index] = NULL;
- 	num_clients--;
-+	smp_store_release(&dp->initialized, false);
- 
- 	snd_seq_oss_reset(dp);
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index fb79b82e2ea6e..899394885ae81 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11771,6 +11771,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x2782, 0x1701, "Infinix Y4 Max", ALC269VC_FIXUP_INFINIX_Y4_MAX),
+ 	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
+ 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
++	SND_PCI_QUIRK(0x2782, 0x1718, "Acer Aspire AL16-31P", ALC269VC_FIXUP_INFINIX_Y4_MAX),
+ 	SND_PCI_QUIRK(0x2782, 0x4900, "MEDION E15443", ALC233_FIXUP_MEDION_MTL_SPK),
+ 	SND_PCI_QUIRK(0x7017, 0x2014, "Star Labs StarFighter", ALC233_FIXUP_STARLABS_STARFIGHTER),
+ 	SND_PCI_QUIRK(0x8086, 0x2073, "Intel NUC 8 Hades Canyon",
 -- 
 2.53.0
 
