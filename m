@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063285;
-	b=zDpqobzg+R9cnMYlTohcoiPCGvi6bHeGdfKBOaTm28OryJ+Tqa8J/NCud6jO78KRT+Gi
-	 xfbiTplh2vm1bOKuY6CtbBSsrPD0F5KIsOI+aLYx5znmiqHf+gJ4xtR3Uf9AX2XGXOtIF
-	 2L5VvDG1oTEPIsoyedsH0vWgp3L1Vbf2ZT3s057+OrAEcMpj4QHzOqZgwWgMMoQzuLX9S
-	 mXnQ4j4Jeu2/AXcNnvFDu4q7gkUVOlMPTDjQWcbLAIyhyfObbPlr8eCntPGsKvJyWCH9o
-	 CJd0GKkFraUu1XJKMXLLwDpQD9W2C5sfuGWUEaOEKKNgPmlOj86sXvGoRKzkaqiygCQ==
+	t=1794063286;
+	b=dHkMzkcKSz5HeNLsllYMN61STJeeCRR+VwtiBZfeY6Vuas6Aal59BX41t0SvCbTRJgOJ
+	 +r6wBRivL4ig3a9+bgIl3ZeI3E8SArXzsHvlAvuwUN5D7AkoZlw4LSbANBAbL/tmyVh8I
+	 Dg7bjUITNZdcMZxE5OqLCaw/eZNdhwn9Jp4ARfsmWQ7ZaEaPu8DRI1aNw1apyu1IAWAp7
+	 iYMT+KWy0VR7koiWba5Fe6x3JFQatQQbkTYvceeeSa2p8u1RwR0jgQ+ZUpOHbb66QPY9J
+	 oIrKedPthGMDbc/8cgwouC16zCeqGdNlmO5i8n1y+kadoITJm6g9xS9GD6LQ863R91Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063285;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063286;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0Lj524IKhI3F6pz2kXdrvgT59drpL+6DOrrVgnKN+b8=;
-	b=b71akF9OE9hi/rI332YtwSN6siE1uoZ2+VXusbEKBWCPajfpvJ3OgW7wIwuA3jsJG9YT
-	 wPdJPozcO7eAMnRJpEcrJuHHVsxsbvdrsSf0ftPBTAKtL8PljRZyHHDuoGbSdYJSyOJ65
-	 DvckxsdPzjoIY7FX1Euhxu06EcVhgsV95L3xt6ZkxbFT/ff66nlYzulkqcB+4qp6NIqWS
-	 ricQiYh9fvT60UZlID4oxrA1LSwNga6oHixkA07MM/XY70clY5o0K+mwH2B40BlyYXdIE
-	 p7RGwB4Lw/cMnMXFoPPUdI1mpEB9xP5EA5iXYDFvV2xAGOeeACA/bHnxiloIMfr664Q==
+	bh=XQ7MrLdMEqy7RY/ygZa0+Ik6tcv4XAneWat4tBcnK0Y=;
+	b=n9OHcWM1nEmc8JzU3sJslkc/0ZLIeeh+wTZ0CT+XGZ/TgWbrZRkzmicdz3iQYAj2AZk9
+	 ftXooTuZ3L1nW6iG/MbD8pZ0h1wIe25RmBEelsaUgV8jx/punM0XJ4B9QpEBogMDdTN49
+	 35pCkhWgkqbnon6iDbuPL3xtllSuXJxJo/6AHGfS7JSISKQSRw8AKGXBURJqIwqDo4N7k
+	 Dpffiz7WJW8OUstg0S7D3OuywGdEpDoDoIn3O3PeOBT+HSXctLSnN9sxuOP09G6C5peWm
+	 QwE3qv9OsvcUUbsbm53BMivFcuAkMDhqV7Zk21d7LxH2mk++6VFXe+hBlAM+jO3cT6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GpGJc09j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKHZsx7h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2A9606A32E;
-	Sat,  7 Nov 2026 14:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE19606D809;
+	Sat,  7 Nov 2026 14:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GpGJc09j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BA81F0089F;
-	Sat,  7 Nov 2026 14:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKHZsx7h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6057F1F008A6;
+	Sat,  7 Nov 2026 14:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063284;
-	bh=0Lj524IKhI3F6pz2kXdrvgT59drpL+6DOrrVgnKN+b8=;
+	s=korg; t=1794063285;
+	bh=XQ7MrLdMEqy7RY/ygZa0+Ik6tcv4XAneWat4tBcnK0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GpGJc09jQTkTrf2Dhq3oihA1HJTIfGbkwubnLQ3KfZPdSghKSPmiK3cZZKVLcDWqg
-	 W7d/XdaPtfvGN9I+eE/cWxGeiLQam8jcAepaQ4RMdAuq5grubf5AG4qcytCAviRlx2
-	 vlW0T20A4dI14PrsmAPbnzWewQKPZ89Ee/b4tJsU=
+	b=lKHZsx7hrgOBV9QkDwBUcuw0u3T0fIUAv/8ybuly48QjWJ3uFiG2BOL7jgnR76FEC
+	 oXs1Ucbn0QRbWWyxwxsrct7RuIXRuywYnnaiMbhrwXxou8/xTlULP0I+Q6CjOVsXfK
+	 85LhtcW/nrqguS53qfogz8Hsf8Dpc3VsD+/yVEpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Juergen Gross <jgross@suse.com>,
-	Jiqian Chen <Jiqian.Chen@amd.com>,
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 440/869] xen-pciback: Fix pcistub_device ref leak in pcistub_get_gsi_from_sbdf()
-Date: Sat,  7 Nov 2026 08:52:02 -0500
-Message-ID: <20261107134908.688951686@linuxfoundation.org>
+Subject: [PATCH 6.18 441/869] iommu/dma: Catch scatterlist length overflows
+Date: Sat,  7 Nov 2026 08:52:03 -0500
+Message-ID: <20261107134908.719562028@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,52 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Krzysztof Karas <krzysztof.karas@intel.com>
 
-[ Upstream commit cfaf31becde901f7a2376d36db628f8be0bc7283 ]
+[ Upstream commit 1c8f6308e557f32412e9d4678b3f029f47f6d9aa ]
 
-pcistub_get_gsi_from_sbdf() obtains the stub device with
-pcistub_device_find(), which returns it with its kref incremented, and
-returns psdev->gsi without dropping that reference again.  The caller
-cannot release it either, so every lookup leaks one reference to the
-stub device.
+It is possible, when a very large mapping uses only one
+scatterlist, that padding overflows scatterlist's length field.
+This results in:
+ 1) silently wrapping the value
+ 2) smaller than desired mappings produced by iommu_map_sg
+ 3) leaving mapped bytes in memory (no iommu_unmap)
 
-Release the reference after reading gsi.
+Address this issue by adding overflow detection for scatterlist
+length field.
 
-Fixes: 2fae6bb7be32 ("xen/privcmd: Add new syscall to get gsi from dev")
+Fixes: 809eac54cdd6 ("iommu/dma: Implement scatterlist segment merging")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Jiqian Chen <Jiqian.Chen@amd.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260916171141.2086627-1-vulab@iscas.ac.cn>
+Assisted-by: LLM
+Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xen-pciback/pci_stub.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/iommu/dma-iommu.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/xen/xen-pciback/pci_stub.c b/drivers/xen/xen-pciback/pci_stub.c
-index 7de2fa67743c6..b128ceeee21bc 100644
---- a/drivers/xen/xen-pciback/pci_stub.c
-+++ b/drivers/xen/xen-pciback/pci_stub.c
-@@ -234,13 +234,16 @@ static int pcistub_get_gsi_from_sbdf(unsigned int sbdf)
- 	int bus = PCI_BUS_NUM(sbdf);
- 	int slot = PCI_SLOT(sbdf);
- 	int func = PCI_FUNC(sbdf);
-+	int gsi;
- 
- 	psdev = pcistub_device_find(domain, bus, slot, func);
--
- 	if (!psdev)
- 		return -ENODEV;
- 
--	return psdev->gsi;
-+	gsi = psdev->gsi;
-+	pcistub_device_put(psdev);
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 9da773ba550ba..aa9ebf2bc96ed 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -1453,6 +1453,11 @@ int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg, int nents,
+ 		sg_dma_len(s) = s_length;
+ 		s->offset -= s_iova_off;
+ 		s_length = iova_align(iovad, s_length + s_iova_off);
++		if (overflows_type(s_length, s->length)) {
++			ret = -EOVERFLOW;
 +
-+	return gsi;
- }
- #endif
++			goto out_restore_sg;
++		}
+ 		s->length = s_length;
+ 
+ 		/*
+@@ -1469,7 +1474,20 @@ int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg, int nents,
+ 		 *   time through here (i.e. before it has a meaningful value).
+ 		 */
+ 		if (pad_len && pad_len < s_length - 1) {
+-			prev->length += pad_len;
++			unsigned int new_prev_len;
++
++			/*
++			 * For large mappings spanning multiple GBs we
++			 * may not be able to fit all needed padding into
++			 * sg->length.
++			 */
++			if (check_add_overflow(prev->length, pad_len, &new_prev_len)) {
++				ret = -EOVERFLOW;
++
++				goto out_restore_sg;
++			}
++
++			prev->length = new_prev_len;
+ 			iova_len += pad_len;
+ 		}
  
 -- 
 2.53.0
