@@ -1,69 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061899;
-	b=A5BG1Fg+WCcxtUUPydpWithwOaIIDDP/hIfGN4LjZoxNvqR9runl6ogu6CmkFOs86whl
-	 PjEHSVARrpbzyNEry4VyeM4dwApk3GWpSQpayzz830P1V0LbkC2xJAKvT6qdz9XmTa/mh
-	 b8sQj9jIWxYhC7ilSvsNVX7zZ1IRu6SauOLL7Rkf2BrsEqh+ujZoLaUwQd9c+RLhWK3Gw
-	 nWp3f+lzBVj1F1NgM0fKpi9lswHcmnqzj2yHqhVD7keeemQXbWRPLbMv8cUsrl6Dakz2N
-	 oTxRjxacWDheQwSZrqZLvG7VIJd2eS29YzsLEo4VJARAuTN7b5T/ZWQHFO4Jrz8VSmQ==
+	t=1794061900;
+	b=F/JQPKVMJgLJNKxLtTOxbO+z54GktLIOYZgIHoN6WaZ5o19xCUs9nScM47P1l+jbZ/qo
+	 nvu0iAJz8W/HlAs9y2xxqOEQXn38SWK4HBnwwUCmMfxc9iBlJ1P1XkTLmMURexY4n4p0R
+	 MsmCADKm5CmFIkUcSmcFiAfpp9G0996ZsLNrah6jiVpDDdXXYYAz5Zx253mJhrdcfetK+
+	 KIafiIQSewtMaD+LIf+XfbQLB0qz73D/J27RhwJERswYH9D8KTxs/chbNvU9vhyR8Q24O
+	 MTB7UjC2E6ao8dT3ZorXyFuPm4mPZJ3sOLyo0eLpzsRG0WYCfuum816esgw3ae9xMEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061900;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h7aZ0Jbe1z5k6opdFA33C1j0/mHxq79l7JrQnIhJrUY=;
-	b=y2w+PT0BesK7xmHrjzz/ALTzWEJ1Mmyzu3QnCa1c4GqSlK71cHao6kWomkN0wGaCyudm
-	 6fgPh0n/AtB86ZboqAFrjIyzNa3MZKR26Ah92GPh6DgOBKx0GWXsQHr67ADjoDtrq8AWd
-	 PxHObizrglEKCBYBa4brUHaypw1DegViPTze9AaYqo/CHRgcRl9VqyElbcFP6JJK/zhKm
-	 6dvxT+dTjZrCSGJDR7CAXCczh4Ayi+WBSNRZvzp2sIHHRd6/u33+43PY9eV931cvfSquF
-	 DpcVfd1L+0Nx0u80Tq6pEk/S6qBCzpU9WFUv9+mpxNeMU6waMVL2dgjESN9ZT9CWbSg==
+	bh=5mDgGQFvvOUcFnwwFvalYrDllgNZS+vXQEK9wwrL4PE=;
+	b=w0tkJPIzLhBZE8tkSqW9685Ylay62IgDc0lXz9So6QguCE9XwBa+UHulPFgvZtd7gO08
+	 1tDPIkED/XrC5YUkAGV5S18TN96vI84THAUsWvJiz7F+g6bIeaIcSL2Di60Azxw25sw4j
+	 NwN09MwHiAPhrJxRZIox+ENjp1ANfy81p1OxSLvXeWROQaDDYnbqOwT1ARbJtjrJRQ5Sv
+	 KXeglvufEfp9pUdTf/mP/nG9w6S0bt2Uf8vWBx0+R5DFwDbjJ04ou2/kEmuC5PUR5HtK2
+	 y24CJN/FL7bVRi7ymIwkcHh/SXVXDajwSKDIshOYBbI1bVXGQJ91+B2yVMVYnIJRbJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nyfhw9YK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Hmj/YHk8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C350606A32F;
-	Sat,  7 Nov 2026 14:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6350B606A326;
+	Sat,  7 Nov 2026 14:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nyfhw9YK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3D61F0089F;
-	Sat,  7 Nov 2026 14:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hmj/YHk8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126761F0089F;
+	Sat,  7 Nov 2026 14:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061899;
-	bh=h7aZ0Jbe1z5k6opdFA33C1j0/mHxq79l7JrQnIhJrUY=;
+	s=korg; t=1794061900;
+	bh=5mDgGQFvvOUcFnwwFvalYrDllgNZS+vXQEK9wwrL4PE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nyfhw9YK9OrEvJES1dxpMavCcv6xKzKyvORoajBL/WRYETi/YopERTvKLZORfLUmv
-	 k14mWEkU7Xg1yfhhVmfuumEP3CZCmy3xYAdFP35LILFRCqQfHtcAdWYhZ0ZSDMzLnC
-	 5HQ4hcBpvt/l7eJBan5iVxDnoMEUTR38QBPrZ3GE=
+	b=Hmj/YHk8HBb2ESWW8RsWuW5nTtc4QWSehFO7papctiwX7HaIYOHr9sF2/CVz6jC1+
+	 e67FRC0vfpwQa1sq3x2hnLclToAVtvIKOwj29Ss9VrSjbK1wSGlhOHfDw4zeZy7nWw
+	 01nWX8LdntZzoQ+3VhPsv9KhKKcJLJrdHvNOJ66Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
+	Stefan Teodorescu <fane@google.com>,
+	Dennis Tighe <dtighe@google.com>,
+	Sashiko Bot <sashiko-bot@kernel.org>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Oscar Salvador <osalvador@suse.de>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Adam Litke <agl@us.ibm.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Rik van Riel <riel@surriel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
+	Ackerley Tng <ackerleytng@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0871/1536] mm/hugetlb: fix use-after-free of a new anon folio
-Date: Sat,  7 Nov 2026 08:48:07 -0500
-Message-ID: <20261107135022.009325172@linuxfoundation.org>
+Subject: [PATCH 6.12 0872/1536] KVM: guest_memfd: Gracefully handle xarray errors when binding a memslot
+Date: Sat,  7 Nov 2026 08:48:08 -0500
+Message-ID: <20261107135022.036511832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -85,108 +72,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 824cc56bf43c714319992bad3558803cac6e77c0 ]
+[ Upstream commit e6ecb88711d93b9e014532f17d3d29b57e80932c ]
 
-For a fault in a private mapping with nothing in the page cache,
-hugetlb_no_page() allocates a folio, locks it and maps it.  The folio has
-one reference, which belongs to the page table entry from then on.  After
-dropping the page table lock the function still sets the migratable flag
-of the folio and unlocks it.
+If inserting a memslot into a guest_memfd's bindings xarray fails,
+propagate the error back to the caller, i.e. fail memslot creation as well.
+Signalling success and continuing on with memslot creation results in
+use-after-free, as the guest_memfd instance will remain reachable via the
+memslot after the file is freed (kvm_gmem_release() won't nullify the file
+pointer due to lack of a valid binding).
 
-Whoever zaps the entry in between frees the folio.  The fault holds the
-fault mutex and the lock of the vma.  MADV_DONTNEED and the first unmap of
-a hole punch, hugetlb_vmdelete_list(), do not take the fault mutex, and a
-private vma only has a lock if it owns a reservation map: not with
-MAP_NORESERVE, and not in the child after fork().
+Opportunistically WARN and reject binding if KVM_MEMSLOT_GMEM_ONLY is
+already set, partly to guard against goofs elsewhere, but mostly so that
+KVM doesn't need to worry about clobbering flags when unwinding on failure.
 
-Then the flag is set in, and folio_unlock() is called on, a folio that is
-free or has a new owner.  A surplus page goes back to the page allocator
-while it is locked:
+Regarding the unwind, the slot must be fully prepared before inserting it
+into the bindings, at which point the slot becomes reachable.  I.e. waiting
+to update the slot in order to avoid the ugly unwind isn't an option.  And
+as part of the unwind, explicitly nullify the relevant bindings, as xarray
+can store a subset of entries when populating a range.
 
-  BUG: Bad page state in process init  pfn:108e00
-  flags: 0x200000000000059(locked|uptodate|dirty|head|node=0|zone=2)
-  page dumped because: PAGE_FLAGS_CHECK_AT_FREE flag(s) set
-
-A page of the pool can be given to the next user, of any file, who locks
-it and loses the lock to the late folio_unlock():
-
-  kernel BUG at mm/filemap.c:1532!
-   hugetlb_no_page+0x111b/0x23e0
-   hugetlb_fault+0x3a9/0x14a0
-
-An unprivileged process is enough: threads that write to a MAP_PRIVATE |
-MAP_NORESERVE hugetlb mapping, threads that call MADV_DONTNEED on it, and
-one that takes the freed pages for another file.
-
-Until commit 3a47c54f09c4 ("hugetlbfs: revert use i_mmap_rwsem for more
-pmd sharing synchronization") the fault held i_mmap_rwsem for reading,
-which everybody who zaps takes for writing.  The lock that commit
-bf4916922c60 ("hugetlbfs: extend hugetlb_vma_lock to private VMAs") gave
-to private vmas closed the window again, but only for those with a
-reservation map.
-
-Be done with the folio before the page table lock is dropped, as
-hugetlb_wp() is with its copy.  The function already unlocks page cache
-folios under that lock.
-
-Original fix generated by an LLM and sent in private by Josef.
-
-[david@kernel.org: simplify+move comment]
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-2-42796911043b@kernel.org
-Fixes: 3a47c54f09c4 ("hugetlbfs: revert use i_mmap_rwsem for more pmd sharing synchronization")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Adam Litke <agl@us.ibm.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: <stable@vger.kernel.org>
+Fixes: a7800aa80ea4 ("KVM: Add KVM_CREATE_GUEST_MEMFD ioctl() for guest-specific backing memory")
+Cc: stable@vger.kernel.org
+Reported-by: Stefan Teodorescu <fane@google.com>
+Reported-by: Dennis Tighe <dtighe@google.com>
+Reported-by: Sashiko Bot <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260823135031.4F6DC1F000E9%40smtp.kernel.org
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Ackerley Tng <ackerleytng@google.com>
+Link: https://patch.msgid.link/20260922001332.1121266-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ sashal: Used gmem instead of f and omitted the guard and rollback cleanup for the unavailable KVM_MEMSLOT_GMEM_ONLY flag. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 8 ++++++--
+ virt/kvm/guest_memfd.c | 8 ++++++--
  1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 5196c1a816e38..049726560c1aa 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -6295,8 +6295,6 @@ static vm_fault_t hugetlb_no_page(struct address_space *mapping,
- 		ret = hugetlb_wp(vmf);
- 	}
+diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+index 71afb0ca0cc94..2e9b5129b5a22 100644
+--- a/virt/kvm/guest_memfd.c
++++ b/virt/kvm/guest_memfd.c
+@@ -520,7 +520,12 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+ 	WRITE_ONCE(slot->gmem.file, file);
+ 	slot->gmem.pgoff = start;
  
--	spin_unlock(vmf->ptl);
--
+-	xa_store_range(&gmem->bindings, start, end - 1, slot, GFP_KERNEL);
++	r = xa_err(xa_store_range(&gmem->bindings, start, end - 1, slot, GFP_KERNEL));
++	if (r) {
++		xa_store_range(&gmem->bindings, start, end - 1, NULL, GFP_KERNEL);
++		slot->gmem.file = NULL;
++		slot->gmem.pgoff = 0;
++	}
+ 	filemap_invalidate_unlock(inode->i_mapping);
+ 
  	/*
- 	 * Only set hugetlb_migratable in newly allocated pages.  Existing pages
- 	 * found in the pagecache may not have hugetlb_migratable if they have
-@@ -6307,6 +6305,12 @@ static vm_fault_t hugetlb_no_page(struct address_space *mapping,
- 
- 	if (folio_locked)
- 		folio_unlock(folio);
-+
-+	/*
-+	 * Hold the PTL until we're done with the folio: the page table owns the
-+	 * folio reference now.
-+	 */
-+	spin_unlock(vmf->ptl);
- out:
- 	hugetlb_vma_unlock_read(vma);
- 
+@@ -528,7 +533,6 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+ 	 * not the other way 'round.  Active bindings are invalidated if the
+ 	 * file is closed before memslots are destroyed.
+ 	 */
+-	r = 0;
+ err:
+ 	fput(file);
+ 	return r;
 -- 
 2.53.0
 
