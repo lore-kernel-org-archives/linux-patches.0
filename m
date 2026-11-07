@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062334;
-	b=PHJ/qtEQNtdaPrtkieyyge+CR7asJdOgBwf0aNoQ9+bPD4Q/2MGIYG2WXFQXTTohjZPB
-	 5zMYHbMm/AH+dD3xjtTc5qjrA2OjuwEqsLOpOWwqkz5qm5zMd23K5MBwPn32I2o6lDnGO
-	 0DrAE3PErX6T/T91TEOmKVUzD8bZO25OfB1aUxaVhXleNOSCzO3QfiCAfy2rlToPM+9Ib
-	 We3eYwQVD+K4ipEWCsKvorN09KLAQW8zE0JIuRh2mfZyEWQWY5jjWwgkMPWNiYzJrh7E7
-	 HdyxQn4wU3UhyGAdhfCWAgsCzdILAVjOQe7/wquBRtQmzBRdg/2zCoqqe/hHFroCDyA==
+	t=1794062335;
+	b=kQ9BJU7L05FqgpEunjeSkxnor+as0/YlIdQota5v+ifirMcksvqeF2ERjm03MSecYTga
+	 ihx1e/QOF9MHUVH27Lw18RhPpcvgiFoE5Dg3jg6YWaiC/XQApX/4Ls/dm1Axn1NAt6HTi
+	 lzDQFIXV+6OPn6kyQQtO2y/7qfi0XEFiRiSTy5jaRn4LmGDSkhjJEsx0hnWbhi2CdVKhv
+	 j1a1rH6CDRACIZwL2z8cHysQS89AWdE0q8mdg8b4XroFBYCavK2QnKQDhSp8NwtE3wixP
+	 Vg/Djx0Ug7coYhpiZYSLoPi3jw7MPMkyCOVMjLITNpQHKzEbXWshhYDhCAWoX/h1PlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062334;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062335;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5RcFG4za7dOeBRQx2Kpd/PqfveMNmx4c9LArE/myL5k=;
-	b=X52U5PGs5yIyI1Dq0C4bbqVUtc255S8D1GDa3Gk98vwh2Lr80uFoCl1aBqcwE1/6t27e
-	 b2riAjpj9s3X55Y/UxSfnU+jaDTiMIH8hEA1GvJayVirKqVtdvNwWWzMLB8XJC72OZYyl
-	 eFpIoT2A2xDHNH+4wZS8Ebu9pS3twuRSPbww+dDa3ouXlgedrBwCD7zuAyQOYb2hpp3sg
-	 UHvKx+Dhp8My8v3eySbPkMr7j64x0seohOsOOOzocEDBx8WU1awqYlSQqDPQ0xOlMZWIB
-	 FWc7YqN+YRiQbWzas5XU4W0uYb2fMySEpmLBrIItgcS+2TdV0YEWytNiCt7JERWv+ng==
+	bh=ujuhjt6hAhCpX0ZVqrc9AtcUfdJB+Ym8lPiYDj0aozY=;
+	b=VnvfCQ1b9GWdPI2djCV/giOGB9jPSyau7+DDJKTz7IA6UQd1oSZ7iEHBNOdov0YDYhro
+	 k8xwo7Iu713+uGDfqhE7P+P1OcHkwoScjt3X6cFMzhoBw41StkWN8j16Afk9S7HPP+O3k
+	 JTQnUCVeQUYBpoZVxQ8tjPfoDrTZUmismVSf5g2nqwivqtIk27DEnPbd2TJfLpUDPygPx
+	 OICoPUFfRN7YJdn+hkvkqlZ3wICBs1pq6FS6vhiXxd2wm47gdC+9WITTDudYBW9eX2Qzt
+	 2VdGN9ShZhpT10salGifqiYbqKYz3yDmvAIVm3YSsbyh9x8ZIwAPjk3bOsJ0o+ZFMAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a2f7sPcp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a6alu5lR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8101606A32F;
-	Sat,  7 Nov 2026 14:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B21606A32F;
+	Sat,  7 Nov 2026 14:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a2f7sPcp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5337F1F0089F;
-	Sat,  7 Nov 2026 14:38:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a6alu5lR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4BB1F0089F;
+	Sat,  7 Nov 2026 14:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062333;
-	bh=5RcFG4za7dOeBRQx2Kpd/PqfveMNmx4c9LArE/myL5k=;
+	s=korg; t=1794062334;
+	bh=ujuhjt6hAhCpX0ZVqrc9AtcUfdJB+Ym8lPiYDj0aozY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a2f7sPcp2EQBf/HiO7oUUr+9j3fF6L9BlHhj5KjwbUo+JyaBopcptIgWeYmVKQbEJ
-	 /dmpjBziNLDiFMwe74W1gToQ0d1uacJKIf7T8GRCe/kY9/hX0NcgmCW3D2776l6060
-	 o2t3qqEAlP7tcNpnI6p2r8u0WRLbfoBEZmzHHq74=
+	b=a6alu5lRzndfOozQ7jtFAlC9xKEbC5chMBaB1axKngOrZUlDR0pOsrE5TATgRVemX
+	 l0vZ+F0ld/nJoUYalFZP3Tgy8u8cdjhnalRfkEoLnUUjKuhjnDKpiTPmhr3dgcLI4Z
+	 DrVeQhR4wed3MuCpv8Zw8AtT4G9dGPo81anVyntI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Jiexun Wang <wangjiexun@tinylab.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1264/1536] clk: qcom: ipq5332: add 24MHz rate for USB UTMI clock
-Date: Sat,  7 Nov 2026 08:54:40 -0500
-Message-ID: <20261107135033.274431925@linuxfoundation.org>
+Subject: [PATCH 6.12 1238/1536] mm/madvise: reclaim isolated folios if PTE restart fails
+Date: Sat,  7 Nov 2026 08:54:14 -0500
+Message-ID: <20261107135032.530792504@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,41 +75,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit 19b62f31e15ef70dc927aab91b1576ea6c37f992 ]
+[ Upstream commit 5445a6359d717354dd76d509b8e693f13403ec61 ]
 
-The USB UTMI reference clock must operate at 24 MHz, as recommended
-by the hardware team, for reliable USB operation.
+MADV_PAGEOUT collects isolated folios on a local list before reclaiming
+them after the PTE walk.  The reschedule path drops the PTE lock and then
+restarts the mapping with pte_offset_map_lock().
 
-Validation showed that USB 3.2 hub enumeration with USB 2.0 devices
-fails when the UTMI reference clock is not configured to the required
-24 MHz rate. Configuring the UTMI reference clock to 24 MHz to resolve
-the enumeration failure and ensure successful device detection.
+A concurrent operation can remove or replace the PTE table while the lock
+is dropped, causing pte_offset_map_lock() to return NULL.  Returning
+directly in that case bypasses reclaim_pages(), leaving the collected
+folios off the LRU with elevated references.
 
-Cc: stable@vger.kernel.org
-Fixes: 3d89d52970fd ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5332 SoC")
-Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260921-ipq_clk_changes-v1-2-d242e3d49648@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This results in a permanent memory leak.  nr_isolated_anon increases
+reliably and does not decrease when the process dies.
+
+Route the failure through the existing cleanup path so any isolated folios
+are reclaimed or put back.
+
+Simplest userland pseudo-code reproducer:
+
+p = mmap(PMD_SIZE, ANONYMOUS);
+touch_every_page(p, PMD_SIZE);
+parallel {
+   while (1) madvise(p, PMD_SIZE, MADV_PAGEOUT);
+   while (1) {
+       madvise(p, PMD_SIZE, MADV_DONTNEED);
+       touch_every_page(p, PMD_SIZE);
+   }
+}
+
+Reproduced in qemu trivially with some explicit widening of the race window.
+
+Link: https://lore.kernel.org/20260912110832.3203902-1-gourry@gourry.net
+Fixes: b2f557a21bc8 ("mm/madvise: add cond_resched() in madvise_cold_or_pageout_pte_range()")
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260821150912.183976-1-gourry@gourry.net
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Assisted-by: LLM
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jiexun Wang <wangjiexun@tinylab.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq5332.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/madvise.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
-index 9536b2b7d07c2..bf77959ca84d7 100644
---- a/drivers/clk/qcom/gcc-ipq5332.c
-+++ b/drivers/clk/qcom/gcc-ipq5332.c
-@@ -1039,6 +1039,7 @@ static struct clk_rcg2 gcc_usb0_master_clk_src = {
- };
+diff --git a/mm/madvise.c b/mm/madvise.c
+index 4abc466d37505..80a95ce616970 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -440,7 +440,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ restart:
+ 	start_pte = pte = pte_offset_map_lock(vma->vm_mm, pmd, addr, &ptl);
+ 	if (!start_pte)
+-		return 0;
++		goto out;
+ 	flush_tlb_batched_pending(mm);
+ 	arch_enter_lazy_mmu_mode();
+ 	for (; addr < end; pte += nr, addr += nr * PAGE_SIZE) {
+@@ -550,6 +550,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ 			folio_deactivate(folio);
+ 	}
  
- static const struct freq_tbl ftbl_gcc_usb0_mock_utmi_clk_src[] = {
-+	F(24000000, P_XO, 1, 0, 0),
- 	F(60000000, P_GPLL4_OUT_AUX, 10, 1, 2),
- 	{ }
- };
++out:
+ 	if (start_pte) {
+ 		arch_leave_lazy_mmu_mode();
+ 		pte_unmap_unlock(start_pte, ptl);
 -- 
 2.53.0
 
