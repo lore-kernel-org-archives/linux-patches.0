@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062995;
-	b=AngldJ7Y+AYYLjbRy2yL4oQGBZiryn63SkjB9Q63x5so/tYcW3JI2/WB0g0UlqB5UjOM
-	 mH3uBGhKgMBy+gk/Vlu1KGY7ahFVJTvVQNHk1l75JJuBwmy7Cr+3t4DwE1OsEZMbL+ok7
-	 Zmoh06Ve9cuC2XBnUWEP9NlI2MIeto/kH1PSD9mncJAz1pDYb+R896AWBw6mhX4oiRzkC
-	 g0Do9O9lIhILK2fXlzoZLwKmCIyb78WSvrUIOGW5ppNwgfBtZwj6Q5PcCG2c+ld4KfuPF
-	 MQseX21toTdM3zffuK+ZQDcktS6CK9178mWhc/sPqR2rQBwxOb13686yNhLIMbc9A4A==
+	t=1794062996;
+	b=cCwNJXf0VttWiQ270VtdXXMS1Kq0Kin8fw6RkZBVNwOVbcxDae9gqmLKegdob0aTpKIr
+	 dHVJmyHhG4lrVAw4y+OSk/ge5076Ji7KaApQxgdkjkAL2NaGKTssYzDH7GIbL7oaqiTtW
+	 mNgezqWLRxQl10yIe6qvTaQRC7AJi2x/Gare12MTmPznkl3tGE/Q3wFUepu3WxcieFbHJ
+	 MgPBVEYu4IK+S6+rPlCKASD8uuTGEzITpg/2XE7/PO6EYxvFgSr36bIX6WCuijtDBcQ9z
+	 /DaHX6Av79QIIS4CXXsi39R6tiIHkUUIgBNOSlLozxpDtdOmsHkg0AadzAEG2WVR/Xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062995;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062996;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8WzLQH7SEEWWQf4UeRxlyPkw3M5NV+dYeEvQJ0YhCdI=;
-	b=ts5NmTkkgTywT15BuVeMnYJajIke3HThkVRNzhvl+a6x2dqPZNb0QlgVYmqotsVM0F7H
-	 fYlJsX4KA9ygixqpt4PyMK70y/kt70vqhg+lRoXv9plBXouFji7GVWqjpwpBQrW68wNCZ
-	 6YPaq6/OhUGqplFP3WF+ve7jEQq9Bve5pgJrs4S8Uxlmy3vmlN2lOe3SU1rpR82aQ0ftk
-	 xYORTy+dz0qworUa3SrNHIzC4pYX4QVtB0sPbJcAkY4hSkCXamw6ZWrYWQTKzNs6cETeD
-	 a7EBUOWr0OvYMFJsR5EvwMTyll/PzgM7+MvcaTnIf5mBZs6c5ExHs6i/b+GUYEpzo5A==
+	bh=i5VUmFiQkH5gtFOzAsGsuvQ1+tlsQhdVl6jkwXXxYo4=;
+	b=XISaUxPVyFV4xCVbGWatPnQOfYfBm63wqJuRv4OFq7bYXFO/p0CUFGTsLzZIeLhbaWsQ
+	 SWjM1ciHM6+gvIqbkqqrA9v/Kvc8BYzO/Re4lSxdHeA3XvJo7oyueXkLgMpSk2dJS2N8A
+	 Y40YI7dJ4joTTFFHmmwsrO1laI/zwvw4d4zPjAOQje3Ma7gPFpWBQH4iXoHEZOlz82wKo
+	 xq0gd9aelXALwxoDvlVKLYSCQE94/2zupcSBJzH2x7J7ZES2uDEFFCNSPR4A8iAduuj3V
+	 k/yY0it2RoKQpOzaq4lQ5Fr+uZghaPOJHLWqYiABTEEqrqzFZsp8AVmqG8ZZ+E/aA1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OU7x+kx6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCucEXe9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51231606A330;
-	Sat,  7 Nov 2026 14:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEF6606A33B;
+	Sat,  7 Nov 2026 14:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OU7x+kx6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8981F008A1;
-	Sat,  7 Nov 2026 14:49:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCucEXe9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B227E1F0089F;
+	Sat,  7 Nov 2026 14:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062994;
-	bh=8WzLQH7SEEWWQf4UeRxlyPkw3M5NV+dYeEvQJ0YhCdI=;
+	s=korg; t=1794062996;
+	bh=i5VUmFiQkH5gtFOzAsGsuvQ1+tlsQhdVl6jkwXXxYo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OU7x+kx6s7Q+cw+sRL2lr/dDTNfBmil64d0EKj2EoEEguPNEd6SznrzX0MyL81jKK
-	 0IkYk9X5lXKT0OAHFRJY62523VTwx0Y2yQetV+3UFmC2tEmYO8N/vij3MIQhN/muvY
-	 JxnlfQgbu0Qu502y45EATKmqzMgBeHz9XTHq/s4c=
+	b=aCucEXe9PoNIsv6qk24bPcbyOQW6Y/CvUZI6OtKtoHj/WhLls1mLp5RO+24i0WBBt
+	 ZsiQOEcFAoT8Gz2rtICZzfE1Jr+7uVeuSaIDbAn8C+JD+tuiMHeEA1fgfta5PYwukZ
+	 leLS4OUvS+TFy2VhxDunKXY+pygclS+/RCZuKkhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Weinberger <richard@nod.at>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 251/869] mtd: Call get_wunit() on the master partition
-Date: Sat,  7 Nov 2026 08:48:53 -0500
-Message-ID: <20261107134900.314098083@linuxfoundation.org>
+Subject: [PATCH 6.18 252/869] hwmon: (coretemp) Refresh the temperature on the first read
+Date: Sat,  7 Nov 2026 08:48:54 -0500
+Message-ID: <20261107134900.342814414@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,34 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Weinberger <richard@nod.at>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-[ Upstream commit 904f18430e8cce829cb9130eab7a93020e33fc89 ]
+[ Upstream commit e463cd582ca125e359ad1a66cb076434c14638b2 ]
 
-The code checks whether master has get_wunit() but still calls
-it on the child. Fix this.
+show_temp() reads the status MSR only when the cached temperature is
+older than one second. Commit 5c0e64dde80f ("hwmon: (coretemp) Remove
+obsolete temp_data->valid") dropped the tdata->valid check that used to
+force the very first read, leaving that comparison as the only trigger.
 
-Fixes: 46b5889cc2c5 ("mtd: implement proper partition handling")
+A never-updated temp_data carries a zero timestamp, which does not look
+stale on 32-bit kernels: jiffies starts 300 seconds short of wrapping,
+so the comparison stays false until jiffies wraps and passes HZ. For the
+first 301 seconds of uptime temp%d_input reports the zero left by the
+allocator rather than the CPU temperature. 64-bit kernels are
+unaffected: jiffies starts at a positive value there and does not wrap.
+
+Backdate the timestamp when the temperature data is allocated. One jiffy
+older than the caching interval is stale under either word size, and the
+first refresh overwrites it.
+
+Fixes: 5c0e64dde80f ("hwmon: (coretemp) Remove obsolete temp_data->valid")
 Cc: stable@vger.kernel.org
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Link: https://patch.msgid.link/20260924-coretemp-temp-fault-v1-1-1884f0ff97d5@linux.intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/coretemp.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 51c8ed4893480..f84e4213b6788 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -562,7 +562,7 @@ int mtd_pairing_info_to_wunit(struct mtd_info *mtd,
- 		return -EINVAL;
- 
- 	if (master->pairing && master->pairing->get_wunit)
--		return mtd->pairing->get_wunit(master, info);
-+		return master->pairing->get_wunit(master, info);
- 
- 	return info->pair;
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index a84a32ada8bd5..e8697d6b9998a 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -511,6 +511,11 @@ init_temp_data(struct platform_data *pdata, unsigned int cpu, int pkg_flag)
+ 	tdata->cpu = cpu;
+ 	tdata->cpu_core_id = topology_core_id(cpu);
+ 	tdata->attr_size = MAX_CORE_ATTRS;
++	/*
++	 * A zero timestamp does not look stale on 32-bit, where jiffies
++	 * starts just short of wrapping. Backdate it instead.
++	 */
++	tdata->last_updated = jiffies - HZ - 1;
+ 	mutex_init(&tdata->update_lock);
+ 	return tdata;
  }
 -- 
 2.53.0
