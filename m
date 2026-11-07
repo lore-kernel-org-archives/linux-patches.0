@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062753;
-	b=3aYHJf+l1Px8HMm/uav5rXx8Xed3wNDAMa7mLGJh1Kj0WiX5Tvwez7VPjvM4e0lledfP
-	 5phSWnezVbYrm8cyLwpKxVdHTctIb9Y4MCDb/P2OWibKc4OO0iJjM8o7gnmKSUzYjJj46
-	 TcHAJ64Xe/t4e3RgMfOrXVS4d2fAtOYIFEAVam79zv0qdpOkVY0daHewjXLbMhTNXorcO
-	 H1NHzrYJ9HARnomFgXi/01woRdqtfdYTuYtmlDQFzInTP1pykc6E7sVUBXepB8nPIcSxn
-	 WKhjkNuTPmMPhuBaF/Ck7wvpjNB9rX3jwQmh3/LYt0at99cSJJhvfnkbutF7Gpzg0Ew==
+	t=1794062755;
+	b=kMCbFalDlQTMDIhhMNb/1QH2KpGaIcC8bTocUqXtSVnqeepmxgklqzAhbP50n3jzNFHL
+	 ryUpo/d8PqJB270j7tIDam31kb7DNy00Vk4+oSewldiXDWBstsvixso8r+D52hIudHEAt
+	 joS3RyIh0oPW9D6/mGShd1KH1XGqOJ3ZwWAavBvVHcmTmyGGEYCgTQKpzv8M7W/2OxtGO
+	 7OjzjsyKXv4mJ93SOZOtYXawdfLWvZjp0p/TQhpmsvtyf8dqL4Vz9ICSwQ+o5gnXD7cPq
+	 a7q2EpvAB0/7qCCAf+b25H85y7N+N0auGsgj6CHt7l6sHFudkxQjIVNPxUThlxslvfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062753;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062755;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tn5lbCZRkwLV4OFvpG/ixoXgWNCssWLi7cDSQpTTrbw=;
-	b=V6OtvHscchXHXBLRDNN4PfHYJo3jpX0Qb2Df80iGRfWbiNvqdJOMPqkNDgJgGmVZI0bo
-	 lV3NERXkHBxZI2eijyThzxvjltNpq+87Fbkd0dd7k8bl2o0fDXP4Ae+73mJt/H0NJcSI3
-	 vkVVeuQpmsqjm8HHrTY/EO6sL1HUcf4sMFtSfQl8vAOLmiQOVTyMvA4nJRXGjLgJXt6zV
-	 5esiplba8hBGuN1mkq3uRx/lrHy9tbOc7cgzxdJiXq5StlKe+IThWykoI25DPa0e9+9Pi
-	 4PquEqM05O4HGkShd7sCUxQsLkkwDNwbn86PwIPqGzkULqNP/0bjhm8qhw121PqdrFg==
+	bh=PxdVC2gKh+XGGPcENm0T9GKhzpvRzyEsEzQOsez1jS4=;
+	b=E4fdWHVVMFXanWdmBvhUU5PPxHG5GnRsQ3zOuiYJOr1ZhrdBrT3VX0CAA5kmaa/f/DFP
+	 FwcqDCAoh0M2u1x1otVzVvTUJP+1i3K0N9QVhn+sdN35mSlwZMzMGFYwOxkx2b5I3tBnK
+	 2FUoU+gDDSl5Mv0fngrhTyITh8X4FfxzFLpQ71eBRR+FoxHmmeBnlYh8VZRMA+dScvwJm
+	 neywMqUwTXb2WwpnrLJhojbsGKHOIeNF+0mNWT0sbdfWoSgjFjmorbS5RYXz6/XkhH5Xp
+	 WAddDI6Y3doSXYcLsaWV+HkPErLo7Q3YaN/3xRZiigcisjDzruQYJgopqsbJHPeQi7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y9NS92ip;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8pklYXJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69468606A32D;
-	Sat,  7 Nov 2026 14:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F41606A32C;
+	Sat,  7 Nov 2026 14:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y9NS92ip
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40211F0089F;
-	Sat,  7 Nov 2026 14:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8pklYXJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405321F0089F;
+	Sat,  7 Nov 2026 14:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062753;
-	bh=tn5lbCZRkwLV4OFvpG/ixoXgWNCssWLi7cDSQpTTrbw=;
+	s=korg; t=1794062754;
+	bh=PxdVC2gKh+XGGPcENm0T9GKhzpvRzyEsEzQOsez1jS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y9NS92ipGamYJGo8FHVm/mK8fJpz7CuoROs9WyqmpA8E5NqHEmcF6s4/aKG5qkx+o
-	 /na3P/ne2OHcUbvhZe8I5+c9jzwEQ/e5mmckD5eOijPH/R+ckD0ODpmODcP3oYJCpI
-	 AFs01URM75HqGGBIC7yJUQvyRq8kfHm0FtV5E1/s=
+	b=O8pklYXJECKH1oGPuRP/zi+WYUGCJ0wbufpCYUVhhNRVsNqDtqgK5It6zr9qyoqgO
+	 DdHApYVrrkGPy5Qb/18i1xTQ/y6SVgspTaPAVCsHp/X/i8nmvELFpRVAJ1Z1NpE3T6
+	 NXEqDHyRwiGYiRsU7ymEHdNe5Z6OncbPWbMlzWCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serin Yeh <serin.yeh@intel.com>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Michael Walle <mwalle@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 066/869] media: i2c: ov8856: fix debug message to report actual CSI-2 lane count
-Date: Sat,  7 Nov 2026 08:45:48 -0500
-Message-ID: <20261107134854.585919783@linuxfoundation.org>
+Subject: [PATCH 6.18 067/869] mtd: spi-nor: sfdp: check the length of the xSPI Profile 1.0 table
+Date: Sat,  7 Nov 2026 08:45:49 -0500
+Message-ID: <20261107134854.660856599@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,44 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serin Yeh <serin.yeh@intel.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit a15976e69b1c70ea16ef1f7172a846f6ef5dfa14 ]
+[ Upstream commit b9f34a95a81021fa1f3c9cb8cfd458e66824cad6 ]
 
-The driver currently prints the number of data lanes using
-ov8856->cur_mode->data_lanes in ov8856_get_hwcfg(). However,
-the ov8856->cur_mode structure is not assigned to a clearly
-supported mode at that point. Due to the missing pointer,
-enabling dynamic debug may lead to a kernel panic.
+The spi_nor_parse_profile1() sizes its buffer from the table length the
+flash reports in the SFDP parameter header. But it then reads DWORD1,
+DWORD4 and DWORD5 without ever checking the table is that long.
 
-Instead, the correct number of CSI-2 data lanes should be taken
-from bus_cfg.bus.mipi_csi2.num_data_lanes, which represents the
-real hardware configuration determined at runtime.
+So if a flash reports a length of one, the buffer is only four bytes
+while DWORD4 and DWORD5 sit at byte offsets 12 and 16. With a length of
+zero kmalloc() returns ZERO_SIZE_PTR rather than an error, so the NULL
+check doesn't catch it and the first read dereferences it. And the value
+doesn't just get thrown away. It ends up as the dummy cycle count for
+8D-8D-8D fast reads.
 
-Fixes: c492ec9ae9ed ("media: ov8856: Add support for 2 data lanes")
+To fix this, reject a table that's too short for the highest DWORD the
+parser reads, the way spi_nor_parse_4bait() already does. The table is
+optional, so this isn't fatal. The spi_nor_parse_sfdp() warns and
+carries on.
+
+Fixes: fb27f198971a ("mtd: spi-nor: sfdp: parse xSPI Profile 1.0 table")
 Cc: stable@vger.kernel.org
-Signed-off-by: Serin Yeh <serin.yeh@intel.com>
-Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov8856.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/spi-nor/sfdp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/i2c/ov8856.c b/drivers/media/i2c/ov8856.c
-index 2e104734ef0b1..27d7ca17d4d68 100644
---- a/drivers/media/i2c/ov8856.c
-+++ b/drivers/media/i2c/ov8856.c
-@@ -2307,7 +2307,8 @@ static int ov8856_get_hwcfg(struct ov8856 *ov8856)
- 		goto check_hwcfg_error;
- 	}
+diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
+index a8324c2da0acf..7d6a604b89954 100644
+--- a/drivers/mtd/spi-nor/sfdp.c
++++ b/drivers/mtd/spi-nor/sfdp.c
+@@ -1175,6 +1175,7 @@ static int spi_nor_parse_4bait(struct spi_nor *nor,
+ #define PROFILE1_DWORD5_DUMMY_166MHZ		GENMASK(31, 27)
+ #define PROFILE1_DWORD5_DUMMY_133MHZ		GENMASK(21, 17)
+ #define PROFILE1_DWORD5_DUMMY_100MHZ		GENMASK(11, 7)
++#define SFDP_PROFILE1_DWORD_MIN			5
  
--	dev_dbg(dev, "Using %u data lanes\n", ov8856->cur_mode->data_lanes);
-+	dev_dbg(dev, "Using %u data lanes\n",
-+		bus_cfg.bus.mipi_csi2.num_data_lanes);
+ /**
+  * spi_nor_parse_profile1() - parse the xSPI Profile 1.0 table
+@@ -1192,6 +1193,9 @@ static int spi_nor_parse_profile1(struct spi_nor *nor,
+ 	int ret;
+ 	u8 dummy, opcode;
  
- 	if (bus_cfg.bus.mipi_csi2.num_data_lanes == 2)
- 		ov8856->priv_lane = &lane_cfg_2;
++	if (profile1_header->length < SFDP_PROFILE1_DWORD_MIN)
++		return -EINVAL;
++
+ 	len = profile1_header->length * sizeof(*dwords);
+ 	dwords = kmalloc(len, GFP_KERNEL);
+ 	if (!dwords)
 -- 
 2.53.0
 
