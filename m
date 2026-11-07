@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061630;
-	b=olDfiBYQNj5OfR83lPnVbhrD5bpfkXOdk95upLOU0TjcGJhk6eqw5QLMHsM8Sr4i/hVm
-	 RXnzcP/UCFNct/4y5blUOFUeoJncFSnGS0g46HvF/jlpiP3O25Ifw2y+uq4QZDdOGSt/8
-	 1wi7kd+C8sCrLK6FhD0SsjuM2cOC7wMMDxYYTBkQr7PU0xcavH2s/+9un9rFeLX74vwxz
-	 SLo27VsSr7VAtxwbdHInRec6LGWOCLZnzdf8B3T7iD7VgbT+nIYA/KaZaC/jnSRzEFsTY
-	 5TJOEIhKaPoMwH4nZX7QxsRJUGUJPq1YCJyVY5QGJqjHwnCGPaRSWuLVzGskxPbbo8w==
+	t=1794061633;
+	b=GPiVDvqFERgcClcWyxUQ0JmHPpR30/fvs045TqFHwqoiDKAdFE3BKPh2WX+IrQQpli61
+	 gub163mXwAbPuBs7J5ZyPXzCfJVcdLgP10WFnB5V9/8RyocoCFqY5z+evTvG/JNECQrqD
+	 MzXquPIQfjookLunOn4mLELCBd4Iokw51aP+NiAH0mErIbZm3XcQfcBGl8pEdeqbKFn5K
+	 85qiskq1iPrGM9iGKjx9qwSu84KipfTvYppN54NRWs8fD0sTuDkpk4CyEktdwBRwxRjVq
+	 T9wAiXOyYzfcgEstXaTEL0W/ZY/RrgREFJZ1U/w+u4rNyQiYZLVqd7nUVAou3oRRasA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061630;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061633;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DHy5cYCxkLG0hyQI7LYGobhKLq3A/4XIaXCUYu1fi5w=;
-	b=RMqW67dsVymCjvlEQfPurtkLR139rIc8BkSPN5enu6lyxvZZt5c6P/6D4BdbEzzBaqaN
-	 eOcLv1KAYyYyJt3V12NMxEljqvPT07xWdzjd1Wmlzmx0aOlirsEEQ+z7odu0pTJFOy14x
-	 FRqIbNDmIUyQ+iy5rRzSlRkqHxqrGs5B/EQsSyu5DKDCYE0drkImiiRt9oCxX9iNis9i5
-	 CzPgdCMhbfQE1Eud6MmFzcGeEc+9pl0DJAVbCLKRp6/jTxUoXF/GYho2nRBhKCLyzNXun
-	 86hr9G461cSufOtWFsIZDTTfIl3vDQRiWxhAcOtxAE5myrXH3aigqVxk8pBV7gjTTpQ==
+	bh=KiWXAzlvVjvj4N1sjEed986+RBIFoFxjiKyzq395GMc=;
+	b=y+f3ODY86vYYrdjzwW1guxApt15potmqEkTbzROui3ZqaM7nh6q4pwLSMtr1UUkdvEa+
+	 RCc4rclwy8W2IzloIjeCdKCC0IVIGx8U2s0Taqrpsr8CI4v54U+3EoTQX2bCFaCU8XohD
+	 Hd2kSrJfgRzwpIfw8QsRtistOJM74z+6wzfWUzdfyb6jVs41GV5TTk5ETw+XYW/ChtCwk
+	 JG9J1ZUNJa5KoFIRQ44zOTwqUUDQOiToBf9Aud1Xzmj0zh1uWQyJUySCGis/ZMrfD84g+
+	 P1BxOWX27EDt59F91y2NTiI3IoZEyFHwHDhugMdB8ro3HSMRr+r2a0Vf94wLZthvhdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UU+ubD2l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMekdGXY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334F6606A330;
-	Sat,  7 Nov 2026 14:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD28606A326;
+	Sat,  7 Nov 2026 14:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UU+ubD2l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30CA1F0089F;
-	Sat,  7 Nov 2026 14:27:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMekdGXY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 006B31F0089F;
+	Sat,  7 Nov 2026 14:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061630;
-	bh=DHy5cYCxkLG0hyQI7LYGobhKLq3A/4XIaXCUYu1fi5w=;
+	s=korg; t=1794061632;
+	bh=KiWXAzlvVjvj4N1sjEed986+RBIFoFxjiKyzq395GMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UU+ubD2l2ALfyw9cM2G5Cw7tTid595kFXi1JnAFXUge2avSTEnrZ+B/KK4ROs3GZG
-	 x4T6DohCPomuNg3DlIhc6aOSLLL+LH7ySkFqC8+hzKNCu9zVowWh5M+EhFIaGq9iWl
-	 D3yAFE8OF3j13aPgrjsq2GaKAtjMEb05xPaDhHP8=
+	b=JMekdGXYTup50zATInK++cKux9hHYhCaIeHYYY0BJtgCO0Gf3LrHQkvlVRcJWvOwR
+	 ag3nhohgVitXAexoS1VhCca4aKwiD1j/J5kRYBHTz3iCgLUbHXvV1/tBxXhOZxzHQY
+	 iex0SLLWNN15tiYUn7i2MX+o4izCZZsADnzB+zyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0695/1536] xfs: fix buffer overflow in corrupt inline attr structure
-Date: Sat,  7 Nov 2026 08:45:11 -0500
-Message-ID: <20261107135017.011712445@linuxfoundation.org>
+Subject: [PATCH 6.12 0696/1536] xfs: actually report corrupt xattrs as XFAIL during cross-referencing
+Date: Sat,  7 Nov 2026 08:45:12 -0500
+Message-ID: <20261107135017.039736120@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,76 +70,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 017dd7a84ff4cd2275eb62f4ee6d63c705bac107 upstream.
+commit b339cc253019518c61b8b150fb7ea727fdae59f4 upstream.
 
-LOLLM noticed a buffer overrun if the xattr scrubber encounters a file
-with a shortform attr fork with sf->count > 0 but if_bytes ==
-sizeof(struct xfs_attr_sf_hdr).  Basically, we have enough data to have
-a header with a nonzero count, but no space for any of those shortform
-entries.  In this case, the xfs_attr_sf_nextentry() call will run off
-the end of if_data and blow up.
+Some LLM reports that xchk_dir_parent_pointer really ought to report
+xattr corruption errors as XFAIL (cross-referencing failed) when a
+directory scrub tries to find the parent pointer for a dirent name.
+Let's do that.
 
-Cc: stable@vger.kernel.org # v6.4
-Fixes: ae0506eba78fd1 ("xfs: check used space of shortform xattr structures")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: 61b3f0df5c2358 ("xfs: check dirents have parent pointers")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/attr.c        |   11 +++++++++--
- fs/xfs/scrub/attr_repair.c |    3 +++
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/dir.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/xfs/scrub/attr.c
-+++ b/fs/xfs/scrub/attr.c
-@@ -590,12 +590,17 @@ xchk_xattr_check_sf(
- 	}
+--- a/fs/xfs/scrub/dir.c
++++ b/fs/xfs/scrub/dir.c
+@@ -147,6 +147,8 @@ xchk_dir_parent_pointer(
+ 			&sd->pptr_args);
+ 	if (error == -ENOATTR)
+ 		xchk_fblock_xref_set_corrupt(sc, XFS_DATA_FORK, 0);
++	else
++		xchk_fblock_xref_process_error(sc, XFS_DATA_FORK, 0, &error);
  
- 	for (i = 0; i < sf->count; i++) {
--		unsigned char		*name = sfe->nameval;
--		unsigned char		*value = &sfe->nameval[sfe->namelen];
-+		unsigned char		*name;
-+		unsigned char		*value;
- 
- 		if (xchk_should_terminate(sc, &error))
- 			return error;
- 
-+		if ((unsigned char *)(sfe + 1) >= end) {
-+			xchk_fblock_set_corrupt(sc, XFS_ATTR_FORK, 0);
-+			break;
-+		}
-+
- 		next = xfs_attr_sf_nextentry(sfe);
- 		if ((unsigned char *)next > end) {
- 			xchk_fblock_set_corrupt(sc, XFS_ATTR_FORK, 0);
-@@ -618,6 +623,7 @@ xchk_xattr_check_sf(
- 			break;
- 		}
- 
-+		name = sfe->nameval;
- 		if (!xchk_xattr_set_map(sc, ab->usedmap,
- 				(char *)name - (char *)sf,
- 				sfe->namelen)) {
-@@ -625,6 +631,7 @@ xchk_xattr_check_sf(
- 			break;
- 		}
- 
-+		value = &sfe->nameval[sfe->namelen];
- 		if (!xchk_xattr_set_map(sc, ab->usedmap,
- 				(char *)value - (char *)sf,
- 				sfe->valuelen)) {
---- a/fs/xfs/scrub/attr_repair.c
-+++ b/fs/xfs/scrub/attr_repair.c
-@@ -477,6 +477,9 @@ xrep_xattr_recover_sf(
- 		if (xchk_should_terminate(sc, &error))
- 			return error;
- 
-+		if ((unsigned char *)(sfe + 1) >= end)
-+			break;
-+
- 		next = xfs_attr_sf_nextentry(sfe);
- 		if ((unsigned char *)next > end)
- 			break;
+ 	return 0;
+ }
 
 
