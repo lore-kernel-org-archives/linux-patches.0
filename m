@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061990;
-	b=P1t4/z02tIzg/hKP4tveiE7TnQ5QubOfaw/n5ZSnI3P+IN00BMbu7jibi31s2HnzteB1
-	 cC8APQhkscX98vAFsgSbHPIJ3M3O9FOWr31SaIdk1Lw203nIMmXcILVw6Efo4/1sIANqN
-	 OVxw654WtcsZX/Umxt0JFmYclhsSsqFVMBhKy6qjhlloeRL+Ijwna6sjH5hbgmbtoff/o
-	 i92+Z7rlqWTYLJfN/TjVpdqsIBEVlHwIZRSJL2FQtznd2a6Fg59dYU7CoUO0cHoeQqaYp
-	 oaVEO+uitRR0ojFavEA4QfiVj91duCx03OR9IgVY5dtyinUy0IXVKSjm2pxi55704tg==
+	t=1794061991;
+	b=IE8607HoxqzelsBuvTTbK0xVNZMyTmhyR6zRbiZ0Esp2qWst4POAh7LWUPmayLUa5lI4
+	 xjHFX/oV4ENGYYZmQXYdQnHioXbQNMz7oIXaoK6OU/Kp8iTgaYYk4daGxby6HIo0s/jAW
+	 pgIZRjxq2yexkpnSFuTTONUBi9yMs7grWNe6vKhO52EyOvd2gzFDdb+aN4Vs3FEtSVH8U
+	 vxZbCIUtP2lvdnskUFpSROQQ0G6g9qE3FRbq2cWkkuhla71t2B1GeF3kOC9QvNr3kzf2L
+	 57rE429ToUFuzZwodjrcrfmqvgUGWZLhuxpt+PD1pZJuC2GBQuTuAa3/Lwc9ZLxCFdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061990;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061991;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=quIFqe4ubEoqRBXg5I+h396bUAZNzLGyhqnQTpdcXhs=;
-	b=OwyukkfaOIkUXF/J4iCnzLtZSZS17P5KXlYesJt9Dwbc1ZSL2IXZj9aK312d8rD/uYli
-	 zEbtiVEBB/Oo/HtGE6pl4JwVdkk2+Xa0SOYUOF5lEsSRGbzVn+u5AY8VNytQ8A+U9CbO/
-	 UaxVVI5lLzK21I/t+6vEYonG3rXe4qUUhHHZNgO3zgshwd1+q//SFqCk/cNl8LAXfbplv
-	 2JYDe2CyZUhqEK1QfJHWfiOi9RJhrRVOGycRTDn20Y1V2InFHkrgasWt9+pSS6xBIXKmE
-	 XvDItl2jiukuKs3S+4PtzGaWZQ8GlwzuJySbW1F3esz3Hov/0755ffm1d7aW54kmZ/w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=+el2guYJT4k5QXNAZQV2IwmsZ5QC8D7iXdl4jUZTqd0=;
+	b=2VKbjNGkAfH8T6fQHIo6e5otNR91b598JzFPln8aKet5Vdeh62p/p/M7Ic1xQzKE5hrm
+	 RNU2AQQoJgE6TVuuBZAu9zZuUnm7n+U/pqfkF7e4gsluhi5Jqc7f2frG4+9ypHAUNlahq
+	 sZg4xKXFsYqjtrk2hmuEBFmoT+YdrwJodIyjTa3Md6a66R2vs/ZAyrPSldOYX5a1adtsb
+	 cme5q2uG/Mo8uzk5VUyXUU4KrZgu33l5BXXF8vgOQR+UjH+qbMVwL0uGHV7d+xH2yanl5
+	 RavmgoJ45lnGkPSifbLLKEBFiMpiWr4zlRE61d/B0YEN/ltljZtrCPuLJ/gICZD1yrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SeXL3hUI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cl2LMFBn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D37606A332;
-	Sat,  7 Nov 2026 14:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7527C606A32E;
+	Sat,  7 Nov 2026 14:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SeXL3hUI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADE81F008A1;
-	Sat,  7 Nov 2026 14:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cl2LMFBn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C811F0089F;
+	Sat,  7 Nov 2026 14:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061990;
-	bh=quIFqe4ubEoqRBXg5I+h396bUAZNzLGyhqnQTpdcXhs=;
+	s=korg; t=1794061991;
+	bh=+el2guYJT4k5QXNAZQV2IwmsZ5QC8D7iXdl4jUZTqd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SeXL3hUIg60XpNmxxHKj2i7XMt83C7lB3Bfv3rhRa3DNZCzMzoVFpEabMUk7pRjaX
-	 J/IfkAV6//nvjfYJu3PnmzaTtSEoDXW6/eOB+uja3obYwhmAnhKLbNbMCGJOkZT2jA
-	 RhzyWpkKb8bltcqmxPh5CtJyCtfR0AlsP0MAdYNo=
+	b=cl2LMFBn/kv80FPFaQk8/lTc3Fym4MwapG7spmS0JVb+rK4SH4H72wP8cs45X2ULZ
+	 V5Zz9oA6/yIJQlh9zIWNM245OmbX3hho12m/TXNsWfJAXqx3NgvurqJv31MYwN2iug
+	 +VlzYMHAldrkw7dKB3A961lM4MaVYyBd/UcbCFHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Sakai <msakai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	stable@kernel.org,
+	Jiucheng Xu <jiucheng.xu@amlogic.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0981/1536] dm vdo indexer: validate record page numbers better
-Date: Sat,  7 Nov 2026 08:49:57 -0500
-Message-ID: <20261107135025.206398533@linuxfoundation.org>
+Subject: [PATCH 6.12 0982/1536] f2fs: force out-place update for all writes on compressed file
+Date: Sat,  7 Nov 2026 08:49:58 -0500
+Message-ID: <20261107135025.234466363@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,72 +64,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Sakai <msakai@redhat.com>
+From: Jiucheng Xu <jiucheng.xu@amlogic.com>
 
-[ Upstream commit e3683a76a313a81f3f7bc7f65e4fc1e61232838b ]
+[ Upstream commit a64a3fec11e77a3a0dc0009bdc58b925e45a1bb4 ]
 
-Move the record_page_number validation check into the
-chapter index lookup function in order to detect (and
-discard) corrupted values on all paths.
+For compressed file, compressed write may fail and fall back to raw
+write.
 
-Signed-off-by: Matthew Sakai <msakai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
+-Thread A                                         - Thread B
+  - f2fs_write_multi_pages                          - f2fs_down_write(&sbi->cp_rwsem);
+   - f2fs_write_compressed_pages                    - ...
+    - f2fs_trylock_op                               - ...
+     - f2fs_down_read_trylock(&sbi->cp_rwsem);      - ...
+   - f2fs_write_raw_pages                           - ...
+
+Thread B acquires the lock first, which causes Thread A to fail lock
+acquisition and fall back to raw-data write.
+IPU_FORCE is enabled on small-capacity storage devices (< 16GB),
+so f2fs_write_raw_pages() overwrites the original compressed data
+in-place.
+
+The in-memory node has been updated with raw-data addresses, while the
+node metadata stored on eMMC still remains in compressed state.
+If a power-cut occurs before the node is flushed to disk, on-disk
+inconsistency arises: disk data is raw, yet metadata treats it as a
+compressed cluster, leading to decompression failure.
+
+To eliminate this risk completely, force out-place update for all
+write operations on compressed file.
+
+Cc: stable@kernel.org
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-vdo/indexer/chapter-index.c | 15 +++++++++++----
- drivers/md/dm-vdo/indexer/volume.c        |  6 ------
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ fs/f2fs/data.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/dm-vdo/indexer/chapter-index.c b/drivers/md/dm-vdo/indexer/chapter-index.c
-index fb1db41c794b3..7a744b2da28f9 100644
---- a/drivers/md/dm-vdo/indexer/chapter-index.c
-+++ b/drivers/md/dm-vdo/indexer/chapter-index.c
-@@ -284,10 +284,17 @@ int uds_search_chapter_index_page(struct delta_index_page *index_page,
- 	if (result != UDS_SUCCESS)
- 		return result;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 4bbaae47b184e..3bf6820130010 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2669,10 +2669,12 @@ bool f2fs_should_update_outplace(struct inode *inode, struct f2fs_io_info *fio)
+ 		return true;
+ 	if (f2fs_used_in_atomic_write(inode))
+ 		return true;
+-	/* rewrite low ratio compress data w/ OPU mode to avoid fragmentation */
+-	if (f2fs_compressed_file(inode) &&
+-		F2FS_OPTION(sbi).compress_mode == COMPR_MODE_USER &&
+-		is_inode_flag_set(inode, FI_ENABLE_COMPRESS))
++	/*
++	 * rewrite low ratio compress data w/ OPU mode to avoid fragmentation.
++	 * If IO comes from compressed write path and fallback to raw write,
++	 * force out‑place to prevent metadata‑data inconsistency.
++	 */
++	if (f2fs_compressed_file(inode))
+ 		return true;
  
--	if (was_entry_found(&entry, address))
--		*record_page_ptr = uds_get_delta_entry_value(&entry);
--	else
-+	if (!was_entry_found(&entry, address)) {
- 		*record_page_ptr = NO_CHAPTER_INDEX_ENTRY;
-+		return UDS_SUCCESS;
-+	}
- 
--	return UDS_SUCCESS;
-+	*record_page_ptr = uds_get_delta_entry_value(&entry);
-+	result = VDO_ASSERT(*record_page_ptr < geometry->record_pages_per_chapter,
-+			    "0 <= %d < %u", *record_page_ptr,
-+			    geometry->record_pages_per_chapter);
-+	if (result != VDO_SUCCESS)
-+		*record_page_ptr = NO_CHAPTER_INDEX_ENTRY;
-+
-+	return result;
- }
-diff --git a/drivers/md/dm-vdo/indexer/volume.c b/drivers/md/dm-vdo/indexer/volume.c
-index 425b3a74f4dba..f7de78e0d0dbd 100644
---- a/drivers/md/dm-vdo/indexer/volume.c
-+++ b/drivers/md/dm-vdo/indexer/volume.c
-@@ -891,12 +891,6 @@ int uds_search_cached_record_page(struct volume *volume, struct uds_request *req
- 	if (record_page_number == NO_CHAPTER_INDEX_ENTRY)
- 		return UDS_SUCCESS;
- 
--	result = VDO_ASSERT(record_page_number < geometry->record_pages_per_chapter,
--			    "0 <= %d < %u", record_page_number,
--			    geometry->record_pages_per_chapter);
--	if (result != VDO_SUCCESS)
--		return result;
--
- 	page_number = geometry->index_pages_per_chapter + record_page_number;
- 
- 	physical_page = map_to_physical_page(volume->geometry, chapter, page_number);
+ 	/* swap file is migrating in aligned write mode */
 -- 
 2.53.0
 
