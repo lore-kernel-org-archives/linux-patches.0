@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062240;
-	b=Hnwi2CqL3TT1Dc9CaGGDgignKmuRo8YLuQhZRf5LYhji+PpDPm0CPcUuWU1AMm20QH6o
-	 ppaB5Ox5SZ0RLkZStEZ7r3RnF3OutPMjcTT8e27G37xN5vJ4ggZvG5lM4uWrE3SPRe9IW
-	 Eb8tFgjI5Xy+CmUbI3s1RzXqCVw5kBBJ+J1C6FSG0n9OILTv5Ij79yaosy/6Ts6vwW9rZ
-	 OybbEyf33XZJOQRF/h0Ihx0Nv4HoTlUzhJMBEU8yECmFx6I5RS5IqOqIyHZxrbuNze8wB
-	 RI2wRdXm6bHKNZrjuLGSSrQQBw9TqpVulFBGi+OYUs5hXoI0PUqqh2kKBia7s+uQ2gA==
+	t=1794062241;
+	b=sbkRGKMGJIdavuoDrWJHk0ZaUx4QqYqA3eFG1dR4Ed6NF6eRsK1otXlJHHmofNDIKIDJ
+	 WB5xlT4J9mKe1E1Zt/OmHsaQqcNkwG71679784A9JW3en2T0z42eETDHrVRyeSsvgHnJx
+	 3PcW/YI5GlvwkYtGK6fLbbl1UwE0I0O6izuVN5KNGYYMTkvmhisyPBAHWB4uHEBsSrjNT
+	 fL3e+v9+56WZ0IqgIWNDfj6YWbM1x3K/sbhAsUQH/932pR6iKy7Sq+mheOyIqhW5iXaA5
+	 WKLnA3RHWKKRZSPSSGT4FWEwK5Own0jEtTOqvaFIejILynAzg5tGHX/BXgt5Z61/oEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062240;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=CWbGPmn/QHIfqdEylzWi8NNL7XtfQXIKXkB1hZm3Lf4=;
-	b=Ty2DG0TkOASXX1GCZ1aiJbUmMcH46Tkt7YOW21NDbpPC1CwGYaiWurIvcpG0i57cbnCT
-	 w5Zm+Y8CEiwdQh7gcOGi/F/75WVKE3va2zeWOLZxKuamaHsrxTBVoRhExGnLfrzP1VjXB
-	 YmMpj0ArA1GS8WDEhomZkXZHb0neDWF/+T2rxmoDedR/eKP27Coy171yJLIZXvEEtu6hE
-	 VSnDyg5eyUWj+ImNoPR9nNl8gOS3M3W9UMbkrRg9OBibZ0z+aSmAHnLSgPxNvqVQ9kw8k
-	 gQ99+4HkUgjB+kML0y2OtrzE0huMvxxz3k7bKQk1HVhASei2lupyNki4unu91Wegm9w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Xephxa9Cufr0x8IEAuW6m/Ii3Vdck3Qr78mOtrFKCMI=;
+	b=HmIDwXQEcBUI8YkSTLXWFmdieju0utrYpbH67iPEA+uvfMrg2ASGbR00Du7/u/7/BVxu
+	 fVEzxaJJkMu0/WkZL6KdYVPN6Ing6wx5XDNPgNr8B41kSreftPkURSjW8KVcENcs/RTDL
+	 xOcu9uxY8YZQ+U+0IvRRPSskSE+wU8l9tfUbuVQQCLAxUt203JjbCpDxCVf5K2z3M6mJ6
+	 jgGtqXhPPPhOx7q9zXi5V8D6A6aAgIWV9AATKKcKeOBm2QIjZ1SO9e4lxAfgDm9HO/CUk
+	 OKBwa7DuKPcIiOWEZghhilIJCqROg30vmj3sWqq7nfN18DqQ1R9JlDCKwOvtLcX1aPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMqJNv0p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OQDB4mU3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD79606D827;
-	Sat,  7 Nov 2026 14:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FAC606D827;
+	Sat,  7 Nov 2026 14:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMqJNv0p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFB21F0089F;
-	Sat,  7 Nov 2026 14:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OQDB4mU3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86F41F008A1;
+	Sat,  7 Nov 2026 14:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062239;
-	bh=CWbGPmn/QHIfqdEylzWi8NNL7XtfQXIKXkB1hZm3Lf4=;
+	s=korg; t=1794062241;
+	bh=Xephxa9Cufr0x8IEAuW6m/Ii3Vdck3Qr78mOtrFKCMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xMqJNv0piJfaJ/gKrKSNUv2e6pR1q1ZX5WNNu5Uc6sNZQpHyTgvXCJVKsu15zZl60
-	 Oo+6YE9YtJym/DI7Ng4aENKG365Hs5RMzULEJT/0HOBsLHM2oOlJjtyjPKm3UghuIO
-	 MptsLxM+dCGci8xOem8eYijFK8nUP/LqXz/3wSLU=
+	b=OQDB4mU3VXStwDJHsptScPSRQbzGs1ufZtgY4rCTC4MCbjopuiz5j+ygVzgzb0g/S
+	 MRSVK6ZESLz5ewtVtGnmLXK4NIl92ZZawnUf+QvImMeuHeRuCp8DngCledH6BX8epH
+	 UgvA3aB3BfulaJrCzz1D1oP1xG2pwyx8DdsSPVcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1188/1536] PCI/sysfs: Pass the device name length in UTF-16 code units
-Date: Sat,  7 Nov 2026 08:53:24 -0500
-Message-ID: <20261107135031.112173929@linuxfoundation.org>
+Subject: [PATCH 6.12 1189/1536] wifi: rtw89: fix IE length passed to cfg80211_find_ie() in WoW AKM
+Date: Sat,  7 Nov 2026 08:53:25 -0500
+Message-ID: <20261107135031.142452352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,63 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit af5ca2d75147bf283239e8ef0fbf6e5e0488ca91 ]
+[ Upstream commit 6c17c57d45ef1652d80f79a9834597b25412fd26 ]
 
-Currently, dsm_label_utf16s_to_utf8s() passes the ACPI buffer length to
-utf16s_to_utf8s() unchanged.  The Device Name _DSM may return the device
-name as a buffer holding a UTF-16 string, and the ACPI length counts bytes
-while the converter counts wchar_t elements.  The converter therefore
-receives a count twice the number of code units the buffer holds, and that
-count is its only bound on the input.
+__rtw89_wow_parse_akm() computes a pointer to the IE area from an
+association request frame:
 
-A NUL code unit ends the conversion early, so a name that carries one is
-converted correctly and the error stays hidden.  ACPICA zeroes the entire
-result allocation, and the padding placed after the buffer supplies that
-NUL for most lengths.  Lengths that leave no padding, or a single byte of
-it, do not, and the conversion then runs up to its own length in bytes past
-the end of the allocation.  The bytes beyond the allocation are decoded
-into the "label" attribute, which is world readable.
+    ies = mgmt->u.assoc_req.variable;
 
-Divide the buffer length by the size of wchar_t so that the converter
-receives a count of code units.  The division truncates, so the converter
-is never told to read more bytes than the buffer holds, including for an
-odd length.
+but then passes skb->len as the IE data length to cfg80211_find_ie().
+Since skb->len covers the entire frame including the 28-byte management
+header and fixed fields, cfg80211_find_ie() may read past the end of the
+actual IE data.
 
-Reaching the out of bounds read needs firmware that returns the name as a
-buffer and omits the terminator.
+Fix by computing the correct IE data length as skb->len minus the
+header offset, and validating the minimum frame length before parsing.
 
-Fixes: 6058989bad05 ("PCI: Export ACPI _DSM provided firmware instance number and string name to sysfs")
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: 92790c4e50d2 ("wifi: rtw89: wow: parsing Auth Key Management from associate request")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260814070522.2327975-5-kwilczynski@kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20261007161721.261452-3-tristmd@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-label.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/wow.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
-index 0c64465196404..c224619b9a266 100644
---- a/drivers/pci/pci-label.c
-+++ b/drivers/pci/pci-label.c
-@@ -144,7 +144,7 @@ static int dsm_label_utf16s_to_utf8s(union acpi_object *obj, char *buf)
- 	int len;
+diff --git a/drivers/net/wireless/realtek/rtw89/wow.c b/drivers/net/wireless/realtek/rtw89/wow.c
+index 38181035ef8ea..dcc7a542efa94 100644
+--- a/drivers/net/wireless/realtek/rtw89/wow.c
++++ b/drivers/net/wireless/realtek/rtw89/wow.c
+@@ -16,10 +16,14 @@ void rtw89_wow_parse_akm(struct rtw89_dev *rtwdev, struct sk_buff *skb)
+ {
+ 	struct ieee80211_mgmt *mgmt = (struct ieee80211_mgmt *)skb->data;
+ 	struct rtw89_wow_param *rtw_wow = &rtwdev->wow;
++	size_t hdr_len = offsetof(struct ieee80211_mgmt, u.assoc_req.variable);
+ 	const u8 *rsn, *ies = mgmt->u.assoc_req.variable;
+ 	struct rtw89_rsn_ie *rsn_ie;
  
- 	len = utf16s_to_utf8s((const wchar_t *)obj->buffer.pointer,
--			      obj->buffer.length,
-+			      obj->buffer.length / sizeof(wchar_t),
- 			      UTF16_LITTLE_ENDIAN,
- 			      buf, PAGE_SIZE - 1);
- 	buf[len++] = '\n';
+-	rsn = cfg80211_find_ie(WLAN_EID_RSN, ies, skb->len);
++	if (skb->len < hdr_len)
++		return;
++
++	rsn = cfg80211_find_ie(WLAN_EID_RSN, ies, skb->len - hdr_len);
+ 	if (!rsn)
+ 		return;
+ 
 -- 
 2.53.0
 
