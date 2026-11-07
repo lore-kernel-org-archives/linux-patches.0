@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063895;
-	b=oLCbHIWkuXCHigfSkw51bFPNP3fdvnlCrC3dtsVbAgwXJALohmHU2MOZAkjlI2pNNTsJ
-	 eTB8WFYJ2bpM9/NaNqJlMS27M+dl/wn6HRr7o0i3L5i2DGTPiyxv/JjMRDh5x7DN4gAnI
-	 FAY1pZUw3m5S4nEF0JgW2R+rKzn9XlF0qDusyKVpNgd0tsTr0F7I55vmMUtF32wRO3j1w
-	 uWdWA5vFlHu2Iuy4tmqXJIcnOJR1o7OEP2E3VgcFgX9YRA8A+SZfHcoBE8/QY9LwPx/4f
-	 OFyuGVUncmIQmX6L/aTdttcRL9r5cf5/MIiiqfPY6rkxoK6hkIm4iunQisTgCei0c6A==
+	t=1794063896;
+	b=ubYpWIDF4U206EkiLXoDD6niTSH7mokg6ceA1pygDeJWCvsKaDyaps/xjKeOWJ+ag1nv
+	 e+h9VCXtbyN2visFRj9ByWqtuGJlXTIu6hQ9MloVAFIPW8u7L4n8Ol3qhJO0c8KS5otx8
+	 mNBo5mLdIDTro2X69VaJig7u0wBmfjPf2PzlIx1sbizPRcWP1OchBUIhuq8DGNuPMXTfv
+	 k95u5dkE+puYM3aGfO2soqiEqnpa3gSmDKAyIsuxyy4Fd6iyPUknQzGzaX5ROkKKThyDC
+	 ErDuQoFug10HJaV1RWG48ZL0kqUlkVJrA510QK2auoY6C+nJYC2exe/n9OqHqGhWrVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063895;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063896;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dLDz0USCdAB7CF++9qiEMsgk0DkRTwUyTqrfluUvoAA=;
-	b=vs5E2sPbTU5xy6WYr47LKZ1wqzbDVXZ+n8MHr9ezl7KdBtszzWRFVqS0NF9bwEGmx8SL
-	 5kWkP2Tyypp10yH+WFbUO/Y1iQXW6kgo/HYbGn2z9JvpsesvyCnzfyrBK641oLAs9AOSy
-	 cvLNhZ02GYCm542Qt5kiAPNd30QurYH+DAnge+XH1of/Xg3TRBOIJwIvidHcqWpLEjssw
-	 1Ji91B54vQXxd8c8C6Z7B5bpWorXrC9Y8VFg9fVMHb2+T+mW5yyDzFfe49zHUrVGKIHOV
-	 UEg8YxGvFzVUogdL8OheKV/kgoVub+ozngqcjmpj0826MeP/7HF0p0Qp0jwm25thkDw==
+	bh=USE3wPYD8IPnvf1WtN2hPEimwtEilhC776ro+R3joMM=;
+	b=otEY0grU2PSgwa3EmWqnImh7j28z99pEGDIWp+CcudlYBJjLU4leEIOm0YoIgOdlsSOX
+	 f2N5qgQLjwzmlbjnOmdCsG2As2OV0SGjyG4obAjPeJdQEK8gFIdlLk5a9HQ4YKtJtVsiP
+	 BRKnDoxeS+RCiqqEDcTy+/V5sEED3YsUFOL2TsMQ7UC89z4Weov965/4RGt0E9BFv3kyg
+	 tEF2DibI8AffOOzd/yY1EsmKCXVlPwlWOsWGU9NlVVqsBP5i9xHbpkYjW/0Dus+O9PSTe
+	 oU7uX+z+pgDuY1TvHQcBJ5TfbVVXW0UfS1hfS9GpGTuI8c8aCI+J7ATm8GY4NM+a+Cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aAZv82wX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TdTeJTJW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B485606B8A6;
-	Sat,  7 Nov 2026 15:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668C2606B8AD;
+	Sat,  7 Nov 2026 15:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aAZv82wX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7151F0089F;
-	Sat,  7 Nov 2026 15:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TdTeJTJW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B321F0089F;
+	Sat,  7 Nov 2026 15:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063895;
-	bh=dLDz0USCdAB7CF++9qiEMsgk0DkRTwUyTqrfluUvoAA=;
+	s=korg; t=1794063896;
+	bh=USE3wPYD8IPnvf1WtN2hPEimwtEilhC776ro+R3joMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aAZv82wX3v72juAXvG16JhepC7XKqOTadm0oed3XBt9eXayS3UEEehdDm1JLHy6Me
-	 DlEPvhq0Kbgpshbolh5d/BC5meCf3iiQfiRdhJoEXD8XtcKnF8l6YcuLbykXLctPfv
-	 rxUSfRyc+98i2iNdWBd9Jv8bLb+yxo7y8rj7phtk=
+	b=TdTeJTJWbsjp9SmiipeZfADd0NyqynnqF+19F5q+Bua0HdQ970OfolbVNhg/pWsKU
+	 ktllkJtXDmcMEr11yKnaBI4AMaEb2uN6QAPAA2UBELbF9sWcvmpoKoBzv41pQw5eSH
+	 2jTeUGOBmCANl4cGDNUlAWanSKgtbBb334115O4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junrui Luo <moonafterrain@outlook.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0097/1257] media: vicodec: fix out-of-bounds write on under-rounded coded dimensions
-Date: Sat,  7 Nov 2026 08:39:53 -0500
-Message-ID: <20261107134942.036145065@linuxfoundation.org>
+Subject: [PATCH 7.3 0098/1257] media: vicodec: make encoder CAPTURE dimensions read-only
+Date: Sat,  7 Nov 2026 08:39:54 -0500
+Message-ID: <20261107134942.064106976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,43 +71,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 0183746ebca4c478027e2261b904f844f1443b19 ]
+[ Upstream commit 2532e9d2f8ccb330a9c924b1ee34c5629240d352 ]
 
-A capture format whose width or height is one more than a multiple of 16
-makes the FWHT codec write one 8x8 block row, or column, past the end of
-the capture plane, and read the same block out of the reference frame for
-P-coded frames.
+Setting the encoder's compressed CAPTURE format to a smaller resolution
+than the raw OUTPUT format makes the encoder write past the end of the
+CAPTURE buffer.
 
-vic_round_dim() is documented to round a frame dimension up so that both
-the luma and the chroma plane end up a multiple of 8, but it only rounds
-the chroma plane:
+For a stateful encoder the CAPTURE width and height are not
+client-settable; Documentation/userspace-api/media/v4l/dev-encoder.rst
+specifies them as "ignored (read-only)" on VIDIOC_S_FMT. vicodec only
+implements half of that: vidioc_s_fmt_vid_out() derives the CAPTURE coded
+size and sizeimage from the OUTPUT format, but S_FMT on the CAPTURE queue
+overwrites them. The encoder then takes its geometry from the OUTPUT
+queue alone, and v4l2_fwht_encode() gets no destination length.
 
-	round_up((dim) / (div), 8) * (div)
+Overwrite the requested width and height with the OUTPUT queue's coded
+dimensions in vidioc_try_fmt_vid_cap(), making them read-only as the
+interface requires.
 
-For div == 2 the result is a multiple of 16 in every case but one: when
-dim % 16 == 1, dim / div is already a multiple of 8 and the macro returns
-dim - 1. encode_plane() and decode_plane() round the same dimension with
-round_up(dim, 8), which yields dim + 7 -- one block more than the coded
-dimension that sized the buffer.
-
-On a KASAN-enabled kernel, a 641x360 YUYV P-frame triggers:
-
-  BUG: KASAN: slab-out-of-bounds in add_deltas+0x450/0xcc0
-  Read of size 1 at addr ffff888009070800 by task trigger_bin/70
-
-  Call Trace:
-   add_deltas+0x450/0xcc0
-   decode_plane+0x1916/0x3390
-   fwht_decode_frame+0x173/0x620
-   v4l2_fwht_decode+0x751/0x1120
-   device_run+0x6bb/0x1850
-
-Round the dimension itself up to a multiple of 8 * div. The rounding
-changes only for div == 2 and dim % 16 == 1, and MAX_WIDTH and MAX_HEIGHT
-are both multiples of 16, so the rounded value still fits the advertised
-limits.
-
-Fixes: 3b15f68e19c2 ("media: vicodec: Add support for resolution change event.")
+Fixes: efec9c815e5d ("media: vicodec: pass on enc output format to capture side")
 Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
@@ -115,22 +97,44 @@ Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vicodec/codec-fwht.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/test-drivers/vicodec/vicodec-core.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/media/test-drivers/vicodec/codec-fwht.h b/drivers/media/test-drivers/vicodec/codec-fwht.h
-index 0eab24020e9e6..4b4d390310899 100644
---- a/drivers/media/test-drivers/vicodec/codec-fwht.h
-+++ b/drivers/media/test-drivers/vicodec/codec-fwht.h
-@@ -61,7 +61,7 @@
-  * both luma and chroma components resolutions are rounded up to
-  * a multiple of 8
-  */
--#define vic_round_dim(dim, div) (round_up((dim) / (div), 8) * (div))
-+#define vic_round_dim(dim, div) round_up(dim, 8 * (div))
+diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
+index ff9d50fb05fd1..25ec3a43fc712 100644
+--- a/drivers/media/test-drivers/vicodec/vicodec-core.c
++++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
+@@ -890,6 +890,8 @@ static int vidioc_try_fmt_vid_cap(struct file *file, void *priv,
+ 				  struct v4l2_format *f)
+ {
+ 	struct vicodec_ctx *ctx = file2ctx(file);
++	struct vicodec_q_data *q_data_out =
++		get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_OUTPUT);
+ 	struct v4l2_pix_format_mplane *pix_mp;
+ 	struct v4l2_pix_format *pix;
  
- struct fwht_cframe_hdr {
- 	u32 magic1;
+@@ -900,6 +902,10 @@ static int vidioc_try_fmt_vid_cap(struct file *file, void *priv,
+ 		pix = &f->fmt.pix;
+ 		pix->pixelformat = ctx->is_enc ? V4L2_PIX_FMT_FWHT :
+ 				   find_fmt(f->fmt.pix.pixelformat)->id;
++		if (ctx->is_enc) {
++			pix->width = q_data_out->coded_width;
++			pix->height = q_data_out->coded_height;
++		}
+ 		pix->colorspace = ctx->state.colorspace;
+ 		pix->xfer_func = ctx->state.xfer_func;
+ 		pix->ycbcr_enc = ctx->state.ycbcr_enc;
+@@ -911,6 +917,10 @@ static int vidioc_try_fmt_vid_cap(struct file *file, void *priv,
+ 		pix_mp = &f->fmt.pix_mp;
+ 		pix_mp->pixelformat = ctx->is_enc ? V4L2_PIX_FMT_FWHT :
+ 				      find_fmt(pix_mp->pixelformat)->id;
++		if (ctx->is_enc) {
++			pix_mp->width = q_data_out->coded_width;
++			pix_mp->height = q_data_out->coded_height;
++		}
+ 		pix_mp->colorspace = ctx->state.colorspace;
+ 		pix_mp->xfer_func = ctx->state.xfer_func;
+ 		pix_mp->ycbcr_enc = ctx->state.ycbcr_enc;
 -- 
 2.53.0
 
