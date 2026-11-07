@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064889;
-	b=d5FlImfgdxArZWi3VyV/6tlsWlv60vUNN+4HMfXe9BXhuRmiU/tBNd4roayqDtFXw84Q
-	 wo6q8Wk9pK+O7Fb2GkEKnsMk8NYnAsjjL9QSf5zfLfJlsJfpOgtXqaMK1c0NFUPOGaD5Z
-	 jdyiPRvcdeselE0n9bxmqSNYTiIA6JZl2OXyUd3NDMVMgS0i3mxzLWZ88Xtw7y6n+xoy9
-	 btod8thjdYg2sQHWJfzHz1ZHXLi4BD7uMleSedxVejHX1nn637LSAkpA196W5S+q6TZMZ
-	 qtd4CFe8CjVpqhwQmoAovLLM83WqsCZ4LtWFSqjD9oAB2QfQWCNFvIE4IPfLiBPOsNQ==
+	t=1794064890;
+	b=LIYXTmrEm+1AzpLarUQGytGd+MTQLi0KuCtwUb54vVXLAq1qYpUyKY5OiNFPedbzcY+R
+	 dVDHJPqOPOsTLfDuwQr3XsbxyYY5DIpk0hmaF/vSPZmwYjcOUMKU6b82cHIGJ2eTUxg/s
+	 IEdeR9Az4zgHVNkwTL1xXkrekZN6X/rZogAmTSupExNNDaig0uJeHC/+2l51XTzt8hNZ8
+	 9fhnfMG7H0110hMfHBlV0t2KmClo539h231pKCxmbAIHfkoAkMeqh/DUxNII6rCQaCJgW
+	 k9qypPIKR7c2iDj/i2Od2YmJ0T6yVtvYBFl2mH2ZiPrFym7l3EnJzPdWh8Sd7YAluAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064889;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064890;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U78I90RbgYuz5qRks2G0XbdznQWbQH/NPD8WGcHnSEU=;
-	b=AKvCKPKjGY2SpuoyLY1P/x6yCvE7/aS7QaY3lg01MjIjDey4N6bKjN2IOvI4yA/3TWsw
-	 xc+zvpZHHUSzGkT0flbQqZL9ieGl8b+uzPPuF2VHa+3kuRUOROtGtgvQA3jVUPEyvWRkk
-	 WSFfJauRudbCVUDapD7xsUOJg/VSZC2mBREuU+tLY6796rK8vb//UMuNH4XspXjazjNSj
-	 2Zkmic8HyiccphVBeeSrXIiP105frJFka9F5ccYNv/HroM/5oTdyLcQPM5udLd0Bra1BH
-	 cU0Koc2TYEWN+Xf1+iuS1dhJVYk4OEXqaYuLEuQ/ZtgnATQIv1BGDxF+EEdfGXvZL9Q==
+	bh=EEq7pT/Ef0um2ZzMxYL+p0nK+I8dJcbLsy2gUgup15A=;
+	b=t61xFXsm8ImF0zpJr1gpJ6A6oNpPdwuk7SYuHispa/uHwPj9Ds8ul5D+KByipKlFEggw
+	 xVIUHlvAUf5R1KlYh3MCxOpzsLs4gJme+UfEdpbJKP7Ms4UMKnm5IFMkWxQy9BuwaZgMF
+	 zefEFVG4SO01+X9Cq7sJ9eYpDsXRASzDjG/JHprfvX9iW7KQVn1PI0wY82ldS9RDFv3RE
+	 FO2ub0B1LuVRH9LS8b+gdsoNE1N0NcNoeGQBwRQhGYjwFUx+wTd8Pona54h37GzOJUDFr
+	 VYai4Ck1aOKTRe2k+AFvffIWuP7/oVUmTxbytnFTEfPhj7pyCNRSCXrjZK1EPfBdYeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PyVhNo+9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xVnsI+Yu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B63606A334;
-	Sat,  7 Nov 2026 15:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEE1606C002;
+	Sat,  7 Nov 2026 15:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PyVhNo+9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E6D1F0089F;
-	Sat,  7 Nov 2026 15:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xVnsI+Yu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1B11F0089F;
+	Sat,  7 Nov 2026 15:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064889;
-	bh=U78I90RbgYuz5qRks2G0XbdznQWbQH/NPD8WGcHnSEU=;
+	s=korg; t=1794064890;
+	bh=EEq7pT/Ef0um2ZzMxYL+p0nK+I8dJcbLsy2gUgup15A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PyVhNo+9KYGdyR+n2H1hx6uYAx0Ucq3nT+DjezjTuahEYj8RQYd69xVGouiPaPY26
-	 OI028LBqeSEIYqOTZKqf+iSxSnSu+LirKf7GAWBb9NP04hJilVf/qDPpjN+u0K4n8k
-	 +vmMxDveLDg4dVHLotw3iwzs/AcrFrys9NdBLOVg=
+	b=xVnsI+YuMoVzvSSK0/ggMwV0rTdAcsw2E8ViG19U0lI+cJDyKbQBRweIvNCO99Ov+
+	 pTaqbnCoGKWWci/tDn8dQ1T/eKIlKFe8fTGnoyKMtjGHKXRZBRL9JkFqnFI3gEK9OG
+	 g5YRs+LTNi5QA587QbjC3YLUFKtLVAtaZ+gIEqrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fuad Tabba <fuad.tabba@linux.dev>,
 	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0799/1257] KVM: arm64: Move OUTSIDE_GUEST_MODE publication past context being saved
-Date: Sat,  7 Nov 2026 08:51:35 -0500
-Message-ID: <20261107135001.398529562@linuxfoundation.org>
+Subject: [PATCH 7.3 0800/1257] KVM: arm64: Move IN_GUEST_MODE ahead of state being loaded
+Date: Sat,  7 Nov 2026 08:51:36 -0500
+Message-ID: <20261107135001.425655901@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,71 +70,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 1d4ce2901f1e25b06d447c0b02d105d6dd3550d8 ]
+[ Upstream commit 22b6557ad05bf05c73246f62c19af3e04017270e ]
 
-OUTSIDE_GUEST_MODE indicates to the rest of KVM that the vcpu has
-exited. So far, this is set as soon as we return from the notional
-hypervisor (which with VHE is just a function call away).
+IN_GUEST_MODE is advertised too late, when state has already been moved
+onto CPU registers and cannot be observed by another CPU anymore.
 
-However, code that uses OUTSIDE_GUEST_MODE as a synchronisation point
-relies on the vcpu state to have been written back to the in-memory
-structures. Clearly, this is not what is happening.
+Move the IN_GUEST_MODE publication ahead of the state being loaded, and
+immediately check for pending request. This ensures that there is no
+window of opportunity for another CPU to observe OUTSIDE_GUEST_MODE and
+yet for state to be loaded.
 
-Move the publication of OUTSIDE_GUEST_MODE to the point where the state
-is actually written, and give this write release semantics to ensure the
-correct ordering.
+This also simplifies the "state rollback", which solely amounts to
+synchronising the timer when no irqchip is present.
 
 Cc: stable@vger.kernel.org
 Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
 Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261015100539.1011760-3-maz@kernel.org
+Link: https://patch.msgid.link/20261015100539.1011760-4-maz@kernel.org
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/arm.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/arm.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 73706464d2653..7ce9f3bfa7fff 100644
+index 7ce9f3bfa7fff..cadc82ba5a5a0 100644
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -1334,13 +1334,13 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+@@ -1321,31 +1321,33 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 
+ 		local_irq_disable();
+ 
+-		kvm_vgic_flush_hwstate(vcpu);
+-
+-		kvm_pmu_update_vcpu_events(vcpu);
+-
+ 		/*
+ 		 * Ensure we set mode to IN_GUEST_MODE after we disable
+ 		 * interrupts and before the final VCPU requests check.
+ 		 * See the comment in kvm_vcpu_exiting_guest_mode() and
+ 		 * Documentation/virt/kvm/vcpu-requests.rst
++		 *
++		 * Requests to self must be posted before this point, or
++		 * won't be taken into account until the next exit. No state
++		 * loading other than what happens at vcpu_load() time can
++		 * be done before we have checked for pending requests.
+ 		 */
  		smp_store_mb(vcpu->mode, IN_GUEST_MODE);
  
  		if (ret <= 0 || kvm_vcpu_exit_request(vcpu, &ret)) {
--			vcpu->mode = OUTSIDE_GUEST_MODE;
- 			isb(); /* Ensure work in x_flush_hwstate is committed */
- 			if (kvm_vcpu_has_pmu(vcpu))
- 				kvm_pmu_sync_hwstate(vcpu);
+-			isb(); /* Ensure work in x_flush_hwstate is committed */
+-			if (kvm_vcpu_has_pmu(vcpu))
+-				kvm_pmu_sync_hwstate(vcpu);
  			if (unlikely(!irqchip_in_kernel(vcpu->kvm)))
  				kvm_timer_sync_user(vcpu);
- 			kvm_vgic_sync_hwstate(vcpu);
-+			smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
+-			kvm_vgic_sync_hwstate(vcpu);
+ 			smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
  			local_irq_enable();
  			preempt_enable();
  			continue;
-@@ -1356,7 +1356,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 		}
  
- 		ret = kvm_arm_vcpu_enter_exit(vcpu);
- 
--		vcpu->mode = OUTSIDE_GUEST_MODE;
- 		vcpu->stat.exits++;
- 		/*
- 		 * Back from guest
-@@ -1390,6 +1389,13 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
- 
- 		kvm_arch_vcpu_ctxsync_fp(vcpu);
- 
-+		/*
-+		 * The state that was pushed into the CPU on entering
-+		 * the guest has been synchronised back, let's
-+		 * advertise we're outside of the guest.
-+		 */
-+		smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
++		/* From here onwards, we are commited to entering the guest */
++		kvm_vgic_flush_hwstate(vcpu);
 +
- 		/*
- 		 * We must ensure that any pending interrupts are taken before
- 		 * we exit guest timing so that timer ticks are accounted as
++		kvm_pmu_update_vcpu_events(vcpu);
++
+ 		kvm_arch_vcpu_ctxflush_fp(vcpu);
+ 
+ 		/**************************************************************
 -- 
 2.53.0
 
