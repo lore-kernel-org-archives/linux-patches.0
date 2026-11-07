@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061042;
-	b=VcL5a6itxM23K7fHz++mSc2rprsA3q/rwH0LRYzBBnoZF2Meo12A/ETb+SCj/XGWNonN
-	 1LKOHf5XZLFScAZOW8xHcFKtCwY430FsefRz2LtwERi+xdvRHLjlfMZ0n/adQjmjqEX7u
-	 nva8QQRFHYWiSrAglrRcaeev1UIJPfMo+lziTzq68orLY+Oi8CljuxztjfgINrDTpEZjJ
-	 5T+kEE/LQtpmh02vk4TdYc91dFwRVn1DgJnoYpWha3QREtkIkH1cQRjUwSyP8bA5tpUU7
-	 ktarCldWtOJyxoIgPUefnhvC6vvSZzqtpgLHJzxJbyWK0xOi9S7aCSYYKMrzS+IyKwA==
+	t=1794061044;
+	b=E98Q37mZL4KnNPZ3fq2mUV07TkwdzvRACBymmReorYLCs93O5XMG87Xj6DE1Vq2Rr831
+	 Pk6U7Fms7ikW+mw+RKsaj9x6VEuiY4ZIBvl03r1ryaTBFzumLjVgS10PmI2gKbZ3sQNXY
+	 u6+veKJ2mNzbBWReG9gIrTt4WX808QVWG/dPu6PvYwTqIvUJHJYUFdVDUdCb/g5clJNCk
+	 WgxRN/rjzf8ZVmHAhKSbxrPd15nFpvQFZajD8OC8g/Z2Z2keAiaroa1doKnG8kO1E8qG4
+	 w77H5BO70PyaTltyEglyrZK3TdQjLIkMDbDlwUhE6Ny00bzcjtvjiLJFx7j4/+pSu9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061044;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ft/HLo/GFtGi8tivmMqh8F5AB5gZ1B0d0Di7kSgJVc0=;
-	b=5tQ/Cjnu5DbFC2RhFXxedAPmnexS7c9p+ozvaMX4Vp4NEUXAcXAyKgG9rtq33TOAtiSZ
-	 SxKWwTLyvx10hl+jUYzKsQY/MqICMYZ0r7PglPHjGGc8tPAK/OOrJ/OIo7vq6T5bOAD0a
-	 FhwYLcmRGlG8YdIaDs93CJvm7ZR8X3b/7896mVol7x90J7bcIp3XgifCsKRFX7sNdDex5
-	 IbQZRyAzb60Fwc0FHvmaAUD+KxDba3ZUOYNX2+UeDszDPGcXdUpA0trUUZBbSGPG6N/JQ
-	 C+CQWFcsejMaHt081UDXofgBcjWy7o10whndKGT95vMfQgGWc1HHAxiLs4K+7qFEOAg==
+	bh=1jMtN0g5iz6wJRHEOp6pI2W/os2WM71WO2ZLkfO9BoM=;
+	b=eXTThfHzhgq3UrgeJfK+1J9eBSYztXEjDAXdI8YxLm6JqfdeU1XY0WJb5TVlinZMZTsR
+	 SW1AeddQDUlrvHsqW/LCTUud0VOha7/QQXK182bcRznJLnB0fdFot6vgq/BiSrXx9vIAa
+	 T1S+l3kyhES4+KjYE8/e1uLrponULW+h1vMUYzi82Q1GPXvIp24KsZR3g9z3Yv20iT4ML
+	 vl4vGYw6T6tgf5k9OBOJMH4k9MrP0vqaSDEr1n77jgs+XswwwWL73vCDehJ6m8C4PY60V
+	 yX6Fh1+AmbXNgEw1jEDXdAwmNNzUYm64IIdrVC7a4fWd8pROQKZBzsa6/4yPnEpr7/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cmOEDtAe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Fq4zn/i+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494BF606D801;
-	Sat,  7 Nov 2026 14:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6586606D80B;
+	Sat,  7 Nov 2026 14:17:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cmOEDtAe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B466B1F0089F;
-	Sat,  7 Nov 2026 14:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fq4zn/i+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725E51F0089F;
+	Sat,  7 Nov 2026 14:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061042;
-	bh=ft/HLo/GFtGi8tivmMqh8F5AB5gZ1B0d0Di7kSgJVc0=;
+	s=korg; t=1794061043;
+	bh=1jMtN0g5iz6wJRHEOp6pI2W/os2WM71WO2ZLkfO9BoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cmOEDtAenONuY94ChoBgKWQAEXRI8gym4Wg+WiNCJStCVFAMYYbm/ZceJFTAYp06w
-	 JZXR0hOjGSWS7w/cBYHQfWtLZ/976bFZsEsNKHJVoFfb2XUYzTZOHjMPe8J7AxbCTR
-	 UKUpUofm0aaXyTtmuZ4RxdlJNMUWvxxEX34tG2Kg=
+	b=Fq4zn/i+dJ4rlznfg8Q9vGcn4Y+hMRoSx5eYDQSGulHkEhbt5lAR0iQ5ySProAllG
+	 hGrABwsW8RDTBxYzh3JXgoICB/in6fXEKolL3vGmdTrpFr/VfAbccVaZPgq/HCg1vK
+	 EKa0Tc918gL0lMrmGFUScuBwmRGAUO51gzevisSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David C.C.M. Gall" <david.ccm.gall@googlemail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com,
+	syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0336/1536] crypto: keembay - use crypto_memneq() to compare CCM AEAD tags
-Date: Sat,  7 Nov 2026 08:39:12 -0500
-Message-ID: <20261107135007.129247276@linuxfoundation.org>
+Subject: [PATCH 6.12 0327/1536] ALSA: hda/intel: Add sanity check for BAR0 size
+Date: Sat,  7 Nov 2026 08:39:03 -0500
+Message-ID: <20261107135006.894700738@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,46 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David C.C.M. Gall <david.ccm.gall@googlemail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ff2ac77a034e03b64e2ba34f775097427dfa5547 ]
+[ Upstream commit 9895573b0185f922be4cf500a0f2e5b9560ab1c3 ]
 
-Use crypto_memneq() for constant-time comparison.
+The recent reports from syzkaller showed that we can bind any wild PCI
+device to HD-audio controller, and if PCI BAR of the device is too
+small, it may lead to a crash, as the driver believes as if the full
+register range were accessible.
 
-The CCM path in ocs-aes.c verifes the received authentication tag with
-memcmp(), which returns early on the first mismatched byte. This leaks
-valid-prefix length and allows for valid tag forgery which violates the
-INT-CTXT guarantee of AEAD.
+For avoiding such a problem, add a safeguard before the actual probe
+to check the available BAR0 size.
 
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: David C.C.M. Gall <david.ccm.gall@googlemail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Note that the threshold (0x200) is chosen to cover all needed
+registers at probing.  But this doesn't mean that it would cover fully
+for all features including the extended ones.
+
+Reported-by: syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=10cd2d1efe8eeb604bee
+Reported-by: syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5ebe7cd17e48b4293660
+Link: https://patch.msgid.link/20260813150354.763502-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/keembay/ocs-aes.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/hda_intel.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/crypto/intel/keembay/ocs-aes.c b/drivers/crypto/intel/keembay/ocs-aes.c
-index be9f32fc8f42a..b159d949d6246 100644
---- a/drivers/crypto/intel/keembay/ocs-aes.c
-+++ b/drivers/crypto/intel/keembay/ocs-aes.c
-@@ -16,6 +16,7 @@
- 
- #include <crypto/aes.h>
- #include <crypto/gcm.h>
-+#include <crypto/utils.h>
- 
- #include "ocs-aes.h"
- 
-@@ -1282,7 +1283,7 @@ static inline int ccm_compare_tag_to_yr(struct ocs_aes_dev *aes_dev,
- 				 (i * sizeof(u32)));
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index d4e325b785332..48fe74ad34124 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2156,6 +2156,15 @@ static int azx_probe(struct pci_dev *pci,
+ 		dev_warn(&pci->dev, "dmic_detect option is deprecated, pass snd-intel-dspcfg.dsp_driver=1 option instead\n");
  	}
  
--	return memcmp(tag, yr, tag_size_bytes) ? -EBADMSG : 0;
-+	return crypto_memneq(tag, yr, tag_size_bytes) ? -EBADMSG : 0;
- }
- 
- /**
++	/* A sanity check against wild device binding;
++	 * here the range 0x200 is enough for the registers used at probe,
++	 * but it doesn't mean covering all HD-audio registers
++	 */
++	if (pci_resource_len(pci, 0) < 0x200) {
++		dev_err(&pci->dev, "Too small PCI BAR0\n");
++		return -EINVAL;
++	}
++
+ 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+ 			   0, &card);
+ 	if (err < 0) {
 -- 
 2.53.0
 
