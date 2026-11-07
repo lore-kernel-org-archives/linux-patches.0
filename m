@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061489;
-	b=BLW/NjcK1Vum1geU/MuEq0EtG6QiiL5XsQRccJCauUeJDUSeV/llR1cok2lVgNyJwguT
-	 uQtA/p4/21MzF1+CKdH9VWhjKv6+JyDzSniLTuWnry7TzSouiNWg9mIgfzPX5XV1Q6L24
-	 uQLLMLLbtBlFT+73To3TI7QVjVRScJdDU9UpJm/PntHZS0TRgpdBGch/4TAAA9Bbt4rs9
-	 4UF9EOGgjkTbnq3bR0Ueok8EFzsb7eJQdkA1okuGp3sO1cA9SEGpYDTm1r7xE5roNJ21/
-	 airry5wivdqIiZVmvzSX95v3Kpy7lUwTzUGnscZRTSwqEYF7cbzATZ7Slb2FckSPzjQ==
+	t=1794061490;
+	b=iaep7MyXqG3CWLZ19064E+q+3DCroDGie9cBX5vk7N5mWpCoPjZKKho4RHqVc7kbrvd+
+	 0k+y7h2kbwyM+ViDw1Uup+TI9pqB9Eevhv0TD7nSPAC6DN7TPa3NoOJIIUs8qNl4HA1Xg
+	 ZjYdVIXgAuJJwOUllra+lDFn3lhnNEewJD7Y2R4fx7Okt1OtRs+9Enb1jtiqQ92xbWD0Y
+	 ahrXh17nAfBnt7uGCrxfvdEE3J8Gw9Eo88OK5eHIoS6amgrSZBk3gOrN8g/q7OWy5RvxW
+	 huiWykgxZE8yIvelgzAT8/nJnT8OH8AAn4pDttEcVaQLWLqWi9jby7r4cLr3iCGK73w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061489;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061490;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mjAXE6STCqAaTquEfOUP0JacAwVshbiJiOTk9J7kFUY=;
-	b=f2gXT1oiZdV9DvweKZxQPIKUrUTVEOU5iS4fAe35qKXlTNykdTC/0q+TOqQKMP/SBkGY
-	 3SE8SqbAjTbdUsGrlPJ1BuFwnCLItfCknZROg4Kblsq00aWz+xdZWU3YwD87uv4Fy7JN4
-	 iYdaPjxawdxN+jr+WC3OHxmDOIFm+SLba5zTwBx7LDVsxfXIfkZQzRaPXOz1lbNyd+9EB
-	 OmnROCk8KtpSatlWkAVCZWijLTKvoxItD6PAVL3kTxtmvqO/0Z+FcgdgMXy/5qIGoKLxY
-	 M6fZHTdMnY3fFa29Jm8No9TrumHd8vAu5qNymd8PbiHHuFArGN2GLNmziPvE27UFcKg==
+	bh=UO3KrmNKDGrb4sZJW52LhnERidYiaVV2TjTpq32N9Wo=;
+	b=agUk9vlUybtwW4HVF8QiDhCDaI2f45iz0FDRjexK6JmU7QfrsejPLwkKQWfzSymX1bMN
+	 sid/6v1oF0dc4vAekM94E6BaqSIvP2YqUAhBIdJOuGQiZAG4nJN3XYaPVDIVbnqwt9dhN
+	 VrqTY2oyh5zndgYjsJZ+eHQ4mDERpJQi6c0BZnQ5WvQ9JOJOwrJ6psJWbdx0QYhZTQZ4x
+	 sRJU9zYihNM2/7flsE1/Gag/qkLhumf/IedktWB/gxYG6vs6+b07eH+OMwW2auSnVbUhl
+	 oIdCOiI9w8dEkUNiPaiuj5gxyxolaeZqrYvqURj6lD373DVnCaxdLM1BAf6Xmm5nq1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GR2zxsW9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPccEm+j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE25A606A326;
-	Sat,  7 Nov 2026 14:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178B8606A326;
+	Sat,  7 Nov 2026 14:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GR2zxsW9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9233B1F0089F;
-	Sat,  7 Nov 2026 14:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPccEm+j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95B71F0089F;
+	Sat,  7 Nov 2026 14:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061488;
-	bh=mjAXE6STCqAaTquEfOUP0JacAwVshbiJiOTk9J7kFUY=;
+	s=korg; t=1794061489;
+	bh=UO3KrmNKDGrb4sZJW52LhnERidYiaVV2TjTpq32N9Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GR2zxsW9l8hi/Fj+Nox2RstXcwzuBMB/tLP9LCgvzPNjaaqQqf4/RSNRMaYFtJs4c
-	 qSzx9F9OVg/hNEz5oxZE0rQPlyyZsJGEZDwR3JXhTk3vfvFdcNHYSvJbKVrQjxQBSt
-	 ivg0JdPisGdjiG7zS71yeWjy8BlXz+vl84cPPFEA=
+	b=RPccEm+jVLs5D5DR1G0kBqPMj39JccjOAeUwfhqT1a6X/qNGTD0IKcDYMJqKgYpnw
+	 hCGKxCi6f6pl3uXUDld2ZOCNXhfQuUlbmpgKU/uB/CnhGMVEq1qryjXfxwruP2DHt7
+	 YraqzEsATt1uWsTSgcZZTSpBfgKTfx24cDmDvYFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0536/1536] KVM: SVM: Preserve TLB control (i.e. pending TLB flush) on failed VMRUN
-Date: Sat,  7 Nov 2026 08:42:32 -0500
-Message-ID: <20261107135012.655863254@linuxfoundation.org>
+	David Heidelberg <david@ixit.cz>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.12 0579/1536] backlight: qcom-wled: Fix NULL pointer dereference in wled_remove()
+Date: Sat,  7 Nov 2026 08:43:15 -0500
+Message-ID: <20261107135013.817399799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,101 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 60d93c27859fb3ec5b5a689e24de303f166477d0 ]
+commit 1dbd46d4b2fb416a8202b1a8e4ef9d0cadbe075f upstream.
 
-Don't reset the VMCB's TLB control back to "do nothing" on a failed VMRUN,
-as empirical testing shows that the CPU performs the requested TLB flush if
-and only if VMRUN is successful, i.e. clearing TLB control on a failed
-VMRUN effectively drops a TLB flush.
+wled_probe() doesn't set the driver data for the platform device.
+As a result, platform_get_drvdata() in wled_remove() will return NULL,
+and the first dereference of it crashes on unbind.
 
-Explicitly track the need to flush all ASIDs on a per-CPU basis, as the
-ASID reuse condition is tied to the pCPU, not to the vCPU.  As a bonus,
-this also obviates the need to avoid clobbering FLUSH_ALL_ASID with
-TLB_CONTROL_FLUSH_ASID, e.g. in svm_flush_tlb_asid().
+Set the platform device driver data in wled_probe().
 
-Deliberately don't bother saving/restoring the "old" tlb_ctl on failure,
-in quotes because it's not exactly the old tlb_ctl, it's the tlb_ctl from
-after pre_svm_run(), but before updating tlb_ctl for flush_all_asids.  If
-VMRUN fails and TLB_CONTROL_FLUSH_ALL_ASID is forced, then the next
-successful run of the VMCB *may* unnecessarily flush all ASIDs, which
-strictly speaking could result in noisy neighbor issues.  However, the
-fact that new_asid() is already guest-triggerable, because of KVM's flawed
-behavior of clearing the ASID on emulated INIT, means that a guest can
-already trigger a flush of all ASIDs at roughly the same rate.  And once
-KVM stops clobbering the ASID on emulated INIT, *or* assigns a static ASID
-to each vCPU, this flaw goes away.
-
-Fixes: 38e5e92fe8c0 ("KVM: SVM: Implement Flush-By-Asid feature")
 Cc: stable@vger.kernel.org
-Reported-by: Stefan Teodorescu <fane@google.com>
-Suggested-by: Yosry Ahmed <yosry@kernel.org>
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: Jim Mattson <jmattson@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260904170642.3291466-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[ sashal: Replaced the missing svm_is_vmrun_failure() helper with an open-coded exit_code != SVM_EXIT_ERR check and dropped the ERAPS-only context around the post-VMRUN tlb_ctl reset. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: feeab87b3072 ("backlight: qcom-wled: Add support for short circuit handling")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260921-qcom-wled-backlight-v4-1-bab8c7ef73cb@ixit.cz
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c | 14 +++++++++++---
- arch/x86/kvm/svm/svm.h |  1 +
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ drivers/video/backlight/qcom-wled.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 4c3891fb789a5..edee403baac03 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -2032,8 +2032,7 @@ static void new_asid(struct vcpu_svm *svm, struct svm_cpu_data *sd)
- 	if (sd->next_asid > sd->max_asid) {
- 		++sd->asid_generation;
- 		sd->next_asid = sd->min_asid;
--		svm->vmcb->control.tlb_ctl = TLB_CONTROL_FLUSH_ALL_ASID;
--		vmcb_mark_dirty(svm->vmcb, VMCB_ASID);
-+		sd->flush_all_asids = true;
- 	}
+--- a/drivers/video/backlight/qcom-wled.c
++++ b/drivers/video/backlight/qcom-wled.c
+@@ -1682,6 +1682,7 @@ static int wled_probe(struct platform_de
  
- 	svm->current_vmcb->asid_generation = sd->asid_generation;
-@@ -4380,6 +4379,11 @@ static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
- 		svm->vmcb->control.asid = svm->asid;
- 		vmcb_mark_dirty(svm->vmcb, VMCB_ASID);
- 	}
-+	if (this_cpu_ptr(&svm_data)->flush_all_asids) {
-+		svm->vmcb->control.tlb_ctl = TLB_CONTROL_FLUSH_ALL_ASID;
-+		vmcb_mark_dirty(svm->vmcb, VMCB_ASID);
-+	}
-+
- 	svm->vmcb->save.cr2 = vcpu->arch.cr2;
+ 	wled->regmap = regmap;
+ 	wled->dev = &pdev->dev;
++	platform_set_drvdata(pdev, wled);
  
- 	svm_hv_update_vp_id(svm->vmcb, vcpu);
-@@ -4460,7 +4464,11 @@ static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
- 		svm->nested.nested_run_pending = 0;
- 	}
- 
--	svm->vmcb->control.tlb_ctl = TLB_CONTROL_DO_NOTHING;
-+	if (svm->vmcb->control.exit_code != SVM_EXIT_ERR) {
-+		this_cpu_ptr(&svm_data)->flush_all_asids = false;
-+		svm->vmcb->control.tlb_ctl = TLB_CONTROL_DO_NOTHING;
-+	}
-+
- 	vmcb_mark_all_clean(svm->vmcb);
- 
- 	/* if exit due to PF check for async PF */
-diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
-index 19da3ce2b7668..511fadfb055f6 100644
---- a/arch/x86/kvm/svm/svm.h
-+++ b/arch/x86/kvm/svm/svm.h
-@@ -341,6 +341,7 @@ struct svm_cpu_data {
- 	u32 next_asid;
- 	u32 min_asid;
- 
-+	bool flush_all_asids;
- 	bool bp_spec_reduce_set;
- 
- 	struct vmcb *save_area;
--- 
-2.53.0
-
+ 	wled->version = (uintptr_t)of_device_get_match_data(&pdev->dev);
+ 	if (!wled->version) {
 
 
