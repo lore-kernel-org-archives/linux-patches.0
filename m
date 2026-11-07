@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064607;
-	b=hN+9OwarkI3+GzgoNc+jIL9S1KZt4S6pRB/jvqPsT5XUOj7iDOiNNU0YBljytgvgW7Gy
-	 DiJuaDl7KaRtI7ZDbttL9rUh5L7HWwRqMbuUJxw+6pZk4jHZScninvn6ETFW2nuJdMYeq
-	 Q+lbvgEabFTypQwLb1QFwYG1pHOTuTB95k55TeRQCgq7RSDjnUOX2lYV4VtdnlON9Tcof
-	 +ALpiVjSosfORqcqYeHnuJtE3VRu3tlqZGmfzA22cRL1kuKKv5VmHHRXBzIVV2zPl+XSc
-	 XbWXdz0+pQxRq6o+cz0XlsT6RNc+NhgxhHu2y4dRSp5dOd4/gNrenQeexQVKuT9BVHw==
+	t=1794064608;
+	b=ZkGFTnMzEznuIGL2vr8b4xh8yEIjvYkTEpPHj/wuNT3SAy9i79+OI37Y8OV8RN7K6/ZJ
+	 1sPtTzRU/8oa5a54FMznwfsCRKXneGohOb8XmTAy+nROay53eazWLaA+msUFw2P9uA1qD
+	 0qiCbid096I3BR/T/OpVDlKe+EwMuKb459E3qbWL8hhHlK5OFIoUK7agitAH6G7GippmM
+	 cRPnsEuAlboVB9mpbQzyVpKYZhQ62p5R8VRUCN/ZQGD8IU1ctT/2cTtGH+hkRe1rmeH9r
+	 zfOTTVqDRshzKz1lLpzfNKL9KmyjgwUd6DKG0tyuju0FRTB4OxtDO1oUqTbVbL5lmtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AVmbFX6t6xcUu/vimmAgkG5zOzmY8smU+XL6/FLtg/4=;
-	b=YnmgFRXucrWXWCuZnQjcXmf4DNyp9qpw54sRhvR0yLGCU0NbYeXmT4mmCcmziBDPBzOx
-	 Pegh4K6oeY361l3uncRsCt8CjgzxhCcUy3nT8398uStGdxixAHZ0w9Fn2C4Xn45fzb2Ks
-	 MzZQbsVQuO1deLPD/pzaaMYTcp7j+IIpaW5C2M6pSNr06BwWvGsnKYXDdjSB0BrN8Rl9n
-	 1K7Dy2brUjrTfRkNSpWD1xARrQGzgRBo77qf/DvGS4vixYAm1Pn3u2kjqc5xtA7qN79Tc
-	 dazpuluQF+u1oT/XqWSrHLfIIkEHEgvLMOhXqJFeRdaCvUwBsuMMF1V+CM7hNrg62lg==
+	bh=Cp428scmMcMNcwyR4rWToLPyzEMoGHoZDoTRMd/JM9Q=;
+	b=vPQKvPbLo1tUHfi21x8+ZpYcDkF4cRFDTzaY9+g/001OznBPbnQMqoBBL3ttd2y81dEw
+	 aeLq3QyQnUXDg1afnKIfEZUwbx0BtkxeV6ALRUk7e/QM57oG9D/l5TFTNFU6cCLhCCqcc
+	 0dEPvo6ZaN4r2oQgdy6CD6hndDA0dQgg8yHigm47wOjWbrI3Vc/oNRGVX9UdLGG0Pz0vc
+	 fLOVg32kTQjIJXCl5rC7t5hEj8bF/wp1rgwc0KpA18iQfrHRQ/j6S2oLmJRjEftDOLgdr
+	 T5ORvYlXa6vXP3hL5sUBG+UlQBslAnaKF4YlYmsvacFj3fqCAVSR3YclpCG6ocJZW3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1h3y6eti;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnrAu4qh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23966606E8FE;
-	Sat,  7 Nov 2026 15:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C40E606E8FE;
+	Sat,  7 Nov 2026 15:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1h3y6eti
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A371F0089F;
-	Sat,  7 Nov 2026 15:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnrAu4qh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE141F008A2;
+	Sat,  7 Nov 2026 15:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064606;
-	bh=AVmbFX6t6xcUu/vimmAgkG5zOzmY8smU+XL6/FLtg/4=;
+	s=korg; t=1794064607;
+	bh=Cp428scmMcMNcwyR4rWToLPyzEMoGHoZDoTRMd/JM9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1h3y6etinK5QspZoej9U42A0Vwv1UfFRUSMbBlY9laIB3p2Y/Hr//zn8WL/SszJxx
-	 Xm6h/EEibWzOkD38DdoYwqXPbU0yGsOiitaESLJM6o4OHKcyyt8IX5tgUKvEOpGuJJ
-	 dya4sUGActGUJgNGv7jPU19Q+hNx+lf+5Fe+bv+A=
+	b=OnrAu4qhwGlM0R6Ia2jBgbrpT8EfRq30fA+HK+LkaIFdbWCXlWo/InR+15gAxOh44
+	 ZvOcgWZEI1Av7zw8sCfYoEQp6gf+mvv8XoJ99r5p7KSPPexWsnDE+fI+jcNjqRtHlG
+	 WIy2Ae1QWOKOxq6NCtaZcpvIvZe+b1XX/p792Nro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evgeny Akhtimirov <evgeny@devduty.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0618/1257] ALSA: hda/realtek: Enable all four speaker amps on Lenovo ThinkBook X G2 IAH
-Date: Sat,  7 Nov 2026 08:48:34 -0500
-Message-ID: <20261107134956.368725671@linuxfoundation.org>
+Subject: [PATCH 7.3 0619/1257] KVM: arm64: Prevent 64-bit overflow when computing hyp clock rate
+Date: Sat,  7 Nov 2026 08:48:35 -0500
+Message-ID: <20261107134956.396209498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,77 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evgeny Akhtimirov <evgeny@devduty.com>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit f2293e7b2ddd803b1461e0490f9b2f32089c1dd0 ]
+[ Upstream commit 6164ce3491bcc3a27a2e2e9260a286eb2df2301e ]
 
-The Lenovo ThinkBook X G2 IAH (MTM 21TU) has an ALC287 codec with four
-CS35L41 amplifiers on I2C (CSC3551). It reports codec SSID 17aa:3929,
-which it shares with the ThinkBook 13x Gen 5, and PCI SSID 17aa:3842.
+The hypervisor clock rate is delta_cycles * NSEC_PER_SEC / delta_boot.
+It is computed whenever a deviation occurs. If the delta between two
+rate updates is big enough, delta_cycles * NSEC_PER_SEC will overflow.
 
-Since PCI SSID 17aa:3842 has no quirk entry, the codec SSID matches
-ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD. That fixup binds only
-two amps (cs35l41-hda.0 and .1), while the CS35L41 configuration table
-describes four for 17AA3929. Amps .2 and .3 probe and load firmware,
-but they are never bound to the codec, so half of the speakers stay
-silent.
+Prevent overflow with mul_u64_u64_div_u64(). And as a bonus, simplify
+the clock estimation with mul_u64_u32_shr().
 
-Add a ThinkPad-style fixup chain that binds four I2C amps, and match the
-laptop by its PCI SSID so the ThinkBook 13x Gen 5 is not affected.
-
-Tested with hda_model=1028:0c4d (alias to ALC287_FIXUP_CS35L41_I2C_4):
-all four amps bind, apply their calibration and are runtime-active
-during playback.
-
+Fixes: b22888917fa4 ("KVM: arm64: Sync boot clock with the nVHE/pKVM hyp")
 Cc: stable@vger.kernel.org
-Signed-off-by: Evgeny Akhtimirov <evgeny@devduty.com>
-Link: https://patch.msgid.link/20261009-thinkbook-x-g2-iah-v1-1-56012188aee0@devduty.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261008104212.3134550-2-vdonnefort@google.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/arm64/kvm/hyp_trace.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index c66dd4a003f39..980e5029b2dbf 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -4339,6 +4339,8 @@ enum {
- 	ALC245_FIXUP_HP_X360_MUTE_LEDS,
- 	ALC287_FIXUP_THINKPAD_I2S_SPK,
- 	ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD,
-+	ALC287_FIXUP_CS35L41_I2C_4_THINKPAD_ACPI,
-+	ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_4_THINKPAD,
- 	ALC2XX_FIXUP_HEADSET_MIC,
- 	ALC289_FIXUP_DELL_CS35L41_SPI_2,
- 	ALC256_FIXUP_ACER_SFG16_MICMUTE_LED,
-@@ -6906,6 +6908,18 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
- 	},
-+	[ALC287_FIXUP_CS35L41_I2C_4_THINKPAD_ACPI] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cs35l41_fixup_i2c_four,
-+		.chained = true,
-+		.chain_id = ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK,
-+	},
-+	[ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_4_THINKPAD] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc287_fixup_tb_vmaster_led,
-+		.chained = true,
-+		.chain_id = ALC287_FIXUP_CS35L41_I2C_4_THINKPAD_ACPI,
-+	},
- 	[ALC2XX_FIXUP_HEADSET_MIC] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc2xx_fixup_headset_mic,
-@@ -8236,6 +8250,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3827, "Ideapad S740", ALC285_FIXUP_IDEAPAD_S740_COEF),
- 	SND_PCI_QUIRK(0x17aa, 0x3834, "Lenovo IdeaPad Slim 9i 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x383d, "Legion Y9000X 2019", ALC285_FIXUP_LEGION_Y9000X_SPEAKERS),
-+	SND_PCI_QUIRK(0x17aa, 0x3842, "ThinkBook X G2 IAH", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_4_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x3843, "Lenovo Yoga 9i / Yoga Book 9i", ALC287_FIXUP_LENOVO_YOGA_BOOK_9I),
- 	/* Yoga Pro 7 14IMH9 shares PCI SSID 17aa:3847 with Legion 7 16ACHG6;
- 	 * use codec SSID to distinguish them
+diff --git a/arch/arm64/kvm/hyp_trace.c b/arch/arm64/kvm/hyp_trace.c
+index 9644c424819b7..c60d7dfbf5e26 100644
+--- a/arch/arm64/kvm/hyp_trace.c
++++ b/arch/arm64/kvm/hyp_trace.c
+@@ -59,14 +59,8 @@ static void __hyp_clock_work(struct work_struct *work)
+ 	if (hyp_clock->mult) {
+ 		u64 err, cur = delta_cycles;
+ 
+-		if (WARN_ON_ONCE(cur >= hyp_clock->cyc_overflow64)) {
+-			__uint128_t tmp = (__uint128_t)cur * hyp_clock->mult;
+-
+-			cur = tmp >> hyp_clock->shift;
+-		} else {
+-			cur *= hyp_clock->mult;
+-			cur >>= hyp_clock->shift;
+-		}
++		WARN_ON_ONCE(cur >= hyp_clock->cyc_overflow64);
++		cur = mul_u64_u32_shr(cur, hyp_clock->mult, hyp_clock->shift);
+ 		cur += hyp_clock->boot;
+ 
+ 		err = abs_diff(cur, boot);
+@@ -84,7 +78,7 @@ static void __hyp_clock_work(struct work_struct *work)
+ 					    err / NSEC_PER_USEC);
+ 	}
+ 
+-	rate = div64_u64(delta_cycles * NSEC_PER_SEC, delta_boot);
++	rate = mul_u64_u64_div_u64(delta_cycles, NSEC_PER_SEC, delta_boot);
+ 
+ 	clocks_calc_mult_shift(&hyp_clock->mult, &hyp_clock->shift,
+ 			       rate, NSEC_PER_SEC, CLOCK_MAX_CONVERSION_S);
 -- 
 2.53.0
 
