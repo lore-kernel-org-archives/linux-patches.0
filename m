@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064952;
-	b=gX/h0xYWuC8jjIMtOKPQconMNutf+JZ6VH978xCCGJzKvUp4bC6b8JW47yEaUmCldqpM
-	 Jun926l+hHIybG6VhMjyOJdQZgk8SMc871LLKhpqNaw6USg+9HZqQCnpvuv9gvHIqcrcR
-	 eRv+g3BNum7WWHUa24vQ9gxMU8QozctLxyJ/Bu5PuGnG++OnTuQbYRxhmhTk1cYMS8U9g
-	 FfnSiab5rbl3rTz5PyKsy3jQwftGCDZsUZCOGmN/EV6Rj5V4kxoCa5f+t0q05d206OfLy
-	 kPkJnVmFtZJ2NxSL8s9K+Ds84/1x6nGRFcZ2RSYuRtEP7/Kz5T+WLJ3g7yQ0uTQo90Q==
+	t=1794064953;
+	b=TSuBtOsrT2bGfQ9+f7efaOXUEq/VyT+sG5wOimuOTeBrAcybZfHVJt0oU6Yo9A8J2dNr
+	 hETwnornfb4AUgbMTrvt/eF93Focysnba02qq1f9GmPgAMIXTe3vm2mJ7JG75qS9p20JP
+	 geCeVX8vR0KGxQfgQYVmW3wwlrfS8LhQnZxILTrJAaZlFu5d8XsJfF5uABOnw/hG2bxYd
+	 eLTU6CsvTxm9hkCRqtMeD8Ug6NHejl5k2ReMKwiC0mFJepIi8ZYtRLlf/m9UCjsThtMlp
+	 nIejsS+tlFtG26wEu1b7zqi6gZXHuKIsQ4EV0O3WpKiAKZJqMlthyQSDhyvNhKBONZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064952;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064953;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EdkHJjk3RPPwxpAs7BOL56KjFo9A8JDB/5Tv9AM0lWU=;
-	b=J2GWYE66V1DC7UZ9CD09qr7PgQrajZAxeG9intVC5jxGftmKY8yTO90kzzHqAX0hs4i2
-	 y2OGk1ZW1yNogPFgWGAMu9kb+7SuhFr3o2XsKPUxK67umPkNWiIiDka6Ne+p06wtu0NEF
-	 trKp64UByT/+mdsnoc/b6KXweDuaDwjU3Hxei1BXxmoO2VR84hnEI26shed4ilLZGcPhs
-	 mADE+GoG5JdjlW91MxPeS8NLSPenZTS8DVpI6m6XF6C3ccblSMlLsnoPKLb2Lz9apWSHt
-	 yO01e8mY1Ag66t89X8o+qYujmD4bbJf/hpeiMZEtsEeEhXDCwGsTmH9bXSLQbX/JxCQ==
+	bh=hY2OWJ8Bp4Y+uNKy/pni1MLYl9tDi7Qtz5tFjV1yy+E=;
+	b=X1laTegtwl8tUbvNQ7doOuCnbgiGFT5O6LrvOFB9weE6ukfGzpf9rijrxYzvfQRLcPJl
+	 tmyA4To9d+i3Vxn+KTzw6eccP1SoqeAEHvvxRhDDa6ZTtYvFS24Q3stzJzK5aH4nfIq8F
+	 g0ZrzkkZHoImwhUJRylY33BZJjoFbY0Rtd+Qa4ql7/yo4FqkkC5RMM9IoterIsGsJe657
+	 uuyHGLy4wrGUV+zFoYkbrLuZHe9S5SjB+SVKPCqAOD+MZOcOZFKmJEJzetXWVjxrc8Xj1
+	 7qCASlSix3OPYDGhgkq1s9AAshAA8GFX9xFk5nlDbJOc9sYn9m0APeEB/kfV2YnJfzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pDnDHV3G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCK9laU7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E07606A335;
-	Sat,  7 Nov 2026 15:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020F9606A335;
+	Sat,  7 Nov 2026 15:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pDnDHV3G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572481F0089F;
-	Sat,  7 Nov 2026 15:22:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCK9laU7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A505E1F0089F;
+	Sat,  7 Nov 2026 15:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064951;
-	bh=EdkHJjk3RPPwxpAs7BOL56KjFo9A8JDB/5Tv9AM0lWU=;
+	s=korg; t=1794064952;
+	bh=hY2OWJ8Bp4Y+uNKy/pni1MLYl9tDi7Qtz5tFjV1yy+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pDnDHV3GJjMByFNvIT+t+D1FaLk3YYSzsdnYbfX9xzMaQVMg8xw4Tn+7nJqhi8XSZ
-	 SfukJzzFeBVjEb+FNHHcdGob4vzMmvhqf5gLAOLvht/OpLA9xxfDQbpwJdynwlUtF9
-	 NeMY6EyVJTAOs0/sbmE4/nEO7vc3hZXOeAoA9UXY=
+	b=pCK9laU7euVadbIlvxyerZMvOLfQB34T/CFVJGSYMNUCHLrzRZsFXjm2he3mryFvI
+	 s1wIJa129ny97aPKPtCkAuqNdkbWJz01F7mfULxI7dd+hoAiWk2rIXLBifCcPHHWuc
+	 n3tug/BcNCnypjP+WE+gse1cNi9nyDQBoPfkP00Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Hongliang Wang <wanghongliang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0789/1257] irqchip/mchp-eic: Fix clock reference leak in mchp_eic_probe()
-Date: Sat,  7 Nov 2026 08:51:25 -0500
-Message-ID: <20261107135001.119123117@linuxfoundation.org>
+Subject: [PATCH 7.3 0833/1257] cpufreq: loongson3: Adjust the width of id and val in smc_message
+Date: Sat,  7 Nov 2026 08:52:09 -0500
+Message-ID: <20261107135002.339438664@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,51 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit af9c707eb065a7d48eb92dc15acdb4346acf5db0 ]
+[ Upstream commit 290814d3c22b300eb36b74dc76ad36bd7fdc1220 ]
 
-of_clk_get_by_name() returns the clock with an elevated reference count
-that mchp_eic_probe() keeps for the lifetime of the driver, but none of
-the probe error paths drops it, so the reference is leaked whenever
-probe fails after the clock has been obtained.
+The id field of smc_message is usually stand for the CPU ID. In the past
+this driver was only tested for desktop and laptop productions so 4-bits
+are enough. But now we have servers that can have as many as 256 cores,
+so we need 8-bits CPU ID.
 
-Put the reference in the error cleanup.  The clk_prepare_enable()
-failure path must jump there directly as it cannot call
-clk_disable_unprepare() on a clock that was never enabled.
+On the other hand, the val field is usually stand for CPU frequency so
+12-bits are enough to represent 4GHz, and for higher frequencies there
+is an extra bit to extend (enough for 8GHz).
 
-Fixes: 00fa3461c86d ("irqchip/mchp-eic: Add support for the Microchip EIC")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+In theory, this is a incompatible change, but fortunately the old SMC
+firmwares are not widely shipped and can be updated on the air, thus we
+can safely adjust the widths.
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260916190349.2094401-1-vulab@iscas.ac.cn
+Fixes: ccf51454145b ("cpufreq: Add Loongson-3 CPUFreq driver support")
+Signed-off-by: Hongliang Wang <wanghongliang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mchp-eic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cpufreq/loongson3_cpufreq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-mchp-eic.c b/drivers/irqchip/irq-mchp-eic.c
-index be007d325e672..5250e6baff63c 100644
---- a/drivers/irqchip/irq-mchp-eic.c
-+++ b/drivers/irqchip/irq-mchp-eic.c
-@@ -233,7 +233,7 @@ static int mchp_eic_probe(struct platform_device *pdev, struct device_node *pare
- 
- 	ret = clk_prepare_enable(eic->clk);
- 	if (ret)
--		goto unmap;
-+		goto clk_put;
- 
- 	for (i = 0; i < MCHP_EIC_NIRQ; i++) {
- 		struct of_phandle_args irq;
-@@ -270,6 +270,8 @@ static int mchp_eic_probe(struct platform_device *pdev, struct device_node *pare
- 
- clk_unprepare:
- 	clk_disable_unprepare(eic->clk);
-+clk_put:
-+	clk_put(eic->clk);
- unmap:
- 	iounmap(eic->base);
- free:
+diff --git a/drivers/cpufreq/loongson3_cpufreq.c b/drivers/cpufreq/loongson3_cpufreq.c
+index 1e8715ea1b771..630f679aa7395 100644
+--- a/drivers/cpufreq/loongson3_cpufreq.c
++++ b/drivers/cpufreq/loongson3_cpufreq.c
+@@ -21,9 +21,9 @@
+ union smc_message {
+ 	u32 value;
+ 	struct {
+-		u32 id		: 4;
++		u32 id		: 8;
+ 		u32 info	: 4;
+-		u32 val		: 16;
++		u32 val		: 12;
+ 		u32 cmd		: 6;
+ 		u32 extra	: 1;
+ 		u32 complete	: 1;
 -- 
 2.53.0
 
