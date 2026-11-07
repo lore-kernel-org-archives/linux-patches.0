@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064097;
-	b=zSRANbBBCb3c9dSGj91vd7GLZIckyxtOymXgGX72bXfmrSlUFqXWmb08RYDeJCZNkQtF
-	 Up1hsYtUv1XmVRbNVKsB4eAjDwKXlpELyP5MghPQFjf0+Mo9tqfsf0Sqjw7qsmlO5YnWr
-	 UKJc2q+MhO4CLsxbJXmViP7AU4QvIka85qRLa2d1+tPTos+jdcu61n3IJHCONOfRL5bzr
-	 uBl1/hfPtYoK6Ucct/dyAzLWrcXB8li3ucZ+8aF03o9Wb3P/ePqKi3fMKVlPbgwIVhcDH
-	 VeK+gf8w4AsygmTHk6hWQQwQ1k+8jbWHOsbDCUijCpXnZx8qfNY6O9Ns2zX60gmrdQg==
+	t=1794064098;
+	b=w7XYzFt6luQv3FaLjHIg9sh8BzYIWycryEIZziXsd+ignqh/NKRw1LABmfCsqaA8Oha0
+	 8/zmo3j4u3et5ZbjpEVPO+BiqIN7z0aELQ0acxCuy00omDdawjgtj+CzPdxKXiJhwaa9X
+	 bqamf7gLjs+s0/+rm1Gr2cqfTA4esJEqi5oqNmgX1wsoREzEc+7fHtvk/EntUcLBthiq7
+	 v06RNZ8qROzsHnaVn4qfNooEdxrnknNbBiehjw4Az1Zd2657uZlNypotZdrKb2Z8lTDbM
+	 jMOdcHQr0ocTvXZ242jCG/rx3JPWdLIuiViAKSo8MfN/XuVD3eX/1aWW8dv1JW4q/cA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064097;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064098;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w3RuHhJIpmoxJK9yfggTTqDfKYKWI7N6G2nJBYPkKcI=;
-	b=zG19BWEmG6jxqBlR0IcD6macYxlbc4RQ7ZBeoaL2UkN3Lw7mdNpo0ArM4ZNIFMP5iMls
-	 HU6F133B+PtdCElThaEu075Q3qZrZAgobCLyp5r3kFhQ9doLD5dmOCpaeKcUaqcvMBdu4
-	 FWE6lUHnMKlGpj5c4DLYD+pzsxGYyk6mF3LRWQFUbB/Sjly95rZizvFM8dBk0kNFzMTq4
-	 RsRvYJ5ONivTzRxp00Tcl5zSFBWHIPshEtgLFOhUoL+deWylCTvHgDh+/eqSznJj5zKAw
-	 wDhWXczPJv/eD1rmD/Z5ZDNCCZwQLXXLyRaAktPTQ28OV1noknTpuPk62BRcaJqXBPQ==
+	bh=gXWhjen83rlY5a3iLDNcR0DSgtGTlpu3HMc0i3NOIh8=;
+	b=1qw45UPYvh/T9ueEtN0Z9hFtUUIc4y0VKT5wV8oU8PVVgfaANAO+K/VYmOmS17la9ieF
+	 4FnO2i/M9UYcFW2eddAx6+OoZ4+1SGaJA8oZ46omIEThygNGOyyMJWwjpC2osAOXdbAbt
+	 6gu6TVyZkkyECmZYvDqRvBJtsfEe4sezNpzlSVM4CS3ixWc82ubsbWwwbOiK40XJPKfcX
+	 BQ8t8tBGJlcoqtj7HQ1Fy1kaTpCA8HvInZCuBB7uo54UpjPBwRoC4qCucLuNPAzp1rXUo
+	 OEjeKM8NQs8XU9vKukc30oH4ylY5cyMsRVLWTh5ES8cNDgdIIAsFgN8RCmVfFoQuOdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/oKS/8n";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S1AYTdWk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA63606A9EE;
-	Sat,  7 Nov 2026 15:08:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E80C606CE56;
+	Sat,  7 Nov 2026 15:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/oKS/8n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C0E1F0089F;
-	Sat,  7 Nov 2026 15:08:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S1AYTdWk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987211F0089F;
+	Sat,  7 Nov 2026 15:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064096;
-	bh=w3RuHhJIpmoxJK9yfggTTqDfKYKWI7N6G2nJBYPkKcI=;
+	s=korg; t=1794064097;
+	bh=gXWhjen83rlY5a3iLDNcR0DSgtGTlpu3HMc0i3NOIh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a/oKS/8nvbz6qFyoV433vNdXy72orJXZp7enUIjTRmAvhObFIUYZRb3bLofuc51au
-	 5BJkD3Dfw+1qKCdo8X86xnKLYAHNQeCPeHCuP8cNN73Gb0R7uNwzGBeT/TqodBPWiy
-	 oXN6HNzrkxeQHOh/Vn1n429USYQmNGNjPuU8O9ec=
+	b=S1AYTdWkTBNxXzc9X/UtvoTblqESqdgBXDGPP88+C9N0ekfmgq00uy0357WOrZdh+
+	 ZR58x2ikyOfUgEoH7oQCx05JsctDCQSLKClvPTM47CNWVd9pmczmClogf+SkVhxsNT
+	 Z+JYlhRBg03rx5bcAEiXZbFEV/uXRW+PcmIm1fg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
+	syzbot+cf896de36144391bcde1@syzkaller.appspotmail.com,
+	Hans Verkuil <hverkuil@kernel.org>,
+	Rohinthan P <rokinthanp03@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0258/1257] media: cec: extron: clear response tail before dispatch
-Date: Sat,  7 Nov 2026 08:42:34 -0500
-Message-ID: <20261107134946.626924100@linuxfoundation.org>
+Subject: [PATCH 7.3 0259/1257] media: v4l2-ctrls: do nothing if controls[0] == NULL in cluster functions
+Date: Sat,  7 Nov 2026 08:42:35 -0500
+Message-ID: <20261107134946.655037378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,47 +70,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Rohinthan P <rokinthanp03@gmail.com>
 
-[ Upstream commit a601427f03e015e3d4d2ba44cfa6e0de144983b9 ]
+[ Upstream commit 9ff738f93084351ed6e818d4d58679a9e9083a8d ]
 
-The serial receive buffer is reused between responses. Terminating a
-short response with one NUL leaves bytes from the previous response
-behind it, while the dispatcher also checks fixed offsets beyond some
-prefixes. Those checks can consume stale tail bytes.
+The V4L2 control framework is designed to allow drivers to instantiate
+controls and clusters without checking for errors after each call,
+checking hdl->error only once at the end.
 
-Clear up to ten bytes at the end of each completed response, limited by
-the remaining array capacity. This includes the terminator and covers
-the dispatcher's fixed-offset tests without adding a separate length
-condition to every prefix branch.
+However, if allocating the master control (controls[0]) fails, e.g. due to
+memory allocation failure, v4l2_ctrl_cluster() triggers a WARNING:
 
-The issue was found by our static-analysis tool.
+      ncontrols == 0 || controls[0] == NULL
+      WARNING: drivers/media/v4l2-core/v4l2-ctrls-core.c:2525 at v4l2_ctrl_cluster
 
-Fixes: 056f2821b631 ("media: cec: extron-da-hd-4k-plus: add the Extron DA HD 4K Plus CEC driver")
+Additionally, v4l2_ctrl_auto_cluster() attempts to dereference
+master->minimum without checking if controls[0] is NULL, leading to a
+NULL pointer dereference when master control creation fails.
+
+Update both v4l2_ctrl_cluster() and v4l2_ctrl_auto_cluster() to silently
+return if controls[0] is NULL, preserving the design that control
+creation errors are caught at the end when the driver checks hdl->error.
+Also update function documentation in include/media/v4l2-ctrls.h.
+
+Fixes: 71c689dc2e73 ("media: v4l2-ctrls: split up into four source files")
 Cc: stable@vger.kernel.org
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Reported-by: syzbot+cf896de36144391bcde1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cf896de36144391bcde1
+Suggested-by: Hans Verkuil <hverkuil@kernel.org>
+Signed-off-by: Rohinthan P <rokinthanp03@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[hverkuil: simplified the v4l2_ctrl_auto_cluster code a bit]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/v4l2-core/v4l2-ctrls-core.c | 12 ++++++++++--
+ include/media/v4l2-ctrls.h                |  6 ++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
-index 3c6ce6f3d93e7..1f8ed7ff31e52 100644
---- a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
-+++ b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
-@@ -847,7 +847,9 @@ static irqreturn_t extron_interrupt(struct serio *serio, unsigned char data,
- 			return IRQ_HANDLED;
- 		memcpy(extron->data, extron->buf, extron->idx);
- 		extron->len = extron->idx;
--		extron->data[extron->len] = 0;
-+		/* Keep fixed-offset response tests from using stale tail bytes. */
-+		memset(extron->data + extron->len, 0,
-+		       min_t(size_t, 10, sizeof(extron->data) - extron->len));
- 		if (debug)
- 			dev_info(extron->dev, "received %s\n", extron->data);
- 		extron->idx = 0;
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls-core.c b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+index 47fb60b1f0c07..6e751a043a210 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -2561,7 +2561,10 @@ void v4l2_ctrl_cluster(unsigned ncontrols, struct v4l2_ctrl **controls)
+ 	int i;
+ 
+ 	/* The first control is the master control and it must not be NULL */
+-	if (WARN_ON(ncontrols == 0 || controls[0] == NULL))
++	if (WARN_ON(ncontrols == 0))
++		return;
++
++	if (!controls[0])
+ 		return;
+ 
+ 	for (i = 0; i < ncontrols; i++) {
+@@ -2583,8 +2586,13 @@ void v4l2_ctrl_auto_cluster(unsigned ncontrols, struct v4l2_ctrl **controls,
+ 	u32 flag = 0;
+ 	int i;
+ 
++	if (WARN_ON(ncontrols <= 1))
++		return;
++
++	if (!master)
++		return;
++
+ 	v4l2_ctrl_cluster(ncontrols, controls);
+-	WARN_ON(ncontrols <= 1);
+ 	WARN_ON(manual_val < master->minimum || manual_val > master->maximum);
+ 	WARN_ON(set_volatile && !has_op(master, g_volatile_ctrl));
+ 	master->is_auto = true;
+diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
+index 327976b14d50b..cec9217d97ac6 100644
+--- a/include/media/v4l2-ctrls.h
++++ b/include/media/v4l2-ctrls.h
+@@ -834,6 +834,9 @@ bool v4l2_ctrl_radio_filter(const struct v4l2_ctrl *ctrl);
+  *
+  * @ncontrols:	The number of controls in this cluster.
+  * @controls:	The cluster control array of size @ncontrols.
++ *
++ *		If controls[0] is NULL, then this function does nothing and just
++ *		returns.
+  */
+ void v4l2_ctrl_cluster(unsigned int ncontrols, struct v4l2_ctrl **controls);
+ 
+@@ -845,6 +848,9 @@ void v4l2_ctrl_cluster(unsigned int ncontrols, struct v4l2_ctrl **controls);
+  * @ncontrols:	The number of controls in this cluster.
+  * @controls:	The cluster control array of size @ncontrols. The first control
+  *		must be the 'auto' control (e.g. autogain, autoexposure, etc.)
++ *
++ *		If controls[0] is NULL, then this function does nothing and just
++ *		returns.
+  * @manual_val: The value for the first control in the cluster that equals the
+  *		manual setting.
+  * @set_volatile: If true, then all controls except the first auto control will
 -- 
 2.53.0
 
