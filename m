@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064376;
-	b=RMcbMBSqed9dhFIdFzDvavz4WSRXDANLKdRL8qTbXkqO+qz3C6Poc9DuMEvmnd8+kG2W
-	 POcz79IJZ7dIx6zt7IbIDUy1YkwQMEISFsBvkLmS2KGgMyASccrn3f6r5yPbmDBtqHK7+
-	 wnc3AaxJVJvSk1tkb7G8k8T7nCXzqN1PD4kc+a+6JixjG4R7jmsdAosr9qLB5ZohMGp7/
-	 V0jmX9rSfy8Dugx5Ljk386HjoNb3yanoN3IUwNEJLLN3figdlt5OyzUdqllVYlrNRupfK
-	 Jc/E0SMG1ZDiDLMUPP1IJ7nJzeasggHa2T4V4Hq2uraD8/YtXWmyohsg/ush4p40ttA==
+	t=1794064382;
+	b=wng2ax5nt1z4TTOlPbK3uMRQa1KGg7nVHQzcndEpx430cCiqV27Awe1Nr+DQ20LHZKcv
+	 4rcY/LgxB2YX+4e8WaapNd46wAm1wjgBBLVTgQd44OE6WfCOkpBNv1I6wYTiUz4pSdNzA
+	 d6bRxSYgxeLdGfyhp1VmVP89AjXCD5XtnajhGVHj/WxJMyorU8zUKayiw3LqU9hJxpJVa
+	 2beFEaw8quyZz+5Ow9F7EaKGAfc6BGKVSLlwVXB8PT7tGM8iwMkfpcz7pDbv5jZcAQi7e
+	 jRVjt0rXOaC4+mVXjwpBaegTNwlExLcoMybolO4JxkJDaXzEvsNTQ4n/JwZA2eU37kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064376;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Erchc0b0Mdd0v92ZeFdVc8MdZSekN3byev8AGFuyF98=;
-	b=nOg38SVMmZcL3CFUZkejfI2CukIU1wwWDvK3yGqAH+ognXhRN0P0/jU6fVhIVUY7QJqz
-	 66OwidYKCicVwU6VvkS0MQQyYTHGFqRaEZUsDd8p2WQcvHVroFUmsbNIrtg6sECT/ubSy
-	 YdT+Us+R5ZEFqVsioKlZ4tTDIw6jwB+sfVPwY6O7um+tF89ZpV+UOguNa8Kl5rR4MCV05
-	 YnfzHjdO6hosWZxlwpjNv7ZRq2n2Wx1dASAP3DB+u3cC2QlKjjjlkxNn2ZiD7IxjtPjpY
-	 op0HkBzvUZA25Nh0G1kSl1cB1EDtHD85LAGD+yWVj6AlK9j0036AoyWw7lRo2wLC2xQ==
+	bh=ZzFRStltm3JDXeUQQNhzP2vmQb52+t3hbH6Zy2O8cBc=;
+	b=fPoe/28Sdiwvq7AdgcE//wKo64fwyy5UPjM2o2k+v6zDUVDWTkWqM2zVaA+Q7FLG1spa
+	 Xm0P/EL77Id59ic0ZjPWFaHr+lD8lH8okIidwMovk167UOoC7DDpAkYi1JzQCIecjv3Nj
+	 NJ66FpLOpg3oET7U2y7+lNkRL7a0SnV1LWQmJHGkPb7gHRhTwX6YiYDZIZOoRBXGRKWb6
+	 eSL8UM/gzpK+I+ERZmq7HZ59nT313iaPVJ9TEH3u1+C/ABd0qfdgSLtdI0TqdOaG/Yzks
+	 cMcbv+BzNFbACTghP0GbONn9dfLFgkN2Z8tupeWX4/9S55jK1D47BElXrZwU5PcYQUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HxAdC8gC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iHH5yqEZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F306083610;
-	Sat,  7 Nov 2026 15:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D6D606D811;
+	Sat,  7 Nov 2026 15:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HxAdC8gC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F021F008AB;
-	Sat,  7 Nov 2026 15:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iHH5yqEZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA8A1F008A2;
+	Sat,  7 Nov 2026 15:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064376;
-	bh=Erchc0b0Mdd0v92ZeFdVc8MdZSekN3byev8AGFuyF98=;
+	s=korg; t=1794064382;
+	bh=ZzFRStltm3JDXeUQQNhzP2vmQb52+t3hbH6Zy2O8cBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HxAdC8gCZKEb8clkd2zbQOIcgrLzYMvPkXWAVArkVELTWAIcQX1nQ7ldeI6B9+3oP
-	 cmTMCEQj362HDJTt1ya8HQTVK0l6okrsipAZkAgZbuZY0mFkZNgylXJ2OOIfSYmB92
-	 NX18U7og1O4hURM592H3hHip6O73rh/v+VaYnq50=
+	b=iHH5yqEZTDYwFQOaA9ayb/6MPAvyxqayh5V0AwqShIun2wwkjQ8KIOL8nu16tNvxr
+	 mleWQjdugbCt6hNUaw6099WNcTPBUOueon99aPxoJhiSMmEIcDfabKkY2kvGQoCxVQ
+	 OCmX5bB+wL8U2RU/FYTYCXtR5eYKdRn/Ajq+TIk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Ming Qian <ming.qian@oss.nxp.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0454/1257] media: amphion: prevent unbind while video instances are open
-Date: Sat,  7 Nov 2026 08:45:50 -0500
-Message-ID: <20261107134952.014904467@linuxfoundation.org>
+Subject: [PATCH 7.3 0458/1257] media: mtk-jpeg: Fix runtime PM leak in mtk_jpegenc_worker()
+Date: Sat,  7 Nov 2026 08:45:54 -0500
+Message-ID: <20261107134952.121679526@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,66 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 96ea6bc6835f1b18b75303d536a7f9a3829c9bc1 ]
+[ Upstream commit 7ec8fd17f3a8059dcf94101065a35d0136031794 ]
 
-An open video instance holds a plain pointer to its devm-allocated core.
-Unbinding the core or its parent through sysfs can release that memory
-while the instance remains open. A later ioctl or close then uses the
-stale pointer.
+pm_runtime_get_sync() leaves the device's runtime PM usage count
+incremented even when it fails, and a failed clk_prepare_enable()
+drops the reference as well.  mtk_jpegenc_worker() jumps to enc_end
+in both cases, which does not call pm_runtime_put(), so the
+reference taken by the successful resume is leaked.
 
-The video file operations pin the module, but sysfs unbind bypasses that
-protection. Suppress manual bind and unbind for both platform drivers,
-and warn if core removal ever encounters a live instance.
+Use pm_runtime_resume_and_get() for the resume failure and release
+the reference explicitly when the clock cannot be enabled, as
+mtk_jpegdec_worker() already does.
 
-Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
+Fixes: 5fb1c2361e56 ("mtk-jpegenc: add jpeg encode worker interface")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_core.c | 3 +++
- drivers/media/platform/amphion/vpu_drv.c  | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
-index a0c58ec97a424..2e8e08e05de7c 100644
---- a/drivers/media/platform/amphion/vpu_core.c
-+++ b/drivers/media/platform/amphion/vpu_core.c
-@@ -696,6 +696,8 @@ static void vpu_core_remove(struct platform_device *pdev)
- 	struct vpu_core *core = platform_get_drvdata(pdev);
- 	int ret;
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+index af44d581e4980..906174302476c 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -1623,7 +1623,7 @@ static void mtk_jpegenc_worker(struct work_struct *work)
+ 	v4l2_m2m_buf_copy_metadata(src_buf, dst_buf);
  
-+	WARN_ON(!list_empty(&core->instances));
-+
- 	vpu_core_remove_dbgfs_file(core);
- 	ret = pm_runtime_resume_and_get(dev);
- 	WARN_ON(ret < 0);
-@@ -846,6 +848,7 @@ static struct platform_driver amphion_vpu_core_driver = {
- 	.remove = vpu_core_remove,
- 	.driver = {
- 		.name = "amphion-vpu-core",
-+		.suppress_bind_attrs = true,
- 		.of_match_table = vpu_core_dt_match,
- 		.pm = &vpu_core_pm_ops,
- 	},
-diff --git a/drivers/media/platform/amphion/vpu_drv.c b/drivers/media/platform/amphion/vpu_drv.c
-index 2cca61f41beae..9c6f32c5eae96 100644
---- a/drivers/media/platform/amphion/vpu_drv.c
-+++ b/drivers/media/platform/amphion/vpu_drv.c
-@@ -205,6 +205,7 @@ static struct platform_driver amphion_vpu_driver = {
- 	.remove = vpu_remove,
- 	.driver = {
- 		.name = "amphion-vpu",
-+		.suppress_bind_attrs = true,
- 		.of_match_table = vpu_dt_match,
- 	},
- };
+ 	mtk_jpegenc_set_hw_param(ctx, hw_id, src_buf, dst_buf);
+-	ret = pm_runtime_get_sync(comp_jpeg[hw_id]->dev);
++	ret = pm_runtime_resume_and_get(comp_jpeg[hw_id]->dev);
+ 	if (ret < 0) {
+ 		dev_err(jpeg->dev, "%s : %d, pm_runtime_get_sync fail !!!\n",
+ 			__func__, __LINE__);
+@@ -1634,6 +1634,7 @@ static void mtk_jpegenc_worker(struct work_struct *work)
+ 	if (ret) {
+ 		dev_err(jpeg->dev, "%s : %d, jpegenc clk_prepare_enable fail\n",
+ 			__func__, __LINE__);
++		pm_runtime_put(comp_jpeg[hw_id]->dev);
+ 		goto enc_end;
+ 	}
+ 
 -- 
 2.53.0
 
