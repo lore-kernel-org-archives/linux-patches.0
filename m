@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061453;
-	b=l8UXeX/lLlRQSv4flP4iwfKzVAn+VYPRzNUwmC6kM+cWru93PqygW8y6V6uR8B6x23Ub
-	 gVXjerbGmQL6vLezjAbK0pPOW+Vk5lkN2u5a3BMPElTgaG9/f3bOAEdWv8kcggt5IPhCN
-	 gU6ZAvTtyWPaHblUz/jw8C7L8bLgPmuUpwLj5Kkjlxe14PmV8xECXNmyfljNKeX74xFpD
-	 lYiU4a4Gt8c5k+/iZHymQfSCsFRjF909Ccm6Ypt7FxSOHU5Wo9I6Elk2j4VqWbi2uYNO3
-	 Wo0ZpP/SSPfBEVYR+uKIOlMS87DzFtiHqR46gIDedc0XeiO7LhulIMaGTGJhcfo6VBg==
+	t=1794061455;
+	b=dscrSqc4xdLXdC4MSn8JRAxKXGKUoaBVaItWRGVA1HSC7K9AF+AUIiF11Q2qAqV4vFWD
+	 S4CTvM1aL/oThKPx+vaTKA6aaiXDBYDbhp6FOE6IpOr1dGxYB4PdCBKSN1a8eI+UczjIC
+	 KwLqLbr5P4juNl+AqRxxh4Uj3ZpgcfjMSEDQ6zzrXIpbLknnrjA2ZSRUoUKapq1yf2Toq
+	 Mb/P7xTstSIyE/IZmyJayDZ3JDP2T4LtMiADAdV2iTmX4cbdIEmIG48AJF//mVKdu+Vng
+	 B3uPpJS5CEcVy8+pcfAAu/fKMV3nORVDeekP3DmdUWNApqAU2552lC7lpvS9gigH3lQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061453;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061455;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BVvE3TkZE2lmOjFlaMZewf4y4EwB5MMGhKKeK+xH5pE=;
-	b=MpX2IPnU9gZ48DrBl09et5DyZr7QLmRVD5EblqnXf1vOQKDuDE+rxv+s0e6Ky3TtSUuQ
-	 vdC//MH2HLN2iaSlKkk0QulIZl2RPZYVdXOXNvc/3OIWjXfMho4e895Hw/4f+4WNMY4ui
-	 X0mCCvxibgYlWdQuCYze1TKrnx+tVZdkBZH/ltsaVreiniLzBgA7wiOKpu8caBvW70LLs
-	 Ld8DvK/4bwtHCyKculXLjorS7WGnf3Sj9bc5A+f6qHYHet/QuNOtbmlTx5g6CbVE66eVZ
-	 iO0l83J8admTwH/b4Ni7hnRh5IuzC5Sk5oTZ76wZfY5xehWVr00R/8t6jWa42DcmUKA==
+	bh=aR15pRvz5ZH9xrOnmy6i3LeGa99E/7EpCUC9B9au7II=;
+	b=IM+7tBBAViq8hs3hOR1nO9n5MCBKcNGy5N6JbcojA12MsobJWbODVXl1jSz/i6CwFVgC
+	 24OORxVdMOlMiz91cjOeqy4ShNphpAR7CB+wpOnM4zxPTLDlbHM4JgSzDEWzPKgcFe76a
+	 afMbD4DZnEOl+WbSJz8UOpJHs2ylwW0N12ybxVuVnKJ3nqO3KXURnX6XHFQqTUQqF7UdJ
+	 tp9yLJ0GwP3wqtsUUmih0s6zSHc2CWXH72/nCYzAB3VvP0GqIFjnV6qCPwMIIH8XxBqzT
+	 4WebfsCwmm9P8IK6MlEBhV38Ujn0rWey1rozF+039oBrtpr9bY/5bT8Dua53hESXQfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L7mlUu2x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arxCkrpe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E59D606A331;
-	Sat,  7 Nov 2026 14:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15F4606A331;
+	Sat,  7 Nov 2026 14:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L7mlUu2x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACC81F0089F;
-	Sat,  7 Nov 2026 14:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arxCkrpe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC801F0089F;
+	Sat,  7 Nov 2026 14:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061453;
-	bh=BVvE3TkZE2lmOjFlaMZewf4y4EwB5MMGhKKeK+xH5pE=;
+	s=korg; t=1794061454;
+	bh=aR15pRvz5ZH9xrOnmy6i3LeGa99E/7EpCUC9B9au7II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L7mlUu2xS6tmDuPBMCzz+Y8iqFX8G+RBCliztWqg0ii3fVCJhYJUvGGI87YjAh3Md
-	 K0UjKITMPCOKh+mdeXdeN8NOwF9pb8xKhNoVbLQ5Zs4RnNAsrVqWH3r3Wf2LHNwW61
-	 8B58LiN+j0k8qhauBOt/hA3zXT06HJKdeUWBshTI=
+	b=arxCkrpe2gCOIA9Xy0+6plnJLatlBBVEBzUCZxnEcqhpIr39ZfpHC2JR75wLZ+0rr
+	 gjoXtkuPAIao7/DCRNfVWoF4/tvnahhMY0C4GtosjEqiZNDZyOun4YTbM751TsDf52
+	 Zyzh2x8+EnAuihV/EMgVaXpvgu87PgPu8obHFIcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0558/1536] ipc: drop the mqueue mount with kern_unmount() on setup failure
-Date: Sat,  7 Nov 2026 08:42:54 -0500
-Message-ID: <20261107135013.260017610@linuxfoundation.org>
+Subject: [PATCH 6.12 0559/1536] ntfs3: free replaced mount options after a grace period
+Date: Sat,  7 Nov 2026 08:42:55 -0500
+Message-ID: <20261107135013.288306910@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,47 +69,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit f0e48172a59e517e613b73f73cc35f24fd123aeb ]
+[ Upstream commit 56c3824de56b5275c02ff6b6aa27ddbacfbb9b25 ]
 
-mq_init_ns() creates the mqueue mount with fc_mount_longterm(), so its
-->mnt_ns is MNT_NS_INTERNAL. When setting up the mqueue or ipc sysctls
-or msg_init_ns() fails afterwards, create_ipc_ns() drops it with a plain
-mntput(). With ->mnt_ns set that takes the fast path of
-mntput_no_expire(). The count drops to zero and nothing ever kills the
-mount, so the mount and the mqueue superblock are leaked.
+ntfs_fs_reconfigure() replaces the old mount options with new mount
+options in sbi->options. The old mount options land in fs_context and
+are freed as soon as remount returns. With a pathwalk held up in
+ntfs_nls_to_utf16() between loading sbi->options and dereferencing it
+while a remount replaces them:
 
-Commit dc55e35f9e81 ("ipc: Store mqueue sysctls in the ipc namespace")
-added the first failure path after mq_init_ns() and never dropped the
-mount. Commit 7229d74e5e8c ("ipc: create_ipc_ns: drop mqueue mount on
-sysctl setup failure") tried to fix that with a mntput() but that
-doesn't help for a long-term mount.
+  BUG: KASAN: slab-use-after-free in ntfs_nls_to_utf16+0x7ae/0x7c0
+  Read of size 8 at addr ff110001044fd448 by task walker/98
+  Call Trace:
+   <TASK>
+   ntfs_nls_to_utf16+0x7ae/0x7c0
+   ntfs_d_hash+0x22b/0x500
+   link_path_walk+0x11ad/0x1d30
+   path_lookupat+0x63/0xb00
+   filename_lookup+0x1f1/0x5b0
+   vfs_statx+0xd7/0x3b0
+  [...]
+  Allocated by task 95:
+   __kmalloc_node_track_caller_noprof+0x2a2/0x730
+   kmemdup_noprof+0x25/0x50
+   ntfs_fill_super+0x1e5/0x4550
+  [...]
+  Freed by task 97:
+   kfree+0x1db/0x5b0
+   put_fs_context+0x13c/0x7d0
+   path_mount+0x54a/0x2130
+   __x64_sys_mount+0x20c/0x270
 
-Use kern_unmount(). free_ipc() open-codes the same thing for a namespace
-that made it.
+That info is needed in rcu lookup in the dentry hash and dentry compary
+methods for ntfs3 and causes a UAF today. Delay freeing with an rcu
+grace period.
 
-Fixes: dc55e35f9e81 ("ipc: Store mqueue sysctls in the ipc namespace")
-Fixes: 7229d74e5e8c ("ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure")
+ntfs_nls_to_utf16() reads ->nls and ->ads once under rcu_read_lock() so
+the hooks pair with the release in ntfs_fs_reconfigure(). That also
+covers callers outside of rcu pathwalk such as ntfs_lookup(). They don't
+hold rcu_read_lock() themselves and wouldn't be protected by the grace
+period otherwise. Remount refuses to change the iocharset so ->nls stays
+valid after rcu_read_unlock().
+
+Fixes: a3a956c78efa ("fs/ntfs3: Add option "nocase"")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-5-7446d2d335e6@kernel.org
+Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-8-7446d2d335e6@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: Kept the older ntfs_nls_to_utf16() and applied only the RCU read of nls, dropping the ads hunks because that option and its splitting code don't exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- ipc/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/dir.c     |  9 ++++++++-
+ fs/ntfs3/ntfs_fs.h |  2 ++
+ fs/ntfs3/super.c   | 16 +++++++++++++++-
+ 3 files changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/ipc/namespace.c b/ipc/namespace.c
-index b93280de1dc5c..e703b23127916 100644
---- a/ipc/namespace.c
-+++ b/ipc/namespace.c
-@@ -95,7 +95,7 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
- fail_mq_sysctls:
- 	retire_mq_sysctls(ns);
- fail_mq_mount:
--	mntput(ns->mq_mnt);
-+	kern_unmount(ns->mq_mnt);
- fail_put:
- 	put_user_ns(ns->user_ns);
- 	ns_free_inum(&ns->ns);
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index 77d3066560253..c5a464ea77806 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -185,11 +185,18 @@ int ntfs_nls_to_utf16(struct ntfs_sb_info *sbi, const u8 *name, u32 name_len,
+ {
+ 	int ret, slen;
+ 	const u8 *end;
+-	struct nls_table *nls = sbi->options->nls;
++	struct ntfs_mount_options *opts;
++	struct nls_table *nls;
+ 	u16 *uname = uni->name;
+ 
+ 	static_assert(sizeof(wchar_t) == sizeof(u16));
+ 
++	/* ntfs_fs_reconfigure() may replace the options, but not ->nls */
++	rcu_read_lock();
++	opts = READ_ONCE(sbi->options);
++	nls = opts->nls;
++	rcu_read_unlock();
++
+ 	if (!nls) {
+ 		/* utf8 -> utf16 */
+ 		ret = _utf8s_to_utf16s(name, name_len, endian, uname, max_ulen);
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index 934dcb136d6da..9674917187608 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -90,6 +90,8 @@ enum utf16_endian;
+ struct ntfs_mount_options {
+ 	char *nls_name;
+ 	struct nls_table *nls;
++	/* ->d_hash() and ->d_compare() read the options in rcu pathwalk */
++	struct rcu_head rcu;
+ 
+ 	kuid_t fs_uid;
+ 	kgid_t fs_gid;
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index 8f30670a56237..b578f37afd261 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -242,6 +242,11 @@ static inline void put_mount_options(struct ntfs_mount_options *options)
+ 	kfree(options);
+ }
+ 
++static void put_mount_options_rcu(struct rcu_head *head)
++{
++	put_mount_options(container_of(head, struct ntfs_mount_options, rcu));
++}
++
+ enum Opt {
+ 	Opt_uid,
+ 	Opt_gid,
+@@ -408,6 +413,7 @@ static int ntfs_fs_reconfigure(struct fs_context *fc)
+ 	struct super_block *sb = fc->root->d_sb;
+ 	struct ntfs_sb_info *sbi = sb->s_fs_info;
+ 	struct ntfs_mount_options *new_opts = fc->fs_private;
++	struct ntfs_mount_options *old_opts;
+ 	int ro_rw;
+ 
+ 	/* If ntfs3 is used as legacy ntfs enforce read-only mode. */
+@@ -444,7 +450,15 @@ static int ntfs_fs_reconfigure(struct fs_context *fc)
+ 
+ out:
+ 	sync_filesystem(sb);
+-	swap(sbi->options, fc->fs_private);
++	old_opts = sbi->options;
++	/* pairs with the READ_ONCE() in ntfs_nls_to_utf16() */
++	smp_store_release(&sbi->options, new_opts);
++	fc->fs_private = NULL;
++	/*
++	 * ntfs_d_hash() and ntfs_d_compare() of a pathwalk in rcu mode may
++	 * still read the old options through the sbi.
++	 */
++	call_rcu(&old_opts->rcu, put_mount_options_rcu);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
