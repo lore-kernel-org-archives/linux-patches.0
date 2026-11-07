@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060918;
-	b=EH7YnA4/CwtkrOcVqnnXpp4ncfbxI71HxjGyAVmJWhIZNU73cNV2YUWZlI0vBmXKrQhs
-	 h/BZMWEy04sS9JypDEEiz5i+KNGrc7iU7+XZXnXqF1SPntCDyG4NcFyck6ZnoMPf2nUgu
-	 3xExoF91A16ZfcVwj2a+REUFUA5GiOW9mmMkgzRCyLPCc0/fSy9xuw93mgIK2ev9WJ6i6
-	 uK7zIzK5Bt2WdHKc6B6mwudyfuZUUNbKs3TkecvM5KXOuwmy+a4E84/XKEGbUgk4txLGw
-	 iE7/xmYaJMaydjBkQ6S8Ubzz1aasy92DTztYjUP1iHJC3iEFUrdJOD1AKn4zRRYUo7g==
+	t=1794060920;
+	b=s41tJ4xZ9zTJi/xGEfKgmxnJiN/FX1c8Sa9NqkOQGIskvt0ufrDJJAFjr4A65bn9pNgl
+	 fOLRmVTmmjuCdpV6544WyoZswAKwiqCrxla+NpEBYfvSrImmw8fViSLTU/+YetwnTSoyV
+	 jhjQlv0/LBnOQt1pADSPiRUA/Q7/tvw9J7zSd3nP5sz9JGriZxXcubriVfvIP87guXWZP
+	 7yBMqF53q+88ojKtwsirJbGK4hb5JC3E7y2mWzfG2JbEic7QnZcb1hjZahlOeAENujqnm
+	 gK3RYHyBTLTuxUv6wjuUTZbV3jrSIhNk2qYAI8xA4yYNyjEZNoQEzbiY0bi6KJfQqXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060920;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0BOHHwvYmYYqpqKyMFt0oWdURV35rsZqYV06Qpkr++Y=;
-	b=vaeevD41/d6JshAX/bn9QXJ94Y5qLJIA2lnpwgClStE+jJ27gtoKLfPiYkTF0OlWIPjQ
-	 HzJlW+ZBjVZWUceA3ksF/Ca+PqHykvqx3Yf7894fplFn9B5l3yTVRrngNI/5rj8Xb4rEF
-	 uvppNLirEa7yvPvh0EqzrH6YgqUkH0EcfyAbfyNX4ViWm2HuPyaUbmz7hAmOBAXWOwUOX
-	 DXsjnnn+AyJGurzncbSE+L0LjbrvfZ7VqEqu+c27aMFv5L9VRCLpR+h1Jyk8cmzFXwBrr
-	 nETJePvarH5EC/MxYxgHGWTiSvxBwGEUAntLrmgc+ScFVC/bLJu2xB1c95txQLi6rBw==
+	bh=A+oUUsDFjnkjk6ZAye/kHh2ovWpwR4sIYiO4joYuuKM=;
+	b=QK+xWKIRrx5Wy+VFYAj7CFlcpr2oPFyvgIBZ1dGdpD/ijHlE0I8VEpjhJn4ztYPu3Vmj
+	 TWNROAUZ4yNIK/ZrBxLzPePWxNKp7gvEd+kQ8snbVNu2vYKmf0/rHa+dsbMHT/qPodxJK
+	 xuS21SqPon/mkdGJG8P9WKBJNxks2Nwe4JXyfZ2RN8Zn2JCV972rbCFKMT+SHD4Rn0C0X
+	 g4V9dY2yKyCY67h3P/Gq7V08ReHlDjsNsa92Hd4NzhksaEdcvMN6BE2e1llKKq2kkDfzQ
+	 3uc848I13NL2mWAFnFlB3JrTinmhjiSgaHh9iYESoVGHOp3pzZEQvU0n1FWUnP2mpaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ecdVon/M";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xDyoqBrD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB4D606A33A;
-	Sat,  7 Nov 2026 14:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB43606A33A;
+	Sat,  7 Nov 2026 14:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecdVon/M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D18B1F0089F;
-	Sat,  7 Nov 2026 14:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xDyoqBrD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE481F0089F;
+	Sat,  7 Nov 2026 14:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060918;
-	bh=0BOHHwvYmYYqpqKyMFt0oWdURV35rsZqYV06Qpkr++Y=;
+	s=korg; t=1794060919;
+	bh=A+oUUsDFjnkjk6ZAye/kHh2ovWpwR4sIYiO4joYuuKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ecdVon/MJlJ4X8uiZtoOAQebnfPNEFAcSKipXO6p26YV+sfSHjcGhWNUfxRai997w
-	 FnKdxiGVYx7JjsSr5JzpjzBreEihpyeZT3CuA2/sk+yzU1FAKuCU00noUZ7O2gEYpP
-	 l9rKDpo8euHTG9dRLd17TaHhpaagLhT1QWMVadNc=
+	b=xDyoqBrDqEqpWSQDDbL94J0NOv1NkIH13wG2jublrlpAwU9jnn92FghDk8fLtHQdo
+	 j33UX1C8RMmA7wSOgpsK7q8JI86v1/j9zkn7Gtzo9VbK93fRUPFcIWI/5EPw98L2dY
+	 4VCk83Gw+wMZr8DfRCMLCvt8Vn64bSbi+Oe2heGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Zverev <playximik29@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0286/1536] Bluetooth: btusb: Add support for 1357:c123 Realtek 8852BE device
-Date: Sat,  7 Nov 2026 08:38:22 -0500
-Message-ID: <20261107135005.691719116@linuxfoundation.org>
+Subject: [PATCH 6.12 0287/1536] Bluetooth: hci_nokia: validate firmware packet bounds
+Date: Sat,  7 Nov 2026 08:38:23 -0500
+Message-ID: <20261107135005.721527194@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,54 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Zverev <playximik29@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 335d7bd554a20f33acf762655cafe1089f7f5822 ]
+[ Upstream commit 45640627e3ddc5f4d3a0d08618a596a8c65d48a5 ]
 
-Wiko Hi MateBook 14 Ryzen 200 laptops (DMI system-product-name
-"MNCA-XX", board "M1060") are equipped with an RTL8852BE Wi-Fi/BT
-combo chip (rtw89_8852be), whose Bluetooth radio enumerates as
-1357:c123 instead of one of the already-supported 1358:c123 / 0bda:c123
-identifiers, presumably due to OEM rebranding. Without a matching
-entry it only matches the generic USB Bluetooth class fallback, so the
-Realtek firmware/config (rtl8852btu_fw.bin / rtl8852btu_config.bin) is
-never loaded and the adapter cannot discover or connect to any device,
-even though hciconfig reports it as powered and scanning.
+nokia_setup_fw() walks a length-prefixed firmware stream and
+decodes HCI command packets from each record.
 
-Device descriptor:
-  idVendor           0x1357
-  idProduct          0xc123
-  bcdDevice            0.00
-  iManufacturer           1 Realtek
-  iProduct                2 Bluetooth Radio
-  bDeviceClass          224 Wireless
-  bDeviceSubClass         1 Radio Frequency
-  bDeviceProtocol         1 Bluetooth
+Check that each record fits in the remaining firmware image, that command
+records contain the HCI command header, and that the payload length is
+covered before submitting the command.
 
-Adding the same BTUSB_REALTEK | BTUSB_WIDEBAND_SPEECH quirk already
-used for 1358:c123 and 0bda:c123 fixes firmware loading and normal
-operation.
-
-Signed-off-by: Pavel Zverev <playximik29@gmail.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/hci_nokia.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 00aa0fffd0c94..84238687ff653 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -855,6 +855,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0bda, 0xc123), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x1357, 0xc123), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0cb5, 0xc547), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/drivers/bluetooth/hci_nokia.c b/drivers/bluetooth/hci_nokia.c
+index 49bbe4975be4b..e5aa606b8d35b 100644
+--- a/drivers/bluetooth/hci_nokia.c
++++ b/drivers/bluetooth/hci_nokia.c
+@@ -354,9 +354,29 @@ static int nokia_setup_fw(struct hci_uart *hu)
+ 		u16 opcode;
+ 		struct sk_buff *skb;
  
++		if (pkt_size > fw_size - 2) {
++			err = -EINVAL;
++			dev_err(dev, "%s: Malformed firmware packet\n",
++				hu->hdev->name);
++			goto done;
++		}
++
+ 		switch (pkt_type) {
+ 		case HCI_COMMAND_PKT:
++			if (pkt_size < 1 + HCI_COMMAND_HDR_SIZE) {
++				err = -EINVAL;
++				dev_err(dev, "%s: Malformed firmware command\n",
++					hu->hdev->name);
++				goto done;
++			}
++
+ 			cmd = (struct hci_command_hdr *)(fw_ptr + 3);
++			if (cmd->plen > pkt_size - 1 - HCI_COMMAND_HDR_SIZE) {
++				err = -EINVAL;
++				dev_err(dev, "%s: Truncated firmware command\n",
++					hu->hdev->name);
++				goto done;
++			}
+ 			opcode = le16_to_cpu(cmd->opcode);
+ 
+ 			skb = __hci_cmd_sync(hu->hdev, opcode, cmd->plen,
 -- 
 2.53.0
 
