@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063297;
-	b=t31LoozlJqCHSvDYs7N2b6kAj+1kHUuL7MQIFH27R2AvRWXm+bEHu5uuvyCB/xWFU6tE
-	 rW+KKqOQYlvDOJ+KDkNXWpQv4FAQoNiXBsb2nnxLIQeR/xq4ohh1yyqihn+tTerkfmJVi
-	 SMuMbbPUmWa6sofMUZ0pVWhr98HBEF9qEVRHWxAr7nqS9RxKiidOpc9pdRFwRZtPYoZeE
-	 gn7uH9Yd1pd53IGcMNelx1PoZCTGzH8RvgPzyy6CIEcp1hm3l0e5pQrHw0c12eDuOFf12
-	 sxBL4BTlm2ULCol6/axZI7iZQuqNvMkP36NmAnhT8fq55F2EWPofIwQWUBeU572O/tw==
+	t=1794063298;
+	b=bNAsSpRZECPDJJeAW/o/YRE7bY7UFHVnYp+I6QS35j51Qsz7sWtCaIezWwoW55hjnajX
+	 /jxurLopmB6WGtcpBvc1UE9AcUWIARxMgo3Lu7TjozJ2XSwz3csBp8SAM1YWolTNWpmSW
+	 yDHsnyoA3EFyV4Hxfq9O9uOX2IXBkEh7360EthlzbpkXltD0ETCQNT5qgAnIzSYQiRdrG
+	 +J3rwSZc2PwXEHoXMRdw2pqBtivSNS8Y1FXA93d8N5lYCI6KWB+KiaI5sDdMcOztYtNoq
+	 swT7KOd8sp8LqPnCmAMqnL9xnIEoDiHhQSPGCGsxbvg1v5aP3o86c9/4hUtEhLoy0/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063297;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063298;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Zt2htV+8N4Zk65V7IIgBi2GuUK4wANSErKydfEQrDKE=;
-	b=Z09d96F7fIgjvfxKrFdoBfINAApE6ju7O8Che1QpJQ7QbnpYh3ZtO1nnSa3fn9Fc/m8u
-	 UoJgjbnAy7GtfGc5Oc8H7zGgcEEgwF9Nden0/9urE45XUim4lZRo6Ax0lGPg4jUr2VOWb
-	 QpEuQa1wQiVdP4tOIIA8K7JgBWGDLrKfomEJvWe8C6fS/8EolReEgdX36E5wLkKaC/JC0
-	 3+daW8cn2IvF8YwMm52mE85aUQq1t7riAAz3kikX4+IxE0JNAzPnaI76ksjRrevqn5zu9
-	 3CYrVRx0dKscuQ95Ie4ZbhmjhVpEuBBktbHI/vY4+rirJiZWhcXU5W5sgvdDLoPnt3Q==
+	bh=IUc88kpyZd7VpPD757hRo0kqf4NsVy9OPNJ5l9WCvTY=;
+	b=edjXbTvKW66CKELsmKfBJchtDVzDgkwsrOQkAhe5J+OzJ/zLV5vX1Kqnrk6iZJhNYZq+
+	 dJfDQpuNTMKLieC9KtBnWEUseJT0SckupeFCLoH5yqHg9UOxNlra3C1apOr48AoV8ABcA
+	 cZhZviweApcLGgkdqTHUoPMIySGonShobjl8xR8gk9ZaKB8cvlrmbRrRXUMLAzu1IS4gR
+	 sNsOvojE0/KbqzQ/2jAhBnExad3aoGvU+EgG66P9OEJOLciVVzToIFwvij9QSOLThI/kW
+	 XNiW+IouD0MKUQV8A9x/pXRqzBSfI7Gm57TfBUKTrEc5mDL3RPHXYX+KO4AhoMQIVRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J185lQ6e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o0Z4ZTBu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36846606A32D;
-	Sat,  7 Nov 2026 14:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C23606D824;
+	Sat,  7 Nov 2026 14:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J185lQ6e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56901F008A3;
-	Sat,  7 Nov 2026 14:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o0Z4ZTBu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4D81F008A2;
+	Sat,  7 Nov 2026 14:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063297;
-	bh=Zt2htV+8N4Zk65V7IIgBi2GuUK4wANSErKydfEQrDKE=;
+	s=korg; t=1794063298;
+	bh=IUc88kpyZd7VpPD757hRo0kqf4NsVy9OPNJ5l9WCvTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J185lQ6eB08sIqKmfa/i6bblv58kas22tXVwCmSTJi4X3TJV/rMacbjX0A4qpPnrx
-	 mWdOXnh5HzPyW9VRcauWJG3vLtHcSOthcA4tlXPUTtZszq8+4GD4BM+Boj17gsMI0K
-	 6dMxqvlhJUp6q6rhIZPLHzLTn9nDEkiUN/Muv/d4=
+	b=o0Z4ZTBuCtVjCMVfsfoE+e7NCpxT+eAbSrqGriF65B75DquX6MaXto02jEmRqJhe7
+	 6UaQxBZzXJP7i92nlCWUzmej5wIVcd04PBVVptCggnZSfJgVf447lhHMn+c98wIms0
+	 I1b7cIWENhoagnlRmyIIJWOmaAS5d+7BR8cLO7Yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gibson <daniel@gibson.sh>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
+	Hugo Baigue <hugobaigue2004@gmail.com>,
+	Ponali <ponali2k@gmail.com>,
+	Denis Benato <denis.benato@linux.dev>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 489/869] platform/x86/amd: Stop counting intermediate cycles with metrics table
-Date: Sat,  7 Nov 2026 08:52:51 -0500
-Message-ID: <20261107134910.145979200@linuxfoundation.org>
+Subject: [PATCH 6.18 490/869] platform/x86: asus-wmi: fix unclear usage of bd->props.power
+Date: Sat,  7 Nov 2026 08:52:52 -0500
+Message-ID: <20261107134910.174327946@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,74 +71,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Denis Benato <denis.benato@linux.dev>
 
-[ Upstream commit 0c2c928ea7d33c8131b0785bda4e26a32dce5caa ]
+[ Upstream commit fd83d81ddf058d487e6d6489b18094f068e66a59 ]
 
-The metrics table doesn't increment for all cases that can cause an
-intermediate wakeup if the cycle is very fast.  This can make the intent
-from commit 9f5595d5f03fd ("platform/x86/amd: pmc: Require at least 2.5
-seconds between HW sleep cycles") not work properly.
+The bd->props.power is checked in parts of the driver correctly
+comparing with BACKLIGHT_POWER_ON, while in others with a raw usage
+of bd->props.power and !bd->props.power, moreover in certain checks
+the logic has been inverted due to BACKLIGHT_POWER_ON being defined
+as 0: fix both the wrong usage and the inconsistencies by using
+proper comparisons.
 
-That commit originally was measured to work properly, but it was
-accidental due to a logic error.  The logic error was fixed in
-commit 4dbd11796f3a8 ("platform/x86/amd: pmc: Clear metrics table at
-start of cycle") but this now masked the table doesn't always update.
-
-Since that code was introduced, Daniel Gibson added a number of changes
-to the logic which includes a state variable introduced in
-commit 037f0b03c663a ("platform/x86/amd/pmc: Don't log during
-intermediate wakeups").
-
-Utilize that state variable to instead decide if a single sequence has
-started.
-
-Cc: Daniel Gibson <daniel@gibson.sh>
-Cc: stable@vger.kernel.org # 7.1.y: 037f0b03c663a platform/x86/amd/pmc: Don't log during intermediate wakeups
-Cc: stable@vger.kernel.org # 6.18.y: 037f0b03c663a platform/x86/amd/pmc: Don't log during intermediate wakeups
-Fixes: 4dbd11796f3a8 ("platform/x86/amd: pmc: Clear metrics table at start of cycle")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Tested-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Link: https://patch.msgid.link/20260914141734.2703545-1-mario.limonciello@amd.com
+Fixes: 130d29c5627c ("platform/x86: asus-wmi: adjust screenpad power/brightness handling")
+Closes: https://lore.kernel.org/all/178362762638.911488.8564892548331679884@eldamar.lan/
+Closes: https://lore.kernel.org/all/ea9c63d1-4776-49d5-9dc4-6c09498f99c9@linux.dev/
+Tested-by: Hugo Baigue <hugobaigue2004@gmail.com>
+Tested-by: Ponali <ponali2k@gmail.com>
+Cc: stable@vger.kernel.org
+Assisted-by: zcode:glm-5.3-flash
+Signed-off-by: Denis Benato <denis.benato@linux.dev>
+Link: https://patch.msgid.link/20260916143838.170950-2-denis.benato@linux.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
-index 000f876e27ebb..fea41c8c1899a 100644
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -604,19 +604,6 @@ static int amd_pmc_verify_czn_rtc(struct amd_pmc_dev *pdev, u32 *arg)
- 	return rc;
- }
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index 9f0f79030b5b8..adff9f49b5677 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -4156,7 +4156,8 @@ static int update_screenpad_bl_status(struct backlight_device *bd)
+ 	u32 ctrl_param = bd->props.brightness;
+ 	int err = 0;
  
--static bool amd_pmc_intermediate_wakeup_need_delay(struct amd_pmc_dev *pdev)
--{
--	/*
--	 * Starting a new HW sleep cycle right after waking from one
--	 * can cause electrical problems triggering the over voltage protection.
--	 * That is avoided by delaying the next suspend a bit, see also
--	 * https://lore.kernel.org/all/20250414162446.3853194-1-superm1@kernel.org/
--	 */
--	struct smu_metrics table;
--
--	return get_metrics_table(pdev, &table) == 0 && table.s0i3_last_entry_status;
--}
--
- static bool amd_pmc_want_suspend_delay(struct amd_pmc_dev *pdev)
- {
- 	/*
-@@ -709,7 +696,7 @@ static void amd_pmc_s2idle_check(void)
- 	struct amd_pmc_dev *pdev = &pmc;
- 	int rc;
+-	if (bd->props.power) {
++	switch (bd->props.power) {
++	case BACKLIGHT_POWER_ON:
+ 		err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_POWER, 1, NULL);
+ 		if (err < 0)
+ 			return err;
+@@ -4164,12 +4165,17 @@ static int update_screenpad_bl_status(struct backlight_device *bd)
+ 		err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_LIGHT, ctrl_param, NULL);
+ 		if (err < 0)
+ 			return err;
+-	}
++		break;
  
--	if (amd_pmc_intermediate_wakeup_need_delay(pdev) ||
-+	if (!pdev->is_first_check_after_suspend ||
- 	    amd_pmc_want_suspend_delay(pdev))
- 		msleep(2500);
+-	if (!bd->props.power) {
++	case BACKLIGHT_POWER_OFF:
+ 		err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_POWER, 0, NULL);
+ 		if (err < 0)
+ 			return err;
++		break;
++
++	default:
++		pr_warn("Invalid screenpad backlight power state: %d\n", bd->props.power);
++		return -EINVAL;
+ 	}
  
+ 	return err;
 -- 
 2.53.0
 
