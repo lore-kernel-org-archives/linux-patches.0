@@ -1,61 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064545;
-	b=KMen9VXWYH2VzvxAGSEKlyYiBduKethfW9K95pGXc7zdFtd6ZdCoWrBDLmbZq+aWJ5vo
-	 gLp8n3SbAWdr1GdtI/qg/SEKvn2SVxVDa0j1LWYBAihj/TUIkrGtTJ+is1PucbnStaSPs
-	 geqkrJmouJTnVCf0R0kcWumEX8dym9SHRJXqfEKJkwz5n549lrat75R4LP6iVp1v3PYfE
-	 Ep4qYHvevUSBf8Nil6sSwJCyO9TbYaxM/jV73RkTxqcMaQv9yd4oC+/dLQ+WCGFvtKlNh
-	 F2NASkyZP2KgU7TCaekKXwCr6tg+uURNsWqAhK4mGJHOt6ElV8YXUGlT9IrjvTvGP5Q==
+	t=1794064546;
+	b=b823Z/WqayNSci1Iw8ri3jRNdTVxFDsP/Gd/fQRVi2BZTV48aR2EXrPhn+KeoHPn5Hz0
+	 yUIRr9crKQrmwUC62Xci8u1mR0ABhuD+C5IS7HdzqjEi/t3EmztOFfUesqL6qcvgg1b8T
+	 mcViA+ZK44LftKq6+VAOnClQdQ1CDL7u67Xklvv9oufffXJYlQqGJ2TJLGQebYGt7jjVt
+	 KmIloFIYqo7a6CNTwjhWGa31G+HK5/2elzQKL7pcL8g7HKA5ezPtteW/9cg5+vZZJtcBz
+	 sfLyGqXtSSYlm8GeGONOFWk7A+ibs88hBDvUBO+jhoNnLwjeqNNiYmvn0tQLcV6sbSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064545;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nw0tIXAYduMwEc6d74Zei7482J4Y/4mmFDwp0gvhSHc=;
-	b=gHlAi3ZklT93DnYBbX7CD45jscCEBfzJZ7oMQO8kNpdPXO3rye1XDi6qsEs1ZC7Shdyp
-	 abfSGjbWJaehk4qvi7F1UxsSwPGI+jyrW/5p3vWCo5R3zjpyrJyPyAHOtjimUakkW9CNf
-	 V4pK/1ITmpOFeW1ZJDJgnXYKVHZyAInXlfeyFEHLLoivkYrZnMIk/mOnS8SDkNDmmVQiP
-	 Rz2rajzcQ0mllsExniajYRc8ILaPhlEfjNYBsCsUGik3YmCI0UWqLZ0kzz26T89jS/axo
-	 jwY+L9BMU6UOBFf7stCn20oy8+1g6rtS1sIwndUmij0aLBqaZdtTx/LcRe4DkMwmM+g==
+	bh=nxomo+oUjoFhQ8rLWj4uWxhhyduruB7seHpIOrvBeNU=;
+	b=Jpqr3p/EmqSQhX7+AXG31DajkghR4rGZkNeWubxhNYM9Go7Fi0GlYsiymWue25AP1Asz
+	 SJEVpZfutT1ic3NtxHcxl0wqqgHP9m8C0r+BGouhcKqmi6MXBJi9hY1paWneHZhzXqKUA
+	 xzooCe8UnBwxGvPdPtJ+PUR/2b+QumSmAWw/1UOMbNC7SknwScaE7yriHc1u1sdH0gWOr
+	 JyfbOwUHCgZefSJP92Xpb+1lcUzBhfoGlhRorPhoCsUwrXTpsWdu0RyUSzn5lA5sM7Bsw
+	 UvKwfhRPNiUZYg3UPqT5ajnmcMBNzhGIsARNaV/hXoowMrybLl8wawpVg9S7NsIqcVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EoFUNhMM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJZAtdSj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557A2606B8A6;
-	Sat,  7 Nov 2026 15:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE9D606B8A6;
+	Sat,  7 Nov 2026 15:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EoFUNhMM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F391A1F008AB;
-	Sat,  7 Nov 2026 15:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJZAtdSj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7191F008AB;
+	Sat,  7 Nov 2026 15:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064545;
-	bh=nw0tIXAYduMwEc6d74Zei7482J4Y/4mmFDwp0gvhSHc=;
+	s=korg; t=1794064546;
+	bh=nxomo+oUjoFhQ8rLWj4uWxhhyduruB7seHpIOrvBeNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EoFUNhMM8RycHG2T4psAzRUvxB8cQHkOpqx5bP9vI/MHi60f4/2DUT+sJ7LtJ2Ofx
-	 cKLGYfB82tlMy01YcLg1y6v2ZZRttduAbOxsw9EcGTWHzOHr+MuW9W9SNjksEE9AUJ
-	 l5lKE0/uDr+w1H8Pql6GtaFJ2x7EWZkmkJkfbvsA=
+	b=uJZAtdSjyXkEXsSGr+0O+0npTRfm061xvFlAIj73A31tcdMxVHrxRQ41mjSduQ3nh
+	 wcLGtkXomIyGadaVkgEmuliXZ1u+Kf+chHbtOlsr33No3oLGrzIlGD3sf0GuUe7VxL
+	 RSbu2dFXVQKNMD7RUPkbWLm5jtaroxxLIV0u/7ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinmeng Zhou <zhoujinmeng@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Hongfu Li <lihongfu@kylinos.cn>,
-	David Hildenbrand <david@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	Yi Cong <yicong@kylinos.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0571/1257] mm/hugetlb: charge folios to the target mms memcg
-Date: Sat,  7 Nov 2026 08:47:47 -0500
-Message-ID: <20261107134955.124617120@linuxfoundation.org>
+Subject: [PATCH 7.3 0545/1257] wifi: mt76: mt792x: fix negative errno truncation in offload capability
+Date: Sat,  7 Nov 2026 08:47:21 -0500
+Message-ID: <20261107134954.450571409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -77,159 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinmeng Zhou <jinmengzhou22@gmail.com>
+From: Yi Cong <yicong@kylinos.cn>
 
-[ Upstream commit c2deb1356d82c9d54bd2fcf1241cc97eb66fd81f ]
+[ Upstream commit d0115096429ca090a592770c7645f9553a839954 ]
 
-HugeTLB folios are currently charged to the memcg of the allocating task.
-This gives the wrong result when a userfaultfd handler populates a HugeTLB
-VMA that belongs to another process.  The UFFDIO_COPY ioctl operates on
-the userfaultfd context's mm, but get_mem_cgroup_from_current() charges
-the folio to the handler's memcg instead.
+Returning a negative errno as u8 turned -ENOENT into 0xfe, wrongly
+enabling CNM and NAN caps. Return int and default to no caps on error.
 
-This can be reproduced by placing the faulting process and its userfaultfd
-handler in different memory cgroups.  Have the target process register a
-HugeTLB mapping with userfaultfd, trigger a missing fault, and let the
-handler resolve it with UFFDIO_COPY.  The hugepage usage is then reported
-in the handler's memory.current instead of the target's.
-
-The generic userfaultfd population path avoids this problem by charging
-folios to dst_vma->vm_mm.
-
-Pass the target mm through hugetlb_alloc_folio() and charge the folio by
-using get_mem_cgroup_from_mm().  This preserves the existing charge timing
-and error handling while making HugeTLB userfaultfd population consistent
-with the generic path.
-
-Link: https://lore.kernel.org/20260903075048.3316-1-zhoujinmeng@bytedance.com
-Fixes: 8cba9576df60 ("hugetlb: memcg: account hugetlb-backed memory in memory controller")
-Signed-off-by: Jinmeng Zhou <zhoujinmeng@bytedance.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Hongfu Li <lihongfu@kylinos.cn>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
+Fixes: e8a264ccd2de ("wifi: mt76: mt7921: move init shared code in mt792x-lib module")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yi Cong <yicong@kylinos.cn>
+Link: https://patch.msgid.link/20260824021429.43761-1-cong.yi@linux.dev
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/hugetlb.h    | 3 ++-
- include/linux/memcontrol.h | 8 +++++---
- mm/hugetlb.c               | 9 ++++++---
- mm/memcontrol.c            | 6 ++++--
- 4 files changed, 17 insertions(+), 9 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt792x_core.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index 16c4c4caa126c..45ada75dc04e9 100644
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -699,7 +699,8 @@ enum hugetlb_alloc_flag {
- #define HUGETLB_ALLOC_USE_GLOBAL_RESERVATIONS BIT(HUGETLB_ALLOC_USE_GLOBAL_RESERVATIONS_BIT)
- 
- struct folio *hugetlb_alloc_folio(struct hstate *h,
--		struct mempolicy_interpreted *mpoli, u8 alloc_flags);
-+		struct mempolicy_interpreted *mpoli, struct mm_struct *mm,
-+		u8 alloc_flags);
- struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 				unsigned long addr, bool cow_from_owner);
- struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
-diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index 7d1c0ce189a88..362af58e50a43 100644
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -662,7 +662,8 @@ static inline int mem_cgroup_charge(struct folio *folio, struct mm_struct *mm,
- 	return __mem_cgroup_charge(folio, mm, gfp);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+index f56f03bfe3874..3ce6c6ceac81c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+@@ -858,7 +858,7 @@ int mt792x_init_wiphy(struct ieee80211_hw *hw)
  }
+ EXPORT_SYMBOL_GPL(mt792x_init_wiphy);
  
--int mem_cgroup_charge_hugetlb(struct folio* folio, gfp_t gfp);
-+int mem_cgroup_charge_hugetlb(struct folio *folio, struct mm_struct *mm,
-+			      gfp_t gfp);
- 
- int mem_cgroup_swapin_charge_folio(struct folio *folio, unsigned short id,
- 				   struct mm_struct *mm, gfp_t gfp);
-@@ -1156,9 +1157,10 @@ static inline int mem_cgroup_charge(struct folio *folio,
- 	return 0;
- }
- 
--static inline int mem_cgroup_charge_hugetlb(struct folio* folio, gfp_t gfp)
-+static inline int mem_cgroup_charge_hugetlb(struct folio *folio,
-+					    struct mm_struct *mm, gfp_t gfp)
+-static u8
++static int
+ mt792x_get_offload_capability(struct device *dev, const char *fw_wm)
  {
--        return 0;
-+	return 0;
- }
- 
- static inline int mem_cgroup_swapin_charge_folio(struct folio *folio,
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 930e40ac77077..1c2b5825b5614 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2827,6 +2827,7 @@ void wait_for_freed_hugetlb_folios(void)
-  * hugetlb_alloc_folio - Allocate a hugetlb folio.
-  * @h: Hugetlb state control block.
-  * @mpoli: Interpreted memory policy to use for allocation.
-+ * @mm: Memory descriptor of the allocation target.
-  * @alloc_flags: Flags controlling the allocation behavior.
-  *
-  * Allocates a hugetlb folio and handles cgroup charging and global hstate
-@@ -2836,7 +2837,8 @@ void wait_for_freed_hugetlb_folios(void)
-  *         -ENOSPC if cgroup charging fails or no folio is available.
-  */
- struct folio *hugetlb_alloc_folio(struct hstate *h,
--		struct mempolicy_interpreted *mpoli, u8 alloc_flags)
-+		struct mempolicy_interpreted *mpoli, struct mm_struct *mm,
-+		u8 alloc_flags)
+ 	const struct mt76_connac2_fw_trailer *hdr;
+@@ -927,13 +927,20 @@ mt792x_get_mac80211_ops(struct device *dev,
+ 			void *drv_data, u8 *fw_features)
  {
- 	bool charge_hugetlb_cgroup_rsvd = alloc_flags &
- 					  HUGETLB_ALLOC_CHARG_CGROUP_RSVD;
-@@ -2891,7 +2893,8 @@ struct folio *hugetlb_alloc_folio(struct hstate *h,
+ 	struct ieee80211_ops *ops;
++	int ret;
  
- 	spin_unlock_irq(&hugetlb_lock);
+ 	ops = devm_kmemdup(dev, mac80211_ops, sizeof(struct ieee80211_ops),
+ 			   GFP_KERNEL);
+ 	if (!ops)
+ 		return NULL;
  
--	ret = mem_cgroup_charge_hugetlb(folio, gfp | __GFP_RETRY_MAYFAIL);
-+	ret = mem_cgroup_charge_hugetlb(folio, mm,
-+					gfp | __GFP_RETRY_MAYFAIL);
- 	/*
- 	 * Unconditionally increment NR_HUGETLB here because if
- 	 * mem_cgroup_charge_hugetlb failed, freeing the page will
-@@ -3034,7 +3037,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 		.nodemask = nodemask,
- 	};
+-	*fw_features = mt792x_get_offload_capability(dev, drv_data);
++	ret = mt792x_get_offload_capability(dev, drv_data);
++	if (ret < 0) {
++		dev_warn(dev, "failed to read firmware offload caps: %d\n", ret);
++		*fw_features = 0;
++	} else {
++		*fw_features = ret;
++	}
  
--	folio = hugetlb_alloc_folio(h, &mpoli, alloc_flags);
-+	folio = hugetlb_alloc_folio(h, &mpoli, vma->vm_mm, alloc_flags);
- 
- 	mpol_cond_put(mpol);
- 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 259f9f43b38b1..1f03f5e775554 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -5242,6 +5242,7 @@ int __mem_cgroup_charge(struct folio *folio, struct mm_struct *mm, gfp_t gfp)
- /**
-  * mem_cgroup_charge_hugetlb - charge the memcg for a hugetlb folio
-  * @folio: folio being charged
-+ * @mm: mm context of the allocation target
-  * @gfp: reclaim mode
-  *
-  * This function is called when allocating a huge page folio, after the page has
-@@ -5251,9 +5252,10 @@ int __mem_cgroup_charge(struct folio *folio, struct mm_struct *mm, gfp_t gfp)
-  * Returns ENOMEM if the memcg is already full.
-  * Returns 0 if either the charge was successful, or if we skip the charging.
-  */
--int mem_cgroup_charge_hugetlb(struct folio *folio, gfp_t gfp)
-+int mem_cgroup_charge_hugetlb(struct folio *folio, struct mm_struct *mm,
-+			      gfp_t gfp)
- {
--	struct mem_cgroup *memcg = get_mem_cgroup_from_current();
-+	struct mem_cgroup *memcg = get_mem_cgroup_from_mm(mm);
- 	int ret = 0;
- 
- 	/*
+ 	if (mt792x_needs_cnm_runtime(drv_data))
+ 		*fw_features |= MT792x_FW_CAP_CNM;
 -- 
 2.53.0
 
