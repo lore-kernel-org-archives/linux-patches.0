@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065132;
-	b=3B/xnj/rMT/VacQaYwJUokNqpcyL962HU/uDpm/yYG3ul4uEo7YYQWONSgDH7Y2GMjMh
-	 lNKAnWH4kCL1lljZe/aPlBk3KHypqjjACzWRFamZdNvCgmB/f3FO+iR4NtmelgJa43MZF
-	 WqNedh6pnpeVDqeqK1WlD2RbzHixT3N/Sx3GAOz57hGprqkWKIZOWjQAWgMw3RZ2QRTE8
-	 A/IpD91jfbXgQaC8Ja1Gqk80fY0ntOTb5Lcm+bMBcVsf1UNu0S5Vw+MuRXGAMt1xolmPS
-	 a8KFwwrN63zzp3IcGdPnfCTVAiA46B3RM7aFButms0U9F/m95MEQuaUo9uxkP3BrifA==
+	t=1794065134;
+	b=YsN/FE8dBaDjVeJqOu7oCOsr9KfDAQUfW+5deHwoB9rFEWfvR5e8vRXbUymIYKWbUeNq
+	 ADCvvLPCmaKp1LYV1ijcYPoihPU2jiS6HWYFzCnMZXr65MP8o58E5UJ9c0wbT/4on98Bm
+	 BOXqbW4oUR+uRW5LVsUtFw32yl9eRXFgG0abLQrevIBtKZE7ALaZ/xSuuLujTjG1Dqt5o
+	 nDeNEssNwGKMMDuTi4JjcZOHuytMR0KDLdGSvLXuL+I07SgMc11X12gK/8GC+HhO4pXtI
+	 7qo3p+8H+XKYyl7LbdzrkeSrKRLl3oRGv1UIqcN57DxJVd5lTt6cPcsYRXNl+g/PsJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065134;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=alMPjnPMlHg+mep7bkouJT6UbZisnct09uuI9KEqhao=;
-	b=wD97egciIe56iBDiEuqv5evp7OLOAOmbMZoEjlDQ31TFYTBAmsDmm5ope8/ShAS5WzTh
-	 GFtCn4F2P9+PCm43InhuBIuFZ1o8SRbwz4nOP56wZ/TeSEBr8mDlMcwuqjLcF/FGjGPLp
-	 +506iMqSvgKz4qxNDxwqLSUiOjbkDxhq/Td2z5hulumhOc1ENLKnhYt4fZt+kWBljVegE
-	 Dn9BakdCeYUsAc+naDphwn6tFxrRP1OWwUmi/JDBG49uiL1EYVdXH1BPMJU4UZfarMXKK
-	 sxcbcJJPbWmZzlJBUzetSs9qML+7IYLrAdokHmr3+bVB84JJdlEP5abF7AfWi4ZNlYQ==
+	bh=IsR3Vego0OFeOIYz7jHLqnz4ZpUD3l54toh2opF5eU0=;
+	b=NaU23CPI/ygx3LfUdxthz4S8Ix29nuxHiJKDCD0j+GEOv/W7XB4WCOiiS479HqkXNptk
+	 IHCzoQTbq9RvJdfvfaEfFFb9HrxD49Eg2n16l7+9R1BfNwG+dlNg6fclB8UNYsKnqL44X
+	 HJpjQ+lgWO28iWfatEgXRXRlKV/cy16Kbp4DAC0wQTa99QKI+8KCxmVqFl37fOzDw9N9+
+	 Z3pYC3bMkkapVkrIN+s4BHo558K2eVMn4m8E7w9lrE1A+GHlRiCX6kVIfl+8ZeB43HXMc
+	 cxl9FMmQ87natMZWyDyyHAW8myp3/MMCba8vRYxaev49eNjrov+rcDoUaF06JlSA+Yg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFCyAhMi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NpKtFA8O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF68E606A32D;
-	Sat,  7 Nov 2026 15:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE0D606A332;
+	Sat,  7 Nov 2026 15:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFCyAhMi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77ADF1F0089F;
-	Sat,  7 Nov 2026 15:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NpKtFA8O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260671F0089F;
+	Sat,  7 Nov 2026 15:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065131;
-	bh=alMPjnPMlHg+mep7bkouJT6UbZisnct09uuI9KEqhao=;
+	s=korg; t=1794065133;
+	bh=IsR3Vego0OFeOIYz7jHLqnz4ZpUD3l54toh2opF5eU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XFCyAhMiD/e6ftMHG1SbLcmiYsy/qWYX75c7Myq6p/DNdq5GLtBv/n/o4FLNVSwta
-	 qiqbZrT+Lf6aygg3wB1XNvRTxDZPgRPHtipG/yOiu34t/JZ4MT/smdu5jlxgD9WPy1
-	 ufiv2CN9HauSERf4M9fWW9HmkwQhLT7FGZQlUiao=
+	b=NpKtFA8OsiD/ZHBB9qdl4igUoWosZlJ3PccP3bBvFjWn9isCOpfBZWlkgz/4HnXxr
+	 45X/fAgLqaUJbyDoVdr1bjlgbxq13Z//tGHg7dnj241TqH0xrFyvirOHpl0gIT4IAO
+	 O3tO2jzNr/fCO3xJEim74lmpctEqxqKFdPguPM74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Luigi Lauro <luigi.lauro@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0952/1257] f2fs: dont use truncate_inode_pages_final() on live inodes
-Date: Sat,  7 Nov 2026 08:54:08 -0500
-Message-ID: <20261107135005.639360896@linuxfoundation.org>
+Subject: [PATCH 7.3 0953/1257] drm/amdgpu: require _PR3 for BOCO
+Date: Sat,  7 Nov 2026 08:54:09 -0500
+Message-ID: <20261107135005.665922669@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,75 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Luigi Lauro <luigi.lauro@gmail.com>
 
-[ Upstream commit 74bbd6ada01f91fcad60608e0417bf45a9fa99e6 ]
+[ Upstream commit 28f3d169f162ca7e803c5a1f7e1bb55bdc915d1c ]
 
-truncate_inode_pages_final() is meant to be called from ->evict_inode.
-It sets AS_EXITING on the mapping, and nothing ever clears it, to tell
-the VM that the inode is going away.
+amdgpu_device_supports_boco() returns true for an AMD_IS_PX device on a
+system with a hybrid ATPX method even when the device has no ACPI power
+resource (_PR3). On an APU mini PC with a discrete GPU attached over
+OCuLink, the iGPU's ATPX method reports hybrid graphics, the dGPU is
+flagged AMD_IS_PX, and runtime PM in auto mode picks BOCO:
 
-f2fs calls it in two places where the inode stays live:
+  amdgpu: ATPX Hybrid Graphics
+  amdgpu 0000:c6:00.0: Using BOCO for runtime pm
 
- - F2FS_IOC_START_ATOMIC_REPLACE uses it to drop the page cache of the
-   original inode before setting i_size to 0. The atomic write then
-   goes on through this inode.
+In BOCO mode the driver leaves powering the device off to the PCI core,
+which can only do it through _PR3 on the upstream bridge. No device on
+this dGPU's path has _PR3, so when it runtime suspends the card stays
+powered, with its fans at about 700 rpm.
 
- - f2fs_abort_atomic_write() uses it to drop the uncommitted data. It
-   is called on eviction, but also on the last writer's close in
-   f2fs_release_file(), from f2fs_file_flush() when the atomic writer
-   exits, from F2FS_IOC_ABORT_ATOMIC_WRITE and when
-   F2FS_IOC_COMMIT_ATOMIC_WRITE fails.
+Require has_pr3 for BOCO, as the function's description ("dGPU with ACPI
+power resources") says. The same card then picks BACO, which powers it
+down:
 
-Other processes may still have the file open or mapped in all of these
-cases. The mapping then stays marked as exiting for as long as the
-inode is in memory. This stops reclaim from storing workingset shadow
-entries for it and breaks any code that assumes an exiting mapping has
-no users left.
+  amdgpu 0000:c6:00.0: Using BACO for runtime pm
 
-All we need in both places is to drop the page cache, so use
-truncate_inode_pages(mapping, 0) instead. The eviction path is not
-affected, because f2fs_pre_evict_inode() still calls
-truncate_inode_pages_final() after f2fs_abort_atomic_write().
+This only changes systems with a hybrid ATPX method and no _PR3 on the
+dGPU's upstream bridge, where BOCO cannot cut the power today. Tested on
+one such system only, an RX 9070 XT (Navi 48) over OCuLink with a Ryzen
+AI 9 HX 470, with the change backported to 7.2.9: the stock module logs
+"Using BOCO", the patched one "Using BACO"; BACO runtime suspend powers
+the card off and it resumes cleanly. Not tested on a hybrid laptop or a
+Thunderbolt eGPU.
 
-Cc: stable@kernel.org
-Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
-Fixes: 41e8f85a75fc ("f2fs: introduce F2FS_IOC_START_ATOMIC_REPLACE")
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5980
+Assisted-by: Claude:claude-opus-5-5
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Luigi Lauro <luigi.lauro@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1a039805354a44aab7abb2a6e685212d48b17a5e)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c    | 2 +-
- fs/f2fs/segment.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index fd72eb4563de2..c477e6d153145 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2460,7 +2460,7 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
- 	fi->original_i_size = isize;
- 	if (truncate) {
- 		set_inode_flag(inode, FI_ATOMIC_REPLACE);
--		truncate_inode_pages_final(inode->i_mapping);
-+		truncate_inode_pages(inode->i_mapping, 0);
- 		f2fs_i_size_write(inode, 0);
- 		isize = 0;
- 	}
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 381b0a9875946..f3a73b6c24c3f 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -194,7 +194,7 @@ void f2fs_abort_atomic_write(struct inode *inode, bool clean)
- 		return;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 9269e780feb73..9128b60891c80 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -583,10 +583,8 @@ bool amdgpu_device_supports_boco(struct amdgpu_device *adev)
+ 	if (!IS_ENABLED(CONFIG_HOTPLUG_PCI_PCIE))
+ 		return false;
  
- 	if (clean)
--		truncate_inode_pages_final(inode->i_mapping);
-+		truncate_inode_pages(inode->i_mapping, 0);
+-	if (adev->has_pr3 ||
+-	    ((adev->flags & AMD_IS_PX) && amdgpu_is_atpx_hybrid()))
+-		return true;
+-	return false;
++	/* BOCO needs a platform power resource (_PR3) to cut the power */
++	return adev->has_pr3;
+ }
  
- 	release_atomic_write_cnt(inode);
- 	clear_inode_flag(inode, FI_ATOMIC_COMMITTED);
+ /**
 -- 
 2.53.0
 
