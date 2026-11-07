@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063724;
-	b=hpcXaoYuXH/kFCAVW5Ij3nOZ7tfDnXtgkGkkH48it0Hww03QZoIomt8w1QkzLuLV84Fx
-	 L0ElJDP27WtiPpnKm2MPS7m82WPFixoe8BSAQ2e+L5q/GQnevvLMC/vcjUM1btD6+EPD/
-	 CFewo4rAfWCcJvRDshCuiJ4WZub3SO9c61eD9EgJsddrR8RLpldo3rKce/6OdXXfdKaHs
-	 fb6Q7c5sb6QBFCz/EHu8q2WN92xjRwMtRXg8smDNnJTTe+4S7exPxvIYK6wb84tOwVLAz
-	 tsoUCJmDUcDrHVE8aDlXEyeCoMHBtVqqMWGAx72GA4uabLtcoS2PGkjQf0XAEIHPtGg==
+	t=1794063725;
+	b=qd/0cud91p4cr7j76kX2BFqbHe/MgcKySDQzckg1pTCYlnaJY3CXWp+4adDtvjxjV0Bj
+	 hZpgDSkvg4LJbIZG7Yfc+lGyZ0DS7noD8f46SZSo6FewqIPlbmFlQLGLDTvqNWDd2mPcI
+	 x4Uj2Ij58hwBP4jfqWnyIFPS7yAUzzuVaTikEBlK2o6DawFuw/4AatVF1fTbFNMegAzsR
+	 A+2R+HXH78PiEmPdA5ERExtFNBjZ6GYGgYQEsC6IV7QVoRszUXzkV9CmFismZWA6L8VIf
+	 S9WYmTeB23M9Py2lpNM+5MHPf+W9gE+Z3zLR2WLIuFpaMXYydBQ11G71zYBkg+9LNfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063724;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MQpw2JyXWUUQOz+YJKXEyou5IGG8IGVi8KmC42yt9CE=;
-	b=cnOGHexsLY/cZ2EigKMSCEp3W6MYYdgK4bxQ+XpQh7Y5ep4ofMVQD4TmKYW4OXhka0Gy
-	 iwaEmK3TUxJmiimzFCqXyZM6y17iNzC86yZL9ahQplUA+eJkBVauEV+z+QpakWttCznh2
-	 2XuEPApLj+e+ElZncPuBsLLHGqmg7yqTs3bZLfrdVgDBhD6M1yWavL6fDP6krHHXZsWZV
-	 n0Xyg0pG3+JbGTbRVJxGJWfz4xPFyVVrL/aoXqlB44/aTaqCBYWl+IG+4ehhSsl0NBJtX
-	 E1Z3ZSDE+ObjspTf7VDLUhuF8vrYOYO2d+qj/WAMUMX9xSdSq4TrwXtLCuB32Nsb3Mg==
+	bh=fxTcukQvhE7I56ytDomJQY8BC76ENhHhG4mfCQx1yzw=;
+	b=ij5iIbBXl3s6oRXb4X5N8rnQ2kMj/VVFOsgmcsRXnrOLslEii/LylJlLmXrcz+t/A/wd
+	 4j/bNYlAwtwNWt+PU9Mamp+5l7uUGR0p4/GhJZtxl68fWFgdo9qxESbRB4SvlFxXaro8b
+	 XmBNwA6AvFdn/uJMGDyfepSNhrlEXKkjoy6THyJovwANh7tVtBGv4ux13G259GmqIa23T
+	 f4m0o+cPsJjlhpnek5aNeJdItFKiEfhu/NkEPPG/Uc3SXcFO4DhoC2gr0/X5DiR7r4NKJ
+	 3K7ZF4jbtLMSKWdInG0VMm1ZLaZUyO5eydsZp+j+AJh8moumWt+oaQXSoWcEBmHlpWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6xNnFeW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ak418quN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0C9606EEB0;
-	Sat,  7 Nov 2026 15:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F63606D83F;
+	Sat,  7 Nov 2026 15:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6xNnFeW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CA51F0089F;
-	Sat,  7 Nov 2026 15:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ak418quN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCF01F008A1;
+	Sat,  7 Nov 2026 15:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063723;
-	bh=MQpw2JyXWUUQOz+YJKXEyou5IGG8IGVi8KmC42yt9CE=;
+	s=korg; t=1794063724;
+	bh=fxTcukQvhE7I56ytDomJQY8BC76ENhHhG4mfCQx1yzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T6xNnFeWroXnmWd5f8TXDZGm8S+g/JHZptXuFb86wA6vm94fmQDi7lEFddZmTTCZf
-	 fKPx0yXc4O+RdCAhEgIQl4Hp5LD/SAi8Gc1o4auEjhV0NLjFV2OsNUFqHCDSTXMp4A
-	 U8dcRO/gmJwokuOUto/Y6E0DzUEIh3tkKdj5pguM=
+	b=ak418quNrYxpp7D8IcYcuHy+sXl5BxJ1lh+zyrAG/wqyH7SYSwEpQiF0B8uB8F2ke
+	 IwZ9LvrBRg6Ea1S3B80egmJ1wS1MwLwOZ5VdS8iGQwNsxSRz5kqfI1pNs9SiYv6Qa0
+	 wYmM7G4+/PDHU/nTTGMg6Wdes5FWLy3wlefCfT0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Hyeontae Lee <wonju345@naver.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 805/869] LoongArch: Remove redundant call in update_bp_registers()
-Date: Sat,  7 Nov 2026 08:58:07 -0500
-Message-ID: <20261107134920.219533239@linuxfoundation.org>
+Subject: [PATCH 6.18 823/869] fs/ntfs3: bound CreateAttribute asize against record_size in do_action
+Date: Sat,  7 Nov 2026 08:58:25 -0500
+Message-ID: <20261107134920.878209925@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,40 +68,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Hyeontae Lee <wonju345@naver.com>
 
-[ Upstream commit 23534c6efeb718e8a4d9107fa7d6707b5b1f5859 ]
+[ Upstream commit fb0f0ef7b5a6bc761b372ce00764d4b6e0b91a47 ]
 
-In update_bp_registers(), there is a duplicate call to write_wb_reg()
-when enabling an execute breakpoint:
+In do_action()'s CreateAttribute case (fslog.c:3286), attr2 points into
+the on-disk log record and asize = le32_to_cpu(attr2->size) is therefore
+attacker-controlled on mount.  The guard bounds asize only against the
+log record itself,
 
-    write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
-    write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
+	Add2Ptr(attr2, asize) > Add2Ptr(lrh, rec_len)
 
-The two lines are completely identical. Remove the redundant call to
-clean up the code and eliminate unnecessary register writes.
+where rec_len is the client data length, and separately bounds dlen
+against the MFT record.  Nothing bounds asize against record_size, but
+all three writes that follow are into rec, a kmalloc(sbi->record_size)
+buffer allocated by mi_init() (record.c:105):
 
+	memmove(Add2Ptr(attr, asize), attr, used - roff);
+	memcpy(attr, attr2, asize);
+	rec->used = cpu_to_le32(used + asize);
+
+With record_size 0x400, roff 0x38, used 0x160 and asize 0x800 the memcpy
+writes 2048 bytes at rec + 0x38, 0x438 bytes past the allocation, and
+rec->used is left at 0x960.  dlen is 0x18 here, so the existing
+dlen check passes: dlen bounds nothing about the size of the copy.
+
+The equivalent non-replay path already refuses this.  mi_insert_attr()
+performs the same insert and starts with (record.c:488):
+
+	if (used + asize > sbi->record_size)
+		return NULL;
+
+Apply the same bound, spelled as a subtraction to match the neighbouring
+clause.  used <= record_size holds here because check_file_record()
+validates it (fslog.c:2826) and is called on this record at fslog.c:3172;
+roff <= used - 4 follows from check_if_attr() together with the ATTR_END
+check at fslog.c:2844, so bounding used + asize bounds both copies.
+
+The sibling WriteEndOfFileRecordSegment case does the equivalent check
+against record_size at fslog.c:3277.
+
+Reproduced by mounting a crafted image on v7.2-rc5 under KASAN:
+
+  BUG: KASAN: slab-out-of-bounds in do_action.isra.0+0x41f6/0x83a0
+  Write of size 2048 at addr ffff888005c74838 by task mount/69
+
+  CPU: 0 UID: 0 PID: 69 Comm: mount Not tainted 7.2.0-rc5-00300-g8ba098e6b6ff #2
+  Call Trace:
+   kasan_report+0xce/0x100
+   kasan_check_range+0x105/0x1b0
+   __asan_memcpy+0x3c/0x60
+   do_action.isra.0+0x41f6/0x83a0
+   log_replay+0x920a/0xd300
+   ntfs_loadlog_and_replay+0x3ef/0x510
+   ntfs_fill_super+0x1d23/0x4550
+   get_tree_bdev_flags+0x2ef/0x550
+   vfs_get_tree+0x82/0x2f0
+   fc_mount+0x10/0x1b0
+   path_mount+0x517/0x1df0
+   __x64_sys_mount+0x20b/0x270
+   do_syscall_64+0xf9/0x540
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+  Allocated by task 69:
+   __kasan_kmalloc+0x8f/0xa0
+   __kmalloc_noprof+0x1b4/0x460
+   mi_init+0x81/0x110
+   mi_get+0x6a/0x220
+   do_action.isra.0+0x1db4/0x83a0
+   log_replay+0x920a/0xd300
+   ntfs_loadlog_and_replay+0x3ef/0x510
+   ntfs_fill_super+0x1d23/0x4550
+
+  The buggy address belongs to the object at ffff888005c74800
+   which belongs to the cache kmalloc-1k of size 1024
+  The buggy address is located 56 bytes inside of
+   allocated 1024-byte region [ffff888005c74800, ffff888005c74c00)
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Fixes: edffa33c7bb5 ("LoongArch: Add hardware breakpoints/watchpoints support")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Hyeontae Lee <wonju345@naver.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/hw_breakpoint.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/ntfs3/fslog.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
-index c35f9bf380334..deeb2f9795705 100644
---- a/arch/loongarch/kernel/hw_breakpoint.c
-+++ b/arch/loongarch/kernel/hw_breakpoint.c
-@@ -453,7 +453,6 @@ static void update_bp_registers(struct pt_regs *regs, int enable, int type)
- 		if (enable) {
- 			if ((info->ctrl.type == LOONGARCH_BREAKPOINT_EXECUTE) && (type == 0)) {
- 				write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
--				write_wb_reg(CSR_CFG_CTRL, i, 0, CTRL_PLV_ENABLE);
- 			} else {
- 				ctrl = read_wb_reg(CSR_CFG_CTRL, i, 1);
- 				if (info->ctrl.type == LOONGARCH_BREAKPOINT_LOAD)
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index ca3533a10d064..f9b6275643f2c 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3302,10 +3302,15 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
+ 		asize = le32_to_cpu(attr2->size);
+ 		used = le32_to_cpu(rec->used);
+ 
++		/*
++		 * attr2->size is taken from the log record and is bounded only
++		 * by the log record length, not by the MFT record.  Refuse an
++		 * attribute that does not fit, as mi_insert_attr() does.
++		 */
+ 		if (!check_if_attr(rec, lrh) || dlen < SIZEOF_RESIDENT ||
+ 		    !IS_ALIGNED(asize, 8) ||
+ 		    Add2Ptr(attr2, asize) > Add2Ptr(lrh, rec_len) ||
+-		    dlen > record_size - used) {
++		    dlen > record_size - used || asize > record_size - used) {
+ 			goto dirty_vol;
+ 		}
+ 
 -- 
 2.53.0
 
