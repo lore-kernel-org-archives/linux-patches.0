@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063676;
-	b=3msJPf0VYNC9/yBWcC4MmTDifiOmqG3l16JeuyhFuiuWSVwJJd7DUfB7x9/k3WuHsRtP
-	 Ta1GHu9fOZLW9qoz+8FtGX8v+lf0OJyQm+gSYT7l46ViFtfirev/AJfFJ9MCIW8IGcZi0
-	 boMyD0WzXzMVdaTjnHp5KyKRJIoMCYTQpxT4ihF8i+b7bu81SOJ9Ttro1y02dgFJTBOTM
-	 0UfKnrEgs/NE6z9YsGZKEIq4l+XJohyU9yTPKUyyioODHjwt0KzGeWdKNbaC8+t/5/n2d
-	 KTSYzARh+81w4FvhPhY//R2yfwvcWPw5N/yQ7stOdcWy2Oh8ne0bsnJ5SF5HP3xg4lg==
+	t=1794063677;
+	b=JU3pO2Ya9PRJ6/1Wdu9I8vwsz1qaE+qHZBmkiDNinJJifRpRhNRJHrMhKI1cvz84ZUKa
+	 1CSSOtA/PMV/i/yWaSBqf1bVZJ9fDbKIWwL5d2UUep3huNZDBw05uQOiFOYhUtUiXk65A
+	 SSOtPJ626RmM9Cpq6Y460vY2CZ1NtW6PQlo9pbIXG3rdPoQYvaBX97cPQCMahDT+oH4Oa
+	 pHGhQ8Cp/Qknprv+b89t/xlqA5Fo6yfJwuQIjghzFNMOojucZQk16qbf9AZPdIRQendgi
+	 QBp1FiM6ksTCR9712nN9Tu9+smmW+zrNg9VjvKrE+gTTJkZRkF/H6NwKRJfemlmJv3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063676;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063677;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZrKwdPieDV43IMjmIpZRIjjnDkw01kAmGWknhqpeOPI=;
-	b=Ufqg3ukPZ22XbVb8VTG4nkPCJXZvxSolR6YmM4iAVUAYYMXF80i0RxBt3dkU2lBzkLUJ
-	 Oh9JrkspHDNBkqsM6SKx68oYXMECzCWuH6PQ0S+cvxgfWlz27Lhx34svCHgb9vHzkC4u8
-	 KtxUZtewWwUbjNKMt1U8ahAvCxy3iwSB8b4o+QPxmWWmdXtIzDsHLq0/49JaeqgrIsFL4
-	 x/vS8LjG4P7DFol1/jhG7Ve3eT9oesUMVdCMDHun14IceLdavPkoFFug1flRjVSyRJeTd
-	 WBOPp+As2Mnp0TVkXCBgneFeU3vfJxBqKhqWDFBZQP3F8BwCGcftqUp1E4g5We+hzOQ==
+	bh=N/R+aOVANEgpgBMzIx+9gr7YJsANL3+oHSFhZV+lXKw=;
+	b=kM7waABoOVVjciDawV/a0g6ViyGJjP/2g6GOdfj/WsR/56a9uM7lcGQD+bcZKvjClVkR
+	 4gFhAiLL0M1EZ/NvfjWKN3oODH9fItRf6IjN2GVAWQcW+8qgq1jpOOwFhR4NpFY5xX756
+	 J8UowgKkopBo1mLWs2VoCrtn0pc9qD0URiXjFsCCy6kvvVRYbItU96ovJs/h5Mn3lp7sE
+	 ptIRmGJlw1rsV1iM1CLYvdVutnh0FmrAWbNMp3pJOnOf/Y20m8IDH4nQ/vNsH03TFWqg5
+	 GQcr8Zs36be7Byw7XYo9ua4E4eYj+PbnLgNw9hFE9CPU8Oxp023PluhB+RPUUGRc2eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aWxlHrAc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r6hDOeF7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A79606A9EF;
-	Sat,  7 Nov 2026 15:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF0A6082BF9;
+	Sat,  7 Nov 2026 15:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aWxlHrAc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150801F0089F;
-	Sat,  7 Nov 2026 15:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r6hDOeF7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D491F0089F;
+	Sat,  7 Nov 2026 15:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063676;
-	bh=ZrKwdPieDV43IMjmIpZRIjjnDkw01kAmGWknhqpeOPI=;
+	s=korg; t=1794063677;
+	bh=N/R+aOVANEgpgBMzIx+9gr7YJsANL3+oHSFhZV+lXKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aWxlHrAcVtpHFwfayK9N4NWDXwIQQ4Pk5JJxBlOJsO3MrhqJxtjUp6IV45+1DxBEh
-	 L4C28foigW8xryJPh6TN2CEAVG5y0z3y+iUVga2Wmx3mTWLiFA7XaYU1WOtqLlS7q+
-	 0ibVcwO52gf7e+rGwa78ZCnjaReG7pDE5PiMmk7U=
+	b=r6hDOeF7qx3F2whqzwiaEwBD1D/9KAro76GfbRk7p4WXUI6J5/NnRoJou7NywqJB8
+	 OprXO9OWmPcuwO83JnlUabC0cknB2Ez78Xr6N5orqTfRXJ4qWk1tFMTNb/wADPjxup
+	 tNerjrIUwEPasFV7448W01PsNaFU7+AXvcKF6JaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 786/869] ceph: fix uninitialized err in ceph_netfs_issue_read()
-Date: Sat,  7 Nov 2026 08:57:48 -0500
-Message-ID: <20261107134919.375957409@linuxfoundation.org>
+Subject: [PATCH 6.18 787/869] f2fs: fix to update superblock crc in sanity_check_area_boundary()
+Date: Sat,  7 Nov 2026 08:57:49 -0500
+Message-ID: <20261107134919.412152507@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,48 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Markuze <amarkuze@redhat.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 823d21c78453fcdf58dbd8ecefbb41f4f3eb6540 ]
+[ Upstream commit f8f956c7ec8c0285d7a80bed497d2f7adcbded15 ]
 
-ceph_netfs_issue_read() declares err without an initializer. On the
-unencrypted, non-sparse success path nothing assigns it, then the
-out: label does if (err) netfs_read_subreq_terminated(subreq).
+This patch fixes the bug reported by Sashiko:
 
-With CONFIG_INIT_STACK_ALL_PATTERN, err is 0xaaaaaaaa (nonzero), so
-the subrequest is terminated while the OSD READ is still in flight.
-netfs then frees the rolling buffer that the OSD iterator still
-points at, causing a KASAN UAF / oops, and finish_netfs_read()
-terminates the same subrequest a second time. CONFIG_INIT_STACK_ALL_ZERO
-hides it because err happens to be 0.
+We should update superblock crc along w/ raw_super->segment_count in
+sanity_check_area_boundary() if sb_checksum feature is enabled.
 
-Restore the err = 0 initializer so a successful submit leaves
-completion to finish_netfs_read() only.
-
-Cc: stable@vger.kernel.org
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Alex Markuze <amarkuze@redhat.com>
-Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Cc: stable@kernel.org
+Fixes: d440c52d3151 ("f2fs: support superblock checksum")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/super.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index fe8b7b4f6e8bf..51aeae341f56d 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -362,7 +362,7 @@ static void ceph_netfs_issue_read(struct netfs_io_subrequest *subreq)
- 	struct ceph_client *cl = fsc->client;
- 	struct ceph_osd_request *req = NULL;
- 	struct ceph_vino vino = ceph_vino(inode);
--	int err;
-+	int err = 0;
- 	u64 len;
- 	bool sparse = IS_ENCRYPTED(inode) || ceph_test_mount_opt(fsc, SPARSEREAD);
- 	u64 off = subreq->start;
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 11d218b415b0d..69d36e1a301bf 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3920,6 +3920,12 @@ static inline bool sanity_check_area_boundary(struct f2fs_sb_info *sbi,
+ 		/* fix in-memory information all the time */
+ 		raw_super->segment_count = cpu_to_le32((main_end_blkaddr -
+ 				segment0_blkaddr) >> log_blocks_per_seg);
++		if (__F2FS_HAS_FEATURE(raw_super, F2FS_FEATURE_SB_CHKSUM)) {
++			__u32 crc = f2fs_crc32(raw_super,
++					offsetof(struct f2fs_super_block, crc));
++
++			raw_super->crc = cpu_to_le32(crc);
++		}
+ 
+ 		if (f2fs_readonly(sb) || f2fs_hw_is_readonly(sbi)) {
+ 			set_sbi_flag(sbi, SBI_NEED_SB_WRITE);
 -- 
 2.53.0
 
