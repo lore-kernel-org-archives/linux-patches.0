@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064924;
-	b=vN65Cj7HmbS7t6FB4Ihr+MXXTPyj2OBd2Je4U5MybJADm6nCd0XGMxP7AaM279cCpQ+z
-	 67y8oprEnoSqny9BK3TqiNZAfX6Jy1fjPjdv2p+JogaTaKiFQXXdiOgyQ0pduCbqRmV9E
-	 +OtMp+7KXL3gub0SuUTb2pAxIj6+suVuJ717y3iOU98BMBLjXlWwO/mIh+IQNTd6T+vjD
-	 /avH8+ko4p0ZahDP+eq+vrY0Q1jpJAUuCiQ6mzmQQ3IoHWdeqQpzDrYDtEv23qooh9Xsk
-	 jbnV7EhG+loNeDDbtBTXjNOXZLETez8VV2yrBz65HE0AyrvA/dt5ugx3RbILEHi4I2A==
+	t=1794064925;
+	b=Oqj0QRWG3ZodZ3ruVSPar9hLWwEWT2SjMM8T0LYKg8byL3WzTyYi86MmDGpD0pVwCX1a
+	 5HWYfSXaHUdlPcRJF31UZm/BqQ1yMGzhQeTvYmodG5pwg70gh2nealAh9PsXCYaVdh99Y
+	 s8y9/Cyej6CpdaABuyRLijyM6aUagMvgFnOmfXO3J7o1A1zyz1nLF+xShAcKrqr2MiyXE
+	 zJpLsxao+aB/3C+WrjR+fD9/ZPZuXp0pWH0BiVaUIy7imPTQ9xhSCdtqtp/B+2XVo8sV2
+	 qLGIleJR94l5Vc3eOJQlcqJrK+AZn/8CXGb/iXAF9lfPrAuoniNYPzC2w6hpTzddZkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064925;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lwn2IVJUFg7Itc1QN2xe8R1wRXR83WM2fvSe2+/zRGk=;
-	b=bw0Z6nBpBrZr9GQpQUOFyRBKf2/+M4eJbfZ1xQyBx1gnZIaqaGXk+oAGWdYBhgsrQ2Pl
-	 eNMs7/O8ZjPHPeqU+/93NOvYCc8cHTPfR8A+DQOl5BkuJa8kTji+etT6S0Y4AgLd9+PqF
-	 d62VP24YAzUyzBaU92Qr/iUGMUCEfo+XhaAegSxCQrB9KzU5NwJQl0yM6ticqaAi+aVZr
-	 eKo/n1U+IkCtD/EBI8mi/kx+ZbK5AjJV2zTsb/BCh1MvD6ihK0ZATLF2T4ox4vDEjVlXu
-	 30PCGFBi3SV5eHzw6aUhPI+1Gr6MTFzFWVMTmoIEEE++hJh2w+MDB13ehuv2FTk8KDQ==
+	bh=2k0m29kLmOniaUxaSOXssrn+B5NVFejqbeWf3GXnbTY=;
+	b=TrW5zH8n9t2ya8aynlMFOO7ZlUKhdKTcURHB6zpTfMjyPwZjLjBMpXJiUbTMjvNUgHvl
+	 Yf3xQBDs4xkaO0YkniTPhjj0fQuPwewkjbpD79ryDVGpJAz5S6GzaHfvNTa0jS9HphDtD
+	 zS1fMLwvea21CO4nDQClZ2DvU8Pdb8UUeSU/fY5FrDuOjdO/88m6nbgzTjYiSnXzTfedq
+	 /55y/5tqRDAYpD5Ul3dednFFH3/oDGvsA/ItyGRxqIltoX72j5ukabEdRGVsNbGFD2E4t
+	 7Wt5pjaPy5MkQt2fIuuxVWuOnQVaar2U8PHYY2JHWT0syAJgY4D6+NvIlBqFcHolZZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RQFoF/46";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XP+epv0a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FD1606A33E;
-	Sat,  7 Nov 2026 15:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5120B606A33E;
+	Sat,  7 Nov 2026 15:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQFoF/46
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C2B1F0089F;
-	Sat,  7 Nov 2026 15:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XP+epv0a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2C21F0089F;
+	Sat,  7 Nov 2026 15:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064923;
-	bh=lwn2IVJUFg7Itc1QN2xe8R1wRXR83WM2fvSe2+/zRGk=;
+	s=korg; t=1794064924;
+	bh=2k0m29kLmOniaUxaSOXssrn+B5NVFejqbeWf3GXnbTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQFoF/46bY5KE6UkRaJHfGHa4VspjMxV54vgan3pRhJlGFJy4yX5bvEmVH+WSJd65
-	 tKAcpxvaP9soAz7L7MFgJWCBoa+WRSyWAgY/QWb144zZEorvH/IMpifCr7jZAnFulk
-	 FlPI+5wZ3biJdY2mVWStE0zcimfYiJH2RUTLEBm8=
+	b=XP+epv0alU+i82kPEPq41R7YPdnltekTpJvRKOTw469jdcaA/jBI9esZgrGYIENQJ
+	 F1OPsuO2ArFLmMx83eDlg58h2F/tiwQg6Ec4Ndb7PDq5/7D0dA8YxR2BCfrXqvxs5A
+	 arKcuoVXiIxSv+9qEOczxvviXjHJafu5ArYF6dM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9bda1b9fbb7fbdf9b62b@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0819/1257] net: erspan: set lltx to avoid sch_direct_xmit deadlock
-Date: Sat,  7 Nov 2026 08:51:55 -0500
-Message-ID: <20261107135001.961800188@linuxfoundation.org>
+Subject: [PATCH 7.3 0820/1257] ublk: keep a canceled FETCH round canceling until the server is gone
+Date: Sat,  7 Nov 2026 08:51:56 -0500
+Message-ID: <20261107135001.990807047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,70 +69,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Ming Lei <tom.leiming@gmail.com>
 
-[ Upstream commit 2d36ec73836e83175deb467fd494c61006107e5d ]
+[ Upstream commit 4c454b5b2634d982caf797fbe477770c3edfc983 ]
 
-The ERSPAN xmit path re-enters the network stack, causing nested
-acquisition of _xmit_lock on the underlay device while already holding
-the ERSPAN device's _xmit_lock, creating an ABBA deadlock. This happens
-for both IPv4 ERSPAN (erspan_xmit() -> ip_tunnel_xmit()) and IPv6 ERSPAN
-(ip6erspan_tunnel_xmit() -> ip6_tnl_xmit()):
+A cancel completes a fetched io command and sets io->cmd to NULL, but
+the io still counts as ready. Only ubq->canceling stops ublk_queue_rq()
+from using the NULL io->cmd. Two paths clear that flag too early:
 
-  sch_direct_xmit [lock erspan] -> erspan_xmit -> ip_tunnel_xmit ->
-  ip_output -> __dev_queue_xmit -> sch_direct_xmit [lock underlay]
+  partial FETCH round                 recovery, two queues
+  -------------------                 --------------------
+  task A: FETCH tags 0-2              q0 ready: q0->canceling = false
+  task A exits:                       q0 task exits:
+    start_cancel(): mark queues         start_cancel(): ub->canceling
+    tags 0-2: io->cmd = NULL              is still set -> q0 not marked
+  task B: FETCH tag 3                   q0: io->cmd = NULL
+    queue ready: canceling = false    q1 ready
+  START_DEV                           END_USER_RECOVERY
+  read -> ublk_queue_cmd(NULL)        read on q0 -> ublk_queue_cmd(NULL)
 
-  sch_direct_xmit [lock erspan] -> ip6erspan_tunnel_xmit -> ip6_tnl_xmit ->
-  ip6_output -> __dev_queue_xmit -> sch_direct_xmit [lock underlay]
+A FETCH round runs from the open of /dev/ublkcN until
+ublk_reset_ch_dev() resets the queues. A canceled command can't be
+fetched again in the same round. So the ready check only needs one
+fact: did this round see a cancel? ub->canceling already records it:
+ublk_start_cancel() sets it under cancel_mutex before any command is
+taken. It is only cleared too early, when all queues are ready.
 
-Set dev->lltx = true so HARD_TX_LOCK() skips the spinlock for ERSPAN.
-This is safe as the ERSPAN xmit path has no shared mutable state: o_seqno
-is atomic, TX stats are per-CPU u64_stats, dst_cache is per-CPU, and
-o_flags is no longer modified in the xmit path since commit 9958e69b9893
-("gre: fix ERSPAN o_flags race/corruption in xmit and fill_info").
-GRETAP, the sibling device with identical xmit structure, already sets
-lltx.
+Fix:
 
-Reported-by: syzbot+9bda1b9fbb7fbdf9b62b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9bda1b9fbb7fbdf9b62b
-Fixes: 84e54fe0a5ea ("gre: introduce native tunnel support for ERSPAN")
-Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
-Cc: stable@vger.kernel.org # 9958e69b9893 ("gre: fix ERSPAN o_flags race/corruption in xmit and fill_info")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261008093824.119453-1-yun.zhou@windriver.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ - clear ub->canceling only in ublk_reset_ch_dev()
+ - when a queue gets ready, clear ubq->canceling only if ub->canceling
+   is not set, and check it under cancel_mutex
+
+The check and the marking are ordered by cancel_mutex:
+
+  check first:   queue cleared -> start_cancel() marks it again
+                 -> command taken
+  cancel first:  check sees ub->canceling -> queue stays canceling
+
+While ub->canceling is set, no queue clears its flag. So the "all
+queues marked" shortcut in ublk_start_cancel() is correct again.
+
+UBLK_F_BATCH_IO follows the same rule. It does not dispatch through
+io->cmd, so it never hit the oops, but a round which lost a fetch
+command is treated the same way: it has to start over.
+
+Fixes: 728cbac5fe21 ("ublk: move device reset into ublk_ch_release()")
+Fixes: 3f3850785594 ("ublk: fix batch I/O recovery -ENODEV error")
+Cc: stable@vger.kernel.org # v6.17+: needs cancel_mutex
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Closes: https://lore.kernel.org/linux-block/20260928-b4-ublk-cancel-stop-v1-0-4a4360232a46@toxicpanda.com/
+Tested-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20261011063555.1142277-2-tom.leiming@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c  | 1 +
- net/ipv6/ip6_gre.c | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/block/ublk_drv.c | 54 ++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 21 deletions(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index e4878e9aa6367..149a4e83b6925 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -1367,6 +1367,7 @@ static int erspan_tunnel_init(struct net_device *dev)
- 	dev->features		|= GRE_FEATURES;
- 	dev->hw_features	|= GRE_FEATURES;
- 	dev->priv_flags		|= IFF_LIVE_ADDR_CHANGE;
-+	dev->lltx = true;
- 	netif_keep_dst(dev);
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 66eb55e7162e5..38ed7d0e39793 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -334,6 +334,11 @@ struct ublk_device {
+ 	u16			nr_queue_ready;
+ 	bool 			unprivileged_daemons;
+ 	struct mutex cancel_mutex;
++	/*
++	 * A cancel started in this FETCH round. Set by ublk_set_canceling(),
++	 * cleared only by ublk_reset_ch_dev() when a new round starts. While
++	 * it is set, no queue clears its ->canceling.
++	 */
+ 	bool canceling;
+ 	pid_t 	ublksrv_tgid;
+ 	struct delayed_work	exit_work;
+@@ -2415,6 +2420,11 @@ static void ublk_reset_ch_dev(struct ublk_device *ub)
+ 		spin_unlock(&ubq->cancel_lock);
+ 	}
  
- 	return ip_tunnel_init(dev);
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 04f7c70b7320e..3429543ec77e7 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1864,6 +1864,7 @@ static int ip6erspan_tap_init(struct net_device *dev)
- 		dev->mtu -= 8;
++	/* a new FETCH round starts, the queues stay canceling until ready */
++	mutex_lock(&ub->cancel_mutex);
++	ub->canceling = false;
++	mutex_unlock(&ub->cancel_mutex);
++
+ 	/* set to NULL, otherwise new tasks cannot mmap io_cmd_buf */
+ 	ub->mm = NULL;
+ 	ub->nr_queue_ready = 0;
+@@ -3024,11 +3034,19 @@ static void ublk_reset_io_flags(struct ublk_queue *ubq, struct ublk_io *io)
+ }
  
- 	dev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
-+	dev->lltx = true;
- 	ip6erspan_tnl_link_config(tunnel, 1);
+ /* reset per-queue io flags */
+-static void ublk_queue_reset_io_flags(struct ublk_queue *ubq)
++static void ublk_queue_reset_io_flags(struct ublk_device *ub,
++				      struct ublk_queue *ubq)
+ {
+-	spin_lock(&ubq->cancel_lock);
+-	ubq->canceling = false;
+-	spin_unlock(&ubq->cancel_lock);
++	/*
++	 * A cancel in this FETCH round took a command which still counts as
++	 * ready, so the queue has to stay canceling. ub->canceling is set
++	 * under cancel_mutex before any command is taken: either we see it
++	 * here, or the cancel marks this queue again later.
++	 */
++	mutex_lock(&ub->cancel_mutex);
++	if (!ub->canceling)
++		ubq->canceling = false;
++	mutex_unlock(&ub->cancel_mutex);
+ 	ubq->fail_io = false;
+ 	ubq->force_abort = false;
+ }
+@@ -3051,24 +3069,17 @@ static void ublk_mark_io_ready(struct ublk_device *ub, u16 q_id,
+ 		ub->nr_queue_ready++;
  
- 	netdev_hold(dev, &tunnel->dev_tracker, GFP_KERNEL);
+ 		/*
+-		 * Reset queue flags as soon as this queue is ready.
+-		 * This clears the canceling flag, allowing batch FETCH commands
+-		 * to succeed during recovery without waiting for all queues.
++		 * Reset queue flags as soon as this queue is ready. Unless
++		 * this round saw a cancel, this clears the canceling flag,
++		 * allowing batch FETCH commands to succeed during recovery
++		 * without waiting for all queues.
+ 		 */
+-		ublk_queue_reset_io_flags(ubq);
++		ublk_queue_reset_io_flags(ub, ubq);
+ 	}
+ 
+-	/* Check if all queues are ready */
+-	if (ublk_dev_ready(ub)) {
+-		/*
+-		 * All queues ready - clear device-level canceling flag
+-		 * and wake ublk_dev_ready() waiters.
+-		 */
+-		mutex_lock(&ub->cancel_mutex);
+-		ub->canceling = false;
+-		mutex_unlock(&ub->cancel_mutex);
++	/* All queues ready - wake ublk_dev_ready() waiters */
++	if (ublk_dev_ready(ub))
+ 		wake_up_var(&ub->nr_queue_ready);
+-	}
+ }
+ 
+ static inline int ublk_check_cmd_op(u32 cmd_op)
+@@ -4433,9 +4444,10 @@ static bool ublk_validate_user_pid(struct ublk_device *ub, pid_t ublksrv_pid)
+ 
+ /*
+  * Wait until all queues have fetched their I/O commands, and return with
+- * ub->mutex held and readiness guaranteed: then every queue's ->canceling
+- * is cleared. Ready may regress between wakeup and mutex_lock() (F_BATCH
+- * UNPREP, daemon death), so re-check it under the mutex and wait again.
++ * ub->mutex held and readiness guaranteed. The queues stay canceling if
++ * this round saw a cancel, see ublk_queue_reset_io_flags(). Ready may
++ * regress between wakeup and mutex_lock() (F_BATCH UNPREP, daemon death),
++ * so re-check it under the mutex and wait again.
+  */
+ static int ublk_wait_dev_ready_and_lock(struct ublk_device *ub)
+ {
 -- 
 2.53.0
 
