@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064573;
-	b=D5Qa6Rn7RNd+XoVeRcJQLLSvhQFdTPEDgsN0W/WlDsdzvGV6E3EiMz0CNIpj7qbaTYmD
-	 kGg90C/9UFYdRchXZelSi3kqyUywcyiVbDdFoIsnyoRAkCUhnCW9HKhmp2wXWEo9Kd5Hm
-	 S27TuGHD2QYwO1sGwAvqtYtFSkZQQNNte/Z20WmFMG1qi6k9O4L6Ekl2rN8XsHcF2tTaw
-	 MO5eTzSqV+DUgOKMlXrhDO7V6u1TzJ+Uw+SvQmrv2wt9bi0zBuKYSMtUPmiyvpF+n5YuS
-	 OuOHl0wiEm8Qxa+8mFz3RbxyeGW0VYkYkChMEHSVuy91lQ7ntNhbOrIavXA3ZpwpgOw==
+	t=1794064574;
+	b=16OK39nzQgaNuu8HPudLhtgw5DQ/g0tgFFI0UowP9HacnDqOSY1r6mKH3jAuP+cPiFkY
+	 i1BBVpnjwWB4awvFNbIjNWGo+o9NlAnE98n082XeY6PwFbqgGy/s12RFPiZvRoZjPsAKb
+	 +7iH1uf0kWpcuMFDE5aKEr4yR8qkWbZ+ivF4JHiBmj95ZQHxLJTEWFfiD95WoBQE2nSm8
+	 51jVHsi/rY8+qBcFWoANjibmOQHrmlxq97Ml75MAV1pqXzjT+Ky4TqzgGnfUw+Xh6X2EJ
+	 peiK+IKOfsKRgUmtzxRM/N2b10Y8Akhxb58SrFjd6D1guq6swRGlotlCVLK/Q3nrjrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064574;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NZAIo16jnuQvQECWPehy909gp3Vpeg9VKUzLPWY2R1M=;
-	b=Ha2KP0XN625ShoS4PT0YgicesuytMfKLI7U7FNTYAR0TJa9Dqa8lnSUfSivaeYFr1EUW
-	 J3xUK7n1qDvYtBUpuGT5h7JX/LcgjIIzD85lwvJoUmzpN1L08GIX6mcT7Lv19BjgeskaD
-	 txlC9MfSSVmMeCk9atiBihhULbiwedUwssERXjf/dppWOugtTHu6a8HWtlB6kIxiWKjYX
-	 cuJjk1bVQ1ZnmvTx4UsqUxY95se1Z56vnhT3y6/X8NPfk3vb1rfyiwoAP0WaUis7XVm1T
-	 CJfw9y0TWK1STk32W81gqs8X7vfh5zNZFXVP8ivWGvp3S/ihJThWZq8ZVHQsChNgmrQ==
+	bh=C36JQyU67sdYP3/Cr+VQN7t2+bMfaljcBVBdC9wsWyw=;
+	b=yTqnSootnhult0Nt0wYmBboCaoL/QjiL0C86MtKa3mPqP4NBj31bA4tfe/766XZN92r8
+	 +TccybaW45TJyXGVxUwwxt/6KHD0T1sInP1/4hYPn9pHdI7nmwkm1529TZ31ccx4gls6O
+	 J1EaDtSY0s5tXZNqwkUML0hpgz5Ou4VRHJIc2NQ5Z/F8Wi4imDv+Em209qyFgOwMbCF3M
+	 4FYMqAMO8SwPeY1jKS/Ag6YzplJYtQHGBLzsBdTmPSBIx2a5AtnV8XdEmHfddKz59ucs9
+	 KJZ8OqSYOSSc2Br4jQ4N+G8FYmIT47zz1O9hBmK5AiiUu0MCX1Ci3/OI0Gpdb5Pze/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMnRbewz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a3sNmBJX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2678606D809;
-	Sat,  7 Nov 2026 15:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAD9606D83D;
+	Sat,  7 Nov 2026 15:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yMnRbewz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D131F0089F;
-	Sat,  7 Nov 2026 15:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a3sNmBJX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73601F0089F;
+	Sat,  7 Nov 2026 15:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064572;
-	bh=NZAIo16jnuQvQECWPehy909gp3Vpeg9VKUzLPWY2R1M=;
+	s=korg; t=1794064573;
+	bh=C36JQyU67sdYP3/Cr+VQN7t2+bMfaljcBVBdC9wsWyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yMnRbewz5rZQWUKY6yzIkSatD7jR8gGfoAE+y3sqwfSRXK4Z5IRuiPPBxdpoBm+Vf
-	 saiHmQEg8H3FESwaO0F2eMLz8/mB6/pT9kEI6AFA+KRTTmonA6y2lHu7+lMb2Tqa12
-	 Dkdj1GXAitByqN46zgWp+8p+kT4sFee42IRhnAFU=
+	b=a3sNmBJX6aRSYLghG4qnagT/ps2Om9euc48PYsVKC169632fFxldC5lFAOx/RWgdy
+	 Kzey/8VDGbeFiYFwJR5TiEXrsmuqnRR+m6JWiYGPw0QOOpJqsbCX5F0/xzGh07zL3j
+	 t3sDlOwA48+pKYn8X3N3Br8Skk8BH/CjtspXW0/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0593/1257] xen/privcmd: Only claim ioreqs matching an ioeventfd
-Date: Sat,  7 Nov 2026 08:48:09 -0500
-Message-ID: <20261107134955.710330354@linuxfoundation.org>
+Subject: [PATCH 7.3 0594/1257] xen/gntdev: Fix gntdev_dmabuf ref leak in dmabuf_exp_wait_released()
+Date: Sat,  7 Nov 2026 08:48:10 -0500
+Message-ID: <20261107134955.735693953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,110 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 908019e5999161ca89da310c05ddbf7fc89c129e ]
+[ Upstream commit 6f165abe2b40ede71c98956cd74cd17c18505e75 ]
 
-The ioeventfd handler shares its event channel with the userspace device
-model. It must only claim requests that match a registered ioeventfd.
-Other requests are left for userspace.
+dmabuf_exp_wait_released() takes a reference on the exported
+gntdev_dmabuf with dmabuf_exp_wait_obj_get_dmabuf() and passes it to
+dmabuf_exp_wait_obj_new(), which drops that reference after adding the
+wait object to the wait list.  When the wait object allocation fails,
+dmabuf_exp_wait_obj_new() returns ERR_PTR(-ENOMEM) early and the
+reference is never dropped, leaking a reference to the exported
+gntdev_dmabuf.
 
-ioeventfd_interrupt() currently marks every MMIO write INPROCESS before
-looking for a match. For an unmatched request it drops the lock and
-restores READY. Userspace may see INPROCESS and skip it. Restoring READY
-does not send another notification. If userspace handles the request at
-the same time, the READY store may overwrite its state.
+Drop the reference on the allocation failure path so the reference is
+consumed whether the wait object is created or not.
 
-Find a matching ioeventfd before changing the request state.
-
-The lock now protects only the ioeventfd list. Use explicit virt_*mb()
-barriers for the ioreq shared with Xen.
-
-Fixes: f0d7db7b3324 ("xen: privcmd: Add support for ioeventfd")
+Fixes: 932d6562179e ("xen/gntdev: Add initial support for dma-buf UAPI")
 Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260821084112.2374949-1-den@valinux.co.jp>
+Message-ID: <20260916170956.2086505-1-vulab@iscas.ac.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/privcmd.c | 47 +++++++++++++++++--------------------------
- 1 file changed, 18 insertions(+), 29 deletions(-)
+ drivers/xen/gntdev-dmabuf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
-index 7cfc28f1bb86f..c67ec6d282cf5 100644
---- a/drivers/xen/privcmd.c
-+++ b/drivers/xen/privcmd.c
-@@ -1169,51 +1169,40 @@ static irqreturn_t ioeventfd_interrupt(int irq, void *dev_id)
- 	struct privcmd_kernel_ioreq *kioreq = port->kioreq;
- 	struct ioreq *ioreq = &kioreq->ioreq[port->vcpu];
- 	struct privcmd_kernel_ioeventfd *kioeventfd;
--	unsigned int state = STATE_IOREQ_READY;
-+	bool matched = false;
+diff --git a/drivers/xen/gntdev-dmabuf.c b/drivers/xen/gntdev-dmabuf.c
+index 83b0df4608941..df1883aca850e 100644
+--- a/drivers/xen/gntdev-dmabuf.c
++++ b/drivers/xen/gntdev-dmabuf.c
+@@ -96,8 +96,10 @@ dmabuf_exp_wait_obj_new(struct gntdev_dmabuf_priv *priv,
+ 	struct gntdev_dmabuf_wait_obj *obj;
  
--	if (ioreq->state != STATE_IOREQ_READY ||
--	    ioreq->type != IOREQ_TYPE_COPY || ioreq->dir != IOREQ_WRITE)
-+	if (ioreq->state != STATE_IOREQ_READY)
- 		return IRQ_NONE;
+ 	obj = kzalloc_obj(*obj);
+-	if (!obj)
++	if (!obj) {
++		kref_put(&gntdev_dmabuf->u.exp.refcount, dmabuf_exp_release);
+ 		return ERR_PTR(-ENOMEM);
++	}
  
--	/*
--	 * We need a barrier, smp_mb(), here to ensure reads are finished before
--	 * `state` is updated. Since the lock implementation ensures that
--	 * appropriate barrier will be added anyway, we can avoid adding
--	 * explicit barrier here.
--	 *
--	 * Ideally we don't need to update `state` within the locks, but we do
--	 * that here to avoid adding explicit barrier.
--	 */
-+	/* Xen publishes the request before changing its state to READY. */
-+	virt_rmb();
- 
--	spin_lock(&kioreq->lock);
--	ioreq->state = STATE_IOREQ_INPROCESS;
-+	if (ioreq->type != IOREQ_TYPE_COPY || ioreq->dir != IOREQ_WRITE)
-+		return IRQ_NONE;
- 
-+	spin_lock(&kioreq->lock);
- 	list_for_each_entry(kioeventfd, &kioreq->ioeventfds, list) {
- 		if (ioreq->addr == kioeventfd->addr + VIRTIO_MMIO_QUEUE_NOTIFY &&
- 		    ioreq->size == kioeventfd->addr_len &&
- 		    (ioreq->data & QUEUE_NOTIFY_VQ_MASK) == kioeventfd->vq) {
-+			/* Finish reading the request before claiming it. */
-+			virt_mb();
-+			ioreq->state = STATE_IOREQ_INPROCESS;
- 			eventfd_signal(kioeventfd->eventfd);
--			state = STATE_IORESP_READY;
-+			matched = true;
- 			break;
- 		}
- 	}
- 	spin_unlock(&kioreq->lock);
- 
--	/*
--	 * We need a barrier, smp_mb(), here to ensure writes are finished
--	 * before `state` is updated. Since the lock implementation ensures that
--	 * appropriate barrier will be added anyway, we can avoid adding
--	 * explicit barrier here.
--	 */
--
--	ioreq->state = state;
--
--	if (state == STATE_IORESP_READY) {
--		notify_remote_via_evtchn(port->port);
--		return IRQ_HANDLED;
--	}
-+	if (!matched)
-+		return IRQ_NONE;
- 
--	return IRQ_NONE;
-+	/* Publish the response only after signaling the eventfd. */
-+	virt_wmb();
-+	ioreq->state = STATE_IORESP_READY;
-+	notify_remote_via_evtchn(port->port);
-+	return IRQ_HANDLED;
- }
- 
- static void ioreq_free(struct privcmd_kernel_ioreq *kioreq)
+ 	init_completion(&obj->completion);
+ 	obj->gntdev_dmabuf = gntdev_dmabuf;
 -- 
 2.53.0
 
