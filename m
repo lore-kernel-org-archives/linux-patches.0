@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061651;
-	b=clnMxIkd2yOyBvOtXUM7RiIMAF1mbjd5BSrPuyiPd/EvoU9JPKAgzB12P++4Bkepriux
-	 M8oJu/iaxdINESts0zdXY4wvxz8hI5JW2ZEULbJbTw/uyLlo8Bl1+d26zozC0bQ8sMS0N
-	 Qxy6e7LICs+MojWqgbuUrUkiWXK4i30maayKE71Pr2UOU7M8zGuJENRnIJC/Bpfh/xmGd
-	 722dV8kGTGpBS3OhvFgrRfZacC/ptYjzBCfJ6SkJ1BJcGMNXq0wGdNm1HDbLBep/qjMJ5
-	 Gke+6s+arAav8qwFNZE0pkUmS9WKAvpDxetTG/oPHMfNUX7MJey21WY0VQ1hAlvIrFA==
+	t=1794061652;
+	b=Df2NqBunhATDodiu/syHdSHERBv0xxtMWwzrgqf4e58QnxX5XRqp0ZUIiaAmJHAE2vxP
+	 zTEAz2vr9/+7E6R33CbNBkWLAmfnYs7j4EsR6qhFM2kcnN33x9eDZRKeS9IZEjhgzdNXB
+	 a4sbNB+cOdRhodyYzfA+jx540RQds+1sOOm412CFNvka8Ml0hsSFBQCFA7C7lKq3TwjWc
+	 MX+zO023ECftVn7gC71BcO2fD3hbG290u8Kn6rsoopeP+P4wPtGv8yl0MiSmFqtT8wAW4
+	 lsB/Kr1jWnPYkY2JoLG0RQIivUeBCVjiH5hgijy7W5BWZFfqTaMXlNUmr9BGb1S7sAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061651;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BfRAd3f3iZ9h2TeKwHyyLJvP6z0x8VQ+ttXUiIrNzo0=;
-	b=bhsTpCvyEIphzqllaxOuBjXwKGHK9/g10Ii2NgR2QvI/LTz/q9EiYSSTAuw7AFU/w1bw
-	 1FkrkQb9viAu/SqHd7kCbKCOoRlB9ULPIV4nHB4KhrdPEvbdxTW7/Ajj5hFE6UXBEe6K7
-	 WNp7qX9gmiJzdzo+s4srVHHFvAZUvHaNSnkN8LkVJmNfTZFyFouSlaDCPtFvKESMAYDFY
-	 hzWoL7Nr3JCUoUEvbt6godtp4wCZ/MNRC5H2t6lrMrf/mWk1LxEiY1YHk57S6At8G5aV3
-	 hE2vLGKkLaNBVi3XLIYJP4KNlHClrRMuNR5bl7RP16Z7i71nbLObsF7g9a8qOHtLe4w==
+	bh=c0w2dXPIOFXbgULe5Fs+Ip1zKs1tPXsBkdmZH7JcGm0=;
+	b=hcSm4PuFzhvFtwKO5QbbjcF2BOY3IA9TvyE73Jk0zMbYVeJS9J7KuBDPnDkjX4foOQFc
+	 vncWAscQ8jtcvRJOF/vm9Dt842WSPePsZv38QfJmAQPdEV5mV+btRI898bWdEFTJQ7YVo
+	 ngMXuxi9vxhsfpyNManTFusCYfD4FKipojJVFdYSNQxuZsy1rSFmdEAdvKhdCkNIC2tuR
+	 Q4SQf6PrUw6meqsAb2dTbA6ctPzG7ILK8CCbohc3cRcEV53EGIM1CxXIpiEVsAsOEKmdN
+	 QVGjQC0YCuGo/fC3E3sr9ji3cQ+39UUBeKui5D366PJY+t5fyTVjVuyqhH7wLVc5cMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rz2jZ5uT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OxkLMrzJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE6C606A331;
-	Sat,  7 Nov 2026 14:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172F6606A32F;
+	Sat,  7 Nov 2026 14:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rz2jZ5uT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5791F0089F;
-	Sat,  7 Nov 2026 14:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OxkLMrzJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D0A1F0089F;
+	Sat,  7 Nov 2026 14:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061650;
-	bh=BfRAd3f3iZ9h2TeKwHyyLJvP6z0x8VQ+ttXUiIrNzo0=;
+	s=korg; t=1794061651;
+	bh=c0w2dXPIOFXbgULe5Fs+Ip1zKs1tPXsBkdmZH7JcGm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rz2jZ5uTstdSA5IktX0cI16kFMrUXGd5N0AWYcNQbucqR8GVsC9Icths03ca9Q0k/
-	 Q4LI7zPt2xyj3FDry0QGaBzbYXVZ2DwGerO7WhOpnZjj2cdRTLbwylkUseZ8+ydqbm
-	 FxbgR1gh6F6DveCb5Mzn93aFdBDkQpTYfhCBIkrc=
+	b=OxkLMrzJ/1Y590/KJbML8SXOW8Q7l3gK5nfbE2AZ4IYVf4WkTCW7hu30xYn/B08Tf
+	 3bCKGndivePBZb/FzRFs/dCyk1Jkkbhxjyo6SGXXOWm3F4m94Hg5wU5ValBWaO7dOb
+	 6pCZ3AuqmpezIz0TDpmsHi07CMPMth2HFxjFPWuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0711/1536] xfs: mark overfull dabtree node blocks as corrupt
-Date: Sat,  7 Nov 2026 08:45:27 -0500
-Message-ID: <20261107135017.467834979@linuxfoundation.org>
+Subject: [PATCH 6.12 0712/1536] xfs: jump out of xchk_bmap_check_rmap if fatal signals
+Date: Sat,  7 Nov 2026 08:45:28 -0500
+Message-ID: <20261107135017.496660151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,34 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit f61c91a2e5994fa81141d6c06dadae1fed206018 upstream.
+commit 49d300a51442bd64b627645b7b0b1cd66e492905 upstream.
 
-LOLLM observes that we need to range-check the dabtree node record count
-before using it to index an array.  Fix that.
+LOLLM observes that we never check for fatal signals inside the loop
+that checks file fork mappings against the rmapbt.  This can lead to
+lengthy delays in responding to a ^C, so add some bailout checks.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: 7c4a07a424c18d ("xfs: scrub directory/attribute btrees")
+Cc: stable@vger.kernel.org # v4.17
+Fixes: 5e777b62b0bcb6 ("xfs: bmap scrubber should do rmap xref with bmap for sparse files")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/dabtree.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/xfs/scrub/bmap.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/xfs/scrub/dabtree.c
-+++ b/fs/xfs/scrub/dabtree.c
-@@ -451,6 +451,10 @@ xchk_da_btree_block(
- 		node = blk->bp->b_addr;
- 		xfs_da3_node_hdr_from_disk(ip->i_mount, &nodehdr, node);
- 		btree = nodehdr.btree;
-+		if (nodehdr.count > dargs->geo->node_ents) {
-+			xchk_da_set_corrupt(ds, level);
-+			goto out_freebp;
-+		}
- 		*pmaxrecs = nodehdr.count;
- 		blk->hashval = be32_to_cpu(btree[*pmaxrecs - 1].hashval);
- 		if (level == 0) {
+--- a/fs/xfs/scrub/bmap.c
++++ b/fs/xfs/scrub/bmap.c
+@@ -566,6 +566,10 @@ xchk_bmap_check_rmap(
+ 	struct xfs_ifork		*ifp;
+ 	struct xfs_scrub		*sc = sbcri->sc;
+ 	bool				have_map;
++	int				error = 0;
++
++	if (xchk_should_terminate(sc, &error))
++		return error;
+ 
+ 	/* Is this even the right fork? */
+ 	if (rec->rm_owner != sc->ip->i_ino)
+@@ -597,6 +601,9 @@ xchk_bmap_check_rmap(
+ 	 */
+ 	check_rec = *rec;
+ 	while (have_map) {
++		if (xchk_should_terminate(sc, &error))
++			return error;
++
+ 		if (irec.br_startoff != check_rec.rm_offset)
+ 			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
+ 					check_rec.rm_offset);
 
 
