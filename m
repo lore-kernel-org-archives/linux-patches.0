@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061114;
-	b=vBAJNSijQL29TC7H27FdU2OJQu0UDmRmpMmirPiRUjlpA651zyz0WRZCSJpjW4MUJht5
-	 R1nrRFgXURKf3QqCSs3coaxZnEfab9witA53tAhfY3NMiQ7q3Gy9gi2pcZm+9Wd+Ivzul
-	 PDr8wVwjomQKOqD143LhlVe6++8SGtPQy44QDLnsojV5JN5/M44omWfCOaw/7jRDUOJ8u
-	 nmUfNPOjJkYTAtGRDp5kvch05Z2bOz9NxHqLFVWU+lZnP6MVCrSuz48+UZ0BEbRcVkVUg
-	 xErhKSBC2jqqd/dGBg2CkMmdZX9w5jWimQp15wZJ1IEm5mo0qtyDwW0OgrNN/6A0ldw==
+	t=1794061116;
+	b=N+V5/VLjNP+AHSxqx277P462i0rvTXt1bczluOeh2pzRFDrqAmVaeHtxvXVI4WO8dxLu
+	 x7BwQtyBF7wxiAx2aH8eHmMlu8rRi3KOc4tCEn3ihz5MhJgGAsKikAwj82WSRUa9hFc8e
+	 5A04vE+ncJ9jxy3GlvU5h2M39pH0LAtLdlLZj1Ki4bU/dDFxSWBLPnvyQjNqOaUcjp9p7
+	 rsIg2gt/TUEMYZXl+G8i4oQhzSpoq55KCsZ2AbpIlta3fFkn4TXyFW2hPoMysXFzMZny5
+	 i3L9/GIZXmjZgPemqU4A2UDdNJEOZN8/MLBPnIJfvNw7CrkeE1h9OYBi2o8Sliq2E5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061114;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061116;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=YuQ4gepvSCSP5V6Zq/SgzO8qlbIiQDDwmg9p864ZkOg=;
-	b=JBr2SoJ/3HU8RdCATMJvGyS1a53y35rIJaoQILoiEw+Y6QkIlVaqh9/06EysRN2BI+6F
-	 F4qDWiVK6deD1e1nWW5y6Y9C+L6XagNEQt72UEeYSIOmDugmPKrFF3Yk0QJ0E6oI0v9p2
-	 hDS+KGvzJi44ecT78G9GVf8SaZa6USczvd1qnDCYlqvna5jxrS3K5V4uGAdt77t5g91Ve
-	 3gRx34GixDJEOKXLVBPyy9slugQHImX78jU064FbCaFw/UpQ+503V+s1lFB685W+Iumc2
-	 VOWUIyfXauIGXK8+YwUMf0qI5AnsOw6/WNGQgp8phoZ14ZfYV88iMFa54ZTdBjb0MTA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=atTsDcKIId/30734nZm812jVEmRqgBYrBlKSIRWKhxs=;
+	b=HeGizr/GQ535Vl2L7PDjlcYtnp3RfeSi1Jp7iXt9oqhe70dio1Rre2qDZSSGc+CFoXAV
+	 B3mIYtRHpN+m6j80jk1A67uwfjSUec6RNnGzJSUShLHOOHCjWOn4eTrPeIfi+Oekg76ns
+	 bLZHz7PvduA3OyMG4QJ3/Cg6r4ButDGap03YuZFceh4TPbIXiQPVhNnh1AMOHqJvlsW7d
+	 7D2Ifa1JgpjUAGQ307C0yt768Px1lHF41w6x/Ox3DmK5DnrXrRXdxD2X1q/eHR17zMgsS
+	 Qq466bqlJDoYyV7w2tPsFR1POla9AmlkrfoG5oCvCDboZvdMKevuR2x+ZA3lIUZSXFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y5TaVlWE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=keDmucUJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99533606D806;
-	Sat,  7 Nov 2026 14:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10656606A332;
+	Sat,  7 Nov 2026 14:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y5TaVlWE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A711F0089F;
-	Sat,  7 Nov 2026 14:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=keDmucUJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E451F0089F;
+	Sat,  7 Nov 2026 14:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061114;
-	bh=YuQ4gepvSCSP5V6Zq/SgzO8qlbIiQDDwmg9p864ZkOg=;
+	s=korg; t=1794061115;
+	bh=atTsDcKIId/30734nZm812jVEmRqgBYrBlKSIRWKhxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y5TaVlWEWvvtPUSK0hZa+VgFsu4EbTmHvspAFCJDgkPWyt7N2ZoNwD+jF5M/8KE/D
-	 eydgEN78dVWjsCYssuc/30RiGAvh9R4F8wfgZsdaifUqMcXTyujGGc+U2NxgpQlIKL
-	 bLD8fmUBxhMD3JZvAqPqb22jLJ+IAmBM/TtxBqzA=
+	b=keDmucUJUIIS28tAjLwSWunpx5VhX/nFpQVVvYB7W5MiA6X1STe75g5l9orFTxe6M
+	 WMlt7XB5ujHVlU/QzqnbuZ4VEL14UMC1eE8eRUAtD44MGGs1eRXkYzdSmzD+SshIxn
+	 LTzM1t7h5VrhRqKsgt7hl5K6PdVNP25s78qWhaPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Bojanowski <tomasz@bojanowski.me>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0413/1536] ALSA: usb-audio: Add mixer mapping for MSI MAG B850M MORTAR WIFI
-Date: Sat,  7 Nov 2026 08:40:29 -0500
-Message-ID: <20261107135009.171621971@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 0431/1536] blk-crypto: fix NULL deref and UAF in __blk_crypto_evict_key()
+Date: Sat,  7 Nov 2026 08:40:47 -0500
+Message-ID: <20261107135009.675162202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,52 +63,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomasz Bojanowski <tomasz@bojanowski.me>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit 7b457ae8cf711831f19d20963f5ed2fdf4842d3a ]
+commit c8c53d669d4e45b3a804013251a34387d7e11bfb upstream.
 
-The USB audio device 0db0:cc78 (Realtek ALC4080) on the MSI MAG B850M
-MORTAR WIFI motherboard exposes all playback controls as "PCM", which
-makes it hard to tell the outputs apart.
+Sashiko reported a possible NULL pointer dereference, triggered by the
+following flow:
 
-Its mixer layout matches the one of the MSI MPG X570S Carbon Max Wifi
-(units 29, 30 and 32), so reuse msi_mpg_x570s_carbon_max_wifi_alc4080_map
-for this device too. With the mapping applied, the controls show up as
-"Speaker", "Front Headphone" and "IEC958".
+  dm-inlinecrypt ctor            # first use of the fallback
+   ├─ blk_crypto_init_key()      # succeeds, ctx->key.size != 0
+   ├─ blk_crypto_start_using_key()
+   │   ├─ hw-wrapped key: -EOPNOTSUPP
+   │   │    # profile never allocated (NULL)
+   │   └─ raw key: fallback_start_using_mode()
+   │      └─ blk_crypto_fallback_init() fails
+   │         └─ kfree(profile)   # not NULLed
+   ├─ goto bad
+   └─ inlinecrypt_dtr()          # evicts whenever key.size is set
+      └─ blk_crypto_evict_key()
+         └─ blk_crypto_config_supported_natively() = false
+            └─ blk_crypto_fallback_evict_key()
+               └─ __blk_crypto_evict_key(blk_crypto_fallback_profile)
+                  └─ profile->num_slots # BOOM!!!
 
-Tested with a patched snd-usb-audio module on a 7.2.7 kernel.
+This issue can be reproduced using the following commands:
 
-Signed-off-by: Tomasz Bojanowski <tomasz@bojanowski.me>
-Link: https://patch.msgid.link/20260923184957.6687-1-tomasz@bojanowski.me
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  dd if=/dev/zero of=/tmp/backing bs=1M count=64
+  LOOP=$(losetup -f --show /tmp/backing)
+  SZ=$(blockdev --getsz $LOOP)
+  KEY=$(head -c 64 /dev/urandom | od -An -tx1 | tr -d ' \n')
+  dmsetup create ic --table "0 $SZ inlinecrypt aes-xts-plain64 \
+    $KEY 0 $LOOP 0 1 keytype:hw-wrapped"
+
+And the following oops is triggered:
+
+  ==================================================================
+  blk-crypto: loop0: no support for wrapped keys
+  Oops: general protection fault, probably for non-canonical address
+        0xdffffc000000000b: 0000 [#1] SMP KASAN PTI
+  KASAN: null-ptr-deref in range [0x0000000000000058-0x000000000000005f]
+  CPU: 5 UID: 0 PID: 901 Comm: dmsetup 7.3.0-rc3 #1 PREEMPT(lazy)
+  RIP: 0010:__blk_crypto_evict_key+0x2e/0x3b0
+  Call Trace:
+   blk_crypto_evict_key+0x24c/0x320
+   inlinecrypt_dtr+0xf6/0x160
+   inlinecrypt_ctr+0x2d3/0xbd0
+   dm_table_add_target+0x661/0xf40
+   table_load+0x1c4/0x490
+   ctl_ioctl+0x32f/0x5f0
+   dm_ctl_ioctl+0xe/0x20
+  ==================================================================
+
+dm-inlinecrypt is the only caller that can evict a key that was never
+started, as fscrypt frees such a key without evicting it.
+
+Fix this by returning early from blk_crypto_fallback_evict_key() when
+tfms_inited[] is not set for the key's mode.  tfms_inited[] is only set
+after blk_crypto_fallback_init() has successfully initialized the
+profile, so the crash above is no longer reachable.
+
+The bug has been latent since commit c984ff1423ae ("blk-crypto:
+dynamically allocate fallback profile") was merged in v6.5, and only
+became actually triggerable when commit e7f57d2c47e2 ("dm-inlinecrypt:
+add target for inline block device encryption") was merged in v7.2.
+
+Fixes: c984ff1423ae ("blk-crypto: dynamically allocate fallback profile")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://patch.msgid.link/sashiko-outbox-167341@kernel.org
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://patch.msgid.link/20261014155131.GB322435@quark
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://patch.msgid.link/20261023081908.3505413-1-libaokun@linux.alibaba.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_maps.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ block/blk-crypto-fallback.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
-index ace4ccad8f51c..a82b9c1d578d9 100644
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -718,6 +718,10 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
- 		.id = USB_ID(0x0db0, 0xa073),
- 		.map = msi_mpg_x570s_carbon_max_wifi_alc4080_map,
- 	},
-+	{	/* MSI MAG B850M MORTAR WIFI */
-+		.id = USB_ID(0x0db0, 0xcc78),
-+		.map = msi_mpg_x570s_carbon_max_wifi_alc4080_map,
-+	},
- 	{	/* MSI TRX40 */
- 		.id = USB_ID(0x0db0, 0x543d),
- 		.map = trx40_mobo_map,
--- 
-2.53.0
-
+--- a/block/blk-crypto-fallback.c
++++ b/block/blk-crypto-fallback.c
+@@ -530,6 +530,12 @@ bool blk_crypto_fallback_bio_prep(struct
+ 
+ int blk_crypto_fallback_evict_key(const struct blk_crypto_key *key)
+ {
++	/*
++	 * Pairs with smp_store_release() in
++	 * blk_crypto_fallback_start_using_mode()
++	 */
++	if (!smp_load_acquire(&tfms_inited[key->crypto_cfg.crypto_mode]))
++		return 0;
+ 	return __blk_crypto_evict_key(blk_crypto_fallback_profile, key);
+ }
+ 
 
 
