@@ -1,55 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063210;
-	b=StMc7qJlvLG/htKLxI+WaOQyMaCcpZ2q0rgU6bTj4rfXxpjYrFXcRW/xnzlnKqRwMZrx
-	 VJoL6j2MxVO904NrvGzABGmKi8n+9ASiOObnA/FkZGg6fj5swKTfLuch/L2UK6PhHL5Xq
-	 Jy4C+l+2cflTbRIOYeaXwEO+PYmDOxx/tmrsENj4RdMdVNkVef1/85kQ3znm19g8ifLaw
-	 /oviG3sTQlpsIW4LPa8s81SXmvRl5mJo3sgwMWl07ZK9Na/RvHVR3eDl7Tpv3dtURyfEh
-	 5KD9Oy8rM0vXlgwgpIHbVmBQQcMgnW1MUFeaoWhrr+g8dj5TAsLNZNVSHLqiNpWv2+A==
+	t=1794063211;
+	b=vurjLPeRKi/6dWV6rjQFa4hA+NLIcHP1IE80Ml35xBPRTfNIFxQlobNel2Ky402fLtGQ
+	 po5rO2CTvLbV7Lw2Wm7VzZia6EYwDRK+IIeR2UNvUUksi+sFkTtHe26s+I1ZmtWJBkCiK
+	 171MomPr4Ash7bzHUjWsZFIzNZBjf4zXhw5F3dU4iJHOuJ0G5JIJP0ZnmB0WVBXZpvV9X
+	 7o7zGB5kBLH4grbdeIptne+cqvGqIrL2OTYOMYtTKcIuxT6hDD9UNRsrcDbZhai8FvutG
+	 uU2y/BPNg3TA9hfqOTd67fhhaj+kd/t3RPMw8XRdovVdEl69qufwKywrcFtCua30vnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063210;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063211;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+DQf3Dibk9nsXnBOt+LHc7QBzkgCdv+/s9WR9Ry9cTc=;
-	b=ppbVkeRpfQzh2LH9ORAqKmsXEQnBg0VCxFpSJOm6f1gRMkyoGwPQghry+NiTPwO+mMTq
-	 nM9r+WaxZfodQ3ifcGNqpUXSOMIVOs+BFb50O5ZQaNVBdOC6Ico3ViEUUVc97bcHbutrf
-	 eEuDVbMH/Y+gL8y8HIpYQPxBJUe8ddk82EqlIZrF2SOLpIZob5ClL9496Sqak7UBIj5I+
-	 JCmJ2l0tdDcWNXZ/ZLlExkIu420TPADKbd9qfwqddQIBB1Rwhpg3+JN/ohjP2Jn+cPXDS
-	 src2k4cGG9Vk/3vARxDDQmzEaZb76/RqF7JNwVa4ekD4yKYR6wp2XcvmUjrtXBchUIQ==
+	bh=H++ta0tHMOO54kH8ZPAM1i+cYkR9oY/lz09NS8vCYks=;
+	b=OhVcujlM4hOP5UQlry+opF9vMvBPDqKSjy/4HPFRZ/HcocB+uVFKTH+Db9BS3yUvM6nH
+	 iqa15TAdbMYuI1XOPRUWli+qFWUDipoui+9d4PAq99tZfdWTmJVU1mjBe3Vfmh8YOduWa
+	 G+l7N9qysJy81scHO2STGpfCLc8ORQictGSxbZukdmAAR36i83eXBz6/oCYPmgjEBwMou
+	 aXCV324jbZF2ltYs1jfpnOZUdjqNQgh25scPKeHwHiIPA0b2BwT4zKTgNjZ83AUUW5D3n
+	 Jug3PhZ5ruC8u/l+qlPrKvuHDeDxGNeGo8zF/sOuJoAUmhtOY0G4kakkN3uhmBO06Vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PxOrCFqG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="K/TJnmFl";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B02606D805;
-	Sat,  7 Nov 2026 14:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58395606D809;
+	Sat,  7 Nov 2026 14:53:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PxOrCFqG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBE81F0089F;
-	Sat,  7 Nov 2026 14:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K/TJnmFl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5041F0089F;
+	Sat,  7 Nov 2026 14:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063209;
-	bh=+DQf3Dibk9nsXnBOt+LHc7QBzkgCdv+/s9WR9Ry9cTc=;
+	s=korg; t=1794063211;
+	bh=H++ta0tHMOO54kH8ZPAM1i+cYkR9oY/lz09NS8vCYks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PxOrCFqGyaz4YvM5K+4XjeAOxM2lBMzvetqLGYMRKGJstM4MlXvfOLlhQy4K70aTA
-	 dmLAkZyxb0nNEGTiEtue1teDxIE4QYHRMo6SP0xwD83vaeuCrjf49N66o7NF2jw/sB
-	 r6cUADnsJEni2PsJ66Ob8XSLQH2J4YIXhc+w/hnE=
+	b=K/TJnmFlVoeDQNSWMGYLNgjPKI6kMsKiYBi0Y8uW61JgZDZPHVMhsiLnntRvkn/fg
+	 gUqRHHrEPgBcKhK1w+jqJYN45cI33PTEqOa2CQkzdP7133FgF2+CRkNWE/kmGhRzlX
+	 Lvp7iiLalEo94HsOXlGY7jBypMd4pmILKQKzNYxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Monakov <amonakov@ispras.ru>,
-	Jan Kara <jack@suse.cz>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Changwei Ge <gechangwei@live.cn>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 421/869] ext4: dont report delalloc data as a hole on indirect-mapped inodes
-Date: Sat,  7 Nov 2026 08:51:43 -0500
-Message-ID: <20261107134907.766881558@linuxfoundation.org>
+Subject: [PATCH 6.18 395/869] ocfs2: restrict OCFS2_INVALID_SLOT suballoc slot to system inodes
+Date: Sat,  7 Nov 2026 08:51:17 -0500
+Message-ID: <20261107134906.807496502@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,184 +74,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit aed43f47e1edeee1454eea86006a8c09480e5ed3 ]
+[ Upstream commit 25bf9e549360b656a6763232e0e9e58a00c3aff7 ]
 
-When a plain lookup finds no block, ext4_ind_map_blocks() sizes the hole
-it reports by counting the empty subtrees under 'partial' in the on-disk
-indirect tree.  That count knows nothing about delayed allocation, so a
-range holding delalloc data that has not been written back yet is
-reported as a plain hole.  The extent-mapped path does not have this
-problem: it trims the hole it found at the first delayed extent before
-returning it.
+Patch series "ocfs2: validate suballoc slot and bit of metadata blocks", v3.
 
-ext4_map_blocks() consults the extent status tree before it calls into
-the mapping layer, so a query that starts exactly on the delayed block
-still finds it.  A query that starts earlier does not, because the hole
-reported for the earlier block already spans the delayed one.  On a
-4k-block filesystem, lseek(SEEK_DATA) from offset 0 on a file whose only
-data block is at logical block N and is still dirty returns:
+The ocfs2 metadata validators trust the on-disk suballoc slot and bit
+without checking them against the slot range of the mounted filesystem and
+the capacity of the block group bitmap.  A corrupted image can carry
+OCFS2_INVALID_SLOT or another out-of-range slot, or a suballoc bit beyond
+the bitmap, and once the corresponding inode, extent block, xattr block,
+dir index root or refcount block gets freed, the bad value goes straight
+into ocfs2_get_system_file_inode() or _ocfs2_free_suballoc_bits() and hits
+a BUG_ON() or runs off the end of local_system_inodes[].
 
-  N = 0..11      direct blocks                 N << 12
-  N = 12         first single-indirect block   N << 12
-  N = 13..1035   inside that indirect block    -1 ENXIO
-  N = 1036       first double-indirect block   N << 12
+This series rejects such values at read time, in the existing validators,
+so corrupted objects fail with -EROFS (and a read-only remount) instead of
+crashing:
 
-Blocks 12 and 1036 survive because the query lands on the delayed block
-itself.  Blocks 13..1035 are swallowed by the 1024-block hole reported
-for block 12.  fiemap loses the same data for the same reason.
+  patch 1 restricts OCFS2_INVALID_SLOT dinodes to system inodes,
+        completing fe7a283b3916 ("ocfs2: add suballoc slot check in
+        ocfs2_validate_inode_block()"), and turns the "system file
+        state is ambiguous" BUG_ON() in ocfs2_read_locked_inode() into
+        an ocfs2_error();
+  patch 2 rejects oversized dinode suballoc bits;
+  patch 3 validates the suballoc slot and bit of xattr and dir index
+        blocks;
+  patch 4 validates the suballoc slot and bit of extent and refcount
+        blocks.
 
-An ext3 filesystem mounted as ext4 hits this during ordinary use: ext3
-inodes stay indirect mapped, while mount -t ext4 turns on delayed
-allocation even though mounting ext3 with -o delalloc is explicitly
-rejected.  install(1) from coreutils uses SEEK_DATA to locate data in
-its source file, so installing a sparse file that has not been written
-back silently produces a destination of the right size holding none of
-the data:
+The checks only enforce what the kernel and mkfs.ocfs2 already write: a
+valid slot from meta_ac->ac_alloc_slot and a bit within the block group
+bitmap, with system inodes carrying OCFS2_INVALID_SLOT plus
+OCFS2_SYSTEM_FL and extent blocks using slot 0.  Nothing changes for
+healthy filesystems.
 
-  truncate -s 1G img && mkfs.ext3 -F img && mount -t ext4 img mnt
-  echo | dd of=mnt/src bs=1 count=1 seek=64K
-  install mnt/src mnt/dst
-  cmp mnt/src mnt/dst        # differ: char 65537
+Each new check was exercised under QEMU by corrupting the field in
+question with an out-of-range value; with the series applied the access
+fails with -EROFS and the filesystem remounts read-only instead of hitting
+the BUG_ON().
 
-Reconciling a hole with the extent status tree does not depend on how
-the hole was found, so instead of open coding it a second time, split
-the delalloc handling out of ext4_ext_determine_insert_hole() into
-ext4_determine_insert_hole(), which takes the hole the caller located,
-and call that from ext4_ind_map_blocks() as well.  All the special cases
-and the comments explaining them stay in one place.
+This patch (of 4):
 
-Two things change for indirect-mapped inodes.  They now cache the holes
-they report, as the extent-mapped path already does: ext4_punch_hole()
-already puts EXTENT_STATUS_HOLE on such inodes, ext4_map_blocks() and
-ext4_da_map_blocks() already handle a cached hole, the latter by
-replacing it with the delayed extent, and consecutive hole entries
-merge, so the tree does not grow with the length of a scan.  And when a
-delayed extent covers the queried block itself - a race, since
-ext4_map_blocks() found nothing in the tree just before - the hole is
-now reported only up to the end of that extent instead of in full.
+ocfs2_validate_inode_block() currently permits i_suballoc_slot to be
+OCFS2_INVALID_SLOT for any dinode.  Only system inodes created by
+mkfs.ocfs2 are allocated from the global allocator and thus legitimately
+carry this value; regular inodes are always allocated from a per-slot
+suballocator and hence must have a valid slot.
 
-The indirect path passes hole_start == lblk, so the "delalloc extent in
-front of the queried range" case cannot be reached there:
-__es_tree_search() never returns an extent ending before the block it
-was searched for.
+If a corrupted regular inode with OCFS2_INVALID_SLOT is accepted,
+ocfs2_remove_inode() will pass the slot to ocfs2_get_system_file_inode()
+and get_local_system_inode() will hit BUG_ON(slot == OCFS2_INVALID_SLOT)
+when the inode is deleted.  This can be triggered by an unprivileged user
+unlinking such a corrupted file.
 
-With this the sweep above returns N << 12 for every N, while the
-nodelalloc and extent-mapped controls are unchanged.  generic/225,
-generic/285, generic/448 and generic/490 pass on ext4 made both with and
-without the extent feature.  generic/286 and generic/436 pass on
-extent-mapped ext4 and are skipped without it, since they need
-fallocate.
+Reject OCFS2_INVALID_SLOT for non-system dinodes during validation, while
+still accepting it for system inodes.  Note that a crafted dinode carrying
+OCFS2_SYSTEM_FL passes the check above, yet a plain lookup of it still
+used to BUG() in ocfs2_read_locked_inode() ("system file state is
+ambiguous").  Since i_flags comes from disk, handle that mismatch with
+ocfs2_error() instead of BUG_ON() as well.
 
-Fixes: facab4d9711e ("ext4: return hole from ext4_map_blocks()")
-Reported-by: Alexander Monakov <amonakov@ispras.ru>
-Closes: https://lore.kernel.org/linux-ext4/594c17d9-c00f-e485-96fb-cedf27ce3aa3@ispras.ru/
-Suggested-by: Jan Kara <jack@suse.cz>
-Cc: stable@vger.kernel.org
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260827084829epcms2p6ecc0c39a71d0c3eebf9cb1ade77314f6@epcms2p6
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/20260901125221.1634686-1-joseph.qi@linux.alibaba.com
+Link: https://lore.kernel.org/20260901125221.1634686-2-joseph.qi@linux.alibaba.com
+Fixes: fe7a283b3916 ("ocfs2: add suballoc slot check in ocfs2_validate_inode_block()")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h     |  3 +++
- fs/ext4/extents.c  | 26 +++++++++++++-------------
- fs/ext4/indirect.c | 17 +++++++++++++++++
- 3 files changed, 33 insertions(+), 13 deletions(-)
+ fs/ocfs2/inode.c | 37 ++++++++++++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 9 deletions(-)
 
-diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index ed546c52ebc32..9c67a2c28faf5 100644
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -3809,6 +3809,9 @@ extern void ext4_ext_tree_init(handle_t *handle, struct inode *inode);
- extern int ext4_ext_index_trans_blocks(struct inode *inode, int extents);
- extern int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
- 			       struct ext4_map_blocks *map, int flags);
-+ext4_lblk_t ext4_determine_insert_hole(struct inode *inode, ext4_lblk_t lblk,
-+				       ext4_lblk_t hole_start,
-+				       ext4_lblk_t hole_len);
- extern int ext4_ext_truncate(handle_t *, struct inode *);
- extern int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
- 				 ext4_lblk_t end);
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 21fba12520a8e..80d41be515644 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4160,21 +4160,19 @@ static int get_implied_cluster_alloc(struct super_block *sb,
- }
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index 835c00b90b7c8..c1ac673ca456d 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -637,14 +637,18 @@ static int ocfs2_read_locked_inode(struct inode *inode,
+ 	fe = (struct ocfs2_dinode *) bh->b_data;
  
- /*
-- * Determine hole length around the given logical block, first try to
-- * locate and expand the hole from the given @path, and then adjust it
-- * if it's partially or completely converted to delayed extents, insert
-- * it into the extent cache tree if it's indeed a hole, finally return
-- * the length of the determined extent.
-+ * Adjust the hole [@hole_start, @hole_start + @hole_len) the caller found
-+ * around the queried block @lblk if it's partially or completely converted
-+ * to delayed extents, insert it into the extent cache tree if it's indeed a
-+ * hole, finally return the length of the determined extent starting at
-+ * @lblk.  @hole_start must not be behind @lblk.
-  */
--static ext4_lblk_t ext4_ext_determine_insert_hole(struct inode *inode,
--						  struct ext4_ext_path *path,
--						  ext4_lblk_t lblk)
-+ext4_lblk_t ext4_determine_insert_hole(struct inode *inode, ext4_lblk_t lblk,
-+				       ext4_lblk_t hole_start,
-+				       ext4_lblk_t hole_len)
- {
--	ext4_lblk_t hole_start, len;
-+	ext4_lblk_t len = hole_len;
- 	struct extent_status es;
- 
--	hole_start = lblk;
--	len = ext4_ext_find_hole(inode, path, &hole_start);
- again:
- 	ext4_es_find_extent_range(inode, &ext4_es_is_delayed, hole_start,
- 				  hole_start + len - 1, &es);
-@@ -4342,9 +4340,11 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
- 	 * we couldn't try to create block if flags doesn't contain EXT4_GET_BLOCKS_CREATE
+ 	/*
+-	 * This is a code bug. Right now the caller needs to
+-	 * understand whether it is asking for a system file inode or
+-	 * not so the proper lock names can be built.
++	 * The caller must know whether it is asking for a system file inode
++	 * or not so the proper lock names can be built.  Since i_flags comes
++	 * from disk, a mismatch is filesystem corruption instead of a code
++	 * bug, so handle it with ocfs2_error() rather than BUG_ON().
  	 */
- 	if ((flags & EXT4_GET_BLOCKS_CREATE) == 0) {
--		ext4_lblk_t len;
-+		ext4_lblk_t hole_start = map->m_lblk, len;
+-	mlog_bug_on_msg(!!(fe->i_flags & cpu_to_le32(OCFS2_SYSTEM_FL)) !=
+-			!!(args->fi_flags & OCFS2_FI_FLAG_SYSFILE),
+-			"Inode %llu: system file state is ambiguous\n",
+-			(unsigned long long)args->fi_blkno);
++	if (!!(fe->i_flags & cpu_to_le32(OCFS2_SYSTEM_FL)) !=
++	    !!(args->fi_flags & OCFS2_FI_FLAG_SYSFILE)) {
++		status = ocfs2_error(osb->sb,
++				     "Inode %llu: system file state is ambiguous\n",
++				     (unsigned long long)args->fi_blkno);
++		goto bail;
++	}
  
--		len = ext4_ext_determine_insert_hole(inode, path, map->m_lblk);
-+		len = ext4_ext_find_hole(inode, path, &hole_start);
-+		len = ext4_determine_insert_hole(inode, map->m_lblk,
-+						 hole_start, len);
+ 	if (S_ISCHR(le16_to_cpu(fe->i_mode)) ||
+ 	    S_ISBLK(le16_to_cpu(fe->i_mode)))
+@@ -1530,8 +1534,23 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+ 		goto bail;
+ 	}
  
- 		map->m_pblk = 0;
- 		map->m_len = min_t(unsigned int, map->m_len, len);
-diff --git a/fs/ext4/indirect.c b/fs/ext4/indirect.c
-index da76353b3a575..50c567123b42d 100644
---- a/fs/ext4/indirect.c
-+++ b/fs/ext4/indirect.c
-@@ -586,6 +586,23 @@ int ext4_ind_map_blocks(handle_t *handle, struct inode *inode,
- 		for (i = partial - chain + 1; i < depth; i++)
- 			count = count * epb + (epb - offsets[i] - 1);
- 		count++;
-+
-+		/*
-+		 * The count knows nothing about delayed allocation, so let
-+		 * the common helper reconcile it with the extent status
-+		 * tree.  Only when the lookup really did find a hole:
-+		 * ext4_get_branch() also returns a non-NULL partial when it
-+		 * failed, and caching a hole for a range it could not read
-+		 * would answer every later read from that cache instead of
-+		 * retrying.  Clamp the count first, a subtree can be bigger
-+		 * than the logical block space when the block size is large.
-+		 */
-+		if (!err) {
-+			count = umin(count, EXT_MAX_BLOCKS - map->m_lblk);
-+			count = ext4_determine_insert_hole(inode, map->m_lblk,
-+							   map->m_lblk, count);
+-	if (le16_to_cpu(di->i_suballoc_slot) != (u16)OCFS2_INVALID_SLOT &&
+-	    (u32)le16_to_cpu(di->i_suballoc_slot) > OCFS2_SB(sb)->max_slots - 1) {
++	/*
++	 * Only system inodes created by mkfs.ocfs2 are allocated from the
++	 * global allocator and thus legitimately carry OCFS2_INVALID_SLOT.
++	 * Regular inodes are always allocated from a per-slot suballocator.
++	 * If a regular inode with OCFS2_INVALID_SLOT was accepted here,
++	 * deleting it would pass the slot to get_local_system_inode() via
++	 * ocfs2_remove_inode() and trigger BUG_ON(slot == OCFS2_INVALID_SLOT).
++	 */
++	if (le16_to_cpu(di->i_suballoc_slot) == (u16)OCFS2_INVALID_SLOT) {
++		if (!(le32_to_cpu(di->i_flags) & OCFS2_SYSTEM_FL)) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode %llu: suballoc slot %u for non-system inode\n",
++					 (unsigned long long)bh->b_blocknr,
++					 le16_to_cpu(di->i_suballoc_slot));
++			goto bail;
 +		}
-+
- 		/* Fill in size of a hole we found */
- 		map->m_pblk = 0;
- 		map->m_len = umin(map->m_len, count);
++	} else if ((u32)le16_to_cpu(di->i_suballoc_slot) > OCFS2_SB(sb)->max_slots - 1) {
+ 		rc = ocfs2_error(sb, "Invalid dinode %llu: suballoc slot %u\n",
+ 				 (unsigned long long)bh->b_blocknr,
+ 				 le16_to_cpu(di->i_suballoc_slot));
 -- 
 2.53.0
 
