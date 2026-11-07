@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062766;
-	b=oaPtx4PM6zC/zQcGnIVw3o5RQfW/Xw4zKKP2NOGC8LhTyFbHj8mRjEMQoJ2iwF6Zru/u
-	 HIK0Rw8SCXSZz5QOx012tMoqfZFIhB5XDA1cPP2rYOAk6SR1vXILdZo0UzdH9xMNwwIKB
-	 yYofhF44z4NKMOH0yymVer/H+JeaubXcPCF3ZHs1Jj3cSPfmcip/qYx6dvGxPagOtUugI
-	 jLMbpq4LNeCXKysPQNKRr0fQNLjoDZ5k/zM6rReO8ynIe/QmRIf5AnrmO+f1X7j7RiF4f
-	 a0tcMkk86NJLUlJPIGir8thL/AYTxqtUKgvvfmDZDT/06VOZyvuACdxdDdcKxq2JsHQ==
+	t=1794062767;
+	b=OaYgrDg5axF35D1hHhWoIvZTLqkSFSZMZntKFjQJCzx2USXc45mw78KrgqTuLd7v/zfc
+	 Qye6hSrtlB6xK+rnM6v0tWAcbqGqgFtywZfBVJ+XbPRB+hAUTnAbDTrHzkj2zpndUmVOl
+	 TLvzGaiWFazpN6fSC79EBb3qiJGgmm6wgvj+8EINA/D4rXhx/zhLkiPtEpiU1D/oI4SR+
+	 B6FulYFmcnL0MoocLSWerhepNPslsEgGbZ1z4d0VNe0E0DyhssFHtaLIpNs2saFH37g9C
+	 d5pC/gRkKielKg33eNSjp719ZJc9BB914m9EClLLEzFrk7t4+x5U5B4Udaq2MzWTj0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062767;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VCAdxGBhyWI0LN4x5ZMEEAIxD+P/let8CrbLcu5Fwes=;
-	b=BOv70kna5K/c2kF4OlKhobzcw8eDBT5DjeBL9PyPTribO2nZ2oLHSo1fZ+kwwleGH97h
-	 VHYuHaUVofaGBhjeE0FSuSChCd40+awZ0+TfzZIiYsZ67BsM4zn+d4WEd5DnKDKjLPygx
-	 0SqkS5zj0lRmYE2HjibMvX6no7y4pzzzx7lTAg/4MHA/oiNmToUgqfWyX6WoCktIhfehy
-	 lofDUDmXr7vtZfHVDtKSchwwwmfCSq6scPIbKeVj5wAiA6rfsPYbJTwFzxRHQTGA2sk3l
-	 K6PtYc4nIPxkO6V94DqkDKmilzh7Pz2PauwwOPLcPCWZ9Oy8MxYqB7ZeT135jLg5Gxg==
+	bh=HpMrf6vDJbaBzCgItnjp7dXNyA5DoSPIN6zATa0rrYU=;
+	b=kpooTg/TbWe11wut7lvoNHy6FwYZbPEZg2DwAvRih60w7rQujepTKuzLuBPO7IhmGxmR
+	 IHNSkPN8PLdFBZXae4kPEFQBo2elTURNnr9v/OcQPpIxEumQMP2GOsJNlLC3luiGGqfqj
+	 2hGpdt6Ry07YIxnep05gRVU/T82goSB3PELetAXvzN7R/pIhVrx2TRFG38Mz5gRvGpi86
+	 dEJCbZCJjO7L1S3IJsN4VwnqVijMNa/YPV68dds5U4Gpw0cv+Fv1pi2RJEKHOfo8+p46i
+	 APkwRh9uFnHQxhhtMZfdbNOsDWZJOq9UJ3760I7qRLKBb1XEmpWq8P2Kccl7hM8/SGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lp5PlS8s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O/Jj5E3m";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E335606A326;
-	Sat,  7 Nov 2026 14:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3DB606A32F;
+	Sat,  7 Nov 2026 14:46:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lp5PlS8s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF821F0089F;
-	Sat,  7 Nov 2026 14:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O/Jj5E3m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FD91F0089F;
+	Sat,  7 Nov 2026 14:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062766;
-	bh=VCAdxGBhyWI0LN4x5ZMEEAIxD+P/let8CrbLcu5Fwes=;
+	s=korg; t=1794062767;
+	bh=HpMrf6vDJbaBzCgItnjp7dXNyA5DoSPIN6zATa0rrYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lp5PlS8sPHUEgPDlYcJkpMet21N1uhhQusfR1YGQcpQ869fkVhxmNc9DWWPBKzP+e
-	 zMd57eqgsqZNTtqKOFBlPSpITuW91jQhai0Y0N20msFvh8XULDxKnEKdLgoekHiwO6
-	 ukifzat4P+LedAoOnFzZCMJzCb3Oh4mSyzPygmXY=
+	b=O/Jj5E3m3rpJoTLTVryxnvDc9B2oxVvPPEWFFSZlGSPSWqPZ80cKC2ooyeVF+DVnK
+	 cYnyhdG8ROuc+x6R0gnxJHfnMtWU5J8FXtG1Lh/RbdVzQ4hzjxG/+EvKh7WMfLkr+/
+	 Vbna/lRZa7JVsQjImrAUxk0upnYsNGmq1qt+wIb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Jan Kara <jack@suse.cz>,
+	Andrea Pesaresi <andreapesaresi82@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 075/869] isofs: fix Rock Ridge CE extent validation on multisession media
-Date: Sat,  7 Nov 2026 08:45:57 -0500
-Message-ID: <20261107134855.297606948@linuxfoundation.org>
+Subject: [PATCH 6.18 076/869] arm64: dts: mediatek: mt7986: correct timer frequency
+Date: Sat,  7 Nov 2026 08:45:58 -0500
+Message-ID: <20261107134855.321971424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,119 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Liu <liubaolin@kylinos.cn>
+From: Andrea Pesaresi <andreapesaresi82@gmail.com>
 
-[ Upstream commit 43de050fa4a31f7e7a73cf8974dcf6037e161a39 ]
+[ Upstream commit 1cf18e4b9815beaf0439c5b57b65b45151c82ad7 ]
 
-Commit a36d990f5913 ("isofs: validate Rock Ridge CE continuation extent
-against volume size") compares the CE extent directly with s_nzones.  The
-extent is an absolute block number, while s_nzones is the number of blocks
-relative to the selected ISO session.  The comparison is therefore wrong
-when a multisession disc starts at a non-zero block.
+The MT7986 architected timer runs at 12,986,200 Hz rather than 13 MHz.
+Firmware reports 13 MHz through CNTFRQ_EL0, causing the system clock to
+run slow by about 1062 ppm. This exceeds the kernel's 500 ppm NTP
+correction limit and leaves clock discipline saturated.
 
-isofs_get_last_session() selects the last session on multisession
-media, and its volume descriptors describe a volume beginning at that
-session's LBA.
-For example, a session beginning at LBA 45447 with 64 blocks can contain a
-valid CE at absolute LBA 45467.  The existing check rejects that CE, so the
-ER continuation record is not read, Rock Ridge is disabled, and the mount
-falls back to Joliet names.
+The corrected rate comes from MediaTek's downstream OpenWrt feed, where
+it is applied to both MT7986A and MT7986B. Since upstream mt7986b.dtsi
+includes mt7986a.dtsi, add it once to the common timer node so the
+architected timer driver uses the actual counter rate.
 
-Save the selected session start in filesystem-block units and validate the
-CE extent against the half-open interval [session_start, session_end).
-Scale the session length to the same block units and retain a separate
-block-device limit.  The lower bound is intentional: accepting arbitrary
-blocks before the selected session could make a CE read data from a
-previous session or another filesystem on the device.
-
-Only apply the bounds check when cont_extent is non-zero.  A zero extent is
-the in-memory sentinel indicating that no CE continuation was found, rather
-than a request to read block zero.
-
-For a single-session image, session_start is zero and the effective volume
-boundary remains unchanged.
-
-Build-tested with:
-
-    make CONFIG_RUST= CONFIG_RUST_DRIVERS= fs/isofs/
-
-Fixes: a36d990f5913 ("isofs: validate Rock Ridge CE continuation extent against volume size")
+Fixes: 50137c150f5f ("arm64: dts: mediatek: add basic mt7986 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
-Link: https://patch.msgid.link/20260907082602.3777551-1-liubaolin12138@163.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://github.com/mediatek/mtk-openwrt-feeds/commit/6a4c41c41410cd5042ad10c39da6593ba036283c
+Link: https://github.com/openwrt/openwrt/issues/24789
+Signed-off-by: Andrea Pesaresi <andreapesaresi82@gmail.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/inode.c |  2 ++
- fs/isofs/isofs.h |  2 ++
- fs/isofs/rock.c  | 11 +++++++++--
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/isofs/inode.c b/fs/isofs/inode.c
-index 3433fa14cd014..8a0da54f391d0 100644
---- a/fs/isofs/inode.c
-+++ b/fs/isofs/inode.c
-@@ -821,6 +821,8 @@ static int isofs_fill_super(struct super_block *s, struct fs_context *fc)
- 	if (!sb_set_blocksize(s, orig_zonesize))
- 		goto out_freesbi;
- 
-+	sbi->s_session_start = (sector_t)vol_desc_start <<
-+				(ISOFS_BLOCK_BITS - s->s_blocksize_bits);
- 	sbi->s_nls_iocharset = NULL;
- 
- #ifdef CONFIG_JOLIET
-diff --git a/fs/isofs/isofs.h b/fs/isofs/isofs.h
-index 5065558375333..a36a634797435 100644
---- a/fs/isofs/isofs.h
-+++ b/fs/isofs/isofs.h
-@@ -35,6 +35,8 @@ struct isofs_sb_info {
- 	unsigned long s_firstdatazone;
- 	unsigned long s_log_zone_size;
- 	unsigned long s_max_size;
-+	/* Session start in filesystem block units. */
-+	sector_t s_session_start;
- 	
- 	int           s_rock_offset; /* offset of SUSP fields within SU area */
- 	s32           s_sbsector;
-diff --git a/fs/isofs/rock.c b/fs/isofs/rock.c
-index 869b331eff4f6..a4a337301b6f9 100644
---- a/fs/isofs/rock.c
-+++ b/fs/isofs/rock.c
-@@ -9,6 +9,7 @@
- 
- #include <linux/slab.h>
- #include <linux/pagemap.h>
-+#include <linux/blkdev.h>
- 
- #include "isofs.h"
- #include "rock.h"
-@@ -84,6 +85,10 @@ static void init_rock_state(struct rock_state *rs, struct inode *inode)
-  */
- static int rock_continue(struct rock_state *rs)
- {
-+	struct super_block *sb = rs->inode->i_sb;
-+	struct isofs_sb_info *sbi = ISOFS_SB(sb);
-+	sector_t session_end = sbi->s_session_start +
-+		((sector_t)sbi->s_nzones << (ISOFS_BLOCK_BITS - sb->s_blocksize_bits));
- 	int ret = 1;
- 	int blocksize = 1 << rs->inode->i_blkbits;
- 	const int min_de_size = offsetof(struct rock_ridge, u);
-@@ -101,11 +106,13 @@ static int rock_continue(struct rock_state *rs)
- 		goto out;
- 	}
- 
--	if ((unsigned)rs->cont_extent >= ISOFS_SB(rs->inode->i_sb)->s_nzones) {
-+	if (rs->cont_extent &&
-+	    (rs->cont_extent < sbi->s_session_start ||
-+	     rs->cont_extent >= session_end)) {
- 		printk(KERN_NOTICE "rock: corrupted directory entry. "
- 			"extent=%u out of volume (nzones=%lu)\n",
- 			(unsigned)rs->cont_extent,
--			ISOFS_SB(rs->inode->i_sb)->s_nzones);
-+			sbi->s_nzones);
- 		ret = -EIO;
- 		goto out;
- 	}
+diff --git a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+index 6786e5b590e85..df5f7d831d819 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+@@ -653,6 +653,7 @@ cpu_trip_active_low: active-low {
+ 	timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupt-parent = <&gic>;
++		clock-frequency = <12986200>;
+ 		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+ 			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+ 			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
 -- 
 2.53.0
 
