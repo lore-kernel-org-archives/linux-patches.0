@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063550;
-	b=LwWf25wNDM/Z6QC4bfIR5+VFh180s+/fJV7gY+QkVPDOCY35nlXUHjgsrV6hCedrRKDw
-	 h1NXeQCfAnrvfzWRmpmECU837c45aTpjSQwsv8swynPNNcw3UOJtVAhUnQ2N8KDwls9pl
-	 cZfGZ36XtPwcD9w8b+ZuwMrlCyPhrvAH0LmTkmDvm+JVNdw3IPS8wfhwmQrwdZHgIambO
-	 l3kDV/lPT7iLZQAKiDuNwTwWjGeqJhXC/fTQqqf+WfESC9Q0HLDwAmLIEHFZHzvv+qY1G
-	 Gh+sdSuzwXVKLplRDpaK7O8MNNzhpkP4lePy6dd6drcRctIK6JqDMzkuG2bCN60CnMw==
+	t=1794063552;
+	b=dg1ZZrl17AFZd0/mr9lyQXA9qjVIPow3SF6A7PyA3s8BAv6PMRAdYI9Uyh+i8mIUHYsr
+	 CUHP9pvYIsrerBt7mO5A2P+rD8qTko4Z2QOsXnvGuw+jLJ7zYP3ueKIe51sG3N0VVYRo5
+	 iTVhy6tuSiSbqBqUjJhyxflrL9u0xfKp9U5agrHegYdRNT2yMXThaIQtOgyHjwCm79KL5
+	 7La1LxnS83vMqYvNDVTOcbk32Tt3gPDrfXkB0pI7EHLXlbKVUoKhpT1F4eUSrVVMcAWs5
+	 qoVtQNeJO8CHjbuSfH2u+H1ZjgQiAn9Lisul39qRGkL/7K9KuMv3pQqz3LFUsZFZ85A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063550;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063552;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dDDY9k1pmSVkAtZSrhaGqXAeuzvvLp+S1tXKVL8xkWk=;
-	b=vGl9pMp2IyNAUzSefjBpP2lDVaeT+/8pGT/5G99NFxTDAwgTrnpuJBegZCTtDALzxp5R
-	 B+aR17vRNjKRPcmEvFZpdWR71zNiwOJUh6JPiCU2tDqZ/JRr7p9ezvo0PLmZaKpVwgvUp
-	 x8gZbflfih6UEXqsekDl6l7pRr8UsIv0bcA7hRLIv0w1bLkL+nP93uCi7K03D+4ANYx4v
-	 1FL/0o/wJzfv8kqf3m9vrpL7j9t2SWSOfMeg0+q5n+cRWXvS7drYk5Q9hNx1L0GOoF90j
-	 43Czwl/7/HbhctYGb1VrNXXNs3MJM8jn2CPn/qpWkkM8KEtl5HQH0ylngucGr+vhfPA==
+	bh=qXA3HfLpiWQnlGVG4Z/AGeYodMCV/RDXwb0pJ8qJXgE=;
+	b=Wr9cHfrbCzZDdbvtq05aEd2opDLMcfbQVPlR5gt9IBuYNetmc3oJdYEIyaDsXmuSEyuE
+	 Wl2NOVVzH97OBWfbBCKC/S+iY0wl1k49pRRotEwn8VW/Sp5y3jrl8oKCuaYtSrHc7/iyU
+	 c4qZkKjQvlwnbVuzO8TaMWv3MSmRyzeR/vV0nA1Xv6dLXRF1ikLNlSN0ftXm20BgThrF4
+	 wp/HBLFWwDPH+bV8kb/1JYSp7IyRzsY5IBIlq6UcGduNL95xsdjT3hIzPKLaaEvbstHO3
+	 TDc1NdPXHa6Qh23Nycc9LxFebrTpHAL2BSKJMza0t8vCtrblxjZUbVJpVzD2+ZsIjUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HiAZqLmV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GGD9x2fT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A3D608361F;
-	Sat,  7 Nov 2026 14:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA793606D816;
+	Sat,  7 Nov 2026 14:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HiAZqLmV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185B41F008A6;
-	Sat,  7 Nov 2026 14:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GGD9x2fT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFD01F008A6;
+	Sat,  7 Nov 2026 14:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063550;
-	bh=dDDY9k1pmSVkAtZSrhaGqXAeuzvvLp+S1tXKVL8xkWk=;
+	s=korg; t=1794063551;
+	bh=qXA3HfLpiWQnlGVG4Z/AGeYodMCV/RDXwb0pJ8qJXgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HiAZqLmV/MLTL8TTsmNFZuf9tjElB6RYFu+bJ8Xpv2iOMndJqXF1lpV21KohRllqY
-	 T7bV626QAAbtbRZ5kt2HAgjndJildiaG0mtM10SyG2Zsxr8PlY5fGGf3ps3erGALEM
-	 /K7n7E7LwZWytkTJQdfp56d82P4CVkwidMlXGlmg=
+	b=GGD9x2fT1u7jkrpC4ld0sn4C+V/ODyXukaMeC7Gkk6Y0Tv9m3BSyuhMdkJ1EeLllz
+	 Rrbpooig5aJhdxs0fUmTvIl6sM5Vyc3jdnJj/O+jAlhszk4CNRJu0g6SZ+ggOli99S
+	 UEAjFPe4jBy22aKtGSj34bSYK3Z3xji1GhOSGkec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Seongjae Jeong <jsjlee1020@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jianyun Gao <jianyungao89@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 647/869] f2fs: fix submit accounting for IPU writeback
-Date: Sat,  7 Nov 2026 08:55:29 -0500
-Message-ID: <20261107134914.916898852@linuxfoundation.org>
+Subject: [PATCH 6.18 648/869] dax: fix wrong error code returned from dax_dedupe_file_range_compare()
+Date: Sat,  7 Nov 2026 08:55:30 -0500
+Message-ID: <20261107134914.965577938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,45 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seongjae Jeong <jsjlee1020@gmail.com>
+From: Jianyun Gao <jianyungao89@gmail.com>
 
-[ Upstream commit 6d1f622b9c069378cdb83088be2b15a9b480b8a3 ]
+[ Upstream commit 9b036546a02c6c9a5133f9c1e93503896595c6ba ]
 
-f2fs_write_cache_pages() uses the submitted count, which is set to
-fio.submitted in f2fs_write_single_data_page(), to update nwritten
-and decrement wbc->nr_to_write.
+When dax_range_compare_iter() returns a negative error code (e.g. -EIO),
+dax_dedupe_file_range_compare() incorrectly returns 'ret' which holds the
+positive return value from iomap_iter() indicating more iterations remain.
+This positive value leaks to the caller, where vfs_dedupe_file_range()
+interprets it as success (bytes_deduped = len), causing userspace to
+incorrectly believe deduplication completed.
 
-In the OPU path, f2fs_submit_page_write() sets fio->submitted to 1.
-However, in the IPU path, fio->submitted is never set and remains zero.
-As a result, successful IPU writes are not accounted for.
-This can cause asynchronous writeback to continue beyond its budget.
+Return 'status' instead to propagate the actual error code.
 
-Set fio->submitted in f2fs_inplace_write_data() after a page is
-successfully merged into a bio or submitted, so that successful
-IPU writes are included in the writeback accounting.
-
-Cc: stable@kernel.org
-Fixes: d68f735b3bc9 ("f2fs: check io submission more precisely")
-Signed-off-by: Seongjae Jeong <jsjlee1020@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 0e79e3736d54 ("fsdax: dedupe: iter two files at the same time")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Link: https://patch.msgid.link/20261015143426.17620-1-jianyungao89@gmail.com
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/dax.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 23f9b76ee0145..46f14f891843c 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -4087,6 +4087,7 @@ int f2fs_inplace_write_data(struct f2fs_io_info *fio)
- 	else
- 		err = f2fs_submit_page_bio(fio);
- 	if (!err) {
-+		fio->submitted = 1;
- 		f2fs_update_device_state(fio->sbi, fio->ino,
- 						fio->new_blkaddr, 1);
- 		f2fs_update_iostat(fio->sbi, fio_inode(fio),
+diff --git a/fs/dax.c b/fs/dax.c
+index 155f8024b30df..30d0c7e4b30cb 100644
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -2235,7 +2235,7 @@ int dax_dedupe_file_range_compare(struct inode *src, loff_t srcoff,
+ 		status = dax_range_compare_iter(&src_iter, &dst_iter,
+ 				min(src_iter.len, dst_iter.len), same);
+ 		if (status < 0)
+-			return ret;
++			return status;
+ 		src_iter.status = dst_iter.status = status;
+ 	}
+ 	return ret;
 -- 
 2.53.0
 
