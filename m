@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064200;
-	b=FQuiaQh1/QEKaOle4iPkL/QCuMnwQgfsB0wH24ODMhar3+aB04/0al2o5LVTZaq0mm5u
-	 /plG36yuJiIM3HDa19ViW4Qnk6CeXKB0SdvGCcOgVvCOaF4HF5wsHZESiq9niTpzJTtW7
-	 cfeDKF3+SMDnK0U197iQvYTZYzP4PwL+pNi2lnxEepliqup4y8SnGjjCWaGoR/P7AiR4X
-	 gDwZcGowQs0pGLOBYPTFNMIzWkp9HC0bIhteBXNJ0toZbzTHQoaKgRtNKwSre4DSEcM3H
-	 9XpFlE/gCxlW52MgtMc2rpkClGQKmq7hutFJo7er4xJd9SWr0JZLX/mjCfZzI1lVmcw==
+	t=1794064237;
+	b=Lw3bRPqHhvtkvosGC+aT8cMCNWj6rxSKSIVrwaLWpjyXu7a7enbkGmPm3eKRYJ3Gyq7D
+	 2WXP7KWx6xugqa4XlEKvmuxhVYJZwd2YmWGvlJHbCjSLWuREhOrilzahW2bG6FjW3/NUa
+	 1YUROUj/X763Z1TKL+QuKe9eS8ojm40R8mZATvvgZsC+eQbRUFoVBOS+DH3hwgg+o36Hx
+	 pk1QaKU31bUtp0AXpRYCOCzFKWciYLmPCbXBoW+P/7CP8p7t1KB6bl04qRvq5H7RI2fQN
+	 QoVXwYgmAq0xI7QSCWzBnTtcM3bWqt7ggMyOifpXy4tXfEk+uk4Q1KCtgFT+mUQ9buw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064200;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064237;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Df6i0TunELCDwFkwnNZAmKfi0rrcLEzaUFe6DusB07o=;
-	b=n+sZ0N9FD+v+aYUyAwnuSz83ujY4Ltuyiq3oZWfBL83AHa/O991b86LD7HONEczbj1OZ
-	 pb+qOBylMktAtu2WsW332V4wYxKtWS0JcFCFntM5pzlDtxVrG4iVreulcb/XYorlbbLDV
-	 oVBOkwQSoj67Xkc5YPrUS6dFD7/q9rkDRXC+N+8xAmM/rjY80cOb0sinYtceaLPf9kfyh
-	 x36RymrZoqtT8Aaye1wXKJ+7U99PdN3olxkJ0RoNZ1WTTWFhVF7icVddyPutUq0fSEPDX
-	 CSv6IT6jhMba6aEgWM4oNqAt0fvcnLXLw4VofTp917VvaaeACrm1JSm6BgxZeUBXYaQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=g7bV9oX6da3G/tv+IXIEkOn1GXWBpTmrJdOMUDSiqiA=;
+	b=QBF3cKD2KkMwSVj2SgE1scCCyb0/SMFWGdUdXN83IIsBLckqRw9sCnpvo68UhBq/MwKq
+	 oc35xMl6N6AHbXCBSKA/QDGuXqw40YeT8N9xgjHnF55oAbBovKBHE/6A1FigTR6El8KC6
+	 Vgb8d8qd5TppYfMwQ0ijkBrhofXja4axzgekP2C5sMeqblzvi+1RucsHLke4sC0J8BXWP
+	 PADAeP1fVx06st9rE8guPuTxO0mjisfyiL+JIy4GRWZN7TLy4fkltL8VrlsGSIt+Y3aWQ
+	 G4JcmvL++BRtIPEZ7GAvfeDaDK8GIQn0moHZuOp48YD7x+jVePvQiG2qAiS/bTDInWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZsRs42ZZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GL947NIH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDD8606EEB2;
-	Sat,  7 Nov 2026 15:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC62606A332;
+	Sat,  7 Nov 2026 15:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZsRs42ZZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599BC1F008A2;
-	Sat,  7 Nov 2026 15:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GL947NIH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487FF1F008A4;
+	Sat,  7 Nov 2026 15:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064199;
-	bh=Df6i0TunELCDwFkwnNZAmKfi0rrcLEzaUFe6DusB07o=;
+	s=korg; t=1794064237;
+	bh=g7bV9oX6da3G/tv+IXIEkOn1GXWBpTmrJdOMUDSiqiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZsRs42ZZy0A7ll0jTcFRuiO0+wQOLqK2SjZ45O++8Y9Og/CdOXyBO5lpN4X4qgvbP
-	 vwwDPERQfe6N1cem0yesfLDNNMqTKJpuqzeHOHmlk3CwEAbJMnVIOPG9GNH07hTw80
-	 tZYzDLsM6EuP/hlLAJC39LkbZV4+Qb4avV+nx6F4=
+	b=GL947NIHpEkYwOux1qdLEcVvoMSIUS4prtCFO+deMgYVckTQa6VwX+IzvcpadKq93
+	 Y2fJmPd3YiY1s6q6nFWUBV2L1VzKUua4HU51UxzLqFAiNL1HLcZQr0lckL5a8J2nd9
+	 7Cj9ZRHuBvf5VbPhlefRZbo+VIrpv6PntKDIbk2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0300/1257] fuse: dont drop destination page cache on a zero byte copy reply
-Date: Sat,  7 Nov 2026 08:43:16 -0500
-Message-ID: <20261107134947.742722834@linuxfoundation.org>
+Subject: [PATCH 7.3 0301/1257] platform/x86/intel/pmt: Block mmap when callback is present
+Date: Sat,  7 Nov 2026 08:43:17 -0500
+Message-ID: <20261107134947.768785747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,67 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Michael J. Ruhl <michael.j.ruhl@intel.com>
 
-[ Upstream commit f7585e1ce3418ec282485854b3d8d31c6a961e37 ]
+[ Upstream commit 0d4cd92b41dd33a3112959f9be86002ff309de73 ]
 
-__fuse_copy_file_range() clears the destination page cache after the
-server replies:
+With the introduction of the .read_telem() callback, control
+for access to a devices data area must be done by the callback
+owner.
 
-	truncate_inode_pages_range(inode_out->i_mapping,
-				   ALIGN_DOWN(pos_out, PAGE_SIZE),
-				   ALIGN(pos_out + bytes_copied, PAGE_SIZE) - 1);
+This means that an area cannot be mmap-ed with the default PMT
+handler.
 
-A server may legitimately reply that it copied nothing, eg if the source
-file turns out to be shorter than the size the kernel has cached for it.
+If the .read_telem() callback is present, do not support mmap.
 
-If pos_out is 0 as well, the end of the range is ALIGN(0, PAGE_SIZE) - 1,
-which is -1. lend is a uoff_t and truncate_inode_pages_range() takes -1
-as its end of file sentinel, so rather than clearing nothing it drops
-every folio in the destination mapping.
-
-That is not only a cache drop. truncate_cleanup_folio() calls
-folio_cancel_dirty(), and fuse_writeback_range() only wrote back
-[pos_out, pos_out + len - 1], so dirty data elsewhere in the destination
-file is discarded without ever reaching the server.
-
-Skip the call when the server copied nothing, since there is nothing
-stale to clear in that case.
-
-Fixes: 9b46418c40fe ("fuse: copy_file_range should truncate cache")
+Fixes: 045a513040cc ("platform/x86/intel/pmt: Use PMT callbacks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Link: https://patch.msgid.link/20260910135954.1586360-2-michael.j.ruhl@intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/platform/x86/intel/pmt/class.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index b52f5b45646c9..0f2c9404af74a 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -3058,9 +3058,11 @@ static ssize_t __fuse_copy_file_range(struct file *file_in, loff_t pos_in,
- 		goto out;
- 	}
+diff --git a/drivers/platform/x86/intel/pmt/class.c b/drivers/platform/x86/intel/pmt/class.c
+index d0ab8e33c62a6..c25892a511804 100644
+--- a/drivers/platform/x86/intel/pmt/class.c
++++ b/drivers/platform/x86/intel/pmt/class.c
+@@ -417,7 +417,14 @@ static int intel_pmt_dev_register(struct intel_pmt_entry *entry,
+ 	sysfs_bin_attr_init(&entry->pmt_bin_attr);
+ 	entry->pmt_bin_attr.attr.name = ns->name;
+ 	entry->pmt_bin_attr.attr.mode = 0440;
+-	entry->pmt_bin_attr.mmap = intel_pmt_mmap;
++
++	/*
++	 * The read_telem callback controls access to the memory area. Block
++	 * usage if the read_telem callback is present.
++	 */
++	if (!(entry->cb && entry->cb->read_telem))
++		entry->pmt_bin_attr.mmap = intel_pmt_mmap;
++
+ 	entry->pmt_bin_attr.read = intel_pmt_read;
+ 	entry->pmt_bin_attr.size = entry->size;
  
--	truncate_inode_pages_range(inode_out->i_mapping,
--				   ALIGN_DOWN(pos_out, PAGE_SIZE),
--				   ALIGN(pos_out + bytes_copied, PAGE_SIZE) - 1);
-+	if (bytes_copied)
-+		truncate_inode_pages_range(inode_out->i_mapping,
-+					   ALIGN_DOWN(pos_out, PAGE_SIZE),
-+					   ALIGN(pos_out + bytes_copied,
-+						 PAGE_SIZE) - 1);
- 
- 	file_update_time(file_out);
- 	fuse_write_update_attr(inode_out, pos_out + bytes_copied, bytes_copied);
 -- 
 2.53.0
 
