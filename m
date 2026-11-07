@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063928;
-	b=YhC2soMwWddJbhP0yA48pNbK5heAyuw+RcvmjjS37rF3XfUpnP73uhAV2fVRkNbwLSOR
-	 4DCyT204wTQjZ0/w6Wjzk7jMOUf1xQT8kvVzmT/PhyncDYaKjKlY8YZHMG65FmrMgqXag
-	 mxRI8Zw7eOtqB1UsNPUWg/QM5rT7iHNTgmRRLEF1RgEdp4Ul+8D8R+YShrNxLoYvbwqjN
-	 NrlIOJUIcuwmLexScbNHrZ+Z8WUBR8hlLnakyJMXvlEo8Stk4w/rGekZ75bhjiz7QTRjb
-	 igecliGmpEfXONfwZkcCm66aLMt+Pf/nC67Efg8pISRxcr1+L51qrT7Tghsp0vVBtyA==
+	t=1794063929;
+	b=DycgDwhpTopqihxCl5TZA2kD74y1mBjJ/IafwDJpvX2Mc0S6OJqQEO0MA9Ar6Pw1LmAf
+	 8Rw7dRduoUNeh7eCj4+sPD7b4PugT7Iyz9Uj42Uq3S4i4S81brYiC4JACRwl+RQo/NeXC
+	 C8SNty6ARBKV3FPvHktVMJQ4zO9lrGiGxRvayq0hwXat09rAdWw9d8WNOWFLyvrkCCaeD
+	 n+9rVDh7/HyKhandOADKTg86xUGikdkJa9HEn4K2jWvd5x2wZcyilPrXyoMVTVqoF7Uo2
+	 emeR9UAedTT8QvifrBuCH6TqgBfrXrHCVvY423yA8DuxwF6XTj+MM3DfjGXGW42tYDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063928;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063929;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7W6zn0QL6/fQLBm8SmWJRSFykORQSDK+RZZaTUyH7Cw=;
-	b=Zp+GfaESedTZ+F7m9giP4pPf0mp1A4exI3q6cBrO5ioKqWyK2k+8dHF5/e3VVv7FFV4y
-	 YuOSNoaCe9Coe0pHxYPde5BqM5ChmaBrexEiJ4v5Cz1UoUa4oReDVxX0paXrCuvMRO0Kl
-	 EAyISoah+4Qv7s3PNhPHtecWto5vlb1XwgPA1mTuXxeS75N5IwmjHqs85/Av8Cfj+eEYX
-	 bbiKFLal9Q7HrcizMW7fQw08OcLrsoyBJPK8dZtvp+rzOq0Dl6kk4zcZps3Jk8VeZPNTP
-	 9Qr2c9PDfZhPZEQPSe9gHT/46sbMiTVlwi2Te8QUlJ/RhUOQWF1cWKD1hl0JJ6jy61g==
+	bh=nCDc1GDp5OCovWnbnDFTq1Mi8n6GFME+4LrcaGOYhU8=;
+	b=Gv4uNlE6Wm3TbU8aw/Cv8w6a1yXdHMfzCZfbTdkp7d+7z7giYkUkVAnBXzSi4JI4WLPA
+	 QjcO43B9+n/RZ8XyrKQrMw5LeedpeN8KSi6UXGGZEu+Emh8XSq07qvsmv2JQXmTEB7Rq0
+	 lH1g45Ose2L7CMCAjuQWDoBsSdSTi8gKxJmpqmUA1JWLitRz+qcex8c6gs5HrziqvG4ib
+	 jnXC4bmRQQg4p0Vl4cGbgsln6cyUaIepzZTzfP8Qb7T3iRJjCEEG2b+2V644XXXHmjld1
+	 jhi5+7lL2058eJrF9ev8chUiVWx51tMaq7598+vMvdM8sABYbWfgXMsfhcjD9JAcfwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GAziBhOM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hX0QaSEm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE436606D802;
-	Sat,  7 Nov 2026 15:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4A9606D802;
+	Sat,  7 Nov 2026 15:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GAziBhOM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEFC1F0089F;
-	Sat,  7 Nov 2026 15:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hX0QaSEm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED7E1F0089F;
+	Sat,  7 Nov 2026 15:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063927;
-	bh=7W6zn0QL6/fQLBm8SmWJRSFykORQSDK+RZZaTUyH7Cw=;
+	s=korg; t=1794063929;
+	bh=nCDc1GDp5OCovWnbnDFTq1Mi8n6GFME+4LrcaGOYhU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GAziBhOMHzUthNJI1liE9zMuJ9iZTn9Ko0pillTn8JSNdm/BetaqCrQ2iuJDDqQNl
-	 QUG6PXG4Gvq7Ixf6VgKNpUZH34jS31HuwDbmra5v0g3bTf928olpLYLm/kpf6ZHycQ
-	 yhli4iPXlN0ZMVyrEeqT+ydE+Ua6YAMV8OJDLXLs=
+	b=hX0QaSEmJVAWxY1qUTpqqlQ/0VYvjJRsMqLclcLjX2f00f6CnHxG0DMRE2YCMDDML
+	 bh+gGXBwKgP0xcIP0lwCJatrZIOK+5ncI9Bc3SphyNEhzlpgBBhLu8rE88JY99LPN5
+	 Ek0KQvLhCfuRoCZ3r6GcACJtBNrsh8x5nOnObf0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Alexander Shiyan <eagle.alexander923@gmail.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Ben Hoff <hoff.benjamin.k@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0122/1257] media: synopsys: hdmirx: use request_any_context_irq() for 5V detection IRQ
-Date: Sat,  7 Nov 2026 08:40:18 -0500
-Message-ID: <20261107134942.699916120@linuxfoundation.org>
+Subject: [PATCH 7.3 0087/1257] media: pci: hws: only init channels the device actually has
+Date: Sat,  7 Nov 2026 08:39:43 -0500
+Message-ID: <20261107134941.767200287@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,49 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Shiyan <eagle.alexander923@gmail.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit fce1e4fa3867c0ff19a31f9977741696710855a6 ]
+[ Upstream commit ad5390c35ccf98cec66ef1009351305f25b5a757 ]
 
-Replace devm_request_irq() with devm_request_any_context_irq()
-for the 5V detection interrupt handler. This allows the kernel
-to choose the appropriate execution context (hardirq or threaded)
-depending on the underlying interrupt controller. On some platforms,
-the interrupt may be nested or require a threaded handler, and
-using the fixed hardirq version can cause probe failures.
-Switching to the more flexible function improves driver portability
-without affecting functionality.
+hws_probe() initializes max_channels (always 4) control handlers, but
+register/unregister only walk cur_max_video_ch (1 or 2 on smaller
+chips). The extra handlers are never freed.
 
-Fixes: 7b59b132ad43 ("media: platform: synopsys: Add support for HDMI input driver")
-Cc: stable@kernel.org
-Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Initialize the same number of channels that cleanup uses.
+
+Fixes: ba07fd2f5742 ("media: pci: add AVMatrix HWS capture driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Reviewed-by: Ben Hoff <hoff.benjamin.k@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/media/pci/hws/hws_pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-index 25f8ca0d6d946..e84d4418c530e 100644
---- a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-+++ b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-@@ -2609,10 +2609,11 @@ static int hdmirx_setup_irq(struct snps_hdmirx_dev *hdmirx_dev,
- 	irq_set_status_flags(irq, IRQ_NOAUTOEN);
+diff --git a/drivers/media/pci/hws/hws_pci.c b/drivers/media/pci/hws/hws_pci.c
+index 30bb7d34465b8..87ba27877f29a 100644
+--- a/drivers/media/pci/hws/hws_pci.c
++++ b/drivers/media/pci/hws/hws_pci.c
+@@ -441,7 +441,7 @@ static int hws_probe(struct pci_dev *pdev, const struct pci_device_id *pci_id)
+ 	hws_init_video_sys(hws, false);
  
- 	hdmirx_dev->det_irq = irq;
--	ret = devm_request_irq(dev, irq, hdmirx_5v_det_irq_handler,
--			       IRQF_TRIGGER_FALLING | IRQF_TRIGGER_RISING,
--			       "rk_hdmirx-5v", hdmirx_dev);
--	if (ret) {
-+	ret = devm_request_any_context_irq(dev, irq, hdmirx_5v_det_irq_handler,
-+					   IRQF_TRIGGER_FALLING |
-+					   IRQF_TRIGGER_RISING,
-+					   "rk_hdmirx-5v", hdmirx_dev);
-+	if (ret < 0) {
- 		dev_err_probe(dev, ret, "failed to request hdmirx-5v irq\n");
- 		return ret;
- 	}
+ 	/* 5) Init channels (video state, locks, vb2, ctrls) */
+-	for (i = 0; i < hws->max_channels; i++) {
++	for (i = 0; i < hws->cur_max_video_ch; i++) {
+ 		ret = hws_video_init_channel(hws, i);
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "video channel init failed (ch=%d)\n", i);
 -- 
 2.53.0
 
