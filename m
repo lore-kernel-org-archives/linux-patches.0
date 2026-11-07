@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062263;
-	b=16VVURPrMjZG036Li9A02Ir5MhJ8BUIg9GxE3IvMHtksIJTbUpW/PaElM2e0tT/1oqja
-	 AjbSemP0kzhx93ks4j38bQkrozQYvdY51a8LEGCRAPmCtW/LwRnXFTwMuP5kha1z2hzE8
-	 GyRnXIaPaPTUmmNBh6Ba7irW3fSST0PxBa8lFHmJnIVfFC8trXuEWhYnh6KZH6rN5nTB1
-	 ECjC/dWVHhVznlierXslw0svwdpSCKaMTZ1K13DOK6nEsUsjF8TylNaRGa4JYcdI/j7/m
-	 GGtrSRRPzjYUoX2O1wr5NMm/2M3T09OTdPuWdNpSLx6ptgKjIQveTTBvGTjlrJdT4zA==
+	t=1794062264;
+	b=MW2KkO5IviVWExexigez9pwk6tm/aW/DQqljTF67LmLrkVyo0Bj5/seXW3chb+gWOMUD
+	 D4T6nCw82r/5SaOOrDA/6GjXC4abwqniRwy6+rPiNxXajiy4yeO7+iY60CVQ403cwlIt3
+	 TIgYx5f2Jj1Qb87TNTNfTSJMn5+2tE8BLyVtHxIyfbhsBfkPSlBH7BtBheWJsu4notM9u
+	 NkGsSS6tLhlYnKdVRA5wX08xbigGF7SchhWQPCq+tX7RS4fmY8BE4Z7xkQo6zCScsTG6Q
+	 t6Eb5AJDEmroap7aDx8L5QUEkfGLZW/1ukf6kTDpvnVQV8LHbmn1WYidTvRvOVsB1XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EXPrk9ssEhAVocRaxcjZlryc2GXuvbHWzoo315xZxuc=;
-	b=jXlHchcO6zHlA/hM9VhA/NI3hxnRDKuz7xqx67mFSUHrJB/Wx18MHcv2DVD2tiYlKFkW
-	 ysMMaqIzsySO2hxJyVbzLkX30WtcYvpSxaZh7+UMWyBbYxfBTQhyto6eZq/eC1WCyJlgP
-	 LJQt1qdLuGt3rG7MRO9mc+9pMwXXQtibrZkvdFrXjKyqCBteatIvqS24iiL9622iznrPr
-	 QVd7PQZG8oOQRAsF6AQNo2L32nklYd4B/b5BoOjNfGIhw+XXDfhjZ3XAyeuS42TOtvx+t
-	 Tx2kMKiOfzXmj32SVY++8j/2jgiKgbvQ3Xq8cyffBVekM7AtqAxnwrGHf1XJLmdrowg==
+	bh=oOXrel/RqBr/iRPKe2j18hvL8nmX+0vExEjX+lLPqKk=;
+	b=pMiIN36TklX6iTI+YZX0VnHw2pRDf8+FGai/s6qHyQzMRHBf9ntglrmwgnUUD2xjSyar
+	 kZZ3YStmJP+S8w3T5aNcOq2bIRGunxeIVmKaJzTcrB3RR3QahD3FDxT0CnDTZn+u9WUuf
+	 FqMCOhwsdpN0UX29diWndO7j7TKIhXw8n8GCjoAS+5UFbet5ereo41WJkGNiW1OZGmTm0
+	 aRv9pwBQTiNx1CRjn95X7+b0ODVuLE5ukzynZ/qhDmNtoeKFJn7Sh4abN3D4jdUZy5kri
+	 FewoMUA+zIPCxQTZh9YMqcG2NTRCODr2l+eNg+7+O4UP6tJyIEVoIl6+DxNjUnpP3ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GO433axR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhnIvMFg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EBF60A262A;
-	Sat,  7 Nov 2026 14:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DBB606A334;
+	Sat,  7 Nov 2026 14:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GO433axR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4667F1F0089F;
-	Sat,  7 Nov 2026 14:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhnIvMFg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628221F008A1;
+	Sat,  7 Nov 2026 14:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062262;
-	bh=EXPrk9ssEhAVocRaxcjZlryc2GXuvbHWzoo315xZxuc=;
+	s=korg; t=1794062263;
+	bh=oOXrel/RqBr/iRPKe2j18hvL8nmX+0vExEjX+lLPqKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GO433axRJcEvXc/s3bv0erCuGPm1xAZ2ajPhrkt9nOuehpoH75GZU7aKoWDay8cAI
-	 C1k10OC9EL7+PziV6Sc8fOIjGmi2lc2nYIBC8jdpZLHgS0c8BhXzh5x78V7GlQsSjX
-	 Y7ixZgcMuJ+CjisANS0QsSsA6j9e22rztN5ARhaE=
+	b=fhnIvMFgZX6QGkhF7JnJyOAzHoVBWigl/eMrNvW5WwWw39/SeZHOgFukxpAnOfq60
+	 2rlLjR9eoigG/VriWM1/pvn+bvaNqNpcdr994e8lDUlq1bi8EHLeBK7ZcmnMP21FW/
+	 ACuEiC8U3RbdmC+xxX6U/SL6YIOMgqURakPtjJRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1206/1536] soc: fsl: dpio: Fix cleanup on IRQ registration failure
-Date: Sat,  7 Nov 2026 08:53:42 -0500
-Message-ID: <20261107135031.625315027@linuxfoundation.org>
+Subject: [PATCH 6.12 1207/1536] soc: fsl: dpio: Free the IRQ before releasing the I/O object
+Date: Sat,  7 Nov 2026 08:53:43 -0500
+Message-ID: <20261107135031.653282757@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,54 +72,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 45ecea8c55521d424513178fb612cefffb09a9f5 ]
+[ Upstream commit a7831c657c90e8f9165f6bbe0cc56262fee075e8 ]
 
-IRQ registration happens after dpaa2_io_create(), but its failure path
-only releases the IRQ resources and the MC portal. The I/O object stays
-allocated and published in the service list and per-CPU lookup table,
-while devres unmaps its portal registers after probe fails.
+The DPIO interrupt handler accesses priv->io, but dpaa2_dpio_remove()
+releases that object before tearing down the interrupts. The IRQ was
+requested with devm_request_irq(), and unregister_dpio_irq_handlers()
+only clears its affinity hint. fsl_mc_free_irqs() returns IRQ resources
+to the MC resource pool without freeing the handler. An interrupt can
+therefore access the freed I/O object before devres releases the IRQ.
 
-Call dpaa2_io_down() on IRQ registration failure to remove the object
-from those lookup structures and free it. Reorder the error labels so
-that a failed dpaa2_io_create() still skips this cleanup.
-
-Remove unregister_dpio_irq_handlers() from the probe error path, since
-no IRQ handler or affinity hint has been installed when registration
-fails.
+Explicitly free the managed IRQ in unregister_dpio_irq_handlers() before
+returning its resource to the pool, and perform IRQ teardown before
+releasing the I/O object. This also waits for an in-flight handler while
+the object is still valid.
 
 This issue was identified during our ongoing static-analysis research
 while reviewing kernel code.
 
-Fixes: fe8fe7723a3a ("soc: fsl: dpio: register dpio irq handlers after dpio create")
+Fixes: 993fec7e11ca ("bus: fsl-mc: dpio: add the DPAA2 DPIO object driver")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
 Co-developed-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20261002194802.375497-2-mhun512@gmail.com
+Link: https://lore.kernel.org/r/20261002194802.375497-3-mhun512@gmail.com
 Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/dpio/dpio-driver.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/fsl/dpio/dpio-driver.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/soc/fsl/dpio/dpio-driver.c b/drivers/soc/fsl/dpio/dpio-driver.c
-index 9e3fddd8f5a91..7dc65f38d2fdb 100644
+index 7dc65f38d2fdb..2962e66e2e413 100644
 --- a/drivers/soc/fsl/dpio/dpio-driver.c
 +++ b/drivers/soc/fsl/dpio/dpio-driver.c
-@@ -248,9 +248,9 @@ static int dpaa2_dpio_probe(struct fsl_mc_device *dpio_dev)
+@@ -88,6 +88,7 @@ static void unregister_dpio_irq_handlers(struct fsl_mc_device *dpio_dev)
  
- 	return 0;
+ 	/* clear the affinity hint */
+ 	irq_set_affinity_hint(irq->virq, NULL);
++	devm_free_irq(&dpio_dev->dev, irq->virq, &dpio_dev->dev);
+ }
  
--err_dpaa2_io_create:
--	unregister_dpio_irq_handlers(dpio_dev);
- err_register_dpio_irq:
+ static int register_dpio_irq_handlers(struct fsl_mc_device *dpio_dev, int cpu)
+@@ -280,10 +281,10 @@ static void dpaa2_dpio_remove(struct fsl_mc_device *dpio_dev)
+ 	priv = dev_get_drvdata(dev);
+ 	cpu = dpaa2_io_get_cpu(priv->io);
+ 
+-	dpaa2_io_down(priv->io);
+-
+ 	dpio_teardown_irqs(dpio_dev);
+ 
 +	dpaa2_io_down(priv->io);
-+err_dpaa2_io_create:
- 	fsl_mc_free_irqs(dpio_dev);
- err_allocate_irqs:
- 	dpio_disable(dpio_dev->mc_io, 0, dpio_dev->mc_handle);
++
+ 	cpumask_set_cpu(cpu, cpus_unused_mask);
+ 
+ 	err = dpio_open(dpio_dev->mc_io, 0, dpio_dev->obj_desc.id,
 -- 
 2.53.0
 
