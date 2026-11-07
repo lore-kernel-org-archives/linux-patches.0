@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064579;
-	b=jgbJJgR+inzFFCQOOmeTrPDSEiN+AvdZdipd3B0kTpz6WB/UWhiWKfIDCPAYaxNjw2Vq
-	 HdHQt0c/nfRC4OQCOoUS9jr2gRttcWP0J68EFaYMN1C8R2bSB0FYJOD7HlNkyRrljtZQj
-	 OkZkBokpFRocVMowWVSu0/pvLcOVFVPAY24I3RTgl0DyLlVtgii3ItRLYwtITEn0rNG2s
-	 ALbLZhYxZkJrT4dhyG7VpRCq3v6Fw15kjtzsaJTitZ0pwuVyobJMBcqAWsIg50ClEkuNe
-	 JGWb1rWQ36j2meZxxbEPg96SM9fI+Y7bq8orrdwuQrE9sPONXDJC8T7Wmq569zGli3Q==
+	t=1794064580;
+	b=tSX7Yrk2VzNsnyOQ432hlRZhivAQM6I6Hesh643UYOJ2qQ6JU6jL3FQpTFOz/srWCeQo
+	 Lbe7jRVJDfXOcyzkQE2MwyhT9E3gWUj9+nNMv5XgndAZwiHrZdtFBZHyXuXfsBNiVZf6O
+	 r8NXhLtbm8Rh8fIGHoNplOQqDrRqoOTGqzOQqq07Nv12GFMVm4KUBVbmTGR1JN5rNg6BE
+	 Tmt0qz4MBiK5952r5ms0jUDWizf81rMRi5QtI+C27k+S5a2KdE22ZnGQOGx9pyG7haXuW
+	 088dOnb5cFG4vXfI1w1pVTM3tB4FW0OHVFrWY2ByFTycrIKQm/HTgHmbZDnzJ32S/ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=wOZYDAFp68GzO37nSFUlmuLuVcDfMf5QeKt19u1XcPg=;
-	b=keK/OvCLcQMfK9DEgyGv0bYY2/isKYbLXV1vgxymi/jTfLvO7eWw9liKA66X5Aq8nbup
-	 +AbgLZ0M1rkPa8J5jCkrpKHLx2iB9R3DdSTQrVBQRGhtlx+5bb/4jcNsK49ge6fV6NpQX
-	 5YLwcYNqAJOhBWFmCbaI3X8kWANPrkb/yGBmQ+91S1horGB9kHni/hF5dfGp2XrNqO/7/
-	 RxoxfNyujrcTkEWOfiqpdtUNZBCwnU+wAOJSJFn2wQEOEwEa+7IzXGtEHl9MJI8I7UfOU
-	 38oXkeEUySU1RYiLbZ9iiNphw01/zistNXvEmWhvxPWizQ0Zp3Iml0x5EKP/p+taboA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=YbUk4QQzOzpCclUdpLQ7Mou9wrVHt80ko4gDkFpJ4T8=;
+	b=VvUO9ihyAoeLiRfQnqZWgeseHivC9a7t5j4O0TNHH38xIGMLnAtZ8K+MVzlWVEw+OU4x
+	 nhQrUoBysnmDsmynUXPluuv2ApiJJxwAo3+X2gE1z7UGXgJPLoQePRNA41VHSzaX7KyoH
+	 F61/kNx7lBx8JV3I7IUG51xlYfoFEQMSnQpfi1gvPlmcqtUL0pPG8pr29A9v4teLWxKEq
+	 EXBw424x9PrY+HdmE+bf7SBNlUE+gKyKO2YAX+RMOBUtcec6M5GJDC7D0Gay4ooXDUKf6
+	 Ug8HRlilX56NAiiAqq1LA5OEJazxW0pH2qJpIPJAMckCLdGTIozlWdHlY83dIJ9c5xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ErSNMczQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qawWv2jV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED11A606D809;
-	Sat,  7 Nov 2026 15:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A004606D809;
+	Sat,  7 Nov 2026 15:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ErSNMczQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE521F0089F;
-	Sat,  7 Nov 2026 15:16:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qawWv2jV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE161F0089F;
+	Sat,  7 Nov 2026 15:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064578;
-	bh=wOZYDAFp68GzO37nSFUlmuLuVcDfMf5QeKt19u1XcPg=;
+	s=korg; t=1794064580;
+	bh=YbUk4QQzOzpCclUdpLQ7Mou9wrVHt80ko4gDkFpJ4T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ErSNMczQglRSy0D5GbIQBuzt7Rh9PhkU5+aCdn+DNk4m0UqKO3fwPVEQgeAmWkUck
-	 NCUQn3PA6iAZphPRUz9bU1xPjMz+Nd1krxorZneWhyS9ZLoXIJSjma9cOHHyy/UinJ
-	 sN5qXhE8eX8rd3s9+f1dy5qtW6qlJtyULu0nG0ac=
+	b=qawWv2jVm0Gg2dxzXoN7PZj/K3uynjyuKJWq4WqpFhe8vAsD6aLRR7a/yNWty+syM
+	 +ni+Zh62+mH11E2G59MibFCusDGxJC6sMExtcaLrF3rBFA+ZUqgq6LVWGd00JWfQB2
+	 e3P4U9Oj58nHQ4zvFcfOGQPTjikWjn+afshSDyrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0598/1257] drm/ttm: return an error when kmapping a BO without pages
-Date: Sat,  7 Nov 2026 08:48:14 -0500
-Message-ID: <20261107134955.840071165@linuxfoundation.org>
+Subject: [PATCH 7.3 0599/1257] ALSA: usb-audio: Add mic resolution quirk for Logitech Webcam C200
+Date: Sat,  7 Nov 2026 08:48:15 -0500
+Message-ID: <20261107134955.865822527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,88 +62,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 
-[ Upstream commit fd485d47437ba1700dd47205a63b9f389a00aa36 ]
+[ Upstream commit 874323b68c93c6808e034dc0113681e822e6fb42 ]
 
-ttm_tt objects for imported sg tables (ttm_bo_type_sg, set up by
-ttm_sg_tt_init() with TTM_TT_FLAG_EXTERNAL) only have DMA addresses and
-no pages array. ttm_bo_kmap() and ttm_bo_vmap() still dereference
-ttm->pages for them, so a driver that tries to CPU map such a BO oopses
-instead of getting an error:
+The C200 (046d:0802) reports a mic capture volume range of
+1536..7680 with a resolution of 1 (6144 steps), triggering
+"Warning! Unlikely big volume step count (=6144), linear volume or
+wrong cval->res?" at probe and exposing a uselessly fine-grained
+mixer control.  This is the same firmware behavior as the other
+UVC-era Logitech webcams already carrying QUIRK_FLAG_MIC_RES_384
+(C500, C600, C210, C270, C310, C510, C525, ...), so apply the same
+quirk: CTL_MSG_DELAY_1M (which the Logitech VENDOR_FLG would provide
+if the device-specific entry did not short-circuit the lookup) plus
+MIC_RES_384.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:ttm_bo_kmap+0x26c/0x300 [ttm]
-  Call Trace:
-   amdgpu_bo_kmap+0x89/0xb0 [amdgpu]
-   amdgpu_userq_fence_read_wptr+0x116/0x170 [amdgpu]
-   amdgpu_userq_signal_ioctl+0x3fe/0xbb0 [amdgpu]
+Verified on real hardware: with the quirk the warning disappears and
+the driver logs "set resolution quirk: cval->res = 384".
 
-Return -EINVAL in that case, like ttm_bo_kmap_try_from_panic() already
-checks for a missing pages array.
-
-Fixes: 75a57669cbc8 ("drm/ttm: add ttm_sg_tt_init")
+Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Link: https://patch.msgid.link/20261009103419.4122940-1-Jesse.Zhang@amd.com
+Link: https://patch.msgid.link/20261008230844.11246-1-olivier.kaloudoff@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo_util.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_bo_util.c b/drivers/gpu/drm/ttm/ttm_bo_util.c
-index bd0b23ac2cc4b..f9458a4d5a09d 100644
---- a/drivers/gpu/drm/ttm/ttm_bo_util.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo_util.c
-@@ -356,6 +356,10 @@ static int ttm_bo_kmap_ttm(struct ttm_buffer_object *bo,
- 	if (ret)
- 		return ret;
- 
-+	/* Imported sg tables only come with DMA addresses, no pages to map. */
-+	if (!ttm->pages)
-+		return -EINVAL;
-+
- 	if (num_pages == 1 && ttm->caching == ttm_cached &&
- 	    !(man->use_tt && (ttm->page_flags & TTM_TT_FLAG_DECRYPTED))) {
- 		/*
-@@ -419,7 +423,7 @@ EXPORT_SYMBOL(ttm_bo_kmap_try_from_panic);
-  *
-  * Returns
-  * -ENOMEM: Out of memory.
-- * -EINVAL: Invalid range.
-+ * -EINVAL: Invalid range or the BO has no pages to map.
-  */
- int ttm_bo_kmap(struct ttm_buffer_object *bo,
- 		unsigned long start_page, unsigned long num_pages,
-@@ -493,7 +497,7 @@ EXPORT_SYMBOL(ttm_bo_kunmap);
-  *
-  * Returns
-  * -ENOMEM: Out of memory.
-- * -EINVAL: Invalid range.
-+ * -EINVAL: Invalid range or the BO has no pages to map.
-  */
- int ttm_bo_vmap(struct ttm_buffer_object *bo, struct iosys_map *map)
- {
-@@ -537,6 +541,9 @@ int ttm_bo_vmap(struct ttm_buffer_object *bo, struct iosys_map *map)
- 		if (ret)
- 			return ret;
- 
-+		if (!ttm->pages)
-+			return -EINVAL;
-+
- 		/*
- 		 * We need to use vmap to get the desired page protection
- 		 * or to make the buffer object look contiguous.
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index a54fabce7920d..b9e89e94e95f5 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2251,6 +2251,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
+ 	DEVICE_FLG(0x045e, 0x070f, /* MS LifeChat LX-3000 Headset */
+ 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
++	DEVICE_FLG(0x046d, 0x0802, /* Logitech Webcam C200 */
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIC_RES_384),
+ 	DEVICE_FLG(0x046d, 0x0807, /* Logitech Webcam C500 */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIC_RES_384),
+ 	DEVICE_FLG(0x046d, 0x0808, /* Logitech Webcam C600 */
 -- 
 2.53.0
 
