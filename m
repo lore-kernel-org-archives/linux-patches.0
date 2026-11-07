@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060816;
-	b=e3DYkWDJ+rAz+v26IyUEUi2TWzoKnEfRtl6VX/ZiNfEMMqHCAVJBRtSZoPreGKzEkGKu
-	 aQedB48Cb16h5FmA5y5trlyB7IJn7LNVe+6wf2e10radL7g1Qaa7mdVk8nLQhWy1PPwn+
-	 6oHgYOQ8arWAQODHi14zXVdtSrnqqt1EBfdChOkKLZBGZY+Z8pBvV8sW4j5xN+5SduqhR
-	 nw351mQCIqcmxjk4LnnTbQkKW76Ofn6hq2/cToX0LwFjICVU/apoC+Yo653YLqZG6zN5l
-	 iNkJeIMX/lVwvPHjxXS3opQKjErhAF8hv8OPq9fLor5S94hCOMIgS5IbvD+U2n1BUtw==
+	t=1794060817;
+	b=ZTt7Jpc0ghRil2RH92LAW5Td+gMAmDgZHu7nCal2hQQD1OnoM+b4q4Crma49iO6+BDSI
+	 C8H/5BIoEOwN2Um2TpzE0Q+LwKsLd6UDIaf47lcKHSc8tmAyPYUwiUoemy29lksjgeizP
+	 VvMMNVelPegDoSvuobZU/k7jrqwXJZPus/MUeF7iVJgEP/ZxBiFNYzRN8Le7+DyYK3hUO
+	 +XJVc2Rodd9jVGNVJ3f06fZFUOnBEQbMxj4RKQ2QaQPG2nQXukj/3pxEsoOg8OafkpRDf
+	 NYDJRwGLO5QsLytJff0TMonryCaIxyYWIr28GBGTjcc2JDRq+VJvI4AK54/VJlA8kFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ciA2OXb6Qz4VuRIuJA+2SplQ0kGGcyIKuSmn0RGKr60=;
-	b=2NFTbNa3KdvlShJK9k/AJ8iOtbyNFL3z9dkAlqXIBr8P9SRDuriE81S9kB1Mj9ojbnWn
-	 J+5VcmJZCi1m5oOJa2j2NsmL9egcsXK5TlildaEb9RwXtnXvfmuNAWy4wa7cVVv0lS8ZJ
-	 +zJmKJONEUZxVaWlW0nCSc6f+Y3kQQZ6pz2/bCl2QcMp6r67HjLoO1s0uCx8pmGc1oDYA
-	 AC1DSM4blj94VE8I556GogH3x/pnoPLQwHBKEHBvXhPNkIQ/ajD41Lp4kSO/RBiB2tUWa
-	 ZVhJQEY4y9U6dEi67I6q/aRVx/eWHLbcN/ob35z6e2yo5QOgjOcwXvC/pOhlabSzF5w==
+	bh=d7DDuTEWx3HyiWTze2CbmpO7V8ovGR5whu1DZg2Ol68=;
+	b=yw0iXhKLYJ20BSMjxGRUCa02GM0NF7suS7/9pzmtXVTI6M3Jm3MnTre+uEFy4DYR/tRT
+	 OkObnN77WY120OL0SYBLV5qRcDpa/FOrrnTuDkoQRix4AYHhs72ZTfDhKhe54PeONBp0a
+	 NrvFjDWlMbEARCt/2e34PwkdE89xm1oi4w7h/U8X05AGTqEw2lX2igMe70MhWBqBCS9ZI
+	 xty262Ep7ZqBgl8ZaS2ZVGvysmiDL9k/wa2cATlOB5A01TmZSy1tvTkTHfI5KgFllRXBI
+	 kYBZHb53BtxHhTqZ9R2iT41YjbMpaPcY+W/gyIHORavSZVrG89HfEd8Gw4XTVf6+NCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsKUmKev;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ckMDXK4i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF22606A326;
-	Sat,  7 Nov 2026 14:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050C4606A326;
+	Sat,  7 Nov 2026 14:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JsKUmKev
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6699E1F0089F;
-	Sat,  7 Nov 2026 14:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ckMDXK4i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A327D1F0089F;
+	Sat,  7 Nov 2026 14:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060815;
-	bh=ciA2OXb6Qz4VuRIuJA+2SplQ0kGGcyIKuSmn0RGKr60=;
+	s=korg; t=1794060816;
+	bh=d7DDuTEWx3HyiWTze2CbmpO7V8ovGR5whu1DZg2Ol68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JsKUmKevj+aZiATc2xbJLq0Vv1d2ks+UvN/c0HWfZOMLD30dGml3qFbKqPJjPjIP5
-	 dmBXt0JZ+/ozHgXFQKJJB1MaEtmZfIZXZRYNOdQ17EwMTAXbnm9wzayIFr7SNy9vYG
-	 +KkUxLh8houGZg/Q4IjV1nWyGb1ibz1DHvF/AR4E=
+	b=ckMDXK4i1fOxMtEp7TiEqW+rG6Wj9rGeKchkgAToqoXKI/3SYCoiOe+lrPHutbHjB
+	 24W6g3bKKS0lCoGwzOIXuNJl6Q3Zzl8Csxek4FuJWKBnK94mHwC/ikCabRqOCCRGmD
+	 B1z9rL1Rn3FDMyty2zM+TKYxc3wGGQgsaMjWEB1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Senjin <senjin@hatchling.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Jiaxing Hu <gahing@gahingwoo.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0206/1536] fs/ntfs3: fix lseek EINVAL on sparse/compressed files with 64-bit clusters
-Date: Sat,  7 Nov 2026 08:37:02 -0500
-Message-ID: <20261107135003.442276042@linuxfoundation.org>
+Subject: [PATCH 6.12 0215/1536] iommu/rockchip: Clear stale page faults before enabling stall
+Date: Sat,  7 Nov 2026 08:37:11 -0500
+Message-ID: <20261107135003.693649110@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,52 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Senjin <senjin@hatchling.org>
+From: Jiaxing Hu <gahing@gahingwoo.com>
 
-[ Upstream commit 789af83e41aef54c1ff1cee16adc27822e0a0d71 ]
+[ Upstream commit b10d5920cafa292ee3cab9c20f813da4fe4f00b8 ]
 
-When CONFIG_NTFS3_64BIT_CLUSTER is enabled, sbi->maxbytes_sparse is set
-to -1. As a signed loff_t this is -1LL, the most negative value. Any
-lseek on a sparse or compressed file passes this as maxsize to
-vfs_setpos(), which returns -EINVAL whenever offset > maxsize, and
-since -1LL is less than any non-negative offset, every seek fails,
-including lseek(fd, 0, SEEK_SET).
+Boot firmware can leave an IOMMU bank in PAGE_FAULT_ACTIVE before the
+driver has configured paging:
 
-The intent of -1 here appears to be "no limit" (matching the spirit of
-MAX_LFS_FILESIZE assigned to sbi->maxbytes and sb->s_maxbytes in the
-same block), but the signed type makes it the minimum instead of the
-maximum.
+  PAGE_FAULT_ACTIVE=1  STALL_ACTIVE=0  IDLE=1
 
-Fix by assigning MAX_LFS_FILESIZE to sbi->maxbytes_sparse in the
-64-bit cluster path, consistent with the other two limits set there.
+Such a bank ignores CMD_ENABLE_STALL and never reaches STALL_ACTIVE, so
+rk_iommu_enable_stall()'s readx_poll_timeout() spins until it times out
+(seen on the RK3576 NPU, whose MMUs share this poll across banks).
 
-Observed on a 16 TB NTFS volume with 0xFFFFFEFF total clusters compiled
-with CONFIG_NTFS3_64BIT_CLUSTER=y. Sequential reads via dd/cp worked
-correctly; any lseek call on sparse files returned EINVAL, preventing
-archive managers and other tools from random-accessing files on the
-volume. The non-64-bit-cluster path correctly sets maxbytes_sparse to
-(1ull << (cluster_bits + 32)) - 1, a large positive value.
+Rather than special-casing these banks in the stall path, acknowledge the
+stale fault with CMD_PAGE_FAULT_DONE before enabling stall, so every bank
+starts from a clean state and the normal stall sequence applies to all of
+them.  Banks without a pending fault are untouched.
 
-Signed-off-by: Senjin <senjin@hatchling.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Jiaxing Hu <gahing@gahingwoo.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/rockchip-iommu.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index c7c1896acc2c5..8f30670a56237 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1130,7 +1130,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- #ifdef CONFIG_NTFS3_64BIT_CLUSTER
- 	if (clusters >= (1ull << (64 - cluster_bits)))
- 		sbi->maxbytes = -1;
--	sbi->maxbytes_sparse = -1;
-+	sbi->maxbytes_sparse = MAX_LFS_FILESIZE;
- 	sb->s_maxbytes = MAX_LFS_FILESIZE;
- #else
- 	/* Maximum size for sparse file. */
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index 7edc913b267c6..7ba806828adc4 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -421,6 +421,19 @@ static int rk_iommu_enable_stall(struct rk_iommu *iommu)
+ 	if (!rk_iommu_is_paging_enabled(iommu))
+ 		return 0;
+ 
++	/*
++	 * Boot firmware can leave a bank in PAGE_FAULT_ACTIVE with no handler
++	 * (PAGE_FAULT_ACTIVE & !STALL_ACTIVE & IDLE).  Such a bank ignores
++	 * CMD_ENABLE_STALL and never reaches STALL_ACTIVE, timing out the poll
++	 * below.  Acknowledge any stale fault first so every bank starts clean.
++	 */
++	for (i = 0; i < iommu->num_mmu; i++) {
++		if (rk_iommu_read(iommu->bases[i], RK_MMU_STATUS) &
++		    RK_MMU_STATUS_PAGE_FAULT_ACTIVE)
++			writel(RK_MMU_CMD_PAGE_FAULT_DONE,
++			       iommu->bases[i] + RK_MMU_COMMAND);
++	}
++
+ 	rk_iommu_command(iommu, RK_MMU_CMD_ENABLE_STALL);
+ 
+ 	ret = readx_poll_timeout(rk_iommu_is_stall_active, iommu, val,
 -- 
 2.53.0
 
