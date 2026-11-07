@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064507;
-	b=JbEBVYiucu5uXxJhq4ScXaxK3nJXiVsgJ3BuDJxAlCTCUAK2KxsqGf5JOoe8n9vtHcKw
-	 H47L0zCro3nwlhmhm+h1OeFPlOZGoiybwOrniLfek1h1WKh+xTsIa3ayBDskXG6k5vqgA
-	 63SYJm+TKXpFK0KeQhyq85a6Ahs8jAeru0vxqxFqF7HQj4zm78Vhc7K1egrWlpETbJDRG
-	 DlhZnwOdEHaKewNRYyYUVLl6F/fdBEuvAokiGOhjIk1H9UYzG9jd3WOroo900/wHBSeOY
-	 9o7Pmp1chxo75UejjyAH7x86gxSldBx4XwZHgPexU1VbdQFGXLgSVTaNZOkkBosn/2g==
+	t=1794064509;
+	b=iNQdLkmfOkJ3+QiORB50Lin7mW9TPL/jGZ4uNEzbYwy4qS4R0VNum6eczCAqwNZRCC82
+	 Czjaf6kWGIQqcz6daxHcMM2ol1QPcT3zHxmji8TMGA+XhghtKZ9zgCZWo/GauU4zfcAR+
+	 PtgSfm2zAuNzeH05nf/i1LPOKW4PgFSI1QggdILwWJ3fmI8A9JbrNONjgJ3XhUvc9o+yO
+	 QwVmJ/QNNMk/Jho4Jh0p1SoSo00MIlYtRpE9Pg3wSCN/zDJLfV8e4rc8ZkUlB7dyTKs5D
+	 MHQBTHvq1ZXJ8VDJkYjspHGHnRVdlfDH8LorKfkxvZQsaBlZWkT1hB0vJZ3cgg58epw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=373sRGXGrxkAkt25fQIHjzW/eJmFem5CQDBEuUMsVfA=;
-	b=WZNd6tVXJ17J4uhK7oQ0FzKqDdphhP9UQ56KXhJkLsAugSQVHMkZ5oy61Fsv50F6QwET
-	 WzNIsxCqOeD0yDc93zChYB8tHAoJvw1EvLkEc2wRtQQK0iOPuhPXQMTJVMEIP3XegXDiL
-	 tRESWNiLbwdbN8+oGgtFBY5jIUi28MEH5Oxu4R0PJ9xWo17enP1NpJlXEBQHqRi3LydUy
-	 cZFdukYqf41/jZnHFB/e/jEirkSBhh0g5cvSlIfNRg4tXIvS54EeG1lGaxntE9OR6Asg9
-	 RbNjuJFUIrAfAt5Q15Fa6Wwt1V/+XNBn0sMo4ws8/ZeB6V+toSBAROCtWuFgtuTKwKg==
+	bh=qpIaKGC8GvuQlyr/IKzaCsJARzCkDkf+VrxjTasKA8k=;
+	b=NDeXY4vXPhMjwcyezb0wzvUBCEFPyPTpGqIlMblIXwqEW9rWvHDLfzWCfCQ1LLclu2yz
+	 5ywhz1AXeXX4W+GkRtmjWaZBBHhIHhEWiTYYy4xi24CTdPafK6J/9BxiQWGH1Fae16mnP
+	 HcRSs28z9ibCirwQYm3Pr/RLGwixyAFXNwRiup65kYd1L4jkCaPFiNqjvZeAoOUXtkOnR
+	 QkbXek1ld6WLGFYH4tj4SDmeGfOnLc77TIjSsTMfI81a+gBb3T4QrggmQOT6AljJvfccN
+	 jJwJtILN50h68sKrFqWTC3piZFVWBY6MvExM3D+sz+IyuJvkyBuKgRm91PyMmu3dUzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BMNHV0Tk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TuGZbS9G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4D5606CE50;
-	Sat,  7 Nov 2026 15:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25ADF606CE4F;
+	Sat,  7 Nov 2026 15:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BMNHV0Tk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CD81F0089F;
-	Sat,  7 Nov 2026 15:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TuGZbS9G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF561F0089F;
+	Sat,  7 Nov 2026 15:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064507;
-	bh=373sRGXGrxkAkt25fQIHjzW/eJmFem5CQDBEuUMsVfA=;
+	s=korg; t=1794064508;
+	bh=qpIaKGC8GvuQlyr/IKzaCsJARzCkDkf+VrxjTasKA8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BMNHV0Tk4YFYZpqJOJs/CJncS5P103L9VqvbbvHODfD2C7wvD2HrH/E8Ep8FnoCxk
-	 yhbF1cTHNLsuAhjyPFScypA0dRnFL/7tzfZ+QIaCSKgEBhVq8Vvfd/gVjjFiRBgN8p
-	 90oJsBMbbzrYXqEVyLZP4uzrm53V+RHPM0DhNV2c=
+	b=TuGZbS9GOas4eNGztuiV/Mhk7HG1g+Cdqajxlz0PONfjj/nYItTH9+kZZvQUAdjyi
+	 NZLf4HQFtD9QPJRjxSHu0N6YVeoLQDHWshQfL+XKfhoOzUl1H2zXBCavYzFp/gh/Ra
+	 IsL9WYpaHlxiBQKW1gK6xz+2B9OuPbjYerOoSkCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0539/1257] wifi: mt76: mt7615: restore DBDC state after ext PHY failure
-Date: Sat,  7 Nov 2026 08:47:15 -0500
-Message-ID: <20261107134954.290185755@linuxfoundation.org>
+Subject: [PATCH 7.3 0540/1257] wifi: mt76: take rcu_read_lock in the USB/SDIO tx completion path
+Date: Sat,  7 Nov 2026 08:47:16 -0500
+Message-ID: <20261107134954.315119597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,76 +68,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 7907d5270dc5c13b6a95754c08a77d5b06bbc786 ]
+[ Upstream commit a7871a7ae5a8625f0ba0a89454ac734c383dd538 ]
 
-mt7615_register_ext_phy() limits the primary PHY to DBDC capabilities
-before allocating and registering the secondary PHY. If allocation,
-EEPROM override, or PHY registration fails, it returns without restoring
-the primary PHY capabilities. The EEPROM override failure also leaks the
-newly allocated ieee80211_hw.
+The USB and SDIO completion path reads a station pointer that RCU
+protects, without holding the read lock. Lockdep catches it on the
+first association:
 
-Route all failures through common labels that free the secondary hardware
-when it was allocated and restore the primary PHY capabilities.
+  mt76.h:1305 suspicious rcu_dereference_check() usage!
+  no locks held by mt76-usb-status/1254.
+   mt7925_usb_sdio_tx_complete_skb+0x119/0x130 [mt7925_common]
+   mt76_queue_tx_complete+0x27/0x60 [mt76]
+   mt76u_status_worker+0xed/0x1e0 [mt76_usb]
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+  mt7925/mac.c:856 suspicious rcu_dereference_check() usage!
+   mt7925_tx_check_aggr.part.0+0xc2/0xe0 [mt7925_common]
+   mt7925_usb_sdio_tx_complete_skb+0xa0/0x130 [mt7925_common]
 
-Fixes: 0f2173f093b3 ("mt76: mt7615: add support for registering a second wiphy via debugfs")
+mt7921 does the same, and warns once instead of twice because its
+aggregation check reads the default link directly. The DMA path makes
+the same reads but completes from softirq, so it stays quiet.
+
+Take the read lock around the lookup and the check.
+
+Tested on 7.2-rc5 with lockdep, fresh module load per arm, 4000
+packets each and no change to the link:
+
+                             splats before   after
+    MT7925  Netgear A9000          2           0
+    MT7921  Alfa                   1           0
+    mt7921e same kernel            0           0
+
+Fixes: dc66a129adf1 ("wifi: mt76: add a wrapper for wcid access with validation")
+Fixes: c22769de2509 ("wifi: mt76: mt7925u: use connac3 tx aggr check in tx complete")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260910215441.76683-1-mhun512@gmail.com
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20261003233056.94497-1-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7615/init.c    | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/mac.c | 3 +++
+ drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-index e437e088b2e91..665b0f1e939f1 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-@@ -541,8 +541,10 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+index e69978184f68c..ad1352ddf1fcc 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+@@ -831,11 +831,14 @@ void mt7921_usb_sdio_tx_complete_skb(struct mt76_dev *mdev,
+ 	u16 idx;
  
- 	mt7615_cap_dbdc_enable(dev);
- 	mphy = mt76_alloc_phy(&dev->mt76, sizeof(*phy), &mt7615_ops, MT_BAND1);
--	if (!mphy)
--		return -ENOMEM;
-+	if (!mphy) {
-+		ret = -ENOMEM;
-+		goto error;
-+	}
- 
- 	phy = mphy->priv;
- 	phy->dev = dev;
-@@ -572,7 +574,7 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
- 
- 	ret = mt76_eeprom_override(mphy);
- 	if (ret)
--		return ret;
-+		goto error_free_hw;
- 
- 	/* second phy can only handle 5 GHz */
- 	mphy->cap.has_5ghz = true;
-@@ -590,7 +592,14 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
- 	ret = mt76_register_phy(mphy, true, mt76_rates,
- 				ARRAY_SIZE(mt76_rates));
- 	if (ret)
--		ieee80211_free_hw(mphy->hw);
-+		goto error_free_hw;
+ 	idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
 +
-+	return 0;
-+
-+error_free_hw:
-+	ieee80211_free_hw(mphy->hw);
-+error:
-+	mt7615_cap_dbdc_disable(dev);
++	rcu_read_lock();
+ 	wcid = __mt76_wcid_ptr(mdev, idx);
+ 	sta = wcid_to_sta(wcid);
  
- 	return ret;
- }
+ 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
+ 		mt76_connac2_tx_check_aggr(sta, txwi);
++	rcu_read_unlock();
+ 
+ 	skb_pull(e->skb, headroom);
+ 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+index 3b82c9de26c5b..2e34e950e111d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+@@ -1688,11 +1688,14 @@ void mt7925_usb_sdio_tx_complete_skb(struct mt76_dev *mdev,
+ 	u16 idx;
+ 
+ 	idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
++
++	rcu_read_lock();
+ 	wcid = __mt76_wcid_ptr(mdev, idx);
+ 	sta = wcid_to_sta(wcid);
+ 
+ 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
+ 		mt7925_tx_check_aggr(sta, e->skb, wcid);
++	rcu_read_unlock();
+ 
+ 	skb_pull(e->skb, headroom);
+ 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
 -- 
 2.53.0
 
