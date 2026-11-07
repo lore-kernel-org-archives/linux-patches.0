@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062462;
-	b=raVGSZun3eYa1LhoIQbLLcbGqF+xQTTvA4hnZbF7mSummxu6pSmBJoZMMgy75aPje2Jn
-	 VLYcNMIQnLoALCqpcC723/uuUBi+xAtutdHiG1B0iv8iOUQikC7Sp+PscGmjUSkqPfSRe
-	 Rcn2AeKnjtaM9lsG6tgkyImgA8Op9/pFLLfdC2VStLaIhshtGVfa6L/Q8h5ajCpWFxqv1
-	 pUsedoFw2mBfHOsnOUuNl5yW26mopmCmh29yhqwwVPXhEALTSgeP/nLPKD0VOHJnKJ4n0
-	 WZ//DVjdeXjDZ/iOqabDe/vlYZWmsLKyI8ahyJpA/e44T0K6xphKn+zluwceqS/2pbg==
+	t=1794062463;
+	b=3T+fzRraT5IVzq9uA3wy8AGdzCEX2Seg3hJMBhfDe/2sJJLl0zCAa4UfjDz/YkR/y3Z8
+	 9ygC5HaDFVZuT7q0B2ZdGjxKW78YmhQwurFfaOPdPfttgqYIXJmLjVGXFXyT9b++6kw1U
+	 snyc0BZg6vFOjyFlla3QiLpNptfqkqbH1z6p848Ef3m3VPlxv2co52+P3OPnCj4aC6dFL
+	 yF3R1BxDqXqmmHIqH/tJBHlVGYAm6ZpkpVaTAG2Q+Mt1BGn8rDM7aCofUZXGKHr6IZyNn
+	 McysHoIKxbNJ4DszIIObzhDf10rGPrVQJLYHaCMIOsy0csnJ8YnZbHcxmclAm6bmFFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SUCfv7IrVHsfYvypXDf3mHAHyf2hsqxtz0Jz8D3s1+Q=;
-	b=zQYiQR/pAxKpVknQ5HQ01j90seYPksYigJgPspGs4rllbaNhGvqz7K28oKP2COprjw5h
-	 iIK+igKX636KSrJH2LcjU2PeDUSOYHKKxFhdLds2SVCMgthHofsgbWDsAEQp8P0K75jBJ
-	 sCNWqMS2OWVSucnAXSsibV4aeTiKIZHahDTxGnnElwtjodHFsj3jU6V2fpGJE63hF2M3i
-	 iBd+gz2GPZvLl8WM2tBuRYUoVtEWQNYEbdBz3hakqZBwBR4VGKPmKMB8hxRE+d5KejwAG
-	 31NcZ1lBlaNQTFjW/H2lFIonXMNRSXdVijSmo/CwE92XyOEZjkUYMLyy+tgsp94UFKg==
+	bh=Zph4vbU4LvzfpVJtFPe/Xmle3TZJNJTOBfW5j3ASCPk=;
+	b=EqAzvD4Qg5qTFrhREB6cEUsZWfe76jMNTHveIZtYcOdarMGn/1Wwkymdshai/dChBwBU
+	 bEcvEG+B8g2UWxx4immvhwXRlF99xHvBNPWZNVSjvjiYaKvjTr67tRwhRwwx+lbMWzcsn
+	 TrklXhwEAMglLU6rgc7o0PsSN9PUA+QgjRm33cPJmCRJwTU/ajsWDvOtblzcIRaqzaNOa
+	 OJC2oXxpXe/dnjO3KA0GgWNjhAdt/zbSNEYNmi7kzHyM6D9Um6D73H2LlNjABNs9AeHqE
+	 5sWO4fY19/iGIslhsrWkcKZjdGD5MOU9o5Obh916GcSyoURC7CpIZX1sDA/eVAW7cHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B/CEoxFE";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ey0sErNJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA62B606A642;
-	Sat,  7 Nov 2026 14:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EA7606A65A;
+	Sat,  7 Nov 2026 14:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B/CEoxFE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774071F0089F;
-	Sat,  7 Nov 2026 14:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ey0sErNJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29E31F008A1;
+	Sat,  7 Nov 2026 14:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062461;
-	bh=SUCfv7IrVHsfYvypXDf3mHAHyf2hsqxtz0Jz8D3s1+Q=;
+	s=korg; t=1794062463;
+	bh=Zph4vbU4LvzfpVJtFPe/Xmle3TZJNJTOBfW5j3ASCPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B/CEoxFEdkHMxt7RtMF9xjZP/0U+e08CzY7CfBt3BZp0LlsfLg9GH7+EHRJUwi1xk
-	 czJNUTLTgG/m5JF3hx3dUxURVr9VRRovPaEp/1hNIZa2L6Nl31DyLTu2Tm6t5aJ/iR
-	 ht5rCurRhkwmZ1pQNm8FgEMuv83g/TX0XIDrZl5M=
+	b=ey0sErNJLAf0vWYoRPAnRVHRdnbLkEDoPWzvVZ0K9UhXSsnnJfPNh1GGtyU4dKP2g
+	 wWsARs54Tpg1NjWaynuqr3/jkAYUfgskOpOaoO1aK+8NOWTmnIDRj6tRunNG/1NWhz
+	 Ya4lij8OoCuxCPWuRN/tu0WGQ8jReNjfaVXcFoYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Wenjie Qi <qiwenjie@xiaomi.com>,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1360/1536] f2fs: flush SIT journal during filesystem resize
-Date: Sat,  7 Nov 2026 08:56:16 -0500
-Message-ID: <20261107135036.031197792@linuxfoundation.org>
+Subject: [PATCH 6.12 1369/1536] ALSA: compress: fix buffer leak on failed SET_PARAMS
+Date: Sat,  7 Nov 2026 08:56:25 -0500
+Message-ID: <20261107135036.291499326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,47 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenjie Qi <qwjhust@gmail.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit a6ede405455106bf42164ec96fd84008c5aabdd9 ]
+[ Upstream commit fbc74ca9fbf7e0b8f6872ccac62f9f4a1f3b5e53 ]
 
-During a filesystem resize, SBI_IS_RESIZEFS prevents new SIT entries
-from being added to the journal and forces existing entries to the SIT
-area. However, f2fs_flush_sit_entries() returns early when there are no
-new dirty sentries, leaving existing journal entries behind.
+When the driver has neither ops->copy nor a preallocated dma_buffer_p,
+snd_compr_allocate_buffer() kmallocs runtime->buffer. If
+ops->set_params() then rejects the parameters, SET_PARAMS fails, the
+stream stays in the OPEN state and keeps the buffer. The next
+SET_PARAMS allocates a new buffer and overwrites the pointer, so
+repeated SET_PARAMS calls with parameters that the driver rejects leak
+one buffer per call.
 
-After the main area shrinks, a later checkpoint can access a journal
-entry whose segment number is outside the new geometry and trigger
-f2fs_bug_on().
+Release the framework-owned buffer when ops->set_params() fails on an
+OPEN stream, so that a failed SET_PARAMS leaves no buffer behind and
+the buffer is allocated only once per successful setup. Use the same
+ownership check as snd_compr_free().
 
-Only take the zero-dirty fast path when entries may be written back to
-the journal. This lets resize drain existing entries through
-remove_sits_in_journal() even when there are no new dirty sentries.
-
-Cc: stable@kernel.org
-Fixes: 04f0b2eaa3b3 ("f2fs: ioctl for removing a range from F2FS")
-Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: b21c60a4edd2 ("ALSA: core: add support for compress_offload")
+Cc: stable@vger.kernel.org
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261019144533.30665-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/compress_offload.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 1ec43e1537fb2..6abe435b9f0d8 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -4553,7 +4553,7 @@ void f2fs_flush_sit_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
+index d81a890b60c65..0d5b3c655e849 100644
+--- a/sound/core/compress_offload.c
++++ b/sound/core/compress_offload.c
+@@ -585,8 +585,15 @@ snd_compr_set_params(struct snd_compr_stream *stream, unsigned long arg)
+ 			return -ENOMEM;
  
- 	down_write(&sit_i->sentry_lock);
+ 		retval = stream->ops->set_params(stream, params);
+-		if (retval)
++		if (retval) {
++			/* the stream stays OPEN: drop the buffer of the rejected setup */
++			if (stream->runtime->state == SNDRV_PCM_STATE_OPEN &&
++			    !stream->runtime->dma_buffer_p) {
++				kfree(stream->runtime->buffer);
++				stream->runtime->buffer = NULL;
++			}
+ 			return retval;
++		}
  
--	if (!sit_i->dirty_sentries)
-+	if (!sit_i->dirty_sentries && to_journal)
- 		goto out;
- 
- 	/*
+ 		if (stream->next_track)
+ 			return retval;
 -- 
 2.53.0
 
