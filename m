@@ -1,58 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065357;
-	b=KrsO+DuEaf13e4UWweqyTe5knWn7PXKlgWO53cEtAT1i8TSfLtQ4TOX1vQwBinDov8Yc
-	 C4AYSy6YE6DQheusCwM9UaatjXkwfXPxlujr1AyKiRyi6l2/iGFbU0qUEqQtGhJpdjjY/
-	 D0dS7cpWgfaqry+DlX/t/5V4sno3SW6/vOsN2cYcXkQfF8BLtnVF+5lLs85xNFU82x1Ha
-	 x2wxvZZQOPuAzpjodVhpKJONlYTQfdn9KsR+WEuRTu13qafL7X1NvxJh8ooOI2K6DIKYr
-	 ECzGgnHwZbHZcZcZ8QzuPdXfrk4wzouvcAYPff8mxQY992TyVh3bL0ekB7EkPWUJwFQ==
+	t=1794065359;
+	b=I3mNaYy62kqGCaYf8WDFNNZrYOFpyhL8dXSg+J6Bu+1YpfsjxQ9SsIDn7Y9EFBP/WM5i
+	 2XR9bwq1zcUe5mW+T8RcKzd6KHwGUgI2+XoIETnE59tOjbovkeaVBB1TWVhZs54lPGxFi
+	 vOpv6CUIL/cxW7BvLp3mA3102/qiWhNfZ9rcsQqUVWL6EXSdqlVlIDaiXqJT94Ffx4N7J
+	 TiPgFMC0gaKyZDcGopQ0tdrFNEl6eWrz9JY7h1A7wrgfUz6+2yUn6AdII0LYt37PL4kLo
+	 OFOJNoyly3Nb1bCQ4IkreErOShn49NZQIH2LY0qVBem3M9AGAPU/IeKq5YOznGK+6SA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065357;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tCYjgur4qBbGW2xcUAjb22RUClZSstLkTBXNKwX94Mk=;
-	b=BdvgP88lpXwP/g9dyxqn0ALTDv3SE/t0w5jggiJLyUkvpNOixvomFiOkcUTMFMubMFs9
-	 QS9koelr1yYueddayKpoMaKCO5mOElX6v+LkSn+5nkoPdRcfu7KfR/yzjdPaq6IvfJdn3
-	 5hgn0rb7HLsTTcOhYFc+FZrXhwEcn8uzMP/M3eF9kwFhp2oOefeCpnEraAcs8WI/bpiX5
-	 KPeyTSiXhtkznBq+85LQP/03QZrWarI1VRm7qzOZs1s7d7UiBX3cWEyrfaEX+dJyafpW7
-	 MROvDsE9/+G/y7j8vRQaWIV268FCswxuVBpGGMNUfSFCXqwpmN8Wdu9+KP2PRpF6/+A==
+	bh=JQGJ/IIIPCm9+dqikFXGvgQeqHkNx0+k32gprIzgA9Q=;
+	b=PwB0mBEcxjNbz7bRty4ssk2E13e1JqIsLAAUl0WvH7xG/xubxlwyNx3RSEZX6hA7FQ8V
+	 zzWCkbzT95LPkHu0RNbpnppqZcz645rHA0XICi2IhrzFIaW7uKFNrggIgbMF8eQc7qRTv
+	 RX1xcgV35W1sB09aOi47/K9jfe9FWDHMNICYq5MZHV8bsA3toIeP9B6+EjLTWGl/svn4Z
+	 NOF+ztlI2JHCJdqTL4ph6KAhEiCTmXbeI8wEnfRXGFRsMykNruN6P+8bhz/iS+hbDNQAM
+	 H5pxF8NGpdqMiwMeMgGflRPhe5KAm1KnIw2GRWVrT6BGOy4vAQW5K5K6sBUsFFvVQXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l4qz/P85";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMoXELPZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE1F606A32C;
-	Sat,  7 Nov 2026 15:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E565F606A32C;
+	Sat,  7 Nov 2026 15:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l4qz/P85
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA9D1F008A1;
-	Sat,  7 Nov 2026 15:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMoXELPZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9572D1F0089F;
+	Sat,  7 Nov 2026 15:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065357;
-	bh=tCYjgur4qBbGW2xcUAjb22RUClZSstLkTBXNKwX94Mk=;
+	s=korg; t=1794065358;
+	bh=JQGJ/IIIPCm9+dqikFXGvgQeqHkNx0+k32gprIzgA9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l4qz/P85TGosE1z2McJLjYC/X3YddvKwCEdoMC8ZwEP2E9dZtlgnP9Rj4SpG0swsS
-	 FHsY5UG+Al9ren08AxtsBaEwpLAZ+mugXdtHe4rqOA50iG5eCoToogAx7zencjiW14
-	 nirQRPFAMdXkXN+ZTsMXPu1QzkXvLIgk0j4se9tQ=
+	b=JMoXELPZlZTR+qiGEYCYgB0ohJnpz/OCXgTpvWMcGwTsuo8tte6+rbC56NLxl2tY0
+	 agIl20Er5zg41iLnW6UfwFB2XeA4kKnxyhp4ncRp110hQJ6ZwOT3Eo2SNiol098Juh
+	 3vBInYa7Nm+R/Pdof6gIdkclYBA+wtJ02EkuupwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Xueyuan Chen <xueyuan.chen21@gmail.com>,
-	Pedro Falcato <pfalcato@suse.de>,
 	"Liam R. Howlett" <liam@infradead.org>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Brian Geffon <bgeffon@google.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1093/1257] mm/mremap: populate calculated fields in vrm state correctly
-Date: Sat,  7 Nov 2026 08:56:29 -0500
-Message-ID: <20261107135009.453568897@linuxfoundation.org>
+Subject: [PATCH 7.3 1094/1257] mm/mremap: correctly uncharge accountable VMAs in error path
+Date: Sat,  7 Nov 2026 08:56:30 -0500
+Message-ID: <20261107135009.479087865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -76,102 +76,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 34e753f8d927069785f6b675f5769da5da4ef78e ]
+[ Upstream commit 65e722a74df992719676ead85a9e93fb2b5a0983 ]
 
-Commit d5c8aec0542e ("mm/mremap: initial refactor of move_vma()")
-introduced the vma_remap_struct helper to pass state sanely through
-mremap() logic.
+The mremap error path is a fragile and unwieldy beast - it reverses the
+page table move then updates vma_remap_struct state to swap VMA, length and
+address between old and new VMAs in copy_vma_and_data().
 
-Part of this state is vrm->delta - equal to the absolute difference between
-vrm->old_len and vrm->new_len (the old and new lengths of the VMA,
-respectively).
+If the mremap() operation didn't specify MREMAP_DONTUNMAP then its caller,
+move_vma(), invokes unmap_source_vma(), which unmaps the new VMA rather
+than the old one.
 
-This value is used to correctly charge accounted VMAs.
+For accountable VMAs when MREMAP_DONTUNMAP is not specified,
+unmap_source_vma() unsets VMA_ACCOUNT_BIT during this unmap in order that
+only the delta of a VMA expansion is charged (performed by
+vrm_calc_charge() earlier).
 
-When shrinking a VMA, mremap_to() sets vrm->old_len equal to vrm->new_len
-having performed the shrink of the VMA first, prior to any potential move
-(e.g.  MREMAP_FIXED | MREMAP_MAYMOVE specified).
+Therefore nothing uncharges the expanded VMA size, and there is a permanent
+leak in global Committed_AS.
 
-However it does not recalculate vrm->delta, which results in incorrectly
-overcharging the VMA when both moving and shrinking a VMA.
+Resolve the issue by uncharging when MREMAP_DONTUNMAP is not specified.
 
-The charge leaks to Committed_AS globally, meaning a mischievous user can
-cause allocations to fail across the system in strict overcommit mode.
-
-Resolve the issue by abstracting the update of vrm->delta to
-vrm_populate_calculated() and invoking this from mremap_to() when
-vrm->old_len is changed.
-
-Additionally, update vrm->remap_type whose value depends on vrm->delta.
-The field is not read again after the shrink, but it is the logically
-correct thing to do and protects against future changes which break this.
-
-Link: https://lore.kernel.org/20261019-mremap-fix-shrink-charge-v1-1-a3ce209e5360@kernel.org
-Fixes: d5c8aec0542e ("mm/mremap: initial refactor of move_vma()")
+Link: https://lore.kernel.org/20261019-other-mremap-charge-leak-v1-1-d94477fe6545@kernel.org
+Fixes: fdbef6149135 ("mm/mremap: don't account pages in vma_to_resize()")
 Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Closes: https://lore.kernel.org/all/20261017233527.797191-1-nickolai@csail.mit.edu/
-Reviewed-by: Xueyuan Chen <xueyuan.chen21@gmail.com>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 Cc: Liam R. Howlett <liam@infradead.org>
 Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Dmitry Safonov <0x7f454c46@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ mm/mremap.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/mm/mremap.c b/mm/mremap.c
-index ace0c6a343b1b..d5f34e87c518a 100644
+index d5f34e87c518a..d404e4b1b6cbd 100644
 --- a/mm/mremap.c
 +++ b/mm/mremap.c
-@@ -887,12 +887,6 @@ unsigned long move_page_tables(struct pagetable_move_control *pmc)
- 	return pmc_progress(pmc);
- }
+@@ -1339,6 +1339,20 @@ static int copy_vma_and_data(struct vma_remap_struct *vrm,
+ 		pmc_revert.need_rmap_locks = true;
+ 		move_page_tables(&pmc_revert);
  
--/* Set vrm->delta to the difference in VMA size specified by user. */
--static void vrm_set_delta(struct vma_remap_struct *vrm)
--{
--	vrm->delta = abs_diff(vrm->old_len, vrm->new_len);
--}
--
- /* Determine what kind of remap this is - shrink, expand or no resize at all. */
- static enum mremap_type vrm_remap_type(struct vma_remap_struct *vrm)
- {
-@@ -905,6 +899,13 @@ static enum mremap_type vrm_remap_type(struct vma_remap_struct *vrm)
- 	return MREMAP_EXPAND;
- }
- 
-+/* Populate calculated fields. */
-+static void vrm_populate_calculated(struct vma_remap_struct *vrm)
-+{
-+	vrm->delta = abs_diff(vrm->old_len, vrm->new_len);
-+	vrm->remap_type = vrm_remap_type(vrm);
-+}
++		/*
++		 * When copy_vma_and_data() returns, the new VMA will be
++		 * unmapped rather than the old one.
++		 *
++		 * When an accountable move is being performed, this unmapping
++		 * will not uncharge any expansion, so do that now.
++		 *
++		 * A move is accountable if the VMA is accountable and
++		 * MREMAP_DONTUNMAP is not specified, so only do so if the
++		 * latter is true.
++		 */
++		if (!(vrm->flags & MREMAP_DONTUNMAP))
++			vrm_uncharge(vrm);
 +
- /*
-  * When moving a VMA to vrm->new_adr, does this result in the new and old VMAs
-  * overlapping?
-@@ -1523,6 +1524,7 @@ static unsigned long mremap_to(struct vma_remap_struct *vrm)
- 
- 		/* Set up for the move now shrink has been executed. */
+ 		vrm->vma = new_vma;
  		vrm->old_len = vrm->new_len;
-+		vrm_populate_calculated(vrm);
- 	}
- 
- 	/* MREMAP_DONTUNMAP expands by old_len since old_len == new_len */
-@@ -1795,8 +1797,7 @@ static int check_prep_vma(struct vma_remap_struct *vrm)
- 	if (is_vm_hugetlb_page(vma) && !align_hugetlb(vrm))
- 		return -EINVAL;
- 
--	vrm_set_delta(vrm);
--	vrm->remap_type = vrm_remap_type(vrm);
-+	vrm_populate_calculated(vrm);
- 	/* For convenience, we set new_addr even if VMA won't move. */
- 	if (!vrm_implies_new_addr(vrm))
- 		vrm->new_addr = addr;
+ 		vrm->addr = vrm->new_addr;
 -- 
 2.53.0
 
