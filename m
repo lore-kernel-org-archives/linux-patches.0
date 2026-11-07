@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064939;
-	b=BMVldq6dAQ4JM/P3W9a1rjCuFBFeg7yu6oNYTqf0+qLy2sqhrB/9idtVRnU/83VgFooS
-	 ExLw9VJYnG2F2jkZ2k70jW1iGZrvCjzMKFYB4HpAfdo0tPgHLaEyDp+pVWkgiONlg7sWH
-	 2kB+4wSjFcinQzKd92gvF7SQim5uPxWpAaSk3gpkPuNAyh6qEURMzYJzy/F7u66LPaEMi
-	 4rybblek1WGpMVk5TbA74glq9HGTV1yzfE1D1V0TkKStBcUFuQYm6yAJwGbbNBe5UZhPe
-	 uxryQuiOu47usYP07TleLOX3LF9glwO31448LzHUeULv0E+64Ms1MjATZzFYdUUc13Q==
+	t=1794064935;
+	b=hXaXrTYxB8e2i2M9VeouV/bj44Z/lWGiJXXIZcyrGsKjP6ver69PSx92AglRGi+uwjoe
+	 eT1i+yUmrlYTTEkjEKZIFWHWMrJEW6irHKKhdjIcuCCwDOWfwHjczlzRIk2At6pK3wN0n
+	 XvYl+ecl/g2161v14QX9QA32XlYyWs+uihyS2n3yQDU47hwV0BBK/5xaAqfIrnvR0OKG+
+	 246Nprpl/4DTV+Nu5X+2ZgOVzsoNLz3w8RkSPT7+UPLuDZO7/UUcpHUsGL9FT//VMsxxP
+	 cbQrn/+kXLv4IYXLQs7vn9fohRskJ+SjwFBJovXeJxQPYtkE3AxP2xEdyUKBUPMvcNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064939;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064935;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7Tst3MTUvrnQq0GFXqC+5PHkWTahIT0qdckqetOpdFI=;
-	b=BrXcB1U5iJsLlBGYzQ73pv6qEGhO0yywzPjo16oLVneQbE2JutbYEa5xi9ZcTHA40ier
-	 1Der/sRB/xZE3QkAqgEmxbR/ZuK5Ek0trfDdSu9y4Th24GWzQHmkOyl7ksSGLTmefFhGD
-	 1c8Pvfu0Ocgq+sEQtWFthtbVdog+gM2FrIEOL6PTi9Zp8xl6Oz/5xfu2dfQfUBU5g6QnK
-	 COKC3oK6aE1rcGMf7589w111WK8IPei+8G5TfHH03u8VzmTCe4Q7SDDlVVU06cEocP3PB
-	 Ezoxop6S/CkwGLqfYkW4K/+prgvz82/FN35WsseqU8iB1heWZBIIveNAJNr0PQqm6vw==
+	bh=TgZLFdDPiSJ/s3tAIGWM39FcPJbIBFjwRfR3+iSSW6A=;
+	b=QNRDEYSKSzhaBa3uHnxuZWKtJi6pV5sS1yjgfhpwHtpeGvZ4qd6wkhLAfmyQr3NVb9QW
+	 uMB4X7x9zQydZ5F25LRqp/GqUVMDCQEbofE+Q2BTeWempnmOAehXdYF01I3nA1ZZAs33q
+	 ZZeLP8FUwrTCujbiYThVDHolPTx/0GJTxFU53RjT72ZlpBA4jxfh4SQRz60FqH+Ib/33q
+	 XZHyWynuAaS4dzogOrXe3OdgIJ8N3ViXaCwzUb9xsYNB4QqYGQmtR8kCYxnM1NmGl6/cW
+	 +jvRpRKUAaC2TavBT84ZPRgkqWLdXo0sx1VOojoIkNKwiLivy9nTv6OllHJe7BgpWcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FUiFz5R/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SHADuWH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10178606A339;
-	Sat,  7 Nov 2026 15:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D215C606A338;
+	Sat,  7 Nov 2026 15:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FUiFz5R/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44E51F0089F;
-	Sat,  7 Nov 2026 15:22:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SHADuWH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BAA1F0089F;
+	Sat,  7 Nov 2026 15:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064938;
-	bh=7Tst3MTUvrnQq0GFXqC+5PHkWTahIT0qdckqetOpdFI=;
+	s=korg; t=1794064934;
+	bh=TgZLFdDPiSJ/s3tAIGWM39FcPJbIBFjwRfR3+iSSW6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FUiFz5R//8fgAh41kxOXe6+28gp6Hu50F3pjfe6XQsrbrXt/DcE1Milo7nQtYDdip
-	 tX7Ug8deJl0SyPhIOmF1dQ7SxATtwL0zg9SQQuIGIUf8g1D+9VE+mZBy2FcfOcFhVd
-	 iary2gBqAxgQZvuZkrSkv1NGhZD11EwF24eOaUYM=
+	b=2SHADuWHHBNQ5s+WcXTrfamoPRrA+7+4/4pIVgnh/653p15mrFlzV0AEKaIIgkBPY
+	 mhfJ7XBRCXP/S/SCtFXpV4RncafJXG8SZ9sW8J+iSFPWBvrjzSXz3Qv1V0jEHOeJt+
+	 brNaJkIiw/YQ4L6+EN6T92K3suwpInAmkG115XT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0793/1257] ALSA: ump: Correct return size of fill_rpn()
-Date: Sat,  7 Nov 2026 08:51:29 -0500
-Message-ID: <20261107135001.230664967@linuxfoundation.org>
+Subject: [PATCH 7.3 0826/1257] net: skbuff: dont BUG() on a bad csum_start in skb_copy_and_csum_dev()
+Date: Sat,  7 Nov 2026 08:52:02 -0500
+Message-ID: <20261107135002.151246170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,38 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 85e8c5f933ee3dbc9d061e121237797e9fa05315 ]
+[ Upstream commit 56453199d28f0072a8196fba14b2d702632e2219 ]
 
-The RPN/NRPN conversion in fill_rpn() is supposed to return the number
-of bytes of the resultant UMP packet, but it returns boolean values.
-This would result in the incorrect ump_bytes in the converter, which
-will confuse stream processing.  Correct to the right value 8 as a MIDI
-2.0 UMP packet.
+skb_copy_and_csum_dev() copies everything up to the checksum start out
+of the linear area, and BUG()s if the checksum start is past the end of
+the linear area.  It misses the other direction: a CHECKSUM_PARTIAL skb
+that has been pulled past its csum_start gives a negative offset, which
+gets past the check and becomes a ~4GB copy.  It also trusts
+csum_offset when it stores the folded checksum.  So far
+skb_copy_and_csum_bits() BUG()ing on a short skb has covered for that,
+but once it returns instead, a bad csum_offset would write past the end
+of the caller's buffer.
 
-Fixes: e6ce8a28c768 ("ALSA: ump: Transmit RPN/NRPN message at each MSB/LSB data reception")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20261015075439.50088-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The function returns void and its callers are drivers copying a frame
+into a bounce buffer just before handing it to the hardware.  There's
+nothing for them to back out of, so check both ends of csum_start and
+that the checksum field fits in the frame, and if not, copy the whole
+frame with skb_copy_bits() without filling in the checksum, with a
+DEBUG_NET_WARN_ON_ONCE() for debug kernels.  The frame
+goes out with a bad checksum and is dropped by the receiver.  If even
+that copy fails, zero the buffer so the driver doesn't send stale bytes.
+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Cc: stable? The trailers only have Assisted-by: and Signed-off-by:. No
+Link: https://patch.msgid.link/20261007-b4-skbuff-bug-on-v2-5-b9a5f732895b@toxicpanda.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ump_convert.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skbuff.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/ump_convert.c b/sound/core/ump_convert.c
-index 85cc67de63306..0a7972d91ec52 100644
---- a/sound/core/ump_convert.c
-+++ b/sound/core/ump_convert.c
-@@ -323,7 +323,7 @@ static int fill_rpn(struct ump_cvt_to_ump_bank *cc,
- 					      cc->cc_data_lsb);
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 2bfabde31ea93..ea4c38dee19f5 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3961,7 +3961,18 @@ void skb_copy_and_csum_dev(const struct sk_buff *skb, u8 *to)
+ 	else
+ 		csstart = skb_headlen(skb);
  
- 	reset_rpn(cc);
--	return 1;
-+	return 8;
- }
+-	BUG_ON(csstart > skb_headlen(skb));
++	if (unlikely(csstart < 0 || csstart > skb_headlen(skb) ||
++		     (skb->ip_summed == CHECKSUM_PARTIAL &&
++		      csstart + skb->csum_offset + sizeof(__sum16) >
++		      skb->len))) {
++		DEBUG_NET_WARN_ON_ONCE(1);
++		/* Send the frame without the checksum filled in, or send
++		 * zeroes if we can't even copy it.
++		 */
++		if (skb_copy_bits(skb, 0, to, skb->len))
++			memset(to, 0, skb->len);
++		return;
++	}
  
- /* convert to a MIDI 1.0 Channel Voice message */
+ 	skb_copy_from_linear_data(skb, to, csstart);
+ 
 -- 
 2.53.0
 
