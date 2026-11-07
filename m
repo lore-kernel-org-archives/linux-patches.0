@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062270;
-	b=WyhVOkUq7rg/OgM28drZUVP/pQ7+N6mIdVavVk4XFC70d1/ZVGrYQLjpIezRTbutBUt3
-	 wl7ivOc6soQrgrAGympQII0mENkplyEB1s2aAB2ekdhX7vXgJsrXxOT/PU9i0LmwXplgE
-	 9E+a/Jrnv0yqUZwD3UKOOUZjno97t7isXkfGn/jaXvZGmUxYispEftk6zt9L5BU+t4sFQ
-	 yzdztGHQSJh11Gn4dH9y8uSQPhk/lKYkL8HfN3kX8EWCG2H/uSDZmYLqiQkBYGCXS2n2I
-	 MjEto2kl4Afbg6pWWxPpwj+k73PXtnIMXzUpxlz3JseCAVzdv4K9RrVAYoEw0a2fBhQ==
+	t=1794062271;
+	b=W7OlnvJH9ONtIqIjGmmVQ0xgky0AQ9DATRtv+AT8WCt6ZqEcCSTT1g3EouUORsOuXQbW
+	 UVjvu1hVvOEeC35fMcbOs4JIB+RN1IXZFdCe8FD1EHu3/pPizety6C1PiHexTOvrevfbT
+	 zkzZZXHC4j2oBPd5Gu+wZdSsK/5Y1s9NiQhOoW2AQrG2zp+OCxZYTy2ZYFBxzysWyVOI+
+	 4/e5uSDu7IVUDVkeDH5qWwyxnk8golkQBZVUC/GM4MDDFmKaYwxm+6cun9nTjUBF80C17
+	 lkWy7w9x5JzxFjqP1TRXPDmWpYpdxkZbY14rV5JDzyLW+45ZKvUJTj2QTnurgPHQ5rQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062270;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062271;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=TtmoIWJGUAtvTHud+Vqu7X4pZE2WRD69tNi6bR/sbBs=;
-	b=O3r3C83h2nYl7C0c7JtDbvmtx2lJovoMwzC0pHNuJfUCsK34kX13CJlY4hFet88dFUhd
-	 BRJ1BRZ2Cl+RGNYjj06DKAPTBcDOEHWKFLMJLsi3hjGZo6L7kATYs5wB35ShLcghuv+bh
-	 lSiehMGINtYwt83ifd4LlW3IbX71CkEc/TR8/H6mAuiyI+FDe5zh/hwozyDwzkz2ctvqf
-	 woBQyZcm3rWbbZR9fYvAqHINygHuxeG/td0t6vhauTaCFuLSWM+qAdUo6foCbABVetxkI
-	 EeXjGz4xk6Xi1uxWvBnW3aOXxUL9AbAEWPHbGDu73s1M2D4rIeYsi2Xm8CpoTFjutpw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Ow5AYrxYY28m7ykUraEnDzFeuNjGaufcshbUs9y9olw=;
+	b=vGmrAcPf99zrzFufz4z7jbC12/0kLnPWSzmwWx6XYX0GG7acG/YzbiGlYs8+NLZLhpD1
+	 dxkOGahfPxaj0EjjEmbRMkDoDuuunXRDIGDNTZoCWJ0cMH6exE9No9atx1Fd1937rPXXq
+	 knPnHUj2OHGeQvLEH2HMf4zCdXASgy3z5L+GvG2KC3Q5pvtAilhAC+tXhQsQ3xosQymGs
+	 1ya/Hh/HJKqUsAAMNfkfOmbXKRDlVGKQsks9YNOCHW4ZqMWzl+AGwXwPq5Dldro7QDnpp
+	 S4tXwKHjXAtYYfC5IGUQvWrcPnaT9SWv2PaFb3of6vKWdLQzlusKPfVKASGGVou8+5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=saiW6aQJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rF+pqF1c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F191F60A380D;
-	Sat,  7 Nov 2026 14:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310CD60A380D;
+	Sat,  7 Nov 2026 14:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=saiW6aQJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04491F0089F;
-	Sat,  7 Nov 2026 14:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rF+pqF1c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D155F1F0089F;
+	Sat,  7 Nov 2026 14:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062269;
-	bh=TtmoIWJGUAtvTHud+Vqu7X4pZE2WRD69tNi6bR/sbBs=;
+	s=korg; t=1794062271;
+	bh=Ow5AYrxYY28m7ykUraEnDzFeuNjGaufcshbUs9y9olw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=saiW6aQJ1haxpF8f6KhuuSi2wMy5j678UTNpmwQqSmYqK5Zkd4Tuv1kgv6S65Fg3F
-	 j8AFIyo8rSVlZAKE5AVNT2qRDGSbfUQkep2hxnJyp5h3hY1G9hMgkJx2SXgQOuWVYF
-	 feqlBjb3NoBInm5sdmRLl/S6ngfCG3TUwZgmb+tU=
+	b=rF+pqF1c/FxYOXgBKLboyCVBeM3ZWJi+LPFuJcjz/+1mq46FI0Xr+670/QNQvYgjp
+	 kSAlbfr9vk8ROpOiwnkLD77S8UKmsKD0JnXqLOq2NXfJnEZuGCY41ymBGHO0DWxbc4
+	 YKO7y2au2ZYSi4VwybQVGsAxAbYgZzGKu+A1SasU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1212/1536] drm/ttm: return an error when kmapping a BO without pages
-Date: Sat,  7 Nov 2026 08:53:48 -0500
-Message-ID: <20261107135031.797976639@linuxfoundation.org>
+Subject: [PATCH 6.12 1213/1536] USB: cdc-acm: fix urb leak on disconnect
+Date: Sat,  7 Nov 2026 08:53:49 -0500
+Message-ID: <20261107135031.825636310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -63,88 +62,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit fd485d47437ba1700dd47205a63b9f389a00aa36 ]
+[ Upstream commit 648b08aa37c1b24a61662ad78964f2bca659ca26 ]
 
-ttm_tt objects for imported sg tables (ttm_bo_type_sg, set up by
-ttm_sg_tt_init() with TTM_TT_FLAG_EXTERNAL) only have DMA addresses and
-no pages array. ttm_bo_kmap() and ttm_bo_vmap() still dereference
-ttm->pages for them, so a driver that tries to CPU map such a BO oopses
-instead of getting an error:
+Make sure to drop the reference taken by usb_anchor_urb() when removing
+URBs from the delayed URB anchor to prevent them from leaking when the
+device is later disconnected.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:ttm_bo_kmap+0x26c/0x300 [ttm]
-  Call Trace:
-   amdgpu_bo_kmap+0x89/0xb0 [amdgpu]
-   amdgpu_userq_fence_read_wptr+0x116/0x170 [amdgpu]
-   amdgpu_userq_signal_ioctl+0x3fe/0xbb0 [amdgpu]
-
-Return -EINVAL in that case, like ttm_bo_kmap_try_from_panic() already
-checks for a missing pages array.
-
-Fixes: 75a57669cbc8 ("drm/ttm: add ttm_sg_tt_init")
-Cc: stable@vger.kernel.org
-Suggested-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Link: https://patch.msgid.link/20261009103419.4122940-1-Jesse.Zhang@amd.com
+Fixes: 140cb81ac8c6 ("USB: cdc-acm: fix broken runtime suspend")
+Reported-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/20260917161217.2161883-1-vulab@iscas.ac.cn/
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20261009122934.464142-1-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo_util.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/usb/class/cdc-acm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_bo_util.c b/drivers/gpu/drm/ttm/ttm_bo_util.c
-index b600be2a5c849..420eed1f1b96a 100644
---- a/drivers/gpu/drm/ttm/ttm_bo_util.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo_util.c
-@@ -355,6 +355,10 @@ static int ttm_bo_kmap_ttm(struct ttm_buffer_object *bo,
- 	if (ret)
- 		return ret;
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index b980cb08d675b..884dc80868ca9 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -782,6 +782,7 @@ static void acm_port_shutdown(struct tty_port *port)
+ 		urb = usb_get_from_anchor(&acm->delayed);
+ 		if (!urb)
+ 			break;
++		usb_put_urb(urb);
+ 		wb = urb->context;
+ 		wb->use = false;
+ 		usb_autopm_put_interface_async(acm->control);
+@@ -1710,7 +1711,7 @@ static int acm_resume(struct usb_interface *intf)
+ 			urb = usb_get_from_anchor(&acm->delayed);
+ 			if (!urb)
+ 				break;
+-
++			usb_put_urb(urb);
+ 			acm_start_wb(acm, urb->context);
+ 		}
  
-+	/* Imported sg tables only come with DMA addresses, no pages to map. */
-+	if (!ttm->pages)
-+		return -EINVAL;
-+
- 	if (num_pages == 1 && ttm->caching == ttm_cached &&
- 	    !(man->use_tt && (ttm->page_flags & TTM_TT_FLAG_DECRYPTED))) {
- 		/*
-@@ -392,7 +396,7 @@ static int ttm_bo_kmap_ttm(struct ttm_buffer_object *bo,
-  *
-  * Returns
-  * -ENOMEM: Out of memory.
-- * -EINVAL: Invalid range.
-+ * -EINVAL: Invalid range or the BO has no pages to map.
-  */
- int ttm_bo_kmap(struct ttm_buffer_object *bo,
- 		unsigned long start_page, unsigned long num_pages,
-@@ -465,7 +469,7 @@ EXPORT_SYMBOL(ttm_bo_kunmap);
-  *
-  * Returns
-  * -ENOMEM: Out of memory.
-- * -EINVAL: Invalid range.
-+ * -EINVAL: Invalid range or the BO has no pages to map.
-  */
- int ttm_bo_vmap(struct ttm_buffer_object *bo, struct iosys_map *map)
- {
-@@ -512,6 +516,9 @@ int ttm_bo_vmap(struct ttm_buffer_object *bo, struct iosys_map *map)
- 		if (ret)
- 			return ret;
- 
-+		if (!ttm->pages)
-+			return -EINVAL;
-+
- 		/*
- 		 * We need to use vmap to get the desired page protection
- 		 * or to make the buffer object look contiguous.
 -- 
 2.53.0
 
