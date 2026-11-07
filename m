@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062399;
-	b=I/WpTf16qSMmMEG4Gxgraan2lDx98QAvPJUWYCED+OFSSkB8b49xf5ZanNfpv1FqVKSj
-	 AjmQW7FZRGkKVqybYAmnTckieY7hCM79pdy18U1jLV3+/NFADLt7twEX8PbDea/mfchB8
-	 kpPe9fl1tH/n8lafaxnOixsS27SKSlfuTedicB7PQyUOPhnHBle7WhAUoRpdPRMtyeYAo
-	 tNiLZqUXGfQP+i1G7L8340HhNN97K2dZF8zYA1Ery0VoGd5r9xW/zgsV5iS+3YZt25nEi
-	 m4LVRSp9LCK3iZvOYQzOf51kuPeB1e68mzXlR4yd+LdIvPQzG1LwHwAqFF1e9ec9qeg==
+	t=1794062400;
+	b=pA6HHivmJfas0gDPKL327w+pA9lx1BxjlccPya9v8D7JubFSJ55RbYSnT6w7KbRUz4TX
+	 TxZSMGn++GWi7dgHVha9Vv7g+0Hb48pBrCOzAgRprF5WjPoXcl464knP0QeM1wKDUIoWG
+	 72UXVX0ETcnqKibBWaJw80DT17NlFh3lNexNYHQw3Ele5JHTw7yZRDZ8o7qWZK4XRAol1
+	 IEO19qFG39ajwJPEyMqRsvxpCFpTjL8oy4Oiayk+NLTZgwXC2fCOvGXIvMUiaKG2TQlZh
+	 8ioSrD86WLrKpJ1KZneJqY8UjqffsOuhqsod0BvEHqewoS7mLzqryTEBU7kL4Rj47OQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062399;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062400;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V1Koiwn7qyN+mSbw1/F1d8z1+yJMYX7heppKO6/7M7s=;
-	b=Fga30Qtr0jCcg/TIN/NleytoafhcSVjxvTe9ilZ4zoJOGNIYEOkrD7/F68SmVkqcjaw/
-	 8L2TxB4AXdLBeLaEAQHQLMvcsSsT5vZkCB3Eo20CM49IJW0O3cL1dv9N3c2ZRQmn/ISOY
-	 qJZjbfVKIcRGqhDz3Jvf7ihDmuh/thqfPJBV0DFgjg74fY1livUH58xhdFItYqnxEWawA
-	 HPC0cg/0QZjgc22kRKmRrL3P7AuEAQzroRLRbVj+tMIkDcuEBRGYlorPe1p17ogw3wIBL
-	 yoeirfJAVPQQjaBXdK3TrNrx89rtO5+FpAUaqbfV1MGowoqqTQMR2EwigW9oWGMvSKA==
+	bh=3ZT7u0LH7EXuPpPw6hVvxS+1vh/rIOVZTihcHIFqZ0I=;
+	b=u0cOdbbQtCxaptpnebgv2fWmg2e+Yr5Zfi7MOAzQ3O3oBvovGJaQKYvvkokN1BzPk9OA
+	 gCbkB1fsfOrJWFBbWhfqdcHr/HMkurHXD5i0XC7rsiNLluE0olVXCWj2aXSFMWIHKqkuQ
+	 QWPYTVFGceJUNHmQ4aSIiNCKNtJY+bqkqYZw0I6fcNHJ5tz0LPu6mB/ZMcXTBqkR/Doig
+	 IxuGOr2DEdbWgHXR8j/BCbXTX6ZjCuRVSpWNZTxqBQp93V9etaxmFdkQie9NoOBtH+obR
+	 CP16MlamT4H3nvDJ9Tya6VTQUSNGAR/iphG1yQzFhEkjB6tMoVx8Nxof06KuHcapSKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0lRDlOmg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RYkMEHNt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DFE608362D;
-	Sat,  7 Nov 2026 14:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A29608362D;
+	Sat,  7 Nov 2026 14:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0lRDlOmg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F8F1F0089F;
-	Sat,  7 Nov 2026 14:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RYkMEHNt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930B61F0089F;
+	Sat,  7 Nov 2026 14:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062398;
-	bh=V1Koiwn7qyN+mSbw1/F1d8z1+yJMYX7heppKO6/7M7s=;
+	s=korg; t=1794062399;
+	bh=3ZT7u0LH7EXuPpPw6hVvxS+1vh/rIOVZTihcHIFqZ0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0lRDlOmgUXBJ1Yg/jy5C6inN8OntMCPxYcZ5hLxz5Lw5ag8i5Jf61OreyVNdRnkXB
-	 RUH1XQz62ncN45Fd9cL7VVngLV1G2MMHvy6+KVh/LFcoeJ8Uj5Mn5mdFkit+Tnckhz
-	 hBXNq54odpDyVrrlbY5fdGMQ/6NpExa7JeRfYnlk=
+	b=RYkMEHNtBwbx4AKT7gpGXdab6fCNsaGJc8Q+ho0w2mcM4rbsQmRSVlxaPyIeJhjbU
+	 U5ygRZFEd3f5P8gM5lZOtput/QQcFdYlyTv5YnpH1G/YAYHeIfRTZBFw8VHycAwETo
+	 l2sPYb0v8XPKBLc9xCm/04cKw5AxP5orcvc43tLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1280/1536] pinctrl: stm32: Fix fwnode reference leak in stm32_gpiolib_register_bank()
-Date: Sat,  7 Nov 2026 08:54:56 -0500
-Message-ID: <20261107135033.730128533@linuxfoundation.org>
+Subject: [PATCH 6.12 1316/1536] spi: npcm-fiu: limit UMA data_size to the 16-byte staging buffer
+Date: Sat,  7 Nov 2026 08:55:32 -0500
+Message-ID: <20261107135034.768320277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,55 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit 54c66b5e47a9b10cbf4a1efe9b01301b7ffee205 ]
+[ Upstream commit f0be928a41384ea93c876364f360779f70359249 ]
 
-stm32_gpiolib_register_bank() walks the "gpio-ranges" property with
-fwnode_property_get_reference_args().  As documented in
-drivers/base/property.c:
+npcm_fiu_uma_read() and npcm_fiu_uma_write() use a 16-byte on-stack
+staging buffer (u32 data_reg[4]) and move data_size bytes to or from
+it. data_size comes straight from op->data.nbytes, which is supplied
+by the SPI MEM operation and is not bounded by the driver:
+npcm_fiu_exec_op() only validates op->addr.nbytes, and no
+adjust_op_size callback truncates the transfer to the controller FIFO
+size.
 
- * The caller is responsible for calling fwnode_handle_put() on the
- * returned @args->fwnode pointer.
+A SPI MEM operation with addr.nbytes == 0 and data.nbytes > 16
+therefore overflows data_reg[] on the kernel stack (write path) or
+reads past it (read path), corrupting the stack.
 
-The returned reference is never put.  The function calls the helper
-twice, once directly and then repeatedly in a while loop, and each
-call overwrites args, so only the last reference is even reachable
-and all the earlier ones are leaked for good.
+Reject data_size larger than the staging buffer in both UMA helpers
+by returning -EOPNOTSUPP, so spi_mem falls back to the generic SPI
+message path. The chunked path in npcm_fiu_manualwrite() always passes
+at most CHUNK_SIZE bytes, so it is unaffected.
 
-Put the reference as soon as args.args[] has been consumed, both for
-the initial call and for every iteration of the loop.
-
-Found by code review.
-
-Cc: stable@vger.kernel.org
-Fixes: bb949ed9b16b ("pinctrl: stm32: Switch to use for_each_gpiochip_node() helper")
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: ace55c411b11 ("spi: npcm-fiu: add NPCM FIU controller driver")
+Cc: stable@vger.kernel.org # 5.4+
+Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261015-npcm-fiu-uma-datasize-v1-1-7dee91cadee6@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/spi/spi-npcm-fiu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index 857ce101fab0c..79aff59b54f72 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -1319,8 +1319,12 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
+diff --git a/drivers/spi/spi-npcm-fiu.c b/drivers/spi/spi-npcm-fiu.c
+index f3bb8bbc192f2..5be83535ae865 100644
+--- a/drivers/spi/spi-npcm-fiu.c
++++ b/drivers/spi/spi-npcm-fiu.c
+@@ -342,6 +342,10 @@ static int npcm_fiu_uma_read(struct spi_mem *mem,
+ 	u32 val;
+ 	u32 i;
  
- 		/* get the last defined gpio line (offset + nb of pins) */
- 		npins = args.args[0] + args.args[2];
--		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args))
-+		fwnode_handle_put(args.fwnode);
++	/* data_reg holds at most 16 bytes */
++	if (data_size > sizeof(data_reg))
++		return -EOPNOTSUPP;
 +
-+		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args)) {
- 			npins = max(npins, (int)(args.args[0] + args.args[2]));
-+			fwnode_handle_put(args.fwnode);
-+		}
- 	} else {
- 		bank_nr = pctl->nbanks;
- 		bank->gpio_chip.base = bank_nr * STM32_GPIO_PINS_PER_BANK;
+ 	regmap_update_bits(fiu->regmap, NPCM_FIU_UMA_CTS,
+ 			   NPCM_FIU_UMA_CTS_DEV_NUM,
+ 			   (spi_get_chipselect(mem->spi, 0) <<
+@@ -397,6 +401,10 @@ static int npcm_fiu_uma_write(struct spi_mem *mem,
+ 	u32 val;
+ 	u32 i;
+ 
++	/* data_reg holds at most 16 bytes */
++	if (data_size > sizeof(data_reg))
++		return -EOPNOTSUPP;
++
+ 	regmap_update_bits(fiu->regmap, NPCM_FIU_UMA_CTS,
+ 			   NPCM_FIU_UMA_CTS_DEV_NUM,
+ 			   (spi_get_chipselect(mem->spi, 0) <<
 -- 
 2.53.0
 
