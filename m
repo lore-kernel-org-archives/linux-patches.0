@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062628;
-	b=ZS+o4T4zNt2MSbXPReaO0HuXQzz3ZVP0uWlRvyycuea4ePnwwl3sVKUR2sGFxNAM/8kS
-	 fnI9M5vCTAgXm5qOmGwJoYobZAIQ4poRS0AA21b1t8dvj+7yYTO7HneC8ftvSLGFUnj+G
-	 PF7VM/ONGGKj7RBr2jp1bSeW9t6+zV+WUxddyxqNmst5cMoYAq+Ae6javA6dskK7Q/9uT
-	 vgW/xPtK5NvZuNngHiLllE4ONupuouERZOLv2WSmRdo+Tfa5vfSZh4NmrMfEF5TC73bUF
-	 1lCi2dpsCnvMaoX3nKmZxZs3U/l/+sVdekrR3/nO2d4s6f1XzWb7EdFi7TFTsmi6Rcw==
+	t=1794062630;
+	b=3+Y0DonAeV+qu79+lr0FOBOZpKxunJO6HggYJnSXFVqhhN5Oa3+zwuLrUO7dpkWPB6Q3
+	 hwgVl5BPY45dg6o0Z8Y596nk9P0J9IhyvIQnC+I7FH4GXazMLmyKHaILS3GeBwBM1u+i+
+	 2owy0VjzCGbYcYA7IvdCInN6owNSyDnnZPNJiJ+Ta9W1a6+vLJM9FxlAgnxCT/fNKzYHG
+	 Da63RsALjUeRtuY8RvxXNFng18VBGivu4t0FYnv1PndThapZn4CdK00d+j92UXy+p6d2z
+	 kIhM84L3GfJDlQN13OaTVgawmlJj4ISdCkF/adqyq7vwXkpLTpITDABD+KUlZ/+FUlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062628;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062630;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PL5DEmUArW5jzxhS2i1T5ok6Q4mnacLKS5AHdQq5o8I=;
-	b=uEK6engSDXO/MeaMzMuQGkc2Eg+QJQD1sJ/EnLmIT3Nnf6vdqUyNuJsx/s5XDO515iDo
-	 IhArBlOcUWTcwz6H/yMAjKcwz9ATmkuz/yw6hKMTUm37Nz3y4Qx3G8wKfnWeurPgCAQaC
-	 8qCqMRC0cWUgyN9oJlE29fTFNz0FqcNoJcNOrPw0gI/mlALd/MYRMUc5S4PSnCD6+mDnr
-	 +ojZpY1fA49oVmiD11BbzuwMRIKebuuY6nIIzZY5qcYSX8aUMqnUNCNwoowOAK767mdLj
-	 p9TH45gR+P5Fea9zvsYiBY4gf963oTEquEM8ZW5Ien1xlQo2ANHpxyHj6nZtra+mR4A==
+	bh=oUDi8nciHxnajvw/avwGTIZJva0YZiF2DTZ8Y4W/vEQ=;
+	b=kEASjBfU7lEXqXKE+PcWRwR1MBH4ihBRlA/VVpuVyOrZExAphYloYz3neRzJZW3XxeF+
+	 vISn5Fry2UYJ2o89BL4s83gVptydOf74ZYL/SoeL2L+Lv++epeIZjuDGpcXHgdrAXyAIR
+	 SHyqWTFiPQV9TapJhPLbIRr8DhrxEuUdxdWbRxi29hLBdPt6yTci7c/LtEKpNlXzNfElT
+	 nly9Cdq2DG/tyHlwWkc2cSSpT+j1vUkxNMgxxbtMQzfXxUk5zIjFOJQeAnQX/IQT6/uRA
+	 QdvpQoJqV0TYtKCbUwKVBv1rY+gw6XtRYIJPaOMpFgd1jc0CUr8uGrG2aAlJHO9smxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n3uXiGKp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dEFcBQgw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A12606A331;
-	Sat,  7 Nov 2026 14:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBE3606A331;
+	Sat,  7 Nov 2026 14:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n3uXiGKp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5CF1F008A1;
-	Sat,  7 Nov 2026 14:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dEFcBQgw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6171F0089F;
+	Sat,  7 Nov 2026 14:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062628;
-	bh=PL5DEmUArW5jzxhS2i1T5ok6Q4mnacLKS5AHdQq5o8I=;
+	s=korg; t=1794062629;
+	bh=oUDi8nciHxnajvw/avwGTIZJva0YZiF2DTZ8Y4W/vEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n3uXiGKpn7kiav3xduEVMFmbhRBaooPXifUtktolua1N3FlM9CSDgd08qu9jkvq7n
-	 0I2SarPQGArezmO4mcbr7QdDYnIsxHIZbGiAgTtRaZGIcUD3k6eZsao1YE5JqpCEg8
-	 KNaV4Ucl+ltp9H8xl7Q+TpVpCaRPatcHwHjIQ270=
+	b=dEFcBQgwJSiXLG7qoPRw2ryC+RQhDbSLf1UdRFCSfmp0tk3+JljFj24TiIoEn/B2j
+	 yP5xDGsHozKDAcg098b38Qwt6Xx3RctfB1E+DQu/hpzPm0ms6Hy52Ta3VfeguMuziD
+	 D8d2IHsqkISs4SpsV8U17uav7AtEfG8gb93Pzq8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Jiale Yao <yaojiale02@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1499/1536] drm/amdkfd: validate SRAT subtables before parsing
-Date: Sat,  7 Nov 2026 08:58:35 -0500
-Message-ID: <20261107135039.965712540@linuxfoundation.org>
+Subject: [PATCH 6.12 1500/1536] drm/amdkfd: evict the queues only once for CRIU PROCESS_INFO
+Date: Sat,  7 Nov 2026 08:58:36 -0500
+Message-ID: <20261107135039.994332086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,102 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 9866cb13ba4d39aa8fed34b765d4aecabe04f02e ]
+[ Upstream commit 8f3ecda0ab42fb5ba7310fe848013d3eff31b416 ]
 
-The KFD SRAT walker reads the first subtable length without checking
-that a header is present and trusts subsequent lengths when accessing
-CPU and generic affinity records. Invalid firmware lengths can therefore
-cause out-of-bounds reads.
+criu_process_info() evicts the queues of the process on every call, and
+each kfd_process_evict_queues() increments qpd->evicted, but CRIU UNPAUSE
+restores them only once. After PROCESS_INFO twice and UNPAUSE the queues
+stay evicted for good. On navi31, a barrier-AND packet on an HSA queue
+completes after PROCESS_INFO + UNPAUSE, but times out after
+PROCESS_INFO, PROCESS_INFO, UNPAUSE.
 
-Validate the table header, every generic subtable range, and each
-supported typed record before reading its fields.
+The error path has a related problem: when kfd_process_evict_queues()
+itself fails, it has already rolled back its partial eviction, and the
+kfd_process_restore_queues() in the error path restores once more.
 
-Fixes: ddec8d3be0f8 ("drm/amdkfd: add ACPI SRAT parsing for topology")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Evict only when the queues are not paused yet, and on errors only undo
+an eviction done by this call. The barrier now completes after any
+number of PROCESS_INFO calls followed by UNPAUSE.
+
+Fixes: cd9f79103003 ("drm/amdkfd: CRIU Implement KFD unpause operation")
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d76b655c98e8cc9e791b31502ad274f47dee2aae)
+(cherry picked from commit 4d79c9e3c32c677fcadf5ca10ab81ee0a4b81f99)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_crat.c | 35 ++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-index f4e40ed231fb0..22dfabc829b40 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_crat.c
-@@ -2048,27 +2048,33 @@ static void kfd_find_numa_node_in_srat(struct kfd_node *kdev)
- 		return;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 5224733a1de39..9cdf7a0fbdf84 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -2702,6 +2702,7 @@ static int criu_process_info(struct file *filep,
+ 				struct kfd_process *p,
+ 				struct kfd_ioctl_criu_args *args)
+ {
++	bool paused_here = false;
+ 	int ret = 0;
+ 
+ 	mutex_lock(&p->mutex);
+@@ -2712,11 +2713,15 @@ static int criu_process_info(struct file *filep,
+ 		goto err_unlock;
  	}
  
-+	if (table_header->length < sizeof(struct acpi_table_srat))
-+		goto invalid_srat;
-+
- 	table_end = (unsigned long)table_header + table_header->length;
+-	ret = kfd_process_evict_queues(p, KFD_QUEUE_EVICTION_CRIU_CHECKPOINT);
+-	if (ret)
+-		goto err_unlock;
++	/* UNPAUSE restores the queues once, so evict them only once */
++	if (!p->queues_paused) {
++		ret = kfd_process_evict_queues(p, KFD_QUEUE_EVICTION_CRIU_CHECKPOINT);
++		if (ret)
++			goto err_unlock;
  
- 	/* Parse all entries looking for a match. */
- 	sub_header = (struct acpi_subtable_header *)
- 			((unsigned long)table_header +
- 			sizeof(struct acpi_table_srat));
--	subtable_len = sub_header->length;
+-	p->queues_paused = true;
++		p->queues_paused = true;
++		paused_here = true;
++	}
  
--	while (((unsigned long)sub_header) + subtable_len  < table_end) {
--		/*
--		 * If length is 0, break from this loop to avoid
--		 * infinite loop.
--		 */
--		if (subtable_len == 0) {
--			pr_err("SRAT invalid zero length\n");
--			break;
--		}
-+	while ((unsigned long)sub_header < table_end) {
-+		unsigned long start = (unsigned long)sub_header;
-+
-+		if (table_end - start < sizeof(*sub_header))
-+			goto invalid_srat;
-+
-+		subtable_len = sub_header->length;
-+		if (subtable_len < sizeof(*sub_header) ||
-+		    subtable_len > table_end - start)
-+			goto invalid_srat;
+ 	args->pid = task_pid_nr_ns(p->lead_thread,
+ 					task_active_pid_ns(p->lead_thread));
+@@ -2731,7 +2736,7 @@ static int criu_process_info(struct file *filep,
+ 				args->priv_data_size);
  
- 		switch (sub_header->type) {
- 		case ACPI_SRAT_TYPE_CPU_AFFINITY:
- 			cpu = (struct acpi_srat_cpu_affinity *)sub_header;
-+			if (subtable_len < sizeof(*cpu))
-+				goto invalid_srat;
-+
- 			pxm = *((u32 *)cpu->proximity_domain_hi) << 8 |
- 					cpu->proximity_domain_lo;
- 			if (pxm > max_pxm)
-@@ -2076,6 +2082,9 @@ static void kfd_find_numa_node_in_srat(struct kfd_node *kdev)
- 			break;
- 		case ACPI_SRAT_TYPE_GENERIC_AFFINITY:
- 			gpu = (struct acpi_srat_generic_affinity *)sub_header;
-+			if (subtable_len < sizeof(*gpu))
-+				goto invalid_srat;
-+
- 			bdf = *((u16 *)(&gpu->device_handle[0])) << 16 |
- 					*((u16 *)(&gpu->device_handle[2]));
- 			if (bdf == pci_id) {
-@@ -2092,9 +2101,13 @@ static void kfd_find_numa_node_in_srat(struct kfd_node *kdev)
- 
- 		sub_header = (struct acpi_subtable_header *)
- 				((unsigned long)sub_header + subtable_len);
--		subtable_len = sub_header->length;
+ err_unlock:
+-	if (ret) {
++	if (ret && paused_here) {
+ 		kfd_process_restore_queues(p);
+ 		p->queues_paused = false;
  	}
- 
-+	goto out;
-+
-+invalid_srat:
-+	pr_err("SRAT contains an invalid subtable\n");
-+out:
- 	acpi_put_table(table_header);
- 
- 	/* Workaround bad cpu-gpu binding case */
 -- 
 2.53.0
 
