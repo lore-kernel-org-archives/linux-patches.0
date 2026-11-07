@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061976;
-	b=iYal3POf2U1sUrr48yjd8y4adTeb+5iPOYr9a1JnpfT7AvOSUbVRimF9Pnlqid20cMFm
-	 nZbyZivt0mP6Z2hvKIWCA2R6uTAxrHg7B00Ic/l7R438ormtXES91yn2YYA6WUjXaeS0R
-	 6oSUrc0Qlwr5ywB7yv7Ef17ilhuKha51+YJKpkwRrUbK+jAc9qVrQAOzBuFEO21gaF5lT
-	 /Kt22e2EZH4GwOj2uDmstmpT4sIL6Qwq4t9Ful1+3KvXOU688GnwKJ4yMsSmuR6XfZjKv
-	 13j/f8VlkXQ10Bm3yb0Wxn5wEAcqYR2YyRjvEFc/eMc3oinVUVVsP7kWmmyKzQP7Xnw==
+	t=1794061977;
+	b=ckFkS4WbJx2rsWj649AjZHMK2EEFX2B4P40p0LdeDGoZaKIIGxkMuTwKdGfQJEmibRyN
+	 Ze/PgtxI1xPMputmnClCLV+wLiISq6sRcHe8kfTqfmtgiMD+y6Phi0qZfr13HP/SvtbzJ
+	 uumLc06f3keVP3hn+SPkzzk26cSVRgqtrPBgsn/KqmVW6GU3ZgB/QiA2YmR8K/NcZQ526
+	 URXqELMhiPNN5AvNE21B0OleF7DMuaB+mmJdGq4l56KtMFJXvndN+lhXsmimcGgmyD6Cf
+	 KcM6Q1P8fEo/0lt1NoNF4DhOv5inaMw1LEIoJdG+mLvlsr70DoZ0htZufKLjolpPpPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2ZoSh3E8FQTFv1yO6DNgqZuaZ4SoHxxXlWZv7BY2Mz0=;
-	b=U9XQ9xNQtvRW8E7+plmoAgwFwsH8ju4OQeh+xcWwPn5kPttF/CAYHoMKmTtTgsKW8kXU
-	 tFdwQIZc/4fMUMP5hraXSWO1KyKR8YlOef4BuRPOXSO21mbluj2pM7t0AMLYiIRrWpOYP
-	 snaZFxRqFjWEVTnIKcjHYpjExVsiND+rmg1M7W8jjM6qI4KsYqC99Tx4rjq1YcFzENz+0
-	 BLdLQpBQEuxSMYdUFZ+Q9jyGz7je4k7Qr8JiEE2IdSnbMelDe6EAP/CtEjyZeQDc0tgMs
-	 2LyQ7JDIn8SaG2MyeGyRkP0z1UkUWcqhfxo0wr8LaLlIzhcBdOhEUGujqvE9QHgogdA==
+	bh=OufVeUlKaoXY/oav4Kuj8FAlG9Nez01oD4xAXdVtFoY=;
+	b=zsPH8KCeBOX0XqM2dWBUg+L0ektRVUxjgzHizuC2Ce2ll384Az43s9hGkjloEWXKlj1G
+	 UnvO73TvsPUV5w4hSdJIQuCLzOSsL7/wLpSkPtMI52+t+8ysPZ5eQyuXgE0t2cfpEFu12
+	 0stnQouxxgHW5zRpxYvs9lyQTTMIGgQj+B9dFPhChA2EwMaeWvOwld48fRFnsj54M2/sd
+	 O6gBhHPoqpk2bMe+JKXVkeXlgQRg/CJqLWf38w3lTfwYh3Sh1tCtiQQ7RkedUGtVDN5NF
+	 qY6rIPeyXhFfdbYBlQ0Q1Y1vpDvGn2mmRwETpBamvGTJTrMsY38miwdMM0rz9VdFdBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K91n+eeV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VpBLb+sw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EA0606A32E;
-	Sat,  7 Nov 2026 14:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8572606A333;
+	Sat,  7 Nov 2026 14:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K91n+eeV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761941F008A2;
-	Sat,  7 Nov 2026 14:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VpBLb+sw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970B11F0089F;
+	Sat,  7 Nov 2026 14:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061975;
-	bh=2ZoSh3E8FQTFv1yO6DNgqZuaZ4SoHxxXlWZv7BY2Mz0=;
+	s=korg; t=1794061976;
+	bh=OufVeUlKaoXY/oav4Kuj8FAlG9Nez01oD4xAXdVtFoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K91n+eeVnnyj4D/l6KCdIDIOYI6e/OXXVxq8vjtOJ1z/updtYJbbyWCQqcWJXr4Vd
-	 4Bdc3qw3SFwSlMiwMNncPC7Ay86KpKUMBGcP9Zfvk1R7860vcwOZ9IrvhAcy/s4QKg
-	 qT2erWt1RItktvTs2g8KPo4piFdxWkt7pivCL6ls=
+	b=VpBLb+swMzEXuyfddft60/eA1itxfuR+9eU6oBI6Uis7FP/XN2lrjW6xwiqx8pbtP
+	 WOUiP0sHSEuEQ48Jri9QvpTOm3r+GH52BaDhtMswDgQ/K8Mfr/TPrdzukVMpcOcSdI
+	 s4dmoKgLtW+Xk54FKH760TPNnZQpuuCdjdIrhD/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+ddccc0c0dbc0a38ffccb@syzkaller.appspotmail.com,
-	Juan Perdomo <jcperdomo100@gmail.com>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0970/1536] media: cx231xx: preserve I2C transfer length
-Date: Sat,  7 Nov 2026 08:49:46 -0500
-Message-ID: <20261107135024.891920473@linuxfoundation.org>
+Subject: [PATCH 6.12 0971/1536] media: vivid: cancel svid ctrl work on release
+Date: Sat,  7 Nov 2026 08:49:47 -0500
+Message-ID: <20261107135024.919569187@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,45 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juan Perdomo <jcperdomo100@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit a19c9502a69bbd42c18816b09cbefdeb4cb68066 ]
+[ Upstream commit 1adaefca7111235ff0a2219dd4899ac24601d6e8 ]
 
-The I2C core stores message lengths in u16, but cx231xx truncates them to
-u8 when populating cx231xx_i2c_xfer_data. A 0x700-byte read therefore
-becomes a zero-length request. USB treats zero-length control transfers as
-OUT regardless of bRequestType, so the IN control pipe trips the
-usb_submit_urb() direction warning.
+vivid_dev_release() cancels update_hdmi_ctrl_work but not its sibling
+update_svid_ctrl_work, which vivid_vid_cap_s_ctrl() queues on
+update_svid_ctrls_workqueue when a VIVID_CID_SVID_IS_CONNECTED_TO_OUTPUT
+control is changed. The two work items were added together, but only
+one of them is cancelled on release.
 
-Use u16 for buf_size, matching both i2c_msg.len and
-VENDOR_REQUEST_IN.wLength. Oversized transfers then reach the existing
-URB_MAX_CTRL_SIZE check and return -EINVAL.
+If the svid work is still pending or running when the last v4l2_device
+reference is dropped, update_svid_ctrls_work_handler() runs after
+kfree(dev): the handler iterates the global vivid_devs[] array and
+calls v4l2_ctrl_modify_range() on every vivid_dev instance, including
+this one after it has been freed.
 
-Fixes: e0d3bafd0258 ("V4L/DVB (10954): Add cx231xx USB driver")
-Cc: stable@kernel.org
-Reported-by: syzbot+ddccc0c0dbc0a38ffccb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ddccc0c0dbc0a38ffccb
-Tested-by: syzbot+ddccc0c0dbc0a38ffccb@syzkaller.appspotmail.com
-Signed-off-by: Juan Perdomo <jcperdomo100@gmail.com>
+Add the missing cancel_work_sync() next to the hdmi sibling, before
+vivid_free_controls() releases the control handlers the work uses.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: d7c969f37515 ("media: vivid: Add 'Is Connected To' menu controls")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/cx231xx/cx231xx.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/test-drivers/vivid/vivid-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/usb/cx231xx/cx231xx.h b/drivers/media/usb/cx231xx/cx231xx.h
-index 74339a6a2f718..3c419bb45fbdd 100644
---- a/drivers/media/usb/cx231xx/cx231xx.h
-+++ b/drivers/media/usb/cx231xx/cx231xx.h
-@@ -463,7 +463,7 @@ struct cx231xx_i2c_xfer_data {
- 	u8 direction;		/* 1 - IN, 0 - OUT */
- 	u8 saddr_len;		/* sub address len */
- 	u16 saddr_dat;		/* sub addr data */
--	u8 buf_size;		/* buffer size */
-+	u16 buf_size;		/* buffer size */
- 	u8 *p_buffer;		/* pointer to the buffer */
- };
+diff --git a/drivers/media/test-drivers/vivid/vivid-core.c b/drivers/media/test-drivers/vivid/vivid-core.c
+index cf9f37bc0c08a..767bcaaa02de4 100644
+--- a/drivers/media/test-drivers/vivid/vivid-core.c
++++ b/drivers/media/test-drivers/vivid/vivid-core.c
+@@ -852,6 +852,7 @@ static void vivid_dev_release(struct v4l2_device *v4l2_dev)
+ 	struct vivid_dev *dev = container_of(v4l2_dev, struct vivid_dev, v4l2_dev);
  
+ 	cancel_work_sync(&dev->update_hdmi_ctrl_work);
++	cancel_work_sync(&dev->update_svid_ctrl_work);
+ 	vivid_free_controls(dev);
+ 	v4l2_device_unregister(&dev->v4l2_dev);
+ #ifdef CONFIG_MEDIA_CONTROLLER
 -- 
 2.53.0
 
