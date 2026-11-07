@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063123;
-	b=2iA8Q1BeQ41M+jKy4ize8HVRJDMwsrEkJ1wLofXt7Ywq/LoAuXasJwn/cUim9WhOuVG2
-	 TVRhXrYkcExsm/ct4LA4I5NdnkWsJKg1gf5O+kPpxbgATMQT6xzbSjZ8g/vc3B6PoxrMR
-	 /nGc44h9/nCErfFLUZdKBH+tn2NxPq9JBmf/zpPo1wI/lqFViMvIO2qC1d/Xrcz2LTyKG
-	 OQ0Pifq2ElDGxMoGiTpPHXVmpx4Nyz952hPmRvpVQxhzUysMd0/aZFNRF9iGJR6B0nCfD
-	 CXreCq/XWl4f9rGOidzD616VYo9IbgHYx9uuH6vQVDD5HdoBNscxsfxB0TZbcHV0UDA==
+	t=1794063124;
+	b=Z0V1W+FtuCwRxTKPCpx7Xr5NcXHkUZ8oDuYkJl9uGCHmW6wnFuMmjSJuJbiMBiKChnLg
+	 kfCrjTK9cYGpqMcULaKGr68PDrw6WDYZYw3U+HYRt0TBenJjm8eO8IV7xEtx3XfxAe5le
+	 XSiRNYjRAqNHwck71IRWch2FcyGlwaJHjBR2aA3qAWrJXDRjC5B/5r9D6l9U7H213NBhR
+	 NXBUvpSA9M72Tzeky6g4o0BKiM/fLeqzeEinnjnSks8odzD6xoy8mIvXe+fmXlQeKDZLB
+	 pI1Dt4qe2mV+GwtL50ATSglguJ8kpuQUi0sQieZa8NC01ixXZApOjHv0+IB4MDM5eXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063123;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063124;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wwz3PPUuCfhHxGmnO4eveDpBi07LraGeSZT3Ob2WmWY=;
-	b=YU2MkMI7Rx7UO/fTfzgLgEngkHCRyG4KMQBqTPXg5XA7Dr0rdqztUf5u8fqpEsFkJJNf
-	 t1dK+jguo0qLgneYwfkWvdp8lHi/B/zU45G+zc/VGAIKWyUDcF8+BHIFaLe+71JELvTmL
-	 eLU56sBeoLK0ZZA4upq9v2uGUzqota05XjnlXAPQ7eiL9+OaUVEq0lODho6y5goodxdl+
-	 uONVbed7IVBOUQi07bCMfj2CejPrZX1rIleWOoeQqmz8nIHJAkMevVaDyy8tmYcaQrq8C
-	 KJnEBzlVEzCCiR5KGUr1HiLpnJMzP1+D3rlIhMsnRh6qEM9mQEcFRA6cI4/CyZsx7/w==
+	bh=9aGtfobb+D8kfAilU700M6E/h4yVp0scNwQ6mU95xnI=;
+	b=tlZRXQf2vWxf/STsdKoWZQR/DuUW4Bma3+WeAmsi1CGqIr752xogjn0zkjoCPTBUhs91
+	 TbWyg7VXSITfepEgfAY5p4qCg/8XB6RsNuWfpLJ77/SoVeCcHrqN1N4uOBOg1xikSBcpX
+	 hmPtm136tTshhBvdgIJs8HAmqQl2DQVXtYM2zInnAnGEN6yIoEtI7dZ1SPX0LglK1S+Np
+	 YXn2NRSyJ+6bWU1dyFDItEgEFGexWZJwd46MTnKja9GbvMyRee4VPsCbWQz0PQXYeRE5Y
+	 hsuX+0wv0HfvDnqiwA2IeQiuQjaHhbReK0ItACCh6irGtVF+iyIh5ruK4cs/AfxNrPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AAOh4tkZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0UFIgPU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC7A606A33B;
-	Sat,  7 Nov 2026 14:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3742606A33B;
+	Sat,  7 Nov 2026 14:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AAOh4tkZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBC11F008A1;
-	Sat,  7 Nov 2026 14:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0UFIgPU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882631F0089F;
+	Sat,  7 Nov 2026 14:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063122;
-	bh=Wwz3PPUuCfhHxGmnO4eveDpBi07LraGeSZT3Ob2WmWY=;
+	s=korg; t=1794063123;
+	bh=9aGtfobb+D8kfAilU700M6E/h4yVp0scNwQ6mU95xnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AAOh4tkZyOMZo7CZvWw9AI/6rryGbXbvRelVGR8MXejv+Cz7575lCcFqW4zhaqt4O
-	 DOVtzx9OHmgo5ZUxPrIrs6KVG+JgjF9blYcH9cz4p2lqCXHfiy5m7Z32aZHrJLkmS0
-	 1xbZHePgH8q95qcV3tXCDZ+a/pVuLQ4sCPRwIEcQ=
+	b=z0UFIgPUY+z1E5eBQiTu1BOZ3i0nscPlOcoJanPrlG06cWPfgYeHb62Gemv6Y4Vt/
+	 fl8EK1O1a/em83r4RCcCNgIkEkn4KgeRXBoxnO6GqCnIeHhScAoQARrK/yOZSHpWe4
+	 GLWZvEsZlU6mwZndZRpSkstZe2cJHbsPSJxEi+Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+6a04efcebe0fc0ce@bugs.sh,
-	Kaho Jiang <kj2864@nyu.edu>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 314/869] media: em28xx: fix double free in em28xx_alloc_urbs
-Date: Sat,  7 Nov 2026 08:49:56 -0500
-Message-ID: <20261107134903.146071062@linuxfoundation.org>
+Subject: [PATCH 6.18 315/869] dm: fix a bug in dm_accept_partial_bio
+Date: Sat,  7 Nov 2026 08:49:57 -0500
+Message-ID: <20261107134903.177609886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,92 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaho Jiang <kj2864@nyu.edu>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit fd427b8adae437cac78a2332241a03cac56e95c2 ]
+[ Upstream commit a279804752e6c767b7f9ecbb32a15bdfd2b80aea ]
 
-When allocation of usb_bufs->buf[i] fails, em28xx_alloc_urbs()
-explicitly frees all items within usb_bufs->buf before calling
-em28xx_uninit_usb_xfer(), which also frees these items, causing them to be
-freed twice.
+dm-writecache doesn't work in pmem mode - mkfs.ext4 and the following
+fsck.ext4 fail with data corruption reported.
 
-BUG: KASAN: double-free in usb_free_urb.part.0 (drivers/usb/core/urb.c:25 ./include/linux/kref.h:65 drivers/usb/core/urb.c:96)
-Free of addr ffff88802fd37c00 by task kworker/1:2/1182
-Workqueue: events request_module_async
-Call Trace:
-  kasan_report_invalid_free (mm/kasan/report.c:557)
-  check_slab_allocation (mm/kasan/common.c:235)
-  kfree (./include/linux/kasan.h:199 (discriminator 1) mm/slub.c:2693 (discriminator 1) mm/slub.c:6508 (discriminator 1) mm/slub.c:6801 (discriminator 1))
-  usb_free_urb.part.0 (drivers/usb/core/urb.c:25 ./include/linux/kref.h:65 drivers/usb/core/urb.c:96)
-  usb_free_urb (drivers/usb/core/urb.c:95)
-  em28xx_uninit_usb_xfer (drivers/media/usb/em28xx/em28xx-core.c:964)
-  em28xx_alloc_urbs (drivers/media/usb/em28xx/em28xx-core.c:1076)
-  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
-  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
-  process_one_work (kernel/workqueue.c:3396)
-  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  Allocated by task 1182:
-  kasan_save_stack (mm/kasan/common.c:57)
-  kasan_save_track (mm/kasan/common.c:78)
-  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
-  __kmalloc_noprof (./include/linux/kasan.h:263 mm/slub.c:5414 mm/slub.c:5439)
-  em28xx_alloc_urbs (./include/linux/slab.h:995 ./include/linux/slab.h:1312 drivers/media/usb/em28xx/em28xx-core.c:1081)
-  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
-  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
-  process_one_work (kernel/workqueue.c:3396)
-  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  Freed by task 1182:
-  kasan_save_stack (mm/kasan/common.c:57)
-  kasan_save_track (mm/kasan/common.c:78)
-  kasan_save_free_info (mm/kasan/generic.c:584)
-  __kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
-  kfree (./include/linux/kasan.h:235 mm/slub.c:2748 mm/slub.c:6508 mm/slub.c:6801)
-  em28xx_alloc_urbs (drivers/media/usb/em28xx/em28xx-core.c:1084)
-  em28xx_dvb_init (drivers/media/usb/em28xx/em28xx-dvb.c:1734 drivers/media/usb/em28xx/em28xx-dvb.c:1698)
-  em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-  request_module_async (drivers/media/usb/em28xx/em28xx-cards.c:3685)
-  process_one_work (kernel/workqueue.c:3396)
-  worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:158)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+The commit 7dd76d1feec7 ("dm: improve bio splitting and associated IO
+accounting") introduced a latent bug in dm_accept_partial_bio - it set
+tio->io->sectors = n_sectors;. This is incorrect, according to the
+diagram in the source code at dm_accept_partial_bio, it should be the
+size of regions 1+2, not the region 2 alone.
 
-Remove the explicit cleanup loop and let em28xx_uninit_usb_xfer()
-handle the cleanup.
+The latent bug become real bug with the commit 8b211aaccb91 ("dm: add two
+stage requeue mechanism").
 
-Fixes: d571b592c6206 ("media: em28xx: don't use coherent buffer for DMA transfers")
+dm-writecache in pmem mode is the only target that actually advances bio
+with bio_advance and then calls dm_accept_partial_bio (so, the region 1
+is non-empty). All the other targets call dm_accept_partial_bio with
+region 1 empty, so bug went unnoticed for so long.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Reported-by: co+6a04efcebe0fc0ce@bugs.sh
-Assisted-by: LLM
-Signed-off-by: Kaho Jiang <kj2864@nyu.edu>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 8b211aaccb91 ("dm: add two stage requeue mechanism")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/em28xx/em28xx-core.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/md/dm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-core.c b/drivers/media/usb/em28xx/em28xx-core.c
-index 1012bfb186460..5552813875132 100644
---- a/drivers/media/usb/em28xx/em28xx-core.c
-+++ b/drivers/media/usb/em28xx/em28xx-core.c
-@@ -949,9 +949,6 @@ int em28xx_alloc_urbs(struct em28xx *dev, enum em28xx_mode mode, int xfer_bulk,
- 
- 		usb_bufs->buf[i] = kzalloc(sb_size, GFP_KERNEL);
- 		if (!usb_bufs->buf[i]) {
--			for (i--; i >= 0; i--)
--				kfree(usb_bufs->buf[i]);
--
- 			em28xx_uninit_usb_xfer(dev, mode);
- 			return -ENOMEM;
- 		}
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index f587b7229ce89..077bf8b16a0bd 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1349,7 +1349,7 @@ void dm_accept_partial_bio(struct bio *bio, unsigned int n_sectors)
+ 	 * for accounting but it is being reduced so update accordingly.
+ 	 */
+ 	dm_io_set_flag(io, DM_IO_WAS_SPLIT);
+-	io->sectors = n_sectors;
++	io->sectors = *tio->len_ptr;
+ 	io->sector_offset = bio_sectors(io->orig_bio);
+ }
+ EXPORT_SYMBOL_GPL(dm_accept_partial_bio);
 -- 
 2.53.0
 
