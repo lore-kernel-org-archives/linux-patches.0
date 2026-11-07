@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064174;
-	b=2Y9WIqqjG77lt7cMIrkg1XYZgtUuSlOsoIL4NHusc9DdYRIMA6eCSxvqYXwhdKMbq5Du
-	 RSukDT0lcbVxHIrAP1ujhMnQJCc08kWATxJI5igCOqqqMm7xLewu1oHXiXEm+7cKSEGvO
-	 Iyohm0Nq4xS9/zLvSvo4wC/kKZfBILEqze3ndBRo+8yJXwvgbIpHfJ367ubY0HzCGZiSk
-	 o1TbXHL88ioUyzMGpu26SyUS2LxsByrJwfbFPw1lqZmG+Ak70ZTNMMAatGmDdF5tQC/il
-	 s3Kw3owVLqSa0FkS+DsFgrbfYnFcjvTqiOUrBsNWkXnoiMMaBAvhOX01/QwZ61XX1Ow==
+	t=1794064175;
+	b=blzsHpl66w4ORA7hEIkLZ3D2Sq5asZkep4jwB6AE5jkglVIAgZodFKDRIW7Q0xaZ5ywt
+	 FVfZnxOo4JIC3F1K4Mf7V7nSLswYAlSaCOvoSU88obNhp8+smJTvEC7PSAWKZ0J282pql
+	 koH53wxa375vUKHmxJXFonOj0dpPsoG29bT58IcQl3OwMha6rRkYkw5QG3Dn0BWHEv0Hh
+	 lB3CLSaBG7LB/vJ4et+nVAZ5Yzz8iBZlYaiybGup129vlEwFSb4D2TC/k2ag4vTdqDjK/
+	 MQILEipQwP+oeK96FUnb7331ysFhE1VuYEsL8kiE1GHDFlUGtXZqIdE8eCv0BaNTTqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064174;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V98vovM5HAsAX/U6Y5gs8H6hRMbqUpzJG0Tf4M1YE3Q=;
-	b=t1mDLhSxoNjPd25MAeDnX19VeyMZsf11JsMhdn/VkpbOmCmx06m6hFOuUTqKB4a8yDg+
-	 JdWw5qp0BqOWb9qyq6Cx5By94Ml1dTJ3e7BdzEEMXKj/iy+saHsYNy6/vrjw1YqIar4WF
-	 U+MXQzDmJL1yKHhH3HsuLM/43N3gc+Kotd6J9iK2bWCG6zm9Y82anmp7KoceXnFyRb/+c
-	 nW55FiujYo0bc8Z0yMSiUQVPtAPP+NXRETZJ+FR4/iasyVnTGcs20yiNXii2t9k8Vqsm2
-	 Uibcfk8XiXNfxAnC/N4GDdjzLZAC9jKZ+D2/7uMq7qUAG/4jlk1dDYFUMv6+e31Lw0g==
+	bh=GZEnM4d0z8KUv2SngU2CEPfwRFVft5yoJsbi7pjPjFk=;
+	b=LXSf3xKSbJndW0zftPKyXvW7Sr0bBbAMtJ1Sdo7Q3KxDwhmowt/uLaAMws3y9kvmQTUr
+	 mbcuGGRiCFjyM/WyvAeMR5M+OHXnmeZWncigUEJ0tUx5MAYveBqxqdyTCdspMQmJocXLo
+	 3dbyRlV3mTWNb58k2FAHFyEkBibV/OZwwDjsDtVeNYs0IA/OS5lBg9XH+j8BX25Sy+U+s
+	 Jb4ccp1E860xzGB+cRJnvFFiJPAyJhCczU5disXm2TrOtybZQXiKDRVDv/lcJIEfUUWxX
+	 MRTw47J+kWo2XsyiHcXM3cgetzxC1gQZdwOLycNOe5FrZVWLgqUrjxBFD9B1XhUydFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJJarE4b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qtElDO6A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311C5606D810;
-	Sat,  7 Nov 2026 15:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C11C606A335;
+	Sat,  7 Nov 2026 15:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wJJarE4b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D460A1F0089F;
-	Sat,  7 Nov 2026 15:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qtElDO6A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC351F0089F;
+	Sat,  7 Nov 2026 15:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064174;
-	bh=V98vovM5HAsAX/U6Y5gs8H6hRMbqUpzJG0Tf4M1YE3Q=;
+	s=korg; t=1794064175;
+	bh=GZEnM4d0z8KUv2SngU2CEPfwRFVft5yoJsbi7pjPjFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wJJarE4bGdzotq1nAf+LyTTu3piF6fbl9u4hDB5E6BLnB6D38CoSV0dgiKOUQJ6tU
-	 xyh6ia9Utd1b0CsrK0Mq87H3kmuCuVIQPbMmOdy5bGp7vJzosYzUR48mGw9I0Db9bd
-	 AQU7HoaFByAH/yJiPoQ67jGD6PNt+IRTeLDf2378=
+	b=qtElDO6ApX+7fp6fLbAFvkRL/vz+Jkl6oVG/z94lK8WQSxj9nV8GwiZ/I4BfN22YN
+	 xjSAeEs1uRNjhwmCpb4Zj5iM3aM24y80nz1lmZtgblssnzaRVbq/C74gXLsSZ/1Pxc
+	 /wzyfWhLNQz884nouwDaKbKUGQ0UVddx9PNZhUE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Orgad Shaneh <orgads@gmail.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0319/1257] MIPS: mm: align hugetlb mappings in arch_get_unmapped_area()
-Date: Sat,  7 Nov 2026 08:43:35 -0500
-Message-ID: <20261107134948.240000736@linuxfoundation.org>
+Subject: [PATCH 7.3 0320/1257] MIPS: mm: do not write a huge TLB entry when the probe misses
+Date: Sat,  7 Nov 2026 08:43:36 -0500
+Message-ID: <20261107134948.267155030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,65 +70,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Orgad Shaneh <orgads@gmail.com>
 
-[ Upstream commit 975d4a6a6d4d23a39e2f49cafcc082d937960bc4 ]
+[ Upstream commit 0cb17268887e1df5c425ea052f5146b42d126323 ]
 
-Since hugetlb mappings were made to go through the architecture's
-arch_get_unmapped_area{,_topdown}(), every architecture that implements
-those has to align hugetlb files itself. The generic implementation and
-loongarch do it with huge_page_mask_align(); MIPS was left out.
+__update_tlb() probes for the 8K pair at the address it is given and,
+for a huge pmd, writes the huge entry with tlbwi at the probed index or
+with tlbwr when the probe misses. That works only if the caller passes
+the faulting address, so that the probe finds the 4K entry the refill
+handler loaded for the faulting page and the huge entry replaces it.
 
-A non-MAP_FIXED mmap() of a hugetlbfs file therefore returns an address
-that is only SHMLBA aligned, and the kernel then installs 2 MB PMDs for
-a VMA that starts in the middle of a PMD. The consequences on an
-Octeon (CN63XX) board running a process that links libhugetlbfs with
-HUGETLB_ELFMAP=R and HUGETLB_MORECORE=yes, all within a minute of
-start: the neighbouring 4 KB page table is clobbered, the TLB ends up
-with overlapping entries ("Caught Machine Check exception - caused by
-multiple matching entries in the TLB"), process exit trips
-BUG_ON(start & ~huge_page_mask(h)) in __unmap_hugepage_range(), and
-freed pages leak into unrelated kernel structures (oopses in the irq
-maple tree, in pte_offset_map, ...).
+update_mmu_cache_pmd() is not called that way. do_set_pmd() has always
+passed the huge-aligned address, and since commit ebcfc63d6bca ("mm:
+abstract THP allocation") the anonymous THP fault path does too
+(map_anon_folio_pmd()). The probe then misses the stale 4K entry, which
+sits at the faulting page somewhere else in the 2 MB range, tlbwr adds
+a huge entry next to it, and the TLB holds two entries matching the
+faulting address. Octeon raises "Machine Check exception - caused by
+multiple matching entries in the TLB" on the next refill of that page;
+a process on a CN63XX board died this way within a second of start, on
+the first anonymous THP of its bss.
 
-Do what loongarch does in commit 3109d5ff484b ("LoongArch: Set hugetlb
-mmap base address aligned with pmd size"): when the file is a hugetlb
-file, use its page mask as the search alignment instead of the cache
-colour mask.
+Skip the write when the probe misses. The refill and TLBL/TLBS handlers
+probe the faulting address themselves and rewrite the stale entry with
+the huge one (they also set the software young bit), so the entry is
+installed on the next access at the cost of one exception.
 
-Fixes: 7bd3f1e1a9ae ("mm: make hugetlb mappings go through mm_get_unmapped_area_vmflags")
-Cc: stable@vger.kernel.org # 6.13+
+Fixes: fd062c847a8c ("MIPS: TLB support for hugetlbfs.")
+Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-5
 Signed-off-by: Orgad Shaneh <orgads@gmail.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/mmap.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/mips/mm/tlb-r4k.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/arch/mips/mm/mmap.c b/arch/mips/mm/mmap.c
-index 5d2a1225785b8..119edaa928f33 100644
---- a/arch/mips/mm/mmap.c
-+++ b/arch/mips/mm/mmap.c
-@@ -9,6 +9,7 @@
- #include <linux/compiler.h>
- #include <linux/elf-randomize.h>
- #include <linux/errno.h>
-+#include <linux/hugetlb.h>
- #include <linux/mm.h>
- #include <linux/mman.h>
- #include <linux/export.h>
-@@ -72,8 +73,11 @@ static unsigned long arch_get_unmapped_area_common(struct file *filp,
+diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
+index 24fe85fa169d1..78bafa317fa6f 100644
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -332,6 +332,19 @@ void __update_tlb(struct vm_area_struct * vma, unsigned long address, pte_t pte)
+ 	/* this could be a huge page  */
+ 	if (pmd_leaf(*pmdp)) {
+ 		unsigned long lo;
++
++		/*
++		 * The probe above only covers the 8K pair at @address, and
++		 * a huge mapping is installed with the huge-aligned address
++		 * while the refill that started the fault left a 4K entry
++		 * for the faulting page elsewhere in the range. Writing the
++		 * huge entry to a random index would leave two entries
++		 * matching the faulting address; leave it to the refill and
++		 * TLBL/TLBS handlers, which probe the faulting address.
++		 */
++		if (idx < 0)
++			goto out;
++
+ 		write_c0_pagemask(PM_HUGE_MASK);
+ 		ptep = (pte_t *)pmdp;
+ 		lo = pte_to_entrylo(pte_val(*ptep));
+@@ -339,10 +352,7 @@ void __update_tlb(struct vm_area_struct * vma, unsigned long address, pte_t pte)
+ 		write_c0_entrylo1(lo + (HPAGE_SIZE >> 7));
+ 
+ 		mtc0_tlbw_hazard();
+-		if (idx < 0)
+-			tlb_write_random();
+-		else
+-			tlb_write_indexed();
++		tlb_write_indexed();
+ 		tlbw_use_hazard();
+ 		write_c0_pagemask(PM_DEFAULT_MASK);
+ 	} else
+@@ -380,6 +390,9 @@ void __update_tlb(struct vm_area_struct * vma, unsigned long address, pte_t pte)
+ 			tlb_write_indexed();
  	}
+ 	tlbw_use_hazard();
++#ifdef CONFIG_MIPS_HUGE_TLB_SUPPORT
++out:
++#endif
+ 	htw_start();
+ 	flush_micro_tlb_vm(vma);
  
- 	info.length = len;
--	info.align_mask = do_color_align ? (PAGE_MASK & shm_align_mask) : 0;
- 	info.align_offset = pgoff << PAGE_SHIFT;
-+	if (filp && is_file_hugepages(filp))
-+		info.align_mask = huge_page_mask_align(filp);
-+	else
-+		info.align_mask = do_color_align ? (PAGE_MASK & shm_align_mask) : 0;
- 
- 	if (dir == DOWN) {
- 		info.flags = VM_UNMAPPED_AREA_TOPDOWN;
 -- 
 2.53.0
 
