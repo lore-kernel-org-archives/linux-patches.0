@@ -1,63 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062214;
-	b=o0wu6rtVS9m5vVlZbsRHvb8YLtzMNn7wpKCenqZY+jxLTQR9SapNfpz59fweoBI1vXT3
-	 mnet/7BR2z7bfRBIrosvsLiafK8nRTAgSwwaYgC4S4/bjPFECLYC8IAfiLMOrXwLjqgo+
-	 ZBmzdibKHMZ8LfZJ05jML9bbM5rVndMmHVlTeCp9j9c9wSbIjc8Zz8tn7s2+zC635xg8j
-	 KTgEA4E8Frp+f0BSehrmV8NwtYflaDWQJtOteSQclp2hEsylcrA+K1YN7TDdoUvUQ36Rn
-	 uU7uUGbvEaPV2Q2rY0XI6wil0tTjQTQ0hNIjiKGCgSSVeU6j+nQdZcBB2rRQunG+e5w==
+	t=1794062215;
+	b=fFkutD5F778SxYEqZj0emePlmh0WA8sKJn5Qbr1w9uXO63+kH1qUU6qVvU5mm4Fs95Sj
+	 WMXSchMX4F7/O7FAqnB4RS5kB7Out8mdZw7M3Nojzdx7ug3WoyB3KUTBUp29VaAn0emno
+	 oKc9giF+K7cN92LX3tUGtWq8GQOuWrRUOmXQU3pFMN88iRDr27N5LvwnQm40UMjIyGpTE
+	 07NdfgFiu5+KsUoW8DwnI7WPZfGNYeTpDMpaXyc8oaVVIhcdI/GObdcaf3XFmMx6OgRBX
+	 9AXScmwjhNsgXGe2y3HoZuJCMU4ynnSoFA1SGqItwWpPwns0Fi+4luuV0TsPQDQeFjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062215;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3ukW58/dSBwi8/+AP6hn6gBtkIAwtw7zsJ2ddUmzbKo=;
-	b=s3iZPqgZMtYyOmS8rJWIjx4j7wjxKIESqLRz+VqCwmF+K7tsTZY35oi9k513x0SiFPLv
-	 QUWE8BnKdfT/DsGp59LF8OZKnC/duYlJJJAEY4c2IEBQy2T4nQkrMZIJX0lNg9lgopYLJ
-	 C7cxLXVikxghRkROpQ1xuIKPjXp09b/C2GP2G+SSjtfnhC2bcAR5poHYH/d6zOY4Rkorw
-	 L9HdbR3s7u0Va2dMO7Enrm/UzdVFPEoNAxH+aXHujNZ6mr+B1dAc6AEOQu+ecQD2AWRhL
-	 Hx91FLEev0hEUW2OQ9WSBQUbhAVAhl7AO8BR6Enjy44v2UvvE07DLVL7I8zZpCSLQjA==
+	bh=7qhvcln9riQ9YIKsGcpQ1lIe0GSBPNvuBmTmIJye69g=;
+	b=SFnxObY078+MxeIB9ZbTvmpXyxtGSnqIGzyPGbAAFj9JXciJY9bxCOr7dXpSHQHCeIM4
+	 o8VPQMKR0IxaDF40aXRZSZkoXIOP1DbRU6jMEf0uCLtQNn0YcCm3vaszQ76887MPXjizu
+	 HMKuje69HukueRyV2svZEvNQshQpNneEcN6cH5NJXgwnCEtAOwgBcJRetOPvVO2FVsLCH
+	 f/MhTPv4T2odqUWT4GrupfTb1v8bK/ws/aAl9qF1XaeQiGnVjP8ef+7ECBbGZbDmnzA/B
+	 ZvbZ3xG88FBiOOHWT+vIadpUp9IHgabt8tEEDMwhfe2gUXOuoEJfDfnzXtRQKYjUmCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=He+Np+zg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n5qFPFc3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB20A606A326;
-	Sat,  7 Nov 2026 14:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC223606A326;
+	Sat,  7 Nov 2026 14:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=He+Np+zg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C541F008A4;
-	Sat,  7 Nov 2026 14:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n5qFPFc3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4511F0089F;
+	Sat,  7 Nov 2026 14:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062213;
-	bh=3ukW58/dSBwi8/+AP6hn6gBtkIAwtw7zsJ2ddUmzbKo=;
+	s=korg; t=1794062214;
+	bh=7qhvcln9riQ9YIKsGcpQ1lIe0GSBPNvuBmTmIJye69g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=He+Np+zgUIE/laj2tgaw5rJ+aGYYDQmsiqcipgZBlCDi4JTqMg2nES6wu+XrkCjIF
-	 I98+8a5SA98Avkwm7e2RVqqT7cd+fXO8Yug5wq5IyCTWMRuz5K/1LpzYqzvlm8TmuH
-	 rv6uCWSMFrMrbuR/xxb/tu5v3il08lX5KEdg+qcY=
+	b=n5qFPFc39Dw4wUIo2vnrUVHe5CIOFYck7cx/c4lzXkrCEPS/qKedroXbZknux3wbO
+	 KcsXI6/UdQu43h01R0aX1NjR4bn1deTvS1M1gCb2GYkh2PxvLY855uhj+139WMRL5C
+	 tSiWUPfRAALBuwa6xwUm1Mn8WSHvo3l7pR+JsyDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	DAI RENJIE <drj19981414013@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Chelsy Ratnawat <chelsyratnawat2001@gmail.com>,
-	Huang Ying <ying.huang@linux.alibaba.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Chenwandun <chenwandun@huawei.com>,
-	David Hildenbrand <david@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Mark Brown <broonie@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1168/1536] mm/mempolicy: take a cpuset cookie for the interleave node count
-Date: Sat,  7 Nov 2026 08:53:04 -0500
-Message-ID: <20261107135030.539004631@linuxfoundation.org>
+Subject: [PATCH 6.12 1169/1536] resource: fix lost wakeup when waiting for a muxed region
+Date: Sat,  7 Nov 2026 08:53:05 -0500
+Message-ID: <20261107135030.566522204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -79,98 +72,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: DAI RENJIE <drj19981414013@gmail.com>
 
-[ Upstream commit bbeeb4a29dc4ca6ac18ab3bafa3728bc984a4cde ]
+[ Upstream commit 405c00e43a9c72a0b9b318cc2d2e298386ffb58e ]
 
-alloc_pages_bulk_interleave() counts pol->nodes without a cpuset cookie:
+A task waiting for a muxed region can sleep forever in
+TASK_UNINTERRUPTIBLE even though the region it waits for is already free.
+__request_region_locked() queues itself on muxed_resource_wait and drops
+resource_lock before setting TASK_UNINTERRUPTIBLE, while
+__release_region() wakes the queue after dropping the same lock.  A wakeup
+landing in between finds TASK_RUNNING, does not match TASK_NORMAL and is
+discarded; callers hold a muxed region only across a bounded transaction,
+so no further release is coming.  The task is unkillable and its caller
+never returns.
 
-	nodes = nodes_weight(pol->nodes);
-	nr_pages_per_node = nr_pages / nodes;
+The window is one store wide, but an interrupt is enough to hold the
+waiter in it, and the machine this was seen on runs PREEMPT_DYNAMIC in its
+voluntary default.  Since v6.11 spd5118 exports the DDR5 sensors of AMD
+boards through i2c-piix4, which takes a muxed region per SMBus
+transaction; a third of the in-tree users of request_muxed_region() are
+hwmon drivers, so reading a world-readable attribute is all an
+unprivileged user needs to drive the contention.  The blocked task sleeps
+holding the i2c adapter bus lock, and 27 more piled up behind it.
 
-nodemask_t spans several words once MAX_NUMNODES exceeds BITS_PER_LONG, so
-a concurrent cpuset rebind can tear that read and yield an empty mask even
-though neither version of it was empty.  The call then allocates nothing
-and returns 0.
+Reproduced by building a kernel with the two orderings selectable at
+runtime and a 2ms delay inside the window.  Switching only that knob, a
+two-thread barriered reproducer loses the wakeup 200 times out of 200
+before the fix and 0 out of 200 after it; without the delay it goes 20000
+times through the wait path and loses none.
 
-Some compilers will hoist the loop entry test above the division,
-because nr_pages_per_node is dead when the loop does not run.
+Fix it by setting the task state before dropping resource_lock, as
+prepare_to_wait() does: the releasing side needs resource_lock to unlink
+the resource, so it cannot reach the wakeup before the state is published.
 
-	682e:	call	...		<- nodes_weight()
-	6838:	test	%eax,%eax
-	683a:	jle	692d		<- nodes <= 0 skips the loop
-	684a:	div	%rcx
-
-So in most deployments, this div/0 is unreachable - but nothing in the
-source guarantees that, it's just not easily exercised.
-
-Take the cookie around the count and bail if the mask really is empty.
-Only the count needs it, interleave_nodes() takes the cookie itself so so
-a torn read there is already retried.
-
-A rebind landing mid-loop can still leave the count disagreeing with the
-mask, so the loop may revisit a node or skip one - but a rebind where
-nodes change causes migration, so a handful of misplaced pages isn't
-catastrophic in any sense.
-
-Measured on a 72 node VM (NODES_SHIFT=10) with a cgroup v2 cpuset flipping
-cpuset.mems between a word 0 and a word 1 node set, and the two word read
-artificially widened: 330 zero counts in 130414 calls without the cookie,
-and 401 retries with it.
-
-Link: https://lore.kernel.org/20260828193111.1023497-1-gourry@gourry.net
-Fixes: c00b6b961099 ("mm/vmalloc: introduce alloc_pages_bulk_array_mempolicy to accelerate memory allocation")
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Link: https://lore.kernel.org/20260821-b4-resource-muxed-lost-wakeup-v1-1-37eb6473a76c@gmail.com
+Fixes: 8b6d043b7ee2 ("resource: shared I/O region support")
+Signed-off-by: DAI RENJIE <drj19981414013@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
-Closes: https://lore.kernel.org/all/20250907160829.91628-1-chelsyratnawat2001@gmail.com/
-Reviewed-by: Huang Ying <ying.huang@linux.alibaba.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
 Assisted-by: Claude:claude-opus-5
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Chenwandun <chenwandun@huawei.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-Cc: Zi Yan <ziy@nvidia.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ kernel/resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 37694789a9663..5ac36b2a87ae3 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -2352,6 +2352,7 @@ static unsigned long alloc_pages_bulk_array_interleave(gfp_t gfp,
- 		struct mempolicy *pol, unsigned long nr_pages,
- 		struct page **page_array)
- {
-+	unsigned int cpuset_mems_cookie;
- 	int nodes;
- 	unsigned long nr_pages_per_node;
- 	int delta;
-@@ -2359,7 +2360,16 @@ static unsigned long alloc_pages_bulk_array_interleave(gfp_t gfp,
- 	unsigned long nr_allocated;
- 	unsigned long total_allocated = 0;
- 
--	nodes = nodes_weight(pol->nodes);
-+	/* count the nodes, retry if a rebind happened during the read */
-+	do {
-+		cpuset_mems_cookie = read_mems_allowed_begin();
-+		nodes = nodes_weight(pol->nodes);
-+	} while (read_mems_allowed_retry(cpuset_mems_cookie));
-+
-+	/* if the nodemask has become invalid, we cannot do anything */
-+	if (!nodes)
-+		return 0;
-+
- 	nr_pages_per_node = nr_pages / nodes;
- 	delta = nr_pages - nodes * nr_pages_per_node;
- 
+diff --git a/kernel/resource.c b/kernel/resource.c
+index 2922e5c85ef65..5b0e2c43ff7da 100644
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -1283,8 +1283,8 @@ static int __request_region_locked(struct resource *res, struct resource *parent
+ 		}
+ 		if (conflict->flags & flags & IORESOURCE_MUXED) {
+ 			add_wait_queue(&muxed_resource_wait, &wait);
+-			write_unlock(&resource_lock);
+ 			set_current_state(TASK_UNINTERRUPTIBLE);
++			write_unlock(&resource_lock);
+ 			schedule();
+ 			remove_wait_queue(&muxed_resource_wait, &wait);
+ 			write_lock(&resource_lock);
 -- 
 2.53.0
 
