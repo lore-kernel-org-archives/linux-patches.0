@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064958;
-	b=XR5pbU1f3i4h/IeHFHIgNBBH07Oi63tK055RagLtG1oGo7ISBJwQpiD0+TBeMFy3ejDq
-	 78CPV/bD/JzGVOubrrDMwZfGu3gOGSLhG6Ht6NdQfSC9RFs+rVWtSKP1n8RkuJ2SJdRUX
-	 ukbYyHNcGoB5k989FqYDStTWuw7SqyFvCGosN0LIxxNeKjPj2X3E6x4mrzjsk+eLNlrCf
-	 V/qHsQBqm2meQGmqibTi8oX00tXOBTTtVLE28oGrERHgRP77LqNNevVwJELPWJu7Ih2y9
-	 oN8mS4h8C8hiuaUg/kIxfS71Lt0GBEEO0bwmYfsmm1CLWjZx+fDYC8mNW3eziA4+Neg==
+	t=1794064959;
+	b=nINVzZdgOMg6iPSgQhKOC2f+1Adbkpnlv1GNgzZ1dYrN8DGZwHPEP/0/DS+2D0hoJwmH
+	 HYnqttmZ80eofxkyHpLop2Ln9JtJb1hzSx7WmROcLivUsWZ5Km8MRPeEV6fMZg4qrQBhf
+	 o8liynJtrXLTlF1d7hZEeCfPbk5X0TNL6QsgKlHrnlLMHyFl0UfVwNg+cQ+XztuXyootE
+	 C0qB32AQf77N2xfZ+DHPOy2XLvNJf2iR4AyG13Ww+Ad50+FIZVHLc31MHiYnZUASdSPAq
+	 tEa5bQceYjvi8+17ui94dKQ0vv+G+TCOljM4NvQzO9UQxxKiOXLzSju2cIzZ00surig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064959;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=basHaUeP+E0uVyVtPvnwNtrtQmeWjl1OiSjdzx9YrEQ=;
-	b=ya8FyrQ2tH99aIhYhj7Kv8isRXc2CyutG1B0VY/2IlXNlE9jHg853ok1nZ8pv8w7h/qG
-	 7zxQSaTbXJVuYAyd9h/5C5VSfs+3bLQ9KxlZendYoKi8l/xLXwAQCQC7kJy8ePrpciukl
-	 1m4z8BX6jEeS5zNMlUdl1yzWXgl6tB6KW8IiKO0kWiPxw3U1O7KdrPtom3dDz+bOaSOY7
-	 pAwPUAo5Kl7vUkwzBVN8qtDvdy2G2syYa9mDMFHUhNpfaCUqpLDzkbv6BBa2MdPcxQEtM
-	 0yaygt5UwHrI7TkEiOexs0k2qN9kXdFmuCUBj5kVTGUcADXkSkL+mZwUrrgz2db7AmA==
+	bh=xwWYyLmJACdd7UF7ZG7BklGfHS2asKGa2S+ksWzLrXM=;
+	b=nXzG5iv0ir9/rgDYF+5ajeO1qrF3denqW8m5Ea/4KHBAMeDWAHeUuKrin4kVFozOvq/J
+	 JAduFsxomGHRr0U6gAa1w0RptptktnvkUrI966J6XmP46fYg3T82z9bQdwbicFm0hwxfB
+	 UZBdLM3QjoVdmL1+BL3suVakKSZRQ5MGTsRlmtxrsATN/hSGZMvm5AziNgWETGi6OgFh/
+	 f8e1z2+B5fVwBcfFGxraGsLUYMLXKynCX6V61KGwNen+57eZ7mYpZoI3Ql6KYeXZpornC
+	 u73+/A09QVCI/ji7zwWQ7NPNAk6kON3isjmAK/yJIZkZOqX+TImvg4WNgGsIWldjVBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VWiH31sJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aASLy7zy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF744606A9C1;
-	Sat,  7 Nov 2026 15:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B2A606A9D9;
+	Sat,  7 Nov 2026 15:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VWiH31sJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA961F0089F;
-	Sat,  7 Nov 2026 15:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aASLy7zy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8B21F0089F;
+	Sat,  7 Nov 2026 15:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064957;
-	bh=basHaUeP+E0uVyVtPvnwNtrtQmeWjl1OiSjdzx9YrEQ=;
+	s=korg; t=1794064959;
+	bh=xwWYyLmJACdd7UF7ZG7BklGfHS2asKGa2S+ksWzLrXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VWiH31sJW6xR7akGI4AxZyAzlSm3ZseYRhgmOGHHPPOj5lKLnG2ykBCBXk5Hg5lAb
-	 21WFBrukenOrH0Tq7KalelvzQrvhfDPQDofNSR7BJv1n5VhwI72Lb+LYYNgqKAIs9c
-	 T4E/2hdLmKviFlwZ0mii4lcAHNX6LPJDuiQAop0E=
+	b=aASLy7zymZpqfTfcZZs7PaURXwAsaA46X+FEGCN3y9uOeombFoeddO4Jdme4nzVY0
+	 UaTpZC5ANyB19TnNqlZV66sWhwwSlFRG50YtfPDeEiPXosA1p/1pFlbdD2EjRn1E49
+	 2E1jUI9Vae48XG7Pcn4BytjYRFRE1/fhBX6xVxYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	"Harry Yoo (Meta)" <harry@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
+	Quanye Yang <quanyeyang@proton.me>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0843/1257] ipc, msg: Account msg_msg allocations with GFP_KERNEL_ACCOUNT again
-Date: Sat,  7 Nov 2026 08:52:19 -0500
-Message-ID: <20261107135002.607260224@linuxfoundation.org>
+Subject: [PATCH 7.3 0844/1257] mptcp: reset msk state on early connect failure
+Date: Sat,  7 Nov 2026 08:52:20 -0500
+Message-ID: <20261107135002.635508995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,51 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Quanye Yang <quanyeyang@proton.me>
 
-[ Upstream commit c57fbbe42e907fa26c5ffada52d913d4ca5fa66e ]
+[ Upstream commit 29afe67082b2d33ab2e90c56c337235d725f023f ]
 
-Since commit 734bbc1c97ea7 ("ipc, msg: Use dedicated slab buckets for
-alloc_msg()"), alloc_msg() allocates with GFP_KERNEL, and a msg_msg is
-accounted only through SLAB_ACCOUNT on its bucket caches. With
-CONFIG_SLAB_BUCKETS=n, kmem_buckets_create() creates no caches and
-kmem_buckets_alloc() is a GFP_KERNEL kmalloc() from the general caches,
-which do not account it; the same happens when kmem_buckets_create()
-fails. Either way, the allocation is not charged to the sender's memory
-cgroup.
+mptcp_connect() can fall back before the subflow SYN is sent, for
+example when the netns is in an MPTCP blackhole, token allocation fails,
+or MD5SIG is in use. If the subsequent subflow connect() fails
+immediately (EAFNOSUPPORT, ENETUNREACH, ...), __inet_stream_connect()
+returns while the socket is still SS_UNCONNECTED and never calls
+->disconnect(). This was reported by Clashiko [1].
 
-Allocate with GFP_KERNEL_ACCOUNT again, as before that commit, so the
-allocation is charged whichever cache serves it.
+The error path only dropped the token and moved the msk back to
+TCP_CLOSE. MPTCP_FALLBACK_DONE, allow_subflows and
+request_mptcp were left as after early fallback, so a later
+connect() on the same fd stayed TCP-only.
 
-Build tested ARCH=x86_64 defconfig with GCC 16.2.0, with
-CONFIG_SLAB_BUCKETS as y and n.
-
-Fixes: 734bbc1c97ea7 ("ipc, msg: Use dedicated slab buckets for alloc_msg()")
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/633 [1]
+Fixes: 0235d075a592 ("mptcp: mark as fallback even early ones")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
-Link: https://patch.msgid.link/20261014052344.384723-2-kees@kernel.org
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
+Signed-off-by: Quanye Yang <quanyeyang@proton.me>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-1-932c9b182fc7@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- ipc/msgutil.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mptcp/protocol.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/ipc/msgutil.c b/ipc/msgutil.c
-index e28f0cecb2ec9..12663a40e9ae6 100644
---- a/ipc/msgutil.c
-+++ b/ipc/msgutil.c
-@@ -58,7 +58,8 @@ static struct msg_msg *alloc_msg(size_t len)
- 	size_t alen;
- 
- 	alen = min(len, DATALEN_MSG);
--	msg = kmem_buckets_alloc(msg_buckets, sizeof(*msg) + alen, GFP_KERNEL);
-+	msg = kmem_buckets_alloc(msg_buckets, sizeof(*msg) + alen,
-+				 GFP_KERNEL_ACCOUNT);
- 	if (msg == NULL)
- 		return NULL;
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index b902e24acd68b..05c38564e8fdf 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -4233,9 +4233,16 @@ static int mptcp_connect(struct sock *sk, struct sockaddr_unsized *uaddr,
+ 	 * subflow_finish_connect()
+ 	 */
+ 	if (unlikely(err)) {
+-		/* avoid leaving a dangling token in an unconnected socket */
+ 		mptcp_token_destroy(msk);
+ 		mptcp_set_state(sk, TCP_CLOSE);
++
++		spin_lock_bh(&msk->fallback_lock);
++		msk->allow_subflows = true;
++		msk->allow_infinite_fallback = true;
++		clear_bit(MPTCP_FALLBACK_DONE, &msk->flags);
++		spin_unlock_bh(&msk->fallback_lock);
++
++		mptcp_subflow_ctx_reset(mptcp_subflow_ctx(ssk));
+ 		return err;
+ 	}
  
 -- 
 2.53.0
