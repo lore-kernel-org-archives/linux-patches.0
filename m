@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063985;
-	b=qoN6muveLBtT5Jw0gLe9ds2hdcWSVD3IyiFcxE0GQto+XZKV0FIUtauQDPJ/YW8PAUwB
-	 txbqi3hTsth/yCbTzre6LbrF2WsLppgHlqdI6w3AvckNah54XjsMgTJJJTczetzKu1J6+
-	 5ZJUskRcyjkzsr1lVHQxq0IEWJJYra++AVth7HMXq+WIP1tOchtIygthtS7H6Qiy2eqaw
-	 FQKa5e0HIHl/WaBBSOJ5pCPTREnKB0HKBXHacsuCJKyFwmYH4HtpClaxTIdnozD7hcKcl
-	 5RPId9VS2JqO59vE3eUN3i1KsK8w33A5TPYc2NIpz/d0f2fJunPvXTMal09dRzCFnAQ==
+	t=1794063986;
+	b=C82sRTOuTRf0oKdgLk5FdRwdD1iMqrbV5/xoPwpJsx67J12ZeBbHlq8WwUpJtzeiPGUj
+	 eTAVJR1graQuhLtybSALAc07cAi06KRpnG+/3yS8IoMkzv3kPC/EuA7QjNxQyOYHcoBtf
+	 JUxSTQEnQBR7Fsd0yYTbHb3f1ev50EBMiBDH+x19m5zOB+7EmfrdAjRMMcqW/PNlWPfm1
+	 2U2JvEWwET0UUKTOPu7t3lw82FgIlXW5j4A51G6bJJGiHGlgi4oxGlWpy7eCOUR/gparS
+	 +RstrCNI4RH8DXKNwsK0+O1awieBEt/o0cTBUHG1ftWoZthJ1ah3zYJz1RX98xymxCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063985;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063986;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tCFi3tBCYvTNZRduD2j79DWlrs4g2O9CZqBctrjoRoM=;
-	b=L3bknDtL1b2xhgfLEpfZRMgVmAwivqydfhFmrzayj+UEOMzGackSOjkCgbBQhgPeJxio
-	 jp8tCeAWldrj0FKxP5zWSb5QbMM6h+sskq8VoGMhPMPg6Q/hgYUkA94ZGQrUnr+9AqQ0O
-	 YUD4v9C+sbELEed8HpvIbSakR2drrmQlkkOLxi0awRNy9sjNzYq5LcYaCwUg67Pt24/t2
-	 PL9X6Y/NfZD8eyJybE93F9Hs68QdavDecFlQKRfsHx6HOTIglctfd+DmmnlTszsKPdCgZ
-	 ZI6CbhMoI7GxMsWXsbFSfalInfHYLtzkMCR101ArI97hhLZ73FcToIqFokeCSq6s77A==
+	bh=dKPpBz+F+JLUge0DsiWhUKE698SkqNaDU7og1r+G+8E=;
+	b=Untytu/liVmrefLc8zn78fIDzfIpnYtJ3fN/4OVOA0Pzhnk++fEDKy1h3vb64AgT3Scc
+	 7K0ZTHayyePpIgKMnpl0+C0LqmbDgkNfMRw3SJzWl8tL++bxQUQJ/atJu11upx/ZoRsB8
+	 xYAY67Ic2UzsmZY3JLG25O/Br0DLFJMZT5/83cFe3l8t/Qdz5Q+oIejQKdWZBxelvDQFB
+	 uIkkhW6PowbjdFyttyJ9LJfrxFlTXQ2NaB9pbx90X+JebcAO1OKpevrGo+yyuwY830dRk
+	 udvhA3fm1TdChlet8sHgZime6ePHqfnQ2xn/byf9AndJfjlY6LESY5fDZwz/VAL68mQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+mvayw+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrGREg7O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB996082BD5;
-	Sat,  7 Nov 2026 15:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D5D6082BD5;
+	Sat,  7 Nov 2026 15:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+mvayw+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086B11F0089F;
-	Sat,  7 Nov 2026 15:06:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrGREg7O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350761F008A3;
+	Sat,  7 Nov 2026 15:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063985;
-	bh=tCFi3tBCYvTNZRduD2j79DWlrs4g2O9CZqBctrjoRoM=;
+	s=korg; t=1794063986;
+	bh=dKPpBz+F+JLUge0DsiWhUKE698SkqNaDU7og1r+G+8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+mvayw+CCTk/mdSinKuup1lkd/ZTvCQIQsuMf+B5Z9xRBFkwZbrOB1ZDlUJOIMHn
-	 DwBTqMWhH1CEaIEqG4GKZM8Iks+Qoo17Gw29qb9iI93fnw31psL03rAhko8s68Uony
-	 Gznan4c0DYRR2rZ203kUF4WXFUO803hmuohcJ2Fs=
+	b=wrGREg7OEDLh8hEG37Jv5s99JTH9RgzLSGYjhflBs/6qXMxW7b1vqQSeAj5klZgPF
+	 O/sPcnGXrQQAw5UouO5PlVSv+jTf7FUHiYI8Mwh+LVDc8WKGrqCmxA+7vjOyL6GU1d
+	 O+Qd5gWciuRWRjwgsHU+aN4AoPMPouKl/mju3OGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0130/1257] power: supply: qcom_smbx: include base when petting watchdog
-Date: Sat,  7 Nov 2026 08:40:26 -0500
-Message-ID: <20261107134942.910954709@linuxfoundation.org>
+Subject: [PATCH 7.3 0131/1257] power: supply: qcom_smbx: test battery health status bits
+Date: Sat,  7 Nov 2026 08:40:27 -0500
+Message-ID: <20261107134942.936871514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,38 +71,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Robin Snyders <robin@snyders.xyz>
 
-[ Upstream commit 2f0dec12007891398e6e3041aca0b8656918973d ]
+[ Upstream commit 68f645192f64e1037685dbdb0dffb41a5a012056 ]
 
-BARK_BITE_WDOG_PET is an offset from the charger peripheral base, but
-the watchdog bark handler writes it as an absolute SPMI address. This can
-write another PMIC peripheral and leave the charger watchdog unserviced.
+BATTERY_CHARGER_STATUS_2 contains independent status and fault bits.
+Switching on the complete register only recognizes a fault when it is the
+sole asserted bit, and can report a healthy battery when another status
+bit is set at the same time.
 
-Add the charger base, as all other qcom_smbx register accesses do.
+Test the relevant fault bits in priority order, matching the Qualcomm
+downstream driver handling.
 
 Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Robin Snyders <robin@snyders.xyz>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260812-qcom-smbx-fixes-v1-1-eb48246be599@snyders.xyz
+Link: https://patch.msgid.link/20260812-qcom-smbx-fixes-v1-2-eb48246be599@snyders.xyz
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_smbx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/qcom_smbx.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/power/supply/qcom_smbx.c b/drivers/power/supply/qcom_smbx.c
-index 67fdb43353388..e6f2328f295c7 100644
+index e6f2328f295c7..0e50d81aefc2a 100644
 --- a/drivers/power/supply/qcom_smbx.c
 +++ b/drivers/power/supply/qcom_smbx.c
-@@ -764,7 +764,7 @@ static irqreturn_t smb_handle_wdog_bark(int irq, void *data)
+@@ -632,26 +632,20 @@ static int smb_get_prop_health(struct smb_chip *chip, int *val)
+ 		return rc;
+ 	}
  
- 	power_supply_changed(chip->chg_psy);
+-	switch (stat) {
+-	case CHARGER_ERROR_STATUS_BAT_OV_BIT:
++	if (stat & CHARGER_ERROR_STATUS_BAT_OV_BIT)
+ 		*val = POWER_SUPPLY_HEALTH_OVERVOLTAGE;
+-		return 0;
+-	case BAT_TEMP_STATUS_TOO_COLD_BIT:
++	else if (stat & BAT_TEMP_STATUS_TOO_COLD_BIT)
+ 		*val = POWER_SUPPLY_HEALTH_COLD;
+-		return 0;
+-	case BAT_TEMP_STATUS_TOO_HOT_BIT:
++	else if (stat & BAT_TEMP_STATUS_TOO_HOT_BIT)
+ 		*val = POWER_SUPPLY_HEALTH_OVERHEAT;
+-		return 0;
+-	case BAT_TEMP_STATUS_COLD_SOFT_LIMIT_BIT:
++	else if (stat & BAT_TEMP_STATUS_COLD_SOFT_LIMIT_BIT)
+ 		*val = POWER_SUPPLY_HEALTH_COOL;
+-		return 0;
+-	case BAT_TEMP_STATUS_HOT_SOFT_LIMIT_BIT:
++	else if (stat & BAT_TEMP_STATUS_HOT_SOFT_LIMIT_BIT)
+ 		*val = POWER_SUPPLY_HEALTH_WARM;
+-		return 0;
+-	default:
++	else
+ 		*val = POWER_SUPPLY_HEALTH_GOOD;
+-		return 0;
+-	}
++
++	return 0;
+ }
  
--	rc = regmap_write(chip->regmap, BARK_BITE_WDOG_PET,
-+	rc = regmap_write(chip->regmap, chip->base + BARK_BITE_WDOG_PET,
- 			  BARK_BITE_WDOG_PET_BIT);
- 	if (rc < 0)
- 		dev_err(chip->dev, "Couldn't pet the dog rc=%d\n", rc);
+ static int smb_get_property(struct power_supply *psy,
 -- 
 2.53.0
 
