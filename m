@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063306;
-	b=13xL49hQz5LKH77/1T+rNAYhi8N/C1Y+tjkthTUlITvdzdyq3WG38awvbjgaHzVuBLM/
-	 eer2rEHoSn/Yb0WbUXur7BhDyFFr1i1vDXIsntpid+Mcwn03hrQa6cEQ+3PRNarM7MZGS
-	 Z3TKPmjKWdSvW8B5NIKc1hrsY7LOyXqC8UA21bn4CVs3+ZqcKHlmnOSuTnHSkojY9oPRl
-	 TJqzObwN5MTzyRsJkhMS/zoDjwZeMXnqNCgKp0Rzf6ofJmb2KdVeP+QoO/LBMgpbmELRE
-	 wfqvTLORQ35ZIPDmHlHf6Cgdl3t0uLl+zbvXjSg88HI2afRGyxELGCETufGJwaTKBfw==
+	t=1794063307;
+	b=ot9vPk8gSaO4+i8WwihjuC5OK+ff6cuPbmkC3EEe9co/b75SoMZNvNQWsozR6cteQ4JZ
+	 rCcO/5Zl+2VCBgBE8dLSPhZP3DQl339WYprffH/SPTtJXeRP1M9WvrmE85WIhzMYpWfLS
+	 DQZ71itfrtPtbIn4oPc/EZwmbqNo8MFgrzr26y6s7Z/mTzCk3sdw0JNOnDDtdNTyaRyxs
+	 KC9e0xZfOl5o9eQwIAZqZurm1LwQlBV3LGxm1tfHcmd5DxtPEh5NC91z15TwPoVT2eYTJ
+	 JNnhQuDcTQUOcrhyMBhsLr6aNzWKkRl/LDUP1OoNYCQ8aOlQXrzVMuCddybijElZ6DQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063306;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063307;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=UxQ6imuHSZaROw1IKRtYMzXSzv5nq2SsCWNq1TyibQI=;
-	b=h6T+KqmnArazhhW3xzI0PRj64bhDVrlw7lhuwna2MEnDSbGlhQRUggRrbeT1K86vt4Zy
-	 vcrbzummYSxJJLwHx/HSkrLHDQ8RPHiD93G7LsajZ4tehzSwzlopztKqSM7I2sDLj2Ucb
-	 dDxDzWk+pKrzBsx/QPZwl5dVVsqGDRZYjde6eDAVpKmdVkyU01vHrrdPqiqI/9i5+VG6h
-	 wtlka1TkVpIHNQ70DTAGzFoVJe67R6SrwoJWwQrfx+dh3rZOxIU9wFRVdNmjz/aJxn5Q0
-	 UDyZ7g/FBV+ShxzdSZ5hbOa/ZRxVbFJP9mA7/yMWQyaE/fBhiXbNZDpcXPobEuHgJMg==
+	bh=r4K2+eUMZO6z6HtWDF0e+AUGDdlm3ZNjd8ktG5gWDVQ=;
+	b=fHD6bD7aQ0uMMGePESNEu+7KdLOJzpvQ/eJw5DRHLOdtnTqQsrme+IC7U9w6pexqDqwm
+	 wbRt2IqXN3NBHOhkNor5X1ylAwB91CfMmJaN3uNhzyJ+TNDyFf8ZyWMKT+HyyS95uS1Ys
+	 Tj17WJRu4l7gO5zc3nnYWc5RKOIWT74fXlql+ZalW5bNIH56VEaCZoCA3OGSyEPr7aHuV
+	 k9OUJsQoNDnZsad40M3NRd+Ph8tCfS6iYrqPnPaFagdBRioA5TDXOXv2REB14oN2On1XG
+	 C4b7TxflGYMQt1X3Ehu2lKDxGmlwtuUN+h/cKVXtXG7ZjiqqlgC/A9P2MCTFNBpL02w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T37J0Zkr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AGmAXT4i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12004606D82F;
-	Sat,  7 Nov 2026 14:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD28606EEB9;
+	Sat,  7 Nov 2026 14:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T37J0Zkr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47451F008A1;
-	Sat,  7 Nov 2026 14:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AGmAXT4i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E231F1F008A1;
+	Sat,  7 Nov 2026 14:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063305;
-	bh=UxQ6imuHSZaROw1IKRtYMzXSzv5nq2SsCWNq1TyibQI=;
+	s=korg; t=1794063307;
+	bh=r4K2+eUMZO6z6HtWDF0e+AUGDdlm3ZNjd8ktG5gWDVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T37J0ZkrWlyhsxTM+G06/RlYWuL2zrWrRIuV0byL2nqfKv2A2d//tmSqB2HNMF5EB
-	 eZ9dF/ry8kcfmvxSM5d2q6KtzSBv0wmcX6DpOMAqDgqMXAiH03V5kk3hWWBA8qGQu7
-	 84thAkwD0Co8LOUE610lcqUxbhf0DyLn7z/Q3yBE=
+	b=AGmAXT4iBvGyNBEK4toTwu9zg3Qn8bLHWg7hfQ+b++Rv5Y6qbdFNAcOAtd+naDWEq
+	 j7CWCpwaXdRFgnE5BIj0Wt/p7t/KKoUQMyzk8jblbYFx3iJuyHcr+nNIFtgV3quQn1
+	 oU5JeAs1Kh9rDm1hWSHzDBIWuCiNNlO+65uQzhJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	"Derek J. Clark" <derekjohn.clark@gmail.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 495/869] platform/x86: oxpec: Fix Apex charge limit control
-Date: Sat,  7 Nov 2026 08:52:57 -0500
-Message-ID: <20261107134910.324057509@linuxfoundation.org>
+Subject: [PATCH 6.18 496/869] platform/x86: simatic-ipc: fix platform device leak on registration failure
+Date: Sat,  7 Nov 2026 08:52:58 -0500
+Message-ID: <20261107134910.351724215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,243 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 0ccdf9a1381c7fb6d9e84abeb8e5d6c85dd07059 ]
+[ Upstream commit 9523698252fd583d6987582b9c34ec6500d10986 ]
 
-The OneXPlayer Apex uses E5/E6 for battery bypass / charge limit, making
-it the first device to deviate. This was verified by a user on Windows
-with BIOS version 2.17 and later by running this kernel patch.
+register_platform_devices() registers the battery, LED, and watchdog
+platform devices in sequence. If LED registration fails, the battery
+device remains registered. If watchdog registration fails, the LED and
+battery devices remain registered.
 
-Drop X1_ from the MASK variables as they are common in all devices,
-introduce a board enum for Apex, and make it use the new E5/E6 registers
-for charge limit / bypass. Apply the same quirks as oxp_fly, since APEX
-uses the same registers otherwise.
+These failure paths leave successful platform_device_register_data()
+calls without the matching platform_device_unregister() calls.
 
-Fixes: 3385ea97c14d ("platform/x86: oxpec: Add support for OneXPlayer APEX")
+Add an unwind ladder to unregister previously registered platform
+devices in reverse order before returning the registration error.
+
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fixes: dd123e62bded ("platform/x86: simatic-ipc: add main driver for Siemens devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Reviewed-by: Derek J. Clark <derekjohn.clark@gmail.com>
-Link: https://patch.msgid.link/20260920190438.3444923-1-lkml@antheas.dev
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260924115617.1578309-1-lgs201920130244@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/oxpec.c | 68 ++++++++++++++++++++++++++++--------
- 1 file changed, 53 insertions(+), 15 deletions(-)
+ drivers/platform/x86/siemens/simatic-ipc.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/oxpec.c b/drivers/platform/x86/oxpec.c
-index a30845ba37969..4fc9310296342 100644
---- a/drivers/platform/x86/oxpec.c
-+++ b/drivers/platform/x86/oxpec.c
-@@ -60,6 +60,7 @@ enum oxp_board {
- 	oxp_x1,
- 	oxp_g1_i,
- 	oxp_g1_a,
-+	oxp_apex,
- };
+diff --git a/drivers/platform/x86/siemens/simatic-ipc.c b/drivers/platform/x86/siemens/simatic-ipc.c
+index 7039874d8f112..4a4509fc9263e 100644
+--- a/drivers/platform/x86/siemens/simatic-ipc.c
++++ b/drivers/platform/x86/siemens/simatic-ipc.c
+@@ -92,6 +92,7 @@ static int register_platform_devices(u32 station_id)
+ 	u8 wdtmode = SIMATIC_IPC_DEVICE_NONE;
+ 	u8 battmode = SIMATIC_IPC_DEVICE_NONE;
+ 	char *pdevname;
++	int ret;
+ 	int i;
  
- static enum oxp_board board;
-@@ -103,11 +104,14 @@ static struct device *oxp_dev;
- #define OXP_X1_CHARGE_LIMIT_REG		0xA3 /* X1 charge limit (%) */
- #define OXP_X1_CHARGE_INHIBIT_REG	0xA4 /* X1 bypass charging */
+ 	for (i = 0; i < ARRAY_SIZE(device_modes); i++) {
+@@ -139,8 +140,10 @@ static int register_platform_devices(u32 station_id)
+ 				pdevname, PLATFORM_DEVID_NONE,
+ 				&platform_data,
+ 				sizeof(struct simatic_ipc_platform));
+-		if (IS_ERR(ipc_led_platform_device))
+-			return PTR_ERR(ipc_led_platform_device);
++		if (IS_ERR(ipc_led_platform_device)) {
++			ret = PTR_ERR(ipc_led_platform_device);
++			goto err_unregister_batt;
++		}
  
--#define OXP_X1_CHARGE_INHIBIT_MASK_AWAKE	0x01
-+#define OXP_APEX_CHARGE_LIMIT_REG	0xE5 /* Apex charge limit (%) */
-+#define OXP_APEX_CHARGE_INHIBIT_REG	0xE6 /* Apex bypass charging */
-+
-+#define OXP_CHARGE_INHIBIT_MASK_AWAKE	0x01
- /* X1 Mask is 0x0A, F1Pro is 0x02 but the extra bit on the X1 does nothing. */
--#define OXP_X1_CHARGE_INHIBIT_MASK_OFF		0x02
--#define OXP_X1_CHARGE_INHIBIT_MASK_ALWAYS	(OXP_X1_CHARGE_INHIBIT_MASK_AWAKE | \
--						 OXP_X1_CHARGE_INHIBIT_MASK_OFF)
-+#define OXP_CHARGE_INHIBIT_MASK_OFF		0x02
-+#define OXP_CHARGE_INHIBIT_MASK_ALWAYS	(OXP_CHARGE_INHIBIT_MASK_AWAKE | \
-+					 OXP_CHARGE_INHIBIT_MASK_OFF)
+ 		pr_debug("device=%s created\n",
+ 			 ipc_led_platform_device->name);
+@@ -153,8 +156,10 @@ static int register_platform_devices(u32 station_id)
+ 				KBUILD_MODNAME "_wdt", PLATFORM_DEVID_NONE,
+ 				&platform_data,
+ 				sizeof(struct simatic_ipc_platform));
+-		if (IS_ERR(ipc_wdt_platform_device))
+-			return PTR_ERR(ipc_wdt_platform_device);
++		if (IS_ERR(ipc_wdt_platform_device)) {
++			ret = PTR_ERR(ipc_wdt_platform_device);
++			goto err_unregister_led;
++		}
  
- static const struct dmi_system_id dmi_table[] = {
- 	{
-@@ -220,7 +224,7 @@ static const struct dmi_system_id dmi_table[] = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
- 			DMI_EXACT_MATCH(DMI_BOARD_NAME, "ONEXPLAYER APEX"),
- 		},
--		.driver_data = (void *)oxp_fly,
-+		.driver_data = (void *)oxp_apex,
- 	},
- 	{
- 		.matches = {
-@@ -404,6 +408,7 @@ static umode_t tt_toggle_is_visible(struct kobject *kobj,
- 	case oxp_x1:
- 	case oxp_g1_i:
- 	case oxp_g1_a:
-+	case oxp_apex:
- 		return attr->mode;
- 	default:
- 		break;
-@@ -433,6 +438,7 @@ static ssize_t tt_toggle_store(struct device *dev,
- 	case oxp_fly:
- 	case oxp_mini_amd_pro:
- 	case oxp_g1_a:
-+	case oxp_apex:
- 		reg = OXP_TURBO_SWITCH_REG;
- 		mask = OXP_TURBO_TAKE_VAL;
- 		break;
-@@ -479,6 +485,7 @@ static ssize_t tt_toggle_show(struct device *dev,
- 	case oxp_fly:
- 	case oxp_mini_amd_pro:
- 	case oxp_g1_a:
-+	case oxp_apex:
- 		reg = OXP_TURBO_SWITCH_REG;
- 		mask = OXP_TURBO_TAKE_VAL;
- 		break;
-@@ -576,6 +583,7 @@ static bool oxp_psy_ext_supported(void)
- 	case oxp_g1_i:
- 	case oxp_g1_a:
- 	case oxp_fly:
-+	case oxp_apex:
- 		return true;
- 	default:
- 		break;
-@@ -589,12 +597,24 @@ static int oxp_psy_ext_get_prop(struct power_supply *psy,
- 				enum power_supply_property psp,
- 				union power_supply_propval *val)
- {
-+	u8 limit_reg, inhibit_reg;
- 	long raw_val;
- 	int ret;
- 
-+	switch (board) {
-+	case oxp_apex:
-+		limit_reg = OXP_APEX_CHARGE_LIMIT_REG;
-+		inhibit_reg = OXP_APEX_CHARGE_INHIBIT_REG;
-+		break;
-+	default:
-+		limit_reg = OXP_X1_CHARGE_LIMIT_REG;
-+		inhibit_reg = OXP_X1_CHARGE_INHIBIT_REG;
-+		break;
-+	}
-+
- 	switch (psp) {
- 	case POWER_SUPPLY_PROP_CHARGE_CONTROL_END_THRESHOLD:
--		ret = read_from_ec(OXP_X1_CHARGE_LIMIT_REG, 1, &raw_val);
-+		ret = read_from_ec(limit_reg, 1, &raw_val);
- 		if (ret)
- 			return ret;
- 		if (raw_val < 0 || raw_val > 100)
-@@ -602,14 +622,14 @@ static int oxp_psy_ext_get_prop(struct power_supply *psy,
- 		val->intval = raw_val;
- 		return 0;
- 	case POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR:
--		ret = read_from_ec(OXP_X1_CHARGE_INHIBIT_REG, 1, &raw_val);
-+		ret = read_from_ec(inhibit_reg, 1, &raw_val);
- 		if (ret)
- 			return ret;
--		if ((raw_val & OXP_X1_CHARGE_INHIBIT_MASK_ALWAYS) ==
--		    OXP_X1_CHARGE_INHIBIT_MASK_ALWAYS)
-+		if ((raw_val & OXP_CHARGE_INHIBIT_MASK_ALWAYS) ==
-+		    OXP_CHARGE_INHIBIT_MASK_ALWAYS)
- 			val->intval = POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE;
--		else if ((raw_val & OXP_X1_CHARGE_INHIBIT_MASK_AWAKE) ==
--			 OXP_X1_CHARGE_INHIBIT_MASK_AWAKE)
-+		else if ((raw_val & OXP_CHARGE_INHIBIT_MASK_AWAKE) ==
-+			 OXP_CHARGE_INHIBIT_MASK_AWAKE)
- 			val->intval = POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE_AWAKE;
- 		else
- 			val->intval = POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO;
-@@ -625,29 +645,41 @@ static int oxp_psy_ext_set_prop(struct power_supply *psy,
- 				enum power_supply_property psp,
- 				const union power_supply_propval *val)
- {
-+	u8 limit_reg, inhibit_reg;
- 	long raw_val;
- 
-+	switch (board) {
-+	case oxp_apex:
-+		limit_reg = OXP_APEX_CHARGE_LIMIT_REG;
-+		inhibit_reg = OXP_APEX_CHARGE_INHIBIT_REG;
-+		break;
-+	default:
-+		limit_reg = OXP_X1_CHARGE_LIMIT_REG;
-+		inhibit_reg = OXP_X1_CHARGE_INHIBIT_REG;
-+		break;
-+	}
-+
- 	switch (psp) {
- 	case POWER_SUPPLY_PROP_CHARGE_CONTROL_END_THRESHOLD:
- 		if (val->intval < 0 || val->intval > 100)
- 			return -EINVAL;
--		return write_to_ec(OXP_X1_CHARGE_LIMIT_REG, val->intval);
-+		return write_to_ec(limit_reg, val->intval);
- 	case POWER_SUPPLY_PROP_CHARGE_BEHAVIOUR:
- 		switch (val->intval) {
- 		case POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO:
- 			raw_val = 0;
- 			break;
- 		case POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE_AWAKE:
--			raw_val = OXP_X1_CHARGE_INHIBIT_MASK_AWAKE;
-+			raw_val = OXP_CHARGE_INHIBIT_MASK_AWAKE;
- 			break;
- 		case POWER_SUPPLY_CHARGE_BEHAVIOUR_INHIBIT_CHARGE:
--			raw_val = OXP_X1_CHARGE_INHIBIT_MASK_ALWAYS;
-+			raw_val = OXP_CHARGE_INHIBIT_MASK_ALWAYS;
- 			break;
- 		default:
- 			return -EINVAL;
- 		}
- 
--		return write_to_ec(OXP_X1_CHARGE_INHIBIT_REG, raw_val);
-+		return write_to_ec(inhibit_reg, raw_val);
- 	default:
- 		return -EINVAL;
+ 		pr_debug("device=%s created\n",
+ 			 ipc_wdt_platform_device->name);
+@@ -169,6 +174,14 @@ static int register_platform_devices(u32 station_id)
  	}
-@@ -715,6 +747,7 @@ static int oxp_pwm_enable(void)
- 	case oxp_x1:
- 	case oxp_g1_i:
- 	case oxp_g1_a:
-+	case oxp_apex:
- 		return write_to_ec(OXP_SENSOR_PWM_ENABLE_REG, PWM_MODE_MANUAL);
- 	default:
- 		return -EINVAL;
-@@ -743,6 +776,7 @@ static int oxp_pwm_disable(void)
- 	case oxp_x1:
- 	case oxp_g1_i:
- 	case oxp_g1_a:
-+	case oxp_apex:
- 		return write_to_ec(OXP_SENSOR_PWM_ENABLE_REG, PWM_MODE_AUTO);
- 	default:
- 		return -EINVAL;
-@@ -771,6 +805,7 @@ static int oxp_pwm_read(long *val)
- 	case oxp_x1:
- 	case oxp_g1_i:
- 	case oxp_g1_a:
-+	case oxp_apex:
- 		return read_from_ec(OXP_SENSOR_PWM_ENABLE_REG, 1, val);
- 	default:
- 		return -EOPNOTSUPP;
-@@ -815,6 +850,7 @@ static int oxp_pwm_fan_speed(long *val)
- 	case oxp_mini_amd_a07:
- 	case oxp_mini_amd_pro:
- 	case oxp_g1_a:
-+	case oxp_apex:
- 		return read_from_ec(OXP_SENSOR_FAN_REG, 2, val);
- 	default:
- 		return -EOPNOTSUPP;
-@@ -855,6 +891,7 @@ static int oxp_pwm_input_write(long val)
- 	case oxp_fly:
- 	case oxp_mini_amd_pro:
- 	case oxp_g1_a:
-+	case oxp_apex:
- 		return write_to_ec(OXP_SENSOR_PWM_REG, val);
- 	default:
- 		return -EOPNOTSUPP;
-@@ -902,6 +939,7 @@ static int oxp_pwm_input_read(long *val)
- 	case oxp_fly:
- 	case oxp_mini_amd_pro:
- 	case oxp_g1_a:
-+	case oxp_apex:
- 	default:
- 		ret = read_from_ec(OXP_SENSOR_PWM_REG, 1, val);
- 		if (ret)
+ 
+ 	return 0;
++
++err_unregister_led:
++	if (ledmode != SIMATIC_IPC_DEVICE_NONE)
++		platform_device_unregister(ipc_led_platform_device);
++err_unregister_batt:
++	if (battmode != SIMATIC_IPC_DEVICE_NONE)
++		platform_device_unregister(ipc_batt_platform_device);
++	return ret;
+ }
+ 
+ static void request_additional_modules(u32 station_id)
 -- 
 2.53.0
 
