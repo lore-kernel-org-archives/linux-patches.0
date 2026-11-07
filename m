@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063377;
-	b=E46y9qq6WXVo8Drsw3iaei/mgzhtX0ndCS0nlnRJ1lYq8e9RU392o8H1HR7yoyBWbmsi
-	 db2aL0/ZDiV45zIAftkjJXI9g717uDqJ+34C93VLR8jSH0wZhcoGw30xrdVRVgGb24WWh
-	 eFC3BF6dLViCKbQxurCl5NMkuMEms3qQT5bTltlI2bY/0C8U80n58mw88NVoriQ8b7Nk3
-	 oFipctam/CbCQ87zhcHV2Ybz2ESkHXDcDKfMqZ9WRkZjDGj3tdAzNoCeElnPogsSy6oAJ
-	 LJ3JtaMWA7OPZfkUyeuldPAbmnW7OWWRDhoTuHA5NjdjGMw9L0+/KWoeTWO0LxE2EXA==
+	t=1794063378;
+	b=1IpfUlj/Pp4mccnhqfKTcl72zSvUljDif9Bi5Xz1BxOx6ne/Ut2cHH5ZN6/TLBM79VnF
+	 3H5+JCWZGildatgJhgsgiMUkGab0DsjNC4QtOPMYAKB5dZeNv+65Sk4/bz8RLUQJtNPr8
+	 wvI7JR6gd/8CHZ3ESXSQ1hEmrK9ZCx1TWqxq/4jUfPKzDiE5u9Gc3/rdowELwatn+iGIT
+	 jAr75fVjHKPNuodLeDjjbKndqtxwvHVt/DXKM99bGIXismui/JNWFg5HJ0FIpLN/PKRe7
+	 jPy9JsHWFY0uerAbZP30HO19jmNUE1l3WVNx3nwp8MzhyFgKne5+TnyEGNbw8PImrdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063377;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NGI+7zy+PyVFYsqZlRTrlAsG/GM0PMZBpPCtIS/ljO0=;
-	b=tcRxYf1x+HQYo4itSYPABnKbO5Uanqmb9pAPMdCmLbZ7HH4Dk+/teN5j0HU/xcvKgHzQ
-	 H/3Fbp/JQx9cT8VtL4r+Auig+N+chC+WWSpnLDK7ZG6la2sn1bHW8fVYwC86AH/DnKNWN
-	 or49vfBdf4b6Ew8pSg5P0q1KINjqLyedpeDFw1btDz5SuO7p/FP0IjlPJQRIb/YIJK2bf
-	 SVgGDr5+NF2w9UlTNlnH+9TOPyAIQHT4tEffvGvHkRbEGc639ugWy94ozmk2wgXuCvM28
-	 DPawbD7tJA3Ni3GWk+bbewENf24/2ZJnUv1Iset+VFXAJ/rX2/8xBFe/lKF+dsk6nIg==
+	bh=+tGO1yM9oMvXy2S9tNC83a5H0vw4YLN8kh5uolbqtQg=;
+	b=Wacu0cHvYQj7CZYazdUQ/60eiQqcSNroYwJm8hKMusfTBtTyyHkIx4abxJvsKqUy/shE
+	 5cB+IrdJtFrlDpMzoB7Jr552Il9IGQITngd9tYii/u8e7QU51n1OC+ydz1daTe5oiKbkv
+	 NqzGhN5A1T587f8A5AaDkQJ6EpZ3MTfZEeJX9LPbgQOhD8T3qcDrR/ia4CngyrjAarofg
+	 PKiAKAAFJ1kghDsHHgGdsG5JWPOovhf2lqRkUbTNJBOoi8mjeaGLS9jLnMBiWRr1gw1Db
+	 C+cwvPGuN0oQTQOG111EpcnObZmuG4M2LWUC+WX8u51ogLfDa4XbIA9moaicUORsgRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p+e+cTRJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rY8f6nlu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3388C6082BDC;
-	Sat,  7 Nov 2026 14:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5657C606A32E;
+	Sat,  7 Nov 2026 14:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p+e+cTRJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A0E1F008A7;
-	Sat,  7 Nov 2026 14:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rY8f6nlu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5FE1F008A1;
+	Sat,  7 Nov 2026 14:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063377;
-	bh=NGI+7zy+PyVFYsqZlRTrlAsG/GM0PMZBpPCtIS/ljO0=;
+	s=korg; t=1794063378;
+	bh=+tGO1yM9oMvXy2S9tNC83a5H0vw4YLN8kh5uolbqtQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p+e+cTRJ6+lfhD6MPT1UGBKXjC1WW4lJqBtp/oRCTCJHNSFGf4LJkc9SfqXBhBs2W
-	 zg9URCjNztrJyLRZi1CN8YgSOhsLCgLdRdoq8nWudbVhr+SS7eUWyd04rw2A7+5lN4
-	 qVTSMogUynlycchgzQX7YOblyihGOPXwE5sg8Uok=
+	b=rY8f6nlut0CYToDfHLYOv0xQTCM5s6NAcy+ElyZ+6LjJz7zJ7norh8cxeyLdSOVW6
+	 zLWOIMVLTuFRNVGgYS0hmfUminCgfFCrooqU4YaO+jH2VN6eOMpY4kWfoZBYcvGsbe
+	 z+K+NLU0po7Iv9HymBBvjzYAdOf+Xr7JZe1ivm2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Douglas <me@timdoug.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Ankit Soni <Ankit.Soni@amd.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Matt Fleming <mfleming@cloudflare.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 551/869] serial: pmac_zilog: push received data to the port that received it
-Date: Sat,  7 Nov 2026 08:53:53 -0500
-Message-ID: <20261107134912.044298488@linuxfoundation.org>
+Subject: [PATCH 6.18 552/869] iommu/amd: Program device table when kdump reuse fails
+Date: Sat,  7 Nov 2026 08:53:54 -0500
+Message-ID: <20261107134912.074229013@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -67,50 +71,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Douglas <me@timdoug.com>
+From: Matt Fleming <mfleming@cloudflare.com>
 
-[ Upstream commit f3dc727da3af64abc12b625bbf1eb68d55d882cc ]
+[ Upstream commit 05d62be400f3ae0f6856f6910a1281e67cbaabcf ]
 
-pmz_interrupt() drains both channels but, since commit 2e124b4a390c
-("TTY: switch tty_flip_buffer_push"), pushes the flip buffer of the
-port whose handler is running rather than the port that was drained.
-With both ports open, data received on the other port can be left in
-its flip buffer until something else pushes it, so its reader may not
-see it.
+Commit 38e5f33ee359 ("iommu/amd: Reuse device table for kdump") made
+iommu_set_device_table() return early in every kdump kernel. That is
+needed when the previous kernel's device table is reused: the base
+register already points at it, and on SNP-enabled systems the register
+is locked.
 
-Fixes: 2e124b4a390c ("TTY: switch tty_flip_buffer_push")
+But if reuse isn't possible, early_enable_iommus() falls back to the
+freshly allocated table and calls early_enable_iommu(). Because of the
+early return, that table is never written to the base register. The
+IOMMU keeps using whatever table the register pointed at before, while
+the driver writes entries into the new one.
+
+Only skip the write when the previous kernel's table was reused.
+
+Fixes: 38e5f33ee359 ("iommu/amd: Reuse device table for kdump")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Tim Douglas <me@timdoug.com>
-Link: https://patch.msgid.link/20261013013541.4535-2-me@timdoug.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Ashish Kalra <ashish.kalra@amd.com>
+Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pmac_zilog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/init.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/pmac_zilog.c b/drivers/tty/serial/pmac_zilog.c
-index e3a9193286954..f49d6052d11be 100644
---- a/drivers/tty/serial/pmac_zilog.c
-+++ b/drivers/tty/serial/pmac_zilog.c
-@@ -444,7 +444,7 @@ static irqreturn_t pmz_interrupt(int irq, void *dev_id)
-  skip_a:
- 	uart_port_unlock(&uap_a->port);
- 	if (push)
--		tty_flip_buffer_push(&uap->port.state->port);
-+		tty_flip_buffer_push(&uap_a->port.state->port);
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index c07c3a01b978b..0572e1a674f0b 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -409,7 +409,13 @@ static void iommu_set_device_table(struct amd_iommu *iommu)
  
- 	if (!uap_b)
- 		goto out;
-@@ -469,7 +469,7 @@ static irqreturn_t pmz_interrupt(int irq, void *dev_id)
-  skip_b:
- 	uart_port_unlock(&uap_b->port);
- 	if (push)
--		tty_flip_buffer_push(&uap->port.state->port);
-+		tty_flip_buffer_push(&uap_b->port.state->port);
+ 	BUG_ON(iommu->mmio_base == NULL);
  
-  out:
- 	return rc;
+-	if (is_kdump_kernel())
++	/*
++	 * A kdump kernel that reuses the previous kernel's device table must
++	 * leave the base register alone. It already points at that table, and
++	 * with SNP enabled the register is locked. If reuse failed, program
++	 * the freshly allocated table like a normal boot.
++	 */
++	if (iommu->pci_seg->old_dev_tbl_cpy)
+ 		return;
+ 
+ 	entry = iommu_virt_to_phys(dev_table);
 -- 
 2.53.0
 
