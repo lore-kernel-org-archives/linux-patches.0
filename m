@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063581;
-	b=CKKmHmc/8jkcth5cXu8CCx6XAvhVIv3JYV4zdO8Ldhzb+oIPBnHEaHFxgPjhkzLUel//
-	 MegXo777eZqeFu+3xNJtciAz3noSphtBCI/VO+aWDfIv+G68eVANG7N4r8z1PzZcp+bdJ
-	 tEHEHHNQyGrN3g5vybqkddrBAtOaTqDsa0dKe6jSoJXO5g2xMZRpiC0vQ92wtYpj6Dr6B
-	 4N79praSS5iqLr2yYBsEYkX64XDOaGKJ1LGtKDFj/2OXbjOIg2q5a2uRqUh3xfHq66ldE
-	 C3JV5l84JagINXZWxWimq5EMaDhhxCNEnMyEB7YXJdiHigpIEHbGuYGdrQOMr5/nMmw==
+	t=1794063582;
+	b=BcRy7N3bSX+A9i3csr2D0FkVrxCtGY87DHTRSkhtlWFS/DN/3JZ4K10Ky8V2ANjSYPob
+	 jpyUegWTlvTSYU1a69LVjpLYJilHJLbzPnnyHoi89XzxVDoqdzzN6KEBPxYQme+vaaO/d
+	 yMtZzBBJBpvvNUmB5OVwyAg+fxHGxH9Zm3UtHLKQos5AXHp+bBNDrVioIVU0/DlHzjGQW
+	 5ff3eJJRhYDoRGYBD1QmynjHWNjyaNzF/nN9FuRYKNUW82/QAWw0cqd4JrrNDOrh9nYrA
+	 6scCPLWRGRZjZd3q5FaBbJ19/vj6JBf3H3pm8EIzeiVE/yszI+EBPVSJ6IIBODDArsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063581;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063582;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1mzpw8eW0wiHBczVfFNGI37r4URLUDeL46xU9IYgmGg=;
-	b=q0HinLOEl9G0FX4tfrALMXd4Kfq6RSE2JIUUVocko/2beDkqNSo9n8uItYDRdoBjVHS9
-	 kEe517YJf3+5KFlwx812AiRf0ySFdJaCGopbG9wnii6ytvB+foQuqVqRZQsqSoMjRCizm
-	 +DfKMA1NOhDUTJ6DyvzxvE7aefNrCGeYrOYRNtUHOadGsJzcUEqSw1fmvpLdIynygVKoI
-	 cFPBTZGTAvJOlRdeMTSadpHjudlT4jbTBnUuARpYA0cpIeTPU7Aktx2bjnLnAslHxS5x8
-	 KxChAiYLYEjPJ3Rjv/U8q2d4AMWoeUXCc9ZY2p60BM8aBixudIJ69suwl9RPpElspQg==
+	bh=fKRf2uXzIHiSUJJZPfxMayh15wiTg710pkSeVwGzlt8=;
+	b=vER+Q7bujXEMnvYsd4zlzj6Egkd1CVQNN9TvvCgDLPgkEyPiJ/vGpjUZxogqv/p9YTJA
+	 Demgv3KS3UO2ducktBnZCKHeO7o6ii79gIyf21ljVFvzNWQ44TpIdJMtg2LdK3Aynf6AA
+	 PqOtgo5Ne3QeIftfhmB1iUoP+m3TiIScGVa8xWWvKdQZfkZsbqUzjWHtQ0aHuBnaa97K4
+	 38k8X8Gsq7+VGpOR2jsEwHVozVYEbTIXI5PncuKEvuv715xqwQmmYr4G7IK8jgP51Crmz
+	 hHWHDAU/iyhx1O2dikjSUv/hiXzSqlWmPaDG5RZkev1n3DNH4eoCHRic3zie8O+u7vQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c35WJfwV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJsk1XBz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0EF60A263F;
-	Sat,  7 Nov 2026 14:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003C960A263F;
+	Sat,  7 Nov 2026 14:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c35WJfwV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BB51F008A3;
-	Sat,  7 Nov 2026 14:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJsk1XBz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F02D1F008A3;
+	Sat,  7 Nov 2026 14:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063580;
-	bh=1mzpw8eW0wiHBczVfFNGI37r4URLUDeL46xU9IYgmGg=;
+	s=korg; t=1794063581;
+	bh=fKRf2uXzIHiSUJJZPfxMayh15wiTg710pkSeVwGzlt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c35WJfwVGMWJb4KdPq8vBNMP1gNKR7Wb5Cxh6UfyDSafa9P9zY+hHBWEG9UAdcJqL
-	 GexYD+zEIBYoCt0Ekywa8zrdKPo3dmpmNw1tXwKBeHSlQfFOibRVwMFiTw3f1HszpR
-	 ziP9qlJXc9XDm4oSJJQtAVnVh4pCqzHhneGsY2kI=
+	b=VJsk1XBzLl47+VPgHluQqPKaoHDdxQjXA6gAoJCoBojoayL3/zUFRuBSSpUPBsvvb
+	 jreySN09katYoq+v2SVIdyPAdhENAL0UBwC5WYztLya4WjBTdPG1ExsCcbdFXihl77
+	 ZVY5zeu44aaKL+mutujw3wbL3mLFhtPDkX72HAvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Daniel Phillips <daniel.phillips@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 709/869] tipc: fix broadcast sender hang on last acker departure
-Date: Sat,  7 Nov 2026 08:56:31 -0500
-Message-ID: <20261107134916.936850316@linuxfoundation.org>
+Subject: [PATCH 6.18 683/869] amdkfd: Fix memory availability double accounting of kfd pinned objects
+Date: Sat,  7 Nov 2026 08:56:05 -0500
+Message-ID: <20261107134916.210387104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,151 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Daniel Phillips <daniel.phillips@amd.com>
 
-[ Upstream commit f4377bf85887f57b59abb5479f7660a81ffe4449 ]
+[ Upstream commit 16df12d7158fb55f20d6e985abd1996cbabab9f8 ]
 
-TIPC group broadcast senders are blocked while a replicast still has
-outstanding member acks: tipc_group_bc_cong() returns true as long as
-grp->bc_ackers is non-zero, and clears *grp->open, which is what
-tipc_poll() uses to report EPOLLOUT (via tsk->group_is_open).
+Pinned objects that are not kfd objects reduce the total vram available
+to kfd, so we subtract the total size of pinned objects from kdf vram
+availability. However this double counts objects pinned by kfd itself,
+because they are counted both as used and pinned. So track the total
+size of objects pinned by kfd and add it back to kfd availability to
+remove the double accounting.
 
-When the last outstanding acker departs before acking,
-tipc_group_delete_member() decrements grp->bc_ackers to zero but
-never restores *grp->open.  As a result poll(EPOLLOUT) never fires
-again.  A writer blocked in sendmsg() is only released if some other
-wakeup happens after the deletion: with TIPC_GROUP_MEMBER_EVTS the
-leave event delivery calls sk_data_ready() and wakes it, but without
-member events nothing does and it sleeps indefinitely, since the
-default send timeout is MAX_SCHEDULE_TIMEOUT.
-
-Commit 99cc2a62e07a ("tipc: reject invalid and unexpected
-GRP_ACK_MSG to prevent bc_ackers underflow") already calls this out
-in its changelog as a pre-existing issue.
-
-Restore the open state exactly on the 1->0 transition in the delete
-path, mirroring the GRP_ACK_MSG completion path, and invoke
-sk->sk_write_space() from tipc_sk_filter_rcv() when the group just
-became writable again.
-
-Also make the ack accounting precise.  The delete path used to test
-less(m->bc_acked, grp->bc_snd_nxt - 1), which also matches members
-that were never counted for the current replicast (JOINING/LEAVING
-members keep a stale bc_acked), and the GRP_ACK_MSG handler accepted
-an ack from any member whose bc_acked differed from the expected
-value.  Either could zero bc_ackers on behalf of a member that owes
-nothing and silently void an ack still owed by a real acker.  Track
-whether a member owes an ack for the current replicast in a new
-per-member bc_pending flag, set when the member is counted and
-cleared when its ack arrives, and use it both to accept an ack and
-to decide on deletion.  bc_acked has no remaining user and is
-removed.  Suggested by Tung Quang Nguyen.
-
-This issue was discovered by Tencent CodeBuddy Security.
-
+Signed-off-by: Daniel Phillips <daniel.phillips@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b8257bdb26ca5d9a75f4b81f629422f17afa221b)
 Cc: stable@vger.kernel.org
-Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20261019115859.3471295-1-bsdhenrymartin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/group.c  | 19 ++++++++++---------
- net/tipc/socket.c | 12 +++++++++++-
- 2 files changed, 21 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h       |  1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/net/tipc/group.c b/net/tipc/group.c
-index 0da7b27133949..a9ce1c7018b6c 100644
---- a/net/tipc/group.c
-+++ b/net/tipc/group.c
-@@ -74,7 +74,7 @@ struct tipc_member {
- 	u16 window;
- 	u16 bc_rcv_nxt;
- 	u16 bc_syncpt;
--	u16 bc_acked;
-+	bool bc_pending;
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+index c59b5d9cd36b6..b15798489af0c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+@@ -104,6 +104,7 @@ struct amdgpu_kfd_dev {
+ 	struct kfd_dev *dev;
+ 	int64_t vram_used[MAX_XCP];
+ 	uint64_t vram_used_aligned[MAX_XCP];
++	atomic64_t vram_pinned;
+ 	bool init_complete;
+ 	struct work_struct reset_work;
  
- struct tipc_group {
-@@ -316,7 +316,6 @@ static struct tipc_member *tipc_group_create_member(struct tipc_group *grp,
- 	m->node = node;
- 	m->port = port;
- 	m->instance = instance;
--	m->bc_acked = grp->bc_snd_nxt - 1;
- 	ret = tipc_group_add_to_tree(grp, m);
- 	if (ret < 0) {
- 		kfree(m);
-@@ -340,9 +339,12 @@ static void tipc_group_delete_member(struct tipc_group *grp,
- 	rb_erase(&m->tree_node, &grp->members);
- 	grp->member_cnt--;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index d56728b257f49..bf4cea36d3ad4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1518,6 +1518,11 @@ static int amdgpu_amdkfd_gpuvm_pin_bo(struct amdgpu_bo *bo, u32 domain)
+ 		pr_err("Error in Pinning BO to domain: %d\n", domain);
  
--	/* Check if we were waiting for replicast ack from this member */
--	if (grp->bc_ackers && less(m->bc_acked, grp->bc_snd_nxt - 1))
--		grp->bc_ackers--;
-+	/* If this member owed an ack for the current replicast and it
-+	 * was the last one, restore the open state so blocked broadcast
-+	 * senders can proceed.
-+	 */
-+	if (grp->bc_ackers && m->bc_pending && !--grp->bc_ackers)
-+		*grp->open = true;
- 
- 	list_del_init(&m->list);
- 	list_del_init(&m->small_win);
-@@ -394,7 +396,6 @@ void tipc_group_update_member(struct tipc_member *m, int len)
- 
- void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
- {
--	u16 prev = grp->bc_snd_nxt - 1;
- 	struct tipc_member *m;
- 	struct rb_node *n;
- 	u16 ackers = 0;
-@@ -403,8 +404,8 @@ void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
- 		m = container_of(n, struct tipc_member, tree_node);
- 		if (tipc_group_is_receiver(m)) {
- 			tipc_group_update_member(m, len);
--			m->bc_acked = prev;
- 			ackers++;
-+			m->bc_pending = ack;
- 		}
- 	}
- 
-@@ -800,9 +801,9 @@ void tipc_group_proto_rcv(struct tipc_group *grp, bool *usr_wakeup,
- 		if (!m || !grp->bc_ackers)
- 			return;
- 		acked = msg_grp_bc_acked(hdr);
--		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
-+		if (acked != grp->bc_snd_nxt || !m->bc_pending)
- 			return;
--		m->bc_acked = acked;
-+		m->bc_pending = false;
- 		if (--grp->bc_ackers)
- 			return;
- 		list_del_init(&m->small_win);
-diff --git a/net/tipc/socket.c b/net/tipc/socket.c
-index af14b50933f5c..4780264a8a491 100644
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -2355,8 +2355,18 @@ static void tipc_sk_filter_rcv(struct sock *sk, struct sk_buff *skb,
- 	if (unlikely(!msg_isdata(hdr)))
- 		tipc_sk_proto_rcv(sk, &inputq, xmitq);
- 
--	if (unlikely(grp))
-+	if (unlikely(grp)) {
-+		bool was_open = tsk->group_is_open;
+ 	amdgpu_bo_sync_wait(bo, AMDGPU_FENCE_OWNER_KFD, false);
 +
- 		tipc_group_filter_msg(grp, &inputq, xmitq);
-+		/* A departing member may have held the last outstanding
-+		 * replicast ack, which can restore the open state inside
-+		 * tipc_group_filter_msg(); wake up senders blocked in
-+		 * poll()/write() if the group just became writable.
-+		 */
-+		if (!was_open && tsk->group_is_open)
-+			sk->sk_write_space(sk);
-+	}
++	if (!ret && bo->tbo.resource->mem_type == TTM_PL_VRAM)
++		atomic64_add(amdgpu_bo_size(bo),
++			&amdgpu_ttm_adev(bo->tbo.bdev)->kfd.vram_pinned);
++
+ out:
+ 	amdgpu_bo_unreserve(bo);
+ 	return ret;
+@@ -1540,6 +1545,11 @@ static void amdgpu_amdkfd_gpuvm_unpin_bo(struct amdgpu_bo *bo)
+ 		return;
  
- 	if (unlikely(!grp) && mtyp == TIPC_MCAST_MSG)
- 		tipc_mcast_filter_msg(net, &tsk->mc_method.deferredq, &inputq);
+ 	amdgpu_bo_unpin(bo);
++
++	if (bo->tbo.resource->mem_type == TTM_PL_VRAM)
++		atomic64_sub(amdgpu_bo_size(bo),
++			&amdgpu_ttm_adev(bo->tbo.bdev)->kfd.vram_pinned);
++
+ 	amdgpu_bo_unreserve(bo);
+ }
+ 
+@@ -1661,6 +1671,7 @@ size_t amdgpu_amdkfd_get_available_memory(struct amdgpu_device *adev,
+ 		vram_available = KFD_XCP_MEMORY_SIZE(adev, xcp_id)
+ 			- adev->kfd.vram_used_aligned[xcp_id]
+ 			- atomic64_read(&adev->vram_pin_size)
++			+ atomic64_read(&adev->kfd.vram_pinned)
+ 			- reserved_for_pt
+ 			- reserved_for_ras;
+ 
 -- 
 2.53.0
 
