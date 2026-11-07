@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062826;
-	b=B1RwU32CcsrwJvXlvcFpkqNHGGkAw/sHtpiQbmUWaqHAJOkq/5ALsq7fqdOfZDVdqobY
-	 rENr6p2LoydqexkTqpdOSVG0Azt2VC0XsLxjH5jOrX3m57wfl8a++bLNloKq0XtG8yByx
-	 +mMYRUe+/0v2vv5nEhQC6JPjP7dQ3apayJadmz6Upl4AaPBpQVMFikrb5tH1yrg+E6oMC
-	 XiF2vU5sJckUrj9mQwJKLTej8CJztGYV/vlQi6rjfRWrPfAwZExePht5XI18pnfK1hwep
-	 2NViBsuk426SghgmJFq80fSSSzxMEn/bYYmMje4Bv96U2n8nkaVgNz+pxZNwC0O5gNw==
+	t=1794062827;
+	b=ga8MSgXQl5otzOfuplUF/9+5RHKXFA9LrwHJel68IP1r3qKjXwZWgRRYSbIQUVaejobL
+	 weVME9Q6Nan3Kv++IrhdYqR9Szz+OwqBBA9jMYt0dFUeyHpaTmvyo6I98WrxkMezkiCI7
+	 Te0cpaVUNJICRD3febySZXP8aF8mnrafVDtEjLvfHZ3EnqcatJoVWdSckkCK1e94k8UDL
+	 JGc8vrPTIsyLhhD1u+RLck6uPHpurSZqC0IHBJwdN+6ej/kC3R9LMQBS5fTOreYLjA9nI
+	 STskDNQdr4QKZepQqln5FCefVGqspHK48mrxts6zdRlpiee77OxVhTIbxjYHrepFw5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WynZQ+H0NSUNs66FiGeYQCF2omQEP8MDqrqpi4HBT1g=;
-	b=AbXCqE5RvKbeeYS0Gut6GJrCFduo8+jBwpXe93pcNmAGfFdw7jHfjd8tFDRNKW4/6R49
-	 5BLC8dw0ckI8SGVXJ7Z1M+He/D+cuUdhPqK0RbNPmyclP4KPUhXTf26I1MrzmKe8Tj8y8
-	 E+ff0d/poJ1khTC0Fuft22+6Fb/pd9VJ/ZWW1PWO38mbiCvAd6AT2IQwieGfLZgX8wMZw
-	 5FCHYscs8S+uxnK+pJNLYF9Lx2I+wWVOd3dTrT2f1xoh9KiTzWL+JuZ0dM06YY5WW2aLf
-	 eAQyJVn8bk9FIqLbxCN+hQlXHVqFadmwZL/FEwHRH0ytukH9y1OsPzO4gQ3+A6FotJQ==
+	bh=mKNkYlib6Y4cxu92YdIIhvlBtJ2YKFATtXi2crHsFXQ=;
+	b=KkET/QB+CzXiPKmqac3O6ORlwER1SDxQO3F2EXRxINkMfcTcDxqO5yzYegKxAz0531DM
+	 i4wjDaNPA9jAMPjLEOSDm/Udj61rEBGEYVhzgMAeh+J9/9ptIAmYapdZ8CM+etDN5wXkI
+	 QnzK0H+FWL4qk+qgKxgNILoivQ6aK+Pr0nSwkVLzCoPHktQepRZhKO5nc3URQI08ig2Ur
+	 2Wb3+KEuNolWYKTN38aiHP2OXnl3Q4msZQmw456uMhED+TCMUsmiYsH4/vdlJ32UZ2LQM
+	 KbuQ2zJBRdEeLGwd44YdbAKs3yN0sXYckREs/AnXypBjUbqmxFr0UcL5m88KsXi4/3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJH+n+Ap;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBs6LNKN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEC9606D808;
-	Sat,  7 Nov 2026 14:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B078606D80B;
+	Sat,  7 Nov 2026 14:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJH+n+Ap
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2EF1F0089F;
-	Sat,  7 Nov 2026 14:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBs6LNKN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4B31F0089F;
+	Sat,  7 Nov 2026 14:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062826;
-	bh=WynZQ+H0NSUNs66FiGeYQCF2omQEP8MDqrqpi4HBT1g=;
+	s=korg; t=1794062827;
+	bh=mKNkYlib6Y4cxu92YdIIhvlBtJ2YKFATtXi2crHsFXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJH+n+ApwFmd7kdiGbrV1HcdECfvV4c9/8AJN2cSlKyJbJBHyagBnTQvFs4kU2pS+
-	 efAqPtsbg5B54Rc8KhGCJGzp+OwEHYtP5rAy6EficpWw1aSdBQYQvQn1pIPRoc5fyA
-	 dqu0TqeSUtosUiG1uWiDNq4Q1VJaotxN2ZnAwQsY=
+	b=rBs6LNKNQvC7T372v2EdGDIKANqRRM/S2foAsE9uIAWSurjjXhDLpIP2dPfy9wmPY
+	 sjjoXy9nR2gdkfEzD1d7VlUNUsClLL21MxcJCEwZEftN0bscqBgQkFO4I7864lnLR9
+	 ws0bQet1cy5nMTbjGNOXBWYmUunKBqW2adG7jD3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binwon Song <qlsdnjs236@chungbuk.ac.kr>,
-	Eric Kim <seohyun.kim@outlook.kr>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	stable@kernel.org,
+	syzbot+cb43e758a4dc84dd467f@syzkaller.appspotmail.com,
+	Maxim Skokov <skokovmaksimevg@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 121/869] sched/fair: Reset NUMA fault locality after scan period update
-Date: Sat,  7 Nov 2026 08:46:43 -0500
-Message-ID: <20261107134856.623586752@linuxfoundation.org>
+Subject: [PATCH 6.18 122/869] media: vivid: round the height down to the vertical subsampling factor
+Date: Sat,  7 Nov 2026 08:46:44 -0500
+Message-ID: <20261107134856.651155676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,59 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Kim <seohyun.kim@outlook.kr>
+From: Maxim Skokov <skokovmaksimevg@gmail.com>
 
-[ Upstream commit e81ee06308379a5f2ededf997bcf17551bce5db7 ]
+[ Upstream commit a2ec28dd2a88d0721fc4a30242861e2be01d4023 ]
 
-When updating the task scan period for NUMA locality checks,
-update_task_scan_period() checks whether there were no faults or failed
-migration on the last scan window, at which it prolongs the scan period.
+syzbot reports a vmalloc out-of-bounds write in the test pattern
+generator:
 
-However, p->numa_faults_locality, which is used to check for migration
-failure and number of faults at the previous scan window is not cleared
-after changing the scan period, which unintentionally increases
-numa_scan_period up to numa_scan_period_max even when there were no
-migration failures or no faults at previous scan.
+BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_pattern drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2617 [inline]
+BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_buffer+0x2063/0x4160 drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2705
+Write of size 720 at addr ffffc900038f9d50 by task vivid-000-vid-c/6017
 
-Fix this by jumping to the out label on early exit at this case to
-ensure p->numa_faults_locality is always cleared before returning.
+The reproducer requests a 720x49 NV12 capture format, i.e. an odd
+height for a format whose chroma plane is vertically subsampled.
 
-Closes: https://lore.kernel.org/all/20250404095354.311156-1-qlsdnjs236@chungbuk.ac.kr/
-Reported-by: Binwon Song <qlsdnjs236@chungbuk.ac.kr>
-Signed-off-by: Eric Kim <seohyun.kim@outlook.kr>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/Message-ID:
+The buffer size is derived from the height by a truncating division:
+
+	sizes[p] = (tpg_g_line_width(&dev->tpg, p) * h) /
+		   dev->fmt_cap->vdownsampling[p] +
+		   dev->fmt_cap->data_offset[p];
+
+For a single buffer holding both planes tpg_g_line_width() returns
+720 + 720 / 2 = 1080, so 1080 * 49 = 52920 bytes get allocated.
+
+tpg_fill_plane_buffer() however emits one chroma line for every two
+luma lines, i.e. DIV_ROUND_UP(49, 2) = 25 lines, and thus needs
+49 * 720 + 25 * 720 = 53280 bytes. The memcpy() of the last chroma
+line runs 360 bytes past the end of the buffer.
+
+An odd height is not meaningful for a 4:2:0 format in the first place,
+since the chroma plane would have to hold half a line. Rather than
+fixing up each of the ~10 sites that divide the height by
+vdownsampling[], round the height down to a multiple of the vertical
+subsampling factor where it enters the driver. Adjusting the format is
+what TRY_FMT/S_FMT are for, and it keeps every later division exact.
+
+Formats without vertical subsampling are unaffected and keep accepting
+odd heights.
+
+Tested with the syzbot reproducer, which no longer triggers the splat,
+and by streaming NV12, NV21, YUV420, YVU420 and YUYV at heights 47,
+48, 49, 51, 480, 481 and 1081. v4l2-compliance gives identical results
+before and after (48 of 50 succeeded on the vivid device in both
+cases; the two failures are pre-existing and unrelated).
+
+Fixes: ddcaee9dd4c0 ("[media] vivid: add support for single buffer planar formats")
+Cc: stable@kernel.org
+Reported-by: syzbot+cb43e758a4dc84dd467f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cb43e758a4dc84dd467f
+Signed-off-by: Maxim Skokov <skokovmaksimevg@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/media/test-drivers/vivid/vivid-vid-cap.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 67e8c2065d827..fbc277c6963c5 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -2794,7 +2794,7 @@ static void update_task_scan_period(struct task_struct *p,
- 		p->mm->numa_next_scan = jiffies +
- 			msecs_to_jiffies(p->numa_scan_period);
- 
--		return;
-+		goto out;
+diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+index d1c09bdb2f3b0..cc2b704717f39 100644
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -568,6 +568,7 @@ int vivid_try_fmt_vid_cap(struct file *file, void *priv,
+ 	const struct vivid_fmt *fmt;
+ 	unsigned bytesperline, max_bpl;
+ 	unsigned factor = 1;
++	unsigned int vdiv = 1;
+ 	unsigned w, h;
+ 	unsigned p;
+ 	bool user_set_csc = !!(mp->flags & V4L2_PIX_FMT_FLAG_SET_CSC);
+@@ -620,6 +621,18 @@ int vivid_try_fmt_vid_cap(struct file *file, void *priv,
+ 		mp->height = r.height / factor;
  	}
  
- 	/*
-@@ -2838,7 +2838,10 @@ static void update_task_scan_period(struct task_struct *p,
- 
- 	p->numa_scan_period = clamp(p->numa_scan_period + diff,
- 			task_scan_min(p), task_scan_max(p));
--	memset(p->numa_faults_locality, 0, sizeof(p->numa_faults_locality));
++	/*
++	 * The chroma planes of vertically subsampled formats hold
++	 * height / vdownsampling lines. If the height is not a multiple of
++	 * the subsampling factor, then the buffer size calculations round
++	 * that number down while the test pattern generator rounds it up,
++	 * so the generator writes one line past the end of the buffer.
++	 * Round the height down to keep both in sync.
++	 */
++	for (p = 0; p < fmt->planes; p++)
++		vdiv = max(vdiv, fmt->vdownsampling[p]);
++	mp->height = rounddown(mp->height, vdiv);
 +
-+out:
-+	memset(p->numa_faults_locality, 0,
-+	       sizeof(p->numa_faults_locality));
- }
+ 	/* This driver supports custom bytesperline values */
  
- /*
+ 	mp->num_planes = fmt->buffers;
 -- 
 2.53.0
 
