@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061444;
-	b=DdZTaQRmILjmOGiw+Q0Bye/mgABPkane5CXBh4ga7BimROr2KsJL9SIqH/9tbGRPJJut
-	 spixpzeb+v1TnqFvl2yGM7bE/v46Vxq96VXyYfWCYW8lnzOX4hrNww/nrXSCYypYdGeux
-	 QcW8h1bLSdirt8eGu68m8BkUAcvlIRYrmcaE1+WF2bR6Wsf3jPZshPx8WW5Re1r7bHl3D
-	 HQaaAhdZFd1ngZr04nar7H319bmnEbuRW6QTwlvhlEj6dVXP1zXKjvsW0HsLnAODiwmV6
-	 8fQYfNFK4P3Cm2zaGx3aYxD1mMoEjpbduzEONUkQPwrSnFhq+GCNRE+r2n9US0331Sw==
+	t=1794061445;
+	b=VlE194/GaKHSGFVUS/OEXmeFZDeJmcPdYR5dFFvG1EmJtfzthmbsEUStLqJuo8/sXkkU
+	 VXqu2wH7CG07O4JP0xOYxWPMd4q3OW7FBiFv9lQTOgPhhoWIo3D2ql0eB4oHIbPSXwDZV
+	 tLM7DMqo+I5OJ6nxLLOtwxXd3dxXyZIvfMPji41T7Uf5QCw1XT6sx0ygLQS+8HNwSp961
+	 mZWWBkQxTxr4PVVoxHsW5/Mcl1q2Wfhio9X6xW/PsphkxGtTSnRp4sihmqB7B7vDTQi38
+	 bHfH7JNccpc9WcZ9obIeXHoallCeIXthATomISJKH/Iqw8JPUEl0z6NZIbrlHosvLnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061444;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H0XWl/hsgzk23//UCb9Y57BR6q6X8LkO0mRD7TxlmyY=;
-	b=IUfIfM77TVnbdFSbQ+y7XPVg4XeOjy+dyiDPdn3ElAuK0jIyzorF/iv9YcXtPc7TLGl6
-	 RJZ9sRoEg9vkwEU1ge7hEh/1cWYqiSou62BeW48mIQt5OenflLit2t29laCPf9iKooQAT
-	 UdnMQYpQi+bHDu+46eMU8nbUecO54q7QBNt9WK8IU5VOkEUIHWRbJxE7MnoGN0D3CTSgH
-	 V9HrB/tA/YD01UID4Ouvz2jGlGMMWLL+TXL3QsM1lUo0zkXbCNuF282BbmzyvaaQWjJxv
-	 wBOjdg911u5rDd5Szcx4Kppg66alKJORq+urx2/4SduVunZTkWWGRpK5SW6u6N6PQcA==
+	bh=H/uo7u7m45L+4CesUHY5hGIPREpelUcfL0Bh9eu3rIU=;
+	b=xFexIsNIPUp91gg8Yao+ObAe8ytmQbxSw6Aa2fEiQGbeAS7jcCp7fRoZQUP9FNVl5CLf
+	 pzRmVvJtMQHfLMSpWrs3uaLof08BdoOtC/9FKsn4serlrItNg2MDAwi8DTfdFAfYHhSke
+	 NrwdNItaX7GU86EDCWZGMxsn41J5ApOFRu7OJCBv+ZI7NgrPOz194cBqaCPF+pYaYRqQL
+	 m9HJgHVtjrHTsFgQUZtEDs5SD4IMFYdoXsvJNdq063+DLordtLJUAWghZ+FzMQUJpkxFq
+	 nVn+BBg5kZTvGynxDS0rQZEyO+WNqjiLq9jcwZdTaFwCOqGpiQGRIZsUgenEfNha3kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u50/vJCX";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fp+f3Mgk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC610606A326;
-	Sat,  7 Nov 2026 14:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C276606A326;
+	Sat,  7 Nov 2026 14:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u50/vJCX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783F01F0089F;
-	Sat,  7 Nov 2026 14:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fp+f3Mgk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2AF1F0089F;
+	Sat,  7 Nov 2026 14:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061443;
-	bh=H0XWl/hsgzk23//UCb9Y57BR6q6X8LkO0mRD7TxlmyY=;
+	s=korg; t=1794061445;
+	bh=H/uo7u7m45L+4CesUHY5hGIPREpelUcfL0Bh9eu3rIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u50/vJCXDx0Uh8ryzdt/bcfzNvM+wclIiSbI0GI7KGFLec1i+dDhl5X6B/3VwzYpb
-	 RZI4mC5TXCyJ8KAbjfL4mCUuKmazEMSj2RuqiFuVBmyj8Jj5iH2hAFSbai/2hJ9qzS
-	 ELAQL+gf2uvBMxjUZqnSWCal500CxQVR5D/3oDzQ=
+	b=Fp+f3MgkH6sbHY/J+ID5TligBN4bdFA8tHWhZwh7d0QdD8/m2mpdCKMM3FHF122wz
+	 h9zYVk6EOc9MCIRzWUQy4K1osWcsPLSeF6xsnb9eJYgNW7nKYC6ULhgVtEJRA0EYPs
+	 AACXUTTc+4u9BZGZt8EsZ72gqCp+bfyKLNIOAPdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theo Andersen Carton <andersen.theo@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0551/1536] drm/amdgpu: skip the noirq suspend reset for a switcheroo-parked GPU
-Date: Sat,  7 Nov 2026 08:42:47 -0500
-Message-ID: <20261107135013.077030784@linuxfoundation.org>
+Subject: [PATCH 6.12 0552/1536] namespace: never expire a locked mount
+Date: Sat,  7 Nov 2026 08:42:48 -0500
+Message-ID: <20261107135013.104756359@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,61 +67,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theo Andersen Carton <andersen.theo@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit eadb85cca111152bd334b861fb53747ab851d13a ]
+[ Upstream commit f78ddcc872248c7aa1d7e904928441a0be4c6d5d ]
 
-amdgpu_pmops_suspend_noirq() resets the ASIC unconditionally. When the GPU
-has been parked by vga_switcheroo it has neither power nor a PCIe link, so
-the reset cannot reach it: pci_set_power_state() reports the device as
-inaccessible and amdgpu_asic_reset() returns -EINVAL. A failure there
-aborts the entire noirq suspend phase, and with it the system suspend, so
-the machine cannot sleep at all while the GPU is switched off.
+Locked mounts are special. They protect the underlying files and
+directories from being revealed. do_umount() refuses to unmount locked
+mounts but shrink_submounts() doesn't.
 
-amdgpu_device_prepare(), amdgpu_device_suspend() and amdgpu_device_resume()
-all bail out early on DRM_SWITCH_POWER_OFF. This callback was added later,
-for an unrelated reason, and did not inherit the check. nouveau guards
-every one of its PM callbacks the same way.
+A shrinkable mount can become locked once the owner of a user namespace
+puts it beneath a locked mount with MOVE_MOUNT_BENEATH. The locked
+property now moves to the mount at the bottom making it possible to
+unmount the top mount.
 
-Bail out the same way here. On a single-GPU system switch_power_state is
-never DRM_SWITCH_POWER_OFF, so this is a no-op there.
+So umount() of an unlocked ancestor now expires the bottom mount first
+and the covered directory is revealed:
 
-Found on a MacBookPro11,5, where the Radeon is powered down through
-apple-gmux so that the internal panel can be driven by the iGPU instead.
-Every suspend failed in amdgpu_pmops_suspend_noirq() while the card was
-off; with this check a full S3 cycle completes.
+  move_mount(c -> x/hidden, MOVE_MOUNT_BENEATH) = 0
+  the cover after the lock moved:  umount2(x/hidden) = 0
+  the holder of the lock:          umount2(x/hidden) = EINVAL
+  the root of the copy, busy:      umount2(x) = EBUSY
+  reads x/hidden/secret: "covered-by-root"
 
-Fixes: 9e051720f9d3 ("drm/amdgpu: Ensure HDA function is suspended before ASIC reset")
-Signed-off-by: Theo Andersen Carton <andersen.theo@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 539d0558638a6dcc066f1cf592b6b9a52adc8ea4)
+So leave a locked mount alone as it dies together with its parent. A
+plain umount() of an unlocked mount with a locked one below it is EBUSY
+from now on. It's the same for any other locked child. A lazy umount
+still takes the whole tree.
+
+mark_mounts_for_expiry() never sees a locked mount. lock_mnt_tree()
+leaves a mount on an expiry list alone and nothing else puts a locked
+one on such a list. Add an assert for this.
+
+Fixes: 5ff9d8a65ce8 ("vfs: Lock in place mounts from more privileged users")
+Fixes: c62a4766937e ("move_mount: transfer MNT_LOCKED")
 Cc: stable@vger.kernel.org
-[ sashal: Adjusted context because the older function lacks the reset-domain lock and int r;, so the switcheroo power-off early return is placed after adev->suspend_complete = true;. ]
+Link: https://patch.msgid.link/20261002-work-mount-fixes-4-v1-8-dd44b89d44ce@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: Dropped the missing is_mounted() context lines and replaced VFS_WARN_ON_ONCE() with WARN_ON_ONCE(), since the former macro doesn't exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/namespace.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index cc95cc43a3e86..1a112a3617576 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2623,6 +2623,15 @@ static int amdgpu_pmops_suspend_noirq(struct device *dev)
- 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
- 
- 	adev->suspend_complete = true;
-+
-+	/*
-+	 * A GPU parked by vga_switcheroo has no power and no PCIe link, so the
-+	 * ASIC reset below would fail and abort the whole noirq suspend phase.
-+	 * Bail out like amdgpu_device_prepare/suspend/resume() already do.
-+	 */
-+	if (drm_dev->switch_power_state == DRM_SWITCH_POWER_OFF)
-+		return 0;
-+
- 	if (amdgpu_acpi_should_gpu_reset(adev))
- 		return amdgpu_asic_reset(adev);
- 
+diff --git a/fs/namespace.c b/fs/namespace.c
+index ebdc223c142e0..d02a4bbb75d37 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3710,6 +3710,8 @@ void mark_mounts_for_expiry(struct list_head *mounts)
+ 	 *   cleared by mntput())
+ 	 */
+ 	list_for_each_entry_safe(mnt, next, mounts, mnt_expire) {
++		/* lock_mnt_tree() leaves expirable mounts alone */
++		WARN_ON_ONCE(IS_MNT_LOCKED(mnt));
+ 		if (!xchg(&mnt->mnt_expiry_mark, 1) ||
+ 			propagate_mount_busy(mnt, 1))
+ 			continue;
+@@ -3738,7 +3740,8 @@ EXPORT_SYMBOL_GPL(mark_mounts_for_expiry);
+  */
+ static bool shrink_submount(struct mount *mnt)
+ {
+-	if (propagate_mount_busy(mnt, 1))
++	/* not the kernel's to remove either */
++	if (IS_MNT_LOCKED(mnt) || propagate_mount_busy(mnt, 1))
+ 		return false;
+ 	touch_mnt_namespace(mnt->mnt_ns);
+ 	umount_tree(mnt, UMOUNT_PROPAGATE|UMOUNT_SYNC);
 -- 
 2.53.0
 
