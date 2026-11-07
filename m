@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060981;
-	b=A8C1KdGY0GuUAQfXHNsRoy6/UH9EUW+4Y11MR+evXQ+rMUoAi8P3VCdov/9U6uvkbY27
-	 Tvv2Y8/65QItzopiQM+DHCwz6jh/++WvMysbAwo1dQf1Ejft+1VCataDeImb81Kukavkn
-	 0W/NHMCbkAeabiWl5jO9JN/N3/xcbyXY+HJ8t94Bl1xw8XHzpCMqUvtcjPk+PRkNdVoa6
-	 YhHCO0erZ+EgZUyVA4DTs36XIE9oUsOTLwfl473NBrt/paFq2Vc4iEcl3RmKUIHt5x4Ds
-	 gaHpvADr7kYcVnTwqhnYBe72328D6CQ57Ma3IhmtXtmSz9AepHmuOvPnezPbH6jr3fw==
+	t=1794060996;
+	b=0d9CRpfdI6Q6O6rPSimH7YFIQ14sWlZPM9OyTj+qbbbk0oieJeH2wW46PHOLQAPq70ul
+	 VvNcn695u1AvKIwe/Q5TyIX1bZIHZeaNzdchsNFPjURNTMoCKhH4XilEOryjYf8ZrTue2
+	 JV0Op8aNuvVPppz0u4iNMiGtz7H8+H9WKo+gGVdYJQC803cw3UTXvsPtEGGsaaiYzzDPo
+	 48wXWQ9KJpnOd7RobSzeZPzAjBYel1mMdDKIyXVp8q8WjreiEql6zPaD6ctp++tS4XKID
+	 wR6LL5FTRabpinDLvpZr5TfSvTigeKK4yWU6PXTtxEduP1YGu/8x9WFA7+h4oeNKMWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060981;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060996;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LEhKbPF/taC0ui8BZzeKt15tlWR4nkwojDobFXdzO5w=;
-	b=WtpXAZuNbC/wolRoKP0qXdpROfFkzPhI3PGxSY+/IzNLXz6ytM2bbxsJSofYa5xRcPpa
-	 phCBfgOey+/c/mzqDV1BlrHUiZKfTb7NC9I+CK9FQknb+st9kjJFSHMUMZJYVrb50kMyJ
-	 FI2/bDq9QZxwgn8evot1EHNf1V6lbkyPwQgjQQKiPRTddAAUR8vK/6OquK4fgfmzFOXwN
-	 s3MMcbGbtUz0wJyEPVbP632dmq3A5OquIGacUz5oVm3UimaFH900R9IZ38xOcQWqe9NVF
-	 2ovmYOU99puFA6BDUijxO2EjkyPG2L6mZWwNanStHXxG5HUs/wU51PIiyaSnZcu7bug==
+	bh=J2J640MM/jPM+DCgkkXADKcGe2U/R+ydhkLkIs7dbHU=;
+	b=21JA8ILQcdjhstOCfZrrHc8WT0UN3qd91QE+4GLg/jT6+HTV9TjlOTYqvJHrRsmZi96c
+	 VRAc7czj75CIA8mLarFF2u/gJd+p1LIWAU/qmx2mYISRNfFPnGlM40dj3YAv00zdRllLI
+	 uP8rWi3vnyOct2Oo8VWdtMLNROKPWyK5CujGNrvRdhPD2mBk+kIovtnaOExK5tb3Uc1pE
+	 8c8vIxxP5sMmJWtOIdA7EjjCE7yYWILwKQwG40YC9XpE8W8DoFrSrCrYsXysTMe8ZtCcZ
+	 +tVvxoZSUNiOPaUT9ae2Mnnc3LE9U/TT+kpdJXE+wP3o82AohjQ1DcQQU2X6u1KEbkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbi8RjrE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Yzq8S/7M";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C18D606A33C;
-	Sat,  7 Nov 2026 14:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FE1606EE86;
+	Sat,  7 Nov 2026 14:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbi8RjrE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1698F1F0089F;
-	Sat,  7 Nov 2026 14:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yzq8S/7M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2A41F008A4;
+	Sat,  7 Nov 2026 14:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060981;
-	bh=LEhKbPF/taC0ui8BZzeKt15tlWR4nkwojDobFXdzO5w=;
+	s=korg; t=1794060990;
+	bh=J2J640MM/jPM+DCgkkXADKcGe2U/R+ydhkLkIs7dbHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qbi8RjrEFU+5kQnLTG683jgyJGcC2fQF67D3MFJUt/I3nunyXX7dzfJzbE/zDyVKy
-	 2Rk4A29VIn3P9DTKi3q3hkpqOQ+Sy/3LjPayxSUET9UFHd3CdZ///shcyyRxQctroF
-	 sKCsF2sFTcJsuZG4MtBe0IsumQC3o9RDsvlfQ2zQ=
+	b=Yzq8S/7MEOwG8D7YkpCPypf2hMZoTzkXf4x81b1V4ujTqQ8BcKaq/578a/fVWh3Wv
+	 qdzxj645nzrUqweVXLHq3Z0LGEtV6tT4QWt4CskrllunSnGltA24+MYPfRb2yKoA9V
+	 qzGtdDiRqHCRzCnbGasq/kEGHNaW6XG/JtFJ1yL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0298/1536] net: dsa: mt7530: check bus->read() error in core_rmw()
-Date: Sat,  7 Nov 2026 08:38:34 -0500
-Message-ID: <20261107135006.098212860@linuxfoundation.org>
+Subject: [PATCH 6.12 0339/1536] ksmbd: allow I/O on directory named streams
+Date: Sat,  7 Nov 2026 08:39:15 -0500
+Message-ID: <20261107135007.208831536@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,43 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 573d6e3afe3d01e34dc82c77bf22ca96a74d805e ]
+[ Upstream commit 8184c425a19d44f138d42b44cc363917c08e5f1c ]
 
-core_rmw() accesses the MMD core registers directly rather than
-through the regmap and has the same unchecked bus->read() as the
-one just fixed in the MDIO regmap backend: a negative errno is
-consumed as register data, modified and written back to the switch.
-Check the read and bail out like the surrounding bus accesses do.
+Named streams are stored as extended attributes on the base inode. The
+VFS read and write helpers reject directory inodes before or together
+with checking whether the handle represents a stream.
 
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/48bb9f0b311a9efeda2a6b24a7e05d4792393a3b.1785811140.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Permit read and write operations when a directory-backed handle is a
+named stream. Continue rejecting direct I/O on ordinary directory
+handles.
+
+This fixes creation of the directory stream in smb2.getinfo.complex.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/smb/server/vfs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 4718f1fcca6d8..d0b2b478ac22e 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -152,8 +152,12 @@ core_rmw(struct mt7530_priv *priv, u32 reg, u32 mask, u32 set)
- 		goto err;
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 967f669974861..9b973d7064988 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -374,7 +374,7 @@ int ksmbd_vfs_read(struct ksmbd_work *work, struct ksmbd_file *fp, size_t count,
+ 	ssize_t nbytes = 0;
+ 	struct inode *inode = file_inode(filp);
  
- 	/* Read the content of the MMD's selected register */
--	val = bus->read(bus, MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
-+	ret = bus->read(bus, MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
- 			MII_MMD_DATA);
-+	if (ret < 0)
-+		goto err;
-+	val = ret;
-+
- 	val &= ~mask;
- 	val |= set;
- 	/* Write the data into MMD's selected register */
+-	if (S_ISDIR(inode->i_mode))
++	if (S_ISDIR(inode->i_mode) && !ksmbd_stream_fd(fp))
+ 		return -EISDIR;
+ 
+ 	if (unlikely(count == 0))
+@@ -502,7 +502,8 @@ int ksmbd_vfs_write(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 
+ 	if (work->conn->connection_type) {
+ 		if (!(fp->daccess & (FILE_WRITE_DATA_LE | FILE_APPEND_DATA_LE)) ||
+-		    S_ISDIR(file_inode(fp->filp)->i_mode)) {
++		    (S_ISDIR(file_inode(fp->filp)->i_mode) &&
++		     !ksmbd_stream_fd(fp))) {
+ 			pr_err("no right to write(%pD)\n", fp->filp);
+ 			err = -EACCES;
+ 			goto out;
 -- 
 2.53.0
 
