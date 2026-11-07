@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064701;
-	b=qwtk5kV/wv2Jvq2OjA7EBtlnk/QY1LWsqBxoPhteepEcw8VQSU0ZldYrUahY5m78UTT9
-	 GhTcZR/vrpIXk5e0fAJhgSnodNVZ8LydAI/lqAF94hLBPgY+kh3CXbM7GBKHzuLXglkfu
-	 dJB8+oVtKqeuO5aVpsva9AlWA2RmfpGl9VUYjzCFfFY8yT+SOzIaIX8dtRZBX9ryMIu5J
-	 IOCgWing6madK8QS5FhC5FX7ArNLXeuMPz37dZ8OGfzCi+ApKywhEgS4t4p5LmMALfaX4
-	 69VmDoniXjWrxA5ZX5+NsCSfP4BkYIfAySDWe5g/eLcYrmH+7vcPaUSdrWxQSk35XUQ==
+	t=1794064704;
+	b=r2idS8aMwnEYZnw6G8vaiDcEWmk86a3O77tTsoFVjP3p0jHOEWHdcKIplQ5ITsgoQnBu
+	 zcjmEp/PBKSD3VAVpl4GMBbHLL8e8EOT/pJaI0eAkUR9RFn+ie1IFyv7c+sBGSghHDG8P
+	 1qceldEz92QryWL9hGsMMraOGrxEaYKpmTLFdvS9OUsGTgyEi+zGVHR5/HbPOM9s6qDN/
+	 RE2bYCDHFTNmpE8NI5BfTSphsc4NfQWMxK9hrGdHRUHROhffCWnIed8hxoHg6Rj1xgG2q
+	 5DE7C6pXAS2tT/MSk46v2g7gWLrvibgnvUggDCIN/PnHfF7zDEmJdS2avWG/hxFVu6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064701;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064704;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AXTusUL+9paLQQ4WcL7trCYEmAqRjPGY1zugsYkILk8=;
-	b=qHsB85okf82BmeOJ4LxpoqJCm/EdlUbt/7g+trVw2CaLuZ9DMDaTlHY9n77tNXdNdMQM
-	 fs+G1Ugjc/MpNErw9PIlrthpsTBm/1gpCrFFiWI95tCZPM8o4vYPCv+fanzYZ9pzK1G0m
-	 /RXn/YhHuJALkbC4r/KadHr6tQ2iWAHUeKvyaUzVvCTTI7hP6XGyvmoj5tlZGDpSpmkhS
-	 +cY9kaDu5LgthdLZRJWPImzqMHrZftmvVJ0G7KuYOdfGKYJsoXqPZG6MA59C+ZXAtbGfm
-	 /nwH6tpnC2blHUJWMYgJxva0Z5KRQfyGPmdaCAdMIBcpRt62HcYWgAxvTtlobWpXqkg==
+	bh=f/jULhVxc9YM1O8HfSEkacV8lDi3zzURNN3CXAZtlIE=;
+	b=5XmOTBEVUt57vJEvyGPwf6pBaf5K4u8Ueo0T6/oEA3p6H6woToS/t9nabKPTMv9Sqcor
+	 XKXv/x9iSXMCNwekP7q3scm2x+ONj8L7Yrug1VFOJSwU+Uxd+JOBxOE9poBit9jt2ZTd4
+	 iQZE3kQbGSfaED6cl5X+Isms3ZaJvRKmW5rQpHTexZqnHR+klSJhTlwBCKxjugEDuMk1j
+	 x4d4KC2PPEikQ/8diImCORr0WG0QJ3KGhpJyYSVaOyHJCziVyx0jB9kQauDMBzMDOiQ9Z
+	 3LYJjtVSLWUFHSYf+Ws/uKTDlB1foroEwJe7G9dgLgnXdofOY6AmOdYHCzcVGLG2Mtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LzLGbdh/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AuhIwDQQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E71A606CE6D;
-	Sat,  7 Nov 2026 15:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6605606A335;
+	Sat,  7 Nov 2026 15:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LzLGbdh/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067121F0089F;
-	Sat,  7 Nov 2026 15:18:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AuhIwDQQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591741F0089F;
+	Sat,  7 Nov 2026 15:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064701;
-	bh=AXTusUL+9paLQQ4WcL7trCYEmAqRjPGY1zugsYkILk8=;
+	s=korg; t=1794064703;
+	bh=f/jULhVxc9YM1O8HfSEkacV8lDi3zzURNN3CXAZtlIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LzLGbdh/ukn4jE98UGq9WDPBvdlVYJ3MJdAntGHOFGhEvifll0k52GAjNHYWEx0Z8
-	 Hu0hG5Dkhr/gnCy3rFkmSftR+6f/m3Atspfy56u0tYQWcKQ2LT7ijsI9ag5JEjdIi4
-	 AYGlYHWOmZopCesFALWnpsqWRzXknPd6tjAIuzFc=
+	b=AuhIwDQQwG+ZUUHAPL4PSG0RjXJdBq/zf0QosVZq1niYW5GcONjkyk6I9urN9C7Kw
+	 U/p8Cdl3rYoQ59vXkhyyior8QYL0UbtvREHxc0te0JS9l2gzU41w2OpTJxRWBd/d6L
+	 1JmBpGGR3oUwfLYlRAdSQtCyvEaDgotrdXszCDlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0690/1257] arm64/mm: Treat faults taken by EFI runtime firmware as kernel faults
-Date: Sat,  7 Nov 2026 08:49:46 -0500
-Message-ID: <20261107134958.322693176@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Qinxin Xia <xiaqinxin@huawei.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>
+Subject: [PATCH 7.3 0691/1257] tools/dma: fix building from the top level with O=
+Date: Sat,  7 Nov 2026 08:49:47 -0500
+Message-ID: <20261107134958.349299756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,48 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+[ Upstream commit 352665c55877368854f87724698dad0b453444eb ]
 
-[ Upstream commit 171be684bfa3020f81bf0b85bc7ac42024575fbf ]
+"make O=<dir> tools/dma" fails:
 
-When EFI runtime services are invoked from a preemptible kthread, the
-kthread runs with efi_mm installed via kthread_use_mm() and preemption
-enabled, so neither faulthandler_disabled() nor !mm applies in
-do_page_fault(). A permission fault taken by the firmware on one of its
-own (TTBR0) mappings then hits the 'access to user memory outside
-uaccess routines' check and oopses, without efi_runtime_fixup_exception()
-ever being consulted.
+  Makefile:27: /tools/build/Makefile.include: No such file or directory
 
-efi_mm has no VMAs, so there is nothing for the mm to resolve. Send such
-faults to no_context directly, so that __do_kernel_fault() can recover
-from them as it does when the call is made with preemption disabled.
+tools/Makefile clears srctree, and the dma Makefile only works it out
+again when building_out_of_srctree is not set, which the top-level
+Makefile sets for O= builds.
 
-Fixes: a5baf582f4c0 ("arm64/efi: Call EFI runtime services without disabling preemption")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Also work out srctree when it is empty, as tools/bpf/Makefile does
+since commit a89b2cbf71d64 ("tools, bpf: Fix build for 'make -s
+tools/bpf O=<dir>'").
+
+Fixes: f74ee32963f1b ("tools/dma: move dma_map_benchmark from selftests to tools/dma")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Qinxin Xia <xiaqinxin@huawei.com>
+Link: https://lore.kernel.org/r/20261011223358.2327625-4-sashal@kernel.org
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/fault.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/dma/Makefile | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index 75c3e463df2ef..357be4c9106df 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -620,9 +620,10 @@ static int __kprobes do_page_fault(unsigned long far, unsigned long esr,
- 
- 	/*
- 	 * If we're in an interrupt or have no user context, we must not take
--	 * the fault.
-+	 * the fault. EFI runtime services may execute with preemption enabled
-+	 * and mm == &efi_mm, but faults need to be treated as kernel faults.
- 	 */
--	if (faulthandler_disabled() || !mm)
-+	if (faulthandler_disabled() || !mm || mm_is_efi(mm))
- 		goto no_context;
- 
- 	if (user_mode(regs))
+diff --git a/tools/dma/Makefile b/tools/dma/Makefile
+index 0c239a6b9eae5..20ae7f09cd206 100644
+--- a/tools/dma/Makefile
++++ b/tools/dma/Makefile
+@@ -7,7 +7,13 @@ bindir ?= /usr/bin
+ # isn't set and when invoked from selftests build, where srctree
+ # is set to ".". building_out_of_srctree is undefined for in srctree
+ # builds
++ifeq ($(srctree),)
++update_srctree := 1
++endif
+ ifndef building_out_of_srctree
++update_srctree := 1
++endif
++ifeq ($(update_srctree),1)
+ srctree := $(patsubst %/,%,$(dir $(CURDIR)))
+ srctree := $(patsubst %/,%,$(dir $(srctree)))
+ endif
 -- 
 2.53.0
 
