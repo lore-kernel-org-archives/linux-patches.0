@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063017;
-	b=YlxRGZEQvW7K2MKfVytBWK0nt1XG82A+5eQSGRcBSylo/wGo5iyWUON+HyylNVRJ6AMs
-	 Vj85Qg9j1xsv691GyLQVnOfj8DKxR7ZXUAnjuHIs0gflrAfs/G/x9Gyt8d3b9rGtCvy50
-	 aOvhz3WXeuOaRvDCItf3SryagWsRjyrC5yly08DSTuKbZQLYaPt1rKMbQ0T8tH8EpU0Mz
-	 mBwNPxjfxVKt9PzlmQ/Q/Ok39CMSgGGJqOTwpttbhsmfFxNlgLsy5RRC0acfN77Gw6LE7
-	 dr1fYZFy87Y3L++8vXKaeGhNZUScUOXxxYoEnSP/gxkTRqOTinA+Xt+l5eV03sCmJxA==
+	t=1794063018;
+	b=5BJ+6RZhCiUErkdEJJVdp1HM7NG5Zn8Q5Eo97T+b0rnGJAl89qdEHYJJu9WGDY8bcAd4
+	 bnwYTR9BllVxZct+O1woIn4iYCd9NXi0MIa0JXXEPTg6AGhfK42UGpZdWjOx023EVdO7v
+	 1sLtDYi68enz3pcoCDugNx1cG9h42jh+a51RlYVwGXBz/SYjC2R9AWzB0ycC9rG94DFZa
+	 oc+F+TJAHCTDS258KfbUBFoiLK3MJuXwxofmzdPOF2odmPOe+3F5yIjBVxq2Pz7Z3wUgm
+	 at1B7Pa+pvhnbBA6SF0/dbjoKDAyLWCVd0MCT+gdyicZfd+ihrj0Ia5aY+Pa2LFaO5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063017;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063018;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZTpE4nCJAhNhl2GrmKFCxsPXSoR7cAYLGikuBcroj6w=;
-	b=LYSHaZuJQMLsBpHjjFUPDSTf7P4wTZBV++jf66PFDibrhmu1PXIEHzGkgWcJ9HbDx+EI
-	 /pRMZ1C9eZkUdvkr2CsmUsO71ps4YrjmwatQXb7B2gNYwbeaJneT5h/8LbxacKWQ4tSzj
-	 J18clbHK8m5YtbeOvL1VBXDZPNYFroYYvboFZhJBlkUa+fFi8eUlSkUVrMrjyE2P1Lk3q
-	 0wPJeqvLjazFelunWaZo5lFJPfnLn4pfNRArZCUCBD9QWtcB1UhYuHnX2APm4Mt6sR8mF
-	 D37O0oZ6ZBTyYkQLzPVEX+nBilzOjJhjL4Q+1Oy+C0mEhVEvlEtDiyLlL6fc/C2yQ2A==
+	bh=rhyRnYdjCr7s4bp2JtNZc3W/SSnw/4RxAVmcX4y0hB0=;
+	b=RdcQ10A47+AQdoX8DGLQ+wIQQKBb2n55tJY/X0zAeZwG4ArjKiBYRQ6YWdKoqwj51Rjt
+	 LSVEIvus+LwF6xyPp7lB9zc9/gZTSgYQ1/suDHUirUOdsqOn1PDiT7o/sZ+ZsEhQtoKor
+	 u4Us6A72cTtv+4uaFK5hp7j6br7sfMaNUTUn4qavkX7QoDlI64w1UCL+bI4BMkAqpj9SZ
+	 i3khbal/NHURK0ZN7VqhlDALfoVXFWIz5jxX4paKxA3Lo4SAxcMTs2Zh5gi/y5px12F4f
+	 DAzPuTkFmEUYaPahrKdwFVKo1Ow/zHMnF/20Fp68pjOzBN4SHnEqAnBRXnnOfZWcDjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kequsqkc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jI+nb4sy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5387606D801;
-	Sat,  7 Nov 2026 14:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0D0606D801;
+	Sat,  7 Nov 2026 14:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kequsqkc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D011F0089F;
-	Sat,  7 Nov 2026 14:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jI+nb4sy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB42D1F0089F;
+	Sat,  7 Nov 2026 14:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063016;
-	bh=ZTpE4nCJAhNhl2GrmKFCxsPXSoR7cAYLGikuBcroj6w=;
+	s=korg; t=1794063017;
+	bh=rhyRnYdjCr7s4bp2JtNZc3W/SSnw/4RxAVmcX4y0hB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KequsqkcmzFfXDFjWLzEkj2qdV63lJxV7nZxQH7e2S+1Q7qUC5CYFKPl0Lal98hB6
-	 Y5+0NKjeLk4CrFy3nFLmOQFp4xzs4zr12JIwWJmSiZvBQodrp9IsxvvprDOLrURXtP
-	 rZR/X1Uj+xK4eYu02QiJhiHs8Q8VtsEKL3oMkJMA=
+	b=jI+nb4sy4ul9twZ7BeUO5JCzn+Z1DvN+5v8dkkcXkN+NROrdGnjBqR1EL9zO5FI6g
+	 QBChWUcvTx3CIIvMOhsMsTUbEXf0ZoTTDPgAvakAmR2ub0SrZM+4Rf/1CYOJ6iNtz4
+	 GdAsSXxkBAmSETqMkUArJ1o/4XBnuZZOfy+oixWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
-	Lee Jones <lee@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 231/869] mfd: wcd934x: Fix NULL pointer dereference on IRQ probe deferral
-Date: Sat,  7 Nov 2026 08:48:33 -0500
-Message-ID: <20261107134859.671558589@linuxfoundation.org>
+Subject: [PATCH 6.18 267/869] iio: dac: ad5755: validate SPI match data
+Date: Sat,  7 Nov 2026 08:49:09 -0500
+Message-ID: <20261107134900.761950380@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,45 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit dcf0e640b553d33512fbcaedb909c32ba9636a64 ]
+[ Upstream commit 85e2c8ca7ac9e39a61e7fb18728918f6e966f439 ]
 
-ddata->dev is only assigned at the end of wcd934x_slim_probe(), but the
-of_irq_get() error path has passed it to the error print since the
-driver was added, while it is still NULL.
+A device bound through driver_override need not match an entry in the
+driver tables. In that case spi_get_device_match_data() returns NULL,
+but ad5755_probe() stores and later dereferences the result.
 
-This used to be harmless with dev_err(), which copes with a NULL device
-and was skipped on -EPROBE_DEFER. Since the switch to dev_err_probe(), a
-deferred IRQ reaches device_set_deferred_probe_reason() ->
-dev_driver_string(), which dereferences the NULL pointer and crashes
-during probe. Use dev, which is already valid at this point.
+Validate the match data before it is used.
 
+Fixes: 62d3fb9dcc09 ("iio: dac: ad5755: make use of of_device_id table")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Cc: stable@vger.kernel.org
-Fixes: 0f1b1b899521 ("mfd: wcd934x: Simplify with dev_err_probe()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/mfd/20260903145651.AC1311F00ACA@smtp.kernel.org/
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://patch.msgid.link/20260903-wcd-dma-v3-1-d3920c6563c4@ixit.cz
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/wcd934x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/dac/ad5755.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mfd/wcd934x.c b/drivers/mfd/wcd934x.c
-index 7bea64fc09562..d57796933d873 100644
---- a/drivers/mfd/wcd934x.c
-+++ b/drivers/mfd/wcd934x.c
-@@ -229,7 +229,7 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
+diff --git a/drivers/iio/dac/ad5755.c b/drivers/iio/dac/ad5755.c
+index d0e5f35462b1b..ce188c5a9ad15 100644
+--- a/drivers/iio/dac/ad5755.c
++++ b/drivers/iio/dac/ad5755.c
+@@ -819,6 +819,9 @@ static int ad5755_probe(struct spi_device *spi)
+ 	spi_set_drvdata(spi, indio_dev);
  
- 	ddata->irq = of_irq_get(np, 0);
- 	if (ddata->irq < 0)
--		return dev_err_probe(ddata->dev, ddata->irq,
-+		return dev_err_probe(dev, ddata->irq,
- 				     "Failed to get IRQ\n");
+ 	st->chip_info = spi_get_device_match_data(spi);
++	if (!st->chip_info)
++		return -ENODATA;
++
+ 	st->spi = spi;
+ 	st->pwr_down = 0xf;
  
- 	ddata->extclk = devm_clk_get(dev, "extclk");
 -- 
 2.53.0
 
