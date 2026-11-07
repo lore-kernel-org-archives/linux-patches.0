@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064290;
-	b=Jr5pz4gRWLlKNTfo+t2SJREuEyP5kXjDovq73NvlRfrAGGNy3rL2to3pLLYQny4THjUN
-	 lv5UP0ebN+d5qZACLVXnXWCnTvd0X6SF/gQwJqKqoeqwS56Ai9dDqXoQD47xAQhKtA2jA
-	 Y1P9xMvD5pBDjwHUsSrHYZTrzK53R8iqHyhQU6dS/XHshkBSML+TS5aNZlrxWcf0/5Wpp
-	 ICk+39TCyfG1mccsNiNAdzy/63r1DN+h8VMpS1eTqtnPYuDYZoIiF8ZhSA12ustRTLIRq
-	 +c3VBSFtjhTzRCqelnc/ZdxiEnsAYsmaoCyNHLutzzD6Cbsq1h2jetXUlFkce6BFO7w==
+	t=1794064291;
+	b=sbuQFJa2HRC96MjuRdJ7S/DVEfMYc58Cm7o2ccoIavilHGFEhdddr+ZwRZdnWiEEg4Fg
+	 XSjjEZL3PFmN29diSGD424HbHCb+KszLGlLYxWJ6MF5Rp1hMHKueY4wBrFTCwgo5b3gaS
+	 qDXx6w//UzFDLRHsiRkKnYu0CrgO1DKESQQm3WwoB0JECBurlSUYmcDRLzqm9WAaFN+cD
+	 7R/DR09HsOIa0aKFvpyfXACGZXHewWlkfVTahKBKeY7JpFpLC1cGjKuUjY0Mt37Q/pKiX
+	 CI5zDmkWKpu4L1vLqD/T9R3FXSQanBLfEGOsTqfg9SNR+RgqKEkUgS/OPrn5VY4G/Cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064290;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064291;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mky9UJJYXJ3iwsIdJtNk3aVWbwQKdHfz/Zt7vKC9/IA=;
-	b=2FIMicndefTDyiUHYIy9KRm/IwJQgxUmYEBFUbITJ1IifTsWy7jB2cN3Ef1AVp8TiMMH
-	 eJp0+pg8aqa3l+Iyq3R5W9L1/ZqTGLm0JFdZZeANNIbneczNh+5ZMSlczoXIIe0hHy2oo
-	 p8RyPUK3YIZcvr4iQixO1mzzZ6sofetIEfvpr9O3cZeioh+LC0yigz3Xe3lo2/NDUY3DR
-	 ECZwnbSPKmDAzPdWtySecwhTuqbKVtT+gjDQjYjCQXiwu91s9akSfPF/beatPySWSXrOr
-	 JXQNX2yKofx760c97zJLLDablOiwuMqBPkbX3eqYW0NFsHiHRZX4+NyTLa8rhQl9T4A==
+	bh=z1k3I8ckO4x8njv6A4H55MVOrJG71WkIP2qSC51Hj1M=;
+	b=sUKSafpgrTnRgUdmEC7K/UZCChsWVw+kFZnWUF8oeUCKBcM9ytBcnuoJA04Vs3vYGMqR
+	 bXTIG4H8zVka2aS/HBIMJSJAdgN9RE8fRK2NNyfUNeJxQ3YMYT9uIBkOVlYyiEWHfHYhR
+	 nCUo+VABcdfEwRe93DNQU0G5i6Y3TfJg5JK9p9Y6pBw1Byp2IUTsG/wbtv+hcO5SEYMUQ
+	 a9+LAUV8E9s9Ej1i6AUFPuFhOFSdUJQ8JLh+t9t1V2evloFGZCKv9XEK5gnQW5QVzsRbO
+	 mMVt7I/YHw62he3qlL1J9WC9QZQr8GW4ZqJoDyI7i2kJg7qzuPWN7mgbhDBzXyB1Gdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trF6ZGj+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rNo4LrYz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51691606A9E6;
-	Sat,  7 Nov 2026 15:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E176606A9E6;
+	Sat,  7 Nov 2026 15:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trF6ZGj+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D451F0089F;
-	Sat,  7 Nov 2026 15:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rNo4LrYz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9601F0089F;
+	Sat,  7 Nov 2026 15:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064290;
-	bh=Mky9UJJYXJ3iwsIdJtNk3aVWbwQKdHfz/Zt7vKC9/IA=;
+	s=korg; t=1794064291;
+	bh=z1k3I8ckO4x8njv6A4H55MVOrJG71WkIP2qSC51Hj1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=trF6ZGj+/ZAwNZ1qwBl6Lav4Prz2p0KGNYDhzL/HflCrnhg8bm3ICmdkQkLmScaRH
-	 mr3SJkf2XXCiBrkSPnFK6A7r1DEJ7VSJrnwB3xCLx0DYnUEEDAI6A0EGNfteizMeNu
-	 wvF5ptI2BPARRotA8ggLsnduwsxnsnTz2heB0sgI=
+	b=rNo4LrYz28+Y/fMWh45oKU+5w6jECQCTFOYuRR7qNaGZQbx5I+GOtjzXy2V25CnL/
+	 YCdGhOdm+2Gh++Z01ee5zIsFEsJXV9kGZ435q11zVbPOpBxAqGwPcAs5Zlqw4OkEHT
+	 S/wUhspC0RbABWHMkismj3ZO+0pSsQFnLfI87+z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srish Srinivasan <ssrish@linux.ibm.com>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0377/1257] pseries/plpks: fix error code for wrapping key reads
-Date: Sat,  7 Nov 2026 08:44:33 -0500
-Message-ID: <20261107134949.964368459@linuxfoundation.org>
+Subject: [PATCH 7.3 0386/1257] ASoC: pcm6240: do not free an unrequested IRQ
+Date: Sat,  7 Nov 2026 08:44:42 -0500
+Message-ID: <20261107134950.210546318@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,38 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srish Srinivasan <ssrish@linux.ibm.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 0d0eafedcaf4939819d38ede6ad355ea37acd978 ]
+[ Upstream commit 995b96380ba5d98131acc162608da3538e1395d8 ]
 
-PLPKS variables with the PLPKS_WRAPPINGKEY policy bit set are not
-readable. Return -EPERM instead of -EINVAL in this case to better
-reflect the access restriction being enforced.
+The driver obtains an IRQ number from device tree but never requests an
+IRQ handler for the PCM6240 device.  Removing the device must not pass
+that number to free_irq().
 
-Fixes: 133aa79e211d ("pseries/plpks: add HCALLs for PowerVM Key Wrapping Module")
-Cc: stable@vger.kernel.org # 7.0
-Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260923182816.151451-3-ssrish@linux.ibm.com
+Leave IRQ ownership to a matching request path if one is added later.
+
+Fixes: 1324eafd37aa ("ASoc: PCM6240: Create PCM6240 Family driver code")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260929095920.2092147-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/plpks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/pcm6240.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
-index 7e56b3dcacbc7..ccf5765a907bf 100644
---- a/arch/powerpc/platforms/pseries/plpks.c
-+++ b/arch/powerpc/platforms/pseries/plpks.c
-@@ -829,7 +829,7 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
- 		return -EINVAL;
+diff --git a/sound/soc/codecs/pcm6240.c b/sound/soc/codecs/pcm6240.c
+index db85ae2f8aed0..7a8c8f53f04c5 100644
+--- a/sound/soc/codecs/pcm6240.c
++++ b/sound/soc/codecs/pcm6240.c
+@@ -2019,8 +2019,6 @@ static const struct regmap_config pcmdevice_i2c_regmap = {
  
- 	if (var->policy & PLPKS_WRAPPINGKEY)
--		return -EINVAL;
-+		return -EPERM;
+ static void pcmdevice_remove(struct pcmdevice_priv *pcm_dev)
+ {
+-	if (pcm_dev->irq)
+-		free_irq(pcm_dev->irq, pcm_dev);
+ 	mutex_destroy(&pcm_dev->codec_lock);
+ }
  
- 	auth = construct_auth(consumer);
- 	if (IS_ERR(auth))
 -- 
 2.53.0
 
