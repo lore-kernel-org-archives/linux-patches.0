@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063944;
-	b=me5K36eBRrxNuKjrOIzAuJ0v22JfSzhhEyFiroiyGTir8kbEwqU5yyrZLFWhfZ7nxtIb
-	 zrFmUHbMyAXJW1Hn98ThjlrjElGBb48NJzsfDSDqYTzaALrcPCn07kmfEWxFI7Y+rmmF4
-	 czxP5eRGdYM4/k3qzhy8oQhRG3MzNUIX7+lJOcXOEYAEUsOIMhBaQm5lsFnVflK3oUSwb
-	 l+/tYordlX8TeIHdi7vTOKwsaw6pD4F0MOdorYkZM3z10o8jzsjgItO69/d3OH/r8fW/I
-	 tGsnMCZRLri2bnMppq2Ocgu4cJDt1CkDR9o7iF0rJz/3WsGIG4W3ezM78sVB9EzM/Qw==
+	t=1794063945;
+	b=17YUj0uZ1szrOL/uxmd9m6xkcJO/pNnF0xSAJHuBKoGK8McRR+oWy+Ia44dI3wq8yIGP
+	 Pk+DaPb/LOhKlPQoBKY2OIU5Ek63GFUt50McQauVtgwKDHWRjM80IgDI8xySAJ8EDj3CR
+	 OdR9I9auvZXc3apObwboKLpib96Lgz5yd6LLYXeeAeWV0WiOaaKhXqPcLofuM38smfjD4
+	 yuLWm1rL4SdC83BkACcFTNwQWVJsAkbDmWgPNJ4vPh0hw6y0kGJ9Z0yx0xPeH/QdWB6+Y
+	 shjhROjSuFhujSfVsMZRJk1+HmoZYa0inWrNxvkKauk+lTJwRdZA0u60O6i5+Q5CQVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063944;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063945;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YKc2D2XA3szISivz8q3BnEVzJ3rkMDz8J2f8hkA7KP4=;
-	b=C3VQUM0F/DweGgD/d+5uAJxGvxEwhTZpvfNFhTcLOfYNqFVAFfuPl+A7adi11GZUSYT9
-	 v2Bd1WJDCbfmCPlc1w2LVOK27aARZ0mYZov6q00mzQjHkFxAsbAGbP23OLofBLBVmuHit
-	 xwOPa7rqmOxUNsqnb6tZ+qgf2X4WJi7AgMdG7VzzHgSDGZ6R83KMgd02ES1w8v/lRvz6w
-	 0M8POzCvt8envyUOUMk2qk5IM3hlX6mmGzj0jfJsfx6S81lukLFDtTwAgQbdoFqkrnBDh
-	 MCosf46+J1iHdKrif+Ez4EJSSsVTeLIK1BDoFVZDVf13m7thJd7O1D3giCn+lcoim4w==
+	bh=3is1g/jjUV69MWE37SOHdnKZdTakNRrWLGaig/KPyks=;
+	b=Hpmh5xoKJOlHHhQRXmcUISmaZg9UxpQD0XBUpY2BpYP/EoWSEa+P9YcERjOVPBFQAM67
+	 Z1GRahLVrEiCvPtirehcBTrTjUzvr+pq4n1Hlykh2C8cWUd7ohRYYqFZMSNl01NEtic7A
+	 dfMDoIQA/g/TQ8DEQs3FZAbhU7QCcCdO89vCytVzgeamiZMFyeKE4HGGgTLgFD9tSJKsl
+	 hDiBRmqfxmsUuCqQxugJifAfw9rUlbtCYDxM4EMmL4qF20XFgGc56aoXkz9RRsV+3i8fZ
+	 5SWY1B2A2rRBgz9Z7f+z4dE/LnplQJZiOCv9gQcJR0l2fUVHe8TKv4HNaISLMBOktnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYt6kQG0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CBTf4t3b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125ED606D829;
-	Sat,  7 Nov 2026 15:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B42606D829;
+	Sat,  7 Nov 2026 15:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HYt6kQG0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FB21F0089F;
-	Sat,  7 Nov 2026 15:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CBTf4t3b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B3A1F0089F;
+	Sat,  7 Nov 2026 15:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063943;
-	bh=YKc2D2XA3szISivz8q3BnEVzJ3rkMDz8J2f8hkA7KP4=;
+	s=korg; t=1794063945;
+	bh=3is1g/jjUV69MWE37SOHdnKZdTakNRrWLGaig/KPyks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HYt6kQG0o1jYUKR8yVh2uCFRfHrUbrGsL3JXkX/pPgUyWSNavuNE2Otb3c8tJ37s8
-	 hWUn5Sx9hbJAsDCOcS0Y/KIqi5oOkOCdwPwM4LExMSKd+tB6eBIGCp4rG8hxGw/6ti
-	 qp3ICRohhRIeX9Xmlzw0+p8l7p2/8q6CuH9hMke8=
+	b=CBTf4t3bNZgBtrwiYpVEk0MqPc0RztWPWobQaUzTDsGWQ2X0DRy7wb6huvoqc9J0Y
+	 cTUz2sgYOggbYj0sVkZfaunY5UFyVTBYQ7geeMtW/biM2igK9jHLJ8A0PAKwTwJv7z
+	 qQvvrT+5cOeC9p0jo5iEjBcrxcittid1ZvQaF4wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0136/1257] power: supply: bq27xxx: Ensure poll work is cancelled on remove
-Date: Sat,  7 Nov 2026 08:40:32 -0500
-Message-ID: <20261107134943.068563913@linuxfoundation.org>
+Subject: [PATCH 7.3 0137/1257] iio: imu: inv_icm42600: fix odr change not caught in certain cases
+Date: Sat,  7 Nov 2026 08:40:33 -0500
+Message-ID: <20261107134943.093677944@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,79 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-[ Upstream commit db560f4b1c5253853f978385db066220e0c218dc ]
+[ Upstream commit f670d4d3477386d62017936f0121909f93ac17f8 ]
 
-The di->work poll work is queued from the poll callback itself and from
-bq27xxx_external_power_changed(). The cancel_delayed_work_sync() in
-bq27xxx_battery_teardown() runs while the power_supply is still
-registered, so external_power_changed() can re-arm the work after the
-cancel, and it runs after the driver data has been freed.
+When using both accel and gyro with different frequencies, the ODR
+change flag in the FIFO header can be sometime in a packet with
+invalid data. Since we are ignoring these packets, we miss the ODR
+change and any further change are blocked until sensor is turned off.
 
-Register a devm_delayed_work_autocancel() before
-devm_power_supply_register(), so on unwind the power_supply is
-unregistered first, after which no new external_power_changed()
-callback can be dispatched, and the poll work is cancelled only then.
-Drop the now-redundant cancel from bq27xxx_battery_teardown().
+Fix this by moving the packet data validity check after the ODR change
+flag check.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 740b755a3b34 ("bq27x00: Poll battery state")
+Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260903081312.225535-1-fanwu01@zju.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c | 8 ++++----
+ drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c  | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 4d4809a70b622..cd30993b8a89e 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -43,6 +43,7 @@
-  */
+diff --git a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+index 4b0e3cd8a5067..b2ad1bd202b4f 100644
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
+@@ -1227,15 +1227,15 @@ int inv_icm42600_accel_parse_fifo(struct iio_dev *indio_dev)
+ 		if (size <= 0)
+ 			return size;
  
- #include <linux/device.h>
-+#include <linux/devm-helpers.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
- #include <linux/param.h>
-@@ -2234,7 +2235,6 @@ int bq27xxx_battery_setup(struct bq27xxx_device_info *di)
- 	};
- 	int ret;
- 
--	INIT_DELAYED_WORK(&di->work, bq27xxx_battery_poll);
- 	ret = devm_mutex_init(di->dev, &di->lock);
- 	if (ret)
- 		return ret;
-@@ -2255,6 +2255,12 @@ int bq27xxx_battery_setup(struct bq27xxx_device_info *di)
- 	psy_desc->get_property = bq27xxx_battery_get_property;
- 	psy_desc->external_power_changed = bq27xxx_external_power_changed;
- 
-+	/* Cancel the poll work after the power_supply is unregistered. */
-+	ret = devm_delayed_work_autocancel(di->dev, &di->work,
-+					   bq27xxx_battery_poll);
-+	if (ret)
-+		return ret;
-+
- 	di->bat = devm_power_supply_register(di->dev, psy_desc, &psy_cfg);
- 	if (IS_ERR(di->bat))
- 		return dev_err_probe(di->dev, PTR_ERR(di->bat),
-@@ -2281,8 +2287,6 @@ void bq27xxx_battery_teardown(struct bq27xxx_device_info *di)
- 	mutex_lock(&di->lock);
- 	di->removed = true;
- 	mutex_unlock(&di->lock);
+-		/* skip packet if no accel data or data is invalid */
+-		if (accel == NULL || !inv_icm42600_fifo_is_data_valid(accel))
+-			continue;
 -
--	cancel_delayed_work_sync(&di->work);
- }
- EXPORT_SYMBOL_GPL(bq27xxx_battery_teardown);
+ 		/* update odr */
+ 		if (odr & INV_ICM42600_SENSOR_ACCEL)
+ 			inv_sensors_timestamp_apply_odr(ts, st->fifo.period,
+ 							st->fifo.nb.total, no);
  
++		/* skip packet if no accel data or data is invalid */
++		if (accel == NULL || !inv_icm42600_fifo_is_data_valid(accel))
++			continue;
++
+ 		memcpy(&buffer.accel, accel, sizeof(buffer.accel));
+ 		/* convert 8 bits FIFO temperature in high resolution format */
+ 		buffer.temp = temp ? (*temp * 64) : 0;
+diff --git a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+index 253bf571439d9..41e46276e6f22 100644
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_gyro.c
+@@ -808,15 +808,15 @@ int inv_icm42600_gyro_parse_fifo(struct iio_dev *indio_dev)
+ 		if (size <= 0)
+ 			return size;
+ 
+-		/* skip packet if no gyro data or data is invalid */
+-		if (gyro == NULL || !inv_icm42600_fifo_is_data_valid(gyro))
+-			continue;
+-
+ 		/* update odr */
+ 		if (odr & INV_ICM42600_SENSOR_GYRO)
+ 			inv_sensors_timestamp_apply_odr(ts, st->fifo.period,
+ 							st->fifo.nb.total, no);
+ 
++		/* skip packet if no gyro data or data is invalid */
++		if (gyro == NULL || !inv_icm42600_fifo_is_data_valid(gyro))
++			continue;
++
+ 		memcpy(&buffer.gyro, gyro, sizeof(buffer.gyro));
+ 		/* convert 8 bits FIFO temperature in high resolution format */
+ 		buffer.temp = temp ? (*temp * 64) : 0;
 -- 
 2.53.0
 
