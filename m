@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061553;
-	b=NHcwmf9SCbK/rq/rV4UjysjOzhqRcPfRwKgPcH5arBzZTjf/S1tdt0UwrYf1LuJTbtjZ
-	 7sFgKDogQ3FBpsYaBFGyXiIoyqi/dCzucyUr7lmixHY15Q+aVXT4zlCBT6Wp9rMqJXfhu
-	 fiY/bwNekeYePaJnbduPespWGd9gPosT4ViG6lfcxSEBpm1wCDOfibMJ0JtSacDjyFMwY
-	 s5azxSF4zuqUSE1JqBk+VjqBy9QNIWRnFCvoMfWRNx79lSPkqlAp5rNP3GYcJcrd1fkBb
-	 hNuq35SNg/+DubDd0ganlOl0JVavZziZdBFxDDfPJuxdE9qWurnZ8vAF+u84RXmhpjg==
+	t=1794061554;
+	b=RMN9sdniDNb7FROSJVN1ZrPxMX6BmlI9Gtg7rz5qIQORUdq65E32Xdej+KRY0E2gkCtT
+	 hHOWaoIZIGCw35Rqxonn/i1RgnSAhfSzBvaCMaQlJnxCHsGIBQL/B5Q4QCda0Ap51LD8r
+	 Ls9sMcFkx6lMcHRleRKRllBAADP9ph5MqBy9OP7+rgqnio9A9zhpMnY7oNICRvLY1/aAs
+	 JqC70Tc8xdz6uzAUezdcKtyb9kjeT5fprDTAgKTeVdh351SUpgLEwwW8kDGREg4b2Kn03
+	 tOjUQdGo5/KTxUFeoqZ63rJxH1NWUIAHjV9VT8szXIWvH5KBx651vGCLwJlwI2VQ2Bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061553;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061554;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f+aV2u4UM1L7bB8RzB4hF/0HDviY6RgmIgqc1lk4lXo=;
-	b=oRp06G5yUv+UR0M+hUqmaMUlqsLHZUFWj6ldYgFXm31j69al/vu+am7TWcmXkzjaqOR5
-	 BahQT74VAIgzTbDmnDXrRXc3BJKmCHjYK+WW6qa1xzq1KNWgTCmWaFwrNArTQkoTHYm/o
-	 VBkM3JWV4wxDXaFA0ZFG4nQ7N+OADz4h4uWimTRfMRP9UNnL0JO37Nb5q5o8LT6j/oFfE
-	 SSJcXlyRhhHWcdbU681zsdZom01M6Ax/2p7IbvB9M6qIfdo7gBSA2bFr97OGPP7R3m3r0
-	 W4dVmASRZRt9ZEm9OqqDt3OLsIMtd9J5CcFXqISImn39tuW2HbrLBbF40OnoFa0mnNA==
+	bh=8LHDuwWVYhpvpet+nAiEXOjoBOwb3i/9EMdJcpxu9kA=;
+	b=U9UPmuESBb1O7prGTet6JN6eFaTLDJFQ61knLrzOCAGSQuJb/hyuGAtjzLjQpUa+sK3/
+	 mE2kOuXdg0ZNMnWPm795kNICN5RA4C8sTsJnYHqwsHamr8LUQTbpc3+wqpFV+o+nXGxDN
+	 5HgWty6VJWAXY7Ke8E90YVZ9gMtGNGXnthjVY/Sxhvc4VwaId4wTaBZcn85VNlmG5Eg+Q
+	 fwh/jBvrgHHFJswsorV2pknvilj1aiwrYkMD7EEp8pk/iL1HwEzC9EaW6CNv8fLxWW4sB
+	 FtPb11RXzKiwUHsBjhl9rbN1VYDxKtuZtRg9zLFDXMK/Lkq2eZF6p+J1Vbj2Xq3355Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GUO7ZF9X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R2OLczNH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BF3606A326;
-	Sat,  7 Nov 2026 14:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D6E606A326;
+	Sat,  7 Nov 2026 14:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GUO7ZF9X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927301F0089F;
-	Sat,  7 Nov 2026 14:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R2OLczNH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F7E1F0089F;
+	Sat,  7 Nov 2026 14:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061552;
-	bh=f+aV2u4UM1L7bB8RzB4hF/0HDviY6RgmIgqc1lk4lXo=;
+	s=korg; t=1794061554;
+	bh=8LHDuwWVYhpvpet+nAiEXOjoBOwb3i/9EMdJcpxu9kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GUO7ZF9XanfxU85qDr3gbO82OZTfqhgSThmCO2UQUuUU4vLmyR2EWwvOhXMhZuGxw
-	 8f4l5KaiDtON8Nz29aX7+OPUOGUcKFmYPuXVSIxke6IyYTM1ZPuYxvSVNmMz56KoeD
-	 JYUHDzeivYRlemgv3tgztCC/xqVtbuagGBwMoOvc=
+	b=R2OLczNH5X2zMjnoETMFI1MMta+mXFUWIHm+1bKxIe5rmbeGLlhqFMtz4hbk6TBEf
+	 gwNioZEE9rci4PJiAHKCdm6Jb2ibAjLcu6b4KAzCQ0gVOe1j88Z9OtHGU+sxjyXab8
+	 cpk3VKbgLzgDGOjVlyzb8u3fWN5HYT1sjklQ2WhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+ed9902f2e44184d9@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 0636/1536] fbdev: udlfb: dont rebuild the mode list while the framebuffer is in use
-Date: Sat,  7 Nov 2026 08:44:12 -0500
-Message-ID: <20261107135015.398052133@linuxfoundation.org>
+	Ngoc Quy <ngocquy0700@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>
+Subject: [PATCH 6.12 0637/1536] fs/proc/task_mmu: pin mm_users in do_pagemap_scan()
+Date: Sat,  7 Nov 2026 08:44:13 -0500
+Message-ID: <20261107135015.425536315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,71 +73,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Ngoc Quy <ngocquy0700@gmail.com>
 
-commit ac9cfa552102b8e80e88c2872e80dc9cb5f07dda upstream.
+commit 4fb975471717c953f912776bb60301add1ffae11 upstream.
 
-dlfb_setup_modes() frees info->modelist with fb_destroy_modelist() and
-rebuilds it, but fbcon holds raw pointers into that list in
-fb_display[i].mode and nothing un-publishes them the way
-do_unregister_framebuffer() and store_modes() do with
-fbcon_delete_modelist(). The function does refuse to install a new mode
-while the framebuffer has users (dlfb->fb_count != 0), but only after the
-list is already destroyed. Reached from the 0666 "edid" sysfs attribute,
-an unprivileged write to /sys/class/graphics/fb0/edid therefore fails with
--EINVAL and still leaves every fb_display[i].mode dangling; the next
-console switch reads the freed fb_videomode in fb_videomode_to_var().
+The PAGEMAP_SCAN ioctl takes mmap_read_lock() on an mm obtained from
+/proc/<pid>/pagemap without holding a reference to mm_users.
 
-Test fb_count before touching the list. fbcon takes a reference through
-fbcon_open(), so that condition covers exactly the states in which
-fb_display[] points into the list, and the errno returned to userspace is
-unchanged.
+proc_mem_open() deliberately grabs only mm_count, so a consumer that
+touches the address space has to call mmget_not_zero() first.  Every other
+consumer in this file does -- m_start(), do_procmap_query(),
+show_smaps_rollup() and pagemap_read() -- but do_pagemap_scan() does not.
 
-  BUG: KASAN: slab-use-after-free in fb_videomode_to_var (drivers/video/fbdev/core/modedb.c:905)
-  Read of size 4 at addr ffff8880107b449c by task kworker/1:1/47
-  Workqueue: events console_callback
-  Call Trace:
-   fb_videomode_to_var (drivers/video/fbdev/core/modedb.c:905)
-   display_to_var (drivers/video/fbdev/core/fbcon.c:998)
-   fbcon_switch (drivers/video/fbdev/core/fbcon.c:2182)
-   redraw_screen (drivers/tty/vt/vt.c:994)
-   complete_change_console (drivers/tty/vt/vt_ioctl.c:1141)
-   console_callback (drivers/tty/vt/vt.c:3358)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  ...
-  The buggy address is located 28 bytes inside of
-   freed 96-byte region [ffff8880107b4480, ffff8880107b44e0)
+Without that reference the target can reach exit_mmap() concurrently, and
+exit_mmap() calls unmap_vmas() while holding mmap_lock only for reading,
+which does not exclude the scanner.  For ordinary VMAs this is harmless,
+as free_pgtables() and remove_vma() run afterwards under mmap_write_lock.
+A shared hugetlb VMA is different: __hugetlb_zap_end() frees the VMA's
+hugetlb_vma_lock inside the read-locked phase.
 
-Cc: stable@vger.kernel.org
-Fixes: 7d9485e2c53c ("Staging: udlfb: Add functions to expose sysfs metrics and controls")
-Reported-by: co+ed9902f2e44184d9@bugs.sh
-Closes: https://lore.kernel.org/all/1jSCSNaDKmuUG7h40rTsSl1rMaSwdlJef4rp%40bugs.sh/
+walk_hugetlb_range() can therefore load vma->vm_private_data, have the
+lock freed underneath it, and then down_read() a freed rw_semaphore.  The
+load happens before the freeing side clears the pointer, so this is a
+use-after-free and not a NULL dereference.  Any unprivileged user can
+reach it with no huge pages configured, as hugetlb_reserve_pages()
+allocates the lock before the VM_NORESERVE early return.
+
+Pin mm_users across the scan, the way the other consumers do.  mmput()
+from the exiting task can then no longer reach exit_mmap() while a walk is
+in progress.
+
+[akpm@linux-foundation.org: remove unneeded & undesirable test for !mm]
+Link: https://lore.kernel.org/20261014095540.3261469-1-ngocquy0700@gmail.com
+Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
+Signed-off-by: Ngoc Quy <ngocquy0700@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Assisted-by: Claude:claude-opus-5
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/all/1jSCSNaDKmuUG7h40rTsSl1rMaSwdlJef4rp%40bugs.sh/
-Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Muhammad Usama Anjum <usama.anjum@arm.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/udlfb.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/proc/task_mmu.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -1293,6 +1293,11 @@ static int dlfb_setup_modes(struct dlfb_
- 		goto error;
- 	}
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -2862,15 +2862,18 @@ static long do_pagemap_scan(struct mm_st
+ 	size_t n_ranges_out = 0;
+ 	int ret;
  
-+	if (dlfb->fb_count) {
-+		result = -EINVAL;
-+		goto error;
-+	}
++	if (!mmget_not_zero(mm))
++		return -ESRCH;
 +
- 	fb_destroy_modelist(&info->modelist);
- 	memset(&info->monspecs, 0, sizeof(info->monspecs));
+ 	ret = pagemap_scan_get_args(&p.arg, uarg);
+ 	if (ret)
+-		return ret;
++		goto out_mmput;
+ 
+ 	p.masks_of_interest = p.arg.category_mask | p.arg.category_anyof_mask |
+ 			      p.arg.return_mask;
+ 	ret = pagemap_scan_init_bounce_buffer(&p);
+ 	if (ret)
+-		return ret;
++		goto out_mmput;
+ 
+ 	for (walk_start = p.arg.start; walk_start < p.arg.end;
+ 			walk_start = p.arg.walk_end) {
+@@ -2925,6 +2928,8 @@ static long do_pagemap_scan(struct mm_st
+ 		ret = -EFAULT;
+ 
+ 	kfree(p.vec_buf);
++out_mmput:
++	mmput(mm);
+ 	return ret;
+ }
  
 
 
