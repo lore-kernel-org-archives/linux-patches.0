@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1794063853;
-	b=aqnHezTN6enJEEjLvePP9G3BUzNETUaEd33DpdvvNCaxYNO2ALon+Wx/QP0Nw/MM1k2a
-	 R2iX5SxKpryUUqSjOMzL11IaKTdKcF68ATAjneRWH+pxEoLr3ERHafiH2BiDMvFpVjVeM
-	 7WX8y/HyFo+GUy+fJPIyWd4XkQKCack8frKAydraU63lavSXYG6BGMcHc11tRdzNKvwpg
-	 lUhupBnc/Ve0D6ah4h+Iv+jnwqtGpDXd8cbWyqb9jkInhe/SMN48GnA7ygMmuqBecdnqB
-	 jjo22bweAX7KdQgSzpJl1eUvj00aduc4QLEaUfbIiCgyakPVu1gGOcWriIRIvwUS0+g==
+	b=Nexgb4ESfMgQJ5XL2HXV/vvoF1q5XgGDz5tRB5W1fXZArUrMhMlHS99PSS00egqSv/hk
+	 U3lNyuNtKSTfGeyvKnwDppvc6kc/9dR1MEUB2R/Q5oa9nvSau6qUNvN0MofqjEsk6Lolh
+	 7iS1wXCsOGytKKbHrV00s3Jn5Ijq1u7sliIh2zSf54S9elW2WC7MoW2BreXMdR1H1tZOe
+	 DzJXsBKY0ldgDzIKPVyFMC82T0Uquoduz3b8sMeEVbT3mq5tJo2QSPqhJ1054hy5KAW8f
+	 35+cWAUW/093Rw8gneZdozJDXfH70bUIEZUD6iAPvRlU1jiFnl9F5+f50AKxFz4f4Iw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794063853;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZDQD99cL0wlNfsNUdQ8DJdG8XNiCVCWauTB/018+NKU=;
-	b=g0cXDBHKtjwMTqu8fpBikEgT5A+whV+TsMseNnnTEF52mYpcumPZYRrAqIornGDVgKd0
-	 h+7tqGfro9twv5GYybd60WnbZvThWeQ2fmpAM/IqOQTtyC1tumsPSrIxmx/oSQ8mlIP+f
-	 NvfOBKG37g6Uc1+Uh/yXvXIrajbK+cjNI6wDGQWLyBAqXa589IzqV33bVKLfdmXAxQqPc
-	 1gmhpEzOHd9UpMC7YqNkYkqqyUleaq7nm4UeKnvyxpEjWCjkn/TebmHp+NVS3GSCkvDOG
-	 Qsf/PAuM+I1MDC0Yx4Vcbmy8MntuYyKDPvINlQfp2UiTPw4c4gCSobhiqlEtzaj+vlg==
+	bh=ZQ92FIBNVW1GN0eCuttiE/xf+CTX/AzTej7RQTIv0iY=;
+	b=scQUZDOKtOPLqB/JECbZDFaQHL/jNk6BeLMJRFp91VwsCIQPFpnAGBIqhmLVlUy0ILBS
+	 qJTTsrUo6OoiL3q6pyPqj6mJWnSg9fzqjwLmfuh0r+a0MiSM4yGZKzgzNZfZMNKSEdhMN
+	 b0Ad7VxKyyTgdfL1PXAK/B3TLsp9pueeXMYx7MqEFb06DKQOAF3EBjwH0y8LYddzT3n5d
+	 Pc7qL92eytRXCVmqKL+v/LHDXKhA+DMRjpxN3bbScgOdLXsxhTpBoGSoAnitsvDUhnySN
+	 wNPQ1yjHbnlTwbAS0A9mGyV2vpYpZsM7VshWnm0zP5NM2xliwD+fsP0x4u2Fq4A/aBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6nf2QMZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gR/b98Ti";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C265B606C034;
-	Sat,  7 Nov 2026 15:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2541606A9CC;
+	Sat,  7 Nov 2026 15:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6nf2QMZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF6E1F0089F;
-	Sat,  7 Nov 2026 15:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gR/b98Ti
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7B61F0089F;
+	Sat,  7 Nov 2026 15:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063852;
-	bh=ZDQD99cL0wlNfsNUdQ8DJdG8XNiCVCWauTB/018+NKU=;
+	s=korg; t=1794063853;
+	bh=ZQ92FIBNVW1GN0eCuttiE/xf+CTX/AzTej7RQTIv0iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u6nf2QMZTZOCzwrlG1PGJxKGRgQAm6nEibXayN1PywlCOnyUT9XO7a8siVhTJqGY/
-	 pr+jZgdeBIe57kvO5B+spqLD9b13xVAZ9pcWI472FQRMUayBXfLZSfhhdReMc0RFY+
-	 XqkvBJdV6q50xGs6WLrPYzRBPqmV9JuxX5SnpOlM=
+	b=gR/b98TiDkstG0UxYDhkPRNsA3Hvp1bRSbJOQlxPcPevsTIYKBCXO6G0pR1rx2q6f
+	 aZNq24ugmMJj58kGE8t4aW8YC9oDqOGpWSc1hD+GALc+6IBCCiKzj38wxrBkcIwRq/
+	 5NM3GVGbTrHrh8Ue1Z5ITf/20FBaQKmaWD08rYyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	hanzhijian <hanzhijian1991@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0044/1257] soc: qcom: geni-se: Fix fw_end computed before round-up; propagate size to caller
-Date: Sat,  7 Nov 2026 08:39:00 -0500
-Message-ID: <20261107134940.626438233@linuxfoundation.org>
+Subject: [PATCH 7.3 0062/1257] clk: mstar: msc313-mpll: fix off-by-one in clock array allocation
+Date: Sat,  7 Nov 2026 08:39:18 -0500
+Message-ID: <20261107134941.110827360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,111 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: hanzhijian <hanzhijian1991@gmail.com>
 
-[ Upstream commit d1750c530e9b9b75c8d1b29d3c76e052a049f51f ]
+[ Upstream commit 712b75152c00a8ab0c56dbfe34caf88e3870ddde ]
 
-fw_end was computed from the raw fw_size_in_items, before the odd-word
-round-up. A segment with an odd word count could pass the bounds check
-at the unrounded value but then be copied one word past the validated
-limit. Move fw_end (and the cfg_{idx,val}_end) calculations to after
-the round-up so they always reflect the true copy extent.
+The hws array of mpll->clk_data is allocated with struct_size() using
+ARRAY_SIZE(output_dividers) as the element count, giving it 7 elements.
+But the probe function stores the MPLL clock at hws[0] and one
+fixed-factor clock for each output divider at hws[i + 1] for i in
+[0, ARRAY_SIZE(output_dividers)), writing 8 elements in total.  The
+final write to hws[7] is past the end of the allocation.
 
-The caller geni_load_se_fw() re-read hdr->fw_size_in_items for the
-memcpy_toio() length, bypassing the validated and rounded value
-established by geni_find_protocol_fw(). Add a fw_size_out output
-parameter and use it in the caller.
+clk_data->num is also set to NUMOUTPUTS (8), so the clock framework
+reads hws[0..7], again accessing hws[7] out of bounds.
 
-Fixes: d4bf06592ad6 ("soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux subsystem")
+Use NUMOUTPUTS as the element count so the allocation matches the
+number of clocks actually stored and exposed.
+
+Found by smatch:
+  drivers/clk/mstar/clk-msc313-mpll.c:134 msc313_mpll_probe()
+  error: buffer overflow 'mpll->clk_data->hws' 7 <= 7
+
+Fixes: bef7a78da716 ("clk: mstar: MStar/SigmaStar MPLL driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260821-fix-write-to-read-only-firmware-buffer-v3-3-43e6a3abd651@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: hanzhijian <hanzhijian1991@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/qcom-geni-se.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/clk/mstar/clk-msc313-mpll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index 54c0a66d6dd6f..11ca8223fbcd6 100644
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -1230,6 +1230,8 @@ EXPORT_SYMBOL_GPL(geni_se_resources_init);
-  * @se: Pointer to the serial engine structure.
-  * @fw: Pointer to the firmware image.
-  * @protocol: Expected serial engine protocol type.
-+ * @fw_size_out: Non-NULL output parameter; receives the rounded, validated
-+ *               firmware word count on success.
-  *
-  * Identifies the appropriate firmware image or configuration required for a
-  * specific communication protocol instance running on a Qualcomm GENI
-@@ -1239,7 +1241,8 @@ EXPORT_SYMBOL_GPL(geni_se_resources_init);
-  * Return: pointer to a valid 'struct se_fw_hdr' if found, or NULL otherwise.
-  */
- static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct firmware *fw,
--					       enum geni_se_protocol_type protocol)
-+					       enum geni_se_protocol_type protocol,
-+					       u32 *fw_size_out)
- {
- 	struct device *dev = se->dev;
- 	const struct elf32_hdr *ehdr;
-@@ -1289,11 +1292,6 @@ static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct
+diff --git a/drivers/clk/mstar/clk-msc313-mpll.c b/drivers/clk/mstar/clk-msc313-mpll.c
+index 61beb4e875250..bd45aa0aec011 100644
+--- a/drivers/clk/mstar/clk-msc313-mpll.c
++++ b/drivers/clk/mstar/clk-msc313-mpll.c
+@@ -105,7 +105,7 @@ static int msc313_mpll_probe(struct platform_device *pdev)
+ 		return PTR_ERR(mpll->loop_div_second);
  
- 		sefw = (struct se_fw_hdr *)(fw->data + phdr->p_offset);
- 		fw_size = le16_to_cpu(sefw->fw_size_in_items);
--		fw_end = le16_to_cpu(sefw->fw_offset) + fw_size * sizeof(u32);
--		cfg_idx_end = le16_to_cpu(sefw->cfg_idx_offset) +
--			      le16_to_cpu(sefw->cfg_size_in_items) * sizeof(u8);
--		cfg_val_end = le16_to_cpu(sefw->cfg_val_offset) +
--			      le16_to_cpu(sefw->cfg_size_in_items) * sizeof(u32);
+ 	mpll->clk_data = devm_kzalloc(dev, struct_size(mpll->clk_data, hws,
+-			ARRAY_SIZE(output_dividers)), GFP_KERNEL);
++				NUMOUTPUTS), GFP_KERNEL);
+ 	if (!mpll->clk_data)
+ 		return -ENOMEM;
  
- 		if (le32_to_cpu(sefw->magic) != SE_MAGIC_NUM || le32_to_cpu(sefw->version) != 1)
- 			continue;
-@@ -1306,6 +1304,12 @@ static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct
- 			sefw->fw_size_in_items = cpu_to_le16(fw_size);
- 		}
- 
-+		fw_end = le16_to_cpu(sefw->fw_offset) + fw_size * sizeof(u32);
-+		cfg_idx_end = le16_to_cpu(sefw->cfg_idx_offset) +
-+			      le16_to_cpu(sefw->cfg_size_in_items) * sizeof(u8);
-+		cfg_val_end = le16_to_cpu(sefw->cfg_val_offset) +
-+			      le16_to_cpu(sefw->cfg_size_in_items) * sizeof(u32);
-+
- 		prog_ram_depth = FIELD_GET(PROG_RAM_DEPTH_MSK,
- 					   readl_relaxed(se->base + SE_HW_PARAM_2));
- 		if (fw_size >= prog_ram_depth) {
-@@ -1320,6 +1324,7 @@ static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct
- 			continue;
- 		}
- 
-+		*fw_size_out = fw_size;
- 		return sefw;
- 	}
- 
-@@ -1430,11 +1435,11 @@ static int geni_load_se_fw(struct geni_se *se, const struct firmware *fw,
- {
- 	const u32 *fw_data, *cfg_val_arr;
- 	const u8 *cfg_idx_arr;
--	u32 i, reg_value;
-+	u32 i, reg_value, fw_size_in_items;
- 	int ret;
- 	struct se_fw_hdr *hdr;
- 
--	hdr = geni_find_protocol_fw(se, fw, protocol);
-+	hdr = geni_find_protocol_fw(se, fw, protocol, &fw_size_in_items);
- 	if (!hdr)
- 		return -EINVAL;
- 
-@@ -1511,7 +1516,7 @@ static int geni_load_se_fw(struct geni_se *se, const struct firmware *fw,
- 
- 	/* Program RAM address space. */
- 	memcpy_toio(se->base + SE_GENI_CFG_RAMN, fw_data,
--		    le16_to_cpu(hdr->fw_size_in_items) * sizeof(u32));
-+		    fw_size_in_items * sizeof(u32));
- 
- 	/* Put default values on GENI's output pads. */
- 	writel_relaxed(0x1, se->base + GENI_FORCE_DEFAULT_REG);
 -- 
 2.53.0
 
