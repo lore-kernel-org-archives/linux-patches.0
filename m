@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063735;
-	b=uiCjDhn8H4SdHVkAQ28unphPqjPwrrvHp8Fnrnkmt3i/E9+HBuBZJUAuGHpNOofD8YS1
-	 PiGJEfAd4mL9JHRQzdFiIfok3EvbHnRZgngfls2hgneG+4X/AVVi8fWOQoNv83zAtCeyO
-	 2VNztb84shiLceDpxbrBaXFOnsj9/BIjL0c2+bc0PUw9LXfCbwdMMBVZOJXUd1b7LufrU
-	 LYzR56iHoICa9dT3cRB8Prh7C2cP2XtxKybp8yOCkA8OZc+Q7vcflLjMlJMNfvsOCuW/D
-	 VLJzHxsDByyNQx5ECcHuZPU3kTm1QNfqMi8woU2TeAymooNY36pv74I2l6GHwyh5a1g==
+	t=1794063737;
+	b=2ndKT3L49WlUTvxfVG3dLgGIYIrnWGwCAa/N6KNlLTExcRzz0551wuQF/nlwy3XoqTFk
+	 FuZHeL3eEVl072gc1XuhaqY/R+8khYWzRO31a8Z+HH7MjMxGtIMCzjQzDdqqntgK9EfKc
+	 ElxKkZaAcOQDFrVllnamV5hUiL2l/nQAZYDiEB6oKnIr/e1P3nNVs1fyv5VGnMHQlsJFY
+	 uqw78tY3tr/nPwES/NHTw9ZBMsgZEDLCNPp8MG5VOxjHrQwp5CYPs/KkvBd7nrSwzTrHt
+	 Na/g49bML40PS0OkluCI0Rytm19OT8Cw0gRCF43LDuQcYZQz7hp0ptvOGLl5vdRXqIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063735;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063737;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2+l9UgXODUfpKcy8ykx5LTW+lSJbg+dHbNMj0EzXv5g=;
-	b=BHG2tkY1uckPkIqyxBa5mLDePXG7oPZWOWDA4K52+N5wLJV6CKPwA+8JUMC8cIdTKiga
-	 Y1iPJ/NZ5cLnbYsnFg2NRFxRvAlyS2Gm9ciMWCa0Y5uVQgyjr3olWws3TiXG/ZFoyjhp5
-	 53XygQVN4D76o4lVK7gG6WqCSBIDzPuC+bFXnD3tmZU/aoECeYMfn6uJzxu54tOMTPd6x
-	 tDG5lXd9eIFTBD9e7I5hulfo9NEhgaIMcIPd/EMusS6xBpGWQZZ0nZYbX1Mhjr18PoTE+
-	 vibZl3BCCkj0G/X5OeyhXReK1QMM2/sNSLPLQ/RPujcNh3pcJvJtb8PNkHiNk7HJ2xQ==
+	bh=f0Vx+ZV2fr3YdUZi1wSGOeS6YpQn7PXZ2CTfNwRBMM0=;
+	b=nSwTGajXo8DZxsi/iD0v/rNn8wREffTmGmffLc/ql0LdEqlxNxUaQFazyEgU/vZwXc7s
+	 ndbEEjDPRCg1rEEn2ANgllH7FpeXOT0Fgfq50sH1d0EiskO0C23in4Lnj4/Vyy+yfn9Mi
+	 q/3vef8hC1OyEGw+pL+eWOlr9rPfziHHpY8jotpbJppZ9krIFi3576d+tqAfHwxERXee+
+	 dzxZdbINQMF+fjceFuY2k0jTwTBURFM4MZ2f7MczyvJZGLUTs7OXN2OTA0TMSTTyhmO2a
+	 OMwGxfAXHX9HrZ8iEO0xTQL54Tchg+CXvs4DefPqDo+7KMIqSNSEwyttcITMIyOds8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvKLXeko;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CrqtWwXe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FE7606A32D;
-	Sat,  7 Nov 2026 15:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7BB606A32D;
+	Sat,  7 Nov 2026 15:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvKLXeko
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D591F0089F;
-	Sat,  7 Nov 2026 15:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CrqtWwXe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B691F0089F;
+	Sat,  7 Nov 2026 15:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063735;
-	bh=2+l9UgXODUfpKcy8ykx5LTW+lSJbg+dHbNMj0EzXv5g=;
+	s=korg; t=1794063736;
+	bh=f0Vx+ZV2fr3YdUZi1wSGOeS6YpQn7PXZ2CTfNwRBMM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YvKLXekoWxlc7nQKaqiooNu3DQAwS0EJr0bHhqmoAUEpzsZwGg8/IQ0ilITBNFGIW
-	 2XmDngPJ1qUKFAyOPreNvh8EtniGmtX7r06+0KgdfiRRTJQiVb/hBcVQXf+vFl6QEv
-	 di9g4OrDD8VnXkbp26biLBsR8rHo/NX8iUSrxrzQ=
+	b=CrqtWwXefBaBTkQ7qyz20tiSzezh4k/S9s38ww26gKEYa8QP8wU5BoSobxmVy9wGl
+	 sq5cZUhokz5chhCu1NtEFQSm4bFUIm9qul+oVV5L7IQlG3krasvd+bzLASPaH32fWG
+	 Yh4B7nn83oICyOu5KQr4f8x8LzWVLISz+lPBfHgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shao Mingyin <shao.mingyin@zte.com.cn>,
-	Keith Busch <kbusch@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 832/869] nvmet-auth: fix error handling on CHALLENGE failure
-Date: Sat,  7 Nov 2026 08:58:34 -0500
-Message-ID: <20261107134921.127596731@linuxfoundation.org>
+Subject: [PATCH 6.18 806/869] LoongArch: Fix bitmask corruption in update_bp_registers()
+Date: Sat,  7 Nov 2026 08:58:08 -0500
+Message-ID: <20261107134920.285488715@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,54 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shao Mingyin <shao.mingyin@zte.com.cn>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 96da408bb4a24bf87b366b13f41c2687d3c05671 ]
+[ Upstream commit 30c52672bf456decf675c11f3c65acd73a6bcca8 ]
 
-In nvmet_execute_auth_receive(), when nvmet_auth_challenge() fails (for
-example when the initiator-supplied allocation length is shorter than the
-DH-HMAC-CHAP challenge response, or the challenge nonce allocation fails),
-the error path sets status = NVME_SC_INTERNAL and breaks out of the
-switch. The unconditional
+In update_bp_registers(), when disabling a LOAD or STORE watchpoint,
+the code attempts to clear the bit of LoadEn or StoreEn by using the
+standard bit-clearing pattern.
 
-    status = nvmet_copy_to_sgl(req, 0, d, al);
+However, due to the omission of parentheses, the bitwise NOT operator
+'~' takes higher precedence than the left shift operator '<<'. Then:
+(1) ~0x1 << MWPnCFG3_LoadEn evaluates to "(~0x1) << 8 = 0xFFFFFE00",
+(2) ~0x1 << MWPnCFG3_StoreEn evaluates to "(~0x1) << 9 = 0xFFFFFC00",
+that incorrectly clears all configuration fields in the lower 8 bits.
 
-after the switch then overwrites the error status (nvmet_copy_to_sgl()
-returns 0 on success), so the AUTH_RECEIVE command incorrectly completes
-with SUCCESS and the initiator proceeds with a truncated/empty challenge.
+These fields in the lower 8 bits contain critical configurations such
+as DSOnly (bit 0), PLV0-PLV3 privilege levels (bits 1-4), and LCL (bit
+7). Writing back these corrupted values severely breaks configuration
+isolation and ruins the hardware watchpoint states.
 
-Fix this by freeing the buffer and jumping to the common done: label on
-CHALLENGE failure, skipping the copy_to_sgl() entirely and preserving the
-NVME_SC_INTERNAL status.
+Add parentheses to ensure the correct evaluation order, so that only
+the targeted LoadEn/StoreEn bit is cleared while preserving the other
+crucial configuration bits in the lower 8 bits.
 
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: edffa33c7bb5 ("LoongArch: Add hardware breakpoints/watchpoints support")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/loongarch/kernel/hw_breakpoint.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index 20a2dfcbbc57f..fc50fde2947d4 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -601,10 +601,11 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
- 	switch (req->sq->dhchap_step) {
- 	case NVME_AUTH_DHCHAP_MESSAGE_CHALLENGE:
- 		if (nvmet_auth_challenge(req, d, al) < 0) {
--			pr_warn("ctrl %d qid %d: challenge error (%d)\n",
--				ctrl->cntlid, req->sq->qid, status);
-+			pr_warn("ctrl %d qid %d: challenge error\n",
-+				ctrl->cntlid, req->sq->qid);
- 			status = NVME_SC_INTERNAL;
--			break;
-+			kfree(d);
-+			goto done;
- 		}
- 		req->sq->dhchap_step = NVME_AUTH_DHCHAP_MESSAGE_REPLY;
- 		break;
+diff --git a/arch/loongarch/kernel/hw_breakpoint.c b/arch/loongarch/kernel/hw_breakpoint.c
+index deeb2f9795705..bd891b3808a6b 100644
+--- a/arch/loongarch/kernel/hw_breakpoint.c
++++ b/arch/loongarch/kernel/hw_breakpoint.c
+@@ -468,9 +468,9 @@ static void update_bp_registers(struct pt_regs *regs, int enable, int type)
+ 			} else {
+ 				ctrl = read_wb_reg(CSR_CFG_CTRL, i, 1);
+ 				if (info->ctrl.type == LOONGARCH_BREAKPOINT_LOAD)
+-					ctrl &= ~0x1 << MWPnCFG3_LoadEn;
++					ctrl &= ~(0x1 << MWPnCFG3_LoadEn);
+ 				if (info->ctrl.type == LOONGARCH_BREAKPOINT_STORE)
+-					ctrl &= ~0x1 << MWPnCFG3_StoreEn;
++					ctrl &= ~(0x1 << MWPnCFG3_StoreEn);
+ 				write_wb_reg(CSR_CFG_CTRL, i, 1, ctrl);
+ 			}
+ 			regs->csr_prmd &= ~CSR_PRMD_PWE;
 -- 
 2.53.0
 
