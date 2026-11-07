@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063385;
-	b=3EF0rRBD/dBKOyKu6S4/FBfWdz0CJlcoZOe1tMPFZ5CSc3AXRM7SkvTH9glgrl2aieTE
-	 bTOQkpnp5tuhYpqolgc4CBFbe8Z72+Y/B9gTHhyJYOo9bFxMuhiYo75emdIHf2uKO4Z+L
-	 +rR+w1qNHBkBQz5VhmUJ6q3RTgAz/O+eEKxjDLbMd60Rzhsf/+9UOd3E8/qJz6nK9Z4my
-	 1W5nuOyCm6sigRnVzSxw9kXWDh3am33pCl30ab10xR/V8Q5686SLXkQhoB4F6z876RAnI
-	 iXhhfvGORxYoeik80uWBh5ywOUagoROIeVtk2STqcEKFiDT9BxKvLMpT0OGVNAKlPqQ==
+	t=1794063387;
+	b=ddFDPQWBpUE7lxS+/kTH16f3G20ZaZOExFSkfGuOIgTmlDlYjKUCLEkGug6HtGfJtyGx
+	 sryBYH8AxAQyKfxADIGmwZWd5awJYHGJELkHt+xj/CBHskRZDpkl/d3Iqg2zcf44Ymf0m
+	 aZKuMJsX8cw8+JZJZehgIaBBgjRcXi5/CetlgS6vMtvweDszvieaBPKPhtD0rLVZi6rQ2
+	 dxUb1suGUJ5PszFdCvjZ8oWJjewO2FkI7qaQ7D1a+SfoP4woMobiCJxaXZVzxVOJXeR5M
+	 PCbmHGobp9Oi9LyC5U4kOF8y6kXXZlhl3n690VP8KHDjgDSk5ck4WxBPdB6grGOI/uA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063385;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063387;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qPDg0K3oJhx2BylxpDNCpi0z+DPWIr1tidiV1NXpx3Q=;
-	b=rmldSwjd7lR9N1FQSchfvXjZ8JknuKIVYKJ6gnJTScaIvzHwIq2N11Gqj6oaNWbdh7Ea
-	 AKtdmV2SruasVMIgcHiTI0hE/Mb0SXkvhB9p9Jfdrffs2PLsgy9MCgwW1tlr1ax44MflB
-	 CcpDPlxdZdhutb+7NW41xGeGJOqA8Ai7/AdJBkv/IpAQIgVP4YitxUa6SYpuSL1PwglTz
-	 0xfPKjw9WbV2kDJ7ZxwMVQbgGND4bNlV7LKLkbPMaHldrKUCCQvDFItcJKt6f3jScUpi/
-	 2063RH71c0wLj3N2aa7S25fZKJeqTvGspRglbhHksSI+rbxQrVY6wMjoSSmUFPI9UbQ==
+	bh=1SFuLUiFKjXNreExHLsRDvP27dlTlSRVCYrQvEcDTbw=;
+	b=p7zbWEABm08dLr1/Y4skPppSxTnWMxy+eymuB9XKOUohzrKGst4ahp954N8mD2tCM7UU
+	 j1nmUQe8YjwQfVppkCM9loxTiHsdFTLzK+7qMFXr7CAEkZjPC1B0t19BZJES8E0cizSNm
+	 3Fk4fFGUwaU90gLjn0Hhmz6pij9J8nRXbqiZ1tcT9fYAvBAWTF6GZEtqtDNY6W2Rt6M5E
+	 5IdQAhqWoFvIi+Iwrm4qnIITopqveIV8VcraGstlwyOWZ1MFD2YKb4u+1xYU8V64ubD2K
+	 2K8mWNck2J1QBivKSNkWSfrpHgXbfhp3tb+sidmB6j3kCTiBcjyu4s0TzplyazKYVFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cnfe86dS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f+3Gy+hx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8432E606D820;
-	Sat,  7 Nov 2026 14:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5182606D816;
+	Sat,  7 Nov 2026 14:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cnfe86dS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318471F0089F;
-	Sat,  7 Nov 2026 14:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f+3Gy+hx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6062E1F0089F;
+	Sat,  7 Nov 2026 14:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063385;
-	bh=qPDg0K3oJhx2BylxpDNCpi0z+DPWIr1tidiV1NXpx3Q=;
+	s=korg; t=1794063386;
+	bh=1SFuLUiFKjXNreExHLsRDvP27dlTlSRVCYrQvEcDTbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cnfe86dS1e5NmgwGyobL7LxJTc7UvqkE/KfgsujwrWojFvG/yuad+nfTo8bqTygZ5
-	 6XF0jFQAhx4FKVTZ9JyCSEQMdjeqy36TIEgyQx+F3/H7MPpF3uvaqT3xvLPnVjTZHn
-	 Ed7I1sAK7ZZNk6CcN4zxVH40WPnphzWp9n9xaFfc=
+	b=f+3Gy+hxaBHmg0cVrE6PZHbeEtUjeWqOLkj5QcnDmCuxVCstDpxNJyCDSiniMVjKh
+	 jaAuJvPpWnEtFbxMqDI45cnn3rU7iAhBz2qgi6VCezRc+UP0PMonpDhXxwKb4IVoLB
+	 xUMBKvtFsRc53G6SpYpU0C6BDLWbgzc1onYk4uiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanchan Joshi <joshi.k@samsung.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Andrea Parri <parri.andrea@gmail.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 520/869] nvme: bound FDP config log reads to the received buffer
-Date: Sat,  7 Nov 2026 08:53:22 -0500
-Message-ID: <20261107134911.152512458@linuxfoundation.org>
+Subject: [PATCH 6.18 521/869] nvmet: zns: dont leak stale memory in zone management receive
+Date: Sat,  7 Nov 2026 08:53:23 -0500
+Message-ID: <20261107134911.181195215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,188 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 3cf6de080d97d0d9641fbdb613d546c0734905dd ]
+[ Upstream commit 31b8a6af19b73e6167c4b655cd5e86681bac1c41 ]
 
-nvme_query_fdp_granularity() parses the FDP Configurations log using
-sizes the controller returns, without checking that they fit the buffer
-it was given.  The log size is only bounded from above before
-kvmalloc(), so a size below the log header makes
-le16_to_cpu(h->numfdpc) read past the allocation, and a size of zero
-yields ZERO_SIZE_PTR and faults.  Each configuration descriptor is then
-dereferenced (dsze while walking, and nrg and runs on the selected one)
-without checking that the whole descriptor lies within the buffer, so a
-descriptor at or past the end is read out of bounds.  The out-of-bounds
-runs value is then exposed to userspace through
-/sys/block/nvmeXnY/queue/write_stream_granularity.
+A Zone Management Receive report returns the full buffer the host asked
+for, but nvmet_bdev_zone_zmgmt_recv_work() writes only the 8-byte
+Number of Zones field and one 64-byte descriptor for each matching zone
+that fits. The 56 reserved header bytes and every descriptor slot past
+the last match keep whatever the buffer held before. A 4096-byte report
+covering a single zone leaves 4024 bytes unwritten.
 
-A device-supplied dsze that is not a multiple of eight also leaves the
-following descriptors unaligned, and the structure is not packed, so
-reading nrg and runs from one can fault on architectures without
-efficient unaligned access.
+The tcp, rdma and fc transports allocate that buffer with sgl_alloc()
+and pci-epf with kmalloc(), none with __GFP_ZERO, and on success each
+sends the whole buffer to the host (nvmet_setup_c2h_data_pdu() for
+tcp), so the host receives old kernel memory from the target.
 
-A malicious or buggy controller triggers this during namespace scan with a
-short FDP Configurations log:
+nvmet_bdev_execute_zone_mgmt_recv() also never checks the transport
+data length against NUMD, so on transports where the host sets that
+length, the buffer sent back can be much larger than the report NUMD
+describes. pci-epf derives its data length from NUMD, so the length
+check below does not apply there, but the zeroing still covers the
+report.
 
-[    1.104828] BUG: KASAN: slab-out-of-bounds in nvme_alloc_ns+0x39a6/0x4480
-[    1.104848] Read of size 8 at addr ffff888009fd8fe0 by task kworker/u8:3/52
-[    1.104852]
-[    1.104857] CPU: 1 UID: 0 PID: 52 Comm: kworker/u8:3 Not tainted 7.3.0-rc6-00063-g0c2669a9f4a1 #1 PREEMPT(lazy)
-[    1.104862] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-[    1.104866] Workqueue: async async_run_entry_fn
-[    1.104873] Call Trace:
-[    1.104876]  <TASK>
-[    1.104878]  dump_stack_lvl+0x66/0xa0
-[    1.104886]  print_report+0xd0/0x630
-[    1.104893]  ? nvme_alloc_ns+0x39a6/0x4480
-[    1.104897]  ? __virt_addr_valid+0x209/0x3f0
-[    1.104903]  ? nvme_alloc_ns+0x39a6/0x4480
-[    1.104907]  kasan_report+0xe4/0x120
-[    1.104913]  ? nvme_alloc_ns+0x39a6/0x4480
-[    1.104919]  nvme_alloc_ns+0x39a6/0x4480
-[    1.104926]  ? __pfx_nvme_alloc_ns+0x10/0x10
-[    1.104931]  ? check_prev_add+0xfd/0xe80
-[    1.104942]  ? lock_acquire+0x18d/0x300
-[    1.104948]  ? nvme_find_get_ns+0xbb/0x2e0
-[    1.104952]  ? find_held_lock+0x2b/0x80
-[    1.104956]  ? nvme_find_get_ns+0x221/0x2e0
-[    1.104962]  ? nvme_find_get_ns+0x231/0x2e0
-[    1.104967]  ? nvme_scan_ns+0x2e1/0x8d0
-[    1.104971]  ? kfree+0x2e5/0x510
-[    1.104976]  ? __lock_acquire+0x570/0x1b00
-[    1.104982]  nvme_scan_ns+0x56a/0x8d0
-[    1.104987]  ? __pfx_nvme_scan_ns+0x10/0x10
-[    1.104994]  ? lockdep_hardirqs_on_prepare+0xdc/0x190
-[    1.104999]  ? trace_hardirqs_on+0x18/0x160
-[    1.105005]  ? kvm_clock_get_cycles+0x19/0x40
-[    1.105011]  ? __pfx_nvme_scan_ns_async+0x10/0x10
-[    1.105015]  async_run_entry_fn+0x8d/0x290
-[    1.105020]  process_one_work+0x8ac/0x1b00
-[    1.105029]  ? __pfx_process_one_work+0x10/0x10
-[    1.105034]  ? lock_acquire+0x18d/0x300
-[    1.105040]  ? lock_is_held_type+0x8f/0x100
-[    1.105046]  ? __pfx_async_run_entry_fn+0x10/0x10
-[    1.105050]  worker_thread+0x4ee/0xe70
-[    1.105056]  ? lockdep_hardirqs_on_prepare+0xdc/0x190
-[    1.105061]  ? trace_hardirqs_on+0x18/0x160
-[    1.105066]  ? __pfx_worker_thread+0x10/0x10
-[    1.105071]  ? __pfx_worker_thread+0x10/0x10
-[    1.105076]  kthread+0x2ce/0x3b0
-[    1.105080]  ? __pfx_kthread+0x10/0x10
-[    1.105085]  ret_from_fork+0x52e/0x780
-[    1.105090]  ? __pfx_ret_from_fork+0x10/0x10
-[    1.105094]  ? __switch_to+0x572/0xde0
-[    1.105101]  ? __pfx_kthread+0x10/0x10
-[    1.105105]  ret_from_fork_asm+0x1a/0x30
-[    1.105114]  </TASK>
-[    1.105116]
-[    1.105117] Allocated by task 52:
-[    1.105119]  kasan_save_stack+0x33/0x60
-[    1.105123]  kasan_save_track+0x14/0x30
-[    1.105126]  __kasan_kmalloc+0x8f/0xa0
-[    1.105129]  __kvmalloc_node_noprof+0x2e1/0x820
-[    1.105134]  nvme_alloc_ns+0x1097/0x4480
-[    1.105138]  nvme_scan_ns+0x56a/0x8d0
-[    1.105142]  async_run_entry_fn+0x8d/0x290
-[    1.105145]  process_one_work+0x8ac/0x1b00
-[    1.105148]  worker_thread+0x4ee/0xe70
-[    1.105152]  kthread+0x2ce/0x3b0
-[    1.105155]  ret_from_fork+0x52e/0x780
-[    1.105159]  ret_from_fork_asm+0x1a/0x30
-[    1.105163]
-[    1.105164] The buggy address belongs to the object at ffff888009fd8fc0
-[    1.105164]  which belongs to the cache kmalloc-32 of size 32
-[    1.105167] The buggy address is located 8 bytes to the right of
-[    1.105167]  allocated 24-byte region [ffff888009fd8fc0, ffff888009fd8fd8)
-[    1.105171]
-[    1.105172] The buggy address belongs to the physical page:
-[    1.105175] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x9fd8
-[    1.105179] flags: 0x100000000000000(node=0|zone=1)
-[    1.105183] page_type: f5(slab)
-[    1.105188] raw: 0100000000000000 ffff888008c41780 dead000000000100 dead000000000122
-[    1.105192] raw: 0000000000000000 0000000000400040 00000000f5000000 0000000000000000
-[    1.105194] page dumped because: kasan: bad access detected
-[    1.105195]
-[    1.105196] Memory state around the buggy address:
-[    1.105198]  ffff888009fd8e80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    1.105201]  ffff888009fd8f00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    1.105203] >ffff888009fd8f80: fc fc fc fc fc fc fc fc 00 00 00 fc fc fc fc fc
-[    1.105205]                                                        ^
-[    1.105207]  ffff888009fd9000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 fc
-[    1.105210]  ffff888009fd9080: fc fc fc fc fc fc fc fc 00 00 00 00 00 00 00 00
-[    1.105212] ==================================================================
+Reject a data length that does not match NUMD with
+nvmet_check_transfer_len(), as nvmet_bdev_execute_zone_append() does,
+and zero the report with nvmet_zero_sgl() before filling it. Zeroing
+NUMD bytes is only enough because of the length check, so the two go
+together.
 
-Reject a log smaller than its header plus one configuration descriptor,
-zero the buffer so a short transfer leaves no uninitialized tail to parse,
-require each descriptor's declared size to be at least a descriptor and to
-leave room for the next one before walking it, and read the descriptor
-fields with the unaligned accessors.
+Allocating with __GFP_ZERO in the transports would also close the leak,
+but it adds a memset to every read command to fix one handler, so the
+transports are left alone.
 
-Fixes: 30b5f20bb2dda ("nvme: register fdp parameters with the block layer")
+Tested over the loop, tcp, rdma and fc transports with a zoned
+null_blk namespace: before this patch, zone reports carried stale bytes
+and a data length larger than NUMD was accepted; with it, reports are
+fully initialized and such a length fails with Data SGL Length Invalid.
+
+Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
 Cc: stable@vger.kernel.org
-Suggested-by: Kanchan Joshi <joshi.k@samsung.com>
+Assisted-by: LLM
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/nvme/target/zns.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index ad725e346c94e..99a8e2953b02a 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2210,13 +2210,18 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
- 	}
- 
- 	size = le32_to_cpu(hdr.sze);
-+	if (size < sizeof(*h) + sizeof(*desc)) {
-+		dev_warn(ctrl->device, "FDP config size too small:%zu\n",
-+			 size);
-+		return 0;
-+	}
- 	if (size > PAGE_SIZE * MAX_ORDER_NR_PAGES) {
- 		dev_warn(ctrl->device, "FDP config size too large:%zu\n",
- 			 size);
- 		return 0;
- 	}
- 
--	h = kvmalloc(size, GFP_KERNEL);
-+	h = kvzalloc(size, GFP_KERNEL);
- 	if (!h)
- 		return -ENOMEM;
- 
-@@ -2242,9 +2247,9 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
- 	desc = log;
- 	end = log + size - sizeof(*h);
- 	for (i = 0; i < fdp_idx; i++) {
--		u16 dsze = le16_to_cpu(desc->dsze);
-+		u16 dsze = get_unaligned_le16(&desc->dsze);
- 
--		if (!dsze || log + dsze > end) {
-+		if (dsze < sizeof(*desc) || log + dsze + sizeof(*desc) > end) {
- 			dev_warn(ctrl->device,
- 				 "FDP invalid config descriptor at index %d\n", i);
- 			ret = 0;
-@@ -2254,13 +2259,13 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
- 		desc = log;
- 	}
- 
--	if (le32_to_cpu(desc->nrg) > 1) {
-+	if (get_unaligned_le32(&desc->nrg) > 1) {
- 		dev_warn(ctrl->device, "FDP NRG > 1 not supported\n");
- 		ret = 0;
+diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
+index 95af4b67108c7..00f694ac3986c 100644
+--- a/drivers/nvme/target/zns.c
++++ b/drivers/nvme/target/zns.c
+@@ -286,6 +286,11 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
+ 	if (status)
  		goto out;
- 	}
  
--	info->runs = le64_to_cpu(desc->runs);
-+	info->runs = get_unaligned_le64(&desc->runs);
- out:
- 	kvfree(h);
- 	return ret;
++	/* Only the zone count and matching descriptors are written below. */
++	status = nvmet_zero_sgl(req, 0, out_bufsize);
++	if (status)
++		goto out;
++
+ 	if (!req_slba_nr_zones) {
+ 		status = NVME_SC_SUCCESS;
+ 		goto out;
+@@ -314,6 +319,11 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
+ 
+ void nvmet_bdev_execute_zone_mgmt_recv(struct nvmet_req *req)
+ {
++	u32 out_bufsize = (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
++
++	if (!nvmet_check_transfer_len(req, out_bufsize))
++		return;
++
+ 	INIT_WORK(&req->z.zmgmt_work, nvmet_bdev_zone_zmgmt_recv_work);
+ 	queue_work(zbd_wq, &req->z.zmgmt_work);
+ }
 -- 
 2.53.0
 
