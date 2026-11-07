@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062375;
-	b=C9yVeKKsqddTZ9ea4KKWDVwIxdUAPj6wm+RNKNKiwb9GHhkbFwyE47ZiuWdSoWyHVNGO
-	 XP+kqTGOh5GBFXw9RK26I3m90retMp3z74actUFZXr1pNvbp9t56+Etr5EyFTDjxJzwMR
-	 ZACcLYPQ0HvSpQ8NmiheIdghPUY/tV1jeMo/SfnPVSLuRJWr6k59vr3oGaIV5Y2JSTp8T
-	 tYIvYA3PKv/MlGwGoTFS6CsGohTF0q2NgHdzrfxNYWpy853Cv1sbC9oy1mNUgfGlPuC13
-	 imMJrA+enl7x+gcO4IUBkGjhydaIp/8wWZe1/j2LS3gq5JM/vZ6CdR0dqEAoPrTvbAg==
+	t=1794062377;
+	b=tqzydfIcN+dZgwPNNY0lLimOXrXIH1TgN5d+BODh2N4bXUVsDwgupnLcOFDfHXh1k2K8
+	 Ic3a9OVEZ2gl6PVAJErNEa9s0X97G0uh6XAejinsXuUe5S9hwfhzb/NxiXt8EjWrUctGo
+	 WENmNfD/5bzTLfl3Uh6AgILY6SCSBs3C31wI2H+5LuNMM7nf3udNQlaBrZKW58+Jh7EN5
+	 fJ6MeAz1jsfTTpcmnhyg1MmbScEMhpe77jZW2cngXR+b4WJlenybzCHmiY2OVFStHPoTs
+	 lb/yaTiey7FR2JTA8yRz+UvKp68eSpW6+HM10ZVVd8lt4t0WbLPXnAPSXjqNp05A53w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062377;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JgHeo5LqDu73kWMsOXpVFNbl60YfUYCDx6LT4PGmYVs=;
-	b=QDEom4ApcVd2QJgBRzTwZn5X4zjAMsq3Y0NC70SaEqzTR6pmvP1dm+wqM0FtmWs4tcdJ
-	 hx31aQcDhMBfuS2ME5YlgKmcCnir+/bBBB5KRzae+UxPBO5jinQ939GOA+gSzQ8U26jtq
-	 2epv5A/+fy+fjkC97MF+O9fLqi/JyAo3g7oO3DN63GRZRAISzhweTvc9l1PUFNKxVvw8o
-	 PzWS6HG59oTfiwz2bbrRUjjKfYXvEcU0oxveS8X0Uh7YeB15ikKRZzoiDMZwolJlmpRg5
-	 GcPOA64QcG+IKDRCR9CXLa12N8xd/7drCaXtaGoHFJdfd6Lze+D4nxtqyqPXlWeJusA==
+	bh=LFSAuN+GlfykjUU8GGNhIMw3wTczA76Qp5z3uDLtqUc=;
+	b=BXJ6vPfu7V/XgWWw5pL4I8yx+XBiTTDRhUb1xerU5/XMFK2KHbGvMB75LWvDwBx9ZydO
+	 iK6y1GNQHmspfbyIRyKgJJz2FCg0p/qrwHQkoJQkVM6kBTYmNp4y/2uk4q2geTAoKpIFk
+	 hrNwPh7fNX8p6S89OvLkAewfLAE/2TZbjBel58UcdQfva+L16Mqn2ftZPziHY6n4k4rjD
+	 FVElDgC2pgx87AlDJLI2zM6lENyjDk8wMSBR+4B3bwoIgkUeYtiHWmJfYhctfAIfwVm9t
+	 fKRB0HIl0WRnNBMAsupFZ2EkPA6Aob2M3dvs8/xMEncMHeNB3guTLHiuu0hiADEYy5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=De6p3ZOy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LbkM+Ujg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BF0606A33A;
-	Sat,  7 Nov 2026 14:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C9D6083603;
+	Sat,  7 Nov 2026 14:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=De6p3ZOy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31821F0089F;
-	Sat,  7 Nov 2026 14:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LbkM+Ujg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129D51F0089F;
+	Sat,  7 Nov 2026 14:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062375;
-	bh=JgHeo5LqDu73kWMsOXpVFNbl60YfUYCDx6LT4PGmYVs=;
+	s=korg; t=1794062376;
+	bh=LFSAuN+GlfykjUU8GGNhIMw3wTczA76Qp5z3uDLtqUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=De6p3ZOy8gwqqGekn9saXE4eycjEzl+vrJc07C5srRMJ64SW0LwMw5ZAZsvZbMgru
-	 hRZkGRp0Nv3p1IuZE97nDG0VifZPuDSithT+DMeG8TS9XDPbrpORrRDn1DcKgWRViF
-	 JRMRVnyc5B6aN/R3VRTnbNZXX1GkrucGbWnwVt6g=
+	b=LbkM+UjgwWkXMJgh3vXwowMWMM9GTjWdKcY+vRIvNfAPK0BNZGJ0cTXcu/+ToZ5vR
+	 322ur89Fl+TkXB+/e0HQqNF9pxej7/7QBzxol3efbY/c6beINgnjpOlPyv0+Fhc3oy
+	 QrIbeuP0GL0XXebANqqS4M8Obz4rh0CqYy2ME7Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bui Viet Dung <dungvn2345@gmail.com>,
+	Siwei Zhang <oss@fourdim.xyz>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1298/1536] Bluetooth: hci_debugfs: Pin module for debugfs file operations
-Date: Sat,  7 Nov 2026 08:55:14 -0500
-Message-ID: <20261107135034.247167534@linuxfoundation.org>
+Subject: [PATCH 6.12 1299/1536] Bluetooth: L2CAP: Reject mode changes on connected channels
+Date: Sat,  7 Nov 2026 08:55:15 -0500
+Message-ID: <20261107135034.274013560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,133 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Viet Dung <dungvn2345@gmail.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-[ Upstream commit 2a3e2287877b1ee40ffb80b7d769b633866533f3 ]
+[ Upstream commit c1398cf11b31a94c27ed810ba69515e0df5ce379 ]
 
-An open debugfs file retains its file_operations pointer in the
-debugfs proxy state. However, the file_operations defined in
-hci_debugfs.c (use_debug_keys_fops, sc_only_mode_fops,
-ssp_debug_mode_fops, force_bredr_smp_fops, force_static_address_fops,
-force_no_mitm_fops, dut_mode_fops, vendor_diag_fops, and the
-DEFINE_QUIRK_ATTRIBUTE macro) have no .owner set to THIS_MODULE.
+A peer can send a configuration response with an RFC
+option for another mode to a connected channel, for
+example to switch it from Streaming to ERTM mode.
+l2cap_parse_conf_rsp() then changes chan->mode, but
+l2cap_ertm_init() is not called again, so the ERTM
+sequence lists are never allocated. The next
+out-of-sequence I-frame makes l2cap_seq_list_clear()
+write through the NULL srej_list.list.
 
-As a result, full_proxy_open_regular() calls fops_get() which succeeds
-without taking a reference to the bluetooth module. When a userspace
-process opens any of these debugfs files, a subsequent controller removal
-and module unload (rmmod bluetooth) can succeed while the file descriptor
-remains open.
+Refuse the channel when a response tries to change
+the mode of a connected channel.
 
-When the userspace process subsequently closes the descriptor,
-full_proxy_release() accesses the already unmapped file_operations
-structure, triggering a kernel oops in full_proxy_release():
-
-  BUG: unable to handle page fault for address: fffffbfff8056f03
-  #PF: supervisor read access in kernel mode
-  Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:full_proxy_release+0x8e/0x140
-  Call Trace:
-   <TASK>
-   __fput+0x39f/0xa60
-   fput_close_sync+0xff/0x200
-   __x64_sys_close+0x8c/0xf0
-   do_syscall_64+0x115/0x6a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-
-The issue was discovered via manual code audit of
-net/bluetooth/hci_debugfs.c and verified on a Linux 7.3-rc6 test VM
-with CONFIG_BT=m.
-
-Set .owner = THIS_MODULE on all debugfs file_operations tables in
-hci_debugfs.c so that debugfs keeps the module loaded until close has
-finished.
-
-Fixes: 0886aea6acd2 ("Bluetooth: Expose debug keys usage setting via debugfs")
+Fixes: f2fcfcd67025 ("Bluetooth: Add configuration support for ERTM and Streaming mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
+Closes: https://sashiko.dev/#/patchset/20261007144717.3832330-1-oss%40fourdim.xyz
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_debugfs.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/bluetooth/l2cap_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_debugfs.c b/net/bluetooth/hci_debugfs.c
-index 8177ea2baaf77..621f0edd885f2 100644
---- a/net/bluetooth/hci_debugfs.c
-+++ b/net/bluetooth/hci_debugfs.c
-@@ -68,6 +68,7 @@ static ssize_t __name ## _write(struct file *file,			      \
- }									      \
- 									      \
- static const struct file_operations __name ## _fops = {			      \
-+	.owner		= THIS_MODULE,					      \
- 	.open		= simple_open,					      \
- 	.read		= __name ## _read,				      \
- 	.write		= __name ## _write,				      \
-@@ -286,6 +287,7 @@ static ssize_t use_debug_keys_read(struct file *file, char __user *user_buf,
- }
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 894fcd779bd03..69e4ef4834b29 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -3769,7 +3769,11 @@ static int l2cap_parse_conf_rsp(struct l2cap_chan *chan, void *rsp, int len,
+ 		}
+ 	}
  
- static const struct file_operations use_debug_keys_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= use_debug_keys_read,
- 	.llseek		= default_llseek,
-@@ -304,6 +306,7 @@ static ssize_t sc_only_mode_read(struct file *file, char __user *user_buf,
- }
+-	if (chan->mode == L2CAP_MODE_BASIC && chan->mode != rfc.mode)
++	/* A connected channel cannot change its mode, as the new mode would
++	 * not be initialized.
++	 */
++	if (chan->mode != rfc.mode &&
++	    (chan->mode == L2CAP_MODE_BASIC || chan->state == BT_CONNECTED))
+ 		return -ECONNREFUSED;
  
- static const struct file_operations sc_only_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= sc_only_mode_read,
- 	.llseek		= default_llseek,
-@@ -440,6 +443,7 @@ static ssize_t ssp_debug_mode_read(struct file *file, char __user *user_buf,
- }
- 
- static const struct file_operations ssp_debug_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= ssp_debug_mode_read,
- 	.llseek		= default_llseek,
-@@ -532,6 +536,7 @@ static ssize_t force_bredr_smp_write(struct file *file,
- }
- 
- static const struct file_operations force_bredr_smp_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_bredr_smp_read,
- 	.write		= force_bredr_smp_write,
-@@ -781,6 +786,7 @@ static ssize_t force_static_address_write(struct file *file,
- }
- 
- static const struct file_operations force_static_address_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_static_address_read,
- 	.write		= force_static_address_write,
-@@ -1184,6 +1190,7 @@ static ssize_t force_no_mitm_write(struct file *file,
- }
- 
- static const struct file_operations force_no_mitm_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= force_no_mitm_read,
- 	.write		= force_no_mitm_write,
-@@ -1322,6 +1329,7 @@ static ssize_t dut_mode_write(struct file *file, const char __user *user_buf,
- }
- 
- static const struct file_operations dut_mode_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= dut_mode_read,
- 	.write		= dut_mode_write,
-@@ -1378,6 +1386,7 @@ static ssize_t vendor_diag_write(struct file *file, const char __user *user_buf,
- }
- 
- static const struct file_operations vendor_diag_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= vendor_diag_read,
- 	.write		= vendor_diag_write,
+ 	chan->mode = rfc.mode;
 -- 
 2.53.0
 
