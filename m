@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065551;
-	b=P+cBzRdmGRxwkYRH91Eot5bV22uJzsgLuRMOfFonVQNiLx3NQDgFep5Y1orcCIQ0y4iX
-	 bymdxeGa/eQXUmRWDAO1Si+Y8+X/QpZfljgZEOsnDVEn36ng2yarIZAZj2iEW45Xk7881
-	 P9VwDR1LIt4TkCsKU/Lxm4MAejt3uGSHQCq5EUqQoLT+0OBjoMG9onCmDLvN7I10DDjEr
-	 BXlUe5q5IzpRtMPjmct3vdxSzMCs7CNTTJWnNgwJ2upPgLK+JYAvoYc0XesgdUwWZz8qE
-	 aSwJ9JqxtFLmwuE/2uenmhCV3oNsF+duTpcG0pQTuHYLJ5Ydh1X4OM5JyO+0m1zan6A==
+	t=1794065552;
+	b=oL4mImH4pW7lef+ZWi01z9wxNS99IoHJwDP3SEjiyvNyiNnf2FkpJNAA4PbehmAfIPEE
+	 fQKcgpiRWjxmE2xGjKrJTlXY+HTzZoERUo5Th/vACWWPmmHCQsyUv9TOGAGkskxQE2DUs
+	 lSwSY6YM0RCpkJs1jiZ/l/YZluh3ptHpPkrSGVMVZ+7VjSdvC+D7CVuci1SEd8wJII22Q
+	 zBdaBzPhzk1PfBG7Pe0GNsAT6Kmr7yOe3y5dzebRcer8lIWJRvUPeWd5aPwdNl1Boocoo
+	 57iCCUvKPXzb2s5iHkVouE+Wsjt4iqdVsJmLn1t6OdGfDYjnpgG5Zdjoc6P8rzErneA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065552;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jFSSP8TWMCwcC98XjHtLzMKp+dZVvgs5mrypSNVipMw=;
-	b=3GmfA6VvEDUxPrSl49t+1tGZrmH3GoP89yXMMYfUqWUcsANjAbviijteMRHVmOvEGOIC
-	 nNaSm5pe11WqOQnUP58fuRzp4/a3nqykakMyWhdokqCqG7jAhHe16ZKqCMTSOkozRsu/H
-	 H1BRVAi1C6vzUI2CIEjLzQ+JNOwyv1zZQ8KtT2Y+Tm8pKzmHVs+o5rY2xGs4kbxHor7Aa
-	 IVoiDeZZ1c5MQIsoev8e5MWoeBZpdUIa2g53mPGQpESvROLhw6cvz4GXItOyQ7HBdoPM4
-	 H7esg81ehZ+M0s1QsEcmEyyBriAB78dJrG6c4ItnrovtMkRHo25mgBgmmNUeljSpTDw==
+	bh=RyCzB0hkGXkOgw3bjqwrmZSL+l4k1wua9wtzmwqPpxY=;
+	b=Df5wq33xmnrcZ/hXAy4ICL0+SPL7sGjiAUeKr4VrhUZqqZ7cVZNH2iRb5NMGM0MrA7Wb
+	 MbJocyv3tF/I5BaAW7nypf/GpWgySIgLF4gl9yReeVX34EKyfaAv7zxnmHC26HjdaHC8g
+	 hY/rTgznAM3XPeboCUeAKLCilFLdXYv0rtYtkm6f9fSGAbjLfnBPBW6TN9R/lDg74rMlN
+	 K+c9geKSyKfsxRKwpYAjSBAULnt1Hviyzo9Vg8qkdqPlq4Jg9iuxGQ/0YQGS9uY0KjL/K
+	 jB1uOF4CBZyt4pLSiGMhXcdjtbsFWr4JmN0J1RQGKmtIhacLc6IN9pjitgjLz4oBTYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nagcOZxl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=teF7Xwie;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692E3606A330;
-	Sat,  7 Nov 2026 15:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918D0606D814;
+	Sat,  7 Nov 2026 15:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nagcOZxl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D8C1F008A1;
-	Sat,  7 Nov 2026 15:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=teF7Xwie
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40ED31F0089F;
+	Sat,  7 Nov 2026 15:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065551;
-	bh=jFSSP8TWMCwcC98XjHtLzMKp+dZVvgs5mrypSNVipMw=;
+	s=korg; t=1794065552;
+	bh=RyCzB0hkGXkOgw3bjqwrmZSL+l4k1wua9wtzmwqPpxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nagcOZxlkmuXTQ9TyHdlVm961zXCg5ZbNKO+ym+013TuWmUEIBhtaNHgp5sIeXhNK
-	 en3vwM7i3gfPETeCaXpBqP7EVnSaAI+Nubae8DeEYrGnyvC16IX1hQegPZxWPzHF+Q
-	 00xVXQ0H9NSE6yilcC2v4eakfuppher5e+FPK+Dk=
+	b=teF7XwieBQnVpwdfzlW5Mrwh7j1LSCUlgVedKWsYN/C3mYE7JZB5zkdKzwSsGcnMj
+	 8EqJcmKRjN9EHdH0OPeRNJOs8MR9DLLJt8UH+Ql4My8mexllEIBrq//jV4QdghTvlS
+	 8E92D9awddap5duvaK3wu2jSdmHF9AvMpm/LvHEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1224/1257] apparmor: dont revalidate inherited files under files->file_lock
-Date: Sat,  7 Nov 2026 08:58:40 -0500
-Message-ID: <20261107135013.154613271@linuxfoundation.org>
+Subject: [PATCH 7.3 1225/1257] r8152: Use BMSR to detect the link state
+Date: Sat,  7 Nov 2026 08:58:41 -0500
+Message-ID: <20261107135013.180780037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,126 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgia Garcia <georgia.garcia@canonical.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit a913281f600157aa036b7c02afbb18a0ac115187 ]
+[ Upstream commit 85b4bc79dde77aadda0929a22f3532b208a3e1f8 ]
 
-aa_inherit_files() revalidates inherited files on exec using
-iterate_fd(), which calls the callback with files->file_lock held,
-so the revalidation is done with IN_ATOMIC. However the unix socket
-mediation path can sleep: aa_unix_file_perm() drops a ref on the
-peer's path with path_put(), and unix_fs_perm() -> aa_path_perm()
-allocates a buffer with aa_get_buffer(false), resulting in
+r8152 detects carrier from PLA_PHYSTATUS without reading BMSR, so
+BMSR_LSTATUS can remain latched low after link up. Since
+commit f6f2e946aa4d ("net: mii: Fix the Speed display when the network
+cable is not connected"), the first speed query can then report
+SPEED_UNKNOWN, which applications such as NetworkManager may cache
+until the next carrier change.
 
-  BUG: sleeping function called from invalid context at fs/dcache.c:1039
-  ...
-   dput.part.0+0x24/0x180
-   path_put+0x2c/0x60
-   aa_unix_file_perm+0x42a/0x17b0
-   aa_file_perm+0xcd3/0x1060
-   match_file+0x10b/0x190
-   iterate_fd+0xe6/0x280
-   aa_inherit_files+0x250/0x4f0
+Use BMSR_LSTATUS in set_carrier() so a latched link down can turn
+carrier off after the link has recovered. If BMSR reports down but
+PLA_PHYSTATUS reports up, reschedule the link work to read the current
+state without waiting for another notification.
 
-Only grab a ref on each file under iterate_fd(), and revalidate it
-after the lock is dropped, so revalidation is done with no locks held
-and does not need to be atomic. Denied fds are still replaced with
-/dev/null, or closed if it can not be opened.
+Tested on an RTL8153B: NetworkManager reported 1000 Mb/s after 3 of 3
+rebinds, instead of an unknown speed.
 
-Fixes: b1aea2c19607 ("apparmor: fix race in unix socket mediation when peer_path is used")
+Fixes: f6f2e946aa4d ("net: mii: Fix the Speed display when the network cable is not connected")
 Cc: stable@vger.kernel.org
-Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Suggested-by: Hayes Wang <hayeswang@realtek.com>
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Hayes Wang <hayeswang@realtek.com>
+Link: https://patch.msgid.link/20261026012345.1902285-1-lilinmao@kylinos.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/file.c | 61 ++++++++++++++++++++--------------------
- 1 file changed, 31 insertions(+), 30 deletions(-)
+ drivers/net/usb/r8152.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/security/apparmor/file.c b/security/apparmor/file.c
-index 3e74b613db325..b52781e05a5a1 100644
---- a/security/apparmor/file.c
-+++ b/security/apparmor/file.c
-@@ -706,49 +706,50 @@ static void revalidate_tty(const struct cred *subj_cred, struct aa_label *label)
- 		no_tty();
- }
- 
--struct cred_label {
--	const struct cred *cred;
--	struct aa_label *label;
--};
--
--static int match_file(const void *p, struct file *file, unsigned int fd)
-+/*
-+ * iterate_fd() callback, called with files->file_lock held: grab a ref
-+ * on the next file so it can be revalidated without the lock held.
-+ */
-+static int get_next_file(const void *p, struct file *file, unsigned int fd)
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index f61686433031c..398d35f6fb7b2 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -6979,11 +6979,8 @@ static void set_carrier(struct r8152 *tp)
  {
--	struct cred_label *cl = (struct cred_label *)p;
-+	*(struct file **)p = get_file(file);
- 
--	if (aa_file_perm(OP_INHERIT, cl->cred, cl->label, file,
--			 aa_map_file_to_perms(file), IN_ATOMIC))
--		return fd + 1;
--	return 0;
-+	return fd + 1;
- }
- 
+ 	struct net_device *netdev = tp->netdev;
+ 	struct napi_struct *napi = &tp->napi;
+-	u16 speed;
 -
- /* based on selinux's flush_unauthorized_files */
- void aa_inherit_files(const struct cred *cred, struct files_struct *files)
- {
- 	struct aa_label *label = aa_get_newest_cred_label(cred);
--	struct cred_label cl = {
--		.cred = cred,
--		.label = label,
--	};
--	struct file *devnull = NULL;
--	unsigned int n;
-+	struct file *devnull = NULL, *file;
-+	bool devnull_tried = false;
-+	unsigned int n = 0;
+-	speed = rtl8152_get_speed(tp);
  
- 	revalidate_tty(cred, label);
- 
--	/* Revalidate access to inherited open files. */
--	n = iterate_fd(files, 0, match_file, &cl);
--	if (!n) /* none found? */
--		goto out;
--
--	devnull = dentry_open(&aa_null, O_RDWR, cred);
--	if (IS_ERR(devnull))
--		devnull = NULL;
--	/* replace all the matching ones with this */
--	do {
-+	/*
-+	 * Revalidate access to inherited open files. Each file is
-+	 * revalidated holding only a reference to it, with no locks
-+	 * held, as revalidation may sleep (e.g. unix socket mediation
-+	 * dropping path refs, or allocating path buffers).
-+	 */
-+	while ((n = iterate_fd(files, n, get_next_file, &file)) != 0) {
-+		int error = aa_file_perm(OP_INHERIT, cred, label, file,
-+					 aa_map_file_to_perms(file), false);
+-	if (speed & LINK_STATUS) {
++	if (r8152_mdio_read(tp, MII_BMSR) & BMSR_LSTATUS) {
+ 		if (!netif_carrier_ok(netdev)) {
+ 			tp->rtl_ops.enable(tp);
+ 			netif_stop_queue(netdev);
+@@ -7009,6 +7006,11 @@ static void set_carrier(struct r8152 *tp)
+ 			tasklet_enable(&tp->tx_tl);
+ 			netif_info(tp, link, netdev, "carrier off\n");
+ 		}
 +
-+		fput(file);
-+		if (!error)
-+			continue;
-+		if (!devnull_tried) {
-+			devnull_tried = true;
-+			devnull = dentry_open(&aa_null, O_RDWR, cred);
-+			if (IS_ERR(devnull))
-+				devnull = NULL;
++		if (rtl8152_get_speed(tp) & LINK_STATUS) {
++			set_bit(RTL8152_LINK_CHG, &tp->flags);
++			schedule_delayed_work(&tp->schedule, 0);
 +		}
-+		/* replace the denied fd (n - 1) with devnull, or close it */
- 		replace_fd(n - 1, devnull, 0);
--	} while ((n = iterate_fd(files, n, match_file, &cl)) != 0);
-+	}
- 	if (devnull)
- 		fput(devnull);
--out:
- 	aa_put_label(label);
+ 	}
  }
+ 
 -- 
 2.53.0
 
