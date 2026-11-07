@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062455;
-	b=gm6cyPuURhZeNFh5Nw82ptit1M12nQ+ho2smR64Q6RVUQ42pPrNC9Uwq7OvpqymocLMS
-	 9TZZHhmHFgeu3a048cG1cj+2a7q1QM6W51UnTaVqhCj5zLOaRXCwF6YQ1zMAStCn+eVUp
-	 NdbEGm45AigtOTmqNGZvwOwHkWJ+WtjY1KfvQy9M/E02g+4wyqG/V2rvPpnUJOQhiggtg
-	 /JV3wzv9t7ljmEAGk09PFbIom5JWusjcG/L1iIfh+UGi4ILodpU8Qdy6FqoPp/Xa7L5YF
-	 kGoI0roJTJdEw3CkcrU+3+1j76IPAX+Zvij50uEEIBXzM/g40fqizZmdlM3mg3ggFIw==
+	t=1794062456;
+	b=y7h24JuZ8ibpbqMgu5NMGCytbzCTSr6ksR5GPclx+2eFPcdeTgkXfgbltfbl+ra3Erbu
+	 wp7edKuoIg7crH2UC5kLgaPdh4tTooWuCPSZN8XpbN0NXfimk87F4oyV5UwvP4Uj2Ki9H
+	 bU8BQu/bRbDxq48FicZxwcQvKn5ue7joH+3yu7UMZhuTf6GADP0U2I1vpYxEQ8f5c5kK4
+	 CLGG+trA2mqvg2PjVY+Q54fk1Lv87rNvyejXfqJ4T5om1ezSZCI6dvU7pz9knNx1cttL9
+	 XY/wmP+gcfoIJy+TWCr73rXpbfjv0vwGcHEZoEv5WSN+OD25SdKqc3e0rCr8HatqpKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062455;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062456;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3NHlOPq9mjWAAXRY9Dzm0nCXMb/YvndSz+zheWypuy8=;
-	b=3N1PopW3dH4NAPWSBIfpJQVgTNjEB/ofMys/ohfg3GNLB0AG6MK+h6R1G7l1qcRkIrOS
-	 W/TlNPHGAG+BpNjtpSX6hOeJdounrY5tuT9dKNxooUD+Rym77Yymq1w1NZPIsGolQvvxS
-	 ule4CC/piOBHb2eijsbpvLzoTUgEQs+2Fx5z/w4dIYcap961Oo6ccEn7lYwiW1xOrznL6
-	 jq7blth79tBUpCBXbMubuH5HJvsL2v3j9r9SLV5FW0a4YXK0NcTSuSWWZ7T3fS9HxVUa2
-	 0zP5V4qhgkFifDAJLSf7N9qDDSG5YPm954+txUDNF/SWFqtGbaRBUy7eaTgomrYVcsw==
+	bh=qtCYqT7xXO5jN2InAQH6ThjZCZUpOM6qCmC4miaK2I4=;
+	b=4omXz10ZF1cvd0XROJspePkl8Uc/rsONggIRVckSKzF0bL3HDgt5rtRl3mG/hUi1/J+U
+	 Xs7SRinEYee8oj9taFGIXvwXLOYaJGDjutAyFoITQb8ufo8nNwHaFYy6s6hfMWkVBVfEE
+	 FZn/Bgw5yDVJpfRlQkIsAKYxDGe/9eZ+D97UTyYBJsnB2pq5RAi8Ih7vZNroFFWZbjlqV
+	 qV4BWpyNDjsjuFvf9mjgxJI7jjB3RJAv0jAwWg18Jwldsfz3Z6Pu8u/W3LMQ3NlYZLoTN
+	 2CVh36OqfTOHFOgYo+OF3h4Kx77mcUyROR2C6sOOfS+e+U2KW2dL4Rd9PEyZpNV63TQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wSxrZ1M6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KlJ9ao7n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFF4606A642;
-	Sat,  7 Nov 2026 14:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70705606A644;
+	Sat,  7 Nov 2026 14:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wSxrZ1M6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6B61F0089F;
-	Sat,  7 Nov 2026 14:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KlJ9ao7n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194921F008A5;
+	Sat,  7 Nov 2026 14:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062455;
-	bh=3NHlOPq9mjWAAXRY9Dzm0nCXMb/YvndSz+zheWypuy8=;
+	s=korg; t=1794062456;
+	bh=qtCYqT7xXO5jN2InAQH6ThjZCZUpOM6qCmC4miaK2I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wSxrZ1M6uewSnqE7Jg4TJcl9+GloKi/W9Kw9W7iZIIv0Pl/h80tmJdmDFh0ZReleU
-	 UcBv9F4EFrCj0lmbBNp4jGnTGLgY1DR56O8C42M3WbzzRAAyOwxu9JD3M8yiDMiX0i
-	 L8UKmbAfKNiybJUFnOQHZNb+ru/xfj5xD9GJUyIM=
+	b=KlJ9ao7npeRhQWLNicTYPFNczDr05eewvnUlmJ15GKaoUg/auHjWI4x9M/HXaCUZ5
+	 CCWXK99uXhIYP+olIi8/WUZv3oN5g3O8CrWDvwgpnGIoe4BP6Q0S4k3KpbIy3hIsvY
+	 fEsq/z+iG/yshfNrOPEQLs9CDlJYPaKCtKy9qAIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Jianyun Gao <jianyungao89@gmail.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1324/1536] ring-buffer: Take cpus_read_lock() when changing the subbuf order
-Date: Sat,  7 Nov 2026 08:55:40 -0500
-Message-ID: <20261107135034.999674718@linuxfoundation.org>
+Subject: [PATCH 6.12 1325/1536] dax: Return errors from dax_core_init()
+Date: Sat,  7 Nov 2026 08:55:41 -0500
+Message-ID: <20261107135035.029446226@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,42 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Jianyun Gao <jianyungao89@gmail.com>
 
-[ Upstream commit 453d0f47b174cac387af48d303c503b84f82212e ]
+[ Upstream commit 4da700e2cadf84a6e858391d5be51d64dcba080f ]
 
-A CPU coming online for the first time gets its per CPU buffer allocated
-by trace_rb_cpu_prepare(), which then adds it to buffer->cpumask. If that
-happens while ring_buffer_subbuf_order_set() is running, the CPU shows up
-after the allocation loop and the install loop walks it with an empty
-new_pages list, corrupting the buffer.
+dax_core_init() returns success when either the character device
+number allocation or DAX bus registration fails, even though the
+error paths have already released the initialized resources.
 
-Take cpus_read_lock() as ring_buffer_resize() does.
+For modular DAX, this allows the module to remain loaded despite
+failed initialization, leaving subsequent users and module removal
+to access resources that have already been released.
 
+Return the error code from the failed operation so that module
+loading fails rather than reporting successful initialization
+after the resources have been released.
+
+Fixes: 9567da0b408a ("device-dax: Introduce bus + driver model")
 Cc: stable@vger.kernel.org
-Fixes: f9b94daa542a ("ring-buffer: Set new size of the ring buffer sub page")
-Link: https://patch.msgid.link/20260916192628.274136-1-devnexen@gmail.com
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20261012151857.22534-1-jianyungao89@gmail.com
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dax/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index e894a5686be30..a203c19cebce2 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -6828,6 +6828,8 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
- 	if (psize > RB_WRITE_MASK + 1)
- 		return -EINVAL;
+diff --git a/drivers/dax/super.c b/drivers/dax/super.c
+index 6eb7ecd233840..718da8ab8a002 100644
+--- a/drivers/dax/super.c
++++ b/drivers/dax/super.c
+@@ -602,7 +602,7 @@ static int __init dax_core_init(void)
+ 	unregister_chrdev_region(dax_devt, MINORMASK+1);
+ err_chrdev:
+ 	dax_fs_exit();
+-	return 0;
++	return rc;
+ }
  
-+	guard(cpus_read_lock)();
-+
- 	/* prevent another thread from changing buffer sizes */
- 	guard(mutex)(&buffer->mutex);
- 
+ static void __exit dax_core_exit(void)
 -- 
 2.53.0
 
