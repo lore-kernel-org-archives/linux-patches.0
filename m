@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061720;
-	b=L/8oxvTe9zePwOzsU5RiSlTJUudLm/2qzSMxQTzpIQyYVy8XfP8yV0I9T5Yuo9XCCmzm
-	 icj3b6W6Reyc0UUmE1BuSswbV4Yvv93U1+yp0jfEx2YqeADKjMZAQTAV5KhpsWDItXXqq
-	 +KzyhO/qPD1vPVU/YgrS5QJ8PfhofEiBqOOmLiZTGECl+8VfSn/w4QJHLmujTDt4P+AB7
-	 3J/6k66ZJnAt2REWHMq894YjiB3ZPv7CjK37MeUiFQ5KAXsMpvPuNfyt+s0hBZiOZH/+G
-	 Gr3jKFgqO0BpgAygJnfCKWu4f2rKTFH7IYfGFuW/Ma7Gb5lmDRXntGKWEd8dgItlPzQ==
+	t=1794061722;
+	b=N3xyhLlBLkapipTjcMkKnQ0TtLGBYacrnWsx3qv/pqv6Vz9vrOObwE4E5sdUM6UN9vw0
+	 M3zz6PLLflI2Z2uPzO0WIjMqIxwx8D0z5NombVORFypk0CdUG/V4v0aDiGINrsjrR2v41
+	 GHuntNjXNTHc34A2x99fbx05p50O0XOSIpRXGi1gmbuZsEPaPs6y1YdUnyjwwgSDgJ643
+	 lOmnmz1GtSwrz+tixgM4TKM3k8oH+IwObbPgIoNXzC7L2JVQ1PaW5HPVBQCmr+QjfWb09
+	 L2i66k8Q2Br5W/5nzpsgVTy0HtzIk+5ETmnGwwrFjjWi7FMt61D1zY2mqf8OSuOydkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061720;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SUo1Bi79aqxNj+YfeieqzhVtTOeM50XAg41PaWbvgMk=;
-	b=ZvKow2N1Hmtk+Vf0jes+hTyZ3hMidenB8hghrlPwVmpkAdlfIf3+0UpncITYd2AuxD7X
-	 1TtaW9zm3wNEePRy0omE9B/xycVbO6Bol6/fR06HAIT+UdGmD0oSV3rQ9hhO3yprzf2d/
-	 jSpMWoqsecfneN+B5SeoOIyv72avAJKHLFqLsV1lcMUsU8NWjeLcaU4QLdoc0mBHsHvHZ
-	 iAwyT1xYbQHRrJP8ysx1Vu1CcEeZvk+HDrDlWPwx639yMfE75EH3NhBa3zyX6q5qDYoRQ
-	 n9DWwuFksqqEnlAxNq17uCqGmgGVH/33m3ZQRJxKNexT1GvvH/c+QVlBv4uRqXCH5qg==
+	bh=83Q8SCfBiLBSQ0yo6eF8Gm4YCwMDXZgPQ0YT/YLM4iI=;
+	b=phft7fOh9iPxobhALqOTqxTnWQdq7G9qJC9rUPgzBDFL3mHYuKU+TlRu2e5VniD+KC04
+	 pranPH7UtzNiG/Rn8BrpeEpE3gtXTJJgXrbV2dOkjz0I8ShIzXC3P94zda4umHZb/QVH5
+	 T6BxcKRWxIK4o23YRuETMemwbLqDPyltlUW3KrBAzy9nkvnCJx88QzapX49dg9EI5DIQX
+	 6B5jA+p6kD6183gsrXw2Co7wAxkUNlKewUY7Rmik8EhhW6+/vM4CRAG+QA7Cg0jHKwoTU
+	 mXMKWJ7e9tpnRgOYWkexXE5s2AnDkNZV9IEgFoxkjbC64HasvsflxZdl7njsgTk01DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4g4+w54;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sGRxshui;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86253606A32C;
-	Sat,  7 Nov 2026 14:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BA6606A32C;
+	Sat,  7 Nov 2026 14:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4g4+w54
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338741F008A1;
-	Sat,  7 Nov 2026 14:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sGRxshui
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E0F1F0089F;
+	Sat,  7 Nov 2026 14:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061720;
-	bh=SUo1Bi79aqxNj+YfeieqzhVtTOeM50XAg41PaWbvgMk=;
+	s=korg; t=1794061721;
+	bh=83Q8SCfBiLBSQ0yo6eF8Gm4YCwMDXZgPQ0YT/YLM4iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w4g4+w5499dByhITTAG3DfrRAwTFU98sC0Or+laBl4LMqzAbywgzmvtlQtfe0pGDg
-	 j9+RfhdeOsMmXx+DHsFNFpuDsaKTgmTpMNmgUhuFmsjvFDke0xAtVeQ2m/avpmm9aT
-	 ldehjQ9VND5aViZQXYoItG6R8RWHntBJxwshpm7U=
+	b=sGRxshuittHfOwpx89TkryjnS/wXIzM0DPtAMveq9ooq1imnPBrlXU/IBPim0kWA4
+	 V4i+IXWkZEza4VRh/NLOs/aZSA0qODPSyTsuqzDytbrq6hnPcs+oiOQ5c77ipgGxb8
+	 YAbNT2SQM8j7qj0LWtJa7lIZe+m0LIHREMfXodaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight.linux@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0765/1536] NFSD: Fail a pool_threads read whose reply does not fit
-Date: Sat,  7 Nov 2026 08:46:21 -0500
-Message-ID: <20261107135019.018590907@linuxfoundation.org>
+Subject: [PATCH 6.12 0766/1536] nfsd: Fix id-to-name cache entry leak in idtoname_parse()
+Date: Sat,  7 Nov 2026 08:46:22 -0500
+Message-ID: <20261107135019.046439777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,59 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit e27c63245903402ccfdb46c576462981a7e032e3 upstream.
+commit 8ca3b74c0c447af17d0e27e76658a3d4cae3c5ba upstream.
 
-The reply to a pool_threads read is the list of per-pool thread counts,
-formatted into a buffer of SIMPLE_TRANSACTION_LIMIT bytes. snprintf()
-truncates its last write and strlen() measures only what fit, so a reply
-too long for that buffer ends mid-number with no terminating newline. A
-pool running 4096 threads is reported as 40. Nothing marks the reply as
-incomplete, so an administrator reads a plausible but wrong count.
+idtoname_lookup() returns the id-to-name cache entry with a new
+reference. The name is parsed between the lookup and the update call,
+and when the parsed name is malformed (negative length or longer than
+IDMAP_NAMESZ), idtoname_parse() jumps to the error label without
+dropping the reference returned by idtoname_lookup(), leaking the cache
+entry.
 
-Take snprintf()'s return value, which reports the truncation strlen()
-cannot see, and fail the read with -ENAMETOOLONG when the list does
-not fit. That is the errno svc_one_xprt_name() already returns for the
-same condition.
+Release the reference with cache_put() before taking the error exit.
 
-Suggested-by: David Laight <david.laight.linux@gmail.com>
-Fixes: eed2965af1ba ("[PATCH] knfsd: allow admin to set nthreads per node")
+Fixes: f9ecc921b5b5 ("[PATCH] knfsd: Use new cache code for name/id lookup caches")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260812193349.13347-1-david.laight.linux@gmail.com
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260917163154.2162438-1-vulab@iscas.ac.cn
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4idmap.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -471,7 +471,7 @@ static ssize_t write_pool_threads(struct
- 	char *mesg = buf;
- 	int i;
- 	int rv;
--	int len;
-+	size_t len;
- 	int npools;
- 	int *nthreads;
- 	struct net *net = netns(file);
-@@ -525,9 +525,13 @@ static ssize_t write_pool_threads(struct
- 
- 	mesg = buf;
- 	size = SIMPLE_TRANSACTION_LIMIT;
--	for (i = 0; i < npools && size > 0; i++) {
--		snprintf(mesg, size, "%d%c", nthreads[i], (i == npools-1 ? '\n' : ' '));
--		len = strlen(mesg);
-+	for (i = 0; i < npools; i++) {
-+		len = snprintf(mesg, size, "%d%c", nthreads[i],
-+			       (i == npools - 1 ? '\n' : ' '));
-+		if (len >= size) {
-+			rv = -ENAMETOOLONG;
-+			goto out_free;
-+		}
- 		size -= len;
- 		mesg += len;
- 	}
+--- a/fs/nfsd/nfs4idmap.c
++++ b/fs/nfsd/nfs4idmap.c
+@@ -252,8 +252,10 @@ idtoname_parse(struct cache_detail *cd,
+ 	/* Name */
+ 	error = -EINVAL;
+ 	len = qword_get(&buf, buf1, PAGE_SIZE);
+-	if (len < 0 || len >= IDMAP_NAMESZ)
++	if (len < 0 || len >= IDMAP_NAMESZ) {
++		cache_put(&res->h, cd);
+ 		goto out;
++	}
+ 	if (len == 0)
+ 		set_bit(CACHE_NEGATIVE, &ent.h.flags);
+ 	else
 
 
