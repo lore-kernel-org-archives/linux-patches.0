@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061127;
-	b=3gRyvi1i+oLJQD2wQk1fd6vKwTGhqT0BQRFq1Ku59J9L1tRf11kPsjcEEOiHqR9TN1+S
-	 AbwoDfHPmfq1hk80G4KKZ5ASrfCqPV2lLrzeZtBTgg4etE65YSDTkJFGW1KZXugtz5qVH
-	 dBeWuRjelKAiW1qfAdexPwIufoXxq7nITFhvcrhviQtglrIy5e3NVnRETTErTirSv8EkH
-	 xwJIo6GDpkDMplBeA2tZtskuo5B/FkFf2JOwEs/weatvrKPKHyTca9o8BeI9nmuTjUpAl
-	 dNw4/PLJey/Ga6MYXMQ1EJb5clk5Kd3fLwF6R8Wsjqo+3ZjVIJA78zwi4hvUV0z0TOg==
+	t=1794061129;
+	b=GUxRTOv4ZPQk5LmpJVOTqctdseBf8WT2Cw3MtbKVPSafhM3BDskU1/u8rYBibLSiRo9A
+	 sD/nGBK4witD4QpatTBrSYurw3D/MdEL66ph7nLD2CiK08b5rTaSGnV7rzqSugzC7rBfu
+	 VbLKPBYJECb8Ii+ZvmZCbjCwG9q3XMzU/F1hxLhkghDa/pF5O7TaRk78RtKV9ju2ufpPW
+	 8nIHq6X1ubg324Jg43OCuuDe/vVudfDldt9t5sCSmmBt/kzuZoZKDt/LbDfY/1a0siYrV
+	 qWIxEJC1zlbVDuCkVhvWIgmSaVjXRzi7JI1u2EHAI/iVW+U65aaS0qYty5ORcb9ySGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061127;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061129;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uqiJxlDXlOK2ECIKfzwnBtq8DQAgGqyyeZl77JQ5s5M=;
-	b=zydKsFKzs4vg0OB17d45XRNgjSfKLUHjuzh5jDddQpMgpIBZaJz2M34BvtENeqg8fEjf
-	 YwkZb4Vxgj45IhutGQXaveagZNKuwHH62nKmowK/Dip1snF1iAfk/PcWvcznosdv4Mgg1
-	 N9d4r4CQBZG77dr10+u0dhgP+73e2J0jpdpG0qZhxJJLY3LbiBHkKTMI5f5g/Mm0BWoWJ
-	 06ofJyGz2dZVhbvRtQuXDqjOIe4UZaz2vrOQV3cAYQBHa9AOp9F1hpaXGABjqGwmrCW/M
-	 yL4ZgmSd0czJUDdCgbX/el97R3TX46VV3V0OYkxrSnYWz7sCuySpZxStJkIyae2zrHA==
+	bh=d+IG9cXhNCRBQQVp7qNiu0ptGiAY+jqusGq+s48Gl+w=;
+	b=NtQeu7o0mY+XHNJpuNuyBvdIQ6crexA4ciECyRDpeHnSRK9MKjpk6DrxrhXF8nbPCBGk
+	 Knsaow7H7IVEv5uDCrjqHRkIGYOwS+TGjY1glcJBYt3wIcJPgLKK8NuVzp+JmngC+clJU
+	 CLNkIwOAnHzOeZcJfODHDrYN/Ykhz0nHZ7XRIoJT1/mHN/+bJIy15kGANNOg1PfK0EKj5
+	 Hhf3siKDFBx2/Qn9eLBktbWMJb1g0UWALwBWJKBaoFm5VZ3YQ0fDjR0foax6mQ8I7JUzM
+	 stbISaJlNw4UVAcBRaIzSrIq2BC4oDN4NfWdotg32CPvoTXy/gJfI+1M6ZXXMstu4kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q6eXERLF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B9v5GvT1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607BA606A332;
-	Sat,  7 Nov 2026 14:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783AB606A337;
+	Sat,  7 Nov 2026 14:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q6eXERLF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AACB1F0089F;
-	Sat,  7 Nov 2026 14:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B9v5GvT1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC5E1F0089F;
+	Sat,  7 Nov 2026 14:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061127;
-	bh=uqiJxlDXlOK2ECIKfzwnBtq8DQAgGqyyeZl77JQ5s5M=;
+	s=korg; t=1794061129;
+	bh=d+IG9cXhNCRBQQVp7qNiu0ptGiAY+jqusGq+s48Gl+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q6eXERLFeo9VQ5QKz50DnMZWqqvKpzKbCJVU9blKLIvw6ewrIW7yoIVdI3n9ZaLnS
-	 lPxqknP334Bxp6VQDjhwGkrviQys+mEtKPMJ1+aIP8LtyKAN0kGC37zbHO8y4n+rjw
-	 3NChG/egoVzealCBpK688oUZwItVCsU5lcS+ft78=
+	b=B9v5GvT1ZU3+GlVVqypDOrLQARky30Ysm/ffG1wVEZkukSAkr2U0Zrz+Fksk2gKKn
+	 u+qbljTmHWNchAmI14ZnNUlgHaFPgsVQ1vxnHsaVqz1m9KAYipE0hUgxUMI9feos/c
+	 sjTPX8FGs2PUkFFDITfwBC/lU6BIUMQdkexIowsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	co+71b6509cb791e531@bugs.sh,
-	Kaho Jiang <kj2864@nyu.edu>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 0439/1536] net: ipv4: add zero check for snd_cwnd_clamp
-Date: Sat,  7 Nov 2026 08:40:55 -0500
-Message-ID: <20261107135009.881398116@linuxfoundation.org>
+	Wei Jie Law <law.wei.jie@gt.tech.gov.sg>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 0440/1536] net: usb: pegasus: do not advance rx_skb->data on dropped frames
+Date: Sat,  7 Nov 2026 08:40:56 -0500
+Message-ID: <20261107135009.906049429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,65 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaho Jiang <kj2864@nyu.edu>
+From: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
 
-commit 363c8c79220d0db4d65dcd570529ddda15067cb5 upstream.
+commit bfa09dccf98cf78dd9282259b2140bd1472f5ae9 upstream.
 
-When RTAX_CWND is locked, user is able to pass 0 into it.
-This could lead to writing 0 to tp->snd_cwnd, leading to a
-division by zero error.
+For the 0x8513 chip, read_bulk_callback() skips the 2-byte receive
+header by advancing pegasus->rx_skb->data in place. This is done before
+the pkt_len > PEGASUS_MTU check, and when that check drops the frame
+the good path resubmits the same skb with the advanced rx_skb->data as
+the transfer buffer, still PEGASUS_MTU bytes long.
 
-Oops: divide error: 0000 [#1] SMP KASAN NOPTI
-Call Trace:
- <IRQ>
- tcp_reno_cong_avoid (net/ipv4/tcp_cong.c:510 (discriminator 1))
- tcp_ack (net/ipv4/tcp_input.c:3517 net/ipv4/tcp_input.c:3873 net/ipv4/tcp_input.c:4440)
- tcp_rcv_established (net/ipv4/tcp_input.c:6685)
- tcp_v4_do_rcv (net/ipv4/tcp_ipv4.c:1854)
- tcp_v4_rcv (net/ipv4/tcp_ipv4.c:2248)
- ip_protocol_deliver_rcu (net/ipv4/ip_input.c:207 (discriminator 1))
- ip_local_deliver_finish (net/ipv4/ip_input.c:241 (discriminator 1))
- ip_local_deliver (./include/linux/netfilter.h:325 ./include/linux/netfilter.h:319 net/ipv4/ip_input.c:262)
- ip_rcv (./include/net/dst.h:481 (discriminator 6) net/ipv4/ip_input.c:492 (discriminator 6) ./include/linux/netfilter.h:325 (discriminator 6) ./include/li)
- __netif_receive_skb_one_core (net/core/dev.c:6297 (discriminator 4))
- __netif_receive_skb (net/core/dev.c:6410)
- process_backlog (net/core/dev.c:6761)
- __napi_poll.constprop.0 (net/core/dev.c:7830)
- net_rx_action (net/core/dev.c:7893 net/core/dev.c:8050)
- handle_softirqs (kernel/softirq.c:645)
- __irq_exit_rcu (kernel/softirq.c:679 kernel/softirq.c:519 kernel/softirq.c:758)
- irq_exit_rcu (kernel/softirq.c:775)
- sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1062 (discriminator 35) arch/x86/kernel/apic/apic.c:1062 (discriminator 35))
-RIP: 0010:tcp_cong_avoid_ai (net/ipv4/tcp_cong.c:482)
+Every frame with an oversized length field therefore moves the receive
+buffer two more bytes towards the end of the skb data area. A device
+that keeps sending such frames makes the host controller write received
+data over skb_shared_info and past the end of the allocation, and the
+corrupted skb_shared_info is used when the skb is eventually freed.
+With an emulated device sending frames filled with 0x5a on a KASAN
+kernel:
 
-Fix by checking if user pass in zero as parameter and if lock is present.
+  BUG: KASAN: slab-out-of-bounds in dummy_timer+0xade/0x3f00 [dummy_hcd]
+  Write of size 1536 at addr ffff888105821202 by task swapper/1/0
+  ...
+  Oops: general protection fault, probably for non-canonical address 0xeb4b474b4b4b4b4c: 0000 [#1] PREEMPT SMP KASAN NOPTI
+  KASAN: maybe wild-memory-access in range [0x5a5a5a5a5a5a5a60-0x5a5a5a5a5a5a5a67]
+  RIP: 0010:skb_release_data+0x36f/0x800
 
-Fixes: 814d488c6126 ("tcp: fix the timid additive increase on stretch ACKs")
+Only skip the header with skb_reserve() once the frame is going to be
+passed up, so the receive buffer always starts at the beginning of the
+skb data area. Unlike the old pointer adjustment, skb_reserve() also
+moves skb->tail, so the two header bytes now count against the buffer
+size: lower the length limit for the 0x8513 accordingly, otherwise a
+pkt_len of PEGASUS_MTU - 1 or PEGASUS_MTU would trip skb_over_panic().
+
+Found by code review with LLM assistance and reproduced with an
+emulated USB device (raw-gadget + dummy_hcd).
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Suggested-by: Eric Dumazet <edumazet@kernel.org>
-Reported-by: co+71b6509cb791e531@bugs.sh
-Signed-off-by: Kaho Jiang <kj2864@nyu.edu>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261021235732.1313305-2-kj2864@nyu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Wei Jie Law <law.wei.jie@gt.tech.gov.sg>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261021020310.34045-2-law.wei.jie@gt.tech.gov.sg
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/metrics.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/usb/pegasus.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/ipv4/metrics.c
-+++ b/net/ipv4/metrics.c
-@@ -60,6 +60,11 @@ static int ip_metrics_convert(struct nla
- 	if (ecn_ca)
- 		metrics[RTAX_FEATURES - 1] |= DST_FEATURE_ECN_CA;
+--- a/drivers/net/usb/pegasus.c
++++ b/drivers/net/usb/pegasus.c
+@@ -464,6 +464,7 @@ static void read_bulk_callback(struct ur
+ 	u8 *buf = urb->transfer_buffer;
+ 	int rx_status, count = urb->actual_length;
+ 	int status = urb->status;
++	int rx_offset = 0;
+ 	__u16 pkt_len;
  
-+	if ((metrics[RTAX_LOCK - 1] & (1 << RTAX_CWND)) && !metrics[RTAX_CWND - 1]) {
-+		NL_SET_ERR_MSG(extack, "Locked cwnd metric must be non zero");
-+		return -EINVAL;
-+	}
-+
- 	return 0;
- }
+ 	if (!pegasus)
+@@ -513,7 +514,7 @@ static void read_bulk_callback(struct ur
+ 	if (pegasus->chip == 0x8513) {
+ 		pkt_len = le32_to_cpu(*(__le32 *)urb->transfer_buffer);
+ 		pkt_len &= 0x0fff;
+-		pegasus->rx_skb->data += 2;
++		rx_offset = 2;
+ 	} else {
+ 		pkt_len = buf[count - 3] << 8;
+ 		pkt_len += buf[count - 4];
+@@ -525,13 +526,14 @@ static void read_bulk_callback(struct ur
+ 	 * If the packet is unreasonably long, quietly drop it rather than
+ 	 * kernel panicing by calling skb_put.
+ 	 */
+-	if (pkt_len > PEGASUS_MTU)
++	if (pkt_len > PEGASUS_MTU - rx_offset)
+ 		goto goon;
  
+ 	/*
+ 	 * at this point we are sure pegasus->rx_skb != NULL
+ 	 * so we go ahead and pass up the packet.
+ 	 */
++	skb_reserve(pegasus->rx_skb, rx_offset);
+ 	skb_put(pegasus->rx_skb, pkt_len);
+ 	pegasus->rx_skb->protocol = eth_type_trans(pegasus->rx_skb, net);
+ 	netif_rx(pegasus->rx_skb);
 
 
