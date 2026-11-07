@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063431;
-	b=NBkG+XQmMAvaReoGPONQrHqFC+dWtU6IHi64Ukx5zGzc9Oba72Yy8VrY492+KEhnYW3X
-	 vRgs2hHpk46W9ja1aOHRjTpyypfIqd3MmzrfTiQZ4il+DbwcotrumLIHISLs4/Q0jAdO+
-	 b/q/YLhWGkgKXQ2uMij/GBjgfeJUHTTr59CDyNbygelK/b2tbgc5eoBE37ylsQZUZgpFT
-	 cPmQEBQi9KDDn1BLLIj17Som9BRyhaj4pJMy84E89vVADgRtMg7mJzgasuh9qgqJ+bko4
-	 xGXilgaf/heeQdT+nFCTwZjyRQjBgCS/7JnRZfnbzX1xbo9a6k0YJ7MjYizK/bNeurg==
+	t=1794063433;
+	b=4f5A9zsH6O2IWl1icHFU2ua+lQUg/0lHrxD/5Ldr0/lKksU14+CmZS0GUK9IOdPQv6mK
+	 wNsJ99QtBkpE/GPveUTWjj/umna98hytbfIWFz2Gb2ZmBDPcbOytOqcIwrMBEQoVOcU1x
+	 WFvcYjNRhMfWhXOcyTqTnpHrP85RRxyP5iesUNl9VlpZSt1m6zGS6Nuq9cNxeGzQiTUfl
+	 y898BUNYjWYLaEvXRYpw+zQiaf/cZSBLj6A2JtWhPew+0hZEAwQp2n8Jpyui40VC0AoPJ
+	 Yj3JLlVpK+xUHtANMRMrAEwnIXcQ9gemzWCp7vOn7yfwtpQYmRnCdtnmNKPERE5eR6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063433;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VaozzPD8IRRdKfRR61D/DwsEzYnHN2dyceXc1dT/XGo=;
-	b=CRvN8VRon6HduUyuB+dqk1W7yZb9r2eussp2TveXwdrGaTNMp/z2MvW2m0pxaxNEYLsq
-	 aAuCvvDmdb2LwbixU1cRZDiURmXAj/dPSjA6c4zTuUNnxd4qmV9RTEUuwACuPSWabrv2Y
-	 nOUsbIEGOodztqsx00h9NclUyAFoziWFShTujk4PTGYxG073h6ZXUA2TJ/eKndacbJ/nk
-	 ydKca50tiaQF8ay5JtCo3zEr4spVrzGfP8AD05n/pwSCMsozH8/5s5rNcz5d/g/JQAWV9
-	 86ONBR+U/A9lFOaG5N4LjiD6DC+p3tZM94E5Zs5DlDa71LU5GmANFtcYqL4eAWC3KdQ==
+	bh=7BHYj3l/75yqdiBRSN7avV4zuNBiJER9SZXNUolnv3c=;
+	b=3D4v9CrvJuWxa/rtBvfQapEDL9cqVCi2gWR0/wRcdnwN8uxDvXprFIzEbYY+inIibbhf
+	 Vf35hMgJ6G8S6Ku9XYAVjX49T3/czJCWqu85RovuxGDJz4Im0uEfsnzkGs411BTqC1qO9
+	 jScNljMTs5w7RBNfMGra7r+h16FprZkGrfgTNUUVGQHB5D4BPdTu0Qcdm9WQTQRoXd4zT
+	 8R8Z9wSFVrQ2cHsXIusO5HJzS44+SnVzV2PoNQNeQyJtdW/pL5BOOcx/WSQRD2kwouPUx
+	 HJqM54GDT6lmRuC3bjcpRs1csGVo+pSZu2VAJyJ1yRyw23FR1beC+lLNoqIuwtzIS3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Z/i5wLyp";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyLVNV06;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EC6606D801;
-	Sat,  7 Nov 2026 14:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C819E606D801;
+	Sat,  7 Nov 2026 14:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z/i5wLyp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4197D1F008A1;
-	Sat,  7 Nov 2026 14:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyLVNV06
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704901F0089F;
+	Sat,  7 Nov 2026 14:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063431;
-	bh=VaozzPD8IRRdKfRR61D/DwsEzYnHN2dyceXc1dT/XGo=;
+	s=korg; t=1794063432;
+	bh=7BHYj3l/75yqdiBRSN7avV4zuNBiJER9SZXNUolnv3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z/i5wLypoX/mVIaTpNxqoDQ3RhwgXJjAPKmWfnB+j+UyZUQjPQxnhCG/1EiuPGlKn
-	 6unQ99zK9oL2APs5ZmNbivDtomj+2jxpWMr0MP59rIwj9k6kM/5xnkxcMsPd8R8eOd
-	 k/RFErExqTrAuURkVO1YXVgegjiaXu/sPhErapk0=
+	b=FyLVNV06/i8gcX6k38AuDHktiWXAEr4aUtJYxML/XzCXGqMgjGU3H3OQ3KxEf2obQ
+	 Kakdj6egEISkMTq3VhP1FlbEoNvrogC7CdjvmyBBX3ECU4wi9cXnAZEozg8WzBk66x
+	 bTU2WTmlmGA6y+nyC0wi68UandfMUl3Gfn/XIvbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gyokhan Kochmarla <gyokhan@amazon.de>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 595/869] spi: amd: fix len==0 underflow and FIFO overflow
-Date: Sat,  7 Nov 2026 08:54:37 -0500
-Message-ID: <20261107134913.267377136@linuxfoundation.org>
+Subject: [PATCH 6.18 596/869] erofs: use on-disk blkszbits for lz4 max pcluster bound
+Date: Sat,  7 Nov 2026 08:54:38 -0500
+Message-ID: <20261107134913.296947209@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,82 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Gyokhan Kochmarla <gyokhan@amazon.de>
 
-[ Upstream commit e2f4edfc061e493fddde16c4bbe1c4f230f41e4a ]
+[ Upstream commit 90b7e4a7a16443d9f6807b5c1dde52074d9f74c0 ]
 
-amd_spi_fifo_xfer() unconditionally decrements xfer->len when a tx_buf
-is present. The SPI core does not reject zero-length transfers, so a
-transfer submitted through the SPI_IOC_MESSAGE ioctl with len == 0 and
-a tx_buf makes the u32 len wrap to 0xFFFFFFFF, and the following
-per-byte loop writes far past the FIFO window.
+z_erofs_load_lz4_config() rejects a valid LZ4 image when the kernel's
+page size differs from the image's block size. It bounds the on-disk
+max_pclusterblks with erofs_blknr(sb, Z_EROFS_PCLUSTER_MAX_SIZE), which
+expands to Z_EROFS_PCLUSTER_MAX_SIZE >> sb->s_blocksize_bits.
 
-The driver also never checks the cumulative FIFO offset against
-AMD_SPI_FIFO_SIZE. The core splits each transfer down to the
-controller's max transfer size but does not bound the total message
-length, so a message of several transfers whose total exceeds the FIFO
-overflows it with out-of-bounds MMIO writes (tx) and reads (rx).
+At the point this runs, sb->s_blocksize_bits still holds PAGE_SHIFT:
+erofs_fc_fill_super() seeds s_blocksize_bits to PAGE_SHIFT before
+reading the superblock, and only corrects it down to the on-disk
+blkszbits after erofs_read_superblock() returns. The LZ4 config is
+parsed inside erofs_read_superblock(), before that correction, so the
+bound is computed with the wrong shift.
 
-Skip zero-length transfers and reject any transfer that would run past
-the end of the FIFO window.
+On a 64K-page kernel mounting a 4K-block image (e.g. one built with
+mkfs.erofs -C 262144 on a 4K-page host), the bound evaluates to
+1 MiB >> 16 = 16 blocks instead of the correct 1 MiB >> 12 = 256
+blocks. The image's legitimate max_pclusterblks of 64 then fails the
+check, mount returns -EINVAL, and booting from such an image as the
+root filesystem panics:
 
-Tested with a user-space replica of the fifo_xfer length arithmetic
-(ASAN build): a zero-length transfer with tx_buf makes len-- wrap to
-0xffffffff, and skipping zero-length transfers avoids the wrap. No AMD
-SPI hardware was available, so the FIFO bound check was verified by
-inspection against AMD_SPI_FIFO_SIZE.
+  erofs (device dm-0): too large lz4 pclusterblks 64
+  Kernel panic - not syncing: VFS: Unable to mount root fs
 
-Fixes: bbb336f39efc ("spi: spi-amd: Add AMD SPI controller driver support")
-Cc: stable@vger.kernel.org # 5.8+
-Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261014-spi-amd-fifo-fix-v1-1-9fec9ab753e8@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+sbi->blkszbits already holds the on-disk block size at this point, so
+compute the bound from it directly. This makes the check independent of
+the host page size and of superblock-parse ordering.
+
+commit 3acea5fc3354 ("erofs: avoid hardcoded blocksize for subpage block
+support") already handled the same ordering hazard for the superblock
+checksum path by using sbi->blkszbits in erofs_superblock_csum_verify();
+the lz4 config path was missed.
+
+Fixes: 3acea5fc3354 ("erofs: avoid hardcoded blocksize for subpage block support")
+Cc: stable@vger.kernel.org
+Assisted-by: Kirocrew:gpt-5.6-sol
+Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-amd.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/erofs/decompressor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-amd.c b/drivers/spi/spi-amd.c
-index 71a6e5c475b03..ddf89e5353c55 100644
---- a/drivers/spi/spi-amd.c
-+++ b/drivers/spi/spi-amd.c
-@@ -322,11 +322,22 @@ static inline int amd_spi_fifo_xfer(struct amd_spi *amd_spi,
- 
- 	list_for_each_entry(xfer, &message->transfers,
- 			    transfer_list) {
-+		/* Skip zero-length transfers to avoid len underflow below */
-+		if (!xfer->len)
-+			continue;
-+
- 		if (xfer->speed_hz)
- 			amd_set_spi_freq(amd_spi, xfer->speed_hz);
- 		else
- 			amd_set_spi_freq(amd_spi, spi->max_speed_hz);
- 
-+		/* Reject transfers that would overflow the FIFO window */
-+		if (fifo_pos + xfer->len >
-+		    AMD_SPI_FIFO_BASE + AMD_SPI_FIFO_SIZE) {
-+			message->status = -EMSGSIZE;
-+			goto fin_msg;
-+		}
-+
- 		if (xfer->tx_buf) {
- 			buf = (u8 *)xfer->tx_buf;
- 			if (!tx_len) {
-@@ -369,6 +380,12 @@ static inline int amd_spi_fifo_xfer(struct amd_spi *amd_spi,
- 
- 		list_for_each_entry(xfer, &message->transfers, transfer_list)
- 			if (xfer->rx_buf) {
-+				/* Reject transfers that would overflow the FIFO window */
-+				if (fifo_pos + xfer->len >
-+				    AMD_SPI_FIFO_BASE + AMD_SPI_FIFO_SIZE) {
-+					message->status = -EMSGSIZE;
-+					goto fin_msg;
-+				}
- 				buf = (u8 *)xfer->rx_buf;
- 				/* Read data from FIFO to receive buffer */
- 				for (i = 0; i < xfer->len; i++)
+diff --git a/fs/erofs/decompressor.c b/fs/erofs/decompressor.c
+index 48a0c84cec755..858fe65ba84d0 100644
+--- a/fs/erofs/decompressor.c
++++ b/fs/erofs/decompressor.c
+@@ -23,7 +23,7 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
+ 		if (!sbi->lz4.max_pclusterblks) {
+ 			sbi->lz4.max_pclusterblks = 1;	/* reserved case */
+ 		} else if (sbi->lz4.max_pclusterblks >
+-			   erofs_blknr(sb, Z_EROFS_PCLUSTER_MAX_SIZE)) {
++			   Z_EROFS_PCLUSTER_MAX_SIZE >> sbi->blkszbits) {
+ 			erofs_err(sb, "too large lz4 pclusterblks %u",
+ 				  sbi->lz4.max_pclusterblks);
+ 			return -EINVAL;
 -- 
 2.53.0
 
