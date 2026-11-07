@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062089;
-	b=TsvPgrXp00N9trVb+dYiBj0Z8/t7agHZIEANvk0nJZLXeaRrFUwZYA61cUQjgIHi+Pkk
-	 fDRI13xxtuhTIUZRtHX5gtsw0iMVW/84Lhxy8zdvG93rtHCyEj4h6afKt0tZoYhFSJAXv
-	 EXGhN70LpHUnF/XsQqJCnIARbJK70yVQIr5W7lKYL8FfhQBwDdjqgYnG37qexMDfZS5co
-	 DHI08dWQ1Es4alOisiNoqEKGTmTp34I/30DS5dtRTDFRDRziUFWhusLtSqJS2XNl4+r5Y
-	 BSeMaCpiejjNXR4vxzEK+MceuIDG0D8QT3raKHpOuZVjdZNdbPy6YsJG6F4ANPJfZeQ==
+	t=1794062090;
+	b=IGnLWEpaateOxrUgT5DHH4Ka4wwRZvFmCE3aBlvZwezYO+9+gIV7LqJEH+uLDYSv7dFm
+	 DTZ4KNM4PxDLbMsWM5IySQFlJbFPgCeVIKpFebH7p3WdxolxXvajr5daiVhP0+O4bdQ+S
+	 BRAlI87KOHdgD7BfzDacrj6UXoFFEzwu4W0IXl3d1TmvxTId3kNHiBDNIuZwx5lVzbRa4
+	 GcASejCwqCYQyB56IVvobczhZCPFdYlwdH/+juaxIdfewuDp7lDhKXpU/2iwaQi3NOKj+
+	 0yag6qlTujVdz4ahFJQ5Ou2i4vlQtU6geFb2Ts/xwwzi51FmwaO9clVkfQ3OBH1aoIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062089;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062090;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dG+29u5lUcHsQ6GV8nny60Bjd5eVE0a9ybPP8uVu9Eo=;
-	b=eVWOKuyWL4YwwLPFQkCrmdBc3vjhmaQGEt3u9mF8hYtxf2T/7jFQLEeLznFVuAedjKSX
-	 tPfcTVxYhlYgVl1Qlpm2kr2xgNJFixHReFvu6Qu+Qch3CR9hzt7+SQUhwfgOlbTfkNswg
-	 alp0YrpYs/ONahjYx+GMBoBJngu6jPmjJ6al1S1iVcazH1iFd9amOAMuoFV1EH93VXwZc
-	 6K4aIa13R/PA9Xm1hrjLcu9mNkhjduzio3aIdpiCXNHHiEafjT/P107XfGY/F+OVXElgh
-	 dL11U9pywnmT5M+ISsIjbpVOmBH6wEuQH83jcGts3UgoKc2VU2Vll5EN467Xmu7AjFw==
+	bh=ynuVOh7XeM6I9pE9MjWxRBxBuIbho0hILwmvIvQCdMk=;
+	b=oIO5qUnz+GzuQjEPaYAsweV3U9PHWuWKzVpwL1dqDa67GeuMJG8uRxKGd6kNaEvRUmMl
+	 d7pvtGcBiHzh3ywpMG85WyM94vjpcFw//tQSrHGw+i+EkthrZDjbHz+XIH8SLhF8Ll1Mp
+	 k16+jzy+87v11nj/qwrHZWIW0C8yY5/Tsst8GO02gkv57UD2lvU+BkRy2kmd0CsXfzqTU
+	 Ox7QBBuZU5UxjF07T5OUp1gDA7unYuRpSxGnJwu0pINKaaiCMHBASDTvXmFfGSxC1C2zv
+	 BCcpccQDYT4egVe7d5oMNDI5m3mj1iPQrBI2J0i5OWqClE7FdTl6xCqoyoa4yVkw3AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XztOSRuV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DvZytM9J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459AA606EEBF;
-	Sat,  7 Nov 2026 14:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785AA608360D;
+	Sat,  7 Nov 2026 14:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XztOSRuV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88651F008AB;
-	Sat,  7 Nov 2026 14:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DvZytM9J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256641F008A5;
+	Sat,  7 Nov 2026 14:34:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062089;
-	bh=dG+29u5lUcHsQ6GV8nny60Bjd5eVE0a9ybPP8uVu9Eo=;
+	s=korg; t=1794062090;
+	bh=ynuVOh7XeM6I9pE9MjWxRBxBuIbho0hILwmvIvQCdMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XztOSRuV48C+yf2v43iOnjvrzTSNeQGVFi9FrENV8LmXBLbE5nKc9JI6nbsZHe/bJ
-	 Tv4MtNiwflTf8GZqTEZtarDZur+RLaHuEeTdVzkDhTN/PZxmoexiiCgfy4uyJb1rjr
-	 TDqBHhhpdK/c8l+T+/fcbOmZKUE0qpPfEuLE3lc0=
+	b=DvZytM9Jv3Z54X1UuUwc8mZf1dXHI1SSoxQaC0TP/bouaKkPr/Bz0V53kSMI7Cw3D
+	 6RunUTyE26Ab6gX4YPCu33YY/QNwYlj7760z85glQLUq241je7aObpOiFVkF0seFfk
+	 MFS3ZhhXcKG0alyv2U+hxvRNTYBKsqoamQG1ykto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Ridham Khurana <khurana.ridham222@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1063/1536] regulator: core: Fix coupled regulators reference leak on removal
-Date: Sat,  7 Nov 2026 08:51:19 -0500
-Message-ID: <20261107135027.540296181@linuxfoundation.org>
+Subject: [PATCH 6.12 1064/1536] hwmon: (lm95245) Fix negative temperature conversion
+Date: Sat,  7 Nov 2026 08:51:20 -0500
+Message-ID: <20261107135027.569596612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,42 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Ridham Khurana <khurana.ridham222@gmail.com>
 
-[ Upstream commit b9205f0837ca91a0bbe6aa9002207656840c1406 ]
+[ Upstream commit f58c16056f8585ebafb0f1f5d90c23085443a4b9 ]
 
-of_parse_coupled_regulator() returns the coupled regulator with its
-device reference incremented and regulator_resolve_coupling() stores it
-in coupling_desc.coupled_rdevs[]. regulator_remove_coupling() clears
-those pointers without dropping the references, so they are leaked when
-the couple is torn down.
+temp_from_reg_signed() uses only the high byte when the sign bit is set
+and drops the fractional bits in the low byte. Writing -500 to
+temp2_offset stores 0xff80 (-0.5 degrees C) in the offset registers,
+but reading temp2_offset back returns -1000.
 
-Release the reference of each coupled regulator while removing the
-coupling.
+Negative temp1_input and temp2_input values are rounded down to the
+next whole degree the same way. The chip reports -0.125 degrees C as
+0xffe0, which the driver returns as -1000.
 
-Fixes: d3d64537c339 ("regulator: core: Resolve coupled regulators")
+Treat the register pair as a single 16-bit two's complement value.
+
+Fixes: fffd80ccc1e6 ("hwmon: LM95245 driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917143052.2156903-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
+Link: https://patch.msgid.link/20260923172551.1593798-1-khurana.ridham222@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/lm95245.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 707fa12836471..3361556d1b6ef 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -5573,6 +5573,8 @@ static void regulator_remove_coupling(struct regulator_dev *rdev)
+diff --git a/drivers/hwmon/lm95245.c b/drivers/hwmon/lm95245.c
+index 3bdc305308479..9c977d2820f9c 100644
+--- a/drivers/hwmon/lm95245.c
++++ b/drivers/hwmon/lm95245.c
+@@ -98,9 +98,9 @@ static int temp_from_reg_unsigned(u8 val_h, u8 val_l)
  
- 		c_desc->coupled_rdevs[i] = NULL;
- 		c_desc->n_resolved--;
+ static int temp_from_reg_signed(u8 val_h, u8 val_l)
+ {
+-	if (val_h & 0x80)
+-		return (val_h - 0x100) * 1000;
+-	return temp_from_reg_unsigned(val_h, val_l);
++	s16 val_hl = (val_h << 8) | val_l;
 +
-+		put_device(&c_rdev->dev);
- 	}
++	return val_hl * 1000 / 256;
+ }
  
- 	if (coupler && coupler->detach_regulator) {
+ static int lm95245_read_conversion_rate(struct lm95245_data *data)
 -- 
 2.53.0
 
