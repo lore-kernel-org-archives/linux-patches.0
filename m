@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061607;
-	b=4B2H4UTD6nYsaVPZrPVyibe37sbl/KOoCvKlL8alzQhTudGTGd1w21vQNBPzmd9gULKT
-	 A0R/BeSBIqQbkXdk0POidQYHyaZHuYBblEWbiuKurCMwuOOl1tJGBLbmDnF6hT3lnBUYH
-	 sR5HGpvqrqIt05bi6+sRRrI7It4ddvAWpXA7YoNMhwyC1an/1CCFl3VOLmpbSRG8E0VOS
-	 lUjEfztcE0qU8rk69L/oXbkt/eYOVy3SjsHT5xfuDPZuIb1LYvsMoi4kjgPgCBHO//C/J
-	 v5fQX5eZvwEjHYNcPzvcY7ROd2GPfDfgZGgCKmalm0Mo1tZ5y8VLIwaJTK7RnC6e+zA==
+	t=1794061608;
+	b=P8/8i1JuEjqHX0zMv1o0ot8vi56+76dPOpXvn69Sy9Hx6Yq8zUcL2qBQzl5Tqz0NJ26Z
+	 BBiW5eBat5mAjnnClcsF2Dajd+dS8T6aev6KL7XO+G6QytOXSZ6yaPxpRsfXEUQcyTZcx
+	 7ecVW6Bf3zR2oAs6CmzN8uV+BpsYQVxmE2faWBjUtHiiDVdlQjXkm4CFkSFhFc2wFijkc
+	 Kl6BWsiN6cM/2PibFofGDuZbRVve6XfdswFZVWlJgq+ML5kerQCpC9VDf2Qq/KVWTFZR3
+	 NbilOn0n5Re8IQTg34fM0vsy2WP2joLP0bg2iK//Jp94wsS8bi+60jFfehwPwy4ASKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EgT5t2RiGAZ0OGTde2pB7FZ9McKD+bR34iv5UGPIGoI=;
-	b=HjjMXVShFPLASuMfutF9ZPLCqAjqDfikvivPRcoWd/s/Vb0VtgGexV0uSWsjHZq4njnC
-	 bsHDD5yJzzVhxMFDrKy/8CJuBAnJ857cZexPLfeP6szOlAYAncrJlze5Q3L4HLYCgB35G
-	 bMsW8OEGlmUI86AIsddo9qZ3ml9czDNic7EvCXAOeV9rSTw7TcUibnwRQ1FJYVd6ZKizh
-	 7Lf52CajlHLnIgvFSxM/9AbsZsjSxP2OXsXat5azdAJnEgyPWpihs4fLOidTggoWNOx8P
-	 Tzd7A/9fi23e7W5V38W9UDixr3W8U+cYP5reKMuYBXjm1J2azj8hk6pgH5Denam8DxQ==
+	bh=Wels78JTlUg1p6vdSKRpxSHXPx1NSsMmBkyJvWDKWno=;
+	b=NHKbyPu7SYgABJZELM8GVFOlr50lhojJJp5vK9OYrdNjXp1tfGwSwSjvW+Vczl/3b/Rj
+	 hELhyJIVue5v0YIb/ukK/fH9E+JtQh8yhpndOPoOyZ+cvhoL+O8aTN094WtghvHB70W7R
+	 TQc9O8G9Qp4fuiE8obrM8eHZVt9RGSGSMstSWBGAIf/tYbAtcGQm65CgbbjCjOavehC2O
+	 SB+eKMz4rAKrMeVOMSnz7b1DkB2M/8Skq4eungbd9hWkS+3ezUJM6vpXIuL+DenjCNUu+
+	 n6uJngosqPpzOyChkJZOEgJUPcA5tjDwokM43G78m/px7WJMkb/qfXYz5VlL3RUPshA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywexLTnN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfiKLY8r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6176E606A32D;
-	Sat,  7 Nov 2026 14:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C274606A326;
+	Sat,  7 Nov 2026 14:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywexLTnN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3CA1F0089F;
-	Sat,  7 Nov 2026 14:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TfiKLY8r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1211F0089F;
+	Sat,  7 Nov 2026 14:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061607;
-	bh=EgT5t2RiGAZ0OGTde2pB7FZ9McKD+bR34iv5UGPIGoI=;
+	s=korg; t=1794061608;
+	bh=Wels78JTlUg1p6vdSKRpxSHXPx1NSsMmBkyJvWDKWno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ywexLTnNXJhAgFddiic+0BgLNYPZv2owmkAqsAcT5qD/601atX58MViIIsUOhW7bg
-	 e0XGisBJzb3QhFa+KcnFt7EW9TqJlH8fbHLrhc3ndDWGjy6aJTOw21flUjyoJxMW99
-	 xzVSkbvTH2dckwG/EQaLKGkARsfdvk/iGDjzN7fg=
+	b=TfiKLY8rGlREHErgKMVTt+1ueB3MOU8hIBnCev3KSiKPHt1oy0nlukC0DPOJ/ZD9O
+	 EVfUXwVQb8wIG8bS0F8WVhDsCMB2eAFRr9nBWXm0dy2nGX+TtOp3pTfYFv4ItJqXVH
+	 dtARAshRdXwV0izrFplmOzzyDhl/goyryPi6EDEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.12 0679/1536] ovl: use the pinned upper dir in ovl_fix_origin()
-Date: Sat,  7 Nov 2026 08:44:55 -0500
-Message-ID: <20261107135016.555525387@linuxfoundation.org>
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 0662/1536] media: rc: Ensure registered is cleared in error path
+Date: Sat,  7 Nov 2026 08:44:38 -0500
+Message-ID: <20261107135016.105009910@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,67 +67,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Sean Young <sean@mess.org>
 
-commit 4f61ff2ebfb3d2967b83b6a4d456242244d5a61f upstream.
+commit 37efd09ba2c62e46e3a3a793025c186f8cd1a417 upstream.
 
-Renames made directly on the upper filesystem during a lookup crash the
-kernel.
+If rc_register_device() fails, ensure that registered is not set to true.
+If lirc_register() succeeded, then userspace could have an open file
+descriptor open. This leads to a use-after-free.
 
-A dentry that is passed to vfs_setxattr() must be pinned.
-ovl_fix_origin() passes upper->d_parent to ovl_set_impure() without a
-reference, and the lookup holds no lock of the upper directory. A
-rename on the upper filesystem changes d_parent, and only the child
-pins the new parent, so a second rename and an rmdir free it.
+lirc_unregister() must be called with registered = false, else there is a
+possibility that an fd is open and polling, which would never return
+POLLERR unless registered is false.
 
-With delays in ovl_fix_origin() and ovl_set_impure(), renaming the upper
-directory twice and removing the intermediate parent during the lookup
-of a merge directory without an origin xattr gave a KASAN
-use-after-free in vfs_setxattr().
+Note that registered must be changed under dev->lock, many functions
+read registered under lock (e.g. lirc_ioctl).
 
-Fix this by passing the upper dentry that the overlay parent holds.
-
-Fixes: 9678e6303057 ("ovl: fix inconsistent d_ino for legacy merge dir")
+Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[amir: add helper ovl_set_impure_dir()]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/namei.c     |    6 ++++--
- fs/overlayfs/overlayfs.h |    6 ++++++
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/media/rc/rc-main.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -910,8 +910,10 @@ static int ovl_fix_origin(struct ovl_fs
- 		goto out;
+--- a/drivers/media/rc/rc-main.c
++++ b/drivers/media/rc/rc-main.c
+@@ -1929,7 +1929,8 @@ int rc_register_device(struct rc_dev *de
+ 			goto out_raw;
+ 	}
  
- 	err = ovl_set_origin_fh(ofs, fh, upper);
--	if (!err)
--		err = ovl_set_impure(dentry->d_parent, upper->d_parent);
-+	if (!err) {
-+		/* upper->d_parent is not stable, use the overlay parent */
-+		err = ovl_set_impure_dir(dentry->d_parent);
-+	}
+-	dev->registered = true;
++	scoped_guard(mutex, &dev->lock)
++		dev->registered = true;
  
- 	ovl_drop_write(dentry);
- out:
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -539,6 +539,12 @@ int ovl_check_setxattr(struct ovl_fs *of
- 		       enum ovl_xattr ox, const void *value, size_t size,
- 		       int xerr);
- int ovl_set_impure(struct dentry *dentry, struct dentry *upperdentry);
+ 	rc = device_add(&dev->dev);
+ 	if (rc)
+@@ -1949,7 +1950,7 @@ int rc_register_device(struct rc_dev *de
+ 	if (dev->allowed_protocols != RC_PROTO_BIT_CEC) {
+ 		rc = lirc_register(dev);
+ 		if (rc < 0)
+-			goto out_dev;
++			goto out_lirc;
+ 	}
+ 
+ 	if (dev->driver_type != RC_DRIVER_IR_RAW_TX) {
+@@ -1972,11 +1973,18 @@ int rc_register_device(struct rc_dev *de
+ out_rx:
+ 	rc_free_rx_device(dev);
+ out_lirc:
+-	if (dev->allowed_protocols != RC_PROTO_BIT_CEC)
++	scoped_guard(mutex, &dev->lock)
++		dev->registered = false;
 +
-+static inline int ovl_set_impure_dir(struct dentry *dentry)
-+{
-+	return ovl_set_impure(dentry, ovl_dentry_upper(dentry));
-+}
-+
- bool ovl_inuse_trylock(struct dentry *dentry);
- void ovl_inuse_unlock(struct dentry *dentry);
- bool ovl_is_inuse(struct dentry *dentry);
++	if (device_is_registered(&dev->lirc_dev))
+ 		lirc_unregister(dev);
+-out_dev:
+ 	device_del(&dev->dev);
++	/* registered already cleared above */
++	goto out_free_table;
+ out_rx_free:
++	scoped_guard(mutex, &dev->lock)
++		dev->registered = false;
++out_free_table:
+ 	ir_free_table(&dev->rc_map);
+ out_raw:
+ 	ir_raw_event_free(dev);
 
 
