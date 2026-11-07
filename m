@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062811;
-	b=hRJ/wtJEC0ePA+z1FXec29/6XdBrr8pQ+kcjYg5c14vyDSNINVnyiD1ZoAzlYC+TUcKC
-	 gsBLddES4zUG6uHGYuFabZLq6qmEwyFUMEN0Y4ECiiMuDIioorZxBVeU/Ph5SkBsAwqjb
-	 h06MmsKWdiRbg/bLl+Bj0x/CwtQPHmvrEyWTcuaTCk+buZo12i6XDjiRg5CVw7ramwQ80
-	 SVJjPNcxbsUvm1TjqPzC9MIPa2WGFr5n0nsKKcGV51B6kA9JtkZuLYIHRSUuR5acbQJWz
-	 dDTgFO+kvoFeSRbnIq4ftGxZ2nDrmddfCfiT4+8G+AdAxnMLXoHf+GBiqgvKB/5J6og==
+	t=1794062813;
+	b=JzAgN1izwcxiuRKQNLHzOlzCg8Xlf5SICA+EFScdioa0ROmhm1LH4j2d0lXrlnuiuJuh
+	 /uT/KuQaL/YT+1k+19xBmOE9bFVVNWeCrPoL5EAj/DSNmdJrM0jJA7kkSwurGI8aHzTFu
+	 0Jd69bw94vzk0fmvH0PyfSu6eaMcMVlNHgr8m+JQ1Bzo4Qrza8h+3TBkeOSddW8/00V0P
+	 FKK5IKD/xbfo44Z9SJvk1MRAfWGSVpDHhIVPH/YCZOD2zDHdVYXGFBLeRR3DCG+E1EwRg
+	 cjKG+C9RSeP8qj2Aa1LTA8TR6OFt3fekhlAiExf0aLCjXPc9RhtQ3OC5xLIkOTMrwog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062813;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4xwNIyOzWiJdwk40vLsYtkAhQ9wQDmdLrPaHCAHDlfk=;
-	b=DsfGxXiKl7b7Aaldue2uom3xwogSdJ/FXfsrFSb8UafC4ENDTBUK3ek4ded6XURzi+WA
-	 v4PdUDT8D6dGmY/yoiYfiPoFiQyM9c4khBfz3QVSBOO+Cl5eybwOJKQEvLANGWGsnriZ5
-	 eQhQO3UeGahn30RJYtDtxwuB1PfWVLCv0++Hxos7MuxWq2QFxdZ9vGcVlWnnw5rtEEQEj
-	 tnGv1Kk3fRfX856UdY43fWKBtACDLCR6UrOoVWIlqTy2RfGkfhWUdmOEN8+d+icpaOqy0
-	 3G4WUrnijorohme/1GuwP8be5pTmpp5GTYg1ftyRxbKw/VHSrb82/koaw7pxpp3Umew==
+	bh=FFy2Udmx0NIb98/tQIsu50NgiVPjL/fJlsFy+tDVPEU=;
+	b=VXtxuTtt1CUbk+BWYIoJQkJm5XkiGeVWHdB0oi7RPp9zMVrM9/G0w+DQChkcnIOVHmFp
+	 x1RlPkGK5QIW791XZsQ87Y4DfViWsxdD3XLS8NUUDaw+GkTRohTJnvXhGjlRyhg0PBA74
+	 ZQYLxljHDr+bEMXMrwtsrL9/ve26SURpgtX1kCOaazVDy+x/tA7n2g4iqG0q81po8MQma
+	 TOYUTmsA3AfjSs+tXlqEc8+zPYpELnNAcNVCGa+hz895if81TI8+A4sdbUN8WG1HKykpR
+	 XY/sqY8wyVltsrRbxdNWL4h+LRiX5dLCtfEtJhsBWWhuhDThl6zrJLetiUZxmPpDPpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcaJfJbU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LsqyWLHA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF51606A33E;
-	Sat,  7 Nov 2026 14:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE625606A33E;
+	Sat,  7 Nov 2026 14:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcaJfJbU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B54E1F0089F;
-	Sat,  7 Nov 2026 14:46:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LsqyWLHA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541721F0089F;
+	Sat,  7 Nov 2026 14:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062811;
-	bh=4xwNIyOzWiJdwk40vLsYtkAhQ9wQDmdLrPaHCAHDlfk=;
+	s=korg; t=1794062812;
+	bh=FFy2Udmx0NIb98/tQIsu50NgiVPjL/fJlsFy+tDVPEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JcaJfJbU+Tx3Iv4gO/QBaNaDoxryTI6rfXJeeLhgj5Qq9wrSCiqYttb54rJZYUsa/
-	 xbj6sjx4E31JtCdB7TMqJbJ+SEJ1vKi42nDzPNFHs4AHVQH6uFRhTV/+ObQH4wc6Wx
-	 T9VCQz62fnXfZLCrOcu+yUcvD0gmi1XSqHXtn/gI=
+	b=LsqyWLHAoq2V8xkMbVZ5obUI2d7ctyQWBjAklEBUq/xDIhFw8EiYicy4+b/f7Rr3v
+	 SK76jrqJzZEHIzVGuSQRC+6/kxuwx7Fni7sa3YKaVp36QdZ1AREEcegOilRwSVnkU7
+	 +j/EWxIZ8TM+G+QcXIr+OIZdGpbrtVEgUaVpnjIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Younho Choi <gdool88@mju.ac.kr>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 084/869] media: vim2m: keep transaction buffer count stable while streaming
-Date: Sat,  7 Nov 2026 08:46:06 -0500
-Message-ID: <20261107134855.548736411@linuxfoundation.org>
+Subject: [PATCH 6.18 111/869] ACPI: pfr_update: zero-initialize capability query result
+Date: Sat,  7 Nov 2026 08:46:33 -0500
+Message-ID: <20261107134856.347605824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,118 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Younho Choi <gdool88@mju.ac.kr>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 50f5fed44d8e24081e8feed5154746fe193f11b8 ]
+[ Upstream commit d776369a9eded071df83e4738e1572c4c5b912d7 ]
 
-V4L2_CID_TRANS_NUM_BUFS controls how many buffer pairs a vim2m
-mem2mem job processes before the job is completed. The driver stores
-the value in ctx->translen and device_work() uses it later to decide
-whether the current transaction should continue.
+query_capability() copies four ACPI buffers into fixed-size fields using
+the firmware-supplied lengths.  The existing overflow guard rejects
+oversized buffers, but shorter buffers are accepted and leave trailing
+bytes of the stack-allocated cap_hdr uninitialized.  PFRU_IOC_QUERY_CAP
+then copies the entire structure to userspace.
 
-Letting userspace change this control while streaming is active can
-make a queued job observe a different transaction length than the one
-it started with. That leaves the transaction state inconsistent with
-the buffers currently queued for the job.
+Zero-initialize cap_hdr before querying the firmware.  This preserves the
+existing handling of short firmware responses while preventing disclosure
+of kernel stack data.  Oversized buffers remain rejected.
 
-Grab the transaction buffer count control while either queue is
-streaming, and release it only after both queues have stopped
-streaming. The V4L2 control framework then rejects changes with
--EBUSY while the value is in use, while still allowing userspace to
-configure the value before streaming starts.
+A QEMU _DSM returning one-byte buffers reproduced nonzero stack suffix
+bytes in all four fields.  With this change, the ioctl still succeeds and
+each unwritten suffix is zero-filled, while 64-byte buffers continue to
+return -EINVAL.
 
-Keep the control handler alive until after v4l2_m2m_ctx_release(),
-since releasing the mem2mem context can call stop_streaming(), which
-now ungrabs the control.
-
-Fixes: 96d8eab5d0a1 ("V4L/DVB: [v5,2/2] v4l: Add a mem-to-mem videobuf framework test device")
-Cc: stable@vger.kernel.org
-Signed-off-by: Younho Choi <gdool88@mju.ac.kr>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/1a001e1fee9.637da6dc3533246.238498880682901704%40a0rg.com
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260827053741.79425-1-kmehltretter@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vim2m.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ drivers/acpi/pfr_update.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vim2m.c b/drivers/media/test-drivers/vim2m.c
-index 86c32699111ad..5db440bf728e9 100644
---- a/drivers/media/test-drivers/vim2m.c
-+++ b/drivers/media/test-drivers/vim2m.c
-@@ -205,6 +205,7 @@ struct vim2m_ctx {
- 	struct vim2m_dev	*dev;
+diff --git a/drivers/acpi/pfr_update.c b/drivers/acpi/pfr_update.c
+index 9afd2c52fdbd8..98ace679601b8 100644
+--- a/drivers/acpi/pfr_update.c
++++ b/drivers/acpi/pfr_update.c
+@@ -422,7 +422,7 @@ static int start_update(int action, struct pfru_device *pfru_dev)
  
- 	struct v4l2_ctrl_handler hdl;
-+	struct v4l2_ctrl	*trans_num_bufs_ctrl;
- 
- 	/* Processed buffers in this transaction */
- 	u8			num_processed;
-@@ -1270,9 +1271,27 @@ static int vim2m_start_streaming(struct vb2_queue *q, unsigned int count)
- 		ctx->aborting = 0;
- 
- 	q_data->sequence = 0;
-+	v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, true);
-+
- 	return 0;
- }
- 
-+static bool vim2m_other_queue_is_streaming(struct vim2m_ctx *ctx,
-+					   struct vb2_queue *q)
-+{
-+	struct vb2_queue *other_vq;
-+
-+	if (!ctx->fh.m2m_ctx)
-+		return false;
-+
-+	if (V4L2_TYPE_IS_OUTPUT(q->type))
-+		other_vq = v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx);
-+	else
-+		other_vq = v4l2_m2m_get_src_vq(ctx->fh.m2m_ctx);
-+
-+	return vb2_is_streaming(other_vq);
-+}
-+
- static void vim2m_stop_streaming(struct vb2_queue *q)
+ static long pfru_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
  {
- 	struct vim2m_ctx *ctx = vb2_get_drv_priv(q);
-@@ -1286,11 +1305,14 @@ static void vim2m_stop_streaming(struct vb2_queue *q)
- 		else
- 			vbuf = v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
- 		if (!vbuf)
--			return;
-+			break;
- 		v4l2_ctrl_request_complete(vbuf->vb2_buf.req_obj.req,
- 					   &ctx->hdl);
- 		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
- 	}
-+
-+	if (!vim2m_other_queue_is_streaming(ctx, q))
-+		v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, false);
- }
- 
- static void vim2m_buf_request_complete(struct vb2_buffer *vb)
-@@ -1392,7 +1414,8 @@ static int vim2m_open(struct file *file)
- 
- 	vim2m_ctrl_trans_time_msec.def = default_transtime;
- 	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_time_msec, NULL);
--	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
-+	ctx->trans_num_bufs_ctrl =
-+		v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
- 	if (hdl->error) {
- 		rc = hdl->error;
- 		v4l2_ctrl_handler_free(hdl);
-@@ -1447,10 +1470,10 @@ static int vim2m_release(struct file *file)
- 
- 	v4l2_fh_del(&ctx->fh, file);
- 	v4l2_fh_exit(&ctx->fh);
--	v4l2_ctrl_handler_free(&ctx->hdl);
- 	mutex_lock(&dev->dev_mutex);
- 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
- 	mutex_unlock(&dev->dev_mutex);
-+	v4l2_ctrl_handler_free(&ctx->hdl);
- 	kfree(ctx);
- 
- 	atomic_dec(&dev->num_inst);
+-	struct pfru_update_cap_info cap_hdr;
++	struct pfru_update_cap_info cap_hdr = {};
+ 	struct pfru_device *pfru_dev = to_pfru_dev(file);
+ 	void __user *p = (void __user *)arg;
+ 	u32 rev;
 -- 
 2.53.0
 
