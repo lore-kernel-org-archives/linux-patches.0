@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064306;
-	b=fJTQnjZbyhgeVDRr+7JsJIfGb29HvMxoP62Jwm4PK+I0NLVfz/fK9hNaY5u1S0zbJSjH
-	 n4yqFB9PqRV3X/yc1l6itER//yQgBXM+XSiuiKL4hy55adslI2oimW6JworyFbmn32MlJ
-	 lrdXMNa7/MpJKTlfneRkFKm4c6LGZWh8HmZwRKj5q16Os+nAoIxHrhIBcUqmBNrXhrPMx
-	 CCePnq09UPkQMG0Kayf71UwBbzYyOtHnQRJ9uj70YerSHnPGe92cRZ2HjPQskt73B/j4p
-	 DIF1zBwFMkZOVyXtnELuI+BcVoMSihRU+bN8DPVcTQJZSebnGHplS12qYpxYyOuURDg==
+	t=1794064307;
+	b=l9NnWkBalWGReuajQwXHXkIdajFJxfWGJRWEvnOVzwZMiRpYvOhNxb7gr+mbb2ofeLvq
+	 vHoBQgfIbhfJS5htIW0TTLkDJi9vl780YTevgPsrwojqS9pWIRK/ccv6bCfSldUlUpief
+	 4Hjle39AP0ayADFtJq3FTsxSWR05dALHMr+25AtHcwwrsvBSG2kkoNhaIOgC/fsQeCWQf
+	 tR7hso4ogxmvTCyPO4PplhpVzzBQCzYsszK3s+No/qo6OzLSnJ/L1Qm0laL6dxGNrZ7qk
+	 K+7pLn15o61RPLsu8knQYp9THP+DW/2hoWh29b0Mg3d0eLdalSyhaKxHIbN37dePAJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064306;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064307;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J1VEWOaz+nui8ONRR1DPvAI9h8BLlyC/1HMK8TpKfMw=;
-	b=ZSme/q8VucYwmIwImIKUydgOwZ+/AKT4L7nDQ9pfHqvEBQU4zev29jvGteFdS9OwkqcK
-	 V0nCtaZjP12FcMAp4IS79BjWK88nYLy4t5nUoIXp3jwPZSSXDP4d89A1FhqDNAK4iO02E
-	 iyesxmzVUtTNHd5lE9WsBU/gw9y3nXPsjysBouzzu0Nvi9T4F7kVXmAzOSlE46/5+YqsN
-	 iZtbR2tYyhgPNJ6+RtzLNeL4swVEse3tvbagkRXbl0YQi9+XCDRH3Zja2jIoNkKPGOXd0
-	 MDX4kImrcoSwVKU2PBTGZg/CinltlHoR0o3lTqxP0SG8plKWN6L30kqkTSbQd37ogmA==
+	bh=vC2N9aG8EBSm0d0fFqcY7V81n+E4n8iAbqpzmkyOX8s=;
+	b=Wssy75RJfegvZFigI+0myZbOWhTtkDM++3/b67JAjKTJewJXuFyWMV4GtK1E0fIbTRCm
+	 OK2iK+ECBHKtWZ/xl41tt1kiFMd3udhiWa247R4poDUPY4rw5hiqtiHL4A7jMwDBLxTvz
+	 kcnAf6+bSIdge9I2T+pCNj1bVOHctoMVsYsnQRi41JF7m3ND6l+b/6zVfyxLb/udbwr+/
+	 UUEWJ/IQoo6PeqJGcif7NI92rq9SIM/ZAFtNCa+Z9NRvcKxoIaoCBrOqv3AqrFUyji/4y
+	 /YilmKCCLJI4QBMI//kIFi4tCFc1ug/182rzJ2kqxjbZLikDzer4JlzjFkmns/6b14Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oBh9HizT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Jz4US+J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2793606A9CC;
-	Sat,  7 Nov 2026 15:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E769606C025;
+	Sat,  7 Nov 2026 15:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oBh9HizT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9361F0089F;
-	Sat,  7 Nov 2026 15:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Jz4US+J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6B41F0089F;
+	Sat,  7 Nov 2026 15:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064305;
-	bh=J1VEWOaz+nui8ONRR1DPvAI9h8BLlyC/1HMK8TpKfMw=;
+	s=korg; t=1794064306;
+	bh=vC2N9aG8EBSm0d0fFqcY7V81n+E4n8iAbqpzmkyOX8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oBh9HizTy3vo6L+8JDfpU8olgUav/q1rzFmKmgNi57pSqRpEq7CJX3NJliapmidr9
-	 UYmi5gMj/NpQ4SASi2w36Tj9C0nBZbHoFfObZDUm/TG+rOSKgkH8/X/hoN3+L3zIP1
-	 gskv6QFE/V5NzyofoJ62cijBGzpWmC5htMMKmnqQ=
+	b=2Jz4US+J+3Xa6fLxIQc9qzasAyCDuxaQ805DKudJAoUsPT9ML23UnAO8SSQRzY+oR
+	 AWxFrsDFFuHAcCTA0nt/V2zo6Fw3aWkY0HW7wGHw0eUCEskNmfYOgvg3EIekT91iae
+	 lEG6yR0C2Hk9JEIurHtpha0VjiQFUbc5C/zDinHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0397/1257] drm/msm/hdmi: Handle msm_hdmi_power_on() errors during .atomic_pre_enable()
-Date: Sat,  7 Nov 2026 08:44:53 -0500
-Message-ID: <20261107134950.507964638@linuxfoundation.org>
+Subject: [PATCH 7.3 0398/1257] drm/msm/hdmi_bridge: Correct poweroff/audio cleanup order in post_disable
+Date: Sat,  7 Nov 2026 08:44:54 -0500
+Message-ID: <20261107134950.532982853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,89 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit dd6ecace57851878e62367a6f1a26dd5b9aa217f ]
+[ Upstream commit 0499f0576e4442d67c164119f9d7f75d3cc945e7 ]
 
-Properly handle power up failures during .atomic_pre_enable() by
-aborting the .atomic_pre_enable() to avoid accessing registers why
-blocks did not bring up.  Otherwise this could lead to imprecise aborts
-when accessing MMIO while entire power domain is off.
+Turning off the power in msm_hdmi_bridge_atomic_post_disable() should
+follow reverse order of powering up, not only because it is logical, but
+also because msm_hdmi_audio_update() accesses registers thus block
+should still be powered on.
 
-Cc: <stable@vger.kernel.org>
-Fixes: ba3d7bf3a7ab ("drm/msm/hdmi: Convert PHY files according to new design")
+Depending on specific timing, existing code could have accesses to MMIO
+of powered off block.
+
+Cc: stable@vger.kernel.org
+Fixes: c0c0d9eeeb8d ("drm/msm: hdmi audio support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/752652/
-Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-2-87bdb9f1987f@oss.qualcomm.com
+Patchwork: https://patchwork.freedesktop.org/patch/752655/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-3-87bdb9f1987f@oss.qualcomm.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 30 ++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index 157f19bd90b4e..db85400e574e4 100644
+index db85400e574e4..1860605850c9b 100644
 --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
 +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -13,14 +13,16 @@
- #include "msm_kms.h"
- #include "hdmi.h"
+@@ -339,10 +339,10 @@ static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
+ 	msm_hdmi_phy_powerdown(phy);
  
--static void msm_hdmi_power_on(struct drm_bridge *bridge)
-+static int msm_hdmi_power_on(struct drm_bridge *bridge)
- {
- 	struct drm_device *dev = bridge->dev;
- 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
- 	struct hdmi *hdmi = hdmi_bridge->hdmi;
- 	int ret;
- 
--	pm_runtime_resume_and_get(&hdmi->pdev->dev);
-+	ret = pm_runtime_resume_and_get(&hdmi->pdev->dev);
-+	if (ret)
-+		return ret;
- 
- 	if (hdmi->extp_clk) {
- 		DBG("pixclock: %lu", hdmi->pixclock);
-@@ -29,9 +31,14 @@ static void msm_hdmi_power_on(struct drm_bridge *bridge)
- 			DRM_DEV_ERROR(dev->dev, "failed to set extp clk rate: %d\n", ret);
- 
- 		ret = clk_prepare_enable(hdmi->extp_clk);
--		if (ret)
-+		if (ret) {
- 			DRM_DEV_ERROR(dev->dev, "failed to enable extp clk: %d\n", ret);
-+			pm_runtime_put(&hdmi->pdev->dev);
-+			return ret;
-+		}
+ 	if (hdmi->power_on) {
+-		power_off(bridge);
+ 		hdmi->power_on = false;
+ 		if (hdmi->connector->display_info.is_hdmi)
+ 			msm_hdmi_audio_update(hdmi);
++		power_off(bridge);
+ 		msm_hdmi_phy_resource_disable(phy);
  	}
-+
-+	return 0;
- }
- 
- static void power_off(struct drm_bridge *bridge)
-@@ -287,13 +294,18 @@ static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
- 
- 	msm_hdmi_set_timings(hdmi, &crtc_state->adjusted_mode);
- 
--	mutex_lock(&hdmi->state_mutex);
--	if (!hdmi->power_on) {
--		msm_hdmi_phy_resource_enable(phy);
--		msm_hdmi_power_on(bridge);
--		hdmi->power_on = true;
-+	scoped_guard(mutex, &hdmi->state_mutex) {
-+		if (!hdmi->power_on) {
-+			if (msm_hdmi_phy_resource_enable(phy))
-+				return;
-+
-+			if (msm_hdmi_power_on(bridge)) {
-+				msm_hdmi_phy_resource_disable(phy);
-+				return;
-+			}
-+			hdmi->power_on = true;
-+		}
- 	}
--	mutex_unlock(&hdmi->state_mutex);
- 
- 	if (connector->display_info.is_hdmi)
- 		msm_hdmi_audio_update(hdmi);
+ 	mutex_unlock(&hdmi->state_mutex);
 -- 
 2.53.0
 
