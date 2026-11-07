@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061157;
-	b=cS0ae3xrzNH3d4Epw+oxhqC55HGSNkK3KR+MlBZUWToVpFyNEMPm8aG7K1H0PfPnTQYO
-	 n+3O/ZxVmQ15XU32HdP/WYybolC1oRhlsDlVwNUk70IcdT0N9ArS2gppW0xGTHzCT1Fx3
-	 IZnMzhYtKvUFi9odnH5+/LcLcKPncHG1RHpbRAf5bqb0rFGALkK3Rpeyh9ujnBDIutsbB
-	 aPaKQ395EvdCp4BkFfH61IL1JAtXyP6Vkblbrr7ei3doHFGOU/MW+yI71q+c0/ikklNPG
-	 oU2gS/3Z/iAiuBROEeiImbo1bcxOQqfsLKijZnH0e+1nX2Q43T0x4EF8S6oTGOr6SKw==
+	t=1794061158;
+	b=Uz82P7v/DpUPImcLYUdvOV1Yd1uZNbYok6zDvULneB8le/RtYqphYg3GIH7lFKYPxdNj
+	 VIMlC9WMrXvkfP0MV7Tg5PecMIw0UfsTP9La9oSg2fPLp0VsCz/grVHiUmJA/9JTaAXwh
+	 WDSRDwK0KkwOgQ8+V1X5u4py074iqtq+b4CkpaoxXqXAQR5pweOYkOZZorW29jQ2+FKzB
+	 /Qkv66la2KoYf5e7+7Wgx/8ldVBUWD8hQmb44vpZoisqk2QQ1TqHvd6stVGo3Q2YO7Lu2
+	 7usEHUIVww+5t/61N/b3/cDUyXltj1sNPihRE8GlmlrrI/OTanq2DsZioGQYeZxTmVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061157;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061158;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Or8Zak/BmurYQXHbPG79GmyTXHsmKMTHQrpDls/nJe4=;
-	b=ESb1Mt8DkgvKf9Q53LK2+YrcaR9zJSL7l5FfpMRipsayvPKXAnEhLWZZryUf/wxJFlfm
-	 n92w7zIz5nCuDxPJnnJnrewVvCPU9d8kkFZjev05g50sozoCi5QfswdneAwxuzvozoHYU
-	 gLUd1fgRtu41gg9bCVA5FO8kkq3wtyIwwK5MIkpvyhPqeMA8V/BD0D51rlknsnQjXwfXE
-	 0cfu+2m9/zZyXiTrtgMrmuY+a5Qa+T6o1AVU/nh75uewwMDYdm7xyLAM0jW/3jP+V+97S
-	 WsjAbfZhx8H+qUzV4kPKgZblGXXL56eZMitt9hIldEYExPc3MaMFJf+nAnCwO5Cce/A==
+	bh=THKk+QW7jPZeLE5EdoMlG6dMjeqFyQJ3RQiPh/bd80c=;
+	b=eppi3S3h1oKRoysE2uEO64pFr9ZRKqr2MdTu2EkDL8OXczOiExFzS6b7p1twP2DGcADp
+	 wwixPmDNvciq0qrqOvnk1oCX4e/5cbBTOYzQkiKCmzDvI9+G4HobaZPogu8x14KOLIVsc
+	 knOGrKid2iMaul42k/OFDnkBDrhKCAnINlwYC98lscKBL30YigStDpuCzpVC7+s1e071U
+	 ak1XTybf0SpU78pya8nOJXlgTcqtImSe3dtmFQZvZtZ2/D966p2RI0/44m8D4x7WtYw1y
+	 U3zjd9cwOSkTyPMewLE3PofED1ALoVL+1UJ4VZsmKdej8KAfso60+rigHFG69YleNYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XWOhwEC/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ond2Yswd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38637606D805;
-	Sat,  7 Nov 2026 14:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64714606D805;
+	Sat,  7 Nov 2026 14:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XWOhwEC/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13A11F0089F;
-	Sat,  7 Nov 2026 14:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ond2Yswd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135371F0089F;
+	Sat,  7 Nov 2026 14:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061157;
-	bh=Or8Zak/BmurYQXHbPG79GmyTXHsmKMTHQrpDls/nJe4=;
+	s=korg; t=1794061158;
+	bh=THKk+QW7jPZeLE5EdoMlG6dMjeqFyQJ3RQiPh/bd80c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XWOhwEC/c33bLW62r5UhF2p91mCHjhfADDhQtLXeYWGVHGJ1Lwuh0Y4APmXHQ5RkP
-	 i9CiDHHRzTeVKKbZ6K2AqpxBK59vpxQayb/2nN6kW3rb9EdtEZI7dmhHFy1OeYa+tZ
-	 7Y4whOFd5/H+5UPhXrTGHx5lKcQ9IGM2dtbPyeO0=
+	b=ond2Yswd/jxov/5l+77D8jVoQGiUyT1672gM1+b/Aj9mIbaLq6XNrPF4kcwDojPz6
+	 IhJL7oAp98+okaGoZL94DeA+500Rt5/tBHK52Gjevy/Fe8gUrBxIo779RYfVq7+n2o
+	 tykkSiMbigbl4HOGsVyUrYO421Rj8YuH+mVejl8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
 	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0464/1536] module: Use RCU in find_kallsyms_symbol().
-Date: Sat,  7 Nov 2026 08:41:20 -0500
-Message-ID: <20261107135010.549697570@linuxfoundation.org>
+Subject: [PATCH 6.12 0465/1536] module/kallsyms: fix nextval for data symbol lookup
+Date: Sat,  7 Nov 2026 08:41:21 -0500
+Message-ID: <20261107135010.575422421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,71 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-[ Upstream commit f01369239293e4900af7be673e0fd26fe54f85e1 ]
+[ Upstream commit 0e9f090a4e9bfae5a190ccf89eab3bf14f6b0f96 ]
 
-The modules list and module::kallsyms can be accessed under RCU
-assumption.
+The symbol lookup code assumes the queried address resides in either
+MOD_TEXT or MOD_INIT_TEXT. This breaks for addresses in other module
+memory regions (e.g. rodata or data), resulting in incorrect upper
+bounds and wrong symbol size.
 
-Use rcu_dereference() to reference the kallsyms pointer in
-find_kallsyms_symbol().  Use a RCU section instead of preempt_disable in
-callers of find_kallsyms_symbol(). Keep the preempt-disable in
-module_address_lookup() due to __module_address().
+Select the module memory region the address belongs to instead of
+hardcoding text sections. Also initialize the lower bound to the start
+of that region, as searching from address 0 is unnecessary.
 
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250108090457.512198-5-bigeasy@linutronix.de
+Cc: stable@vger.kernel.org
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Stable-dep-of: 0e9f090a4e9b ("module/kallsyms: fix nextval for data symbol lookup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/kallsyms.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ kernel/module/kallsyms.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
 diff --git a/kernel/module/kallsyms.c b/kernel/module/kallsyms.c
-index 30d0798f114f1..18931db1369da 100644
+index 18931db1369da..f92317d3796aa 100644
 --- a/kernel/module/kallsyms.c
 +++ b/kernel/module/kallsyms.c
-@@ -260,7 +260,7 @@ static const char *find_kallsyms_symbol(struct module *mod,
- {
+@@ -261,17 +261,25 @@ static const char *find_kallsyms_symbol(struct module *mod,
  	unsigned int i, best = 0;
  	unsigned long nextval, bestval;
--	struct mod_kallsyms *kallsyms = rcu_dereference_sched(mod->kallsyms);
-+	struct mod_kallsyms *kallsyms = rcu_dereference(mod->kallsyms);
- 	struct module_memory *mod_mem;
+ 	struct mod_kallsyms *kallsyms = rcu_dereference(mod->kallsyms);
+-	struct module_memory *mod_mem;
++	struct module_memory *mod_mem = NULL;
  
- 	/* At worse, next value is at end of module */
-@@ -332,6 +332,7 @@ int module_address_lookup(unsigned long addr,
- 	int ret = 0;
- 	struct module *mod;
+-	/* At worse, next value is at end of module */
+-	if (within_module_init(addr, mod))
+-		mod_mem = &mod->mem[MOD_INIT_TEXT];
+-	else
+-		mod_mem = &mod->mem[MOD_TEXT];
++	for_each_mod_mem_type(type) {
++#ifndef CONFIG_KALLSYMS_ALL
++		if (!mod_mem_type_is_text(type))
++			continue;
++#endif
++		if (within_module_mem_type(addr, mod, type)) {
++			mod_mem = &mod->mem[type];
++			break;
++		}
++	}
  
-+	guard(rcu)();
- 	preempt_disable();
- 	mod = __module_address(addr);
- 	if (mod) {
-@@ -354,7 +355,7 @@ int lookup_module_symbol_name(unsigned long addr, char *symname)
- {
- 	struct module *mod;
+-	nextval = (unsigned long)mod_mem->base + mod_mem->size;
++	if (!mod_mem)
++		return NULL;
  
--	preempt_disable();
-+	guard(rcu)();
- 	list_for_each_entry_rcu(mod, &modules, list) {
- 		if (mod->state == MODULE_STATE_UNFORMED)
- 			continue;
-@@ -366,12 +367,10 @@ int lookup_module_symbol_name(unsigned long addr, char *symname)
- 				goto out;
+-	bestval = kallsyms_symbol_value(&kallsyms->symtab[best]);
++	/* Initialize bounds within memory region the address belongs to. */
++	nextval = (unsigned long)mod_mem->base + mod_mem->size;
++	bestval = (unsigned long)mod_mem->base - 1;
  
- 			strscpy(symname, sym, KSYM_NAME_LEN);
--			preempt_enable();
- 			return 0;
- 		}
- 	}
- out:
--	preempt_enable();
- 	return -ERANGE;
- }
- 
+ 	/*
+ 	 * Scan for closest preceding symbol, and next symbol. (ELF
 -- 
 2.53.0
 
