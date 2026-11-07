@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065165;
-	b=P24T1lRgqzrp4oih1ibk0UN3fRpt0YuCxi0afFbWGanIByXf7V4LsZwNA2s7WTb2aCa3
-	 dycIADwx+rZdH6F71jvtrKqq6a2lFEeb29ZfEgK5+CudRfq5X2UJMxi5XIEiLWUBTENEQ
-	 tuEUnD9h7kYDtptL9WQGJriqFi33ePByTmX8HoG6FCk9om+O8AmXA4BgymGx+VO++mEPu
-	 u0LGBQAcOQ8QLz0Dy3DA4Um1L7XXmqsjQUiMB7lEnum349l/VNh5XL1EGpVQtB93bI9KY
-	 PCtKTPD70pGafhn8Ml94o8REd/a3YAX+TiuOiXYZ+momSEeQxbAD2P3MG4jzzNEG/Yg==
+	t=1794065166;
+	b=Go/LFXfWidAaawzfe/EEuua5aHbW0CPIfRgsJYVWWvCp/uOEpu/XaJ4FhgytDOmcRSNH
+	 qaXDgWb8z1A+D45vi3mA34IRrTXQZafvuKV47DnZbde87xvCbEeV6Jp5ptKtlkCsEiea0
+	 a6/0/KsZMvRrv+xqN4GnhzOLoV8jvc8BnNTuIyAAFl7gut1pFsgJUnUuHcKgYUgoo824v
+	 oYwmyl53HJl9i29iJYa/cVptXr3ILgLS3n5aySwnLzzQMLf4Y6le+UnKZdKGvTtm/k0Vq
+	 nqh2LhH/l2yztcrnAGwGSn7bISfmEOMbI6C9jLy6und+xt5RvKhl02uCQgEuURV/1Xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065165;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065166;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GtpbhzghIX0As2PIaOxBJTq4H2SxGqfNXOyBgFl4+N0=;
-	b=f33JgyEql5tKIQYmAedR6Y0T3iBJ8CCnQf/MpTaI5FABRXU9D5vO+OSmx8sUfKHNP1c5
-	 i73C41FOP8txjeQHzyFPjsrp3dOzHpaPXLBNYKw3IqH0OfZOb+kjEgveegLyE1tcGnbcu
-	 5N0SC4ebSyhH/HFimGOhQPA+Bd9NoRK97pqlDTVeeDhf+NjsoHhgnrvejas7lvNi3AiXY
-	 jPKnSpSCWWhQ9WgoiBrrNohPs6btlzGwiBtX7M8uNIPBdVhUyN++/jStG35s1iXwd4OTY
-	 D7inI7a+UQHSHwvzse2AAZdKe4mh24Z2kJQJjXWcu5QkQ6l6Fcuk/O/0ttyYrlhqnbA==
+	bh=sd3cPaLApvwl6UVkwCKBGohbuH6r5M61LFcWotF4nKI=;
+	b=myXsY0BRovObMeI0iPNpOarU2c6FLtIblh0lq9ddFNrI5hHvoMiIg5NH47oZ2jaY0wIO
+	 ZcUETqKuXsBwScb14BJgQ0ruDJQPJjeJYRRLuRKEiA6/NrLBMkbW9OQ8Zk0NMXy6vX1KC
+	 NlxZe3Ox3OQyktPhAO/ffVkiMd6/+RGt6nDbzwvCro485oQixRno0zXcrlNx+2hgAJEkg
+	 SptkZYIkUQpbTTtWtwVBIk/9w6wcxAcL1U2DNlsDKC7rC5GLLgvnpJ9ACp7EZlQ6F3/uo
+	 a4ikSxDWfYmXwPqk96S1S/o0hNRFmvFTgNsvstRCDQ0veXbYs3KHcechIDEHlD4JG0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m7UUHqMw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GD9GM+oI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80A4606A32E;
-	Sat,  7 Nov 2026 15:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319E7606A331;
+	Sat,  7 Nov 2026 15:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m7UUHqMw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B021F0089F;
-	Sat,  7 Nov 2026 15:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GD9GM+oI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD5B1F0089F;
+	Sat,  7 Nov 2026 15:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065164;
-	bh=GtpbhzghIX0As2PIaOxBJTq4H2SxGqfNXOyBgFl4+N0=;
+	s=korg; t=1794065166;
+	bh=sd3cPaLApvwl6UVkwCKBGohbuH6r5M61LFcWotF4nKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m7UUHqMwElQmE2xgFzhOoHSwsOTPJ2nTAqecy9i/sehUMGWU7q130Rhs8d+HjjoQz
-	 kFGUhTWjzd8wCEtYfO2AXD08CJT2bLQWCoMtsb7sSBG8Bzb48SoElUWlE/jy0CTNaR
-	 V0lj+JySM7nhjpMOkrN97dUppCKlJOiEnIIR16+o=
+	b=GD9GM+oIa3AGhJND3cA/X1XDZrLPDiVlIAB8FUs2PObGiSkbGg2PvfDFJoVOanRGM
+	 aG83349WOsok90qBfEXkHR/0nxLzW2y7xqMufe/89D7EjjYzVlYOVgbWcCqNrO7UV2
+	 2l8zCimPNO7S+4PhzwoKrZS6FLZyAS4X3ojinuO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>,
-	Kees Cook <kees@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0970/1257] netdev: Hide the netdev_priv() origin from GCC in netdev_from_priv()
-Date: Sat,  7 Nov 2026 08:54:26 -0500
-Message-ID: <20261107135006.147347785@linuxfoundation.org>
+Subject: [PATCH 7.3 0971/1257] ipv6: remove ifaddr from hash during ifdown list cleanup
+Date: Sat,  7 Nov 2026 08:54:27 -0500
+Message-ID: <20261107135006.175741579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,92 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 56f8d919739b588e2ad8cb9fb9eff704f32afaab ]
+[ Upstream commit 6ace56ed7b13a9c6d4cb7ef0d82d3a3d53324a63 ]
 
-GCC 15.1 and later can compute an object size of 0 for a pointer that
-container_of() derives from a pointer into a __counted_by flexible array
-member[1]; Clang gets it right. netdev_from_priv() does this with struct
-net_device's "priv" array, so when GCC can see that its argument came
-from netdev_priv(), FORTIFY_SOURCE sees a zero-sized net_device. Since
-commit 9027497a25e3c ("team: use netdev_from_priv()"), adding a port of
-another type to a team device can then fail the memcpy() to
-"dev->broadcast" in team_setup_by_port(), which GCC sees through after
-inlining team_port_add() into team_add_slave():
+addrconf_ifdown() clears the address hash before snapshotting the
+per-device address list. A concurrent ipv6_add_addr() can publish an
+address after the hash scan and before the list snapshot.
 
-  memcpy: detected buffer overflow: 4 byte write of buffer size 0
-  ...
-  kernel BUG at lib/string_helpers.c:1044!
-  ...
-  Call Trace:
-   <TASK>
-   team_add_slave.cold+0x88/0x201
-   do_set_master+0x11c/0x180
-   do_setlink.isra.0+0x3a4/0x1410
+The ifdown path then removes the address from the device list and drops
+the list-owned reference while it is still linked in the hash. Once the
+remaining references are released, inet6_ifa_finish_destroy() warns, but
+a DEAD address continues to kfree_rcu(). The hash therefore points to
+freed memory that later RCU walkers can dereference.
 
-Whether GCC inlines that far depends on the architecture and the
-configuration. It does on ppc64le, where this was reported, and on
-x86_64 with defconfig plus hardening.config or with Debian's
-configuration, but not with allmodconfig.
+This follow-on was found by source review and was not separately
+triggered at runtime.
 
-Hide where "priv" came from with OPTIMIZER_HIDE_VAR(), so GCC sees a
-net_device of unknown size whose members have their declared sizes. (An
-"unknown" size is considered uncheckable by FORTIFY.)  FORTIFY still
-bounds writes to members; only the whole-object size becomes unknown,
-as it already is for any net_device pointer GCC can't trace to its
-allocation. In an extracted PoC, the __builtin_dynamic_object_size()
-of "dev->broadcast" for the two types FORTIFY sees, before and after
-this patch:
+Remove each non-kept address from the hash immediately before removing
+it from the per-device list. Keeping it hashed through the delete
+notification blocks same-address publication until NETDEV_DOWN has been
+delivered. hlist_del_init_rcu() is safe when the earlier hash scan
+already removed the address.
 
-                                   GCC 16.2.0      Clang 22 and 24
-                                 before   after
-  plain pointer, whole object   unknown  unknown        44
-  container_of(), whole object        0  unknown        44
-  container_of(), member              0       32        32
+This handles a late publisher captured by the list snapshot. The next
+change serializes publication with teardown so an add cannot miss both
+observations. Both changes are required when backporting the complete fix.
 
-In addition to getting the bogus "0" fixed in GCC, I'll be following up
-to solve the whole-object visiblity disparity as well.
-
-Build tested with GCC 16.2.0: ARCH=x86_64 defconfig with hardening.config,
-CONFIG_NET_TEAM=y, and CONFIG_NET_IPGRE=y; ARCH=arm64 defconfig with
-hardening.config, CONFIG_NET_TEAM=y, CONFIG_PPP=y, and CONFIG_NET_AIROHA=m;
-and drivers/net/team/, drivers/net/ppp/, and drivers/net/ethernet/airoha/
-in ARCH=x86_64 allmodconfig. Under QEMU, the x86_64 kernel hits the BUG
-above when adding the GRE fallback device "gre0" as a port of a new team
-device without this patch, and adds it with the patch.
-
-Reported-by: Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>
-Closes: https://lore.kernel.org/all/3ad19e86-234c-408f-896e-0d6c774fea49@linux.ibm.com/
-Fixes: 9027497a25e3c ("team: use netdev_from_priv()")
+Fixes: 73a8bd74e261 ("ipv6: Revert 'administrative down' address handling changes.")
 Cc: stable@vger.kernel.org
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=127875 [1]
-Signed-off-by: Kees Cook <kees@kernel.org>
-Link: https://patch.msgid.link/20261015165959.i.798-kees@kernel.org
+Reported-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/20261004135117.GA206930@shredder
+Link: https://lore.kernel.org/r/179161099539.434549.2238120015372268173@kernel.org
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261015050651.1841557-2-4ncienth@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/ipv6/addrconf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 3cff2174dc03a..3e64af0b932d7 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -2841,6 +2841,13 @@ static inline void *netdev_priv(const struct net_device *dev)
-  */
- static inline struct net_device *netdev_from_priv(const void *priv)
- {
-+	/*
-+	 * When GCC can see that @priv came from netdev_priv(), it can
-+	 * compute an object size of 0 for the net_device and its members,
-+	 * which makes FORTIFY_SOURCE fail valid accesses through the result:
-+	 * https://gcc.gnu.org/bugzilla/show_bug.cgi?id=127875
-+	 */
-+	OPTIMIZER_HIDE_VAR(priv);
- 	return container_of(priv, struct net_device, priv);
- }
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index c90ee6dd7446c..72d7df23f7967 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -4019,6 +4019,10 @@ static int addrconf_ifdown(struct net_device *dev, bool unregister)
+ 		}
  
+ 		if (!keep) {
++			spin_lock_bh(&net->ipv6.addrconf_hash_lock);
++			hlist_del_init_rcu(&ifa->addr_lst);
++			spin_unlock_bh(&net->ipv6.addrconf_hash_lock);
++
+ 			write_lock_bh(&idev->lock);
+ 			list_del_rcu(&ifa->if_list);
+ 			write_unlock_bh(&idev->lock);
 -- 
 2.53.0
 
