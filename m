@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065376;
-	b=URDAGOulrpyXL8QOJue8hk1vaiWasVK/RHe6l2/exuSuqjjhooMPi/u4lFq4JIc/Lqfw
-	 +7ADuMbZ/ijrD/xQOU485hB4tBWotHHPNAedCluVVvijLHS0ds9zHsJpTwiRuQUWyxh/E
-	 F/imDnJmZDs2hJxE7banGxsZIHK7RBgvMyVeviU6Px2zYGZQznGwFKw+pSPumPpJvfMj6
-	 vRivknAgqFaAApk3u+bBmvl8v96ZYhw8ZT4440d2zJu0ND8W5Sbs8YwjDxywaviFG0kxt
-	 CcxZyewtOpw+5StfD3BuFk0qFxMZkhYIG0flAymf6Jt8lAxtUYwMcBXTy3sua7wN84g==
+	t=1794065378;
+	b=HXDRqzrorVa9knYFZ/YJJAy9BDZQRoyVP/eXiN+juuRuJMTgRtR2GQ/gGuXmpa6kbjOX
+	 DMgczFOE1WALGudML+ZXi6SBf6ssxhl3g0Tq0mffvTkctcrvcFZPFjqqLJ2LV6PKBjYK3
+	 vhlcJTbxdrN8xmQIlIZrPyBS+Cv0BFosHB4VwHi/n/0otLuj6LMuxRD+8PEz2anTPqsEW
+	 5W++113JahLlVQkoGP2PSg/Q8JigIxLmrlyTK/CJFNykVN23Kb2PxWaN1EPuD2OYI5+SE
+	 9rhmLDt4rtQjXLTImZCQDl/K1QE7TcNUq/Bi3IWMXfpfSysaV7fz4tnZmuEpS1LYgWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065376;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065378;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=exaf5kXvdkbLhO5zDvPgJA0MiNRmOjUJK0SIPzqWNM0=;
-	b=TMQU4OX3wyE8ALuufJbgd0KjCO5gDubYlQBmhvO+VkQ/hypisWr1sKhM9XYjNZr1RbV9
-	 4rIppTyLaXB5IFgIZ+dA5B7bNbziBwPR7BUwsU6e0NI82TDbSkNXFLsjgHgQZd+rzMaVd
-	 1WarIUjRZIMWh2JZmur2H//PFZaQCjzfCT/ZtBnDidSVszZ6sUsF2oHJYwHbDfPkAKbuf
-	 Ebc5tUXcJQaGwTlJxpTjiZbXbqHiRf97qw5moW51Kv+4eRDrem3ZduzicwBFtXoU8rQZz
-	 ojR0Kq25gibOMGjT6VvC96yOxZRibtHw0CCzQf4C5RtsdAXPrfQcjUOf1hE8zJ3z9Jg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=MEw05vrJDsDoyQ7Qqkeou4+i5P/OlaWZRGWe2KOPWwY=;
+	b=eGVOVPgoDr2MPkg+yp4z3/m1JAlwdkBYo8Jitt5bqfZTpRlz//y05x6MRETv87ScBYal
+	 bkYutB2rGmUNfFvEIS/R09W8q6i5jZOfmHhcqawn0ir3oxL9Acyc6xJGQSHv8id0ui9X8
+	 p2nTTex2EXfO1COh97tLZ2jqNps1LqaFOR6a2+lvaClUl9xH3GhYqjSTP2MUtJIfzpfCA
+	 zdSS2yGTomVBfADz/2xkrjMAcjHJvARv8AkIDBnNXDn/k6DrIowLK0sevbSne08QWO4p9
+	 z9DzmZ+/mGzfAp2SxROk6UXvwsu4g9Oo+JtA+S4VFVB5wJPsd6aRbNwKItbLL39GNVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qcZYYDJI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JggTxjf0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B114C606A32C;
-	Sat,  7 Nov 2026 15:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E70606A32C;
+	Sat,  7 Nov 2026 15:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qcZYYDJI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3EB1F0089F;
-	Sat,  7 Nov 2026 15:29:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JggTxjf0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C181F0089F;
+	Sat,  7 Nov 2026 15:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065375;
-	bh=exaf5kXvdkbLhO5zDvPgJA0MiNRmOjUJK0SIPzqWNM0=;
+	s=korg; t=1794065378;
+	bh=MEw05vrJDsDoyQ7Qqkeou4+i5P/OlaWZRGWe2KOPWwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qcZYYDJIiGCSpVHarEpX+yPRcdhiQrjIifNaRw8Hgt7gcXd589+nz03ORmmxwxsUK
-	 JCRj6sRqNzHEJ0h/ONguCBJyIQDYgS0WbLwH90yACSwn9JzG1XVDM8Ckod56H8NJ8x
-	 3DbxOAAsBDtnjo1nplw/MJPx6DdH+JaJXbrMj6gI=
+	b=JggTxjf02tuOk7zauP6eFVBP/qzSUFOX3DMwiU6vQF9/V6FTqwEhBKup+MlRtPeAP
+	 qZ/gkJ3OOIgee7Fdp1zLaSOAy3Pr/BlFuaRfh6dBDPjYOsvMvgl8+5OunNlen574KY
+	 4NKv0itLATNZiSIartZh0fF6o1IqtRua7L6Z9JAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Haoran <haoranwangsec@gmail.com>,
-	Li Ximo <lixicaicai@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	YoungWoo Rim <xsapiens75@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	"Gao Xiang (Docker)" <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1104/1257] fbdev: atmel_lcdfb: fix list_first_entry() on possibly empty modelist in probe
-Date: Sat,  7 Nov 2026 08:56:40 -0500
-Message-ID: <20261107135009.752347848@linuxfoundation.org>
+Subject: [PATCH 7.3 1105/1257] erofs: hold real inodes for shared files
+Date: Sat,  7 Nov 2026 08:56:41 -0500
+Message-ID: <20261107135009.778634748@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,82 +63,148 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Haoran <haoranwangsec@gmail.com>
+From: Gao Xiang <xiang@kernel.org>
 
-[ Upstream commit 01d1204582f16e8b7bfce29648e5cf77a585d962 ]
+[ Upstream commit 7259fb011c14977661b7a4680886b466a3089ea7 ]
 
-list_first_entry() does not return NULL on an empty list; it returns a
-bogus pointer computed by container_of() from the list head.
-atmel_lcdfb_probe() initializes info->modelist with INIT_LIST_HEAD()
-and later takes its first entry with list_first_entry(), assuming
-atmel_lcdfb_of_init() populated it. However, atmel_lcdfb_of_init()
-drops the return value of fb_add_videomode() — unlike every other
-fallible call in the same function — so if fb_add_videomode() fails
-(its internal kmalloc can return -ENOMEM under memory pressure or
-fault injection), the list stays empty while of_init() reports
-success. The probe path then dereferences the bogus pointer in
-fb_videomode_to_var(&info->var, &modelist->mode). Because the bogus
-pointer lands inside the contiguous fb_info allocation, this may not
-fault immediately; instead it silently reads adjacent memory as a
-struct fb_videomode and programs garbage timing parameters into the
-LCD controller. This was found by code audit; we do not have Atmel
-hardware to reproduce it.
+EROFS page cache sharing uses shared inodes. However, a mmaped VMA
+keeps the shared file even after the corresponding fd is closed, while
+currently the real inode is never held by any reference associated
+with the shared file.
 
-Fix this on two levels: check the return value of fb_add_videomode()
-in atmel_lcdfb_of_init() so the failure is propagated (root cause),
-and use list_first_entry_or_null() in atmel_lcdfb_probe() with a NULL
-check that fails probe gracefully with -EINVAL (defense in depth),
-consistent with the surrounding error handling which bails out to
-stop_clk.
+As a result, the real inode could be evicted and removed from the
+shared inode's list while the page fault can still invoke on the
+shared inode's address space, which causes no candidate is
+successfully acquired by erofs_real_inode().
 
-Reported-by: Wang Haoran <haoranwangsec@gmail.com>
-Reported-by: Li Ximo <lixicaicai@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fix this by simply keeping the original inode in the shared backing
+file's private data.
+
+Also replace confusing "realfile"/"rf" names with "sf" (sharedfile)
+to unify the terms as well as nullify realinode in erofs_real_inode()
+to avoid returning an uninitialized pointer.
+
+Fixes: 5ef3208e3be5 ("erofs: introduce the page cache share feature")
+Reported-by: YoungWoo Rim <xsapiens75@gmail.com>
+Closes: https://lore.kernel.org/r/atzSVuvqYKgmvDmO@MacBookPro
+Cc: stable@vger.kernel.org # 7.0+
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang (Docker) <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/atmel_lcdfb.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/erofs/ishare.c | 43 ++++++++++++++++++++++++++++++-------------
+ 1 file changed, 30 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/video/fbdev/atmel_lcdfb.c b/drivers/video/fbdev/atmel_lcdfb.c
-index 9a0cc09004b70..bed11a652d14d 100644
---- a/drivers/video/fbdev/atmel_lcdfb.c
-+++ b/drivers/video/fbdev/atmel_lcdfb.c
-@@ -1007,7 +1007,9 @@ static int atmel_lcdfb_of_init(struct atmel_lcdfb_info *sinfo)
- 	if (ret < 0)
- 		goto put_display_node;
+diff --git a/fs/erofs/ishare.c b/fs/erofs/ishare.c
+index a1cf2aff8d321..61f48ceb6cb66 100644
+--- a/fs/erofs/ishare.c
++++ b/fs/erofs/ishare.c
+@@ -30,9 +30,18 @@ static int erofs_ishare_iget5_set(struct inode *inode, void *data)
+ 	return 0;
+ }
  
--	fb_add_videomode(&fb_vm, &info->modelist);
-+	ret = fb_add_videomode(&fb_vm, &info->modelist);
-+	if (ret < 0)
-+		goto put_display_node;
++static int erofs_ishare_backing_release(struct inode *inode, struct file *file)
++{
++	iput(file->private_data);
++	file->private_data = NULL;
++	return 0;
++}
++
+ bool erofs_ishare_fill_inode(struct inode *inode)
+ {
+-	static const struct file_operations empty_fops = {};
++	static const struct file_operations backing_fops = {
++		.release = erofs_ishare_backing_release,
++	};
+ 	struct erofs_sb_info *sbi = EROFS_SB(inode->i_sb);
+ 	const struct address_space_operations *aops;
+ 	struct erofs_inode *vi = EROFS_I(inode);
+@@ -50,7 +59,7 @@ bool erofs_ishare_fill_inode(struct inode *inode)
+ 			  xxh32(fp.opaque, fp.size, 0),
+ 			  erofs_ishare_iget5_eq, erofs_ishare_iget5_set, &fp);
+ 	if (si && (inode_state_read_once(si) & I_NEW)) {
+-		si->i_fop = &empty_fops;
++		si->i_fop = &backing_fops;
+ 		si->i_mapping->a_ops = aops;
+ 		si->i_mode = 0444 | S_IFREG;
+ 		si->i_size = inode->i_size;
+@@ -100,16 +109,24 @@ static int erofs_ishare_file_open(struct inode *inode, struct file *file)
+ 		.mnt = erofs_ishare_mnt,
+ 		.dentry = EROFS_I(inode)->sharedentry,
+ 	};
+-	struct file *rf;
++	struct file *sf;
  
- put_display_node:
- 	of_node_put(display_np);
-@@ -1075,8 +1077,13 @@ static int atmel_lcdfb_probe(struct platform_device *pdev)
- 	}
- 	atmel_lcdfb_start_clock(sinfo);
+ 	if (file->f_flags & O_DIRECT)
+ 		return -EINVAL;
  
--	modelist = list_first_entry(&info->modelist,
--			struct fb_modelist, list);
-+	modelist = list_first_entry_or_null(&info->modelist,
-+					    struct fb_modelist, list);
-+	if (!modelist) {
-+		dev_err(dev, "no video mode available\n");
-+		ret = -EINVAL;
-+		goto stop_clk;
-+	}
- 	fb_videomode_to_var(&info->var, &modelist->mode);
+-	rf = backing_file_open(file, file->f_flags | O_NOATIME,
++	sf = backing_file_open(file, file->f_flags | O_NOATIME,
+ 			       &sharedpath, current_cred());
+-	if (IS_ERR(rf))
+-		return PTR_ERR(rf);
+-	file->private_data = rf;
++	if (IS_ERR(sf))
++		return PTR_ERR(sf);
++	/*
++	 * A VMA only holds a reference to the shared file so that the original
++	 * file may be released: the shared file must therefore hold a reference
++	 * to one of the real inodes ("inode" passed here), and that reference
++	 * will be released by erofs_ishare_backing_release().
++	 */
++	ihold(inode);
++	sf->private_data = inode;
++	file->private_data = sf;
+ 	return 0;
+ }
  
- 	atmel_lcdfb_check_var(&info->var, info);
+@@ -123,13 +140,13 @@ static int erofs_ishare_file_release(struct inode *inode, struct file *file)
+ static ssize_t erofs_ishare_file_read_iter(struct kiocb *iocb,
+ 					   struct iov_iter *to)
+ {
+-	struct file *realfile = iocb->ki_filp->private_data;
++	struct file *sf = iocb->ki_filp->private_data;
+ 	struct kiocb dedup_iocb;
+ 	ssize_t nread;
+ 
+ 	if (!iov_iter_count(to))
+ 		return 0;
+-	kiocb_clone(&dedup_iocb, iocb, realfile);
++	kiocb_clone(&dedup_iocb, iocb, sf);
+ 	nread = filemap_read(&dedup_iocb, to, 0);
+ 	iocb->ki_pos = dedup_iocb.ki_pos;
+ 	return nread;
+@@ -137,12 +154,12 @@ static ssize_t erofs_ishare_file_read_iter(struct kiocb *iocb,
+ 
+ static int erofs_ishare_mmap(struct file *file, struct vm_area_struct *vma)
+ {
+-	struct file *realfile = file->private_data;
++	struct file *sf = file->private_data;
+ 	int err;
+ 
+-	vma_set_file(vma, realfile);
++	vma_set_file(vma, sf);
+ 
+-	err = security_mmap_backing_file(vma, realfile, file);
++	err = security_mmap_backing_file(vma, sf, file);
+ 	if (err)
+ 		return err;
+ 
+@@ -176,7 +193,7 @@ const struct file_operations erofs_ishare_fops = {
+ struct inode *erofs_real_inode(struct inode *inode, bool *need_iput)
+ {
+ 	struct erofs_inode *vi, *vi_share;
+-	struct inode *realinode;
++	struct inode *realinode = NULL;
+ 
+ 	*need_iput = false;
+ 	if (inode->i_sb != erofs_ishare_mnt->mnt_sb)
 -- 
 2.53.0
 
