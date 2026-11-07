@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063520;
-	b=qQHR4k3bQHayeQyPB6yQea/bNtQfb34o8clQFo4GMQtvRH7SpxTt/e1IGFyCSI9XlKD8
-	 vnZ/eCMGV2jPwykI2PnkY/1IdbxxK0J0EPJhw8cCrTF8CopcDpF3sVrAeQUZ2YYmsCC2S
-	 d9SN/jjDXaRyI4Tubnu1vBQKk3Go65XsFjZbtj98ZZ8sTJ4YayQmbkInDh/N5vWq8wWxy
-	 fLhNjGo6GpqTeeLH+ORjBqBGT8kv5pQXBT4OjwMnHRo5dwjMQaX1lC4JWOdHgdo9IZOtb
-	 xzs9gxU79lXN5cZauL+7NaTpwFQrbWind9mB1u2k2NSGPAox6O+5uvRqW0AKDoIV92Q==
+	t=1794063522;
+	b=sact1lf8337g97utQx/Q1IiPAtSfXmVhJQecTlsyKdBj4OhDswwKlUyANmi9Exmvl6D5
+	 5c9B/MNgZQN3OcWcAj0FWzQaqC002X+u2s0BJ0WX6XZFz/JylMUvAQKR44nznr6aHLyrv
+	 XpsBjhAjKvWUYsltShbfN/i+7gryHLJI0JJ9TscHtAKEFDiNJK+HbKb2RO6S9lKEpXES6
+	 ULTTzaBlj7tyDFA6xaGI4DYATom2rviPPjDd9oFkAzDJJTsD4Vmr9BzV4qnEBbsYjmahi
+	 dlmMAXjO6KMF2EySfR1dnSmtcbWuceelFIZ58QaEVK5hCo5ezH1hgltDWDXiHYOmrFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063520;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063522;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fmwgi84p0mFKYw/5Mt3j7SRrW8N26uCTs+/DGNGZq7g=;
-	b=UKG9upFC7MXgGw0BoPIxHmsZSRv5TjPWJeyMZh1tPxoxb2FnUj3LI4dv/zCeccaDBVf4
-	 tArTpZrLO5DbiAs8Sz7kvpRSW0BzxCGdmVKbbFIYtSUVeKLd5AqsbU2KDffuf6qvn5U4C
-	 e5BFETOLF58jnsS1/OYjisIvsZGbQHWb3g5GldMv5cgJKf53Cx5U7R7eM0uV+neWWb0Q/
-	 s9nhnSO5shMB1L0tw+LiDTa1RwFFB81YRIiAazoGFktH2mdCdLwDa0hhXb2T6UxEju5eU
-	 T/MjgqZ9gwRgsUv6f4IG4YMAu/PaEaIjqSk7heetO73oOk2sOUEhij640T2OnVhcwiQ==
+	bh=98MCnAT0OxoGWPyrPpwR3BP6O7P21/eDMFc1CLygows=;
+	b=QCxiA+F1ze9WpPP79WO/4Beslw3Wtns1Er00CctMpJ8XSrYozLX4XANKNN61Gh6G9jU7
+	 fOlbYIJ2A0SElMFhYOACUGUxzcWZa7C5EIXziQh94kW75sWIahsluUvmPD5vDWxcKA1xA
+	 h2h6Kd6a64EZo/vY0PLs8EM+kEBnWaX1AbimnMSxdxA5Pf0/2KP3E8JoS6vALvaRbsPZh
+	 x1+ufx3EWe7vyr3p/0I7Dal4Na3fEJImmQxDg9nB1SxTwvSlv2ZgrCcf9Jl9w5f94C10S
+	 pwMfeaokzbHGKy2/yT7/cXD+fxxSVAg3BA3uAxZQE1Bf6rR2RjkWAq2WJzBNtBQ7hpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IDHYVDVH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=giEajoMN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1B7606B8BD;
-	Sat,  7 Nov 2026 14:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8731606B8BD;
+	Sat,  7 Nov 2026 14:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IDHYVDVH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C32C1F008A4;
-	Sat,  7 Nov 2026 14:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=giEajoMN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871F61F008BD;
+	Sat,  7 Nov 2026 14:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063520;
-	bh=Fmwgi84p0mFKYw/5Mt3j7SRrW8N26uCTs+/DGNGZq7g=;
+	s=korg; t=1794063521;
+	bh=98MCnAT0OxoGWPyrPpwR3BP6O7P21/eDMFc1CLygows=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IDHYVDVHGA8wPj4jWkN3FWQdTF4zEhJVnMxFkfwGWDybqrj09kgSMiuEy3eZI6RAF
-	 iMHgWrMLXhyBIK57m92HUg8SEJZHHmXx4iuO63FS8ZtdYJaQl39/bT9j511soBgNoe
-	 h1umD7eq6sGEfvcGFFvyYd2hp2A7YQgwOrdbpm58=
+	b=giEajoMNyUaSix4Zghch2pnVotWA+DMis87KnHXZ/Lz4zPsTaB+L5lH3+bGrC+77p
+	 k1D+HVwjoQvQcHpg53gC82jTRgOnDl7BMyt5QTY/a65ApljoEQKkIhBP34XREtyb+E
+	 w1PtvSW69HXn+pbMLra5CrklPFArzgCocdoRDsIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 661/869] ALSA: compress: add missing OPEN-state gate to SET_METADATA
-Date: Sat,  7 Nov 2026 08:55:43 -0500
-Message-ID: <20261107134915.590200862@linuxfoundation.org>
+Subject: [PATCH 6.18 662/869] ALSA: compress: reject restarting an ACTIVE task via origin_seqno
+Date: Sat,  7 Nov 2026 08:55:44 -0500
+Message-ID: <20261107134915.614291106@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,46 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 931f5714b7921290cd1a4742e185aeeae7270ee6 ]
+[ Upstream commit 0ade01edd33181b65393cf3864cb2ac7c5eb1487 ]
 
-snd_compr_set_metadata() calls stream->ops->set_metadata() straight
-after copy_from_user(), without ever checking runtime->state, even
-though the function's own comment says a parameter change should only
-be allowed once the stream has left the OPEN state. Every other
-metadata/param entry point in this file (SET_PARAMS, WRITE, ...)
-enforces that gate.
+snd_compr_task_start_prepare() only rejects tasks with
+state >= SND_COMPRESS_TASK_STATE_FINISHED. Since the enum is
+IDLE(0) < ACTIVE(1) < FINISHED(2), this accepts ACTIVE tasks and
+rejects FINISHED ones, the opposite of what the origin_seqno
+mechanism needs: origin_seqno is meant to let a caller reuse a
+FINISHED task's buffers for a new job, not to restart a task that is
+still queued with the driver.
 
-A codec driver's set_metadata callback can assume SET_PARAMS has
-already run and initialised its private state; calling it while the
-stream is still OPEN can operate on that uninitialised state.
+The seqno lookup path in snd_compr_task_start() has its own explicit
+"task->state != IDLE" guard, but the origin_seqno lookup path relies
+solely on this function, so it can restart an ACTIVE task, causing
+ops->task_start() to be called twice for the same task and
+runtime->active_tasks to be incremented twice without a matching
+finish/stop.
 
-Add the OPEN-state check the existing comment already documents.
+Accept IDLE and FINISHED, reject ACTIVE, on both entry paths.
 
-Fixes: 9727b490e543 ("ALSA: compress: add support for gapless playback")
+Fixes: 04177158cf98 ("ALSA: compress_offload: introduce accel operation mode")
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Acked-by: Vinod Koul <vkoul@kernel.org>
-Link: https://patch.msgid.link/20261019144533.30665-4-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20261019144533.30665-5-peter.ujfalusi@linux.intel.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/compress_offload.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/core/compress_offload.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
-index b707bdbb97069..1bf943b189cd0 100644
+index 1bf943b189cd0..e1b2da84f7782 100644
 --- a/sound/core/compress_offload.c
 +++ b/sound/core/compress_offload.c
-@@ -748,6 +748,9 @@ snd_compr_set_metadata(struct snd_compr_stream *stream, unsigned long arg)
- 	* we should allow parameter change only when stream has been
- 	* opened not in other cases
- 	*/
-+	if (stream->runtime->state == SNDRV_PCM_STATE_OPEN)
-+		return -EBADFD;
-+
- 	if (copy_from_user(&metadata, (void __user *)arg, sizeof(metadata)))
- 		return -EFAULT;
- 
+@@ -1142,7 +1142,9 @@ static int snd_compr_task_start_prepare(struct snd_compr_task_runtime *task,
+ {
+ 	if (task == NULL)
+ 		return -EINVAL;
+-	if (task->state >= SND_COMPRESS_TASK_STATE_FINISHED)
++	/* only an unqueued or already finished task may be (re)started */
++	if (task->state != SND_COMPRESS_TASK_STATE_IDLE &&
++	    task->state != SND_COMPRESS_TASK_STATE_FINISHED)
+ 		return -EBUSY;
+ 	if (utask->input_size > task->input->size)
+ 		return -EINVAL;
 -- 
 2.53.0
 
