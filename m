@@ -1,69 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065335;
-	b=vvr217F8l4iVyovJqDEAOpQr2BLGXJQ295ELCW4cuqICNKPTlKMO2LiSZdxVO6B1pxDu
-	 A5sV4e7Qj0WYYBHkrJwHiEKeXsY8kkysoDOtAvClt6QeRum0i5ty5wp6/gOz4H++n36Gg
-	 hhv+yWrtstY7ldmycxyIFup28DCpv5gqb4pd35fzCNbs0jc2ZdNiPae7on22Lu/BwT78S
-	 Mn21JCfRgYoeaiYics0d/23A2YYHJlTiZuLuwpig280SAd+c95ncjvgtS8BGmbTJbdyRS
-	 Ofc0N2SGJ8LnEZzyl/6VT0sL9dUn46cImjYNGHf3T2cDONVw111fWBNZgZtNx/afWdA==
+	t=1794065337;
+	b=Jx7x+cprxFHVXq9YZae9rHBKUAFW46EnCHfLLDyW0MoIHXraFzriuiwxY5Eb87qw32v3
+	 ofzaGvX25bWWhTVE0mK/MylFA6/59irAh4WV7M3wOkKS7JCZgn659+Nl+De1EpjbpuWU/
+	 LJ+lWoEUaO62khxIbi6myOmIJipSONnjt/cJvHp9/e99et4se3N9UTVoOOryl+s+xk5Jw
+	 tLCZZu/NNlmNpKTcCf9ZcbWHmqc2n8C2J2T7S2xgEin/mSG8LrKOPtNghwxCKJCjAwmo2
+	 2XCCiCZdrOvtvuDYKJgw1bzuBnCb6/5FVyFunNZIUveJ6FzNzMRCgKVHbvCamlUa6Uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065335;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065337;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=If+KYIs5C6Q46PqAVMZruZb8laUM0dubO6DVqiY0eys=;
-	b=sGlxcqwFvNpNN4P0WP8LrFvWXaw7+r8m6rdCig712MoGkiYLtZcRtYouOw3HKJFPM9J0
-	 mnHCC7kj0fh8ESH2+I61bX0yfGOBvmb9xPFGJHCX9RvR/KDH82F5UrTiGBYw0BHTwL6Z1
-	 U2yVO4FsNH/dK8KIjIVlcoMrTrGZxmdCZlkwXRXdiWwb7/7pZP1hCyXZWsZJJk27AxQcQ
-	 xKZFvdBVVGnLtXbCBkhs50JcUu6qgmBZwGhDzir0Lc8hRkJuT+B7/YyYox3auWt5Gse8R
-	 51uF1MxeUdrfXEYk1t9T8N+9JlAaIvW9qWy95zl+A+khEYCZ/Dh+2InVD8BwPlNsUBw==
+	bh=4cI/2tdadDPxnaZ7KLd4NSWnuTQ5Bk0Ak9gHzQ7TVLU=;
+	b=nCeld8WB4/trmx9OY4xVmqgzg7/VtGFEGVyCYn0QYG2KhtM0fCrSu8alKYT+n5lCXrsW
+	 AC/++hTH1Zs3dd49WBdtrTcsP1cOs1ZK99NDMPJFRxxjV/90ZdN3idEv62akpeotmbJ88
+	 OvxndKa7jUZx9qw+4qczRf/Yb/qBmcIOkjHuMaqgPGGHthpAA19EljORT986bflO4pRhQ
+	 WLYcA+TIojAEfsve052TBKpbJbJsjOkiNMfHlQCefXsFnQNVUYDLvVHq57lw1xm7eC1UL
+	 NTtxDd75txG2Fs8hyBFfGtKRSGQ//LaXXaSPzp6KDzx3Qntp/zdow843q+EUXjHDvnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GV4nTwwR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pr9iiurr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D75606A326;
-	Sat,  7 Nov 2026 15:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC723606A326;
+	Sat,  7 Nov 2026 15:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GV4nTwwR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65BB1F0089F;
-	Sat,  7 Nov 2026 15:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pr9iiurr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221221F0089F;
+	Sat,  7 Nov 2026 15:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065335;
-	bh=If+KYIs5C6Q46PqAVMZruZb8laUM0dubO6DVqiY0eys=;
+	s=korg; t=1794065336;
+	bh=4cI/2tdadDPxnaZ7KLd4NSWnuTQ5Bk0Ak9gHzQ7TVLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GV4nTwwRi/KOjQVq1EPWjnFN3NAA1vLg0+b1Tilu0gVhWRhSSTt1ccCN3cESrXHP7
-	 Ae+dW6UTMfFyxuIuc0oFP5eheU35d+4+ImsJktqbrowuANBSed/STcKD5RJswZ9VUZ
-	 mD31ljKxvgrQvgGJnD1KFP1qDYQJslA5x57U6byY=
+	b=pr9iiurrmXy8fRd2elzEz/XWGGvK2/tyJUmBzkHTCtRkMUItj0uue5Z90RvUNDssW
+	 85EKSgJQsfisv3dHOhfj2v0joMMMl+59dHijcYfIysm3qH2eKlbvepE1fxjEQPXuKi
+	 54NUDY6UsbMGSAjvawW8AqQN8wfzhxxP001wl8Uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Hongfu Li <lihongfu@kylinos.cn>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
 	Muchun Song <muchun.song@linux.dev>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
 	Oscar Salvador <osalvador@suse.de>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Adam Litke <agl@us.ibm.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Rik van Riel <riel@surriel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
+	David Hildenbrand <david@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Michal Hocko <mhocko@suse.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Chris Down <chris@chrisdown.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1074/1257] mm/mremap: fix calling fixup_hugetlb_reservations() on the wrong VMA
-Date: Sat,  7 Nov 2026 08:56:10 -0500
-Message-ID: <20261107135008.929545166@linuxfoundation.org>
+Subject: [PATCH 7.3 1075/1257] mm/hugetlb: account migration target folio in per-node NR_HUGETLB vmstat
+Date: Sat,  7 Nov 2026 08:56:11 -0500
+Message-ID: <20261107135008.956763232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -85,61 +79,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Hongfu Li <lihongfu@kylinos.cn>
 
-[ Upstream commit cc078ca0b5b79b4a9e514b7f1b489f2afc83b195 ]
+[ Upstream commit 92635a3ffe8bb48304f50625dd591a27d7505698 ]
 
-In case we fail to move the page tables, for example, because we fail
-to allocate a page table, we actually keep the old VMA.
+Patch series "mm: fix hugetlb NR_HUGETLB accounting on folio migration", v2.
 
-Calling fixup_hugetlb_reservations() on the old VMA is wrong. Fix it
-by just calling it on the VMA that will be removed.
+The hugeTLB counters added by 05d4532b60e3 ("memcg/hugetlb: add hugeTLB
+counters to memcg") are maintained in two per-node places:
+  - the per-node vmstat counter NR_HUGETLB, exposed as nr_hugetlb in
+    /proc/vmstat;
+  - the per-node memcg lruvec stat, exposed via memory.numa_stat.
 
-The user-visible impact is that the VMA loses its reservations, meaning
-that the existing reservations get stranded (leaked) and new hugetlb folios
-that are getting allocated in the VMA cannot make use of the
-reservations, failing these allocations.
+Both are accounted against the folio's node, and both drift when a hugetlb
+folio is migrated, though in different ways.
 
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-10-42796911043b@kernel.org
-Fixes: b714ccb02a76 ("mm/mremap: complete refactor of move_vma()")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+A migration target folio is allocated by alloc_hugetlb_folio_nodemask()
+and inherits the old folio's state without ever being accounted, while the
+old folio is freed right after and its free is accounted.  That alone
+loses vmstat accounting: the target node has no matching increment for the
+decrement on the old node, so /proc/vmstat's nr_hugetlb shrinks by
+nr_pages per migration.  Patch 1 accounts the folio where it is obtained,
+so the increment pairs with the free in free_huge_folio() on the
+successful as well as the failed migration path.  The memfd page cache
+preallocation helper has the same asymmetry and is fixed in the same
+patch.
+
+The per-node lruvec stat breaks differently.  mem_cgroup_migrate() moves
+the charge to the new folio and drops the old folio's memcg data, so the
+old folio's free right after migration skips the memcg per-node decrement;
+the count stays attributed to the old node for the rest of the charge's
+life, and the target folio never gets an increment on its new node.  Patch
+2 moves that per-node accounting along with the charge, in
+move_hugetlb_state().
+
+This patch (of 2):
+
+The NR_HUGETLB vmstat counter is maintained per folio's node: incremented
+when a huge page is handed to a user via hugetlb_alloc_folio() and
+decremented when it is returned to the pool via free_huge_folio().
+
+A folio obtained by alloc_hugetlb_folio_nodemask() never goes through
+hugetlb_alloc_folio(), so it is never accounted, while its free always is.
+For a migration target this means the target node gets no matching
+increment for the decrement on the old node, so the global nr_hugetlb in
+/proc/vmstat drops by nr_pages for each migration.  The same asymmetry
+affects the failed migration path, which frees the target again right
+away, and the temporary folio hugetlb_mfill_atomic_pte() takes from the
+same helper.
+
+alloc_hugetlb_folio_reserve(), used to preallocate the memfd page cache
+folios, has the same asymmetry: the folio is handed to a user without
+being accounted, while its free is accounted through free_huge_folio().
+
+Account the folio where it is obtained, in alloc_hugetlb_folio_nodemask()
+and alloc_hugetlb_folio_reserve(), so that the increment pairs with the
+decrement in free_huge_folio(): a successful migration hands the folio to
+a user, a failed one frees it again.
+
+Link: https://lore.kernel.org/20260923-for-hugetlb_state3-v2-0-e8a36245bfab@kylinos.cn
+Link: https://lore.kernel.org/20260923-for-hugetlb_state3-v2-1-e8a36245bfab@kylinos.cn
+Fixes: 05d4532b60e3 ("memcg/hugetlb: add hugeTLB counters to memcg")
+Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Tested-by: Joshua Hahn <joshua.hahnjy@gmail.com>
+Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
 Acked-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Adam Litke <agl@us.ibm.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Chris Down <chris@chrisdown.name>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/hugetlb.c | 35 +++++++++++++++++++++++------------
+ 1 file changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 444f37d7cd28e..ace0c6a343b1b 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -1345,7 +1345,7 @@ static int copy_vma_and_data(struct vma_remap_struct *vrm,
- 		mremap_userfaultfd_prep(new_vma, vrm->uf);
- 	}
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 30fc6984b2898..90a8076e7ccc4 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2191,6 +2191,11 @@ struct folio *alloc_hugetlb_folio_reserve(struct hstate *h, int preferred_nid,
+ 		h->resv_huge_pages--;
  
--	fixup_hugetlb_reservations(vma);
-+	fixup_hugetlb_reservations(vrm->vma);
+ 	spin_unlock_irq(&hugetlb_lock);
++
++	if (folio)
++		lruvec_stat_mod_folio(folio, NR_HUGETLB,
++				      folio_nr_pages(folio));
++
+ 	return folio;
+ }
  
- 	*new_vma_ptr = new_vma;
- 	return err;
+@@ -2198,24 +2203,30 @@ struct folio *alloc_hugetlb_folio_reserve(struct hstate *h, int preferred_nid,
+ struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
+ 		nodemask_t *nmask, gfp_t gfp_mask, bool allow_alloc_fallback)
+ {
+-	spin_lock_irq(&hugetlb_lock);
+-	if (available_huge_pages(h)) {
+-		struct folio *folio;
++	struct folio *folio = NULL;
+ 
++	spin_lock_irq(&hugetlb_lock);
++	if (available_huge_pages(h))
+ 		folio = dequeue_hugetlb_folio_nodemask(h, gfp_mask,
+ 						preferred_nid, nmask);
+-		if (folio) {
+-			spin_unlock_irq(&hugetlb_lock);
+-			return folio;
+-		}
+-	}
+ 	spin_unlock_irq(&hugetlb_lock);
+ 
+-	/* We cannot fallback to other nodes, as we could break the per-node pool. */
+-	if (!allow_alloc_fallback)
+-		gfp_mask |= __GFP_THISNODE;
++	if (!folio) {
++		/*
++		 * We cannot fallback to other nodes, as we could break the
++		 * per-node pool.
++		 */
++		if (!allow_alloc_fallback)
++			gfp_mask |= __GFP_THISNODE;
+ 
+-	return alloc_migrate_hugetlb_folio(h, gfp_mask, preferred_nid, nmask);
++		folio = alloc_migrate_hugetlb_folio(h, gfp_mask, preferred_nid,
++						    nmask);
++	}
++
++	if (folio)
++		lruvec_stat_mod_folio(folio, NR_HUGETLB, folio_nr_pages(folio));
++
++	return folio;
+ }
+ 
+ static nodemask_t *policy_mbind_nodemask(gfp_t gfp)
 -- 
 2.53.0
 
