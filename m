@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062758;
-	b=3RA654rXUgLPWgqWd5Pq5bHQGq2kv7KAB88RKj+vB7p4t2LI1AnsuN+sN3rdcsLF+u4l
-	 PAYBsEVGrf9hm3xTBg+EPo6wnICdVJ4gtfs6DJ3FYvk41hJEzwzmpyPwnijLrPASJorLj
-	 SqneINuEcOAslsFC/LAzOOmpFc+SwcDKmjyAP8byrmTWAWcRPgOBMVYNVxYE0jpvoMtgl
-	 sYOYrPak8C9OJn11wa7eMNXcBAP27874Cm/d29+LyOky45yDogEXo+82GTVpuTG4k/l0F
-	 iehyIpD7em1UzqWhlbbAQ/oXnD63+eC7KrD7s8nyNweyhQHbz0jhkb94xCqyr5dhZsA==
+	t=1794062759;
+	b=ktwrUZjNT7pGUm61Q0wAwobTJ87S7xfpyx9wBSkWbdmoQZhW/AitkjM7Pob5/OsR9cCK
+	 EfnGOX6u55jnNS2WrSTWlm6+fyrPtEvitweC9Y0u/yXUBUJC8xkQHAstEOVnI1lE/n+5m
+	 pAuZAUnUBueCU6XtgZKEyT/DYOQ7U2YE7HW80i5ZDG5eCparseqDrTmn42wU1FSxg3QEm
+	 90TIN5M87hLTtjTaA4YzVfGzcczh8AZ4olF1gahl7klC0TuDqbTVublPLMboekJ+9URyY
+	 fQ3ikSIL/FeLLC+Tmly3dHbOMG21ENwb27l04Wuta5g6vuZJyIB4G/VA+IP83FMliCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062759;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tu+wimbtfaATCjqK/9oUBf70mIU7KAlY5c9DTp1g7DQ=;
-	b=oJgpGZ7wSzqCOd0XR3kc1idx/7R8+qgapFfkjLbxfAgX7OgEf2YMpkSS1kwerU2iUGJ9
-	 nHuoDMiXCiUXNt9exVjwtbLsj3t02vfGZqnS7y7abLLX2JwmdaUwE7uWhuYp0QiQsVFrY
-	 nx7XiyGp+AOEjyJkheV1MOz2sEUxQu6a2G2OaATFz1rcD8mDmYp1tX6QTU9b+0mh6350a
-	 bXHAXEdvrlenj/3MJBT+yHRUSgeDv2JrFg2W/uL70N/wF9hKa8wvhZRT0tmA5rYBd4Ptm
-	 H8zgbqQHFTDCTRyqwQLVJCnk8RbsAIkZ73R+PpFti+6ZA6GKf8egOyjm5u9ArO6Nc5Q==
+	bh=HJ5/ylU/bAUBZO9xRPdBTBLjpUndXiOXryoxPdtEFN4=;
+	b=lamUKzbSu0hvwkKYI+//z00BasP1p8pGNpgqotbOHfF6OWOsf2f4YORb9wFdz31bqkH4
+	 LHlwIHKqaoJpumudSZ+bDLalVP2H/o7bIJCPSJITQ12C/g6TuFgqJ+GXbInDwMoWLO7HP
+	 sNef0n4GxVt8DGcfwiGXklVPkqzAz68hNQD/kshuLu+4u9TrboxANhKpvRuKtdxClq6xo
+	 khe9xHhcI0MWtGYy3LeLBT5N0BUShfvbXhsujocxpkfd9R/7GVV2VFmf7+uu9AB4XZYiZ
+	 vaWDbcitgerqvERS8p9INtSWcBhuDUhB47bxQ2Hmq2tul+c4p87RXljEiC/bAcU9I9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YavcBX4U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALTotvpl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600D4606A326;
-	Sat,  7 Nov 2026 14:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1008606A32D;
+	Sat,  7 Nov 2026 14:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YavcBX4U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4321F0089F;
-	Sat,  7 Nov 2026 14:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALTotvpl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD761F008A1;
+	Sat,  7 Nov 2026 14:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062758;
-	bh=Tu+wimbtfaATCjqK/9oUBf70mIU7KAlY5c9DTp1g7DQ=;
+	s=korg; t=1794062759;
+	bh=HJ5/ylU/bAUBZO9xRPdBTBLjpUndXiOXryoxPdtEFN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YavcBX4UP4joY7ZXNMSYPhzW+uiO0LgSBgfLHByv3LnvtSLmwWR0LfhjmyvOl8R7W
-	 PFU0nisqRj4NmqScXHHQFmfbH7FuvOs9Jdl5Nr3n4NQfr5RN7UNyS7qmUFzNLpAjN/
-	 b/kJa+dZq6YMIS52zdPG7UcEYHOPvKJE2RTQ2BkI=
+	b=ALTotvplTxf/wrhCaz7qDJsCu9o+NLzbaQXBoI65W6j4pjDVJasp+8nZbakPzmBte
+	 Lv/Pew5mrmcdYkNKtta6et+Za9g6+x+Yui2i3WQ84JGADsZtsdbV9pxeTRrktVoFVS
+	 XFYJu7o1rZUw4CH1y1sRq8Jp4j561F1sERGWTRiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/869] ipc/mqueue: release notification resources during inode eviction
-Date: Sat,  7 Nov 2026 08:45:25 -0500
-Message-ID: <20261107134853.596712666@linuxfoundation.org>
+Subject: [PATCH 6.18 070/869] fs_pin: publish pins with RCU list helpers
+Date: Sat,  7 Nov 2026 08:45:52 -0500
+Message-ID: <20261107134854.880636088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,55 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit eb85469f0dd69ca145d63117450e14c31f67f698 ]
+[ Upstream commit 8d01d6b4c17c406f37a9b6edac93dfb858af30d0 ]
 
-mqueue_flush_file() removes an mq_notify() registration only when the
-closing task belongs to the thread group stored in notify_owner.
+pin_insert() initializes a pin before adding it under pin_lock.  The kill
+paths read the list heads under RCU without taking that lock.  Plain hlist
+insertion does not publish the earlier initialization to those readers.
 
-A task in a separate thread group created with CLONE_FILES can register
-SIGEV_THREAD notification and exit without closing the shared file table.
-If another thread group then unlinks and last-closes the queue, ->flush()
-skips the registration and inode eviction loses the only pointers to its
-resources.
+KCSAN weak-memory checking reported acct_on() callback initialization
+racing with pin_kill() after the superblock-list publication.  The
+corresponding LKMM model permits the stale read with plain publication;
+the RCU release/acquire pair forbids it.
 
-The orphaned registration permanently retains the notification skb, its
-netlink socket, a pid reference and a user namespace reference. An
-unprivileged process can repeat the sequence with new queues and sockets.
+Use the RCU hlist add and dereference helpers for both pin lists.
 
-No inode users remain during eviction. Remove any stale registration there
-after dropping info->lock, since netlink_sendskb() may release the final
-socket reference.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 2798d4ce6160 ("acct: get rid of acct_lock for acct->count")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20260824042359.925145-1-4ncienth@gmail.com
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260903002100.34822-1-kmehltretter@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- ipc/mqueue.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/fs_pin.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/ipc/mqueue.c b/ipc/mqueue.c
-index 093551fe66a7e..11eaf5df3645f 100644
---- a/ipc/mqueue.c
-+++ b/ipc/mqueue.c
-@@ -529,6 +529,13 @@ static void mqueue_evict_inode(struct inode *inode)
- 		list_add_tail(&msg->m_list, &tmp_msg);
- 	kfree(info->node_cache);
- 	spin_unlock(&info->lock);
-+	/*
-+	 * A shared file table can let the notification owner exit without
-+	 * running ->flush(). No users of the inode remain during eviction, so
-+	 * tear down any stale notification after dropping info->lock because
-+	 * netlink_sendskb() may release the final socket reference.
-+	 */
-+	remove_notification(info);
+diff --git a/fs/fs_pin.c b/fs/fs_pin.c
+index 47ef3c71ce907..1a508f2167e0a 100644
+--- a/fs/fs_pin.c
++++ b/fs/fs_pin.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/fs.h>
++#include <linux/rculist.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+ #include "internal.h"
+@@ -22,8 +23,8 @@ void pin_remove(struct fs_pin *pin)
+ void pin_insert(struct fs_pin *pin, struct vfsmount *m)
+ {
+ 	spin_lock(&pin_lock);
+-	hlist_add_head(&pin->s_list, &m->mnt_sb->s_pins);
+-	hlist_add_head(&pin->m_list, &real_mount(m)->mnt_pins);
++	hlist_add_head_rcu(&pin->s_list, &m->mnt_sb->s_pins);
++	hlist_add_head_rcu(&pin->m_list, &real_mount(m)->mnt_pins);
+ 	spin_unlock(&pin_lock);
+ }
  
- 	list_for_each_entry_safe(msg, nmsg, &tmp_msg, m_list) {
- 		list_del(&msg->m_list);
+@@ -73,7 +74,7 @@ void mnt_pin_kill(struct mount *m)
+ 	while (1) {
+ 		struct hlist_node *p;
+ 		rcu_read_lock();
+-		p = READ_ONCE(m->mnt_pins.first);
++		p = rcu_dereference(hlist_first_rcu(&m->mnt_pins));
+ 		if (!p) {
+ 			rcu_read_unlock();
+ 			break;
+@@ -87,7 +88,7 @@ void group_pin_kill(struct hlist_head *p)
+ 	while (1) {
+ 		struct hlist_node *q;
+ 		rcu_read_lock();
+-		q = READ_ONCE(p->first);
++		q = rcu_dereference(hlist_first_rcu(p));
+ 		if (!q) {
+ 			rcu_read_unlock();
+ 			break;
 -- 
 2.53.0
 
