@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062356;
-	b=YjC0cAOYb1uXvgRmcH6BUfcjvb/SLjBnbex3aQKPjR2IGqDmA+NDdjKVII4+s6OSBPk5
-	 W/RmY79m3NFFGvD/CQjro/oc4t9cipy5K6xqVoIaKiYLHpxVUT2j8OoPL5rQFik3Tfvmo
-	 0OZ8VXlzSGsLlM9/yFopjHHEMnzHptTlROV4WzD6FlQUGYgTb9tnK+Wtkf7/k9ekzgYBm
-	 aMS/24IdVDJHLPCZF9+qe7OqzAlcYhpApLxnrye3LGiMdCnu75B6N1pS0ztJEJMrPGVhX
-	 lN2R3zHq+mi4FeA2qEDOTaD868efxdnxs+ingHvUFMWQksOYjU65tf0O7/BMDLnJmcA==
+	t=1794062357;
+	b=k6dXh9a/f8Z/hv+3OD8guZeGGjCQxpze1jEvsw/py5R0W9EgMzRRWOdY4TQL302mSubk
+	 E8LR8Dw64584p+QaQ9S8SFjgVoaf4ehpqJEoSBV9icybdfzWOqQUYXP1CArN1IYqD9C8Y
+	 l28RV2khlYuWxKbqe4EvbxNYJiydjNZJKM0jgLbai41DmdzvlOi9KsfIaYD0KTBfqo93w
+	 /F8+/8DajHxOEyEqKUFYrZWn5bMq6+gIIELn8TdAlUINeNvmq+1bs65p52ecgiDPveClh
+	 AaNN0Wzcyuq82fnjt3+2l6pDJ+SnsRViodouwgZKXFLW23UT1Z6ORQaHcJav+Mac5Tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062356;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062357;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ib7f6fBskPCk7suu7mv6WcZ+dH5OLN4ST+XJxST2V14=;
-	b=TAI111zIoPavPAoyJf0tiLeT3y5OkxiSkOWvPlXGVOJMPBB7OwhB9XXFM6XgSYrZpJZs
-	 Buno+nN4BVg24rTW2GFWr55ThxOFk0JLjsACbOcIbVxHWRhxWyw+rN57Mcd9rYuDkw6V8
-	 JMmYdYweTL6N3EgE5MaqsIl/O+nmzlr9M9XGZUi+nE/Jha3sk0CxesR1GDhhoPdx9czQY
-	 /KB2mrDvs/chJfzMpBXGZmCxrVaw1P/ax8QwiAn7CP0tkoNMcGLOCcCqJ+ZNLI0EDK05z
-	 3pqEcGlAOtCdHanUsR3Z1FZJOwr7MzAveMSM6MbpS79fBBiLbtt1h0EGKjT8CXwCdHA==
+	bh=ApIAxycnC8zrk02eLZt4f1d1Z5W/rnFTGAhiRXQeU5Y=;
+	b=JflGqqgkmVvit+Itm47HvwR6HTfFXxSbEx1sg6MYMPWl4N8N9S8FCgizEUlb515WKtdJ
+	 AZ4Q4uVtTyz/WxsePHMoJrrRgr2dUUKIYQfPrrosd6MUKSkyR5O0j46KEsCvguh2G+7jB
+	 KwXdQMdmM990nm6rKwQFi623tXl/reLiBHpYmdSwUCPpXBEUNZhm4vNnecgGdpAeeuLUG
+	 cMxbvrBm7iEf9FQ9FNMxfC/RL6LfKUCwKfCjy9uviOBsIQxbgX85RYoSC/ClBExKChahu
+	 jMUgH7xdOrswL39/AV6jMzbwityZ7ko3XKasK7iTTJEm7du7oA74+B8b7nuxJnpfsVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DlLrx34m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=snEJDOGx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8789606A330;
-	Sat,  7 Nov 2026 14:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115FA606A32E;
+	Sat,  7 Nov 2026 14:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DlLrx34m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799361F0089F;
-	Sat,  7 Nov 2026 14:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=snEJDOGx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04671F0089F;
+	Sat,  7 Nov 2026 14:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062355;
-	bh=ib7f6fBskPCk7suu7mv6WcZ+dH5OLN4ST+XJxST2V14=;
+	s=korg; t=1794062356;
+	bh=ApIAxycnC8zrk02eLZt4f1d1Z5W/rnFTGAhiRXQeU5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DlLrx34m+47zM3ZH8WNedtOHwikkCncCyZ/sBflKGjx7QljDOZ9+flFPOxNMglP35
-	 v1wTfwKsVreUuiGwTK7w7YrUlpBcHFMMoq2fq4SSHU1bckZqg7rXFzkaSYWwbAhnQq
-	 VyzW9x16WyGoiDUxTpRC1bI4cqFg05lLQAtVOaow=
+	b=snEJDOGxah2zejhKmZu5LPUyCcmFMi0lwYrTuX9VPM4Uewndlcx0lOma7HoCBIoOG
+	 sD2KZ4ggWCaVHOEaFHLFTeNgrXfukquERFngpBveBNaoZ2IxZs2EiK3Nw+tuyS18bU
+	 hx5xpYQhGu7KlhnLX9c8lQ4K6sRFQ1FYCs/7cdf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <david@davidgow.net>,
+	Yongjian Mu <ymu@everpuredata.com>,
+	Chuck Lever <cel@kernel.org>,
+	Tim Menninger <tmenninger@everpuredata.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1244/1536] mm/damon/core: charge only the part of a region the filter left
-Date: Sat,  7 Nov 2026 08:54:20 -0500
-Message-ID: <20261107135032.703402700@linuxfoundation.org>
+Subject: [PATCH 6.12 1235/1536] xprtrdma: trim head iovec when the payload arrives via a Write chunk
+Date: Sat,  7 Nov 2026 08:54:11 -0500
+Message-ID: <20261107135032.444448280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,70 +70,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Yongjian Mu <ymu@everpuredata.com>
 
-[ Upstream commit 4ff3b4a54a32142497fb44b79d0920aa6ba3393d ]
+[ Upstream commit 9ee534a75912361308b1f956bc3e7895a082a422 ]
 
-Patch series "mm/damon/core: fix the size charged for a filter-trimmed
-region", v2.
+The upper layer sets rq_rcv_buf.head[0].iov_len from its estimate of the
+reply header size. For RPCSEC_GSS that estimate includes
+auth->au_ralign, which gss_create_new() initializes to GSS_VERF_SLACK >>
+2 (25 XDR words, or 100 bytes) and which is corrected to the real
+verifier size only after the first reply on that rpc_auth has been
+unwrapped. In this case, the krb5 MIC verifier is 36 bytes, so every
+request encoded before the first reply completes has a head that is 64
+bytes too long.
 
-An address range DAMOS filter that partially overlaps a monitoring region
-splits it, so the scheme action reaches only one side of the boundary.
-damos_apply_scheme() reads the region size before that split and never
-re-reads it, so the quota charge and schemes/<S>/stats/sz_tried account
-for the whole original region.
+On TCP this is harmless: xdr_realign_pages() moves the excess head
+bytes, which are genuine reply data, into the page list. With
+RPC-over-RDMA and a Write chunk (sec=krb5, i.e. RPC_GSS_SVC_NONE, where
+DDP is allowed), the payload has already been placed directly into the
+page list, and the receive buffer holds only the inline part of the
+reply. rpcrdma_inline_fixup() clamps its local copy of the head length
+to the inline length but leaves head.iov_len untouched, so
+xdr_realign_pages() still sees iov_len > cur and shifts whatever lies
+past the inline reply in the receive buffer into the front of the
+directly-placed payload:
 
-Patch 1 re-reads the size after the core filters have run.  Patch 2 adds
-KUnit coverage for what the function charges and reports, for the trimmed
-cases and for the cases that must not change.
+  rpc_xdr_recvfrom:  head=[...,196] page=524288 tail=[...,64]
+  rpc_xdr_alignment: nfsv4 READ offset=132 copied=64
 
-This patch (of 2):
+The first 64 bytes returned by each such READ are incorrect (zeroed, or
+shifted right by 64 bytes depending on the kernel's xdr_shrink_bufhead()
+implementation). This is readily hit with pNFS flexfiles over RDMA and
+sec=krb5: the per-DS rpc_clnt gets a fresh rpc_auth whose first RPC is a
+large READ. Reads following the first completed reply return the
+expected data.
 
-An address range DAMOS filter that partially overlaps a monitoring region
-splits the region at the filter boundary, so the scheme action is applied
-to only one side of it.  damos_apply_scheme() reads the region size once
-on entry, before damos_core_filter_out() performs that split.
+Commit cb0ae1fbb2f5 ("xprtrdma: Do not update {head, tail}.iov_len in
+rpcrdma_inline_fixup()") removed the head-length correction while fixing
+the handling of pure-inline krb5p replies.
 
-The quota charge and the statistics update therefore account for the
-region as it was before the trim.  schemes/<S>/stats/sz_tried counts
-memory the filter excluded, which Documentation/mm/damon/design.rst says
-is not counted as tried, and with quotas/bytes set the excluded part is
-charged against the budget, throttling the scheme to a fraction of what
-was configured.
+When a Write chunk conveyed the payload, trim head.iov_len (in both
+rq_rcv_buf and rq_private_buf, which call_decode() expects to match) to
+the inline length actually received so that the XDR layer does not
+realign the page list. These READ replies have no trailing inline
+fields, and the payload is already in the page list, so the upper
+layer's head estimate can be safely reduced. Reduce buflen by the same
+amount to avoid treating unused head capacity as additional tail
+capacity. Pure inline replies and Reply chunk replies are unchanged.
 
-User impact is that DAMOS could unexpectedly slowly run, due to
-over-charged quota.  DAMOS stat could also be confusing.  No critical
-events such as crashes or leask happen.
+Tested on Linux 6.8.0 and 7.3-rc4 with NFSv4.1 pNFS flexfiles over
+RPC/RDMA and sec=krb5.
 
-Re-read the region size after the core filters have run.
-
-Link: https://lore.kernel.org/20260921152443.80132-1-sj@kernel.org
-Link: https://lore.kernel.org/20260921152443.80132-2-sj@kernel.org
-Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos filter")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <david@davidgow.net>
-Cc: <stable@vger.kernel.org>
+Fixes: cb0ae1fbb2f5 ("xprtrdma: Do not update {head, tail}.iov_len in rpcrdma_inline_fixup()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yongjian Mu <ymu@everpuredata.com>
+Reviewed-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/xprtrdma/rpc_rdma.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index ed32855c16ed8..3142776e2e0ee 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1482,6 +1482,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		}
- 		if (damos_filter_out(c, t, r, s))
- 			return;
-+		sz = damon_sz_region(r);
- 		ktime_get_coarse_ts64(&begin);
- 		if (c->callback.before_damos_apply)
- 			err = c->callback.before_damos_apply(c, t, r, s);
+diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
+index aa57e057ff451..11b9c2032f3fc 100644
+--- a/net/sunrpc/xprtrdma/rpc_rdma.c
++++ b/net/sunrpc/xprtrdma/rpc_rdma.c
+@@ -1033,12 +1033,16 @@ void rpcrdma_reset_cwnd(struct rpcrdma_xprt *r_xprt)
+  * @rqst: controlling RPC request
+  * @srcp: points to RPC message payload in receive buffer
+  * @copy_len: remaining length of receive buffer content
+- * @pad: Write chunk pad bytes needed (zero for pure inline)
++ * @writelist: bytes conveyed by the Write chunk (zero for pure inline)
+  *
+  * The upper layer has set the maximum number of bytes it can
+  * receive in each component of rq_rcv_buf. These values are set in
+  * the head.iov_len, page_len, tail.iov_len, and buflen fields.
+  *
++ * For READ replies with a Write chunk, the payload is already in
++ * the page list. An overestimated head length and buflen can be
++ * reduced without moving reply data.
++ *
+  * Unlike the TCP equivalent (xdr_partial_copy_from_skb), in
+  * many cases this function simply updates iov_base pointers in
+  * rq_rcv_buf to point directly to the received reply data, to
+@@ -1047,13 +1051,16 @@ void rpcrdma_reset_cwnd(struct rpcrdma_xprt *r_xprt)
+  * Returns the count of bytes which had to be memcopied.
+  */
+ static unsigned long
+-rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len, int pad)
++rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len,
++		     u32 writelist)
+ {
+ 	unsigned long fixup_copy_count;
+ 	int i, npages, curlen;
+ 	char *destp;
+ 	struct page **ppages;
+ 	int page_base;
++	int pad = writelist & 3;
++	unsigned int delta;
+ 
+ 	/* The head iovec is redirected to the RPC reply message
+ 	 * in the receive buffer, to avoid a memcopy.
+@@ -1065,8 +1072,20 @@ rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len, int pad)
+ 	 * head.iov_len bytes are copied into the page list.
+ 	 */
+ 	curlen = rqst->rq_rcv_buf.head[0].iov_len;
+-	if (curlen > copy_len)
++	if (curlen > copy_len) {
++		/* These READ replies have no inline fields after the payload.
++		 * Trim the head without moving the directly-placed data.
++		 */
++		if (writelist) {
++			delta = curlen - copy_len;
++
++			rqst->rq_rcv_buf.head[0].iov_len = copy_len;
++			rqst->rq_private_buf.head[0].iov_len = copy_len;
++			rqst->rq_rcv_buf.buflen -= delta;
++			rqst->rq_private_buf.buflen -= delta;
++		}
+ 		curlen = copy_len;
++	}
+ 	srcp += curlen;
+ 	copy_len -= curlen;
+ 
+@@ -1294,7 +1313,7 @@ rpcrdma_decode_msg(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep,
+ 	base = (char *)xdr_inline_decode(xdr, 0);
+ 	rpclen = xdr_stream_remaining(xdr);
+ 	r_xprt->rx_stats.fixup_copy_count +=
+-		rpcrdma_inline_fixup(rqst, base, rpclen, writelist & 3);
++		rpcrdma_inline_fixup(rqst, base, rpclen, writelist);
+ 
+ 	r_xprt->rx_stats.total_rdma_reply += writelist;
+ 	return rpclen + xdr_align_size(writelist);
 -- 
 2.53.0
 
