@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063509;
-	b=tLX01GX1wmorhDKfyLsg6GaZTklkhVSp+OpxaKjix5tJllI8k5enMHYOULoTrTJhyR5S
-	 Xp6hoaqKwxJTBpctiB3tv1w45TL4oEXMnCqG5HSf8GjisyiczmXwdSfdlLPDbtpCjUot8
-	 SiItZC4iFg2HZz+ZruRa+xlqWFxGM+xBPRPLR1JBttBBAI7rVdrW/9r2TRd69k4Gdbx1c
-	 hSleCUeUvKzANIbrPYxtd66RbrlWEtpkJYqcmS9tt8EaxwFhvs6mPTyuTwluu+eXmc9t4
-	 M6S4mlit0ybjRcA7sE0SrAz4xFiOEFT/CRYr2n+l0tOC6KXgp6/dY3AQ9P0JbBzfQ9w==
+	t=1794063511;
+	b=11A4A9x6Xlvx+MqKoWd7EqNJggwB8yYKQVv0tjVBRdGz/V/55Q+aNC8zR30TAl35jJLp
+	 VIs8AxnC8e5S98htzDuJprjoqSF1y18Rin7KyGEz5GED7MAp7AhG1FbbSG29gfLUA5aY3
+	 IjnIoDUXGdmmemTQqcbQdLnLY/s1NN9fqsm2C8Qg+f0iVPvjDhORLYWtahm0HVIi83mfi
+	 /i7t2lpwag0fuC81Q1trCJFFuq3lM1GsVzJcQxEjuvDCAVYIArWKcWnRGGvxuMJdGWYwB
+	 GEdzGW7vXiiJpwLJbwOPLBxXXyd4FETuL74z3FSmZtFRy66J8hSvgPoLCTWKInFb+pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063509;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063511;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nQZujWiG/x43ba+/zquF2saJHYn7pinXF1lCeHDATJ8=;
-	b=ZzunOoUcNyxsSmO5pNpzty+PEm6OPzu+aUU1wngTzuDej/8x8a2j+pdPElYrpkgfB0IH
-	 M2xLn5LRC/LPSzO9L0aSaAdnLL3zd0c0RPgz9LmK6PTvM6hWp3IWZiozs8vqHehVX7zc7
-	 FPvlb3eX1Ida4YJWvq0FwpNyl+k9RIm/XMQ5Zr4G4I42gcrHZCB5eD9DndLp2/x1yRGaT
-	 Gv0vjjwPb6Fvpcr4PiwZ/G4QK31CQ86ZJYVzurL0ei3eGpNON4hbBv4QyFvHYesO5uFZU
-	 IjRAG3s4wILw+xW5LYF8od5zt0gK4f2bCTFbV8oL4HfmHRo3kZRTVP0bqrCNKwdaQ4A==
+	bh=2xd10RXLVas9OiYDw2O5vTRgh7N3bhdI0I+ULIupbcQ=;
+	b=pW2DdmuWY5uLMVuaZT8YXZNjfnJFTYI/3eHOlSPL31+Mg8k6GOAjUtP7Bj5iYifZ6zha
+	 +QDOSmVwyQQxFaZesQvtBjp80h4cFy0HkL1keX1g8ZwtVAS0OsQqdCuWYk/TeoCZdDVTh
+	 Y8o9eZXzdT332faZfJPJfFQR9UbxXHE5O6YYLi1f3orGAwQbK0unb/GYwuiTAdQG5ehSH
+	 Bm5pnyk+OVNyvY6bS5mUWYXWsJYSvPFBbBTFMAubZtxPdqdCaB69d0d5w/UdETqWy5GvD
+	 ifkBQuhfFFtbrTDKMS3UgP2k+jSd8P6+MmkOnG/LrDD75K/MzHUoELWkApMI0iZX6CA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7mq225K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hB54mPZT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5434B606B8AF;
-	Sat,  7 Nov 2026 14:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB57E606B8AF;
+	Sat,  7 Nov 2026 14:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7mq225K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D1A1F008A4;
-	Sat,  7 Nov 2026 14:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hB54mPZT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387731F008A1;
+	Sat,  7 Nov 2026 14:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063509;
-	bh=nQZujWiG/x43ba+/zquF2saJHYn7pinXF1lCeHDATJ8=;
+	s=korg; t=1794063510;
+	bh=2xd10RXLVas9OiYDw2O5vTRgh7N3bhdI0I+ULIupbcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d7mq225K806P28Sb3S/fKvRr39Sqi8wqdqhuWiS4rx+oqd012IXvhqvuyMoKQSa8R
-	 DaW4af7hRlIOyBG3TH+Z/4GMiPc6s2V2enFHiH2NjqYoHbSlV+2oFosukGrCxM9QAx
-	 ebRmb3HCZRgganeFffUzlvub2/Vh3Ir0qildVj7Q=
+	b=hB54mPZTEs6vH2e2RmMlHbvkOXmZ0P62FWabWDoAnM6ekxyjG8WcrZ86huIhExmmm
+	 5ayiUk6RKxbT6L0T2TxZQtkvOWUkfj5DjOEMYSz51ZyK9ZmJqtlqfIRaJgNB7ommGl
+	 opXQngx/U8PQERwJlgmk+NNuJp4AVeCrt5AcJEH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grant Slater <github@firefishy.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 653/869] hwmon: (acpi_power_meter) Fix 18.45 TW bug
-Date: Sat,  7 Nov 2026 08:55:35 -0500
-Message-ID: <20261107134915.200424701@linuxfoundation.org>
+	Jiri Kosina <jkosina@suse.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Karlos Abel <kabel@voidship.net>
+Subject: [PATCH 6.18 654/869] Input: always accept EV_SYN in input_event()
+Date: Sat,  7 Nov 2026 08:55:36 -0500
+Message-ID: <20261107134915.241434047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,67 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 0b6eda22f9ab67ddb2a872b0c3fc578ad9f4e27e ]
+[ Upstream commit c1d13bfdb9c75c2885d10332174a887349eb0b51 ]
 
-The ACPI specification says:
+Commit 0cd587735205 ("Input: preallocate memory to hold event values")
+moved allocation of dev->vals into input_allocate_device(), which caused
+input core to accumulate events reported while seeding initial device
+state before input_register_device().
 
-"If an error occurs while obtaining the meter reading or if the value
-is not available then an Integer with all bits set is returned"
+However, because EV_SYN is only set in dev->evbit during
+input_register_device() (and some drivers also overwrite dev->evbit
+directly before registration), any EV_SYN/SYN_REPORT events sent before
+registration were dropped by is_event_supported(), leaving those seeded
+events stuck in dev->vals until the next SYN_REPORT after registration.
 
-This integer can also be 64-bit wide on ACPI 2.0 and later systems,
-so we have to check for that too.
+Always accept EV_SYN in input_event() and input_inject_event() without
+checking dev->evbit so input_sync() flushes dev->vals as intended.
 
-Compile-tested only.
-
-Reported-by: Grant Slater <github@firefishy.com>
-Closes: https://github.com/lm-sensors/lm-sensors/issues/460
-Fixes: 1fefca6c57fb ("hwmon: (acpi_power_meter) Fix 4.29 MW bug")
+Reported-by: Karlos Abel <kabel@voidship.net>,
+Fixes: 0cd587735205 ("Input: preallocate memory to hold event values")
 Cc: stable@vger.kernel.org
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20261006234618.10943-1-W_Armin@gmx.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Assisted-by: LLM
+Acked-by: Jiri Kosina <jkosina@suse.com>
+Link: https://patch.msgid.link/asx50uz6iafsyAd5@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/acpi_power_meter.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/input/input.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
-index de408df0c4d78..667dffde33015 100644
---- a/drivers/hwmon/acpi_power_meter.c
-+++ b/drivers/hwmon/acpi_power_meter.c
-@@ -10,6 +10,7 @@
- #include <linux/hwmon.h>
- #include <linux/hwmon-sysfs.h>
- #include <linux/jiffies.h>
-+#include <linux/limits.h>
- #include <linux/mutex.h>
- #include <linux/dmi.h>
- #include <linux/slab.h>
-@@ -31,7 +32,12 @@
- #define POWER_METER_CAN_NOTIFY	(1 << 3)
- #define POWER_METER_IS_BATTERY	(1 << 8)
- #define UNKNOWN_HYSTERESIS	0xFFFFFFFF
--#define UNKNOWN_POWER		0xFFFFFFFF
-+/*
-+ * ACPI integers can either be 32-bit or 64-bit wide, so
-+ * we have to check for both values.
-+ */
-+#define UNKNOWN_POWER_32	U32_MAX
-+#define UNKNOWN_POWER_64	U64_MAX
+diff --git a/drivers/input/input.c b/drivers/input/input.c
+index a500e1e276c21..9907dd9ec880a 100644
+--- a/drivers/input/input.c
++++ b/drivers/input/input.c
+@@ -391,7 +391,7 @@ void input_handle_event(struct input_dev *dev,
+ void input_event(struct input_dev *dev,
+ 		 unsigned int type, unsigned int code, int value)
+ {
+-	if (is_event_supported(type, dev->evbit, EV_MAX)) {
++	if (type == EV_SYN || is_event_supported(type, dev->evbit, EV_MAX)) {
+ 		guard(spinlock_irqsave)(&dev->event_lock);
+ 		input_handle_event(dev, type, code, value);
+ 	}
+@@ -415,7 +415,7 @@ void input_inject_event(struct input_handle *handle,
+ 	struct input_dev *dev = handle->dev;
+ 	struct input_handle *grab;
  
- #define METER_NOTIFY_CONFIG	0x80
- #define METER_NOTIFY_TRIP	0x81
-@@ -454,7 +460,7 @@ static int power_meter_read(struct device *dev, enum hwmon_sensor_types type,
- 		ret = update_meter(res);
- 		if (ret)
- 			return ret;
--		if (res->power == UNKNOWN_POWER)
-+		if (res->power == UNKNOWN_POWER_32 || res->power == UNKNOWN_POWER_64)
- 			return -ENODATA;
- 		*val = res->power * 1000;
- 		break;
+-	if (is_event_supported(type, dev->evbit, EV_MAX)) {
++	if (type == EV_SYN || is_event_supported(type, dev->evbit, EV_MAX)) {
+ 		guard(spinlock_irqsave)(&dev->event_lock);
+ 		guard(rcu)();
+ 
 -- 
 2.53.0
 
