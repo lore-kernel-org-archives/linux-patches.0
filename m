@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064962;
-	b=ZValTA7gC7blWRw4p1EnngjZefvOiGOrmTHkRLJa+FakSECP/qboP8fvhyYdbwpaLbI6
-	 v7NBdD7PBtQzJKTaf6m1O+eUNVCJr6TCbBecvUTupv6AcHJWBemHRGKoP7smJS3fBSvqc
-	 D9OA3ytn0M7gExhEfjATRy8wMhIWAy8J74fGdJWLg74k//hiKg2yVUPMWcsgBvyKPTVul
-	 2ajEEGzyVLAqq39xaxxy9gB7M4bImbvnoLpG8Hu5/wwx4LU17rKB9zOOO5b9VdqUZ/l8k
-	 TgEQ9YqBZffHOysHa3pC/So60LRjnL/GUcXqGcMnxe7HsVvsjL8atYkVX6rd8dFtqCw==
+	t=1794064963;
+	b=nLCYk1aDY89yhwEeLnj017Ga7/9bUCd79BAYH6r7gsWIO39Kuj8PLqIMhYhhTTbrUdY9
+	 uCqiFZjBqdUP4OiED49O9zmQkopNo5MVKQCCNBqrv6R2wslt3tI9psiFhhyYqN7KRfxTp
+	 7cPjvSjpXsVmt7yxn0WblWAMKHNqh5D+I9Ggty5+ZIg2quxYiuc5z6FLhG54N6o0qU9/R
+	 Zx8ajjVnfELRv0mPGwpWmDwGNe7rGWrSmuvdbjyQL38RKiPc8wA44MG7Kh6iUgrr9DeHd
+	 hmBJI5NtAyuQ1p2CVCiF0f1lzH536DUjpo0mIjR+/tDXo+j6Kg5aTjNhorc46smKiEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064963;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=gQE9EMn96UZmZYpwjD3tKEVZI0WqJqO2AtHmBetgYYY=;
-	b=yocX85rttrSOXJe2Mjvm0vRaJBqLVd16aw6FM54Sa54p3+LNbT4vif9PF55TgvJGlS7z
-	 9zaX256jMiXifP/PnxJn7yhFLq7q+XRybwLbJ2IpYBsWTMQ9iobiwpzwOXFRenB5WmdUB
-	 4QPy4rXh12cgvr4lDJf7TjhkfiJHov+UZEO8I00NOuSmZ8ifPDlWWSzbZSoC6ZnlYtKBv
-	 S9NZUeYbeXoSPcKNpi9jIhoSZ932atf88p7f68sYXgeAZrPM90upthzexCPXVfP+ppmD0
-	 c09jjWJeE1z5EvQYZxHTAlyhiTmVJ01QC3Y1ss78walNdFxdeK/J5CHmRqPSI8fcDCQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=VOnkphal0n7cCo1ZepY7MaAKg8t3I2tcEAmxirEMK9w=;
+	b=oxuCjQA6fAmv6bhlVQMp9XXIMyMZqvY0pklOJ0r3lOp8qYFtZxtikHwNfXYTkwv4CS/6
+	 MtdJFOr+2OE7pXKFFtb5r1rFkkHhIY3GhyaJukASVXmmjVk6eFcC0CL/Fnhvvs7ZXHXyQ
+	 D0UH8MbOnT/DT1zRPpdSzh1aPxrxFLxTmQq0u5HOQansw17g4QhGQIuoe4RBBHZI8cvNJ
+	 Y5OCvt4Dgs1Opah6BysHuTf/y24j/9HpGnJssgcM41OqL0+cumd2Mix3FBxHawlFDYpn+
+	 0JjEg5K/QTWucpNz1BX8rWVSMroiBKoz8OH9EK3grvBpsktnxuzdSVXdYrZRHxp+KJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TD0XAVtf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+1t8E1U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3858A606A9D9;
-	Sat,  7 Nov 2026 15:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75832606A9E3;
+	Sat,  7 Nov 2026 15:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TD0XAVtf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64BF1F0089F;
-	Sat,  7 Nov 2026 15:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+1t8E1U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225A51F0089F;
+	Sat,  7 Nov 2026 15:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064962;
-	bh=gQE9EMn96UZmZYpwjD3tKEVZI0WqJqO2AtHmBetgYYY=;
+	s=korg; t=1794064963;
+	bh=VOnkphal0n7cCo1ZepY7MaAKg8t3I2tcEAmxirEMK9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TD0XAVtfIZRr5pzH2fufRRIUp01iTmuZoOoCWcF633vnI48aNEGR/RGoZUhWLOI51
-	 xoC6WznemULpy/nll4ujibdhUfx+9wGtvNxdf3z2nHuS7TKkyg0xlxfzHxl2dQZ4Zq
-	 WducSUMy/XvOOmhp+IPc2lOjlTicp4hH1WCF+ubg=
+	b=E+1t8E1UTFrdG4e29eI1qr8WRrzkljjwgYRaTcEeGwwntBCwk5B9RqAFHA+McFbBP
+	 rq/pQPL1RKfVTcLpxAHluEkq+M1gwy9qOsn7b9v8zdcdax63wkZuQlhzHKLf+sXWRz
+	 1qAMT509uQuduYsPzDYaZYXTHVwXyxqC98FCLWX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	=?UTF-8?q?Jos=C3=A9=20Miguel=20Castellanos=20Valladolid?= <josstamy@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0846/1257] ALSA: seq: oss: Skip events until fully initialized
-Date: Sat,  7 Nov 2026 08:52:22 -0500
-Message-ID: <20261107135002.690626657@linuxfoundation.org>
+Subject: [PATCH 7.3 0847/1257] ALSA: hda/realtek: Enable mute LEDs on HP OmniBook X Flip 14-fm0xxx
+Date: Sat,  7 Nov 2026 08:52:23 -0500
+Message-ID: <20261107135002.719959332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,86 +62,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: José Miguel Castellanos Valladolid <josstamy@gmail.com>
 
-[ Upstream commit 68d4a6ea6cc6091a05836f783bc17d525d266d0b ]
+[ Upstream commit c80286aaa4acd52f9bd0b0d4914d2069fe6ba3a8 ]
 
-When an OSS sequencer device is opened, it creates a sequencer port,
-then further initializes the internal states like a timer instance,
-etc.  Since the sequencer port is published, an event can be already
-delivered, and this may hit unexpected event handling, which can
-eventually cause a NULL dereference (like the timer start/stop event
-triggered before the timer initialization).
+The HP OmniBook X Flip Laptop 14-fm0xxx (subsystem ID 0x103c8d9f, ALC245
+with two CS35L41 amplifiers over I2C) is currently handled by
+ALC287_FIXUP_CS35L41_I2C_2. That binds the amplifiers but does not set up
+the mute LEDs, so neither the speaker mute key LED nor the microphone mute
+key LED lights up under Linux. With that fixup the codec GPIOs stay
+disabled (IO[0..2] enable=0).
 
-For avoiding such a race, introduce a simple guard and skips the event
-processing until the port is fully initialized.
-At releasing the device, in turn, clear this guard, so that any input
-events will be discarded during the teardown.
+Switch the entry to ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS, which chains
+cs35l41_fixup_i2c_two with ALC245_FIXUP_HP_X360_MUTE_LEDS. This keeps the
+amplifier setup and adds the speaker mute LED through the ALC245 COEF
+register and the mic mute LED through codec GPIO2. It is the same fixup
+already used for the 17 Turbine OmniBook 7 DIS (0x103c8d9c).
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20261016161930.482309-1-tiwai@suse.de
+Tested on the affected laptop with v7.2.11 using the equivalent
+ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX fixup, which has the identical
+cs35l41_fixup_i2c_two + ALC245_FIXUP_HP_X360_MUTE_LEDS chain: hda::mute
+and hda::micmute LED class devices appear and both key LEDs light up
+when muting.
+
+Fixes: 29951021367f ("ALSA: hda/realtek: Add support for various HP Laptops using CS35L41 HDA")
+Cc: stable@vger.kernel.org
+Signed-off-by: José Miguel Castellanos Valladolid <josstamy@gmail.com>
+Link: https://patch.msgid.link/20261017050615.14481-1-josstamy@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/oss/seq_oss_device.h | 1 +
- sound/core/seq/oss/seq_oss_event.c  | 3 +++
- sound/core/seq/oss/seq_oss_init.c   | 2 ++
- 3 files changed, 6 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/oss/seq_oss_device.h b/sound/core/seq/oss/seq_oss_device.h
-index 935cf3df0b30f..571186db4fa59 100644
---- a/sound/core/seq/oss/seq_oss_device.h
-+++ b/sound/core/seq/oss/seq_oss_device.h
-@@ -72,6 +72,7 @@ struct seq_oss_devinfo {
- 	int cseq;	/* sequencer client number */
- 	int port;	/* sequencer port number */
- 	int queue;	/* sequencer queue number */
-+	bool initialized;
- 
- 	struct snd_seq_addr addr;	/* address of this device */
- 
-diff --git a/sound/core/seq/oss/seq_oss_event.c b/sound/core/seq/oss/seq_oss_event.c
-index 122735862044d..20f4c5ce763cc 100644
---- a/sound/core/seq/oss/seq_oss_event.c
-+++ b/sound/core/seq/oss/seq_oss_event.c
-@@ -425,6 +425,9 @@ snd_seq_oss_event_input(struct snd_seq_event *ev, int direct, void *private_data
- 	struct seq_oss_devinfo *dp = (struct seq_oss_devinfo *)private_data;
- 	union evrec *rec;
- 
-+	if (!dp || !smp_load_acquire(&dp->initialized))
-+		return 0; /* ignored */
-+
- 	if (ev->type != SNDRV_SEQ_EVENT_ECHO)
- 		return snd_seq_oss_midi_input(ev, direct, private_data);
- 
-diff --git a/sound/core/seq/oss/seq_oss_init.c b/sound/core/seq/oss/seq_oss_init.c
-index 1aece46c8b064..a1063dc22d462 100644
---- a/sound/core/seq/oss/seq_oss_init.c
-+++ b/sound/core/seq/oss/seq_oss_init.c
-@@ -258,6 +258,7 @@ snd_seq_oss_open(struct file *file, int level)
- 
- 	client_table[dp->index] = dp;
- 	num_clients++;
-+	smp_store_release(&dp->initialized, true);
- 
- 	return 0;
- 
-@@ -403,6 +404,7 @@ snd_seq_oss_release(struct seq_oss_devinfo *dp)
- 
- 	client_table[dp->index] = NULL;
- 	num_clients--;
-+	smp_store_release(&dp->initialized, false);
- 
- 	snd_seq_oss_reset(dp);
- 
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 58948a3bbda04..946989d9315a5 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7762,7 +7762,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8d9c, "HP 17 Turbine OmniBook 7 DIS", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8d9d, "HP 17 Turbine OmniBook X UMA", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8d9e, "HP 17 Turbine OmniBook X DIS", ALC287_FIXUP_CS35L41_I2C_2),
+-	SND_PCI_QUIRK(0x103c, 0x8d9f, "HP 14 Cadet (x360)", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8d9f, "HP 14 Cadet (x360)", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8da0, "HP 16 Clipper OmniBook 7(X360)", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8da1, "HP 16 Clipper OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8da7, "HP 14 Enstrom OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.53.0
 
