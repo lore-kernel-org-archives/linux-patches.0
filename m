@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064837;
-	b=qS0c1fwL71o+N9SYT3CTbAI3IBNrcWy/2HF4FOidzyP/duueQRh80cwnfIfnEls/hmEg
-	 pSV+jZtZtgPwwwApi9lfDuG3BF5ZTXLNgNppWT34f8U8cmJwJaAQ3IKBks7WFlmg283us
-	 KafKzdCCaQIv/UgQ/zbimFT7JgrUJnH2O93/qqWR0TCEY23V76M20mhcKp9rONsrDu62s
-	 XUyaAzPtM4sLgABBgfY2AbgWaAJWNynpf1Vk9Dk31+SBXfhciI41HrEZ8vUBTjUGvt6mo
-	 WCIxIV9AYiiAm3PXspnqaZ259eoGPPBLH5V8+yptyAR0Ff7WaootZUHh6rkzpnB5Pag==
+	t=1794064840;
+	b=rLJCArxZ7kVKENcclsd02bx651T1deKtFUGOv2SGKhWVIOQVpkjT6bs4y8OxJDY7kxBC
+	 hMEsrWlMa4hwDrge4P1aTxUypOdQla8HPGzfpl/o5v9Zap8vyMO/nWMJdi25tT7sDjUzG
+	 f1Xv2rf4fUz25JF9QkWMQ8auTm8TnRzEbAuUkBN4jWZS3vLT6YKYbP+LBLZ8Q6RtJno9h
+	 yN6i2OFNWfl1bhJ31C/IXrFDQEWspD7p8NQThbjrTk8mnMGX9Wsu7IToxy/KL2TV5rU21
+	 3uD/0AY/itcII2pViXfnjoqRMvFszjn0+GC3ABTeCuM6TRL7gIdQzLnTJdekXVZ6O3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064837;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064840;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=9yZev+xpfEI3myAKTTk6im/0quBF0vsBkLKX6wBobrk=;
-	b=NTNIUVfUedKJkwsrL2t/w5jbqUVfIvTZzb7aMfL/aLyTPUinvLI99rgJZUA/bCTRZ7V5
-	 wDhPetzPp+IOjxFYALwbFcEpT1+yqVTZ8ZlwlayyvqJM9xUpEDgrPX61gEc7l4amlIK6b
-	 JqkBYi2FIApWkXjeYOp/xS3ok7DLJX50VPhKtjfGBtJnrdH/XQ4/akha8lJyOER1QRs5s
-	 zHrCx6V/j9eu8wyUhW3pO1P5OEmy2SvyLBEEBxybMtIBR0s1Sy7GVLidvE9/yY2s1Sh9e
-	 /Pycw/pAJeXqGWmIc5S1p6uxvY2XW62RcEFal3bkMbT9+YNGtpnImV0RS+51Y9td82A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=aZK+vzlEbEQztNENZtV3m8LBehh6jmo5Tuj5+hWj8Mk=;
+	b=OLvT/8ItD/Xiyzacu8scfTzxl622eCd15wB1GdacdtqAD7dADfukWZ16MdX/RQJso15i
+	 hOFo3Xdx7jxOIS+sna/orLCiFXK87G8ouFluq6M652L+la2pFr956SckQBM8l6I8FS2Uw
+	 2gexYKWGAq7/f9ddhsUg5UZR+s856y8o2tSXWN3+eHpLxRSSeU+K2S+4m8xoWAVf1kryE
+	 gHBTAIuFOG6waP3FENT4xnjp8SckuopzL7aymBAMRISKXA5pA6apVcL0U3UDQcvcpTILh
+	 XIvja/LGGtNQoyreI8INW+S3VlJcNTOWOOAKIxads2by5Kz5AdQpzIOhPH+Bbqt6CsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pizVvzcW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A6F6qvf1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D308606A32C;
-	Sat,  7 Nov 2026 15:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FAE606A337;
+	Sat,  7 Nov 2026 15:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pizVvzcW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48BA61F008A3;
-	Sat,  7 Nov 2026 15:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A6F6qvf1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B901F008A3;
+	Sat,  7 Nov 2026 15:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064837;
-	bh=9yZev+xpfEI3myAKTTk6im/0quBF0vsBkLKX6wBobrk=;
+	s=korg; t=1794064839;
+	bh=aZK+vzlEbEQztNENZtV3m8LBehh6jmo5Tuj5+hWj8Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pizVvzcWNH768f2/HFcDbOpn34bxxZd0/KnrLJR3FjACGphKKvTOF/UzSeQQU/bpn
-	 2LlawC+OUEyW1HcuiFU2uua8H0xDChVwesq7O8dqvqo9cEUxUnvupU36RZtV/k+CLg
-	 t+n9hGTPZwY9EhjGmzAk7k5tvVh8s+W0WjRFTWn0=
+	b=A6F6qvf1CQbBwiABES+OU6MUhRPR96e4w3LIjPOKHNaJbyK9eSJJq+IDi1FhnH9wE
+	 3/2j35drWYF15S4XTp2zEvRr5I59ZKEXsx2f3hJ0RxB0mEJcS18k8Kcw6dJSM/JeNx
+	 LqAXv/xcapJM11mPaizhLzONce+PIdVl5erHBaqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0767/1257] ARM: 9521/1: cacheinfo: count external caches in early_cache_level()
-Date: Sat,  7 Nov 2026 08:51:03 -0500
-Message-ID: <20261107135000.477238991@linuxfoundation.org>
+Subject: [PATCH 7.3 0750/1257] platform/x86: hp-bioscfg: allow clearing current_password
+Date: Sat,  7 Nov 2026 08:50:46 -0500
+Message-ID: <20261107135000.002372352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,68 +62,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 4fd69e8a9ebc42e292637ec2ebfb6bcf2d2f6c0e ]
+[ Upstream commit acada379d5c4dd3a86d48fc69802e769eff29f7e ]
 
-early_cache_level() counts only caches described by CLIDR. An external
-PL310 is absent from CLIDR, and its arm,pl310-cache compatible is not
-accepted by init_of_cache_level(), so early allocation falls back to
-an incomplete count. init_cache_level() later adds the DT-described
-L2, forcing reallocation on the secondary CPU with interrupts disabled.
-This defeats early allocation on PREEMPT_RT.
+The ABI documents echo "" > current_password as the way to end a
+session, but validate_password_input() rejects an empty string when
+min_password_length is nonzero, so the password stays cached.
 
-Use init_cache_level() for early sizing too, so the initial allocation
-includes external caches described by the device tree.
+Skip the length check for an empty current_password so the write
+clears it.
 
-Assisted-by: LLM
+Compile tested only.
 
+Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
 Cc: stable@vger.kernel.org
-Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20260912195552.76673-3-kmehltretter@gmail.com/
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
+Link: https://patch.msgid.link/20261007134711.473857-5-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/cacheinfo.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ .../platform/x86/hp/hp-bioscfg/passwdobj-attributes.c    | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/kernel/cacheinfo.c b/arch/arm/kernel/cacheinfo.c
-index 860eeb03cfe5d..31591c9472548 100644
---- a/arch/arm/kernel/cacheinfo.c
-+++ b/arch/arm/kernel/cacheinfo.c
-@@ -111,13 +111,6 @@ static int detect_cache_level(unsigned int *level_p, unsigned int *leaves_p)
- 	return 0;
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+index 3f4c45d9b9f95..f0551b4553794 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+@@ -60,7 +60,8 @@ int hp_get_password_instance_for_type(const char *name)
+ 	return -EINVAL;
  }
  
--int early_cache_level(unsigned int cpu)
--{
--	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
--
--	return detect_cache_level(&this_cpu_ci->num_levels, &this_cpu_ci->num_leaves);
--}
--
- int init_cache_level(unsigned int cpu)
+-static int validate_password_input(int instance_id, const char *buf)
++static int validate_password_input(int instance_id, const char *buf,
++				   bool is_current)
  {
- 	unsigned int level, leaves;
-@@ -146,6 +139,11 @@ int init_cache_level(unsigned int cpu)
- 	return 0;
- }
+ 	int length;
+ 	struct password_data *password_data = &bioscfg_drv.password_data[instance_id];
+@@ -69,6 +70,10 @@ static int validate_password_input(int instance_id, const char *buf)
+ 	if (length > 0 && buf[length - 1] == '\n')
+ 		length--;
  
-+int early_cache_level(unsigned int cpu)
-+{
-+	return init_cache_level(cpu);
-+}
++	/* An empty current_password clears the session password */
++	if (is_current && !length)
++		return 0;
 +
- int populate_cache_leaves(unsigned int cpu)
- {
- 	unsigned int level, idx;
+ 	if (length > MAX_PASSWD_SIZE)
+ 		return -E2BIG;
+ 
+@@ -97,7 +102,7 @@ static int store_password_instance(struct kobject *kobj, const char *buf,
+ 		id = get_password_instance_id(kobj);
+ 
+ 		if (id >= 0)
+-			ret = validate_password_input(id, buf_cp);
++			ret = validate_password_input(id, buf_cp, is_current);
+ 	}
+ 
+ 	if (!ret) {
 -- 
 2.53.0
 
