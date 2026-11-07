@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062814;
-	b=Dep1izwJjfvtuxiyzoapd1F4APuNhDeLmNqichnIvg3j6qOIuhY0r+rynIDKaycQ8ssv
-	 j8cCo4YbyZJVrmjCi8ZcEUVGfhHl4fOc8zt/38uXN71iOM0JtFJbXMTWSdINRDZEnwiDl
-	 LWoSfbcCdb0SuN4Wv532MWWkaSzhTKI4HFwFIYrdVKW9Cm2Y/GjUjCX2qnZOMLBjy52Zi
-	 7CJHgI4T+kv7WHseBQjkLzvO1xlQE6H/KoxuqSDi64cR4+nG5AwJb4Q/dWGQBxO5szzLC
-	 EncWivIA7TCOzsgTJ1kyKxOfuwD6bWBe3GwMXGpag7+hK9ZAd08GdGWsYi4LFL5YpsQ==
+	t=1794062815;
+	b=nEUFhKYTLbCzxjAjdpjRaf+M/ksVYEC6aiAFr9vjbLZLc3R+78elnL5H5oKcppbV3Q12
+	 NmMNRwjKXugUuVugFgk8Xe8YVZVSvVUM/QzcJbpHxliNWCWXApfooK6EKETyJ4Y7gvcmR
+	 bW5abqz4bkI5Rs5PctQT0nJYCanMhjNvdGvxE68caPBmZUMAF3yJ/RMtV8GZ4mu+IcpuT
+	 O3HIT7uN28ZvpzCBXo+Qo4xzVBW7w1M7ZMmY73KlWVHF+eI0aJf566k5rdbZNapRYkR/Z
+	 vO9t8YD4PUJSPl6rb+jxkQs8p9RGvLjj3TW8AC43zE+R72e8CgQ6gLS/baxtHlNmR+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062814;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062815;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6phHUxDV7JZGx4VJY6yvmxzVJmooWJuBGhlQG38Aek4=;
-	b=CLJ+tkmPcq8fBWbfWXCi4cWATELUA3yUyHPCGBXIsMg8JyDwHbEs8sdS2jkDMctBMzfL
-	 q32A7YZzveRByGO1VlsHp2qPdOEU+4gFbvn/dba+zHSPvV1xYndbEC7iFdBMoh/ZdQ5xC
-	 niD6TjUfOWtZ/asPfabLaMKkAHEKuM9Nj951SoomdijZ1qcw4NnczV/jRhVB3GwMv7KFX
-	 hZ1PPnFCSvrkkJQb4tvShVS0OCgZtF5rmhbgBcA/auWXc7zM4/jfsDq/n0pGX6NdRzMYp
-	 ITrEUrSd2QtN6fsU1UhaS9VAqx4wix+2FWkB72VxsqcFJIxyZMPEMhOMc1WE+8TdlKQ==
+	bh=Nt0uLIz1GAUVEvxgYluel3UTZ4NJgYyPG2NyuIvUhjs=;
+	b=i2Hh6WO6hLDXqI2oubo79kPY77hubQw4P+95QwT8Bv2pUh5MdikVcq5Md7fizkcLionB
+	 rsefv/oGFznIwejSoYvW9ddHPMe1H3D3pCILtJHI+UWHq3W2ajckQsUOnTeejlk7234sc
+	 GAQgqpzsL67ycIrG3np+6kjJPGXYUsWh4NKGSG/xcoDuErEWo/33jtyaROVt2FdzkYF0N
+	 EN70lBUzopfgJtKJZZ4rsbpLL/B0Y/KUqdMls3ryOselHLbWsS+zS3g+OuRyyf4ZmeRLd
+	 MHjdmPnAUZyNJKdIZv5q2bqO0YbenKkm8IAs4VlEnP+pZOhsWYQ+fSGGJbSlzYDXCPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMPw5ib9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJt3FnLh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC83606D806;
-	Sat,  7 Nov 2026 14:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B140606A333;
+	Sat,  7 Nov 2026 14:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMPw5ib9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829A41F0089F;
-	Sat,  7 Nov 2026 14:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJt3FnLh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC13E1F008A2;
+	Sat,  7 Nov 2026 14:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062813;
-	bh=6phHUxDV7JZGx4VJY6yvmxzVJmooWJuBGhlQG38Aek4=;
+	s=korg; t=1794062815;
+	bh=Nt0uLIz1GAUVEvxgYluel3UTZ4NJgYyPG2NyuIvUhjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jMPw5ib96eXqos9cCVXFnqQw9Hapu7KpB0OREs92jjC17rUykKFxXEr9mTxmx7O5U
-	 mqjJUFTXLHlZBzVvh5sxXnZT/2Hi8GV3vuoe2jeSAQWxNYafRo/0u8wRAQ8phrfEe4
-	 E+eXMdVDCdrfQrS1tiLeaUA6UgV8qc3kyxkxlEyk=
+	b=lJt3FnLhoTJl9mQot7cr7rozU4IptosWEu1NdgSg1JQ51wffoszb3BBnLO7QEyQW8
+	 wLT5cmCbXGK47UOujN7B0/xPLIaRMR7YrrmBALyghMojNRNVRXNRmhsegPFGBAdDS4
+	 Kz6HaDKSlErm9R7tftm1znnGqE5hCmLczQr47DUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Dipen Patel <dipenp@nvidia.com>,
+	Robin Snyders <robin@snyders.xyz>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 112/869] hte: tegra194-test: shut down timer before GPIO release
-Date: Sat,  7 Nov 2026 08:46:34 -0500
-Message-ID: <20261107134856.376172496@linuxfoundation.org>
+Subject: [PATCH 6.18 113/869] power: supply: qcom_smbx: include base when petting watchdog
+Date: Sat,  7 Nov 2026 08:46:35 -0500
+Message-ID: <20261107134856.403067727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,46 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Robin Snyders <robin@snyders.xyz>
 
-[ Upstream commit 30167fadbf87fa901a2fee49c30a5c5a506a43e8 ]
+[ Upstream commit 2f0dec12007891398e6e3041aca0b8656918973d ]
 
-tegra_hte_test_remove() releases GPIO descriptors before stopping
-hte.timer. gpio_timer_cb() accesses hte.gpio_out and rearms the timer, so
-a callback concurrent with remove can use a released descriptor and rearm
-after teardown.
+BARK_BITE_WDOG_PET is an offset from the charger peripheral base, but
+the watchdog bark handler writes it as an absolute SPMI address. This can
+write another PMIC peripheral and leave the charger watchdog unserviced.
 
-Shut down the timer before releasing the GPIO descriptors.
-timer_shutdown_sync() waits for a running callback and prevents it from
-being rearmed.
+Add the charger base, as all other qcom_smbx register accesses do.
 
-Fixes: 9a75a7cd03c9 ("hte: Add Tegra HTE test driver")
+Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Dipen Patel <dipenp@nvidia.com>
-Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+Signed-off-by: Robin Snyders <robin@snyders.xyz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260812-qcom-smbx-fixes-v1-1-eb48246be599@snyders.xyz
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hte/hte-tegra194-test.c | 2 +-
+ drivers/power/supply/qcom_smbx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
-index 94e931f453059..4951049e00b09 100644
---- a/drivers/hte/hte-tegra194-test.c
-+++ b/drivers/hte/hte-tegra194-test.c
-@@ -218,10 +218,10 @@ static void tegra_hte_test_remove(struct platform_device *pdev)
- {
- 	(void)pdev;
+diff --git a/drivers/power/supply/qcom_smbx.c b/drivers/power/supply/qcom_smbx.c
+index b1cb925581ec6..11aab7e635592 100644
+--- a/drivers/power/supply/qcom_smbx.c
++++ b/drivers/power/supply/qcom_smbx.c
+@@ -757,7 +757,7 @@ static irqreturn_t smb_handle_wdog_bark(int irq, void *data)
  
-+	timer_shutdown_sync(&hte.timer);
- 	free_irq(hte.gpio_in_irq, &hte);
- 	gpiod_put(hte.gpio_in);
- 	gpiod_put(hte.gpio_out);
--	timer_delete_sync(&hte.timer);
- }
+ 	power_supply_changed(chip->chg_psy);
  
- static struct platform_driver tegra_hte_test_driver = {
+-	rc = regmap_write(chip->regmap, BARK_BITE_WDOG_PET,
++	rc = regmap_write(chip->regmap, chip->base + BARK_BITE_WDOG_PET,
+ 			  BARK_BITE_WDOG_PET_BIT);
+ 	if (rc < 0)
+ 		dev_err(chip->dev, "Couldn't pet the dog rc=%d\n", rc);
 -- 
 2.53.0
 
