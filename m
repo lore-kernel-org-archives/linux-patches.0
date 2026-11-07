@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065118;
-	b=RPqhC5TVDJ8rqpiKov4dn84xKoNEE/qEqdkUYLSgXLMX+7o0Xy939p95eEyU5wK9tSYA
-	 3rU9lQSiY6u/Jnsl7yBRaE39/zmmMikCBLwth//kWbEac9N64EkZqq/ClvpjQR2VqTNE+
-	 DUSp6IJpMjAao2DsaPu3YQZ1a7SSRQw+5nrxO88M3zIcjoVVBTRLk+Mr3lmGqvSUnyrRu
-	 5bYesyFYMZ+UjT9nuri8gQIyw/Wlmqxc+/QyaKhE6bfV3/hPmEFBgu4M5neqF95hCnAqA
-	 j7JyxnJ1xbUF8n+VcaTrv/s7A1E+dc16iHezPOTAMQUg9EtOOI5BWd4eZkR8xAqd2WQ==
+	t=1794065119;
+	b=oSkvmupH9bSi5UUQuK7xowiSEO4iXus579Bw2vC9RI/OeXQl2a1JCbacykZdkVj2LVst
+	 h3pDfHu0iwPiytWQG7f0NCLYfF6HBy5Mk00Y2vqy4l0sbkPXGMSf5jOheOUQEwiosvTMS
+	 f302GkYxl1UkwHdGUOyEvvzMEcVtnCGLTBHz0XFVEXbLiozFb5TzMuNYUFm/Y5qV9zr8q
+	 XtYcFgw9ow3Uiv0Eyd+oc/cnYWkAxhf49g8FWScszfrO885vnZuuqpsEUWWS6cXt2ZUDi
+	 Z0gsCVrGGeG9Rfr03QapWmdq8RZtSi2jmi44/VN75ie7JXZFB0igHV7fLiT+8RFD1fg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=nMMVEHZcmdJhFieuQEiUFnBGYmnnzipluHD12eoasVA=;
-	b=Z94xD1TJVgqmxYSfJv5Vzi8VeRYPdCL3Q7LwJeZUhz6vTMoaukjbieI5AuLWPs+LgLnO
-	 xpjsj6sYmpwt00k6YgANw/oa2y81BoI8vDxhUN06JjdAS/MuGFvs3CXGw4mas/KpWnHZr
-	 64Y2beNyj+HW7X5xHUIz5HlpNkB/fZHRunVrxQmQHFVDxF8ij45NIrnrnt/HdAHZuwpHS
-	 r8syfxZPsFY5YMDaxozltaT6mGGME/LBvWZOGG1cVkilz2X8il29d0ENJk/uquffXHt37
-	 SbXNFoupZNmEG/Hi/r9yR4hwiqj+LPyIZuwIpOSFIuP/8zQUdbrkKrjYQbs12jaMEvQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=V/EVb0B47fiqR+4rh4PxYcHxdTHtO5uUDfEO1P/3r5E=;
+	b=j6ky1WBMJALO7B9fIc1nOz/jp3XLXu46KExy03QrE2yUW6iMA54See4zwMYYUXjT1CF4
+	 1l8cZvs4qTbzZUMp782A9ijBqJk/F7RKhNXan/Lv7SDFasjE+UPpI1A2NrrAm/v1vHaTE
+	 zhSQ1D+ucUR9aI6yT8IUZEnx1JBb+g1QlFLvlrdl4oEj1d1OYA+Ja/OUd6b04syXcjeRv
+	 CakfVwdZLziMu+3Pbh2ujkj4svxqkFcQk/ev1ottS6P4RWLZs4GfEVloofTZ3w2eIxdBt
+	 v8RA/Zpt1um2lqvyu28T0NP9NtGil7I0SkCwMzf/6XTV3hZDnP8ZsrQz4Ha/AFBARAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WpPqpodA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+u31W6U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D915606A32F;
-	Sat,  7 Nov 2026 15:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDEE606A32E;
+	Sat,  7 Nov 2026 15:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WpPqpodA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46CA1F0089F;
-	Sat,  7 Nov 2026 15:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+u31W6U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D971F008A1;
+	Sat,  7 Nov 2026 15:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065118;
-	bh=nMMVEHZcmdJhFieuQEiUFnBGYmnnzipluHD12eoasVA=;
+	s=korg; t=1794065119;
+	bh=V/EVb0B47fiqR+4rh4PxYcHxdTHtO5uUDfEO1P/3r5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WpPqpodAK9z3GhL1OTMpp8e+woUkjTXwNIFk07mznGXZq9I9xnG2BvpKQor5w946U
-	 klz5s90M2PXRKDfZ348UrXa6ZHei9XHgYrT4P6bBsI8MUzEaCMdqoiZHGHe1Y0erJp
-	 P3JEshDwaxbdGCsWY5lOBMsAsZgNeo0EFDJZ+fog=
+	b=M+u31W6UB4mStacrPEHZr5fA7cc82RjbaPrhqEUZhja/3DqlKUjV8kxkncjcZgMkf
+	 8wAJ4OQtczeBbf4eEPLyBQ5WblribS5dRZUMl7Um3qEoMnpR9/CKv/PaSU4BOtuHEF
+	 bKwKylo5yly9SIwvWCRX8yMCXuBNdX+CgREQshIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Navon John Lukose <navonjohnlukose@gmail.com>,
+	"Derek J. Clark" <derekjohn.clark@gmail.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Rong Zhang <i@rong.moe>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0943/1257] ALSA: emux: Stop voices before freeing zones in all cases
-Date: Sat,  7 Nov 2026 08:53:59 -0500
-Message-ID: <20261107135005.396336881@linuxfoundation.org>
+Subject: [PATCH 7.3 0944/1257] platform/x86: lenovo-wmi-capdata: Do not stop the AC notifier chain on error
+Date: Sat,  7 Nov 2026 08:54:00 -0500
+Message-ID: <20261107135005.422016962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -61,85 +65,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Rong Zhang <i@rong.moe>
 
-[ Upstream commit 8a5d87c2ba30e8de31cfbe888fd4d95f43c63db9 ]
+[ Upstream commit 3b53e691e907086672b72d0544e4bf27efd4250d ]
 
-The emux voice caches the soundfont zone pointer in vp->zone, which
-is referred to later, e.g. in snd_emux_send_effect().  For avoiding
-dangling pointers, the soundfont code calls the sample_reset callback
-to stop all voices before freeing zones.  However, in a few cases
-(e.g. emu10k1's missing sample_reset or the call path via
-remove_info()), the sample reset isn't called properly, leaving the
-playing voices.
+Returning NOTIFY_BAD to the AC notifier chain stops it by preventing
+later notifier blocks from being called, but our error is non-fatal for
+other AC notifier blocks, which should continue to consume the event.
 
-Fix it by always registering the sample_reset callback, falling back
-to snd_emux_terminate_all() when the driver has no own ops, and by
-calling sample_reset in remove_info() before freeing the zones.
+Return NOTIFY_DONE and add a dev_warn() on error, so that the AC
+notifier chain continues. This also aligns with hp-wmi.
 
+The function documentation was copied from elsewhere and makes no sense
+here, so correct it as well.
+
+Fixes: e1a5fe662b59 ("platform/x86: Add Lenovo Capability Data 01 WMI Driver")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261020101624.205638-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Tested-by: Navon John Lukose <navonjohnlukose@gmail.com>
+Reviewed-by: Derek J. Clark <derekjohn.clark@gmail.com>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Signed-off-by: Rong Zhang <i@rong.moe>
+Link: https://patch.msgid.link/20261019-lwmi-wmi-new-api-v5-2-71557d28d058@rong.moe
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/synth/emux/emux.c      | 10 +++++++---
- sound/synth/emux/soundfont.c |  9 +++++++++
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/platform/x86/lenovo/wmi-capdata.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/sound/synth/emux/emux.c b/sound/synth/emux/emux.c
-index 450147b1abed5..2a42d041e1da0 100644
---- a/sound/synth/emux/emux.c
-+++ b/sound/synth/emux/emux.c
-@@ -71,7 +71,12 @@ static int sf_sample_free(void *private_data, struct snd_sf_sample *sp,
- static void sf_sample_reset(void *private_data)
- {
- 	struct snd_emux *emu = private_data;
--	emu->ops.sample_reset(emu);
+diff --git a/drivers/platform/x86/lenovo/wmi-capdata.c b/drivers/platform/x86/lenovo/wmi-capdata.c
+index d5e9615661364..58787da959b4a 100644
+--- a/drivers/platform/x86/lenovo/wmi-capdata.c
++++ b/drivers/platform/x86/lenovo/wmi-capdata.c
+@@ -774,13 +774,11 @@ static int lwmi_cd_setup(struct lwmi_cd_priv *priv, enum lwmi_cd_type type)
+ 
+ /**
+  * lwmi_cd01_notifier_call() - Call method for cd01 notifier.
+- * block call chain.
+- * @nb: The notifier_block registered to lenovo-wmi-events driver.
++ * @nb: The cd01 ACPI notifier_block.
+  * @action: Unused.
+  * @data: The ACPI event.
+  *
+- * For LWMI_EVENT_THERMAL_MODE, set current_mode and notify platform_profile
+- * of a change.
++ * Refresh cached capdata on AC status change.
+  *
+  * Return: notifier_block status.
+  */
+@@ -799,8 +797,16 @@ static int lwmi_cd01_notifier_call(struct notifier_block *nb, unsigned long acti
+ 	switch (event->type) {
+ 	case ACPI_AC_NOTIFY_STATUS:
+ 		ret = lwmi_cd_cache(priv);
+-		if (ret)
+-			return NOTIFY_BAD;
++		if (ret) {
++			dev_warn(&priv->wdev->dev,
++				 "failed to refresh capdata on AC change: %d\n", ret);
 +
-+	/* stop all voices that might refer to zones and samples to be freed */
-+	if (emu->ops.sample_reset)
-+		emu->ops.sample_reset(emu);
-+	else
-+		snd_emux_terminate_all(emu);
- }
- 
- int snd_emux_register(struct snd_emux *emu, struct snd_card *card, int index, char *name)
-@@ -95,8 +100,7 @@ int snd_emux_register(struct snd_emux *emu, struct snd_card *card, int index, ch
- 	sf_cb.private_data = emu;
- 	sf_cb.sample_new = sf_sample_new;
- 	sf_cb.sample_free = sf_sample_free;
--	if (emu->ops.sample_reset)
--		sf_cb.sample_reset = sf_sample_reset;
-+	sf_cb.sample_reset = sf_sample_reset;
- 	emu->sflist = snd_sf_new(&sf_cb, emu->memhdr);
- 	if (emu->sflist == NULL)
- 		return -ENOMEM;
-diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
-index 039357d96e07a..42d1f33fb2b50 100644
---- a/sound/synth/emux/soundfont.c
-+++ b/sound/synth/emux/soundfont.c
-@@ -443,6 +443,15 @@ remove_info(struct snd_sf_list *sflist, struct snd_soundfont *sf,
- 	struct snd_sf_zone *prev, *next, *p;
- 	int removed = 0;
- 
-+	/* stop voices before freeing the zones they might refer to */
-+	for (p = sf->zones; p; p = p->next) {
-+		if (!p->mapped && p->bank == bank && p->instr == instr) {
-+			if (sflist->callback.sample_reset)
-+				sflist->callback.sample_reset(sflist->callback.private_data);
-+			break;
++			/*
++			 * Our error is non-fatal for others, and we still want
++			 * the other event consumers to process it.
++			 */
++			return NOTIFY_DONE;
 +		}
-+	}
-+
- 	prev = NULL;
- 	for (p = sf->zones; p; p = next) {
- 		next = p->next;
+ 
+ 		return NOTIFY_OK;
+ 	default:
 -- 
 2.53.0
 
