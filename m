@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061842;
-	b=3/D0umcemYSkuYWiVnKJVm9jJQZcLriTeOfrR7l3A1Aw+polMVSHR+xncYXYAaezqtxZ
-	 q4e8v9VKcVNb1R+yXbpF2Z6Oj6Gps6LLr2j6veMINtin+fOsv0VYeUkOVxznQ/7WyVKeJ
-	 CiK+slyULw87Lk21+IThsFmI1eJGnG/VzTkeGWpQbAcGunubIpQcmlFJ/1eR9sUglW/TU
-	 0ekDKMBmWNryCjrtW1kWynfcyamHBMTvaJCMoFdGRiX2yzCNkPniuLTeVwc7/bZKu+fD5
-	 ps3JRmZV/ZYY3TUYbE3i7LgMb5i7WbHmMwmRjoCpOhfRGpIMbslpovsoPCK4fxGexmg==
+	t=1794061843;
+	b=0wfcdbWkt50RkhhUYlGJNaCnN6eMEFH31+rLX4/DAeCuCJybNJ07y4ci3/b7138IJ0Xr
+	 jXB3DxIZ/iQSB/s8Vsj3RMpXze9EeV86YNEOJ3fFc3HqwTy9BjGGNYahUQ39EKD4iTeW5
+	 DOKVw/Da0GuUZYpHbKRmH5rOIjIIkjMT5ZmBEh4a4bDuoKW3CrNY3nBkYsEbZoP/52+2A
+	 D6XoGdSaSiS9arzh6gij+jcZ7oES2N80/CgPz5yeyqp72eiX46aX4guo5ec7hd7BYB1Iu
+	 4xfIWot197Qu2u5Ayh4zeXVmmCVG6jlIhw9P5vJlwD1DSkqfjozMPed8s+ULxX7n6LA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061842;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061843;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HRrdcVQ0UZ6D6dCPhjBEjjTmVglsJ9sVxqRE62Lkcao=;
-	b=Yk00986JBMxB3DAN+7uUAwxY3M2NsmXEvq8cWNk4GXnvb0UOaZrrEvJXBDr9J502MPea
-	 VmDSx1V4NjaUQRbe7D4ptmrP1Rsi+qjk7ESzHapzpuC1DFKKuYH2GRjARs+ACpz0ZLoGD
-	 3AekIlnOcoV3NBa69SqsA0spSeWmfZutZnwXDz7U6+7jPg02CQHDXqJ94g6f8fhBva8qF
-	 XNgKZ4Q/JDlCp23fu6yMfMP7j5+F25IN7/0Ar7469BoZy2GehCxJ1h+XZQW0+x/w/jfJr
-	 EmPbjWmjOaxqG+gksX+U1GOYJEtCMGi/AV/wfuM+Q02hkrhklUasi3L1lNbUgqOtFFQ==
+	bh=lO9hmD8vhm56NJYqsCXTMcBkSFgvMdfmZjgunJBA0Xk=;
+	b=CbIEl3XlxHAHlrHjlGKImtRhWKYyyAz5hDii/JuB0wgR6LWotmC5fKJdd8FQU5NX4N9M
+	 sJJhHw/3KnW/qKrTsdmV38ALWZbis98gOwn3Hu5BOAG2xZrFS/I8pJz8ZaJUfETf1l7bV
+	 4ceorLXKj0VF27h7iRritj9NMyC6wIGezlnWADgJ5GmUk+SlAqbTMCwJgod+3NS6nWlPw
+	 Y8wIwHA9QRYX5hFp8TrxRfg1W7F1VJ5Kd2YrK5sFC13IuXKamXkFaDR7cXeS0JHKFsTEf
+	 1OGKurvJwGCRIIvDBBOxBumgzewAs0d1tkt6HwlXgzLjD/UVN/tRlMNnQ4i6XvdR8Ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i8cHmoS/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ByvV8/p3";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA73F606A326;
-	Sat,  7 Nov 2026 14:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CE7606A32C;
+	Sat,  7 Nov 2026 14:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i8cHmoS/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9788C1F0089F;
-	Sat,  7 Nov 2026 14:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ByvV8/p3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C296F1F0089F;
+	Sat,  7 Nov 2026 14:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061841;
-	bh=HRrdcVQ0UZ6D6dCPhjBEjjTmVglsJ9sVxqRE62Lkcao=;
+	s=korg; t=1794061843;
+	bh=lO9hmD8vhm56NJYqsCXTMcBkSFgvMdfmZjgunJBA0Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i8cHmoS/iMGD/3PSwEu40cb7e4EBKRGD+mEcKjPR4soLsvZo6n1HFns2NhipZrP63
-	 vWk98P4Kft/ItZyFG7z/BElSD/Oz8YvUd1O+OTxGgJ78YNAzEALMxAsrkhHfxL1OEO
-	 PQ5gvys2LcPpEV2pNj/LVKyIZtOElHEmL4OhVySU=
+	b=ByvV8/p3eptFiEAAOhG+DjMtsI6f0v2G1BFR3ovwbXfRwyPfoU8lGfr6WBetxwbpQ
+	 ifqbv7RipIWNJWJfdi6zATSObxPEHsv9BpHD7WXiq4zrl8G+XA0o57niRRxNy+n9Eu
+	 SaGB9IummR/yYBWjD8vJbgDfsgcbNjOFZpxnMTMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0860/1536] inet: reject unhashed sockets during established lookups
-Date: Sat,  7 Nov 2026 08:47:56 -0500
-Message-ID: <20261107135021.704137018@linuxfoundation.org>
+Subject: [PATCH 6.12 0861/1536] ovl: check that the parents of volatile/dirty are dirs
+Date: Sat,  7 Nov 2026 08:47:57 -0500
+Message-ID: <20261107135021.732904859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,191 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 4e2b3ef19e0e04adca38442f07dd6bc93c712bf1 ]
+commit e34d2ef818e4c7676d8d8e1bf43e6a1ed39efb2a upstream.
 
-TCP established ehash lookups are lockless. The socket caches involved
-use SLAB_TYPESAFE_BY_RCU, so memory can be reused before an RCU reader
-that retained its old address has finished.
+An unprivileged user crashes the kernel by mounting overlayfs with the
+volatile option.
 
-After a tuple match, __inet_lookup_established() and
-__inet6_lookup_established() acquire a reference and repeat the tuple
-check. They do not check whether the new object is hashed. If the
-address is reused for a socket with the same tuple, the lookup can
-acquire a reference to the new object and return it while its nulls node
-is unhashed.
+A dentry that serves as the parent of a lookup must be a directory.
+ovl_create_volatile_dirty() walks work/incompat/volatile/dirty by name,
+and ovl_lookup_or_create() returns an existing entry whatever its type.
+A file or a symlink that another task creates during the mount becomes
+the parent of the next lookup, which calls a NULL ->lookup.
 
-A PoC that drives reuse with a SYN cookie request socket reproduced the
-crash. The new request socket is unhashed and has a NULL rsk_listener.
-A lookup that had loaded the address of the old request socket acquired
-the reference published by tcp_get_cookie_sock() and returned the new
-object. tcp_v4_rcv() then read sk_state through the NULL listener.
+An unprivileged user mounted overlayfs with "volatile" in a user
+namespace while a second process created a symlink named work/incompat,
+and the mount task oopsed on a NULL ->lookup call.
 
-The resulting crash was:
+Fix this by returning -ENOTDIR from ovl_lookup_or_create() when the
+caller asked for a directory and the existing entry is a non-dir.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000012
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  ...
-  Oops: Oops: 0000 [#1] SMP NOPTI
-  CPU: 4 UID: 0 PID: 0 Comm: swapper/4 Not tainted 7.3.0-00591-g0e135910deec #1 PREEMPT(lazy)
-  ...
-  RIP: 0010:tcp_v4_rcv+0x44e/0x1280
-  ...
-  R10: 0000000000000001 R11: 00000000024ca8c0 R12: 0000000000000000
-  ...
-  CR2: 0000000000000012 CR3: 0000000103d50004 CR4: 0000000000770ef0
-  ...
-  Call Trace:
-   <IRQ>
-   ? raw_local_deliver+0xae/0x240
-   ip_protocol_deliver_rcu+0x2d/0x180
-   ip_local_deliver_finish+0x84/0x100
-   ip_sublist_rcv_finish+0x5f/0x70
-   ip_sublist_rcv+0x12a/0x1d0
-   ip_list_rcv+0xfd/0x130
-   __netif_receive_skb_list_core+0x223/0x250
-   netif_receive_skb_list_internal+0x1d2/0x2c0
-   ? try_fill_recv+0x39/0x7b0
-   napi_complete_done+0x74/0x170
-   virtnet_poll+0x445/0x600
-   __napi_poll+0x27/0x1e0
-   net_rx_action+0x2fe/0x3b0
-   handle_softirqs+0xc2/0x2c0
-   __irq_exit_rcu+0x74/0xd0
-   common_interrupt+0x7f/0x90
-   </IRQ>
-  ...
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-After taking a reference, check whether the nulls node is unhashed in
-both IPv4 and IPv6 established lookups. If it is unhashed or the tuple
-no longer matches, drop the reference and restart the lookup.
-
-Lookups racing with the TIME_WAIT hashdance, or with a request being
-replaced by its child, now restart and find the new socket instead of
-returning the old one.
-
-Request sockets that were never inserted into ehash can have a nonzero
-refcount, and a stale lookup can hold a transient reference. Therefore,
-when SYN cookie, Fast Open, and request migration paths fail after
-setting a nonzero refcount, release the references held by those paths
-with reqsk_put() instead of freeing the request directly.
-
-Fixes: 079096f103fa ("tcp/dccp: install syn_recv requests into ehash table")
+Fixes: c86243b090bc ("ovl: provide a mount option "volatile"")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261029214219.1035176-2-imv4bel@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+[backport: no ovl_start_creating_upper(), check the child of
+ ovl_lookup_upper() in ovl_lookup_or_create() instead]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 10 +++++++---
- net/ipv4/inet_hashtables.c      |  5 +++--
- net/ipv4/syncookies.c           |  2 ++
- net/ipv4/tcp_input.c            |  4 +++-
- net/ipv6/inet6_hashtables.c     |  4 +++-
- 5 files changed, 18 insertions(+), 7 deletions(-)
+ fs/overlayfs/super.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 14f54dc8e0179..4093bbbd687ab 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1177,10 +1177,14 @@ static void reqsk_timer_handler(struct timer_list *t)
- 	 */
- 	if (nreq) {
- 		__NET_INC_STATS(net, LINUX_MIB_TCPMIGRATEREQFAILURE);
-+		/* The timer was not armed, drop its reference here. */
-+		reqsk_put(nreq);
- no_ownership:
- 		reqsk_migrate_reset(nreq);
- 		reqsk_queue_removed(queue, nreq);
--		__reqsk_free(nreq);
-+		/* Drop the temporary reference and the one reserved for ehash. */
-+		reqsk_put(nreq);
-+		reqsk_put(nreq);
+diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
+index bd0c548cf1eeb..b0cf671b4200d 100644
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -594,16 +594,23 @@ static int ovl_check_rename_whiteout(struct ovl_fs *ofs)
+ 
+ static struct dentry *ovl_lookup_or_create(struct ovl_fs *ofs,
+ 					   struct dentry *parent,
+-					   const char *name, umode_t mode)
++					   const char *name, bool is_dir)
+ {
+ 	size_t len = strlen(name);
+ 	struct dentry *child;
+ 
+ 	inode_lock_nested(parent->d_inode, I_MUTEX_PARENT);
+ 	child = ovl_lookup_upper(ofs, name, parent, len);
+-	if (!IS_ERR(child) && !child->d_inode)
+-		child = ovl_create_real(ofs, parent->d_inode, child,
+-					OVL_CATTR(mode));
++	if (!IS_ERR(child)) {
++		if (!child->d_inode) {
++			child = ovl_create_real(ofs, parent->d_inode, child,
++						OVL_CATTR(is_dir ? S_IFDIR :
++								   S_IFREG));
++		} else if (is_dir && !d_can_lookup(child)) {
++			dput(child);
++			child = ERR_PTR(-ENOTDIR);
++		}
++	}
+ 	inode_unlock(parent->d_inode);
+ 	dput(parent);
+ 
+@@ -624,7 +631,7 @@ static int ovl_create_volatile_dirty(struct ovl_fs *ofs)
+ 	const char *const *name = volatile_path;
+ 
+ 	for (ctr = ARRAY_SIZE(volatile_path); ctr; ctr--, name++) {
+-		d = ovl_lookup_or_create(ofs, d, *name, ctr > 1 ? S_IFDIR : S_IFREG);
++		d = ovl_lookup_or_create(ofs, d, *name, ctr > 1);
+ 		if (IS_ERR(d))
+ 			return PTR_ERR(d);
  	}
- 
- drop:
-@@ -1467,7 +1471,7 @@ struct sock *inet_csk_complete_hashdance(struct sock *sk, struct sock *child,
- 
- 			__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPMIGRATEREQFAILURE);
- 			reqsk_migrate_reset(nreq);
--			__reqsk_free(nreq);
-+			reqsk_put(nreq);
- 		} else if (inet_csk_reqsk_queue_add(sk, req, child)) {
- 			return child;
- 		}
-@@ -1523,7 +1527,7 @@ void inet_csk_listen_stop(struct sock *sk)
- 					__NET_INC_STATS(sock_net(nsk),
- 							LINUX_MIB_TCPMIGRATEREQFAILURE);
- 					reqsk_migrate_reset(nreq);
--					__reqsk_free(nreq);
-+					reqsk_put(nreq);
- 				}
- 				rcu_read_unlock();
- 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 37a6acff537e6..e8adf8530596c 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -512,8 +512,9 @@ struct sock *__inet_lookup_established(const struct net *net,
- 		if (likely(inet_match(net, sk, acookie, ports, dif, sdif))) {
- 			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
- 				goto out;
--			if (unlikely(!inet_match(net, sk, acookie,
--						 ports, dif, sdif))) {
-+			if (unlikely(hlist_nulls_unhashed_lockless(&sk->sk_nulls_node) ||
-+				     !inet_match(net, sk, acookie, ports, dif,
-+						 sdif))) {
- 				sock_gen_put(sk);
- 				goto begin;
- 			}
-diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
-index 66d5272c5abb9..16361ce3e8062 100644
---- a/net/ipv4/syncookies.c
-+++ b/net/ipv4/syncookies.c
-@@ -217,6 +217,8 @@ struct sock *tcp_get_cookie_sock(struct sock *sk, struct sk_buff *skb,
- 
- 		bh_unlock_sock(child);
- 		sock_put(child);
-+		reqsk_put(req);
-+		return NULL;
- 	}
- 	__reqsk_free(req);
- 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 96eb6d2421413..c11faca825ff9 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7379,7 +7379,9 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 		if (!inet_csk_reqsk_queue_add(sk, req, fastopen_sk)) {
- 			bh_unlock_sock(fastopen_sk);
- 			sock_put(fastopen_sk);
--			goto drop_and_free;
-+			/* tcp_disconnect() already dropped one reqsk ref. */
-+			reqsk_put(req);
-+			goto drop;
- 		}
- 		READ_ONCE(sk->sk_data_ready)(sk);
- 		bh_unlock_sock(fastopen_sk);
-diff --git a/net/ipv6/inet6_hashtables.c b/net/ipv6/inet6_hashtables.c
-index 9ec05e354baa6..70633fed6e6af 100644
---- a/net/ipv6/inet6_hashtables.c
-+++ b/net/ipv6/inet6_hashtables.c
-@@ -74,7 +74,9 @@ struct sock *__inet6_lookup_established(const struct net *net,
- 		if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
- 			goto out;
- 
--		if (unlikely(!inet6_match(net, sk, saddr, daddr, ports, dif, sdif))) {
-+		if (unlikely(hlist_nulls_unhashed_lockless(&sk->sk_nulls_node) ||
-+			     !inet6_match(net, sk, saddr, daddr, ports, dif,
-+					  sdif))) {
- 			sock_gen_put(sk);
- 			goto begin;
- 		}
 -- 
 2.53.0
 
