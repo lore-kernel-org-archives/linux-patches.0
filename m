@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063891;
-	b=YQV3Z8JrVoTO1VJdek16qHEZVVcURom6yVgWGQFapQImy46e6qg6CjzDpaTM6kvpaDUN
-	 BodxlLVt/yqZFQ33oriyiv9orxAmTRnd6F147nllDb2Y3VByGhPwWDGYHb/kYzUrX2Rg7
-	 F3tdXTGU0o8WRX3qxmusE/7rZjMIgu6M+9iiA3UIw6CWSRXZbt//uiX58QAsnD7GLdCDZ
-	 AgJ2P2B/6BSKWpAwBeJ9MJIb0OiU8zi8wtROOIQ8kd1CxLzDsxykLmHSLjoJa4aRNScnI
-	 pVNgtGk2koBu5NqZVqpNoT2YNrVVtxqHp4G1OwjvfXgEnNk9x6d0QcXsaupHTmxBzXA==
+	t=1794063893;
+	b=PoFlB3VYHACZBG+OGMuDt9uAiPGyflGeoUqWaqR+Yx3CaV5rLjCSXTcFW58Dlz0GlIol
+	 TrvqgRR7nx7ecDBdvOlc2srTdOW30Xo1Fb/e1UFCDC8j+eO/6YT53qHvKe6/8+nVcxTPG
+	 E5AMYZYAfI8uJTPgWf1euXPkNO8hJ/ZeYg8BLVNZmhcm1g53p0ZXZlbYlUqD5ZWwHjC2Y
+	 BPIr4miGSe/EqrFhAVPG82s8aUbADXIjU7Sl+cQMcU+bjrarpAPBU3imU0wafCV8tffXR
+	 68DoOHZMfdyetCAgYk5nyJbrlOeKvUsaEBpzLUIKU0BwvUbXSKcvPa3cGlNuKJoerOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063893;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UjVqnk/i88jVJpV8Mog87M6X5f3AOpxAqVlynDJsuyk=;
-	b=uxk8qNhdjVj1yV0J1wm0Ps9kW7COTwPBMc0Nc1xezYxWJAPKBJM2Fk49UvL6/o/NXNa4
-	 iX1w5h7y/OCN10kokGJpTVPSPupXMhIhNrcr2j4xOgyQJSZwFEtBGZhZH0B4JCLe9gM8v
-	 jd80CC+UuFPQYTBaoXAy9YYy/2tyLY8v3LzDuTLnTSqvfbKee2gIVnOzxvpnhQxqv+pDP
-	 ACfOhsye1EW42dGYEHg3kJem+v8IV5LnPkYwn4DLTktTW1n6shQRUaeTj7CooDg2Nvv9C
-	 PQOQJyTULjV/LLFwx720wL6uJfySFeEDTKKTV2oK9YOTwmNOTcUCSl1RqGoHou09NZg==
+	bh=L1+mEVU/UtUFWqNdbQ/AHeIfxNWjgSfkzsHp6d1zqcQ=;
+	b=Cod8oXl+88yFqCFIXTujOI04HOh/3WryTsBRnYty0/cQQUVwzN3tU+LjOuAlSh6FGAXC
+	 LLuLyeV9drvDAATWMJYROuNUH2Dga4oZm3+U6urRIzaphwla73X9hqpsOnUXWoyfYbpFg
+	 yw0+ty8ntZAlB31aTFPoJvSJVJqIZVO0MvoTKMwLKfTxEknJrZOW436W4f7fyYcBIsgsR
+	 GKoXtkymlENR7N2TFUyBjM+D9Zm2ssK3/heCN2FEBb6OY6LOxVzg+TxYKORnf13REvA3a
+	 0OIOAr8/pbPsPqfFyIbMsQ7rzdt/E1wq82SWZJwTsatQ26qltU6f/UnxHWw46K8FAdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ommwjXKD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRk9eRCx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE57606B8AD;
-	Sat,  7 Nov 2026 15:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB73606B8BF;
+	Sat,  7 Nov 2026 15:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ommwjXKD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56771F0089F;
-	Sat,  7 Nov 2026 15:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRk9eRCx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B2C1F0089F;
+	Sat,  7 Nov 2026 15:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063891;
-	bh=UjVqnk/i88jVJpV8Mog87M6X5f3AOpxAqVlynDJsuyk=;
+	s=korg; t=1794063892;
+	bh=L1+mEVU/UtUFWqNdbQ/AHeIfxNWjgSfkzsHp6d1zqcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ommwjXKD11KOT7U4WBryrfPGku+azfXVM/c0tJYR2mN0iobENngQLEIqKBn47j0wl
-	 XWG1MRZhoTv4d4gLMEMjnEXsx/e37cVQDGpO0fncLx1uiR+JYtYrISzad9AIrUJw6G
-	 KohSKhEYdLs0Jt/XZRDFXVjAvtkJXM30FN4eeoq8=
+	b=oRk9eRCxm2zolCvl+AoRYzykXXpcYD4BVsYlk9v1JB0SBo9FprfO30SmSpU5+rXfE
+	 Y5qTNVy2d5YuTYvFQjvTXAhk0wMXKA134NV1GqAmOkD8QQfT324PIV/+91zuh99QFz
+	 cFvhIbyQWgpTKH1p2UuufucwR4awIE/2KTaVuYhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Younho Choi <gdool88@mju.ac.kr>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0094/1257] media: saa7146: Initialize interrupt lock before requesting IRQ
-Date: Sat,  7 Nov 2026 08:39:50 -0500
-Message-ID: <20261107134941.959675310@linuxfoundation.org>
+Subject: [PATCH 7.3 0095/1257] media: vim2m: keep transaction buffer count stable while streaming
+Date: Sat,  7 Nov 2026 08:39:51 -0500
+Message-ID: <20261107134941.984824573@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,49 +69,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Younho Choi <gdool88@mju.ac.kr>
 
-[ Upstream commit e07c75a6bc4adf1ed09ede31756261e2c6bdede5 ]
+[ Upstream commit 50f5fed44d8e24081e8feed5154746fe193f11b8 ]
 
-The saa7146 interrupt handler can call SAA7146_IER_DISABLE(), which
-serializes register access with dev->int_slock. request_irq() allows the
-shared handler to run before saa7146_init_one() reaches the current lock
-initialization block.
+V4L2_CID_TRANS_NUM_BUFS controls how many buffer pairs a vim2m
+mem2mem job processes before the job is completed. The driver stores
+the value in ctx->translen and device_work() uses it later to decide
+whether the current transaction should continue.
 
-Initialize dev->int_slock before requesting the interrupt so every handler
-path sees an initialized lock.
+Letting userspace change this control while streaming is active can
+make a queued job observe a different transaction length than the one
+it started with. That leaves the transaction state inconsistent with
+the buffers currently queued for the job.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Grab the transaction buffer count control while either queue is
+streaming, and release it only after both queues have stopped
+streaming. The V4L2 control framework then rejects changes with
+-EBUSY while the value is in use, while still allowing userspace to
+configure the value before streaming starts.
+
+Keep the control handler alive until after v4l2_m2m_ctx_release(),
+since releasing the mem2mem context can call stop_streaming(), which
+now ungrabs the control.
+
+Fixes: 96d8eab5d0a1 ("V4L/DVB: [v5,2/2] v4l: Add a mem-to-mem videobuf framework test device")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Younho Choi <gdool88@mju.ac.kr>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/saa7146/saa7146_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/test-drivers/vim2m.c | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/common/saa7146/saa7146_core.c b/drivers/media/common/saa7146/saa7146_core.c
-index c297d019f2b3f..70d6ca00513f8 100644
---- a/drivers/media/common/saa7146/saa7146_core.c
-+++ b/drivers/media/common/saa7146/saa7146_core.c
-@@ -340,6 +340,8 @@ static int saa7146_init_one(struct pci_dev *pci, const struct pci_device_id *ent
- 		goto out;
- 	}
+diff --git a/drivers/media/test-drivers/vim2m.c b/drivers/media/test-drivers/vim2m.c
+index bb2dd11eef0e4..f4a2c40838292 100644
+--- a/drivers/media/test-drivers/vim2m.c
++++ b/drivers/media/test-drivers/vim2m.c
+@@ -205,6 +205,7 @@ struct vim2m_ctx {
+ 	struct vim2m_dev	*dev;
  
-+	spin_lock_init(&dev->int_slock);
+ 	struct v4l2_ctrl_handler hdl;
++	struct v4l2_ctrl	*trans_num_bufs_ctrl;
+ 
+ 	/* Processed buffers in this transaction */
+ 	u8			num_processed;
+@@ -1258,9 +1259,27 @@ static int vim2m_start_streaming(struct vb2_queue *q, unsigned int count)
+ 		ctx->aborting = 0;
+ 
+ 	q_data->sequence = 0;
++	v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, true);
 +
- 	/* create a nice device name */
- 	sprintf(dev->name, "saa7146 (%d)", saa7146_num);
+ 	return 0;
+ }
  
-@@ -425,7 +427,6 @@ static int saa7146_init_one(struct pci_dev *pci, const struct pci_device_id *ent
- 	dev->ext = ext;
++static bool vim2m_other_queue_is_streaming(struct vim2m_ctx *ctx,
++					   struct vb2_queue *q)
++{
++	struct vb2_queue *other_vq;
++
++	if (!ctx->fh.m2m_ctx)
++		return false;
++
++	if (V4L2_TYPE_IS_OUTPUT(q->type))
++		other_vq = v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx);
++	else
++		other_vq = v4l2_m2m_get_src_vq(ctx->fh.m2m_ctx);
++
++	return vb2_is_streaming(other_vq);
++}
++
+ static void vim2m_stop_streaming(struct vb2_queue *q)
+ {
+ 	struct vim2m_ctx *ctx = vb2_get_drv_priv(q);
+@@ -1274,11 +1293,14 @@ static void vim2m_stop_streaming(struct vb2_queue *q)
+ 		else
+ 			vbuf = v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
+ 		if (!vbuf)
+-			return;
++			break;
+ 		v4l2_ctrl_request_complete(vbuf->vb2_buf.req_obj.req,
+ 					   &ctx->hdl);
+ 		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
+ 	}
++
++	if (!vim2m_other_queue_is_streaming(ctx, q))
++		v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, false);
+ }
  
- 	mutex_init(&dev->v4l2_lock);
--	spin_lock_init(&dev->int_slock);
- 	spin_lock_init(&dev->slock);
+ static void vim2m_buf_request_complete(struct vb2_buffer *vb)
+@@ -1380,7 +1402,8 @@ static int vim2m_open(struct file *file)
  
- 	mutex_init(&dev->i2c_lock);
+ 	vim2m_ctrl_trans_time_msec.def = default_transtime;
+ 	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_time_msec, NULL);
+-	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
++	ctx->trans_num_bufs_ctrl =
++		v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
+ 	if (hdl->error) {
+ 		rc = hdl->error;
+ 		v4l2_ctrl_handler_free(hdl);
+@@ -1435,10 +1458,10 @@ static int vim2m_release(struct file *file)
+ 
+ 	v4l2_fh_del(&ctx->fh, file);
+ 	v4l2_fh_exit(&ctx->fh);
+-	v4l2_ctrl_handler_free(&ctx->hdl);
+ 	mutex_lock(&dev->dev_mutex);
+ 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
+ 	mutex_unlock(&dev->dev_mutex);
++	v4l2_ctrl_handler_free(&ctx->hdl);
+ 	kfree(ctx);
+ 
+ 	atomic_dec(&dev->num_inst);
 -- 
 2.53.0
 
