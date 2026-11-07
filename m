@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063092;
-	b=lnkLmQ9g9vh3tgrCbE06Rf8zDprgJRUASh+ytFuyU8UttGIW87YxNx/hMIsFH/cvBfah
-	 x6mF8vW8yOSIJnn5zdr/VWUvgAnhj9PAVdtlJzmsUyGXLEmoZNr3t4xDHPhcwNCJJAdDB
-	 zEyONbwoR40YanE2kpQy+5bpyrJMWB/b7VKRY+NFZRT8QiMWPxMnSFLsLJc8mcsYV0/fV
-	 L2RBct58gI5PoigsVpnhplCa3Ajw2DFfcnsNM7R2eP0wosdj9lAhN0XJhdIB2S3iG5gCU
-	 ZxhDOay36k3B3trg5Upl5AorzcEySuuGuBSD0cqvPTvEpTJQVQuYR9Uxzk8CTnLAIJw==
+	t=1794063093;
+	b=gQnoQqspW91HgKtjDWQ3ibxHxFxURq/xau+o7/prC7OXj7SdLYH834m2lJ9Cb+fuCc+z
+	 LaLad11RF+cMhR9trKbFIatAMx3M2liPa+3tH15lygawOC2krF6P+zuK9CqthaqmoFIGo
+	 VO7a7yDPhxONPsQaVRHJy4knG03lLvL4US8EJIziclHXtIWRBIqHHZsY4Uj1B+B/cVVXn
+	 e30e7wEDQ/IUMRtI/MwlKO6C2iEnncI7S4Tn+mF+u3zF+jLMSwRafOsA56OSKJ5lOJ8YQ
+	 h9AZMKgP6+R460RPIyVOzW4wGyTmljdtPOv1TDeESRJmPHP7aGSiMJ4ay9p0Ix3xCxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063092;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063093;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vsLXNQqsBa+iU4SoVwr09HmlZeBD2TekS3R8TBlN3b8=;
-	b=d/TC4RiGGhbIjvERmA1GZRzWqgXbRb8UVL75JPhK66LEr2giX+Ztmfdz96Vu7SZ04ne6
-	 1RRO7mQfWAhJfGwtmtwUbHekWEevYL60ynS3kLJv5S47xnQSueNgQRU/wILcE/ETwP1qK
-	 up7uIuEG3ZCg86q2JQ2goZyBKbArgJOGDmC1YThVvuvQ1qQMhDiAnY2ezHOcee3hQIgLv
-	 M2pD75UPcgDwa7ZB3NV1k+iKLYYuoCtSEPiNig9hDHbvHTeVgUCaFDJJ4EYjhcCIW+6O/
-	 26at+DjoF0r2HNuqjVbSuPpcN4bRCI0xw09F01AqHvhvV7L+bX5xknKIk6Azw8AW5lA==
+	bh=RN5rO2hSzyJkJFaza2x2aGBZTP/J/esYI/3ST41vGs0=;
+	b=SHrq0wQRG/yi1OaaO283F65UbF00zeWAWXulRollT2n8AQ3XJUFE+c7pDwAtHQcYoIfY
+	 euWw/bCzKTL5P/kASYKx3ur5q8XicTghlUivqMOb8tTbJeWmPCWYTJH6nOZgyOt353kBg
+	 Iu1VmycfJh6io2P//074P8BYSutwgd7aOO5EjFa5UvapouMbSQeTrH7C4JiucNjs2zBP3
+	 NKPtMTz5S0RaGvsmtSOY3+rF/htb2LxM+c22N8KfjC0pOlqDx7DhI8j6EGjmc/qVFBVlq
+	 PW/mD9lN3QB41GClSnVAtbpdxZ/1E7naGTwBRwmcHFnDYjPjxQRX/SThpcOqPJ/Tr8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEgK2uD4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPeBBVkE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1084C606D804;
-	Sat,  7 Nov 2026 14:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38408606D804;
+	Sat,  7 Nov 2026 14:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEgK2uD4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21361F0089F;
-	Sat,  7 Nov 2026 14:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPeBBVkE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE9D1F0089F;
+	Sat,  7 Nov 2026 14:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063091;
-	bh=vsLXNQqsBa+iU4SoVwr09HmlZeBD2TekS3R8TBlN3b8=;
+	s=korg; t=1794063093;
+	bh=RN5rO2hSzyJkJFaza2x2aGBZTP/J/esYI/3ST41vGs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QEgK2uD4EVypTqEKJ+ijqq02Cv9j4jbIgpmYohV0qWGkXr/L15ikS2wLsqtmCIDnb
-	 RXbu+sWvLHzKRG8HheGd5i53cdEAYP+Okk5Ec/rOc6OkY38xeHm3eETH30tPMB29Nv
-	 VnLsiYuSlDT9g9BONZ74L8p2xiZmSqzn83OSJ1GA=
+	b=uPeBBVkElG02S/EmAVdGm2Jjd7lvfX5ePQyBq7+S64jzNUoKDIFVUVq4zmqxqDR9l
+	 7YZVqcNAmMSQK2iULNBg/YELyqzI4ypW4rvCmWBcNkg87vZ+CNO9uKwU/EMLk9Qndz
+	 alM6LyG9qU3ERaaAHVw5T8gsjgqpd5d0dqZf84jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Thorsten Blum <blum@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 311/869] media: pvrusb2: Fix USB parent device leak in class_dev_create()
-Date: Sat,  7 Nov 2026 08:49:53 -0500
-Message-ID: <20261107134903.059548094@linuxfoundation.org>
+Subject: [PATCH 6.18 329/869] hwrng: ba431 - fix reported byte count
+Date: Sat,  7 Nov 2026 08:50:11 -0500
+Message-ID: <20261107134903.591136754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,38 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Thorsten Blum <blum@kernel.org>
 
-[ Upstream commit 02421d7278e4a62c3daf37ad6c45d4af96ee4252 ]
+[ Upstream commit 7e638679883ceff5b6e7b6dcad09c21a105e941f ]
 
-class_dev_create() stores a reference to the USB device obtained with
-get_device() in class_dev->parent, which class_dev_destroy() releases.
-When device_register() fails the function only drops class_dev, so the
-reference to the USB parent device is never released.
+Use the size of the buffer element instead of the pointer size to report
+the number of bytes read. Since data is a u32 pointer and sizeof(data)
+is 8 bytes on 64-bit systems, using the pointer size reports twice the
+number of bytes actually read.
 
-Drop the parent reference on the failure path as well.
-
-Fixes: 28c4a5e6d324 ("V4L/DVB: pvrusb2: Fix USB parent device reference count")
+Fixes: 0289e9be5dc2 ("hwrng: ba431 - add support for BA431 hwrng")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Thorsten Blum <blum@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/pvrusb2/pvrusb2-sysfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/hw_random/ba431-rng.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c b/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c
-index 3077399901aa1..dd6fcc6245afc 100644
---- a/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c
-+++ b/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c
-@@ -633,6 +633,7 @@ static void class_dev_create(struct pvr2_sysfs *sfp)
- 	if (ret) {
- 		pvr2_trace(PVR2_TRACE_ERROR_LEGS,
- 			   "device_register failed");
-+		put_device(class_dev->parent);
- 		put_device(class_dev);
- 		return;
+diff --git a/drivers/char/hw_random/ba431-rng.c b/drivers/char/hw_random/ba431-rng.c
+index 9de7466e68962..c33fbc25b7cdf 100644
+--- a/drivers/char/hw_random/ba431-rng.c
++++ b/drivers/char/hw_random/ba431-rng.c
+@@ -148,7 +148,7 @@ static int ba431_trng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
+ 		}
  	}
+ 
+-	n *= sizeof(data);
++	n *= sizeof(*data);
+ 	return (n || !wait) ? n : -EIO;
+ }
+ 
 -- 
 2.53.0
 
