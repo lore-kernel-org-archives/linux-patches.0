@@ -1,63 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062512;
-	b=ntpxPyxU4LQgoscIH99HmkBLRqKEmnP2ggZ4pq5W+/2TISmpcHVK2Ei3X3keyW8YWqTM
-	 IbA72bWvlka79IIlgZ/hJOSJSiauDf7D+RY6CZO8086pI/yUjO8Ufpge+n1fP/3+3IRGZ
-	 yuaRaYHTEAf6PWMN5v8+CgklA1beeC7FcKdXvGz1BaZZLFsMCQgxdCcNKDpZ8yosBsyJP
-	 bq0TFJM6mTOsFkw5hQBeRuE9jd8GY0nHicLqY/GqP42g32OIsZOZNgGq5N578Uy+a1X8p
-	 +JtpG6ZaQmkDopbu3w6jMOtgwk6Lpp1IEr+O5Cg2U0eFuIH/XJ8cY5aaJ8ONiA7GuQA==
+	t=1794062513;
+	b=eaMlmoTFFrBBhTBybz89vE3nHuBxEMK4iPOWjEiysiWJ7KwBWhsvIuYECZ7O2HX2W4mc
+	 D+9ehhY1g7lNdNZsj+Hez4LvWQhD6jiJ3GwAr2j877/B7+CNB/+rvNhU4mk1ciAyK7SGe
+	 zJsVMNHAaPEA9dM4YDehiWIpfvzODmMKhqlkWYC155QRZ+OtKV0w6yB+Khy5rhjlS6XcK
+	 4Y9bhtm4WidyeB9NUjvn7cefBY4H/xFXpqAab/TkhD0N+lBT+zpAqjcKC5UCW2J8b/qSB
+	 BG4/caO/3lumv1G4L/BW8dij9grcdoNybfgU5sC/GxCCb5cgwfKo8pzOxuDDpxFz8kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062513;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QQpY0A5fe8mK+X+491VmU1xi+5SWoly+jwu7Jntr2xY=;
-	b=sWAVH/vWoXcOB4+fEhZqdJNhGBlQIqx/UC5gYTh3kFvrNskMqr4OomxDxitC6+Ixusfw
-	 U0U/CEgs3Ru/Z2P0ZCB48uOoB88O5+So4RBNiUP0SdwjPJ3Wvcooy6aOQRR0DLRjfQAYN
-	 UQK7E/aA2/EYtIu2qSmQJ42N5s0+iE16r6NdDdcn2rFWJiDh5+LhpUTxNYA61ZH8qzBME
-	 yM0APW85OF4RCgLFgc0Rw+QxYVedhOoeOacXwLhQOBvUcCpXaFUh7nzUcJu4vPesX8bDB
-	 P7TtKj0SYroQaKHYBrfydyik2AVGreBI8SEzHYD94+9coQDdJpLAEfQTjJ6ZXuDXl4g==
+	bh=ywdXdzciDNYe6naWxMvCL6doJCTKRUunXv2s3TEpm9g=;
+	b=CbUhz81rqagcyqD5Dj/riKMCb3N4x0zWsIdBRVToei9eB3efP+rP+pqEkMFq2/+O6rnS
+	 1rDs/XTG2R3TYUem2qwrSB/22Qv2qBJ4SNJ2rcqQBWF30kKvEiHaIgHmzkvbJAiOYZpos
+	 DtdWyDLu+EnruQGQby3wMSqaJerv7/BYxX/6Ce3qtTe4qJxTGpB+RNMOqhxmQYvBn2CCH
+	 EDdYXTZGFSevHDZ+5dfrGDU8kfxI4Ab2QHNMNsRZ5EzNOBmWkO1RK+6Cru6vF2aS8xRp0
+	 XjC+1hRz44TCR8xqKscUI83qIhi/HJ6z8hsSg2+JV1KiM7aY6o9WIq48vDIG6f2xuIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wep8Y0Wv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDcNnQMX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEDB606A326;
-	Sat,  7 Nov 2026 14:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A79A606A326;
+	Sat,  7 Nov 2026 14:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wep8Y0Wv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BCE1F0089F;
-	Sat,  7 Nov 2026 14:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDcNnQMX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464141F008A1;
+	Sat,  7 Nov 2026 14:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062512;
-	bh=QQpY0A5fe8mK+X+491VmU1xi+5SWoly+jwu7Jntr2xY=;
+	s=korg; t=1794062513;
+	bh=ywdXdzciDNYe6naWxMvCL6doJCTKRUunXv2s3TEpm9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wep8Y0Wv0TDZTulejVCGA8Dt8P9UR7FZvh1JvR6F+upzhnirjGIbzd/D4M8ggghzi
-	 ci0zHiamqC6EUOFK+W7QsvggBOPHEu9UMWG3x/IWkIKXh1tpLvD4FvlL+GyPdDzhY4
-	 Wl6CUd/ReGJxaVP7v/SYZBDd2mfbZmwslWcMUjn8=
+	b=zDcNnQMXDV76+TsSGz4lu/voTe7H7V6kYelSA5JTfMrahhB/eh8DnhRkhxrorSP94
+	 Dfk4U6DkgEr7IYau8B1T4IqFmRwwk3lY4RZLNF6stu1GgzG6dddf1lNyKLfqWYmzWL
+	 PRX6E4WbL8zPLaUE1TrfyVarMpCr+WUVfvmED8tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Yufan Chen <ericterminal@gmail.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Kees Cook <kees@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Sunil Mushran <sunil.mushran@oracle.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1401/1536] ocfs2/cluster: initialize heartbeat regions before publishing them
-Date: Sat,  7 Nov 2026 08:56:57 -0500
-Message-ID: <20261107135037.175160642@linuxfoundation.org>
+Subject: [PATCH 6.12 1410/1536] tipc: fix broadcast sender hang on last acker departure
+Date: Sat,  7 Nov 2026 08:57:06 -0500
+Message-ID: <20261107135037.424802404@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -79,192 +69,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit c5b7a30a5172317e1e3cba61d8c9f9c588c497bb ]
+[ Upstream commit f4377bf85887f57b59abb5479f7660a81ffe4449 ]
 
-A region on o2hb_all_regions must have an initialized config item and
-name. o2hb_heartbeat_group_make_item() currently links the zeroed region
-under o2hb_live_lock, drops the lock, and only then initializes hr_item.
-The lock therefore protects the list without protecting initialization
-from readers of the published item.
+TIPC group broadcast senders are blocked while a replicast still has
+outstanding member acks: tipc_group_bc_cong() returns true as long as
+grp->bc_ackers is non-zero, and clears *grp->open, which is what
+tipc_poll() uses to report EPOLLOUT (via tsk->group_is_open).
 
-With global heartbeat enabled, a DLM_QUERY_REGION from the current
-joining node can pass the existing-domain and protocol checks while a
-configfs mkdir creates another region. The DLM locks are not taken by
-the constructor, and the network worker does not take the configfs
-subsystem mutex. The following ordering is possible:
+When the last outstanding acker departs before acking,
+tipc_group_delete_member() decrements grp->bc_ackers to zero but
+never restores *grp->open.  As a result poll(EPOLLOUT) never fires
+again.  A writer blocked in sendmsg() is only released if some other
+wakeup happens after the deletion: with TIPC_GROUP_MEMBER_EVTS the
+leave event delivery calls sk_data_ready() and wakes it, but without
+member events nothing does and it sleeps indefinitely, since the
+default send timeout is MAX_SCHEDULE_TIMEOUT.
 
-  Configfs mkdir                     O2net receive worker
-  --------------                     --------------------
-  Allocate reg
-  Lock o2hb_live_lock
-  Link into o2hb_all_regions
-  Unlock o2hb_live_lock
-                                     dlm_query_region_handler()
-                                       dlm_match_regions()
-                                         o2hb_get_all_regions()
-                                           Lock o2hb_live_lock
-                                           Copy 32 bytes from NULL name
-                                           Unlock o2hb_live_lock
-  config_item_init_type_name()
+Commit 99cc2a62e07a ("tipc: reject invalid and unexpected
+GRP_ACK_MSG to prevent bc_ackers underflow") already calls this out
+in its changelog as a pre-existing issue.
 
-The query thus dereferences NULL. Initialize hr_item before linking the
-region so the existing list lock also orders name initialization before
-any reader. Reject a failed name allocation, since the initialization
-helper does not propagate that error.
+Restore the open state exactly on the 1->0 transition in the delete
+path, mirroring the GRP_ACK_MSG completion path, and invoke
+sk->sk_write_space() from tipc_sk_filter_rcv() when the group just
+became writable again.
 
-Use config_item_put() on initialized constructor failures to release the
-name and respect references retained by o2hb_region_pin(). Initialize
-the list heads, mutex and delayed works needed by o2hb_region_release()
-before any such put, and leave the list node self-linked after rollback.
-Keep the existing handler drain before removing a failed published item.
+Also make the ack accounting precise.  The delete path used to test
+less(m->bc_acked, grp->bc_snd_nxt - 1), which also matches members
+that were never counted for the current replicast (JOINING/LEAVING
+members keep a stale bc_acked), and the GRP_ACK_MSG handler accepted
+an ack from any member whose bc_acked differed from the expected
+value.  Either could zero bc_ackers on behalf of a member that owes
+nothing and silently void an ack still owed by a real acker.  Track
+whether a member owes an ack for the current replicast in a new
+per-member bc_pending flag, set when the member is counted and
+cleared when its ack arrives, and use it both to accept an ack and
+to decide on deletion.  bc_acked has no remaining user and is
+removed.  Suggested by Tung Quang Nguyen.
 
-KASAN report as below:
+This issue was discovered by Tencent CodeBuddy Security.
 
-    ==================================================================
-    BUG: KASAN: null-ptr-deref in o2hb_get_all_regions+0xbb/0x1f0
-    Read of size 32 at addr 0000000000000000 by task kworker/u16:1/14
-
-    CPU: 2 UID: 0 PID: 14 Comm: kworker/u16:1 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Workqueue: o2net o2net_rx_until_empty
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     kasan_report+0xe0/0x110
-     ? o2hb_get_all_regions+0xbb/0x1f0
-     kasan_check_range+0x105/0x1b0
-     __asan_memcpy+0x23/0x60
-     o2hb_get_all_regions+0xbb/0x1f0
-     dlm_query_region_handler+0x4c2/0xc20
-     ? __pfx_dlm_query_region_handler+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? kvm_clock_get_cycles+0x31/0x60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_dlm_query_region_handler+0x10/0x10
-     o2net_rx_until_empty+0x1a50/0x3200
-     ? reacquire_held_locks+0xdd/0x200
-     ? __pfx_o2net_rx_until_empty+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? process_one_work+0x935/0x1b40
-     ? process_one_work+0x834/0x1b40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x9a8/0x1b40
-     ? __pfx_process_one_work+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __kthread_parkme+0x177/0x220
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x351/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf70
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-    ==================================================================
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0079-v5-f931a29339cadc0a2a70@gmail.com
-Fixes: 536f0741f324 ("ocfs2/cluster: Track number of global heartbeat regions")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Yufan Chen <ericterminal@gmail.com>
-Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>
-Cc: Sunil Mushran <sunil.mushran@oracle.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20261019115859.3471295-1-bsdhenrymartin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ net/tipc/group.c  | 19 ++++++++++---------
+ net/tipc/socket.c | 12 +++++++++++-
+ 2 files changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index ca8c99b1cec01..94743cef12f13 100644
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -2124,6 +2124,18 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 	}
- 	reg->hr_node_num = O2NM_MAX_NODES;
+diff --git a/net/tipc/group.c b/net/tipc/group.c
+index 0da7b27133949..a9ce1c7018b6c 100644
+--- a/net/tipc/group.c
++++ b/net/tipc/group.c
+@@ -74,7 +74,7 @@ struct tipc_member {
+ 	u16 window;
+ 	u16 bc_rcv_nxt;
+ 	u16 bc_syncpt;
+-	u16 bc_acked;
++	bool bc_pending;
+ };
  
-+	INIT_LIST_HEAD(&reg->hr_all_item);
-+	mutex_init(&reg->hr_arming_mutex);
-+	reg->hr_stopping = true;
-+	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
-+	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
-+	INIT_LIST_HEAD(&reg->hr_handler_list);
-+	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
-+	if (!config_item_name(&reg->hr_item)) {
-+		ret = -ENOMEM;
-+		goto put_item;
-+	}
-+
- 	spin_lock(&o2hb_live_lock);
- 	reg->hr_region_num = 0;
- 	if (o2hb_global_heartbeat_active()) {
-@@ -2132,26 +2144,19 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 		if (reg->hr_region_num >= O2NM_MAX_REGIONS) {
- 			spin_unlock(&o2hb_live_lock);
- 			ret = -EFBIG;
--			goto free;
-+			goto put_item;
+ struct tipc_group {
+@@ -316,7 +316,6 @@ static struct tipc_member *tipc_group_create_member(struct tipc_group *grp,
+ 	m->node = node;
+ 	m->port = port;
+ 	m->instance = instance;
+-	m->bc_acked = grp->bc_snd_nxt - 1;
+ 	ret = tipc_group_add_to_tree(grp, m);
+ 	if (ret < 0) {
+ 		kfree(m);
+@@ -340,9 +339,12 @@ static void tipc_group_delete_member(struct tipc_group *grp,
+ 	rb_erase(&m->tree_node, &grp->members);
+ 	grp->member_cnt--;
+ 
+-	/* Check if we were waiting for replicast ack from this member */
+-	if (grp->bc_ackers && less(m->bc_acked, grp->bc_snd_nxt - 1))
+-		grp->bc_ackers--;
++	/* If this member owed an ack for the current replicast and it
++	 * was the last one, restore the open state so blocked broadcast
++	 * senders can proceed.
++	 */
++	if (grp->bc_ackers && m->bc_pending && !--grp->bc_ackers)
++		*grp->open = true;
+ 
+ 	list_del_init(&m->list);
+ 	list_del_init(&m->small_win);
+@@ -394,7 +396,6 @@ void tipc_group_update_member(struct tipc_member *m, int len)
+ 
+ void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
+ {
+-	u16 prev = grp->bc_snd_nxt - 1;
+ 	struct tipc_member *m;
+ 	struct rb_node *n;
+ 	u16 ackers = 0;
+@@ -403,8 +404,8 @@ void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
+ 		m = container_of(n, struct tipc_member, tree_node);
+ 		if (tipc_group_is_receiver(m)) {
+ 			tipc_group_update_member(m, len);
+-			m->bc_acked = prev;
+ 			ackers++;
++			m->bc_pending = ack;
  		}
- 		set_bit(reg->hr_region_num, o2hb_region_bitmap);
  	}
- 	list_add_tail(&reg->hr_all_item, &o2hb_all_regions);
- 	spin_unlock(&o2hb_live_lock);
  
--	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
--
- 	/* this is the same way to generate msg key as dlm, for local heartbeat,
- 	 * name is also the same, so make initial crc value different to avoid
- 	 * message key conflict.
- 	 */
- 	reg->hr_key = crc32_le(reg->hr_region_num + O2NM_MAX_REGIONS,
- 		name, strlen(name));
--	mutex_init(&reg->hr_arming_mutex);
--	reg->hr_stopping = true;
--	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
--	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
--	INIT_LIST_HEAD(&reg->hr_handler_list);
- 	ret = o2net_register_handler(O2HB_NEGO_TIMEOUT_MSG, reg->hr_key,
- 			sizeof(struct o2hb_nego_msg),
- 			o2hb_nego_timeout_handler,
-@@ -2174,10 +2179,13 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 	o2net_unregister_and_flush_handler_list(&reg->hr_handler_list);
- remove_item:
- 	spin_lock(&o2hb_live_lock);
--	list_del(&reg->hr_all_item);
-+	list_del_init(&reg->hr_all_item);
- 	if (o2hb_global_heartbeat_active())
- 		clear_bit(reg->hr_region_num, o2hb_region_bitmap);
- 	spin_unlock(&o2hb_live_lock);
-+put_item:
-+	config_item_put(&reg->hr_item);
-+	return ERR_PTR(ret);
- free:
- 	kfree(reg);
- 	return ERR_PTR(ret);
+@@ -800,9 +801,9 @@ void tipc_group_proto_rcv(struct tipc_group *grp, bool *usr_wakeup,
+ 		if (!m || !grp->bc_ackers)
+ 			return;
+ 		acked = msg_grp_bc_acked(hdr);
+-		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
++		if (acked != grp->bc_snd_nxt || !m->bc_pending)
+ 			return;
+-		m->bc_acked = acked;
++		m->bc_pending = false;
+ 		if (--grp->bc_ackers)
+ 			return;
+ 		list_del_init(&m->small_win);
+diff --git a/net/tipc/socket.c b/net/tipc/socket.c
+index 0ae02e8e11ff5..f9e9f05657e02 100644
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -2355,8 +2355,18 @@ static void tipc_sk_filter_rcv(struct sock *sk, struct sk_buff *skb,
+ 	if (unlikely(!msg_isdata(hdr)))
+ 		tipc_sk_proto_rcv(sk, &inputq, xmitq);
+ 
+-	if (unlikely(grp))
++	if (unlikely(grp)) {
++		bool was_open = tsk->group_is_open;
++
+ 		tipc_group_filter_msg(grp, &inputq, xmitq);
++		/* A departing member may have held the last outstanding
++		 * replicast ack, which can restore the open state inside
++		 * tipc_group_filter_msg(); wake up senders blocked in
++		 * poll()/write() if the group just became writable.
++		 */
++		if (!was_open && tsk->group_is_open)
++			sk->sk_write_space(sk);
++	}
+ 
+ 	if (unlikely(!grp) && mtyp == TIPC_MCAST_MSG)
+ 		tipc_mcast_filter_msg(net, &tsk->mc_method.deferredq, &inputq);
 -- 
 2.53.0
 
