@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063959;
-	b=ikcg0KHmBlipCnhAxXI593OB0NLSoVNjcI/33U4c2nkg1qS1u4p5P/JeShJlabwcy04L
-	 RtGvJXeTZuivPHuBtK+W98BxixKD1UWNjnhu0jR2VsjD8Su4A1SdvzzokZ6h+1eevIJrv
-	 36n1/E6ACh2+PQxMCbzjK/jWGuOfq/JQxEtGzY8rRtnUCxa77Baud41sMHJlbHMuuXHMT
-	 5z3Sp85b/Y3X53twEZBfNCeUnXN3VtJeKUD09iRlcYxtniDO1ec8khBdlko5SgLN5n6rP
-	 m4EeZ8OX03B9TqxZIVQG1OWYru3i3JRhmisgpsJoH61vvsYm2K6t7h5ybDwoo5b8LFQ==
+	t=1794063961;
+	b=AL/GNrr5o1G972/YTJ3BI5L2kKKr4BGr3sFxroiCXH0WYgzbT1O/UAedWeTrJyV+TNoa
+	 WKD+mB5ldxvk0+Act0Zt6CH3BOvekdP0+PwikTmqvCMADUbjFtEHbM92/HNNUIyfAWIh0
+	 1zBBjo2v52p86eADsxAH6EBgks4vSsmlx1/4SMIQjWfQRxCkdPTaNlu3MkpMZoSHw+vDn
+	 YP6dY28K7fwnbd/6Tz6haz4ShwIPOfbdN7r8qrwEHjIDASm3Kr0FyTtSboWhH0Hj3AHda
+	 BdDUyJA8aD/rh6Jxe3SnI+Yy/5k7IKS+szw0Rsbrj7y3AfNZY1SUx8j/snPoC+1L5gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063961;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+Yz5RYypp0+ypo4NNkOK5jEetxy/MtLxGYvlXPQShHc=;
-	b=XBCYgAQTnwQp7ZrA+21i21rAFo/VZpvpafq621GfSxznsGBwXupb9WO0I6jse6BlGfTD
-	 Ol1F7HSToIkrWqe2c2yFTcl/K8BujxykHQCkwpv/EF/ToQ4dXbV7TjXTAWrkvgWrJGTAk
-	 D13WMerHM5adskR/4hSL6PSuWgpy76CdBog0Qjf1HoEfxLFQ/InGaCZd6mAAUhM6kgUPu
-	 ACUEoGaCt/moNFCiQNQIDYASW486NdCVIQky7sB+ZULEz+Erjd6R3ASVi4DRwKM7yPGMw
-	 8G+P20KSRcR3m8LPzm1Usgznhe4BklnLwjLEDeyeFExfNV25Gg4lRpghTrPkcHFkdxA==
+	bh=eZO+bCkyA0gEn8QUXODpx7jWa6MVbVMFbamEBA0HYUY=;
+	b=wLRjduPjae+3jhaA3UtsmsUBoEb8rgGDzSfGcHku0RIFeEenSfP0vHQBoKY7Y9AZIy+T
+	 LpqeamzjhVfpHFEx5A6hWQ7KlsKlezzndCouJtImk6l4468hBFE6qERyj3UYJkOmcbcrx
+	 Apa4YgNT75+GTrvX5StBBXfrwB5ZisFsMwfoSdCTXKZlxuPLrSqW5wFqTVu37SWQQPdac
+	 o3Rt90yCzS5yZuGb9p/YtRMSlatBLZKFO2Wg1kovjfXMTVoUbxHERSBiFjKCbx0Kh+qiy
+	 VmUb9ryMY3Iy/G7HryYuPMIAmKmtqcCWP9Z60r0evLTVRT3jJY9QwLosG1k1DpTps5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sVi1n++A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dP1K6IGE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B02C606EE97;
-	Sat,  7 Nov 2026 15:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A4C6083614;
+	Sat,  7 Nov 2026 15:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sVi1n++A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C815C1F008A1;
-	Sat,  7 Nov 2026 15:05:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dP1K6IGE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F04A1F008A1;
+	Sat,  7 Nov 2026 15:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063959;
-	bh=+Yz5RYypp0+ypo4NNkOK5jEetxy/MtLxGYvlXPQShHc=;
+	s=korg; t=1794063960;
+	bh=eZO+bCkyA0gEn8QUXODpx7jWa6MVbVMFbamEBA0HYUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sVi1n++Am6rbPkQslGeMWMU4fL0JpjOVSZXrOqcdi0f3MbmBEXzJWjes9nzisDoDx
-	 7r9KGgCgVhClKn527cQfFhX32b70ly60ZMXUak/hDDwnl0PEuR/8nObOgboHeWuToY
-	 SkeAy6rpOTi5bMvCU32kmflsJ/OHMPNn4NB+FrY8=
+	b=dP1K6IGEu1lHtHOXQ4Hc3eow0ov4i4pzcOGjye2JSt3+4C2hTkNOIk8YqsPgRzQ+n
+	 GdTLBlWtTGRvS2kLROSnJ46rXV5fRPOKXdf3qVb54fdZgxBIbzOrlQcRzauFY4pJKY
+	 5Sk3pobzBw6n2j6zter08SIFUSJb1NHLMtGiCBKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Karl Mehltretter <kmehltretter@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0147/1257] crypto: atmel-aes - fix AADLENR for standalone GHASH
-Date: Sat,  7 Nov 2026 08:40:43 -0500
-Message-ID: <20261107134943.372504440@linuxfoundation.org>
+Subject: [PATCH 7.3 0148/1257] lib/842: reject output overflows from index and short data
+Date: Sat,  7 Nov 2026 08:40:44 -0500
+Message-ID: <20261107134943.401946855@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,51 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 0dd8cded0e6f8c9635fe1d79d60dc7b2599b099b ]
+[ Upstream commit 38ed7182f3491ec1449ff246551e11ad82adba45 ]
 
-atmel_aes_gcm_ghash_init() writes dd->total, the request's text length,
-to AES_AADLENR.  But the GHASH it runs hashes the dd->datalen bytes passed
-in: the 16-byte length block, or the padded IV when the IV is not 96 bits.
-The data sheet requires AES_AADLENR to hold the length of that input.
+The output length passed to sw842_decompress() is the caller's buffer
+capacity. Indexed copies write 2, 4 or 8 bytes and short-data templates
+write up to 7, but neither checks that capacity before writing and
+decrementing p->olen.
 
-With empty plaintext and empty AAD, dd->total is 0 and the tag comes out
-wrong.  Later requests only pass because dd->total still holds the
-previous request's length.
+Overwriting an undersized destination then underflows p->olen, which is
+unsigned, so every later bounds check in the stream passes. Subsequent
+operations keep writing past the destination, and a matching CRC lets
+sw842_decompress() return success with an output length larger than the
+capacity the caller supplied.
 
-This is testmgr's first gcm(aes) vector, so CONFIG_CRYPTO_SELFTESTS=y
-fails at boot:
+This is reachable through zram's compressed writeback path. With 842
+selected, targeted corruption of the compressed data on its backing device
+made a KASAN kernel report vmalloc-out-of-bounds writes in __do_index() and
+sw842_decompress() when zram read the page back.
 
-  alg: aead: atmel-gcm-aes encryption test failed (wrong result) on test
-  vector 0, cfg="in-place (one sglist)"
+Check the remaining output before both operations and return -ENOSPC,
+matching the other output-producing templates.
 
-Without selftests the broken atmel-gcm-aes is preferred at priority 300.
-Seen on a SAM9X75 Curiosity with 6.18 and current mainline.
-
-Write dd->datalen instead.
-
-Fixes: d4419548dba9 ("crypto: atmel-aes - add support to GCM mode")
+Fixes: 2da572c959dd ("lib: add software 842 compression/decompression")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-aes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/842/842_decompress.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
-index 50d97cef75b89..8e4de859cadc0 100644
---- a/drivers/crypto/atmel-aes.c
-+++ b/drivers/crypto/atmel-aes.c
-@@ -1267,7 +1267,7 @@ static int atmel_aes_gcm_ghash_init(struct atmel_aes_dev *dd)
- 	struct atmel_aes_gcm_ctx *ctx = atmel_aes_gcm_ctx_cast(dd->ctx);
+diff --git a/lib/842/842_decompress.c b/lib/842/842_decompress.c
+index 582085ef8b49c..87d1e0f8a4926 100644
+--- a/lib/842/842_decompress.c
++++ b/lib/842/842_decompress.c
+@@ -165,6 +165,9 @@ static int __do_index(struct sw842_param *p, u8 size, u8 bits, u64 fsize)
+ 	u64 index, offset, total = round_down(p->out - p->ostart, 8);
+ 	int ret;
  
- 	/* Set the data length. */
--	atmel_aes_write(dd, AES_AADLENR, dd->total);
-+	atmel_aes_write(dd, AES_AADLENR, dd->datalen);
- 	atmel_aes_write(dd, AES_CLENR, 0);
++	if (size > p->olen)
++		return -ENOSPC;
++
+ 	ret = next_bits(p, &index, bits);
+ 	if (ret)
+ 		return ret;
+@@ -344,6 +347,8 @@ int sw842_decompress(const u8 *in, unsigned int ilen,
  
- 	/* If needed, overwrite the GCM Intermediate Hash Word Registers */
+ 			if (!bytes || bytes > SHORT_DATA_BITS_MAX)
+ 				return -EINVAL;
++			if (bytes > p.olen)
++				return -ENOSPC;
+ 
+ 			while (bytes-- > 0) {
+ 				ret = next_bits(&p, &tmp, 8);
 -- 
 2.53.0
 
