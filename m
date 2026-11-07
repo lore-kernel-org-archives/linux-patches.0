@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062159;
-	b=koJ1yoogEFc95Qy9y+DDbD6lnS1DxXYV8E6t6y7YummcsN3ckQ5ziffEV/bapVrqjJsU
-	 lq6gD+RJbtOOoINuU9y5q5SooVx8hhKcno5OZ4TDTb/jkuWsG2IDo0AxqMe8i9VBqCt2i
-	 LpV7P3mdwrbnt7KzH90n3pw249bc/bAG+j0kPsqY6BmXj6iiovXhP26jDSZVOn04eh89d
-	 uWkK0JDcHg3Q1grQ1FhMyb3iEARkXJK1Fm4M5KYue7n1vtdKgTQW46xKb5zBFnSFsg6AN
-	 bgTs6V6HT1orX48XiJXCe+12+RICWGm4FwA7QbZaiqdut6pkfvOZShPlSCBFj+GxmdQ==
+	t=1794062160;
+	b=Gpi91sozFVrZyUuEKNaLTuRxHuX3FOxz74LM9P+EYYKhMiDkIya98nqxiEsBfLrxXvzs
+	 567vrQfXmlbiFzHTcdTczbPGzgel4y+F3+H8jKYF1YhqRGEy0PP+MVuO9QV58yer/Faqd
+	 +ShY4WlNGR4US/W5iCU/OMcX6VFiR3WMX0ivUq9DsnooMHBOSnIdIPr9d+l9rJtt1Mxap
+	 fHzZyW8f6SrI8x5vbasTZ1jy2/E/Al6HDOQ8I6wk8vniL7WAqSflcqxKB6ALsGLaoww62
+	 ww6Dggy1Fneal7HGzgJRluoX97Fwu7fWBs//uHzErvKJP3rIUYOSpr6n3VoOtPs8nWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062159;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062160;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SJx0ab1sayzKyEHBwe7x4CphYM5W9HhtXoMTeN4a/1Q=;
-	b=rpUjfoShClvLDL/KG52slbF6SQKffpTXIOu5X4jsB+Vm5HtZWHHmuIpsyjeNocsyxTz0
-	 j7HeR1REeShephYj7dvceH/GAJ4bQmRHGdV/T852Z4Pa/sluPQ75eiUStyCJ/zpYEGgoo
-	 3EVI+fLny7fvUNJaFfH31bUQgNXYPvnUAtvMRnvKsPAyX64e3XNiH1LbYIUQzGqsjBYSH
-	 H9Vb4K38ue9j63vDnvQI5tfVMUCKNJPuQhJwwno0vF+F3ard0KezYhSQhUgQFYFzKSCvB
-	 V1jvfeo2WU7f14EqOjD1q5OT09fEf2+lJnAU5TQ72xelVb27oVNzzFL+TirbgexPO2A==
+	bh=McdclI/+1XpgRgdOUWf70pZYcA57YkCR2qhVxJrbLTo=;
+	b=ThoXqTohYNtieoy7Vg6ujzlkgRpYF90HAQ/ZPTfX3M9l1LSOH63FuwNXPrsFRUugkLCI
+	 NeqW6qLYyFnystRZ7Q19k0peBQTSDeZBLwUXvpiF5xi4t7AxMx/B523vlx8ZIyV6CTfYH
+	 pltaGmWKv2rkQOr7REmuempsK9zlWqTjwQLs8GZMPG9blWevNE2/dsp+4qChpKUzOAtpo
+	 pEs14UcpYwoq11fxasolYto8DlTbWq3VQZVj/CNSRjNsuaxz/0mKbURyd73flZL2Szehr
+	 e6dNJyNkvIk4O42/dsp9LELY1FKuvNr4bStkwRiS2EKVRGgQ3SgoDtovp0KwFuNo/Cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=czIi2rXA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WEScl0Fp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC79606A326;
-	Sat,  7 Nov 2026 14:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96788606A326;
+	Sat,  7 Nov 2026 14:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=czIi2rXA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC131F008A3;
-	Sat,  7 Nov 2026 14:35:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WEScl0Fp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B761F0089F;
+	Sat,  7 Nov 2026 14:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062159;
-	bh=SJx0ab1sayzKyEHBwe7x4CphYM5W9HhtXoMTeN4a/1Q=;
+	s=korg; t=1794062160;
+	bh=McdclI/+1XpgRgdOUWf70pZYcA57YkCR2qhVxJrbLTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=czIi2rXAvVlIlzH72Js+VKrqCDkiEv9o3vK8huSDEHRPc9GhvEWIscIIsPfJLd7LJ
-	 NJpXjo/ZFjcDM44VXV8T2Ab7E/66yN1tiALZypSx/z8CDHidruUNpfpxuMl1xnFcOl
-	 N0Xw4DUXgpX0NhKAhuZWxubq0slj8ZNvvm28khHw=
+	b=WEScl0FpRWmX/7P7U/6iVd05KXg8Cn8yx3mw5PTC95mYVyu0uoRU8nnJWLow/qpUm
+	 RWETOCbAp7HeT7WfCJ9dbMSjbOv1K0HqnWPLBbAMYFHDmNJz/01WfXgAsDQnw9Jame
+	 yDT+sjpwkUehBwwboWl53QGLxgQ0ABmOnwWlhKKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1123/1536] dm-writecache: report I/O error if flush failed
-Date: Sat,  7 Nov 2026 08:52:19 -0500
-Message-ID: <20261107135029.252100303@linuxfoundation.org>
+Subject: [PATCH 6.12 1124/1536] dm-writecache: fix a quirk in statistics
+Date: Sat,  7 Nov 2026 08:52:20 -0500
+Message-ID: <20261107135029.278186350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,40 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 78a6afc2999d26e5a30a56db77db34c22b88f5d5 ]
+[ Upstream commit c1ab80af0d99a906b60b769f2e692c37d2db1323 ]
 
-There was a bug that if writecache_flush fails due to I/O error, the
-error is not reported in the FUA bio. This commit fixes it.
+writecache_bio_copy_ssd() unconditionally adds the number of extra blocks
+in the merged bio to stats.writes_allocate. That is only correct when the
+entries were taken off the freelist.
+
+When the function is called with search_used == true -- i.e. from the
+write_hits_uncommitted / write_hits_committed paths in
+writecache_map_write() -- the first entry was found in the rbtree and
+every following entry is picked up with rb_next(), so nothing is
+allocated at all. Accordingly the writes_allocate++ that accompanies a
+successful writecache_pop_from_freelist() is skipped for that case, but
+the batch accounting below still adds n - 1.
+
+An in-place overwrite of n contiguous cached blocks therefore reports n -
+1 allocations that never happened. Only the dmsetup status output is
+affected; there is no functional change.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: opencode:big-pickle
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Fixes: 48debafe4f2f ("dm: add writecache target")
+Fixes: b2676e1482af ("dm writecache: count number of blocks written, not number of write bios")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-writecache.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/md/dm-writecache.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
-index 7ce8847b34041..d9e0008c32372 100644
+index d9e0008c32372..be22d5ae696f7 100644
 --- a/drivers/md/dm-writecache.c
 +++ b/drivers/md/dm-writecache.c
-@@ -1492,10 +1492,13 @@ static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio
- 		}
- 	} while (bio->bi_iter.bi_size);
+@@ -1423,7 +1423,8 @@ static void writecache_bio_copy_ssd(struct dm_writecache *wc, struct bio *bio,
+ 	dm_accept_partial_bio(bio, bio_size >> SECTOR_SHIFT);
  
--	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks))
-+	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks)) {
- 		writecache_flush(wc);
--	else
-+		if (writecache_has_error(wc))
-+			bio->bi_status = BLK_STS_IOERR;
-+	} else {
- 		writecache_schedule_autocommit(wc);
-+	}
+ 	wc->stats.writes += bio->bi_iter.bi_size >> wc->block_size_bits;
+-	wc->stats.writes_allocate += (bio->bi_iter.bi_size - wc->block_size) >> wc->block_size_bits;
++	if (!search_used)
++		wc->stats.writes_allocate += (bio->bi_iter.bi_size - wc->block_size) >> wc->block_size_bits;
  
- 	return WC_MAP_SUBMIT;
- }
+ 	if (unlikely(wc->uncommitted_blocks >= wc->autocommit_blocks)) {
+ 		wc->uncommitted_blocks = 0;
 -- 
 2.53.0
 
