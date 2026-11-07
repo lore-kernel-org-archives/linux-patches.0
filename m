@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060911;
-	b=01++QqlhPPTtc/mf2KYhq8tOSznaM5ztNC54C6FbASaDPBMORO9Jw/aLuyZheR9Afi2y
-	 BggRanzC7h/1JtC/EgciaIbh0cfcNLwet9Bv5tNUb7i232BNApsHoxzw8xoKvG6v1CVX/
-	 o0oiMJ8MOg3mKgaFlFNR7xTQFvWgJzF+TQ2Bcy64/hFM/P22EDSl21skCEb28sEaZV+Hs
-	 L4X1oXC3WDV7Vw5ZahMVLs94S9J+ktU+19Q1YC9CTUUfxHrQqzpMahgWx1V/nDJlCG3DF
-	 iYmgoMSY3ye5Vwq9U8bU77MPEhD3tpHCqLrdDTlwiieOZ/YZDW2hhTSxkPL2C5nfAiA==
+	t=1794060912;
+	b=ykLBudG+lY2GxqN/yVSBGOtigZX3m10OhdjqJFXPW9g33dnHfg7LhKzGQCrjxvAqECdq
+	 8HKMs2yCv6+De5XPT61Mwme+d1EUMR2Y9MPdJP7pyl36f2kdjh738ArtMhnxU08dz2T61
+	 /gHi8h1OLX5vVWU4e3MQfyIHv7VcPlcYJ5naFTIDX0V3yiMfBk+5MyG54cKA+/c4EKliQ
+	 2JHSylIQySGRNDRZeAFCtLxwIMAJ+yuH6Z2AoDIpB4VuIqUk9R8SQnP8AZoCD2p379DdZ
+	 0//n35Q1XjsCYaHLhGWP7Uc0YlLe7quLwrRA0QBwN+q+h5jKZHpKK2/xI9CreeUDZLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060911;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060912;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=JSpgfTzMbDHBUHXx7lp9MGd7vuzMnIRJChCz4lN7Qsg=;
-	b=eRtjL3Bl026jPz8StdtxI36ams/DqCW7XKzvd7AeTxmTatU6PEjSiwVaneIZjf0KSe3/
-	 k/iiMhwO51gaCSkf2gBpO2+cVtAF7hoLprc1rucmZKDqqIS6qQrkIx0NMPMDUhkwGA+aB
-	 +zOWytVmTMdjWiU6vchHd7hSF+TrgMeJMRU3dILfE2uVWXw/edKoNGOf8o1cnONjtiYIE
-	 so+AlmesjzyqlckfEAC3OCPhtK3AexW2d2NYWc7lbjsTpGi9V1gkWgHaPBtMmIPrLskOk
-	 aSybeozjh5+Vp1p/ZuXt92uqZkR6QEmYABHkzGNOwMznf168zH9C8+JaNYvDCCqY4+A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Vn1fg+M1u79jehET4I5oOPjMCpZDRSiL+Yi7efzwWyU=;
+	b=LiF1ID3P6jQ4co1Zc/ghMFGVVdVSMjNX+3+vmbXChfQgWYi7o+2jW6qde3ugT0xVP/7v
+	 XoyaxwP1oeIjGbbT12f5AC1FKm7tA5oddrVdDoqPQ8rRpWDAojU5IputGHhleuVz/oGg/
+	 aVbiPNyrsyWkF6AE48TKYe8p/hvwfyqeqZwM6OVFcUr0QuvaRcXpVVWOxKmVdWVttmHyZ
+	 LCCL8bz49+3nHFKY0C0COoiB5g5AcFe9Hve0FGRsivZxwdkEUZLCUQJTg+4f9ktMdQzwR
+	 7XVV7iN4VRG5TFOYuYRu2SvdiM09N2D14qxmfI7/c1+LfxGmhZvmXN1jwpPgHZOzS5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wF3XlXf/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4N0lTzs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A39C606D821;
-	Sat,  7 Nov 2026 14:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6E1606D81D;
+	Sat,  7 Nov 2026 14:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wF3XlXf/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70401F0089F;
-	Sat,  7 Nov 2026 14:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4N0lTzs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57891F008A1;
+	Sat,  7 Nov 2026 14:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060910;
-	bh=JSpgfTzMbDHBUHXx7lp9MGd7vuzMnIRJChCz4lN7Qsg=;
+	s=korg; t=1794060912;
+	bh=Vn1fg+M1u79jehET4I5oOPjMCpZDRSiL+Yi7efzwWyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wF3XlXf/UZMnf4eQreljnA26eW1EKxZvMUhIZCiW0iRMXt8AyFklE+fVuhF1N4Ml7
-	 9Ac06fKArkvW4TEjRr7w1cR9RhSVucorUZszhb6V+eQYdo3PDKIqrhpdwqSaIftQHE
-	 1VT3YzqgDDFX0unfSn03f8DeBMWwNT/PI6CihUbc=
+	b=G4N0lTzsz/HHnzY1/eVX247kw6RF2X19nJZfGGiVxO20CH3rz6uXERNXcOiBNNDEm
+	 X5TzJtsI9C6hjXevTBjERuyxhot9vfQh+SaeHF7suTz6o6OwDWAklEMv64yT0Wq8T4
+	 nksYxuKTpQYVMMkwsooiwewaonr4tnFLgaYopiYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Junzhe <junzheyu1@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Shang En Sim <sim@shangen.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0280/1536] ext4: guard against NULL s_group_info in ext4_get_group_info
-Date: Sat,  7 Nov 2026 08:38:16 -0500
-Message-ID: <20261107135005.530379984@linuxfoundation.org>
+Subject: [PATCH 6.12 0281/1536] ALSA: hda/realtek: Enable mute LEDs on HP Spectre x360 16-aa0xxx
+Date: Sat,  7 Nov 2026 08:38:17 -0500
+Message-ID: <20261107135005.556582359@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,74 +62,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junzhe Yu <junzheyu1@gmail.com>
+From: Shang En Sim <sim@shangen.org>
 
-[ Upstream commit 8f3901fbb40745046e513226ad84e8b84492632d ]
+[ Upstream commit bfcdc1c0eaeae5525c726193568e8d638b2afdc0 ]
 
-Resend: previous attempt was rejected by vger for containing HTML.
+The HP Spectre x360 2-in-1 Laptop 16-aa0xxx with PCI subsystem ID
+0x103c:0x8c17 only gets the CS35L41 amplifier setup from
+ALC287_FIXUP_CS35L41_I2C_2, so the speaker-mute and mic-mute keyboard
+LEDs do not work.
 
-==================================================================
+Use ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX like subsystem ID 0x8c16 so
+the mute LEDs work.
 
-ext4_mark_group_bitmap_corrupted() already treats a NULL return from
-ext4_get_group_info() as "nothing to do", but ext4_get_group_info()
-indexes s_group_info without checking whether the array exists.
+Tested on HP Spectre x360 2-in-1 Laptop 16-aa0xxx.
 
-During mount, fast-commit replay runs inside jbd2_journal_load() from
-ext4_load_and_init_journal(), which is before ext4_mb_init() allocates
-s_group_info. Replaying an FC UNLINK for an inode whose bitmap bit is
-already clear takes:
-
-   ext4_fc_replay_unlink -> iput -> ext4_evict_inode -> ext4_free_inode
-     -> ext4_mark_group_bitmap_corrupted -> ext4_get_group_info
-
-and faults on the NULL s_group_info base. Userspace only mounts a dirty
-ext4 image; this is a supported recovery path.
-
-Return NULL when s_group_info (or the per-block grp_info row) is unset
-so the existing caller check is effective during early mount.
-
-Tested on Linux v6.6.145 KASAN: crafted FC-unlink image previously
-triggered KASAN null-ptr-deref / panic in ext4_get_group_info; with this
-patch, mount succeeds (EXT4 "bit already cleared" may still log). Also
-observed on v6.6.144; still present on torvalds/linux as of
-f5098b6bae76 (2026-07-26).
-
-A self-contained Docker/QEMU reproducer (craft + mount + patch verify) is
-available on request.
-
-Signed-off-by: Yu Junzhe <junzheyu1@gmail.com>
-Link: https://patch.msgid.link/65c955b0-716b-4599-b925-59c2782e38b4@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Shang En Sim <sim@shangen.org>
+Link: https://patch.msgid.link/20260807055139.58707-1-sim@shangen.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/balloc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/pci/hda/patch_realtek.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
-index c48fd36b2d74c..0ba91e0fe7665 100644
---- a/fs/ext4/balloc.c
-+++ b/fs/ext4/balloc.c
-@@ -331,9 +331,13 @@ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
- 
- 	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
- 		return NULL;
-+	if (unlikely(!EXT4_SB(sb)->s_group_info))
-+		return NULL;
- 	indexv = group >> (EXT4_DESC_PER_BLOCK_BITS(sb));
- 	indexh = group & ((EXT4_DESC_PER_BLOCK(sb)) - 1);
- 	grp_info = sbi_array_rcu_deref(EXT4_SB(sb), s_group_info, indexv);
-+	if (unlikely(!grp_info))
-+		return NULL;
- 	return grp_info[indexh];
- }
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index cde9e6a252ffe..ffef6b5f517cd 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11097,7 +11097,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c15, "HP Spectre x360 2-in-1 Laptop 14-eu0xxx", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x8c16, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
+-	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre 16", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x8c21, "HP Pavilion Plus Laptop 14-ey0XXX", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus 15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8c46, "HP EliteBook 830 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
 -- 
 2.53.0
 
