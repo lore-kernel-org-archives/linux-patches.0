@@ -1,50 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061740;
-	b=Ty6DrVG4YLwAkn7IrelXt3mPKmwSHcllelngAF1J7wc2KqBeJENKlOV37yW+Zm/iw8D2
-	 F+VpHV5DN/RjlfuHKfxm7ItI3QJ91kj1zg2xK/yeeNbKiVjFmcg5ux0s24nK0tPlVQe8g
-	 Gftq1LgiTGNeD1qP7WjwjCIqTQT1bJKjDyCQiniEO8C9mDwhNA/ik+9q2BA3BqYHEQgI4
-	 Npkwcd1lBdgCaN4z8aN0YDApob4F3CRP5elqYPCoshpsyt7wqdCDR+OYseSHJ8gWT3zrW
-	 57bxCsv4DjL/ZgdgCMjYiy3tSokbJ58/EG70GjoBUqUtRWAX3oazRsGxccAyPQXMQcQ==
+	t=1794061742;
+	b=QDJmWVdCKZ/pfFFE2bVJ1gC4l0YF1dLyCjcHaZ5qRcH5ukzR9iVwl9IZkECuAdUxudMJ
+	 YL/iVGRnbnOY0JAX5Wmbfy4Fl4ihnr+r0gkyfi/y+BHAzP7j8zhrJHK0FHjyls1Y0YATi
+	 zwiP9XDlawot98CvmTMJrks4qz52M+hO/TDJ0lC6Fl3JJqqMzcevWp5oy8AMnwDsDYdgh
+	 7hOjccFF+aqS9+SrpI/nXaYWe2Qpb4jPagDg28FJlZRMQ4Gv8x50FeOHy1lyQ1CUPLPLI
+	 WNJO3fizd1WY44/WHwlEKy2aRwMe9advEYtZtk9G3Zl8l1JWZhgonMgKBMZ3Zco27gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061740;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=tzlE7+1ZVrBm7sZ3GGjmhPEvLX3PT4maZGNyred1fo0=;
-	b=AJlvZeODxUo1V0uoqHlwEQgFLQUaNWW9XI2hIJeHpDI7UHcGsVXGmBk9xqypIn0cR0d3
-	 ETO+TpLptXpniSCKjiRNxVcyZTB0G4AHVQbkq0XrdCDojurJNsqKxBlwsPCvyYMWIfJn+
-	 LhY2fp4yg9oeTKsbhfaiQE+wJhxPJd5YgJUyPF5IDc9o1mm3sUM0/TKXxX7inYhyNL2F8
-	 q6e3iUko6VZbuTzYHLj9IKqRdYyPp6M80X6Vax4etawAVS85bLOVVArgaBr7pqwxOx5vl
-	 F2rz8BUd1zH0aJ2IiMVuuumGTJ5IZP4Nny6DeOvMHXUuE4MCllFg0G7vrUW4CkVPUoQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=s6yGTVRqdEFp0W0vs24ekBrICiHKQfIlC6sYTU3JFLs=;
+	b=apjxCg1qoO94E9pcvVEV7JIX2irYTby6fvws36iurg+/tIpF7O14QLq8v1zTkUaRnUB7
+	 HkjRZQAJsKGzgilYxo/jGzQ+3Ur4PF48oiRZVzwtpBF8qwr7cA5oh8qZN+h5wbtrMxIAM
+	 fwD/QMRWmkf5xrFIZdX/ZvdILjD3QG1TDfqcKCOeCZBa48gn6JyblR8Eu0HWajLQJHF6V
+	 vKkWnaMIsOapopsNT4KKXIsNtlhbGBFUV4N364hLGAZEHbs1u48TZBiOqFOSNHzdSvSr3
+	 Eyx0BAT4RU8HqU/t+S7k8B6fjUVjB982+VLWoQE+4IIZZDfigHpJMSRSAxPXK5WV/FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfStAjv7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VvZ+nJsq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE6D606A326;
-	Sat,  7 Nov 2026 14:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F31606A326;
+	Sat,  7 Nov 2026 14:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfStAjv7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F097F1F0089F;
-	Sat,  7 Nov 2026 14:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VvZ+nJsq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D56C1F0089F;
+	Sat,  7 Nov 2026 14:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061740;
-	bh=tzlE7+1ZVrBm7sZ3GGjmhPEvLX3PT4maZGNyred1fo0=;
+	s=korg; t=1794061741;
+	bh=s6yGTVRqdEFp0W0vs24ekBrICiHKQfIlC6sYTU3JFLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gfStAjv7G/bERGfqhVI5DAgNyZfx8QFw8zVBK1v8QzzZa+i5Vqo4ikCk71YbVsz5L
-	 bLW6xuckIZxzmgY21xngnhQ37BmFlgZ+Oi+/knbHBeegj0AcrMV55H3NmO3iy40VJ4
-	 g+YA8YTGunVJwBuSqvRzk/6HNOIISpseOQNQtisE=
+	b=VvZ+nJsqnSTCD0eqh9IucYq7rLQH33IjqwMW7BaavWjmeBLJOXy6hu4ut7YeAx9Yp
+	 JXqPhUB0/HDLSPPVuc+eXyPXqm6IB3DL661WifbnU9P2Nu4Pcyc8nwb20rSvo7SlsO
+	 IvJb4MdYZAQhZQb+yN9pI2q34Xm68/7/C+cr1jNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0780/1536] SUNRPC: Do not credit control-record octets to the RPC stream
-Date: Sat,  7 Nov 2026 08:46:36 -0500
-Message-ID: <20261107135019.446622723@linuxfoundation.org>
+Subject: [PATCH 6.12 0781/1536] SUNRPC: fix oversized GSS proxy token copy
+Date: Sat,  7 Nov 2026 08:46:37 -0500
+Message-ID: <20261107135019.474443249@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -60,61 +61,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 129e7107b971009bc81643d23f3ab949f540d321 upstream.
+commit 62319c2534b603b416fa2aa2f3ef18c311f75010 upstream.
 
-svc_tcp_sock_recv_cmsg() receives up to two octets into a local
-buffer, and returns that count for any record type other than
-TLS_RECORD_TYPE_ALERT. Nothing reached the caller's buffer, but
-svc_tcp_read_marker() adds the count to sk_tcplen and
-svc_tcp_read_msg()'s caller adds it to sk_datalen. The RPC stream
-advances over octets it never received. The fragment marker is
-assembled from stale sk_marker octets. The message body comes from
-pages nothing wrote.
+gss_read_proxy_verf() allocates one page per token chunk, but it copies the
+entire linear head of an RPC request into in_token->pages[0]. A UDP datagram
+can leave more than PAGE_SIZE bytes in the linear head, so a large
+RPCSEC_GSS INIT token overwrites following pages.
 
-A conforming client reaches this. RFC 8446 Section 4.6.3 lets either
-peer send KeyUpdate once it has sent its Finished, and svcsock has no
-rekey path. kTLS leaves the partially consumed record on ctx->rx_list,
-so the body drains two octets per svc_tcp_recvfrom() call. Each pair
-is credited the same way.
+Copy the linear head in page-sized chunks before switching to the request
+page array. The linear head itself can span multiple pages.
 
-Return -EAGAIN for a record that is not an alert. That is what
-svc_tcp_sock_process_cmsg()'s default arm returned before the receive
-moved into a local buffer.
-
-Fixes: bee47cb026e7 ("sunrpc: fix handling of server side tls alerts")
+Fixes: 5866efa8cbfb ("SUNRPC: Fix svcauth_gss_proxy_init()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260808-svcsock-cmsg-fixes-v3-1-62d9a631c880@kernel.org
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Assisted-by: Codex:gpt-5
+Link: https://patch.msgid.link/20260910125120.3798995-1-Jeremy.Jean@oss.cyber.gouv.fr
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -289,8 +289,13 @@ svc_tcp_sock_recv_cmsg(struct socket *so
- 	iov_iter_kvec(&msg.msg_iter, ITER_DEST, &alert_kvec, 1,
- 		      alert_kvec.iov_len);
- 	ret = sock_recvmsg(sock, &msg, MSG_DONTWAIT);
--	if (ret > 0 &&
--	    tls_get_record_type(sock->sk, &u.cmsg) == TLS_RECORD_TYPE_ALERT) {
-+	if (ret > 0) {
-+		/* Returning the count would credit the RPC stream with
-+		 * octets that never reached the caller's buffer.
-+		 */
-+		if (tls_get_record_type(sock->sk, &u.cmsg) !=
-+		    TLS_RECORD_TYPE_ALERT)
-+			return -EAGAIN;
- 		iov_iter_revert(&msg.msg_iter, ret);
- 		ret = svc_tcp_sock_process_cmsg(sock, &msg, &u.cmsg, -EAGAIN);
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1085,10 +1085,11 @@ static int gss_read_proxy_verf(struct sv
  	}
+ 
+ 	length = min_t(unsigned int, inlen, (char *)xdr->end - (char *)xdr->p);
+-	if (length)
+-		memcpy(page_address(in_token->pages[0]), xdr->p, length);
++	for (to_offs = 0; to_offs < length; to_offs += PAGE_SIZE)
++		memcpy(page_address(in_token->pages[to_offs >> PAGE_SHIFT]),
++		       (char *)xdr->p + to_offs,
++		       min_t(unsigned int, length - to_offs, PAGE_SIZE));
+ 	inlen -= length;
+-
+ 	to_offs = length;
+ 	from_offs = rqstp->rq_arg.page_base;
+ 	while (inlen) {
 
 
