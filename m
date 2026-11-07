@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063872;
-	b=4VfUiCJASSDhV+MN10kalNddTCxIbMF9YUpsUhFgjnX7Cxsp4achyxv7wzbnbGqLuoMl
-	 wt9V7/zfWDaVtU2+EMfrdj18WHLnwjJJcSebiPtgwGd2vzTwzYkR2RA0VBmRDXb/YvcIK
-	 MOEm+AkwmMjl+oYqzlMAtG49us4/n7D/7+3fXNnEDZ7PkAKa4bPanvd84oUfpPdTEit1Q
-	 Vj0ZsJ5WEpSxRckMA5bSIKaoqAZH9HdK5JwBG1miP0u4Hj2w1eXuCUQ4kalbZAW+PKoR8
-	 E9TBHWuFxnFQplbvmSpfxtjh8fdB652PBCOYH4gEMP2EJicNz7U0Ex7jHkIkWOvw6EA==
+	t=1794063873;
+	b=qp9++Csztyq/xrDXaOj6GSLK9UwbkN4ziyHFw83D1o3AZYldjAsihSxGLi2kv8Vj8ouS
+	 +5CgybYtzDOZmT1b4fY/xYF45BcNqojCSInAkOuod0kBC9EgeOoyrYBRmuKVC0mbY9QVc
+	 nY9NXKXm9T/9DRUEUqMYcXL4iK2hiJuGEDTlC25TsaGVSHTfiQaFV5wQseN9eEP58b4fM
+	 Uv45IbElsvI256EME9SlzRkoB3kfgAnkzUAp41uGDYYdeLXAIWosg4y48XASqLTUKFFk9
+	 vREKyx64L8I+dEWYChsYp9/kiXhySo+bg+UQsmO9XwK824Kcv27b9Xuh/t+XzYALc4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063873;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t7Oj16P58EMROd+3XXy7QZFiJAZgpnHLxdUWcs7xfNE=;
-	b=CEdwd6sZoSb9wTX0qROSByONr4MatLeOHN2FJTo4Hlr5I7n1790SrR9wRGdUrUCE4qfc
-	 dqmPtvriY9DVPF710o89DwA5ebu/zdOjWcyukfMWSNINpgIH2482n/VWZyd+Cc9LLixmD
-	 B5oqBYeBUwKHRCLb6UV/DE7C7AO+b6sZ9T3VMiwP81NSpzj/knkRafHFreSe9MtGEhz7f
-	 eIyRFou2a2IHzTYYakYCLYugeFhgPhsBc2ys+7uc7wi5hY3U8Qr1AfUlgX8e4tECxpchV
-	 UA2wdcB26e4Q5+xMQUmvO3zFVxOt+up6sgOV9vmANnYvjDyJDe+PeA4lkEViNDDEJ6A==
+	bh=wfFxgPYpj8pl7wmhwractfFUTkhcoanPwpLWLweTg4w=;
+	b=hiXSOf2VauvLUK9F1cW5NQoDTXeHPjmA17RbIp+CUYKjBzgptLK0uaz+bBJDVF1RZRoS
+	 IH2xivFf7uH1XV99EJe4QqiS+4SheO0XcZS5VxQTH9JG2/oxPxOP7nIMiSfIiitHRtDUE
+	 tu80DR+WFh8A01q/kby7kRatXelYv0gRI2dsbLY3rfngNvWd96eDuXTD6MV6OBJlL7DYq
+	 IYuujDU4qSOubRw/cxlZ7b7mBcZ7iLk6Xn1fpRPEx9pPtoI6RlPUsGDl/Xa9Ubpp7qCgn
+	 HYbdJzxL+tmrdkc4gKMkE7F5yK28w5cPuOUaLJ4OPcep7nWV8R6EgjBApKUR5GBsjEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlTf9OYp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6JzjPsp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A53E606E8D7;
-	Sat,  7 Nov 2026 15:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485D8606B892;
+	Sat,  7 Nov 2026 15:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlTf9OYp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC92E1F008A2;
-	Sat,  7 Nov 2026 15:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6JzjPsp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E735C1F0089F;
+	Sat,  7 Nov 2026 15:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063872;
-	bh=t7Oj16P58EMROd+3XXy7QZFiJAZgpnHLxdUWcs7xfNE=;
+	s=korg; t=1794063873;
+	bh=wfFxgPYpj8pl7wmhwractfFUTkhcoanPwpLWLweTg4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dlTf9OYpJNdGBciTELFQdm/xzPVxKRqJcXb6PmO6L1s3vuXEkQe4C2WNjSt44SPjU
-	 hrz5MnC/1FRuA+/8yXw6dybSZNjPGFE56JJKunjeiMlyASC72AksmMqWwSa2x505h5
-	 GS/1umS2ISLmPMfLQIXBTpyW9mjDtYgyqO7DENGQ=
+	b=e6JzjPsp0wzTybq+qh5Nter7aXFIcJK9lyWteVWgYxqZ84h/xCW70dngnsNzDViFJ
+	 1BKIATNvFEOPrOZ6k/VWKkJZY+D4oBfG03EUUjVQ95+jHGw/lTHYjoiUP0Ea8ihDhA
+	 yZCIo6+rwT63BvWi/bbwnwb2FU+KBNubzvI9LS5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0076/1257] fs_pin: publish pins with RCU list helpers
-Date: Sat,  7 Nov 2026 08:39:32 -0500
-Message-ID: <20261107134941.481703884@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Daehyeon Ko <4ncienth@gmail.com>
+Subject: [PATCH 7.3 0077/1257] fs: make sure to call fsnotify_inoderemove() only once when inode is dead
+Date: Sat,  7 Nov 2026 08:39:33 -0500
+Message-ID: <20261107134941.508022063@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,72 +70,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 8d01d6b4c17c406f37a9b6edac93dfb858af30d0 ]
+[ Upstream commit 669bb5af15d41a21359d00a441490f87a88eb52a ]
 
-pin_insert() initializes a pin before adding it under pin_lock.  The kill
-paths read the list heads under RCU without taking that lock.  Plain hlist
-insertion does not publish the earlier initialization to those readers.
+Daehyeon reported a race wherein fsnotify_removeinode() can be called
+when inode still has a live alias.  This can lead to several undesired
+outcomes such as crashes in fsnotify code or avoidance of inode mark
+notifications.
 
-KCSAN weak-memory checking reported acct_on() callback initialization
-racing with pin_kill() after the superblock-list publication.  The
-corresponding LKMM model permits the stale read with plain publication;
-the RCU release/acquire pair forbids it.
+Check that inode is really "dead", meaning no nlink and no more aliases
+before calling fsnotify_inoderemove() for final cleanup of inode marks.
+Also do not allow open_by_handle() to add new aliases to a "dead" inode.
 
-Use the RCU hlist add and dereference helpers for both pin lists.
+Ideally, we'd call fsnotify_inoderemove() once last inode reference is
+dropped to make things simpler. Alas fsnotify inode marks currently hold
+inode references and thus this doesn't work. Once we teach fsnotify to
+avoid holding inode references, these games with dead inodes can go as
+well.
 
-Fixes: 2798d4ce6160 ("acct: get rid of acct_lock for acct->count")
-Cc: stable@vger.kernel.org
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260903002100.34822-1-kmehltretter@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
+Reported-and-tested-by: Daehyeon Ko <4ncienth@gmail.com>
+Closes: https://lore.kernel.org/linux-fsdevel/20260827045007.3831259-1-4ncienth@gmail.com/
+CC: stable@vger.kernel.org
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260902164924.1333135-2-jack@suse.cz
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs_pin.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/dcache.c | 27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/fs/fs_pin.c b/fs/fs_pin.c
-index 47ef3c71ce907..1a508f2167e0a 100644
---- a/fs/fs_pin.c
-+++ b/fs/fs_pin.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/fs.h>
-+#include <linux/rculist.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include "internal.h"
-@@ -22,8 +23,8 @@ void pin_remove(struct fs_pin *pin)
- void pin_insert(struct fs_pin *pin, struct vfsmount *m)
- {
- 	spin_lock(&pin_lock);
--	hlist_add_head(&pin->s_list, &m->mnt_sb->s_pins);
--	hlist_add_head(&pin->m_list, &real_mount(m)->mnt_pins);
-+	hlist_add_head_rcu(&pin->s_list, &m->mnt_sb->s_pins);
-+	hlist_add_head_rcu(&pin->m_list, &real_mount(m)->mnt_pins);
- 	spin_unlock(&pin_lock);
+diff --git a/fs/dcache.c b/fs/dcache.c
+index f44c7b39c3b38..2eb23222be549 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -450,6 +450,17 @@ static void dentry_free(struct dentry *dentry)
+ 		call_rcu(&dentry->d_rcu, __d_free);
  }
  
-@@ -73,7 +74,7 @@ void mnt_pin_kill(struct mount *m)
- 	while (1) {
- 		struct hlist_node *p;
- 		rcu_read_lock();
--		p = READ_ONCE(m->mnt_pins.first);
-+		p = rcu_dereference(hlist_first_rcu(&m->mnt_pins));
- 		if (!p) {
- 			rcu_read_unlock();
- 			break;
-@@ -87,7 +88,7 @@ void group_pin_kill(struct hlist_head *p)
- 	while (1) {
- 		struct hlist_node *q;
- 		rcu_read_lock();
--		q = READ_ONCE(p->first);
-+		q = rcu_dereference(hlist_first_rcu(p));
- 		if (!q) {
- 			rcu_read_unlock();
- 			break;
++/*
++ * If inode is unlinked and doesn't have any aliases (i.e., all fds pointing to
++ * it are closed), it is pretty much dead. Except that file handle lookup could
++ * still revive it which causes issues to fsnotify. So once inode reaches this
++ * state we make sure to block creating any new aliases.
++ */
++static bool inode_notify_dead(struct inode *inode)
++{
++	return !inode->i_nlink && hlist_empty(&inode->i_dentry);
++}
++
+ /*
+  * Release the dentry's inode, using the filesystem
+  * d_iput() operation if defined.
+@@ -459,6 +470,7 @@ static void dentry_unlink_inode(struct dentry * dentry)
+ 	__releases(dentry->d_inode->i_lock)
+ {
+ 	struct inode *inode = dentry->d_inode;
++	bool notify_dead;
+ 
+ 	raw_write_seqcount_begin(&dentry->d_seq);
+ 	__d_clear_type_and_inode(dentry);
+@@ -469,9 +481,10 @@ static void dentry_unlink_inode(struct dentry * dentry)
+ 	 */
+ 	dentry->waiters = NULL;
+ 	raw_write_seqcount_end(&dentry->d_seq);
++	notify_dead = inode_notify_dead(inode);
+ 	spin_unlock(&dentry->d_lock);
+ 	spin_unlock(&inode->i_lock);
+-	if (!inode->i_nlink)
++	if (notify_dead)
+ 		fsnotify_inoderemove(inode);
+ 	if (dentry->d_op && dentry->d_op->d_iput)
+ 		dentry->d_op->d_iput(dentry, inode);
+@@ -2243,7 +2256,12 @@ static struct dentry *__d_obtain_alias(struct inode *inode, bool disconnected)
+ 
+ 	sb = inode->i_sb;
+ 
+-	res = d_find_any_alias(inode); /* existing alias? */
++	spin_lock(&inode->i_lock);
++	if (!inode_notify_dead(inode))
++		res = __d_find_any_alias(inode);	/* existing alias? */
++	else
++		res = ERR_PTR(-ESTALE);
++	spin_unlock(&inode->i_lock);
+ 	if (res)
+ 		goto out;
+ 
+@@ -2255,7 +2273,10 @@ static struct dentry *__d_obtain_alias(struct inode *inode, bool disconnected)
+ 
+ 	security_d_instantiate(new, inode);
+ 	spin_lock(&inode->i_lock);
+-	res = __d_find_any_alias(inode); /* recheck under lock */
++	if (!inode_notify_dead(inode))
++		res = __d_find_any_alias(inode);	/* recheck under lock */
++	else
++		res = ERR_PTR(-ESTALE);
+ 	if (likely(!res)) { /* still no alias, attach a disconnected dentry */
+ 		unsigned add_flags = d_flags_for_inode(inode);
+ 
 -- 
 2.53.0
 
