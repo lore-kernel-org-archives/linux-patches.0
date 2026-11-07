@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062617;
-	b=XBWrB4+x41r4qtQX5ZDCMF1xegLE2ZXslcps6mJ8kXLaMA2ogDQREDfukrA9xgPLvwke
-	 oF2Xv63XrRhjJ0jSBC7OlOrCFUL59L2kwdpfD14aMxt0x4q4kYd0jEVybPybmCtWRxlNT
-	 GGNPv5CVqFnyOIdJIbS8A1FbzeXKjeXfnlaWrK7ILzQtV4sTfBvqa67Ru1An9foOpZDT5
-	 41bJCUHAZlbsUQ318N+7SiQnUXojJrRoWHy3D82xnDiF17U8daZt5n0f2xxDGDCpfJNML
-	 oFCovrFhTT4W7u/M5zqhMsCzrIpoBFm2xM5B9xCVCqOplhjzhGufj9fsTZFCVxuAYSw==
+	t=1794062618;
+	b=5fGUMCL1ij6bTsDIKLrc614IFm0UTVAI8IrTTgXQDsU9P+V5GA17Fdn86L/wrRezXocX
+	 dZgz1HC4tCWrZ92nkFDxfSsx4Vx9OLiM1FYDeOAg5BD+rjHZzChED9+NcsYqBz9epE8rW
+	 zAX3o+T4fUCfsYB7rgO/kBvp7HxhU0pOUeMBYc5dOmOeRijB8RSYa/FFuIcOBYx3d9jDn
+	 YERAw4ZZ5cIqnkME0fkfjguwSDbHk186ax70BOCUS1IsoNu7ZQccAtkdAkylbqsuHjckc
+	 erH/EWeFrc3ocs4K6tDLsTZ6SuIqnjkFeEKPaZ47i0rQIru25N9cgcGV2tM3WDSlskw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062618;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=zhOjlPgheumBke4qbOWZ49tVpfBTz4/ig1ZzIzkD8JU=;
-	b=nbnGAoB4Moc2Oz/V/w9vEI/mbFfrOZdvyM0mu9I+9hiJJUPRmlqVY5n+y/sOrmKXdwy+
-	 /3uau+7f5wY1qi+sToOumKsKZdgGDTf352CnYVFvwJgSHjDJTMkgklI749cHnfOPMDI0n
-	 IS4M1zI2Mgk1vSGkaejlB9uBqq383wE1zPmj8U65oexJzJUP0VJT1epStEZnzGK3FBwNq
-	 +ABqUwh1n05Mvs3ZhkxDPPdUr/x8Ru55N9NP6rkm5ARWFq24j6+9vXRCfY+4zoy0smc9v
-	 9B9jjnyRcE12nn5EQJxZBCsm4PDfUpNJzpSN805ZniOqDmEQ+wNyjWqPkCpQhWq8jKA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=DOy7LOGG7tbsNQO68R7nKkCVnfEcHulIWE7+FeuHHpo=;
+	b=jeVq9tpbc0+pSGoFuhjXyTemXDGu2b7yEeIlO0c40GxpZPn/SrzJvAPB6HEpRC3THzCK
+	 d1OmiY3uGybL21gEemtzDa9KMDOg2e/Pj7sYhjxU7/9ay7TRxSnjrhEZLYFvuosspHzZj
+	 ln2y9LBtLQ1tqOyudIMY/9JVt3Mv2CW/ns0MHlsX+ugCDu3CkeXIyqPcrFC0sNpPEtJ8Z
+	 QWNOVvEhdv63UXcd95ZuuOOXhpnA67tNd3dpQ3uqQ2IaE0uYUoeq/kBp/53OYMn8ZyhOh
+	 5/azZ1pqTfZwXvR2yg2K7ZhLGEe4F/B2SXQVocuTYVB2+yirJwqXncqnTOD3UHz5JBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u0srpHvv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DPxkXVYt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487B5606A333;
-	Sat,  7 Nov 2026 14:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709B0606A333;
+	Sat,  7 Nov 2026 14:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u0srpHvv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCA91F0089F;
-	Sat,  7 Nov 2026 14:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DPxkXVYt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 201411F0089F;
+	Sat,  7 Nov 2026 14:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062617;
-	bh=zhOjlPgheumBke4qbOWZ49tVpfBTz4/ig1ZzIzkD8JU=;
+	s=korg; t=1794062618;
+	bh=DOy7LOGG7tbsNQO68R7nKkCVnfEcHulIWE7+FeuHHpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u0srpHvv7NjESXdO7o8jbYY4qaxu50IYjRzID6f0czZP4Pon5OkfMxwW2VB1jHVkN
-	 q/6Onwy7wijADdvmnQXQLB6T18ZzZdoFfFUiqQJrNcC0ZSoi9V8NWogouAf/6McAvX
-	 Xh+Im/BlXNNh6jSoE2qp8uM3gR4nuwZm+ymhxyeM=
+	b=DPxkXVYteEbRNv8uNFu98YdHvay3ULwlzG05dKXKF4Zyr+OyWQx68I8XzLgKtXvGO
+	 SdoHfQCxRjSjNCX4N7TFClUTh6NYCc3fK1GrT4IwKmAnbf3YgZI5+glUZ+bZS1FJEb
+	 vRFPyLiXKyWxS2JgAPElrJkBkLTcLaFDoO8sPvAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Haoran <haoranwangsec@gmail.com>,
-	Li Ximo <lixicaicai@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1450/1536] fbdev: atmel_lcdfb: fix list_first_entry() on possibly empty modelist in probe
-Date: Sat,  7 Nov 2026 08:57:46 -0500
-Message-ID: <20261107135038.564349548@linuxfoundation.org>
+Subject: [PATCH 6.12 1441/1536] mm/mlock: use a long for the page count in mlock_fixup()
+Date: Sat,  7 Nov 2026 08:57:37 -0500
+Message-ID: <20261107135038.311182840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -63,82 +67,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Haoran <haoranwangsec@gmail.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 01d1204582f16e8b7bfce29648e5cf77a585d962 ]
+[ Upstream commit 3ae91e3079b1504ef162b2884454d5f1421f4eb9 ]
 
-list_first_entry() does not return NULL on an empty list; it returns a
-bogus pointer computed by container_of() from the list head.
-atmel_lcdfb_probe() initializes info->modelist with INIT_LIST_HEAD()
-and later takes its first entry with list_first_entry(), assuming
-atmel_lcdfb_of_init() populated it. However, atmel_lcdfb_of_init()
-drops the return value of fb_add_videomode() — unlike every other
-fallible call in the same function — so if fb_add_videomode() fails
-(its internal kmalloc can return -ENOMEM under memory pressure or
-fault injection), the list stays empty while of_init() reports
-success. The probe path then dereferences the bogus pointer in
-fb_videomode_to_var(&info->var, &modelist->mode). Because the bogus
-pointer lands inside the contiguous fb_info allocation, this may not
-fault immediately; instead it silently reads adjacent memory as a
-struct fb_videomode and programs garbage timing parameters into the
-LCD controller. This was found by code audit; we do not have Atmel
-hardware to reproduce it.
+mlock_fixup() adjusts mm->locked_vm, an unsigned long, by the number of
+pages whose VM_LOCKED state it changes, but computes that number in an
+int:
 
-Fix this on two levels: check the return value of fb_add_videomode()
-in atmel_lcdfb_of_init() so the failure is propagated (root cause),
-and use list_first_entry_or_null() in atmel_lcdfb_probe() with a NULL
-check that fails probe gracefully with -EINVAL (defense in depth),
-consistent with the surrounding error handling which bails out to
-stop_clk.
+	int nr_pages;
+	...
+	nr_pages = (end - start) >> PAGE_SHIFT;
+	...
+	mm->locked_vm += nr_pages;
 
-Reported-by: Wang Haoran <haoranwangsec@gmail.com>
-Reported-by: Li Ximo <lixicaicai@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+When a single VMA range of 2^31 pages (8 TiB with 4 KiB pages) or more
+is locked or unlocked, the count is truncated to 32 bits and then
+sign-extended, so locked_vm is changed by the wrong amount, while
+munmap(), mremap() and the other paths that maintain locked_vm use the
+full unsigned long page count.
+
+Such a range is reachable on 64-bit architectures with a 47-bit or
+larger user address space (x86_64, arm64 with 48-bit VA, riscv64 Sv48)
+by a task with CAP_IPC_LOCK or a raised RLIMIT_MEMLOCK, which do_mlock()
+checks against the full untruncated length.  It costs nothing with
+MAP_NORESERVE and MLOCK_ONFAULT/MCL_ONFAULT, since then no page is
+populated.  On x86_64, after
+
+	p = mmap(NULL, 8UL << 40, PROT_READ | PROT_WRITE,
+		 MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
+	mlock2(p, 8UL << 40, MLOCK_ONFAULT);
+
+VmLck in /proc/self/status reads 18446744065119617024 kB instead of
+8589934592 kB; munmap() of the region then subtracts the true size and
+leaves VmLck at 18446744056529682432 kB instead of 0.  With 16 TiB,
+locked_vm is not changed at all, VmLck stays 0 kB, and after the task
+drops CAP_IPC_LOCK or lowers RLIMIT_MEMLOCK, mlock(), mmap(MAP_LOCKED)
+and the other mlock_future_ok() and account_locked_vm() users enforce
+RLIMIT_MEMLOCK against that count, so they let the task lock memory
+beyond its limit (or, in the 8 TiB case, refuse every further lock).
+The error persists for the life of the mm; unlocking the range in pieces
+skews it further.  The wrong count is per-mm accounting only: it does
+not change which pages are locked.
+
+The int has been there since before git history (the variable was named
+"pages" until it was renamed in 2.6.28); every other updater of
+locked_vm uses an unsigned long or long count.  Make nr_pages a long,
+which holds the page count of any user range and its negation, so the
+existing sign handling is unchanged.
+
+Found by formal verification of mm/mlock.c against the kernel binary.
+
+Link: https://lore.kernel.org/20261014131358.780240-1-nickolai@csail.mit.edu
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Assisted-by: LLM
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/atmel_lcdfb.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ mm/mlock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/atmel_lcdfb.c b/drivers/video/fbdev/atmel_lcdfb.c
-index ecf805b5c7801..934f76410b03a 100644
---- a/drivers/video/fbdev/atmel_lcdfb.c
-+++ b/drivers/video/fbdev/atmel_lcdfb.c
-@@ -1009,7 +1009,9 @@ static int atmel_lcdfb_of_init(struct atmel_lcdfb_info *sinfo)
- 	if (ret < 0)
- 		goto put_display_node;
+diff --git a/mm/mlock.c b/mm/mlock.c
+index 8293d2d03ab0a..9d5fd901d0f45 100644
+--- a/mm/mlock.c
++++ b/mm/mlock.c
+@@ -468,7 +468,7 @@ static int mlock_fixup(struct vma_iterator *vmi, struct vm_area_struct *vma,
+ 	       unsigned long end, vm_flags_t newflags)
+ {
+ 	struct mm_struct *mm = vma->vm_mm;
+-	int nr_pages;
++	long nr_pages;
+ 	int ret = 0;
+ 	vm_flags_t oldflags = vma->vm_flags;
  
--	fb_add_videomode(&fb_vm, &info->modelist);
-+	ret = fb_add_videomode(&fb_vm, &info->modelist);
-+	if (ret < 0)
-+		goto put_display_node;
- 
- put_display_node:
- 	of_node_put(display_np);
-@@ -1077,8 +1079,13 @@ static int atmel_lcdfb_probe(struct platform_device *pdev)
- 	}
- 	atmel_lcdfb_start_clock(sinfo);
- 
--	modelist = list_first_entry(&info->modelist,
--			struct fb_modelist, list);
-+	modelist = list_first_entry_or_null(&info->modelist,
-+					    struct fb_modelist, list);
-+	if (!modelist) {
-+		dev_err(dev, "no video mode available\n");
-+		ret = -EINVAL;
-+		goto stop_clk;
-+	}
- 	fb_videomode_to_var(&info->var, &modelist->mode);
- 
- 	atmel_lcdfb_check_var(&info->var, info);
 -- 
 2.53.0
 
