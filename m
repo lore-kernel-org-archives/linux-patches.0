@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063267;
-	b=A4ES8qq14IhPNSwTn5ytjrv6x5OTvsGjl+Z3oJazqcscrccNmUGHDQVxH6vZ/70lPGRQ
-	 UCXRjj/aTevo7BHO7BBECSPi+BmfCMxE+jTM2+quMMeop9jywKXDq+tbmkRFe3hFDI9oN
-	 4tnIblLn1JKGMexM6oWDXAAgNgPCcWvIEBJTnym2Ed7ofy4pkWSq+EyUJhfrrOaDBAJQg
-	 J7uN7cISTSlljX1xYfO2UunRI5rBRmzuY7GoV1PhigZ53PNp7z4hrcs5pyrsdJPN8CkV6
-	 Zuj3Yoq3AEXd/KJl+bX3623cbzIdbXDdP8b1Ge9d7niEEQsfssUEjakX/RXUQowfZGg==
+	t=1794063269;
+	b=GvKEFXloNk2knulHXtA9vFmypfz6+y4v8X4x5Viv2tIX1Jo7Mmk8zfbcl1LDmS2jCMdd
+	 eC3+8UNE5koZPN9/oPWex/RC4/LuhlQyftvqrW0bLvivkhPZp0f9MzrkW7LP40Q0ieAtr
+	 S6DNYc+Beckg8wnMPfdZvdHoJsx54NA3uvjyN4cWar1yAdbVDfl0nCRat7CpqluZ1RmUJ
+	 Qdg5ODBRQwpR9z4P7kBxbB5C/yhixHjgy30Yawayi9npVSMwrQiFufK1A4GVuILilk4pI
+	 2cvYNZo1EKh3OTGwW+b5Otw0ADtGYx6tbCfOuIhV85mhwvM2NIUHFXkwC7QzZ4KiZCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063267;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063269;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=isBWlDrvUr4H+vG0hAmVIIkBn+FrMz+W/cmOfgmRmHM=;
-	b=XjnVuB9BCveMYsrzUT+zuSfVoKpY0LDb6Gv9AgCkVx/j/69yNE40U+o1xv8ZtOYgDucJ
-	 mLmXFLzWYzRuUMY0vO4lOkqUQ44NbEW8208oERaY7j4VOOiD8+vQgm9hEOMBCnrbDs+ZO
-	 RTmWfgxizHR4zexis5KTsW/sBQ9C57+i0i2JJPHbIwHigQV5qXsxKjrJh43imAGHEEfOZ
-	 1mPssMVgpmnhLyYAk0gL5LROpd7OyVAsn9lXNn7Mypi18lKZywrybl2irTHaPZyee5DHS
-	 cbSNDL6VhvjI+T+dmhJF6q3/dLtlz0qsaYhW3b4zuUfwc6lZ0CiJgGEDGbEGmaapOUg==
+	bh=1bsL/ckJ85uZ4OW4uZLv6l/sIGgY5eOLA+eFYMICFBI=;
+	b=D7n872+PY5vEbSQ4iDn+ZB0Gt/6nUdIspjNL5Vosd0Hh0u2bJLHsabCK1xhj7Lmz6xKk
+	 hMvK4nocpaZ59xWw1B/hL+0i+SUOq8uQJU19sp96QDrTl/BaYqUaq5eHsd2ZtTngNx/pX
+	 DdFQE4XtkZk7JvCyOtuHxsOYZ6f8Pnnl5hbxMLkqQ9jqWDEXBtWZE+Uw7NuhewHcdBsHo
+	 hdIwscn1ZlrONkEu5wA1QUnlodDrGuLGLy3jBgE05F34JbWjd1dsEpvkGliKJk8y9dy0n
+	 ffc1u1egwz7OvXvuzmN/RTii9sAGV9SY+61TAno2i4O5k/7tU3EVq+Cw2elNbiVqb8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUikKE1g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MwPxMw8p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5CF606A331;
-	Sat,  7 Nov 2026 14:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0992F606A331;
+	Sat,  7 Nov 2026 14:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUikKE1g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184F71F0089F;
-	Sat,  7 Nov 2026 14:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MwPxMw8p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D3F1F0089F;
+	Sat,  7 Nov 2026 14:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063267;
-	bh=isBWlDrvUr4H+vG0hAmVIIkBn+FrMz+W/cmOfgmRmHM=;
+	s=korg; t=1794063268;
+	bh=1bsL/ckJ85uZ4OW4uZLv6l/sIGgY5eOLA+eFYMICFBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oUikKE1goc67V5MkAZqD763GatbxB6q/Te1v68GkxfwpaHf9Cv7eNo3lysFd7V70T
-	 xLCpMl4wucJVppMHhSdOGe3qbbIgypWfWsAhdcbiescMNx/fPUFUzvzEI9mRlh07bG
-	 /w9yQO2v/r63nhlejZrkr9iKd9exVQhQ7RzO70kY=
+	b=MwPxMw8p/8y7zDIZl8xtQVlnGIGbJJEFXTmeg2zkPpOz1yg0WPO4z/cf+ljaXTcR4
+	 EtDLB+QgnDhq4B96XmW7wV9MO5i87C3zRKdU1vw83ZaoQDhCcmJHP4AMmks45QMYmO
+	 7BfjhIpq32A8lGQl2E8Hy4Gpk84qVaiE55reTNbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Danesh Petigara <danesh.petigara@broadcom.com>,
-	Justin Chen <justin.chen@broadcom.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 465/869] mailbox: bcm74110: Cap rx_svc_init_list growth to prevent PMC-induced OOM
-Date: Sat,  7 Nov 2026 08:52:27 -0500
-Message-ID: <20261107134909.427027197@linuxfoundation.org>
+Subject: [PATCH 6.18 466/869] mailbox: mtk-cmdq: Fix runtime PM leak in cmdq_mbox_flush()
+Date: Sat,  7 Nov 2026 08:52:28 -0500
+Message-ID: <20261107134909.455259684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,91 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit eb2ee504757674450a5e03e36e6b9340f064e599 ]
+[ Upstream commit 18e3e979826795b62e8916743bec4de660e7cb22 ]
 
-bcm74110_rx_push_init_msg() allocates a GFP_ATOMIC struct for every
-BCM_MSG_SVC_INIT word received from the PMC co-processor and appends it
-to rx_svc_init_list with no cap on list length.  The only consumers of
-this list (bcm74110_rx_pop_init_msg_block / bcm74110_rx_flush_msg) are
-called only during probe and at shutdown respectively; after probe
-completes, PMC firmware can continuously inject BCM_MSG_SVC_INIT words,
-exhausting GFP_ATOMIC reserves and causing a whole-device denial of
-service.
+pm_runtime_get_sync() leaves the runtime PM usage counter incremented
+even when it fails, but cmdq_mbox_flush() returns the error without
+dropping it.  The same happens when the GCE thread does not drain in
+time and the function bails out with -EFAULT.
 
-Add BCM74110_INIT_MSG_MAX (16 entries) as the maximum list depth.
-bcm74110_rx_push_init_msg() now checks the count under the existing
-rx_svc_list_lock before allocating; if the cap is reached the message is
-dropped and a rate-limited warning is emitted.  The new rx_svc_init_count
-field is decremented by bcm74110_rx_pop_init_msg() on successful dequeue
-and reset to zero by bcm74110_rx_flush_msg() on shutdown.
+Undo the reference on both error paths.
 
-Fixes: 52436007b862 ("mailbox: Add support for bcm74110")
+Fixes: b0524f7c9635 ("mailbox: mediatek: implement flush function")
 Cc: stable@vger.kernel.org
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Assisted-by: Anthropic:claude-sonnet-4.6 cursor
-Signed-off-by: Danesh Petigara <danesh.petigara@broadcom.com>
-Acked-by: Justin Chen <justin.chen@broadcom.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/bcm74110-mailbox.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/mailbox/mtk-cmdq-mailbox.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/bcm74110-mailbox.c b/drivers/mailbox/bcm74110-mailbox.c
-index 2e7e86f3e6a4a..0ae6c56b87869 100644
---- a/drivers/mailbox/bcm74110-mailbox.c
-+++ b/drivers/mailbox/bcm74110-mailbox.c
-@@ -97,6 +97,8 @@ struct bcm74110_mbox_chan {
- 	int				type;
- };
+diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
+index a1360b70b83fb..6e915ec5deaae 100644
+--- a/drivers/mailbox/mtk-cmdq-mailbox.c
++++ b/drivers/mailbox/mtk-cmdq-mailbox.c
+@@ -506,8 +506,10 @@ static int cmdq_mbox_flush(struct mbox_chan *chan, unsigned long timeout)
+ 	int ret;
  
-+#define BCM74110_INIT_MSG_MAX		16
-+
- struct bcm74110_mbox {
- 	struct platform_device		*pdev;
- 	void __iomem			*base;
-@@ -105,6 +107,7 @@ struct bcm74110_mbox {
- 	int				rx_chan;
- 	int				rx_irq;
- 	struct list_head		rx_svc_init_list;
-+	unsigned int			rx_svc_init_count;
- 	spinlock_t			rx_svc_list_lock;
- 
- 	struct mbox_controller		controller;
-@@ -148,7 +151,15 @@ static void bcm74110_rx_push_init_msg(struct bcm74110_mbox *mbox, u32 val)
- 	msg->msg = val;
- 
- 	spin_lock(&mbox->rx_svc_list_lock);
-+	if (mbox->rx_svc_init_count >= BCM74110_INIT_MSG_MAX) {
-+		spin_unlock(&mbox->rx_svc_list_lock);
-+		kfree(msg);
-+		dev_warn_ratelimited(&mbox->pdev->dev,
-+				     "PMC INIT msg list full, dropping message\n");
-+		return;
+ 	ret = pm_runtime_get_sync(cmdq->mbox.dev);
+-	if (ret < 0)
++	if (ret < 0) {
++		pm_runtime_put_noidle(cmdq->mbox.dev);
+ 		return ret;
 +	}
- 	list_add_tail(&msg->list_entry, &mbox->rx_svc_init_list);
-+	mbox->rx_svc_init_count++;
- 	spin_unlock(&mbox->rx_svc_list_lock);
- }
  
-@@ -225,6 +236,7 @@ static int bcm74110_rx_pop_init_msg(struct bcm74110_mbox *mbox, u32 func_type,
- 				 list_entry) {
- 		if (BCM_MSG_GET_FIELD(msg->msg, FUNC) == func_type) {
- 			list_del(&msg->list_entry);
-+			mbox->rx_svc_init_count--;
- 			found = true;
- 			break;
- 		}
-@@ -248,6 +260,7 @@ static void bcm74110_rx_flush_msg(struct bcm74110_mbox *mbox)
+ 	spin_lock_irqsave(&thread->chan->lock, flags);
+ 	if (list_empty(&thread->task_busy_list))
+@@ -544,6 +546,9 @@ static int cmdq_mbox_flush(struct mbox_chan *chan, unsigned long timeout)
+ 		dev_err(cmdq->mbox.dev, "Fail to wait GCE thread 0x%x done\n",
+ 			(u32)(thread->base - cmdq->base));
  
- 	spin_lock_irqsave(&mbox->rx_svc_list_lock, flags);
- 	list_splice_init(&mbox->rx_svc_init_list, &list_temp);
-+	mbox->rx_svc_init_count = 0;
- 	spin_unlock_irqrestore(&mbox->rx_svc_list_lock, flags);
- 
- 	list_for_each_entry_safe(msg, msg_tmp, &list_temp, list_entry) {
++		pm_runtime_mark_last_busy(cmdq->mbox.dev);
++		pm_runtime_put_autosuspend(cmdq->mbox.dev);
++
+ 		return -EFAULT;
+ 	}
+ 	pm_runtime_mark_last_busy(cmdq->mbox.dev);
 -- 
 2.53.0
 
