@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063144;
-	b=HaF5yvtF00YrkFv0FYBgMhcorycwpM0+hYygUNDgvXn3+p0QbSxHUkgWXKdU5xGeMp4k
-	 k3E2u3MCTz0aJJZSopEgamxN8hfgWOxResnAGVsr8jXZtPqlfn+rGSy3EJFamCaTwxwWT
-	 pWQt5oAGZicHGxXt47VxEGMzn4DGv7UVPVS1wql7aO9yjTrRG3OxIRe7w2uhdSpQxlg3o
-	 lRMzYKRAk3IiGOch1iu88uGHRXtc8mlkTXO5Duk90xSUCfdECTZud48BervvcHCvxMx8t
-	 in6d2sW5IVHPwvob6RLfTHKpe/2avg5m5H7bIYWktSPD2DJdfmQZbzxRpVgOEmiqJ5g==
+	t=1794063145;
+	b=cDN2+5Ub4iyWClSBOYzmvqkC3Md5EZ1KPh3gGZQaLmCW1WdsLh2VpDDJ3gaQ8gmgED9Q
+	 vowe2FwY0LWQBrD9ACdd0rlY9d95zP6SebAKzsRE+/Y/lVpV08sZ3no9zlCXsOEGE+7Z1
+	 THSTvXF0h/p8yDUEyRHG7Oey8us/JI4SorP2Mcl+hdDoqg09B9TVDYmJ+MufwDPcyktAy
+	 ReifGg4zVyWj1JYIhTTD5CvUGhb6PkNv5m3XoMdL7hJN9YS+/M9iiH7kPk9UbUlUMKbW7
+	 y5N4F4JvyAw24OipNKlp+zj8pmvVOvU3yhY7R89AmEmFIoydn/cFEae4sJZYQYCUzVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063145;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dBvcnhXfQsiEVeS+I4j3ID5YsDAyJYfjXbQEhPeRCis=;
-	b=KOxFvVhWv3CQvMFRlM58IDiuCnhcyJxy8cLPEszVRSrSjIVzf74DitclPm2c467pzG8v
-	 k7UVy+dCy77vY3sCzeQzaGFpkqkcXTH+6t9BEdJDbWyk7DK7J9/mV8ICfLpEd98ScU6wU
-	 DFwHhA33Da9+GOkIf3U+LRli3GpciWld/80muz6SIeBfuzbg1/AZnvY6jN3kvWLYg0i6V
-	 ym5ChkHhl6qrbaC+2+hrZfkvdeiJ8G2a/g2kyprVn9QpFjTkEj5nDo66nOy4Sc+kZ+Ob9
-	 EEfYfi8oJLdDB7eke4CiF0EPrW/F6EIVuFiaKnxdQPrPRHTTnADhY4yQWmPlxfB4jEA==
+	bh=6sAovY+0DemWZsMNLoBD698eZwCUm4IE8wYbZPYnqso=;
+	b=GwYeGZBmzQzPbcDcWoFv5WPon25WiNzlhoZbvb+DMT9iCsay3BuRcuw+4BSenif2XNQf
+	 UChYAGs1cxClr1e9rFF126ngbCLdyU7Nv5VVgogkkxMgneIYW1lJrdG1ZXO6jNDXugz2T
+	 asExSQyomF7fz3AdXm2MfQvotjFk1zlfu7qbacVFAUsrNdsnwK2jm875tjQ2puniZipgK
+	 Q+VpdfJwyn5WBJJY4f0DjbUqKGmOCxoLv84j2FDWIGv+Q2Xb8S+gd7cY31YCBbpVsNQqa
+	 HsBe8A+8xUl75pbv5lmHsIDNsTpmd1+Yia0pL1igCAf/VXYGPKKiPDcNOv9wDZVPD0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B477wS3V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDhht10v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C11606A326;
-	Sat,  7 Nov 2026 14:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DBF606A326;
+	Sat,  7 Nov 2026 14:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B477wS3V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B1721F0089F;
-	Sat,  7 Nov 2026 14:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDhht10v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED0F1F008A1;
+	Sat,  7 Nov 2026 14:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063143;
-	bh=dBvcnhXfQsiEVeS+I4j3ID5YsDAyJYfjXbQEhPeRCis=;
+	s=korg; t=1794063144;
+	bh=6sAovY+0DemWZsMNLoBD698eZwCUm4IE8wYbZPYnqso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B477wS3V9mg2rKmjwbDGAyKZS/PqJEYhT5NrPvdn8Md2pwB2iBKgGB8OYSALJFe4M
-	 u06/cDWyqkjuedG1cLHXp0Eor00FNJS/LCNgWYEo+Nv7s+/kGje4Qr9qIrQkLjC7S2
-	 zuMw+lrboiLfDvO3Dc15KK8WpAqniPKz4d1PLeGw=
+	b=SDhht10vg8anBRKLpx3VwL74NDMKEfpxlRp1VEFfVHdB6QbgSmn8NXadR6zE8uLEy
+	 uBC7yUsJ6TqKif+SkGNV74rFFBCYzEDGcaoUBamHZPGK07QNNjc8H+O4//38V0Ttu7
+	 FTx9kQTmfn+eANXw8ykTJ0n14t9u5xIlh4IfdzM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michail Tatas <michail.tatas@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Alistair Francis <alistair@alistair23.me>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 353/869] media: verisilicon: rockchip: Fix leaks in init
-Date: Sat,  7 Nov 2026 08:50:35 -0500
-Message-ID: <20261107134904.341301649@linuxfoundation.org>
+Subject: [PATCH 6.18 371/869] PCI/DOE: Fix double free of a duplicate features sysfs name
+Date: Sat,  7 Nov 2026 08:50:53 -0500
+Message-ID: <20261107134905.378682894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,144 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michail Tatas <michail.tatas@gmail.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 96f6b5e2295996a9e2dd1e2382d3872f98cbb554 ]
+[ Upstream commit 624ee129620a054466b6a29d98cd7a40ccc239cd ]
 
-If one of the dma_alloc_coherent in the init function fails then
-the previously allocated ones leak.
+When a DOE feature is reported twice, sysfs_add_file_to_group() fails
+with -EEXIST for the second copy and pci_doe_sysfs_feature_populate()
+frees that attribute's name, but leaves the pointer in place.
+pci_doe_sysfs_feature_remove() frees every name again when the device
+is removed, or when a later feature fails to register, so the name is
+freed twice:
 
-Fix by freeing them in the error path.
+  BUG: KASAN: double-free in pci_doe_sysfs_feature_remove+0x117/0x1b0
+  Call Trace:
+   kfree+0x11a/0x420
+   pci_doe_sysfs_feature_remove+0x117/0x1b0
+   pci_doe_sysfs_teardown+0x90/0xf0
+   pci_remove_bus_device+0x128/0x2e0
+   pci_stop_and_remove_bus_device_locked+0x1d/0x30
+   remove_store+0xd2/0xf0
 
-Fixes: 727a400686a2 ("media: verisilicon: Add Rockchip AV1 decoder")
+Clear the pointer after freeing the name.
+
+Fixes: 2311ab1820fe ("PCI/DOE: Expose DOE features via sysfs")
+Suggested-by: Alistair Francis <alistair@alistair23.me>
+Assisted-by: LLM
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Alistair Francis <alistair@alistair23.me>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Michail Tatas <michail.tatas@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://patch.msgid.link/20261003102221.59894-1-donggeunyoo.kernel@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../verisilicon/rockchip_vpu981_hw_av1_dec.c  | 68 +++++++++++++++----
- 1 file changed, 55 insertions(+), 13 deletions(-)
+ drivers/pci/doe.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-index 00aa566a4ccdb..2a145433e6d17 100644
---- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-+++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-@@ -369,6 +369,7 @@ void rockchip_vpu981_av1_dec_exit(struct hantro_ctx *ctx)
+diff --git a/drivers/pci/doe.c b/drivers/pci/doe.c
+index aae9a8a00406e..3b0cc6db4402d 100644
+--- a/drivers/pci/doe.c
++++ b/drivers/pci/doe.c
+@@ -210,8 +210,9 @@ static int pci_doe_sysfs_feature_populate(struct pci_dev *pdev,
+ 				pci_warn(pdev, "Failed adding %s to sysfs group\n",
+ 					 attrs[i].attr.name);
+ 				goto fail;
+-			} else
+-				kfree(attrs[i].attr.name);
++			}
++			kfree(attrs[i].attr.name);
++			attrs[i].attr.name = NULL;
+ 		}
+ 	}
  
- int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
- {
-+	int ret = 0;
- 	struct hantro_dev *vpu = ctx->dev;
- 	struct hantro_av1_dec_hw_ctx *av1_dec = &ctx->av1_dec;
- 
-@@ -377,39 +378,54 @@ int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
- 	av1_dec->global_model.cpu = dma_alloc_coherent(vpu->dev, GLOBAL_MODEL_SIZE,
- 						       &av1_dec->global_model.dma,
- 						       GFP_KERNEL);
--	if (!av1_dec->global_model.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->global_model.cpu) {
-+		ret = -ENOMEM;
-+		goto global_model_cpu_err;
-+	}
-+
- 	av1_dec->global_model.size = GLOBAL_MODEL_SIZE;
- 
- 	av1_dec->tile_info.cpu = dma_alloc_coherent(vpu->dev, AV1_TILE_INFO_SIZE,
- 						    &av1_dec->tile_info.dma,
- 						    GFP_KERNEL);
--	if (!av1_dec->tile_info.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->tile_info.cpu) {
-+		ret = -ENOMEM;
-+		goto tile_info_cpu_err;
-+	}
-+
- 	av1_dec->tile_info.size = AV1_TILE_INFO_SIZE;
- 
- 	av1_dec->film_grain.cpu = dma_alloc_coherent(vpu->dev,
- 						     ALIGN(sizeof(struct rockchip_av1_film_grain), 2048),
- 						     &av1_dec->film_grain.dma,
- 						     GFP_KERNEL);
--	if (!av1_dec->film_grain.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->film_grain.cpu) {
-+		ret = -ENOMEM;
-+		goto film_grain_cpu_err;
-+	}
-+
- 	av1_dec->film_grain.size = ALIGN(sizeof(struct rockchip_av1_film_grain), 2048);
- 
- 	av1_dec->prob_tbl.cpu = dma_alloc_coherent(vpu->dev,
- 						   ALIGN(sizeof(struct av1cdfs), 2048),
- 						   &av1_dec->prob_tbl.dma,
- 						   GFP_KERNEL);
--	if (!av1_dec->prob_tbl.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->prob_tbl.cpu) {
-+		ret = -ENOMEM;
-+		goto prob_tbl_cpu_err;
-+	}
-+
- 	av1_dec->prob_tbl.size = ALIGN(sizeof(struct av1cdfs), 2048);
- 
- 	av1_dec->prob_tbl_out.cpu = dma_alloc_coherent(vpu->dev,
- 						       ALIGN(sizeof(struct av1cdfs), 2048),
- 						       &av1_dec->prob_tbl_out.dma,
- 						       GFP_KERNEL);
--	if (!av1_dec->prob_tbl_out.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->prob_tbl_out.cpu) {
-+		ret = -ENOMEM;
-+		goto prob_tbl_out_cpu_err;
-+	}
-+
- 	av1_dec->prob_tbl_out.size = ALIGN(sizeof(struct av1cdfs), 2048);
- 	av1_dec->cdfs = &av1_dec->default_cdfs;
- 	av1_dec->cdfs_ndvc = &av1_dec->default_cdfs_ndvc;
-@@ -420,11 +436,37 @@ int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
- 						   AV1_TILE_SIZE,
- 						   &av1_dec->tile_buf.dma,
- 						   GFP_KERNEL);
--	if (!av1_dec->tile_buf.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->tile_buf.cpu) {
-+		ret = -ENOMEM;
-+		goto tile_buf_cpu_err;
-+	}
-+
- 	av1_dec->tile_buf.size = AV1_TILE_SIZE;
- 
--	return 0;
-+	return ret;
-+
-+tile_buf_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->prob_tbl_out.size,
-+			  av1_dec->prob_tbl_out.cpu,
-+			  av1_dec->prob_tbl_out.dma);
-+prob_tbl_out_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->prob_tbl.size,
-+			  av1_dec->prob_tbl.cpu,
-+			  av1_dec->prob_tbl.dma);
-+prob_tbl_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->film_grain.size,
-+			  av1_dec->film_grain.cpu,
-+			  av1_dec->film_grain.dma);
-+film_grain_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->tile_info.size,
-+			  av1_dec->tile_info.cpu,
-+			  av1_dec->tile_info.dma);
-+tile_info_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->global_model.size,
-+			  av1_dec->global_model.cpu,
-+			  av1_dec->global_model.dma);
-+global_model_cpu_err:
-+	return ret;
- }
- 
- static int rockchip_vpu981_av1_dec_prepare_run(struct hantro_ctx *ctx)
 -- 
 2.53.0
 
