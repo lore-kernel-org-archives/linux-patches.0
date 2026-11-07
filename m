@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065129;
-	b=FgOpSFw+lfliEy3OEHX7bC3BxO0CNAwNb0bm1xCbrEnxdLKdYh9kiCeOCU48+tIQTfqk
-	 p4RdXreZgBxzmJs11nHMRgK2A2X+tAIxPfUqLxXFl1SYQt/txxHdsretpYdN1rf1HZisT
-	 o9k7jfAKjHw/7caq50IMMc9CJRsFHO6MO7o/O/oUUn9hOHZ5uEIlCP/YyVk8RdXlQCvbp
-	 YhoSRgacJJukhgD7DLaQAeTdKJZDgyIr5AoqJ2YHTIM3PKu5WdCTLUdDEvAtfQQ0ahGon
-	 En7El3j32nVsAySVZUElZ6Uj3wyXJ4Bvpscs6/gSkEv+Roe5fetZhAomuDv1FQD+Mrw==
+	t=1794065130;
+	b=X4HTMjFgyeSnYVnwgsTR9IG+Rw5IkUHx+iMq1QR5b2Ae0ur3TFfEZEdiRND/xZ3I2kOZ
+	 1A73+4LfuwRfIf8AN3Pu2gr6OIglEVSZDyx7WUsi0YeiI9k9muMWzltEDBQCW4vnN+wNm
+	 yD1Ug3GRSAQn7xzDdKflXWpYUX3vEe1u55yY5DEL/53EZPiYNUydWZ8hg4faovxViumQV
+	 BAGx1UVhYy4iVt91k1N5da8chRwuk38K+Px3uGZ2Dh04IuSj86d3MyYVlFj1ttgsYeSNc
+	 IDkq6aFDBnQ4UOx1eKa/+TveDseI+Bk2lJXFPxGv7Fv2GSBQKtBgbNXqrgImEXaAfmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065129;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=OasLNe7+9tYZkhlY8ChDG7Uh2DezXYJNAct0EJAa2VY=;
-	b=lj+dJbGOiq60O7r6extzMLGuFVMnSglR7CYbG4ekqhHgfmuEXWnnlfn4sHxnpAlOEjse
-	 1ewOym6UHHGfQFNVgA/n+Q4aRVxz2umaLQubSchRf8NE4v1zlBRpNCPIWjL40jADXm1+A
-	 h48FjaDII7qHL6AK/WYO1sFFaYmgjN3aqcwVyO9FoUc9Y/9VVJttNdeOgyD4wv1z4e4Pe
-	 S5vtq9Ww3JxV9oddSWwETMsf4qb4IH9/SkwNriC2vI7SM78Ljs6H5bWD3aqWpeEffWtnl
-	 hurPwPS0CKzsQClX8VJSfTcikYww90WLUSH8EgJQqwz640HChjAe9K2QOjE7UoCO7ug==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=0cnBhEru7K1whd5k4MpcfoZ7txWJUGw2v7w9XV8eOLU=;
+	b=3WJUKv+ZvQOqj+wUF3U8vvwYEChuMjrypfc3R8o8ygQU56FlU82TeCe/qmAj81p2N/4v
+	 nRT0OlO1LrtIohLx8dnO+tB6j2yuZLoHPDMKnWF8wWoEUXae/10jpg5pp6njGAEhqvPhh
+	 A4XWCfE8fD9Pe2hL19zqxl24ok1hddGfT9NsejcneeYb4iVWeaCE625elkHEGqWZ+1DgH
+	 6M3eTOFxxgrgVuXRjoMg7xJ7CjMIBEN0V/FvX6fcl/Fsif82Bix0RTRuFIRUBP4n3kwyZ
+	 fF5Ej7trDy1wVv+FiFoMI8DBiRMAi+ZbWceqbjT0I5auFc9zsRs9VS77rSZ4WdtvrdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NHhRT19p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jL5G6+W6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B644606A32E;
-	Sat,  7 Nov 2026 15:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9EC606A32E;
+	Sat,  7 Nov 2026 15:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NHhRT19p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F581F0089F;
-	Sat,  7 Nov 2026 15:25:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jL5G6+W6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF01D1F008A3;
+	Sat,  7 Nov 2026 15:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065128;
-	bh=OasLNe7+9tYZkhlY8ChDG7Uh2DezXYJNAct0EJAa2VY=;
+	s=korg; t=1794065130;
+	bh=0cnBhEru7K1whd5k4MpcfoZ7txWJUGw2v7w9XV8eOLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NHhRT19pJhZv5BH3bsMfDTiDev4QJZFasmeW7I7dAFPgLs8i1bhGw+RRHsJ9+hKDQ
-	 jw/e62EeG1+NJvHUF8n8j3hDbxNs24nLiNXFaKM49Aj/jR6wfa143t5ZY9Evn8Pg/r
-	 S3eZGO8mgrtGR0NB4YfpX7SruMB3gqci9a6+SuCM=
+	b=jL5G6+W6r/U7ykYSSplCVyVYyHyaHpPka0QGR2RWvKo+SCTD75vEswTFaz3FtYoO8
+	 +K+aTZVtu1N36UuK02k1aySd2WCJFgnUUyJbDvvn+XPkXwZVVLabsyIwO0hUIRXQAg
+	 uISY2BlsuLUX8uG8vcIbX9r+Z1fyPAwCTRwk926I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirmoy Das <nirmoyd@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Haofeng Li <lihaofeng@kylinos.cn>,
+	Wang Yan <wangyan01@kylinos.cn>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0950/1257] blk-mq: clear stale inactive flag on hctx reuse
-Date: Sat,  7 Nov 2026 08:54:06 -0500
-Message-ID: <20261107135005.584888510@linuxfoundation.org>
+Subject: [PATCH 7.3 0951/1257] selftests/landlock: Fix snprintf truncation checks in test files
+Date: Sat,  7 Nov 2026 08:54:07 -0500
+Message-ID: <20261107135005.611286756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,86 +64,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nirmoy Das <nirmoyd@nvidia.com>
+From: Wang Yan <wangyan01@kylinos.cn>
 
-[ Upstream commit afc1de47a7ab607ae6403c4bfda36b0bf3cd342f ]
+[ Upstream commit 8e4c736cffdd6b133f6498e0d40ba60dc6819d43 ]
 
-When the last CPU mapped to an hctx goes offline,
-blk_mq_hctx_notify_offline() sets BLK_MQ_S_INACTIVE. Updating the
-number of hardware queues exits every hctx and parks it on
-q->unused_hctx_list. A later update can reuse a parked hctx through
-blk_mq_alloc_and_init_hctx(), at any queue index, and nothing clears
-the flag.
+Commit b566f7a4f0e4 ("selftests/landlock: Fix snprintf truncation checks
+in audit helpers") fixed the truncation detection in audit.h by changing
+the comparison from ">" to ">=" to correctly handle the edge case where
+snprintf returns a value equal to the buffer size.
 
-If the reused hctx is mapped to an online CPU, blk_mq_get_tag() keeps
-returning BLK_MQ_NO_TAG for it. __blk_mq_alloc_requests() sleeps and
-retries, expecting CPU hotplug to move the task to another CPU, so a
-task that stays on that CPU never gets a tag. Onlining the original CPU
-doesn't recover it either, because blk_mq_hctx_notify_online() only
-clears the flag on the hctx that CPU now maps to.
+However, the same pattern exists in ptrace_test.c, audit_test.c, and
+net_test.c and was not fixed.  snprintf() returns the number of
+characters that would have been written, excluding the terminating NUL
+byte.  When the output is truncated, this return value equals or exceeds
+the buffer size. The existing ">" check therefore fails to detect
+truncation when the return value equals the buffer size.
 
-Clear BLK_MQ_S_INACTIVE in blk_mq_init_hctx() so a reused hctx starts
-like a freshly allocated one. A reused hctx has no cpuhp instances at
-that point, so the offline callback can't set the flag again before
-blk_mq_add_hw_queues_cpuhp() registers it. Clearing the flag in
-blk_mq_exit_hctx() is not enough, because a parked hctx keeps its cpuhp
-instances until blk_mq_remove_hw_queues_cpuhp(). Preserve the other
-hctx state flags.
+Fix these remaining instances to use ">=" for truncation detection,
+matching the fix in audit.h.
 
-Reproduced with null_blk on v7.3 in a four-vCPU arm64 QEMU/KVM guest:
-
-  modprobe null_blk nr_devices=0
-  mkdir /sys/kernel/config/nullb/nullb0
-  cd /sys/kernel/config/nullb/nullb0
-  echo 4 > submit_queues; echo 1 > memory_backed; echo 16 > size
-  echo 1 > power
-  echo 0 > /sys/devices/system/cpu/cpu3/online
-  echo 2 > submit_queues
-  echo 4 > submit_queues
-
-Offlining CPU3 marks hctx3 inactive. After the two updates it comes back
-as hctx1 and is mapped to CPU0:
-
-  # cat /sys/block/nullb0/mq/1/cpu_list
-  0
-  # cat /sys/kernel/debug/block/nullb0/hctx1/state
-  INACTIVE
-
-A 4K O_DIRECT read pinned to CPU0 hangs in D state, while the same read
-on CPU1 and CPU2 completes. Onlining CPU3 again leaves hctx1 inactive
-and the CPU0 read still hangs. With this change hctx1 state is empty and
-the reads on CPU0, CPU1 and CPU2 complete, before and after onlining
-CPU3.
-
-Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
+Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
+Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
+Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
+Reviewed-by: Günther Noack <gnoack@google.com>
+Link: https://patch.msgid.link/20260626070016.61049-1-wangyan01@kylinos.cn
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
-Link: https://patch.msgid.link/20261020125129.430600-1-nirmoyd@nvidia.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/landlock/audit_test.c  | 2 +-
+ tools/testing/selftests/landlock/net_test.c    | 4 ++--
+ tools/testing/selftests/landlock/ptrace_test.c | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index e929f94b25c7f..5a5dc66fc3b15 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4003,6 +4003,7 @@ static int blk_mq_init_hctx(struct request_queue *q,
- 		goto fail;
+diff --git a/tools/testing/selftests/landlock/audit_test.c b/tools/testing/selftests/landlock/audit_test.c
+index 72b5612375ddb..4bea8c880a4d3 100644
+--- a/tools/testing/selftests/landlock/audit_test.c
++++ b/tools/testing/selftests/landlock/audit_test.c
+@@ -31,7 +31,7 @@ static int matches_log_signal(struct __test_metadata *const _metadata,
  
- 	hctx->queue_num = hctx_idx;
-+	clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
+ 	log_match_len =
+ 		snprintf(log_match, sizeof(log_match), log_template, opid);
+-	if (log_match_len > sizeof(log_match))
++	if (log_match_len >= sizeof(log_match))
+ 		return -E2BIG;
  
- 	hctx->tags = set->tags[hctx_idx];
+ 	return audit_match_record(audit_fd, AUDIT_LANDLOCK_ACCESS, log_match,
+diff --git a/tools/testing/selftests/landlock/net_test.c b/tools/testing/selftests/landlock/net_test.c
+index 16afbfdf06bb2..50b637354b51d 100644
+--- a/tools/testing/selftests/landlock/net_test.c
++++ b/tools/testing/selftests/landlock/net_test.c
+@@ -2878,7 +2878,7 @@ static int matches_auditlog(const int audit_fd, const char *const blockers,
+ 		log_match_len = snprintf(log_match, sizeof(log_match),
+ 					 log_with_addrport_tmpl, blockers,
+ 					 dir_addr, addr, dir_port, port);
+-	if (log_match_len > sizeof(log_match))
++	if (log_match_len >= sizeof(log_match))
+ 		return -E2BIG;
  
+ 	return audit_match_record(audit_fd, AUDIT_LANDLOCK_ACCESS, log_match,
+@@ -3173,7 +3173,7 @@ static int matches_log_connect_bound(int audit_fd, const char *const blockers,
+ 
+ 	log_match_len = snprintf(log_match, sizeof(log_match), log_template,
+ 				 blockers, addr, lport, addr, dport);
+-	if (log_match_len > sizeof(log_match))
++	if (log_match_len >= sizeof(log_match))
+ 		return -E2BIG;
+ 
+ 	return audit_match_record(audit_fd, AUDIT_LANDLOCK_ACCESS, log_match,
+diff --git a/tools/testing/selftests/landlock/ptrace_test.c b/tools/testing/selftests/landlock/ptrace_test.c
+index 2644445a9d020..e0e7f95e889b3 100644
+--- a/tools/testing/selftests/landlock/ptrace_test.c
++++ b/tools/testing/selftests/landlock/ptrace_test.c
+@@ -305,7 +305,7 @@ static int matches_log_ptrace(struct __test_metadata *const _metadata,
+ 
+ 	log_match_len =
+ 		snprintf(log_match, sizeof(log_match), log_template, opid);
+-	if (log_match_len > sizeof(log_match))
++	if (log_match_len >= sizeof(log_match))
+ 		return -E2BIG;
+ 
+ 	return audit_match_record(audit_fd, AUDIT_LANDLOCK_ACCESS, log_match,
 -- 
 2.53.0
 
