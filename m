@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060798;
-	b=PM/AEz/t/4B6dcyXbfObCkn88sj2cujeaSMR1bxIyr9Pv41l6NM1B0uN8ILcUo7EWxkT
-	 c1Z/gW0pbZHbrugqP18jx9Nt24M0EDKi0iIhTktKLdHBSnTBkW1xNGvDai5JQURldMkDW
-	 IWx+456v1w8a5L4t0P60Olqsx0VoKOKQVaCSgTA5NAFVhipnbCkEp2ECmXHo14Zl34g/W
-	 zGd2PgiPynBwxWZfK7Id+eiP30ROffH+g4349KQbDkvPLdEvFJiTXlBV89btyH2N49s5m
-	 vRWWOUERhbxD4p/9kXqtebavfHjxD8D/AlVzNcCYXpkQTT+Asessv9rZYLMtpeKVTEQ==
+	t=1794060800;
+	b=MQmDtEjW4LsYX+6jYMXTfEl3eSpei3BGPMbhtvZ4/FXghsBn3U4QnWym2ad3MmXEjgB+
+	 AjII1YeajANLvOeMbgnJkBl1G2CEXXmfsXrVE5lrVp/caUJTu06zgnU2k4E1ikdaimD5K
+	 ChxfiMfERHPXNYGHVEbffxIzOnwGGS1WS54CBAUqyMd7vBHaMK56yr9SnIPzEWhKG9nh9
+	 KUiGPHRJf8O3hy/pBjmTAQ6ErZt1nV2hhf7KocXPLV6F72FCEFD1T2fmEjwPMgODC+tTh
+	 NvZRmahgpGylPrbWlw0CGznl9BhDwDC+UYHPyGfqk1YOg4GVLLEDln+DiFlOmvquVeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060798;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060800;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dxIeCyaD2nQJRCjNl9QcP7vb+eEvASjuch+9VSDcTrs=;
-	b=hXAJvE7mGFK4Y/XkLMaqZCynf5zrIhnelY5WMb1Jesw72PmlLfKlMbU91+yRYZsN1CBS
-	 xJIa57SBVGJqFObH8waI/pXSqw7x0bTlpY3iTEnYaE7MDeVpgWwp9yGiL+ZA8uL1JUWbC
-	 SP1azGMUxnCN5lcf8jk/4KR2atuFW3ck0g9n0/CW2d49PclSvJVWbHZwoj+BQkXKro4cv
-	 FXAzt5bVCdICppVPUVsEcBPlXj039UVe+exX/jUjOHU9T9NUKeNyBBMmwMC32ZG56Xiki
-	 LSjf0MojxwtdqY9nSSCbtYfGQe7tn8ckjJInIDQwHsSCRTh6Ull/cQ8mbpM0Olu9DiA==
+	bh=OEa1H7qcjw1OMZsP02a9Hajqe7jbvw55axDdvY7NmoI=;
+	b=fhi4XAOnzd9MHnPxsZlSTSVOBwc5ga0jD8d3pqVwPQNnJqROyEdy82PIcEwuIlACIdoi
+	 EfYLiB6jgmVKlcq4tl0TMSJ1LQR+2iJlo0BafJSr1K5jXuk5CpsbUvod9S9Z7hJK0qmr/
+	 87Fnqn5wiFeC0oDLZXVlOsRqxXSvcO/2HOpsL4/4DeN5n/QsCBXyfWFy9DEvyLn0AV1f9
+	 OvM1ehOYTWv7EDxMBHTvCVeCxYzemXPobkhJrWejrJtqS/Jtxdxd2DsZPSeXxZkaP884f
+	 4aVlm0EiP1ogTxtD4iBsIaiU1jExfIeEA56fM0czvM2dMI8vJ3cv4odVjg5MGd0jINA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WIr3wlY4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DztaSxlK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E33606A332;
-	Sat,  7 Nov 2026 14:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00B2606A326;
+	Sat,  7 Nov 2026 14:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WIr3wlY4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9041F0089F;
-	Sat,  7 Nov 2026 14:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DztaSxlK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0111F0089F;
+	Sat,  7 Nov 2026 14:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060798;
-	bh=dxIeCyaD2nQJRCjNl9QcP7vb+eEvASjuch+9VSDcTrs=;
+	s=korg; t=1794060800;
+	bh=OEa1H7qcjw1OMZsP02a9Hajqe7jbvw55axDdvY7NmoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WIr3wlY4mLgVA94Dr8qMyR278l1dx8PPBd7XLca+4Eut2YaV5qH5gK4dFQc08kBfC
-	 tTazNCh0lc3O0praZer0dKzSqk2SEfLk62D81vMG892r8hvc5nJA7pgaS5J+jjxyqS
-	 l7za/8pEAZc4C9/MCoMMqfAnuvkSKmSw+Lb8EdOQ=
+	b=DztaSxlKiwsjhyq+6BfKqP9hclDEtNvyLmWaemo93fh8T5Tb2XTt4YgX7Gml2PlIq
+	 fm+fToC/V4KzTX91pS9O9mNlsvOFQLfvMnk5JWWy3GfZK5ehkLDgBlpHoz2Q5ByMin
+	 u6CVFJuXY2cfVag6hE/ud9Xju1XrduppLRRm2QyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Randolph Sapp <rs@ti.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0199/1536] ata: pata_ep93xx: fix PIO fallback when DMA init fails
-Date: Sat,  7 Nov 2026 08:36:55 -0500
-Message-ID: <20261107135003.251562784@linuxfoundation.org>
+Subject: [PATCH 6.12 0200/1536] drm/etnaviv: force flush on power register ops
+Date: Sat,  7 Nov 2026 08:36:56 -0500
+Message-ID: <20261107135003.278572661@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,96 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Randolph Sapp <rs@ti.com>
 
-[ Upstream commit c303c3619a1d5cf7d4b457106062d16724724a80 ]
+[ Upstream commit c182a2ae13886463f7ae36e034449477306d182b ]
 
-ep93xx_pata_dma_init() returns an error when dma_request_chan() fails,
-which causes ep93xx_pata_probe() to abort entirely.  The probe function
-already has a PIO fallback path (it checks both channel pointers before
-enabling UDMA), so the DMA init should not fail the probe on non-fatal
-errors.
+Add gpu_write_power_sync to verify that power register modifications
+have reached the endpoint device in sequence specific sections that do
+not validate device state.
 
-Propagate -EPROBE_DEFER, such that we allow the DMA controller driver
-to load, in case we got probed before the DMA controller driver.
-For all other failures (e.g. -ENODEV when the DMA controller is missing
-in the device tree), fall back to PIO.
+These sequence specific areas have been detected experimentally with an
+am57xx-evm through numerous boot and module load+unload cycles.
 
-Assisted-by: Opencode:Big-Pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Randolph Sapp <rs@ti.com>
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Link: https://patch.msgid.link/20251013170122.1145387-2-rs@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_ep93xx.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 10 +++++-----
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.h |  6 ++++++
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ata/pata_ep93xx.c b/drivers/ata/pata_ep93xx.c
-index f3f5b2b0ecc9f..3ee9753097910 100644
---- a/drivers/ata/pata_ep93xx.c
-+++ b/drivers/ata/pata_ep93xx.c
-@@ -652,14 +652,22 @@ static int ep93xx_pata_dma_init(struct ep93xx_pata_data *drv_data)
- 	 * start of new transfer.
- 	 */
- 	drv_data->dma_rx_channel = dma_request_chan(dev, "rx");
--	if (IS_ERR(drv_data->dma_rx_channel))
--		return dev_err_probe(dev, PTR_ERR(drv_data->dma_rx_channel),
--				     "rx DMA setup failed\n");
-+	if (IS_ERR(drv_data->dma_rx_channel)) {
-+		ret = PTR_ERR(drv_data->dma_rx_channel);
-+		drv_data->dma_rx_channel = NULL;
-+		if (ret == -EPROBE_DEFER)
-+			return ret;
-+		dev_warn(dev, "rx DMA unavailable, using PIO\n");
-+		return 0;
-+	}
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+index d2f9ad9d9e89d..919bf6b38e8a7 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+@@ -519,13 +519,13 @@ static int etnaviv_hw_reset(struct etnaviv_gpu *gpu)
+ 		u32 pulse_eater = 0x01590880;
  
- 	drv_data->dma_tx_channel = dma_request_chan(&pdev->dev, "tx");
- 	if (IS_ERR(drv_data->dma_tx_channel)) {
--		ret = dev_err_probe(dev, PTR_ERR(drv_data->dma_tx_channel),
--				    "tx DMA setup failed\n");
-+		ret = PTR_ERR(drv_data->dma_tx_channel);
-+		drv_data->dma_tx_channel = NULL;
-+		if (ret == -EPROBE_DEFER)
-+			goto fail_release_rx;
-+		dev_warn(dev, "tx DMA unavailable, using PIO\n");
- 		goto fail_release_rx;
- 	}
+ 		/* disable clock gating */
+-		gpu_write_power(gpu, VIVS_PM_POWER_CONTROLS, 0x0);
++		gpu_write_power_sync(gpu, VIVS_PM_POWER_CONTROLS, 0x0);
  
-@@ -670,7 +678,7 @@ static int ep93xx_pata_dma_init(struct ep93xx_pata_data *drv_data)
- 	conf.src_addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
- 	ret = dmaengine_slave_config(drv_data->dma_rx_channel, &conf);
- 	if (ret) {
--		dev_err_probe(dev, ret, "failed to configure rx dma channel");
-+		dev_warn(dev, "failed to configure rx dma channel, using PIO\n");
- 		goto fail_release_dma;
- 	}
+ 		/* disable pulse eater */
+ 		pulse_eater |= BIT(17);
+ 		gpu_write_power(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
+ 		pulse_eater |= BIT(0);
+-		gpu_write_power(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
++		gpu_write_power_sync(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
  
-@@ -681,7 +689,7 @@ static int ep93xx_pata_dma_init(struct ep93xx_pata_data *drv_data)
- 	conf.dst_addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
- 	ret = dmaengine_slave_config(drv_data->dma_tx_channel, &conf);
- 	if (ret) {
--		dev_err_probe(dev, ret, "failed to configure tx dma channel");
-+		dev_warn(dev, "failed to configure tx dma channel, using PIO\n");
- 		goto fail_release_dma;
- 	}
+ 		/* enable clock */
+ 		control = VIVS_HI_CLOCK_CONTROL_FSCALE_VAL(fscale);
+@@ -619,7 +619,7 @@ static void etnaviv_gpu_enable_mlcg(struct etnaviv_gpu *gpu)
+ 	    gpu->identity.revision == 0x4302)
+ 		ppc |= VIVS_PM_POWER_CONTROLS_DISABLE_STALL_MODULE_CLOCK_GATING;
  
-@@ -689,10 +697,14 @@ static int ep93xx_pata_dma_init(struct ep93xx_pata_data *drv_data)
+-	gpu_write_power(gpu, VIVS_PM_POWER_CONTROLS, ppc);
++	gpu_write_power_sync(gpu, VIVS_PM_POWER_CONTROLS, ppc);
  
- fail_release_rx:
- 	dma_release_channel(drv_data->dma_rx_channel);
-+	drv_data->dma_rx_channel = NULL;
-+	if (ret == -EPROBE_DEFER)
-+		return ret;
-+	return 0;
-+
- fail_release_dma:
- 	ep93xx_pata_release_dma(drv_data);
--
--	return ret;
-+	return 0;
+ 	pmc = gpu_read_power(gpu, VIVS_PM_MODULE_CONTROLS);
+ 
+@@ -663,7 +663,7 @@ static void etnaviv_gpu_enable_mlcg(struct etnaviv_gpu *gpu)
+ 	pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_RA_HZ;
+ 	pmc |= VIVS_PM_MODULE_CONTROLS_DISABLE_MODULE_CLOCK_GATING_RA_EZ;
+ 
+-	gpu_write_power(gpu, VIVS_PM_MODULE_CONTROLS, pmc);
++	gpu_write_power_sync(gpu, VIVS_PM_MODULE_CONTROLS, pmc);
  }
  
- static void ep93xx_pata_dma_start(struct ata_queued_cmd *qc)
+ void etnaviv_gpu_start_fe(struct etnaviv_gpu *gpu, u32 address, u16 prefetch)
+@@ -729,7 +729,7 @@ static void etnaviv_gpu_setup_pulse_eater(struct etnaviv_gpu *gpu)
+ 		pulse_eater |= BIT(18);
+ 	}
+ 
+-	gpu_write_power(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
++	gpu_write_power_sync(gpu, VIVS_PM_PULSE_EATER, pulse_eater);
+ }
+ 
+ static void etnaviv_gpu_hw_init(struct etnaviv_gpu *gpu)
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.h b/drivers/gpu/drm/etnaviv/etnaviv_gpu.h
+index 31322195b9e41..c9f26d86f26af 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.h
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.h
+@@ -201,6 +201,12 @@ static inline u32 gpu_read_power(struct etnaviv_gpu *gpu, u32 reg)
+ 	return readl(gpu->mmio + gpu_fix_power_address(gpu, reg));
+ }
+ 
++static inline void gpu_write_power_sync(struct etnaviv_gpu *gpu, u32 reg, u32 data)
++{
++	gpu_write_power(gpu, reg, data);
++	gpu_read_power(gpu, reg);
++}
++
+ int etnaviv_gpu_get_param(struct etnaviv_gpu *gpu, u32 param, u64 *value);
+ 
+ int etnaviv_gpu_init(struct etnaviv_gpu *gpu);
 -- 
 2.53.0
 
