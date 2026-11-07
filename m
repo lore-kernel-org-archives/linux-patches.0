@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064427;
-	b=UdOEHPfJJlCKO9WdfzS8zqrEojf+JyXCed+iQbSwTASP6HD1ww1N7yOuziL11180IqF1
-	 FuAje8xH/iGCyWZKideoKMDInSnYVPIheIQM+AyWu/LEH1y5SnXsGEstibFy5Js6uAnDw
-	 vylDi55I3xv4mVHJowWya6pe1LW05h5ePDsYeN8zXau2Bimp8f+hntofAe3p/9kkcl3ME
-	 lFuZhT/jkuSC0jtxPsHRBIF34znlLTxB+/9U+2QqwfDhbHnIFnusfxRmueSP2EwvbEg34
-	 tI1ttKeiPm/vqtRdQv9eRaEQJsVuUzf5Q1kPboG7AQKBDjmnfX9pmyR6CXOpXtQ8khw==
+	t=1794064428;
+	b=xj6tXCgzqtEJ53+ngAwy2rCVJyzklPMiIzilwRh4ByhoE8Pdw8lg8DDw6mRUyvDJ+K0G
+	 TxLKAR/vCdHherTYjrVVyADOSutn1OS90sxeoN5jAX1zPuFkN2yA182inRPUO7Q++miVP
+	 xsHhileOhovFfhdnxm02/jTXYMeAVYswbMQtKN7JVieDJcazfU0Dokm2rAlmQ07fCWjJQ
+	 f9tgbgnqntv0YhPkYQB8aWut043MRmD+pAiZ3KdbFbkA44eGP5lYEel4LrPfA38gOVHRr
+	 yMMhkwVHJcOaiNYPdtCPMZmSapDyHBQn8QZwguoGRw83hzHBltyWn7kzXL8YwQs3Z0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064427;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064428;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vyuwj3GOWzzdtZduFoirEKQARut/t/MRTl4Yeyr73MU=;
-	b=BC5xZ3yyshTFNzMaBmqpF5lEO9clQK7Zua2s0PODndSTp5oiP82T4qmH8LMpQPcy+Sbc
-	 EnDLXwMkwOCX1yeHvSY7QM4sUyxnHHDEtSBp4h16Dg0oND+allH+1+GoRjKWtCIm/aew8
-	 fCY8fLQvVa7rmnqn8j64bkR/Kgq89VXDqHmt7NZVD3m+syeyyPPgXZS579mfmK7ixRLFC
-	 8lJzjOjUsYHniae+L5/VfnvLc7R22XCZE1zKEHv+dnWiLWkkfqnlNo+n/URIjqS/uzQb+
-	 cumCzpowzJavaHsliPndlKCKKR/6tscG2zfe4YykeTD0+QmYC4Irk99uxDFDlWqCAEA==
+	bh=Lb+2IOte2D0sr7HHj09vHf3jKupn/mdoXAPsf4nMgsA=;
+	b=DnA4S0VftBCyIEOKl4fTUSwzZxHdU3V5eQ9B/OcLPL+WJaPmkDOv2Yapu04uWjCHshRd
+	 cV0i5okSGJkHpu8qivBaSrFllK8n0L6CDDPCKyGl1em4ahDsCl5ddygnL1QlMHMKXgxxN
+	 L1iRE/1cghFIiK5QJFKC710eMljfGXuxTeW9cUFlnLRtoFjM0inGtE2fdcSzHxucvz9Ho
+	 H8sxs/cJN1ZLQbd9wHE7GqFMqpbdWprxK8gImQrGUIcEjNoCEWbqA2mup6kifxa/6yFXk
+	 PBt3ThXz40vP4vvV7y4E5NjexeViSYequsw4ICNo/CuhQNMduK5PqqGouRmOH3DUZiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V4XwJzUF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nDJrxhPt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0481D606EE9A;
-	Sat,  7 Nov 2026 15:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41E8606A9C6;
+	Sat,  7 Nov 2026 15:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V4XwJzUF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682351F0089F;
-	Sat,  7 Nov 2026 15:13:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nDJrxhPt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1ABE1F008A1;
+	Sat,  7 Nov 2026 15:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064426;
-	bh=vyuwj3GOWzzdtZduFoirEKQARut/t/MRTl4Yeyr73MU=;
+	s=korg; t=1794064427;
+	bh=Lb+2IOte2D0sr7HHj09vHf3jKupn/mdoXAPsf4nMgsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V4XwJzUFt1UVeJuds9Sqc4Qnqt8OuFiEcs2yw3trtA5LENKLs1LiTtJ6bCPun6mA1
-	 KDmsl5QHq7p4g/YHYYTLEcvGfAQJFwpiYtdRbvqQD2Hsy356zXzK+tt0SGHcUrFwm4
-	 faL+sCZ6vmX1jwlOXH5Yhg/hpR5Pp9iURZVNoZLw=
+	b=nDJrxhPtpAfmV3jOob5kCItJoiMQZkcpVs4xWbztEDP0pnwztSw2BB09DM09x6P7P
+	 TOP4+Wr4lqPC1Ad0jFaGeiZgso2H42vBp/jU0zKKUiYKuopHScDV9+SGF2ibwo3k9e
+	 ZYrguOZ8IqpWNLDIqWCcdMM3fb8JuMsNOPKde2g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0476/1257] spi: atmel-quadspi: balance runtime PM and pclk across system sleep
-Date: Sat,  7 Nov 2026 08:46:12 -0500
-Message-ID: <20261107134952.597912846@linuxfoundation.org>
+Subject: [PATCH 7.3 0477/1257] perf: xgene: initialize lock before requesting IRQ
+Date: Sat,  7 Nov 2026 08:46:13 -0500
+Message-ID: <20261107134952.624979302@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,100 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 717e45f97246d1070cdf86ccd7a0fb872b45933a ]
+[ Upstream commit d4b7b0c77142b3bc535192fa65130474a129c487 ]
 
-On the controllers with a generic clock (SAMA7G5, SAMA7D65, SAM9X7 and
-LAN969x), atmel_qspi_suspend() takes a runtime PM reference and returns
-without dropping it or suspending the device. It disables the peripheral
-clock directly. atmel_qspi_resume() only prepares the peripheral clock
-and then reinitializes the controller with that clock still off.
+xgene_pmu_probe() requests the PMU IRQ before initializing
+xgene_pmu->lock. request_irq() enables IRQ handling before it returns,
+so xgene_pmu_isr() can run in this window and acquire the uninitialized
+raw spinlock.
 
-On a SAM9X75 Curiosity board, the tested standby and mem resumes
-failed:
+Initialize the lock before requesting the IRQ so the handler always sees a
+valid lock.
 
-  atmel_qspi f0014000.spi: PM: failed to resume: error -110
-  spi-nor spi0.0: resume() failed
-
-Reading the flash afterwards returned no data. The runtime usage count
-grew by one with each cycle, and the second suspend disabled the
-peripheral clock again:
-
-  WARNING: drivers/clk/clk.c:1257 at clk_core_disable+0x6c/0xcc
-  qspi_clk already disabled
-
-Use the same runtime PM sequence as the other variants. Suspend disables
-the controller and forces a runtime suspend. Resume forces a runtime
-resume, which enables the peripheral clock, before it runs the init
-callback, and drops the reference afterwards. With this change the
-tested resumes succeed on the board in both modes, the controller
-returns to runtime suspend, and the flash reads back.
-
-Fixes: 5af42209a4d2 ("spi: atmel-quadspi: Add support for sama7g5 QSPI")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260709112006.390742-1-robert.marko%40sartura.hr?part=3
+Fixes: 832c927d119b ("perf: xgene: Add APM X-Gene SoC Performance Monitoring Unit driver")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260923012950.15651-1-kmehltretter@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/atmel-quadspi.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/perf/xgene_pmu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
-index ec19fa0180f00..96ed734b56218 100644
---- a/drivers/spi/atmel-quadspi.c
-+++ b/drivers/spi/atmel-quadspi.c
-@@ -1590,12 +1590,14 @@ static int atmel_qspi_suspend(struct device *dev)
+diff --git a/drivers/perf/xgene_pmu.c b/drivers/perf/xgene_pmu.c
+index ab3623fab914c..0aa2b605fd53d 100644
+--- a/drivers/perf/xgene_pmu.c
++++ b/drivers/perf/xgene_pmu.c
+@@ -1873,6 +1873,8 @@ static int xgene_pmu_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return -EINVAL;
  
- 	if (aq->caps->has_gclk) {
- 		ret = atmel_qspi_sama7g5_suspend(aq);
--		clk_disable_unprepare(aq->pclk);
--		return ret;
-+		if (ret) {
-+			pm_runtime_put_autosuspend(dev);
-+			return ret;
-+		}
-+	} else {
-+		atmel_qspi_write(QSPI_CR_QSPIDIS, aq, QSPI_CR);
- 	}
++	raw_spin_lock_init(&xgene_pmu->lock);
++
+ 	rc = devm_request_irq(&pdev->dev, irq, xgene_pmu_isr,
+ 				IRQF_NOBALANCING | IRQF_NO_THREAD,
+ 				dev_name(&pdev->dev), xgene_pmu);
+@@ -1881,8 +1883,6 @@ static int xgene_pmu_probe(struct platform_device *pdev)
  
--	atmel_qspi_write(QSPI_CR_QSPIDIS, aq, QSPI_CR);
+ 	xgene_pmu->irq = irq;
+ 
+-	raw_spin_lock_init(&xgene_pmu->lock);
 -
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_force_suspend(dev);
- 
-@@ -1621,20 +1623,20 @@ static int atmel_qspi_resume(struct device *dev)
- 		return ret;
- 	}
- 
--	if (aq->caps->has_gclk)
--		return aq->caps->init(aq);
--
- 	ret = pm_runtime_force_resume(dev);
- 	if (ret < 0)
- 		return ret;
- 
--	atmel_qspi_init(aq);
--
--	atmel_qspi_write(aq->scr, aq, QSPI_SCR);
-+	if (aq->caps->has_gclk) {
-+		ret = aq->caps->init(aq);
-+	} else {
-+		atmel_qspi_init(aq);
-+		atmel_qspi_write(aq->scr, aq, QSPI_SCR);
-+	}
- 
- 	pm_runtime_put_autosuspend(dev);
- 
--	return 0;
-+	return ret;
- }
- 
- static int atmel_qspi_runtime_suspend(struct device *dev)
+ 	/* Check for active MCBs and MCUs */
+ 	rc = xgene_pmu_probe_active_mcb_mcu_l3c(xgene_pmu, pdev);
+ 	if (rc) {
 -- 
 2.53.0
 
