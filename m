@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063538;
-	b=NSnwANwXvNJUPmbT06fuzs6a8ervMfpuuza13URqfXFF3zpnU79GNvt1HahuICJUWy60
-	 9TesLh8pu/RCD1ioWr/r7ffJ4cJn/HCpc3Hd7ov1DtTPgyBMdTGj5HyQKIRAK102FHMmK
-	 QYKSNs+jNnCcEUrN97J7aI63Rvw2jLyph3GB2CpKnD+B9aHLyFpxbT82+FCyBQTeLtZQL
-	 +HNnJM0fMXo4offlSvEW9x+DcxticOUC9qsLikJOR0ZdOLJC1FkJZFUwnSnshToOr3QpC
-	 YdkZotRQHSadKNfSOfwkfbobHMw2B9R5ifA14tRFmVcN0Qd4TSQmkHNOAUgV8CyNBnA==
+	t=1794063539;
+	b=iDtSrrK/kla6lSZiU1eijwr1Wr7+z2SlTmehtx64H/uhq7ec4Ih+PU18ZdDq1WRU9BYd
+	 nE2LFLlI1ol4wd0aSYwL5Ts9HoOeCfM/O1Yqx6GWrn3O817tiaVsmIUXaaMz+kOnriXos
+	 tAmzMSfgjYx1O4buiIf29lm0UAZP39WSwYIDd/GzspfucY2YcQu5ZkZGMnIFqikm2DeyJ
+	 oSrlFR59wleH4938RD/Gidz/MdanVmENfhYPtMSQ7Qwwtmuzapcl6D3PWtpVOR9NDN/Rk
+	 htP8S8Vnju6aWcDNkKnHi2C1fMrLk3jQ8nCUAI62NbEqudsFWC2gbSq86GVzD26+Jiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063539;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dF8/3gNRg1Dy+faXtiqPWlLxue1JvSsN4pSJTUUWvMY=;
-	b=beCFcrZRjtcWitsfW4izplorPBrPgPwQLC7e8Lgfq743MUeGhW7jTIflZloXBZBHLQwu
-	 5Thc+BwPDeGJkUvoZrsiyaG9lAAJQeHxd083N9l+kcWLU10Cur71XHalRv3RwIWS68qBr
-	 Cix3DHPmTPapNhaSubeGkp7sMc9pS4r0CcV91vA7CQYWZSdBPorRzRRoEpFLC7A6PVZJb
-	 A5eiDIibGDkITxByieAmqNZ1yfUhKdiPug28MvkTKlNYSOYomns9bMEtXBojzpubUpPAA
-	 CcLN7phefTDrU4vlcg8UTWtumGf5mXU+cOkHFifVAQ0L60mUicRuQUuIou8Ny9i/g+Q==
+	bh=///jhV8ipz4x3ptB/WxEpfyTqyiawQ/mXJ/Oukk9YiY=;
+	b=J/sJXxPJsPwQY2K3YHY0kP3qo3ukmGXNsBWOKFTA693C5s4RWPvuuRVa+SPeu2BFaIRD
+	 VrR2LsRd/0SksZCPTM3bRDVx0vfB6iOaRH0WclVgVZJRGErw7OFbLyntAcg4DWUZ/4QCS
+	 pK5yBPWjoUMqxOinBZR4UqxMPVt1pu9FsyByU4x9tMNo8k66RUA9vunc3ZAUouESBOa56
+	 lo+3Szfl2bdNENKxPrM+umXtoGAFCYGBuLIwNHLoZqqqT3Gur7gN95jcNp0S5Roac4R3D
+	 7zfStGbD5Ym8Ja2XPUpN/Iwh3Y5aKbcxVR5e4akwPJ8KlUExuJd1d7+oSVFVQ7adKPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hmu8pB/o";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDVEmUF6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE59606D802;
-	Sat,  7 Nov 2026 14:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EB3606D802;
+	Sat,  7 Nov 2026 14:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hmu8pB/o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9231F008A1;
-	Sat,  7 Nov 2026 14:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDVEmUF6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98A71F0089F;
+	Sat,  7 Nov 2026 14:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063538;
-	bh=dF8/3gNRg1Dy+faXtiqPWlLxue1JvSsN4pSJTUUWvMY=;
+	s=korg; t=1794063539;
+	bh=///jhV8ipz4x3ptB/WxEpfyTqyiawQ/mXJ/Oukk9YiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hmu8pB/oaK916fb4lVhA9ouPdnNb3vYzeUsIkhFdcJcC29ZHbLo2Xw960BU0HDoHo
-	 4izjDpzDvDG94gXeGSRlsUeBYHazxEH8jlR2+eOlScQycUJdrhh0yw7BpAbXIJBzaA
-	 UE2qJ1YK4o7fpFRmvMu/0kX0dB+5ZIA2+vRDrGI4=
+	b=jDVEmUF6pxGYGs1sdeCVudzYUEa5rDzkZW0B3/HOM3wepOvubg9vCPkGS5QeENAkG
+	 XHSrf4m6mf5G0d5lNG1g1BsaKDP+0TWsYQc+n/QmDf1qEl4RGiOsSlf5jCf8elKnER
+	 2Cy+ZGoGa2dhUOsj5EIiFVmhPnq6qsawD6tA0RR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 674/869] drm/amdkfd: fix doorbell allocation race creating duplicate allocations
-Date: Sat,  7 Nov 2026 08:55:56 -0500
-Message-ID: <20261107134915.952486407@linuxfoundation.org>
+Subject: [PATCH 6.18 675/869] drm/amd/display: dont WARN when removing an unallocated MST payload
+Date: Sat,  7 Nov 2026 08:55:57 -0500
+Message-ID: <20261107134915.981677876@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,183 +71,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit bebad45050945a3d668d6701fb77ae2571c5d44b ]
+[ Upstream commit b18a7c6d75bcc883b39497863cc88c9ef4c6c85f ]
 
-The check-and-allocate sequence on pdd->qpd.proc_doorbells is
-lockless at every call site of kfd_alloc_process_doorbells():
-kfd_get_process_doorbells() (mmap of /dev/kfd),
-kfd_ioctl_create_queue() and the CRIU restore path each test the
-pointer under different locking (or none), so two racing threads can
-both observe NULL and each allocate a doorbell BO and bitmap,
-orphaning one allocation and handing the two mappings different
-backing pages.
+[Why]
+On an MST teardown that runs through the reset path
+(dcn31_reset_hw_ctx_wrap -> link_set_dpms_off -> deallocate_mst_payload),
+fill_dc_mst_payload_table_from_drm() is asked to remove a payload whose
+vcpi is not present in link->mst_stream_alloc_table and trips:
 
-Move the serialization into kfd_alloc_process_doorbells() itself,
-using a new per-process-device mutex so all three call sites are
-covered regardless of their own locking.  The device-global
-kfd->doorbell_mutex is not suitable here: it is acquired under
-dqm->lock on the kernel-doorbell path (start_cpsch() -> pm_init() ->
-kq_initialize() -> kfd_get_kernel_doorbell()), so holding it across
-the sleeping allocations above would create a lock-ordering
-inversion with dqm->lock via TTM eviction, and it would also
-serialize doorbell setup of unrelated processes behind a
-device-wide lock for per-process state.
+  WARNING: .../amdgpu_dm_helpers.c:275 fill_dc_mst_payload_table_from_drm
 
-This issue was discovered by Tencent CodeBuddy Security.
+This is a legitimate case, not an error: deallocate_mst_payload() can be
+called for a stream whose MST payload was never programmed into DC's
+HW-maintained table (a new stream created for a modeset whose enable
+never completed, as already documented in deallocate_mst_payload()).
+There is simply nothing to remove.
 
-v3 (Felix Kuehling):
-- Removed unlocked check in kfd_get_process_doorbell flagged as
-  problematic by Sashiko Bot. Fall back to the locked check inside
-  kfd_alloc_process_doorbells
-- Added missing mutex_destroy
-v4 (Felix Kuehling):
-- Removed unlocked checks around other kfd_alloc_process_doorbells calls
+[How]
+Drop the ASSERT and fall through to the fill loop, which rebuilds the
+allocation table from the remaining entries. The table ends up unchanged,
+which is correct: the payload being removed was never in it.
 
-Fixes: 16f0013157bf ("drm/amdkfd: Allocate doorbells only when needed")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Note the loop must not early-return here - the caller passes a zeroed
+proposed_table, so returning early would zero the whole link's table and
+drop the other MST streams sharing the link.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5875
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4e27ba5ad5f76932d4f6cbacd25c81c2dd40ec4a)
+(cherry picked from commit 88a27f624dc0ebc14a7ab274a84d977ce8513cb6)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c  | 18 +++++++-----------
- drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c | 23 +++++++++++++++++------
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h     |  3 +++
- drivers/gpu/drm/amd/amdkfd/kfd_process.c  |  2 ++
- 4 files changed, 29 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 04c2d412fa7da..c224d78a770a1 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -352,12 +352,10 @@ static int kfd_ioctl_create_queue(struct file *filep, struct kfd_process *p,
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+index 7633af2429198..e8f4e7b7af570 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -225,7 +225,7 @@ fill_dc_mst_payload_table_from_drm(struct dc_link *link,
+ 				break;
+ 			}
  		}
+-		ASSERT(i != copy_of_link_table.stream_count);
++		/* Payload absent from HW table when never allocated: nothing to remove. */
  	}
  
--	if (!pdd->qpd.proc_doorbells) {
--		err = kfd_alloc_process_doorbells(dev->kfd, pdd);
--		if (err) {
--			pr_debug("failed to allocate process doorbells\n");
--			goto err_bind_process;
--		}
-+	err = kfd_alloc_process_doorbells(dev->kfd, pdd);
-+	if (err) {
-+		pr_debug("failed to allocate process doorbells\n");
-+		goto err_bind_process;
- 	}
- 
- 	err = kfd_queue_acquire_buffers(pdd, &q_properties);
-@@ -2282,11 +2280,9 @@ static int criu_restore_devices(struct kfd_process *p,
- 			goto exit;
- 		}
- 
--		if (!pdd->qpd.proc_doorbells) {
--			ret = kfd_alloc_process_doorbells(dev->kfd, pdd);
--			if (ret)
--				goto exit;
--		}
-+		ret = kfd_alloc_process_doorbells(dev->kfd, pdd);
-+		if (ret)
-+			goto exit;
- 	}
- 
- 	/*
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c b/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
-index fdcf7f2d1b5b4..6af268a031f22 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
-@@ -239,11 +239,9 @@ phys_addr_t kfd_get_process_doorbells(struct kfd_process_device *pdd)
- 	struct amdgpu_device *adev = pdd->dev->adev;
- 	uint32_t first_db_index;
- 
--	if (!pdd->qpd.proc_doorbells) {
--		if (kfd_alloc_process_doorbells(pdd->dev->kfd, pdd))
--			/* phys_addr_t 0 is error */
--			return 0;
--	}
-+	if (kfd_alloc_process_doorbells(pdd->dev->kfd, pdd))
-+		/* phys_addr_t 0 is error */
-+		return 0;
- 
- 	first_db_index = amdgpu_doorbell_index_on_bar(adev,
- 						      pdd->qpd.proc_doorbells,
-@@ -257,12 +255,21 @@ int kfd_alloc_process_doorbells(struct kfd_dev *kfd, struct kfd_process_device *
- 	int r;
- 	struct qcm_process_device *qpd = &pdd->qpd;
- 
-+	mutex_lock(&pdd->doorbell_mutex);
-+
-+	/* Another thread may have won the check-and-allocate race */
-+	if (qpd->proc_doorbells) {
-+		mutex_unlock(&pdd->doorbell_mutex);
-+		return 0;
-+	}
-+
- 	/* Allocate bitmap for dynamic doorbell allocation */
- 	qpd->doorbell_bitmap = bitmap_zalloc(KFD_MAX_NUM_OF_QUEUES_PER_PROCESS,
- 					     GFP_KERNEL);
- 	if (!qpd->doorbell_bitmap) {
- 		DRM_ERROR("Failed to allocate process doorbell bitmap\n");
--		return -ENOMEM;
-+		r = -ENOMEM;
-+		goto unlock;
- 	}
- 
- 	r = init_doorbell_bitmap(&pdd->qpd, kfd);
-@@ -284,11 +291,15 @@ int kfd_alloc_process_doorbells(struct kfd_dev *kfd, struct kfd_process_device *
- 		DRM_ERROR("Failed to allocate process doorbells\n");
- 		goto err;
- 	}
-+
-+	mutex_unlock(&pdd->doorbell_mutex);
- 	return 0;
- 
- err:
- 	bitmap_free(qpd->doorbell_bitmap);
- 	qpd->doorbell_bitmap = NULL;
-+unlock:
-+	mutex_unlock(&pdd->doorbell_mutex);
- 	return r;
- }
- 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index f2cda82cbed4c..ef1afeaa8d85d 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -769,6 +769,9 @@ struct kfd_process_device {
- 	/* per-process-per device QCM data structure */
- 	struct qcm_process_device qpd;
- 
-+	/* Serializes process doorbell allocation for this device */
-+	struct mutex doorbell_mutex;
-+
- 	/*Apertures*/
- 	uint64_t lds_base;
- 	uint64_t lds_limit;
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 8ed513a77d38f..0b760aab11c6f 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -1089,6 +1089,7 @@ static void kfd_process_destroy_pdds(struct kfd_process *p)
- 		}
- 
- 		atomic_dec(&pdd->dev->kfd->kfd_processes_count);
-+		mutex_destroy(&pdd->doorbell_mutex);
- 
- 		kfree(pdd);
- 		p->pdds[i] = NULL;
-@@ -1628,6 +1629,7 @@ struct kfd_process_device *kfd_create_process_device_data(struct kfd_node *dev,
- 	pdd->dev = dev;
- 	INIT_LIST_HEAD(&pdd->qpd.queues_list);
- 	INIT_LIST_HEAD(&pdd->qpd.priv_queue_list);
-+	mutex_init(&pdd->doorbell_mutex);
- 	pdd->qpd.dqm = dev->dqm;
- 	pdd->qpd.pqm = &p->pqm;
- 	pdd->qpd.evicted = 0;
+ 	/* Fill payload info*/
 -- 
 2.53.0
 
