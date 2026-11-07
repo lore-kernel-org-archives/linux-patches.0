@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063969;
-	b=tUqoq7HyIqmQmlj20PMJporHqvedNQtcG5RJ0cfCJSBhfPxaK9dpggJqr1dxkl9uDzXU
-	 LhQFibIOxN6Z7Ibss2HUxe1qLYjBjOgbv00enHr5izTWxVeIiu9GFFsNbLYjV4H6V5NDu
-	 Z5JwElvm/Q9gQFMKf/0MwXt45CwTfLisyOA+C9FnhTZ+sjmk2uz0Q3G0j43KI9UHfVEdL
-	 clqW6461XvAftQ0zlT1qQoOLBbD8jvY0Y0agQKL609uRUeldlD58g0xu3SB1OiQrlLl+p
-	 2dvliU6Q/ICKJk+8GXIj4/FUjaBFVqaPgWG0SRYMymNH2T78VKiSdLciEnB2eEO/qDw==
+	t=1794063970;
+	b=jzN17Gsm7rC8FLtJyltBF7LeSi9neA64E979Ml63qhSBHzfxei2eeYmQGqNONbIST/mj
+	 oKk4DL2qHB70bcFhcnmd9cpkX/Nr3qkZwuP2ZY7SClw6MV9rX194foT82Ial1eiTPW81O
+	 3s/z7mlStgQuVjIXuBelyo/IjT9U+anVGGuDPI1wjbbCnYrP3m7Vzb1rXKHoNLNvDvIT5
+	 i6n0KXuTQrXRfhGEFYRy6Et2nrs2cNP2s4dJLRoqUP76Sbrm9SY7LpGrdrXQaek2AlXXD
+	 JejwKpHukymXcaMog9ATOgU2c2hKgKVRzLXPZ1wIBFVSOqJwCeKOMLB1suSCdNbfrsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063969;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nIVA8PCNkT6TcckvmnDBve6eLcMYSiu3Ur41MyA2JUU=;
-	b=PQQ11wQ26bmanl11Zqd6H6qbvxgMEAgVOhCQiHT2gOfTw/KpcutxKLmv0n2XVV18VbZR
-	 Y3zf+uCis3QOhHHX8ZvuU/Wne23XBxeFxRwmemqfYVuxxxJA4nLKCpfcO44Md98r2OliX
-	 JtDrYKYI82ANnr3+57z/3Lz7QEf4lrbCrBI2gtkTQb5KE7ZAjT5FW3xYEhzFoYeWyYaZB
-	 cFHyGHPUF3S9tNSN599rWzJ8SFyGcAssy59iaifrsX7Lw7f2HKv7mCBqQA1+Hw/5tno1S
-	 poqenajzUJPUnsZxZSwAPBMnrERpihnQOuQbcznUXYyDGRoYjMR/8bIOEtWlWzEWuAw==
+	bh=UYQpvg1d+kR1yv9+3f5WpQJxpcnH/zhSe3+abZ+9IKE=;
+	b=P6wB3rYiaxpaL4z6Gp5tgFJFnIf55gtzIDioRn5k28qTQK2PY3IsT3Ih6oINL11c2zQ5
+	 4yFYM4VK82JslHdJmqRsHvXdJhoMDh8xPQJI9Cn5QCcqDqNSkf/RGPubXulIsqrLJ+y+4
+	 bIeUiiEfm6UTP2LLqF1RBF90vGO8rNvwSsQjZjMbb7EoaX7os4rO4s4LBrqOoSMBualM4
+	 6iziP8Pcx57dRbr8lqYDMQQ4mHXVwM/Lbh+fIF8kgYtqGao36UishkXKRCugPclCYjnS0
+	 VSaUtVGg5UGDjdrIEBlK+f/ZHRCrEgigQfEgiOtfUJt+UbSrAZMKAO9djrJUw1/mh7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AA+fUdoT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t62dLDCp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87966608362B;
-	Sat,  7 Nov 2026 15:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A139F608362B;
+	Sat,  7 Nov 2026 15:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AA+fUdoT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA51F1F008A4;
-	Sat,  7 Nov 2026 15:06:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t62dLDCp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126111F008A4;
+	Sat,  7 Nov 2026 15:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063969;
-	bh=nIVA8PCNkT6TcckvmnDBve6eLcMYSiu3Ur41MyA2JUU=;
+	s=korg; t=1794063970;
+	bh=UYQpvg1d+kR1yv9+3f5WpQJxpcnH/zhSe3+abZ+9IKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AA+fUdoTtNSGJ8PCVbXmGptXXEJ39tejYCbHyjMztNYG+ZVn81kkRI+FcuvXSuOdO
-	 n9Uygc605scqUzAd928XntTrS392kf4/WmTAVMInBHBYFLbLxung6fJbtnnFkpPmXc
-	 ZvyYOaveezQ1hz/fKTPeRbP+xSYh6pWRK5LRR7oM=
+	b=t62dLDCpfxPn8DkXH7q4hgpsCiO5u7l1fV+yEbyylFwPXH/GLv4BFM/yhgpdbBPqd
+	 dTlOxvEcyWqXCPzvHpOogb1EG2mNXiroDCGHfIClbxeVj4+Pn8W9H+d5v8XU8mEP8W
+	 oUEdCcKBW9Z3cHCcCpv0ad3X08nE14VxnyyQzt24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Fabio Cesari <fabio.cesari@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0128/1257] ACPI: pfr_update: zero-initialize capability query result
-Date: Sat,  7 Nov 2026 08:40:24 -0500
-Message-ID: <20261107134942.858365956@linuxfoundation.org>
+Subject: [PATCH 7.3 0155/1257] iio: light: isl29028: fix runtime PM reference leak on error paths
+Date: Sat,  7 Nov 2026 08:40:51 -0500
+Message-ID: <20261107134943.601396113@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,50 +69,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Fabio Cesari <fabio.cesari@gmail.com>
 
-[ Upstream commit d776369a9eded071df83e4738e1572c4c5b912d7 ]
+[ Upstream commit 0e30d15b15647df786e60022650613e16dd70645 ]
 
-query_capability() copies four ACPI buffers into fixed-size fields using
-the firmware-supplied lengths.  The existing overflow guard rejects
-oversized buffers, but shorter buffers are accepted and leave trailing
-bytes of the stack-allocated cap_hdr uninitialized.  PFRU_IOC_QUERY_CAP
-then copies the entire structure to userspace.
+isl29028_read_raw() and isl29028_write_raw() take a runtime PM reference
+with pm_runtime_resume_and_get() but return directly on their error
+paths without dropping it. The usage count never balances again and the
+device stops entering autosuspend for good. In isl29028_read_raw() this
+needs a regmap access to fail; in isl29028_write_raw() one rejected
+sysfs write is enough, for example
 
-Zero-initialize cap_hdr before querying the firmware.  This preserves the
-existing handling of short firmware responses while preventing disclosure
-of kernel stack data.  Oversized buffers remain rejected.
+  echo 200 > in_proximity_sampling_frequency
 
-A QEMU _DSM returning one-byte buffers reproduced nonzero stack suffix
-bytes in all four fields.  With this change, the ioctl still succeeds and
-each unwritten suffix is zero-filled, while 64-byte buffers continue to
-return -EINVAL.
+which is outside the [1:100] range and returns -EINVAL with the
+reference still held.
 
-Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/1a001e1fee9.637da6dc3533246.238498880682901704%40a0rg.com
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260827053741.79425-1-kmehltretter@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Take the reference with PM_RUNTIME_ACQUIRE_AUTOSUSPEND() instead, so it
+is released on every return path.
+
+This also stops the return value of pm_runtime_put_autosuspend() from
+reaching userspace. That value only says whether the device could be
+suspended right away, so -EAGAIN or -EPERM turns a successful access
+into a failure, and with CONFIG_PM=n the stub returns -ENOSYS on every
+access.
+
+Fixes: 2db5054ac28d ("staging: iio: isl29028: add runtime power management support")
+Suggested-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Cc: stable@vger.kernel.org
+Assisted-by: LLM coccinelle
+Signed-off-by: Fabio Cesari <fabio.cesari@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pfr_update.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/light/isl29028.c | 33 ++++++++-------------------------
+ 1 file changed, 8 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/acpi/pfr_update.c b/drivers/acpi/pfr_update.c
-index 9afd2c52fdbd8..98ace679601b8 100644
---- a/drivers/acpi/pfr_update.c
-+++ b/drivers/acpi/pfr_update.c
-@@ -422,7 +422,7 @@ static int start_update(int action, struct pfru_device *pfru_dev)
+diff --git a/drivers/iio/light/isl29028.c b/drivers/iio/light/isl29028.c
+index 33deb1726689e..e481ac908fc13 100644
+--- a/drivers/iio/light/isl29028.c
++++ b/drivers/iio/light/isl29028.c
+@@ -342,8 +342,9 @@ static int isl29028_write_raw(struct iio_dev *indio_dev,
+ 	struct device *dev = regmap_get_device(chip->regmap);
+ 	int ret;
  
- static long pfru_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+-	ret = pm_runtime_resume_and_get(dev);
+-	if (ret < 0)
++	PM_RUNTIME_ACQUIRE_AUTOSUSPEND(dev, pm);
++	ret = PM_RUNTIME_ACQUIRE_ERR(&pm);
++	if (ret)
+ 		return ret;
+ 
+ 	mutex_lock(&chip->lock);
+@@ -392,14 +393,7 @@ static int isl29028_write_raw(struct iio_dev *indio_dev,
+ 
+ 	mutex_unlock(&chip->lock);
+ 
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = pm_runtime_put_autosuspend(dev);
+-	if (ret < 0)
+-		return ret;
+-
+-	return 0;
++	return ret;
+ }
+ 
+ static int isl29028_read_raw(struct iio_dev *indio_dev,
+@@ -408,10 +402,11 @@ static int isl29028_read_raw(struct iio_dev *indio_dev,
  {
--	struct pfru_update_cap_info cap_hdr;
-+	struct pfru_update_cap_info cap_hdr = {};
- 	struct pfru_device *pfru_dev = to_pfru_dev(file);
- 	void __user *p = (void __user *)arg;
- 	u32 rev;
+ 	struct isl29028_chip *chip = iio_priv(indio_dev);
+ 	struct device *dev = regmap_get_device(chip->regmap);
+-	int ret, pm_ret;
++	int ret;
+ 
+-	ret = pm_runtime_resume_and_get(dev);
+-	if (ret < 0)
++	PM_RUNTIME_ACQUIRE_AUTOSUSPEND(dev, pm);
++	ret = PM_RUNTIME_ACQUIRE_ERR(&pm);
++	if (ret)
+ 		return ret;
+ 
+ 	mutex_lock(&chip->lock);
+@@ -461,18 +456,6 @@ static int isl29028_read_raw(struct iio_dev *indio_dev,
+ 
+ 	mutex_unlock(&chip->lock);
+ 
+-	if (ret < 0)
+-		return ret;
+-
+-	/**
+-	 * Preserve the ret variable if the call to
+-	 * pm_runtime_put_autosuspend() is successful so the reading
+-	 * (if applicable) is returned to user space.
+-	 */
+-	pm_ret = pm_runtime_put_autosuspend(dev);
+-	if (pm_ret < 0)
+-		return pm_ret;
+-
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
