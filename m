@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063490;
-	b=Geue89fZFELA5XYoXtMxKgBpVcJubFcVcYQpc/vXAk4dZ8hsmDyi12g0F0/oufNofSyf
-	 +DRg3o5F7snoGtJaFItIDvdVu2x5liRtCw1K0MMdpfJeuiBaEW1aXlTqgAN8dkcKI2cLB
-	 ZmkexTv9sT2sd3vIMeoi9SiAgO/fOlVRwZzN2kNdMczCbOE0e6HsZXfa+YvMHaAuSfDJN
-	 FSuwpm2KnnQKX0iHOAtOaRtLd84//7tBKb1DuAdOeVeEnLuAi8KGTFYl+v58ITGe2CxuQ
-	 TXEAwTHWNPKIG7VlPPOm/2m6hg+thp944UBX/NBr7lwdA4hUPuvkNR1T/Z8bi1ZHbWw==
+	t=1794063492;
+	b=LdVYHaz6YssQNUcnlARj3MYj1rKMqET61ytgCjly+HyRGrHpjFERCMOk/F2DhfLqvUuh
+	 6EDiLY6+VTbxuarl00ONqdIADMk3jU6ka87FrPwdx5PzvU5MxhNM7HMChUX8t4niaoedE
+	 FyQw8UHk95NG2evvfj7J8CjLXdI0nJVSpnn+czyBNh6gx0qbz60kKSX32bj7S1XkaITgL
+	 F01KxPxHtiI2LjeOy92pWYZXpCAHT1Z38xVnfamlns92kuA2AHlIbQguf06hHor4BV9pe
+	 H+U4qDKzrAUDMdu/U3mQb1Prcv9mPHvK8gGtiYDdTOWIsgF6M6c6Ddtl+OS4ydwkfgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063492;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XRK74jAsjY1uk/FkFZQagmPYV6uUkXdrZqlwDalTjwY=;
-	b=qh3SDs5Y0FFfd/colQQaPYoqnE/MhB0cI6nTXIA5/Mgt+po9l1gSEZwUbjPttsyUQYXL
-	 1voZCVqW30m7qbOIFl/9nGQGewVj0N0D+PGTsr7puTMuTqjUo+hI2uZUT+Au1cPew3PPh
-	 9WRZj8FMgJShXuYFELa65y8IeYyjRaEd2OKrWReI6oHgXH2QJe9ESReGoqMDsx3ootw9W
-	 KFlqnDehJ0khFeuTUC9bdgMWHU37528GthMx/IOLjyDfndQm3LMugdGknFJeywjZ+/C7h
-	 TIKrdq+ys+9p9HjRr6RKNg8qA2KrYGt0YbTYyEx95kOIX7RRMM2T72+S27FmTwzSNaA==
+	bh=SmoASWUlP2IZYly/Ey0rQt4s9QVcVq47cgYLvU8RShc=;
+	b=5OCnA83x/W3NFtBBlx6HIdZBRgmTyyoMC+D4bCegH8ppzS12jr6ueQYlxkel0tQD9nx/
+	 EbY82zYHbNzIVqxz/ks6v6qWdlBCUR58aw9Ab5DCaQK3xWLpe3wkQ+sU7E4eJyZlmkagN
+	 fQuMokUZj3q8ZdbFox/20yCefIfTWoeW3RdZMnNLiyyJ/6q6aQDBnezcUMqbMwOOdm1fG
+	 drm7V4gC5FH5X7cbeVm6tqP8wNRvrn0teJwLov/2eUgtnrx6LoWVLUUiD4dH8kBPSG5fG
+	 8KRpfk9uKhNcAYVo2OPMHLn6Rr/GRG/uJ1p0kZy4lUu6SpMqAq2qd3oKhkFMAC3fncA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eR7OVi0w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vYNg37Uu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E13606B884;
-	Sat,  7 Nov 2026 14:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A4B606B884;
+	Sat,  7 Nov 2026 14:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eR7OVi0w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B541F008BC;
-	Sat,  7 Nov 2026 14:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vYNg37Uu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3D81F008A4;
+	Sat,  7 Nov 2026 14:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063490;
-	bh=XRK74jAsjY1uk/FkFZQagmPYV6uUkXdrZqlwDalTjwY=;
+	s=korg; t=1794063491;
+	bh=SmoASWUlP2IZYly/Ey0rQt4s9QVcVq47cgYLvU8RShc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eR7OVi0whX678qBdLqvIbHcBzjd7lWXbdWt+ulxa7jkEXrNyXrOIgi/Hy41Hc0g8K
-	 jTsW/XJ7nAdL4moLts0BRWHrsnkFKCvVRBjPpHMbUUcRh9S5zhsmu68nK6MsLCyIrh
-	 88/h47sKpxCrnFWXseNzvW0bVoJboPi+vwmgm+Bo=
+	b=vYNg37Uu45ueEwoKo1Zn/kIo3U0hMwddAPVjPEsOwF1XHaIZJbbgggnMzRodalq6/
+	 rBIIYWaSrAdv2NJEdOjrOptz54vUewdYvDIdXckXR9xb6/MJp2rfiBy+wAYt9k+dh9
+	 2U+A1VJp6aStLkIz9qZLe+gucGF2fqDjV5oLid0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tom Verdonck <tom.verdonck@inspiral.be>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 636/869] spi: ch341: handle transfers without a TX or RX buffer
-Date: Sat,  7 Nov 2026 08:55:18 -0500
-Message-ID: <20261107134914.507819745@linuxfoundation.org>
+Subject: [PATCH 6.18 637/869] hwmon: (sht4x) Fix jiffies wraparound in heater-ready check
+Date: Sat,  7 Nov 2026 08:55:19 -0500
+Message-ID: <20261107134914.536854356@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,49 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Tom Verdonck <tom.verdonck@inspiral.be>
 
-[ Upstream commit 84182c48999f856c3865e4a537c244f9569c9f6c ]
+[ Upstream commit ce3ff350c4a3b9466bd67bfe2adb2e3bea732b9e ]
 
-ch341_transfer_one() unconditionally copies from trans->tx_buf into the
-TX packet and hands trans->rx_buf to usb_bulk_msg() for the readback.
+sht4x stores in ->heating_complete the jiffies deadline at which the
+current heater pulse finishes. It is set once at probe (to jiffies) and
+only updated when the heater is explicitly enabled via sysfs, so in the
+common case where the heater is never used it stays frozen at its probe
+value.
 
-The SPI core allows half-duplex transfers where either of the buffers
-is NULL, so a transfer without TX data crashes the kernel on the memcpy
-and a transfer without RX data makes usb_bulk_msg() store the received
-data at address 0.
+->heating_complete is an unsigned long compared with time_before(),
+whose signed difference is only meaningful while the two values are
+within LONG_MAX jiffies of each other. Because the deadline is frozen,
+jiffies keeps advancing away from it, and after 2^31 jiffies the
+difference flips sign. On a 32-bit HZ=100 kernel that happens ~248.5
+days after boot. time_before() in sht4x_read_values() then wrongly
+reports that heating is still in progress and the read path executes
 
-The CH341A clocks data in both directions on every transfer; there is
-no mode to disable a direction. Set SPI_CONTROLLER_MUST_TX and
-SPI_CONTROLLER_MUST_RX so the SPI core fills in dummy buffers for
-half-duplex transfers.
+	msleep(jiffies_to_msecs(data->heating_complete - curr_jiffies));
 
-Fixes: 8846739f52af ("spi: add ch341a usb2spi driver")
-Cc: stable@vger.kernel.org # 6.11+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20261013054339.77477-1-liuwb@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+with a bogus, huge delta, blocking the temperature read for a very long
+time instead of returning data. The heater_enable sysfs attributes are
+affected the same way (spurious -EBUSY and "1" readback).
+
+Store the deadline as a 64-bit jiffies value and compare it with
+get_jiffies_64()/time_before64(), which does not wrap in any practical
+uptime.
+
+Fixes: 0eed6fc3d2b9 ("hwmon: (sht4x): add heater support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tom Verdonck <tom.verdonck@inspiral.be>
+Link: https://patch.msgid.link/7b2087ccb963e097cf3f6333efaec0c46549003b.1790358356.git.tom.verdonck@inspiral.be
+[groeck: Squashed 'Fix torn read' patch into this one]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ch341.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hwmon/sht4x.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/spi/spi-ch341.c b/drivers/spi/spi-ch341.c
-index 3eaa8f176f63a..170240a0dde89 100644
---- a/drivers/spi/spi-ch341.c
-+++ b/drivers/spi/spi-ch341.c
-@@ -189,6 +189,12 @@ static int ch341_probe(struct usb_interface *intf,
- 	ctrl->transfer_one = ch341_transfer_one;
- 	ctrl->set_cs = ch341_set_cs;
- 	ctrl->auto_runtime_pm = false;
-+	/*
-+	 * The CH341A SPI_STREAM command clocks data in both directions on
-+	 * every transfer, so the driver always needs a TX and an RX buffer;
-+	 * let the SPI core supply dummy buffers for half-duplex transfers.
-+	 */
-+	ctrl->flags = SPI_CONTROLLER_MUST_TX | SPI_CONTROLLER_MUST_RX;
+diff --git a/drivers/hwmon/sht4x.c b/drivers/hwmon/sht4x.c
+index 5a76361bb1350..f757265a82a6d 100644
+--- a/drivers/hwmon/sht4x.c
++++ b/drivers/hwmon/sht4x.c
+@@ -67,7 +67,7 @@ DECLARE_CRC8_TABLE(sht4x_crc8_table);
+  */
+ struct sht4x_data {
+ 	struct i2c_client	*client;
+-	unsigned long		heating_complete;	/* in jiffies */
++	u64			heating_complete;	/* in jiffies */
+ 	bool			data_pending;
+ 	u32			heater_power;	/* in milli-watts */
+ 	u32			heater_time;	/* in milli-seconds */
+@@ -92,14 +92,14 @@ static int sht4x_read_values(struct sht4x_data *data)
+ 	u8 crc;
+ 	u8 cmd[SHT4X_CMD_LEN] = {SHT4X_CMD_MEASURE_HPM};
+ 	u8 raw_data[SHT4X_RESPONSE_LENGTH];
+-	unsigned long curr_jiffies;
++	u64 curr_jiffies;
  
- 	usb_set_intfdata(intf, ch341);
+-	curr_jiffies = jiffies;
+-	if (time_before(curr_jiffies, data->heating_complete))
++	curr_jiffies = get_jiffies_64();
++	if (time_before64(curr_jiffies, data->heating_complete))
+ 		msleep(jiffies_to_msecs(data->heating_complete - curr_jiffies));
+ 
+ 	if (data->data_pending &&
+-	    time_before(jiffies, data->heating_complete + data->update_interval)) {
++	    time_before64(get_jiffies_64(), data->heating_complete + data->update_interval)) {
+ 		data->data_pending = false;
+ 	} else {
+ 		next_update = data->last_updated +
+@@ -237,7 +237,9 @@ static ssize_t heater_enable_show(struct device *dev,
+ {
+ 	struct sht4x_data *data = dev_get_drvdata(dev);
+ 
+-	return sysfs_emit(buf, "%u\n", time_before(jiffies, data->heating_complete));
++	guard(hwmon_lock)(dev);
++
++	return sysfs_emit(buf, "%u\n", time_before64(get_jiffies_64(), data->heating_complete));
+ }
+ 
+ static ssize_t heater_enable_store(struct device *dev,
+@@ -279,14 +281,14 @@ static ssize_t heater_enable_store(struct device *dev,
+ 
+ 	guard(hwmon_lock)(dev);
+ 
+-	if (time_before(jiffies, data->heating_complete))
++	if (time_before64(get_jiffies_64(), data->heating_complete))
+ 		return -EBUSY;
+ 
+ 	ret = i2c_master_send(data->client, &cmd, SHT4X_CMD_LEN);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	data->heating_complete = jiffies + msecs_to_jiffies(heating_time_bound);
++	data->heating_complete = get_jiffies_64() + msecs_to_jiffies(heating_time_bound);
+ 	data->data_pending = true;
+ 	return count;
+ }
+@@ -410,7 +412,7 @@ static int sht4x_probe(struct i2c_client *client)
+ 	data->client = client;
+ 	data->heater_power = 200;
+ 	data->heater_time = 1000;
+-	data->heating_complete = jiffies;
++	data->heating_complete = get_jiffies_64();
+ 
+ 	crc8_populate_msb(sht4x_crc8_table, SHT4X_CRC8_POLYNOMIAL);
  
 -- 
 2.53.0
