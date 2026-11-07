@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063720;
-	b=RUvL9VThbvdQb71/uk8vG9bCrbtPNUIUS31HRN8MQACxz3bTq/HzGuOhKjwzeewccCQ5
-	 yY0VSxB2tvDkVguTCS1dw6vt/3sIA8UkxQdgJB1QsdVX7Ej/+N+cHMAKQFA60VCMU8F5b
-	 3zUuhlyq/LXbXOT4+emYl6OjPVdkatHfZ5ymAi24sj/rTOgDQ3TGw9HndFrk12sZ9eKN0
-	 VMh7hyh8h6kzU/3PY+zEBxXHkeegE53FKdUJiUPre+hYOMpnEIBHCRExYcsrMdM3TP5sN
-	 UeIrNKmEmP5Ekf4ZvCWRIYjyxQcPo92vi1wKVw4L4DX0rvc1zO6S/Vrah3KRN2zVTtA==
+	t=1794063721;
+	b=aNuGvD4sf3dTzMPFRQ26WkWYUPAFAOxUG4AesUi2fBbQmR5p2xhAPPxEMYVZBf9AvP2X
+	 D26/PID1WG+HEd5lWsOJUFso6mfmPbsApC8vuGL4aRNKynUX64/+gW+tIobSeflDyZv7z
+	 XzHvC4w0f3BrbLgh9jNvdvJhsdwje5aJcKtN0DX6WMD1XtuVDbYKQws8b7/u776XTzcn4
+	 kSWXhqc1/mafDS7d+6/h2RKZW5Oah4nZ7ldspiQZfWTCNhN0geL3BEn7WwxgUtpxyEBMM
+	 cw49Yax/qErTpA5DuLhwr+Zbq+51nApx4d5slvQgzAm7xSlig+hD/oUyauN1tDn1YdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063720;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063721;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LumB+2YTncyGttT/zv6Boqk+IXTiymlr4yvTiMRt+bo=;
-	b=gFtvtTk0oM4b5+Xcf3VZ2m52TI1ZPneTyXZm/PQKQLDuSV4n2zLB1bx3Vz6w/VAUX5aV
-	 dy80xEcWJ2INwOFQNJQctu7wJrSr6nUgtOSKp+5tGyPcOCIfB0IAyL97prGMt0ExZfF5Y
-	 gy9+nKpDeodgRf3dp4is7fEkZjVrs9naOy6cVZRfDeGPa7W2EbMVKIq7qmZdNv9McfiAm
-	 EbT5widuFxsyLuwz1n+O5AfVs9HPJSsFE+T5sHz0qR9or/J2kiP9JP1Tp4ukifFukXOah
-	 Jq2ot0jHCJ5eVIsYZ9YHP/GBoy1S+Bnj8jBL4Coj5H9f8dpdgPUZiZA1CBUYBKG4cfw==
+	bh=l0YwAkajAHjLQ43vATJ+FCVdKhiMnNXZO4p43/lcKIw=;
+	b=sniLB/wxSVbs1NRASxn9dp7y/qkkTLr5K0WSDERxmvg4uE4bBINyXegJjfPvvIXC0WGp
+	 bMmEhtlbF139pVARSc/Qhfr3t1V2OtL0jHjZRUXu3IrO0dKoH69SYcpBHjWsx8UHCUmUe
+	 JOGlQ5iGS8IstBVkdBysShMN5Lrl7qdsfggtRv/Mf7o1Uo2CIUzp7R2E4O5Wrx1per1SL
+	 zKJn+qP5Aoejn7UZUBBEfrK17NmMxK+kOPuxzES5XhYajPuO2dOm5rO1QK+LZvRww6J9B
+	 GMm9nvJxEPZCkZXX6bmF2yR+zciQlplelkeQbq92ZX6FKldjLjwaEQZ9/Jj9IBC4A9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIdsVzVh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uL0EZDgq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCA1606D83F;
-	Sat,  7 Nov 2026 15:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D54606A32E;
+	Sat,  7 Nov 2026 15:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIdsVzVh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96A91F0089F;
-	Sat,  7 Nov 2026 15:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uL0EZDgq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F8F1F0089F;
+	Sat,  7 Nov 2026 15:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063720;
-	bh=LumB+2YTncyGttT/zv6Boqk+IXTiymlr4yvTiMRt+bo=;
+	s=korg; t=1794063721;
+	bh=l0YwAkajAHjLQ43vATJ+FCVdKhiMnNXZO4p43/lcKIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DIdsVzVhlw7HbCmDjBMyrsmHsZtsnIaNMZS+eroPO9FNGA3O54eXvTJhK9abofEuY
-	 2bpJQKHzXjCep/pAVyfBl0rMKM5FeteLzz8a2ni0TOGbPcOB/O1Pezv2iyqBjJgsOB
-	 onCjOB/7OQCqi0e9dFPYg57UP7idMhBc6Vgpi4Ss=
+	b=uL0EZDgqxDigdeYabpmETU3XeEOFFbKNjiDPqFYwkYiFre1u2KYebt1cZqqL0a2mS
+	 2bcyHqLPxcaytuiKtuh6SKfqsus10G8B5yHn8W1plI/6qmOwMNQ8vQ6PUKaXmXO4Pk
+	 A8xBRfEHwqVGzCG9RDAvb5Wg2SllldzGJYSbuf0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Kamil Sawicki <user148783812897@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
+	Xia Yan <yanxia@cmss.chinamobile.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 820/869] net: limit priority VLAN untag depth
-Date: Sat,  7 Nov 2026 08:58:22 -0500
-Message-ID: <20261107134920.790500352@linuxfoundation.org>
+Subject: [PATCH 6.18 821/869] macvlan: fix passthru promiscuity accounting while down
+Date: Sat,  7 Nov 2026 08:58:23 -0500
+Message-ID: <20261107134920.820056959@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,72 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamil Sawicki <user148783812897@gmail.com>
+From: Xia Yan <yanxia@cmss.chinamobile.com>
 
-[ Upstream commit d3ff07f5acc573e5f72bf1c581bae5d05191ba61 ]
+[ Upstream commit b6743653d134c9ef8436e2db1be1ad4c1e0d0091 ]
 
-The priority VLAN receive path can repeatedly remove VID 0 tags and retry
-packet processing. Unlike the read-only VLAN protocol parser, this path has
-no limit on the number of nested tags it consumes.
+macvlan_changelink() adjusts the lower device's promiscuity count when
+NOPROMISC changes, even if the passthru macvlan is down. The reference
+is acquired in macvlan_open() and released in macvlan_stop(), so a down
+interface has no reference to change.
 
-Each skb_vlan_untag() advances skb->data and resets header offsets. The
-offsets are stored in 16-bit fields. With enough nested tags, the network
-or transport offset can wrap. A later protocol handler can then derive a
-large pull length from the wrapped offsets and access memory outside the
-skb allocation.
+Clearing NOPROMISC while down leaves an extra reference after the next
+open/stop cycle. Setting it while down can remove a reference held by
+another user of the lower device.
 
-Apply the existing VLAN_MAX_DEPTH limit to the exceptional VID 0 retry.
-Count the tag already stored in skb VLAN metadata as the first level, then
-stop before untagging a ninth level. Keep the accounting inside this
-uncommon branch so the regular VLAN receive path is unaffected.
+Guard the count adjustment with netif_running(dev). Keep storing the
+requested flags while down so the next open uses the new setting.
 
-A single VID 0 priority tag before a real VLAN tag is valid. No normal
-deployment was found that intentionally emits multiple consecutive VID 0
-tags; permitting eight levels is therefore conservative.
+Comparing changelink with open/stop exposed the unmatched count changes;
+the same issue was also described in earlier macvlan reviews. A netlink
+test on UML reproduced both DOWN cases before the fix and verified the
+expected counts afterwards. Repeated flag updates, two open/stop cycles,
+deletion and bidirectional small-frame delivery were also checked.
 
-The issue was found while researching the Linux network receive path for
-Google kvmCTF, with OpenAI Codex (gpt-5.6-sol) assisting the analysis. The
-affected path, reproducer and fix were manually reviewed and tested.
+Full x86_64 builds completed with WERROR disabled for allmodconfig, and
+WERROR and KASAN disabled for allyesconfig, including the resulting
+dependency changes. Neither comparison showed new diagnostics.
 
-Fixes: 36b2f61a42c2 ("net: handle 802.1P vlan 0 packets properly")
+Fixes: df8ef8f3aaa6 ("macvlan: add FDB bridge ops and macvlan flags")
+Link: https://lore.kernel.org/netdev/179170088566.434549.4699134797461783473@kernel.org/
+Link: https://lore.kernel.org/netdev/20261016003009.2692872-1-kuba@kernel.org/
 Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Kamil Sawicki <user148783812897@gmail.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261024004835.17862-1-user148783812897@gmail.com
+Signed-off-by: Xia Yan <yanxia@cmss.chinamobile.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261022090809.12019-1-yanxia@cmss.chinamobile.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/macvlan.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 0bfd5e9940df0..673223065b955 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -6074,6 +6074,8 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
- 	}
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index 7151ae883136b..c38989009c76f 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -1630,7 +1630,8 @@ static int macvlan_changelink(struct net_device *dev,
+ 	if (data && data[IFLA_MACVLAN_FLAGS]) {
+ 		__u16 flags = nla_get_u16(data[IFLA_MACVLAN_FLAGS]);
+ 		bool promisc = (flags ^ vlan->flags) & MACVLAN_FLAG_NOPROMISC;
+-		if (macvlan_passthru(vlan->port) && promisc) {
++		if (macvlan_passthru(vlan->port) && promisc &&
++		    netif_running(dev)) {
+ 			int err;
  
- 	if (unlikely(skb_vlan_tag_present(skb)) && !netdev_uses_dsa(skb->dev)) {
-+		unsigned int priority_tag_depth = 1;
-+
- check_vlan_id:
- 		if (skb_vlan_tag_get_id(skb)) {
- 			/* Vlan id is non 0 and vlan_do_receive() above couldn't
-@@ -6085,6 +6087,12 @@ static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
- 			 * 802.1Q or 802.1AD and vlan_do_receive() above could
- 			 * not find vlan dev for vlan id 0.
- 			 */
-+			if (unlikely(priority_tag_depth >= VLAN_MAX_DEPTH)) {
-+				drop_reason = SKB_DROP_REASON_RECURSION_LIMIT;
-+				goto drop;
-+			}
-+
-+			priority_tag_depth++;
- 			__vlan_hwaccel_clear_tag(skb);
- 			skb = skb_vlan_untag(skb);
- 			if (unlikely(!skb))
+ 			if (flags & MACVLAN_FLAG_NOPROMISC)
 -- 
 2.53.0
 
