@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060789;
-	b=TI4ukjeJesLmN956aU9jnoQCuBR3VFwo6enAAoCZxUf+0IlGr5p5CCRpjuPEH1J/Ll/h
-	 2gqV91+Odz1cGKmgSzKpn88hGfVwGnfYZXsOfdWpBV+xbdDPk13P5Kpk0NS8eK6wlOsjI
-	 JHmfb4yOdNxtts7T3up3DXN5Gw1aIVKVdaOUp5Js/O/R6sfUnRawkHwNbN6ZkfeG+AUPk
-	 qxGvF2B0/0wdb68lw/X2UXOMpxsdg4mS9dy0t8YY7i3YWrlE/jY4PeaNo1oAkiXMuniE0
-	 eNZ+lE1/16L6IP116hJ725VBgPSTN+rIR2DIUUphSdvgM+uD66VSiBzhxcO04+mV4XA==
+	t=1794060790;
+	b=sqA5uYi6nM8X/ZE1MPMYlQiN7VSw/qd3xy9ujV866prAFau7LmT2vm76cHzR9ZSimSZm
+	 LGLQcmolhY0BYyy1I/qYR73Vmm24qUrSUreYlX2KShTKBCnMQ2A87vcrjKfQ2MZDym/hO
+	 kCiMB0/oK9xagLidOkTwLUCFQZCfbcOYwz2kjSC2021J5LUNqaFYMAXTOaUVHvlJK3FuZ
+	 RF39kXvThUyB3C12iFOfTUS/MmV4nUP72QtHtgiUg+sa4dMm1RjCLrKv3SNDH4zGKqArM
+	 jnOgEi6xU1xnhTMicZ7jRKnM6BbhfMZ7Zu04X8GjN8m+SPfp5YD8v3pV2CxHTBySgZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7e08uW0nvbYI6Kj7mOHaORrSRs9MMmmI2X5kmNS6c/4=;
-	b=ACfWvKzJpJyU470+CbIud8q/1fjsiR0Il5KBxPuksg5zqGYNJRAuIsaPtZuuHTjLptZ/
-	 zAWtXQpnejusEAL8OHvDFmhQ0uU6PNbSkOW3qhgLMdnHYcQ0ddNAr5Zn1laTFGT2PgFuC
-	 vwGmavYmHEoOC6qZYSMRNR4UPX63s5oaI+qqnHGrSFOPBaOFj8wSikao5JkRD918KTSyD
-	 kY0XvcSM5ezaDPEs6fme2Tq2ocwhmMRg8rxNnjIgQ8e4smRQQGpZ9TsyYtAGqJlkliU2f
-	 9aWuqzDfAKjuQQR+aSILWUam9Bu4N46hmrwQd+WuS2ORe/aj4xA5ROYvciuRHTuDx5w==
+	bh=hdnWm08/x37FubN3wyuJSzeO/6iXih+oQ7yDIMlWWTw=;
+	b=3BhNjXjnzl5kjgDXrXMe2Gyj33/VVHO0brJm9UHLxkxbXhz8/K8Q9W+mrTab/CpT059l
+	 5orCELGShWiSyP8TBP0Dj0Sit0UEQixNnYbe/zjjjvqVwJYujmDu9MeyeT7jepp23cyle
+	 1IgAAFDWGMR7qeqUTQzEdGIWGi3/bVN+TAdv57jHyrbdx93+zqVkVi/lHwBzCXZMAVkF2
+	 fScfcL3gIFyduVhpY3v117UtlNoci0NYn3orUpm/54trSC4J3onGAJkKr5u3lxPbayOH4
+	 JdqKyU+PWASY/fWa3ao5P2YSb1/un1NMV2WaTQzbTxXPpjxuDfejV2XozFtxJChK3Kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XIyq94Eq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxtCgjjH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB55A606A326;
-	Sat,  7 Nov 2026 14:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A47606A332;
+	Sat,  7 Nov 2026 14:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XIyq94Eq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945C81F0089F;
-	Sat,  7 Nov 2026 14:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxtCgjjH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AAA1F0089F;
+	Sat,  7 Nov 2026 14:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060788;
-	bh=7e08uW0nvbYI6Kj7mOHaORrSRs9MMmmI2X5kmNS6c/4=;
+	s=korg; t=1794060790;
+	bh=hdnWm08/x37FubN3wyuJSzeO/6iXih+oQ7yDIMlWWTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XIyq94EqKJgTYX90E/hTr+c4Rw4RdlEfXKoFukbpAL5pzTL4L64vwNsOGjliczx6h
-	 NhF98f1kvXnGirFEjEgisQEceDScwsEavI4543sSJbGCYZKwJQ1TUoC2deyHIZnzUy
-	 HyiJr6/P2LAnoMOBKbPW/zN69EhFo9Jbf2yoM2ew=
+	b=YxtCgjjHFmU/PVb8nyFHsxveZM2PjyynPGd0vqh/I4obkVuy0W5KzlChUTMTVkI3A
+	 uOl1YWTDf5snKzu48TYXKg/QUrcATw6iyGnmebOkHIAr483wUL3VXvWbGhX7KC5DS0
+	 FGOUXZ/XnpZpraTbz+pwmt9Eo3c4FMW8EXyWa7Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0166/1536] wifi: iwlwifi: mvm: ignore sync frames when sync is disabled
-Date: Sat,  7 Nov 2026 08:36:22 -0500
-Message-ID: <20261107135002.330613248@linuxfoundation.org>
+Subject: [PATCH 6.12 0193/1536] wifi: ath11k: validate regulatory capability phy_id
+Date: Sat,  7 Nov 2026 08:36:49 -0500
+Message-ID: <20261107135003.081638383@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,44 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit a790f60cc4d7dc64a2d7cadb94a3d9f60392bed4 ]
+[ Upstream commit f8729a40ebcc94d164be8f154483a21669f3ab52 ]
 
-Gate time-sync frame interception on the active flag so frames are not
-queued after time-sync teardown.
+ath11k_wmi_tlv_ext_hal_reg_caps() copies firmware regulatory
+capability records into soc->hal_reg_cap[] using reg_cap.phy_id as
+the destination index.  The loop count is bounded by num_phy, but the
+phy_id embedded in each record is not checked against the fixed
+MAX_RADIOS-sized destination array.
 
-Assisted-by: GitHubCopilot:GPT-5.3-Codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260717172958.ac73ee199a25.Ic1489244f9b02da93060f0a0e5b300a73527f265@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reject firmware records whose phy_id does not fit soc->hal_reg_cap[]
+before copying the parsed capability.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260704011040.26233-1-pengpeng@iscas.ac.cn
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/ath/ath11k/wmi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h b/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h
-index 2cfd0fb5e781a..7bdbacb640787 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/time-sync.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
- /*
-  * Copyright (C) 2022 Intel Corporation
-+ * Copyright (C) 2026 Intel Corporation
-  */
- #ifndef __TIME_SYNC_H__
- #define __TIME_SYNC_H__
-@@ -19,6 +20,9 @@ int iwl_mvm_time_sync_config(struct iwl_mvm *mvm, const u8 *addr,
- static inline
- bool iwl_mvm_time_sync_frame(struct iwl_mvm *mvm, struct sk_buff *skb, u8 *addr)
- {
-+	if (!mvm->time_sync.active)
-+		return false;
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index a184a7e3452c0..1911b4e50abb9 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -4816,6 +4816,12 @@ static int ath11k_wmi_tlv_ext_hal_reg_caps(struct ath11k_base *soc,
+ 			return ret;
+ 		}
+ 
++		if (reg_cap.phy_id >= ARRAY_SIZE(soc->hal_reg_cap)) {
++			ath11k_warn(soc, "invalid reg cap phy_id %u\n",
++				    reg_cap.phy_id);
++			return -EINVAL;
++		}
 +
- 	if (ether_addr_equal(mvm->time_sync.peer_addr, addr) &&
- 	    (ieee80211_is_timing_measurement(skb) || ieee80211_is_ftm(skb))) {
- 		skb_queue_tail(&mvm->time_sync.frame_list, skb);
+ 		memcpy(&soc->hal_reg_cap[reg_cap.phy_id],
+ 		       &reg_cap, sizeof(reg_cap));
+ 	}
 -- 
 2.53.0
 
