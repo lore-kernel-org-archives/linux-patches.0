@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063266;
-	b=o9L7Zr7t9KsXJj/9Cg3zpLYbTYFAKq3dUxtlfW9fJXe9LJA/oIwmZJ+AdKqGAOOc8qTW
-	 wDDjH3Kw5i5xhfyo15WsdqAQBhm8i14jBkCJ7OglY2CTcXrrIllzPAFjWSC174ZyaI1/B
-	 eW6RhRxtJrUGrkpxnZLGirEmq7i57zi3OSFqn9odUf1SGRThKd1EEaIHt32ODy2mJv+Qv
-	 bmINwDfEtIeYUJADKwrBXCPR4q6+nB0ytUI+oNOCBti+UiYPC5A9HH6d7jn0yP+JvgsJy
-	 cGZJRTVLFncujnZ+25BmMMY6E6yqIAMRReI2HdlacM/bH3S6RkMU9gIs0wQYUV3WmHA==
+	t=1794063267;
+	b=A4ES8qq14IhPNSwTn5ytjrv6x5OTvsGjl+Z3oJazqcscrccNmUGHDQVxH6vZ/70lPGRQ
+	 UCXRjj/aTevo7BHO7BBECSPi+BmfCMxE+jTM2+quMMeop9jywKXDq+tbmkRFe3hFDI9oN
+	 4tnIblLn1JKGMexM6oWDXAAgNgPCcWvIEBJTnym2Ed7ofy4pkWSq+EyUJhfrrOaDBAJQg
+	 J7uN7cISTSlljX1xYfO2UunRI5rBRmzuY7GoV1PhigZ53PNp7z4hrcs5pyrsdJPN8CkV6
+	 Zuj3Yoq3AEXd/KJl+bX3623cbzIdbXDdP8b1Ge9d7niEEQsfssUEjakX/RXUQowfZGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063266;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063267;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GMGeueMEoXc5CoOqVsLi1ygv6S/egljNPlIUPLr4ISw=;
-	b=392Dh+maqudbXGeTZ98ahXaYaonW1SKaW+khAgFofrHKWtGF9F1rjegs0rqnBDZHDtf2
-	 IYG62CxhH58zyXa86ce4WkSJXYl35+9w+gFxXjH0EK7Mhmuy69gRMWHL+TPqYj6/smCRj
-	 a7sKzz8vg2FuowBwo5W+P7ijeTomK1wYfyY04Ei/yFU/0CS2keFElinsyUH3pA+KFDC7w
-	 DvYYqrfzGD4OGuUxbgzJx473ZQiTfA6zanxzj4ByXxhYIAuTP1EtpJxOFRsNilz+3DDf/
-	 apPgl6/iYzRG1kgJ4+oP4WcaRhSl8K90NYFBjrq5hqwRDYWJrN0hSashaG9m3oKYryA==
+	bh=isBWlDrvUr4H+vG0hAmVIIkBn+FrMz+W/cmOfgmRmHM=;
+	b=XjnVuB9BCveMYsrzUT+zuSfVoKpY0LDb6Gv9AgCkVx/j/69yNE40U+o1xv8ZtOYgDucJ
+	 mLmXFLzWYzRuUMY0vO4lOkqUQ44NbEW8208oERaY7j4VOOiD8+vQgm9hEOMBCnrbDs+ZO
+	 RTmWfgxizHR4zexis5KTsW/sBQ9C57+i0i2JJPHbIwHigQV5qXsxKjrJh43imAGHEEfOZ
+	 1mPssMVgpmnhLyYAk0gL5LROpd7OyVAsn9lXNn7Mypi18lKZywrybl2irTHaPZyee5DHS
+	 cbSNDL6VhvjI+T+dmhJF6q3/dLtlz0qsaYhW3b4zuUfwc6lZ0CiJgGEDGbEGmaapOUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FgBrCREI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUikKE1g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276B8606A331;
-	Sat,  7 Nov 2026 14:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5CF606A331;
+	Sat,  7 Nov 2026 14:54:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FgBrCREI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1FB1F0089F;
-	Sat,  7 Nov 2026 14:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUikKE1g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184F71F0089F;
+	Sat,  7 Nov 2026 14:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063266;
-	bh=GMGeueMEoXc5CoOqVsLi1ygv6S/egljNPlIUPLr4ISw=;
+	s=korg; t=1794063267;
+	bh=isBWlDrvUr4H+vG0hAmVIIkBn+FrMz+W/cmOfgmRmHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FgBrCREIXWb7KibFzFGXZFTFT8yc3IRCSkTSfmY1ey3vENRYqq4hRQdPDGiw9Ev3b
-	 32q/hbr9JffpfdLxNMlcsgztb1ziiIzAgA7rFrV5dimzkCUkke0i6TEeJaRZWIZpg8
-	 AYDkvVldOtYcxfooOf4RQ9hrS/pZynRMvAm7ygo8=
+	b=oUikKE1goc67V5MkAZqD763GatbxB6q/Te1v68GkxfwpaHf9Cv7eNo3lysFd7V70T
+	 xLCpMl4wucJVppMHhSdOGe3qbbIgypWfWsAhdcbiescMNx/fPUFUzvzEI9mRlh07bG
+	 /w9yQO2v/r63nhlejZrkr9iKd9exVQhQ7RzO70kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Danesh Petigara <danesh.petigara@broadcom.com>,
+	Justin Chen <justin.chen@broadcom.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 464/869] mailbox: altera: shut down RX polling timer on channel teardown
-Date: Sat,  7 Nov 2026 08:52:26 -0500
-Message-ID: <20261107134909.397035487@linuxfoundation.org>
+Subject: [PATCH 6.18 465/869] mailbox: bcm74110: Cap rx_svc_init_list growth to prevent PMC-induced OOM
+Date: Sat,  7 Nov 2026 08:52:27 -0500
+Message-ID: <20261107134909.427027197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,43 +70,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 0cf10e65639cba32d05994f85e6a8f08dd0ffe08 ]
+[ Upstream commit eb2ee504757674450a5e03e36e6b9340f064e599 ]
 
-The RX polling callback unconditionally rearms the timer after it
-processes mailbox data.  altera_mbox_shutdown() uses
-timer_delete_sync(), which waits for a running callback but does not
-prevent that callback from rearming the timer after the deletion.
+bcm74110_rx_push_init_msg() allocates a GFP_ATOMIC struct for every
+BCM_MSG_SVC_INIT word received from the PMC co-processor and appends it
+to rx_svc_init_list with no cap on list length.  The only consumers of
+this list (bcm74110_rx_pop_init_msg_block / bcm74110_rx_flush_msg) are
+called only during probe and at shutdown respectively; after probe
+completes, PMC firmware can continuously inject BCM_MSG_SVC_INIT words,
+exhausting GFP_ATOMIC reserves and causing a whole-device denial of
+service.
 
-Use timer_shutdown_sync() for the final polling teardown so the timer
-cannot be queued again while the mailbox channel is being released.
-The timer is reinitialized with timer_setup() on a later channel startup,
-so polling mode remains reusable.
+Add BCM74110_INIT_MSG_MAX (16 entries) as the maximum list depth.
+bcm74110_rx_push_init_msg() now checks the count under the existing
+rx_svc_list_lock before allocating; if the cap is reached the message is
+dropped and a rate-limited warning is emitted.  The new rx_svc_init_count
+field is decremented by bcm74110_rx_pop_init_msg() on successful dequeue
+and reset to zero by bcm74110_rx_flush_msg() on shutdown.
 
-Fixes: f62092f6d77d ("mailbox: Add Altera mailbox driver")
+Fixes: 52436007b862 ("mailbox: Add support for bcm74110")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Assisted-by: Anthropic:claude-sonnet-4.6 cursor
+Signed-off-by: Danesh Petigara <danesh.petigara@broadcom.com>
+Acked-by: Justin Chen <justin.chen@broadcom.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-altera.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mailbox/bcm74110-mailbox.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/mailbox/mailbox-altera.c b/drivers/mailbox/mailbox-altera.c
-index 17278c2571d34..7cb91413ef7fc 100644
---- a/drivers/mailbox/mailbox-altera.c
-+++ b/drivers/mailbox/mailbox-altera.c
-@@ -270,7 +270,7 @@ static void altera_mbox_shutdown(struct mbox_chan *chan)
- 		writel_relaxed(~0, mbox->mbox_base + MAILBOX_INTMASK_REG);
- 		free_irq(mbox->irq, chan);
- 	} else if (!mbox->is_sender) {
--		timer_delete_sync(&mbox->rxpoll_timer);
-+		timer_shutdown_sync(&mbox->rxpoll_timer);
- 	}
+diff --git a/drivers/mailbox/bcm74110-mailbox.c b/drivers/mailbox/bcm74110-mailbox.c
+index 2e7e86f3e6a4a..0ae6c56b87869 100644
+--- a/drivers/mailbox/bcm74110-mailbox.c
++++ b/drivers/mailbox/bcm74110-mailbox.c
+@@ -97,6 +97,8 @@ struct bcm74110_mbox_chan {
+ 	int				type;
+ };
+ 
++#define BCM74110_INIT_MSG_MAX		16
++
+ struct bcm74110_mbox {
+ 	struct platform_device		*pdev;
+ 	void __iomem			*base;
+@@ -105,6 +107,7 @@ struct bcm74110_mbox {
+ 	int				rx_chan;
+ 	int				rx_irq;
+ 	struct list_head		rx_svc_init_list;
++	unsigned int			rx_svc_init_count;
+ 	spinlock_t			rx_svc_list_lock;
+ 
+ 	struct mbox_controller		controller;
+@@ -148,7 +151,15 @@ static void bcm74110_rx_push_init_msg(struct bcm74110_mbox *mbox, u32 val)
+ 	msg->msg = val;
+ 
+ 	spin_lock(&mbox->rx_svc_list_lock);
++	if (mbox->rx_svc_init_count >= BCM74110_INIT_MSG_MAX) {
++		spin_unlock(&mbox->rx_svc_list_lock);
++		kfree(msg);
++		dev_warn_ratelimited(&mbox->pdev->dev,
++				     "PMC INIT msg list full, dropping message\n");
++		return;
++	}
+ 	list_add_tail(&msg->list_entry, &mbox->rx_svc_init_list);
++	mbox->rx_svc_init_count++;
+ 	spin_unlock(&mbox->rx_svc_list_lock);
  }
  
+@@ -225,6 +236,7 @@ static int bcm74110_rx_pop_init_msg(struct bcm74110_mbox *mbox, u32 func_type,
+ 				 list_entry) {
+ 		if (BCM_MSG_GET_FIELD(msg->msg, FUNC) == func_type) {
+ 			list_del(&msg->list_entry);
++			mbox->rx_svc_init_count--;
+ 			found = true;
+ 			break;
+ 		}
+@@ -248,6 +260,7 @@ static void bcm74110_rx_flush_msg(struct bcm74110_mbox *mbox)
+ 
+ 	spin_lock_irqsave(&mbox->rx_svc_list_lock, flags);
+ 	list_splice_init(&mbox->rx_svc_init_list, &list_temp);
++	mbox->rx_svc_init_count = 0;
+ 	spin_unlock_irqrestore(&mbox->rx_svc_list_lock, flags);
+ 
+ 	list_for_each_entry_safe(msg, msg_tmp, &list_temp, list_entry) {
 -- 
 2.53.0
 
