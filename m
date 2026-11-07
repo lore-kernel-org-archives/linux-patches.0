@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061108;
-	b=CebLgGMNZyT3xKgPJU6XzyEilDGG9O0pT/3w0mKLv1jS/Cw7fghIVLEXlgKGiLfbHuVg
-	 lCta/8JyWje+FQh9bdZTGVYo8szC/qk39tZL13x/aEx81rzZZr/Md8tizuOidRmIxzvwp
-	 yEUDEXHnWlfI97FYMunRdi/9FFbtdgfVid3h8Zocwdn+66bxoLHyw69yq3Ml9EgHSx6/k
-	 aKmj3eGmYI3eiT1whVsZjAURIeuy/ocgWTZMeasNp/V5QJ7yXpVfTOu9vSlLOnRVGWG2U
-	 f7s838AHQ15LE7+TUFB0ML39ZTMIisX7oafTjHBYhF4cS1PeDuZXBMhdTByW8vHxiEQ==
+	t=1794061110;
+	b=ouYm+tRXFfxFdsNcPlwkGjP8KuiVdPdr3d4bUREsxeqkS0AnV7lMixFp1q086iDL+C4n
+	 cfozh6u2o//CkIXRpzAnyzbsl+wV6XDxQPbeXB0/xve3YH2FLl+DxR2Fn7ibBGXYr5gOg
+	 S71M1pmUeHrgA3G+5NjW6HvEw8MxatJhLOjKP67/zWQrO3aD0cYCJqzcuYAMtmKEoTTxy
+	 3wIZqGFuDfIwbnFDoLvwEJ5fen5KC50qB5O/XspmhIUHjUNxc74ohhn4T1z0d/aJh0rt3
+	 BtKjjFxBBWawApPMpvJTprf+IdCQNlGeIW68QX4F1bxckzCFTWU+8bGKPpjhezFkK9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VbOQu3e12HGlWXQTpQuQt6QmpuMlVeJ/VubWfhLCo8o=;
-	b=ajRKpRaeKONFg+Y3h02nFhSpfYGDQlDdaC8OtKdcyyyRQWUjFPUh20diiJTdJt7eSd0x
-	 iEv5A197uQOKaEFrdxkEQdBZNxq4TTl1weGCvjtLN79kskeVY8WfQ7aM/oF9rWC1ZcN34
-	 Z8utLytST3j7t5jh2SDCE11qpzAYXW0Y5zethap4OCmfLl6ZVlsvbzSJpcpyf46Dv9pYI
-	 bvTQ2PUsRUGJdULTmsypDf1EaVyKwRe8Ob5PG05tUPtKIV9RvtWaNiKc9ETzZn8DdAFD0
-	 FHAOeZRESllpEaKEfJb1uS52S/OLlHJc2njQ/CG6Ewp1jBkcaJXxFStEcyje9qPWSJQ==
+	bh=Nsh9AfXAwl5J72fJpIcirhQvUiGX+TV6gpya+L/Bk4k=;
+	b=HZnOKmCce0h4+yqaKNzp9cQdp5umcq/cRKBCqbQudchiuiJbyM5oh3Pw5RHBHOjCa5cG
+	 /+iq2xGxiz7PUyomjCuqvcQsSfXCv+UGkcHthCl/quFeNp5ZVNgHy7W0mtMCpak9lNk1R
+	 owfj2rwAro6tB9d8j+Ni0k5L6YRIH1Lp+nhKky8syGUFGB5556ObcHvauMdLX6eKgLX+S
+	 HmSz0NfGt7STejLH5sE7WfeqP9BIJhfDotASh9xD60t8i/DkA1Sl7xG6a0Y8Y1kNlrUr0
+	 nWS5/4gPsGVETZWntETxzsJr+BOo5nEQtaHbtH1GJLIUw+YL9ZywmpRmQc9f+duU8Cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1pqE4fU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WkrFMReg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D43606A332;
-	Sat,  7 Nov 2026 14:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6141606A332;
+	Sat,  7 Nov 2026 14:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1pqE4fU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C822A1F008A2;
-	Sat,  7 Nov 2026 14:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WkrFMReg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537A01F0089F;
+	Sat,  7 Nov 2026 14:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061108;
-	bh=VbOQu3e12HGlWXQTpQuQt6QmpuMlVeJ/VubWfhLCo8o=;
+	s=korg; t=1794061109;
+	bh=Nsh9AfXAwl5J72fJpIcirhQvUiGX+TV6gpya+L/Bk4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a1pqE4fUMURJnZOkJdRoIqzMBk6wYJkRu5ralLD1DTp0VOQgVq3gMLMOEqC35ovau
-	 rCMj6+2E84WcAXyFR03b6q9dpaUBhXs4Vd02zrnj7ARq3/LXpPEPHdynf/HSC2jZ2C
-	 RhsvjH8YPV9kib7hP9IkN6noytWCfMcY7RpkVve0=
+	b=WkrFMRegTIuJ9aUH97sVJmJY0lDXpmFnNVLLmFMYrYiSPAMGy2lrq01JhclH9GjL6
+	 9MqJEdkqCWGj7DC2yUaQyZU40oViMjCUkVse+Oq+dt2rJxcQ404D7rrfQIqmWzhD7u
+	 XvLOrQ9+p5Br7HAMfBPW1MXB1R2KovPXhHb7pp5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matus Gajdos <matuszpd@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Michael Reeves <michael.reeves077@gmail.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0426/1536] ALSA: usb-audio: Add native DSD support for Cambridge Audio streamers
-Date: Sat,  7 Nov 2026 08:40:42 -0500
-Message-ID: <20261107135009.531220909@linuxfoundation.org>
+Subject: [PATCH 6.12 0427/1536] regmap: Remove debugfs before cache teardown
+Date: Sat,  7 Nov 2026 08:40:43 -0500
+Message-ID: <20261107135009.560189257@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,44 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matus Gajdos <matuszpd@gmail.com>
+From: Michael Reeves <michael.reeves077@gmail.com>
 
-[ Upstream commit 4e1462e7cd6a9b920f441842726cc2b9d232673e ]
+[ Upstream commit 834035934cef9e60169de682f4dc9feafd49e51a ]
 
-The Cambridge Audio streamer advertises the UAC2 RAW_DATA format on
-altsetting 2 of its playback interface, but without the DSD_RAW quirk
-flag the driver exposes it only as a SPECIAL format that cannot be
-used.
+regmap_exit() and regmap_reinit_cache() destroy the register cache before
+removing debugfs. A concurrent debugfs cache operation can therefore
+access cache state after the backend exit callback starts freeing it.
 
-Add QUIRK_FLAG_DSD_RAW for the device (USB ID 22e8:ca10), so the
-altsetting is exposed as DSD_U32_BE, enabling native DSD64/128/256
-playback.
+Remove debugfs before cache teardown, and clear the debugfs pointer after
+removal. During cache reinitialization, recreate debugfs only after the
+new cache initializes successfully.
 
-Tested with: gst-launch-1.0 filesrc location=file.dsf ! \
-                            avdemux_dsf ! dsdconvert ! \
-                            alsasink device=hw:2,0
-
-Signed-off-by: Matus Gajdos <matuszpd@gmail.com>
-Link: https://patch.msgid.link/20261002125237.82188-1-matuszpd@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Michael Reeves <michael.reeves077@gmail.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20261006-regcache-lifecycle-submit-v3-1-37bdd82fd47c@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/base/regmap/regmap-debugfs.c |  1 +
+ drivers/base/regmap/regmap.c         | 15 +++++++++------
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index cc8d755256f2e..f224e41209e86 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2367,6 +2367,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x21b4, 0x0232, /* Ayre QX-5 Twenty */
- 		   QUIRK_FLAG_DSD_RAW),
-+	DEVICE_FLG(0x22e8, 0xca10, /* Cambridge Audio streamers */
-+		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x2522, 0x0007, /* LH Labs Geek Out HD Audio 1V5 */
- 		   QUIRK_FLAG_SET_IFACE_FIRST),
- 	DEVICE_FLG(0x262a, 0x9302, /* ddHiFi TC44C */
+diff --git a/drivers/base/regmap/regmap-debugfs.c b/drivers/base/regmap/regmap-debugfs.c
+index fb84cda92a753..d65f6dd8c1215 100644
+--- a/drivers/base/regmap/regmap-debugfs.c
++++ b/drivers/base/regmap/regmap-debugfs.c
+@@ -667,6 +667,7 @@ void regmap_debugfs_exit(struct regmap *map)
+ {
+ 	if (map->debugfs) {
+ 		debugfs_remove_recursive(map->debugfs);
++		map->debugfs = NULL;
+ 		mutex_lock(&map->cache_lock);
+ 		regmap_debugfs_free_dump_cache(map);
+ 		mutex_unlock(&map->cache_lock);
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index 3b2e27af91fe6..75460428f6300 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -1425,8 +1425,8 @@ int regmap_reinit_cache(struct regmap *map, const struct regmap_config *config)
+ {
+ 	int ret;
+ 
+-	regcache_exit(map);
+ 	regmap_debugfs_exit(map);
++	regcache_exit(map);
+ 
+ 	map->max_register = config->max_register;
+ 	map->max_register_is_set = map->max_register ?: config->max_register_is_0;
+@@ -1442,12 +1442,16 @@ int regmap_reinit_cache(struct regmap *map, const struct regmap_config *config)
+ 	if (ret)
+ 		return ret;
+ 
+-	regmap_debugfs_init(map);
+-
+ 	map->cache_bypass = false;
+ 	map->cache_only = false;
+ 
+-	return regcache_init(map, config);
++	ret = regcache_init(map, config);
++	if (ret)
++		return ret;
++
++	regmap_debugfs_init(map);
++
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(regmap_reinit_cache);
+ 
+@@ -1461,9 +1465,8 @@ void regmap_exit(struct regmap *map)
+ 	struct regmap_async *async;
+ 
+ 	regmap_detach_dev(map->dev, map);
+-	regcache_exit(map);
+-
+ 	regmap_debugfs_exit(map);
++	regcache_exit(map);
+ 	regmap_range_exit(map);
+ 	if (map->bus && map->bus->free_context)
+ 		map->bus->free_context(map->bus_context);
 -- 
 2.53.0
 
