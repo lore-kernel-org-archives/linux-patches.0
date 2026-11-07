@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062452;
-	b=1Z3S1Tx+D+84RCfFBwnY1gBKRQNSHSRSx0PgLM6S3cF06QQN8uq15xr+9e32Z14Aj5Oa
-	 y3QUw0CtS6VYVXngZJ3McFljAkD2Fht9Ej93I7FUzlJjlydTTAbh6pXG8cDNpjMrdno8h
-	 9PypAMPrOZqWhin/cOOc0MdW2aReqjRjvp5cT9gMBJvsPHPIDKsBvRvcdjPt0hs75JSqU
-	 +FwuLeTX5oHsPXPXIfzXIqPOU1gSaOz4nsL21b7Y7VZ4YTCO6gTHp8EDumix3wrnhpniG
-	 0LjfC8XapMDY6vpZOq4wnyKgD3/U/8rT77Hfs3Bmbo4H/hXMBvXwxiGAVHbZdBQfItw==
+	t=1794062454;
+	b=H1nl8YkULT3f0XHRVpURpBQL8+Nl9Ke0TNhT0T7fbYf56OS57UpYBlE37RxOyGLbxmRE
+	 V1Bt/A2m7EkUv83MCWKPKPYNju298g6+t5S5eXdEf1cBK8TawFe5mWIahqhpix4i5CJz6
+	 V7EAwklL/KT9X1eI8TQeGpHzx3ogCaluHbY5uOCFH4JNAHhHgivTzukL9rtlfhIpUKLou
+	 r8LL4PaxuxU36EUyOo/ytoMgoB14/sRz/6ne1Tft5XkhRoFlqOmagFi3lDjHdYxDHyu/B
+	 xV2npil3L982tDbd54HRT62jQzy6iDHPz+wMXnxjXDZz8QqRQVrbLafmWx8eXdgo7CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=McvjQNWXaG7c886mIkhUt0Bxd8ZrNuXWYKBSGMeK8DQ=;
-	b=nFpC9/PlNO1rLHW/Tw5CYxrI/fk5cAyWVznW/DDNN2gbHiQsVpkd9HyAOtelcZTSTu3k
-	 AcEiCsT7nUH4FiQQCN1kfhl0aO9Ot+HCxj86jD5apzTBEA5MlIw2ZNzmWQayH4fCBM/KU
-	 qsdM/otnEvBj5Y2qZTxghTkkqPU+9VnjhZLzD/282gYb+EBdg2LXiXMi2y5wcPQw06nyz
-	 pZwXq1MisVKPx27K3t20D+YmtITflzd+wgN5V2s2aXPVz0Vjg/EWlsiu/0nRixsp7YMA3
-	 xQ3cXKHJl/U/yMlK7AlDZe3HK5l0Iya0ZDUxti/zL/VTHeIuySqnyqBIhsAjEjpdoZA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=gigqbdnmCFNCGjuUaIi6xEoUh17tZN3siqldfUv/nVs=;
+	b=qGk+ryYm291yfxHFv7qtTEj+8B9SmVEycFp+Y/4AlJ9xE3xxqh1KAUsHzY/QoOIlDPYI
+	 voAvp0CpljiD/GKup+Ls2g79pO/vhPAEP2qrsH4Tk7PPR7iK5ULUzRtkKvw80/hiYTK7i
+	 rnGVlUpNyg5sms0ONb86/sZm72JyjSThk2rCXIzKq/3fj0rN3V2GM2p756GDHYkJw8ggA
+	 V9peaHgGlS1Ttmh81TtOqddyl+EC3viT3m1YbWr3z9zQh/IOTDBQAmzuhKbIiJ5DdBQmU
+	 M/Y29pCXMAft7L+gbr/NCWzq8HLqk0xS1Db22nHgSE8Wjp0rNjfPyH6h+KovDxGm+xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OyYknNRZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bPNgzR7T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C65606A644;
-	Sat,  7 Nov 2026 14:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D76606A642;
+	Sat,  7 Nov 2026 14:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OyYknNRZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387711F0089F;
-	Sat,  7 Nov 2026 14:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bPNgzR7T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F451F0089F;
+	Sat,  7 Nov 2026 14:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062452;
-	bh=McvjQNWXaG7c886mIkhUt0Bxd8ZrNuXWYKBSGMeK8DQ=;
+	s=korg; t=1794062453;
+	bh=gigqbdnmCFNCGjuUaIi6xEoUh17tZN3siqldfUv/nVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OyYknNRZaSRE7/dKJfRGpH+74uYcKuEgYOlTkXoQjPZxQiZgfYlzKnV1ekDxDyMmx
-	 vachMEo6bt4QY3J4Z6Yf1oEc/VDbaMfYNHH6jMEMNuyqkuazJbCyxLGERWPXI0Fl2p
-	 BrWRfvgqbR0BDrgJ7Xs3yJkgRkNs+Rr0hp4nzK+Q=
+	b=bPNgzR7TNANe5xWNaAHxvAc3FNPp9YtPAgupp4yUUvNJXU74vmSJzVHdIfsR+61++
+	 zYa3Z4v943/NPV4eVBrQngCEH5g93SZ7LSc6nTkxRihx2ycmjs2b8L49a9xkuldKtI
+	 4AZZZWKznDZl0LQ3hJ5t01Tm8rlV3c1UgYw2mlLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Tosatti <mtosatti@redhat.com>,
-	Ximing Zhang <xzhangjr@gmail.com>,
-	=?UTF-8?q?Asaf=20Nuri=20Bertizlio=C4=9Flu?= <ycistak@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Gyokhan Kochmarla <gyokhan@amazon.de>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1358/1536] hwmon: (coretemp) Fix handling of isolated SMT siblings
-Date: Sat,  7 Nov 2026 08:56:14 -0500
-Message-ID: <20261107135035.973454565@linuxfoundation.org>
+Subject: [PATCH 6.12 1323/1536] erofs: use on-disk blkszbits for lz4 max pcluster bound
+Date: Sat,  7 Nov 2026 08:55:39 -0500
+Message-ID: <20261107135034.971536369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -64,127 +62,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ximing Zhang <xzhangjr@gmail.com>
+From: Gyokhan Kochmarla <gyokhan@amazon.de>
 
-[ Upstream commit 37c1974a0ec4ec4624a270291a179c53f8f4fbca ]
+[ Upstream commit 90b7e4a7a16443d9f6807b5c1dde52074d9f74c0 ]
 
-Commit 0f8b916bc5b5 ("hwmon: (coretemp) avoid RDMSR interrupts to
-isolated CPUs") prevents create_core_data() from creating temperature
-data for an isolated CPU. coretemp_cpu_online(), however, still adds
-that CPU to pdata->cpumask.
+z_erofs_load_lz4_config() rejects a valid LZ4 image when the kernel's
+page size differs from the image's block size. It bounds the on-disk
+max_pclusterblks with erofs_blknr(sb, Z_EROFS_PCLUSTER_MAX_SIZE), which
+expands to Z_EROFS_PCLUSTER_MAX_SIZE >> sb->s_blocksize_bits.
 
-When an isolated SMT thread is processed before a housekeeping sibling,
-the mask makes coretemp_cpu_online() believe that the core is already
-represented. The housekeeping sibling then gets no temperature
-attributes. Package attributes are similarly not retried when the first
-CPU processed in a die is isolated.
+At the point this runs, sb->s_blocksize_bits still holds PAGE_SHIFT:
+erofs_fc_fill_super() seeds s_blocksize_bits to PAGE_SHIFT before
+reading the superblock, and only corrects it down to the on-disk
+blkszbits after erofs_read_superblock() returns. The LZ4 config is
+parsed inside erofs_read_superblock(), before that correction, so the
+bound is computed with the wrong shift.
 
-The mask is also used to select a replacement CPU when a sensor target
-goes offline. Including isolated CPUs permits the driver to retarget a
-sensor to one, causing subsequent sysfs reads to send an RDMSR IPI to an
-isolated CPU.
+On a 64K-page kernel mounting a 4K-block image (e.g. one built with
+mkfs.erofs -C 262144 on a 4K-page host), the bound evaluates to
+1 MiB >> 16 = 16 blocks instead of the correct 1 MiB >> 12 = 256
+blocks. The image's legitimate max_pclusterblks of 64 then fails the
+check, mount returns -EINVAL, and booting from such an image as the
+root filesystem panics:
 
-Keep isolated CPUs out of pdata->cpumask by moving the housekeeping check
-to coretemp_cpu_online(). Sensor creation is then deferred to an eligible
-CPU, and hotplug replacement targets remain on housekeeping CPUs.
+  erofs (device dm-0): too large lz4 pclusterblks 64
+  Kernel panic - not syncing: VFS: Unable to mount root fs
 
-Tested on an Intel Core i7-10510U running 6.18.50-3-cachyos-lts, with
-nohz_full=1 on CPU 1 and its housekeeping SMT sibling on CPU 5. The stock
-driver omitted Core 1 after module load and retained its readable sensor
-after CPU 5 was offlined. The patched driver exposed Core 1, removed it
-when CPU 5 went offline, and restored it when CPU 5 returned.
+sbi->blkszbits already holds the on-disk block size at this point, so
+compute the bound from it directly. This makes the check independent of
+the host page size and of superblock-parse ordering.
 
-Fixes: 0f8b916bc5b5 ("hwmon: (coretemp) avoid RDMSR interrupts to isolated CPUs")
+commit 3acea5fc3354 ("erofs: avoid hardcoded blocksize for subpage block
+support") already handled the same ordering hazard for the superblock
+checksum path by using sbi->blkszbits in erofs_superblock_csum_verify();
+the lz4 config path was missed.
+
+Fixes: 3acea5fc3354 ("erofs: avoid hardcoded blocksize for subpage block support")
 Cc: stable@vger.kernel.org
-Cc: Marcelo Tosatti <mtosatti@redhat.com>
-Signed-off-by: Ximing Zhang <xzhangjr@gmail.com>
-Tested-by: Asaf Nuri Bertizlioğlu <ycistak@gmail.com>
-Link: https://patch.msgid.link/20261016-codex-coretemp-housekeeping-v1-1-96618c5676b2@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Assisted-by: Kirocrew:gpt-5.6-sol
+Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ fs/erofs/decompressor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index e84ccf65b327a..04b20cf272ac8 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -565,9 +565,6 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
- 	u32 eax, edx;
- 	int err;
- 
--	if (!housekeeping_cpu(cpu, HK_TYPE_MISC))
--		return 0;
--
- 	tdata = init_temp_data(pdata, cpu, pkg_flag);
- 	if (!tdata)
- 		return -ENOMEM;
-@@ -687,6 +684,14 @@ static int coretemp_cpu_online(unsigned int cpu)
- 	if (!cpu_has(c, X86_FEATURE_DTHERM))
- 		return -ENODEV;
- 
-+	/*
-+	 * Keep isolated CPUs out of pdata->cpumask. Besides tracking the CPUs
-+	 * available to this driver, the mask is used to select the CPU on which
-+	 * to read the temperature MSRs.
-+	 */
-+	if (!housekeeping_cpu(cpu, HK_TYPE_MISC))
-+		return 0;
-+
- 	pdata = platform_get_drvdata(pdev);
- 	if (!pdata->hwmon_dev) {
- 		struct device *hwmon;
-@@ -716,8 +721,8 @@ static int coretemp_cpu_online(unsigned int cpu)
- 	}
- 
- 	/*
--	 * Check whether a thread sibling is already online. If not add the
--	 * interface for this CPU core.
-+	 * Check whether a housekeeping thread sibling is already online. If
-+	 * not, add the interface for this CPU core.
- 	 */
- 	if (!cpumask_intersects(&pdata->cpumask, topology_sibling_cpumask(cpu)))
- 		coretemp_add_core(pdev, cpu, 0);
-@@ -747,9 +752,9 @@ static int coretemp_cpu_offline(unsigned int cpu)
- 	cpumask_clear_cpu(cpu, &pd->cpumask);
- 
- 	/*
--	 * If this is the last thread sibling, remove the CPU core
--	 * interface, If there is still a sibling online, transfer the
--	 * target cpu of that core interface to it.
-+	 * If this is the last housekeeping thread sibling, remove the CPU core
-+	 * interface. If there is still a housekeeping sibling online, transfer
-+	 * the target CPU of that core interface to it.
- 	 */
- 	target = cpumask_any_and(&pd->cpumask, topology_sibling_cpumask(cpu));
- 	if (target >= nr_cpu_ids) {
-@@ -761,7 +766,8 @@ static int coretemp_cpu_offline(unsigned int cpu)
- 	}
- 
- 	/*
--	 * If all cores in this pkg are offline, remove the interface.
-+	 * If all housekeeping cores in this pkg are offline, remove the
-+	 * interface.
- 	 */
- 	tdata = get_temp_data(pd, -1);
- 	if (cpumask_empty(&pd->cpumask)) {
-@@ -774,7 +780,7 @@ static int coretemp_cpu_offline(unsigned int cpu)
- 
- 	/*
- 	 * Check whether this core is the target for the package
--	 * interface. We need to assign it to some other cpu.
-+	 * interface. We need to assign it to some other housekeeping CPU.
- 	 */
- 	if (tdata && tdata->cpu == cpu) {
- 		target = cpumask_first(&pd->cpumask);
+diff --git a/fs/erofs/decompressor.c b/fs/erofs/decompressor.c
+index 933347416513b..970cc3f25bee9 100644
+--- a/fs/erofs/decompressor.c
++++ b/fs/erofs/decompressor.c
+@@ -26,7 +26,7 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
+ 		if (!sbi->lz4.max_pclusterblks) {
+ 			sbi->lz4.max_pclusterblks = 1;	/* reserved case */
+ 		} else if (sbi->lz4.max_pclusterblks >
+-			   erofs_blknr(sb, Z_EROFS_PCLUSTER_MAX_SIZE)) {
++			   Z_EROFS_PCLUSTER_MAX_SIZE >> sbi->blkszbits) {
+ 			erofs_err(sb, "too large lz4 pclusterblks %u",
+ 				  sbi->lz4.max_pclusterblks);
+ 			return -EINVAL;
 -- 
 2.53.0
 
