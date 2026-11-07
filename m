@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061131;
-	b=xUzYbDZ3gdBdVOMR/TYuEzXfyv6pWxUvU1JtvAqJhZCFvu1QLWVkRmn3k31mFMBVxFq3
-	 u6YbNYT7jcRS12v5Vyykwd0sZkV9gYIPy4sAyoZ8sxXJMx1gH04WXGSQriorYZxQLaKDt
-	 aYoGzR0ALbRwzouIxjqxV+/4rjbKZfQJO5EOFmjTTuRoR4HyJhK/rN7cv2os8eiIUnJNS
-	 J2lbgfSDObPfUTnVrPAhJzjIPG6gy/sgD+WSAWB44lcbgA0xIhC6b73PXTf+aLGsC/x5C
-	 1r3IBxEkl3x9nrbdmALumlgNbJuQuU0Bo0KuiPpgIVoV3IYNsVI2hGGllLFJi7Kf+Sg==
+	t=1794061132;
+	b=p6L5+5fAw39b+g0eQF+t8iGVxdlAlC0OmMUtl4g438q5kWntXmTJtkcSq8xJNAblxrDg
+	 DCGMwNIK9syMNW6dTc+RUAA2XJwQariNmxJVKHtZ0gRjfB1CqdBM9XORBaUP7PpiRSkbu
+	 RX3vBGwxcRUTK8W+K7XRyVTmb83z6FTQpC58/rxfW87yS2p4v47e/D6a25FJ67kAL6pll
+	 GPSnP6MAa7gDARmx2pDVLYx7qGqNfGS0ODCTLtvE4ODXm55SFTRZHrebPZtE+VG7EMm7N
+	 FCo30dv8mZri8w/z6YDKYpJFPOloVhzBASHxBjTIiTOrYTQdfDhL7PMbcaeqX6NqR/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061131;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061132;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hr7i+8cN1d/x0re1f+MCnnBhkwvVbwzd7cjpTIwAz2s=;
-	b=kCOPYvrAkjfRzw6G0KgRK/jm4hYRLkJEYLkbrzpS9qEh0WTe1f77Tv145wixXMgmyB+2
-	 HTM0MU7qy7Py0qPj9R9KE+5GmNl9u1+4h+BG23SNk8Nt6REf2LM7DNMJQQkOE7W36gZOj
-	 tlFc+InVWJUclok5UDMP7DN55sCqMXiBa+rzElkerEqwbc77YNl8QL2T+S/nSvI2YkGa1
-	 feEiT00VoGnQMS7wefSlIzARlEbAlcu8UCKyy0fQSHngjH2KkugjHeqKjuMWPgK91gRj7
-	 CY5MMwYY2Eqb6pTNGuOvn6/kfrE62b2bp2A8+AhTBaLGcyWn6C1SRWXT9q46G2z0g0A==
+	bh=sDJJxkSD60FJ2amQAyh6sAHMVPNgMjjvbVbCe/4hYyA=;
+	b=joN5sfv8HXjQV2SUlVrMDp5ZA9DmRfqs8s8B7LQrltKUDKxYpQLCcVSeWdEQw9uBveri
+	 zZd7cLHz7LhzO9SamC6Bb8o/qFjP5R6LNB6aOuRaeWHGTW/uLDeSwD6eq4e9nVz9Wi5jP
+	 o0qp8wMxiR/qq8vjUezRtlRCB8n1iavptPzAQ0BtjAleZIIttoriUWODWBkGIq9NSho3t
+	 J5+uzZJyV1WV1jCMwbQCBuJuHtx5lFPAw5QgVhsjqAdwmNS9SUfuLJIrTyXjq2f1Bm5kA
+	 YLhXFeQQdRI0fUKOI+BYzU/ESQJJx0xgsqJRs/wz0jgJIkMqmKQce6axiUbvOG5id/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A6MrQt4j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xs3PHDYL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EB7606A332;
-	Sat,  7 Nov 2026 14:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B13606A332;
+	Sat,  7 Nov 2026 14:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A6MrQt4j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551C91F0089F;
-	Sat,  7 Nov 2026 14:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xs3PHDYL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872031F0089F;
+	Sat,  7 Nov 2026 14:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061130;
-	bh=Hr7i+8cN1d/x0re1f+MCnnBhkwvVbwzd7cjpTIwAz2s=;
+	s=korg; t=1794061131;
+	bh=sDJJxkSD60FJ2amQAyh6sAHMVPNgMjjvbVbCe/4hYyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A6MrQt4j+jvD79UY1LR8fRnT/jT4/DZYb+wwrqZLjzvjAKfHuWBAvv7QZVTG8hAUn
-	 NjzALzwYdOQLHA/TBOTRuoeMP4ZWDOB84I4xlRI8Vb5HplON0oMTyxvkk+CIu+FjwF
-	 kkzvHAxyiPnscwXLiPLtvIYjymC6HslVE5uEIMag=
+	b=Xs3PHDYLxdvfP176S21c0W7yPQonId2rTCyL2sjvtsMlLJoEVP/APWZ6MvRt5KB+K
+	 kOFZj65jhaKBAMcq8dGdEg0aMAuVEKQV24IeceUHt35qnPmcEd7OkxTJTW084oLVMC
+	 2wLkfV6ZKfy5Q1g7ztdK16f245f5la+agbDKG0l4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KIM MinWoo <phrimm136@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0414/1536] ALSA: hda/realtek: Add quirk for Lenovo ThinkBook 16p Gen 3 ARH (21EK)
-Date: Sat,  7 Nov 2026 08:40:30 -0500
-Message-ID: <20261107135009.198205778@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com
+Subject: [PATCH 6.12 0441/1536] ocfs2/dlm: drain join handlers before releasing module text
+Date: Sat,  7 Nov 2026 08:40:57 -0500
+Message-ID: <20261107135009.932750293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,44 +73,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: KIM MinWoo <phrimm136@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 3867e38b2d4b844d89076f988c7b9741c87a9858 ]
+commit 28f366d84023651e50e32e29931401ba0df3e679 upstream.
 
-The ThinkBook 16p Gen 3 ARH (SSID 17aa:3871) has a TI TAS2563
-amplifier device on I2C, exposed by ACPI as INT8866, the same
-arrangement as the Yoga 7 14ARB7 (SSID 17aa:3870). Without a quirk,
-the codec falls back to the vendor-wide Lenovo quirk
-(ALC269_FIXUP_LENOVO_XPAD_ACPI), the amplifier is never bound, and the
-internal speakers stay silent while the headphone output works.
+The code for a registered DLM handler must remain resident until its
+last invocation finishes. dlm_unregister_net_handlers() only removes
+dlm_join_handlers from the o2net registry. o2net_handler_get() takes a
+kref on the wrapper, but that reference does not pin ocfs2_dlm text.
+o2net_process_message() calls nh_func after dropping o2net_handler_lock.
 
-Reuse the Yoga 7 14ARB7 fixup, which binds the INT8866 device as a side
-codec. ALC287_FIXUP_TAS2781_I2C does not work on this machine because it
-looks for a TIAS2781 device.
+With CONFIG_OCFS2_FS_O2CB=m, ocfs2_dlm can be loaded independently of
+ocfs2_stack_o2cb while nodemanager continues handling messages from a
+configured, heartbeating peer. If no dependent module or module reference
+prevents normal unload, the following ordering is possible:
 
+  Receive worker                       Module unload
+  --------------                       -------------
+  o2net_handler_get()
+    take wrapper kref
+    drop handler lock
+  <preempted>
+                                       dlm_exit()
+                                         unregister handlers
+                                       release DLM module text
+  call saved nh_func
+    in released module text
+
+Use o2net_unregister_and_flush_handler_list() in the shared DLM
+unregister helper. It first prevents new lookups, then waits for the
+ordered o2net workqueue to drain, including a concurrent destruction of
+that queue. The acquired invocation therefore finishes before dlm_exit()
+returns and the loader releases the callback code. The same helper
+covers partial registration and dlm_init() error unwind before module
+memory is released.
+
+Skip the drain when the private join-handler list is empty. Early
+dlm_init() failures can reach this helper before any handler has been
+published. Partial-registration failure also reaches it a second time
+after the first call has already unregistered and drained the list.
+Neither case needs to take o2net_wq_mutex or drain unrelated work.
+The list is changed only by serialized module init/exit paths; a
+nonempty list still uses the full unregister-and-flush helper.
+
+Oops report as below:
+
+    Oops: int3: 0000 [#1] SMP KASAN NOPTI
+    CPU: 2 UID: 0 PID: 54 Comm: kworker/u16:3 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+
+Hardware identification omitted.
+
+    Workqueue: o2net o2net_rx_until_empty [ocfs2_nodemanager]
+    RIP: 0010:0xffffffffc0423871
+    [Instruction byte dump omitted.]
+
+Register dump omitted.
+
+    Call Trace:
+     <TASK>
+     ? o2net_rx_until_empty+0x19b1/0x3300 [ocfs2_nodemanager]
+     ? __pfx_o2net_rx_until_empty+0x10/0x10 [ocfs2_nodemanager]
+     ? lock_acquire+0x190/0x300
+     ? process_one_work+0x935/0x1b40
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     ? kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ? ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ? ret_from_fork_asm+0x1a/0x30
+     </TASK>
+    Modules linked in: ocfs2_nodemanager [last unloaded: ocfs2_dlm]
+    ---[ end trace 0000000000000000 ]---
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0076-v6-12de5f4628f57fba3be3@gmail.com
+Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Assisted-by: LLM
-Signed-off-by: KIM MinWoo <phrimm136@gmail.com>
-Link: https://patch.msgid.link/20260923013756.106033-1-phrimm136@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/dlm/dlmdomain.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 8847d06fcba79..52aba6f9ce6f2 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11610,6 +11610,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	HDA_CODEC_QUIRK(0x17aa, 0x38a8, "Legion Pro 7 16ARX8H", ALC287_FIXUP_TAS2781_I2C), /* this must match before PCI SSID 17aa:386f below */
- 	SND_PCI_QUIRK(0x17aa, 0x386f, "Legion Pro 7i 16IAX7", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3870, "Lenovo Yoga 7 14ARB7", ALC287_FIXUP_YOGA7_14ARB7_I2C),
-+	SND_PCI_QUIRK(0x17aa, 0x3871, "Lenovo ThinkBook 16p Gen 3 ARH", ALC287_FIXUP_YOGA7_14ARB7_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3874, "Legion 7i 16IAX7", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3877, "Lenovo Legion 7 Slim 16ARHA7", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3878, "Lenovo Legion 7 Slim 16ARHA7", ALC287_FIXUP_CS35L41_I2C_2),
--- 
-2.53.0
-
+--- a/fs/ocfs2/dlm/dlmdomain.c
++++ b/fs/ocfs2/dlm/dlmdomain.c
+@@ -2212,7 +2212,8 @@ static LIST_HEAD(dlm_join_handlers);
+ 
+ static void dlm_unregister_net_handlers(void)
+ {
+-	o2net_unregister_handler_list(&dlm_join_handlers);
++	if (!list_empty(&dlm_join_handlers))
++		o2net_unregister_and_flush_handler_list(&dlm_join_handlers);
+ }
+ 
+ static int dlm_register_net_handlers(void)
 
 
