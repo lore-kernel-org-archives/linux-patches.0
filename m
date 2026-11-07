@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063721;
-	b=aNuGvD4sf3dTzMPFRQ26WkWYUPAFAOxUG4AesUi2fBbQmR5p2xhAPPxEMYVZBf9AvP2X
-	 D26/PID1WG+HEd5lWsOJUFso6mfmPbsApC8vuGL4aRNKynUX64/+gW+tIobSeflDyZv7z
-	 XzHvC4w0f3BrbLgh9jNvdvJhsdwje5aJcKtN0DX6WMD1XtuVDbYKQws8b7/u776XTzcn4
-	 kSWXhqc1/mafDS7d+6/h2RKZW5Oah4nZ7ldspiQZfWTCNhN0geL3BEn7WwxgUtpxyEBMM
-	 cw49Yax/qErTpA5DuLhwr+Zbq+51nApx4d5slvQgzAm7xSlig+hD/oUyauN1tDn1YdQ==
+	t=1794063722;
+	b=a7PTGIy/inmeEeq4qpKEG+NREnbwBU3hJKF44aROD0ZShmkJWfemIK9fXVpMkixaXdgy
+	 nG0ctCGsu0TIcy7cvbrt1WhokA9QXaOrJTyV4cc9M6CiE7wPyB7+O7I1NzTx/BXUlsdd4
+	 LI3CDrHw8MRFD4VNQQa96GnwwuT8+RcVj1+fzrxE4Uv/Arpb3XPBtfmbREDXBsHnJfiUc
+	 3uRTTlzqkalMWipqiV5ncAN8PpBELTRT0NkGsMaCUW/Xou144ZPu6aupGeHmya3GEyCmx
+	 pohQBb8VpTTodddU0rF0xiyzIkxuXhAZBjJ+EWpecBs9YopBWIyhMAXmLJEoRoa1VFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063721;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063722;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l0YwAkajAHjLQ43vATJ+FCVdKhiMnNXZO4p43/lcKIw=;
-	b=sniLB/wxSVbs1NRASxn9dp7y/qkkTLr5K0WSDERxmvg4uE4bBINyXegJjfPvvIXC0WGp
-	 bMmEhtlbF139pVARSc/Qhfr3t1V2OtL0jHjZRUXu3IrO0dKoH69SYcpBHjWsx8UHCUmUe
-	 JOGlQ5iGS8IstBVkdBysShMN5Lrl7qdsfggtRv/Mf7o1Uo2CIUzp7R2E4O5Wrx1per1SL
-	 zKJn+qP5Aoejn7UZUBBEfrK17NmMxK+kOPuxzES5XhYajPuO2dOm5rO1QK+LZvRww6J9B
-	 GMm9nvJxEPZCkZXX6bmF2yR+zciQlplelkeQbq92ZX6FKldjLjwaEQZ9/Jj9IBC4A9g==
+	bh=7SAHRPEHor1E2CBYxMMfIAV2MUrO4/SSDje+jhEDQSM=;
+	b=JZGlqZSplQT5Ek9Vu1QirCOXB2kS4bk/dYhRxhkxZOoIROi3YNeK94j4FsBmu/rzbVLY
+	 wFzHBBN+hGPMyEc2u+0aFCntDkIc8gDhUaPzApY+8UZ64hMWm06FHwJRZHCHV7sg1i4Ha
+	 hkK4IyiKBBL4xg8wa0gE4zYmmJCV6rPrvmdM5IFUtIhXour5b7hCDA3Hynksalus77sfh
+	 9ioSXosSwOT5dGkDNlbSjZH2NjqlUFoHiyvWiQGECnWF3/v3bazKTCoTXpGY7QdINc87x
+	 A7H1QezdZY8I4rVoE/2HLbCBQIP2WRgCAHD4Ef+TqhCDwYMUnYgXmBt47xObxRQR2oA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uL0EZDgq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cMj/MeGC";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D54606A32E;
-	Sat,  7 Nov 2026 15:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8503B606D83F;
+	Sat,  7 Nov 2026 15:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uL0EZDgq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F8F1F0089F;
-	Sat,  7 Nov 2026 15:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cMj/MeGC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D051F0089F;
+	Sat,  7 Nov 2026 15:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063721;
-	bh=l0YwAkajAHjLQ43vATJ+FCVdKhiMnNXZO4p43/lcKIw=;
+	s=korg; t=1794063722;
+	bh=7SAHRPEHor1E2CBYxMMfIAV2MUrO4/SSDje+jhEDQSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uL0EZDgqxDigdeYabpmETU3XeEOFFbKNjiDPqFYwkYiFre1u2KYebt1cZqqL0a2mS
-	 2bcyHqLPxcaytuiKtuh6SKfqsus10G8B5yHn8W1plI/6qmOwMNQ8vQ6PUKaXmXO4Pk
-	 A8xBRfEHwqVGzCG9RDAvb5Wg2SllldzGJYSbuf0Q=
+	b=cMj/MeGCdC+lstJvyhrzNY8zWeTVMMb46oMjvxhLXiLkD0HIaBknbJ3h5Q3T6L/rr
+	 ordDINzbDh1fHxbJ3FLyZXYp6U7wq0KCjr5OeyA3VSByQAvL2HQaU74UNj1SGlaQ+E
+	 30hC0fumCUmqZIGJMzcyK9E2EvTvK4WEiJcVKWts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xia Yan <yanxia@cmss.chinamobile.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
+	David Yang <mmyangfl@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 821/869] macvlan: fix passthru promiscuity accounting while down
-Date: Sat,  7 Nov 2026 08:58:23 -0500
-Message-ID: <20261107134920.820056959@linuxfoundation.org>
+Subject: [PATCH 6.18 822/869] net: hisilicon: hisi_femac: Stop the receiver before releasing the RX ring
+Date: Sat,  7 Nov 2026 08:58:24 -0500
+Message-ID: <20261107134920.848463510@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,59 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xia Yan <yanxia@cmss.chinamobile.com>
+From: David Yang <mmyangfl@gmail.com>
 
-[ Upstream commit b6743653d134c9ef8436e2db1be1ad4c1e0d0091 ]
+[ Upstream commit d54b21d824302af52d06574870817fbe14774dab ]
 
-macvlan_changelink() adjusts the lower device's promiscuity count when
-NOPROMISC changes, even if the passthru macvlan is down. The reference
-is acquired in macvlan_open() and released in macvlan_stop(), so a down
-interface has no reference to change.
+hisi_femac_net_close() frees the receive ring while the RX address queue
+still holds every address that was pushed to IQ_ADDR.
 
-Clearing NOPROMISC while down leaves an extra reference after the next
-open/stop cycle. Setting it while down can remove a reference held by
-another user of the lower device.
+A port that keeps receiving then DMAs arrived frames into buffers that
+other slab caches have already taken back; on an EC6108V9C (hi3798mv100)
+the queue still held all 52 armed addresses right after the interface
+was closed, and had dropped to 43 after 15 s of broadcast traffic.
 
-Guard the count adjustment with netif_running(dev). Keep storing the
-requested flags while down so the next open uses the new setting.
+Reset the port before the buffers are released, so that the receiver no
+longer holds any of their addresses.
 
-Comparing changelink with open/stop exposed the unmatched count changes;
-the same issue was also described in earlier macvlan reviews. A netlink
-test on UML reproduced both DOWN cases before the fix and verified the
-expected counts afterwards. Repeated flag updates, two open/stop cycles,
-deletion and bidirectional small-frame delivery were also checked.
-
-Full x86_64 builds completed with WERROR disabled for allmodconfig, and
-WERROR and KASAN disabled for allyesconfig, including the resulting
-dependency changes. Neither comparison showed new diagnostics.
-
-Fixes: df8ef8f3aaa6 ("macvlan: add FDB bridge ops and macvlan flags")
-Link: https://lore.kernel.org/netdev/179170088566.434549.4699134797461783473@kernel.org/
-Link: https://lore.kernel.org/netdev/20261016003009.2692872-1-kuba@kernel.org/
+Fixes: 542ae60af24f ("net: hisilicon: Add Fast Ethernet MAC driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xia Yan <yanxia@cmss.chinamobile.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20261022090809.12019-1-yanxia@cmss.chinamobile.com
+Signed-off-by: David Yang <mmyangfl@gmail.com>
+Link: https://patch.msgid.link/20261025182022.2959333-1-mmyangfl@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macvlan.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hisi_femac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index 7151ae883136b..c38989009c76f 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -1630,7 +1630,8 @@ static int macvlan_changelink(struct net_device *dev,
- 	if (data && data[IFLA_MACVLAN_FLAGS]) {
- 		__u16 flags = nla_get_u16(data[IFLA_MACVLAN_FLAGS]);
- 		bool promisc = (flags ^ vlan->flags) & MACVLAN_FLAG_NOPROMISC;
--		if (macvlan_passthru(vlan->port) && promisc) {
-+		if (macvlan_passthru(vlan->port) && promisc &&
-+		    netif_running(dev)) {
- 			int err;
+diff --git a/drivers/net/ethernet/hisilicon/hisi_femac.c b/drivers/net/ethernet/hisilicon/hisi_femac.c
+index d244a40df4309..fba68035c9691 100644
+--- a/drivers/net/ethernet/hisilicon/hisi_femac.c
++++ b/drivers/net/ethernet/hisilicon/hisi_femac.c
+@@ -491,6 +491,7 @@ static int hisi_femac_net_close(struct net_device *dev)
+ 	netif_stop_queue(dev);
+ 	napi_disable(&priv->napi);
  
- 			if (flags & MACVLAN_FLAG_NOPROMISC)
++	hisi_femac_port_reset(priv);
+ 	hisi_femac_free_skb_rings(priv);
+ 
+ 	return 0;
 -- 
 2.53.0
 
