@@ -1,68 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065408;
-	b=ZHk1wi1Z2Dl661w9TfC0erNy+qbV3S4CpKz1Y40v1A+keMCXUC0YGm+y8XpGN9LlBSrO
-	 GW7RGq4b9HODRIzMFt6loBTXxajaTFqSG7tiaSn5SLNWyIXwGdJFg8XvLZ1d8vnUP40pK
-	 0x04zrodm4SaD9DKW8zfG7urjjAmjkE+bN85JTY1NEt8Ypi9fcR4Qrl9+dlmDYE+sMlal
-	 6Oc0AOJAH0KRtKASpg2voaxZMjFdybjWubE403P4KamkPvHoakJJpP11adIQTryr/p7jD
-	 rYjTIbmV1HiApRmruABoEALhBdWL8gmGXJhA+6ERHK4S8HLGQ9F8H6WSFNoaVR7gZkw==
+	t=1794065410;
+	b=m13y7ALQ8aqMh0LKo6IXT3DHBqFpF7CcgWh4KeRI+Z0I5hIQRyJj8tAIvk7PXkcKV4XN
+	 EsYFXtkUUGEkBllH/OMHrGqsqVOI0A+ll3CuPJglzwwY1gxncfOk1v/IzRyxI9q0EOP3O
+	 0dMk4Zg8yEhpM10zC+suTfS+wwHiYlbbgkXPD1j92083cHxGZor27zE6A3HkjKkSL771K
+	 OTNH2bfTZK2kdl8B2trqcBxJrAkSaGU2riZyQK+bHuSEvaGuLdrIIxzmKJiTGSPVBe44c
+	 zVB7AXZmlh0cs2wwWwuNqTO03Ta5DY40SzZAgN6xj6cvetbS8uWd+kDtyiLrYJ8D6hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065410;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gNSuNh9qIAAMkroKBbw/CZsVRAN2JXknWCrL99r9uVI=;
-	b=jafYyhwg8wwj6r0Zo+L+lC1SRawkA9CoU+kGDL4Bh26Q/OBxA6MLvabXTBWseXySWlJe
-	 +umEs00P6ktGMbYrfhIv/kujiWaJMS4NoXybH3UvbrQUfREQMSgYzFRm84qdukaLzysVW
-	 ytkgYz8xk5ytc0m/ueLdbJTD2EkXXTfubD+s6tzLF/nyHhcacMxoIvjb/2cWWCeyJg6j1
-	 jGCF0LRjyasKv6Yjk5DMO2Jb3Jt/6P5PoH3e82hOCp2UPU/fTa9VvvfO5hY7hshP4/dXB
-	 zihKCnRqwt6YechDKdZOEVnXSZ08xk/fktruNFofwtaSSC5X19hNKFWXArs22r0UnFg==
+	bh=pP/W8PCSG2MCJkh6d4APe6b+BPsJ7kJ8rTtj5B9+g+I=;
+	b=nZLdEErGd5Ta7QlczxYLfBSWZVr/6sc+JkZgBbh1cieDRqWTfjU8G+hMbouWsa4OVQ39
+	 Usu9NbgPta0fXX0UWwtkbtlWdL1Q0x4sU3c/NXvu/fJOHiz9lMqaODo1E+bKdoQR9+lMK
+	 BlaH4Op9YlocKNyvR1cqBW9KaspXbMi4Rl+wz+slC0wCJFCjTcpyHshcOSh4HgJ3k45zk
+	 8Tv+0xmnEOuwTvC8H2/WNwUD1TPDc9uEQZ3BQm4NXAFAeDPk66kzL2LKmMmgW6lRN9gyH
+	 c1jMutpORDY3r/Cku+YHIJNWZ/E3X0gZ7ipKStBz/CMAees3Sl9mbkAGLqRD4yACPxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L2dPlXE1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gr5d9aik;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131DB606A33A;
-	Sat,  7 Nov 2026 15:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A941F606A33E;
+	Sat,  7 Nov 2026 15:30:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L2dPlXE1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E3D1F0089F;
-	Sat,  7 Nov 2026 15:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gr5d9aik
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4EC1F008A1;
+	Sat,  7 Nov 2026 15:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065407;
-	bh=gNSuNh9qIAAMkroKBbw/CZsVRAN2JXknWCrL99r9uVI=;
+	s=korg; t=1794065409;
+	bh=pP/W8PCSG2MCJkh6d4APe6b+BPsJ7kJ8rTtj5B9+g+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L2dPlXE1JfwLo7y4WPz7ylAKNZbrh0WsC1CgtNxbDLP95wq+IPscdxXOqp/C7FJwJ
-	 5tRA3DsgXqvWOvE9xzXGnipRNgO6zg4gGfYlCQplEtwbTgQFc7gq6Ops+830Rci4Pp
-	 MjN4dC8uiqi04Un2iNpRlZCyhc+m3YFT5WnZx01E=
+	b=gr5d9aikximRl0YLCXEoh4QQSQt35ohvLzRxie/o/XMRsP+usfRlikKMpl1DxkmXq
+	 ie83kw0PXNsRPGML/xqDhJBu44UNqmU3O+E6Lh32HYiNkFbmOOHMiRM44Cgp2YFjXj
+	 sQDda3dah9Q24/WTDHpTHPqp88y2THTua/uUCj7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vernon Yang <yanglincheng@kylinos.cn>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Ridong Chen <ridong.chen@linux.dev>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	David Hildenbrand <david@kernel.org>,
 	Kairui Song <kasong@tencent.com>,
-	Qi Zheng <qi.zheng@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Wei Xu <weixugc@google.com>,
+	Chris Li <chrisl@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Nhat Pham <nphamcs@gmail.com>,
 	Baoquan He <baoquan.he@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Youngjun Park <youngjun.park@lge.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1088/1257] mm: vmscan: dont count per-node proactive reclaim as memory pressure
-Date: Sat,  7 Nov 2026 08:56:24 -0500
-Message-ID: <20261107135009.316798463@linuxfoundation.org>
+Subject: [PATCH 7.3 1089/1257] mm/swap: fix swap_cache_get_folio() returning a folio that left the swap cache
+Date: Sat,  7 Nov 2026 08:56:25 -0500
+Message-ID: <20261107135009.343092436@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -84,93 +75,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vernon Yang <yanglincheng@kylinos.cn>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 2ca8b38962f239b17f7881a4710c11328ce38ac9 ]
+[ Upstream commit 60f34fedf3a4c91ed631ed2f80713ab993cde5ee ]
 
-When the cgroup has no memory pressure at all, writing to
-/sys/devices/system/nodeX/reclaim triggers proactive reclaim on
-NUMA node, causing increase in the writer cgroup's memory PSI.
+swap_cache_get_folio() reads the folio from the swap table and takes a
+reference with folio_try_get(), without any lock.  If the folio is removed
+from the swap cache and freed in between, and its memory gets reused,
+folio_try_get() still succeeds and we return a page that has nothing to do
+with the swap entry:
 
-Due to this reclaim is performed in the context of the write(),
-accounted as memory pressure on the writer, like
-commit e22c6ed90aa9 ("mm: memcontrol: don't count limit-setting reclaim
-as memory pressure"). This is unexpected, the similar scenarios (e.g.
-senpai) will continue to occur, only this time it is for the
-/sys/devices/system/nodeX/reclaim knob.
+  CPU 0                                  CPU 1
+  do_swap_page()
+    swap_cache_get_folio()
+      swp_tb = swap_table_get()
+      folio = swp_tb_to_folio(swp_tb)
+                                         madvise(MADV_DONTNEED)
+                                           zap_nonpresent_ptes()
+                                             swap_put_entries_direct()
+                                               swap_put_entries_cluster()
+                                                 __try_to_reclaim_swap()
+                                                   swap_cache_del_folio()
+                                                   folio_put()   <- freed
+                                         page reused, e.g. as an anon
+                                         folio of another task
+      folio_try_get(folio)               <- succeeds
+      return folio
+    swap_update_readahead()              <- may clear PG_readahead on it
+    folio_lock_or_retry()                <- locks it
+    folio_matches_swap_entry() fails, unlock and put
 
-The Documentation/ABI/stable/sysfs-devices-node documentation also
-notes that "This interface is equivalent to the memcg variant."
+filemap_get_entry() does the same lockless lookup for the page cache, and
+after folio_try_get() it rechecks the xarray, because the folio may have
+been freed and reused in between.  swap_cache_get_folio() lost that
+recheck when the swap cache moved to the swap table.
 
-This patch unifies the semantics of the memcg and node interfaces:
-per-node proactive reclaim is no longer counted as memory pressure,
-and the per-node proactive reclaim interface no longer produces
-phantom pressure.
+So CPU 0 writes to a folio it doesn't own: it may clear PG_readahead and
+takes the folio lock of someone else's page, before
+folio_matches_swap_entry() finds out the folio is not ours.
 
-I ran demo[1] that performs per-node proactive reclaim 10000 times
-in qemu, writer cgroup memory.pressure as follows:
+When the race occurs, a swap fault can acquire a reference to a
+physical page that has been freed and reused for an unrelated purpose,
+potentially by another process.  The fault handler may then clear that
+page's PG_readahead/PG_reclaim flag, wait on or acquire its folio lock,
+and potentially attempt to remove it from an unrelated swap cache.
 
-without patch:
+These operations can interfere with unrelated workloads and may cause
+unexpected stalls and impaired reclaim.  The subsequent swap-entry
+validation normally prevents the wrong folio from being mapped into the
+faulting process.
 
-some avg10=31.53 avg60=13.42 avg300=3.31 total=10602985
-full avg10=31.53 avg60=13.42 avg300=3.31 total=10602985
+It's documented that caller always double checks the folio so this part
+is harmless from the aspect of data corruption or crash.
 
-with patch:
+Recheck the slot after folio_try_get() and retry if it no longer holds
+this folio.
 
-some avg10=9.59 avg60=3.41 avg300=0.81 total=2686221
-full avg10=9.59 avg60=3.41 avg300=0.81 total=2686221
-
-Link: https://lore.kernel.org/20261012022917.1102467-1-vernon2gm@gmail.com
-Link: https://github.com/vernon2gh/app_and_module/tree/main/reclaim_node_psi [1]
-Fixes: b980077899ea ("mm: introduce per-node proactive reclaim interface")
-Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
+[akpm@linux-foundation.org: add LLM-generated description of userspace impact]
+Link: https://lore.kernel.org/20261015060528.302634-1-jiayuan.chen@linux.dev
+Fixes: 8578e0c00dcf ("mm, swap: use the swap table for the swap cache and switch API")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
-Acked-by: Davidlohr Bueso <dave@stgolabs.net>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Qi Zheng <qi.zheng@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: Wei Xu <weixugc@google.com>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
 Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Youngjun Park <youngjun.park@lge.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/swap_state.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 59f4a805fd53c..6a14e42ea9ed6 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -7847,7 +7847,8 @@ static unsigned long __node_reclaim(struct pglist_data *pgdat,
- 					   sc->gfp_mask);
+diff --git a/mm/swap_state.c b/mm/swap_state.c
+index cb574030b814f..0d9b0d876b565 100644
+--- a/mm/swap_state.c
++++ b/mm/swap_state.c
+@@ -92,17 +92,27 @@ void show_swap_cache_info(void)
+  */
+ struct folio *swap_cache_get_folio(swp_entry_t entry)
+ {
++	struct swap_cluster_info *ci = __swap_entry_to_cluster(entry);
++	unsigned int ci_off = swp_cluster_offset(entry);
+ 	unsigned long swp_tb;
+ 	struct folio *folio;
  
- 	cond_resched();
--	psi_memstall_enter(&pflags);
-+	if (!sc->proactive)
-+		psi_memstall_enter(&pflags);
- 	delayacct_freepages_start();
- 	fs_reclaim_acquire(sc->gfp_mask);
- 	/*
-@@ -7871,7 +7872,8 @@ static unsigned long __node_reclaim(struct pglist_data *pgdat,
- 	memalloc_noreclaim_restore(noreclaim_flag);
- 	fs_reclaim_release(sc->gfp_mask);
- 	delayacct_freepages_end();
--	psi_memstall_leave(&pflags);
-+	if (!sc->proactive)
-+		psi_memstall_leave(&pflags);
+ 	for (;;) {
+-		swp_tb = swap_table_get(__swap_entry_to_cluster(entry),
+-					swp_cluster_offset(entry));
++		swp_tb = swap_table_get(ci, ci_off);
+ 		if (!swp_tb_is_folio(swp_tb))
+ 			return NULL;
+ 		folio = swp_tb_to_folio(swp_tb);
+-		if (likely(folio_try_get(folio)))
++		if (!folio_try_get(folio))
++			continue;
++		/*
++		 * The folio may have been freed and its memory reused before
++		 * we got the reference. Make sure it is still in the slot.
++		 */
++		swp_tb = swap_table_get(ci, ci_off);
++		if (likely(swp_tb_is_folio(swp_tb) &&
++			   swp_tb_to_folio(swp_tb) == folio))
+ 			return folio;
++		folio_put(folio);
+ 	}
  
- 	trace_mm_vmscan_node_reclaim_end(sc->nr_reclaimed, NULL);
- 
+ 	return NULL;
 -- 
 2.53.0
 
