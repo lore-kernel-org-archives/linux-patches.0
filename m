@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064253;
-	b=cS6ViNhv8rkt1xeozVPEL2cW0zKYu0655HuNHmD1iL9wkfTW26Qcwgt1X9QrjpikqPYz
-	 6S+ALt28QyprfLvUd+y9GASXu6FqOzy7ndkZV1UfVPYXuOxroXhumXx1wr++ixEx6WDsS
-	 Lihl5kxSqPuSWpqoJUq76YMTCW2undGCaPogC5JNPd+tpgjAAwm+XyPP8a8TFcAMw+NSb
-	 5XI8vL+cPl28bnb0gGkClZCiSmDWbyCCWK4iOswlMhtpAOixDFaRENcRjOsRceETmW6tm
-	 kDW7P41zkSFnTgyHC+YMdfXojsWeOUNxzISDaLuTbBAHj1v3AWB0/FXrIWM5luEF/1Q==
+	t=1794064254;
+	b=eUnF+Cat8dUcDBdgmTESN+ywLUL+J1kiDmjcVpy7/oA9XAMlzwAD3MoSDfBxmn7KzSSl
+	 Wy8Bpm9lKcJJA31jID5CUH+tOFvqK+YRG1K5q0qivxYdwlUcN0DbEw5KtdxAYeMRFTnOr
+	 Tk4Uc7hKbHATN1gEluymcvPFgKfy1EWWoRSR4GF4pQlGe9IQIiddoNQyPdARzLE2S7fgF
+	 AiabYMJ5Y5Zrse9a2DMonBYh3z27wt6cSek4rTfu4e/cYv8byvjI7Zc4XnJe54++j8rTj
+	 ccQsH56Vj1ubY3GZnCDFqG9exkndTwNVBJNnMX1yXfYmSo1nhvsSbh8cu7yKM002/Sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064253;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064254;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zUniO1Q2hY+6h8mpj/s72WdWg4IY3v+DkuL6HJDjrX4=;
-	b=ZSXDUlVzRZen4XJ5ltOqxx/2e3FaH/dfLl8aVFyxnjlcgHnRh4q0kDQ1vHeWUp6d1KBV
-	 znjDuOuBx/tBODtYZ64erAmxn4+juZbT4QgohfkbyhByIveGkETBZrDo2Q/DxaDrOJQk8
-	 wlcSZ5PSa0ajuKp5+poZ3fON7VJvs4yJrp3N4d+Sr9Q7qzTiai1jWv98m+SCBt+RjALD5
-	 jPkcgZMJ1eJA5opaLsLt3AqzK2nKOAC5TEAVIEMxh2IgEZq8Jf/jFiWwuXupNp4DiCZL+
-	 i0UWOD6WU8n/iv+qRJ6xgUvePARBVzyqAN+OJwrk2eb33CIQWn9rs085zqUpd74J7pg==
+	bh=sdGT4bUoH9vgtdzdN0AcuIKe18fj+yOnEBgHSJ/HPOA=;
+	b=cVItmTfkg2yVnmCGM1+Ghzwfqlw5aTe4OBEsE5BC1fmXTGxHuXkxKIZxpXympW4iHWDF
+	 QU0i6JBDP8e0b6yabODRkPvXZT9gYyJbuhi7xIOWH3t+APxRRKxXOhfObc5f6LjIPi2Tp
+	 IT9gXyOa9vc+IB8rBV2v9/JtxgqVQUiTzuHzzSQ3BCPl17ubBFFJep+CjLNdUQ3qMyGve
+	 oR804xpUF9yGtYwZk4d8Bv+h30+qSDSOFzd8uoGreCw0Qy6HIZS1V6429t4JyrWYxs8x9
+	 lSn5beujSjKMe+MDPIqXKjkqaUZ0Y0CE4nhi4QvjLTMnlY3jWKTDt0n5v1y7i5833Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NXmvUp+B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NQbrAiTP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AEA606A9C6;
-	Sat,  7 Nov 2026 15:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604DB606A9C6;
+	Sat,  7 Nov 2026 15:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NXmvUp+B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E611F0089F;
-	Sat,  7 Nov 2026 15:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NQbrAiTP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9771F0089F;
+	Sat,  7 Nov 2026 15:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064253;
-	bh=zUniO1Q2hY+6h8mpj/s72WdWg4IY3v+DkuL6HJDjrX4=;
+	s=korg; t=1794064254;
+	bh=sdGT4bUoH9vgtdzdN0AcuIKe18fj+yOnEBgHSJ/HPOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NXmvUp+BIRCtx8bscZoofo+gs6JKVdSIK49fRMEK7gDyZvwGCRyK4ibvA6Z3dtXD2
-	 UHRuj394BcBgQCbH0Zbv7ZS9UVCK3sJg9bxANXVqniJE7G5T26QZuqx+X3y9YGj+nc
-	 ov1l0t4xZxz5+a4svhMzyMmuJwGUw/i178KRfjYY=
+	b=NQbrAiTPiUnDrplkL06YYMRBfSg68HvtBet/oc6Wn49qMaw5o0g3gYN/10dds4TBZ
+	 tkm9h8EFM+LvPkFk57S1j+sVAUyIeMt/168Wa9iKpAyS0OlOowyKMUWGptbITiUEHk
+	 AFOylS6lhaf2uUPUIXSb0Ft2TMW43mKEpvjALC+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0337/1257] iio: adc: ad7192: reject devices without match data
-Date: Sat,  7 Nov 2026 08:43:53 -0500
-Message-ID: <20261107134948.717420931@linuxfoundation.org>
+Subject: [PATCH 7.3 0355/1257] fs/ntfs3: reject an oversized resident attribute on the inline iomap path
+Date: Sat,  7 Nov 2026 08:44:11 -0500
+Message-ID: <20261107134949.191499805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,44 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 7f7a119a370ecf6c8d4ab9e9ee0a8cdd77afedd3 ]
+[ Upstream commit 456189f9c714dee6716c2a3aad908e63830cac66 ]
 
-SPI driver_override allows a device to bind to this driver without
-matching either the OF or SPI device ID table. In that case,
-spi_get_device_match_data() returns NULL.
+attr_data_get_block_locked() maps a resident attribute as a one-page
+IOMAP_INLINE extent: it allocates a single page, copies the resident
+value into it with memcpy(), and hands that page to ntfs_iomap_begin()
+as the inline data.  The copy length is the on-disk resident value
+length (res.data_size), and mi_enum_attr() only bounds that length
+against the MFT record size.  A corrupted volume with MFT records larger
+than a page can therefore present a resident $DATA whose length exceeds
+PAGE_SIZE, and the memcpy() then writes past the single destination page.
 
-ad7192_probe() immediately dereferences the returned chip information
-to initialize the IIO device, causing a NULL pointer dereference.
+Impact: reading or writing a resident file on a mounted crafted NTFS
+volume whose MFT records are larger than a page overflows the one-page
+inline buffer in attr_data_get_block_locked() with attacker-controlled
+bytes.
 
-Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
-data") fixed the same driver_override issue in another SPI driver.
-Reject devices without match data before using the chip information.
+Reject such an attribute in attr_data_get_block_locked(), before the
+page is allocated and the copy is made.
 
-Fixes: c3708c829a06 ("iio: adc: ad7192: Convert from of specific to fwnode property handling")
+Fixes: 099ef9ab9203 ("fs/ntfs3: implement iomap-based file operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7192.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ntfs3/attrib.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/iio/adc/ad7192.c b/drivers/iio/adc/ad7192.c
-index d8f5886fcf694..8bd8105463111 100644
---- a/drivers/iio/adc/ad7192.c
-+++ b/drivers/iio/adc/ad7192.c
-@@ -1406,6 +1406,9 @@ static int ad7192_probe(struct spi_device *spi)
- 	st->int_vref_mv = ret == -ENODEV ? avdd_mv : ret / MILLI;
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index b1c315206ffaf..fd2640878e6a5 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -1034,6 +1034,21 @@ int attr_data_get_block_locked(struct ntfs_inode *ni, CLST vcn, CLST clen,
  
- 	st->chip_info = spi_get_device_match_data(spi);
-+	if (!st->chip_info)
-+		return -ENODATA;
+ 	if (!attr_b->non_res) {
+ 		u32 data_size = le32_to_cpu(attr_b->res.data_size);
 +
- 	indio_dev->name = st->chip_info->name;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
- 	indio_dev->info = st->chip_info->info;
++		/*
++		 * A resident attribute is copied into a single page below
++		 * (alloc_page() + memcpy()) and mapped as a one-page
++		 * IOMAP_INLINE extent by ntfs_iomap_begin().  mi_enum_attr()
++		 * only bounds the resident value length against the MFT record
++		 * size, so a corrupted volume whose records are larger than a
++		 * page can report data_size > PAGE_SIZE; copying that many bytes
++		 * would overflow the single destination page.  Reject it.
++		 */
++		if (data_size > PAGE_SIZE) {
++			err = -EINVAL;
++			goto out;
++		}
++
+ 		*lcn = RESIDENT_LCN;
+ 		*len = data_size;
+ 		if (res) {
 -- 
 2.53.0
 
