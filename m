@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064265;
-	b=uvr1oorCCsDKeTh9cKr4y1afpc+ggrG8eSuULXIqU8H/SqcbP1UpxPxRe1g9EuHn1+88
-	 KbaqD/AzDjvlM8uIhplVZHVI91LTsytP3xjh6BJuO7NDY7Z+eu0wZd2b8DSTzq9exST3O
-	 mN0yUQuEcovVp9bby1ZNxl0gu5tkRzUc9aw0lqbXdM6CFNmhkWhrlqMsVE5WoE520AbR3
-	 e5K5nidrLbkn18xbdhORWzhEc5rxJCbzfIdMTRLdomq4ZFTFwchnIb+zUIFxqkIGvlpy9
-	 nRyCcINZvLGMhIDAA/HZNoa3tp/jCiM/dlqUMQqeCR2L1kC3AL3X2JMEhTpo6H7la4g==
+	t=1794064267;
+	b=1zmHlCX6dSa5hGaAHkrAW0mtp0Cr4dt1EDM8VUWSYN2DP3GnzdK2vF+jV6EQmrDyHY8J
+	 hqHECvP4Wwqd5TRfhqrwof05cG1vTklKKeuUO7b7pay+YA2+YagUXIFXrRBSnr3hZqtYm
+	 3MqHBTTgPvgqrnZ+v6ggMMgrCA2aHE9Xvie9b2dQbB9nLhWoR9MyD0Jxm7TziWIijATWK
+	 GJClL83/gh4+6F4oMpH/75fVL+n5m5ku3WxYUEJ9lNeCyV91xFgdHxnoPSU8fp1GHZxPt
+	 MPd40c7m6aRVhlcDbmpRvvFIVNREcN1jQc2mJ/7VJO/5919k0e04A6JVkCoqVvx+RtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064265;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064267;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fVbIARVQsQmC/r2eNAnWFtmZEOWM424WazY9ORQYyE8=;
-	b=X6hj0+DJl35bosy0OUxqZhp20TnP5TfceCl/3DTJEEvkPT0IjBBfvgE45C8WNyUfeJPO
-	 kut9YUraATaKYV7KGfy2xoAL6N2ENQVx7DM4Klmg8qaWh7FbOjeAhiAV0/VGEz91vGni2
-	 TCvsGsCWN016/t7vKpVU2tAHTlfWRvtyqgtIU7OeFHrSD7G/khDgbLCdc/KDObgw63cFy
-	 Dyk52hMQftvIel1ZrT4lTA+9AZQ0koBmeUDhf2h17h0JJOm9hoA6+Q1UEVsgXbIJ+vga6
-	 F3cXzGql/vxk/Pd+0+RFfpqTt4iLk0Nx5tJDuXiGSPl8b0Z/QSyLT3PchKoN/kpLpCQ==
+	bh=/B5zbC1jWfQsvRa+GfSg7hhqlTHCiLDmYiT7XaQuDUg=;
+	b=wtzkB2V4kRiIq8RJaLenujnFkkiB+IffzVUC9ub6GFVNNxt2G97Mgq0T3idqm0m7vuoe
+	 nhRmuAmxSs4xRy/H6j1IVbCaBc/NHDFmCf4JFFOUfWSOw5wrs91f+le2O8/3e046OIWwN
+	 pW3HKvB2olOcIptq3as58c9GBEpltwZQd/ASAVRczTfRMU4EUhUxwlnMZYaF1OLZuYyz5
+	 0ECzH+9+2tNryaOgeOcJ5DL5ZUMVo0VPY6T5dG5jUyBArcwXgQdVIJIog0bz1Zm+VvS94
+	 JtrKJ6RLD0hhlEknObG8vrRdPJQLLNPafwbZNuaZ5bMLqOBtxGFLDtbFb082RoBItGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZaGharVG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Q0G3Dg9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89484606A334;
-	Sat,  7 Nov 2026 15:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD88B606A334;
+	Sat,  7 Nov 2026 15:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZaGharVG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3870C1F0089F;
-	Sat,  7 Nov 2026 15:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Q0G3Dg9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8A51F0089F;
+	Sat,  7 Nov 2026 15:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064265;
-	bh=fVbIARVQsQmC/r2eNAnWFtmZEOWM424WazY9ORQYyE8=;
+	s=korg; t=1794064266;
+	bh=/B5zbC1jWfQsvRa+GfSg7hhqlTHCiLDmYiT7XaQuDUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZaGharVGwiEyt92WgBbI7xHJgnHO2Fba1qnW7LJ81p0rvMCIIaGcBXDQ1/OJ6n+w0
-	 aKAv7nu6h/4TbCvZQWDMHFbwaK56ldF5jbavXS0fnFmzGyBXGwJhZIFRf3KSF4/gK8
-	 zazqBrdR7PYF9Aqd1dQbyeSULvWrCauKZkg5PWAU=
+	b=2Q0G3Dg9ha9KXdp0J7oIIYvTeEFeeodkSSmjCSTEK11+u8YJ1R4wyW6X3Tnt0u2Sb
+	 vDg85DuNwB1xIDoNxYcaZMJorQZ8R/KPsn1bYB8RC4VIvhk/cGslhrcS1mmC95bHD2
+	 fFfXtr+jKhzKiUuazFTuFt2cWuo35CjSDzwILMyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0364/1257] media: iris: avoid bit depth validation for capture formats
-Date: Sat,  7 Nov 2026 08:44:20 -0500
-Message-ID: <20261107134949.637664641@linuxfoundation.org>
+Subject: [PATCH 7.3 0338/1257] iio: adc: ad7606: reject devices without match data
+Date: Sat,  7 Nov 2026 08:43:54 -0500
+Message-ID: <20261107134948.741962215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,59 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 40e9c3b3e35c6d65a3a0d3b1483716ad48b046bd ]
+[ Upstream commit 7830650d5293a0f412a869225262ca51b661e49f ]
 
-When validating a capture format, check_format() compares the requested
-pixel format against inst->fw_caps[BIT_DEPTH]. However, the bit depth
-capability is not available at this stage and it contains the default
-value of BIT_DEPTH_8. The actual bit depth is updated later after the
-firmware reports stream capabilities through read_input_subcr_params().
-Because of this, a valid client request of QC10C format request is
-rejected during the initial format negotiation. The driver then falls
-back to the default capture format (NV12) and stores it as capture format.
-Later, when the firmware reports that the stream is 10-bit, the driver
-sees NV12 as the selected capture format and switches to the default
-10-bit format (P010). As a result, the original QC10C format requested
-by userspace is lost and QC10C decoding cannot work correctly.
-The bit depth information is not reliable during the initial format
-setup, so it should not be used to validate capture formats. Remove
-the bit-depth checks from check_format() and only verify that the
-requested pixel format is supported. This allows the format requested
-by userspace is handled correctly.
+SPI driver_override allows a device to bind to this driver without
+matching either the OF or SPI device ID table. In that case,
+spi_get_device_match_data() returns NULL.
 
-Fixes: 20c3ef4c7cae ("media: qcom: iris: vdec: update find_format to handle 8bit and 10bit formats")
+ad7606_spi_probe() dereferences the returned bus information to pass
+the chip information and bus operations to the core, causing a NULL
+pointer dereference.
+
+Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
+data") fixed the same driver_override issue in another SPI driver.
+Reject devices without match data before entering the core.
+
+Fixes: bc69e9fffde4 ("iio: adc: ad7606: Add compatibility to fw_nodes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/iris/iris_vdec.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/iio/adc/ad7606_spi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
-index 9e228b70420e4..7f89e745a4b1b 100644
---- a/drivers/media/platform/qcom/iris/iris_vdec.c
-+++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-@@ -95,16 +95,6 @@ static bool check_format(struct iris_inst *inst, u32 pixfmt, u32 type)
- 	if (i == size)
- 		return false;
+diff --git a/drivers/iio/adc/ad7606_spi.c b/drivers/iio/adc/ad7606_spi.c
+index 1ebdfb8580ab5..8c479fa50a237 100644
+--- a/drivers/iio/adc/ad7606_spi.c
++++ b/drivers/iio/adc/ad7606_spi.c
+@@ -456,7 +456,11 @@ static const struct ad7606_bus_info ad7616_bus_info = {
  
--	if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
--		if (iris_fmt_is_8bit(pixfmt) &&
--		    inst->fw_caps[BIT_DEPTH].value == BIT_DEPTH_10)
--			return false;
--
--		if (iris_fmt_is_10bit(pixfmt) &&
--		    inst->fw_caps[BIT_DEPTH].value != BIT_DEPTH_10)
--			return false;
--	}
--
- 	return true;
- }
+ static int ad7606_spi_probe(struct spi_device *spi)
+ {
+-	const struct ad7606_bus_info *bus_info = spi_get_device_match_data(spi);
++	const struct ad7606_bus_info *bus_info;
++
++	bus_info = spi_get_device_match_data(spi);
++	if (!bus_info)
++		return -ENODATA;
  
+ 	return ad7606_probe(&spi->dev, spi->irq, NULL,
+ 			    bus_info->chip_info, bus_info->bops);
 -- 
 2.53.0
 
