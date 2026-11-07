@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064806;
-	b=NKSuDFsD/B0ay4tG+I2Pi64wmt6TdAFDfCXUphjv7+p+/K1Oy5tChjFcU0uos3ublp9X
-	 tzVz4rrXix7DDBplbtFuA9NNUcFz5CgIVOIutYuCu2fwdr/FVivHtEtZm5mxDlWJV42Ke
-	 qqHw+e6J3iTAqMUsQ1N6RtUt3XwfOlZ4Xqom0h0qw4vBhs4ijyYq8nxJhgfd+AobLZCq1
-	 Tznh1bHUxVT1S7BZIK4Tvh5t/JdB2hLF1fsEebgd8jUeLpgzgqZE251ZRAWNkmrDr43U3
-	 9UD7dgLvuyTpLhauaDsZwrperh8Jobi6rtgChELQM7GKNzzwILoyCjlF8T1FkNjO5Jw==
+	t=1794064807;
+	b=hYoiA/Ol47wbQIQJEqnngFo7AH3FnAz30KXAzsi+h9P+XulXutQJs3a3Xc4mihYCU1C7
+	 WJcgIlvfLxbG3HsRpgPxNvW9L8P9plNbrFN2BZT3UJgKiH5o6PTcicMkB6gyNBa80SMVc
+	 ao4H4Ok/lqJhjBl6D+PEUxG/U4FYoHw3iEha6wQsIL1iukoBLi+UVPDpqYnO+YoAzKt3M
+	 FIWkdwI3rIqHYQuxuxyCDBq85Z9ACYwLlY2Z9+NJvHIwtSB3p4owYhugsmrXib3flzLNr
+	 RqcsZmY3Bc+zXnKNCnenZHNqRax4m5bj9+wOCcceCHYxNz3w5BdWQwEfvsIZ9k27bPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064806;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064807;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=pbPeNjRFHUYfx/yatmbYyxqyPZNE5KRDVG73+DZoSTc=;
-	b=ap3Er/7pu2Jdf+29yQJSSfEQzUMsta2BAxKZulNdZPOHu5NS+w5GBUK00spvBdUIbcZI
-	 V5zuY8spEhxAPVuU2qKHzuHnyMmvTKk2oAy1xrdewQGhigQrar1POiott75LUMGCxwbPg
-	 AczCKe0xlvSg0PiOFgE0rlQXC0CcbhZ5Old1ps5cmOGHMTmTGGSn13Y+kF2IdTmCbtyyA
-	 /w1DKCLdAAF0VCLSZ109peXr9cEekRwT9m7Rp146rSu0S7su8bG2GK0z0d9WoMSdTt8Mn
-	 Pp9PCva4Vl6rxVoLtOfsMMZFPiF0jdIgcnr2gYc7Gma7ey7LvJuyvTnhIZikozOM0ww==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=AjHuqYrpktNza/tahbS4Heg6hTjThT3nQp+PtjSNY10=;
+	b=UT8ItQ304Gca/P15YzpDwhsyVZE/04r7nL9qB/LUKuznw1fn2JooJJx2flIQjnxmzAhc
+	 Ny9KkH0OKSmktXvOBmHka/dOmGybLjnHqvMl3+UJH9PYM0ZZXYIxM/dE0UuMJsPU2Z+1O
+	 mRkEGUft+hCu3y9KkPIR64TUkG9bzydlJBjWj81QiTnrv+83YZvdjyvoHFc5yV4yb2EuZ
+	 jZB0peV6uzG17Klvm5xiSvU9qNsrIMOaypwT9PZHQGuHXQhll/JJKpqR7WTSYJYC65dHw
+	 G/HmGCHSLX1V7XnWdDvT07GYs6ahGUgNKfoFNP34vymHguZZinETA9XtUKUTHR9MdgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HTUl4HI9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AVIy5mXB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6D3606C021;
-	Sat,  7 Nov 2026 15:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A15606C02A;
+	Sat,  7 Nov 2026 15:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HTUl4HI9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7075A1F008A3;
-	Sat,  7 Nov 2026 15:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AVIy5mXB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3251F008A3;
+	Sat,  7 Nov 2026 15:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064805;
-	bh=pbPeNjRFHUYfx/yatmbYyxqyPZNE5KRDVG73+DZoSTc=;
+	s=korg; t=1794064807;
+	bh=AjHuqYrpktNza/tahbS4Heg6hTjThT3nQp+PtjSNY10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HTUl4HI95dfu8zh9ujlYvRpymgql5UU4UQM3u/IDdHo1C7JEFOBY+6E4apux+/MBx
-	 9eSKz/rMGG8sYXJ/cjOqNmmmHqt8D8UlxcQTIR5EgoGNtTlMCHDUaxPXeWowhKbFX6
-	 bnQn1bfqKI2kgp1V7rZzoTrKJiMxB3EZz4Inl98E=
+	b=AVIy5mXBPbnCSkVWv3gh2wMHXkLV1a7j2+zg1dvRWMbikvAuwNBJuobMQ4Rm6gLKL
+	 tnwvQuQfVfKVjfcMvnE9WXdTIwqT4QHNbwLjOu6yQ4KEST/3ORsP7jWrxPyv1BPp7F
+	 m+wfqYvO2UQkJ6cheYe/zMEUoZ0Lc2kl0RfVHO0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Aaron Erhardt <aer@tuxedocomputers.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Denis Arefev <arefev@swemel.ru>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0745/1257] platform/x86/tuxedo: Fix keyboard LED map ordering
-Date: Sat,  7 Nov 2026 08:50:41 -0500
-Message-ID: <20261107134959.866884136@linuxfoundation.org>
+Subject: [PATCH 7.3 0746/1257] ALSA: cs46xx: fix unit mismatch in DSP code area bounds check
+Date: Sat,  7 Nov 2026 08:50:42 -0500
+Message-ID: <20261107134959.895363536@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,59 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aaron Erhardt <aer@tuxedocomputers.com>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit 5c9c54dfa28c9a47c9d81322d16585f9a64d4c69 ]
+[ Upstream commit fd65108f5001ffb416dc9bd37ec1893f55cff24a ]
 
-The LED mappings in sirius_16_[iso|ansii]_kbl_map did contain a
-flipped line that caused LEDs to turn on in the wrong order when
-counting up the Lamp ID.
+ins->code.offset and code->size are measured in 32-bit words, while
+DSP_CODE_BYTE_SIZE is the size of the DSP code area in bytes. The
+check ins->code.offset + code->size > DSP_CODE_BYTE_SIZE in
+cs46xx_dsp_load_module() therefore allowed up to four times more code
+than the code area can hold.
 
-Fixes: cfd84b3f419b ("platform/x86/tuxedo: Add virtual LampArray for TUXEDO NB04 devices")
+The shadow buffer ins->code.data is allocated with
+kmalloc(DSP_CODE_BYTE_SIZE), i.e. it holds DSP_CODE_BYTE_SIZE/4
+words. A firmware file with a code segment larger than
+DSP_CODE_BYTE_SIZE/4 words (28 KiB) passed the check and caused an
+out-of-bounds write in shadow_and_reallocate_code() and an
+out-of-bounds read in snd_cs46xx_download().
+
+Compare the sum in words against DSP_CODE_BYTE_SIZE/4 and cast it to
+u64 so that the sum cannot wrap for large code->size values.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reviewed-by: Werner Sembach <wse@tuxedocomputers.com>
-Signed-off-by: Aaron Erhardt <aer@tuxedocomputers.com>
-Link: https://patch.msgid.link/20261007080202.81694-5-aer@tuxedocomputers.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Link: https://patch.msgid.link/20261014102619.16415-1-arefev@swemel.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/tuxedo/nb04/wmi_ab.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/pci/cs46xx/dsp_spos.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/tuxedo/nb04/wmi_ab.c b/drivers/platform/x86/tuxedo/nb04/wmi_ab.c
-index 32d7756022c26..38a719381fdc5 100644
---- a/drivers/platform/x86/tuxedo/nb04/wmi_ab.c
-+++ b/drivers/platform/x86/tuxedo/nb04/wmi_ab.c
-@@ -232,8 +232,8 @@ static const struct tux_kbl_map_entry_t sirius_16_ansii_kbl_map[] = {
- 	{ 0x2e, { 246000,  67500, 5250 } },
- 	{ 0x2a, { 269500,  67500, 5250 } },
- 	{ 0x53, { 294500,  67500, 5250 } },
--	{ 0x55, { 311200,  67500, 5250 } },
--	{ 0x54, { 327900,  67500, 5250 } },
-+	{ 0x54, { 311200,  67500, 5250 } },
-+	{ 0x55, { 327900,  67500, 5250 } },
- 	{ 0x56, { 344600,  67500, 5250 } },
- 	{ 0x2b, {  31000,  85500, 5500 } },
- 	{ 0x14, {  51500,  85500, 5500 } },
-@@ -337,8 +337,8 @@ static const struct tux_kbl_map_entry_t sirius_16_iso_kbl_map[] = {
- 	{ 0x2e, { 246000,  67500, 5250 } },
- 	{ 0x2a, { 269500,  67500, 5250 } },
- 	{ 0x53, { 294500,  67500, 5250 } },
--	{ 0x55, { 311200,  67500, 5250 } },
--	{ 0x54, { 327900,  67500, 5250 } },
-+	{ 0x54, { 311200,  67500, 5250 } },
-+	{ 0x55, { 327900,  67500, 5250 } },
- 	{ 0x56, { 344600,  67500, 5250 } },
- 	{ 0x2b, {  31000,  85500, 5500 } },
- 	{ 0x14, {  51500,  85500, 5500 } },
+diff --git a/sound/pci/cs46xx/dsp_spos.c b/sound/pci/cs46xx/dsp_spos.c
+index 6fd4f629d1d57..a77e6f5a14ada 100644
+--- a/sound/pci/cs46xx/dsp_spos.c
++++ b/sound/pci/cs46xx/dsp_spos.c
+@@ -393,7 +393,7 @@ int cs46xx_dsp_load_module (struct snd_cs46xx * chip, struct dsp_module_desc * m
+ 		dev_dbg(chip->card->dev,
+ 			"dsp_spos: module got no code segment\n");
+ 	} else {
+-		if (ins->code.offset + code->size > DSP_CODE_BYTE_SIZE) {
++		if ((u64)ins->code.offset + code->size > DSP_CODE_BYTE_SIZE / 4) {
+ 			dev_err(chip->card->dev,
+ 				"dsp_spos: no space available in DSP\n");
+ 			return -ENOMEM;
 -- 
 2.53.0
 
