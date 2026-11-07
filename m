@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065411;
-	b=EVDNr5/G3kF7l0QgIWOsR7bxDwoAvt+D8Adelm1LgzscVI/ps5fX5lKQvoVveWQDuknG
-	 Ks8m7uSuV/XBFkQMQbCFC8Gn20xP8x2WvtvRcG9EgMD2W9lyFnots9F1iGzQaVkiB4Z7o
-	 J6cFbAAej2uyZe1cQw6SA9czMPP4WUieYxqKhrfpsW70x6f8uVSoRY1Cx6KjJ9G1eSkuu
-	 crsB8r6+tr4CVeIQ9OHaJ5G+dP4R5/twsKctMsiO1mhSTzoG1NSN2D13qUjdySWPUSaSN
-	 C/idQNOeaetVET4UiOUtaixxE//oRPgTWki4WnbwhGuB+L+T9SSF3VZU9JLEBGI3T8Q==
+	t=1794065413;
+	b=qon/wwwQdNnOo7xi4u6cnNAEsa5BKAuE+fKqPCT25nLNvxgdSmMnLRULq36phAWVMlVh
+	 lu1HCKgxqxSW/uyXAXGHMRERpIMJrzy79HGtZskSv6Otr94HWlb0aweSD828K5af23kPv
+	 ySoRx1S3GMKwefy9lXs7DnYv/xxZr/ejxgFevzV1HMpsY/xbIZfiHQbciUHtynnJV+J93
+	 RJE90siuiUrX41/Ya7hN04ZXMd3ajzXXYoVMzS/298Hvgz2Vdv6rAG6gU3QH2K3YPhy9C
+	 4Rso0xk9Kz7yhXAU7i2cW/Mlj0WgnrRBUPCWOfWMdwzYe2Lcvab1qv18k1Go+72SXfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065411;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CGAwar/0TbWmSJ3blFjW6JtRTqLRLDl/p+TNRbqx8DI=;
-	b=hFLGYsxjhiDozC7roeNcX9FHeb5AhcShuU6ExNgR5+a9ckDpuuI8yOxGAETiGQfKIolH
-	 2Z3kzZy8C9zQpzgByDjmIyE1NZnSSAon2GRpIvdZbp0wvbiY/yMZy/w5PcGp/Q99mO5EN
-	 QigAbFBG+CkltEHh5RHpg/BgzkxnEdWlAlG0asX/i8l8N1uTEB8rzejs+lEs8bGe+es6h
-	 WxhBo49LpzDyBQ6lQR7QsxSpZfIhslshmNDku9h3X0uKC0VTeOpDr74B6OvPrn7r0HxyT
-	 eX7LtKMBFy9LxLjPEJ5SUjAHnOtyiN3GT9VT9Vq+YA3oGWt8/CU4ynpC/6BR9GJ5aqQ==
+	bh=p0RLjJonUKh/C8d0M0jIu6I21pXHkhJy00AyIQ16DpY=;
+	b=tB19BH0b6jt2dmPNNfiXchle+j2DiY3nsbTR4Ej1un+vNa7HSyyvtlrunxaoTZlTy89L
+	 KYReDaET2T59X3p4U1fbyH4/MKc26nFUlrb4+IGaSRQ4x4de8vbmsBiQVXpoVMbABMSQN
+	 kKHNDlk4zSRQig1rn9tq/76JU72vzPEtiUXcd91UyHS1dK2Vh7quyU6Szn5lTSQL7I6D/
+	 Hx4c83Eb0xqpB2F8pGlKq7+7TqPoQ7qeZCLIz7FDAfZIVK8ey6qSLyrysmiA9jGHrOdMQ
+	 DwtaYqrmNi6N+wyaMaMRkXgH6fVZb4anCQtabqEnMmpg2sfSzGau+m6+4Y3oMYgFAng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="A/zinf/7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvPDdMB0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67927606A330;
-	Sat,  7 Nov 2026 15:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21D3606D811;
+	Sat,  7 Nov 2026 15:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A/zinf/7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1A31F0089F;
-	Sat,  7 Nov 2026 15:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvPDdMB0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA521F008A2;
+	Sat,  7 Nov 2026 15:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065411;
-	bh=CGAwar/0TbWmSJ3blFjW6JtRTqLRLDl/p+TNRbqx8DI=;
+	s=korg; t=1794065412;
+	bh=p0RLjJonUKh/C8d0M0jIu6I21pXHkhJy00AyIQ16DpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A/zinf/7q5dtjXANHaHTl/uvW8PMIfISfaC4rivf+tRxs51LdxLpciJeUXY61GQ90
-	 8LIOKIEStVdkviXwepASmBATZ2AjwSVoxUuwS1ETLzBGMbm8zi6kBOH4cZnhl+gW0/
-	 JnqjBznUdswRKhb7rqkbR8UvRNY8nAiJiWZpJ4lM=
+	b=FvPDdMB01ngvlzwOOr1bwF7WKZ1zTaHF9lakJcvFapqPDWl+SBH1KV5SE1+dl+FGI
+	 PPL+8edgHNWYKeBFUDii8Z3RjSsO/TXiPyYdJ60DUK+lGUPYaBzcYjVgNbWBaPUmmb
+	 UcPzYI003Q8Njxr2f4VZddyEydhisOnIYfE5RPho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongfu Li <lihongfu@kylinos.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Hugh Dickins <hughd@google.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Felix Hoffmann <f3lix.dev@gmx.de>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1080/1257] mm/memfd: fix hugetlb reservation accounting in error paths
-Date: Sat,  7 Nov 2026 08:56:16 -0500
-Message-ID: <20261107135009.089503483@linuxfoundation.org>
+Subject: [PATCH 7.3 1122/1257] libceph: reject mismatched CRUSH weight-set sizes
+Date: Sat,  7 Nov 2026 08:56:58 -0500
+Message-ID: <20261107135010.225735953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -74,127 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongfu Li <lihongfu@kylinos.cn>
+From: Felix Hoffmann <f3lix.dev@gmx.de>
 
-[ Upstream commit 50ee565c1e900e247e439e4139839b060c968343 ]
+[ Upstream commit d8fc89b5bfe4cb3aebe4c8a818247d11291b841c ]
 
-If hugetlb_add_to_page_cache() in memfd_alloc_folio() fails with -EEXIST,
-a concurrent fault has already instantiated the folio in the page cache,
-and the reservation now belongs to that folio.  Calling
-hugetlb_unreserve_pages() in that case incorrectly removes the region
-backing the cached folio and releases one reservation more than it should,
-leaving that folio in the page cache with no region recording it.
+A CEPH_MSG_OSD_MAP message can contain CRUSH choose args with replacement
+weight vectors for straw2 buckets.  decode_choose_args() validates the
+optional IDs vector against the referenced bucket, but does not validate
+the size of any replacement-weight vector.
 
-That leaves resv_huge_pages one page short until that folio is removed
-from the page cache, so available_huge_pages() reports a page that is not
-actually free and the pool can grant one reservation more than it can
-back.  Applications using hugetlb memfds can then fail to allocate or
-fault in a page they already reserved.  They see -ENOMEM or -ENOSPC from
-the allocation or fault path even though the reservation and
-HugePages_Free still look healthy.
+The CRUSH mapper assumes that each replacement vector has exactly as many
+entries as the bucket.  A zero-length vector for a nonempty bucket makes
+bucket_straw2_choose() dereference NULL, while a shorter nonzero vector
+causes an out-of-bounds read.  An authenticated monitor or OSD can deliver
+such a map and crash a kernel client when it performs placement for an
+ordinary request.
 
-So hold the hugetlb fault mutex from hugetlb_reserve_pages() until the
-error-path unreserve completes to make the reserve, allocate and
-instantiate steps atomic against concurrent faults.  With the mutex held
-from the start, a concurrent fault can no longer consume the reservation
-between reserve and allocate/instantiate.  If a fault completed before the
-mutex was taken, it has already added the region for that index, so
-hugetlb_reserve_pages() returns 0 and the error path leaves the region in
-place.
+Reject a nonempty collection of weight sets for an absent bucket and
+require every replacement-weight vector to match its bucket size.
 
-Link: https://lore.kernel.org/20260927094757.31665-1-hongfu.li@linux.dev
-Link: https://lore.kernel.org/20260903030134.7407-1-hongfu.li@linux.dev
-Fixes: 717cf9357325 ("mm/memfd: reserve hugetlb folios before allocation")
-Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Cc: <stable@vger.kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 5cf9c4a9959b ("libceph, crush: per-pool crush_choose_arg_map for crush_do_rule()")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Felix Hoffmann <f3lix.dev@gmx.de>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memfd.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ net/ceph/osdmap.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/mm/memfd.c b/mm/memfd.c
-index c708d92533f4a..0f6fff004f5e4 100644
---- a/mm/memfd.c
-+++ b/mm/memfd.c
-@@ -82,22 +82,31 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
- 		struct hstate *h = hstate_file(memfd);
- 		int err = -ENOMEM;
- 		long nr_resv;
-+		u32 hash;
+diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
+index cf34b35c9a901..7bd27c2fc8726 100644
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -376,7 +376,9 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
+ 		ceph_decode_32_safe(p, end, num_buckets, e_inval);
+ 		while (num_buckets--) {
+ 			struct crush_choose_arg *arg;
++			struct crush_bucket *bucket;
+ 			u32 bucket_index;
++			u32 i;
  
- 		gfp_mask = htlb_alloc_mask(h);
- 		gfp_mask &= ~(__GFP_HIGHMEM | __GFP_MOVABLE);
- 		idx >>= huge_page_order(h);
+ 			ceph_decode_32_safe(p, end, bucket_index, e_inval);
+ 			if (bucket_index >= arg_map->size)
+@@ -387,10 +389,18 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
+ 			if (ret)
+ 				goto fail;
  
-+		/*
-+		 * Serialize hugepage allocation and instantiation to prevent
-+		 * races with concurrent allocations, as required by all other
-+		 * callers of hugetlb_add_to_page_cache().
-+		 */
-+		hash = hugetlb_fault_mutex_hash(memfd->f_mapping, idx);
-+		mutex_lock(&hugetlb_fault_mutex_table[hash]);
++			bucket = c->buckets[bucket_index];
+ 			if (arg->ids_size &&
+-			    (!c->buckets[bucket_index] ||
+-			     arg->ids_size != c->buckets[bucket_index]->size))
++			    (!bucket || arg->ids_size != bucket->size))
+ 				goto e_inval;
 +
- 		nr_resv = hugetlb_reserve_pages(inode, idx, idx + 1, NULL, EMPTY_VMA_FLAGS);
--		if (nr_resv < 0)
--			return ERR_PTR(nr_resv);
-+		if (nr_resv < 0) {
-+			err = nr_resv;
-+			goto out_unlock;
-+		}
- 
- 		folio = alloc_hugetlb_folio_reserve(h,
- 						    numa_node_id(),
- 						    NULL,
- 						    gfp_mask);
- 		if (folio) {
--			u32 hash;
--
- 			/*
- 			 * Zero the folio to prevent information leaks to userspace.
- 			 * Use folio_zero_user() which is optimized for huge/gigantic
-@@ -112,20 +121,9 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
- 			 */
- 			__folio_mark_uptodate(folio);
- 
--			/*
--			 * Serialize hugepage allocation and instantiation to prevent
--			 * races with concurrent allocations, as required by all other
--			 * callers of hugetlb_add_to_page_cache().
--			 */
--			hash = hugetlb_fault_mutex_hash(memfd->f_mapping, idx);
--			mutex_lock(&hugetlb_fault_mutex_table[hash]);
--
- 			err = hugetlb_add_to_page_cache(folio,
- 							memfd->f_mapping,
- 							idx);
--
--			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
--
- 			if (err) {
- 				folio_put(folio);
- 				goto err_unresv;
-@@ -133,11 +131,14 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
- 
- 			hugetlb_set_folio_subpool(folio, subpool_inode(inode));
- 			folio_unlock(folio);
-+			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
- 			return folio;
++			if (arg->weight_set_size && !bucket)
++				goto e_inval;
++
++			for (i = 0; i < arg->weight_set_size; i++) {
++				if (arg->weight_set[i].size != bucket->size)
++					goto e_inval;
++			}
  		}
- err_unresv:
- 		if (nr_resv > 0)
- 			hugetlb_unreserve_pages(inode, idx, idx + 1, 0);
-+out_unlock:
-+		mutex_unlock(&hugetlb_fault_mutex_table[hash]);
- 		return ERR_PTR(err);
- 	}
- #endif
+ 
+ 		if (!__insert_choose_arg_map(&c->choose_args, arg_map)) {
 -- 
 2.53.0
 
