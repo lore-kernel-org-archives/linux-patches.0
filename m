@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062019;
-	b=HFpd7P3IQxY7h6B7iu6QO1wuXvAwAlIHQCl+NYo/Ejbv7vXcmJ6Wa7LVlQFJ+YqhTloB
-	 vQmFT58SzpWLPO25vLiiJB1XGRjXSVEGCI2A4q4FL+OWP2nKTYXQDtyVyryN6vK05NLRe
-	 K6fkCftF3zLRYHRZjbCL59TXvOuudmcO7k/NgrqMqemzOF58MRlumtyOEMcJQO5JFqw1E
-	 FbpPRwGRnU5ytONWX0wRQoE26SFQTPlK4rP4RrwHloPaPaEcY1xkH5+gUy+ab8B4SxKJf
-	 SG/gPoSt+A0TaqOIBgaLRBTmIrotgpolUr31ThntUk4h5K2CvnopQvwixKUomBs8FIQ==
+	t=1794062020;
+	b=F+vtKQ19rSsqBwGNMkYDurO6HBZCZS27HPFSzAQIB3jeK1P+jUhFIbQ3FkFibN9CoLcy
+	 PzaGnYdRvSUO9pD77nT6LfBv06iBtI83rr2Taw+xXI6iRnEy18csorj10HDO06H4vr5A6
+	 5Bsg5aSWfGgnDFCpFE7miTPhxgNSgN8LwV3YnfYi2rNhY5HRzsVJhqZUaP0xm3CQh/Ofh
+	 rOsgeY4HwI5Ca/uQ6HZ1A0Ag1oFgjyJoKV40fl1PkbsgZmns+wF+22z45F6SFN1stCqh2
+	 kgbeuNgVUcbj0BhXKLs1tDLPgWg8u9HA5f9xY/yLiqSszMJS+GvV0yID/WYFTH4GHlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062019;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062020;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GeqwkizjiTcXzYtfKtJwQp2Xnf+Wu2DcUlKide0kkmA=;
-	b=l8y0tGji+EmNW98xUoX7ooCicG4DWsz9CiVyAxRX2y2FQNaLIRPUVuylSbWo0EkSh7Au
-	 3uAD3xromKoMpyEIf/Ccf6qFlLgp+P3mjSOACzbAby/lY8OM0tWUEPq4o0Io6+RRPxcuJ
-	 5WbHZ7BNtrDouQqbybA0nxe1jvaPjU2TXP6dhNX35WpIpMyc/26XH/U6pt95ojqHfe5kG
-	 NsB5W9khF+Z30SIx+OavLQL7D8xhsHWTaWrqhERsbvmZHR3Ce4MG2Z0HmEtm+xeC6U8aK
-	 4CEnwwkD91SE6LOvhfD8zamva8fimtASW41i3/gDV2McpwfNnG13JROBpCxIa8TVvzQ==
+	bh=djJ5AC6wL57lXSw9yRiNbpaFN4ZFF9FfvYd7D5Zszzo=;
+	b=BlpHeaXHgs9PxYe3fZZiFUHrE74CaOux4bGQ54lVNzZAQ6BQMlnefst85wBiZecYmsZ0
+	 ZkKiw66RAmJ+3C5wcU4A/bytnro0SXUjiX4AOyj5qE7MD8gO8tcXxvOooT9pFO28QKQB6
+	 TzymBsE5ofsSlLun+c1JdnD2EM8rff+5uxoylLl7/Jr/AqD8LhsOMUYmbqA/1VNJ8qfva
+	 SQn3XbXwqrFuG6kZwh8kUWyHwBObURdKFPVdJnREEU8yQ8zYoYHkF89lms7xIE/kY0VgZ
+	 L065vwcRpOlHoCbxDdUkGn09hsrJyWSk7wZe6xKcBFgxPO8WteodwJIVfxOitN2Z6ZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DqUoe+AR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUg0YhLU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DADA606A335;
-	Sat,  7 Nov 2026 14:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D27D606A333;
+	Sat,  7 Nov 2026 14:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DqUoe+AR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F9F1F0089F;
-	Sat,  7 Nov 2026 14:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUg0YhLU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6DD1F008A4;
+	Sat,  7 Nov 2026 14:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062018;
-	bh=GeqwkizjiTcXzYtfKtJwQp2Xnf+Wu2DcUlKide0kkmA=;
+	s=korg; t=1794062020;
+	bh=djJ5AC6wL57lXSw9yRiNbpaFN4ZFF9FfvYd7D5Zszzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DqUoe+ARRCImdvIUp28ng/7j5uPYeXa7HfqWkobQsHtz8dVqT0s/2hEwZwZsK26OF
-	 s+gj8XDlEZ5cfPAGPrSPx/Xph1x6zA2WOHs86t6IS5U8xiYHwSP4Vi/gNsh1EXKZMR
-	 g2bGwzA6KR5AqNEG0B2Otga5mYzr0FXbKsCDI7Bk=
+	b=oUg0YhLUOdv8m2ar4SgcVI17BgliMPbL4dIdZrdBO31hkKaLjRQpMHj4+lLIbWAiU
+	 ayVClGIiP7CS5dc62K824LUDQg4u8VcpQygEJNRtHj4HJM7v53ZzEi4mJjqZopBtkT
+	 dbBLdd2NaJHTRlVfYfBSpe8GAqkLOb0n8TqSqq80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	ChiYuan Huang <cy_huang@richtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+45ef5a8d661162757547@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1007/1536] regulator: rt6190: Fix runtime PM imbalance in rt6190_out_enable()
-Date: Sat,  7 Nov 2026 08:50:23 -0500
-Message-ID: <20261107135025.955675702@linuxfoundation.org>
+Subject: [PATCH 6.12 0990/1536] ntfs3: bound index head insertions by buffer capacity
+Date: Sat,  7 Nov 2026 08:50:06 -0500
+Message-ID: <20261107135025.463520489@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,66 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit e0d673e5a5c4084f0da90c06ed3b0bc45e47d679 ]
+[ Upstream commit 2f497d23652ff23da07b08cfb4b4a1c2a87f1892 ]
 
-In rt6190_out_enable(), pm_runtime_get_sync() is called at the start of
-the function. However, if any subsequent regmap or regulator operation
-fails, the function returns directly without dropping the runtime PM
-reference, causing a runtime PM reference leak.
+hdr_insert_head() shifts the existing index entries by ins_bytes without
+checking that the resulting used size fits within hdr->total. A directory
+index root larger than the newly allocated index buffer can therefore make
+the memmove write beyond the buffer.
 
-Add an error handling path with pm_runtime_put() to keep the reference
-count balanced on failure.
+Reject insertions whose size would exceed the index header capacity and
+make both split callers unwind the new node when that happens.
 
-Fixes: e6999e7cca7e ("regulator: rt6190: Add support for Richtek RT6190 regulator")
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: syzbot+45ef5a8d661162757547@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=45ef5a8d661162757547
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: ChiYuan Huang <cy_huang@richtek.com>
-Link: https://patch.msgid.link/20260916072541.1968033-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/rt6190-regulator.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ fs/ntfs3/index.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/rt6190-regulator.c b/drivers/regulator/rt6190-regulator.c
-index 3883440295edf..bf99e18f6d5b0 100644
---- a/drivers/regulator/rt6190-regulator.c
-+++ b/drivers/regulator/rt6190-regulator.c
-@@ -109,19 +109,27 @@ static int rt6190_out_enable(struct regulator_dev *rdev)
- 	ret = regmap_raw_read(regmap, RT6190_REG_OUTV, out_cfg,
- 			      sizeof(out_cfg));
- 	if (ret)
--		return ret;
-+		goto err_pm_put;
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index 03ae5a817c1b4..97cbe176a83e5 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -596,6 +596,8 @@ static const struct NTFS_DE *hdr_insert_head(struct INDEX_HDR *hdr,
  
- 	ret = regulator_enable_regmap(rdev);
- 	if (ret)
--		return ret;
-+		goto err_pm_put;
+ 	if (!e)
+ 		return NULL;
++	if (size_add(used, ins_bytes) > le32_to_cpu(hdr->total))
++		return NULL;
  
- 	ret = regmap_raw_write(regmap, RT6190_REG_OUTV, out_cfg,
- 			       sizeof(out_cfg));
- 	if (ret)
--		return ret;
-+		goto err_pm_put;
-+
-+	ret = regmap_update_bits(regmap, RT6190_REG_SET5, RT6190_ENGCP_MASK,
-+				 RT6190_ENGCP_MASK);
-+	if (ret)
-+		goto err_pm_put;
-+
-+	return 0;
+ 	/* Now we just make room for the inserted entries and jam it in. */
+ 	to_move = used - le32_to_cpu(hdr->de_off);
+@@ -1800,7 +1802,10 @@ static int indx_insert_into_root(struct ntfs_index *indx, struct ntfs_inode *ni,
+ 	}
  
--	return regmap_update_bits(regmap, RT6190_REG_SET5, RT6190_ENGCP_MASK,
--				  RT6190_ENGCP_MASK);
-+err_pm_put:
-+	pm_runtime_put(data->dev);
-+	return ret;
- }
+ 	/* Copy root entries into new buffer. */
+-	hdr_insert_head(hdr, re, to_move);
++	if (!hdr_insert_head(hdr, re, to_move)) {
++		err = -EINVAL;
++		goto out_put_n;
++	}
  
- static int rt6190_out_disable(struct regulator_dev *rdev)
+ 	/* Update bitmap attribute. */
+ 	indx_mark_used(indx, ni, new_vbn >> indx->idx2vbn_bits);
+@@ -1952,7 +1957,11 @@ indx_insert_into_buffer(struct ntfs_index *indx, struct ntfs_inode *ni,
+ 	/* Copy all the entries <= sp into the new buffer. */
+ 	de_t = hdr_first_de(hdr1);
+ 	to_copy = PtrOffset(de_t, sp);
+-	hdr_insert_head(hdr2, de_t, to_copy);
++	if (!hdr_insert_head(hdr2, de_t, to_copy)) {
++		err = -EINVAL;
++		put_indx_node(n2);
++		goto out;
++	}
+ 
+ 	/* Remove all entries (sp including) from hdr1. */
+ 	used = used1 - to_copy - sp_size;
 -- 
 2.53.0
 
