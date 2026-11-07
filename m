@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063515;
-	b=ziV2AKstk5So3fKyDpnATSirUuvuy+RzQMO9XDscg/HSebMirq8VUTcz31vJI79R/uxP
-	 /mCrW6sHOV4grmEhbk0/RbGUq7ursgw79m+6lWIRQJVSF/3yBR6SQp/2vF0Utt1LrNAvJ
-	 YW7X8eCNGDiG+VW0tRdc9ZpG0T7g0CrjzMOvLxnMtNdVyrUmKh5adOYqoHTy1/EqNWzVb
-	 12Hh8zoKzk8GzkMGUIevcQd4VO+Ve/VbFqNKOcvlWvBGnW0QF/hwgkfB96DUuxxgoaRsu
-	 z/42zz5OG08KRXrVXDe/bJAoW8+qqEvXIamMNxi/N8CMaBJJXEO5H78FpnGT6qN2Deg==
+	t=1794063517;
+	b=1GWFWaM7Amrf5rWRAdENUp9/uLIczGCfbAt3JKCFp0zEMlWqkCwnlklqHY5j8pcY8Tsz
+	 ylqxphfuW30W1gkJlHk4ruiFYUe4bFm72cvyBuKZRtPQgsi4X1aI3MAfK4bWBSEOqJM/W
+	 wJmys6F/laPPCRTEyL7BNKYHEqid6rqMhibkwcqFPshGR+1cw40KZk0Hekwm5p8Xczt96
+	 ZDqSPCWaOOVs/i4B+O/VQ1cTiZF+Z+lVIXpyL0+1vM2t8rz0Nhd+qCWBQyByiNXCMOYOC
+	 B6scZbFLAbnG/IPTMZLvLfpUxG7eKhOmvRmqib7ltkwEUnFgWXYI3YxfWNoW3Uf8uOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063515;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063517;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6RXR6BJ4hMJMJZnQLcRK/8EUEzWh+ODIkKCWxObJWP4=;
-	b=cN6/RAntLiaBIrID8sF7AATDZJqIcsqGvW070oqsJUWdxpPOtlc9ozjkk1ursfMl917b
-	 hVqlm5Q5yMF1rePbeWB0djQ+BAL6SHtZI+i6GMVmsLXFa9JrtE9gkHCb2jppwmLeJ7Et5
-	 HjU2eNQHsfWvPDNdW7ypw+ci/vl9iDSB4rbmYiucuZYyGp3oE7zIQsVEaZfZc7h33IrAz
-	 Fk5/uxC0+Pmg9JFSXejiYmtLWlTfE3bFjDeKHOeut2wIp8DUUd8LlCTaZ68fIxe+7wup/
-	 8YeW4vTh2JITXf9CQ/5+GKXc1xec9f2ZY5CGSYEvwGfINpKVBRuvaGXjVEbY4QiaM1A==
+	bh=d6zjBtVg5oO1t5dBT9zeHbAkGkx8g5x/6dUn6S/Uk8A=;
+	b=3q279KAgLhpzK3bV6yZB6B+gwVls2UIRSZmONFVpEKCiYhbOrYJiR9Xqb6GEcpvwIbEu
+	 eEHGzKQu0QnmWlsWRz9rea+IXE+AAdeHwbu6tTLbCqGcSG3/ipMuJWh972jPITKUUjTJy
+	 15bHK/VAaPlC+Fx0Gi+cXu7l63aL2AMLzS/bk1hn35vVdI8FUI3P/DsjfzfvSn5gcH6qm
+	 l3So7ivzlmmZgoWCVePqUVOF6Hp3dWG4O2dLmSUTWI3U8Dakq45kSDH1XlQLnSrb/P2aZ
+	 sFAT9Qj9Gx/OgxX8uhPtNANcGx3Vvk5+VFmHSB4HVnO+Nuu2deQjV3WYhCBTwpnepSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwVwq9Ii;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BUG+KYe/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D774606B8AF;
-	Sat,  7 Nov 2026 14:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0C6606B8BD;
+	Sat,  7 Nov 2026 14:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwVwq9Ii
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BBE1F008A5;
-	Sat,  7 Nov 2026 14:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUG+KYe/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576CC1F008A5;
+	Sat,  7 Nov 2026 14:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063515;
-	bh=6RXR6BJ4hMJMJZnQLcRK/8EUEzWh+ODIkKCWxObJWP4=;
+	s=korg; t=1794063516;
+	bh=d6zjBtVg5oO1t5dBT9zeHbAkGkx8g5x/6dUn6S/Uk8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jwVwq9IizYmDnxs0+13YBrcbSKGSsoNlpr1RHXo5TGcbizdfAFEFKMwjh00TJ9ArT
-	 J/AHg+NXQUMWNvdi9HpJhgB855RMuSbzlEiWaOlno9sxN4/BvxnR/lqtR7pDlytep1
-	 GDhRj1Au7aeffzHrENRbYWT035HpTyOz+TkLY0lQ=
+	b=BUG+KYe/Fk9HQbd1ukbGw2SNmjOnWzsEjO9gxT6MRoX2biJamVkaOPBV+c6S5aA8f
+	 G+jY5wKTUipca28CIo/i2zDY0Ndsrf6Mh0x52C/OQvMXLrIAHaTyFfKfHeZMjcbWuv
+	 uIAROUPtu8Ee8TJJRKyX8x9jdFipKGKSt3deGYQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sorah Fukumori <her@sorah.jp>,
-	Chase Hiltz <me@chasehil.tz>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 658/869] net: gro: dont chain linear parts larger than gso_size into frag_list
-Date: Sat,  7 Nov 2026 08:55:40 -0500
-Message-ID: <20261107134915.389848438@linuxfoundation.org>
+Subject: [PATCH 6.18 641/869] gpiolib: cdev: dont set GPIOD_FLAG_IS_OUT
+Date: Sat,  7 Nov 2026 08:55:23 -0500
+Message-ID: <20261107134914.653021967@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,100 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sorah Fukumori <her@sorah.jp>
+From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
 
-[ Upstream commit 679f6929a66db9f5a6611dad37545fbd705962d5 ]
+[ Upstream commit 974d2712cb15014019595799b3ed68fef5fe9695 ]
 
-skb_gro_receive() chains an skb into the frag_list of the held packet
-when its payload cannot be attached as page frags: when its head is
-not a page fragment and still holds payload, or when its head and
-frags would overflow the frags[] array of the last packet. Since commit
-5eddb24901ee ("gro: add support of (hw)gro packets to gro stack"), that
-skb may itself be a GSO packet whose linear part holds several
-gso_size segments. skb_segment() cannot split the linear part of a
-frag_list member across segments, so segmenting the aggregate in
-software, e.g. when forwarding it to a device without NETIF_F_FRAGLIST,
-hits
+When a line is requested or reconfigured through the v2 uAPI,
+gpio_v2_line_config_flags_to_desc_flags() copies the requested
+configuration into the descriptor flags, GPIOD_FLAG_IS_OUT included,
+before gpiod_direction_input_nonotify() or
+gpiod_direction_output_nonotify() asks the driver for the direction.
+If the driver refuses, for instance with -EOPNOTSUPP from
+.direction_input() for a line that can only be an output, the ioctl
+fails but the flag keeps the refused direction. gpiod_free_commit()
+does not touch GPIOD_FLAG_IS_OUT, so this outlives the failed request,
+and GPIO_V2_GET_LINEINFO_IOCTL reports the line as an input while the
+hardware still drives it, until a request without direction flags
+makes gpiod_request_commit() read the direction back from the driver:
 
-  BUG_ON(skb_headlen(list_skb) > len);
+  GPIO_V2_GET_LINE_IOCTL, line 0, input:         -EOPNOTSUPP
+  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            input
+  GPIO_V2_GET_LINE_IOCTL, line 0, no direction:  ok
+  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            output
 
-Fully linear GSO packets come from generic XDP. When the program does
-not support frags, netif_skb_check_for_xdp() linearizes any nonlinear
-skb with pskb_expand_head() and skb_linearize() and keeps its GSO
-metadata. GRO on the device runs before generic XDP, so each aggregate
-passed by the program carries all of its payload in a kmalloc'ed head.
-A tunnel that decapsulates these packets and runs GRO again through
-gro_cells then builds the bad frag_list. This was first seen on a
-router that forwards TCP received over VXLAN, with a non-frags XDP
-program attached in SKB mode to the underlying bond because one slave
-lacks native XDP:
+GPIO_V2_LINE_SET_CONFIG_IOCTL updates the flags in the same order.
+There the line stays requested, and since commit 92ac7de3175e
+("gpiolib: don't allow setting values on input lines")
+GPIO_V2_LINE_SET_VALUES_IOCTL on it then fails with -EPERM, though the
+line is still an output. A line whose driver refuses to make it an
+output is likewise reported as one.
 
-  kernel BUG at net/core/skbuff.c:4917!
-  RIP: 0010:skb_segment+0xbb6/0xf40
-  Call Trace:
-   tcp_gso_segment
-   ipv6_gso_segment
-   skb_mac_gso_segment
-   __skb_gso_segment
-   validate_xmit_skb
-   __dev_queue_xmit
-   ip6_output
-   ip6_sublist_rcv_finish
-   ipv6_list_rcv
-   netif_receive_skb_list_internal
-   gro_complete
-   dev_gro_receive
-   gro_receive_skb
-   gro_cell_poll
-   __napi_poll
-   net_rx_action
+gpiod_direction_input_nonotify() and gpiod_direction_output_nonotify()
+set or clear GPIOD_FLAG_IS_OUT themselves once the driver has accepted
+the direction, emulated open drain and open source included, and
+nothing between the copy and those calls reads the flag. Leave it to
+them, as the v1 uAPI already does.
 
-It reproduces with three network namespaces: TCP sent over VXLAN on an
-IPv6 veth link to a router namespace that has an XDP_PASS program
-without frags support attached to the underlay veth in generic mode
-and GRO enabled on its VXLAN device, and forwards to a veth with
-tx-scatter-gather-fraglist disabled.
+The other flags that the helper copies stay as they are. Active low,
+drive and bias are what gpiod_direction_*() applies, drive and bias
+possibly before the driver refuses the direction; edges and event
+clock are the character device's own. None of them is read back from
+the driver, so there is no earlier state that is more accurate to go
+back to. A failed request releases the line, which clears them, and a
+failed reconfiguration leaves the line, like the lines before it, with
+what was applied up to the failure.
 
-A program with frags support in generic mode gives similar packets.
-skb_pp_cow_data() rebuilds the skb with up to about a page of linear
-data in a page_pool head_frag and keeps the GSO metadata, so once
-frags[] is full the next such packet is chained through frag_list
-with more than gso_size bytes in its head as well.
+Reproduced under QEMU with a test GPIO chip whose line 0 refuses input
+and line 1 refuses output: both refused requests and both refused
+reconfigurations leave the line info with the refused direction, and
+setting the value of the reconfigured output fails with -EPERM. With
+this change the line info shows the direction of the hardware in all
+four cases and setting the value works. First seen on real hardware
+with v6.12.
 
-Refuse the merge when the linear part to be chained exceeds the held
-packet's gso_size. tcp_gro_receive() then flushes the held packet and
-the skb starts a new GRO packet as its head, whose linear length
-skb_segment() handles.
-
-Fixes: 5eddb24901ee ("gro: add support of (hw)gro packets to gro stack")
+Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
 Cc: stable@vger.kernel.org
-Assisted-by: claude-opus-5-5
-Signed-off-by: Sorah Fukumori <her@sorah.jp>
-Tested-by: Chase Hiltz <me@chasehil.tz>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Link: https://patch.msgid.link/20261013130250.3643916-1-her@sorah.jp
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: LLM
+Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+Reviewed-by: Kent Gibson <warthog618@gmail.com>
+Link: https://patch.msgid.link/20261016-gpiolib-cdev-direction-v2-1-aambrozewicz@nvidia.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/gro.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpio/gpiolib-cdev.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/net/core/gro.c b/net/core/gro.c
-index 252d7851d1aee..f96e5024758e2 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -192,6 +192,10 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
- 	}
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index d67d361cc4562..1afda8ea5769b 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -1253,11 +1253,6 @@ static void gpio_v2_line_config_flags_to_desc_flags(u64 lflags,
+ 	assign_bit(GPIOD_FLAG_ACTIVE_LOW, &flags,
+ 		   lflags & GPIO_V2_LINE_FLAG_ACTIVE_LOW);
  
- merge:
-+	/* skb_segment() cannot split the linear part of a frag_list member. */
-+	if (unlikely(headlen > offset + skb_shinfo(p)->gso_size))
-+		return -E2BIG;
-+
- 	/* sk ownership - if any - completely transferred to the aggregated packet */
- 	skb->destructor = NULL;
- 	skb->sk = NULL;
+-	if (lflags & GPIO_V2_LINE_FLAG_OUTPUT)
+-		set_bit(GPIOD_FLAG_IS_OUT, &flags);
+-	else if (lflags & GPIO_V2_LINE_FLAG_INPUT)
+-		clear_bit(GPIOD_FLAG_IS_OUT, &flags);
+-
+ 	assign_bit(GPIOD_FLAG_EDGE_RISING, &flags,
+ 		   lflags & GPIO_V2_LINE_FLAG_EDGE_RISING);
+ 	assign_bit(GPIOD_FLAG_EDGE_FALLING, &flags,
 -- 
 2.53.0
 
