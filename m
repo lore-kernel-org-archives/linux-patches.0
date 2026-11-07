@@ -1,52 +1,70 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063621;
-	b=iO5PKUVTTuTbd6Nj6RLAUhZ4VQ1GimYu0HcalRF6ybXxABsKYoabMbMBV969j07Ec9j0
-	 AesbKo5RMO5lmdLwAZuiskYM+QgjoHQk1ec8fKFI2L2DLLoJO7O1zKnHoN0/wCJSDcZmc
-	 Xh39mnjKeSwjwmdXvjw5zQKW2wI65+ESFUpaGjvuOa4+El2NoLSmPXtln3q76yKp3pgQn
-	 p7PgnU/3fMgGNx8aiq7zYWfCHyeT+KivYzA114ESd09e/Z+qAU9fJbHcJ5XwfYU8HsPWO
-	 RZk517lF2b7898L8ChHba8bt3RdDs/+uMsHJzxeXOw+59U1mCuSZQvjWJowpr3OVK/A==
+	t=1794063622;
+	b=SXVJ6SRImXMzFBnBt7NF1f1De7rpQejQSn+S9I3WLpshtVZ1ccdBtq+RHyBW79k5r425
+	 bDqUIuDSbSbJwpdUZc/0Vm4qivkT1A56FJYg4dffaovj44M76yxr40M2Zi6f0SsW4V4Az
+	 l8WWMagM1tu4jHVJaxSeGMtL4ESQF9gSpbMZbkA2edMUjGJVsk393/6KCX/Kby+yBLVCK
+	 i4vXqdCi8lN0AvqOdKL2Au4qY4xvC/DHP5a806ziW5eOcviBYkpyILmdYdu1xE/jyfL9T
+	 JGnJ6HhgCMsvVqjyntXrzewOjojGTXAKX4UIKJEpRn2aRqWH0DbIvSfhcjzP9PDLYbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063621;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063622;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HNZeKscwB/BtbLFMH+moNds+bX4Q6CJcIaI6b8vrXHE=;
-	b=c23Jcq5mLLI+eQjY/g55ZD0b7KUnx3/IH3KI5TdWSSg+Oqi9y245PMRYo4lSM0cIxE/l
-	 ktaWkSYW5b6D4WoZpGKKQTvgdEeuA34UCUMyQJbS8QQqoQaSEamoozzFbqV9UNXN0ZnGF
-	 xvHZrrlzaUS+O9UxRhHbPL25ZFWY3dc1FiUKSRXCR/zinmr2nJ6CauNWVwMBRMXzea71w
-	 lJYqhWON3qcI/mBCIBhJUNlBQyd6hnp39hVks9LvhszIxofvHb1Gqs3NWi6R7oOQ172un
-	 NPW7BdUkzu3i1ImiHJ41vkudsq960aVtNKe3YALuNMYL3NLIvUk3zV2Pzo41StSoNTQ==
+	bh=yquqyf/pnD/fPIsS5n3tAaF3jJeHCz73NtlsnH2pr9E=;
+	b=VThjhWUbGPIWj5SLs/0yh21QJKwGQn9Hq1jNTwYc5nUvfB/kdOvKv+0gJSg28uSytOG2
+	 KlA3UriBKo084NAJCT3TM93VlUf9J7rmXHeWWvwsn10holhoiwhmeCo1mZWS3uJHUPGkA
+	 2SlRkpBjk2lnEVp/Pyex+f6kc6Sqc1RCSSR5XZUaV085RpASo3F7wqvS+zWIu4yoltC6O
+	 NopYTzGcCUY4Ui3mROsA6zZvdPRmcRV1iDAD33yvIY4/L22+PpduJZuY+iYnEDoAR/r35
+	 FKqRMOoXQ4zDDPt2jF5XaRSFJgxLqEnWFahEiyWTJ6l53+pY3UQYmQhChMXEOIwqM2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UXNGTN2x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G6QQhdFP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E310C606EE9F;
-	Sat,  7 Nov 2026 15:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0BA6082BE9;
+	Sat,  7 Nov 2026 15:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UXNGTN2x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5491F0089F;
-	Sat,  7 Nov 2026 15:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G6QQhdFP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB271F0089F;
+	Sat,  7 Nov 2026 15:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063620;
-	bh=HNZeKscwB/BtbLFMH+moNds+bX4Q6CJcIaI6b8vrXHE=;
+	s=korg; t=1794063622;
+	bh=yquqyf/pnD/fPIsS5n3tAaF3jJeHCz73NtlsnH2pr9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UXNGTN2xoIbPPzw52b6ZIeG1oYrNCp1H54bBWMNnwPwmrrztVg+6T9GfNbuhV6Z1d
-	 WRwmkvWx2jEX/of0Npse1MBWP28Nxcb6K2pcypmnoMeO6Ct4YmdZIyRJDDyXCL6MkO
-	 EByQe6Jx2vqUkyeXjTbpYChZCJyiG6xG/Nk7LEPc=
+	b=G6QQhdFP2gfKsiaVIy6SK24DU7CXdIiV4J9OTlRjU0fXSUMrHCuQNMFwVcl+cRBRI
+	 sfEHaPbE9a/ApkVLJkoUtnF57JbQjMOftBhyCbnt8t2tSkqiFJivtXLyxYjz3KdRoa
+	 8AYPNZ7iwKGifUKSIdt7S80bjPS3CPuNlEOQI3S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Chris Mason <mason@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Oscar Salvador <osalvador@suse.de>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Adam Litke <agl@us.ibm.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Rik van Riel <riel@surriel.com>,
+	Peter Xu <peterx@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 723/869] i2c: mt7621: fix copying uninitialized kernel stack with reduced page_len
-Date: Sat,  7 Nov 2026 08:56:45 -0500
-Message-ID: <20261107134917.331919762@linuxfoundation.org>
+Subject: [PATCH 6.18 741/869] mm/hugetlb: dont clear the resv_map of a VMA whose lock is held
+Date: Sat,  7 Nov 2026 08:57:03 -0500
+Message-ID: <20261107134917.937679998@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,68 +86,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit b7fd977fec0d3f2bdd4f13bb59949c817a365652 ]
+[ Upstream commit d42032c0fe3ca007986c1229128775af0340fbec ]
 
-When a page_len is less than 5 bytes in mtk_i2c_xfer, uninitialized kernel
-stack data is copied and written to REG_SM0D1_REG. Equally on the read
-part, an unnecessary read is done.
+Since commit bf4916922c60 ("hugetlbfs: extend hugetlb_vma_lock to private
+VMAs") the lock of a private hugetlb VMA that owns a reservation is the
+rw_sema of its resv_map.  The hugetlb_vma_*lock*() helpers find it through
+vma->vm_private_data, anew for every lock and every unlock.
 
-Guard these extra copy/write and read for the page_len to fix leaking
-uninitialized stack memory.
+At the end of mremap() the old VMA has to let go of the resv_map, which
+now belongs to the new VMA: clear_vma_resv_huge_pages() stores NULL into
+vm_private_data.  mremap() holds mmap_lock for writing and has write
+locked the VMA, which keeps away everybody who comes through the mm.  It
+does not keep away those who find the VMA through the file.  For hole
+punch and truncation hugetlb_vmdelete_list() does
 
-Fixes: d04913ec5f89 ("i2c: mt7621: Add MediaTek MT7621/7628/7688 I2C driver")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.3+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20261022193853.670625-1-ansuelsmth@gmail.com
+	hugetlb_vma_trylock_write(vma);		locks resv_map->rw_sema
+	unmap_hugepage_range(vma, ...);
+						vm_private_data = NULL
+	hugetlb_vma_unlock_write(vma);		no resv_map: does nothing
+
+and the rw_sema stays write locked for ever:
+
+  WARNING: lock held when returning to user space!
+  mremap_punch/116 is leaving the kernel with locks still held!
+  locks held by mremap_punch/116: 1, last CPU#1:
+   #0: (&resv_map->rw_sema){+.+.}-{4:4}, at:
+                                       hugetlb_vmdelete_list+0x46/0x160
+
+The next fault in the new VMA sleeps in hugetlb_vma_lock_read(),
+uninterruptibly, and it holds its entry of hugetlb_fault_mutex_table[].
+That table is global, so a fault of any other process on a page that
+hashes to the same entry sleeps uninterruptibly as well.
+
+All those who take the lock of a private VMA without taking the mmap/vma
+lock are affected: rmap walks. So hold i_mmap_rwsem around the clearing
+of the resv_map.
+
+No change of behaviour, other than that mremap() of a hugetlb VMA takes
+i_mmap_rwsem once more.
+
+Original fix generated by an LLM and sent in private by Josef.
+
+[david: avoid local variable, move and refine comment, description cleanups+simplifications]
+Link: https://lore.kernel.org/20261015-urgent_fixes-v1-5-42796911043b@kernel.org
+Fixes: bf4916922c60 ("hugetlbfs: extend hugetlb_vma_lock to private VMAs")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Adam Litke <agl@us.ibm.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-mt7621.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ mm/hugetlb.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-mt7621.c b/drivers/i2c/busses/i2c-mt7621.c
-index 0a288c998419b..9ea5e3f9a7632 100644
---- a/drivers/i2c/busses/i2c-mt7621.c
-+++ b/drivers/i2c/busses/i2c-mt7621.c
-@@ -144,7 +144,6 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 	u16 addr;
- 	int i, j, ret, len, page_len;
- 	u32 cmd;
--	u32 data[2];
- 
- 	i2c = i2c_get_adapdata(adap);
- 
-@@ -186,6 +185,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 
- 		/* transfer data */
- 		for (len = pmsg->len, j = 0; len > 0; len -= 8, j += 8) {
-+			u32 data[2] = { };
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 8832923dfbcd8..ed4fb48cb35b8 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -8054,6 +8054,15 @@ void hugetlb_unshare_all_pmds(struct vm_area_struct *vma)
+  */
+ void fixup_hugetlb_reservations(struct vm_area_struct *vma)
+ {
+-	if (is_vm_hugetlb_page(vma))
+-		clear_vma_resv_huge_pages(vma);
++	if (!is_vm_hugetlb_page(vma))
++		return;
 +
- 			page_len = (len >= 8) ? 8 : len;
- 
- 			if (pmsg->flags & I2C_M_RD) {
-@@ -194,7 +195,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 			} else {
- 				memcpy(data, &pmsg->buf[j], page_len);
- 				iowrite32(data[0], i2c->base + REG_SM0D0_REG);
--				iowrite32(data[1], i2c->base + REG_SM0D1_REG);
-+				if (page_len > 4)
-+					iowrite32(data[1], i2c->base + REG_SM0D1_REG);
- 				cmd = SM0CTL1_WRITE;
- 			}
- 
-@@ -204,7 +206,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 
- 			if (pmsg->flags & I2C_M_RD) {
- 				data[0] = ioread32(i2c->base + REG_SM0D0_REG);
--				data[1] = ioread32(i2c->base + REG_SM0D1_REG);
-+				if (page_len > 4)
-+					data[1] = ioread32(i2c->base + REG_SM0D1_REG);
- 				memcpy(&pmsg->buf[j], data, page_len);
- 			} else {
- 				if (!(pmsg->flags & I2C_M_IGNORE_NAK)) {
++	/*
++	 * Rmap walks might still find this VMA and take the lock
++	 * inside the reservation map for __vma_private_lock(). Don't clear
++	 * the reservation map while that is possible.
++	 */
++	i_mmap_lock_write(vma->vm_file->f_mapping);
++	clear_vma_resv_huge_pages(vma);
++	i_mmap_unlock_write(vma->vm_file->f_mapping);
+ }
 -- 
 2.53.0
 
