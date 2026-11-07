@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064246;
-	b=qkqGU1n8axebaU+HuAu7O8AQ/L9UtSNxu3RKn1w4PsXlquJlLMd8b2ZJGk6LqPO/2Ish
-	 ItEppdeGwXQ6Y3ptn6zEzQZm6jpf3CVv6ZBYXE82ycd3pDGz8uc6W/dtxOETs8/5Ve7xw
-	 J0q0BOd8q8YYeY6q4GKvofXEDeB1hwFMxi0U5Q+arKTumbcqnqghYtGnMJrqIhjAbDnJB
-	 jF2pAA3rAdABNL6GNu9OzttAMToofxmwJb/257gto293hxWb8XvIAdxGjwubvibX0q+72
-	 43kM4NRlvodfTPv9MmbWZuCQnLjnhcH/z7eHCrnpP3qPsG+FhGbT3VBJkx52uvfohZw==
+	t=1794064247;
+	b=PR4win0mKhnEDI9TuXfUFigaOdXfWVElRVxC37VcKx+NXbqXQEK0eIAVlYlDX2n9erl3
+	 IzRGADc6hFd+ivWfRrYPcjkRL66yQ6VNMav2Dn7EEq9P5hgGKSHLw+T+BJ3APIqoeNVLn
+	 /5dBRPB5MB6AuMTEvR+yunzt9XZYwnmWhJryzDdQjO0df0Hd/2+3BESlFwV1H9i4nB9dq
+	 k3aeXQOGIw6LSN42dLNcamDxBc5unEG4W5J6wR15C9NBWMZkPalhlAITFfKaw/yaW2Y0u
+	 X1bD1RhI2xOwO9qZG2E3aRnaXwOK8g2risnl1xF/euarV7PxTyhqOX6NREl9uiJQy7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064246;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064247;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vga4M5WP7fTvIuFfrEadwHg65DDOmZBK1JsubpHF0kA=;
-	b=za3csVBe9NH+KxGFrNgZ/j4nLPRNHaORrA0outTLKzsf6PXbSzZwk4Wp0ORGQV0Vjreb
-	 ElLf6Q6+pERXIBkY/KSLQLqtNKS0292jxm1AnM8bCFrUnFijZeKoZOOcZnDNwtFoNbveZ
-	 5cQRvCiQx+20Wxtynh4x5z5Slnxnw/D4jEVHEJBcd4LLMPAc11DwdNkjrzslalP/FOgOU
-	 XLMUoSyb9DahMI3TISnAhScZ0XVwrgSfqrAjo8jZnSmGHkVDkaWsU8vg02bgXIK9CEU0g
-	 YGT81HzUWUobEYTUO9pYYdB2EnTtpYR9eFMdTi7Bo4Niaiq3/fBEVE2Rs1v5QEfRtZQ==
+	bh=SPGKl5Dntaz3Zld+uTNXIE+ASRdVApClcGa6gmJLAuo=;
+	b=Uv/aHJPlHVK6zH4esa+30kjim9Sl69vq+vQlNlL4uHGdeHvfhywuUSL/z+bxFK/DypU+
+	 +cDmLq9j0Kzt9QfpQ5ySqliLfKzzepknMmTPC1IkQnVIMTszHJi/r9FNARSfMOKHWLvxR
+	 adRkZupLpTXO+Er6/WBNyUN7DhYZHOE9iL8YOfb4X/KYeZhcjKZFkd8bcMETrbv8HaMVk
+	 43udPsw/E80Fw+dFGp0OfJPX4JBkTTrKGkGpWEst59p5a+T2l44r2qjcYHRcxIlUgwoES
+	 J73oz1kC2s5jApY41YJUOkEfBxIHY336PrPhUow9VZs/ymZO/EAHQwwsQGsbj8MdxAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjQOAZsV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F/qhMrwd";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03871606A332;
-	Sat,  7 Nov 2026 15:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFE7606A332;
+	Sat,  7 Nov 2026 15:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjQOAZsV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C551F0089F;
-	Sat,  7 Nov 2026 15:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F/qhMrwd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18191F0089F;
+	Sat,  7 Nov 2026 15:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064245;
-	bh=vga4M5WP7fTvIuFfrEadwHg65DDOmZBK1JsubpHF0kA=;
+	s=korg; t=1794064247;
+	bh=SPGKl5Dntaz3Zld+uTNXIE+ASRdVApClcGa6gmJLAuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjQOAZsV9lNyxJtCVLIQ+O9X7CBXJ8u5oRsecLcEV+DdJtxgFKg/mpyHQPavKMLCy
-	 GSZ4TZ9CgvJV5dW75IY65Gc6GU9YvYV7/1uyZKUVcmuvU57v5JI9bXNNobHC0FoHaH
-	 r2ZZUA83RL1v0yn9+EjuF2657BJGbveoqqrpEfdY=
+	b=F/qhMrwdGDfG/MWVw0LdaeyrYdOgBPrGK8Cy6qi68w8A+tPN1Rr9GyBjym8G4sl+l
+	 nZBTkqO/ZgS9P4vcIrkhBQ370ZlniMzY12LOO0aMGXk6VKarp9Z2r0eWIuii21qHKt
+	 UzAYlAr5GXQy/AfJNlVkt9HJ12iQM5aLKadYGJjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
+	sashiko-bot@kernel.org,
+	Ariana Lazar <ariana.lazar@microchip.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0349/1257] iio: accel: sca3000: reject devices without match data
-Date: Sat,  7 Nov 2026 08:44:05 -0500
-Message-ID: <20261107134949.034859559@linuxfoundation.org>
+Subject: [PATCH 7.3 0350/1257] iio: dac: mcp47feb02: Avoid unjustified probe error on missing label
+Date: Sat,  7 Nov 2026 08:44:06 -0500
+Message-ID: <20261107134949.062960793@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,44 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Ariana Lazar <ariana.lazar@microchip.com>
 
-[ Upstream commit bee629c18a9389cfbbe182df954cf49a9066b383 ]
+[ Upstream commit bce5b7e29e72538ba61f76c6d534a58ab3838438 ]
 
-SPI driver_override allows a device to bind to this driver without
-matching either the OF or SPI device ID table. In that case,
-spi_get_device_match_data() returns NULL.
+Fix unjustified probe error on missing optional 'label' property by
+replacing dev_err_probe() with dev_warn_probe(). Correct %pfw usage by
+passing the child fwnode handle directly in the error message. Besides the
+probe warning a read error is returned at the attempt of reading a null
+label.
 
-sca3000_probe() immediately dereferences the returned chip information
-to set the IIO device name and channel layout, causing a NULL pointer
-dereference.
-
-Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
-data") fixed the same driver_override issue in another SPI driver.
-Reject devices without match data before using the chip information.
-
-Fixes: d6ae9f202f61 ("iio: sca3000: simplify with spi_get_device_match_data()")
+Fixes: bf394cc80369 ("iio: dac: adding support for Microchip MCP47FEB02")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260804134616.1D8A21F00A3E@smtp.kernel.org/
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Ariana Lazar <ariana.lazar@microchip.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/sca3000.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/dac/mcp47feb02.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iio/accel/sca3000.c b/drivers/iio/accel/sca3000.c
-index 8f1ac1d3305ed..acd0890c78a58 100644
---- a/drivers/iio/accel/sca3000.c
-+++ b/drivers/iio/accel/sca3000.c
-@@ -1462,6 +1462,8 @@ static int sca3000_probe(struct spi_device *spi)
- 	st->us = spi;
- 	mutex_init(&st->lock);
- 	st->info = spi_get_device_match_data(spi);
-+	if (!st->info)
-+		return -ENODATA;
+diff --git a/drivers/iio/dac/mcp47feb02.c b/drivers/iio/dac/mcp47feb02.c
+index 7758e37080958..baeb1be455c6f 100644
+--- a/drivers/iio/dac/mcp47feb02.c
++++ b/drivers/iio/dac/mcp47feb02.c
+@@ -921,7 +921,10 @@ static int mcp47feb02_read_label(struct iio_dev *indio_dev, struct iio_chan_spec
+ {
+ 	struct mcp47feb02_data *data = iio_priv(indio_dev);
  
- 	indio_dev->name = st->info->name;
- 	indio_dev->info = &sca3000_info;
+-	return sysfs_emit(label, "%s\n", data->labels[ch->address]);
++	if (data->labels[ch->address])
++		return sysfs_emit(label, "%s\n", data->labels[ch->address]);
++
++	return -ENOENT;
+ }
+ 
+ static const struct iio_info mcp47feb02_info = {
+@@ -974,10 +977,11 @@ static int mcp47feb02_parse_fw(struct iio_dev *indio_dev,
+ 
+ 		set_bit(reg, &data->active_channels_mask);
+ 
+-		ret = fwnode_property_read_string(child, "label", &data->labels[reg]);
+-		if (ret)
+-			return dev_err_probe(dev, ret, "%pfw: invalid label\n",
+-					     fwnode_get_name(child));
++		if (fwnode_property_present(child, "label")) {
++			ret = fwnode_property_read_string(child, "label", &data->labels[reg]);
++			if (ret)
++				dev_warn_probe(dev, ret, "%pfw: invalid label\n", child);
++		}
+ 
+ 		chanspec.address = reg;
+ 		chanspec.channel = reg;
 -- 
 2.53.0
 
