@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061450;
-	b=ROuWCT2xmyETLuRPm6jTZ/z/p04viYA2U/3PowfsPJEsYHdqEZ4SfAC21wxhCDhVuti0
-	 2ofYYktw2jHdb5qlO7UY/ATD3HJYHDZyZ6L8WgHHAfhQYRz001QTIaTlNcZlCZb10D/IK
-	 q7FBeG+X3vF0tgzRrXYkd2SF/1UjTC82VajyWyyVQxcTgRaWqh5v1eLEKBmw87MpA6WFs
-	 0sm5uyYIA/6Yf880ghmg9k5VtIR4cnqiiWj4I20IMGrX3LM12R8QEmpRCHHuHAkR4xurw
-	 rfggeDfG6FBjdxjXmM20e226aXiLEtXeqI1QRKVS4SiaSX44gstA9EONBbK0Rq0/CPQ==
+	t=1794061451;
+	b=hjoetFL4uCfPW5MWxOTiCQHY76hWeOS3M7p4yIIvVvxqR0piQ0/XLuWEmJm2p+yFAmOb
+	 8uoHTgl8OYVZwLn4K1L7LNrGP6DbzjPJ+97DXuaFU6qoF8ZGuabhKUvHValBGARAPVqky
+	 bKAzEX4KDnFF6ddHbiG8gPAQD66re4MCqKh4XIynggmkWqpodZqsf1m5Ot4yTjmci6FFy
+	 fSwnE5ZrCUN4EgneRBRD04LgbGLU0YZAz1AkxZdKAcrvPAuJQ9goKBDTkJG6XgIoNcmuB
+	 PTyQOuXuhZgt9wEvsGLVXZOWnCsX9/fg00CSW57pBu4tpnHIY1h7BYgisH3cr7TVzrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061450;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061451;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Oh86IPqe5b7vDgCJfdp+k1EjqirV5Dme90wpxqx63Zw=;
-	b=oxnZfY86WicKWjGU3pcG3uE2i4ADPe8TUTAev8kaPX5JEUuBy3Uu73OUpuG2ivfUMHec
-	 rmhQrPMQKBO6y4fvZMH1MavFovIRW8Eij+D36O2g/nkZ9h2bRcs5TbL2PKiaB00o4LLmn
-	 vJV4/4yehBc5m28QLvlHthFdPe/OwaEP67H9PLtVoTdlBQqf2ZmV211ARkG4VvpXzcJ0D
-	 VW3fpYk4qXGUosJsux6SlHMGecaeDVh8Fze5ZDOwOYIfemhWdAv+zmeT2lPdHN0YWxAQS
-	 TYO8e5nuBpRT2KR9w+fJd8SoXAqZ79LYnIyIOjfAE13ss0LehHfokAB18YYGlyCiobg==
+	bh=+ywgtp4ISDzmojhh1zOwWgc9a7OezKLzb1juozCADz4=;
+	b=eB1T8Qw89fRn+H9z2V/3Bk5HdO6Vb2O5r2NopqdcSvY2VnIIBC89D9cnhiVffGOe2IxK
+	 nTKq0f6zme+rvIihxYPqz450453WRWm7BPbUsx9nHDKHAiXrOJD1rzqbIgbGf8l3BR0LX
+	 DypoB3uYg1Br60kpPivOxxrOiwsQXeMpynYTHwPG6ucTl2TKBfuWHmx3rookZm/pnn6nJ
+	 P0YOkwp38HdOmfJDmjkJyQP8iG5CD5ni230K73rxY1wivl54xoX4vBVLfpvK9ksklTeCJ
+	 bzx9zgXeW6p699aOkfk8SWMsbgdLXCgpjkmnr1DwX+ieIZdSpdePXGBc9tXvhNDLXBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lbzSZrFe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Sh0TDG/G";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD205606A331;
-	Sat,  7 Nov 2026 14:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3567D606A337;
+	Sat,  7 Nov 2026 14:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lbzSZrFe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA2C1F0089F;
-	Sat,  7 Nov 2026 14:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sh0TDG/G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65251F0089F;
+	Sat,  7 Nov 2026 14:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061449;
-	bh=Oh86IPqe5b7vDgCJfdp+k1EjqirV5Dme90wpxqx63Zw=;
+	s=korg; t=1794061451;
+	bh=+ywgtp4ISDzmojhh1zOwWgc9a7OezKLzb1juozCADz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lbzSZrFe50idwHjPrAS+9Bh+wgTFr/MgjGcIEDn+aB2Z/KeDvLNSXNTN056pzRJ+x
-	 RZTERnFZt0aiKkpMTHza3ECV00pELX/DypF/55tzALamdRnr2y6D73dvDbX6Z9E1Tp
-	 dUIz1FVsApx/1lWEC4VuFqAwADxYla8jv/6icinM=
+	b=Sh0TDG/GZMWfgB3qH/BVwsPfqtrC7Sx7AWTrL7+yaqx/Vk3q9PwssZA7ys9CYQZmd
+	 77N9EulLH40qCPiLa+4YZzaEnje97B8e0ZM8ySgOQmJ7boIhvIoEq05ce+nkFoC3Hz
+	 3ZDL/eqDaw2KwTw+4tDaMPrNfP/gKeUE8r4EMiTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu-Hsiang Tseng <asas1asas200@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>,
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0538/1536] ALSA: hda/realtek: Fix silent speaker on Higole F9B
-Date: Sat,  7 Nov 2026 08:42:34 -0500
-Message-ID: <20261107135012.708152596@linuxfoundation.org>
+Subject: [PATCH 6.12 0556/1536] drm/i915/dmc: Add sanity check for DMC load address
+Date: Sat,  7 Nov 2026 08:42:52 -0500
+Message-ID: <20261107135013.207706279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,49 +70,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu-Hsiang Tseng <asas1asas200@gmail.com>
+From: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
 
-[ Upstream commit 2a8ee6897302ca12ff39e8eb180503956797c60c ]
+[ Upstream commit 7dedc5bb11f95e96fe80757c924d8d9aa7327759 ]
 
-The Higole F9B is an Alder Lake-N mini PC with a 7" touchscreen and an
-ALC269VC codec (subsystem ID 0x10ec111e). Its DMI strings are all
-"Default string", so the SSID is the only way to identify it.
+For DMC firmware header version 3, the firmware load address is stored
+in dmc_info->start_mmioaddr and later used by dmc_load_program().
 
-The internal speaker is silent out of the box. The generic parser
-assigns DAC 0x03 to the speaker pin 0x14 and DAC 0x02 to the headphone
-pin 0x15, but the speaker only reproduces what DAC 0x02 plays, whatever
-its connection selection says. Checked one path at a time, only the
-gain of DAC 0x02 and the mute of pin 0x14 change what comes out of the
-speaker. User space only knows the path it was told the speaker uses,
-so selecting the speaker turns the path that actually reaches it all
-the way down.
+Unlike the MMIO address table, the firmware load address is not
+validated. Add a sanity check to ensure it is within the valid range.
 
-Route both 0x14 and 0x15 through mixer 0x0c (DAC 0x02), which is what
-ALC290_FIXUP_MONO_SPEAKERS already does. Tested on the device: the
-speaker plays.
-
-Cc: <stable@vger.kernel.org>
-Assisted-by: LLM
-Signed-off-by: Yu-Hsiang Tseng <asas1asas200@gmail.com>
-Link: https://patch.msgid.link/20260923141344.1543158-1-asas1asas200@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+BSpec: 69671, 68378
+Fixes: 3d5928a168a9 ("drm/i915/xelpd: Pipe A DMC plugging")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude-Code:Sonnet-5
+Signed-off-by: Dibin Moolakadan Subrahmanian <dibin.moolakadan.subrahmanian@intel.com>
+Reviewed-by: Mitul Golani<mitulkumar.ajitkumar.golani@intel.com>
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://patch.msgid.link/20260922133535.3180973-6-dibin.moolakadan.subrahmanian@intel.com
+(cherry picked from commit 5e47ee5c76ca9becde8df4ad5202845b7ffcbc4c)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+[ sashal: Changed drm_err(display->drm, ...) to drm_err(&i915->drm, ...) because parse_dmc_fw_header() here has no display variable and uses i915. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/display/intel_dmc.c      | 55 +++++++++++++++++++
+ drivers/gpu/drm/i915/display/intel_dmc_regs.h | 12 ++++
+ 2 files changed, 67 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 1a39c59a79ea5..fb79b82e2ea6e 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11408,6 +11408,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x10cf, 0x1757, "Lifebook E752", ALC269_FIXUP_LIFEBOOK_HP_PIN),
- 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
- 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
-+	SND_PCI_QUIRK(0x10ec, 0x111e, "Higole F9B", ALC290_FIXUP_MONO_SPEAKERS),
- 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x10ec, 0x119e, "Positivo SU C1400", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+diff --git a/drivers/gpu/drm/i915/display/intel_dmc.c b/drivers/gpu/drm/i915/display/intel_dmc.c
+index 641dabf275e73..d99037132cef5 100644
+--- a/drivers/gpu/drm/i915/display/intel_dmc.c
++++ b/drivers/gpu/drm/i915/display/intel_dmc.c
+@@ -699,6 +699,55 @@ static void dmc_set_fw_offset(struct intel_dmc *dmc,
+ 	}
+ }
+ 
++/*
++ * Check if the load address is within the valid range for the given DMC ID.
++ */
++static bool dmc_load_addr_sanity_check(struct intel_dmc *dmc,
++				       u32 start_addr, u32 payload_size,
++				       int header_ver, enum intel_dmc_id dmc_id)
++{
++	u32 start_range, end_range, end_addr;
++
++	if (header_ver != 3)
++		return true;
++
++	switch (dmc_id) {
++	case DMC_FW_MAIN:
++		start_range = DMC_MAIN_PROGRAM_BASE_START;
++		end_range = DMC_MAIN_PROGRAM_BASE_END;
++		break;
++	case DMC_FW_PIPEA:
++		start_range = DMC_PIPEA_PROGRAM_BASE_START;
++		end_range = DMC_PIPEA_PROGRAM_BASE_END;
++		break;
++	case DMC_FW_PIPEB:
++		start_range = DMC_PIPEB_PROGRAM_BASE_START;
++		end_range = DMC_PIPEB_PROGRAM_BASE_END;
++		break;
++	case DMC_FW_PIPEC:
++		start_range = DMC_PIPEC_PROGRAM_BASE_START;
++		end_range = DMC_PIPEC_PROGRAM_BASE_END;
++		break;
++	case DMC_FW_PIPED:
++		start_range = DMC_PIPED_PROGRAM_BASE_START;
++		end_range = DMC_PIPED_PROGRAM_BASE_END;
++		break;
++	default:
++		MISSING_CASE(dmc_id);
++		return false;
++	}
++
++	if (payload_size == 0)
++		end_addr = start_addr;
++	else if (check_add_overflow(start_addr, payload_size - 1, &end_addr))
++		return false;
++
++	if (start_addr < start_range || end_addr > end_range)
++		return false;
++
++	return true;
++}
++
+ static bool dmc_mmio_addr_sanity_check(struct intel_dmc *dmc,
+ 				       const u32 *mmioaddr, u32 mmio_count,
+ 				       int header_ver, enum intel_dmc_id dmc_id)
+@@ -842,6 +891,12 @@ static u32 parse_dmc_fw_header(struct intel_dmc *dmc,
+ 		return 0;
+ 	}
+ 
++	if (!dmc_load_addr_sanity_check(dmc, start_mmioaddr, payload_size,
++					dmc_header->header_ver, dmc_id)) {
++		drm_err(&i915->drm, "DMC %d: firmware has wrong load address\n", dmc_id);
++		return 0;
++	}
++
+ 	dmc_info->payload = kmalloc(payload_size, GFP_KERNEL);
+ 	if (!dmc_info->payload)
+ 		return 0;
+diff --git a/drivers/gpu/drm/i915/display/intel_dmc_regs.h b/drivers/gpu/drm/i915/display/intel_dmc_regs.h
+index 1bf446f96a10c..cb788a318d8d8 100644
+--- a/drivers/gpu/drm/i915/display/intel_dmc_regs.h
++++ b/drivers/gpu/drm/i915/display/intel_dmc_regs.h
+@@ -87,6 +87,18 @@
+ #define TGL_PIPE_MMIO_END(dmc_id)	_PICK_EVEN(((dmc_id) - 1), _TGL_PIPEA_MMIO_END,\
+ 					      _TGL_PIPEB_MMIO_END)
+ 
++/* For DMC header version v3*/
++#define DMC_MAIN_PROGRAM_BASE_START	0x80000
++#define DMC_MAIN_PROGRAM_BASE_END	0x86fff
++#define DMC_PIPEA_PROGRAM_BASE_START	0x90000
++#define DMC_PIPEA_PROGRAM_BASE_END	0x96fff
++#define DMC_PIPEB_PROGRAM_BASE_START	0x98000
++#define DMC_PIPEB_PROGRAM_BASE_END	0x9efff
++#define DMC_PIPEC_PROGRAM_BASE_START	0x52000
++#define DMC_PIPEC_PROGRAM_BASE_END	0x53fff
++#define DMC_PIPED_PROGRAM_BASE_START	0x59000
++#define DMC_PIPED_PROGRAM_BASE_END	0x5afff
++
+ #define SKL_DMC_DC3_DC5_COUNT	_MMIO(0x80030)
+ #define SKL_DMC_DC5_DC6_COUNT	_MMIO(0x8002C)
+ #define BXT_DMC_DC3_DC5_COUNT	_MMIO(0x80038)
 -- 
 2.53.0
 
