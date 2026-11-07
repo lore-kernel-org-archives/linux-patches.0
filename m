@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062827;
-	b=ga8MSgXQl5otzOfuplUF/9+5RHKXFA9LrwHJel68IP1r3qKjXwZWgRRYSbIQUVaejobL
-	 weVME9Q6Nan3Kv++IrhdYqR9Szz+OwqBBA9jMYt0dFUeyHpaTmvyo6I98WrxkMezkiCI7
-	 Te0cpaVUNJICRD3febySZXP8aF8mnrafVDtEjLvfHZ3EnqcatJoVWdSckkCK1e94k8UDL
-	 JGc8vrPTIsyLhhD1u+RLck6uPHpurSZqC0IHBJwdN+6ej/kC3R9LMQBS5fTOreYLjA9nI
-	 STskDNQdr4QKZepQqln5FCefVGqspHK48mrxts6zdRlpiee77OxVhTIbxjYHrepFw5Q==
+	t=1794062828;
+	b=sHjHQSWIltnUsbI0IrTe3cJzZ0RIzPjch3d5iEBgpygOCntBMsrL8kBPaa/8PaQQZsFB
+	 qXJRNLUJ7qasofD//rQ+3n3fw743jYwyCFFr5gFP6yCl2KDaCu4VEXK9m+YUoUuRl5t47
+	 e6Bein6xm4ucXDgLucjdUESOej5PYNProaHZJ6HQ1aUI8eBDKfebzkU5rBCSsf62mGq5E
+	 cYrxoZGGTyKJ46fJOd4WhsyJN6SJtboGPP9zyhhjSczO3P3DmQqbEhyts0utKLh4HIWwA
+	 p47pMx9UYET4yXAFtsqhtZUWKEnyUIDokVvTdPVLo4FmCqkXftnf3R+uM+/G3QAG60g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062828;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mKNkYlib6Y4cxu92YdIIhvlBtJ2YKFATtXi2crHsFXQ=;
-	b=KkET/QB+CzXiPKmqac3O6ORlwER1SDxQO3F2EXRxINkMfcTcDxqO5yzYegKxAz0531DM
-	 i4wjDaNPA9jAMPjLEOSDm/Udj61rEBGEYVhzgMAeh+J9/9ptIAmYapdZ8CM+etDN5wXkI
-	 QnzK0H+FWL4qk+qgKxgNILoivQ6aK+Pr0nSwkVLzCoPHktQepRZhKO5nc3URQI08ig2Ur
-	 2Wb3+KEuNolWYKTN38aiHP2OXnl3Q4msZQmw456uMhED+TCMUsmiYsH4/vdlJ32UZ2LQM
-	 KbuQ2zJBRdEeLGwd44YdbAKs3yN0sXYckREs/AnXypBjUbqmxFr0UcL5m88KsXi4/3Q==
+	bh=A0BJV+h+/g9zptnVmVMhm70uDa782lvg04fsepAcuaU=;
+	b=iNEc3QZEfPJrzJ/0kBW547Os2iZzX0dN+TGQGYoJfhOSg5vSE4pwXwz7n6SbgD8LgYHc
+	 T7zfnTAtLDRhE1J6mJORZiVTFJue884PfqFm3ampFMSzTzYTd56I/XzwnkiQM1wx3AS8A
+	 MW6Pmcgujy0rt2ow5LpYlnX/tT5LUjqD4uFP2ha6mEDRYsXaBfHtjIarfTbpMUqxp5QV9
+	 L6TaQC5S8WjIK2K5rbSrTKByhEye/IGTPSUMdnTD+hnjOF7qT0sgcQg4koTXWV7ColeBS
+	 M723VqFfwa8LTj09HITjr8v4pMyYcm5FDj2kc3wLVz85NGZvIT5gRKm+MmrgVovu9hA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBs6LNKN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k41kD9VB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B078606D80B;
-	Sat,  7 Nov 2026 14:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797A4606D804;
+	Sat,  7 Nov 2026 14:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rBs6LNKN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4B31F0089F;
-	Sat,  7 Nov 2026 14:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k41kD9VB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263CE1F0089F;
+	Sat,  7 Nov 2026 14:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062827;
-	bh=mKNkYlib6Y4cxu92YdIIhvlBtJ2YKFATtXi2crHsFXQ=;
+	s=korg; t=1794062828;
+	bh=A0BJV+h+/g9zptnVmVMhm70uDa782lvg04fsepAcuaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rBs6LNKNQvC7T372v2EdGDIKANqRRM/S2foAsE9uIAWSurjjXhDLpIP2dPfy9wmPY
-	 sjjoXy9nR2gdkfEzD1d7VlUNUsClLL21MxcJCEwZEftN0bscqBgQkFO4I7864lnLR9
-	 ws0bQet1cy5nMTbjGNOXBWYmUunKBqW2adG7jD3A=
+	b=k41kD9VBS196+qklwWmGCVu2SV1JJpfgPvwbIftwUBgMiztYsj9BCOrLT4o0t1rjp
+	 s6Az2zF1mqvFxmZcJDL4ECcCDnigwEozeLbJ0tjg4td9KHm9GmZifhUnfbuZvuKywr
+	 C8DicxBGxDeXcs5ag/qohqr/K0KXv2HRZprzZr1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	syzbot+cb43e758a4dc84dd467f@syzkaller.appspotmail.com,
-	Maxim Skokov <skokovmaksimevg@gmail.com>,
+	syzbot+ddccc0c0dbc0a38ffccb@syzkaller.appspotmail.com,
+	Juan Perdomo <jcperdomo100@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 122/869] media: vivid: round the height down to the vertical subsampling factor
-Date: Sat,  7 Nov 2026 08:46:44 -0500
-Message-ID: <20261107134856.651155676@linuxfoundation.org>
+Subject: [PATCH 6.18 123/869] media: cx231xx: preserve I2C transfer length
+Date: Sat,  7 Nov 2026 08:46:45 -0500
+Message-ID: <20261107134856.679344868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,92 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Skokov <skokovmaksimevg@gmail.com>
+From: Juan Perdomo <jcperdomo100@gmail.com>
 
-[ Upstream commit a2ec28dd2a88d0721fc4a30242861e2be01d4023 ]
+[ Upstream commit a19c9502a69bbd42c18816b09cbefdeb4cb68066 ]
 
-syzbot reports a vmalloc out-of-bounds write in the test pattern
-generator:
+The I2C core stores message lengths in u16, but cx231xx truncates them to
+u8 when populating cx231xx_i2c_xfer_data. A 0x700-byte read therefore
+becomes a zero-length request. USB treats zero-length control transfers as
+OUT regardless of bRequestType, so the IN control pipe trips the
+usb_submit_urb() direction warning.
 
-BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_pattern drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2617 [inline]
-BUG: KASAN: vmalloc-out-of-bounds in tpg_fill_plane_buffer+0x2063/0x4160 drivers/media/common/v4l2-tpg/v4l2-tpg-core.c:2705
-Write of size 720 at addr ffffc900038f9d50 by task vivid-000-vid-c/6017
+Use u16 for buf_size, matching both i2c_msg.len and
+VENDOR_REQUEST_IN.wLength. Oversized transfers then reach the existing
+URB_MAX_CTRL_SIZE check and return -EINVAL.
 
-The reproducer requests a 720x49 NV12 capture format, i.e. an odd
-height for a format whose chroma plane is vertically subsampled.
-
-The buffer size is derived from the height by a truncating division:
-
-	sizes[p] = (tpg_g_line_width(&dev->tpg, p) * h) /
-		   dev->fmt_cap->vdownsampling[p] +
-		   dev->fmt_cap->data_offset[p];
-
-For a single buffer holding both planes tpg_g_line_width() returns
-720 + 720 / 2 = 1080, so 1080 * 49 = 52920 bytes get allocated.
-
-tpg_fill_plane_buffer() however emits one chroma line for every two
-luma lines, i.e. DIV_ROUND_UP(49, 2) = 25 lines, and thus needs
-49 * 720 + 25 * 720 = 53280 bytes. The memcpy() of the last chroma
-line runs 360 bytes past the end of the buffer.
-
-An odd height is not meaningful for a 4:2:0 format in the first place,
-since the chroma plane would have to hold half a line. Rather than
-fixing up each of the ~10 sites that divide the height by
-vdownsampling[], round the height down to a multiple of the vertical
-subsampling factor where it enters the driver. Adjusting the format is
-what TRY_FMT/S_FMT are for, and it keeps every later division exact.
-
-Formats without vertical subsampling are unaffected and keep accepting
-odd heights.
-
-Tested with the syzbot reproducer, which no longer triggers the splat,
-and by streaming NV12, NV21, YUV420, YVU420 and YUYV at heights 47,
-48, 49, 51, 480, 481 and 1081. v4l2-compliance gives identical results
-before and after (48 of 50 succeeded on the vivid device in both
-cases; the two failures are pre-existing and unrelated).
-
-Fixes: ddcaee9dd4c0 ("[media] vivid: add support for single buffer planar formats")
+Fixes: e0d3bafd0258 ("V4L/DVB (10954): Add cx231xx USB driver")
 Cc: stable@kernel.org
-Reported-by: syzbot+cb43e758a4dc84dd467f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cb43e758a4dc84dd467f
-Signed-off-by: Maxim Skokov <skokovmaksimevg@gmail.com>
+Reported-by: syzbot+ddccc0c0dbc0a38ffccb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ddccc0c0dbc0a38ffccb
+Tested-by: syzbot+ddccc0c0dbc0a38ffccb@syzkaller.appspotmail.com
+Signed-off-by: Juan Perdomo <jcperdomo100@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-vid-cap.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/media/usb/cx231xx/cx231xx.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-index d1c09bdb2f3b0..cc2b704717f39 100644
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -568,6 +568,7 @@ int vivid_try_fmt_vid_cap(struct file *file, void *priv,
- 	const struct vivid_fmt *fmt;
- 	unsigned bytesperline, max_bpl;
- 	unsigned factor = 1;
-+	unsigned int vdiv = 1;
- 	unsigned w, h;
- 	unsigned p;
- 	bool user_set_csc = !!(mp->flags & V4L2_PIX_FMT_FLAG_SET_CSC);
-@@ -620,6 +621,18 @@ int vivid_try_fmt_vid_cap(struct file *file, void *priv,
- 		mp->height = r.height / factor;
- 	}
+diff --git a/drivers/media/usb/cx231xx/cx231xx.h b/drivers/media/usb/cx231xx/cx231xx.h
+index 19f5036a78d7f..f85d054fbb5cf 100644
+--- a/drivers/media/usb/cx231xx/cx231xx.h
++++ b/drivers/media/usb/cx231xx/cx231xx.h
+@@ -463,7 +463,7 @@ struct cx231xx_i2c_xfer_data {
+ 	u8 direction;		/* 1 - IN, 0 - OUT */
+ 	u8 saddr_len;		/* sub address len */
+ 	u16 saddr_dat;		/* sub addr data */
+-	u8 buf_size;		/* buffer size */
++	u16 buf_size;		/* buffer size */
+ 	u8 *p_buffer;		/* pointer to the buffer */
+ };
  
-+	/*
-+	 * The chroma planes of vertically subsampled formats hold
-+	 * height / vdownsampling lines. If the height is not a multiple of
-+	 * the subsampling factor, then the buffer size calculations round
-+	 * that number down while the test pattern generator rounds it up,
-+	 * so the generator writes one line past the end of the buffer.
-+	 * Round the height down to keep both in sync.
-+	 */
-+	for (p = 0; p < fmt->planes; p++)
-+		vdiv = max(vdiv, fmt->vdownsampling[p]);
-+	mp->height = rounddown(mp->height, vdiv);
-+
- 	/* This driver supports custom bytesperline values */
- 
- 	mp->num_planes = fmt->buffers;
 -- 
 2.53.0
 
