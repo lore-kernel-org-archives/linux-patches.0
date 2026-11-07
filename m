@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062477;
-	b=H/j30gomABMd5Wyt0WFfV2C3E0ZTpdlNA7HNPAUYMy1MgnF2jsM2IaLUVLQGwX5k58UL
-	 qNBl2f651SQA/IjMYm1oMhsjlX7a8RLAgng/TxLPZYvQCFdac+idxRYEnuLoxzbNMcyno
-	 u2cDATlo35FxJ/wAfbDJI0R+iSCXEapvngHMHtngWeEqlq9dXXiPaa4VSjxTenhsEXp6v
-	 SdmDbdj8PO4r6x253tlmkpDp5G/OaCIMvL+X2PfRkwAgMT/k6w/WpKQtW747lNJ5hY85d
-	 xQzuBR6KPNOC1yiiXWa0+dwC+c6TassB4U3E9B6wwRU2q3qH1+klXASLkgVw9Xo6LRg==
+	t=1794062478;
+	b=K2rSoAcFWbZwnoey5D2bSlM8tAZ0+tcrOjZ6+TpiV5soEFq2MTAVJnuW4ADCY2UKFn/P
+	 O8pbOggTMBtLu9OeUhBM13x2KrPSY6eCsQ11hHNUnK4bhudNvZ+L2xfDDjGPCIPTnyGHt
+	 G+hyFrDWTitQ9A7rHcuo73Y3I6i1jSOW282rr/OzE/W2vY7GBGoyNzt0iYTE/BxQpjTQK
+	 Q7+EcLT/lTEmiAgi8sjWGAMoLolWRQww8t7bMF7AAP/OK52Oc081vF1CTI3KbZJL/196I
+	 euDhWxrWsWT59jyQystAl7nGaUs2g6A/YhHAJ5BelOK6RiW5wsDFEmJ5V3B6P8z2jFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062477;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062478;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PWCovdcc9wkFos0VaYd1y9IBcetlCCmGoG1M6bFo6m8=;
-	b=mGf5yEWsz8llMMKkdOVABNounch2GOzHDdS7sqzmZJFGMPaNeIo+y/toyTnftgb3Gnaf
-	 D6OUwSYrDdMotVa7Fk5Rvx4/kVtsClEnfmV752fxAwCiljoyJCfuPVUh8bExEV+C5ldof
-	 BpMjgudfyDmdi6xXh7RgBaK691tzdI+hk0fudFGrZbVez8agEuiJ/vQRkz3Ynj6Z1eSnG
-	 iot4tGEZdiN+NRt6GY3slti/Gb8L4vigVXHqhLzNuSjQi+ng93KfR7kC03aJk3/aI46H4
-	 zHiyj2iauPgQvJRBw3RDAUvkM640Kc6vd2pWm3Vwsc1JUOTo2b4w1wcNbs/J8tZBLFw==
+	bh=zpyqiFLmFHu8BiFlDMPTWT3+DCLFfIcgjpIIEhp+6J0=;
+	b=cR15qi1CWz+bJX1WW5uk87sk2Sc7USAqa5Lgc/eM6jKRVigSp3wqeVBGdUZJq0JRl84w
+	 UDvT4Vzsn93HER/qR+FMlCAYjqtVioSf2cEjrM9dqNLfFUzq+uVayzpznsZjmAWO5hnxy
+	 YdIVfvhiN7tvwhDtM9dJejLqXa81NZWjUg/Pll1F86OWDx4yc2YLTOH4soL9jQaUgrblR
+	 x9rzyyz+CyYB2s0wOeKhkxEnupmVhDBGOUh+xDz5fOpOLeGRN7X8qKnE/awJLekdTWkHm
+	 jW5GkT/KPRBEKKcUnqhiMLfifzBNAS5ieGClCJiBUo13YZHqRtFjCVbnEgV6dDBT3CQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fi7hjwpp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZS9hbRvy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB07D606A33D;
-	Sat,  7 Nov 2026 14:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E560E60A380E;
+	Sat,  7 Nov 2026 14:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fi7hjwpp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628581F0089F;
-	Sat,  7 Nov 2026 14:41:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZS9hbRvy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FD71F0089F;
+	Sat,  7 Nov 2026 14:41:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062476;
-	bh=PWCovdcc9wkFos0VaYd1y9IBcetlCCmGoG1M6bFo6m8=;
+	s=korg; t=1794062477;
+	bh=zpyqiFLmFHu8BiFlDMPTWT3+DCLFfIcgjpIIEhp+6J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fi7hjwpplvAT20AqAGCHP7uOhAaJImhiWrFrYh779yUnES7L9PLeutSfoYZULnxve
-	 lGq70LfMC/gb0a0h0axvZ6vqOVsltWIOCbj18Hf68KxAfpdBZfHxiwN6MW++ETOW9+
-	 DMABX4iyQhX12AtxBrWGV0IgukSg9PqOjuVEWCzc=
+	b=ZS9hbRvyGrAdeYWgVLrKkYEJRk8XvLo9AMXuyUti5zUxNahLhFbzqoHWcNU1UHCN1
+	 58QDD6v6mn+CarvCysuZ7bCogF2JyEjDEe/1t3bmwXSPXR084aN7j73QY97ONrcPRd
+	 9G0ADwmwrG0P5cWJf83skG97zqNoDzm4NslMaq0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Maciej Kucharek <qchcio@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1379/1536] drm/amdgpu: reset VI ASIC on Apple boards with VRAM at 0
-Date: Sat,  7 Nov 2026 08:56:35 -0500
-Message-ID: <20261107135036.567289151@linuxfoundation.org>
+Subject: [PATCH 6.12 1380/1536] drm/amdkfd: fix doorbell allocation race creating duplicate allocations
+Date: Sat,  7 Nov 2026 08:56:36 -0500
+Message-ID: <20261107135036.594181922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,70 +69,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Kucharek <qchcio@gmail.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 92a5184787b81e67f7b831ad860ca9b053505cf8 ]
+[ Upstream commit bebad45050945a3d668d6701fb77ae2571c5d44b ]
 
-On MacBookPros with switchable graphics, the firmware puts VRAM at MC
-address 0 when the iGPU is enabled.  A later post (S3 resume, GPU
-reset) moves VRAM back to the VBIOS default.  gmc_v8_0 reads
-MC_VM_FB_LOCATION once at init and reprograms it only on SR-IOV.  On
-bare metal, the driver then keeps using the old layout.
+The check-and-allocate sequence on pdd->qpd.proc_doorbells is
+lockless at every call site of kfd_alloc_process_doorbells():
+kfd_get_process_doorbells() (mmap of /dev/kfd),
+kfd_ioctl_create_queue() and the CRIU restore path each test the
+pointer under different locking (or none), so two racing threads can
+both observe NULL and each allocate a doorbell BO and bitmap,
+orphaning one allocation and handing the two mappings different
+backing pages.
 
-vi_reset_quirks[] handles this for the MacBookPro14,3 by PCI ID:
+Move the serialization into kfd_alloc_process_doorbells() itself,
+using a new per-process-device mutex so all three call sites are
+covered regardless of their own locking.  The device-global
+kfd->doorbell_mutex is not suitable here: it is acquired under
+dqm->lock on the kernel-doorbell path (start_cpsch() -> pm_init() ->
+kq_initialize() -> kfd_get_kernel_doorbell()), so holding it across
+the sleeping allocations above would create a lock-ordering
+inversion with dqm->lock via TTM eviction, and it would also
+serialize doorbell setup of unrelated processes behind a
+device-wide lock for per-process state.
 
-  commit b6b1d9721851 ("drm/amdgpu: reset VI ASIC on MacBookPro14,3")
+This issue was discovered by Tencent CodeBuddy Security.
 
-Add the test that SI and CIK use: an Apple subsystem vendor and VRAM at
-0.  Other Polaris MacBookPros then get the same reset at load, for
-example the MacBookPro13,3 if its firmware leaves VRAM at 0.  These
-boards are not tested.
+v3 (Felix Kuehling):
+- Removed unlocked check in kfd_get_process_doorbell flagged as
+  problematic by Sashiko Bot. Fall back to the locked check inside
+  kfd_alloc_process_doorbells
+- Added missing mutex_destroy
+v4 (Felix Kuehling):
+- Removed unlocked checks around other kfd_alloc_process_doorbells calls
 
-Keep vi_reset_quirks[].  Its MacBookPro15,1 entries fix a different
-failure, a module reload after S3:
-
-  commit a5be7ad8f5f0 ("drm/amdgpu: reset VI ASIC on MacBookPro15,1")
-
-VRAM is not at 0 at that point, so the new test may not cover it.
-
-After the reset, FB_BASE is not 0, so the new test does not fire again
-on a module reload.
-
-Only compile-tested.
-
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Maciej Kucharek <qchcio@gmail.com>
+Fixes: 16f0013157bf ("drm/amdkfd: Allocate doorbells only when needed")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c2335b685b1e1e387f2fea1c67f56b5b8a8b6dc6)
+(cherry picked from commit 4e27ba5ad5f76932d4f6cbacd25c81c2dd40ec4a)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vi.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c  | 18 +++++++-----------
+ drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c | 23 +++++++++++++++++------
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h     |  3 +++
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c  |  2 ++
+ 4 files changed, 29 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vi.c b/drivers/gpu/drm/amd/amdgpu/vi.c
-index 0cab98957ca40..5d822a3c7e279 100644
---- a/drivers/gpu/drm/amd/amdgpu/vi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vi.c
-@@ -1426,6 +1426,16 @@ static bool vi_need_reset_on_init(struct amdgpu_device *adev)
- 	unsigned int i;
- 	u32 clock_cntl, pc;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 6aeda30797074..c556780fa6171 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -353,12 +353,10 @@ static int kfd_ioctl_create_queue(struct file *filep, struct kfd_process *p,
+ 		}
+ 	}
  
-+	/*
-+	 * MacBookPros with switchable graphics put VRAM at 0 when the iGPU
-+	 * is enabled.  Any later post (S3 resume, GPU reset) moves it back to
-+	 * the vbios default, so reset and post on load to start with the
-+	 * vbios layout.
-+	 */
-+	if (adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE &&
-+	    !(RREG32(mmMC_VM_FB_LOCATION) & MC_VM_FB_LOCATION__FB_BASE_MASK))
-+		return true;
+-	if (!pdd->qpd.proc_doorbells) {
+-		err = kfd_alloc_process_doorbells(dev->kfd, pdd);
+-		if (err) {
+-			pr_debug("failed to allocate process doorbells\n");
+-			goto err_bind_process;
+-		}
++	err = kfd_alloc_process_doorbells(dev->kfd, pdd);
++	if (err) {
++		pr_debug("failed to allocate process doorbells\n");
++		goto err_bind_process;
+ 	}
+ 
+ 	err = kfd_queue_acquire_buffers(pdd, &q_properties);
+@@ -2289,11 +2287,9 @@ static int criu_restore_devices(struct kfd_process *p,
+ 			goto exit;
+ 		}
+ 
+-		if (!pdd->qpd.proc_doorbells) {
+-			ret = kfd_alloc_process_doorbells(dev->kfd, pdd);
+-			if (ret)
+-				goto exit;
+-		}
++		ret = kfd_alloc_process_doorbells(dev->kfd, pdd);
++		if (ret)
++			goto exit;
+ 	}
+ 
+ 	/*
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c b/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
+index fdcf7f2d1b5b4..6af268a031f22 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_doorbell.c
+@@ -239,11 +239,9 @@ phys_addr_t kfd_get_process_doorbells(struct kfd_process_device *pdd)
+ 	struct amdgpu_device *adev = pdd->dev->adev;
+ 	uint32_t first_db_index;
+ 
+-	if (!pdd->qpd.proc_doorbells) {
+-		if (kfd_alloc_process_doorbells(pdd->dev->kfd, pdd))
+-			/* phys_addr_t 0 is error */
+-			return 0;
+-	}
++	if (kfd_alloc_process_doorbells(pdd->dev->kfd, pdd))
++		/* phys_addr_t 0 is error */
++		return 0;
+ 
+ 	first_db_index = amdgpu_doorbell_index_on_bar(adev,
+ 						      pdd->qpd.proc_doorbells,
+@@ -257,12 +255,21 @@ int kfd_alloc_process_doorbells(struct kfd_dev *kfd, struct kfd_process_device *
+ 	int r;
+ 	struct qcm_process_device *qpd = &pdd->qpd;
+ 
++	mutex_lock(&pdd->doorbell_mutex);
 +
- 	for (i = 0; i < ARRAY_SIZE(vi_reset_quirks); i++)
- 		if (adev->pdev->device == vi_reset_quirks[i].device &&
- 		    adev->pdev->subsystem_vendor == vi_reset_quirks[i].subsystem_vendor &&
++	/* Another thread may have won the check-and-allocate race */
++	if (qpd->proc_doorbells) {
++		mutex_unlock(&pdd->doorbell_mutex);
++		return 0;
++	}
++
+ 	/* Allocate bitmap for dynamic doorbell allocation */
+ 	qpd->doorbell_bitmap = bitmap_zalloc(KFD_MAX_NUM_OF_QUEUES_PER_PROCESS,
+ 					     GFP_KERNEL);
+ 	if (!qpd->doorbell_bitmap) {
+ 		DRM_ERROR("Failed to allocate process doorbell bitmap\n");
+-		return -ENOMEM;
++		r = -ENOMEM;
++		goto unlock;
+ 	}
+ 
+ 	r = init_doorbell_bitmap(&pdd->qpd, kfd);
+@@ -284,11 +291,15 @@ int kfd_alloc_process_doorbells(struct kfd_dev *kfd, struct kfd_process_device *
+ 		DRM_ERROR("Failed to allocate process doorbells\n");
+ 		goto err;
+ 	}
++
++	mutex_unlock(&pdd->doorbell_mutex);
+ 	return 0;
+ 
+ err:
+ 	bitmap_free(qpd->doorbell_bitmap);
+ 	qpd->doorbell_bitmap = NULL;
++unlock:
++	mutex_unlock(&pdd->doorbell_mutex);
+ 	return r;
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index 939a6c92351b6..f8b880235e661 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -766,6 +766,9 @@ struct kfd_process_device {
+ 	/* per-process-per device QCM data structure */
+ 	struct qcm_process_device qpd;
+ 
++	/* Serializes process doorbell allocation for this device */
++	struct mutex doorbell_mutex;
++
+ 	/*Apertures*/
+ 	uint64_t lds_base;
+ 	uint64_t lds_limit;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+index b9f00b756c509..9eca60c48483c 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -1092,6 +1092,7 @@ static void kfd_process_destroy_pdds(struct kfd_process *p)
+ 		}
+ 
+ 		atomic_dec(&pdd->dev->kfd->kfd_processes_count);
++		mutex_destroy(&pdd->doorbell_mutex);
+ 
+ 		kfree(pdd);
+ 		p->pdds[i] = NULL;
+@@ -1641,6 +1642,7 @@ struct kfd_process_device *kfd_create_process_device_data(struct kfd_node *dev,
+ 	pdd->dev = dev;
+ 	INIT_LIST_HEAD(&pdd->qpd.queues_list);
+ 	INIT_LIST_HEAD(&pdd->qpd.priv_queue_list);
++	mutex_init(&pdd->doorbell_mutex);
+ 	pdd->qpd.dqm = dev->dqm;
+ 	pdd->qpd.pqm = &p->pqm;
+ 	pdd->qpd.evicted = 0;
 -- 
 2.53.0
 
