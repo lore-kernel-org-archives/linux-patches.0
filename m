@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065341;
-	b=ATI5SN71S7KoK60JH7YQgkXHmR5cDjfNL+0VRu7CKyonwQtjr/mWWsqm5h9NjqJQEam3
-	 4oEllbnC9U4PN7oOp3NGBa5uKWMMKCM5Q86UVWBP1U+jvUNtutqKHK7fR2sQ9Ckw4oF5P
-	 khOHtqGOlURlx15hvPGjxiB/GY51tVLF0/cYNczX+dKX+7yIETZhYSX7JthOM3K8SexEL
-	 YAFzhHYWvRlNY9xcpNUrmUWxWsBq+m2apO8a2R2GBqGhnOMzhsYBA4Ph3n1CPcC2VP8ur
-	 CCUd82yMW6c2IFET8qQYAqM8bE87MIMLRXuaLLsgQYlLomFB1dYUzQYC7zeOyZCi7wQ==
+	t=1794065342;
+	b=e1DouJ28w61delOcu+saYMazHHSDRkx8QZK0brFodKvkt7Qgm+cDcbdvrx+1EnGb88bI
+	 UA54ixzxUsHWM0GMtZnsyswlQzLgVemJ/5KkN/3lRUTcCI+q2IhntUQFtEw3rFkl35faC
+	 6/bQC+OsydKuXNl1hCG87ZpVra1FgOLIgNOZGA7OGS11GUXmKa+dpVMJnq6kfRCYKUi7y
+	 KO7LUx6fBiVWm+CLnu7kqrIJdPcBTVPLyC7JKlcfhKGSiq35CBknRAbFXIZZgYARhK8OU
+	 MjfB+nb3zAejsUYiduGf+HE3q0IeeIGu1Thd21k7fcvOIkEKI7wn69zVM9XyEPP/oLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065341;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065342;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=THt1Kv2G0woN18QVW/f36rw5CNthBbJyZTVxLhhe7MI=;
-	b=PJHXOrexFY69I8EzARjyLU3rTNHCBbzdKzmiJ1e7CkIWIJJdK8VVZZEmQFpiCCSC9w9Y
-	 hl7hw+Vk87WKcO/SGLgBVDV8vcEKu9ngLC69FwOBrppyDbcWfIJnfDXrWLG30I/Oa72mS
-	 9RrghKwkTklBZ2kulhik/ZMRGalNzKespzORpjPA9e0jVEh+A+wHbdA+LM5teeX+mx/9w
-	 r6lJIx8HYQXdcl2vEJ1VjeoaQdLFB9GIrhMFzW0HwHCjviHrUE2hn60cVhHo04I71NOyu
-	 qxxfNIqT7RoypW3CjF2q4m6HqDPtgb4wAQJnC8+NIEjqTGowNzXtVZ6PEsoXrSipxCw==
+	bh=DqHEo/GRzC+GUI6+zL2lqIy0UZjvwaPGz0t/w8fTgA8=;
+	b=34hYW+l3X/kI+uMBX9RYlF9Y1SuvTpcaZDRwRtplY3BQF/2HQK72pChNvuI2OM+ut4ur
+	 TEqjBY+c6r8rMJNGKYbVmH2lkS6UhI4GKzVea9czbczr1SzqSMuSsrUVYOM9DVK808zMH
+	 tXiY+MEnuUGvfXiEZXm6ZqXC9NuEnwehO502JIn4PAlErXlvuL7OLFhY6IGaxDkBT10Qv
+	 QbtJYR9NU+v/U2Nyeujyo95QXuNSZhyrz/X6JbTnI8P5aW58Ifg8OhDiXJrhkmeKsOE0Z
+	 LmvjDE9vza3L40xFSG3Zz6AO/dr+hMIaq+bo+ugevMlXPyQfg/XBYhOJjhUyUlpryzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fVS78WBO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w71grPGi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8260606A32C;
-	Sat,  7 Nov 2026 15:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8837606A32E;
+	Sat,  7 Nov 2026 15:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fVS78WBO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194381F0089F;
-	Sat,  7 Nov 2026 15:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w71grPGi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9746F1F0089F;
+	Sat,  7 Nov 2026 15:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065340;
-	bh=THt1Kv2G0woN18QVW/f36rw5CNthBbJyZTVxLhhe7MI=;
+	s=korg; t=1794065341;
+	bh=DqHEo/GRzC+GUI6+zL2lqIy0UZjvwaPGz0t/w8fTgA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fVS78WBOQEQdruvSkQa2LJWJO2iDrm6ERkA2JtAnpyPl56KUc3s0FCiD2BHp9WS+1
-	 nE3apcWlnRu1hSyxqwGyqwwgVKfoDpSI92QeZdsS5prNgNP0ObmgUotBva2XnmpbCE
-	 UDzF3PuJJYPSMtnktErKA74gRic4q3ClobM4u1rE=
+	b=w71grPGiGkHpRti4YOMGeQ7s7bq0yKuTNQGeq/XoOIdC5+1YpuVrFo20f5cHD49nW
+	 f8Wn5rgmqpXC5KrhZSptbkyDG48vJZHZhUY7rFwD6TrNh/13h7WcQbCQQocNqmAJBC
+	 bb6NelGOLZhGgz0ujxvM6Di1QPrmXICQse/0p2gY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
 	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Bijan Tabatabai <bijan311@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1077/1257] mm/damon/core: preserve the quota passed to damon_new_scheme()
-Date: Sat,  7 Nov 2026 08:56:13 -0500
-Message-ID: <20261107135009.011457967@linuxfoundation.org>
+Subject: [PATCH 7.3 1078/1257] mm/damon/core: prevent size quota overflow in the temporal goal tuner
+Date: Sat,  7 Nov 2026 08:56:14 -0500
+Message-ID: <20261107135009.037111997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,137 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit f73ecbc0589c8df8f18e444f5f633de01ebb0d98 ]
+[ Upstream commit 4293c54b72e75a9d8d2e79b1498cbc782267a4db ]
 
-Patch series "mm/damon/core: preserve quota state when constructing
-schemes", v3.
+Patch series "mm/damon: fix the temporal goal tuner's size quota
+conversion", v5.
 
-damon_commit_ctx() first commits the running context's parameters to a
-temporary context for validating proposed updates.  Constructing the
-temporary schemes clears the running schemes' quota state because
-damon_new_scheme() initializes the quota passed as a parameter before
-copying it to the new scheme.  Even an update later rejected with -EINVAL
-loses the running quota state.
+damos_goal_tune_esz_bp_temporal() hands the size quota to
+damos_set_effective_quota() through quota->esz_bp in basis points, and the
+multiply that gets it there is unchecked.  On 32-bit it wraps above 429496
+bytes, and a wrapped product below 10000 divides to a zero effective
+quota.  damos_quota_is_full() is then true on the first test of every
+charge window, so the scheme makes no progress for as long as the goal is
+unachieved.
 
-Initialize the new scheme's copy instead, and add KUnit tests for the
-constructor and for accepted and rejected context updates.
-
-Note: below are test results and changelogs that could be removed from the
-final commit log.
-
-In the v1 live test with damo, a scheme with a plain 64 KiB size quota and
-a 60-second reset interval uses its quota, and a full "damo tune" with
-unchanged parameters then lets it try another 64 KiB within the same
-window.  With the fix, sz_tried stays at 64 KiB.
-
-KUnit was rerun after the rebase on x86-64 and i386. With only patch 2
-applied, the two new tests fail. With the fix, all 46 DAMON KUnit tests
-pass on both architectures.
-
-The v1 DAMON selftests showed no new failures (QEMU TCG guest; the
-wss_estimation test missed its accuracy bounds with and without the fix).
+Patch 1 bounds the conversion.  Patch 2 pins the boundary in the core
+kunit suite, where the new test would fail without patch 1 on any word
+size.
 
 This patch (of 2):
 
-damon_commit_ctx() first commits the running context's parameters to a
-temporary context for validating proposed updates.  When
-damon_commit_schemes() creates the temporary schemes, it passes the
-running scheme's quota as the quota parameter of damon_new_scheme().
+damos_goal_tune_esz_bp_temporal() converts the scheme's size quota into
+basis points with "quota->esz_bp = quota->sz * 10000", both unsigned long,
+and damos_set_effective_quota() divides the result back by 10000.
+quotas/bytes is unbounded; bytes_store() hands it to kstrtoul() as is.
 
-damon_new_scheme() calls damos_quota_init() on that quota before copying
-it to the new scheme.  This clears the running scheme's effective quota,
-feedback input and charging state.  Even an update rejected with -EINVAL
-loses the running quota state.
+On 32-bit the product wraps for any size quota above ULONG_MAX / 10000,
+that is 429496 bytes.  A wrapped product below 10000 divides to a zero
+effective quota: 429497 gives 0.  damos_quota_is_full() is then true on
+the first test of every charge window.  Other wrapped values are wrong
+without being zero: 500000 gives 70503.
 
-For a size quota, this discards the bytes already charged and allows the
-scheme to use a fresh quota before the reset interval has elapsed.  For a
-goal-driven quota, the consist tuner loses its accumulated input and
-restarts from its minimum input.  A time quota loses its throughput
-estimate and falls back to the initial estimate.
+Triggering this needs a scheme with a quota goal, the temporal goal tuner,
+and a size quota above ULONG_MAX / 10000 -- 429496 bytes on 32-bit,
+1844674407370955 on 64-bit.  The scheme then makes no progress for as long
+as the goal is unachieved, which is easy to notice, and writing a smaller
+size quota restores it.  Nothing is corrupted and nothing leaks.  This is
+unlikely to be hit on a tested setup.
 
-The end users will show DAMOS works more or less aggressively than
-expected for online-commit updates of quotas.  DAMON provides best efforts
-by default.  DAMON parameters online commit is supposed to be executed
-only occasionally.  Hence, the issue wouldn't be critical on sane setups.
-For user_input type quota goals, online commit of the user input score is
-expected to be frequent.  But, for the case commit_schemes_quota_goals
-command is recommended for optimal execution, and it doesn't have this
-bug.
+addr_unit does not cover this.  It only scales the numbers a paddr context
+writes to quotas/bytes, so a large enough scaled value wraps just the
+same, and vaddr and fvaddr contexts take raw byte values.
 
-Commit 60bd24f272d0 ("mm/damon/sysfs: test commit input against realistic
-destination") introduced this problem in v6.19 when sysfs validation began
-committing the running context's parameters to a temporary context.
-Commit b90408ef1163 ("mm/damon/core: safely validate src on
-damon_commit_ctx()") later moved that validation into the core API,
-exposing other callers including DAMON_RECLAIM and DAMON_LRU_SORT.
+Bound the multiply.
 
-Sashiko reported the same side effect [1] on the RFC of the core API
-change.
-
-Copy the quota to the new scheme first, then initialize that copy.  Make
-damos_quota_init() return void, since its return value is no longer
-needed.
-
-Link: https://lore.kernel.org/20260928085835.7675-1-sj@kernel.org
-Link: https://lore.kernel.org/20260928085835.7675-2-sj@kernel.org
-Link: https://lore.kernel.org/r/20260702212143.0CB6D1F00A3D@smtp.kernel.org/ [1]
-Fixes: 60bd24f272d0 ("mm/damon/sysfs: test commit input against realistic destination")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/20260928084816.5575-1-sj@kernel.org
+Link: https://lore.kernel.org/20260928084816.5575-2-sj@kernel.org
+Fixes: af738a6a00c1 ("mm/damon/core: introduce DAMOS_QUOTA_GOAL_TUNER_TEMPORAL")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Reviewed-by: SJ Park <sj@kernel.org>
-Assisted-by: LLM
-Cc: Bijan Tabatabai <bijan311@gmail.com>
-Cc: <stable@vger.kernel.org>
-
-only occasionally.  Hence, the issue wouldn't be critical on sane setups.
-For user_input type quota goals, online commit of the user input score is
-expected to be frequent.  But, for the case commit_schemes_quota_goals
-command is recommended for optimal execution, and it doesn't have this
-bug.
-
-Commit 60bd24f272d0 ("mm/damon/sysfs: test commit input against realistic
-destination") introduced this problem in v6.19 when sysfs validation began
-committing the running context's parameters to a temporary context.
-
+Cc: <stable@vger.kernel.org> # 7.1.x
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/damon/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 4290e2a1c7e8d..6dd2ad9636a34 100644
+index 6dd2ad9636a34..1b05b4809522d 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -668,7 +668,7 @@ static bool damos_quota_goals_empty(struct damos_quota *q)
- }
+@@ -3148,7 +3148,7 @@ static void damos_goal_tune_esz_bp_temporal(struct damon_ctx *c,
  
- /* initialize fields of @quota that normally API users wouldn't set */
--static struct damos_quota *damos_quota_init(struct damos_quota *quota)
-+static void damos_quota_init(struct damos_quota *quota)
- {
- 	quota->esz = 0;
- 	quota->total_charged_sz = 0;
-@@ -678,7 +678,6 @@ static struct damos_quota *damos_quota_init(struct damos_quota *quota)
- 	quota->charge_target_from = NULL;
- 	quota->charge_addr_from = 0;
- 	quota->esz_bp = 0;
--	return quota;
- }
- 
- struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
-@@ -710,7 +709,8 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
- 	scheme->last_applied = NULL;
- 	INIT_LIST_HEAD(&scheme->list);
- 
--	scheme->quota = *(damos_quota_init(quota));
-+	scheme->quota = *quota;
-+	damos_quota_init(&scheme->quota);
- 	/* quota.goals should be separately set by caller */
- 	INIT_LIST_HEAD(&scheme->quota.goals);
- 
+ 	if (score >= 10000)
+ 		quota->esz_bp = 0;
+-	else if (quota->sz)
++	else if (quota->sz && quota->sz <= ULONG_MAX / 10000)
+ 		quota->esz_bp = quota->sz * 10000;
+ 	else
+ 		quota->esz_bp = ULONG_MAX;
 -- 
 2.53.0
 
