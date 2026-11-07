@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062026;
-	b=btkrNpgarPwrbQzurQRD0KhZ88yNaZFRTUI0fMmU3aRHzsTJQoPW91T3w8NR+4h8gm/r
-	 iemJQPgcOMagGJfilkdtOQwA/sykHDmROZmOxu4/k8OH4UPMFCbsRuvgOozgA75k4sZW+
-	 bQPrS+PXKP2TrX/KJtYddjg0C9KO++CppTbKgZlEmJhsA1AHQpUpZn54YFSUNXS3DI+p4
-	 i5OoyC6YzInLmnSeNAdUyjdqWhRQfryEuBRYezFLypKcmx1WxvKZ37aL7LFTqYjxvuqc3
-	 S1pN337iXyPMYBNN249Z6r/GJjAcdIimizhXzv8w56S2262tb8jO5eksOZFq0nQ9MAg==
+	t=1794062028;
+	b=BEyGyBt13NN26p9DCn4A+FbegJB/7Aq12SaIYKKfArb6/b+h4rDJ63ss/n1p31i/01R7
+	 sprTepjfrjSNtyfzxtABc3fjJMDBuTDpIuej9ZtYP/43OsvwweXeT+DT9BZPj5cUjpTTf
+	 x7ZNd/3SIbJD7Ek5zNW/dVN0hl/lYYjRAzlSYzVNn67zzhFs2oYzlQXt2fxAaAnHXxp+p
+	 MRQXwmCZoiWAFSmrG93wMtuUa+eGy6IUKMTPcS6QpWvhGcXV2ZDQpedNYA0thUNGrzuPS
+	 TQSvHdqnD6ElHFwVSYyyJBDEruGX11ozQ89G8LzrBx8bTO5JaVAA6n7MsaF/wBXd48g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062026;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062028;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3AYJdWoCyGxhTq75r5liRJ9+zlf7inkc+wFgbLeXe/c=;
-	b=op2SvIDrV3d016SwZsSZn3LAxi1LN8hXW3H1aa9LB7adRV8rrekgubUUZb3t3GV0T5no
-	 hqoVs7gefAiGsGuYFE6/RN4h+dVwP6LJV5aUBdBSXrqxzI8TX2snFXzt+mrrUGWbIdfUS
-	 7D/Yotlp53Rl+zNy+qsNneRxOsOi2qTVKx7ZuyDq4QVaYv3zV1wEXYnC2HmImXLBl6ZnP
-	 D42GHq1m0jDzRyUgbkYRuB7Vxyc1RMT7FEweZoFAvCY6msxOTYcvKJ4uRVaAK1cfS+kRI
-	 tK+ckrpNoFyiAPSLC3HiIWfHBsR54SSGgW2WRipVIonFXqsJ0/NYABrUypxXQNLLhRg==
+	bh=QPmR4QcGGZJpK6QKOw4HOFDISyFLXIoqhtSBeFHBi+M=;
+	b=iNWXC3096z56TwZgohuGPNWTbDRbiXQq0l0GC05IY+JsFA8GtTCX9oJLwrW7h7i4A7LX
+	 ihftP5tja/TQqDMO68QzlcjjK0t8Rksucc7JoBXWf3sWX4ztsv2pCWIIlhsrNJhU2LI5f
+	 QqJO5jva1/CLwfiGtNyjhO8U6wN9mKGL0NpZ5R+wTUocgpsEw+16Q3yRdX0GTNDC9PeDo
+	 P86rZYQzRc20vrs/18ZQd98as1ICKInZDxhM9iwENYPmu0E+RR6pdcaRBAiEXMoX8GZDc
+	 T9FuTwP432GLpH2vp1nWgROIoJ8XBJqbq/wji36lQrBaORZpBRlX3NOtqDadK0X3enA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bWphQIda;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=roFtBC6R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE98606A332;
-	Sat,  7 Nov 2026 14:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1A2606A332;
+	Sat,  7 Nov 2026 14:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bWphQIda
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132C41F0089F;
-	Sat,  7 Nov 2026 14:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=roFtBC6R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE331F008A2;
+	Sat,  7 Nov 2026 14:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062026;
-	bh=3AYJdWoCyGxhTq75r5liRJ9+zlf7inkc+wFgbLeXe/c=;
+	s=korg; t=1794062027;
+	bh=QPmR4QcGGZJpK6QKOw4HOFDISyFLXIoqhtSBeFHBi+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bWphQIdagqATZOBsYcrDORb8iGFzJgGDqK7V7XQ+oCZ+c744sJoaze4PqQT3uWt9c
-	 79rdvu9bdtZtZlc8x/CnaaDYR01XE7ppCkgWjijDuI9D/DSsi0O6/TKK+lIA61ta0H
-	 dN+38ovO7/tfRmv/Y+CrzGTkfO4QCjvk1hEqiR0s=
+	b=roFtBC6RdSZLhK1Ju1/cIqTFRRx2FGe6E+hZrYO4DSHeBEuCQHQp19UzY4OrZSgYF
+	 jIClblFaqwWccSZ1tNyoheDIu9wnif+Ki5/Fd0gV7mWWgml0o3vTgG8RJ7bBbWYl9D
+	 a8A2i18PL7W+W7svKTFzzbCmUYTcGRcV2om4pLmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
+	stable@kernel.org,
+	syzbot+0a4c46806941297fecb9@syzkaller.appspotmail.com,
+	Kusaram Devineni <kusaram@devineni.in>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1012/1536] PCI: pciehp: Make pciehp_poll_mode parameter read-only
-Date: Sat,  7 Nov 2026 08:50:28 -0500
-Message-ID: <20261107135026.097252800@linuxfoundation.org>
+Subject: [PATCH 6.12 1013/1536] signalfd: dont dequeue the forced fatal signals
+Date: Sat,  7 Nov 2026 08:50:29 -0500
+Message-ID: <20261107135026.125762011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,64 +71,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 5ab17178fca6026d329cb6ced33c30f3b7d3e50a ]
+[ Upstream commit d72e0fb3b00c6a1146bcfd7186ad9f6f609ba236 ]
 
-pciehp_request_irq() and pciehp_free_irq() select different resources based
-on the global pciehp_poll_mode parameter. The parameter is currently
-writable through sysfs, so changing it while a controller is active can
-make teardown try to stop a nonexistent polling thread or call free_irq()
-for an IRQ that was not requested.
+These signals should act like SIGKILL, in that userspace must never dequeue
+them. But as Kusaram explains, io_uring-driven signalfd_read_iter() called
+from get_signal() -> task_work_run() paths can do this before get_signal()
+has a chance to dequeue such a signal and notice SA_IMMUTABLE.
 
-Keep the parameter available for boot and module configuration, but prevent
-runtime changes to the registration mode.
+Change signalfd_poll() and signalfd_dequeue() to add pending SA_IMMUTABLE
+signals to ctx->sigmask.
 
-Reproducer:
-Boot an x86_64 guest in QEMU with a native PCIe hotplug root port and an
-e1000 device, using these device options:
+TODO: we should probably change force_sig_info_to_task(HANDLER_EXIT) to
+make fatal_signal_pending() true, or add a fatal_or_forced_signal_pending()
+helper. Then signalfd_dequeue() could just return -EINTR in this case.
+This also makes sense for get_signal(), which could prioritize a fatal
+signal sent by (say) force_sig_seccomp(force_coredump => true), just like
+it already prioritizes SIGKILL.
 
-  -device pcie-root-port,id=rp1,chassis=1,slot=1 -device e1000,bus=rp1
-
-Pass "pcie_ports=native pciehp.pciehp_poll_mode=1" to the guest kernel.  As
-root in the guest, replace the device name below with a bound pciehp
-service device and run:
-
-  # dev=0000:00:1c.0:pcie004
-  # driver=/sys/bus/pci_express/drivers/pciehp
-  # echo 0 > /sys/module/pciehp/parameters/poll_mode
-  # echo "$dev" > "$driver/unbind"
-  # dmesg | grep 'Trying to free already-free IRQ'
-
-The unfixed kernel accepts the runtime mode change and reports the warning
-when the service device is removed. The fixed kernel rejects the write and
-removes the device without the warning. The mode change is a deliberate
-privileged test action and is not expected during ordinary operation.
-
-Assisted-by: LLM Codex
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Link: https://patch.msgid.link/20260921142608.270312-1-runyu.xiao@seu.edu.cn
-Cc: stable@vger.kernel.org
+Cc: stable@kernel.org
+Reported-by: syzbot+0a4c46806941297fecb9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0a4c46806941297fecb9
+Tested-by: syzbot+0a4c46806941297fecb9@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/69d122fd.050a0220.2dbe29.001c.GAE@google.com/
+Suggested-by: Kusaram Devineni <kusaram@devineni.in>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Link: https://patch.msgid.link/adO3HG8bvwRPcmte@redhat.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/pciehp_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/signalfd.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/hotplug/pciehp_core.c b/drivers/pci/hotplug/pciehp_core.c
-index 997841c698935..854b787fd8493 100644
---- a/drivers/pci/hotplug/pciehp_core.c
-+++ b/drivers/pci/hotplug/pciehp_core.c
-@@ -38,7 +38,7 @@ int pciehp_poll_time;
-  * not really modular, but the easiest way to keep compat with existing
-  * bootargs behaviour is to continue using module_param here.
-  */
--module_param(pciehp_poll_mode, bool, 0644);
-+module_param(pciehp_poll_mode, bool, 0444);
- module_param(pciehp_poll_time, int, 0644);
- MODULE_PARM_DESC(pciehp_poll_mode, "Using polling mechanism for hot-plug events or not");
- MODULE_PARM_DESC(pciehp_poll_time, "Polling mechanism frequency, in seconds");
+diff --git a/fs/signalfd.c b/fs/signalfd.c
+index d1a5f43ce4669..02c9009d154b9 100644
+--- a/fs/signalfd.c
++++ b/fs/signalfd.c
+@@ -48,17 +48,30 @@ static int signalfd_release(struct inode *inode, struct file *file)
+ 	return 0;
+ }
+ 
++static void refine_sigmask(struct signalfd_ctx *ctx, sigset_t *sigmask)
++{
++	struct k_sigaction *k = current->sighand->action;
++	int n;
++
++	*sigmask = ctx->sigmask;
++	for (n = 1; n <= _NSIG; ++n, ++k) {
++		if (k->sa.sa_flags & SA_IMMUTABLE)
++			sigaddset(sigmask, n);
++	}
++}
++
+ static __poll_t signalfd_poll(struct file *file, poll_table *wait)
+ {
+ 	struct signalfd_ctx *ctx = file->private_data;
+ 	__poll_t events = 0;
++	sigset_t sigmask;
+ 
+ 	poll_wait(file, &current->sighand->signalfd_wqh, wait);
+ 
+ 	spin_lock_irq(&current->sighand->siglock);
+-	if (next_signal(&current->pending, &ctx->sigmask) ||
+-	    next_signal(&current->signal->shared_pending,
+-			&ctx->sigmask))
++	refine_sigmask(ctx, &sigmask);
++	if (next_signal(&current->pending, &sigmask) ||
++	    next_signal(&current->signal->shared_pending, &sigmask))
+ 		events |= EPOLLIN;
+ 	spin_unlock_irq(&current->sighand->siglock);
+ 
+@@ -155,11 +168,13 @@ static ssize_t signalfd_dequeue(struct signalfd_ctx *ctx, kernel_siginfo_t *info
+ 				int nonblock)
+ {
+ 	enum pid_type type;
+-	ssize_t ret;
+ 	DECLARE_WAITQUEUE(wait, current);
++	sigset_t sigmask;
++	ssize_t ret;
+ 
+ 	spin_lock_irq(&current->sighand->siglock);
+-	ret = dequeue_signal(&ctx->sigmask, info, &type);
++	refine_sigmask(ctx, &sigmask);
++	ret = dequeue_signal(&sigmask, info, &type);
+ 	switch (ret) {
+ 	case 0:
+ 		if (!nonblock)
+@@ -174,7 +189,7 @@ static ssize_t signalfd_dequeue(struct signalfd_ctx *ctx, kernel_siginfo_t *info
+ 	add_wait_queue(&current->sighand->signalfd_wqh, &wait);
+ 	for (;;) {
+ 		set_current_state(TASK_INTERRUPTIBLE);
+-		ret = dequeue_signal(&ctx->sigmask, info, &type);
++		ret = dequeue_signal(&sigmask, info, &type);
+ 		if (ret != 0)
+ 			break;
+ 		if (signal_pending(current)) {
+@@ -184,6 +199,7 @@ static ssize_t signalfd_dequeue(struct signalfd_ctx *ctx, kernel_siginfo_t *info
+ 		spin_unlock_irq(&current->sighand->siglock);
+ 		schedule();
+ 		spin_lock_irq(&current->sighand->siglock);
++		refine_sigmask(ctx, &sigmask);
+ 	}
+ 	spin_unlock_irq(&current->sighand->siglock);
+ 
 -- 
 2.53.0
 
