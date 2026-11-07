@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063919;
-	b=T0vtyn9RxKL/iyloJmdKkb24nLfUBGCctvjuxB+bAX8qByb7i7jJLNRqAqwQf8usBPzY
-	 oexHin23YsWjwF51OwCk8W4RSRDH/ou13YGoQ6TsP83+j5olei2O5kS8TMtHtmrY/VmKv
-	 q0S9tcBFj0V4y/qCLoDogRNqH3t2NTwbUTP4cIobQcW2R2FZa1GaSfTLJ7wz6upxzkrYu
-	 8GDppNKyaVTyA9cro9UcURuMyxc/bPS/k0Xl7dzYnNms9u3vrQzysNrU2BfOJhUrFF1xs
-	 yjm5g4HctdHCtT8bQtRH9jQLM2nm0GKAz0OXpt9KUQLMK3kVh12GvibzsREh7gRoRLg==
+	t=1794063921;
+	b=wkR3dABl9gsIKyD08sB3WJVDMeYQCaGSmS8j+5GP4yWvz6VyLp5+Ms2+35+ZUwg2uNfr
+	 JdeXKL6Hsrpub0/6A1d7sAJZoEBhrkVHU0ilnMThI9zEUGU3HbMXyYmUhkartes17giA7
+	 iy8SciJNrepiS9+4gwj5otUsv8IWqvw3Ox/kk1CuoQDfGqu29dizqS9mQR0+irFo8iGg1
+	 aEiLG6OEZeMn3h4taH+esAbA9a9AJpYUNCIYwFDQ7uk3ERlASKD5HbypsJAMKRGI0q2qO
+	 98xlVJgE9z6SlkrT5KyYFAqGfPLQAEdCCZwA75UFsMNicraFYejrni3ZxI4+E9/gRrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063919;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O1lk7XeyKauQj8y4N5FE7VEGVNE+eMiTBSoRpyR1x64=;
-	b=fWXYCnmy0o8HdMscG8gT4NBgv1a9X/tM0OHcKQi2RAjOsjJsssI2Nkek8PV/gxCEB1Bc
-	 F0z/SLGTX9QoLPzO1pMKkDQe7AW2Pt56Qu9IjsBDctxM/MHgfomHUtcr/yQFj7KyfDy7v
-	 5eI9PsAaLEqBd74MduBSPllHUdP1VbShuWMF513Odk+1fRkiq6ya7uidZVO+k9YAekUWg
-	 z4/JT4Lz+ebfj+HJ/pYbGmmCr8UY2twNFUQpvVr4viaIgXnC/BKM2gP1z6m5Ac2/pQzx4
-	 ecpEiRyhCQTlSmEt9/Jpten+wibH4AUoeS6fvfhr5MXSmKfeoC5cQSBWrrPv3XlO0SA==
+	bh=MKeZQX6YgkzT/MrtHXgEtZ/UyDF552SsT+ApVbXwt9c=;
+	b=MZY/Gp5+VVqiIN5QfdObLfyoLDL8M1xlpbBZTDhuYtiYhT/4kk7sn3KvlMaDj59Pis2i
+	 VhxL9RXvjeMlDzKC5KGDrNE7yzuk19UII6EfFYb8maMLKrQtiy0emJoprQnNp310gQfSW
+	 ScKLZcDkH4u1bfHnOnKgJ3wT27I6jYJBcQ6kFKNGVbZbGB3YA8p4x6hEWgjlUYfcnMoRq
+	 e8682Dv3BRVslgHlZWPlfDQlDTgrHBV+Ldkb+PZ5M+h+YSp/iaTi7zwVcZd7c4cqPZNBd
+	 ueIQPXdF2GLhr6h/TUIFQfZw8KG4M+duqNNQZD5+RWSzH29E+mTZFqJHpGmkI0km0fQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHvMqOwy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VtzeBzy+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98ABB606E8E9;
-	Sat,  7 Nov 2026 15:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13D2606E8E9;
+	Sat,  7 Nov 2026 15:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHvMqOwy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DF11F0089F;
-	Sat,  7 Nov 2026 15:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VtzeBzy+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8001F0089F;
+	Sat,  7 Nov 2026 15:05:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063919;
-	bh=O1lk7XeyKauQj8y4N5FE7VEGVNE+eMiTBSoRpyR1x64=;
+	s=korg; t=1794063920;
+	bh=MKeZQX6YgkzT/MrtHXgEtZ/UyDF552SsT+ApVbXwt9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qHvMqOwynxsqveRTNnpm6WbRqcghSlPdUqoEhqxBBjQ/HIuuiOFue6+VLDuYxmcmN
-	 bAfLzLuGLZGFbLDaUXOQMsnwQWW+708MTtlhkS4r9Mw8zxCGV0oV5s5iFoYGUeLhLz
-	 Ey39t8cKuakjKANVSvsp5xRZxClgWj8NyuGrau0k=
+	b=VtzeBzy+XeL8QZyaDWjdrdj6tfeEL2zk8h1b39qWAuMmkjiuz4TOWwWcfca4oWCmn
+	 /zpSJfxmxnhtqeID4VG7BIIODfUuRN99b2i5IStG6PRi5IyuMHbuAOMvMWgvqlgv8e
+	 0nHQojEwP5Co37dZZ0joYWKmyBuO0FtkKTzKDSrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	James Hilliard <james.hilliard1@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0115/1257] media: stm32: csi: unregister async notifier on cleanup
-Date: Sat,  7 Nov 2026 08:40:11 -0500
-Message-ID: <20261107134942.521033865@linuxfoundation.org>
+Subject: [PATCH 7.3 0116/1257] mtd: rawnand: sunxi: reject ECC maximization on small pages
+Date: Sat,  7 Nov 2026 08:40:12 -0500
+Message-ID: <20261107134942.546911174@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,52 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit 4957d480a0c87cf3d024e6ff1f57d1222f9212cb ]
+[ Upstream commit a3c84084a73e170374b7dd493947efdef4ee57bc ]
 
-stm32_csi_parse_dt() registers the async notifier before probe finishes.
-If a later operation fails, the error path only cleans up the notifier's
-connections.  It does not unregister the notifier, leaving its entry on
-the global notifier list after the devm-allocated csidev is freed.
+When nand-ecc-maximize is set, the driver selects a 1024-byte ECC step
+and divides the available OOB bytes by the resulting number of steps. A
+NAND with a smaller page therefore produces zero steps and a division by
+zero.
 
-The remove path has the same problem.  A later async operation can then
-walk the stale notifier entry and access freed memory.
+The older controllers also provide a 512-byte ECC block mode, but the
+hardware documentation describes that as an ECC block size within NAND
+pages whose supported sizes start at 1024 bytes. It does not document a
+512-byte NAND page mode.
 
-Unregister the notifier before cleaning up its resources on both paths.
+Reject pages smaller than 1024 bytes before deriving the step count. This
+prevents the division by zero at the point where the incompatible
+maximized geometry is selected without changing explicitly configured
+512-byte ECC block handling.
 
-Fixes: dcb0f4c16be5 ("media: stm32: csi: addition of the STM32 CSI driver")
+Fixes: 4796d8655915 ("mtd: nand: sunxi: Support ECC maximization")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/st/stm32/stm32-csi.c | 3 +++
+ drivers/mtd/nand/raw/sunxi_nand.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/platform/st/stm32/stm32-csi.c b/drivers/media/platform/st/stm32/stm32-csi.c
-index ecd0ed8e76b59..78c68cf90ffcb 100644
---- a/drivers/media/platform/st/stm32/stm32-csi.c
-+++ b/drivers/media/platform/st/stm32/stm32-csi.c
-@@ -1059,6 +1059,7 @@ static int stm32_csi_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/mtd/nand/raw/sunxi_nand.c b/drivers/mtd/nand/raw/sunxi_nand.c
+index 45ccbce91551b..4f9c229c34bc0 100644
+--- a/drivers/mtd/nand/raw/sunxi_nand.c
++++ b/drivers/mtd/nand/raw/sunxi_nand.c
+@@ -2077,6 +2077,9 @@ static int sunxi_nand_hw_ecc_ctrl_init(struct nand_chip *nand,
+ 	if (nanddev->ecc.user_conf.flags & NAND_ECC_MAXIMIZE_STRENGTH) {
+ 		int bytes = mtd->oobsize;
  
- err_cleanup:
-+	v4l2_async_nf_unregister(&csidev->notifier);
- 	v4l2_async_nf_cleanup(&csidev->notifier);
- 	return ret;
- }
-@@ -1067,6 +1068,8 @@ static void stm32_csi_remove(struct platform_device *pdev)
- {
- 	struct stm32_csi_dev *csidev = platform_get_drvdata(pdev);
++		if (mtd->writesize < 1024)
++			return -EINVAL;
++
+ 		ecc->size = 1024;
+ 		nsectors = mtd->writesize / ecc->size;
  
-+	v4l2_async_nf_unregister(&csidev->notifier);
-+	v4l2_async_nf_cleanup(&csidev->notifier);
- 	v4l2_async_unregister_subdev(&csidev->sd);
- 
- 	pm_runtime_disable(&pdev->dev);
 -- 
 2.53.0
 
