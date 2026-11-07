@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062973;
-	b=rrDSsW2wzz/Zv+wClvUDm4zLbgXdS+OfFVv28X2WYcDUQRliGOqlwd1tks9PsUCSvRxe
-	 ZxnNiZd4pJxjrxCeBb0vVw033MdruzDjropoiLerzjO6IHIaaaMwEUXtenuUjm3qNhB2z
-	 P29vijiQ4eFwQLg47XkAnRObnIUOnc9gMkDyPFi80bSa3URk5vsEs9pjfHVXpbmVnkjbg
-	 rVKVE6TNtLbSk0J5kuucjMcrZZP3QZWpONb8P7LNhMTQZ3rpMaTsOeeGFcneKeTF4j8wi
-	 gWQaLH84op1/7BY6FpowsB7hcpcK47PbtCMAfZGOcG/2NMcUhNh9wUUmCcLVZ4eXHpQ==
+	t=1794062975;
+	b=e3wkiI3pfSTMuj3wGR/fZoXzmWEiovaN08ZqGLUh0EjjtEWlGSfiHFQkKf9Ttu+2NWmA
+	 kh6oJiBmWEMJQk6CSguLl1TM3/VFTOT8W2d0BNW5EYQ6Qmy7QelNowQQ27ANVF1+ouce/
+	 RG0QipU6SwkeaGpiC6B0O3toOrCQ4SlzA8nFJjfBiHmSvoUbuMCxV2iFABUZ2Asf1WgHc
+	 2MTm+3n7uEY2RDEEiL5QzVnnPvUcJJHtumLpTNVx1yS6Fv/ljbtxpL2PmBsTpZwZm1UWw
+	 4sJTkAvueezUoV/RKkq5trZsU1SVW8xX2JEEVpAggnLjwV0pbP8epKITN6C+3/X5Njw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062973;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ERwuJG8I7Nz0JDf8ccpN4PkhOINndXvP5sXWMBgmSMI=;
-	b=D6w9sigFNl8A5pQztaqecaxsbQptnY3ZHwurrYuUbOEHkp+cab7oSvC2g5oQwYcgsTEj
-	 EtaV/EXkQ2BaYBObH6qqIw18yUpWuX8D826EnpZ9c/QfjRKmZ5sFpRE2vbZILfN8BEyOt
-	 TVhQ45QqqqT5uqo8DiUrzznhnepm17ZeufX8VVl9Y3Dje3JL3G0vIQaNf1tyeJTqaftU3
-	 wN3Dgc2fln/fTvmiWNI4NB2AtfbOlwWnj9fc2ybG4gvKU8JAeya7hHBV+s0pdBlqNLDmr
-	 6Yi3YjKBJR0d7lmM+usEkI4QP8mIGf+9v4qzO6pY4ipgYDId+/nkENx3cIFLZHnEyXw==
+	bh=5aluARpS56yiSGi2EE1fq8mV6PBaHfTtVigx6pSr3Qw=;
+	b=PN1/N8a7sv1A7YN8JQwPp42u4usX0jrurUxeH+d00vfAc08mJ/U/7O79GFnplvQLTX9V
+	 btHls9ndlCuteisutqyqcdvKf0R2zVAdQEM7fevjtkqU5dEFMyU7XHZxN/VMvc5pYc4E8
+	 GFhamzHxAqahUOeL1I8KUYL7tnfUMBuT0OVF4rnIvAL97MHe0rMegBsQ8oIuV9y7Km1/1
+	 3mAXhvMTyRsPDTbJhcQInJMqtbq1Ue1XJMNENibO3UcLZtHndk7AMYhUQD9wM2K3hSXnM
+	 JGpsKRRLAbBEllQZU628HlR9twotPeLZQWWtaJ54rW+kYhBBjMGRS7gzPrdzdU/LlXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HxRHGkZo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NFTyZ/Q/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB23606A32C;
-	Sat,  7 Nov 2026 14:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE32606A32C;
+	Sat,  7 Nov 2026 14:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HxRHGkZo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8541F0089F;
-	Sat,  7 Nov 2026 14:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NFTyZ/Q/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CEE1F0089F;
+	Sat,  7 Nov 2026 14:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062973;
-	bh=ERwuJG8I7Nz0JDf8ccpN4PkhOINndXvP5sXWMBgmSMI=;
+	s=korg; t=1794062974;
+	bh=5aluARpS56yiSGi2EE1fq8mV6PBaHfTtVigx6pSr3Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HxRHGkZoQInH5OXuOYXqMfbPSHn/Zfc8ELr9Sv5YpGb1d9kgoT+ISToLPNvOzGE/F
-	 l2bQWIzjxGe/dJZ/DnofPjT/9c0xP7Oe2zc6nVNJGbIklyxg9oiF7/lGJaJI7Z6wBA
-	 czJcC6UsE/giNoK1JgrbmvGHC0HkW2hZJ/3+ZrtU=
+	b=NFTyZ/Q/khsSqprsDzql0m4L1N++GGYj/GG9qZX2rOJVHs48PANHBXbYFbnPXL9uE
+	 ciUFyOLJY9Blyyt9xYfbqSXjg4mrJL5eolkWiFFqLEAes3euAayve8mcKPFUGy5nfb
+	 HyP85l0nK+TlNFUOcnzhGcKqsDWorCfMknB+8Zow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
 	Lee Jones <lee@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 179/869] leds: ktd2692: Pass context to regulator cleanup
-Date: Sat,  7 Nov 2026 08:47:41 -0500
-Message-ID: <20261107134858.224374802@linuxfoundation.org>
+Subject: [PATCH 6.18 228/869] mfd: da903x: Cancel IRQ work during teardown
+Date: Sat,  7 Nov 2026 08:48:30 -0500
+Message-ID: <20261107134859.589784710@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,84 +68,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit c73e9f04445f361d5f19ca2edfde742ce18348ef ]
+[ Upstream commit fd2258999ecdc7164ef0cda2d4102e4558a5660f ]
 
-regulator_disable_action() retrieves the driver context from device
-driver data.  However, ktd2692_parse_dt() registers the action before
-ktd2692_probe() stores the context with platform_set_drvdata().
+The IRQ handler disables the IRQ and schedules irq_work. Releasing the
+IRQ does not drain that work, which can continue to use the devm-allocated
+chip and notifier state.
 
-If devm_add_action_or_reset() cannot allocate the action, it invokes the
-callback immediately.  A later probe failure also invokes it during
-managed-resource unwinding.  Both paths dereference a NULL context.
+Manage both IRQ-work cancellation and subdevice removal with devres.
+Register the subdevice-removal action before requesting the IRQ, then add
+the IRQ-work action after the request. This avoids leaving a live IRQ
+without work cancellation if action registration fails. Devres cleanup
+then disables the IRQ and drains the work before releasing the IRQ and
+removing child devices. Register both actions before creating the children
+so partial probe failures use the same ordering.
 
-Pass the already allocated context directly to the action and retain the
-device pointer in it for error reporting.  The context is allocated before
-the action is registered, so reverse-order devres unwinding keeps it alive
-through the callback.
+This issue was found by the author's in-house static analysis tool.
+The patch was reviewed by the author against the latest mainline tree.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: ee78b9360e14 ("leds: ktd2692: Fix an error handling path")
+Fixes: 26b8f5e1e2d1 ("mfd: add base support for Dialog DA9030/DA9034 PMICs")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260910194525.99654-1-mhun512@gmail.com
+Suggested-by: Lee Jones <lee@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://patch.msgid.link/20260814153019.1114-1-getshell@seu.edu.cn
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/flash/leds-ktd2692.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/mfd/da903x.c | 34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/leds/flash/leds-ktd2692.c b/drivers/leds/flash/leds-ktd2692.c
-index 0f16eefcfe4cd..04e2efdac3e6f 100644
---- a/drivers/leds/flash/leds-ktd2692.c
-+++ b/drivers/leds/flash/leds-ktd2692.c
-@@ -69,6 +69,8 @@ const struct expresswire_timing ktd2692_timing = {
- };
- 
- struct ktd2692_context {
-+	struct device *dev;
-+
- 	/* Common ExpressWire properties (ctrl GPIO and timing) */
- 	struct expresswire_common_props props;
- 
-@@ -196,13 +198,12 @@ static void ktd2692_setup(struct ktd2692_context *led)
- 
- static void regulator_disable_action(void *_data)
- {
--	struct device *dev = _data;
--	struct ktd2692_context *led = dev_get_drvdata(dev);
-+	struct ktd2692_context *led = _data;
- 	int ret;
- 
- 	ret = regulator_disable(led->regulator);
- 	if (ret)
--		dev_err(dev, "Failed to disable supply: %d\n", ret);
-+		dev_err(led->dev, "Failed to disable supply: %d\n", ret);
+diff --git a/drivers/mfd/da903x.c b/drivers/mfd/da903x.c
+index e86b39de3303a..e4ad48e1f139b 100644
+--- a/drivers/mfd/da903x.c
++++ b/drivers/mfd/da903x.c
+@@ -421,6 +421,14 @@ static irqreturn_t da903x_irq_handler(int irq, void *data)
+ 	return IRQ_HANDLED;
  }
  
- static int ktd2692_parse_dt(struct ktd2692_context *led, struct device *dev,
-@@ -233,7 +234,7 @@ static int ktd2692_parse_dt(struct ktd2692_context *led, struct device *dev,
- 			dev_err(dev, "Failed to enable supply: %d\n", ret);
- 		} else {
- 			ret = devm_add_action_or_reset(dev,
--						regulator_disable_action, dev);
-+						regulator_disable_action, led);
- 			if (ret)
- 				return ret;
- 		}
-@@ -290,6 +291,7 @@ static int ktd2692_probe(struct platform_device *pdev)
- 	if (!led)
- 		return -ENOMEM;
++static void da903x_cancel_irq_work(void *data)
++{
++	struct da903x_chip *chip = data;
++
++	disable_irq(chip->client->irq);
++	cancel_work_sync(&chip->irq_work);
++}
++
+ static const struct da903x_chip_ops da903x_ops[] = {
+ 	[0] = {
+ 		.init_chip	= da9030_init_chip,
+@@ -456,6 +464,13 @@ static int da903x_remove_subdevs(struct da903x_chip *chip)
+ 	return device_for_each_child(chip->dev, NULL, __remove_subdev);
+ }
  
-+	led->dev = &pdev->dev;
- 	fled_cdev = &led->fled_cdev;
- 	led_cdev = &fled_cdev->led_cdev;
- 	led->props.timing = ktd2692_timing;
++static void da903x_remove_subdevs_action(void *data)
++{
++	struct da903x_chip *chip = data;
++
++	da903x_remove_subdevs(chip);
++}
++
+ static int da903x_add_subdevs(struct da903x_chip *chip,
+ 					struct da903x_platform_data *pdata)
+ {
+@@ -484,7 +499,6 @@ static int da903x_add_subdevs(struct da903x_chip *chip,
+ 	return 0;
+ 
+ failed:
+-	da903x_remove_subdevs(chip);
+ 	return ret;
+ }
+ 
+@@ -520,6 +534,11 @@ static int da903x_probe(struct i2c_client *client)
+ 	chip->ops->mask_events(chip, chip->events_mask);
+ 	chip->ops->read_events(chip, &tmp);
+ 
++	ret = devm_add_action_or_reset(&client->dev,
++				       da903x_remove_subdevs_action, chip);
++	if (ret)
++		return ret;
++
+ 	ret = devm_request_irq(&client->dev, client->irq, da903x_irq_handler,
+ 			IRQF_TRIGGER_FALLING,
+ 			"da903x", chip);
+@@ -529,14 +548,12 @@ static int da903x_probe(struct i2c_client *client)
+ 		return ret;
+ 	}
+ 
+-	return da903x_add_subdevs(chip, pdata);
+-}
+-
+-static void da903x_remove(struct i2c_client *client)
+-{
+-	struct da903x_chip *chip = i2c_get_clientdata(client);
++	ret = devm_add_action_or_reset(&client->dev, da903x_cancel_irq_work,
++				       chip);
++	if (ret)
++		return ret;
+ 
+-	da903x_remove_subdevs(chip);
++	return da903x_add_subdevs(chip, pdata);
+ }
+ 
+ static struct i2c_driver da903x_driver = {
+@@ -544,7 +561,6 @@ static struct i2c_driver da903x_driver = {
+ 		.name	= "da903x",
+ 	},
+ 	.probe		= da903x_probe,
+-	.remove		= da903x_remove,
+ 	.id_table	= da903x_id_table,
+ };
+ 
 -- 
 2.53.0
 
