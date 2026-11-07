@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062098;
-	b=tPgYV6yiVEexE9njbIiE5zKul5jBLJ3BEuvu/ZEc01sdx84oDGgnsxdMFIrw/q1EmBes
-	 o+qARdboZHQ5DEvNUaCk308KnUtm1/fzor046gbqpxvAwRBZq2fZQiPBr1rhVtZcrUNbk
-	 ymw+ibUT5MQ2EeOHiN2RIFvsP/hkD+AKamWMNUf0w5QXQ7Dd2jo2iJLImMSXfoOaeeX9i
-	 4thPfio3XleuWBnIxs/Xoe6us4Y4p8yNjesafFLQzlx81d1vTsSAc9OAAYszakZM25Ndx
-	 wrRm9SX5pvYZUmaGlXw0F1COhwMFbRdyRxpAljlFJ6EZdOrJ1oDmBZf0GLK4Qh+Dujw==
+	t=1794062099;
+	b=ASK3Y6BrBF8ii8ZvlWzyZ35FleKGdiCrXsJcd5usm5jVcL93nKUrmKb/zdX+9LJz6UCT
+	 O44E/E3F7C9RxOqGKYChuR5bS/H6Wk4vHQpKOdSj+1givyWxaav3fqOeONEkcRxWIpl34
+	 vmPPdRAtJg0W/aSV3Sr6CW7QET26vN4uCTKE6CJXrOSwIuKApU8gYYiIgl82/fMvQz3eU
+	 b8tAtDxQ/R7oPqWUJiBynmj+2l4F225dfNuF+tLwRsfTLut2ParaL2cFRJwJ21rfPwmlP
+	 kJh2br/EuKhTIuCQuOpVySExUukcOY5dFMhqXiI0VEJ1rB/DaotqEmuZ89y0HYvk3DA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062098;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062099;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yN9hMNEVdDQt0cwPHVMbcnFxMUDJRxZE4gr5NO03vc4=;
-	b=XxFNK97v6axnr8a4ZX0dS8ebvhyqyBrCOek827uXS8dBWeH2ysIRkxMrH+8e8kflN7yt
-	 D4d1jW2/vM+7JNTkrazlFhH+XernBaOPfSuzSCzY1QnpklWB73xlFvpZlRuPBpAt/gpdo
-	 YDFgKjEQ++yE1s9NY8iSMwvagf8ZUAtqRooudFwOAD12D/2VqSUEB8RLDNJ3BidnwxPHf
-	 k9Kpul/NZcDd6hpNclRDJdpiKy7xyUT+Lk2x2Od07IeTtkDh/JnsCXmCz7nlZKTIz+Vpz
-	 wuy9R25qhWJ2Ik9+8FMCHw8HywOLmlrNoFqk3Ccg9FMvxx6/3FxYqCoCOnIuWIKkSNw==
+	bh=vlFuRwBBw+eyZ+DITllc1mefh7hT4Hs7lui0efca53A=;
+	b=yzZz4lESi49bhVVDDWX0d6iRUuEFX8TKmBaE+d6QnefK/S+2wSj6KZhZsO5yhnPIeS8/
+	 CrRFLdBaO8I/UNsqw4YACW2UowukHngsooomDYpXUR+8/rREvum2XpuNVKtOYxEhyAe0+
+	 20o5tMOM9HfYV48EaknnSM09qlVZGLtbo6n1m3R8G0+ioZGmjfLkHWGpRWDdGIq+qtnAo
+	 UKjE6QxKatmuCs9g1sE9CDLPaM2zSb3/0LXvnmoeMmXVgwSYOHI6XEoQgqOUk7hMBpi29
+	 GA1C/qaM8hDEcf6+Qg5TNULR5dFIO67T/KmleiYwJYY6xTezEUGRoQOSz4nbniGWsag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2Bcx6VH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XMNH3AfM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6304606D80C;
-	Sat,  7 Nov 2026 14:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7CA60A2610;
+	Sat,  7 Nov 2026 14:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2Bcx6VH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C411F008A6;
-	Sat,  7 Nov 2026 14:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XMNH3AfM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9091F008A2;
+	Sat,  7 Nov 2026 14:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062097;
-	bh=yN9hMNEVdDQt0cwPHVMbcnFxMUDJRxZE4gr5NO03vc4=;
+	s=korg; t=1794062098;
+	bh=vlFuRwBBw+eyZ+DITllc1mefh7hT4Hs7lui0efca53A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X2Bcx6VH2jlmx2RWs8iLJCEkRXR/jONfrQKsDbKfycWSgi6jCAmhSyBAux4JSB+3r
-	 BPBmgWPjNwyjN0GcxftyCFfFckuOXLZaioh5UrjBt+dPCFe0mdvoCGjFHT4//KptS4
-	 4WdyJfPHSaSEVE+lQLuJTrjw6NZn83hUdSNwIgI0=
+	b=XMNH3AfMJtw1gAz1w7SrhI7D4uL554JJVlYDZM5WfF5bCbQ8oGtWWjxY3hnypX49S
+	 jPtIgNvce0WPrTUnnmRFNJDgJbCVV0rl/a4PGVFcSloh+1dYyFVLQIb3zhYQGY3rJV
+	 /PopdSc05whTwfJCotNWuok9FkzF5Z2PummkOqyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1069/1536] mtd: amd76xrom: Fix PCI device reference leak in amd76xrom_init_one()
-Date: Sat,  7 Nov 2026 08:51:25 -0500
-Message-ID: <20261107135027.715299908@linuxfoundation.org>
+Subject: [PATCH 6.12 1034/1536] crypto: amlogic - Fix IRQ handler return value and fallthrough logic
+Date: Sat,  7 Nov 2026 08:50:50 -0500
+Message-ID: <20261107135026.715521476@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,40 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
 
-[ Upstream commit 1a122f5fecbabd47b81b1be3f0934f57b78aad42 ]
+[ Upstream commit 4b8ae2732070c5669adee2d5d3bb97b14af53a63 ]
 
-init_amd76xrom() obtains the PCI device with pci_get_device() and
-hands the reference over to amd76xrom_init_one(), which stores it in
-window->pdev.  When reserving the ROM window fails, that function
-returns -EBUSY directly instead of going through amd76xrom_cleanup(),
-so the reference is neither released nor cleared.
+In meson_irq_handler(), when an interrupt matches a flow but the status
+register is empty, the driver prints an error but doesn't return. It
+falls through the loop and incorrectly prints an `unknown irq` message.
 
-Drop the reference and clear window->pdev on that path.
+Fix this by returning immediately. For empty status registers, return
+IRQ_NONE instead of IRQ_HANDLED to avoid masking spurious interrupts and
+allow the kernel to detect interrupt storms. Also use
+dev_err_ratelimited() to prevent console lockups during an interrupt
+storm.
 
-Fixes: dd8e9ed6ed54 ("[MTD] Switch to pci_get_device and do ref counting")
+Additionally, the handler returned IRQ_HANDLED for genuinely unknown
+interrupts. Return IRQ_NONE instead for unhandled interrupts.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 48fe583fe5417 ("crypto: amlogic - Add crypto accelerator for amlogic GXL")
+Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/maps/amd76xrom.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/crypto/amlogic/amlogic-gxl-core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/maps/amd76xrom.c b/drivers/mtd/maps/amd76xrom.c
-index 281fcbaa74e70..43411ec02ed59 100644
---- a/drivers/mtd/maps/amd76xrom.c
-+++ b/drivers/mtd/maps/amd76xrom.c
-@@ -152,6 +152,8 @@ static int amd76xrom_init_one(struct pci_dev *pdev,
- 		printk(KERN_ERR MOD_NAME
- 		       " %s(): Unable to register resource %pR - kernel bug?\n",
- 		       __func__, &window->rsrc);
-+		pci_dev_put(window->pdev);
-+		window->pdev = NULL;
- 		return -EBUSY;
+diff --git a/drivers/crypto/amlogic/amlogic-gxl-core.c b/drivers/crypto/amlogic/amlogic-gxl-core.c
+index cdb5ac1a69916..42d08a48b1806 100644
+--- a/drivers/crypto/amlogic/amlogic-gxl-core.c
++++ b/drivers/crypto/amlogic/amlogic-gxl-core.c
+@@ -37,12 +37,13 @@ static irqreturn_t meson_irq_handler(int irq, void *data)
+ 				complete(&mc->chanlist[flow].complete);
+ 				return IRQ_HANDLED;
+ 			}
+-			dev_err(mc->dev, "%s %d Got irq for flow %d but ctrl is empty\n", __func__, irq, flow);
++			dev_err_ratelimited(mc->dev, "%s %d Got irq for flow %d but ctrl is empty\n", __func__, irq, flow);
++			return IRQ_NONE;
+ 		}
  	}
  
+-	dev_err(mc->dev, "%s %d from unknown irq\n", __func__, irq);
+-	return IRQ_HANDLED;
++	dev_err_ratelimited(mc->dev, "%s %d from unknown irq\n", __func__, irq);
++	return IRQ_NONE;
+ }
+ 
+ static struct meson_alg_template mc_algs[] = {
 -- 
 2.53.0
 
