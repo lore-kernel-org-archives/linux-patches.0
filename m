@@ -1,63 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065338;
-	b=MP6bGz2PfW4p9e0DxwfiqAEtLpRBOuMGEZC4eKWKUAvH2u3sdQIYRW3Ul8ddiDE2qzKR
-	 6oVENyQOP3HgQXiIXlSsPxkQxjFWG1oLldsQKG0WliTa/iqHBvgzrcGuEuYazH5UyhLm0
-	 PSO/q9b2L6iWrI3xdqEfrp8RkcLuFkOn0wsoZv0P6xOaMNAAvY4KVznKx9ArOjp++9daz
-	 mxG9Lufim+qyUGyudhG88I9SQe9PdQggslR+WFcsBbVDscSJauvh+jBiXjuCFXWtEpwZH
-	 axQBztKGp4Obcl9gmon2EMalXa61889ZCeOrqdN2e8Fs6F1CXVWtwYgHUHO+pJ8aMhA==
+	t=1794065339;
+	b=QTm8OU4AHbyqdPSgDuNlITCKuTS5or/ondn2srnD+deq8iC5Mji9zR7Miy26RKbXzhQW
+	 U6EkJoxBLQRbtp/21TCgH8z0HBY2rg2hRfpxrRobu4pdOoVbITOhN22k2v6V5Lgv5bGUV
+	 zSiVMCzeI3K7Zn9Ti1AUbsGo4lUr26z6wlJ1XAfdk5taDPr3vZt2nNzeTQXSlJ+s/wz97
+	 PjxJOtDgAjUd97NLjghiRro82l+pq2DjIyn4MDrfAQHZpoZ9vtoGr1jbw7tS1LomJJ0HU
+	 BaAKCp1sXIK+TLsdlHl5DG2ZI81I/ixAdI4/tpuExvuSKB/4hC4440gWlPiadhzV6gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065339;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UoYjF/b0k21IzUAXNbcxlt2W6AauYPw88+vBvdaWqlg=;
-	b=CqF4AB6PIHbIfK61tMi3rk8Fe5fc4KfaKu2+c95ZEMPTJdq29lAxq7Fel6rZ4CMleQGJ
-	 +5EPFPEVkH0fvjYUE9VNxu/t8BnRV4ibjYO5w6YLsHr+ighd+iVeXJH9OBl+YxrMelRbj
-	 vY9dGXBT9hipC3kpRugg7abqpTCabe3UVJahw2TbvitazCgo7yo8QD/suUVNrZqF64zsS
-	 goTv6MVzFw7xL1iDp39MDVv9OROkpMHhox6Fc0P76jjGosuBUpnwVqpNwmAaFTq8kpTjn
-	 sHmJb67LVvE8BqgGTLjsa4RokiJnoYTHKQIYeAt3CjuKwpHo5thZfi8kC/jh9dYt4Dg==
+	bh=EdgXJJzddED8Sb7E67LMosd94JiEwn+pUv/3ouPTtmc=;
+	b=WlbgbZQbfqR9wRLMnmkcJA3FFh8/NpFeZXbAhQY+mV2Dwz+kzG3W0F8VGNHdFmgAW2We
+	 c4K4a5gJwOU/ju1p6MchhzdW+fP8zxM8pORDzdUciMpot0FbQA8akUyE/GW5/E8e+8DIV
+	 k7VooFAk4U08h3Y3fTAzfEfEhl2ypfoTTqWR+o+vYasfIc1t/0334x7KHoiL0NwjwrbXR
+	 cqSZcuygpt+mX6OCO9DKtJ6CAQdadkaxP79vqHsfl8DBp5eOAsFstbKIu3SLyYhVB3cPZ
+	 DsuNdyrdmd5/KdYolFcGaim3hzmirvs1eN3VPPvhALdupWn2oNEmUuZux99ItKQhCug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cg6bJKuL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pf4FmUkY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C661606A326;
-	Sat,  7 Nov 2026 15:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C17606A32C;
+	Sat,  7 Nov 2026 15:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cg6bJKuL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913EE1F0089F;
-	Sat,  7 Nov 2026 15:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pf4FmUkY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D964C1F0089F;
+	Sat,  7 Nov 2026 15:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065337;
-	bh=UoYjF/b0k21IzUAXNbcxlt2W6AauYPw88+vBvdaWqlg=;
+	s=korg; t=1794065339;
+	bh=EdgXJJzddED8Sb7E67LMosd94JiEwn+pUv/3ouPTtmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cg6bJKuLxVoIHVdnnktzVd7//hGLiR0MbDo6slP86v8E4geGkxVk5p/NppcrQ7AOg
-	 UYZxuc1ElptaHUEnRb4bZS5+uHe1dCNM4u14m7OLBeAPUZRh0wUEOV21JQr0IZa3Se
-	 3rsUhjwSoB9cWIgDb9KUvB/xD3cM9dtAC8l6zid8=
+	b=pf4FmUkY2nY9zFlPgx6Os1039g8/V7GiW6SGBtw7OBIF8PETRWHqzFHnoY9g0BlsG
+	 8YBatYVtEnae6G083Ts50Kbv4w5WZ3L+NEGeycEv9rPxsGmbJ/REqUuXOe7b+7oDuK
+	 KU7mDkm7qDGcB+nc3ZDiQ4Bqcah8QzJ5IB31qdzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongfu Li <lihongfu@kylinos.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Chris Down <chris@chrisdown.name>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1076/1257] mm/memcg: migrate per-node hugetlb lruvec stat together with hugetlb folio
-Date: Sat,  7 Nov 2026 08:56:12 -0500
-Message-ID: <20261107135008.985605122@linuxfoundation.org>
+Subject: [PATCH 7.3 1032/1257] tpm: fix zero-length read discarding the pending response
+Date: Sat,  7 Nov 2026 08:55:28 -0500
+Message-ID: <20261107135007.827164298@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -79,142 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongfu Li <lihongfu@kylinos.cn>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 02e0c8cc2815f0082b5b5aabafe3b46688082adc ]
+[ Upstream commit 6fc1b05077b8ac7c3193616f0bc419f6185988c6 ]
 
-memory.numa_stat exposes per-node hugetlb counters from per-node lruvec
-stats.  These stats are accounted against folio_nid(): incremented on the
-folio's node when handed to a user, decremented when the folio is returned
-to the pool.
+POSIX requires that a read() with a count of zero returns zero and
+has no other effects.  tpm_common_read() treats such a call as a
+consumed response: it marks the pending response as read and drops
+it, so the response can never be retrieved; subsequent reads return
+zero and the next write() is allowed to overwrite the response
+buffer, silently breaking the command/response pairing of the TPM
+character devices.
 
-During hugetlb folio migration, mem_cgroup_migrate() moves the charge to
-the new folio and drops the memcg data of the old one, so the free of the
-old folio right after the migration skips the memcg per-node lruvec
-decrement.  The hugetlb count stays attributed to the old node for the
-rest of the life of the charge, while the target folio gets no increment
-on the new node; its later free decrements a counter that was never
-incremented.
+Return early when the caller passes a zero count, leaving any
+pending response untouched for the next read.  A zero-length read
+will not report a deferred asynchronous error; POSIX permits read()
+to skip error detection for a zero count.
 
-Migrate the per-node lruvec accounting alongside migration.  Global memcg
-totals remain balanced because they track resource consumption, not node
-placement.
-
-Link: https://lore.kernel.org/20260923-for-hugetlb_state3-v2-2-e8a36245bfab@kylinos.cn
-Fixes: 05d4532b60e3 ("memcg/hugetlb: add hugeTLB counters to memcg")
-Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Tested-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Chris Down <chris@chrisdown.name>
-Cc: <stable@vger.kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 9488585b21be ("tpm: add support for partial reads")
+Assisted-by: GLM-5.3
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://lore.kernel.org/r/3f15140ab3c26e98b49d6aceaaa826585d56960b.1791015549.git.xiaopei01@kylinos.cn
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memcontrol.h |  8 ++++++++
- mm/hugetlb.c               | 25 +++++++++++++++++++++++++
- mm/memcontrol.c            |  5 ++---
- 3 files changed, 35 insertions(+), 3 deletions(-)
+ drivers/char/tpm/tpm-dev-common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index bf057d80e2c6e..6d1c9e9a28d92 100644
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -958,6 +958,9 @@ unsigned long lruvec_page_state_monotonic(struct lruvec *lruvec,
- unsigned long lruvec_page_state_local(struct lruvec *lruvec,
- 				      enum node_stat_item idx);
+diff --git a/drivers/char/tpm/tpm-dev-common.c b/drivers/char/tpm/tpm-dev-common.c
+index f942c0c8e402f..6569212dc6b87 100644
+--- a/drivers/char/tpm/tpm-dev-common.c
++++ b/drivers/char/tpm/tpm-dev-common.c
+@@ -134,6 +134,9 @@ ssize_t tpm_common_read(struct file *file, char __user *buf,
+ 	ssize_t ret_size = 0;
+ 	int rc;
  
-+void mod_memcg_lruvec_state(struct lruvec *lruvec,
-+			    enum node_stat_item idx, int val);
++	if (!size)
++		return 0;
 +
- void mem_cgroup_flush_stats(struct mem_cgroup *memcg);
- void mem_cgroup_flush_stats_ratelimited(struct mem_cgroup *memcg);
+ 	mutex_lock(&priv->buffer_mutex);
  
-@@ -1420,6 +1423,11 @@ static inline unsigned long lruvec_page_state_local(struct lruvec *lruvec,
- 	return node_page_state(lruvec_pgdat(lruvec), idx);
- }
- 
-+static inline void mod_memcg_lruvec_state(struct lruvec *lruvec,
-+					  enum node_stat_item idx, int val)
-+{
-+}
-+
- static inline void mem_cgroup_flush_stats(struct mem_cgroup *memcg)
- {
- }
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 90a8076e7ccc4..e71e0ab116bfb 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -23,6 +23,7 @@
- #include <linux/mmdebug.h>
- #include <linux/sched/signal.h>
- #include <linux/rmap.h>
-+#include <linux/rcupdate.h>
- #include <linux/string_choices.h>
- #include <linux/string_helpers.h>
- #include <linux/swap.h>
-@@ -7360,12 +7361,36 @@ void folio_putback_hugetlb(struct folio *folio)
- 	folio_put(folio);
- }
- 
-+static void move_hugetlb_lruvec_stat(struct folio *old_folio,
-+				     struct folio *new_folio)
-+{
-+	struct mem_cgroup *memcg;
-+	long nr_pages = folio_nr_pages(old_folio);
-+	int old_nid = folio_nid(old_folio);
-+	int new_nid = folio_nid(new_folio);
-+
-+	if (old_nid == new_nid)
-+		return;
-+
-+	guard(rcu)();
-+
-+	memcg = folio_memcg(new_folio);
-+	if (!memcg)
-+		return;
-+
-+	mod_memcg_lruvec_state(mem_cgroup_lruvec(memcg, NODE_DATA(old_nid)),
-+			       NR_HUGETLB, -nr_pages);
-+	mod_memcg_lruvec_state(mem_cgroup_lruvec(memcg, NODE_DATA(new_nid)),
-+			       NR_HUGETLB, nr_pages);
-+}
-+
- void move_hugetlb_state(struct folio *old_folio, struct folio *new_folio,
- 			enum migrate_reason reason)
- {
- 	struct hstate *h = folio_hstate(old_folio);
- 
- 	hugetlb_cgroup_migrate(old_folio, new_folio);
-+	move_hugetlb_lruvec_stat(old_folio, new_folio);
- 	folio_set_owner_migrate_reason(new_folio, reason);
- 
- 	/*
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 0c7a506873eed..b5137e86bed70 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -987,9 +987,8 @@ static void __mod_memcg_lruvec_state(struct mem_cgroup_per_node *pn,
- 	put_cpu();
- }
- 
--static void mod_memcg_lruvec_state(struct lruvec *lruvec,
--				     enum node_stat_item idx,
--				     int val)
-+void mod_memcg_lruvec_state(struct lruvec *lruvec,
-+			    enum node_stat_item idx, int val)
- {
- 	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
- 	struct mem_cgroup_per_node *pn;
+ 	if (priv->response_length) {
 -- 
 2.53.0
 
