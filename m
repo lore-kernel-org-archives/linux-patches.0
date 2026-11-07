@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064423;
-	b=A8orqLBxH8AAr5507+GMCSmSKPia2TQWvqODRioJ/yxkN3jNRAeoAaynWpzMubeDbtEE
-	 zhWx+PytBL8Pmris5j82L7urOJKl9F3ZIzuorlfDmYipkDcT9BhZ2lIkCvBUGkUDNDA1g
-	 gfG6+hafiXMpF47b7SUW1Ok9rDAyeqPr5p+sih1QThMrE61Jw+s0F/j0cg1vutlABR9/6
-	 3utoZaf1a0rWScwnvyFjF3siViiFlxHl+pXz4dcYdS3WT5pMIBNG+1KlSNhmtaUzSrICG
-	 dxQvof4mm88fP16WOgkSy6NQ3pd87dpzMiLzZOoqchenIluvst1bi8Y77eYxpMFp1DQ==
+	t=1794064424;
+	b=JFx3XQoEidHCDjaryxihEXs9LqJAhGMcLmwlrtI9FVhIlE90MeZK5auvYh/QfjbfWdAh
+	 zJc72L3QJo7RG05mh+5sOvyab4ugxkhlLaCuoLO75KnHyC4FgSmZ60WbS+C5q2dZU0zbC
+	 M3U57FSvb/NA0kxesJFR1RfQKzcHgsURDtwn026v2gqUdXPKPw1fgp6CQ2suCoqmbr8co
+	 prcvPVudI/kwgWHRga24wNZBTj9YVnkC9sVXlhwaV7RLJURN0RtLDofIQhFEpdVCl4nHJ
+	 TmzFk6AENDpRN1GeFD/kvWbD/KG0N98F2ZSM90BWDfAwC+Am+b4CARO9QJbp67l/cHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064423;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064424;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FN8+mskpemK3Qs6jz/PytEVhTssGPLqO3scUuMwEDbo=;
-	b=1S/ssKmVs7kUZSZhfr188DjGecaMvAxW9x0PRHs0ZbFj1oI/Dy5p34TqH25O/KT2AVke
-	 rx/JNmSD23f5uYgJr2oWaoXzw1pwWf8hqqYpp+UQo6rEWhCFzVmv3LD2pN2sOdwutqnad
-	 6YH86nJhMdrYYcuQtxYOQ8+XpSXD3YFmy1+g80bDj+b+Db8FWllbVGKpAsTGB9nlnLsCf
-	 UeSDLkE3J0ARDFQtrPf+krVOZch9nd8lulLpLAuPAcW4DnsJtuMBkQVisYeWWFrTNB9ay
-	 B2r28AN7qlF7akc60Qdem3ysWEAdI3IKoyBAIRa9T9/SNDScfMPSJ9AsDAVo8uQRwGg==
+	bh=oO6uIix2G3GcLWU7DUhw8o86WCTnqmeNoU8J92mR87w=;
+	b=jg5XtNfqncljGmtosPMA+nqdOg/VBZnMO03o/y9p8xAd0S8ZxGx36TLDiFtVfsMAnNzg
+	 Dd+fOGUw9+lh7x+j0l7KtwiJJSetsmtji7+w+oXmrb46wnEyOxHUuPS6kxOhFHzpSngl5
+	 eGT5Am7uG6/p/Rwdy3PmdyD0alPJZ49tR76x8tuVOnSWkR+FicAZoDac7mP61SE3aH2pY
+	 ghbQmsVo9CXRCAylAVkdjM8uJoCHJbinUq3mSTkkm8hbxDRBATs64O+BdcnDDzMd54ge2
+	 is6dknbcn1KWw9g2y/OqVfU0g94jFPdradLzNKb1reCkTEDauNQDXZb4DAnFkfHvjaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OKspeqjk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9nxRu0h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A21606EE91;
-	Sat,  7 Nov 2026 15:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92341606EE91;
+	Sat,  7 Nov 2026 15:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OKspeqjk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BDD1F0089F;
-	Sat,  7 Nov 2026 15:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9nxRu0h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083491F0089F;
+	Sat,  7 Nov 2026 15:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064423;
-	bh=FN8+mskpemK3Qs6jz/PytEVhTssGPLqO3scUuMwEDbo=;
+	s=korg; t=1794064424;
+	bh=oO6uIix2G3GcLWU7DUhw8o86WCTnqmeNoU8J92mR87w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OKspeqjk1oKDe0aAxAkzaDR6AFkGylsXrz7Wvl7giPkFlPgSl46IPuacfEN5Oq5cg
-	 m47h1aTk9DawkRjzujOvo3YmTeFHmB2Sxw9i/2QtkMCGIexTm7PwG48bzW03hqt1RZ
-	 SM1MlNN8gCb7MDujzJXY24EGXIdKH2QSqFiW7g2Q=
+	b=Y9nxRu0hFrclV94s1qlzc0xpFpSRc0RGIkuvKGc2Gtn8vpZduZ3X9Lsay9d8um8Zc
+	 +fOjp3uKXMlwvVv8CJrVWjj1odWMHhhV2wHDjSIhnXi2VCDzZWJiWQseYJxuXPzdKj
+	 WxmYs33eQwn4to5tm4EYBVPZhOlkuPWv5OOch47k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Hofman <pavel.hofman@ivitera.com>,
-	Henrik Enquist <henrik.enquist@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0473/1257] ALSA: aloop: Dont constrain playback params in notify mode
-Date: Sat,  7 Nov 2026 08:46:09 -0500
-Message-ID: <20261107134952.518738940@linuxfoundation.org>
+Subject: [PATCH 7.3 0474/1257] power: supply: ab8500_fg: Accept status from supplied power
+Date: Sat,  7 Nov 2026 08:46:10 -0500
+Message-ID: <20261107134952.544923003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,117 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrik Enquist <henrik.enquist@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit ded106036984a9dd766e7e1451b02e2d15c81438 ]
+[ Upstream commit 16f506a13b58a55308449bbcbec89c817d619ca2 ]
 
-With notify enabled (the pcm_notify module parameter or the "PCM
-Notify" control), the playback side of a cable may change format, rate
-and channels while a capture is running. loopback_check_format() then
-stops the capture and notifies the "PCM Slave" controls, so that the
-capture application can reopen with the new parameters. For this
-reason loopback_open() still gives a notify mode playback the
-unconstrained loopback_pcm_hardware.
+Commit dc77721ea4aa ("power: supply: ab8500: Set typing and props")
+changed the charging algorithm power supply type from battery to unknown
+so userspace would not mistake it for a second battery. The fuel gauge,
+however, processes status changes only from battery-type supplies. It
+therefore never learns that charging started and keeps running its
+discharge state machine.
 
-Since commit 898dfe4687f4 ("ALSA: aloop: Fix racy hw constraints
-adjustment") the hw rules refine against the shared cable->hw instead
-of the substream's own runtime->hw. This pins the playback side to the
-parameters of an open capture whatever the notify setting is. A player
-probing the device sees only the capture's rate, format and channels,
-and the format change path in loopback_check_format() can't be reached
-by a new playback.
+The power supply relationship already limits the callback to supplies
+naming the fuel gauge in supplied_to. Accept status from any such supply
+while retaining the battery type checks for battery-specific properties.
 
-Skip the format, rate and channels rules for the playback substream
-when notify is enabled. Skip the period bytes rule as well: with a
-sound timer source, params_change() already takes the period size from
-a notify mode playback, and keeping the old capture's period bytes
-leaves a playback at another rate with a period that doesn't match the
-timer. The capture side stays constrained to the cable parameters.
+The Samsung-GT-I8160-Codina and Samsung-GT-I8160_HD-Codina product trees
+keep the charging algorithm typed as a battery. The
+Samsung-GT-I8530-Gavini, Samsung-GT-S7710-Skomer,
+Samsung-SGH-I407-Kyle and Samsung-SGH-T599-Codina-TMO alternative
+fuel-gauge drivers instead pass cable state directly. Both approaches
+preserve the charging state handoff that was lost in mainline.
 
-The capture stop this makes reachable again was hardened by commit
-826af7fa62e3 ("ALSA: aloop: Fix racy access at PCM trigger") and
-commit e5c33cdc6f40 ("ALSA: aloop: Fix peer runtime UAF during
-format-change stop"), which need to be applied first when backporting.
-
-Reproducer, with notify enabled on the cable:
-  arecord -D hw:Loopback,1,0 -r 44100 -f S32_LE -c 2 /dev/null &
-  aplay -D hw:Loopback,0,0 96k.wav
-Before: aplay is forced to 44100 Hz and the capture keeps running.
-After: aplay runs at 96000 Hz, the capture is stopped and "PCM Slave
-Rate" reports 96000.
-
-Fixes: 898dfe4687f4 ("ALSA: aloop: Fix racy hw constraints adjustment")
-Reported-by: Pavel Hofman <pavel.hofman@ivitera.com>
-Closes: https://lore.kernel.org/all/b4af9071-f8d7-5b47-4d7a-c5743bd67394@ivitera.com/
+Fixes: dc77721ea4aa ("power: supply: ab8500: Set typing and props")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Henrik Enquist <henrik.enquist@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261003-aloop-notify-fix-v1-1-ba5dfb831bf5@gmail.com
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-1-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/power/supply/ab8500_fg.c | 60 ++++++++++++++------------------
+ 1 file changed, 27 insertions(+), 33 deletions(-)
 
-diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index 81cb1f59f703b..5f0e2dc96769e 100644
---- a/sound/drivers/aloop.c
-+++ b/sound/drivers/aloop.c
-@@ -1073,6 +1073,18 @@ static unsigned int get_cable_index(struct snd_pcm_substream *substream)
- 		return !substream->stream;
- }
+diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
+index e6b5efdf5dc9b..016ed35e90f91 100644
+--- a/drivers/power/supply/ab8500_fg.c
++++ b/drivers/power/supply/ab8500_fg.c
+@@ -2205,42 +2205,36 @@ static int ab8500_fg_get_ext_psy_data(struct power_supply *ext, void *data)
  
-+/*
-+ * In notify mode the playback side may change format, rate, channels and,
-+ * with a sound timer, the period size. A running capture that no longer
-+ * matches is stopped by loopback_check_format().
-+ * call in loopback->cable_lock
-+ */
-+static bool loopback_playback_unconstrained(struct loopback_pcm *dpcm)
-+{
-+	return dpcm->substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
-+	       get_notify(dpcm);
-+}
-+
- static int rule_format(struct snd_pcm_hw_params *params,
- 		       struct snd_pcm_hw_rule *rule)
- {
-@@ -1082,6 +1094,8 @@ static int rule_format(struct snd_pcm_hw_params *params,
- 
- 	snd_mask_none(&m);
- 	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
-+		if (loopback_playback_unconstrained(dpcm))
-+			return 0;
- 		m.bits[0] = (u_int32_t)cable->hw.formats;
- 		m.bits[1] = (u_int32_t)(cable->hw.formats >> 32);
- 	}
-@@ -1096,6 +1110,8 @@ static int rule_rate(struct snd_pcm_hw_params *params,
- 	struct snd_interval t;
- 
- 	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
-+		if (loopback_playback_unconstrained(dpcm))
-+			return 0;
- 		t.min = cable->hw.rate_min;
- 		t.max = cable->hw.rate_max;
- 	}
-@@ -1112,6 +1128,8 @@ static int rule_channels(struct snd_pcm_hw_params *params,
- 	struct snd_interval t;
- 
- 	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
-+		if (loopback_playback_unconstrained(dpcm))
-+			return 0;
- 		t.min = cable->hw.channels_min;
- 		t.max = cable->hw.channels_max;
- 	}
-@@ -1128,6 +1146,8 @@ static int rule_period_bytes(struct snd_pcm_hw_params *params,
- 	struct snd_interval t;
- 
- 	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
-+		if (loopback_playback_unconstrained(dpcm))
-+			return 0;
- 		t.min = cable->hw.period_bytes_min;
- 		t.max = cable->hw.period_bytes_max;
- 	}
+ 		switch (prop) {
+ 		case POWER_SUPPLY_PROP_STATUS:
+-			switch (ext->desc->type) {
+-			case POWER_SUPPLY_TYPE_BATTERY:
+-				switch (ret.intval) {
+-				case POWER_SUPPLY_STATUS_UNKNOWN:
+-				case POWER_SUPPLY_STATUS_DISCHARGING:
+-				case POWER_SUPPLY_STATUS_NOT_CHARGING:
+-					if (!di->flags.charging)
+-						break;
+-					di->flags.charging = false;
+-					di->flags.fully_charged = false;
+-					if (di->bm->capacity_scaling)
+-						ab8500_fg_update_cap_scalers(di);
+-					queue_work(di->fg_wq, &di->fg_work);
++			switch (ret.intval) {
++			case POWER_SUPPLY_STATUS_UNKNOWN:
++			case POWER_SUPPLY_STATUS_DISCHARGING:
++			case POWER_SUPPLY_STATUS_NOT_CHARGING:
++				if (!di->flags.charging)
+ 					break;
+-				case POWER_SUPPLY_STATUS_FULL:
+-					if (di->flags.fully_charged)
+-						break;
+-					di->flags.fully_charged = true;
+-					di->flags.force_full = true;
+-					/* Save current capacity as maximum */
+-					di->bat_cap.max_mah = di->bat_cap.mah;
+-					queue_work(di->fg_wq, &di->fg_work);
+-					break;
+-				case POWER_SUPPLY_STATUS_CHARGING:
+-					if (di->flags.charging &&
+-						!di->flags.fully_charged)
+-						break;
+-					di->flags.charging = true;
+-					di->flags.fully_charged = false;
+-					if (di->bm->capacity_scaling)
+-						ab8500_fg_update_cap_scalers(di);
+-					queue_work(di->fg_wq, &di->fg_work);
++				di->flags.charging = false;
++				di->flags.fully_charged = false;
++				if (di->bm->capacity_scaling)
++					ab8500_fg_update_cap_scalers(di);
++				queue_work(di->fg_wq, &di->fg_work);
++				break;
++			case POWER_SUPPLY_STATUS_FULL:
++				if (di->flags.fully_charged)
+ 					break;
+-				}
++				di->flags.fully_charged = true;
++				di->flags.force_full = true;
++				/* Save current capacity as maximum */
++				di->bat_cap.max_mah = di->bat_cap.mah;
++				queue_work(di->fg_wq, &di->fg_work);
+ 				break;
+-			default:
++			case POWER_SUPPLY_STATUS_CHARGING:
++				if (di->flags.charging &&
++				    !di->flags.fully_charged)
++					break;
++				di->flags.charging = true;
++				di->flags.fully_charged = false;
++				if (di->bm->capacity_scaling)
++					ab8500_fg_update_cap_scalers(di);
++				queue_work(di->fg_wq, &di->fg_work);
+ 				break;
+ 			}
+ 			break;
 -- 
 2.53.0
 
