@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064522;
-	b=i4jsC37xMhxnLwPbPWcKqOOkjx/Gj3mdG9+g+zFfOc+Wcos7LXZ0bhZCJXG4dwEVVDpb
-	 UAug//bG/9TCyFVvK2UiiazRARwabL+9XujbdV6Pid9jnMXwKvPgtct7YSk/IZmKmsnf7
-	 eBFKGtRJdGotgAkXFxzi5jgOdbf6olkYLU9CdfgJ1FM8F4JXKKjkLbKUc2TSFNPwhEFlw
-	 PnEi0NXKM8K9u0UbSfpvKEmOf88/UfftBbKnUkR4Q/PtvAB83t7HJEMYiVgAwZuntp2Zk
-	 07e0p2OF//f4llW9z5cEPNTrcusSVoVijh27zakvHzAD3yRGSsHe4sktJsCMmKIpVkQ==
+	t=1794064523;
+	b=Tpffg56/Fh/IGnjVDO5EqmX0XtHFK6b0KJnRxXJlU7GLlX636GRsVvnlRwyBlpWXrqMm
+	 6ocRVTQgy43QqXuTavn+uBBjxEwikYDtgn/t4qPrjqn2j0esxzVrFj3eSDP3DFC7WfU0r
+	 VmemX1b3C37ewddObz6xN/lI41DlyInobYFT4Shor2pxfmVx1ybgRLF5To/BoXaoaRW2c
+	 t0PHFstPWSi79jaTIUaZ53aRpy53WIMPMyUXL/U79SnnB6NlDjUQHr8KGcEwDng4zwdcH
+	 q04z74x7fV/brZyDFLcBNW2dR1owOkvNTuBiL0D6qb2hvJdEzOgUhlVly3FAls+TH8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064523;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9Iaer0xno81RyuIRdaK45560/iKH4UpCFAAE2rIykow=;
-	b=ezcFgUzYd33bKr3JQCE2Cb42+h0ECCeW0EG4D2ghNIIONue/l4QN2As0z2m/ED90a8CV
-	 D75zNwvScz4u9t9mb80uUXzcxL5qs3fLdmUfpbjRbR3ZVThrVGLQulwOdHtGQ+mqCF+GF
-	 9Nz7a1NU4PyTxDc5ql+qjMM/ujcXm9MqcnSoaGdBcciCtCPVc7dbIyVdK0qRYozuy8rzY
-	 KavN9H8aARtzFdA7sbcqu6r+pNQ9k15jhutDl1ywsELsrSeb22vswKtCJYZVyU6K2Z43H
-	 iImLV7YHwceiq095sSHWa9I2eRG+rNSr9yjAbrDACf3PGAZiHqGdIyf3shr1zVmr7eA==
+	bh=hcojWWo2OVDYepdviiwviYIOyeA5YVcJd4njXl1dzWc=;
+	b=c7XjLxgkGBWHSjDEFuNjrd09+8h6lfjcttnP9Nxueq8/X6UMXjFDkBu6QPTNe/egAnDd
+	 VaXazXzVlPCRGZBMvnSKWb+CFlD3Axg0IDNwPC93j8ZMr9Ptlw3+vEyNiH68Szqk7thH/
+	 WFTimBLSCkoM6++VlJJN6y8dQ0eYoKVc0522E5HLEWmd1FHBrjPhzCog4Y9eZmU/c92Nn
+	 wtSYOnnZrYfNoJB6m5hYqOtkx36wgLFW5pnL2Zjxuw+ySGxecW/wxs2cen2hffdVlNTo1
+	 zswyYSSAN0Ty92uzFFlhmWzZNnZb+BBEgRKduw0S4kl3Tqt5j6Dg08h4XkFZ2pjqZTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSnFnpS5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E1k9oXGV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D534606A32C;
-	Sat,  7 Nov 2026 15:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967F8606A32C;
+	Sat,  7 Nov 2026 15:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSnFnpS5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF431F0089F;
-	Sat,  7 Nov 2026 15:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E1k9oXGV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3351F0089F;
+	Sat,  7 Nov 2026 15:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064522;
-	bh=9Iaer0xno81RyuIRdaK45560/iKH4UpCFAAE2rIykow=;
+	s=korg; t=1794064523;
+	bh=hcojWWo2OVDYepdviiwviYIOyeA5YVcJd4njXl1dzWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iSnFnpS5ZAup6lrvJwg2U5ff7NGZCw1QG85hgmquvc3EfQzXfacjNJo28KNd92Dxb
-	 da2ojHzagRW6u9Ru2YR1VUrNnFOgKQTiasYj2e8qQK/IUKw25Jl7ukGt5ThyKbpipt
-	 bCYCd2aJCV6uuyopk63WHyAAMNpVAc+d0Ok/D8+0=
+	b=E1k9oXGVSg13aCd/r2P3pt0/rTh7rG9p5l0BqLqXtYezqPgEYQtW13WYjLqD/kVea
+	 kXvWIGqe2AIs+wQpneqBmZLfSkbXm9kQVHl6DcVn7w56FtKqA+brsXOyua2VsvgzG9
+	 HabjVV9Gkj4CmpcdDu48solguevqZ6wI1gCCRUV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Morrow <morrownr@gmail.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Matej Sochan <matej.sochan@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0553/1257] wifi: rtw89: usb: shorten the RX aggregation hold on RTL8922AU over USB 3
-Date: Sat,  7 Nov 2026 08:47:29 -0500
-Message-ID: <20261107134954.661108198@linuxfoundation.org>
+Subject: [PATCH 7.3 0554/1257] ALSA: hda/realtek: Fix silent speakers on Lenovo Legion S7 15IMH05
+Date: Sat,  7 Nov 2026 08:47:30 -0500
+Message-ID: <20261107134954.686609262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,70 +68,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Matej Sochan <matej.sochan@gmail.com>
 
-[ Upstream commit 83de3a16c7b37064a59305040ba9b0f93b832794 ]
+[ Upstream commit 1c36207da79455402d981125fa09716991364e66 ]
 
-The RTL8922AU holds received frames for up to a millisecond before
-handing them to the host, a value carried over from the RTL8852CU.
-On USB 3 that adds up to a millisecond of round trip, and under load
-at 160 MHz the access point drops to lower rates and download suffers.
+The speakers on the Legion S7 15IMH05 (PCI SSID 17aa:3811, ALC287) stay
+silent after a cold boot with the current quirk, which applies
+ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS. They only start working after a
+suspend/resume cycle.
 
-Shorten the hold on USB 3 only. On USB 2 the bus is the limit, and a
-slow host needs the long hold to keep up.
+The amplifier setup is sent through COEF 0x24/0x26 on NID 0x20. On this
+machine the first pass of that sequence appears to only wake the
+amplifiers. Sending the identical sequence a second time makes both
+speakers work, provided the second write comes a few milliseconds after
+the first: back-to-back writes leave the speakers silent, a 7 ms gap
+makes only the right speaker work, and 8 ms or more is reliable. A dump
+of all COEF registers of NID 0x20 taken before and after the second
+write shows no difference.
 
-RTL8922AU on USB 3 at 160 MHz, power save off for the round trip:
+Add a dedicated fixup that writes the sequence, waits 20 ms to keep a
+margin over the measured minimum, and writes it again on every codec
+init. It chains to the same AUTOMUTE fixup as before. To share the
+sequence, move the verbs of ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS into a
+named array; this has no functional change for the other users of that
+fixup.
 
-                         x86, 6 GHz    x86, 5 GHz    Pi 5, 6 GHz
-                        before after  before after  before after
-  TCP down, 1 flow        613  1002     579   948     587  1010  Mbps
-  TCP down, 8 flows       656  1187     629  1080     605  1122  Mbps
-  round trip             2.33  1.29    2.25  1.18    1.42  0.84  ms
-  busiest core, UDP 200M  8.4  12.8     8.3  12.9     2.1   3.3  %
-
-RTL8922AU on USB 2, Raspberry Pi 1 B+ at 5 GHz, 80 MHz:
-
-                        long hold  short hold
-  TCP up, 1 flow            102.3        87.7  Mbps
-  CPU, UDP 20M               50.5        77.4  %
-  loss, UDP 50M               3.8        85.7  %
-
-Fixes: 32cee8a9bb66 ("wifi: rtw89: usb: Enable RX aggregation for RTL8922AU")
-Reported-by: Nick Morrow <morrownr@gmail.com>
+Fixes: 67f4c61a73e9 ("ALSA: hda/realtek: Add quirk for Legion S7 15IMH")
 Cc: stable@vger.kernel.org
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20261007210958.56528-1-lucid_duck@justthetip.ca
+Link: https://github.com/CachyOS/linux-cachyos/issues/792
+Signed-off-by: Matej Sochan <matej.sochan@gmail.com>
+Link: https://patch.msgid.link/20261007-legion-s7-v1-1-8ea7fb7ee766@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/usb.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 92 +++++++++++++++++++------------
+ 1 file changed, 56 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/usb.c b/drivers/net/wireless/realtek/rtw89/usb.c
-index aafa8b9e93dfc..22a1a988f3073 100644
---- a/drivers/net/wireless/realtek/rtw89/usb.c
-+++ b/drivers/net/wireless/realtek/rtw89/usb.c
-@@ -819,10 +819,15 @@ static void rtw89_usb_rx_agg_cfg_v2(struct rtw89_dev *rtwdev)
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 1623cf926c713..c66dd4a003f39 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -4290,6 +4290,7 @@ enum {
+ 	ALC236_FIXUP_HP_LIMIT_INT_MIC_BOOST,
+ 	ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS,
+ 	ALC287_FIXUP_LEGION_15IMHG05_AUTOMUTE,
++	ALC287_FIXUP_LEGION_S7_15IMH05_AMP,
+ 	ALC287_FIXUP_YOGA7_14ITL_SPEAKERS,
+ 	ALC298_FIXUP_LENOVO_C940_DUET7,
+ 	ALC287_FIXUP_LENOVO_YOGA_BOOK_9I,
+@@ -4437,6 +4438,53 @@ static void alc700_fixup_intel_hades_canyon(struct hda_codec *codec,
+ 		alc_update_coef_idx(codec, 0x1b, 0x0400, 0x0400);
+ }
  
- static void rtw89_usb_rx_agg_cfg_v3(struct rtw89_dev *rtwdev)
- {
--	const u32 rxagg_0 = FIELD_PREP_CONST(B_BE_RXAGG_0_EN, 1) |
--			    FIELD_PREP_CONST(B_BE_RXAGG_0_NUM_TH, 255) |
--			    FIELD_PREP_CONST(B_BE_RXAGG_0_TIME_32US_TH, 32) |
--			    FIELD_PREP_CONST(B_BE_RXAGG_0_BUF_SZ_1K, 20);
-+	struct rtw89_usb *rtwusb = rtw89_usb_priv(rtwdev);
-+	u32 rxagg_0 = FIELD_PREP_CONST(B_BE_RXAGG_0_EN, 1) |
-+		      FIELD_PREP_CONST(B_BE_RXAGG_0_NUM_TH, 255) |
-+		      FIELD_PREP_CONST(B_BE_RXAGG_0_BUF_SZ_1K, 20);
++static const struct hda_verb legion_amp_verbs[] = {
++	/* left speaker */
++	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x24 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x41 },
++	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0xc },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x1a },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
++	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x2 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
 +
-+	if (rtwusb->udev->speed == USB_SPEED_SUPER)
-+		rxagg_0 |= FIELD_PREP_CONST(B_BE_RXAGG_0_TIME_32US_TH, 1);
-+	else
-+		rxagg_0 |= FIELD_PREP_CONST(B_BE_RXAGG_0_TIME_32US_TH, 32);
- 
- 	rtw89_write32(rtwdev, R_BE_RXAGG_0_V1, rxagg_0);
- 	rtw89_write32(rtwdev, R_BE_RXAGG_1_V1, 0x1F);
++	/* right speaker */
++	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x24 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x42 },
++	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0xc },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x2a },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
++	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x2 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
++	{ 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
++	{}
++};
++
++static void alc287_fixup_legion_s7_amp(struct hda_codec *codec,
++				       const struct hda_fixup *fix, int action)
++{
++	if (action != HDA_FIXUP_ACT_INIT)
++		return;
++
++	snd_hda_sequence_write(codec, legion_amp_verbs);
++	/*
++	 * The amplifiers accept the setup only a few ms after the first
++	 * write (8 ms is the measured minimum on the test machine), so
++	 * keep a margin.
++	 */
++	msleep(20);
++	snd_hda_sequence_write(codec, legion_amp_verbs);
++}
++
+ static const struct hda_fixup alc269_fixups[] = {
+ 	[ALC298_FIXUP_RAZER_BLADE16_2025_PINS] = {
+ 		.type = HDA_FIXUP_PINS,
+@@ -6486,41 +6534,13 @@ static const struct hda_fixup alc269_fixups[] = {
+ 	},
+ 	[ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS] = {
+ 		.type = HDA_FIXUP_VERBS,
+-		//.v.verbs = legion_15imhg05_coefs,
+-		.v.verbs = (const struct hda_verb[]) {
+-			 // set left speaker Legion 7i.
+-			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x24 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x41 },
+-
+-			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0xc },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x1a },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
+-
+-			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x2 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
+-
+-			 // set right speaker Legion 7i.
+-			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x24 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x42 },
+-
+-			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0xc },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x2a },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
+-
+-			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x2 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
+-			 { 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
+-			 {}
+-		},
++		.v.verbs = legion_amp_verbs,
++		.chained = true,
++		.chain_id = ALC287_FIXUP_LEGION_15IMHG05_AUTOMUTE,
++	},
++	[ALC287_FIXUP_LEGION_S7_15IMH05_AMP] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc287_fixup_legion_s7_amp,
+ 		.chained = true,
+ 		.chain_id = ALC287_FIXUP_LEGION_15IMHG05_AUTOMUTE,
+ 	},
+@@ -8206,7 +8226,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	HDA_CODEC_QUIRK(0x17aa, 0x38d5, "Lenovo Yoga Pro 9 16IMH9", ALC287_FIXUP_TAS2781_I2C),
+ 	HDA_CODEC_QUIRK(0x17aa, 0x38d6, "Lenovo Yoga Pro 9 16IMH9", ALC287_FIXUP_TAS2781_I2C),
+ 	HDA_CODEC_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
+-	SND_PCI_QUIRK(0x17aa, 0x3811, "Legion S7 15IMH05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
++	SND_PCI_QUIRK(0x17aa, 0x3811, "Legion S7 15IMH05", ALC287_FIXUP_LEGION_S7_15IMH05_AMP),
+ 	SND_PCI_QUIRK(0x17aa, 0x3813, "Legion 7i 15IMHG05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x3818, "Lenovo C940 / Yoga Duet 7", ALC298_FIXUP_LENOVO_C940_DUET7),
+ 	SND_PCI_QUIRK(0x17aa, 0x3819, "Lenovo 13s Gen2 ITL", ALC287_FIXUP_13S_GEN2_SPEAKERS),
 -- 
 2.53.0
 
