@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065372;
-	b=OtHQ2X4oXGnvFvpFhJ6Jf/pO98LGNLZTQwT+x4deEbje0uWnO5Ffbiz8+LHsFpgicohd
-	 mT0KuzI7uBrWu3cFUgz7zUS+miytAO6voKw7Y+xooSi59DrKN1Wn0l4uaE7sDpmUvmWcy
-	 deY/NehVglvRPkCel4M4CzWh91d5ac93koaNq6MQlgweKzt1fMi9QlgWHErBJmAuW5RI8
-	 LUCeHK1RdhTpPUol4DaOoIPIF3JtKRGWcAzv6ZhdF/BWY22rCOLcQEwrQrYDlZ9fMn1D+
-	 klMGxSe1O5I5Gsro7U95/7FKjURkKg7zDJTI625wU1GYRUeuTqHMOXU+gxIUrPmRU6w==
+	t=1794065373;
+	b=t4XLU2UmMwOOKPfLu7ZLFlwHXF+o+0KFN7yKSJAcWfo7T42pTL5JSmZ1L0TetF0JxWX+
+	 xK94fZ7ez1cKgRJ5/O0oX5xNBvToyl2F4F3HjClfAr6AKCbh+WNT0oLKq5vKtY9oW77ZL
+	 LLKak5vZG4diIsWxBEgofzZho2fPmFGefN2gaHlrZKZGU/hlyZRTT5TI+auMdPlxuo0ku
+	 8wUjcwB2oznRuq1nPZHWrha4PENicvPKB3eetPBGv9zJ7dvmHY4r1mCbm9pLjohtYfz5N
+	 B6f/2Rmh+YWbYjcpEmu+jKXeT4qGb/cl8ywKl1VkIVoQu4K7Hok2y4LypvTDe3vyLJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065372;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0B9jCT1FXiD8ASjKVSdYcrWmCxTYK95o/LcdQTvmPHc=;
-	b=DrQyYoQ7e1f+fgJCYdhw2mc9Js8+iUzSsoy0nCMBFcMX/8rkxIl6dAdDqFa6eaD1ZfcQ
-	 0srh553+OZyKwoe3Zkp/st8dJCIcMnmhCSmTKwD/ak5UEmEcVv059+MDU5cyrt5Aa25qy
-	 vsdz0LLJIKTw6VhTX8Tbe8YZKSV0XbBK20sUfiVOsqs+KbkXxkuXVePKc1i1deljsdKd7
-	 u4/LZQ5GpG3MA9cW3Ly6UIDU3oZQ7RKcJtylI1kevJCBhKO0lZksLD5hsxvtTGQjXjWZN
-	 s0CvqC4zBlS0xavVxZLiHVNNpkY1LWD7vhKiEmA6mTsK6UyVpXTZcU8nEF/Qq3cfv1A==
+	bh=Fu/0E2EfElhQ/Idc7RhQfX1vyGQG0kt7xPOsfM7EXvk=;
+	b=PmDvDZ5zrMGSq42DAkICAr9J/s06TinIGzUNSeTIagxKf18wS+ksiHMNLUYS/LiWGYxQ
+	 89Dt2fnUed+fYTFMFYwYCB7TeLFbUKYEBlc9w6WhZBTMV9c2jkSbTHkc1CxkRzJaWkYn5
+	 zdf+OG/ESVjL2mnVIBQ/4LbUQsSbVj+vBEuI/Swp8EXjQWvpJUvUazQi2aokNfBrb5yF9
+	 HUNlYyVwS3e2TZuFoznJh3CRfj/84IhvZXfHolVsg+zwBUp8r63ALNFsBB1R3hJaHIXSB
+	 UsG6vC2r8nZtpeL3WYV/C1nXU3wn7mtZFyjvt/CA1NEPGJ2QJJsnyI3ZSrVWW6eWSlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W96P7mQY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z3n9Zyax;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4AF606A335;
-	Sat,  7 Nov 2026 15:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763B7606A331;
+	Sat,  7 Nov 2026 15:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W96P7mQY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1161F0089F;
-	Sat,  7 Nov 2026 15:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z3n9Zyax
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2236B1F0089F;
+	Sat,  7 Nov 2026 15:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065372;
-	bh=0B9jCT1FXiD8ASjKVSdYcrWmCxTYK95o/LcdQTvmPHc=;
+	s=korg; t=1794065373;
+	bh=Fu/0E2EfElhQ/Idc7RhQfX1vyGQG0kt7xPOsfM7EXvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W96P7mQYB5bb3ZbB40d0YOMxowo81+3ph02E976w0dqF4TdkykQRsyM9FM6fgZtJp
-	 Yq46kBt9Xtv73u6U9JOLQPWY7POlj0ShL1/JeOgQqOGn6npFVBDlVWSPha2v2JeG0C
-	 ZqBHod8FamheS504Y2+e5RGjX9yB2UzjzHebQbrM=
+	b=z3n9ZyaxbdqAR5DsWCyLaw2/y9mv09gKxg9+TzbS702JZMyGSEE7EUAGNlWAqlkbV
+	 r9QbVBcECJMht2m217D5OAqI88AeEaAaks1qLjCbhMM3kx5dF/v1o29lcSS1df9sCI
+	 S0/6MBt1zq5q6CwANIJvjTDhZzezuiKrqa+yffT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Eric Biggers <ebiggers@kernel.org>,
 	Alberto Garcia <berto@igalia.com>,
 	Baokun Li <libaokun@linux.alibaba.com>,
-	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1102/1257] ext4: refuse encryption when block size > page size
-Date: Sat,  7 Nov 2026 08:56:38 -0500
-Message-ID: <20261107135009.700759823@linuxfoundation.org>
+Subject: [PATCH 7.3 1103/1257] ext4: reject encrypted inodes when block size > page size
+Date: Sat,  7 Nov 2026 08:56:39 -0500
+Message-ID: <20261107135009.727232083@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,54 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Alberto Garcia <berto@igalia.com>
 
-[ Upstream commit 0e341d1d29db11c29211d2b8870a515c26589d5a ]
+[ Upstream commit a5e894bc87b76fd980075892ba77e6bdeeb5e4d0 ]
 
 Encryption is not supported when a filesystem's block size is larger
-than the page size, and commit 709f0f1f1bf5 ("ext4: add checks for
-large folio incompatibilities when BS > PS") added a check to refuse
-mounting such a filesystem.
+than the page size. ext4_check_large_folio() refuses to mount a
+filesystem like that if the "encrypt" feature is already enabled, and
+ext4_set_context() refuses to create encrypted inodes if the feature
+is enabled after mounting.
 
-However, it is also possible to enable the "encrypt" feature on a
-filesystem that is already mounted (with tune2fs -O encrypt). Once
-that happens it won't be possible to mount the filesystem again in
-the future, but there is nothing preventing the user from setting an
-encryption policy while the filesystem is still mounted.
+However, a corrupted or hand-crafted filesystem can still have
+encrypted inodes even if the "encrypt" feature is not set, and those
+inodes can be unlocked if they're using v1 policies.
 
-Fix this by refusing to set an fscrypt context in ext4_set_context()
-when the block size is larger than the page size.
+Check this in __ext4_iget() and reject them as corrupted.
 
 Fixes: 709f0f1f1bf5 ("ext4: add checks for large folio incompatibilities when BS > PS")
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
 Cc: stable@vger.kernel.org # v6.19+
 Signed-off-by: Alberto Garcia <berto@igalia.com>
 Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
 Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Link: https://patch.msgid.link/093b40e9df29fc102907092f4ff73461f4cfcbfd.1790343958.git.berto@igalia.com
+Link: https://patch.msgid.link/aeb8efa8beb72721fb4b13cffe6eb22c795ec33f.1790343958.git.berto@igalia.com
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/crypto.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ext4/inode.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/ext4/crypto.c b/fs/ext4/crypto.c
-index 1a0fccb084ef5..318b2eaea7412 100644
---- a/fs/ext4/crypto.c
-+++ b/fs/ext4/crypto.c
-@@ -156,6 +156,15 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
- 	if (ext4_test_inode_flag(inode, EXT4_INODE_DAX))
- 		return -EOPNOTSUPP;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index fb0548b3355c5..6697c33d3aa33 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5671,6 +5671,12 @@ struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+ 		ret = -EFSCORRUPTED;
+ 		goto bad_inode;
+ 	}
++	if (IS_ENCRYPTED(inode) && sb->s_blocksize > PAGE_SIZE) {
++		ext4_error_inode(inode, function, line, 0,
++				 "encrypted inode with block size larger than page size");
++		ret = -EFSCORRUPTED;
++		goto bad_inode;
++	}
  
-+	/*
-+	 * Encryption is not supported when the block size is larger
-+	 * than the page size.  This is rejected at mount time by
-+	 * ext4_check_large_folio(), and this check here is for the case
-+	 * when the 'encrypt' feature is enabled on a mounted filesystem.
-+	 */
-+	if (inode->i_sb->s_blocksize > PAGE_SIZE)
-+		return -EOPNOTSUPP;
-+
- 	res = ext4_convert_inline_data(inode);
- 	if (res)
- 		return res;
+ 	ext4_set_inode_mapping_order(inode);
+ 
 -- 
 2.53.0
 
