@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064818;
-	b=OGUMa9StjVwzH5pfEJGJAOf4kksY2n6AwyIYmqHg/wq4t4WiIZBWcNjViOE7ltYpWut5
-	 hkWZZIKD3abqf0+D5Mjf2IeyNFMpOcIURHaypLE/WnSfPAsv6yjJFrS+BCfiT9bttWQgx
-	 W10OMQYVsQ8oVA4athbve12iFDwlZLjmJ0qSUv8PfHUpv+UqC4fpczcGlfs0ZY9o4SixK
-	 q4ZV5NoT+4ek/qGnkwxHHG0R8KQ5Xc2/14gMaaBYg/7fz7FQ1qkzoK8rUcjjYQzN4LaTb
-	 mDi4VjlnT9uDIsCXS2+coWmaQTP2t4Vhofu8YWHaYD7EXVeyrfkCywBGu5cPnqeUp0A==
+	t=1794064820;
+	b=VpVc2rlU+JOnzIqfVE3ISTJot4iPNd4afyEa9hmhpRgAOAbJbgV84iOPLaqH+HWNArHx
+	 91eWzOnVj88oquQ05shv85vMNI6iEysWUq1pYVW1oQVsBBiZJ1mJlyMjZR0tKWpsCrbar
+	 VSx6iLi4Ekqdaro6ZfNa1cR0qqkJ6wQ9OV6DKmxsvDexez+QgqU7WzoSHAhe5qcnSZlw/
+	 f7Vnh68y9cIX55r8XRqQ0+Hatzs0K4SDqemrybAqVahj7TY5/psp9NrqF5PwR4ciqY1oh
+	 szBHb1QZMrYweqy2xIb6ZKSUdUXfcd51WE9mIHsMoj8W940LHKUNPz9xpvmdrwd9OoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MkVr+laVLuzdJ/g21EZ81WK8Srqn8p8e6ktPJ28P3kU=;
-	b=5Yx6HM3j/RFN1Go7yDyPLPLh61Cv2N80bj/qVSAcW3f9iIc1JZ3akUGjsToJvewexc72
-	 ESChtkp8CxZMR8eNvnbZGogva7UBXsBW+woA0rfcmv0WMK3IKiaWiH5zMQzROtZi1ULoW
-	 rchtAFglbHA8vHZvCIsI7kMBIfxc/o1g8yjSN1y/tyzoeR+gADLB7dd9Gf/CrAJWmMQE8
-	 qdHoIgdsR+PzLkoZcDtJMAwQ3ivZjCQht9mJpe3MdRrhFjbHjuk4xfx3cVq2ekcILN5kA
-	 KErIArBBUHf7CSefZUc8gSkHLDD5Bse1cH1v8GVTDoTtgRZplvudG19zcpVX+T/56TQ==
+	bh=g9cDC7ThrAFvvgOmwSVv/b6ukb7FGxZQkRn7UQvq3fM=;
+	b=YFeuFmrDpVGUOYZxdvkOUSCKdn/dOJLjIS4SIBBYqgCe9eReURTjeUA+IVQtR7AdsEAA
+	 Z53f1E1BJFCdEl4+3ljAB9XbEEUzYgzEw3EbtoJ3GjVCA+7gsN9DR8Ubf6I0I/ubKCa49
+	 gDqkXTwyKFlSSHlDFmTi4AiZOoHxouf6RzKrCKmIjOEs3UqBuUTO2iQ8Sl8smgdOHodd8
+	 +TigIrRGg3eq/gfzKY0D5bgVXSnWdW/DrHpEOt1iaaqI3jUePghG+pME6UqwKjxUkHuz8
+	 P3HFm+HyZOSiEiAEuOWdZYnWgo0/2mjLgw+iARAVsNvrLRdKcScFLQ49u2nlvzQh17g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2OKp8ynK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dKsouVo0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6FB606B88F;
-	Sat,  7 Nov 2026 15:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE8C606B88F;
+	Sat,  7 Nov 2026 15:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2OKp8ynK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7100F1F0089F;
-	Sat,  7 Nov 2026 15:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dKsouVo0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5111F0089F;
+	Sat,  7 Nov 2026 15:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064818;
-	bh=MkVr+laVLuzdJ/g21EZ81WK8Srqn8p8e6ktPJ28P3kU=;
+	s=korg; t=1794064819;
+	bh=g9cDC7ThrAFvvgOmwSVv/b6ukb7FGxZQkRn7UQvq3fM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2OKp8ynKr6JAWXcascqIsOjvlDwUMLZQ1+Pxre7kCnPBNtjC7kZASrzE0HqMGRf9T
-	 YHILqxlViVFYJrE2NkygZo3L07jSsqGc2TiRMkGqyJJ88y7yz5qUmEeSOOyhYWovOx
-	 qCEEvmB5bnY8QozgsyKkRVUeoKc5mInwf6ilPKVA=
+	b=dKsouVo0iTarivDCUBLwy02drAvDbCQvaRS88FRULIJ3X1lQEx86e164Xf0kwmhMB
+	 mt9XC07sJ1vp8AFqjVRWjdYyR6LVtkTsFmE3uYujANCw2RO0tKg++e2Cuj7dYICXRp
+	 z6hSpRhUieVWxME9oakvV9XS7w9+0kI3UPqPTEIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0716/1257] PCI: rockchip-host: Do not attempt 5.0 GT/s retraining
-Date: Sat,  7 Nov 2026 08:50:12 -0500
-Message-ID: <20261107134959.035928820@linuxfoundation.org>
+Subject: [PATCH 7.3 0707/1257] nvme-rdma: dont complete a request after a bogus remote invalidation
+Date: Sat,  7 Nov 2026 08:50:03 -0500
+Message-ID: <20261107134958.781526971@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,71 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geraldo Nascimento <geraldogabriel@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 2a1e6c382fb7567679c07bd6a7060fefc7a5edc9 ]
+[ Upstream commit 909307cea08aff4e486cdb7491de5c76a2c31341 ]
 
-Drop the 5.0 GT/s Link Speed retraining from Rockchip PCIe Root Complex
-Mode Operation, so-called host driver.
+When a remote invalidation names an rkey that is not the one we handed out
+for this request, nvme_rdma_process_nvme_rsp() logs and schedules error
+recovery, then falls through to nvme_rdma_end_request().  The request is
+completed with req->mr never invalidated, and nvme_rdma_unmap_data() hands
+it back with ib_mr_pool_put(), which only puts it on a list.  The rkey
+stays valid and still maps the pages the completed read filled, so a
+controller that sent the bogus invalidation can write into those pages
+after pread() has returned.
 
-The reason is that Shawn Lin from Rockchip has reiterated that there may be
-danger of "catastrophic failure" in using their PCIe with 5.0GT/s speeds.
+Return instead, the way the local invalidation path below already does,
+and leave the request for error recovery to cancel.
 
-While Rockchip has done so informally without issuing a proper errata, and
-the particulars are thus unknown, this may cause data loss or worse.
-
-This change is corroborated by RK3399 official datasheet [1], which states
-maximum link speed for this platform is 2.5 GT/s.
-
-[1] https://opensource.rock-chips.com/images/d/d7/Rockchip_RK3399_Datasheet_V2.1-20200323.pdf
-
-Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
-Reported-by: Dragan Simic <dsimic@manjaro.org>
-Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://lore.kernel.org/all/ffd05070-9879-4468-94e3-b88968b4c21b@rock-chips.com/
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Fixes: 3ef0279bb0031 ("nvme-rdma: Check remotely invalidated rkey matches our expected rkey")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/68f6353e3a2ea4914de36c42b6906e41282adad3.1781622998.git.geraldogabriel@gmail.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-host.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+ drivers/nvme/host/rdma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
-index d203c4876d304..0b52f2e370f41 100644
---- a/drivers/pci/controller/pcie-rockchip-host.c
-+++ b/drivers/pci/controller/pcie-rockchip-host.c
-@@ -328,26 +328,6 @@ static int rockchip_pcie_host_init_port(struct rockchip_pcie *rockchip)
- 		goto err_power_off_phy;
- 	}
- 
--	if (rockchip->link_gen == 2) {
--		/*
--		 * Enable retrain for gen2. This should be configured only after
--		 * gen1 finished.
--		 */
--		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL2);
--		status &= ~PCI_EXP_LNKCTL2_TLS;
--		status |= PCI_EXP_LNKCTL2_TLS_5_0GT;
--		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL2);
--		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
--		status |= PCI_EXP_LNKCTL_RL;
--		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_CR + PCI_EXP_LNKCTL);
--
--		err = readl_poll_timeout(rockchip->apb_base + PCIE_CORE_CTRL,
--					 status, PCIE_LINK_IS_GEN2(status), 20,
--					 500 * USEC_PER_MSEC);
--		if (err)
--			dev_dbg(dev, "PCIe link training gen2 timeout, fall back to gen1!\n");
--	}
--
- 	/* Check the final link width from negotiated lane counter from MGMT */
- 	status = rockchip_pcie_read(rockchip, PCIE_CORE_CTRL);
- 	status = 0x1 << ((status & PCIE_CORE_PL_CONF_LANE_MASK) >>
+diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
+index 9cb811a2ce1f7..5b9b540693b51 100644
+--- a/drivers/nvme/host/rdma.c
++++ b/drivers/nvme/host/rdma.c
+@@ -1748,6 +1748,7 @@ static void nvme_rdma_process_nvme_rsp(struct nvme_rdma_queue *queue,
+ 				"Bogus remote invalidation for rkey %#x\n",
+ 				req->mr ? req->mr->rkey : 0);
+ 			nvme_rdma_error_recovery(queue->ctrl);
++			return;
+ 		}
+ 	} else if (req->mr) {
+ 		int ret;
 -- 
 2.53.0
 
