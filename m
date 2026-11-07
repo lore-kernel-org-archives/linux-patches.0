@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061465;
-	b=pizpJIYX08CGQ5WLhk6BMNKRSRzz3SD3jyFiCF+VcSt0JRSq+1rd/cv/h7XPUVj9Q1Hm
-	 GSmkbrF7rq9Xbsc3KMGuntcJeTUjGoHjB1GJhSa3PFccSFi5LOvoSJDEtmPnP1EqCb1Cp
-	 31kPG6Uuooq6YlO32t9l32pB5cm5Qrf70tfpNl3cwpLxBuKAfJkyeGWc5N1w8/mCMpwdy
-	 N2dbaD3Y4k0TJAsqpcWIdJoExB9HjIjNTV4v6jFcBhV/e82VDWtgZfsg/mqXasSWWY3Tu
-	 Y9IyW4aqFDFldsjjyGlSlZk5K6vGHXdo21PtUbMEyswIZ0Zb2/CFaftr2BS5Pp9PhOw==
+	t=1794061466;
+	b=qq5LZn1ZISU+tfHF/0+GnnavK2vkiJOnYie63NQjpSF+t/d4ad4AbWXXABLxfvSoPnu3
+	 9lHhXGXHJZnUGk1XYS9qHH+r9q5inNoTcu/TEmwisP7TT37ipCxK+j8oC7OEhEslqicUv
+	 wUWBZK4s3dJz74fgXcrSnxjC6BZ9gtUu3zXoSeQbtDG4T6tvtpA6BQcQ2Ab+QHTzt4uZ2
+	 ZNRdLBiTQQuUord6Ef/0nVd9GlswxFrxW03AZCT/nIL+x/wjJzEN39pX8IJWj/Y4+uYTp
+	 dPK9S57nft/rDT+UMt+8lWIXiLeCwAj32Nr2LoJMNW1ad0udJsEeZtk2LZlkD39IdRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061465;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061466;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ACzd6TSiitx002leitP2gTN+9ommgBh0IF3cl91Qo3s=;
-	b=aZmZfygKQ7c7JI+UR19P6N+/PzX9xx/p/EBK4USoTZ3a6YU/xtehcPJVw5fP6Ci8YPNW
-	 6KW8u5tmNF5CpRY4aSa6RAWa+/YilSBz1ychrRyDCNsODqFsyhTSmCdcoxMzVpjoV3q5R
-	 oGbjmYA9DgAY/Y6M9QZV+f+SAXuUBOglrHG0lXDYZWZdsegJ1zDRFcGIuAr4/0TuSLg5u
-	 L/kLd8reUeUXg/xvBZ5iHISA6exMC+rNo+sq5JYni2wPIu3ZsRJyO4Poi5iLQrFG/dF6l
-	 lZ7ckOGCET02D0h3pTflem3H8Y3O9QaKMTD4Lr4cjb1ydHmrdaulT+KDZv1iWPjB5dw==
+	bh=PaJT8wZ+6fOhTsFmQDFafSNmtwHge5H4pWoA3MLekZ4=;
+	b=ayij/hWoqDE94Ge8Rew+iJxOw0fsVQnGheYNvWpVcWLLGGWd9O3n5s655XbZ/91vYaM9
+	 JvQEEtoOP9UF+xw0URxzhWGs0Fn8zGOEmAPH08Qd8J2wnX21rjbRypPPEYN9FyJ6e3FhR
+	 SEMdFj8tbyeWLRfxMRtLP+wNmEJE8drO/+RXSslNb1nX6oRAj0l1yvsfbNe2SdPoAGnxG
+	 tfkyuMUo3WQ0yA+EjFC8FuyexXIgZepRD21leyjeCcIYb+XK3RAGTwkR+MZy1KvoWNA8o
+	 kbUT0D+oWMcL3FNfNCvLrVdoHwaQwCzjilgSW6Gn9ikzmjybgqIRIGwJLKveXx1ttig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rJwn1mba;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IDEIqiEz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2325A606A331;
-	Sat,  7 Nov 2026 14:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7E6606A336;
+	Sat,  7 Nov 2026 14:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rJwn1mba
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7B81F0089F;
-	Sat,  7 Nov 2026 14:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IDEIqiEz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 041471F0089F;
+	Sat,  7 Nov 2026 14:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061465;
-	bh=ACzd6TSiitx002leitP2gTN+9ommgBh0IF3cl91Qo3s=;
+	s=korg; t=1794061466;
+	bh=PaJT8wZ+6fOhTsFmQDFafSNmtwHge5H4pWoA3MLekZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rJwn1mbauM4i1SMjSsvU54FwHyrtRJ3Sq6Vzf5NfiPDKzqBXF6RvLkcpkMXClXuCU
-	 rIgtNdUwafE2otiOU5CfkVjkQeUA5zfBBA54NFW7fqqsbZLxaN9VUqRsh54bBLDCd2
-	 u8Jt7VHCf+FgNlvKjm4j49LSdbuiUrVSq11gR/FQ=
+	b=IDEIqiEzp6EQazC/SExJJrIZ9+UqTUm4NocrspgJtD+FmVwyy7cdyjqTsWuScnMOG
+	 1Q5volavftbbgi0esY6HB8CPtw4gakiCAcI16fwrjcMRr8TcDQGRq8S82nWDzZjvUn
+	 ZvApr8jQiUErHv68drjaqge9BiO2DdaTQBiIIHhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiakai Xu <jiakaiPeanut@gmail.com>,
-	Jiakai Xu <xujiakai2025@iscas.ac.cn>,
-	Nutty Liu <nutty.liu@hotmail.com>,
-	Andrew Jones <andrew.jones@oss.qualcomm.com>,
-	Anup Patel <anup@brainfault.org>,
+	Hari Mishal <harimishal1@gmail.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0566/1536] RISC-V: KVM: Fix double-free of sdata in kvm_pmu_clear_snapshot_area()
-Date: Sat,  7 Nov 2026 08:43:02 -0500
-Message-ID: <20261107135013.475942608@linuxfoundation.org>
+Subject: [PATCH 6.12 0567/1536] drm/amd/display: guard dc_sink dereferences in MST mode validation
+Date: Sat,  7 Nov 2026 08:43:03 -0500
+Message-ID: <20261107135013.502131668@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,66 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit 310e2096b082ae0010e7afef666073b966ac2fa7 ]
+[ Upstream commit 217f64f348c90cba62164e7ff38e0ccf78a5ca09 ]
 
-In kvm_riscv_vcpu_pmu_snapshot_set_shmem(), when kvm_vcpu_write_guest()
-fails, kvpmu->sdata is freed but not set to NULL. This leaves a dangling
-pointer that will be freed again when kvm_pmu_clear_snapshot_area() is
-called during vcpu teardown, triggering a KASAN double-free report.
+dm_dp_mst_is_port_support_mode() reads
+aconnector->dc_sink->dsc_caps... for the DSC branch-throughput check,
+and get_conv_frl_bw()'s HDMI-PCON FRL-bandwidth path reads
+aconnector->dc_sink->edid_caps.max_frl_rate, both without a NULL
+check. dc_sink is cleared asynchronously on MST unplug, and both
+functions run from paths that the driver's own comments document as
+racing that teardown: the connector probe worker's ->mode_valid
+callback and a compositor's atomic check, neither of which holds the
+MST manager lock that the teardown path uses. The former does have an
+existing dsc_aux NULL check, but dsc_aux isn't reliably cleared in
+every path that clears dc_sink, so it doesn't cover this.
 
-First free occurs in kvm_riscv_vcpu_pmu_snapshot_set_shmem():
- kvm_riscv_vcpu_pmu_snapshot_set_shmem arch/riscv/kvm/vcpu_pmu.c:443
- kvm_sbi_ext_pmu_handler arch/riscv/kvm/vcpu_sbi_pmu.c:74
- kvm_riscv_vcpu_sbi_ecall arch/riscv/kvm/vcpu_sbi.c:608
- kvm_riscv_vcpu_exit arch/riscv/kvm/vcpu_exit.c:240
- kvm_arch_vcpu_ioctl_run arch/riscv/kvm/vcpu.c:1008
- kvm_vcpu_ioctl virt/kvm/kvm_main.c:4476
+Fail the port-support check and skip the FRL conversion path when the
+sink is already gone.
 
-Second free (double-free) occurs in kvm_pmu_clear_snapshot_area():
- kvm_pmu_clear_snapshot_area arch/riscv/kvm/vcpu_pmu.c:403 [inline]
- kvm_riscv_vcpu_pmu_deinit.part arch/riscv/kvm/vcpu_pmu.c:905
- kvm_riscv_vcpu_pmu_deinit arch/riscv/kvm/vcpu_pmu.c:893
- kvm_arch_vcpu_destroy arch/riscv/kvm/vcpu.c:199
- kvm_vcpu_destroy virt/kvm/kvm_main.c:469 [inline]
- kvm_destroy_vcpus virt/kvm/kvm_main.c:489
- kvm_arch_destroy_vm arch/riscv/kvm/vm.c:54
- kvm_destroy_vm virt/kvm/kvm_main.c:1301 [inline]
- kvm_put_kvm virt/kvm/kvm_main.c:1338
- kvm_vm_release virt/kvm/kvm_main.c:1361
-
-Fix it by setting kvpmu->sdata to NULL after kfree() in
-kvm_riscv_vcpu_pmu_snapshot_set_shmem(), so that the subsequent
-kfree(NULL) in kvm_pmu_clear_snapshot_area() becomes a safe no-op.
-
-This bug was found by fuzzing the KVM RISC-V PMU interface.
-
-Fixes: c2f41ddbcdd756 ("RISC-V: KVM: Implement SBI PMU Snapshot feature")
-Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>
-Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260318092956.708246-1-xujiakai2025@iscas.ac.cn
-Signed-off-by: Anup Patel <anup@brainfault.org>
-[ sashal: Kept the local SBI_ERR_FAILURE error code in the context line, since upstream has SBI_ERR_INVALID_ADDRESS there, and added the same kvpmu->sdata = NULL; line. ]
+Fixes: f04d275d94e1 ("drm/amd/display: add mst port output bw check")
+Fixes: 5c9b8b27a883 ("drm/amd/display: Tie FRL support into amdgpu_dm")
+Assisted-by: gkh_clanker_t1000
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Reviewed-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7c3db8da4e039698ae198c870712428644e965c7)
+Cc: stable@vger.kernel.org
+[ sashal: Dropped the conflicting get_conv_frl_bw() hunk because this tree has no HDMI-PCON FRL code, keeping only the dc_sink NULL guard in dm_dp_mst_is_port_support_mode(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_pmu.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
-index 516a0570bdf6a..9270119cd44da 100644
---- a/arch/riscv/kvm/vcpu_pmu.c
-+++ b/arch/riscv/kvm/vcpu_pmu.c
-@@ -451,6 +451,7 @@ int kvm_riscv_vcpu_pmu_snapshot_set_shmem(struct kvm_vcpu *vcpu, unsigned long s
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 9a3deb26149d8..8db1ce500fbcf 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1819,6 +1819,9 @@ enum dc_status dm_dp_mst_is_port_support_mode(
+ 	struct dc_dsc_config_options dsc_options = {0};
+ 	uint32_t stream_kbps;
  
- 	if (kvm_vcpu_write_guest(vcpu, saddr, kvpmu->sdata, snapshot_area_size)) {
- 		kfree(kvpmu->sdata);
-+		kvpmu->sdata = NULL;
- 		sbiret = SBI_ERR_FAILURE;
- 		goto out;
- 	}
++	if (!aconnector->dc_sink)
++		return DC_FAIL_BANDWIDTH_VALIDATE;
++
+ 	/* DSC unnecessary case
+ 	 * Check if timing could be supported within end-to-end BW
+ 	 */
 -- 
 2.53.0
 
