@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065575;
-	b=O5WEkRCQJ61yFI/yl80SYqOvc4X2jlUQKmY26/t2sTt0KGkRwFNLjA7XympPxv4uivXB
-	 +yOsGDiuURGb0GByKn5RXET1yGGjV5aC6gzdQ7fkdTEOZNy/BwaKN65VUKxWuhDFUisff
-	 R0/m9UkS4ZFOx8W90Ld+oBY8xD+2Hxggs5PCDz/TaIjCAhzD5QY/qPVHkzUluA4sWGn1p
-	 ZCLoeBmrViV2eMR2MamwerEE4A0SFEd+BB8zwbXdIJjk+kOp7+eUOqBzmhoh60d6YfsHD
-	 ovh7mYlfD5xPtsat9aRd0qNGtMLAL+8rnd1bzcUybGxV8g1m9Or1EOu4SoyRnjdzjRA==
+	t=1794065577;
+	b=WVOrORlaxAG2U1PLLc0bpcyPW/RwcLH6Q5at1zLfeXU+YV/0cUgyzVkWAJFa5sagouNQ
+	 w4UKtTG6CVt+yRrvKmOx0owC0T/BI9KYb9J5eB+s3lUBvt1RDchFUmVYa3btSkQBEtLCJ
+	 yJg90NdPh4iRvX6QRbbm6fBv3hCVHS4Phnd0e47plTgOYiTGEF8MAG5hAxezwwOfopeSa
+	 uwqrZ26ZM0Zlnl112j0ug0/zZ1t9FZZU7rkkas9gOtxizhR0YRHA2Sh5NAfZkpx69mMWm
+	 OaPwjfYcnSt87BTW0bmMvfrDlwmKD4eHvWJzSpQwrRFukJkadL6WrNOds96DoO6jk1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PTklK5f/yiFUX04cJqTGo9qupwdselhz4DXyPEwybJA=;
-	b=eHCTB33ZBlcF469MeaZHxP4EA4X0+sVKJrgTvlBwdRSse6wA5RSAizVMiCf/iroPXlsl
-	 zU1OTnCTKrXyt/hLZrznomJTecC0B5HHaS2rdFFneGiyRROqZqCIYuzFNzkdMh0yYLbTJ
-	 flVoqUMVuaUicgX+Y72dRmOWtQz5Cf8cIJRFg7kd4MOiN/NkQqcJkR5fz63GAAjQGKKt4
-	 DTFZeOtDHRm3wv7F42hNqHU9uIMA9it3pxeyYIZiwo58eZf0HPq4MarEgMGRoq0omspU2
-	 PojpnUgapr/WAWuauYBjXeqTls/gsUfO9LFrucQTsabMleeinrfSh9xUm60J5xtCTZQ==
+	bh=MipFZibjioSMiO9VjvY6WWaIXrID7dSSvXni6YGqmaI=;
+	b=DcIq+7K4iu6Tgxptej9+cdM1iORdWPQIbD4HJD1rZHHbQzwzRP9IRjQ0dNq1nNCk1qle
+	 ny4lxbBP2+4RQtJnyYpP298FGbB0cA1rVZ6K51j4Ek6d+Yh2WLBHnJRhkqe5vHN0t73vZ
+	 J01qCAxI1SqPLa6JM1WNfTheUETGPumtgGC/6F69292EKfCUSC70q1rS4kD5ymWp2Tvqj
+	 A3paNI3OY8OgEZXtQRO+mQxM5RrxB/+1ZUrtEthbBSRt4dkGxOeIdQoUDNDyw2zN5R9s9
+	 zBrbytib4u95iUay32kFTOlBM6lRY9/vEj+E7x4+I6N30KRh9Wgw8ff7dROSTnQJzRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCCOaTsh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0Qm/0nbn";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553A4606A32C;
-	Sat,  7 Nov 2026 15:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4884606A32C;
+	Sat,  7 Nov 2026 15:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCCOaTsh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31401F0089F;
-	Sat,  7 Nov 2026 15:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Qm/0nbn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726881F0089F;
+	Sat,  7 Nov 2026 15:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065575;
-	bh=PTklK5f/yiFUX04cJqTGo9qupwdselhz4DXyPEwybJA=;
+	s=korg; t=1794065576;
+	bh=MipFZibjioSMiO9VjvY6WWaIXrID7dSSvXni6YGqmaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aCCOaTshq5HQCVDP2VY4K/iEC75zJv5tu29v5sGHYFwQ2y3v3Qm27NEotSMnTGflk
-	 daINEhhQYxLgl4xhYeTMsv8nigp9oox0D9uZRkgBsuAHwEZ3OiQK3SzjadrmRzinlJ
-	 EIyPkkTMvGs6aKYy9Nx8BEqyQrsykM4c3JeW4yg0=
+	b=0Qm/0nbnqPJPLseRWxW9ufwhrq+RZTLfmkd22Ht10nfiFvZFkNP2RMvSDlHKDRmXf
+	 VIQPC432KNukshmyeKUEX9cC+7E1026OfmZ+rFrEnkBlqoBudvORPzQ24SlQe0ZLmH
+	 aGGa+10zGS+9DtV4TddcJUYIwbB111aRrZxiUD0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
+	Li RongQing <lirongqing@baidu.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1236/1257] apparmor: fix refcount leak in aa_get_newest_profile()
-Date: Sat,  7 Nov 2026 08:58:52 -0500
-Message-ID: <20261107135013.476607640@linuxfoundation.org>
+Subject: [PATCH 7.3 1237/1257] apparmor: avoid potential double free when remapping DFA tables
+Date: Sat,  7 Nov 2026 08:58:53 -0500
+Message-ID: <20261107135013.502669713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,62 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 33ed50716251d5b2875706c40d0c8082d46be0b1 ]
+[ Upstream commit 7ccd884a5e5386f4c7d98625113f4924f70286b4 ]
 
-The labels_profile() macro is evaluating its argument twice
+When unpacking a DFA, aa_dfa_unpack() stores a table in dfa->tables
+before attempting to remap a 16-bit table to 32-bit.
 
-  #define labels_profile(X) ((X)->vec[(X)->size - 1])
+However, remap_data16_to_data32() frees the original table when
+allocation of the new table fails. This leaves the corresponding
+dfa->tables entry pointing to freed memory. If the unpacking then
+fails, dfa_free() attempts to free the same table again.
 
-unfortunately aa_get_newest_profile() passes
-   aa_get_newest_label(&p->label)
-so every call to aa_get_newest_profile results in 2 refcounts
-being taken with one being leaked.
+Only publish the table to dfa->tables after any required remapping
+has completed successfully, so that dfa->tables never contains a
+pointer to a table that has already been freed.
 
-There is no need for labels_profile() to be a macro. Convert it to
-an inline fn, which ensures all uses are passing the correct struct
-and removes the double evaluation.
-
-Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
+Fixes: 9208c05f9fdf ("apparmor: add support for 2^24 states to the dfa state machine.")
 Cc: stable@vger.kernel.org
-Reported-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/label.h | 6 +++++-
- security/apparmor/label.c         | 1 -
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ security/apparmor/match.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/security/apparmor/include/label.h b/security/apparmor/include/label.h
-index 2c869b7dec973..61794b9cd6be6 100644
---- a/security/apparmor/include/label.h
-+++ b/security/apparmor/include/label.h
-@@ -162,7 +162,11 @@ do {							\
- #define labels_ns(X) (vec_ns(&((X)->vec[0]), (X)->size))
- #define labels_set(X) (&labels_ns(X)->labels)
- #define labels_view(X) labels_ns(X)
--#define labels_profile(X) ((X)->vec[(X)->size - 1])
-+
-+static inline struct aa_profile *labels_profile(const struct aa_label *label)
-+{
-+	return label->vec[label->size - 1];
-+}
+diff --git a/security/apparmor/match.c b/security/apparmor/match.c
+index 7713484f6a36e..ca30a4292c422 100644
+--- a/security/apparmor/match.c
++++ b/security/apparmor/match.c
+@@ -397,7 +397,6 @@ struct aa_dfa *aa_dfa_unpack(const void *blob, size_t size, int flags)
+ 		/* check for duplicate table entry */
+ 		if (dfa->tables[table->td_id])
+ 			goto fail;
+-		dfa->tables[table->td_id] = table;
+ 		data += table_size(table->td_lolen, table->td_flags);
+ 		size -= table_size(table->td_lolen, table->td_flags);
  
- 
- int aa_label_next_confined(const struct aa_label *l, int i);
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index 82742a4710552..42ed476fe89d9 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -387,7 +387,6 @@ void aa_label_kref(struct kref *kref)
- 		label_free_switch(label);
- 		return;
+@@ -414,9 +413,9 @@ struct aa_dfa *aa_dfa_unpack(const void *blob, size_t size, int flags)
+ 				if (!table)
+ 					goto fail;
+ 			}
+-			dfa->tables[table->td_id] = table;
+ 			break;
+ 		}
++		dfa->tables[table->td_id] = table;
+ 		table = NULL;
  	}
--	/* TODO: update labels_profile macro so it works here */
- 	AA_BUG(label_isprofile(label) &&
- 	       on_list_rcu(&label->vec[0]->base.profiles));
- 	AA_BUG(label_isprofile(label) &&
+ 	error = verify_table_headers(dfa->tables, flags);
 -- 
 2.53.0
 
