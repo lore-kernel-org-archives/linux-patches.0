@@ -1,55 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062607;
-	b=sC6HDPK/kYQfUsZsQPuC073AWZ/puzlRnwDf08fd/hxU3hIPQvSQsKySaApmkiX4Uwz9
-	 1mTWp6U/WN9yGhrAjkjU8fmK0RHEsoUDPPMvUAY6/Ps28cCM1cwA2QtZSl3eFEKIACzgY
-	 0tybJ1B22p2OXbQEjkI4q7z+7xw4z7CsC4ma0nBgpgI7LEhl/gj60sFXorAFXrvCcmaDt
-	 Twez0e8sReOIfA/CW5aCVlq920iqmWyVJ2Xxys0Uev7Fza9qL/rJPZ68MbGm0/vJjSChG
-	 VOQr1j3k6Yr7zhPK8nOXRALs2OLkxRNhKgqYoDGFmh6mfPNRM3P4f37fvH3kfdH8NZg==
+	t=1794062609;
+	b=NNibxtX8ugVDh7DobV6Skhz38EqDhfOTDhuCMLnwZRU/R1Uny4qGTL7lS8JAYJJO24CI
+	 J9FWLD9I14Fhl7e+1dP3mrwwwrJnnE5YfJc4v7soIY+eW8GHq5pYtvcSY1xe78wHdih/4
+	 y5Vp9APl2nEPKxA0t9SYeikiFKRfoE5VvPrXVloh1MFtWHOmLkR8uFTf37JvU8aJpzxNz
+	 8Kk8+eaVO2OK0EVXLlH7HMP2HPdWzTvcI0oXfHywE5azKmYPujty6lxyhtlshfXC7QHfH
+	 QFvrNyQFJZSbesLbX6V9D90yqWyMWsctt/uGfc2d30A3tmpenYhPK/wIAVZPyA62zmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062609;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vk51C6TzxSMMSwTXKpnDt9RFHlG1txOAAn7EYwFPhBo=;
-	b=iyhHfW9AvIXaARTOx+vr/GXTcK3PnezlILvZWI4DZBYHA3AgpKocEnS4jZZHwwu52QiQ
-	 lmXoKM1q2yJ3sQEt12fs1M+dR4RzFtgp74Zlsb+GfvJye6GvYxAF+BRny+thMI8GKQDM5
-	 AV3GHHSc8vluQdJc3KANT/5INTU64zud8X+rv/PYyDVVPPqgGTXQxuQp7Wn1+ArEc79bc
-	 +pOXvmxtdjKDlzcCPVmTHGATl7Jz7yHtQ8MPh/MFhhSV32+aQay1pPUS5XEOy9G3EzRQc
-	 KQ+tY8RoNLP/kZLk00dmvJp+nWsJ02HWxsER/HrYBvk3iLOvW59DNxhhMrbabVd/CGw==
+	bh=4efFVmxiHtQx9M/jdXvfY0kY3PhbG9e+JKfVdt49lRE=;
+	b=WDxo0aZj43cv63C2Miye3fYU0Gu5H+9USevzBXP8WnVk2wZ1AZ0DZbzzqvH3sY/1WpmD
+	 mrwwGujU2z4E+O4aPs5D28cAqcFXWu0nZT+9ZO2LCRbKI2xgtymOTLQ+jr3/PbxdNfcLn
+	 ijaDNfD3cKpc3saRnpbjz+I0Y1JxdxEBR2OFLjd/etHkR/L51J7Fz1Xh4h2fBVHtcH49l
+	 PdYVZAGD7fLYgIy7LpnfcF91N5us2FISQVm5kFWj2pNaeeQ+NjfNLT6AhuBghMynRDj7X
+	 yZd0sQAmC2gL36g9crLN9jLjdD5oYVZyKaUfeqWBp6T+u5zy9EpcV7q+hk/rZf/3mwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fpb2Wja6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSnxB4yk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E440606A334;
-	Sat,  7 Nov 2026 14:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0820606A335;
+	Sat,  7 Nov 2026 14:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fpb2Wja6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333191F008A1;
-	Sat,  7 Nov 2026 14:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSnxB4yk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4A81F0089F;
+	Sat,  7 Nov 2026 14:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062607;
-	bh=vk51C6TzxSMMSwTXKpnDt9RFHlG1txOAAn7EYwFPhBo=;
+	s=korg; t=1794062608;
+	bh=4efFVmxiHtQx9M/jdXvfY0kY3PhbG9e+JKfVdt49lRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fpb2Wja6oKCiuqCft0yDEuKaT6/Q1d3F52TV76Vu3nmY1GVSwOSAn2t66ZXsLEjJQ
-	 emeGmngW0aMJNcbLzcp1MTj0AQ5SeyrrdhKwf3mIRRkHLR+3dEpvQhrGj8qd5rwb6+
-	 zdDLZCKawbXDSNRRIKHpgKMrX3xrAAO3S5SNSyoo=
+	b=CSnxB4ykJBYUaJkNrHb13ol7zqB5NptSF+rDunVDMhryxC1egn9hhDYitWUaEfEPm
+	 35FJBa2/6+gQYxnFRWgvlnyqSb+YZnQohRpjAVUVpEPm+BX0QnwNrWQv2IOSe9yket
+	 fBeqU0Cds6D9YQqLcOFX1SmHQNKFtYaQchfLoKgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Wang <1075151112@qq.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Dev Jain <dev.jain@arm.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	Kairui Song <kasong@tencent.com>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Baoquan He <baoquan.he@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Frank van der Linden <fvdl@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1480/1536] tcp: limit tcp_tso_rtt_log to a valid shift count
-Date: Sat,  7 Nov 2026 08:58:16 -0500
-Message-ID: <20261107135039.418374880@linuxfoundation.org>
+Subject: [PATCH 6.12 1445/1536] mm/page_alloc: count guard pages as free again when their buddy merges
+Date: Sat,  7 Nov 2026 08:57:41 -0500
+Message-ID: <20261107135038.419624204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,84 +82,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Rik van Riel <riel@surriel.com>
 
-[ Upstream commit 850a7225bc61cdfaf0c4b02ff341ae7cb54902f5 ]
+[ Upstream commit 1503710b3b0cec02b531978129c6c1eb70a7c490 ]
 
-tcp_tso_autosize() right-shifts the u32 returned by tcp_min_rtt() by
-sysctl_tcp_tso_rtt_log. The sysctl uses proc_dou8vec_minmax() without
-an upper bound, so it accepts values through 255. Values above 31 make
-the shift undefined.
+With debug_guardpage_minorder set, expand() turns the unused halves of a
+split into guard pages, which page_del_and_expand() leaves out of the free
+counts.  Freeing the allocated half credits only that half, and
+__free_one_page() then merges the guard buddy with clear_page_guard(),
+which no longer touches the counters.
 
-A process with CAP_NET_ADMIN in the target network namespace can set the
-per-netns sysctl. With CONFIG_UBSAN_SHIFT=y, setting it to 32 and sending
-TCP data over loopback triggers:
+The merged block goes on a free list with the guard pages never counted,
+so NR_FREE_PAGES falls behind the free lists by every guard that merges.
+Before commit e0932b6c1f94 ("mm: page_alloc: consolidate free page
+accounting"), __set_page_guard() and __clear_page_guard() adjusted the
+counts themselves; that commit dropped both adjustments but kept the
+subtraction implicit in expand().
 
-  UBSAN: shift-out-of-bounds in net/ipv4/tcp_output.c:2264:30
-  shift exponent 32 is too large for 32-bit type 'unsigned int'
-  Call Trace:
-   __ubsan_handle_shift_out_of_bounds
-   tcp_tso_segs
-   tcp_write_xmit
-   __tcp_push_pending_frames
-   tcp_push
-   tcp_sendmsg_locked
+Count the guard pages under the merged block's migratetype when the buddy
+is cleared.  account_freepages() skips an isolated block as it does for
+every other free page, and moving the block off the isolated list counts
+it then.
 
-Limit the sysctl to 31, the largest valid shift count for a u32, and
-document the accepted range. Writes of larger values now fail with
--EINVAL.
+Booting a 16GB VM with debug_pagealloc=on debug_guardpage_minorder=1,
+check the difference in free pages reported between /proc/vmstat and
+/proc/buddyinfo.
 
-On a UBSAN/KASAN build of the net tree, values 0 and 31 remained
-accepted, values 32 and 255 returned -EINVAL, and TCP traffic with the
-valid boundary values produced no sanitizer diagnostics.
+At three points (idle, after a read and file-creation load, after a second
+load), check the difference between nr_free_pages and the buddyinfo
+numbers in the normal zone, as a number of pages:
 
-Fixes: 65466904b015 ("tcp: adjust TSO packet sizes based on min_rtt")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/tencent_31D2FFCCE76C50A695A1270151F825E90906@qq.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+                idle   after load   after second load
+    unpatched   -130        79205               99121
+    patched      -16           45                   0
+
+The small remaining difference seems to be due to the numbers not being
+read at exactly the same time, and is also seen without guard pages.
+
+Link: https://lore.kernel.org/20261016122304.5b1eba8e@fangorn
+Fixes: e0932b6c1f94 ("mm: page_alloc: consolidate free page accounting")
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Assisted-by: LLM
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Qi Zheng <qi.zheng@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Frank van der Linden <fvdl@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/ip-sysctl.rst | 2 ++
- net/ipv4/sysctl_net_ipv4.c             | 2 ++
- 2 files changed, 4 insertions(+)
+ mm/page_alloc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/networking/ip-sysctl.rst b/Documentation/networking/ip-sysctl.rst
-index 9e3da2008c412..bc41d23a3376a 100644
---- a/Documentation/networking/ip-sysctl.rst
-+++ b/Documentation/networking/ip-sysctl.rst
-@@ -952,6 +952,8 @@ tcp_tso_rtt_log - INTEGER
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index e68a47d8485c8..a649f0245e3bf 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -858,10 +858,12 @@ static inline void __free_one_page(struct page *page,
+ 		 * Our buddy is free or it is CONFIG_DEBUG_PAGEALLOC guard page,
+ 		 * merge with it and move up one order.
+ 		 */
+-		if (page_is_guard(buddy))
++		if (page_is_guard(buddy)) {
+ 			clear_page_guard(zone, buddy, order);
+-		else
++			account_freepages(zone, 1 << order, migratetype);
++		} else {
+ 			__del_page_from_free_list(buddy, zone, order, buddy_mt);
++		}
  
- 	If you want to use the old autosizing, set this sysctl to 0.
- 
-+	Possible values are [0, 31], inclusive.
-+
- 	Default: 9  (2^9 = 512 usec)
- 
- tcp_pacing_ss_ratio - INTEGER
-diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
-index 00d3be968a53d..b0904a606f3b3 100644
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -26,6 +26,7 @@ static int ip_local_port_range_max[] = { 65535, 65535 };
- static int tcp_adv_win_scale_min = -31;
- static int tcp_adv_win_scale_max = 31;
- static int tcp_app_win_max = 31;
-+static int tcp_tso_rtt_log_max = 31;
- static int tcp_min_snd_mss_min = TCP_MIN_SND_MSS;
- static int tcp_min_snd_mss_max = 65535;
- static int ip_privileged_port_min;
-@@ -1349,6 +1350,7 @@ static struct ctl_table ipv4_net_table[] = {
- 		.maxlen		= sizeof(u8),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dou8vec_minmax,
-+		.extra2		= &tcp_tso_rtt_log_max,
- 	},
- 	{
- 		.procname	= "tcp_min_rtt_wlen",
+ 		if (unlikely(buddy_mt != migratetype)) {
+ 			/*
 -- 
 2.53.0
 
