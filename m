@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063470;
-	b=brbSbJXhPhv3O4k5s1QOsJwRkjjEv17EKcMdKicmnzq+kx7ymZrHIcEyA6dGT9CDjNGC
-	 NUH3mUh64n7i2lD+Zt7ZFtXfCx59XpxRj3BXXZeQjYsb9Q7Bx6jyDt9D5N+o3AGCjcCCv
-	 gCeSlnSPKdr1TWEiayyFdSebJdkjKxkE++oyudaJbhxHMpX7XBT1JeI8v7TzMLEB4NwMg
-	 Wq63wWc15fuCKLHbH07F/ig911gYlQEM96UU09mz9yFy5S+pjaoLXlZr2gQ1HJBJDHwpH
-	 e2/kWnIvuC5o+QMbsGYH3EJSk1RvA+BqN8rF79HHA9HKWVtPlMCYkxe+88sx1Sg+KMQ==
+	t=1794063471;
+	b=kC5R2vRzIS9/qpru28Wnx9hPnY+clOsHSLWHOMMeS1CsRzTOWeRiJqRRCIEitdVOWLLL
+	 f/MDkYJJSDCsiAPG/e1Nn2xhK3TqhCaxKpcfI77gs3hQCBew55T5KzW4i1Kl7eOYvbOg8
+	 dLaALRqKTzFSEEsC4ZGkfx59f5WMxmUGlDDJ287PFr/2170qmQI0n8N1j+RSIc0LmK64m
+	 qBGPQxhieGHjPkN5tIzq0zn+x7I0Q/0ncn0uiODwRCW3ZAeWgOlrkBzl6P85qYOZGh/o6
+	 kIQzoQ58jIrYSkjVGjZPdmzj+bI4Uw484VO8MNrrxi2Wbr3ZhgjOOAHTq37lnyW2fkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063471;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eaCwefF2LEbzB8VWleTI4wH4r+VbMhsSep1dIqfXf8g=;
-	b=xD0UyHXM+tldwp4KLT4z5tNX/8cj7OykphJN6Xao7oA6UWW891U2P1DB7DQM22X0E5OQ
-	 CdjX6ZBJ5f8KgzwDW0nxC2qAQeokQAQejKDQuBBApqBGfkY37PDHhqk9TtVeVy7dBIry3
-	 DlFkD1yFphqCxYu8Gmzxh9CwKkp1YrynkK3B3IOzhqhsBanbSE1PXYwMDJI+rJCNflTAL
-	 kTFp8PQD76VMEvO1SoUKPdnrX+Borpz6Uc72cc1aUzJW5MlJBYInjMdUCBRObjUHcZFJZ
-	 k6J/8Q1FWgv9owA2NeikKVzJLPSw8aXwfbGe0/ro4KuA6732jXlONmnoVyj76w6+vAQ==
+	bh=cATlO+jhXsaT4ePY2ktaLugdpOPwp7jAGs8cE3E4a/U=;
+	b=oeSCUjPHsNzVf3Trro2CtJ4GRll9BXNIx1mWjKIdLaQJQGGYF5fNFV24er+MAX1mC6qM
+	 J6cbHcDhXwp2BsPuTwkyfThBIw4J/K9SoAxxHUNk2DKW6ll3NU/XKzsdmhZIAP8HuUiId
+	 oKe55O4zvM+UkGrPDFVZNBJwIGiwk46/voY7ubTCB3aaWnjXA+CD1LaOF3DbyJb5oTPVK
+	 GHxvryWC5FMP8YOAhAwsvdndvIM0oJG1LpzKqWlvGgHW04AtPWAswpCk/1OG5lc3HgDiH
+	 molZqnsTtNbIzAsLBRg29D/6GlHZpg45fInl91b/nvNHmW0cDaDqOm1F+DtnWhMv6+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xkMIhIIn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0N068Vud;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AA5606EEA3;
-	Sat,  7 Nov 2026 14:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6944860A6F5F;
+	Sat,  7 Nov 2026 14:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xkMIhIIn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBED11F008A2;
-	Sat,  7 Nov 2026 14:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0N068Vud
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17DCE1F008A2;
+	Sat,  7 Nov 2026 14:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063470;
-	bh=eaCwefF2LEbzB8VWleTI4wH4r+VbMhsSep1dIqfXf8g=;
+	s=korg; t=1794063471;
+	bh=cATlO+jhXsaT4ePY2ktaLugdpOPwp7jAGs8cE3E4a/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xkMIhIInoCnmy6ikT1kVUEPBYH9qhdaDZjVv87BQqv78iSHE3r8JuWShqQ6K/9n+C
-	 Bnx/EpscXqB2xLqvv01mkTcpDI6uiI+0oJzuIuWGq19ExFaiBuH7nWse5L+Eh3DxhQ
-	 Gfy/56uckcpvMmfgGxfV5if6OkquIgx8nvHP8QXs=
+	b=0N068VudZhSJop5KyvbfAPTNPMQ5zKTm6yhd+/xh10f7cKKhM82oKxbBK7Aexjs4j
+	 sBbEHHkmWu4SXcY/z+5px6DAxpwtLajYZOb6q0Ag9s2sfJkPQwlPC9/egZ1QqE9juv
+	 M8rdnK8Qw+XjusGuqc7Mkv6+Sp5T6f9qb0y/B360=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brandon Williams <turbine.bmw@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Matt Turner <mattst88@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 623/869] power: supply: qcom_battmgr: Notify charger supplies of online changes
-Date: Sat,  7 Nov 2026 08:55:05 -0500
-Message-ID: <20261107134914.134839794@linuxfoundation.org>
+Subject: [PATCH 6.18 624/869] alpha: handle VM_FAULT_HWPOISON in do_page_fault()
+Date: Sat,  7 Nov 2026 08:55:06 -0500
+Message-ID: <20261107134914.167745588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,80 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brandon Williams <turbine.bmw@gmail.com>
+From: Matt Turner <mattst88@gmail.com>
 
-[ Upstream commit 87fd20da8ca8bacdaa9bff5860167f208077dc51 ]
+[ Upstream commit 4bef20bbb9e02568a009efa4d404ce2621289be5 ]
 
-On SC8280XP and X1E80100 the AC, USB and wireless supplies take their
-online state from the charging source in the battery status response.
-The firmware sends no notification for those supplies when the charging
-source changes, and the driver only announces the battery, so userspace
-never learns that the charger was plugged in or out. UPower keeps the
-state it read at startup: a laptop booted on the charger never goes on
-battery.
+do_page_fault() handles VM_FAULT_OOM, VM_FAULT_SIGSEGV and
+VM_FAULT_SIGBUS and then falls into BUG() for anything else in
+VM_FAULT_ERROR. VM_FAULT_HWPOISON and VM_FAULT_HWPOISON_LARGE are in
+that set, so a fault on a poisoned page takes down the kernel instead of
+delivering a signal.
 
-Call power_supply_changed() for a supply whose online state changes when
-a status response is parsed. A supply that is not registered yet, when
-the battery is read during probe, reports its state when it registers.
+Alpha does not select ARCH_SUPPORTS_MEMORY_FAILURE, so the machine check
+paths cannot produce these. UFFDIO_POISON can: it installs a poison PTE
+marker without any memory failure support, and a subsequent access
+returns VM_FAULT_HWPOISON. Registering an anonymous range with
+userfaultfd, poisoning it and reading it back reliably hits the BUG():
 
-Tested on a Microsoft Surface Pro 11 (X1E80100): after restarting UPower
-on the charger, unplugging now sets OnBattery, and plugging in clears it.
+  Kernel bug at arch/alpha/mm/fault.c:188
+  poison(50809): Kernel Bug 1
+  pc is at do_page_fault+0x4e8/0x550
+  ra is at do_page_fault+0xfc/0x550
 
-Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Brandon Williams <turbine.bmw@gmail.com>
-Link: https://patch.msgid.link/20261013-upstream-battmgr-charger-online-v1-1-731973e133a0@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+The BUG() fires with mmap_read_lock() still held, so the faulting task
+is left unkillable in D state holding the lock, and shutdown stalls
+behind it. A UFFD_USER_MODE_ONLY userfaultfd is always allowed, so any
+local user can do this.
+
+Deliver SIGBUS with BUS_MCEERR_AR instead, reporting the size of the
+poisoned area, as the other architectures do. That is the huge page size
+for VM_FAULT_HWPOISON_LARGE, which becomes reachable once alpha
+implements huge pages.
+
+Tested on an UP1500 (EV68AL): the reproducer above now takes a SIGBUS
+and the kernel logs
+
+  poison[373]: hardware memory error at 0000020000030000 pc 00000200010007ec
+
+with no oops, no wedged task and no taint.
+
+A backport needs the show_signal_msg() call dropped, since alpha only
+has it since commit 9ca6af1aac40 ("alpha: select
+SYSCTL_EXCEPTION_TRACE").
+
+Fixes: fc71884a5f59 ("mm: userfaultfd: add new UFFDIO_POISON ioctl")
+Cc: stable@vger.kernel.org # 6.6+
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Link: https://lore.kernel.org/r/20261007-alpha-hugepages-v2-2-8e108af2d961@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_battmgr.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ arch/alpha/mm/fault.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index 7454ec0e99633..03ffaad3b53df 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -1258,6 +1258,23 @@ static unsigned int qcom_battmgr_sc8280xp_convert_temp(unsigned int temperature)
- 	return DIV_ROUND_CLOSEST(temperature, 10);
- }
+diff --git a/arch/alpha/mm/fault.c b/arch/alpha/mm/fault.c
+index a9816bbc9f34d..f40ac0826a854 100644
+--- a/arch/alpha/mm/fault.c
++++ b/arch/alpha/mm/fault.c
+@@ -8,6 +8,7 @@
+ #include <linux/sched/signal.h>
+ #include <linux/kernel.h>
+ #include <linux/mm.h>
++#include <linux/hugetlb.h>
+ #include <asm/io.h>
  
-+/*
-+ * The charger supplies' online state comes from the battery status response,
-+ * and the firmware sends no notification of its own when it changes, so
-+ * announce the change here. A supply that is not registered yet announces its
-+ * state when it is.
-+ */
-+static void qcom_battmgr_sc8280xp_set_online(struct power_supply *psy,
-+					     bool *online, bool value)
-+{
-+	if (*online == value)
-+		return;
-+
-+	*online = value;
-+	if (psy)
-+		power_supply_changed(psy);
-+}
-+
- static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
- 					   const struct qcom_battmgr_message *resp,
- 					   size_t len)
-@@ -1327,9 +1344,12 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
- 		battmgr->status.temperature = qcom_battmgr_sc8280xp_convert_temp(le32_to_cpu(resp->status.temperature));
+ #define __EXTERN_INLINE inline
+@@ -89,6 +90,7 @@ do_page_fault(unsigned long address, unsigned long mmcsr,
+ 	struct mm_struct *mm = current->mm;
+ 	const struct exception_table_entry *fixup;
+ 	int si_code = SEGV_MAPERR;
++	unsigned int lsb;
+ 	vm_fault_t fault;
+ 	unsigned int flags = FAULT_FLAG_DEFAULT;
  
- 		source = le32_to_cpu(resp->status.charging_source);
--		battmgr->ac.online = source == BATTMGR_CHARGING_SOURCE_AC;
--		battmgr->usb.online = source == BATTMGR_CHARGING_SOURCE_USB;
--		battmgr->wireless.online = source == BATTMGR_CHARGING_SOURCE_WIRELESS;
-+		qcom_battmgr_sc8280xp_set_online(battmgr->ac_psy, &battmgr->ac.online,
-+						 source == BATTMGR_CHARGING_SOURCE_AC);
-+		qcom_battmgr_sc8280xp_set_online(battmgr->usb_psy, &battmgr->usb.online,
-+						 source == BATTMGR_CHARGING_SOURCE_USB);
-+		qcom_battmgr_sc8280xp_set_online(battmgr->wls_psy, &battmgr->wireless.online,
-+						 source == BATTMGR_CHARGING_SOURCE_WIRELESS);
- 		if (battmgr->info.last_full_capacity != 0) {
- 			/*
- 			 * 100 * battmgr->status.capacity can overflow a 32bit
+@@ -161,6 +163,8 @@ do_page_fault(unsigned long address, unsigned long mmcsr,
+ 			goto bad_area;
+ 		else if (fault & VM_FAULT_SIGBUS)
+ 			goto do_sigbus;
++		else if (fault & (VM_FAULT_HWPOISON | VM_FAULT_HWPOISON_LARGE))
++			goto do_sigbus_mceerr;
+ 		BUG();
+ 	}
+ 
+@@ -222,6 +226,21 @@ do_page_fault(unsigned long address, unsigned long mmcsr,
+ 		goto no_context;
+ 	return;
+ 
++ do_sigbus_mceerr:
++	mmap_read_unlock(mm);
++	if (!user_mode(regs))
++		goto no_context;
++	/*
++	 * Report the size of the poisoned area, which for a hugetlb fault
++	 * is the size of the huge page that could not be mapped.
++	 */
++	lsb = PAGE_SHIFT;
++	if (fault & VM_FAULT_HWPOISON_LARGE)
++		lsb = hstate_index_to_shift(VM_FAULT_GET_HINDEX(fault));
++	show_signal_msg(regs, address, SIGBUS, "hardware memory error");
++	force_sig_mceerr(BUS_MCEERR_AR, (void __user *) address, lsb);
++	return;
++
+  do_sigsegv:
+ 	force_sig_fault(SIGSEGV, si_code, (void __user *) address);
+ 	return;
 -- 
 2.53.0
 
