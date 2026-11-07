@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064183;
-	b=vjCxBNnGYBDXl5ExiUM41PZuVH0HDPJXoPeDAdismFuMvnQf61AHGRKJh462JITxFQUy
-	 rRAxLluM6BdzYqUmtyWoMloVLrEmwN7LU/+bPf/aw/B+Thv1mOJw5LD+QDMEPRQGRh+e1
-	 7LqgghqpJfxt4yqEqds1z0M7ibWWds148MMHP7hEApX6BgPzNLWpGnhKcZAZmZOOUO2vI
-	 EtwNa9zBjiX4OEtO1yhv6+a040dOxZ+zcSWckXwxh8nuw6vtFUkLWif2zAGtXb3cIa8Gm
-	 fWQEffjj6xHE05tWf5aTFC/+dsVlfTs7ZBLALErFUfjp7Ns6skHev0XCRhHz7pp0D1Q==
+	t=1794064184;
+	b=qHREocyOIEOvCU6nkNNqNrc9C31evqQjuybgsjfNSA8JjG86RM1GHLFXgIVB7cs2weEr
+	 nCMpecMOXiRDCiwbVELxtOZkT5wa/3Yk6OXKhMnqztzC7w9Zkqtnfv+FRJZrqgvMEa30k
+	 Cc2y1ZSBiyA760mq+Q9iy/aU3PXjrMG6c2TH72uEyoaafOgocp4ZqrS+d9x3prPDsq5+7
+	 coN7iYMZ8YAONEA5dbHwkSEKQQa9dNE3Jb8eBVE/kU62HmLDFgNXtcAdTXRM84c3by88z
+	 JqRbGUTWd/KRFmQzJOrCqZ5lvvJHyECL14CWMGAfB6slp9/mNnFRcxaEEEYwGFBaqJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064183;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064184;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SrFEOm3nHrXbVgCnxWuXKbhNokPwqAZ+T2nJ9ewAAAU=;
-	b=1cFPwG2eW/LHeRQc/4PkAgZWvOrn4nXAH7ya1XnBzAtVD3rIdsddegcCvxvd12jGK8mS
-	 kdfpMAho6eCM7ms4xEFdC5Br2hPeiq3Aqq0IaSH3JBqfQOn9JMqMzY+PMwt7ecrx50ymc
-	 but0n/PFKQbT3rkheuxW5RzoZFratDIEmeCia3c2h41co7efclq9vU8jdjpUf3z1z06cc
-	 +FKLOAtP6kegSDfl6dONIAaT+8jL2YqR1YBw+OxjG9Nuy6Quiv3oibK/VvdYx8f5KTpAq
-	 0EOpGjMrVpFEqdGPzUZTloXzNrQWzjPvQUVUlqx38lOqhHarWgM2rVuONKKM1VAW4eA==
+	bh=skY7d+K2EqNEHU6r2YdGP1p/lqHXj7qkmRZrZ5WV9Ts=;
+	b=D9sv5Lnu8uvmDFNnFrxHOt7tyPnsQFU6VggCFNxzdTvwI+RupXk5T2VBTJcL7gN+SGAU
+	 j9shcpidFR0cPHfb2XY0xK5MMxv4EIdvISadZhXWYsCmkft1nXlq8MwL3vlRu4ZXFq+MU
+	 tYMZZrZQ3s5I++ZE5btOdPfc6/lKR3HQU+WEv+sFQUlosJMTMxgvi3fwiK4bqItvyCsEi
+	 g4Rvb3ZvTOGh7UVKqDZM3S46a2X44lmHeqgj/MLrlRmDpD0ssFYmlVBnhN8zhaxXZA8jq
+	 cEw7xukzdcD2Iv4GC1FPALAJKDbIffuX7jQAJ2++eiAhjXbEH/u7dq2l5JjoxBk3JkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IqaTIX89;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NMTKdz1n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9206606D809;
-	Sat,  7 Nov 2026 15:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BFA606D809;
+	Sat,  7 Nov 2026 15:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IqaTIX89
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9654A1F0089F;
-	Sat,  7 Nov 2026 15:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NMTKdz1n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32361F008A1;
+	Sat,  7 Nov 2026 15:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064182;
-	bh=SrFEOm3nHrXbVgCnxWuXKbhNokPwqAZ+T2nJ9ewAAAU=;
+	s=korg; t=1794064184;
+	bh=skY7d+K2EqNEHU6r2YdGP1p/lqHXj7qkmRZrZ5WV9Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IqaTIX89s3gmRiuhCIBi5bFeXLNO56SXIWpTcrqBuGrdkneuFh/FzPRJpDioSEPHq
-	 h/OpK4EVNQRckoS0pXsmr6dPBzuW7EP6VHZn03IYPOci7zkJdcgkvgvyUwXViw9KkQ
-	 J3RlC970O5ABFMuBZWly2g/xkW09uRXLTBM6ZbUk=
+	b=NMTKdz1n6C+QNMoWsyq2d3IsMmx/Zsghg/BZtVhxC/6YckAEDvHIFJQFZTtSVYPBQ
+	 gR1JEeszG41BwmaIz2+Ny/pFTz96jKYDCtwJmr/+F3koQa2xQcVhExlJfsd4C7z856
+	 tb5vruZq2Nz/EGdjOkHSooCEUT/IdhwCrMhAqkw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0325/1257] iommu/vt-d: Avoid out-of-range shift in qi_desc_dev_iotlb_pasid()
-Date: Sat,  7 Nov 2026 08:43:41 -0500
-Message-ID: <20261107134948.399577441@linuxfoundation.org>
+Subject: [PATCH 7.3 0326/1257] fuse: fix GCC 8 build with CONFIG_PROFILE_ALL_BRANCHES
+Date: Sat,  7 Nov 2026 08:43:42 -0500
+Message-ID: <20261107134948.427917576@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,113 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit ddea230c9fc28d1f2090ceeab3d66ce2bea658e9 ]
+[ Upstream commit 6e887377a63f670d79f3d8a107f29e745e9ddf43 ]
 
-Callers request a full Device-TLB flush by passing MAX_AGAW_PFN_WIDTH
-(64 - VTD_PAGE_SHIFT == 52) as @size_order.  Two expressions in
-qi_desc_dev_iotlb_pasid() are not prepared for a value that large:
+Commit 25307ca50b815 ("fuse: simplify logic in fuse_notify_store() and
+fuse_retrieve()") introduced a loff_t cursor and used it in place of
+outarg's offset field. In the min() expression this changed the second
+operand from unsigned to signed.
 
-  unsigned long mask = 1UL << (VTD_PAGE_SHIFT + size_order - 1);
-  ...
-  if (!IS_ALIGNED(addr, VTD_PAGE_SIZE << size_order))
+With CONFIG_PROFILE_ALL_BRANCHES, GCC 8 does not propagate the range
+established by the preceding MAX_LFS_FILESIZE check through the branch
+profiling code. Consequently, min() cannot prove that the signed operand
+is nonnegative and rejects the mixed-signedness comparison:
 
-The second evaluates to 1UL << 64, which is undefined on all
-architectures.  On x86_64 the shift count masks to zero, IS_ALIGNED(addr,
-1) is trivially true, and the alignment sanity check silently degrades
-into a no-op.
+  min(outarg.size, ((loff_t)((long long)(~0ULL >> 1))) - pos)
+  signedness error
 
-The first evaluates to 1UL << 63.  That is well defined on 64-bit builds,
-where unsigned long is 64 bits wide, but is undefined on 32-bit ones.  In
-practice x86 masks the shift count to five bits, so the expression yields
-1UL << 31 and ~mask becomes 0x7fffffff.  That value is zero-extended when
-applied to the 64-bit descriptor, so
+This happens with GCC 8.1 on x86-64 and GCC 8.5 on arm and s390.
+GCC 8.1 remains the minimum supported compiler.
 
-  desc->qw1 &= ~mask;
+Use umin(), which is intended for comparing an unsigned value with a
+signed value that is known to be nonnegative. The preceding bounds check
+guarantees that MAX_LFS_FILESIZE - pos is nonnegative, and outarg.size
+bounds the result to unsigned int.
 
-clears qw1[63:32] as well as bit 31, collapsing the ADDR field that had
-just been filled with ones.  Reaching that requires a scalable-mode PASID
-configuration on 32-bit x86, which is not a realistic deployment, but the
-construct is wrong regardless.
-
-Compute the mask with BIT_ULL() so that it is 64-bit on every
-architecture, and skip the alignment check for a full flush, where it is
-both meaningless and the source of the out-of-range shift.
-
-Note that @size_order must not be clamped below 64 - VTD_PAGE_SHIFT.  With
-S set, hardware derives the invalidation range from the least significant
-zero bit N of ADDR and matches bits [63:N+1] of the incoming address.  For
-size_order 52 the descriptor sets ADDR[63:12] and clears bit 63, making
-N = 63 and the comparison range empty, so everything is invalidated.
-Reducing @size_order to 51 would instead leave N = 62 and cause hardware
-to compare address bit 63; since callers pass an address of 0, only the
-lower half of the address space would be invalidated.  Bound @size_order
-at 64 - VTD_PAGE_SHIFT so that a bogus caller cannot reintroduce an
-out-of-range shift, without altering the full-flush encoding.
-
-The non-PASID variant qi_desc_dev_iotlb() already uses 1ULL and is
-unaffected.
-
-Fixes: f701c9f36bcb7 ("iommu/vt-d: Factor out invalidation descriptor composition")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260623060122.3796325-1-guanghuifeng%40linux.alibaba.com
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 25307ca50b815 ("fuse: simplify logic in fuse_notify_store() and fuse_retrieve()")
+Cc: stable@vger.kernel.org # v7.1
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.h | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ fs/fuse/notify.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index 23dbe6c24439f..5b3d234ae2659 100644
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -1105,12 +1105,20 @@ static inline void qi_desc_dev_iotlb_pasid(u16 sid, u16 pfsid, u32 pasid,
- 					   unsigned int size_order,
- 					   struct qi_desc *desc)
- {
--	unsigned long mask = 1UL << (VTD_PAGE_SHIFT + size_order - 1);
--
- 	desc->qw0 = QI_DEV_EIOTLB_PASID(pasid) | QI_DEV_EIOTLB_SID(sid) |
- 		QI_DEV_EIOTLB_QDEP(qdep) | QI_DEIOTLB_TYPE |
- 		QI_DEV_IOTLB_PFSID(pfsid);
+diff --git a/fs/fuse/notify.c b/fs/fuse/notify.c
+index 1ba763705d911..fff059f8ad859 100644
+--- a/fs/fuse/notify.c
++++ b/fs/fuse/notify.c
+@@ -155,7 +155,7 @@ static int fuse_notify_store(struct fuse_conn *fc, unsigned int size,
  
-+	/*
-+	 * The widest range the descriptor can express is a full flush, encoded
-+	 * by making bit 63 the least significant zero bit of ADDR, that is
-+	 * @size_order == 64 - VTD_PAGE_SHIFT.  Bound @size_order there so that
-+	 * a caller passing something larger cannot produce an out-of-range
-+	 * shift below.
-+	 */
-+	if (size_order > 64 - VTD_PAGE_SHIFT)
-+		size_order = 64 - VTD_PAGE_SHIFT;
-+
- 	/*
- 	 * If S bit is 0, we only flush a single page. If S bit is set,
- 	 * The least significant zero bit indicates the invalidation address
-@@ -1120,7 +1128,8 @@ static inline void qi_desc_dev_iotlb_pasid(u16 sid, u16 pfsid, u32 pasid,
- 	 * Max Invs Pending (MIP) is set to 0 for now until we have DIT in
- 	 * ECAP.
- 	 */
--	if (!IS_ALIGNED(addr, VTD_PAGE_SIZE << size_order))
-+	if (size_order < 64 - VTD_PAGE_SHIFT &&
-+	    !IS_ALIGNED(addr, BIT_ULL(VTD_PAGE_SHIFT + size_order)))
- 		pr_warn_ratelimited("Invalidate non-aligned address %llx, order %d\n",
- 				    addr, size_order);
+ 	nodeid = outarg.nodeid;
+ 	pos = outarg.offset;
+-	num = min(outarg.size, MAX_LFS_FILESIZE - pos);
++	num = umin(outarg.size, MAX_LFS_FILESIZE - pos);
  
-@@ -1136,7 +1145,7 @@ static inline void qi_desc_dev_iotlb_pasid(u16 sid, u16 pfsid, u32 pasid,
- 		desc->qw1 |= GENMASK_ULL(size_order + VTD_PAGE_SHIFT - 1,
- 					VTD_PAGE_SHIFT);
- 		/* Clear size_order bit to indicate size */
--		desc->qw1 &= ~mask;
-+		desc->qw1 &= ~BIT_ULL(VTD_PAGE_SHIFT + size_order - 1);
- 		/* Set the S bit to indicate flushing more than 1 page */
- 		desc->qw1 |= QI_DEV_EIOTLB_SIZE;
- 	}
+ 	down_read(&fc->killsb);
+ 
 -- 
 2.53.0
 
