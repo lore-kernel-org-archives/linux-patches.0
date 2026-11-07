@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062530;
-	b=OYTxf4jrSXHnSm6KhGhCV8JmYM+PqQrGwjG5UI/AhJzwf0CwGYwKRUBocxXQh+tB9ewZ
-	 22syHgGN0sLE5Zop9YX2iq5RT/vMjV6HDtz/g3vxfDexmJPKseUJ79IjMWbI0Z+35lPOx
-	 iygDFo82P9sbZpOxhzjOun2YH5Q/zi03Oyh4kTfYouOKc2SH7p4dDoRnKQJcfAH4wNIHO
-	 tv9rsBI1jPTgCH0M8H/mkDS3Y9DgP29ZvSMUmTeKopyFchOfMdJ6LCh5sVosa6wLGEUQJ
-	 +nreyM4PjpSCPLiHgxbO+ZTtjKCDCUtpTWZ0lMXDxCgdjj8H8DB/K9+NyOc+IMbj7sA==
+	t=1794062532;
+	b=fFi4cDM+MqXPdhommAS7C+i0TnFMQbu2Y9227ODViETxpMi8wMbFwUYeLOY1QuGzU4bF
+	 Me7MS1r97RjzK85evzCDg7uoXagJ6Mt9043jLdp6WaBiAl/bVpufwix1OHtx51K9j4uJN
+	 c18YOVvYZWru7wzhpaMc6VJbDHc7GGmNOAeQ0jMg4G/W3z63jriCSQPgdsrOc1fDnp4Qo
+	 duKb6A9M9LqvHcQCuWJWdsANxu/dQ20hQzu6Jlwfg/A6bBEv/BnZ62sz1qlsGnfGLF+Ik
+	 JsbzPc6smSJfclw5zddy7F3UJIyw9wLtbke+kGo8d+hrqoF9Y7psCMQSaGP2ekqGncg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Tmzxk5LBpr2JqfsYb+TvLSPlDi0NDSCVPbOENCf4PFI=;
-	b=IsjsswIwfh6hf3DkkrxmAZaEd3fmd5crtaZN9+6tkndcsOiAaJJktyGhLqsQqeSWvoeB
-	 XKwRrw1trdzm1rchcY2SHTPxUFn3NIoUNXGZpqrWPv2DAHAYtY+VWAx18qGjBJkEgeyid
-	 1oUNM+4c2V2u66vUIknxI6z/WvuOBCG1j/eenr3qr5aRQH7g+qbpalR8ZFgG0VXxnPZ1c
-	 odTZx31U3ZiFoVUG7srMfpCvHG++vUG82AsGkil3PQGfPoFV8Lnf2trx35tzO7QFyfDf2
-	 RPcyBoV/+wWjF+8au9mUwH45ORU5B8mPGhRFmw06/1gHqoMilhux7QL3ohL/KCC27VA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=QJDq+MRm+7cJiLQL3faA0fDo9GSKb4ee1DPsxFKR+ns=;
+	b=HQ3oT7ib8a+BkBGePKAKThq/NSa81gIBbTBqZAocHE+NVE/8uSozTW6IVpurvxqLpL3T
+	 wvxk3e/7co2SrR95FHnUWjYE8xMnJrPlXdH/eV40HRtXlf8BcB3qUC5lYFMpKSkiomPKJ
+	 pAHrS9ES12uas08Mfl9Jo5G2RUNxOFiemyCFmmq/mXawcF3wEioFUPKq0SKHL+wX0LcB6
+	 84jx/EAhnQyZyEtbNpX9Z/u9q3eQOpajXn1pu1R3U3lu6zlDVTirI5cbiKfMka6mFAqPs
+	 381k+cm8ru+wdpbYNvT7oCU2f0CTrU0sHaTYXOcYJGLH9/aMqbpfl7jCb2NbXMjhd+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AE9XJPqT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hKYtEZJm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92564606D80F;
-	Sat,  7 Nov 2026 14:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7AB606D80A;
+	Sat,  7 Nov 2026 14:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AE9XJPqT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBDA1F008A2;
-	Sat,  7 Nov 2026 14:42:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hKYtEZJm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F7F1F008A1;
+	Sat,  7 Nov 2026 14:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062530;
-	bh=Tmzxk5LBpr2JqfsYb+TvLSPlDi0NDSCVPbOENCf4PFI=;
+	s=korg; t=1794062531;
+	bh=QJDq+MRm+7cJiLQL3faA0fDo9GSKb4ee1DPsxFKR+ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AE9XJPqT7V1gX3O+okIi2R7HbTIRvVceh2QPfbYBSaPl65v6Q8G0hEUhybMv/PhXF
-	 8hkKzV8+7YnqKgxEyzMh43Vy/GiGWQafKGusIYd41/9mDfOCa+itcrJ0sc9KUG6EK8
-	 v5lpGOwanmzpNMfWo1wiMOzKkoEvi5WEqasxwt18=
+	b=hKYtEZJmXYpU8Ql2y2x0hSxJuHSTS9JSKGc9QnW45bDURk8F2HGOPPa7y6pyAyo24
+	 28YYpg+FdDpo2Z1f6jnra7AL9BswLCo++2ezv4Tz94hxcmqfIbldClBbgMjqSj8mUp
+	 XSrSTJf2ZOj3+pEJ+6J2RbBFr70+W0j9CC2/IpaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delu <jeandelu@tutamail.com>,
-	Helge Deller <deller@gmx.de>,
+	Alex Kazinsky <a.kazinsky@ideco.ru>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1422/1536] parisc: eisa_enumerator: Fix out-of-bounds reads of the EEPROM buffer
-Date: Sat,  7 Nov 2026 08:57:18 -0500
-Message-ID: <20261107135037.767892793@linuxfoundation.org>
+Subject: [PATCH 6.12 1423/1536] ASoC: tlv320aic32x4: Prevent division by zero in divider callbacks
+Date: Sat,  7 Nov 2026 08:57:19 -0500
+Message-ID: <20261107135037.796345110@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,90 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jean Delu <jeandelu@tutamail.com>
+From: Alex Kazinsky <a.kazinsky@ideco.ru>
 
-[ Upstream commit c0a3e153804f0c14f4159ddbd2b73483c9cb3577 ]
+[ Upstream commit 8cf9607d2d855629260fc78e6b54ea7a98525708 ]
 
-eisa_enumerator() trusts the contents of the EISA EEPROM.  The number
-of slots is read from the EEPROM header and used to access the slot
-records at HPEE_SLOT_INFO(i) = 20 + 48*i within the fixed-size
-eeprom_buf (HPEE_MAX_LENGTH, 8192 bytes) without any bound check.  As
-struct eeprom_eisa_slot_info is 48 bytes, only 170 records fit into the
-buffer, but num_slots is a u8 and may be up to 255, so a corrupted
-EEPROM makes the code read up to about 4 kB past the end of the buffer
-(e.g. record 254 is accessed at offset 20 + 48*254 = 12212).
+A zero rate requested through clk_set_rate() or clk_round_rate() reaches
+clk_aic32x4_div_determine_rate() when the minimum rate is zero. Clamping
+the requested rate to the allowed range leaves it unchanged, causing
+division by zero when calculating the divisor.
 
-parse_slot_config() has the same kind of problem: it clamps
-config_data_length against HPEE_MAX_LENGTH but does not take
-config_data_offset into account, so the parser can walk past the end of
-the buffer even when the offset itself is valid.
+A zero parent rate can also cause division by zero in determine_rate().
+For example, if reading a parent divider's register fails,
+clk_aic32x4_div_recalc_rate() returns zero, which the clock framework
+caches as the parent's rate. A subsequent rate request for a child
+divider receives this value in best_parent_rate. With a nonzero requested
+rate, the calculated divisor is zero. It passes the existing upper-bound
+check and causes division by zero in the resulting rate calculation.
 
-Clamp the number of slots so that all slot records fit into the buffer,
-and hand the number of bytes actually available to parse_slot_config()
-and bound the parse by it.
+The set_rate callback can receive a zero rate when an ancestor's rate
+changes. clk_calc_subtree() calculates descendant rates through
+recalc_rate() without calling their determine_rate callbacks. If reading
+a descendant divider's register fails, clk_aic32x4_div_recalc_rate()
+returns zero. This becomes the descendant's new_rate, which
+clk_change_rate() passes to clk_aic32x4_div_set_rate(), causing division
+by zero.
 
-Signed-off-by: Jean Delu <jeandelu@tutamail.com>
+Reject zero rates in both callbacks and reject a zero divisor in
+clk_aic32x4_div_determine_rate().
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a51b50062091 ("ASoC: tlv320aic32x4: Model DAC/ADC dividers in CCF")
 Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Alex Kazinsky <a.kazinsky@ideco.ru>
+Link: https://patch.msgid.link/20261023130854.93639-1-a.kazinsky@ideco.ru
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parisc/eisa_enumerator.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ sound/soc/codecs/tlv320aic32x4-clk.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/parisc/eisa_enumerator.c b/drivers/parisc/eisa_enumerator.c
-index f0cb31198a8f0..aa41d3abc6c22 100644
---- a/drivers/parisc/eisa_enumerator.c
-+++ b/drivers/parisc/eisa_enumerator.c
-@@ -311,6 +311,7 @@ static int configure_function(const unsigned char *buf, int *more)
+diff --git a/sound/soc/codecs/tlv320aic32x4-clk.c b/sound/soc/codecs/tlv320aic32x4-clk.c
+index 5c0a76a4a106b..1a815de909097 100644
+--- a/sound/soc/codecs/tlv320aic32x4-clk.c
++++ b/sound/soc/codecs/tlv320aic32x4-clk.c
+@@ -320,6 +320,9 @@ static int clk_aic32x4_div_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	struct clk_aic32x4 *div = to_clk_aic32x4(hw);
+ 	u8 divisor;
  
- static int parse_slot_config(int slot,
- 			     const unsigned char *buf,
-+			     unsigned int buflen,
- 			     struct eeprom_eisa_slot_info *es, 
- 			     struct resource *io_parent,
- 			     struct resource *mem_parent)
-@@ -333,8 +334,8 @@ static int parse_slot_config(int slot,
- 	printk(KERN_INFO "EISA slot %d: %s %s ", 
- 	       slot, board, es->flags&HPEE_FLAG_BOARD_IS_ISA ? "ISA" : "EISA");
- 	
--	maxlen = es->config_data_length < HPEE_MAX_LENGTH ?
--			 es->config_data_length : HPEE_MAX_LENGTH;
-+	/* never parse beyond the data that is actually in the buffer */
-+	maxlen = min_t(unsigned int, es->config_data_length, buflen);
- 	while ((pos < maxlen) && (num_func <= es->num_functions)) {
- 		pos+=configure_function(buf+pos, &function_len); 
- 		
-@@ -491,6 +492,13 @@ int eisa_enumerator(unsigned long eeprom_addr,
- 	printk(KERN_INFO "Enumerating EISA bus\n");
- 		    	
- 	eh = (struct eeprom_header*)(eeprom_buf);
-+	/*
-+	 * The EEPROM contents are not to be trusted: clamp the number of
-+	 * slots so that all slot records fit into eeprom_buf.
-+	 */
-+	eh->num_slots = min_t(u8, eh->num_slots,
-+				(HPEE_MAX_LENGTH - sizeof(*eh)) /
-+				sizeof(struct eeprom_eisa_slot_info));
- 	for (i=0;i<eh->num_slots;i++) {
- 		struct eeprom_eisa_slot_info *es;
- 		
-@@ -503,7 +511,8 @@ int eisa_enumerator(unsigned long eeprom_addr,
- 		
- 		if (es->config_data_offset < HPEE_MAX_LENGTH) {
- 			if (parse_slot_config(i+1, &eeprom_buf[es->config_data_offset],
--					      es, io_parent, mem_parent)) {
-+						HPEE_MAX_LENGTH - es->config_data_offset,
-+						es, io_parent, mem_parent)) {
- 				return -1;
- 			}
- 		} else {
++	if (!rate)
++		return -EINVAL;
++
+ 	divisor = DIV_ROUND_UP(parent_rate, rate);
+ 	if (divisor > AIC32X4_DIV_MAX)
+ 		return -EINVAL;
+@@ -333,8 +336,11 @@ static int clk_aic32x4_div_determine_rate(struct clk_hw *hw,
+ {
+ 	unsigned long divisor;
+ 
++	if (!req->rate)
++		return -EINVAL;
++
+ 	divisor = DIV_ROUND_UP(req->best_parent_rate, req->rate);
+-	if (divisor > AIC32X4_DIV_MAX)
++	if (!divisor || divisor > AIC32X4_DIV_MAX)
+ 		return -EINVAL;
+ 
+ 	req->rate = DIV_ROUND_UP(req->best_parent_rate, divisor);
 -- 
 2.53.0
 
