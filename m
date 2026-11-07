@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062994;
-	b=A9BO00nx5qPi2EOAeMJQqKmBzWnRnauRxHK1BrM+ATLGEEHg73rHyKBTwli8M56IWO8B
-	 7mnyylkf6q0B+O1pb2C9NCmBGXOTAwRFzv5FGsG9D3twkZNtHX3VsgK+fOOiWnDydYQG5
-	 izl/by0sHvmV0KQTqgSekIcATRd8DxxGKh4f5xMHvk7WCUDdcvR7eyNTh8aoIOmrW7R3N
-	 85b2WVmm/Hb+3mEXyVgCr9DuzBznJsuPEEUbemDXYqz9Wee2FeQLZFzf7WNEdX+FfpF+O
-	 KfxKBeOb/pKfPyd0Ap2dwgq7HAPNCJOQBqkGKb0Y/AQqRsMHUDmwZjW8G31ZWp4dQDQ==
+	t=1794062995;
+	b=AngldJ7Y+AYYLjbRy2yL4oQGBZiryn63SkjB9Q63x5so/tYcW3JI2/WB0g0UlqB5UjOM
+	 mH3uBGhKgMBy+gk/Vlu1KGY7ahFVJTvVQNHk1l75JJuBwmy7Cr+3t4DwE1OsEZMbL+ok7
+	 Zmoh06Ve9cuC2XBnUWEP9NlI2MIeto/kH1PSD9mncJAz1pDYb+R896AWBw6mhX4oiRzkC
+	 g0Do9O9lIhILK2fXlzoZLwKmCIyb78WSvrUIOGW5ppNwgfBtZwj6Q5PcCG2c+ld4KfuPF
+	 MQseX21toTdM3zffuK+ZQDcktS6CK9178mWhc/sPqR2rQBwxOb13686yNhLIMbc9A4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ltdTr0v0X2YZOFdPY6bqsqCBc05ouVBmdkNqPGu43fw=;
-	b=XgNb1TVxAIbrU+3r8Q3YlD7ReQJuP9c4waahZkbJW4scm10CfqMKK8dAzyZK3Iu/A4pw
-	 R6ak9OGdJGpkJEaQIlaV98Zhi42FPnL6OdGDYcMaO09u5gmkzmZ8VbamviTIN9hFGAsBE
-	 x0Iuf/vN//yycPUePRnmJuAH5xT8I6vn/TE27OfwZBrKaQwgyfljj7ROpaPSuSqv9bQgF
-	 58LyFFXGQn633AGj8Qr0v5hjfIcvLhJbsSKYgurK+qRURjl8Kj7KNSaCM0TKhNYKh83wC
-	 P3VXXTjy9HJtx2GLfkWDLS1TMu3iNFYE+MXAQk2Fns1D9heIoqw4PMLCbuAgr3P0qPg==
+	bh=8WzLQH7SEEWWQf4UeRxlyPkw3M5NV+dYeEvQJ0YhCdI=;
+	b=ts5NmTkkgTywT15BuVeMnYJajIke3HThkVRNzhvl+a6x2dqPZNb0QlgVYmqotsVM0F7H
+	 fYlJsX4KA9ygixqpt4PyMK70y/kt70vqhg+lRoXv9plBXouFji7GVWqjpwpBQrW68wNCZ
+	 6YPaq6/OhUGqplFP3WF+ve7jEQq9Bve5pgJrs4S8Uxlmy3vmlN2lOe3SU1rpR82aQ0ftk
+	 xYORTy+dz0qworUa3SrNHIzC4pYX4QVtB0sPbJcAkY4hSkCXamw6ZWrYWQTKzNs6cETeD
+	 a7EBUOWr0OvYMFJsR5EvwMTyll/PzgM7+MvcaTnIf5mBZs6c5ExHs6i/b+GUYEpzo5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wLPmtleW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OU7x+kx6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB484606A330;
-	Sat,  7 Nov 2026 14:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51231606A330;
+	Sat,  7 Nov 2026 14:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wLPmtleW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D351F0089F;
-	Sat,  7 Nov 2026 14:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OU7x+kx6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8981F008A1;
+	Sat,  7 Nov 2026 14:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062993;
-	bh=ltdTr0v0X2YZOFdPY6bqsqCBc05ouVBmdkNqPGu43fw=;
+	s=korg; t=1794062994;
+	bh=8WzLQH7SEEWWQf4UeRxlyPkw3M5NV+dYeEvQJ0YhCdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wLPmtleW7ZO/q/Nm5wjrPXy85KgDxrWERZcnF+edp8FExDn+48Hzlu4YqjZZti31T
-	 QbUxojCWw0uQEdcCcfDDMwJbJeykeVlLcea+i0iwUmfUY3NDUgXCF5H2mSMdSlqKOo
-	 kRV9ItrzB2oNxeVH/ABn+tTpScU6pgvrVraW0/oo=
+	b=OU7x+kx6s7Q+cw+sRL2lr/dDTNfBmil64d0EKj2EoEEguPNEd6SznrzX0MyL81jKK
+	 0IkYk9X5lXKT0OAHFRJY62523VTwx0Y2yQetV+3UFmC2tEmYO8N/vij3MIQhN/muvY
+	 JxnlfQgbu0Qu502y45EATKmqzMgBeHz9XTHq/s4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Richard Weinberger <richard@nod.at>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 250/869] mtd: mtdsuper: Fix MTD device reference leak in mtd_get_sb()
-Date: Sat,  7 Nov 2026 08:48:52 -0500
-Message-ID: <20261107134900.243204936@linuxfoundation.org>
+Subject: [PATCH 6.18 251/869] mtd: Call get_wunit() on the master partition
+Date: Sat,  7 Nov 2026 08:48:53 -0500
+Message-ID: <20261107134900.314098083@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,44 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Richard Weinberger <richard@nod.at>
 
-[ Upstream commit 62ee3da38f41bef83c1cf250f6816a0ee187674b ]
+[ Upstream commit 904f18430e8cce829cb9130eab7a93020e33fc89 ]
 
-mtd_get_sb() is called with a reference to the MTD device already
-taken by the caller.  When sget_dev() fails, the function returns the
-error without dropping that reference, so the device is never released
-and its refcount never reaches zero.  Every mount attempt on an MTD
-device whose superblock cannot be set up leaks a reference.
+The code checks whether master has get_wunit() but still calls
+it on the child. Fix this.
 
-Restore the put_mtd_device() that the fs_context conversion dropped on
-this path.
-
-Fixes: 0f071004109d ("mtd: Provide fs_context-aware mount_mtd() replacement")
+Fixes: 46b5889cc2c5 ("mtd: implement proper partition handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdsuper.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mtd/mtdcore.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/mtdsuper.c b/drivers/mtd/mtdsuper.c
-index b7e3763c47f0c..22ddeaa7d5221 100644
---- a/drivers/mtd/mtdsuper.c
-+++ b/drivers/mtd/mtdsuper.c
-@@ -31,8 +31,10 @@ static int mtd_get_sb(struct fs_context *fc,
- 	int ret;
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index 51c8ed4893480..f84e4213b6788 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -562,7 +562,7 @@ int mtd_pairing_info_to_wunit(struct mtd_info *mtd,
+ 		return -EINVAL;
  
- 	sb = sget_dev(fc, MKDEV(MTD_BLOCK_MAJOR, mtd->index));
--	if (IS_ERR(sb))
-+	if (IS_ERR(sb)) {
-+		put_mtd_device(mtd);
- 		return PTR_ERR(sb);
-+	}
+ 	if (master->pairing && master->pairing->get_wunit)
+-		return mtd->pairing->get_wunit(master, info);
++		return master->pairing->get_wunit(master, info);
  
- 	if (sb->s_root) {
- 		/* new mountpoint for an already mounted superblock */
+ 	return info->pair;
+ }
 -- 
 2.53.0
 
