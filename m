@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064091;
-	b=grTpFinyi+hlHhjgZdbIoqD8sPzYjZOllRgzfcLXRxq47gZf6iJ73ANMeMhWlrq8Ri+b
-	 G9zpFPlgDggO47LclJKpjUcE1CGKUU1Goy0Wf1Xw+6BzAuj23JJuIGfJYkXYsf3DHvp3+
-	 sKlzt1RUjzR1m1a9XEvKPv9c0WdB1bCvZE5mT6EgSBqjdvZ5sVgK2i4rpuersn6r7Vt9W
-	 TSMTfBcHSUXS8x9DPfL2XUzBv3mx62pDwrdWIdp7Kz0NuDxajPUpssKeKd/C1CgEelLSw
-	 kyLxNlG5+K9vDDNlPcx3ryG1o66xF7r7emPWYEvYAZWAtbIrw1NBcVOC5rCEUy84UYA==
+	t=1794064093;
+	b=XqMVCqhqO8knXk6J/Y80K5zRKZwdOoHpHljNuPduLD+OtTPJx8v2XUzYJwDZnz8Bqy4v
+	 i6+oJRSMbzRvPsFBtzSvsEk1jbhNs7ppw2rJTA6HDIzuxUku6iJvy/3zEqit+hflwVXp8
+	 iomn24m1QD56ury1MWGBo02r6iymkSYvtDkAF9dfgxTIUzl0gST5K62Z3HGPBbwgyYHQY
+	 L05g6/4W26HGGn8RoJybxJuLBdaDlMNE1U4bMa7L2C2PO++exXujIFdG1sL3YjD20fFzH
+	 aVQ4q6GFmggJ7YeL39U3Dh7Ject8ldOjeuaz8iHQCT01b16B3zhA3OAWIDVDPr2T1Zg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064091;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064093;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Us3Zp/O7p7PVB/MVUep017+ego2wI3ltuwnJtmPc3f8=;
-	b=JuJAy0pbn0WhKfywJiYaJOX+RZgZLYcW8BwapPMzjJUdu63uPXw43PDlmikCSmSOWX3K
-	 4hNJYMDLaZ3ldtpwtnALqjq/T2OphkUOqO/NpQKzl6o1VJ3foprVE1nH1qZvE89m8dxB6
-	 lGMauFVyf/Kvi2At/WtSCV77w2/RMKVl4lJp+ep3yiZqGpcyeTz95YQoPVUh0hCbqoMPD
-	 Ui7JH6Pok87RD0YkUDSkfcScVBdIZ8QzbqljBqSUKpUuBfZhgxJce3ezxHU7y3HubyBuB
-	 pkZw/7gs9Dr7mGukSJU0ER6Arj/Dy858i8ziou3UIBl4vDvdFm/djfpFhknGtgcFU/g==
+	bh=nbuPDMAR3vM5CJClZbHk771lI03CCDaN+f0Efhfr824=;
+	b=Q52PSKId2SqwfMTPvu4FKlHt01J6hh/UyRmgsvRQxJ5ReSQ7GDzwRTMbfgqjbHxtP+IN
+	 N8DGpTHpyQQt4VvsZvUdkkYhwHMMCtgTC47fGjaUdHzdfl/9J3xyPYFYstTIcmCztc8+g
+	 uD43FdkkH2YnKPoS9t0HlwnUOVd4cIeNNEWoYDoqvEvSiKtVAlghIqI7FJl3LvHYK6fmJ
+	 1BnIzOJFHkNLfBe8P7jn4r7ZwIp4B/yEaHGhBR8ngYud7uN4isoBYjQ4sgadRL4HRMnO+
+	 WkY3S61d6NMoh6XNOmIrF1LNAlTytPyGZrc6xZqvI6vTpZvhBe+KSfxQ5QGVcKahWQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/C6uR5V";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2XteIYg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6D4606A9EE;
-	Sat,  7 Nov 2026 15:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214EF606A9EE;
+	Sat,  7 Nov 2026 15:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/C6uR5V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB9E1F0089F;
-	Sat,  7 Nov 2026 15:08:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2XteIYg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9901F0089F;
+	Sat,  7 Nov 2026 15:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064090;
-	bh=Us3Zp/O7p7PVB/MVUep017+ego2wI3ltuwnJtmPc3f8=;
+	s=korg; t=1794064093;
+	bh=nbuPDMAR3vM5CJClZbHk771lI03CCDaN+f0Efhfr824=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a/C6uR5VxhZWU3vterWdcYzs0j1Zo48lwalqnLY5C4lkUG/LDpJTH8ICOqyImFsct
-	 xEGGHUkZQv0eheT9aW76nhR78T01PIeVCnt9mYhdVNHJVEPvRLhr8t/H+uiSuOJzlE
-	 3bugTN0Q/gXE0/qfHV0ROruICiyoBQMySgaol1CQ=
+	b=F2XteIYg5LTyFH3XCX7TBzTmyq1hnZRzPBbp9JWCD/Ri+2BfdkqYNfTHVTSDac/p8
+	 hbbnD4aOg8xHmfgoQaif/og8vGgvcE0jS/a6r+eFcp5T00J/i+cGS+cMfJyhmv32yO
+	 /jBn88Oev/VG5CDdH7td5xRwqMLX+0WYNo51N2pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Tsz Shan Chan <tchan@jacques.com.au>,
+	Subhajit Ghosh <subhajit.ghosh@tweaklogic.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0215/1257] iio: imu: inv_icm42600: force accel odr change when switching power mode
-Date: Sat,  7 Nov 2026 08:41:51 -0500
-Message-ID: <20261107134945.477190585@linuxfoundation.org>
+Subject: [PATCH 7.3 0216/1257] iio: light: apds9306: fix default sampling frequency definition
+Date: Sat,  7 Nov 2026 08:41:52 -0500
+Message-ID: <20261107134945.503001123@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,104 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Tsz Shan Chan <tsz.chan.dev@gmail.com>
 
-[ Upstream commit d52047d84963e5cf7c8ad502e0adf003fb0669de ]
+[ Upstream commit a1c005f6336aa41f23552e66ea1b98b9ee493a86 ]
 
-When accel must switch from low-power mode to low-noise due to a change in
-ODR, there is an hardware bug that sometimes prevent the ODR change flag
-to be set in the FIFO header. If this happens, the driver is stuck waiting
-for the ODR change flag that is never happening.
+APDS9306_SAMP_FREQ_10HZ is defined as 0.
 
-Fix this by using accel_force_odr flag set when switching mode for forcing
-apply of ODR change. Do the apply after parsing FIFO data to let the flag
-do the job if it is here.
+According to the datasheet (Broadcom AV02-4755EN, page 11,
+ALS_MEAS_RATE), bits[2:0] set the measurement rate:
+- 000: 25ms  (40Hz)
+- 001: 20ms  (20Hz)
+- 010: 100ms (10Hz)
 
-Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
+Change APDS9306_SAMP_FREQ_10HZ from 0 to 2 to write the correct value
+for 10Hz.
+
+Datasheet: https://docs.broadcom.com/doc/AV02-4755EN
+Fixes: 620d1e6c7a3f ("iio: light: Add support for APDS9306 Light Sensor")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Tsz Shan Chan <tchan@jacques.com.au>
+Acked-by: Subhajit Ghosh <subhajit.ghosh@tweaklogic.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600.h        | 1 +
- drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c  | 9 ++++++++-
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c | 2 ++
- drivers/iio/imu/inv_icm42600/inv_icm42600_core.c   | 9 +++++++++
- 4 files changed, 20 insertions(+), 1 deletion(-)
+ drivers/iio/light/apds9306.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/imu/inv_icm42600/inv_icm42600.h b/drivers/iio/imu/inv_icm42600/inv_icm42600.h
-index b55d993f02643..15fc8395da527 100644
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600.h
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600.h
-@@ -179,6 +179,7 @@ struct inv_icm42600_state {
- 	struct {
- 		s64 gyro;
- 		s64 accel;
-+		bool accel_force_odr;
- 	} timestamp;
- 	struct inv_icm42600_apex apex;
- 	struct inv_icm42600_fifo fifo;
-diff --git a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-index b2ad1bd202b4f..aea9bbc188da2 100644
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_accel.c
-@@ -1228,9 +1228,11 @@ int inv_icm42600_accel_parse_fifo(struct iio_dev *indio_dev)
- 			return size;
+diff --git a/drivers/iio/light/apds9306.c b/drivers/iio/light/apds9306.c
+index f681b02e49225..7dd41136734f5 100644
+--- a/drivers/iio/light/apds9306.c
++++ b/drivers/iio/light/apds9306.c
+@@ -61,7 +61,7 @@
+ #define APDS9306_NUM_REPEAT_RATES	7
+ #define APDS9306_INT_SRC_CLEAR	0
+ #define APDS9306_INT_SRC_ALS	1
+-#define APDS9306_SAMP_FREQ_10HZ	0
++#define APDS9306_SAMP_FREQ_10HZ	2
  
- 		/* update odr */
--		if (odr & INV_ICM42600_SENSOR_ACCEL)
-+		if (odr & INV_ICM42600_SENSOR_ACCEL) {
- 			inv_sensors_timestamp_apply_odr(ts, st->fifo.period,
- 							st->fifo.nb.total, no);
-+			st->timestamp.accel_force_odr = false;
-+		}
- 
- 		/* skip packet if no accel data or data is invalid */
- 		if (accel == NULL || !inv_icm42600_fifo_is_data_valid(accel))
-@@ -1243,5 +1245,10 @@ int inv_icm42600_accel_parse_fifo(struct iio_dev *indio_dev)
- 		iio_push_to_buffers_with_timestamp(indio_dev, &buffer, ts_val);
- 	}
- 
-+	if (st->timestamp.accel_force_odr) {
-+		inv_sensors_timestamp_apply_odr(ts, 0, 0, 0);
-+		st->timestamp.accel_force_odr = false;
-+	}
-+
- 	return 0;
- }
-diff --git a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-index 998d312f7bde3..c871981d2dadd 100644
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -399,6 +399,8 @@ static int inv_icm42600_buffer_postdisable(struct iio_dev *indio_dev)
- 	mutex_lock(&st->lock);
- 
- 	inv_sensors_timestamp_apply_odr(ts, 0, 0, 0);
-+	if (sensor == INV_ICM42600_SENSOR_ACCEL)
-+		st->timestamp.accel_force_odr = false;
- 
- 	ret = inv_icm42600_buffer_set_fifo_en(st, st->fifo.en & ~sensor);
- 	if (ret)
-diff --git a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-index dc97d8a274e36..e28f012e62b1a 100644
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-@@ -324,6 +324,15 @@ int inv_icm42600_set_accel_conf(struct inv_icm42600_state *st,
- 		break;
- 	}
- 
-+	/*
-+	 * If we change mode from low-power to low-noise because of odr,
-+	 * we need to force odr change.
-+	 */
-+	if (oldconf->mode == INV_ICM42600_SENSOR_MODE_LOW_POWER &&
-+	    conf->mode == INV_ICM42600_SENSOR_MODE_LOW_NOISE &&
-+	    conf->odr != oldconf->odr)
-+		st->timestamp.accel_force_odr = true;
-+
- 	/* set ACCEL_CONFIG0 register (accel fullscale & odr) */
- 	if (conf->fs != oldconf->fs || conf->odr != oldconf->odr) {
- 		val = INV_ICM42600_ACCEL_CONFIG0_FS(conf->fs) |
+ /**
+  * struct part_id_gts_multiplier - Part no. and corresponding gts multiplier
 -- 
 2.53.0
 
