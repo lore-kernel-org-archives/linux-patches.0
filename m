@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062126;
-	b=OI3imrKHP9IuRNGjA7f94ZxHVrPWzbjkcpAqcBMWyiVGBPMoIU/sa0zWb5lTovGNnwRO
-	 LNI0mTYisIhfpvoqH/x4VP9oXLGvSkr43USymRpllO24K+AGoSMdRxv33tJwkRWR2qdAy
-	 F5hZGQ6+mQiIgA4WaBSs/RPp23kosjFudBsfkfTv1mKZ+LdEGedeIlCtv1+FDy9w+7mRn
-	 Ya3XgWV/ehRe6Rg908dx79Pell8Y7Y2/9UL7AUFlVtdK446iHSubKgGLAfU+5fXG/eLEd
-	 B+ykI6oNY5/YNv/nl/vCwdNVNvFYIQiy/A3WxK3Xzu0wI7/l0Ixy+qgP9wf8s7vM5EQ==
+	t=1794062128;
+	b=1I1BHTBHgzclcvqcwgLK+oxcrJikRjlJz18NKWovaMfj/WjYMDw5+GXMwgtPf635nphm
+	 CiX04YcVx2rNN/UipVQeUokU5sfHbMRvUgrEujVEMx0cGmk805uE8QnXQk00Bx52r3G0t
+	 jv81kpeLwXEYMAkAGGzMeDddjedTS5YctKHFLXk2SPPXE49DZq4D1DPlM+Ejn4HAqeYhJ
+	 67sw1ZLqVBLlDjoAMNCLdJZJTPEnwIiSOoO/DbxgSpjWIGQXuWmdFLC7i4WFtxB3KCqP5
+	 IJLV4wkYPYiDWskv81ENy4yrldjMlwgvrd4VUZgsEBNXJfwZBEU9vcQ9ktnPDQ7ZHCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062126;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062128;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YiwUlw8QC+53b1ibB6+0YY2jaBD6l+SfGvpF5LOB7OQ=;
-	b=DFKfVIe+6d5crZxiksYIUOmZgu1p8J6SVQlY3b/4j/9qxe6ZSN6NNccXtPC2GBFrMV8H
-	 /SQSjl/sYkDrnCJ/73KMDBLclq8wc0My+g7r82NtVjdtQ2VIUJnp9SZlFY+tLnjn8ibBY
-	 /20mIsDwpKrQQYTKKKhdEgirsUFg5JbOez6tdGPzeBC8cpFh518cdSFZghdqPtNUbEKAQ
-	 gSYSKkzXPSrnfp/udbACHXbvoKq8ulDxc0sMadGfJYh+oiCB7cD5Z9TqLuDjDbGdoR0v3
-	 +Nn/PMylrB6WB9RWT5w3oZcbrSL8gnwHCbpWI5uR5+x2W4ezqyL+STt0bwkwcSoDDpw==
+	bh=eagi2ovkNhJWDiQekSdmMQPjplPpu9qmb1Dt2gi/eKo=;
+	b=a60v4+1ufuZBffKTV7GftNldk2loLWMd7oYCJiaSxn90ha8q90MbyMdzgFJRLFFFqu8r
+	 LFyk5Ol7okifPZEYuHZTMSbbYMvOQvPKChI8w3D5RDqLhdaSIEWpgQiNbDcivD/vhqgUI
+	 0pU/Ct2c8KJJK91IsYxItw18HNRSe0rn37frTPGkbFx7jhRG68WmYtJp6+stNvfI1S0xG
+	 hH6uhlXLIy8dSdQMRam7ESGwzmm+LU88J0Zv3JhSiOQUjuZ/S7Qw5vWI6pLz2N18jhNfp
+	 JY4cFNkoQ20PLYwbitTmX8Y5f3MVjprPVEU0dxK37/Rq9x2/59wxGcbiDZB66FbQGXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=plet0PKV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mEcY+jPW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E76B606EE98;
-	Sat,  7 Nov 2026 14:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D692D606EE98;
+	Sat,  7 Nov 2026 14:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=plet0PKV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C24C1F008A1;
-	Sat,  7 Nov 2026 14:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mEcY+jPW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F681F008A1;
+	Sat,  7 Nov 2026 14:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062126;
-	bh=YiwUlw8QC+53b1ibB6+0YY2jaBD6l+SfGvpF5LOB7OQ=;
+	s=korg; t=1794062127;
+	bh=eagi2ovkNhJWDiQekSdmMQPjplPpu9qmb1Dt2gi/eKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=plet0PKV4FysZTxpUYB7399SO4FlpuqI1sOpnrzcOlDrJ3dDio6IiGR7Z9QfqGlJS
-	 dxqGQUDCm9HIh1tjDBS/bsDFkO5DUam5c/CTlTKtYCElUMypI6Z5qSsXOGobNsBSl4
-	 B0dPrCyQ9cfsFDZWK51+1F/1F+frm6Mayz0CcQtc=
+	b=mEcY+jPWYrsVmD7+nfchfEZV0BXECwUUc1dxmcm0y79dAuJA6eSI/8wqUgHtCqx7G
+	 DmAtrz/sQjuEvubyWgU30g1Ys4bGx2RaeqkDuzFsAOUysj3ZV1F6j9dcrqlQhgcncA
+	 LreJuP6WPti9xUzsgKuxg09wXLT8XGxJIS0mj8Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheick Traore <cheick.traore-ext@st.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Lucas Costa <2000.costalucas@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1095/1536] iio: adc: stm32: fix minimum sampling time values
-Date: Sat,  7 Nov 2026 08:51:51 -0500
-Message-ID: <20261107135028.454850435@linuxfoundation.org>
+Subject: [PATCH 6.12 1096/1536] spi: bcm2835: fix device_node reference leak in bcm2835_spi_setup()
+Date: Sat,  7 Nov 2026 08:51:52 -0500
+Message-ID: <20261107135028.483205952@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,49 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheick Traore <cheick.traore-ext@st.com>
+From: Lucas Costa <2000.costalucas@gmail.com>
 
-[ Upstream commit ef04fdc999ee40a58d513ea48d391c7dc78c908c ]
+[ Upstream commit 8db44cca03df066186d6220bfad9fa482d7cdc13 ]
 
-- On stm32mp15: vddcpu and vddq_ddr are not connected to internal
-channel, so their sampling time shouldn't be set.
+of_find_compatible_node() returns a device_node with its reference count
+incremented, but bcm2835_spi_setup() only uses the return value to test
+for a matching node in the loop and never releases it.
 
-- On stm32mp13: vddcpu and vddq_ddr are connected to internal channels
-and the value for vddcore was not correct. Values from the datasheet
-are 1us (e.g. 1000ns) for ts_vddcore, ts_vddcpu and ts_vddq_ddr.
+Declare the node with a scope-based __free(device_node) cleanup so the
+reference is dropped automatically when leaving the loop body, matching
+the existing __free(kfree) usage in the same function.
 
-Fixes: 7cb2303dd024 ("iio: adc: stm32: manage min sampling time on all internal channels")
+Fixes: e19c1272c80a ("spi: bcm2835: Restore native CS probing when pinctrl-bcm2835 is absent")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cheick Traore <cheick.traore-ext@st.com>
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Lucas Costa <2000.costalucas@gmail.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260925193008.127314-1-2000.costalucas@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stm32-adc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-bcm2835.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/stm32-adc.c b/drivers/iio/adc/stm32-adc.c
-index 2513146639171..ed75e7cb1c220 100644
---- a/drivers/iio/adc/stm32-adc.c
-+++ b/drivers/iio/adc/stm32-adc.c
-@@ -2606,7 +2606,7 @@ static const struct stm32_adc_cfg stm32h7_adc_cfg = {
- 	.ts_int_ch = stm32_adc_min_ts_h7,
- };
+diff --git a/drivers/spi/spi-bcm2835.c b/drivers/spi/spi-bcm2835.c
+index 5926e004d9a65..8fadb216b87ea 100644
+--- a/drivers/spi/spi-bcm2835.c
++++ b/drivers/spi/spi-bcm2835.c
+@@ -1297,7 +1297,9 @@ static int bcm2835_spi_setup(struct spi_device *spi)
+ 	}
  
--static const unsigned int stm32_adc_min_ts_mp1[] = { 100, 100, 100, 4300, 9800 };
-+static const unsigned int stm32_adc_min_ts_mp1[] = { 100, 0, 0, 4300, 9800 };
- static_assert(ARRAY_SIZE(stm32_adc_min_ts_mp1) == STM32_ADC_INT_CH_NB);
+ 	for (i = 0; i < ARRAY_SIZE(pinctrl_compats); i++) {
+-		if (of_find_compatible_node(NULL, NULL, pinctrl_compats[i]))
++		struct device_node *np __free(device_node) =
++			of_find_compatible_node(NULL, NULL, pinctrl_compats[i]);
++		if (np)
+ 			break;
+ 	}
  
- static const struct stm32_adc_cfg stm32mp1_adc_cfg = {
-@@ -2626,7 +2626,7 @@ static const struct stm32_adc_cfg stm32mp1_adc_cfg = {
- 	.ts_int_ch = stm32_adc_min_ts_mp1,
- };
- 
--static const unsigned int stm32_adc_min_ts_mp13[] = { 100, 0, 0, 4300, 9800 };
-+static const unsigned int stm32_adc_min_ts_mp13[] = { 1000, 1000, 1000, 4300, 9800 };
- static_assert(ARRAY_SIZE(stm32_adc_min_ts_mp13) == STM32_ADC_INT_CH_NB);
- 
- static const struct stm32_adc_cfg stm32mp13_adc_cfg = {
 -- 
 2.53.0
 
