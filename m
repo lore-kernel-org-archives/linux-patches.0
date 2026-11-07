@@ -1,54 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063568;
-	b=CGmsj+ENI6+rvTEzeZKlUWHkZqFj4huMsxPzSFunR2NfME34i3oKXugJsLlf7wdfrrAr
-	 Gf8JrUnSp14fxXB50YycOkCxSn8/qoDd39tLghiF3VF0g8E2YtV4HCESfqv6VXEIusE/X
-	 Me43ldF5BoM9gJ+G3iM5LWkf8hJ1ZxqZDh7UcU/W2Z4F5Emp5dlA6hN0WTeikhMMVDy0j
-	 aoJieZWQ5/8TtYCHNcDvLtMu+5TB5b53gxlVrT56KaRkyI9i8kq+K1XjZCd949DPSJ4m9
-	 XZKPj5OnVxS6jAjJIiA5FO7g7/LDP/UMHn70hb34lSZU0CaYukX6vJP8m+K/HPRrLeA==
+	t=1794063569;
+	b=KRVx6mKPxAOO/E+I/QzQKDvl7wXGf0Opt+bJqOY7Tp1hlJns4WebzdKEAPtScGGnSfjw
+	 oZc1KnqG941FOiNZL/Mu2BbEhoMbsW5ketuEy537ok/qY0CUAL9dUZEawvHumhKPy3K+a
+	 oRrTFSmAfatwTnS+o/++oZp0azhTJ99VwquDcQFFcmj/O7hN6l/IrKwaFfkMjRt7hJE6v
+	 4e6yIyHLOYC45B+Dw6/Xk/XkMRipP2e98ZSR0F8wxP2pWQmTa0HNJyvhBc4s3SeatXybL
+	 +v7v5FY5zPdv2uqH19BHelXh+3090KiWJMd170SSjMqcHcKpYJbcPnH5CTkbJ03q6Mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063568;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063569;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=8sUS5acLTqwJn2JhgBewO6iLxphVLkVhG0l+ofZveYA=;
-	b=f204Ey0buEDf5lfIOKAFM+XLd/+ca3jy2DbXT2UMkEx2ICFj4PvnNuvAWorYyBRNU4Rj
-	 MBUwB7YskbjGSFAJy9lxlmAE0TactyPNVTDFJJY0jY9ey2K581x83R7dq+xLbmNVEUIw/
-	 zhxJUHkiNvS9YZnXbTDsWdu2ysnJN5hEeT5GbQUZOlzPFow7UgF3Knth+0aut9eOkBSHD
-	 I3TJnLANs5LegHoyrButI2YUwa+fKPE8B56B2OrzTRbSFRIe1MzOEfbYHkJFEGOHduT1s
-	 qXMNb/kP+vOdVUXvCm8I5ck/0n2M2jKqPasoFrTdcnvrQJkmv4FSvzsji00Gm1Cpy0g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CMMdgj25cy45j5ZND9cKfw7GYt7NrsaO7IkiA1nUVY4=;
+	b=pTOOWvyQUsJu+846m0SxwyCcGeDFmTMPAJCYmgIU9HPhEkRUxwTQWY27u3/NU06NwAPN
+	 bI84ojcPDNJLBTYyIXm0/px0oV1DPLgMZq8aW8WVZpDkXjgLuBd0toVLbp+ia+SkBJbCL
+	 yUhliebEUBDcXTgaa8JUkVT2mcx0Lms90sAXnavzxrDVuFFRaWxg5PmMtgzupFhmaDx4o
+	 siUrPEjyG6MRhgz5Rq5xoN7p+RZ68lYGCoV+t343ICw4zSoESC0AfWb9RsuptmWUoey3G
+	 sr+EA9Xo+UN0rNbJf9vAF89A7HisWcbL3KSb1hKgOtnBbuP+jh14RdXozbJV7xWTdIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FR54c/7Q";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8RzPWOa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E00606D829;
-	Sat,  7 Nov 2026 14:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52E7606D818;
+	Sat,  7 Nov 2026 14:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FR54c/7Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AEF1F008A3;
-	Sat,  7 Nov 2026 14:59:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q8RzPWOa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806EF1F008A3;
+	Sat,  7 Nov 2026 14:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063567;
-	bh=8sUS5acLTqwJn2JhgBewO6iLxphVLkVhG0l+ofZveYA=;
+	s=korg; t=1794063568;
+	bh=CMMdgj25cy45j5ZND9cKfw7GYt7NrsaO7IkiA1nUVY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FR54c/7Q4kqjKUA6/ZVGpq0k39azov8E9y0J4jzW/jLWSJi+VDYY6BLSmnJHwUhfR
-	 0mtfS+Q09XLvOeXiLxenvijMHmbK+MQv3sL3OTCYyS+OGp3bb3kCRrkvbSMFznrudn
-	 /gekpquijzghrycGFEyg4+JBTp8dk8KX19kaYn64=
+	b=Q8RzPWOauaKCVVbFAtZKDQoH/QT/zMuNc193Or3NevOmDfqjXYej00x6+TrF1/q7h
+	 yhtvISFzCzqWmQi3hAuc8tJqHE+JuXBm6W8frRsYX7vac2oB8xn+wvyY4gb+gT9KTN
+	 FFpc51DRcIgGtalYpyE+Xy8DI5R+hDx3tsNqxNHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	John Fisher <jfisher84@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Yufan Chen <ericterminal@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Kees Cook <kees@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sunil Mushran <sunil.mushran@oracle.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 682/869] drm/amdgpu: wait for pending page table updates before switching a VM to CPU updates
-Date: Sat,  7 Nov 2026 08:56:04 -0500
-Message-ID: <20261107134916.182936862@linuxfoundation.org>
+Subject: [PATCH 6.18 700/869] ocfs2/cluster: initialize heartbeat regions before publishing them
+Date: Sat,  7 Nov 2026 08:56:22 -0500
+Message-ID: <20261107134916.689833732@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -64,109 +73,198 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Fisher <jfisher84@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 53d9ef2f518add783bb48a69d77bbc8aea99e911 ]
+[ Upstream commit c5b7a30a5172317e1e3cba61d8c9f9c588c497bb ]
 
-amdgpu_vm_make_compute() switches a VM from SDMA to CPU page table
-updates when a KFD process acquires it. It syncs "with the last SDMA
-update/clear" through amdgpu_bo_sync_wait() on the root PD, but that
-walks the reservation with DMA_RESV_USAGE_READ, and the clears of the
-VM's page tables (the root PD from amdgpu_vm_init(), and the PDs/PTs
-the seq64 mapping allocates at the render node's open) are added there
-by amdgpu_vm_sdma_commit() with DMA_RESV_USAGE_BOOKKEEP only:
-amdgpu_vm_pt_clear() commits them with a NULL fence, so they do not
-reach vm->last_update. The CPU path's own waits (amdgpu_vm_cpu_update(),
-amdgpu_bo_kmap()) use DMA_RESV_USAGE_KERNEL. None of them waits for a
-clear that is still queued.
+A region on o2hb_all_regions must have an initialized config item and
+name. o2hb_heartbeat_group_make_item() currently links the zeroed region
+under o2hb_live_lock, drops the lock, and only then initializes hr_item.
+The lock therefore protects the list without protecting initialization
+from readers of the published item.
 
-When one is, the CPU writes the first entries of the new compute VM (the
-KFD trap handler's TBA/TMA page at AMDGPU_VA_RESERVED_TRAP_START, mapped
-during ACQUIRE_VM) into a page directory the SDMA then clears. The
-entries are gone, the handler's page is unmapped, and the first wave
-save of any queue of the process faults in the SQC instruction fetch at
-the handler's address (GCVM_L2_PROTECTION_FAULT_STATUS 0x008012B1,
-PERMISSION_FAULTS 0xb). The MES then fails REMOVE_QUEUE and SUSPEND, and
-the device takes a MODE1 reset with VRAM lost on 7.2.9; on 7.3-rc6 the
-queue is reset instead.
+With global heartbeat enabled, a DLM_QUERY_REGION from the current
+joining node can pass the existing-domain and protocol checks while a
+configfs mkdir creates another region. The DLM locks are not taken by
+the constructor, and the network worker does not take the configfs
+subsystem mutex. The following ordering is possible:
 
-The window is the time between the render node's open and ACQUIRE_VM.
-ROCr spends milliseconds there and is practically never hit; a minimal
-KFD client that opens the render node and acquires the VM at once is hit
-most of the time. On a Radeon AI PRO R9700 (gfx1201, Resizable BAR, so
-vm_update_mode defaults to CPU updates for compute VMs), a wave reading
-the trap handler's page right after queue creation found it unmapped in
-8 of 12 runs; a 5 ms sleep between the open and ACQUIRE_VM made that 0
-of 9, and the same sleep after queue creation instead 3 of 3.
+  Configfs mkdir                     O2net receive worker
+  --------------                     --------------------
+  Allocate reg
+  Lock o2hb_live_lock
+  Link into o2hb_all_regions
+  Unlock o2hb_live_lock
+                                     dlm_query_region_handler()
+                                       dlm_match_regions()
+                                         o2hb_get_all_regions()
+                                           Lock o2hb_live_lock
+                                           Copy 32 bytes from NULL name
+                                           Unlock o2hb_live_lock
+  config_item_init_type_name()
 
-The wait covered these jobs until commit 926c79ad6ecd ("drm/amdgpu:
-promote the implicit sync to the dependent read fences") narrowed
-amdgpu_sync_resv() from DMA_RESV_USAGE_BOOKKEEP to DMA_RESV_USAGE_READ;
-the VM's page table jobs have been added with BOOKKEEP since commit
-4247084057cf ("drm/amdgpu: use DMA_RESV_USAGE_BOOKKEEP v2"), so from
-v6.16 on the sync in amdgpu_vm_make_compute() waits for nothing of
-them.
+The query thus dereferences NULL. Initialize hr_item before linking the
+region so the existing list lock also orders name initialization before
+any reader. Reject a failed name allocation, since the initialization
+helper does not propagate that error.
 
-Record the clears in vm->last_update, as amdgpu_vm_update_pdes() does
-with its updates, and wait for it, uninterruptibly, before switching the
-update functions. The clears all go through vm->delayed, so the last one
-covers the earlier ones; immediate clears are not recorded, as before.
+Use config_item_put() on initialized constructor failures to release the
+name and respect references retained by o2hb_region_pin(). Initialize
+the list heads, mutex and delayed works needed by o2hb_region_release()
+before any such put, and leave the list node self-linked after rollback.
+Keep the existing handler drain before removing a failed published item.
 
-With this, on 7.3-rc6 and on 7.2.9, the same client reads the handler
-10 of 10 times, 8 busy queues on the 4 compute slots complete in 5 of 5
-runs on 7.3-rc6 and 3 of 3 on 7.2.9 (1 of 6 before), 16 and 32 queues
-complete on 7.3-rc6, and two processes with 8 queues each complete
-together on both, with no fault.
+KASAN report as below:
 
-Fixes: 926c79ad6ecd ("drm/amdgpu: promote the implicit sync to the dependent read fences")
-Cc: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: John Fisher <jfisher84@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9ec91b35baba45209c3fcd00f086224a158dd512)
-Cc: stable@vger.kernel.org # v6.16+
+    ==================================================================
+    BUG: KASAN: null-ptr-deref in o2hb_get_all_regions+0xbb/0x1f0
+    Read of size 32 at addr 0000000000000000 by task kworker/u16:1/14
+
+    CPU: 2 UID: 0 PID: 14 Comm: kworker/u16:1 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: o2net o2net_rx_until_empty
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     kasan_report+0xe0/0x110
+     ? o2hb_get_all_regions+0xbb/0x1f0
+     kasan_check_range+0x105/0x1b0
+     __asan_memcpy+0x23/0x60
+     o2hb_get_all_regions+0xbb/0x1f0
+     dlm_query_region_handler+0x4c2/0xc20
+     ? __pfx_dlm_query_region_handler+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on+0x18/0x160
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? kvm_clock_get_cycles+0x31/0x60
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_dlm_query_region_handler+0x10/0x10
+     o2net_rx_until_empty+0x1a50/0x3200
+     ? reacquire_held_locks+0xdd/0x200
+     ? __pfx_o2net_rx_until_empty+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? process_one_work+0x935/0x1b40
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+    ==================================================================
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0079-v5-f931a29339cadc0a2a70@gmail.com
+Fixes: 536f0741f324 ("ocfs2/cluster: Track number of global heartbeat regions")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Yufan Chen <ericterminal@gmail.com>
+Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: Sunil Mushran <sunil.mushran@oracle.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c    | 5 +----
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c | 2 +-
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ fs/ocfs2/cluster/heartbeat.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-index f78ac6777ee5c..c9614a99b40d1 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2720,10 +2720,7 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm)
+diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
+index 61e5eb0090d39..0888c44f677c1 100644
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -2124,6 +2124,18 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 	}
+ 	reg->hr_node_num = O2NM_MAX_NODES;
  
- 	if (vm->use_cpu_for_update) {
- 		/* Sync with last SDMA update/clear before switching to CPU */
--		r = amdgpu_bo_sync_wait(vm->root.bo,
--					AMDGPU_FENCE_OWNER_UNDEFINED, true);
--		if (r)
--			goto unreserve_bo;
-+		dma_fence_wait(vm->last_update, false);
++	INIT_LIST_HEAD(&reg->hr_all_item);
++	mutex_init(&reg->hr_arming_mutex);
++	reg->hr_stopping = true;
++	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
++	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
++	INIT_LIST_HEAD(&reg->hr_handler_list);
++	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
++	if (!config_item_name(&reg->hr_item)) {
++		ret = -ENOMEM;
++		goto put_item;
++	}
++
+ 	spin_lock(&o2hb_live_lock);
+ 	reg->hr_region_num = 0;
+ 	if (o2hb_global_heartbeat_active()) {
+@@ -2132,26 +2144,19 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 		if (reg->hr_region_num >= O2NM_MAX_REGIONS) {
+ 			spin_unlock(&o2hb_live_lock);
+ 			ret = -EFBIG;
+-			goto free;
++			goto put_item;
+ 		}
+ 		set_bit(reg->hr_region_num, o2hb_region_bitmap);
+ 	}
+ 	list_add_tail(&reg->hr_all_item, &o2hb_all_regions);
+ 	spin_unlock(&o2hb_live_lock);
  
- 		vm->update_funcs = &amdgpu_vm_cpu_funcs;
- 		r = amdgpu_vm_pt_map_tables(adev, vm);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
-index f794fb1cc06e6..a05f34259d578 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
-@@ -421,7 +421,7 @@ int amdgpu_vm_pt_clear(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 	if (r)
- 		goto exit;
- 
--	r = vm->update_funcs->commit(&params, NULL);
-+	r = vm->update_funcs->commit(&params, &vm->last_update);
- exit:
- 	drm_dev_exit(idx);
- 	return r;
+-	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
+-
+ 	/* this is the same way to generate msg key as dlm, for local heartbeat,
+ 	 * name is also the same, so make initial crc value different to avoid
+ 	 * message key conflict.
+ 	 */
+ 	reg->hr_key = crc32_le(reg->hr_region_num + O2NM_MAX_REGIONS,
+ 		name, strlen(name));
+-	mutex_init(&reg->hr_arming_mutex);
+-	reg->hr_stopping = true;
+-	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
+-	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
+-	INIT_LIST_HEAD(&reg->hr_handler_list);
+ 	ret = o2net_register_handler(O2HB_NEGO_TIMEOUT_MSG, reg->hr_key,
+ 			sizeof(struct o2hb_nego_msg),
+ 			o2hb_nego_timeout_handler,
+@@ -2174,10 +2179,13 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+ 	o2net_unregister_and_flush_handler_list(&reg->hr_handler_list);
+ remove_item:
+ 	spin_lock(&o2hb_live_lock);
+-	list_del(&reg->hr_all_item);
++	list_del_init(&reg->hr_all_item);
+ 	if (o2hb_global_heartbeat_active())
+ 		clear_bit(reg->hr_region_num, o2hb_region_bitmap);
+ 	spin_unlock(&o2hb_live_lock);
++put_item:
++	config_item_put(&reg->hr_item);
++	return ERR_PTR(ret);
+ free:
+ 	kfree(reg);
+ 	return ERR_PTR(ret);
 -- 
 2.53.0
 
