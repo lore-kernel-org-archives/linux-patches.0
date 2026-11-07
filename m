@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064811;
-	b=WrgRwTzRpyS1+O/dgarFHYEsfTgctT+USJ4Ch53C1yZKAhzdRgmrT4wvpzgUyfKImcVQ
-	 Z3bcNlPgx2QQjAhbecDUxexVpd4R+imalksm+grDxCA4Vnx6KwKUAMuNQ+2pHeWZbPA5v
-	 BqBIGeFTcJWpVLhmMtZyXmt8bra328lDQJfGmIUahGTcaNz/5RMdfWqxK/yy3Ibex1At8
-	 RovQ8MKuvio0faTWXqbRB+stNL9++ZjqYFqq1Uxe73YHCi9YuMBQAo1z83ZU9pg5tf9KO
-	 kS2aqSqz8IMq0ztUKk9SeBNGsztfxZQL2Ct7NZd7ogSH5O2xbHdlEKwVLgdzCqxAVaw==
+	t=1794064812;
+	b=WFDxspTMo3J/JDKOd3TaSIs+Gv5Sy5G/It01uN32seIFSdAAQwW1/lVcgQb/V4CZaMz2
+	 k6yUwGJ1dEOWpDMRNbaI08JUR3F4Qooe038Ew/GXEmpBmprPPd7HhwPsIShpcD2iZB3A7
+	 X/8fSQQ1D8PsvSpHDoI2RSy1v2LbeQXfx6gUe+/vaoyB+KppTHfpQlwwspj9KcrC+8zm6
+	 1rcOZqMkP5t8cgkIFeN4MsUEnXIWU9mnr8e48RuUVftYJSZQVXfU6+o8WjRHFLPrnxe2D
+	 mLQGrDoswzxjP85gUofFPZ2lGvJQPbpaPNOjksW2E/WQWvsza7yO2uskIEm3cG1Iqeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064812;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=xKUXUuUAzKHX06j5H+2FgJ1AVFxYvEXJ316jGpEf4oc=;
-	b=re/R8qUMdmivYQQlS8t5E5zHcJBd6IDtQKfDWP9HOkpEZC3NX08FbalrXL8OwmgjwqOH
-	 sW680SkKi2X/qWdGv4nVGHA6XC32ul7SWsJE/h8CpvZ1C4U/UkvQv0G4le/Tl4cznAALO
-	 qP//BoL4Li5YAOAd+oOTosTqGKxnB4/+1MwzSvK4m10c9udFtzqFewSf1lS0CirWPNM7S
-	 iiWdlA5zKdZBPph/gz9A96PhNIjR805Aj6BcnhXjis+EkbFMOcJlLoxVDB7iAWlVJQXk/
-	 EcMF2iXYLM6xlLfTD6r4boZ6gd6YDOdIGd9g9RSB8Shxr35POZXIYjJJ3F/mrxKSxdg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=5jmsM9PXno3vJDl68gTY7rw5scT8O10gRnCKc3fO9Bg=;
+	b=bIgOVwn3oFLBAZ8PhMVRsQTZFf6EXGzdabx1CCyYZj60iyuC2bfsOCbO7p2JHweEU/k8
+	 xSBVSJG3aMsfVqkXWW9TzrCu3Zh1I8fnW3aK0YQg5OVMb1XsmqAzTOJJX6QLu2xih29T7
+	 EgVnf48vXpy6b1lfJMtAPsGfkVixfATaI6Dc2jm6SY8tHO/jk0hReIu9/jxUzC2mHRpnD
+	 EnTS1XOXzZICivDHj8ifdyI3mLZ8bDRaF0ynmZUFFKgE6UQ/MB9h+gNujk/cscdmo3ekK
+	 htuRQdLUMB2ZVOR5oou0UOp/3E7pCmzPwFtb+WWUVlQHky4t5zLIE40l0hgLrOauigA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arYKpaYW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4C3TF3F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD632606C02F;
-	Sat,  7 Nov 2026 15:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFC8606C02B;
+	Sat,  7 Nov 2026 15:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arYKpaYW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682201F008A2;
-	Sat,  7 Nov 2026 15:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4C3TF3F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279EC1F008A2;
+	Sat,  7 Nov 2026 15:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064810;
-	bh=xKUXUuUAzKHX06j5H+2FgJ1AVFxYvEXJ316jGpEf4oc=;
+	s=korg; t=1794064812;
+	bh=5jmsM9PXno3vJDl68gTY7rw5scT8O10gRnCKc3fO9Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=arYKpaYWy2wX/25FXf5w6m8+mgj2JbNA4j7nybqEqH2lYNCgnx1/eg3A1MW7T3Tvn
-	 3YWWYQ8OLXkYuGbjI6h7Spw7OHWZCh2xJ40s0UbCTv9/0Mf7YX2NqywK4fHh7NVTJn
-	 GF1OafkUkj1Y6X8DMBXWvK+9dj1JBERNZPZE/s2E=
+	b=q4C3TF3FIfOaV4yQlN9D20sNo+KSTxTme2BPGbJBVDQmLG40/yM6wN/a5/e+V2Eg6
+	 zWQGoIS90nPFQR/Qx/cS4Th0JsuVCMnzdo8mJLd001hxAW5e9pBNzaF/JZY2zyVfOy
+	 u3gm6dQDjHljz8YXPXJSmZOlN4YW4UlseZ5yB41s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0747/1257] platform/x86: hp-bioscfg: fix OOB reads in hp_get_string_from_buffer()
-Date: Sat,  7 Nov 2026 08:50:43 -0500
-Message-ID: <20261107134959.922048732@linuxfoundation.org>
+Subject: [PATCH 7.3 0712/1257] nvme: bound FDP config log reads to the received buffer
+Date: Sat,  7 Nov 2026 08:50:08 -0500
+Message-ID: <20261107134958.919534442@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,102 +64,194 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 176b38b84ae5e075850b3ebb25f906d66f95a46d ]
+[ Upstream commit 3cf6de080d97d0d9641fbdb613d546c0734905dd ]
 
-The escape prescan loop uses 'size' as both its bound and its
-accumulator, so each escape character found extends the loop and
-reads past the end of src[].
+nvme_query_fdp_granularity() parses the FDP Configurations log using
+sizes the controller returns, without checking that they fit the buffer
+it was given.  The log size is only bounded from above before
+kvmalloc(), so a size below the log header makes
+le16_to_cpu(h->numfdpc) read past the allocation, and a size of zero
+yields ZERO_SIZE_PTR and faults.  Each configuration descriptor is then
+dereferenced (dsze while walking, and nrg and runs on the selected one)
+without checking that the whole descriptor lies within the buffer, so a
+descriptor at or past the end is read out of bounds.  The out-of-bounds
+runs value is then exposed to userspace through
+/sys/block/nvmeXnY/queue/write_stream_granularity.
 
-Use the original u16 count as the loop bound. Also include the 2-byte
-length prefix in the bounds check, pass the u16 count instead of the
-byte count to utf16s_to_utf8s(), and advance the buffer by the bytes
-actually consumed instead of the escape-inflated count.
+A device-supplied dsze that is not a multiple of eight also leaves the
+following descriptors unaligned, and the structure is not packed, so
+reading nrg and runs from one can fault on architectures without
+efficient unaligned access.
 
-Tested on HP EliteBook 840 G2 (Fedora 44, Linux 7.2.7).
+A malicious or buggy controller triggers this during namespace scan with a
+short FDP Configurations log:
 
-Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
+[    1.104828] BUG: KASAN: slab-out-of-bounds in nvme_alloc_ns+0x39a6/0x4480
+[    1.104848] Read of size 8 at addr ffff888009fd8fe0 by task kworker/u8:3/52
+[    1.104852]
+[    1.104857] CPU: 1 UID: 0 PID: 52 Comm: kworker/u8:3 Not tainted 7.3.0-rc6-00063-g0c2669a9f4a1 #1 PREEMPT(lazy)
+[    1.104862] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+[    1.104866] Workqueue: async async_run_entry_fn
+[    1.104873] Call Trace:
+[    1.104876]  <TASK>
+[    1.104878]  dump_stack_lvl+0x66/0xa0
+[    1.104886]  print_report+0xd0/0x630
+[    1.104893]  ? nvme_alloc_ns+0x39a6/0x4480
+[    1.104897]  ? __virt_addr_valid+0x209/0x3f0
+[    1.104903]  ? nvme_alloc_ns+0x39a6/0x4480
+[    1.104907]  kasan_report+0xe4/0x120
+[    1.104913]  ? nvme_alloc_ns+0x39a6/0x4480
+[    1.104919]  nvme_alloc_ns+0x39a6/0x4480
+[    1.104926]  ? __pfx_nvme_alloc_ns+0x10/0x10
+[    1.104931]  ? check_prev_add+0xfd/0xe80
+[    1.104942]  ? lock_acquire+0x18d/0x300
+[    1.104948]  ? nvme_find_get_ns+0xbb/0x2e0
+[    1.104952]  ? find_held_lock+0x2b/0x80
+[    1.104956]  ? nvme_find_get_ns+0x221/0x2e0
+[    1.104962]  ? nvme_find_get_ns+0x231/0x2e0
+[    1.104967]  ? nvme_scan_ns+0x2e1/0x8d0
+[    1.104971]  ? kfree+0x2e5/0x510
+[    1.104976]  ? __lock_acquire+0x570/0x1b00
+[    1.104982]  nvme_scan_ns+0x56a/0x8d0
+[    1.104987]  ? __pfx_nvme_scan_ns+0x10/0x10
+[    1.104994]  ? lockdep_hardirqs_on_prepare+0xdc/0x190
+[    1.104999]  ? trace_hardirqs_on+0x18/0x160
+[    1.105005]  ? kvm_clock_get_cycles+0x19/0x40
+[    1.105011]  ? __pfx_nvme_scan_ns_async+0x10/0x10
+[    1.105015]  async_run_entry_fn+0x8d/0x290
+[    1.105020]  process_one_work+0x8ac/0x1b00
+[    1.105029]  ? __pfx_process_one_work+0x10/0x10
+[    1.105034]  ? lock_acquire+0x18d/0x300
+[    1.105040]  ? lock_is_held_type+0x8f/0x100
+[    1.105046]  ? __pfx_async_run_entry_fn+0x10/0x10
+[    1.105050]  worker_thread+0x4ee/0xe70
+[    1.105056]  ? lockdep_hardirqs_on_prepare+0xdc/0x190
+[    1.105061]  ? trace_hardirqs_on+0x18/0x160
+[    1.105066]  ? __pfx_worker_thread+0x10/0x10
+[    1.105071]  ? __pfx_worker_thread+0x10/0x10
+[    1.105076]  kthread+0x2ce/0x3b0
+[    1.105080]  ? __pfx_kthread+0x10/0x10
+[    1.105085]  ret_from_fork+0x52e/0x780
+[    1.105090]  ? __pfx_ret_from_fork+0x10/0x10
+[    1.105094]  ? __switch_to+0x572/0xde0
+[    1.105101]  ? __pfx_kthread+0x10/0x10
+[    1.105105]  ret_from_fork_asm+0x1a/0x30
+[    1.105114]  </TASK>
+[    1.105116]
+[    1.105117] Allocated by task 52:
+[    1.105119]  kasan_save_stack+0x33/0x60
+[    1.105123]  kasan_save_track+0x14/0x30
+[    1.105126]  __kasan_kmalloc+0x8f/0xa0
+[    1.105129]  __kvmalloc_node_noprof+0x2e1/0x820
+[    1.105134]  nvme_alloc_ns+0x1097/0x4480
+[    1.105138]  nvme_scan_ns+0x56a/0x8d0
+[    1.105142]  async_run_entry_fn+0x8d/0x290
+[    1.105145]  process_one_work+0x8ac/0x1b00
+[    1.105148]  worker_thread+0x4ee/0xe70
+[    1.105152]  kthread+0x2ce/0x3b0
+[    1.105155]  ret_from_fork+0x52e/0x780
+[    1.105159]  ret_from_fork_asm+0x1a/0x30
+[    1.105163]
+[    1.105164] The buggy address belongs to the object at ffff888009fd8fc0
+[    1.105164]  which belongs to the cache kmalloc-32 of size 32
+[    1.105167] The buggy address is located 8 bytes to the right of
+[    1.105167]  allocated 24-byte region [ffff888009fd8fc0, ffff888009fd8fd8)
+[    1.105171]
+[    1.105172] The buggy address belongs to the physical page:
+[    1.105175] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x9fd8
+[    1.105179] flags: 0x100000000000000(node=0|zone=1)
+[    1.105183] page_type: f5(slab)
+[    1.105188] raw: 0100000000000000 ffff888008c41780 dead000000000100 dead000000000122
+[    1.105192] raw: 0000000000000000 0000000000400040 00000000f5000000 0000000000000000
+[    1.105194] page dumped because: kasan: bad access detected
+[    1.105195]
+[    1.105196] Memory state around the buggy address:
+[    1.105198]  ffff888009fd8e80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    1.105201]  ffff888009fd8f00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    1.105203] >ffff888009fd8f80: fc fc fc fc fc fc fc fc 00 00 00 fc fc fc fc fc
+[    1.105205]                                                        ^
+[    1.105207]  ffff888009fd9000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 fc
+[    1.105210]  ffff888009fd9080: fc fc fc fc fc fc fc fc 00 00 00 00 00 00 00 00
+[    1.105212] ==================================================================
+
+Reject a log smaller than its header plus one configuration descriptor,
+zero the buffer so a short transfer leaves no uninitialized tail to parse,
+require each descriptor's declared size to be at least a descriptor and to
+leave room for the next one before walking it, and read the descriptor
+fields with the unaligned accessors.
+
+Fixes: 30b5f20bb2dda ("nvme: register fdp parameters with the block layer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20261007134711.473857-2-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Suggested-by: Kanchan Joshi <joshi.k@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.c | 26 +++++++++++---------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ drivers/nvme/host/core.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-index ff28db7ced008..6b48faec2cea3 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-@@ -54,8 +54,8 @@ int hp_get_integer_from_buffer(u8 **buffer, u32 *buffer_size, u32 *integer)
- int hp_get_string_from_buffer(u8 **buffer, u32 *buffer_size, char *dst, u32 dst_size)
- {
- 	u16 *src = (u16 *)*buffer;
-+	u16 orig_size;
- 	u16 src_size;
--
- 	u16 size;
- 	int i;
- 	int conv_dst_size;
-@@ -63,17 +63,21 @@ int hp_get_string_from_buffer(u8 **buffer, u32 *buffer_size, char *dst, u32 dst_
- 	if (*buffer_size < sizeof(u16))
- 		return -EINVAL;
- 
--	src_size = *(src++);
--	/* size value in u16 chars */
--	size = src_size / sizeof(u16);
-+	src_size = *src;
- 
--	/* Ensure there is enough space remaining to read and convert
--	 * the string
-+	/*
-+	 * Ensure there is enough space remaining for the length prefix
-+	 * just read plus the string data it describes.
- 	 */
--	if (*buffer_size < src_size)
-+	if (*buffer_size < sizeof(u16) + src_size)
- 		return -EINVAL;
- 
--	for (i = 0; i < size; i++)
-+	src++;
-+	/* size value in u16 chars */
-+	orig_size = src_size / sizeof(u16);
-+	size = orig_size;
-+
-+	for (i = 0; i < orig_size; i++)
- 		if (src[i] == '\\' ||
- 		    src[i] == '\r' ||
- 		    src[i] == '\n' ||
-@@ -91,7 +95,7 @@ int hp_get_string_from_buffer(u8 **buffer, u32 *buffer_size, char *dst, u32 dst_
- 	/*
- 	 * convert from UTF-16 unicode to ASCII
- 	 */
--	utf16s_to_utf8s(src, src_size, UTF16_HOST_ENDIAN, dst, conv_dst_size);
-+	utf16s_to_utf8s(src, orig_size, UTF16_HOST_ENDIAN, dst, conv_dst_size);
- 	dst[conv_dst_size] = 0;
- 
- 	for (i = 0; i < conv_dst_size; i++) {
-@@ -117,8 +121,8 @@ int hp_get_string_from_buffer(u8 **buffer, u32 *buffer_size, char *dst, u32 dst_
- 		src++;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 7eb0f9fe6b18d..af71d02b84765 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2273,13 +2273,18 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
  	}
  
--	*buffer = (u8 *)src;
--	*buffer_size -= size * sizeof(u16);
-+	*buffer += sizeof(u16) + src_size;
-+	*buffer_size -= sizeof(u16) + src_size;
+ 	size = le32_to_cpu(hdr.sze);
++	if (size < sizeof(*h) + sizeof(*desc)) {
++		dev_warn(ctrl->device, "FDP config size too small:%zu\n",
++			 size);
++		return 0;
++	}
+ 	if (size > PAGE_SIZE * MAX_ORDER_NR_PAGES) {
+ 		dev_warn(ctrl->device, "FDP config size too large:%zu\n",
+ 			 size);
+ 		return 0;
+ 	}
  
- 	return size;
- }
+-	h = kvmalloc(size, GFP_KERNEL);
++	h = kvzalloc(size, GFP_KERNEL);
+ 	if (!h)
+ 		return -ENOMEM;
+ 
+@@ -2305,9 +2310,9 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
+ 	desc = log;
+ 	end = log + size - sizeof(*h);
+ 	for (i = 0; i < fdp_idx; i++) {
+-		u16 dsze = le16_to_cpu(desc->dsze);
++		u16 dsze = get_unaligned_le16(&desc->dsze);
+ 
+-		if (!dsze || log + dsze > end) {
++		if (dsze < sizeof(*desc) || log + dsze + sizeof(*desc) > end) {
+ 			dev_warn(ctrl->device,
+ 				 "FDP invalid config descriptor at index %d\n", i);
+ 			ret = 0;
+@@ -2317,13 +2322,13 @@ static int nvme_query_fdp_granularity(struct nvme_ctrl *ctrl,
+ 		desc = log;
+ 	}
+ 
+-	if (le32_to_cpu(desc->nrg) > 1) {
++	if (get_unaligned_le32(&desc->nrg) > 1) {
+ 		dev_warn(ctrl->device, "FDP NRG > 1 not supported\n");
+ 		ret = 0;
+ 		goto out;
+ 	}
+ 
+-	info->runs = le64_to_cpu(desc->runs);
++	info->runs = get_unaligned_le64(&desc->runs);
+ out:
+ 	kvfree(h);
+ 	return ret;
 -- 
 2.53.0
 
