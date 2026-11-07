@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063858;
-	b=5cNdxVJWiS7UOFnnvuL4WfgIujQvI5AtX2zMz/6HvyasWO+tWNDO1ivrbskpkTn3pRqB
-	 1KnVTXPd5thhp7pNz9xilbecFpfMMRy7+raUb25LyeiSldWylAb1423lPofYnG1je2PVQ
-	 s45BxW5cktZf1HHm0xBGlqzs/AQnABVocPimXIA5ebLjIz2PYWD5eO+28gzLx4ddLJdDK
-	 XrFLL5kOKaTLz5gckFbEB+YV2Zd4DIUWW+Nzwrj8QAZaanPS17RUwHXkAs00RyfxCYhLq
-	 FZ/x6BF+c5pu/uHLy3q/5IfxPe5n3ADiemOsHleM3DgATDIZaIeVCOyqDa0GVGiSIyQ==
+	t=1794063859;
+	b=GOJEsZ0DxK4uxeyIX+CMYMrpkxZuSGTpoqoWUn+sKgekTe6Jo3aCMocZQjXU3vaQ9Ikq
+	 tZIq8gbwXeJtTJI82+/5SJVuNWtgDCgQrMu3HBZfCbkhEaCFNlElITpps+3pYj59X6dWm
+	 7h501UgGJoxzhogRC/LUDMgAWV8yFX3tpliezTtcoq3Jj9CJ7mqn8KaqNfdjdBSAOWET3
+	 Yqxc+PaHjKLZpLkdFYzs/ADweLFN1updIzk0ss9202OvhALETGMPlnItNAL6nB9r7T1kE
+	 zeGtEYybnICEpO4yWLqwGso2n9mwbZoIdYv79e6wE4Lozl1V3CTrI2POKBHsOb59Htw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063858;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063859;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0FXdWbDES3ZyPYY/184tAV9Ukx+8kQ+wmHvQ3eQq/YE=;
-	b=0sZ8auVguUG64YiVymTSFSQDenuDgx0wgcOdeA45auGysYHA4zdpnGSMybASccMgFtlh
-	 Lk77iFGMAVtLb2A8OaTYSIlw412dK+P5QJ5a5HNaQE/IsFxr8EkW6s5dx1gceewmo8pI9
-	 KavWDId4evIEYP5dh+LkQJA5HgjiJw49vQ4TIZJHaAem4UolwU/ADeRmEbY0MmXI319HR
-	 258gYZ3JYH0c3eqLV297beSI9fmi7sXOt8cfQ7yMJGbGh0Y2OOYf4IDv9c8MeO7nzbkbO
-	 ZP35jPsyIJYQjL/1p7sbpPXBtFoGKX6dtHMX+j3nqZD+iQOUsaiJBCqnvh3T6cn29nw==
+	bh=Kkxq3DQ9Gq22KLCYppUi8GwVoHsesSolngFfVQawd9c=;
+	b=MvU499EfRoD3OwG1SdwABw3W1LxpzbEPRmoT8iYD87dvSnGsa7n0ZuVe3hWQAm2+NyMT
+	 oStBDyFu3ODlU83I8I47OH87oCyBLb5XQGH6Ka2fLSoC4fvuYJ1pyanwUD2yMoIBOdw9q
+	 m+NTM2bRn9tkOWssJ3MvL3EhMYt2AnXRlsvjdhhXBK5BlFYlJjN1lCFROXq0IH7o5K9Hy
+	 AdwHaAW68VasNYCDkI3THrqnf4yD1jj5skgTEF8AR09mFENu4Wsuy8qTdLzTszwVNCFzq
+	 vUaMU2lVkJ0djuvxGSRPPFfyJmEJSlxte1Pt8OpDfR/JlrlnG5QIQyuxfZzEyrdK5Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VVpSftZU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pFC59Iru;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC65B606A9FF;
-	Sat,  7 Nov 2026 15:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B722E606A9FF;
+	Sat,  7 Nov 2026 15:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VVpSftZU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FDE1F0089F;
-	Sat,  7 Nov 2026 15:04:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pFC59Iru
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D8B1F008A1;
+	Sat,  7 Nov 2026 15:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063857;
-	bh=0FXdWbDES3ZyPYY/184tAV9Ukx+8kQ+wmHvQ3eQq/YE=;
+	s=korg; t=1794063858;
+	bh=Kkxq3DQ9Gq22KLCYppUi8GwVoHsesSolngFfVQawd9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VVpSftZUX/7R8Sxrjygu6JKIQx8YR6nmg29aXqayFByFX7ow/ka5swIFENbEgljZR
-	 hRCBTlq/7UR4mVEDY0L0v+ZSptLEwh1XKWmDW+kl8Uaiq7a6QKUnUyZHiX64vDksNg
-	 XH6pnP+k4yXhb+cCX4nVahqDSljOsg/xUKaapsuY=
+	b=pFC59IrudCmKvrdW/lVmaVA8Sj7lqX16os+44RLZHnbgDrB+y47usN+LePS1f9cHo
+	 bJdWWrqRVGpXOac1W2TMzcDkgbUgrYz8R5YogN6eQX+T+IURr3liC9HR/h7uwhtw9t
+	 wNBbx4NjDSUddrvpqWQShYRcetWdeYI/AfQnhDfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Dipen Patel <dipenp@nvidia.com>,
+	Antti Laakso <antti.laakso@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0065/1257] hte: tegra194: Initialize slice locks before registering chip
-Date: Sat,  7 Nov 2026 08:39:21 -0500
-Message-ID: <20261107134941.193544346@linuxfoundation.org>
+Subject: [PATCH 7.3 0066/1257] media: i2c: cvs: Add sensor node in bound callback
+Date: Sat,  7 Nov 2026 08:39:22 -0500
+Message-ID: <20261107134941.219216673@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,51 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Antti Laakso <antti.laakso@linux.intel.com>
 
-[ Upstream commit 1329abe1bae416ab2cff89c3312d33f745d341c7 ]
+[ Upstream commit 7456b40bc992a3fc34b587545716729923d507b9 ]
 
-Registering the HTE chip publishes its request callbacks to consumers.
-Initialize every slice lock before registration so a concurrent HTE
-request cannot use an uninitialized lock.
+Sensor device nodes are created in the complete callback, which is only
+called when all devices are successfully registered. If any device fails
+to register, e.g. due to a missing driver, the complete callback is
+never invoked and sensor nodes are not created.
 
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Fixes: 09574cca6ad6 ("hte: Add Tegra194 HTE kernel provider")
+Create sensor device nodes in the bound callback instead, ensuring they
+are available as soon as sensor is bound regardless of other devices
+registration status.
+
+Fixes: 8e2b43d2c10b ("media: i2c: cvs: Add driver of Intel Computer Vision Sensing Controller(CVS)")
 Cc: stable@vger.kernel.org
-Acked-by: Dipen Patel <dipenp@nvidia.com>
-Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+Signed-off-by: Antti Laakso <antti.laakso@linux.intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hte/hte-tegra194.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/media/i2c/cvs/v4l2.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
-index 4a7702b32b24f..1612812abe8f6 100644
---- a/drivers/hte/hte-tegra194.c
-+++ b/drivers/hte/hte-tegra194.c
-@@ -910,17 +910,17 @@ static int tegra_hte_probe(struct platform_device *pdev)
+diff --git a/drivers/media/i2c/cvs/v4l2.c b/drivers/media/i2c/cvs/v4l2.c
+index 9fadca7a3beed..863112cde2665 100644
+--- a/drivers/media/i2c/cvs/v4l2.c
++++ b/drivers/media/i2c/cvs/v4l2.c
+@@ -13,6 +13,7 @@
+ #include <media/v4l2-async.h>
+ #include <media/v4l2-common.h>
+ #include <media/v4l2-ctrls.h>
++#include <media/v4l2-device.h>
+ #include <media/v4l2-event.h>
+ #include <media/v4l2-fwnode.h>
+ #include <media/v4l2-mc.h>
+@@ -400,7 +401,7 @@ static int cvs_csi_notify_bound(struct v4l2_async_notifier *notifier,
+ 				struct v4l2_async_connection *asc)
+ {
+ 	struct icvs *ctx = notifier_to_csi(notifier);
+-	int pad;
++	int pad, ret;
  
- 	hte_dev->chip = gc;
+ 	pad = media_entity_get_fwnode_pad(&sd->entity, asc->match.fwnode,
+ 					  MEDIA_PAD_FL_SOURCE);
+@@ -409,9 +410,13 @@ static int cvs_csi_notify_bound(struct v4l2_async_notifier *notifier,
  
-+	for (i = 0; i < slices; i++) {
-+		hte_dev->sl[i].flags = 0;
-+		spin_lock_init(&hte_dev->sl[i].s_lock);
-+	}
+ 	ctx->remote = &sd->entity.pads[pad];
+ 
+-	return media_create_pad_link(&sd->entity, pad, &ctx->subdev.entity,
+-				     ICVS_CSI_PAD_SINK, MEDIA_LNK_FL_ENABLED |
+-				     MEDIA_LNK_FL_IMMUTABLE);
++	ret = media_create_pad_link(&sd->entity, pad, &ctx->subdev.entity,
++				    ICVS_CSI_PAD_SINK, MEDIA_LNK_FL_ENABLED |
++				    MEDIA_LNK_FL_IMMUTABLE);
++	if (ret)
++		return ret;
 +
- 	ret = devm_hte_register_chip(hte_dev->chip);
- 	if (ret) {
- 		dev_err(gc->dev, "hte chip register failed");
- 		return ret;
- 	}
++	return v4l2_device_register_subdev_nodes(sd->v4l2_dev);
+ }
  
--	for (i = 0; i < slices; i++) {
--		hte_dev->sl[i].flags = 0;
--		spin_lock_init(&hte_dev->sl[i].s_lock);
--	}
--
- 	val = HTE_TECTRL_ENABLE_ENABLE |
- 	      (HTE_TECTRL_INTR_ENABLE << HTE_TECTRL_INTR_SHIFT) |
- 	      (hte_dev->itr_thrshld << HTE_TECTRL_OCCU_SHIFT);
+ /**
 -- 
 2.53.0
 
