@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063708;
-	b=1U0xR+IGkkGoQZpgJkCMFLd7P75GBskHWS8UtnteuimjdS531W/zqhaA2gvNBPeD+RFg
-	 EDzzabMDqVYibVY0Sb8RHMm9mROwsBw3elRcY3EaqNYHq2AivSjihHqMOYLQqvHceSMdW
-	 +lXjXHm3Tak3p1W/TmmJvqVD/EaJUEUQeqKPlRjJTTA/C/ydBMzw+zSKx+uCi2JMX5RsM
-	 2Y+G/ggrMPtZqRc8xr/8izFIl9XMJQyG6Rxji8EE8jqtU252XR5ZLl2hmdKFhXiG3IlCk
-	 trv+4oR+fWBe6odnzrRuIhdWHEAKEFgW34dzVbQwf9XpEdDOE6KVtehJorZq8VhwcHg==
+	t=1794063709;
+	b=WYyTSzmmWGSrKtvuVDXV/bO+F2Tqy9UhJR2778QseFcDH2f0UV8Qnz+n2k+57kGfX4tI
+	 Bq1i4qOdWHQTC/pcben/qGDj1E6lNdf4YIZ3ehB4XGBLi3KgBjfX42hdu8TI+icC6Qwo2
+	 AUx3bW4MnjyjSbo2A0rznM+DW/Nu0VHlNACkd9h3t7TMnbq9oqMfStOLATcsxV9GW5XVg
+	 yknlmmUrqNW27zrNytme7xOeiSR8W/Hwp7pdCmeFi/9GmTq2lv5DIXCzi3x2l8ghq5mNm
+	 TOr/pF0vWuaqEQEuQZWdElmmJpqFm3W3tZnpTvWPNW8ygAGckoQjSaqwKKrfErmJCEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063708;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063709;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=sqL+Mczg5dR23IK+xOUPY64s9Ieq633sAP3QZIFBYtw=;
-	b=Rx9vdSpPGL8tnROt7pNaRf8b+44tpWLEE65ZUwoYFeQOBlrp0TiFkz/ipQ2+AY/6jrWx
-	 RlSD6NJKFGyLQXC5EHE5eSNcR0l25ebaNCnMyJCa6+F6HfDws4Xkd4+qgDT/j0ykb2vP7
-	 PNCptlwFbWAVpZsbYcEvHkcijwwor9h23Z7lqhoKWxHPdkwjdWDEltdKiyfyFVoDi4rzB
-	 GYLddf2BKva9YYcAZ7jUtmFarS/r084xAwyvVABkAYU0Y1VWwXBE+c2hzH0pKJ1diO3uZ
-	 WzSEKm+v8fzUXKE1AsD+r1WlA4ICcMRhFbSbc7cYkLmKED7tw2A71Br4IedZkySX84A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=IgWh7Shg4Yxql7LlNJj6i2gM95h5j/U2gkPo9ZzO1cc=;
+	b=qY3m3DzAusx4iZcSVNlGxtOlXAf9CXXU6uod4p83UJYXxEXxDEULRXyraUnWjvZKpmNJ
+	 DkLsJC4VYFOyZxrUjgVRIBpuXdA88owSbWaSBV0DQFI6zJhghQg3w1sFVyNSfzwtTehAj
+	 EXmZ8VYJdU2eYIAWh+dJDHx7fxQsjFRXNAT9slAqEnhSJuTg5EHJm322eVQaL7I6nohzf
+	 vAd3hjbkTjweADR7d0Y/HJSPvl0S3rLml67+/d2ExDNKNAOUDYNW/vrUrr+UU+kn9ASZI
+	 3WY0E2jOxNLEmJzpffpK5cJQU/RNfnP/7XYcBvrXR+1zsRnNEfoogbE4v11MoUA3dBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f+vVViz5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UMzWaWyg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB19606B8AF;
-	Sat,  7 Nov 2026 15:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24063606B8AF;
+	Sat,  7 Nov 2026 15:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f+vVViz5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2C81F0089F;
-	Sat,  7 Nov 2026 15:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UMzWaWyg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FC31F0089F;
+	Sat,  7 Nov 2026 15:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063707;
-	bh=sqL+Mczg5dR23IK+xOUPY64s9Ieq633sAP3QZIFBYtw=;
+	s=korg; t=1794063709;
+	bh=IgWh7Shg4Yxql7LlNJj6i2gM95h5j/U2gkPo9ZzO1cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f+vVViz5fZp771TkuCbjzpobef1nxreKuQsFFSk82Ddfo91Suk1aExr+puKkxMwQe
-	 MKyF41GG3qX4TyYsqgcuNVujjQopzWmTERliAFcwbDVLxdujzcLEvMy3nmlOakmldo
-	 2ZSUk+E1bVqK+kE2NudnBEK1nxZqwwkuE5hVFoEI=
+	b=UMzWaWyg4cYEFXUmFdt9pgzpxKLOeFfnRoEAhq7wkgXY/xXVzS1Fcs5CKYz5UNgbK
+	 aFoB8UtCocH2s7/i9aTzCC5pP//xSvxanDD9kHY3RzP2q2/PcbV5zYys9zpKWD0u/V
+	 VoVo5MJMeQzqcaLIJH8bOUpsMhvAYY3xgx9n2wJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Wang Haoran <haoranwangsec@gmail.com>,
+	Li Ximo <lixicaicai@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 771/869] libceph: Fix unsafe decode in ceph_redirect_decode()
-Date: Sat,  7 Nov 2026 08:57:33 -0500
-Message-ID: <20261107134918.849014561@linuxfoundation.org>
+Subject: [PATCH 6.18 762/869] fbdev: atmel_lcdfb: fix list_first_entry() on possibly empty modelist in probe
+Date: Sat,  7 Nov 2026 08:57:24 -0500
+Message-ID: <20261107134918.554974435@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -63,52 +63,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Wang Haoran <haoranwangsec@gmail.com>
 
-[ Upstream commit 0405670e50f213594366ab7eddc07002bd7f84c0 ]
+[ Upstream commit 01d1204582f16e8b7bfce29648e5cf77a585d962 ]
 
-ceph_redirect_decode handles unchecked data received over the network
-from an OSD. Currently, there is only a bounds check covering the first
-three decode operations. After decoding the first len field from the
-message, the only remaining check ensures there is enough buffer space
-to hold len bytes. However, there is no guarantee that this value is
-large enough to hold the subsequently decoded fields. The decoding of
-the second len field is missing an explicit bounds check. Consequently,
-a corrupted message can trigger an out-of-bounds read.
+list_first_entry() does not return NULL on an empty list; it returns a
+bogus pointer computed by container_of() from the list head.
+atmel_lcdfb_probe() initializes info->modelist with INIT_LIST_HEAD()
+and later takes its first entry with list_first_entry(), assuming
+atmel_lcdfb_of_init() populated it. However, atmel_lcdfb_of_init()
+drops the return value of fb_add_videomode() — unlike every other
+fallible call in the same function — so if fb_add_videomode() fails
+(its internal kmalloc can return -ENOMEM under memory pressure or
+fault injection), the list stays empty while of_init() reports
+success. The probe path then dereferences the bogus pointer in
+fb_videomode_to_var(&info->var, &modelist->mode). Because the bogus
+pointer lands inside the contiguous fb_info allocation, this may not
+fault immediately; instead it silently reads adjacent memory as a
+struct fb_videomode and programs garbage timing parameters into the
+LCD controller. This was found by code audit; we do not have Atmel
+hardware to reproduce it.
 
-This patch fixes the issue by switching the decoding from
-ceph_decode_32() to the bounds-checked version ceph_decode_32_safe().
+Fix this on two levels: check the return value of fb_add_videomode()
+in atmel_lcdfb_of_init() so the failure is propagated (root cause),
+and use list_first_entry_or_null() in atmel_lcdfb_probe() with a NULL
+check that fails probe gracefully with -EINVAL (defense in depth),
+consistent with the surrounding error handling which bails out to
+stop_clk.
 
+Reported-by: Wang Haoran <haoranwangsec@gmail.com>
+Reported-by: Li Ximo <lixicaicai@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: 205ee1187a67 ("libceph: follow redirect replies from osds")
-Assisted-by: Cursor
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Wang Haoran <haoranwangsec@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/osd_client.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/atmel_lcdfb.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/ceph/osd_client.c b/net/ceph/osd_client.c
-index 92d76df2701ef..47879d73029aa 100644
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -3642,7 +3642,7 @@ static int ceph_redirect_decode(void **p, void *end,
- 	if (ret)
- 		goto out;
+diff --git a/drivers/video/fbdev/atmel_lcdfb.c b/drivers/video/fbdev/atmel_lcdfb.c
+index 35862e83f7afa..2b602ad004dd9 100644
+--- a/drivers/video/fbdev/atmel_lcdfb.c
++++ b/drivers/video/fbdev/atmel_lcdfb.c
+@@ -1009,7 +1009,9 @@ static int atmel_lcdfb_of_init(struct atmel_lcdfb_info *sinfo)
+ 	if (ret < 0)
+ 		goto put_display_node;
  
--	len = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, len, e_inval);
- 	if (len > 0) {
- 		pr_warn("ceph_request_redirect::object_name is set\n");
- 		goto e_inval;
+-	fb_add_videomode(&fb_vm, &info->modelist);
++	ret = fb_add_videomode(&fb_vm, &info->modelist);
++	if (ret < 0)
++		goto put_display_node;
+ 
+ put_display_node:
+ 	of_node_put(display_np);
+@@ -1077,8 +1079,13 @@ static int atmel_lcdfb_probe(struct platform_device *pdev)
+ 	}
+ 	atmel_lcdfb_start_clock(sinfo);
+ 
+-	modelist = list_first_entry(&info->modelist,
+-			struct fb_modelist, list);
++	modelist = list_first_entry_or_null(&info->modelist,
++					    struct fb_modelist, list);
++	if (!modelist) {
++		dev_err(dev, "no video mode available\n");
++		ret = -EINVAL;
++		goto stop_clk;
++	}
+ 	fb_videomode_to_var(&info->var, &modelist->mode);
+ 
+ 	atmel_lcdfb_check_var(&info->var, info);
 -- 
 2.53.0
 
