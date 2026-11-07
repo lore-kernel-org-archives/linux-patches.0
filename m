@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064416;
-	b=cF6FtrPtinVsalKztW10g7PdK4Uc2ZpjSukXXKng4N6hEApLWyZh2KfGX+3LuVTdF++n
-	 Z4rMi28qesRKnDcYF2LZrVvLmoFeFanfhaOnBv1pQXO+vSpXCkZRCkCKy5MpJ0sbIq6in
-	 7XIFaAEHDAuqBkgAb9vHZ9i11OK0wE4ylpMsIKTC4tz4czrhAnAtYn69omvfdvtBimJlx
-	 BQ50y4EOp+Q9DQE0W+XWW29lRQRP7QNlmwtCOCdD4oFTjqEZpYEbk+nLZQ4V6wMC9jYpB
-	 r2u55kbDoRYe4ZW2H88+Fb1yvPKl7dABlu0loqU26mb4rqWC7GsaHqrnbfCsAqLLGkg==
+	t=1794064417;
+	b=A74ZrwZ0fm5Xe8a9F9c6sam2Q/CSEMYf+Xi6weMgRQLwb7llzzghbNMPEFveDCRWj4Qe
+	 /OgQapCgLDuIx1cYl8fQ/Iaw+cXjOtgoj56SmXfkoTqik0uaMPWxQV+xl6y988FXLJZ9D
+	 vuQ8nY5EoGymhgd865zxU21D1TUjdq4i+inLiWcPrPWjxp4jSBVvlIoLqwgM13P9cn8N0
+	 MbgVbSXpqIYU3AKa3qFMVDEfB61tViZhboOq+DelLxG5y+8uu0+db2XGkwG1+y2/n33NA
+	 BSaPN1dnmn5gNA/TQuGwZDGB4dMeeR0ry1ITIRoxN8X6+ATkG4BccoLsJ4+KUa74cmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064416;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fy7y9EyJCa/MfK+azw/1fDtlCYuse1WnO9pUH1BusE8=;
-	b=Q38SC2y02DXfYreKhDLej19Xk+XYUqb+rGBnGEAUNNNv+LXIpi8izitIhxBxa1A7UuMY
-	 7xKn+FACMvaMdyWz9IuMc3GigXdemUaVIZrEKe7E1nV8JF3955B/ApqdLjS24yBFpqQ+R
-	 IJU+Xwqb/ktntnebmzTx6TEBF8tDJbsxscmTeQ2gJmxwv1Dq6Fb8Rn8xzA4MBkOHxCx5p
-	 c5R0Ui7Z6IG6YjHDvWezGEKVlY6/xtc56HOnsVPfYAV0tlD3R4vqcyOCTK36NUwQG8feW
-	 F4n4SvGuPORVkpUkalqoQruMubsz3EsGLT9J/iy0bNTpMxmPW/g/pyKb5gDFXFvI9Tg==
+	bh=WTTe/viX5Bhux2G82Y3kx8/OEYz8VpWNORZ7Wpyp50Q=;
+	b=DZwTWrTkme5K5FqaAc2DwUG5g/x9EmN6NWlKZ4dLXD43oOgjynfebJjbqaSW0fSiGBFH
+	 Wd40vpBLIofdiwS4JzTRo6f6en3BP/W9vTW0z60mAuSRzeHv0S9d7vF8MS7Mz7PIErIdR
+	 RYwiDp9PQ4JcHVPR8P8ulmWMDZUvYS4kU0HRe0quxzXJcYJ6afFtbhOc5LUJcQXbu1iMn
+	 Yw+bGTw6Cd+XRTY5Va7GAkVZ5cAhyRdwE5H4wKuxBP9eJpXrGd0JQ/aeCs3wrLAwcWXp3
+	 I+5XRvbD/pKuCEQqfaAhx1Q2xNGssQWZ8a71RGVkxPSvIdH2WRjz1K1kVoJXIQcHbzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYzuf0Lv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F26pASjL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDB5606A333;
-	Sat,  7 Nov 2026 15:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E15606A333;
+	Sat,  7 Nov 2026 15:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pYzuf0Lv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5D51F0089F;
-	Sat,  7 Nov 2026 15:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F26pASjL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F6E1F008A1;
+	Sat,  7 Nov 2026 15:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064415;
-	bh=Fy7y9EyJCa/MfK+azw/1fDtlCYuse1WnO9pUH1BusE8=;
+	s=korg; t=1794064417;
+	bh=WTTe/viX5Bhux2G82Y3kx8/OEYz8VpWNORZ7Wpyp50Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pYzuf0Lvr3ew+0K6t8IDeBRRmWPbQG7dHIwIY/kCZoiA24B+7Cyn7a4KnvZ8gnR5n
-	 aAQnqjks6uNf6M/lkU2CSrj02+TyYX2nnL8SnT3TKPQRUqs85C5pNOR//aFx/WcRu4
-	 NyuA/+HiQ96D0JY4vFAlJjLvwDhxzB7TpJB+iHfY=
+	b=F26pASjL8391ax5K571TGrcPq4aOqQZGo441hvP7JrioY+R5etGSXK55lI+fKoXcI
+	 IW2bIEs53tPzOG/pVARtJYjxdktZOgSnd4O9ZKoJIwP4WEjqEq93PUhqQVrmZOkc25
+	 rDwafec/MaW9S+Nvag5/FT6MRk5Yor7Vwl0vLI2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0427/1257] PCI: Disable MSI for ULi M1575 EHCI controller
-Date: Sat,  7 Nov 2026 08:45:23 -0500
-Message-ID: <20261107134951.286465862@linuxfoundation.org>
+Subject: [PATCH 7.3 0418/1257] dm-writecache: fix a quirk in statistics
+Date: Sat,  7 Nov 2026 08:45:14 -0500
+Message-ID: <20261107134951.051982324@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,60 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 5f30217ec296fb5742f6fd306586dbca5b81b4eb ]
+[ Upstream commit c1ab80af0d99a906b60b769f2e692c37d2db1323 ]
 
-With MSI, the ULi M1575 EHCI controller (10b9:5239) intermittently stops
-executing its asynchronous schedule. Control transfers time out ("device
-not accepting address", "device descriptor read/64"), the port is handed to
-the companion OHCI controller, and the device ends up at full speed. On a
-configured hub the stall shows up as hub descriptor and status read
-failures. Only re-initializing the controller recovers it.
+writecache_bio_copy_ssd() unconditionally adds the number of extra blocks
+in the merged bio to stats.writes_allocate. That is only correct when the
+entries were taken off the freelist.
 
-On a Sun Ultra 45, 65 of 800 controller initializations stalled with MSI
-and none of 200 with INTx. Each initialization is an unbind and bind of
-ehci-pci on the EHCI function, with MSI or INTx selected through its
-msi_bus attribute; with this quirk, 0 of 100 cycles of the same loop
-stalled. The stall reproduces on a kernel that already contains commit
-0b60557230ad ("usb: ehci: Prevent missed ehci interrupts with
-edge-triggered MSI").
+When the function is called with search_used == true -- i.e. from the
+write_hits_uncommitted / write_hits_committed paths in
+writecache_map_write() -- the first entry was found in the rbtree and
+every following entry is picked up with rb_next(), so nothing is
+allocated at all. Accordingly the writes_allocate++ that accompanies a
+successful writecache_pop_from_freelist() is skipped for that case, but
+the batch accounting below still adds n - 1.
 
-The OHCI functions (10b9:5237) keep MSI. They showed no stall, and the hub
-enumerated through them on MSI during the EHCI failures, so only the EHCI
-function is quirked.
+An in-place overwrite of n contiguous cached blocks therefore reports n -
+1 allocations that never happened. Only the dmsetup status output is
+affected; there is no functional change.
 
-The illumos EHCI driver also disables MSI on this chip, in
-ehci_register_intrs_and_init_mutex() in
-usr/src/uts/common/io/usb/hcd/ehci/ehci_util.c.
-
-Until USB HCDs started trying MSI first in v5.9, the controller always used
-INTx. Disable MSI so it uses INTx again on this chipset.
-
-Fixes: 306c54d0edb6 ("usb: hcd: Try MSI interrupts on PCI devices")
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260930191100.6127-1-kaloz@kernel.org
+Fixes: b2676e1482af ("dm writecache: count number of blocks written, not number of write bios")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/dm-writecache.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 866493aceef0c..edf035d251cc2 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -1945,6 +1945,8 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x4388, quirk_no_msi);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x4389, quirk_no_msi);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x438a, quirk_no_msi);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x438b, quirk_no_msi);
-+/* ULi M1575 EHCI (10b9:5239): MSI stalls the async schedule */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AL, 0x5239, quirk_no_msi);
+diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
+index 5804cbc62a511..e4559d1de3dde 100644
+--- a/drivers/md/dm-writecache.c
++++ b/drivers/md/dm-writecache.c
+@@ -1424,7 +1424,8 @@ static void writecache_bio_copy_ssd(struct dm_writecache *wc, struct bio *bio,
+ 	dm_accept_partial_bio(bio, bio_size >> SECTOR_SHIFT);
  
- static void quirk_pcie_mch(struct pci_dev *pdev)
- {
+ 	wc->stats.writes += bio->bi_iter.bi_size >> wc->block_size_bits;
+-	wc->stats.writes_allocate += (bio->bi_iter.bi_size - wc->block_size) >> wc->block_size_bits;
++	if (!search_used)
++		wc->stats.writes_allocate += (bio->bi_iter.bi_size - wc->block_size) >> wc->block_size_bits;
+ 
+ 	if (unlikely(wc->uncommitted_blocks >= wc->autocommit_blocks)) {
+ 		wc->uncommitted_blocks = 0;
 -- 
 2.53.0
 
