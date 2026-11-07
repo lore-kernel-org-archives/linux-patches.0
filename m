@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060855;
-	b=MW4bct/7gHOea3+AFI6HlqEbwWJMm4+9JwvAyoB/3uZHQJHAUB/kB2Tx6jUy3Zl345ri
-	 +J0hJHf6hnhWxqZVDZQPPnUIxyWNbF99t0X/pq8isK6FK7ajEGo2XLsbPI4hFNO6jRkoR
-	 sk6g7kmCe1jDoXehv6DlFI/9MM8XCkl25cDkcvJwqIKAiUJ9tO8eZBG+Q61QktJQVnR3h
-	 uougjkl7th5p7C12ig6jU015Rl1N53bXP/3twl/nY98M44YGIREn+LK1p5E86/QKVyG/J
-	 yARM8+4/jmfNEmrDmwHTLQiA5yDTbUe02elwWtiV6p/DFbimqEVfj2FLYtgIGbvwKYQ==
+	t=1794060856;
+	b=21TAozu7NSVsKoIrlV7Snxm6LJLhtWigSlbdT51auu/etnPPMGCvwp+0KN0OTsdVvUIr
+	 Cw7wU/rvkkeCy6URjqzvv6FpuVUwGhjTJzWIrnyrH6RKaK6p80cCTYYaxLPSwQ2l5G0Wp
+	 4Vt8IqdxtiMF48Zb2whkCSzU/hKQFYHasZJYlAMiFeNJMcRGiVc06XGUpQR0pth5A/l1p
+	 FxfmNvLbMXLIbfKhy37CJrgeaJs/gvwEMgfk99NnkmtxFbM5KZKoOCkC4vZ51SF6g1BuY
+	 TBMUM3X46g7P3m5bl3vmFvE+P3O3ijOGUYG2exDqQahBNeEQknAs16R5Avru4DOSVfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060855;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060856;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nGFR/SsqHv5NZmAdRwMhNMd2Zl+NTmbwWUEYQwpBdZ0=;
-	b=3nQirvY87UsCYbJKizyjJfZsUCBrCpOIUh71odfAC46mIwe1Re2RePLoRZlOwHg3Mphn
-	 qjnTAg2e7zG8Euvmofu1dRDhHruPpyww54aBmzcMyi+3iAGotKJJ6JOGadZF4qURgfJ0g
-	 tQSLn5jNixRG/bEFI5IDt+AfqCYIH8b+L2gfDUh6v6/EvzuO4HlpXvh8/EYQCOzSm/7Dc
-	 tALkMWiP++5SKe3gE14ZGCbY2nT9vso+yg6T4X9jHsE/7bPLn4EDtBCqPSq9bnmo4nnf2
-	 ZCURBub6c6nnCdbH9hD/8JBw+2OiJ8g8FSUKmlHdpZwvtg9S5gzdz/bgspA7MxX+Kuw==
+	bh=vo3Vw54tJVCF1E75b4x60phq7cbrQ51xIFcCna3AgTk=;
+	b=utKM4yo7CAsxIzuIuPARcwWYTuXSuuY0HK2ywIaZedOLrAedlBNioSXen8CsiUAV99y4
+	 ahWsxjuus360sZBtVD91yQLbV0w3XeDHr8r0sEWYfdFXlzbMjH4QLBausmVI0nS814Ovq
+	 FAqIIFB9PqERBH/XxhT5la1I6cT2fvLcYu9uTOa25HQ/IaFt9SNg5A+vv/ipm7yMvn+2N
+	 rU/Dd4JxRaM5nNUcB14BJyR6FI/K+/2zmQj0z57pyz5rX8SB6R42xW5Elostl3no14Y/g
+	 +IWuXRwPR2RHdpsmC/wlFC7BSH0eL4uZI2bxSmOUbRCxajT2+1cg91rxa7qYhYrWPaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHLXRZIO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sh0oNqVA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A98606A330;
-	Sat,  7 Nov 2026 14:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D751606A330;
+	Sat,  7 Nov 2026 14:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHLXRZIO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B241F0089F;
-	Sat,  7 Nov 2026 14:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sh0oNqVA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3ACA1F0089F;
+	Sat,  7 Nov 2026 14:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060854;
-	bh=nGFR/SsqHv5NZmAdRwMhNMd2Zl+NTmbwWUEYQwpBdZ0=;
+	s=korg; t=1794060856;
+	bh=vo3Vw54tJVCF1E75b4x60phq7cbrQ51xIFcCna3AgTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UHLXRZIOlXBe5K/hjvneB37O3s61mZoDoqOzNNZiSW/XT/CMpJDzDopUG9lGT3Lw4
-	 W1YLSc7A4bln5mloAR/hTes4INdEw39pmdvejeBHPmdSzNUYrNGmj8BuDwklGkMSgC
-	 S9eQeGgPgS4TYv3ADDdReT/GOsvCDY2gIvHt6Z/0=
+	b=sh0oNqVAEV6p7TF/ijoPJn31I9OA5wpxVTo0nMYOhcWRbkQEuZp22dg1tpiOndJ7S
+	 AQayTP3LNnE/bDxmcMwLLZZqwhnqu5VHlNo3vff+8RH2h6hqakbDkGc5v9fexkixW0
+	 SED9YSFiQobngspx09FxvZvguWro58cKOuSbGYzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rosen Penev <rosenp@gmail.com>,
 	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0239/1536] nvmem: brcm_nvram: reject empty NVRAM partition
-Date: Sat,  7 Nov 2026 08:37:35 -0500
-Message-ID: <20261107135004.387985244@linuxfoundation.org>
+Subject: [PATCH 6.12 0240/1536] nvmem: brcm_nvram: fix out-of-bounds access on malformed flash data
+Date: Sat,  7 Nov 2026 08:37:36 -0500
+Message-ID: <20261107135004.414131899@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,42 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit fde46579cf8872138b296349c2bd8a3cd3f132e2 ]
+[ Upstream commit a67e2c323a47a2254ed3472b5e4c53abac20f116 ]
 
-If the partition is completely erased (all padding bytes), the trimming
-loop reduces data_len to 0. devm_kzalloc(dev, 0, GFP_KERNEL) returns
-ZERO_SIZE_PTR ((void *)16), which is non-NULL and bypasses the NULL
-check. The subsequent cast of priv->data to struct brcm_nvram_header *
-and dereference of header->magic causes a page fault on address 0x10.
+The length check in brcm_nvram_parse() validated header->len against
+priv->nvmem_size (the full partition size) instead of priv->data_len
+(the actual allocated data buffer). A malformed flash partition with
+header->len between the two would pass the check, causing
+brcm_nvram_add_cells() to read and write priv->data[len - 1] beyond
+the heap allocation.
 
-Reject data_len smaller than the header before allocating.
+Also add a minimum bound: len < sizeof(*header) could underflow the
+data[len - 1] access.
+
+Fix both bounds by rejecting len outside [sizeof(*header), priv->data_len].
 
 Assisted-by: opencode:big-pickle
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260729094647.111468-13-srini@kernel.org
+Link: https://patch.msgid.link/20260729094647.111468-14-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/brcm_nvram.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/nvmem/brcm_nvram.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/nvmem/brcm_nvram.c b/drivers/nvmem/brcm_nvram.c
-index 65f458af3a195..6a142f8feac39 100644
+index 6a142f8feac39..3e85b6e6447ca 100644
 --- a/drivers/nvmem/brcm_nvram.c
 +++ b/drivers/nvmem/brcm_nvram.c
-@@ -84,6 +84,11 @@ static int brcm_nvram_copy_data(struct brcm_nvram *priv, struct platform_device
+@@ -192,9 +192,13 @@ static int brcm_nvram_parse(struct brcm_nvram *priv)
  	}
- 	WARN(priv->data_len > SZ_128K, "Unexpected (big) NVRAM size: %zu B\n", priv->data_len);
  
-+	if (priv->data_len < sizeof(struct brcm_nvram_header)) {
-+		dev_err(priv->dev, "NVRAM data too small (%zu)\n", priv->data_len);
+ 	len = le32_to_cpu(header->len);
+-	if (len > priv->nvmem_size) {
+-		dev_err(dev, "NVRAM length (%zd) exceeds mapped size (%zd)\n", len,
+-			priv->nvmem_size);
++	if (len < sizeof(*header)) {
++		dev_err(dev, "NVRAM length (%zd) too small\n", len);
 +		return -EINVAL;
 +	}
-+
- 	priv->data = devm_kzalloc(priv->dev, priv->data_len, GFP_KERNEL);
- 	if (!priv->data)
- 		return -ENOMEM;
++	if (len > priv->data_len) {
++		dev_err(dev, "NVRAM length (%zd) exceeds data size (%zd)\n", len,
++			priv->data_len);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
