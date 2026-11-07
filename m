@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063633;
-	b=OixxMPEMAGXqauVg7BqsP9dGTh8XICMOhlQDLGxGOzZBFxtSDdRKYvJbYmQUEfCK4ADP
-	 N93HJEdp2X5D/JesMGmjRgOzfrLurklebBF9WFSInrPA4Zb5QVHhcyMp9bPz11VYmeJzb
-	 7JPO7lYL3rL+atmSLXZyO1srNhPI1lazWPNiBnMyQMDbIs1WSnxkUpCHz/hFvuU99uGnN
-	 3DvErh8NYDBFXnjLk4dbSlfSdRQlDJ9+oSgks8JcSJMaeYeXdzx/nsiZXHyA/3EHbJ2I3
-	 BSnuBBBnEPqVoc5DqYf/RwBrVT/jrh/BkEod9M1dPVmNN9K209Ix6prd69mAy+dd00Q==
+	t=1794063634;
+	b=ug3USLJs4TAwsOlWECiXHqcI6NfXZDWZYk1ebmsBRBedDIp1TkTgRn1w0x2EB6ywvFSg
+	 PYMxbWv8CwtyZKWX7LN4IlHYYLnFp5oLsb15H7L7vNDUA/HJao8fsJLpJrd1ATLOntrQN
+	 VlRpXLD+qJsx/g9fjskXxviqYP17QbMIin0AdGWr7CSGLPsSQo4aRwUuaAf6caBcopE5e
+	 VYgq5NRCE/ztbwDy+x4ZdD7c0bGv9E9Cp9rB5dN53gSjwOIgynhb4jSKiaQazzrLQF/M7
+	 lLdN2VG489Js2Vsgl4gGG89gNJnFpEB4lC69mJtZxVe2PyvJQJb2sn0A3NPPYx6pxjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063633;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FQ1RvVNyJ/kqbCyYKiNsZETtvOhVEt3Azssztc2sb64=;
-	b=dAbN58Dv3x9x71DT4g6YqRYpq11twM95n7vvwqzkBCFnr1qDbw0EaJSDTLXgnqSBrv6G
-	 Oc9PzyjvgGeWfiJA9VIYErAZ5VxPJvLM6SQChAymZaIQYLKunQvsGI/wwXIGYyeZZUo+c
-	 K7Xpffk1uw8l14Pb4eiZ0cCtAh0Dxf72TgOlsrrAdEYJ7qYCNWIz4FSWT/u06YaxHrgk5
-	 sjouNGVpyGntqjC4rgJnH60dheUYhLjKjEGo7JBz92gooa2I8GM2IEA8DiAI0xJh0q3aS
-	 v0Bwc/140mBqA7jw3adTtYOnrvg0W1yIL0B4LWwbwwOizCSPKJpkslaOp2VhjiHOLFQ==
+	bh=9TjHK+s3frzalWq5S1OyAJ5PMFZhbAeuDTIFD6EHnVs=;
+	b=H5z8IgvgIPQc5WHuZzfKmK7J+S2DAoZ31o3NNNAO/S6DIZ/w0NG9tgACH8GLoxJfGFAd
+	 a0te75BSa/XAHuSobUxJ0Xwx9GfGc32bhGkTHWuG70ERxuJqnP0yddLf7acy60LachvhS
+	 K4Cc6cHhX+sqnDF412U1EnuEq8oAM+wLYE/s/uh4aHMy+pcIfBRe2eYZs6T04NaBHNgma
+	 YlZI+KtRytelWOp19Sp8lJiT1hLmIyljibUl3MGZHRLPy0mYCBeZndeAzbHnEqF2LBaYn
+	 ke6mto33xtUCo6tj6i9X0elSBPsQUgC3i63OR3Xt840XTberSo6IJleTZTsXOtWxptw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yay6X7M0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JYuDGmVt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D7B606EEAB;
-	Sat,  7 Nov 2026 15:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B37D606A333;
+	Sat,  7 Nov 2026 15:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yay6X7M0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA411F0089F;
-	Sat,  7 Nov 2026 15:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JYuDGmVt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACA81F0089F;
+	Sat,  7 Nov 2026 15:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063633;
-	bh=FQ1RvVNyJ/kqbCyYKiNsZETtvOhVEt3Azssztc2sb64=;
+	s=korg; t=1794063634;
+	bh=9TjHK+s3frzalWq5S1OyAJ5PMFZhbAeuDTIFD6EHnVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yay6X7M02xq22m2tw7Qd9ys7rYZDgNlcCtCnqQ102lozEEF62i6K/cBqxJ8TnvWPM
-	 2gSY8+KHXeRGdpl9OuPRQwpoLICq452xv6VtxJ/wi+ydWfafzRVxv04qmpYvEoXwxD
-	 doiByN9srP2pCaaCj61LMiwHxnXcjOw8TNWeba28=
+	b=JYuDGmVt9yGih1YCkVG46eewqXfk0udIYBugk0cLFIKjmN2RWf842qVMhTHgCDC9A
+	 8vajng7JW1NuGIdnFzBxSIbrOgqet0D0B78j78LbBc2KKU0f/vrHcXO6uTEjR4v00H
+	 qKKfcCsye6aMwfiORLVwXXuCnHD1ZJTJnKAKK5v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weilin Tong <tongweilin@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	David Hildenbrand <david@kernel.org>,
-	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Dan Carpenter <error27@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Pufan Jin <cyan2254650260@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 750/869] ipc/shm: fix RSS accounting for hugetlb shared memory
-Date: Sat,  7 Nov 2026 08:57:12 -0500
-Message-ID: <20261107134918.187301187@linuxfoundation.org>
+Subject: [PATCH 6.18 724/869] spi: zynq-qspi: fix address buffer corruption and support 4-byte address
+Date: Sat,  7 Nov 2026 08:56:46 -0500
+Message-ID: <20261107134917.359765694@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -75,74 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weilin Tong <tongweilin@linux.alibaba.com>
+From: Pufan Jin <cyan2254650260@gmail.com>
 
-[ Upstream commit e387ebe5cd31720b1e0281fd045be4eef36fadb3 ]
+[ Upstream commit dc5ca34f5e8dc10c566ef39aa3b1a201a17ca734 ]
 
-Commit a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in
-filemap.c") changed mapping->nrpages to count base pages for hugetlb
-folios.  However, shm_add_rss_swap() still multiplies it by
-pages_per_huge_page(), overcounting RSS in both SHM_INFO and
-/proc/sysvipc/shm.
+In zynq_qspi_exec_mem_op(), when transmitting address bytes, the driver
+iterates over op->addr.nbytes and populates xqspi->txbuf[i]. However,
+xqspi->txbuf is never re-assigned before populating the address, meaning
+it still points to (u8 *)&op->cmd.opcode from the command phase.
 
-Use mapping->nrpages for RSS accounting across all backing types, and
-account swap only for non-hugetlb shmem.  Use READ_ONCE() for both
-counters instead of info->lock, which does not protect nrpages and cannot
-provide a consistent snapshot.
+This causes two severe issues:
+1. Memory corruption: Writing into xqspi->txbuf writes past the opcode
+   buffer on the stack (which was passed as const struct spi_mem_op *).
+   If opcode is zero, xqspi->txbuf is uninitialized.
+2. In zynq_qspi_supports_op(), operations with op->addr.nbytes > 3 are
+   rejected. When paired with SPI NOR flashes larger than 16MB (such as
+   Winbond W25Q256), spi_nor_spimem_check_read_pp_op() tests 4-byte address
+   support, which fails and causes spi_nor_select_read() to drop all read
+   capabilities, failing probe with -EINVAL (-22).
 
-Link: https://lore.kernel.org/20261014082218.2236088-1-tongweilin@linux.alibaba.com
-Fixes: a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in filemap.c")
-Signed-off-by: Weilin Tong <tongweilin@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Dan Carpenter <error27@gmail.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: <stable@vger.kernel.org>
+The Zynq-7000 QSPI controller hardware in manual I/O mode natively supports
+transmitting 1 to 4 address bytes via its TXD FIFO registers
+(ZYNQ_QSPI_TXD_00_00_OFFSET).
+
+Fix this by introducing a local opaddr[4] buffer in zynq_qspi_exec_mem_op()
+and explicitly setting xqspi->txbuf = opaddr before populating address
+bytes. Also allow up to 4 address bytes in zynq_qspi_supports_op().
+
+Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pufan Jin <cyan2254650260@gmail.com>
+Link: https://patch.msgid.link/20261016130812.282624-1-cyan2254650260@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- ipc/shm.c | 23 ++++-------------------
- 1 file changed, 4 insertions(+), 19 deletions(-)
+ drivers/spi/spi-zynq-qspi.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/ipc/shm.c b/ipc/shm.c
-index c77a6c8683ce9..2f5cee0c78c7d 100644
---- a/ipc/shm.c
-+++ b/ipc/shm.c
-@@ -936,26 +936,11 @@ static inline unsigned long copy_shminfo_to_user(void __user *buf, struct shminf
- static void shm_add_rss_swap(struct shmid_kernel *shp,
- 	unsigned long *rss_add, unsigned long *swp_add)
- {
--	struct inode *inode;
-+	struct inode *inode = file_inode(shp->shm_file);
+diff --git a/drivers/spi/spi-zynq-qspi.c b/drivers/spi/spi-zynq-qspi.c
+index 406fd9d5337ee..c9588fd1d1237 100644
+--- a/drivers/spi/spi-zynq-qspi.c
++++ b/drivers/spi/spi-zynq-qspi.c
+@@ -229,11 +229,10 @@ static bool zynq_qspi_supports_op(struct spi_mem *mem,
+ 		return false;
  
--	inode = file_inode(shp->shm_file);
+ 	/*
+-	 * The number of address bytes should be equal to or less than 3 bytes.
++	 * The number of address bytes should be equal to or less than 4 bytes.
+ 	 */
+-	if (op->addr.nbytes > 3)
++	if (op->addr.nbytes > 4)
+ 		return false;
 -
--	if (is_file_hugepages(shp->shm_file)) {
--		struct address_space *mapping = inode->i_mapping;
--		struct hstate *h = hstate_file(shp->shm_file);
--		*rss_add += pages_per_huge_page(h) * mapping->nrpages;
--	} else {
--#ifdef CONFIG_SHMEM
--		struct shmem_inode_info *info = SHMEM_I(inode);
--
--		spin_lock_irq(&info->lock);
--		*rss_add += inode->i_mapping->nrpages;
--		*swp_add += info->swapped;
--		spin_unlock_irq(&info->lock);
--#else
--		*rss_add += inode->i_mapping->nrpages;
--#endif
--	}
-+	*rss_add += READ_ONCE(inode->i_mapping->nrpages);
-+	if (IS_ENABLED(CONFIG_SHMEM) && !is_file_hugepages(shp->shm_file))
-+		*swp_add += READ_ONCE(SHMEM_I(inode)->swapped);
+ 	return true;
  }
  
- /*
+@@ -526,6 +525,7 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
+ 				 const struct spi_mem_op *op)
+ {
+ 	struct zynq_qspi *xqspi = spi_controller_get_devdata(mem->spi->controller);
++	u8 opaddr[4] __aligned(4);
+ 	int err = 0, i;
+ 	u8 *tmpbuf;
+ 
+@@ -547,12 +547,13 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
+ 	}
+ 
+ 	if (op->addr.nbytes) {
+-		for (i = 0; i < op->addr.nbytes; i++) {
+-			xqspi->txbuf[i] = op->addr.val >>
++		for (i = 0; i < op->addr.nbytes; i++)
++			opaddr[i] = op->addr.val >>
+ 					(8 * (op->addr.nbytes - i - 1));
+-		}
+ 
+ 		reinit_completion(&xqspi->data_completion);
++		xqspi->txbuf = opaddr;
++
+ 		xqspi->rxbuf = NULL;
+ 		xqspi->tx_bytes = op->addr.nbytes;
+ 		xqspi->rx_bytes = op->addr.nbytes;
 -- 
 2.53.0
 
