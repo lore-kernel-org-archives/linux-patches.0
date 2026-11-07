@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062504;
-	b=Y+bpiM1QWTvCc8vFxDW1SPGjSEtSTAUTlclwqaZosRrNxpx/jMt8/iLkwDrV1KeEaFF0
-	 Ur5nguZjNvIYyCAg6Bcu5NJdqvCzsf+XheLB6fsrfVtDOWASree1EgbKy2NGBt/Dqom4q
-	 JuSBcMZRi2kD6igKCZ2O/mwokyVSQqlduAgX7SKXnO2eXFinOwRPziRMG2NZS8i3cnJbL
-	 RgRVy4gnC0rr8shvGctHK8DwC8sT+VdUZKWM40X7Q6yGxVN/nGBr/HyzkH6vQ3bA0LVHx
-	 Jr/BpAYwDPYKyi1z6t6BCKth+UoO/kJz7Q9+QJS6BvPy0H3BWW3VnnNX/Umod+fZwHQ==
+	t=1794062505;
+	b=jsrlC4xJDLldUuk7+7eArbjzZyMSAzS5jaRg89abXTFabqlynbEv/qZJ9zEyLw9LX7lv
+	 MuPBW3hnY6CYOFtGequG13G6Kk1TXEgmukdpUkvTNvtQqOltfmvfe4IC+m5NXXBxk1nxw
+	 xOEHIn7Y3Cd7MHPoosuOhhqgO8pn/vi9Yu8WHnp/c4ej7m9sfjpfg1Yx8EaTsFsSi7uIZ
+	 LB2UOXkpZwOmfBjKVa/civfGDDPBUKF87kKB8jJCKgS7aWG0kqVsZrg7D1sYrepkQCYxg
+	 4ouBVDavMUlXaCvGu1wnVv0p1pNpGDmcI9i1kRt2vHJelelk4KfEMV8ylpMl7T5iWTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062504;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062505;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YpAgwViQKlieUuORNdLFOYylvgJTqhghj4uk+eSAblU=;
-	b=bkGJMl330Co+Qr8AsMlulYwlF/i7xBlbn5aJuqHLR83TT93mHL3ZluyQRFx47hhsSSFx
-	 PhnAcvJQJ238A4CtwCczDnl0ijNfqMrknpeTHva/4ZQNgiVoETo9YRiVK6Kt9CkgV6K1D
-	 AdF1ZLtV6mbrDvs5Waf00PcbSpCZLj7MZ7IKcYgXfFMxQJGzPzO/C/slYRwJIqL2o0doL
-	 +xZblNWWlTVcJ5EW+Zxh0Z0Zh+eisni6eqV6ddFupHts1NHUslR2OKHaxMYJTDN37w1GQ
-	 zudJDPP4C5BPI06xzBoU31yDcrkR7fuEBBEVYTdc0bIZGEjwUIW5NpQ5wHFjuB2CwoQ==
+	bh=V26TiMzslUCTrNMs/KDcV27KuBTayXvYpIsr/KWBn4Y=;
+	b=Jto40fMhdvg+SAVKDh1EuAMFpjwva2BmevOSI7bSQxKRqjtIknHBxjIwcFPTNCaA5dYt
+	 0+0xisBWd56cqmxdXjT7AwhlKIsryJg01j3/40n/h6eTnCFxV+TuuEPsXWBj7hbISqQiZ
+	 xVXfMuOK/2i7HC54VIoOcr+OwiF7rOpiPJoBbf5lWfcHf/aGOKzpcJwWSaP24yKjnrdNx
+	 RxzcNe4Bp3gyZb+XBUYJ68q87toTFMEOL1k4pYPryJ2oMiFben9E1sh43KL2SCGZuzjp0
+	 Tw7VFy7U30wDRqgkmpW98EcIQFLiwvhVuahA42OR0H7DU5nMX3XqGdrXBDNrhFNzoWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PUD/5p7Z";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t3//Sgv1";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3231606A330;
-	Sat,  7 Nov 2026 14:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3F0606A331;
+	Sat,  7 Nov 2026 14:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PUD/5p7Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5285C1F0089F;
-	Sat,  7 Nov 2026 14:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3//Sgv1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F481F0089F;
+	Sat,  7 Nov 2026 14:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062503;
-	bh=YpAgwViQKlieUuORNdLFOYylvgJTqhghj4uk+eSAblU=;
+	s=korg; t=1794062504;
+	bh=V26TiMzslUCTrNMs/KDcV27KuBTayXvYpIsr/KWBn4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PUD/5p7Zbpc4an3djzIO83cKhW3YwKEIU1NDSlTrOtBnR77xvfuXPlJZO8yY0vV4e
-	 tAD9uBWI1gKsp++rN1q7F6wZQ1z/POj76x6+Tr/y8mfaFsVQsRTCpaTsUPzouk2Msp
-	 KJ+jEBlgBS/pzUvkb5mdc1mMD9rwCHg/PwMKuceY=
+	b=t3//Sgv12AVrUPhLqIx0Jam7ffOLkzeCbvpqMta2dhV780Tq7alziE4sx4TEhxVEo
+	 ntB7qyIDpdN0VpvbzErRrINqWP4QH0y+W+tjJRI5vqqc7JIQd53XZ9LvX1MY1e8EZB
+	 JZ1+7qwS9UnoevRsGQf9yYk7kmQS/kHq1zulhNAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Anderson Ferneda <anderson.ferneda@braza.com.br>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1399/1536] ocfs2: use the stored hash when checking xattr bucket collision
-Date: Sat,  7 Nov 2026 08:56:55 -0500
-Message-ID: <20261107135037.115762059@linuxfoundation.org>
+Subject: [PATCH 6.12 1364/1536] hwmon: (sht3x) Return the consumed count for heater writes
+Date: Sat,  7 Nov 2026 08:56:20 -0500
+Message-ID: <20261107135036.146875001@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,123 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-[ Upstream commit e39baff18b85cf8956aee138d7944b6581e8ba36 ]
+[ Upstream commit 817ac527100c8e20684211eb919ffd6d875adc7a ]
 
-ocfs2_check_xattr_bucket_collision() decides whether splitting a full
-bucket can make room for the entry being set by recomputing the hash of
-the name:
+heater_enable_store() returns the result of i2c_master_send(), which is
+the two-byte command length on success rather than the sysfs input
+count. This can report more bytes than were supplied, or a partial write
+for a fully processed input. For example, writing "on\n" returns two
+instead of three, so a caller retrying the remaining newline gets
+-EINVAL even though the heater command succeeded. Retrying the remainder
+of "off\n" can also send the heater-off command twice.
 
-	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
+Return count after a complete command transfer. Preserve negative I2C
+errors and return -EIO for nonnegative incomplete transfers, so a
+zero-message transfer is not reported as a successful zero-byte write.
+Keep the existing boolean parsing, command selection and locking.
 
-	if (name_hash != le32_to_cpu(xh->xh_entries[0].xe_name_hash))
-		return 0;
-
-For a new entry that is the hash it will be stored under, so comparing it
-is correct.  An existing entry keeps the hash it already has: an update
-never rewrites xe_name_hash, since ocfs2_xa_add_entry() is the only
-writer of that field for a real entry and ocfs2_xa_prepare_entry() calls
-it only when loc->xl_entry is NULL.
-
-An entry stored by a kernel that sign-extended the name bytes when
-hashing can still be updated, because ocfs2_xattr_find_entry() searches
-a non-indexed xattr block by memcmp on the name and never looks at
-xe_name_hash.  Growing it past the space left in the block converts the
-block into a tree, ocfs2_cp_xattr_block_to_bucket() fills the bucket in
-stored hash order, and the update runs out of room in the bucket too.
-The collision check then compares the unsigned hash against the legacy
-hashes in the bucket and reports no collision.
-
-ocfs2_xattr_set_entry_index_block() goes on to allocate a bucket that
-ocfs2_divide_xattr_bucket() cannot fill: a bucket whose entries all share
-one hash has no divide position, so all it does is append an empty bucket
-with a sentinel hash one above the last entry's.
-
-The re-search that follows depends on where the unsigned hash sorts.
-Below the legacy ones, it comes back to the full bucket and the set fails
-with -ENOSPC, having grown the tree for nothing.  Above them, it lands on
-the new empty bucket, which ocfs2_xattr_bucket_find() handles explicitly
-and ocfs2_find_xe_in_bucket() scans zero times, so the set stores a second
-copy of the entry under the unsigned hash and returns success.  The
-original stays in the full bucket, listxattr reports the name twice and
-getxattr returns the new copy.
-
-Pass the hash the entry is stored under instead: the stored one for an
-existing entry, the unsigned one for a new entry.  A tree whose entries
-are all stored under the unsigned hash sees no change, since there the
-two are the same value.
-
-Link: https://lore.kernel.org/20261009083002.2621201-3-joseph.qi@linux.alibaba.com
-Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Anderson Ferneda <anderson.ferneda@braza.com.br>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org> # 6.2+
+Fixes: 50c22cd154e5 ("hwmon: (sht3x) add humidity heater element control")
+Cc: stable@vger.kernel.org
+Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+Link: https://patch.msgid.link/20261019154718.2328055-1-pocj8ur4in@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/hwmon/sht3x.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index de87adb1ea976..8689a1ba0e43a 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -5746,16 +5746,14 @@ static int ocfs2_rm_xattr_cluster(struct inode *inode,
+diff --git a/drivers/hwmon/sht3x.c b/drivers/hwmon/sht3x.c
+index 1f63c07cfb085..87f406cca6cae 100644
+--- a/drivers/hwmon/sht3x.c
++++ b/drivers/hwmon/sht3x.c
+@@ -546,7 +546,10 @@ static ssize_t heater_enable_store(struct device *dev,
  
- /*
-  * check whether the xattr bucket is filled up with the same hash value.
-- * If we want to insert the xattr with the same hash, return -ENOSPC.
-- * If we want to insert a xattr with different hash value, go ahead
-- * and ocfs2_divide_xattr_bucket will handle this.
-+ * If the entry being set carries that same hash, return -ENOSPC, since
-+ * ocfs2_divide_xattr_bucket() has no divide position to work with.
-+ * Otherwise go ahead and ocfs2_divide_xattr_bucket() will handle this.
-  */
--static int ocfs2_check_xattr_bucket_collision(struct inode *inode,
--					      struct ocfs2_xattr_bucket *bucket,
--					      const char *name)
-+static int ocfs2_check_xattr_bucket_collision(struct ocfs2_xattr_bucket *bucket,
-+					      u32 name_hash)
- {
- 	struct ocfs2_xattr_header *xh = bucket_xh(bucket);
--	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
+ 	mutex_unlock(&data->i2c_lock);
  
- 	if (name_hash != le32_to_cpu(xh->xh_entries[0].xe_name_hash))
- 		return 0;
-@@ -5824,6 +5822,7 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
- 					     struct ocfs2_xattr_search *xs,
- 					     struct ocfs2_xattr_set_ctxt *ctxt)
- {
-+	u32 name_hash;
- 	int ret;
- 
- 	trace_ocfs2_xattr_set_entry_index_block(xi->xi_name);
-@@ -5843,10 +5842,18 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
- 	 * the maximum number of collisions we will allow for then is
- 	 * one bucket's worth, so check it here whether we need to
- 	 * add a new bucket for the insert.
-+	 *
-+	 * An existing entry keeps the hash it was stored under, and that is
-+	 * the hash a split has to work with.  A new entry is stored under the
-+	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
- 	 */
--	ret = ocfs2_check_xattr_bucket_collision(inode,
--						 xs->bucket,
--						 xi->xi_name);
-+	if (xs->not_found)
-+		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
-+						  xi->xi_name_len);
-+	else
-+		name_hash = le32_to_cpu(xs->here->xe_name_hash);
+-	return ret;
++	if (ret != SHT3X_CMD_LENGTH)
++		return ret < 0 ? ret : -EIO;
 +
-+	ret = ocfs2_check_xattr_bucket_collision(xs->bucket, name_hash);
- 	if (ret) {
- 		mlog_errno(ret);
- 		goto out;
++	return count;
+ }
+ 
+ static int update_interval_read(struct device *dev)
 -- 
 2.53.0
 
