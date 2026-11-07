@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062714;
-	b=LvkBygFbQbkzTyoy2ybC1powO42Y6HVhTyHNyJ9DGJJvW07LIDwUkwmnsKj1I4At10kB
-	 RwEFR8JBZkvwGKjPo6L3FU6i1S3tSMnQW17snLQYPh5PDmFLN6B8dGycY9FLCKU8kw7PM
-	 h8VxVb44vJ0DQVS31AhlLaf39qJx0S/JstT+4WszZ8SgZzPFnp7AQ4+W08KKGX9xztZMf
-	 oI+gUHt5mRpJakI8CRcqGPoR/SwYeKMq29174gp277IG/ZWs12xNSRAtNbYc+40VFkpKd
-	 llFafWYul5+4/UhAYDReL5zavIAoFUnxe4dOYOcOq2OJ3UuTIuqJoCk3tD9iP1FbpPA==
+	t=1794062715;
+	b=SroYpPX9TPagmEgRNbexsjwR/t3hR+a2v2LHhAgCjMVvBcH6XfFvK+zbQEvjQyci8VRz
+	 QVmVSfHDCDL8Rgdf441prGrXQf0FYdhMxwj16kQ0jZ7xeDFc87K4UKtPXGjNSx64haeqG
+	 sBulhSSw+1ISFzJp2dIt+CTNnfCHW6TumCe1hPXUKYg8ue791J/geZsKJVeWpfDg+2w0/
+	 iBXDQbw1OOEwqGBX4RrFuzdTUD9ZzT32n97YKa7JDkOuSxuQEKGlIqJ24dxG/BL37a9At
+	 XBNpfns7U4iwbCdr5lslin0nxosH+ciMaMiVyzNL6A/p7SlKHiOVH5MbfDq3f2eLpxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062714;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062715;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lPSa0qfvOUblO6opJF8nhmn722CeIjzb22COJqhLm0c=;
-	b=ogkbSrF37HuwVUUynSnUc1fdqtF15gjOaY+DXIC4N6VWCzfkyGEdlldZ2m5hE/IVszJL
-	 ycdRRrs/X2mEEtleP1E4OUbbru7OafytjwAXkEHj8Y2bIzEUFV/tt+rUVDkc2LKa0DHKp
-	 OYUpAn7o9gy5RJM+mmh3AXWGGMcG2fSfDQMn//LZp80Gdlo/ydAmr2W7IwQjaffd2gPox
-	 NOJ2OsW4NSU6rMeIKugjHVHIHoSUIiD2YceaQhBRdow+eR+KBXkJxYVX/GMuCu7mcCkjV
-	 1YUfuVeZLuhoM4v4eVvsHr9junCdtLN7Mt2Cm77Y1xSdR3XuawVxd+dsGLiJSIOydFw==
+	bh=BoyGQIO41IfCl2m+dZgcw7yfcJpUUTn4CZ578AsmB4g=;
+	b=dB+RoQ6Ly5xvp7rmoC/dnh9FRZyP6MGl7HDF2CyofuNJ3WQ8ruO0lw4MU4YuXWSz9Tsb
+	 S8g0raAqbn2Mxr9GrVt7dpOBXATgAuyPnFZMJL+TsYVbq8I8X0kkH2XAe3TuCv+oZTDy9
+	 zPOcmFT+0AmIvqqmO/w8PK6dwunls0OySg6BX/p9RhtuxHxcKZ/xRxGHAYW48/NncTDQC
+	 du3ZomzLUn2IFiDOs9N+0KptSMwApwTlKYBmiBBaNZJ+KuUtO3RLkGezQ4PnK8BQWuhC7
+	 lw4H+eqtcUyu3FUnd3ADAl/QtIwQKZ8a5VX7EYAnyWeGQ1Aa0cC8IAa4dUbFqXH0YhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4W8ZUN+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SZsqOnIf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0309F606A326;
-	Sat,  7 Nov 2026 14:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42933606A326;
+	Sat,  7 Nov 2026 14:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4W8ZUN+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6731F008A1;
-	Sat,  7 Nov 2026 14:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SZsqOnIf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D5C1F0089F;
+	Sat,  7 Nov 2026 14:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062713;
-	bh=lPSa0qfvOUblO6opJF8nhmn722CeIjzb22COJqhLm0c=;
+	s=korg; t=1794062715;
+	bh=BoyGQIO41IfCl2m+dZgcw7yfcJpUUTn4CZ578AsmB4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u4W8ZUN+AxePt+OCyOcvOg+90vhhKC1yGpDzAh23CIW3rysi3rT9HPTBA8E74JKRO
-	 cKa91J186j/ob/bwrSpcAqq7KY92gjFjZYFMUZpQl4D7ao/tD/wQr+ymo14rSMdB0U
-	 AGW5OZAwym7AKK7CeqBwPLAH9A+jlAkF/kakBR+4=
+	b=SZsqOnIffkWG8J0DrZB164VnxHcJcl3MiifQqzzJWEJ9u7rcehncpAo8lLWw6z4cX
+	 zfWkyOp3sVdOipduYy0uAd1p1vySH4nRTbRF3kU0Il6/fDPhAFqzv37LidDNR9Q2ek
+	 n0r048ZJ1Ih7Ntjehx26GPfsz4kRN0J+mDOExkwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 035/869] media: meson-ir-tx: Ensure clock is disabled on unbind
-Date: Sat,  7 Nov 2026 08:45:17 -0500
-Message-ID: <20261107134853.374935557@linuxfoundation.org>
+Subject: [PATCH 6.18 009/869] tcp: Remove timeout arg from reqsk_timeout().
+Date: Sat,  7 Nov 2026 08:44:51 -0500
+Message-ID: <20261107134852.343459720@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,43 +69,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 1517326fcc9dfdb9acb24f42472366ac1b4b8237 ]
+[ Upstream commit 207ce0f6bc131812c96cf4f6db328af5396cebac ]
 
-clk_prepare_enable() needs a call to clk_disable_unprepare() on
-driver unbind. Make it devm managed.
+reqsk_timeout() is always called with @timeout being TCP_RTO_MAX.
 
-Fixes: 49be1c78d575 ("media: rc: introduce Meson IR TX driver")
-Signed-off-by: Sean Young <sean@mess.org>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Let's remove the arg.
+
+As a prep for the next patch, reqsk_timeout() is moved to tcp.h
+and renamed to tcp_reqsk_timeout().
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251106003357.273403-5-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c9c90cf437a9 ("mptcp: hold MP_JOIN msk ref when cloning reqsk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/meson-ir-tx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/net/inet_connection_sock.h | 8 --------
+ include/net/tcp.h                  | 7 +++++++
+ net/ipv4/inet_connection_sock.c    | 2 +-
+ net/ipv4/tcp_minisocks.c           | 5 +++--
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/media/rc/meson-ir-tx.c b/drivers/media/rc/meson-ir-tx.c
-index fded2c256f2a6..6beb9e97453dd 100644
---- a/drivers/media/rc/meson-ir-tx.c
-+++ b/drivers/media/rc/meson-ir-tx.c
-@@ -288,11 +288,12 @@ static int meson_irtx_mod_clock_probe(struct meson_irtx *ir,
- 	if (!np)
- 		return -ENODEV;
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index d50e0afc3193f..39ccb785dd4c1 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -297,14 +297,6 @@ static inline int inet_csk_reqsk_queue_is_full(const struct sock *sk)
+ bool inet_csk_reqsk_queue_drop(struct sock *sk, struct request_sock *req);
+ void inet_csk_reqsk_queue_drop_and_put(struct sock *sk, struct request_sock *req);
  
--	clock = devm_clk_get(ir->dev, "xtal");
--	if (IS_ERR(clock) || clk_prepare_enable(clock))
-+	*clk_nr = IRB_MOD_XTAL3_CLK;
+-static inline unsigned long
+-reqsk_timeout(struct request_sock *req, unsigned long max_timeout)
+-{
+-	u64 timeout = (u64)req->timeout << req->num_timeout;
+-
+-	return (unsigned long)min_t(u64, timeout, max_timeout);
+-}
+-
+ void inet_csk_destroy_sock(struct sock *sk);
+ void inet_csk_prepare_for_destroy_sock(struct sock *sk);
+ void inet_csk_prepare_forced_close(struct sock *sk);
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index e40bad5606486..f9bcfa8773a3a 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -838,6 +838,13 @@ static inline u32 __tcp_set_rto(const struct tcp_sock *tp)
+ 	return usecs_to_jiffies((tp->srtt_us >> 3) + tp->rttvar_us);
+ }
+ 
++static inline unsigned long tcp_reqsk_timeout(struct request_sock *req)
++{
++	u64 timeout = (u64)req->timeout << req->num_timeout;
 +
-+	clock = devm_clk_get_enabled(ir->dev, "xtal");
-+	if (IS_ERR(clock))
- 		return -ENODEV;
++	return (unsigned long)min_t(u64, timeout, TCP_RTO_MAX);
++}
++
+ u32 tcp_delack_max(const struct sock *sk);
  
--	*clk_nr = IRB_MOD_XTAL3_CLK;
- 	ir->clk_rate = clk_get_rate(clock) / 3;
+ /* Compute the actual rto_min value */
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 3e9eaf9d341d1..9a87ea6c63b46 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1128,7 +1128,7 @@ static void reqsk_timer_handler(struct timer_list *t)
+ 	     inet_rsk(req)->acked)) {
+ 		if (req->num_timeout++ == 0)
+ 			atomic_dec(&queue->young);
+-		mod_timer(&req->rsk_timer, jiffies + reqsk_timeout(req, TCP_RTO_MAX));
++		mod_timer(&req->rsk_timer, jiffies + tcp_reqsk_timeout(req));
  
- 	if (ir->clk_rate < IRB_MOD_1US_CLK_RATE) {
+ 		if (!nreq)
+ 			return;
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index d05009f985afc..2d78801866396 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -717,7 +717,8 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 			 * it can be estimated (approximately)
+ 			 * from another data.
+ 			 */
+-			tmp_opt.ts_recent_stamp = ktime_get_seconds() - reqsk_timeout(req, TCP_RTO_MAX) / HZ;
++			tmp_opt.ts_recent_stamp = ktime_get_seconds() -
++				tcp_reqsk_timeout(req) / HZ;
+ 			paws_reject = tcp_paws_reject(&tmp_opt, th->rst);
+ 		}
+ 	}
+@@ -756,7 +757,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 		    !tcp_rtx_synack(sk, req)) {
+ 			unsigned long expires = jiffies;
+ 
+-			expires += reqsk_timeout(req, TCP_RTO_MAX);
++			expires += tcp_reqsk_timeout(req);
+ 			if (!fastopen)
+ 				mod_timer_pending(&req->rsk_timer, expires);
+ 			else
 -- 
 2.53.0
 
