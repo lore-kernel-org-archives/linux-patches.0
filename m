@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061348;
-	b=U7tSS9cW4kSGfTrd4QB/TgQwPWxKiELo2zdQUybyaTda0L1Av3FS7GbWME7xSjoajHFb
-	 zvYvZSlXvglUtZ97sz2xu0PPrL9muHhoUy5w7p1aCfDwZGanoVYPEh2NZ/oULY7S90Ujr
-	 r6mxP7J+U1llCCSi6yDJAj2/jKB9gJfeFH+Rz2jQslC9mXGuDIYQfkJzmbWlkoOiuETIF
-	 3tC3uGK1nG6li15zeWLIckM3XTsO65LUDdz3BfJDKvCpQfzC6GZnESJpefVWavtO7TCl4
-	 vKmYnOU6WBnnYiuEOz0StapaL8G7lZFtaHcp9m1ZZxVZSyNzf2B1DVtDzJv4zUuz8BQ==
+	t=1794061349;
+	b=RnBvr0VAxEoOU+CRgHzFEz5Uqqee9ypa51g99v34lJeg7PwACzLlPrfw8Y7s5WU1TJGh
+	 mRVNG5TbrBHFY8/rRU/8HSSAQoKsRK/MJucwKEhE3lxruJpK7SsYa7BwNeLx0UFGWOQDZ
+	 y4nl6t/5zZKmRfQnHL5EbsfCqRCdcLQ0xA7nNlUMaBQL3+2wGOt9JrETla9dh3D99BogO
+	 J1sgLxKjSCtsVjTEz8/mPKYSpGQEsDwjbtTI7Dr8+3xBKYRjT03ZgrfBVDi4B2NDAvfY5
+	 5HjSNkVfhglbuis+bKBzuBaMQVPXVIVp01vHsL1g452vkdnN7HcKlHx8qZ4q4oL9S7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061349;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=J+FcGIMmC2Ozy2m5DZJaAJl1OpzoldIxmtv1/3TiXRY=;
-	b=HghZKeUz3DyzWRS3qYAK+N8SrrkZqHF4nbnho3kj93aN8Wo19DLfjpKf+psftdARiNAQ
-	 qqnp14xN+3qRERdrfRRAvwdqHe7Y/fsNUxm18+5guoMCuTMj9G9THFgcVabPJweMsG094
-	 KC7P7n8zl6mpw6PJkx3coV1dyBFHg/up1PuFevJ4ZUXT/pPrrYoaYB3VZffw4C6pAxlvJ
-	 XLR8mvIm40ZFAuPanUBs7x+06ZVQyz1m+9x3Bb0NAxweCesjJel7H2zzpxi+YtdNKe0JH
-	 sFQIslJ5JkwMYRPeTBUYRz3weK+uWCs6gwpD/XB4n4cJthjsu+EUPV+Sm3Co131Jbqw==
+	bh=HlRwT4c+5r2UUf1vnvEWq19gwVeorzu8UDGApzM6UAc=;
+	b=ulfwo4hqoSYt9S2iptLIysPdHFz+lEggY2xAG6t5uI98N4P11LnkI6cvDnCsn+azFaly
+	 HGN+5y+IC26hWwyF49CMcAmUmjr5zmq7YjtlUkrdtXOvwhvbvVkV0vXMCltwv/6iMEKJ5
+	 lH4bAAeN/8yq97VAg3KCiSYIkADlWfk3Qs75fVyckHbb/h73xj9g/J3DzZrF/YeqVXhrz
+	 RjXMeNqdAXGRzhRKxx0h8dZog8sWbb1CI/t+9H/mH1UmhgkQeKRrq+79N7GrYPb2CqDZa
+	 IRX7CFDp4tzbjKVhBfTpM4lwzPBc7bArNY+pY1UROG5AwoGuyp+AoD8bsKoejaNJcMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQgJVZEa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WQl/fxr7";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B87606A32D;
-	Sat,  7 Nov 2026 14:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FE3606A331;
+	Sat,  7 Nov 2026 14:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQgJVZEa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C341C1F0089F;
-	Sat,  7 Nov 2026 14:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WQl/fxr7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0DD1F008A1;
+	Sat,  7 Nov 2026 14:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061348;
-	bh=J+FcGIMmC2Ozy2m5DZJaAJl1OpzoldIxmtv1/3TiXRY=;
+	s=korg; t=1794061349;
+	bh=HlRwT4c+5r2UUf1vnvEWq19gwVeorzu8UDGApzM6UAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VQgJVZEaGmORRkbgjDsIWYn+T+BQBQQeiWNVwPbAG3KdrU6CH99q2nOyPbswTaqf0
-	 SyzzKOKDqxcA78AEjuFAj5FrXYlOsP/7XXKO+5dwYX8lMjY5YqNtBVM9Zenve8kN/b
-	 cpNZDtLi+3/1EMM35glcccbk64saOPnxB0++Tk4A=
+	b=WQl/fxr797DDDN2UrP3jBNq2NysDo+68GkyFTV00Nix8ju/LoNW5ctBhulj8VTAOp
+	 yKCT/ilGeRpQ33veJ8Z8n6XyiMC/fkb1SUfhEcM8kUWLOsaaLZGRikrEnb+X8uCAEQ
+	 Abw1winihEVhlhyuGtvXAli3aQRJV0bLcMPxk/78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bibo Mao <maobibo@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0476/1536] i3c: master: Fix potential UAF in i3c_device_uevent()
-Date: Sat,  7 Nov 2026 08:41:32 -0500
-Message-ID: <20261107135010.866984823@linuxfoundation.org>
+Subject: [PATCH 6.12 0477/1536] LoongArch: KVM: Skip PMU checking on vCPU context switch
+Date: Sat,  7 Nov 2026 08:41:33 -0500
+Message-ID: <20261107135010.894158959@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,54 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-[ Upstream commit e5e8dd2e959f470524c16ca444d001c90d6bb3ad ]
+[ Upstream commit 11f340ece403e71aa2b643a2562a58ed3ac12e2c ]
 
-i3c_device_uevent() dereferences i3cdev->desc without holding the bus
-normal-use lock.  Since the descriptor pointer can be replaced
-concurrently, including when a uevent is generated from sysfs, this can
-result in dereferencing a stale descriptor and lead to a use-after-free.
+PMU hardware about VM is switched on VM exit to host rather than vCPU
+context sched off, PMU is checked and restored on return to VM. It is
+not necessary to check PMU on vCPU context sched on callback, since the
+request is made on the VM exit entry or VM PMU CSR access abort routine
+already.
 
-Use i3c_device_get_info() instead, which protects access to the
-descriptor with the normal-use lock.
-
-Commit 6cf7b65f7029 ("i3c: Use i3cdev->desc->info instead of calling
-i3c_device_get_info() to avoid deadlock") replaced the accessor with a
-direct descriptor dereference because i3c_device_get_info() would
-recursively acquire bus->lock during device registration.
-
-This change depends on "i3c: master: Fix recursive locking during device
-registration", which moves device registration out from under bus->lock
-and removes the possibility of that deadlock.  Without that change,
-restoring the i3c_device_get_info() call would reintroduce the deadlock.
-
-Fixes: 6cf7b65f7029 ("i3c: Use i3cdev->desc->info instead of calling i3c_device_get_info() to avoid deadlock")
-Cc: stable@vger.kernel.org # requires "i3c: master: Fix recursive locking during device registration"
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Acked-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260807145638.168865-7-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Stable-dep-of: 32d05564a612 ("LoongArch: KVM: Set vcpu->cpu before IN_GUEST_MODE is set")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/loongarch/kvm/vcpu.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index bb15b621c067b..28a39b2c039b1 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -282,8 +282,7 @@ static int i3c_device_uevent(const struct device *dev, struct kobj_uevent_env *e
- 	struct i3c_device_info devinfo;
- 	u16 manuf, part, ext;
+diff --git a/arch/loongarch/kvm/vcpu.c b/arch/loongarch/kvm/vcpu.c
+index 59eee474e8182..92c0c38b1bad1 100644
+--- a/arch/loongarch/kvm/vcpu.c
++++ b/arch/loongarch/kvm/vcpu.c
+@@ -143,12 +143,6 @@ static void kvm_lose_pmu(struct kvm_vcpu *vcpu)
+ 	kvm_restore_host_pmu(vcpu);
+ }
  
--	if (i3cdev->desc)
--		devinfo = i3cdev->desc->info;
-+	i3c_device_get_info(i3cdev, &devinfo);
- 	manuf = I3C_PID_MANUF_ID(devinfo.pid);
- 	part = I3C_PID_PART_ID(devinfo.pid);
- 	ext = I3C_PID_EXTRA_INFO(devinfo.pid);
+-static void kvm_restore_pmu(struct kvm_vcpu *vcpu)
+-{
+-	if ((vcpu->arch.aux_inuse & KVM_LARCH_PMU))
+-		kvm_make_request(KVM_REQ_PMU, vcpu);
+-}
+-
+ static void kvm_check_pmu(struct kvm_vcpu *vcpu)
+ {
+ 	if (kvm_check_request(KVM_REQ_PMU, vcpu)) {
+@@ -299,7 +293,10 @@ static int kvm_pre_enter_guest(struct kvm_vcpu *vcpu)
+ 		vcpu->arch.aux_inuse &= ~KVM_LARCH_SWCSR_LATEST;
+ 
+ 		if (kvm_request_pending(vcpu) || xfer_to_guest_mode_work_pending()) {
+-			kvm_lose_pmu(vcpu);
++			if (vcpu->arch.aux_inuse & KVM_LARCH_PMU) {
++				kvm_lose_pmu(vcpu);
++				kvm_make_request(KVM_REQ_PMU, vcpu);
++			}
+ 			/* make sure the vcpu mode has been written */
+ 			smp_store_mb(vcpu->mode, OUTSIDE_GUEST_MODE);
+ 			local_irq_enable();
+@@ -1577,9 +1574,6 @@ static int _kvm_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
+ 	change_csr_gcfg(CSR_GCFG_MATC_MASK, CSR_GCFG_MATC_ROOT);
+ 	kvm_make_request(KVM_REQ_STEAL_UPDATE, vcpu);
+ 
+-	/* Restore hardware PMU CSRs */
+-	kvm_restore_pmu(vcpu);
+-
+ 	/* Don't bother restoring registers multiple times unless necessary */
+ 	if (vcpu->arch.aux_inuse & KVM_LARCH_HWCSR_USABLE)
+ 		return 0;
 -- 
 2.53.0
 
