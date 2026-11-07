@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062033;
-	b=3TruY8l0SCak2g75cJrFJv1U5Q5OeaTn7AHa4wa7yLTsgLYjFlF37yhOySmeuE/oIdHl
-	 dSKhQavO2iIemnZB6Is9fswmMp7aPG0Qg8GGFVYyJBCCYgPq17u+OtPs32+Y5eG4kzpqu
-	 jpDidVtft9N71ZQVMdQgdJyAUKgxp+dfvyrYI2SdxNhk/ofGewPGQZD0GtVgAzVNyF1OK
-	 EuSe9st0Uls9zbgZGnatNWG6/WJwUrCPQPibHZrUmB+IVA1OYtCtPYtz9H2J+z5u+3+1U
-	 3Vbck0cpbJnhj982GIUCaasxtHn0o8RXplZBbYEF+PJijQhwY15QymgdKWfPjwDFh2g==
+	t=1794062034;
+	b=j9zdlDxTEMubnp9yCKMcivkfm0v2GTXdtUBeG0B9DIm+/UNnoy1zraCnP/sn1bE7zAKc
+	 YyDPnH+xiJ/9spZdbX7gdYgcEio1plutslOpmoNpPShygYNi0g1g3JYG54GYMmHO5QLu1
+	 2k3gfaxfV/jUPFxMiVU560iubaNW/log+0e0oCv/axxeT24av4UQOy94zJlHZgP9PN49T
+	 KR29XxWt4v3n8MgafucVnnXBTIGAcePJYoguKH9zRZQww2tvbyDVgwJmku/Uk1vctCIOg
+	 JIlwmw2Sig6cmDGtuOkDdDAiVBE9DDF2l7KjJPWbdHxf/wzbRCkK2fVnagNGuY77jRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062034;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o5GF3R8w6a98ukAmgPk6zt2zHZmkYwC9nu3d/VmpaNg=;
-	b=nr4bZMgOyScQcxooiJkYVW1ZAiTXRX0EZrihHpE+MN/Am1hm8+77qeRpM/QcEIl88SlE
-	 upblqAJUfvSAJpKKnh/soVMMeMSurd93FUJG4CZgM/3rgUdfaK90wAs+8GxIFGItWOZvt
-	 mA4MPPBpfKUWT5UJn/xVawVemmKEIpYCJKAVR8TH3RJAshC0bdwxi0k5N7LaFvqf+jmKP
-	 +o2OVIgEZMluT5uwkCCykdi9yKXl9RsetBOTygqNs8iSTdDXw6xoxr/3iho2O3kvy5Ukz
-	 GhKWO9TfsuRg10FsFVP40w+C5qQb0ZKAR256n+1JiV7LZSNADlorUtSD6CT/CEQBs0g==
+	bh=/os9Kkdqk7hzU0bYG4nQIFcDvLpZ596aOM4irxFY5z4=;
+	b=xtBiBMdFoBixcJpp2qXXPMPpmK/nAX6HuKCFPEmmC0HpFF5eY74cDEmz/MzlwLvgJt2n
+	 N3obcQ03sV7yNzfplwoRmI+hqgq4aUiKxa2zscZ23MsrFwoBXpI9FnS9A6CCOYfcrDMnM
+	 RQMoFTKI+rfYH0lrzy57MNwj3QYJ+DtRvPG123XTUUXsu1lJ83Gz02hrQLbpOuktrUiPF
+	 70xzuY4RswqGYYMi9EUc+MmAy+nrSjWgMyf7lOJ4zVlDz6AmZmusLFfKSPePU6YUZgI00
+	 iDWYYc8a9SbdVCAsSUrPiaBN+IaJMDoIUwFzma8tGAjXBK6vt46g3wTIqw3ftdZgDqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHgvTyIg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fq9NRAe2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37FA606A332;
-	Sat,  7 Nov 2026 14:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D432606A332;
+	Sat,  7 Nov 2026 14:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHgvTyIg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7301F0089F;
-	Sat,  7 Nov 2026 14:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fq9NRAe2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB321F0089F;
+	Sat,  7 Nov 2026 14:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062032;
-	bh=o5GF3R8w6a98ukAmgPk6zt2zHZmkYwC9nu3d/VmpaNg=;
+	s=korg; t=1794062033;
+	bh=/os9Kkdqk7hzU0bYG4nQIFcDvLpZ596aOM4irxFY5z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GHgvTyIgNoEEMwlC3kyjJX1dACZCho3gXp6OuAEnSaoPf+OKyP0DAXhF/ugeoaRPc
-	 TtisAnTdh1vgUkt0Oc1zx6YOqHznPhnPHHYhAzymNx+nsb0Izt2Hs4TEY+bL0Gf+YW
-	 Tu5/ubb0NBO7d0z2VV+Ntzw5YKGjS6DPUjPls49o=
+	b=Fq9NRAe24vTGnRJrrkS7XQ0oZsBJpBq7GT6QtejFJBuO64bAYVS2XUquZ70FshwAm
+	 LNR76U1M1aEfBIY3xM7bbSnaVPm6K2rMJdkRxf7/SSqhVLK2MQ/Yszie7sR4/0JgbM
+	 k4cFmOSa5HGO5LoHS3J71/eYqF35STN3y1hy4Xyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thorsten Blum <blum@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1017/1536] media: ir_toy: Validate the maximum tx carrier
-Date: Sat,  7 Nov 2026 08:50:33 -0500
-Message-ID: <20261107135026.242009784@linuxfoundation.org>
+Subject: [PATCH 6.12 0991/1536] crypto: atmel-tdes - sync output bounce buffer before DMA
+Date: Sat,  7 Nov 2026 08:50:07 -0500
+Message-ID: <20261107135025.492060206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,35 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 27303392aa87b61692faadec8b00e0ca66bf98dd ]
+[ Upstream commit a38fdcb9c944525ca71e6aaf35e708586d0ae87d ]
 
-Reject any carrier the hardware cannot generate. This also fixes
-a divide by zero if a carrier of U32_MAX/16 is set.
+The slow path maps its output bounce buffer once at probe time with
+dma_map_single() and DMA_FROM_DEVICE, then reuses the mapping for every
+request.  After the CPU copies a result from the buffer,
+dma_sync_single_for_device() must hand the buffer back to the device before
+the next DMA transfer.  The driver omits this call, so cache lines from the
+previous result can remain valid while the device writes the next one.
 
-Fixes: 8bff1386d62d ("media: ir_toy: allow tx carrier to be set")
+This bug was masked by the completion paths calling
+dma_sync_single_for_device() immediately before the CPU copied the output,
+where dma_sync_single_for_cpu() was required.  For DMA_FROM_DEVICE on
+ARM926, dma_sync_single_for_device() invokes arm926_dma_map_area(), which
+invalidates the cache lines.  The misplaced call therefore discarded the
+stale lines before every copy-out.
+
+Commit c8a9a647532f ("crypto: atmel-tdes - fix DMA sync direction")
+correctly changed the completion paths to call dma_sync_single_for_cpu().
+On ARM926, that function invokes arm926_dma_unmap_area(), which is a no-op.
+The missing pre-DMA dma_sync_single_for_device() was therefore exposed on
+ARM926-based SAM9X60 and SAM9X7 SoCs.
+
+With CONFIG_CRYPTO_SELFTESTS=y all four DES/TDES algorithms fail on
+SAM9X75:
+
+  alg: skcipher: atmel-ecb-tdes encryption test failed (wrong result) on
+  test vector 2, cfg="unaligned buffer, offset=1"
+
+Call dma_sync_single_for_device() for the output buffer before starting DMA
+in both atmel_tdes_crypt_pdc() and atmel_tdes_crypt_dma().
+
+Fixes: c8a9a647532f ("crypto: atmel-tdes - fix DMA sync direction")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Young <sean@mess.org>
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Thorsten Blum <blum@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/ir_toy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/atmel-tdes.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/rc/ir_toy.c b/drivers/media/rc/ir_toy.c
-index e79de56997a42..ba6c042127078 100644
---- a/drivers/media/rc/ir_toy.c
-+++ b/drivers/media/rc/ir_toy.c
-@@ -373,7 +373,7 @@ static int irtoy_tx_carrier(struct rc_dev *rc, uint32_t carrier)
- 	u8 buf[3];
- 	int err;
+diff --git a/drivers/crypto/atmel-tdes.c b/drivers/crypto/atmel-tdes.c
+index 360f5ef930322..3195605ef1c2d 100644
+--- a/drivers/crypto/atmel-tdes.c
++++ b/drivers/crypto/atmel-tdes.c
+@@ -373,6 +373,8 @@ static int atmel_tdes_crypt_pdc(struct atmel_tdes_dev *dd,
+ 	if (!(dd->flags & TDES_FLAGS_FAST)) {
+ 		dma_sync_single_for_device(dd->dev, dma_addr_in, length,
+ 					   DMA_TO_DEVICE);
++		dma_sync_single_for_device(dd->dev, dma_addr_out, length,
++					   DMA_FROM_DEVICE);
+ 	}
  
--	if (carrier < 11800)
-+	if (carrier < 11800 || carrier > 3000000)
- 		return -EINVAL;
+ 	len32 = DIV_ROUND_UP(length, sizeof(u32));
+@@ -405,6 +407,8 @@ static int atmel_tdes_crypt_dma(struct atmel_tdes_dev *dd,
+ 	if (!(dd->flags & TDES_FLAGS_FAST)) {
+ 		dma_sync_single_for_device(dd->dev, dma_addr_in, length,
+ 					   DMA_TO_DEVICE);
++		dma_sync_single_for_device(dd->dev, dma_addr_out, length,
++					   DMA_FROM_DEVICE);
+ 	}
  
- 	buf[0] = 0x06;
+ 	addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
 -- 
 2.53.0
 
