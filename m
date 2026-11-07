@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063444;
-	b=KzmOqMbtWN7v7AKETeoNk88a54aAftNWgU0ksOgaIn4BMAV5PLG+VhsU5AtoVmtw+ota
-	 n4DwismjqMkqgNT2UudDXB4qlPjeSSnxu1LT9oKL+Iu7A+b6PJZW3WRukTrFRboQvji4j
-	 VqKlqwRbGDGe0kiZeSMqSVrZdvm1n+EsEbEh3qdjcurpl0Sqyh/qKqSMn1OgrzY5YoE+C
-	 cqVG15I3qLP0y7keU7sjz3ml3VOtFmzZzXNkDiL7zdHLRwdeUTKatcI4eOgG1jfVixTui
-	 +385+5RB61ge91SUJQvPMid0jylpgaWJFvJqPxBP4UVcyDFwyh2qBLn+bSmw5eoOI4g==
+	t=1794063450;
+	b=g3sGoWEMu0IOKwZqCGPInie/5rNJgF1Ir7NA73DQ7EZqA2MVh6Uxv0DMSEFzft0L/R+R
+	 hHQj5iG0iHQjjfcNX4kG1yML0AKVgt22rsk27ZScMbVtil3knCCujcEJBQBmwfJqZA9l3
+	 pTIFtsajsrzZ4fuDHO4Lrs5RWJXGtjIYzczP83js/G0zj81ZrOcQFWy2pPy9g6B2ok571
+	 PvtAUpHA9ChhGTaUWky8wBT3eFYqM/QybrzyBiY/AQ23Qd8NlHgFc0BrwoH2m8xDtNiwI
+	 6eQ47XNkXOzWetXfsBgDS2nVYRLzrYSUUayp7boyeY5UOBrZu0GSTK7Xbei/+YOV4zQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063444;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063450;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G8ufY2dbpDFX38r/1rrTlj88NNWIeuAwdUKRa1Ck6UA=;
-	b=zed5rz+eJz26Bt9UQZpltLGKUtOs3hf+zV5BkZW7xyxRjOLA7rNLhVWYO9DQYhLYh6Ql
-	 4wXqs7qYXxGyqZ/MfRGQUp4mHXyaPfbqg13O59soksIKRvsW2SJWK3WB3IOcaOpGG/VNL
-	 /KgjbvFqYwVCRgZ8jGwnyzl5VwUkV5nzxqRkFgEXfI2ve0xxoOSrGIlxhKFz4LRGFCRuy
-	 i68pyi2wlCExLZ+1kbexRlaWeNtIec+KYk/DTQMt2VFXkfvMv4YBYF7IbOFPjv0+Vh16N
-	 XzMB0q/mfEcREW3sjS2LJnqhQP6lsLA2BLRPCAvf6mGOSbJXbAx0/7BSdDi+4uszP/w==
+	bh=3JfMLFvs1hxJvgySLIYsbhlI1YrCa5Yi3aN4r9rAVDM=;
+	b=BV7gBIeamAWRa+gtU5fC/kz6qkeH9gRP4jZq4fb8YZ5uwwJGKEOfGyD52aHTuVmLBFV2
+	 1sqSvXzMw/mhuEE43mxAZU0dCFLPijIKlecLgagHkInjPlvMamjywuF3WdhPZa+Xe2rs8
+	 jD7hFtAZkRrB6ANSiaSXyv9+Algydc+/vVAcCxCpys6PsXpHLluq8Cc+ax/bkq5QMDqvw
+	 RjRTX3qq3bZ5f9NdBPGb6d6GqqzCW+f58i3bDFPUzkfkZ4MA/5Qwn/G5NQzLERrbXHNgZ
+	 aGpSFCbXLJtkTUKYkUTqRIIHqxfQZnXSgj/HZiA0e8k/+GK5n3xNUZcs6VhDLR+HTTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Or8IGKAt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OoQVh+qt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5155560A2616;
-	Sat,  7 Nov 2026 14:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618FE60A263F;
+	Sat,  7 Nov 2026 14:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Or8IGKAt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93C21F008A1;
-	Sat,  7 Nov 2026 14:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OoQVh+qt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E131D1F008A7;
+	Sat,  7 Nov 2026 14:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063443;
-	bh=G8ufY2dbpDFX38r/1rrTlj88NNWIeuAwdUKRa1Ck6UA=;
+	s=korg; t=1794063450;
+	bh=3JfMLFvs1hxJvgySLIYsbhlI1YrCa5Yi3aN4r9rAVDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Or8IGKAtegsmS3zZsa/mNB+ssL2sgF5cUkgjz91760+OQMkovsq0htIplpTyTFpyS
-	 MnDk/UwZRG88nO6hn+fE3PHQK9ELh6PkRu44PMF64BYnNQgXC6Rn4TGZmFglCGIB3X
-	 Us79v1H9tIzhV+Z5wSXzuKdLAkElrjCxWRr7ut1U=
+	b=OoQVh+qttRTaO5VoN1xZS6Kb8cWxZTtk/ltrZ1io2UpVrwZ60yoMzeCO/n8XraIDR
+	 rWTAsIiO7ZKgYPIF1dGJYMuB7zMzmf8nI4fm6Qamp7WjaVLQI2cBvzv+bWuxmMy9Ha
+	 4D0m6ekKt6GqJyg6ltWhh1IZtuEPkQsjJehFN9dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianyun Gao <jianyungao89@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Hongliang Wang <wanghongliang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 599/869] dax: fix dax_range_compare_iter() to use correct size and address offset
-Date: Sat,  7 Nov 2026 08:54:41 -0500
-Message-ID: <20261107134913.378684161@linuxfoundation.org>
+Subject: [PATCH 6.18 608/869] cpufreq: loongson3: Replace per-package mutex with per-node
+Date: Sat,  7 Nov 2026 08:54:50 -0500
+Message-ID: <20261107134913.706712612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,75 +70,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianyun Gao <jianyungao89@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit a4bfbfb4e98a62b589ac7ca9e73e9612bfe8cab7 ]
+[ Upstream commit 5d7802ada30b3101f408706b7399b0e170d2febd ]
 
-dax_range_compare_iter() has two bugs in how it calls
-dax_iomap_direct_access() and uses the returned addresses:
+Our server productions (e.g. Loongson-3D6000/3E6000) can have multiple
+nodes in one package and SMC mailboxes are also per-node. So replace the
+per-package mutex with per-node one.
 
-1. The size argument passed to dax_iomap_direct_access() is
-   ALIGN(pos + len, PAGE_SIZE), which is an absolute file offset
-   rather than a length. This causes the underlying dax_direct_access()
-   to request a massively inflated nr_pages via PHYS_PFN(size).
-
-2. The addresses returned by dax_iomap_direct_access() are page-aligned
-   starting addresses, but memcmp() compares from saddr/daddr directly
-   without adding the page-in-page offset of pos1/pos2. When pos1/pos2
-   are not page-aligned, this compares the wrong data.
-
-Fix the size by computing ALIGN(len + offset_in_page(pos), PAGE_SIZE),
-matching the pattern used in dax_iomap_copy_around(). Fix the address
-by adding offset_in_page(pos1)/offset_in_page(pos2) to saddr/daddr in
-the memcmp() call.
-
-Fixes: 6f7db3894ae2 ("fsdax: dedup file range to use a compare function")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20261011064840.1296-1-jianyungao89@gmail.com
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Fixes: ccf51454145b ("cpufreq: Add Loongson-3 CPUFreq driver support")
+Signed-off-by: Hongliang Wang <wanghongliang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dax.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/cpufreq/loongson3_cpufreq.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/fs/dax.c b/fs/dax.c
-index 69ac2562cec31..155f8024b30df 100644
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -2168,6 +2168,7 @@ static int dax_range_compare_iter(struct iomap_iter *it_src,
- 	loff_t pos1 = it_src->pos, pos2 = it_dest->pos;
- 	u64 dest_len;
- 	void *saddr, *daddr;
-+	size_t size1, size2;
- 	int id, ret;
+diff --git a/drivers/cpufreq/loongson3_cpufreq.c b/drivers/cpufreq/loongson3_cpufreq.c
+index 630f679aa7395..e3cd78a5ab187 100644
+--- a/drivers/cpufreq/loongson3_cpufreq.c
++++ b/drivers/cpufreq/loongson3_cpufreq.c
+@@ -169,7 +169,7 @@ struct loongson3_freq_data {
+ 	struct cpufreq_frequency_table table[];
+ };
  
- 	len = min(len, min(smap->length, dmap->length));
-@@ -2183,17 +2184,18 @@ static int dax_range_compare_iter(struct iomap_iter *it_src,
+-static struct mutex cpufreq_mutex[MAX_PACKAGES];
++static struct mutex cpufreq_mutex[MAX_NUMNODES];
+ static struct cpufreq_driver loongson3_cpufreq_driver;
+ static DEFINE_PER_CPU(struct loongson3_freq_data *, freq_data);
+ 
+@@ -177,14 +177,14 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
+ {
+ 	int retries;
+ 	unsigned int cpu = raw_smp_processor_id();
+-	unsigned int package = cpu_data[cpu].package;
++	unsigned int nid = cpu_to_node(cpu);
+ 	union smc_message msg, last;
+ 
+-	mutex_lock(&cpufreq_mutex[package]);
++	mutex_lock(&cpufreq_mutex[nid]);
+ 
+ 	last.value = iocsr_read32(LOONGARCH_IOCSR_SMCMBX);
+ 	if (!last.complete) {
+-		mutex_unlock(&cpufreq_mutex[package]);
++		mutex_unlock(&cpufreq_mutex[nid]);
+ 		return -EPERM;
  	}
  
- 	id = dax_read_lock();
--	ret = dax_iomap_direct_access(smap, pos1, ALIGN(pos1 + len, PAGE_SIZE),
--				      &saddr, NULL);
-+	size1 = ALIGN(len + offset_in_page(pos1), PAGE_SIZE);
-+	ret = dax_iomap_direct_access(smap, pos1, size1, &saddr, NULL);
- 	if (ret < 0)
- 		goto out_unlock;
+@@ -208,11 +208,11 @@ static inline int do_service_request(u32 id, u32 info, u32 cmd, u32 val, u32 ext
+ 	}
  
--	ret = dax_iomap_direct_access(dmap, pos2, ALIGN(pos2 + len, PAGE_SIZE),
--				      &daddr, NULL);
-+	size2 = ALIGN(len + offset_in_page(pos2), PAGE_SIZE);
-+	ret = dax_iomap_direct_access(dmap, pos2, size2, &daddr, NULL);
- 	if (ret < 0)
- 		goto out_unlock;
+ 	if (!msg.complete || msg.cmd != CMD_OK) {
+-		mutex_unlock(&cpufreq_mutex[package]);
++		mutex_unlock(&cpufreq_mutex[nid]);
+ 		return -EPERM;
+ 	}
  
--	*same = !memcmp(saddr, daddr, len);
-+	*same = !memcmp(saddr + offset_in_page(pos1),
-+			daddr + offset_in_page(pos2), len);
- 	if (!*same)
- 		len = 0;
- 	dax_read_unlock(id);
+-	mutex_unlock(&cpufreq_mutex[package]);
++	mutex_unlock(&cpufreq_mutex[nid]);
+ 
+ 	return msg.val;
+ }
+@@ -337,7 +337,7 @@ static int loongson3_cpufreq_probe(struct platform_device *pdev)
+ {
+ 	int i, ret;
+ 
+-	for (i = 0; i < MAX_PACKAGES; i++) {
++	for (i = 0; i < MAX_NUMNODES; i++) {
+ 		ret = devm_mutex_init(&pdev->dev, &cpufreq_mutex[i]);
+ 		if (ret)
+ 			return ret;
 -- 
 2.53.0
 
