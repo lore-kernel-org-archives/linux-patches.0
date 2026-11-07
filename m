@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063205;
-	b=gjpkRP91h9yHVG7fP052pixU/AnsArz58tnIiFHhoCW4zok8na8bNqvZPVTNHZ5KLghL
-	 /AUwbhct8b1IcXQ7uT9GYuCYtPflJrxTrQeAB+4YzVhkAsyktjmVdnGwvKm0pmJuO7xgS
-	 9DDaZhE3xGrkvq/yHmcSUNQr2Yl3/H63B6mBzTZFgnPEXGsqfYkbMLKz5tTWaa8ozhT9b
-	 XQdEvryQzOPUwtTmCXrcKuJa0g0Ggnv8Az9pxD1q51FH4BD2HY2cIGgR29QmePghzuUAf
-	 TqPTe4sXIggNVLdLUdcybNOGV2BhVg728oQqDu7v2sp3t9FQQFC5huOPx/aAZ7EPAmQ==
+	t=1794063206;
+	b=ZctBLCm2FbpXDBUyuvnANP55APgTTs6cooTJIuRlmsiFx3FiMj9vEHEXtLD7yRmJOF+R
+	 jP80A19meCivhOKqTHUI4asaPtcRcjv0bMPN8m4yHmTYlI1OSCw4nQllLCKuHwb0BFlcd
+	 lrv5oh2E4OUGBkTrZpgx0ZarVP/XenFF4uyLT4bXXXazmlBG6vo+saCsM/d9AjFughWl/
+	 hwOapFS1qmaQ+tuUbqbaEsyZbdCS+EUVu1n3Rb/AngNnFTDPkCctdN6Ti2ADDC0yODjqe
+	 ngfqNL42shvq6oOGqHEZKsY7Qkv9NJ4z0z2M8W/k8EWUcRlEZw81MncSIAqE69W1hOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063206;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w8eYhpG5PCHmZiNnbwuDo6/7rfn44uyeb8MvV0fCTA4=;
-	b=K6VplADu1CgiAQT0Qru7hSN8c67nBrAW5b0LW0w/sfAGL3XRRvf+VtPJNPiJO67iAPuu
-	 Ce60hqDHqM3qJCSRSjW3LbFHNd+BUjWnSNSSgyVNBczoAplv3d628eAYY/M6umdjo50oN
-	 joB94C9VL3xwR7t/0lKMzRzg6QXD6lmhkOiBX8OOhShk0BcWtExilUHdzeYnhmLFnWq/7
-	 ciujITlDISvzTLbb4YxU+DwKJo23ZNzyD7RXJHj+Ht2mc9CcrIeXnTImPl8/3M/HfX88d
-	 I2/ST1BgvqQLgxp0dEM4v/EYw7TanSNYZHLcDqI4znLnwL06lDnc1Qq9gQrKSLJkIoA==
+	bh=P5K0EOo0LWdj6ZYajYwXV+Dm/K+M9svGRlvpN9TXhpo=;
+	b=a+PlNqY0CXwOdcB7ZLjiNTGoBVD+KhCXbdM6gEqEV2KVo0TbNzH1hMMWazZYoOt/hEKc
+	 Uy9DLMT6oBGR5UVRDa+1PokTrKnho1nVQ+rAS2ozcmXhSRVBhYaWBle8Hb951WE7b8Xhn
+	 uS6sKTpwm7sp14kNIsGC6lHBOWT9rMMIC6kxj88Pe+QIQKGSh3SNmZut4ss7IwB54hmJB
+	 4iGL1dMXMMpVl/hzNk7NMILx7nPpO0W/6v7eS1iyawtdtHpg+Zb4cq5U9FhAKWB0vEsG4
+	 nPaynd+0KaKIN9r29ps1JCX8X1ohfao9CdHKHYvygldPO+0KFYCoDAW6YiUx0gDrfEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AObhtO4a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvOGd8jk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0048C606D818;
-	Sat,  7 Nov 2026 14:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6533E606D802;
+	Sat,  7 Nov 2026 14:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AObhtO4a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32E51F0089F;
-	Sat,  7 Nov 2026 14:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YvOGd8jk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52401F0089F;
+	Sat,  7 Nov 2026 14:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063204;
-	bh=w8eYhpG5PCHmZiNnbwuDo6/7rfn44uyeb8MvV0fCTA4=;
+	s=korg; t=1794063206;
+	bh=P5K0EOo0LWdj6ZYajYwXV+Dm/K+M9svGRlvpN9TXhpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AObhtO4ao+uJDDh0yi0tCKbFhaHLdXHItUoWmEzXyXQ8cTD3AXIjsM1fQADJvGkSP
-	 4ZfdyETH10lIDMNq/CHYHmhS8g3gv0lR08k/MFkPjesYBZOtaBk/BvjfVYO3IPIanH
-	 WSmHbNd6pIm0+nmgZ2cgbx2Vf7ciChAP8uWnohK4=
+	b=YvOGd8jkK8mSupsfiT5Hxsr3TL4OHSWng70Vy7E+zlCcLUkM1lQSeNAfTu2M6mKdG
+	 dxAPoumdbz6aNNizzsaZR7+SZB4swmgpd0WoZ/3wRg7yJj4kC7vgIQij5kGTfgJylh
+	 5Vabf3sFmBV1FwF+SiHKjHwY1dnHNj/WKkTCUjIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsiu-Hsien Lee <swinds24@gmail.com>,
+	guzebing <guzebing1612@gmail.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 417/869] ext4: fix fast commit replay failing on a read-only mount
-Date: Sat,  7 Nov 2026 08:51:39 -0500
-Message-ID: <20261107134907.552080761@linuxfoundation.org>
+Subject: [PATCH 6.18 418/869] ext4: reject delalloc to nodelalloc before applying remount options
+Date: Sat,  7 Nov 2026 08:51:40 -0500
+Message-ID: <20261107134907.592861785@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,114 +70,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsiu-Hsien Lee <swinds24@gmail.com>
+From: guzebing <guzebing1612@gmail.com>
 
-[ Upstream commit e1a881ea4674876721cab97680d1d8308f90e9a4 ]
+[ Upstream commit 26a3ff309c91986dbedb05d0e0f0050ea0aa629c ]
 
-A filesystem with fast_commit that needs recovery cannot be mounted
-read-only:
+Commit 97f5ec3b166d ("ext4: prevent delalloc to nodelalloc on
+remount") rejects switching a mounted filesystem from delalloc to
+nodelalloc.  However, it performs the check after ext4_apply_options()
+has already cleared EXT4_MOUNT_DELALLOC in the live superblock.  The
+failure path eventually restores the bit, but leaves a window where
+other CPUs can observe nodelalloc.
 
-  EXT4-fs (dm-0): INFO: recovery required on readonly filesystem
-  EXT4-fs (dm-0): write access will be enabled during recovery
-  WARNING: CPU: 22 PID: 5544 at fs/ext4/ext4_jbd2.c:73
-   ext4_journal_check_start
-   __ext4_journal_start_sb
-   __ext4_unlink
-   ext4_fc_replay
-   do_one_pass
-   jbd2_journal_recover
-   jbd2_journal_load
-   __ext4_fill_super
-  JBD2: journal recovery failed
-  EXT4-fs (dm-0): error loading journal
+test_opt() reads s_mount_opt directly without a lock shared with
+remount.  If a concurrent truncate's __es_remove_extent() hits this
+window and observes nodelalloc, it sets count_reserved to false.
+Delayed extent status entries are then removed without calculating
+their cluster reservations, leaving reserved at zero.
+ext4_es_remove_extent() therefore calls ext4_da_release_space() with
+zero, leaving i_reserved_data_blocks and s_dirtyclusters_counter
+elevated.  When the inode is later evicted after unlink,
+ext4_destroy_inode() reports:
 
-Fast commit replay runs ext4 metadata operations instead of writing
-blocks through the buffer cache: ext4_fc_replay_{unlink,link,create}()
-reach __ext4_unlink() and __ext4_link(), which start a handle.
-ext4_journal_check_start() returns -EROFS on a read-only sb, and as
-that is not -ENOENT it propagates out of jbd2_journal_recover() and
-kills the whole recovery.  The EXT4_FC_REPLAY check that would hand
-out a no-journal handle sits after the sb_rdonly() test, so replay can
-never complete read-only.
+  i_reserved_data_blocks (...) not cleared!
 
-ext4_load_journal() has already promised that write access will be
-enabled during recovery, so make that true for the superblock as well:
-clear SB_RDONLY across jbd2_journal_load() when recovery is needed on a
-read-only mount and the devices are writable, as ext4_orphan_cleanup()
-does.  Unlike ext4_handle_error(), which avoids SB_RDONLY because it
-would need s_umount, the sb here is still inside ext4_fill_super() and
-not published, so nothing can observe it.
+CPU 0                             CPU 1
+                                  ksys_truncate()
+                                    ...
+                                    ext4_es_remove_extent()
+ext4_reconfigure()
+  ext4_check_opt_consistency()
+  __ext4_remount()
+    ext4_apply_options()
+      clear EXT4_MOUNT_DELALLOC
+                                      __es_remove_extent()
+                                        test_opt() sees !DELALLOC
+                                        count_reserved = false
+    reject delalloc -> nodelalloc
+    restore EXT4_MOUNT_DELALLOC
+                                        remove delayed ES
+                                    ext4_da_release_space(0)
 
-The failure is not clean either: the replay handlers passing a NULL
-handle (ext4_fc_replay_inode(), _add_range(), _del_range()) never hit
-ext4_journal_check_start() and do write, leaving a partially applied
-fast commit behind.
+Follow the pre-apply validation approach used by
+ext4_check_quota_consistency() and reject the transition in
+ext4_check_opt_consistency(), before ext4_apply_options() changes live
+state.  Use mask_s_mount_opt to determine whether delalloc/nodelalloc
+was specified and ctx_test_mount_opt() to check the final parsed value.
 
-Reproducer, where the unlink only ever reaches the fast commit area:
-
-  mke2fs -q -F -t ext4 -O fast_commit -b 4096 /dev/sdb3 262144
-  mount /dev/sdb3 /mnt
-  dd if=/dev/zero of=/mnt/victim bs=4k count=1 conv=fsync
-  sync                          # victim now in a full commit
-  rm /mnt/victim
-  dd if=/dev/zero of=/mnt/trigger bs=4k count=1 conv=fsync
-  <crash, or snapshot the device while mounted and write it back>
-  mount -o ro /dev/sdb3 /mnt
-
-Without this patch that mount fails; with it recovery completes and
-victim is gone, i.e. the UNLINK record was really replayed.
-
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Fixes: 97f5ec3b166d ("ext4: prevent delalloc to nodelalloc on remount")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hsiu-Hsien Lee <swinds24@gmail.com>
+Signed-off-by: guzebing <guzebing1612@gmail.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260812044353.1018268-1-swinds24@gmail.com
+Link: https://patch.msgid.link/20260814034855.1573759-1-guzebing1612@gmail.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/ext4/super.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index b4ff7e692986b..2762628bbfc95 100644
+index 2762628bbfc95..613b04b64b14d 100644
 --- a/fs/ext4/super.c
 +++ b/fs/ext4/super.c
-@@ -6016,6 +6016,7 @@ static int ext4_load_journal(struct super_block *sb,
- 	int err = 0;
- 	int really_read_only;
- 	int journal_dev_ro;
-+	bool enable_write = false;
- 
- 	if (WARN_ON_ONCE(!ext4_has_feature_journal(sb)))
- 		return -EFSCORRUPTED;
-@@ -6072,6 +6073,7 @@ static int ext4_load_journal(struct super_block *sb,
- 			}
- 			ext4_msg(sb, KERN_INFO, "write access will "
- 			       "be enabled during recovery");
-+			enable_write = true;
- 		}
+@@ -2783,6 +2783,14 @@ static int ext4_check_opt_consistency(struct fs_context *fc,
  	}
  
-@@ -6088,7 +6090,19 @@ static int ext4_load_journal(struct super_block *sb,
- 		if (save)
- 			memcpy(save, ((char *) es) +
- 			       EXT4_S_ERR_START, EXT4_S_ERR_LEN);
-+		/*
-+		 * Fast commit replay performs regular ext4 metadata updates
-+		 * (see ext4_fc_replay()) which refuse to run on a read-only
-+		 * superblock.  We promised write access above, so make that
-+		 * true for the duration of the recovery, the same way
-+		 * ext4_orphan_cleanup() does.  The superblock is not published
-+		 * yet, so nothing can observe the transient state.
-+		 */
-+		if (enable_write)
-+			sb->s_flags &= ~SB_RDONLY;
- 		err = jbd2_journal_load(journal);
-+		if (enable_write)
-+			sb->s_flags |= SB_RDONLY;
- 		if (save && memcmp(((char *) es) + EXT4_S_ERR_START,
- 				   save, EXT4_S_ERR_LEN)) {
- 			memcpy(((char *) es) + EXT4_S_ERR_START,
+ 	if (is_remount) {
++		if (test_opt(sb, DELALLOC) &&
++		    (ctx->mask_s_mount_opt & EXT4_MOUNT_DELALLOC) &&
++		    !ctx_test_mount_opt(ctx, EXT4_MOUNT_DELALLOC)) {
++			ext4_msg(sb, KERN_ERR,
++				 "can't disable delalloc during remount");
++			return -EINVAL;
++		}
++
+ 		if (!sbi->s_journal &&
+ 		    ctx_test_mount_opt(ctx, EXT4_MOUNT_DATA_ERR_ABORT)) {
+ 			ext4_msg(NULL, KERN_WARNING,
+@@ -6595,13 +6603,6 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
+ 		goto restore_opts;
+ 	}
+ 
+-	if ((old_opts.s_mount_opt & EXT4_MOUNT_DELALLOC) &&
+-	    !test_opt(sb, DELALLOC)) {
+-		ext4_msg(sb, KERN_ERR, "can't disable delalloc during remount");
+-		err = -EINVAL;
+-		goto restore_opts;
+-	}
+-
+ 	sb->s_flags = (sb->s_flags & ~SB_POSIXACL) |
+ 		(test_opt(sb, POSIX_ACL) ? SB_POSIXACL : 0);
+ 
 -- 
 2.53.0
 
