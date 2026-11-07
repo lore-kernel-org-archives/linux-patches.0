@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061859;
-	b=HLgMfhu8oW53eGhzzO4HQrXfP01M8x52TPi5Y+dPuNEU4gmViffHp9Mki1Knq6JtilY8
-	 rBHXASO622xkpcnjop6iwlBgGF1U9TIqD2gnDyHEakQRHetQfLRmsd76BQp+Y+W2GsB1O
-	 ikOuRxHLs3H2B6w5hZdblK9OBQBpfNipx70vBBWjvfKwNRPBVcAzapfzZOCp9wjz/Hl9N
-	 SaEF5GVdT7QA0ZF0syFmwpgTDN1wCymOYwdDWa8ZR/ldVb/aEU+OvBJhy8ypsmrz7sevO
-	 OxHHcHwkb6nJYBrpff2xi0H2WhZ6g99IlpiVH5HqsvsxmVt18xfjFaRQaYILR/8ozUQ==
+	t=1794061860;
+	b=qEDKnF3mRmZ2WlJH3H2qQ/iJl1a4zBWsCWQgwBljQ5xu3QH9WrfzY+xJTMSRO55YH6xx
+	 uVgHa52U+QvqKnx7GjitPDAij7b+8RlrBrWSIrWuXIXyiT8eG5CSdGp3W/Bbi456tBLdE
+	 EKFkommt7Cxj7K4ikv/0ErSe5C+9JQypznXhxPIawsUKMucTXIm+My5gSHLzbrALe+ucg
+	 W4kIMl+as8b5dqYsT3bvQU/XY00JcbOLoOleEYVZHDfaERsII0ntLGtNWxctu79Bh37qr
+	 KaXSEMwEWcm7VDhGnA59Ce+p/Qu9M/O0pjrQZgJHeFJfikqAlQT3O0HDrX6Wl+Ewayg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061859;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061860;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sZ4df8TCoEKCU6ONy8VnQnYL7x1jsP9AU7LsOQVd5zQ=;
-	b=MgjzkVqNXN+WDxIGGiYb5JCLRsHOacbwUOpsyMQbx6f5p4CzhH4+2vcl6lthRJWNrl0O
-	 i8EeQZEoaNbWmqTQgS2V/5weSkZPsfg0iLvcO7+9BthIBVjob9AeWTNxD7fFEgYVJbIaB
-	 NVtw4GU5mlbWZxZfHGm3rV0SSSOsDp2Ve+zHAU7wtu/mxRU0iZESsP9rMXvoJ+aC+TdLj
-	 RN/A+hkUEBXippy3i5ZYUqX4WiMCPemRdPeK+15Ccvyek4OodKbySWE7u3+dYqJRUSdXe
-	 4PjaByEYjsLewqGWNni5X3VtWgXycUmkM03vYssJtJkCvr+ydH5huyeuPysSzZgRyHA==
+	bh=+VnnomsQnz72YXdOOHxbjqRMp0lP6WT5QPtSuVq3+mg=;
+	b=jFyl31/biirXPyExokQtD7//sCoi4eQjr54aUiRXR66qDTc5Er90ARoNHrzfybXm65P4
+	 /j4P6m5yDfhOa9H+k9DuSlSmVwaVUXMXQ0biMcUyDnRgBX2CtvQtR0KnuE4ay3DZOLFRY
+	 klZe0B1iETkum3luscSouxxBVYaujtldQ64Cu57fjKY9IMGfqApvjKz70mbh1xvtMlzeW
+	 DSU3uzDHihB+HgkcNnxf+FImGUXbLwuyW8gvz5jM71RDEMRAF7NzZzbD0UbNyMjWgECtM
+	 12SCILgDMidl99WQIeQxHfcqH+E070mQ75fVLf8KDUr5b85Wr5GlkKBXIWVm3bq6+0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DyS0jU73;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDQ17vW7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13C1606A32C;
-	Sat,  7 Nov 2026 14:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8FC606A32C;
+	Sat,  7 Nov 2026 14:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DyS0jU73
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508631F0089F;
-	Sat,  7 Nov 2026 14:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDQ17vW7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7C91F0089F;
+	Sat,  7 Nov 2026 14:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061858;
-	bh=sZ4df8TCoEKCU6ONy8VnQnYL7x1jsP9AU7LsOQVd5zQ=;
+	s=korg; t=1794061859;
+	bh=+VnnomsQnz72YXdOOHxbjqRMp0lP6WT5QPtSuVq3+mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DyS0jU73iJnKKvXru1er/1o8l3AZN+qbrPzB4yGLMIhj5sB8OOV7dWRmDTIlVdpFe
-	 N40NY3hYSwVFemKF2QDHgktVYU627i4NgTYU480+GNN+NE9RvvLWbnmXB6VfP4WbnQ
-	 OLOQA0RQNuy1Ej3j9PYT+19Sd3gtdcXn53NObfUY=
+	b=uDQ17vW7zw5WP2hGZqzHMPnJy5+xPYSg1R+zmePw4+ghIcNixk7neoQk65l80uUzt
+	 WXdcQOm/X0YaAaCxDmw0y3JxxG4tVACCx2PMih36YBHTK1L9OzfBdOpaS356iR1NB1
+	 /3DIXXABbK2NGs4H0BJymDriisXSl5H6eZPh6oJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Vega <vega@nebusec.ai>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	co+d17c2bc750a9cbbb@bugs.sh,
+	Weiming Shi <bestswngs@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0876/1536] mptcp: hold MP_JOIN msk ref when cloning reqsk
-Date: Sat,  7 Nov 2026 08:48:12 -0500
-Message-ID: <20261107135022.151841159@linuxfoundation.org>
+Subject: [PATCH 6.12 0877/1536] virtio_net: atomically disable rx mode work
+Date: Sat,  7 Nov 2026 08:48:13 -0500
+Message-ID: <20261107135022.179345387@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -73,192 +69,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit c9c90cf437a9e6597611b6d3aad6e255fad22867 ]
+[ Upstream commit 1234707482053f1d1ac7c5756207d2c29057974c ]
 
-TCP request migration clones pending request sockets with
-inet_reqsk_clone().  For MPTCP MP_JOIN requests this byte-copies
-subflow_req->msk, but the clone does not own a reference.
+virtio-net uses a boolean to gate rx_mode_work during device teardown.
+The flag is changed under RTNL, but ndo_set_rx_mode checks it under the
+address-list lock. A callback can therefore pass the check and enqueue work
+after teardown has flushed it. The work is also enabled before late
+probe operations that can fail, allowing probe unwind to free the netdev
+with work still queued.
 
-The original and cloned requests can consequently drop the same msk
-reference, leaving one request with a dangling pointer.  This manifests as
-a KASAN slab-use-after-free in subflow_req_destructor():
+KASAN reports the worker using a virtqueue that probe unwind already freed:
 
-  BUG: KASAN: slab-use-after-free in subflow_req_destructor (net/mptcp/subflow.c:45)
-  Write of size 4 at addr ff1100010e008d40 by task swapper/0/0
-  CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.2.0-rc5-00353-gc27e36054537 #10 PREEMPT(full)
-
+  BUG: KASAN: slab-use-after-free in virtqueue_add_split
+  Workqueue: events virtnet_rx_mode_work
   Call Trace:
-   subflow_req_destructor (net/mptcp/subflow.c:45)
-   subflow_v4_req_destructor (net/mptcp/subflow.c:694)
-   __reqsk_free (net/ipv4/inet_connection_sock.c:906)
-   reqsk_timer_handler (include/net/request_sock.h:137 net/ipv4/inet_connection_sock.c:1147)
+   virtqueue_add_split (drivers/virtio/virtio_ring.c:706)
+   virtqueue_add_sgs (drivers/virtio/virtio_ring.c:2839)
+   virtnet_send_command_reply (drivers/net/virtio_net.c:3565)
+   virtnet_rx_mode_work (drivers/net/virtio_net.c:3833)
+   process_one_work (kernel/workqueue.c:3322)
+   worker_thread (kernel/workqueue.c:3405)
+  Freed by task 119:
+   kfree (mm/slub.c:6625)
+   vp_del_vq.isra.0 (drivers/virtio/virtio_pci_common.c:259)
+   vp_del_vqs (drivers/virtio/virtio_pci_common.c:285)
+   virtnet_probe (drivers/net/virtio_net.c:7129)
 
-  Allocated by task 10014:
-   sk_prot_alloc (net/core/sock.c:2246)
-   sk_clone (net/core/sock.c:2488)
-   mptcp_sk_clone_init (include/net/sock.h:1848 net/mptcp/protocol.c:3564)
-   subflow_syn_recv_sock (net/mptcp/subflow.c:883)
-   tcp_check_req (net/ipv4/tcp_minisocks.c:934)
+Use the workqueue disable mechanism to atomically reject new queue attempts
+and drain running work. Keep work disabled until probe succeeds or restore
+has reattached the netdev, then enable it and replay receive-mode state for
+a running interface. Disable it before resource teardown in freeze and
+remove.
 
-  Freed by task 0:
-   slab_free_after_rcu_debug (include/linux/kasan.h:235 mm/slub.c:2677 mm/slub.c:6439)
-   rcu_core (kernel/rcu/tree.c:2645 kernel/rcu/tree.c:2897)
-
-  Last potentially related work creation:
-   kmem_cache_free (mm/slub.c:2638 mm/slub.c:6377 mm/slub.c:6504)
-   __sk_destruct (net/core/sock.c:2289 net/core/sock.c:2391)
-   sk_destruct (net/core/sock.c:2419)
-   __sk_free (net/core/sock.c:2430)
-   sk_free (net/core/sock.c:2441)
-   mptcp_close (include/net/sock.h:2020 net/mptcp/protocol.c:3399)
-   inet_release (net/ipv4/af_inet.c:442)
-
-  The buggy address belongs to the cache MPTCP of size 2968
-  The buggy address is 128 bytes inside a freed 2968-byte region
-
-A non-NULL subflow_req->msk means that the request owns one reference. The
-third ACK can concurrently transfer the original request reference to the
-child and release it, so taking an unconditional hold on the copied pointer
-is unsafe.
-
-MPTCP sockets use SLAB_TYPESAFE_BY_RCU and all current inet_reqsk_clone()
-callers run in an RCU read-side critical section. Document and
-lockdep-check that calling-context requirement.  Read the pointer from the
-original request and acquire a reference only if it is still live.  Use
-refcount_inc_not_zero_acquire() so the subsequent ownership validation
-cannot be reordered before the try-get, then re-read the original request
-to verify that it still owns the same msk. If either check fails, clear the
-clone pointer; otherwise its normal destructor balances the new reference.
-Mark the ownership-transfer store with WRITE_ONCE() to match the lockless
-reads.
-
-The following patch completes the clone fixup for MP_CAPABLE token
-ownership. Both patches carry the same Fixes tag and are required for
-stable backports.
-
-Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
+Fixes: b9f7425239a0 ("virtio-net: convert rx mode setting to use workqueue")
 Cc: stable@vger.kernel.org
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Reported-by: David Lee <david.lee@trailofbits.com>
-Reported-by: Vega <vega@nebusec.ai>
-Closes: https://lore.kernel.org/all/20260804095051.715355-1-david.lee@trailofbits.com/
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-3-932c9b182fc7@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Adjusted the MPTCP include placement because the TCP ECN header is absent. ]
+Reported-by: <co+d17c2bc750a9cbbb@bugs.sh>
+Assisted-by: LLM
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20261017114237.2786302-2-bestswngs@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: adjusted context to match the existing virtio-net device lifecycle code ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mptcp.h             |  9 +++++++++
- net/ipv4/inet_connection_sock.c |  4 ++++
- net/mptcp/subflow.c             | 35 ++++++++++++++++++++++++++++++++-
- 3 files changed, 47 insertions(+), 1 deletion(-)
+ drivers/net/virtio_net.c | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/include/net/mptcp.h b/include/net/mptcp.h
-index 814b5f2e3ed5e..280001e0ed921 100644
---- a/include/net/mptcp.h
-+++ b/include/net/mptcp.h
-@@ -213,6 +213,9 @@ int mptcp_subflow_init_cookie_req(struct request_sock *req,
- struct request_sock *mptcp_subflow_reqsk_alloc(const struct request_sock_ops *ops,
- 					       struct sock *sk_listener,
- 					       bool attach_listener);
-+/* Caller must hold an RCU read-side lock. */
-+void mptcp_subflow_reqsk_clone(struct request_sock *req,
-+			       struct request_sock *new_req);
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 2c62371666cd5..bf4f177417384 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -437,9 +437,6 @@ struct virtnet_info {
+ 	/* Work struct for setting rx mode */
+ 	struct work_struct rx_mode_work;
  
- __be32 mptcp_get_reset_option(const struct sk_buff *skb);
+-	/* OK to queue work setting RX mode? */
+-	bool rx_mode_work_enabled;
+-
+ 	/* Does the affinity hint is set for virtqueues? */
+ 	bool affinity_hint_set;
  
-@@ -308,6 +311,12 @@ static inline struct request_sock *mptcp_subflow_reqsk_alloc(const struct reques
- 	return NULL;
+@@ -678,16 +675,13 @@ static void disable_delayed_refill(struct virtnet_info *vi)
+ 
+ static void enable_rx_mode_work(struct virtnet_info *vi)
+ {
+-	rtnl_lock();
+-	vi->rx_mode_work_enabled = true;
+-	rtnl_unlock();
++	if (enable_work(&vi->rx_mode_work) && netif_running(vi->dev))
++		schedule_work(&vi->rx_mode_work);
  }
  
-+/* Caller must hold an RCU read-side lock. */
-+static inline void mptcp_subflow_reqsk_clone(struct request_sock *req,
-+					     struct request_sock *new_req)
-+{
-+}
+ static void disable_rx_mode_work(struct virtnet_info *vi)
+ {
+-	rtnl_lock();
+-	vi->rx_mode_work_enabled = false;
+-	rtnl_unlock();
++	disable_work_sync(&vi->rx_mode_work);
+ }
+ 
+ static void virtqueue_napi_schedule(struct napi_struct *napi,
+@@ -3688,8 +3682,7 @@ static void virtnet_set_rx_mode(struct net_device *dev)
+ {
+ 	struct virtnet_info *vi = netdev_priv(dev);
+ 
+-	if (vi->rx_mode_work_enabled)
+-		schedule_work(&vi->rx_mode_work);
++	schedule_work(&vi->rx_mode_work);
+ }
+ 
+ static int virtnet_vlan_rx_add_vid(struct net_device *dev,
+@@ -5515,7 +5508,6 @@ static void virtnet_freeze_down(struct virtio_device *vdev)
+ 	/* Make sure no work handler is accessing the device */
+ 	flush_work(&vi->config_work);
+ 	disable_rx_mode_work(vi);
+-	flush_work(&vi->rx_mode_work);
+ 
+ 	netif_tx_lock_bh(vi->dev);
+ 	netif_device_detach(vi->dev);
+@@ -5538,7 +5530,6 @@ static int virtnet_restore_up(struct virtio_device *vdev)
+ 	virtio_device_ready(vdev);
+ 
+ 	enable_delayed_refill(vi);
+-	enable_rx_mode_work(vi);
+ 
+ 	if (netif_running(vi->dev)) {
+ 		err = virtnet_open(vi->dev);
+@@ -5549,6 +5540,8 @@ static int virtnet_restore_up(struct virtio_device *vdev)
+ 	netif_tx_lock_bh(vi->dev);
+ 	netif_device_attach(vi->dev);
+ 	netif_tx_unlock_bh(vi->dev);
 +
- static inline __be32 mptcp_reset_option(const struct sk_buff *skb)  { return htonl(0u); }
++	enable_rx_mode_work(vi);
+ 	return err;
+ }
  
- static inline void mptcp_active_detect_blackhole(struct sock *sk, bool expired) { }
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 4093bbbd687ab..2cb125bbfb9db 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -20,6 +20,7 @@
- #include <net/tcp_states.h>
- #include <net/xfrm.h>
- #include <net/tcp.h>
-+#include <net/mptcp.h>
- #include <net/sock_reuseport.h>
- #include <net/addrconf.h>
+@@ -6610,6 +6603,7 @@ static int virtnet_probe(struct virtio_device *vdev)
  
-@@ -1005,6 +1006,9 @@ static struct request_sock *inet_reqsk_clone(struct request_sock *req,
- 		rcu_assign_pointer(tcp_sk(nreq->sk)->fastopen_rsk, nreq);
+ 	INIT_WORK(&vi->config_work, virtnet_config_changed_work);
+ 	INIT_WORK(&vi->rx_mode_work, virtnet_rx_mode_work);
++	disable_work(&vi->rx_mode_work);
+ 	spin_lock_init(&vi->refill_lock);
+ 
+ 	if (virtio_has_feature(vdev, VIRTIO_NET_F_MRG_RXBUF)) {
+@@ -6752,8 +6746,6 @@ static int virtnet_probe(struct virtio_device *vdev)
+ 	if (vi->has_rss || vi->has_rss_hash_report)
+ 		virtnet_init_default_rss(vi);
+ 
+-	enable_rx_mode_work(vi);
+-
+ 	/* serialize netdev register + virtio_device_ready() with ndo_open() */
+ 	rtnl_lock();
+ 
+@@ -6849,6 +6841,8 @@ static int virtnet_probe(struct virtio_device *vdev)
+ 		goto free_unregister_netdev;
  	}
  
-+	if (rsk_is_mptcp(req))
-+		mptcp_subflow_reqsk_clone(req, nreq);
++	enable_rx_mode_work(vi);
 +
- 	return nreq;
- }
+ 	pr_debug("virtnet: registered device %s with %d RX and TX vq's\n",
+ 		 dev->name, max_queue_pairs);
  
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 1d0deac2c0fee..17d392b042ba9 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -47,6 +47,39 @@ static void subflow_req_destructor(struct request_sock *req)
- 	mptcp_token_destroy_request(req);
- }
+@@ -6900,7 +6894,6 @@ static void virtnet_remove(struct virtio_device *vdev)
+ 	/* Make sure no work handler is accessing the device. */
+ 	flush_work(&vi->config_work);
+ 	disable_rx_mode_work(vi);
+-	flush_work(&vi->rx_mode_work);
  
-+void mptcp_subflow_reqsk_clone(struct request_sock *req,
-+			       struct request_sock *new_req)
-+{
-+	struct mptcp_subflow_request_sock *subflow_req = mptcp_subflow_rsk(req);
-+	struct mptcp_subflow_request_sock *new_subflow_req;
-+	struct mptcp_sock *msk;
-+
-+	new_subflow_req = mptcp_subflow_rsk(new_req);
-+	RCU_LOCKDEP_WARN(!rcu_read_lock_any_held(),
-+			 "MPTCP reqsk clone called without RCU");
-+
-+	/* A non-NULL ->msk means the request owns one reference.  The clone
-+	 * copied only the pointer, while the original request can concurrently
-+	 * transfer its reference to the child.  Acquire a reference for the
-+	 * clone, then verify that the original request still owns the same msk.
-+	 * MPTCP sockets use SLAB_TYPESAFE_BY_RCU and all clone callers run in
-+	 * an RCU read-side critical section, keeping the memory stable here.
-+	 */
-+	msk = READ_ONCE(subflow_req->msk);
-+	if (msk) {
-+		struct sock *sk = (struct sock *)msk;
-+
-+		if (!refcount_inc_not_zero_acquire(&sk->sk_refcnt)) {
-+			msk = NULL;
-+		} else if (READ_ONCE(subflow_req->msk) != msk) {
-+			sock_put(sk);
-+			msk = NULL;
-+		}
-+	}
-+
-+	new_subflow_req->msk = msk;
-+}
-+
- static void subflow_generate_hmac(u64 key1, u64 key2, u32 nonce1, u32 nonce2,
- 				  void *hmac)
- {
-@@ -928,7 +961,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 			}
+ 	virtnet_free_irq_moder(vi);
  
- 			/* move the msk reference ownership to the subflow */
--			subflow_req->msk = NULL;
-+			WRITE_ONCE(subflow_req->msk, NULL);
- 			ctx->conn = (struct sock *)owner;
- 
- 			if (subflow_use_different_sport(owner, sk)) {
 -- 
 2.53.0
 
