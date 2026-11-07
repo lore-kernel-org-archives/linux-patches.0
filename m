@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061556;
-	b=Kr4FJHDGpLmlrX7qhUfu3upgKC3V9AZ+9O2BKsJYMOhiS9hD0cgJ/lecsNlL6q9ErCnk
-	 sPcM+rpC/OSQxrMJOuWcGVU06MKmox0FGwMLFemLt1JE4AGB6NDFwpUqETyz7PBe3XUFT
-	 6elWvU2TbVpdOapBN5LJvCj9pPAMYZek08jTI8hHWkD0kEbMyZsi14Y6apq5Ix0/INNmE
-	 5jiDz3r895FF/jHwd9XTjVmyh1LxZWdUqZTrZ2N6iMf+XTdifVSLqhyy14VCj1Lz1tBYT
-	 HAC5O5T/OePu/Ahf2UO+IoFrQ5zoPfi0+l+IjChbDVsqfO9eVXLf2u4Ayw0f87i4FjQ==
+	t=1794061558;
+	b=e3zqpvV1vj8x1u0vU3X28MmjiA9rAwgXTn1blps02tvARrMx22XHeHFQfYVStdeG3JU1
+	 PbBH6cJ3IcQpGSpGhm6yHyxriC0hUkTHv7lX3zxAYORVoeqOU3Naflo/VOY8VROYBrRrQ
+	 i8BthgcWhD+OcCqdjoI7UDWSqs1hTO16NJWisxSegfX8BaE2UXSatisCLSGJQfSTq/gju
+	 RB3gLXrR7v8Fp6RNG5DVCX49A+6nv+T781EVo3flku+RZyqEPr/JWiH3LbsfLPxmwnVcW
+	 EhSSgcSLUvU70JHU7OLY5STImiBlw18ZWA7Vz5KBpSq1Rt+5b1lk4fMjNt3kJ+iJKhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061556;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061558;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xnL5fkWehCNcYC/zbY5TnRLB1OeVgaeFTgFV5z+9uSk=;
-	b=Nc3Sl3ZUC5k0fWmLDSU2IZL9sTyO3Jx5BFT+N3lvbO12U33oNXWB5cEnwfQul2yoFh7Q
-	 uIyi9Cid8HgRbBKTgHF9mLs+2uNBI8MA7Bu184Vlp7+llicboAvgKOTVHI5MwjlvOG0I/
-	 dLcz2xMffG3H75ZoKbdpZO/wlBRXCektvd2G7BXeYgaPupaBw55h/Q35nw92tvd/cfsGS
-	 hP5uTWumU2oLNKLbGTVGa0wQjUaL/cJz8tr5vo9uf+GCnwZZHlI2sqXOkmcW9TUjM/G1i
-	 4o9zHnjAntgfs3jCsf7QJ0vP6djkZkZzvxywGV4Gf+r7nOzAcFarNCWbbTV/597Nw8A==
+	bh=gIOUAa5DNlm8wfJh2d1fOKSfvgNe7h8u9TIMfdNObeU=;
+	b=OyxnAvsvfHIRVcz+TWgqAfc/9HnhsM4m7Wo5f33QfZandWILjelm0qup/z6mXouqgXOb
+	 QOQUJx/0VjGzAbd3oGLiOViIGKMZF0kvAbSzmWBOhPuiuDm1hT7qWr1Q+dSl6YM/PL9Xw
+	 7wPbj3ND6d8J6noBqSUamS+kDreZEu9zKpjgh9rFEFWkIa62XCOm9Fw9u0NClehwasd9k
+	 ved2fvGj/LeD2uBjxwxA2SnhGLoGm326ieyj+pCeF2/93ikjL4Fwh/3+cNEk8tKPZm8B/
+	 PivDOErkk2kGcxCOCF9xK9ZuRT/T6RN9kfBocr7sgPbJ10aKpeUdXxuViOnowFnmWeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKBw1q2U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sEm5HduB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8793C606A331;
-	Sat,  7 Nov 2026 14:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75B6606A32F;
+	Sat,  7 Nov 2026 14:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKBw1q2U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E2D1F008A1;
-	Sat,  7 Nov 2026 14:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sEm5HduB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908781F008A1;
+	Sat,  7 Nov 2026 14:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061556;
-	bh=xnL5fkWehCNcYC/zbY5TnRLB1OeVgaeFTgFV5z+9uSk=;
+	s=korg; t=1794061557;
+	bh=gIOUAa5DNlm8wfJh2d1fOKSfvgNe7h8u9TIMfdNObeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JKBw1q2U9DiR6fyjT5GKUyj5odCRo4sbntvwdZZD8EjTBu08JLhvx3V7ls/4CCexc
-	 cMscg5hoJew8wgFPSrHFV86XqxMommB6DexQ7Xv9np/+aiDnLud2/uM56sy5uQfhDv
-	 C1UAdKg7s7ObaaNYZZKJEJHTKJM9Vyd1q1X4V6WE=
+	b=sEm5HduBXk7GN9seUjT2zY6Ok4CsocAF3x5JFPFJl3tI5nRooLJL4ZMbgSNFEcYen
+	 d15iosIRtI3u13aeTbILOjZOIj8ihiaJwlonqQMmQ+VyfNrMHJ8UqKatTEg83n9afP
+	 wT0Nr4IwspcPj3ZjVDIlYXS/GIdI0WMK8fV2vi68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 0621/1536] HID: wacom: Use hdev->product in wacom_setup_touch_input_capabilities
-Date: Sat,  7 Nov 2026 08:43:57 -0500
-Message-ID: <20261107135014.974841444@linuxfoundation.org>
+	Richard Patel <ripatel@wii.dev>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.12 0639/1536] genirq: Move interrupt thread exit_work object to irqaction
+Date: Sat,  7 Nov 2026 08:44:15 -0500
+Message-ID: <20261107135015.479803595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,83 +67,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Richard Patel <ripatel@wii.dev>
 
-commit 86472508a7ef74b525e79a79d2d02d911a641d6b upstream.
+commit 89a9e003a2ef73f67dff03dfd59e0a5474b56b0b upstream.
 
-Replace the lookup-dependent 'wacom_wac->shared->touch->product' references
-with 'hdev->product' inside wacom_setup_touch_input_capabilities() since
-'hdev' is already available (via container_of) and represents the touch
-device itself.
+irq_thread() registers irq_thread_dtor() as exit task_work using a
+stack-allocated callback_head.  On normal interrupt thread exit, this work
+gets cancelled and never runs.
 
+On x86, an abnormal interrupt thread exit (e.g. handler oops) discards the
+stack, including the callback_head, while that callback_head is still
+pending. By the time exit_task_work() runs, the stack memory formerly
+backing callback_head is already clobbered.
+
+  irq_thread()                      <-- on_exit_work allocated
+    ** IRQ handler faults **
+    oops_end()
+      rewind_stack_and_make_dead()  <-- on_exit_work freed
+  make_task_dead()
+    do_exit(SIGSEGV)
+      ...
+      exit_shm()                    <-- on_exit_work clobbered
+      ...
+      exit_task_work()              <-- stack use-after-free
+        exit_shm()+0x30             <-- wild jump to return addr
+
+Thus, a benign threaded IRQ oops (e.g. a NULL pointer deref) is
+turned into a wild jump. This is caught by kernel IBT:
+
+  ** first fault **
+  Oops: general protection fault, kernel NULL pointer dereference 0x3c0: 0000 [#1] SMP NOPTI
+  ...
+  ** second fault **
+  Missing ENDBR: exit_shm+0x30/0x1c0
+  kernel BUG at arch/x86/kernel/cet.c:133!
+  ...
+   ? task_work_run+0x5c/0x90
+   ? do_exit+0x209/0x460
+   ? rewind_stack_and_make_dead+0x16/0x20
+  ...
+  note: irq/165-AudioDS[1427] exited with irqs disabled
+  Fixing recursive fault but reboot is needed!
+
+Fix this by storing the callback_head in struct irqaction.  The irqaction
+is only freed once irq_thread_dtor() finishes.
+
+Fixes: 2deb4be28077 ("x86/dumpstack: When OOPSing, rewind the stack before do_exit()")
+Signed-off-by: Richard Patel <ripatel@wii.dev>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Acked-by: Ping Cheng <ping.cheng@wacom.com>
-Tested-by: Ping Cheng <ping.cheng@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Link: https://patch.msgid.link/20261009145842.1616117-3-ripatel@wii.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ include/linux/interrupt.h |    2 ++
+ kernel/irq/manage.c       |    9 ++++-----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -3961,8 +3961,8 @@ int wacom_setup_pen_input_capabilities(s
- int wacom_setup_touch_input_capabilities(struct input_dev *input_dev,
- 					 struct wacom_wac *wacom_wac)
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -118,6 +118,7 @@ typedef irqreturn_t (*irq_handler_t)(int
+  * @thread_flags:	flags related to @thread
+  * @thread_mask:	bitmask for keeping track of @thread activity
+  * @dir:	pointer to the proc/irq/NN/name entry
++ * @thread_dtor:	task_work for @thread irregular exit cleanup
+  */
+ struct irqaction {
+ 	irq_handler_t		handler;
+@@ -133,6 +134,7 @@ struct irqaction {
+ 	unsigned long		thread_mask;
+ 	const char		*name;
+ 	struct proc_dir_entry	*dir;
++	struct callback_head	thread_dtor;
+ } ____cacheline_internodealigned_in_smp;
+ 
+ extern irqreturn_t no_action(int cpl, void *dev_id);
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -1255,9 +1255,9 @@ static void __irq_thread_dtor(struct irq
+ 	irq_finalize_oneshot(desc, action);
+ }
+ 
+-static void irq_thread_dtor(struct callback_head *unused)
++static void irq_thread_dtor(struct callback_head *work)
  {
-+	struct hid_device *hdev = container_of(wacom_wac, struct wacom, wacom_wac)->hdev;
- 	struct wacom_features *features = &wacom_wac->features;
--
- 	if (!(features->device_type & WACOM_DEVICETYPE_TOUCH))
- 		return -ENODEV;
+-	struct irqaction *action = kthread_data(current);
++	struct irqaction *action = container_of(work, struct irqaction, thread_dtor);
  
-@@ -3971,9 +3971,11 @@ int wacom_setup_touch_input_capabilities
- 	else
- 		__set_bit(INPUT_PROP_POINTER, input_dev->propbit);
+ 	__irq_thread_dtor(action);
+ 	clear_and_wake_up_bit(IRQTF_EXIT_WORK, &action->thread_flags);
+@@ -1305,7 +1305,6 @@ static void wake_up_and_wait_for_irq_thr
+  */
+ static int irq_thread(void *data)
+ {
+-	struct callback_head on_exit_work;
+ 	struct irqaction *action = data;
+ 	struct irq_desc *desc = irq_to_desc(action->irq);
+ 	irqreturn_t (*handler_fn)(struct irq_desc *desc,
+@@ -1322,8 +1321,8 @@ static int irq_thread(void *data)
+ 		handler_fn = irq_thread_fn;
  
--	if (features->type == HID_GENERIC)
-+	if (features->type == HID_GENERIC) {
-+		hid_dbg(hdev, "generic touch setup\n");
- 		/* setup has already been done */
- 		return 0;
-+	}
+ 	set_bit(IRQTF_EXIT_WORK, &action->thread_flags);
+-	init_task_work(&on_exit_work, irq_thread_dtor);
+-	task_work_add(current, &on_exit_work, TWA_NONE);
++	init_task_work(&action->thread_dtor, irq_thread_dtor);
++	task_work_add(current, &action->thread_dtor, TWA_NONE);
  
- 	input_dev->evbit[0] |= BIT_MASK(EV_KEY) | BIT_MASK(EV_ABS);
- 	__set_bit(BTN_TOUCH, input_dev->keybit);
-@@ -4005,19 +4007,17 @@ int wacom_setup_touch_input_capabilities
- 		input_dev->evbit[0] |= BIT_MASK(EV_SW);
- 		__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
- 
--		if (wacom_wac->shared->touch->product == 0x361) {
-+		if (hdev->product == 0x361) {
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
- 					     0, 12440, 4, 0);
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
- 					     0, 8640, 4, 0);
--		}
--		else if (wacom_wac->shared->touch->product == 0x360) {
-+		} else if (hdev->product == 0x360) {
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
- 					     0, 8960, 4, 0);
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
- 					     0, 5920, 4, 0);
--		}
--		else if (wacom_wac->shared->touch->product == 0x393) {
-+		} else if (hdev->product == 0x393) {
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_X,
- 					     0, 6400, 4, 0);
- 			input_set_abs_params(input_dev, ABS_MT_POSITION_Y,
-@@ -4047,8 +4047,8 @@ int wacom_setup_touch_input_capabilities
- 		fallthrough;
- 
- 	case WACOM_27QHDT:
--		if (wacom_wac->shared->touch->product == 0x32C ||
--		    wacom_wac->shared->touch->product == 0xF6) {
-+		if (hdev->product == 0x32C ||
-+		    hdev->product == 0xF6) {
- 			input_dev->evbit[0] |= BIT_MASK(EV_SW);
- 			__set_bit(SW_MUTE_DEVICE, input_dev->swbit);
- 			wacom_wac->has_mute_touch_switch = true;
+ 	while (!irq_wait_for_interrupt(desc, action)) {
+ 		irqreturn_t action_ret;
 
 
