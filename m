@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061688;
-	b=GqP8Av148/aXoIN5GDjr4+DUwCrTJ0ktPTRa2FX/IblOue6PFViiTlYG+/v8Z2mLAJyJ
-	 gKojuJXjp5DQWZixoNaUHGEb2f1H14OvrUGl1HQy3fzWfI/AODKrR3HF5A26cAqDpY9hy
-	 3MW1yiXZ3X7lZFRSelwOxl2nvbg/0AuastnS0os5XP1S5PVODRq6RncOXQcl2r4h4+5JT
-	 zKIPZ8AhSMMp3Rtmw+XVxmtCOH84+aGktknRqC9OrUnve+w96eZYxesygqVoXgsogyZBr
-	 FTLJBg6eP4Mp+67hMn5upH+X/EEAXmn7ae0V+8L5rTLaeOeqUiOdV7ISgzhQurt8iqQ==
+	t=1794061689;
+	b=HjrIcpitSGnzUEDJaj/mpQiP6UytyMNURWofl/DhBXVrJh72b0jy0My9ZVbT4Ozhb1mW
+	 ncbntK1dU6leYPAyy/d+hpz8xFZO9ud4fJUlH90yZqhzlv8kUMZqRx2iyoiQjIPeyz0J9
+	 UqYsJB/MDznjY8UnL2UVDWxbb/t6iFHQpyOp2S16vU2c/GyD+jxZj43l8m3Qzjapt8qFc
+	 eCOss0TMCb2bR642IFyMn5XoNIrawg4km9ynk6ZG1fMNr9RoPX9CLjQm8KfwBwNgEymEW
+	 DYWgY2RnhtZ/Nw6slIAG0uUSSK8TeT8bKeXvcGUeZh1mLExhp0C5fc7v0Su8iz6XYGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061689;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+v1O7trVvIiuuSvpRP6EFapGkWVtIb5sPcVE/8SgnQE=;
-	b=LehIbgHAmyfpn93E/9pf8v/ikrDGfgQ2Pj0/xGiONplDMUr/4V4pWNmcVCCKHWViqECv
-	 XcpX7UyjEooaRPHFTZLMS0IsQLndV7Xn47lC8PuN3WezcvsvraQSPZzoJbMX+bTKkqixw
-	 6DeAQ5xtQ3Vh+g9+YPuOUZL4veEvyUeja+xSAE3y2rkCWP+uBuQhZdzHZ5uDNWjKYd27F
-	 /bfv/0Orzr8V/H4gA+WJuHFXxHcomaqwGyvz5Aam/8HQNIk0X+vK3Z48aUQrWbITYqUEy
-	 hLAwysUobacp2UwG7p8/PwnAvEeF4f1Eh5tJqtP+qornAp7FhI6HRnoTE9w5XC4PReA==
+	bh=6Ux94dwCteUxtXK0d61d/XfUZBg/sOid5QLDwS0J5Tw=;
+	b=RwNEfUNjoc44I5TYoN9ffYx+GL9izdXGQEhr0HDjrdYHc2bNkSwu3MtOwYd+ezNVUMDP
+	 oomDDWGwZFEVUq772L5OtypyV9qsUhpEZICEJfssTEQxMHc8GngubZLi4pq7/xbxD0bk5
+	 FlyP9CtaVPSXItS2tal3n16wfxXZJWy4aZf6NTI6N6aGsYiuJcOoiuUA3pFfLrOWL7hbt
+	 QTF/Im4coqEjY4bm8Az8wL/p/gAzl2WrFS2Ux8ntBfIu/9R5zjwjbRaVlm0y6zny2e4fV
+	 lQC06hiAxJpqip/hW6cdjrXuqPJyef4H2jjr27dyY9AqSg5L4ngC29lQnBTQxQ3GXZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNxWgIAu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkNiMrJx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20132606A32C;
-	Sat,  7 Nov 2026 14:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F9B606A32C;
+	Sat,  7 Nov 2026 14:28:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNxWgIAu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E9F1F0089F;
-	Sat,  7 Nov 2026 14:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkNiMrJx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AA21F008A1;
+	Sat,  7 Nov 2026 14:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061688;
-	bh=+v1O7trVvIiuuSvpRP6EFapGkWVtIb5sPcVE/8SgnQE=;
+	s=korg; t=1794061689;
+	bh=6Ux94dwCteUxtXK0d61d/XfUZBg/sOid5QLDwS0J5Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RNxWgIAuzHPVLln2N3e9ffZCUIC7NDR9S9EhOWS9RODop2fHscgwWW4Dfm1wNs8zR
-	 3GXk/X4+yJxtHbpjXqjFhhiwRwPur7LH3We262qr8G18EeG2owtTj34X/AbrNROSlX
-	 fpqxDguNL1SA/HKzDLff6l1Gw/wVA2vDwi6cEG/g=
+	b=wkNiMrJxS0WOeGbMArYspECd41XDXL+PKYR0WR2aMt+k8iDxzC6r0WQn3Qn2ENJ90
+	 tk4OxWP/xC3Qr6/IrqIXsePVdMQ8RGh9h1ECJG9nJn6LESGyP6NQb4G/GDS2Ps4Wuu
+	 8vZC/BEkXHo8q+9nDJ7fRQX0cVRwvJVo3kp42pAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0738/1536] xfs: dont rescan ifree and icount when frozen
-Date: Sat,  7 Nov 2026 08:45:54 -0500
-Message-ID: <20261107135018.246793500@linuxfoundation.org>
+Subject: [PATCH 6.12 0739/1536] xfs: dont subtract excess usage twice when computing agf_btreeblks
+Date: Sat,  7 Nov 2026 08:45:55 -0500
+Message-ID: <20261107135018.276634319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,36 +70,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 18028768415e3c05ab7edb22d740e2f4dc52836a upstream.
+commit 4439b626fb5104204952aa2f169451688fb6be26 upstream.
 
-LOLLM points out that it's pointless to rescan the AGs if we've already
-frozen the filesystem because there won't be any more perturbations.
-Fix this to mark the scan incomplete and exit.
+LOLLM noticed that the free space btree repair code calculates
+agf_btreeblks from the number of blocks we wrote to rebuild the free
+space btrees (minus the roots).  That's correct.  However, it observes
+that we subtract the "excess" reservation, which is not correct.  Fix
+this accounting problem.
 
-Cc: stable@vger.kernel.org # v5.2
-Fixes: 75efa57d0bf5fc ("xfs: add online scrub for superblock counters")
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 4bdfd7d15747b1 ("xfs: repair free space btrees")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/fscounters.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/xfs/scrub/alloc_repair.c |    6 +-----
+ fs/xfs/scrub/newbt.c        |   13 -------------
+ fs/xfs/scrub/newbt.h        |    1 -
+ 3 files changed, 1 insertion(+), 19 deletions(-)
 
---- a/fs/xfs/scrub/fscounters.c
-+++ b/fs/xfs/scrub/fscounters.c
-@@ -379,6 +379,11 @@ retry:
- 	 * to maintain ifree <= icount before giving up.
+--- a/fs/xfs/scrub/alloc_repair.c
++++ b/fs/xfs/scrub/alloc_repair.c
+@@ -663,15 +663,11 @@ xrep_abt_reset_counters(
+ 
+ 	/*
+ 	 * Compute the contribution to agf_btreeblks for the new free space
+-	 * btrees.  This is the computed btree size minus anything we didn't
+-	 * use.
++	 * btrees.  This is the computed btree size minus the root block.
  	 */
- 	if (fsc->ifree > fsc->icount) {
-+		if (fsc->frozen) {
-+			xchk_set_incomplete(sc);
-+			return -EFSCORRUPTED;
-+		}
-+
- 		if (tries--)
- 			goto retry;
- 		return -EDEADLOCK;
+ 	freesp_btreeblks += ra->new_bnobt.bload.nr_blocks - 1;
+ 	freesp_btreeblks += ra->new_cntbt.bload.nr_blocks - 1;
+ 
+-	freesp_btreeblks -= xrep_newbt_unused_blocks(&ra->new_bnobt);
+-	freesp_btreeblks -= xrep_newbt_unused_blocks(&ra->new_cntbt);
+-
+ 	/*
+ 	 * The AGF header contains extra information related to the free space
+ 	 * btrees, so we must update those fields here.
+--- a/fs/xfs/scrub/newbt.c
++++ b/fs/xfs/scrub/newbt.c
+@@ -555,16 +555,3 @@ xrep_newbt_claim_block(
+ 	/* Relog all the EFIs. */
+ 	return xrep_defer_finish(xnr->sc);
+ }
+-
+-/* How many reserved blocks are unused? */
+-unsigned int
+-xrep_newbt_unused_blocks(
+-	struct xrep_newbt	*xnr)
+-{
+-	struct xrep_newbt_resv	*resv;
+-	unsigned int		unused = 0;
+-
+-	list_for_each_entry(resv, &xnr->resv_list, list)
+-		unused += resv->len - resv->used;
+-	return unused;
+-}
+--- a/fs/xfs/scrub/newbt.h
++++ b/fs/xfs/scrub/newbt.h
+@@ -70,6 +70,5 @@ void xrep_newbt_cancel(struct xrep_newbt
+ int xrep_newbt_commit(struct xrep_newbt *xnr);
+ int xrep_newbt_claim_block(struct xfs_btree_cur *cur, struct xrep_newbt *xnr,
+ 		union xfs_btree_ptr *ptr);
+-unsigned int xrep_newbt_unused_blocks(struct xrep_newbt *xnr);
+ 
+ #endif /* __XFS_SCRUB_NEWBT_H__ */
 
 
