@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063245;
-	b=EicC3yKnk8HEEnAWyzgeIwg2tooPdxasHZDy3l9v1N44A+uHzTwnOEScCy1et1e/Fk2u
-	 WHHF5erHhHdivoDCPj3NXPbp+BBMDgF1IbZSp9UHQtYE6sKzlDZzIz754/cQMlb0FxmrW
-	 TNGUVsg9RpxDxJu927DWTFKOHR0xInVwc1RaC4LBHhCJDuVHOYvOAAllTMRVW4hPqjNW1
-	 ilFOWE/Ybp46ghsUrjdb8EVlB180/g0iRsGVL7HcOYlf0KcmixzseyulwroQaQ6X+Ai9f
-	 dktccpTsTFtmXuLZc2zeMA3vgNJFsb6tbkmEDYwORpjXd3bmWO5FGO2xDgDGaYZf+MA==
+	t=1794063246;
+	b=L8FhxWASm8m6YqPQQ0khhMZ10SOGKWYwHOccrwrCjetdUuL+8mqD+fQqFmbfqisFsaUG
+	 EJ7gYVQSwqO8EBazjPQo0nAmApYx8IXBu4AvlCj8O+560tyYp5OHdrRoidBbRWs2rL99t
+	 0cFSw89JzGwUhr7fIsI2FZx+ob5pbvHk1d1Xk+/Bcrc7FFJJxwyhhGv2oEDmaazvxJuwP
+	 l3JcapsRekTdugcnqqZV8em7xDG7yvCnbp2n9bd+ubP8VUS2vQzq5OfDX+60KW/Ak9Cvh
+	 GAmBhzsE3OTeDFzqx8NV97w6GA9NFN1/rX/5LTSPk3oPq9be8WRotZQQrgJVPs+Aecw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063245;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063246;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=62a9uqV4SKgDz8cDZkggAkD3d0r6AkLytmPOG/vstF8=;
-	b=LlbgWrt+5niKqWmBIMqW3NIa8PlbuJkXFi6Ubmx5LZI4V3GhsGdHQtAfsKf4KW4oLy4p
-	 e62QFq6tM8ua+93kNUa0hJXWSWPkp6yP2TjhxiMZZ66m047FagTammJMm47DKyRRuZmyQ
-	 +OH6T/6z8pkuTSS4tKJeoWiG7G4Ito/E0freCqSQVovWRi8lb1AOT2B9hJeIfiqevg4mS
-	 uDGKK2OEePRA1/CXckrALZrUAMGRUVuX5ODM8rOK/AqZSpCYjQmpahWn4eajD6WiHoLc1
-	 ERcu1stCDPcNuhqvNm6/DlgRZaoJe7OyFK9Ig/QmJIEff+goGOWXWYyQOeCRG+9pyLA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=toREthKeR/BMLpFefXbyjYO5UoDj9BnxZlQa4l2dZG0=;
+	b=bEE5B57aB+DsjxwC053+bK4uTwnD4sjQXgj8SLErXumC6MLjqb1mVlNtNJYvpEBkMwZr
+	 H1BhSppmcBA/wkZZr4tvOY3NBJG1FxOr6BPKa4sULgUTNDuWWj+fRiDHsa6CGifxmL96t
+	 sjm8rREJZ3ekNGGX/fKcCaE4dBaNPuN6znzhOVxANo5de6oC/tOihtjT6yXFT5YQ0EF0F
+	 s6P5ELKsU0ZDUFgVPUZsfAJgfVTkX6i3gdebP+pXgqrcAlzQQ50zKSoiLRFI1cw3mt4s+
+	 ajz+i3P13nthE3IhV2+pjQ+JaHifb+hdT/2tcClmk4CfAoZmbmDIKnL67Y9iDuWkFyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kgBwCPY7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ic62R6VZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28070606A33A;
-	Sat,  7 Nov 2026 14:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC9C606A32E;
+	Sat,  7 Nov 2026 14:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kgBwCPY7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACBD1F0089F;
-	Sat,  7 Nov 2026 14:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ic62R6VZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12721F0089F;
+	Sat,  7 Nov 2026 14:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063244;
-	bh=62a9uqV4SKgDz8cDZkggAkD3d0r6AkLytmPOG/vstF8=;
+	s=korg; t=1794063245;
+	bh=toREthKeR/BMLpFefXbyjYO5UoDj9BnxZlQa4l2dZG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kgBwCPY76dPBCTnZ/U2Dxkgo57keTdPwv5Bhs67TZjXVc5LnW12NqGuaqxdskkX9F
-	 xyLzNqgaMo8x7uBkYCa34iH6LZjbMIY7pDdHBqdNA8xmny20WFF+d0hldd0rNJ4Qqf
-	 c4O0XCTaOilajHGPWTqTiYHrBXglDQZCOzPHmafg=
+	b=Ic62R6VZGOhPib3c4R1kSg92X1Ha3Ygj5D9LNtMM1THcBK+FgAhb/nQXOv8KDW32E
+	 HfOIVJVhEg79Mdw4PQpT9yAfYQGcGAfSH3sIsdqCzQjhmrhWj7l6K/CjB0e2NiMvoX
+	 chXJx8llKVknU/8i7yChS/5yxk2F7wMi31BWA+Hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zongmin Zhou <zhouzongmin@kylinos.cn>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 449/869] slimbus: messaging: fix leaked PM vote on tid allocation failure
-Date: Sat,  7 Nov 2026 08:52:11 -0500
-Message-ID: <20261107134908.951433076@linuxfoundation.org>
+Subject: [PATCH 6.18 450/869] xen-blkfront: Fix IO race during unplug
+Date: Sat,  7 Nov 2026 08:52:12 -0500
+Message-ID: <20261107134908.980682466@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -62,49 +63,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit c26cc979e28f5193310e4379e14aa6417375c565 ]
+[ Upstream commit 61b6d1df1d6234c38a6ea7e4f58e7da035ef6ab4 ]
 
-In slim_do_transfer(), when a transaction needs a tid and
-slim_alloc_txn_tid() fails, the function returns directly instead of
-jumping to slim_xfer_err. The runtime PM vote taken earlier with
-pm_runtime_get_sync() is then never released, leaving the controller
-permanently powered up.
+During unplug, blkfront stops the hw queues and marks the disk as dead,
+then later during removal calls del_gendisk(). However, IO issued after
+the hw queues are stopped but before the call to del_gendisk() will be
+queued but never handled. This causes del_gendisk() to hang forever
+waiting for the queue refcount to drop to zero.
 
-As txn->tid is still 0 at that point, jumping to slim_xfer_err drops
-the vote exactly like it is done for other failed transactions.
+This can be reproduced by issuing IO during an artificial delay after
+stopping the hw queues.
 
-Fixes: d3062a2109309 ("slimbus: messaging: add slim_alloc/free_txn_tid()")
+Fix this by simply not stopping the hw queues directly. Marking the disk
+as dead already freezes the queue which prevents new requests being
+added and it synchronously runs the hw queues to clear anything pending.
+If the hw queues are stopped when calling blk_mark_disk_dead(), running
+the hw queues is a no-op and can leave queued requests unprocessed.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20261002101448.1084691-2-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assisted-by: LLM
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Acked-by: Roger Pau Monné <roger@xenproject.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20261006163411.2583538-1-ross.lagerwall@citrix.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/slimbus/messaging.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/xen-blkfront.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/slimbus/messaging.c b/drivers/slimbus/messaging.c
-index e2dbe4a66b703..ee127ef42046b 100644
---- a/drivers/slimbus/messaging.c
-+++ b/drivers/slimbus/messaging.c
-@@ -139,7 +139,7 @@ int slim_do_transfer(struct slim_controller *ctrl, struct slim_msg_txn *txn)
- 	if (need_tid) {
- 		ret = slim_alloc_txn_tid(ctrl, txn);
- 		if (ret)
--			return ret;
-+			goto slim_xfer_err;
+diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
+index f37290fd3c5db..79fe0b107887c 100644
+--- a/drivers/block/xen-blkfront.c
++++ b/drivers/block/xen-blkfront.c
+@@ -2133,10 +2133,8 @@ static void blkfront_closing(struct blkfront_info *info)
+ 		return;
  
- 		if (!txn->msg->comp)
- 			txn->comp = &done;
+ 	/* No more blkif_request(). */
+-	if (info->rq && info->gd) {
+-		blk_mq_stop_hw_queues(info->rq);
++	if (info->gd)
+ 		blk_mark_disk_dead(info->gd);
+-	}
+ 
+ 	for_each_rinfo(info, rinfo, i) {
+ 		/* No more gnttab callback work. */
 -- 
 2.53.0
 
