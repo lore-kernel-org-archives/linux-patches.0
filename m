@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060917;
-	b=LhoFIrqjbAyUudBMOdTuSkvderqjM1Do1sMQme704qnDmpn+/AZb+jxesg372vVvLy1E
-	 CJqmmf30pb7CHiBZa0r6iD347dLhiJF8SN+7IBTzAjJWeDwhY/VtSymuNW5CV2WPK600A
-	 ivKDSQ8htzqnLXJRk1f53r7zYWEqVlRZR083dfsMdRTXEJfIGV3b5I/9fdznR3hgV8Hrb
-	 V17GtsvkVKzDe/S+vIp7RWSdwKML9PcJ4ALN7B44eX3gIlrEFd6ums9t8XI8zVA2mfkYR
-	 uVS03CYmHfNmNstNCzsFigCeDMb6u9F9q0usu2Jc9UAr3msXY/5fuiha+IQjQrtSaFQ==
+	t=1794060918;
+	b=EH7YnA4/CwtkrOcVqnnXpp4ncfbxI71HxjGyAVmJWhIZNU73cNV2YUWZlI0vBmXKrQhs
+	 h/BZMWEy04sS9JypDEEiz5i+KNGrc7iU7+XZXnXqF1SPntCDyG4NcFyck6ZnoMPf2nUgu
+	 3xExoF91A16ZfcVwj2a+REUFUA5GiOW9mmMkgzRCyLPCc0/fSy9xuw93mgIK2ev9WJ6i6
+	 uK7zIzK5Bt2WdHKc6B6mwudyfuZUUNbKs3TkecvM5KXOuwmy+a4E84/XKEGbUgk4txLGw
+	 iE7/xmYaJMaydjBkQ6S8Ubzz1aasy92DTztYjUP1iHJC3iEFUrdJOD1AKn4zRRYUo7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060918;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LPB9S6W4CoWOvKdxpi8qwOssfdhgQWqqhcqY+DRWQc0=;
-	b=5S9Z+h+5yazmaBPcECYwXH5vWeaTza0fP05ZnI5CWqfW6fh405gtph+ejtqx3mIQwyJr
-	 WjaSpP08673WULgSud9N9h4PUvreOTnZ9+SK5UzyGXH17tb0/PPrUN2eDJBW5HlqElwdw
-	 oIS4xOITKrYdiR5LVvry/lOeOaCvn2/ymO9+IgwufVOwyKJLuIGhP38KShU25e2BOepyM
-	 V9hwdZkOA5iXYvziclwKaeJcMhjkUTWrWk+eggWVO4s6hTi8lg7qEz1p28ZIVmArXURJh
-	 CdxIO9jBNseHxj6x9YZQlWQ+YsvC7Vgux0D4awMAIfzlG615176RBIOz7Cd9ivmGs2w==
+	bh=0BOHHwvYmYYqpqKyMFt0oWdURV35rsZqYV06Qpkr++Y=;
+	b=vaeevD41/d6JshAX/bn9QXJ94Y5qLJIA2lnpwgClStE+jJ27gtoKLfPiYkTF0OlWIPjQ
+	 HzJlW+ZBjVZWUceA3ksF/Ca+PqHykvqx3Yf7894fplFn9B5l3yTVRrngNI/5rj8Xb4rEF
+	 uvppNLirEa7yvPvh0EqzrH6YgqUkH0EcfyAbfyNX4ViWm2HuPyaUbmz7hAmOBAXWOwUOX
+	 DXsjnnn+AyJGurzncbSE+L0LjbrvfZ7VqEqu+c27aMFv5L9VRCLpR+h1Jyk8cmzFXwBrr
+	 nETJePvarH5EC/MxYxgHGWTiSvxBwGEUAntLrmgc+ScFVC/bLJu2xB1c95txQLi6rBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u39J6/tV";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ecdVon/M";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1F8606D81D;
-	Sat,  7 Nov 2026 14:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB4D606A33A;
+	Sat,  7 Nov 2026 14:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u39J6/tV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1744A1F0089F;
-	Sat,  7 Nov 2026 14:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ecdVon/M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D18B1F0089F;
+	Sat,  7 Nov 2026 14:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060917;
-	bh=LPB9S6W4CoWOvKdxpi8qwOssfdhgQWqqhcqY+DRWQc0=;
+	s=korg; t=1794060918;
+	bh=0BOHHwvYmYYqpqKyMFt0oWdURV35rsZqYV06Qpkr++Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u39J6/tVH1XcOWCQT4Jqmwi0kboyOApVoILBrWj4fhgSmDDvHipVHalDsP/g6Lx/b
-	 IUZQuNyYcQWQ+jgu8DFleWqVXGEp1/F78W77G8zOAimLij9aTB5FSJFiQUOBb8bIJI
-	 dLPlcd42Lwy61zzFj3875Wi561vzhjxLpg6T6RtU=
+	b=ecdVon/MJlJ4X8uiZtoOAQebnfPNEFAcSKipXO6p26YV+sfSHjcGhWNUfxRai997w
+	 FnKdxiGVYx7JjsSr5JzpjzBreEihpyeZT3CuA2/sk+yzU1FAKuCU00noUZ7O2gEYpP
+	 l9rKDpo8euHTG9dRLd17TaHhpaagLhT1QWMVadNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Qi <qirui.001@bytedance.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Pavel Zverev <playximik29@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0285/1536] selftests/ftrace: Force C locale in ftracetest
-Date: Sat,  7 Nov 2026 08:38:21 -0500
-Message-ID: <20261107135005.665650791@linuxfoundation.org>
+Subject: [PATCH 6.12 0286/1536] Bluetooth: btusb: Add support for 1357:c123 Realtek 8852BE device
+Date: Sat,  7 Nov 2026 08:38:22 -0500
+Message-ID: <20261107135005.691719116@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,46 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rui Qi <qirui.001@bytedance.com>
+From: Pavel Zverev <playximik29@gmail.com>
 
-[ Upstream commit c13fcd3951dcc19524ce0b3e852844b16cd32b22 ]
+[ Upstream commit 335d7bd554a20f33acf762655cafe1089f7f5822 ]
 
-Some ftracetest test cases parse command output by matching English
-field names. Tools such as readelf may localize their output via
-gettext, while ftracetest currently inherits the user locale from
-the environment.
+Wiko Hi MateBook 14 Ryzen 200 laptops (DMI system-product-name
+"MNCA-XX", board "M1060") are equipped with an RTL8852BE Wi-Fi/BT
+combo chip (rtw89_8852be), whose Bluetooth radio enumerates as
+1357:c123 instead of one of the already-supported 1358:c123 / 0bda:c123
+identifiers, presumably due to OEM rebranding. Without a matching
+entry it only matches the generic USB Bluetooth class fallback, so the
+Realtek firmware/config (rtl8852btu_fw.bin / rtl8852btu_config.bin) is
+never loaded and the adapter cannot discover or connect to any device,
+even though hciconfig reports it as powered and scanning.
 
-If a translated field name is printed, parsing can fail even though
-the tested kernel behavior is unchanged. For example, add_remove_uprobe
-can fail to find the ELF entry point and then write a uprobe event with
-a missing offset.
+Device descriptor:
+  idVendor           0x1357
+  idProduct          0xc123
+  bcdDevice            0.00
+  iManufacturer           1 Realtek
+  iProduct                2 Bluetooth Radio
+  bDeviceClass          224 Wireless
+  bDeviceSubClass         1 Radio Frequency
+  bDeviceProtocol         1 Bluetooth
 
-Export LC_ALL=C in the top-level ftracetest runner so every test case
-gets stable command output by default.
+Adding the same BTUSB_REALTEK | BTUSB_WIDEBAND_SPEECH quirk already
+used for 1358:c123 and 0bda:c123 fixes firmware loading and normal
+operation.
 
-Link: https://lore.kernel.org/all/20260807081512.2974757-2-qirui.001@bytedance.com/
-
-Signed-off-by: Rui Qi <qirui.001@bytedance.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Pavel Zverev <playximik29@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ftrace/ftracetest | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
-index cce72f8b03dce..ee3b950e872f6 100755
---- a/tools/testing/selftests/ftrace/ftracetest
-+++ b/tools/testing/selftests/ftrace/ftracetest
-@@ -7,6 +7,9 @@
- #  Written by Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>
- #
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 00aa0fffd0c94..84238687ff653 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -855,6 +855,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0bda, 0xc123), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x1357, 0xc123), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0cb5, 0xc547), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
  
-+# Keep command output parsing stable regardless of the user's locale.
-+export LC_ALL=C
-+
- usage() { # errno [message]
- [ ! -z "$2" ] && echo $2
- echo "Usage: ftracetest [options] [testcase(s)] [testcase-directory(s)]"
 -- 
 2.53.0
 
