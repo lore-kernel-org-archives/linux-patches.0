@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063663;
-	b=ppfAB2AB+4wVWS+vN4HSB2W77aYzPRQ+7ovmc90mG2UV4q0owcewx3Uy1fnqc8hoonST
-	 5kMDdKJBGCZfw3725zhfMwg1O4TrCCiNskew2aAvCQq3+RIxwaQLaoFE4aLC9MACELeJx
-	 qeFz8H5tiwM+GK2qySfQJqDqFTszyKoo+Fpj3nY6sOnJjgwiJ0ImD7ZlOvWvDnlseH1Na
-	 gRbVWalpLGP83Ymn3dVModSILfEncx67FAuc5bArtp+ZkA6N3t5iuIT3lC1eXs4L8ChlP
-	 zsXobloTyehCFXAZGAdi40YJg4rKNbTtqW1MG/hWY+GcBvBmvWjL/ySGc032CW3JwYg==
+	t=1794063664;
+	b=W2QYS3IER0U6PV5EeipA/v2tnQAMLZ5lpEW8IN+N822L+ouKGRoQsZ4ceRyd5Dn0vobt
+	 m9vG9w6V2L849MW6uvLY5+g55226ursqiDyg2ejQl6I1dlS2B/S3CFOhZsAm0yNqiLwYF
+	 XSMJMzVldgLvr+7E2XSs3/WuCkylFP6FkUy1KvHIqJorD7xsOS+WzE5pHTzpPTCMrbSaE
+	 e8+UgBQCBEqAtXbm1NPRxW+TcCFoDi5joRz1jR5cMhupC/Wz7s48ORBzisE0nYSaBUzQu
+	 MVAbUqRiyL3TEyisYbW4j6Sw8Zz1FvCMCUoTLeOVzPZoIZyz0Uas50cmGtsC7yFXizw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063663;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063664;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F+ohLeXYXC3A4jSLGEAm5S4iBUvs4CJ6IB6DqASR+sk=;
-	b=zz5tLg5RNSMfPcmw0yt9D843Ja11sNRFO9aLTj/UFMfjtJF72u2UDg22Kt/KdkrxGtCC
-	 1Y82wrIpircQOG7TWc/Ellave9CtxuttrxXRSXLbvkJKVP/b8Cb9C3S1yumVL6fhWp3Cv
-	 w75ExSM0oGlzlt+L82/4PnhV0fqzHfxRmAOIkzzyf5VqY8BrDoFZL1iHfIY6fe1I7FDve
-	 2JK3GpT18IedgQsaj/LJPtr1REa9JM2vC48CRAV/+EU+EvtS237zGH8CknLFxCiL+IQBL
-	 13YSQiuNcDGZ6cEbqBb6ZHWfpbRo47AY/vltejMt/qbG7kuAMdmT8X88f43e/Z5OWLA==
+	bh=q3AABM1OJgeEaEocR60xaed1gSkKoid+CLjJCCTLsF4=;
+	b=rHbnvy8HqgFgjkPH6QbhGELoDcvxLH9fGLy0NYZdMWS6Lfx0IBuAPcrkW50O1hgN+HE3
+	 uTogxsyv+IrG/S4v2ttI8U/TDEPU1QEO9GJhlWsvVhqRCjCAm/fYgmesPapkiBa3zhy3U
+	 X35qih3KaPbee8rzIME7oFR0+c8NBdKgMyM3yjezeQImpW6nPGP48wUudWsWxDBQrupko
+	 qNDwrRgeHhaPEmKWzTIuAAZirxZNOYh6Zw1e3V+g/aBUrYd9Wn6MM9M0PMj5rFwDsfeMc
+	 KfZPBCHUo8gNoC/ZuQxLx0Qbm3uHpiH7awbZisrfltf6ExKUUAcWJC3ZKYRDnJ13tMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jHADfJdd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dHlKPH+R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047C8606A9DA;
-	Sat,  7 Nov 2026 15:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC1A606A9CA;
+	Sat,  7 Nov 2026 15:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jHADfJdd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49771F0089F;
-	Sat,  7 Nov 2026 15:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dHlKPH+R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24821F0089F;
+	Sat,  7 Nov 2026 15:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063662;
-	bh=F+ohLeXYXC3A4jSLGEAm5S4iBUvs4CJ6IB6DqASR+sk=;
+	s=korg; t=1794063664;
+	bh=q3AABM1OJgeEaEocR60xaed1gSkKoid+CLjJCCTLsF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jHADfJdd28lkxS+D0S8fTAcFeqplToUT0t0ValezrD3J73CfG7/9aX5j3iLk4XRSY
-	 B3OESheoR1Io8vv/sEQHODOzpWLfkylusdzCSRO/5McTenOXZPwT/+MDDSBHJzVTFy
-	 bZnsqVz/xaONdduxUdiwplyyKMj11CnkMjzSi1Qc=
+	b=dHlKPH+RivC1xgmvbSi/5fIzn7en4XLAKwQsVEWWw+ykFG5/6ZduwlF7xC6sUfvtY
+	 7rvNFAoLm5xkHH786YKicQCIwgZTYAJEfj5MPzikdO05ewEhihSK9E16Ajrf8rJ5ox
+	 2Cip2IzsuYrERCfmSeltma9eDhJHVYc5mMhrxsxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 776/869] ceph: Fix xattr buffer leak in __send_cap()
-Date: Sat,  7 Nov 2026 08:57:38 -0500
-Message-ID: <20261107134919.009614564@linuxfoundation.org>
+Subject: [PATCH 6.18 777/869] ceph: Fix mds session leak in __open_export_target_session()
+Date: Sat,  7 Nov 2026 08:57:39 -0500
+Message-ID: <20261107134919.041640158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,41 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit e51cf76e7275d1bb5ad2d529bb00feade632dadc ]
+[ Upstream commit 6c80207392fdb86107d7acbdbf4c86cac38da1af ]
 
-__prep_cap() takes a reference on the xattr blob via ceph_buffer_get()
-and also grabs a reference to the old xattr blob returned by
-__ceph_build_xattrs_blob(). These references are normally dropped in
-__send_cap() after the cap message has been sent, but when ceph_msg_new()
-fails, __send_cap() requeues the cap and returns early without dropping
-them, leaking both buffers on every allocation failure.
+__open_export_target_session() holds a reference on the target session,
+either from __ceph_lookup_mds_session() or from register_session(),
+which the caller is expected to drop. When __open_session() fails, the
+helper returns ERR_PTR(ret) without dropping that reference, leaking
+one session reference on every open failure.
 
-Release arg->old_xattr_buf and arg->xattr_buf on the ceph_msg_new()
-failure path before returning.
+Drop the session reference before returning the error.
 
 Cc: stable@vger.kernel.org
-Fixes: 16d68903f56a ("ceph: break up send_cap_msg")
+Fixes: b682c6d41bc2 ("ceph: switch to WARN_ON_ONCE in encode_supported_features()")
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/caps.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ceph/mds_client.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index 7ce1af5b61c88..3dfd230412cc2 100644
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1561,6 +1561,8 @@ static void __send_cap(struct cap_msg_args *arg, struct ceph_inode_info *ci)
- 		spin_lock(&ci->i_ceph_lock);
- 		__cap_delay_requeue(arg->session->s_mdsc, ci);
- 		spin_unlock(&ci->i_ceph_lock);
-+		ceph_buffer_put(arg->old_xattr_buf);
-+		ceph_buffer_put(arg->xattr_buf);
- 		return;
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index a5bc9f75e0f9c..56d8df7f7ebdd 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -1758,8 +1758,10 @@ __open_export_target_session(struct ceph_mds_client *mdsc, int target)
+ 	if (session->s_state == CEPH_MDS_SESSION_NEW ||
+ 	    session->s_state == CEPH_MDS_SESSION_CLOSING) {
+ 		ret = __open_session(mdsc, session);
+-		if (ret)
++		if (ret) {
++			ceph_put_mds_session(session);
+ 			return ERR_PTR(ret);
++		}
  	}
  
+ 	return session;
 -- 
 2.53.0
 
