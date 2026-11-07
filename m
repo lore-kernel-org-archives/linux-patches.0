@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063370;
-	b=HeW4bWvwiBLbc2ef4JgvlPt74gWoqo4Uzl5UsOs8MuKMWuBVa/7lXHgfz8F6i/HH3v/J
-	 KoFkLMsGStsjoYDzNJM5/EQodQzAKTQBl6rxZvsQ8eyI7KGFJOqSxTT0Jc3R/zRdPCK/z
-	 mrLAPSuYJYjyPde7ZY4mqjYwubf0VV0ql4ktVePcce2Cd5kG56JOWLHJyyV58/ySEmQBi
-	 g/446i1DzcRBrwi5Z7p3sWloTjpnc9U3Ou6hdUoRgWH5J1y0csrujlFxuIy1hPqi4HK+F
-	 9RLJctheHMUND6+F0XkRjMu3DEWEtFUrZbVjuj2dzqxgjobmfuLvaHCJNNhvAfn8MJw==
+	t=1794063371;
+	b=aY+5f4N7Kqm7CyliwFX3iMiJ6NltCxdnxZnLE99hSSFEOUPjK2Nw5rnIJk5yZYZbCAcm
+	 hLWKPu7yVRRK8yuhcRG6KIInv9XOVu6K7j18xD6Z/b0ubwBmazofw6aBroVJLJ2y8nVI8
+	 x0K3AVrkOv8fs4ZgpXdT6zT9dIubCYECehlNAngsKMlAU5OvvEKsaz9x1Y/nZ3I/lldFw
+	 qRtiyHoLHt6eRwjawJTwuQhkr2JJKNraQSuRq5G1vXofmdBT1GE7yIFtBeq7n+JW9OQJG
+	 x6eeNKBLbEFLhCnt2e1oXvGCjtPCpukEIvXke/sFNlgqlZjG3Be2B5rJDmXAtH7WQvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063371;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=3SbQqgIta7YaT3nTQ8IPJ4VUGYWZi2wZ5kVZgeaFcKs=;
-	b=qKnk1lkbvVk4q3UI83Ls0dYqzG/IaUVOXp287TYR3m/HLjBXdv+TvFy0anPjgS2LAmIu
-	 E1w/a5USJoJHzC8S4TayO116T1yFs4hKzmvl3rOBgeBZ5snbgi639p4UQO04NLFx+XSVH
-	 hgdeGxPTeJMOXHZkqzQzi2n6pjE+hs/ktD1hsMJ248+eF3i3Jh9XzYWQ7JxiwRJkdUOrV
-	 LW70GPe+DZAAA77dP+atCSdjRK78K7v4BOUNYejYYMfKzoCq2KhxA9pScY0R0AMcS7Sxo
-	 BeKVMTQB8Mph4QDjRPBP2ELSfM3pi7Vv0k/YffT48PKEgXQJvyxlK5nJEslbTfJWbAg==
+	bh=18BriGGSZWWyueau0e959F9HEtbXSLokktjONiPL8Xk=;
+	b=IT7FHVyg7JYL98vmQ5AwBdCtNoXKuB75zrWxO9zkLhHkbv8dthBLgD3tXOPlJc0NP4Ih
+	 sosKRB789koL/P0wA2BbIyVRgUn+pzFBF00EyKKk4AtPtC5RqKeMkYqRddg/vRmEhx4dQ
+	 R25caYytrxyMJZ9SghPPW7pbzguyB1z0NDVKgIBwqTOyoUeCmAhkRugGXxHJLQVDSU8+N
+	 ULdSpOLJ3aJhC4wH39RP4b0+vM4p3H4YNEP1K3jCeyVYJ7tkG58k0GSq7yVV8rli0pXEe
+	 ggN1HUL0Xll6qLY9XlKOS1TUFliHNxh4Af6xjp1QzcxjwL/lQVFzcH22D9wziNPdjeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kKt3fpV0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sj5G0eDV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E146C606D815;
-	Sat,  7 Nov 2026 14:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B79606D801;
+	Sat,  7 Nov 2026 14:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kKt3fpV0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9078E1F008A4;
-	Sat,  7 Nov 2026 14:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sj5G0eDV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63261F008A1;
+	Sat,  7 Nov 2026 14:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063369;
-	bh=3SbQqgIta7YaT3nTQ8IPJ4VUGYWZi2wZ5kVZgeaFcKs=;
+	s=korg; t=1794063371;
+	bh=18BriGGSZWWyueau0e959F9HEtbXSLokktjONiPL8Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kKt3fpV0WoTyB5GPyuNuO+dBzAseDpXMZ+OPqbZWPjMWU6tGQ9gjXfIO2gv461g9V
-	 4dU1WsWWliYVVk7kE8W4BSGQtlqIF4CP6gmazc4Wv4vl3JL0LBdtGGH1lXl2/jVQGK
-	 BVHplIcllutQRWqmroL0xc6WCGc4TbwARwSGH/XE=
+	b=Sj5G0eDVlMGvZgQytWHaIUQulLQ2dvLlspsqkDZue5GCTYuxWtncXDdt9vTwsdisR
+	 Lu7q3jcimSp/Aa3LKe32ueqDXy8oIBZ1WIkJ9mWROB/WKJP3b8GSlhId60itWXr1wZ
+	 lZUtHad+L+vN+NZKiAsF4KSTvNyx1J+xx87txQx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Muhammad Bilal <meatuni001@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 545/869] platform/x86: hp-bioscfg: allow clearing current_password
-Date: Sat,  7 Nov 2026 08:53:47 -0500
-Message-ID: <20261107134911.876272788@linuxfoundation.org>
+Subject: [PATCH 6.18 546/869] platform/x86: hp-bioscfg: NUL-terminate the SPM auth token
+Date: Sat,  7 Nov 2026 08:53:48 -0500
+Message-ID: <20261107134911.904561833@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,63 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit acada379d5c4dd3a86d48fc69802e769eff29f7e ]
+[ Upstream commit f2769668959f6411ac69e83080a240f8a8785e05 ]
 
-The ABI documents echo "" > current_password as the way to end a
-session, but validate_password_input() rejects an empty string when
-min_password_length is nonzero, so the password stays cached.
+auth_token_store() copies the token with kmemdup(), which does not NUL
+terminate it, but hp_calculate_security_buffer() and
+hp_populate_security_buffer() use it as a C string and read past the
+allocation.
 
-Skip the length check for an empty current_password so the write
-clears it.
+A lone newline (echo > auth_token) is worse: kmemdup() of 0 bytes
+returns ZERO_SIZE_PTR, which passes the NULL checks, so a later
+attribute write passes it to strlen().
 
-Compile tested only.
+A userspace replica of the two helpers under ASan reports a heap
+buffer overflow in hp_calculate_security_buffer() for the unterminated
+token and a fault at address 0x10 for the lone newline, and is clean
+with this change.
 
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
+The token is a string, so copy it with kstrndup(), which always NUL
+terminates and allocates at least one byte.
+
+Fixes: b2715aa2e135 ("platform/x86: hp-bioscfg: spmobj-attributes")
 Cc: stable@vger.kernel.org
 Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
-Link: https://patch.msgid.link/20261007134711.473857-5-meatuni001@gmail.com
+Link: https://patch.msgid.link/20261007134711.473857-9-meatuni001@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/x86/hp/hp-bioscfg/passwdobj-attributes.c    | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-index 43a2fd0c07db1..97990191b71f3 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -60,7 +60,8 @@ int hp_get_password_instance_for_type(const char *name)
- 	return -EINVAL;
- }
- 
--static int validate_password_input(int instance_id, const char *buf)
-+static int validate_password_input(int instance_id, const char *buf,
-+				   bool is_current)
- {
- 	int length;
- 	struct password_data *password_data = &bioscfg_drv.password_data[instance_id];
-@@ -69,6 +70,10 @@ static int validate_password_input(int instance_id, const char *buf)
- 	if (length > 0 && buf[length - 1] == '\n')
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+index abf8ce20fe15c..040964ed50ced 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+@@ -307,7 +307,7 @@ static ssize_t auth_token_store(struct kobject *kobj,
  		length--;
  
-+	/* An empty current_password clears the session password */
-+	if (is_current && !length)
-+		return 0;
-+
- 	if (length > MAX_PASSWD_SIZE)
- 		return -E2BIG;
- 
-@@ -97,7 +102,7 @@ static int store_password_instance(struct kobject *kobj, const char *buf,
- 		id = get_password_instance_id(kobj);
- 
- 		if (id >= 0)
--			ret = validate_password_input(id, buf_cp);
-+			ret = validate_password_input(id, buf_cp, is_current);
- 	}
- 
- 	if (!ret) {
+ 	/* allocate space and copy current auth token */
+-	bioscfg_drv.spm_data.auth_token = kmemdup(buf, length, GFP_KERNEL);
++	bioscfg_drv.spm_data.auth_token = kstrndup(buf, length, GFP_KERNEL);
+ 	if (!bioscfg_drv.spm_data.auth_token) {
+ 		ret = -ENOMEM;
+ 		goto exit_token;
 -- 
 2.53.0
 
