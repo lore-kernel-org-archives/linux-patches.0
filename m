@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062671;
-	b=xLj1Kt3ixxUydPO5MjO52kUXKZzQEIUABQmGSS3lkz1bmwfBg64MS7cOV7A8isErEMnV
-	 RUeaqqtmLLS0x0kxBNy0H97CngCmAp+FjPPq3VS0YBC3S5OAZpe7GdjFNvW3T3VvU8Pnx
-	 Zi6NKV5YnKOE1PgRd1vHazXCkiy6HyLykg0tBszum1JgsVJtzcuXhRCPug2Hq95uxI3HS
-	 i2mbzwSB9L4wc0gnjGUC707QZVzzzPd0W7/AFsrR0dOLqIPT7zRmhRO5EnnLoZHKa5Wgv
-	 2VkxFtGNeV02/ut3yCPt4xghAyUPvrgeZGl/jUw937h5zrrFI2XG1nxfypyPJbxqhPg==
+	t=1794062672;
+	b=NhVHsN7an8+GNINlLSjIBlCkYJRnizdOKQA8L9aAi0Iu3nOQ8Sm2QkeX/fPg91X26KEM
+	 wuqjxQVzmlO44M7ZiPzyd3O0G39+sOcbR6v7MvoH77nXBIZHU20ZbbRtF3n3+liiqQC2+
+	 2aiDnZo4S7i+r9+DegPpErqH1OYXqqTfoeYpm253Ckuz2Fi6FXOAb/BpwuQFAMTX3sKlb
+	 vDu97GXpTwLpmWOKNVQ0vfIuuHBkQv28AGKSiP66yMRcAZ/ejKWZseJsvCXQnEuPM3BZG
+	 7JehjHgeFAhWLFhHDV7QZZFzuX5oUD1jYTxlbOHWCykydifg/v7SMoH479+c4Fnjrdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062671;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062672;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MIEhbQSeE3QyoZCFvEDZX7Ov+P9U7q/wzU9ytm3UvSM=;
-	b=OE+c3wuNtriAKAhmwGCbWvxDuVx9rk19G242H80xnaCgZNVpwxSqLdvJDMMJx9zOFLL4
-	 /wNsOyNmR081wSdJwZnvAuRgW+EuYwNIJMJe60n4fGkiTDB1ZCwi7FJPoVPWCJzy4OslD
-	 J5h+I4OvcrC8TeqWcL721vGnGnw/uPN/yO0ZLY/oswTE0fHGayKqOh8vlJ/Z/BIfpKR4K
-	 WgTsk03nPcNgLiaeMBa0ektx7gkX8R0EGwUotfTYJhv87N2Scr33N8pxR/MeIuvTRxkKw
-	 XSwVHp8SecOh2cnTQqVX3SzpNRA/it9rt0/SOjeh73asbZCGEFucRo7wZiTnfGQiADQ==
+	bh=RN4DxICy9W/uC2XEjd3SscZZjUJHHdgmwz4bb/qVshg=;
+	b=UYLze3PI9RpnSSVptj/+rNUi5Ad9SFHk/HzpUYoEI/8eDd5teK2rrEEwDLbHpNnAIN8N
+	 MxxBkfl1YecXJ0utKTTXmhgV5phtz2ApdPSETng+aFgqfIKKseFNJWjqxksh72K3qXdCy
+	 Y0zzfm3uDt99LmIMND3DUz/qgXMbpY3Q0+TbV/AV6QLajSo5VfajX9GDitWy8v51kmix5
+	 5mjXcJnnfOJG+8Mf2B+5XnGnhfhCqOXIjGFH58F4ZHPN4dWxNn4O5kke4JMopDcTEZ8zI
+	 1LeZG/rwToDZ41+TMv4TwPTo0rJXzWUsNPN/yGbM+V+qBPVL0jOg4zfORJbT/QXD4yA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GR1OmhLS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=smRmw2iM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4297606A32C;
-	Sat,  7 Nov 2026 14:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6E0606A330;
+	Sat,  7 Nov 2026 14:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GR1OmhLS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679621F0089F;
-	Sat,  7 Nov 2026 14:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=smRmw2iM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3E71F008A1;
+	Sat,  7 Nov 2026 14:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062670;
-	bh=MIEhbQSeE3QyoZCFvEDZX7Ov+P9U7q/wzU9ytm3UvSM=;
+	s=korg; t=1794062671;
+	bh=RN4DxICy9W/uC2XEjd3SscZZjUJHHdgmwz4bb/qVshg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GR1OmhLS76g3OHPnLG/I8DPTNxcnhNQ7YfbJXwnU/MH1wyESSk4uQJ/Wusu/R5g2Q
-	 Tqg/t6oBuuWkY1p6UaNVStq8OMmXTiqyv7NWZV/YXU+jHxh86N+KonjhHcyMPamtz6
-	 MtIQ+htuHj1VbberbGePQVUXif1zLznkeluZyPi4=
+	b=smRmw2iMvYsutvC/ZbtYNG14sKpNN9MSpPKS1ViwAJ0DnbKop98WV5mohEH2WLLrO
+	 B+fPlY5Wg1J90fRIB1s5Jovh8AJ6iHczzLZr3ueVfhxrJuGQT7HyR28hd4j0lA0bD2
+	 ROJw+bJutLU3VBdL/TPm7IVavc8tXRmP/n5GqUB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Scott Gauche <scott-dev@scottgauche.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1525/1536] net/packet: check TX_RING fragments before memory accounting
-Date: Sat,  7 Nov 2026 08:59:01 -0500
-Message-ID: <20261107135040.712688359@linuxfoundation.org>
+Subject: [PATCH 6.12 1534/1536] ALSA: hda/realtek: Fix audio after Windows reboot on ASUS Q423SA
+Date: Sat,  7 Nov 2026 08:59:10 -0500
+Message-ID: <20261107135040.971253115@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,71 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Scott Gauche <scott-dev@scottgauche.com>
 
-[ Upstream commit dc4dd12f80e499dc034710cd8195489abcf0b059 ]
+[ Upstream commit 8acd6469f42784f38872ad83b14c41152d986b63 ]
 
-tpacket_fill_skb() adds the full non-linear payload length to
-skb->truesize and sk_wmem_alloc before checking MAX_SKB_FRAGS. With
-PACKET_VNET_HDR, userspace can submit a ring-sized frame even when it
-greatly exceeds the device MTU.
+The ASUS Vivobook S 14 Q423SA-U5512 (DMI family S5406SA) with the
+ALC294 codec has working analog audio when booted directly after a full
+shutdown. After a warm reboot from Windows 11, audio works briefly during
+Linux startup, then both the internal speakers and headphones become
+silent. PCM playback continues without errors.
 
-A near-INT_MAX frame can saturate sk_wmem_alloc before the fragment
-loop rejects it. A subsequent refcount_add(0x40000001) can temporarily
-turn REFCOUNT_SATURATED into 1. A concurrent TX completion can then
-drop that apparent last reference and free the still-live packet
-socket before refcount_warn_saturate() restores the counter.
+Coefficient 0x1b is 0x4e4b on a direct cold boot, but 0x4a4b after the
+Windows warm reboot. Restoring bit 10 changes it back to 0x4e4b and
+immediately enables both analog outputs. Speaker playback, headphone
+playback, jack switching, cold boot, and suspend/resume were tested
+successfully. The same 0x4a4b state and immediate recovery with 0x4e4b
+were independently confirmed on another S5406SA with subsystem 1043:10c4.
 
-Check that the remaining payload fits in MAX_SKB_FRAGS pages before
-accounting it. Include the initial page offset in the calculation,
-and move the existing -EFAULT handling out of the fragment loop.
-This preserves the accepted packet sizes and error code while
-preventing an invalid frame from injecting an oversized byte charge.
+The same coefficient write is already used by
+ALC294_FIXUP_ASUS_COEF_1B for the ASUS UX431DA. That fixup cannot be
+reused here because it chains to ALC289_FIXUP_ASUS_GA401 and applies
+unrelated DAC routing and microphone pin configuration.
 
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
-Cc: stable@vger.kernel.org
-Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-[edumazet: use net_warn_ratelimited() instead of pr_err(), add a Fixes: tag]
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261028181450.2221013-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add a model-specific fixup for subsystem 1043:10c4 and chain it to the
+existing ALC2XX_FIXUP_HEADSET_MIC fixup instead.
+
+Link: https://github.com/thesofproject/sof/issues/11051
+Fixes: f2d08f3651fb ("ALSA: hda/realtek: Fix headset mic on ASUS Vivobook S14 S5406SA")
+Signed-off-by: Scott Gauche <scott-dev@scottgauche.com>
+Link: https://patch.msgid.link/20261005154017.1164657-1-scott-dev@scottgauche.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ sound/pci/hda/patch_realtek.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 048dc025b911b..1f5353b5d7500 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2699,6 +2699,12 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 	}
- 
- 	offset = offset_in_page(data);
-+	if (unlikely(to_write > MAX_SKB_FRAGS * PAGE_SIZE - offset)) {
-+		net_warn_ratelimited("Packet exceed the number of skb frags(%u)\n",
-+				     (unsigned int)MAX_SKB_FRAGS);
-+		return -EFAULT;
-+	}
-+
- 	len_max = PAGE_SIZE - offset;
- 	len = ((to_write > len_max) ? len_max : to_write);
- 
-@@ -2710,12 +2716,6 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 	while (likely(to_write)) {
- 		nr_frags = skb_shinfo(skb)->nr_frags;
- 
--		if (unlikely(nr_frags >= MAX_SKB_FRAGS)) {
--			pr_err("Packet exceed the number of skb frags(%u)\n",
--			       (unsigned int)MAX_SKB_FRAGS);
--			return -EFAULT;
--		}
--
- 		page = pgv_to_page(data);
- 		data += len;
- 		flush_dcache_page(page);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 899394885ae81..0b370a9eb9f2d 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -8104,6 +8104,7 @@ enum {
+ 	ALC294_FIXUP_ASUS_MIC,
+ 	ALC294_FIXUP_ASUS_HEADSET_MIC,
+ 	ALC294_FIXUP_ASUS_SPK,
++	ALC294_FIXUP_ASUS_Q423SA,
+ 	ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE,
+ 	ALC285_FIXUP_LENOVO_PC_BEEP_IN_NOISE,
+ 	ALC255_FIXUP_ACER_HEADSET_MIC,
+@@ -9481,6 +9482,17 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC294_FIXUP_ASUS_HEADSET_MIC
+ 	},
++	[ALC294_FIXUP_ASUS_Q423SA] = {
++		.type = HDA_FIXUP_VERBS,
++		.v.verbs = (const struct hda_verb[]) {
++			/* Restore bit 10 lost after reboot from Windows */
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x1b },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0x4e4b },
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC2XX_FIXUP_HEADSET_MIC,
++	},
+ 	[ALC295_FIXUP_CHROME_BOOK] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc295_fixup_chromebook,
+@@ -11250,7 +11262,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+-	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS Vivobook S14 S5406SA", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS S5406SA/Q423SA", ALC294_FIXUP_ASUS_Q423SA),
+ 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1154, "ASUS TP3607SH", ALC287_FIXUP_TAS2781_I2C),
 -- 
 2.53.0
 
