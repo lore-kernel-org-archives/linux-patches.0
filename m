@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065379;
-	b=yeavDv/S7tjNFeVY/2udUg7kv8+IhPjDTq6BTyRsgG23crR3ujdi5W9yTa7qB0u8ZQHV
-	 wGeojdS+VVwBu2Ar1GEnE5TAP+UAspOiI2635E/PMAEvAaF3SaNA7OeUV6n4FSAYpXSTI
-	 aMwsOBB6SGfCiyRi5XKBDdMqsh4BEheAYq0DQN4eHl3AaMRSV35wwi7+ufFm6vGNJ8aFM
-	 vwkdY9utT8WpIEduSTkeJQLsjar49iF579G1it99I805QTJQyzMKw4xS5sER27H+62cK8
-	 JfxUs0gqrgnySB4xMxmalg6BQUdLoPHjFuil41QXr01iYqzfDN8YQmwsd95fgfIxHIw==
+	t=1794065381;
+	b=17l2RMU5swkxDdeaGBf2QrMZkaQCOpeXxY+HT8QzAh9u599lq2L5q09qIbYimbrI3slT
+	 CIaH9g8mc4t+NxRv6MFcASv+bU35y5/4cBn02va2YZj/TxKgY3rlzYWRdUF9hXoPUaCNx
+	 uDDLS3niUU5sZ1Nn6aA8QgPHFLJRvcDF5idG1ZNZ5Kqa0MxYgIvvpNKjIUupF1kN6rVSY
+	 Wem3bOEK/ovvb75z0AvQRmTiL7z151drCESItxjQD1eLMW5MguE31OMGOgg76onqdx3vC
+	 81Kd15Y0D6aLiqATtC3ittRIgXTNLCKUXOlKE+pIO1QfkQ4QUZkwMRrP/4UDhuMARIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065379;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065381;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/Lu6IAco07RARuInpSjacHw422jfpzYsg9SETYPe9hQ=;
-	b=rA8akwcJu71hxH5nK7PiQhHp88bRpZvy9I4CUixUemfO8X4Eo/3Q6vVczSWx4alSd/xU
-	 Nf68tZIOLB3gi6Lu8oo8gp4HPVd0FjVp29xCKl970BZzV9jjkwp/jI3QxqjVw3eit2Cu0
-	 sGzKoj3vejFFD8rG6rPGdbvD0eR+k1AcwUwTjTC95RvE2qdSWEsfi7BhNHWtdrk86YX/N
-	 yQcmHA3hOrYj9rOeYd0XVZHc8uXsn1bo3gV5xVC13MLj/ceYVWXPNsntpvegP57Vi5Vwv
-	 q92qG1EoB3e1ZVfF1qa68X5ACsmK5fQelemRtKccnGqmJFlaIYf+bFz63y6vGmTzUtQ==
+	bh=kKJ0xUO+NMI6OGnY9qfTypZqPrKmzZXPJSanau9Vo+w=;
+	b=CS32NDWU4b+IHHY3VgGGORrMnXW5e2SH/zsdHSTWPXgNi1nKLPffkL8GakI5K162FqOa
+	 6yEgUAL7tmnmUUOtidoqP8xU26aSzE8bpssxtcG13IEypV/rLnwJiwBro+jNxUzQQUk2S
+	 YBaoGr9QO3Xcysd0vaJEMUbQalulJiAnmHsb0DOwRc6aegBffUwOWAZ1Q68OgXXhSMi6V
+	 OAnImlo+8VS0bMk9EHq6RbcjoVmigelmSqz/4Zv7QENWTZ3jbDVV7xPZHaKhK5tsY3ptw
+	 Rfg5BkiUUkTdtf/oAr+LgDeghJNcQyGt3RdIvk544u2bdRaxt1s16MSB72rA3UTwOcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9F25EFH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eW/XYwJ9";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60390606A32C;
-	Sat,  7 Nov 2026 15:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FF5606A32C;
+	Sat,  7 Nov 2026 15:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9F25EFH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE211F0089F;
-	Sat,  7 Nov 2026 15:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eW/XYwJ9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C70E1F0089F;
+	Sat,  7 Nov 2026 15:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065379;
-	bh=/Lu6IAco07RARuInpSjacHw422jfpzYsg9SETYPe9hQ=;
+	s=korg; t=1794065380;
+	bh=kKJ0xUO+NMI6OGnY9qfTypZqPrKmzZXPJSanau9Vo+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x9F25EFHriGwCBftn7fh7byfCgVDwDocG+2IJd2dMUJcba1mZjoV1bbBPGZ7G7W8h
-	 ndptfAFXYShOn+aBixU9Sl5riWLa+hXVcYGissWjB5Go1ty3VZcSBV5Dqulmllju8D
-	 41ujv8dySLfhwHWm5/BfxgKsoZSynioU5L6mfiZs=
+	b=eW/XYwJ97kMy75Oc9bi8UyC6qj6efNV4f/qb/sQSZtuUXexHWoza810E0hTIbQ0I1
+	 SUVWz7JPKKsA2GZoH7mdmOtsqcxKE8KgVa/HnBPN6J+1Fp7lU3iT5kpoacgYv2I0yT
+	 rpsCBK5suffOEqF11OBMpz7kdHD3ulVIT/syNuuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hungyu Lin <dennylin0707@gmail.com>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1106/1257] posix-timers: Accept NULL clock_getres() output in stubs
-Date: Sat,  7 Nov 2026 08:56:42 -0500
-Message-ID: <20261107135009.803884503@linuxfoundation.org>
+Subject: [PATCH 7.3 1107/1257] timers/itimer: Keep a nonzero value at CPU timer expiry
+Date: Sat,  7 Nov 2026 08:56:43 -0500
+Message-ID: <20261107135009.829908492@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,49 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 5b819071e4346256c4edbae5cc2095dff25694fc ]
+[ Upstream commit ef60f61208a30eb5b941b707debdf04517271b4f ]
 
-With CONFIG_POSIX_TIMERS disabled, clock_getres() returns -EFAULT for a
-supported clock when the result pointer is NULL. POSIX permits a NULL
-result pointer to suppress returning the clock resolution.
+get_cpu_itimer() returns a zero remaining time when the sampled CPU time
+is exactly equal to the nonzero expiry. This makes an armed ITIMER_VIRTUAL
+or ITIMER_PROF timer appear disarmed.
 
-Only copy the result when a destination is provided, in both the native
-and time32 stubs. This matches the full POSIX timer implementation and
-preserves clock ID validation.
+The cputime cleanup replaced cputime_le(), which implements <=, with <.
+Restore the inclusive comparison so the equality case returns TICK_NSEC,
+like the overdue case and set_process_cpu_timer().
 
-Fixes: baa73d9e478f ("posix-timers: Make them configurable")
-Fixes: d822cdcce43f ("posix-timers: Move compat versions of clock_gettime/settime/getres")
+Fixes: 648616343cdb ("[S390] cputime: add sparse checking and cleanup")
 Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261020161121.85042-1-dennylin0707@gmail.com
+Link: https://patch.msgid.link/20261020223957.87842-1-dennylin0707@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-stubs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/time/itimer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/posix-stubs.c b/kernel/time/posix-stubs.c
-index 9b6fcb8d85e78..5a27335a917ec 100644
---- a/kernel/time/posix-stubs.c
-+++ b/kernel/time/posix-stubs.c
-@@ -83,7 +83,7 @@ SYSCALL_DEFINE2(clock_getres, const clockid_t, which_clock, struct __kernel_time
- 	case CLOCK_REALTIME:
- 	case CLOCK_MONOTONIC:
- 	case CLOCK_BOOTTIME:
--		if (put_timespec64(&rtn_tp, tp))
-+		if (tp && put_timespec64(&rtn_tp, tp))
- 			return -EFAULT;
- 		return 0;
- 	default:
-@@ -166,7 +166,7 @@ SYSCALL_DEFINE2(clock_getres_time32, clockid_t, which_clock,
- 	case CLOCK_REALTIME:
- 	case CLOCK_MONOTONIC:
- 	case CLOCK_BOOTTIME:
--		if (put_old_timespec32(&rtn_tp, tp))
-+		if (tp && put_old_timespec32(&rtn_tp, tp))
- 			return -EFAULT;
- 		return 0;
- 	default:
+diff --git a/kernel/time/itimer.c b/kernel/time/itimer.c
+index 03a32dffc56cc..f7de39769095f 100644
+--- a/kernel/time/itimer.c
++++ b/kernel/time/itimer.c
+@@ -60,7 +60,7 @@ static void get_cpu_itimer(struct task_struct *tsk, unsigned int clock_id,
+ 		thread_group_sample_cputime(tsk, samples);
+ 		t = samples[clock_id];
+ 
+-		if (val < t)
++		if (val <= t)
+ 			/* about to fire */
+ 			val = TICK_NSEC;
+ 		else
 -- 
 2.53.0
 
