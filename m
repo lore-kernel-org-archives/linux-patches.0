@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064345;
-	b=iASNDptG31xh3SF3iLvSXgs4b9NGyGA7/DhwbyBtVHVSgNu3tgoSWgvZFLeSq9D267f4
-	 mxukMcu7OZJ/99ndp3J81EyL/jr8DrN4gmLnRPdHzN+G951awJgde0cc/F9R6xjcJFdwq
-	 KtUjyh8uxvKf0Y0YV9vy3Njov1qgXBfuzk2QdVI0sdRR5OkBcSYjfV0ms1pPA4mbEaNiR
-	 5pyzqBt6+f/FSA2xyxE9mnMeaWGx0WXAGa+36+36Uy5B/lWWEYhzqaORotC21pl1Xf4Uw
-	 0rBIvA2XbOe27WqFYjrtXacyfesrTUjmZYMfPHBhpMR9nZ2GNNkyOpBK9n0f0LFWbOQ==
+	t=1794064346;
+	b=2qAvZ8++GkefKJqEOsOmFHB39SLlXxDebY8jX9W9EYbMscuJNnpZ8D+OkZMzOIuSWu5Q
+	 yiSJhVWZWQgy33gxEGMspciUAUIxcQQnXEBHto3b6qd4obLDgOTw2++MeWxjPTnlurrjh
+	 1NjDG44zw+whA2x7o2kwNBCDwVa0cknPZ7WMJAlB/5/OruEs46/Rn3pgjuFhgGfUdtIb8
+	 0S0P/kGLcsIqBA8G/rSPZSJolkhHKaSuBzZzi9ch3hW+8Mu8/VBbYwXmxki/9RnAwal/x
+	 bjmu0WD8dx14Y+KcTgDn1/iawBPvcplINQAiyRQ9ys/xbfH23sER7dHETxtmV0KbiMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064345;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064346;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g/c9yvf9Xn3UUWI6/k3mthZkzAmlh2+HD0/gsEpk8QU=;
-	b=m/0KCOYDreer9OInMZZP3DakWbBrCs6PSl6NMQkHprkIMGlasbV/RxVjUDo66h6gGa7P
-	 nsv6xb+p7BT3ai2kuj8Z30gymAw3JWfzxZ7uLR1MXOj4Neo2WLgkE3rK8nqXOgVQAhOVo
-	 +5PDULTz4cCpp01dUrB+zM/InrFdAm4zo11P03T3czkTGoqmMdiSKA7znqoqIfOXElxEC
-	 f749VssEl37CcvtBs/hf2UZ5rl2bVigNWuL+9EPP7IUPWmVlSkXmleG0FYX9gKZ5FySbW
-	 Mo65pzmg4X4GMEyTkInEXoKwBVLHKKIDfrAjGzpYHeJzgQAsc80HDXmFvvAL9+57Zuw==
+	bh=PF/Q6MvQSpJBcxHqHOJ7SjhJn+092b98OFdl1uag+U8=;
+	b=sXQb4+/nuWWUeBUsrqU8UmuNHd39hmJj3fCdYWPUfsMF4q3T/GNxEsRf41LHlxAlBDVB
+	 qEG/fzly1LeYNspTnPKPBbMqwPFPknxlWR8b1T2lCH56lWE3yvGDfnOK4q3gSK/RX7Y/R
+	 PtYFOWvhqecXjRCLYwGkk+IxF4ReSDpWH1IGyw06uRnNlTAxi+tyCs4U/mQVfqqZge/UV
+	 MQi6vmB9HflLO4EmxwVTLiRko1AX8wC4z4cp+G87lSge42okftyo/BDXhR4WHA3/KezuW
+	 OXBaM4KPALq9WR3oG6/VM/B7YpA5HpSZrr9XD7i7VKOvWgmSgr2NIHjSP2MervsVhxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TIS2KBDg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kfTaOu+n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D365B606CE6E;
-	Sat,  7 Nov 2026 15:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4967C606CE6E;
+	Sat,  7 Nov 2026 15:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TIS2KBDg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD1D1F0089F;
-	Sat,  7 Nov 2026 15:12:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kfTaOu+n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF3A1F0089F;
+	Sat,  7 Nov 2026 15:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064344;
-	bh=g/c9yvf9Xn3UUWI6/k3mthZkzAmlh2+HD0/gsEpk8QU=;
+	s=korg; t=1794064346;
+	bh=PF/Q6MvQSpJBcxHqHOJ7SjhJn+092b98OFdl1uag+U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TIS2KBDgJvzfJGne8mlMO9pnq0wVv7chQa2svYdGmtNLjW7dvG9Tiv8HOKBfnSL7v
-	 lKO8vxPndN8yLrZqV5wAvPxPZDdTS02fA0zEMpOm5OQBgJxJZRHfZE/rIkEckZCcGk
-	 L9+YWADXiGqqMr5tG5cJEnKFVxLEYv59djyxtAVM=
+	b=kfTaOu+nvbXhseyLviCqqrQJ2Qwj2qY35dWD74B/mqu9ACwUBEgfhE1x1wxYrmud+
+	 KwTqBruAcy6he9d90lhpA9L747CvV0a3ViWfoogJ7hiAceJoEoks8fBT42vmu4oTxZ
+	 TJbSr3Cfc17Xvr/zwaGPBx+nwkFUBTOXHoghdsbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhaoJinming <zhaojinming@uniontech.com>,
-	Sahil Malhotra <sahil.malhotra@nxp.com>,
+	Thorsten Blum <blum@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0430/1257] crypto: caam - fix double-free in caam_rsa_set_priv_key_form()
-Date: Sat,  7 Nov 2026 08:45:26 -0500
-Message-ID: <20261107134951.363679315@linuxfoundation.org>
+Subject: [PATCH 7.3 0431/1257] hwrng: amd - report partial reads in non-blocking mode
+Date: Sat,  7 Nov 2026 08:45:27 -0500
+Message-ID: <20261107134951.389026883@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,62 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhaoJinming <zhaojinming@uniontech.com>
+From: Thorsten Blum <blum@kernel.org>
 
-[ Upstream commit a91d9346a70b68f77884cba9d9ec3b70f96bf9d2 ]
+[ Upstream commit e7f5ce911efb2017381f28bbedb6243a74a9c285 ]
 
-caam_rsa_set_priv_key_form() frees the partially allocated key
-components (p, q, tmp1, tmp2, dp, dq) with kfree_sensitive() on its
-error path, but does not set those pointers to NULL afterward.
+amd_rng_read() returns 0 if no more data is available, even if some data
+was already copied to the output buffer. Return the number of copied
+bytes instead.
 
-When the function returns an error, caam_rsa_set_priv_key() jumps to
-its err label and calls caam_rsa_free_key(), which frees all of those
-same pointers again, resulting in a double-free.
-
-This is reachable when the allocation of q, tmp1, tmp2, dp, dq or qinv
-fails, e.g. under memory pressure, or for a malformed key whose CRT
-members decode to zero length and make caam_read_rsa_crt() return NULL.
-
-Set each pointer to NULL right after freeing it so that the subsequent
-caam_rsa_free_key() call becomes a no-op for the already-freed fields.
-
-Fixes: 52e26d77b8b3 ("crypto: caam - add support for RSA key form 2")
+Fixes: 85962d2248fa ("hwrng: amd - Convert to new hwrng read() API")
 Cc: stable@vger.kernel.org
-Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
-Reviewed-by: Sahil Malhotra <sahil.malhotra@nxp.com>
+Signed-off-by: Thorsten Blum <blum@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/caam/caampkc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/char/hw_random/amd-rng.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/caam/caampkc.c b/drivers/crypto/caam/caampkc.c
-index cb001aa1de661..ac515ed8c5755 100644
---- a/drivers/crypto/caam/caampkc.c
-+++ b/drivers/crypto/caam/caampkc.c
-@@ -1033,16 +1033,22 @@ static int caam_rsa_set_priv_key_form(struct caam_rsa_ctx *ctx,
- 
- free_dq:
- 	kfree_sensitive(rsa_key->dq);
-+	rsa_key->dq = NULL;
- free_dp:
- 	kfree_sensitive(rsa_key->dp);
-+	rsa_key->dp = NULL;
- free_tmp2:
- 	kfree_sensitive(rsa_key->tmp2);
-+	rsa_key->tmp2 = NULL;
- free_tmp1:
- 	kfree_sensitive(rsa_key->tmp1);
-+	rsa_key->tmp1 = NULL;
- free_q:
- 	kfree_sensitive(rsa_key->q);
-+	rsa_key->q = NULL;
- free_p:
- 	kfree_sensitive(rsa_key->p);
-+	rsa_key->p = NULL;
- 	return -ENOMEM;
- }
- 
+diff --git a/drivers/char/hw_random/amd-rng.c b/drivers/char/hw_random/amd-rng.c
+index dff80daae5877..ac2d257793bf3 100644
+--- a/drivers/char/hw_random/amd-rng.c
++++ b/drivers/char/hw_random/amd-rng.c
+@@ -80,7 +80,7 @@ static int amd_rng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
+ 				if (timeout-- == 0)
+ 					return read;
+ 			} else {
+-				return 0;
++				return read;
+ 			}
+ 		} else {
+ 			*data = ioread32(priv->iobase + RNGDATA);
 -- 
 2.53.0
 
