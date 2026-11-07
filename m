@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065475;
-	b=XzH9qpd1sc/JFAttS1IoYjcV1PUOZ4lShxrok5fBqhRCqYGDYrS4KuKRY3IlLLiyEtFZ
-	 fe+gCKc/qQ5Yd0csGMQOSPylR59MFOGAuMmFSttRJPS/TFdh5UPdnUhcIDsRDGjZfNPH/
-	 jQIQBe4lsdXK46UODGJJFzPVLkZSRgA5KQia23N/PwS6AAkK/2lHR45y/apBYgB0mmJMv
-	 cF+8kHk6sTVOhAGNfEf4Usv3IwK85udd1yAbJIVPavQoP648uSostyeInbUPV3xcF6kJa
-	 LBKj7h04Q4s0VHuzWj9oh9iHbS1KiyOJ4aa4xMcnVI1jJJOCalFYTpc11xpicYwVP/A==
+	t=1794065476;
+	b=fquwUuMetJctmiUQK4uKcEhsCcdjnNW+wyI5dPcoBR3eoiLUivkPOqkZNx1xCBcAPkKi
+	 chXMcFF17QKrYKSGXIkrabQcU8DNjtr8USJqWokjMVDtxAvIHtMg0YVAuX513DiD6FsHK
+	 X93lHiOKaXbzfF1vlitX6YAmauvOcvfsIldtoZg/vKjo0SJuJa5uft6ydXiKuWMvAHcxH
+	 OISg3HjD/mOli/PPgGlCsgyW3yYfR/Na9ddlAgNm0WSQD1e2EdQe8o9bHdJUElfuiiL6v
+	 5HQ+Q+yCjY0PkIHDFUMh0YZ18LBNlmgYx+n0UUYJOfmqvFEOvM2WzUI5OFzaACOPKPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065475;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065476;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SEOzuSyrvm8h5mh/sK9z0NV5+N9cNRYzmgMDSinRJ9Y=;
-	b=uLbJ2rQbjHplo6U2V+q9EvOjiAl9pbBU12KR2htn0wrmVjao36vzhH9Az+HmMcUZxXiM
-	 NHFCKLuDxxqqEyu9uFVqrp0doBcpneDiQPWX9iyyAOKtA7OyKn6Q18vsg8HuB1UzJvjL6
-	 5ptNXeOcvufejSGhG+Y4KaL/Rj1RcPzl40kOfrt9ce1o0ihKRhUL2oJCcsO0VDQspXBDk
-	 W6D8fdMVOrdr5pqRuBFl33zf7tMGct0QO43SpMungy//PArH9sIMQ0/4wi6usvXJ8nAHi
-	 wo1Ma7hZBNXqSlkfJ8eukEucmQfmeKSJyPK5XzW6/vFfkaQ9AgMGvqRWZy2s2etRt+w==
+	bh=F3wizEtrRVeKyOMYXuJk4UaAv0/ckEnoiuspwmmf9wU=;
+	b=Kr6fJnNxlFKYRl/ylSk7NM75MNxRnfAhl9pfi9tenC0GPC3WeB4ogJV9zYBmfcOxzyN3
+	 OnkYd9XA4Ug8NQVoSOwGLjuxN8ppfMXWEffhzk5OHPosl55Jf7ttiCDzPoU7tUmq+MOpo
+	 DwfDBxElx+5oPE+HQZ8Ns6A4f5F5ZQqbxJIsnOOzYm5n082vcOzuhO+A1TjCCIt7gfgx+
+	 zG//fZK4mUR+f1zmj506SMl6SgNVMpM0+jAvkxiYWRlwpudzMLdhd/7iN0lkKCE3ozDnE
+	 8l0B13ioB4Ax4DeOHeX+aHctFS7UR1jy7L1ihb6bt9s26UR//x7vMrBtqmCdzD/l6dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wnlp8P3P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRu4t+pX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44A5606A32C;
-	Sat,  7 Nov 2026 15:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71E7606A339;
+	Sat,  7 Nov 2026 15:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wnlp8P3P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480621F008A1;
-	Sat,  7 Nov 2026 15:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRu4t+pX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841731F008A1;
+	Sat,  7 Nov 2026 15:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065474;
-	bh=SEOzuSyrvm8h5mh/sK9z0NV5+N9cNRYzmgMDSinRJ9Y=;
+	s=korg; t=1794065475;
+	bh=F3wizEtrRVeKyOMYXuJk4UaAv0/ckEnoiuspwmmf9wU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wnlp8P3PxvoYJvGFVWt4r4Te9thh278waIvDz/LhfxCSH9pOFMfZlQ+YrSsSBr91B
-	 c33Av70cS+IpCIIUvv8iZvQKsZ5LShIVIyiozwQB+Itie7DzYoDa9+k7YRePBLZmtr
-	 zsj8+pRwS7RIbNGDipWBlFQjb9wrMBDr6f9AuhKc=
+	b=cRu4t+pXUG12G28HQB1JJuUoJYWw1QO1pJeX3IlvOzCK6o4chXbFK1RBNfYzW4DsK
+	 NpyBBBa3z10WeVjaIT4qK6CezgS24Q1nnIqHKiGWgmt39/1G+rFU6yi4qdTK1U3KsJ
+	 nKQOV6QIJUJe5PKwPuzM/olbIULss2CcBjbdvbm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1163/1257] LoongArch: Dont init & online empty nodes
-Date: Sat,  7 Nov 2026 08:57:39 -0500
-Message-ID: <20261107135011.310802852@linuxfoundation.org>
+Subject: [PATCH 7.3 1172/1257] cpufreq: stats: Fix potential out-of-bounds access in deferred reset
+Date: Sat,  7 Nov 2026 08:57:48 -0500
+Message-ID: <20261107135011.548594998@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,49 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 
-[ Upstream commit 87c6d144bc7bbed0c4573848b9c92006edca7848 ]
+[ Upstream commit 8a702989677216489e471a6f27599da53f753567 ]
 
-Don't init & online empty nodes without any CPU cores (and memory), in
-this way "lscpu" will not display confusing empty nodes.
+cpufreq_stats_create_table() sets stats->last_index to -1 if policy->cur
+is not in the frequency table. It then stays at -1, because
+cpufreq_stats_record_transition() returns early on old_index == -1 before
+it gets to update last_index.
 
-Modify fake_numa_init() to make sure at least Node-0 isn't empty for the
-FDT booting case.
+Commit 46a310b80bc2 ("[CPUFREQ] Don't set stat->last_index to -1 if
+the pol->cur has incorrect value.") added that check. However, since
+commit 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to
+cpufreq_stats_record_transition()"), the stats reset is deferred to the
+beginning of cpufreq_stats_record_transition(), before that check, and
+cpufreq_stats_reset_table() ends with an unconditional
+cpufreq_stats_update(). So if the "reset" attribute is written while
+last_index is -1, the next frequency transition accesses
+time_in_state[-1].
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fix it by also returning early on last_index == -1 in
+cpufreq_stats_reset_table().
+
+Fixes: 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to cpufreq_stats_record_transition()")
+Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
+Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261027133332.377546-1-zhongqiu.han@oss.qualcomm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/numa.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/cpufreq/cpufreq_stats.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/loongarch/kernel/numa.c b/arch/loongarch/kernel/numa.c
-index c96c536237151..7dedc134ddfe0 100644
---- a/arch/loongarch/kernel/numa.c
-+++ b/arch/loongarch/kernel/numa.c
-@@ -216,6 +216,8 @@ static int __init fake_numa_init(void)
- 	phys_addr_t start = memblock_start_of_DRAM();
- 	phys_addr_t end = memblock_end_of_DRAM() - 1;
+diff --git a/drivers/cpufreq/cpufreq_stats.c b/drivers/cpufreq/cpufreq_stats.c
+index 670a10c3ecfad..e7ec16bcb67ea 100644
+--- a/drivers/cpufreq/cpufreq_stats.c
++++ b/drivers/cpufreq/cpufreq_stats.c
+@@ -52,6 +52,10 @@ static void cpufreq_stats_reset_table(struct cpufreq_stats *stats)
+ 	 * reset_pending accesses in cpufreq_stats_record_transition().
+ 	 */
+ 	smp_rmb();
++
++	if (stats->last_index == -1)
++		return;
++
+ 	cpufreq_stats_update(stats, READ_ONCE(stats->reset_time));
+ }
  
-+	set_cpuid_to_node(0, 0);
-+	early_numa_add_cpu(0, 0);
- 	pr_info("Faking a node at [mem %pap-%pap]\n", &start, &end);
- 
- 	return numa_add_memblk(0, start, end + 1);
-@@ -244,8 +246,10 @@ int __init init_numa_memory(void)
- 		return -EINVAL;
- 
- 	for_each_node_mask(node, node_possible_map) {
--		node_mem_init(node);
--		node_set_online(node);
-+		if (!cpumask_empty(&cpus_on_node[node])) {
-+			node_mem_init(node);
-+			node_set_online(node);
-+		}
- 	}
- 	max_pfn = PFN_DOWN(memblock_end_of_DRAM());
- 	max_low_pfn = min(PFN_DOWN(HIGHMEM_START), max_pfn);
 -- 
 2.53.0
 
