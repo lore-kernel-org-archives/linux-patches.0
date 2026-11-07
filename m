@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060696;
-	b=0tUzqaej4ChepcQzRu40oyZuPLZpNQxyjlSayRMskWOCDL+9R8xeQ11sTuQiMIgnDtio
-	 qF9Zoof2GGsTEGiM99Zsz0kP1JLv1D3Enzf0L3Z3HdWcanxVLeMOT5L6iST8AoAxOpYEo
-	 iR4nod883UllFRxYhIQQtHrBVUdkcg0qcxXgJz5hAo3sJIHo/p/39HVm4CpbDfb/XSORV
-	 AIq/kyKb9lyZT8QDg/b9q2TQtyTfq4zhBoPYgNdUZ84ATnCHzVQL00QTpLSOMoVKlYZyV
-	 OvPkKqzHsEOK0j7ABIU45Y6/QQ29COxx/qWJdgneCgDit8hPONLFqP+dwkeyXGN86QA==
+	t=1794060697;
+	b=wMCFfOdag2rmBoExAuA9SkEFWzPMNKWWNkkw+RadWXuvkhsUAA6GE5Z+wYXNqAMzBfqF
+	 2yJgtLVbyAG7gp/Y9wFtXVTVjLWaZFDfzAxKK+X+N7+sDL7kJcNtpmNMMmkgjY4KXANvH
+	 4IudHi8KUSg+VQsbutDcK10UEkUU6PBYp7vSWsx9USsN5jK60Wdgw9BS3Ygbm7vev0e5v
+	 1kXexMjSxJKSbrucQZ8RccdU+n5arMfaGkUibNeIo7TxcbG5d+e39RdTmfJlsd1Q52WIF
+	 tP42meuW0x6UIhQHzujJiSdaTC7u27OQOIRVEvU+04AO+RmM9LoXFzg7EjS0YgO1BVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060696;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060697;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nzl0fe9dcyAJ8z2t283hCX7B8MmM8ftmBPsKpq1Py+I=;
-	b=O2zkLczAmHJRP0UXDPYm1FA5MtuADW4sqM+xGBs33yn00NHRtqqtZBJ3RZ8ln/gjJ1z6
-	 GGL9rz/fuk/ovN027d5MWH1EZ7bC47vVEfkxqA34zsCFwosw7VXKONGpZyuTXbyqAqsZJ
-	 qG7BeIwjMZipfq2Hgw3LoCyq7e42VphuZ4RO7T6ibh69QLe3Y91XeqnHr9MBwORrjKUOU
-	 yPTM44i6TFZHDiUkuja8YbdSCowdZyhPqrO5W5Pg8xJDMDV3/ZOkvOmaS80s4LZeH2LsY
-	 6i833/iybCvGAX2b1KQRuyPyNoRbX9JWq/qxJcPNPDfTqP6HNK5V2ktB4z1P8Q+ttSg==
+	bh=NsEn6UDXBo/I+o/mnrFhLlgYAXzsDgEZj4sHC/RbAHk=;
+	b=I0HFKxi0hSG7JhwSqVtIDe8M3RYLavFPRjTPURS7prrgwopEuAKwla9Pk3IMFmOTPXmD
+	 XInr08bJoeG9tWUnogxfUYB2tS1JIg4naquFRLkO3kM8GmEXSERcQaYv/2hqly6Kt734J
+	 Cul0wXBavbLPvKhAxfdTMobxDTvzhd2nvuN71gU9AVSi2qly7/gF5vEVxK2JS/ajMLEkN
+	 M8w0vCMgpMBVlaw/B8BHe4ODkattZb96jGVk35UJQsK79RCxbEO3egFCMj7SlI8SoOawH
+	 /jPSDHUOVc59UecmIKfnY+GBc8qj5AQKtMIGVpf/z9C0Dm6KBtuhn86JnypanUW1VmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cLbuAcA8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PPdTYfF8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CD8606A326;
-	Sat,  7 Nov 2026 14:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8D4606A326;
+	Sat,  7 Nov 2026 14:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cLbuAcA8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999741F0089F;
-	Sat,  7 Nov 2026 14:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PPdTYfF8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DC91F0089F;
+	Sat,  7 Nov 2026 14:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060695;
-	bh=Nzl0fe9dcyAJ8z2t283hCX7B8MmM8ftmBPsKpq1Py+I=;
+	s=korg; t=1794060697;
+	bh=NsEn6UDXBo/I+o/mnrFhLlgYAXzsDgEZj4sHC/RbAHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cLbuAcA8VdWMD3uX2rM5cxKYxJtjTu71SEqaPqFrrUTsdURlzF+IH+r9+xGcCWrfW
-	 2VSrOQE98Ik524/TYqTYS0w4sEGhlj+8rGHe0w3ghLWg+BtuKIKcY0kjwXSy3J7iSS
-	 3XM9wYdmhDJFBk4sL48lPmIZ/DrLGusnu6bzdOX4=
+	b=PPdTYfF8kfYpFcb7eG0y451iJNXYXU5vbyl6J9YqlxHvhPrphmeBrdHVHzf8GmiS5
+	 jVZ1oHCMsCQFWWbdsr8fND1QQ4ODjd6j46G6ZjO+TgjmSXVC3ppV0VEU6ClHwwTzB8
+	 w0ImXRlAHX5gHQqVLZpuvtRrTbKSeGezluJUw4sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0085/1536] mmc: moxart: report DMA completion timeout
-Date: Sat,  7 Nov 2026 08:35:01 -0500
-Message-ID: <20261107135000.059608254@linuxfoundation.org>
+Subject: [PATCH 6.12 0086/1536] mmc: cqhci: fix to missed endian conversions
+Date: Sat,  7 Nov 2026 08:35:02 -0500
+Message-ID: <20261107135000.086863169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,57 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit e29e650077e01dddf69bc8fac31e0cd60043aa7c ]
+[ Upstream commit 0aae2c73175821a71c0e20607f8e333be5b71940 ]
 
-moxart_transfer_dma() waits for the DMA completion but ignores
-wait_for_completion_interruptible_timeout(). It then unconditionally
-reports the full transfer length in data->bytes_xfered.
+Fix two places where the wrong type or conversion of little-endian
+types to fix the following sparse warnings:
 
-Terminate the DMA channel and set data->error when the wait is
-interrupted or times out. Only report host->data_len as transferred
-after the completion is observed.
+drivers/mmc/host/cqhci-core.c:487:15: warning: incorrect type in assignment (different base types)
+drivers/mmc/host/cqhci-core.c:487:15:    expected restricted __le32 [usertype]
+drivers/mmc/host/cqhci-core.c:487:15:    got int
+drivers/mmc/host/cqhci-core.c:566:19: warning: incorrect type in assignment (different base types)
+drivers/mmc/host/cqhci-core.c:566:19:    expected unsigned long long [usertype] *task_desc
+drivers/mmc/host/cqhci-core.c:566:19:    got restricted __le64 [usertype] *
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/moxart-mmc.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/mmc/host/cqhci-core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/mmc/host/moxart-mmc.c b/drivers/mmc/host/moxart-mmc.c
-index 8ede4ce932714..3fa591f886b97 100644
---- a/drivers/mmc/host/moxart-mmc.c
-+++ b/drivers/mmc/host/moxart-mmc.c
-@@ -264,6 +264,7 @@ static void moxart_transfer_dma(struct mmc_data *data, struct moxart_host *host)
- 	u32 len, dir_slave;
- 	struct dma_async_tx_descriptor *desc = NULL;
- 	struct dma_chan *dma_chan;
-+	long timeout;
+diff --git a/drivers/mmc/host/cqhci-core.c b/drivers/mmc/host/cqhci-core.c
+index 178277d90c31c..00614b500b2bc 100644
+--- a/drivers/mmc/host/cqhci-core.c
++++ b/drivers/mmc/host/cqhci-core.c
+@@ -484,11 +484,11 @@ void cqhci_set_tran_desc(u8 *desc, dma_addr_t addr, int len, bool end,
+ {
+ 	__le32 *attr = (__le32 __force *)desc;
  
- 	if (host->data_len == data->bytes_xfered)
- 		return;
-@@ -296,11 +297,17 @@ static void moxart_transfer_dma(struct mmc_data *data, struct moxart_host *host)
- 		dma_async_issue_pending(dma_chan);
- 	}
+-	*attr = (CQHCI_VALID(1) |
+-		 CQHCI_END(end ? 1 : 0) |
+-		 CQHCI_INT(0) |
+-		 CQHCI_ACT(0x4) |
+-		 CQHCI_DAT_LENGTH(len));
++	*attr = cpu_to_le32((CQHCI_VALID(1) |
++			     CQHCI_END(end ? 1 : 0) |
++			     CQHCI_INT(0) |
++			     CQHCI_ACT(0x4) |
++			     CQHCI_DAT_LENGTH(len)));
  
--	wait_for_completion_interruptible_timeout(&host->dma_complete,
--						  host->timeout);
-+	timeout = wait_for_completion_interruptible_timeout(&host->dma_complete,
-+							    host->timeout);
-+	if (timeout <= 0) {
-+		dmaengine_terminate_sync(dma_chan);
-+		data->error = timeout ?: -ETIMEDOUT;
-+		goto unmap;
-+	}
- 
- 	data->bytes_xfered = host->data_len;
- 
-+unmap:
- 	dma_unmap_sg(dma_chan->device->dev,
- 		     data->sg, data->sg_len,
- 		     mmc_get_dma_dir(data));
+ 	if (dma64) {
+ 		__le64 *dataddr = (__le64 __force *)(desc + 4);
+@@ -542,7 +542,7 @@ static int cqhci_prep_tran_desc(struct mmc_request *mrq,
+ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
+ 				   struct mmc_request *mrq)
+ {
+-	u64 *task_desc = NULL;
++	__le64 *task_desc = NULL;
+ 	u64 data = 0;
+ 	u8 resp_type;
+ 	u8 *desc;
+@@ -574,7 +574,7 @@ static void cqhci_prep_dcmd_desc(struct mmc_host *mmc,
+ 		 CQHCI_CMD_TIMING(timing) | CQHCI_RESP_TYPE(resp_type));
+ 	if (cq_host->ops->update_dcmd_desc)
+ 		cq_host->ops->update_dcmd_desc(mmc, mrq, &data);
+-	*task_desc |= data;
++	*task_desc |= cpu_to_le64(data);
+ 	desc = (u8 *)task_desc;
+ 	pr_debug("%s: cqhci: dcmd: cmd: %d timing: %d resp: %d\n",
+ 		 mmc_hostname(mmc), mrq->cmd->opcode, timing, resp_type);
 -- 
 2.53.0
 
