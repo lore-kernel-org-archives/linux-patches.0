@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064293;
-	b=RGku4W5yTL8oS5+SxhSSTwnL5dZ/PdlxwvALRQ74nwwDkE0iegC4aH7i3kh/mxK0xK+y
-	 7g6vYz7RyzI1aEuSmJroxxB2lUogHGcv69wuoEWmPuAj9h07v9a98dT3Hl77YY/6T/irN
-	 xzzqOnnWXIuUUvHJIRPBVGouQGCeBWKHlsuoidTqgvDAESVPLP0HO+K+cJbWNes4ZjAvY
-	 Z9bb97uTFVJjBmAJafam3hQIR9nJ5nrm+hEO8hjjvM325BpRXPSiYv8CsuFCbhmOciocl
-	 MMFJESPn/rIbeFKgzt5mjixl2aFJ437sTUNLQCaUgo15QqS/rCVUPkTnQfEQkNeb/Ew==
+	t=1794064294;
+	b=wV+T0vnqgpLPjhNMBPdqvNEYyfdmYjh0i1eDwRr46EshW+RBctq5Z/mncBecE+9J4miq
+	 SYS1DriBU3kdCqhFs8QPuLBMGX0FEyofc2XjQMvD7ds4XE1zPOp+nPK1UwSzUx/Zsk6Vu
+	 QtqCYOAQhE+oJeyj2yz/44rsQ3hxxUBkYODrTkyEJs6bf532d6tIsh55Ksbh1GmluvtEE
+	 giVBhOMM9FIKDUCsDhPuBLodBueaJpMpNJBlDsauzgInrI4hUDZ7MR6uZY1LcG6RvmLVS
+	 jm/Bpkok+bxRrb+OZFaYdsSlXrbjp9ZPtHPDuGi6ySwpFb5zd4MGjIPlBlc78cBB+xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064293;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064294;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HS+vrenvi4zngz7dg3CzNtH+vfBiZTiNFObcbIXHNbA=;
-	b=bpET3oZUOxg73tHgwTboJaWsRCHh6zsIvYQaZdT8XY0d/W5KkuV18ci0dKIBGk3NgGmv
-	 eHjIis0taYQH1cmbixz6BL50x9atzlCHHevdMPbqP/09ZCOb7X/5FHDixL1RmTtS5F5ab
-	 BDJot9WLFTqopAZOsqEGn9ZGYbLGXdJPaSyvh14Hcm2FVDo3DAZIVeCw3wJuZFvYUGI7Y
-	 gyUll1gXQHifd360NLemPVSijwWk7p5arAYbNcTpmHvdf+D6HHxS0i/xdIQCcfDTvsF5J
-	 wJ/p35vWfoAe4T8weN9CjoVL3IVdvJqoDG4wk6ikOEw/Kqy8oT8JXqAaJ3udjhM8Lrg==
+	bh=J5yYK5QqUazPRfye5O43cD8we24h2HKJUhVNdG+zu0k=;
+	b=0cksvauVruA22HNSEpmN6HQWpwe72JL31wzOxX3qg20QbBCbYSJKS37j0nFFUukz5XW7
+	 wHVwx5ao3Tll5lYegav+qJ4j+YzClnwG+P9T89FYuxLqNwQMw05MaHUsC3HahdBFulG+w
+	 Lbn/s+lclLfi/avvSa7OuunW9giGWF0WIdWGLt1ZMdpuBSoVVhDvKhX3OA4yjBUQoD4Mx
+	 ZGzHfb6+BGXhDfhAapnR9c6KwrYjHOCZJL9VdwT24kOP1+JesWcGuWCtiZwLelFHvE/6s
+	 5X24r+Yk7dbXpyeM8K2PuWIK/pQipmeuHprNhN1pN5WDFUykkvhFCC5aVLkkAYq8wXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWZrIjZe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQrsFlYj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF44A606A9D4;
-	Sat,  7 Nov 2026 15:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B38606A9D4;
+	Sat,  7 Nov 2026 15:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWZrIjZe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEE81F0089F;
-	Sat,  7 Nov 2026 15:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQrsFlYj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB331F008A1;
+	Sat,  7 Nov 2026 15:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064292;
-	bh=HS+vrenvi4zngz7dg3CzNtH+vfBiZTiNFObcbIXHNbA=;
+	s=korg; t=1794064293;
+	bh=J5yYK5QqUazPRfye5O43cD8we24h2HKJUhVNdG+zu0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fWZrIjZe/bhQeFsg4ls4aO7nddatDVpOnm0oj/alT4cPp+fngTMfCqcEG9SqaI2A5
-	 c/+tbhAdMOestyDkyxPArDojnwmfSCWk+48y28oGeE71BH0XAaIXHLNJ6TJkzOZKvz
-	 BXDz5n8Ufab8aVFEH1OCGD28aTIXc2pFLu7hU9RY=
+	b=XQrsFlYjHSUQjpgictN4BOYK3W2iKNPUaMYrURgJeRcLlBma5OxZQCVN3UQ9JvbBW
+	 oKE0Fgxi9UkecadfOuI/0uyOdX5l3uoyENb6uKM4FqnkW08B9rOIkRIMM7HlLKFQAN
+	 iMQfJ6fwKR7nJzXnqAuhHKCayDeKCetEFQGuL/p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	"Drew Fustini (Tenstorrent)" <fustini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0387/1257] nilfs2: clear dirty flag on bdev buffers on log write failure
-Date: Sat,  7 Nov 2026 08:44:43 -0500
-Message-ID: <20261107134950.239004268@linuxfoundation.org>
+Subject: [PATCH 7.3 0388/1257] clk: tenstorrent: Assign .num before accessing .hws
+Date: Sat,  7 Nov 2026 08:44:44 -0500
+Message-ID: <20261107134950.265102609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,61 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-[ Upstream commit 6faad04a002603d800134398fcd042b403b32d35 ]
+[ Upstream commit da9f1312b06e4c03d43d21494fb5beea7f9e096d ]
 
-Since the commit referenced in the Fixes tag stopped directly calling
-inode_attach_wb(), a dirty flag is set on buffers (with
-mark_buffer_dirty()) allocated to the backing device for segment
-summaries and the super root block during log writes.
+Commit f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with
+__counted_by") annotated the hws member of 'struct clk_hw_onecell_data'
+with __counted_by, which informs the bounds sanitizer (UBSAN_BOUNDS)
+about the number of elements in .hws[], so that it can warn when .hws[]
+is accessed out of bounds. As noted in that change, the __counted_by
+member must be initialized with the number of elements before the first
+array access happens, otherwise there will be a warning from each access
+prior to the initialization because the number of elements is zero.
+This occurs in atlantis_prcm_clocks_register() due to .num being
+assigned only after every clock has been stored in .hws[]. With
+CONFIG_UBSAN_BOUNDS and a compiler that implements __counted_by (GCC
+15.1+ or Clang 20.1+), this triggers an array-index-out-of-bounds report
+during probe, and with CONFIG_UBSAN_TRAP the first store traps so the
+clock provider never registers.
 
-While this dirty flag is cleared upon a successful log write, it remains
-uncleared if the log write fails.
+Move the .num initialization to right after the allocation.
 
-Consequently, when a log write fails, these backing device buffers are
-left in an inconsistent state where their uptodate flag and the dirty
-flag of the containing page/folio are cleared, but the buffer's dirty
-flag remains as stale garbage.
-
-Particularly when the block size is smaller than the page size, if other
-buffers on the same page/folio become dirty, this buffer unexpectedly
-becomes a target for writeback again.  As a result, if the block is
-later reused for other data or metadata, that contents risks being
-corrupted.
-
-Fix this issue by calling clear_buffer_dirty() for the backing device
-buffers when aborting log writes in nilfs_abort_logs().
-
-Fixes: 68142cb628f7 ("nilfs2: do not call inode_attach_wb() directly")
+Fixes: 23c8ebc95284 ("clk: tenstorrent: Add Atlantis clock controller driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Assisted-by: LLM
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Reviewed-by: Drew Fustini (Tenstorrent) <fustini@kernel.org>
+Link: https://patch.msgid.link/AS8P251MB00013BD9A093C06D2D60E10EC8B42@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+[fustini: drop num_clks, use data->num per Gustavo]
+Signed-off-by: Drew Fustini (Tenstorrent) <fustini@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/segment.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/tenstorrent/atlantis-prcm.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
-index 829573cb61316..2f0e59847d026 100644
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -1829,6 +1829,7 @@ static void nilfs_abort_logs(struct list_head *logs, int err)
- 	list_for_each_entry(segbuf, logs, sb_list) {
- 		list_for_each_entry(bh, &segbuf->sb_segsum_buffers,
- 				    b_assoc_buffers) {
-+			clear_buffer_dirty(bh);
- 			clear_buffer_uptodate(bh);
- 			if (bh->b_folio != bd_folio) {
- 				if (bd_folio)
-@@ -1840,6 +1841,7 @@ static void nilfs_abort_logs(struct list_head *logs, int err)
- 		list_for_each_entry(bh, &segbuf->sb_payload_buffers,
- 				    b_assoc_buffers) {
- 			if (bh == segbuf->sb_super_root) {
-+				clear_buffer_dirty(bh);
- 				clear_buffer_uptodate(bh);
- 				if (bh->b_folio != bd_folio) {
- 					folio_end_writeback(bd_folio);
+diff --git a/drivers/clk/tenstorrent/atlantis-prcm.c b/drivers/clk/tenstorrent/atlantis-prcm.c
+index 6d4386eeb7dae..6772035ec8726 100644
+--- a/drivers/clk/tenstorrent/atlantis-prcm.c
++++ b/drivers/clk/tenstorrent/atlantis-prcm.c
+@@ -789,13 +789,14 @@ static int atlantis_prcm_clocks_register(struct device *dev,
+ {
+ 	struct clk_hw_onecell_data *clk_data;
+ 	int i, ret;
+-	size_t num_clks = data->num;
+ 
+ 	clk_data = devm_kzalloc(dev, struct_size(clk_data, hws, data->num),
+ 				GFP_KERNEL);
+ 	if (!clk_data)
+ 		return -ENOMEM;
+ 
++	clk_data->num = data->num;
++
+ 	for (i = 0; i < data->num; i++) {
+ 		struct clk_hw *hw = data->hws[i];
+ 		struct atlantis_clk_common *common =
+@@ -809,8 +810,6 @@ static int atlantis_prcm_clocks_register(struct device *dev,
+ 		clk_data->hws[common->clkid] = hw;
+ 	}
+ 
+-	clk_data->num = num_clks;
+-
+ 	return devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
+ }
+ 
 -- 
 2.53.0
 
