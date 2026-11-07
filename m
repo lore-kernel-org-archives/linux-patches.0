@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065515;
-	b=EcWaidaEBitdZmfnFRVWDggWORx3uPTMfT+TcPxIDBv+Y8Fafr/WnYBm1ChgieGgtadm
-	 mF51PgOEWeEqM3jt4aRcdhioo8tzRpcNbJEheuZ7VkAzWYXn471pM4WRX4ZkpS60M/Bxx
-	 mO7r9Tq2zFL2rOs3i6X9wsvWfBwW1zAkOisXvw3jtCj+1p7haruU7G24GEkW50uBY5Huz
-	 NpC94s+3TlaAJ32EHrnIo1iXEQK/ZESlqYdsb4ea/muyRa8rpO+QZBbZrkMGXrz49HFaR
-	 8To9Oc/yE8UqUn3fZolTuf1OSsVRl4jnhfUPSsdDJYHKkKZ2dR2hJbPw1c9YnYReOIQ==
+	t=1794065516;
+	b=an48t1RJH1DXwmP87dQC+MgGAxbvYarFhDkY/L+IpFgSRNx2KUkBVoyBRsryke7sV1Lq
+	 SQF2ETaaOc0N7jv8Mwy3ANSmXfjSsjg+60xjBD4kM81NP4I70/tONdUVx2wCQdtQ9egR1
+	 z71XDXjbIvIoHY58psRY2Rv8ItqWMl8joVSfuQBxJJ+mS3AEfO9QyZbJNuXYh+wqLsjov
+	 41D+4z4I2UvjbPkQWNVelnK4c0QeVh78QuqamwjUjK8BYKuf+FMeug8heNuUkcFtpdySX
+	 Gij5SlzCViIgXOd5USFOhIo4GGJMjhDOtqHgOPbZKLGUEu9YEc+g6NZ9cspIfyjipdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065515;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065516;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HPg829iKgvz1nadeH/X19UkRSnBt7EBl1DtS5/N9ehE=;
-	b=KUpBsBsFhtvAWTanXKmdRrixKt0hUxBb6uIzXCFZxDWuxXjEgHoV60iHXLveLhWgoODo
-	 65ycmMLPPLkZDzQY5pyVLEhOBCeMP1aq2tqZoW3kljmceokilgaSECc/O8kiOezMmFq2H
-	 3DK4HRj7i+kIvCPEDFeuNUEQFSl9Wlt/JxNEz8vXYmCYHbZH0DSUhnZ/LfUx/p6Ou8rhY
-	 BJN2HCEm+JQ46V0TioGFoBHNBc3fJNBVyp6EeRrEihuIoP5cjo12i53RcV5KmVRsprcUv
-	 ii8DmkFVXtpubIr8Uie0vtxJnJLzedC6jeI9Hzqc6kVvXvKCXqZGU2WDvxumkUx/Mog==
+	bh=a/RvPJWWSXOBsXwuTT5yFoQ6PkuaB0m2gjJGCgJcRXI=;
+	b=fqiXvzImFUiIa5itqq2JYiFg6aqRsrOyQxldhz8trlqYh7N6P5ucA0lfAPxdIc5DFSfT
+	 8I+K8Wdq8X54S7iemGJhP11ZqD5tQNKbBuh3FFUKkvUO/qaoDkqtJznigKy5r6dSnqocE
+	 Q64l3m3KvWKPbDxb5lgVXMF9fbuWAm2E6zH1Vj5D9q33yfI3aKJYQMbbAQ1V4aTnd6UG8
+	 DezxOYaVuKEX7ZLRdoKT3lz15nyVpQxYIm/dBXhE3L0BYRjW2X+le8Lci8bUUSBiuiLcV
+	 OVjHoWnTdnLyE4S3kMS7erwYpGfJHIMhbaiFu9aAHtsrRCK63eFWoTDS0hhFCe9V7ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3ILkfcL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X1mVPwvv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DFF606A32C;
-	Sat,  7 Nov 2026 15:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E3C606A32C;
+	Sat,  7 Nov 2026 15:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y3ILkfcL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38E81F0089F;
-	Sat,  7 Nov 2026 15:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X1mVPwvv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456651F0089F;
+	Sat,  7 Nov 2026 15:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065514;
-	bh=HPg829iKgvz1nadeH/X19UkRSnBt7EBl1DtS5/N9ehE=;
+	s=korg; t=1794065516;
+	bh=a/RvPJWWSXOBsXwuTT5yFoQ6PkuaB0m2gjJGCgJcRXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y3ILkfcL+cyUOWV4Kh5DTdsVPjOP6Lkvq9lxtvR5HUB/6U/n5uIxUfVMF9cjmL7/t
-	 hDL+Ag2wL3aEqN58Aoom8KAyA/fdgMzJ3lCJEWcJjWFN41XeuRh6ljNKHneoCoOtfa
-	 2MsrkYDtfWg+8QEMnRykYj9qaIm+SVLJbmwAg9Yw=
+	b=X1mVPwvvjO/WBZD2g1OxFa8lSN5YlGBs3BxCGacz/Fl8T10Hdm3yIvchHi+ThrpF5
+	 1IJ/VNdpHRqB9Yp5yLbBOECM7myZRklavJt12RTLiDXZx0o8S/Z4+ZuEc0R0+4dY0v
+	 UOC0ZxgBwv+qKtDVXfqGpu55fn22Ar7+R9tj0rKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1197/1257] soc: loongson: loongson2_pm: Fix build warnings for 32BIT
-Date: Sat,  7 Nov 2026 08:58:13 -0500
-Message-ID: <20261107135012.221573359@linuxfoundation.org>
+Subject: [PATCH 7.3 1198/1257] ASoC: hdac_hda: Keep runtime PM state in sync across codec remove/probe
+Date: Sat,  7 Nov 2026 08:58:14 -0500
+Message-ID: <20261107135012.447316350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,43 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 48b960ad7057f84a375ae7ec803ea3ba6b038b5c ]
+[ Upstream commit 99203e8d8968def973e82bb712ea959c6a46c16e ]
 
-Since loongson_sysconf.suspend_addr is unsigned long, use "unsigned
-long" instead of "u64" for casting, so as to avoid build warnings for
-32BIT:
+After the codec has been removed, its runtime PM status is
+RPM_SUSPENDED while hdac_hda_codec_probe() powers the codec up via
+snd_hda_codec_device_new(). The pm_runtime_put()/snd_hda_power_down()
+calls on probe and registration then see an already suspended device,
+the codec suspend callback is not called and the codec, its HDA link and
+the codec_powered bit stay set, preventing the controller from runtime
+suspending.
 
-   drivers/soc/loongson/loongson2_pm.c: In function 'loongson2_pm_probe':
->> drivers/soc/loongson/loongson2_pm.c:178:49: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-     178 |                 loongson_sysconf.suspend_addr = (u64)phys_to_virt(suspend_addr);
-         |
+The remove has a similar problem with the codec link accounting:
+hdac_hda_codec_remove() drops the link reference taken in probe without
+looking at the runtime PM state of the codec. If the codec was already
+runtime suspended, the link reference has been dropped by the codec
+suspend callback and the remove drops it a second time.
 
+Resume the codec in hdac_hda_codec_remove() before disabling runtime PM
+so that the link reference and the codec_powered bit are always in the
+same state as after the probe, and mark the device active on probe once
+the codec has been powered up.
+
+Finally mark the codec device suspended at the end of the remove. Its
+runtime PM is disabled at this point and if only the ASoC card is
+unbound (e.g. by unbinding the machine driver), a following system
+suspend would otherwise call the runtime suspend callback on the already
+cleaned up codec via pm_runtime_force_suspend().
+
+This is a followup patch to address Sashiko reports.
+
+Link: https://lore.kernel.org/linux-sound/20261027083840.28813-4-peter.ujfalusi@linux.intel.com/
+Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
 Cc: stable@vger.kernel.org
-Fixes: 3d9aba6618d1 ("LoongArch: Adjust build infrastructure for 32BIT/64BIT")
-Closes: https://lore.kernel.org/oe-kbuild-all/202610190549.WM2PO3vO-lkp@intel.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261027144655.31988-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/loongson/loongson2_pm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/hdac_hda.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/soc/loongson/loongson2_pm.c b/drivers/soc/loongson/loongson2_pm.c
-index b8e5e1e3528a6..1e2c897d055bd 100644
---- a/drivers/soc/loongson/loongson2_pm.c
-+++ b/drivers/soc/loongson/loongson2_pm.c
-@@ -175,7 +175,7 @@ static int loongson2_pm_probe(struct platform_device *pdev)
- 		return irq;
+diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
+index cbf17753d3fc1..40d602f79314a 100644
+--- a/sound/soc/codecs/hdac_hda.c
++++ b/sound/soc/codecs/hdac_hda.c
+@@ -514,6 +514,9 @@ static int hdac_hda_codec_probe(struct snd_soc_component *component)
+ 		snd_hdac_display_power(hdev->bus,
+ 				       HDA_CODEC_IDX_CONTROLLER, false);
  
- 	if (!device_property_read_u64(dev, "loongson,suspend-address", &suspend_addr))
--		loongson_sysconf.suspend_addr = (u64)phys_to_virt(suspend_addr);
-+		loongson_sysconf.suspend_addr = (unsigned long)phys_to_virt(suspend_addr);
- 	else
- 		dev_err(dev, "No loongson,suspend-address, could not support S3!\n");
++	/* The codec is in D0, the status is RPM_SUSPENDED after a previous unbind */
++	pm_runtime_set_active(&hdev->dev);
++
+ 	/* match for forbid call in snd_hda_codec_device_new() */
+ 	pm_runtime_allow(&hdev->dev);
  
+@@ -554,6 +557,12 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
+ 		return;
+ 	}
+ 
++	/*
++	 * Resume the codec to have its link reference (dropped below) and
++	 * codec_powered bit in the same state as after the probe.
++	 */
++	pm_runtime_get_sync(&hdev->dev);
++
+ 	/* prevent runtime PM callbacks while the link and the codec are torn down */
+ 	pm_runtime_disable(&hdev->dev);
+ 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+@@ -565,6 +574,9 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
+ 
+ 	/* Balances the disable above, cleanup_for_unbind keeps runtime PM disabled */
+ 	pm_runtime_enable(&hdev->dev);
++	pm_runtime_put_noidle(&hdev->dev);
++	/* The codec is cleaned up, system suspend must skip it from now on */
++	pm_runtime_set_suspended(&hdev->dev);
+ }
+ 
+ static const struct snd_soc_dapm_route hdac_hda_dapm_routes[] = {
 -- 
 2.53.0
 
