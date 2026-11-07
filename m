@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062673;
-	b=ccjsDtIt7o4ID2O8NQLx486HxcP8B0+4l8JIXS5KHgfbiR6QROyS2RzxVywb0a7Yz3WQ
-	 SC2xeSCWrtqYW2Fg+K0zUfmcqkB2tLRa8iLN1KC0C32U/ARDgWwvjJDNZdnLEZXez4zVd
-	 YX3qXrtO2hsnj5cr3XoA+RoTsVinFwzVpQlLws7tJ1b3E5IH0miCyUegF9EZZdmGYwX6B
-	 8Jl4TMSEycCN3u0Aki5hZwnWJALprt7naYcjYs6XiwTEz5AxIX4HPbW2M/6NN+cJiQymT
-	 VqOLR9nImd6G8uEq6JoUXbD+hOG6Yj7urv+ItAYs/QTSTCEfeMl3p+L91KsmXlV03gg==
+	t=1794062674;
+	b=tqL49V8ktMfFhCcUKP2zDV97IPU3lWfEI6qindhzkrZ5pf33N/Z7Z7O3w1cBrSSglNZr
+	 5DtcsJ4Vgw33bQzUlYiDzy2cpzSvCO2FAmZE16bPeK2nx0MaOUwuM8J6c3AJn+thHhB0y
+	 N5E+KXQdepVRKpemNjpWwfRn7+Ml76zw2MvIyyE5JT9jG1U0KM3x68xL8GtPybXDuZVQ0
+	 EUqQvPFwZNCw49sQZmNB20SFRnrKWrqv8+4u6Xw5uiYzGolxq75uI1aqle8864cAiDwkv
+	 q8J778nwWVvIT6bRUHbKBlXhAkZrzbmfWANHjX0xvdzQ1U1S374xrj/clV+2OJjZw3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062673;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062674;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eRwL61e3vl21xJEiz14b+ikqzS7yobucCl/JHRKgx4c=;
-	b=wE5rYEOftHnXd2N0QvzzEs7zA64UK2/XGKw2uL23MLhUgSzbYVqhD+lD3+qUxRRYq5Wg
-	 Nh7pIE4FY52pQUaGou3ev7iszRxCBsOhxXD4D2CDs5yEw0D9oTeY/eDhgdRLLq/VepusY
-	 +KKaiP1i0fXctMBI215Cwq0ms9SazJdlH0OqbPcVdsoC8QowJhMAZt/JM+pntzLQ2pWl5
-	 Nfai7YV8Lcc/JBGEM2cm8sUEK7fxCECuTtZNgv59A37637gSL+NF7x7MafwHrOI1eo5/+
-	 VDSW5UK3nGAARYUziXZjsZnLWVaMPwvclmCRUsJb+Ah+bHgYmwlDKwSZLmm3Xh8T/mg==
+	bh=ejVzXlTFuZG7wcJBpNeRvVO5Fl9CYrRdJgHXv0TC5M4=;
+	b=ROjOnCE7LBEJRa2MGT7SHaBew/LwOH4fv+5SnUwiMdNuSD6ifF8ml3Uzhb0MvJ3gfbNg
+	 U3e77SayRw7/aWJSpA5O1PvLPI7xA8COXadeNnvBE9Lgr8IBjMH0Uf5KkhuuZnWbTtP+h
+	 ai1Zp+X5yPgm2ujG7trGfredxUJPZd8iV0c9cGIv1Rk7YqJFdolO/eXxqieC8aSGmvXgS
+	 PzEcHxtBhjX5AMSH7zTtn+3G8Mk3wPiUY8ZdpdYTN24N7CujXNk0Yl8XiisN/xTFFNu2F
+	 Dzd6EFdzUIkAQNJtDcxx6PVlY+Bcobcjf505sZR1zrgpRSOfWKWNxaOQaOjlagQS+Ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iOkzuIEl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lFRIWFfA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B427606A326;
-	Sat,  7 Nov 2026 14:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2B1606A326;
+	Sat,  7 Nov 2026 14:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iOkzuIEl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51161F0089F;
-	Sat,  7 Nov 2026 14:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lFRIWFfA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060181F0089F;
+	Sat,  7 Nov 2026 14:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062673;
-	bh=eRwL61e3vl21xJEiz14b+ikqzS7yobucCl/JHRKgx4c=;
+	s=korg; t=1794062674;
+	bh=ejVzXlTFuZG7wcJBpNeRvVO5Fl9CYrRdJgHXv0TC5M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iOkzuIEl5CN0k4b1J8zwQzzQzzze+rl7UPMGrseRCZwC+yg4JA4o7rF4i8N8QCAJO
-	 OdnrppDenFGgWCRugZbbvmxtCa0uuz7SfmlWPp57GguPcc9j4RlLG2fE3YHA78j9MX
-	 34OEzRW2VkP+FfbQTSjuSS6foDX4Eo8DKUNLgvX8=
+	b=lFRIWFfAjXCzHO7VMsKprxYWSXcdQykRiQCnjXR4AOVtra4h22dZh1YGjsp6xzGcX
+	 NZsfKdqge7KUBrqIJKacupec2IsONCr/uGPc982J/2PIUyJ4d1I85S7Ps7Z+CDIFCA
+	 L9C13Ik9XQ7S6XL10YD4ADuqHNJ5edHWZAUtvrrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1535/1536] ocfs2: read the xattr entry hash before defragmenting the bucket
-Date: Sat,  7 Nov 2026 08:59:11 -0500
-Message-ID: <20261107135041.002286228@linuxfoundation.org>
+Subject: [PATCH 6.12 1536/1536] apparmor: on failed load ensure profile files are removed before parent
+Date: Sat,  7 Nov 2026 08:59:12 -0500
+Message-ID: <20261107135041.029504753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,120 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit f48151da595e74efdc23d83d8d6d142207b8c731 ]
+[ Upstream commit 97ba44a2aa4c7ab011a93ce94cb595200fe4ea4f ]
 
-Patch series "ocfs2: fix stale xattr entry pointers and empty header
-reads", v1.
+The load interface does not guarantee the order profiles are loaded.
+When a parent is loaded after its child, and the load fails, the
+current code will issue a warning, and leak a dentry.
 
-Five defects in the ocfs2 extended attribute code, plus one robustness
-measure that belongs with them, all on the paths that move entries
-between a block, a bucket and an index tree.  They fall into two groups.
+For the loaded set of profiles, ensure that on failure list is ordered
+is traversed in reverse so any children processed after their parent
+is freed first. We do not need to deal with the cases where the
+children are processed before their parent, because either a parent
+outside the list already exists or a dummy parent outside of the list
+is created, and the list walk will not put those parents before their
+children.
 
-Stale entry pointers (patches 1 to 3)
-
-ocfs2_xa_set() writes through a pointer into xh_entries[] that two of
-its callers invalidate first.  Defragmenting a bucket ends in a sort()
-on xe_name_hash, and lib/sort.c is an unstable heapsort, so entries that
-share a hash can trade slots.  Copying a block into a bucket changes the
-order outright, since a block holds its entries in insertion order while
-a bucket holds them by hash, yet ocfs2_xattr_update_xattr_search()
-relocates the search by the index the entry had in the block.  Neither
-path compares the entry's name with the one being set, so setxattr() can
-replace a neighbouring attribute's value and still report success, or
-trip ocfs2_xa_reuse_entry()'s BUG_ON.  Patch 1 takes the hash before the
-sort; patches 2 and 3 look the entry up again afterwards.
-
-Reads of an empty entry array (patches 4 to 6)
-
-A block and a bucket may both hold no entries: ocfs2_xa_remove_entry()
-keeps the last slot when it removes the only one, so an empty bucket
-still carries the hash it is keyed by.  Three sites index xh_entries[]
-without checking xh_count and so read xh_entries[-1], which lands on the
-header and comes back as xh_count | xh_free_start << 16.  Nothing
-faults, but the value is acted on: the collision check reports no
-collision for an empty bucket, the divide commits a sentinel hash that
-hides part of the key space from ocfs2_xattr_bucket_find(), and the
-block to bucket copy claims storage the bucket does not hold.  Patches 4
-to 6 guard each site and keep the one read of xh_entries[0] that
-ocfs2_xa_remove_entry() documents as intentional.
-
-This patch (of 6):
-
-ocfs2_xattr_set_entry_index_block() takes the hash a bucket split has to
-work with out of xs->here, but only after ocfs2_xattr_set_entry_bucket()
-has tried and failed to fit the entry.  That call defragments the bucket
-when it runs out of room, and ocfs2_defrag_xattr_bucket() finishes by
-sorting the entry array by name hash.  lib/sort.c is not stable, so two
-entries sharing a hash may trade slots and xs->here is left naming an
-entry other than the one the search found.
-
-The hash value itself survives the permutation -- the array is already
-sorted, so a slot can only exchange with an equal-hash neighbour -- but
-there is no reason to depend on that.  Pick the hash up before the set,
-where xs->here is unambiguously the entry the search landed on.
-
-No functional change intended.
-
-Link: https://lore.kernel.org/20261024151012.1059683-1-joseph.qi@linux.alibaba.com
-Link: https://lore.kernel.org/20261024151012.1059683-2-joseph.qi@linux.alibaba.com
-Fixes: e39baff18b85 ("ocfs2: use the stored hash when checking xattr bucket collision")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
+Fixes: 6ec46f8f1977d ("apparmor: remove fs entries created by a failed policy load")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ security/apparmor/policy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index de4a7070d4ac5..f73bfcfcde546 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -5898,6 +5898,22 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
- 
- 	trace_ocfs2_xattr_set_entry_index_block(xi->xi_name);
- 
-+	/*
-+	 * An existing entry keeps the hash it was stored under, and that is
-+	 * the hash a split has to work with.  A new entry is stored under the
-+	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
-+	 *
-+	 * Read it before the set below.  Filling the bucket may defragment it,
-+	 * and ocfs2_defrag_xattr_bucket() re-sorts the entry array, so
-+	 * afterwards xs->here only denotes whichever entry the sort left in
-+	 * that slot.
-+	 */
-+	if (xs->not_found)
-+		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
-+						  xi->xi_name_len);
-+	else
-+		name_hash = le32_to_cpu(xs->here->xe_name_hash);
-+
- 	ret = ocfs2_xattr_set_entry_bucket(inode, xi, xs, ctxt);
- 	if (!ret)
- 		goto out;
-@@ -5913,17 +5929,7 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
- 	 * the maximum number of collisions we will allow for then is
- 	 * one bucket's worth, so check it here whether we need to
- 	 * add a new bucket for the insert.
--	 *
--	 * An existing entry keeps the hash it was stored under, and that is
--	 * the hash a split has to work with.  A new entry is stored under the
--	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index efa11a1a297d4..c9ffb1eec7a7c 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1373,8 +1373,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 	 * them yet, and leaving them behind would leak the new profiles
+ 	 * (their dents pin the proxy) and make the next load at the same,
+ 	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
++	 * ensure children (which are at the end of the list are removed
++	 * before their parent
  	 */
--	if (xs->not_found)
--		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
--						  xi->xi_name_len);
--	else
--		name_hash = le32_to_cpu(xs->here->xe_name_hash);
--
- 	ret = ocfs2_check_xattr_bucket_collision(xs->bucket, name_hash);
- 	if (ret) {
- 		mlog_errno(ret);
+-	list_for_each_entry(tmp, &lh, list) {
++	list_for_each_entry_reverse(tmp, &lh, list) {
+ 		if (!tmp->old)
+ 			__aafs_profile_rmdir(tmp->new);
+ 	}
 -- 
 2.53.0
 
