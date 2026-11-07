@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062113;
-	b=EGsK1KHfAR2FA9+iYpheiHAxJFHiC84dctISI/MFdutZvkvHe6gA7tJVWwiF8z4BQEs+
-	 IhpejqhkDYte8+t4l12xVElOF00C6DbY2xE8E+wnd/AlgErahIp/j1HHy/6mHpyqTaToQ
-	 TWxaQKZWKrAX5nqtDFMBnw7LBxBLh/5wi0frXx6xVO95uD/wSc2jdGVfmNiHG/nGmeOEr
-	 rqvdMh3JMgeNiLkNjArCOLeUUxIqX313z3MXe2ecbqACm6ppriC4F1WAY8diQ8U+ICtS8
-	 Dbo4zYfbj23rkqpdhxgjGXGOgw6nqz152Cl9GKGfn6foKgSmX+bxUSuLiaj6XddhJ8g==
+	t=1794062115;
+	b=ttEj85wA/2bbiX1XyzVVDyr9afQBvfe0Tci6kx86Th9Hd/t5FkRtHLob3SEJbtd7kKu0
+	 Qt0qtJaEsXv5H4E7MEAMEKC5tgNutS4KU+qSyM7M7T+xFVnlapcG6/NF+oel/00b6pOvc
+	 GRgCbKCmTOSF+3CKYbT/NAruDB0DzgUmlc8ugklR4eSHYmcL9rYJT/04mA/QYzs5vu9UC
+	 3mXMBt3Yu3joSmjTPEcCB6NL3piA/BKaDi02Yno41PVwiNNYbOYt2pj3LGms6VKyR2tc3
+	 jZluLHHVEtmr6ssvd9JwPj2grJIag63MS/UG6hJ62CmvAE2VBIInvfTs33Vxd19SUUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062113;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062115;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZgoSsom4TQbqXTQqhEnC7gPwYomG2wmaFATASiV/LUk=;
-	b=zYAHy00MV8dsHWDaOnTS1aGhfGgFvZIbua+ia0UuTyIod5lbN9o6Vj0Zk2vZkKPp8/D+
-	 WR05iia8pUj9jeFDcNl1v5tEKfnXS6n0tAMa3WYNB8TzVUS890bE3DPPkW7jK5/64dVex
-	 HknqXE+R+zqabema257nUj9ZPLo2ttAl5Ghaxu0NKfuGXlFXXN+v+c4R0AR02UWaXgqZv
-	 aqtNCnwxeoNp31WmasanZsTHa8+tU2Dm0xkmxBbRvI6EqXfAxm0AbA4EdAScHq7PWGO1i
-	 xOYjs3XM1WpdwxtOvv/uXijuG8NVa0jpnzzSSPeHEIOrUQjP/W3F21wYxkKa517CfDQ==
+	bh=7VvNy5hy1OjrB97Lv89szYebHoLCcz4qmweZ+JnSr6c=;
+	b=AO0P0imbfiuE/veqX1Xda7b7g3lcurY0JMVlKD5FEjDZIXWB3+FQ72t1/fEoXOWvL79c
+	 rbHxMKc8IoTVFOubZgfrhphU55MDQRZTAYFSwhLRoBRMwR17tfHsrpq7Bu08uGgDNsS37
+	 6do7k4sDtXjLdaMqofp4iFAEu/vHVo9qTPcy1G8SoQEsPJk8o5kZzdVOZXvfLq1h5y0Q8
+	 zNpq9t6O3WJAgxwy2T3zqvW5+sgLCBlJbppEWUWAJtx1acOyN8CDTzBJI24NQwcPPoQTP
+	 9n325SJNwsZ8AbuxuOI7Jvv3+ojvVVD1OWCksmQpz3gbtpkvoIbJTo566RXvzcmofWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCPqErqT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H45RLuoj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A3D60A5BC3;
-	Sat,  7 Nov 2026 14:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E421B60A5BC3;
+	Sat,  7 Nov 2026 14:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCPqErqT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0933E1F0089F;
-	Sat,  7 Nov 2026 14:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H45RLuoj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495131F008A1;
+	Sat,  7 Nov 2026 14:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062113;
-	bh=ZgoSsom4TQbqXTQqhEnC7gPwYomG2wmaFATASiV/LUk=;
+	s=korg; t=1794062114;
+	bh=7VvNy5hy1OjrB97Lv89szYebHoLCcz4qmweZ+JnSr6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCPqErqTbYSW/nXor6JHyZNF67xJfNaILuC3aoE7ja4Ly4PStJyaSzRUES+T3eE2M
-	 ZABmednYwc4Oj6GaziqANYMEx2oSr2EUuZeAOhJvIr/vBYoaH9JX9Hg1MV7/i748sb
-	 evNweM8pqj2Q7blgwpYbEL9U5crskZ6Bw68rVbf4=
+	b=H45RLuojIVA5860KmAFZYk5gDtueZsGq7CBN+rgjx/A14oQno0MraWJZ7F2dZcjKT
+	 yvyxsRaT6llSdDUETiGRs5BKBUAMPdk9Yrsze2lD2YKaSL6xucYSTP7dxiT3gPEShz
+	 xkg2/ReA83B31xmlnXdtf5DwYUbh9nl9ME6AHJss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1085/1536] ASoC: codecs: wcd9335: Fix SLIM interface device leak in wcd9335_slim_status()
-Date: Sat,  7 Nov 2026 08:51:41 -0500
-Message-ID: <20261107135028.172311119@linuxfoundation.org>
+Subject: [PATCH 6.12 1086/1536] iio: dac: ad5755: validate SPI match data
+Date: Sat,  7 Nov 2026 08:51:42 -0500
+Message-ID: <20261107135028.200464613@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,68 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 082723fee626532f176727b6438b666a96d5246c ]
+[ Upstream commit 85e2c8ca7ac9e39a61e7fb18728918f6e966f439 ]
 
-of_slim_get_device() returns a device with an elevated reference count,
-and wcd->slim_ifc_dev is intentionally kept for the codec lifetime on
-success. However, all the failure paths of wcd9335_slim_status() return
-without dropping that reference, leaking the SLIM interface device
-whenever the register maps cannot be created or the codec fails to come
-up.
+A device bound through driver_override need not match an entry in the
+driver tables. In that case spi_get_device_match_data() returns NULL,
+but ad5755_probe() stores and later dereferences the result.
 
-Put the device on each of those error paths.
+Validate the match data before it is used.
 
-Fixes: 20aedafdf492 ("ASoC: wcd9335: add support to wcd9335 codec")
+Fixes: 62d3fb9dcc09 ("iio: dac: ad5755: make use of of_device_id table")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917164853.2163184-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd9335.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/iio/dac/ad5755.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
-index a1fa5957f6468..6b20a426e87aa 100644
---- a/sound/soc/codecs/wcd9335.c
-+++ b/sound/soc/codecs/wcd9335.c
-@@ -5134,25 +5134,32 @@ static int wcd9335_slim_status(struct slim_device *sdev,
- 	slim_get_logical_addr(wcd->slim_ifc_dev);
+diff --git a/drivers/iio/dac/ad5755.c b/drivers/iio/dac/ad5755.c
+index 0b24cb19ac9d1..d00a04af5d676 100644
+--- a/drivers/iio/dac/ad5755.c
++++ b/drivers/iio/dac/ad5755.c
+@@ -824,6 +824,9 @@ static int ad5755_probe(struct spi_device *spi)
+ 	spi_set_drvdata(spi, indio_dev);
  
- 	wcd->regmap = regmap_init_slimbus(sdev, &wcd9335_regmap_config);
--	if (IS_ERR(wcd->regmap))
-+	if (IS_ERR(wcd->regmap)) {
-+		put_device(&wcd->slim_ifc_dev->dev);
- 		return dev_err_probe(dev, PTR_ERR(wcd->regmap),
- 				     "Failed to allocate slim register map\n");
-+	}
- 
- 	wcd->if_regmap = regmap_init_slimbus(wcd->slim_ifc_dev,
- 						  &wcd9335_ifc_regmap_config);
--	if (IS_ERR(wcd->if_regmap))
-+	if (IS_ERR(wcd->if_regmap)) {
-+		put_device(&wcd->slim_ifc_dev->dev);
- 		return dev_err_probe(dev, PTR_ERR(wcd->if_regmap),
- 				     "Failed to allocate ifc register map\n");
-+	}
- 
- 	ret = wcd9335_bring_up(wcd);
- 	if (ret) {
- 		dev_err(dev, "Failed to bringup WCD9335\n");
-+		put_device(&wcd->slim_ifc_dev->dev);
- 		return ret;
- 	}
- 
- 	ret = wcd9335_irq_init(wcd);
--	if (ret)
-+	if (ret) {
-+		put_device(&wcd->slim_ifc_dev->dev);
- 		return ret;
-+	}
- 
- 	wcd9335_probe(wcd);
+ 	st->chip_info = spi_get_device_match_data(spi);
++	if (!st->chip_info)
++		return -ENODATA;
++
+ 	st->spi = spi;
+ 	st->pwr_down = 0xf;
  
 -- 
 2.53.0
