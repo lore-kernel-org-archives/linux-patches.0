@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062683;
-	b=yeYKcm82RF3lgbq5ksBeBLzSx5h4o6RMcMfNNBOZkykvgKuem7pc20GEeocfS57laPxj
-	 PnGbGVNUXXKW2YgT0vhaU1Ojc2B/ZwReCQ1tItdP2R97izWfxG+LGnNqei9dc5AYf4RJU
-	 WFqzMqqsH4NqM1VBhqx5mXdL3hawainAC+vD7RDRD/oSou09zJzhxlIbbuoRxKj7/9D2X
-	 NQn0s8VmJziUqO7kQcuyphH3Tc/Yt/81ZxLwnZDqesLpZLaGqG9xUYwsIXyjy85mO5R1O
-	 LwAeEUeF7SD4f1eGbkehy0TJs/AgOMLRKSqH4i4VWluKoRmEmncxTkvqcHo4SNGJXIg==
+	t=1794062684;
+	b=bJ2aELvdrYLeKXC5mTd7F+w0YCMZi6tA1M80zmJBLconcWjGb5EGzZrYkVLzfxPRslhV
+	 OWPzy4dNYiKF9xRbieFGbTZ7f4/HBkj7RDzL29tk3lYzqp+r+sj/pfpyr4wCf99x4BuM6
+	 Zo9ouPfqQD6FDYGnDlcN1EfLsdNjVy+Q3zEEmeO/ucjdUa/8fUs1R0Rs6ovA3lmxZq8UK
+	 gkSWOGgiYNcaG7iIfIler/ke36aTA2I/+lU5VdnlHWexoOzitvheUSs4rAhMpzvsEhMZg
+	 Pcq0qpm3VSNeTZT8NDG9CB/fC8uqiuWfxz4c2DwfPlEm5LQTVP3+y9Wjd1qUQwG+D0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062684;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5XW+CaRaXZO9XkN/ZXZIfu5bDBXK9oVQlVriUyqwno0=;
-	b=lPq9vuVqAnB0aMyBQQoQXRsCWfo5y1ECqTRjGZaiFYOhE/df8C+7nGypluVQvffla3Ly
-	 ZxzcgZEvULlDbz2qXpBKn30i/u10f/INP82zXJgStQTNlm5mOzVcBm0kTdZVEqPo6qVv/
-	 eqxJLYutVWw4KqONC7ZRqIMREtP3R+4zcrhBm2MzKpfKqwpcoiWYLAXMdKhWqBtwN90Tk
-	 NtKEQFFeHP8gs92CxVGquWTzrgC9ICMLlMVlMVhdJyySdy0W6CwvRwGb2P4LIGYIMP4nc
-	 sqK+eHQUq5Sm8yGepsCAEtj1htlW7Y9dtk/G8gO6Fho79MRgWW80tbTXDAnfjXZ9FJw==
+	bh=2tMzF+pybJ9kzWZrVPCVe2cxKgpHjgdCAHsIJ30EQYg=;
+	b=VK1S1WBAXOuJExnmcfi3hZXG6jxcbxFijW/FN6+bATgDu0H+4JjMDMp5j+EFMOEHFqdo
+	 irO3J8Ydk9mooTnqsi6qCWm2WGNUIQrrE3n4V8kZPStMMyTioVR62Amah0t6XIy3kBl/C
+	 BewQEG1fe0TYsKBCiPAAYXOVmUplndyZoRJMcgGQAVFE20Rdnz6RZ0WlRDsWmwbvZMOKv
+	 pTXOubpSxwJzgzti0nSJfTlPLtb9U7wJMuzxuPkClpAwg22HnxeqeHXysUcmPbDSwa7VJ
+	 WMTyOgLL9saCfcFWB9v/+4yaqSYCftnWV7JxOISphcwZH9r5SSQUeob0xImrL+36LSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hoDvcuAz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZzGVIR/L";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB96606A326;
-	Sat,  7 Nov 2026 14:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E15606A332;
+	Sat,  7 Nov 2026 14:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hoDvcuAz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7981B1F0089F;
-	Sat,  7 Nov 2026 14:44:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzGVIR/L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30F91F0089F;
+	Sat,  7 Nov 2026 14:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062682;
-	bh=5XW+CaRaXZO9XkN/ZXZIfu5bDBXK9oVQlVriUyqwno0=;
+	s=korg; t=1794062683;
+	bh=2tMzF+pybJ9kzWZrVPCVe2cxKgpHjgdCAHsIJ30EQYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hoDvcuAzHbbgvqOahhMfgKQ/OMuoomE7Bea0yPdPTXaQUIluhk6mU6kFqrbiM+7d2
-	 TpH7ZOULObKrRLyDFyr3NqhVpsBhrrMVSpNMdAIFBaHPjvxjUNe0rw4DDr85t1H+ZO
-	 q4xmG219N3tLJLyCPeuRqwD+KtwjnvbCL632jQi4=
+	b=ZzGVIR/LxHXYbcLBndXFkgtuY2drLE6m/pW32fegKyGv8oNdHssQCPS04H4gkI3Zb
+	 DkCSBETYznt7hQNOUSTwZQ6nJoMc+mrtOAR1FXOW5/EqmpEOi3mkc/UJo3A3WPFmhP
+	 a8q4oocFykWEJ30Axqnw+Rht7hULzupTn1HvCk08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Jason Perlow <jperlow@gmail.com>,
+	Aditya Garg <aditya.garg@linux.dev>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1532/1536] init/bootconfig: pass init arguments in documented order
-Date: Sat,  7 Nov 2026 08:59:08 -0500
-Message-ID: <20261107135040.913179496@linuxfoundation.org>
+Subject: [PATCH 6.12 1533/1536] wifi: brcmfmac: map msgbuf RX packet IDs bidirectional
+Date: Sat,  7 Nov 2026 08:59:09 -0500
+Message-ID: <20261107135040.940453397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,50 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Jason Perlow <jperlow@gmail.com>
 
-[ Upstream commit 278b2abf660a3e0991eb9f16f11bd9e9514a286d ]
+[ Upstream commit 7ed5dce55fa8393972b1bf2bf5af1c818c5e7dc2 ]
 
-start_kernel() appends command-line init arguments before
-bootconfig init arguments, while setup_command_line()
-places them in the opposite order. As a result, the
-arguments passed to init do not match the saved command
-line, reversing the intended precedence of options.
+Commit f0ba5fd51ff2 ("wifi: brcmfmac: Set DMA direction for msgbuf
+packet IDs") maps the RX packet ID buffers DMA_FROM_DEVICE. The
+BCM4364 firmware also reads posted RX buffers, so with VT-d
+translation enabled every such read faults ("PTE Read access is not
+set") and the firmware crashes and resets in a loop.
 
-Parse extra_init_args before after_dashes so command-line
-init arguments are passed last.
+Map the RX pool DMA_BIDIRECTIONAL again, as before that commit. TX
+keeps DMA_TO_DEVICE.
 
-Link: https://lore.kernel.org/all/20261027073719.4010659-2-thnkslprpt@gmail.com/
-
-Fixes: b66fbbe8d482 ("init/bootconfig: Reorder init parameter from bootconfig and cmdline")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Fixes: f0ba5fd51ff2 ("wifi: brcmfmac: Set DMA direction for msgbuf packet IDs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Jason Perlow <jperlow@gmail.com>
+Signed-off-by: Aditya Garg <aditya.garg@linux.dev>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20261021172238.10004-1-aditya.garg@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/init/main.c b/init/main.c
-index 34bb284f64191..bad880340de43 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -914,12 +914,12 @@ void start_kernel(void)
- 				  __stop___param - __start___param,
- 				  -1, -1, NULL, &unknown_bootoption);
- 	print_unknown_bootoptions();
--	if (!IS_ERR_OR_NULL(after_dashes))
--		parse_args("Setting init args", after_dashes, NULL, 0, -1, -1,
--			   NULL, set_init_arg);
- 	if (extra_init_args)
- 		parse_args("Setting extra init args", extra_init_args,
- 			   NULL, 0, -1, -1, NULL, set_init_arg);
-+	if (!IS_ERR_OR_NULL(after_dashes))
-+		parse_args("Setting init args", after_dashes, NULL, 0, -1, -1,
-+			   NULL, set_init_arg);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+index f850e64108c41..24f083f42bb75 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+@@ -1639,7 +1639,7 @@ int brcmf_proto_msgbuf_attach(struct brcmf_pub *drvr)
+ 	if (!msgbuf->tx_pktids)
+ 		goto fail;
+ 	msgbuf->rx_pktids = brcmf_msgbuf_init_pktids(NR_RX_PKTIDS,
+-						     DMA_FROM_DEVICE);
++						     DMA_BIDIRECTIONAL);
+ 	if (!msgbuf->rx_pktids)
+ 		goto fail;
  
- 	/* Architectural and non-timekeeping rng init, before allocator init */
- 	random_init_early(command_line);
 -- 
 2.53.0
 
