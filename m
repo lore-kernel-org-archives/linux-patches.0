@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061958;
-	b=jY9CsTzgD9wYlciI5twLn6dDXqbProFtoo7e517To+FVZa+XY9xj+iG6Xvxk1yVIQuFl
-	 94YQeD1164p3tP/GFWbBxLpoOZqWW2UK+65mPKY8PaYIQ6Qp98l2BxfwbufktKjEUnqR5
-	 GzzsgBocijN35cbNmr3unadgMf3/avzmlsO+qEqIWgF9BC54nJjgox4yDMZFxEy+L8EXt
-	 UtQ3/Rjr0G8UhOd1Q1iVqsZ16zAZRD7obNwc7WC9YqIRdzMOH3ohTpH7rqdBZSWdG3Jwl
-	 EKeHJwvKcRUXbUbd8WDGU6GZmJiU/9+UNCrQ7Anehjez98fAPtm9KBjso6/OrywsqQw==
+	t=1794061959;
+	b=UF28NspbZlKOjalkjwnPc9H6Bm77dZMDTji7AWpnamcjWTT6r/McbIC57se5Y9EbVlnZ
+	 iBX6WDlMNGSHo23EbshRJwDZ/NwlfoPmIU7ssfG12FqCJaICHzs+zD0T100A0KA4gJnkQ
+	 MIKuhWbFXeMZTs/SE/wuPQA91yOkGXltNZoU9MORJ3AZo/HulTj+UKLdOFYg9/GWvKleG
+	 jsuJSx8PP1izwkJuR133tlUiwHKqTuo7rmrV8gnUnXR6GGy5z12IH6Gg1ovAXZhVSr+an
+	 fX0odRkhqgeLWqMKgwWsr76devCEP58PQ0VHGLgrYSECcempHSQSADcnLkocBqkw2uA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061959;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yKozGTj5kXFPLZk69+5MOrsJayxYQ+h94ee1DfMXda0=;
-	b=nWvqHJ5ceEy2djYqZmzXZNbsz1dArp+nvm5l9dJcm/h2C0nuz4+upHfLAe/l/wlMoZNd
-	 O79zhH48CX1XQwmgFw3Gob2r9eBBTtrhAj3+Es//qGgsPtXmAXKF++TgOY7epLE1xRzJ7
-	 D4hqGv5hoY7JKVb+tfFBmZtFjAC8ZxSrBY/1cIMRHPMCS9ruJ7Fj78M+Qfh7TuuGD+mla
-	 gbkZBG420lKtlTyNL+Bc3ehSug0c+Dp+1iIKNepzHP8K5jDnd8K4XXmtSkB3TEsCzvp94
-	 DDmHz3TpNu9+91aJX1l1apxUkXJcC5EEXxzy6D5GmYXZkbeKDdHBebY+V+hN+yGHqcQ==
+	bh=OPCm+Oxv72fTR0V+4bzomvOYFYriz0k9+yJk24YTuaM=;
+	b=UpJuyHQRfUMoxAwH6cG8imXT/k9bRn/1otz32uG0v6hR79nzY43Rp1jozaAR0hyWvmbD
+	 pHdeSaQyKG41EzbFVQhhgmzEqGHepa2O8es6kA/9rePia87/S5V4DFX3GLNxnn5srhWe8
+	 SU6965n+SSIQ5U+jmo8WTAvdBjj64CUpsfcUlDDH89I4ZVQbQjVYU2PuZ4I0Z14b5avRY
+	 Gn3Xbw+WEVOPk6VuLr7UeekVO0bwS5S94we7oyWlnk3V6/qJC7GQWmcwJX//hTbMijHJY
+	 b3cM5K3tuV5jsNLrbKcGxFRN+DCkJL1xfwzpFKq1u93HLRTGFf8tXgy/VVBMuJMfN7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XHcB7XK9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FdXiGS4c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20C6606A332;
-	Sat,  7 Nov 2026 14:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E59606A330;
+	Sat,  7 Nov 2026 14:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XHcB7XK9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A891F008A1;
-	Sat,  7 Nov 2026 14:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FdXiGS4c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4961F008A1;
+	Sat,  7 Nov 2026 14:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061957;
-	bh=yKozGTj5kXFPLZk69+5MOrsJayxYQ+h94ee1DfMXda0=;
+	s=korg; t=1794061958;
+	bh=OPCm+Oxv72fTR0V+4bzomvOYFYriz0k9+yJk24YTuaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XHcB7XK9fQwXKLQrG+PNGbPs7eBRnpmLksZX7HlI5l0fBfZzAcjDUTflkU89Gns/g
-	 frGtl3BETDMPfP2U5A0ibon9wXFguSWrSxbKAh1MH9TUeHYN3a9NQ6N3AP3KoF49qz
-	 qAUhbx7UnLCHfDLFmdbosSpNp/c/9fUbDjXyyyxs=
+	b=FdXiGS4ce1ApYA/yK0TU4eNTO3d46oUr9a/hKRlOb7nOLqVz8y9nNIazQAA3MLenT
+	 0tTcLrqnAcbukql8ouwgQ7zWkuW5i/xEivLItkv5fC0ZWjb5zHIfa4U+HANikvVxLI
+	 AFWYLTfq48ctm4+RVEode6HcX99NT2TXgbJl6SKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <ehristev@kernel.org>,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	stable@kernel.org,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0948/1536] media: microchip-isc: fix awb_mutex and lock lifecycle
-Date: Sat,  7 Nov 2026 08:49:24 -0500
-Message-ID: <20261107135024.284009237@linuxfoundation.org>
+Subject: [PATCH 6.12 0957/1536] media: stv0900: bound DiSEqC reply length to msg[] size
+Date: Sat,  7 Nov 2026 08:49:33 -0500
+Message-ID: <20261107135024.531820051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,160 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 5540b48c0702f6a1389db3d473d7fd0db930422a ]
+[ Upstream commit 6d7e70111b9c80a9e4cb17fe6a6c4f5470847722 ]
 
-isc->lock and awb_mutex were initialised in isc_async_complete() and
-destroyed in isc_async_unbind(), tying their lifetime to the subdev
-bind/unbind cycle instead of the device:
+The FIFO_BYTENBR field is 4 bits (mask 0x0f), giving a length of 0..15
+but reply->msg is __u8[4] in struct dvb_diseqc_slave_reply.  A faulty or
+malicious device reporting more than 4 bytes will the array and clobber
+the stack.
 
- - isc_async_unbind() destroyed awb_mutex before cancel_work_sync(),
-   which takes it;
- - a failed .complete() left them initialised, and isc->lock was
-   destroyed only on the .complete() error path, so the normal unbind
-   path leaked it;
- - a rebind runs .complete() again and reinitialises a live mutex.
+The stb0899, tda10071, and s5h1420 drivers all properly bound the FIFO
+count against sizeof(reply->msg) before the read loop, so do the same
+thing in this driver.
 
-Initialise both with devm_mutex_init() at probe so they live for the
-whole device lifetime and are freed at remove, and drop the init and
-destroy from the .complete()/.unbind() callbacks.
-
-isc_async_complete_err then only returned ret, so drop the label and
-return directly at each error site.
-
-Fixes: 314c96e5203d ("media: atmel: atmel-isc-base: use mutex to lock awb workq from streaming")
-Cc: stable@vger.kernel.org
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Fixes: 99277b3824e4 ("V4L/DVB (10803): Add core code for ST STV0900 dual demodulator.")
+Cc: stable@kernel.org
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/microchip/microchip-isc-base.c | 15 ++++-----------
- .../platform/microchip/microchip-sama5d2-isc.c    |  9 +++++++++
- .../platform/microchip/microchip-sama7g5-isc.c    |  9 +++++++++
- 3 files changed, 22 insertions(+), 11 deletions(-)
+ drivers/media/dvb-frontends/stv0900_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
-index 5bda866d29d87..44d50196bb304 100644
---- a/drivers/media/platform/microchip/microchip-isc-base.c
-+++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -1705,7 +1705,6 @@ static void isc_async_unbind(struct v4l2_async_notifier *notifier,
- {
- 	struct isc_device *isc = container_of(notifier->v4l2_dev,
- 					      struct isc_device, v4l2_dev);
--	mutex_destroy(&isc->awb_mutex);
- 	cancel_work_sync(&isc->awb_work);
- 	video_unregister_device(&isc->video_dev);
- 	v4l2_ctrl_handler_free(&isc->ctrls.handler);
-@@ -1769,8 +1768,6 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
+diff --git a/drivers/media/dvb-frontends/stv0900_core.c b/drivers/media/dvb-frontends/stv0900_core.c
+index e7b9b9b11d7df..ce228f2ef330c 100644
+--- a/drivers/media/dvb-frontends/stv0900_core.c
++++ b/drivers/media/dvb-frontends/stv0900_core.c
+@@ -1775,6 +1775,8 @@ static int stv0900_recv_slave_reply(struct dvb_frontend *fe,
  
- 	isc->current_subdev = container_of(notifier,
- 					   struct isc_subdev_entity, notifier);
--	mutex_init(&isc->lock);
--	mutex_init(&isc->awb_mutex);
+ 	if (stv0900_get_bits(intp, RX_END)) {
+ 		reply->msg_len = stv0900_get_bits(intp, FIFO_BYTENBR);
++		if (reply->msg_len > sizeof(reply->msg))
++			reply->msg_len = sizeof(reply->msg);
  
- 	init_completion(&isc->comp);
- 
-@@ -1789,7 +1786,7 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 	ret = vb2_queue_init(q);
- 	if (ret < 0) {
- 		dev_err(isc->dev, "vb2_queue_init() failed: %d\n", ret);
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	/* Init video dma queues */
-@@ -1800,13 +1797,13 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 	ret = isc_set_default_fmt(isc);
- 	if (ret) {
- 		dev_err(isc->dev, "Could not set default format\n");
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	ret = isc_ctrl_init(isc);
- 	if (ret) {
- 		dev_err(isc->dev, "Init isc ctrols failed: %d\n", ret);
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	/* Register video device */
-@@ -1826,7 +1823,7 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 	ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
- 	if (ret < 0) {
- 		dev_err(isc->dev, "video_register_device failed: %d\n", ret);
--		goto isc_async_complete_err;
-+		return ret;
- 	}
- 
- 	ret = isc_scaler_link(isc);
-@@ -1841,10 +1838,6 @@ static int isc_async_complete(struct v4l2_async_notifier *notifier)
- 
- isc_async_complete_unregister_device:
- 	video_unregister_device(vdev);
--
--isc_async_complete_err:
--	mutex_destroy(&isc->awb_mutex);
--	mutex_destroy(&isc->lock);
- 	return ret;
- }
- 
-diff --git a/drivers/media/platform/microchip/microchip-sama5d2-isc.c b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-index 4033bfc96bb77..7cedfd29ac130 100644
---- a/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-@@ -30,6 +30,7 @@
- #include <linux/interrupt.h>
- #include <linux/math64.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/of_graph.h>
- #include <linux/platform_device.h>
-@@ -424,6 +425,14 @@ static int microchip_isc_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, isc);
- 	isc->dev = dev;
- 
-+	ret = devm_mutex_init(dev, &isc->lock);
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_mutex_init(dev, &isc->awb_mutex);
-+	if (ret)
-+		return ret;
-+
- 	io_base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(io_base))
- 		return PTR_ERR(io_base);
-diff --git a/drivers/media/platform/microchip/microchip-sama7g5-isc.c b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-index 58cfbf6fcd668..36f52ea38d55b 100644
---- a/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-@@ -33,6 +33,7 @@
- #include <linux/interrupt.h>
- #include <linux/math64.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/of_graph.h>
- #include <linux/platform_device.h>
-@@ -413,6 +414,14 @@ static int microchip_xisc_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, isc);
- 	isc->dev = dev;
- 
-+	ret = devm_mutex_init(dev, &isc->lock);
-+	if (ret)
-+		return ret;
-+
-+	ret = devm_mutex_init(dev, &isc->awb_mutex);
-+	if (ret)
-+		return ret;
-+
- 	io_base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(io_base))
- 		return PTR_ERR(io_base);
+ 		for (i = 0; i < reply->msg_len; i++)
+ 			reply->msg[i] = stv0900_read_reg(intp, DISRXDATA);
 -- 
 2.53.0
 
