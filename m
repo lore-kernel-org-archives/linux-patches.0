@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064055;
-	b=2quUJf7xsY/41GHUSPLk5bGzxrTMI1LFMgX9yO81Lr9hmR+hZMchHJdM2IUF1qfmrA/d
-	 3ybWocb9T1lH6Gxo4W7TB5eI2MbQ9kxQZwdIGswcLFPKQG00jZvWhZohjqTvZZfj2SJn2
-	 Fkkv75QTHMWCJOXNiiKqny5JaaWb3jQQaHW3WG7Xg7yGKLQ3DFT0xKqUDuXMjkt/VS5Ob
-	 TU7PWVuikZLyn1elNTS+Kb7vNV7wo4Pf3iDNLInhnpira+YGUpBLXqa4P0XmKSSISkSDa
-	 ymeN1GZ6lZIYFceXWA1swHu6GmuCPXgjBJjJuxB7SzuXsTn0kqOKpBW3bHlPOUGch5g==
+	t=1794064056;
+	b=UMs55fHUiDDr+EO+xEgyamkInB+RzT/f9j9auEjQNRVUvPQdYFXYqYzhnLHylRifnoOR
+	 NYINVGLY9lkuYQDZCvcz9WNFkKh7t6rT4L2kzg8THNAdy3h8VXVNHGpxReONwBpG3YYR2
+	 DnIpiR7SxirB+iKSh75/T6DemJbzMWVH06Z+QlzieDtOltt8zryaAK5v4X7Ug7x1tHf3D
+	 UFML8WAOSOUMe/vy2ZmTIWRYJ8Ds1zj0B/0mJ7nhHt7oszDA2H7zfh9BnrfwpTaQ1h3TZ
+	 sjFnxHPzDCu5AtiOqhaktT04U5njDOti0B//tgWBDFnCJqeBFFPIShBr6cFRaNOr8vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064055;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064056;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6s1gT/reJhcJ5qbRHrpei71Y2fPvmclakFo4zg86wdY=;
-	b=IAbyvwuC+YoNxHEXF7wzKAlpTFhtyPYn3MnBv/VNmjlKt9gk6BnqaSa+hYuHeRy1UXO0
-	 LAnQ9ZPPppsnfuntigYeyRy1OQgD0quf79imXLlVQhqkkaH1QAqHX39+Uq+rZ9xHPzPbl
-	 ud4aHLkArl00LavxaS3VrCMzZr79gZh4hIfOYhYKKiSnJRC7Em7qbA3FpWwR1qsW6Y1Xi
-	 gIuAcGB4kjG1pP4OU0zeRi7hiVNiUFt2qJljK738Kv1gJ5dlb8PrR9ZFkbPreac6tBbZz
-	 kuo2V4YLzSHaedE5xfJhhxbhOGx5+SvPQ2/RIUAtj6t5pSH+9jd0UJnISKDQe3zAHeA==
+	bh=K52S6CVZIT456X8ms9JqG4vIIvjpcxBXozTzSuY+ohc=;
+	b=npq4ybpEpBuoZhR+TowRQkEjJlolKSssCJKqurCrXYxNyMSPWxS5Bp1juLA9mSOZeIQy
+	 X4azwYmgkfHHcK1QZ4QIzs7w2/Ye8tCOVvu73Z12aB7siqF9c/ivHlGhckJsBla+XEB9A
+	 6ExcObdPFs0jxSw1niXoFcmukUUXRei9OeJTzHcWArvhuS2R7JL264E0IvY1zLuw9E32+
+	 tSeup8aqEEYkGB4hpmvUNVe0lCpiLLGysVcIuPiRyd+0SMuHzE9WwCZ4+ljJKIUjv2h4L
+	 tD4bscSaOj+17MqLqOhWYRx4zrOsNXmQs0jEx6X7KTyprmh7FJ9v07/sMYCbeQrlqHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hM+FOGdc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OLr7voyE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66672606A9D4;
-	Sat,  7 Nov 2026 15:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2E2606A9D4;
+	Sat,  7 Nov 2026 15:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hM+FOGdc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E9D1F008A1;
-	Sat,  7 Nov 2026 15:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OLr7voyE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484C61F0089F;
+	Sat,  7 Nov 2026 15:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064055;
-	bh=6s1gT/reJhcJ5qbRHrpei71Y2fPvmclakFo4zg86wdY=;
+	s=korg; t=1794064056;
+	bh=K52S6CVZIT456X8ms9JqG4vIIvjpcxBXozTzSuY+ohc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hM+FOGdch/IBVEsxH23xaUr+2qWJk3+wxLZet8n6pp7kEduq8tci0HAA23d9R5irn
-	 DdWe0emwNhw784mWJMxd7Op1midwNft4lxgYA4T2guJlxq/5CyTBBya8XS4l0AGIAj
-	 57oTm5nlA2faLG0baevOwXjop6gZ8eIl3kqdyaK4=
+	b=OLr7voyE3nBtRVDjc5kVuWF2WCoGY6RtvwpdQt7RiEMcJapAJcAtgR8dB3kxgx3z/
+	 Y0W6cGM/SI06V4iFfoVD4husfuhOQNzbB14S9DbTGoQ1jyukXAzI3ELsJ0vJ+W0Gqz
+	 p/oJjp7v4UTt1oBQrv+wmeY85QAozG7Q/CFEsbWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	ChiYuan Huang <cy_huang@richtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0209/1257] regulator: rt6190: Fix runtime PM imbalance in rt6190_out_enable()
-Date: Sat,  7 Nov 2026 08:41:45 -0500
-Message-ID: <20261107134945.314897396@linuxfoundation.org>
+Subject: [PATCH 7.3 0227/1257] media: serial_ir: Fix race condition where timer can be re-armed
+Date: Sat,  7 Nov 2026 08:42:03 -0500
+Message-ID: <20261107134945.797312423@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,66 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit e0d673e5a5c4084f0da90c06ed3b0bc45e47d679 ]
+[ Upstream commit d74ac4016ba64cb3b20f395511d0b18025ca0ba9 ]
 
-In rt6190_out_enable(), pm_runtime_get_sync() is called at the start of
-the function. However, if any subsequent regmap or regulator operation
-fails, the function returns directly without dropping the runtime PM
-reference, causing a runtime PM reference leak.
+Ensure the timer cannot be re-armed.
 
-Add an error handling path with pm_runtime_put() to keep the reference
-count balanced on failure.
-
-Fixes: e6999e7cca7e ("regulator: rt6190: Add support for Richtek RT6190 regulator")
+Fixes: 2940c7e49775 ("[media] serial_ir: generate timeout")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: ChiYuan Huang <cy_huang@richtek.com>
-Link: https://patch.msgid.link/20260916072541.1968033-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/rt6190-regulator.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/media/rc/serial_ir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/rt6190-regulator.c b/drivers/regulator/rt6190-regulator.c
-index f2cd9540038d9..21ced348a2cfe 100644
---- a/drivers/regulator/rt6190-regulator.c
-+++ b/drivers/regulator/rt6190-regulator.c
-@@ -108,19 +108,27 @@ static int rt6190_out_enable(struct regulator_dev *rdev)
- 	ret = regmap_raw_read(regmap, RT6190_REG_OUTV, out_cfg,
- 			      sizeof(out_cfg));
- 	if (ret)
--		return ret;
-+		goto err_pm_put;
+diff --git a/drivers/media/rc/serial_ir.c b/drivers/media/rc/serial_ir.c
+index 992fff82b5245..f6702b3df9a03 100644
+--- a/drivers/media/rc/serial_ir.c
++++ b/drivers/media/rc/serial_ir.c
+@@ -798,7 +798,7 @@ static int __init serial_ir_init_module(void)
  
- 	ret = regulator_enable_regmap(rdev);
- 	if (ret)
--		return ret;
-+		goto err_pm_put;
- 
- 	ret = regmap_raw_write(regmap, RT6190_REG_OUTV, out_cfg,
- 			       sizeof(out_cfg));
- 	if (ret)
--		return ret;
-+		goto err_pm_put;
-+
-+	ret = regmap_update_bits(regmap, RT6190_REG_SET5, RT6190_ENGCP_MASK,
-+				 RT6190_ENGCP_MASK);
-+	if (ret)
-+		goto err_pm_put;
-+
-+	return 0;
- 
--	return regmap_update_bits(regmap, RT6190_REG_SET5, RT6190_ENGCP_MASK,
--				  RT6190_ENGCP_MASK);
-+err_pm_put:
-+	pm_runtime_put(data->dev);
-+	return ret;
+ static void __exit serial_ir_exit_module(void)
+ {
+-	timer_delete_sync(&serial_ir.timeout_timer);
++	timer_shutdown_sync(&serial_ir.timeout_timer);
+ 	serial_ir_exit();
  }
  
- static int rt6190_out_disable(struct regulator_dev *rdev)
 -- 
 2.53.0
 
