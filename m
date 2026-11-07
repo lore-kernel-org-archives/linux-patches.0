@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065541;
-	b=eKr1z0tmjsvF8g3NAkMoKQmkBmDjXqYL4PUCu0YL/WdQkc20+2qvgH2ofPbGsZAcXmoq
-	 ckNYVTiZaVoc16B3Jyfra1y6IHs0vtf+bBWRNkWYkDzWD1CKCpabuMqtS/GJALDO3M1LN
-	 hQmZKqHlw8cybJm/WkVpahXRv/sZmKdiB4FGSp7tkzqki6bxUMssExVMJ0zK24bQ3I4GE
-	 jg2M+OiZ92Yt83cg9GuhaPT0Cqn7CiNwOrzJdBClG6pfqFne26MhNOcuR/Kjgsiv5cY4C
-	 d8bEIIy7ydF1kGDxucJR1XXGed/JOoPwWHLI8GL26mmY59t5QWC7ofcOwcVxtFkFTJA==
+	t=1794065542;
+	b=Xb1SnF5SbAHKEyrl8g3dt1x/99qdyxhlisFalICyrnw3C98bio8A+u49vArFAFCUz4Pp
+	 pLtAlnPbmrR0gngsFVuCGsCiyZx7eV84zbKYGuaab7bqzNndJOb8HBpy0fl77HALrd5Mw
+	 rSsS1UmsAMJ7zi3W1aVhRU5m7qOWtVSCJN6aPIt01CwENItKvQXbXZmpj8prR8h56gPnD
+	 6iPXwl4/utxUzw3eK403XFLYobVeo79VV7jccpGUn8b/bEPd6d3ypSkr2fAnOEf88tOKa
+	 RoJmM62dgH1ZTMbINoPfdHazveJ3djwzMQa9LrbBexPw5CI8JbMfrH3FV6GKotBc7Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065541;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065542;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HGt0hjcFRXvTPvZRwj0eKs1hDjilSqBmVCfIQyCCOLw=;
-	b=cLwI2U+3UqFWq8bddVd0ZG2IYovtp45JgShADtk+irsxBFlgixJ7dmfnmmHKa+6XE0AP
-	 xqObTstD9UEliUM9ClKBiOXlUcxDqNLVvEIQE8QE3nuO1dNnnVRROGuXTcexI0sAmybnE
-	 /mrBla7I/kMKU4vujUYz9xEHL5JAYO441LKFo7hbv7pcRcs//0BG3IGmNCdWai8IHnv8b
-	 J1v8gLjiDfsCZ3XqdhJqzxSgDAAEs8zlvKWQYRTv4b71gK0wwnw52YReYD4iynXPG7B4U
-	 Dj3FUb1vxEwQE7ASVao5GP+5Vrj5I4Bz1z9TnuPMpSiL6D4XRAuYNbWEWf1MPXGeSSg==
+	bh=gGHtHt+jAFOjTq6m7FuLLXZ5bVyo+bBbFP3zzTvotn4=;
+	b=m8RXj7yz5dN4uvyl7JCwNBAGlDPmX30KzXKlru7R4Z16XOiCy/TOEhMQPYG0du8AecsK
+	 1RhbaYG9xAkvjrZDug6XVa4f4e1i1YtDyGsyCwALCbNRUVRlMes5NhVebuXlvBsZkHT1K
+	 CllD21WJtv6JCg/nP1BvNDPv9WifGgpWzINb5rQC39OjUhRXyuqxHlWeiZbqRpMYZtaLP
+	 mWFMVfTcs/3mBBbbJVfOoE2KZvOr6Qsz3X3mRqBhnRp9dWo9Q+yDLeVECckMh5SwwJXhV
+	 Wq9Rave+29IZdm9/HgQO7xVRUp9nwYK4G8cMvjDuz3wMlxtngWfzoOkss/AplTi2zwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PwYMNI53;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IjUbJCkB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F71606D823;
-	Sat,  7 Nov 2026 15:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D69606A330;
+	Sat,  7 Nov 2026 15:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PwYMNI53
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6C61F0089F;
-	Sat,  7 Nov 2026 15:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IjUbJCkB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B20F1F008A2;
+	Sat,  7 Nov 2026 15:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065541;
-	bh=HGt0hjcFRXvTPvZRwj0eKs1hDjilSqBmVCfIQyCCOLw=;
+	s=korg; t=1794065542;
+	bh=gGHtHt+jAFOjTq6m7FuLLXZ5bVyo+bBbFP3zzTvotn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PwYMNI53amT67/sm3NhS+fvhkjUeBmJe8tLJ2T2zM9gNk7aXVGjGwOgnxFsoWKrvn
-	 0cRZPUK2YZnwz1r4qtzjPA8AU3arllJDVfVukKKN8g+XKA6FToCCZesmbrL30BalF8
-	 KgNsyTYO/XDvY6QVYp+i2x15Zevlh08O8I0tIsJ8=
+	b=IjUbJCkBmYucS15GUj4dfJ/nmvUJl9VfqvcGgqG2QQM89yhE8tgN6FD6ae8fMHDze
+	 PsKcPxui/ogSGYXSp7xborI8CgJ1awSydv9/UGsFO4juwdpV5DR5VHiTosZYd+K72q
+	 BCX0uEERARriLpCLnVCXJwjnBJksDMeezoFwrN7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Albershteyn <aalbersh@kernel.org>,
 	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1217/1257] fsverity: Explicitly require FMODE_READ to retrieve hashes
-Date: Sat,  7 Nov 2026 08:58:33 -0500
-Message-ID: <20261107135012.977052187@linuxfoundation.org>
+Subject: [PATCH 7.3 1218/1257] fsverity: Be more careful with return value of ->get_verity_descriptor()
+Date: Sat,  7 Nov 2026 08:58:34 -0500
+Message-ID: <20261107135013.003183523@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,125 +69,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 1acb4fd2d011c4bd6cc961095ae17361c71ff61a ]
+[ Upstream commit 8f8faec82aa902b1997ae578c46bcc84afbad811 ]
 
-The comment in fsverity_ioctl_read_metadata(), which justifies not
-checking for FMODE_READ, doesn't consider that the nonstandard access
-mode 3 (ioctl-only) exists.
+If fsverity_operations::get_verity_descriptor() returns that the verity
+descriptor has 0 size, then a zero-size buffer is allocated to hold it,
+and it's called again with bufsize=0.
 
-Opening an ioctl-only fd generally requires read (and write) permission.
-However, there are gaps with certain LSMs: an ioctl-only fd requests
-read (and write) permission via security_inode_permission, but not
-security_file_open.  With certain LSMs relying on the latter, such as
-Landlock and AppArmor, an ioctl-only fd can be opened without the LSM
-granting read (and write) permission.
+But bufsize=0 is a special case that says to return the actual size.  If
+in the meantime the filesystem has decided that the size is some
+actually valid size, it will return that size, and then
+validate_fsverity_descriptor() will read from ZERO_SIZE_PTR and crash.
 
-Since FS_IOC_READ_VERITY_METADATA returns hashes of file contents
-blocks, it should require read permission.  This also applies to
-FS_IOC_MEASURE_VERITY, which returns a hash for the whole file.
+Of course, for the filesystem to misbehave in that strange way, it
+generally would require direct writes to the block device.
 
-Meanwhile, ioctl-only fds are a rarely-used feature, not known to be
-used with either ioctl.
+Regardless, fsverity_get_descriptor() might as well guard against it.
+Make it do so.  Specifically, validate that the first call to
+->get_verity_descriptor() returns at least the minimum descriptor size,
+and validate that the second call returns the same size as the first.
 
-Therefore, just disallow these ioctls on ioctl-only file descriptors,
-similar to what was already done with FS_IOC_ENABLE_VERITY.
-
-More specifically, explicitly check for FMODE_READ.  This also covers
-write-only fds to non-verity files which otherwise would have failed
-with ENODATA.  This change in error code for write-only fds should be
-fine too, as these ioctls cannot be usefully used with write-only fds
-anyway, but it's worth noting as another technicality.
-
-Fixes: 4dd893d832cf ("fs-verity: implement FS_IOC_MEASURE_VERITY ioctl")
-Fixes: e17fe6579de0 ("fs-verity: add FS_IOC_READ_VERITY_METADATA ioctl")
+Fixes: fd2d1acfcadf ("fs-verity: add the hook for file ->open()")
 Cc: stable@vger.kernel.org
-Reviewed-by: Andrey Albershteyn <aalbersh@kernel.org>
-Link: https://patch.msgid.link/20261022211522.1489943-1-ebiggers@kernel.org
+Link: https://patch.msgid.link/20261025203831.120095-1-ebiggers@kernel.org
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/fsverity.rst |  3 +++
- fs/verity/measure.c                    | 10 ++++++++++
- fs/verity/read_metadata.c              | 14 ++++++++++----
- 3 files changed, 23 insertions(+), 4 deletions(-)
+ fs/verity/open.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/Documentation/filesystems/fsverity.rst b/Documentation/filesystems/fsverity.rst
-index 22b49b295d1f9..e5d38439bf585 100644
---- a/Documentation/filesystems/fsverity.rst
-+++ b/Documentation/filesystems/fsverity.rst
-@@ -170,6 +170,7 @@ fatal signal), no changes are made to the file.
- FS_IOC_ENABLE_VERITY can fail with the following errors:
+diff --git a/fs/verity/open.c b/fs/verity/open.c
+index 52c8cd0149216..9761b67bc9754 100644
+--- a/fs/verity/open.c
++++ b/fs/verity/open.c
+@@ -270,12 +270,6 @@ static bool validate_fsverity_descriptor(struct inode *inode,
+ 					 const struct fsverity_descriptor *desc,
+ 					 size_t desc_size)
+ {
+-	if (desc_size < sizeof(*desc)) {
+-		fsverity_err(inode, "Unrecognized descriptor size: %zu bytes",
+-			     desc_size);
+-		return false;
+-	}
+-
+ 	if (desc->version != 1) {
+ 		fsverity_err(inode, "Unrecognized descriptor version: %u",
+ 			     desc->version);
+@@ -314,31 +308,37 @@ static bool validate_fsverity_descriptor(struct inode *inode,
+ int fsverity_get_descriptor(struct inode *inode,
+ 			    struct fsverity_descriptor **desc_ret)
+ {
+-	int res;
++	int size, res;
+ 	struct fsverity_descriptor *desc;
  
- - ``EACCES``: the process does not have write access to the file
-+- ``EBADF``: the file descriptor is not open for reading
- - ``EBADMSG``: the builtin signature is malformed
- - ``EBUSY``: this ioctl is already running on the file
- - ``EEXIST``: the file already has verity enabled
-@@ -232,6 +233,7 @@ regardless of the size of the file.
- 
- FS_IOC_MEASURE_VERITY can fail with the following errors:
- 
-+- ``EBADF``: the file descriptor is not open for reading
- - ``EFAULT``: the caller provided inaccessible memory
- - ``ENODATA``: the file is not a verity file
- - ``ENOTTY``: this type of filesystem does not implement fs-verity
-@@ -310,6 +312,7 @@ blocks from disk without actually verifying the path to the root node.
- 
- FS_IOC_READ_VERITY_METADATA can fail with the following errors:
- 
-+- ``EBADF``: the file descriptor is not open for reading
- - ``EFAULT``: the caller provided inaccessible memory
- - ``EINTR``: the ioctl was interrupted before any data was read
- - ``EINVAL``: reserved fields were set, or ``offset + length``
-diff --git a/fs/verity/measure.c b/fs/verity/measure.c
-index 68dfccb697720..0c75616dca011 100644
---- a/fs/verity/measure.c
-+++ b/fs/verity/measure.c
-@@ -31,6 +31,16 @@ int fsverity_ioctl_measure(struct file *filp, void __user *_uarg)
- 	const struct fsverity_hash_alg *hash_alg;
- 	struct fsverity_digest arg;
- 
-+	/*
-+	 * This ioctl returns a hash of the file contents, so it should require
-+	 * read permission.  Disallow it on ioctl-only (i.e., nonstandard access
-+	 * mode 3) fds, which can in some cases be acquired without passing all
-+	 * LSM read-permission checks.  Also disallow write-only fds, which can
-+	 * refer only to non-verity files which would fail with ENODATA anyway.
-+	 */
-+	if (!(filp->f_mode & FMODE_READ))
-+		return -EBADF;
-+
- 	vi = fsverity_get_info(inode);
- 	if (!vi)
- 		return -ENODATA; /* not a verity file */
-diff --git a/fs/verity/read_metadata.c b/fs/verity/read_metadata.c
-index b4c0892430cde..6694149f7b467 100644
---- a/fs/verity/read_metadata.c
-+++ b/fs/verity/read_metadata.c
-@@ -166,13 +166,19 @@ int fsverity_ioctl_read_metadata(struct file *filp, const void __user *uarg)
- 	int length;
- 	void __user *buf;
- 
-+	/*
-+	 * This ioctl returns file contents block hashes, so it should require
-+	 * read permission.  Disallow it on ioctl-only (i.e., nonstandard access
-+	 * mode 3) fds, which can in some cases be acquired without passing all
-+	 * LSM read-permission checks.  Also disallow write-only fds, which can
-+	 * refer only to non-verity files which would fail with ENODATA anyway.
-+	 */
-+	if (!(filp->f_mode & FMODE_READ))
-+		return -EBADF;
-+
- 	vi = fsverity_get_info(inode);
- 	if (!vi)
- 		return -ENODATA; /* not a verity file */
--	/*
--	 * Note that we don't have to explicitly check that the file is open for
--	 * reading, since verity files can only be opened for reading.
--	 */
- 
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
+-	res = inode->i_sb->s_vop->get_verity_descriptor(inode, NULL, 0);
+-	if (res < 0) {
+-		fsverity_err(inode,
+-			     "Error %d getting verity descriptor size", res);
+-		return res;
++	size = inode->i_sb->s_vop->get_verity_descriptor(inode, NULL, 0);
++	if (size < 0) {
++		fsverity_err(inode, "Error %d getting verity descriptor size",
++			     size);
++		return size;
+ 	}
+-	if (res > FS_VERITY_MAX_DESCRIPTOR_SIZE) {
+-		fsverity_err(inode, "Verity descriptor is too large (%d bytes)",
+-			     res);
++	if (size < sizeof(*desc) || size > FS_VERITY_MAX_DESCRIPTOR_SIZE) {
++		fsverity_err(inode,
++			     "Verity descriptor has invalid size (%d bytes)",
++			     size);
+ 		return -EMSGSIZE;
+ 	}
+-	desc = kmalloc(res, GFP_KERNEL);
++	desc = kmalloc(size, GFP_KERNEL);
+ 	if (!desc)
+ 		return -ENOMEM;
+-	res = inode->i_sb->s_vop->get_verity_descriptor(inode, desc, res);
++	res = inode->i_sb->s_vop->get_verity_descriptor(inode, desc, size);
+ 	if (res < 0) {
+ 		fsverity_err(inode, "Error %d reading verity descriptor", res);
+ 		kfree(desc);
+ 		return res;
+ 	}
+-
+-	if (!validate_fsverity_descriptor(inode, desc, res)) {
++	if (res != size) {
++		fsverity_err(inode, "Verity descriptor size changed (%d => %d)",
++			     size, res);
++		kfree(desc);
++		return -EINVAL;
++	}
++	if (!validate_fsverity_descriptor(inode, desc, size)) {
+ 		kfree(desc);
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
