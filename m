@@ -1,59 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060362;
-	b=wWNKuna62Mc339dDzcKiLHdswI4R33HAl7Z6+w9PHyjkd1+ScJFfe1mGWtLPFPN+Pxio
-	 T0sPLZr3/QUn1G/ItkwPyab0cKtiqOud0AX65jR3Chi9UNQ5hJeJ8dnt9DvaBHz6WiJAU
-	 aIjiO31+fAcVOXM1aXyirGBRBbyuu5oCtOcAFFhvUjjPKakNSlahBguhN60WvtnyGExUD
-	 xcvJJELddHZDvFrn927rJFCm3kR/VL5hjNo54U7AzswMmBh4qvKQdIads8LlOCrwP5nCw
-	 2ZWwrQX4ePBjjWJftqo08IMQ7cF8TJsqAEP38NvP35sIPnqDmxKFb7WwbKHZlXDG0/w==
+	t=1794060363;
+	b=efdmzVFm1ihOUPvJoueN140zy33c0FEG+cvZDcGdDhq+Qfj8WFS7ml6U1b1K9u68ttpB
+	 Dasw2Hyw2ybfDyBO/TcZ/enzD0HG/yN/RIhcQlzzQUJXFoGCySvUb/6Ilg6IMBQJYrP39
+	 NpUpGby55c41LhvzjgRlPPxgojprQf9dIvdnZGRHSdss1JrQOgv5nMmgJYU4titcd6/v7
+	 L/ystrFfVNxxI760S4h4nSIuJPedoflT24D9G2vbe8QNBZDCOPZ1ccmtyZgJGCPCjNxzV
+	 xr0tM973GTbyVKhz76jhHbqRUcRbrmdWWaV6bYQLu67u8JEPB0geaACBEr6LYow62mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=5LOM2msOIVGIdPh/UJnY63t/i63/X0X0RpcFSj06m0Q=;
-	b=PlCoiAvUWy/Vw5tOP3D8Nq/JGm0pw9R+7i49tP+0TQmrDuVnJe9XxlIuavjihEbcV1Or
-	 2QT1pzoCryFNeKQVyGHfUiuPmCgJbTXPrMMVOUNLPzcihCIP1xjswQNX9YPeZ8M2WL8Qz
-	 KgD+F68N6QYFq81Bzb+KiUpiGG2nYUnno9HkWPyMPcGISpTmEWqV+FWZLHvlckT75zlP9
-	 M40FCrgQN0LdltwHF8zvPgB5F0ujoCKMviNr9F91uZ/xNlhoVDTHZEqUzjKxUNA7Tp/Mz
-	 16T3xyrr7w8rB5pvFQU1G/SvGBKzSbAJJhj0BVhyQCgVsY+hIeD/OdQE5B0SPZlKaEQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ztBUZS8A2QLBcele2HV+r5WD0EFJ0/27sstl0v/PrNc=;
+	b=EllJPliVOY+kvfyURLjyYM5T6Du14U8xI5CLjYgmrzDQH+jrWupULNvLCnjWPVdKLivU
+	 H/HRLA0/zat9J8eeacI5uDwhkanzk6aXbYBpn86y43/K+o3FnoqNQwkOHtLMWWg8MwI59
+	 kXAhqtbgQ63oOonl44oxbaJf9ciJfgq//+iIBRFYVdqzM0oh0fyVu+1Ql4jarolMl6tT2
+	 NJe1k2MW3TudSfgKCOB9FMSVW6dgdBStg0ok+cgk3XGFyuruKExu4s4WW8vNhXZl6GpWm
+	 ju42eWaFeXfNadUhNHbLqOW0BBOh+2ypFOY0BUSRuDg/KuO7axMDClNsV2v0+vxks8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sa0XpmAY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpKvpUUz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A94606A32E;
-	Sat,  7 Nov 2026 14:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892ED606A32E;
+	Sat,  7 Nov 2026 14:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sa0XpmAY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B315E1F0089F;
-	Sat,  7 Nov 2026 14:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpKvpUUz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD9B1F0089F;
+	Sat,  7 Nov 2026 14:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060362;
-	bh=5LOM2msOIVGIdPh/UJnY63t/i63/X0X0RpcFSj06m0Q=;
+	s=korg; t=1794060363;
+	bh=ztBUZS8A2QLBcele2HV+r5WD0EFJ0/27sstl0v/PrNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sa0XpmAYeyidke1f03jWSz7SrRjtMHnbQhySWkAGJt9eA0OVXCW9l95Y5Mnr93Bhc
-	 o45J3+TDPyeocvy65W5Pb/ck+Bk5/bWWJOUZMlSV9So2XftnZOiw2YccbYS8JYegGm
-	 gC0/FeRu4YEHFUrMkLHwMnHdIOfmi/8mCaELrqpU=
+	b=SpKvpUUzJJck9J12Fkb9/vOy1Yaj8hwt1j6bYdN5p1ZqTNzpsIx4l6EOOyl2c4Pk1
+	 6/4BqyYvz0x6hp9oxrmUoOe52nsK2UTw3NL94eQyZchEqmSN3lfJG6hMc43skCOchv
+	 pklGaxKNachBfeqRUO25z8azmgFFeJOYjW4kwRtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hiroyuki Katsura <hk590@cam.ac.uk>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Mark Bundschuh <mkbund@amazon.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Honglei Huang <honghuan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0003/1536] KVM: arm64: Transfer the hyp stack pages out of the host stage-2
-Date: Sat,  7 Nov 2026 08:33:39 -0500
-Message-ID: <20261107134957.764230508@linuxfoundation.org>
+Subject: [PATCH 6.18 004/869] drm/amdgpu: drop retry loop in amdgpu_hmm_range_get_pages
+Date: Sat,  7 Nov 2026 08:44:46 -0500
+Message-ID: <20261107134852.202517425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
-References: <20261107134957.653319350@linuxfoundation.org>
+In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
+References: <20261107134852.069646174@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -66,63 +63,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Honglei Huang <honghuan@amd.com>
 
-[ Upstream commit 3a8c562892b96f35bba1e00d5e455a15963bbb92 ]
+[ Upstream commit 342981fff32802a819d6fc7cf3c9fedf9f3d9d60 ]
 
-fix_host_ownership() walks only the linear-map alias of each memblock
-region, and the per-CPU hyp stack, mapped in the private VA range for
-its guard page, has none.
+Since commit c08972f55594 ("drm/amdgpu: fix amdgpu_hmm_range_get_pages")
+moved mmu_interval_read_begin() out of the per-chunk loop, the
+captured notifier_seq is no longer refreshed across retries. As a
+result, the existing -EBUSY retry path can never make progress:
 
-Walk each stack's VA range with the same walker.
+  hmm_range_fault() returns -EBUSY only when
+  mmu_interval_check_retry(notifier, notifier_seq) reports that the
+  sequence is stale. Once the sequence has advanced, the stored seq
+  will never match again, so every subsequent call within the same
+  invocation returns -EBUSY immediately.
 
-Fixes: 1a919b17ef012 ("KVM: arm64: Add guard pages for pKVM (protected nVHE) hypervisor stack")
-Reported-by: Hiroyuki Katsura <hk590@cam.ac.uk>
-Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Tested-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260908110713.1540304-2-fuad.tabba@linux.dev
-Signed-off-by: Oliver Upton <oupton@kernel.org>
-[ 38f9e4b905a0 ("arm64: kvm: Introduce nvhe stack size constants") is
-  not backported because it converts nvhe stack code in eight files to
-  NVHE_STACK_SIZE, and the hyp stack here is one page, so PAGE_SIZE
-  replaces it. ]
-Assisted-by: LLM
-Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
+The "goto retry" therefore degenerates into a busy spin that simply
+burns CPU for the full HMM_RANGE_DEFAULT_TIMEOUT (~1s) window before
+finally bailing out with -EAGAIN. This is pure latency with no chance
+of recovery, and it actively hurts the KFD userptr stack: the caller
+ends up blocked for a second while holding mmap_lock, only to return
+-EAGAIN to the restore worker (or to userspace) which would have
+re-driven the operation immediately anyway.
+
+Drop the retry/timeout entirely and let -EBUSY propagate straight to
+out_free_pfns, where it is already translated to -EAGAIN. Recovery is
+handled at a higher level: the KFD restore_userptr_worker reschedules
+itself, and the userptr ioctl path returns -EAGAIN to userspace.
+
+No functional regression: the previous behaviour on -EBUSY was already
+to fail with -EAGAIN after a 1s stall; we just skip the stall.
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Honglei Huang <honghuan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ sashal: Adjusted the declaration context: this tree allocates hmm_range with kzalloc() as a plain pointer rather than embedding it, so only the timeout declaration was dropped. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/setup.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/setup.c b/arch/arm64/kvm/hyp/nvhe/setup.c
-index 08770d7cba4b0..2763bf8dd105f 100644
---- a/arch/arm64/kvm/hyp/nvhe/setup.c
-+++ b/arch/arm64/kvm/hyp/nvhe/setup.c
-@@ -264,6 +264,16 @@ static int fix_host_ownership(void)
- 			return ret;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
+index db2bb5cb671d3..fa3676c5babcd 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
+@@ -173,7 +173,6 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
+ 	const u64 max_bytes = SZ_2G;
  
-+	/* The stacks sit in the private VA range, not the linear map. */
-+	for (i = 0; i < hyp_nr_cpus; i++) {
-+		struct kvm_nvhe_init_params *params = per_cpu_ptr(&kvm_init_params, i);
-+		u64 start = params->stack_hyp_va - PAGE_SIZE;
-+
-+		ret = kvm_pgtable_walk(&pkvm_pgtable, start, PAGE_SIZE, &walker);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	return 0;
- }
+ 	struct hmm_range *hmm_range;
+-	unsigned long timeout;
+ 	unsigned long *pfns;
+ 	unsigned long end;
+ 	int r;
+@@ -204,15 +203,9 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
+ 		pr_debug("hmm range: start = 0x%lx, end = 0x%lx",
+ 			hmm_range->start, hmm_range->end);
  
+-		timeout = jiffies + msecs_to_jiffies(HMM_RANGE_DEFAULT_TIMEOUT);
+-
+-retry:
+ 		r = hmm_range_fault(hmm_range);
+-		if (unlikely(r)) {
+-			if (r == -EBUSY && !time_after(jiffies, timeout))
+-				goto retry;
++		if (unlikely(r))
+ 			goto out_free_pfns;
+-		}
+ 
+ 		if (hmm_range->end == end)
+ 			break;
 -- 
 2.53.0
 
