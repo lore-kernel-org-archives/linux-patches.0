@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064580;
-	b=tSX7Yrk2VzNsnyOQ432hlRZhivAQM6I6Hesh643UYOJ2qQ6JU6jL3FQpTFOz/srWCeQo
-	 Lbe7jRVJDfXOcyzkQE2MwyhT9E3gWUj9+nNMv5XgndAZwiHrZdtFBZHyXuXfsBNiVZf6O
-	 r8NXhLtbm8Rh8fIGHoNplOQqDrRqoOTGqzOQqq07Nv12GFMVm4KUBVbmTGR1JN5rNg6BE
-	 Tmt0qz4MBiK5952r5ms0jUDWizf81rMRi5QtI+C27k+S5a2KdE22ZnGQOGx9pyG7haXuW
-	 088dOnb5cFG4vXfI1w1pVTM3tB4FW0OHVFrWY2ByFTycrIKQm/HTgHmbZDnzJ32S/ew==
+	t=1794064581;
+	b=vcxxjFJVLDrKQRkpE3hy4olDZ1apBzZNJ8vLD6cUxFuWCxUGJ90x9CT6964a4f3iPPl3
+	 2xgXYTCN39xO7FgVQhrIB+O2f4/Yt6pY1L813C5DUBUTVUzDf9nM5/qRmLD8mMCsHBhW0
+	 44+tUTAh41REy2Pz5QbKJnyHBGQMdVn64V8EVDAEIlvfxmSXN6GEnFKf2M21fmO9GWbpH
+	 WLeMD/j3JzgJKoq8ZoXPxCXbshgKZNzibwEwgRDMJXAfOyXFjnirz0gsRmHK5Bs5ZmYvR
+	 3FdQdb6ZFjTMVvu58HartEamUGHtffsOdSP9Sz9YkDKr3dq3t6u3rGbl9qKTDVoiEMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064581;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YbUk4QQzOzpCclUdpLQ7Mou9wrVHt80ko4gDkFpJ4T8=;
-	b=VvUO9ihyAoeLiRfQnqZWgeseHivC9a7t5j4O0TNHH38xIGMLnAtZ8K+MVzlWVEw+OU4x
-	 nhQrUoBysnmDsmynUXPluuv2ApiJJxwAo3+X2gE1z7UGXgJPLoQePRNA41VHSzaX7KyoH
-	 F61/kNx7lBx8JV3I7IUG51xlYfoFEQMSnQpfi1gvPlmcqtUL0pPG8pr29A9v4teLWxKEq
-	 EXBw424x9PrY+HdmE+bf7SBNlUE+gKyKO2YAX+RMOBUtcec6M5GJDC7D0Gay4ooXDUKf6
-	 Ug8HRlilX56NAiiAqq1LA5OEJazxW0pH2qJpIPJAMckCLdGTIozlWdHlY83dIJ9c5xg==
+	bh=M6f+k1u7QUaqroyAXIj7KmIKERC+rrkLuTsLYGnTBvI=;
+	b=DHUKN7F4RIv897NI4ofnLpujnCn+rnLjTIBJUTfC6/mb3X8KkFwZ7JbRJi6+H8xCEoDu
+	 A/BJxOyxgp9hY1aQYpiCNW06XwZP8xFcYbRj/WtqrgJ6yL4vxXP+05L5mLI/0zkVNfwJc
+	 AxcLweUdb0RwoA8K6JIzdZoEPt+H82w5b90eaUveFqHmxzmK2mHnh4+CkgGQ41O5dk4LD
+	 1+QFyHIatnamNxFAcmRyvOdhwdcSM5GF781NKw6JwjcoCSckIprXu+AgBUQiMFx52HGJH
+	 8oZ+greDhST63lnK7TZlGV8Kqc4cnqDtocn528o7tHlDTRK8SB3Lf1ms/i3hjN1F0OA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qawWv2jV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UijXboqr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A004606D809;
-	Sat,  7 Nov 2026 15:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5C2606D83C;
+	Sat,  7 Nov 2026 15:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qawWv2jV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE161F0089F;
-	Sat,  7 Nov 2026 15:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UijXboqr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489021F0089F;
+	Sat,  7 Nov 2026 15:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064580;
-	bh=YbUk4QQzOzpCclUdpLQ7Mou9wrVHt80ko4gDkFpJ4T8=;
+	s=korg; t=1794064581;
+	bh=M6f+k1u7QUaqroyAXIj7KmIKERC+rrkLuTsLYGnTBvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qawWv2jVm0Gg2dxzXoN7PZj/K3uynjyuKJWq4WqpFhe8vAsD6aLRR7a/yNWty+syM
-	 +ni+Zh62+mH11E2G59MibFCusDGxJC6sMExtcaLrF3rBFA+ZUqgq6LVWGd00JWfQB2
-	 e3P4U9Oj58nHQ4zvFcfOGQPTjikWjn+afshSDyrI=
+	b=UijXboqro/BEMWeXQGlZGX2FbSLBnoMrOm9SpH3P40VBR2l2+ZkV7dpJg4cM/GllZ
+	 9n3RmDU+0hY6OUdarlBVJwKsbMWNvawQpQnyKKpeS2IUxr0Hl7tR5DU7jhpQkB4Pac
+	 fSuq34p7Tj+uuAZLRF3bL7Wfs/XrTWnl2uRBctzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jiale Yao <yaojiale02@163.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0599/1257] ALSA: usb-audio: Add mic resolution quirk for Logitech Webcam C200
-Date: Sat,  7 Nov 2026 08:48:15 -0500
-Message-ID: <20261107134955.865822527@linuxfoundation.org>
+Subject: [PATCH 7.3 0600/1257] wifi: ath12k: validate MAC/PHY capability count before saving
+Date: Sat,  7 Nov 2026 08:48:16 -0500
+Message-ID: <20261107134955.892247597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,46 +70,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 874323b68c93c6808e034dc0113681e822e6fb42 ]
+[ Upstream commit 86f2537877d6029487811bc3e0cd9e086a196000 ]
 
-The C200 (046d:0802) reports a mic capture volume range of
-1536..7680 with a resolution of 1 (6144 steps), triggering
-"Warning! Unlikely big volume step count (=6144), linear volume or
-wrong cval->res?" at probe and exposing a uselessly fine-grained
-mixer control.  This is the same firmware behavior as the other
-UVC-era Logitech webcams already carrying QUIRK_FLAG_MIC_RES_384
-(C500, C600, C210, C270, C310, C510, C525, ...), so apply the same
-quirk: CTL_MSG_DELAY_1M (which the Logitech VENDOR_FLG would provide
-if the device-specific entry did not short-circuit the lookup) plus
-MIC_RES_384.
+Firmware supplies the hardware mode count and the PHY bitmap for each
+mode in the service-ready-ext event. ath12k_wmi_save_all_mac_phy_info()
+uses those bitmaps to populate svc_ext_info->mac_phy_info, but the
+destination is a fixed array of ATH12K_MAX_MAC_PHY_CAP elements.
 
-Verified on real hardware: with the quirk the warning disappears and
-the driver logs "set resolution quirk: cval->res = 384".
+If the total number of advertised PHY entries exceeds that limit, the
+loop writes beyond mac_phy_info and corrupts adjacent memory.
 
-Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
+ath12k_wmi_mac_phy_caps_parse() allocates the source array for
+tot_phy_id entries and rejects excess capability TLVs. However, if the
+event contains fewer capability TLVs than advertised, the remaining
+allocated entries stay zeroed and are saved as invalid PHY information.
+
+After parsing the MAC/PHY capability TLVs, validate the destination
+capacity and reject an incomplete capability list before saving any
+entries.
+
+Fixes: 062ade23991e ("wifi: ath12k: parse and save hardware mode info from WMI_SERVICE_READY_EXT_EVENTID event for later use")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261008230844.11246-1-olivier.kaloudoff@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261003101944.596546-1-yaojiale02@163.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath12k/wmi.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index a54fabce7920d..b9e89e94e95f5 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2251,6 +2251,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
- 	DEVICE_FLG(0x045e, 0x070f, /* MS LifeChat LX-3000 Headset */
- 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
-+	DEVICE_FLG(0x046d, 0x0802, /* Logitech Webcam C200 */
-+		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIC_RES_384),
- 	DEVICE_FLG(0x046d, 0x0807, /* Logitech Webcam C500 */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIC_RES_384),
- 	DEVICE_FLG(0x046d, 0x0808, /* Logitech Webcam C600 */
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index d5160af60e00d..3e812c79a649d 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -5050,6 +5050,7 @@ static int ath12k_wmi_svc_rdy_ext_parse(struct ath12k_base *ab,
+ 					u16 tag, u16 len,
+ 					const void *ptr, void *data)
+ {
++	struct ath12k_svc_ext_info *svc_ext_info = &ab->wmi_ab.svc_ext_info;
+ 	struct ath12k_wmi_pdev *wmi_handle = &ab->wmi_ab.wmi[0];
+ 	struct ath12k_wmi_svc_rdy_ext_parse *svc_rdy_ext = data;
+ 	int ret;
+@@ -5094,6 +5095,22 @@ static int ath12k_wmi_svc_rdy_ext_parse(struct ath12k_base *ab,
+ 				return ret;
+ 			}
+ 
++			if (svc_rdy_ext->tot_phy_id >
++			    ARRAY_SIZE(svc_ext_info->mac_phy_info)) {
++				ath12k_warn(ab, "too many PHY entries %u (max %zu)\n",
++					    svc_rdy_ext->tot_phy_id,
++					    ARRAY_SIZE(svc_ext_info->mac_phy_info));
++				return -EINVAL;
++			}
++
++			if (svc_rdy_ext->n_mac_phy_caps < svc_rdy_ext->tot_phy_id) {
++				ath12k_warn(ab,
++					    "not enough MAC/PHY caps %u, expected %u\n",
++					    svc_rdy_ext->n_mac_phy_caps,
++					    svc_rdy_ext->tot_phy_id);
++				return -EINVAL;
++			}
++
+ 			ath12k_wmi_save_all_mac_phy_info(ab, svc_rdy_ext);
+ 
+ 			svc_rdy_ext->mac_phy_done = true;
 -- 
 2.53.0
 
