@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061667;
-	b=tI8CBf5jjnXTAYJMZPdXY4SYJsO8/Lyx8JDwECZGSachLavNSJ6LvRvGjGhQ4leLAumg
-	 2pKO1PecVa+CQyQgbmd+ph41HEB1nvxE0cIvIoWG3xEQQ88hx6UMQGdahvW9IgfxLHFuf
-	 9rxPg/ezzfTa63KNlA5d+nP0TGxbNAWDq9eNaajMPwneTGM15rLBFhC1skBmUuZrhfK/G
-	 VULvDT8i9cYvIfe8N7edB9nbOvWW8eEqEZqkoQNb7A0q+k4QNxl5jn1es9LS6XWSYftT6
-	 NUpufzY9RBTQclTscF9A/XwktvFW5UgUHhrnFPGBDRx1LLwCTL2QC/tFgA44ZyfL3Rg==
+	t=1794061668;
+	b=F6oJkpi/E0ftJpJ1ZaFVY59AViph0vDoAB6PqKCnFkmIM3ox8reyvIuVGqcqhEVgshm8
+	 GflCcEYKhS9rSRvX6MfYo0JZbHPEjsG4ZFPsbgUrn0e4xu3v9DWSnKuak48Ga3yjSwEVz
+	 YBit2LGaHAYzlH1wUtYvsVaCV/AK0aGF6eKzx6UyqTkedpCy6DsbIkRCezE0VPzXfcbM0
+	 VpqJz3WoVwj/RhHrYcT8P9AtZdEur3+6clsqEfXfFA9wsRvNEtfIGBCUXUF5PGcHG5Y8z
+	 LoYsS+Wcha99eNnF/BMzJR/LVmP8fkwLgyb+ZEvwQlT3txiPttxAqjbZq91lw/5lOIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061667;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061668;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AdTlvX2Q0yqw2AJb3BZtUpQfO6yBx0JhvrWQmr7WTvw=;
-	b=JXCrmXXt6UjCipOcRoi365WUqNec8FsSIaKwT0HxOIkLwTHLstVeq9e3VrNJmSh4K8nf
-	 6VOPQvaXi2o7nVZOrfo62WVV/RWimMTnSIqlinQHAyOMBbQxlW590gUGWXl8bkIxtHEXI
-	 GKZ/9NgD4nuKlz5GJ4N9bl7nTAnEijFF80EVBlMzYgkftXURRnP2mpNdMVUJamhGp73Y3
-	 6I6jlgnOhYLdvH9a5TpBPP9B7fUEW1AUnFfMu2nEj9mRohJWIKEVHJ+Rj1U9ZIqVFK9mN
-	 TLiv4CZi4E4LVXdxI6x1gVPS209QlIF3NqfJmTalMbrTUxhs9WWvaSZeq5bA15nzZsg==
+	bh=EC1+XZz98YkggtlLmVZhRuKLIk4yqoOpf8KBYbv4H+o=;
+	b=fWEOI17qLPQcYgBICXZDf8xtEB4R8zd/zCh7GkefkxuVdHPlNBLuGD6brNzmgXQ10IFA
+	 FU49e0dd0hS8T48/nOtge4ogZ9zJZxne+iq0yVLidhzViPW6Cy7KPqQNX7tgx2FTw5ZZR
+	 K5PeTxYRucO7HqImEsCmXAvCYMu52CMTTlFsZ5a6XVo0JbQs1VYMSZAndbcKVyK6U932g
+	 jWozwesEWnx9Vl8OIN1BwsadedP+Mi+wNhovM/2eS3jh+2G2piogkN9ptvWFlfyLWAi/k
+	 c4VCMHddfEEnpGo2A7xAXr8gYjJSS58l/X9euxnmW8eVDzZPROCvVCBnEDXlWPvxhqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J/UTAKvs";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xfNhDqEl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDB5606A331;
-	Sat,  7 Nov 2026 14:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2F9606A32E;
+	Sat,  7 Nov 2026 14:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J/UTAKvs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8C11F0089F;
-	Sat,  7 Nov 2026 14:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xfNhDqEl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED251F0089F;
+	Sat,  7 Nov 2026 14:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061666;
-	bh=AdTlvX2Q0yqw2AJb3BZtUpQfO6yBx0JhvrWQmr7WTvw=;
+	s=korg; t=1794061668;
+	bh=EC1+XZz98YkggtlLmVZhRuKLIk4yqoOpf8KBYbv4H+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/UTAKvs2Q2Z6iisqw2nO2PFzGsUOFjrJ3+XKBJR7YHtzdOJIM69y5DQswSDHbp0+
-	 pmI80MRpvOEGL63m5l2+qSUKOAyJKT+5+bPWidde9nPEDmZ7LnARBr/JCvfepm2v2h
-	 5njdunCoW7CsewTtqE+spiWiqlazJgjveGeNZUWs=
+	b=xfNhDqEl32HZLcYxTctR/29tloIIeaRFFwrdwc+wJSX4dM1rBPWKYMR88iPyfunhG
+	 P8CI3wdHYsf1/zH/HRb/nUXUYkgUHvt/pLQ6vAF5m7G7XcPG86y62cQNePTeCxqQPs
+	 8/HcmwTa/YnNwaIk7psCLk+o68NIHo3rMTtJKWA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0722/1536] xfs: reject absurdly large xattr value lengths in xchk_xattr_actor
-Date: Sat,  7 Nov 2026 08:45:38 -0500
-Message-ID: <20261107135017.777426267@linuxfoundation.org>
+Subject: [PATCH 6.12 0723/1536] xfs: reject out-of-range attribute value lengths in xfs_attr_copy_value
+Date: Sat,  7 Nov 2026 08:45:39 -0500
+Message-ID: <20261107135017.805268730@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,55 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit fd012955641881169a9f01a00f656f6ca73842ec upstream.
+commit 0643549ffecaeb716c0b75590a9b76dfa5eb35b3 upstream.
 
-LOLLM suggests that we shouldn't try to allocate absurdly large buffers
-for xattr value checks because that will push reclaim very hard, never
-succeed, and is pointless because nobody can create xattrs that large.
-Since the xattr repair code ignores values larger than XATTR_SIZE_MAX,
-we can flag the corruption and return early.
+xfs_attr_copy_value() takes the value length as a signed int and, for a
+remote xattr, is handed args->rmtvaluelen.  That field is filled from the
+on-disk __be32 xfs_attr_leaf_name_remote.valuelen in
+xfs_attr3_leaf_getvalue(), so a crafted length such as 0x80000000 is
+stored into the signed rmtvaluelen as a negative number.
 
-Cc: stable@vger.kernel.org # v5.3
-Fixes: 6d6ccedd76823c ("xfs: only allocate memory for scrubbing attributes when we need it")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+The "buffer too small" guard in xfs_attr_copy_value() is a signed
+comparison:
+
+	if (args->valuelen < valuelen)
+		return -ERANGE;
+
+A negative valuelen therefore compares as smaller than the caller's
+buffer size, skips the -ERANGE path, and is then used as a copy length,
+leading to an out-of-bounds copy of a full remote block into a small
+getxattr(2) buffer on a mounted crafted image.
+
+Reject a value length that is negative or larger than the maximum xattr
+size before it is used, so a bogus on-disk length can no longer slip
+through the value copier.
+
+Fixes: 9df243a1a9e6 ("xfs: consolidate attribute value copying")
+Cc: stable@vger.kernel.org
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/attr.c          |    6 ++++++
- fs/xfs/scrub/parent_repair.c |    4 ++++
- 2 files changed, 10 insertions(+)
+ fs/xfs/libxfs/xfs_attr_leaf.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/xfs/scrub/attr.c
-+++ b/fs/xfs/scrub/attr.c
-@@ -216,6 +216,12 @@ xchk_xattr_actor(
- 		return -ECANCELED;
- 	}
- 
-+	/* Don't even try to handle a bizarrely large xattr. */
-+	if (valuelen > XATTR_SIZE_MAX) {
-+		xchk_fblock_set_corrupt(sc, XFS_ATTR_FORK, args.blkno);
-+		return -ECANCELED;
-+	}
-+
+--- a/fs/xfs/libxfs/xfs_attr_leaf.c
++++ b/fs/xfs/libxfs/xfs_attr_leaf.c
+@@ -582,6 +582,17 @@ xfs_attr_copy_value(
+ 	int			valuelen)
+ {
  	/*
- 	 * Try to allocate enough memory to extract the attr value.  If that
- 	 * doesn't work, return -EDEADLOCK as a signal to try again with a
---- a/fs/xfs/scrub/parent_repair.c
-+++ b/fs/xfs/scrub/parent_repair.c
-@@ -914,6 +914,10 @@ xrep_parent_fetch_xattr_remote(
- 	};
- 	int			error;
- 
-+	/* Don't even try to handle a bizarrely large xattr. */
-+	if (valuelen > XATTR_SIZE_MAX)
++	 * A value length that is negative or larger than the maximum xattr
++	 * size is on-disk corruption.  The remote value length is an on-disk
++	 * __be32 stored into the signed args->rmtvaluelen, so a crafted value
++	 * such as 0x80000000 becomes negative and would slip past the
++	 * "args->valuelen < valuelen" check below and be used as a copy
++	 * length.  Reject it before that can happen.
++	 */
++	if (valuelen < 0 || valuelen > XFS_XATTR_SIZE_MAX)
 +		return -EFSCORRUPTED;
 +
- 	/*
- 	 * If we need a larger value buffer, try to allocate one.  If that
- 	 * fails, return with -EDEADLOCK to try harder.
++	/*
+ 	 * Parent pointer lookups require the caller to specify the name and
+ 	 * value, so don't copy anything.
+ 	 */
 
 
