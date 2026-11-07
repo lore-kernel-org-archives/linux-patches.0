@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065302;
-	b=2Tyhv9Oh8yyBMnjVSX9lHp3b+dq6LPAQ53KMt8AEosYDuNZePj58uqW5yZIH1ylQ0txX
-	 22QjO9o+XtVAtD6I3hpB11r5LgqhgGJTHeVBPjc52V8W+jV8men8YVEv782jWIAMfmroL
-	 90TDQh51rPHni2VQzN3IC61GYhL1MUkQfZBlXDuYKcrMBfZP4VTsr/pReESRMLL7UsnML
-	 NNyjQGIvOFZsCuqQVk4LZ0Kkyg5URTD91eD2FZQl1LXrY9ZuiHQ1GGgFvZ1+gxFsCDNi+
-	 sY0FG/+36cHIVkpGqRTRvRXZey9RyZzSfE/JEHyBI911qcN27zS91CjRgTs8QJcping==
+	t=1794065304;
+	b=TlU9TIk0MAc6hxlbioRxVuibqZuG9ppOq9r5LE/PncKgqIPBsPhM/zIOvSI9PKS6h4ho
+	 LBDVXLwd7X8N2zrtEgWLppchgXkrMJdda+LhllbUwzPt8LOAvAy6M6fMerjP8K+bLD7b0
+	 +CgRzNKoanjaX3gqmrAoEQy1uBRehOL9Ab+m6J5ZN85u/qyNr06amCpLBbCm/ptmioC3V
+	 al5DTPOPcAdDImijSX9zVf3Rh1WsxhQX2fzCbDiryYzUaLQWqik4HM5OBruUHPHs6wNXC
+	 XLpaBAFntrj7bSCYhsSJNEJyyAWaglYcprw+hR2e4xz60qLR4jG4Fdrb31dtk/EeeaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065302;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065304;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HsHHnFEXbBeg6YHkn359sXZx95MyOjpRuNvFYDFWkKI=;
-	b=dZc5Tw7pMIpd9n9+N6JNQN35Fmf3byWzha14F/LYhx9ySQAfXCKh5gdu5bqCERpiGv5g
-	 wGoaqImTlf6K2KIEJcV5DpNIkBonK3BzHffEQZ0GH/fZ7Qs6M7TuLtn+Z+heqBENfwvUP
-	 jIwJTR25Baw0xTq9mndKK3KeLuZLQ4FB9iqRV0M6eIcNXpqkdSk9SM+Afo5OGQiEXM1lc
-	 5gUnSmgeD7OMdfyUJGdS6S+xcew8FdOszl2LMRWuiL7HjYJyVOf+dHWzVYdEPTdSFkhJu
-	 OiKO1/gZsi2ZqGVbfX0lqThEZo8bGUELgG9mcnsHAhbOgEv76AH0fWcjeqTCl3do5Vw==
+	bh=vVugI5GIpxsNxrvLvgv+7VjUWvRSvUssOoz1u7wXfd4=;
+	b=PwOQCipZCWIaADoR6JUkcgAKADz2PP44NvA/axllfED4InQNL2BCD/rWWfFxYkYBaK1A
+	 cjqlFgcvwonJxZ8x/CBdQZFnD1Bcwst8bLZzG6GH0daMZ50y6R1ScrNbGmjyVGWpkhX/6
+	 g8XVqvtgJpZar/wlGrSfa7UCa6krxSVtZQRQwPwI5foaiHlVsdT48NnafnLWVdXN+kxtN
+	 J8TgTuXT1Rs4eoLKa/ohpnCANzkwKyg1VZ8ryHRAlRq6eq8hUIoZXYCC9TF0DLo6M4wG0
+	 pzHptUed0eJTE5JUQxZkR+ubWbzR1GHxt7vJn6/zfFOL7/95EaWePvnrJa3UXrYSEmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ab6aoTES;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DSUtOzK1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309BC606A336;
-	Sat,  7 Nov 2026 15:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C696B606A32D;
+	Sat,  7 Nov 2026 15:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ab6aoTES
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9811F0089F;
-	Sat,  7 Nov 2026 15:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DSUtOzK1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FC61F0089F;
+	Sat,  7 Nov 2026 15:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065302;
-	bh=HsHHnFEXbBeg6YHkn359sXZx95MyOjpRuNvFYDFWkKI=;
+	s=korg; t=1794065303;
+	bh=vVugI5GIpxsNxrvLvgv+7VjUWvRSvUssOoz1u7wXfd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ab6aoTESDZe8qnOc4iWRuafOKqW2loRfRbHr9RKA5LCrLm0X96BznLfwsBH417zUL
-	 rks6LcCLrWX0Fi7K5uQoBzUHGmRg4FlFV5pC62sPNWVK/4yqAR6FvYCh1xsCDFHk//
-	 5BB4heWFeZiQRJUOjS/CwxDcxS4ZzAaaxDiyYz9A=
+	b=DSUtOzK1RTDA/CUej6y/kKhm1hSjTTcdqDTq9AYTTn2f24tF9I5lsRAP4BWGp4K/I
+	 XinKkJ1c9YzuqBta16yS5IhEXpprsteN9czXHj2Ni6a1jBA/id9lhgC5GfMfcvMa6p
+	 VSJE66hU7i0uAH4jY/p8qEEuUGBnRaNPlUZkVw/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Lianqin Hu <hulianqin@vivo.com>,
 	Bart Van Assche <bvanassche@acm.org>,
-	John Garry <john.garry@linux.dev>,
+	Yingjie Wang <x-professor@outlook.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1055/1257] scsi: sd: Mark the disk dead if runtime resume fails in sd_remove()
-Date: Sat,  7 Nov 2026 08:55:51 -0500
-Message-ID: <20261107135008.427217510@linuxfoundation.org>
+Subject: [PATCH 7.3 1056/1257] scsi: handle out-of-range SG_SET_TIMEOUT values
+Date: Sat,  7 Nov 2026 08:55:52 -0500
+Message-ID: <20261107135008.454778471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,81 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Yingjie Wang <x-professor@outlook.com>
 
-[ Upstream commit 085bb18a0b91007f04ddca13af30277c78040157 ]
+[ Upstream commit 9a6cb1da4f3bc4633bf6669faed25a361834b1b9 ]
 
-If a SCSI disk is unplugged while runtime suspended, its request queue is
-still in the pm-only state when sd_remove() is called. The runtime resume
-attempted by scsi_autopm_get_device() fails because the parent device,
-e.g. a USB device in the USB_STATE_NOTATTACHED state, cannot be
-resumed. Hence, sdev_runtime_resume() is not called and the pm-only state
-is not cleared. Next, del_gendisk() calls blk_report_disk_dead(disk,
-false), which calls sync_filesystem(). Any bio submitted by the filesystem
-waits forever in __bio_queue_enter() because the queue will never leave the
-pm-only state and because GD_DEAD has not yet been set:
+SG_SET_TIMEOUT accepts a signed int in USER_HZ units. The sg character
+device rejects negative values and limits positive values so the converted
+timeout fits its destination field. The block SCSI and BSG paths instead
+pass the value to clock_t_to_jiffies(), which accepts an unsigned long, and
+store the result in an unsigned int.
 
- __bio_queue_enter+0xb8/0x174
- blk_mq_submit_bio+0x640/0x7e4
- [ ... ]
- exfat_sync_fs+0xa4/0xe0
- sync_filesystem+0xa8/0xdc
- fs_bdev_mark_dead+0x30/0x88
- bdev_mark_dead+0x54/0xc4
- blk_report_disk_dead+0x8c/0xd4
- del_gendisk+0xa0/0x2f8
- sd_remove+0x30/0x60
- [ ... ]
- scsi_remove_host+0x88/0x18c
- usb_stor_disconnect+0x68/0xf4
+Negative values are converted into large unsigned timeouts. On 64-bit
+systems, large positive values can also exceed UINT_MAX after conversion
+and are truncated on assignment. With HZ=1000 and USER_HZ=100, for example,
+429496730 clock ticks become 4294967300 jiffies and are stored as 4
+jiffies. On 32-bit systems, an overflowing conversion becomes ULONG_MAX,
+which is an unsafe relative interval for the block timer comparisons.
 
-Fix this hang by calling blk_mark_disk_dead() if runtime resume fails.
-This sets GD_DEAD, tells the filesystem that the disk has been removed
-without attempting to sync it, and wakes up any bios that are waiting in
-__bio_queue_enter(). Syncing the filesystem is not possible anyway if
-runtime resume failed, so no data is lost that could otherwise have been
-written. If runtime resume succeeds, behavior is not changed.
+Reject negative values with -EIO, matching drivers/scsi/sg.c. Saturate the
+converted value at the smaller of the destination field limit and
+MAX_JIFFY_OFFSET. This preserves successful ioctl behavior while avoiding
+both narrowing wraparound and an unsafe 32-bit timer interval.
 
-Please note that this patch converts temporary runtime resume failures into
-permanent failures. Before this patch, if runtime resume fails temporarily,
-a filesytem sync would be postponed until a later resume succeeds.
+The block SCSI behavior predates Git history. BSG has exposed the same
+behavior since it was introduced.
 
-Cc: Christoph Hellwig <hch@lst.de>
-Tested-by: Lianqin Hu <hulianqin@vivo.com>
-Reported-by: Lianqin Hu <hulianqin@vivo.com>
-Closes: https://lore.kernel.org/all/TYUPR06MB6217DD31B1B3CD09E431CC12D2922@TYUPR06MB6217.apcprd06.prod.outlook.com/
-Fixes: 6f8191fdf41d ("block: simplify disk shutdown")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 3d6392cfbd7d ("bsg: support for full generic block layer SG v3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: John Garry <john.garry@linux.dev>
-Link: https://patch.msgid.link/2c0c76d70f0fe197932836b9bcf8496095135d1b.1792446921.git.bvanassche@acm.org
+Reported-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/9321a59c-c560-4742-8b71-5b0ec1f30c2f@acm.org
+Signed-off-by: Yingjie Wang <x-professor@outlook.com>
+Link: https://patch.msgid.link/20261022025508.294713-1-x-professor@outlook.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ block/bsg.c               |  5 ++++-
+ drivers/scsi/scsi_ioctl.c | 11 ++++++++---
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index a1b21ea14e549..208b915f25a2c 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -4270,7 +4270,15 @@ static void sd_remove(struct scsi_device *sdp)
- 	struct device *dev = &sdp->sdev_gendev;
- 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
+diff --git a/block/bsg.c b/block/bsg.c
+index 82aaf3cee5825..b296fa3732924 100644
+--- a/block/bsg.c
++++ b/block/bsg.c
+@@ -132,7 +132,10 @@ static long bsg_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	case SG_SET_TIMEOUT:
+ 		if (get_user(val, intp))
+ 			return -EFAULT;
+-		bd->timeout = clock_t_to_jiffies(val);
++		if (val < 0)
++			return -EIO;
++		bd->timeout = min(clock_t_to_jiffies(val),
++				  min(UINT_MAX, MAX_JIFFY_OFFSET));
+ 		return 0;
+ 	case SG_GET_TIMEOUT:
+ 		return jiffies_to_clock_t(bd->timeout);
+diff --git a/drivers/scsi/scsi_ioctl.c b/drivers/scsi/scsi_ioctl.c
+index c14f81403a09e..81a0519a2984b 100644
+--- a/drivers/scsi/scsi_ioctl.c
++++ b/drivers/scsi/scsi_ioctl.c
+@@ -9,6 +9,7 @@
+ #include <linux/blkdev.h>
+ #include <linux/interrupt.h>
+ #include <linux/errno.h>
++#include <linux/jiffies.h>
+ #include <linux/kernel.h>
+ #include <linux/sched.h>
+ #include <linux/mm.h>
+@@ -195,10 +196,14 @@ static int sg_set_timeout(struct scsi_device *sdev, int __user *p)
+ {
+ 	int timeout, err = get_user(timeout, p);
  
--	scsi_autopm_get_device(sdkp->device);
-+	/*
-+	 * If runtime resume fails, e.g. because the device was unplugged
-+	 * while runtime suspended, the request queue stays in the pm-only
-+	 * state and any I/O submitted by del_gendisk(), e.g. from
-+	 * sync_filesystem(), would wait forever in __bio_queue_enter().
-+	 * Prevent this by marking the disk dead.
-+	 */
-+	if (scsi_autopm_get_device(sdkp->device) < 0)
-+		blk_mark_disk_dead(sdkp->disk);
+-	if (!err)
+-		sdev->sg_timeout = clock_t_to_jiffies(timeout);
++	if (err)
++		return err;
++	if (timeout < 0)
++		return -EIO;
  
- 	device_del(&sdkp->disk_dev);
- 	del_gendisk(sdkp->disk);
+-	return err;
++	sdev->sg_timeout = min(clock_t_to_jiffies(timeout),
++			       min(UINT_MAX, MAX_JIFFY_OFFSET));
++	return 0;
+ }
+ 
+ static int sg_get_reserved_size(struct scsi_device *sdev, int __user *p)
 -- 
 2.53.0
 
