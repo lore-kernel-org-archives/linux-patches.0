@@ -1,62 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061817;
-	b=DCJJtgNPJgy73pkl2wmjnHlocDHwc226J7KuQ3wXlEMrD1EL4zbz9E6MmnS386c+d7ba
-	 VD8QBBOzY7dtv26XbzoTDGbqcYf4lq3PSISEbZqGTSFppKvAXtTraQypcZcs69dq8q70l
-	 UJIdQGCM/dPf+8s38wA9amJf14qnt7rvK9rt2QtVe0IpoGOZV2gE/+csjGBagX8y72Vu2
-	 c+sI7vmaV+UO+deC6AsYQfa+6JH3KaDFTeXz5lI0aoLOuGiC5O7YDQJU16N8pVzEq+n+e
-	 lThfDTGmj1k4fgfhQ8B4PbyIn2MA1lgNqODsF+2Cy0MIcXcd+B92bUZDwwmrXZmfxCw==
+	t=1794061818;
+	b=flBLnwo0jrzs2+p0+nxKuMpBMktrwuvTPSKzob880BMtxhDlO1HWn9E5qNOVdSps2+yv
+	 +YmWl3yOOy+l/XrsHpcQMXIld5G8fGoI3eSB4amZ2xGXs32H2bXYm3dTb95EKsDQjDNuA
+	 SL0Cn+ipiyQmtjxGVy/CdW/6pz16lG56xiTBTddi0wSm0XwxHgIx9+kfnBwxXl4Q32wMh
+	 019YkUuOabMvYJs8viKrfzlC5OlQfOeEiaC9NEXeH27csiONey7YeLRNXbTahMSJ8/n/R
+	 ObW9qxxPs9jYFiH4p25ForBS/UnBHG/cjeAM0HugHPRlYNVajK86zTO+jhRgGj2TzXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061818;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DIenJ2c6AfWQYRL/wahpDAT4p1SY0EXllO69KxwKpg4=;
-	b=Q863EFxsiEh2T/V9swbn2GjiTsbtqsWjW43ZfjtfKTK5Mr04nfLMykt1Ix82HiU+P5u+
-	 koKdlIQ4DuJ/BEf3IcruL0idhnwptqNXClSAf5jCVxbAO1Sp87bn0q0ESa8CcCGGVwKzC
-	 J/Pde8XS21tzqYULaHYiRYp54FK/vpi6TjC2YXLdKWFPy6RZlOqE3kkBCLBPHezdnCVdo
-	 r2MU/TPq3QLzlt6xLevTVNj2v89FWaf242wJF+WOJL8uxA5lYoQtUdwVVgLK1e9MeqPq+
-	 Um25hEdfrzyYtAxs5dWne37E5OjREsOZcULDMUxdR2WFhTNFabOCGwQFmHS7Q92y+QA==
+	bh=oKJBfMWy+ejebDHpBwudfBXgFuxvcL0tO7Vye2cgRaE=;
+	b=fLJ49VU6kk2y2rDto3mlUwviPpaZcJW6rwCbJXB8nZjB4qF66W1cyyBN1BRYRunnd+bt
+	 YrgCvc4XdwuW4O4guqWFydXTO8GO6OrM3TWr1yL2FjvUn8cqSQ+nxd7kQwc0DF9Cdw/L2
+	 IEzZf+jHRxv3tDENP90iKCKKfXL4biffoEGp44kYbFhXwKY+J6Kt7MiPsIucSO71aTXsL
+	 3dUpzDWRNEiDG1ZwUbAlFC65yG1u28WwIWzi+Q/Kyx/MRZpFWOGnxkyGlprK7dfGXjUcJ
+	 S8bQXFDQ7e9mIu5WZTmq1to/pRxpa1StUri/pwbmOSXvcSxKSWITTt8CB4BGKh/pI3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDiZMDLn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v4oaSK8p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC745606A333;
-	Sat,  7 Nov 2026 14:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D69606A326;
+	Sat,  7 Nov 2026 14:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDiZMDLn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F771F0089F;
-	Sat,  7 Nov 2026 14:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v4oaSK8p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9E01F0089F;
+	Sat,  7 Nov 2026 14:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061816;
-	bh=DIenJ2c6AfWQYRL/wahpDAT4p1SY0EXllO69KxwKpg4=;
+	s=korg; t=1794061817;
+	bh=oKJBfMWy+ejebDHpBwudfBXgFuxvcL0tO7Vye2cgRaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YDiZMDLn60h9BPFV8p+dntZCO+l4J8QFS9qqWRcHmzyC2xNoL5Die7YOHEQWeyjk2
-	 +g+hdMMppMmQYo6j+7EAlivv7ce7BAESF8m9M/c5FxJ6ZS4bx9t35E0ra2QPtCAEeB
-	 Be9pQgeAvZ3pwJQXSCTGTnyOelA6cw3XdLgqmX84=
+	b=v4oaSK8pwsNrnJGndYj4qe65kc4+3rfyaPWbjMrYB09n40Lt8vi9f9K7e6i78nGOV
+	 1rqetVcIIxOsANenTkWRrC0qZ4ISzsQbeQ2q+VVsmMYTu8J5WHdW8YhW0sq+UNYUbP
+	 LhUTzGgpo9GyH9SXFeMxx2N6xN7NKhwB4malE02M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Kyle Zeng <kylebot@openai.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"JongHyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Harry Yoo <harry@kernel.org>,
-	Jann Horn <jannh@google.com>,
+	Fredric Cover <fredric.cover.lkernel@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0842/1536] mm/rmap: dont discard lazyfree THPs at PMD level
-Date: Sat,  7 Nov 2026 08:47:38 -0500
-Message-ID: <20261107135021.196846562@linuxfoundation.org>
+Subject: [PATCH 6.12 0843/1536] smb: client: fix early procfs exposure race
+Date: Sat,  7 Nov 2026 08:47:39 -0500
+Message-ID: <20261107135021.226618154@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -78,92 +68,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Fredric Cover <fredric.cover.lkernel@gmail.com>
 
-[ Upstream commit 984c0700854e35779a2bcce6b02783e709b6efa2 ]
+[ Upstream commit 7b1afb631395c958993cda4631002258ef4151ea ]
 
-__discard_anon_folio_pmd_locked() clears a lazyfree THP's PMD before it
-determines whether the folio can be discarded, and restores it if the
-folio is dirty or has extra references.  It is done under only the PMD
-lock and the anon_vma read lock inside try_to_unmap_one() and no mmap lock
-is held.  The temporarily none PMD causes UAF.
+Currently, init_cifs() calls cifs_proc_init() near the beginning of
+the function, before INIT_LIST_HEAD, leading to a momentarily
+uninitialized, but exposed, procfs. If a userspace process reads this
+empty procfs, iterating over a zeroed list_head leads to a NULL
+pointer dereference and a kernel oops/panic.
 
-A parallel munmap() or mremap() is supposed to serialize with it on the
-PMD lock, but zap_pmd_range() (called by munmap()) and move_page_tables()
-(called by mremap()) do not take the lock when they see the temporarily
-none PMD and skip the PMD.  There is no more page table walk after the
-none PMD is restored:
+For example, if a delay is added between cifs_proc_init() and
+INIT_LIST_HEAD, and a userspace process is polling
+/proc/fs/cifs/DebugData, the following oops occurs:
 
-- munmap(): free_pgtables() waits in unlink_anon_vmas() for the anon_vma
-  lock, then free_pmd_range() drops the restored PMD as bad without
-  removing the rmap, so the folio keeps a stale mapcount.
+BUG: kernel NULL pointer dereference, address: 0000000000000608
+Oops: Oops: 0000 [#1] SMP PTI
+CPU: 0 UID: 0 PID: 3477 Comm: cat Not tainted
+7.3.0-02212-g4df4d2a577db-dirty #6 PREEMPT(lazy)
+RIP: 0010:cifs_debug_data_proc_show+0x103/0xd80 [cifs]
+Call Trace:
+<TASK>
+ ? seq_read_iter+0x86/0x400
+ ? seq_read_iter+0x86/0x400
+ seq_read_iter+0x183/0x400
+ proc_reg_read_iter+0x62/0x90
+ copy_splice_read+0x215/0x310
+ splice_file_to_pipe+0xec/0x1c0
+ do_splice+0x4b8/0x780
+ __se_sys_splice+0x18f/0x250
+ do_syscall_64+0x109/0x330
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+</TASK>
 
-- whole-VMA MREMAP_DONTUNMAP: dontunmap_complete() unlinks the source VMA
-  from its anon_vma while the restored PMD still maps the folio.
+Fix this by moving cifs_proc_init() down in init_cifs(), ensuring it runs
+only after all internal lists, locks, counters, and workqueues are fully
+ready, but before registering the filesystem. Update the error cleanup
+ladder and exit_cifs() to maintain proper LIFO order.
 
-- plain mremap(): the THP is not moved but unmapped, so the THP's data is
-  lost.
-
-In the first two cases, the folio stays mapped, but no VMA that maps it is
-linked to its anon_vma.  When the anon_vma is freed, it is still reachable
-when one rmap walks the folio.  Racing lazyfree reclaim against
-MREMAP_DONTUNMAP as an unprivileged user reproduces a KASAN use-after-free
-in folio_lock_anon_vma_read() as reported in the Closes link.
-
-One solution is to use an invalidated PMD instead of a cleared one until
-the discard is committed, but it needs arch fixes first.
-1. GUP-fast still follows an invalidated PMD on riscv, LoongArch and s390.
-2. sparc64 miscounts thp_pte_count when an invalidated PMD is set again or
-   cleared.
-
-To keep the fix simple for backport, stop discarding lazyfree THPs at PMD
-level instead. try_to_unmap_one() splits the PMD and discards the folio at
-PTE level.
-
-unmap_huge_pmd_locked() and __discard_anon_folio_pmd_locked() are left in
-place, unused, to minimize this fix for backport and the invalidated PMD
-approach is planned as a follow-up series to use them again.
-
-Link: https://lore.kernel.org/20261012-lazyfree-stable-fix-v2-1-6387d6e30063@nvidia.com
-Fixes: 735ecdfaf4e8 ("mm/vmscan: avoid split lazyfree THP during shrink_folio_list()")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Closes: https://lore.kernel.org/r/20261009165214.40212-2-kylebot@openai.com
-Reviewed-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Tested-by: JongHyuk Kim(MalHyuk) <malhyuk97@gmail.com>
-  Link: https://lore.kernel.org/CADQRuqvXQ=YE=7T3oR66vTxE33pi=ygEeZKPTOU=cALZL0Figw@mail.gmail.com
-Assisted-by: LLM
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Zi Yan <ziy@nvidia.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Fredric Cover <fredric.cover.lkernel@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: Adjusted context for absent maperror initialization calls and a workqueue declaration without WQ_PERCPU. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/rmap.c | 4 ----
- 1 file changed, 4 deletions(-)
+ fs/smb/client/cifsfs.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/mm/rmap.c b/mm/rmap.c
-index d165050c2fc56..1bf83e939583f 100644
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -1698,10 +1698,6 @@ static bool try_to_unmap_one(struct folio *folio, struct vm_area_struct *vma,
- 		}
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index 65bf11f606ed4..cfe950e3fb9cf 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1916,7 +1916,6 @@ static int __init
+ init_cifs(void)
+ {
+ 	int rc = 0;
+-	cifs_proc_init();
+ 	INIT_LIST_HEAD(&cifs_tcp_ses_list);
+ /*
+  *  Initialize Global counters
+@@ -1965,10 +1964,8 @@ init_cifs(void)
+ 	}
  
- 		if (!pvmw.pte) {
--			if (unmap_huge_pmd_locked(vma, pvmw.address, pvmw.pmd,
--						  folio))
--				goto walk_done;
--
- 			if (flags & TTU_SPLIT_HUGE_PMD) {
- 				/*
- 				 * We temporarily have to drop the PTL and
+ 	cifsiod_wq = alloc_workqueue("cifsiod", WQ_FREEZABLE|WQ_MEM_RECLAIM, 0);
+-	if (!cifsiod_wq) {
+-		rc = -ENOMEM;
+-		goto out_clean_proc;
+-	}
++	if (!cifsiod_wq)
++		return -ENOMEM;
+ 
+ 	/*
+ 	 * Consider in future setting limit!=0 maybe to min(num_of_cores - 1, 3)
+@@ -2055,19 +2052,22 @@ init_cifs(void)
+ 	if (rc)
+ 		goto out_cifs_swn_init;
+ 
++	cifs_proc_init();
++
+ 	rc = register_filesystem(&cifs_fs_type);
+ 	if (rc)
+-		goto out_init_cifs_idmap;
++		goto out_clean_proc;
+ 
+ 	rc = register_filesystem(&smb3_fs_type);
+ 	if (rc) {
+ 		unregister_filesystem(&cifs_fs_type);
+-		goto out_init_cifs_idmap;
++		goto out_clean_proc;
+ 	}
+ 
+ 	return 0;
+ 
+-out_init_cifs_idmap:
++out_clean_proc:
++	cifs_proc_clean();
+ 	exit_cifs_idmap();
+ out_cifs_swn_init:
+ #ifdef CONFIG_CIFS_SWN_UPCALL
+@@ -2103,8 +2103,6 @@ init_cifs(void)
+ 	destroy_workqueue(decrypt_wq);
+ out_destroy_cifsiod_wq:
+ 	destroy_workqueue(cifsiod_wq);
+-out_clean_proc:
+-	cifs_proc_clean();
+ 	return rc;
+ }
+ 
+@@ -2114,6 +2112,7 @@ exit_cifs(void)
+ 	cifs_dbg(NOISY, "exit_smb3\n");
+ 	unregister_filesystem(&cifs_fs_type);
+ 	unregister_filesystem(&smb3_fs_type);
++	cifs_proc_clean();
+ 	cifs_release_automount_timer();
+ 	exit_cifs_idmap();
+ #ifdef CONFIG_CIFS_SWN_UPCALL
+@@ -2136,7 +2135,6 @@ exit_cifs(void)
+ 	destroy_workqueue(serverclose_wq);
+ 	destroy_workqueue(cfid_put_wq);
+ 	destroy_workqueue(cifsiod_wq);
+-	cifs_proc_clean();
+ }
+ 
+ MODULE_AUTHOR("Steve French");
 -- 
 2.53.0
 
