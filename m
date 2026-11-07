@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062786;
-	b=VB7mZ6j532VHQJCp9uGrp+YUGRAGNTRyz16+mX8ZuUImGfrrXVpO1D9+jaKI+xH8fXH0
-	 04eIZijYBddktC46yvLPiTKcukdEdjQ8r9DjzFJtacHRpQgsHHRL3+9aJATnuGEQi+Qok
-	 a5wKbZ9k8wMZrezEBZvjQyLv3DfO/ECYBMk1n8ajignB5G82C4RCFVLDAS/5amqreLzgL
-	 EUos+ftTaKCcEqaoPnAgHq5lIfOX04LGlWedE/DJwyIW9DZ5rGJIST82cuf5+PqCAP9v/
-	 n79KQWQyAaC6FxF7cq2sRai26q7/abhpfQnQ0BECagKQck2r+DsRAV+J0+V9GANTKnA==
+	t=1794062788;
+	b=XAeM2Z6otAiA6Ct1mG4SMksNX9LcWdd20nh78C0ZbIfqcqV8uagKUPUdFA7sPaQu+Ryp
+	 dgEuavXcMd9lS/xwnANixLpYBgY/WIXSfZBp3D81wr5GP4cXMm1kxRFPXwOFLBN6pYAhD
+	 H6DHMev4lxPQA/ZODVmip7phesIDSKaaomrMcjHApeLzMF1yMg4TP81WTPhup3GnRJKmU
+	 XSNnlWEcFDevhC2/wcG7Gp3yVfDExePJZbaU2Trh/xDAchQ+Z6BzAhIMc0nK72Epm+enx
+	 bP8f3LgdVbkoXXZtPXvHf4u6e1M8fNXBn/xzeJv9rWxbWYjD505kQVhqBHqV6fKkyQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062786;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062788;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2z2AX5NWl0BEmuw7Gxecw806Zqs7Z3qX4sIlGURSSqg=;
-	b=ZiSbNoM8GLfAXLsFXCjHoceiKZsv1/eQJjqCi8nWFbfvul2KOaWDV/uo554GXFPpdKYE
-	 WNJG4tMnYwIzlAEuH40EA/zl0E5FqcvBHbJfxBM48zTPacBmwXFb3y4fjdQ2K1xAkgOju
-	 leLdn/gg/KVxZ9JkB+c3e99ag8tGpp8+eSwV+NUIV7R55OupCKmRX8aquqHGBM0CkG1sr
-	 +RH2R+rCindwep1c/iSnuMhEL8A3n+wlufkBIjRIu6gvMYL5GasU/WoZWM7JmXAHtoCw5
-	 7GkBamfKa4NAmo5ipRHLrAz3txL/oB9uWVwiFL70xpQf8KNQ2RkBvhyV3/MHwqFYZHQ==
+	bh=W3AEUUs+AI0hYnTl6ovtBxpw0osmgL4MKy88ZUa+1Mw=;
+	b=mdL2arSgflSSDu2BxTlBNiDGdz8iJdcFDY2GjxvUWH3a4N3W8wB8Xr+CRmnrhaBYdQvM
+	 TddLlyMpR0lhDi/MlElAQngcNo/lssMaVIv/QBlAvnolYkCGHN7YQPMdC+F69i5q1vGBX
+	 bSBiyNC05mYCHpO/qlytIAOrRpCW0NQBRO//ZgVOq31HBsY1YHjF4J3TNezwYww1VHapm
+	 dApuMKDVF14nJ7Nsx1eVkjwaTZ6uQ/nO2oxhULAhO9437IcwhucalVldk7iJloHPD5urE
+	 jWts3ndTXjAPzLifcqYnOAvNKUJYk+pPBLMxVyjZ6YTUgUBFymG57y0JUcwWWz5z+yA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzSab9VJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0bQi5QG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318AD606A326;
-	Sat,  7 Nov 2026 14:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B480A606A334;
+	Sat,  7 Nov 2026 14:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzSab9VJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DC41F0089F;
-	Sat,  7 Nov 2026 14:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0bQi5QG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E411F0089F;
+	Sat,  7 Nov 2026 14:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062786;
-	bh=2z2AX5NWl0BEmuw7Gxecw806Zqs7Z3qX4sIlGURSSqg=;
+	s=korg; t=1794062787;
+	bh=W3AEUUs+AI0hYnTl6ovtBxpw0osmgL4MKy88ZUa+1Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dzSab9VJxmElBcC9ojvdmFQ+gN8bxY06Kd58My+0gh9+lGrxJePlLq7hQXMeeEKoX
-	 DTfuO5a2UlpkQmp2XurMa32lrZS5597mPPHHxEWzUb3Vxv7OFFzYnRfLqNk7DK+H2t
-	 Ye+frTzMhEIuSIVBQQJzk/isUMmJTLIjE9FHoD6o=
+	b=O0bQi5QGGE+97ygNjnQh5JtZ8IZ0CQzJkk02wYKdavgpHhEEg3idyzkXLFTYYxrvv
+	 WNGejvce+RKxqp13/yKqEbSwCNyW3kbOBWL/04ZW9xASU9t8Y9bEEmGYL9WvCyDl0A
+	 v2T+Ysva0HN19K3EmBdWHFU9baryRDCStML/yufo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Wang Yan <wangyan01@kylinos.cn>,
+	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 093/869] ASoC: codecs: lpass-wsa-macro: use v2.5 Compander1 addresses on v2.5+
-Date: Sat,  7 Nov 2026 08:46:15 -0500
-Message-ID: <20261107134855.852576320@linuxfoundation.org>
+Subject: [PATCH 6.18 094/869] perf powerpc-vpadtl: Fix off-by-one in auxtrace_info minimum size check
+Date: Sat,  7 Nov 2026 08:46:16 -0500
+Message-ID: <20261107134855.880139357@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,98 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Wang Yan <wangyan01@kylinos.cn>
 
-[ Upstream commit 233d36a96009682208cc4ca1139b9e5641a8bf09 ]
+[ Upstream commit d9c7e2ede92ce258a5d4a6cbc55f75acd379c97d ]
 
-wsa_macro_set_spkr_mode() unconditionally writes CDC_WSA_COMPANDER1_CTL3
-(0x5CC) and CDC_WSA_COMPANDER1_CTL7 (0x5DC).  On v2.5+ silicon these
-registers moved to CDC_2_5_WSA_COMPANDER1_CTL3 (0x5EC) and
-CDC_2_5_WSA_COMPANDER1_CTL7 (0x5FC); the v2.1 addresses are dead on
-that hardware, so the update_bits() calls take a bus error:
+min_sz is set to sizeof(u64) * POWERPC_VPADTL_TYPE, but the code reads
+auxtrace_info->priv[POWERPC_VPADTL_TYPE], which needs at least
+POWERPC_VPADTL_TYPE + 1 elements.  POWERPC_VPADTL_TYPE is the first
+enumerator of the priv index enum (0), so min_sz evaluates to 0 and the
+check validates only the perf_record_auxtrace_info header itself.  A
+PERF_RECORD_AUXTRACE_INFO event carrying a zero-length priv array then
+passes the size check, and the subsequent priv[POWERPC_VPADTL_TYPE]
+read runs one u64 past the validated region.
 
-  wsa_macro 6c90000.codec: ASoC error (-5): at
-    snd_soc_component_update_bits() on 6c90000.codec for
-    register: [0x000005dc]
+This is the same off-by-one fixed for Intel PT by commit c4362d5e1a5e
+("perf intel-pt: Fix off-by-one in auxtrace_info minimum size check")
+and for Intel BTS by commit b9fb8225951c ("perf intel-bts: Fix off-by-one
+in auxtrace_info minimum size check").
 
-The flat regcache had been hiding the read side of this by returning
-the zero-initialised cache slot instead of doing a bus read, so the
-error only becomes visible once the cache reports the miss honestly
-and regmap falls back to a real bus read.
+Use sizeof(u64) * (POWERPC_VPADTL_TYPE + 1) so the highest accessed
+priv index is covered by the minimum-size validation.
 
-Select the correct address for Compander1 CTL3/CTL7 based on
-codec_version.  The Compander0 and Boost registers used in the same
-function have the same address across versions, so they stay
-unchanged.  Also collapse the two mode branches to a single sequence
-with mode-selected values, which is what the switch was doing anyway.
-
-Fixes: 727de4fbc546 ("ASoC: codecs: lpass-wsa-macro: Correct support for newer v2.5 version")
+Fixes: c4bbd4ec2e50a9ed ("perf powerpc: Process auxtrace events and display in 'perf report -D'")
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
+Cc: Athira Rajeev <atrajeev@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260908082806.648797-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/lpass-wsa-macro.c | 42 ++++++++++++++++++------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ tools/perf/util/powerpc-vpadtl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
-index 8350b02b575fb..f094225ba40a4 100644
---- a/sound/soc/codecs/lpass-wsa-macro.c
-+++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -1129,27 +1129,35 @@ static const struct regmap_config wsa_regmap_config = {
- int wsa_macro_set_spkr_mode(struct snd_soc_component *component, int mode)
+diff --git a/tools/perf/util/powerpc-vpadtl.c b/tools/perf/util/powerpc-vpadtl.c
+index 55b9b6e070746..eacc845ebda26 100644
+--- a/tools/perf/util/powerpc-vpadtl.c
++++ b/tools/perf/util/powerpc-vpadtl.c
+@@ -681,7 +681,7 @@ int powerpc_vpadtl_process_auxtrace_info(union perf_event *event,
+ 				  struct perf_session *session)
  {
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
-+	unsigned int comp1_ctl3, comp1_ctl7;
-+	u8 comp_val, boost_val;
+ 	struct perf_record_auxtrace_info *auxtrace_info = &event->auxtrace_info;
+-	size_t min_sz = sizeof(u64) * POWERPC_VPADTL_TYPE;
++	size_t min_sz = sizeof(u64) * (POWERPC_VPADTL_TYPE + 1);
+ 	struct powerpc_vpadtl *vpa;
+ 	int err;
  
- 	wsa->spkr_mode = mode;
- 
--	switch (mode) {
--	case WSA_MACRO_SPKR_MODE_1:
--		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL3, 0x80, 0x00);
--		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER1_CTL3, 0x80, 0x00);
--		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL7, 0x01, 0x00);
--		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER1_CTL7, 0x01, 0x00);
--		snd_soc_component_update_bits(component, CDC_WSA_BOOST0_BOOST_CTL, 0x7C, 0x44);
--		snd_soc_component_update_bits(component, CDC_WSA_BOOST1_BOOST_CTL, 0x7C, 0x44);
--		break;
--	default:
--		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL3, 0x80, 0x80);
--		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER1_CTL3, 0x80, 0x80);
--		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL7, 0x01, 0x01);
--		snd_soc_component_update_bits(component, CDC_WSA_COMPANDER1_CTL7, 0x01, 0x01);
--		snd_soc_component_update_bits(component, CDC_WSA_BOOST0_BOOST_CTL, 0x7C, 0x58);
--		snd_soc_component_update_bits(component, CDC_WSA_BOOST1_BOOST_CTL, 0x7C, 0x58);
--		break;
-+	/* Compander1 CTL3/CTL7 moved on v2.5+ silicon. */
-+	if (wsa->codec_version >= LPASS_CODEC_VERSION_2_5) {
-+		comp1_ctl3 = CDC_2_5_WSA_COMPANDER1_CTL3;
-+		comp1_ctl7 = CDC_2_5_WSA_COMPANDER1_CTL7;
-+	} else {
-+		comp1_ctl3 = CDC_WSA_COMPANDER1_CTL3;
-+		comp1_ctl7 = CDC_WSA_COMPANDER1_CTL7;
- 	}
-+
-+	if (mode == WSA_MACRO_SPKR_MODE_1) {
-+		comp_val = 0x00;
-+		boost_val = 0x44;
-+	} else {
-+		comp_val = 0x80;
-+		boost_val = 0x58;
-+	}
-+
-+	snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL3, 0x80, comp_val);
-+	snd_soc_component_update_bits(component, comp1_ctl3, 0x80, comp_val);
-+	snd_soc_component_update_bits(component, CDC_WSA_COMPANDER0_CTL7, 0x01, comp_val ? 0x01 : 0x00);
-+	snd_soc_component_update_bits(component, comp1_ctl7, 0x01, comp_val ? 0x01 : 0x00);
-+	snd_soc_component_update_bits(component, CDC_WSA_BOOST0_BOOST_CTL, 0x7C, boost_val);
-+	snd_soc_component_update_bits(component, CDC_WSA_BOOST1_BOOST_CTL, 0x7C, boost_val);
-+
- 	return 0;
- }
- EXPORT_SYMBOL(wsa_macro_set_spkr_mode);
 -- 
 2.53.0
 
