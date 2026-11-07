@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063769;
-	b=SsNrPvePtCzpi+B/Id4PFiAkqC2Rqyjqr+uSQtllhTfvIVNeH5VeQyh3ODu/nc8AvYUo
-	 q0OcGa4fnXECOwGgGCwidtE/LeynQM27yCNYv78TRp8ocwR2PumICD5bO84RHjteDYXTu
-	 3OjpESpp6o7g9OBCVqsCxE+UOHu6UZzLoiQZS+HmlevpmjBWC8fx534prS9bMY5e4aUAo
-	 JxCXyxkCiMwYwps4A7QcmYcLCKeq7pfgP24+2bCtKO8gS4PnjWWENRLxv/s9J75fEZlEw
-	 dyXtoYreJfRFoQOBC71/i2CyFRd32o6pkA6Dyyc0GokhzVbcJzpC+dVnwSMqEwAvZjQ==
+	t=1794063770;
+	b=nHYcsQokqcb9XCRhK1FPY57DMHa328rLTsmM3KSBqa+3BHCPwZnZm2yc14cHGOJ68sqb
+	 s54/WDrVqfBZnRktXiDiEbJh++EIYINQV+ZLXJcFZk6r6+Jr7DE+zrsHo6IxJQembfxyu
+	 dDzDzUguzw8WyVrkEXrXmpMeOU90bXt6qsGpWhjKOe/tfbPVO6mxJ1qOtWXbfrHNSU/CA
+	 EjpbhndcYvwfcAo2vhPphXByQHarJphez4cjXqva1lHBUksCalJuo6igD7nqV++43bTiR
+	 hjMbtqiUXwqEkvQ6kBSooKlcEruP7vy+ncnnN0lw/I3+ZggV9jmSb+hIXy/Y0rwySaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063769;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063770;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E3M74m8FYOfvLFfehYzTcvy7QUvtMQy6Ze6cAppeah8=;
-	b=VEtRcBuOVtfB7s7Hg+9+nYF1aJe/zf48ZPWlLBwZA0opMXFlBvWPabI86fnOywWALrZa
-	 v0XEDhFpvvVvFMsaBZYMJP89GoESYY6EOUngmWGtKh4Ln8h6YGFpB35w/H9i0Z/MyS8Ce
-	 LVBLY2GYPaApNEUF2+fRxUKfQSwSs8MTjpnhE3YdBt8hWOeX+TjpkDhYhO2kGB1eVe7wq
-	 Xyt6wiu9BMK5KZt+n+7M9owCGHBz0ZeA4Z0R0NAEc0UiiKXiNsgZLs/ixKulT9lpMoylS
-	 a/5lLNH+bnb5voTvcYbCqH07dRJbQnwFCZhRuMkuojmYXF54aQOeUKkHn5/33JUQBRQ==
+	bh=29dvBlNx4H/lerupypcKdG3quCT9uKKusC71fR/FO5A=;
+	b=B1kB5o9Og1jADakxJO29FUV6hW201DufsRpJJo7gym2jRcPwfOMC8HST6ojeb6OQeUm+
+	 jFNCWKFAOJgA7aQiBFjmxnc3PegLubSJ6BVY1QfTXSLNG34BQ+HUNRIynYaM+N4iIElxy
+	 9lNUl3YCOeDZwV2FzHhyxPG9fKVXD0OnPVpWKDAehnNrhLdEqMfINPdlEq8EJVSlbvJeG
+	 HpoeoE6gRJ+GY3RQ2VCzfQN5ymuYUYI5128VntzLmSTMjZesZ8XjfG745ikVO2hAUuyKN
+	 nNHsHJgPA5ut+GCyojCrSUA2FblL/HgDUDRHE3eQi4JrThn3xeF+iXidAACk547kOvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iia0C1fD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AdBDZYZE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B85960A261D;
-	Sat,  7 Nov 2026 15:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E4F60A261D;
+	Sat,  7 Nov 2026 15:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iia0C1fD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECADD1F0089F;
-	Sat,  7 Nov 2026 15:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AdBDZYZE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256121F0089F;
+	Sat,  7 Nov 2026 15:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063769;
-	bh=E3M74m8FYOfvLFfehYzTcvy7QUvtMQy6Ze6cAppeah8=;
+	s=korg; t=1794063770;
+	bh=29dvBlNx4H/lerupypcKdG3quCT9uKKusC71fR/FO5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iia0C1fDh7r7iWnO/8TKP46psRsnVzCdE9Y+0msrBmMe0ryGdsw3KcS2r1Joq8+WO
-	 jfnFt+RDQCfAfONSKHkynty9G0HsL5sl+850wOJ446/uVSM0c+Vfw6yuBcoTusQalu
-	 blvwUwOoNSwJ54cXW3aciaOvmAWDrH9Hl5FCYpgk=
+	b=AdBDZYZEUJDN2ymQ6BLNWOaZBfN2M3odcjtgjXtmbJsPlIGcRkS0yO0wFyySh5x+N
+	 ewUks5PM4hm6fj7UI0yDf9SEWotcZZuelYuwNdDXGDmt4U3EcMOw8NcAqD0fYEnpzD
+	 WGScxnBvAuZ21hbh1ad76QJVrZmtiJ/ZWjfzfz9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 861/869] iov_iter: fix NULL deref in iov_iter_alignment()
-Date: Sat,  7 Nov 2026 08:59:03 -0500
-Message-ID: <20261107134922.009452319@linuxfoundation.org>
+Subject: [PATCH 6.18 862/869] splice: avoid stale f_pos writeback on error
+Date: Sat,  7 Nov 2026 08:59:04 -0500
+Message-ID: <20261107134922.046322380@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,56 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit a290a9e5cf5fbba05d6c59b94b36d00f4fc15ef2 ]
+[ Upstream commit 79b496ebe382866e3a05090b7dc9ae95e85e65b2 ]
 
-Since commit 111a12b422a8 ("io_uring/rsrc: reject zero-length fixed
-buffer import") io_import_fixed() hands out an empty ITER_BVEC for a
-zero-length request. Its count is 0 and its bvec array is NULL.
+do_splice() snapshots an implicit file position before calling the splice
+helper. Since splice does not take f_pos_lock, another operation on the
+same open file description can update f_pos while the helper is blocked.
+If the helper then fails, the unconditional writeback restores the stale
+snapshot.
 
-iov_iter_alignment() only checks the count for ITER_UBUF. For ITER_BVEC
-it calls iov_iter_alignment_bvec() and the do-while loop in there reads
-bvec->bv_len before it looks at the count. So it dereferences NULL.
+For a directory without ->splice_read, a file-to-pipe splice fails with
+-EINVAL. A concurrent directory mutation and getdents() call can advance
+f_pos and refresh the filesystem's revalidation cookie before that failure
+restores only the old position. The next ext2 readdir can then trust an
+offset inside a directory entry and copy data from the adjacent page to
+userspace.
 
-btrfs checks the alignment of a direct read with iov_iter_alignment()
-before it looks at the count and f2fs does the same. So any user that
-can open a file on btrfs can oops the kernel with a single zero-length
-IORING_OP_READ_FIXED on an O_DIRECT file descriptor. With IOSQE_ASYNC
-the oops happens in an io-wq worker. The dead worker stays on the worker
-list and when the task that submitted the request exits io-wq writes to
-the freed task_struct of the worker. That's just fallout from the oops
-though.
+Only update an implicit file position when splice returns a non-negative
+result, matching read and write. Keep explicit offset updates unchanged.
 
-Empty iterators with a NULL array aren't unusual. afs, tls and tipc
-create them as well. So leave io_uring alone and make
-iov_iter_alignment() return 0 for an empty iterator of any type.
-
-Fixes: 111a12b422a8 ("io_uring/rsrc: reject zero-length fixed buffer import")
+Fixes: 7995bd287134 ("splice: don't pass the address of ->f_pos to methods")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Link: https://patch.msgid.link/20261029-work-fs-ai-fixes-v1-3-88f22792f6f7@kernel.org
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20261018051708.2422394-1-4ncienth@gmail.com
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/iov_iter.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/splice.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/lib/iov_iter.c b/lib/iov_iter.c
-index 4bc7c19337558..b2eb629497a92 100644
---- a/lib/iov_iter.c
-+++ b/lib/iov_iter.c
-@@ -836,6 +836,10 @@ unsigned long iov_iter_alignment(const struct iov_iter *i)
- 		return 0;
- 	}
+diff --git a/fs/splice.c b/fs/splice.c
+index f5094b6d00a09..8ac45441e2193 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -1351,10 +1351,10 @@ ssize_t do_splice(struct file *in, loff_t *off_in, struct file *out,
+ 		ret = do_splice_from(ipipe, out, &offset, len, flags);
+ 		file_end_write(out);
  
-+	/* An empty iterator may have no segment array at all. */
-+	if (!i->count)
-+		return 0;
-+
- 	/* iovec and kvec have identical layouts */
- 	if (likely(iter_is_iovec(i) || iov_iter_is_kvec(i)))
- 		return iov_iter_alignment_iovec(i);
+-		if (!off_out)
+-			out->f_pos = offset;
+-		else
++		if (off_out)
+ 			*off_out = offset;
++		else if (ret >= 0)
++			out->f_pos = offset;
+ 	} else if (opipe) {
+ 		if (off_out)
+ 			return -ESPIPE;
+@@ -1375,10 +1375,10 @@ ssize_t do_splice(struct file *in, loff_t *off_in, struct file *out,
+ 
+ 		ret = splice_file_to_pipe(in, opipe, &offset, len, flags);
+ 
+-		if (!off_in)
+-			in->f_pos = offset;
+-		else
++		if (off_in)
+ 			*off_in = offset;
++		else if (ret >= 0)
++			in->f_pos = offset;
+ 	} else {
+ 		ret = -EINVAL;
+ 	}
 -- 
 2.53.0
 
