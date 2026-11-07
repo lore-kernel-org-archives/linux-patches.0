@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063860;
-	b=Sko6U0o/1DWIDEI3z8nXpHuNxbkxRRaCfo8F/YYPoRby5G+eiLEeDKvmvM08nnutnCBs
-	 HApLPtREawxWV86OMq5RWRxjmWrnx8tB5VXlSkW0vQzZFNA0RNhJXg0GDyL7OM+G8EJbE
-	 l1GU3rdiCBTjF1N01vvsX2rGUm9aQ1F6fjm+muCWyThiCl2haW9HwhKMzVRSxJNPgGjpq
-	 VgATbHbZhiJlV3lCoGt4upqkd+YsJ4Tt5yg0HfZ+rX5Kp//YS0QoLL76NPGZaXDcJTPHx
-	 3UDpQtKqNSzTtEYShVtJnAfsFbUnGVZMy91sIfYdf1NE7OUQCQmWc8h9go9AeOsvp8Q==
+	t=1794063861;
+	b=TFZ+U9EjFJj7jf4oGtkvgo26qKRo2bj/nqcsVjnqrspWVmkABtM2/LXAP0WaBYnTqyfp
+	 IK9puu+dQ8t1nszm8CjRg/tMV0PLHXvpgYq2E1Mia+T/oLTtHifq8ioXZukVrajrBMJ3W
+	 aEVgGC44P8bmAaNuuYrIXgRlTnNhnLIZI2yOqqdFjLUE7oQqPX32Iwgg2uZchhJrFS4K/
+	 M8TpjmOmvocErVZKLCNOeku6s47n8iNmCCZimL+LdSjSiAYAfx5vQP2g83pkUj66pX+vh
+	 /HB50NOWiJLKC3VBuvfGeVOM5T0BLmfReprQAOPMpCsAkTZ9eyJYlqieWMh/QDqfqWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063861;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5h9vuvEqUCqSsD2awmeSgm7Ub1uIHVBE6QXVF38Rmzs=;
-	b=wafuNkWCdHIyqvQrDH1+k++4U72GYP4h5vcCGT9+AdhXpVOZwfFdZzO/hyVODzqqqNCe
-	 JVsE2hUZ/q4PcrE/UFV7N+dkKVURYdMwS3+u+rvUk73tn720TqL1LDo5ifFpetw78nk5C
-	 dLxDdhaMRxb/JhMrrpAnTU4TMdNx6SZgClJfjw119vwXKk4ozvaXq5oR5l8BELuKHHAuw
-	 oEFA9BLnofXimGFfn2VoQM1aqv73NczWl80uzNtrzQ98oqcb5CDpS0orS3oPwexqGe1lM
-	 IgrH99hYSBQtq5/GncFOuMgyn7/JZ+WHBHqcSh47pDZiYBdPAZ1YXKrQVhf8CNO4RXg==
+	bh=cWo4YV1LWp1wq6Kdz2GN/6JOmPqB0Znkm+uaRXtd5FQ=;
+	b=RhkaAPf7L13zRWgRMMObSI/QVInMVjHsimdP/KuxW9XNdz4TL8BchCxRwXFGV5Y6nRen
+	 IeSGuxVIuDY4b3C7h5LeEA5XLr1jEueafUNtUeCu74C0IX6EJtG1yPdZmOi7TgDBRswk6
+	 uGujvfTMjjctuI08a3gXGoi0YZm9iwx6yBE6St8eI/zTQc7c7KSpLYl6WU25VnF5s/d6Q
+	 sFppd28cuN2aj/C5P1zdYPuRwgL2BYXCSQhwsbf+l3B8nSOVWgCPz9Iaunp9U4GRCPmGm
+	 djbAHi8l7MGHtRmBwr/gTkZC4Fwvi4kCZP3wmFU+Kx/+RW7xLp9ImC9ukYIaYgXiJ5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukYznIaP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jag2cmCt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25D7606A9CA;
-	Sat,  7 Nov 2026 15:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2460E606A9FB;
+	Sat,  7 Nov 2026 15:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukYznIaP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEEE1F0089F;
-	Sat,  7 Nov 2026 15:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jag2cmCt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27811F0089F;
+	Sat,  7 Nov 2026 15:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063859;
-	bh=5h9vuvEqUCqSsD2awmeSgm7Ub1uIHVBE6QXVF38Rmzs=;
+	s=korg; t=1794063861;
+	bh=cWo4YV1LWp1wq6Kdz2GN/6JOmPqB0Znkm+uaRXtd5FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ukYznIaP9ANNVKVctQp2NejAF+Jr0ii4T29e82HukeiE8MuYQvgnxVVCCnwfIXhHN
-	 WFum5Rhejzrab7KPLq8vG/0YJLfTq5FX98ERsr0CRAi8/gxS6ulTlNwWHNTyHrHqym
-	 mWPSJeCDQTRVRs5x3hKx/+Eare2YZUxEBS90b1eM=
+	b=jag2cmCtbCaGCUIsTQsMiGoVe6dO5ntAtV2zk5848ISFowNc+PRjuOrBo5R9/xFUx
+	 QSS1wSvQfmu92mIHSW8UkY/jVfVrgz3sEYVvWu0sayebMVr+QDKV1sx/O6/B3wFz/5
+	 YlC0fccN76UDI4pgxyxi2NNgYxqx5/2K+l085knY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0067/1257] arm64: dts: qcom: sdm845-google: Set i2c3 frequency to 400 kHz
-Date: Sat,  7 Nov 2026 08:39:23 -0500
-Message-ID: <20261107134941.246327059@linuxfoundation.org>
+Subject: [PATCH 7.3 0068/1257] clk: mediatek: Add missing depend for COMMON_CLK_MT8173
+Date: Sat,  7 Nov 2026 08:39:24 -0500
+Message-ID: <20261107134941.271019015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,41 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit a317bee7cd894188d99b4edd841744f70ed9cd8c ]
+[ Upstream commit 84964d0ce3faed815e1b8e048ce5ce1c93badb18 ]
 
-The Device Tree found in the downstream kernel for this device doesn't
-explicitly set a bus frequency, resulting in 400 kHz being chosen.
+PM_GENERIC_DOMAINS_OF depends on OF, by adding a select to it without
+adding a depend on OF, the following warning is triggered:
 
-This upstream DT also lacks it, however that results in a different
-default value of 100 kHz. Set it to 400 explicitly to match the
-downstream kernel.
+WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS_OF
+  Depends on [n]: PM_GENERIC_DOMAINS [=y] && OF [=n]
+  Selected by [y]:
+  - COMMON_CLK_MT8173_MFGTOP [=y] && COMMON_CLK [=y] && (ARCH_MEDIATEK || COMPILE_TEST [=y]) && COMMON_CLK_MT8173 [=y] && PM [=y]
+
+This patch explicitly adds a dependency on OF to solve this issue.
 
 Cc: stable@vger.kernel.org
-Fixes: 10f91b0dfaf6 ("arm64: dts: qcom: sdm845-google-common: Enable NFC")
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://lore.kernel.org/r/20260902-sdm670-sargo-nfc-v1-1-bed1cbbffc46@ixit.cz
-[bjorn: Updated commit message based on suggestion from Konrad]
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: ebd0b73d2137 ("clk: mediatek: Add mt8173-mfgtop driver")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/mediatek/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
-index 9e952f9862f24..f73d4ea57705f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
-@@ -392,6 +392,8 @@ &gpu_zap_shader {
- };
- 
- &i2c3 {
-+	clock-frequency = <400000>;
-+
- 	status = "okay";
- 
- 	nfc@28 {
+diff --git a/drivers/clk/mediatek/Kconfig b/drivers/clk/mediatek/Kconfig
+index b059d44577f1e..ba1ca9c90dbf1 100644
+--- a/drivers/clk/mediatek/Kconfig
++++ b/drivers/clk/mediatek/Kconfig
+@@ -541,6 +541,7 @@ config COMMON_CLK_MT8173_MFGTOP
+ 	tristate "Clock and power driver for MediaTek MT8173 mfgtop"
+ 	depends on COMMON_CLK_MT8173
+ 	depends on PM
++	depends on OF
+ 	default COMMON_CLK_MT8173
+ 	select PM_GENERIC_DOMAINS
+ 	select PM_GENERIC_DOMAINS_OF
 -- 
 2.53.0
 
