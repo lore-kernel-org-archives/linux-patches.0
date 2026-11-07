@@ -1,57 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064485;
-	b=zAWJz8ZVbFItkgvb7sGAPy9LVpz8RwjzTy+KYmQZbTpXFpAJpcXTT8aJpIN4jCENyvqG
-	 He28Uc5jQHEEL9KX+65m+bKwEWoY181lEJC+RZzs9bY/o1R3pR0XASDycOOb7cvjvtGmn
-	 MT/nQ4E6/IroDobULNwTQlbaIKjEYEzWEMWA7ysbd7kkeSw5iU/w+ovw9Wqek02KzV2KL
-	 FYwLNeRd0DGWGcJW/U+id/QBQKVLRyYFBxnGvc5/M16Iltb2lDjR12/ZuIn0FUjbXYWag
-	 DXvwaeaZL3erY7xLLAlDyaPTqRI3J6cNILijCO+69j9uHJ0kqFdGU3uFeMsrZu1KkFA==
+	t=1794064487;
+	b=ly2u9oUXDAELyWJRmMiqq70t68fDsWPrPnis/R5Iwh4GkqVnWCF64ihwvLn2gEgRUD9c
+	 vWQjmaQeRGE+PFE8txSp9Mctnwdf0E+hRBSR0JRACHajzc1gmvCdD2yr/2Pfsc7jZ9qkv
+	 DG57N18IAYJofSHSgTYvTY+mkSVDnjPSC6ZJMH1aSvzcc6VMu/UnoygJ7UNDcK7cfoyga
+	 dlZPSlkm7QI0w4Z7cex60mMCTpDUxKm1sSnDoHuJTZdpwFDZKJCCI7QJjy952FEgDVCc4
+	 LdxKNZ8dv1xNsLSxOmiYHva/yvSdd6j/zh+v26bocl7UN0f8UxkBuv/uVaftwRsnFHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064487;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w1wQle/s8r1t5OwoRqtzM5dNmr06vNU4kjZuvCBu7tk=;
-	b=IbRa8sC81sA+dV+OvodhxwZS9DgS3W8yuh267PVGaq0ZyJK5QPSNewL8hrpATF3aHFEF
-	 52UKqo57Y9BVeNiU7rN76gmI5sGfrqYCXxWYLO5d8nMX9Ndqwi8cM92TYZGurXES/DYSD
-	 V2o7/fAptfM2FF0SdxI8aiYtcWlzB8kfXlLaXhIGDbGygSlzQzbvWdF//CoZav7zfHheD
-	 eoMw6eEGSjquLhYwVgNynieB7BzbSRKW5x6mJknS+9E9gZyfd2I+aKrgA+txeixEAfxhb
-	 wmK0hiQaoDBxv1KEqUbbG3gJrGjVP2cHAdMQDjNGFrArmPdS8kWSaV1TV4FbDJOkoyw==
+	bh=BwQpG2Hcb8EfCi9QDtafX/IeisbFnQAmr26k8o9cy+s=;
+	b=iqaxkeIb8csJbDN9lxQRy/RMljZ+bq1Ku3Pa4OoHjcmesVRifv9/nHayem42vVdOyrQL
+	 Ux3L95G/y91E8VNgubxfiPAAd0VX6zDs57p1Uay7P6M10QEdriCxgL3Gk0yewDZNMlwbD
+	 7TxQuszxA2BO9sECxioYsGGkuuRJfUqFtQWqhWoFNlMKZ0RUPkcvAkf9RzOUIFwdKgoXG
+	 N9KFQKwaDBOUwJ22/8KjvB6EH+pTOKYP+rVKlIB+/2Ml/+56W3pcPMkN+sD7vE2jf2saq
+	 mbM3aViI2AFGqZrXHO9jWOJCyaZnJrEQzAnTElr4kUxoZfgtGwoMJE1q+X5Se0DTIfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DtLLIg5B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eHojYmN9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F839606A9F0;
-	Sat,  7 Nov 2026 15:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CCB606A9EE;
+	Sat,  7 Nov 2026 15:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DtLLIg5B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB301F0089F;
-	Sat,  7 Nov 2026 15:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eHojYmN9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B1F91F0089F;
+	Sat,  7 Nov 2026 15:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064485;
-	bh=w1wQle/s8r1t5OwoRqtzM5dNmr06vNU4kjZuvCBu7tk=;
+	s=korg; t=1794064486;
+	bh=BwQpG2Hcb8EfCi9QDtafX/IeisbFnQAmr26k8o9cy+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DtLLIg5BRzxLu8tnWnxr1BXz00QXGJszovFdcgbOMpGL55LnruO4XlC83zIHQ/ub7
-	 iKfMoV6T7/Qrdr7r9wi02DXTbzoef1jqDlqklZGEYPvBlpNOxdhXWSlrCUfsJWLREX
-	 EnKQ3rL/38cT0/uVnS1ZIGGPae32YdsTUB44boJk=
+	b=eHojYmN9sKErBvx1Ky/AiIvjNqeJBc17lkT4OIDcMjrdlzLHkpUx4TJzmQKb/3esC
+	 ITLAOaPn3A46bjjICh4DG8rhmTHUMUiSKb4r+A/aFtSVmWAoRm4AFwE9ZfLnm58Dve
+	 GMdwGeYb5qW8zMx7yPPF2luU7t7ssS1WqRyeoAaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Liang <mliang@purestorage.com>,
+	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Akinbou Mita <akinobu.mita@gmail.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	syzbot+805630f1453e490427fa@syzkaller.appspotmail.com,
+	Alan Stern <stern@rowland.harvard.edu>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0522/1257] fault-inject: fix dentry leak
-Date: Sat,  7 Nov 2026 08:46:58 -0500
-Message-ID: <20261107134953.843025112@linuxfoundation.org>
+Subject: [PATCH 7.3 0523/1257] USB: gadgetfs: do not WARN about excessively large memory allocations
+Date: Sat,  7 Nov 2026 08:46:59 -0500
+Message-ID: <20261107134953.868347937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -73,159 +71,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Liang <mliang@purestorage.com>
+From: Zi Yan <ziy@nvidia.com>
 
-[ Upstream commit ceb43516a9aae0d969a4ec5ab40d45bd09e64229 ]
+[ Upstream commit a156148976eac47bee7210097afbb609cafe88b6 ]
 
-fault_create_debugfs_attr() has always taken an extra dentry reference on
-the created directory (attr->dname = dget(dir)) so that fail_dump() could
-print the name via %pd from any context.  Nothing anywhere in the tree
-ever calls dput() on attr->dname.
+GadgetFS passes an excessively large user input len to kmalloc and kmalloc
+gives a WARN (see below for details).  Suppress it by passing __GFP_NOWARN
+to kmalloc used by both ep_write_iter() and ep_read_iter().  Follow the
+same method as commit 4f2629ea67e72 ("USB: usbfs: Don't WARN about
+excessively large memory allocations").
 
-For callers with a matching teardown, that unmatched reference causes one
-dentry plus its attached inode to leak per fault_create_debugfs_attr /
-debugfs_remove_recursive cycle.  simple_recursive_removal() drops
-debugfs's own +1 ref on the child dentry, but the dget()'d ref keeps its
-refcount at 1: the dentry ends up unhashed but pinned, and its inode is
-never freed.
+kmalloc is used to allocate physically contiguous memory for kernel
+allocations.  For requests larger than KMALLOC_MAX_CACHE_SIZE, kmalloc
+uses the page allocator and can only support up to KMALLOC_MAX_SIZE.  For
+request sizes bigger than KMALLOC_MAX_SIZE, the page allocator can emit a
+WARN because kmalloc allocates an order greater than MAX_PAGE_ORDER.
 
-Boot-once callers (mm/failslab, block/blk-core, etc.) leak exactly once at
-init and never destroy the tree, so the impact there is bounded.  But
-per-lifecycle callers (drivers/nvme, drivers/infiniband/hw/hfi1,
-drivers/mmc, drivers/iommu/iommufd, drivers/media, drivers/misc,
-drivers/gpu/drm/msm, drivers/crypto, net/sunrpc) leak on every
-create/destroy cycle.
-
-We observed this in production: an NVMe/RDMA host repeatedly reconnecting
-to a target that rejected the CRTO Property Get went through ~50 nvme
-controller create/destroy cycles per second, and dentry and inode_cache
-grew by ~13k pinned objects per 240 s -- unrecoverable through
-drop_caches.  Byte math matched a per-cycle 1-dentry / 1-inode leak from
-the "fault_inject" directory dentry.
-
-Fix this by not holding any external reference in fault_attr.  Embed the
-directory name as a fixed-size char array (FAULT_ATTR_DNAME_LEN, 64 bytes)
-inside struct fault_attr, copied by strscpy() at
-fault_create_debugfs_attr() time.  fail_dump() prints it via %s.
-
-Advantages of an embedded array over kstrdup() + kfree() paired with a new
-destroy API:
-
-  - Zero API footprint.  No new export and no caller changes required:
-    callers already own their fault_attr's memory and free it when
-    they are done, and now that suffices.
-  - No allocation on the create path.
-  - fault_create_debugfs_attr() cannot fail from the name-copy step.
-  - No lifetime coupling between attr->dname and debugfs; the string
-    is valid for exactly as long as the containing struct.
-
-The 64-byte length accommodates every in-tree caller with generous
-headroom (the longest current name is "fail_dma_array_full", 19 chars).
-
-The user-visible fail_dump() format changes from "name %pd" to "name %s",
-but the printed content is identical -- %pd on the created directory
-renders the same string that was passed in as @name.
-
-drivers/infiniband/hw/hfi1/fault.c drops a now-invalid "attr.dname = NULL"
-statement; the surrounding kzalloc() already zero-initialises the array.
-
-Link: https://lore.kernel.org/20260821181527.3271414-1-mliang@purestorage.com
-Fixes: 6adc4a22f20b ("fault-inject: add ratelimit option")
-Signed-off-by: Michael Liang <mliang@purestorage.com>
+Link: https://lore.kernel.org/DKTTMAS94IMH.2C6ERY0ZIVWVZ@nvidia.com
+Fixes: b3c466ce5129 ("page allocator: do not sanity check order in the fast path")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Akinbou Mita <akinobu.mita@gmail.com>
-Cc: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Reported-by: syzbot+805630f1453e490427fa@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a820ebc.9ebadd4d.20b15e.001b.GAE@google.com/
+Tested-by: syzbot+805630f1453e490427fa@syzkaller.appspotmail.com
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/fault.c |  1 -
- include/linux/fault-inject.h       | 10 ++++++++--
- lib/fault-inject.c                 |  7 +++++--
- 3 files changed, 13 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/legacy/inode.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/fault.c b/drivers/infiniband/hw/hfi1/fault.c
-index 4ab72ef03ba11..941a0b96590b6 100644
---- a/drivers/infiniband/hw/hfi1/fault.c
-+++ b/drivers/infiniband/hw/hfi1/fault.c
-@@ -216,7 +216,6 @@ int hfi1_fault_init_debugfs(struct hfi1_ibdev *ibd)
- 	ibd->fault->attr.interval = 1;
- 	ibd->fault->attr.require_end = ULONG_MAX;
- 	ibd->fault->attr.stacktrace_depth = 32;
--	ibd->fault->attr.dname = NULL;
- 	ibd->fault->attr.verbose = 0;
- 	ibd->fault->enable = false;
- 	ibd->fault->opcode = false;
-diff --git a/include/linux/fault-inject.h b/include/linux/fault-inject.h
-index 58fd14c822708..5c74748a53f38 100644
---- a/include/linux/fault-inject.h
-+++ b/include/linux/fault-inject.h
-@@ -18,6 +18,13 @@ enum fault_flags {
- #include <linux/configfs.h>
- #include <linux/ratelimit.h>
- 
-+/*
-+ * Length of the debugfs directory name embedded in struct fault_attr.
-+ * Chosen to accommodate every in-tree caller of fault_create_debugfs_attr()
-+ * (the longest is "fail_dma_array_full", 19 chars) with generous headroom.
-+ */
-+#define FAULT_ATTR_DNAME_LEN	64
-+
- /*
-  * For explanation of the elements of this struct, see
-  * Documentation/fault-injection/fault-injection.rst
-@@ -37,7 +44,7 @@ struct fault_attr {
- 
- 	unsigned long count;
- 	struct ratelimit_state ratelimit_state;
--	struct dentry *dname;
-+	char dname[FAULT_ATTR_DNAME_LEN];
- };
- 
- #define FAULT_ATTR_INITIALIZER {					\
-@@ -47,7 +54,6 @@ struct fault_attr {
- 		.stacktrace_depth = 32,					\
- 		.ratelimit_state = RATELIMIT_STATE_INIT_DISABLED,	\
- 		.verbose = 2,						\
--		.dname = NULL,						\
+diff --git a/drivers/usb/gadget/legacy/inode.c b/drivers/usb/gadget/legacy/inode.c
+index ce61348d9f2b7..d15a48bdd7596 100644
+--- a/drivers/usb/gadget/legacy/inode.c
++++ b/drivers/usb/gadget/legacy/inode.c
+@@ -613,7 +613,7 @@ ep_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 		return -EBADMSG;
  	}
  
- #define DECLARE_FAULT_ATTR(name) struct fault_attr name = FAULT_ATTR_INITIALIZER
-diff --git a/lib/fault-inject.c b/lib/fault-inject.c
-index 999053fa133e3..02916ef2761c6 100644
---- a/lib/fault-inject.c
-+++ b/lib/fault-inject.c
-@@ -5,6 +5,7 @@
- #include <linux/debugfs.h>
- #include <linux/sched.h>
- #include <linux/stat.h>
-+#include <linux/string.h>
- #include <linux/types.h>
- #include <linux/fs.h>
- #include <linux/export.h>
-@@ -64,7 +65,7 @@ static void fail_dump(struct fault_attr *attr)
- {
- 	if (attr->verbose > 0 && __ratelimit(&attr->ratelimit_state)) {
- 		printk(KERN_NOTICE "FAULT_INJECTION: forcing a failure.\n"
--		       "name %pd, interval %lu, probability %lu, "
-+		       "name %s, interval %lu, probability %lu, "
- 		       "space %d, times %d\n", attr->dname,
- 		       attr->interval, attr->probability,
- 		       atomic_read(&attr->space),
-@@ -261,7 +262,9 @@ struct dentry *fault_create_debugfs_attr(const char *name,
- 	debugfs_create_xul("reject-end", mode, dir, &attr->reject_end);
- #endif /* CONFIG_FAULT_INJECTION_STACKTRACE_FILTER */
+-	buf = kmalloc(len, GFP_KERNEL);
++	buf = kmalloc(len, GFP_KERNEL | __GFP_NOWARN);
+ 	if (unlikely(!buf)) {
+ 		mutex_unlock(&epdata->lock);
+ 		return -ENOMEM;
+@@ -675,7 +675,7 @@ ep_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 		return -EBADMSG;
+ 	}
  
--	attr->dname = dget(dir);
-+	if (strscpy(attr->dname, name, sizeof(attr->dname)) == -E2BIG)
-+		pr_warn("FAULT_INJECTION: name '%s' truncated to '%s'\n",
-+			name, attr->dname);
- 	return dir;
- }
- EXPORT_SYMBOL_GPL(fault_create_debugfs_attr);
+-	buf = kmalloc(len, GFP_KERNEL);
++	buf = kmalloc(len, GFP_KERNEL | __GFP_NOWARN);
+ 	if (unlikely(!buf)) {
+ 		mutex_unlock(&epdata->lock);
+ 		return -ENOMEM;
 -- 
 2.53.0
 
