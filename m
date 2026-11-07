@@ -1,57 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064498;
-	b=q05y6x0aQhCDVVyfcY4ZNqoYgIE9rEOzw9+WgfocnJkioK76lUhqHSX+kH8I9QzoUzp3
-	 7s4JpZSIKShLvrbIdyhsKUjQ2P3MWrR138f58SjrP3SXLkac+5Hv2vspDremT/kyBkLCW
-	 0pxakkBN+4n2J8ZY3BPUjzBdhPmv7dwAYvlrG5v3mc/zqJlBN5vX+fYstMIdHwpAeqfUf
-	 2eau8ZvSZWgXm5wkzvPZJMujCBPVfhrkrCmlE7t1eHioRMu8r8grzx+pA7J2khH8CAtsh
-	 hjSseSBCLZ1ctfGlQLXc3U1yFE2q9LXucPIIidJVG+UpLBXq3kpsZ2eT2odtCFSCvjw==
+	t=1794064499;
+	b=b2KytgP8E4RmSiwHWigHrNNga8qAcmrv+5RoSJR0DSgMYUCaY0j44ESimIurMmHQ+g5V
+	 kW3rVWy4hnXaeq8YJyQDQttuBPP0O3poG1dHuo0IaT59vvZ/7s1r7gv6mDSrxIsL+tnMs
+	 ciuUnEcxidFGzynKjF07Yl+LyoLfkaYADstzyRsIOZW+nseLQafnigRXTj6VuG2sd8eAy
+	 7/wQ4zUxFiExHSomQqwl3H3uY/bIrrazBbNXiUT9FaxoHf/XFttmWit4n43brYfgIxX34
+	 /5HQK9FLJBU6JTEwLUsP51nnmKpJuajn5OoKyEQffBgua70zOxV1lj/g5WN1+5kbYJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064498;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064499;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KdBbrZ9hOV7leiB9WDbbiPDQeiC78GESPDnc0Zw3z5E=;
-	b=xfwbE2Ma+X9S6hh341RrgdbZFG+GXL8RW4zbouVw8hOyCYLeeIry3rBM0ehi+qn6Oefc
-	 liCqVLcC7QDe4K66f7yvB8y7JMJLUEwfrJQCIYvSOMdtHpXG7Gk403nL5OnQIoc5GmE6o
-	 1C9UmToU5swZQWEmqXVyTiH9ulAKknLIAm530KyXj0iVtgh+hyCtur6ckSNSAXFWqw97y
-	 QErRTId79UNlc/a9CrOOR1672mVqLKUMqXHJPCNUyXXfR0J5Jd6mYmH+VhsZOCbWIDF9S
-	 T3boN+i8xSeZwIqIvNYmaWiLd2w6bam/TENt077qJajXTG97OTEU3C/owmOXI7ZEVnA==
+	bh=mvXt2V/jr1j1cUbYsqX3g/N9qE4DRFfMtJGpRKDefa8=;
+	b=29bzIP3Rt88xBNKzot9eEeOi4sr/I/tCqjy8Hd4Ymp9REjllD0ciaXIHCN5vh7ybdduO
+	 p75HY050s7NOwvbt2D3WSKBUYjkYUZlehCrsSDTJsEeJ+5Ss/h5F1ShLwL4P66aZn5efO
+	 L2qX62Bd7DKFovUZVRgwupTvOTt//PMsZtZ6DNPDzmM5CfLlugVZFfAyt3P9/LLT8w4SI
+	 89lBho9oufp5M30MV1oYokii1yKM7X85b1OsphpEG0XS++heo8MSzhmgeQoVNGiAzQJs8
+	 4Llj7WeiwU0e3DLg13SLTvBrG+PFKOp12oAkYvZsFYYVfLPeAaLVpgYCC9wsXz7D+kA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3OKegMc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Abs3E1j4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CAE606C03F;
-	Sat,  7 Nov 2026 15:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FD9606A336;
+	Sat,  7 Nov 2026 15:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x3OKegMc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F2D1F008A1;
-	Sat,  7 Nov 2026 15:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Abs3E1j4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAC81F008A1;
+	Sat,  7 Nov 2026 15:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064497;
-	bh=KdBbrZ9hOV7leiB9WDbbiPDQeiC78GESPDnc0Zw3z5E=;
+	s=korg; t=1794064498;
+	bh=mvXt2V/jr1j1cUbYsqX3g/N9qE4DRFfMtJGpRKDefa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x3OKegMcUWIlkjkTvThtNzUR/tgO1AyI07HuQqh+LPZTaS882Ca2T6OkV8g/WNBvh
-	 F14OoidN2ZrpUioPGDIL4uI9NGJDRFVzpPWFTviiPt6vl06tLCylRJHOebFpKi8ple
-	 tSngwD0WwjaKqpSIS0l5+5ARzIwk6wLZ18C/v8/A=
+	b=Abs3E1j4nGh+IOoykP/kWulMpYvQ2OJ67G97zgG4916TKKtA1Bt3ezOK6QdGd5IV9
+	 hL40wQUBlfwDFnxzGmJKK8CYUbCRKrAD0z/vXYY4nBRsN3ZMcv5gl2sd1MyuD5z8im
+	 KzxPH391Lu8O9Pt2vLZFVMmqeTgPQBwQlukBkPcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Bradley Morgan <include@grrlz.net>,
-	Ingo Molnar <mingo@redhat.com>,
-	Kees Cook <kees@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Changwei Ge <gechangwei@live.cn>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0531/1257] fork: honor task_structs declared alignment
-Date: Sat,  7 Nov 2026 08:47:07 -0500
-Message-ID: <20261107134954.076151046@linuxfoundation.org>
+Subject: [PATCH 7.3 0532/1257] ocfs2: restrict OCFS2_INVALID_SLOT suballoc slot to system inodes
+Date: Sat,  7 Nov 2026 08:47:08 -0500
+Message-ID: <20261107134954.102289226@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -73,65 +74,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 9decb604dc064099a6249150f0c4909525ed657c ]
+[ Upstream commit 25bf9e549360b656a6763232e0e9e58a00c3aff7 ]
 
-Since commit cb7ca40a3882 ("x86/fpu: Make task_struct::thread constant
-size"), struct task_struct is declared __attribute__((aligned(64))) on all
-architectures.
+Patch series "ocfs2: validate suballoc slot and bit of metadata blocks", v3.
 
-But fork_init() still sets the task_struct slab cache's alignment to
+The ocfs2 metadata validators trust the on-disk suballoc slot and bit
+without checking them against the slot range of the mounted filesystem and
+the capacity of the block group bitmap.  A corrupted image can carry
+OCFS2_INVALID_SLOT or another out-of-range slot, or a suballoc bit beyond
+the bitmap, and once the corresponding inode, extent block, xattr block,
+dir index root or refcount block gets freed, the bad value goes straight
+into ocfs2_get_system_file_inode() or _ocfs2_free_suballoc_bits() and hits
+a BUG_ON() or runs off the end of local_system_inodes[].
 
-	align = max(L1_CACHE_BYTES, ARCH_MIN_TASKALIGN)
+This series rejects such values at read time, in the existing validators,
+so corrupted objects fail with -EROFS (and a read-only remount) instead of
+crashing:
 
-which is smaller than 64 on architectures whose cache lines are below 64
-bytes: e.g.  32 on ARMv5.
+  patch 1 restricts OCFS2_INVALID_SLOT dinodes to system inodes,
+        completing fe7a283b3916 ("ocfs2: add suballoc slot check in
+        ocfs2_validate_inode_block()"), and turns the "system file
+        state is ambiguous" BUG_ON() in ocfs2_read_locked_inode() into
+        an ocfs2_error();
+  patch 2 rejects oversized dinode suballoc bits;
+  patch 3 validates the suballoc slot and bit of xattr and dir index
+        blocks;
+  patch 4 validates the suballoc slot and bit of extent and refcount
+        blocks.
 
-In practice plain SLUB happens to hand out 64-byte-aligned objects anyway.
-With CONFIG_SLUB_DEBUG_ON the red-zone padding shifts objects to the
-requested alignment.
+The checks only enforce what the kernel and mkfs.ocfs2 already write: a
+valid slot from meta_ac->ac_alloc_slot and a bit within the block group
+bitmap, with system inodes carrying OCFS2_INVALID_SLOT plus
+OCFS2_SYSTEM_FL and extent blocks using slot 0.  Nothing changes for
+healthy filesystems.
 
-With CONFIG_UBSAN_ALIGNMENT=y a boot on QEMU versatilepb (ARM926EJ-S,
-v7.2-rc2, gcc 13.3) floods the console with reports like:
+Each new check was exercised under QEMU by corrupting the field in
+question with an out-of-range value; with the series applied the access
+fails with -EROFS and the filesystem remounts read-only instead of hitting
+the BUG_ON().
 
-  UBSAN: misaligned-access in include/linux/sched.h:2087:9
-  member access within misaligned address c295d7e0 for type 'struct task_struct'
-  which requires 64 byte alignment
-  CPU: 0 UID: 0 PID: 15 Comm: pr/ttyAMA-1 Not tainted 7.2.0-rc2 #1 VOLUNTARY
+This patch (of 4):
 
-Set the slab alignment to at least the type's declared alignment.
+ocfs2_validate_inode_block() currently permits i_suballoc_slot to be
+OCFS2_INVALID_SLOT for any dinode.  Only system inodes created by
+mkfs.ocfs2 are allocated from the global allocator and thus legitimately
+carry this value; regular inodes are always allocated from a per-slot
+suballocator and hence must have a valid slot.
 
-Link: https://lore.kernel.org/20260710123957.31774-1-kmehltretter@gmail.com
-Fixes: cb7ca40a3882 ("x86/fpu: Make task_struct::thread constant size")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+If a corrupted regular inode with OCFS2_INVALID_SLOT is accepted,
+ocfs2_remove_inode() will pass the slot to ocfs2_get_system_file_inode()
+and get_local_system_inode() will hit BUG_ON(slot == OCFS2_INVALID_SLOT)
+when the inode is deleted.  This can be triggered by an unprivileged user
+unlinking such a corrupted file.
+
+Reject OCFS2_INVALID_SLOT for non-system dinodes during validation, while
+still accepting it for system inodes.  Note that a crafted dinode carrying
+OCFS2_SYSTEM_FL passes the check above, yet a plain lookup of it still
+used to BUG() in ocfs2_read_locked_inode() ("system file state is
+ambiguous").  Since i_flags comes from disk, handle that mismatch with
+ocfs2_error() instead of BUG_ON() as well.
+
+Link: https://lore.kernel.org/20260901125221.1634686-1-joseph.qi@linux.alibaba.com
+Link: https://lore.kernel.org/20260901125221.1634686-2-joseph.qi@linux.alibaba.com
+Fixes: fe7a283b3916 ("ocfs2: add suballoc slot check in ocfs2_validate_inode_block()")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Bradley Morgan <include@grrlz.net>
-Assisted-by: Claude:claude-fable-5
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ocfs2/inode.c | 37 ++++++++++++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 26b666e98bb8a..8ad34646962d2 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -858,7 +858,8 @@ void __init fork_init(void)
- #ifndef ARCH_MIN_TASKALIGN
- #define ARCH_MIN_TASKALIGN	0
- #endif
--	int align = max_t(int, L1_CACHE_BYTES, ARCH_MIN_TASKALIGN);
-+	int align = max3(L1_CACHE_BYTES, ARCH_MIN_TASKALIGN,
-+			 __alignof__(struct task_struct));
- 	unsigned long useroffset, usersize;
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index 180107a11046c..9228d6ef23c24 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -638,14 +638,18 @@ static int ocfs2_read_locked_inode(struct inode *inode,
+ 	fe = (struct ocfs2_dinode *) bh->b_data;
  
- 	/* create a slab on which task_structs can be allocated */
+ 	/*
+-	 * This is a code bug. Right now the caller needs to
+-	 * understand whether it is asking for a system file inode or
+-	 * not so the proper lock names can be built.
++	 * The caller must know whether it is asking for a system file inode
++	 * or not so the proper lock names can be built.  Since i_flags comes
++	 * from disk, a mismatch is filesystem corruption instead of a code
++	 * bug, so handle it with ocfs2_error() rather than BUG_ON().
+ 	 */
+-	mlog_bug_on_msg(!!(fe->i_flags & cpu_to_le32(OCFS2_SYSTEM_FL)) !=
+-			!!(args->fi_flags & OCFS2_FI_FLAG_SYSFILE),
+-			"Inode %llu: system file state is ambiguous\n",
+-			(unsigned long long)args->fi_blkno);
++	if (!!(fe->i_flags & cpu_to_le32(OCFS2_SYSTEM_FL)) !=
++	    !!(args->fi_flags & OCFS2_FI_FLAG_SYSFILE)) {
++		status = ocfs2_error(osb->sb,
++				     "Inode %llu: system file state is ambiguous\n",
++				     (unsigned long long)args->fi_blkno);
++		goto bail;
++	}
+ 
+ 	if (S_ISCHR(le16_to_cpu(fe->i_mode)) ||
+ 	    S_ISBLK(le16_to_cpu(fe->i_mode)))
+@@ -1520,8 +1524,23 @@ int ocfs2_validate_inode_block(struct super_block *sb,
+ 		goto bail;
+ 	}
+ 
+-	if (le16_to_cpu(di->i_suballoc_slot) != (u16)OCFS2_INVALID_SLOT &&
+-	    (u32)le16_to_cpu(di->i_suballoc_slot) > OCFS2_SB(sb)->max_slots - 1) {
++	/*
++	 * Only system inodes created by mkfs.ocfs2 are allocated from the
++	 * global allocator and thus legitimately carry OCFS2_INVALID_SLOT.
++	 * Regular inodes are always allocated from a per-slot suballocator.
++	 * If a regular inode with OCFS2_INVALID_SLOT was accepted here,
++	 * deleting it would pass the slot to get_local_system_inode() via
++	 * ocfs2_remove_inode() and trigger BUG_ON(slot == OCFS2_INVALID_SLOT).
++	 */
++	if (le16_to_cpu(di->i_suballoc_slot) == (u16)OCFS2_INVALID_SLOT) {
++		if (!(le32_to_cpu(di->i_flags) & OCFS2_SYSTEM_FL)) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode %llu: suballoc slot %u for non-system inode\n",
++					 (unsigned long long)bh->b_blocknr,
++					 le16_to_cpu(di->i_suballoc_slot));
++			goto bail;
++		}
++	} else if ((u32)le16_to_cpu(di->i_suballoc_slot) > OCFS2_SB(sb)->max_slots - 1) {
+ 		rc = ocfs2_error(sb, "Invalid dinode %llu: suballoc slot %u\n",
+ 				 (unsigned long long)bh->b_blocknr,
+ 				 le16_to_cpu(di->i_suballoc_slot));
 -- 
 2.53.0
 
