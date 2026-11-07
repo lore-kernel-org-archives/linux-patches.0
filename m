@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064926;
-	b=17N/rOwrfUFx+X3newIPdmLY6sgOcTXNyFdPhH1ioPb60yolI19qKGbknrFAfdzoyXrc
-	 ++pw4bbvp9TaNMZAsJMNQQFUZTdAxu25HXKXnR2XAgSu7EubUkZs/vvbFZB7Gl059DNH3
-	 sOyvCflMVsDI5xGOxp0KTTTxz/lp2Tc/pbfsU+G1rGyzFdNo21ZBbUtseXSZB8hehS8Zx
-	 KIQIKb8qmCo5SwJMpmaxQkV0ByhdlXt0yGa/tOZrcJdqFuJrb5m64EdJq/JU2uaqGdsx8
-	 ZrvqBRy2ODFqdJ7iC+Ww8tKFlEPoDWdhf94BbzVEusrU4zLbpCjYPiLjXFQbDCDmaIQ==
+	t=1794064928;
+	b=iVGuogEMAVng++if4ezMntAD51LN3HMog/HMylx0L1j6VBkIOKibC/FpoOqpQKLXUPV7
+	 8dZIwHrV8D8JH3qw8Q8Rh0nzPVBRroGiCThm2UTe/E3QzVqcqO2WudGkjd+Oqm8795ORK
+	 pwAMCTdQ07Y5phBOu0WqD4sqcVh0txzacJDlo9iHzVvkDkIWfkjX+jjly3Jc5QI8j3fUD
+	 doCShxDLZITSunu8XPqvtHzpItt/4niRvq+R78Uck1mTICDpFPV5vsQAPnit4pas3ufGx
+	 cgUF6lFXlxm2kZ8lKACtWxrlTP0aX9YqPK5X1uyg1vYc6vbwUEdnEqOvhK9DgV5oOuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064926;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=9lsK0T0v5lOEkhRxoOxi94XKoHkKaDRvSN9Jk1jCF6g=;
-	b=dYNfslvCe5dntZvFasrSsjWGQG9KcgEyQka1U9uVRqH3DwxQ5rByN1a+z8ueqCDvVahB
-	 8vjxH4Xb8mBV7h9vf2rr0LCISMzY5lsgJxy6say3Y/dC9+X900X2+2Arjbk/tCL3+1Sgi
-	 nU56M4JAQP/CC7mFSa1shUhfEqw+fjuNTvQqFZ7EgKPVppP+k1tAkeFrqVq4FeguV9Mpj
-	 kHl8Nhd4U5D4Wrh3kVcbi/Yhgp6DFLnmgN8NdSuujCG+S6d++3LL5Jj6nWAzup4gtq86v
-	 tNDvmZ8Si8d5AaPAoW8sFKc7sF2t/Q/0yIJSyUsHN+rfxWBJp4bBf18xWRKKGC4tuvA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=GAcmS0Gj72syrvC4EMh7qIxa5KGzoM+1SVB/Vmvphkw=;
+	b=FtS3aJdYJhvBhpG1fwskIk28925iwMeiCr9kUuE7jfLd+ocXIQFE2jrNU3NQadpXBadA
+	 iXhkrl9kEywvHrKvgeSE6iBj06R4Cbdqf+m8l17HmO+0TThlkzg90WOB1OARSxoOjxtnN
+	 qzztUA00Ix0yLjExw1lBKDeL7bhpreLZP0HQlFQ3lVTOisDiP08Vdb/EwJbJpv5Hkb8JK
+	 HLB42oco+HH7GaGRkmvngBp3Jd2ud/heTCcGFdgUQLFaWRXPTulRYKzEXsGxGkb6ob+vO
+	 n/3+wNvwtTUGOTig4iW45B+7zKEWElqfT+wQeg7KIqB+7AFbsmGxBrMAxmmU3mfPbzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SAvaTsnv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1pvttwzR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D59606A33E;
-	Sat,  7 Nov 2026 15:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDF8606B88B;
+	Sat,  7 Nov 2026 15:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SAvaTsnv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23FA1F008A1;
-	Sat,  7 Nov 2026 15:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1pvttwzR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579BC1F0089F;
+	Sat,  7 Nov 2026 15:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064926;
-	bh=9lsK0T0v5lOEkhRxoOxi94XKoHkKaDRvSN9Jk1jCF6g=;
+	s=korg; t=1794064927;
+	bh=GAcmS0Gj72syrvC4EMh7qIxa5KGzoM+1SVB/Vmvphkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SAvaTsnvI9yu/So0SnRGrgzaCIHwZR/PoCVQEaG4ZJmDqvpWwLm4gwZVKT/0j2Y1e
-	 IORTgfDEvYRzGMRpRdf5ftvIB95qv0W2OW00mTskHGZkiJ9gU2JNZlcsuRmm3FOZT/
-	 SLKeGN3cwA4VYDoWHoan8ejO4KDgtchYKnb4X57g=
+	b=1pvttwzRQHu245sKXu73lqzus5hJ/+fBzE88P/Cq96tzXo4EhnaWr13A/1tf+zfKn
+	 btGbGIZl4ii1Ev4V+1g/iPf+bTKMP22c95VIcfQVL0CguLFo5NMf2iMoNzor3SVMyD
+	 LhcHNx5v/ScIrJPN7eOBUIbKdVo92g2VqiuYSDac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming Lei <tom.leiming@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0821/1257] ublk: mark the io command cancelable before publishing it
-Date: Sat,  7 Nov 2026 08:51:57 -0500
-Message-ID: <20261107135002.017084989@linuxfoundation.org>
+Subject: [PATCH 7.3 0822/1257] ublk: mark the batch fetch command cancelable before linking it
+Date: Sat,  7 Nov 2026 08:51:58 -0500
+Message-ID: <20261107135002.043209225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,7 +63,6 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -72,127 +71,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Lei <tom.leiming@gmail.com>
 
-[ Upstream commit a261f0cacacc022e4fab5b8e38c59f74ce4942e8 ]
+[ Upstream commit b59e96011d22e322fbf4d5d1d1124de538c278ed ]
 
-FETCH, COMMIT_AND_FETCH and NEED_GET_DATA publish the command in io->cmd
-before marking it cancelable. A cancel from the control path (STOP_DEV,
-QUIESCE_DEV) can complete it in between:
+UBLK_U_IO_FETCH_IO_CMDS has the same order problem as the per-io
+commands: ublk_batch_attach() links the fetch command into fcmd_head
+and marks it cancelable only after dropping evts_lock. A cancel from
+the control path (ublk_batch_cancel_queue()) can take it in between and
+complete it, and the later mark puts a completed request on io_uring's
+cancelable list.
 
-  issue path                       control-path cancel
-  io->cmd = C
-                                   take C, io_uring_cmd_done(C):
-                                     C not marked, nothing to unlink
-  ublk_prep_cancel(C)
-    the completed C is linked on the cancelable list
-  ring exit: the cancel walk hits it → GPF (KASAN, with a delay added)
+Mark it before linking it. evts_lock orders the mark before the link,
+which is where the cancel finds it.
 
-Mark the command before ublk_fill_io_cmd() publishes it. The handlers
-run with uring_lock held, as io_uring's cancel walk does, so marking
-takes no lock and the walk can't see a marked command before it is
-published. smp_wmb() orders the mark before the io->cmd store; the
-cancel loads cmd with READ_ONCE(io->cmd) before reading cmd->flags.
+Batch commands are not bounced to task work, so they can run from io-wq
+without uring_lock, and io_uring's cancel walk can now find a fetch
+command before it is linked. Two things make that safe:
 
-A marked command has to be completed by io_uring_cmd_done(), so a failed
-FETCH and the inline UBLK_IO_RES_OK of NEED_GET_DATA now do that. The CQE
-is the same.
+ - initialize fcmd->node: it came from kzalloc(), so list_empty() saw a
+   linked node and ublk_batch_cancel_cmd() would list_del_init() NULL
+   pointers
+ - on the -ENODEV path, complete the command with io_uring_cmd_done()
+   before freeing fcmd: that removes it from the cancelable list under
+   uring_lock, after which nothing can see fcmd
 
-Fixes: 216c8f5ef0f2 ("ublk: replace monitor with cancelable uring_cmd")
-Cc: stable@vger.kernel.org
+Also use data->cmd instead of fcmd->cmd after dropping evts_lock: once
+fcmd is linked and not the active one, a control-path cancel may
+complete and free it.
+
+Fixes: a4d883755399 ("ublk: add UBLK_U_IO_FETCH_IO_CMDS for batch I/O processing")
+Cc: stable@vger.kernel.org # v7.0+
 Tested-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20261011063555.1142277-3-tom.leiming@gmail.com
+Link: https://patch.msgid.link/20261011063555.1142277-4-tom.leiming@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ drivers/block/ublk_drv.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 38ed7d0e39793..6015fb2fb925f 100644
+index 6015fb2fb925f..5e37b8e9d9acb 100644
 --- a/drivers/block/ublk_drv.c
 +++ b/drivers/block/ublk_drv.c
-@@ -2800,7 +2800,8 @@ static void ublk_cancel_cmd(struct ublk_queue *ubq, u16 tag,
- 	done = !!(io->flags & UBLK_IO_FLAG_CANCELED);
- 	if (!done) {
- 		io->flags |= UBLK_IO_FLAG_CANCELED;
--		cmd = io->cmd;
-+		/* dependency ordered against smp_wmb() in ublk_prep_cancel() */
-+		cmd = READ_ONCE(io->cmd);
- 		io->cmd = NULL;
+@@ -815,6 +815,8 @@ ublk_batch_alloc_fcmd(struct io_uring_cmd *cmd)
+ 	if (fcmd) {
+ 		fcmd->cmd = cmd;
+ 		fcmd->buf_group = READ_ONCE(cmd->sqe->buf_index);
++		/* a cancel may look at it before it is linked */
++		INIT_LIST_HEAD(&fcmd->node);
  	}
- 	spin_unlock(&ubq->cancel_lock);
-@@ -3163,6 +3164,12 @@ ublk_fill_io_cmd(struct ublk_io *io, struct io_uring_cmd *cmd)
- 	return req;
+ 	return fcmd;
  }
+@@ -3915,6 +3917,15 @@ static int ublk_batch_attach(struct ublk_queue *ubq,
+ 	bool free = false;
+ 	struct ublk_uring_cmd_pdu *pdu = ublk_get_uring_cmd_pdu(data->cmd);
  
-+/*
-+ * Call before ublk_fill_io_cmd() publishes @cmd in io->cmd: a control-path
-+ * cancel may complete any command found there, and io_uring_cmd_done() only
-+ * takes it off the cancelable list if it is marked already. The handlers
-+ * hold uring_lock, so marking takes no lock.
-+ */
- static inline void ublk_prep_cancel(struct io_uring_cmd *cmd,
- 				    unsigned int issue_flags,
- 				    struct ublk_queue *ubq, u16 tag)
-@@ -3176,6 +3183,8 @@ static inline void ublk_prep_cancel(struct io_uring_cmd *cmd,
- 	pdu->ubq = ubq;
- 	pdu->tag = tag;
- 	io_uring_cmd_mark_cancelable(cmd, issue_flags);
-+	/* pairs with the cancel loading cmd from io->cmd, then cmd->flags */
-+	smp_wmb();
- }
++	/*
++	 * Mark it cancelable before linking it into fcmd_head, where a cancel
++	 * from the control path can take and complete it: see
++	 * ublk_prep_cancel(). evts_lock orders the mark before the link.
++	 */
++	pdu->ubq = ubq;
++	pdu->fcmd = fcmd;
++	io_uring_cmd_mark_cancelable(fcmd->cmd, data->issue_flags);
++
+ 	spin_lock(&ubq->evts_lock);
+ 	if (unlikely(ubq->force_abort || ubq->canceling)) {
+ 		free = true;
+@@ -3925,14 +3936,12 @@ static int ublk_batch_attach(struct ublk_queue *ubq,
+ 	spin_unlock(&ubq->evts_lock);
  
- static void ublk_io_release(void *priv)
-@@ -3423,11 +3432,11 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
- 		ret = ublk_check_fetch_buf(ub, addr);
- 		if (ret)
- 			goto out;
-+		/* before ublk_fetch() publishes io->cmd, see ublk_prep_cancel() */
-+		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
- 		ret = ublk_fetch(cmd, ub, io, addr, q_id);
- 		if (ret)
--			goto out;
+ 	if (unlikely(free)) {
++		/* off the cancelable list first, then nothing can see fcmd */
++		io_uring_cmd_done(data->cmd, -ENODEV, data->issue_flags);
+ 		ublk_batch_free_fcmd(fcmd);
+-		return -ENODEV;
++		return -EIOCBQUEUED;
+ 	}
+ 
+-	pdu->ubq = ubq;
+-	pdu->fcmd = fcmd;
+-	io_uring_cmd_mark_cancelable(fcmd->cmd, data->issue_flags);
 -
--		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
-+			goto out_done;
- 		return -EIOCBQUEUED;
- 	}
- 
-@@ -3471,6 +3480,7 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
- 		if (ret)
- 			goto out;
- 		io->res = result;
-+		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
- 		req = ublk_fill_io_cmd(io, cmd);
- 		ublk_apply_io_buf(ub, io, cmd, addr, &auto_buf, &buf_idx);
- 		if (buf_idx != UBLK_INVALID_BUF_IDX)
-@@ -3489,19 +3499,24 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
- 		 * uring_cmd active first and prepare for handling new requeued
- 		 * request
- 		 */
-+		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
- 		req = ublk_fill_io_cmd(io, cmd);
- 		io->buf.addr = addr;
- 		if (likely(ublk_get_data(ubq, io, req))) {
- 			__ublk_prep_compl_io_cmd(io, req);
--			return UBLK_IO_RES_OK;
-+			ret = UBLK_IO_RES_OK;
-+			goto out_done;
- 		}
- 		break;
- 	default:
+ 	if (!new_fcmd)
  		goto out;
- 	}
--	ublk_prep_cancel(cmd, issue_flags, ubq, tag);
- 	return -EIOCBQUEUED;
  
-+ out_done:
-+	/* marked cancelable: complete through io_uring_cmd_done() */
-+	io_uring_cmd_done(cmd, ret, issue_flags);
-+	return -EIOCBQUEUED;
-  out:
- 	pr_devel("%s: complete: cmd op %d, tag %d ret %x io_flags %x\n",
- 			__func__, cmd_op, tag, ret, io ? io->flags : 0);
+@@ -3940,9 +3949,12 @@ static int ublk_batch_attach(struct ublk_queue *ubq,
+ 	 * If the two fetch commands are originated from same io_ring_ctx,
+ 	 * run batch dispatch directly. Otherwise, schedule task work for
+ 	 * doing it.
++	 *
++	 * Use data->cmd, not fcmd->cmd: once fcmd is linked and not active,
++	 * a cancel from the control path may complete and free it.
+ 	 */
+ 	if (io_uring_cmd_ctx_handle(new_fcmd->cmd) ==
+-			io_uring_cmd_ctx_handle(fcmd->cmd)) {
++			io_uring_cmd_ctx_handle(data->cmd)) {
+ 		data->cmd = new_fcmd->cmd;
+ 		ublk_batch_dispatch(ubq, data, new_fcmd);
+ 	} else {
 -- 
 2.53.0
 
