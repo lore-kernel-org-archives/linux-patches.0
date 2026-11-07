@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060616;
-	b=5PR4UNMwWd8EybA7ORlJUffwTtJDN+JVNUlkdi90XrTWMlCg+7CISwjtY2OkyjwuKRb0
-	 RGH9LmkVu/CAj/OQenOE5/EWetxuzCFtzgB/y3kIz6H0nq1woste5gkMrkhZGZWQHkLIw
-	 tuIBX9v/7yh/UJRAlYzB/C7rVrF5fbE/lIscG20lgHoWjm963j3twbnnRafQTEnswQDYk
-	 kW0GO282Gm8epKDdO+fdD3BiVpqe2uSjZuwJr8Y6evyIRpBVdR46++j2y8RgfN2BeWxsk
-	 EySDQqrA9lFTACFT6jQa7CStLZK0FrkXpgXneTJLz0ssFNRW0WOBn/bL9/o/3oGtB5w==
+	t=1794060617;
+	b=jF5dleSpY0JH0pqEi+j5EePSh1VnCc6c1Gsx7Nl2Nh5IZpsmpn57FT7kwvB4D/BZ8BCg
+	 IQWd1czPGcr1zTMr4Q4TGdYL+U7CYw/pPtcV+e6NOW+Q0izRuy86VX3Xh+GhDw6Xv1Uq4
+	 xOcEekllHnG9wrog6bAQEYTlbelIH9nfZt1b75V1Y5l5rs/twRex5UTXlki5O/xneeca1
+	 dGKHB0J6bBIfyZBvLppByC3NngmsUWiPRSHHMmKjlvQdq2bIGBPKzf9sE87sYHSKTbZxM
+	 mkVhuW2IClxmha42VpKTEMXCXfwIVZCkxsgHPNctgtGfGvr/C58eeQ3tt6q8RXdz6/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060616;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060617;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=2u7FzxCdTztMJlp0KJy87M9iGfQqIpydYvgYXXl3UJE=;
-	b=wA6Ppd0Rp+6x5mmeYUVlscX1CiqGwjrYcaDOOd0Xw2j0coM6V740YtdrURgk+M3X9Tdg
-	 lLA4/YaLTSVwu6gHV5sRUz3a4hltQ9NEvJUcuF3amep/NkLP2M1ls13VkIxFI+VdtDEY0
-	 gSTS0iUZHopVAXnKWkvs+X+CbjJnG2Sai9vYpJqP1pRdknV54veFQS72m5umVJPyjIAbz
-	 GXX3ty3adkzifdlSnyt06xsfUkr1aQ0KgK41lnpjaVPpgSjrk+g06+KDPpz4GwIhHSmEx
-	 ALZPh3pQH9Dbnji3+YkJZQk4Tzy3lu37yY/nrHwQZQc9QvDU3IdIsWeKiWBdwYbhePA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=wQHC2zcFpTJkmhpB/uYp3kSZ+TaUCwp2j6sP2GL+TC8=;
+	b=QLv9B91xHcyNmh1jQ8KEoaCwE4N6pa9rXzr1Hk+uuIuTNNQuGPbRgUxaJqr+u3vcUi18
+	 JT/HfcOd3IWnhLJRitZWEdKtBqP+hFJpwbhb/Erxc70Mz+WT+i9tv8epsVE099EbRtA8y
+	 C1BF5GsZxB67sB19MzjKHOfK6+XJj3bq7e29DYDlZNRMavitlh4R5/OA1Y8H7n+WuXGPl
+	 szmCqtmobwB9oVYO7QUzUQmgxgNXlzJO5QOBfJUTjsubAN9RQUVq2N0L8DLmX7BNTPsX6
+	 Su/pzFI0VPBZTybTTcn7UuSCBCaqMQwBP019LSPShnivPrOcCX8ZeGxikTu61u4AczQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPxCoGVs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bdayf+ds;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849E2606A326;
-	Sat,  7 Nov 2026 14:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827D2606A326;
+	Sat,  7 Nov 2026 14:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPxCoGVs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99F11F008A2;
-	Sat,  7 Nov 2026 14:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bdayf+ds
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211A11F008A2;
+	Sat,  7 Nov 2026 14:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060616;
-	bh=2u7FzxCdTztMJlp0KJy87M9iGfQqIpydYvgYXXl3UJE=;
+	s=korg; t=1794060617;
+	bh=wQHC2zcFpTJkmhpB/uYp3kSZ+TaUCwp2j6sP2GL+TC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uPxCoGVsN3MS7C0Y9bPMITWhkSzGEx88KTYSdtxZL7l0akRRcTDzUiHxXVEob+NSR
-	 BWAAfikzLKXEFt/q1detAcOuhzvhdWO20MygPdVMESFuzp/ncaBAq1q8h98DolonBE
-	 0ueYDZXPKH0Qzq847l1hpzAjnYF8ezQROR9/f37E=
+	b=Bdayf+dsI+QZ909IFWVWh257l3WU1OSY9eWsGC9c507EtLbzn9jaM3QrSDXU0w8KJ
+	 Rij/XilXzI9BzF+jJxUE7MUdZXCt0vuwTadXQbrhf0j+SJ+hXbo4ad/GA5jA+I+9mB
+	 57ZbJ0fyfC0UmItgf9RfvumfDycoFYHFilM7OM6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Huang <jinhuieric.huang@amd.com>,
+	Philip Yang <philip.yang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0039/1536] regmap: maple: Workaround for another false-positive compiler warning
-Date: Sat,  7 Nov 2026 08:34:15 -0500
-Message-ID: <20261107134958.760016453@linuxfoundation.org>
+Subject: [PATCH 6.12 0066/1536] drm/amdkfd: add sanity check in svm_range_is_valid
+Date: Sat,  7 Nov 2026 08:34:42 -0500
+Message-ID: <20261107134959.521023126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,45 +63,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+From: Eric Huang <jinhuieric.huang@amd.com>
 
-[ Upstream commit dffd32eb2b0e714a8ae23f98518ad7152cb06369 ]
+[ Upstream commit aa7e29cf9a37092cf5057a612ee09f28df20258f ]
 
-Similar to the issue fixed in commit 542440fd7b30 ("regmap: maple: work
-around gcc-14.1 false-positive warning"), I see an uninitialized warning
-for upper_index and upper_last.
+to prevent svm range to be overflow or underflow.
 
-Happens with arc-linux-gnu-gcc (Debian 15.3.0-1) 15.3.0 on an
-allmodconfig for ARCH=arc.
-
-Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20260626060427.2548578-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
+Reviewed-by: Philip Yang <philip.yang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-maple.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
-index 82d9410591654..2dc6e5d146859 100644
---- a/drivers/base/regmap/regcache-maple.c
-+++ b/drivers/base/regmap/regcache-maple.c
-@@ -113,7 +113,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
- 	unsigned long *entry, *lower, *upper;
- 	/* initialized to work around false-positive -Wuninitialized warning */
- 	unsigned long lower_index = 0, lower_last = 0;
--	unsigned long upper_index, upper_last;
-+	unsigned long upper_index = 0, upper_last = 0;
- 	int ret = 0;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 08fcc94c0a2c3..0b86da7d7c502 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -3409,7 +3409,13 @@ svm_range_is_valid(struct kfd_process *p, uint64_t start, uint64_t size)
+ 	unsigned long start_unchg = start;
  
- 	lower = NULL;
+ 	start <<= PAGE_SHIFT;
+-	end = start + (size << PAGE_SHIFT);
++
++	if (size == 0)
++		return -EINVAL;
++
++	if (check_add_overflow(start, size << PAGE_SHIFT, &end))
++		return -EOVERFLOW;
++
+ 	do {
+ 		vma = vma_lookup(p->mm, start);
+ 		if (!vma || (vma->vm_flags & device_vma))
 -- 
 2.53.0
 
