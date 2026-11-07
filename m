@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065037;
-	b=vgXIlNmR5csuKCZwiXRmOdrstr1KV63+zjxUOogp1XD0+PGNH5b1z6ldj1KgRr/VJsBL
-	 1prch5U9wemxRpuaZ1Fgvz7ILnHHKUvWMK3gf6E06KD+E/vd2pSs+oQp9AOBEVFJ1dwPs
-	 wnHyeSGR8J9Qs7MfTcDp4C1epWMDH5Wo4XoJdGVwo4P5SEf2azF0dvHIPgOgBcDxOlHky
-	 xkLGfUvi5L0nGzjVfANziiUWRUemcIL0pDUNDQgrA0dL21P2s2Ledby8TdPpO+L1Jobng
-	 B5lRlrMX4laimZhfgXMjISEV832V8sAb9WKWRuljs2ss7J/7U7mF7l4I3039/jwm7lA==
+	t=1794065038;
+	b=RSD4h6oVCVLA7Oqe7ASOc0u81rfxJsjRgRHnPz0P9h+uLU/hmNc3RmK0YSc/LWKQZ7RC
+	 v6WKfkYnaddpf9fVwspo4KLoGmiSUasvRIpYngV8i1QV0nV1GhZoRMFX3mgMyL7fiVOWC
+	 xeT2OXmJHcghoDo3io1NxmGuYt9k//sUbKKeuTENhMchBawgRfCFm9PZj87J8Og+LXPVy
+	 yrBSYUIepdd3+TwPnqrUR334CMiXIj81itw+iXxBlYb5MDudHf3RBhzYsl0MCjHSwClSU
+	 GsB7ovmqWOFCBfm1ypnTewm3ALpgG7bDMnl0bMGZAopuX9m8ASSEE5tSMutHfUid6Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065037;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065038;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ihx5vagYj7hwy8HZ+1t1d+kgjGaFiFtJ2qOQptvEuOQ=;
-	b=pcyOffhjlIAFQmkvMVgjGGNtAgBzRuvaaMi24FVA4PphZqKBX90LQpSZJE/6eXy80ugk
-	 lufH80DcBb4z8py0e4RFISf7SEFQlAck5+Z1TkQDPOvpYgnjyJHUp7Ul1rcPXMFQqCfuD
-	 DFnY4C3yysNE19pPY6mmn2LZI2l5p6eH0+d9n9b0vKgUUhdZjbJ6j01ek63ioUuM3W7xu
-	 wTmp2loSQdvXhMi9SabkgJdiKzXDumMwNSDUh/1PQC0BFquoa5wturFfTtaqjfi1YDMJH
-	 +uiekWP4xQrGBu4yZnaLV0naKo2t3yX5g0WF/xyNn3SO4VEfwE5SHXWPAgCtdhdzTpg==
+	bh=rCKUJ0tINMm/0o3ITwuuE0d+7b8wOnCj1bBhOvarSX8=;
+	b=NHOMuEGIdA+IuOyV0G/amc5vNdGZQlQ6V6wpUUVxVmKQQVFhve8G6SXVp9c1CC83+p2V
+	 0TJlXw2Gc5SdDchYW6BvpICLEByX45dFPssKLW1oM9V0G4XIoYIooHeVFy/3nc7z/MonQ
+	 9eem7K06wxsp3DkPbWGot3qQ9kbz/YcXo2+GYb+oux3ZlKVp1/fjek5j0gRftNl+hRo91
+	 qdEXoDPm500z88eA2/9TX8MFCyPRyGCvNn7MlVilGpEqOSaFXkTx1Vsz5LKDcfiUlyum9
+	 qnkyxT5KLmN+S0SEa+hrXg2Hw5+2F5Ylwc49ite3FFuHARI9RtrUYLn35iq9ylwDADQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cpZYbbB3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0kejwO0f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E70606A9C0;
-	Sat,  7 Nov 2026 15:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CF7606A9C1;
+	Sat,  7 Nov 2026 15:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cpZYbbB3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8335F1F0089F;
-	Sat,  7 Nov 2026 15:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0kejwO0f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3ED51F0089F;
+	Sat,  7 Nov 2026 15:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065036;
-	bh=ihx5vagYj7hwy8HZ+1t1d+kgjGaFiFtJ2qOQptvEuOQ=;
+	s=korg; t=1794065038;
+	bh=rCKUJ0tINMm/0o3ITwuuE0d+7b8wOnCj1bBhOvarSX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cpZYbbB3E2MzY5rc+WgPlBkGtw/j0dLClWRU5sno5npH1FtWtPsbxNoM6NTs+XAKk
-	 VHZSkzbuAYQ5qrewktOIYcZ5zY1ZxIQ6Q4FRg7Bv4Wd8IGtz5gWl6VIfM3Vdg0bdKh
-	 5mxMs9mYsMlDDv5qUOvgKgJVF4g8z6W/J0/xp62w=
+	b=0kejwO0f1Uxd6vhq4QiyJlWFTpm2rt0VekQfxg5nLJTGzgYULMNYTvpIMsxOo9Bi9
+	 wTgDIfQTHVfNT7xHGPBW9OMq4zbzag+fzpVMd20S16HXnJqi7SHOASlESpyrCtfds1
+	 aQb303W8YQXpTWZTS3fmyHP5S51gLNmHuGiobvLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Kosina <jkosina@suse.com>,
+	Alexander Kochetkov <al.kochet@gmail.com>,
+	Siarhei Volkau <lis8215@gmail.com>,
+	Paul Cercueil <paul@crapouillou.net>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Karlos Abel <kabel@voidship.net>
-Subject: [PATCH 7.3 0893/1257] Input: always accept EV_SYN in input_event()
-Date: Sat,  7 Nov 2026 08:53:09 -0500
-Message-ID: <20261107135003.986560817@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 0894/1257] Revert "Input: matrix_keypad - force switch rows to input mode"
+Date: Sat,  7 Nov 2026 08:53:10 -0500
+Message-ID: <20261107135004.016654815@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,57 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Alexander Kochetkov <al.kochet@gmail.com>
 
-[ Upstream commit c1d13bfdb9c75c2885d10332174a887349eb0b51 ]
+[ Upstream commit 1527451f87dfe368b8ddeeb501c24ac9bde6b589 ]
 
-Commit 0cd587735205 ("Input: preallocate memory to hold event values")
-moved allocation of dev->vals into input_allocate_device(), which caused
-input core to accumulate events reported while seeding initial device
-state before input_register_device().
+This reverts commit 01c84b03d80aab9f04c4e3e1f9085f4202ff7c29.
 
-However, because EV_SYN is only set in dev->evbit during
-input_register_device() (and some drivers also overwrite dev->evbit
-directly before registration), any EV_SYN/SYN_REPORT events sent before
-registration were dropped by is_event_supported(), leaving those seeded
-events stuck in dev->vals until the next SYN_REPORT after registration.
+The commit makes every scan call gpiod_direction_input() on the row
+GPIOs. On pin controllers where GPIO input and interrupt are separate
+pinmux functions this switches the row pins out of interrupt mode, and
+enable_row_irqs() does not switch them back: it only unmasks the
+interrupts. Row interrupts then never arrive and the keypad stops
+working. Seen with a matrix keypad on an Allwinner A64 board (PINE
+A64-LTS); it works again with the commit reverted.
 
-Always accept EV_SYN in input_event() and input_inject_event() without
-checking dev->evbit so input_sync() flushes dev->vals as intended.
+The workaround is not needed on Ingenic either: the author of the
+reverted commit re-tested all available JZ47xx SoCs and they all report
+the live pin state in interrupt mode, see the thread in Link.
 
-Reported-by: Karlos Abel <kabel@voidship.net>,
-Fixes: 0cd587735205 ("Input: preallocate memory to hold event values")
+Fixes: 01c84b03d80a ("Input: matrix_keypad - force switch rows to input mode")
+Link: https://lore.kernel.org/all/4130C026-2A83-408B-836A-ECA044491C47@gmail.com/
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Acked-by: Jiri Kosina <jkosina@suse.com>
-Link: https://patch.msgid.link/asx50uz6iafsyAd5@google.com
+Signed-off-by: Alexander Kochetkov <al.kochet@gmail.com>
+Acked-by: Siarhei Volkau <lis8215@gmail.com>
+Acked-by: Paul Cercueil <paul@crapouillou.net>
+Link: https://patch.msgid.link/20261002100935.449473-1-al.kochet@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/input.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/keyboard/matrix_keypad.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/input/input.c b/drivers/input/input.c
-index 01c91fec9b7eb..6c45a158047f2 100644
---- a/drivers/input/input.c
-+++ b/drivers/input/input.c
-@@ -391,7 +391,7 @@ void input_handle_event(struct input_dev *dev,
- void input_event(struct input_dev *dev,
- 		 unsigned int type, unsigned int code, int value)
- {
--	if (is_event_supported(type, dev->evbit, EV_MAX)) {
-+	if (type == EV_SYN || is_event_supported(type, dev->evbit, EV_MAX)) {
- 		guard(spinlock_irqsave)(&dev->event_lock);
- 		input_handle_event(dev, type, code, value);
- 	}
-@@ -415,7 +415,7 @@ void input_inject_event(struct input_handle *handle,
- 	struct input_dev *dev = handle->dev;
- 	struct input_handle *grab;
+diff --git a/drivers/input/keyboard/matrix_keypad.c b/drivers/input/keyboard/matrix_keypad.c
+index 8863b741d1a32..cda2888b2e562 100644
+--- a/drivers/input/keyboard/matrix_keypad.c
++++ b/drivers/input/keyboard/matrix_keypad.c
+@@ -134,9 +134,6 @@ static void matrix_keypad_scan(struct work_struct *work)
  
--	if (is_event_supported(type, dev->evbit, EV_MAX)) {
-+	if (type == EV_SYN || is_event_supported(type, dev->evbit, EV_MAX)) {
- 		guard(spinlock_irqsave)(&dev->event_lock);
- 		guard(rcu)();
+ 	memset(new_state, 0, sizeof(new_state));
+ 
+-	for (row = 0; row < keypad->num_row_gpios; row++)
+-		gpiod_direction_input(keypad->row_gpios[row]);
+-
+ 	/* assert each column and read the row status out */
+ 	for (col = 0; col < keypad->num_col_gpios; col++) {
  
 -- 
 2.53.0
