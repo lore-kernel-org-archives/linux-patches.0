@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063517;
-	b=1GWFWaM7Amrf5rWRAdENUp9/uLIczGCfbAt3JKCFp0zEMlWqkCwnlklqHY5j8pcY8Tsz
-	 ylqxphfuW30W1gkJlHk4ruiFYUe4bFm72cvyBuKZRtPQgsi4X1aI3MAfK4bWBSEOqJM/W
-	 wJmys6F/laPPCRTEyL7BNKYHEqid6rqMhibkwcqFPshGR+1cw40KZk0Hekwm5p8Xczt96
-	 ZDqSPCWaOOVs/i4B+O/VQ1cTiZF+Z+lVIXpyL0+1vM2t8rz0Nhd+qCWBQyByiNXCMOYOC
-	 B6scZbFLAbnG/IPTMZLvLfpUxG7eKhOmvRmqib7ltkwEUnFgWXYI3YxfWNoW3Uf8uOA==
+	t=1794063518;
+	b=mz6YW79O7rKWS67urW7f7I0rTXTgPc9gv7nTmANfZ0jdhJhlqKbYPHSnvartkktxVjvt
+	 dsxvgepO9iE+1/upU1kQ3LC0rCfdQRCAjgYwxNTyEp1jfpudHVi7EDwHwEQJ7v1XuLZLn
+	 kwOYAcRlP39IGiY1RT2FsFQXoVqldoTdGTHEyFmyxSUeIKIT9zcipglBwPJKP62qn+rPY
+	 LprsR0nFbZugX06NbSjQqGjXYbgcP9cq906AfyKu8YzbO9MEy3eeKMbBe5mbAEWN015cM
+	 4Ahubm5vHi3UrzOhr5bat9SHMilXo46A/ZkPGIHPYdMa5z4xRAWua5zz/2tG4Ry4Q9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063517;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063518;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d6zjBtVg5oO1t5dBT9zeHbAkGkx8g5x/6dUn6S/Uk8A=;
-	b=3q279KAgLhpzK3bV6yZB6B+gwVls2UIRSZmONFVpEKCiYhbOrYJiR9Xqb6GEcpvwIbEu
-	 eEHGzKQu0QnmWlsWRz9rea+IXE+AAdeHwbu6tTLbCqGcSG3/ipMuJWh972jPITKUUjTJy
-	 15bHK/VAaPlC+Fx0Gi+cXu7l63aL2AMLzS/bk1hn35vVdI8FUI3P/DsjfzfvSn5gcH6qm
-	 l3So7ivzlmmZgoWCVePqUVOF6Hp3dWG4O2dLmSUTWI3U8Dakq45kSDH1XlQLnSrb/P2aZ
-	 sFAT9Qj9Gx/OgxX8uhPtNANcGx3Vvk5+VFmHSB4HVnO+Nuu2deQjV3WYhCBTwpnepSQ==
+	bh=ahe4IChpZ882BFE6SFo7Xo4s3XAWB0w5xIL8kx/UW3M=;
+	b=w9Q28ZahIkDlCXge0lZ5RZ+yQNWDCp6iCqUuk+4KJAoOql5xyOKnq1z++iy09/aTrQzh
+	 L+XUKvLw0GVumSqMB0Od1mgaSipxhkpHyo/+mbx9GHVfcl+ebKBTUqgF9lu8/MEZyK8xP
+	 WPljnLy71tsOk9TCgR2d5FnvzuHtEFhKYtjUpkMrXpFoBkIpM3Vh3LgRq4TArFvsbedlM
+	 SZzMeU6Y6F2bbrm4Bg+JwJ89OH3yyBsNQAmr5aWOvoOEZXmsMmgaSrN35eTjCRidmx4Xg
+	 320ACGZo+pGmmCNPt9ypNRAGPPDludbWWRNBpiDpC+WBCha64Rx6Paw1SRHKE3Ch1Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BUG+KYe/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HSNsoKev;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0C6606B8BD;
-	Sat,  7 Nov 2026 14:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CA0606B8BD;
+	Sat,  7 Nov 2026 14:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUG+KYe/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576CC1F008A5;
-	Sat,  7 Nov 2026 14:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HSNsoKev
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9BFF1F008A2;
+	Sat,  7 Nov 2026 14:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063516;
-	bh=d6zjBtVg5oO1t5dBT9zeHbAkGkx8g5x/6dUn6S/Uk8A=;
+	s=korg; t=1794063517;
+	bh=ahe4IChpZ882BFE6SFo7Xo4s3XAWB0w5xIL8kx/UW3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BUG+KYe/Fk9HQbd1ukbGw2SNmjOnWzsEjO9gxT6MRoX2biJamVkaOPBV+c6S5aA8f
-	 G+jY5wKTUipca28CIo/i2zDY0Ndsrf6Mh0x52C/OQvMXLrIAHaTyFfKfHeZMjcbWuv
-	 uIAROUPtu8Ee8TJJRKyX8x9jdFipKGKSt3deGYQo=
+	b=HSNsoKev56FxEraBx9rbJPhXdHYi4ivvGmznSEyiYJu4cOlEzGEmrcvViFRQNwMQl
+	 HZZOOpRd941PLJCObEYP4T0xARPj0M90AttEQexgUcjmIaOlF04z6dBSlzC/nzy9IN
+	 hWZGxtm/YBrASZfFax3I+/PLCpfC8R6zlkITD3QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 641/869] gpiolib: cdev: dont set GPIOD_FLAG_IS_OUT
-Date: Sat,  7 Nov 2026 08:55:23 -0500
-Message-ID: <20261107134914.653021967@linuxfoundation.org>
+Subject: [PATCH 6.18 659/869] ALSA: compress: fix buffer leak on failed SET_PARAMS
+Date: Sat,  7 Nov 2026 08:55:41 -0500
+Message-ID: <20261107134915.419974437@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,86 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 974d2712cb15014019595799b3ed68fef5fe9695 ]
+[ Upstream commit fbc74ca9fbf7e0b8f6872ccac62f9f4a1f3b5e53 ]
 
-When a line is requested or reconfigured through the v2 uAPI,
-gpio_v2_line_config_flags_to_desc_flags() copies the requested
-configuration into the descriptor flags, GPIOD_FLAG_IS_OUT included,
-before gpiod_direction_input_nonotify() or
-gpiod_direction_output_nonotify() asks the driver for the direction.
-If the driver refuses, for instance with -EOPNOTSUPP from
-.direction_input() for a line that can only be an output, the ioctl
-fails but the flag keeps the refused direction. gpiod_free_commit()
-does not touch GPIOD_FLAG_IS_OUT, so this outlives the failed request,
-and GPIO_V2_GET_LINEINFO_IOCTL reports the line as an input while the
-hardware still drives it, until a request without direction flags
-makes gpiod_request_commit() read the direction back from the driver:
+When the driver has neither ops->copy nor a preallocated dma_buffer_p,
+snd_compr_allocate_buffer() kmallocs runtime->buffer. If
+ops->set_params() then rejects the parameters, SET_PARAMS fails, the
+stream stays in the OPEN state and keeps the buffer. The next
+SET_PARAMS allocates a new buffer and overwrites the pointer, so
+repeated SET_PARAMS calls with parameters that the driver rejects leak
+one buffer per call.
 
-  GPIO_V2_GET_LINE_IOCTL, line 0, input:         -EOPNOTSUPP
-  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            input
-  GPIO_V2_GET_LINE_IOCTL, line 0, no direction:  ok
-  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            output
+Release the framework-owned buffer when ops->set_params() fails on an
+OPEN stream, so that a failed SET_PARAMS leaves no buffer behind and
+the buffer is allocated only once per successful setup. Use the same
+ownership check as snd_compr_free().
 
-GPIO_V2_LINE_SET_CONFIG_IOCTL updates the flags in the same order.
-There the line stays requested, and since commit 92ac7de3175e
-("gpiolib: don't allow setting values on input lines")
-GPIO_V2_LINE_SET_VALUES_IOCTL on it then fails with -EPERM, though the
-line is still an output. A line whose driver refuses to make it an
-output is likewise reported as one.
-
-gpiod_direction_input_nonotify() and gpiod_direction_output_nonotify()
-set or clear GPIOD_FLAG_IS_OUT themselves once the driver has accepted
-the direction, emulated open drain and open source included, and
-nothing between the copy and those calls reads the flag. Leave it to
-them, as the v1 uAPI already does.
-
-The other flags that the helper copies stay as they are. Active low,
-drive and bias are what gpiod_direction_*() applies, drive and bias
-possibly before the driver refuses the direction; edges and event
-clock are the character device's own. None of them is read back from
-the driver, so there is no earlier state that is more accurate to go
-back to. A failed request releases the line, which clears them, and a
-failed reconfiguration leaves the line, like the lines before it, with
-what was applied up to the failure.
-
-Reproduced under QEMU with a test GPIO chip whose line 0 refuses input
-and line 1 refuses output: both refused requests and both refused
-reconfigurations leave the line info with the refused direction, and
-setting the value of the reconfigured output fails with -EPERM. With
-this change the line info shows the direction of the hardware in all
-four cases and setting the value works. First seen on real hardware
-with v6.12.
-
-Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
+Fixes: b21c60a4edd2 ("ALSA: core: add support for compress_offload")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
-Reviewed-by: Kent Gibson <warthog618@gmail.com>
-Link: https://patch.msgid.link/20261016-gpiolib-cdev-direction-v2-1-aambrozewicz@nvidia.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261019144533.30665-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 5 -----
- 1 file changed, 5 deletions(-)
+ sound/core/compress_offload.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index d67d361cc4562..1afda8ea5769b 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -1253,11 +1253,6 @@ static void gpio_v2_line_config_flags_to_desc_flags(u64 lflags,
- 	assign_bit(GPIOD_FLAG_ACTIVE_LOW, &flags,
- 		   lflags & GPIO_V2_LINE_FLAG_ACTIVE_LOW);
+diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
+index 065cdfaef1eaa..c4114186b0d11 100644
+--- a/sound/core/compress_offload.c
++++ b/sound/core/compress_offload.c
+@@ -661,8 +661,15 @@ snd_compr_set_params(struct snd_compr_stream *stream, unsigned long arg)
+ 			return -ENOMEM;
  
--	if (lflags & GPIO_V2_LINE_FLAG_OUTPUT)
--		set_bit(GPIOD_FLAG_IS_OUT, &flags);
--	else if (lflags & GPIO_V2_LINE_FLAG_INPUT)
--		clear_bit(GPIOD_FLAG_IS_OUT, &flags);
--
- 	assign_bit(GPIOD_FLAG_EDGE_RISING, &flags,
- 		   lflags & GPIO_V2_LINE_FLAG_EDGE_RISING);
- 	assign_bit(GPIOD_FLAG_EDGE_FALLING, &flags,
+ 		retval = stream->ops->set_params(stream, params);
+-		if (retval)
++		if (retval) {
++			/* the stream stays OPEN: drop the buffer of the rejected setup */
++			if (stream->runtime->state == SNDRV_PCM_STATE_OPEN &&
++			    !stream->runtime->dma_buffer_p) {
++				kfree(stream->runtime->buffer);
++				stream->runtime->buffer = NULL;
++			}
+ 			return retval;
++		}
+ 
+ 		if (stream->next_track)
+ 			return retval;
 -- 
 2.53.0
 
