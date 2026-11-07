@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062688;
-	b=e1dDBLC7S2AIyBSh0ubhm16Kx5H5K3Tv7lpOMbZRuGBeDfhnnTQtP3QV7QofyrPZO+C/
-	 y6rAwyLOCrkzedafByl3/ZRJuSb1ShcP7E+5F8nzV3V2tFS4faQpD7adOKjOS1ZNaaGPn
-	 3ii6/HJ85PpnLuUSU/PQDe3dxNBxtHpDikXK5NH0VJplCAFY6PjYzW8o+UtZ9s2SP1Npj
-	 J/Mqj8t21kfqsuX3xD7fr210NYCjdM3XzbTmVMHGAwYCZ5ud3YPbjrU4OG+2LjxPI3mtz
-	 OAghN5Z3LEzz9T8Rrr2Y+eQ2ioy6q/eUJ48wRHRpK0yQpwX9uKCT2sP80y8rszqL8lw==
+	t=1794062689;
+	b=46Np5ReZtwRZLuVvUaf6N9vTnK9X6FIFL1acb/V+V9AkZLiUpC6aCucuYlvBuZ9aWVne
+	 f/ybmKkN/CLKhmPoD1KKg1mmVDYsdebGaBFg8cmak9rvOGn4M3INSu5J18vtgJJG9LoTV
+	 MPLEoKMTPOiLnAuLtJlneWcQCS1DcmUT6qylddQTd1f/KZ5mvyo/YTOt6auc0HgDW6sIK
+	 mFnxQN7AEcRdHqxTLt/7FISQq9307aghWMpTleSKoYAyMPWzjW0u9ZqL59qVLicCSjajv
+	 qrRyx4KlBfPofxZgUPFRPJ3eWb+h+eHh7u0pV5vQ8Vxj8Y/7bWag/mbl7p9A8E5KUCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062689;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nd0afvP0AYWmpZf8bE/2a2TolcKBJ9KIWElH03IjNzg=;
-	b=czY7wEK3JiJ3QYIPzbWnsd6vZUZVKOuPP28a8wptI2gwFFfduTArTVJ5BAbYuO02WT4O
-	 jZbV+PXiPqrXOhWTQLp1L9bd/eCUbY4I56y3cqpyT9aXT91ZlAipFy6H5BStQvm0eGW4W
-	 9T8feFvC/Ai/axCoC/Q3+ZERSuwwzS+pXnWe8XdM46S8v7iwGzzbu2ylv2f2aRfyhf/mg
-	 eZ93uhFYcjdDc723RSxjp0ZtX6oTF0dOc5411U19EppFXEdX/7OAxk+1dRWXrN7YyYVmT
-	 wfAL40gEFrfkgulLYMJdPXlxvLS7vXx6p0XNtRJEHXf1RFg+bbk0GON8qz+G2vrToLA==
+	bh=itDku/vLK6bpFS6b9ApL5qwqE+N4bZdz5AtYIk1m1ls=;
+	b=xP03Kof4bzKX25XFFMr4wDQu+xrX4zQfYaDuFB8PGTHfgBY06Xx3ePE8mUx2ZpEvdpkm
+	 wcgS58VCNlvhsOGZFp48k8t12mLWHbLPAV0loPkoe0wVA3vat7+ORsLJ7RmCiQhVUmh2d
+	 UpFKJ0qH0UHCXO7ksrUXBzeYvm/+yrp0HJz3jJ51fNt9iZacaHJjW1jkiGB+fzKn74l0L
+	 SNuCpdjc246/Dn8TEszwPf9TlxDofFkSh6dE1fwqKzwAYSadjRY04tOvnOgLD9xlC9drd
+	 Dp0XOQhw181roM2ZhHvZs/c3A1bOOxfRTEKqmkZSq2tRwRhTiBe9RzTUzrOOVJxzFcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XcoBFKn/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z2/Oo3Xb";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B806606A32D;
-	Sat,  7 Nov 2026 14:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA104606A32D;
+	Sat,  7 Nov 2026 14:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcoBFKn/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E461F0089F;
-	Sat,  7 Nov 2026 14:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2/Oo3Xb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897FF1F0089F;
+	Sat,  7 Nov 2026 14:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062687;
-	bh=nd0afvP0AYWmpZf8bE/2a2TolcKBJ9KIWElH03IjNzg=;
+	s=korg; t=1794062688;
+	bh=itDku/vLK6bpFS6b9ApL5qwqE+N4bZdz5AtYIk1m1ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XcoBFKn/QibI/+B94d8VXxAot5nGOouOdjwJ/cx3cVm2qMT4BIh3IE9+ZcfrfFsd1
-	 StL/BmuzPR5XK/+j1h2zP3GyDsBsgI5JxprR0WXJem7Pt4sqYsJb8CzVIBgRJDDnqQ
-	 D6Vad+b3EJOTAc7C4TqbWBMlYDBmqIKTRBRPS8aI=
+	b=z2/Oo3XbT7jsUVd1cct7niE03JbkliIfnV8eosnxJKlP9R2BMlQP49u/HeNXXGC2e
+	 D+o9YOOvEb9DTKlqCiFvFhf2CSGAJ1faOB4kbwCcfC1suuZawqd4MSdTzzNgpqd9RG
+	 xrYIy/Aa1DMTvAOcUYmPvQLh2NcVq45/2n8P4hxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Khasar Munkh-Erdene <02khasar@gmail.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Gary Guo <gary@garyguo.net>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 007/869] staging: rtl8723bs: fix spacing around operators in rtw_recv.c
-Date: Sat,  7 Nov 2026 08:44:49 -0500
-Message-ID: <20261107134852.288718929@linuxfoundation.org>
+Subject: [PATCH 6.18 016/869] rust: irq: declare cfi_encoding for irqreturn
+Date: Sat,  7 Nov 2026 08:44:58 -0500
+Message-ID: <20261107134852.534647921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -67,300 +71,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Khasar Munkh-Erdene <02khasar@gmail.com>
+From: Sami Tolvanen <samitolvanen@google.com>
 
-[ Upstream commit 393b267e6f04a11d4b18b7dc1423fa59f173f72b ]
+[ Upstream commit 01f3e6b4b1c8c1748e59ba53631ab1f5d9ad0ea4 ]
 
-Fix coding style issues by adding missing spaces around binary and
-ternary operators, as reported by checkpatch.pl.
+The IRQ callbacks return c_uint. C calls them through irq_handler_t,
+which returns enum irqreturn. kCFI encodes enum types by name even with
+integer normalization, so the type ids never match and every call fails
+the CFI check.
 
-Signed-off-by: Khasar Munkh-Erdene <02khasar@gmail.com>
-Link: https://patch.msgid.link/20260225032909.72799-1-02khasar@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 495cb31c791b ("staging: rtl8723bs: fix protected RX frame validation in decrypt path")
+Generate irqreturn as a newtype with a cfi_encoding, as is done for
+lru_status, and return bindings::irqreturn_t from the callbacks.
+
+Fixes: 0851d34a8cc3 ("rust: irq: add support for non-threaded IRQs and handlers")
+Fixes: 135d40523244 ("rust: irq: add support for threaded IRQs and handlers")
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261019-rust-cfi-fixes-v1-1-9503472ba738@google.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+[ sashal: replaced bindgen's custom enum attribute option with sed post-processing to support older bindgen ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_recv.c | 84 +++++++++++------------
- 1 file changed, 42 insertions(+), 42 deletions(-)
+ rust/Makefile              |  3 ++-
+ rust/bindgen_parameters    |  3 +++
+ rust/bindings/lib.rs       |  1 +
+ rust/kernel/irq/request.rs | 22 +++++++++++-----------
+ 4 files changed, 17 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_recv.c b/drivers/staging/rtl8723bs/core/rtw_recv.c
-index 4727f94df4355..9f9d80e42e4db 100644
---- a/drivers/staging/rtl8723bs/core/rtw_recv.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_recv.c
-@@ -316,7 +316,7 @@ static void rtw_handle_tkip_mic_err(struct adapter *padapter, u8 bgroup)
- 	} else {
- 		cur_time = jiffies;
+diff --git a/rust/Makefile b/rust/Makefile
+index d4618f646b05b..3867ff14fbdec 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -367,7 +367,8 @@ quiet_cmd_bindgen = BINDGEN $@
+ $(obj)/bindings/bindings_generated.rs: private bindgen_target_flags = \
+     $(shell grep -Ev '^#|^$$' $(src)/bindgen_parameters)
+ $(obj)/bindings/bindings_generated.rs: private bindgen_target_extra = ; \
+-    sed -Ei 's/pub const RUST_CONST_HELPER_([a-zA-Z0-9_]*)/pub const \1/g' $@
++    sed -Ei 's/pub const RUST_CONST_HELPER_([a-zA-Z0-9_]*)/pub const \1/g' $@; \
++    sed -Ei 's/^pub struct irqreturn\(/#[cfi_encoding="9irqreturn"]\n&/' $@
+ $(obj)/bindings/bindings_generated.rs: $(src)/bindings/bindings_helper.h \
+     $(src)/bindgen_parameters FORCE
+ 	$(call if_changed_dep,bindgen)
+diff --git a/rust/bindgen_parameters b/rust/bindgen_parameters
+index e13c6f9dd17b2..9e02500dc9792 100644
+--- a/rust/bindgen_parameters
++++ b/rust/bindgen_parameters
+@@ -23,6 +23,9 @@
+ # warning. We don't need to peek into it anyway.
+ --opaque-type spinlock
  
--		if (cur_time - psecuritypriv->last_mic_err_time < 60*HZ) {
-+		if (cur_time - psecuritypriv->last_mic_err_time < 60 * HZ) {
- 			psecuritypriv->btkip_countermeasure = true;
- 			psecuritypriv->last_mic_err_time = 0;
- 			psecuritypriv->btkip_countermeasure_time = cur_time;
-@@ -384,13 +384,13 @@ static signed int recvframe_chkmic(struct adapter *adapter,  union recv_frame *p
- 				mickey = &stainfo->dot11tkiprxmickey.skey[0];
- 			}
++# enums that appear in indirect function calls should specify a cfi type
++--newtype-enum irqreturn
++
+ # `seccomp`'s comment gets understood as a doctest
+ --no-doc-comments
  
--			datalen = precvframe->u.hdr.len-prxattrib->hdrlen-prxattrib->iv_len-prxattrib->icv_len-8;/* icv_len included the mic code */
-+			datalen = precvframe->u.hdr.len - prxattrib->hdrlen - prxattrib->iv_len - prxattrib->icv_len - 8;/* icv_len included the mic code */
- 			pframe = precvframe->u.hdr.rx_data;
--			payload = pframe+prxattrib->hdrlen+prxattrib->iv_len;
-+			payload = pframe + prxattrib->hdrlen + prxattrib->iv_len;
+diff --git a/rust/bindings/lib.rs b/rust/bindings/lib.rs
+index 8305adbdf8cbf..37f584727eba1 100644
+--- a/rust/bindings/lib.rs
++++ b/rust/bindings/lib.rs
+@@ -23,6 +23,7 @@
+     unreachable_pub,
+     unsafe_op_in_unsafe_fn
+ )]
++#![feature(cfi_encoding)]
  
- 			rtw_seccalctkipmic(mickey, pframe, payload, datalen, &miccode[0], (unsigned char)prxattrib->priority); /* care the length of the data */
+ #[allow(dead_code)]
+ #[allow(clippy::as_underscore)]
+diff --git a/rust/kernel/irq/request.rs b/rust/kernel/irq/request.rs
+index 70700f43ddd37..4f2b315856b9b 100644
+--- a/rust/kernel/irq/request.rs
++++ b/rust/kernel/irq/request.rs
+@@ -20,10 +20,10 @@
+ #[repr(u32)]
+ pub enum IrqReturn {
+     /// The interrupt was not from this device or was not handled.
+-    None = bindings::irqreturn_IRQ_NONE,
++    None = bindings::irqreturn::IRQ_NONE.0,
  
--			pframemic = payload+datalen;
-+			pframemic = payload + datalen;
+     /// The interrupt was handled by this device.
+-    Handled = bindings::irqreturn_IRQ_HANDLED,
++    Handled = bindings::irqreturn::IRQ_HANDLED.0,
+ }
  
- 			bmic_err = false;
+ /// Callbacks for an IRQ handler.
+@@ -275,7 +275,7 @@ pub fn synchronize(&self, dev: &Device<Bound>) -> Result {
+ unsafe extern "C" fn handle_irq_callback<T: Handler + 'static>(
+     _irq: i32,
+     ptr: *mut c_void,
+-) -> c_uint {
++) -> bindings::irqreturn_t {
+     // SAFETY: `ptr` is a pointer to `RegistrationInner` set in `Registration::new`
+     let inner = unsafe { &*(ptr as *const RegistrationInner) };
+     // SAFETY: `inner.handler` is a pointer to `T` set in `Registration::new`
+@@ -284,20 +284,20 @@ pub fn synchronize(&self, dev: &Device<Bound>) -> Result {
+     // callback is running implies that the device has not yet been unbound.
+     let device = unsafe { inner.dev.as_bound() };
  
-@@ -437,9 +437,9 @@ static union recv_frame *decryptor(struct adapter *padapter, union recv_frame *p
- 	u32  res = _SUCCESS;
+-    T::handle(handler, device) as c_uint
++    bindings::irqreturn_t(T::handle(handler, device) as c_uint)
+ }
  
- 	if (prxattrib->encrypt > 0) {
--		u8 *iv = precv_frame->u.hdr.rx_data+prxattrib->hdrlen;
-+		u8 *iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
+ /// The value that can be returned from [`ThreadedHandler::handle`].
+ #[repr(u32)]
+ pub enum ThreadedIrqReturn {
+     /// The interrupt was not from this device or was not handled.
+-    None = bindings::irqreturn_IRQ_NONE,
++    None = bindings::irqreturn::IRQ_NONE.0,
  
--		prxattrib->key_index = (((iv[3])>>6)&0x3);
-+		prxattrib->key_index = (((iv[3]) >> 6) & 0x3);
+     /// The interrupt was handled by this device.
+-    Handled = bindings::irqreturn_IRQ_HANDLED,
++    Handled = bindings::irqreturn::IRQ_HANDLED.0,
  
- 		if (prxattrib->key_index > WEP_KEYS) {
- 			switch (prxattrib->encrypt) {
-@@ -561,7 +561,7 @@ static signed int recv_decache(union recv_frame *precv_frame, u8 bretry, struct
- {
- 	signed int tid = precv_frame->u.hdr.attrib.priority;
+     /// The handler wants the handler thread to wake up.
+-    WakeThread = bindings::irqreturn_IRQ_WAKE_THREAD,
++    WakeThread = bindings::irqreturn::IRQ_WAKE_THREAD.0,
+ }
  
--	u16 seq_ctrl = ((precv_frame->u.hdr.attrib.seq_num&0xffff) << 4) |
-+	u16 seq_ctrl = ((precv_frame->u.hdr.attrib.seq_num & 0xffff) << 4) |
- 		(precv_frame->u.hdr.attrib.frag_num & 0xf);
+ /// Callbacks for a threaded IRQ handler.
+@@ -501,7 +501,7 @@ pub fn synchronize(&self, dev: &Device<Bound>) -> Result {
+ unsafe extern "C" fn handle_threaded_irq_callback<T: ThreadedHandler + 'static>(
+     _irq: i32,
+     ptr: *mut c_void,
+-) -> c_uint {
++) -> bindings::irqreturn_t {
+     // SAFETY: `ptr` is a pointer to `RegistrationInner` set in `ThreadedRegistration::new`
+     let inner = unsafe { &*(ptr as *const RegistrationInner) };
+     // SAFETY: `inner.handler` is a pointer to `T` set in `ThreadedRegistration::new`
+@@ -510,7 +510,7 @@ pub fn synchronize(&self, dev: &Device<Bound>) -> Result {
+     // callback is running implies that the device has not yet been unbound.
+     let device = unsafe { inner.dev.as_bound() };
  
- 	if (tid > 15)
-@@ -625,29 +625,29 @@ static void process_wmmps_data(struct adapter *padapter, union recv_frame *precv
- 	if (!psta->qos_option)
- 		return;
+-    T::handle(handler, device) as c_uint
++    bindings::irqreturn_t(T::handle(handler, device) as c_uint)
+ }
  
--	if (!(psta->qos_info&0xf))
-+	if (!(psta->qos_info & 0xf))
- 		return;
+ /// # Safety
+@@ -519,7 +519,7 @@ pub fn synchronize(&self, dev: &Device<Bound>) -> Result {
+ unsafe extern "C" fn thread_fn_callback<T: ThreadedHandler + 'static>(
+     _irq: i32,
+     ptr: *mut c_void,
+-) -> c_uint {
++) -> bindings::irqreturn_t {
+     // SAFETY: `ptr` is a pointer to `RegistrationInner` set in `ThreadedRegistration::new`
+     let inner = unsafe { &*(ptr as *const RegistrationInner) };
+     // SAFETY: `inner.handler` is a pointer to `T` set in `ThreadedRegistration::new`
+@@ -528,5 +528,5 @@ pub fn synchronize(&self, dev: &Device<Bound>) -> Result {
+     // callback is running implies that the device has not yet been unbound.
+     let device = unsafe { inner.dev.as_bound() };
  
--	if (psta->state&WIFI_SLEEP_STATE) {
-+	if (psta->state & WIFI_SLEEP_STATE) {
- 		u8 wmmps_ac = 0;
- 
- 		switch (pattrib->priority) {
- 		case 1:
- 		case 2:
--			wmmps_ac = psta->uapsd_bk&BIT(1);
-+			wmmps_ac = psta->uapsd_bk & BIT(1);
- 			break;
- 		case 4:
- 		case 5:
--			wmmps_ac = psta->uapsd_vi&BIT(1);
-+			wmmps_ac = psta->uapsd_vi & BIT(1);
- 			break;
- 		case 6:
- 		case 7:
--			wmmps_ac = psta->uapsd_vo&BIT(1);
-+			wmmps_ac = psta->uapsd_vo & BIT(1);
- 			break;
- 		case 0:
- 		case 3:
- 		default:
--			wmmps_ac = psta->uapsd_be&BIT(1);
-+			wmmps_ac = psta->uapsd_be & BIT(1);
- 			break;
- 		}
- 
-@@ -967,20 +967,20 @@ static signed int validate_recv_ctrl_frame(struct adapter *padapter, union recv_
- 		switch (pattrib->priority) {
- 		case 1:
- 		case 2:
--			wmmps_ac = psta->uapsd_bk&BIT(0);
-+			wmmps_ac = psta->uapsd_bk & BIT(0);
- 			break;
- 		case 4:
- 		case 5:
--			wmmps_ac = psta->uapsd_vi&BIT(0);
-+			wmmps_ac = psta->uapsd_vi & BIT(0);
- 			break;
- 		case 6:
- 		case 7:
--			wmmps_ac = psta->uapsd_vo&BIT(0);
-+			wmmps_ac = psta->uapsd_vo & BIT(0);
- 			break;
- 		case 0:
- 		case 3:
- 		default:
--			wmmps_ac = psta->uapsd_be&BIT(0);
-+			wmmps_ac = psta->uapsd_be & BIT(0);
- 			break;
- 		}
- 
-@@ -992,7 +992,7 @@ static signed int validate_recv_ctrl_frame(struct adapter *padapter, union recv_
- 			psta->state ^= WIFI_STA_ALIVE_CHK_STATE;
- 		}
- 
--		if ((psta->state&WIFI_SLEEP_STATE) && (pstapriv->sta_dz_bitmap&BIT(psta->aid))) {
-+		if ((psta->state & WIFI_SLEEP_STATE) && (pstapriv->sta_dz_bitmap & BIT(psta->aid))) {
- 			struct list_head	*xmitframe_plist, *xmitframe_phead;
- 			struct xmit_frame *pxmitframe = NULL;
- 			struct xmit_priv *pxmitpriv = &padapter->xmitpriv;
-@@ -1036,7 +1036,7 @@ static signed int validate_recv_ctrl_frame(struct adapter *padapter, union recv_
- 				/* spin_unlock_bh(&psta->sleep_q.lock); */
- 				spin_unlock_bh(&pxmitpriv->lock);
- 
--				if (pstapriv->tim_bitmap&BIT(psta->aid)) {
-+				if (pstapriv->tim_bitmap & BIT(psta->aid)) {
- 					if (psta->sleepq_len == 0) {
- 						/* issue nulldata with More data bit = 0 to indicate we have no buffered packets */
- 						issue_nulldata_in_interrupt(padapter, psta->hwaddr);
-@@ -1412,9 +1412,9 @@ static signed int validate_80211w_mgmt(struct adapter *adapter, union recv_frame
- 				goto validate_80211w_fail;
- 			precv_frame = decryptor(adapter, precv_frame);
- 			/* save actual management data frame body */
--			memcpy(mgmt_DATA, ptr+pattrib->hdrlen+pattrib->iv_len, data_len);
-+			memcpy(mgmt_DATA, ptr + pattrib->hdrlen + pattrib->iv_len, data_len);
- 			/* overwrite the iv field */
--			memcpy(ptr+pattrib->hdrlen, mgmt_DATA, data_len);
-+			memcpy(ptr + pattrib->hdrlen, mgmt_DATA, data_len);
- 			/* remove the iv and icv length */
- 			pattrib->pkt_len = pattrib->pkt_len - pattrib->iv_len - pattrib->icv_len;
- 			kfree(mgmt_DATA);
-@@ -1470,7 +1470,7 @@ static signed int validate_recv_frame(struct adapter *adapter, union recv_frame
- 	struct rx_pkt_attrib *pattrib = &precv_frame->u.hdr.attrib;
- 
- 	u8 *ptr = precv_frame->u.hdr.rx_data;
--	u8  ver = (unsigned char) (*ptr)&0x3;
-+	u8  ver = (unsigned char) (*ptr) & 0x3;
- 
- 	/* add version chk */
- 	if (ver != 0) {
-@@ -1508,7 +1508,7 @@ static signed int validate_recv_frame(struct adapter *adapter, union recv_frame
- 		retval = _FAIL; /*  only data frame return _SUCCESS */
- 		break;
- 	case WIFI_DATA_TYPE: /* data */
--		pattrib->qos = (subtype & BIT(7)) ? 1:0;
-+		pattrib->qos = (subtype & BIT(7)) ? 1 : 0;
- 		retval = validate_recv_data_frame(adapter, precv_frame);
- 		if (retval == _FAIL) {
- 			struct recv_priv *precvpriv = &adapter->recvpriv;
-@@ -1553,8 +1553,8 @@ static signed int wlanhdr_to_ethhdr(union recv_frame *precvframe)
- 	if (pattrib->encrypt)
- 		recvframe_pull_tail(precvframe, pattrib->icv_len);
- 
--	psnap = (struct ieee80211_snap_hdr	*)(ptr+pattrib->hdrlen + pattrib->iv_len);
--	psnap_type = ptr+pattrib->hdrlen + pattrib->iv_len+SNAP_SIZE;
-+	psnap = (struct ieee80211_snap_hdr	*)(ptr + pattrib->hdrlen + pattrib->iv_len);
-+	psnap_type = ptr + pattrib->hdrlen + pattrib->iv_len + SNAP_SIZE;
- 	/* convert hdr + possible LLC headers into Ethernet header */
- 	/* eth_type = (psnap_type[0] << 8) | psnap_type[1]; */
- 	if ((!memcmp(psnap, rfc1042_header, SNAP_SIZE) &&
-@@ -1568,37 +1568,37 @@ static signed int wlanhdr_to_ethhdr(union recv_frame *precvframe)
- 		/* Leave Ethernet header part of hdr and full payload */
- 		bsnaphdr = false;
- 
--	rmv_len = pattrib->hdrlen + pattrib->iv_len + (bsnaphdr?SNAP_SIZE:0);
-+	rmv_len = pattrib->hdrlen + pattrib->iv_len + (bsnaphdr ? SNAP_SIZE : 0);
- 	len = precvframe->u.hdr.len - rmv_len;
- 
--	memcpy(&be_tmp, ptr+rmv_len, 2);
-+	memcpy(&be_tmp, ptr + rmv_len, 2);
- 	eth_type = ntohs(be_tmp); /* pattrib->ether_type */
- 	pattrib->eth_type = eth_type;
- 
- 	if ((check_fwstate(pmlmepriv, WIFI_MP_STATE) == true)) {
- 		ptr += rmv_len;
- 		*ptr = 0x87;
--		*(ptr+1) = 0x12;
-+		*(ptr + 1) = 0x12;
- 
- 		eth_type = 0x8712;
- 		/*  append rx status for mp test packets */
--		ptr = recvframe_pull(precvframe, (rmv_len-sizeof(struct ethhdr)+2)-24);
-+		ptr = recvframe_pull(precvframe, (rmv_len - sizeof(struct ethhdr) + 2) - 24);
- 		if (!ptr)
- 			return _FAIL;
- 		memcpy(ptr, get_rxmem(precvframe), 24);
- 		ptr += 24;
- 	} else {
--		ptr = recvframe_pull(precvframe, (rmv_len-sizeof(struct ethhdr) + (bsnaphdr?2:0)));
-+		ptr = recvframe_pull(precvframe, (rmv_len - sizeof(struct ethhdr) + (bsnaphdr ? 2 : 0)));
- 		if (!ptr)
- 			return _FAIL;
- 	}
- 
- 	memcpy(ptr, pattrib->dst, ETH_ALEN);
--	memcpy(ptr+ETH_ALEN, pattrib->src, ETH_ALEN);
-+	memcpy(ptr + ETH_ALEN, pattrib->src, ETH_ALEN);
- 
- 	if (!bsnaphdr) {
- 		be_tmp = htons(len);
--		memcpy(ptr+12, &be_tmp, 2);
-+		memcpy(ptr + 12, &be_tmp, 2);
- 	}
- 
- 	return _SUCCESS;
-@@ -1736,7 +1736,7 @@ static int amsdu_to_msdu(struct adapter *padapter, union recv_frame *prframe)
- 		pdata += nSubframe_Length;
- 		a_len -= nSubframe_Length;
- 		if (a_len != 0) {
--			padding_len = 4 - ((nSubframe_Length + ETH_HLEN) & (4-1));
-+			padding_len = 4 - ((nSubframe_Length + ETH_HLEN) & (4 - 1));
- 			if (padding_len == 4)
- 				padding_len = 0;
- 
-@@ -2002,7 +2002,7 @@ static int recv_indicatepkt_reorder(struct adapter *padapter, union recv_frame *
- 
- 			rtw_recv_indicatepkt(padapter, prframe);
- 
--			preorder_ctrl->indicate_seq = (preorder_ctrl->indicate_seq + 1)%4096;
-+			preorder_ctrl->indicate_seq = (preorder_ctrl->indicate_seq + 1) % 4096;
- 
- 			return _SUCCESS;
- 		}
-@@ -2012,7 +2012,7 @@ static int recv_indicatepkt_reorder(struct adapter *padapter, union recv_frame *
- 
- 			retval = amsdu_to_msdu(padapter, prframe);
- 
--			preorder_ctrl->indicate_seq = (preorder_ctrl->indicate_seq + 1)%4096;
-+			preorder_ctrl->indicate_seq = (preorder_ctrl->indicate_seq + 1) % 4096;
- 
- 			if (retval != _SUCCESS) {
- 			}
-@@ -2201,7 +2201,7 @@ static int recv_func(struct adapter *padapter, union recv_frame *rframe)
- 			!psecuritypriv->busetkipkey) {
- 			rtw_enqueue_recvframe(rframe, &padapter->recvpriv.uc_swdec_pending_queue);
- 
--			if (recvpriv->free_recvframe_cnt < NR_RECVFRAME/4) {
-+			if (recvpriv->free_recvframe_cnt < NR_RECVFRAME / 4) {
- 				/* to prevent from recvframe starvation, get recvframe from uc_swdec_pending_queue to free_recvframe_cnt  */
- 				rframe = rtw_alloc_recvframe(&padapter->recvpriv.uc_swdec_pending_queue);
- 				if (rframe)
-@@ -2289,19 +2289,19 @@ static void rtw_signal_stat_timer_hdl(struct timer_list *t)
- 		}
- 
- 		/* update value of signal_strength, rssi, signal_qual */
--		tmp_s = (avg_signal_strength+(_alpha-1)*recvpriv->signal_strength);
-+		tmp_s = (avg_signal_strength + (_alpha - 1) * recvpriv->signal_strength);
- 		if (tmp_s % _alpha)
--			tmp_s = tmp_s/_alpha + 1;
-+			tmp_s = tmp_s / _alpha + 1;
- 		else
--			tmp_s = tmp_s/_alpha;
-+			tmp_s = tmp_s / _alpha;
- 		if (tmp_s > 100)
- 			tmp_s = 100;
- 
--		tmp_q = (avg_signal_qual+(_alpha-1)*recvpriv->signal_qual);
-+		tmp_q = (avg_signal_qual + (_alpha - 1) * recvpriv->signal_qual);
- 		if (tmp_q % _alpha)
--			tmp_q = tmp_q/_alpha + 1;
-+			tmp_q = tmp_q / _alpha + 1;
- 		else
--			tmp_q = tmp_q/_alpha;
-+			tmp_q = tmp_q / _alpha;
- 		if (tmp_q > 100)
- 			tmp_q = 100;
- 
+-    T::handle_threaded(handler, device) as c_uint
++    bindings::irqreturn_t(T::handle_threaded(handler, device) as c_uint)
+ }
 -- 
 2.53.0
 
