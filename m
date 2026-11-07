@@ -1,58 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061135;
-	b=H5IScwRAuye7vGqHITYSeFR1de3MPwt0FZs0FBHUPoPV6ZIByN8u0sPynTMPeLEXCBf1
-	 yTOX+q34ydUBnYMGN3UwVS54JjkFclir2+aVHeNaPhG7UQ95Mh61nwcOMQY6gwCdAQmDT
-	 LtvgxRgDM3T5wG14ZD/Q/qMfHXt9Cil8qWXzWVSsfe5f4J9lkycKw0RPuc1zx4Sn5xlpb
-	 ZOTTpyn/oEsaQOb5BiW5iYfy1avYsAxGGIqNR6yok8UVkit6QyN8mBdp4fNNJYRzlypdm
-	 U3Lp2v8CZhDgZAUPxVqrU+pzpn43CLcL2YeXov7vmZ6sQhy4rvAPtuv/yQ2eREPVCVw==
+	t=1794061137;
+	b=BXlwpI7RB5hbEBainTZA2JhtRc8CmI699ycjRlf9qBx24ZE7PlIvhCtSqJGqlrwjwpfa
+	 XAxYoalO/wkFz6W15pm6jW5dP6Gedf0ufFGeTEX8JlrSNTejXjM8Lb2+pyg6gPIu9Ri2N
+	 4HJ/6f9+UHI99ygFRE98Olj2mEZQRe9VcUFus3dc1p8ymYPHk5FwQwIk9+LXLcW1QxXh7
+	 q1kuqOYLdRM8cG7rRSUeAfuo5QGUb4mFla9tFKjAlTjLjXk8kqYndO3EglJmAA73M0Q8d
+	 YY6C/d3OEnHQXX3RljwFcXYEkg9sN+3L2iGji4j2T8S3kw6Y+VBZGH8ES55ghM27DxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061135;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061137;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C1QH2QTIYcL6houoiPnns3oWzdNCuPl6rOXLfQcnz2I=;
-	b=XgS/RG+BoaFZ9QqlEqY5qrc5xbPXDyrnmvJp8UYeBaRcThqxhUnt3vvLamwzMvGbICGj
-	 J+eSodeHq7yFMATnbwL6ce4HV2T5GPo0jtJNTVnEztLOoXD7pOpZW9fo3VdWkVp9BXVdk
-	 Hi4qbkzzEGL/xP3InN8K+5wZU4k1Ew50tKECJOrhjCurww0VsN3TRWrhyI7/ZIwvlHA1q
-	 lkZs6iTpV4FGCIqddJUs2PWqrKVONu+cyBb09BSh1pfJsKPdIV6bfrNkA7U+ElKM3MeLh
-	 3LI0cxi3g5CJoliCxWo2rzHwS9GYR/8AKlhUm1KYD+r8tRIqsiJ7xRyd5TnJFUmg49g==
+	bh=X8eUw6q5qPyTXuZlwEG/slsMtIht3kmp7ECDjjyepNk=;
+	b=X4aSD7Py+1Wc3pwiKFWRBmH+Ef7m8+XasHyoM89sUKoxFTMhgdai7gffOpwPxp79UUOF
+	 2tGNz7qcMrej9DOlqWbkrFjezYQox7sIKLo/RTKLhTZEjormBXpq3QxIMLOGlzRZR0OJd
+	 afzHQqq/8lP3pFPO9j61Z8OC7WbOgUyh5Y3VDU88fM68nyzwwrpEVTS413Zi6C7JR8nUn
+	 sCAASSJoTosj8ISNRjefYbWzsjmNi2ipglUVbTaUDwLp/9l045fK6AwfcAE6kO/TNAK6S
+	 VtaqHma/6lt+pO9YDgH+IcStqyJ9t/vWQP8aS5HOBt73DMnehQJ4No+8tsVAYWhJugw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pY9fNADx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZSSZH/aw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6CA606A332;
-	Sat,  7 Nov 2026 14:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF44606D817;
+	Sat,  7 Nov 2026 14:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pY9fNADx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307021F0089F;
-	Sat,  7 Nov 2026 14:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZSSZH/aw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591D11F0089F;
+	Sat,  7 Nov 2026 14:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061135;
-	bh=C1QH2QTIYcL6houoiPnns3oWzdNCuPl6rOXLfQcnz2I=;
+	s=korg; t=1794061136;
+	bh=X8eUw6q5qPyTXuZlwEG/slsMtIht3kmp7ECDjjyepNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pY9fNADxYJD2bKToWLdF6uPewC0il/3uOR/iH9yifrzcP99GixL3+0zsiPXJwfoTe
-	 wRn3qb2GQBeB5rO2VXo4vLfjQcapBY7p/OaZmZZA0N2zB4dTdozfoMAVHNxY+iKybL
-	 22YuUEN1vqqIaYFG+wr1Ph1HWwY+6bz497OMjSw4=
+	b=ZSSZH/awLb/PToLsYtFTcqAgnW42FvJtNTLSCprrfpD2p/0GiBfPeR63+y+mPq4gq
+	 HKjYTOiGuGQovBGs6ca6iPAAyXpavTYtTnpRXQX7oML3LQwsRCKbAB311qFhdsIn6G
+	 hcJCe2aziH8td9onzBXl2N/eU6gniMXQTNjUARyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Gang He <ghe@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com
-Subject: [PATCH 6.12 0444/1536] ocfs2: publish the filecheck owner before adding sysfs attributes
-Date: Sat,  7 Nov 2026 08:41:00 -0500
-Message-ID: <20261107135010.015215094@linuxfoundation.org>
+	Jonathan Gopel <jgopel@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.12 0445/1536] thunderbolt: Do not RPM complete unrelated subtrees on unplug
+Date: Sat,  7 Nov 2026 08:41:01 -0500
+Message-ID: <20261107135010.042187849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -74,84 +67,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Jonathan Gopel <jgopel@gmail.com>
 
-commit e062baf5680845705d21df415c8f0751c96b0792 upstream.
+commit 96a8479804e3f7af43e639e9df39f562f1a75fd5 upstream.
 
-ocfs2_filecheck_create_sysfs() initializes the filecheck allocation before
-calling kobject_init_and_add(), but assigns entry->fs_fcheck only after
-that call returns.  The default attribute group can already be visible
-while registration is in progress.  A concurrent read can therefore enter
-ocfs2_filecheck_attr_show() with a NULL fs_fcheck and try to lock its
-fc_lock.
+When a Thunderbolt device is unplugged, that switch and every switch
+subsequent to it on the bus device list is `complete()`d, not just its
+child devices. In the case of multiple domains, it may cause, eg, an
+attempt to `complete()` the uninitialized domain 1 root switch RPM
+completion on unplug of a switch from domain 0 (though ordering is not
+guaranteed numerically sorted).
 
-Assign the initialized owner before adding the kobject, so every activated
-attribute has valid state.  Clear the pointer when addition fails,
-preserving the existing teardown guard and error cleanup.
+I initially noticed this issue on a Dell XPS9720 when the system would
+seem to sporadically not wake after unplugging a Thunderbolt dock. I
+tried multiple kernel versions including v7.2.7 and v7.3-rc4 to see if
+that resolved the issue, but the issue persisted. Eventually I found
+that I could consistently generate a kernel Oops reporting a page fault
+at 0xffff_ffff_ffff_fff8 on unplug from one side of the laptop and went
+bug hunting. I became suspicious of the `bus_for_each_dev()` walk that I
+ultimately ended up changing. To confirm this issue, I did an eBPF trace
+of `bus_for_each_dev()`, `complete_rpm()`, and `complete()` while
+unplugging in a variety of situations and found that an unplug from
+domain 0 tries to `complete_rpm()` domain 1's switch, whose RPM
+completion is not initialized and thus is holding a null wait-list
+pointer, triggering the page fault.
 
-A controlled probe-instrumented test kernel with the original OCFS2
-registration ordering produced this Oops during a concurrent sysfs read:
+Here are the key sections of that eBPF trace. Note that HEAD denotes the
+completion's own wait-list HEAD:
 
-  KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
-  RIP: 0010:kasan_byte_accessible+0x15/0x30
-  Call Trace:
-   <TASK>
-   __kasan_check_byte+0x13/0x50
-   lock_acquire+0x113/0x300
-   _raw_spin_lock+0x31/0x40
-   ocfs2_filecheck_attr_show+0x138/0x5f0
-   ocfs2_filecheck_show+0x5d/0x90
-   sysfs_kf_seq_show+0x1d3/0x360
-   seq_read_iter+0x480/0x1110
-   kernfs_fop_read_iter+0x419/0x5a0
-   vfs_read+0x7d2/0xc20
-   ksys_read+0x111/0x200
-   do_syscall_64+0x114/0x620
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Modules linked in:
+```
+RESCAN_ENTER domain=0
 
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0086-v4-1b3a3c5fd05c1fb41df9@gmail.com
-Fixes: 5f483c4abb50 ("ocfs2: add kobject for online file check")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Gang He <ghe@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+COMPLETE rescan_domain=0 target=0-1 target_domain=0
+         route=0x1 parent=0-0 unplugged=1
+COMPLETION done=0 head=HEAD next=HEAD prev=HEAD
+
+BUS_WALK domain=0 start=0-1 callback=complete_rpm
+CALLBACK_ENTER rescan_domain=0 dev=1-0 parent=domain1 is_switch=1
+
+COMPLETE rescan_domain=0 target=1-0 target_domain=1
+         route=0x0 parent=domain1 unplugged=0
+COMPLETION done=0 head=HEAD next=0 prev=0
+
+        complete+5
+        complete_rpm+43
+        bus_for_each_dev+133
+        icm_free_unplugged_children+250
+        icm_rescan_work+42
+```
+
+This patch gates the `complete()` on an additional condition - that the
+Thunderbolt domain matches the domain of the device that was unplugged.
+
+I only have a single system with multiple Thunderbolt domains - the Dell
+XPS9720. I am consistently able to reproduce the Oops on that system.
+Since running with this patch, I have not seen the Oops reoccur. I have
+also tested it on a Thinkpad X1-Gen12, and that system boots and runs
+well with it, but it only has a single Thunderbolt domain, so it does
+not exercise the multi-domain failure case.
+
+Fixes: 4f7c2e0d8765 ("thunderbolt: Make sure device runtime resume completes before taking domain lock")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Gopel <jgopel@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/filecheck.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/thunderbolt/icm.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ocfs2/filecheck.c
-+++ b/fs/ocfs2/filecheck.c
-@@ -179,17 +179,20 @@ int ocfs2_filecheck_create_sysfs(struct
- 	fcheck->fc_size = 0;
- 	fcheck->fc_done = 0;
+--- a/drivers/thunderbolt/icm.c
++++ b/drivers/thunderbolt/icm.c
+@@ -2034,7 +2034,7 @@ static int complete_rpm(struct device *d
+ {
+ 	struct tb_switch *sw = tb_to_switch(dev);
  
-+	/* Publish the initialized owner before activating its sysfs callbacks. */
-+	entry->fs_fcheck = fcheck;
- 	entry->fs_kobj.kset = osb->osb_dev_kset;
- 	init_completion(&entry->fs_kobj_unregister);
- 	ret = kobject_init_and_add(&entry->fs_kobj, &ocfs2_ktype_filecheck,
- 					NULL, "filecheck");
- 	if (ret) {
-+		/* Mount failure still calls ocfs2_filecheck_remove_sysfs(). */
-+		entry->fs_fcheck = NULL;
- 		kobject_put(&entry->fs_kobj);
- 		kfree(fcheck);
- 		return ret;
- 	}
- 
--	entry->fs_fcheck = fcheck;
+-	if (sw)
++	if (sw && sw->tb == data)
+ 		complete(&sw->rpm_complete);
  	return 0;
  }
+@@ -2050,8 +2050,8 @@ static void remove_unplugged_switch(stru
+ 	 * tb_switch_remove() calls pm_runtime_get_sync() that then waits
+ 	 * for it.
+ 	 */
+-	complete_rpm(&sw->dev, NULL);
+-	bus_for_each_dev(&tb_bus_type, &sw->dev, NULL, complete_rpm);
++	complete_rpm(&sw->dev, sw->tb);
++	bus_for_each_dev(&tb_bus_type, &sw->dev, sw->tb, complete_rpm);
+ 	tb_switch_remove(sw);
  
+ 	pm_runtime_mark_last_busy(parent);
 
 
