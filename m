@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063996;
-	b=3PKvLvW9M9a/MkS3C/o0yZMFX8vNyAIcOwGwsqz3ueAZdJkuGyeTxPkG0q5o4OMN063k
-	 DH83ts7s/3rOYSd8VOPyqf2YL388TgclSuknY+ittKtj0vsuLOHt1cunqUtPzHrJ6fpG6
-	 fmBR08qLEA4bW0LT+Ik1kAPp72Rp6ojDDPHOrfezfYsSzrS0W63XrAoKIAThhQUbKbG8B
-	 iHgUgmiZ62/vOU9xlc6BE/ATY9saGsV2XNqy1VKmsu6tpFr2EeCo2S7HzNbg1a+tk7ilj
-	 2IIdOC1ZT7IGJk08152rsuB++Z6UAoqcj9YFvlTZlr7djgmCSIV/L+8/e26i5ARRAjg==
+	t=1794063997;
+	b=o6f6rhpGoP067hNlQvWOWskUjVHUlYWvlole4IQlFjPWTd1lSnkZSWwlqXaTlLyd2BQB
+	 WJuG0ddjK0jgG1a2krqJXPZ9K/RiEOKnK1NE/gLREirtWpYzNh0nBb6x8WxVuRh492jwb
+	 DwD4W8kA8Yz1na3NQ59eHZpoIkPoetqHXSpjthR+8vG06ZfhYDy6T6fqb1aFBTAp56xZG
+	 SbFLIGz+ExobB61t3yQSolbwaOeAJl1yFKgQbCuJLKULEIUSdhXXWu5PVSsGy5/j375bN
+	 BvFZ9rPK7TR3KygfhHLFw5g9kUvZU8kjwsj/1BB8+qVVgK78A2odYLUI5hDFkJmr5PA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063996;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063997;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1P8zq4qaZWonbRZWw72xVf84Rfngu29alJR65AOViFU=;
-	b=AZw0oiTAcnqkyyKzl6M72UU1hyAHClgGcm5P/Fy/89nbvSZa9D3wjQBs/fmMbCYtKKBO
-	 zg5f5gBqPvOoAZH+ycoHIAQtvuJZeriXdE2VrsebmHcF/ww5GAh26jc7T1LuC3lkwYwfu
-	 +ZJVEJshn/p/HL77E/Z6nCN+8bkc4u7goZ1VT45oCNjTYsY2nDMSV6gijI9ikP1pH/gvP
-	 AOIszMZWVmCOmQt9qDuigXWFcEVc36bh1KJBOrApI9OZ7dObC7gJhQ/j5t1XSW2PgQvlu
-	 QZ2vGJ44+IaXKY09CqFku0fMtvYK8p/MO0D5u3KfHPlWMyn0hITfwlpq9nbixwigK4Q==
+	bh=NBiqgvI7ihWNzZ2MrGtJR5ngfR3gPcJIj1zAjTuwqRA=;
+	b=Vg61ydzBmfJQPiE1Z+NyLdS6qhUAp0R5BJdyXpV/Swt6av8cXmUWXojg8UrNn4k+mPWo
+	 EfBP42D6pHKiZm3zFlyY8NRVcH6H3H9C2/tWGLHwJikMTE090YZ3P2oOXyC32RW383Knp
+	 PEAncaU2+7c6n7zcXMOLzZotItPIBxgsgcpIBs6gKsC1X64Y4kTWP+Fb1/Db4RIm3d7ZA
+	 sAWbd/Mwqk2vKoCikB4mGHgtZlrQV1/LP92dqDtgswtuMMYezj5kWK/YX2D33IOyIvMhp
+	 Fxvi6lu4ejz6AY2NaeY4iQYk377gW2if9awemsx48m6+bKm/UzvI4feGCLJwbLY+sEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BHQnFmtw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JR+e7I0S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A46606A332;
-	Sat,  7 Nov 2026 15:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B993606A332;
+	Sat,  7 Nov 2026 15:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BHQnFmtw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988291F008A1;
-	Sat,  7 Nov 2026 15:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JR+e7I0S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DDF1F008A1;
+	Sat,  7 Nov 2026 15:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063995;
-	bh=1P8zq4qaZWonbRZWw72xVf84Rfngu29alJR65AOViFU=;
+	s=korg; t=1794063997;
+	bh=NBiqgvI7ihWNzZ2MrGtJR5ngfR3gPcJIj1zAjTuwqRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BHQnFmtwMFXQH33ktAppvz5kuI9leLR6QoDQ5zO9331s8s3wJNQka6BJbkiNlRUiT
-	 52w39XgZa2UrWa5U4aaIg2IwzCYK9Jx/EshyhKFO7rgpJEoGMIlUnZYtAjnnxEwCQV
-	 X1MCLuoQZMITlwDsA/oe/BGnGN9b4iH52yeEErJE=
+	b=JR+e7I0SLfq8d/0dpChM73KPs2m9Nb6aw4G4EIAZt7Ue096B4c/cW/T5AGw9yLV3c
+	 fSKu7plZIM4MhnomiwfgqoWVYQoVaLP80HC0z8wLNM/7vKcHp9eA5qHjcAh89ZSGq4
+	 BAHXzu5EtVzsUCz2PirGYAxvgRQ1zkeIDDRf8nhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Thorsten Blum <blum@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Liu Chao <liuc63@xiaopeng.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0178/1257] crypto: atmel-tdes - sync output bounce buffer before DMA
-Date: Sat,  7 Nov 2026 08:41:14 -0500
-Message-ID: <20261107134944.373547605@linuxfoundation.org>
+Subject: [PATCH 7.3 0179/1257] usb: fotg210: validate endpoint index in ep0 handlers
+Date: Sat,  7 Nov 2026 08:41:15 -0500
+Message-ID: <20261107134944.397880865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,72 +68,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Liu Chao <liuc63@xiaopeng.com>
 
-[ Upstream commit a38fdcb9c944525ca71e6aaf35e708586d0ae87d ]
+[ Upstream commit bbddb219b00af0792242a0ad1dc7fb3344f38733 ]
 
-The slow path maps its output bounce buffer once at probe time with
-dma_map_single() and DMA_FROM_DEVICE, then reuses the mapping for every
-request.  After the CPU copies a result from the buffer,
-dma_sync_single_for_device() must hand the buffer back to the device before
-the next DMA transfer.  The driver omits this call, so cache lines from the
-previous result can remain valid while the device writes the next one.
+fotg210_set_feature(), fotg210_clear_feature() and fotg210_get_status()
+use wIndex from the USB setup packet to index the fotg210->ep[] array
+without verifying that the endpoint number falls below
+FOTG210_MAX_NUM_EP (5).  USB_ENDPOINT_NUMBER_MASK is 0x0f, so a
+malicious host can issue a setup packet with wIndex 5..15, resulting in
+an out-of-bounds array read.  The resulting wild pointer is then
+dereferenced in fotg210_set_epnstall() or fotg210_is_epnstall(), which
+compute an MMIO register offset from ep->epnum and perform iowrite32
+through it.
 
-This bug was masked by the completion paths calling
-dma_sync_single_for_device() immediately before the CPU copied the output,
-where dma_sync_single_for_cpu() was required.  For DMA_FROM_DEVICE on
-ARM926, dma_sync_single_for_device() invokes arm926_dma_map_area(), which
-invalidates the cache lines.  The misplaced call therefore discarded the
-stale lines before every copy-out.
+fotg210_clear_feature() is especially problematic: the out-of-bounds
+access occurs at function entry (source-level) regardless of which
+USB_RECIP_* case is taken, because the ep pointer is computed before the
+switch statement.
 
-Commit c8a9a647532f ("crypto: atmel-tdes - fix DMA sync direction")
-correctly changed the completion paths to call dma_sync_single_for_cpu().
-On ARM926, that function invokes arm926_dma_unmap_area(), which is a no-op.
-The missing pre-DMA dma_sync_single_for_device() was therefore exposed on
-ARM926-based SAM9X60 and SAM9X7 SoCs.
+Add upper-bound checks on the endpoint number derived from wIndex in
+all three functions.  Invalid endpoint numbers in clear_feature now
+trigger fotg210_request_error() (STALL) instead of silently falling
+through to fotg210_set_cxdone().  Also add the missing le16_to_cpu()
+conversion for ctrl->wIndex in fotg210_get_status() to fix a sparse
+endianness warning.
 
-With CONFIG_CRYPTO_SELFTESTS=y all four DES/TDES algorithms fail on
-SAM9X75:
-
-  alg: skcipher: atmel-ecb-tdes encryption test failed (wrong result) on
-  test vector 2, cfg="unaligned buffer, offset=1"
-
-Call dma_sync_single_for_device() for the output buffer before starting DMA
-in both atmel_tdes_crypt_pdc() and atmel_tdes_crypt_dma().
-
-Fixes: c8a9a647532f ("crypto: atmel-tdes - fix DMA sync direction")
+Fixes: b84a8dee23fd ("usb: gadget: add Faraday fotg210_udc driver")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Thorsten Blum <blum@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260913120458.1608186-1-liuc63@xiaopeng.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-tdes.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/fotg210/fotg210-udc.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/crypto/atmel-tdes.c b/drivers/crypto/atmel-tdes.c
-index 2756dab3f4c7f..ed80423b4209c 100644
---- a/drivers/crypto/atmel-tdes.c
-+++ b/drivers/crypto/atmel-tdes.c
-@@ -370,6 +370,8 @@ static int atmel_tdes_crypt_pdc(struct atmel_tdes_dev *dd,
- 	if (!(dd->flags & TDES_FLAGS_FAST)) {
- 		dma_sync_single_for_device(dd->dev, dma_addr_in, length,
- 					   DMA_TO_DEVICE);
-+		dma_sync_single_for_device(dd->dev, dma_addr_out, length,
-+					   DMA_FROM_DEVICE);
- 	}
+diff --git a/drivers/usb/fotg210/fotg210-udc.c b/drivers/usb/fotg210/fotg210-udc.c
+index d9e024873a429..127a259c8d1ea 100644
+--- a/drivers/usb/fotg210/fotg210-udc.c
++++ b/drivers/usb/fotg210/fotg210-udc.c
+@@ -661,7 +661,7 @@ static void fotg210_set_feature(struct fotg210_udc *fotg210,
+ 	case USB_RECIP_ENDPOINT: {
+ 		u8 epnum;
+ 		epnum = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
+-		if (epnum)
++		if (epnum && epnum < FOTG210_MAX_NUM_EP)
+ 			fotg210_set_epnstall(fotg210->ep[epnum]);
+ 		else
+ 			fotg210_set_cxstall(fotg210);
+@@ -677,8 +677,8 @@ static void fotg210_set_feature(struct fotg210_udc *fotg210,
+ static void fotg210_clear_feature(struct fotg210_udc *fotg210,
+ 				struct usb_ctrlrequest *ctrl)
+ {
+-	struct fotg210_ep *ep =
+-		fotg210->ep[ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK];
++	u8 epnum = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
++	struct fotg210_ep *ep;
  
- 	len32 = DIV_ROUND_UP(length, sizeof(u32));
-@@ -402,6 +404,8 @@ static int atmel_tdes_crypt_dma(struct atmel_tdes_dev *dd,
- 	if (!(dd->flags & TDES_FLAGS_FAST)) {
- 		dma_sync_single_for_device(dd->dev, dma_addr_in, length,
- 					   DMA_TO_DEVICE);
-+		dma_sync_single_for_device(dd->dev, dma_addr_out, length,
-+					   DMA_FROM_DEVICE);
- 	}
- 
- 	addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+ 	switch (ctrl->bRequestType & USB_RECIP_MASK) {
+ 	case USB_RECIP_DEVICE:
+@@ -688,7 +688,12 @@ static void fotg210_clear_feature(struct fotg210_udc *fotg210,
+ 		fotg210_set_cxdone(fotg210);
+ 		break;
+ 	case USB_RECIP_ENDPOINT:
+-		if (ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK) {
++		if (epnum >= FOTG210_MAX_NUM_EP) {
++			fotg210_request_error(fotg210);
++			break;
++		}
++		if (epnum) {
++			ep = fotg210->ep[epnum];
+ 			if (ep->wedged) {
+ 				fotg210_set_cxdone(fotg210);
+ 				break;
+@@ -744,8 +749,8 @@ static void fotg210_get_status(struct fotg210_udc *fotg210,
+ 		fotg210->ep0_data = cpu_to_le16(0);
+ 		break;
+ 	case USB_RECIP_ENDPOINT:
+-		epnum = ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK;
+-		if (epnum)
++		epnum = le16_to_cpu(ctrl->wIndex) & USB_ENDPOINT_NUMBER_MASK;
++		if (epnum && epnum < FOTG210_MAX_NUM_EP)
+ 			fotg210->ep0_data =
+ 				cpu_to_le16(fotg210_is_epnstall(fotg210->ep[epnum])
+ 					    << USB_ENDPOINT_HALT);
 -- 
 2.53.0
 
