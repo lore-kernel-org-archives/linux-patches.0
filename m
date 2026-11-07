@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064594;
-	b=h1YnbCmv2BqTy7pJBsZPEhtTApdkXloccKxXejUg770mXl3DDBYGZ7/0pV9byXAutiNh
-	 hPavKOFndeVx0VQKQk+ORFFW/gvdOboUNyXMsGQKw4KXcKq1xapNFpLyt4BXL7xisUbtj
-	 RQdMGLftyvi+9IwomioIuwRGkilJh8QSJcCpG5QGlJrEPAewW0LFf4CHk6OTX3r9L09nY
-	 9ZQ6M6VL4/YSOFufIGx/dEfxqXOOurJLfbQfu1yY6FsCY5T6sC6aXmKo3O9seXeYvkSGf
-	 gaUG+HeHU6ADZ+Hr72ba/L5z6g3I4kuuBLvE9uaIPDbONg/T+F0POCE6b/HSlxAqLsA==
+	t=1794064596;
+	b=evGngeYp2gO51xSwhzjfjmmzh9icdC+dMO2VTkyJmYIFxlUvK1sGPX5CX6LyFhvtk8gZ
+	 hZ0E6RewEStI98PAK0yDV+57wa/OZrDHblT/3dgpK1y3xFPW+b9NOFKkZAPcbfssHXxt0
+	 pShd+kIPD34qC0idRcdNMhtfqQIG9wS0qIS9+cQ7mnB7N7IvT6unDO1YliHhAG35SuC+d
+	 kWwb0blQDuW+rblONXBSv2E1mbbWgvnQuU9XNr/HNC9H4e5zlMYr7ov5XchGz1S6EWoP3
+	 uO/AZgtejq9Y4GK9Idr2ifai7lh/ozne3QBiX4HYyJY0iPGO8AGzWHVUVV2iV1g1R2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=+uNluHznprbR0qGi4RDGgZ+gFFV5hdnBNL+zH0C49ow=;
-	b=l+doExszrkjy7gFj+0wCMcjeddN91ZkbXkXuKpmHo25ie6a+U4Un/nNxCGlY+SVT+V1w
-	 dWEfE4d5Jeolm8hCBRD4uJDZlGpiq3nShkDIV0fuChXzrmKVgbt2AKJJTYNc1jeEZw3xI
-	 I302fl2QNTaEx1c8G3wSrv8G5d9cPnfW2iev3s077JLCqE9xCLdSAhnD0pe17k0P/D6pm
-	 chowM9OmyQ6Ui9iPP+zE7F1UbSunMXIlyKnIaWKLJpgO7xvIOrtJn8xJpk64MbPt6lRsE
-	 vUvkQqYNd7OZtYBA5+nn8qm0qrJ3/tiJb/g6ptNmwfQdWFnucbJKHcYTNyi4g4Al3BA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=rasA7DsuYGl0+YlBwSliFkHxBckW17wJnIR0hKSUb7Y=;
+	b=pYzkhsi0URZdtTiw3zsnMi1ArEUZFkBiNcGN+3WBlJ50G5CtXv9MTyD3oex0gYiixGJH
+	 t8VxhAM7UyHtfRNC00vTSXZiSKucjkGg8zwB0vvyqHyqa40HP1MN5TyKzsOdIlReGgdH9
+	 O7RyP4IIQQ1tR/GsywyQnwbl/g6W7RNemqgT3voC3HcVQ52jnfRDl0KBTfz5hjNhs+Ki0
+	 STd8VuqVSxlFboDhfYnHQr19T8m0d1ql0yCTNzicN6j/CRDnxlxKha4PG/ryNit6eISVL
+	 ZQSsGiMe0nLPZUD+1YKPjYHeQd08p+l20SLcpFMbSmGLzsNw163ETCV8uapOiYPQfxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MtbpV2x3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v//T/t0Y";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D5D606A9D0;
-	Sat,  7 Nov 2026 15:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10F4606A9CD;
+	Sat,  7 Nov 2026 15:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MtbpV2x3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFE31F0089F;
-	Sat,  7 Nov 2026 15:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v//T/t0Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224031F0089F;
+	Sat,  7 Nov 2026 15:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064594;
-	bh=+uNluHznprbR0qGi4RDGgZ+gFFV5hdnBNL+zH0C49ow=;
+	s=korg; t=1794064595;
+	bh=rasA7DsuYGl0+YlBwSliFkHxBckW17wJnIR0hKSUb7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MtbpV2x3cvg4S4G5NrpUDyAYKG87t6nP613rKVAdO3so1ryVqHGgaNhGyEeXnIvsg
-	 n+dPvyWyrEdxX+jjsq6+d4bUWJnyGpsfcPhn3hqsncrch5xKuCw7nctM8gov+Iod2R
-	 tqdwmsunllOlF15QkMlGkKNzFzlKrh4e72g3dCU8=
+	b=v//T/t0Y9sWUvLn5+99p54d2jYNuHDltWFc4ui5vDA6aB9e1JevEnJUwQnhDlqvSs
+	 b985qdYQ/at5s28i/PxERrfj0wUvgYyI9lv0x3pQPinK472W8mDvoLu/upkdNdD82a
+	 TudMhgQG/QUOrEC2xfDHKKBIO9d07JRNPn/v3LCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Lagerwall <ross.lagerwall@citrix.com>,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
-	Juergen Gross <jgross@suse.com>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Xiaofeng Yuan <yuanxiaofeng@eswincomputing.com>,
+	Nutty Liu <nutty.liu@hotmail.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0609/1257] xen-blkfront: Fix IO race during unplug
-Date: Sat,  7 Nov 2026 08:48:25 -0500
-Message-ID: <20261107134956.129205186@linuxfoundation.org>
+Subject: [PATCH 7.3 0610/1257] RISC-V: KVM: Fix IPI delivery for out-of-order vcpu_id
+Date: Sat,  7 Nov 2026 08:48:26 -0500
+Message-ID: <20261107134956.155337700@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,59 +65,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ross Lagerwall <ross.lagerwall@citrix.com>
+From: Xiaofeng Yuan <yuanxiaofeng@eswincomputing.com>
 
-[ Upstream commit 61b6d1df1d6234c38a6ea7e4f58e7da035ef6ab4 ]
+[ Upstream commit c367d3bf721f2bc391d6cfb47f6884e99d563df0 ]
 
-During unplug, blkfront stops the hw queues and marks the disk as dead,
-then later during removal calls del_gendisk(). However, IO issued after
-the hw queues are stopped but before the call to del_gendisk() will be
-queued but never handled. This causes del_gendisk() to hang forever
-waiting for the queue refcount to drop to zero.
+The SBI IPI handler walks vCPUs with kvm_for_each_vcpu(), which
+iterates by vcpu_idx (creation order) rather than vcpu_id order.
+Since vcpu_id can be assigned out of order by userspace, a vCPU whose
+hart_bit falls outside the XLEN-bit hart_mask range may be reached
+before vCPUs the mask actually targets. In that case the handler jumps
+to "done" and stops sending IPIs, leaving valid target vCPUs without
+an interrupt.
 
-This can be reproduced by issuing IO during an artificial delay after
-stopping the hw queues.
+Replace the early "goto done" with "continue" so vCPUs outside the
+hart_mask range are skipped without aborting the loop.
 
-Fix this by simply not stopping the hw queues directly. Marking the disk
-as dead already freezes the queue which prevents new requests being
-added and it synchronously runs the hw queues to clear anything pending.
-If the hw queues are stopped when calling blk_mark_disk_dead(), running
-the hw queues is a no-op and can leave queued requests unprocessed.
+Reproduced with a minimal userspace VMM driving KVM inside a QEMU
+(RISC-V virt) guest: three vCPUs are created with ids 100, 0, 1 (in
+creation order) and sbi_send_ipi(hart_mask=bit0, hbase=0) is called
+from vcpu_id 1. Before this change the IPI is dropped and the ecall
+returns SBI_ERR_INVALID_PARAM; with this change the IPI is delivered
+and the ecall returns SBI_SUCCESS.
 
+Fixes: 0611f78f83c9 ("riscv: KVM: Fix SBI IPI error generation")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Acked-by: Roger Pau Monné <roger@xenproject.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261006163411.2583538-1-ross.lagerwall@citrix.com>
+Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Xiaofeng Yuan <yuanxiaofeng@eswincomputing.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260917122012.2577-1-yuanxiaofeng@eswincomputing.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/xen-blkfront.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/riscv/kvm/vcpu_sbi_replace.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index 86f5dd3aced13..ad0cb42c10197 100644
---- a/drivers/block/xen-blkfront.c
-+++ b/drivers/block/xen-blkfront.c
-@@ -2142,10 +2142,8 @@ static void blkfront_closing(struct blkfront_info *info)
- 		return;
+diff --git a/arch/riscv/kvm/vcpu_sbi_replace.c b/arch/riscv/kvm/vcpu_sbi_replace.c
+index 506a510b6bff3..c2f1f7f264423 100644
+--- a/arch/riscv/kvm/vcpu_sbi_replace.c
++++ b/arch/riscv/kvm/vcpu_sbi_replace.c
+@@ -64,8 +64,17 @@ static int kvm_sbi_ext_ipi_handler(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 			if (tmp->vcpu_id < hbase)
+ 				continue;
+ 			hart_bit = tmp->vcpu_id - hbase;
++			/*
++			 * kvm_for_each_vcpu() walks kvm->vcpus[] by
++			 * vcpu_idx, i.e. the creation order, which has
++			 * nothing to do with the vcpu_id (hart id) space
++			 * that the SBI IPI operates on. vcpu_ids need not
++			 * increase along the iteration, so harts outside
++			 * the hart_mask window must be skipped instead of
++			 * aborting the loop.
++			 */
+ 			if (hart_bit >= __riscv_xlen)
+-				goto done;
++				continue;
+ 			if (!(hmask & (1UL << hart_bit)))
+ 				continue;
+ 		}
+@@ -76,7 +85,6 @@ static int kvm_sbi_ext_ipi_handler(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 		kvm_riscv_vcpu_pmu_incr_fw(tmp, SBI_PMU_FW_IPI_RCVD);
+ 	}
  
- 	/* No more blkif_request(). */
--	if (info->rq && info->gd) {
--		blk_mq_stop_hw_queues(info->rq);
-+	if (info->gd)
- 		blk_mark_disk_dead(info->gd);
--	}
+-done:
+ 	if (hbase != -1UL && (hmask ^ sentmask))
+ 		retdata->err_val = SBI_ERR_INVALID_PARAM;
  
- 	for_each_rinfo(info, rinfo, i) {
- 		/* No more gnttab callback work. */
 -- 
 2.53.0
 
