@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062979;
-	b=ApBr/csUpW9vJ12fCpda6IQWjAoH/vpvz0klAbOPKch2d1VVp6VRNNvBAPLN6cQ4YNF6
-	 RKk0VXkW/nDSm5C/qo22dy6v6Mg2WiJY26m31M8bqIqfOLunOX+g2CM3FF9iWZcL/CVQ/
-	 3b+estkK+Gof0MAAqg/w8mj6J3JirRa2cfTE/Mk7wzbd9WvqKJ7ThoJa4nuzvg7WjZRFQ
-	 Typ5DGo8yC7cE6UPEefR5+1vQUJOt55yS107dZvRPwCNdGdrVirHPDodEAF05fIGncuwh
-	 5g6hRgDzlU3Em6ne1K6a178wqtLBlE0OiUKNTroEGbVOzOq8yDZyOiMmOtkmIIxB9AQ==
+	t=1794062981;
+	b=u4cw1o35AD8YzDHl8ZTxo98HjN+T7ZmFCruMFxKflZ+aVhSV7fna/iRAX/nPFEW7xUJU
+	 hPmhwIFSlJkXjraeTS0f7Yez5msvvW82f+M7zz8wKDPnlYIL3VCe3QG0+VmOoqGfhPuRP
+	 Ratv4fpCxQhJisgimBRO7JixHyXfI7x+GpViEdxVMtVMlPzfi/LpQK1ZUEaGYjXveFyqO
+	 qlc6CvadqrzbtzrXGyqNJ9uwktGBut2c89nFXltRkigLWguAHJYOuzepHbVYS1e4NCwzD
+	 qwYQFKJX81o2FYHlpid+mwpv1foc/HN5phvZtYO4n44tJ7n0zPyFe99QWQ8AiZhROjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062979;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062981;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/dewe3QzfImDF5CBq3NGcm2kiSDeAnmiRlrDXwymA5Q=;
-	b=Zj7/H2xYpc9sh94mC9IhlZxdpewtSZrB3Zoo87zwhdkpUesTkUPo1zNN+ARI3TOB35tW
-	 ZhCq9Zrqyx6/SY9oDCRo5M+Uyla95Zmw70OCiYnh0bPfSuDbAvPW+a+iQHtcKMC3lAp64
-	 WsQuIekxfW0ILpQLw4jraDdwzcgtXENRyHpmDJral06Chj4ScJkt2LDLRueAeO6cw8mcv
-	 TbW2DCdbFe6FffJNyH6eYdv+r2zL8siPwLqwLyyMtRcTdcHKvwPFQ0rmOenipq2KLFrUS
-	 5eES2xipt/gCYerW2EQXYgNs7XV+cf2IPuoFoKRbjS/RshPFozmuYgsAmkCu/9LdzYw==
+	bh=C2UpDKZT5Ay3wcZ45tSDhQfKlvMwnrZFBRzimSYaX5A=;
+	b=mn6tkVmZ90T/LQPq8XGkmUlE5Ngb2gAUdjOr4BA6er1xg0AktvF/rUoMW8793Gr7Vb0a
+	 S70XgDx4tbuKOHg0oob6nN8nVxkxgc9E9IBYU/zyB+aJKxlBMQRxRS1EWXK2DAjcrGpfG
+	 ny4XklB0b1mHfWREgJOGQ4nrkya3QDosCRjOivXCEO7O8rmdWgxQKTrR7uTC/Jm5vYFO8
+	 3F3U+l6h4imVRpkB3ASksVQnDylL06h1x7LI1NVX4SegHqp546llg197Wjv7O7L/CPoaD
+	 uhaDIby5rXTNUZLBbdh34wPSxNKJG4xYK/JgdK+jgZXLgU+pMepVa9YXIjvGZ+JiEcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqX1LZGW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zyGzAWm7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7845F606A32C;
-	Sat,  7 Nov 2026 14:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9C6606A32C;
+	Sat,  7 Nov 2026 14:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqX1LZGW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264831F0089F;
-	Sat,  7 Nov 2026 14:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zyGzAWm7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BF41F0089F;
+	Sat,  7 Nov 2026 14:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062979;
-	bh=/dewe3QzfImDF5CBq3NGcm2kiSDeAnmiRlrDXwymA5Q=;
+	s=korg; t=1794062980;
+	bh=C2UpDKZT5Ay3wcZ45tSDhQfKlvMwnrZFBRzimSYaX5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rqX1LZGW9wp/JNgMSkJqrxTBGS/MTSum1JwDt4XdWsFw4/5ahUr3R2fU/aCMnLKop
-	 CQpXaDVpIYSikk5c8cizZy6QaTAHEs3Zea3hixVf7Qr4Loo/XdJLgfQzrl+lQ/eApu
-	 40KtKpzYly8d55S2sVOaeogxGC1wkwJKINTe9TOM=
+	b=zyGzAWm7OjkILqW3SdbZ66JlIXYafo4ud3gOt7+Fabsa8mIfVp3tdr5s8diqooQ0i
+	 VX0w9UOOZ03x2TVrVgxRMAQK0Htn3F+mHH+ncbiexuQ56mzfeYEjtyjRW9nDZ9HiiO
+	 XiRaBVH8CAoaWjdQES2XGpL/wmBte0H9sGqQecEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 240/869] hwmon: (lm95245) Fix negative temperature conversion
-Date: Sat,  7 Nov 2026 08:48:42 -0500
-Message-ID: <20261107134859.963382529@linuxfoundation.org>
+Subject: [PATCH 6.18 241/869] fuse: dont drop destination page cache on a zero byte copy reply
+Date: Sat,  7 Nov 2026 08:48:43 -0500
+Message-ID: <20261107134859.990797960@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,48 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit f58c16056f8585ebafb0f1f5d90c23085443a4b9 ]
+[ Upstream commit f7585e1ce3418ec282485854b3d8d31c6a961e37 ]
 
-temp_from_reg_signed() uses only the high byte when the sign bit is set
-and drops the fractional bits in the low byte. Writing -500 to
-temp2_offset stores 0xff80 (-0.5 degrees C) in the offset registers,
-but reading temp2_offset back returns -1000.
+__fuse_copy_file_range() clears the destination page cache after the
+server replies:
 
-Negative temp1_input and temp2_input values are rounded down to the
-next whole degree the same way. The chip reports -0.125 degrees C as
-0xffe0, which the driver returns as -1000.
+	truncate_inode_pages_range(inode_out->i_mapping,
+				   ALIGN_DOWN(pos_out, PAGE_SIZE),
+				   ALIGN(pos_out + bytes_copied, PAGE_SIZE) - 1);
 
-Treat the register pair as a single 16-bit two's complement value.
+A server may legitimately reply that it copied nothing, eg if the source
+file turns out to be shorter than the size the kernel has cached for it.
 
-Fixes: fffd80ccc1e6 ("hwmon: LM95245 driver")
+If pos_out is 0 as well, the end of the range is ALIGN(0, PAGE_SIZE) - 1,
+which is -1. lend is a uoff_t and truncate_inode_pages_range() takes -1
+as its end of file sentinel, so rather than clearing nothing it drops
+every folio in the destination mapping.
+
+That is not only a cache drop. truncate_cleanup_folio() calls
+folio_cancel_dirty(), and fuse_writeback_range() only wrote back
+[pos_out, pos_out + len - 1], so dirty data elsewhere in the destination
+file is discarded without ever reaching the server.
+
+Skip the call when the server copied nothing, since there is nothing
+stale to clear in that case.
+
+Fixes: 9b46418c40fe ("fuse: copy_file_range should truncate cache")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260923172551.1593798-1-khurana.ridham222@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm95245.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/fuse/file.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/lm95245.c b/drivers/hwmon/lm95245.c
-index 3bdc305308479..9c977d2820f9c 100644
---- a/drivers/hwmon/lm95245.c
-+++ b/drivers/hwmon/lm95245.c
-@@ -98,9 +98,9 @@ static int temp_from_reg_unsigned(u8 val_h, u8 val_l)
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index a7a3ac5b34f42..18a3ef3a96953 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -3094,9 +3094,11 @@ static ssize_t __fuse_copy_file_range(struct file *file_in, loff_t pos_in,
+ 		goto out;
+ 	}
  
- static int temp_from_reg_signed(u8 val_h, u8 val_l)
- {
--	if (val_h & 0x80)
--		return (val_h - 0x100) * 1000;
--	return temp_from_reg_unsigned(val_h, val_l);
-+	s16 val_hl = (val_h << 8) | val_l;
-+
-+	return val_hl * 1000 / 256;
- }
+-	truncate_inode_pages_range(inode_out->i_mapping,
+-				   ALIGN_DOWN(pos_out, PAGE_SIZE),
+-				   ALIGN(pos_out + bytes_copied, PAGE_SIZE) - 1);
++	if (bytes_copied)
++		truncate_inode_pages_range(inode_out->i_mapping,
++					   ALIGN_DOWN(pos_out, PAGE_SIZE),
++					   ALIGN(pos_out + bytes_copied,
++						 PAGE_SIZE) - 1);
  
- static int lm95245_read_conversion_rate(struct lm95245_data *data)
+ 	file_update_time(file_out);
+ 	fuse_write_update_attr(inode_out, pos_out + bytes_copied, bytes_copied);
 -- 
 2.53.0
 
