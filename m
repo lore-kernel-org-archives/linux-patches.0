@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062941;
-	b=FimA1+mQotIeITeMBMOa5/GQ125+//JLcPbW2qxEk/VodKIWfEWrDpN3HxFVcFnxjxjR
-	 8qm4G+5AMRIxlPq/QrwhxRj01l6S7nFTcZ8qLzk/9ai0JxN+wW6zKa2fRj9XO09UmMXbA
-	 aYaUG5I2ROMfq0qgpCnNxGau2yNu5P1NtoCm9wNZ61VaPF/bVqN3h7tX9bmS6A4IeVoYu
-	 V2dZU9X3RiAuw7Ij9R2OrfsRwgOxA97CV7GGFc+H1GuUKReqhYzAUpaOJhxZfxzWlZ1CV
-	 2wWp1SzKORvl3dGWylL0dgKPF9S0b6Z4YV1x/bduost6IkQJsmfoQdjQOhtRU9SlgJQ==
+	t=1794062943;
+	b=VjVj1oK4RU9xqi+SbQfODz+rD75fTdYzny2qrt8FpMd43TNclyRf9roxfZ8564jFJI6H
+	 UEqmf+Leq6OfQbVMKLyexl7wkLGthXjRqC3Im2ef64/u1DUqkrgkzz+vFFe96MMuicZ/Y
+	 +bMnzJZhh3ul0NVuHgEVXMg2ew25KXJzQdXsda7DJyo6G3z8aZzdWBtczPRBLxEa8svp1
+	 jM0CbNfV4Nai40xrmk/jiB3WAlr9Fsr2GNy9ByU/ywqWRYCaCIEuWhKigcchSRRvdRNSu
+	 itTcr4kk5fjrwjUoyQ1WU0ITZT5Wzsg7dYtMjq15RYtI1aGZrYQhienD6awhPj0OECw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062943;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oBuYbHxpLvK//A4k5slK+jfYmeKnwBUSfrwCDwZkP+k=;
-	b=xBhSemIgzF7n1Y+/wAAehmAqAjiLz867aPpdcT81RAoTCIH70+Wj3GC7OTk8B3+QpZF1
-	 jmiY0o+bt15B2Bj9fIK3UtvCxsJzYTBsAfZTNy/gff2FK7zOg8O2lwtvSKon/HJgLKi8y
-	 maKLLQVAHjUOZwhgerQtuvUsA8LgMM6slciv2wgOXmiFH8HUMwPVJxk4gN2MWr5h4wjiC
-	 9ftRg2aC0Y+LJyBYvYw8MT+alELwbzgJ/df4utcckjSVzS39kClYXHcUzukuXfe12TbHf
-	 7rL50a/8NMI5xY/sUqs/Npqfp3ioqyuocwJHlkYP8zYtp0JBot+GS81W5fmVzLByRSQ==
+	bh=Lo8uZVLGLtyxZLrX225UsHdS3nPHnrvP1rF1awii4Jk=;
+	b=ozG9SpXsevEIgYzUFo6SkSpqBaxOYpylTYfpqAhsSAsbWSWxy2LnGDykoQKKGiJowsX+
+	 Hh3fg/JQZwx+jXJ46TtnGCKxa1PH/nA8Vo7yhKWGUfljUysNS+80OZdjoTQZ0xqAx6Ujn
+	 URrm93ag93nPviW7bmffujgPEnQqleB2NtUNe3ikb0tb0YnNWpCnJoKb/H9qZqnsbSjNN
+	 SuPHv74Rwh13qp9qUH+LiYfAkab/qAkF+ci+RH9gXOqucqO/QGr5uO3wYo+452ZK/VEdP
+	 jFMNrn1opKllDXBu0WCKVpgS0Ren3evWsd5SjnrlIrQxvMXj282/V3r0mJifg/dqxVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJKKoymC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d/hUKeO5";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623EE606A326;
-	Sat,  7 Nov 2026 14:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6495606A33E;
+	Sat,  7 Nov 2026 14:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJKKoymC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF741F0089F;
-	Sat,  7 Nov 2026 14:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d/hUKeO5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D04A1F0089F;
+	Sat,  7 Nov 2026 14:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062941;
-	bh=oBuYbHxpLvK//A4k5slK+jfYmeKnwBUSfrwCDwZkP+k=;
+	s=korg; t=1794062942;
+	bh=Lo8uZVLGLtyxZLrX225UsHdS3nPHnrvP1rF1awii4Jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lJKKoymCcoRIdNnJDFmLfCVRr/L4GKAYGN3xGHvwy815kxiOF5MLBzDm/jhcJOof4
-	 Ywy+C41vwhAoU2Zx7eeVRRgdc0rYFcjXgf44233JxL/I4gpIyW14MojsH7PtHO+2KA
-	 T+5Q2+DxgHpWk/EccZLaEKCYvozvv95b1mXSWvbI=
+	b=d/hUKeO5xKNzPnLMyXOmZoYs+3SzuJqxFdKKFXWPDK/DJwadOL00HZxTOC8Cgf1AF
+	 GTzTManYIpnDWQxO3p+wK9MWbh4gOdMvAa+IbMDHbOF5aUgEG4yQ5EDsXfGzFZo3bd
+	 wyj73ImAm4VbEkQFiFsijKdGT801iOIdlcZvv54k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
+	syzbot+cf896de36144391bcde1@syzkaller.appspotmail.com,
+	Hans Verkuil <hverkuil@kernel.org>,
+	Rohinthan P <rokinthanp03@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 182/869] media: ir_toy: Validate the maximum tx carrier
-Date: Sat,  7 Nov 2026 08:47:44 -0500
-Message-ID: <20261107134858.307651753@linuxfoundation.org>
+Subject: [PATCH 6.18 209/869] media: v4l2-ctrls: do nothing if controls[0] == NULL in cluster functions
+Date: Sat,  7 Nov 2026 08:48:11 -0500
+Message-ID: <20261107134859.060229637@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,35 +70,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Rohinthan P <rokinthanp03@gmail.com>
 
-[ Upstream commit 27303392aa87b61692faadec8b00e0ca66bf98dd ]
+[ Upstream commit 9ff738f93084351ed6e818d4d58679a9e9083a8d ]
 
-Reject any carrier the hardware cannot generate. This also fixes
-a divide by zero if a carrier of U32_MAX/16 is set.
+The V4L2 control framework is designed to allow drivers to instantiate
+controls and clusters without checking for errors after each call,
+checking hdl->error only once at the end.
 
-Fixes: 8bff1386d62d ("media: ir_toy: allow tx carrier to be set")
+However, if allocating the master control (controls[0]) fails, e.g. due to
+memory allocation failure, v4l2_ctrl_cluster() triggers a WARNING:
+
+      ncontrols == 0 || controls[0] == NULL
+      WARNING: drivers/media/v4l2-core/v4l2-ctrls-core.c:2525 at v4l2_ctrl_cluster
+
+Additionally, v4l2_ctrl_auto_cluster() attempts to dereference
+master->minimum without checking if controls[0] is NULL, leading to a
+NULL pointer dereference when master control creation fails.
+
+Update both v4l2_ctrl_cluster() and v4l2_ctrl_auto_cluster() to silently
+return if controls[0] is NULL, preserving the design that control
+creation errors are caught at the end when the driver checks hdl->error.
+Also update function documentation in include/media/v4l2-ctrls.h.
+
+Fixes: 71c689dc2e73 ("media: v4l2-ctrls: split up into four source files")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Young <sean@mess.org>
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reported-by: syzbot+cf896de36144391bcde1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cf896de36144391bcde1
+Suggested-by: Hans Verkuil <hverkuil@kernel.org>
+Signed-off-by: Rohinthan P <rokinthanp03@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[hverkuil: simplified the v4l2_ctrl_auto_cluster code a bit]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/ir_toy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/v4l2-core/v4l2-ctrls-core.c | 12 ++++++++++--
+ include/media/v4l2-ctrls.h                |  6 ++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/rc/ir_toy.c b/drivers/media/rc/ir_toy.c
-index e79de56997a42..ba6c042127078 100644
---- a/drivers/media/rc/ir_toy.c
-+++ b/drivers/media/rc/ir_toy.c
-@@ -373,7 +373,7 @@ static int irtoy_tx_carrier(struct rc_dev *rc, uint32_t carrier)
- 	u8 buf[3];
- 	int err;
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls-core.c b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+index 02e2ae93d1764..579787f0be351 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -2431,7 +2431,10 @@ void v4l2_ctrl_cluster(unsigned ncontrols, struct v4l2_ctrl **controls)
+ 	int i;
  
--	if (carrier < 11800)
-+	if (carrier < 11800 || carrier > 3000000)
- 		return -EINVAL;
+ 	/* The first control is the master control and it must not be NULL */
+-	if (WARN_ON(ncontrols == 0 || controls[0] == NULL))
++	if (WARN_ON(ncontrols == 0))
++		return;
++
++	if (!controls[0])
+ 		return;
  
- 	buf[0] = 0x06;
+ 	for (i = 0; i < ncontrols; i++) {
+@@ -2453,8 +2456,13 @@ void v4l2_ctrl_auto_cluster(unsigned ncontrols, struct v4l2_ctrl **controls,
+ 	u32 flag = 0;
+ 	int i;
+ 
++	if (WARN_ON(ncontrols <= 1))
++		return;
++
++	if (!master)
++		return;
++
+ 	v4l2_ctrl_cluster(ncontrols, controls);
+-	WARN_ON(ncontrols <= 1);
+ 	WARN_ON(manual_val < master->minimum || manual_val > master->maximum);
+ 	WARN_ON(set_volatile && !has_op(master, g_volatile_ctrl));
+ 	master->is_auto = true;
+diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
+index 31fc1bee3797b..b900734ee9c1c 100644
+--- a/include/media/v4l2-ctrls.h
++++ b/include/media/v4l2-ctrls.h
+@@ -834,6 +834,9 @@ bool v4l2_ctrl_radio_filter(const struct v4l2_ctrl *ctrl);
+  *
+  * @ncontrols:	The number of controls in this cluster.
+  * @controls:	The cluster control array of size @ncontrols.
++ *
++ *		If controls[0] is NULL, then this function does nothing and just
++ *		returns.
+  */
+ void v4l2_ctrl_cluster(unsigned int ncontrols, struct v4l2_ctrl **controls);
+ 
+@@ -845,6 +848,9 @@ void v4l2_ctrl_cluster(unsigned int ncontrols, struct v4l2_ctrl **controls);
+  * @ncontrols:	The number of controls in this cluster.
+  * @controls:	The cluster control array of size @ncontrols. The first control
+  *		must be the 'auto' control (e.g. autogain, autoexposure, etc.)
++ *
++ *		If controls[0] is NULL, then this function does nothing and just
++ *		returns.
+  * @manual_val: The value for the first control in the cluster that equals the
+  *		manual setting.
+  * @set_volatile: If true, then all controls except the first auto control will
 -- 
 2.53.0
 
