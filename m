@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060633;
-	b=g0V9q/xJAaJ3LpwNC2s4PgaSRfJ4kv18/JKM5Sv1fLiPncJbEyT53jHeA6J+65N//hCT
-	 D200HelNUwd18+pcG/i8CJm2UdJvyo+r1m89KyOBGDOcLhOyA7E95MRShzswX1opWv2qT
-	 QQIagMUcPL6Qd/JWokbCQDWkwL5HzHYaWb6paLCXApK4nxFdZi73EOWeAhox5cK5XURb6
-	 qVPQftBYcfflFTgdUrv9Sl8xJTgdDJxk7nZGrmSEguY/xc2B23tb7qnMiDuu902i40O6u
-	 9WXKBUksbLPvmTtb7XAhkzNAbdR4+1NHkBPEAMG8VQ4m/qQMkmWAbhqaNsDes9+OUnQ==
+	t=1794060634;
+	b=jJ5Jkmj0FgXW197qyFKrsOn+gE4CNq6RryXthI2K9TFC66g2LbMecba5Pyv3KQlmu+Cy
+	 gcPIcLBn+O9VqrHL0+AvcBzCH4WABJAxlgU8F2hxEQYUCrJZkFc2CpAD7dMGpDi2oF4Eu
+	 2ReW1UwCiOwuAwOw8ZvF3UjEnEvWqTp3hH99QNyjnWJ/4qZHworYrnxiViwKmPwABX1qZ
+	 S22enlaiOnuZW92UxRVEoC4Z3QbYGQLfyKvWLWQhitV8rj5FDBcA5iL4TSZ/R5WdD+FKH
+	 gDLgg4T6ntFyExYlpyNoC8Jdo572dsa0Wl8oIeEo4iDosW0LmeIS8OkNI3XuljeNJ1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060633;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HYbi810AK9zdqVsnotTDaUsOO5X2GTeFSmmQ8b704Fk=;
-	b=p2tZUEkXTgN/QMdWRpDRv/q1rppcUkNl/vMmUrDAgOmIVV32ncB+Pl5Ai2xWDG3e/7Jf
-	 mIhrbtaqMl6Hiy1dQF8MCZFCwSklB3VCU4SVjVId0Ov9TXRhZwWe3GlNiBbHDc0Vp9lVd
-	 BU2iDqHOUW1Fkms0tgrd2uDAEtTN+AccYEYo3Q1kROSegULTth8KTjbsv4GUY4N8beZRQ
-	 yvnqzofj1Lqk+RCC92UWu1ppqbkCq36W5tbxfFB2Kbo1BqlGMZwRq1/F8tGlcSoF5Uen4
-	 UBO0wgTtCrU+KCdb8Dik+5LSP3aLkKj/MGDq4gDT1nSDkRUrSRJ/+FHyc7ShSDhVe5A==
+	bh=QS6Yepooq1GppTw7wcazlvfVTN3OVqhCup3gNJxskb0=;
+	b=0/2Xx97Pr7yOh/pej8m+dmD1sWAWd1ewWc70hJsHMTcvCoNbe2ad5AThiuteoq0cxl8r
+	 QjWvQ6wy5u/Vpvq8z9Jf45yXsWgek1kZYbmz9dQ+gqOKoQGIWX/88XUxKaAeIB8VAAUHR
+	 FCrjh2U8qCETUijqZo3bf0/Pf1q3Yxx0PyAAhtZbvjVnEnLSib+Amjri5mZQs5hvKMTxH
+	 SeViLge3piFB8mql6OoZBK/WQ2Y4pJpqu8W3mhlVqT1rytcYw/KYKjA3pJnFPn7gJ14gk
+	 ivGZgt2FI5OR6pmsP2GhwRZn7da+EB+e0fbjxTKsajgZu/x/y/kdI9DAQOAVZGGgfbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e25yRins;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FemJGabi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EE1606A326;
-	Sat,  7 Nov 2026 14:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE21606A32C;
+	Sat,  7 Nov 2026 14:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e25yRins
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7BC1F0089F;
-	Sat,  7 Nov 2026 14:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FemJGabi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98CD1F0089F;
+	Sat,  7 Nov 2026 14:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060632;
-	bh=HYbi810AK9zdqVsnotTDaUsOO5X2GTeFSmmQ8b704Fk=;
+	s=korg; t=1794060634;
+	bh=QS6Yepooq1GppTw7wcazlvfVTN3OVqhCup3gNJxskb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e25yRinsOCUM6RnyaAiwE4rmyxtw0k4Wja3r51MLeSUcc3zH66dIEIdbncoVUMlHf
-	 vKnIySl+yEiWdHbO/MVj3r+uJX3R3h9LdJLqIJXEI6GByCN64T2ND1raWrwryXE8TG
-	 bAb7WnfAk9OME5uEBw/vK107cRjAAHPqF3cDzwtA=
+	b=FemJGabi8V+8b/fm1QJL4xsNnC3QG5SYE9iHZtX/fADpwLO7PtU0dJpm38XrhuhLi
+	 7OB6A/nvObdz6cEvjkYfrDibWLzFFX90JumvuL4KmQbm7JQ3MniUm5xYE/CQEK3/J0
+	 w+UOu7/XDW11QxJkbB/K18aXwRmI2QqVedFWuUx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mithil Bavishi <bavishimithil@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	"Kevin Hilman (TI)" <khilman@baylibre.com>,
+	Chih-Kang Chang <gary.chang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0040/1536] ARM: OMAP2+: Add CFI type for omap4_finish_suspend
-Date: Sat,  7 Nov 2026 08:34:16 -0500
-Message-ID: <20261107134958.787537860@linuxfoundation.org>
+Subject: [PATCH 6.12 0076/1536] wifi: rtw89: wow: only WiFi 6 chips initialize RF registers in WoWLAN mode
+Date: Sat,  7 Nov 2026 08:34:52 -0500
+Message-ID: <20261107134959.810570370@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,58 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mithil Bavishi <bavishimithil@gmail.com>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit 4a7b197ad28d71f9fac873f283b4408df3fdb287 ]
+[ Upstream commit dbff9040587e9bd6d3ee337315971957f9f76612 ]
 
-With CONFIG_CFI enabled, OMAP4 can trap in omap4_enter_lowpower()
-because omap_pm_ops.finish_suspend points directly to the assembly
-routine omap4_finish_suspend, which lacks the expected KCFI type
-metadata.
+Only the WiFi 6 chips need to initialize RF register when WoWLAN download
+FW for some power save issue. Applying the same initialization flow to
+WiFi 7 chips might trigger the error
+'RF parameters exceed size. path=1, idx=1500.'.
 
-Annotate omap4_finish_suspend with SYM_TYPED_FUNC_START so the assembly
-routine carries the KCFI type metadata.
+This happens because normal mode uses rtw89_phy_config_rf_reg_v1(), which
+skips registers with addresses below 0x100. However, WoWLAN mode uses
+rtw89_phy_config_rf_reg_noio(), and WiFi 7 chips do not satisfy the
+rtw89_chip_rf_v1() condition. As a result, more RF registers are
+configured, causing the size overflow error.
 
-Signed-off-by: Mithil Bavishi <bavishimithil@gmail.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260604054048.18980-1-bavishimithil@gmail.com
-Signed-off-by: Kevin Hilman (TI) <khilman@baylibre.com>
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260625061545.44808-11-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap2/sleep44xx.S | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/wow.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-omap2/sleep44xx.S b/arch/arm/mach-omap2/sleep44xx.S
-index f09c9197808b1..8b515f30072b0 100644
---- a/arch/arm/mach-omap2/sleep44xx.S
-+++ b/arch/arm/mach-omap2/sleep44xx.S
-@@ -6,6 +6,7 @@
-  * 	Santosh Shilimkar <santosh.shilimkar@ti.com>
-  */
+diff --git a/drivers/net/wireless/realtek/rtw89/wow.c b/drivers/net/wireless/realtek/rtw89/wow.c
+index db68ac988cd24..38181035ef8ea 100644
+--- a/drivers/net/wireless/realtek/rtw89/wow.c
++++ b/drivers/net/wireless/realtek/rtw89/wow.c
+@@ -1249,7 +1249,8 @@ static int rtw89_wow_swap_fw(struct rtw89_dev *rtwdev, bool wow)
+ 	if (disable_intr_for_dlfw)
+ 		rtw89_hci_enable_intr(rtwdev);
  
-+#include <linux/cfi_types.h>
- #include <linux/linkage.h>
- #include <asm/assembler.h>
- #include <asm/smp_scu.h>
-@@ -58,7 +59,7 @@
-  * stack frame and it expects the caller to take care of it. Hence the entire
-  * stack frame is saved to avoid possible stack corruption.
-  */
--ENTRY(omap4_finish_suspend)
-+SYM_TYPED_FUNC_START(omap4_finish_suspend)
- 	stmfd	sp!, {r4-r12, lr}
- 	cmp	r0, #0x0
- 	beq	do_WFI				@ No lowpower state, jump to WFI
-@@ -223,7 +224,7 @@ skip_scu_gp_clear:
- 	isb
- 	dsb
- 	ldmfd	sp!, {r4-r12, pc}
--ENDPROC(omap4_finish_suspend)
-+SYM_FUNC_END(omap4_finish_suspend)
+-	rtw89_phy_init_rf_reg(rtwdev, true);
++	if (chip->chip_gen == RTW89_CHIP_AX)
++		rtw89_phy_init_rf_reg(rtwdev, true);
  
- /*
-  * ============================
+ 	ret = rtw89_fw_h2c_role_maintain(rtwdev, rtwvif_link, rtwsta_link,
+ 					 RTW89_ROLE_FW_RESTORE);
 -- 
 2.53.0
 
