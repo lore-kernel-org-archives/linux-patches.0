@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065257;
-	b=2ZX/FlP8HFbHwvReDu0c0Ogk3CjRg7GccoDV4Sr6FAUWdAqE0nHvh9UqA53Ze4haY5WQ
-	 cgQ3YVMRltpUaqNxwkZywFJh0VWpAO96FbeQ2XM7fW+8SmQ6Q5iDxjMpfS6OIVU4xiBch
-	 zwVDxw5fUg+SMQr/qL8HHkiWRRQj1Fbmxr7LCUKxjxWxhcfLCcbyizHMdfi9oZuNKGRIe
-	 mIhrH1zybjT6MwHMYHlDV44HfurOrhXOjYJAF/PO/YIXdq4LPyaowgeQe6pn6sWRj6YdD
-	 8SMFmBCSkIL6Kn7ZKUBJZiI0Hjodc6lehkNMwUC3VI5IWbNERRRS4lIlC1U3cNrix9w==
+	t=1794065259;
+	b=BX4xnPXI3mcU8RRj3Owzh8MUyuhMxkvZEiboY6X81R1MhBBv6YxDyKQuMrpGyevGDPo8
+	 97lVI8GhidPShftzlnwA5jveG4QvWgtJEFWJb29OPXfyifi9vAyyjrItd5F57h6bAuRQY
+	 +CBp9/SPv2GHU7cgvb/zQv1vzPrUnpcW5xjeNr4wdKv2d5NVmtwmRSGkzTR05z/KsVWN4
+	 c/uWVJrt975J/C2mTo1h1uxocvCQG2+MlOOqTuIPlawpNWogY+iKUyQCJCVCVFa0HkHV4
+	 G6FfIQoND766fr4maPjWAPN3NGIq0QtY21qOnWVkswkoUoPU6jyC64UqtkJT/ewtENw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065257;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065259;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T3NtAXwUMUeb7j9VQYhdVJ5OHqfHQc/S8HKdwykQj0w=;
-	b=qsGSdpkmt376A9/0OBsM2vJsAasLSDnwi155A5HJzcfNjHWfViZr0CIb3Rvb+3qzAWRv
-	 IOiq2egrdyODW44bahYQUbgYCVi6bUuOVTChW34YYZi2rk/5WE76ONLmHiKYuGPrdrx2W
-	 O4SWGkRQOE8nOagqmdnr+AjjXvAmmgqfO1q2hRw7kjlefNaBkiDn9WZBvf4Llxhtq7diu
-	 eyFzUMNtnsHGa2AB/bfuQWtyznoQ2GvBjlLOJo6hXWpMskM3LlI06266x/jqJYOp+lc+Y
-	 WQzfWUA8ckX2n8IAEZ/QQ1cEMdiTKBVAaBdhG7txEmkpgntiJr2XG2X1kiQ0/4EXP1g==
+	bh=1H5VRu6dmpEWEXTuQzxqdC5abW6ZNEgF4atJfoVr+Wc=;
+	b=qk40BhlpvFgqk40QhKiLXBdfolH0zAM1+MBPF4MonZqmIfgVfgCKyyhgR6RdnQzaei5p
+	 10JhYiRH/rYQiFuVAekEnBbFPHMrZ76MWgA5f4EC8LqVDmnwh0SvdpV7bTOeUXgXNr+U+
+	 4vmEE1R72vK+eYcNDWanyHdp4rLQPFZV4m1APXX1CVFCOXKJURhtLT3OSV7upDIQMJEis
+	 nTAY369af7Ej8GBeuUlyiwnULDjQLANVZ2PzTP20fq9XS790AbbyFBR3b2ABesJNVlhzl
+	 BJ82jEP+097CIsMI4mi4HuuqDXkcGh1A8a4jDydpDh8oWepnhTQxI9py26MfIFFzfng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMAp6ime;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="n/21Hxtg";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B931606A32C;
-	Sat,  7 Nov 2026 15:27:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB696606A326;
+	Sat,  7 Nov 2026 15:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GMAp6ime
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E712B1F0089F;
-	Sat,  7 Nov 2026 15:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n/21Hxtg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7131F0089F;
+	Sat,  7 Nov 2026 15:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065256;
-	bh=T3NtAXwUMUeb7j9VQYhdVJ5OHqfHQc/S8HKdwykQj0w=;
+	s=korg; t=1794065258;
+	bh=1H5VRu6dmpEWEXTuQzxqdC5abW6ZNEgF4atJfoVr+Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GMAp6imedRLBAQ/klcaY/vzz28tDCbkUjX/8pUBqDHg87m04+3WyTiBrB6CKHcXd3
-	 7zCmG0yC7Z7TTWkjlEOSnvlqp1z1s9XbSNPx7TodjhFjZzrGbxogHsOEvxJCxCTHxN
-	 xQCXOmAMoDq8j9e3Pvq0D5BrHnValIHDQ+j0rQTo=
+	b=n/21HxtgZqGcd4QYdoavIWrr+XGd97awo8H6R+NJLTaawfxIA/u8C3/UnV4wQHRXK
+	 RAqaSBYTslfHcDjO907kl3wVGF7aVO5cFRL009EkdQQz+9r+NSBbCMawgZ+HQqU4vw
+	 bAp9GIs28ADnOfzUdlgiz9V8XmjbHOcJ+A0grmho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1025/1257] cpufreq: intel_pstate: cancel HWP notify work in driver cleanup
-Date: Sat,  7 Nov 2026 08:55:21 -0500
-Message-ID: <20261107135007.634760529@linuxfoundation.org>
+Subject: [PATCH 7.3 1026/1257] PM: EM: allocate the cpumask for every perf domain
+Date: Sat,  7 Nov 2026 08:55:22 -0500
+Message-ID: <20261107135007.660410447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,43 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 0ffc7534a210105ba973167a5b86d5ab39d4031f ]
+[ Upstream commit 6c7a7007c5b7566fba4fbee1d40011fb8f833dc3 ]
 
-intel_pstate_driver_cleanup() frees per-CPU data without cancelling the
-pending HWP notify delayed work. If hwp_notify_work is still scheduled
-or running when the struct is freed, the work function accesses freed
-memory via container_of().
+em_create_pd() allocates space for the trailing cpus[] flexible array
+only for CPU devices.  A performance domain registered for another
+device therefore has no storage for its cpumask.
 
-Call intel_pstate_disable_hwp_interrupt() before kfree() to disable
-the interrupt source and cancel the pending work, matching the pattern
-used in intel_pstate_suspend() and intel_pstate_hwp_offline().
+All performance domains are added to em_pd_list.  The netlink interface
+does not distinguish CPU and non-CPU domains when it calls
+cpumask_weight() or iterates over pd->cpus.  A request for a non-CPU
+domain reads cpumask_size() bytes beyond the allocation and can report
+bits from the following memory as CPU attributes.
 
-Fixes: d845cd901b28 ("cpufreq: intel_pstate: Support highest performance change interrupt")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-[ rjw: Fixed the Fixes: tag ]
-Link: https://patch.msgid.link/20261019222635.1741146-1-tristmd@gmail.com
+KASAN reports slab-out-of-bounds reads for both dump and by-ID requests
+against a synthetic non-CPU performance domain.
+
+GET_PERF_DOMAINS does not require GENL_ADMIN_PERM, so an unprivileged
+request can reach this path when a GPU or another devfreq device has
+registered an energy model.
+
+Allocate the cpumask for non-CPU domains too.  The zeroed mask remains
+empty, as required for the documented unused field.
+
+Fixes: d8eef0453132 ("PM: EM: Implement em_nl_get_pds_doit()")
+Cc: All Applicable <stable@vger.kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/20260910205234.5392-1-kmehltretter@gmail.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/intel_pstate.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/power/energy_model.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index 17158cb25dd89..0e6ae4cdda5de 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -3436,6 +3436,8 @@ static void intel_pstate_driver_cleanup(void)
- 			if (intel_pstate_driver == &intel_pstate)
- 				intel_pstate_clear_update_util_hook(cpu);
+diff --git a/kernel/power/energy_model.c b/kernel/power/energy_model.c
+index a76089e2ce8c4..d19a65461ae80 100644
+--- a/kernel/power/energy_model.c
++++ b/kernel/power/energy_model.c
+@@ -439,7 +439,9 @@ static int em_create_pd(struct device *dev, int nr_states,
  
-+			intel_pstate_disable_hwp_interrupt(all_cpu_data[cpu]);
-+
- 			kfree(all_cpu_data[cpu]);
- 			WRITE_ONCE(all_cpu_data[cpu], NULL);
- 		}
+ 		cpumask_copy(em_span_cpus(pd), cpus);
+ 	} else {
+-		pd = kzalloc_obj(*pd);
++		/* Readers expect pd->cpus to exist and remain empty. */
++		pd = kzalloc_flex(*pd, cpus,
++				  BITS_TO_LONGS(large_cpumask_bits));
+ 		if (!pd)
+ 			return -ENOMEM;
+ 	}
 -- 
 2.53.0
 
