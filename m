@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062996;
-	b=cCwNJXf0VttWiQ270VtdXXMS1Kq0Kin8fw6RkZBVNwOVbcxDae9gqmLKegdob0aTpKIr
-	 dHVJmyHhG4lrVAw4y+OSk/ge5076Ji7KaApQxgdkjkAL2NaGKTssYzDH7GIbL7oaqiTtW
-	 mNgezqWLRxQl10yIe6qvTaQRC7AJi2x/Gare12MTmPznkl3tGE/Q3wFUepu3WxcieFbHJ
-	 MgPBVEYu4IK+S6+rPlCKASD8uuTGEzITpg/2XE7/PO6EYxvFgSr36bIX6WCuijtDBcQ9z
-	 /DaHX6Av79QIIS4CXXsi39R6tiIHkUUIgBNOSlLozxpDtdOmsHkg0AadzAEG2WVR/Xw==
+	t=1794062998;
+	b=IIZHWPFCqlI56Cb0JTlK7pWtZhgjzQPHjMpG4Tr1vT48j+RYDST3RnlNvSP443DTSCDo
+	 uH44ltaD7O/j6IbSLT1f0KfcoCg8qDZw/pw4pKd2TxYG+ikxkR1txyj7O8M4fE0pMwzpq
+	 fEpVtRPNPab3VD47nZPG0MFBB1/RvNZZUHNOKdFUCk5GzGj5v86JA4XIunFyZ1XIrFetH
+	 kC3KRMYd9lSjJEJzk8kMb+T1Z9k2dPLucdhJ/Kx/gMBvva7vRo0/g0r+bK+MIkV6BMi9U
+	 gkFqpCLQy4qpNXUK2PXfR2+AeUIlKqFqGRfDEF5gmQ5QWnub4p18c3UrzPNBB2ro1XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062996;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062998;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i5VUmFiQkH5gtFOzAsGsuvQ1+tlsQhdVl6jkwXXxYo4=;
-	b=XISaUxPVyFV4xCVbGWatPnQOfYfBm63wqJuRv4OFq7bYXFO/p0CUFGTsLzZIeLhbaWsQ
-	 SWjM1ciHM6+gvIqbkqqrA9v/Kvc8BYzO/Re4lSxdHeA3XvJo7oyueXkLgMpSk2dJS2N8A
-	 Y40YI7dJ4joTTFFHmmwsrO1laI/zwvw4d4zPjAOQje3Ma7gPFpWBQH4iXoHEZOlz82wKo
-	 xq0gd9aelXALwxoDvlVKLYSCQE94/2zupcSBJzH2x7J7ZES2uDEFFCNSPR4A8iAduuj3V
-	 k/yY0it2RoKQpOzaq4lQ5Fr+uZghaPOJHLWqYiABTEEqrqzFZsp8AVmqG8ZZ+E/aA1Q==
+	bh=LFnEDQJ1TaIaLbXp8hNjJ1Y/vIF3yAfMssbiEuKMz/M=;
+	b=RsUEbN4pIJgH/2JsAWaYTgYL4uypJ/eKAur7HhH3y8aXjTJ+y/Fq2xeU9RG4Ah+5XI2w
+	 rCAjxT7CxEOlq9tdUle5c65YkJ38gsGMkdrwPhXzq8ggghoPHMlqwNc4u9DEXrkMQ0qiu
+	 mHi3MXBQ73VCOFgJzlaY+vzojnZKIOMCVsDRfUhSR6Or0YobCTxUbGkPeevD0bQaOcuDy
+	 Hfs0C2nequy5GkRBK2ARk/IXfFj6Tqg9/lX9Ph7k+YN/rCC9/PzFYmD9ydpKkXKH9L5ng
+	 f253CA7VOBVBWhVtmFqYF5fWXsYVzX6nTxBWgku13ci5QJqaqdqq4qvCpw/V7evAQxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCucEXe9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I0kckoCz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEF6606A33B;
-	Sat,  7 Nov 2026 14:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF26B606A331;
+	Sat,  7 Nov 2026 14:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCucEXe9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B227E1F0089F;
-	Sat,  7 Nov 2026 14:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I0kckoCz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172111F0089F;
+	Sat,  7 Nov 2026 14:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062996;
-	bh=i5VUmFiQkH5gtFOzAsGsuvQ1+tlsQhdVl6jkwXXxYo4=;
+	s=korg; t=1794062997;
+	bh=LFnEDQJ1TaIaLbXp8hNjJ1Y/vIF3yAfMssbiEuKMz/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aCucEXe9PoNIsv6qk24bPcbyOQW6Y/CvUZI6OtKtoHj/WhLls1mLp5RO+24i0WBBt
-	 ZsiQOEcFAoT8Gz2rtICZzfE1Jr+7uVeuSaIDbAn8C+JD+tuiMHeEA1fgfta5PYwukZ
-	 leLS4OUvS+TFy2VhxDunKXY+pygclS+/RCZuKkhs=
+	b=I0kckoCzSIs4cO2vyrkJoISzdBFXftMTTgLU2QgHwlWKxY0+VgsBlsH8R4Z+t3Y9D
+	 OAZlvaj1/bJHWWcZhyVh3oDRmK6GBUidpzw02xZ29DtdYugyInpcLy2uB80HRYbjAJ
+	 9cHrapAJWSh9fGMI5I06up9dYeEu4y+JIv6GWskc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Breno Leitao <leitao@debian.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 252/869] hwmon: (coretemp) Refresh the temperature on the first read
-Date: Sat,  7 Nov 2026 08:48:54 -0500
-Message-ID: <20261107134900.342814414@linuxfoundation.org>
+Subject: [PATCH 6.18 253/869] dcache: report a Tasks-RCU quiescent state in dentry_kill()
+Date: Sat,  7 Nov 2026 08:48:55 -0500
+Message-ID: <20261107134900.372877428@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,52 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit e463cd582ca125e359ad1a66cb076434c14638b2 ]
+[ Upstream commit a647a53bc89a046bee4a12a0a5627f2dfaaef807 ]
 
-show_temp() reads the status MSR only when the cached temperature is
-older than one second. Commit 5c0e64dde80f ("hwmon: (coretemp) Remove
-obsolete temp_data->valid") dropped the tdata->valid check that used to
-force the very first read, leaving that comparison as the only trigger.
+I am constantly seeing the following warning on Meta's fleet:
 
-A never-updated temp_data carries a zero timestamp, which does not look
-stale on 32-bit kernels: jiffies starts 300 seconds short of wrapping,
-so the comparison stays false until jiffies wraps and passes HZ. For the
-first 301 seconds of uptime temp%d_input reports the zero left by the
-allocator rather than the CPU temperature. 64-bit kernels are
-unaffected: jiffies starts at a positive value there and does not wrap.
+  INFO: rcu_tasks detected stalls on tasks:
+    native_queued_spin_lock_slowpath
+    locked_inode_to_wb_and_lock_list
+    inode_io_list_del
+    evict
+    __dentry_kill
+    shrink_dentry_list
+    shrink_dcache_tree
+    d_invalidate
+    btrfs_delete_subvolume
+    btrfs_ioctl_snap_destroy
+    btrfs_ioctl
+    do_syscall_64
 
-Backdate the timestamp when the temperature data is allocated. One jiffy
-older than the caching interval is stale under either word size, and the
-first refresh overwrites it.
+dentry_kill() is the common funnel for dentry teardown: dput(),
+shrink_dentry_list() and shrink_dcache_tree() all reach it, once per
+dentry, and its cond_resched() is the only reschedule point on that path.
 
-Fixes: 5c0e64dde80f ("hwmon: (coretemp) Remove obsolete temp_data->valid")
+cond_resched() is not an RCU-tasks quiescent state.
+
+Use cond_resched_tasks_rcu_qs() so the teardown reports an RCU-tasks
+quiescent state as it proceeds.
+
+Fixes: 9c5f1d30199d ("dcache: move cond_resched() into the end of __dentry_kill()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Link: https://patch.msgid.link/20260924-coretemp-temp-fault-v1-1-1884f0ff97d5@linux.intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260918-dcache-task-rcu-qa-v1-1-963ec83e6d0b@debian.org
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/dcache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index a84a32ada8bd5..e8697d6b9998a 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -511,6 +511,11 @@ init_temp_data(struct platform_data *pdata, unsigned int cpu, int pkg_flag)
- 	tdata->cpu = cpu;
- 	tdata->cpu_core_id = topology_core_id(cpu);
- 	tdata->attr_size = MAX_CORE_ATTRS;
-+	/*
-+	 * A zero timestamp does not look stale on 32-bit, where jiffies
-+	 * starts just short of wrapping. Backdate it instead.
-+	 */
-+	tdata->last_updated = jiffies - HZ - 1;
- 	mutex_init(&tdata->update_lock);
- 	return tdata;
- }
+diff --git a/fs/dcache.c b/fs/dcache.c
+index 1b4c210338022..04adb623e584e 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -686,7 +686,7 @@ static struct dentry *__dentry_kill(struct dentry *dentry)
+ 	if (dentry->d_op && dentry->d_op->d_release)
+ 		dentry->d_op->d_release(dentry);
+ 
+-	cond_resched();
++	cond_resched_tasks_rcu_qs();
+ 	/* now that it's negative, ->d_parent is stable */
+ 	if (!IS_ROOT(dentry)) {
+ 		parent = dentry->d_parent;
 -- 
 2.53.0
 
