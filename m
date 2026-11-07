@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063835;
-	b=RING6ZXqIeYr+JtI+sxsjuHNjDgjNPxV+h7IKYDPEi7T4f1uYHqOyeSw2V++6FQRZ6AH
-	 buwfy7PBlll40Y8vJQpv7JVMqhgcCY+n1kelTIkK+71uEFTwErCwo5HTqfGMEn7QnfELg
-	 yoIhMiC25OIRuLqbTKflOmOf55m9H3WkB4lW5gsrwAuzGiGkfMkPARcyYM3GAsZjkXnqt
-	 q2YaQQos4wXEtx8D+O9J+lresnVabe/7z6p4+vkKIYbvenpn7lorbpJ7oG71WoXp9fbhN
-	 yGdZu35RDodfUTccozMJT8faoHJC5aJ0k/Y7/+Lq49h1uS71C9K/7ilnQAuULewETyQ==
+	t=1794063837;
+	b=aUAC4mqzeGv8uFMumSBwHTMsm3Ow5VeowBH2L/rC8yLspHszO7WAcDOAxZBkqAFkr9LD
+	 BHTzJR/06GCGTkuCWYeqI21uznCQbq+RE/yIbL8r0PZr5w9KBdaagihg36hcpof+09SzY
+	 NX7o1OA4Oyg+xw5RRkxvI9/bvtV+dS6M6xDaB9+l2Vnha5FjY+AXLxi4vucg6rwxw3At2
+	 N3B7prv4utXxrgfswnS2/sm8x7dULrnyoi7gcxhljCyr4GfgPGvw40wDcgsTgYK/kHbeO
+	 9YXUv7oC146UhQ1Qin6EafjNXMbAsV+Js94iRuUigW8U3c9w+zT3/VufcqwxZWtx2Lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063835;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063837;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mIymRQQrVhP5+h0xKQiZN3WR9JSJ4Mx7cx53EDglWNI=;
-	b=J3qc1keYyup4inNY8BzdERAVVQf1s5jTI9BGj1mMbZBFQfXv7YxwIlVOFJz4WiwueoaE
-	 ttM87Q51Suogv1POrBQ3KshLnw2Vu22w6raNj3KfN7L5o+vq+visDRPPFNq8YV75Hoep7
-	 lLjy1FBCl/h6C/9syHCpxiXHbvgzEh7cOjo645vkAWm0Gua9XviWN1ey8ngl/IQTY2e0k
-	 Y9exVipnIZtXIJDxYUglyTokUDIMYuPbg7pig5ZHZ9XrCHGrPl8rKqlcBMOn1T5tfV+pG
-	 dKSMa3Z1PZz6rXPSk/itQmGkArl/Lga9qfdYMny4FRx7MW+g3Xp3UReEcI1rf8iSfTg==
+	bh=1yId8EmE1SsY6ovb+mDfWzLYT+eHs4bUIl7Jfeu4P7o=;
+	b=mrboS4kQn4nRFKBqhD4HYKyKAlXmF2Tg23x88huEp517BhZA++yzzo5c3R7gU+prGAeH
+	 ndbAgG6221HhcZT4hhO5G7TtoCTqadT9TmNgfLAKwBDRwTgYTFvHvkcAtH895Keiifpoi
+	 rEfZme/hDOawwIOpzrZEu+O1Nf/cUG60ZUdS0fOew9Q/AeBRmp27Jd2Gu0WmQQK7zMk5r
+	 sTXvfy3j0FLPOuFCBBokx1cxMlRwhMX46YxwKSGyVSS6HWJAvoXlsw0ZQzx+x69mATMu0
+	 p+S4CD++NjflmRTMylv6/QpJBsF/X9cjWFyCJFxSAxooHhVtSWDw+1dV0pjKoL596hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uaURU96+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YHob6GI/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F1D60A5BD5;
-	Sat,  7 Nov 2026 15:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC49C60A5BE7;
+	Sat,  7 Nov 2026 15:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uaURU96+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259BC1F008A1;
-	Sat,  7 Nov 2026 15:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YHob6GI/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DF41F0089F;
+	Sat,  7 Nov 2026 15:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063835;
-	bh=mIymRQQrVhP5+h0xKQiZN3WR9JSJ4Mx7cx53EDglWNI=;
+	s=korg; t=1794063836;
+	bh=1yId8EmE1SsY6ovb+mDfWzLYT+eHs4bUIl7Jfeu4P7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uaURU96+FowMth3eAOs+neqOj4fn998pjLCXkpNw7+atnrFlpcS40DD3mRcx6Spk/
-	 Ysr/hy2qOVYptjzKZzeuzdXDUr8Y1T23OUPnMbXTf42Hy9yMIzi9XS5iP5p4HVQmEe
-	 qUvFFjIzYvQ1mQ4NqEsXe1/Wv1omYctdPAZoUvHo=
+	b=YHob6GI/jqASz2g2cTvNQvWcyYtYz/5ZlBlELCeDynuRO/+M5j0r4HqQvuKCcJXCB
+	 wQQ5xUGUE+IDQeHsI+HeAEJKOMMjnEIyrgzwkN66j55gnV7HG47EUa5m0FiwhM7ilj
+	 Ax2CHW3ivdz0VRQtnL/2HMJu3KCzwgX+yzH9g3Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Zhenhao Wan <whi4ed0g@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0015/1257] drm/nouveau/svm: drain fault handler before freeing svmm
-Date: Sat,  7 Nov 2026 08:38:31 -0500
-Message-ID: <20261107134939.845341000@linuxfoundation.org>
+Subject: [PATCH 7.3 0006/1257] inet: reject unhashed sockets during established lookups
+Date: Sat,  7 Nov 2026 08:38:22 -0500
+Message-ID: <20261107134939.611351052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,67 +70,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenhao Wan <whi4ed0g@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit b46ddaf0823405f81e681eb26ec98508f3eb9a07 ]
+[ Upstream commit 4e2b3ef19e0e04adca38442f07dd6bc93c712bf1 ]
 
-The SVM fault handler nouveau_svm_fault() looks up each fault's
-nouveau_svmm under svm->mutex, caches it in the fault array, then drops
-svm->mutex and dereferences the svmm across blocking faults
-(mmu_interval_notifier_insert(), hmm_range_fault()).
+TCP established ehash lookups are lockless. The socket caches involved
+use SLAB_TYPESAFE_BY_RCU, so memory can be reused before an RCU reader
+that retained its old address has finished.
 
-nouveau_svmm is not refcounted. On DRM file close nouveau_svmm_fini() ->
-mmu_notifier_put() frees it asynchronously via call_srcu() without
-waiting for the handler, and mmget_not_zero() pins the mm, not the svmm.
-flush_work() on the fault buffer otherwise runs only at device removal
-and suspend, never on close, so a fault handled concurrently with a close
-can dereference a freed svmm.
+After a tuple match, __inet_lookup_established() and
+__inet6_lookup_established() acquire a reference and repeat the tuple
+check. They do not check whether the new object is hashed. If the
+address is reused for a socket with the same tuple, the lookup can
+acquire a reference to the new object and return it while its nulls node
+is unhashed.
 
-The instance is already unlinked by nouveau_svmm_part() earlier in the
-same close, so no new fault can resolve to it. Drain the handler in
-nouveau_svmm_fini() before the free, guarding the flush with a NULL check
-on drm->svm: on device teardown nouveau_svm_fini() runs first and frees
-drm->svm (NULL) after blocking the notify and flushing the buffer, so the
-handler is already drained; on per-client close drm->svm is alive and the
-flush runs.
+A PoC that drives reuse with a SYN cookie request socket reproduced the
+crash. The new request socket is unhashed and has a NULL rsk_listener.
+A lookup that had loaded the address of the old request socket acquired
+the reference published by tcp_get_cookie_sock() and returned the new
+object. tcp_v4_rcv() then read sk_state through the NULL listener.
 
-Fixes: eeaf06ac1a55 ("drm/nouveau/svm: initial support for shared virtual memory")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
+The resulting crash was:
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000012
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  ...
+  Oops: Oops: 0000 [#1] SMP NOPTI
+  CPU: 4 UID: 0 PID: 0 Comm: swapper/4 Not tainted 7.3.0-00591-g0e135910deec #1 PREEMPT(lazy)
+  ...
+  RIP: 0010:tcp_v4_rcv+0x44e/0x1280
+  ...
+  R10: 0000000000000001 R11: 00000000024ca8c0 R12: 0000000000000000
+  ...
+  CR2: 0000000000000012 CR3: 0000000103d50004 CR4: 0000000000770ef0
+  ...
+  Call Trace:
+   <IRQ>
+   ? raw_local_deliver+0xae/0x240
+   ip_protocol_deliver_rcu+0x2d/0x180
+   ip_local_deliver_finish+0x84/0x100
+   ip_sublist_rcv_finish+0x5f/0x70
+   ip_sublist_rcv+0x12a/0x1d0
+   ip_list_rcv+0xfd/0x130
+   __netif_receive_skb_list_core+0x223/0x250
+   netif_receive_skb_list_internal+0x1d2/0x2c0
+   ? try_fill_recv+0x39/0x7b0
+   napi_complete_done+0x74/0x170
+   virtnet_poll+0x445/0x600
+   __napi_poll+0x27/0x1e0
+   net_rx_action+0x2fe/0x3b0
+   handle_softirqs+0xc2/0x2c0
+   __irq_exit_rcu+0x74/0xd0
+   common_interrupt+0x7f/0x90
+   </IRQ>
+  ...
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+After taking a reference, check whether the nulls node is unhashed in
+both IPv4 and IPv6 established lookups. If it is unhashed or the tuple
+no longer matches, drop the reference and restart the lookup.
+
+Lookups racing with the TIME_WAIT hashdance, or with a request being
+replaced by its child, now restart and find the new socket instead of
+returning the old one.
+
+Request sockets that were never inserted into ehash can have a nonzero
+refcount, and a stale lookup can hold a transient reference. Therefore,
+when SYN cookie, Fast Open, and request migration paths fail after
+setting a nonzero refcount, release the references held by those paths
+with reqsk_put() instead of freeing the request directly.
+
+Fixes: 079096f103fa ("tcp/dccp: install syn_recv requests into ehash table")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260814-nouveau-svm-svmm-uaf-v2-1-8e6590519f07@gmail.com
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261029214219.1035176-2-imv4bel@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_svm.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/ipv4/inet_connection_sock.c | 10 +++++++---
+ net/ipv4/inet_hashtables.c      |  5 +++--
+ net/ipv4/syncookies.c           |  2 ++
+ net/ipv4/tcp_input.c            |  4 +++-
+ net/ipv6/inet6_hashtables.c     |  4 +++-
+ 5 files changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_svm.c b/drivers/gpu/drm/nouveau/nouveau_svm.c
-index 58735446d7832..c519c28164fa0 100644
---- a/drivers/gpu/drm/nouveau/nouveau_svm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_svm.c
-@@ -304,6 +304,19 @@ nouveau_svmm_fini(struct nouveau_svmm **psvmm)
- {
- 	struct nouveau_svmm *svmm = *psvmm;
- 	if (svmm) {
-+		struct nouveau_svm *svm = svmm->vmm->cli->drm->svm;
-+
-+		/* The fault handler caches svmm pointers under svm->mutex and
-+		 * dereferences them after dropping it, across blocking faults.
-+		 * The instance is already unlinked (nouveau_svmm_part), so drain
-+		 * the handler before the free to release any in-flight reference.
-+		 *
-+		 * On device teardown nouveau_svm_fini() ran first and freed
-+		 * drm->svm (NULL) after draining the buffer; nothing to flush.
-+		 */
-+		if (svm)
-+			flush_work(&svm->buffer[0].work);
-+
- 		mutex_lock(&svmm->mutex);
- 		svmm->vmm = NULL;
- 		mutex_unlock(&svmm->mutex);
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index c6f8011200a0b..8e891c8141f85 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1140,10 +1140,14 @@ static void reqsk_timer_handler(struct timer_list *t)
+ 	 */
+ 	if (nreq) {
+ 		__NET_INC_STATS(net, LINUX_MIB_TCPMIGRATEREQFAILURE);
++		/* The timer was not armed, drop its reference here. */
++		reqsk_put(nreq);
+ no_ownership:
+ 		reqsk_migrate_reset(nreq);
+ 		reqsk_queue_removed(queue, nreq);
+-		__reqsk_free(nreq);
++		/* Drop the temporary reference and the one reserved for ehash. */
++		reqsk_put(nreq);
++		reqsk_put(nreq);
+ 	}
+ 
+ drop:
+@@ -1451,7 +1455,7 @@ struct sock *inet_csk_complete_hashdance(struct sock *sk, struct sock *child,
+ 
+ 			__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPMIGRATEREQFAILURE);
+ 			reqsk_migrate_reset(nreq);
+-			__reqsk_free(nreq);
++			reqsk_put(nreq);
+ 		} else if (inet_csk_reqsk_queue_add(sk, req, child)) {
+ 			return child;
+ 		}
+@@ -1506,7 +1510,7 @@ void inet_csk_listen_stop(struct sock *sk)
+ 					__NET_INC_STATS(sock_net(nsk),
+ 							LINUX_MIB_TCPMIGRATEREQFAILURE);
+ 					reqsk_migrate_reset(nreq);
+-					__reqsk_free(nreq);
++					reqsk_put(nreq);
+ 				}
+ 				rcu_read_unlock();
+ 
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index ba0faa9ae2bb3..58d54965036a2 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -552,8 +552,9 @@ struct sock *__inet_lookup_established(const struct net *net,
+ 		if (likely(inet_match(net, sk, acookie, ports, dif, sdif))) {
+ 			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
+ 				goto out;
+-			if (unlikely(!inet_match(net, sk, acookie,
+-						 ports, dif, sdif))) {
++			if (unlikely(hlist_nulls_unhashed_lockless(&sk->sk_nulls_node) ||
++				     !inet_match(net, sk, acookie, ports, dif,
++						 sdif))) {
+ 				sock_gen_put(sk);
+ 				goto begin;
+ 			}
+diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
+index 73e1297681847..6440305615378 100644
+--- a/net/ipv4/syncookies.c
++++ b/net/ipv4/syncookies.c
+@@ -218,6 +218,8 @@ struct sock *tcp_get_cookie_sock(struct sock *sk, struct sk_buff *skb,
+ 
+ 		bh_unlock_sock(child);
+ 		sock_put(child);
++		reqsk_put(req);
++		return NULL;
+ 	}
+ 	__reqsk_free(req);
+ 
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 99baf14afdfd8..3583867487d7f 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -7777,7 +7777,9 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 		if (!inet_csk_reqsk_queue_add(sk, req, fastopen_sk)) {
+ 			bh_unlock_sock(fastopen_sk);
+ 			sock_put(fastopen_sk);
+-			goto drop_and_free;
++			/* tcp_disconnect() already dropped one reqsk ref. */
++			reqsk_put(req);
++			goto drop;
+ 		}
+ 		READ_ONCE(sk->sk_data_ready)(sk);
+ 		bh_unlock_sock(fastopen_sk);
+diff --git a/net/ipv6/inet6_hashtables.c b/net/ipv6/inet6_hashtables.c
+index b111b51d69fc9..aa5fa1dd062f7 100644
+--- a/net/ipv6/inet6_hashtables.c
++++ b/net/ipv6/inet6_hashtables.c
+@@ -108,7 +108,9 @@ struct sock *__inet6_lookup_established(const struct net *net,
+ 		if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
+ 			goto out;
+ 
+-		if (unlikely(!inet6_match(net, sk, saddr, daddr, ports, dif, sdif))) {
++		if (unlikely(hlist_nulls_unhashed_lockless(&sk->sk_nulls_node) ||
++			     !inet6_match(net, sk, saddr, daddr, ports, dif,
++					  sdif))) {
+ 			sock_gen_put(sk);
+ 			goto begin;
+ 		}
 -- 
 2.53.0
 
