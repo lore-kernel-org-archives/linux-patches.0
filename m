@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064685;
-	b=AUkfR/rViJyjuDGL5KStdzP89vppbYnSZ1KZXOY77VakDkB3JxmOVX0XFKBTG9R3xHsR
-	 JRLnWctS+BKYU6a3/dql4tBBAN8CU0OeYhffhYkhwVN0xdyD6psk08aKnp3uwDyMU/tFm
-	 PtlB3kb9Iy8hwT5a1AO30J+BMQOluUYO3TKoYrb13a3hLJ4T5WsoNaK8qxbTYVa5G6UKq
-	 z0dL7p2AAWK1hTzj0EXJQ6PLkcNazASdNM6ppsmtJryT4OZ14d6UjRhiGrJYgPKrbx8uZ
-	 9Jkomb9vcNKWSwsXi9Rsb/F50DW3llyU9MnCi267IT1g3etrHSAvYZaxnZUuHquV2sg==
+	t=1794064686;
+	b=v0MgtJpc7UeXwfK0eMZBR7WFDFGely/BXq6k2KjlrbLSDi2GdK57jnQGribgNwbdJiUn
+	 KgoIvih40BnqUSbnVaHxYknNOKnKKfAEZpycTbLV5ELKitwaZQ+84YjFpm+kt0bS8GKfB
+	 JsPhnhP8xIPKIL3D2dq/Ek2BsAdO4JYKjMb4dO80lfQakZQ9gwvRUvY/XbT0s69qEE8Ok
+	 D0UOdgCNrrHMk0Hc+K6mt5OmEMmwkV1Y9+N7ir4ctSI8DTlMCNxVEWM0oR/J6nroguCLo
+	 2+KmkTbd9cOqbbyAIPd07F6OnT2SZWOi8STsWZuAMNEI8GQLc/4PHUMCHr7eRWfMuFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064685;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064686;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ZHVmF0XMOXLzinmCjPp/nM6A1Ep0etQEKIXcizwnlWM=;
-	b=VLhL51CA+7Y5JlsQYgmACSQhwOgQunaG+u70HaWPqYOaub1beBfoT41Ldtlarcs5oKRW
-	 I9dkmQV/7nUSk3Gq9n9YTC4A3aW82d4iV95jyTADfJGQaiyaH6BC6+m8UtWqlO2YDlj/h
-	 JBioMjLtYByaRDs30JHsZVhNHD/F5RssONJAJvTAKGpd4eD+T8achfIa4jaaUz+dNPe5/
-	 U3whfOrp/BxamW5gTJtvUG8Hn5Jw+Spd1GSj7jLOgQVVavTYsHKbugxe3+JmcsnTqQqdo
-	 WqtamZS0e7RG+qqw4NXxFpjgeHlBMj0XUa5FSrEKqIiPoSSNOAXOMkfL2PAq4CQfC5Q==
+	bh=9Yqy8ekK09FcHpV5vexjgKC2dVXxxZ8EvTPdzDM4V6k=;
+	b=p4GqYKZJGUIgT++I5hwJp/8uAMuBx+LGUT3KXYlI22X2BfoKgquhorlEkjmx4pvHV6qc
+	 jxsRKPi43lNRuccQnAwobPoK9NwyLj7hknhapF0QZeeB/nzR9Z+3N9rzN8rPe8ymaqZdh
+	 nRtGiI0Xs70gWBxzrvLrspFSLfXyzxTDakaotVbGY9afSBthWH+c+aLy1zRUieB1Watyh
+	 Eb5PD/0A8rIQ/4L1d0Cr8dAEvChl5mhMa7zPmgNn7NWRX3OUEbw6ZNlEifptU+iQhRg0v
+	 IR8UADKVJuPQe59PHRgDpyOHtht4KS82iRh1qvr2gkjo7Q7gxTVd2+pW5jNXliXnlhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tFhicV8r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p35dDcBt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F13606B8A5;
-	Sat,  7 Nov 2026 15:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C186606B8AE;
+	Sat,  7 Nov 2026 15:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tFhicV8r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FBB1F0089F;
-	Sat,  7 Nov 2026 15:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p35dDcBt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDF41F0089F;
+	Sat,  7 Nov 2026 15:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064684;
-	bh=ZHVmF0XMOXLzinmCjPp/nM6A1Ep0etQEKIXcizwnlWM=;
+	s=korg; t=1794064685;
+	bh=9Yqy8ekK09FcHpV5vexjgKC2dVXxxZ8EvTPdzDM4V6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tFhicV8rrQycFc70pdHnel1od5yG5mdsdZppP4T4rM+i0WJvK3mlxotAXw3id2/tn
-	 hljFNqH2Bpsk3BZs8TL8xFEVtNvv/dSGSSx1cZKUd1wKF+cbb72LsGNmtD64CXoIjU
-	 M7T71y0NPDLtQdUfvIOc1VxyDEdGikm7CBzhhcPA=
+	b=p35dDcBt+SSOONU4U/u2LZYO38VqAi9UDlnoLzs0eWjxVedJvVNUjT1My6cjyZrmZ
+	 4JuabnyXew0i3s84RBARmH/JgaIYzSxHlfnFMzHyMRFMGW7cVLaOQQtJSeq3uY4P8Y
+	 S61DwHwVzXXx2s2MgwkiVOkftgapIkuDJmB5pOeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yijia Wang <wangyijia.yeah@bytedance.com>,
-	Guixiong Wei <weiguixiong@bytedance.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0679/1257] platform/x86/intel-uncore-freq: Continue restoring limits on resume
-Date: Sat,  7 Nov 2026 08:49:35 -0500
-Message-ID: <20261107134958.018215920@linuxfoundation.org>
+Subject: [PATCH 7.3 0680/1257] platform/x86/intel/vsec: Fix inverted walk_header() test in get_features()
+Date: Sat,  7 Nov 2026 08:49:36 -0500
+Message-ID: <20261107134958.047023333@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,53 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixiong Wei <weiguixiong@bytedance.com>
+From: David E. Box <david.e.box@linux.intel.com>
 
-[ Upstream commit 38998529f45c02edcf96b0a3ddd3c83de6d11bbe ]
+[ Upstream commit 3678e39c6aaeb9aa380c7357b24f7d55955543f8 ]
 
-The PM notifier iterates over every uncore frequency instance to restore
-user-configured MSR_UNCORE_RATIO_LIMIT values after resume. Entries that
-have never been configured legitimately have stored_uncore_data set to
-zero.
+intel_vsec_walk_header() used to return a bool that was true when devices
+were found. It was converted to return 0 on success and a negative errno
+on failure, but the boolean test in intel_vsec_get_features() was left
+unchanged, so its meaning is now inverted.
 
-The refactoring that split common and enumeration code changed the
-iteration from active control CPUs to all allocated instances. It also
-changed the skip for an invalid or unconfigured entry from continue to
-return, causing that entry to terminate the entire restore operation.
+A successful walk returns 0 and leaves found set to false, while a failed
+walk returns an error that evaluates to true. When no other capabilities
+are present, intel_vsec_pci_init() then returns -ENODEV even though the
+auxiliary devices were created, and the driver core tears them back down.
 
-On a multi-package or multi-die system, configuring only a later instance
-therefore leaves its limit unrestored after suspend, hibernation, or
-restore if an earlier entry is invalid or unconfigured.
+This affects platforms that have no DVSEC or VSEC capabilities and
+describe their features through device_data instead, which today means
+DG1. Test the return value for success explicitly.
 
-Use continue to skip only the current entry and restore all remaining
-configured instances.
-
-Fixes: dbce412a7733 ("platform/x86/intel-uncore-freq: Split common and enumeration part")
+Fixes: a6ce8bf3c993 ("platform/x86/intel/vsec: Return real error codes from registration path")
 Cc: stable@vger.kernel.org
-Tested-by: Yijia Wang <wangyijia.yeah@bytedance.com>
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260929163133.14326-2-weiguixiong@bytedance.com
+Assisted-by: LLM
+Signed-off-by: David E. Box <david.e.box@linux.intel.com>
+Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Link: https://patch.msgid.link/20261001220351.1592138-3-david.e.box@linux.intel.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c | 2 +-
+ drivers/platform/x86/intel/vsec.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-index 667f2c8b9594a..c44e7e38cae25 100644
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-@@ -211,7 +211,7 @@ static int uncore_pm_notify(struct notifier_block *nb, unsigned long mode,
- 			struct uncore_data *data = &uncore_instances[i];
+diff --git a/drivers/platform/x86/intel/vsec.c b/drivers/platform/x86/intel/vsec.c
+index 5ab2215fdd7fa..7d51f27f09bc9 100644
+--- a/drivers/platform/x86/intel/vsec.c
++++ b/drivers/platform/x86/intel/vsec.c
+@@ -641,7 +641,7 @@ static bool intel_vsec_get_features(struct pci_dev *pdev,
+ 		found = true;
  
- 			if (!data || !data->valid || !data->stored_uncore_data)
--				return 0;
-+				continue;
+ 	if (info && (info->quirks & VSEC_QUIRK_NO_DVSEC) &&
+-	    intel_vsec_walk_header(&pdev->dev, info))
++	    !intel_vsec_walk_header(&pdev->dev, info))
+ 		found = true;
  
- 			wrmsrq_on_cpu(data->control_cpu, MSR_UNCORE_RATIO_LIMIT,
- 				      data->stored_uncore_data);
+ 	return found;
 -- 
 2.53.0
 
