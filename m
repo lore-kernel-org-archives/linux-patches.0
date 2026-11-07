@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064248;
-	b=nHvp8ADR5HyRmY0wjDTMlFuezAIlSesfFuQa64Kqq2IhvKuLdVssePa9epLsdY+g6H/d
-	 wUoYVX2PBiVvhCsNdnXxgIo/LAw1y356VvQW+PdEqXk8I0Jz7/L/DQH7O9IKkFOOnvXrm
-	 UgPYrBnP+qG5KiSGtqjaVfJV2HuXg7juGv9+fcdfiXDWZcTdczqjkr5ZQ71n0nYEzGh/T
-	 z5Oy77ITJ/OV/ph5TfWoqbj4y+LzoX1QGLhP9s7FtWBn6z0frrqu+Ee3oQy+RxO6xKw4p
-	 tVtCc3uLxwz2xHUevouOimuy/ESt6AVgfKac8nxBt54oEGCG0Vj5Docqaq0rM3yoU1w==
+	t=1794064249;
+	b=2ozWJgPrZVLN7j8TvXYH4+fggDBGsTHa1y+rEX2F0VrWSyB+skXPO5I7blbmKl+oPNtv
+	 IrV5lg7npw0x2DoUVA2FGvNcPwxzBPsX1hJFne8dvHw4eN/JeKYzTq6FvV5bpeCCoKwFG
+	 Q0A5V7wmR1xqFLGWtH6d33GtxY0KSM0uc2tTHZA/2/qJzag+Wc+e4rrtIlrugEoznd4tV
+	 oQZY975CQ+rvMUdmXfwsybfeJjL3mMRH4otestRjwVb7aQW7StQojGFX6jhc024OkYv6n
+	 acrDN8BWzOdmJ17lwLJ1QVyDEbkUyKFS/LZq1Jrb28+Z/qTHX5o1lI9YDU5il/Hb2Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064248;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=buW+enNKtaNsvZnu1sWWBnS9oQXeSr0Dm23JM5tHfaI=;
-	b=L/ZRuoZjGq6SyAoYL8fhJ64zQ7EyT+3zI2qXFDBfOZ7rzkW91rdjit5kuDxCk5anyyNP
-	 annlKIjjIqgSCqXFKiWP1yFGqINzEenz9upBCdvdulo7uIccPXPkzJCqP+U8eCnC8o7MV
-	 RbnWcSvOdjmmfrzWW7LuRtgYGPQ4jYIdD1P6YzmXjd9dAm7USFW3RSIzJR/BZtJlc6SGr
-	 I7+EVHjeC24j2a3ArKjL/O6+M8Pos45Yh/7SCeAFEr0RocAWE4z1Feuu17uHRO/P3hZFp
-	 BnkFr0uPPt9dsR7nGkq+Smx+Ryg9Nbf7+vZOQW2bBYBAX6UeJmmDPqFP1v/Fh9Xiziw==
+	bh=gGwqy+HH9GcvoZ0pOlVGw37jIEzuR15ExGH5t19+vXg=;
+	b=qhajRKhsRptJrSBY9jd6QbSyjgtitk9jKh1wS/b1M0/kZbkxKgt9saljWafKb266PsEE
+	 LegLWBcPlj/bFxBhaVVHMODF5kqIaxmso/xgofCK0w//FnAYzyDC/zjcRFcJP0ETkE1tW
+	 YT+URQG+I7+9O1jPI2ZHiMpc0VZkNMc/hS+UVfHYMPG5NUr1UK1/XSPB2X1sMxR4IllMM
+	 MhbmZ6fKKf9u/KbUwRKy2U0zWJtMeXfexMDnU8K8XhNVkJ+jfsqONz+cByagXJxAx3fBq
+	 EmUizrPOOXYv0tikhnpTAhKaMLe7onCkt1wt/2akvZ41uddtCVwlbMKjrWjyY7bb3xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="E4z/rWGT";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rk7ACYiv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61086606A332;
-	Sat,  7 Nov 2026 15:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7E6606A9C6;
+	Sat,  7 Nov 2026 15:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4z/rWGT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4EA1F0089F;
-	Sat,  7 Nov 2026 15:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rk7ACYiv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E481F0089F;
+	Sat,  7 Nov 2026 15:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064248;
-	bh=buW+enNKtaNsvZnu1sWWBnS9oQXeSr0Dm23JM5tHfaI=;
+	s=korg; t=1794064249;
+	bh=gGwqy+HH9GcvoZ0pOlVGw37jIEzuR15ExGH5t19+vXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E4z/rWGThBQDF2mrC3okZ2eSlcjdPamUSXBaGc1rh98ATwWOidhFUIBsr4qsoh+ot
-	 NVySFB9wKa7kbBb8lt0SC7FHP34VDKGu9jUrA6NNfqPLQQ9cPfrXJwVbve4BGRKuPZ
-	 WKjSNtmNFeTFvwouba4dg32a6jr+WF1j82bPU1w8=
+	b=rk7ACYivisQObMlIG9ggZythuajbrjIt0PHiVa6slTKqB6W+TP8dG7AsilON2qJ+I
+	 a+UmeEu5tM5GjmJzEPGkmmPg0thkkxabm30EqjxMh3jOyFKBctIquWKmN0A5rcxOKK
+	 4naBW3xGrgoEm18R6FomdiqqFDaI9ZBWYXtj5j30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheick Traore <cheick.traore-ext@st.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Rupesh Majhi <zoone.rupert@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0351/1257] iio: adc: stm32: fix minimum sampling time values
-Date: Sat,  7 Nov 2026 08:44:07 -0500
-Message-ID: <20261107134949.088244281@linuxfoundation.org>
+Subject: [PATCH 7.3 0352/1257] iio: pressure: dps310: fix CFG_REG bit definitions
+Date: Sat,  7 Nov 2026 08:44:08 -0500
+Message-ID: <20261107134949.114427413@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,49 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheick Traore <cheick.traore-ext@st.com>
+From: Rupesh Majhi <zoone.rupert@gmail.com>
 
-[ Upstream commit ef04fdc999ee40a58d513ea48d391c7dc78c908c ]
+[ Upstream commit 4334dc4092c271e6cd010c2ee70b7f4415c4c199 ]
 
-- On stm32mp15: vddcpu and vddq_ddr are not connected to internal
-channel, so their sampling time shouldn't be set.
+Driver defines them as BIT(4), BIT(5) and BIT(6). Per datasheet P_SHIFT
+is bit 2, FIFO_EN is bit 1 and SPI_MODE is bit 0.
 
-- On stm32mp13: vddcpu and vddq_ddr are connected to internal channels
-and the value for vddcore was not correct. Values from the datasheet
-are 1us (e.g. 1000ns) for ts_vddcore, ts_vddcpu and ts_vddq_ddr.
+Only P_SHIFT has a user. dps310_set_pres_precision() sets it at
+oversampling 16 or above, so with wrong bit the result register is never
+shifted and stops matching the scale factor compensation divides by.
+in_pressure_input returns -ERANGE at oversampling 16, 32 and 64.
 
-Fixes: 7cb2303dd024 ("iio: adc: stm32: manage min sampling time on all internal channels")
+FIFO_EN needed by FIFO support later in this series.
+
+Fixes: ba6ec48e76bc ("iio: Add driver for Infineon DPS310")
+Fixes: d711a3c7dc82 ("iio: dps310: Add pressure sensing capability")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cheick Traore <cheick.traore-ext@st.com>
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Assisted-by: LLM
+Signed-off-by: Rupesh Majhi <zoone.rupert@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stm32-adc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/pressure/dps310.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/adc/stm32-adc.c b/drivers/iio/adc/stm32-adc.c
-index 90f0e257e6d1b..b024326775aeb 100644
---- a/drivers/iio/adc/stm32-adc.c
-+++ b/drivers/iio/adc/stm32-adc.c
-@@ -2734,7 +2734,7 @@ static const struct stm32_adc_cfg stm32h7_adc_cfg = {
- 	.set_ovs = stm32h7_adc_set_ovs,
- };
- 
--static const unsigned int stm32_adc_min_ts_mp1[] = { 100, 100, 100, 4300, 9800 };
-+static const unsigned int stm32_adc_min_ts_mp1[] = { 100, 0, 0, 4300, 9800 };
- static_assert(ARRAY_SIZE(stm32_adc_min_ts_mp1) == STM32_ADC_INT_CH_NB);
- 
- static const struct stm32_adc_cfg stm32mp1_adc_cfg = {
-@@ -2756,7 +2756,7 @@ static const struct stm32_adc_cfg stm32mp1_adc_cfg = {
- 	.set_ovs = stm32h7_adc_set_ovs,
- };
- 
--static const unsigned int stm32_adc_min_ts_mp13[] = { 100, 0, 0, 4300, 9800 };
-+static const unsigned int stm32_adc_min_ts_mp13[] = { 1000, 1000, 1000, 4300, 9800 };
- static_assert(ARRAY_SIZE(stm32_adc_min_ts_mp13) == STM32_ADC_INT_CH_NB);
- 
- static const struct stm32_adc_cfg stm32mp13_adc_cfg = {
+diff --git a/drivers/iio/pressure/dps310.c b/drivers/iio/pressure/dps310.c
+index 45bdb8c7670f0..35260b3993903 100644
+--- a/drivers/iio/pressure/dps310.c
++++ b/drivers/iio/pressure/dps310.c
+@@ -50,9 +50,9 @@
+ #define DPS310_CFG_REG		0x09
+ #define  DPS310_INT_HL		BIT(7)
+ #define  DPS310_TMP_SHIFT_EN	BIT(3)
+-#define  DPS310_PRS_SHIFT_EN	BIT(4)
+-#define  DPS310_FIFO_EN		BIT(5)
+-#define  DPS310_SPI_EN		BIT(6)
++#define  DPS310_PRS_SHIFT_EN	BIT(2)
++#define  DPS310_FIFO_EN		BIT(1)
++#define  DPS310_SPI_EN		BIT(0)
+ #define DPS310_RESET		0x0c
+ #define  DPS310_RESET_MAGIC	0x09
+ #define DPS310_COEF_BASE	0x10
 -- 
 2.53.0
 
