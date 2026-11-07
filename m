@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065401;
-	b=xKHTqOuAY9IEJKA20F2hlLiI2Otq6Dgnyx+bgraRp9v3qlgy93HOhfRN7wshpNfH4T/s
-	 736PZEyaLvx/2w26JYB7v1VwUfFr5FE4AquaWfzTVijvvYJ52d8T8RFtqVFgtRM8iZ/e0
-	 5ov30qyvty/CdcYvOR2ChifbHjqAMotak26m/js8HRlJRbRyge17bVa7DsABR3XWDjQlv
-	 HCgmiKjsKjyufRp0lCRKvE0/CtHHhANO74XlmDErFYJIO8bFoQPJEi3HmxTr0v7rBNNzc
-	 BAQbknllj1rSfVuZKlht97s+r/cIqPJtarexOA7t1jKeT31r1JbjfP+TG/6bpy10Jig==
+	t=1794065403;
+	b=kgDrAOmLETFXrdzs4WB0S8Ow/z4YIDzS92f07ruVzJN/XX+6AsJfPNbO1roBcREGZsA6
+	 CnQm9tpjHAqQPv1DoYbJb6HFES8zjh8ldhqL2ikYyLrn9pSMI5fVitfLI0acJCc2c1fV9
+	 ABsvJT8taxkUmOQ2EqoqvSLMioJTPCMBTE4qwNruy++aULe7Z9sMvHBXK7Aw+rJV6TE2j
+	 a4y9/+57qwnoxwYvSjmtX+phN5VtStC0GZl62hSUpgi/LO2gKcnm63v1JcTks7MwsjfEB
+	 Qh60UlpLYEJHcxQZDoVw9vcYXUzCMMwN9h44g6TPOMztX4tqGJ0vxmsWxOuaN6OOYAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065401;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065403;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VhnCMAqe0/QdwaDckF8Y8Jtj+cy4xEl3xZrzd5bA5mo=;
-	b=BH79rSnX8O1KvMArkbKT0JOEzV9/beiD7xMIrLYfm9YlB30x9jlGUsXZ7Dug2DCaV3d0
-	 eVUZ2XNcX29/h6qKrUUwBfvc2krLgZWI58Vp5sK8A9D273JMJOFJUcdyutec6HOQnuDZv
-	 XoNA74Jpjkd9JsVN4Fhe5ORNIddZHZgY/yLnXqv3yll4UIuNPmW66cuQJ/m+Byc0bXrv7
-	 jOMW8dUkIbW9M4VFMi2eHiPF85dD0NWteXA+D6aedq0fiyD22xR51YbPSUz0sF3P5IK1m
-	 aexwyqVW8mgCe4aGwTfTnVGijuF/5yxJoUCDD5h5rEUBzQiQaD7GjbRgw5oGR2w+ohA==
+	bh=UMNJt4znPkPdPr80r32H1PeBb5hBAprPEXSWHyKuYEs=;
+	b=jPv2CyGR0yYR+CReNR8BJbovVn0fSvlX2r5kRDss/9oKIoWwxd1B80nNCYlXxV+RTEl7
+	 Hv2Nz3381x2moB2YgKD+1GMUa7vBb7/leBENlWJzN3ckeDHbIT+ANysEVZGlfgu04cCcQ
+	 c5LfBe6Jr2BMnJYhV4Oe/IJf2fIbkrrBbeCOL58hBmVYQQfmdcovB2BvaB8hfWyqgriJE
+	 Al0Sgzudt/I2M//lAk2jbcL+p1qpbNSUa2f0Id5ZE7+qLM1PcOe9ew+sjQdNSBmCmnsgT
+	 zq9Ndc9GhvfT/4FW5Wdy/Sbj401p4jpQpqel60RbYzYiY5DpIrjJl5BUwf5pfYEQryQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2hHPvvz7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uVKs/+25";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79887606D801;
-	Sat,  7 Nov 2026 15:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4129F606A33C;
+	Sat,  7 Nov 2026 15:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2hHPvvz7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B9F1F0089F;
-	Sat,  7 Nov 2026 15:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uVKs/+25
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DCC1F008A2;
+	Sat,  7 Nov 2026 15:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065401;
-	bh=VhnCMAqe0/QdwaDckF8Y8Jtj+cy4xEl3xZrzd5bA5mo=;
+	s=korg; t=1794065403;
+	bh=UMNJt4znPkPdPr80r32H1PeBb5hBAprPEXSWHyKuYEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2hHPvvz7eT0x5xPWPSWIr98qmlUwhL+sV1cCWnDKTaHGZFH+NumfMSBfS+WMIHyRV
-	 uhUwOFi+EyGbBLJ8A8XeXFOO8yr3LWiWsdDsLl2k2zkaIxVtwvZd4em3ilBoR6VzpA
-	 /J3a5HdFGf04SFWFBD1km3Ie3Aho277sTBu/iQlU=
+	b=uVKs/+251/BMqlnZ7cd2FnGjphteWoUkMhzwrwYZW8QlwrPFu3+TEJg7NOKfO/7Ju
+	 MdrmrtaWjBu36JV0bkQQtQBZiEDOlGaI6curvaIA0m1ZtcjWq9liMVMrQuiSULCkNA
+	 W8Y8k/x3mlMfrDBsR2DHox930y0sXokQm+sWMQA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Dennis Zhou <dennis@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Christoph Lameter <cl@gentwo.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Hao Ge <hao.ge@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1120/1257] libceph: Fix unsafe decode in ceph_redirect_decode()
-Date: Sat,  7 Nov 2026 08:56:56 -0500
-Message-ID: <20261107135010.172876012@linuxfoundation.org>
+Subject: [PATCH 7.3 1085/1257] mm/percpu: account full object size for percpu memory allocations
+Date: Sat,  7 Nov 2026 08:56:21 -0500
+Message-ID: <20261107135009.227084832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,46 +74,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Harry Yoo (Meta) <harry@kernel.org>
 
-[ Upstream commit 0405670e50f213594366ab7eddc07002bd7f84c0 ]
+[ Upstream commit c7a467fbcbbc31e57a5077bfc9456d9f29cb1571 ]
 
-ceph_redirect_decode handles unchecked data received over the network
-from an OSD. Currently, there is only a bounds check covering the first
-three decode operations. After decoding the first len field from the
-message, the only remaining check ensures there is enough buffer space
-to hold len bytes. However, there is no guarantee that this value is
-large enough to hold the subsequently decoded fields. The decoding of
-the second len field is missing an explicit bounds check. Consequently,
-a corrupted message can trigger an out-of-bounds read.
+When memory allocation profiling is enabled, the pages backing percpu
+memory chunks are attributed to func:pcpu_alloc_pages.  However, the
+accounting of individual percpu memory allocations via alloc_percpu()
+and friends record only the size of a single object rather than its
+full size across all CPUs.
 
-This patch fixes the issue by switching the decoding from
-ceph_decode_32() to the bounds-checked version ceph_decode_32_safe().
+As a result, it is often not straightforward to identify which kernel code
+is actually responsible for percpu memory, because the size is
+under-accounted by a factor of num_possible_cpus().
 
-Cc: stable@vger.kernel.org
-Fixes: 205ee1187a67 ("libceph: follow redirect replies from osds")
-Assisted-by: Cursor
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Account full object size with pcpu_obj_full_size(size) instead, which
+multiplies the object size by num_possible_cpus() and adds the objcg
+pointer overhead.  This is consistent with what memcg already does for
+charging percpu allocations.
+
+Verified with 64-CPU VM by spawning 400 processes in a memory cgroup and
+measuring mm_init()'s rss_stat counters.
+
+Delta of kernel/fork.c:1142 func:mm_init in /proc/allocinfo:
+
+                  bytes   calls   per allocation
+    unpatched      6320     395         16
+    patched      418176     396       1056
+
+'percpu' field in memory.stat: 422400 (1056 bytes per process)
+
+Memory allocation profiling now accounts the same amount of memory as
+what memcg charges.
+
+Link: https://lore.kernel.org/20261013-fix-alloc-percpu-accounting-v1-1-03e788a1e41f@kernel.org
+Fixes: 60fa4a9e2323 ("mm: percpu: add codetag reference into pcpuobj_ext")
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
+Assisted-by: LLM # Verification
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Christoph Lameter <cl@gentwo.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Hao Ge <hao.ge@linux.dev>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/osd_client.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/percpu.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/ceph/osd_client.c b/net/ceph/osd_client.c
-index 8c2b89e2004ba..3f23027fba3c0 100644
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -3639,7 +3639,7 @@ static int ceph_redirect_decode(void **p, void *end,
- 	if (ret)
- 		goto out;
+diff --git a/mm/percpu.c b/mm/percpu.c
+index a802d72c116fb..b0a4aa4e852bf 100644
+--- a/mm/percpu.c
++++ b/mm/percpu.c
+@@ -1698,14 +1698,15 @@ static void pcpu_alloc_tag_alloc_hook(struct pcpu_chunk *chunk, int off,
+ {
+ 	if (mem_alloc_profiling_enabled() && likely(chunk->obj_exts)) {
+ 		alloc_tag_add(&chunk->obj_exts[off >> PCPU_MIN_ALLOC_SHIFT].tag,
+-			      current->alloc_tag, size);
++			      current->alloc_tag, pcpu_obj_full_size(size));
+ 	}
+ }
  
--	len = ceph_decode_32(p);
-+	ceph_decode_32_safe(p, end, len, e_inval);
- 	if (len > 0) {
- 		pr_warn("ceph_request_redirect::object_name is set\n");
- 		goto e_inval;
+ static void pcpu_alloc_tag_free_hook(struct pcpu_chunk *chunk, int off, size_t size)
+ {
+ 	if (mem_alloc_profiling_enabled() && likely(chunk->obj_exts))
+-		alloc_tag_sub(&chunk->obj_exts[off >> PCPU_MIN_ALLOC_SHIFT].tag, size);
++		alloc_tag_sub(&chunk->obj_exts[off >> PCPU_MIN_ALLOC_SHIFT].tag,
++			      pcpu_obj_full_size(size));
+ }
+ #else
+ static void pcpu_alloc_tag_alloc_hook(struct pcpu_chunk *chunk, int off,
 -- 
 2.53.0
 
