@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063961;
-	b=AL/GNrr5o1G972/YTJ3BI5L2kKKr4BGr3sFxroiCXH0WYgzbT1O/UAedWeTrJyV+TNoa
-	 WKD+mB5ldxvk0+Act0Zt6CH3BOvekdP0+PwikTmqvCMADUbjFtEHbM92/HNNUIyfAWIh0
-	 1zBBjo2v52p86eADsxAH6EBgks4vSsmlx1/4SMIQjWfQRxCkdPTaNlu3MkpMZoSHw+vDn
-	 YP6dY28K7fwnbd/6Tz6haz4ShwIPOfbdN7r8qrwEHjIDASm3Kr0FyTtSboWhH0Hj3AHda
-	 BdDUyJA8aD/rh6Jxe3SnI+Yy/5k7IKS+szw0Rsbrj7y3AfNZY1SUx8j/snPoC+1L5gQ==
+	t=1794063962;
+	b=p56dIUx1Y4nXtozufBVInbsWks+PuQCngGA+K7w60K0BfZI+guDsxdvXwCZqFKnXCis0
+	 RZNjSpb9HmolasKRPO+OwMO923tp//neohJRyhYxIkQP1ixc21uge5mkKPZKLk9IWNnke
+	 HGgEsMXi6/F0AHlxHfUmCJ8gq9n7EzbJ2Md3nEN8QHjAN1FEqxut9sZ1t0dBH2E2Onqf9
+	 yb5Ch4ilKrqhPO9X0rX2IgLmFvTYnN7jQGb5CI/jWYGn+TEdaHAmiGUXVW6yFueCaIOD1
+	 KBDZ5ScXx931CD+G3ZxbR63kMr5CCp7kTiCNOVy5VVJwXjZYxFGMfXwtTqxIP7b8New==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eZO+bCkyA0gEn8QUXODpx7jWa6MVbVMFbamEBA0HYUY=;
-	b=wLRjduPjae+3jhaA3UtsmsUBoEb8rgGDzSfGcHku0RIFeEenSfP0vHQBoKY7Y9AZIy+T
-	 LpqeamzjhVfpHFEx5A6hWQ7KlsKlezzndCouJtImk6l4468hBFE6qERyj3UYJkOmcbcrx
-	 Apa4YgNT75+GTrvX5StBBXfrwB5ZisFsMwfoSdCTXKZlxuPLrSqW5wFqTVu37SWQQPdac
-	 o3Rt90yCzS5yZuGb9p/YtRMSlatBLZKFO2Wg1kovjfXMTVoUbxHERSBiFjKCbx0Kh+qiy
-	 VmUb9ryMY3Iy/G7HryYuPMIAmKmtqcCWP9Z60r0evLTVRT3jJY9QwLosG1k1DpTps5A==
+	bh=My5c5r7T24JWgXmyzUEJuVs8UyVWNziP8pIMIzY/VmE=;
+	b=Lxw6GwMY2uhed8Tt/XApaUM7xZ+gqJIUztM2B+A4PNuUj50XQT9VjiFm3xo5mkwmPwfz
+	 qYn6bayZKF4qMh6JmW2WDVC30ECmcDicpYMWbE4RL/PBueO1e8a56i7vJaQXVlh0MD1NB
+	 JeZ6Ty6cn/meEokWknKhmCxVC5At7zYwNgoNRahQzeL3R4Ko0W+l+ahIBOk7wyHYXcUSM
+	 JQvQTJlFEgLaEK0z0FwufmFG1NeIhQw3v/EB3ny/2LBnYcRKUPrbGHv1B/jV3g8RQSdaf
+	 tWnr8CyXAbZFkEVv8xOn2fuTM6WgtQr+h+JyukboamQSEjbIFEW4UoTzq/P/UUH8A1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dP1K6IGE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sUSx77Xy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A4C6083614;
-	Sat,  7 Nov 2026 15:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D4C606EE97;
+	Sat,  7 Nov 2026 15:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dP1K6IGE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F04A1F008A1;
-	Sat,  7 Nov 2026 15:06:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sUSx77Xy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 976411F008A6;
+	Sat,  7 Nov 2026 15:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063960;
-	bh=eZO+bCkyA0gEn8QUXODpx7jWa6MVbVMFbamEBA0HYUY=;
+	s=korg; t=1794063961;
+	bh=My5c5r7T24JWgXmyzUEJuVs8UyVWNziP8pIMIzY/VmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dP1K6IGEu1lHtHOXQ4Hc3eow0ov4i4pzcOGjye2JSt3+4C2hTkNOIk8YqsPgRzQ+n
-	 GdTLBlWtTGRvS2kLROSnJ46rXV5fRPOKXdf3qVb54fdZgxBIbzOrlQcRzauFY4pJKY
-	 5Sk3pobzBw6n2j6zter08SIFUSJb1NHLMtGiCBKA=
+	b=sUSx77XyvqX9I2bZh/IHJ+qqJ5ESLiNlt2eUwgWoOTBZ+o2GisrEH9W2eS2x1FGuO
+	 pDZ/uhLIwRVZnc65nIBjnLRhcqmJAuYPku+70pnFbij+zzJWC+e6ucQvkWWpoxiYPh
+	 FCn3HM5m0ToYY5NxkYp82/VPe83TRkZB5n7QSfQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Karl Mehltretter <kmehltretter@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0148/1257] lib/842: reject output overflows from index and short data
-Date: Sat,  7 Nov 2026 08:40:44 -0500
-Message-ID: <20261107134943.401946855@linuxfoundation.org>
+Subject: [PATCH 7.3 0149/1257] lib/842: require a complete history block for repeat templates
+Date: Sat,  7 Nov 2026 08:40:45 -0500
+Message-ID: <20261107134943.429665869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,26 +70,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 38ed7182f3491ec1449ff246551e11ad82adba45 ]
+[ Upstream commit deb631649882bbf43f7c2fc79b5990139fd744ba ]
 
-The output length passed to sw842_decompress() is the caller's buffer
-capacity. Indexed copies write 2, 4 or 8 bytes and short-data templates
-write up to 7, but neither checks that capacity before writing and
-decrementing p->olen.
+An 842 repeat template copies the preceding eight-byte output block. The
+decoder rejects a repeat only when no output has been produced. A
+short-data operation can produce between one and seven bytes before a
+repeat.
 
-Overwriting an undersized destination then underflows p->olen, which is
-unsigned, so every later bounds check in the stream passes. Subsequent
-operations keep writing past the destination, and a matching CRC lets
-sw842_decompress() return success with an output length larger than the
-capacity the caller supplied.
+Such a stream makes the repeat copy read before the start of the output
+buffer. Depending on the surrounding mapping, this can fault or bring
+preceding memory into the decompressed data.
 
-This is reachable through zram's compressed writeback path. With 842
+This is also reachable through zram's compressed writeback path. With 842
 selected, targeted corruption of the compressed data on its backing device
-made a KASAN kernel report vmalloc-out-of-bounds writes in __do_index() and
-sw842_decompress() when zram read the page back.
+to a short-data-then-repeat stream made a KASAN kernel report a
+vmalloc-out-of-bounds read when zram read the page back.
 
-Check the remaining output before both operations and return -ENOSPC,
-matching the other output-producing templates.
+Require at least one complete output block before accepting a repeat.
 
 Fixes: 2da572c959dd ("lib: add software 842 compression/decompression")
 Cc: stable@vger.kernel.org
@@ -98,32 +95,22 @@ Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/842/842_decompress.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ lib/842/842_decompress.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/842/842_decompress.c b/lib/842/842_decompress.c
-index 582085ef8b49c..87d1e0f8a4926 100644
+index 87d1e0f8a4926..45a9815abd637 100644
 --- a/lib/842/842_decompress.c
 +++ b/lib/842/842_decompress.c
-@@ -165,6 +165,9 @@ static int __do_index(struct sw842_param *p, u8 size, u8 bits, u64 fsize)
- 	u64 index, offset, total = round_down(p->out - p->ostart, 8);
- 	int ret;
+@@ -309,7 +309,7 @@ int sw842_decompress(const u8 *in, unsigned int ilen,
+ 			if (ret)
+ 				return ret;
  
-+	if (size > p->olen)
-+		return -ENOSPC;
-+
- 	ret = next_bits(p, &index, bits);
- 	if (ret)
- 		return ret;
-@@ -344,6 +347,8 @@ int sw842_decompress(const u8 *in, unsigned int ilen,
- 
- 			if (!bytes || bytes > SHORT_DATA_BITS_MAX)
+-			if (p.out == out) /* no previous bytes */
++			if (p.out - p.ostart < 8) /* no complete previous block */
  				return -EINVAL;
-+			if (bytes > p.olen)
-+				return -ENOSPC;
  
- 			while (bytes-- > 0) {
- 				ret = next_bits(&p, &tmp, 8);
+ 			/* copy rep + 1 */
 -- 
 2.53.0
 
