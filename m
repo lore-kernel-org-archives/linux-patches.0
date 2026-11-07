@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062781;
-	b=oujOF7TygGQHINvczG4r6mehzCCbsW5YH/TwQkKU6YJSn5AeeYHDFj+ayt/RUBSF3zSm
-	 LFpmfX5PwfKTwMm34e3N9txclnOKaavgLJvYRT0A4GuxE2plvKQSZsfim12IspPXzzXUe
-	 w7NHNROuL6estirC2KuOsxXInYd2nogOm6cFf1m7CO5S6Z6/0dTns5WbYr5x2IshL/QHL
-	 l1HUxzvAi4p6mrOwFmMDqn5nxaTQ1KYiOqYnAiVnrRAV7JkJzWEw0q2sBxGfCk/m8k3i9
-	 Q4kL7spuvkI+1t6VCx89VObVr++jDQbFO+kKAVsPovvGx6eebeZaCoDrceRzsayzvAQ==
+	t=1794062782;
+	b=C7lcM9TTqcGvgTuWINCMecEtxg4GyKUqEppWcO6rhpWTxq6fF2Mw3KKnxeU4YKDLrEEf
+	 S0dX8eUHb90h5BIjqLOyUdu9gUHwScxaofx2LCjXmzCS9jEeit6OdHSAV+nHUxXMmsDjC
+	 3k0z/K66zFiTOA/obAVpNkVL8qgF9PrGLi+dwkkpsKdgVrycky8rvmLpxPguAXCzZ/sWl
+	 ClgFoGHIu76E7J2EwpwRQcKPRIqtq+9zLjg3LzNsYV0+M8mx4bKT+yIC4fgBK3/DzAPWi
+	 iV3gWCeO8vZSci3hPHCbIXk4Ze+T7D8h5sMBg+MN0AruZal/+xHnMbFMB6w+jM1j+Sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062781;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062782;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DjBSQEVUhLYVPnVzha7Siza1m8/3C3Mc9UZlawVkjHI=;
-	b=CzoTJ4G3UlHe6TihKLCOjOI2K6LgXruX0tuDyNe1nUORxDiu50+SSGnsfM5cqeu3sIKI
-	 OchBF5DgkHpdAe2HMUw8PGhC7LWH6qC4IKsyfnNWkmVsTWwLqKZRXSG2AYlJGUZvdHLC0
-	 Si+CHHMV3I9yco8pkKJ0Wqg4vpSdC5gTMkp+W/2SZVhpsl29G+sIgU2PywpdQAR/7UBgH
-	 Vb4d1osSVjT0J3fPaSUU43Z3V7wZy9ZqqBA+5DPBUGu4bTFW9lDaQbGvJs2GwShmJQxgj
-	 fr6S139xzeXl4p0i7PICEYmoKajrM4j8FHgftiTA4F4RAn68ozcVLzDqSNpF2SVUagQ==
+	bh=WEl1Av/jc0hQtWhTXB24JQUkbD7z+WbtTrO0Fh3s5PE=;
+	b=hHTjs//ymBDxhAh1qVVQNTSyJoeLJpRZ/lg8qLwMdfnVRMj4uHRgfpvj9qjWije4kHsX
+	 3ye6QbSt4e8D1cJ/5mgkdtWVy3sClykRSFEsgoIMaf767OHp92ZtH/LFL6l+cp38TxXoI
+	 ps6xlDIsOZh/pnXy+6/GOGpVEAEXAj4/a0u08vIMMawAFrXUX8CjVZSUjy0avYn7KScQK
+	 4XRieJb6w19ZjFVZ6uuzg7FS3qPa1oJaxi4kQ+hOMeZzhHz9+Ng8UU6HTblxznXNSnO+t
+	 sKDdXfyyUkAo7NOQM9+XRR2c8wJepcQY7TM14ogQd9gHwZkUX36OauR+UCeKb8d7qhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wd2RZT6e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdrTF8bC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BE5606A326;
-	Sat,  7 Nov 2026 14:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D18606A326;
+	Sat,  7 Nov 2026 14:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wd2RZT6e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE19E1F0089F;
-	Sat,  7 Nov 2026 14:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdrTF8bC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C251F0089F;
+	Sat,  7 Nov 2026 14:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062781;
-	bh=DjBSQEVUhLYVPnVzha7Siza1m8/3C3Mc9UZlawVkjHI=;
+	s=korg; t=1794062782;
+	bh=WEl1Av/jc0hQtWhTXB24JQUkbD7z+WbtTrO0Fh3s5PE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wd2RZT6en99g2Zd2ett8t7WwEDGR2aNm5LAp0zWyvXlaBwFqtXU4Vz/TUUhd0Hkz/
-	 9NEyyOhga5kYlc9IjolmZkal7UiDXkOjqYIYC0R4aijR3J41gOZy6lpiIVq5vqDe4a
-	 0BxIoXEDb5/PUaWQ1p0/P68IP2l71pl1eEz4KxmE=
+	b=wdrTF8bCTqvNciciKOKmNIPN4WcZPmjXSAEMtC9apVBRPRLBIqZvi9eT4TaBw8khB
+	 UnOuQUKpE2BRuVkyjyS4DhcZjX9ku98c31UYkItBJYTxsu5tkz5CVa9nHV6+jwujL4
+	 dKC1Inf06bvAQ+tJJAxrpGli1KUA5jr4dkfhqDmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Michal Simek <monstr@monstr.eu>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Shengzhuo Wei <me@cherr.cc>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 040/869] microblaze: Fix MB_MANAGER build with older binutils
-Date: Sat,  7 Nov 2026 08:45:22 -0500
-Message-ID: <20261107134853.516623938@linuxfoundation.org>
+Subject: [PATCH 6.18 082/869] media: go7007: bound EZ-USB I2C transfers to the usb_buf size
+Date: Sat,  7 Nov 2026 08:46:04 -0500
+Message-ID: <20261107134855.486593416@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,49 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Shengzhuo Wei <me@cherr.cc>
 
-[ Upstream commit 79c8aa4da3d5453dd956d2170d1c9c716311ea06 ]
+[ Upstream commit 816c4628b23e8c3d925978433f4dd1a13620c01b ]
 
-Commit 88707ebe77e2 ("microblaze: Add custom break vector handler for mb
-manager") added the suspend mnemonic to the MB Manager break handler.
+go7007_usb_i2c_master_xfer() copies msgs[i].len bytes into go->usb_buf,
+a 16-byte buffer embedded in struct go7007, without any length check.
+The adapter declares no transfer limits, so an SMBus block transfer
+issued through /dev/i2c-N can write up to 34 bytes into it and corrupt
+the struct fields that follow the buffer.
 
-GNU as only learned this mnemonic in binutils 2.42. Linux supports
-binutils 2.30, where enabling CONFIG_MB_MANAGER fails:
+Bound the transfer size with i2c_adapter_quirks so the I2C core
+rejects oversized messages before they reach the driver.
 
-  arch/microblaze/kernel/entry.S:946: Error: unknown opcode "suspend"
-
-The suspend mnemonic is an alias for mbar 24, and both encode as
-0xbb020004. Use the underlying instruction, which GNU as 2.30 already
-supports.
-
-Fixes: 88707ebe77e2 ("microblaze: Add custom break vector handler for mb manager")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310310151.UhB396Qs-lkp@intel.com/
-Suggested-by: Michal Simek <monstr@monstr.eu>
+Fixes: 7955f03d18d1 ("[media] go7007: move out of staging into drivers/media/usb.")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260813024026.5402-1-kmehltretter@gmail.com
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Shengzhuo Wei <me@cherr.cc>
+Assisted-by: GLM:5.3
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/entry.S | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/go7007/go7007-usb.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/microblaze/kernel/entry.S b/arch/microblaze/kernel/entry.S
-index 582d7256d8154..ad44341a5dbc7 100644
---- a/arch/microblaze/kernel/entry.S
-+++ b/arch/microblaze/kernel/entry.S
-@@ -943,7 +943,7 @@ ret_from_break:
- 	mbar	1
- 	mbar	2
- 	bri	4
--	suspend
-+	mbar	24 /* suspend */
- 	nop
- #endif
+diff --git a/drivers/media/usb/go7007/go7007-usb.c b/drivers/media/usb/go7007/go7007-usb.c
+index 334cdde81a5c8..bf3cf320b2c9c 100644
+--- a/drivers/media/usb/go7007/go7007-usb.c
++++ b/drivers/media/usb/go7007/go7007-usb.c
+@@ -1029,10 +1029,16 @@ static const struct i2c_algorithm go7007_usb_algo = {
+ 	.functionality	= go7007_usb_functionality,
+ };
  
++static const struct i2c_adapter_quirks go7007_usb_quirks = {
++	.max_write_len	= 12,
++	.max_read_len	= 15,
++};
++
+ static struct i2c_adapter go7007_usb_adap_templ = {
+ 	.owner			= THIS_MODULE,
+ 	.name			= "WIS GO7007SB EZ-USB",
+ 	.algo			= &go7007_usb_algo,
++	.quirks			= &go7007_usb_quirks,
+ };
+ 
+ /********************* USB add/remove functions *********************/
 -- 
 2.53.0
 
