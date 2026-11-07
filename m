@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062592;
-	b=3pkrcwfCrqbL5d+5ddfaW1cELChKV19iftdg35m05dURSQF391QSxL1IARH+jnu0d5aE
-	 TWs+t5s49JwRNPcezio+ei4qlJoPwZwDkL+vbbi9MDmXOv/ueOVtX7WecW/51GM42KZDi
-	 vtR0ydf3b/13sIbthOpF/HYE4HIP7Fvp2oyLu6qY5sr/GhXpA9UVNSQBsc+jmCj5vVVzL
-	 yH1eoYqhlQWzMPsrfaeC9Vlys1XtezWfqC/2JvKigXYe/8DAXeUSvT0Hy6MSdkdQO2QJ5
-	 55PJB83pH91dqPNNouJaoezqCtBFz3+RNO6gJD5mFM68PAoS5BlnlFlkcbDo2rogrhw==
+	t=1794062593;
+	b=iFrbjapoP07Zu3bGjvqwGpVx6XpKxPxlWu2ZkNJ+4fbLzxuk9QDGrCrQrQcbE1un0TWE
+	 39zZTQp3dX8ezStJoakGUDSTw7expUupzWXxEdvI9TdesfUpGRGxEt0VXXhUkiG5xTI9B
+	 h6wI9cfKUapOhEEVIWDTSCKzAiwnUG+g1Cp8m/xjy2gJR4jLApCXmJCMcVLPacAiNA49z
+	 2kGYJ4ab8Kjv9E8WtVUTgu7wa/FMimpFeyQoUtqxLlocUGVMwnlzcyaYrXjHItchvO3HX
+	 XmWyPb8CUTm7GLS9u1mkZPn/+FDodXOtI+6VA9ClHIG6WBSfhO3VGPuWAds5xaKWdvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3Ll/J45jp/2TgkSn/D8V222F3+0l7upQ9CXVlNbceYc=;
-	b=wA2+veE9K8SIq8TfR/+dCD5hU3I+AtxHsQ+SoOjKj4rRoYDViqShjevzPWW1ubk/vAcS
-	 xgCig8bNxWrXvoaV5A+rxKEOVvy/MX4PSk0Wl0X3bDZZ0fu45v6Rvajpmn8vgQbxF/bt/
-	 eWUtNIb4NXb/R986hcCe3ztiXwhh8ZTGCTnsRLfrX4THANnHlayMWJzDsinHjczUH6pKh
-	 1vN/vUwRLsoyO/1SG9xBZPgOLhFrfKDc2bjuRLXvkLmNYoF+Lz2oeDODrCJbx3UhGec94
-	 uSoCVn8q7/167/cq8eczuj1r/lgjzHg4ug7qEGqXCPayiqD3vmpUbtj7zWmBqcTLuiA==
+	bh=2kszbeZLNlkb399vzp98idrcXVSyTjx6Sf2hylzwJGQ=;
+	b=joAe3Uawhka/Kngt3vjSdTMFnFwOux/K4LBBuPN0M2COBddfwrpvd0NNX4JAfvaxcaBR
+	 DlQUQafM4vV9R1VOH2cg30LJJtLQ1+IkEiVsTHGNNV/0LcjGAaKodZZEwREGpCveywnyA
+	 9gRduM8E8+n5Ov7d9DJ8mH8YnmvG7OhsnvbNB2oxWS4dX5P1OI1yTl288niWhruVe0hMl
+	 SqJeNdUbejOA4PGwmG9QPG9gnVmvgIDVhmz0UCZtY2Jm69rH8kKyiI8p3OEeYU0OGd63g
+	 j3wXDP8whsFpXWCDPRWof58o0vqeiY/TyLCWxeqP3fuug7VB1b7LwKV9hRZGoknxcSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J5lS+YuH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aTLYHdNP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF012606A330;
-	Sat,  7 Nov 2026 14:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D7C606A330;
+	Sat,  7 Nov 2026 14:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J5lS+YuH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE411F0089F;
-	Sat,  7 Nov 2026 14:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aTLYHdNP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77C81F0089F;
+	Sat,  7 Nov 2026 14:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062591;
-	bh=3Ll/J45jp/2TgkSn/D8V222F3+0l7upQ9CXVlNbceYc=;
+	s=korg; t=1794062593;
+	bh=2kszbeZLNlkb399vzp98idrcXVSyTjx6Sf2hylzwJGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J5lS+YuHb7AXVEKAJIxCwCG0ch2LZS+LwUvr+v7HMbvxelPMMbF6ywbF1UWo0MEiX
-	 I1zuhG7b6U50TBZ+rlih2tEXEDL6V1gzo90DyyRNH9kWyIl793d49eS1z/EES2m6Qm
-	 SNPpuMNElpvntU3ajPq4oiyXLAOzejqZNRnM8mGc=
+	b=aTLYHdNPW/C/BB1d6ZDPDunJnxwWfhyVIWp7+8Yzilb8KCEmiOUv815U8Z1TLl37n
+	 OEjZE8ddbpIW+15QfbWRgR5SLsiln6QynZfppDSXSaKIb7A1TOZ/Jb64X2VkTPJUQw
+	 N93iozFAhZhlULlETSgIfzQq4Iz7Ykg/a7Fyu/Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1469/1536] ceph: validate fscrypt auth blob length
-Date: Sat,  7 Nov 2026 08:58:05 -0500
-Message-ID: <20261107135039.104528398@linuxfoundation.org>
+Subject: [PATCH 6.12 1470/1536] ceph: bound name skips in ceph_mdsmap_decode() by the message end
+Date: Sat,  7 Nov 2026 08:58:06 -0500
+Message-ID: <20261107135039.133020166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,47 +71,54 @@ Content-Transfer-Encoding: 8bit
 
 From: sung byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit bc418e234e5be14b97dec90e84a680e615b4134e ]
+[ Upstream commit 7f702e1703c9648fcb02a217d66c880d00417150 ]
 
-ceph_crypt_get_context() trusts cfa_blob_len after checking only that the
-inode-owned fscrypt_auth allocation contains the fixed header and one byte.
-An MDS can therefore place a larger inner length in a shorter outer object,
-causing memcpy() to read beyond the allocation when a caller requests the
-encryption nonce.
+ceph_mdsmap_decode() reads two remote u32 name lengths and advances its
+parser cursor without checking that either string remains in the message.
+On a 32-bit client, a sufficiently large length can wrap the cursor below
+`end`.  The following numerical bounds check then succeeds and dereferences
+the wrapped address.
 
-Require the complete blob to fit in the inode-owned allocation before using
-the inner length.
+Use ceph_decode_skip_n() for both names so the remaining bytes are checked
+before the cursor advances.
 
-On the tested baseline, the malformed reply produced the same KASAN
-slab-out-of-bounds read twice. An ordinary UID obtained sixteen wire-absent
-SLUB redzone bytes in two non-KASAN production-path runs. The input was
-rejected twice after this change, while a complete context still worked.
+The issue produced a page fault in ceph_mdsmap_decode twice on the tested
+i386 baseline.  The same frame was rejected without a fault twice after
+this change, while a normal MDSMap continued to be accepted.
 
 Cc: stable@vger.kernel.org
-Fixes: 2d332d5bc424 ("ceph: fscrypt_auth handling for ceph")
+Fixes: 2f2dc053404f ("ceph: MDS client")
 Assisted-by: LLM
 Signed-off-by: sung byeongchan <tjdqudcks0424@naver.com>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/crypto.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ceph/mdsmap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ceph/crypto.c b/fs/ceph/crypto.c
-index ed6b32f821a8d..f955a37d6b17d 100644
---- a/fs/ceph/crypto.c
-+++ b/fs/ceph/crypto.c
-@@ -83,6 +83,9 @@ static int ceph_crypt_get_context(struct inode *inode, void *ctx, size_t len)
- 		return -ENOBUFS;
+diff --git a/fs/ceph/mdsmap.c b/fs/ceph/mdsmap.c
+index 0fd578f0b2cd2..d377d13f854d5 100644
+--- a/fs/ceph/mdsmap.c
++++ b/fs/ceph/mdsmap.c
+@@ -209,7 +209,7 @@ struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
+ 		ceph_decode_need(p, end, sizeof(u64) + sizeof(u32), bad);
+ 		*p += sizeof(u64);
+ 		namelen = ceph_decode_32(p);  /* skip mds name */
+-		*p += namelen;
++		ceph_decode_skip_n(p, end, namelen, bad);
  
- 	ctxlen = le32_to_cpu(cfa->cfa_blob_len);
-+	if (ctxlen > ci->fscrypt_auth_len -
-+		     offsetof(struct ceph_fscrypt_auth, cfa_blob))
-+		return -ENOBUFS;
- 	if (len < ctxlen)
- 		return -ERANGE;
- 
+ 		ceph_decode_32_safe(p, end, mds, bad);
+ 		ceph_decode_32_safe(p, end, inc, bad);
+@@ -227,7 +227,7 @@ struct ceph_mdsmap *ceph_mdsmap_decode(struct ceph_mds_client *mdsc, void **p,
+ 		laggy = laggy_since.tv_sec != 0 || laggy_since.tv_nsec != 0;
+ 		*p += sizeof(u32);
+ 		ceph_decode_32_safe(p, end, namelen, bad);
+-		*p += namelen;
++		ceph_decode_skip_n(p, end, namelen, bad);
+ 		if (info_v >= 2) {
+ 			ceph_decode_32_safe(p, end, num_export_targets, bad);
+ 			export_targets_len = size_mul(num_export_targets,
 -- 
 2.53.0
 
