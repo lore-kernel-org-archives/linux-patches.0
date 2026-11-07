@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060565;
-	b=EQyb90RH/aVDkcAIv/OGko88RsH57pVQNRz1qvkMG2kOVXs+Vw4QmgicGQnYU4fUsQEe
-	 KhBBhxSmuNev/jnIaTbUcTQBR0cyqiE2Pe2CnkW9lhk/qXmZcUutimUiavNeMSfuLWF18
-	 LZmkAB/iNqpQIKLD1qxpDbRVrN4mz09+NuIeBypJkv1itec9oPZoSs5vwF7yahyXwiIAH
-	 aTfS/BHbVe6wTK+RpUqbDDbTsB2VOFWZQuRI1pt9ss64lTGATFU5vB/GNrZCnYf4Jq1+B
-	 SjLrnBKPG6RrpQFWEykaA2eUl3GiDt65tmnBo2UIJSDoATkyvIMWS5Zu+mhDXNvLivg==
+	t=1794060566;
+	b=msqlpGjW/G3jbsxoFV2O6DA//ylc0uLr7K5wci4foa11iUtrvMvgD/LVr2vBpVbNJhcl
+	 OdC0ZSZ2YNQHdiXiF/ibAYa/wIOfYwzhbeJPXmiuFkRha/aJQZgMi3qtCi1c6DWW7zhP3
+	 s9PRnoE27RFqjYRHz338lQHIUbxzEoJN97ll9nrK+Ppyp5DuMfl884seag4Smhi6CSE3z
+	 jmGMbp7enQfwnMmD4sX1nXbiJ5rb248TKKWnK+zE7XsaauBUDIHgNlT6vz7kTTu7omTcJ
+	 Rp5O++kN59P3ExvMB8m8hWkNurwmycezXVl1BUP6FyVALqMyvaQGXvHQC9gpoP5+PxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060566;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zw61CW5pG2xWHsDm8BhjaYoQKJeKSp3yA6c7iPw/8b8=;
-	b=HzpJu2dgY84ECIPmd0BtznKUhMy+n+dYEMV1refekZ13Uk3WJgwN41xVgypZGAT05o55
-	 /5w65QEy5qP7u5MLmWtI0pB21L8y5qx6g3xJ4BKgDnei6g41Y07TkTZGpXuFZPzfmE6EZ
-	 SLpqJIAlRguda3YSbVnMLxvR1R/VHP/0mzvbm2Skr8/e/t5sZqC8Yjy8y8k0mYlgzIAqB
-	 5xVfLoQKLTMHQ9W7n1qKGlt31dJ2gCIGG/WNRRP5Ld0nXxUc0wTTwcSXEF8vyBSHhnWWo
-	 Hj0QxosbYIzI/0v84q5T6ht15BVRkCtX3pGFBbGaoG6cYH4RXaCKqqkSVeZkbhOpbaQ==
+	bh=NBZlaEbhfwr9kPfaPN+d3xUBDlnArd1TOZQ2EwWKZfw=;
+	b=nU8ofTYNPLkLVO1ud4vWTR20ijXzdffSVno2LTS5RY9tbYbLlM4m8MvgTFmLXWDfLfRm
+	 v1WFLaUQFDvm3qnKl1qoo2sCft073bvfcUMFwPmF9+mRmW7gMHx367iBOhl2i7lwwSmD1
+	 KgXotrSROpzjI9hO0Iu0wU13vd72Poi41VYKWgUhlAd9pYOLZpNdPkmXeZT3WOm3glCIe
+	 M1Q2catisPCN9oxwwCAVQMhxegEGpuYTfA8SyLy0I7aXy/eLeCQYyaHvcCOq+CykBN5J2
+	 dTQfasnO+wxLOstIgN8SnIOMwgl9bvMwjffVqTh5QeK8XTZGnslparlNSdT/LtTdW5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q44ueUsJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CYE2i2+s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EFD606A331;
-	Sat,  7 Nov 2026 14:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A023B606A330;
+	Sat,  7 Nov 2026 14:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q44ueUsJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F230C1F0089F;
-	Sat,  7 Nov 2026 14:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CYE2i2+s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C221F0089F;
+	Sat,  7 Nov 2026 14:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060565;
-	bh=zw61CW5pG2xWHsDm8BhjaYoQKJeKSp3yA6c7iPw/8b8=;
+	s=korg; t=1794060566;
+	bh=NBZlaEbhfwr9kPfaPN+d3xUBDlnArd1TOZQ2EwWKZfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q44ueUsJekkJZJ00nikXHJoBOf1jDouTRoGufFcl6p/NIcWoYToxUAXXNotNt+dH4
-	 052uIHUQhImeNCoLjd9olOLhfiYJabw6IBfb0H57Q3J5N2chdeoJZ2xZcC5ATQ0Riq
-	 8w3kaVGMeNdyLCiiIkx2fKvgoj/yUuJ7uhPO+c7U=
+	b=CYE2i2+sPnptkSzsmJaXVjiFUGb3tql+g4wLgX0VGg7IHfeLbgbQfbkG06irU41fD
+	 Urgr8/Oz+IIyoOAoRbDrMyyq6r9W4SNyTCpOi/TCsVjiwBDPcr7eQw+2F5sktnPtHE
+	 A2/hKTKxPyZHgsGqjvjpbIGvgpxA8Ucl1Qzmzx2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dillon Varone <dillon.varone@amd.com>,
-	Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0027/1536] drm/amd/display: fix max dispclk_khz/dppclk_khz double 1000
-Date: Sat,  7 Nov 2026 08:34:03 -0500
-Message-ID: <20261107134958.437948809@linuxfoundation.org>
+Subject: [PATCH 6.12 0028/1536] drm/radeon: avoid double free in r600 DPM cleanup
+Date: Sat,  7 Nov 2026 08:34:04 -0500
+Message-ID: <20261107134958.463929334@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,49 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charlene Liu <Charlene.Liu@amd.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit f48124ff35357d05a98d9cd5cb7982e7e5509003 ]
+[ Upstream commit d3f30034f861a585f8e487ae1555d9f288a96f87 ]
 
-[why]
-Fix regresson caused by double roundup and index out of range
+r600_parse_extended_power_table() uses manual kfree() calls for some
+early allocation failures, but the freed pointers are left in the
+dynamic power-management state. If device teardown later calls
+r600_free_extended_power_table(), those stale pointers can be freed
+again.
 
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Reviewed-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
-Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Use the common extended power table cleanup helper for those early
+failure paths as well, and clear each pointer after freeing it so
+repeated cleanup stays safe.
+
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/radeon/r600_dpm.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-index 20c643ab756eb..445c5ae951ea1 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/dml21_wrapper.c
-@@ -175,16 +175,16 @@ static void dml21_calculate_rq_and_dlg_params(const struct dc *dc, struct dc_sta
- 	context->bw_ctx.bw.dcn.clk.bw_dispclk_khz = context->bw_ctx.bw.dcn.clk.dispclk_khz;
- 	if (in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.num_clk_values > 1) {
- 		context->bw_ctx.bw.dcn.clk.max_supported_dispclk_khz =
--			in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.num_clk_values] * 1000;
-+			in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.num_clk_values - 1];
- 	} else {
--		context->bw_ctx.bw.dcn.clk.max_supported_dispclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[0] * 1000;
-+		context->bw_ctx.bw.dcn.clk.max_supported_dispclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dispclk.clk_values_khz[0];
- 	}
+diff --git a/drivers/gpu/drm/radeon/r600_dpm.c b/drivers/gpu/drm/radeon/r600_dpm.c
+index 81d58ef667dd4..2bc0bdfd11590 100644
+--- a/drivers/gpu/drm/radeon/r600_dpm.c
++++ b/drivers/gpu/drm/radeon/r600_dpm.c
+@@ -933,7 +933,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
+ 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk,
+ 							       dep_table);
+ 			if (ret) {
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
++				r600_free_extended_power_table(rdev);
+ 				return ret;
+ 			}
+ 		}
+@@ -944,8 +944,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
+ 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk,
+ 							       dep_table);
+ 			if (ret) {
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
+-				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
++				r600_free_extended_power_table(rdev);
+ 				return ret;
+ 			}
+ 		}
+@@ -956,9 +955,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
+ 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.mvdd_dependency_on_mclk,
+ 							       dep_table);
+ 			if (ret) {
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
+-				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk.entries);
++				r600_free_extended_power_table(rdev);
+ 				return ret;
+ 			}
+ 		}
+@@ -1298,17 +1295,29 @@ void r600_free_extended_power_table(struct radeon_device *rdev)
+ 	struct radeon_dpm_dynamic_state *dyn_state = &rdev->pm.dpm.dyn_state;
  
- 	if (in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.num_clk_values > 1) {
- 		context->bw_ctx.bw.dcn.clk.max_supported_dppclk_khz =
--			in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.num_clk_values] * 1000;
-+			in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.num_clk_values - 1];
- 	} else {
--		context->bw_ctx.bw.dcn.clk.max_supported_dppclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[0] * 1000;
-+		context->bw_ctx.bw.dcn.clk.max_supported_dppclk_khz = in_ctx->v21.dml_init.soc_bb.clk_table.dppclk.clk_values_khz[0];
- 	}
+ 	kfree(dyn_state->vddc_dependency_on_sclk.entries);
++	dyn_state->vddc_dependency_on_sclk.entries = NULL;
+ 	kfree(dyn_state->vddci_dependency_on_mclk.entries);
++	dyn_state->vddci_dependency_on_mclk.entries = NULL;
+ 	kfree(dyn_state->vddc_dependency_on_mclk.entries);
++	dyn_state->vddc_dependency_on_mclk.entries = NULL;
+ 	kfree(dyn_state->mvdd_dependency_on_mclk.entries);
++	dyn_state->mvdd_dependency_on_mclk.entries = NULL;
+ 	kfree(dyn_state->cac_leakage_table.entries);
++	dyn_state->cac_leakage_table.entries = NULL;
+ 	kfree(dyn_state->phase_shedding_limits_table.entries);
++	dyn_state->phase_shedding_limits_table.entries = NULL;
+ 	kfree(dyn_state->ppm_table);
++	dyn_state->ppm_table = NULL;
+ 	kfree(dyn_state->cac_tdp_table);
++	dyn_state->cac_tdp_table = NULL;
+ 	kfree(dyn_state->vce_clock_voltage_dependency_table.entries);
++	dyn_state->vce_clock_voltage_dependency_table.entries = NULL;
+ 	kfree(dyn_state->uvd_clock_voltage_dependency_table.entries);
++	dyn_state->uvd_clock_voltage_dependency_table.entries = NULL;
+ 	kfree(dyn_state->samu_clock_voltage_dependency_table.entries);
++	dyn_state->samu_clock_voltage_dependency_table.entries = NULL;
+ 	kfree(dyn_state->acp_clock_voltage_dependency_table.entries);
++	dyn_state->acp_clock_voltage_dependency_table.entries = NULL;
+ }
  
- 	/* get global mall allocation */
+ enum radeon_pcie_gen r600_get_pcie_gen_support(struct radeon_device *rdev,
 -- 
 2.53.0
 
