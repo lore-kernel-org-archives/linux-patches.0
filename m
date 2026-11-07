@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062250;
-	b=L85qtAgROh0PKvzYv2jl7hcuXD29fgTg9eI2ZWVDepwLdlb6ItbxqNjr8zIKiC6C8Sob
-	 PV7aneAoL/6hDVphe1pNfH9yY8UsHFyit3Hdxg/Dyqtvum51CavypiPDDhZfiANVOZ5wH
-	 fAy/w20xXn5UI0WCRgV2BuECufXBw67nORqi2fYpShM+IfiwWM/LEHE8H2HYVw1Vi2K9L
-	 An7VU+tacNR5d1IDc7IWYAQJmqWokQPyLbMwl7T5zGcg+79YKEZ73nzZpaGt1d3XTFjAZ
-	 wGp7EUvhSsCKgD7pAMHcjev97jPBqKBkyqnHBZWfzlhX/yv3BlPBkXBAw8+2ubuJQdA==
+	t=1794062252;
+	b=JC3Po/SZTti7JpPCVbXzFpbogdXJxoH71tjQZWYLQ7T1/GOm4krv6L0CxMEtVfhYrWoG
+	 PclAcXEzr6ZMqrY8gTku+Zia4GjFzuROBRyDVmG9+wVHgLXt60LX+yRgWfnKXmkCv7wv0
+	 iM3BpZlL2+VEu92UJROWKlJm/TIQf3s8tCDQYFdo/rTnPFMSa4rYwKgeM879DQ1+8bFkv
+	 x4ll9KW+NoulaV3SGgVAMGrh0nZJzsXxI5kd2G4hVWpf7x4k667oxU4gCl2Hjqb8VziZ7
+	 MprNmeo/G/l8jDs4vpwSnIZMK3CrfVMKW8NhOTUnSi5cU88r1OGfPo4CDdKztaoNojg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hRMyeU7uTvQWQ2ma2bcLJVFo3cpn+XeEPVe1KU8KP+w=;
-	b=p2T/7dLIsnWvkMn8OWokPpM6Of6PL5hdYmmyZ6M/v04mpcz8EuKX9TIKeq5BFNcgXm+8
-	 88ExwIF45SKKYCmdgcWwSt6Wq4E4PlCwWRIJjeFSlfEvkFq/Gm0035DuW43gKgcbW7XZz
-	 6IfqUbLPgdVOgYxDaEq3aBgErHGTg3gM5HH2ItruCYpGwFYgcU/PFrplSYA5UxgACscAS
-	 nOaelgdptM9Z9pPuq6svHq44zm3reWytDTFaN6vuQiB4HQb3nYOc3OerMkHzTKLEAw7Qe
-	 5m04XVO6BeT/xI5hEyZNqmAf03v/FZgaIu0jZR8Sdcxt1y9e6MZtskzZ5m1XV8iW4+w==
+	bh=esKvd8K1FO5gEZLWlA3pN66ybv6FOE2LfjkVe8KMTQQ=;
+	b=1b8ooG5bWPwJYZXq6xBTAYFt8AXCw3m6+JbrH7QJzuX2EHb0np7CjWTs8QM4ExrdOMsu
+	 YjiEVypH6qCcScAlFqhQcnAGsF0uwT6R5GB0FHjxu9XKOrRn3gfA11l4zWoAKX47MZ2xy
+	 SjXdd4bm3h8zdmyBxpD690LqB13QqvO0zP7+3Uf1JCac1fXXiMPDBwxpbsFMx4Cv9BbFP
+	 lpJFu/8W2/wntdNhsAM2b8JUEu6S9fRTrPrkhG+ZHm6N4ZSX8nxkcG+J7U1SUz20DIpiO
+	 NN7pCQcMxsGfTafb39tlRq/DCNQqpEl60uFPucgDmSYKcbZ/xFMGWvMbZItVA4j78FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fv88KaRg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtfPvDkE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6083A606D83E;
-	Sat,  7 Nov 2026 14:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC76606D83E;
+	Sat,  7 Nov 2026 14:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fv88KaRg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97631F0089F;
-	Sat,  7 Nov 2026 14:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtfPvDkE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC9A1F0089F;
+	Sat,  7 Nov 2026 14:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062250;
-	bh=hRMyeU7uTvQWQ2ma2bcLJVFo3cpn+XeEPVe1KU8KP+w=;
+	s=korg; t=1794062251;
+	bh=esKvd8K1FO5gEZLWlA3pN66ybv6FOE2LfjkVe8KMTQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fv88KaRg/TFP8M6N2ytyrzf3f2xgi/1O8GohGYpiT6m5FK3ucbuLui9Fdu5v1tkyt
-	 +VwfqiLv1ODJMLseG1PwMzdzk6r9YbOdH91GvIBLl6WI5fdih3qDBEVWKisIYYMXTL
-	 rFwydInv4Gh1RS3KyjQL/VDmsWBJ4er0Wsu4OKEQ=
+	b=rtfPvDkEKiKbka4XXT3zel25nG3ZZOxnUVyzn5a17sDskU1l6VKTVYJWS9mHOXTOR
+	 daveAytnImXxsx27AqTIPVjez8aBCvfgwDwroEHNb9t39U3DUd4sf/uHwJBNGwtI+t
+	 blBp+xIKLU5xvMLiywDY3WaSJI1BrRVXxooNMRSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yu Junzhe <junzheyu1@gmail.com>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1193/1536] jbd2: dont advance j_fc_off before the buffer is recorded
-Date: Sat,  7 Nov 2026 08:53:29 -0500
-Message-ID: <20261107135031.254585052@linuxfoundation.org>
+Subject: [PATCH 6.12 1157/1536] power: supply: ab8500_fg: Accept status from supplied power
+Date: Sat,  7 Nov 2026 08:52:53 -0500
+Message-ID: <20261107135030.221564889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,81 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 9f359c031885bb50add7d23c7a5a0e9755b134c9 ]
+[ Upstream commit 16f506a13b58a55308449bbcbec89c817d619ca2 ]
 
-jbd2_fc_get_buf() increments journal->j_fc_off before jbd2_journal_bmap()
-and __getblk() have had a chance to fail.  When either does, the slot
-j_fc_wbuf[fc_off] is never assigned, but j_fc_off already counts it.
+Commit dc77721ea4aa ("power: supply: ab8500: Set typing and props")
+changed the charging algorithm power supply type from battery to unknown
+so userspace would not mistake it for a second battery. The fuel gauge,
+however, processes status changes only from battery-type supplies. It
+therefore never learns that charging started and keeps running its
+discharge state machine.
 
-ext4 then fails the fast commit and falls back, and the fallback path
-reaches jbd2_fc_release_bufs() via ext4_fc_commit ->
-jbd2_fc_end_commit_fallback -> __jbd2_fc_end_commit -> ext4_fc_cleanup.
-That walks down from j_fc_off - 1 and put_bh()es every slot until it
-sees NULL, so it also touches the slot that was never written.
-j_fc_wbuf comes from a plain kmalloc() and is never zeroed, so a slot
-used for the first time holds uninitialised heap data.
+The power supply relationship already limits the callback to supplies
+naming the fuel gauge in supplied_to. Accept status from any such supply
+while retaining the battery type checks for battery-specific properties.
 
-Advance j_fc_off only after the buffer head has been stored.  That
-restores the invariant that j_fc_off covers exactly the filled slots,
-which is what jbd2_fc_release_bufs() relies on: the live buffers of the
-current fast commit sit above the NULLs the previous one released, so
-stopping at the first NULL is correct.
+The Samsung-GT-I8160-Codina and Samsung-GT-I8160_HD-Codina product trees
+keep the charging algorithm typed as a battery. The
+Samsung-GT-I8530-Gavini, Samsung-GT-S7710-Skomer,
+Samsung-SGH-I407-Kyle and Samsung-SGH-T599-Codina-TMO alternative
+fuel-gauge drivers instead pass cable state directly. Both approaches
+preserve the charging state handoff that was lost in mainline.
 
-Reproduced on a KASAN kernel with an ext4 fast_commit filesystem on a
-loop device, truncating the backing file under the live mount so that
-only the journal's fast-commit region falls past the end of the device.
-__getblk() then fails for the first fast-commit block while the rest of
-the journal is still addressable, so the journal is not aborted and the
-fast commit reaches the fallback path.  j_fc_wbuf was poisoned to make
-the read of the never-written slot visible:
-
-  BUG: KASAN: wild-memory-access in jbd2_fc_release_bufs+0x6b/0xd0
-  Write of size 4 at addr 5a5a5a5a5a5a5ab2 by task sync/961
-   jbd2_fc_release_bufs+0x6b/0xd0
-   ext4_fc_cleanup+0x97/0x830
-   __jbd2_fc_end_commit+0x37/0xc0
-   ext4_fc_commit+0x524/0x560
-   ext4_sync_file+0x3c4/0x4b0
-   __x64_sys_fsync+0x20/0x30
-
-With this patch the same run leaves j_fc_off at 0 across repeated
-__getblk() failures and completes cleanly.
-
-Fixes: ff780b91efe9 ("jbd2: add fast commit machinery")
-Cc: stable@kernel.org
-Reported-by: Yu Junzhe <junzheyu1@gmail.com>
-Closes: https://lore.kernel.org/linux-ext4/7e4b109d-64c3-444f-a5dc-93c2ca4576cc@gmail.com/
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260819060939epcms2p37bb8589b2f8a52a2b14bef38fadcf69d@epcms2p3
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: dc77721ea4aa ("power: supply: ab8500: Set typing and props")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-1-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/journal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/ab8500_fg.c | 60 ++++++++++++++------------------
+ 1 file changed, 27 insertions(+), 33 deletions(-)
 
-diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
-index c7b042c67a75d..67dc1903d53dc 100644
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -842,7 +842,6 @@ int jbd2_fc_get_buf(journal_t *journal, struct buffer_head **bh_out)
+diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
+index 89b6e599087a3..4c15cb1f7b7c2 100644
+--- a/drivers/power/supply/ab8500_fg.c
++++ b/drivers/power/supply/ab8500_fg.c
+@@ -2206,42 +2206,36 @@ static int ab8500_fg_get_ext_psy_data(struct device *dev, void *data)
  
- 	fc_off = journal->j_fc_off;
- 	blocknr = journal->j_fc_first + fc_off;
--	journal->j_fc_off++;
- 	ret = jbd2_journal_bmap(journal, blocknr, &pblock);
- 	if (ret)
- 		return ret;
-@@ -852,6 +851,7 @@ int jbd2_fc_get_buf(journal_t *journal, struct buffer_head **bh_out)
- 		return -ENOMEM;
- 
- 	journal->j_fc_wbuf[fc_off] = bh;
-+	journal->j_fc_off++;
- 
- 	*bh_out = bh;
- 
+ 		switch (prop) {
+ 		case POWER_SUPPLY_PROP_STATUS:
+-			switch (ext->desc->type) {
+-			case POWER_SUPPLY_TYPE_BATTERY:
+-				switch (ret.intval) {
+-				case POWER_SUPPLY_STATUS_UNKNOWN:
+-				case POWER_SUPPLY_STATUS_DISCHARGING:
+-				case POWER_SUPPLY_STATUS_NOT_CHARGING:
+-					if (!di->flags.charging)
+-						break;
+-					di->flags.charging = false;
+-					di->flags.fully_charged = false;
+-					if (di->bm->capacity_scaling)
+-						ab8500_fg_update_cap_scalers(di);
+-					queue_work(di->fg_wq, &di->fg_work);
++			switch (ret.intval) {
++			case POWER_SUPPLY_STATUS_UNKNOWN:
++			case POWER_SUPPLY_STATUS_DISCHARGING:
++			case POWER_SUPPLY_STATUS_NOT_CHARGING:
++				if (!di->flags.charging)
+ 					break;
+-				case POWER_SUPPLY_STATUS_FULL:
+-					if (di->flags.fully_charged)
+-						break;
+-					di->flags.fully_charged = true;
+-					di->flags.force_full = true;
+-					/* Save current capacity as maximum */
+-					di->bat_cap.max_mah = di->bat_cap.mah;
+-					queue_work(di->fg_wq, &di->fg_work);
+-					break;
+-				case POWER_SUPPLY_STATUS_CHARGING:
+-					if (di->flags.charging &&
+-						!di->flags.fully_charged)
+-						break;
+-					di->flags.charging = true;
+-					di->flags.fully_charged = false;
+-					if (di->bm->capacity_scaling)
+-						ab8500_fg_update_cap_scalers(di);
+-					queue_work(di->fg_wq, &di->fg_work);
++				di->flags.charging = false;
++				di->flags.fully_charged = false;
++				if (di->bm->capacity_scaling)
++					ab8500_fg_update_cap_scalers(di);
++				queue_work(di->fg_wq, &di->fg_work);
++				break;
++			case POWER_SUPPLY_STATUS_FULL:
++				if (di->flags.fully_charged)
+ 					break;
+-				}
++				di->flags.fully_charged = true;
++				di->flags.force_full = true;
++				/* Save current capacity as maximum */
++				di->bat_cap.max_mah = di->bat_cap.mah;
++				queue_work(di->fg_wq, &di->fg_work);
+ 				break;
+-			default:
++			case POWER_SUPPLY_STATUS_CHARGING:
++				if (di->flags.charging &&
++				    !di->flags.fully_charged)
++					break;
++				di->flags.charging = true;
++				di->flags.fully_charged = false;
++				if (di->bm->capacity_scaling)
++					ab8500_fg_update_cap_scalers(di);
++				queue_work(di->fg_wq, &di->fg_work);
+ 				break;
+ 			}
+ 			break;
 -- 
 2.53.0
 
