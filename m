@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062305;
-	b=uMSjF+6Zz5Jskipq/yv/Mo7QsEE3gn6OlZqOqXAXdJkQDvFIpzHY0bFyZIIkz4gBfBRm
-	 2PFMMHf7GHxx/skfzgM76WveRkSkS+n6j1vOEsXQ6JgEeN4WUdw/C/sTFc9mIWQZwWmfC
-	 AQG8aZ8e8AUrrqxoXLjoTGuGXC+Kcah6q1TnvTKi3BTfEITng07zEMew1rrfLe68tEsX4
-	 SUwMTZrUVamFKVw0G9o5gXzxXuy7lvgCJ/RvvCxY/hKXjQ6Fs1J6/ufUv1bvlX9U+BmgF
-	 HmV5Dxb9jXr8B8KjJhstOudW47q1BQx4Utr/5OcWUpOinVu5882a7pPUolKu2eR9Cvw==
+	t=1794062306;
+	b=FzPYPCc5iRo93oRbd5WeKs8Ri6u7gFfSiz7yINXsZnfOfBG5RGRF4IqYb8HiQlVW3dcr
+	 cpnV+sb/Y3Z4/rAHN+tx6TqqA8bfbV2C82wFZGTEoR0qEuSz8qhciPfN7wL7zvMJMZ/5I
+	 CRyWI7XD8n2ML4XR0jAeJC8scP8pFkMZjlarQ4Zu4dOs9LyvXmNjM3CSzv5V95nXVUObp
+	 gHY+swrLZAkLbxLZcJPr09G4OOWMpCMTnxZ6E0cKphMg3INMls0IYS3r14SMAg49RNM/3
+	 hQAHleJ36Oori8c18XNNiiwGM5YeOPPQsJ2QcaUjH/WgxLt8D/pprhHrW3h9sbHL8Zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062305;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062306;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HI3jY2We2AeSskdsi7C24uay/BN2yPNt3O39JhwK4Cs=;
-	b=Mc1rDOOQvtwTxWH34ihf5HtMJXhoqsTzaX5KpyCdlooD9CC6lcYPWpwv56vTzKU9AoAr
-	 k+leGPgI3FlbYGy9MbjmfCaaKVh10XOlAXLpV041Y3WeKe0aHTj7RXwolfps/HQrZc3g3
-	 zJmKKyFSNtHQchI0Oei1QejDjVmthMe6UaPwE6O4iZTqQfyUbTG9IewKqQCHFJwklAxdO
-	 fZiuQO9MfO9eC6lxywu5zycatQ4/Nx+N4eMKGxkvx6DjKFdTes8RlhV0aLonMd91wfJNJ
-	 OtTIEdjPEVGWPa3HiS7qpNICLa7BSK78YB7doMhvUfhdGAFgUKNA/foiwYFkWGfOT9A==
+	bh=YdD7jNYE0xbBxydH6WT0rHDGLpDzBF1xPnJFe2zCOAQ=;
+	b=V53QlOPTSMZxYBhKwewIgkJ3i7qxORYDWB/oz7ObxhtSMbO4OglDDvcqiyLD8k+tMlKc
+	 STEdF7vRR1DeYZV+biT0hRtIHQvN0OHalpo7qIR13LyGIrdOmnbppBSTztEUelE2uRUMs
+	 TLflk6tOgJWpH9KdR8N9YT6oBznPziIL+vPfiOCy3Oj2dmviHFmS2iXNPfDjTs+DK6ntM
+	 YkPUGd47k/Kjk98dC8XNORRyzA6oDXVQjJFvqU+taqAG9sixpsW0quAIsgeDsRy1LBJ4k
+	 UbxbyKycUBx32Sl24Y1+Dy4FEKZ1JEa1eECS5hDltLBpKdYYaFRxCdMwMm2/u0HlzoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zHjG+re1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLMdxvg3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E199A60A383D;
-	Sat,  7 Nov 2026 14:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D84606A640;
+	Sat,  7 Nov 2026 14:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zHjG+re1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE4A1F0089F;
-	Sat,  7 Nov 2026 14:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLMdxvg3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1521F0089F;
+	Sat,  7 Nov 2026 14:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062304;
-	bh=HI3jY2We2AeSskdsi7C24uay/BN2yPNt3O39JhwK4Cs=;
+	s=korg; t=1794062306;
+	bh=YdD7jNYE0xbBxydH6WT0rHDGLpDzBF1xPnJFe2zCOAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zHjG+re1n5syOHpWgHgIQodnWm6S9541xlr8p0viJ5jRFldvUtSL2G05fj4PEdYYn
-	 4dYK6i+oe5UNxO8Y606180nEtDIE3fEBdj7qvgThH6bboL/09EreyY7Y0ncblw5BlS
-	 f8W7FEOP+w0SIzBUXPZrgkFe1wuDTAfugnE1VQuw=
+	b=DLMdxvg3s1oc3/0DoBy9naSlx4s+9/D8U5MBXRPf+6PU5jsElYszdNVz0YL2LM2cD
+	 bK+uaeaa79TNMHOEVvRERGU5R2whjzLuK0TPa1k1NowDqjyLsEJnVXguZPZe6ai7di
+	 FU6PARYmKaj3xsmN0sgymNFNAX06OUO0VndS4+Pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1202/1536] clk: imx: Fix clock reference leak in imx_get_clk_hw_by_name()
-Date: Sat,  7 Nov 2026 08:53:38 -0500
-Message-ID: <20261107135031.509950593@linuxfoundation.org>
+Subject: [PATCH 6.12 1203/1536] clk: imx: Fix clock reference leak in imx_obtain_fixed_clock_hw()
+Date: Sat,  7 Nov 2026 08:53:39 -0500
+Message-ID: <20261107135031.537831384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,48 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 8e177ca735761a1f03e1dedffd7ab00d6d0540ae ]
+[ Upstream commit 52d4d1b26a5bc64de95099d0a3dd8b90dba1f3a3 ]
 
-imx_get_clk_hw_by_name() obtains a consumer clock with
-of_clk_get_by_name(), extracts the hardware pointer with __clk_get_hw()
-and returns it without ever calling clk_put(), leaking the consumer
-reference on both return paths.
+imx_obtain_fixed_clock_hw() obtains the clock through
+imx_obtain_fixed_clock_from_dt(), which creates a consumer reference
+via of_clk_get_from_provider(). The reference is discarded right after
+__clk_get_hw() returns the hardware pointer, leaking it.
 
-Extract the hardware pointer first and drop the clock reference with
-clk_put() before returning.
+Keep the imx_clk_fixed() fallback unchanged and drop the DT-obtained
+consumer reference with clk_put() once the hardware pointer has been
+extracted.
 
-Fixes: 3b315214e091 ("clk: imx: implement new clk_hw based APIs")
+Fixes: a4a4069f4523 ("clk: imx: Add imx_obtain_fixed_clock clk_hw based variant")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260915055515.1730145-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260915055631.1730231-1-vulab@iscas.ac.cn
 Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/imx/clk.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/clk/imx/clk.c b/drivers/clk/imx/clk.c
-index df83bd939492e..542b58ccf120b 100644
+index 542b58ccf120b..153e7405eae4d 100644
 --- a/drivers/clk/imx/clk.c
 +++ b/drivers/clk/imx/clk.c
-@@ -119,12 +119,16 @@ struct clk_hw *imx_obtain_fixed_of_clock(struct device_node *np,
- struct clk_hw *imx_get_clk_hw_by_name(struct device_node *np, const char *name)
+@@ -95,11 +95,16 @@ struct clk_hw *imx_obtain_fixed_clock_hw(
+ 			const char *name, unsigned long rate)
  {
  	struct clk *clk;
 +	struct clk_hw *hw;
  
- 	clk = of_clk_get_by_name(np, name);
+ 	clk = imx_obtain_fixed_clock_from_dt(name);
  	if (IS_ERR(clk))
- 		return ERR_PTR(-ENOENT);
- 
+-		clk = imx_clk_fixed(name, rate);
 -	return __clk_get_hw(clk);
++		return __clk_get_hw(imx_clk_fixed(name, rate));
++
 +	hw = __clk_get_hw(clk);
 +	clk_put(clk);
 +
 +	return hw;
  }
- EXPORT_SYMBOL_GPL(imx_get_clk_hw_by_name);
  
+ struct clk_hw *imx_obtain_fixed_of_clock(struct device_node *np,
 -- 
 2.53.0
 
