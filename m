@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064956;
-	b=1JdnQHulglzx6CFxiJPrm/xMvklrO80sNBWyrqqrBd43XP5BhEMD2Plbuzx0O1HQZPS3
-	 YvJ4V4Fui2bOz687zGmzL/MP4ZC+EDIjGUPZQ1NqVNxdAo4HtDh9qxUGE4aBJRqOr54FQ
-	 CKsfaerXGpeHjeojbPeuIxkBRJ79ixij4eofYL1fKnPeF24lVIuETLvHCePVNkeIx1UA2
-	 srlybpchJ2nOESh/qXmyd5v9fyq0wFcj72CkJ92/6eVSE45LgWaSMDykodU4C8e9qcMYg
-	 BHiW5LMzqjm0SA0IrMaAwoDkKoRb4WQKYJzosqS9TzyVVAm+GH3xu39qLWuW8LnKTzQ==
+	t=1794064958;
+	b=XR5pbU1f3i4h/IeHFHIgNBBH07Oi63tK055RagLtG1oGo7ISBJwQpiD0+TBeMFy3ejDq
+	 78CPV/bD/JzGVOubrrDMwZfGu3gOGSLhG6Ht6NdQfSC9RFs+rVWtSKP1n8RkuJ2SJdRUX
+	 ukbYyHNcGoB5k989FqYDStTWuw7SqyFvCGosN0LIxxNeKjPj2X3E6x4mrzjsk+eLNlrCf
+	 V/qHsQBqm2meQGmqibTi8oX00tXOBTTtVLE28oGrERHgRP77LqNNevVwJELPWJu7Ih2y9
+	 oN8mS4h8C8hiuaUg/kIxfS71Lt0GBEEO0bwmYfsmm1CLWjZx+fDYC8mNW3eziA4+Neg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064956;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d7+R5nsNtKIp2wLZboqzM4rp/IOB5jAOFAVdGKF0imI=;
-	b=leyws6BArM2rxhh7JANALkSvNnGtxweWYv+fjj7olqDE70TuRlxi/53VG8PvEfzUUzt6
-	 WVrM/kLC+l2B9/W9HGXk1MvIpqQ4+bMBYS1xpsHNGQrJKQ7s4UxFCapAFpLN90Ueul61D
-	 oXCYBeNt54pKZa7krT+mAScEWbxiV5pWmnbEeDopvX2YnJgtwUCqwwAoVQTHBG4xYakM+
-	 Y1UqgtuIxwMJTR1KGfjg59zBof3u0eIWi/dlgXQHxN+Oo7fjioL46UcbYiGzh3QgwRIWH
-	 vcTRUm0j4nSHwz9PxcKmGmxDBv7KH0pf02emrhlm1wuL2CwZpWDkrmfaNEcThB9xuMA==
+	bh=basHaUeP+E0uVyVtPvnwNtrtQmeWjl1OiSjdzx9YrEQ=;
+	b=ya8FyrQ2tH99aIhYhj7Kv8isRXc2CyutG1B0VY/2IlXNlE9jHg853ok1nZ8pv8w7h/qG
+	 7zxQSaTbXJVuYAyd9h/5C5VSfs+3bLQ9KxlZendYoKi8l/xLXwAQCQC7kJy8ePrpciukl
+	 1m4z8BX6jEeS5zNMlUdl1yzWXgl6tB6KW8IiKO0kWiPxw3U1O7KdrPtom3dDz+bOaSOY7
+	 pAwPUAo5Kl7vUkwzBVN8qtDvdy2G2syYa9mDMFHUhNpfaCUqpLDzkbv6BBa2MdPcxQEtM
+	 0yaygt5UwHrI7TkEiOexs0k2qN9kXdFmuCUBj5kVTGUcADXkSkL+mZwUrrgz2db7AmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ESWILpfX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VWiH31sJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3DC606A9C1;
-	Sat,  7 Nov 2026 15:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF744606A9C1;
+	Sat,  7 Nov 2026 15:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ESWILpfX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9401F0089F;
-	Sat,  7 Nov 2026 15:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VWiH31sJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA961F0089F;
+	Sat,  7 Nov 2026 15:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064956;
-	bh=d7+R5nsNtKIp2wLZboqzM4rp/IOB5jAOFAVdGKF0imI=;
+	s=korg; t=1794064957;
+	bh=basHaUeP+E0uVyVtPvnwNtrtQmeWjl1OiSjdzx9YrEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ESWILpfXaO8Me+2qSE7Ev/fPtl4/lbRwiE6J37cx4kNcgPUSxOHeRuhoKEN2bLRak
-	 lTquKXev1TIdpq+vuuHlHIwp+H6/88/6oE3Dvuy243WvOTv20dSYUqPnFLWqSXAUA9
-	 SFD6mcB6NsSJYXt9POhykoQYnOkWfUp9qpNTvPTA=
+	b=VWiH31sJW6xR7akGI4AxZyAzlSm3ZseYRhgmOGHHPPOj5lKLnG2ykBCBXk5Hg5lAb
+	 21WFBrukenOrH0Tq7KalelvzQrvhfDPQDofNSR7BJv1n5VhwI72Lb+LYYNgqKAIs9c
+	 T4E/2hdLmKviFlwZ0mii4lcAHNX6LPJDuiQAop0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sonotri <sono7ri@gmail.com>,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Kees Cook <kees@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0842/1257] ublk: pin module while release work is pending
-Date: Sat,  7 Nov 2026 08:52:18 -0500
-Message-ID: <20261107135002.580149042@linuxfoundation.org>
+Subject: [PATCH 7.3 0843/1257] ipc, msg: Account msg_msg allocations with GFP_KERNEL_ACCOUNT again
+Date: Sat,  7 Nov 2026 08:52:19 -0500
+Message-ID: <20261107135002.607260224@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,60 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: sonotri <sono7ri@gmail.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit afc9cde716b29ce814798d649a95f9128ba42b43 ]
+[ Upstream commit c57fbbe42e907fa26c5ffada52d913d4ca5fa66e ]
 
-ublk_ch_release() takes a device reference and queues exit_work.  The VFS
-module reference held through the file operations is dropped after
-->release() returns.  A queued work item does not acquire its own module
-reference for the callback.
+Since commit 734bbc1c97ea7 ("ipc, msg: Use dedicated slab buckets for
+alloc_msg()"), alloc_msg() allocates with GFP_KERNEL, and a msg_msg is
+accounted only through SLAB_ACCOUNT on its bucket caches. With
+CONFIG_SLAB_BUCKETS=n, kmem_buckets_create() creates no caches and
+kmem_buckets_alloc() is a GFP_KERNEL kmalloc() from the general caches,
+which do not account it; the same happens when kmem_buckets_create()
+fails. Either way, the allocation is not charged to the sender's memory
+cgroup.
 
-Consequently, normal module removal can start while exit_work is pending or
-executing.  In addition to the worker callback itself, the final device put
-can invoke ublk_cdev_rel(), which is also module code.
+Allocate with GFP_KERNEL_ACCOUNT again, as before that commit, so the
+allocation is charged whichever cache serves it.
 
-Take a module reference while ->release() is still covered by the file
-operations reference and drop it only after the worker has completed its
-final device put.  A rearming worker retains the same reference.
+Build tested ARCH=x86_64 defconfig with GCC 16.2.0, with
+CONFIG_SLAB_BUCKETS as y and n.
 
-Merely canceling exit_work during module exit is insufficient.  The worker
-is the terminal path for the device reference taken by ublk_ch_release(),
-so its cancellation would strand that reference and skip the associated
-cleanup.
-
-Fixes: c5c5eb24ed61 ("ublk: avoid ublk_io_release() called after ublk char dev is closed")
+Fixes: 734bbc1c97ea7 ("ipc, msg: Use dedicated slab buckets for alloc_msg()")
 Cc: stable@vger.kernel.org
-Signed-off-by: sonotri <sono7ri@gmail.com>
-Reviewed-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20261015120654.241354-1-sono7ri@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://patch.msgid.link/20261014052344.384723-2-kees@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Signed-off-by: Harry Yoo (Meta) <harry@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 3 +++
- 1 file changed, 3 insertions(+)
+ ipc/msgutil.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index a49bd30154e01..1ef01ce18f4f0 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -2637,6 +2637,7 @@ static void ublk_ch_release_work_fn(struct work_struct *work)
+diff --git a/ipc/msgutil.c b/ipc/msgutil.c
+index e28f0cecb2ec9..12663a40e9ae6 100644
+--- a/ipc/msgutil.c
++++ b/ipc/msgutil.c
+@@ -58,7 +58,8 @@ static struct msg_msg *alloc_msg(size_t len)
+ 	size_t alen;
  
- 	/* put the reference grabbed in ublk_ch_release() */
- 	ublk_put_device(ub);
-+	module_put(THIS_MODULE);
- }
+ 	alen = min(len, DATALEN_MSG);
+-	msg = kmem_buckets_alloc(msg_buckets, sizeof(*msg) + alen, GFP_KERNEL);
++	msg = kmem_buckets_alloc(msg_buckets, sizeof(*msg) + alen,
++				 GFP_KERNEL_ACCOUNT);
+ 	if (msg == NULL)
+ 		return NULL;
  
- static int ublk_ch_release(struct inode *inode, struct file *filp)
-@@ -2652,6 +2653,8 @@ static int ublk_ch_release(struct inode *inode, struct file *filp)
- 	 */
- 	ublk_get_device(ub);
- 
-+	/* Keep the worker's callback and final device release code resident. */
-+	__module_get(THIS_MODULE);
- 	INIT_DELAYED_WORK(&ub->exit_work, ublk_ch_release_work_fn);
- 	schedule_delayed_work(&ub->exit_work, 0);
- 	return 0;
 -- 
 2.53.0
 
