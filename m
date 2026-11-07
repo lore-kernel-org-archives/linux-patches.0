@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062950;
-	b=hEvDCYRyttlc20CcInQeCa07jKBOrxKiRDglTIWo/z8lUz+FNPcaWf+NVzvuk9nQ/d56
-	 +RdFFn2xK3pd9lmsK61eq71OpieY/bEljyS7A0Eit9oF/qpW3fP6kJGuSGad2hZlN8vU7
-	 uR72/kDidGwnBIbFGrxPgIFpijoV+NeU3K2a6FjA9r4DcS4zgcj12DYlQ6XnteG5387ZG
-	 yCNM2tgh4V1M0PXEJHblVM2Ts0DxNCvOdFjWUHi3NKJz5s5i3BfQ3h/QFAjJo2UC/v1K2
-	 nq1X/V0PshFRZzjJfd5h6al82Twy5WxHXNHH1sM4Gx+EeMklne3qE/YD6J0xKYW6znw==
+	t=1794062951;
+	b=5RNuOnGAhBjY4lz6eFBY8mKEGsYohF9vaBg+amX1NqxaRQZ+nfEU9u7/C89uAOEyW2Mm
+	 K3XV36+K+O287wHhgisD+t2NT7Xjz44GK4pDfCqIQfmggP/yqb1L8/MXcMFYu6Yc/CeQK
+	 pWzDX5+oWdv0Y3s5P4hemeLlhRFGsA/WRH+Z+XOY/o6GbI2h+qXR31I3cQMEo0yWhgZMt
+	 KXxQj1D5OOMoTyJOkJJ2JmW6numLkkAp6BsdPqmYXG5ucvRzFvVXRDtXpRY9gVZYZsQ7C
+	 t36GQ50Z+i5zwIyY6zk5LMljD3wSMPM148kTJTDR6Nz8A/XFHRkt9jZVlW0dL1vohxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062951;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xCHXLz/7cigrazwUjQ/7ck3lyURoQqjqS8+ojS2X+rA=;
-	b=hjhfOz7aKSVw7YTftprBXdPJ57D7A5/2uMAGoSG5HOWM1C1v9s6w0suBuNuK+G676sJ6
-	 ZynA+JeDdIrhg/Hbc9sYnCaYemp5YYA6ICXgw1NI252uwk8hwji/cXHt/KQzqJTUJeztV
-	 vMRvEZh9uMMkrYDB36JXV6MHEyv0546o14JfsuPoVUm/m+QajyEf6XnFWR20P9P1VQ3wy
-	 qsNu8Q50jf1NInED8SApIyY/J96Sa553wjvSv6ViRWpQRp8vBwJrhzYn2Dfi3Nr94Kp2x
-	 FtX0wEkD+kidedKxYQnAEAxzfZg8g4D+S7fGHRbAXgUMHlT31FyHyyidPSLKdbYrr0w==
+	bh=26hR4L9FsXLXlyEme5tEY/+dsdLp/T4jOY/jPZTk6aA=;
+	b=oeqBXlSSdvVUp8yJin+liVnAMAzxY6rKSHwrxf3dyefh0cFOVFgUgMHh3EeCfyWEZhXE
+	 85FStcxzalsLw9lYjLXQwZ74+jnx9w+Sr9nDnsa3+rsxTNJeTcyrq0fjFg5hwg/4unCVM
+	 hsb8EB1O9g7r5YaYIiWDwiIxeHOwUTNkVfS8QgTyuhr5Hk4/0BKNkr276uv4PyyHeksTO
+	 DCsiB7Z6sLLtnHoH/mStzn/9MWOMzrveVqEXzWuOzJJUP2jyDnmDyIibAadZjvlIzU8a1
+	 1hTdixZKvWqWK/hRs3NXOYUk6d/9+0wk56VMDdus4T7RJgiTGGzbT21FMqRPw3FC51w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jjk4qMEE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUQ3UMYh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF2A606A32C;
-	Sat,  7 Nov 2026 14:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAD3606A32C;
+	Sat,  7 Nov 2026 14:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jjk4qMEE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9C11F0089F;
-	Sat,  7 Nov 2026 14:49:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUQ3UMYh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4461F0089F;
+	Sat,  7 Nov 2026 14:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062950;
-	bh=xCHXLz/7cigrazwUjQ/7ck3lyURoQqjqS8+ojS2X+rA=;
+	s=korg; t=1794062951;
+	bh=26hR4L9FsXLXlyEme5tEY/+dsdLp/T4jOY/jPZTk6aA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jjk4qMEEm+utvxlJxd+yp0cQpcPbHXuUWuWItCN2sAHGA/vyYQfZCFEItgz8u7AtF
-	 uY+l7XPao/W5x8cY7aDN6FikYh8C9VMVDFwn5/pcWGai2FlCGsRebz87qN5Hoyo1U5
-	 HdoiIIETmfa+EJ1IpAqCJuLG1psb/YhudcYz1R1g=
+	b=pUQ3UMYhg2wunSiyYKQl7W5aLONYz2v+PXIiYqvXe8fTVlYzvfCQc1i46sTRBHfxW
+	 aqySr3ifBSrLb/3fQBl13Va+EkngS2SqdBx5PBHsPzNSHEpf3ibXWTBdhcng6+gYJu
+	 /1GH6f7VGWQjBd370h64fNU9QIt/nBy+k/Kj1KB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 215/869] media: au0828: Fix media device leak in au0828_usb_probe()
-Date: Sat,  7 Nov 2026 08:48:17 -0500
-Message-ID: <20261107134859.228996857@linuxfoundation.org>
+Subject: [PATCH 6.18 216/869] media: vpif_capture: Fix i2c adapter reference leak in vpif_probe()
+Date: Sat,  7 Nov 2026 08:48:18 -0500
+Message-ID: <20261107134859.257399516@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,39 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 7b7a69c91c0537d48150942d9707614a4fdd3766 ]
+[ Upstream commit b00fbdad64d4ea7d594bc67988c1722fe5b3be50 ]
 
-au0828_media_device_init() takes a reference to a media device with
-media_device_usb_allocate().  When au0828_v4l2_device_register()
-fails right after, the error path only unregisters the entities and
-frees au0828_dev, so that reference is never released.
+vpif_probe() takes a reference to the i2c adapter with
+i2c_get_adapter() and passes it to v4l2_i2c_new_subdev_board(),
+which does not consume it, but the reference is never released, so
+it is leaked both when the probe succeeds and when it fails after
+the adapter has been acquired.
 
-Release it with media_device_delete() on that path.
+Release the reference with i2c_put_adapter() on the success path
+and in the probe_subdev_out cleanup, and initialise i2c_adap so
+that the cleanup is a no-op when the adapter was never acquired.
 
-Fixes: 812658d88d26 ("media: change au0828 to use Media Device Allocator API")
+Fixes: 6ffefff5a9e7 ("V4L/DVB (12906c): V4L : vpif capture driver for DM6467")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/au0828/au0828-core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/platform/ti/davinci/vpif_capture.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/au0828/au0828-core.c b/drivers/media/usb/au0828/au0828-core.c
-index 1e246b47766dd..c7ff52044bd25 100644
---- a/drivers/media/usb/au0828/au0828-core.c
-+++ b/drivers/media/usb/au0828/au0828-core.c
-@@ -697,6 +697,10 @@ static int au0828_usb_probe(struct usb_interface *interface,
- 	retval = au0828_v4l2_device_register(interface, dev);
- 	if (retval) {
- 		au0828_usb_v4l2_media_release(dev);
-+#ifdef CONFIG_MEDIA_CONTROLLER
-+		media_device_delete(dev->media_dev, KBUILD_MODNAME,
-+				    THIS_MODULE);
-+#endif
- 		mutex_unlock(&dev->lock);
- 		kfree(dev);
- 		return retval;
+diff --git a/drivers/media/platform/ti/davinci/vpif_capture.c b/drivers/media/platform/ti/davinci/vpif_capture.c
+index 9fbef24025744..5158417fe603e 100644
+--- a/drivers/media/platform/ti/davinci/vpif_capture.c
++++ b/drivers/media/platform/ti/davinci/vpif_capture.c
+@@ -1603,7 +1603,7 @@ vpif_capture_get_pdata(struct platform_device *pdev,
+ static int vpif_probe(struct platform_device *pdev)
+ {
+ 	struct vpif_subdev_info *subdevdata;
+-	struct i2c_adapter *i2c_adap;
++	struct i2c_adapter *i2c_adap = NULL;
+ 	int subdev_count;
+ 	int res_idx = 0;
+ 	int i, err;
+@@ -1693,9 +1693,12 @@ static int vpif_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
++	i2c_put_adapter(i2c_adap);
++
+ 	return 0;
+ 
+ probe_subdev_out:
++	i2c_put_adapter(i2c_adap);
+ 	v4l2_async_nf_cleanup(&vpif_obj.notifier);
+ 	/* free sub devices memory */
+ 	kfree(vpif_obj.sd);
 -- 
 2.53.0
 
