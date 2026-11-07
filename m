@@ -1,64 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064553;
-	b=rZm2oj3SafHLVGQWEnEScMAKXnCwHAn33gn0R4+B5MdiMdt4tuLCJToPeiPJ+NwLHfy9
-	 m/Tyd1UNSrvgjRrhLDtqG1R688E8+Rrf6iODs9Fmy6QuurGMvDJaII+cL5+L0pG8o0wCU
-	 0/+42AIBVPlg9fL6oElqPbBOp8QQ7c8ohs/R0V7PivoqPhDkgV/9+A3BJaF8sKG3awNfM
-	 XWQVKXjUsLapiyLy8AQsMTB+kvuneKO1RbppxlnRywhQm3KgA7OD0RgoDTHEv2UfQGnTc
-	 PHTN+yNgD3q1+DDDu5rY6MICIUgSsaDOCvgsjyJauFPkJCLYzznudbZKjUo2BjhBOvg==
+	t=1794064554;
+	b=IzPB7DUJs+l+n/haw/HYrtwqpECp/FlWCoeTdRJKKpeE38wDoHzwt6qwwW6fbCeBzOwl
+	 OPUzzkaO29rbELdnnQBpWPa02GdpbYcDp1Pwo8Xe5rvTCP0OoDBmwefqMBJz7V8wrWKSI
+	 qMHPKjCSoupBF1vK4RG5Qi7jGvEzqAJMB2xlkSMVG81Ma75ZlUHm1KJmA9d6r8FpIyaHx
+	 /SlCZSmkv+Z23Msarv023/e+biL4bPTQiu4Sqvi3LXiMo9ngPXdeXUcYXPM3OcjE84pB1
+	 XuTonVOgmbyNisyuZ+f7GPT6O0bPtzR/jPywaHRlxnQ6kxrIUB1VIcObYbii7QUdMaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064553;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064554;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q80XHiC/+OdEb+Je7ZA3tUMrfwAqx4Z6OT6/ZSuMQFM=;
-	b=vZz+x4Ai+vT2OcqrJHK9dArjchdG0xHX3aJfivnELfET7QcTIrQy44w7JbNi6L46XRRe
-	 phGrPl/o1ZOavKwnowROTeEzD2shRTB8FTLaEYssy9U7QEWyfH+LeG6/BggkoeqC1tX2L
-	 ce53qpOLINcmHBtE4b6DFNj1GklfolhCjXELRuXVPGtiZH0IYQrIPEdKOJS4r76IOFalK
-	 cXcLRU2Gp+NmN2IIdF4nKdIl8UBIgWS9NxFu4m23+yCF97ipyZ7jshsTXx8iZKm3ry8Qx
-	 foJBeJ2W0YmMHKBTpBSTNR7ec/1M2XIqbZTjc7Ptmvs19CeQ9IR7zikhiXbDs0bnT+g==
+	bh=f+qcsFv9a0dy+NrcuEgn6STPOrxG6HO3ZahEo9BUvQY=;
+	b=Yk/qci8i7t9HLC3Q0aeSidAEHwSWy7dwF4/a6k1nhAJPhLjvDAQ/u5CNJ/IpefMygxiI
+	 F/BYau8DaohlE1SnFL2kFOqpQlXlTnKs2xx/6xrEn5I7yUdxJSYpO2ryihCKsnJKWO+f5
+	 favssuL/BrKCY0pkdCPipzy1hEFj86uvdqOTV1XZnARmS0A44GU2OfOOosK5DVtGnQ6or
+	 IYTyivpRKVjpcOiHIyiH9Fbw/WYXlELG5ftejc5M0GQOdkxQbCzx1TuDXUVN9Ws18GpjW
+	 T2CubUOXM2RjyJBOFzPde8z1q1zjLxGLy5ieW6WcWLTBUlWQGg1mS/FjEiwNSyDNpHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0YOTSc0S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImRty2O3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D68606B8A6;
-	Sat,  7 Nov 2026 15:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301E1606B8A6;
+	Sat,  7 Nov 2026 15:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0YOTSc0S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589311F008A1;
-	Sat,  7 Nov 2026 15:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImRty2O3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F891F008A1;
+	Sat,  7 Nov 2026 15:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064552;
-	bh=Q80XHiC/+OdEb+Je7ZA3tUMrfwAqx4Z6OT6/ZSuMQFM=;
+	s=korg; t=1794064554;
+	bh=f+qcsFv9a0dy+NrcuEgn6STPOrxG6HO3ZahEo9BUvQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0YOTSc0SnlQUFemqkNAWGRMgXMofTXm6e1cp4YXcAjzvgVeaAznlzKdR6A+92T1pS
-	 VpVRYgw0+coloBTykXbXMECfWPa/y3S1/I3nS31s07qVk46sxOMfgl5sZ6pynwo72q
-	 2efJTTuf9mUuAqtu1DXcRNTLviLc2qtwiIqbrbX4=
+	b=ImRty2O3RejXGixbV0cA88/nWPUnrCuvSr0JbZijOW5aOvWLk/YXH1NGCmTfqkLsI
+	 zj+ixdV1g96S548g4C+ClkyHZfeCjuTVrlDiqmBrbswAFoscN4vlDRvbuZTN1SbKmp
+	 fOWuRUkO7Gj1tfe4aA/hSnSPx/D1j7/cyqTWS0wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Zhu <zhuhui@kylinos.cn>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Kairui Song <kasong@tencent.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jikos@kernel.org>,
+	Luis Chamberalin <mcgrof@kernel.org>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0576/1257] mm: memcg: reparent non-hierarchical lruvec stats on cgroup v2
-Date: Sat,  7 Nov 2026 08:47:52 -0500
-Message-ID: <20261107134955.253729782@linuxfoundation.org>
+Subject: [PATCH 7.3 0577/1257] mm/execmem: free ROX cache chunks only when they span an entire vm area
+Date: Sat,  7 Nov 2026 08:47:53 -0500
+Message-ID: <20261107134955.280010352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -80,158 +72,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Zhu <zhuhui@kylinos.cn>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 154c16a783b75105347cf5ed7731afc887308120 ]
+[ Upstream commit 52d95a55a0113408acd2d4ce0294a72c527f5092 ]
 
-On cgroup v2, reparent_state_local() returns early and never moves the
-dying memcg's non-hierarchical state_local base counts to its parent.
-Meanwhile memcg_reparent_objcgs() rewrites objcg->memcg to the parent, so
-when the reparented folios are freed later, the negative deltas land on
-the parent's lruvec.  The parent therefore receives the uncharges without
-ever having received the matching charges, and its state_local
-(NR_LRU_BASE + lru, MEMCG_SOCK, NR_SLAB_RECLAIMABLE_B,
-NR_SLAB_UNRECLAIMABLE_B) permanently underflows.  Since
-lruvec_page_state_local() clamps negative values to zero, the underflow
-masks the parent's own legitimate pages.
+Patch series "mm/execmem: fixes and cleanups for the ROX cache".
 
-count_shadow_nodes() is the only reader of these non-hierarchical
-state_locals on cgroup v2, so the underflow directly distorts the
-workingset shadow node budget.
+Sashiko review of the ROX cache refill path asked what happens when the
+PMD_SIZE allocation fails there.  Pulling that thread uncovered a bit more
+than the fallback.
 
-Fix this by reparenting the lruvec state_locals on cgroup v2 as well,
-mirroring what cgroup v1 already does.  Only the lruvec stats consumed by
-count_shadow_nodes() are moved; the memcg-level stats are left alone
-because on v2 they are exposed through the rstat hierarchical tree and are
-not read from state_local.
+Patch 1 fixes a real bug, although rare bug: execmem_cache_clean() can
+free a chunk that is still partially in use, because a PMD sized and PMD
+aligned free range in the middle of a larger chunk looks exactly like a
+chunk that nobody uses.
 
-Link: https://lore.kernel.org/4a7a64eed2b145ad535fedaea3624f8310c29d5b.1789096175.git.zhuhui@kylinos.cn
-Fixes: 8285917d6f38 ("mm: memcontrol: prepare for reparenting non-hierarchical stats")
-Signed-off-by: Hui Zhu <zhuhui@kylinos.cn>
+Patch 2 handles maple tree allocation failures in the cache.  They are
+unlikely, but silently dropping an area from the tree is not a great way
+to deal with them.
+
+Patch 3 deals with the fallback that started all this.  The cache exists
+to keep the direct map free of unnecessary splits, and the fallback
+happily filled it with base page mapped areas that could never be freed
+from the cache again.  Ask vmalloc for a huge mapping or nothing, and
+serve whatever does not fit outside the cache.
+
+Patches 4 and 5 convert the ROX cache to scope based cleanup.
+
+The series was tested on x86 with module load/unload cycles, with PTDUMP
+confirming that the cache is using 2M mappings, and with nohugevmalloc to
+exercise the uncached fallback.
+
+This patch (of 5):
+
+When execmem refills the ROX cache, it vmalloc()s multiples of PMD_SIZE
+aligned to PMD_SIZE.  For every such allocation vmalloc creates a vm area.
+
+The first part of the vmalloc()ed chunk is returned to the allocation that
+triggered the cache refill and the remaining part is added to the cache
+and handed out for subsequent allocations with execmem_alloc().
+
+When only the first part is freed, the entire vm area remains in the ROX
+cache and can be handed out again.
+
+In the case when the first allocation is larger than PMD_SIZE and the
+second allocation from the freed first part of the chunk is exactly
+PMD_SIZE, execmem_cache_clean() will free the entire chunk while part of
+it is still in use.
+
+For example:
+
+	/*
+	 * vmalloc(4M), return p0 to the caller
+	 * add [p0 + 3M, p0 + 4M) to the cache
+	 */
+	p0 = execmem_alloc(3M);
+
+	/* return p0 + 3M from the cache to the caller */
+	p1 = execmem_alloc(1M);
+
+	/* put [p0, p0 + 3M) back into the cache */
+	execmem_free(p0);
+
+	/* return p0 from the cache to the caller */
+	p2 = execmem_alloc(2M);
+
+	/* return p0 + 2M from the cache to the caller */
+	p3 = execmem_alloc(1M);
+
+	/* bah! execmem_cache_clean() frees the entire 4M chunk */
+	execmem_free(p2);
+
+Make sure that the ranges that execmem_cache_clean() frees cover the
+entire vm area.
+
+Link: https://lore.kernel.org/20260903-execmem-rox-cache-pmd-v1-v1-0-11beb2a3d249@kernel.org
+Link: https://lore.kernel.org/20260903-execmem-rox-cache-pmd-v1-v1-1-11beb2a3d249@kernel.org
+Fixes: 2e45474ab14f ("execmem: add support for cache of large ROX pages")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
+Assisted-by: copilot:claude-opus-5
+Cc: Benjamin Tissoires <bentiss@kernel.org>
+Cc: Jiri Kosina <jikos@kernel.org>
+Cc: Luis Chamberalin <mcgrof@kernel.org>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol-v1.h |  5 +++--
- mm/memcontrol.c    | 42 ++++++++++++++++++++++++++++--------------
- 2 files changed, 31 insertions(+), 16 deletions(-)
+ mm/execmem.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/mm/memcontrol-v1.h b/mm/memcontrol-v1.h
-index 1e394269c613d..0578b7076764d 100644
---- a/mm/memcontrol-v1.h
-+++ b/mm/memcontrol-v1.h
-@@ -25,6 +25,9 @@ int memory_stat_show(struct seq_file *m, void *v);
- struct mem_cgroup *mem_cgroup_private_id_get_online(struct mem_cgroup *memcg,
- 						    unsigned int n);
+diff --git a/mm/execmem.c b/mm/execmem.c
+index 74a178a87e758..33e4e68f655f0 100644
+--- a/mm/execmem.c
++++ b/mm/execmem.c
+@@ -165,9 +165,11 @@ static void execmem_cache_clean(struct work_struct *work)
  
-+void reparent_memcg_lruvec_state_local(struct mem_cgroup *memcg,
-+				       struct mem_cgroup *parent, int idx);
-+
- /* Cgroup v1-specific declarations */
- #ifdef CONFIG_MEMCG_V1
+ 	mutex_lock(mutex);
+ 	mas_for_each(&mas, area, ULONG_MAX) {
++		struct vm_struct *vm = find_vm_area(area);
+ 		size_t size = mas_range_len(&mas);
  
-@@ -73,8 +76,6 @@ void reparent_memcg1_lruvec_state_local(struct mem_cgroup *memcg, struct mem_cgr
+-		if (IS_ALIGNED(size, PMD_SIZE) &&
++		if (vm && get_vm_area_size(vm) == size &&
++		    IS_ALIGNED(size, PMD_SIZE) &&
+ 		    IS_ALIGNED(mas.index, PMD_SIZE)) {
+ 			struct vm_struct *vm = find_vm_area(area);
  
- void reparent_memcg_state_local(struct mem_cgroup *memcg,
- 				struct mem_cgroup *parent, int idx);
--void reparent_memcg_lruvec_state_local(struct mem_cgroup *memcg,
--				       struct mem_cgroup *parent, int idx);
- 
- void memcg1_account_kmem(struct mem_cgroup *memcg, int nr_pages);
- static inline bool memcg1_tcpmem_active(struct mem_cgroup *memcg)
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index ed371b1ddab87..a3f16cbfdc6e2 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -232,14 +232,29 @@ static inline struct obj_cgroup *__memcg_reparent_objcgs(struct mem_cgroup *memc
- 	return objcg;
- }
- 
--#ifdef CONFIG_MEMCG_V1
- static void __mem_cgroup_flush_stats(struct mem_cgroup *memcg, bool force);
- 
--static inline void reparent_state_local(struct mem_cgroup *memcg, struct mem_cgroup *parent)
-+/*
-+ * Reparent the non-hierarchical lruvec stats that count_shadow_nodes() reads
-+ * to approximate the shadow node budget.  They are not exposed to userspace
-+ * on cgroup v2, but they must follow the reparented folios; otherwise the
-+ * ancestor would only receive the negative deltas when the folios are freed
-+ * without ever having received the positive base, and its local stats would
-+ * permanently underflow.
-+ */
-+static void reparent_v2_lruvec_state_local(struct mem_cgroup *memcg, struct mem_cgroup *parent)
- {
--	if (cgroup_subsys_on_dfl(memory_cgrp_subsys))
--		return;
-+	int i;
-+
-+	for (i = 0; i < NR_LRU_LISTS; i++)
-+		reparent_memcg_lruvec_state_local(memcg, parent, NR_LRU_BASE + i);
-+
-+	reparent_memcg_lruvec_state_local(memcg, parent, NR_SLAB_RECLAIMABLE_B);
-+	reparent_memcg_lruvec_state_local(memcg, parent, NR_SLAB_UNRECLAIMABLE_B);
-+}
- 
-+static inline void reparent_state_local(struct mem_cgroup *memcg, struct mem_cgroup *parent)
-+{
- 	/*
- 	 * Reparent stats exposed non-hierarchically. Flush @memcg's stats first
- 	 * to read its stats accurately , and conservatively flush @parent's
-@@ -248,17 +263,18 @@ static inline void reparent_state_local(struct mem_cgroup *memcg, struct mem_cgr
- 	 */
- 	__mem_cgroup_flush_stats(memcg, true);
- 
--	/* The following counts are all non-hierarchical and need to be reparented. */
--	reparent_memcg1_state_local(memcg, parent);
--	reparent_memcg1_lruvec_state_local(memcg, parent);
-+	if (cgroup_subsys_on_dfl(memory_cgrp_subsys)) {
-+		reparent_v2_lruvec_state_local(memcg, parent);
-+	} else {
-+#ifdef CONFIG_MEMCG_V1
-+		/* The following counts are all non-hierarchical and need to be reparented. */
-+		reparent_memcg1_state_local(memcg, parent);
-+		reparent_memcg1_lruvec_state_local(memcg, parent);
-+#endif
-+	}
- 
- 	__mem_cgroup_flush_stats(parent, true);
- }
--#else
--static inline void reparent_state_local(struct mem_cgroup *memcg, struct mem_cgroup *parent)
--{
--}
--#endif
- 
- static inline void reparent_locks(struct mem_cgroup *memcg, struct mem_cgroup *parent, int nid)
- {
-@@ -570,7 +586,6 @@ unsigned long lruvec_page_state_local(struct lruvec *lruvec,
- 	return x;
- }
- 
--#ifdef CONFIG_MEMCG_V1
- static void __mod_memcg_lruvec_state(struct mem_cgroup_per_node *pn,
- 				     enum node_stat_item idx, long val);
- 
-@@ -592,7 +607,6 @@ void reparent_memcg_lruvec_state_local(struct mem_cgroup *memcg,
- 		__mod_memcg_lruvec_state(parent_pn, idx, value);
- 	}
- }
--#endif
- 
- /* Subset of vm_event_item to report for memcg event stats */
- static const unsigned int memcg_vm_event_stat[] = {
 -- 
 2.53.0
 
