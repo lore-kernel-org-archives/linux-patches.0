@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062265;
-	b=VRw1xGGyAZGXor/qbKgs4eUFMppCuO5jn3Pu1XAIQ35s7y4Rw1YClvoRhPUpt+2/KRNT
-	 XL5nPfeeWaRs+YvEYmcOI6IzwaADFz3O/tQRAvKqiZ5owRRu4nKTN7QDjjchfMl7jp0MU
-	 KhauQEXm2NBV/5zJWwB8zIPNAgBITUShSfWHt8QiL4tReNwgfuQz1VmuEBzm4ACLzgCLM
-	 CSQ3QPFuQsBANJ15qJl2BARDmo9Yn1FX2MB9iiptSq7Xftf5ojMuk+a1uSt3MY2EVWaWF
-	 iTFU3GL+2YmPwk4RKe6ed5AXJJtrC5mWBEC7bVCQ47OYJua1zMVrN0ryoc0hEC9AR2Q==
+	t=1794062266;
+	b=fH6ZbmQi08oIa5ETasgi8wvtCkp3OP768S9dpB/YW6JEG7O6txreCQM7OfJejV3DuqV1
+	 06FQ0D0i8ubGjFivpT/tnmAXL8W2BSx2ck856UqsP9G8fCKg0QbmOmbdffKiDpQiWLxmk
+	 2vUrqep1WjhLsSKK20z2l82OoU3AzaatrowiOAas3B9TXIZaGotUj2VSs1agQRfWZ0yhw
+	 rtQJNR5NORKHPJwK+k7NR+RTakSpY6HMQimiIdd8GfM6YDjUdsGXWravrPAsr3ghfi2CJ
+	 4CRTXEQs2/YLuXhk1ygN/+9yCFFSeQH9EU6SqMQereO4vQn1B8yM6HrLDP8FM5+HklQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062265;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7mkd0VTOGhj0ZqShrdcwysK0GuvMxvWiEBdrVgOROOk=;
-	b=Sa0fFsmWzAxaR690+6taSnTRdCRCubjoHF/moSyfPgsFeLUFqM1XRh0yUCz62+jJFjUg
-	 wieekbJaYH6DkSvMlk7Hjf1Fq+IRisr8bG5VfA+i3oeDIGVQTb5JgLE8sI4YBqwCeiTUR
-	 WYd5UmVIawAtnvzDFk7jMxzjg9KugDmQxnotFeCHQgD+KKd0pYvpW6zJN5od+Pb/IRcre
-	 q5pgp2j+hqXJFVbhhFTTrXQoE/J3nmdz4DdN9ECp9HvWJ3Sv+VmUvnSaInLU2XMMNJK9z
-	 uTRckuXFdYKECP7sa/6CNr8CoaZ2pA9VeFlrRvHMI5h7kEwdffhi+7CkedW5oRdU85g==
+	bh=js6kdhwae2MWVfy+d5jIfo3+X3ASpUi7yv4GQtBTApw=;
+	b=rdsUU1UyZTdfqf0aAASjLL8+iKFZp16pt1tILBqI5cCg5bnlyFonGiga9nw9L29OuThg
+	 VxNMQA/jdoFJqKDXPtI5gNAiRQ7h+YWZIIKYIw5J8gSPMH4SeAZ43YWmYCHY0QftwaETI
+	 BG+bUykD+7bGnKClZv4fk4MlvtIHUngR5t9LkLFp8i/c6b5xg3vfQYj2Ss8T0NpxOETrB
+	 bjS5Qz/RYEOI43QEFR5MVgHJkMucZuUuz+DsO7+niwQtvDav6a9GVYbx2YdNxVeILuBm2
+	 m6VuvPadgQkWwBTJM4vQZWftTMntfYeMGl97n8dpMp/ryE6cScjIblAQErRrX3UKWZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGItANqt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VA5z1y6E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2E8606A334;
-	Sat,  7 Nov 2026 14:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF7660A2636;
+	Sat,  7 Nov 2026 14:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGItANqt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56F71F0089F;
-	Sat,  7 Nov 2026 14:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VA5z1y6E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2171F0089F;
+	Sat,  7 Nov 2026 14:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062265;
-	bh=7mkd0VTOGhj0ZqShrdcwysK0GuvMxvWiEBdrVgOROOk=;
+	s=korg; t=1794062266;
+	bh=js6kdhwae2MWVfy+d5jIfo3+X3ASpUi7yv4GQtBTApw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eGItANqtiS+9arqvZslkkfIKf1Nzv7KRggqKfaWl1wg5qeyTT19sedWU2g5Ppy0fb
-	 QfleAH2SceKvh5qbT3r6Px0K/6hp8ft5OWw+ZK8ntyosMGX0irKEKnVWLyww3NQrQ8
-	 qtWy7NKhCgGLk/DSVTlchT5po7d4bBTSmSCdsTUk=
+	b=VA5z1y6En11jYqO59wQgzrLcnCoI1au3RqnJBsqH2fKX9jnMES5zAbA7cojzcjeIY
+	 3fMsjUgnRlA1j4uovFFskEq9R3Y6cMTugEDoPK2Jp0b6zRug1Je8/ox7L1pEorsyrB
+	 GF1k1WabfvktIyWHc591DQJ0GU5kb6i0c0eKvwg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	Juergen Gross <jgross@suse.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1208/1536] xen/privcmd: Only claim ioreqs matching an ioeventfd
-Date: Sat,  7 Nov 2026 08:53:44 -0500
-Message-ID: <20261107135031.682714955@linuxfoundation.org>
+Subject: [PATCH 6.12 1209/1536] xen/pcifront: check that an AER callback exists before calling it
+Date: Sat,  7 Nov 2026 08:53:45 -0500
+Message-ID: <20261107135031.712371479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,110 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 908019e5999161ca89da310c05ddbf7fc89c129e ]
+[ Upstream commit 3b4854b69ee70fffb2fa7acac09e715a7efcbae1 ]
 
-The ioeventfd handler shares its event channel with the userspace device
-model. It must only claim requests that match a registered ioeventfd.
-Other requests are left for userspace.
+pcifront_common_process() handles an AER request from the backend by
+dispatching on aer_op.cmd to the bound driver's PCI error handler.  It
+only checks that err_handler and err_handler->error_detected are present,
+then for the mmio_enabled, slot_reset and resume commands it calls the
+corresponding callback unconditionally.  Those three callbacks are
+optional -- the PCI core NULL-checks each of them individually before
+use -- and many drivers (for example igb, igc, ice and ixgbevf) install
+error_detected without all of them.
 
-ioeventfd_interrupt() currently marks every MMIO write INPROCESS before
-looking for a match. For an unmatched request it drops the lock and
-restores READY. Userspace may see INPROCESS and skip it. Restoring READY
-does not send another notification. If userspace handles the request at
-the same time, the READY store may overwrite its state.
+aer_op.cmd comes from the shared ring, so a malicious or buggy backend
+can send XEN_PCI_OP_aer_mmio (or _slotreset/_resume) for a device whose
+driver leaves that callback NULL and make the frontend call through a
+NULL pointer, crashing the guest.
 
-Find a matching ioeventfd before changing the request state.
+Check each callback before calling it.  When mmio_enabled or slot_reset is
+absent, return PCI_ERS_RESULT_RECOVERED so recovery proceeds, as the PCI
+core does for a missing callback; returning PCI_ERS_RESULT_NONE would
+instead make xen-pciback tear the guest domain down.
 
-The lock now protects only the ioeventfd list. Use explicit virt_*mb()
-barriers for the ioreq shared with Xen.
-
-Fixes: f0d7db7b3324 ("xen: privcmd: Add support for ioeventfd")
+Fixes: 956a9202cd12 ("xen-pcifront: Xen PCI frontend driver.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 Reviewed-by: Juergen Gross <jgross@suse.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260821084112.2374949-1-den@valinux.co.jp>
+Message-ID: <20261006023443.338194-1-yhlee@isslab.korea.ac.kr>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/privcmd.c | 47 +++++++++++++++++--------------------------
- 1 file changed, 18 insertions(+), 29 deletions(-)
+ drivers/pci/xen-pcifront.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
-index 115b54c3805b0..c562e6df49cc7 100644
---- a/drivers/xen/privcmd.c
-+++ b/drivers/xen/privcmd.c
-@@ -1179,51 +1179,40 @@ static irqreturn_t ioeventfd_interrupt(int irq, void *dev_id)
- 	struct privcmd_kernel_ioreq *kioreq = port->kioreq;
- 	struct ioreq *ioreq = &kioreq->ioreq[port->vcpu];
- 	struct privcmd_kernel_ioeventfd *kioeventfd;
--	unsigned int state = STATE_IOREQ_READY;
-+	bool matched = false;
- 
--	if (ioreq->state != STATE_IOREQ_READY ||
--	    ioreq->type != IOREQ_TYPE_COPY || ioreq->dir != IOREQ_WRITE)
-+	if (ioreq->state != STATE_IOREQ_READY)
- 		return IRQ_NONE;
- 
--	/*
--	 * We need a barrier, smp_mb(), here to ensure reads are finished before
--	 * `state` is updated. Since the lock implementation ensures that
--	 * appropriate barrier will be added anyway, we can avoid adding
--	 * explicit barrier here.
--	 *
--	 * Ideally we don't need to update `state` within the locks, but we do
--	 * that here to avoid adding explicit barrier.
--	 */
-+	/* Xen publishes the request before changing its state to READY. */
-+	virt_rmb();
- 
--	spin_lock(&kioreq->lock);
--	ioreq->state = STATE_IOREQ_INPROCESS;
-+	if (ioreq->type != IOREQ_TYPE_COPY || ioreq->dir != IOREQ_WRITE)
-+		return IRQ_NONE;
- 
-+	spin_lock(&kioreq->lock);
- 	list_for_each_entry(kioeventfd, &kioreq->ioeventfds, list) {
- 		if (ioreq->addr == kioeventfd->addr + VIRTIO_MMIO_QUEUE_NOTIFY &&
- 		    ioreq->size == kioeventfd->addr_len &&
- 		    (ioreq->data & QUEUE_NOTIFY_VQ_MASK) == kioeventfd->vq) {
-+			/* Finish reading the request before claiming it. */
-+			virt_mb();
-+			ioreq->state = STATE_IOREQ_INPROCESS;
- 			eventfd_signal(kioeventfd->eventfd);
--			state = STATE_IORESP_READY;
-+			matched = true;
- 			break;
- 		}
- 	}
- 	spin_unlock(&kioreq->lock);
- 
--	/*
--	 * We need a barrier, smp_mb(), here to ensure writes are finished
--	 * before `state` is updated. Since the lock implementation ensures that
--	 * appropriate barrier will be added anyway, we can avoid adding
--	 * explicit barrier here.
--	 */
--
--	ioreq->state = state;
--
--	if (state == STATE_IORESP_READY) {
--		notify_remote_via_evtchn(port->port);
--		return IRQ_HANDLED;
--	}
-+	if (!matched)
-+		return IRQ_NONE;
- 
--	return IRQ_NONE;
-+	/* Publish the response only after signaling the eventfd. */
-+	virt_wmb();
-+	ioreq->state = STATE_IORESP_READY;
-+	notify_remote_via_evtchn(port->port);
-+	return IRQ_HANDLED;
- }
- 
- static void ioreq_free(struct privcmd_kernel_ioreq *kioreq)
+diff --git a/drivers/pci/xen-pcifront.c b/drivers/pci/xen-pcifront.c
+index 11636634ae512..451476ce10ae9 100644
+--- a/drivers/pci/xen-pcifront.c
++++ b/drivers/pci/xen-pcifront.c
+@@ -599,11 +599,16 @@ static pci_ers_result_t pcifront_common_process(int cmd,
+ 		case XEN_PCI_OP_aer_detected:
+ 			return pdrv->err_handler->error_detected(pcidev, state);
+ 		case XEN_PCI_OP_aer_mmio:
+-			return pdrv->err_handler->mmio_enabled(pcidev);
++			if (pdrv->err_handler->mmio_enabled)
++				return pdrv->err_handler->mmio_enabled(pcidev);
++			return PCI_ERS_RESULT_RECOVERED;
+ 		case XEN_PCI_OP_aer_slotreset:
+-			return pdrv->err_handler->slot_reset(pcidev);
++			if (pdrv->err_handler->slot_reset)
++				return pdrv->err_handler->slot_reset(pcidev);
++			return PCI_ERS_RESULT_RECOVERED;
+ 		case XEN_PCI_OP_aer_resume:
+-			pdrv->err_handler->resume(pcidev);
++			if (pdrv->err_handler->resume)
++				pdrv->err_handler->resume(pcidev);
+ 			return PCI_ERS_RESULT_NONE;
+ 		default:
+ 			dev_err(&pdev->xdev->dev,
 -- 
 2.53.0
 
