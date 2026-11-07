@@ -1,57 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061347;
-	b=Eh/X6/dtlBoYYkzzt0Njczfz6So5ViBJfD12wBn1sk5NB7GiLr7VrWz26Cs9ODgzZzLB
-	 G+uiyPC3acp+6VpKPtrdoFghJggQG/66G9rlCkq0V50RAl7iTbll8uwLMF8NhTFxgWQIl
-	 xv7/U9X2lR7FCcYhPz/ToXHQa40AA2w+g7e37haD8zVIrpft3w+ZajTjdAOoUq3jI/FH2
-	 K0ZfA2nUjVycVp30INjqMvIByxtUsTTLFsQc10wiOJc4X7Yd8+HpJde38/Atg/VxzOp1L
-	 D04Z7UjVCYCCjLzzxbRagsh0hbweZ5B4dFmbqK1GrXwal5FyPm5YOCOIRfBxTou8AGA==
+	t=1794061348;
+	b=U7tSS9cW4kSGfTrd4QB/TgQwPWxKiELo2zdQUybyaTda0L1Av3FS7GbWME7xSjoajHFb
+	 zvYvZSlXvglUtZ97sz2xu0PPrL9muHhoUy5w7p1aCfDwZGanoVYPEh2NZ/oULY7S90Ujr
+	 r6mxP7J+U1llCCSi6yDJAj2/jKB9gJfeFH+Rz2jQslC9mXGuDIYQfkJzmbWlkoOiuETIF
+	 3tC3uGK1nG6li15zeWLIckM3XTsO65LUDdz3BfJDKvCpQfzC6GZnESJpefVWavtO7TCl4
+	 vKmYnOU6WBnnYiuEOz0StapaL8G7lZFtaHcp9m1ZZxVZSyNzf2B1DVtDzJv4zUuz8BQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061347;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061348;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HbX8UOGx8AJ+mI66TRFXIAUXioHP/gxSHQfoS3zbTZA=;
-	b=EYQDsZAkoFPPK1pOlKwcwqfzf8KW9K2e9MWCoWM6XwPjdL5gWtM/gI1FaJO/M5b+5+Zm
-	 8tVYs792jT+aetPQqJeJLvV9mVRehEfuy4e0BDsek3FGBZhdHP7QBz9d6kmZR90/bBeTA
-	 QwZZ4/x4tjLCSGlmyoIyQz+7pfNcgB4dcif8HDbkVeCI5v1uKRN1fRX1TUZFZyY+/hD4z
-	 FhtShC8i+DS8EuZONEP6mhfsvboGqDxJqlJw/Ub2RArsKJ4+BnOQVJ12kKSGxC+oDK9kJ
-	 3Ksd5fmr6pBsG5wrn/+F0H7PQJq7fJSp9k1BlzW5dMIRInkq5ds/wrUZ/YWRcrAfWRw==
+	bh=J+FcGIMmC2Ozy2m5DZJaAJl1OpzoldIxmtv1/3TiXRY=;
+	b=HghZKeUz3DyzWRS3qYAK+N8SrrkZqHF4nbnho3kj93aN8Wo19DLfjpKf+psftdARiNAQ
+	 qqnp14xN+3qRERdrfRRAvwdqHe7Y/fsNUxm18+5guoMCuTMj9G9THFgcVabPJweMsG094
+	 KC7P7n8zl6mpw6PJkx3coV1dyBFHg/up1PuFevJ4ZUXT/pPrrYoaYB3VZffw4C6pAxlvJ
+	 XLR8mvIm40ZFAuPanUBs7x+06ZVQyz1m+9x3Bb0NAxweCesjJel7H2zzpxi+YtdNKe0JH
+	 sFQIslJ5JkwMYRPeTBUYRz3weK+uWCs6gwpD/XB4n4cJthjsu+EUPV+Sm3Co131Jbqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gD+2einQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQgJVZEa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1582606A326;
-	Sat,  7 Nov 2026 14:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B87606A32D;
+	Sat,  7 Nov 2026 14:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gD+2einQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621F21F0089F;
-	Sat,  7 Nov 2026 14:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQgJVZEa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C341C1F0089F;
+	Sat,  7 Nov 2026 14:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061346;
-	bh=HbX8UOGx8AJ+mI66TRFXIAUXioHP/gxSHQfoS3zbTZA=;
+	s=korg; t=1794061348;
+	bh=J+FcGIMmC2Ozy2m5DZJaAJl1OpzoldIxmtv1/3TiXRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gD+2einQJleA9OBzN9ZVpt1uxOpYiFoNCu0wLAhAurAlmdSJygylHkgr6PPSYtz/F
-	 JoHv9VNWF8IDVHvhCxNw+enlb18B+D5ajBSznNSQ0la6sSTI7EmrN1PFJsz0yy33ms
-	 PNe1l8Urj2W1CI/oIQFBsBLdFCeM+zN7CVF9vQbc=
+	b=VQgJVZEaGmORRkbgjDsIWYn+T+BQBQQeiWNVwPbAG3KdrU6CH99q2nOyPbswTaqf0
+	 SyzzKOKDqxcA78AEjuFAj5FrXYlOsP/7XXKO+5dwYX8lMjY5YqNtBVM9Zenve8kN/b
+	 cpNZDtLi+3/1EMM35glcccbk64saOPnxB0++Tk4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0475/1536] mm: memcg-v1: fix wrong linux-mm list address in deprecation warnings
-Date: Sat,  7 Nov 2026 08:41:31 -0500
-Message-ID: <20261107135010.841528424@linuxfoundation.org>
+Subject: [PATCH 6.12 0476/1536] i3c: master: Fix potential UAF in i3c_device_uevent()
+Date: Sat,  7 Nov 2026 08:41:32 -0500
+Message-ID: <20261107135010.866984823@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -73,57 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 45b1ec4887bdcc58af885540d9fefa8b67d17d57 ]
+[ Upstream commit e5e8dd2e959f470524c16ca444d001c90d6bb3ad ]
 
-The deprecation warnings for memory.oom_control and memory.pressure_level
-use linux-mm-@kvack.org instead of the linux-mm mailing list address.
-Remove the extra hyphen.
+i3c_device_uevent() dereferences i3cdev->desc without holding the bus
+normal-use lock.  Since the descriptor pointer can be replaced
+concurrently, including when a uevent is generated from sysfs, this can
+result in dereferencing a stale descriptor and lead to a use-after-free.
 
-Link: https://lore.kernel.org/20260713085756.2973549-1-guopeng.zhang@linux.dev
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Use i3c_device_get_info() instead, which protects access to the
+descriptor with the normal-use lock.
+
+Commit 6cf7b65f7029 ("i3c: Use i3cdev->desc->info instead of calling
+i3c_device_get_info() to avoid deadlock") replaced the accessor with a
+direct descriptor dereference because i3c_device_get_info() would
+recursively acquire bus->lock during device registration.
+
+This change depends on "i3c: master: Fix recursive locking during device
+registration", which moves device registration out from under bus->lock
+and removes the possibility of that deadlock.  Without that change,
+restoring the i3c_device_get_info() call would reintroduce the deadlock.
+
+Fixes: 6cf7b65f7029 ("i3c: Use i3cdev->desc->info instead of calling i3c_device_get_info() to avoid deadlock")
+Cc: stable@vger.kernel.org # requires "i3c: master: Fix recursive locking during device registration"
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Acked-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260807145638.168865-7-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol-v1.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/i3c/master.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/mm/memcontrol-v1.c b/mm/memcontrol-v1.c
-index afc9660c9f945..6e4e39a367e57 100644
---- a/mm/memcontrol-v1.c
-+++ b/mm/memcontrol-v1.c
-@@ -2019,13 +2019,13 @@ static ssize_t memcg_write_event_control(struct kernfs_open_file *of,
- 		event->unregister_event = mem_cgroup_usage_unregister_event;
- 	} else if (!strcmp(name, "memory.oom_control")) {
- 		pr_warn_once("oom_control is deprecated and will be removed. "
--			     "Please report your usecase to linux-mm-@kvack.org"
-+			     "Please report your usecase to linux-mm@kvack.org"
- 			     " if you depend on this functionality.\n");
- 		event->register_event = mem_cgroup_oom_register_event;
- 		event->unregister_event = mem_cgroup_oom_unregister_event;
- 	} else if (!strcmp(name, "memory.pressure_level")) {
- 		pr_warn_once("pressure_level is deprecated and will be removed. "
--			     "Please report your usecase to linux-mm-@kvack.org "
-+			     "Please report your usecase to linux-mm@kvack.org "
- 			     "if you depend on this functionality.\n");
- 		event->register_event = vmpressure_register_event;
- 		event->unregister_event = vmpressure_unregister_event;
-@@ -2883,7 +2883,7 @@ static int mem_cgroup_oom_control_write(struct cgroup_subsys_state *css,
- 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index bb15b621c067b..28a39b2c039b1 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -282,8 +282,7 @@ static int i3c_device_uevent(const struct device *dev, struct kobj_uevent_env *e
+ 	struct i3c_device_info devinfo;
+ 	u16 manuf, part, ext;
  
- 	pr_warn_once("oom_control is deprecated and will be removed. "
--		     "Please report your usecase to linux-mm-@kvack.org if you "
-+		     "Please report your usecase to linux-mm@kvack.org if you "
- 		     "depend on this functionality.\n");
- 
- 	/* cannot set to root cgroup and only 0 and 1 are allowed */
+-	if (i3cdev->desc)
+-		devinfo = i3cdev->desc->info;
++	i3c_device_get_info(i3cdev, &devinfo);
+ 	manuf = I3C_PID_MANUF_ID(devinfo.pid);
+ 	part = I3C_PID_PART_ID(devinfo.pid);
+ 	ext = I3C_PID_EXTRA_INFO(devinfo.pid);
 -- 
 2.53.0
 
