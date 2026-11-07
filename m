@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065586;
-	b=Nw/AINvvT2vymc8bo9iTDMIxEjsGitVDCgdOfik+HS/Ox2elKAlFRxOBCKBEu7Yv130x
-	 oZLh/qSm/+9pBYi1TVAFW5F6mdU+N41RNE0ZLt+b2eKZ47d4p9dpyEELWKAY6CUJjsdij
-	 1gMCMo1VE08oR2EFEdGCuSYpXc2R0lkFJBG6FDhcrs2bV4f+26BjdNSic+gqRowQTFKlW
-	 sd5E6hfNBI3SVduJG3Dh1JFiHwclerUxnKTKvajadcQEVPo9bCv96eP4rePnSFI8UI8mI
-	 kpJr46vMRYBrlLY1f1TxADOpWQdxi4/fJu8ijJwB/m0ayjwa0jyvUci3+xUVAboH8cg==
+	t=1794065588;
+	b=J2nBpn1h6Uh+W0yftaYDrqzaVNjykqda0k0le3EqCTwCgDKlaosGDiu5P5kqPAFkpno1
+	 BQ2f+KvyBoN0Jwc91g2LYKLLvxE00nwWyGBFZIwqAa0CCF4GsDDGWCuV9gFaO4jjcX7H7
+	 zIU2s9SVqQFwXMVehHvhYwNiFgUj2xXtlWTUSV5Wn/t6yc6wN0vCtGY/jDoWaBtuG75qi
+	 M9kLRJblsw1GlIPqmTrmxw95v6ksK1it0AFKovYT3OZFnm5SMeS2vL0yCyaxgEMavxBvO
+	 PQIqH4FGSvcyVgPeJM3vk+xvQywUr30E7/+p2lDCqucV0SX6SJchfDcW8h6HHKvzjmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065588;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UMHiGTqpiJnWl270B6kIjsX9cBJAvuQ1NbOVP4CgsGk=;
-	b=DFZEZezJnH249+rmhSibZl7oPeZh26PlH9sggkgrF3T5lffWwnQC0gPJQh4Oxzg1OrkN
-	 yjSC/ka5Z8h0/huuuz6nTBAX7PaLby9frpU08HB6c0HG3suy2xtJ834QRXXvnS0q3mJDs
-	 vp88b/gge9VWH+L8YKnpq1vsWLsXdhEZJYe+zPz0YpGmj8luZhjfGOUNrzPd5doLf1ZX3
-	 9j3BIcG/JuRrCz0YK/au9ZqJr/KLZh7A/GeyR+wU5jCOqUioRgNewdeunF6cW+fAohOJh
-	 HNmTsIADDv65XXCvDKgJKv76MmQN9nCRWBNPZqe6yhEoIQf+B8I/OFNxxn6O4ZMSHbA==
+	bh=aVXWpLG8V1Sy3WfagclSjN3lB4ccqp29SUkA7nZfn3I=;
+	b=fbdY0M7xgQVGgL0nDDKy+KYWXR9AF2kTh3/Mw3R21+G4/MmO6xPKoQJEM7VZI4U/J2/A
+	 1iGkbkXBwhX1dIuUA4LX8hepDArRmTvyqcL6fviVbzJnmG3jVVoqdb3Kg9WFUTShl54uv
+	 8pTMquO4gjQStTaviFdPnXIn3DiytGzxNcMFBsRjJVKuZT+U78RYRMMmVnyTh56juQh2r
+	 dKlBIcTtgyOsTg/ZO8j5JNoRSOuFRdi4GweNbodcswTPFvSO5gRDZKC+MBTPs9dkxKxQj
+	 UVUF+h8+zrx0dKu8vnedUIG23cC8YhuEMDPOpnb9c3sr6tXkUPv36mgnXL351fY293w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mfgDOIv3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bTNEjw06;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7097A606A32C;
-	Sat,  7 Nov 2026 15:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2256606A32C;
+	Sat,  7 Nov 2026 15:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mfgDOIv3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F03B1F0089F;
-	Sat,  7 Nov 2026 15:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bTNEjw06
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CA01F0089F;
+	Sat,  7 Nov 2026 15:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065586;
-	bh=UMHiGTqpiJnWl270B6kIjsX9cBJAvuQ1NbOVP4CgsGk=;
+	s=korg; t=1794065587;
+	bh=aVXWpLG8V1Sy3WfagclSjN3lB4ccqp29SUkA7nZfn3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mfgDOIv36GUf8oE6EoyQ1AqDukluQ9Qdl4hQ/5tGEPgcLesA2NSdNIfozynfhp3eh
-	 o98th7W2XhC8D9RSHGugjcsf4eHzGjhaB0yWAqsAK4Pdd/gUapKBP3BhdEZ0dAIOEI
-	 xoDPgf/bvj0zB1HirGygt7diZTKuaeEkHQYOgLUQ=
+	b=bTNEjw06BRkhS4hpqUI1XZ7BaJueIZ6HhIrR3Pni/42cQpoo9oY/BhJDwSNx6nwHi
+	 jyy7nEAg7T30Pd22KxDibViAtEniSCBAZhOHHHSlTj4zi7BM2rcEQlzdvZLAvgZuc0
+	 DeB9bKETw/SsUozgP8XuG9FyPnJjT9z5zMn8mpaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Martin Belanger <martin.belanger@dell.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1243/1257] apparmor: fix profile leak when a policy load fails
-Date: Sat,  7 Nov 2026 08:58:59 -0500
-Message-ID: <20261107135013.661256695@linuxfoundation.org>
+Subject: [PATCH 7.3 1208/1257] nvme-tcp: start error recovery when read_sock fails
+Date: Sat,  7 Nov 2026 08:58:24 -0500
+Message-ID: <20261107135012.709607533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,106 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgia Garcia <georgia.garcia@canonical.com>
+From: Martin Belanger <martin.belanger@dell.com>
 
-[ Upstream commit ce94927fa4173fcc1eca27bdc65a140064c8f1e6 ]
+[ Upstream commit 288cfa187208cc9d0809eb8e1508658151a444dd ]
 
-The error paths of aa_replace_profiles() and aa_unpack() do not break
-the refcount cycle between label and proxy. They just aa_put_profile()
-the new profiles, which drops the label refcount from 2 to 1, and the
-proxy keeps the profile alive. Every failed atomic policy load
-(e.g. "profile can not be replaced", or a later profile in the blob
-failing to unpack) leaks every new profile in the set, along with its
-proxy, rules and its loaddata reference.
+nvme_tcp_recv_skb() disables the queue and starts error recovery for
+errors it detects itself. An error returned by the transport reaches
+nvme_tcp_try_recv() without either action.
 
-The leak is usually not visible from userspace, because the raw_data
-directory for a failed load is not created, but it becomes visible
-when the blob is deduplicated onto an existing loaddata, which then
-keeps its policy/raw_data/<rev> directory forever.
+nvme_tcp_io_work() returns on a negative result and does not requeue
+itself, so the queue stops receiving and remains stalled until a command
+times out.
 
-Add aa_put_unpublished_profile(), which drops the profile's own proxy
-before putting the profile, and use it on those error paths. The
-proxy of an unpacked profile is always freshly allocated and not
-referenced by anything else before the profile is published, so
-putting it is safe.
+Report the error and start error recovery when the queue is still
+enabled, which indicates that the error was not handled by the actor.
+Do this under the socket lock, as nvme_tcp_recv_skb() does.
 
-Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
+Fixes: be8e82caa685 ("nvme-tcp: enable TLS handshake upcall")
 Cc: stable@vger.kernel.org
-Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Assisted-by: LLM
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Martin Belanger <martin.belanger@dell.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/policy.h | 20 ++++++++++++++++++++
- security/apparmor/policy.c         |  3 +++
- security/apparmor/policy_unpack.c  |  4 +++-
- 3 files changed, 26 insertions(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/security/apparmor/include/policy.h b/security/apparmor/include/policy.h
-index 0dcbf8cf1029a..bb851654cb80f 100644
---- a/security/apparmor/include/policy.h
-+++ b/security/apparmor/include/policy.h
-@@ -436,6 +436,26 @@ static inline void aa_put_profile(struct aa_profile *p)
- 		kref_put(&p->label.count.count, aa_label_kref);
- }
- 
-+/**
-+ * aa_put_unpublished_profile - put a profile that was never made visible
-+ * @p: profile  (MAYBE NULL)
-+ *
-+ * A newly allocated profile and its proxy reference each other
-+ * (proxy->label holds a label refcount). That cycle is normally broken
-+ * when the profile is replaced or removed, which redirects the proxy.
-+ * A profile that is discarded before being added to the policy tree
-+ * never goes through either path, so break the cycle here, otherwise
-+ * the profile, its proxy and its rawdata are leaked.
-+ */
-+static inline void aa_put_unpublished_profile(struct aa_profile *p)
-+{
-+	if (p && p->label.proxy) {
-+		aa_put_proxy(p->label.proxy);
-+		p->label.proxy = NULL;
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 7eec983c0eade..129966ffeb9c5 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1421,6 +1421,19 @@ static int nvme_tcp_try_recv(struct nvme_tcp_queue *queue)
+ 	lock_sock(sk);
+ 	queue->nr_cqe = 0;
+ 	consumed = sock->ops->read_sock(sk, &rd_desc, nvme_tcp_recv_skb);
++	/*
++	 * nvme_tcp_recv_skb() handles its own errors, so a queue that is
++	 * still enabled failed inside read_sock(). Handle it before
++	 * release_sock() processes the backlog.
++	 */
++	if (unlikely(consumed < 0 && consumed != -EAGAIN &&
++		     queue->rd_enabled)) {
++		dev_err(queue->ctrl->ctrl.device,
++			"queue %d: receive failed: %d\n",
++			nvme_tcp_queue_id(queue), consumed);
++		queue->rd_enabled = false;
++		nvme_tcp_error_recovery(&queue->ctrl->ctrl);
 +	}
-+	aa_put_profile(p);
-+}
-+
- static inline int AUDIT_MODE(const struct aa_profile *profile)
- {
- 	if (aa_g_audit != AUDIT_NORMAL)
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index f6f7cdcb62126..8f23f99d2a58f 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1460,6 +1460,9 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	}
- 	list_for_each_entry_safe(ent, tmp, &lh, list) {
- 		list_del_init(&ent->list);
-+		/* new was never added to the policy tree */
-+		aa_put_unpublished_profile(ent->new);
-+		ent->new = NULL;
- 		aa_load_ent_free(ent);
- 	}
- 
-diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
-index 1ea89e9c53fff..99dd61e3b1038 100644
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -1816,13 +1816,15 @@ int aa_unpack(struct aa_loaddata *udata, struct list_head *lh,
- 
- fail_profile:
- 	kfree(ns_name);
--	aa_put_profile(profile);
-+	aa_put_unpublished_profile(profile);
- 
- fail:
- 	if (compressed_data)
- 		kvfree(compressed_data);
- 	list_for_each_entry_safe(ent, tmp, lh, list) {
- 		list_del_init(&ent->list);
-+		aa_put_unpublished_profile(ent->new);
-+		ent->new = NULL;
- 		aa_load_ent_free(ent);
- 	}
- 
+ 	release_sock(sk);
+ 	return consumed == -EAGAIN ? 0 : consumed;
+ }
 -- 
 2.53.0
 
