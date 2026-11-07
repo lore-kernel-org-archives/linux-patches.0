@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062797;
-	b=TFSgSyCOdxcnjgTOptJGUyrc3yOyYn9xfb4Z9n2gUG6h3gyhilcNTvlWcl64neJz1STk
-	 tPm2pDHw1d73FY1MZfvfkB5dJeAN0Cno3JJBCGyYie6+szIs+56Th5+hdxJoRwnhJ4n95
-	 4/l9PzelWA+Ju4b7dtZ1QV5B7PNl8lX7DiwgGyXvVGjik/kbMvl/7wu+/N4myZd9uW0u2
-	 e+he7FR9oq5efiwwJYbU7/ycA8nbdjLhMLCAzCbw/1B5BVWM9mJy1ArOvJoE54BN1FERh
-	 Rw0HD1wcBjsawH7DbcPyWOyKh1nMRllGPEFpHEtOfKkwwaGbxTCmLI++m6tMDMKPHXA==
+	t=1794062799;
+	b=nM3cJ88BDb4LCNmy97KEIpPKIxtRTjvKibqEnHt7Ok6FldPDWsVF0jwFqfntFY2gXz6+
+	 RP93+sA2dVVD1nuIdijdbng4fT0F2ozXcnHuOy2agpS4CtrTu6Jxh20FHYehieZ1Ja4Hz
+	 ZgXHfLR0S1AFCC1vEvF8lWVEd+eTZwrUAOy+a30EA+kTXzmtU+GKMQM3lvNoan8/p8UJO
+	 yWmBzH6+yiLQkv+e1+g5JKdrhe1psUsrfglDnIVdYlNzOGi21vvTX5UQiTPculwp7bwyS
+	 EpTQu2wtETn+knyCJtFvGudNGexaofw7eMA4XyjWczd4sxd2wuT1v1eyWeB7cZ/E1TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062797;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dOmuqP6LjLXKmejMbgN8TEgX/95sMNAeSsZUp/EdTv0=;
-	b=HQ7iQZlV5ys9/Vtq0Ff0zYECSIDtr47I1H6NTGHBcnyA4wdVZp1GiLbqLsep5NFT9SsV
-	 Zbsw4JfXnrvBRHrvKmvJqxwhi/u0ad80mEXs8BUYrbIF7L5atuLEk5qsqqNEciFK7LK/l
-	 r17Ux7H3QM3U9SqofIxVH2Xg3EWLhXgb9bXbSqYAditsymzXpC3fh0Z4lV70DYRntBJx4
-	 gQmmt2EcBKupSHDI0MaF7GjKvtm1U2JcpQLWrCBq1//3sODW+wPx79IveoYrAeVR/cWkL
-	 2fJaY+tk7f5BzMcKz6U4WasYiIqUELXZqLFnjgr+gKQjdEDYdoCzwvMgrSUzFrIl3SQ==
+	bh=FQworxnOIDos2YlAw7mWv6RCbovJTEcVAgYhIsfNyDM=;
+	b=LoDFi+F6p2LAGEI7q9hQV9dLJBwAIVq2wgQAcyijuqpOORUxRSGth1DBwkdfUZ5HaWpU
+	 uZCqrr9tmpym7Y1WBY3DbtWaAVDIhaCUmmDqHmyKUuebIuqdDXHudtWtE3/KDiB2W33ZN
+	 Rw8RZOA8/mmGH0iorlYe+JVo+xd2BTg0/IU9VKRbZ4rDa2OGsWru8UFWeYk3oM8UxNN11
+	 mDO7N9kaM5cbSkNU/q8KeSyG82npFRCI3FmEKgiSGNK9C+MlwO1OPYebHKHo5HwULf3hY
+	 CCwWBXReuPWV+bEU1PsiKMV95yzH49eNQ1qZrx6oAr9sj7MAJmLdbuMF/oAEEdsuyQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq9oSHXD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YcEn3jJy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAAB606D804;
-	Sat,  7 Nov 2026 14:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA20606D809;
+	Sat,  7 Nov 2026 14:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hq9oSHXD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497DE1F008A2;
-	Sat,  7 Nov 2026 14:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YcEn3jJy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFF71F0089F;
+	Sat,  7 Nov 2026 14:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062797;
-	bh=dOmuqP6LjLXKmejMbgN8TEgX/95sMNAeSsZUp/EdTv0=;
+	s=korg; t=1794062798;
+	bh=FQworxnOIDos2YlAw7mWv6RCbovJTEcVAgYhIsfNyDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hq9oSHXD7Ur3bMqSf5DDmFmTHOa+dfTwns+eGdyIJXCLM7cLY3JGFktz3Nw0r7jQZ
-	 Joef2llBg0RT+5ZALSzilDsBehRikystZv8ie7YIrtZCeG+K4H3tAYupy6+CjKCl2J
-	 EbVOKRkERETlPZGw6ciEQzo1kqrUlDRPKvMRMzo0=
+	b=YcEn3jJyOvaIAfNTBebSRzEpvYt7Ka2gBkdwNIwZ4afK0s3KAoowd2CQk3gbwD5K0
+	 PXT/q3ZSDJHmIHFpjfSNgtddvew/aRT0lD+rKqhnRfaeRWbWFcLHVRjmdpGrqB2TrK
+	 1X/mhbGUwhp04huorWMDCAiEU3vvUsURW1O7bpnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	stable@kernel.org,
+	Alain Volmat <alain.volmat@foss.st.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 083/869] media: saa7146: Initialize interrupt lock before requesting IRQ
-Date: Sat,  7 Nov 2026 08:46:05 -0500
-Message-ID: <20261107134855.517035387@linuxfoundation.org>
+Subject: [PATCH 6.18 101/869] media: stm32: csi: correct remote pad retrieval
+Date: Sat,  7 Nov 2026 08:46:23 -0500
+Message-ID: <20261107134856.071272896@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,49 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Alain Volmat <alain.volmat@foss.st.com>
 
-[ Upstream commit e07c75a6bc4adf1ed09ede31756261e2c6bdede5 ]
+[ Upstream commit b83651d321d4fd07979a59f359dcb0266391f17a ]
 
-The saa7146 interrupt handler can call SAA7146_IER_DISABLE(), which
-serializes register access with dev->int_slock. request_irq() allows the
-shared handler to run before saa7146_init_one() reaches the current lock
-initialization block.
+The function media_entity_get_fwnode_pad is called in order to
+retrieve the remote pad, which is the source of the CSI.
+However this function is expecting the sensor endpoint fwnode
+and not sensor device fwnode as it is currently given.
+Correct this by properly relying on the notified matched fwnode
+data instead of the subdev entity fwnode.
 
-Initialize dev->int_slock before requesting the interrupt so every handler
-path sees an initialized lock.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Cc: stable@kernel.org
+Fixes: dcb0f4c16be5 ("media: stm32: csi: addition of the STM32 CSI driver")
+Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/saa7146/saa7146_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/st/stm32/stm32-csi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/common/saa7146/saa7146_core.c b/drivers/media/common/saa7146/saa7146_core.c
-index 27c53eed8fe39..e908af0693d26 100644
---- a/drivers/media/common/saa7146/saa7146_core.c
-+++ b/drivers/media/common/saa7146/saa7146_core.c
-@@ -340,6 +340,8 @@ static int saa7146_init_one(struct pci_dev *pci, const struct pci_device_id *ent
- 		goto out;
- 	}
+diff --git a/drivers/media/platform/st/stm32/stm32-csi.c b/drivers/media/platform/st/stm32/stm32-csi.c
+index fd2b6dfbd44c5..ecd0ed8e76b59 100644
+--- a/drivers/media/platform/st/stm32/stm32-csi.c
++++ b/drivers/media/platform/st/stm32/stm32-csi.c
+@@ -825,7 +825,7 @@ static int stm32_csi_async_bound(struct v4l2_async_notifier *notifier,
+ 	int remote_pad;
  
-+	spin_lock_init(&dev->int_slock);
-+
- 	/* create a nice device name */
- 	sprintf(dev->name, "saa7146 (%d)", saa7146_num);
- 
-@@ -425,7 +427,6 @@ static int saa7146_init_one(struct pci_dev *pci, const struct pci_device_id *ent
- 	dev->ext = ext;
- 
- 	mutex_init(&dev->v4l2_lock);
--	spin_lock_init(&dev->int_slock);
- 	spin_lock_init(&dev->slock);
- 
- 	mutex_init(&dev->i2c_lock);
+ 	remote_pad = media_entity_get_fwnode_pad(&s_subdev->entity,
+-						 s_subdev->fwnode,
++						 asd->match.fwnode,
+ 						 MEDIA_PAD_FL_SOURCE);
+ 	if (remote_pad < 0) {
+ 		dev_err(csidev->dev, "Couldn't find output pad for subdev %s\n",
 -- 
 2.53.0
 
