@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063248;
-	b=wZVNhbhm4MyiR67qVHa5VXvtUVdNA5SEdRpovtCIlxywp2W5cdCPM299xPiLK9zCDGwR
-	 PKlDYxj839gDaMu0M4YL7mZNCLudtVpIwWQ/dZZ6x8lsqXbnVqh6GxONSOW4o9Iz5I6xt
-	 dXHm0Adosc/AaddEO3Ju1Z2sBOteXHo3j2llGhkzF99RXUcGYWbh647C7omUZPxssT7Fp
-	 4BAh+Y8lYU60MWo54ozlU4XR4eCL6QRxp7L7oUaIrtOVpwtY21m4zcyFdUMge29fPLtGa
-	 8YIg6fcWuhn2Q5Xv+sS0XVONoGJ8/a/HCmN4zpX6SS2Utw+4H4PovcRxFWV/Q1gOK5Q==
+	t=1794063250;
+	b=30GAuXJFNK3SHq/I1Whqv6mjjyeXlsV7FDA53bvV4+a0wRdOSLMN4WiM89Uw4F6DcDn5
+	 ijcHE/NxknJGqpcEqigKNTnxz3Uu5+T67zX0dPSzkPd3T/T13dXExoIOY+EksRpk4RU2G
+	 M6C7Lhtq3a7Vav0CFAwXJw3PwzC0suHlOIhAEJuHOzP/Ay78unW4f1YEzf1cEfzyqrLni
+	 heAxhtNFV9BwoNRUMePMjXER/xW2/Gzh6dGSaqqENR6IQm+762DQHzxCC8QuaD5vH7SSp
+	 UWWtQduCyiOvQMVIHQmuwMs4xT3WU6KGNA8h+XjmpC79m0p3dyEbJGgG67Nu7iC4QMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063248;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063250;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qEcYdKkxRygVALu6IvHOe6gEwpH96UFzqePRRFmQ4H0=;
-	b=f/+DIUgzaIkPyNJa7v0STb7V18Nf/uxWNsLTb4zSogsNZ0lp7LJHRcU28LVjGHte6zaD
-	 NqMpf4tSifw/duNOvNZ6Y2ZuhTpQC4mSXPmZD9Z/E+qM/qKpfOZDhyDqflP2C29SK80IR
-	 HLWH4+vzMTOF6FbrTnPpcJHJqszfFXLjlEXPliURHRG59n0foyPett86X80GZosBhzcOV
-	 lmsKjeDWR8tS/jyTkaHZ7t9LB+jjm6s1oJtL7jLjUJKKhND8x8Ha5+2Uw/t0LoxdwJjNt
-	 KkCAZAemkMQjPfbg53BJ0XBWs7KOu9C5uAJkDA7lC4da4yDDnccJE5JUUi3NdtIx9fA==
+	bh=W7u/oSSIQu0WO+TyR36bsPnKuKvoQBRxae9kGHmCaak=;
+	b=h9mSt8sxylyYE/a92jc0ZacAZZj+wydSP7vdjk6AliWco2ZRoWgyaLT+LJCqZsD8kj7d
+	 0reAYvF99bV34wyINkNQ/7iFmopCSsgsTouZbS90W1+txoTHyLsaDJSUnq46kFk/EYEy/
+	 nN2l4aS3rkfNFkJXP0TO+azlq6c5x7VjUIwMrupWy40rexyXBaYoDLkvOsuxfpgtrDE+J
+	 WS3TjA6ROGByhw+qky75D1eBL8I/ScxthnjW28W5efjZZdCqvl1P2kleFA6m7r3YoBGh1
+	 NmTT6VP3YIenebJcIhk0SjEn8SUXnq/vUqsOWC+YkW7ZDtRQgjTvipkxWqM6Hq0DEEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnWg9sIr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KRzhDUK2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73974606A32E;
-	Sat,  7 Nov 2026 14:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5E1606A336;
+	Sat,  7 Nov 2026 14:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnWg9sIr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4CF1F0089F;
-	Sat,  7 Nov 2026 14:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KRzhDUK2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A95D1F0089F;
+	Sat,  7 Nov 2026 14:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063248;
-	bh=qEcYdKkxRygVALu6IvHOe6gEwpH96UFzqePRRFmQ4H0=;
+	s=korg; t=1794063249;
+	bh=W7u/oSSIQu0WO+TyR36bsPnKuKvoQBRxae9kGHmCaak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tnWg9sIr1BMMYlO3MO2cR74xSyAaRK2HE5v423F/qy5BYTagsHg3t94yqatp1zkfK
-	 nOX8ixoDXzsjrsLrGpRlSbAth86JXaZvdSbEKXZ6XXDfQ1JBjdICwGzBJvp3/F3BmP
-	 IYrxNjLcKK3omOfhLIRG4G1xg0ZVEUfJQIQIbjAA=
+	b=KRzhDUK2VYsK8np7LaB1383iZ8ZPmFW/5TtFGT2wRLRqrKSL5QixHlE14D651ZOU5
+	 sxOAnnJMagAaSpraiis2hqzC3eRFVBRLaHonV/QZHRjb/KAi5I+IhnfierXbfDf6vr
+	 OhWNWdlqnudKX20w1RN454FXtDoqQucNrxLJ4LM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Seongjun Hong <hsj0512@snu.ac.kr>,
-	Alex Williamson <alex@shazbot.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Herve Codina <herve.codina@bootlin.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 452/869] vfio/mlx5: Fix boundary check in set_report_output()
-Date: Sat,  7 Nov 2026 08:52:14 -0500
-Message-ID: <20261107134909.044790624@linuxfoundation.org>
+Subject: [PATCH 6.18 435/869] soc: fsl: cpm1: tsa: Fix clock leak in tsa_of_parse_tdms()
+Date: Sat,  7 Nov 2026 08:51:57 -0500
+Message-ID: <20261107134908.538954813@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,38 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seongjun Hong <hsj0512@snu.ac.kr>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 37b2ee6747b7857920ebc71eabc25208a39164a4 ]
+[ Upstream commit 46201d760c48e771fa2febfcb0787f22c3b71387 ]
 
-Use > instead of >= on boundary check of recv_buf to avoid the bug which
-the full message in the last slot of recv_buf is ignored even though the
-received data size does not overflow the recv_buf.
+The error cleanup loop puts l1rsync_clk and l1rclk_clk a second time
+and never puts l1tsync_clk or l1tclk_clk, because the branches that
+guard the transmit clocks use the receive clock field names.
 
-Fixes: 9c7c5430bca3 ("vfio/mlx5: Align the page tracking max message size with the device capability")
+Use the matching field in each branch so every clock acquired by
+tsa_of_parse_tdms() is released exactly once.
+
+Fixes: 1d4ba0b81c1c ("soc: fsl: cpm1: Add support for TSA")
 Cc: stable@vger.kernel.org
-Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
-Signed-off-by: Seongjun Hong <hsj0512@snu.ac.kr>
-Link: https://lore.kernel.org/r/20261005-vfio-mlx5-fix-boundary-check-v2-1-75599d2f4497@snu.ac.kr
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://lore.kernel.org/r/20260917152719.2160395-1-vulab@iscas.ac.cn
+[chleroy: Fixed the same in tsa_remove()]
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/mlx5/cmd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/fsl/qe/tsa.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/vfio/pci/mlx5/cmd.c b/drivers/vfio/pci/mlx5/cmd.c
-index a92b095b90f6a..a870ea1c0e9d3 100644
---- a/drivers/vfio/pci/mlx5/cmd.c
-+++ b/drivers/vfio/pci/mlx5/cmd.c
-@@ -1627,7 +1627,7 @@ set_report_output(u32 size, int index, struct mlx5_vhca_qp *qp,
- 	int i;
- 
- 	buf_offset = index * qp->max_msg_size;
--	if (WARN_ON(buf_offset + size >= qp->recv_buf.npages * PAGE_SIZE ||
-+	if (WARN_ON(buf_offset + size > qp->recv_buf.npages * PAGE_SIZE ||
- 		    (nent > qp->max_msg_size / entry_size)))
- 		return;
- 
+diff --git a/drivers/soc/fsl/qe/tsa.c b/drivers/soc/fsl/qe/tsa.c
+index 4a88e54d25b94..502e2ffe86898 100644
+--- a/drivers/soc/fsl/qe/tsa.c
++++ b/drivers/soc/fsl/qe/tsa.c
+@@ -865,12 +865,12 @@ static int tsa_of_parse_tdms(struct tsa *tsa, struct device_node *np)
+ 			clk_put(tsa->tdm[i].l1rclk_clk);
+ 		}
+ 		if (tsa->tdm[i].l1tsync_clk) {
+-			clk_disable_unprepare(tsa->tdm[i].l1rsync_clk);
+-			clk_put(tsa->tdm[i].l1rsync_clk);
++			clk_disable_unprepare(tsa->tdm[i].l1tsync_clk);
++			clk_put(tsa->tdm[i].l1tsync_clk);
+ 		}
+ 		if (tsa->tdm[i].l1tclk_clk) {
+-			clk_disable_unprepare(tsa->tdm[i].l1rclk_clk);
+-			clk_put(tsa->tdm[i].l1rclk_clk);
++			clk_disable_unprepare(tsa->tdm[i].l1tclk_clk);
++			clk_put(tsa->tdm[i].l1tclk_clk);
+ 		}
+ 	}
+ 	return ret;
+@@ -1039,12 +1039,12 @@ static void tsa_remove(struct platform_device *pdev)
+ 			clk_put(tsa->tdm[i].l1rclk_clk);
+ 		}
+ 		if (tsa->tdm[i].l1tsync_clk) {
+-			clk_disable_unprepare(tsa->tdm[i].l1rsync_clk);
+-			clk_put(tsa->tdm[i].l1rsync_clk);
++			clk_disable_unprepare(tsa->tdm[i].l1tsync_clk);
++			clk_put(tsa->tdm[i].l1tsync_clk);
+ 		}
+ 		if (tsa->tdm[i].l1tclk_clk) {
+-			clk_disable_unprepare(tsa->tdm[i].l1rclk_clk);
+-			clk_put(tsa->tdm[i].l1rclk_clk);
++			clk_disable_unprepare(tsa->tdm[i].l1tclk_clk);
++			clk_put(tsa->tdm[i].l1tclk_clk);
+ 		}
+ 	}
+ }
 -- 
 2.53.0
 
