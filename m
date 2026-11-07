@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060732;
-	b=keUlUMCGP/NMU9xdJfmfb5jw9ztYKBxbIVHcP1DPdfabppDvsae5ylLRPfWPYVswta9B
-	 BpkXi3O9QCeM3TPvnXVZktYwJjap0pujqmyRkHZadABTyLR/5FSPhQxECi9G6eUye1nwN
-	 IFu4Sz0adJmpRiNwKXPvqly9mzqWM21olfz+R7MLIVoW0yZW1CSZMaIMDzoxt++mgcKWc
-	 YvKuxG5a0W1XT4dQBvjV/k37f+twe4XpTYNFY6YglFtFeB6blDY10rEXvc2Had2TlZpmb
-	 rEcMeD4u+YT5bm72U41ejkT/vd0VOkl9W2YiAOC2l4LJ9JT3NfbTPZeWyQ6iV9aRBow==
+	t=1794060734;
+	b=HCFtRG9zO7rQpYYBvijbDJV8xMWNbWWqHDEW9MvruWy9wGgSSYCCeYM1stDMsKhsgdoM
+	 uFB+qQpwDCsYlAxmQJxGXqIrd3f7wLLmtPOxOu7XT8YqLQgVArxpEuz8gpGQI2+CkWIeK
+	 9/uegXk9tbDZ+vVq65Iq+6exAxFYgnx/w6iwq5N/QJJJ8ZWuL6MBlc/vebUBfJLkLaIa5
+	 MKUAVC+oXGl2jfknHQAi89YxO7yB8WFFx+RVEAe87O5yssgIQGgk0YPWwqc2oBNFG7nYa
+	 LYWi5fKesAEGGcwt/dQpovnl3xgod/Ms+coVdVJbSvlZ9IhaFsand2IvVuCCFCBk/kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060734;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s+oyBK85GbX10LM25c0bTyxx9IT+yRVwi1trjNfOH+k=;
-	b=fS0vJjzrj6a/7UhNWEdjz2xN4g9yis2kK+8KwhRcz2l7rqrDx0lPcy040c/j5PyUyxGg
-	 TRBiKnMgU7v7BJn74GbM3uEFoiYTdM9X1f4pQA1qn8Xi+Syg/Y7lulO47cgUwic+Fgu7e
-	 VcV4ZZRjdBDYNXzwkqwa9QD79aSDeuBknqPJAR3xnhgtDUdcYVs+ESKaQk69WL+ibty2L
-	 QQPLQLabap6/ZFY6+KUBgDVUk2IhtqYnHYGF3SNwsSS3lMAxK8kMRHQyw7xVT288zZ69U
-	 1sMrHdDHTMKLIkfVrPzVP51HOSoblBYeMKXDj/OBJLpVD2MK9vmirvwg1ofa4GQm7FA==
+	bh=HdgCb6/Tccvemirywr9QCyOJm52LlzYwtLiBaNGjw5s=;
+	b=QE9h+KINSpDUSKqIBv2JAoRrjAclShEPL2HFW+Cu6gutmDeUg0SiME3hGsjfBY+gku1l
+	 wCW40Fdd3ERtln/7HYgR9OQrCxgUgej0P1n6QIY/E1/magsAUki0HYVxbXLR1duPwDrlO
+	 4ij7QLurIy8vWBZfu0Xg0qsMiBiHeCWGpzlgZwtvgd4/tNZaS2KEbkPDQBxKJkpKq+lRL
+	 BQoU2NQW4WxYqJyUFsVLCkOziyhsZSA5pU3Mhi2WhRZlQ9dxFIJoxZoUVMlI5K5TuyAbn
+	 5itayXt/wVDcX07frZ95Phe7dYm6l5t8HP8EVOEWS2fZsZ2TRwWpWEaKnkLcfX0SlNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QvsY1PBT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4Qd1bny;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED5C606A326;
-	Sat,  7 Nov 2026 14:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE5C606A338;
+	Sat,  7 Nov 2026 14:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QvsY1PBT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BD21F0089F;
-	Sat,  7 Nov 2026 14:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4Qd1bny
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4BB1F0089F;
+	Sat,  7 Nov 2026 14:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060732;
-	bh=s+oyBK85GbX10LM25c0bTyxx9IT+yRVwi1trjNfOH+k=;
+	s=korg; t=1794060733;
+	bh=HdgCb6/Tccvemirywr9QCyOJm52LlzYwtLiBaNGjw5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QvsY1PBTmMHl/Xp2dDE3W2odtjch1c7oHcLFnTLrl9MRpwSu+Dv+CjnDRZ6rrKI95
-	 sH9q5RnzyeLMejPPihyjrmQTmzsWJ8VN8JqqvvDJ9xH7fIpjtHLZG9vZcUDTFe+lTX
-	 plBVIYXnKG+QJsCTvPVS8eXlhNgSOgRtGNK9eO/M=
+	b=G4Qd1bnyk/gYeT9NAZPBIlHuiZkYEglcyf7dTo0+oxXLW8nJbII6QY92YgAgyEJVK
+	 pFjedyWvDyXsOYkbZpEd/S35HVwWEYBXwAFFvkdh/kw9YjQv0BiwCcJTOUuG/Z4IHF
+	 8TZLVyafwmluwgujbYWkvAUZA5ypb7ksvz93YbXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Hari Mishal <harimishal1@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0124/1536] nvme: bound ns descriptor header and body to identify buffer
-Date: Sat,  7 Nov 2026 08:35:40 -0500
-Message-ID: <20261107135001.168904342@linuxfoundation.org>
+Subject: [PATCH 6.12 0151/1536] comedi: aio_iiro_16: Add sanity check to interrupt handler
+Date: Sat,  7 Nov 2026 08:36:07 -0500
+Message-ID: <20261107135001.923224870@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,44 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 3c568b35a0d309acb40746552bec2af24cd550ef ]
+[ Upstream commit 1ca44751915134f19e8627768159781e75b5da50 ]
 
-nvme_identify_ns_descs() allocates a buffer and gives it to the
-controller, which populates it and then iterates the buffer with
-variable byte increments that vary by type and body size.  But, there is
-no bounds check inside the iteration itself except the loop bound
-itself.  Fix this by checking and stopping iteration if the next header
-or its declared body would go past the buffer itself.
+The driver requests an interrupt handler for the device, after setting
+device registers to disable interrupt generation.  The interrupt handler
+should not be called prematurely unless the user-configured I/O port
+base address and/or IRQ number are incorrect or the hardware is bad.
 
-Assisted-by: gkh_clanker_t1000
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+For safety, check the dev->attached flag in the interrupt handler to
+ensure the device has been fully set up, avoiding a possible null
+pointer dereference of dev->read_subdev.
+
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-2-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/comedi/drivers/aio_iiro_16.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index bb274fecbec48..cf79a6c45ccd3 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1540,8 +1540,12 @@ static int nvme_identify_ns_descs(struct nvme_ctrl *ctrl,
- 	for (pos = 0; pos < NVME_IDENTIFY_DATA_SIZE; pos += len) {
- 		struct nvme_ns_id_desc *cur = data + pos;
+diff --git a/drivers/comedi/drivers/aio_iiro_16.c b/drivers/comedi/drivers/aio_iiro_16.c
+index 739cc4db52ac7..fe75b7e1ddcac 100644
+--- a/drivers/comedi/drivers/aio_iiro_16.c
++++ b/drivers/comedi/drivers/aio_iiro_16.c
+@@ -59,6 +59,9 @@ static irqreturn_t aio_iiro_16_cos(int irq, void *d)
+ 	unsigned int status;
+ 	unsigned int val;
  
-+		if (pos + sizeof(*cur) > NVME_IDENTIFY_DATA_SIZE)
-+			break;
- 		if (cur->nidl == 0)
- 			break;
-+		if (pos + sizeof(*cur) + cur->nidl > NVME_IDENTIFY_DATA_SIZE)
-+			break;
- 
- 		len = nvme_process_ns_desc(ctrl, &info->ids, cur, &csi_seen);
- 		if (len < 0)
++	if (!dev->attached)
++		return IRQ_NONE;
++
+ 	status = inb(dev->iobase + AIO_IIRO_16_STATUS);
+ 	if (!(status & AIO_IIRO_16_STATUS_IRQE))
+ 		return IRQ_NONE;
 -- 
 2.53.0
 
