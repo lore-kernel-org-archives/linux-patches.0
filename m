@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063462;
-	b=B4M529n+4hEgvKQvrOGHSRZ8ZD/gh9CrjMU2UPLv/ALxI8aK1df18x7Aq6PpRSDTfck/
-	 kwj3XkvK2ExJtEq0wrs33BnOUHXD1up8Cpm8hBXsSTy74HbgGuW5AKwSpvsBo3uQ3tP8G
-	 1a9seBsWtaNbubRVr86TscTHmk+rfmVnALW2VPB3uj/VNn5v4jezizeY3roJ06sREa8u4
-	 cO4AFaZrQkWCQwvXM8aYjyU5kPdFYJSSpIpH7HWLM03CiX51RT5Qse/GzZy9AcMgdownV
-	 JJrGrCHlnR1iJ7cfEQUCScTP79pn+HdJR5ZosY8al1UqdxsOCdlfYJqM3FpPrfU9GCw==
+	t=1794063464;
+	b=KjVJ/qzqWpCT87LVP7ONvvswm0uOhhBspFixQ8PjY4/MqVJh6X7aHCgnTCJk+lXSPAjQ
+	 3ubLDXcTWdhPj+kk7qPYXV/m1ZsbWlXmxzCKVwzJubB4rRwHeJ2PIDm5ykq67NAl2I7R9
+	 W4PRbAxGUJQ8olfOop6ZsK8ige9V7LKCeCgmrp7ywRhvHm5hT6NQPDEIuUq5Qk2eiOzX3
+	 B8qix6ti8NmSSMSLa1gtYS8dwpEcVTk6p8+gJyPY3IJ98T/zQpUWICi1g14freZx2ZxDx
+	 DcROasgDoCAZtbL8WlBuionxOV/h+UpufjrBp+BD9/TkpuqovdIWJboSnH8CYDsiI3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063464;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=oXlZ1/aUbtQpyd0iBRV00AJpU7v6tKwaWUfc8tdDv04=;
-	b=5stMqHFtfPgk4Gv3OLb0vvpRQeI5nJ8cnq1OowNglhITs1kMlc/TRbimJTBzgQoTiwwC
-	 JDWB29opFNU9BFWC9TUKK8OH4HshFgByDkoaY/YEk6fT5DfiFgsmKljFj5ODhKIN2tJ2Q
-	 HimoPIeBHPYOVSIUvfPut+ggAqBrshxA3HHor8gFcbq8nRPAN1uHKGktIICLSMu1eHSlZ
-	 X0tLoO+S8s0gqNz96tGGr/PymP3fmOuXGq6Wb+TYBpEH6keipECGSZefnKt+nttpi0GJy
-	 Qm9b5MkQ+cY8HRX7HLulkhRU0kxhfhmk3EK/o0SXEqYS2DyB6ePIaeHkOeCO0F7QgCg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=+ca3P+TE8TPPWL4SesXJagcwmzn1asuSz4GmboRJ2MI=;
+	b=n0BqubAsPHV799KODWGQa710lSUP1cI5AckrRbiUX52npTzeyu9cUut3PLOLZBQNl+8b
+	 WaXRhv6H0ypuU9RpVS7DGEfH9cwjFHKtk3QF6xHiIxPemV2/OlrBgcUg1RD9tNIYKCfb1
+	 jd2CZBsHXtp0E8vuTcha8T8obpD62G6mhodTa2jWRax451id0p7ucusWD+F+X1Jy0Naxq
+	 GkaamWSWwyw6zMgOoIEinbduwkt1OD2OT0Ga53OShMyyCzuIaXDvsxFKiif7t8xB+x0d9
+	 WZ65FbL5oQL1FWQqpOjMzTWKL3IFxmjFclxR1rS3abP0hask0bc8htApOdxxGW1BJzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzKKugiS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=linUp5sr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8C8606D82B;
-	Sat,  7 Nov 2026 14:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA70460A6F53;
+	Sat,  7 Nov 2026 14:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dzKKugiS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196651F008A5;
-	Sat,  7 Nov 2026 14:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=linUp5sr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3720C1F008A5;
+	Sat,  7 Nov 2026 14:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063462;
-	bh=oXlZ1/aUbtQpyd0iBRV00AJpU7v6tKwaWUfc8tdDv04=;
+	s=korg; t=1794063463;
+	bh=+ca3P+TE8TPPWL4SesXJagcwmzn1asuSz4GmboRJ2MI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dzKKugiSO2326KeD8usqb1cbvlVq6WncsE0Aurr+LgKjLfebDDzKZlE8cTlQ1frpb
-	 0CsKeZOnL+bTBLNETOLC7e5+6JPyupwto8oGWKTOPtmCxkzBkPF96xsUnpHDFiVwoB
-	 bLVu2K2Jk5AhGoRrmNa8mfED5zAcBIM9kfWvspU8=
+	b=linUp5sr2jRd84G7Ar0AZF1kvyiTDaFHezDI4S0tDkGN0/VF4aqJhEyeeKceL3crW
+	 0SinSLynPlqrB7Wg4YPZdTf5KMpkh1PS1FG8e67Ysskrz90A0k4yIjBdPwhUn/mfpK
+	 H4Chw4OKAk4+DMvzLAWJRDMUpljvOGCkL2N52lF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 600/869] ublk: reset the FETCH round in release also without a disk
-Date: Sat,  7 Nov 2026 08:54:42 -0500
-Message-ID: <20261107134913.405098396@linuxfoundation.org>
+Subject: [PATCH 6.18 618/869] ALSA: seq: oss: Skip events until fully initialized
+Date: Sat,  7 Nov 2026 08:55:00 -0500
+Message-ID: <20261107134913.995839970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -63,78 +62,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Lei <tom.leiming@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f06ca594eafcdf58a399a0f92480631192e06032 ]
+[ Upstream commit 68d4a6ea6cc6091a05836f783bc17d525d266d0b ]
 
-The release of /dev/ublkcN resets the queues only when the device has a
-disk. Without one it skips ublk_reset_ch_dev():
+When an OSS sequencer device is opened, it creates a sequencer port,
+then further initializes the internal states like a timer instance,
+etc.  Since the sequencer port is published, an event can be already
+delivered, and this may hit unexpected event handling, which can
+eventually cause a NULL dereference (like the timer start/stop event
+triggered before the timer initialization).
 
-  server fetches, never starts;         old server exits
-  or STOP_DEV removed the disk           release: no disk → skip reset
-                                         ios stay ACTIVE / CANCELED,
-                                         nr_io_ready stays full
-  new server opens /dev/ublkcN           FETCH: -EBUSY (still ready), or
-                                         -EINVAL after a partial round
-                                         → the device can only be deleted
+For avoiding such a race, introduce a simple guard and skips the event
+processing until the port is fully initialized.
+At releasing the device, in turn, clear this guard, so that any input
+events will be discarded during the teardown.
 
-All uring_cmds are done when the release work runs, with or without a
-disk, so the reset is safe either way. Do it in both cases. Then a new
-server can fetch and start the device again, as the STOP_DEV entry in
-Documentation/block/ublk.rst says ("ublk device is ready for the new
-process").
-
-Fixes: 82a8a30c581b ("ublk: improve detection and handling of ublk server exit")
-Cc: stable@vger.kernel.org
-Tested-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20261011063555.1142277-5-tom.leiming@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20261016161930.482309-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ sound/core/seq/oss/seq_oss_device.h | 1 +
+ sound/core/seq/oss/seq_oss_event.c  | 3 +++
+ sound/core/seq/oss/seq_oss_init.c   | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index f44512ed12176..f85d66cee9c3a 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1761,12 +1761,13 @@ static void ublk_ch_release_work_fn(struct work_struct *work)
- 	}
+diff --git a/sound/core/seq/oss/seq_oss_device.h b/sound/core/seq/oss/seq_oss_device.h
+index 935cf3df0b30f..571186db4fa59 100644
+--- a/sound/core/seq/oss/seq_oss_device.h
++++ b/sound/core/seq/oss/seq_oss_device.h
+@@ -72,6 +72,7 @@ struct seq_oss_devinfo {
+ 	int cseq;	/* sequencer client number */
+ 	int port;	/* sequencer port number */
+ 	int queue;	/* sequencer queue number */
++	bool initialized;
  
- 	/*
--	 * disk isn't attached yet, either device isn't live, or it has
--	 * been removed already, so we needn't to do anything
-+	 * No disk: the device isn't live, or it has been removed already.
-+	 * There are no requests to abort, but the round still has to be
-+	 * reset, so that a new server can fetch and start the device.
- 	 */
- 	disk = ublk_get_disk(ub);
- 	if (!disk)
--		goto out;
-+		goto reset;
+ 	struct snd_seq_addr addr;	/* address of this device */
  
- 	/*
- 	 * All uring_cmd are done now, so abort any request outstanding to
-@@ -1827,10 +1828,9 @@ static void ublk_ch_release_work_fn(struct work_struct *work)
- unlock:
- 	mutex_unlock(&ub->mutex);
- 	ublk_put_disk(disk);
--
-+reset:
- 	/* all uring_cmd has been done now, reset device & ubq */
- 	ublk_reset_ch_dev(ub);
--out:
- 	clear_bit(UB_STATE_OPEN, &ub->state);
+diff --git a/sound/core/seq/oss/seq_oss_event.c b/sound/core/seq/oss/seq_oss_event.c
+index 122735862044d..20f4c5ce763cc 100644
+--- a/sound/core/seq/oss/seq_oss_event.c
++++ b/sound/core/seq/oss/seq_oss_event.c
+@@ -425,6 +425,9 @@ snd_seq_oss_event_input(struct snd_seq_event *ev, int direct, void *private_data
+ 	struct seq_oss_devinfo *dp = (struct seq_oss_devinfo *)private_data;
+ 	union evrec *rec;
  
- 	/* put the reference grabbed in ublk_ch_release() */
++	if (!dp || !smp_load_acquire(&dp->initialized))
++		return 0; /* ignored */
++
+ 	if (ev->type != SNDRV_SEQ_EVENT_ECHO)
+ 		return snd_seq_oss_midi_input(ev, direct, private_data);
+ 
+diff --git a/sound/core/seq/oss/seq_oss_init.c b/sound/core/seq/oss/seq_oss_init.c
+index 973f057eb731f..102c9358ce481 100644
+--- a/sound/core/seq/oss/seq_oss_init.c
++++ b/sound/core/seq/oss/seq_oss_init.c
+@@ -258,6 +258,7 @@ snd_seq_oss_open(struct file *file, int level)
+ 
+ 	client_table[dp->index] = dp;
+ 	num_clients++;
++	smp_store_release(&dp->initialized, true);
+ 
+ 	return 0;
+ 
+@@ -403,6 +404,7 @@ snd_seq_oss_release(struct seq_oss_devinfo *dp)
+ 
+ 	client_table[dp->index] = NULL;
+ 	num_clients--;
++	smp_store_release(&dp->initialized, false);
+ 
+ 	snd_seq_oss_reset(dp);
+ 
 -- 
 2.53.0
 
