@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061507;
-	b=IGCPpMUOZMystZaTUKw+f9ApBwo2LGWt9A0D2AxZSsrNWmY2CA81xsJ78zPc0N+JiPaR
-	 Bky212Slyl7zbGgcGJw4fhoWQ4oBncAZZ+k+3nNQfr4IYtnZqlbTjHSiUDSz5gYd07vnN
-	 cOFilmdeL9w4rij/8siF+s7+e/VA4t1MpeQ/Ke38/pnJl9As8250qzepbXy9WW28fGOrF
-	 cTKCiL5jj7rPj7NFbw7ia1aYAQR0sb1j7xEN+3rosYqrq4alOcXpUNRVWZp2HnbbmCUPl
-	 MpOPgxnsdFdkghbSVK1jLeEcDckSSHo94CSMC69Ou+h8uDP6v5kfWgiYDLNkrKSRYdg==
+	t=1794061509;
+	b=fJjK3YQemeEDsf4I/00ejQt8BwhK8KsbRKxxpymAChoqMxMXIXfb0XmzCccy3DqaY9Dh
+	 Y8mim6ZttmuIH9GYKvraCvZZLs+z2wwI2TaMSzZF8w4551XfoRiT3uNXwfPgiCfDBVQD8
+	 HwsYkmDSzQTZWaWy4ygtbNl+HGOtFEoqvoDg3lyoF6scXkWvXZAWIVFWTrd/+0/nXRJ96
+	 yUR+vpPLZQ/DK+yUPai7z5IfTAODwXva6pXliEd29c0ru1swTEjLNp9opI6k6T4cSjrnV
+	 cnr5xxWd8tWmSt8AzcDPaTzk2UaGo8phMHWrbiFHOCoYaRHkBPywW8fGPZ6SASVfoVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mkba6+hUaZzSvgdo8cRwkM6o5Gb97sublOPViaehTBk=;
-	b=qoT38rfIcow6gWqPuPDHQuy7HCQuzsGLnrNbeS8qWt8UdU3DmcnLunCIPPTVa8vLNBub
-	 DvYAUqfg+Py2BvjZeoWHyFRc699Vd3yRnbK2hVj4EPpPa0HusyAbfybVN6+QiJnqXLYPk
-	 IvJGB0aIvkeNm0kunjaKocbYBAhMmaZKGQM5IVrN8/6ms0lwmEPkJ4fKlW4X4nTbArs/D
-	 ZLPLaz3sibwJRFVzbbc19+DBNo5D+xgwtgF+02RwFrB1zGBpebBf+yX7K7MBKj2VIp8BA
-	 HW3JiFE8K1/kh2VC6i2T1faOrVXZfVTcYNRofybglDyeTqpG6YH6Vw3J4vNYGYlaLFQ==
+	bh=E0ejE9EIjiHl84SR3X98dYdJ6u6XFwIlZE9rwj/XlqM=;
+	b=bdpCmaeJsw/sBP65S3e5e83xvUECrbNCcDLMFyghIlCsmzohP+54Yn8EG+TYZFZTbUBW
+	 biFZM5l7A0CMQHI2w1Ovx2EMH1bPRAC0mBTSOfFty6lHnKl4uamih5hx6cJp1IjNZNW3s
+	 BT2vzzhJMcxYdSDwVqs21KcIoSRoqQNOqFr7Fc7OTOWCalrtQf5wkDcEAM+uwO4OXqDa4
+	 1xc5YeYk1aFjrz3htTGvOJrKUXZWUkR2xnqLiMbeJS66UN4isx/ENLqG5AxyRlmXklctJ
+	 xB3qn5RgNRZeFE85mbr179DpfiXGX8DBPKvKH5xCHIhhBm1sJSrYMKqgUbQdMTDmzQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VSYnOnxf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UjkJXASw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A0E606A326;
-	Sat,  7 Nov 2026 14:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03CF606A339;
+	Sat,  7 Nov 2026 14:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VSYnOnxf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4051F0089F;
-	Sat,  7 Nov 2026 14:25:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UjkJXASw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A1A41F0089F;
+	Sat,  7 Nov 2026 14:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061507;
-	bh=mkba6+hUaZzSvgdo8cRwkM6o5Gb97sublOPViaehTBk=;
+	s=korg; t=1794061508;
+	bh=E0ejE9EIjiHl84SR3X98dYdJ6u6XFwIlZE9rwj/XlqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VSYnOnxf6EsvuwBviH+sNnAYbzLVD/MFSqgg+ayZjWmPSaKpe3n6a8T6jaGrs2nWa
-	 d20O0VP2G+Qr1UTd6Yt/hnGT0c6gsTE7FfJLCv1nxG9XszyuNB3LaP0czEUtAB2+Or
-	 /sPQ6nvYYB6E31SReBCggLM+6aiaqpMTphAqOEnU=
+	b=UjkJXASwolRWPSTJoaewYC1YpfeRpweAe9wZOrs206B/mSjJsZG1tdECXEOB16jDG
+	 UI8WCRzJ0ynSSAqO3sm3Sd3/EQRrmBLgFs1evQ8yTbaAtKDXogdiB3Kso+Ufm/ahCi
+	 0SSrtWCctvxBQ/C8Ac0Q2AC8W9NCf6c/yeFGferI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kevin Cheng <chengkev@google.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Bjoern Doebel <doebel@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0599/1536] KVM: x86: Tell ->inject_page_fault() whether or a fault came from hardware
-Date: Sat,  7 Nov 2026 08:43:35 -0500
-Message-ID: <20261107135014.366969325@linuxfoundation.org>
+Subject: [PATCH 6.12 0600/1536] KVM: VMX: Synthesize nested EPT violation GVA_IS_VALID/GVA_TRANSLATED bits
+Date: Sat,  7 Nov 2026 08:43:36 -0500
+Message-ID: <20261107135014.396667024@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,176 +69,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Kevin Cheng <chengkev@google.com>
 
-[ Upstream commit fe0b872d750023eda270cbc01c53ead52b1049d8 ]
+[ Upstream commit 96b067b59ad9ccede585fcadab27543188353bff ]
 
-When injecting a page fault (including nested TDP faults into L1), tell the
-injection routine whether or not the fault originated in hardware, i.e. if
-KVM is effectively forwarding a fault it intercept.  For nested TDP fault
-injection, KVM needs to grab PAGE_WALK vs. GUEST_FINAL information from the
-VMCB/VMCS, _if_ the fault originated in hardware.
+When injecting an EPT Violation into L2 in response to a fault detected
+while emulating an L2 GVA access, synthesize the GVA_IS_VALID and
+GVA_TRANSLATED bits using information provided by the walker, instead of
+pulling the bits from vmcs02.EXIT_QUALIFICATION.  The information in
+vmcs02.EXIT_QUALIFICATION is valid/correct if and only if the fault being
+injected into L1 is the direct result of an EPT Violation VM-Exit from L2.
 
-Note, simply checking whether or not the original exit was due a #NPF or
-EPT Violation isn't sufficient/correct, as the fault being synthesized for
-L1 may or may not be the "same" fault that triggered a VM-Exit from L2.
-E.g. if access to emulated MMIO in L2 hits a !PRESENT fault (EPT Violation
-or #NPF), e.g. because MMIO caching is disabled or it's the first time the
-GPA has been accessed by L2, then KVM will enter the emulator.  If
-emulating the MMIO instruction then hits a nested TDP fault, e.g. because
-L2 was accessing MMIO with a MOVSQ (memory-to-memory move), or because L1
-has since unmapped the code stream, then the TDP fault synthesized to L1
-will not be the same emulated fault the triggered the VM-Exit.
+E.g. if KVM is emulating an I/O instruction and the memory operand's
+translation through L1's EPT fails, using vmcs02.EXIT_QUALIFICATION is
+wrong as the semantics for EXIT_QUALIFICATION would be for an I/O exit,
+not an EPT Violation exit.
 
-No functional change intended (nothing uses the new param, yet...).
+Opportunistically clean up the formatting for creating the mask of bits
+to pull from vmcs02.EXIT_QUALIFICATION.
 
-Link: https://patch.msgid.link/20260522232701.3671446-3-seanjc@google.com
+Signed-off-by: Kevin Cheng <chengkev@google.com>
+[sean: use plumbed in @access bits, massage changelog]
+Link: https://patch.msgid.link/20260522232701.3671446-5-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-[doebel: keep this tree's split kvm_requeue_exception()/_e()
-declarations and EXPORT_SYMBOL_GPL()]
-Stable-dep-of: 96b067b59ad9 ("KVM: VMX: Synthesize nested EPT violation GVA_IS_VALID/GVA_TRANSLATED bits")
+[doebel: no advanced EPT vmexit info here, so the mask keeps only the two
+GVA bits; set GVA_TRANSLATED via !(access & PFERR_GUEST_PAGE_MASK)]
 Signed-off-by: Bjoern Doebel <doebel@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kvm_host.h | 18 ++++++++++++++----
- arch/x86/kvm/mmu/paging_tmpl.h  |  2 +-
- arch/x86/kvm/svm/nested.c       |  3 ++-
- arch/x86/kvm/vmx/nested.c       |  3 ++-
- arch/x86/kvm/x86.c              | 16 +++++++++-------
- 5 files changed, 28 insertions(+), 14 deletions(-)
+ arch/x86/kvm/mmu/paging_tmpl.h | 17 ++++++++++++++++-
+ arch/x86/kvm/vmx/nested.c      | 23 +++++++++++++++++++----
+ 2 files changed, 35 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index 565582cd96392..cec497aed149a 100644
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -451,7 +451,8 @@ struct kvm_mmu {
- 	u64 (*get_pdptr)(struct kvm_vcpu *vcpu, int index);
- 	int (*page_fault)(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault);
- 	void (*inject_page_fault)(struct kvm_vcpu *vcpu,
--				  struct x86_exception *fault);
-+				  struct x86_exception *fault,
-+				  bool from_hardware);
- 	gpa_t (*gva_to_gpa)(struct kvm_vcpu *vcpu, struct kvm_mmu *mmu,
- 			    gpa_t gva_or_gpa, u64 access,
- 			    struct x86_exception *exception);
-@@ -2140,9 +2141,18 @@ void kvm_queue_exception_e(struct kvm_vcpu *vcpu, unsigned nr, u32 error_code);
- void kvm_queue_exception_p(struct kvm_vcpu *vcpu, unsigned nr, unsigned long payload);
- void kvm_requeue_exception(struct kvm_vcpu *vcpu, unsigned nr);
- void kvm_requeue_exception_e(struct kvm_vcpu *vcpu, unsigned nr, u32 error_code);
--void kvm_inject_page_fault(struct kvm_vcpu *vcpu, struct x86_exception *fault);
--void kvm_inject_emulated_page_fault(struct kvm_vcpu *vcpu,
--				    struct x86_exception *fault);
-+void kvm_inject_page_fault(struct kvm_vcpu *vcpu, struct x86_exception *fault,
-+			   bool from_hardware);
-+void __kvm_inject_emulated_page_fault(struct kvm_vcpu *vcpu,
-+				      struct x86_exception *fault,
-+				      bool from_hardware);
-+
-+static inline void kvm_inject_emulated_page_fault(struct kvm_vcpu *vcpu,
-+						  struct x86_exception *fault)
-+{
-+	__kvm_inject_emulated_page_fault(vcpu, fault, false);
-+}
-+
- bool kvm_require_cpl(struct kvm_vcpu *vcpu, int required_cpl);
- bool kvm_require_dr(struct kvm_vcpu *vcpu, int dr);
- 
 diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
-index 9e17ebcc4c318..829821fbc8437 100644
+index 829821fbc8437..0752d1b3d918b 100644
 --- a/arch/x86/kvm/mmu/paging_tmpl.h
 +++ b/arch/x86/kvm/mmu/paging_tmpl.h
-@@ -799,7 +799,7 @@ static int FNAME(page_fault)(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault
+@@ -495,7 +495,7 @@ static int FNAME(walk_addr_generic)(struct guest_walker *walker,
+ 	 * [2:0] - Derive from the access bits. The exit_qualification might be
+ 	 *         out of date if it is serving an EPT misconfiguration.
+ 	 * [5:3] - Calculated by the page walk of the guest EPT page tables
+-	 * [7:8] - Derived from [7:8] of real exit_qualification
++	 * [7:8] - Derived from "fault stage" access bits
+ 	 *
+ 	 * The other bits are set to 0.
  	 */
- 	if (!r) {
- 		if (!fault->prefetch)
--			kvm_inject_emulated_page_fault(vcpu, &walker.fault);
-+			__kvm_inject_emulated_page_fault(vcpu, &walker.fault, true);
+@@ -509,6 +509,21 @@ static int FNAME(walk_addr_generic)(struct guest_walker *walker,
+ 		if (fetch_fault)
+ 			walker->fault.exit_qualification |= EPT_VIOLATION_ACC_INSTR;
  
- 		return RET_PF_RETRY;
- 	}
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index c1ecaf1578052..90704214ec880 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -34,7 +34,8 @@
- #define CC KVM_NESTED_VMENTER_CONSISTENCY_CHECK
- 
- static void nested_svm_inject_npf_exit(struct kvm_vcpu *vcpu,
--				       struct x86_exception *fault)
-+				       struct x86_exception *fault,
-+				       bool from_hardware)
- {
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 	struct vmcb *vmcb = svm->vmcb;
++		/*
++		 * KVM doesn't emulate features that access GPAs directly, e.g.
++		 * Intel Processor Trace.  Assume the GVA is always valid; when
++		 * propagating faults from hardware, KVM will discard this info
++		 * and use the EXIT_QUALIFICATION bits from the VMCS.
++		 */
++		walker->fault.exit_qualification |= EPT_VIOLATION_GVA_IS_VALID;
++
++		/*
++		 * Accesses to guest paging structures are not the translation of
++		 * a guest linear address, i.e. GVA_TRANSLATED must be left clear.
++		 */
++		if (!(access & PFERR_GUEST_PAGE_MASK))
++			walker->fault.exit_qualification |= EPT_VIOLATION_GVA_TRANSLATED;
++
+ 		/*
+ 		 * Note, pte_access holds the raw RWX bits from the EPTE, not
+ 		 * ACC_*_MASK flags!
 diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 016acc678fc03..17ecc0e863d44 100644
+index 17ecc0e863d44..c2aae9db372d1 100644
 --- a/arch/x86/kvm/vmx/nested.c
 +++ b/arch/x86/kvm/vmx/nested.c
-@@ -414,7 +414,8 @@ static void nested_ept_invalidate_addr(struct kvm_vcpu *vcpu, gpa_t eptp,
- }
- 
- static void nested_ept_inject_page_fault(struct kvm_vcpu *vcpu,
--		struct x86_exception *fault)
-+					 struct x86_exception *fault,
-+					 bool from_hardware)
- {
- 	struct vmcs12 *vmcs12 = get_vmcs12(vcpu);
- 	struct vcpu_vmx *vmx = to_vmx(vcpu);
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 4c6cae3a0f3f6..cc20ccaf87e4e 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -921,7 +921,8 @@ static int complete_emulated_insn_gp(struct kvm_vcpu *vcpu, int err)
- 				       EMULTYPE_COMPLETE_USER_EXIT);
- }
- 
--void kvm_inject_page_fault(struct kvm_vcpu *vcpu, struct x86_exception *fault)
-+void kvm_inject_page_fault(struct kvm_vcpu *vcpu, struct x86_exception *fault,
-+			   bool from_hardware)
- {
- 	++vcpu->stat.pf_guest;
- 
-@@ -938,8 +939,9 @@ void kvm_inject_page_fault(struct kvm_vcpu *vcpu, struct x86_exception *fault)
- 					fault->address);
- }
- 
--void kvm_inject_emulated_page_fault(struct kvm_vcpu *vcpu,
--				    struct x86_exception *fault)
-+void __kvm_inject_emulated_page_fault(struct kvm_vcpu *vcpu,
-+				      struct x86_exception *fault,
-+				      bool from_hardware)
- {
- 	struct kvm_mmu *fault_mmu;
- 	WARN_ON_ONCE(fault->vector != PF_VECTOR);
-@@ -956,9 +958,9 @@ void kvm_inject_emulated_page_fault(struct kvm_vcpu *vcpu,
- 		kvm_mmu_invalidate_addr(vcpu, fault_mmu, fault->address,
- 					KVM_MMU_ROOT_CURRENT);
- 
--	fault_mmu->inject_page_fault(vcpu, fault);
-+	fault_mmu->inject_page_fault(vcpu, fault, from_hardware);
- }
--EXPORT_SYMBOL_GPL(kvm_inject_emulated_page_fault);
-+EXPORT_SYMBOL_GPL(__kvm_inject_emulated_page_fault);
- 
- void kvm_inject_nmi(struct kvm_vcpu *vcpu)
- {
-@@ -12661,7 +12663,7 @@ bool kvm_arch_async_page_not_present(struct kvm_vcpu *vcpu,
- 		fault.nested_page_fault = false;
- 		fault.address = work->arch.token;
- 		fault.async_page_fault = true;
--		kvm_inject_page_fault(vcpu, &fault);
-+		kvm_inject_page_fault(vcpu, &fault, false);
- 		return true;
- 	} else {
- 		/*
-@@ -12917,7 +12919,7 @@ void kvm_fixup_and_inject_pf_error(struct kvm_vcpu *vcpu, gva_t gva, u16 error_c
- 		fault.address = gva;
- 		fault.async_page_fault = false;
- 	}
--	vcpu->arch.walk_mmu->inject_page_fault(vcpu, &fault);
-+	vcpu->arch.walk_mmu->inject_page_fault(vcpu, &fault, true);
- }
- EXPORT_SYMBOL_GPL(kvm_fixup_and_inject_pf_error);
+@@ -447,10 +447,25 @@ static void nested_ept_inject_page_fault(struct kvm_vcpu *vcpu,
+ 			vm_exit_reason = EXIT_REASON_EPT_MISCONFIG;
+ 			exit_qualification = 0;
+ 		} else {
+-			exit_qualification = fault->exit_qualification;
+-			exit_qualification |= vmx_get_exit_qual(vcpu) &
+-					      (EPT_VIOLATION_GVA_IS_VALID |
+-					       EPT_VIOLATION_GVA_TRANSLATED);
++			const u64 mask = EPT_VIOLATION_GVA_IS_VALID |
++					 EPT_VIOLATION_GVA_TRANSLATED;
++
++			exit_qualification = fault->exit_qualification & ~mask;
++
++			/*
++			 * Use the EXIT_QUALIFICATION from the VMCS if and only
++			 * if the hardware VM-Exit from L2 was an EPT Violation.
++			 * If the fault is synthesized, then EXIT_QUALIFICATION
++			 * is stale and/or holds entirely different data.  And
++			 * conversely, KVM _must_ rely on EXIT_QUALIFICATION if
++			 * the fault came from hardware, because KVM only sees
++			 * and walks the faulting GPA.
++			 */
++			if (from_hardware)
++				exit_qualification |= vmx_get_exit_qual(vcpu) & mask;
++			else
++				exit_qualification |= fault->exit_qualification & mask;
++
+ 			vm_exit_reason = EXIT_REASON_EPT_VIOLATION;
+ 		}
  
 -- 
 2.53.0
