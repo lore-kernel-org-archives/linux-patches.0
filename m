@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060717;
-	b=YIfk6e7onRGY4zQ3wkM8sG4fnQAoc3U5vZGhim8El21uk0D7Cl6Ovssm8btMG8ZbJGVO
-	 UAW90Cm86YBURyrJedvMSHf/6QwVoX9ZKIPm6Oy24LaAXrvvGG0DtR4j3Dxzq9MEH/ZK8
-	 eT4trJIC2YllvM3n+3ePl91vMpCZK06qrJPwouyRbFd45xh5ZeuWgRQbOl5/nwQhmlvzz
-	 L0ufFzQAcI5EF75aqQZmLY9kd6izuHSzb1Rmi6lvs8tZTh/vHJsCAk4PxEKtZk6AcOmH9
-	 8Khpm3csZZbCoVvw1YiLS5m+cZraRZ7oCjj6LTyjEcg4jUFmxPMMFAVxIKUZMZ4BZoQ==
+	t=1794060718;
+	b=Ry52M7Qak0bI8oByS9fgGTRdgYU8yep8sBIa6bNTibwflviNMdKGrq/Kc7j4GMBhDj7d
+	 bL+Y6D950dBFzbaCR/PTTCMa9+Hs13DFZoVjfPrMYIyEQBVTgnTQKrO/8iyvjjcM7LiGt
+	 I82S5kM3DGEwQaCvj14KMn7lsZcLq5YY4HakFoxN/x/SaXdqUV2mOrQN2qrU1O6edsGZ0
+	 G9VWhBOa1LB4OleELbsjIWXsU9drOh7nMb1AtWsF2tNmrXEgjJ0Faze3gJKL/kA3Xq/IU
+	 9nVlJCltMKuXeFDpjdK4FBIYaHot7adNZEbJlYL8FDzCy5YCPPJhCFwE2wRJOGmFCtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060718;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GL+fyiMbOb9RDN8yGyGavzx0wOiBAL5EntdjUDwNoxI=;
-	b=asqgHE6lb4LwFYZKjhPaOFLRnHVt7VU8pm/qvcaB7XNZmOSvQX1KnsNDFTha78wLqPsL
-	 yeXWutcVwLA/uMpSR7PPhuqz+9EaxmfssZYfEb8m2NwEaGlWljqV+7IDJblRKEtOkq7ok
-	 L/r7FlqP3yemxdfeJYMG2b21KWGv/w5CDzzcwiPZmyVouZa3dOuVvFPMS6QP4ieKw0g1p
-	 te0sKtNBJQiXShIepRxrPhNlrqPFOGGZyi4JEAnHWURf2k0zSiwjRD5S8clbxyCmQC8Va
-	 Wk3weZVpwdEDad0OfHBisOuojUGBqoXhoVJcYzx94cKmmT/joJu4ol+ONWr7RCGIILQ==
+	bh=lKpK6rkbrGV1lxXLgnssqa6xAefY5WJbT0Q0AtIsPB8=;
+	b=Cpae+AwgaLAy5SXSDtj7x6CjDyBv/fgfSgxaQkj60CDmZsC9s3UdHKq8c15QFHE9XE6O
+	 8JWnMRRCkTyUv/e0jahx1HzvV7T6l2cgnjdib3JXOwxwldplsqHfRnfR0z8lKQXCMBKUP
+	 MnFdHjVhg6XJaR4n1swjlN5KwZS/9bE1OkDumtpfJ67giaNJTmoXjTSjBObt/zb2rQsKw
+	 4icTFTgwcNmU1ppk1ZU3rJUsToFiNY3aPrtHV6DteLTuudMG+4FSgR/ixoCZxQfpwjJIv
+	 +/HpkOx+jIh+3ej1+7EReKsP/cUl6leA5QowUNqJajjyPQxyn1WuGs9Zte9J21h4wSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oVycShhX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2wrxw2O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FA8606A326;
-	Sat,  7 Nov 2026 14:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594FA606A326;
+	Sat,  7 Nov 2026 14:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oVycShhX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537631F0089F;
-	Sat,  7 Nov 2026 14:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F2wrxw2O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2A51F0089F;
+	Sat,  7 Nov 2026 14:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060716;
-	bh=GL+fyiMbOb9RDN8yGyGavzx0wOiBAL5EntdjUDwNoxI=;
+	s=korg; t=1794060717;
+	bh=lKpK6rkbrGV1lxXLgnssqa6xAefY5WJbT0Q0AtIsPB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oVycShhXUKnG5x0kSMO7s1ibci0Z0o9hkAToSTQ8cOX8Ph0pllG8ECL2DPHmO8qVD
-	 SW/EDq59KUYtMHOSSKwBMunlNkAcboX6gkOHNVFrThxeiG4E+ZJQHpFTZC72ijGORs
-	 7xy3qeRJoQs4fmAAd1ZS3+RWlCMvW/8LxY+B6S6I=
+	b=F2wrxw2O9BEsBVw+p6JXEowrdhnSzGByzul45tEp2b3wAwFeOu4GH0YIBLgewsaeQ
+	 5D0mpvKGhzdX6tehSjfEg4l+eMnCVPZ+Rlhc19VCIAZtbpO2dvnveNtUYHVMzU8CmA
+	 UzE2ELWQO2CJkqXEfw8ROYUY90F3wJIOBIW4cCOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Martins Alves <lucas.alves@lumal21.com.br>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0140/1536] usb: musb: host: clear stale RX interrupt on three-strikes error
-Date: Sat,  7 Nov 2026 08:35:56 -0500
-Message-ID: <20261107135001.620010399@linuxfoundation.org>
+Subject: [PATCH 6.12 0123/1536] soundwire: intel_auxdevice: Add cs42l44 to wake_capable_list
+Date: Sat,  7 Nov 2026 08:35:39 -0500
+Message-ID: <20261107135001.139131706@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,60 +68,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Martins Alves <lucas.alves@lumal21.com.br>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 3a3a48487344a653f46a4aadc9ba296386eb3541 ]
+[ Upstream commit d08e4d9197396ceb906715d976b63aed0c5cc8e5 ]
 
-Unplugging a busy USB Ethernet adapter can leave a stale RX interrupt
-pending while the host handles MUSB_RXCSR_H_ERROR. On AM335x/DSPS
-platforms this can retrigger the same three-strikes error before the
-disconnect path completes, flooding the log and potentially leaving the
-host port stuck until reboot.
+Add cs42l44 to the wake_capable_list because it can generate
+jack events whilst the bus is stopped.
 
-Clear the pending endpoint RX interrupt when aborting the transfer so
-the error storm is broken, and rate limit the error message to avoid
-spamming the log while the fault path completes.
-
-Signed-off-by: Lucas Martins Alves <lucas.alves@lumal21.com.br>
-Link: https://patch.msgid.link/20260714134941.18508-1-lucas.alves@lumal21.com.br
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260708122948.1502227-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/musb/musb_host.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/soundwire/intel_auxdevice.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/musb/musb_host.c b/drivers/usb/musb/musb_host.c
-index bc45077811679..96fbd7baf8e84 100644
---- a/drivers/usb/musb/musb_host.c
-+++ b/drivers/usb/musb/musb_host.c
-@@ -1774,7 +1774,8 @@ void musb_host_rx(struct musb *musb, u8 epnum)
- 		status = -EPIPE;
- 
- 	} else if (rx_csr & MUSB_RXCSR_H_ERROR) {
--		dev_err(musb->controller, "ep%d RX three-strikes error", epnum);
-+		dev_err_ratelimited(musb->controller,
-+				    "ep%d RX three-strikes error\n", epnum);
- 
- 		/*
- 		 * The three-strikes error could only happen when the USB
-@@ -1788,6 +1789,17 @@ void musb_host_rx(struct musb *musb, u8 epnum)
- 		rx_csr &= ~MUSB_RXCSR_H_ERROR;
- 		musb_writew(epio, MUSB_RXCSR, rx_csr);
- 
-+		/*
-+		 * Unplugging a USB-Ethernet adapter while it is busy can make
-+		 * the controller keep re-asserting the three-strikes error for
-+		 * this endpoint before the disconnect is processed. That floods
-+		 * the log and can wedge the host port until reboot. Drop the
-+		 * stale pending RX interrupt on platforms that support it (e.g.
-+		 * AM335x/DSPS) to break the storm; the transfer is still
-+		 * aborted below via the fault path.
-+		 */
-+		musb_platform_clear_ep_rxintr(musb, epnum);
-+
- 	} else if (rx_csr & MUSB_RXCSR_DATAERROR) {
- 
- 		if (USB_ENDPOINT_XFER_ISOC != qh->type) {
+diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
+index ae1dfce163e25..d444ca477064f 100644
+--- a/drivers/soundwire/intel_auxdevice.c
++++ b/drivers/soundwire/intel_auxdevice.c
+@@ -50,6 +50,7 @@ static struct wake_capable_part wake_capable_list[] = {
+ 	{0x01fa, 0x2A30},
+ 	{0x01fa, 0x2A3B},
+ 	{0x01fa, 0x4243},
++	{0x01fa, 0x4244},
+ 	{0x01fa, 0x4245},
+ 	{0x025d, 0x5682},
+ 	{0x025d, 0x700},
 -- 
 2.53.0
 
