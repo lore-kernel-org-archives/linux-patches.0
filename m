@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065216;
-	b=naphqVynlRPMNmZ5KTh3uKIAu3blMCYTWNOnVNnoCaXnT3/ZyKTfzHMbDrFnaBKyy5J2
-	 2aPpRtOEDPOFTVp/2J01/Q3z3beV6k83J+vPP6v3nFz4glhnmOfGGwMWmJH8QjW+5vaGc
-	 ZwaGkIURn67AO0b5uKh8nbtU/XgjxtKnHBdfFdqsIZS+Xx9xHbt/zofQ5JHr+xqQEwJsc
-	 o7QYCBH+SKiTNQyZrKAUmWTrV9CwITbVhn09SS1qpodAaRyt3WHceaeiyhPenME3kWNYn
-	 Q7i29Afpv1kxLkOgNSrWYNz7Bgh+32bm4jofjL3zSZnOV/6a5Ju7rHGfSsKqPy55YxQ==
+	t=1794065219;
+	b=Zt4h/or4e/i4JryslP8UaRRQgPhRVUYIQJLEqrlrHEX2E40iRS5DNfnsXDIF8yRejCka
+	 DZesaf+lo/RyFgRwJYV5Diei789sFpFzI/NUH+1fuYANrAPFMmHT0HxXmqkjCXzrHQXaL
+	 bjPgr8oWx4fWeIrSxr0nOZOaojpsjtBjnx3OvMc+imgnDUNN1YW4Q5mu8hmKPHhFJaCFT
+	 1ZkPVFW9yjNRbDOrhyv+DaCSafZsLBGEz5H0m5IQMRZve8c8C7zLmuILQLTSJDA5c/GFH
+	 c1gofsdA9nX+JzW4fA/PIqjLhyMdw8PIV+VJd5cBb+K1MdnURUz96U1E/zwUVa73GIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065216;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065219;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hBepUiAOrwhRfhFIxvlkmM59TTUh+LVMYlTIBRylMLo=;
-	b=cW9QNv33tMaClR/VbwfdYiXCmGH29jQMZGvCQy8/6PC+wsiOSH6rwFGpM7NCXfQelyAp
-	 YyWiPaGmNy200vqrKEIBUdSGt2WZ293384oXJTW+BBz2memN5lKtW1Ytv077UrTqYIt+O
-	 uvR2bkQMExUaGgeV+dmOz7/sa0gy997uqwqiK7DxFvW7imjGpQm6P4IcjWK9tHqdDtEWG
-	 5KprMoJZ5Pb4UCeSlPFl9OWCIFOBzIRG48pIplSN/LX7Y/Oz9x0eysdGlnby+6iAYcYfm
-	 0+yolJILMTbN/nLCQVW56xhMH3IqXpUp4Hsu0j2mnWIzwclqNymzjqdj6H3VnfdBFnw==
+	bh=RFgpxMYf9Q/H6x2agZQzmrPTOo8Ys6OveuEK1MTDXdw=;
+	b=I1j4iZRgx+7GWTz71Iu3I/Ul7ryC7PDkgF6U7Blyr8envaJMFJs0b5RjZ0UdfmUe8ILy
+	 03wfysrW25qXI+ONA+X4rdKMJgr12qT7Nac4oc/Kax3J04C2W2aM5n9nSu8r8nQztY3jk
+	 7eU+qd479CKsU3gYiQY0L52IUN+YyFrfyl0PVVnoDaWhDIYm/4LbbgokWqFBJtPe+Q5m7
+	 EBizUGg+Wcqg0KPpPEuEXGWy2y53XjvlqrT2z4CJsFSwj/gcktEqKAjZ9gcxJjprOQtbV
+	 9teAzNc2xXyBhpSapVTP1HkoxYwKl6aKK860fcP92DrfINFrYkVl+ZWRNCZy4lT3k2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z2RiUjZU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ke48Jd2J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B15606A32E;
-	Sat,  7 Nov 2026 15:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39112606D801;
+	Sat,  7 Nov 2026 15:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z2RiUjZU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2D11F0089F;
-	Sat,  7 Nov 2026 15:26:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ke48Jd2J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF231F0089F;
+	Sat,  7 Nov 2026 15:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065216;
-	bh=hBepUiAOrwhRfhFIxvlkmM59TTUh+LVMYlTIBRylMLo=;
+	s=korg; t=1794065218;
+	bh=RFgpxMYf9Q/H6x2agZQzmrPTOo8Ys6OveuEK1MTDXdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z2RiUjZUJJpATxfZ8ftVLxvXpGzifYaSRSzDG88v1BhRdCZYvQoupMNfNpcFmr+8C
-	 wHk/ZblNFMgg0q+hzeLI8CCueKhC1tHg0Em9avIkZCgrI+3V9PcQcG6rvmWk31RY54
-	 NHs5MOyjYCCOV89u/CsU8eWZKN0Xd3M2Seb4rfzk=
+	b=Ke48Jd2JZv7xd5Mrpsm0xAVPGipq72xJQUusLXUrT3AEoc2tVTYOYFwdvdncvAYxZ
+	 5VmYZXwbOdg2q1Ev9Y0aNeGDa2nceUiyx4YPrVU9AsvI4rWr8D/JP3y1Y5YlcUm61G
+	 1Il1ObeTkK0D9KXnw32/mKJ9Pkoo9XY8ij3TDh2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Yu Zhang <yuz08559@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1010/1257] nvmet: take subsys->lock while force-reconnecting in nvmet_subsys_attr_qid_max_store()
-Date: Sat,  7 Nov 2026 08:55:06 -0500
-Message-ID: <20261107135007.235696142@linuxfoundation.org>
+Subject: [PATCH 7.3 1012/1257] pppoe: delete session hash entries by pointer match
+Date: Sat,  7 Nov 2026 08:55:08 -0500
+Message-ID: <20261107135007.288686921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,66 +68,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Zhang <yuz08559@gmail.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 9f426f14051181e251590783e68ce589a63e2b1c ]
+[ Upstream commit b5b8c81836e2bec7b444dfa2b14fd14e912e9d63 ]
 
-nvmet_subsys_attr_qid_max_store() sets subsys->max_qid and then walks
-subsys->ctrls to force every controller to reconnect, but it holds only
-nvmet_config_sem (for write).  subsys->ctrls is protected by subsys->lock:
-nvmet_alloc_ctrl() adds an entry under subsys->lock, and nvmet_ctrl_free()
-removes it under subsys->lock with list_del() + kfree() (not kfree_rcu).
-The free path takes no nvmet_config_sem, so the two locks are independent.
+pppoe_connect() copies the requested PPPoE address to a socket before
+attempting to insert the socket into the session hash table. If the
+tuple already exists, __set_item() returns -EALREADY, but the copied
+address and ifindex remain set on the failed socket.
 
-A controller teardown (host disconnect, keep-alive timeout or fatal error
--> nvmet_sq_destroy() -> nvmet_ctrl_put() -> nvmet_ctrl_free()) can
-therefore list_del() an entry while qid_max_store() is iterating the list,
-corrupting the walk.
+Closing that socket then deletes the existing socket's hash entry
+through pppoe_release(), preventing it from receiving further session
+traffic. An unprivileged process in the same network namespace can
+trigger this through a duplicate connection attempt.
 
-KASAN, concurrent "echo 128 > .../subsystems/<nqn>/attr_qid_max" racing
-nvme-loop controllers connecting and disconnecting, panics in seconds:
+To avoid the accidental delete, pass the pppox_sock to __delete_item(),
+and unlink only an entry whose pointer matches the requested socket.
 
-  BUG: KASAN: null-ptr-deref in nvmet_subsys_attr_qid_max_store+0x10d/0x1b0
-  Read of size 8 at addr 0000000000000090
-  Call Trace:
-   nvmet_subsys_attr_qid_max_store+0x10d/0x1b0
-   configfs_write_iter+0x1a7/0x250
-   vfs_write+0x5df/0x940
-   ksys_write+0xfd/0x1e0
-
-(also seen as a general-protection fault dereferencing a LIST_POISON
-pointer at the same instruction.)
-
-Take subsys->lock around the list_for_each_entry() loop, matching every
-other subsys->ctrls accessor.  ->delete_ctrl() only queues asynchronous
-controller teardown, so it does not re-enter subsys->lock under the loop.
-
-Fixes: 3e980f5995e0 ("nvmet: expose max queues to configfs")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Yu Zhang <yuz08559@gmail.com>
-Tested-by: Yu Zhang <yuz08559@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Link: https://patch.msgid.link/20261020092118.47416-1-qingfang.deng@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ppp/pppoe.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index b03b5d1c2dc3d..83b86180c50f8 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -1689,8 +1689,10 @@ static ssize_t nvmet_subsys_attr_qid_max_store(struct config_item *item,
- 	subsys->max_qid = qid_max;
+diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
+index bf7414b46a260..ee0e318d6a2a4 100644
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -194,18 +194,16 @@ static int __set_item(struct pppoe_net *pn, struct pppox_sock *po)
+ 	return 0;
+ }
  
- 	/* Force reconnect */
-+	mutex_lock(&subsys->lock);
- 	list_for_each_entry(ctrl, &subsys->ctrls, subsys_entry)
- 		ctrl->ops->delete_ctrl(ctrl);
-+	mutex_unlock(&subsys->lock);
- 	up_write(&nvmet_config_sem);
+-static void __delete_item(struct pppoe_net *pn, __be16 sid,
+-					char *addr, int ifindex)
++static void __delete_item(struct pppoe_net *pn, const struct pppox_sock *po)
+ {
+-	int hash = hash_item(sid, addr);
++	int hash = hash_item(po->pppoe_pa.sid, po->pppoe_pa.remote);
+ 	struct pppox_sock *ret, __rcu **src;
  
- 	return cnt;
+ 	ret = rcu_dereference_protected(pn->hash_table[hash], lockdep_is_held(&pn->hash_lock));
+ 	src = &pn->hash_table[hash];
+ 
+ 	while (ret) {
+-		if (cmp_addr(&ret->pppoe_pa, sid, addr) &&
+-		    ret->pppoe_ifindex == ifindex) {
++		if (ret == po) {
+ 			struct pppox_sock *next;
+ 
+ 			next = rcu_dereference_protected(ret->next,
+@@ -236,11 +234,10 @@ static inline struct pppox_sock *get_item(struct pppoe_net *pn, __be16 sid,
+ 	return po;
+ }
+ 
+-static inline void delete_item(struct pppoe_net *pn, __be16 sid,
+-					char *addr, int ifindex)
++static void delete_item(struct pppoe_net *pn, const struct pppox_sock *po)
+ {
+ 	spin_lock(&pn->hash_lock);
+-	__delete_item(pn, sid, addr, ifindex);
++	__delete_item(pn, po);
+ 	spin_unlock(&pn->hash_lock);
+ }
+ 
+@@ -570,8 +567,7 @@ static int pppoe_release(struct socket *sock)
+ 	 * protect "po" from concurrent updates
+ 	 * on pppoe_flush_dev
+ 	 */
+-	delete_item(pn, po->pppoe_pa.sid, po->pppoe_pa.remote,
+-		    po->pppoe_ifindex);
++	delete_item(pn, po);
+ 
+ 	sock_orphan(sk);
+ 	sock->sk = NULL;
+@@ -621,8 +617,7 @@ static int pppoe_connect(struct socket *sock, struct sockaddr_unsized *uservaddr
+ 	if (stage_session(po->pppoe_pa.sid)) {
+ 		pppox_unbind_sock(sk);
+ 		pn = pppoe_pernet(sock_net(sk));
+-		delete_item(pn, po->pppoe_pa.sid,
+-			    po->pppoe_pa.remote, po->pppoe_ifindex);
++		delete_item(pn, po);
+ 		if (po->pppoe_dev) {
+ 			dev_put(po->pppoe_dev);
+ 			po->pppoe_dev = NULL;
+@@ -672,8 +667,7 @@ static int pppoe_connect(struct socket *sock, struct sockaddr_unsized *uservaddr
+ 
+ 		error = ppp_register_net_channel(dev_net(dev), &po->chan);
+ 		if (error) {
+-			delete_item(pn, po->pppoe_pa.sid,
+-				    po->pppoe_pa.remote, po->pppoe_ifindex);
++			delete_item(pn, po);
+ 			goto err_put;
+ 		}
+ 
 -- 
 2.53.0
 
