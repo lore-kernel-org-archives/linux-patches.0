@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064298;
-	b=Z94YQ0skn1wLungxbaZxVI7CwUodMURkMY+GS1x/gSd3VE9NNRXwKrejtX6cRkpYz+EE
-	 d7vdekLOwkJGyxhAOIqUd7uboITWNBsEfD9IPxytYJGQ9tp1bbxvB0mqxucU3myZFhPCK
-	 ShIunT1mtPQcjevExMQZRmoOFg6Q83ihCBEvHPQjtdzf89MlwX65fuOLgR/qNW6GH/wkC
-	 BevON9mJGM67BQFL6FR4djO7WFSKEG21J0N50z8ytldBhoEebEKrrSfclVmgsOyEakL3s
-	 Ln4mua8uOVk3PHObDzCq1KL6ia79fXm1xHrDgW6kW/Dbo4MVz4vcRkZrFdK8Jn4fPJQ==
+	t=1794064300;
+	b=YqJtJiUDQMoywtAUNYDJj1CfTFQohg4nQusFXi/1MezgYJuEzWSZjbx99yHTjv8pv1W5
+	 XCtwqwU4jsOGYrchlktwSepd50jNHLBAWI1Ww9z3ggrEXtVVJIu/OAvo73se4cvqgQ5Pl
+	 inK3sLnHNsD0LS5Mu6NWUCGiMoYnBKruJl4sZ7tY3gNWLd1W/zdr9JcWy25zUPJl52IeV
+	 Lu209jx4O9/81zY0ELCRIsKqKklCHEiZTQjyQHvFR5rwmdxkOpb/FF8zU3EZB5IhO9mYc
+	 txGs7MrO0v+qWD9xXp7flKnKSLHfyERVqvYcocN2KI0YwojuvLWlBI1w0Ud59l7ikTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=OaWQ4fyv8X+fkytmIkwwXjZ28KscybDGWq6joGVR934=;
-	b=DJ+dGdq5xJqh736nuGOgfkrK8PA5/pdShDIjVsr2zV3fXWQ8QiS/PpQkBrpHSKcSsxYo
-	 rlcFpJ5dITazmAzkZ3ZyKDo8/0gWE56QP/Su5t0Pe6geQdabdCQtF0JhgGtLrQryq00zX
-	 lzjNWx/KoJgA020UNLiXPr9xXa0T+f3JmzvnjhmsicMd6RMK1WDccMG/aEy0DDACs17+N
-	 aq4ZimQ+j40K+Q3Gms9xvq6XgPMRrLI1eAwMDOSmEtwWu3Fok3MQgYF1NUdK82O+oVoGv
-	 y2aBbFYomthigEVRqrNN57LtzhTxzYux7zHE3DxGYsjHIxnwfrMi97tTTrjemcyCFVQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=dsmYsPC6ZdLnPXli+yZ+9RHFunPlQgTIhDjn5M1o1g4=;
+	b=KD7mAsAE1btN7JbhtHryx1XOpOm41+gppum4YMSQ0hH4S1KCGAFfam2pXHTS5M297T0e
+	 GdijgFiCis7vs1oVjdqDfgiTbKRCCTNEyPElTCAOgJWgsFSryYNQymoXcQAaNloPQZSu7
+	 8oX2J5QseY43EZA0xnSVHp/aYod7eCzZ43PyZVlNFg6HNZYN4B58bFV8jjSxIv9p8rHC0
+	 U2ebMd95nmxaC5nVMaXvWipt2e6Pvra7fvqcgIFvzXIj9wSs1vsC2MIb9vxfHCsTdtva3
+	 vKdnLRWnTmqVtQQZ50I++oeQnTOkqVR8h08sDKMfByRDZy+Xsputnyg3BQiZFEltxwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUMgYGWx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZaRm1Fk0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A105F606A9D4;
-	Sat,  7 Nov 2026 15:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0107606A9CC;
+	Sat,  7 Nov 2026 15:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUMgYGWx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F75E1F0089F;
-	Sat,  7 Nov 2026 15:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZaRm1Fk0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7141F0089F;
+	Sat,  7 Nov 2026 15:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064298;
-	bh=OaWQ4fyv8X+fkytmIkwwXjZ28KscybDGWq6joGVR934=;
+	s=korg; t=1794064299;
+	bh=dsmYsPC6ZdLnPXli+yZ+9RHFunPlQgTIhDjn5M1o1g4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oUMgYGWx0WpEWyz3hD06qGB7CGlrW6M1IU6F+z5jU8zcIfWNJeMcmgW4P3KltPUJ0
-	 ftcZbr4PLmhAyNFk1yKf/zkwrNGR6fiQPcrk9Fxpv83AFHBXorMJMxyxKEk0jMImmr
-	 BumxHK7h2zptLA78NyM/blVsi4l6i/92gzNfKcSE=
+	b=ZaRm1Fk0TQjfomOh8Bwa9HvdvcTgfIJc+n6FmtaSaOZKnw/aNburlZtOhfIrWeMbL
+	 vbd6/i7TAzqfK2xB7gOyEUAe/FWht0zhUlelrUKZFrgruNVsPJHE/4mRJ1ZjEnC01z
+	 qwNdXOyApe2MGna9lnPJIjPvwMX7YSdQPhGKGViY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0392/1257] pwm: tiehrpwm: Clear period on disable to allow reconfiguration
-Date: Sat,  7 Nov 2026 08:44:48 -0500
-Message-ID: <20261107134950.374272883@linuxfoundation.org>
+Subject: [PATCH 7.3 0393/1257] IB/hfi1: Shutdown self-rearming timers before freeing
+Date: Sat,  7 Nov 2026 08:44:49 -0500
+Message-ID: <20261107134950.401308092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,55 +62,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit e74b9a7ee50071aad25d3989bf985292f90b0c6e ]
+[ Upstream commit 9d3259e41ccd5016cd2c6d013232b89df6d73011 ]
 
-Both channels share one period register, so ehrpwm_pwm_config() rejects a
-period differing from the sibling's period_cycles[]. That value was cleared
-only in .free(), not in .disable(), so a stopped channel kept blocking the
-sibling from switching to a new frequency. Clear it in .disable() too.
+The HFI1 receive error and synthetic counter timers rearm themselves from
+their callbacks. Their cleanup paths use timer_delete_sync(), which only
+waits for a running callback and does not prevent a concurrent or
+subsequent rearm.
 
-Testcase:
+Use timer_shutdown_sync() when releasing these timers. This prevents a
+callback from enqueueing either timer after cleanup begins, before the
+containing hfi1_devdata is freed.
 
-  cd /sys/class/pwm/pwmchip0; echo 0 > export; echo 1 > export
-  for p in pwm0 pwm1; do
-    echo 1000000 > $p/period; echo 500000 > $p/duty_cycle
-    echo 1 > $p/enable; echo 0 > $p/enable; echo 2000000 > $p/period
-  done
-  echo 1 > pwm0/enable	# before: -EINVAL, after: succeeds
+Preserve the existing work cancellation and workqueue destruction ordering
+for synthetic counters.
 
-Fixes: 01b2d4536f02 ("pwm: pwm-tiehrpwm: Fix conflicting channel period setting")
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/20260929120806.2790355-1-alexander.sverdlin@siemens.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260930070455.2934286-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tiehrpwm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/hfi1/chip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
-index 3a53489f0b982..e3407d0a1f7fe 100644
---- a/drivers/pwm/pwm-tiehrpwm.c
-+++ b/drivers/pwm/pwm-tiehrpwm.c
-@@ -358,6 +358,9 @@ static void ehrpwm_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 
- 	/* Disable clock on PWM disable */
- 	pm_runtime_put_sync(pwmchip_parent(chip));
-+
-+	/* A disabled channel must not constrain the sibling's period */
-+	pc->period_cycles[pwm->hwpwm] = 0;
+diff --git a/drivers/infiniband/hw/hfi1/chip.c b/drivers/infiniband/hw/hfi1/chip.c
+index 592e330e74bf1..faa724ca33bd7 100644
+--- a/drivers/infiniband/hw/hfi1/chip.c
++++ b/drivers/infiniband/hw/hfi1/chip.c
+@@ -5567,7 +5567,7 @@ static int init_rcverr(struct hfi1_devdata *dd)
+ static void free_rcverr(struct hfi1_devdata *dd)
+ {
+ 	if (dd->rcverr_timer.function)
+-		timer_delete_sync(&dd->rcverr_timer);
++		timer_shutdown_sync(&dd->rcverr_timer);
  }
  
- static void ehrpwm_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+ static void handle_rxe_err(struct hfi1_devdata *dd, u32 unused, u64 reg)
+@@ -12300,7 +12300,7 @@ static void free_cntrs(struct hfi1_devdata *dd)
+ 	int i;
+ 
+ 	if (dd->synth_stats_timer.function)
+-		timer_delete_sync(&dd->synth_stats_timer);
++		timer_shutdown_sync(&dd->synth_stats_timer);
+ 	cancel_work_sync(&dd->update_cntr_work);
+ 	ppd = (struct hfi1_pportdata *)(dd + 1);
+ 	for (i = 0; i < dd->num_pports; i++, ppd++) {
 -- 
 2.53.0
 
