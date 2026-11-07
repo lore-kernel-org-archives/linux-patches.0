@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064419;
-	b=kN3U213WpWwcZeEXfJ+0Lr7dsDyt8KLLsvjVLYUCe3lXOHK3G9dIvSB0wmWrFsmaiyxa
-	 SNRezct21pWM5CV+kiDYaowTby52KA/BGraknMKH/5Zu9dltAJcgHa8NIfSRUA/Y/jlWd
-	 VukRXxX0RR19tgjiBIotKANS5Os3/ne1HkdEhuWqEumPwhwmcEiE/oEe4HsUt7qkEZ5d3
-	 HaugXCyzsHbRi3zRJhR53OHLGpmzSNSKaFfja9bXoQv+a83Ssz3w3A6qFQKeSTXi6/God
-	 j31aTCHfD8XkTDCy6BMnb4n6iPS95iKd+/xkm7LyMdmN8fM4rNfUzi9lr1mcBsrFukg==
+	t=1794064421;
+	b=Zm1lJ/sHLsAsNfBmLFhEzEcLpDxU09IH80+MLA3a2OYVgijK2YCaGnaJDJoJ4liYRR18
+	 XjyLkkc2uPmxX9RCqCvu3zL+QFlg9MGQDv5l0woazFsezSgxTOL7ut2Eewdpy407A72ie
+	 RtBFioOgE1z5WQiNCGOSs3X8CJR4qjPxguFnd4jURvCZ34aIJ4ogA0VZeK4X3/vEvqPQZ
+	 oSMGmBKYH7wSF+sD9slgNONqBFWy1oBBUIEJqpalT1Keav1YOJpbBCHv5McrV0N3OLL4l
+	 1zokiQnSZFHRQyb8TDkojgvi6CI2cD5TH/RPuvtl3eceSpwudukuGcR/f3jmQIpAo3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064419;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=11Z4NM/OAkxzVhiYhmR7zrs7kGjEHngHc6gIUt1zmTQ=;
-	b=1mLEIPzmz9qaSDPSxuiUOUeoPqeEFPCMSGGHzKJclcijkxA1LfmrA6dHzIbwc3dpyL3M
-	 sRFJQr/cMf0sfFBl+sN0pjnvokWxl+RTTkLGDbGh5wFXJ3xoz8PJJPmgG4BCJeD5fNPSX
-	 yT1imsJC/LPMEDwNVol5uTImK4qmQ8Ovhtfv0chkrVhNqA5VY6yvlQc+q1FycgOntaQz3
-	 aBVjIFqk2vef9tKP1pMBzWMnvswZy/PlrM1+ofIYgDSAckLGfbDV5yxx08DFtm7MQOQcs
-	 m0sApQESNHRjfMmDTQXvQ5ERFTpogmThRFDAOV6nZOm6EAx7pAAw/n0ESV6IxabmldQ==
+	bh=JUKxUo6i2QP3V2BNsxrSyBDr3bqDOF28W9azZfoOa6k=;
+	b=sMaS7AYVJLBMKFYvjuU+ktPbeknbG9NLGSfdZnJR1gdRst7i8GA7wrdWjZw1QiS6C9SK
+	 3xKUDs06N5wYIhtelgB4eJd/Mty4BT6ZB+irLY+nxdCw0Bpa69YiiYBS/ToHaZpPG398N
+	 ClPx07ABaNQurjJRHYCuckHS0095RQvMP0Hy0503I1qjKcDogRd0AYtoipHgjj1QUFxy1
+	 defdZ3IDeODkV989a4bUdX6t9o8gjRtyAIuXVc0srU9yA90UfAzthZzr+IslRJ/Wj2xMH
+	 3wDWhUvTOinL3vik201YFozkWfojN+QGmkA5QeuSEUgp11wmDJO+PrdHZ/kw67moZkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fs2JmJm5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fth7MWBM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89533606A9C1;
-	Sat,  7 Nov 2026 15:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5453606A9C1;
+	Sat,  7 Nov 2026 15:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fs2JmJm5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CCC1F0089F;
-	Sat,  7 Nov 2026 15:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fth7MWBM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C011F0089F;
+	Sat,  7 Nov 2026 15:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064419;
-	bh=11Z4NM/OAkxzVhiYhmR7zrs7kGjEHngHc6gIUt1zmTQ=;
+	s=korg; t=1794064420;
+	bh=JUKxUo6i2QP3V2BNsxrSyBDr3bqDOF28W9azZfoOa6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fs2JmJm5RCHsdKPBsU7fz2Usc8Rk+L0Kt9XaFvAaEpbHMKAzyS/S1iZpbNlpB6Mms
-	 KPuScLP/yHJ6eUiFgaOXk3zC/aoJv1CDeO66S9f6e9X4gUHkDgU4LN/jFz2vgR3jL2
-	 jqi1CKqtkjhFH+ujywPxGCgvnDqZ52xJ5ypB2VSw=
+	b=fth7MWBM58GwW5bB4ivsTut/UmWCL2n/R25dPVrIZ82OmERUzI+X4/gwT/JqKDpDJ
+	 96Kb3iD0BZydvtVW8wav+nACSDuOtxtqthCUQK6vG+uz39IWw3xN559ygX5hTS+nw8
+	 g616MCdUTG3uApiiSHQURErMNZt6qMz8REsHtWB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Casciano <mauriziocasciano7@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0470/1257] power: supply: core: Honor supplied-from with CONFIG_OF=y
-Date: Sat,  7 Nov 2026 08:46:06 -0500
-Message-ID: <20261107134952.438956843@linuxfoundation.org>
+Subject: [PATCH 7.3 0471/1257] power: supply: ltc2941: Fix of_node reference leak in ltc294x_i2c_probe()
+Date: Sat,  7 Nov 2026 08:46:07 -0500
+Message-ID: <20261107134952.464432732@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,169 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Casciano <mauriziocasciano7@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 6bd80f22c764fe8c56c62c118387f86a3ca98cff ]
+[ Upstream commit 09a29213bf15630e85a375478832b074b2cfc5c8 ]
 
-The supplied-from device property is the name-based counterpart to
-firmware-node power-supplies references. It was added for non-DT platforms,
-but its parser is compiled only when CONFIG_OF is disabled. CONFIG_OF is
-a global kernel option, so x86 systems commonly enable it even when
-individual power supplies are described by software nodes.
+ltc294x_i2c_probe() takes a reference on the device node with
+of_node_get(), but never drops it, so the reference leaks on every
+return path, including the success path.
 
-Consequently, these consumers never populate supplied_from and supplier
-notifications do not reach their external_power_changed() callbacks. On a
-Lenovo Yoga Book YB1-X91L, ftrace showed the Whiskey Cove supplier
-notification running without invoking the BQ25892 callback, leaving the
-input current limit at its boot-time value.
+The node is only used to read the battery properties and to set
+info->supply_desc.name, so release it after its last use and also on
+the lltc,resistor-sense error path.
 
-Use a single power_supply_check_supplies() implementation for all
-configurations. Preserve firmware-node power-supplies references as the
-preferred firmware description and use the name-based supplied-from
-property only when no references are specified. Continue to honor an
-explicitly provided supplied_from list first and propagate errors from
-specified firmware references.
-
-With the fix, ftrace shows the BQ25892 callback on hotplug. A boot-offline
-test changes its input current limit from 500 mA to 2 A.
-
-Fixes: 58a36bb06891 ("power: supply: core: Add support for supplied-from device-property")
+Fixes: 085bc24d1553 ("Add LTC2941/LTC2943 Battery Gauge Driver")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Maurizio Casciano <mauriziocasciano7@gmail.com>
-Link: https://patch.msgid.link/20260924225152.985489-1-mauriziocasciano7@gmail.com
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917142127.2156568-1-vulab@iscas.ac.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 84 ++++++++++++------------
- 1 file changed, 42 insertions(+), 42 deletions(-)
+ drivers/power/supply/ltc2941-battery-gauge.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 1279785645fbe..eba690f1dad35 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -190,7 +190,35 @@ static void power_supply_deferred_register_work(struct work_struct *work)
- 		device_unlock(psy->dev.parent);
- }
- 
--#ifdef CONFIG_OF
-+static int power_supply_check_supplies_by_name(struct power_supply *psy)
-+{
-+	struct device *parent = psy->dev.parent;
-+	int nval, ret;
-+
-+	if (!parent)
-+		return 0;
-+
-+	nval = device_property_string_array_count(parent, "supplied-from");
-+	if (nval <= 0)
-+		return 0;
-+
-+	psy->supplied_from = devm_kmalloc_array(&psy->dev, nval,
-+						sizeof(*psy->supplied_from),
-+						GFP_KERNEL);
-+	if (!psy->supplied_from)
-+		return -ENOMEM;
-+
-+	ret = device_property_read_string_array(parent, "supplied-from",
-+						(const char **)psy->supplied_from,
-+						nval);
-+	if (ret < 0)
-+		return ret;
-+
-+	psy->num_supplies = nval;
-+
-+	return 0;
-+}
-+
- static int __power_supply_populate_supplied_from(struct power_supply *epsy,
- 						 void *data)
- {
-@@ -262,22 +290,21 @@ static int power_supply_find_supply_from_fwnode(struct fwnode_handle *supply_nod
- static int power_supply_check_supplies(struct power_supply *psy)
- {
- 	struct fwnode_handle *np;
--	int cnt = 0;
-+	int cnt, ret;
- 
- 	/* If there is already a list honor it */
- 	if (psy->supplied_from && psy->num_supplies > 0)
- 		return 0;
- 
--	/* No device node found, nothing to do */
--	if (!psy->dev.fwnode)
--		return 0;
--
--	do {
--		int ret;
-+	for (cnt = 0; psy->dev.fwnode; cnt++) {
-+		np = fwnode_find_reference(psy->dev.fwnode, "power-supplies", cnt);
-+		if (IS_ERR(np)) {
-+			ret = PTR_ERR(np);
-+			if (ret != -ENOENT)
-+				return ret;
- 
--		np = fwnode_find_reference(psy->dev.fwnode, "power-supplies", cnt++);
--		if (IS_ERR(np))
- 			break;
-+		}
- 
- 		ret = power_supply_find_supply_from_fwnode(np);
- 		fwnode_handle_put(np);
-@@ -286,48 +313,21 @@ static int power_supply_check_supplies(struct power_supply *psy)
- 			dev_dbg(&psy->dev, "Failed to find supply!\n");
- 			return ret;
- 		}
--	} while (!IS_ERR(np));
-+	}
- 
--	/* Missing valid "power-supplies" entries */
--	if (cnt == 1)
--		return 0;
-+	/* Fall back to the name-based property if no references were specified. */
-+	if (!cnt)
-+		return power_supply_check_supplies_by_name(psy);
- 
- 	/* All supplies found, allocate char * array for filling */
- 	psy->supplied_from = devm_kcalloc(&psy->dev,
--					  cnt - 1, sizeof(*psy->supplied_from),
-+					  cnt, sizeof(*psy->supplied_from),
- 					  GFP_KERNEL);
- 	if (!psy->supplied_from)
- 		return -ENOMEM;
- 
- 	return power_supply_populate_supplied_from(psy);
- }
--#else
--static int power_supply_check_supplies(struct power_supply *psy)
--{
--	int nval, ret;
--
--	if (!psy->dev.parent)
--		return 0;
--
--	nval = device_property_string_array_count(psy->dev.parent, "supplied-from");
--	if (nval <= 0)
--		return 0;
--
--	psy->supplied_from = devm_kmalloc_array(&psy->dev, nval,
--						sizeof(char *), GFP_KERNEL);
--	if (!psy->supplied_from)
--		return -ENOMEM;
--
--	ret = device_property_read_string_array(psy->dev.parent,
--		"supplied-from", (const char **)psy->supplied_from, nval);
+diff --git a/drivers/power/supply/ltc2941-battery-gauge.c b/drivers/power/supply/ltc2941-battery-gauge.c
+index d1be314f36a09..6ebb555f203d3 100644
+--- a/drivers/power/supply/ltc2941-battery-gauge.c
++++ b/drivers/power/supply/ltc2941-battery-gauge.c
+@@ -464,9 +464,11 @@ static int ltc294x_i2c_probe(struct i2c_client *client)
+ 	/* r_sense can be negative, when sense+ is connected to the battery
+ 	 * instead of the sense-. This results in reversed measurements. */
+ 	ret = of_property_read_s32(np, "lltc,resistor-sense", &r_sense);
 -	if (ret < 0)
--		return ret;
--
--	psy->num_supplies = nval;
--
--	return 0;
--}
--#endif
++	if (ret < 0) {
++		of_node_put(np);
+ 		return dev_err_probe(&client->dev, ret,
+ 			"Could not find lltc,resistor-sense in devicetree\n");
++	}
+ 	info->r_sense = r_sense;
  
- struct psy_am_i_supplied_data {
- 	struct power_supply *psy;
+ 	ret = of_property_read_u32(np, "lltc,prescaler-exponent",
+@@ -477,6 +479,8 @@ static int ltc294x_i2c_probe(struct i2c_client *client)
+ 		prescaler_exp = LTC2941_MAX_PRESCALER_EXP;
+ 	}
+ 
++	of_node_put(np);
++
+ 	if (info->id == LTC2943_ID) {
+ 		if (prescaler_exp > LTC2943_MAX_PRESCALER_EXP)
+ 			prescaler_exp = LTC2943_MAX_PRESCALER_EXP;
 -- 
 2.53.0
 
