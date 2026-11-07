@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064094;
-	b=OtSUbVIFwA1q0Jlr/5KqewK2n5Hgl2+yuYLW19TzjNgAUKzAJWmiTd7rYaLebc0+0pot
-	 J1M6EQ8fitWnLipTUaJXRtUOl2RttnVll8fJNYo//Ai4K5hmNFNCR3PnmlxfV7Dfc0ZCq
-	 MlMWnSrRUoJ0y80Oh2Dl7W4SBLlbQ3UZ24PlLVEzbu4vo+I3dcjvFKSvp/+cUBx6uLWlp
-	 +v8fixQ+KcttsEkQ/JonSrgObducm1JHrnaT2uNPpe3DhNnMsQn7BHclnihnbD1TxLjx4
-	 S5cS5+JrAJ67Q5sToJtswpQZoPX99CFQvXO/eXYU1sJ3lC5ivzCm05X2bStVXgOxeqw==
+	t=1794064095;
+	b=YMsBg2UM5cGuHG1aepvuwvqnGafNtHHJjRyD9FuQOWuNxS4w0sglby9FgMkTBedw/rlD
+	 IaTVff2FsH28JCrzbVrPxrt62HGiTtyhTZoISZM9kny9BjZ3Ow5gOscFD1buMYMiVuGGH
+	 on2DAuuKSlSg9uP3n+MTj5Z5P2xWPog2e1m6U7PZdGxnhQ/Qw3g5Us+MCbv8SEQdYALMl
+	 GaCumCiqZsunorRH4E+dkvAeRUluoWwgZUAntIxS+phF82mGTxpUAR571g7rUrWyGgkN3
+	 dKLbvQeo3XkSjrFkEfGIGKb42Y/b/g6ZwHTQwdMGCNasaLvTTWnBY4CPQER9Vazjxeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064095;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xuFzjf8z4/qnvLqpdm/tvqx1HaQizl7biRM8xfscFuc=;
-	b=V1WSp/NUJTxWsgJ2TZ+yU80NUMEvehV2BlwXhGUombmaWZueiCx4DuG8Six9wxuKmse3
-	 3nDIYUyFGsC/74g7mWzK8Lw5RT2jDb4ICPJx45e5Od5A8tWWbstHtjfSBHWmbGpIlYsWI
-	 n7CUpggUVt5oEjP73tJt4E2SZmYRi71AV/boN3Zh0+NeHlVWiGaXjonYqVqiJ50sa01/k
-	 3EyIGgZfGJVpfiomhOgiXTF9MiM6Vj4FkyBS0D0o0w4HsPMkRSnwm3IPq9HSqx5AiPHyW
-	 eIcBaZr8+z7vz/V3gpwfQ2ldd81BFXg379pDKQKruuIqn0Q3VO23kYu2vIGAnPbdsUA==
+	bh=Q7tMH2tHuPM7WogLQ0Zv8siEZaB+Pr5MV09tnbBflYo=;
+	b=l/trkyHIj6LU0JEtt5NU9tzGGDO5WmEybTdU4Um6dbHMc/RUX3yAKBJEOMc8QEEKA28q
+	 BzP6YmAkLqwzHcEGwFm98K5j00hM/QCEQa138Ek59pz0GpgmL/PTgXyL1ajc8vhJQSwuc
+	 FPRvqkKn6yBVk3WCPCed1tc3ed1dX65F2MUBdxA9KD8YGrTawqVGjhVqZ/NyyNI8OFTOA
+	 ZFHRE7LJDkWW5efIVQAYW3gUAIYNNmZNcbQaN5X9N+PO4/Te4/7DIMXhXabzukuLjBKSP
+	 3Gc1UKz3MKFx3FWX7wxsTsmzIA8YYLQz6Zxl4/WsQbDcbFab0r1+0lQEINwHchsVWWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTnJcpsZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9U6YVed;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B96606CE56;
-	Sat,  7 Nov 2026 15:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D29606CE56;
+	Sat,  7 Nov 2026 15:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kTnJcpsZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020C71F0089F;
-	Sat,  7 Nov 2026 15:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9U6YVed
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354EE1F0089F;
+	Sat,  7 Nov 2026 15:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064094;
-	bh=xuFzjf8z4/qnvLqpdm/tvqx1HaQizl7biRM8xfscFuc=;
+	s=korg; t=1794064095;
+	bh=Q7tMH2tHuPM7WogLQ0Zv8siEZaB+Pr5MV09tnbBflYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kTnJcpsZFjpdC4+Spjk8jwZmUKwE9ElEm7DFYESZBrA2GlK590aP1u2yQAAdZlVXq
-	 Eu/64udnGX4O/yD0L5PoadIxa6X6amZ3y4ro4gb6OBIRT0zGv0FYaX5D0K46u7uXFL
-	 gwjj096m8avwVToPufXURJf2CwygMdLgJKXEMa9I=
+	b=t9U6YVedVlGBNlrv9MsXmsOBOHC8IPJR3K9m+5JPYGcWWAV7jCXHDs8pO2KnUzZzw
+	 yDwnGhGplHePMT7DW58qLBIpZ2FTGqDcUv8V+mwBa5MgFx9sAX7UBGs34yzBj9CGem
+	 LshpcCmBbH/ZM8uGjnRj+Y8yCHB1hjJM+HyzQTpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wentao Liang <vulab@iscas.ac.cn>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tony Luck <tony.luck@intel.com>,
+	Qiuxu Zhuo <qzhuo@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0207/1257] ASoC: codecs: wm8994: Fix runtime PM leak in wm8994_mic_detect()
-Date: Sat,  7 Nov 2026 08:41:43 -0500
-Message-ID: <20261107134945.260600260@linuxfoundation.org>
+Subject: [PATCH 7.3 0249/1257] EDAC/i10nm: Fix mdev reference leak in i10nm_get_ddr_munits()
+Date: Sat,  7 Nov 2026 08:42:25 -0500
+Message-ID: <20261107134946.384853740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,39 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit b2c0e5bf750e33b0e1dcdfbb2df8103a06c7caab ]
+[ Upstream commit f0d8c34b3b5e845113581d7d3b24ddaa61bce1f0 ]
 
-wm8994_mic_detect() resumes the component before configuring the MICBIAS
-pins, but the default case of the micbias switch returns -EINVAL right
-after taking that reference, skipping the pm_runtime_put() on the
-success path. This leaks a runtime PM reference on every call with an
-invalid micbias.
+In i10nm_get_ddr_munits(), get_ddr_munit() returns a PCI device with
+its reference count incremented.  If ioremap() fails to map the MMIO
+space of the memory controller, the function returns -ENODEV without
+putting the reference held by mdev, leaking it.
 
-Release the reference before returning -EINVAL.
+Put the device reference before returning on the ioremap failure path.
 
-Fixes: f5a2cda4f1db ("ASoC: wm8994: Ensure the device is resumed in wm89xx_mic_detect functions")
-Cc: stable@vger.kernel.org
+[Tony: Dropped the Cc: stable tag]
+
+Fixes: c545f5e41225 ("EDAC/i10nm: Skip the absent memory controllers")
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260917165130.2163278-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Qiuxu Zhuo <qzhuo@nvidia.com>
+Link: https://patch.msgid.link/20260916091251.1997522-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 1 +
+ drivers/edac/i10nm_base.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index 0d1b4b1fcecda..58cfdd60d8ab1 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -3532,6 +3532,7 @@ int wm8994_mic_detect(struct snd_soc_component *component, struct snd_soc_jack *
- 		break;
- 	default:
- 		dev_warn(component->dev, "Invalid MICBIAS %d\n", micbias);
-+		pm_runtime_put(component->dev);
- 		return -EINVAL;
- 	}
+diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
+index fa1853f252b06..12e1949fcf44f 100644
+--- a/drivers/edac/i10nm_base.c
++++ b/drivers/edac/i10nm_base.c
+@@ -634,6 +634,7 @@ static int i10nm_get_ddr_munits(void)
  
+ 			mbase = ioremap(base + off, size);
+ 			if (!mbase) {
++				pci_dev_put(mdev);
+ 				i10nm_printk(KERN_ERR, "Failed to ioremap 0x%llx\n",
+ 					     base + off);
+ 				return -ENODEV;
 -- 
 2.53.0
 
