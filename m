@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064961;
-	b=iOMU3R/wg2sdP46MzjHrvJqA/CeLKP66UsO1NNZ+JvkiitM4GHzh/qKRopCyZJSUubaz
-	 zj2pzrZqgt1CcGZKWszzDVieGJ2OhpNTuWT/YvEeiryqYOj0MbUOlv/Ll93Rykcxlc9XK
-	 XJubtNfN7xqNE6oZQ4seGv7+c55g4JATWESg5m6xNzzUgEKd7RgXRDlxK/unjbddFGGsv
-	 fHykqPwhpwbAQRXe2QTOmpVksGSgEMjWQcZSrxrTeCOoaXdUvfDmdopmm45ZZaPVBpAdG
-	 VOjSylnLM7vbuaIIcpcDGplo8iVIZoSyWQOILypVwB1PZnC4rHba7jNjMlxJyutzfaA==
+	t=1794064962;
+	b=ZValTA7gC7blWRw4p1EnngjZefvOiGOrmTHkRLJa+FakSECP/qboP8fvhyYdbwpaLbI6
+	 v7NBdD7PBtQzJKTaf6m1O+eUNVCJr6TCbBecvUTupv6AcHJWBemHRGKoP7smJS3fBSvqc
+	 D9OA3ytn0M7gExhEfjATRy8wMhIWAy8J74fGdJWLg74k//hiKg2yVUPMWcsgBvyKPTVul
+	 2ajEEGzyVLAqq39xaxxy9gB7M4bImbvnoLpG8Hu5/wwx4LU17rKB9zOOO5b9VdqUZ/l8k
+	 TgEQ9YqBZffHOysHa3pC/So60LRjnL/GUcXqGcMnxe7HsVvsjL8atYkVX6rd8dFtqCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BunjJOa1zBZK9nBh47fa/Nbv/7pRM5dIFR63pdaFwoY=;
-	b=yps7AXqhP/8ItNoj17FpViKZyYeog8MVOtpMgKWCaSpMz9CYKpe6bsgkc3yQ0Xxcttj0
-	 8/ByOmthagNgDSq0hZ0Q5PunUaWgHIfYBZkS5nMrO1xxkWQ5Shaua7ykDmHnqdTuD1cAg
-	 LIGNihxaVTbXPgytwwuHL9o6h/2iY6u04U5LV8AR6OkIozV4X/kJPRmAhOiT0eU6w110J
-	 IZsbq1No4IcZyDBaG1wBZsK3dXkJ9D2JHV+Mm0On7lgBpCRL4Di4Mr3FEtc0QUdjEiG7O
-	 9flIc5W8MIC60HZluf43i3ebB/UpMT57OY0jRQJFKeM5DUrB+DjOlY50+h3X2Ekjb/w==
+	bh=gQE9EMn96UZmZYpwjD3tKEVZI0WqJqO2AtHmBetgYYY=;
+	b=yocX85rttrSOXJe2Mjvm0vRaJBqLVd16aw6FM54Sa54p3+LNbT4vif9PF55TgvJGlS7z
+	 9zaX256jMiXifP/PnxJn7yhFLq7q+XRybwLbJ2IpYBsWTMQ9iobiwpzwOXFRenB5WmdUB
+	 4QPy4rXh12cgvr4lDJf7TjhkfiJHov+UZEO8I00NOuSmZ8ifPDlWWSzbZSoC6ZnlYtKBv
+	 S9NZUeYbeXoSPcKNpi9jIhoSZ932atf88p7f68sYXgeAZrPM90upthzexCPXVfP+ppmD0
+	 c09jjWJeE1z5EvQYZxHTAlyhiTmVJ01QC3Y1ss78walNdFxdeK/J5CHmRqPSI8fcDCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ApSTwW6w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TD0XAVtf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C581C606B8A1;
-	Sat,  7 Nov 2026 15:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3858A606A9D9;
+	Sat,  7 Nov 2026 15:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ApSTwW6w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730D31F0089F;
-	Sat,  7 Nov 2026 15:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TD0XAVtf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64BF1F0089F;
+	Sat,  7 Nov 2026 15:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064960;
-	bh=BunjJOa1zBZK9nBh47fa/Nbv/7pRM5dIFR63pdaFwoY=;
+	s=korg; t=1794064962;
+	bh=gQE9EMn96UZmZYpwjD3tKEVZI0WqJqO2AtHmBetgYYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ApSTwW6w4Xgd97JFkZ2q+6ANyQp4BiwHHxryQxNj5ur9R/DcWA8mK9d7mfvT9tZCR
-	 6HtTvYEqvTzKDMbqFhMKCEvArNUi1hmn+Lqopc1f47a+OTW3xzPuRpzfrquezbWMwf
-	 6qTP1N5Y+Dc2hoRq7lOqf/sP/JMtSmB77rjlScGg=
+	b=TD0XAVtfIZRr5pzH2fufRRIUp01iTmuZoOoCWcF633vnI48aNEGR/RGoZUhWLOI51
+	 xoC6WznemULpy/nll4ujibdhUfx+9wGtvNxdf3z2nHuS7TKkyg0xlxfzHxl2dQZ4Zq
+	 WducSUMy/XvOOmhp+IPc2lOjlTicp4hH1WCF+ubg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0845/1257] mptcp: fix subflow bitfield misuse
-Date: Sat,  7 Nov 2026 08:52:21 -0500
-Message-ID: <20261107135002.662289014@linuxfoundation.org>
+Subject: [PATCH 7.3 0846/1257] ALSA: seq: oss: Skip events until fully initialized
+Date: Sat,  7 Nov 2026 08:52:22 -0500
+Message-ID: <20261107135002.690626657@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,55 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 7538fa33bb2f66b8b809ff39d58308be48e197a0 ]
+[ Upstream commit 68d4a6ea6cc6091a05836f783bc17d525d266d0b ]
 
-The subflow status bitfield is protected by the subflow socket lock,
-with one notable exception: the `close_event_done` bit is actually under
-the msk socket lock protection.
+When an OSS sequencer device is opened, it creates a sequencer port,
+then further initializes the internal states like a timer instance,
+etc.  Since the sequencer port is published, an event can be already
+delivered, and this may hit unexpected event handling, which can
+eventually cause a NULL dereference (like the timer start/stop event
+triggered before the timer initialization).
 
-As reported by Clashiko [1], flipping the latter bit may corrupt other
-entries in the same bitfield.
+For avoiding such a race, introduce a simple guard and skips the event
+processing until the port is fully initialized.
+At releasing the device, in turn, clear this guard, so that any input
+events will be discarded during the teardown.
 
-Move the `close_event_done` outside the bitfield, in a 32bit hole.
-
-Link: https://lore.kernel.org/178959153492.22033.1944011998010756543@kernel.org
-Fixes: d82809b6c5f2 ("mptcp: avoid duplicated SUB_CLOSED events")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-2-932c9b182fc7@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20261016161930.482309-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/core/seq/oss/seq_oss_device.h | 1 +
+ sound/core/seq/oss/seq_oss_event.c  | 3 +++
+ sound/core/seq/oss/seq_oss_init.c   | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 3c9ad99ee7ef0..4ed598febbf01 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -583,14 +583,16 @@ struct mptcp_subflow_context {
- 		closing : 1,	    /* must not pass rx data to msk anymore */
- 		valid_csum_seen : 1,        /* at least one csum validated */
- 		is_mptfo : 1,	    /* subflow is doing TFO */
--		close_event_done : 1,       /* has done the post-closed part */
- 		mpc_drop : 1,	    /* the MPC option has been dropped in a rtx */
- 		resetting : 1,	    /* subflow is resetting */
--		__unused : 8;
-+		__unused : 9;
- 	bool	data_avail;
- 	bool	scheduled;
- 	bool	pm_listener;	    /* a listener managed by the kernel PM? */
- 	bool	fully_established;  /* path validated */
-+	bool	close_event_done;   /* has done the post-closed part,
-+				     * protected by msk socket lock
-+				     */
- 	u32	lent_mem_frag;
- 	u32	remote_nonce;
- 	u64	thmac;
+diff --git a/sound/core/seq/oss/seq_oss_device.h b/sound/core/seq/oss/seq_oss_device.h
+index 935cf3df0b30f..571186db4fa59 100644
+--- a/sound/core/seq/oss/seq_oss_device.h
++++ b/sound/core/seq/oss/seq_oss_device.h
+@@ -72,6 +72,7 @@ struct seq_oss_devinfo {
+ 	int cseq;	/* sequencer client number */
+ 	int port;	/* sequencer port number */
+ 	int queue;	/* sequencer queue number */
++	bool initialized;
+ 
+ 	struct snd_seq_addr addr;	/* address of this device */
+ 
+diff --git a/sound/core/seq/oss/seq_oss_event.c b/sound/core/seq/oss/seq_oss_event.c
+index 122735862044d..20f4c5ce763cc 100644
+--- a/sound/core/seq/oss/seq_oss_event.c
++++ b/sound/core/seq/oss/seq_oss_event.c
+@@ -425,6 +425,9 @@ snd_seq_oss_event_input(struct snd_seq_event *ev, int direct, void *private_data
+ 	struct seq_oss_devinfo *dp = (struct seq_oss_devinfo *)private_data;
+ 	union evrec *rec;
+ 
++	if (!dp || !smp_load_acquire(&dp->initialized))
++		return 0; /* ignored */
++
+ 	if (ev->type != SNDRV_SEQ_EVENT_ECHO)
+ 		return snd_seq_oss_midi_input(ev, direct, private_data);
+ 
+diff --git a/sound/core/seq/oss/seq_oss_init.c b/sound/core/seq/oss/seq_oss_init.c
+index 1aece46c8b064..a1063dc22d462 100644
+--- a/sound/core/seq/oss/seq_oss_init.c
++++ b/sound/core/seq/oss/seq_oss_init.c
+@@ -258,6 +258,7 @@ snd_seq_oss_open(struct file *file, int level)
+ 
+ 	client_table[dp->index] = dp;
+ 	num_clients++;
++	smp_store_release(&dp->initialized, true);
+ 
+ 	return 0;
+ 
+@@ -403,6 +404,7 @@ snd_seq_oss_release(struct seq_oss_devinfo *dp)
+ 
+ 	client_table[dp->index] = NULL;
+ 	num_clients--;
++	smp_store_release(&dp->initialized, false);
+ 
+ 	snd_seq_oss_reset(dp);
+ 
 -- 
 2.53.0
 
