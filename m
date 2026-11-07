@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063104;
-	b=bQrgt3oLRdcBFRlsNrdHp5EDkEh1WtiAFGFXNVY/LOO6mbgC1RhDWKlBBPeHHrhVu/h4
-	 okHu1+u4iYsRRPrXIS/o7V/Pk8CENhwg8VpS/E7pplW7wOChgkoPkSZyYwSBUc4zv27Lc
-	 tshNLHn0XKcLAoDV3Sa4eUk+/tQvgz8O/orS2BsOhV0er8bACvmvpzrxr1XstZ2HYkv1r
-	 PWozqSGFt97S+D7Hj7DUbyCoEqf42JaTA0BHg/43v2AWYpnVgtGANCyw9YgB4NTIFOKeu
-	 wsrMF3113QYl6784nzuTeumZeG86gTxQRrvCE+zdMadHmk5u2DFOHi9j6bGrHslT0eQ==
+	t=1794063106;
+	b=hmwLofURW0CMXOD8Usw/QZlYwYX5Hzd6cAnVkNcVUJZzTK0q0ceq+vcp6p05pCExnPvo
+	 D0bK7f6AksUtzpGToF03uodPmCZo4MQ3ozlGEw4eu6vKXszqrZ2d8DKWpOKnVK0a8+vUV
+	 HDE3CL723PGD9d6hegKXLEoxVaBy8zeW55S0RVvdiCi1FQIUj4IM+Q/IxsGtcZn5Joh+u
+	 uVDMm1pX7lqqaWsXyRjg34iWeRaIzejEPgZwEQOrXaVA4MjDUw+a24EX2vLnABTnPtrX3
+	 iM3O5zWYJNDZldD/g7wFI2st+1Jcn0urdsSjo5jQUl6kXP0S/TlvBGWOUNn5rcUXepg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063106;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nS/Z3ANDvMp0BOkcwT6Az7SagajBX7W7oBMWlUffNDk=;
-	b=epTiXuh24yGBhbr+m/Ed8DMfbVRJBPkut/8RM1dK4Igs0+DlPAp0Yd7KpYgQNVCHIhBv
-	 J8+rckN+4v6LXtwmvhP93hVUcP8w4E4i+nGgO5nDNakrcwDrbUKqWlJl4vwgME2mmpfYV
-	 Gp14DJ3RxAwjTz+pecCUHzJPGFQlOKaBe0gQNnvPacDbEmbyjso0A4vgLj9zPgR/R31YP
-	 9nOVRDTlcKWjj4pV7B/nqBkIk0xkiCisASR7mSjr+OiKhTWPmIeDYMy3RNiILeAaiv/mN
-	 inPSyT9YH77bH8rYAxWvWymR8usm5NBwFBe7omW5vmFBMiCYbzI5FxaEbpmW6UkD0WA==
+	bh=w1pQ9l9HgumiSIpNRvrf5S4MMAs0fn2jY2858sGuzAo=;
+	b=1iWKMpRCEFBhfm1RyJRnkX2U4tUxpVRfAUjtsLJIlRq8VGUTGzSgEvoqk0IGjahJBfkD
+	 wsGCruO5V/O/AoB7uNz/Jw8iRFQMti2AebbyA2JiGBGUuU++QIRrDCKIDU2Daz/f4RdeU
+	 qxg7VdoZeIk0ayiFik8sRbo425v5AY12/kMhLit5N9nx2GaiSAyusmV6Wqk2Z98HRf+Hv
+	 KqVmWLshcsgfELILzlvmO95E/qYv2Cc/L+yCiL/kcK4PjdX+m5HQTJCc5PtEbRsnaPuBh
+	 LBtrY80UfdoRfYvpXYl9NciYXSp09XTRoRUH/G93bQTxRd0h8ke/6TPocjpgHk226Xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0ZjC/+2i";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNuMC197;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A7C606A33B;
-	Sat,  7 Nov 2026 14:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33B7606A33B;
+	Sat,  7 Nov 2026 14:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZjC/+2i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED47B1F0089F;
-	Sat,  7 Nov 2026 14:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tNuMC197
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB571F008A1;
+	Sat,  7 Nov 2026 14:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063104;
-	bh=nS/Z3ANDvMp0BOkcwT6Az7SagajBX7W7oBMWlUffNDk=;
+	s=korg; t=1794063105;
+	bh=w1pQ9l9HgumiSIpNRvrf5S4MMAs0fn2jY2858sGuzAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ZjC/+2iWvdIvu5p9Xb1g7OrZNBKahFTSSoVwghERVWzT4Allohhx3nl+MtjU9VBe
-	 kUN2lz+231B45ttEyLfWF8H5FJW0L7LzIdjuk5JS8RdebRUzNIxpmaN8XnpoNVuDEf
-	 /czfXE9rU+Gb5VYRVIqQDqjyXI66OFrtoVP+6LeA=
+	b=tNuMC197mOUrsMY8VVXkud6+7Cn2fbAsdRXGOnTgvQEwK1Fv8nys4XTz++TqqqNeD
+	 Q4O/ts1bj0M6Ikq6Qo/iQk+ZyhF3NGR7fjLnG6j/v0XaoTY9XWFw5ShQWdnzVfxzfL
+	 xaoiSMF7BaeMEBvy3j/mhKK0zlPlb2IU0q7zKs2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Jai Luthra <jai.luthra@ideasonboard.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 338/869] media: imagination: Fix value clamping in calculate_qp_tables
-Date: Sat,  7 Nov 2026 08:50:20 -0500
-Message-ID: <20261107134903.860594975@linuxfoundation.org>
+Subject: [PATCH 6.18 312/869] media: rtl28xxu: fix SDR platform device leak
+Date: Sat,  7 Nov 2026 08:49:54 -0500
+Message-ID: <20261107134903.088827688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,44 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit c8454a41da59d51fbcc5743f8c71a03b096a770f ]
+[ Upstream commit 083a92996598a5080965f1baa84175082e14a45b ]
 
-The local variable 'val' was never clamped to 1 or 255 because the
-return value of clamp() was not used. Fix this by assigning the clamped
-value back to 'val'.
+rtl2832u_tuner_attach() registers an rtl2832_sdr platform device, but
+does not unregister it if no driver is bound. It also does not take a
+reference on the bound driver module.
 
+Unregister the platform device when no driver is bound or the module
+reference cannot be acquired. Drop the module reference in
+rtl28xxu_tuner_detach() before unregistering the device.
+
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fixes: a2f7f220df5e ("[media] rtl28xxu: switch SDR module to platform driver")
 Cc: stable@vger.kernel.org
-Fixes: a1e294045885 ("media: imagination: Add E5010 JPEG Encoder driver")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/imagination/e5010-jpeg-enc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/usb/dvb-usb-v2/rtl28xxu.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/imagination/e5010-jpeg-enc.c b/drivers/media/platform/imagination/e5010-jpeg-enc.c
-index c4e0097cb8b7f..a36a2acc896c9 100644
---- a/drivers/media/platform/imagination/e5010-jpeg-enc.c
-+++ b/drivers/media/platform/imagination/e5010-jpeg-enc.c
-@@ -175,12 +175,12 @@ static void calculate_qp_tables(struct e5010_context *ctx)
- 		long long delta = v4l2_jpeg_ref_table_chroma_qt[i] * contrast + luminosity;
- 		int val = (int)(v4l2_jpeg_ref_table_chroma_qt[i] + delta);
+diff --git a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+index 487c6ab784abd..d2957e4bf0173 100644
+--- a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
++++ b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+@@ -1391,8 +1391,16 @@ static int rtl2832u_tuner_attach(struct dvb_usb_adapter *adap)
+ 						     "rtl2832_sdr",
+ 						     PLATFORM_DEVID_AUTO,
+ 						     &pdata, sizeof(pdata));
+-		if (IS_ERR(pdev) || pdev->dev.driver == NULL)
++		if (IS_ERR(pdev))
+ 			break;
++		if (!pdev->dev.driver) {
++			platform_device_unregister(pdev);
++			break;
++		}
++		if (!try_module_get(pdev->dev.driver->owner)) {
++			platform_device_unregister(pdev);
++			break;
++		}
+ 		dev->platform_device_sdr = pdev;
+ 		break;
+ 	default:
+@@ -1426,8 +1434,10 @@ static int rtl28xxu_tuner_detach(struct dvb_usb_adapter *adap)
  
--		clamp(val, 1, 255);
-+		val = clamp(val, 1, 255);
- 		ctx->chroma_qp[i] = quality == -50 ? 1 : val;
+ 	/* remove platform SDR */
+ 	pdev = dev->platform_device_sdr;
+-	if (pdev)
++	if (pdev) {
++		module_put(pdev->dev.driver->owner);
+ 		platform_device_unregister(pdev);
++	}
  
- 		delta = v4l2_jpeg_ref_table_luma_qt[i] * contrast + luminosity;
- 		val = (int)(v4l2_jpeg_ref_table_luma_qt[i] + delta);
--		clamp(val, 1, 255);
-+		val = clamp(val, 1, 255);
- 		ctx->luma_qp[i] = quality == -50 ? 1 : val;
- 	}
- 
+ 	/* remove I2C tuner */
+ 	client = dev->i2c_client_tuner;
 -- 
 2.53.0
 
