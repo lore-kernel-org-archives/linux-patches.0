@@ -1,61 +1,80 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.227.220.155
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794076622;
-	b=O2qaS19rn0Z1o6O209v7nARvibzeCYNj44/RR6R9YQ5K0rZ0KmRNOZfUSWA4fTuTi7ph
-	 81BhVMzB4bTdj/tOaXZQG7hWDSYRc8ED570XnfVp1aoJUQI+ywCxbqQoZVhpOYyi5yWj2
-	 VRbKbxI0tsF+ssjObnit9/2vXRFiuN3WbO6wGO736Y5G99OJCYNMY80NsxwLjPGJSjLHb
-	 DgYvehSFOfm61Jhmc8zFmI1cUV1YQVrUq/PlX2MpsS2+FMwy2LxKa55eTZ+sMPk2/Js6N
-	 7bUptj4/qQ6z6RIUBmn4HyeRzNtiReUfAY/IVvcYToIyfIW6f4u3SCdUW6XEF6muw0w==
+	t=1794080048;
+	b=qRu65gWGIT+3amMKrZPbJR5r9PFLkC+ZtiDZNOunfzB2TBB6YRxu9M+7674/VjJPanSs
+	 LwjjkjyF98Aa2ZFPOfT2XfCkcA5Nm7SmHhRavQRrpAog2kthN6duB8rvhaNbRdOPu6MXI
+	 9yCgx/i4fNGJ067W2D16mKhhbD0uqKrUmRFKLyJBN+Q59LHM3TclhFg3UeSYCxL89cQLn
+	 eI6zkx7g7GnbIL5g0xjcgZYsJlNYo1DQpf2JjHzWFBJMsG9di77ULXsLYZbzRWGXcO/20
+	 uQnk5dYDFFlP+Xq2NxqenCWVLlJnvmLTDYVcbBRvWDwRmxU+SSw5VdNIQMXAkGCP0fg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794076622;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=ERuNgL3/8ubnIoEFYnufjQbxnvviKD87N6fwTkLdxrI=;
-	b=ZGfjSXV3PkwzepjC5zdlIpcGQ5tTdkNLwpH3NcNwCST/hTOjq5NwD/k9NpJ5C0WdDnhY
-	 DiGxhr5Puy+u33Mliq4Ds039k8BpmoEIkxeOT+sAouT6oVj2f3SfWxrD0bJW3pybqEgg5
-	 Ykm8So2O3tt44Sig6w97+EnzU3s5ampk+e+tMYGtv6VQIPy9MzDdX+N1KVkvVgNXT3Kyh
-	 PVR2K9tMypT4ZEWzrP9/9rE744gponOQ0aYAoMp1rTyXTBeduM82cEYDF8xz64ZPum5CD
-	 Z1K0dpNl1Ck+ZhcXkIHc5dGe9QGjj5zLZrr+zvZSMmcPmpoj2fIlaZTGE7LkDWE+ABw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794080048;
+	h=DMARC-Filter:Date:DKIM-Signature:From:To:Cc:Subject:Message-ID:
+	 Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=iSm02S9UFPqyxcXJfE/yMCdmauGWZNHUIjvGtZ/NnKU=;
+	b=XUJZmVgj6tVPalamXf5pcJ1PFF2zjo9gkJaoDm07TsYNLsqFPGcVXxSU3AVv2bAOmdrf
+	 zp7TifpvxFqtD1HjwRYTTv6C5vQ3kETuWnxCYkzI3XxxPZ6gXjObapMm6tpkxPqFI9NOP
+	 FlfgG0NyqNLN4rCILNq0qhnz86iNR10+MLHcQ8udFLFLQHYFrZQD++wuwyMgl6xLCbR3c
+	 WzW4jz82QBWNtq77r0uwAA4p6argYmUhAYHKf4h8Rj4ILbpNmhqw97iLN5ZTLeAcvHjcK
+	 vgCNdHj7c2nmnaJAB/FHqiEWk1OEua/lyx4nLAN5ujgB/jLQDlnkt1HnLxxVK2yj0RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="axbka1s/";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=mareichelt.com;
+	spf=pass smtp.mailfrom=mareichelt.com;
+	dkim=pass header.d=mareichelt.com header.i=@mareichelt.com header.a=rsa-sha256 header.s=202107 header.b=33XC+mGy;
+	arc=none smtp.remote-ip=91.227.220.155
+Received: from mail.antaris-organics.com (mail.antaris-organics.com [91.227.220.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8580E606A326;
-	Sat,  7 Nov 2026 18:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA9E606A326
+	for <patches@lists.linux.dev>; Sat,  7 Nov 2026 19:34:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5BA9E606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mareichelt.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mareichelt.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=axbka1s/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8051F0089F;
-	Sat,  7 Nov 2026 18:37:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794076622;
-	bh=ERuNgL3/8ubnIoEFYnufjQbxnvviKD87N6fwTkLdxrI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=axbka1s/19gUwcu/QXKm+mhOqmjccYmIKBleffEGvgIx8Cwl/MDFXNzPFTUVZieCc
-	 QPht6WBEQo89ZR+KB1uvAOrUy4wpU9ZL/J/YUoGM0CpkO545NDcnzsHUoZEXuYWyPM
-	 lRA2TMFaIDCehp3d4o7YmLulYSrMWIGShMbD3eAeF/sCOOqMfxOWfnl9X54h8ct80V
-	 ZangmDWEA8OsKkud4r7T3UJyHHW6BvIr0eu/36eGXF2j7tXV7sKFE1QUtN3G9nFuzm
-	 0cXQqgCAw91wiJZcx+Tt94dz5/lB+il+DS/VFZVkRegyYXH/gyms4YXRlQtYkSrAkI
-	 uL1ahsyYUkJ3g==
-From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Usama Arif <usamaarif642@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 7.3 0655/1257] mm/damon/core-kunit: test invalid damos filter commits
-Date: Sat,  7 Nov 2026 10:36:49 -0800
-Message-ID: <20261107183650.177635-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261107183202.177477-1-sj@kernel.org>
-References: 
+	dkim=pass (2048-bit key) header.d=mareichelt.com header.i=@mareichelt.com header.a=rsa-sha256 header.s=202107 header.b=33XC+mGy
+Date: Sat, 7 Nov 2026 20:33:58 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mareichelt.com;
+	s=202107; t=1794080039;
+	bh=iSm02S9UFPqyxcXJfE/yMCdmauGWZNHUIjvGtZ/NnKU=;
+	h=Date:From:To:Cc:Subject:Message-ID:Mail-Followup-To:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To:date:
+	 author:from:to:subject:message-id:in-reply-to:references:
+	 mail-followup-to:openpgp:mime-version:content-type:
+	 content-transfer-encoding:author:from:subject:date:to:cc:
+	 resent-author:resent-date:resent-from:resent-sender:resent-to:
+	 resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
+	 mime-version:content-type:content-transfer-encoding:
+	 content-disposition:content-id:content-description:message-id:
+	 mail-followup-to:openpgp;
+	b=33XC+mGykPVMszVlywKf/jjOHp5XTiedLZF4e1fTb8HbS5AtU2UN3RO0ez+c1EjRK
+	 DC9OnYYVTawu0zRm0NYsNQB/k4G3+A15KpSLBWaAYQw7moDVG8XAKm1zAirljB1MQi
+	 eUrXHuKxKlGlyBgquCKMXEVpfPszguhHQMKCwc/rkbYMnHmchPJ7v1l01FNy35Z39A
+	 9sQZ+jM4C/Afxv9pzo+puukdbjo9Px6gr3h9RjjIm72hU3Tx86GhCbs2anlG0UZG8N
+	 d4kklCVB+uLztThKADVQUZVbrSSEWurJ2p3zaQVj5jXndMFuZejKhhS9M6IBbyYpSv
+	 kUc6Rz5hSR21A==
+From: Markus Reichelt <lkt+2023@mareichelt.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 7.3 0000/1257] 7.3.4-rc1 review
+Message-ID: <20261107193358.GA6808@pc21.mareichelt.com>
+Mail-Followup-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+References: <20261107134939.434104957@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -65,65 +84,24 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 
-On Sat, 07 Nov 2026 10:32:10 -0800 SJ Park <sj@kernel.org> wrote:
+* Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> Hi Greg,
+> This is the start of the stable review cycle for the 7.3.4 release.
+> There are 1257 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> On Sat, 7 Nov 2026 08:49:11 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> 
-> > 7.3-stable review patch.  If anyone has any objections, please let me know.
-> 
-> TL;DR: Please drop this.  It has wrong Cc: stable@ tag.
-> 
-> > 
-> > ------------------
-> > 
-> > From: SJ Park <sj@kernel.org>
-> > 
-> > [ Upstream commit 409d2ab6d98209c30d45123920721710475a30b4 ]
-> > 
-> > Add test cases for testing the validation of damos filter arguments in
-> > commit time.
-> 
-> This patch is for testing commit 1bfb9384ae0e ("mm/damon/core: disallow max <
-> min damos filter range arguments commit"), which does not exist in 7.3.y.
-> Hence this patch is making DAMON kunit fails.
-> 
-> > 
-> > Link: https://lore.kernel.org/20260914142327.92510-9-sj@kernel.org
-> > Signed-off-by: SJ Park <sj@kernel.org>
-> > Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> > Cc: Brendan Higgins <brendan.higgins@linux.dev>
-> > Cc: David Gow <davidgow@davidgow.net>
-> > Cc: Usama Arif <usamaarif642@gmail.com>
-> > Cc: <stable@vger.kernel.org>
-> 
-> I didn't intend this to be applied to stable@.  My original patch [1] hence
-> doesn't have Cc: stable@.  But I show Cc: stable@ tag in the upstream commit.
-> Seems Andrew added Cc: stable@ while applying it to mm.git and I missed it.
-> Sorry for not catching this early.
-> 
-> So, this patch is not really meant to be picked into stable@, and only causing
-> the kunit failure.  Could you please drop this?
+> Responses should be made by Mon, 09 Nov 2026 13:46:08 +0000.
+> Anything received after that time might be too late.
 
-FWIW, the patch was posted as a part of a series that have a few Cc: stable@
-patches.  I did so because Cc: stable@ patches are only for minor bug fixes
-that does not require the fast path of hotfixes.  Apparently it only confused
-Andrew or his script.  Sorry about that.  I will not mix Cc: stable@ patches
-with non-Cc: stable@ patches from the next time.
+7.3.4-rc1 compiles on x86_64 (Xeon E5-1620 v2, Slackware64-15.0),
+and boots & runs on x86_64 (AMD Ryzen 5 7520U, Slackware64-current).
+No regressions observed during boot & my custom tests.
 
-> 
-> [1] https://lore.kernel.org/20260914142327.92510-9-sj@kernel.org
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
-> 
+I did not observe the build error already reported in this thread.
 
-
-Thanks,
-SJ
+Tested-by: Markus Reichelt <lkt+2023@mareichelt.com>
