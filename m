@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065272;
-	b=0QaBHVmm1PesHmlwYR3/7JwPKthNA4kN7xKvEtAnZW+Hkrm5omB1H7JVT5kiqqeUVb6e
-	 qPDsZsuMOylN9OTUf2eTqqH6scNA+m8Dq3h5s9UgICHK8GomAWCCYeyPEhPW1x77nt6/G
-	 D9rHrE5x0zNRymmSaPAn/yPphAykZk5MRpGgDwRgVSPklUk/G6TPIJPT0zJ9kvMyzy4+4
-	 Xb1oc/EI6D6esMXpmQqWCNYt1tSU1L9GS08AqpBNgu1ND5tTkLl5REJp/OSNMaNA+OPH0
-	 VSU4mGBRs17myAXhfIiC0R0HzC/nL2Q8butsVyqBkfsg3Uoo7J9PMUllVUeSOwZZuwg==
+	t=1794065274;
+	b=I+kkeY5hI6S2WUsG9ZGiUZlHYOswBXU1Pj36KjOzcrDaft83Ydo/nh4L5E4JtRpw2y0G
+	 DsStrghl4w4sys/iRMwQ0BifA0YSZQXIVpIdt4/OZ8YrxKiA9THNb27LILJgca98t+XXe
+	 EZpU6dSkhHWGyuvPlxM0f0Z7JRqFsRK1TOvg33TWJLo9HajLIXkDA95wy3NLti7pCSX4j
+	 8SuFzU6TNqK4F31BlJ68F36WpRLon/7raxz4ruVuELoKxgER3D0NvZjV0lxGHreK1JZ01
+	 iIToPgzp4mE7UPXmG6A8jnjhuN208k75eOIeOLlt8QbMVJoI/fUC55UG7aAdVJP43Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065274;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6gyviW/2nf6zpUVFec5ypI4EHX6B3CQeqiQuBBAoAGg=;
-	b=IMqqStqQk/gPv5vsShAA/Y+GTGoYsn3SPKU7uxSvpgo2O5QewtVkd+ckDPXj2eRYdLXe
-	 Ibz7tfPA2GFgfbg5q3PT3VsyUgKQoDb6Q7eX6iMzfC2vCneVnCjlXTbiMmYPW9uKVHPGy
-	 eOVp3EY3whcC4ItoBS57rts1Yxj5PJHP0jFSHaR4vPP4immSd45ve2bNkmBlv4oCcIVSi
-	 oAIed0VQV9GqRCJQjI3KS1QQDaUCyqCLU/6FpVAyChrjBSt/FnkU/o1ltN4hCAOoSV6vj
-	 4+qX9t0JrwgL6GHUBW9NkVaii4OrYTVP36asjZp0XGsWiGuK+eu+RCQSvwDZpSdR9lA==
+	bh=u213L9ZNZond1RKs5ldxZTfbsYU+m/K0hIOt3pYSCbE=;
+	b=eiTnhBUqyrYuQrwEoWXFSXX5+cXxL0Jki1x8xwDhijufafwAAQvvjJ5MY7wRQjoaGvzd
+	 tGvKPdx8JN0r7y6oHwb7ashMH0keOInQRmYZMp0omZEqj2+Kg8mVgnfIKMMzu9gkfZJoq
+	 YfC06cY7fCoW/o86pVOYUcLDLU3HlxyliqaIkyrf7ZXWLEDxt2HC1NxKtRZzs2XVKJKcF
+	 /9Y27DMW1fmAPBtbqm/mwW1tEK08JbgOR1A7iFWmn8OwO95EZDbhTdziuqv95oDoGXQLb
+	 oNO87wLbF/WQi77Bh2RhWZ2eXhs+0rBlKkXr1DPsqY02GS2/datgHyaKpTBCXpduSRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McU+4UyQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWpYcRHa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95887606A326;
-	Sat,  7 Nov 2026 15:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57071606A330;
+	Sat,  7 Nov 2026 15:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McU+4UyQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACCD1F0089F;
-	Sat,  7 Nov 2026 15:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWpYcRHa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0326D1F008A1;
+	Sat,  7 Nov 2026 15:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065272;
-	bh=6gyviW/2nf6zpUVFec5ypI4EHX6B3CQeqiQuBBAoAGg=;
+	s=korg; t=1794065274;
+	bh=u213L9ZNZond1RKs5ldxZTfbsYU+m/K0hIOt3pYSCbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McU+4UyQQWIMcSTzfGKNCs7M+o5jwbVxKvaWtXwZWaF/MTHFBPULJa+QXZeQri7MN
-	 IbEXcQSdE7XJ5cgI8r/GYZ3jzrhHsZXe6r5gx0cBXh52QWUPargemsqNoSAKO624zW
-	 tlge0TfdlpvV9LBQnLncaiEWJVUlMaD2SyFfRGqg=
+	b=vWpYcRHaT0vykMxvvnqU8YIG+L6Io4MuS/on46bZxOgrnSdztDNgfF8quT8wskq+1
+	 NpAeUYCv+/J9RpVB7urOfIJf56JihXPCS3Yo+Gx5L9ONCLr1iw5FTMMStzfcYdJQhX
+	 bMQN4C5xuVNzb8G3FMwTJY/ZhmqVQMKzeRSADktI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Navon John Lukose <navonjohnlukose@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Klaus Kusche <klaus.kusche@computerix.info>,
+	Kayra Cizmeci <kayracizmeci@gmail.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ricardo Neri <ricardo.neri@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1028/1257] i2c: designware: queue only one read command for block reads
-Date: Sat,  7 Nov 2026 08:55:24 -0500
-Message-ID: <20261107135007.714094763@linuxfoundation.org>
+Subject: [PATCH 7.3 1037/1257] sched/cache: Honor asym packing over cache aware scheduling on hybrid systems
+Date: Sat,  7 Nov 2026 08:55:33 -0500
+Message-ID: <20261107135007.960161707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,52 +72,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Navon John Lukose <navonjohnlukose@gmail.com>
+From: Tim Chen <tim.c.chen@linux.intel.com>
 
-[ Upstream commit 73dae605cad7921800677d982bfaeb81cc930dec ]
+[ Upstream commit ee92b7ef4c1e271b3c1ea2a8b13034bdc62422a7 ]
 
-i2c_dw_xfer_msg() pre-queues up to rx_fifo_depth read commands based
-on the initial msg.len. For I2C_M_RECV_LEN transfers the real length
-is unknown until the first byte arrives and i2c_dw_recv_len() runs.
-When a large initial length is passed, the surplus pre-queued reads
-leave rx_outstanding non-zero after i2c_dw_recv_len() adjusts
-msg.len, so the completion condition is never met and the transfer
-times out. In a loop, this repeatedly times out the controller and
-disrupts unrelated driver-bound devices on the same adapter.
+A regression was reported on an AMD Ryzen AI HX 370 running a cache
+intensive Clang full-LTO link. The little cores run at a much lower
+frequency (3.3 GHz vs 5.1 GHz) and have only half of the L3 cache
+(8 MB vs 16 MB), so pinning such a task to the little-core LLC
+hurts twice, and full-LTO builds slow down dramatically compared to
+pre-cache-aware-scheduling kernels.
 
-Queue only one read command while I2C_M_RECV_LEN is pending.
-i2c_dw_recv_len() re-enables TX_EMPTY, and the rest are queued once
-the device-reported length is known.
+Asym packing and cache aware scheduling express conflicting placement
+strategies. Asym packing wants a task to run on the highest priority CPU,
+whereas cache aware scheduling wants to co-locate the tasks of a process
+on one LLC regardless of the priority of CPUs in that LLC.
 
-Fixes: c3ae106050b9 ("i2c: designware: Implement support for SMBus block read and write")
-Signed-off-by: Navon John Lukose <navonjohnlukose@gmail.com>
-Cc: <stable@vger.kernel.org> # v4.10+
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+When asym packing tries to migrate task to an idle core that has higher
+priority than source cpu, let asym packing win.  Moving tasks to a higher
+performing idle core will buy more performance than cache co-location.
+
+Prioritize asym packing over LLC balancing for regular and active load
+balancing.
+
+Fixes: 23b2b5ccc45c ("sched/cache: Introduce helper functions to enforce LLC migration policy")
+Closes: https://lore.kernel.org/lkml/2180ea5a-eb28-4152-8d4d-cd00b0c24b2e@computerix.info/
+Reported-by: Klaus Kusche <klaus.kusche@computerix.info>
+Suggested-by: Kayra Cizmeci <kayracizmeci@gmail.com>
+Signed-off-by: Tim Chen <tim.c.chen@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kayra Cizmeci <kayracizmeci@gmail.com>
+Tested-by: Klaus Kusche <klaus.kusche@computerix.info>
+Tested-by: Ricardo Neri <ricardo.neri@intel.com>
+Tested-by: Chen Yu <yu.c.chen@intel.com>
+Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 7.2.x
+Link: https://patch.msgid.link/b29badede27bb6bfb4a759e06754cb19657f0778.1791308631.git.tim.c.chen@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-master.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/sched/fair.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index a1bcc3797e4ff..cd4f57b4e2b52 100644
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -441,6 +441,14 @@ i2c_dw_xfer_msg(struct dw_i2c_dev *dev)
- 				if (dev->rx_outstanding >= dev->rx_fifo_depth)
- 					break;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index b336048eafa2c..b1e9ac883efae 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -10945,6 +10945,8 @@ static inline bool task_misfits_asym_cpu(struct lb_env *env, struct task_struct
+ 	return false;
+ }
  
-+				/*
-+				 * For block reads, queue only the length
-+				 * byte until i2c_dw_recv_len() runs.
-+				 */
-+				if ((flags & I2C_M_RECV_LEN) &&
-+				    buf_len < msgs[dev->msg_write_idx].len)
-+					break;
++static inline bool sched_asym(struct sched_domain *sd, int dst_cpu, int src_cpu);
 +
- 				regmap_write(dev->map, DW_IC_DATA_CMD,
- 					     cmd | 0x100);
- 				rx_limit--;
+ /*
+  * Check if task p can migrate from source LLC to
+  * destination LLC in terms of cache aware load balance.
+@@ -10969,6 +10971,10 @@ static enum llc_mig can_migrate_llc_task(struct lb_env *env,
+ 	if (cpu < 0 || cpus_share_cache(src_cpu, dst_cpu))
+ 		return mig_unrestricted;
+ 
++	/* Prioritize asym packing to idle core over cache awareness */
++	if (env->idle && sched_asym(env->sd, dst_cpu, src_cpu))
++		return mig_unrestricted;
++
+ 	/* skip cache aware load balance for too many threads */
+ 	if (invalid_llc_nr(grp, p, dst_cpu) ||
+ 	    exceed_llc_capacity(grp, dst_cpu)) {
+@@ -12165,6 +12171,14 @@ static inline bool llc_balance(struct lb_env *env, struct sg_lb_stats *sgs,
+ 	    sgs->group_misfit_task_load)
+ 		return false;
+ 
++	/*
++	 * On asym packing domains, if the destination CPU
++	 * has higher priority than all CPUs in the source group,
++	 * prioritize asym packing.
++	 */
++	if (sgs->group_asym_packing)
++		return false;
++
+ 	/*
+ 	 * Skip cache aware tagging if nr_balanced_failed is sufficiently high.
+ 	 * Threshold of cache_nice_tries is set to 1 higher than nr_balance_failed
+@@ -13580,12 +13594,12 @@ static int need_active_balance(struct lb_env *env)
+ {
+ 	struct sched_domain *sd = env->sd;
+ 
+-	if (alb_break_llc(env))
+-		return 0;
+-
+ 	if (asym_active_balance(env))
+ 		return 1;
+ 
++	if (alb_break_llc(env))
++		return 0;
++
+ 	if (imbalanced_active_balance(env))
+ 		return 1;
+ 
 -- 
 2.53.0
 
