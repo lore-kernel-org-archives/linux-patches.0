@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063103;
-	b=pJFsFvXBTf93pltd7LbW/WZ0MD+viupHlLmy2TEwRgDH3aLhXh7YTUBAIQ5rdOGyVo0C
-	 vWfP6D9Mh3emdwS8PB56x2pX8JAyqESXgqA3U68ZXOu+FHxwIUa2jwpO5HYa2TKFIAR6M
-	 Q2Rl7pN1We/+eP6R/rLiNKekrVven8DYvoZ+AV+dmkIaUN7MO9WG+O62YvjKhJw4kDMbQ
-	 e5eW15j4uTKl+FM2Z6cbsqx8nT601iUOG2x+6neE7AMrQo5M/HwWDm3aihAF3a0yHBzuY
-	 mJIXFkk5T5fLtRDrmdoNN62sKLH2K/Yef+KYCmkmL0Yp73Acomj8GtiOkU+1/sxEQDw==
+	t=1794063104;
+	b=bQrgt3oLRdcBFRlsNrdHp5EDkEh1WtiAFGFXNVY/LOO6mbgC1RhDWKlBBPeHHrhVu/h4
+	 okHu1+u4iYsRRPrXIS/o7V/Pk8CENhwg8VpS/E7pplW7wOChgkoPkSZyYwSBUc4zv27Lc
+	 tshNLHn0XKcLAoDV3Sa4eUk+/tQvgz8O/orS2BsOhV0er8bACvmvpzrxr1XstZ2HYkv1r
+	 PWozqSGFt97S+D7Hj7DUbyCoEqf42JaTA0BHg/43v2AWYpnVgtGANCyw9YgB4NTIFOKeu
+	 wsrMF3113QYl6784nzuTeumZeG86gTxQRrvCE+zdMadHmk5u2DFOHi9j6bGrHslT0eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063103;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5EIsnCDn+/nEloWNEAjW0Rq4opSLchdNnsy079uEEoU=;
-	b=Te0hHz5qaSlbGt7/DFocEQUk4wrUEI2XwZLbn7JAWMO78p4GxgCnrmi6c0pcd5jz04Bt
-	 vf5sHKQgKeJxeBKC/l6JOSetsUO1WXkyLrWgXL72awQYH+JVbeGFqPLzAAojC+XGyz/Uk
-	 mx+KxCCtPfiOkmNh4VkAoJSNVyLAVdOn9FTLwZ5XMSnHjsmHnagZJz5WEcUOuIqS9j/zz
-	 6zPcAct7ugaisyzJwLbywjmlCqCSNlCOu1kbU8sRDZjvaf0ILjIiqt4M0SPPYo4qDW/Rp
-	 Cl1y4SBtxXNvf+m35IYijP/S3wnfpRcVluYxr9a2OK//vvebJEYmKXomlCE84LoKIjg==
+	bh=nS/Z3ANDvMp0BOkcwT6Az7SagajBX7W7oBMWlUffNDk=;
+	b=epTiXuh24yGBhbr+m/Ed8DMfbVRJBPkut/8RM1dK4Igs0+DlPAp0Yd7KpYgQNVCHIhBv
+	 J8+rckN+4v6LXtwmvhP93hVUcP8w4E4i+nGgO5nDNakrcwDrbUKqWlJl4vwgME2mmpfYV
+	 Gp14DJ3RxAwjTz+pecCUHzJPGFQlOKaBe0gQNnvPacDbEmbyjso0A4vgLj9zPgR/R31YP
+	 9nOVRDTlcKWjj4pV7B/nqBkIk0xkiCisASR7mSjr+OiKhTWPmIeDYMy3RNiILeAaiv/mN
+	 inPSyT9YH77bH8rYAxWvWymR8usm5NBwFBe7omW5vmFBMiCYbzI5FxaEbpmW6UkD0WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jQc25zgH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0ZjC/+2i";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3CD606D808;
-	Sat,  7 Nov 2026 14:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A7C606A33B;
+	Sat,  7 Nov 2026 14:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jQc25zgH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCEB1F008A1;
-	Sat,  7 Nov 2026 14:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZjC/+2i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED47B1F0089F;
+	Sat,  7 Nov 2026 14:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063103;
-	bh=5EIsnCDn+/nEloWNEAjW0Rq4opSLchdNnsy079uEEoU=;
+	s=korg; t=1794063104;
+	bh=nS/Z3ANDvMp0BOkcwT6Az7SagajBX7W7oBMWlUffNDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jQc25zgHIq/bMVRn/EWUYSUDa9E/CObqPGUEFDbn8YjSM4wwVuW3Qh63pJ8CPAnFe
-	 67xfLkcj+TOfffBVhYWT0vYoUlUe+9sRifTOM3C0/pVYrKKiKXixwco/tdScjr/GNu
-	 jslffBM9Wxn18O4Y2GvWAyn/qMP2vKxsmqUaoy1k=
+	b=0ZjC/+2iWvdIvu5p9Xb1g7OrZNBKahFTSSoVwghERVWzT4Allohhx3nl+MtjU9VBe
+	 kUN2lz+231B45ttEyLfWF8H5FJW0L7LzIdjuk5JS8RdebRUzNIxpmaN8XnpoNVuDEf
+	 /czfXE9rU+Gb5VYRVIqQDqjyXI66OFrtoVP+6LeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 337/869] KVM: arm64: vgic-v3: Roll back assignments from the new region
-Date: Sat,  7 Nov 2026 08:50:19 -0500
-Message-ID: <20261107134903.833854642@linuxfoundation.org>
+Subject: [PATCH 6.18 338/869] media: imagination: Fix value clamping in calculate_qp_tables
+Date: Sat,  7 Nov 2026 08:50:20 -0500
+Message-ID: <20261107134903.860594975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,98 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit a32c01324eb494dda811912eb847b0e907cd7270 ]
+[ Upstream commit c8454a41da59d51fbcc5743f8c71a03b096a770f ]
 
-A failed REDIST_REGION write unregisters the redistributor iodevs of every
-vCPU processed before the failure. This includes vCPUs assigned to older
-regions. Their assignments remain cached, so a retry does not register the
-iodevs again.
+The local variable 'val' was never clamped to 1 or 255 because the
+return value of clamp() was not used. Fix this by assigning the clamped
+value back to 'val'.
 
-The vCPU whose registration fails has no assignment to roll back. For vCPUs
-processed earlier, limit rollback to those assigned to the new region. The
-region is removed on failure, so its free_index does not need restoring.
-
-Resetting assignments from older regions is unsafe because a vCPU can own
-one before kvm_for_each_vcpu() can see it. Rollback could then move
-free_index behind that live assignment.
-
-kvm_vgic_addr() holds slots_lock across the REDIST_REGION write. vCPU
-creation takes the same lock before assigning a redistributor. A concurrent
-vCPU cannot acquire an assignment from the new region before rollback
-completes. The lock also keeps rdreg valid across the config_lock drop
-required by MMIO-bus registration.
-
-Fixes: c011f4ea106b ("KVM: arm/arm64: Check vcpu redist base before registering an iodev")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260831081005.41346-3-kmehltretter@gmail.com
-[maz: moved helper into the sole caller]
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: a1e294045885 ("media: imagination: Add E5010 JPEG Encoder driver")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/media/platform/imagination/e5010-jpeg-enc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-index 7d90e6fe076c3..79e018cec0f96 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -846,7 +846,8 @@ void vgic_unregister_redist_iodev(struct kvm_vcpu *vcpu)
- 	kvm_io_bus_unregister_dev(vcpu->kvm, KVM_MMIO_BUS, &rd_dev->dev);
- }
+diff --git a/drivers/media/platform/imagination/e5010-jpeg-enc.c b/drivers/media/platform/imagination/e5010-jpeg-enc.c
+index c4e0097cb8b7f..a36a2acc896c9 100644
+--- a/drivers/media/platform/imagination/e5010-jpeg-enc.c
++++ b/drivers/media/platform/imagination/e5010-jpeg-enc.c
+@@ -175,12 +175,12 @@ static void calculate_qp_tables(struct e5010_context *ctx)
+ 		long long delta = v4l2_jpeg_ref_table_chroma_qt[i] * contrast + luminosity;
+ 		int val = (int)(v4l2_jpeg_ref_table_chroma_qt[i] + delta);
  
--static int vgic_register_all_redist_iodevs(struct kvm *kvm)
-+static int vgic_register_all_redist_iodevs(struct kvm *kvm,
-+					   struct vgic_redist_region *rdreg)
- {
- 	struct kvm_vcpu *vcpu;
- 	unsigned long c;
-@@ -866,7 +867,14 @@ static int vgic_register_all_redist_iodevs(struct kvm *kvm)
+-		clamp(val, 1, 255);
++		val = clamp(val, 1, 255);
+ 		ctx->chroma_qp[i] = quality == -50 ? 1 : val;
  
- 		for (i = 0; i < c; i++) {
- 			vcpu = kvm_get_vcpu(kvm, i);
-+			if (vcpu->arch.vgic_cpu.rdreg != rdreg)
-+				continue;
-+
- 			vgic_unregister_redist_iodev(vcpu);
-+
-+			guard(mutex)(&vcpu->kvm->arch.config_lock);
-+			vcpu->arch.vgic_cpu.rdreg = NULL;
-+			vcpu->arch.vgic_cpu.rd_iodev.base_addr = VGIC_ADDR_UNDEF;
- 		}
+ 		delta = v4l2_jpeg_ref_table_luma_qt[i] * contrast + luminosity;
+ 		val = (int)(v4l2_jpeg_ref_table_luma_qt[i] + delta);
+-		clamp(val, 1, 255);
++		val = clamp(val, 1, 255);
+ 		ctx->luma_qp[i] = quality == -50 ? 1 : val;
  	}
  
-@@ -975,10 +983,13 @@ void vgic_v3_free_redist_region(struct kvm *kvm, struct vgic_redist_region *rdre
- 
- int vgic_v3_set_redist_base(struct kvm *kvm, u32 index, u64 addr, u32 count)
- {
-+	struct vgic_redist_region *rdreg;
- 	int ret;
- 
- 	mutex_lock(&kvm->arch.config_lock);
- 	ret = vgic_v3_alloc_redist_region(kvm, index, addr, count);
-+	if (!ret)
-+		rdreg = vgic_v3_rdist_region_from_index(kvm, index);
- 	mutex_unlock(&kvm->arch.config_lock);
- 	if (ret)
- 		return ret;
-@@ -987,12 +998,9 @@ int vgic_v3_set_redist_base(struct kvm *kvm, u32 index, u64 addr, u32 count)
- 	 * Register iodevs for each existing VCPU.  Adding more VCPUs
- 	 * afterwards will register the iodevs when needed.
- 	 */
--	ret = vgic_register_all_redist_iodevs(kvm);
-+	ret = vgic_register_all_redist_iodevs(kvm, rdreg);
- 	if (ret) {
--		struct vgic_redist_region *rdreg;
--
- 		mutex_lock(&kvm->arch.config_lock);
--		rdreg = vgic_v3_rdist_region_from_index(kvm, index);
- 		vgic_v3_free_redist_region(kvm, rdreg);
- 		mutex_unlock(&kvm->arch.config_lock);
- 		return ret;
 -- 
 2.53.0
 
