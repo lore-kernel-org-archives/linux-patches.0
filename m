@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062258;
-	b=cBDUDzCdAy4IA4ZIqHCnX3OSLJKD7pQCQ3LxC7Tk4bD9tlF3VSa/RTr1uoV/iY1ygHT1
-	 k51SYvOBW3nEzbBOO1vbrS0vA9bVSvLqmzK6FTI0stKHpkUStxMyiyMWziE/NEaIJxdIi
-	 aJu6SxHcxHMYDzCKPq4mT1fHXUFtEu1XXiKzWH/nc2TJF//vAYwBdtryZNMhiZlu2b0Zh
-	 acUwV/orNSpG4Co0meBWxhJ+74/d4zg56rY4SZymTpIi2+Vj4PkZI2gSXTCa3RwwhIyZb
-	 hYVwehWroQy/SEQTguOsOS7B42mIjIuUAJcMHeghjePxkY/DZFCguY/Tup7EhgUqP/w==
+	t=1794062259;
+	b=SaM2VP8mMGh7rko2TePVX5et1NeJFV78+O/rKzHKb/CGwMAhN4tvRgrjftiDbkwcVNQu
+	 UkDUC22MvH8akXzor3/4Pqk+FDKPH6UeQmli5PQlxR+wBqgz/oLd8h1wRBf13X70nfooh
+	 1TL9xp0AQMaR4kwHyCnKQH8mlXEbnXZCBWVkhx+CJLa+1NLMrxgBcN54OoItwp0lHMtCZ
+	 r8eJ5xnWUNoCWDBm6HBxcQz+Oghb7colN1S1apcA9Pap2TfgR3EKT5saoe2uUlXI71Gfd
+	 ndK/ue5K9wfAsRrLFzVmjhInshrBTxlkjOP2Vn8tZkT1yofEoihvv3pQc4qmQd54HkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062258;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062259;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2ZsoiUO3pv7sZ9zcWAWmwM5WFkG7xzFddSmhgJrLCUY=;
-	b=5pbW4u2P9DgGk4tUmzeydhUe7YBLkl+kY+Pgg0yTGLwYnrlDR9KLueUAWz8MLw2wXWd3
-	 i43D+zwhdhMmhwpvJWNz338RTV5WZKONt8Zu50hJK9fJvnsAfkZ/+ChWi7/Xx0tQsGQYe
-	 7HUE/ppr7n4qv+fb86CyYl57hYLaI1CdFsHn3zSdI+HXAjRF8fXFMy6YWDD1+tpSOkQIK
-	 btNuTHNLaArKCSn3jczbiBo3GSzqP+A9VcPWhINivR2ULol1seehZwT64Xu3bmxI/RVZq
-	 f3MtC86sYfc96wwY6geoeDIC5kQgHe2acRdqqyMrExNxE80qjShKvq/wrGPhG2Lng/A==
+	bh=E1YJK9PSeLFlllNHG46411INmjvQAxggHJWy2MpQ7Ic=;
+	b=Eoh+DWJjWplOol9MbcMb0Gs+1QvzI/kRF/VVi6xp+jyEklHiBAqw2y5jPBWxcWU/ceiK
+	 EzaST68GP/xC2PUyHr78/HVmaDN44jRktn0Iyin3iKUVu6RxI511MnHllA+wID04VPY4O
+	 8f74N7A9fQczj1bJ1wcqIzOdKzdRh8A2la/zLFsG9LEqnGcXQkKBTN4snQUvYG5Sg41kf
+	 4So0ZuEpC+SI2UYVORjGGOgGwxG6dsLuFdoCJe4o1UuklbJgt3/T0nUFRruyBnNs8BIGq
+	 Gn7dztdwVNlJLuoK/9/JBGpCLsDm+LiG+Lyl3RwECLEHHV3+Qg4tAi1A6EVd3sgFpyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ewO56Kiv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nuzftPQg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22B4606EE82;
-	Sat,  7 Nov 2026 14:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8331606EE82;
+	Sat,  7 Nov 2026 14:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ewO56Kiv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718891F008A2;
-	Sat,  7 Nov 2026 14:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nuzftPQg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE211F0089F;
+	Sat,  7 Nov 2026 14:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062257;
-	bh=2ZsoiUO3pv7sZ9zcWAWmwM5WFkG7xzFddSmhgJrLCUY=;
+	s=korg; t=1794062258;
+	bh=E1YJK9PSeLFlllNHG46411INmjvQAxggHJWy2MpQ7Ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ewO56Kivdx8kS4hbpfBtR9TPYJ7JFH4k1XNgi8ScZoxaXV2sMxGuZvQLg3eUGTGni
-	 d9lWQscFk98ovPCWXohzd8yrwSyelGSZd+E8FUDjDScq9Nnnbv/cuYxtC1vUzs/Dtz
-	 xjrBiTEb527A3UfsFu/YM34Te3Uwq55WptGHKZYI=
+	b=nuzftPQgr6dlRekL4wiYE2NoNGNhv+dTMVkhC58Gug2+NN2xNmg7oNAT6EwXdu08e
+	 Jvi7HaVGF1RB+1xRd5ui27IBcu4WM4nh25yugEiU4b2bHY+oWirvMjeLyVcjSwD+VN
+	 BbHExpakaHcaA6PJui82tMQFnk2XlBC6uU8wigOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Alexander Monakov <amonakov@ispras.ru>,
+	Jan Kara <jack@suse.cz>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1152/1536] media: vicodec: fix NULL deref on oversized frame
-Date: Sat,  7 Nov 2026 08:52:48 -0500
-Message-ID: <20261107135030.082188840@linuxfoundation.org>
+Subject: [PATCH 6.12 1195/1536] ext4: dont report delalloc data as a hole on indirect-mapped inodes
+Date: Sat,  7 Nov 2026 08:53:31 -0500
+Message-ID: <20261107135031.311185676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,55 +71,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit c657eb609197e289b054bc2c4e86a0fc32dd7ebe ]
+[ Upstream commit aed43f47e1edeee1454eea86006a8c09480e5ed3 ]
 
-job_ready() only honours the is_header_valid() verdict when
-ctx->comp_has_frame is set, and comp_has_frame is only set once
-comp_size reaches the full frame size. Since the copy is clamped to
-ctx->comp_max_size, a header advertising a larger size leaves comp_size
-stuck at comp_max_size, so comp_has_frame stays false and the failed
-validation is discarded.
+When a plain lookup finds no block, ext4_ind_map_blocks() sizes the hole
+it reports by counting the empty subtrees under 'partial' in the on-disk
+indirect tree.  That count knows nothing about delayed allocation, so a
+range holding delalloc data that has not been written back yet is
+reported as a plain hole.  The extent-mapped path does not have this
+problem: it trims the hole it found at the first delayed extent before
+returning it.
 
-Control then falls into the resolution change branch, which calls
-update_capture_data_from_header(). That function re-derives info via
-info_from_header(), assigns it to q_dst->info and dereferences it as
-q_dst->info->sizeimage_mult, with no NULL check of its own.
-is_header_valid() does check that same info_from_header() result --
-if (!info) return false which is precisely the false verdict
-job_ready() discarded above. info_from_header() returns NULL whenever the
-header flags resolve to no supported pixel format.
+ext4_map_blocks() consults the extent status tree before it calls into
+the mapping layer, so a query that starts exactly on the delayed block
+still finds it.  A query that starts earlier does not, because the hole
+reported for the earlier block already spans the delayed one.  On a
+4k-block filesystem, lseek(SEEK_DATA) from offset 0 on a file whose only
+data block is at logical block N and is still dirty returns:
 
-Drop the comp_has_frame conjunct so an invalid header always bails out.
-The resolution change path is unaffected, as it is entered with a valid
-header. Oversized frames are then rejected by device_process(), which
-already returns -EINVAL when comp_frame_size exceeds comp_max_size.
+  N = 0..11      direct blocks                 N << 12
+  N = 12         first single-indirect block   N << 12
+  N = 13..1035   inside that indirect block    -1 ENXIO
+  N = 1036       first double-indirect block   N << 12
 
-Fixes: 3b15f68e19c2 ("media: vicodec: Add support for resolution change event.")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Blocks 12 and 1036 survive because the query lands on the delayed block
+itself.  Blocks 13..1035 are swallowed by the 1024-block hole reported
+for block 12.  fiemap loses the same data for the same reason.
+
+An ext3 filesystem mounted as ext4 hits this during ordinary use: ext3
+inodes stay indirect mapped, while mount -t ext4 turns on delayed
+allocation even though mounting ext3 with -o delalloc is explicitly
+rejected.  install(1) from coreutils uses SEEK_DATA to locate data in
+its source file, so installing a sparse file that has not been written
+back silently produces a destination of the right size holding none of
+the data:
+
+  truncate -s 1G img && mkfs.ext3 -F img && mount -t ext4 img mnt
+  echo | dd of=mnt/src bs=1 count=1 seek=64K
+  install mnt/src mnt/dst
+  cmp mnt/src mnt/dst        # differ: char 65537
+
+Reconciling a hole with the extent status tree does not depend on how
+the hole was found, so instead of open coding it a second time, split
+the delalloc handling out of ext4_ext_determine_insert_hole() into
+ext4_determine_insert_hole(), which takes the hole the caller located,
+and call that from ext4_ind_map_blocks() as well.  All the special cases
+and the comments explaining them stay in one place.
+
+Two things change for indirect-mapped inodes.  They now cache the holes
+they report, as the extent-mapped path already does: ext4_punch_hole()
+already puts EXTENT_STATUS_HOLE on such inodes, ext4_map_blocks() and
+ext4_da_map_blocks() already handle a cached hole, the latter by
+replacing it with the delayed extent, and consecutive hole entries
+merge, so the tree does not grow with the length of a scan.  And when a
+delayed extent covers the queried block itself - a race, since
+ext4_map_blocks() found nothing in the tree just before - the hole is
+now reported only up to the end of that extent instead of in full.
+
+The indirect path passes hole_start == lblk, so the "delalloc extent in
+front of the queried range" case cannot be reached there:
+__es_tree_search() never returns an extent ending before the block it
+was searched for.
+
+With this the sweep above returns N << 12 for every N, while the
+nodelalloc and extent-mapped controls are unchanged.  generic/225,
+generic/285, generic/448 and generic/490 pass on ext4 made both with and
+without the extent feature.  generic/286 and generic/436 pass on
+extent-mapped ext4 and are skipped without it, since they need
+fallocate.
+
+Fixes: facab4d9711e ("ext4: return hole from ext4_map_blocks()")
+Reported-by: Alexander Monakov <amonakov@ispras.ru>
+Closes: https://lore.kernel.org/linux-ext4/594c17d9-c00f-e485-96fb-cedf27ce3aa3@ispras.ru/
+Suggested-by: Jan Kara <jack@suse.cz>
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20260827084829epcms2p6ecc0c39a71d0c3eebf9cb1ade77314f6@epcms2p6
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vicodec/vicodec-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/ext4.h     |  3 +++
+ fs/ext4/extents.c  | 26 +++++++++++++-------------
+ fs/ext4/indirect.c | 17 +++++++++++++++++
+ 3 files changed, 33 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
-index 29e9f8db664a4..34bbaca077662 100644
---- a/drivers/media/test-drivers/vicodec/vicodec-core.c
-+++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
-@@ -650,7 +650,7 @@ static int job_ready(void *priv)
- 	 * if the header is invalid the device_run will just drop the frame
- 	 * with an error
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index 18d6a8a4915a6..e61d5b514e8a1 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3707,6 +3707,9 @@ extern void ext4_ext_tree_init(handle_t *handle, struct inode *inode);
+ extern int ext4_ext_index_trans_blocks(struct inode *inode, int extents);
+ extern int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
+ 			       struct ext4_map_blocks *map, int flags);
++ext4_lblk_t ext4_determine_insert_hole(struct inode *inode, ext4_lblk_t lblk,
++				       ext4_lblk_t hole_start,
++				       ext4_lblk_t hole_len);
+ extern int ext4_ext_truncate(handle_t *, struct inode *);
+ extern int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
+ 				 ext4_lblk_t end);
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 797656df12a88..06f8c734ddba1 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -4158,21 +4158,19 @@ static int get_implied_cluster_alloc(struct super_block *sb,
+ }
+ 
+ /*
+- * Determine hole length around the given logical block, first try to
+- * locate and expand the hole from the given @path, and then adjust it
+- * if it's partially or completely converted to delayed extents, insert
+- * it into the extent cache tree if it's indeed a hole, finally return
+- * the length of the determined extent.
++ * Adjust the hole [@hole_start, @hole_start + @hole_len) the caller found
++ * around the queried block @lblk if it's partially or completely converted
++ * to delayed extents, insert it into the extent cache tree if it's indeed a
++ * hole, finally return the length of the determined extent starting at
++ * @lblk.  @hole_start must not be behind @lblk.
+  */
+-static ext4_lblk_t ext4_ext_determine_insert_hole(struct inode *inode,
+-						  struct ext4_ext_path *path,
+-						  ext4_lblk_t lblk)
++ext4_lblk_t ext4_determine_insert_hole(struct inode *inode, ext4_lblk_t lblk,
++				       ext4_lblk_t hole_start,
++				       ext4_lblk_t hole_len)
+ {
+-	ext4_lblk_t hole_start, len;
++	ext4_lblk_t len = hole_len;
+ 	struct extent_status es;
+ 
+-	hole_start = lblk;
+-	len = ext4_ext_find_hole(inode, path, &hole_start);
+ again:
+ 	ext4_es_find_extent_range(inode, &ext4_es_is_delayed, hole_start,
+ 				  hole_start + len - 1, &es);
+@@ -4340,9 +4338,11 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
+ 	 * we couldn't try to create block if flags doesn't contain EXT4_GET_BLOCKS_CREATE
  	 */
--	if (!is_header_valid(&ctx->state.header) && ctx->comp_has_frame)
-+	if (!is_header_valid(&ctx->state.header))
- 		return 1;
- 	flags = ntohl(ctx->state.header.flags);
- 	hdr_width_div = (flags & V4L2_FWHT_FL_CHROMA_FULL_WIDTH) ? 1 : 2;
+ 	if ((flags & EXT4_GET_BLOCKS_CREATE) == 0) {
+-		ext4_lblk_t len;
++		ext4_lblk_t hole_start = map->m_lblk, len;
+ 
+-		len = ext4_ext_determine_insert_hole(inode, path, map->m_lblk);
++		len = ext4_ext_find_hole(inode, path, &hole_start);
++		len = ext4_determine_insert_hole(inode, map->m_lblk,
++						 hole_start, len);
+ 
+ 		map->m_pblk = 0;
+ 		map->m_len = min_t(unsigned int, map->m_len, len);
+diff --git a/fs/ext4/indirect.c b/fs/ext4/indirect.c
+index da76353b3a575..50c567123b42d 100644
+--- a/fs/ext4/indirect.c
++++ b/fs/ext4/indirect.c
+@@ -586,6 +586,23 @@ int ext4_ind_map_blocks(handle_t *handle, struct inode *inode,
+ 		for (i = partial - chain + 1; i < depth; i++)
+ 			count = count * epb + (epb - offsets[i] - 1);
+ 		count++;
++
++		/*
++		 * The count knows nothing about delayed allocation, so let
++		 * the common helper reconcile it with the extent status
++		 * tree.  Only when the lookup really did find a hole:
++		 * ext4_get_branch() also returns a non-NULL partial when it
++		 * failed, and caching a hole for a range it could not read
++		 * would answer every later read from that cache instead of
++		 * retrying.  Clamp the count first, a subtree can be bigger
++		 * than the logical block space when the block size is large.
++		 */
++		if (!err) {
++			count = umin(count, EXT_MAX_BLOCKS - map->m_lblk);
++			count = ext4_determine_insert_hole(inode, map->m_lblk,
++							   map->m_lblk, count);
++		}
++
+ 		/* Fill in size of a hole we found */
+ 		map->m_pblk = 0;
+ 		map->m_len = umin(map->m_len, count);
 -- 
 2.53.0
 
