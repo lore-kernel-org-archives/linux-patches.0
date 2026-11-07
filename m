@@ -1,83 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061378;
-	b=1+QIdLhj7Dydq8xkEVVIKMPFEGJE7y3HOpy6PrD4ZiGdjuCUSe46/fLJwgLhkyUjcP9/
-	 oIa5VhKSVDdpKoR84aHNpSxFq4joX1VQZrW6TuY4m3nAZZoLvyfx07gxYQKhkH6ClMzIu
-	 Szy5Krg1uh6Je2hFQq89kI4vHPykWUCtubW9+FXaifBPx0rgfrhooXs/g+yh9wlK+8St6
-	 FJgjsnQEakfgUBLZIOVg6MPIInjPkn12dIA+EAOKcprbuNEqr2JnmYJP3nto3hAqIlLu5
-	 bHwBX19cTU1rGVy1MPCs/6ifJQahlFoa2ZrvpYUHXFdmmYJZzqq/g47slXhx3x8Ti4g==
+	t=1794061379;
+	b=q/C81d8Cfp48gGN5Sporhk7+42gDIGjph8l/qNrKVU6dcQPuPGE/qF+ERUynM3j/o64Z
+	 rWSnIpq793ai+yEeS5IMGWgxwJmSABF7gwXH4RzOjUjJtmxnX8ULfaZ3kCNG7ge24lbPT
+	 tLOevBHVjKFpwpHZ6056DnG+Z8QIQjjMw5fXYG7LXHrazE4w/JaA3MTf65lQELQZkDxA1
+	 PmLfBISjjURJ7cVUqPDmPU553mNjqIMuj+EyBgXE5Gmty5AAzkKF6AVeeWcE+T5XH/43i
+	 NLOP67Pq8F2Wtf24LEiiBJr1yFeoTlJNWeKqmN1tNSm2S8bqux6xD1iGS0Kq4cWXnPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061378;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061379;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zv6KcU/BYbajOigwfSMJc3dSDgHx2oHfrwBCaKN06vA=;
-	b=ueIZfMPbACVCPDBbHqoJT+IXhHtSc51YMfcBmsnqJM3e1PWkPmpFoQtJ56xXyXZH7oKQ
-	 +YBCxTab3cw92LrGlCFEiugbjLDs7wPqzQTrPFfieAKgvY1oyqlTjBmCeSG07OpLg5JgB
-	 Tsruu6Kf7lTd4jT+LOUBS6a7IfR7qHFB4AHJuaGE4h3fpCfE03GP3XkRVilvaWdp94ndJ
-	 LoSPOHJYqbbWICxHXC0xfFWpVbyBX/1h7Qfkp4HzTDmIcQjMVXZ3iw8MRuC5C1GUBv5AL
-	 BlfmwabVxK+Jy1qfYDx+5/8TflB8bE0TLSjspPbz3je3ZP3C3SaxOZrEfcHzUcg/UFQ==
+	bh=HMOkF/ah7fNtmGVvY3UIcOvh/L3VBWSU9JzsBsmEFPI=;
+	b=t5VHqoauIbqD9USUt04s7mimVFTdRjDdtxpizz9/tdmeriXkusmCoXMfK3/GDBwt8Yhw
+	 +chrudFiKEnEXDPSsRMlbvjjqzNttfPS1siFKG738AMPK8LOeqaK8h+cqigpX5w/UQpLj
+	 ayWCsg2SE71FH6l2ZpWSGgHrSpck/Tg9K3mlItKl66EOY/Aa+vcmtJbZY7+4DPVaLMdCB
+	 W9MVJgC4lx+Gh3cw7s0ZFHuJCSteZ4aH/aGgqPYnu7J29V4/NHB7GTIRG8HG+Fv/SlaRx
+	 E2vOA/7mbwcS0KpjeHoDR2NeMYkko1XmKn+f8/t+GM4H1FZa/ekt4SSicBrLxeiJxIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XfC316OR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GCpPqo5y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA12606D80C;
-	Sat,  7 Nov 2026 14:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EED6606A339;
+	Sat,  7 Nov 2026 14:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XfC316OR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929501F008BC;
-	Sat,  7 Nov 2026 14:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GCpPqo5y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00B21F0089F;
+	Sat,  7 Nov 2026 14:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061377;
-	bh=Zv6KcU/BYbajOigwfSMJc3dSDgHx2oHfrwBCaKN06vA=;
+	s=korg; t=1794061379;
+	bh=HMOkF/ah7fNtmGVvY3UIcOvh/L3VBWSU9JzsBsmEFPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XfC316ORF7dOWea9GwRWZbOQqUBz7MJyx3BhskiNoNw1l9JLVL7Q1MWV3k3qq6EM/
-	 k7g32U4gCjLWGca6FHLL0FDUOl1zdU+B3NPagE6CZPAsOhm7g3UdgPZxMvpHu4wnrb
-	 fmZMehH77q2mpi0CVPMbkZ3H+EY2e58dp84A5vSI=
+	b=GCpPqo5yKlsjX/YIegSeLj9G0jisNcxV6oLavt7LkVP2fekx/O92JXyPhOsxLpf4T
+	 EXsNarYr6JKhUS828mQ4pk/bAd58757YCuzvoeXVXPwcn2KpdiwsNRaNdl7/C2nCtP
+	 hTK7MnhoZrBw6Ygi09KjPxcQOqPKT5esRYn71Ohw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Gregory Price <gourry@gourry.net>,
-	Harry Yoo <harry@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mel Gorman <mel@csn.ul.ie>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0462/1536] mm/migrate: use huge_ptep_get() in remove_migration_pte()
-Date: Sat,  7 Nov 2026 08:41:18 -0500
-Message-ID: <20261107135010.496410850@linuxfoundation.org>
+Subject: [PATCH 6.12 0453/1536] KVM: SEV: Mark vCPU RUNNABLE after AP_CREATE, even if VMSA is unusable
+Date: Sat,  7 Nov 2026 08:41:09 -0500
+Message-ID: <20261107135010.256051741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -99,81 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit ac1ec50d71b953524100ddc09057ee61a3dfaff3 ]
+[ Upstream commit 98ade8c48c28c227fe2e80e545ff0c57cd4712a3 ]
 
-remove_migration_pte() converts migration entries back to present PTEs
-after folio migration completes.  For hugetlb folios,
-page_vma_mapped_walk() returns the pte pointer to the hugetlb folio in
-pvmw.pte, but the code reads it with ptep_get().
+Always mark the vCPU as RUNNABLE after responding to AP_CREATE, even if the
+guest-specified VMSA is unusable, e.g. isn't backed by a memslot or doesn't
+have a backing guest_memfd page.  If the VMSA is unusable, leaving the vCPU
+in a non-running state will effectively hang the vCPU instead of reporting
+an error to userspace.  This will also allow retrying the VMSA load in the
+future, to fix a bug where KVM doesn't honor guest_memfd invalidation
+events, e.g. if AP_CREATION races with PUNCH_HOLE.
 
-On arches which provide their own huge_ptep_get() to dereference a huge
-pte pointer, accessing via ptep_get() would cause pte_pfn(),
-pte_present() etc to misbehave.
-
-It is not clear whether this has a trivially visible effect to userspace.
-
-Use huge_ptep_get() to dereference a huge pte pointer.
-
-Link: https://lore.kernel.org/20260703114202.365553-5-dev.jain@arm.com
-Fixes: 290408d4a250 ("hugetlb: hugepage migration core")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Mel Gorman <mel@csn.ul.ie>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org # 6.12.x
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Link: https://patch.msgid.link/20260709204948.1988414-4-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ sashal: Replaced the missing kvm_set_mp_state() helper with open-coded pv_unhalted/mp_state assignments, and the function is non-static in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/migrate.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/kvm/svm/sev.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/mm/migrate.c b/mm/migrate.c
-index ca05835fb62e6..e07a098671cea 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -313,7 +313,11 @@ static bool remove_migration_pte(struct folio *folio,
- 			continue;
- 		}
- #endif
--		old_pte = ptep_get(pvmw.pte);
-+		if (folio_test_hugetlb(folio))
-+			old_pte = huge_ptep_get(vma->vm_mm, pvmw.address,
-+						pvmw.pte);
-+		else
-+			old_pte = ptep_get(pvmw.pte);
- 		if (rmap_walk_arg->map_unused_to_zeropage &&
- 		    try_to_map_unused_to_zeropage(&pvmw, folio, old_pte, idx))
- 			continue;
+diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+index e7f20e1b8d86f..2c6122bc90d76 100644
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -3988,10 +3988,6 @@ static void sev_snp_reload_vmsa(struct kvm_vcpu *vcpu, gpa_t gpa)
+ 	svm->sev_es.snp_guest_vmsa_gpa = gpa;
+ 	svm->vmcb->control.vmsa_pa = pfn_to_hpa(pfn);
+ 
+-	/* Mark the vCPU as runnable */
+-	vcpu->arch.pv.pv_unhalted = false;
+-	vcpu->arch.mp_state = KVM_MP_STATE_RUNNABLE;
+-
+ 	/*
+ 	 * gmem pages aren't currently migratable, but if this ever changes
+ 	 * then care should be taken to ensure svm->sev_es.vmsa is pinned
+@@ -4026,6 +4022,17 @@ void sev_snp_init_protected_guest_state(struct kvm_vcpu *vcpu)
+ 	svm->sev_es.snp_pending_vmsa_gpa = INVALID_PAGE;
+ 
+ 	sev_snp_reload_vmsa(vcpu, gpa);
++
++	/*
++	 * Mark the vCPU as runnable for CREATE requests, indicated by a valid
++	 * VMSA GPA, even if installing the VMSA failed, so that KVM_RUN will
++	 * fail instead of blocking indefinitely and hanging the vCPU, e.g. if
++	 * the backing guest_memfd page is unavailable.
++	 */
++	if (VALID_PAGE(gpa)) {
++		vcpu->arch.pv.pv_unhalted = false;
++		vcpu->arch.mp_state = KVM_MP_STATE_RUNNABLE;
++	}
+ }
+ 
+ static int sev_snp_ap_creation(struct vcpu_svm *svm)
 -- 
 2.53.0
 
