@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061643;
-	b=KsitSPfQeGfJBjYTnJJntC2pRGBh7Z5AUDh1Q4q7nDtuzTuZrIpREeH6D9Ad0PTC4ZUq
-	 lDo3v5FTgqXKYlYKFBeyOi3H+Fr1j4nkPDAfIRFjMaecL4sPQwKcweedWXfKfVPDb2su+
-	 7/GjBWeQoplPROzDupsEKfrErBidV/k+VKOp7/8UQLPTCVUhWxINYkdbJ09eSDYbSD70L
-	 cL3c1pbH1vEhl15soC1ERbAgSPoChl9gBC3bbM+/GN7i81W2WqYfrD6/JNYkiVN3ILePi
-	 EhEC/3jcAWdaTNQMsTITlpT2YQfFTOj71nWWft1TLyi4QTarCACZKv6k7NHjYjUi8uQ==
+	t=1794061645;
+	b=3a1nS6hkoClqWRjFbLvSFub6CckbfmEuhEycgx5++uaYPE6wMa9uILnxUsM51fZniiTC
+	 7Wler2Yg+axpFTvsD2vWeapA4tysH2fjRiZffkxQxTQXd3DGXDj5eL1e50KOADs75HGq3
+	 xi3OfD/ryqo0h/lCvFTgpUXSzO96U4INPHYiRKezUz1RgdHqgFa+LkKNHbVlmVjVgQmBy
+	 5XAE84n0tSX4Rj/cOD1LNhlSpagWmcOO5OFeRvalYbKBkWDTA9Qn3EvNr/VxFX3WmQQVB
+	 4I+rh0EgSlFaZwhyK3o6pnZtSGC7ofAb29GepfBWT9YuNT+xvAfchiK5NdwDYyiZfLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061643;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061645;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r/Jr9sXuPLmsXnW+ekDOQ3wUptqCY7qZEpANNV2c3k8=;
-	b=5IUIKwwdg+O+KMuJVOIc2sNUgbr3dppZ9PAMi0KhT3fkkNK3tHzyYXWUsmcS7jlNCa+l
-	 Nz+2X4JtZwdir79hA6xPsV8lvh/VRUlRjrzvuwbNQItLTC93epMaZwYLTSbtxuyuQkgqn
-	 INaR32hZkPx+Oyj7heDpfRAt9Ertzw7pVXxiDP3gUFMAgWcwDwHSwfFiQMXaYY6gA+W0P
-	 AAnf7oq3ywKy0BjvDGKsyDyFoV/NLbT92z+6pJYylJoKxZk9grWBs7+s5HMJzZsJJTDDk
-	 oZdnGK1aMa0oWWdyi+FzJz4mzj0X67IV3d8H881p7+OgbsypP593PA94Lc38sTYsv+A==
+	bh=9WxDFWjvacWgG6Uvryim985fYdX5bt+7RviPopLjjmw=;
+	b=3XDTnAo02/5cGEDnkWj03mH9/haJEXqQ6uvcG3oINs6ORD/NFKEw1v1jaiYfzQfRHb4g
+	 TAJCto8lKAIFwBEQho6EAs0gIWwxIfCD5cYNmJOsA5Nf1ZgbJhwzkEE6N6twoicTKqfsB
+	 lgCeIuPi0bPuh9Pnz0aed5KE/6a69b1GFQiAvVBZW3pvwl85PBQDofBRDs4eBt0PmUYqU
+	 6uf+h+JP1DahDqWnLU37VJRilLowywvmoBOFKlzUQBo3DcydALl0g8tWEGstpeY0SV3/c
+	 +T7oPQUad2qon5XmG0Xj3pswWL4O/7gN6yvCdqUI1YcEq5bsDq8HmGYNHJUnMrnE7Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qkYlnzOM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbcIrtIr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB0A606A336;
-	Sat,  7 Nov 2026 14:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FAB606A32C;
+	Sat,  7 Nov 2026 14:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qkYlnzOM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D30F1F0089F;
-	Sat,  7 Nov 2026 14:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbcIrtIr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3171F0089F;
+	Sat,  7 Nov 2026 14:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061643;
-	bh=r/Jr9sXuPLmsXnW+ekDOQ3wUptqCY7qZEpANNV2c3k8=;
+	s=korg; t=1794061644;
+	bh=9WxDFWjvacWgG6Uvryim985fYdX5bt+7RviPopLjjmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qkYlnzOMBDcLg0lQr8aw0mhnpiJfeXX/YSzEFpednsisnCkPf0kk8fv4GOiivhoDp
-	 9b5Sr4+8BXGLN3b2TX3CVQ8cl5vU5yHP97d7eJxOEFPUvlBIpDCuIEbre+++BksSDs
-	 5vqknj6DPNN13wGzIs1/nDdNXcBi7V+ssUW/E2bE=
+	b=BbcIrtIrZK5zNYtrKgfNcAGJOJ9ceJoVrNbK+2fzU9IKYJS4rzBPj9zlokefcW4oR
+	 to6XUjIahF2414X8iMDz3YSDabOzQ4T5cBb+msCKBinTintYYkXaoOba9JFTikGnmw
+	 xTk4ckD1wnHyvEzNkZK5lu7V8pg1MyQbCoiIBNzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0666/1536] media: rc: After rc_unregister_device() timers can be re-armed
-Date: Sat,  7 Nov 2026 08:44:42 -0500
-Message-ID: <20261107135016.202377323@linuxfoundation.org>
+Subject: [PATCH 6.12 0667/1536] media: rc: Fix use after free in bpf progs
+Date: Sat,  7 Nov 2026 08:44:43 -0500
+Message-ID: <20261107135016.226476139@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,33 +69,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Young <sean@mess.org>
 
-commit ef41a67979aed4d7d4f393c56c1e25b6754e2b78 upstream.
+commit f95a9f8472f97c30106513fc7494b7abad243949 upstream.
 
-If rc_keydown() is called after rc_register_device(), then the timers
-can be re-armed. Delete them again for a final time.
+Since commit dccc0c3ddf8f ("media: rc: fix race between unregister and
+urb/irq callbacks"), rcdev->raw is no longer set to NULL after device
+unregister. raw->progs could point to stale data.
 
 Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
 Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/rc-main.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/rc/bpf-lirc.c  |   18 +++++++++++++-----
+ drivers/media/rc/rc-ir-raw.c |   11 +++--------
+ 2 files changed, 16 insertions(+), 13 deletions(-)
 
---- a/drivers/media/rc/rc-main.c
-+++ b/drivers/media/rc/rc-main.c
-@@ -1742,6 +1742,11 @@ void rc_free_device(struct rc_dev *dev)
- 	if (!dev)
+--- a/drivers/media/rc/bpf-lirc.c
++++ b/drivers/media/rc/bpf-lirc.c
+@@ -148,12 +148,13 @@ static int lirc_bpf_attach(struct rc_dev
+ 	if (ret)
+ 		return ret;
+ 
+-	raw = rcdev->raw;
+-	if (!raw) {
++	if (!rcdev->registered) {
+ 		ret = -ENODEV;
+ 		goto unlock;
+ 	}
+ 
++	raw = rcdev->raw;
++
+ 	old_array = lirc_rcu_dereference(raw->progs);
+ 	if (old_array && bpf_prog_array_length(old_array) >= BPF_MAX_PROGS) {
+ 		ret = -E2BIG;
+@@ -186,12 +187,13 @@ static int lirc_bpf_detach(struct rc_dev
+ 	if (ret)
+ 		return ret;
+ 
+-	raw = rcdev->raw;
+-	if (!raw) {
++	if (!rcdev->registered) {
+ 		ret = -ENODEV;
+ 		goto unlock;
+ 	}
+ 
++	raw = rcdev->raw;
++
+ 	old_array = lirc_rcu_dereference(raw->progs);
+ 	ret = bpf_prog_array_copy(old_array, prog, NULL, 0, &new_array);
+ 	/*
+@@ -235,7 +237,8 @@ void lirc_bpf_free(struct rc_dev *rcdev)
+ 	struct bpf_prog_array_item *item;
+ 	struct bpf_prog_array *array;
+ 
+-	array = lirc_rcu_dereference(rcdev->raw->progs);
++	array = rcu_replace_pointer(rcdev->raw->progs, NULL,
++				    lockdep_is_held(&ir_raw_handler_lock));
+ 	if (!array)
  		return;
  
-+	if (dev->input_dev) {
-+		timer_delete_sync(&dev->timer_keyup);
-+		timer_delete_sync(&dev->timer_repeat);
+@@ -316,6 +319,11 @@ int lirc_prog_query(const union bpf_attr
+ 	if (ret)
+ 		goto put;
+ 
++	if (!rcdev->registered) {
++		ret = -ENODEV;
++		goto unlock;
 +	}
 +
- 	input_put_device(dev->input_dev);
+ 	progs = lirc_rcu_dereference(rcdev->raw->progs);
+ 	cnt = progs ? bpf_prog_array_length(progs) : 0;
  
- 	put_device(&dev->dev);
+--- a/drivers/media/rc/rc-ir-raw.c
++++ b/drivers/media/rc/rc-ir-raw.c
+@@ -649,8 +649,11 @@ void ir_raw_event_free(struct rc_dev *de
+ {
+ 	if (dev->raw) {
+ 		timer_delete_sync(&dev->raw->edge_handle);
++		mutex_lock(&ir_raw_handler_lock);
+ 		if (dev->raw->thread)
+ 			put_task_struct(dev->raw->thread);
++		lirc_bpf_free(dev);
++		mutex_unlock(&ir_raw_handler_lock);
+ 		kfree(dev->raw);
+ 		dev->raw = NULL;
+ 	}
+@@ -660,9 +663,6 @@ void ir_raw_event_unregister(struct rc_d
+ {
+ 	struct ir_raw_handler *handler;
+ 
+-	if (!dev || !dev->raw)
+-		return;
+-
+ 	/*
+ 	 * After ir_raw_event_unregister() is called, an sync
+ 	 * call to ir_raw_event_handle() can still arrive. This function
+@@ -682,11 +682,6 @@ void ir_raw_event_unregister(struct rc_d
+ 
+ 	lirc_bpf_free(dev);
+ 
+-	/*
+-	 * A user can be calling bpf(BPF_PROG_{QUERY|ATTACH|DETACH}), so
+-	 * ensure that the raw member is null on unlock; this is how
+-	 * "device gone" is checked.
+-	 */
+ 	mutex_unlock(&ir_raw_handler_lock);
+ }
+ 
 
 
