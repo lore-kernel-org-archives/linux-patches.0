@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063180;
-	b=0gJba130pVDRvs0LmtW2fVq50CEr5A3ygH4SPeJVYMLdTRI/ZREXa8NDU2Aefmyn8kR0
-	 g1KYHqH7r2nJSy75SnIcoUs+H9djBK9frZhMOEqTT/6GHj9OMHh/SEhd6LaJshrgl4Rxy
-	 Ee1EoO2xC5dD4XZhPyV1TGVu6GuLcAZeHCSfWGf3/mCtpZW7JZYF2/kqJ+v31yuuT4KVy
-	 lTfAikPlH9eXUBa5BOzNHayfeNvaKfQ5mMc3lVXJru2ozg4zRZk0tehRlrdGjVL2B80Ha
-	 vr+tcBEx+Rpos3MYgcuPKzCaHqEQ84GFPLpoW7QKG7f79UsGKCYQyMbjQXhvTqWxJSg==
+	t=1794063181;
+	b=N78ZAj2I1Q38l3THWoZJSO8KK4utum3BVkAjstduxPUU823b3eXSZZtz+i5KAsTY87TQ
+	 k/MAUBs/7BlcXsFeENlqAHxlj/zl2lxvO1UESas5Rtj3qUHCCKoL0EJcZlyHeJkm8l8N0
+	 W+vDXI5nJt9Fy2HIYp5OKRlTlpv7T0yhSeeRRxfB7HZYFpz3qRBH3qM6ZX73LY8I8sESf
+	 L4p+cbAHOVzyDhWQOXqM9qnNYPu53lccDGhIDKnl3PC50up5aS0hlsI02snDqwpF+lw3N
+	 wRFxbgcOSQSCz/A4qt6KQeMfJaUqr7CDEP5oschtZMXoe/29+74yx6e5eIUamlnshRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063181;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0kwhVB5HFJjZJ1gNwA4n8cuc5uVxWm+o7ugLuW9PEP0=;
-	b=fYKQf6Hf1zfiYkv6HVUJGUQq3VtwNBoWzrC6+fSsZQmL0FQ+uhpzhGemFqQf9dmcC0+K
-	 GiYSdlSAuXOjIIygYYTY56CD3e2ugQC2/jGcXy7+WDnnDHJUd4LoEVbR1EA1A3fbEgAcf
-	 hqneB0OLauE9/Cw/3rGolx8CG+fGa2HVh+HLegF5y3zl0oYqTIJq1gn5//U+qwEl6nrO5
-	 EqbUgJGLOUvFmvNLuUVALpDsLVYEsrCu5s7rwrJIrc+qr5OMOArS+4aHXwof368z9Nk0p
-	 LAWY77CnT3zlA9gfZtG9BhgDp1E73Z2J6/EvjsB1A4+B7etO4fxQ6fkXO9vEaFgXpsQ==
+	bh=OR2uLUoyojS+H6asW7d6UDUL+B7cYTGFtwKwJvQOCd0=;
+	b=D6XMw5H0cq4s6yBW0vWOVNcp/xKqMsfYazN7mmWGMEnNJi3n9lt9+EW4fx9yzkfXgMsQ
+	 pDCzkfT0G56HtMLQDIt+C4wDBdpHbc+QUqRXNNyAH/ucLOlgEJ07+fsy0xu21ZR91Y7Xo
+	 RmAgY+8WA6lq8145hLnA4VEssQwTfxEchYXkfevcY3A9kLam8KMkib6UKMKKX17JJHMo+
+	 q+MdR1Tzq+DQ/J5Jzv4j7pitpa+rw1nzoqTkATj1O1GqSMCH/64tMlq3aDEMq9l0oXjZx
+	 WgYfbdSopeS6cjHdOZ0dquqPTPTdC+hXwq4PTanlquijQ8QrOwemgHWb1Px4fT/D/ZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V1R0TeKL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxrKa6PD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49781606A330;
-	Sat,  7 Nov 2026 14:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B8E606A330;
+	Sat,  7 Nov 2026 14:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V1R0TeKL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A351F0089F;
-	Sat,  7 Nov 2026 14:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rxrKa6PD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472A31F0089F;
+	Sat,  7 Nov 2026 14:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063180;
-	bh=0kwhVB5HFJjZJ1gNwA4n8cuc5uVxWm+o7ugLuW9PEP0=;
+	s=korg; t=1794063181;
+	bh=OR2uLUoyojS+H6asW7d6UDUL+B7cYTGFtwKwJvQOCd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V1R0TeKLQMTwyczzR8uQdMMUrMRDnG6eMP1Cs30X31bmceqh+9WNKWcgGUrvlKPTO
-	 orqKz/khA7iLmkFfPKmTdNHlVM2J1oT2TtzFy04SFbCiTiAaRh552N+Oy35reSZiVz
-	 a1ouVvckTUvasm9SMAI27e56Wrm7aTRnQlOPS4Kg=
+	b=rxrKa6PDp5at8cwWWZAi2ROWQInrXz1jpoLKpxfplyYq5ej/cVST3Q/4MiytjJqAw
+	 7ocz4fX8EDN1YY6OjEV5ANjXm9KARQ2qAwnRNsG96dfqcgLAZCv5P2svrSn831g+iE
+	 +nBOohZsFMkO+6XpNguqPDAk/z/48iUXHPoQ5puw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tharit Tangkijwanichakul <tharitt97@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Maurizio Casciano <mauriziocasciano7@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 359/869] media: hantro: disable runtime PM before hardware teardown
-Date: Sat,  7 Nov 2026 08:50:41 -0500
-Message-ID: <20261107134904.644721590@linuxfoundation.org>
+Subject: [PATCH 6.18 360/869] power: supply: core: Honor supplied-from with CONFIG_OF=y
+Date: Sat,  7 Nov 2026 08:50:42 -0500
+Message-ID: <20261107134904.681448903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,96 +68,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+From: Maurizio Casciano <mauriziocasciano7@gmail.com>
 
-[ Upstream commit 8e26d4c20ed218db6c3123480a4a4e2545680566 ]
+[ Upstream commit 6bd80f22c764fe8c56c62c118387f86a3ca98cff ]
 
-Removing the Hantro driver may trigger an SError on RK3588:
-	SError Interrupt on CPU6, code 0x00000000be000011 -- SError
-	...
-	do_serror+0x5c/0x74
-	el1h_64_error_handler+0x34/0x50
-	el1h_64_error+0x6c/0x70
-	regmap_mmio_read32le+0x10/0x20 (P)
-	_regmap_bus_reg_read+0x6c/0xb4
-	_regmap_read+0x60/0xdc
-	regmap_read+0x4c/0x80
-	rockchip_pd_power+0xe4/0x600
-	rockchip_pd_power_off+0x1c/0x60
-	_genpd_power_off+0x98/0x198
-	genpd_power_off.part.0+0x178/0x288
-	genpd_runtime_suspend+0x210/0x300
-	__rpm_callback+0x48/0x1e0
-	rpm_callback+0x74/0x80
-	rpm_suspend+0x10c/0x580
-	rpm_idle+0x134/0x1b8
-	update_autosuspend+0x30/0xc4
-	__pm_runtime_use_autosuspend+0x48/0x64
-	hantro_remove+0x8c/0xa8 [hantro_vpu]
-	...
+The supplied-from device property is the name-based counterpart to
+firmware-node power-supplies references. It was added for non-DT platforms,
+but its parser is compiled only when CONFIG_OF is disabled. CONFIG_OF is
+a global kernel option, so x86 systems commonly enable it even when
+individual power supplies are described by software nodes.
 
-hantro_remove() currently asserts the device resets before disabling
-runtime PM.
+Consequently, these consumers never populate supplied_from and supplier
+notifications do not reach their external_power_changed() callbacks. On a
+Lenovo Yoga Book YB1-X91L, ftrace showed the Whiskey Cove supplier
+notification running without invoking the BQ25892 callback, leaving the
+input current limit at its boot-time value.
 
-Calling pm_runtime_dont_use_autosuspend() causes an idle device to be
-runtime-suspended immediately. At that point the Hantro hardware has
-already been torn down, while the generic power-domain genpd code
-still performs the power-off sequence. genpd regmap_mmio_read causes panic
-subsequently because the reset lines were asserted.
+Use a single power_supply_check_supplies() implementation for all
+configurations. Preserve firmware-node power-supplies references as the
+preferred firmware description and use the name-based supplied-from
+property only when no references are specified. Continue to honor an
+explicitly provided supplied_from list first and propagate errors from
+specified firmware references.
 
-Disable runtime PM before asserting the reset lines so that no runtime-PM
-transition can race with hardware teardown.
+With the fix, ftrace shows the BQ25892 callback on hotplug. A boot-offline
+test changes its input current limit from 500 mA to 2 A.
 
-Apply the same ordering to the probe error paths as well.
-
-Fixes: ea71631b7129 ("media: hantro: add support for reset lines")
+Fixes: 58a36bb06891 ("power: supply: core: Add support for supplied-from device-property")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tharit Tangkijwanichakul <tharitt97@gmail.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Maurizio Casciano <mauriziocasciano7@gmail.com>
+Link: https://patch.msgid.link/20260924225152.985489-1-mauriziocasciano7@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_drv.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/power/supply/power_supply_core.c | 84 ++++++++++++------------
+ 1 file changed, 42 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index d2d88d0d7eeff..32197f00c0bb5 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -1204,7 +1204,7 @@ static int hantro_probe(struct platform_device *pdev)
- 	ret = clk_bulk_prepare(vpu->variant->num_clocks, vpu->clocks);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to prepare clocks\n");
--		goto err_rst_assert;
-+		goto err_pm_disable_assert_reset;
- 	}
- 
- 	ret = v4l2_device_register(&pdev->dev, &vpu->v4l2_dev);
-@@ -1258,8 +1258,11 @@ static int hantro_probe(struct platform_device *pdev)
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- err_clk_unprepare:
- 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
--err_rst_assert:
-+err_pm_disable_assert_reset:
-+	pm_runtime_dont_use_autosuspend(vpu->dev);
-+	pm_runtime_disable(vpu->dev);
- 	reset_control_assert(vpu->resets);
-+	return ret;
- err_pm_disable:
- 	pm_runtime_dont_use_autosuspend(vpu->dev);
- 	pm_runtime_disable(vpu->dev);
-@@ -1279,9 +1282,9 @@ static void hantro_remove(struct platform_device *pdev)
- 	v4l2_m2m_put(vpu->m2m_dev);
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
--	reset_control_assert(vpu->resets);
- 	pm_runtime_dont_use_autosuspend(vpu->dev);
- 	pm_runtime_disable(vpu->dev);
-+	reset_control_assert(vpu->resets);
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index 615dc27089a3a..7edca0694eb7f 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -190,7 +190,35 @@ static void power_supply_deferred_register_work(struct work_struct *work)
+ 		device_unlock(psy->dev.parent);
  }
  
- #ifdef CONFIG_PM
+-#ifdef CONFIG_OF
++static int power_supply_check_supplies_by_name(struct power_supply *psy)
++{
++	struct device *parent = psy->dev.parent;
++	int nval, ret;
++
++	if (!parent)
++		return 0;
++
++	nval = device_property_string_array_count(parent, "supplied-from");
++	if (nval <= 0)
++		return 0;
++
++	psy->supplied_from = devm_kmalloc_array(&psy->dev, nval,
++						sizeof(*psy->supplied_from),
++						GFP_KERNEL);
++	if (!psy->supplied_from)
++		return -ENOMEM;
++
++	ret = device_property_read_string_array(parent, "supplied-from",
++						(const char **)psy->supplied_from,
++						nval);
++	if (ret < 0)
++		return ret;
++
++	psy->num_supplies = nval;
++
++	return 0;
++}
++
+ static int __power_supply_populate_supplied_from(struct power_supply *epsy,
+ 						 void *data)
+ {
+@@ -262,22 +290,21 @@ static int power_supply_find_supply_from_fwnode(struct fwnode_handle *supply_nod
+ static int power_supply_check_supplies(struct power_supply *psy)
+ {
+ 	struct fwnode_handle *np;
+-	int cnt = 0;
++	int cnt, ret;
+ 
+ 	/* If there is already a list honor it */
+ 	if (psy->supplied_from && psy->num_supplies > 0)
+ 		return 0;
+ 
+-	/* No device node found, nothing to do */
+-	if (!psy->dev.fwnode)
+-		return 0;
+-
+-	do {
+-		int ret;
++	for (cnt = 0; psy->dev.fwnode; cnt++) {
++		np = fwnode_find_reference(psy->dev.fwnode, "power-supplies", cnt);
++		if (IS_ERR(np)) {
++			ret = PTR_ERR(np);
++			if (ret != -ENOENT)
++				return ret;
+ 
+-		np = fwnode_find_reference(psy->dev.fwnode, "power-supplies", cnt++);
+-		if (IS_ERR(np))
+ 			break;
++		}
+ 
+ 		ret = power_supply_find_supply_from_fwnode(np);
+ 		fwnode_handle_put(np);
+@@ -286,48 +313,21 @@ static int power_supply_check_supplies(struct power_supply *psy)
+ 			dev_dbg(&psy->dev, "Failed to find supply!\n");
+ 			return ret;
+ 		}
+-	} while (!IS_ERR(np));
++	}
+ 
+-	/* Missing valid "power-supplies" entries */
+-	if (cnt == 1)
+-		return 0;
++	/* Fall back to the name-based property if no references were specified. */
++	if (!cnt)
++		return power_supply_check_supplies_by_name(psy);
+ 
+ 	/* All supplies found, allocate char * array for filling */
+ 	psy->supplied_from = devm_kcalloc(&psy->dev,
+-					  cnt - 1, sizeof(*psy->supplied_from),
++					  cnt, sizeof(*psy->supplied_from),
+ 					  GFP_KERNEL);
+ 	if (!psy->supplied_from)
+ 		return -ENOMEM;
+ 
+ 	return power_supply_populate_supplied_from(psy);
+ }
+-#else
+-static int power_supply_check_supplies(struct power_supply *psy)
+-{
+-	int nval, ret;
+-
+-	if (!psy->dev.parent)
+-		return 0;
+-
+-	nval = device_property_string_array_count(psy->dev.parent, "supplied-from");
+-	if (nval <= 0)
+-		return 0;
+-
+-	psy->supplied_from = devm_kmalloc_array(&psy->dev, nval,
+-						sizeof(char *), GFP_KERNEL);
+-	if (!psy->supplied_from)
+-		return -ENOMEM;
+-
+-	ret = device_property_read_string_array(psy->dev.parent,
+-		"supplied-from", (const char **)psy->supplied_from, nval);
+-	if (ret < 0)
+-		return ret;
+-
+-	psy->num_supplies = nval;
+-
+-	return 0;
+-}
+-#endif
+ 
+ struct psy_am_i_supplied_data {
+ 	struct power_supply *psy;
 -- 
 2.53.0
 
