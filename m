@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065496;
-	b=VuPvGsML0+1wgfFKRatDO0eD20NTxgURTcb8rbOOzu2/9rznAZxwJCsEhgm0nPTlVyvx
-	 k46xBN8ljSlb8U2nA+uE3hS/F1kkGQ4oemR3mNVbY89uTBzyTxdMmXQWqXycT3AAvq4oM
-	 9wfSFVisLUaMTVoDWevrZ17Dh57U61Ke7Qg3569yVYtacAS9X14+KCj0nj4DeBn5RNd1f
-	 H5bPMdsHpmPMZHcKDTE8RJa28ipivrgpOkhrsyM9JVepFCBBW2PX5osf/PG9+b0wrhxhf
-	 Fc+zxIRLR8OmERf10JjdjeOiZAgjDxCeAGL+11D1AK/S0l/8qHd6Jv3ND3jdVZIA8UQ==
+	t=1794065500;
+	b=19NqLsRSi1h60XpyrM2jnbUOC6TNw+H0ZfgLxXfk46qdWxl81uTM2HEr38K2Olotwvxe
+	 y3wEqlrPhZ98gxI+xceOVNb9bQSJQII4ytrR/umf3N8cg3697GKZFWm+ZM/+1J84t/tE0
+	 /AGAfmtPEOhjiQrLGYcHfomtKg35hVZiYITIVywb3JtRZTQS251kI/tOXWL0lRDFqLnws
+	 eSrJ6ONafBYmF+Gt5rM4YaiiaBO6M4ejKXKxm3Zi+xzDVmJgLvcHe7g1mkiKDcEXZzgHR
+	 xxnYwY6uEjDjDBAnrZeY9lJTdcjry9YC9KURD3ftkJmUr56XPxkT7OhUjDBq79gqX7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065496;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T/S25njRCD1jknjKhkopVyIdxZQyCANEN/JrM7jpR3E=;
-	b=ekxtb35vDaZhO5ekI0RdMxnUPZshpm4QURt0hiY7/xBBLQ5jJ6yqL3XMps0Wz7B9eIwb
-	 n9rGfszgWj2yMsqawbx5cdaS6SI1Q0M+okE4uiHmW+Bo4fas/I6pil6BNJadN1dzWx6E4
-	 kkTP3heVXVJmzExaAF48PkbjE5k1YPR5VJY1tSxTXItL7r4T9MZuQFERymApddIwauSEv
-	 wySmvM16SsMzbTO1rmoNF9ehiTxKKEnvo61btzA3lvtQS4+oD6EgPlKzYdAXGwO0km5zt
-	 bF+mmfTQa5BQhZUykVcDcQy3arzDDnC5tGOPZX2nl/DhaVG/oHChM2JkZQjoeSBe7Nw==
+	bh=uNB1rbbSiW5vchhmeEZr9vlMcjDg5jjiWeZ3XyXypCY=;
+	b=eRachDAJwjfQDQr7Vh3MVGaAF9/JD0stY4DfJgHjcRpKhZQBThdSp0qmHW1co34qHnHA
+	 vqU8HmEpZS30YGqO8/gm2kjO9VDeaw1nw0pAuhyiIBZkpMNDF5qkkUy+4Bu+jH/82FMub
+	 x4+50VSOq68zKYqSmaK6LpbSuju60+vOgOgfdq4GfGLl196oOPQwOis+TylisMeJWLxg/
+	 fj5DsAjkXBY6iOh6dmIHNSMDAPHeFlKbujnn+g+OQgeCJvXLM/xKpeLby/dEsVFVoqm6z
+	 nIiviR/zjBqqJDe6CsOcbtCVN6aX6BiDbRIP74URACphYSoY2m1/IOC/YeRkyaJpq9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tx5jMnmM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2nAPFy5N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C85606D825;
-	Sat,  7 Nov 2026 15:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4A6606D803;
+	Sat,  7 Nov 2026 15:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tx5jMnmM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8B21F008A2;
-	Sat,  7 Nov 2026 15:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2nAPFy5N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134B61F0089F;
+	Sat,  7 Nov 2026 15:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065496;
-	bh=T/S25njRCD1jknjKhkopVyIdxZQyCANEN/JrM7jpR3E=;
+	s=korg; t=1794065499;
+	bh=uNB1rbbSiW5vchhmeEZr9vlMcjDg5jjiWeZ3XyXypCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tx5jMnmMYGNJxUBH0lroKvEsjwr/coa+ve2SL2Qmmomd8k7fDpj+LNlgmx9km3LAB
-	 na/ekzNtVlvNVnjVIGPko1hcaMCIUrr4bcNL19aFVMbKeU73XnfEz7U9kwakD9l7k1
-	 8a1iNiOHt1Lfv6q3wsYvJzGMWa4LyfhenVANIba0=
+	b=2nAPFy5NDAyTM9jsyUqZ+uA1Wn6pHW7jXoJFfhh2VkAFHqC0hJ9WeLg5gDII2cvqc
+	 jf9Fw6LBJzwGDplfhvceg245J38x14VtFQz+p9ONV6DpwnzkPPkl2eWW7DkR2Cp6LT
+	 bRRyOWHrOkMS37+bsbbv/8WgpdzejwBWbwX9WYlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Wang <kevin.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1185/1257] drm/amd/pm: preserve committed OD features for SMU 14.0.2
-Date: Sat,  7 Nov 2026 08:58:01 -0500
-Message-ID: <20261107135011.898269136@linuxfoundation.org>
+Subject: [PATCH 7.3 1187/1257] drm/amdkfd: send SMI process and VM fault events only to allowed clients
+Date: Sat,  7 Nov 2026 08:58:03 -0500
+Message-ID: <20261107135011.951817510@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,423 +69,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Wang <kevin.wang@amd.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 9b0890e72d19b0c430fe62bad290c7c79baa78e4 ]
+[ Upstream commit 2e0f334f5c7140b67f16eff9d93c2ca426848664 ]
 
-PMFW treats FeatureCtrlMask as the complete set of active OD features.
-Uploads containing only newly edited bits can drop earlier settings.
+Commit 92a8dba246d3 ("drm/amdkfd: fix SMI event cross-process
+information leak") made the VMFAULT and PROCESS_START/END SMI events
+carry the pid of the process they are about, so that
+kfd_smi_ev_enabled() only passes them to clients of that process and to
+privileged clients. Commit 1142738572ef ("drm/amdkfd: Fix SMI event PID
+reporting for containers") then switched kfd_smi_event_add() to take a
+task and passed NULL for these events, i.e. pid 0, which every client
+receives again.
 
-Fix the OD state handling to:
+On navi31, an unprivileged SMI client (uid 1000) subscribed to
+PROCESS_START/END sees root running rocminfo:
 
-- preserve committed features across later commits
-- keep fan-curve and legacy-fan bits mutually exclusive
-- keep staged OD settings out of power-cap writes
-- update cached state only after successful uploads
-- clear restored features only after they return to defaults
-- restore PPT for the current AC/DC source after resume
+  event: c 223a9 rocminfo
+  event: d 223a9 rocminfo
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/3625
-Signed-off-by: Kevin Wang <kevin.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+The same commit also made the filter compare PIDs of different
+namespaces: the client stores its PID in its own namespace and events
+use the PID of the task in the task's namespace, so a client that is
+PID 1 in one container receives the events of PID 1 in another. And an
+exited task has no PID in its namespace anymore, which gives pid 0 for
+PROCESS_END.
+
+Match clients by global TGID, which is unique and stays valid after the
+task exited, and keep showing the namespace PID in the event text. Pass
+the TGID of the process for the process and VM fault events again. With
+this the unprivileged client gets nothing, a root client still gets both
+events, and an unprivileged client that is PID 1 in its own PID
+namespace no longer gets the events of rocminfo running as PID 1 in
+another one.
+
+v2: rename the pid of the clients and of the filter to tgid (Felix)
+
+Fixes: 1142738572ef ("drm/amdkfd: Fix SMI event PID reporting for containers")
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8d4ce79aff1cd1ff4feea4967c30e04eb6be8c2d)
+(cherry picked from commit 77f5f4eae104a96399a5b1003730d5d739368b7d)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c  | 230 +++++++++++++-----
- 1 file changed, 171 insertions(+), 59 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c | 60 ++++++++++++---------
+ 1 file changed, 35 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-index 566b7f2b00f0e..6a12d6f8c9dd3 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-@@ -91,6 +91,10 @@ static const struct smu_feature_bits smu_v14_0_2_dpm_features = {
- #define PP_OD_FEATURE_FAN_ZERO_RPM_ENABLE		11
- #define PP_OD_FEATURE_FAN_ZERO_RPM_STOP_TEMP		12
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c b/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
+index 6a7b4d959541b..c87370a9f5f0a 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_smi_events.c
+@@ -40,7 +40,7 @@ struct kfd_smi_client {
+ 	struct kfd_node *dev;
+ 	spinlock_t lock;
+ 	struct rcu_head rcu;
+-	pid_t pid;
++	pid_t tgid;
+ 	bool suser;
+ };
  
-+#define SMU_14_0_2_OD_FAN_FEATURE_MASK \
-+	(BIT(PP_OD_FEATURE_FAN_CURVE_BIT) | \
-+	 BIT(PP_OD_FEATURE_FAN_LEGACY_BIT))
-+
- static struct cmn2asic_msg_mapping smu_v14_0_2_message_map[SMU_MSG_MAX_COUNT] = {
- 	MSG_MAP(TestMessage,			PPSMC_MSG_TestMessage,                 1),
- 	MSG_MAP(GetSmuVersion,			PPSMC_MSG_GetSmuVersion,               1),
-@@ -963,6 +967,84 @@ static bool smu_v14_0_2_is_od_feature_supported(struct smu_context *smu,
- 	return feature_enabled;
+@@ -160,18 +160,18 @@ static int kfd_smi_ev_release(struct inode *inode, struct file *filep)
+ 	return 0;
  }
  
-+static u32
-+smu_v14_0_2_filter_od_feature_mask(struct smu_context *smu, u32 feature_mask)
-+{
-+	PPTable_t *pptable = smu->smu_table.driver_pptable;
-+	u32 supported_mask =
-+		pptable->SkuTable.OverDriveLimitsBasicMax.FeatureCtrlMask;
-+
-+	return feature_mask & supported_mask;
-+}
-+
-+static u32
-+smu_v14_0_2_get_od_feature_mask(struct smu_context *smu, u32 pending_mask)
-+{
-+	u32 supported_mask = smu_v14_0_2_filter_od_feature_mask(smu, ~0U);
-+	u32 fan_mask = supported_mask & SMU_14_0_2_OD_FAN_FEATURE_MASK;
-+	u32 mask = smu->smu_table.user_od_feature_mask;
-+
-+	if (pending_mask & fan_mask)
-+		mask &= ~fan_mask;
-+	mask |= pending_mask;
-+
-+	return smu_v14_0_2_filter_od_feature_mask(smu, mask);
-+}
-+
-+static bool smu_v14_0_2_fan_is_default(const OverDriveTable_t *od,
-+				       const OverDriveTable_t *boot)
-+{
-+	return !memcmp(od->FanLinearPwmPoints, boot->FanLinearPwmPoints,
-+			sizeof(od->FanLinearPwmPoints)) &&
-+		!memcmp(od->FanLinearTempPoints, boot->FanLinearTempPoints,
-+			sizeof(od->FanLinearTempPoints)) &&
-+		od->AcousticTargetRpmThreshold == boot->AcousticTargetRpmThreshold &&
-+		od->AcousticLimitRpmThreshold == boot->AcousticLimitRpmThreshold &&
-+		od->FanTargetTemperature == boot->FanTargetTemperature &&
-+		od->FanMode == boot->FanMode;
-+}
-+
-+static bool smu_v14_0_2_legacy_fan_is_default(const OverDriveTable_t *od,
-+					      const OverDriveTable_t *boot)
-+{
-+	return od->FanMinimumPwm == boot->FanMinimumPwm &&
-+		od->FanMode == boot->FanMode;
-+}
-+
-+static bool smu_v14_0_2_zero_fan_is_default(const OverDriveTable_t *od,
-+					    const OverDriveTable_t *boot)
-+{
-+	return od->FanZeroRpmEnable == boot->FanZeroRpmEnable &&
-+		od->FanZeroRpmStopTemp == boot->FanZeroRpmStopTemp;
-+}
-+
-+static u32 smu_v14_0_2_normalize_feature_mask(const OverDriveTable_t *od,
-+					      const OverDriveTable_t *boot,
-+					      u32 feature_mask)
-+{
-+	if (od->GfxclkFoffset == boot->GfxclkFoffset)
-+		feature_mask &= ~BIT(PP_OD_FEATURE_GFXCLK_BIT);
-+	if (od->UclkFmin == boot->UclkFmin &&
-+	    od->UclkFmax == boot->UclkFmax)
-+		feature_mask &= ~BIT(PP_OD_FEATURE_UCLK_BIT);
-+	if (!memcmp(od->VoltageOffsetPerZoneBoundary,
-+		    boot->VoltageOffsetPerZoneBoundary,
-+		    sizeof(od->VoltageOffsetPerZoneBoundary)))
-+		feature_mask &= ~BIT(PP_OD_FEATURE_GFX_VF_CURVE_BIT);
-+	if ((feature_mask & BIT(PP_OD_FEATURE_FAN_CURVE_BIT)) &&
-+	    smu_v14_0_2_fan_is_default(od, boot))
-+		feature_mask &= ~BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
-+	if ((feature_mask & BIT(PP_OD_FEATURE_FAN_LEGACY_BIT)) &&
-+	    smu_v14_0_2_legacy_fan_is_default(od, boot))
-+		feature_mask &= ~BIT(PP_OD_FEATURE_FAN_LEGACY_BIT);
-+	if (smu_v14_0_2_zero_fan_is_default(od, boot))
-+		feature_mask &= ~BIT(PP_OD_FEATURE_ZERO_FAN_BIT);
-+	if (!od->Ppt)
-+		feature_mask &= ~BIT(PP_OD_FEATURE_PPT_BIT);
-+
-+	return feature_mask;
-+}
-+
- static void smu_v14_0_2_get_od_setting_limits(struct smu_context *smu,
- 					      int od_feature_bit,
- 					      int32_t *min,
-@@ -2317,6 +2399,38 @@ static int smu_v14_0_2_upload_overdrive_table(struct smu_context *smu,
- 	return ret;
- }
- 
-+static int
-+smu_v14_0_2_upload_ppt_overdrive_table(struct smu_context *smu, s16 ppt)
-+{
-+	struct smu_table_context *table_context = &smu->smu_table;
-+	OverDriveTableExternal_t *od_table = table_context->overdrive_table;
-+	OverDriveTableExternal_t *user_od_table = table_context->user_overdrive_table;
-+	OverDriveTableExternal_t upload_table;
-+	u32 next_mask = table_context->user_od_feature_mask;
-+	int ret;
-+
-+	/* Do not commit OD settings staged after the last c operation. */
-+	memcpy(&upload_table, user_od_table, sizeof(upload_table));
-+	upload_table.OverDriveTable.Ppt = ppt;
-+	if (ppt)
-+		next_mask |= BIT(PP_OD_FEATURE_PPT_BIT);
-+	else
-+		next_mask &= ~BIT(PP_OD_FEATURE_PPT_BIT);
-+	upload_table.OverDriveTable.FeatureCtrlMask =
-+		smu_v14_0_2_filter_od_feature_mask(smu, next_mask);
-+
-+	ret = smu_v14_0_2_upload_overdrive_table(smu, &upload_table);
-+	if (ret)
-+		return ret;
-+
-+	table_context->user_od_feature_mask =
-+		upload_table.OverDriveTable.FeatureCtrlMask;
-+	od_table->OverDriveTable.Ppt = ppt;
-+	user_od_table->OverDriveTable.Ppt = ppt;
-+
-+	return 0;
-+}
-+
- static void smu_v14_0_2_set_supported_od_feature_mask(struct smu_context *smu)
+-static bool kfd_smi_ev_enabled(pid_t pid, struct kfd_smi_client *client,
++static bool kfd_smi_ev_enabled(pid_t tgid, struct kfd_smi_client *client,
+ 			       unsigned int event)
  {
- 	struct amdgpu_device *adev = smu->adev;
-@@ -2375,6 +2489,7 @@ static int smu_v14_0_2_set_default_od_settings(struct smu_context *smu)
- 	memcpy(od_table,
- 	       boot_od_table,
- 	       sizeof(OverDriveTableExternal_t));
-+	od_table->OverDriveTable.FeatureCtrlMask = 0;
+ 	uint64_t events = READ_ONCE(client->events);
  
- 	/*
- 	 * For S3/S4/Runpm resume, we need to setup those overdrive tables again,
-@@ -2384,6 +2499,7 @@ static int smu_v14_0_2_set_default_od_settings(struct smu_context *smu)
- 		memcpy(user_od_table,
- 		       boot_od_table,
- 		       sizeof(OverDriveTableExternal_t));
-+		user_od_table->OverDriveTable.FeatureCtrlMask = 0;
- 		smu->user_dpm_profile.user_od = false;
- 		smu->smu_table.user_od_feature_mask = 0;
- 	} else if (smu->user_dpm_profile.user_od) {
-@@ -2420,6 +2536,14 @@ static int smu_v14_0_2_set_default_od_settings(struct smu_context *smu)
- 			user_od_table_bak.OverDriveTable.FanZeroRpmEnable;
- 		user_od_table->OverDriveTable.FanZeroRpmStopTemp =
- 			user_od_table_bak.OverDriveTable.FanZeroRpmStopTemp;
-+		user_od_table->OverDriveTable.FanMode =
-+			user_od_table_bak.OverDriveTable.FanMode;
-+		user_od_table->OverDriveTable.FeatureCtrlMask = 0;
-+	}
-+	if (smu->adev->in_suspend) {
-+		user_od_table->OverDriveTable.Ppt = 0;
-+		smu->smu_table.user_od_feature_mask &=
-+			~BIT(PP_OD_FEATURE_PPT_BIT);
- 	}
+-	if (pid && client->pid != pid && !client->suser)
++	if (tgid && client->tgid != tgid && !client->suser)
+ 		return false;
  
- 	smu_v14_0_2_set_supported_od_feature_mask(smu);
-@@ -2432,14 +2556,22 @@ static int smu_v14_0_2_restore_user_od_settings(struct smu_context *smu)
- 	struct smu_table_context *table_context = &smu->smu_table;
- 	OverDriveTableExternal_t *od_table = table_context->overdrive_table;
- 	OverDriveTableExternal_t *user_od_table = table_context->user_overdrive_table;
-+	OverDriveTableExternal_t upload_table;
-+	u32 next_mask;
- 	int res;
- 
--	user_od_table->OverDriveTable.FeatureCtrlMask =
--		table_context->user_od_feature_mask;
--	res = smu_v14_0_2_upload_overdrive_table(smu, user_od_table);
--	user_od_table->OverDriveTable.FeatureCtrlMask = 0;
--	if (res == 0)
-+	next_mask = smu_v14_0_2_filter_od_feature_mask(smu,
-+						       table_context->user_od_feature_mask);
-+	memcpy(&upload_table, user_od_table, sizeof(upload_table));
-+	upload_table.OverDriveTable.FeatureCtrlMask = next_mask;
-+	res = smu_v14_0_2_upload_overdrive_table(smu, &upload_table);
-+	if (res == 0) {
-+		table_context->user_od_feature_mask = next_mask;
-+		smu->user_dpm_profile.user_od =
-+			!!(next_mask & ~BIT(PP_OD_FEATURE_PPT_BIT));
- 		memcpy(od_table, user_od_table, sizeof(OverDriveTableExternal_t));
-+		od_table->OverDriveTable.FeatureCtrlMask = 0;
-+	}
- 
- 	return res;
+ 	return events & KFD_SMI_EVENT_MASK_FROM_INDEX(event);
  }
-@@ -2463,43 +2595,30 @@ static int smu_v14_0_2_od_restore_table_single(struct smu_context *smu, long inp
- 					boot_overdrive_table->OverDriveTable.FanLinearPwmPoints[i];
- 		}
- 		od_table->OverDriveTable.FanMode = FAN_MODE_AUTO;
--		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
--		od_table->OverDriveTable.FeatureCtrlMask &= ~BIT(PP_OD_FEATURE_FAN_LEGACY_BIT);
- 		break;
- 	case PP_OD_EDIT_FAN_ZERO_RPM_ENABLE:
- 		od_table->OverDriveTable.FanZeroRpmEnable =
- 					boot_overdrive_table->OverDriveTable.FanZeroRpmEnable;
--		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_ZERO_FAN_BIT);
- 		break;
- 	case PP_OD_EDIT_FAN_ZERO_RPM_STOP_TEMP:
- 		od_table->OverDriveTable.FanZeroRpmStopTemp =
- 					boot_overdrive_table->OverDriveTable.FanZeroRpmStopTemp;
--		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_ZERO_FAN_BIT);
- 		break;
- 	case PP_OD_EDIT_ACOUSTIC_LIMIT:
- 		od_table->OverDriveTable.AcousticLimitRpmThreshold =
- 					boot_overdrive_table->OverDriveTable.AcousticLimitRpmThreshold;
--		od_table->OverDriveTable.FanMode = FAN_MODE_AUTO;
--		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
- 		break;
- 	case PP_OD_EDIT_ACOUSTIC_TARGET:
- 		od_table->OverDriveTable.AcousticTargetRpmThreshold =
- 					boot_overdrive_table->OverDriveTable.AcousticTargetRpmThreshold;
--		od_table->OverDriveTable.FanMode = FAN_MODE_AUTO;
--		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
- 		break;
- 	case PP_OD_EDIT_FAN_TARGET_TEMPERATURE:
- 		od_table->OverDriveTable.FanTargetTemperature =
- 					boot_overdrive_table->OverDriveTable.FanTargetTemperature;
--		od_table->OverDriveTable.FanMode = FAN_MODE_AUTO;
--		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
- 		break;
- 	case PP_OD_EDIT_FAN_MINIMUM_PWM:
- 		od_table->OverDriveTable.FanMinimumPwm =
- 					boot_overdrive_table->OverDriveTable.FanMinimumPwm;
--		od_table->OverDriveTable.FanMode = FAN_MODE_AUTO;
--		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_FAN_LEGACY_BIT);
--		od_table->OverDriveTable.FeatureCtrlMask &= ~BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
- 		break;
- 	default:
- 		dev_info(adev->dev, "Invalid table index: %ld\n", input);
-@@ -2517,9 +2636,17 @@ static int smu_v14_0_2_od_edit_dpm_table(struct smu_context *smu,
- 	struct smu_table_context *table_context = &smu->smu_table;
- 	OverDriveTableExternal_t *od_table =
- 		(OverDriveTableExternal_t *)table_context->overdrive_table;
-+	OverDriveTableExternal_t *user_od_table =
-+		(OverDriveTableExternal_t *)table_context->user_overdrive_table;
-+	OverDriveTableExternal_t *boot_od_table =
-+		(OverDriveTableExternal_t *)table_context->boot_overdrive_table;
-+	OverDriveTableExternal_t upload_table;
-+	OverDriveTable_t *od = &od_table->OverDriveTable;
-+	OverDriveTable_t *boot = &boot_od_table->OverDriveTable;
- 	struct amdgpu_device *adev = smu->adev;
- 	uint32_t offset_of_voltageoffset;
- 	int32_t minimum, maximum;
-+	u32 next_mask;
- 	int i, ret = 0;
  
- 	switch (type) {
-@@ -2691,6 +2818,7 @@ static int smu_v14_0_2_od_edit_dpm_table(struct smu_context *smu,
- 		od_table->OverDriveTable.AcousticLimitRpmThreshold = input[0];
- 		od_table->OverDriveTable.FanMode = FAN_MODE_AUTO;
- 		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
-+		od_table->OverDriveTable.FeatureCtrlMask &= ~BIT(PP_OD_FEATURE_FAN_LEGACY_BIT);
- 		break;
+-static void add_event_to_kfifo(pid_t pid, struct kfd_node *dev,
++static void add_event_to_kfifo(pid_t tgid, struct kfd_node *dev,
+ 			       unsigned int smi_event, char *event_msg, int len)
+ {
+ 	struct kfd_smi_client *client;
+@@ -179,7 +179,7 @@ static void add_event_to_kfifo(pid_t pid, struct kfd_node *dev,
+ 	rcu_read_lock();
  
- 	case PP_OD_EDIT_ACOUSTIC_TARGET:
-@@ -2713,6 +2841,7 @@ static int smu_v14_0_2_od_edit_dpm_table(struct smu_context *smu,
- 		od_table->OverDriveTable.AcousticTargetRpmThreshold = input[0];
- 		od_table->OverDriveTable.FanMode = FAN_MODE_AUTO;
- 		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
-+		od_table->OverDriveTable.FeatureCtrlMask &= ~BIT(PP_OD_FEATURE_FAN_LEGACY_BIT);
- 		break;
+ 	list_for_each_entry_rcu(client, &dev->smi_clients, list) {
+-		if (!kfd_smi_ev_enabled(pid, client, smi_event))
++		if (!kfd_smi_ev_enabled(tgid, client, smi_event))
+ 			continue;
+ 		spin_lock(&client->lock);
+ 		if (kfifo_avail(&client->fifo) >= len) {
+@@ -210,27 +210,33 @@ static inline pid_t kfd_smi_task_to_pid(struct task_struct *task)
+ 	return task ? task_tgid_nr_ns(task, task_active_pid_ns(task)) : 0;
+ }
  
- 	case PP_OD_EDIT_FAN_TARGET_TEMPERATURE:
-@@ -2735,6 +2864,7 @@ static int smu_v14_0_2_od_edit_dpm_table(struct smu_context *smu,
- 		od_table->OverDriveTable.FanTargetTemperature = input[0];
- 		od_table->OverDriveTable.FanMode = FAN_MODE_AUTO;
- 		od_table->OverDriveTable.FeatureCtrlMask |= BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
-+		od_table->OverDriveTable.FeatureCtrlMask &= ~BIT(PP_OD_FEATURE_FAN_LEGACY_BIT);
- 		break;
- 
- 	case PP_OD_EDIT_FAN_MINIMUM_PWM:
-@@ -2812,44 +2942,38 @@ static int smu_v14_0_2_od_edit_dpm_table(struct smu_context *smu,
- 		       table_context->boot_overdrive_table,
- 		       sizeof(OverDriveTableExternal_t));
- 			od_table->OverDriveTable.FeatureCtrlMask = 0;
--			table_context->user_od_feature_mask = 0;
- 		}
- 		fallthrough;
- 	case PP_OD_COMMIT_DPM_TABLE:
--		/*
--		 * PMFW interprets FeatureCtrlMask as the complete set of OD
--		 * features that are currently overridden, not as a delta
--		 * describing this single operation. Any feature whose bit is
--		 * clear gets reset to its default on import. od_table's mask
--		 * has accumulated every feature the user touched since the
--		 * last full restore, so record it and keep restating it on
--		 * subsequent uploads.
--		 */
--		table_context->user_od_feature_mask =
--			od_table->OverDriveTable.FeatureCtrlMask;
--
- 		offset_of_voltageoffset = offsetof(OverDriveTable_t, VoltageOffsetPerZoneBoundary);
--		if (memcmp((u8 *)od_table + offset_of_voltageoffset,
--			   table_context->user_overdrive_table + offset_of_voltageoffset,
--			   sizeof(OverDriveTableExternal_t) - offset_of_voltageoffset)) {
--			smu_v14_0_2_dump_od_table(smu, od_table);
-+		next_mask = smu_v14_0_2_get_od_feature_mask(smu,
-+							    od->FeatureCtrlMask);
-+		next_mask = smu_v14_0_2_normalize_feature_mask(od, boot,
-+							       next_mask);
- 
--			ret = smu_v14_0_2_upload_overdrive_table(smu, od_table);
-+		if (memcmp((u8 *)od_table + offset_of_voltageoffset,
-+			   (u8 *)user_od_table + offset_of_voltageoffset,
-+			   sizeof(OverDriveTableExternal_t) - offset_of_voltageoffset) ||
-+		    next_mask != table_context->user_od_feature_mask) {
-+			memcpy(&upload_table, od_table, sizeof(upload_table));
-+			upload_table.OverDriveTable.FeatureCtrlMask = next_mask;
-+			smu_v14_0_2_dump_od_table(smu, &upload_table);
++/*
++ * Clients are matched by global TGID, which is unique across PID namespaces
++ * and stays valid after the task exited. Events show kfd_smi_task_to_pid().
++ */
++static inline pid_t kfd_smi_task_tgid(struct task_struct *task)
++{
++	return task ? task_tgid_nr(task) : 0;
++}
 +
-+			ret = smu_v14_0_2_upload_overdrive_table(smu, &upload_table);
- 			if (ret) {
- 				dev_err(adev->dev, "Failed to upload overdrive table!\n");
- 				return ret;
- 			}
+ __printf(4, 5)
+-static void kfd_smi_event_add(struct task_struct *task, struct kfd_node *dev,
++static void kfd_smi_event_add(pid_t tgid, struct kfd_node *dev,
+ 			      unsigned int event, char *fmt, ...)
+ {
+ 	char fifo_in[KFD_SMI_EVENT_MSG_SIZE];
+ 	int len;
+ 	va_list args;
+-	pid_t pid;
  
--			memcpy(table_context->user_overdrive_table + offset_of_voltageoffset,
-+			table_context->user_od_feature_mask = next_mask;
-+			od_table->OverDriveTable.FeatureCtrlMask = 0;
-+			memcpy((u8 *)user_od_table + offset_of_voltageoffset,
- 			       (u8 *)od_table + offset_of_voltageoffset,
- 			       sizeof(OverDriveTableExternal_t) - offset_of_voltageoffset);
-+			user_od_table->OverDriveTable.FeatureCtrlMask = 0;
+ 	if (list_empty(&dev->smi_clients))
+ 		return;
  
--			if (!memcmp(table_context->user_overdrive_table,
--				    table_context->boot_overdrive_table,
--				    sizeof(OverDriveTableExternal_t)))
--				smu->user_dpm_profile.user_od = false;
--			else
--				smu->user_dpm_profile.user_od = true;
-+			smu->user_dpm_profile.user_od =
-+				!!(next_mask & ~BIT(PP_OD_FEATURE_PPT_BIT));
- 		}
- 		break;
- 
-@@ -2867,10 +2991,8 @@ static int smu_v14_0_2_set_ppt_limit(struct smu_context *smu,
- 	PPTable_t *pptable = smu->smu_table.driver_pptable;
- 	uint32_t msg_limit = pptable->SkuTable.MsgLimits.Power
- 		[PPT_THROTTLER_PPT0][POWER_SOURCE_AC];
--	struct smu_table_context *table_context = &smu->smu_table;
--	OverDriveTableExternal_t *od_table =
--		(OverDriveTableExternal_t *)table_context->overdrive_table;
- 	OverDriveTableExternal_t current_od_table;
-+	s16 ppt;
- 	int ret = 0;
- 
- 	if (limit_type != SMU_PPT_LIMIT_PPT0)
-@@ -2882,13 +3004,7 @@ static int smu_v14_0_2_set_ppt_limit(struct smu_context *smu,
- 			return ret;
- 
- 		if (current_od_table.OverDriveTable.Ppt) {
--			od_table->OverDriveTable.Ppt = 0;
--			table_context->user_od_feature_mask &=
--				~(1U << PP_OD_FEATURE_PPT_BIT);
--			od_table->OverDriveTable.FeatureCtrlMask =
--				table_context->user_od_feature_mask;
+-	pid = kfd_smi_task_to_pid(task);
 -
--			ret = smu_v14_0_2_upload_overdrive_table(smu, od_table);
-+			ret = smu_v14_0_2_upload_ppt_overdrive_table(smu, 0);
- 			if (ret) {
- 				dev_err(smu->adev->dev, "Failed to upload overdrive table!\n");
- 				return ret;
-@@ -2900,12 +3016,8 @@ static int smu_v14_0_2_set_ppt_limit(struct smu_context *smu,
- 		if (ret)
- 			return ret;
+ 	len = scnprintf(fifo_in, sizeof(fifo_in), "%x ", event);
  
--		od_table->OverDriveTable.Ppt = (limit * 100) / msg_limit - 100;
--		table_context->user_od_feature_mask |= 1U << PP_OD_FEATURE_PPT_BIT;
--		od_table->OverDriveTable.FeatureCtrlMask =
--			table_context->user_od_feature_mask;
--
--		ret = smu_v14_0_2_upload_overdrive_table(smu, od_table);
-+		ppt = (limit * 100) / msg_limit - 100;
-+		ret = smu_v14_0_2_upload_ppt_overdrive_table(smu, ppt);
- 		if (ret) {
- 		  dev_err(smu->adev->dev, "Failed to upload overdrive table!\n");
- 		  return ret;
+ 	va_start(args, fmt);
+ 	len += vscnprintf(fifo_in + len, sizeof(fifo_in) - len, fmt, args);
+ 	va_end(args);
+ 
+-	add_event_to_kfifo(pid, dev, event, fifo_in, len);
++	add_event_to_kfifo(tgid, dev, event, fifo_in, len);
+ }
+ 
+ void kfd_smi_event_update_gpu_reset(struct kfd_node *dev, bool post_reset,
+@@ -252,14 +258,14 @@ void kfd_smi_event_update_gpu_reset(struct kfd_node *dev, bool post_reset,
+ 		amdgpu_reset_get_desc(reset_context, reset_cause,
+ 				      sizeof(reset_cause));
+ 
+-	kfd_smi_event_add(NULL, dev, event, KFD_EVENT_FMT_UPDATE_GPU_RESET(
++	kfd_smi_event_add(0, dev, event, KFD_EVENT_FMT_UPDATE_GPU_RESET(
+ 			  dev->reset_seq_num, reset_cause));
+ }
+ 
+ void kfd_smi_event_update_thermal_throttling(struct kfd_node *dev,
+ 					     uint64_t throttle_bitmask)
+ {
+-	kfd_smi_event_add(NULL, dev, KFD_SMI_EVENT_THERMAL_THROTTLE,
++	kfd_smi_event_add(0, dev, KFD_SMI_EVENT_THERMAL_THROTTLE,
+ 			  KFD_EVENT_FMT_THERMAL_THROTTLING(
+ 			  throttle_bitmask,
+ 			  amdgpu_dpm_get_thermal_throttling_counter(dev->adev)));
+@@ -271,10 +277,14 @@ void kfd_smi_event_update_vmfault(struct kfd_node *dev, uint16_t pasid)
+ 
+ 	task_info = amdgpu_vm_get_task_info_pasid(dev->adev, pasid);
+ 	if (task_info) {
+-		/* Report VM faults from user applications, not retry from kernel */
++		/*
++		 * Report VM faults from user applications, not retry from
++		 * kernel, and only to clients allowed to see that process.
++		 */
+ 		if (task_info->task.pid)
+-			kfd_smi_event_add(NULL, dev, KFD_SMI_EVENT_VMFAULT, KFD_EVENT_FMT_VMFAULT(
+-					  task_info->task.pid, task_info->task.comm));
++			kfd_smi_event_add(task_info->tgid, dev, KFD_SMI_EVENT_VMFAULT,
++					  KFD_EVENT_FMT_VMFAULT(task_info->task.pid,
++								task_info->task.comm));
+ 		amdgpu_vm_put_task_info(task_info);
+ 	}
+ }
+@@ -283,7 +293,7 @@ void kfd_smi_event_page_fault_start(struct kfd_node *node, struct task_struct *t
+ 				    unsigned long address, bool write_fault,
+ 				    ktime_t ts)
+ {
+-	kfd_smi_event_add(task, node, KFD_SMI_EVENT_PAGE_FAULT_START,
++	kfd_smi_event_add(kfd_smi_task_tgid(task), node, KFD_SMI_EVENT_PAGE_FAULT_START,
+ 			  KFD_EVENT_FMT_PAGEFAULT_START(ktime_to_ns(ts),
+ 			  kfd_smi_task_to_pid(task), address, node->id,
+ 			  write_fault ? 'W' : 'R'));
+@@ -292,7 +302,7 @@ void kfd_smi_event_page_fault_start(struct kfd_node *node, struct task_struct *t
+ void kfd_smi_event_page_fault_end(struct kfd_node *node, struct task_struct *task,
+ 				  unsigned long address, bool migration)
+ {
+-	kfd_smi_event_add(task, node, KFD_SMI_EVENT_PAGE_FAULT_END,
++	kfd_smi_event_add(kfd_smi_task_tgid(task), node, KFD_SMI_EVENT_PAGE_FAULT_END,
+ 			  KFD_EVENT_FMT_PAGEFAULT_END(ktime_get_boottime_ns(),
+ 			  kfd_smi_task_to_pid(task), address, node->id,
+ 			  migration ? 'M' : 'U'));
+@@ -304,7 +314,7 @@ void kfd_smi_event_migration_start(struct kfd_node *node, struct task_struct *ta
+ 				   uint32_t prefetch_loc, uint32_t preferred_loc,
+ 				   uint32_t trigger)
+ {
+-	kfd_smi_event_add(task, node, KFD_SMI_EVENT_MIGRATE_START,
++	kfd_smi_event_add(kfd_smi_task_tgid(task), node, KFD_SMI_EVENT_MIGRATE_START,
+ 			  KFD_EVENT_FMT_MIGRATE_START(ktime_get_boottime_ns(),
+ 			  kfd_smi_task_to_pid(task), start, end - start, from,
+ 			  to, prefetch_loc, preferred_loc, trigger));
+@@ -315,7 +325,7 @@ void kfd_smi_event_migration_end(struct kfd_node *node, struct task_struct *task
+ 				 uint32_t from, uint32_t to, uint32_t trigger,
+ 				 int error_code)
+ {
+-	kfd_smi_event_add(task, node, KFD_SMI_EVENT_MIGRATE_END,
++	kfd_smi_event_add(kfd_smi_task_tgid(task), node, KFD_SMI_EVENT_MIGRATE_END,
+ 			  KFD_EVENT_FMT_MIGRATE_END(ktime_get_boottime_ns(),
+ 			  kfd_smi_task_to_pid(task), start, end - start, from,
+ 			  to, trigger, error_code));
+@@ -324,14 +334,14 @@ void kfd_smi_event_migration_end(struct kfd_node *node, struct task_struct *task
+ void kfd_smi_event_queue_eviction(struct kfd_node *node, struct task_struct *task,
+ 				  uint32_t trigger)
+ {
+-	kfd_smi_event_add(task, node, KFD_SMI_EVENT_QUEUE_EVICTION,
++	kfd_smi_event_add(kfd_smi_task_tgid(task), node, KFD_SMI_EVENT_QUEUE_EVICTION,
+ 			  KFD_EVENT_FMT_QUEUE_EVICTION(ktime_get_boottime_ns(),
+ 			  kfd_smi_task_to_pid(task), node->id, trigger));
+ }
+ 
+ void kfd_smi_event_queue_restore(struct kfd_node *node, struct task_struct *task)
+ {
+-	kfd_smi_event_add(task, node, KFD_SMI_EVENT_QUEUE_RESTORE,
++	kfd_smi_event_add(kfd_smi_task_tgid(task), node, KFD_SMI_EVENT_QUEUE_RESTORE,
+ 			  KFD_EVENT_FMT_QUEUE_RESTORE(ktime_get_boottime_ns(),
+ 			  kfd_smi_task_to_pid(task), node->id, '0'));
+ }
+@@ -348,7 +358,7 @@ void kfd_smi_event_queue_restore_rescheduled(struct mm_struct *mm)
+ 	for (i = 0; i < p->n_pdds; i++) {
+ 		struct kfd_process_device *pdd = p->pdds[i];
+ 
+-		kfd_smi_event_add(p->lead_thread, pdd->dev,
++		kfd_smi_event_add(kfd_smi_task_tgid(p->lead_thread), pdd->dev,
+ 				  KFD_SMI_EVENT_QUEUE_RESTORE,
+ 				  KFD_EVENT_FMT_QUEUE_RESTORE(ktime_get_boottime_ns(),
+ 				  kfd_smi_task_to_pid(p->lead_thread),
+@@ -361,7 +371,7 @@ void kfd_smi_event_unmap_from_gpu(struct kfd_node *node, struct task_struct *tas
+ 				  unsigned long address, unsigned long last,
+ 				  uint32_t trigger)
+ {
+-	kfd_smi_event_add(task, node, KFD_SMI_EVENT_UNMAP_FROM_GPU,
++	kfd_smi_event_add(kfd_smi_task_tgid(task), node, KFD_SMI_EVENT_UNMAP_FROM_GPU,
+ 			  KFD_EVENT_FMT_UNMAP_FROM_GPU(ktime_get_boottime_ns(),
+ 			  kfd_smi_task_to_pid(task), address,
+ 			  last - address + 1, node->id, trigger));
+@@ -379,7 +389,7 @@ void kfd_smi_event_process(struct kfd_process_device *pdd, bool start)
+ 	task_info = amdgpu_vm_get_task_info_vm(avm);
+ 
+ 	if (task_info) {
+-		kfd_smi_event_add(NULL, pdd->dev,
++		kfd_smi_event_add(kfd_smi_task_tgid(pdd->process->lead_thread), pdd->dev,
+ 				  start ? KFD_SMI_EVENT_PROCESS_START :
+ 				  KFD_SMI_EVENT_PROCESS_END,
+ 				  KFD_EVENT_FMT_PROCESS(task_info->task.pid,
+@@ -408,7 +418,7 @@ int kfd_smi_event_open(struct kfd_node *dev, uint32_t *fd)
+ 	spin_lock_init(&client->lock);
+ 	client->events = 0;
+ 	client->dev = dev;
+-	client->pid = kfd_smi_task_to_pid(current);
++	client->tgid = kfd_smi_task_tgid(current);
+ 	client->suser = capable(CAP_SYS_ADMIN);
+ 
+ 	spin_lock(&dev->smi_lock);
 -- 
 2.53.0
 
