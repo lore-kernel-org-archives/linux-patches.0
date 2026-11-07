@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061569;
-	b=dAUk+oJVPvOhrxyCaUnjp11uB8StAomgO9A7dOejTQQMfVn5PjcIZmkaHfliHcdTgKBO
-	 WQpQ45RhICxOn6qgW6klBhksF61uZrYRgLszG5PeU9C1HP4oV37WqgPptPABr7U/fgK5e
-	 ZBKROwcqWAR9/94CEIzb0Tc71gReiZ8t5Ejg931Zksree5Q6/5c+gLKYPG1Lwd8BlyoWx
-	 PM3y5GEPvz15myRBtVaO5lQgPlJu0IvpWgb63nNOHODYzM69mQdUuxG6AjU/eIKKK3ujD
-	 eliPx4KfBGVPg86y57xt/YN+vRiAagIEVuWXHc7poRpnQbxkxlkkG9t5Bou7rVsySnA==
+	t=1794061570;
+	b=ptWJPi267OHdiXVqwXbRjIVlT2hHz+wAJaL5b0i2zOdKC4Ia6gZFS6O2Es/i9o4htSb3
+	 o+g3GP1X4Te3X5s7pRX9YotQhg8ZlStEqcg3YRjSImKjtio7p3qfRq9ZQs9bmLMHQETzK
+	 jES6NIu0HKWdGrHLQfDSGC85T8SOtPs6qDQA0aklQiE4PM1t9usR/RraanjxNr4CjKv0B
+	 pbI9zEwwzKSnSJl2O1G6Fd4bknhzla/keAvPDB46+oxrK3hesyGFlH7M4lZhDK6u3r2uj
+	 05LzFL5rz6jw6FU+lJkAIjbtfAQnYHmUx4CvH85gQ+W9L1A8AbKLGOtqFcrY1pqiqYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061570;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LYc2XGzDH8iU7uVSqtVVjX9u9pvE8TdTBxG2NxqFWBU=;
-	b=V+rjxpSzyAtkSn9i3kb+jiKaLCl2mERB8FNKpjyNT2embasrfsWEvIIWYmMbcldRKqqp
-	 9g3x4QXgeBbf/IK7NdJ6M+QCCAmGaqVdxO7niRhkI0QsoMQ8wRZAdcoL34Ig0SM01KOce
-	 OQIYV43TnGp6HiRjQWCAG4ps53yqJ2UsKHsdv9oihaGf7CtDN4UmUzz3OOkUSgoLrMiV+
-	 TrCpstdWgKpV6/ke9tkyKYJs7UqNnOU3EOLZ9DgrDpr7MKm0Knrn1jY8klzBZBzdb9aoZ
-	 5W4joDX02JERSNecWztEyEZHM6AEknW9n3yxmzkLwt6Ra7OzjEqTgNPUnNV003GogDw==
+	bh=Nodin/6a8HU/JRIWT9rFZ3eWwSRA5wAccSDfr+Rd90M=;
+	b=hWfkw0mze32MNYnS0ne/uizsNfu4fr8aZNh8gg5UwfL7kqSRZSyrXgWEqkFbJbW0q+xu
+	 n8mZRhJNwZV6aZiYVYgMYMhQIhGUtELTm5jYYPRmhvwsbQwGGoSuQGysiSPoGpnsZRyuG
+	 UOOdQkzLVCuxIHtgrggb7zLcdicv3rAiofD+tDQ1O8obISC+FlRXlb6ZvsYfY3lb3pzih
+	 PTPwgO50hIUbR0gF2ASduMJplyitGQHDbIytllIChSDogmUgCXNaw4SOzXJh6PnkOnopN
+	 ECTRQNncNQEr6k8gh2WzubMzbJCBde+7wKlEbmDBiudIhMZmFEamhrs4iE8riawq5wg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sODydWq+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dj4JW3ET;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332E2606A326;
-	Sat,  7 Nov 2026 14:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BA1606A326;
+	Sat,  7 Nov 2026 14:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sODydWq+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58631F0089F;
-	Sat,  7 Nov 2026 14:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dj4JW3ET
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195411F0089F;
+	Sat,  7 Nov 2026 14:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061569;
-	bh=LYc2XGzDH8iU7uVSqtVVjX9u9pvE8TdTBxG2NxqFWBU=;
+	s=korg; t=1794061570;
+	bh=Nodin/6a8HU/JRIWT9rFZ3eWwSRA5wAccSDfr+Rd90M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sODydWq+aeymAGmn1yCAMK/5ykkHM7etlGssYC2+Chgu4o5J9I4M+8BEGH2S0aIas
-	 JZX9q/LBFefhk14OhU1jYIiG7uHrQwKocWUss6EZVBXex+3UfZ8KrO+jZ8BnBoxmRS
-	 iLcdzB4yXh5sm/FSIVJUnuRfU6SOazKR8/VKzVGw=
+	b=dj4JW3ETNbfmUOmBAFEr/jahGWfjgNbvQzDQb/RmPv1UBN3Pk/HQznxrb6cathA6Z
+	 oZ6A4KPQabxBdIcIGafzQ+V0rSKmak8yqjsMVzbCSomczxJd3kh35fM4T+jxJNkzmX
+	 S1jUTNUqN7bcuVl1oBLKhVY4Qfl0oa+GlwbSynUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Eugen Hristev <ehristev@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0648/1536] media: microchip-isc: take a reference on the parsed endpoints
-Date: Sat,  7 Nov 2026 08:44:24 -0500
-Message-ID: <20261107135015.727876737@linuxfoundation.org>
+	Lee Jones <lee@kernel.org>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.12 0622/1536] HID: wacom: Advertise SW_MUTE_DEVICE capability prior to registration
+Date: Sat,  7 Nov 2026 08:43:58 -0500
+Message-ID: <20261107135015.004190226@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,150 +68,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Lee Jones <lee@kernel.org>
 
-commit f2eb2fd388bf3f1959556a326e797cacca341c86 upstream.
+commit ba16e5ffbaa10fde960918d69af5e49f2b3fdd5e upstream.
 
-for_each_endpoint_of_node() drops the reference on the current node as
-it advances. xisc_parse_dt() and isc_parse_dt() store the node in
-subdev_entity->epn and release it later with of_node_put(), but never
-took their own reference, so the stored pointer refers to an
-already-released node. This underflows the refcount and can
-use-after-free, reachable through the camera device tree overlay.
+Input subsystem guidelines require that device capabilities are advertised
+before the input device is registered.  The Wacom driver was violating
+this by advertising the SW_MUTE_DEVICE capability post-registration in
+wacom_set_shared_values() (and duplicating it in device-specific setup
+cases).
 
-Take a reference with of_node_get() when storing the node, and drop it
-in microchip_isc_subdev_cleanup() so the entities the bind loop never
-reaches on an early exit do not leak it.
+Resolve this by moving the SW_MUTE_DEVICE capability setup to
+wacom_setup_touch_input_capabilities() for all touch devices that support
+it.
 
-Fixes: c9aa973884a1 ("media: atmel: atmel-isc: add microchip-xisc driver")
-Fixes: d6701f13bd07 ("media: atmel: Use v4l2_async_notifier_add_fwnode_remote_subdev")
+For generic touch devices whose capabilities depend on mute switch
+usages parsed from a sibling Pen/Pad interface, defer registration
+with -EPROBE_DEFER until the sibling has parsed its descriptors and
+initialized shared capabilities.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: d2ec58aee8b1 ("HID: wacom: generic: support generic touch switch")
+Signed-off-by: Lee Jones <lee@kernel.org>
+Acked-by: Ping Cheng <ping.cheng@wacom.com>
+Tested-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/microchip/microchip-isc-base.c    |    6 +++++
- drivers/media/platform/microchip/microchip-sama5d2-isc.c |   17 ++++++++++-----
- drivers/media/platform/microchip/microchip-sama7g5-isc.c |   17 ++++++++++-----
- 3 files changed, 30 insertions(+), 10 deletions(-)
+ drivers/hid/wacom_sys.c |   93 ++++++++++++++++++++++++++++++++++++++----------
+ drivers/hid/wacom_wac.c |    5 ++
+ 2 files changed, 79 insertions(+), 19 deletions(-)
 
---- a/drivers/media/platform/microchip/microchip-isc-base.c
-+++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -1862,6 +1862,12 @@ void microchip_isc_subdev_cleanup(struct
- 	list_for_each_entry(subdev_entity, &isc->subdev_entities, list) {
- 		v4l2_async_nf_unregister(&subdev_entity->notifier);
- 		v4l2_async_nf_cleanup(&subdev_entity->notifier);
-+		/*
-+		 * Release the endpoint reference taken while parsing. It is
-+		 * NULL for entities the bind loop already consumed, so this
-+		 * only drops the ones left over on an early exit.
-+		 */
-+		of_node_put(subdev_entity->epn);
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -895,19 +895,14 @@ static int wacom_add_shared_data(struct
+ 		list_add_tail(&data->list, &wacom_udev_list);
  	}
  
- 	INIT_LIST_HEAD(&isc->subdev_entities);
---- a/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-@@ -356,28 +356,30 @@ static int isc_parse_dt(struct device *d
- 	struct device_node *epn;
- 	struct isc_subdev_entity *subdev_entity;
- 	unsigned int flags;
-+	int ret;
+-	mutex_unlock(&wacom_udev_list_lock);
+-
+ 	wacom_wac->shared = &data->shared;
  
- 	INIT_LIST_HEAD(&isc->subdev_entities);
+-	retval = devm_add_action_or_reset(&hdev->dev, wacom_remove_shared_data, wacom);
+-	if (retval)
+-		return retval;
++	if (wacom_wac->has_mute_touch_switch)
++		WRITE_ONCE(wacom_wac->shared->has_mute_touch_switch, true);
  
- 	for_each_endpoint_of_node(np, epn) {
- 		struct v4l2_fwnode_endpoint v4l2_epn = { .bus_type = 0 };
--		int ret;
+-	if (wacom_wac->features.device_type & WACOM_DEVICETYPE_TOUCH)
+-		wacom_wac->shared->touch = hdev;
+-	else if (wacom_wac->features.device_type & WACOM_DEVICETYPE_PEN)
+-		wacom_wac->shared->pen = hdev;
++	mutex_unlock(&wacom_udev_list_lock);
  
- 		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(epn),
- 						 &v4l2_epn);
- 		if (ret) {
--			of_node_put(epn);
- 			dev_err(dev, "Could not parse the endpoint\n");
--			return -EINVAL;
-+			of_node_put(epn);
-+			ret = -EINVAL;
-+			goto err_cleanup;
- 		}
- 
- 		subdev_entity = devm_kzalloc(dev, sizeof(*subdev_entity),
- 					     GFP_KERNEL);
- 		if (!subdev_entity) {
- 			of_node_put(epn);
--			return -ENOMEM;
-+			ret = -ENOMEM;
-+			goto err_cleanup;
- 		}
--		subdev_entity->epn = epn;
-+		subdev_entity->epn = of_node_get(epn);
- 
- 		flags = v4l2_epn.bus.parallel.flags;
- 
-@@ -398,6 +400,11 @@ static int isc_parse_dt(struct device *d
- 	}
- 
- 	return 0;
-+
-+err_cleanup:
-+	list_for_each_entry(subdev_entity, &isc->subdev_entities, list)
-+		of_node_put(subdev_entity->epn);
-+	return ret;
++	retval = devm_add_action_or_reset(&hdev->dev, wacom_remove_shared_data, wacom);
+ 	return retval;
  }
  
- static int microchip_isc_probe(struct platform_device *pdev)
---- a/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-@@ -340,6 +340,7 @@ static int xisc_parse_dt(struct device *
- 	struct isc_subdev_entity *subdev_entity;
- 	unsigned int flags;
- 	bool mipi_mode;
-+	int ret;
+@@ -2319,13 +2314,12 @@ static void wacom_release_resources(stru
  
- 	INIT_LIST_HEAD(&isc->subdev_entities);
+ static void wacom_set_shared_values(struct wacom_wac *wacom_wac)
+ {
+-	if (wacom_wac->features.device_type & WACOM_DEVICETYPE_TOUCH) {
+-		wacom_wac->shared->type = wacom_wac->features.type;
+-		wacom_wac->shared->touch_input = wacom_wac->touch_input;
+-	}
++	struct wacom *wacom = container_of(wacom_wac, struct wacom, wacom_wac);
++
++	guard(mutex)(&wacom_udev_list_lock);
  
-@@ -347,23 +348,24 @@ static int xisc_parse_dt(struct device *
- 
- 	for_each_endpoint_of_node(np, epn) {
- 		struct v4l2_fwnode_endpoint v4l2_epn = { .bus_type = 0 };
--		int ret;
- 
- 		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(epn),
- 						 &v4l2_epn);
- 		if (ret) {
--			of_node_put(epn);
- 			dev_err(dev, "Could not parse the endpoint\n");
--			return -EINVAL;
-+			of_node_put(epn);
-+			ret = -EINVAL;
-+			goto err_cleanup;
- 		}
- 
- 		subdev_entity = devm_kzalloc(dev, sizeof(*subdev_entity),
- 					     GFP_KERNEL);
- 		if (!subdev_entity) {
- 			of_node_put(epn);
--			return -ENOMEM;
-+			ret = -ENOMEM;
-+			goto err_cleanup;
- 		}
--		subdev_entity->epn = epn;
-+		subdev_entity->epn = of_node_get(epn);
- 
- 		flags = v4l2_epn.bus.parallel.flags;
- 
-@@ -387,6 +389,11 @@ static int xisc_parse_dt(struct device *
+ 	if (wacom_wac->has_mute_touch_switch) {
+-		wacom_wac->shared->has_mute_touch_switch = true;
++		WRITE_ONCE(wacom_wac->shared->has_mute_touch_switch, true);
+ 		/* Hardware touch switch may be off. Wait until
+ 		 * we know the switch state to decide is_touch_on.
+ 		 * Softkey state should be initialized to "on" to
+@@ -2335,12 +2329,67 @@ static void wacom_set_shared_values(stru
+ 			wacom_wac->shared->is_touch_on = true;
  	}
  
- 	return 0;
+-	if (wacom_wac->shared->has_mute_touch_switch &&
+-	    wacom_wac->shared->touch_input) {
+-		set_bit(EV_SW, wacom_wac->shared->touch_input->evbit);
+-		input_set_capability(wacom_wac->shared->touch_input, EV_SW,
+-				     SW_MUTE_DEVICE);
++	if (wacom_wac->features.device_type & WACOM_DEVICETYPE_TOUCH) {
++		wacom_wac->shared->type = wacom_wac->features.type;
++		wacom_wac->shared->touch_input = wacom_wac->touch_input;
++		wacom_wac->shared->touch = wacom->hdev;
++	} else if (wacom_wac->features.device_type & WACOM_DEVICETYPE_PEN) {
++		/* Pairs with smp_load_acquire() in wacom_sibling_pending() */
++		smp_store_release(&wacom_wac->shared->pen, wacom->hdev);
++	}
++}
 +
-+err_cleanup:
-+	list_for_each_entry(subdev_entity, &isc->subdev_entities, list)
-+		of_node_put(subdev_entity->epn);
-+	return ret;
++static bool wacom_sibling_pending(struct wacom *wacom)
++{
++	const struct wacom_features *features = &wacom->wacom_wac.features;
++	struct hid_device *hdev = wacom->hdev;
++	struct usb_interface *sibling_intf;
++	int ifnum;
++
++	if (features->type != HID_GENERIC ||
++	    !(features->device_type & WACOM_DEVICETYPE_TOUCH))
++		return false;
++
++	if (wacom->wacom_wac.shared) {
++		/* Pairs with smp_store_release() in wacom_set_shared_values() */
++		if (smp_load_acquire(&wacom->wacom_wac.shared->pen))
++			return false;
+ 	}
++
++	if (!hid_is_usb(hdev) || !wacom->usbdev || !wacom->intf ||
++	    !wacom->intf->cur_altsetting)
++		return false;
++
++	ifnum = wacom->intf->cur_altsetting->desc.bInterfaceNumber;
++
++	/*
++	 * On composite Wacom devices, the Pen interface is always interface 0.
++	 * If the Touch interface is interface 0, there is no sibling Pen
++	 * interface on this device (standalone touch device).
++	 */
++	if (ifnum == 0)
++		return false;
++
++	/* Look for the sibling Pen interface at interface 0 */
++	sibling_intf = usb_ifnum_to_if(wacom->usbdev, 0);
++	if (!sibling_intf || !sibling_intf->cur_altsetting)
++		return false;
++
++	if (sibling_intf->cur_altsetting->desc.bInterfaceClass !=
++	    USB_INTERFACE_CLASS_HID)
++		return false;
++
++	if (sibling_intf->cur_altsetting->desc.bInterfaceSubClass == 1 &&
++	    (sibling_intf->cur_altsetting->desc.bInterfaceProtocol == 1 ||
++	     sibling_intf->cur_altsetting->desc.bInterfaceProtocol == 2))
++		return false;
++
++	/*
++	 * Interface 0 is a candidate HID interface on this composite device
++	 * whose probe has not completed yet (shared->pen is NULL). Defer until
++	 * interface 0 finishes probing and registers shared values.
++	 */
++	return true;
  }
  
- static int microchip_xisc_probe(struct platform_device *pdev)
+ static int wacom_parse_and_register(struct wacom *wacom, bool wireless)
+@@ -2416,6 +2465,11 @@ static int wacom_parse_and_register(stru
+ 	if (error)
+ 		goto fail;
+ 
++	if (wacom_sibling_pending(wacom)) {
++		error = -EPROBE_DEFER;
++		goto fail;
++	}
++
+ 	error = wacom_setup_inputs(wacom);
+ 	if (error)
+ 		goto fail;
+@@ -2473,6 +2527,7 @@ static int wacom_parse_and_register(stru
+ 
+ fail_hw_stop:
+ 	hid_hw_stop(hdev);
++	cancel_delayed_work_sync(&wacom->init_work);
+ fail:
+ 	wacom_release_resources(wacom);
+ 	return error;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -3973,6 +3973,11 @@ int wacom_setup_touch_input_capabilities
+ 
+ 	if (features->type == HID_GENERIC) {
+ 		hid_dbg(hdev, "generic touch setup\n");
++		if (wacom_wac->has_mute_touch_switch ||
++		    (wacom_wac->shared && READ_ONCE(wacom_wac->shared->has_mute_touch_switch))) {
++			input_set_capability(input_dev, EV_SW, SW_MUTE_DEVICE);
++			wacom_wac->has_mute_touch_switch = true;
++		}
+ 		/* setup has already been done */
+ 		return 0;
+ 	}
 
 
