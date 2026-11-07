@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063420;
-	b=v4cdK5xRezPn0wXyVW7PjA0VLGH+Jaf4fjrU93hyQQmFdjUqOI1eR++Z2o/W76SnyDTq
-	 Jjdt1OTTrAE+YuUZDA/AprEZaiV/NvTFKShbflTkGnHdwxpiDBdSHQ9IrP07F4SUsI+T1
-	 Twol4mn/LNQ+UQN9tIlxiYvecUagZYQnv53D+/5FszYvqM4BxClvBX1xYqp271kWLF6Im
-	 m39PQV7vHAuHr0UnjFGzcGboU8ubB+fG9jUKBCthW7XGkuYHmtpiYClbqm1tcknunpRq7
-	 QUl7QqRxIqMkFTeUfSWeP2B79dPBm2geyWo/suG5BG2azPdsSBKkfdxgITBGS56GXyA==
+	t=1794063422;
+	b=JC/elkjHk6xvtEhEalXKH6Ftxh+2i2mxYzfGAoRana7dtrlPJNHYp2uf8zOQYJy1Z2JL
+	 QIu4J/zXxDevAtXLXwfJ5uTg4Oo/UGvriU6zTJROpuzGHvvPwyPQHWwPiIdPFR6AxrGcn
+	 8woF3UK0oUcB2VOFTguLXCAfR71E/IFNX5KH113tIVvJa83x36K2Y2hHdLfivqGCGVZZA
+	 Cd/M/Vq/yG44cwjsc07M8WJfEarnUp/yYwPkfIjzIKXHsvilP7hdMrBHlTrLfJDlLWC8M
+	 w9q/sMYL1KBozc480KMtzoKK2R44atqb0EGs8qyCdnuxnJS9fuYfs/1q9k44EY+ifIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m9+ETSvqU0GYDoXqdDvQ9blqgYT+IJ5BKrUs8BkfdpU=;
-	b=CLKGIIVwy0YDRGrr4iqI1eZivbnr7kcS2EVnN6EgH3kGngP75zIe0e2mAewT5SfgvwXn
-	 lGU5A/3hyDxbzUgE1bipsW4iLFeeAEDCUvSRui7fKHT8gxdBWZV0Xi1QHt8Eb2dHo0ZoA
-	 0MCT9om4UDx1ZDu4OarqwyfiTbScKvFtk78bbvb+QjdN3MeyPE4SKlv27VTdF49kKR5+C
-	 vJ4tJV9w4x1qpPTCswCG/IwvyPkZ4UpDkr/LtM7HcFUkH0brj/dZQpudOvao7fP0sJ8GH
-	 5eOjwIdl6R9UUqf1wKKTe+PpEqzjcyoMrf/A8S92r+Tg2srHO1YwznN1WZzlgePQbnw==
+	bh=Lx0PZzw4z2ODnaieWZaXwq0K2fr4oJ+1k134HytoX8k=;
+	b=q1oT4uGP10KJdHtUPBCAgy1hOdwnQQpc/s8Ybh5YoqVV2dm37tcfEwR7eXgN9pB/xIOZ
+	 qjv89VAXvc/B765cIdhVt+7Y0F2bIc7CWajgbFzd/fpQLjb/vEfS/WLyQ14zTSdc5/UJR
+	 QfBXwDXY4fKIsEh5G7Jv4gxhEzQ3xihh79zlkeyCs2MoGBYTq0J7XdgkgljrbSPq9dG3E
+	 yHvxO61s9a5/2+4IdLTftcipAbBMpxCQ3Sov9u7CdBRmj1C2Xu/4A58wovwMTpdbuLkUk
+	 snh1GW/WLmepb6QeKWMp4cClb+6UdbdtJizRrytnpripC+RUIoXMdCeDmaNJwt3UWGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CY8iw962;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tCV91UXr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78390606D80D;
-	Sat,  7 Nov 2026 14:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6010608360D;
+	Sat,  7 Nov 2026 14:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CY8iw962
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078631F0089F;
-	Sat,  7 Nov 2026 14:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tCV91UXr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637841F008A2;
+	Sat,  7 Nov 2026 14:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063420;
-	bh=m9+ETSvqU0GYDoXqdDvQ9blqgYT+IJ5BKrUs8BkfdpU=;
+	s=korg; t=1794063421;
+	bh=Lx0PZzw4z2ODnaieWZaXwq0K2fr4oJ+1k134HytoX8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CY8iw962bPBmEGxBB3/XsChjTdxjhF1L4w+COXxlNGB3ArP5oaq+WhZT8wKMUjFvy
-	 rrkFvCjElP7btY877KAGkX0GJRssGXdTneMvoIhtBwum4+X8Ji2LH/q67QuyDk0hJj
-	 KJgyXzvmtVI2G9FaPLJkKa8nfOAfP4qSi666NS1s=
+	b=tCV91UXr3RxcihipRXA2ccvLNQSFzHStehIZnydUB+GQ+xjsJwT06yWFnLgmSbvP0
+	 OxH9GZ9PBce4nRP4Gj3IR3k0As/tplZQxBsH3gc/hesYyOs1uK29Gah11vDPu9CI30
+	 YP+fNSzKvkc7jARY1g0lWSfjn0DTRppDbyIBO7f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 560/869] ARM: 9522/1: cacheinfo: guard the CLIDR read in populate_cache_leaves()
-Date: Sat,  7 Nov 2026 08:54:02 -0500
-Message-ID: <20261107134912.297562593@linuxfoundation.org>
+Subject: [PATCH 6.18 587/869] KVM: arm64: Turn vcpu->arch.pause into a counter
+Date: Sat,  7 Nov 2026 08:54:29 -0500
+Message-ID: <20261107134913.044756041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,84 +68,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 2315f2c46e0813d010e7b3ea40f2769621453e27 ]
+[ Upstream commit e64309198eda29415a95113def92aa40196cd422 ]
 
-ARM1176 and ARM11 MPCore can be reported as ARMv7 by
-cpu_architecture() even though they lack CLIDR. populate_cache_leaves()
-therefore needs the CTR-format check used by detect_cache_level().
+We have situations where we can call kvm_arm_halt_guest() without
+holding config_lock, which means that halt and resume can overlap in
+funny ways when called from separate contexts, and result in situations
+where a vcpu is resumed while other parts of KVM assume it is halted.
+Consequences are left to the imagination of the reader.
 
-DT-based early allocation bypasses init_cache_level(), so its check
-no longer protects populate_cache_leaves(). A combined ARMv6/ARMv7
-SMP kernel can reach this path on BCM2835, whose DT describes its
-caches.
+Fix this sorry situation by turning kvm_vcpu_arch::pause into an
+atomic counter, which makes the races described above harmless.
 
-Share the CLIDR capability check between detection and population.
-Return -ENOENT from population when CLIDR is unavailable, preserving
-the existing absence of cacheinfo and avoiding a new topology warning.
-
-Assisted-by: LLM
-
+Fixes: 3b92830ad41b2 ("KVM: arm/arm64: implement kvm_arm_[halt,resume]_guest")
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
 Cc: stable@vger.kernel.org
-Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20260912195552.76673-4-kmehltretter@gmail.com/
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20261015100539.1011760-5-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/cacheinfo.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ arch/arm64/include/asm/kvm_host.h |  7 +++----
+ arch/arm64/kvm/arm.c              | 21 ++++++++++++---------
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm/kernel/cacheinfo.c b/arch/arm/kernel/cacheinfo.c
-index 31591c9472548..993c8a1347860 100644
---- a/arch/arm/kernel/cacheinfo.c
-+++ b/arch/arm/kernel/cacheinfo.c
-@@ -80,19 +80,21 @@ static void ci_leaf_init(struct cacheinfo *this_leaf,
- 	this_leaf->type = type;
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index 419e37112a6f0..b7334f98deaac 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -833,11 +833,10 @@ struct kvm_vcpu_arch {
+ 	/*
+ 	 * Don't run the guest (internal implementation need).
+ 	 *
+-	 * Contrary to the flags above, this is set/cleared outside of
+-	 * a vcpu context, and thus cannot be mixed with the flags
+-	 * themselves (or the flag accesses need to be made atomic).
++	 * Contrary to the flags above, this is updated outside of
++	 * a vcpu context, and thus cannot be mixed with the flags.
+ 	 */
+-	bool pause;
++	atomic_t pause;
+ 
+ 	/*
+ 	 * We maintain more than a single set of debug registers to support
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index c8a8d9ce4b14e..4e0db01a528a8 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -500,6 +500,7 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
+ 	kvm_arm_pvtime_vcpu_init(&vcpu->arch);
+ 
+ 	vcpu->arch.hw_mmu = &vcpu->kvm->arch.mmu;
++	atomic_set(&vcpu->arch.pause, 0);
+ 
+ 	/*
+ 	 * This vCPU may have been created after mpidr_data was initialized.
+@@ -765,6 +766,11 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
+ 	return ret;
  }
  
--static int detect_cache_level(unsigned int *level_p, unsigned int *leaves_p)
-+static bool clidr_present(void)
- {
--	unsigned int ctype, level, leaves;
--	u32 ctr, format;
--
- 	/* CLIDR is not present before ARMv7/v7m */
- 	if (cpu_architecture() < CPU_ARCH_ARMv7)
--		return -EOPNOTSUPP;
-+		return false;
- 
- 	/* Don't try reading CLIDR if CTR declares old format */
--	ctr = read_cpuid_cachetype();
--	format = FIELD_GET(CTR_FORMAT_MASK, ctr);
--	if (format != CTR_FORMAT_ARMV7)
-+	return FIELD_GET(CTR_FORMAT_MASK, read_cpuid_cachetype()) == CTR_FORMAT_ARMV7;
++static bool vcpu_can_run(struct kvm_vcpu *vcpu)
++{
++	return !kvm_arm_vcpu_stopped(vcpu) && !atomic_read(&vcpu->arch.pause);
 +}
 +
-+static int detect_cache_level(unsigned int *level_p, unsigned int *leaves_p)
-+{
-+	unsigned int ctype, level, leaves;
-+
-+	if (!clidr_present())
- 		return -EOPNOTSUPP;
+ /**
+  * kvm_arch_vcpu_runnable - determine if the vcpu can be scheduled
+  * @v:		The VCPU pointer
+@@ -780,8 +786,7 @@ int kvm_arch_vcpu_runnable(struct kvm_vcpu *v)
+ 		      (kvm_timer_should_notify_user(v) ||
+ 		       kvm_pmu_should_notify_user(v)));
  
- 	for (level = 1, leaves = 0; level <= MAX_CACHE_LEVEL; level++) {
-@@ -150,11 +152,10 @@ int populate_cache_leaves(unsigned int cpu)
- 	enum cache_type type;
- 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
- 	struct cacheinfo *infos = this_cpu_ci->info_list;
--	unsigned int arch = cpu_architecture();
+-	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v))
+-		&& !kvm_arm_vcpu_stopped(v) && !v->arch.pause);
++	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v)) && vcpu_can_run(v));
+ }
  
--	/* CLIDR is not present before ARMv7/v7m */
--	if (arch < CPU_ARCH_ARMv7)
--		return -EOPNOTSUPP;
-+	/* The device tree can describe caches CLIDR cannot fill in. */
-+	if (!clidr_present())
-+		return -ENOENT;
+ bool kvm_arch_vcpu_in_kernel(struct kvm_vcpu *vcpu)
+@@ -937,7 +942,7 @@ void kvm_arm_halt_guest(struct kvm *kvm)
+ 	struct kvm_vcpu *vcpu;
  
- 	for (idx = 0, level = 1; level <= this_cpu_ci->num_levels &&
- 	     idx < this_cpu_ci->num_leaves; level++) {
+ 	kvm_for_each_vcpu(i, vcpu, kvm)
+-		vcpu->arch.pause = true;
++		atomic_inc(&vcpu->arch.pause);
+ 	kvm_make_all_cpus_request(kvm, KVM_REQ_SLEEP);
+ }
+ 
+@@ -947,8 +952,8 @@ void kvm_arm_resume_guest(struct kvm *kvm)
+ 	struct kvm_vcpu *vcpu;
+ 
+ 	kvm_for_each_vcpu(i, vcpu, kvm) {
+-		vcpu->arch.pause = false;
+-		__kvm_vcpu_wake_up(vcpu);
++		if (atomic_dec_and_test(&vcpu->arch.pause))
++			__kvm_vcpu_wake_up(vcpu);
+ 	}
+ }
+ 
+@@ -956,11 +961,9 @@ static void kvm_vcpu_sleep(struct kvm_vcpu *vcpu)
+ {
+ 	struct rcuwait *wait = kvm_arch_vcpu_get_wait(vcpu);
+ 
+-	rcuwait_wait_event(wait,
+-			   (!kvm_arm_vcpu_stopped(vcpu)) && (!vcpu->arch.pause),
+-			   TASK_INTERRUPTIBLE);
++	rcuwait_wait_event(wait, vcpu_can_run(vcpu), TASK_INTERRUPTIBLE);
+ 
+-	if (kvm_arm_vcpu_stopped(vcpu) || vcpu->arch.pause) {
++	if (!vcpu_can_run(vcpu)) {
+ 		/* Awaken to handle a signal, request we sleep again later. */
+ 		kvm_make_request(KVM_REQ_SLEEP, vcpu);
+ 	}
 -- 
 2.53.0
 
