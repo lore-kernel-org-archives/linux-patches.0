@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061001;
-	b=P/PrAdYaDxio3BKU8cfENFfNMS/FP/JE2UNC4pH4fytbKCeu3cRJwDv7ORZhnQ3NZFai
-	 Y223BT3DtyPo17bUksAvH8ga19WHw1yNhXXKQ+qtuuxdsB8KNBuXH12oCTxCLyq5Tp8ln
-	 sv2H3DyTyPIAkL1/yK8OOlxC0psCNWFwmcbe1lvaZsVRofsVt1bW2EUROaOOJF9hRH6bd
-	 SUaVQ0ZwrjgDuQln2SwsV7H4oqxWCXJ9uLULflfSx54YLE0PzKAenFoErgJNdhpl9yXns
-	 BtaOMlDxFvD/SzTGIv/Yvwrh1fWCRkPKL+62xS+svMRNdNRTyp21SZcYPqvJPi/KzwA==
+	t=1794061003;
+	b=f5krm9tm0oowJ3jTvh/+d9y7LqfWqCsZuBGd8P1BDTQyYGk0pz22PDW/aPlqH3iBpJoa
+	 T2VwNiZAlocsiWLPoGhqeDAsQ62IOPc5/fHyvtL06rB/dTHmCE4Ks5nkU9oNzsoMKLPZ3
+	 x2Juy6ES78yMzWQIu+p+bNlVhfteb7Giz0Te3fiRyg5WCYLJc470XmsyVbx6tyHuT9A3N
+	 Sv6fOlUN9cxfRHPq651QK01je1bKgXcBL4qejMlEcObArp51ayJxaL3bJA2EOnR19p7XW
+	 S7ncCqMG/j2bfRxcbPc3QeAG5YJ9suB/prlIJpHSK0/6ZysdflmdBLPAXPW+paHDEBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061001;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=35EP4kugu9nRcRRDTA6npseXplGCtBBBfNttINKbLak=;
-	b=0JFw1FQbpZClvtGFFdkCuUIuyOASQoNR80yi+l+oSeYaNY/4N7vHVEJ4QxF9tWgSr/mO
-	 WmJRgBz3ghk9XZZEU1l8kDi32oupBJDRjEs63D0d1oERMMxm2JaGEpRoey8gtPS1wUSkD
-	 V9SUW8ExmMhNhEesZj8pb/rMInAslWUtNrrLkIZWQ7Uxc5SnZIfqlGVQX5Wyktg1YDuJq
-	 kJUnDvO6CYuedq3lHk2YyrVakH60ADi+QwAhfqtIkQUSTdX8VuG7R0CFKfnlBNbALFiq7
-	 u2gqroV/P42d5BkJHYSzv8SrjxSUbfJuxWx/XfW+WGZRhoNqPOGYbgRnlyuom2OeApw==
+	bh=vSAXvWyHtWwTrETQ4Shtf3gRiT4OF44MispfkVhKWU4=;
+	b=5stjFmFT86D5pDqIKcC9nN6Tu8Yn/HRkGOlfxuONrdKbrbMmUCUwBA/wS6/o7cQzfpD2
+	 Q9Y0dVZIAGTlXrZasKzUhIOY5qbl7elndcV2IFVBadwAFlIvPZmSMRSoSQKuvkhAld0km
+	 ky8RecA7uq5QJ/5vz/9txAcO/57BJFmHW7nCpnZtHxMlN+zqdcic5TT7V+Ls8gI9QAj9g
+	 SFMzyuAM7LiZIZyWJ/ImAan3SsCpXlr7Ud4NppvWORCI8zFQgfRftOBAa2PcgHIGb3Cai
+	 +s4mPvjcJnKOSsxZ7fyVVIoupN8gGNUC5xl3FDvyXR14QwusgmwLG6aNpL0sCzGoeBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vxU9zDL/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v9c/I35r";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A2B606A33B;
-	Sat,  7 Nov 2026 14:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF557606A33A;
+	Sat,  7 Nov 2026 14:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vxU9zDL/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4C81F008A2;
-	Sat,  7 Nov 2026 14:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9c/I35r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FDB1F008A2;
+	Sat,  7 Nov 2026 14:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061001;
-	bh=35EP4kugu9nRcRRDTA6npseXplGCtBBBfNttINKbLak=;
+	s=korg; t=1794061002;
+	bh=vSAXvWyHtWwTrETQ4Shtf3gRiT4OF44MispfkVhKWU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vxU9zDL/CHCuS+Fv06qTgy8Y0/nXdlbXHnKcnlV1JcbWA7AmN/OLDxHfBzL7PRbOc
-	 rtY0m9p4wqgI/L1AQPal0zrXndX6ZZRoKUSgRKDhLMQaOSMNLpvKX+YEE+k7e/xikm
-	 TcHr+wAQYVQ++ykTWFQBjtZYwnJk2oeoC3mxpsSI=
+	b=v9c/I35rslnxIy8jD20Y8NgCoaDzOeWU9+WuLGsSTswpmWRMkv0zNNXdHCaNclqqK
+	 MSQ20eaHv6wlJXsjoASeK8n8Q1IsQfSj1p5VOkXbOYHOXsuvfptyWB6d3EzPaN4s6h
+	 U7jAEAx1RVEFZTLHAvddvb6tmCExq3tWId6kNrps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Gael Blivet <gael.blivet@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0329/1536] HID: amd_sfh: Serialize access to the shared emp2 pointer
-Date: Sat,  7 Nov 2026 08:39:05 -0500
-Message-ID: <20261107135006.948550660@linuxfoundation.org>
+Subject: [PATCH 6.12 0347/1536] ksmbd: skip fallocate for SMB2_CREATE_ALLOCATION_SIZE on a stream handle
+Date: Sat,  7 Nov 2026 08:39:23 -0500
+Message-ID: <20261107135007.424113929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,69 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Gael Blivet <gael.blivet@gmail.com>
 
-[ Upstream commit c57016bcf6d0b57cda5579e5d6856bd9bbe52a77 ]
+[ Upstream commit bfdf81c62f4f52a3626ea62db0744def6778e83f ]
 
-The SFH accessors reach the device through a file-global emp2 pointer
-that is published at probe and cleared on remove. amd_get_sfh_info() is
-exported and called from other modules on unrelated threads, so a reader
-can observe a non-NULL emp2 and then race a concurrent unbind that clears
-it and frees the device.
+smb2_open() calls vfs_fallocate(fp->filp, ...) unconditionally when a
+client's CREATE request includes an AllocationSize create context.
+For a stream handle, fp->filp refers to the base file's data fork
+(streams are xattr-backed on the same underlying file, not separate
+files), so this pre-allocates storage on the base file's actual data
+instead of doing anything meaningful for the stream -- fallocate has
+no applicability to an xattr-backed stream at all.
 
-Serialize the emp2 publish/clear and all readers under a mutex, so a
-reader either sees a live device for the whole access or sees NULL.
+Skip the fallocate call for stream handles.
 
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/server/smb2pdu.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-index 4676f060da261..2365e3c6bab55 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-@@ -8,12 +8,14 @@
-  * Author: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-  */
- #include <linux/amd-pmf-io.h>
-+#include <linux/cleanup.h>
- #include <linux/io-64-nonatomic-lo-hi.h>
- #include <linux/iopoll.h>
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index e0accc8565f70..b4bdd98bbbe0f 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3633,13 +3633,22 @@ int smb2_open(struct ksmbd_work *work)
+ 			ksmbd_debug(SMB,
+ 				    "request smb2 create allocate size : %llu\n",
+ 				    alloc_size);
+-			smb_break_all_levII_oplock(work, fp, 1);
+-			err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
+-					    alloc_size);
+-			if (err < 0)
+-				ksmbd_debug(SMB,
+-					    "vfs_fallocate is failed : %d\n",
+-					    err);
++			/*
++			 * fp->filp is the base file's data fork for a stream
++			 * handle (streams are xattr-backed on the same
++			 * underlying file) -- fallocate has no meaning for a
++			 * stream and would otherwise pre-allocate storage on
++			 * the base file's data instead.
++			 */
++			if (!ksmbd_stream_fd(fp)) {
++				smb_break_all_levII_oplock(work, fp, 1);
++				err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
++						    alloc_size);
++				if (err < 0)
++					ksmbd_debug(SMB,
++						    "vfs_fallocate is failed : %d\n",
++						    err);
++			}
+ 		}
  
- #include "amd_sfh_interface.h"
- 
- static struct amd_mp2_dev *emp2;
-+static DEFINE_MUTEX(emp2_lock);
- 
- static int amd_sfh_wait_response(struct amd_mp2_dev *mp2, u8 sid, u32 cmd_id)
- {
-@@ -78,12 +80,14 @@ static struct amd_mp2_ops amd_sfh_ops = {
- 
- void sfh_deinit_emp2(void)
- {
-+	guard(mutex)(&emp2_lock);
- 	emp2 = NULL;
- }
- 
- void sfh_interface_init(struct amd_mp2_dev *mp2)
- {
- 	mp2->mp2_ops = &amd_sfh_ops;
-+	guard(mutex)(&emp2_lock);
- 	emp2 = mp2;
- }
- 
-@@ -125,6 +129,8 @@ static int amd_sfh_als_info(u32 *ambient_light)
- 
- int amd_get_sfh_info(struct amd_sfh_info *sfh_info, enum sfh_message_type op)
- {
-+	guard(mutex)(&emp2_lock);
-+
- 	if (sfh_info) {
- 		switch (op) {
- 		case MT_HPD:
+ 		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID, 4);
 -- 
 2.53.0
 
