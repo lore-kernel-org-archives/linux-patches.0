@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061501;
-	b=llyDxPli5H+bLflz1M0+tGzZxTwI218owMhW/MiKGN7Rcs1xEEXx86dikCxTqoU4bVOt
-	 R3rQh+I1QUIaGYbHUvO/zTAI25IT+QwULqCTWXR6REdg7rO1UbnQvwwAS7W1yq8nLm1TM
-	 /NHwqnkuAVwIL8gpd+qiVdrTw2jBMfk+4YyDmcVHSm2wF6v4EQaakgQUk9TNWMqeROOSV
-	 69zaAzPujpGXy9W5q+DnacHMjW9VSNDPo1OGf/SVl7a3digYsivl3cq1x5Fr96iMY2kIY
-	 vp2gffeE9bRuE8vvNRHuhZV2YLDhy7iW8vCPIfApiHQ4/YHsOaCPnUGus7aL4qrfKAw==
+	t=1794061502;
+	b=eta6rWLrU3+1RkZOnJX4RaLc2MuPZ1ePlA6O+o6TiAJoW5s+y+pRz9TtEsJ/GbFcFlXD
+	 0/QxVc3/oEvsViwrT04R8grYJF/CBSEneAC54Tsd5B8ZN/Cn6wUQjOuX7pZi3IMegbnMi
+	 u+yeCYLFoEPhvCBQkh3+qVJkOHHlku77ML/gsYVRpPmsV0xeRtb7d9kBaMmafsSFA5i3r
+	 mTK+zjGHwRuOSg2PiraU1Bf7JkFlzgFw/D3FI8hhXo8Yk6GO5Dl7CIo1U5VgKb5zv37wf
+	 k/2+l9j2rto3m9mLpZ6rOsxnZJJI/h6PaoC+MOj3k8jgud3t5ZCaNl4Qu5JHFFEO/Og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061501;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MGHFdZ2O002Ihlh4o1C+vfiSPRuTBo2OgeCnHnFCjBg=;
-	b=XngvQHelXY6w5E6x78o6leuIODVXmIzGv97rehK5gAfG7TknrGLNALL6foYfHxkF7p4W
-	 WcdSzmztzcaMCFuu2gTD4pIfb4bHzkAsz8Y0nzKTFNVH+rlnyaaI4PjEs6xUBynJcAtHX
-	 REUtI8tOpntPlWXM7rTMtE2RTIJvqygwYD0KA8zwd4npqn64QqMTH1SqnHQSodXfgCeJB
-	 6byMxDPzuPaV+oMl/7Bagnf4/M5NjWwgJF3JbX13voWIhS2jf0xissGSCmoSaHVnYD7/y
-	 4xsPckOVAdHEBRDz+D6NSOQZiM/A2x3QISv7F8XqqAor7NUo2uwyBNujc5/e3CxXI0A==
+	bh=YZ4UPY8kZ44ynHtGiRkzKebqLsj0vJkEHqY5F98AzfY=;
+	b=dMainN3/M+NHG/DSTOk+F5M43pJAc2k6yRj2jVWMkJ7TWnuaFIkITL/81V5gFKd6dILl
+	 llj3oj2uNbXYSkX5e7OlGBfgFMInn4OxWTm2/5pD/JJqcyRtX8ykTN0p4IhdujNosbTiA
+	 bIawUZpNVEhy7Ycs5NRHzaKhe4krc70Xh/j1uAb6fXjpQ8KFPCXKgH5W4FcPMbJ3fsCtL
+	 Y/TfzshUlXpSbPl+fDz7AtBplRmVeCF25kCrXtMGeLTH0JYTWynoVHbqS1W/OeXRfTE5G
+	 bPD/SYwWiv4qQn6eIT3LONfsvpfbjrOajFdViZlx/sUhtMrxrh6nXdsnvdCEr6IkwAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OoxqcwAz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzuEmu5l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64812606A331;
-	Sat,  7 Nov 2026 14:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9C9606A331;
+	Sat,  7 Nov 2026 14:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OoxqcwAz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6231F008A1;
-	Sat,  7 Nov 2026 14:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IzuEmu5l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4996E1F0089F;
+	Sat,  7 Nov 2026 14:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061501;
-	bh=MGHFdZ2O002Ihlh4o1C+vfiSPRuTBo2OgeCnHnFCjBg=;
+	s=korg; t=1794061502;
+	bh=YZ4UPY8kZ44ynHtGiRkzKebqLsj0vJkEHqY5F98AzfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OoxqcwAzxqED5kKdSw6UCBHBYzWLhMhXSNnNdBkurz9RH7pOxoVLsPROTbQIjE7XE
-	 agUj3T47xjkBbRvd+zQpbHz2CL8crJm4Vap10TqDbTo/SZazBb4+sH103crFJNBp0z
-	 1c8AEDiZAO4FdRDbM0BdL7A1JMHuda9rrR/PvCYc=
+	b=IzuEmu5lU9y62hoAdhAUVXLOFCYhl3mTO4LH5MUVscPGeiM3ZdqXNzF9PJdNRipx5
+	 YN0ykjiudbsbXNwv1+36LN3HEUued/YAkbz8hDnrxd/pahajYxQaXoDsIXggJshV3Q
+	 5eLtj6bv22KyvC2Ts+G8S/Ed9zJevKtsDUMN2dQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Erik Brangs <erik.brangs@gmx.de>,
 	Christoph Zwerschke <cito@online.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0596/1536] Revert "Bluetooth: btusb: Add ASUS USB-BT600 for Realtek 8761CU"
-Date: Sat,  7 Nov 2026 08:43:32 -0500
-Message-ID: <20261107135014.282258661@linuxfoundation.org>
+Subject: [PATCH 6.12 0597/1536] Revert "Bluetooth: btusb: Add ASUS USB-BT540 for Realtek 8761CU"
+Date: Sat,  7 Nov 2026 08:43:33 -0500
+Message-ID: <20261107135014.311202175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,8 +70,8 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Zwerschke <cito@online.de>
 
-This reverts commit 32412aff8d11d00672053cb10750869f2de94a1f which is
-commit 6f0624b4427e38c3bb63a951c536cf8adaee1238 upstream.
+This reverts commit f05baf6e0680d8c10d2fbbc5953848fc3e3db957 which is
+commit 980084de4d9b25193398d89a1c0430ba3501b683 upstream.
 
 With the device ID in the table, the adapter is handed over to btrtl,
 which in this tree, together with the backport of commit 4a23ce935f74
@@ -91,22 +91,24 @@ Link: https://lore.kernel.org/all/179104011040.2214689.5921682013387867802@eldam
 Signed-off-by: Christoph Zwerschke <cito@online.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/bluetooth/btusb.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 84238687ff653..9fc1e3d2dded6 100644
+index 9fc1e3d2dded6..32465e6736d2a 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -820,8 +820,6 @@ static const struct usb_device_id quirks_table[] = {
- 	/* Additional Realtek 8761CU Bluetooth devices */
- 	{ USB_DEVICE(0x0b05, 0x1bef), .driver_info = BTUSB_REALTEK |
+@@ -817,10 +817,6 @@ static const struct usb_device_id quirks_table[] = {
+ 	{ USB_DEVICE(0x37ad, 0x0600), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },
--	{ USB_DEVICE(0x0b05, 0x1d70), .driver_info = BTUSB_REALTEK |
--						     BTUSB_WIDEBAND_SPEECH },
  
+-	/* Additional Realtek 8761CU Bluetooth devices */
+-	{ USB_DEVICE(0x0b05, 0x1bef), .driver_info = BTUSB_REALTEK |
+-						     BTUSB_WIDEBAND_SPEECH },
+-
  	/* Additional Realtek 8821AE Bluetooth devices */
  	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
+ 	{ USB_DEVICE(0x13d3, 0x3414), .driver_info = BTUSB_REALTEK },
 -- 
 2.53.0
 
