@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062923;
-	b=p1eBluvMPDmlZ1on4dZVduBY9vVe4r460aG0+OW/lR6gx8t8n8UEWSkUy657dHtMo0CC
-	 yQ35nj5pGNiKtB+OvG0ijzqniEMYmUCoqHzbRbH6cyi6igqN4CxEEZLfJ9j7L8vUEJGJ4
-	 NdAVTZKX25uYPfCoa+FcURMcN4aselz4bV5yCS9x291kTLTx/qVDTy8k+bSSslgn6ZTgk
-	 LEcxhfj5YE7ESOWM40gH16r5FdIYiB4WuGhlnzVFhtOxyEwEUCfWWdR2x66hZ17a7CEoQ
-	 yhey2PrJfIX0m7wh9cKbfrzMYoAQkTN71kvreUUKav7h+fVdK6Kanojvn/D93BifCGQ==
+	t=1794062925;
+	b=ird8FXflcGK1M1iSMXw4ntPiTeyh/gq1EQLoFgX2gOxj5FnmsXHkCnwuWdugC/cf9Rwa
+	 vn3BZQN0STqItRvnfX1RLX+KVzdpf5rtV80YaKIbPxYl94WShEI5xkS+Hv+uPiegYXyfc
+	 2/Q5663hgEBQ9gwBJsf0p4hE/hRJF/YQkYt6BBD0Ai+lcnPR+kxsKPXTCYiYlcE47ij5M
+	 pdG+aFqb6doGDDxrKxgGeaD9EMj/EflbHxBKUfAJlbx38D2pWEHZMf51uJXARkNJcYflF
+	 gDhWv5DqqG0FVk1S7ZrfFz0Mv23EURHYIwkwuaGsJxirXMIOQHPFI5UPONsJg5mG+0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062923;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062925;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tDSrF0NfXFW7IKGXCLcgRHKLLxpTaBDnt6KTc7S5nx4=;
-	b=k7dYtXUBOKVrpfG6aml7UurVxMyvY1RY56mo6B41rteWLC6ozhicl5fu0xaWMJOStJCf
-	 Oe2VmTxZFdFlZB3+T2MQ/YmCl/rvh8VSQoC16bO/2a+TLU/3RNT+diYCS2BFZdXjTNErS
-	 wcnDH0fxZjh0QnUrzOWCRN603EB5B4cmQ+3GnnV/L1OzjK+i/u2kzFo10Hc3dr+WksanW
-	 JCLCCv5zCq3JhhXDFWqNLchO5mmR+brYqtH3YUnGp9lL2Z/SqYargAJMrv283C9stwGqP
-	 yMtDG05FFG25eiuCPEG+aDaI8q7SqQ5NIDapQvGUtPJ9BFukRJLoojSmWXIweNY74iQ==
+	bh=tWK8d13Y6bnG0VDMtr0shYQWfl6L4j3g0a7ZueayHWQ=;
+	b=TvfeY6Ut1XeBETSQqGu4rEUmHO5bwbGVcwC3p/Kk/WOWQ8q1CTi4KM0pTvTB1Nd0sV0Z
+	 v4kmC1GpwahNeeWpkXhpWfaA2SLzWGZ4gdz6716nOCOtbD4RBnv3RdU7AMkaWZNn5o9jP
+	 GSoIDwQcXHxj/b6jfijjdLnIEFzoB346qRCtwUg4wvJkV/fBdOLOJiDRbrfAfe1fngWeJ
+	 O40iRN9QFMCJHotmz1+RmeOpQKxRa7lygFycDkJW1rfY/htS/SoTphSaSuuv/VuqCvDhP
+	 OPEk4dU/XaUrdL/JA3fGyem/FQPOeZ5bWqat5vk4CpN5ErUYIJ3JeQBafWy+ZvwdV6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BGJBG6F6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMIxHO10;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7734D606A326;
-	Sat,  7 Nov 2026 14:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EFE606A326;
+	Sat,  7 Nov 2026 14:48:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BGJBG6F6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226151F0089F;
-	Sat,  7 Nov 2026 14:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMIxHO10
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676BD1F0089F;
+	Sat,  7 Nov 2026 14:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062923;
-	bh=tDSrF0NfXFW7IKGXCLcgRHKLLxpTaBDnt6KTc7S5nx4=;
+	s=korg; t=1794062924;
+	bh=tWK8d13Y6bnG0VDMtr0shYQWfl6L4j3g0a7ZueayHWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BGJBG6F6LZanRqK3DTJxN6A6OAmmmgJMkwKy6SmGs73gh5iPhC92Zxwg763fihFdH
-	 HrT79QQNuo3eFkQHp0Ip8jlQo6DMt8oMsEwgdEw/z7sIBjDpexjqVz6KdumXsiuz4N
-	 GnZEt1oidaV3pXSXQeV6gAlBJA8admz+h0//6BJE=
+	b=AMIxHO10TxwVrYvRp12IKX1IPC/ZWaBLatUS16bipO5W0CrI/MQYzXcxXmx7vPS/a
+	 1SqUUkje6sK5fx0TzlWyPrH+MX68KipsMNNKeQqMZHE2+MRidPnOvChOsOVSgY0oWL
+	 atOmzaLnjKxdLjaxUsJ/Z45uCDS5+2XF8dmPfzmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	LFRon <ronforever@outlook.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Mario Limonciello <superm1@kernel.org>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 197/869] cpufreq/amd-pstate: Skip auto_sel write when it already matches the mode
-Date: Sat,  7 Nov 2026 08:47:59 -0500
-Message-ID: <20261107134858.726869635@linuxfoundation.org>
+Subject: [PATCH 6.18 198/869] nilfs2: fix checkpoint root lifetime on sysfs errors
+Date: Sat,  7 Nov 2026 08:48:00 -0500
+Message-ID: <20261107134858.756459415@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,65 +69,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-[ Upstream commit b400642c5e93863ec17ea15fcbd3efc81c299531 ]
+[ Upstream commit 2cb947450e0e5a88bb6bb5fca6dbfda1910e74b0 ]
 
-Since commit 9dfd13f80c85 ("cpufreq/amd-pstate: Toggle auto_sel in active
-mode on shared memory systems"), shmem_init_perf() programs
-AUTONOMOUS_SELECTION_ENABLE unconditionally, including in active mode.
+nilfs_find_or_create_root() links a new checkpoint root into the
+checkpoint tree and drops ns_cptree_lock before creating the root's
+sysfs group.  If nilfs_sysfs_create_snapshot_group() then fails, the
+root is freed while it is still reachable from ns_cptree, so a
+concurrent nilfs_lookup_root() can dereference freed memory.
 
-Platforms that exclusively support autonomous selection report this field
-as an Integer of 1, as required by the ACPI specification, instead of as a
-register descriptor.  cppc_get_reg_val() reads such a field back
-successfully, but cppc_set_reg_val() rejects the write with -EOPNOTSUPP
-because the entry is not an ACPI_TYPE_BUFFER.
+nilfs_sysfs_create_snapshot_group() allocates memory and creates sysfs
+nodes and may sleep, so it cannot run under the ns_cptree_lock spinlock.
+Reorder the creation path so that the sysfs group is set up before the
+root is published: initialize the root, create its sysfs group outside
+the lock, and only then take ns_cptree_lock to link it into the tree.
+On sysfs failure the root was never visible and is freed directly; in
+the unlikely case a root with the same checkpoint number is already
+present, the sysfs group of the new root is removed before it is freed.
+Concurrent insertions are already serialized by ns_snapshot_mount_mutex,
+so only the race against nilfs_lookup_root() needs to be closed.
 
-shmem_init_perf() propagates that error, so every amd_pstate_epp_cpu_init()
-fails, cpufreq_register_driver() ends up with an empty policy list and
-returns -ENODEV, and amd-pstate refuses to load at all:
+Because kobject_put() does not guarantee that the embedded kobject's
+release callback has run by the time it returns
+(CONFIG_DEBUG_KOBJECT_RELEASE defers it), the container must not be
+freed until the release completes.  Keep that wait_for_completion() of
+snapshot_kobj_unregister inside the sysfs helpers, so both the creation
+error path and nilfs_sysfs_delete_snapshot_group() wait for the release
+before their callers free the root.
 
-  amd_pstate: failed to set auto_sel, ret: -95
-  amd_pstate: Failed to initialize CPU 0: -95
-  ...
-  amd_pstate: failed to register with return -19
-
-Skip the write when the register already holds the value the requested mode
-needs.  Active and guided mode are fixed on these platforms, which report
-auto_sel as 1, while passive mode still fails to load on a platform that
-cannot disable autonomous selection, exactly as it did before the
-offending commit.
-
-Fixes: 9dfd13f80c85 ("cpufreq/amd-pstate: Toggle auto_sel in active mode on shared memory systems")
+Fixes: dd70edbde262 ("nilfs2: integrate sysfs support into driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: LFRon <ronforever@outlook.com>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Link: https://lore.kernel.org/r/20260918090909.86544-1-guanwentao@uniontech.com
-Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/nilfs2/sysfs.c     |  5 ++++-
+ fs/nilfs2/the_nilfs.c | 34 +++++++++++++++++++++-------------
+ 2 files changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index b1a200531628f..0b06bbd7215ff 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -469,8 +469,10 @@ static int shmem_init_perf(struct amd_cpudata *cpudata)
- 		return 0;
+diff --git a/fs/nilfs2/sysfs.c b/fs/nilfs2/sysfs.c
+index bc52afbfc5c73..5bb74a45ad1ed 100644
+--- a/fs/nilfs2/sysfs.c
++++ b/fs/nilfs2/sysfs.c
+@@ -195,8 +195,10 @@ int nilfs_sysfs_create_snapshot_group(struct nilfs_root *root)
+ 					    "%llu", root->cno);
  	}
  
--	ret = cppc_set_auto_sel(cpudata->cpu,
--			(cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
-+	if ((cppc_state != AMD_PSTATE_PASSIVE) == auto_sel)
-+		return 0;
-+
-+	ret = cppc_set_auto_sel(cpudata->cpu, !auto_sel);
+-	if (err)
++	if (err) {
+ 		kobject_put(&root->snapshot_kobj);
++		wait_for_completion(&root->snapshot_kobj_unregister);
++	}
  
- 	if (ret)
- 		pr_warn("failed to set auto_sel, ret: %d\n", ret);
+ 	return err;
+ }
+@@ -204,6 +206,7 @@ int nilfs_sysfs_create_snapshot_group(struct nilfs_root *root)
+ void nilfs_sysfs_delete_snapshot_group(struct nilfs_root *root)
+ {
+ 	kobject_put(&root->snapshot_kobj);
++	wait_for_completion(&root->snapshot_kobj_unregister);
+ }
+ 
+ /************************************************************************
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index 9911a484398a0..b453229db3af9 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -887,6 +887,26 @@ nilfs_find_or_create_root(struct the_nilfs *nilfs, __u64 cno)
+ 	if (!new)
+ 		return NULL;
+ 
++	new->cno = cno;
++	new->ifile = NULL;
++	new->nilfs = nilfs;
++	refcount_set(&new->count, 1);
++	atomic64_set(&new->inodes_count, 0);
++	atomic64_set(&new->blocks_count, 0);
++
++	/*
++	 * Register the sysfs group before publishing the root in the
++	 * checkpoint tree.  nilfs_sysfs_create_snapshot_group() can sleep,
++	 * so it must run outside ns_cptree_lock; creating it first also
++	 * ensures a concurrent nilfs_lookup_root() can never observe a root
++	 * whose sysfs registration later fails and gets freed.
++	 */
++	err = nilfs_sysfs_create_snapshot_group(new);
++	if (err) {
++		kfree(new);
++		return NULL;
++	}
++
+ 	spin_lock(&nilfs->ns_cptree_lock);
+ 
+ 	p = &nilfs->ns_cptree.rb_node;
+@@ -903,29 +923,17 @@ nilfs_find_or_create_root(struct the_nilfs *nilfs, __u64 cno)
+ 		} else {
+ 			refcount_inc(&root->count);
+ 			spin_unlock(&nilfs->ns_cptree_lock);
++			nilfs_sysfs_delete_snapshot_group(new);
+ 			kfree(new);
+ 			return root;
+ 		}
+ 	}
+ 
+-	new->cno = cno;
+-	new->ifile = NULL;
+-	new->nilfs = nilfs;
+-	refcount_set(&new->count, 1);
+-	atomic64_set(&new->inodes_count, 0);
+-	atomic64_set(&new->blocks_count, 0);
+-
+ 	rb_link_node(&new->rb_node, parent, p);
+ 	rb_insert_color(&new->rb_node, &nilfs->ns_cptree);
+ 
+ 	spin_unlock(&nilfs->ns_cptree_lock);
+ 
+-	err = nilfs_sysfs_create_snapshot_group(new);
+-	if (err) {
+-		kfree(new);
+-		new = NULL;
+-	}
+-
+ 	return new;
+ }
+ 
 -- 
 2.53.0
 
