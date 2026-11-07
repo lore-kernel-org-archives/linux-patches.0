@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1794061364;
-	b=uhKCefdFqnPOaIIwmA/aa5ltUrYFkXZMPoRyOsN3GZ2aS5jUCueSbvP9e6pC9Ry9nCPI
-	 nCR8S9mQtCy9NrRsUEKgXFP7IMyLpY0+03wTVS9DZIwgXx8EvjwxCi7RBhfckdI2OkgBr
-	 6oDbSlQgLV71rXejy5k/iiwVzXJijlzmn0+GdclXo3TBYaita7fnsBz76y55kyw/vvMTS
-	 y/qki/P/tLbPqufXSyWRANZqIeLiJ9rT/mXUciJ7hH7wpM4Nwb14Lk7XRLLmVveNlBGux
-	 mldVsB+e4Dj5s6v0daLwl6CMi11K3Vq0HMilfkmMqdR+6w1ZUVee07wsTjQgCIuNz4Q==
+	b=bcZGf6bb0rvjRNJPAlHTQAUwIVpHr7CQ7w9rmeI5nN0I7/syiK6T1DX5KvDu591VRk2Q
+	 a49m1mpagX3g+U51f2zrLcCuk+EiHxeQp9a0MloenrYBt3iIrjUhH4NAvzthA7O7osFwR
+	 v11KFR5AgnOzV9NiUDbSNPH1DnMSFVVROo6kGU1cM5CF7gRmzG2PtgJCIk7vuhBh1CUND
+	 gPdfa/Xako0yVq/hlBThTqTZRhdkPjw4f4ATnS4nJfFG+WnzGNMfhydts1Ii6l2buX6ck
+	 wFrKIi9rF+seLGka6v5UR6yjC98/ySWUkttnRnp0OrPB7xDKky1vvcVbfkgo7wouhDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794061364;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l0RR+WGdR2C39mrb/yqPIOznQ5kLcs717Z4ljkUrmu0=;
-	b=kazBZ4ab2nF2XlvAgBKVjg65qqOBpfl4+qd/ouGukCSuAtNEeHFVIefk2xG9Si+7KsAG
-	 Qf85QDDgg9SbdQgmsIoEdM9lDDNNlUD+9xxm47ynSGL8nXmBGk4w6XZTpBCl+WPS7XMuy
-	 KFpucXgq+PPPjhYYBMRhQaUWsCDWO1xwO3hNLdeGlnMwmBxi8mfE3SyXFvNGhfJxiD7VY
-	 PHgz9dA/kNq5r47YXCITyVBHk0xyDLwmKyNx9SxkjHZRqMPXDwp2/lLvdVu4k0flklTgG
-	 bA3zD1Tp50YBhyLmNH0RI8fOyb6yOT2Rxa3Ezo73VnIxASe6q6mH19bIADePX+x1Uug==
+	bh=KfqTxVaNM++43fET2xiHBR60Nwcr9NY8CHKihXcMsE8=;
+	b=vxdP6Vf3632GLqEtXtjOnJMHmo7yZRRElNkyGYsjSUFGxISC4nkclvVYVbe27Ta+E7/C
+	 2fYHb0a270Q11t8zzwlPULIYOem58Xpcatd3zACDWFYs5g6tVtTHC1dcUKs25Llot7dfD
+	 iFZ/uX6ea7ziwwL6dnpITKBgmopcexumi22seTBQPT9qEh205GTrWbztcGjwPVxkbR/rw
+	 cxk06cb9rXqt1spAEnHwAxgZD32N8tZmmhmditeGsO9+e90uoq07QZONzCqfW+NDQBmHl
+	 hqHoXmgSh4b2bgXqr+JU7SS0QD6ar7DUpw/BaV7l4TGXFDy/00UfMwt4K0fx23zjwkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6zLtY7m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MkSBjU/9";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EEE606A326;
-	Sat,  7 Nov 2026 14:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A53606A326;
+	Sat,  7 Nov 2026 14:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6zLtY7m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 052181F008A1;
-	Sat,  7 Nov 2026 14:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MkSBjU/9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D021F0089F;
+	Sat,  7 Nov 2026 14:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061363;
-	bh=l0RR+WGdR2C39mrb/yqPIOznQ5kLcs717Z4ljkUrmu0=;
+	s=korg; t=1794061364;
+	bh=KfqTxVaNM++43fET2xiHBR60Nwcr9NY8CHKihXcMsE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u6zLtY7mavSHkPayU581s45USC4mGKr9zJFRuo+d19HaKpXn098YmiafnOH064ufm
-	 4iVaSrsZftYEAPYokLYm+TSezEecXgVJZXmrL/uXZJDpkaODxoL6bR+T2Q9dF+q466
-	 uS403asjBVUQ6AClnMHia3F/PzSpyS3hBQn2Dpz0=
+	b=MkSBjU/9tuBqguZvGOp+ffLP3FVN5yso6i1kkSoWigoFt++2FWpSH7VDTgMuRD8Dh
+	 wnOU4VTt7dpqTp2Se25Jb6E5RK8MMTOEpm68N6mKq81P0PiZoSCvGCwXacg2FanqbJ
+	 ouyRCsN7uQkBHuY1/f6AK0VQnoHdEe+RutWzlmxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.com>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	kernel test robot <yi1.lai@intel.com>,
+	Gary Guo <gary@garyguo.net>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0487/1536] cifs: add cifs_resize_file_locked() to guard fscache_resize_cookie() under i_rwsem
-Date: Sat,  7 Nov 2026 08:41:43 -0500
-Message-ID: <20261107135011.156600899@linuxfoundation.org>
+Subject: [PATCH 6.12 0488/1536] rust: cfi: disable function merging if CFI is enabled
+Date: Sat,  7 Nov 2026 08:41:44 -0500
+Message-ID: <20261107135011.182949173@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,125 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit 32a7af68df7361fe7cf153cf36124d04b94aec00 ]
+[ Upstream commit 29b03d1de967a177176d12811d970cac7882afcf ]
 
-cifs_setsize() calls fscache_resize_cookie() without holding i_rwsem.
-When the fscache cookie is active (FSCACHE_COOKIE_IS_CACHING is set),
-fscache_resize_cookie() performs a real resize that requires i_rwsem
-held exclusively.  If another file descriptor has the same inode open,
-fscache_use_cookie() was already called from that cifs_open(), making
-the cookie active.  In that case, calling cifs_setsize() from
-cifs_do_truncate() (invoked from cifs_open() without i_rwsem) races
-against concurrent fscache I/O.
+In Rust doc tests, there is a dummy `__module_firmware_test_init` function
+generated by the example in `module_firmware!`'s documentation, which
+just returns zero. Many other documentation examples generate functions
+that produce zero. LKP test robot reports [1] a `Flags::zeroed` instance;
+my local reproduction has a `Bounded::new::<0>`.
 
-Strip fscache_resize_cookie() from cifs_setsize(), making it a pure
-size/page-cache helper.  Add cifs_resize_file_locked() for callers
-that already hold i_rwsem: it calls netfs_resize_file() and
-cifs_setsize(), then temporarily activates the cookie with
-fscache_use_cookie() to perform the resize under the lock, then
-deactivates it with cifs_fscache_unuse_inode_cookie().  Using
-fscache_use_cookie() before the resize ensures correctness whether or
-not another fd already holds the cookie active.
+LLVM's MergeFunctionsPass incorrectly merges functions with different
+KCFI types, causing `__module_firmware_test_init` to be merged into
+one of the zero-returning functions. As module init is invoked via an
+indirect function call, KCFI is checked and this produces a KCFI failure.
 
-Switch cifs_file_set_size(), smb2_duplicate_extents(), and both size-
-extension branches of smb3_simple_falloc() to the new wrapper; those
-paths already hold i_rwsem via VFS setattr, lock_two_nondirectories(),
-or cifs_fallocate() respectively.  cifs_do_truncate() continues to
-call cifs_setsize() followed by cifs_invalidate_cache(), since it runs
-without i_rwsem.
+I've reported this bug to upstream LLVM [2]; in the meantime, disable
+function merging if CFI is enabled. No separate treatment is needed for
+CONFIG_RUST_INLINE_HELPERS, as Clang does not enable function merging
+by default.
 
-Fixes: fa724e235cfd ("cifs: add fscache_resize_cookie() to cifs_setsize()")
+[ LLVM already has a pending PR:
+
+    https://github.com/llvm/llvm-project/pull/217665
+
+  which solves the issue. In addition, I asked upstream Rust if the
+  unstable `-Zmerge-functions=disabled` flag will remain around:
+
+    https://rust-lang.zulipchat.com/#narrow/channel/425075-rust-for-linux/topic/.60-Zmerge-functions.3Ddisabled.60/
+
+  and it does indeed look like that will be the case. - Miguel ]
+
+Reported-by: kernel test robot <yi1.lai@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202608201017.100a4511-lkp@intel.com [1]
+Link: https://github.com/llvm/llvm-project/issues/217629 [2]
+Signed-off-by: Gary Guo <gary@garyguo.net>
 Cc: stable@vger.kernel.org
-Cc: David Howells <dhowells@redhat.com>
-Cc: Paulo Alcantara <pc@manguebit.com>
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Dropped the "small range beyond EOF" hunk and the second falloc extension branch, which this tree lacks, and kept local i_blocks and cifs_truncate_page code and the older cifs_set_file_size naming. ]
+Fixes: ca627e636551 ("rust: cfi: add support for CFI_CLANG with Rust")
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Link: https://patch.msgid.link/20260820135733.37121-1-gary@kernel.org
+[ Fixed typos as discussed. Reworded slightly for other typos. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.h  |  1 +
- fs/smb/client/inode.c   | 21 ++++++++++++++++++---
- fs/smb/client/smb2ops.c |  6 ++----
- 3 files changed, 21 insertions(+), 7 deletions(-)
+ Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/cifsfs.h b/fs/smb/client/cifsfs.h
-index 71b720dbb2ce3..7eee688ca30b6 100644
---- a/fs/smb/client/cifsfs.h
-+++ b/fs/smb/client/cifsfs.h
-@@ -135,6 +135,7 @@ extern ssize_t cifs_file_copychunk_range(unsigned int xid,
- 
- extern long cifs_ioctl(struct file *filep, unsigned int cmd, unsigned long arg);
- extern void cifs_setsize(struct inode *inode, loff_t offset);
-+extern void cifs_resize_file_locked(struct inode *inode, loff_t offset);
- extern int cifs_truncate_page(struct address_space *mapping, loff_t from);
- 
- struct smb3_fs_context;
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index 05f525621e0f6..4954d42ae8248 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -2977,7 +2977,23 @@ void cifs_setsize(struct inode *inode, loff_t offset)
- 		pagecache_isize_extended(inode, old_size, offset);
- 	truncate_pagecache(inode, offset);
- 	netfs_wait_for_outstanding_io(inode);
--	fscache_resize_cookie(cifs_inode_cookie(inode), offset);
-+}
-+
-+void cifs_resize_file_locked(struct inode *inode, loff_t offset)
-+{
-+	struct fscache_cookie *cookie = cifs_inode_cookie(inode);
-+
-+	lockdep_assert_held_write(&inode->i_rwsem);
-+
-+	netfs_resize_file(netfs_inode(inode), offset, true);
-+	cifs_setsize(inode, offset);
-+
-+	if (!cookie)
-+		return;
-+
-+	fscache_use_cookie(cookie, true);
-+	fscache_resize_cookie(cookie, offset);
-+	cifs_fscache_unuse_inode_cookie(inode, true);
- }
- 
- static int
-@@ -3043,8 +3059,7 @@ cifs_set_file_size(struct inode *inode, struct iattr *attrs,
- 
- set_size_out:
- 	if (rc == 0) {
--		netfs_resize_file(&cifsInode->netfs, attrs->ia_size, true);
--		cifs_setsize(inode, attrs->ia_size);
-+		cifs_resize_file_locked(inode, attrs->ia_size);
- 		/*
- 		 * i_blocks is not related to (i_size / i_blksize), but instead
- 		 * 512 byte (2**9) size is required for calculating num blocks.
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 7cd2e88a86b72..1f6618cb64b94 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -2304,8 +2304,7 @@ smb2_duplicate_extents(const unsigned int xid,
- 		 * size will be queried on next revalidate, but it is important
- 		 * to make sure that file's cached size is updated immediately
- 		 */
--		netfs_resize_file(netfs_inode(inode), dest_off + len, true);
--		cifs_setsize(inode, dest_off + len);
-+		cifs_resize_file_locked(inode, dest_off + len);
- 	}
- 	rc = SMB2_ioctl(xid, tcon, trgtfile->fid.persistent_fid,
- 			trgtfile->fid.volatile_fid,
-@@ -3832,8 +3831,7 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
- 		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
- 				  cfile->fid.volatile_fid, cfile->pid, new_eof);
- 		if (rc == 0) {
--			netfs_resize_file(&cifsi->netfs, new_eof, true);
--			cifs_setsize(inode, new_eof);
-+			cifs_resize_file_locked(inode, new_eof);
- 			cifs_truncate_page(inode->i_mapping, inode->i_size);
- 			truncate_setsize(inode, new_eof);
- 		}
+diff --git a/Makefile b/Makefile
+index 82dfb3e137ea9..2c0181b4b7871 100644
+--- a/Makefile
++++ b/Makefile
+@@ -971,7 +971,8 @@ endif
+ ifdef CONFIG_RUST
+ 	# Always pass -Zsanitizer-cfi-normalize-integers as CONFIG_RUST selects
+ 	# CONFIG_CFI_ICALL_NORMALIZE_INTEGERS.
+-	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers
++	# Disable function merging as LLVM incorrectly merges functions with different KCFI types.
++	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers -Zmerge-functions=disabled
+ 	KBUILD_RUSTFLAGS += $(RUSTC_FLAGS_CFI)
+ 	export RUSTC_FLAGS_CFI
+ endif
 -- 
 2.53.0
 
