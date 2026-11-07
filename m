@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062381;
-	b=Ocv5cdm3ERcli+fW0++Ft+qQ68afEgvcoLgv2XT/M8vqmXUAESBjAQ5pvX4A2CeHCXAU
-	 vvVHT2mSYYBlGMYYV93g6qvdyiVBeA7hsj1pNVfsWNG1fsUMwky5dE5MUK3n1hwRqdHn4
-	 Qw8KwvV5ApHW+vEqAoYWc3tkXbyWTHc86OKEEfCoUpGAZubmm0Re9Yk+10BEMO1j9iMEb
-	 uAjTytljVbX2Ao5Ej4Mx3wXWOkJnMSsrKoF6DJ/0pExiae9K9VQ9jxAPwrOaIdfd/L56P
-	 qQGmMF2Bc4MA8+jTLlFuip1+UO8e5fue5F7TLpYKhCx5+jL67fYM2vJkMq0NeAPZg9w==
+	t=1794062383;
+	b=Hya0J1NuxSV+OWmj44SnS0yFEWIN8quuDr+6HkO6JtxOw0GsgWl4QCC5cGUMGWtaus32
+	 Ce6TAV+Z/iu8AAgCj8VE2PQgrT9ngCu1V3dkatffPLafCXRGruy9lM6a1pz6eF3dTJ6gz
+	 jkgldcKvkLcRlf3pf0Et0nBFtGrgRzHy8x53F+trPyRhkovmJALqUIsrSXkl/7pNHZySX
+	 ynpA5kieVHtk0Ple2y+C4X9n5paw/u6ZcxBh8e4aLMKaww0gwDOLT7X40WO3BoqatW3JT
+	 CLwf9FBMKM0ZT2zUWxVWdqsPrZ1KfxFz1OO0jxM9kro3LfVMv5QIJOtMOjZsz0S44Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ffvr04j943fuAIEz9j4kMzFsGKxn3gS27RNb2QKdgaI=;
-	b=u/9pIWZJuNsaWRnaM1+q2GUnO3hnU7dAXat0SfGWQ+c0GSsOdFaWQAGAPvCqp4+y+TVr
-	 FmMsMQ0fsoyBxt4eKSlXXpBz1znASevcOVA/Ae/reXtFp28XMIxvKHrrzq92ExBZ7k47m
-	 kUA5C7Rw0YdlojFyjHHkiu5yJ5LTv7lInI9ZE0qu2GLNWPnYd6qBxHiXVYODUZq3sld8C
-	 SnhlP3v0OfBeeyJxq+zS3W/rGOzTBIa8DGGylyiY8uKIToXAnHWixrRoiu1vK1y65BnVQ
-	 GEgnRIntQLBRvaSls85U3VUIN2SX0uOBpTEyVltSNrgMGj6D1zKJSTqEpyRkhGKDi0w==
+	bh=CHo4FBwessL5tN4NdqlpwVoPlKenNTjXhjfGevQsK/I=;
+	b=kFE/40P8P4R7MJEoZwEi+LFPus5EyQvvMHCCgSFNny8Jnh1xlOUR6B330KNfoH9H2LtK
+	 dmEdr88xwLFnIUKsYP/YBOoao0eTWdx9kM45msqUUFG6jS57N+Ahd8Oq7NQN9un5zBm/o
+	 bbH5fUmh0hMDv/Q7iXrkpTVsv0MJQRZ1VxriOojrejf3JQA0Lof9TxICdK6xBPbK5ztYa
+	 ix6orRglW6gO9BdNmrcdqRp1SC/sgPRzu8glihekSAcFZkU3wL9btdsQzecFo+I9e0nkt
+	 AAukGnE4zpeEHSoNAj88f/9Pa2GIImO2bbcUGYGxwTtzNay4D3VivDkv97ugz5H1JVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0dqXfmF2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6tilBYj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C1E6083603;
-	Sat,  7 Nov 2026 14:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FFD6083612;
+	Sat,  7 Nov 2026 14:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0dqXfmF2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B75C1F0089F;
-	Sat,  7 Nov 2026 14:39:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c6tilBYj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581CD1F0089F;
+	Sat,  7 Nov 2026 14:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062381;
-	bh=ffvr04j943fuAIEz9j4kMzFsGKxn3gS27RNb2QKdgaI=;
+	s=korg; t=1794062382;
+	bh=CHo4FBwessL5tN4NdqlpwVoPlKenNTjXhjfGevQsK/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0dqXfmF2NQD/vGpiyoCsT+iJ54mByCLI/0+dqPb2dQ4b7FfKjSl3dFxTM965iwtNl
-	 cY1C9OLmLT7FaB/lCunhAdZN5N8EF6i54zeYnkotBH2j80DgYbeHHJK9VtZHyySI41
-	 amoqCX3tCIyMWE8eL0s4ejhrWyvdRnvvSQC0DWDs=
+	b=c6tilBYjc9T/hsxN9v+WJgsx2/Qk4gj/Ef7BbRB4lxzyLlDfQskpgJZ17+TGt7c3u
+	 UFfpi3TJC+RSfdjewC6bBhweWPukScr4U+XWLR5haHt2AjBuSVpDGm0suGsv70Fdb+
+	 uS+MN217PIINrqfbRT69tOaL/DSUI3WCPtGf0Fbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1303/1536] PCI: xilinx-xdma: Fix device node reference leak in xilinx_pl_dma_pcie_init_irq_domain()
-Date: Sat,  7 Nov 2026 08:55:19 -0500
-Message-ID: <20261107135034.388732376@linuxfoundation.org>
+Subject: [PATCH 6.12 1304/1536] iommufd: Reject a zero-length dirty bitmap request
+Date: Sat,  7 Nov 2026 08:55:20 -0500
+Message-ID: <20261107135034.416026824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,71 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 73d3d81832708137ba6332fc011663feaf97deee ]
+[ Upstream commit f6b3fd8f573e801066c21b2aec3d2e949e61e48e ]
 
-xilinx_pl_dma_pcie_init_irq_domain() takes a reference to the PCIe
-interrupt-controller child node with of_get_child_by_name(), but the
-error paths after the two irq_domain_create_linear() calls and after
-xilinx_pl_dma_pcie_init_msi_irq_domain() return directly without
-dropping it.  irq_domain_create_linear() gets its own reference on the
-fwnode, so the domains do not consume the caller's one.
+iommufd_check_iova_range() subtracts one from bitmap->length before it
+checks the length, so a zero-length request wraps to SIZE_MAX.  With
+iova = 0 the wrapped value passes the overflow and alignment checks, and
+the request reaches iova_bitmap_alloc() with length 0.
 
-Add an err_put_node label that drops the reference before returning.
+iova_bitmap_alloc() then sizes the bitmap from a length - 1 of SIZE_MAX,
+so mapped_total_index is effectively unbounded.  The scan uses
+last_iova = ULONG_MAX, which spans the whole IOAS when an area is mapped
+at IOVA 0.  Reject a zero length before the subtraction.
 
-Fixes: 8d786149d78c ("PCI: xilinx-xdma: Add Xilinx XDMA Root Port driver")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: b9a60d6f850e ("iommufd: Add IOMMU_HWPT_GET_DIRTY_BITMAP")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260917132459.2153240-1-vulab@iscas.ac.cn
+Assisted-by: LLM
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20260925161142.189813-4-parri.andrea@gmail.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-xilinx-dma-pl.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/iommu/iommufd/io_pagetable.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/controller/pcie-xilinx-dma-pl.c b/drivers/pci/controller/pcie-xilinx-dma-pl.c
-index 116c6e0e71457..d71b6dba75cc8 100644
---- a/drivers/pci/controller/pcie-xilinx-dma-pl.c
-+++ b/drivers/pci/controller/pcie-xilinx-dma-pl.c
-@@ -588,7 +588,7 @@ static int xilinx_pl_dma_pcie_init_irq_domain(struct pl_dma_pcie *port)
- 	port->pldma_domain = irq_domain_add_linear(pcie_intc_node, 32,
- 						   &event_domain_ops, port);
- 	if (!port->pldma_domain)
--		return -ENOMEM;
-+		goto err_put_node;
+diff --git a/drivers/iommu/iommufd/io_pagetable.c b/drivers/iommu/iommufd/io_pagetable.c
+index 83b953f3b327b..177e8e12f189f 100644
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -521,6 +521,9 @@ int iommufd_check_iova_range(struct io_pagetable *iopt,
+ 	size_t iommu_pgsize = iopt->iova_alignment;
+ 	u64 last_iova;
  
- 	irq_domain_update_bus_token(port->pldma_domain, DOMAIN_BUS_NEXUS);
- 
-@@ -596,7 +596,7 @@ static int xilinx_pl_dma_pcie_init_irq_domain(struct pl_dma_pcie *port)
- 						  &intx_domain_ops, port);
- 	if (!port->intx_domain) {
- 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
--		return -ENOMEM;
-+		goto err_put_node;
- 	}
- 
- 	irq_domain_update_bus_token(port->intx_domain, DOMAIN_BUS_WIRED);
-@@ -604,13 +604,17 @@ static int xilinx_pl_dma_pcie_init_irq_domain(struct pl_dma_pcie *port)
- 	ret = xilinx_pl_dma_pcie_init_msi_irq_domain(port);
- 	if (ret != 0) {
- 		irq_domain_remove(port->intx_domain);
--		return -ENOMEM;
-+		goto err_put_node;
- 	}
- 
- 	of_node_put(pcie_intc_node);
- 	raw_spin_lock_init(&port->lock);
- 
- 	return 0;
++	if (!bitmap->length)
++		return -EINVAL;
 +
-+err_put_node:
-+	of_node_put(pcie_intc_node);
-+	return -ENOMEM;
- }
+ 	if (check_add_overflow(bitmap->iova, bitmap->length - 1, &last_iova))
+ 		return -EOVERFLOW;
  
- static int xilinx_pl_dma_pcie_setup_irq(struct pl_dma_pcie *port)
 -- 
 2.53.0
 
