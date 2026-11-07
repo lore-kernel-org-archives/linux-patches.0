@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064005;
-	b=J22nALUinTCzsqVNXdvDBR+BCnWbAdR25MSU3CFtxZOEG8bHu5KLj5NJMQ5e5Ce/AlTw
-	 VHQFjhhwcx/rTRIckAZWdvUyP0PCyv819o0yohA03QUw4MipZ3jXY/e/bD5DRgv3tDDEu
-	 HQSJni3sNxNjNjhuf8cQMarhNpjrjtsWUMLIjKEHs6U2igvapnNuEK1+F7JNxaRQDDVqU
-	 xwabEhiqFqyzcFvWfkeuFpmNLcTKOfk4oBdQ4STXvOU58l0acGK331LmCHceK+oo2vTaC
-	 GrMeyq1FO1CYUXasUFZ9B78AoLrElrKvmD4NRaBzeyjycQtr4b0b0QQzRRy10MB5FLA==
+	t=1794064006;
+	b=OwZACVZXCoT5xp+OcsRlCCpMxI1hhSJ4NNqRr4cXZxgeXDYMTrMQEKTT+y4ztYtw5RWy
+	 6RBkf+YzuM8yeoKuqG9TOTg/Oh/MrBYRa9HPBT5AunbiICzBKRBkLNzeZPVLyvCeh5wR7
+	 1sHtN+ZnmWPUlLoU/HaouM41iXWnxFC+7La22NSS08ocxVkx1mKbn82mCcJ2bQCXHeTMW
+	 FEWdWvKJ+EfBz7R1e0eYa2ENXI0M3BnxBnLxw+NFibDKqN5CZs3CyAoFvqWginfxQWYJ9
+	 3qvXFzXCAaLjEUOG/pcDh0yytcoamzsnUKhr/CxkuF6Ve0vvmlB1jskKwziqwFNcQ+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064005;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aQZIrB1EKZ5mpytTDQsm+qb46VzodYB54PX81lLRis0=;
-	b=HG9AvdJcJ5GQ47MJsJU+iHiYrXWpIjp8xO9kpN6TWIFdWrq4qjLwVbNY86wwe7SnuqS7
-	 hEKKkhAZ4XqPHc5wnO5s5oAQj4AZXrCJPlLy1Gr9pvdEeA7EJ8f5zdtjqdYr/t5ft2g3f
-	 5+WB1NtEfvQAF+cnLLD6H/mCpDYIEkxVGjqAwDgpSn01+8PYCQov2HtFiA6PkMmA3qY29
-	 i+lxsYHHaFw2BsaQrsRmEotoow4jmiYJOIHfMaZTXRVRroz2X4Y+TUt3VOfbPNqcPEPkx
-	 98h768iVNpLjUoMmi8G3wv17EwscOIMxWfpplKId6btiUDzRNJP5p6+WIplKdeWG09g==
+	bh=BMO5SnnIB79fX7kDkgtYKaJug7hYuLCdFVDw/iCk9HE=;
+	b=Szz+13ntA9lCSBCctaE791n9SxIwwaN4ZOlDIM/QrGhf2yLE5c4A1AOb6U6ghwSBFD4L
+	 etEfMjyMv4E3bVYslIWIxSG1IJ7NsrbdMjNpTr3Eh9j1YotQEMjNzB1qi4EwVp7j1uTqh
+	 oP027FTNqjE9a4pKknqnyw7aL7/r/QJwQMmZfrMy14RBvHn4EVxoU42C5lJLZ/reyd7Qn
+	 9f4EmZhYbwHwPRznuk+IoDezZDNxI3LA+WElU0+xMQ7dO2+0i64tdCT+Kwes7EdDONTCy
+	 j/4vcuerMoSno3FdFshIKa/VTcm7+j4X8MW8fNFaoeVHxij8mQ2Z4+ZLxLYV8mO+s5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kri8Kppp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SPC9kaWU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40B5606EE9E;
-	Sat,  7 Nov 2026 15:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC116606D822;
+	Sat,  7 Nov 2026 15:06:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kri8Kppp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 582C21F008BC;
-	Sat,  7 Nov 2026 15:06:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SPC9kaWU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882931F008AB;
+	Sat,  7 Nov 2026 15:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064004;
-	bh=aQZIrB1EKZ5mpytTDQsm+qb46VzodYB54PX81lLRis0=;
+	s=korg; t=1794064005;
+	bh=BMO5SnnIB79fX7kDkgtYKaJug7hYuLCdFVDw/iCk9HE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kri8Kpppy7T423kmlbtXjIkQSWAMC9seA5P+F1mRLuN39U0Xg95VzNnyu6+RuXdyU
-	 4d+YeUV9/g/FDwLu7VcShiL2xRYFFzQy84T2J0vYrUo7rm9uW5gIY8acOT38/gKtxI
-	 wRTwJSDCjo9RMzGccmhb3rNbjHwoRB1W2xwHG6nY=
+	b=SPC9kaWU9IU9LCutBzwKkMY34iqESPgFeSPufqpTHO42Q56zlRf4RuXSmYFjFM83T
+	 29HEEjVuN2EV8JW8gpiykdUfaLQowPvneeWAVGhFdAU6J6Z72ZcrJISmycF99+aiRr
+	 HTd2FPaDKpS/NxlMRusfv1HSISbOyruPCuBsoiio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0185/1257] iio: adc: at91-sama5d2: disable autosuspend on remove
-Date: Sat,  7 Nov 2026 08:41:21 -0500
-Message-ID: <20261107134944.565771321@linuxfoundation.org>
+Subject: [PATCH 7.3 0168/1257] ata: ahci_st: Do not ignore errors when getting the reset controls
+Date: Sat,  7 Nov 2026 08:41:04 -0500
+Message-ID: <20261107134943.980809194@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,48 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 022996906e70c6bc9a7968ee663ebbe314fe1524 ]
+[ Upstream commit c74ee9230a8d1d2f6fcbceff55f56f7dd9b9cccd ]
 
-at91_adc_probe() enables runtime PM autosuspend with
-pm_runtime_use_autosuspend(). The probe error path correctly undoes
-this setting with pm_runtime_dont_use_autosuspend(), but the normal
-remove path only disables runtime PM.
+st_ahci_probe_resets() treats any error from devm_reset_control_get() as
+"reset control not defined" and continues with a NULL reset control:
 
-The runtime PM API requires pm_runtime_use_autosuspend() to be undone
-with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
-was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
-set therefore leaves the runtime PM state incompletely cleaned up after
-the driver is unbound.
+	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
+	if (IS_ERR(drv_data->pwr)) {
+		dev_info(dev, "power reset control not defined\n");
+		drv_data->pwr = NULL;
+	}
 
-Add the missing pm_runtime_dont_use_autosuspend() call to the remove
-path.
+This also swallows -EPROBE_DEFER, which is returned when the reset
+controller providing the reset has not been probed yet. probe() then
+continues as if the device tree did not specify any reset, so the resets
+of the SATA IP are never deasserted, and st_ahci_configure_oob() and
+ahci_platform_init_host() access the MMIO of an IP which is still held in
+reset and powered down, which can result in an external abort.
 
-This issue was found by manual code inspection.
+The resets are optional in the binding, as they are not part of its
+required properties, so use devm_reset_control_get_optional(), which
+returns NULL if the reset is not specified in the device tree, and
+propagate all other errors.
 
-Fixes: 75d7556ac0e4 ("iio: adc: at91-sama5d2_adc: add runtime pm support")
+Note that an absent reset is now indicated by a NULL reset control
+instead of an error, so the "reset control not defined" messages are
+dropped.
+
+Fixes: 76884cb2f7da ("ahci: st: Add support for ST's SATA IP")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260915084127.692494-9-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/at91-sama5d2_adc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ata/ahci_st.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/iio/adc/at91-sama5d2_adc.c b/drivers/iio/adc/at91-sama5d2_adc.c
-index e8a5285bb6d4f..e68632e628c71 100644
---- a/drivers/iio/adc/at91-sama5d2_adc.c
-+++ b/drivers/iio/adc/at91-sama5d2_adc.c
-@@ -2487,6 +2487,7 @@ static void at91_adc_remove(struct platform_device *pdev)
+diff --git a/drivers/ata/ahci_st.c b/drivers/ata/ahci_st.c
+index 4336c8a6e2087..819269a022efd 100644
+--- a/drivers/ata/ahci_st.c
++++ b/drivers/ata/ahci_st.c
+@@ -104,23 +104,20 @@ static int st_ahci_probe_resets(struct ahci_host_priv *hpriv,
+ {
+ 	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
  
- 	pm_runtime_disable(st->dev);
- 	pm_runtime_set_suspended(st->dev);
-+	pm_runtime_dont_use_autosuspend(st->dev);
- 	clk_disable_unprepare(st->per_clk);
+-	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
+-	if (IS_ERR(drv_data->pwr)) {
+-		dev_info(dev, "power reset control not defined\n");
+-		drv_data->pwr = NULL;
+-	}
+-
+-	drv_data->sw_rst = devm_reset_control_get(dev, "sw-rst");
+-	if (IS_ERR(drv_data->sw_rst)) {
+-		dev_info(dev, "soft reset control not defined\n");
+-		drv_data->sw_rst = NULL;
+-	}
+-
+-	drv_data->pwr_rst = devm_reset_control_get(dev, "pwr-rst");
+-	if (IS_ERR(drv_data->pwr_rst)) {
+-		dev_dbg(dev, "power soft reset control not defined\n");
+-		drv_data->pwr_rst = NULL;
+-	}
++	drv_data->pwr = devm_reset_control_get_optional(dev, "pwr-dwn");
++	if (IS_ERR(drv_data->pwr))
++		return dev_err_probe(dev, PTR_ERR(drv_data->pwr),
++				     "failed to get pwr-dwn reset\n");
++
++	drv_data->sw_rst = devm_reset_control_get_optional(dev, "sw-rst");
++	if (IS_ERR(drv_data->sw_rst))
++		return dev_err_probe(dev, PTR_ERR(drv_data->sw_rst),
++				     "failed to get sw-rst reset\n");
++
++	drv_data->pwr_rst = devm_reset_control_get_optional(dev, "pwr-rst");
++	if (IS_ERR(drv_data->pwr_rst))
++		return dev_err_probe(dev, PTR_ERR(drv_data->pwr_rst),
++				     "failed to get pwr-rst reset\n");
  
- 	regulator_disable(st->vref);
+ 	return st_ahci_deassert_resets(hpriv, dev);
+ }
 -- 
 2.53.0
 
