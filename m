@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064061;
-	b=qkQJyFi7EPtZYmm9Zfokm8HyxsOwc5KW8/tx/8qoMGXleDxFMdDQHpd/bPiGRHEAsD1O
-	 GCvfh9PRZ06Ih8CsnawH/SAX2g6v5yTNIwm6WTdfLsoun5B9BbpTAR0vlpOp5zAI+5Owe
-	 zjMxXZ0k/keiLG1JcuQnFZOAepzs1qCDUgZii9aRttvNv1CVOe72453BzdrzsJxpPPdqH
-	 If3gcLeb/HW8Sa7EqJ07wTa6H6GyZL78GxmeXvU4eoL+Trsawo5R9nrN1efR8wcrPiokM
-	 BfrTjpE4Ie11fiwI/FprgbouhJvXbrBHkmwhr59Ld6hmcQnKBv2mSolgxlAEZtmi2RA==
+	t=1794064062;
+	b=jnIfqxnrLUVoUEERPzdh17LDzH4CAEcIyXhCMvfs1o2n1ZERtQ2RYG41elCySVdX66z5
+	 SoILoGDHs/Es3ui4Smp0JRq/V5F+/8s5255nNmX30vQ0LWfPIn0pY6/crW8AhEEGaF2Z/
+	 uowTFgD+oUQ6OPdwNVqz9On54G2uSP5dikKOlyDx/QAOeGkf2rALlJ57cL7CGPY1f5ETZ
+	 CQtFUncwzC6vIeciHQCpYmXFVSBFTSGfKmbnkbgsOsKAWhV0CF6VvAd1F24bhZuFufwNT
+	 d2ZFKbAIhDzYPHfSklmXB+Cg7FtVAhxMJMk2KzYN9HkJhMelcjY6QmxgF+hFKDC7M7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064061;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064062;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XljQnURcD0FRreBkv4MeC1EfoxFt3V8BtCrZ2kknTpc=;
-	b=C/4TM2kJTT+KKeloWD5TvaRn6IOnIaFntcMQlbX6NP7oHDFGoiOoIpkQUQNHJz5M27XF
-	 mQ2nnUbjBwlYSUamFum5GIs3gGx0iICC4UPJeVNDJs/OyTuCMoqWrM6AGGV+ZR17/l6aQ
-	 s6zJ68GfdP6Vo1IhT80O46BMdKC7dl4H1a9iOWcQWj9JI3oLhW6bTTCF0Z0+wCejfVQ+Q
-	 VRdnAJxz3Ked6ZomULgGS8zJNh3ekH/+R/TMZoWq2Rqk4yt3AEkEXute1W1O8zE4QjfZ8
-	 k+qJqBb89pXSa5G/fd5TCaqej2QXrufGMsm0ppgOhPt1/aaZA4jNc2lmhNzF+Hrx7Ug==
+	bh=h4K24IZCc/vP3oFxo8J0yTOobaazje2j+KZra5zfzSg=;
+	b=WCzU316NNFfnBFRwcTaT9tJ11/ZgLkU5Syay1g0cgRH+WiM/Cs65TDnrv18TyhYOpe94
+	 tWeBlIHB9/vePqbZUNN+xbkrSRYO7Kk8+INcbYfSlJvBR2CPgE+uDKgKC9QmiT6xWwFRu
+	 bJ86S911jiD45Xd/PQtlSPoVTxdJkSiodLTiXHnEU4SD30A0S6GJb+uSqidIY92mnfoRd
+	 9AePAXNVw7RBycEVMReR91dRZWqcBgVZqVzvrLI3myXIqsOV63AZVvVZDopb5BjB3JKA7
+	 z2yqkrhVGGupFhkrdbTnumWVc3FSXODkRZqRNQwVugzUYKS8uggCTfsITJyD4dQDd0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cbHPezq3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWARoEKp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641D4606A9EC;
-	Sat,  7 Nov 2026 15:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B968606A9C2;
+	Sat,  7 Nov 2026 15:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cbHPezq3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1059F1F008A1;
-	Sat,  7 Nov 2026 15:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWARoEKp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473741F008A1;
+	Sat,  7 Nov 2026 15:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064061;
-	bh=XljQnURcD0FRreBkv4MeC1EfoxFt3V8BtCrZ2kknTpc=;
+	s=korg; t=1794064062;
+	bh=h4K24IZCc/vP3oFxo8J0yTOobaazje2j+KZra5zfzSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cbHPezq3RDA4cMM5ih0FsTbH8SWILqTHdIcQwYpKW0c64yw5tdp+Pc3Lnuc/5Y6S+
-	 m8S04Og4R3UNlc1vHWR1JGWN/uKiJOTuvjYFY/ULjvyehb+M2sugGXRG5k3EzwxhP5
-	 iVwErK/o/0Wu2cFvj3uuQjCV8dP3H2XRthxGNEX8=
+	b=iWARoEKpSvtJff3v7+VnoCg32qcUSKr/zUBdV9LA2auugqtdWIdXS3ulfGicQUCKh
+	 lsKrzXb6aZEmrOw2ezYlbG/+z0241j9MHP3k7w4VmAxu1bvtxvmnSOAWj1so77ZtAt
+	 oCtftTx4RfeNvf5444dVo6Jl1rETHpFQCT7ctfBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Judith Mendez <jm@ti.com>,
 	Moteen Shah <m-shah@ti.com>,
-	Udit Kumar <u-kumar1@ti.com>,
 	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0231/1257] arm64: dts: ti: k3-am62a: Fix MMC0_CLK register address
-Date: Sat,  7 Nov 2026 08:42:07 -0500
-Message-ID: <20261107134945.905722669@linuxfoundation.org>
+Subject: [PATCH 7.3 0232/1257] arm64: dts: ti: k3-am62a7-sk: Set eMMC clock pin as OUTPUT
+Date: Sat,  7 Nov 2026 08:42:08 -0500
+Message-ID: <20261107134945.931401281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -72,37 +71,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Judith Mendez <jm@ti.com>
 
-[ Upstream commit 9852f2badc438de82b6828c11c80ef0a656f1d4d ]
+[ Upstream commit aa7d5b1efa75e58c9d440dfd720205045fe6a806 ]
 
-MMC0_CLKLB and MMC0_CLK have incorrectly swapped register addresses
-as per datasheet [0]. Set the correct MMC0_CLK address and drop the
-unneeded MMC0_CLKLB pin configuration.
+MMC clock pins must be configured as OUTPUT-only per TRM [0] with
+receiver disabled (RXACTIVE bit = 0). Change MMC CLK pins from
+PIN_INPUT to PIN_OUTPUT to match documentation.
 
-[0] https://www.ti.com/lit/gpn/am62a7 Rev. E: Table 5-1. Pin Attributes
+[0] https://www.ti.com/lit/pdf/spruj16 Rev. C: Table 12-257. MMCSDi I/O Signals
 
 Fixes: e041ec6e86e7 ("arm64: dts: ti: k3-am62a7-sk: Enable eMMC support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Judith Mendez <jm@ti.com>
 Reviewed-by: Moteen Shah <m-shah@ti.com>
-Acked-by: Udit Kumar <u-kumar1@ti.com>
-Link: https://patch.msgid.link/20260909214743.899477-2-jm@ti.com
+Link: https://patch.msgid.link/20260909214743.899477-4-jm@ti.com
 Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62a7-sk.dts | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62a7-sk.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-index d3b3675e7a8fc..b04636cab71c7 100644
+index b04636cab71c7..f6778f9798d40 100644
 --- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
 +++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-@@ -328,8 +328,7 @@ AM62AX_IOPAD(0x0b4, PIN_INPUT_PULLUP, 1) /* (K24) GPMC0_CSn3.I2C2_SDA */
+@@ -328,7 +328,7 @@ AM62AX_IOPAD(0x0b4, PIN_INPUT_PULLUP, 1) /* (K24) GPMC0_CSn3.I2C2_SDA */
  	main_mmc0_pins_default: main-mmc0-default-pins {
  		pinctrl-single,pins = <
  			AM62AX_IOPAD(0x220, PIN_INPUT, 0) /* (Y3) MMC0_CMD */
--			AM62AX_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLKLB */
--			AM62AX_IOPAD(0x21c, PIN_INPUT, 0) /* (AB1) MMC0_CLK */
-+			AM62AX_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLK */
+-			AM62AX_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLK */
++			AM62AX_IOPAD(0x218, PIN_OUTPUT, 0) /* (AB1) MMC0_CLK */
  			AM62AX_IOPAD(0x214, PIN_INPUT, 0) /* (AA2) MMC0_DAT0 */
  			AM62AX_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
  			AM62AX_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
