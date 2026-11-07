@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062837;
-	b=2CiKGtK8BQl+H1oDLZ8RcDnZPZZWGth2bYp57omuBZgWyQEwRLFP6hD+ikrCXoIhigJH
-	 VzUCPoGlRFB0IheKdy57aYdTftOe3mqXi5gO7VTwWUciASaFAiMfr1oKTjDs6uhhVauLn
-	 pG/Vdm+FG2bWe3yi7Mq71AowDtSOuGcL8AYBjdN8NacVC5Ad05wgcrmI2XWbaJX6wT3hI
-	 lSo5+IDMiVPvWh6OciTfUFI6huV8enQ2UDgk4IG3SBdZc8WY5l8Z9AxT22MYhR5fGMj/2
-	 JEzOssZnUISrnwvpaiBL5X3S1fMLos2BDeY4Lg8qnQc1oqGd+G+BnKRjnZ9Ht762Omw==
+	t=1794062838;
+	b=G5j2qxP8jgYDLEqc83XGXzfHVsGRvAoeKechteSK/2cct/RuIUT+QMSxbF50+iJfm0gs
+	 ZfwlWx03aYj0gOz626ZX4aGRQGWqaPxmjZwkpsu4P0hCqQNn5Mq4/9VWSDCMnS5nCsQuv
+	 Ut4mifEtvM/9OcNH8ZsUiisq/fiGyqw4km3HhJr+LfLik8n3aJnlNO4xQ9heVnr+MsRno
+	 qEnKxw4884yCVgJPrWWlylrYkBi47SqxHmReTjN/K8t1JfV4HXChDt9/o0u97bSp5VY3X
+	 UFg/BEQV5AyEJfRKA3Jax7lLTh6Zeh4+EL8aYUB4+DJU3fOWL3kbni5EdCNALcSN+ZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062837;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062838;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=65p+Z/aWqm3OxwldLEil50aVgF9fhTP5coD1Q0dDCtk=;
-	b=EBFtdFiSVL039T9raEdzbZ+sohVgAz8fFyoyzb622tfQ68RZ0hm1pmUj3AZuz7443Nkw
-	 5pRuVTSTO7uSRactZ0aonGd3KAvTXzVxEkGIK+6zw261NPRk15jkYSg4oVUJOvjg0/eZj
-	 YdTTBENguADx7WQ6sbMkt4W9Tc3KomJR6a+8dRiJkc6zUHgQ2rWaTL72FmDzDkdqy4gM2
-	 jsocHn6rEvhBnUKmPUDzAgiDugPWOfO1QR4XgZCUztkozppMi60LqB3Rt90s41+eKfhwB
-	 byVzL/zVWVtM07sAAmpZsE/+P5GV8Kc1elE6fnYFIEjvTj/yTLyUOClhzNIbCwoKVXg==
+	bh=+NbzLX93PponeIYlonZY1D28imrVDEfuD1OBugW9Rq8=;
+	b=Lzxcq1qkI6Lekj9z/12znJ+udGJVxgs7NDsiOb7lbOU38wtD9BN0NQtqrFVFkIl+WGe0
+	 kXNYleIO+ZUBohZj/a3az/LAX/lz7Mm5PB5HNcqAOiN8LNkRJ3axywoDxf8K7EHN63trZ
+	 QmSb+LFmZPTjrUoNeHctMaNq1rBstB6q/ZJ8mOPAO28dWl3UHo/yhMYvWbrhlu1u5mwPW
+	 T3iJxyw/Ypg4y4nC9WmFh/KRBdq4bT46yCToT+TSZNf5jUjHiIxZxlQXl5DmkJLaUtqmd
+	 LTTM6PjRURnRdVjNlNvoAnnuyGX6lCf7rAN2Ro8UxH8MiXo3WEoQMxoBvI8jy8uS4NA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+52gJUM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fDE0lmyx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8363606A326;
-	Sat,  7 Nov 2026 14:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AA2606A334;
+	Sat,  7 Nov 2026 14:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+52gJUM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4799C1F0089F;
-	Sat,  7 Nov 2026 14:47:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fDE0lmyx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893C71F0089F;
+	Sat,  7 Nov 2026 14:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062836;
-	bh=65p+Z/aWqm3OxwldLEil50aVgF9fhTP5coD1Q0dDCtk=;
+	s=korg; t=1794062837;
+	bh=+NbzLX93PponeIYlonZY1D28imrVDEfuD1OBugW9Rq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L+52gJUMTEOf+W3hXIZe5oNBCjth6kA6ZuPGRMJUlIdjUGs/DknynoLmHUWYF6Sfv
-	 Fs34R1DmTqvx+sixBewp1H+MNGC8OWJaGqpjmcCY8JnCdaHzVqRDctZz77gt+Bdcer
-	 uM8KNOgF8xRoCOM6PfhaqsA3bKSk6Q93F3q8zEQ0=
+	b=fDE0lmyx2hGCHtVadj+JhPgJIAr0YF6bz66APmXuLcYUM7KZ2ina+E8pjMpdof/RB
+	 I/lhooCtv+NJC6IqwYtTPIyVhKw+dMYZbaYUX67/EpA6ByTzPBRxAvwOoNN3BPLjjh
+	 r/MWiIXnnECr36gm8P3nyp2JEyK8EoOvBw3vGzyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 081/869] media: i2c: tc358743: add missing color-space strings
-Date: Sat,  7 Nov 2026 08:46:03 -0500
-Message-ID: <20261107134855.460672893@linuxfoundation.org>
+Subject: [PATCH 6.18 125/869] media: vicodec: zero-initialize stateful decoder heap buffers
+Date: Sat,  7 Nov 2026 08:46:47 -0500
+Message-ID: <20261107134856.735406190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,37 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit cb37e83f1bbdf0964ed0a9524ce45a0694f98205 ]
+[ Upstream commit 27953c044974baf7e24dee3e9342fe0103dea80c ]
 
-VI_STATUS3 S_V_COLOR is four bits, so the index after the shift
-is 0-15. input_color_space[] only has 14 entries. Add the two
-reserved values so log_status() cannot walk off the table.
+The stateful decoder leaks uninitialized kernel heap memory to userspace.
+A process that can open the decoder video node gets it back in the CAPTURE
+buffers it dequeues.
 
-Fixes: d32d98642de6 ("[media] Driver for Toshiba TC358743 HDMI to CSI-2 bridge")
+The reference frame and the compressed frame buffer are allocated with
+kvmalloc() in vicodec_start_streaming(), and the decoder can read them
+before they have been written. The first frame is allowed to be a P-frame,
+in which case it is decoded against a reference frame that was never
+produced, and the padding rows below the visible area are never written
+for any frame.
+
+Use kvzalloc() for both allocations.
+
+Fixes: 256bf813ba39 ("media: vicodec: add the virtual codec driver")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/tc358743.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/test-drivers/vicodec/vicodec-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
-index a0ca19359c431..aefc442b5737c 100644
---- a/drivers/media/i2c/tc358743.c
-+++ b/drivers/media/i2c/tc358743.c
-@@ -1373,7 +1373,8 @@ static int tc358743_log_status(struct v4l2_subdev *sd)
- 	static const char * const input_color_space[] = {
- 		"RGB", "YCbCr 601", "opRGB", "YCbCr 709", "NA (4)",
- 		"xvYCC 601", "NA(6)", "xvYCC 709", "NA(8)", "sYCC601",
--		"NA(10)", "NA(11)", "NA(12)", "opYCC 601"};
-+		"NA(10)", "NA(11)", "NA(12)", "opYCC 601", "NA(14)",
-+		"NA(15)"};
+diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
+index cdc3af33b4bbe..841dc03d0edd2 100644
+--- a/drivers/media/test-drivers/vicodec/vicodec-core.c
++++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
+@@ -1606,9 +1606,9 @@ static int vicodec_start_streaming(struct vb2_queue *q,
+ 	}
+ 	state->ref_stride = q_data->coded_width * info->luma_alpha_step;
  
- 	v4l2_info(sd, "-----Chip status-----\n");
- 	v4l2_info(sd, "Chip ID: 0x%02x\n",
+-	state->ref_frame.buf = kvmalloc(total_planes_size, GFP_KERNEL);
++	state->ref_frame.buf = kvzalloc(total_planes_size, GFP_KERNEL);
+ 	state->ref_frame.luma = state->ref_frame.buf;
+-	new_comp_frame = kvmalloc(ctx->comp_max_size, GFP_KERNEL);
++	new_comp_frame = kvzalloc(ctx->comp_max_size, GFP_KERNEL);
+ 
+ 	if (!state->ref_frame.luma || !new_comp_frame) {
+ 		kvfree(state->ref_frame.luma);
 -- 
 2.53.0
 
