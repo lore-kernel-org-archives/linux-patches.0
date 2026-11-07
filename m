@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061684;
-	b=HWNgk9c20aW7qQ6rJQidGzc39ZE4KF02OHqe8br5rl+9KgJTb1wL8k5bxvXDW2jtW/cQ
-	 hNJlcxb+cxpuIEKnDf9Cz5MadeYnBzozWFa3syOGeizcVfQbMZWNnRVu900wjMY153H75
-	 zPn4OCA3rwTsbTdBNKd5BGvq/Avsornsqbg3kxuIOXhdCiKXsdNDcjuMfQyHDtf5x0Ooo
-	 pTpEyxd3jPzqHThAdzogfEsdOIQqfu0LEqlkFa+FiL7ejUtqkfZVOw0hSs7Hvp5sZdXgI
-	 zbNZ7fGomAgQJbAYgpfrEgFlUwZgrUPBkuZjouHyYs3fccAmxDrFSfgd7o0vU/JOZhg==
+	t=1794061686;
+	b=wGHzWVgfHJSTRz6uBkTIjcZsMltFwehcYHQelR/JAbE18kb2K6IVVexFElugZINWv0Qo
+	 KE/QUStnFbdCNrAWSlH1tz3/5AzhobCpPsNlatMVBhHKhy8nQhYCAPGIttbuO5uIGwemA
+	 bWrlTVHDc9tUPoljhFFzxZe/yMuBbYSZAMGq7neDk2qJfSaY5DGENgb9Q4L2Lrv7SirVn
+	 oQdh2rfhSwabe/EJ/8R8xNbBlNcVOL2fapLOjqOcmrTycgGPHfWSfZccR7sX65qIFa4vk
+	 2uXGX097sFPJf9Bu/PZ2td6ll6n0RYRa/0gBrg9dV001rU3mkmGpzKKsPHM8FR0qVGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061684;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061686;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uIkk8M0yn/VlDRUUVmiPnhCjhyOun6mvXQxwsJR7VRU=;
-	b=n2SJb5x1XLjn/oUP/MkuzWlJ4NpVWw3M+w7Jwvva0mjvck+iVPsKdj2YnGpMT7CcbY32
-	 Q9BrSSnptObuDAMetELNJb1onQhtI5YdP53HfmI+CqhtQSmbSM4JnRIAACOdqmpbirIAI
-	 NanIA2jynOl19fOyPmdNARU3kK7ZtFTpgOewTI0dYNeSPFzVvmOgWW2UK0JP5mxz5oNQM
-	 iy3ackKHAEDVqMF6bDYFQvzitmBhX+p1J+NP5ltEHXwv/03swszgeAjxotcrOLkprl/1g
-	 b3xiaGbtZWd1K8zqeFZRfSpUdTngMykKeXwdUvjrlw0UefvUjxHPIYdt9uuW9srpwoA==
+	bh=uWvzxA4prNiHslDSZiH+B4JCPIynZly4izQ4O+8hpLs=;
+	b=nRFZMi0ljrXBbHjYGivhyvLI3IFa2+F2GFGWPWmp9ZVPv0OI0BI8KTBTXZuYm6H8t/5X
+	 pqHeVMMxISKuzCX103qwIuuWOzcq+RRiPNVNNpg9VxVQC+hVRP+4mdWBj/XwI5Nt7UU8S
+	 bH7WxstPlruQFQ3u2x6EsTOjLaeMOsHklGCgquBz5OSkj3EEP13IoHfhA8zse/ti8aJ0z
+	 g1vVI69nuFCwccQ5ZuSKmKQs88GJjRxMfX5HAU/wxrUElDJXr7iUyOHHOElvrJ06ZN8oa
+	 XSwnd4VTfo0t/WSHWkuaFQjf3P1kleC2IrUUbmNlDcupl/JppLgaWhhas/wF0c+D/Ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TaQ4OH6k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FT+fvujd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74794606A32C;
-	Sat,  7 Nov 2026 14:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8E9606A32C;
+	Sat,  7 Nov 2026 14:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TaQ4OH6k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1190F1F008A1;
-	Sat,  7 Nov 2026 14:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FT+fvujd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D011F0089F;
+	Sat,  7 Nov 2026 14:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061684;
-	bh=uIkk8M0yn/VlDRUUVmiPnhCjhyOun6mvXQxwsJR7VRU=;
+	s=korg; t=1794061685;
+	bh=uWvzxA4prNiHslDSZiH+B4JCPIynZly4izQ4O+8hpLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TaQ4OH6k/uNVpmdefkGFU6os3fA0p4Mssz7Hg3YDRicRORQqRzcyNzRcrd2qbot3k
-	 AOrTpJuM1dCHXx7mZyriyeHsXAK+ysEI0wqJ4abItJmXTR/eFsFj4/OBt43a+ZS7Jq
-	 OPR8zI2TBpM3GuzOmh/CBxo4M5N+XUVkQShAQw4c=
+	b=FT+fvujdF4+m72OdiGgxlHQv8HiOi4fhCMBUqjIgApEI717OUrSAZ2i813m1/0beW
+	 /4FIWwSYjyyThPbL0RHPgrm9plWz+DOJjS8kMhv7WuZJgqoai06i5OfWcGN5+xFoXz
+	 a1RD97FGBz9yJl+0JLjnGmqbP/d3cBIzMH6juylY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0735/1536] xfs: clear set[ug]id mode bits when zapping attr fork
-Date: Sat,  7 Nov 2026 08:45:51 -0500
-Message-ID: <20261107135018.157648388@linuxfoundation.org>
+Subject: [PATCH 6.12 0736/1536] xfs: dont clear COWEXTSIZE on directories on reflink filesystems
+Date: Sat,  7 Nov 2026 08:45:52 -0500
+Message-ID: <20261107135018.186665085@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,39 +70,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit eb20a959760c21e3547cd811d0d9b0b29df98959 upstream.
+commit 3978b1f3109dfd5c648442bb040f9abd58608226 upstream.
 
-LOLLM observes that zapping a file's attr fork could result in ACLs
-being removed from the file.  Because we have no idea what we're
-deleting, we should clear the setuid and setgid bits in addition to the
-access mode bits so that nobody can access the file.
+LOLLM noticed that xrep_dinode_flags clears the COWEXTSIZE flag
+unnecessarily on directories on reflink filesystems.  Directories just
+pass the hint along to new children, so it's valid to leave the flag
+set.
 
 Cc: stable@vger.kernel.org # v6.8
-Fixes: e744cef2060559 ("xfs: zap broken inode forks")
+Fixes: 2d295fe65776d1 ("xfs: repair inode records")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/inode_repair.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/inode_repair.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/fs/xfs/scrub/inode_repair.c
 +++ b/fs/xfs/scrub/inode_repair.c
-@@ -1130,7 +1130,12 @@ xrep_dinode_zap_afork(
+@@ -553,6 +553,8 @@ xrep_dinode_flags(
  	 */
- 	if (dip->di_format != XFS_DINODE_FMT_BTREE)
- 		dip->di_forkoff = 0;
--	dip->di_mode = cpu_to_be16(mode & ~0777);
-+
-+	/*
-+	 * Zapping the attr fork could remove ACLs, so we clear suid/sgid and
-+	 * all access mode bits.
-+	 */
-+	dip->di_mode = cpu_to_be16(mode & ~(S_ISUID | S_ISGID | 0777));
- 	dip->di_uid = 0;
- 	dip->di_gid = 0;
- }
+ 	if (xfs_has_reflink(mp) && S_ISREG(mode))
+ 		flags2 |= XFS_DIFLAG2_REFLINK;
++	else if (xfs_has_reflink(mp) && S_ISDIR(mode))
++		flags2 &= ~XFS_DIFLAG2_REFLINK;
+ 	else
+ 		flags2 &= ~(XFS_DIFLAG2_REFLINK | XFS_DIFLAG2_COWEXTSIZE);
+ 	if (flags & XFS_DIFLAG_REALTIME)
 
 
