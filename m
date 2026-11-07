@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062295;
-	b=M7iGnLPf6PjG/c/VSF5zAzQ6wKlMOu1QzSpooXBHlIkkJu8iOM8fshY4crWzr+3GhX31
-	 46pJQerX+bAUHlV54Trc7B+/KG+jXqrlNHb37dTRpuVHndf4/YtgAl080JJ9T+qSwFhkZ
-	 rlQpDvKiBP5uw+AYn+wHmnw2t6Z8EOBASa4VVdItSyeB9F8oIY8ZHt/y6wn6DL5Toynm8
-	 t4w2Vfv+swi5Cc1ATzYsXx4tDCUEWtTRL+RmoWNDfTNNNmrYIJVAr+fIDEkREbCIoErUF
-	 VipmJR935Mh20EAtBXvPW7+2eIKr9MrUrJA1G0W+0WizH/Vk6aqO6Cx80cG81TrNw9Q==
+	t=1794062296;
+	b=NcO6TWSAe8nXQhYOhdFy3X9O0AFHwmvr4927x36fFz3X1KTY4Ud7znZN3+lOGjV2VSFQ
+	 LX9qMhp23TJwuyNo7QoF2gF98cudBZMwQP9RJxJRTyb99Qi8/oGL/xYGPTyPymEHMvYkf
+	 7X1PcFdNx+VGbG4RlVV1khVQUv21uDWt5aOI304ZUjIaMoyIPlloF3WgaQfUxlGCZEL2L
+	 Z4LoiYvCUAfrewtHFD355lVQdedxkPve6ZBSFmVZTvnq8Br7cApwm1rmVY57NAXNRtXsz
+	 sYT1rjtIFHwEY5J75d49aBPa/XdFlKSsLFF5vedVp1PkftR2Zx/uySUoStpQoiRlBHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062295;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062296;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LVb1d+fFA21YOvZ4JkM4AGr7NhSHteJc2oNh8pS69Hw=;
-	b=BvEt0PQ08/p/b1xK6WvXM9ttp+YXPfC45YYiiLcfQGvOfvM096YW8uADvCNEuJjMV6cX
-	 eQim+CRqhbAs+7u2h/PuGwlbb7KddzWu4fsUt4doVbAuncSm153A5U8d98p7T6OKVVxSM
-	 q1VqjiSK6aa9Se1IhLycP3LSJx1TUtqoeO4GjQEdeyRmdU6pXSXFT1mL5zF8wWeLXoNi0
-	 FJM1RoQjqZglhV6KCItoTY1c47veT7tkiXFDl6d6Vq4eiF6klO2cHADxZFxOoh13gbo7w
-	 3CNWN/jIMRQQOudpvxcte7TSAnOUgHjJJYvJ6REpIaNgM4sikU8GKLgBdja+QLcJ52g==
+	bh=v7ZwhupHFeM0geKmqYBePrWYK+7YKZTZXM2HjlEsn8Q=;
+	b=aEp7HzGKngL/vXXyKPoNcQ+nG7KlVA9Q7ob2SZMxljlqlMRm8dHhopdyVs5IzkmsXpAC
+	 y8KPLAAVgYoIK1PVRG/MHb4bVWWFOS04D6moDoE7iRhm5v+FTUAkX03tm63yVjFaokDfH
+	 VzUMotdFfSQyrpZ04vQBbw442GcPBZktp7ABsyWGptKxgo3ocOP3oqxuoI2hs/Q7l1ZBc
+	 XRyp7Hl7gG6JZOg0c+n9V8zWu/fIJ4BXA2Ypcm4g4cCxFQYIPYg4QH3SSgS2tescP+Swh
+	 UvuI3GFkX+JXS0A+wQgy8Sm7BYp5V79x5pXt/uWBsi327JGnxvkT+PGW62zCe20TyWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJBZDtGo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="W/pXKmkX";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24630606D816;
-	Sat,  7 Nov 2026 14:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEAC606EE98;
+	Sat,  7 Nov 2026 14:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJBZDtGo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C439F1F0089F;
-	Sat,  7 Nov 2026 14:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W/pXKmkX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F072E1F0089F;
+	Sat,  7 Nov 2026 14:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062295;
-	bh=LVb1d+fFA21YOvZ4JkM4AGr7NhSHteJc2oNh8pS69Hw=;
+	s=korg; t=1794062296;
+	bh=v7ZwhupHFeM0geKmqYBePrWYK+7YKZTZXM2HjlEsn8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJBZDtGotar2POBHPli0c76Iav4MjoJ7fLf4SN8xiG5rORxCJIyeFlUx11dnJsBQx
-	 fDjwlCXB4bkOcTKgpJmqI/si6vDYRxR3trxR6/owveXvrm1yhpkGC7ninB7W83pKHW
-	 UhSqhig/ceFrew19pct3PgUDRXTKExu+A7ts1YFY=
+	b=W/pXKmkXfVqoLl9ObffSOearr7Zk9JHU1pLraxubxSantApQieIPzWBGxEKtY7amv
+	 Ak272dFJBZMJMJe4WlJflgKVdUtRH2sp6A414IgGylGthwP764eZSV69SGtWscpAGb
+	 Bt4EZWhk7FHw24gYSxiBsX6bPgJtE50V7uFmIGfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Qu Wenruo <wqu@suse.com>,
+	Hengyu Liang <hengyul@cs.unc.edu>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1231/1536] btrfs: zoned: fix block group reference leak in btrfs_repair_one_zone()
-Date: Sat,  7 Nov 2026 08:54:07 -0500
-Message-ID: <20261107135032.333396202@linuxfoundation.org>
+Subject: [PATCH 6.12 1232/1536] btrfs: return -ENOTTY for unknown ioctls on the control device
+Date: Sat,  7 Nov 2026 08:54:08 -0500
+Message-ID: <20261107135032.360830728@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,54 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Hengyu Liang <hengyul@cs.unc.edu>
 
-[ Upstream commit 886f1aa6e6b30a02901aa7f140149d466e10a873 ]
+[ Upstream commit 9985f1643ac3f8595862e2f82108f0ccae4cf959 ]
 
-btrfs_repair_one_zone() hands the block group reference taken by
-btrfs_lookup_block_group() over to relocating_repair_kthread(), which
-drops it.  However the return value of kthread_run() is not checked, so
-when the kernel thread fails to spawn, nothing executes the put and the
-block group reference is leaked.
+Commit 5ab2b180884c ("btrfs: factor out validation of
+btrfs_ioctl_vol_args::name") made btrfs_control_ioctl() store the result
+of btrfs_check_ioctl_vol_args_path() in ret before it looks at the
+command.
 
-Check kthread_run() and drop the reference if the thread failed to
-start.
+However, ret is initialized to -ENOTTY and the switch has no default
+case, so this initial value was what an unknown command returned. As of
+now, every unknown ioctl on /dev/btrfs-control returns 0. A tool that
+tries a control ioctl which the running kernel does not have is told
+that the ioctl succeeded.
 
-Fixes: f7ef5287a63d ("btrfs: zoned: relocate block group to repair IO failure in zoned filesystems")
+The issue can be reproduced with a simple C program, run as root:
+
+    #include <fcntl.h>
+    #include <stdio.h>
+    #include <sys/ioctl.h>
+
+    int main(void)
+    {
+            static char buf[4096];
+            int fd = open("/dev/btrfs-control", O_RDWR);
+
+            if (ioctl(fd, TCGETS, buf) < 0)
+                    perror("ioctl");
+            else
+                    printf("ioctl succeeded\n");
+            return 0;
+    }
+
+Before commit 5ab2b180884c ("btrfs: factor out validation of
+btrfs_ioctl_vol_args::name"), the result is:
+
+    ioctl: Inappropriate ioctl for device
+
+After that commit, the result is:
+
+    ioctl succeeded
+
+This patch will add a default case that returns -ENOTTY.
+
+Fixes: 5ab2b180884c ("btrfs: factor out validation of btrfs_ioctl_vol_args::name")
 CC: stable@vger.kernel.org
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/btrfs/super.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 6d9df90de9387..b6ed1190a63d7 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -8295,6 +8295,7 @@ static int relocating_repair_kthread(void *data)
- bool btrfs_repair_one_zone(struct btrfs_fs_info *fs_info, u64 logical)
- {
- 	struct btrfs_block_group *cache;
-+	struct task_struct *task;
- 
- 	if (!btrfs_is_zoned(fs_info))
- 		return false;
-@@ -8312,8 +8313,9 @@ bool btrfs_repair_one_zone(struct btrfs_fs_info *fs_info, u64 logical)
- 		return true;
+diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
+index 62366d3fdcc63..60f2145c8ac8e 100644
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -2265,6 +2265,9 @@ static long btrfs_control_ioctl(struct file *file, unsigned int cmd,
+ 	case BTRFS_IOC_GET_SUPPORTED_FEATURES:
+ 		ret = btrfs_ioctl_get_supported_features((void __user*)arg);
+ 		break;
++	default:
++		ret = -ENOTTY;
++		break;
  	}
  
--	kthread_run(relocating_repair_kthread, cache,
--		    "btrfs-relocating-repair");
-+	task = kthread_run(relocating_repair_kthread, cache, "btrfs-relocating-repair");
-+	if (IS_ERR(task))
-+		btrfs_put_block_group(cache);
- 
- 	return true;
- }
+ out:
 -- 
 2.53.0
 
