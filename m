@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061621;
-	b=xOmUSGEmJnszzXGnii/AqWXn3sM/rr+zHPehzGFG9acRU1sJEDDfVX3AqDUrdaf5NX8Q
-	 MihEOqlGO9CXh/8A2oki1LBSSQqbK0wJ0FOnAmxYgfYNFpo51/vRXMTumYq9KEFOVT/bk
-	 UZ02AUuKlWd4NpmAXartn1w5c8mv98XGkfnGSn27fD+imt1zUfjj2ZoXTfEvlp7Wk/v8P
-	 p7BArrO8weyTNCJoxYkFU+0iDrlwLyDhk+PZfWpSjt7FHHhNMS3ZIRoHJnviCkibvo94T
-	 8dgdObfsuXGkxqlfeMWlqp1+fjc8aQDOmNmcSH0cpCwx0yc4pX4MG06z73rezM/slIw==
+	t=1794061623;
+	b=KLFnFIUdiMWcv6lPKwSb1HjiVleJaW7Mu1CrFnV5rGeiwN40q6E306eocj1QYpDR5dBH
+	 W9sc5wUtd/l9nQoY6c03gHrep79IvWSk+GIO6LKWmxP3jzp4+TzZdZIfXXl7haauU5zPy
+	 X+vAWMZmi+TpkGgheNDZJ9rltW/nrX7VIS9+6sDvm2pmqlP4HTooAi5r7i6VEfzIc5l5r
+	 ml4ttH4Y93q2UCJfaPk0R4NGc8Hao3o5yQ05qR8EuoWD5d8dDcIkKr4xhQnw9g+YcAYTg
+	 P8cMatPmTMppcQ8Ih4R9M+/orl8ldp24xiSqPnFuksvNbG02a2Dnj2VRgQcJRXTqTeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061621;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061623;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DKwkDH+4D9LLIyUtWVwmEDxYMfYkJBbgAUshiKRxnNM=;
-	b=n94gETRbw2VgVVxSM4b3ewS1aVTvBLHfnP/iX4iUOzH04Jf5WIUG60aGgyF3xg8IRXF4
-	 8du12pDDO3WMVwn4i0Ui3Tbr0CQRN6b7j7ycV90S6NyrU+KbMKLLDhV9aqKcKIkb33ucz
-	 jYmKp8mNFB9dyaSN1WMGqqqSnpfR7mqOxLxr0rrsXLLZSHFK64HIgDgziPkmAX3ARp0wG
-	 irCiry9w0jtIPQ9g4ZYCQ1fdRm6UmwWee1Xb3zOWRsabkyzCrM9yi/aMVTNLhDDgYpGGX
-	 bN+DIrL3ZFKJx5O+cB4Z/6399a965ok+ONXgM7ZWPhD76bHyZScGWEiFqSRfC7VWfyA==
+	bh=pehgAv4MrnomqIHFJwbjp/Ji71Vs1kxLIE4puHuo/jE=;
+	b=es1ukQh8mbzP6yJ+7dVNJ8Etihsm1JEAl6KzNbfrbQhxKCzz/nBZvcYoIbPMU6xpRgkU
+	 pg37is7gQ0tJrlPecQAp1V2FKR0aAF353E/xrva9DGSZS9zVbwmqTicErcMgskrv353NX
+	 +iLYm6rfw8urIT8qEN+SQf60W+oX5NZTrlr9fAe4xR07QnbgB2fclsG/+eNPzZ3Ig0Se1
+	 zaeBvtF40934aqmdv1mtbUYXLXc7R8hYePlQxc9C3ZkTIXzDpkXYFOp6aZFjgjh9qJevt
+	 ApvpRzOkppSqXVX3cijGu4jQdWDu90bz2S0cpC29/qAxxsMW/3TyYX6DKLot/YdP+4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mgrfzwbI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBFmV4jZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547FA606A326;
-	Sat,  7 Nov 2026 14:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5FF606A326;
+	Sat,  7 Nov 2026 14:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mgrfzwbI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD901F0089F;
-	Sat,  7 Nov 2026 14:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBFmV4jZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9E41F0089F;
+	Sat,  7 Nov 2026 14:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061621;
-	bh=DKwkDH+4D9LLIyUtWVwmEDxYMfYkJBbgAUshiKRxnNM=;
+	s=korg; t=1794061622;
+	bh=pehgAv4MrnomqIHFJwbjp/Ji71Vs1kxLIE4puHuo/jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mgrfzwbIAlinsBm6FuMyZKrvEnRRZNs22AVO6RvmQkcbUjprFbyZlsWPxevXVj/w5
-	 /Sj8Qr7XdXSJfDC9fTgS+JJtlhBUbqMbyVO5sAoU01sC37rDNNyoV25dpwiMQ6YppA
-	 I0FBj54S1WHY5FvR5/oXFCoF2jWGnf2Fk9DFFE7s=
+	b=DBFmV4jZu45Gyo+H8Qj7ScNKh4OqqQUxojFz23+07gwkZr8h16f1f89PMP22/+Jyp
+	 ivPC6KOofO26yCz3WWUCKa3lMmEmUirqCSm1WyfBvsLySqmwNdgJeriFGquAVqpLL/
+	 3Qt/dKp1bZae9AEQ6y7LdLIG8Lii5RxDwycxAWsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <dgc@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0689/1536] xfs: fix ondisk symlink target validation in xrep_dinode_check_dfork
-Date: Sat,  7 Nov 2026 08:45:05 -0500
-Message-ID: <20261107135016.840796621@linuxfoundation.org>
+	Weigang He <geoffreyhe2@gmail.com>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 6.12 0663/1536] media: rc: fintek-cir: process a full RX buffer instead of overflowing it
+Date: Sat,  7 Nov 2026 08:44:39 -0500
+Message-ID: <20261107135016.129015395@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,118 +67,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-commit aafe21c23ad8263251085291019d8860ddc51da9 upstream.
+commit d1febef1bcfa7bbc401729f994c375b91a833911 upstream.
 
-LOLLM noticed that online repair of a broken symlink file could fail
-unnecessarily if a local-format symlink target isn't null terminated.
-The ondisk target isn't required to be null terminated, but repair
-enforces that anyway because it uses the validator for the incore
-symlink target.  (The incore buffer is always null-terminated).  Fix
-this by reverting the changes to xfs_symlink_shortform_verify and adding
-an ondisk-specific helper in inode_repair.c.
+fintek_get_rx_ir_data() drains the CIR RX FIFO into fintek->buf[], which
+holds RX_BUF_LEN (32) bytes, for as long as CIR_STATUS reports pending
+RX data:
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: e744cef2060559 ("xfs: zap broken inode forks")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Dave Chinner <dgc@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+	do {
+		sample = fintek_cir_reg_read(fintek, CIR_RX_DATA);
+		...
+		fintek->buf[fintek->pkts] = sample;
+		fintek->pkts++;
+		...
+	} while (status & rx_irqs);
+
+Nothing bounds fintek->pkts. If the hardware reports data for more than
+RX_BUF_LEN reads in one interrupt, the loop writes past the end of
+buf[], starting with the pkts counter that follows it in struct
+fintek_dev.
+
+Hand a full buffer to fintek_process_rx_ir_data(), which parses the
+samples and resets fintek->pkts, before storing the next sample. This
+keeps the parser state consistent and drops no samples. The loop still
+relies on the status register to terminate.
+
+The driver does not document the hardware FIFO depth, so it is not
+known whether a working device can trigger this.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 9bdc79ea07d9 ("[media] fintek-cir: new driver for Fintek LPC SuperIO CIR function")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_inode_fork.c     |    4 +---
- fs/xfs/libxfs/xfs_symlink_remote.c |    8 ++++++--
- fs/xfs/libxfs/xfs_symlink_remote.h |    2 +-
- fs/xfs/scrub/inode_repair.c        |   26 +++++++++++++++++++++++++-
- 4 files changed, 33 insertions(+), 7 deletions(-)
+ drivers/media/rc/fintek-cir.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/xfs/libxfs/xfs_inode_fork.c
-+++ b/fs/xfs/libxfs/xfs_inode_fork.c
-@@ -722,9 +722,7 @@ xfs_ifork_verify_local_data(
- 		break;
- 	}
- 	case S_IFLNK: {
--		struct xfs_ifork	*ifp = xfs_ifork_ptr(ip, XFS_DATA_FORK);
--
--		fa = xfs_symlink_shortform_verify(ifp->if_data, ifp->if_bytes);
-+		fa = xfs_symlink_shortform_verify(ip);
- 		break;
- 	}
- 	default:
---- a/fs/xfs/libxfs/xfs_symlink_remote.c
-+++ b/fs/xfs/libxfs/xfs_symlink_remote.c
-@@ -208,11 +208,15 @@ xfs_symlink_local_to_remote(
-  */
- xfs_failaddr_t
- xfs_symlink_shortform_verify(
--	void			*sfp,
--	int64_t			size)
-+	struct xfs_inode	*ip)
- {
-+	struct xfs_ifork	*ifp = xfs_ifork_ptr(ip, XFS_DATA_FORK);
-+	char			*sfp = (char *)ifp->if_data;
-+	int			size = ifp->if_bytes;
- 	char			*endp = sfp + size;
+--- a/drivers/media/rc/fintek-cir.c
++++ b/drivers/media/rc/fintek-cir.c
+@@ -340,6 +340,10 @@ static void fintek_get_rx_ir_data(struct
+ 		sample = fintek_cir_reg_read(fintek, CIR_RX_DATA);
+ 		fit_dbg("%s: sample: 0x%02x", __func__, sample);
  
-+	ASSERT(ifp->if_format == XFS_DINODE_FMT_LOCAL);
++		/* Process a full buffer before storing the next sample. */
++		if (fintek->pkts >= RX_BUF_LEN)
++			fintek_process_rx_ir_data(fintek);
 +
- 	/*
- 	 * Zero length symlinks should never occur in memory as they are
- 	 * never allowed to exist on disk.
---- a/fs/xfs/libxfs/xfs_symlink_remote.h
-+++ b/fs/xfs/libxfs/xfs_symlink_remote.h
-@@ -18,7 +18,7 @@ bool xfs_symlink_hdr_ok(xfs_ino_t ino, u
- void xfs_symlink_local_to_remote(struct xfs_trans *tp, struct xfs_buf *bp,
- 				 struct xfs_inode *ip, struct xfs_ifork *ifp,
- 				 void *priv);
--xfs_failaddr_t xfs_symlink_shortform_verify(void *sfp, int64_t size);
-+xfs_failaddr_t xfs_symlink_shortform_verify(struct xfs_inode *ip);
- int xfs_symlink_remote_read(struct xfs_inode *ip, char *link);
- int xfs_symlink_write_target(struct xfs_trans *tp, struct xfs_inode *ip,
- 		xfs_ino_t owner, const char *target_path, int pathlen,
---- a/fs/xfs/scrub/inode_repair.c
-+++ b/fs/xfs/scrub/inode_repair.c
-@@ -872,6 +872,30 @@ xrep_dinode_bad_bmbt_fork(
- 	return false;
- }
+ 		fintek->buf[fintek->pkts] = sample;
+ 		fintek->pkts++;
  
-+static xfs_failaddr_t
-+xrep_symlink_shortform_verify(
-+	void			*sfp,
-+	int64_t			size)
-+{
-+	/*
-+	 * Zero length symlinks should never occur in memory as they are
-+	 * never allowed to exist on disk.
-+	 */
-+	if (!size)
-+		return __this_address;
-+
-+	/* No negative sizes or overly long symlink targets. */
-+	if (size < 0 || size > XFS_SYMLINK_MAXLEN)
-+		return __this_address;
-+
-+	/* No NULLs in the target either. */
-+	if (memchr(sfp, 0, size))
-+		return __this_address;
-+
-+	/* ondisk symlink target isn't null terminated, unlike incore */
-+	return NULL;
-+}
-+
- /*
-  * Check the data fork for things that will fail the ifork verifiers or the
-  * ifork formatters.
-@@ -939,7 +963,7 @@ xrep_dinode_check_dfork(
- 			return true;
- 		/* symlink structure must pass verification. */
- 		if (S_ISLNK(mode) &&
--		    xfs_symlink_shortform_verify(dfork_ptr, data_size) != NULL)
-+		    xrep_symlink_shortform_verify(dfork_ptr, data_size) != NULL)
- 			return true;
- 		break;
- 	case XFS_DINODE_FMT_EXTENTS:
 
 
