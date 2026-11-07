@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063412;
-	b=NuXZyBW6P/zKlJNNEzorPs9vC7RRy/pjSxqolFFeadRqDtRREtnLQl0SUuf35cqEbNPN
-	 fFwx87wQGzp8lFJqdFYKf9YdEt7SfPFJFxKvRWWHRuW5NU49itzA85+8+y1wg0qekz04N
-	 5AGlYj4hNzWIunZeeUICbK0xNVb0CLhbwTinK7uEMa+ZpDxTwbwqMrePz9qWeo1za4vS6
-	 1dNHLUPyRp0tI7i6abH5Ex9yOWPLxS8e6h3bl8otK7965brYLHjO0HT674SBYBprQhWni
-	 iW1Y4u1RoA4b9y5jV3ikOMsWhvmKB+PsVWPG9Lpxkq7Bvc3kcM5zEALIhYTnotoKSUg==
+	t=1794063413;
+	b=KjcgPy1jGnNNqoRYjOPCbl8mvrenhqjCLjsFRm87MUF58SoMr2WxOiXWHEhushbDwtvI
+	 ESpKDbJ9P+m4uaJIMecfFJnG1ijB+b0/ECVEYlwuUd2xJr3ZYDsr4wtU1l2/i69PsQrue
+	 GvWMe0nsLdYI3iO9/dH52lrFiE8uswM1WVpXzDYXH8Df9oqOd+8keMUfIi82F7e4rLNU0
+	 nNr0GG1ymSnR+o6dwi7pPYNsl9i1jRbWvt5On9KwCo9Oujy+L7uzeizlPdkJmggaGLiFv
+	 GdPU0xaRpPiSwqSCmlOjI7CvN50hiYWNxIjw1KdB1o3opE+UQq5DNZhUiGQAUAwGCVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063412;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063413;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UP4ROJ/aquwA2lmf4ZokEfyA/kQFQb3lkv2w8kYAAcA=;
-	b=rVgmx2zanjrpwKmvt9naaQS9J71nPqpdnjEmlnHaynYo6rZ86cAbiVVXcekGYiwzZBW5
-	 TVVtx7ZNDWWoPy8mIFvrQtR1QK5S6DIYHtSAsHsfCwLPKHAQnzNgwSZrdxgBDAj0AWyKZ
-	 LdId62iQ7t+TDNb9iJt/Ivp0/FeTkw54UlUjSWrWUamj/HrlvMG1IX0kyV9yINR8MEGiB
-	 Qt16h3BkqcCOFNHAgeB1EnrjI45sQn61yqoKCy/qTib1mGScGjhGhNSabFsgRiB2ds0Ev
-	 Vc7HcVVrKZWIOvTzLU2xOWJQ6B0HHCPQIbn+684yJO1KKkRJeBcnqRyjmQwlaY2MvSg==
+	bh=Zv/CDdg4b0YPNDwpnc0B1ZfeNdlvqeFd9eno7YtAT4Q=;
+	b=H9Oh/V1MjbE6L/UjsjsPSg+YlcFLnbiB4319tUcryczXNPCYzba6NEJsZK/Hi11pW2Y0
+	 +tCC3tsaXu6tl9/BhG0MayXOQCe3zpFHN+V7+K1sqCb6O7lJiLKfbJNMfTaTS8sQS2hKz
+	 oafs36w+rAT6F7YDpv3m/GJBKh7Hu1flXaJ8TRJPod14Xx+Jppa+4WLO6dNXz041shcH/
+	 BnrKQj/xMW+2g0b5d+PcRq3DMD9Tu++bSk5oe4ftr0uNm7w/LZXD4A1iU25sYIL7DsBoj
+	 MsGKo0arenZYAw+koNWXwsA6GQ+7NXkwWQJBU8Fw9WgbSb9g8Myb2EB5Wl53/N5Qq5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=etAO6XtQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VONJVfaw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC0D606A33B;
-	Sat,  7 Nov 2026 14:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE94606A33B;
+	Sat,  7 Nov 2026 14:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=etAO6XtQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B36B1F0089F;
-	Sat,  7 Nov 2026 14:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VONJVfaw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983101F0089F;
+	Sat,  7 Nov 2026 14:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063411;
-	bh=UP4ROJ/aquwA2lmf4ZokEfyA/kQFQb3lkv2w8kYAAcA=;
+	s=korg; t=1794063412;
+	bh=Zv/CDdg4b0YPNDwpnc0B1ZfeNdlvqeFd9eno7YtAT4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=etAO6XtQfe7KMCJnptDwJz5Dp1yF6QBFGWIksbLDB+sqiJ14zfTKkrM0Xhpt1CUmQ
-	 3vuq4SoDky37rk+oxW8pWnbwBiuXnkixqEz4bbGc0bfZXsflaMca0dxc9dzBqmea4W
-	 0VkPcS9vTt6tJGRjOOmz7mMu2yO6ZXbq4BTCFhQ0=
+	b=VONJVfaw1gy4vXrxm13BQGqjFuzrMz0oi0QVGFfmQdjqit3rnsuXPp/rw1X7WU5Km
+	 +WvpmcmSi+YUfYeaeOSkqVG3yC04AEmIuG3KTxnWMvRpccPLtBvDq5D5e9SBWc8uI7
+	 7wlCRWO41z1mLunaXhPdxK2x5i7OAAPWy1g0qKyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Tal Zussman <tz2294@columbia.edu>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 580/869] ALSA: ump: Correct return size of fill_rpn()
-Date: Sat,  7 Nov 2026 08:54:22 -0500
-Message-ID: <20261107134912.850929132@linuxfoundation.org>
+Subject: [PATCH 6.18 581/869] gfs2: fix the escaped block copy in gfs2_before_commit()
+Date: Sat,  7 Nov 2026 08:54:23 -0500
+Message-ID: <20261107134912.878154352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -67,38 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 85e8c5f933ee3dbc9d061e121237797e9fa05315 ]
+[ Upstream commit 1a4aeb6d6a08af1a2e2c52c84170561625819377 ]
 
-The RPN/NRPN conversion in fill_rpn() is supposed to return the number
-of bytes of the resultant UMP packet, but it returns boolean values.
-This would result in the incorrect ump_bytes in the converter, which
-will confuse stream processing.  Correct to the right value 8 as a MIDI
-2.0 UMP packet.
+Commit d68d0c6c3fc7 ("gfs2: Use memcpy_{from,to}_page where
+appropriate") made the escaped buffer copy read from the mempool page
+it had just allocated instead of from the buffer, so the block written
+to the log is whatever the pool page last held. If the journal is
+replayed after a crash, the block is restored from that and the file's
+data is corrupted. Only escaped buffers are affected: jdata blocks
+whose first four bytes match GFS2_MAGIC. Copy from the buffer's folio
+instead.
 
-Fixes: e6ce8a28c768 ("ALSA: ump: Transmit RPN/NRPN message at each MSB/LSB data reception")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20261015075439.50088-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: d68d0c6c3fc7 ("gfs2: Use memcpy_{from,to}_page where appropriate")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tal Zussman <tz2294@columbia.edu>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ump_convert.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/gfs2/lops.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/ump_convert.c b/sound/core/ump_convert.c
-index 85cc67de63306..0a7972d91ec52 100644
---- a/sound/core/ump_convert.c
-+++ b/sound/core/ump_convert.c
-@@ -323,7 +323,7 @@ static int fill_rpn(struct ump_cvt_to_ump_bank *cc,
- 					      cc->cc_data_lsb);
+diff --git a/fs/gfs2/lops.c b/fs/gfs2/lops.c
+index 0ed81a685fcd0..59e3d295a2a17 100644
+--- a/fs/gfs2/lops.c
++++ b/fs/gfs2/lops.c
+@@ -690,7 +690,9 @@ static void gfs2_before_commit(struct gfs2_sbd *sdp, unsigned int limit,
  
- 	reset_rpn(cc);
--	return 1;
-+	return 8;
- }
- 
- /* convert to a MIDI 1.0 Channel Voice message */
+ 				page = mempool_alloc(gfs2_page_pool, GFP_NOIO);
+ 				p = page_address(page);
+-				memcpy_from_page(p, page, bh_offset(bd2->bd_bh), bd2->bd_bh->b_size);
++				memcpy_from_folio(p, bd2->bd_bh->b_folio,
++						  bh_offset(bd2->bd_bh),
++						  bd2->bd_bh->b_size);
+ 				*(__be32 *)p = 0;
+ 				clear_buffer_escaped(bd2->bd_bh);
+ 				unlock_buffer(bd2->bd_bh);
 -- 
 2.53.0
 
