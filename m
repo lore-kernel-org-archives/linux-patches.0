@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063368;
-	b=xlJGvQfKXe1YESNk6qhmkiL9TEvcTgY/ja4ielgq05/oYMNYldQqJFT6i0Bn8bRGqggG
-	 Batt1Sz0i25Ftb+W8zf1HkbhlUFOKlAl2PuoSVMl3DakvU2oJXlTP43+up+mpR7IVuL3F
-	 tMVop+oourbL+o5mirTjGNpP0uy31B4IRh3GHEPyntBKZ3DdUTudjXvePcL0aj07oFTnm
-	 aVOLZaa132nagBrtwGNnGY5RVruaKuVQTzeH+7yUOdIN4L2+8QwVjDUW6NNAKynAErUkT
-	 c16VcUrSynafgdKRUXP8irv1DNkHzZ/V+ZDQRhoZUTmZK7QtdWMIF7ycZtuKZnVWrhQ==
+	t=1794063370;
+	b=HeW4bWvwiBLbc2ef4JgvlPt74gWoqo4Uzl5UsOs8MuKMWuBVa/7lXHgfz8F6i/HH3v/J
+	 KoFkLMsGStsjoYDzNJM5/EQodQzAKTQBl6rxZvsQ8eyI7KGFJOqSxTT0Jc3R/zRdPCK/z
+	 mrLAPSuYJYjyPde7ZY4mqjYwubf0VV0ql4ktVePcce2Cd5kG56JOWLHJyyV58/ySEmQBi
+	 g/446i1DzcRBrwi5Z7p3sWloTjpnc9U3Ou6hdUoRgWH5J1y0csrujlFxuIy1hPqi4HK+F
+	 9RLJctheHMUND6+F0XkRjMu3DEWEtFUrZbVjuj2dzqxgjobmfuLvaHCJNNhvAfn8MJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063370;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=elIJzfjqiIwo22e01ewQQ2wZj4GND9bMWax65daebzM=;
-	b=5HzIS2QPZm06PrJqCiAmXOlohlyJSbiDbPGLcFZO1lhpVyUX7rHSZPikZ+RzTDMjiups
-	 xu5r+/4Mc2ItyoHAUeue9eDb6zupgWDLPsfqpB4yV8PvE/s8YRUI/bVrzoUfrDkc+SLZv
-	 KpVkhoOskGr8rRG3SRv0zro92AeHCoDC7ztaqM76BGPIv0bB2BV7zFfsH+WYbLRe8xm0V
-	 P7rXx35Oe+aGmlJL5K7o5jmWcStC20IGP4+jMbDRApxgmhY2VN0AIa2cGBqaBEdDraUhQ
-	 Z/PatS3ug3NQj0JM9F4toDxW1iNBaxmbSWHIssb2T1hGucMbNixGp6MUCzgTxlxTW2Q==
+	bh=3SbQqgIta7YaT3nTQ8IPJ4VUGYWZi2wZ5kVZgeaFcKs=;
+	b=qKnk1lkbvVk4q3UI83Ls0dYqzG/IaUVOXp287TYR3m/HLjBXdv+TvFy0anPjgS2LAmIu
+	 E1w/a5USJoJHzC8S4TayO116T1yFs4hKzmvl3rOBgeBZ5snbgi639p4UQO04NLFx+XSVH
+	 hgdeGxPTeJMOXHZkqzQzi2n6pjE+hs/ktD1hsMJ248+eF3i3Jh9XzYWQ7JxiwRJkdUOrV
+	 LW70GPe+DZAAA77dP+atCSdjRK78K7v4BOUNYejYYMfKzoCq2KhxA9pScY0R0AMcS7Sxo
+	 BeKVMTQB8Mph4QDjRPBP2ELSfM3pi7Vv0k/YffT48PKEgXQJvyxlK5nJEslbTfJWbAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoMDv4dF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kKt3fpV0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC15606D81A;
-	Sat,  7 Nov 2026 14:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E146C606D815;
+	Sat,  7 Nov 2026 14:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoMDv4dF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8521F0089F;
-	Sat,  7 Nov 2026 14:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kKt3fpV0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9078E1F008A4;
+	Sat,  7 Nov 2026 14:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063368;
-	bh=elIJzfjqiIwo22e01ewQQ2wZj4GND9bMWax65daebzM=;
+	s=korg; t=1794063369;
+	bh=3SbQqgIta7YaT3nTQ8IPJ4VUGYWZi2wZ5kVZgeaFcKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GoMDv4dFw9lGuVg8bLO9TL5rbuKGTNHqau8Hg4OcomJgjV+aNJSxVfJfTndhoPcQk
-	 TPBwwWruVHMeVo1SM/kqhIMi2hZjvzUwkz/v3NpXeJ9CnlKFpcGQDbAEXqlJNy7gk6
-	 5EjAtuxhi5Q7irhqxL21ZrNALBT5rX1RlsWUICX8=
+	b=kKt3fpV0WoTyB5GPyuNuO+dBzAseDpXMZ+OPqbZWPjMWU6tGQ9gjXfIO2gv461g9V
+	 4dU1WsWWliYVVk7kE8W4BSGQtlqIF4CP6gmazc4Wv4vl3JL0LBdtGGH1lXl2/jVQGK
+	 BVHplIcllutQRWqmroL0xc6WCGc4TbwARwSGH/XE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Keith Busch <kbusch@kernel.org>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 518/869] nvmet: free the bvec on file namespace range errors
-Date: Sat,  7 Nov 2026 08:53:20 -0500
-Message-ID: <20261107134911.095684365@linuxfoundation.org>
+Subject: [PATCH 6.18 545/869] platform/x86: hp-bioscfg: allow clearing current_password
+Date: Sat,  7 Nov 2026 08:53:47 -0500
+Message-ID: <20261107134911.876272788@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,46 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 9d820d55b3cb4859c7cf42a74dc78f6154f97398 ]
+[ Upstream commit acada379d5c4dd3a86d48fc69802e769eff29f7e ]
 
-nvmet_file_execute_rw() allocates the bvec before
-nvmet_file_execute_io() checks whether the request fits in the backing
-file. If the request extends beyond the file, nvmet_file_execute_io()
-calls nvmet_req_complete() to return an error. This skips
-nvmet_file_io_done(), so the allocated memory is never freed. Repeated
-requests can exhaust memory.
+The ABI documents echo "" > current_password as the way to end a
+session, but validate_password_input() rejects an empty string when
+min_password_length is nonzero, so the password stays cached.
 
-Use nvmet_file_io_done() to free the bvec before returning the range
-error to the client.
+Skip the length check for an empty current_password so the write
+clears it.
 
-Fixes: 50a909db36f2 ("nvmet: use IOCB_NOWAIT for file-ns buffered I/O")
+Compile tested only.
+
+Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
+Link: https://patch.msgid.link/20261007134711.473857-5-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/io-cmd-file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../platform/x86/hp/hp-bioscfg/passwdobj-attributes.c    | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
-index 2d068439b129c..6e14700164724 100644
---- a/drivers/nvme/target/io-cmd-file.c
-+++ b/drivers/nvme/target/io-cmd-file.c
-@@ -133,8 +133,8 @@ static bool nvmet_file_execute_io(struct nvmet_req *req, int ki_flags)
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+index 43a2fd0c07db1..97990191b71f3 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+@@ -60,7 +60,8 @@ int hp_get_password_instance_for_type(const char *name)
+ 	return -EINVAL;
+ }
  
- 	pos = le64_to_cpu(req->cmd->rw.slba) << req->ns->blksize_shift;
- 	if (unlikely(pos + req->transfer_len > req->ns->size)) {
--		nvmet_req_complete(req, errno_to_nvme_status(req, -ENOSPC));
--		return true;
-+		ret = -ENOSPC;
-+		goto complete;
+-static int validate_password_input(int instance_id, const char *buf)
++static int validate_password_input(int instance_id, const char *buf,
++				   bool is_current)
+ {
+ 	int length;
+ 	struct password_data *password_data = &bioscfg_drv.password_data[instance_id];
+@@ -69,6 +70,10 @@ static int validate_password_input(int instance_id, const char *buf)
+ 	if (length > 0 && buf[length - 1] == '\n')
+ 		length--;
+ 
++	/* An empty current_password clears the session password */
++	if (is_current && !length)
++		return 0;
++
+ 	if (length > MAX_PASSWD_SIZE)
+ 		return -E2BIG;
+ 
+@@ -97,7 +102,7 @@ static int store_password_instance(struct kobject *kobj, const char *buf,
+ 		id = get_password_instance_id(kobj);
+ 
+ 		if (id >= 0)
+-			ret = validate_password_input(id, buf_cp);
++			ret = validate_password_input(id, buf_cp, is_current);
  	}
  
- 	memset(&req->f.iocb, 0, sizeof(struct kiocb));
+ 	if (!ret) {
 -- 
 2.53.0
 
