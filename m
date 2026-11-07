@@ -1,58 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064490;
-	b=yzMnrvBPWX0pj6Nk8Sg5u1kq6j7nxmg6e0t4Fuw0THug1IdWhS68PBmpZVvwYLfrYMBu
-	 guOdSt1byET5Bx+LmfsKDINtXurefzDIULOulyhbB8ZR4MD0LYmluA9WW6rKz7cODPMFG
-	 LGShThV/xQ+iP+waATCItQjkaZ9kAHS4Xcjwm7ZcXTBGXlYfkAnEfoSXkcghh7xJbs5u0
-	 vk4OK8aa60HvYPjdB0n3LkDGMHxL7taLi6AsoTrC7MrBEgeND11dALiokCjyiXVwcoRjv
-	 n7pb1kNQJL14SNpPCykwoja4eEsUvskomiA6caCVk/mM8O2Fvp5EFUIDrvW5oJcOdxw==
+	t=1794064491;
+	b=c53vHiEhjKEV92ed2KRdRWrLg/4vd4ni9Gc6/YV1oFGvZgy8GORHGzUeOmxbbiAHLLZI
+	 bR6Rts06bDZAFn+ytrjL/QdUSQJOAKZb2wcHMjx+Hw0Ks2eqBzYuXnFJme+p948xo+661
+	 2a4pM8MTGYjoUhfdy8gML9qo8p4LOczthjXnx1xDRhbdflocnaC2UPDSFwhs0QbYB4c3u
+	 DzJztLD1DirJnYGaNrI7FC7IaYFR34HjMN6N2l+rZmLEofL+hmZagZnQMPl0PVcifyxVy
+	 kbx9YFNlUKieMUhXuTWRUofPFGFJ82HUuW9lLJWVl8yvVCdOek+mmwWqQFwrYYu/UFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qgA9KbqkPMYmRYFGeqvsvoJ35jGV/07pQ61zoU3P/as=;
-	b=MqnRLyO1bzKo9TytcL9NGYTcIxeDWrKveBxkXnKgxlmb+tQe1MGRxi54Y1JQzsEJsNUg
-	 NsFPo23GY/BKHk1ZbFZQmaIjLcTNWVmwCeFKycDQT3185JsJKfZNiEskY05HVQF4+ikXg
-	 6nUiQqWRFY15AkFq9HVbO6ILEA4sYFriSYmXXHhAHYwHLT8mLEP/cqBdLGs25i2/+QzHk
-	 9EBuHqeY0HV1jYnpe9Gxvz4yThcttssxRO3LF6c9PYDEybKxadQuQDA523bjNoFzU/qpK
-	 UDUhB8T5synO+Wo1dmDclGrehu/OHveneKMXZl3uKk39fbtXD3G2Lu25K66t4bXPJqQ==
+	bh=cnr5IRu6t/iudtUN4NUyaclXPUP83MtqXK8dDe+28ig=;
+	b=KxA7xByRCuRjaZ0IKTAmXVY9CXyG+Ksb1QkR83z67cxp5nXH0cuAuKpfOMSOQwPO3C4g
+	 CO600nfoXG7JATM2QKk8RtYeWDKVCyZj87pA1o6C89f1WvIWSvngtjObBtBdVD+hDfAN9
+	 uhGhvCU97jCbYl3RaenpsjJLu6htp8Ui+8f94EF33jNuBJEGSDrL1Mxjix4Ub4vYdyzeM
+	 v86G4P+w40Rh+hXTNjQWX8KAe53TpF4NzfqkOw3qQsZNk47WD5zIL4p5wB+qlXrM8C3gL
+	 QjjZN5sd42OMNAQUXTaJbLaOY15dZxcJMEV5shR6c76iL/HJdULLe63TvMKrLGxQvvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W0ZZPfYs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTwyCH5V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF5C606A9EE;
-	Sat,  7 Nov 2026 15:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2F6606A9EE;
+	Sat,  7 Nov 2026 15:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W0ZZPfYs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C0F1F008A4;
-	Sat,  7 Nov 2026 15:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTwyCH5V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A83A1F008A2;
+	Sat,  7 Nov 2026 15:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064490;
-	bh=qgA9KbqkPMYmRYFGeqvsvoJ35jGV/07pQ61zoU3P/as=;
+	s=korg; t=1794064491;
+	bh=cnr5IRu6t/iudtUN4NUyaclXPUP83MtqXK8dDe+28ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W0ZZPfYsfzetKdOyQpEaq3aBPjJD24SOhWQTZKeRj5sxkDhfvkQO2ruQX33Fas6bV
-	 6+FO2BWnL3OISXPxokDxf9Cc83PCmGsqiu2V4TG2YZKHKIgDGXWgO2/eU+q993AvCf
-	 PVqERtZLov8b1DpWyGBozoa8ieorDNxyEflmt2WM=
+	b=YTwyCH5VkjA5Xa8J6RKwJqzGAtLt+0X9/TXwV+POq+GfQCZzWAF4YMlj0x0hCUwKz
+	 n6G5HsQK0ojC3x1bS2jQrdgZYNgKNt96/RmL8T9M3G8uIMIXCuPLLD8+yrhvs41Dqj
+	 rNZGQEzI9Gjjsdv38KZetnbpDPNk5r2qIApDn69E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Konstantin Khorenko <khorenko@virtuozzo.com>,
+	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0526/1257] ocfs2: free replay slots in ocfs2_recovery_exit()
-Date: Sat,  7 Nov 2026 08:47:02 -0500
-Message-ID: <20261107134953.943595402@linuxfoundation.org>
+Subject: [PATCH 7.3 0527/1257] selftests/core: fix unshare_test with large fs.nr_open
+Date: Sat,  7 Nov 2026 08:47:03 -0500
+Message-ID: <20261107134953.970332482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -74,105 +71,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Konstantin Khorenko <khorenko@virtuozzo.com>
 
-[ Upstream commit 1ddadc6d41c1a29fd8fad1891bdcd2956e08b7f0 ]
+[ Upstream commit df0b7e0ea59c43708cff8c7e34da5e2f8d430e5e ]
 
-Commit ce2fcf1516d6 ("ocfs2: fix memory leak in ocfs2_mount_volume()")
-added ocfs2_free_replay_slots() calls to the mount error paths
-out_dismount and out_check_volume to fix a leak of osb->replay_map.
-However these calls are unlocked while the bail path of the recovery
-thread, which is woken up by out_dismount right before the call, also
-frees the replay slots under osb->recovery_lock.  Both sides can thus
-observe a non-NULL osb->replay_map and trigger a double free.
+The test assumes fs.nr_open is close to the default 1048576, but some
+systems set it much higher (e.g.  1073741816).  This is systemd's doing:
+since systemd v240 (2018), PID 1 bumps fs.nr_open and fs.file-max to their
+largest possible values on boot, as file descriptors are already accounted
+for by memcg [1].
 
-Fix this by moving ocfs2_free_replay_slots() into ocfs2_recovery_exit()
-after ocfs2_recovery_disable(), which waits for a running recovery thread
-to exit under osb->recovery_lock, and drop the unlocked call sites.  Both
-ocfs2_dismount_volume() and the out_super path of ocfs2_fill_super() call
-ocfs2_recovery_exit(), so the replay slots are freed on every path.  Since
-super.c no longer references it, make ocfs2_free_replay_slots() static
-again.
+In that case, dup2() to nr_open + 64 requires the kernel to allocate a
+file descriptor table with ~1 billion entries, which fails with ENOMEM.
 
-Link: https://lore.kernel.org/20260828112825.666097-2-joseph.qi@linux.alibaba.com
-Fixes: ce2fcf1516d6 ("ocfs2: fix memory leak in ocfs2_mount_volume()")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+On a kernel that already carries 04a2c4b4511d1, dup2() no longer fails
+with ENOMEM.  The allocation is now rejected up front and the caller
+gets EMFILE instead, without the WARNING, but the test still fails.
+
+Cap the nr_open value used for the test's own arithmetic to a known
+reasonable base value (1048576) and restore the true original value once
+the test has completed.
+
+Link: https://lore.kernel.org/20260814165709.513263-1-khorenko@virtuozzo.com
+Link: https://github.com/systemd/systemd/commit/a8b627aaed409a15260c25988970c795bf963812 [1]
+Signed-off-by: Konstantin Khorenko <khorenko@virtuozzo.com>
+Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Wei Yang <richard.weiyang@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/journal.c | 3 ++-
- fs/ocfs2/journal.h | 1 -
- fs/ocfs2/super.c   | 5 +----
- 3 files changed, 3 insertions(+), 6 deletions(-)
+ tools/testing/selftests/core/unshare_test.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/journal.c b/fs/ocfs2/journal.c
-index d8afbc1a76bb8..a3938a03e93bf 100644
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -156,7 +156,7 @@ static void ocfs2_queue_replay_slots(struct ocfs2_super *osb,
- 	replay_map->rm_state = REPLAY_DONE;
+diff --git a/tools/testing/selftests/core/unshare_test.c b/tools/testing/selftests/core/unshare_test.c
+index ffce75a6c228f..d40e963dd5205 100644
+--- a/tools/testing/selftests/core/unshare_test.c
++++ b/tools/testing/selftests/core/unshare_test.c
+@@ -40,6 +40,14 @@ TEST(unshare_EMFILE)
+ 
+ 	ASSERT_EQ(sscanf(buf, "%d", &nr_open), 1);
+ 
++	/*
++	 * Cap nr_open for the duration of the test to avoid ENOMEM from a
++	 * huge fd table allocation; buf/n keep the real original value so
++	 * fs.nr_open can be restored to it once the test is done.
++	 */
++	if (nr_open > 1024 * 1024)
++		nr_open = 1024 * 1024;
++
+ 	ASSERT_EQ(0, getrlimit(RLIMIT_NOFILE, &rlimit));
+ 
+ 	/* bump fs.nr_open */
+@@ -73,10 +81,13 @@ TEST(unshare_EMFILE)
+ 
+ 	if (pid == 0) {
+ 		int err;
++		char buf3[32];
++		ssize_t n3;
+ 
+-		/* restore fs.nr_open */
++		/* restore fs.nr_open to the (possibly capped) test baseline */
++		n3 = sprintf(buf3, "%d\n", nr_open);
+ 		lseek(fd, 0, SEEK_SET);
+-		write(fd, buf, n);
++		write(fd, buf3, n3);
+ 		/* ... and now unshare(CLONE_FILES) must fail with EMFILE */
+ 		err = unshare(CLONE_FILES);
+ 		EXPECT_EQ(err, -1)
+@@ -89,6 +100,10 @@ TEST(unshare_EMFILE)
+ 	EXPECT_EQ(waitpid(pid, &status, 0), pid);
+ 	EXPECT_EQ(true, WIFEXITED(status));
+ 	EXPECT_EQ(0, WEXITSTATUS(status));
++
++	/* restore the real fs.nr_open value */
++	lseek(fd, 0, SEEK_SET);
++	write(fd, buf, n);
  }
  
--void ocfs2_free_replay_slots(struct ocfs2_super *osb)
-+static void ocfs2_free_replay_slots(struct ocfs2_super *osb)
- {
- 	struct ocfs2_replay_map *replay_map = osb->replay_map;
- 
-@@ -243,6 +243,7 @@ void ocfs2_recovery_exit(struct ocfs2_super *osb)
- 	/* XXX: Should we bug if there are dirty entries? */
- 
- 	kfree(rm);
-+	ocfs2_free_replay_slots(osb);
- }
- 
- static int __ocfs2_recovery_map_test(struct ocfs2_super *osb,
-diff --git a/fs/ocfs2/journal.h b/fs/ocfs2/journal.h
-index f8b3b2a3d6309..19fc920d26b1c 100644
---- a/fs/ocfs2/journal.h
-+++ b/fs/ocfs2/journal.h
-@@ -151,7 +151,6 @@ void ocfs2_recovery_exit(struct ocfs2_super *osb);
- void ocfs2_recovery_disable_quota(struct ocfs2_super *osb);
- 
- int ocfs2_compute_replay_slots(struct ocfs2_super *osb);
--void ocfs2_free_replay_slots(struct ocfs2_super *osb);
- /*
-  *  Journal Control:
-  *  Initialize, Load, Shutdown, Wipe a journal.
-diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
-index 736cc1fa8b23e..169c576f06bf5 100644
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -1163,7 +1163,6 @@ static int ocfs2_fill_super(struct super_block *sb, struct fs_context *fc)
- out_dismount:
- 	atomic_set(&osb->vol_state, VOLUME_DISABLED);
- 	wake_up(&osb->osb_mount_event);
--	ocfs2_free_replay_slots(osb);
- 	ocfs2_dismount_volume(sb, 1);
- 	goto out;
- 
-@@ -1777,14 +1776,12 @@ static int ocfs2_mount_volume(struct super_block *sb)
- 	status = ocfs2_truncate_log_init(osb);
- 	if (status < 0) {
- 		mlog_errno(status);
--		goto out_check_volume;
-+		goto out_system_inodes;
- 	}
- 
- 	ocfs2_super_unlock(osb, 1);
- 	return 0;
- 
--out_check_volume:
--	ocfs2_free_replay_slots(osb);
- out_system_inodes:
- 	if (osb->local_alloc_state == OCFS2_LA_ENABLED)
- 		ocfs2_shutdown_local_alloc(osb);
+ TEST_HARNESS_MAIN
 -- 
 2.53.0
 
