@@ -1,80 +1,61 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.227.220.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794080048;
-	b=qRu65gWGIT+3amMKrZPbJR5r9PFLkC+ZtiDZNOunfzB2TBB6YRxu9M+7674/VjJPanSs
-	 LwjjkjyF98Aa2ZFPOfT2XfCkcA5Nm7SmHhRavQRrpAog2kthN6duB8rvhaNbRdOPu6MXI
-	 9yCgx/i4fNGJ067W2D16mKhhbD0uqKrUmRFKLyJBN+Q59LHM3TclhFg3UeSYCxL89cQLn
-	 eI6zkx7g7GnbIL5g0xjcgZYsJlNYo1DQpf2JjHzWFBJMsG9di77ULXsLYZbzRWGXcO/20
-	 uQnk5dYDFFlP+Xq2NxqenCWVLlJnvmLTDYVcbBRvWDwRmxU+SSw5VdNIQMXAkGCP0fg==
+	t=1794083261;
+	b=nBuOt8KCH0dw4VEfJKkzAoUAum6GmKLlYGl6llfJrKR4+inHm6svFHLKKeIW8jpAI189
+	 r98IX6F+koLqJ9p/sOperIM896KY3WisJ6N2uPEwVUXQVYEA7WAdm+qmQNNmsqbU89W/q
+	 HqPqJX78cVhBXePiyBThQuGgzlDGqABg0ddmrQF3atnilGufb4BFeWT4DSNqRCIdjvOmU
+	 dMNF/ceYTslV4xAaZ/mhi2MqB9Av8wPLpPEytb1/XkhD7UAxAg60JbDcRwKiYFNMrkzk7
+	 6NYOAKMstxx7WeMjIyQYRxP7yWts/BjaN/qgjR3FDJNwGpJvUHy9aQIV3P2ppfFiTeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794080048;
-	h=DMARC-Filter:Date:DKIM-Signature:From:To:Cc:Subject:Message-ID:
-	 Mail-Followup-To:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=iSm02S9UFPqyxcXJfE/yMCdmauGWZNHUIjvGtZ/NnKU=;
-	b=XUJZmVgj6tVPalamXf5pcJ1PFF2zjo9gkJaoDm07TsYNLsqFPGcVXxSU3AVv2bAOmdrf
-	 zp7TifpvxFqtD1HjwRYTTv6C5vQ3kETuWnxCYkzI3XxxPZ6gXjObapMm6tpkxPqFI9NOP
-	 FlfgG0NyqNLN4rCILNq0qhnz86iNR10+MLHcQ8udFLFLQHYFrZQD++wuwyMgl6xLCbR3c
-	 WzW4jz82QBWNtq77r0uwAA4p6argYmUhAYHKf4h8Rj4ILbpNmhqw97iLN5ZTLeAcvHjcK
-	 vgCNdHj7c2nmnaJAB/FHqiEWk1OEua/lyx4nLAN5ujgB/jLQDlnkt1HnLxxVK2yj0RA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794083261;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=+DUELhgEaqAYntYFp1DpQZLJYBain+UJS9q9wsG5xwM=;
+	b=jhlpSDyRp6pSegL79ytDQokA6GHrYZz7Pe6QQWu6pwhUwg+3lsUn62BmRceSmkMCwNy6
+	 lpNgjsPGEygu3DoprbeN7Otx3h69rn4d+lYgtwcvu2qpDxF22BO5vCErIvqFNLSUKwiHr
+	 nak7/kWSlpEjAq6iQzHEjXqsqsh0BqUYbRd6WROWVnwsUo25gGLZAfhTFCME1RPGq4oZG
+	 8hn4d4swx2Dx0YVYjkAI5HdP0dE6UyXjC21AjbqiYNDPhtkJ7Zn/vDGNdgP5wOZJpWWZu
+	 Mki+2thvC+098BJxr31XBFF1OgOQGkQckueQdo9VBuvmdEfMdcofXXrt2KLV4JKurmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=mareichelt.com;
-	spf=pass smtp.mailfrom=mareichelt.com;
-	dkim=pass header.d=mareichelt.com header.i=@mareichelt.com header.a=rsa-sha256 header.s=202107 header.b=33XC+mGy;
-	arc=none smtp.remote-ip=91.227.220.155
-Received: from mail.antaris-organics.com (mail.antaris-organics.com [91.227.220.155])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hw8Ig7N8;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA9E606A326
-	for <patches@lists.linux.dev>; Sat,  7 Nov 2026 19:34:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5BA9E606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mareichelt.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mareichelt.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E7D606A32C;
+	Sat,  7 Nov 2026 20:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mareichelt.com header.i=@mareichelt.com header.a=rsa-sha256 header.s=202107 header.b=33XC+mGy
-Date: Sat, 7 Nov 2026 20:33:58 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mareichelt.com;
-	s=202107; t=1794080039;
-	bh=iSm02S9UFPqyxcXJfE/yMCdmauGWZNHUIjvGtZ/NnKU=;
-	h=Date:From:To:Cc:Subject:Message-ID:Mail-Followup-To:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To:date:
-	 author:from:to:subject:message-id:in-reply-to:references:
-	 mail-followup-to:openpgp:mime-version:content-type:
-	 content-transfer-encoding:author:from:subject:date:to:cc:
-	 resent-author:resent-date:resent-from:resent-sender:resent-to:
-	 resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
-	 mime-version:content-type:content-transfer-encoding:
-	 content-disposition:content-id:content-description:message-id:
-	 mail-followup-to:openpgp;
-	b=33XC+mGykPVMszVlywKf/jjOHp5XTiedLZF4e1fTb8HbS5AtU2UN3RO0ez+c1EjRK
-	 DC9OnYYVTawu0zRm0NYsNQB/k4G3+A15KpSLBWaAYQw7moDVG8XAKm1zAirljB1MQi
-	 eUrXHuKxKlGlyBgquCKMXEVpfPszguhHQMKCwc/rkbYMnHmchPJ7v1l01FNy35Z39A
-	 9sQZ+jM4C/Afxv9pzo+puukdbjo9Px6gr3h9RjjIm72hU3Tx86GhCbs2anlG0UZG8N
-	 d4kklCVB+uLztThKADVQUZVbrSSEWurJ2p3zaQVj5jXndMFuZejKhhS9M6IBbyYpSv
-	 kUc6Rz5hSR21A==
-From: Markus Reichelt <lkt+2023@mareichelt.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hw8Ig7N8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273561F0089F;
+	Sat,  7 Nov 2026 20:27:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794083261;
+	bh=+DUELhgEaqAYntYFp1DpQZLJYBain+UJS9q9wsG5xwM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Hw8Ig7N8ipyfZ3oLF7oLXIIZROi1iV2VlJcpQRKDu+rHlxJAzQELrbHXUg4YZpqRD
+	 UV76H4ugRrTqydRRici07WNIQ/tX/4TS2nIEkIOlyvnsK277QeSwN9+8hGYsdFpYgL
+	 U5pMd+DJp82x4qomj0SHutM6mLqvYF8rdurufBYAf038bETyufr2jLGEQl5c3ndEs+
+	 H2tdwboDLY9XhTZ2Euj9vsT0snFGnkFuhUqFpi/ajjyNlqhnzge/RYgia14Ae6wZcd
+	 tregYEgMbom2x6RbsmuavUlH3hHrRxpt0si+ySATU5xLB9x1JXYBf5CQQpUDlLGhlT
+	 M2UNz6wQztZdw==
+From: SJ Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 7.3 0000/1257] 7.3.4-rc1 review
-Message-ID: <20261107193358.GA6808@pc21.mareichelt.com>
-Mail-Followup-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-References: <20261107134939.434104957@linuxfoundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <david@davidgow.net>,
+	Sasha Levin <sashal@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.18 487/869] mm/damon/tests/core-kunit: test the size charged for a filter-trimmed region
+Date: Sat,  7 Nov 2026 12:27:33 -0800
+Message-ID: <20261107202734.231272-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261107134910.088452714@linuxfoundation.org>
+References: 
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -84,24 +65,20 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-* Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Sat, 7 Nov 2026 08:52:49 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 7.3.4 release.
-> There are 1257 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 09 Nov 2026 13:46:08 +0000.
-> Anything received after that time might be too late.
+> 6.18-stable review patch.  If anyone has any objections, please let me know.
 
-7.3.4-rc1 compiles on x86_64 (Xeon E5-1620 v2, Slackware64-15.0),
-and boots & runs on x86_64 (AMD Ryzen 5 7520U, Slackware64-current).
-No regressions observed during boot & my custom tests.
+Please drop this.  This is not intended to be picked for stable tree, and
+causing a DAMON kunit test failure.
 
-I did not observe the build error already reported in this thread.
+The Cc:stable@ tag was wrongly added due to a mix of Cc:stable@ and
+non-Cc:stable@ patches in a series.
 
-Tested-by: Markus Reichelt <lkt+2023@mareichelt.com>
+
+Thanks,
+SJ
+
+[...]
