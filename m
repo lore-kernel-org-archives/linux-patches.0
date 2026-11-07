@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065464;
-	b=IlkWAZh9L/8OSaywT2DppvSIBG5g7dUWDcgfnXmdrwT9MSzwKkDapZlOKIbpoVL4YWRX
-	 kTdgkqLGB1JGKBIJUwk75aOfZWVc716HoC2nZtuoICmYX+n7sFykq3+7mgPWtY3wEbXF/
-	 bOt/CX2nsmTVOEKCtOPtRsz8UAQq8FjCHj1PGJILQMyhZn3lhv9jPeXLDmyaDxvazZsGC
-	 ZgBn4ubQlDQmQyWbCwgJG6/po/G+dzLuINL1ucMlWI6D11VkDhJonFbKV7El+9DaFedf4
-	 QgJPUnTRiyHV1eHfI92+av8TYphOn2gcCSR7uqLqiS+JoAWeGhUJN6t0XrqTBUOjdXg==
+	t=1794065466;
+	b=DAwf/8z9VU24RckbSzR3mrr/wgX9/kXyzLmIBy5AaCXigXed5iG0I+mtgRNI+/tkLXtr
+	 zfyOpPOakNdGE0ttO3/DUjBuDgMy438VGVKUpoMenUwuist/szuBkAfbNkWBgF0fJKtmN
+	 oOsvxdIWVBkDVuZ55UY00laMQ56R8hCUAvTWemBCPoCn7HJlReeipTboANpILnwoXrFDO
+	 YlnxuJ7h6GKni8wrwPobuH0CUPRXfJSzCzL3cMukJ0GEvaVopaboIJ1P6KBgKsm93Upig
+	 IweV277cTfE19SOyuak8JRx6xWmzkqu63b/h3dpjVhs6emFkQG8Y95gGTbUv79aSFsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065464;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065466;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V6LgQzGQIqUFxfeCAEwgSIkJqMSpRshJ/yG9cVkhdUk=;
-	b=Ks/Tbksx63AwVWB6klJmRp2x8BwAuauCBhBVQAHJ3MyMyET/4mduVECZq/4+e+dIhGk3
-	 4VpfaBaO7ojwgoyBLxC0QBf9gTzn3zn3UNUIXCeabPgxYHzPiO3wXcvLC8rnYiQ4l2ZL2
-	 nbC4ex/kndSMRzXhH78Q+tDpRo5KZBfLfTXpBMMgjsvWABs015y4kolM1LAL+qYIzlhjx
-	 v5FHR4j/vDZZtZgoD/4eHJ5EW5y0lqyj6bzPsjpi55TTYEq8MavlyRgIwzxKW3ICSM/fg
-	 /PNc3/kOgq889RbiFQ3Xklr/YWaR3RVHPmRi+E48qPhfPrCU6lT0rsEfbXzEQoxHbGA==
+	bh=eZDJZMZfookYkE7cB5myLvTuOMk8Xr9rocmXEVyzbao=;
+	b=DRU9wpyDnOWWDZpxl/8wSQeSEm4EFqr76ZaSS2fK0B+UrPO1xXFDyb5Q5sTND66nlPXr
+	 UaseIOhzFn+p+tPUreEh+/ayqIhwszkPJVzugiI85lOISQ4NXdPkuY5zF/lDi9ctSkpfS
+	 rQvJwO9pruhJGnCD72OfxAmJTn1z501gE8ipTtBP1tGKMeQd5Ioo0yRXyWEBT1syRq7FD
+	 43ICh/+wa0opFVhArXOd+csrk8mqC0AZc8itY54JIyqyaqkO3GGWS/LHBe51FHjS7tzTS
+	 iX1OZ73uNnHHb4RuXJT5faSIN7hrnbNhQhXLQAOFLo80qjW+KQ+UZ3ntgf+zrnfca4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0L9JFv5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypziRvxT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665EA606A335;
-	Sat,  7 Nov 2026 15:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EA8606A32C;
+	Sat,  7 Nov 2026 15:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0L9JFv5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8091F0089F;
-	Sat,  7 Nov 2026 15:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypziRvxT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593D11F0089F;
+	Sat,  7 Nov 2026 15:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065464;
-	bh=V6LgQzGQIqUFxfeCAEwgSIkJqMSpRshJ/yG9cVkhdUk=;
+	s=korg; t=1794065465;
+	bh=eZDJZMZfookYkE7cB5myLvTuOMk8Xr9rocmXEVyzbao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0L9JFv5DrCs6z1JZgDWrVOxMKDe8cKWGNGYB55vJGBJb7b02HOTXamA31eEfZh5P
-	 Rc/WLLXCyHaEt0Zq84Z+foUNYmJK6xsodnZczYS66sSKCczdbT/lYYAPHOGx1GVeei
-	 pBfHSyVdCp13dpADXWlvskZkwzoN0rezed3jVO0k=
+	b=ypziRvxTx9lHxuqRc5uFraQUnVlz763lpzyOEbGja3kycp3S+QNuf72yyZXZKglOc
+	 1d3muvncZ0aCxYzZ/31xuPga0oj1uZNBJunlR5gThUaV0nTCCpaK1reJMuEiAPJ62k
+	 Y4BiCEc84LrqgEkNX+yMBuxSIAogSuxkZd0tth+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1125/1257] ceph: Fix xattr buffer leak in __send_cap()
-Date: Sat,  7 Nov 2026 08:57:01 -0500
-Message-ID: <20261107135010.306822614@linuxfoundation.org>
+Subject: [PATCH 7.3 1161/1257] ASoC: hdac_hda: Balance the runtime PM disable in codec remove
+Date: Sat,  7 Nov 2026 08:57:37 -0500
+Message-ID: <20261107135011.260372656@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,43 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit e51cf76e7275d1bb5ad2d529bb00feade632dadc ]
+[ Upstream commit f26c0d5f91d918bb66cbbc8916f41836adb38346 ]
 
-__prep_cap() takes a reference on the xattr blob via ceph_buffer_get()
-and also grabs a reference to the old xattr blob returned by
-__ceph_build_xattrs_blob(). These references are normally dropped in
-__send_cap() after the cap message has been sent, but when ceph_msg_new()
-fails, __send_cap() requeues the cap and returns early without dropping
-them, leaking both buffers on every allocation failure.
+hdac_hda_codec_remove() disables runtime PM of the codec device before
+releasing the HDA link and calling the codec driver's remove callback,
+so that no runtime resume can race with the teardown and access the
+link or the already freed codec driver data.
+snd_hda_codec_cleanup_for_unbind() then disables runtime PM again.
 
-Release arg->old_xattr_buf and arg->xattr_buf on the ceph_msg_new()
-failure path before returning.
+On the next probe snd_hda_codec_register() enables runtime PM only once,
+leaving it disabled after the ASoC card or the codec driver has been
+unbound and bound again: the codec stays powered and runtime_status
+reads 'unsupported'.
 
+Re-enable runtime PM at the end of hdac_hda_codec_remove() to balance
+its own disable. The codec remains disabled until it is registered again.
+
+Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
 Cc: stable@vger.kernel.org
-Fixes: 16d68903f56a ("ceph: break up send_cap_msg")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261027083840.28813-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/caps.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/hdac_hda.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index 86e195c5fd325..4cedbdd1d4033 100644
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1569,6 +1569,8 @@ static void __send_cap(struct cap_msg_args *arg, struct ceph_inode_info *ci)
- 		spin_lock(&ci->i_ceph_lock);
- 		__cap_delay_requeue(arg->session->s_mdsc, ci);
- 		spin_unlock(&ci->i_ceph_lock);
-+		ceph_buffer_put(arg->old_xattr_buf);
-+		ceph_buffer_put(arg->xattr_buf);
+diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
+index 1c06fdbf0e712..cbf17753d3fc1 100644
+--- a/sound/soc/codecs/hdac_hda.c
++++ b/sound/soc/codecs/hdac_hda.c
+@@ -554,6 +554,7 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
  		return;
  	}
  
++	/* prevent runtime PM callbacks while the link and the codec are torn down */
+ 	pm_runtime_disable(&hdev->dev);
+ 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
+ 
+@@ -561,6 +562,9 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
+ 		driver->ops->remove(codec);
+ 
+ 	snd_hda_codec_cleanup_for_unbind(codec);
++
++	/* Balances the disable above, cleanup_for_unbind keeps runtime PM disabled */
++	pm_runtime_enable(&hdev->dev);
+ }
+ 
+ static const struct snd_soc_dapm_route hdac_hda_dapm_routes[] = {
 -- 
 2.53.0
 
