@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062031;
-	b=BNShX0p+xxxNPzTb7A1fvcUd+d00VPov7fTj5SuPoS964ggyhX0Hi7b6UCbfjpNojHOF
-	 vI4eKOg3snzDB3aWdHMAhoMujKRU0OpNVxOMmcT8um4M7BZ1jR0Zec3KAG6bHGGVPUFsU
-	 GeRtaGhRsjZUiSxt1m6FCtHXp7qDWB7mCCiNJcJREqK7RXk5Vxb8ZygV1DkhZf3ISsZMb
-	 w+mDb/csMZpNntQxVAW36FFQb4JSqIh8BgiWeDJq4V+tDszLR2iG3XOKOy4/1pZJFDB4N
-	 lCiBggAsdacltHa1KiV7/JmJIUgZk+sk6FZrUe3Sclu8litko4yC+dypgX7+9DWP6UQ==
+	t=1794062033;
+	b=3TruY8l0SCak2g75cJrFJv1U5Q5OeaTn7AHa4wa7yLTsgLYjFlF37yhOySmeuE/oIdHl
+	 dSKhQavO2iIemnZB6Is9fswmMp7aPG0Qg8GGFVYyJBCCYgPq17u+OtPs32+Y5eG4kzpqu
+	 jpDidVtft9N71ZQVMdQgdJyAUKgxp+dfvyrYI2SdxNhk/ofGewPGQZD0GtVgAzVNyF1OK
+	 EuSe9st0Uls9zbgZGnatNWG6/WJwUrCPQPibHZrUmB+IVA1OYtCtPYtz9H2J+z5u+3+1U
+	 3Vbck0cpbJnhj982GIUCaasxtHn0o8RXplZBbYEF+PJijQhwY15QymgdKWfPjwDFh2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062031;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nyJFZDtVa5H0wLtzNm+4jfAFmgRrJy/kYiVkjjOslTU=;
-	b=V5o9piGzDbhigefJz0JKmlpfWEeWQX/D1Ijr4Vpt2N7MF+VhTUfdZNRyx+M9Q7SNnKVH
-	 7kfHX1y2n65twDoME3KZn7YtDDnCb9FbxRGQBzKqkhxBrvDKwzfS2MF6Yj8UxW7VmzSGA
-	 s15iqpj3d/GJpbcHsaIiK5fwaXUBakUNpFiTGA/2Yun31YUlyYK0aFSJ1/Gc0CFZACdor
-	 vhWJAf3EsqGksjKpjsGMtjw2sIsllU8zLz9h4qEmIq16K3VplXokwmpQxGz6neFXWmchb
-	 uPLfD/1gertMTeiMYf1JHgRJd6k6QAvqS+N0OVU/bdT4vV2WPnXwIA6msONj7bj6wKg==
+	bh=o5GF3R8w6a98ukAmgPk6zt2zHZmkYwC9nu3d/VmpaNg=;
+	b=nr4bZMgOyScQcxooiJkYVW1ZAiTXRX0EZrihHpE+MN/Am1hm8+77qeRpM/QcEIl88SlE
+	 upblqAJUfvSAJpKKnh/soVMMeMSurd93FUJG4CZgM/3rgUdfaK90wAs+8GxIFGItWOZvt
+	 mA4MPPBpfKUWT5UJn/xVawVemmKEIpYCJKAVR8TH3RJAshC0bdwxi0k5N7LaFvqf+jmKP
+	 +o2OVIgEZMluT5uwkCCykdi9yKXl9RsetBOTygqNs8iSTdDXw6xoxr/3iho2O3kvy5Ukz
+	 GhKWO9TfsuRg10FsFVP40w+C5qQb0ZKAR256n+1JiV7LZSNADlorUtSD6CT/CEQBs0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WcJh9AfZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHgvTyIg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF12606A332;
-	Sat,  7 Nov 2026 14:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37FA606A332;
+	Sat,  7 Nov 2026 14:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WcJh9AfZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C06A1F0089F;
-	Sat,  7 Nov 2026 14:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHgvTyIg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7301F0089F;
+	Sat,  7 Nov 2026 14:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062031;
-	bh=nyJFZDtVa5H0wLtzNm+4jfAFmgRrJy/kYiVkjjOslTU=;
+	s=korg; t=1794062032;
+	bh=o5GF3R8w6a98ukAmgPk6zt2zHZmkYwC9nu3d/VmpaNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WcJh9AfZCzadENRDR9n60p4rn24RgEAusnGnT77+vf+CEz7nSw1i2RZPNI+0WLf97
-	 cYIXBgclTGTaq2f9+J3abinj0L/wj3gMbtg1VieXvg2WzmtHxLaIzXc5b448PAE6uI
-	 wbgNV3AUKPB2QbNUUddOgJVm8K4PxJYRROYZar2s=
+	b=GHgvTyIgNoEEMwlC3kyjJX1dACZCho3gXp6OuAEnSaoPf+OKyP0DAXhF/ugeoaRPc
+	 TtisAnTdh1vgUkt0Oc1zx6YOqHznPhnPHHYhAzymNx+nsb0Izt2Hs4TEY+bL0Gf+YW
+	 Tu5/ubb0NBO7d0z2VV+Ntzw5YKGjS6DPUjPls49o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1016/1536] leds: ktd2692: Pass context to regulator cleanup
-Date: Sat,  7 Nov 2026 08:50:32 -0500
-Message-ID: <20261107135026.215133737@linuxfoundation.org>
+Subject: [PATCH 6.12 1017/1536] media: ir_toy: Validate the maximum tx carrier
+Date: Sat,  7 Nov 2026 08:50:33 -0500
+Message-ID: <20261107135026.242009784@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,84 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit c73e9f04445f361d5f19ca2edfde742ce18348ef ]
+[ Upstream commit 27303392aa87b61692faadec8b00e0ca66bf98dd ]
 
-regulator_disable_action() retrieves the driver context from device
-driver data.  However, ktd2692_parse_dt() registers the action before
-ktd2692_probe() stores the context with platform_set_drvdata().
+Reject any carrier the hardware cannot generate. This also fixes
+a divide by zero if a carrier of U32_MAX/16 is set.
 
-If devm_add_action_or_reset() cannot allocate the action, it invokes the
-callback immediately.  A later probe failure also invokes it during
-managed-resource unwinding.  Both paths dereference a NULL context.
-
-Pass the already allocated context directly to the action and retain the
-device pointer in it for error reporting.  The context is allocated before
-the action is registered, so reverse-order devres unwinding keeps it alive
-through the callback.
-
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: ee78b9360e14 ("leds: ktd2692: Fix an error handling path")
+Fixes: 8bff1386d62d ("media: ir_toy: allow tx carrier to be set")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260910194525.99654-1-mhun512@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sean Young <sean@mess.org>
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/flash/leds-ktd2692.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/rc/ir_toy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/flash/leds-ktd2692.c b/drivers/leds/flash/leds-ktd2692.c
-index b92adf908793e..f18acd9eeac3d 100644
---- a/drivers/leds/flash/leds-ktd2692.c
-+++ b/drivers/leds/flash/leds-ktd2692.c
-@@ -69,6 +69,8 @@ const struct expresswire_timing ktd2692_timing = {
- };
+diff --git a/drivers/media/rc/ir_toy.c b/drivers/media/rc/ir_toy.c
+index e79de56997a42..ba6c042127078 100644
+--- a/drivers/media/rc/ir_toy.c
++++ b/drivers/media/rc/ir_toy.c
+@@ -373,7 +373,7 @@ static int irtoy_tx_carrier(struct rc_dev *rc, uint32_t carrier)
+ 	u8 buf[3];
+ 	int err;
  
- struct ktd2692_context {
-+	struct device *dev;
-+
- 	/* Common ExpressWire properties (ctrl GPIO and timing) */
- 	struct expresswire_common_props props;
+-	if (carrier < 11800)
++	if (carrier < 11800 || carrier > 3000000)
+ 		return -EINVAL;
  
-@@ -196,13 +198,12 @@ static void ktd2692_setup(struct ktd2692_context *led)
- 
- static void regulator_disable_action(void *_data)
- {
--	struct device *dev = _data;
--	struct ktd2692_context *led = dev_get_drvdata(dev);
-+	struct ktd2692_context *led = _data;
- 	int ret;
- 
- 	ret = regulator_disable(led->regulator);
- 	if (ret)
--		dev_err(dev, "Failed to disable supply: %d\n", ret);
-+		dev_err(led->dev, "Failed to disable supply: %d\n", ret);
- }
- 
- static int ktd2692_parse_dt(struct ktd2692_context *led, struct device *dev,
-@@ -233,7 +234,7 @@ static int ktd2692_parse_dt(struct ktd2692_context *led, struct device *dev,
- 			dev_err(dev, "Failed to enable supply: %d\n", ret);
- 		} else {
- 			ret = devm_add_action_or_reset(dev,
--						regulator_disable_action, dev);
-+						regulator_disable_action, led);
- 			if (ret)
- 				return ret;
- 		}
-@@ -290,6 +291,7 @@ static int ktd2692_probe(struct platform_device *pdev)
- 	if (!led)
- 		return -ENOMEM;
- 
-+	led->dev = &pdev->dev;
- 	fled_cdev = &led->fled_cdev;
- 	led_cdev = &fled_cdev->led_cdev;
- 	led->props.timing = ktd2692_timing;
+ 	buf[0] = 0x06;
 -- 
 2.53.0
 
