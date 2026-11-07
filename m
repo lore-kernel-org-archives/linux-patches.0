@@ -1,55 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063150;
-	b=DZLXyOE4vqp0UVJA/bn8C7lzJ5SeyYusgZETQ7MbDlLOt5w0db8b6p2jrmGU74T3Wxzx
-	 90Cp9E/rPk6aHlhMNaUJbKeOCdG4jeqKtHT3eOyrAMZ2rr9cRyHmuFn3aB5l1EKhegbB4
-	 MYJ0K3LlzBBaOyWuy/XgYTaSh3SLbiTrm77STTWuck4bXBssBN9vyg1gEvU+pT8T81DjK
-	 KmmXSR5QKL4NZCcO1BSUAl1/26UWOWOYrhWqnxyVbeIsshzhqPQwCyKOi5st7T+4XJqxV
-	 sAkJryrZNdqVdewJMn8Yvn2Ft8+qLh+D5aGmQ0iItE/vdxZdTplGlan04M9d1Xduhpg==
+	t=1794063151;
+	b=GfTVk5RV4PNztM7N8G3CuOxaCWneFTdhNmcK7zJeppk8J4BzXxEPlddRBD2w82OhmP/I
+	 gqK1ojb5l2d3b5hn/CyeuwwNKRLCXaBzWP2NuzUto2hnmijLVdByEVM9SWOpRY202wxOW
+	 PbMbi3Dgqigi2eoT+HDMKdARnfCLuWuy21rBCoVXjnuN7JqTPxZYyam8VIvLsAZHnRLec
+	 YSItkekXaOU0/qnLQkedPIPyb7swuvE28SYrpWROtY90GIP0cw1RLShCTirklCiWvRzM/
+	 PAbj+KlO5gmb6AtbtnjszZ1d+eRCoOOIDhowlCQJGmGMSzPjkgLJv6LjkjuhA66kpQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063150;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063151;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WAU5YbORscdcR67ZeusPlyFsAU114EgLmcpNsmncse0=;
-	b=wo0qMWalgt2k17QSRdJSiaGCkIWOe77TEeosk0sMZYDvXZDbNEW1gZ0aTK3YHn5n4myt
-	 H04noTEpjkHs7gw8eh2stzTPRsrRy+kzDp7734Pt0xbfYiEYZvGd6eEhRSJaSWViwahgn
-	 SfhJ3BMB8rDMk4qR1GzwkBEyQErABUzZVtYddsZJM/ALPRgJbKudj6vsUL9k1NtYq7xAL
-	 OBfODSZgu3M6UOr/u216hzg8X3bwgByuEboBJogXe1vOnfbBW88Ip0Mtl3MCj1vJgHp6n
-	 sO5gkVnbDwufhQPmH5RedEU1YasZxU8KcB2pKf1mCvtAgzIdjmoOsz6lvG/URq74KQg==
+	bh=gCfBofenEKJNhqE4n19dSj/AnjVzBzGIk2fA1hobfrY=;
+	b=mPd16Akjq1uf2yN2B8D5EnzTZzlQONs7s2te2JVCf1AOz+5VrsU06h6OXWWDx5LrLMb3
+	 GhGR2H6f0955+oVFRTwnE50v3+6vI9s/x6FTwhuSh637w/l/1b/GyT3m36uHvGkTVZ+XM
+	 j+nTH0+QoHHc7f9g/Cb/wt5kXTjsV7eehkImlh1VdPrxHVEUSP67HE2RyXBMGV746vEQF
+	 LKrO4aSPj2Kf2ckb8GkL/Q/8T5aZjIrqd4K3/zxPykG5ER1Hp4fqNG9IJlOUkCMLaYWR7
+	 2hLrtMfZZlFK5sLl8CgHe4hAYDH3o4vA+f6DdPR53RBzIQnY48khHTxsISNWbPAgV8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rGN14M39;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mbkuiCky;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C06606A331;
-	Sat,  7 Nov 2026 14:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B954606A331;
+	Sat,  7 Nov 2026 14:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rGN14M39
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1351F0089F;
-	Sat,  7 Nov 2026 14:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mbkuiCky
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B9A1F0089F;
+	Sat,  7 Nov 2026 14:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063150;
-	bh=WAU5YbORscdcR67ZeusPlyFsAU114EgLmcpNsmncse0=;
+	s=korg; t=1794063151;
+	bh=gCfBofenEKJNhqE4n19dSj/AnjVzBzGIk2fA1hobfrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rGN14M399e+4ZsS5U/XqLAtw1zTmvxp621TxVkiA3yM0La2kbFscobXsimrXuFA2N
-	 89KsKrgY9DKlEHK14S06t0++dOfIV4ON32wRLDWe+GH1GMnW7ClxCqJp35f4bazxzT
-	 6iuDptLvRIYlt9qu8Iblvi1pAw2Ifs//+ifTGquI=
+	b=mbkuiCkykl6uzaeKrJxzH9DM9R2R0mPpOpf1dol6nTNBHgK1E3oR23TYcXjGMB8jU
+	 rWhdsIGanYxwEBp2QjcnGbVippiz8j3xxjUAWnHh7CB0LY2hD144u3NaKelGkKU/w2
+	 zMI9fk6tHKAX6T8jqy/gyeWAWNyF/XF6d541SOs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Qi Xi <xiqi2@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Xu Xin <xu.xin16@zte.com.cn>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 375/869] mm/ksm: mark migration stores with WRITE_ONCE()
-Date: Sat,  7 Nov 2026 08:50:57 -0500
-Message-ID: <20261107134905.820909018@linuxfoundation.org>
+Subject: [PATCH 6.18 376/869] mm/page_isolation: fix UBSAN shift-out-of-bounds warning
+Date: Sat,  7 Nov 2026 08:50:58 -0500
+Message-ID: <20261107134905.868910374@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,79 +76,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Qi Xi <xiqi2@huawei.com>
 
-[ Upstream commit d3863210464f69c18615cbe400d48a6e53e770d4 ]
+[ Upstream commit eba0e6297edd60a85bc96ff5cfb734d066af62dd ]
 
-ksm_get_folio() deliberately samples stable_node->kpfn and folio->mapping
-without taking the folio lock because the KSM folio may be migrated
-concurrently.  folio_migrate_ksm() updates the same state using plain
-assignments.
+Patch series "mm/page_isolation: fix UBSAN shift-out-of-bounds in
+isolate_single_pageblock", v3.
 
-The reader can load the old kpfn, then the migrator can store the new
-kpfn, execute smp_wmb(), and clear the old folio's mapping before the
-reader checks that mapping.  Thus the initial kpfn load can overlap its
-update and the subsequent mapping load can overlap the clear, with no
-common lock.  This leaves marked READ_ONCE() accesses racing with plain
-stores.
+Patch 1 fixes a UBSAN shift-out-of-bounds warning in the PageBuddy branch
+of isolate_single_pageblock() triggered by concurrent buddy allocation.
 
-The kernel reported:
+Patch 2 addresses the same class of issue in the PageCompound branch,
+where racy compound_order() and compound_head() reads could lead to
+out-of-range shifts or incorrect page skipping.
 
-  BUG: KCSAN: data-race in folio_migrate_ksm / ksm_get_folio
+This patch (of 2):
 
-  read (marked) to 0xffff8ce401421330 of 8 bytes by task 48 on cpu 3:
-   ksm_get_folio+0x7f/0x2a0
-   ksm_scan_thread+0x1635/0x3330
-   kthread+0x1af/0x1f0
+A contig-range allocation racing with buddy allocation on the adjacent
+pageblock can trigger:
 
-  write to 0xffff8ce401421330 of 8 bytes by task 102 on cpu 1:
-   folio_migrate_ksm+0x6a/0xd0
-   folio_migrate_flags+0x193/0x420
-   __migrate_folio.isra.0+0x162/0x1a0
-   migrate_folio+0x4c/0x70
-   move_to_new_folio+0xd6/0x170
+ UBSAN: shift-out-of-bounds in mm/page_isolation.c:393:15
+ shift exponent -749042176 is negative
+ Call trace:
+  isolate_single_pageblock
+  start_isolate_page_range
+  alloc_contig_frozen_range_noprof
+  alloc_contig_range_noprof
 
-Use WRITE_ONCE() for both stores to pair them with the existing lockless
-reads.  This preserves the existing smp_wmb()/smp_rmb() migration protocol
-and control flow while preventing compiler transformations of the shared
-accesses.
+isolate_single_pageblock() first calls set_migratetype_isolate() with
+zone->lock held, which marks the pageblock MIGRATE_ISOLATE and moves any
+free page straddling the boundary out of the way.  Once the lock is
+dropped, it scans the MAX_ORDER_NR_PAGES-aligned window [start_pfn,
+boundary_pfn) locklessly, only to skip the free pages already handled
+above and to detect in-use pages straddling the boundary.  Since this
+scan only reads page state to decide how far to skip and returns -EBUSY
+on a straddling in-use page, it does not take the lock.
 
-Link: https://lore.kernel.org/20260824112433.191301-1-nicoyip.dev@gmail.com
-Fixes: c8d6553b9580 ("ksm: make KSM page migration possible")
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+The window also covers the adjacent pageblock, whose free pages stay on
+the normal movable/CMA freelist and can be allocated concurrently.  So
+after the scan observes PageBuddy(page), another CPU can allocate the
+page, leaving a stale value in page->private that makes "1 << order" shift
+out of range.
+
+Use buddy_order_unsafe() with READ_ONCE to read the order, and validate
+it is within MAX_PAGE_ORDER before shifting to prevent UBSAN warnings.
+
+Since pageblock_isolate_and_move_free_pages() already handles free pages
+straddling boundary_pfn under zone->lock, bail out with -EBUSY instead
+of VM_WARN_ON_ONCE() when a PageBuddy page appears to cross the boundary
+during the lockless scan.
+
+Link: https://lore.kernel.org/20260825120549.966271-2-xiqi2@huawei.com
+Fixes: b2c9e2fbba32 ("mm: make alloc_contig_range work at pageblock granularity")
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Xu Xin <xu.xin16@zte.com.cn>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/ksm.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ mm/page_isolation.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/mm/ksm.c b/mm/ksm.c
-index 4f672f4f21407..80274ace8155e 100644
---- a/mm/ksm.c
-+++ b/mm/ksm.c
-@@ -1065,7 +1065,8 @@ static inline void folio_set_stable_node(struct folio *folio,
- 					 struct ksm_stable_node *stable_node)
- {
- 	VM_WARN_ON_FOLIO(folio_test_anon(folio) && PageAnonExclusive(&folio->page), folio);
--	folio->mapping = (void *)((unsigned long)stable_node | FOLIO_MAPPING_KSM);
-+	WRITE_ONCE(folio->mapping,
-+		   (void *)((unsigned long)stable_node | FOLIO_MAPPING_KSM));
- }
+diff --git a/mm/page_isolation.c b/mm/page_isolation.c
+index f72b6cd38b958..2ec974fa9726d 100644
+--- a/mm/page_isolation.c
++++ b/mm/page_isolation.c
+@@ -380,13 +380,19 @@ static int isolate_single_pageblock(unsigned long boundary_pfn,
+ 		}
  
- #ifdef CONFIG_SYSFS
-@@ -3248,7 +3249,7 @@ void folio_migrate_ksm(struct folio *newfolio, struct folio *folio)
- 	stable_node = folio_stable_node(folio);
- 	if (stable_node) {
- 		VM_BUG_ON_FOLIO(stable_node->kpfn != folio_pfn(folio), folio);
--		stable_node->kpfn = folio_pfn(newfolio);
-+		WRITE_ONCE(stable_node->kpfn, folio_pfn(newfolio));
+ 		if (PageBuddy(page)) {
+-			int order = buddy_order(page);
++			unsigned int order = buddy_order_unsafe(page);
+ 
+-			/* pageblock_isolate_and_move_free_pages() handled this */
+-			VM_WARN_ON_ONCE(pfn + (1 << order) > boundary_pfn);
+-
+-			pfn += 1UL << order;
+-			continue;
++			/* buddy_order_unsafe() is racy. Validate the order before shifting. */
++			if (order <= MAX_PAGE_ORDER &&
++				/*
++				 * pageblock_isolate_and_move_free_pages() splits
++				 * cross-boundary PageBuddy, verify it.
++				 */
++			    pfn + (1UL << order) <= boundary_pfn) {
++				pfn += 1UL << order;
++				continue;
++			}
++			goto failed;
+ 		}
+ 
  		/*
- 		 * newfolio->mapping was set in advance; now we need smp_wmb()
- 		 * to make sure that the new stable_node->kpfn is visible
 -- 
 2.53.0
 
