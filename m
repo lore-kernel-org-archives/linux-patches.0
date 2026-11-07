@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061543;
-	b=5O00lvo6nsDmK6SW1MIeT4U99dDuTtYEmUtEcG2cNoHzPAA9vY8Hw/9FiDiOJgRyq5cj
-	 JDKpwPfgXmSFAVN1EYhKQnP7+AfbFKyqfHjtVEYFzGTBDlf1d23tKGCeu4PGj19mWvlRL
-	 b58BmCNgh+pp4AN1Ofw74xlLB/5BBTbnDsEekaOI6njc2YB1vrwZEQ18Nk82sOppSEuUq
-	 tdSzBoRLH5b2vxQLcpRd1g5JM3FqQV6xx1alc7rnxczITc8TDouzTEh6ptQalleiSZ2ah
-	 Bw6GT5G+4tP2YNf2jDy3hEpmqe50B+R0WZud09w8hyMmH8h2nXoEWGKgUc5wtOkIFzA==
+	t=1794061544;
+	b=2uqDrgEDFWCSBoPeottP59NAsISJFbUAFTdAx+Kjca3lkfJDzpeOli03VkS76Gfkr3du
+	 +4OZ/Yqv2ZcPkscECcr4zaQr+H2w7L2lB2o/7xzspvWR9NxRotgDxpXzcPLjU8gQeYj9j
+	 C38PeNZX5fl5mqFDcEpoUj8ki8G89sJ6wXd4OifjExrxrKlLkHT2+JLrP1epeFA3EXqaH
+	 Wq24gOgTIAZBowtp3ANDBKyoinPCyGwdlydZREm86wXwWnWItr7hGBkeG2v3nT56eJbXZ
+	 W6T1M7Q2yn4zfyJW38Tr1xEOsWwLDBLGUxdZyra1A6eEDPipiEqhDrlFoeNjyG6ccgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061543;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qlb+UqbFsSP31277AAT86tPMifVb20BqKB2Frdd+vg4=;
-	b=qlVOKFIGkoll4pIOAjzToZH5qkYTU98sX0I/jXeC5EyGRSdIUoHHYM7CjzCGugysOBvL
-	 8Ff2qxWKSrB8Ip2x7dmm1vW/5uNEFBN0crQn4jQjxw3SUpgh8tDLCRPOyR6CJ2HtuEqiw
-	 WceN6DrlIuSHGHfQptERE9mnp8v3F766o62ZhJSxOa3chtZuFVnjU/38v5X2avVh4ZZnQ
-	 638BqX56to2Aod3D4pkRhcjwPmhi9OYvZND9z9YiUT8uWvbCe37z02U1eojdsVQV7XqTT
-	 O69iy3Mda3v77Y4PZyr5AZsBLZf8hHm9JYllVozlP7nspclHDWmCA/P/RQbIWKmHpkg==
+	bh=MkhghfqilhVT/ckmRUQBhllwVdUXmL2prpoVCxMOAT8=;
+	b=xKUaBYD7MN77grV+z80jvaYfl7al9mJi6Noq/Hgndexfq0/SGwJVpxHyubxcVAaIeTuX
+	 h8Xk3NoRktC/PYoUYIx84BD/UCpuRZ3yP2KYp2qQ1qmr5TS+M7g7BkI7oZNbT4PI/G0yA
+	 yCYeR7Mxs0g+QxxTFn/nP8E5wT+r9uPk+xQBngjqdpJY3P5b0mptnU10Y9ZKbAOgtVS8L
+	 7Jnkw2D+wWGdTlByCr5qjrajKOjFx7BwPvVUblq7YJzNdKNbMXjUI+eSZBVulyX+5PMyD
+	 GMzDty5ak/95Fa4CSpv7+HWc2KWREbHxR/4qq+VrTbTsHsSG0KMK4u4soCa6iYa8LtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="W/BkTH0W";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=brp1MH+5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FCB606A326;
-	Sat,  7 Nov 2026 14:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720B5606A326;
+	Sat,  7 Nov 2026 14:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W/BkTH0W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0181F0089F;
-	Sat,  7 Nov 2026 14:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=brp1MH+5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E1C1F0089F;
+	Sat,  7 Nov 2026 14:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061542;
-	bh=Qlb+UqbFsSP31277AAT86tPMifVb20BqKB2Frdd+vg4=;
+	s=korg; t=1794061544;
+	bh=MkhghfqilhVT/ckmRUQBhllwVdUXmL2prpoVCxMOAT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W/BkTH0Wof2gKz9i0LKzKeSL7gUpvAEH6/e7baM1OKjw7nJ5gVuaykC4U2AiqjEW8
-	 6Xn+OvUn3uDA5WvLWwL0bKWVRYju5ISn7YT/kcm2kBMomhDLN1cDm9EzoaMfaK9sSD
-	 fyeitUchup5j5fRK/goznjzvJtGb3rFx2oXHl5pQ=
+	b=brp1MH+5dcxmCUB+2FFrr675wYDU1S4F7YO/WGJABzDXb2lOamiICh0zi9vbnrl4L
+	 H1O/kJwqbPyDQrIfrjYckAamj3Br+x5c/kcfkH7/mNWLZVWnTIwJ0++AfGXJk26s77
+	 fTm8OWNtPOa/hcls9blX3ihlaFxyWNKDrKnWRz5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.12 0620/1536] s390/zcrypt: Fix out-of-bounds ptr advance in cca_query_crypto_facility()
-Date: Sat,  7 Nov 2026 08:43:56 -0500
-Message-ID: <20261107135014.946366420@linuxfoundation.org>
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 0629/1536] objtool/rust: add one more `noreturn` Rust function for Rust 1.101.0
+Date: Sat,  7 Nov 2026 08:44:05 -0500
+Message-ID: <20261107135015.198812153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,87 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 9fd7fca66735307fd7afa3450882a55ef80f2add upstream.
+commit 6b704ec9007a3f23ec5ded8f320825ac444f307d upstream.
 
-The FQ reply parser code blindly advanced the walk pointer by a length
-value read directly from the hardware reply payload without checking
-that the advance stayed within the allocated reply buffer. A corrupt
-or malicious device response could push ptr beyond the cprbmem region,
-causing an out-of-bounds dereference or kernel memory exposure via the
-subsequent memcpy().
+Starting with Rust 1.101.0 (expected 2026-12-24), `objtool` may report:
 
-Fix this by tracking the remaining reply buffer space in a variable
-and validating each device-supplied length field against it before
-advancing or dereferencing the pointer.
+    rust/kernel.o: warning: objtool: _R..._4core6result13unwrap_failed...()
+    falls through to next function _R..._4core6result13unwrap_failed...()
 
-Fixes: 2004b57cde6b ("s390/zcrypt: code cleanup")
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+(and others) due to calls to the `noreturn` symbol:
+
+    core::result::unwrap_failed::unwrap_failed_inner
+
+Rust introduced this helper when making `unwrap_failed` generic [1]. The
+existing entry for `unwrap_failed` does not match the new helper.
+
+Thus add the mangled one to the list so that `objtool` knows it is
+actually `noreturn`.
+
+See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+for more details.
+
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://github.com/rust-lang/rust/pull/164059 [1]
+Assisted-by: LLM
+Link: https://patch.msgid.link/20261018131313.59391-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_ccamisc.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ tools/objtool/check.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/s390/crypto/zcrypt_ccamisc.c
-+++ b/drivers/s390/crypto/zcrypt_ccamisc.c
-@@ -1559,6 +1559,7 @@ int cca_query_crypto_facility(u16 cardnr
- 		u8  subfunc_code[2];
- 		u8  lvdata[];
- 	} __packed * prepparm;
-+	size_t datalen;
- 
- 	/* get already prepared memory for 2 cprbs with param block each */
- 	rc = alloc_and_prep_cprbmem(parmbsize, &mem, &preqcblk, &prepcblk);
-@@ -1604,27 +1605,44 @@ int cca_query_crypto_facility(u16 cardnr
- 	prepcblk->rpl_parmb = (u8 __user *)ptr;
- 	prepparm = (struct fqrepparm *)ptr;
- 	ptr = prepparm->lvdata;
-+	datalen = parmbsize - 2 * sizeof(u8);
- 
- 	/* check and possibly copy reply rule array */
- 	len = *((u16 *)ptr);
-+	if (len > datalen) {
-+		ZCRYPT_DBF_ERR("%s reply rule array len %u exceeds datalen %zu\n",
-+			       __func__, len, datalen);
-+		rc = -EIO;
-+		goto out;
-+	}
-+	datalen -= sizeof(u16);
-+	ptr += sizeof(u16);
- 	if (len > sizeof(u16)) {
--		ptr += sizeof(u16);
- 		len -= sizeof(u16);
- 		if (rarray && rarraylen && *rarraylen > 0) {
- 			*rarraylen = (len > *rarraylen ? *rarraylen : len);
- 			memcpy(rarray, ptr, *rarraylen);
- 		}
-+		datalen -= len;
- 		ptr += len;
- 	}
- 	/* check and possible copy reply var array */
- 	len = *((u16 *)ptr);
-+	if (len > datalen) {
-+		ZCRYPT_DBF_ERR("%s reply var array len %u exceeds datalen %zu\n",
-+			       __func__, len, datalen);
-+		rc = -EIO;
-+		goto out;
-+	}
-+	datalen -= sizeof(u16);
-+	ptr += sizeof(u16);
- 	if (len > sizeof(u16)) {
--		ptr += sizeof(u16);
- 		len -= sizeof(u16);
- 		if (varray && varraylen && *varraylen > 0) {
- 			*varraylen = (len > *varraylen ? *varraylen : len);
- 			memcpy(varray, ptr, *varraylen);
- 		}
-+		datalen -= len;
- 		ptr += len;
- 	}
- 
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -213,6 +213,7 @@ static bool is_rust_noreturn(const struc
+ 	       str_ends_with(func->name, "_4core6option13expect_failed")				||
+ 	       str_ends_with(func->name, "_4core6option13unwrap_failed")				||
+ 	       str_ends_with(func->name, "_4core6result13unwrap_failed")				||
++	       str_ends_with(func->name, "_4core6result13unwrap_failed19unwrap_failed_inner")		||
+ 	       str_ends_with(func->name, "_4core9panicking5panic")					||
+ 	       str_ends_with(func->name, "_4core9panicking9panic_fmt")					||
+ 	       str_ends_with(func->name, "_4core9panicking14panic_explicit")				||
 
 
