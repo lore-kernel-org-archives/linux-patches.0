@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061044;
-	b=E98Q37mZL4KnNPZ3fq2mUV07TkwdzvRACBymmReorYLCs93O5XMG87Xj6DE1Vq2Rr831
-	 Pk6U7Fms7ikW+mw+RKsaj9x6VEuiY4ZIBvl03r1ryaTBFzumLjVgS10PmI2gKbZ3sQNXY
-	 u6+veKJ2mNzbBWReG9gIrTt4WX808QVWG/dPu6PvYwTqIvUJHJYUFdVDUdCb/g5clJNCk
-	 WgxRN/rjzf8ZVmHAhKSbxrPd15nFpvQFZajD8OC8g/Z2Z2keAiaroa1doKnG8kO1E8qG4
-	 w77H5BO70PyaTltyEglyrZK3TdQjLIkMDbDlwUhE6Ny00bzcjtvjiLJFx7j4/+pSu9A==
+	t=1794061045;
+	b=oFeLw4DCMegXIervrc5ks9DfFP/iWS4kDTxdXvBEAl4Pu0vbiU2k2Hci9LvvddxpCxaM
+	 SYNVjC3yy9e52xfz4o2ewzEefM8lEA90ZSKV9cx0xdvxFtGJ38o4tiBdnVOfEsFfQRgfr
+	 gVZoPaZ/SK7mBEdXtALfNTB3ETt1IRlgbqyBpU7o+xfj/x1XE7FKDFw0ECb1GcMsEKyv5
+	 xbdA9jF78ojH5JWuiRd21KG8naq+6oB8E2tLNtPOpQh8pxtOnlYxMU9EYC6mpFzLkteZ9
+	 N9XdS+ErI0Cwad+LM46ZEC/ziRHliUF4kDY89U1KXfPTtvr5IQvsJlNgZHrQ+AOuWUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061045;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1jMtN0g5iz6wJRHEOp6pI2W/os2WM71WO2ZLkfO9BoM=;
-	b=eXTThfHzhgq3UrgeJfK+1J9eBSYztXEjDAXdI8YxLm6JqfdeU1XY0WJb5TVlinZMZTsR
-	 SW1AeddQDUlrvHsqW/LCTUud0VOha7/QQXK182bcRznJLnB0fdFot6vgq/BiSrXx9vIAa
-	 T1S+l3kyhES4+KjYE8/e1uLrponULW+h1vMUYzi82Q1GPXvIp24KsZR3g9z3Yv20iT4ML
-	 vl4vGYw6T6tgf5k9OBOJMH4k9MrP0vqaSDEr1n77jgs+XswwwWL73vCDehJ6m8C4PY60V
-	 yX6Fh1+AmbXNgEw1jEDXdAwmNNzUYm64IIdrVC7a4fWd8pROQKZBzsa6/4yPnEpr7/Q==
+	bh=e7tCqhY6FhFCw5NY0OlT/l2nu06fnu1PvzkCFQwq27g=;
+	b=1CVZAVRj0UmJ5LMsWxuG9Y/wQJTT6VxDoctBAn07rqITW3FrptkOvOFjx4qa76OSWCvP
+	 N3Boc1WMmR1/QyHj13HWPvD7AfeYEo6R5R58pqbbzAAw6leCZdE6Lckce0SPMGfFieFQ1
+	 be6Ozj98jPoc/VliAUuFO/jEEHrH8mn+peSt+8iVH8Vkn0GLyOdBA8vg4fF9koJijB2ND
+	 7Fv194ERHSlxxGR9MrTBbDnzPdVoE4zbmTEQw31dir8TC2L8P6IrWFywJbW00PZshBCzd
+	 rkHzL9w8FHLTaqVjy159jt1RJF2D0aRAAv7z1yVLbbSBtNDMHyqwoM/0TaZRk1GXyRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Fq4zn/i+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMb7ID9b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6586606D80B;
-	Sat,  7 Nov 2026 14:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CE2606D80B;
+	Sat,  7 Nov 2026 14:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fq4zn/i+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725E51F0089F;
-	Sat,  7 Nov 2026 14:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMb7ID9b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA1A1F0089F;
+	Sat,  7 Nov 2026 14:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061043;
-	bh=1jMtN0g5iz6wJRHEOp6pI2W/os2WM71WO2ZLkfO9BoM=;
+	s=korg; t=1794061044;
+	bh=e7tCqhY6FhFCw5NY0OlT/l2nu06fnu1PvzkCFQwq27g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fq4zn/i+dJ4rlznfg8Q9vGcn4Y+hMRoSx5eYDQSGulHkEhbt5lAR0iQ5ySProAllG
-	 hGrABwsW8RDTBxYzh3JXgoICB/in6fXEKolL3vGmdTrpFr/VfAbccVaZPgq/HCg1vK
-	 EKa0Tc918gL0lMrmGFUScuBwmRGAUO51gzevisSI=
+	b=gMb7ID9biY+P/1r3TUfHwIhydXc7A7FI03D3az5EzLrzmg/Tt9FN8JzU2zr6sAmDW
+	 RyWUwAUvqG25Iu1folyVR4cM6vv2HLdEasAg0pMW/ZsOTVq9zX6hbn99UCBbBi4JST
+	 VqJM98hvJ6iFRXhU9g0LTOJNTUAqesUanOnU7NMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com,
-	syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>,
+	Jinqian Yang <yangjinqian1@huawei.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0327/1536] ALSA: hda/intel: Add sanity check for BAR0 size
-Date: Sat,  7 Nov 2026 08:39:03 -0500
-Message-ID: <20261107135006.894700738@linuxfoundation.org>
+Subject: [PATCH 6.12 0370/1536] virtio_ring: fix infinite loop in virtnet_poll_cleantx when device is broken
+Date: Sat,  7 Nov 2026 08:39:46 -0500
+Message-ID: <20261107135008.040084697@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,53 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jinqian Yang <yangjinqian1@huawei.com>
 
-[ Upstream commit 9895573b0185f922be4cf500a0f2e5b9560ab1c3 ]
+[ Upstream commit 0d0eff39ceb3dcbf7847a6f4517086c207c60081 ]
 
-The recent reports from syzkaller showed that we can bind any wild PCI
-device to HD-audio controller, and if PCI BAR of the device is too
-small, it may lead to a crash, as the driver believes as if the full
-register range were accessible.
+virtnet_poll_cleantx() contains a do-while loop that cleans up
+transmitted TX buffers and calls virtqueue_enable_cb_delayed() to check
+whether more buffers need processing. When the virtio backend stops
+responding during guest reboot, used->idx is never updated, so
+virtqueue_enable_cb_delayed() always returns false and the loop never
+terminates. Then it will block reboot process, and the guest will hang.
 
-For avoiding such a problem, add a safeguard before the actual probe
-to check the available BAR0 size.
+The problem occurs during guest reboot under network traffic:
 
-Note that the threshold (0x200) is chosen to cover all needed
-registers at probing.  But this doesn't mean that it would cover fully
-for all features including the extended ones.
+  1. kernel_restart() -> device_shutdown() traverses the device list
+  2. virtio_dev_shutdown() calls virtio_break_device() which sets
+     vq->broken = true
+  3. virtio_dev_shutdown() then calls virtio_synchronize_cbs() to wait
+     for in-flight callbacks to complete
+  4. A virtio interrupt fires, softirq is deferred to ksoftirqd which
+     calls net_rx_action() -> virtnet_poll() -> virtnet_poll_cleantx()
+  5. virtnet_poll_cleantx() enters the do-while loop and never exits
+     because the QEMU backend has stopped updating used->idx, despite
+     vq->broken having been set to true in step 2.
 
-Reported-by: syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=10cd2d1efe8eeb604bee
-Reported-by: syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5ebe7cd17e48b4293660
-Link: https://patch.msgid.link/20260813150354.763502-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Since the loop runs inside ksoftirqd (a SCHED_OTHER kthread), it is
+visible to the scheduler and does not trigger a hard lockup. However,
+the kthread never leaves the loop, so RCU detects it as a CPU stall
+and reports it periodically. Meanwhile, the reboot process remains
+blocked in device_shutdown() because virtio_dev_shutdown() cannot
+complete its synchronization step, and the guest hangs permanently.
+
+This can be reproduced on a guest with a virtio-net device: run iperf3
+traffic in the guest, then trigger reboot. The reboot occasionally hangs
+permanently with RCU stall on ksoftirqd.
+
+Observed on ARM64 KVM guest:
+
+  CPU#1 RCU stall (ksoftirqd/1), repeated periodically:
+    virtqueue_enable_cb_delayed_split <- virtnet_poll <- __napi_poll <-
+    net_rx_action <- handle_softirqs <- run_ksoftirqd <-
+    smpboot_thread_fn <- kthread
+
+Fix by adding a vq->broken check in virtqueue_enable_cb_delayed(), so
+that the loop exits immediately when the device is broken, allowing
+the device shutdown to proceed.
+
+Signed-off-by: Jinqian Yang <yangjinqian1@huawei.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260716115940.394832-1-yangjinqian1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/virtio/virtio_ring.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index d4e325b785332..48fe74ad34124 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2156,6 +2156,15 @@ static int azx_probe(struct pci_dev *pci,
- 		dev_warn(&pci->dev, "dmic_detect option is deprecated, pass snd-intel-dspcfg.dsp_driver=1 option instead\n");
- 	}
+diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
+index 2dfc815c54f68..92a96d592735c 100644
+--- a/drivers/virtio/virtio_ring.c
++++ b/drivers/virtio/virtio_ring.c
+@@ -2544,6 +2544,14 @@ bool virtqueue_enable_cb_delayed(struct virtqueue *_vq)
+ {
+ 	struct vring_virtqueue *vq = to_vvq(_vq);
  
-+	/* A sanity check against wild device binding;
-+	 * here the range 0x200 is enough for the registers used at probe,
-+	 * but it doesn't mean covering all HD-audio registers
++	/*
++	 * When the device is broken there is no point in polling used->idx,
++	 * the backend will never update it. Return true to let callers
++	 * exit their cleanup loops instead of spinning forever.
 +	 */
-+	if (pci_resource_len(pci, 0) < 0x200) {
-+		dev_err(&pci->dev, "Too small PCI BAR0\n");
-+		return -EINVAL;
-+	}
++	if (unlikely(vq->broken))
++		return true;
 +
- 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
- 			   0, &card);
- 	if (err < 0) {
+ 	if (vq->event_triggered)
+ 		data_race(vq->event_triggered = false);
+ 
 -- 
 2.53.0
 
