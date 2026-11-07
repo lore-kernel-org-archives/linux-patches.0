@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064922;
-	b=QASujdJqGirEWLjjIALHimEoTylDyo0qLTZZbgyjL+Gf/Zvr05SZXZbhq8UieA1xTL2h
-	 EJ4Ee+J9MWKACZNSeWz/tOWSqNt5NGTDec/IXp5/Jo4fhPT/UHdcZ5HUhfBFji9fZ1PbW
-	 phgWv7vZ15CU7PTZuq2IOHFT2nZArMgZwJibwapJNBr3ZlRUlasmpW2HhTNwii6UmJrVq
-	 SA1V3ysCHkAiNWsfU2uYsUpPl6Xyli8ip5KFRSf9J75wd3J3csdLam1N1U0+VSfFVs/HU
-	 kDVZD4HBn0yej65VXLSgmVrJpETlVYAKy5aSJwTM5CNuOECEogWf1k9polWavK2dc4g==
+	t=1794064924;
+	b=vN65Cj7HmbS7t6FB4Ihr+MXXTPyj2OBd2Je4U5MybJADm6nCd0XGMxP7AaM279cCpQ+z
+	 67y8oprEnoSqny9BK3TqiNZAfX6Jy1fjPjdv2p+JogaTaKiFQXXdiOgyQ0pduCbqRmV9E
+	 +OtMp+7KXL3gub0SuUTb2pAxIj6+suVuJ717y3iOU98BMBLjXlWwO/mIh+IQNTd6T+vjD
+	 /avH8+ko4p0ZahDP+eq+vrY0Q1jpJAUuCiQ6mzmQQ3IoHWdeqQpzDrYDtEv23qooh9Xsk
+	 jbnV7EhG+loNeDDbtBTXjNOXZLETez8VV2yrBz65HE0AyrvA/dt5ugx3RbILEHi4I2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064922;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z+AfgfqUqflqsTkkW3mBdOG7SmHImeitXf6KNFuPK9I=;
-	b=UGvm1awMXDp7H1niYcYVvCnZbs3f8MPy/a91KkCKeq29lsLRogxnEtm75+bJGU+1/P2Q
-	 v13YcmQzEr9znrVFQ5Kmd0a0v8HDxGHpuvhEaOrMkvXIN+/yNMJGDAa5zW0TKxpnAmRZz
-	 BjjyxdO4nMyPLSB9ZvAFKUs158PIKO6ZmcHLFs2KuJhUkdCG7g1HGtA4rf/NGiiDm48sJ
-	 x+e62X6xP4hLBwVbrC40G9j27azCnwv/JGRLodGFkZBXYSFC7y2PGsKYWvsG7IV45OvaQ
-	 UJmYumR5tiuAEnT3IagX/pFAKu7jevEXTTJ8vdVeau1yes/n+uNSs34G7Nub6TfJ2DQ==
+	bh=lwn2IVJUFg7Itc1QN2xe8R1wRXR83WM2fvSe2+/zRGk=;
+	b=bw0Z6nBpBrZr9GQpQUOFyRBKf2/+M4eJbfZ1xQyBx1gnZIaqaGXk+oAGWdYBhgsrQ2Pl
+	 eNMs7/O8ZjPHPeqU+/93NOvYCc8cHTPfR8A+DQOl5BkuJa8kTji+etT6S0Y4AgLd9+PqF
+	 d62VP24YAzUyzBaU92Qr/iUGMUCEfo+XhaAegSxCQrB9KzU5NwJQl0yM6ticqaAi+aVZr
+	 eKo/n1U+IkCtD/EBI8mi/kx+ZbK5AjJV2zTsb/BCh1MvD6ihK0ZATLF2T4ox4vDEjVlXu
+	 30PCGFBi3SV5eHzw6aUhPI+1Gr6MTFzFWVMTmoIEEE++hJh2w+MDB13ehuv2FTk8KDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukLW+UqF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RQFoF/46";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339B4606A33E;
-	Sat,  7 Nov 2026 15:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FD1606A33E;
+	Sat,  7 Nov 2026 15:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukLW+UqF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22C81F0089F;
-	Sat,  7 Nov 2026 15:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQFoF/46
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C2B1F0089F;
+	Sat,  7 Nov 2026 15:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064922;
-	bh=Z+AfgfqUqflqsTkkW3mBdOG7SmHImeitXf6KNFuPK9I=;
+	s=korg; t=1794064923;
+	bh=lwn2IVJUFg7Itc1QN2xe8R1wRXR83WM2fvSe2+/zRGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ukLW+UqFGOqgppSeWh85bos21LbmzD6F7WXMHHgtwK2jpsUxBMA6Md23StAHRryeP
-	 vExbLyzdzhLNkehZbbvu+YDzpATESbp35tAlNjGNGa0gqCPlm2enHjNxtm21dPbIPT
-	 5WjkUhxqjoINUNhJCPC8kJjdIodNggm0T5kc7BQs=
+	b=RQFoF/46bY5KE6UkRaJHfGHa4VspjMxV54vgan3pRhJlGFJy4yX5bvEmVH+WSJd65
+	 tKAcpxvaP9soAz7L7MFgJWCBoa+WRSyWAgY/QWb144zZEorvH/IMpifCr7jZAnFulk
+	 FlPI+5wZ3biJdY2mVWStE0zcimfYiJH2RUTLEBm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Au Dang <au.dang.jx@renesas.com>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	syzbot+9bda1b9fbb7fbdf9b62b@syzkaller.appspotmail.com,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0792/1257] irqchip/renesas-rzv2h: Preserve TIEN state in rzv2h_tint_set_type()
-Date: Sat,  7 Nov 2026 08:51:28 -0500
-Message-ID: <20261107135001.201194267@linuxfoundation.org>
+Subject: [PATCH 7.3 0819/1257] net: erspan: set lltx to avoid sch_direct_xmit deadlock
+Date: Sat,  7 Nov 2026 08:51:55 -0500
+Message-ID: <20261107135001.961800188@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,61 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Au Dang <au.dang.jx@renesas.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit 42bedd4af8cd50c32a1560d8744bd22d25be79cc ]
+[ Upstream commit 2d36ec73836e83175deb467fd494c61006107e5d ]
 
-rzv2h_tint_set_type() clears TIEN while switching the TINT source and
-then unconditionally sets it again, enabling the interrupt even if it
-was disabled before the call.
+The ERSPAN xmit path re-enters the network stack, causing nested
+acquisition of _xmit_lock on the underlay device while already holding
+the ERSPAN device's _xmit_lock, creating an ABBA deadlock. This happens
+for both IPv4 ERSPAN (erspan_xmit() -> ip_tunnel_xmit()) and IPv6 ERSPAN
+(ip6erspan_tunnel_xmit() -> ip6_tnl_xmit()):
 
-Restore the previous TIEN state instead of forcing it on.
+  sch_direct_xmit [lock erspan] -> erspan_xmit -> ip_tunnel_xmit ->
+  ip_output -> __dev_queue_xmit -> sch_direct_xmit [lock underlay]
 
-Fixes: 0d7605e75ac2 ("irqchip: Add RZ/V2H(P) Interrupt Control Unit (ICU) driver")
-Signed-off-by: Au Dang <au.dang.jx@renesas.com>
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+  sch_direct_xmit [lock erspan] -> ip6erspan_tunnel_xmit -> ip6_tnl_xmit ->
+  ip6_output -> __dev_queue_xmit -> sch_direct_xmit [lock underlay]
+
+Set dev->lltx = true so HARD_TX_LOCK() skips the spinlock for ERSPAN.
+This is safe as the ERSPAN xmit path has no shared mutable state: o_seqno
+is atomic, TX stats are per-CPU u64_stats, dst_cache is per-CPU, and
+o_flags is no longer modified in the xmit path since commit 9958e69b9893
+("gre: fix ERSPAN o_flags race/corruption in xmit and fill_info").
+GRETAP, the sibling device with identical xmit structure, already sets
+lltx.
+
+Reported-by: syzbot+9bda1b9fbb7fbdf9b62b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9bda1b9fbb7fbdf9b62b
+Fixes: 84e54fe0a5ea ("gre: introduce native tunnel support for ERSPAN")
+Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
+Cc: stable@vger.kernel.org # 9958e69b9893 ("gre: fix ERSPAN o_flags race/corruption in xmit and fill_info")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261014095927.635132-1-tommaso.merciai.xr@bp.renesas.com
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261008093824.119453-1-yun.zhou@windriver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-rzv2h.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/ipv4/ip_gre.c  | 1 +
+ net/ipv6/ip6_gre.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/irqchip/irq-renesas-rzv2h.c b/drivers/irqchip/irq-renesas-rzv2h.c
-index 1a4703a353e95..485c3eea76328 100644
---- a/drivers/irqchip/irq-renesas-rzv2h.c
-+++ b/drivers/irqchip/irq-renesas-rzv2h.c
-@@ -420,9 +420,9 @@ static void rzv2h_clear_tint_int(struct rzv2h_icu_priv *priv, unsigned int hwirq
- static int rzv2h_tint_set_type(struct irq_data *d, unsigned int type)
- {
- 	u32 titsr, titsr_k, titsel_n, tien;
-+	u32 titsr_cur, tssr_cur, tien_cur;
- 	struct rzv2h_icu_priv *priv;
- 	u32 tssr, tssr_k, tssel_n;
--	u32 titsr_cur, tssr_cur;
- 	unsigned int hwirq;
- 	u32 tint, sense;
- 	int tint_nr;
-@@ -477,6 +477,8 @@ static int rzv2h_tint_set_type(struct irq_data *d, unsigned int type)
- 		if (tssr_cur == tint && titsr_cur == sense)
- 			goto set_parent_type;
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index e4878e9aa6367..149a4e83b6925 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -1367,6 +1367,7 @@ static int erspan_tunnel_init(struct net_device *dev)
+ 	dev->features		|= GRE_FEATURES;
+ 	dev->hw_features	|= GRE_FEATURES;
+ 	dev->priv_flags		|= IFF_LIVE_ADDR_CHANGE;
++	dev->lltx = true;
+ 	netif_keep_dst(dev);
  
-+		tien_cur = tssr & tien;
-+
- 		tssr &= ~(ICU_TSSR_TSSEL_MASK(tssel_n, priv->info->field_width) | tien);
- 		tssr |= ICU_TSSR_TSSEL_PREP(tint, tssel_n, priv->info->field_width);
+ 	return ip_tunnel_init(dev);
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index 04f7c70b7320e..3429543ec77e7 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1864,6 +1864,7 @@ static int ip6erspan_tap_init(struct net_device *dev)
+ 		dev->mtu -= 8;
  
-@@ -489,7 +491,7 @@ static int rzv2h_tint_set_type(struct irq_data *d, unsigned int type)
+ 	dev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
++	dev->lltx = true;
+ 	ip6erspan_tnl_link_config(tunnel, 1);
  
- 		rzv2h_clear_tint_int(priv, hwirq);
- 
--		writel_relaxed(tssr | tien, priv->base + priv->info->t_offs + ICU_TSSR(tssr_k));
-+		writel_relaxed(tssr | tien_cur, priv->base + priv->info->t_offs + ICU_TSSR(tssr_k));
- 	}
- set_parent_type:
- 	return irq_chip_set_type_parent(d, IRQ_TYPE_LEVEL_HIGH);
+ 	netdev_hold(dev, &tunnel->dev_tracker, GFP_KERNEL);
 -- 
 2.53.0
 
