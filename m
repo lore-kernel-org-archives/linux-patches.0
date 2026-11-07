@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063879;
-	b=iqLeFyDvKuUuxJEkwSBTUlxwe/jznqYdkFDKwVCpoqZ4vb6fuV2md9hFVcK6eUnEgdhJ
-	 ISp3N+rFOm/diy5g71N71cXJWZ7IBKiSfYbMHwqBK5lP7HDochcF1pQPT9fi4amyH08+c
-	 t6grbHJwk+FPc/PwpsrChPZlHJR2MgQUhzfElHOvEiBjn9rQbvJb4DmRstnbmvO5It4ld
-	 NKTVC8LXzE6FNsWs5P78yvW5uiQJdr7/m6zS9GQZepIMUcZ5hwlq0KnPjxIoA1qSryeTu
-	 zpVwHIKr74jG+aGVHrHBcbz20v24SOV+cpGIAJO5ROa/mRmrgf2jfJrcqnegMJdiZjw==
+	t=1794063880;
+	b=onrwX7j4byR+34zoa73PoJrfiYjZwdKd+fVEeUgNEKy0gb4CcJuzbOtFYhFFcklxjpWp
+	 fbFPmSGnJA7QUraztuiySx/av/Wd1fpe5eTzrSBeuQSuLVsPseBO4gyHeKINq4lleaWWq
+	 +qETno3yJCwV7GRMXlZ/F3wgJtotQjC/gnvvK/cxkSSSxZu/wBAzvT9Rmda6JPVYRXesp
+	 nWHOptN1fbwuBP2QafdJgiNF4OImY43X2bashPx75tWO7YwIKYdZedi2FsRlrltybA/qa
+	 TteQZgvTFCc5JE0VNTM228HHfl6c20aQsCp3TtCT3c/6k/HM0e76U+AMWZ8OkZHf9UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063879;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063880;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3qDCTQV1mOZVqYmYtf9eEvJgXUHiH0jcMlHHMRnqRpo=;
-	b=WHYhAMQWD8vNnkh0qF8HRWsJ+zgfiKVYwQRELQ+eng9Kf7i2mwvrPKCZ1gCwHHqUwDnS
-	 5AoCCH8qbmtzLapDzd+1G+YC++aXq6REZp3KBqHo3G1US2kTWgZt/LrhjvHv8wYsK0k1G
-	 lLPiJKgjnHwHG62IVD9ikgLpTq/rYqO4zRgNHMNzYK+eoH55Bcz/6tCiJCbg2UIsgI4lU
-	 adgZAV4NkAPyq5OR6VQQ+hEWLaurdTHYSssImDjE94/1/FHdAXseq8orNLb+PQ5yK2b6w
-	 eGKlrqrkRBX/Qq8CsSFfoeNWm7K19vlWPTWTp4IHMXdUDLbP8r4Qm0Abi2HnYquGeaw==
+	bh=5YdndtTa8Pr23BzRp++zXaCGyhS0/Hq7grSvXp/0be8=;
+	b=yh1mzzogDe/N2TwOLqumD7HPXbCM1lco9lYswGmpOMaEZQzEi1ZFMMY4c+5OA+CAg2lw
+	 ZRde0tPdi+xMUyS6gz0J+I7ENORAjbW17OwkAryweCnH5SPTOGPaGoz2Dcu3rG1rD2CSm
+	 vTIefY6dLgx/05koSi0RNbVM8KOhNlbCWzfiHeeU5DqQsWiUyxUHm0HRsY+JAb5OBv4Y2
+	 HM/FDPtlk8XABgE5TZNGAumrq+WKaUfPmhDvPVLCa9eAPO5f7j8waylXkPBboyEFhU2rT
+	 I1NTUPZefFFCFRM60z/kg1xmi+j9MgebB6cSwMTA7m3yndEQ9UD8RkMxk2qH3XfI/4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dIzPbszK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDqq0Usj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41651606A32F;
-	Sat,  7 Nov 2026 15:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D2B606A32F;
+	Sat,  7 Nov 2026 15:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dIzPbszK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60691F0089F;
-	Sat,  7 Nov 2026 15:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDqq0Usj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0F71F008A2;
+	Sat,  7 Nov 2026 15:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063879;
-	bh=3qDCTQV1mOZVqYmYtf9eEvJgXUHiH0jcMlHHMRnqRpo=;
+	s=korg; t=1794063880;
+	bh=5YdndtTa8Pr23BzRp++zXaCGyhS0/Hq7grSvXp/0be8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dIzPbszKzFzo4kTgxaF+ZUYRRfCVbTXa4f5sNh0N4LO1znBkIT4YBwd7GE05GeWlm
-	 RVilO7k4AuWaDN/tF/PRcuWJQ/2zLBTL2CECFdWyERdp5nIWawYE2hlOyC3WY1mqc+
-	 jaV4VwPYO1pTQ2nSC08g/BaZqXri/+Z+n61wXcG4=
+	b=SDqq0UsjxrXCTFEUC9LdTzY3F4C7d/znVtg4wVKkKuta8yZpIdnZPAw7VVD6OxyI2
+	 BzalKSnl4U6yXGQw/BzG0OxsYqMmRwHvODY4HIgApSu2+lQPAWYnmaecyvnZJWOQrl
+	 qs0sf6lQgRK8MpmbVzpABbv2teRna2Hzv+Uz+H4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Guodong Xu <docular.xu@gmail.com>,
+	Yixun Lan <dlan@kernel.org>,
+	"GUO Ren (XuanTie)" <guoren@kernel.org>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0046/1257] soc: qcom: pmic_glink: Fix device access from worker during suspend
-Date: Sat,  7 Nov 2026 08:39:02 -0500
-Message-ID: <20261107134940.681657034@linuxfoundation.org>
+Subject: [PATCH 7.3 0082/1257] riscv: dts: spacemit: k3: fix IMSIC num-guest-ids
+Date: Sat,  7 Nov 2026 08:39:38 -0500
+Message-ID: <20261107134941.639616619@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,99 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: GUO Ren (XuanTie) <guoren@kernel.org>
 
-[ Upstream commit 7d0767c5cd878707fd6711023731549c83563840 ]
+[ Upstream commit 69f95409f0053f787ad60175944080621a8b7d95 ]
 
-For historical reasons, the GLINK smem interrupt is registered with
-IRRQF_NO_SUSPEND flag set, which is the underlying problem here, since the
-incoming messages can be delivered during late suspend and early
-resume.
+The initial K3 device tree used generic/placeholder values for the
+IMSIC guest configuration:
 
-In this specific case, the pmic_glink_altmode_worker() currently gets
-scheduled on the system_wq which can be scheduled to run while devices
-are still suspended. This proves to be a problem when a Type-C retimer,
-switch or mux that is controlled over a bus like I2C, because the I2C
-controller is suspended.
+  riscv,num-guest-ids    = <511>;
 
-This has been proven to be the case on the X Elite boards where such
-retimers (ParadeTech PS8830) are used in order to handle Type-C
-orientation and altmode configuration. The following warning is thrown:
+According to the SpacemiT K3 User Manual this values is incorrect
+for the X100 cores:
 
-[   35.134876] i2c i2c-4: Transfer while suspended
-[   35.143865] WARNING: CPU: 0 PID: 99 at drivers/i2c/i2c-core.h:56 __i2c_transfer+0xb4/0x57c [i2c_core]
-[   35.352879] Workqueue: events pmic_glink_altmode_worker [pmic_glink_altmode]
-[   35.360179] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[   35.455242] Call trace:
-[   35.457826]  __i2c_transfer+0xb4/0x57c [i2c_core] (P)
-[   35.463086]  i2c_transfer+0x98/0xf0 [i2c_core]
-[   35.467713]  i2c_transfer_buffer_flags+0x54/0x88 [i2c_core]
-[   35.473502]  regmap_i2c_write+0x20/0x48 [regmap_i2c]
-[   35.478659]  _regmap_raw_write_impl+0x780/0x944
-[   35.483401]  _regmap_bus_raw_write+0x60/0x7c
-[   35.487848]  _regmap_write+0x134/0x184
-[   35.491773]  regmap_write+0x54/0x78
-[   35.495418]  ps883x_set+0x58/0xec [ps883x]
-[   35.499688]  ps883x_sw_set+0x60/0x84 [ps883x]
-[   35.504223]  typec_switch_set+0x48/0x74 [typec]
-[   35.508952]  pmic_glink_altmode_worker+0x44/0x1fc [pmic_glink_altmode]
-[   35.515712]  process_scheduled_works+0x1a0/0x2d0
-[   35.520525]  worker_thread+0x2a8/0x3c8
-[   35.524449]  kthread+0xfc/0x184
-[   35.527749]  ret_from_fork+0x10/0x20
+ - Advanced Interrupt Architecture (AIA):
+    - M-mode MSI: 512
+    - S-mode MSI: 512
+    - VS-mode MSI: 64
 
-The proper solution here should be to not deliver these kind of messages
-during system suspend at all, or at least make it configurable per glink
-client. But simply dropping the IRQF_NO_SUSPEND flag entirely will break
-other clients. The final shape of the rework of the pmic glink driver in
-order to fulfill both the filtering of the messages that need to be able
-to wake-up the system and the queueing of these messages until the system
-has properly resumed is still being discussed and it is planned as a
-future effort.
+Therefore, S-mode IMSIC (simsic) needs num-guest-ids = 63.
 
-Meanwhile, the stop-gap fix here is to schedule the pmic glink altmode
-worker on the system_freezable_wq instead of the system_wq. This will
-result in the altmode worker not being scheduled to run until the
-devices are resumed first, which will give the controllers like I2C a
-chance to resume before the transfer is requested.
-
-Reported-by: Johan Hovold <johan+linaro@kernel.org>
-Closes: https://lore.kernel.org/lkml/Z1CCVjEZMQ6hJ-wK@hovoldconsulting.com/
-Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
-Cc: stable@vger.kernel.org    # 6.3
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260819-b4-soc-qcom-pmic-glink-fix-device-access-on-worker-while-suspended-v3-1-169b00e0d9d4@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 56f37e391a62 ("riscv: dts: spacemit: add initial support for K3 SoC")
+Cc: stable@vger.kernel.org
+Cc: Guodong Xu <docular.xu@gmail.com>
+Cc: Yixun Lan <dlan@kernel.org>
+Signed-off-by: GUO Ren (XuanTie) <guoren@kernel.org>
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+Reviewed-by: Junhui Liu <junhui.liu@pigmoral.tech>
+Link: https://patch.msgid.link/20260817033038.2286436-1-guoren@kernel.org
+Signed-off-by: Yixun Lan <dlan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/pmic_glink_altmode.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/boot/dts/spacemit/k3.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
-index 13c434f8d03a6..465e5d2316a04 100644
---- a/drivers/soc/qcom/pmic_glink_altmode.c
-+++ b/drivers/soc/qcom/pmic_glink_altmode.c
-@@ -451,7 +451,7 @@ static void pmic_glink_altmode_sc8180xp_notify(struct pmic_glink_altmode *altmod
- 	alt_port->mode = mode;
- 	alt_port->hpd_state = hpd_state;
- 	alt_port->hpd_irq = hpd_irq;
--	schedule_work(&alt_port->work);
-+	queue_work(system_freezable_wq, &alt_port->work);
- }
+diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+index c3f2dce0969c0..f9c2ffedeae80 100644
+--- a/arch/riscv/boot/dts/spacemit/k3.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+@@ -1248,7 +1248,7 @@ simsic: interrupt-controller@e0400000 {
+ 			msi-controller;
+ 			riscv,guest-index-bits = <6>;
+ 			riscv,hart-index-bits = <4>;
+-			riscv,num-guest-ids = <511>;
++			riscv,num-guest-ids = <63>;
+ 			riscv,num-ids = <511>;
+ 		};
  
- #define SC8280XP_DPAM_MASK	0x3f
-@@ -502,7 +502,7 @@ static void pmic_glink_altmode_sc8280xp_notify(struct pmic_glink_altmode *altmod
- 		alt_port->tbt_data = *tbt;
- 	}
- 
--	schedule_work(&alt_port->work);
-+	queue_work(system_freezable_wq, &alt_port->work);
- }
- 
- static void pmic_glink_altmode_callback(const void *data, size_t len, void *priv)
 -- 
 2.53.0
 
