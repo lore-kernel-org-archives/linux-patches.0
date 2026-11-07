@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064554;
-	b=IzPB7DUJs+l+n/haw/HYrtwqpECp/FlWCoeTdRJKKpeE38wDoHzwt6qwwW6fbCeBzOwl
-	 OPUzzkaO29rbELdnnQBpWPa02GdpbYcDp1Pwo8Xe5rvTCP0OoDBmwefqMBJz7V8wrWKSI
-	 qMHPKjCSoupBF1vK4RG5Qi7jGvEzqAJMB2xlkSMVG81Ma75ZlUHm1KJmA9d6r8FpIyaHx
-	 /SlCZSmkv+Z23Msarv023/e+biL4bPTQiu4Sqvi3LXiMo9ngPXdeXUcYXPM3OcjE84pB1
-	 XuTonVOgmbyNisyuZ+f7GPT6O0bPtzR/jPywaHRlxnQ6kxrIUB1VIcObYbii7QUdMaw==
+	t=1794064555;
+	b=XeoSR9qQoWuW0vBtaLchvN05futbauPk0zGcoFABhkWkeJ6Fhuw0SFOdvYSnTVYHTPwA
+	 VfOV3AlxEEhy61Qst68SYRPxDyXkKEBakGmOMI8gCIEnz+qeh8aPGLxU/0Frryp+1JNlO
+	 Nt7sKvTUfNZPGlvfKbLRovLbaMvLxIyA1Tt77wSpWS/DhEQ7ZHOI89TOYDpTA7F8N471i
+	 NCxP+Sl70JxlB7aBSS2RpVpQP6wcXgauAalcl9wSYi/PRRHIxNxwUjPpn+30EHNO8Y4XG
+	 WYKXrFs5yP9kUamgCLyte+4SgIeFHZqrfpa8IBWexDhXYb13opIo7DOdmZh/wXU80Ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f+qcsFv9a0dy+NrcuEgn6STPOrxG6HO3ZahEo9BUvQY=;
-	b=Yk/qci8i7t9HLC3Q0aeSidAEHwSWy7dwF4/a6k1nhAJPhLjvDAQ/u5CNJ/IpefMygxiI
-	 F/BYau8DaohlE1SnFL2kFOqpQlXlTnKs2xx/6xrEn5I7yUdxJSYpO2ryihCKsnJKWO+f5
-	 favssuL/BrKCY0pkdCPipzy1hEFj86uvdqOTV1XZnARmS0A44GU2OfOOosK5DVtGnQ6or
-	 IYTyivpRKVjpcOiHIyiH9Fbw/WYXlELG5ftejc5M0GQOdkxQbCzx1TuDXUVN9Ws18GpjW
-	 T2CubUOXM2RjyJBOFzPde8z1q1zjLxGLy5ieW6WcWLTBUlWQGg1mS/FjEiwNSyDNpHw==
+	bh=/++Mx2Guo09mhg9HhICRz635oC1U1U5l/+7i55vssRo=;
+	b=p3sIquEbiWmum3Su0719ybu/egsVoxHWg0txvML0GI0kQjHtgTq+Of0WdYozNhGnyyZ2
+	 j0bRTSTCxKn+m6NtwSTvcouQZxorFexV8Zi0mjx9ADZy21zPtZm6t7UWFtobXkZ6tIZjV
+	 eN1QRwOxeUjFZO3OpYhqyKoFqzRcYFvjz0cqh68jbcMEpzEePdjp1whc4nMbKaKaXDmHH
+	 T1ccJz7RCUVfoOLSGFuepP3L/JcervXaC/RRiawD9ZZUfPVQhh4k1h33f0y5bA/AO+8zm
+	 A6bJWJtlOUjzK/vjgja8lUkHmo0JIqdBW1/dWWFn4qn8l4DRAOD9/u8Rr93iqbtFZjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImRty2O3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UayQrTKr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301E1606B8A6;
-	Sat,  7 Nov 2026 15:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCBD606D811;
+	Sat,  7 Nov 2026 15:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImRty2O3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F891F008A1;
-	Sat,  7 Nov 2026 15:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UayQrTKr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500C41F0089F;
+	Sat,  7 Nov 2026 15:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064554;
-	bh=f+qcsFv9a0dy+NrcuEgn6STPOrxG6HO3ZahEo9BUvQY=;
+	s=korg; t=1794064555;
+	bh=/++Mx2Guo09mhg9HhICRz635oC1U1U5l/+7i55vssRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ImRty2O3RejXGixbV0cA88/nWPUnrCuvSr0JbZijOW5aOvWLk/YXH1NGCmTfqkLsI
-	 zj+ixdV1g96S548g4C+ClkyHZfeCjuTVrlDiqmBrbswAFoscN4vlDRvbuZTN1SbKmp
-	 fOWuRUkO7Gj1tfe4aA/hSnSPx/D1j7/cyqTWS0wY=
+	b=UayQrTKrcsKqy7pR6/x0wfjMfwXl6QNZamflneXXDzfvIACLTE/7Mhs+NXNWT4QQL
+	 hzfA9wd/pXd64+9ym2+W98oBH1417FdCTOF71FK72IFml+3Dx/oSttUqewsDMvXTP+
+	 HNkmCY8Z4SrVH6uEMXhtto/79G1ZYfFto3MO6ZJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Anastasios Papagiannis <tasos.papagiannnis@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Jiri Kosina <jikos@kernel.org>,
-	Luis Chamberalin <mcgrof@kernel.org>,
-	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Hajime Tazaki <thehajime@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0577/1257] mm/execmem: free ROX cache chunks only when they span an entire vm area
-Date: Sat,  7 Nov 2026 08:47:53 -0500
-Message-ID: <20261107134955.280010352@linuxfoundation.org>
+Subject: [PATCH 7.3 0578/1257] mm/nommu: reject wrapping ranges in access_remote_vm()
+Date: Sat,  7 Nov 2026 08:47:54 -0500
+Message-ID: <20261107134955.305940230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -72,113 +71,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Anastasios Papagiannis <tasos.papagiannnis@gmail.com>
 
-[ Upstream commit 52d95a55a0113408acd2d4ce0294a72c527f5092 ]
+[ Upstream commit 51a8de81fd2edbf87d8046e352060329bb216fad ]
 
-Patch series "mm/execmem: fixes and cleanups for the ROX cache".
+The NOMMU implementation of access_process_vm() rejects address ranges
+whose end wraps around, but access_remote_vm() bypasses this check even
+though both functions delegate to __access_remote_vm().
 
-Sashiko review of the ROX cache refill path asked what happens when the
-PMD_SIZE allocation fails there.  Pulling that thread uncovered a bit more
-than the fallback.
+Move the wraparound check into __access_remote_vm() so it applies to both
+entry points.
 
-Patch 1 fixes a real bug, although rare bug: execmem_cache_clean() can
-free a chunk that is still partially in use, because a PMD sized and PMD
-aligned free range in the middle of a larger chunk looks exactly like a
-chunk that nobody uses.
+This is originally reported in [1].
 
-Patch 2 handles maple tree allocation failures in the cache.  They are
-unlikely, but silently dropping an area from the tree is not a great way
-to deal with them.
-
-Patch 3 deals with the fallback that started all this.  The cache exists
-to keep the direct map free of unnecessary splits, and the fallback
-happily filled it with base page mapped areas that could never be freed
-from the cache again.  Ask vmalloc for a huge mapping or nothing, and
-serve whatever does not fit outside the cache.
-
-Patches 4 and 5 convert the ROX cache to scope based cleanup.
-
-The series was tested on x86 with module load/unload cycles, with PTDUMP
-confirming that the cache is using 2M mappings, and with nohugevmalloc to
-exercise the uncached fallback.
-
-This patch (of 5):
-
-When execmem refills the ROX cache, it vmalloc()s multiples of PMD_SIZE
-aligned to PMD_SIZE.  For every such allocation vmalloc creates a vm area.
-
-The first part of the vmalloc()ed chunk is returned to the allocation that
-triggered the cache refill and the remaining part is added to the cache
-and handed out for subsequent allocations with execmem_alloc().
-
-When only the first part is freed, the entire vm area remains in the ROX
-cache and can be handed out again.
-
-In the case when the first allocation is larger than PMD_SIZE and the
-second allocation from the freed first part of the chunk is exactly
-PMD_SIZE, execmem_cache_clean() will free the entire chunk while part of
-it is still in use.
-
-For example:
-
-	/*
-	 * vmalloc(4M), return p0 to the caller
-	 * add [p0 + 3M, p0 + 4M) to the cache
-	 */
-	p0 = execmem_alloc(3M);
-
-	/* return p0 + 3M from the cache to the caller */
-	p1 = execmem_alloc(1M);
-
-	/* put [p0, p0 + 3M) back into the cache */
-	execmem_free(p0);
-
-	/* return p0 from the cache to the caller */
-	p2 = execmem_alloc(2M);
-
-	/* return p0 + 2M from the cache to the caller */
-	p3 = execmem_alloc(1M);
-
-	/* bah! execmem_cache_clean() frees the entire 4M chunk */
-	execmem_free(p2);
-
-Make sure that the ranges that execmem_cache_clean() frees cover the
-entire vm area.
-
-Link: https://lore.kernel.org/20260903-execmem-rox-cache-pmd-v1-v1-0-11beb2a3d249@kernel.org
-Link: https://lore.kernel.org/20260903-execmem-rox-cache-pmd-v1-v1-1-11beb2a3d249@kernel.org
-Fixes: 2e45474ab14f ("execmem: add support for cache of large ROX pages")
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Link: https://lore.kernel.org/20260909064231.18693-1-tasos.papagiannnis@gmail.com
+Fixes: f55f199b7d76 ("NOMMU: implement access_remote_vm")
+Signed-off-by: Anastasios Papagiannis <tasos.papagiannnis@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: copilot:claude-opus-5
-Cc: Benjamin Tissoires <bentiss@kernel.org>
-Cc: Jiri Kosina <jikos@kernel.org>
-Cc: Luis Chamberalin <mcgrof@kernel.org>
-Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Closes: https://lore.kernel.org/bpf/4ef240a5bea36ff84df9589671367832860795159386a4c8fba546a0fa8b786f@mail.kernel.org/ [1]
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Hajime Tazaki <thehajime@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/execmem.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/nommu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/mm/execmem.c b/mm/execmem.c
-index 74a178a87e758..33e4e68f655f0 100644
---- a/mm/execmem.c
-+++ b/mm/execmem.c
-@@ -165,9 +165,11 @@ static void execmem_cache_clean(struct work_struct *work)
+diff --git a/mm/nommu.c b/mm/nommu.c
+index 498e01ee40b05..ed44510e37707 100644
+--- a/mm/nommu.c
++++ b/mm/nommu.c
+@@ -1674,6 +1674,9 @@ static int __access_remote_vm(struct mm_struct *mm, unsigned long addr,
+ 	struct vm_area_struct *vma;
+ 	int write = gup_flags & FOLL_WRITE;
  
- 	mutex_lock(mutex);
- 	mas_for_each(&mas, area, ULONG_MAX) {
-+		struct vm_struct *vm = find_vm_area(area);
- 		size_t size = mas_range_len(&mas);
++	if (addr + len < addr)
++		return 0;
++
+ 	if (mmap_read_lock_killable(mm))
+ 		return 0;
  
--		if (IS_ALIGNED(size, PMD_SIZE) &&
-+		if (vm && get_vm_area_size(vm) == size &&
-+		    IS_ALIGNED(size, PMD_SIZE) &&
- 		    IS_ALIGNED(mas.index, PMD_SIZE)) {
- 			struct vm_struct *vm = find_vm_area(area);
+@@ -1727,9 +1730,6 @@ int access_process_vm(struct task_struct *tsk, unsigned long addr, void *buf, in
+ {
+ 	struct mm_struct *mm;
  
+-	if (addr + len < addr)
+-		return 0;
+-
+ 	mm = get_task_mm(tsk);
+ 	if (!mm)
+ 		return 0;
 -- 
 2.53.0
 
