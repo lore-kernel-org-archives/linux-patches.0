@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063566;
-	b=R+hNCyu1BNvGMDRdPhWOJXox5S0J1fJA42OtvYnkFTBzMU2FKIvk6h/pH412tFzWNtFX
-	 xGuyHDlk7ufiPp8r2jytnRCSdxesAxrzMRw87i+95WttfNRGxhWbKZDmO/vbPIbSfMQk5
-	 b+nwsVbHKQznnzr2SYKcAn8VfjLwRlCV3nZ4pGzIRAF44SDOm7ZgjvEs0pUp1vuNQLvnq
-	 JXu/abwKN1uqolLMUGT08KnKH67yxK9LcJmaI4FNeVnoIytyzNNehLPat4yZbjNHsm2Q/
-	 Faa1xKjQ7CjGqDjiBM4DE01vgvnWVQRYQvbIYqIdv8lUQqk54EfeY44o5QWxWHdSP9g==
+	t=1794063568;
+	b=CGmsj+ENI6+rvTEzeZKlUWHkZqFj4huMsxPzSFunR2NfME34i3oKXugJsLlf7wdfrrAr
+	 Gf8JrUnSp14fxXB50YycOkCxSn8/qoDd39tLghiF3VF0g8E2YtV4HCESfqv6VXEIusE/X
+	 Me43ldF5BoM9gJ+G3iM5LWkf8hJ1ZxqZDh7UcU/W2Z4F5Emp5dlA6hN0WTeikhMMVDy0j
+	 aoJieZWQ5/8TtYCHNcDvLtMu+5TB5b53gxlVrT56KaRkyI9i8kq+K1XjZCd949DPSJ4m9
+	 XZKPj5OnVxS6jAjJIiA5FO7g7/LDP/UMHn70hb34lSZU0CaYukX6vJP8m+K/HPRrLeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=G6bEg3aoKGAbq1nHT9zOB2YBFMSPMH+rRgYFRJGq86k=;
-	b=W1sz7XdG0ntW9in0QUWfVOVfJUrs87R5NlXaAqqlnX3KpEyp97yqjoucnU9qprakniuq
-	 yBAvtEDHXhPYOyAx2Y4cxDw/4uWE6Q8XTc7Pagmq/0lfuGKlSQ7uSfF9MyfzUveExA5DW
-	 khW2SP86d0SKXYy4eRLI0BAedBbr0fyoEIvTgPFgZiM+tkwMysmpCUFy08iKWg5zhGxoN
-	 uQAxRI8r0AsJ4MXkwaEQ4815YGwy8xfP5TnVS63qvroCw3tvt0miJ83a7Ct2uoGcrjwxP
-	 AIF3wYFn2V/I6hkCNyIyZeDywyVtmI/7g/TvS1V/SAKFnnCzRKQbZw+kFXq4RhHhftg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=8sUS5acLTqwJn2JhgBewO6iLxphVLkVhG0l+ofZveYA=;
+	b=f204Ey0buEDf5lfIOKAFM+XLd/+ca3jy2DbXT2UMkEx2ICFj4PvnNuvAWorYyBRNU4Rj
+	 MBUwB7YskbjGSFAJy9lxlmAE0TactyPNVTDFJJY0jY9ey2K581x83R7dq+xLbmNVEUIw/
+	 zhxJUHkiNvS9YZnXbTDsWdu2ysnJN5hEeT5GbQUZOlzPFow7UgF3Knth+0aut9eOkBSHD
+	 I3TJnLANs5LegHoyrButI2YUwa+fKPE8B56B2OrzTRbSFRIe1MzOEfbYHkJFEGOHduT1s
+	 qXMNb/kP+vOdVUXvCm8I5ck/0n2M2jKqPasoFrTdcnvrQJkmv4FSvzsji00Gm1Cpy0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXfwB9np;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FR54c/7Q";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BFB606D818;
-	Sat,  7 Nov 2026 14:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E00606D829;
+	Sat,  7 Nov 2026 14:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXfwB9np
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EDD1F008A3;
-	Sat,  7 Nov 2026 14:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FR54c/7Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61AEF1F008A3;
+	Sat,  7 Nov 2026 14:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063566;
-	bh=G6bEg3aoKGAbq1nHT9zOB2YBFMSPMH+rRgYFRJGq86k=;
+	s=korg; t=1794063567;
+	bh=8sUS5acLTqwJn2JhgBewO6iLxphVLkVhG0l+ofZveYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eXfwB9npDRStOTYwT0PTRuJn2NeCR6R8KuNSzOGFCSCmdNbvLzbmvixGab0uavF+b
-	 QoBadxUOlUB2ZhJOG+1DPLdK6+SP92o7GjqS2wPsgyS26hfQKXFTspXNAjW8pISfnt
-	 o0lUmN0laaVDQeAi8EUG36rjfsENJ+FYhngKxBqU=
+	b=FR54c/7Q4kqjKUA6/ZVGpq0k39azov8E9y0J4jzW/jLWSJi+VDYY6BLSmnJHwUhfR
+	 0mtfS+Q09XLvOeXiLxenvijMHmbK+MQv3sL3OTCYyS+OGp3bb3kCRrkvbSMFznrudn
+	 /gekpquijzghrycGFEyg4+JBTp8dk8KX19kaYn64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Anderson Ferneda <anderson.ferneda@braza.com.br>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	Prike Liang <Prike.Liang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	John Fisher <jfisher84@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 699/869] ocfs2: deal with legacy signed xattr name hash values
-Date: Sat,  7 Nov 2026 08:56:21 -0500
-Message-ID: <20261107134916.658803780@linuxfoundation.org>
+Subject: [PATCH 6.18 682/869] drm/amdgpu: wait for pending page table updates before switching a VM to CPU updates
+Date: Sat,  7 Nov 2026 08:56:04 -0500
+Message-ID: <20261107134916.182936862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -66,203 +64,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: John Fisher <jfisher84@gmail.com>
 
-[ Upstream commit 824d26d11448b4d4f19677bce27c7fe5e962f4c6 ]
+[ Upstream commit 53d9ef2f518add783bb48a69d77bbc8aea99e911 ]
 
-Commit 3bc753c06dd0 ("kbuild: treat char as always unsigned") set
--funsigned-char globally, which changed the result of the naked 'char'
-load in ocfs2_xattr_name_hash():
+amdgpu_vm_make_compute() switches a VM from SDMA to CPU page table
+updates when a KFD process acquires it. It syncs "with the last SDMA
+update/clear" through amdgpu_bo_sync_wait() on the root PD, but that
+walks the reservation with DMA_RESV_USAGE_READ, and the clears of the
+VM's page tables (the root PD from amdgpu_vm_init(), and the PDs/PTs
+the seq64 mapping allocates at the render node's open) are added there
+by amdgpu_vm_sdma_commit() with DMA_RESV_USAGE_BOOKKEEP only:
+amdgpu_vm_pt_clear() commits them with a NULL fence, so they do not
+reach vm->last_update. The CPU path's own waits (amdgpu_vm_cpu_update(),
+amdgpu_bo_kmap()) use DMA_RESV_USAGE_KERNEL. None of them waits for a
+clear that is still queued.
 
-	hash = (hash << OCFS2_HASH_SHIFT) ^
-	       (hash >> (8*sizeof(hash) - OCFS2_HASH_SHIFT)) ^
-	       *name++;
+When one is, the CPU writes the first entries of the new compute VM (the
+KFD trap handler's TBA/TMA page at AMDGPU_VA_RESERVED_TRAP_START, mapped
+during ACQUIRE_VM) into a page directory the SDMA then clears. The
+entries are gone, the handler's page is unmapped, and the first wave
+save of any queue of the process faults in the SQC instruction fetch at
+the handler's address (GCVM_L2_PROTECTION_FAULT_STATUS 0x008012B1,
+PERMISSION_FAULTS 0xb). The MES then fails REMOVE_QUEUE and SUSPEND, and
+the device takes a MODE1 reset with VRAM lost on 7.2.9; on 7.3-rc6 the
+queue is reset instead.
 
-A name byte >= 0x80 used to sign-extend and now zero-extends, so the
-hash no longer matches the xe_name_hash an older kernel stored.  An
-indexed xattr tree is searched by that hash alone, and both the bucket
-binary search and the entry scan within it stop as soon as the wanted
-hash falls below an entry's, so the entry is never reached: getxattr,
-setxattr and removexattr return -ENODATA for a name that listxattr
-still lists.
+The window is the time between the render node's open and ACQUIRE_VM.
+ROCr spends milliseconds there and is practically never hit; a minimal
+KFD client that opens the render node and acquires the VM at once is hit
+most of the time. On a Radeon AI PRO R9700 (gfx1201, Resizable BAR, so
+vm_update_mode defaults to CPU updates for compute VMs), a wave reading
+the trap handler's page right after queue creation found it unmapped in
+8 of 12 runs; a 5 ms sleep between the open and ACQUIRE_VM made that 0
+of 9, and the same sleep after queue creation instead 3 of 3.
 
-Search with the current unsigned hash and, on a miss, retry with the
-legacy signed one, as ext4 does in commit f3bbac32475b2 ("ext4: deal
-with legacy signed xattr name hash values").  New entries are always
-stored under the unsigned hash.  Skip the retry when the two hashes are
-equal, so that a miss on an ASCII name does not walk the tree twice.
+The wait covered these jobs until commit 926c79ad6ecd ("drm/amdgpu:
+promote the implicit sync to the dependent read fences") narrowed
+amdgpu_sync_resv() from DMA_RESV_USAGE_BOOKKEEP to DMA_RESV_USAGE_READ;
+the VM's page table jobs have been added with BOOKKEEP since commit
+4247084057cf ("drm/amdgpu: use DMA_RESV_USAGE_BOOKKEEP v2"), so from
+v6.16 on the sync in amdgpu_vm_make_compute() waits for nothing of
+them.
 
-A miss is not empty handed: ocfs2_xattr_bucket_find() leaves xs->bucket
-holding the bucket a new entry would go into.  So after a double miss
-drop it and search once more with the unsigned hash, otherwise a new
-entry would be placed by its legacy hash and stored under its unsigned
-one, breaking the ordering the search relies on.
+Record the clears in vm->last_update, as amdgpu_vm_update_pdes() does
+with its updates, and wait for it, uninterruptibly, before switching the
+update functions. The clears all go through vm->delayed, so the last one
+covers the earlier ones; immediate clears are not recorded, as before.
 
-Only indexed trees are affected; inline xattrs and non-indexed xattr
-blocks compare names with memcmp and never look at the hash.
+With this, on 7.3-rc6 and on 7.2.9, the same client reads the handler
+10 of 10 times, 8 busy queues on the 4 compute slots complete in 5 of 5
+runs on 7.3-rc6 and 3 of 3 on 7.2.9 (1 of 6 before), 16 and 32 queues
+complete on 7.3-rc6, and two processes with 8 queues each complete
+together on both, with no fault.
 
-Also spell out the signedness instead of leaving the current hash to
--funsigned-char, as commit 854f0912f813 ("ext4: make xattr char
-unsignedness in hash explicit") did, so that both variants stay correct
-if this is backported to a kernel without the flag.
-
-Link: https://lore.kernel.org/20261009083002.2621201-4-joseph.qi@linux.alibaba.com
-Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Anderson Ferneda <anderson.ferneda@braza.com.br>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org> # 6.2+
+Fixes: 926c79ad6ecd ("drm/amdgpu: promote the implicit sync to the dependent read fences")
+Cc: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: John Fisher <jfisher84@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9ec91b35baba45209c3fcd00f086224a158dd512)
+Cc: stable@vger.kernel.org # v6.16+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 93 ++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 82 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c    | 5 +----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c | 2 +-
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 523d5ac597f41..8013451927a83 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -533,9 +533,10 @@ static inline const char *ocfs2_xattr_prefix(int name_index)
- 	return handler ? xattr_prefix(handler) : NULL;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index f78ac6777ee5c..c9614a99b40d1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2720,10 +2720,7 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm)
  
--static u32 ocfs2_xattr_name_hash(struct inode *inode,
--				 const char *name,
--				 int name_len)
-+static u32 __ocfs2_xattr_name_hash(struct inode *inode,
-+				   const char *name,
-+				   int name_len,
-+				   bool legacy_signed)
- {
- 	/* Get hash value of uuid from super block */
- 	u32 hash = OCFS2_SB(inode->i_sb)->uuid_hash;
-@@ -544,13 +545,30 @@ static u32 ocfs2_xattr_name_hash(struct inode *inode,
- 	/* hash extended attribute name */
- 	for (i = 0; i < name_len; i++) {
- 		hash = (hash << OCFS2_HASH_SHIFT) ^
--		       (hash >> (8*sizeof(hash) - OCFS2_HASH_SHIFT)) ^
--		       *name++;
-+		       (hash >> (8*sizeof(hash) - OCFS2_HASH_SHIFT));
-+		if (legacy_signed)
-+			hash ^= (signed char)name[i];
-+		else
-+			hash ^= (unsigned char)name[i];
- 	}
+ 	if (vm->use_cpu_for_update) {
+ 		/* Sync with last SDMA update/clear before switching to CPU */
+-		r = amdgpu_bo_sync_wait(vm->root.bo,
+-					AMDGPU_FENCE_OWNER_UNDEFINED, true);
+-		if (r)
+-			goto unreserve_bo;
++		dma_fence_wait(vm->last_update, false);
  
- 	return hash;
- }
+ 		vm->update_funcs = &amdgpu_vm_cpu_funcs;
+ 		r = amdgpu_vm_pt_map_tables(adev, vm);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+index f794fb1cc06e6..a05f34259d578 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+@@ -421,7 +421,7 @@ int amdgpu_vm_pt_clear(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+ 	if (r)
+ 		goto exit;
  
-+static u32 ocfs2_xattr_name_hash(struct inode *inode,
-+				 const char *name,
-+				 int name_len)
-+{
-+	return __ocfs2_xattr_name_hash(inode, name, name_len, false);
-+}
-+
-+static u32 ocfs2_xattr_name_hash_signed(struct inode *inode,
-+					const char *name,
-+					int name_len)
-+{
-+	return __ocfs2_xattr_name_hash(inode, name, name_len, true);
-+}
-+
- static int ocfs2_xattr_entry_real_size(int name_len, size_t value_len)
- {
- 	return namevalue_size(name_len, value_len) +
-@@ -3949,11 +3967,12 @@ static int ocfs2_xattr_bucket_find(struct inode *inode,
- 	return ret;
- }
- 
--static int ocfs2_xattr_index_block_find(struct inode *inode,
--					struct buffer_head *root_bh,
--					int name_index,
--					const char *name,
--					struct ocfs2_xattr_search *xs)
-+static int __ocfs2_xattr_index_block_find(struct inode *inode,
-+					  struct buffer_head *root_bh,
-+					  int name_index,
-+					  const char *name,
-+					  u32 name_hash,
-+					  struct ocfs2_xattr_search *xs)
- {
- 	int ret;
- 	struct ocfs2_xattr_block *xb =
-@@ -3962,7 +3981,6 @@ static int ocfs2_xattr_index_block_find(struct inode *inode,
- 	struct ocfs2_extent_list *el = &xb_root->xt_list;
- 	u64 p_blkno = 0;
- 	u32 first_hash, num_clusters = 0;
--	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
- 
- 	if (le16_to_cpu(el->l_next_free_rec) == 0)
- 		return -ENODATA;
-@@ -3993,6 +4011,59 @@ static int ocfs2_xattr_index_block_find(struct inode *inode,
- 	return ret;
- }
- 
-+static int ocfs2_xattr_index_block_find(struct inode *inode,
-+					struct buffer_head *root_bh,
-+					int name_index,
-+					const char *name,
-+					struct ocfs2_xattr_search *xs)
-+{
-+	u32 name_hash, legacy_hash;
-+	int name_len = strlen(name);
-+	int ret;
-+
-+	name_hash = ocfs2_xattr_name_hash(inode, name, name_len);
-+
-+	ret = __ocfs2_xattr_index_block_find(inode, root_bh, name_index, name,
-+					     name_hash, xs);
-+	if (ret != -ENODATA)
-+		return ret;
-+
-+	/*
-+	 * Nothing under the current hash.  The entry may have been stored by
-+	 * an older kernel, which sign-extended the name bytes when hashing.
-+	 * Skip the retry when the two hashes are equal, so that a name made
-+	 * only of ASCII does not have to walk the tree twice.
-+	 */
-+	legacy_hash = ocfs2_xattr_name_hash_signed(inode, name, name_len);
-+	if (legacy_hash == name_hash)
-+		return ret;
-+
-+	/*
-+	 * A miss still leaves xs->bucket holding the bucket a new entry would
-+	 * be inserted into, so drop it before searching again.
-+	 */
-+	ocfs2_xattr_bucket_relse(xs->bucket);
-+
-+	ret = __ocfs2_xattr_index_block_find(inode, root_bh, name_index, name,
-+					     legacy_hash, xs);
-+	if (!ret) {
-+		pr_warn_once("ocfs2: xattr tree with signed name hash\n");
-+		return ret;
-+	}
-+	if (ret != -ENODATA)
-+		return ret;
-+
-+	/*
-+	 * Not under either hash.  Restore the unsigned placement, since that
-+	 * is where a new entry is stored: leaving the bucket where the legacy
-+	 * hash put it would break the ordering the search relies on.
-+	 */
-+	ocfs2_xattr_bucket_relse(xs->bucket);
-+
-+	return __ocfs2_xattr_index_block_find(inode, root_bh, name_index, name,
-+					      name_hash, xs);
-+}
-+
- static int ocfs2_iterate_xattr_buckets(struct inode *inode,
- 				       u64 blkno,
- 				       u32 clusters,
+-	r = vm->update_funcs->commit(&params, NULL);
++	r = vm->update_funcs->commit(&params, &vm->last_update);
+ exit:
+ 	drm_dev_exit(idx);
+ 	return r;
 -- 
 2.53.0
 
