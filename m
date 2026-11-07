@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065221;
-	b=qJpbYQvhog/OQAfb8tsyvmLDXePSBxQs8ACLe7Y660pPkAgkWCPdRjg1bk+ZiB/HO4WL
-	 GtYj4g2VaP0oL91Ngw2/DfaalKeHAcv+g4Rc6RSTSFQN3+tjorEaR/e0drBuWcTAlkjXM
-	 4+FyOl7G/Yca6aYp3mqYxUGMR7Firc3UDYhQkZ2eYXwDdGGB71jArUmKWpeYSiePosXTk
-	 poK3zW20od32JeLXlX1gQQMvx5rwMbwaEO1lMrqtZtYXy5uv32yucPaxHAqQfA45r8m6Q
-	 kio+lcE/mSzRIcQdQmBG851Gcz19KLBBzW6D5ZZR1RieEQCDjpsjuV1pc7DCTHCXYOQ==
+	t=1794065222;
+	b=D4QUXK7ezvhGlKc5D/r1q5I1XtvAa6GyOszNlt+7TzHlbaocu13Li1/o6aKj7Gzlggj6
+	 50/lZ8Lw8f4R0cE917P1/AanQ6FRvv8hhK2MsFQ42Sq7y3qOBNW3izVJIGX0Ez6PRUEL+
+	 OKdSFzbFfch5lOpt+wwmn5uapPshtK6iLeXEzVxrTNUAQ4GvX7AcqWMF9TqVwZfLwtfji
+	 PnEjujH2BolP9+EvqKDNBwFwAJRHKfigO/bCXXW/NscBu2GOmBxHrXficKnCEpZdJU9y/
+	 1rQ4S3TEIAq7wM7fOCz2kLRnuJX3pEtCJwSy1bf9XUiJPzbIw5oDTIMMcl3Mv9zxBKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065222;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HNGFmNr1u/gQnTBwr3AnnvIceE8/w45AV/CxfAcMKPQ=;
-	b=BQKURnPO6alct1jXL5fM4zlZR+c/l4XWK30BskRaOewtC/o5nxx7fsiwxyjsAN0JwGAZ
-	 PPmd3QBwdAi0KySmxN9CLZtbmSDpFrNyBvAJhhQd/J5ZAHDrdicYUdV7/PUGbqRQK2ZLx
-	 NVYiWRypLk2PBx6Rbb6vH1wV2amvuEgMUos+2gvuYfSX00fUZ7KsuSpW/Yd9lcAEDS/lz
-	 W5nhKVw/JSZTyOK1VScNzTsbpHH0AhY174+PbXYu7SON6vQT46TgBpN3HMC7xeocYmDZZ
-	 iTk7psE7kLSh8zfRjTjFiaJ3y180//2TO5ke8gHAyPyWoX4Vczuht+Q4YgYG2uKtxMw==
+	bh=fqToHcLqPbi8CW45dPR9gF7Si2IddeeQzeyHgcVOx40=;
+	b=rJVlE4DqtAKBX51xIQEVoBp9H+wpuovxvTKUuJTqcfTJxWGhUSRfNESnObE9dlcxSCQr
+	 SwkFUn6EWs0Wdw9taTDe3tyHcK7PqZXyLMu3NnQpMvbRFHTdEw/V4ALYvCSUSPJsEJu3m
+	 z2kezUXkXqbb7zgFKg9Le4EuwLM4A2BxyX6ZTfW+JmuMjd2iD4s3ONWdZRAuyx9J4NOvJ
+	 BtX7jqcRIN5Rjl+GyPSFGBXpos0LetSwHXz7A8KyXffP3OjbHlNlvkqhVIYNrYuYOnZSC
+	 VYdIZDQ1p77VSMbxb+kXHWhj4g0P0/m7SZ2vpYsCfUMfj0etbsZnb1vU9TeiMfgbwdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HS48yKt0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C3k6EI4D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F4B606D801;
-	Sat,  7 Nov 2026 15:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CAE606D801;
+	Sat,  7 Nov 2026 15:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HS48yKt0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E311F0089F;
-	Sat,  7 Nov 2026 15:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C3k6EI4D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937B01F0089F;
+	Sat,  7 Nov 2026 15:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065220;
-	bh=HNGFmNr1u/gQnTBwr3AnnvIceE8/w45AV/CxfAcMKPQ=;
+	s=korg; t=1794065221;
+	bh=fqToHcLqPbi8CW45dPR9gF7Si2IddeeQzeyHgcVOx40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HS48yKt0pLS12ALilA/DQgtEVTT7Y3Hp6AXv9K+8IQ5RBjUtrh5RPIlXh76BpGfbq
-	 wJLTffKdFUm7EbaBXxp/DapXjRZffmbnDlH08YvR5viF3leZLYhShl8dFtXO3uA0fG
-	 3VsTIYWsXgWWyIBoE6+hHq91wKTFXo+mgvj6aIcY=
+	b=C3k6EI4DLgZ9Sbxh5CCPmld7bh4joxxHfZ8YQmlmLVK0QXTjZP9b/XMosn1lhc3JM
+	 Kg61J6pz4IHWRNiP/lEj9yDZXwB1X8/npVrZvln92lgb/GIPB470FMyrGxG2IkqsW8
+	 rmCYcZSnDY//2OgeOxj6lUHoepKi8ta6wzVkLQmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fang Xieyan <fangxy@xiaopeng.com>,
-	Liu Chao <liuc63@xiaopeng.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yao Yiqi <yaoyiqi3@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1013/1257] net: wwan: iosm: validate msg_head before indexing msg_ring
-Date: Sat,  7 Nov 2026 08:55:09 -0500
-Message-ID: <20261107135007.315589442@linuxfoundation.org>
+Subject: [PATCH 7.3 0978/1257] fbcon: Retry rotated font allocation after failure
+Date: Sat,  7 Nov 2026 08:54:34 -0500
+Message-ID: <20261107135006.370542755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,47 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Chao <liuc63@xiaopeng.com>
+From: Yao Yiqi <yaoyiqi3@huawei.com>
 
-[ Upstream commit 46cbf85155e5451b6682ea0c17bc62ec564aec36 ]
+[ Upstream commit 7935db1a4a0f83a63590a222500e5016e2f6c85e ]
 
-ipc_protocol_free_msg_get() reads msg_head from shared memory and
-uses it directly as an index into msg_ring[]. If the head is out
-of range, the subsequent memset() writes beyond the message ring.
+fbcon_rotate_font() records the font, its geometry and the rotation in
+par->rotated before calling font_data_rotate(). If the allocation
+fails, the error path clears par->rotated.buf, but the recorded key
+already looks up to date, so the next call takes the early-out and
+never retries. The rotated putcs/cursor ops keep returning early on
+the NULL buffer, and the console stays blank even after memory is
+available again.
 
-Validate head against IPC_MEM_MSG_ENTRIES before using it as an
-index. The ring is a circular buffer, so a value outside the valid
-range indicates a corrupted head pointer; report the error and fail
-the allocation instead of writing out of bounds.
+Also test par->rotated.buf in the early-out, so a failed allocation
+is retried on the next call: at the next fbcon_switch(),
+fbcon_modechanged() or font change.
 
-Fixes: 64516f633bfd ("net: iosm: protocol operations")
+Fixes: e4ef723d8975 ("fbcon: Avoid OOB font access if console rotation fails")
 Cc: stable@vger.kernel.org
-Reviewed-by: Fang Xieyan <fangxy@xiaopeng.com>
-Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261020094254.4017726-1-liuc63@xiaopeng.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yao Yiqi <yaoyiqi3@huawei.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/video/fbdev/core/fbcon_rotate.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c b/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c
-index f2f86f41fd10e..004920068c45b 100644
---- a/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c
-+++ b/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c
-@@ -14,6 +14,11 @@ ipc_protocol_free_msg_get(struct iosm_protocol *ipc_protocol, int *index)
- 	u32 new_head = (head + 1) % IPC_MEM_MSG_ENTRIES;
- 	union ipc_mem_msg_entry *msg;
+diff --git a/drivers/video/fbdev/core/fbcon_rotate.c b/drivers/video/fbdev/core/fbcon_rotate.c
+index 660a3fa81baed..7afd63dcee7be 100644
+--- a/drivers/video/fbdev/core/fbcon_rotate.c
++++ b/drivers/video/fbdev/core/fbcon_rotate.c
+@@ -25,7 +25,8 @@ int fbcon_rotate_font(struct fb_info *info, struct vc_data *vc)
+ 	    par->rotate == par->rotated.buf_rotate &&
+ 	    vc->vc_font.width == par->rotated.buf_width &&
+ 	    vc->vc_font.height == par->rotated.buf_height &&
+-	    vc->vc_font.charcount == par->rotated.buf_charcount)
++	    vc->vc_font.charcount == par->rotated.buf_charcount &&
++	    par->rotated.buf)
+ 		return 0;
  
-+	if (head >= IPC_MEM_MSG_ENTRIES) {
-+		dev_err(ipc_protocol->dev, "invalid message head %u", head);
-+		return NULL;
-+	}
-+
- 	if (new_head == le32_to_cpu(ipc_protocol->p_ap_shm->msg_tail)) {
- 		dev_err(ipc_protocol->dev, "message ring is full");
- 		return NULL;
+ 	par->rotated.fontdata = par->p->fontdata;
 -- 
 2.53.0
 
