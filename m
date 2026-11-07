@@ -1,55 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064483;
-	b=2P9jUCx7FffVACtxAlv5jyD5Va/jFYFDfkPr52O1klT3hVtFa9CTooXjzEE9uJYQ02Zg
-	 gQhKKkcn04x923GYBF08JzetW1DD2dloon7eZxcytRYlmPBBMYmn2JDUrYFLNFkNWFtA4
-	 ZNpScJU134G0snSYkPNOLqEeQNhabvRKsJ+3dhBQ+KfI1XRWB4UcgQluQTSmPgJxMKquw
-	 qjfcSUUMQohdMqU8U/6ygr/SnscdxgLhjjzrtgxmaXHa+cIkPD+iAz0Rn8T846AnOtMm/
-	 Usno55v0SDl+Xdmc4EETOdN+xX0k2u2fihKDdwjmHIs4cfYyyCZrIo/1jmkmBlG+mOw==
+	t=1794064484;
+	b=pXsgoxJxanUqvOGI5oVxVj3fH6iIoZVGrROouMXvlUNZIkKdBxjSYwWOrYfaCUtCWX68
+	 /WUBCKh+J5q2dXgCysE4mtOf/jDACuLeZHOcLZfZ4sgroeZmHYFMTQZRutZxjJBACoYym
+	 fme4Wc0pEmiORvQRsj9s4EpFxMM+so93b0FMHcrAOk7xzlChc82DsD4YaDkyr6poFr8oi
+	 C6Q+52fthL6+EplAD7GZvDiH/kKsIz7ZIU3e/suiwlAfl6+kKNAGNdVPXwIB/eLRPdabJ
+	 imB49maXbZWYT7e2Mc3uNIdC9/WTkACAc5AluVKHwSQ88Xq43ZKgicNdSBlGpYfwSDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064484;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0StND3fWYYxrFik6DUUH8qmLofh3X4vHZiJvcV2mXTs=;
-	b=4QDYMd3AEla2FHdCTb8Q32qzI6Fy+hor3ld9tHW51GvqXiz7d+MOkOl0Pt+oP7HpkkH9
-	 T0sbFgl4+xl2u7jju080ZNR7KHdQC21TKZBjzKhZBGDOOHl+Mf9ltM/3tlpjQecJiajdY
-	 sjTuvw8kf+1O7cNT9PZI/ldWi6tAqZ4Jqe2Fnt1pKu4xzLkbIDBACDuGBvkN2sZaZe0YG
-	 9F1myQp4H49eGKhE3twcql+QrcDLx/a7RSKqXUkeGdorFPMDbWcMS8dER/T8FGK7bKvJ8
-	 xDxFULC9tc1QG01HzSUFm6/Q2XJxCwMSJLoPvQShBzqj2Xac3Y7WuJUypZFQyo7ZAsg==
+	bh=2XrVixnvYviCzcaEqMKzZghUOYezXb0tM1QuRknX6AE=;
+	b=0ATysatrJFHHu5hye+MFiKjhO8N30eT3X12GH5D7tml6977WsglkWnG9EJrVqHa37PgM
+	 6fIddvU/bFAZKY2G+tggJBQG4trLDet8rePJ7V3K+mXTr441mp5Gx5LHBHgRcEuaTfhXl
+	 UUSZJ2r1fJz2+VcmQO9PhvtQSiPNjtAhkX3ipRhpWivQmlZ0vMY7MSQQQUxbP0BPhTqjt
+	 HwYTSvYpGOX44OT9gYddEg0PrzlDTrE2kj9FPmLYCY5z0nAkAloAAzu5kI0SZOR2lKkn+
+	 AvyM8Orf2FX2tYsYvulkUXQwUZfJSC7d42EvpTJeQgTYcgfWutSLuu3Gqf+te9BEd1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5LqSeAS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CFFhfIiP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED7B606A9F0;
-	Sat,  7 Nov 2026 15:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE86606A9F0;
+	Sat,  7 Nov 2026 15:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e5LqSeAS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A541F008A2;
-	Sat,  7 Nov 2026 15:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CFFhfIiP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3011F0089F;
+	Sat,  7 Nov 2026 15:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064483;
-	bh=0StND3fWYYxrFik6DUUH8qmLofh3X4vHZiJvcV2mXTs=;
+	s=korg; t=1794064484;
+	bh=2XrVixnvYviCzcaEqMKzZghUOYezXb0tM1QuRknX6AE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e5LqSeAS+hQXGV/n/e6eDeCkmjbp1Ap/FbQvr5oPPEc9EKmZYL8JEEoTuPmwjxdmA
-	 J2tl14kLKhZCGdiPxIOlRc6FDmQRcKXeMCXl3UGm42LovLsVXQve3WrsGxzjZ5r/Ls
-	 0297Ay49eSTfUR/RPn7hFbcgps2tGRDrvPmiJbDQ=
+	b=CFFhfIiP/ijZIN4c4ZINUwnJ7DVMZR2YuHbEGY/QtB8OsOU9W1XHv7FNyQaR85ShG
+	 f8tP4+7XhQJiM/j4bhf4iqV40uI6jr2tZM+kqpFSSGZrcOsdIKpqbYczrnn1sxQr2u
+	 u0vlVW9Ht9pdwHMu2gQ/DGs/hISRCimuA0UDoh4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Vega <vega@nebusec.ai>,
-	Ye Liu <liuye@kylinos.cn>,
+	syzbot+e64c6472a3d96a75172a@syzkaller.appspotmail.com,
+	syzbot+26461e903494e689c24f@syzkaller.appspotmail.com,
+	Yemu Lu <prcups@krgm.moe>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0503/1257] mm/page_table_check: skip zero pages
-Date: Sat,  7 Nov 2026 08:46:39 -0500
-Message-ID: <20261107134953.322562642@linuxfoundation.org>
+Subject: [PATCH 7.3 0521/1257] fat: fix fat_ent_write() for reverting the value
+Date: Sat,  7 Nov 2026 08:46:57 -0500
+Message-ID: <20261107134953.817267713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,60 +76,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
 
-[ Upstream commit 33afd07412a1efe5b750a3fd5eb0272ebdd12761 ]
+[ Upstream commit 63c4b67ee163b2a67a7561314bf2106d6c79c53c ]
 
-page_table_check_set() accounts pages by whether they are PageAnon().  The
-shared zero page is a special page, not an ordinary file-backed page.
-Read faults on private anonymous mappings can install many read-only PTEs
-that point at the zero page, but page_table_check currently accounts them
-in file_map_count.
+commit 64d9183203ee ("fat: restore original value when fat_ent_write
+failed") try to revert the fatent value to old value when got the error on
+mirror FAT.
 
-That lets an unprivileged process populate enough zero-page mappings to
-overflow file_map_count and trip the BUG_ON() in page_table_check_set().
+However it didn't work if the error is when writing the fatent bh.  In
+that case, the bh is cleared the uptodate flag, so reuse bh is invalid.
 
-Skip zero pages in page_table_check accounting.  They do not need the
-anonymous/file mapping conflict checks that page_table_check performs for
-ordinary pages, and this keeps the existing counter size and page_ext
-layout unchanged.
+Fix this by reverting the fatent only if got the error on mirror FAT.
 
-Link: https://lore.kernel.org/1f8848512d2e3ded944f8d595c29faee8fdaeab0.1784645969.git.roxy520tt@gmail.com
-Fixes: df4e817b7108 ("mm: page table check")
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Link: https://lore.kernel.org/87ik4yz9fv.fsf_-_@mail.parknet.co.jp
+Fixes: 64d9183203ee ("fat: restore original value when fat_ent_write failed")
+Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Cc: Ye Liu <liuye@kylinos.cn>
+Reported-by: syzbot+e64c6472a3d96a75172a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e64c6472a3d96a75172a
+Reported-by: syzbot+26461e903494e689c24f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=26461e903494e689c24f
+Cc: Yemu Lu <prcups@krgm.moe>
+Cc: Ren Wei <n05ec@lzu.edu.cn>
+Cc: Yuan Tan <yuantan098@gmail.com>
+Cc: Yifan Wu <yifanwucs@gmail.com>
+Cc: Juefei Pu <tomapufckgml@gmail.com>
+Cc: Xin Liu <bird@lzu.edu.cn>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_table_check.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/fat/fat.h    |  2 +-
+ fs/fat/fatent.c | 21 ++++++++++++++++++---
+ fs/fat/file.c   |  3 ++-
+ fs/fat/misc.c   |  6 ++----
+ 4 files changed, 23 insertions(+), 9 deletions(-)
 
-diff --git a/mm/page_table_check.c b/mm/page_table_check.c
-index 6ffc536359cd0..75818f1bc127e 100644
---- a/mm/page_table_check.c
-+++ b/mm/page_table_check.c
-@@ -67,7 +67,7 @@ static void page_table_check_clear(unsigned long pfn, unsigned long pgcnt)
- 	struct page *page;
- 	bool anon;
+diff --git a/fs/fat/fat.h b/fs/fat/fat.h
+index 61338413d9f3e..fbd207c55859e 100644
+--- a/fs/fat/fat.h
++++ b/fs/fat/fat.h
+@@ -392,7 +392,7 @@ extern void fat_ent_access_init(struct super_block *sb);
+ extern int fat_ent_read(struct inode *inode, struct fat_entry *fatent,
+ 			int entry);
+ extern int fat_ent_write(struct inode *inode, struct fat_entry *fatent,
+-			 int new, int wait);
++			 int new, int old, int wait);
+ extern int fat_alloc_clusters(struct inode *inode, int *cluster,
+ 			      int nr_cluster);
+ extern int fat_free_clusters(struct inode *inode, int cluster);
+diff --git a/fs/fat/fatent.c b/fs/fat/fatent.c
+index f0801d99dd62a..df23fc85f3130 100644
+--- a/fs/fat/fatent.c
++++ b/fs/fat/fatent.c
+@@ -413,7 +413,7 @@ static int fat_mirror_bhs(struct super_block *sb, struct buffer_head **bhs,
+ }
  
--	if (!pfn_valid(pfn))
-+	if (!pfn_valid(pfn) || is_zero_pfn(pfn) || is_huge_zero_pfn(pfn))
- 		return;
+ int fat_ent_write(struct inode *inode, struct fat_entry *fatent,
+-		  int new, int wait)
++		  int new, int old, int wait)
+ {
+ 	struct super_block *sb = inode->i_sb;
+ 	const struct fatent_operations *ops = MSDOS_SB(sb)->fatent_ops;
+@@ -422,10 +422,25 @@ int fat_ent_write(struct inode *inode, struct fat_entry *fatent,
+ 	ops->ent_put(fatent, new);
+ 	if (wait) {
+ 		err = fat_sync_bhs(fatent->bhs, fatent->nr_bhs);
+-		if (err)
++		if (err) {
++			/*
++			 * bhs are not uptodate after I/O error. So we
++			 * can't simply re-dirty to revert. And it
++			 * would not have value to write again on I/O
++			 * error.
++			 */
+ 			return err;
++		}
+ 	}
+-	return fat_mirror_bhs(sb, fatent->bhs, fatent->nr_bhs);
++
++	err = fat_mirror_bhs(sb, fatent->bhs, fatent->nr_bhs);
++	if (err) {
++		/* Try to revert if got the error on mirror FAT */
++		ops->ent_put(fatent, old);
++		if (wait)
++			fat_sync_bhs(fatent->bhs, fatent->nr_bhs);
++	}
++	return err;
+ }
  
- 	page = pfn_to_page(pfn);
-@@ -102,7 +102,7 @@ static void page_table_check_set(unsigned long pfn, unsigned long pgcnt,
- 	struct page *page;
- 	bool anon;
+ static inline int fat_ent_next(struct msdos_sb_info *sbi,
+diff --git a/fs/fat/file.c b/fs/fat/file.c
+index 1c835ca5f21a5..6c475c53334c6 100644
+--- a/fs/fat/file.c
++++ b/fs/fat/file.c
+@@ -363,7 +363,8 @@ static int fat_free(struct inode *inode, int skip)
+ 				     __func__, MSDOS_I(inode)->i_pos);
+ 			ret = -EIO;
+ 		} else if (ret > 0) {
+-			err = fat_ent_write(inode, &fatent, FAT_ENT_EOF, wait);
++			err = fat_ent_write(inode, &fatent, FAT_ENT_EOF, ret,
++					    wait);
+ 			if (err)
+ 				ret = err;
+ 		}
+diff --git a/fs/fat/misc.c b/fs/fat/misc.c
+index e79762cf19754..c44296756eae6 100644
+--- a/fs/fat/misc.c
++++ b/fs/fat/misc.c
+@@ -133,11 +133,9 @@ int fat_chain_add(struct inode *inode, int new_dclus, int nr_cluster)
+ 		ret = fat_ent_read(inode, &fatent, last);
+ 		if (ret >= 0) {
+ 			int wait = inode_needs_sync(inode);
+-			int old = ret;
  
--	if (!pfn_valid(pfn))
-+	if (!pfn_valid(pfn) || is_zero_pfn(pfn) || is_huge_zero_pfn(pfn))
- 		return;
- 
- 	page = pfn_to_page(pfn);
+-			ret = fat_ent_write(inode, &fatent, new_dclus, wait);
+-			if (ret < 0)
+-				fat_ent_write(inode, &fatent, old, wait);
++			ret = fat_ent_write(inode, &fatent, new_dclus, ret,
++					    wait);
+ 			fatent_brelse(&fatent);
+ 		}
+ 		if (ret < 0)
 -- 
 2.53.0
 
