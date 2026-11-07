@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061977;
-	b=ckFkS4WbJx2rsWj649AjZHMK2EEFX2B4P40p0LdeDGoZaKIIGxkMuTwKdGfQJEmibRyN
-	 Ze/PgtxI1xPMputmnClCLV+wLiISq6sRcHe8kfTqfmtgiMD+y6Phi0qZfr13HP/SvtbzJ
-	 uumLc06f3keVP3hn+SPkzzk26cSVRgqtrPBgsn/KqmVW6GU3ZgB/QiA2YmR8K/NcZQ526
-	 URXqELMhiPNN5AvNE21B0OleF7DMuaB+mmJdGq4l56KtMFJXvndN+lhXsmimcGgmyD6Cf
-	 KcM6Q1P8fEo/0lt1NoNF4DhOv5inaMw1LEIoJdG+mLvlsr70DoZ0htZufKLjolpPpPA==
+	t=1794061978;
+	b=iIzCs9YkJO4Gw3R5GYy2VJLziJLKtV0VemP5PkZqiBcZrxo0ZdaQF4TRxmQYNOLHzHzl
+	 aWgTmDUvg+harAtJZk1KgHAN6Hu+jDJM/5Gt6Nb3GstRW9tDK8nxcwWcuhF2MqPOm66mi
+	 Z+EwrBhQNt0RcNAo3IZSlujYVRVHyDrvdh543JSkkjs8kwDQAdIO5NTAqDWpLVtI4Yh5z
+	 xeSe7R4FcFUBAcCL306I7W+H0p8txtIxI1oXflNFhyu4a5Fic4DH29eWKGzfUDTv2hHCU
+	 5iedjUaruwySB6N1eIo3PImMByy5BQ9aK2W1AUCAVpcQ3ibccF7S9m02ZQM99WP0wEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061978;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OufVeUlKaoXY/oav4Kuj8FAlG9Nez01oD4xAXdVtFoY=;
-	b=zsPH8KCeBOX0XqM2dWBUg+L0ektRVUxjgzHizuC2Ce2ll384Az43s9hGkjloEWXKlj1G
-	 UnvO73TvsPUV5w4hSdJIQuCLzOSsL7/wLpSkPtMI52+t+8ysPZ5eQyuXgE0t2cfpEFu12
-	 0stnQouxxgHW5zRpxYvs9lyQTTMIGgQj+B9dFPhChA2EwMaeWvOwld48fRFnsj54M2/sd
-	 O6gBhHPoqpk2bMe+JKXVkeXlgQRg/CJqLWf38w3lTfwYh3Sh1tCtiQQ7RkedUGtVDN5NF
-	 qY6rIPeyXhFfdbYBlQ0Q1Y1vpDvGn2mmRwETpBamvGTJTrMsY38miwdMM0rz9VdFdBQ==
+	bh=m/ZNUhEDiVfxF/JODznYlhHVXzdBS1caeso/BIAobQ0=;
+	b=0vsFKsrrM18Qxqu3qsd0zdKoBWe2jIZXF1ddCmKmj3LSZbEhUKc8UmBu4RwzQsc4VDyo
+	 IiBEnbC0vBVGCU18YES+7DogP1aHHcliLwVvHX2bkSsxLZSfp9268aD0GprXE4FzL50sO
+	 s4mi8XzgWlTxEfuNpl6kIhxHqelX9YDbkEWjRBO1X+ibnksuIRCD3GE0gNjEHu6f45Kbf
+	 rgkFSwnx85IhF9NTecs7O1OtllPmF9JZNK+mx9ZpGzo4sgu05tznsNR/Mbr+jiG95hw4Q
+	 tEHOuPCCu8sR6MMsyLMXqRUsomLefs8Njt1SYgFvzmqdxDnsd0b536qRNNelnajLtVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VpBLb+sw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yxzwjY2X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8572606A333;
-	Sat,  7 Nov 2026 14:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707FE606A332;
+	Sat,  7 Nov 2026 14:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VpBLb+sw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970B11F0089F;
-	Sat,  7 Nov 2026 14:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yxzwjY2X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57FB1F008A2;
+	Sat,  7 Nov 2026 14:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061976;
-	bh=OufVeUlKaoXY/oav4Kuj8FAlG9Nez01oD4xAXdVtFoY=;
+	s=korg; t=1794061978;
+	bh=m/ZNUhEDiVfxF/JODznYlhHVXzdBS1caeso/BIAobQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VpBLb+swMzEXuyfddft60/eA1itxfuR+9eU6oBI6Uis7FP/XN2lrjW6xwiqx8pbtP
-	 WOUiP0sHSEuEQ48Jri9QvpTOm3r+GH52BaDhtMswDgQ/K8Mfr/TPrdzukVMpcOcSdI
-	 s4dmoKgLtW+Xk54FKH760TPNnZQpuuCdjdIrhD/Q=
+	b=yxzwjY2XpvaRXZRoW75u1QeSqcg06fDbujbSxqNkrN3tK4r5PY4Z2veojv9TLwj6y
+	 Ys62YKSD+cYJF3rZuURgJABP3O3QXqPzRdtSvWdTzdDNUNVHHhOO63don03JFm+GBT
+	 eNy1XXJ92yvCIUgTKJ/pK4GJM+JRe4kr3ShXu0rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0971/1536] media: vivid: cancel svid ctrl work on release
-Date: Sat,  7 Nov 2026 08:49:47 -0500
-Message-ID: <20261107135024.919569187@linuxfoundation.org>
+Subject: [PATCH 6.12 0972/1536] media: vicodec: zero-initialize stateful decoder heap buffers
+Date: Sat,  7 Nov 2026 08:49:48 -0500
+Message-ID: <20261107135024.946385993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,51 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 1adaefca7111235ff0a2219dd4899ac24601d6e8 ]
+[ Upstream commit 27953c044974baf7e24dee3e9342fe0103dea80c ]
 
-vivid_dev_release() cancels update_hdmi_ctrl_work but not its sibling
-update_svid_ctrl_work, which vivid_vid_cap_s_ctrl() queues on
-update_svid_ctrls_workqueue when a VIVID_CID_SVID_IS_CONNECTED_TO_OUTPUT
-control is changed. The two work items were added together, but only
-one of them is cancelled on release.
+The stateful decoder leaks uninitialized kernel heap memory to userspace.
+A process that can open the decoder video node gets it back in the CAPTURE
+buffers it dequeues.
 
-If the svid work is still pending or running when the last v4l2_device
-reference is dropped, update_svid_ctrls_work_handler() runs after
-kfree(dev): the handler iterates the global vivid_devs[] array and
-calls v4l2_ctrl_modify_range() on every vivid_dev instance, including
-this one after it has been freed.
+The reference frame and the compressed frame buffer are allocated with
+kvmalloc() in vicodec_start_streaming(), and the decoder can read them
+before they have been written. The first frame is allowed to be a P-frame,
+in which case it is decoded against a reference frame that was never
+produced, and the padding rows below the visible area are never written
+for any frame.
 
-Add the missing cancel_work_sync() next to the hdmi sibling, before
-vivid_free_controls() releases the control handlers the work uses.
+Use kvzalloc() for both allocations.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: d7c969f37515 ("media: vivid: Add 'Is Connected To' menu controls")
+Fixes: 256bf813ba39 ("media: vicodec: add the virtual codec driver")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/test-drivers/vicodec/vicodec-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-core.c b/drivers/media/test-drivers/vivid/vivid-core.c
-index cf9f37bc0c08a..767bcaaa02de4 100644
---- a/drivers/media/test-drivers/vivid/vivid-core.c
-+++ b/drivers/media/test-drivers/vivid/vivid-core.c
-@@ -852,6 +852,7 @@ static void vivid_dev_release(struct v4l2_device *v4l2_dev)
- 	struct vivid_dev *dev = container_of(v4l2_dev, struct vivid_dev, v4l2_dev);
+diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
+index e7cea1816bb11..29e9f8db664a4 100644
+--- a/drivers/media/test-drivers/vicodec/vicodec-core.c
++++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
+@@ -1604,9 +1604,9 @@ static int vicodec_start_streaming(struct vb2_queue *q,
+ 	}
+ 	state->ref_stride = q_data->coded_width * info->luma_alpha_step;
  
- 	cancel_work_sync(&dev->update_hdmi_ctrl_work);
-+	cancel_work_sync(&dev->update_svid_ctrl_work);
- 	vivid_free_controls(dev);
- 	v4l2_device_unregister(&dev->v4l2_dev);
- #ifdef CONFIG_MEDIA_CONTROLLER
+-	state->ref_frame.buf = kvmalloc(total_planes_size, GFP_KERNEL);
++	state->ref_frame.buf = kvzalloc(total_planes_size, GFP_KERNEL);
+ 	state->ref_frame.luma = state->ref_frame.buf;
+-	new_comp_frame = kvmalloc(ctx->comp_max_size, GFP_KERNEL);
++	new_comp_frame = kvzalloc(ctx->comp_max_size, GFP_KERNEL);
+ 
+ 	if (!state->ref_frame.luma || !new_comp_frame) {
+ 		kvfree(state->ref_frame.luma);
 -- 
 2.53.0
 
