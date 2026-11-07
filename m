@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064611;
-	b=tUmltQAveZdfZArKe3uicsO2O5+qaI3NAW817sl+5rR2TfeHgaAE7FcMXMbb/mFyNicW
-	 AhLrrm+vbHcTEodWeKkY7FYJlg6j1IoeMPTz02EAgQhSJog1QZeBe1qlMpV+M12pP+sx3
-	 0hg1axikKTslnXnIxP2ax+66WQqUK+dP3JSsSChixpYNF3UOKfZ3IMDrf6objmbqkBlGS
-	 NoJBllTtr7bQUi2HOIgJ5I2bInZoiirUdoTEWCgvZfqHwVMRK9b7W6WEGuH9cZza1TtxD
-	 Io4tez8bn6gV0zOUGbcrMuo5qu29Z0yxREmhrsotqm2eA/KgYO0XYxJDnNOXlbBFTkA==
+	t=1794064612;
+	b=KOGQLhH8KVAFGkGshCC0+ZBJw0173hgN++zz7yHuQIK4eYQtFO66jnyv7dzPsVdP56sw
+	 z7nto3uw07ULosO3axPOuZWxHLUVfcGlawiUKapRNFt/DWovwPdyvPiiSjvMg+Nse3+1t
+	 H0cXps30NpvSftDqmM59e9VQvf/COGFdbe8jY7Tmn6ZTvEQ/dxfgxbcfXTzjxWTMYjgpy
+	 tAhEmht569wRPgtktD3oKYKU1EY8XltI5As2NSRXQ1pDJaXpLsa5BQ2hkwq18A9SexoiD
+	 Vnp/otFRu9EBaTi1joXnWXTC8H+I27vExrENT2zyvGOZ8oL/zK/QC/MSj3LC9hQhk0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064611;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064612;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QOabKzNsJfA8mVcOdcb7DcIJ2s3OwfTYgcyEFkQZqo4=;
-	b=jPvyI/enzgehySTKpm+SXYeT9h5v/ZUSQSkXbjrVa7c4gzTPjfeXtLFEnjPraPhRoj4P
-	 fnn9lMyEB66tEHdF5s3yHIzGm6qOo1W9YE4uNqiWJuvKPcnlz3Piyd9UhfghnvfmsmTsm
-	 nk+LNRURNgEsFUlnJzXpwm/aPZunoeEkV+V2DpteGCKmPIat/DIjBseIqmDN3IuhuRKMX
-	 ObR22zO4hJHpgsbkMHg1yo0WbeZfPeTcyK7HROSWicosTnI8kAJX18K+nTFIivG8MPIvU
-	 Pg4xc5+pykWsf12OmrbYyvcCThwQm9+fjjFFZOz/vBRVvtlDTqOohmmckOb1TOTiG5Q==
+	bh=l1USSPQctGoLFhdR+coFb72twaRlt/Zd5f8TzSyOgwg=;
+	b=uQwMWuz0xbL/OV3LbDmgi3B2Mm5ZCY+HnRF+xvzvk1zNH04t/vIKf9DYsOtR4orjagP/
+	 P/tBabdzgAgQAWZiAhUg1hhOtpPuubDIbhAkUmzYXMYWKZRd985+hNUtrvQmdA0CI/LoW
+	 IKrdZ5jLrQSnjcU82ngG1yNXA244CyaQHCH74pptTX21CvIGC89GtpRqdOU9i2f3qxb2b
+	 bOFubQEVptcB5aTvlRW93GSyThvb/Vi+8+UUgRf1y/IQSc6BqSyOc6MyHTuN10Zch28s6
+	 q4WBLbwWJJCt0DuaVERBpNySQ9mYvaPG4m278VwJqw8pW+aXZSsGLBjJg+evzS25SNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rgKey0jf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d0rXMNWG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BB6606EE88;
-	Sat,  7 Nov 2026 15:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69810606EE88;
+	Sat,  7 Nov 2026 15:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rgKey0jf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C553E1F0089F;
-	Sat,  7 Nov 2026 15:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d0rXMNWG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2821F0089F;
+	Sat,  7 Nov 2026 15:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064611;
-	bh=QOabKzNsJfA8mVcOdcb7DcIJ2s3OwfTYgcyEFkQZqo4=;
+	s=korg; t=1794064612;
+	bh=l1USSPQctGoLFhdR+coFb72twaRlt/Zd5f8TzSyOgwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rgKey0jfWcYk/CEmZku4vlc4W52QuyCZYV1AR6DMstttRGPB2x3hdV9Q1MCLvmvzc
-	 S+21s762aZPDsXPnlPBmGW1b9qaLnifllS9eQCpeSjeNkoLNkA8MZ0f/7jrhpcqYGc
-	 12LX6ZQ1U5+Y+cXxolC9FXCA8OuqVEUy8DkXIplw=
+	b=d0rXMNWG7Pgev5bKqQMwApsXs1hn8NxhWr1DyWKcwG9QMlO2DxFfET/RUumXn8jNq
+	 TlmEdKcRDAMmdrnph1BRtGe5xb1rMYK3NPfGicx92LOjGJdtFbeTthw/QXJho7Sjke
+	 dsQI9SvwRyBqNotu8jNV62ejPR4wQuwBMqe78SSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Johan Hovold <johan@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
+	stable <stable@kernel.org>,
+	Orgad Shaneh <orgads@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0621/1257] usb: core: dont set drvdata to NULL in usb_unbind_interface()
-Date: Sat,  7 Nov 2026 08:48:37 -0500
-Message-ID: <20261107134956.451712343@linuxfoundation.org>
+Subject: [PATCH 7.3 0622/1257] usb: octeon-hcd: release the USB block when initialization fails
+Date: Sat,  7 Nov 2026 08:48:38 -0500
+Message-ID: <20261107134956.477782427@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,106 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Orgad Shaneh <orgads@gmail.com>
 
-[ Upstream commit 8f0d16174102863936d583c90258ea02bf06205c ]
+[ Upstream commit b8c063059f304abebc11039195f5b28298aeddbb ]
 
-usb_unbind_interface() serves as the remove() callback of struct
-usb_driver and calls usb_set_intfdata(intf, NULL) to clear the bus
-device private data pointer.
+cvmx_usb_initialize() gets as far as selecting the reference clock,
+enabling USBN_CLK_CTL and taking the PHY out of reset (steps 2b-2e)
+before anything can go wrong, and its only caller frees the HCD and
+returns without touching the hardware. Both of its error returns
+therefore leave the USB block clocked and out of reset on a failed
+probe.
 
-However, the driver core code already sets the bus device private data
-pointer to NULL in device_unbind_cleanup() *after* devres_release_all(),
-which makes the call redundant.
+Release it on the way out with cvmx_usb_shutdown(), which is the undo
+the retry path a few lines above already uses. It cannot refuse with
+-EBUSY here: the pipe lists it checks are initialised by
+octeon_usb_probe() before cvmx_usb_initialize() is called, and no pipe
+can have been opened yet.
 
-In addition, it can create unexpected NULL pointer dereference scenarios
-when drivers use managed APIs.
-
-	int probe(struct usb_interface *intf,
-		  const struct usb_device_id *id)
-	{
-		struct data *data;
-		int ret;
-
-		data = devm_kzalloc(&intf->dev, sizeof(*data), GFP_KERNEL);
-		if (!data)
-			return -ENOMEM;
-
-		ret = devm_device_add_group(&intf->dev, &foo_attr_group);
-		if (ret)
-			return ret;
-
-		...
-	}
-
-	ssize_t foo_value_show(struct device *dev, struct device_attribute *attr,
-			       char *buf)
-	{
-		struct usb_interface *intf = to_usb_interface(dev);
-		struct data *data = usb_get_intfdata(intf);
-
-		/* Potential NULL pointer dereference */
-		return sysfs_emit(buf, "%u\n", data->value);
-	}
-
-Nothing prevents usb_unbind_interface() to race with foo_value_show()
-and set usb_set_intfdata(intf, NULL).
-
-The same applies to the unwind path of usb_probe_interface(), which also
-calls usb_set_intfdata(intf, NULL).
-
-Besides that, the Rust driver core code manages a driver's bus device
-private data and destroys it in device_unbind_cleanup().
-
-If usb_unbind_interface() sets the pointer to NULL prematurely, the Rust
-driver core code sees NULL, and hence skips the destructor of the bus
-device private data, which leaks all its resources.
-
-Thus, drop usb_set_intfdata(intf, NULL) from usb_probe_interface() and
-usb_unbind_interface(), and move it to usb_driver_release_interface(),
-which manually calls the remove() callback of struct usb_driver and
-hence can't rely on the driver core.
-
-Cc: stable@kernel.org
-Fixes: a995fe1a3aa7 ("rust: driver: drop device private data post unbind")
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/20261010135131.286498-1-dakr@kernel.org
+Fixes: 22bce6d2b3fd ("usb: octeon-hcd: fail the probe when the USB core does not respond")
+Cc: stable <stable@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Link: https://patch.msgid.link/20261011072238.2381564-1-orgads@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/driver.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/host/octeon-hcd.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/core/driver.c b/drivers/usb/core/driver.c
-index bf660b15a0f60..9af0184276c10 100644
---- a/drivers/usb/core/driver.c
-+++ b/drivers/usb/core/driver.c
-@@ -410,7 +410,6 @@ static int usb_probe_interface(struct device *dev)
- 	return error;
- 
-  err:
--	usb_set_intfdata(intf, NULL);
- 	intf->needs_remote_wakeup = 0;
- 	intf->condition = USB_INTERFACE_UNBOUND;
- 
-@@ -497,7 +496,6 @@ static int usb_unbind_interface(struct device *dev)
- 	} else {
- 		intf->needs_altsetting0 = 1;
+diff --git a/drivers/usb/host/octeon-hcd.c b/drivers/usb/host/octeon-hcd.c
+index 256e459ff6d8d..4d6558e5492c2 100644
+--- a/drivers/usb/host/octeon-hcd.c
++++ b/drivers/usb/host/octeon-hcd.c
+@@ -708,6 +708,7 @@ static int cvmx_usb_initialize(struct device *dev,
+ 	int channel;
+ 	int divisor;
+ 	int retries = 0;
++	int status;
+ 	union cvmx_usbcx_hcfg usbcx_hcfg;
+ 	union cvmx_usbnx_clk_ctl usbn_clk_ctl;
+ 	union cvmx_usbcx_gintsts usbc_gintsts;
+@@ -872,7 +873,8 @@ static int cvmx_usb_initialize(struct device *dev,
+ 	if (usbcx_gahbcfg.u32 == 0xffffffff || usbcx_gahbcfg.u32 == 0) {
+ 		dev_err(dev, "USB core is not responding (GHWCFG3=0x%08x)\n",
+ 			usbcx_gahbcfg.u32);
+-		return -ENODEV;
++		status = -ENODEV;
++		goto err_shutdown;
  	}
--	usb_set_intfdata(intf, NULL);
  
- 	intf->condition = USB_INTERFACE_UNBOUND;
- 	intf->needs_remote_wakeup = 0;
-@@ -644,6 +642,7 @@ void usb_driver_release_interface(struct usb_driver *driver,
- 	} else {
- 		device_lock(dev);
- 		usb_unbind_interface(dev);
-+		dev_set_drvdata(dev, NULL);
- 		dev->driver = NULL;
- 		device_unlock(dev);
- 	}
+ 	usbcx_gahbcfg.u32 = 0;
+@@ -961,14 +963,27 @@ static int cvmx_usb_initialize(struct device *dev,
+ 	dev_dbg(dev, "gintsts after reset: 0x%x\n", (int)usbc_gintsts.u32);
+ 	if (!usbc_gintsts.s.disconnint && !usbc_gintsts.s.prtint)
+ 		return 0;
+-	if (retries++ >= 5)
+-		return -EAGAIN;
++	if (retries++ >= 5) {
++		status = -EAGAIN;
++		goto err_shutdown;
++	}
+ 	dev_info(dev, "controller reset failed (gintsts=0x%x) - retrying\n",
+ 		 (int)usbc_gintsts.u32);
+ 	msleep(50);
+ 	cvmx_usb_shutdown(usb);
+ 	msleep(50);
+ 	goto retry;
++
++err_shutdown:
++	/*
++	 * Steps 2b-2e above selected the reference clock, enabled
++	 * USBN_CLK_CTL and took the PHY out of reset, and the caller only
++	 * frees the HCD, so hand the block back before giving up. The pipe
++	 * lists cvmx_usb_shutdown() checks are initialised by the caller
++	 * before it gets here, so it cannot refuse with -EBUSY.
++	 */
++	cvmx_usb_shutdown(usb);
++	return status;
+ }
+ 
+ /**
 -- 
 2.53.0
 
