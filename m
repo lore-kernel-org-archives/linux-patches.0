@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063162;
-	b=nx3ggskr4jyNy3Nyrk64iktdMXWBw2ctAC+nLXf/b//7kgO0Y67b6UxLSyqqO1UXlscn
-	 Y8HABiK/AYLXpc2FFl+zENuDJiJg3+XXGBwWkfy6RkjkdSe6VUTuqZPkdb63aGlOzmwXI
-	 lLgFfgvKrnKHIcw1hfXDaHG7EApD1TkSk//hxynymRSlfeWROGZKh+lkNTKRMW7d3inSF
-	 h8ZZdhcnt5vRMhMn+QKD3ElF265uHAjsyB+2l8pzkgFHSU0mw9oy2me+M+w++/JlpZW6i
-	 /D+HgkEoJSxdId0LXg/wBl8ubCkyd3N9pEwsTTg71odTV5U5MVCGzeKRf8JFFCZ3vcw==
+	t=1794063164;
+	b=g3/XCdh6YGQBsKhuAVOi14qc34d27I5gStiHJOtU4X5f6rdUVmwlXIfLZGEg8VWend09
+	 O2fOz0CvmGxGVVe3EVjiOF26g0SpTT2V9qxHtcOkTTSMdusBYCi0vM31yraZEFTcDT1bF
+	 n8weCKd67lsZKrQjg+p4+gJelsksvGjSZ59ZSw9JkcO2zMqwvUpzyvYhRrz8Nprhmot4V
+	 Wl6aCM8bTsddhObMysFzR19ZZapBECNoXVV3Uiec0yHG981oab3Dn/TZypwyloqKl7K8I
+	 1ICKKR84a9ZpPKUAoYpg3MEPeFTlgnhNYuXO04YeE2NKDoWZR81wYvZeXpfA9/QKBdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063162;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063164;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HSwIZK7YnJBtlgRci62wslfsA12YpEkrtfekxrkWgQw=;
-	b=qv0txY70yo5I4yKmH6UZ7/Vca14ku+3PIsg7FHLaAn7zUvhvwL6dYr8ng2jqH6lpz4iS
-	 X22kM6+AMNvhcYdJKq/JLYlvJzJj0+Irqkp/bFO/pEI37YGQ0S4bhTvfH9ufhoR5Of+M6
-	 ckGNmQSVHapZc92u0ABADYB+NAhw+i4P8oj8V2yHLnjD+nY4uwAUWerQRiJTuvNbrsmMN
-	 o/eDULv7LDLVhBlA5Swv18OtYz0jhr9kzpJBaWh16Sl9V3NERNP+AQEzSDgV7yvEl6U9z
-	 +GFsTakuy5G4U+VR6N7x0ctbDiWb8nmjeo1wVJHtXyrC4JtY+szoSWYUkAlCdaFMltA==
+	bh=PE0p5/OeYudstkbIlTRct/yJPqPb6Cj2QRmdxkHCV8E=;
+	b=I2yYj9GlAbLfkyOTL1FXvfQOm7otvKTxWOMcssendKv6SaLHGbjES1w82SVrP1YfeBUL
+	 CfaT+DQAwHPGJqyVopxoZ4hK/B5qeHqTsLv2rvdlSnm+8mT/skCtI7MpMqdvteCtj7mo6
+	 7ysb3pK27P+dLzHlGuhOdcuYi7NpbguJSjhEidbkPjFtO2B6ZRKYTdScE+u1C1KMXdaQd
+	 yn8ZKxRTYAB9F+Cox4TRGY1U60X+3OjXHEHZvIB+bhK8WyBv0hm2QSGDgCwl9+nCsxwjv
+	 AJZcwBKrxNz+WLAWaD7ozRzh9SbxU2GaJJpRSqhhn57l9bmdEDgESHT51SPZZ8t2eLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXIJYt3v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yp5bgE8Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A4E606D833;
-	Sat,  7 Nov 2026 14:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1DD606D833;
+	Sat,  7 Nov 2026 14:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXIJYt3v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC9B1F0089F;
-	Sat,  7 Nov 2026 14:52:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yp5bgE8Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534CC1F0089F;
+	Sat,  7 Nov 2026 14:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063162;
-	bh=HSwIZK7YnJBtlgRci62wslfsA12YpEkrtfekxrkWgQw=;
+	s=korg; t=1794063163;
+	bh=PE0p5/OeYudstkbIlTRct/yJPqPb6Cj2QRmdxkHCV8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OXIJYt3vQgKemRHzurKxXrFIMjxB12JNwkjiF0sjaeNKais8CuedEJtW+wJJOywyW
-	 b03jktANJferR+ULTh+tsD61jbcLQCk4TVoVSO3SK/T7WzGV7zU4/rK3RTHNqpgttc
-	 szqKXZo8Ep4LsRGRwR6yD7bAX5RLvLIAvXZOe2ck=
+	b=yp5bgE8Zb60/48XHtvKfcdl/mE1gDxLVcddYBTb3b2fYO9GDoCYxVEY2Rw0KGhSM7
+	 QJJ7RxQ/gCA4CGRB2rTJVVUE+18wYag4voRWT9n3HXEEs+eHa6saxOkv2hQ64d62Ee
+	 xhYmEKCOuAYr2DeQIpotVYvBvZX0REnbtDu6BhtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Usama Arif <usamaarif642@gmail.com>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 384/869] mm/damon/core: handle extreme memory state in damon_get_node_mem_bp()
-Date: Sat,  7 Nov 2026 08:51:06 -0500
-Message-ID: <20261107134906.347817144@linuxfoundation.org>
+Subject: [PATCH 6.18 385/869] mm/damon/sysfs: set next refresh jiffies per sysfs context
+Date: Sat,  7 Nov 2026 08:51:07 -0500
+Message-ID: <20261107134906.437857068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,49 +75,83 @@ Content-Transfer-Encoding: 8bit
 
 From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 485a9149ad406e00949327a3231b9084d7073706 ]
+[ Upstream commit b9100ecb5411d2de79175ed534df72ec41e94998 ]
 
-In an extreme and unlikely situation, si_meminfo_node() might let the
-caller show zero total ram.  That could cause a divide by zero in
-damon_get_node_mem_bp().  It could also show free memory larger than the
-total memory.  This could cause underflow and make DAMOS temporarily make
-unexpected behavior.  Thanks to safety guards in the auto-tuning feedback
-loop, that should not be a real problem, though.  Fix the problems by
-respectively returning 100% and 0% for used and free memory queries in the
-corner cases.
+When 'refresh_ms' is set, DAMON sysfs interface periodically updates
+auto-tuned parameters and DAMOS stats.  The timestamp for the next refresh
+is initialized when a DAMON context starts, and updated in its
+damon_call() callback function.  That is, each DAMON context updates it.
+However, the timestamp is a global variable that is shared with all the
+contexts.  When there are multiple DAMON contexts having different
+refresh_ms, the update frequency will be changed, depending on the order
+of the contexts.  When there are multiple kdamonds, it will be even more
+chaotic.  Fix the problem by having the timestamp per each context.
 
-The issue was discovered [1] by Sashiko.
+The user impact is not very critical.  It does not leak, corrupt or crash.
+The update will not be faster or slower than the lowest and largest
+refresh_ms values of the contexts, respectively.  The user can also
+manually ask the updates on demand using kdamond state commands.  That
+said, clearly this is a bug and can easily be reproduced.
 
-Link: https://lore.kernel.org/20260901131850.98037-7-sj@kernel.org
-Link: https://lore.kernel.org/20260328133216.9697-1-sj@kernel.org [1]
-Fixes: 0e1c773b501f ("mm/damon/core: introduce damos quota goal metrics for memory node utilization")
+Link: https://lore.kernel.org/20260902002725.108635-5-sj@kernel.org
+Fixes: 9fd7bb5083d1 ("mm/damon/sysfs: change next_update_jiffies to a global variable")
 Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: <stable@vger.kernel.org> # 6.16.x
+Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+Tested-by: Lian Wang <lianux.mm@gmail.com>
+Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@davidgow.net>
+Cc: Quanmin Yan <yanquanmin1@huawei.com>
+Cc: <stable@vger.kernel.org> # 6.18.x
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ mm/damon/sysfs.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 8fa788b0d709c..0bed1cd9e3a23 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2145,6 +2145,13 @@ static __kernel_ulong_t damos_get_node_mem_bp(
- 	}
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 3a79d8c89b5bb..1ae026d099a2e 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1199,6 +1199,7 @@ struct damon_sysfs_kdamond {
+ 	struct damon_sysfs_contexts *contexts;
+ 	struct damon_ctx *damon_ctx;
+ 	unsigned int refresh_ms;
++	unsigned long next_refresh_jiffies;
+ };
  
- 	si_meminfo_node(&i, goal->nid);
-+	if (!i.totalram || i.totalram < i.freeram) {
-+		if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
-+			return 10000;
-+		else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
-+			return 0;
-+	}
-+
- 	if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
- 		numerator = i.totalram - i.freeram;
- 	else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
+ static struct damon_sysfs_kdamond *damon_sysfs_kdamond_alloc(void)
+@@ -1567,17 +1568,15 @@ static struct damon_ctx *damon_sysfs_build_ctx(
+ 	return ctx;
+ }
+ 
+-static unsigned long damon_sysfs_next_update_jiffies;
+-
+ static int damon_sysfs_repeat_call_fn(void *data)
+ {
+ 	struct damon_sysfs_kdamond *sysfs_kdamond = data;
+ 
+ 	if (!sysfs_kdamond->refresh_ms)
+ 		return 0;
+-	if (time_before(jiffies, damon_sysfs_next_update_jiffies))
++	if (time_before(jiffies, sysfs_kdamond->next_refresh_jiffies))
+ 		return 0;
+-	damon_sysfs_next_update_jiffies = jiffies +
++	sysfs_kdamond->next_refresh_jiffies = jiffies +
+ 		msecs_to_jiffies(sysfs_kdamond->refresh_ms);
+ 
+ 	if (!mutex_trylock(&damon_sysfs_lock))
+@@ -1645,8 +1644,8 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
+ 	}
+ 	kdamond->damon_ctx = ctx;
+ 
+-	damon_sysfs_next_update_jiffies =
+-		jiffies + msecs_to_jiffies(kdamond->refresh_ms);
++	kdamond->next_refresh_jiffies = jiffies +
++		msecs_to_jiffies(kdamond->refresh_ms);
+ 
+ 	repeat_call_control->fn = damon_sysfs_repeat_call_fn;
+ 	repeat_call_control->data = kdamond;
 -- 
 2.53.0
 
