@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062281;
-	b=k+l2ItH0P9pgsMp9z0bLoonR15TNKHodQPttnShOpNTd8ZkN2XhlGrOaMccLNmOFmCi+
-	 0PQMYESlbOvG+LIDtH/NAHzeOXj92dwGX95kA85MqE87XCzxbrKI7ioofVZElDAMuVXn1
-	 l43+g1kr/QyX4M0SsQk9+WTzBLFfZdRwVRKd4YQJ+sg0AzmIbYSE6YP5VCmWN6Km/aK19
-	 LnljBKUDC5nEZj2p+FYQKCfe0NeisSNNDkq0Zo29WRi1CWEF/3ydg/Dv/l7hbLwndkWd+
-	 C2XynHJfb+s+s7qAZwBqlCxuxYTKpKYQlGNQ9NKiW1AuuD5mb+Txmw7DkQyp46zGvww==
+	t=1794062282;
+	b=IXkGn/Tn93Q5+CVI/N0lOo5+8IiPHiT5GyfbDbLYF0Y3uWHTNU1Y379Zmrws+29PZeF/
+	 v5lrmLu/XOVYZgvwLdanTutf5a5cQMPyRAFlRNH+1/4+gIV+9l4advjXAspuLLsx3oawB
+	 nm71rcl4+GegvLdt8bVFTqGuL0ZwmK9fvjRtwfarueTkbJlkNJ1k4auHNomdah9Ur8bim
+	 BSQjghqQfLGLSVY1Iq0Y8oHazoNBYz9qtwfNbLsOfVxF5ku1W+sdHwbj1kOFllwUfSVBN
+	 kcfkPHKVr0f/iJI2JXLSBFJtFqF/26xmd8+D6Atju0Yfrxz85B+P+XMba3EpkBvUGrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062282;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9EVZua8LKSDOlbN2RgUCmTUIkevYd/cHi3+altah/gU=;
-	b=JUAKmEsXrU/kAAPX9BOG+lIxNNdwjY3zWDRORReg/shV6GiHIyEbzrzGfB8I8wZ7L7c7
-	 FTJtB4HQta0SeClabW+S8KaV7QW9DXOOC+qDiluACuMVopPePVLBFFtEpF247kHegA1Nk
-	 2KDKualpe2Vqfl6T9mn6e+H7nYgF9NBxhxYWTseWztKq9lXL7m1ahzhoSyKSVMaQrRzvc
-	 Qi0RfqPn3he4RC0svyz804FXelpKd4lfKG7X0eLgZ4GXH56ojscr+GYuO0k/fzUlR5oxs
-	 Aqv7Sk/IA2SeWhuSU8jIrXRqvW/NEH/sEfFkCYU0LVjvFiuzLbVfVHgSMctnSJAsz9w==
+	bh=FI6T0qltBp4nClZXxI6lEvGSPBbE66hKvcEtQHhvTtE=;
+	b=5a/GGdlpnWOenAOqPOV3AsmtAAv7GRxVrWazCO2znjnBO1/iQjXbtSN6fk/haHJRcrIc
+	 JrOkM5WefBH63Fc80kXRHWK3vhQ2NjtaLfuF2vSaF7AeC6FF+hfWwa5TheFY09lV8ZgtV
+	 Hj7WiiKm6X102HfvJutfhhQXgqFMn/atf5JKHd4bMcqi4k3wVP2AUxBL38eKyowNsfQB2
+	 2epGbIuVkrZIjWhatVJ4Omo4dv++hliFsiIo8QeYcY8Y8IpJ1CzeFVD7oX9CVBikRU4sr
+	 6ITnZjEeHHewT2NN+dj1+jA179UWmRpsPxUc8t3D1tAwz30lvlBk3fCtb8baQt7zMIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YiH43onA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=djYg7Ciq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC80D606EE9A;
-	Sat,  7 Nov 2026 14:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33B8606D804;
+	Sat,  7 Nov 2026 14:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YiH43onA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B84D1F0089F;
-	Sat,  7 Nov 2026 14:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=djYg7Ciq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12261F0089F;
+	Sat,  7 Nov 2026 14:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062280;
-	bh=9EVZua8LKSDOlbN2RgUCmTUIkevYd/cHi3+altah/gU=;
+	s=korg; t=1794062281;
+	bh=FI6T0qltBp4nClZXxI6lEvGSPBbE66hKvcEtQHhvTtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YiH43onAcx4ioX1xXu6vwT54TKlgXu2KVz0pQ+k7YKjw8iGIggXKXTrUtbQJbVdAW
-	 JmW85gnKCXF/0Gvrik/01QQTstYXvfMT/2YR4wgcdWF9jZHAg3VmMK8FwT/X+edkrj
-	 xorhPwVbHShi3rQxgawSSfwEAWddzspbXRSJbjIU=
+	b=djYg7CiqhnxThqUwcrt2kyjkPeLsoGB22r4F4zgOQXYe3+0QFGtIUg4janPaVbiuw
+	 eOvz+PE5ccMOqCbqQKtBADQ6WX/86+Lrw5PUrgC6bV/JhTFoO3egTUkPM420pk7ISL
+	 o6+2zUtOGKUt56qmGk5wPqBNp77kguNPKBeepmmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Seongjun Hong <hsj0512@snu.ac.kr>,
-	Alex Williamson <alex@shazbot.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1220/1536] vfio/mlx5: Fix boundary check in set_report_output()
-Date: Sat,  7 Nov 2026 08:53:56 -0500
-Message-ID: <20261107135032.021040224@linuxfoundation.org>
+Subject: [PATCH 6.12 1221/1536] cxl/port: Convert PCIe link latency to nanoseconds
+Date: Sat,  7 Nov 2026 08:53:57 -0500
+Message-ID: <20261107135032.049024127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,38 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seongjun Hong <hsj0512@snu.ac.kr>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 37b2ee6747b7857920ebc71eabc25208a39164a4 ]
+[ Upstream commit 16440d6e4bf1175cda83438d9f9a8ae84bfcf0ee ]
 
-Use > instead of >= on boundary check of recv_buf to avoid the bug which
-the full message in the last slot of recv_buf is ignored even though the
-received data size does not overflow the recv_buf.
+Commit 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
+converted CDAT latencies to nanoseconds and removed the conversion in
+cxl_region_perf_data_calculate(), but left PCIe link latencies in
+picoseconds.
 
-Fixes: 9c7c5430bca3 ("vfio/mlx5: Align the page tracking max message size with the device capability")
+This inflates the FlitLatency contribution to region and node latencies
+by a factor of 1000, exposing incorrect values in sysfs. The resulting
+abstract distances can incorrectly reverse the memory tier ordering of
+nodes.
+
+Convert the FlitLatency contribution to nanoseconds before adding it to
+the access coordinates, rounding up as cdat_normalize() does.
+
+Fixes: 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
 Cc: stable@vger.kernel.org
-Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
-Signed-off-by: Seongjun Hong <hsj0512@snu.ac.kr>
-Link: https://lore.kernel.org/r/20261005-vfio-mlx5-fix-boundary-check-v2-1-75599d2f4497@snu.ac.kr
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20261009045452.1107921-2-den@valinux.co.jp
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/mlx5/cmd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cxl/core/port.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/vfio/pci/mlx5/cmd.c b/drivers/vfio/pci/mlx5/cmd.c
-index e7d2251db6267..fd50d19364a30 100644
---- a/drivers/vfio/pci/mlx5/cmd.c
-+++ b/drivers/vfio/pci/mlx5/cmd.c
-@@ -1642,7 +1642,7 @@ set_report_output(u32 size, int index, struct mlx5_vhca_qp *qp,
- 	int i;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 35aceb7b38040..9c5835eaa22d7 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -2129,6 +2129,9 @@ EXPORT_SYMBOL_NS_GPL(schedule_cxl_memdev_detach, CXL);
  
- 	buf_offset = index * qp->max_msg_size;
--	if (WARN_ON(buf_offset + size >= qp->recv_buf.npages * PAGE_SIZE ||
-+	if (WARN_ON(buf_offset + size > qp->recv_buf.npages * PAGE_SIZE ||
- 		    (nent > qp->max_msg_size / entry_size)))
- 		return;
- 
+ static void add_latency(struct access_coordinate *c, long latency)
+ {
++	/* Convert link latency from picoseconds to nanoseconds. */
++	latency = DIV_ROUND_UP(latency, 1000);
++
+ 	for (int i = 0; i < ACCESS_COORDINATE_MAX; i++) {
+ 		c[i].write_latency += latency;
+ 		c[i].read_latency += latency;
 -- 
 2.53.0
 
