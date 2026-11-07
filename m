@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065592;
-	b=WYrj1qj4rP4G9p8YMMu+7IVus+iB9c7nbFIFXbLJ7ASIukzHtn/h6bVopgmw/QOF7hOS
-	 G2dtcDtYutJbX4/xf2RNjMRVwIatVDPaT8AUkCZxDSHi+VBUbdGznC9c/IoGbC2NORE7q
-	 fK5G89Ty8Ndx01Mv360EHpjNQijWreNXYQ13lu9K+eKJfvLzH9fx5UCwrEVdyVWOVy3yU
-	 Kw3D7xwer4WrphWhCS6Shrlk6L0zKbxmJNJnbOS0hbgVS3PLoUK0RkzL3mgc0yCedivOv
-	 SOgZwhWqmITUFdlSPqWFL3p6OxZSHc4MUgg0XgUw2e9I1ytRl3j0HbCnKD61bqkBXZA==
+	t=1794065593;
+	b=BHlZBdZgDERYN486DTrx4IVTgxsclr+2h9anZQtJP6dlnaOH7g3jE4P2DR8BSieQPx6I
+	 vPmBlFZxwSGVcOfZoPyY2eRCWOSBAvFuZHAUkWHPhnLSggoWXN1N4kCR/dVdHP+SPf9O5
+	 mZmsVTIe8cLqplm5UTsXOZZCjchpXqgR8e3AdceWIAQwSCiJsHWvTLu8XYqewJ7D9YV9K
+	 hlTr6tIUzgOylCiK3l1LvbQwraItcnX5H9PDkpqUNouSP4y8MPqk2FajvzCuqVD979y0W
+	 4eHkKclIlbGsPKHa975y5oj/VARCXKBlB/WIF0NPXpqeSylyTQ6dMafVRcR6+RRYDLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hcsTkclqjKf5NbXO1So60HwTVzQ+yqLM6baRrpI+RKs=;
-	b=wDdyBIZGRim78k0jSmQYK9I8IO/KfRxcgA6rS6HGZKW0Ci84xgRODBIDOQPzf9yKcdGG
-	 bluBXvXtV+TxfN6GrczDHAu0oQdDnGUf6FXA4qLB1RQT1PPt/zOZGh+NNtYY7jhFe52TK
-	 Rt1K6IlfPtKcxTqrGJndNzEoQ0XaVy1rtIW7QTgObitVkSHg9YpXOSbdiOVIEUkKFS0Iu
-	 7ERMNRVWOOW7cEOquksps4YNeqXZ2tayVVqS5G1xNCjz4PAqdbN85e9tNGmmGNSsMvE/D
-	 SNvrNwjRAsZGHEMBExd1UGCTsMsor+sxIoIEpYSj4wgvQukn3KHl8bdjVGQY47aO6mw==
+	bh=5DNhsHP1dig34cakIkG12XFuRZrlMB7D5fnnUygeNf0=;
+	b=SIq9fOZrF0TSKGlIXVX+bcVHSpBAOdYlX4WExUPyA/21v9y/0DFot2GKWuGfAYTUCYqw
+	 OTyOQXTAEze0xt78p/GOixqroL8EMe5T+W9kjxkYW2Y+q2LuGoMz8Gy50/apKWgOnubaT
+	 PZLA1PlqpHdEiVl+fUkruwmL1B/J2IRqrIkQ0D7DmezzpVWCsBlxUMbNjQTS/8AAfHXyD
+	 XVjaY6TgOrF4wYNH7MdvOBY5JwtU9uHeC48WuGMHvOaNBu4mm7Zu5uvj82r3rLONwvNWW
+	 R4r2q7oFYFkrn1xbIoIqzNCvaznrrRAt+9JT0KVhVD73Wqek5i92G5OFKZaBmb/nS3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5Ymnlaq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lueXSg8M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2781606A337;
-	Sat,  7 Nov 2026 15:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF0F606A337;
+	Sat,  7 Nov 2026 15:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5Ymnlaq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6109D1F0089F;
-	Sat,  7 Nov 2026 15:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lueXSg8M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897801F0089F;
+	Sat,  7 Nov 2026 15:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065591;
-	bh=hcsTkclqjKf5NbXO1So60HwTVzQ+yqLM6baRrpI+RKs=;
+	s=korg; t=1794065592;
+	bh=5DNhsHP1dig34cakIkG12XFuRZrlMB7D5fnnUygeNf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h5YmnlaqQ5VIqSzh/A8w/+hUhDW5ZtGJLHlawnNgIy2za3EhjtzLGzHgpW3nkSv0O
-	 lFyY7iurluRfEBtgwIcXHFIY+8tew/1t7/NEQM7NSeJqyHK7O53wox+yCCjQ+if0eL
-	 zfWc2ClU6dbgCf6+oXu8WcPThdQRbQXGh0NiK3PM=
+	b=lueXSg8MtyvyfX5yIsLs9dAcQQ2TnckipI4Uqm/KMdaffKKDz6/WY5JgMOSzsI5yZ
+	 1V2TF2oCneJ3dMaPWfyySgxXDDq59mULNQ/yequzIwmlo9DE+xFHQJGDFbtoIh4XrA
+	 ATyc+5sVUdsrStWLIdlJ7VKWZQnnjUAwY4dyQ1yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hannes Reinecke <hare@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Guixin Liu <kanie@linux.alibaba.com>,
+	Yingjie Wang <1075151112@qq.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1211/1257] nvmet: Free the old negotiation state when restarting authentication
-Date: Sat,  7 Nov 2026 08:58:27 -0500
-Message-ID: <20261107135012.820880553@linuxfoundation.org>
+Subject: [PATCH 7.3 1212/1257] nvmet-tcp: validate the TLS handshake timeout
+Date: Sat,  7 Nov 2026 08:58:28 -0500
+Message-ID: <20261107135012.848686311@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,61 +70,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Yingjie Wang <1075151112@qq.com>
 
-[ Upstream commit 5c279fcabb0ea7ba61881c13027b15d8054b8abd ]
+[ Upstream commit e3e7a85730a4b17efa1e2ff4088443c4753be683 ]
 
-Restarting a DH-HMAC-CHAP negotiation with SEND(NEGOTIATE) resets
-sq->dhchap_step but does not release the previous c1/c2/skey, which
-are only freed in nvmet_auth_sq_free() at teardown.  The next
-CHALLENGE/REPLY exchange then overwrites those pointers with fresh
-allocations.
+tls_handshake_timeout is writable but stored as a signed int. Multiplying
+the value by MSEC_PER_SEC and HZ therefore uses signed arithmetic.
 
-An unauthenticated host can repeat the negotiate message endlessly,
-leaking a few dozen bytes per round and slowly exhausting target
-memory.
+With HZ=1000, setting it to 2147484 overflows both multiplications. If
+the handshake request is accepted and remains pending, the timer wheel
+treats the jiffies delay as already expired and queues the timeout work
+on its next advance, while the handshake agent was given about 24.9
+days. Negative values such as -1 cause the same immediate kernel-side
+timeout.
 
-Clear the old negotiation state with nvmet_auth_sq_free() before
-setting up the new one.  Also reset dhchap_skey_len to zero: if a DH
-session key was already established, a following round with dhvlen=0
-would otherwise pass a NULL skey with a stale non-zero length to the
-HMAC code and dereference it.
+Store the parameter as an unsigned int and reject values that cannot be
+represented both by tls_handshake_args::ta_timeout_ms and by a safe
+jiffies delay. Take one snapshot so a concurrent parameter update cannot
+give the handshake agent and delayed work different timeouts. Document
+the accepted range for built-in use.
 
-Fixes: db1312dd95488 ("nvmet: implement basic In-Band Authentication")
+Negative and oversized values now fail with -EINVAL. Keep zero valid,
+preserving the existing immediate-timeout behavior.
+
+Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
 Cc: stable@vger.kernel.org
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/auth.c             | 1 +
- drivers/nvme/target/fabrics-cmd-auth.c | 1 +
- 2 files changed, 2 insertions(+)
+ .../admin-guide/kernel-parameters.txt         |  5 ++++
+ drivers/nvme/target/tcp.c                     | 26 ++++++++++++++++---
+ 2 files changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
-index 1680e5e6839c1..574025730834c 100644
---- a/drivers/nvme/target/auth.c
-+++ b/drivers/nvme/target/auth.c
-@@ -237,6 +237,7 @@ void nvmet_auth_sq_free(struct nvmet_sq *sq)
- 	sq->dhchap_c2 = NULL;
- 	kfree(sq->dhchap_skey);
- 	sq->dhchap_skey = NULL;
-+	sq->dhchap_skey_len = 0;
- }
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index e75344f4e0cde..a6aded898b668 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -4802,6 +4802,11 @@ Kernel parameters
+ 			Example:
+ 			nvme.quirks=7710:2267:bogus_nid,^identify_cns-9900:7711:broken_msi
  
- void nvmet_auth_sq_destroy(struct nvmet_sq *sq)
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index 51d6ad4d021d0..d9dab0cda3b06 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -324,6 +324,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 			/* Restart negotiation */
- 			pr_debug("%s: ctrl %d qid %d reset negotiation\n",
- 				 __func__, ctrl->cntlid, req->sq->qid);
-+			nvmet_auth_sq_free(req->sq);
- 			if (!req->sq->qid) {
- 				dhchap_status = nvmet_setup_auth(ctrl, req->sq,
- 								 true);
++	nvmet_tcp.tls_handshake_timeout=
++			[NVME] NVMe/TCP target TLS handshake timeout in seconds.
++			Valid values range from 0 to the smaller of
++			UINT_MAX / 1000 and MAX_JIFFY_OFFSET / HZ. Default: 10
++
+ 	ohci1394_dma=early	[HW,EARLY] enable debugging via the ohci1394 driver.
+ 			See Documentation/core-api/debugging-via-ohci1394.rst for more
+ 			info.
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index e598101752620..7937377436d3b 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -6,6 +6,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ #include <linux/module.h>
+ #include <linux/init.h>
++#include <linux/jiffies.h>
+ #include <linux/slab.h>
+ #include <linux/crc32c.h>
+ #include <linux/err.h>
+@@ -76,8 +77,24 @@ MODULE_PARM_DESC(idle_poll_period_usecs,
+ /*
+  * TLS handshake timeout
+  */
+-static int tls_handshake_timeout = 10;
+-module_param(tls_handshake_timeout, int, 0644);
++static unsigned int tls_handshake_timeout = 10;
++
++static int tls_handshake_timeout_set(const char *val,
++				     const struct kernel_param *kp)
++{
++	return param_set_uint_minmax(val, kp, 0,
++		min_t(unsigned long, UINT_MAX / MSEC_PER_SEC,
++		      MAX_JIFFY_OFFSET / HZ));
++}
++
++static const struct kernel_param_ops tls_handshake_timeout_ops = {
++	.set = tls_handshake_timeout_set,
++	.get = param_get_uint,
++};
++
++module_param_cb(tls_handshake_timeout, &tls_handshake_timeout_ops,
++		&tls_handshake_timeout, 0644);
++__MODULE_PARM_TYPE(tls_handshake_timeout, "uint");
+ MODULE_PARM_DESC(tls_handshake_timeout,
+ 		 "nvme TLS handshake timeout in seconds (default 10)");
+ #endif
+@@ -1904,6 +1921,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
+ {
+ 	int ret = -EOPNOTSUPP;
+ 	struct tls_handshake_args args;
++	unsigned int timeout = READ_ONCE(tls_handshake_timeout);
+ 
+ 	if (queue->state != NVMET_TCP_Q_TLS_HANDSHAKE) {
+ 		pr_warn("cannot start TLS in state %d\n", queue->state);
+@@ -1917,7 +1935,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
+ 	args.ta_done = nvmet_tcp_tls_handshake_done;
+ 	args.ta_data = queue;
+ 	args.ta_keyring = key_serial(queue->port->nport->keyring);
+-	args.ta_timeout_ms = tls_handshake_timeout * 1000;
++	args.ta_timeout_ms = timeout * MSEC_PER_SEC;
+ 
+ 	ret = tls_server_hello_psk(&args, GFP_KERNEL);
+ 	if (ret) {
+@@ -1925,7 +1943,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
+ 		pr_err("failed to start TLS, err=%d\n", ret);
+ 	} else {
+ 		queue_delayed_work(nvmet_wq, &queue->tls_handshake_tmo_work,
+-				   tls_handshake_timeout * HZ);
++				   (unsigned long)timeout * HZ);
+ 	}
+ 	return ret;
+ }
 -- 
 2.53.0
 
