@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064358;
-	b=bKfMhdJf9n3cPOYtafDG4Tp8ZFlklkxL5QFe+20bH+ikryVGNYZwzQuLdpWBskHChWQG
-	 sHLuRkSknWwz8KX1axXOXSU7rxejLkNTBA33S1xlV2hW4UMu6SD5q6/m9EbIZps3vgmL4
-	 iE4CswRiiLki9eR3wTOPcO0z8kwB0rrXLnDonOEzGTMaBuRRIdoDtJps5I+PqKCnAOE2P
-	 tYVlmFV8S7ulIpJ220JLQDhNx1X2lMj1CIiZfJLjj3CzrpoKXzdc59Y4XKvMUMekOT7Nx
-	 SUgxwsMSnMr4tbQBEaBZB7EteY+LTzmdseesompDpGsGKIuoHoqmKumYGo4lHBpeBlQ==
+	t=1794064359;
+	b=OluKkK49p/8L9KL1AalnaVnRIofS4spJfkzvbGL//GjjOVV7H+7LX7FzL1n2TRKrhuNC
+	 8/2PFcykVkL14nR4sTgLjznBEuxqcIHta4fFIXTPVQftIUP43PT9AGv6bWVJSA91v1l16
+	 gghGyGCi0w6JDfrjmmH1FlECmnvWfwT86S4G8ByF4P/QnFiCImqaq3shRaTCbQJWxAot5
+	 YoQ6Q9VOLE3IvqoutLfxPc6/Nq7apVc/NXg5AteTI2AgW8TEYAHauLD0b27WZh9vVmfmp
+	 XJaltpDGIrw+cMXC+l4GnpXERWP2X3O0R97oLmPGn2bg+ggazzVGh+5f7ndVERWSzLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Is8kUUfzlAtWNAuKrnZ/HWViNWJ2ogyxK5c+hsbsv/E=;
-	b=wHHRT5pEHOBqtITcHQ2B62ML0xAEfbDccNnS9FgNQ0CNcjd09AXvYv1pAUr5SpnJux16
-	 wVOdpuzRXH04mprh3XnGnt77Cp9b+gV4tlGkGDFTBuZ8xDV6vGV5m4Nc+d3WLvr/MSlZE
-	 jx/56b/TrHzOYhRBt+BhmY+WsZdEAFF9HLmuc/99jQ1VFTZa1gZ4t2n0PX6vAfT0dPRVp
-	 GY4nkmhBOfnHZFKZrsd9CsS93z8u1tJcid03Ns8U6+JiK1M6muUwGC+fJ212E867ljorz
-	 i2k+fUQg44VlTCBfGBuCZasCokCytBFYAwGz/BJEvTeeosXEM1aAjerH8M7ks3kWEVQ==
+	bh=1VvvmSe3DbjQklkupEmiHhqVO64EdAHh/0tyDbm5XC4=;
+	b=sooZIT2a0Sl+MLMYWHfL8QBXTO5INIkiVJdvfEuEQDY/zxlTnEm7Hn8ERPj0Pjey0xgK
+	 z4ukhGhNxRw+pDV7gaFChxxa3G1alanMEndMnf6kNU9TzzKcK0+LGKj8X2xoaoKukzhLi
+	 cOmZs5yJHmjNjm/1RgHRlakVVmNYQmgv0LGcW7fMwa/7OXjCNXpjCjXaVcz5+i3puB6Bj
+	 G979Bj2vBmZ3YYAgy7ja9IsQgpRQNRcoLiZW96zRu2siVJGRtwGVsn6ggH0bzoURnaoZy
+	 /vG9UBlExWWBbydlUOoLT+MxClC+UXn1y9OBME/IO8qRA3MA9l7sPYn4UyJK8Ybe3KA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v+7L+TKF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImTd3Nfo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D31F606B88E;
-	Sat,  7 Nov 2026 15:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E2C606B88D;
+	Sat,  7 Nov 2026 15:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v+7L+TKF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10431F0089F;
-	Sat,  7 Nov 2026 15:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ImTd3Nfo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFA21F0089F;
+	Sat,  7 Nov 2026 15:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064358;
-	bh=Is8kUUfzlAtWNAuKrnZ/HWViNWJ2ogyxK5c+hsbsv/E=;
+	s=korg; t=1794064359;
+	bh=1VvvmSe3DbjQklkupEmiHhqVO64EdAHh/0tyDbm5XC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v+7L+TKFWoA4bpgRRFAjNblI2I4mr2JDP0tQXtaPh8e3FEW756imeptGYRxzSaM8g
-	 6qNqHvIAW/bsuvlh3/39bFPP/4f0eKW/XyBndUFJCBqSxOICc2EwCkCviptcBtjzUt
-	 x0Z2SJ5HQSSGzxb2c6yUa+iEXW5zQaHcGmkgsnnU=
+	b=ImTd3NfozqJ4lGB9gkDyUOtSWb167Jl0yGTPrnkMGrjm55bqLFLnG2+xWba3t0ikV
+	 zDxNvrh+PKqnRL4D2YmbYZIDcDU//bhxQhf7cl4J1aAFtTRcaAr2+SSLjeJVy/txqL
+	 rqOC3+PzG0GhfqAuzlOKTFy9hh34a3Ex/VaqtvPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0440/1257] KVM: arm64: vgic-v3: Undo assignment on iodev registration failure
-Date: Sat,  7 Nov 2026 08:45:36 -0500
-Message-ID: <20261107134951.638950422@linuxfoundation.org>
+Subject: [PATCH 7.3 0441/1257] soc: samsung: exynos-pmu: fix error paths in cpuhotplug/idle states setup
+Date: Sat,  7 Nov 2026 08:45:37 -0500
+Message-ID: <20261107134951.665114623@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,67 +69,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-[ Upstream commit 8a88a46b86ca3dbbd24522760d29edfb3f24ac2a ]
+[ Upstream commit f7b2b6acf658be412b0c4746d07d210a9e18f13b ]
 
-vgic_register_redist_iodev() assigns a redistributor region and base
-address to the vCPU before adding its iodev to the MMIO bus. However, the
-region's free_index is advanced only after registration succeeds.
+The setup_cpuhp_and_cpuidle() initialisation sequence currently ignores
+the return values of cpuhp_setup_state(), cpu_pm_register_notifier(), and
+register_reboot_notifier(). If any of these registrations fail during
+probe() routine, the driver returns 0, leaving the driver partially
+configured.
 
-If kvm_io_bus_register_dev() fails, the vCPU retains the assignment while
-free_index still identifies the same slot as free. A later registration can
-therefore reuse a slot that remains assigned to the vCPU.
+Furthermore, if anything after setup_cpuhp_and_cpuidle() fails in probe()
+routine, for instance devm_mfd_add_devices(), the probe() lacks an error
+path and leaves notifiers and cpu hotplug states registered.
 
-Reserve the slot before registering its iodev. The caller holds slots_lock,
-so a registration failure cannot race with a later assignment. Undo the
-reservation and clear the cached assignment on failure.
+Introduce variables for the cpu hotplug state IDs in exynos_pmu_context
+struct, that should be initialised to CPUHP_INVALID by default. Check all
+return codes in setup_cpuhp_and_cpuidle(), and add an error path to remove
+registered states on failure. Finally, add destroy_cpuhp_and_cpuidle()
+helper to safely tear down notifiers and cpu hotplug states.
 
-Fixes: dbd9733ab674 ("KVM: arm/arm64: Replace the single rdist region by a list")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260513-exynos850-cpuhotplug-v4-0-54fec5f65362@linaro.org?part=3
+Fixes: 78b72897a5c8 ("soc: samsung: exynos-pmu: Enable CPU Idle for gs101")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20260831081005.41346-2-kmehltretter@gmail.com
-[maz: moved helper into the sole caller]
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://patch.msgid.link/20260930-exynos-pmu-cpuhp-idle-fixes-v3-1-4269d8425978@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/soc/samsung/exynos-pmu.c | 61 +++++++++++++++++++++++++++-----
+ 1 file changed, 53 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-index 5913a20d83019..8fb0a3eb3457d 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -818,16 +818,21 @@ int vgic_register_redist_iodev(struct kvm_vcpu *vcpu)
- 	rd_dev->nr_regions = ARRAY_SIZE(vgic_v3_rd_registers);
- 	rd_dev->redist_vcpu = vcpu;
+diff --git a/drivers/soc/samsung/exynos-pmu.c b/drivers/soc/samsung/exynos-pmu.c
+index efccdd63e40ea..c764f35fbfc25 100644
+--- a/drivers/soc/samsung/exynos-pmu.c
++++ b/drivers/soc/samsung/exynos-pmu.c
+@@ -38,6 +38,8 @@ struct exynos_pmu_context {
+ 	unsigned long *in_cpuhp;
+ 	bool sys_insuspend;
+ 	bool sys_inreboot;
++	int cpuhp_prepare_state;
++	int cpuhp_online_state;
+ };
  
-+	/* Protected by slots_lock */
-+	rdreg->free_index++;
+ void __iomem *pmu_base_addr;
+@@ -458,16 +460,55 @@ static int setup_cpuhp_and_cpuidle(struct device *dev)
+ 		gs101_cpuhp_pmu_online(cpu);
+ 
+ 	/* register CPU hotplug callbacks */
+-	cpuhp_setup_state(CPUHP_BP_PREPARE_DYN,	"soc/exynos-pmu:prepare",
+-			  gs101_cpuhp_pmu_online, NULL);
++	pmu_context->cpuhp_prepare_state = CPUHP_INVALID;
++	pmu_context->cpuhp_online_state = CPUHP_INVALID;
+ 
+-	cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "soc/exynos-pmu:online",
+-			  NULL, gs101_cpuhp_pmu_offline);
++	ret = cpuhp_setup_state(CPUHP_BP_PREPARE_DYN, "soc/exynos-pmu:prepare",
++				gs101_cpuhp_pmu_online, NULL);
++	if (ret < 0)
++		return ret;
 +
- 	mutex_unlock(&kvm->arch.config_lock);
++	pmu_context->cpuhp_prepare_state = ret;
++
++	ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "soc/exynos-pmu:online",
++				NULL, gs101_cpuhp_pmu_offline);
++	if (ret < 0)
++		goto clean_cpuhp_state_prepare;
++
++	pmu_context->cpuhp_online_state = ret;
  
- 	ret = kvm_io_bus_register_dev(kvm, KVM_MMIO_BUS, rd_base,
- 				      2 * SZ_64K, &rd_dev->dev);
+ 	/* register CPU PM notifiers for cpuidle */
+-	cpu_pm_register_notifier(&gs101_cpu_pm_notifier);
+-	register_reboot_notifier(&exynos_cpupm_reboot_nb);
+-	return 0;
++	ret = cpu_pm_register_notifier(&gs101_cpu_pm_notifier);
++	if (ret)
++		goto clean_cpuhp_states;
++
++	ret = register_reboot_notifier(&exynos_cpupm_reboot_nb);
++	if (!ret)
++		/* Success */
++		return ret;
++
++	cpu_pm_unregister_notifier(&gs101_cpu_pm_notifier);
++
++clean_cpuhp_states:
++	cpuhp_remove_state(pmu_context->cpuhp_online_state);
++	pmu_context->cpuhp_online_state = CPUHP_INVALID;
++
++clean_cpuhp_state_prepare:
++	cpuhp_remove_state(pmu_context->cpuhp_prepare_state);
++	pmu_context->cpuhp_prepare_state = CPUHP_INVALID;
++
++	return ret;
++}
++
++static void destroy_cpuhp_and_cpuidle(void)
++{
++	cpu_pm_unregister_notifier(&gs101_cpu_pm_notifier);
++	unregister_reboot_notifier(&exynos_cpupm_reboot_nb);
++
++	if (pmu_context->cpuhp_prepare_state != CPUHP_INVALID)
++		cpuhp_remove_state(pmu_context->cpuhp_prepare_state);
++	if (pmu_context->cpuhp_online_state != CPUHP_INVALID)
++		cpuhp_remove_state(pmu_context->cpuhp_online_state);
+ }
+ 
+ static int exynos_pmu_probe(struct platform_device *pdev)
+@@ -541,8 +582,12 @@ static int exynos_pmu_probe(struct platform_device *pdev)
+ 
+ 	ret = devm_mfd_add_devices(dev, PLATFORM_DEVID_NONE, exynos_pmu_devs,
+ 				   ARRAY_SIZE(exynos_pmu_devs), NULL, 0, NULL);
 -	if (ret)
--		return ret;
 +	if (ret) {
-+		guard(mutex)(&vcpu->kvm->arch.config_lock);
-+		vgic_cpu->rdreg->free_index--;
-+		vgic_cpu->rdreg = NULL;
-+		vgic_cpu->rd_iodev.base_addr = VGIC_ADDR_UNDEF;
++		if (pmu_context->pmu_data && pmu_context->pmu_data->pmu_cpuhp)
++			destroy_cpuhp_and_cpuidle();
++
+ 		return ret;
 +	}
  
--	/* Protected by slots_lock */
--	rdreg->free_index++;
--	return 0;
-+	return ret;
- 
- out_unlock:
- 	mutex_unlock(&kvm->arch.config_lock);
+ 	if (devm_of_platform_populate(dev))
+ 		dev_err(dev, "Error populating children, reboot and poweroff might not work properly\n");
 -- 
 2.53.0
 
