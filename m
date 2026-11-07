@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064801;
-	b=p46LuIpcA9RkX/x0ZtQWQwUp4KPs0PRdC4AMbr36t9ozv+d3b0he6XI0rDSAkdZau/hr
-	 XH2a2hcEgXADJg5uwSLLv6cQo6QgSi7XYBiflbO5FQ3Yk07P0wxHKJuffBORNExPq76X1
-	 Sxe7j43rQ1P3781e12jeSYpuluGS7XJS04lkadM6M2hUNyUJDkEgGFiqFDIw3YXR4CH0t
-	 3Kdd74QnNvEyqQoIPjrNbHYDJuHEyK9uDYSl8WjWFUPRJ34M0SuYqv7KckqdTot7Zl4NV
-	 A0DMtqCXhTu2+Kq3+LiGmiSJP6WdpmA5az8PD6GRjB7SqxwGlfXTEdFV3jlRBCzFgJQ==
+	t=1794064802;
+	b=wvN0m95do6gzHZ3LTZDhB21D4dwrhZYZnZvLGZHEjnvlW50hsU7wTsn++vKa+PEb5gj6
+	 LMvq5mtg6K3IVTQvdj9u7DoVoI/okeIUoJwt346agXKUtvM4jb9oyCNeEWKCwIS27nHwm
+	 oYNckUkbUs0AVTSMaMtv1kLR20xm6fH2aoWzk5lt2wWmYjy8duJn2iyn8ME1snUZzv6ul
+	 2AsyJJDmuhzS3ZSUIxEID8tESGTpJgvfgDMoCknRPR7xjDGBY/daC5Cwe0YHMz8y5CZod
+	 JmrsjWcPeoobe2hz3LIi9UI/FJhhAqMz7T+mNzj/0iA/5LAEq5RMvCdTLvn2YurHTTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064801;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064802;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=DTWrzTmuT72UuiUkG5SWTaqpH2s6ypHympzFQgS8W4o=;
-	b=ALBDDAtX8YzpC3NRgpuoX0YaHjXB0AoXtz4/L3IwKSRHr3KI4c6s7aOlXD5d837OpJoT
-	 BD+CHFuHdryJmHcVMMblrBf1yyvPPoQPzY10u6g7jcMyjo1HQ2VZTrtD1T/MBsAz42sGA
-	 oHxzWMN6+UXIXU/q/rtrAMJXh/jFMJha3+vnAPn2EpR7TPPmNVdoOPUFsooSj5ElE06xN
-	 xXw/Zu/NGQtfUkpj7a+rm6EAWbZOfasMWzsi+4OMWJMbaJjFIj+NoVLC0s5Hq5sFrrssl
-	 BNB5w4ccMmMS0BtmGajf44T0OiOMIjp0CoFXjKoCUhfrReQh+OOeE415c4wTfyC+y5g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Ayi/+ER7ZdFPDJDPuosiVAvdNKMWpHJgJnolEXOyaLM=;
+	b=IClHowpPW4r/WZKahbkfsb+9MI1QvHqakv1IEjdwex7IcQmqu77UXtCiKVZnEfQPmEra
+	 Bye9nus6EbDaCiCTt2OaqBJUsOMFjZawkFn/uH0ju8jYMyPtE7tQNaPI1j6Ig3ijWbrBc
+	 jaTfnOufZjsMi5CJvfDB5WUi/7ASurb444NFdd2Xqvt58zNwYiriOMl1OIJPQ9jsxKv6o
+	 7WecU6V0poFYM5KikfiXAzpoNgcn1TT+oiseNBZmbMzGtbRRhdSIV19etUWzITt8hKkL6
+	 zbAgiMg3RtwEX4upRG1xfrM2n1LWKSoQgZYFcPS5COqo6QhA2ZOqHjYwzr6gt6JQ+wQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N6gAQSxR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nxxt8hXq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F1C606A33E;
-	Sat,  7 Nov 2026 15:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3BE606C021;
+	Sat,  7 Nov 2026 15:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N6gAQSxR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727A71F008A3;
-	Sat,  7 Nov 2026 15:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nxxt8hXq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7ACD1F008A4;
+	Sat,  7 Nov 2026 15:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064800;
-	bh=DTWrzTmuT72UuiUkG5SWTaqpH2s6ypHympzFQgS8W4o=;
+	s=korg; t=1794064802;
+	bh=Ayi/+ER7ZdFPDJDPuosiVAvdNKMWpHJgJnolEXOyaLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N6gAQSxRzm12bE1d3Hq1ylvJMTqUp4ZbEaI/bxNUMnEN9th6PRZilzZmOKMQI+rdT
-	 Gi116OEhE6TnmojmMm7M5dNFjL2c2QgNGB/N8lv1zKdr9mvpmClbH5r/GSgL8s3rBB
-	 fLzsB9a8XoEmBGErHlYfuYB/5jtWkelS3KmvOxuU=
+	b=Nxxt8hXqxg5xiFnzPxXrElVFaEJtUcSFl2nDwy3+m1lFuoko5EZLAtB3rGUaWIGJF
+	 Crmo4FPOON8EU7qlN/itZDNgx9o/sIzpt8THupDy1LzrOId3ot8XHdgZPva7OqCrQI
+	 +sAPN/Meszcys9NDQ8nk6mdlPuByhoH/+6u5ulGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georg Wenzel <g.wenzel@gmail.com>,
-	Gergo Koteles <soyer@irl.hu>,
-	Philipp Oster <philippdev5396@outlook.de>,
+	=?UTF-8?q?Iv=C3=A1n=20Ezequiel=20Rodriguez?= <ivanrwcm25@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0742/1257] ALSA: hda/tas2781: Skip invalid TAS2563 UEFI calibration data
-Date: Sat,  7 Nov 2026 08:50:38 -0500
-Message-ID: <20261107134959.782813402@linuxfoundation.org>
+Subject: [PATCH 7.3 0743/1257] ALSA: hda/realtek: keep headset mic on Acer SSID 0x1640
+Date: Sat,  7 Nov 2026 08:50:39 -0500
+Message-ID: <20261107134959.808860580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -64,49 +62,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
 
-[ Upstream commit a0f0325e92e505db6a6879d79da5aa88e94a36ab ]
+[ Upstream commit b23012149ca8e7a9c7c72e93b7639ca2a282d6b1 ]
 
-Some Lenovo 14ARB7 laptops do not have proper calibration data.
+The micmute-LED quirk for the Aspire A315-44P matches PCI SSID
+1025:1640 before the Acer ALC256 pin fallback. The Aspire Go 15
+AG15-42P shares that SSID and leaves nid 0x19 as 0x411111f0, so
+selecting the LED-only fixup drops the headset-mic pin remap that
+the fallback would have applied.
 
-Skip these zero calibration values and fall back to the calibration data
-provided by the DSP firmware.
+Chain ALC2XX_FIXUP_HEADSET_MIC before the GPIO3 micmute LED on that
+SSID. Leave the Swift SFG16 entry (0x169a) unchanged.
 
-Tested-by: Georg Wenzel <g.wenzel@gmail.com>
-Fixes: c3ca4458cc2f ("ALSA: hda/tas2781: add TAS2563 support for 14ARB7")
-Cc: stable@vger.kernel.org # 6.18
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Tested-by: Philipp Oster <philippdev5396@outlook.de>
+Tested on Acer Aspire AG15-42P (Callisto_BCU): PCI pick 1025:1640,
+Headset Mic=0x19, GPIO3 enabled with no physical micmute LED, speaker
+and capture paths functional.
+
+Fixes: d830631a128b ("ALSA: hda/realtek: Add micmute LED quirk for Acer Aspire A315-44P")
+Cc: stable@vger.kernel.org
+Signed-off-by: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
+Link: https://patch.msgid.link/20261013204219.9649-1-ivanrwcm25@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/12a1ab265a1dc0e3a062a54287c8ef48682c4efc.1791895478.git.soyer@irl.hu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/side-codecs/tas2781_hda_i2c.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
-index cff8fab8133a8..44855f593daf8 100644
---- a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
-+++ b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
-@@ -372,6 +372,11 @@ static int tas2563_save_calibration(struct tas2781_hda *h)
- 					i, j, status);
- 				return -EINVAL;
- 			}
-+			if (*(uint32_t *)&data[offset] == 0) {
-+				dev_warn(p->dev,
-+					 "Dev %d: Caldat[%d] is zero\n", i, j);
-+				return -EINVAL;
-+			}
- 			bedata = cpu_to_be32(*(uint32_t *)&data[offset]);
- 			memcpy(&data[offset], &bedata, sizeof(bedata));
- 			offset += TAS2563_CAL_DATA_SIZE;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 980e5029b2dbf..94593267a5b82 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -4344,6 +4344,7 @@ enum {
+ 	ALC2XX_FIXUP_HEADSET_MIC,
+ 	ALC289_FIXUP_DELL_CS35L41_SPI_2,
+ 	ALC256_FIXUP_ACER_SFG16_MICMUTE_LED,
++	ALC256_FIXUP_ACER_HEADSET_MICMUTE_LED,
+ 	ALC256_FIXUP_HEADPHONE_AMP_VOL,
+ 	ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX,
+ 	ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX,
+@@ -6934,6 +6935,13 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc256_fixup_acer_sfg16_micmute_led,
+ 	},
++	[ALC256_FIXUP_ACER_HEADSET_MICMUTE_LED] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc256_fixup_acer_sfg16_micmute_led,
++		.chained = true,
++		.chained_before = true,
++		.chain_id = ALC2XX_FIXUP_HEADSET_MIC,
++	},
+ 	[ALC256_FIXUP_HEADPHONE_AMP_VOL] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc256_decrease_headphone_amp_val,
+@@ -7264,7 +7272,13 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x160e, "Acer PT316-51S", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x1616, "Acer Aspire A515-57", ALC256_FIXUP_ACER_COLDBOOT),
+ 	SND_PCI_QUIRK(0x1025, 0x161f, "Acer S40-54", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
+-	SND_PCI_QUIRK(0x1025, 0x1640, "Acer Aspire A315-44P", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
++	/*
++	 * Shared SSID: A315-44P needs GPIO3 micmute LED; AG15-42P needs
++	 * the headset pin remap (BIOS leaves 0x19 as 0x411111f0). One
++	 * entry applies both. GPIO3 is unused on AG15.
++	 */
++	SND_PCI_QUIRK(0x1025, 0x1640, "Acer Aspire A315-44P / AG15-42P",
++		      ALC256_FIXUP_ACER_HEADSET_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x1025, 0x166c, "Acer Predator PH16-71", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x1679, "Acer Nitro 16 AN16-41", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x169a, "Acer Swift SFG16", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
 -- 
 2.53.0
 
