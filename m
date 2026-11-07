@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065270;
-	b=p/wPOXOZROn1oZaSqymbBSgVup/pdv57isj6krrtvhoC0lHoloHDodpNJqTCdhpZRfIs
-	 kQv4MnqJVvjoes/hUXupjqdMIhEDnoJyEuXv3TrcASvj9vuro2oFyazD359U4vaWdFWqi
-	 oMKqMFX2ro34cKoMXzGuzuCa8rrquBDXDU0bPsQPOzbl0wGcUGpywhs9D0Bil63pi0T+d
-	 MGp01JGgqsyX2Jn2um0pCyYOXYArCY3qMqZG2scvp+r/O90/nULYbAsCDK8PFXmvzaneX
-	 AltFGE9ELuCEBMmopvK6uhPQAnF8GMfUACq8gPBvZ4UCZZmSoqTc/E4WUTPtlpF6L0g==
+	t=1794065272;
+	b=0QaBHVmm1PesHmlwYR3/7JwPKthNA4kN7xKvEtAnZW+Hkrm5omB1H7JVT5kiqqeUVb6e
+	 qPDsZsuMOylN9OTUf2eTqqH6scNA+m8Dq3h5s9UgICHK8GomAWCCYeyPEhPW1x77nt6/G
+	 D9rHrE5x0zNRymmSaPAn/yPphAykZk5MRpGgDwRgVSPklUk/G6TPIJPT0zJ9kvMyzy4+4
+	 Xb1oc/EI6D6esMXpmQqWCNYt1tSU1L9GS08AqpBNgu1ND5tTkLl5REJp/OSNMaNA+OPH0
+	 VSU4mGBRs17myAXhfIiC0R0HzC/nL2Q8butsVyqBkfsg3Uoo7J9PMUllVUeSOwZZuwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065270;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065272;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zkck/OH2c27/J2qLN0nb36GLECCKjMyF12Z8Mfa17go=;
-	b=Z5HPCVpGDnHVgkNCThYf2POv+T7qXxUcCYR4t9W7G+AAw01RxptIlss8lPTOLJZUAArg
-	 djTl2ERoQnroZ9/vEtHVfl4U0Wh+oC3s7avq1uq2GqNwgfnThmGhjeBg02V9o9alR89v6
-	 plTUhvrGXDnS/iT/lLGLnTn3lAYvAC//TjFAf5B059yW+ID8iseqmtRYX4QMZd4YYdCMd
-	 UVEqs1sBUi3EttV8dFHAG15QD+Wh9hUBgzcmUybY8/JDWxGvUtY6Pn7pPk0zkPy7e2p9X
-	 3t41UDhAgb5eg8a9On5oPSmvjDIrVqwSACvoAujG+jZKhv3aRoztyzkmegoPDEMVnhQ==
+	bh=6gyviW/2nf6zpUVFec5ypI4EHX6B3CQeqiQuBBAoAGg=;
+	b=IMqqStqQk/gPv5vsShAA/Y+GTGoYsn3SPKU7uxSvpgo2O5QewtVkd+ckDPXj2eRYdLXe
+	 Ibz7tfPA2GFgfbg5q3PT3VsyUgKQoDb6Q7eX6iMzfC2vCneVnCjlXTbiMmYPW9uKVHPGy
+	 eOVp3EY3whcC4ItoBS57rts1Yxj5PJHP0jFSHaR4vPP4immSd45ve2bNkmBlv4oCcIVSi
+	 oAIed0VQV9GqRCJQjI3KS1QQDaUCyqCLU/6FpVAyChrjBSt/FnkU/o1ltN4hCAOoSV6vj
+	 4+qX9t0JrwgL6GHUBW9NkVaii4OrYTVP36asjZp0XGsWiGuK+eu+RCQSvwDZpSdR9lA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dkbdk4YT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McU+4UyQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFC4606A32C;
-	Sat,  7 Nov 2026 15:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95887606A326;
+	Sat,  7 Nov 2026 15:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dkbdk4YT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098A31F0089F;
-	Sat,  7 Nov 2026 15:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McU+4UyQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ACCD1F0089F;
+	Sat,  7 Nov 2026 15:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065270;
-	bh=zkck/OH2c27/J2qLN0nb36GLECCKjMyF12Z8Mfa17go=;
+	s=korg; t=1794065272;
+	bh=6gyviW/2nf6zpUVFec5ypI4EHX6B3CQeqiQuBBAoAGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dkbdk4YTwz3k+23I7zflI6b4NDGlC/vvAQwBmhNlPFdYFvdpvr23eD/fe4U5dBnzq
-	 dFMxAbU1OIDxTSCMuraHLqDoI7Ck253Pq7Vyr+b0MOL6eeRm7SmTuHz9oC3328Ia/6
-	 6lgnldM89nlOWVMejIIGEpnACLt0rE4XB02tBVs8=
+	b=McU+4UyQQWIMcSTzfGKNCs7M+o5jwbVxKvaWtXwZWaF/MTHFBPULJa+QXZeQri7MN
+	 IbEXcQSdE7XJ5cgI8r/GYZ3jzrhHsZXe6r5gx0cBXh52QWUPargemsqNoSAKO624zW
+	 tlge0TfdlpvV9LBQnLncaiEWJVUlMaD2SyFfRGqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Navon John Lukose <navonjohnlukose@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0974/1257] ipv6: do not restart DAD for a dead ifaddr
-Date: Sat,  7 Nov 2026 08:54:30 -0500
-Message-ID: <20261107135006.259576065@linuxfoundation.org>
+Subject: [PATCH 7.3 1028/1257] i2c: designware: queue only one read command for block reads
+Date: Sat,  7 Nov 2026 08:55:24 -0500
+Message-ID: <20261107135007.714094763@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,75 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Navon John Lukose <navonjohnlukose@gmail.com>
 
-[ Upstream commit ffb668669ce4144347973d8b2fad449e9be0563d ]
+[ Upstream commit 73dae605cad7921800677d982bfaeb81cc930dec ]
 
-addrconf_dad_failure() can create a stable-privacy replacement without
-RTNL. After ipv6_add_addr() publishes it, addrconf_ifdown() can mark the
-new ifaddr DEAD, clear its route, and unlink it before the recovery path
-takes ifp2->lock.
+i2c_dw_xfer_msg() pre-queues up to rx_fifo_depth read commands based
+on the initial msg.len. For I2C_M_RECV_LEN transfers the real length
+is unknown until the first byte arrives and i2c_dw_recv_len() runs.
+When a large initial length is passed, the surplus pre-queued reads
+leave rx_outstanding non-zero after i2c_dw_recv_len() adjusts
+msg.len, so the completion condition is never met and the transfer
+times out. In a loop, this repeatedly times out the controller and
+disrupts unrelated driver-bound devices on the same adapter.
 
-The recovery path then unconditionally changes the state back to PREDAD
-and queues delayed DAD work. The MTU teardown path can leave IF_READY
-set. For an optimistic address, addrconf_dad_begin() can consequently
-pass the cleared NULL route to ip6_ins_rt().
+Queue only one read command while I2C_M_RECV_LEN is pending.
+i2c_dw_recv_len() re-enables TX_EMPTY, and the rest are queued once
+the device-reported length is known.
 
-This follow-on was found by source review and was not separately
-triggered at runtime.
-
-The new ifaddr is already initialized in PREDAD. Under ifp2->lock, record
-the retry and queue DAD only if teardown has not changed the state to
-DEAD. If teardown wins after this check, the work observes DEAD and exits
-without reviving the address.
-
-This complements the existing lock_errdad check that preserves the original
-ifaddr's DEAD state after the same function reacquires its lock.
-
-Fixes: 5f40ef77adb2 ("ipv6: do retries on stable privacy addresses")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://lore.kernel.org/r/179161099408.434549.14449036924552933828@kernel.org
-Link: https://lore.kernel.org/r/20260513025509.3776405-1-lilinmao@kylinos.cn
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261015050651.1841557-5-4ncienth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c3ae106050b9 ("i2c: designware: Implement support for SMBus block read and write")
+Signed-off-by: Navon John Lukose <navonjohnlukose@gmail.com>
+Cc: <stable@vger.kernel.org> # v4.10+
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-designware-master.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index df56668122619..a2d3fb187f768 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -2198,6 +2198,7 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 			     ifp->idev->dev->name, &ifp->addr, eth_hdr(skb)->h_source);
+diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
+index a1bcc3797e4ff..cd4f57b4e2b52 100644
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -441,6 +441,14 @@ i2c_dw_xfer_msg(struct dw_i2c_dev *dev)
+ 				if (dev->rx_outstanding >= dev->rx_fifo_depth)
+ 					break;
  
- 	if (ifp->flags & IFA_F_STABLE_PRIVACY) {
-+		bool start_dad = false;
- 		struct in6_addr new_addr;
- 		struct inet6_ifaddr *ifp2;
- 		int retries = ifp->stable_privacy_retry + 1;
-@@ -2236,11 +2237,14 @@ void addrconf_dad_failure(struct sk_buff *skb, struct inet6_ifaddr *ifp)
- 			goto lock_errdad;
- 
- 		spin_lock_bh(&ifp2->lock);
--		ifp2->stable_privacy_retry = retries;
--		ifp2->state = INET6_IFADDR_STATE_PREDAD;
-+		if (ifp2->state != INET6_IFADDR_STATE_DEAD) {
-+			ifp2->stable_privacy_retry = retries;
-+			start_dad = true;
-+		}
- 		spin_unlock_bh(&ifp2->lock);
- 
--		addrconf_mod_dad_work(ifp2, net->ipv6.sysctl.idgen_delay);
-+		if (start_dad)
-+			addrconf_mod_dad_work(ifp2, net->ipv6.sysctl.idgen_delay);
- 		in6_ifa_put(ifp2);
- lock_errdad:
- 		spin_lock_bh(&ifp->lock);
++				/*
++				 * For block reads, queue only the length
++				 * byte until i2c_dw_recv_len() runs.
++				 */
++				if ((flags & I2C_M_RECV_LEN) &&
++				    buf_len < msgs[dev->msg_write_idx].len)
++					break;
++
+ 				regmap_write(dev->map, DW_IC_DATA_CMD,
+ 					     cmd | 0x100);
+ 				rx_limit--;
 -- 
 2.53.0
 
