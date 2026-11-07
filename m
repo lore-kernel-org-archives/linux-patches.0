@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060770;
-	b=AEyDs4y1/i0qcjEJ3z5kXTakFpArw+ajkqSgiqaj6M7Zy4md6WM9+3EiIQrYH0SRyZi5
-	 LCBr4NZNZDBFNZjBheUjxxnAOL3teMNrrYuQrjIz2PoRJj7bnZNWs6w5317vHeutaojKP
-	 c51C0usBn93ealyZ1q7jjQzumILh3evLx1Yw1cyzmebspK0DvK7Zh/bp3HYDqO6w37Qic
-	 SUgD1E7kTcNJwIxFaMATO7HTHtsfx71Y07LYKdTiJTZWv7Z7p8edz7M4+VbOaHrpo4LRf
-	 hWXK1JtxRpDk6350OEcy/QbB92qRCdoVInKKT+SP2txwc6CbATST2Pd+jDQkvr4aDGw==
+	t=1794060772;
+	b=XbO84cbVPtvAnTaDUN9HYci5g8iGeDzFtftQrOKOhaezTecVSp/0NmFop+/duiIvdEka
+	 yXZC7n/lTiHdl037MKpHVYBfJDvJCkaYrI+tL4n4QLjhypYsJHrqGffEVaAvbRkoo+H53
+	 0/cK+BfmY0G9blopmwMWMr5XjjthtgMAiEAWQgdoPjpjvEexw4GTaVTsXQLuypZcOgWDu
+	 OI51dEpZTgBDgZDO1g/Lc/kYaFC76KPyOw/98E2jkxvnHSvouvzvWoJXC3N6lxuXfjhsX
+	 BvIJaUzAjH4ZJCz6xT/he08s2ODRK+qIzsQOcmiBUGxfXmYIjl9uNzW7VA9GbHzuMCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060770;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060772;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w8m5erW1DDSbLjJgmNgVrif3t+wIlyqEQU8rBFEN7+M=;
-	b=Al5mkew31tujLuR/YtMNcBGPX1bLKC9U3aGwZ0aYqsyDqVzZ1hmqGb+O55dNqKOHJs9P
-	 YWiq7BYpIOVXexQiSbYI/Mo/PX6y8/bKwGWo10Oot/dUqIDEHBx73aCcMcwVaCFkEybqm
-	 Ynr72C/lKEaPHR9RYrX379JNcVs7KDPkwzJkKR2U/MGfB3+QHj4WI7p7WphmC4jAW6uXo
-	 LVLMGDP7kgfFt33U3jtpqZ8jQ6/9msH9XTYOZhBs8MM4V1W4M3mz9jG5Cm2p0HXpf1zXm
-	 pUEDKsFztYelTWTZcbR+OoVFNaa4FUn+6wRi31P/gUg4vuMrZgqURwD46qn2kETaXGQ==
+	bh=e74Tt9yctcf6+KUhg2KWXEYZdSQUSM1XCBpUHgGh3v4=;
+	b=Ix44jKWUFE+fd7Uqmd2GV8OJxg5iKIuRxi13cekXGsl2ayiRXiz/bSyaF8qUaP6u5DrF
+	 MWSe7nkFoCaGrLxsUpvWrkcHuUslcBdntbvSVp6woc5g0KNKOtNa7k8lbEkrY2bTbZol2
+	 +yT4skjWCcHs6qxL5DTVkT5iyQgqyYGf4/DL/AZs7rr/OVdn3OhSZagS9sOT1CpZjichr
+	 mlCPnwYKBKgCtI1beMdxz4KOY7Y13TX+arGBVOxuEcwJDC89lzmW7JPl7JqLieaHIqzrP
+	 jhDz9TVYDnLDWTj7EpPXaJiMv/bBOPGrkPWy1HNYIeFTmLIFcC0W/aDktjwpNwzXZng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2t11dK7t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="QkzKLBw/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C28606A32D;
-	Sat,  7 Nov 2026 14:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF240606A32D;
+	Sat,  7 Nov 2026 14:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2t11dK7t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D931F0089F;
-	Sat,  7 Nov 2026 14:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QkzKLBw/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CC01F0089F;
+	Sat,  7 Nov 2026 14:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060769;
-	bh=w8m5erW1DDSbLjJgmNgVrif3t+wIlyqEQU8rBFEN7+M=;
+	s=korg; t=1794060771;
+	bh=e74Tt9yctcf6+KUhg2KWXEYZdSQUSM1XCBpUHgGh3v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2t11dK7tLzlAEt0uHEt0TBn25a7fU0VrBu5147mbHLL1ujop+BgK9Rf+Yv9cUa9xS
-	 UgFtNyrZtan3IWh98seiQ9bzyqMmOzysZWkwy5zZw1FE/trAcPHfr22JF1ZxU67qdu
-	 vhCGGNUxhiwYUZtlCvF22SvccPLSZcV30w/ZrGxw=
+	b=QkzKLBw/YbBf0lpNu+GAJ9PP5o/tOeHtDbByCBLyYvYN3DtqAWJXFVxccjN8dxR1w
+	 mhLshvc6Z+SiDl8tXcRrtwa25lnQ0ivM/YP8T1lET3bifINfmf+cXE1TSlc0Kp3/Kw
+	 ny+LzYcUCYyKFzHR9leS3zYoGOZYJOTXo9isfcN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0180/1536] power: supply: cros_pchg: unregister EC notifier
-Date: Sat,  7 Nov 2026 08:36:36 -0500
-Message-ID: <20261107135002.718599292@linuxfoundation.org>
+Subject: [PATCH 6.12 0181/1536] net: sfp: add quirk for HORACO copper SFP+ module
+Date: Sat,  7 Nov 2026 08:36:37 -0500
+Message-ID: <20261107135002.745540974@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,62 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 631adfa03595c63b2a621cdc62db60bb1ce5f91c ]
+[ Upstream commit 1bb028baab541900d3603d4f93c1c0fb5aba5401 ]
 
-cros_pchg_probe() registers an EC event notifier whose callback uses the
-devm-allocated charger_data via container_of().  The driver has no
-remove callback and does not unregister the notifier, so the notifier
-chain can retain a pointer to freed driver state after unbind or probe
-cleanup.
+Add quirk for a copper SFP+ module that identifies itself as "OEM"
+"HC-10GE-113C". It uses RollBall protocol to talk to the PHY.
 
-Register a devm cleanup action immediately after the notifier is
-installed so the notifier is unregistered before the driver state is
-released.  Also fail probe if the notifier cannot be registered, instead
-of leaving a charger device that cannot receive EC events.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260615063105.39152-1-pengpeng@iscas.ac.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260719100158.874882-1-olek2@wp.pl
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cros_peripheral_charger.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/phy/sfp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/power/supply/cros_peripheral_charger.c b/drivers/power/supply/cros_peripheral_charger.c
-index 962a6fd298323..48e10e872d1bd 100644
---- a/drivers/power/supply/cros_peripheral_charger.c
-+++ b/drivers/power/supply/cros_peripheral_charger.c
-@@ -259,6 +259,14 @@ static int cros_ec_notify(struct notifier_block *nb,
- 	return cros_pchg_event(charger);
- }
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 512f817607c82..55388b77dd3b9 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -569,6 +569,9 @@ static const struct sfp_quirk sfp_quirks[] = {
  
-+static void cros_pchg_unregister_notifier(void *data)
-+{
-+	struct charger_data *charger = data;
+ 	SFP_QUIRK_F("YV", "SFP+ONU-XGSPON", sfp_fixup_potron),
+ 
++	// HORACO HC-10GE-113C uses Rollball protocol to talk to the PHY.
++	SFP_QUIRK_F("OEM", "HC-10GE-113C", sfp_fixup_rollball),
 +
-+	blocking_notifier_chain_unregister(&charger->ec_device->event_notifier,
-+					   &charger->notifier);
-+}
-+
- static int cros_pchg_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -346,9 +354,10 @@ static int cros_pchg_probe(struct platform_device *pdev)
- 	ret = blocking_notifier_chain_register(&ec_dev->ec_dev->event_notifier,
- 					       nb);
- 	if (ret < 0)
--		dev_err(dev, "Failed to register notifier (err:%d)\n", ret);
-+		return dev_err_probe(dev, ret, "Failed to register notifier\n");
+ 	// OEM SFP-GE-T is a 1000Base-T module with broken TX_FAULT indicator
+ 	SFP_QUIRK_F("OEM", "SFP-GE-T", sfp_fixup_ignore_tx_fault),
  
--	return 0;
-+	return devm_add_action_or_reset(dev, cros_pchg_unregister_notifier,
-+					charger);
- }
- 
- #ifdef CONFIG_PM_SLEEP
 -- 
 2.53.0
 
