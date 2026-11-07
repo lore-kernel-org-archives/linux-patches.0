@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063797;
-	b=T1709O5tfNicp/amBlUKnNeZhnk/lqID1liy4Johjpj5kRSX1gYMtWb6yJUfOjIMq70q
-	 rkYLCE65Sy0GsM5lpHW6P5XZP/8BQObPMKLFspjf/vPd2ncJYBUYkHU0PEcVrdnyTyYfu
-	 qvXc7SHZisQcmJhnBhEHy4w8VFvOVgdOB3CLMkjICA0Xsu0cnq+2gNxcYFAI0/J7r+Uj6
-	 0fYwEdfIo1EYfvZdr4CJCGje4FwZ2N281HasHQ5s6Ip9BqWb4bQNEwirLHR7KVjqPDvON
-	 jDftQkcrts9Jw4Gh/CaKxR9qrHD2EGZeiNFshG8mRomGGxvX5tGLmAszczax7A1Lr7Q==
+	t=1794063798;
+	b=YKT8N8JJSAMVvdUoZD580ycFDeSN3DJYdaB918U2Kr84iWzx+IDrkpTksyt2SI1EWw24
+	 EAb9a2KhDSWS1KLPuWWo/E8+Tr3nmgounLZRAaRSij0Rs/fl/qUlkekgnFExxXc0RVuj4
+	 Td7NCHVivpqIqbl6sO5QjzMSnvsq8B5ZCC02WAZsNdOS4COrXjkONS+VugE3YrV9btu9n
+	 G2qc2sldF/V+WUSJCnn+vzk24XJyqTBM7Eqy3sJfc9AdYPb68JBIxv6jlQU7d5bThpaWL
+	 m9hANalQ3m5ITbSk7G9VO8AGm+yVq+Cqiks6znVUd+DUAAqsyQ6PlQ+gE7uV8zv2BHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063797;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063798;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ce5ZupXn8QiguNKMEhU4YvCp+9lxEGL2uxrNctMH2vQ=;
-	b=Mu9FvknSd0Zmh0/VAzCC8ctKbSVfMTmKDZ+F1GFk1tGsfq9gRTim+oPK/lYh81EqB9Su
-	 dkFrWpKL47rM/vEsOJ8XARycwcC+3OFpS3DjgSWlUMyTYrJS3iM59RDfXoJ+03L7Wo8Wk
-	 dFJtGIasWPJwkFUWRgKNjq040PH3gy7ZPpAuN+IBGmCQuXAwetFj97abJQvahj3UB4V4f
-	 Df1gS0sC5ajGdkebt0Qv2SlQdBgozd9FQQIVpDYONqOa4hjwqtpt+inHfomD/2uvuOHMb
-	 TswJAKrRXEwI1WlryR7kDAJrkEAI+k9mRo6IJPTZa6sCuISNAFGefr6A/4WEeGxd3sA==
+	bh=vg5ycn0gl62T+kEHIkgUO/xn0fOhQ5U+Qb1pfUOSYFk=;
+	b=gLSWrYYDmd+/kuPr2HOQ71hKlbAa7qzYwZ7Ig5W9kPQSzm6lglviqaX3Lp0uvDFZy0Dn
+	 A4Ndz1HatjWiLbvEmk8SRzVzMYTCdMxPOAtUn0yUPHbvXcOHsndkGVFpWRzx/kGK3CWi8
+	 kTBsNSgM6/gfbz1brqecRyae2pbSFcFbyDdxWLxoLlZ1Gp0TUZ5iLaaIwfJEtFsa33EhU
+	 piS52y1ArG/9zKBe9daWlKZen+lsY0fy9vRSYzSm9upauonjMf/nEf8B2I8SOSsxS/iSD
+	 fc4Pgk9Uiu3poUtS7EovuWO7SIXtx9QPhZG7GESdpU/1SEhPWask3ZOVre1Ka67PCmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jy8JD+cl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g8yhvyD+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36682606EE9B;
-	Sat,  7 Nov 2026 15:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63821606EE81;
+	Sat,  7 Nov 2026 15:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jy8JD+cl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D635E1F0089F;
-	Sat,  7 Nov 2026 15:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g8yhvyD+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115381F0089F;
+	Sat,  7 Nov 2026 15:03:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063797;
-	bh=ce5ZupXn8QiguNKMEhU4YvCp+9lxEGL2uxrNctMH2vQ=;
+	s=korg; t=1794063798;
+	bh=vg5ycn0gl62T+kEHIkgUO/xn0fOhQ5U+Qb1pfUOSYFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jy8JD+cljgcAzvbmu+uxRGPSIC5Ke3p4X6ldEceaV0Wb+I+BpmHQoMLE7Re0oFIVT
-	 hppB3W+MrMDGigWf8m9FWXUSt1vOq700hZ8ZsLos5ngLzuSQyq1Soc/z4nfSFbPldX
-	 Il1szBhf6X/sfefEuFfSRmvCn+VF2ZseoYelYwMk=
+	b=g8yhvyD+LnnctPee9wiQRPc/pt3SX+X9zRpA8uyyhh720UQjvfLY6IDnB4cTSXTmp
+	 qR4UZ2ouX9xAWyMf+BxnE2r8QSpZfKK2ruPXnV8kbjBiK+isVYDTRsvNY4T44yTR1p
+	 RqkrELrpivCwwFcjr5sg17Qq0td+h6swsqnnCtDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
 	Marek Czernohous <marek@czernohous.de>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0018/1257] drm/nouveau: cancel the DP IRQ work before freeing the connector
-Date: Sat,  7 Nov 2026 08:38:34 -0500
-Message-ID: <20261107134939.923026679@linuxfoundation.org>
+Subject: [PATCH 7.3 0019/1257] drm/nouveau: dont dereference outp before checking it in nouveau_dp_irq
+Date: Sat,  7 Nov 2026 08:38:35 -0500
+Message-ID: <20261107134939.949592763@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,61 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Czernohous <marek@czernohous.de>
 
-[ Upstream commit f60849975a886d70883bcb6b3658c0fa83c6971f ]
+[ Upstream commit 843bc34db94bff0612c8294861b156489958897b ]
 
-nouveau_connector_destroy() tears the two nvif events down and then
-frees the connector, but never cancels the work the IRQ event queues:
+nouveau_dp_irq() looks the encoder up and dereferences it in the same
+breath, five lines before testing it:
 
-	nvif_event_dtor(&nv_connector->irq);
-	nvif_event_dtor(&nv_connector->hpd);
-	kfree(nv_connector->edid);
+	struct nouveau_encoder *outp = find_encoder(connector, DCB_OUTPUT_DP);
+	struct nouveau_drm *drm = nouveau_drm(outp->base.base.dev);
 	...
-	kfree(connector);
+	if (!outp)
+		return;
 
-nouveau_connector_irq() queues that work unconditionally:
+find_encoder() walks the connector's possible encoders and returns NULL
+when none of them matches the requested type, so the NULL test is not
+decoration: it is the author saying this can happen. The initialiser
+above it dereferences the same pointer regardless.
 
-	schedule_work(&nv_connector->irq_work);
-	return NVIF_EVENT_KEEP;
+The NULL test predates the dereference. commit 773eb04d14a1
+("drm/nouveau/disp: expose conn event class") turned nouveau_dp_irq()
+into a work callback, and since the drm pointer was no longer passed in
+as an argument it was recovered from the encoder in the declaration
+block, which put the dereference above the existing test.
 
-A DP IRQ arriving just before nvif_event_dtor() therefore leaves
-nv_connector->irq_work on the system queue past the kfree(). When it
-runs, nouveau_dp_irq() derives both nv_connector and connector from the
-work_struct and dereferences them, and goes on to take
-outp->dp.hpd_irq_lock.
+Move the drm lookup below the test. No functional change when outp is
+non-NULL.
 
-There is no cancel_work_sync() for irq_work anywhere in the driver, so
-nothing else covers this. Add it after the event teardown, where no
-further work can be queued, and before anything is freed.
-
-Reported by the Sashiko review bot as a pre-existing issue, in its review
-of an earlier nv04 FIFO series of mine, and confirmed against the source.
-
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260812231330.705425-1-mczernohous@gmail.com?part=1
 Fixes: 773eb04d14a1 ("drm/nouveau/disp: expose conn event class")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-5
 Signed-off-by: Marek Czernohous <marek@czernohous.de>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/178682366002.3748010.4096452389040554615@gmail.com
+Link: https://patch.msgid.link/178682366004.3748010.14933649768375463967@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/nouveau/nouveau_dp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
-index 4cfc9c7c2ae0c..7c4f0a29b05bf 100644
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -397,6 +397,7 @@ nouveau_connector_destroy(struct drm_connector *connector)
- 	struct nouveau_connector *nv_connector = nouveau_connector(connector);
- 	nvif_event_dtor(&nv_connector->irq);
- 	nvif_event_dtor(&nv_connector->hpd);
-+	cancel_work_sync(&nv_connector->irq_work);
- 	kfree(nv_connector->edid);
- 	drm_connector_unregister(connector);
- 	drm_connector_cleanup(connector);
+diff --git a/drivers/gpu/drm/nouveau/nouveau_dp.c b/drivers/gpu/drm/nouveau/nouveau_dp.c
+index 55691ec44abaa..738802358d85c 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_dp.c
++++ b/drivers/gpu/drm/nouveau/nouveau_dp.c
+@@ -486,7 +486,7 @@ nouveau_dp_irq(struct work_struct *work)
+ 		container_of(work, typeof(*nv_connector), irq_work);
+ 	struct drm_connector *connector = &nv_connector->base;
+ 	struct nouveau_encoder *outp = find_encoder(connector, DCB_OUTPUT_DP);
+-	struct nouveau_drm *drm = nouveau_drm(outp->base.base.dev);
++	struct nouveau_drm *drm;
+ 	struct nv50_mstm *mstm;
+ 	u64 hpd = 0;
+ 	int ret;
+@@ -494,6 +494,8 @@ nouveau_dp_irq(struct work_struct *work)
+ 	if (!outp)
+ 		return;
+ 
++	drm = nouveau_drm(outp->base.base.dev);
++
+ 	mstm = outp->dp.mstm;
+ 	NV_DEBUG(drm, "service %s\n", connector->name);
+ 
 -- 
 2.53.0
 
