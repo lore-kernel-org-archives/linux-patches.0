@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061094;
-	b=Uiqgl4keZiD3g6KGJHe7rU5jPtberWogsi5IJ2iJnnqhfLOu/voStyl0E6PAwJSSqxcE
-	 TfH0YIUTz+Do4GzIRdtZIqJDtEi1DhE/Eb05/5o/p6aYcz+gwxUIvOZ63t/Rr6TRxcOhh
-	 KiD/6yetdEs4ljjFKDiaCKlZCFlkTkHvpbOwgtF8g/oF//wWAZKSuP/YaCLtnnViH2M+7
-	 qzpPmIOJ+fjN4FEZtPvfSbQZkaDwSctCGu4bYuHZ8kftCVPXis1xRFccsbQspRs/R/h5B
-	 QQNYT3g7w8wO3gYgt/wSjiFGoYgQIQCx4d/bpvW65bI7CmPNQs6ROrbCzNWeEIkSfnw==
+	t=1794061096;
+	b=KiBY4FO8qJ1whBgooGpYf7WVzhUyVyEkjSSNtMs750dAssu4jbKV7UUND7WYynek2UoI
+	 gEt2xDLwmspdEzdxxsywayWtlqdQk95EZ4bJIeJsx7dvjkatYt6cMh8vVue8jyRl0bC8Q
+	 wWMIMQFoP7lnoO0ZuiLQzckekXost1s6BGk0rL64pVFxULsgdBT14Vpga44602CVdQ6Fj
+	 tlxU97pE59AFGkjEdHtXfSx20P2jDicY41UfjMGd5tpZeTHrvRoTCz50HJD6d2546qpkc
+	 gdHEhQUpATIf3IFoYZrKfd49xuZRtAejdQhSwcOMUWiGYsZC/DLRvjVwGQOHFh1GkFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061096;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YWSJwvwyvNBm//Up9qH0U9NSUnu2p4/SvgIEz+d1CF0=;
-	b=koUvp6gT1VRAptMD+OU53kny8KW2w3QM/QNw5RdMOi5OMcqmhq1VzLz1t6h7IzLhyfyu
-	 4SvZfeMgQJ/FMloydChPvlX56p3dHOKkVaeROD21yxumIdlcMhoX552oAhmz1dPjnVLn2
-	 jkPMljNdsxHYX8AV/hWAjmeBWNCA2KM3sd9ose4mmVhjPjf7AQPe9GESnzdYGxSK+RAR2
-	 XZ/TXtt4CZWmC1+VFMctEbz8cWmPcqN+SzSYavaTWGrG0zNNhw/MkgJdgJp2JJ2fC12RD
-	 AFgWHBbPKElx4bEMD0abSeDzpQgcUzAe/DDsEHLsPZ8wGvYcs9zXqJQDpAOnMfAsILA==
+	bh=EJ9/TVVBuA7N507wpEbRkFdbOfiFxYaI7xLQWAKu/Aw=;
+	b=2fIdIhMfGaglWj6yacPhj+iSZeOc57D9nYEKvmPEMQCDQSECSA6MsFrFdjgTBiAvDWd4
+	 9ATOCjS4uZL+gzuX9RO0z7Gfzl41oNm0X0/BdyyI+bz89zo/qr71KLDXWrn34wdyDXnBp
+	 ytxDjNTA8Ox0E7e+f07NX8tN1vJg1i3BMukO5K3Po3cL/+zNi7yJS93nrP3B35ltTwTAn
+	 l7w3mDsSZ+mp6LOd4l+SUiqHFocGKTSXE7tjJO0N/kd7RClj9SY9h8g07qulhSaKgS96b
+	 7P5vnVe0uV+SDsm6HoQ4e3PbxAOb9SQTkBTGRPmRsvjBN3gBaE1nCWhIRNRb8d7L6oA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yyeXD+hm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bz4S3RuL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8F3606D838;
-	Sat,  7 Nov 2026 14:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C477606D837;
+	Sat,  7 Nov 2026 14:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yyeXD+hm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74381F008A1;
-	Sat,  7 Nov 2026 14:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bz4S3RuL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D441F008A1;
+	Sat,  7 Nov 2026 14:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061094;
-	bh=YWSJwvwyvNBm//Up9qH0U9NSUnu2p4/SvgIEz+d1CF0=;
+	s=korg; t=1794061095;
+	bh=EJ9/TVVBuA7N507wpEbRkFdbOfiFxYaI7xLQWAKu/Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yyeXD+hmv81mVxA6eP4HZ8IbPMAX4qeLOSXQ2RErzAVssysEvfc01CpBG1pZu5BvS
-	 1FWooyRsd4N3//Vr6zhbmhrE2Hy2UPhR9y7tgxbie1cYIdoy+zbVhhQtpBZ2lJJOSC
-	 IE/vbdbk+5X08FdJ4CXQCc8Li7bTpZsJoC0lvj1I=
+	b=bz4S3RuLPSCM3yvUzSOEY273NnmxzkIF+RGhcKmIIl5nYK8zoGMKFZoWAjUCn7YjW
+	 dHK/GaLM4SW4oh0cKPCAfT8gYqCAbc+XE0/lHM+3pdNLqnvtRwXoVsJV0c2HL+vtMU
+	 ZhpQB8LnP0YPRHiY/LCmwTXazQZLOVqhF4uy9+hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	BingKun Yue <yuebingkun@kylinos.cn>,
-	Helge Deller <deller@gmx.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0376/1536] fbdev: platinumfb: add error checking for ioremap calls
-Date: Sat,  7 Nov 2026 08:39:52 -0500
-Message-ID: <20261107135008.194595165@linuxfoundation.org>
+Subject: [PATCH 6.12 0377/1536] ksmbd: enable TCP keepalive for accepted connections
+Date: Sat,  7 Nov 2026 08:39:53 -0500
+Message-ID: <20261107135008.219619310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,87 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: BingKun Yue <yuebingkun@kylinos.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit ba13226fc966004713aed47931db8922b84d1960 ]
+[ Upstream commit 56549c18a4f75309161ca780feaa4d17904e3ee9 ]
 
-The ioremap() and ioremap_wt() calls in platinumfb_probe() were not
-checked for failure. If any of these mappings fail, the driver would
-dereference NULL pointers, leading to a kernel panic.
+A client that disappears without sending a FIN or RST can leave its
+ksmbd connection in ESTABLISHED indefinitely. ksmbd sets a socket
+receive timeout, but the connection receive loop retries timeout errors
+without a limit, so the connection remains in conn_list and consumes the
+per-IP connection quota.
 
-Add proper error checking and use goto-based cleanup to avoid code
-duplication across the error paths.
+Enable SO_KEEPALIVE on accepted TCP sockets so the TCP stack can detect a
+silent peer failure. The keepalive idle time, interval, and probe count
+remain controlled by the existing TCP sysctl settings.
 
-Signed-off-by: BingKun Yue <yuebingkun@kylinos.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/platinumfb.c | 35 ++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+ fs/smb/server/transport_tcp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/video/fbdev/platinumfb.c b/drivers/video/fbdev/platinumfb.c
-index a08d955d9b439..81fdaa3541db9 100644
---- a/drivers/video/fbdev/platinumfb.c
-+++ b/drivers/video/fbdev/platinumfb.c
-@@ -567,15 +567,30 @@ static int platinumfb_probe(struct platform_device* odev)
- 	/* frame buffer - map only 4MB */
- 	pinfo->frame_buffer_phys = pinfo->rsrc_fb.start;
- 	pinfo->frame_buffer = ioremap_wt(pinfo->rsrc_fb.start, 0x400000);
-+	if (!pinfo->frame_buffer) {
-+		dev_err(&odev->dev, "failed to ioremap frame buffer\n");
-+		rc = -ENOMEM;
-+		goto err_release_fb;
-+	}
- 	pinfo->base_frame_buffer = pinfo->frame_buffer;
+diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
+index 902a6265e323c..2356edc0e29e7 100644
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -325,6 +325,12 @@ static int ksmbd_kthread_fn(void *p)
+ 		ksmbd_debug(CONN, "connect success: accepted new connection\n");
+ 		client_sk->sk->sk_rcvtimeo = KSMBD_TCP_RECV_TIMEOUT;
+ 		client_sk->sk->sk_sndtimeo = KSMBD_TCP_SEND_TIMEOUT;
++		/*
++		 * Detect peers that disappear without sending a FIN or RST.
++		 * Otherwise the connection handler can retry receive timeouts
++		 * indefinitely and keep the connection in conn_list.
++		 */
++		sock_set_keepalive(client_sk->sk);
  
- 	/* registers */
- 	pinfo->platinum_regs_phys = pinfo->rsrc_reg.start;
- 	pinfo->platinum_regs = ioremap(pinfo->rsrc_reg.start, 0x1000);
-+	if (!pinfo->platinum_regs) {
-+		dev_err(&odev->dev, "failed to ioremap registers\n");
-+		rc = -ENOMEM;
-+		goto err_unmap_fb;
-+	}
- 
- 	pinfo->cmap_regs_phys = 0xf301b000;	/* XXX not in prom? */
- 	request_mem_region(pinfo->cmap_regs_phys, 0x1000, "platinumfb cmap");
- 	pinfo->cmap_regs = ioremap(pinfo->cmap_regs_phys, 0x1000);
-+	if (!pinfo->cmap_regs) {
-+		dev_err(&odev->dev, "failed to ioremap cmap registers\n");
-+		rc = -ENOMEM;
-+		goto err_release_cmap;
-+	}
- 
- 	/* Grok total video ram */
- 	out_be32(&pinfo->platinum_regs->reg[16].r, (unsigned)pinfo->frame_buffer_phys);
-@@ -623,13 +638,21 @@ static int platinumfb_probe(struct platform_device* odev)
- 	dev_set_drvdata(&odev->dev, info);
- 
- 	rc = platinum_init_fb(info);
--	if (rc != 0) {
--		iounmap(pinfo->frame_buffer);
--		iounmap(pinfo->platinum_regs);
--		iounmap(pinfo->cmap_regs);
--		framebuffer_release(info);
--	}
-+	if (rc != 0)
-+		goto err_unmap_cmap;
-+
-+	return 0;
- 
-+err_unmap_cmap:
-+	iounmap(pinfo->cmap_regs);
-+err_release_cmap:
-+	release_mem_region(pinfo->cmap_regs_phys, 0x1000);
-+	iounmap(pinfo->platinum_regs);
-+err_unmap_fb:
-+	iounmap(pinfo->frame_buffer);
-+err_release_fb:
-+	release_mem_region(pinfo->rsrc_fb.start, resource_size(&pinfo->rsrc_fb));
-+	framebuffer_release(info);
- 	return rc;
- }
- 
+ 		ksmbd_tcp_new_connection(client_sk);
+ 	}
 -- 
 2.53.0
 
