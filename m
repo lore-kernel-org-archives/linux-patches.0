@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065188;
-	b=f9+2tZY/b1RvbeCIvEcQLDmmgt6O/gNad+TZMS51tnvVOKf6Yjs+AruxXCihq3HMs0cl
-	 P9EmoyLHpbuJg5TqD4xC4BcduelqPL1A8eOcGk1qGu9XnSbn8hWjm+ZxSpSiMuDxXR6Cn
-	 vhXB/D1aRnFmWXjDQn5/5Pxn1DYaOLFUbYpkqCAMwGEBffE8gzDxijbxz9WqtG4H3K2+N
-	 cedEuc/Th+gRUs/KDtjm8GetSG5DyQf8wu0gv3d8KsepyhTigdxklwpFdyquqLrG5ATYV
-	 hkWrR1iHMMeFE+yxcTPIbR9Neg5mCb8Mcw2etT1DQ3X6CB+YrbeFYveqpomojSe/CXg==
+	t=1794065189;
+	b=Aoyxa6g39/KWrmQnBcEROboEl6JLqnT4EyarAatTZHLZVp+I8Mj6Zwv4Fneruks957sy
+	 AvbMOQKRPX9NUQJxxmaIHIMUtzc5wazaNbxp3JovCNzQuKhDKjtPmP1vXV03LKoj4knoK
+	 CDBCWzpm5SgIfN4YDkmkeVJt3dPEDskC9LxTExUVvM6FZi2uTaQflFGnWHCbOQXW2S0u3
+	 n6ZO/If4SDyf8ztibTiVPMKIek/dECaVIxtMBOHHXhxKfOiDx0X6/Rc4+xb5oVz1mCViV
+	 b7MP6skaFnHqndywgzKzqeMfBwSX/ColLsAzhNSGgUW9PGXu51MQa12Xd1CN5Mhc24A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wXcMrEEvgsP83QeyO90WrBUSVrdyckT05YVTqKyWJ5o=;
-	b=giytb34fBxqKVzN9R+Uk+IAHzQ/sbPob6jKN7l7d+/Q1x0MbEKqx+Qnj9R7JfEOqKUKM
-	 lGKLjoz55GuG/oDduDd65+aUp+YnTW0P8TB9xmIZV5M1VYy4JE6CaTpy3cTh1qegQqcyF
-	 fR2W/lTRm4H7hkqP0dHPyBJwEOy/+zNvlUZRNwjNp1xqBuYAUGLeQXkSLNgQaRz0gWFvU
-	 075PnYqsgUhMqFX8U+DOACMGKBTPPN21/1tetTMFFiU+3CQ0NZ3BiQ8Leq9xUiNJwZ6IK
-	 5UuY5tAMPmvOze9/8rPlYWPzmIttGscC4XvUaUyHj8CIULE0waIRpZlm4nIwD2oKPcA==
+	bh=cGpB+CfvhAxbzM2V7xUhdtuepvPNAOnmEUHZsnJ7IwY=;
+	b=kOfcbztS4DWbowM8P0PzDx/nWeXUu4acMFNpl5YfhKZS7iGUBzOH6Td8IbN9jfd3XG3v
+	 GgOHRmQwcOsAmNPdqzXF3qjHDJyk8CKQnOKqbYcItQC5MebmHc+d1OupzaynmOkTrACX1
+	 cTVzYbVwTjh5RopGne53ZgqZ2/boxRpn6hDEJ+RdmigfaUy0Ml5r7rphhE5lNy6Mz4xFu
+	 04bRl6gkEDlwuEug5Hoyi2ky+T4YrZi1vWtxzvcUBQzQbAKS8kWy+f1VUlvplMy6llLc6
+	 yZyeCcSd7ZKw5+6QZntrLakYlwJi/r9KB2O0HEaIS52yMERukajxKOZ6Qjo31QjrAqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MniZBXXd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wXRJjYgz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B7F606A335;
-	Sat,  7 Nov 2026 15:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8055F606A33A;
+	Sat,  7 Nov 2026 15:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MniZBXXd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE89A1F0089F;
-	Sat,  7 Nov 2026 15:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wXRJjYgz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEB81F008A1;
+	Sat,  7 Nov 2026 15:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065188;
-	bh=wXcMrEEvgsP83QeyO90WrBUSVrdyckT05YVTqKyWJ5o=;
+	s=korg; t=1794065189;
+	bh=cGpB+CfvhAxbzM2V7xUhdtuepvPNAOnmEUHZsnJ7IwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MniZBXXd3esif/WMMHZG74d+ttSsC7pZWCXwsLqr4UZ8j/joOtORvJvmXNKQc+RnN
-	 Bzabf0eG5SwKF9Cl5nCN160x7b4FOMQqe2QTXjIAPgOLoaxC7IXqZo65+zQ14KM1Ma
-	 myi8rtOR4/27Cvn2cKdCh1BYEGLUo+cKh5VUOXHQ=
+	b=wXRJjYgzagdiY5IxScPPAxMl8o48+bHHTfaiyxubZvbWXXwVB/s0+jGHpphMHDrsJ
+	 Gipfv71OXIpZl8hpTwwnbzVfgnTSnS1xQCmlJuNAJVdSewefK7ezlU9xbWgX3YL2iD
+	 wzD3Y7xsQHt3sUi5G7d6RkRDlV8X2qXTZPThn4Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hengyu Liang <hengyul@cs.unc.edu>,
+	Chi Zhiling <chizhiling@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0991/1257] exfat: free clusters beyond EOF when a write fails or is short
-Date: Sat,  7 Nov 2026 08:54:47 -0500
-Message-ID: <20261107135006.736583587@linuxfoundation.org>
+Subject: [PATCH 7.3 0992/1257] exfat: fix reading a directory whose FAT chain is longer than its size
+Date: Sat,  7 Nov 2026 08:54:48 -0500
+Message-ID: <20261107135006.763427852@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,126 +71,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Hengyu Liang <hengyul@cs.unc.edu>
 
-[ Upstream commit b4c282c0d82e8715ea9ed0b35813a3f365e3f952 ]
+[ Upstream commit 8534eb11ac056dc2ca08007cf76d3ae7cbe42684 ]
 
-Commit 82a81a7352bc ("exfat: add iomap buffered I/O support") and commit
-867b9c96dc83 ("exfat: add iomap direct I/O support") made a write
-allocate the clusters for its whole range in one step. They also dropped
-exfat_write_failed(), which freed the clusters beyond the end of the
-file after a failed or short write.
+Commit 08cf4a8181b4 ("exfat: use exfat_chain_advance helper") made the
+directory code walk the clusters of a directory with
+exfat_chain_advance().
 
-However, a write can stop early, for example when the process is killed
-or when a part of the buffer cannot be read. As of now, the clusters for
-the part that was not written stay allocated beyond the end of the file.
-exfat_cont_expand() does not expect them, so a later write or truncate
-that extends the file fails with ENOSPC. The directory entry records
-only the size of the file, so the space can be lost for good once the
-volume is unmounted.
+However, exfat_chain_advance() returns -EIO once it has walked as many
+clusters as the size of the directory says. The FAT chain of a directory
+can be longer than that, because some cameras stop updating the size,
+see commit 1e5654de0f51 ("exfat: handle wrong stream entry size in
+exfat_readdir()"). As of now, opening such a directory fails with EIO as
+soon as the chain is two clusters longer than the size. Reading a
+directory that has a FAT chain after a seek past its end fails with EIO
+too.
 
-The issue can be reproduced on a 64M volume made by mkfs.exfat and
-mounted on /mnt, with a write of 1M from a buffer that has only its
-first 4K mapped:
+The issue can be reproduced with an image in which the size of a
+directory with 200 files and 7 clusters is lowered to 2 clusters:
 
-    #include <fcntl.h>
-    #include <stdio.h>
-    #include <sys/mman.h>
-    #include <sys/stat.h>
-    #include <unistd.h>
+    mount -o loop exfat.img /mnt
+    ls /mnt/d | wc -l
 
-    int main(void)
-    {
-            char *p = mmap(NULL, 8192, PROT_READ | PROT_WRITE,
-                           MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-            int fd = open("/mnt/f", O_CREAT | O_WRONLY, 0644);
-            struct stat st;
-
-            munmap(p + 4096, 4096);
-            printf("write: %zd\n", write(fd, p, 1 << 20));
-            fstat(fd, &st);
-            printf("blocks: %ld\n", (long)st.st_blocks);
-            printf("ftruncate: %d\n", ftruncate(fd, 1 << 16));
-            return 0;
-    }
-
-Before commit 82a81a7352bc ("exfat: add iomap buffered I/O support"),
+Before commit 08cf4a8181b4 ("exfat: use exfat_chain_advance helper"),
 the result is:
 
-    write: 4096
-    blocks: 8
-    ftruncate: 0
+    200
 
-After that commit, the result is:
+After that commit, ls fails with "Input/output error" and the result is:
 
-    write: 4096
-    blocks: 2048
-    ftruncate: -1
+    0
 
-This patch will bring back exfat_write_failed() and call it when a write
-ends before the end of its range, so that the clusters beyond the end of
-the file are freed again. It waits for direct I/O in flight first, as
-exfat_setattr() does before it frees clusters.
+This patch will make exfat_chain_advance() follow the FAT to its end
+when the directory has a FAT chain, as the code did before, and keep the
+size check for a directory without one.
 
-Fixes: 82a81a7352bc ("exfat: add iomap buffered I/O support")
-Fixes: 867b9c96dc83 ("exfat: add iomap direct I/O support")
+Fixes: 08cf4a8181b4 ("exfat: use exfat_chain_advance helper")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
 Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
+Reviewed-by: Chi Zhiling <chizhiling@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/file.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ fs/exfat/exfat_fs.h | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index f106db945d8dd..dc57d2c2f0f0f 100644
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -804,6 +804,19 @@ static int exfat_extend_valid_size(struct inode *inode, loff_t new_valid_size)
- 	return ret;
- }
- 
-+/*
-+ * The clusters for a write are allocated before the data is copied. Free the
-+ * ones that a failed or short write has left beyond the end of the file.
-+ */
-+static void exfat_write_failed(struct inode *inode)
-+{
-+	inode_dio_wait(inode);
-+	filemap_invalidate_lock(inode->i_mapping);
-+	truncate_pagecache(inode, i_size_read(inode));
-+	exfat_truncate(inode);
-+	filemap_invalidate_unlock(inode->i_mapping);
-+}
-+
- static ssize_t exfat_fallback_buffered_write(struct kiocb *iocb,
- 		struct iov_iter *from)
+diff --git a/fs/exfat/exfat_fs.h b/fs/exfat/exfat_fs.h
+index 249aa59288631..dd6734632bb23 100644
+--- a/fs/exfat/exfat_fs.h
++++ b/fs/exfat/exfat_fs.h
+@@ -679,19 +679,29 @@ static inline int exfat_chain_advance(struct super_block *sb,
+ 		struct exfat_chain *chain, unsigned int step)
  {
-@@ -862,7 +875,7 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 	struct file *file = iocb->ki_filp;
- 	struct inode *inode = file_inode(file);
- 	struct exfat_inode_info *ei = EXFAT_I(inode);
--	loff_t pos, valid_size;
-+	loff_t pos, valid_size, end;
- 	int err;
+ 	unsigned int clu = chain->dir;
++	unsigned int i;
  
- 	if (unlikely(exfat_forced_shutdown(inode->i_sb)))
-@@ -881,6 +894,7 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 	}
+-	if (unlikely(chain->size < step))
+-		return -EIO;
++	if (chain->flags == ALLOC_NO_FAT_CHAIN) {
++		if (unlikely(chain->size < step))
++			return -EIO;
  
- 	pos = iocb->ki_pos;
-+	end = pos + iov_iter_count(iter);
- 	if (pos > i_size_read(inode))
- 		truncate_pagecache(inode, i_size_read(inode));
+-	if (exfat_cluster_walk(sb, &clu, step, chain->flags))
+-		return -EIO;
++		chain->size -= step;
++		chain->dir = chain->size ? clu + step : EXFAT_EOF_CLUSTER;
++		return 0;
++	}
  
-@@ -909,6 +923,8 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 		ret = iomap_file_buffered_write(iocb, iter,
- 				&exfat_write_iomap_ops, NULL, NULL);
- 	}
-+	if (ret != -EIOCBQUEUED && end > i_size_read(inode))
-+		exfat_write_failed(inode);
- 	if (ret < 0)
- 		goto unlock;
+-	chain->size -= step;
++	/*
++	 * Only the FAT tells where a chain of this kind ends. The size can be
++	 * smaller than the chain, see commit 1e5654de0f51 ("exfat: handle
++	 * wrong stream entry size in exfat_readdir()").
++	 */
++	for (i = 0; i < step && clu != EXFAT_EOF_CLUSTER; i++) {
++		if (exfat_get_next_cluster(sb, &clu))
++			return -EIO;
++	}
  
+-	if (chain->size == 0 && chain->flags == ALLOC_NO_FAT_CHAIN)
+-		chain->dir = EXFAT_EOF_CLUSTER;
+-	else
+-		chain->dir = clu;
++	chain->size -= min(chain->size, step);
++	chain->dir = clu;
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
