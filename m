@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062244;
-	b=Zz0R94VFKsMl6NQhDt4GsohUiCfRSEh7qSwp8WUDGDr0ajTxrpcOsVsnFmH0XaMmGsH1
-	 tnEvZe5f3tGpN5bu0FvsxDH327/N/LPBbP2xwDfdQuG3jJQjFGy866bZn4qNRJBkhoJ90
-	 WM+PkV5V8zUI+dffqN1nUrxBZzWwzN7kjCG1QGRoHX+2i3QlBBvzqDq2kKsr/clkheOWh
-	 6eE4E9gqKnJ/dyhDyAuzygn5xFzfGobJl195o9TGtilmZnsZONCB1b2edsVHV7cTegn1Q
-	 0NN8+sKKkwp8u6fF3qVxKkAnTrp0WktSSoVP1L6OKnteCCDnGIk+1snB0NPP/vmxgHA==
+	t=1794062245;
+	b=JwtPzAlQJjG7/iw4WzDigK+APRFCxYfWg/qZ8oo1jHf/X4h0zMo8TBl9LDeOuhKl1v/0
+	 VmeUHzjT2JRkwo8K394rowX7ZxK2cOPrDImwdP1JuvuxXA1PY2PrbmiMo9rGKeof15gdr
+	 LOe5HfcVCVYerQyPnsJPypM9e9UBqL3uy8lMgxnKAA/KeepZm110lxkBG9RRYjjHvItN+
+	 LQ4ovgPvLSr67qJfQWZWdasQeTC3M1pXGzQytlWdsgrkQiXQy62A2VGOH9vJ9KPOqE8vE
+	 sQVVrgYWuMe6eXtMjGCGcpS1xq1UZfU7lwP5kZt0ZiJxnpY3AtSwplz0fWHRNKfsmeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062245;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V1X28mQy1l6gjDWWwgWZCLK7U6Qw+Ozsf2AvzQ9V9fc=;
-	b=JSQ7x0Eb1b1VP0BrFNUj1EQKOrj7CU+BIHoFGbNdZBqDlJLkSCR6PsyyIHz5fjG8B+x7
-	 xje3Q+OAuVhHcD6dn/hEYzAQ8itXT0CLmVFYTqCVN+kVf8Wr0tkKekMLgQ6gRpmmyoPoV
-	 fZUGgzZmyyHjLzllSH4DdyYRYIiET6oKhvr+XztZe7rlz21FfPPS1K1IK5TW0GTQy0sE2
-	 nN4quqnGGdDrjry4EMGprR8KuEawfRCCgVniv//K6EhoJ2zLMN0UsuO3xWYjqn4GZjuDJ
-	 +eJB6b1Ce8b+q9JFOnYejo4QEYS/I/bLZTHVS3uhoPBdGOyfTRa9y7qAuZp245p8aEg==
+	bh=ES+pvpZC35A5aFIlwTY30HcSJXKLDmdIB5y4wiVQbvE=;
+	b=o/D852d6CzGVESbuPod9ORLEv1kQkyWmfb29K88ekJwZAVfpvH5OBw6zLIZECOM87MO+
+	 arvfvdOcrJay0P8T/JyygKUXhsM98jWAfduLAn7C4KyroXkSR5PNHnc1OWfUwFMqvmYrY
+	 Md69alC/Aw1h1eNGKkUpMPsWZqTWl7dMscPZhVGQ81HTsG3TKKRokDZOGqJR7yDGy73e1
+	 jcyHiz9Qoht3eoi7ONwcR8kpLsHo+M1NAOqkF7bPyH1TCYydL+EHDixLaP31ExajciW27
+	 UAuF0VOBBWBbJYQ+J9npalvIZl2Majzv2+9ksReeSzQT3BstEUP/K0bceuHO8luwpIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W0Zfx3FL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2SbbQkQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DFE60A260B;
-	Sat,  7 Nov 2026 14:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E3A606EE82;
+	Sat,  7 Nov 2026 14:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W0Zfx3FL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6071F0089F;
-	Sat,  7 Nov 2026 14:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2SbbQkQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE821F0089F;
+	Sat,  7 Nov 2026 14:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062243;
-	bh=V1X28mQy1l6gjDWWwgWZCLK7U6Qw+Ozsf2AvzQ9V9fc=;
+	s=korg; t=1794062245;
+	bh=ES+pvpZC35A5aFIlwTY30HcSJXKLDmdIB5y4wiVQbvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W0Zfx3FLcNv8gJHSXwon7xIeSN6T2vTCHM8cSEvbDouYYcXzaKhRGvZtRTweJLOJi
-	 KHPhL8vl2BQylb7TuFLbPxtSa5yJvOaAcsKXJsgb6w5ImjGxt8Eqmnsipt2dEBf7cN
-	 v8p9tHG/sRE2jyUyhAfPPAmcSbCYwBbUOfbiFWcs=
+	b=Q2SbbQkQEKsytW6cB2SZrq6pEaIoq4QxoFOU5jyaqcOiEvHC9ErdhKoeBx0lpJKMV
+	 zwQJ8pZfVVTIkEDcr02s+1LDx9I0kGiODsFczVlWdNxBsSvx0SIGivJdXlnLyEIwLI
+	 rpUR/ymdRLOyL6IK+Z9SX8t5Nh2blXicNDPhPriQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Andrey Albershteyn <aalbersh@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1191/1536] fanotify: report names longer than NAME_MAX
-Date: Sat,  7 Nov 2026 08:53:27 -0500
-Message-ID: <20261107135031.198516834@linuxfoundation.org>
+Subject: [PATCH 6.12 1156/1536] fsverity: hoist statx reporting of fs-verity flag
+Date: Sat,  7 Nov 2026 08:52:52 -0500
+Message-ID: <20261107135030.193192234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,129 +70,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Andrey Albershteyn <aalbersh@kernel.org>
 
-[ Upstream commit ff05910cb1b77c2b229c5e6e260c6173a17b579b ]
+[ Upstream commit f9e450420da2624c93ce9585deebfabb87932774 ]
 
-fanotify keeps the length of a reported name in a u8, so it drops any
-name longer than NAME_MAX and warns:
+All filesystems, supporting fsverity, report this status by checking
+inode flag. Also, BTRFS was missing stat->attributes_mask, which is
+fixed now.
 
-  WARNING: fs/notify/fanotify/fanotify.h:217 at fanotify_handle_event+0x2e82/0x39f0
-
-Such names are legitimate on some filesystems.  vfat mounted with utf8
-takes up to 255 UTF-16 characters, which are up to 765 bytes of UTF-8,
-and FUSE accepts names up to PATH_MAX - 1.  readdir() and inotify report
-them in full.  fanotify sends the event without the name, and for
-FAN_RENAME it trips a second warning in copy_fid_info_to_user(), after
-which read() fails with EFAULT and the event is lost.
-
-When syzbot hit this, Jan suggested accommodating names up to PATH_MAX
-[1], the limit readdir() already applies to a name
-(verify_dirent_name()).  Store the name lengths as u16, which keeps
-struct fanotify_info at 8 bytes, and drop without a warning only names
-of PATH_MAX bytes or more, which no path can refer to.  An event with
-such a name can exceed a page, so allocate name events with kvmalloc(),
-as Jan also suggested.  Names up to NAME_MAX are reported exactly as
-before, and the record format is unchanged: an event with a long name is
-just longer.
-
-Link: https://lore.kernel.org/all/20241112115059.ecvomkalee5m4i4i@quack3/ [1]
-Fixes: 2d9374f09513 ("fanotify: use macros to get the offset to fanotify_info buffer")
+Fixes: 146054090b08 ("btrfs: initial fsverity support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/20260926020851.2938961-1-matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Andrey Albershteyn <aalbersh@kernel.org>
+Acked-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Link: https://patch.msgid.link/20261002223705.2175542-7-aalbersh@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify.c |  7 +++++--
- fs/notify/fanotify/fanotify.h | 21 ++++++++++++---------
- 2 files changed, 17 insertions(+), 11 deletions(-)
+ fs/btrfs/inode.c | 3 ---
+ fs/ext4/inode.c  | 5 +----
+ fs/f2fs/file.c   | 5 +----
+ fs/stat.c        | 6 +++++-
+ 4 files changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
-index 4d86a05258b97..714c51ca4ac14 100644
---- a/fs/notify/fanotify/fanotify.c
-+++ b/fs/notify/fanotify/fanotify.c
-@@ -615,6 +615,9 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 	unsigned long name2_len = name2 ? name2->len : 0;
- 	unsigned int len, size;
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 9f3881db076fc..f1d9aa14c8286 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -7854,7 +7854,6 @@ static int btrfs_getattr(struct mnt_idmap *idmap,
+ 	struct inode *inode = d_inode(path->dentry);
+ 	u32 blocksize = btrfs_sb(inode->i_sb)->sectorsize;
+ 	u32 bi_flags = BTRFS_I(inode)->flags;
+-	u32 bi_ro_flags = BTRFS_I(inode)->ro_flags;
  
-+	if (WARN_ON_ONCE(name_len >= PATH_MAX || name2_len >= PATH_MAX))
-+		return NULL;
+ 	stat->result_mask |= STATX_BTIME;
+ 	stat->btime.tv_sec = BTRFS_I(inode)->i_otime_sec;
+@@ -7867,8 +7866,6 @@ static int btrfs_getattr(struct mnt_idmap *idmap,
+ 		stat->attributes |= STATX_ATTR_IMMUTABLE;
+ 	if (bi_flags & BTRFS_INODE_NODUMP)
+ 		stat->attributes |= STATX_ATTR_NODUMP;
+-	if (bi_ro_flags & BTRFS_INODE_RO_VERITY)
+-		stat->attributes |= STATX_ATTR_VERITY;
+ 
+ 	stat->attributes_mask |= (STATX_ATTR_APPEND |
+ 				  STATX_ATTR_COMPRESSED |
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index dcd67771f3a3b..aa33c974e9af5 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5749,15 +5749,12 @@ int ext4_getattr(struct mnt_idmap *idmap, const struct path *path,
+ 		stat->attributes |= STATX_ATTR_IMMUTABLE;
+ 	if (flags & EXT4_NODUMP_FL)
+ 		stat->attributes |= STATX_ATTR_NODUMP;
+-	if (flags & EXT4_VERITY_FL)
+-		stat->attributes |= STATX_ATTR_VERITY;
+ 
+ 	stat->attributes_mask |= (STATX_ATTR_APPEND |
+ 				  STATX_ATTR_COMPRESSED |
+ 				  STATX_ATTR_ENCRYPTED |
+ 				  STATX_ATTR_IMMUTABLE |
+-				  STATX_ATTR_NODUMP |
+-				  STATX_ATTR_VERITY);
++				  STATX_ATTR_NODUMP);
+ 
+ 	generic_fillattr(idmap, request_mask, inode, stat);
+ 	return 0;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index b4bd73648a014..df4bad21dcc71 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1013,15 +1013,12 @@ int f2fs_getattr(struct mnt_idmap *idmap, const struct path *path,
+ 		stat->attributes |= STATX_ATTR_IMMUTABLE;
+ 	if (flags & F2FS_NODUMP_FL)
+ 		stat->attributes |= STATX_ATTR_NODUMP;
+-	if (IS_VERITY(inode))
+-		stat->attributes |= STATX_ATTR_VERITY;
+ 
+ 	stat->attributes_mask |= (STATX_ATTR_COMPRESSED |
+ 				  STATX_ATTR_APPEND |
+ 				  STATX_ATTR_ENCRYPTED |
+ 				  STATX_ATTR_IMMUTABLE |
+-				  STATX_ATTR_NODUMP |
+-				  STATX_ATTR_VERITY);
++				  STATX_ATTR_NODUMP);
+ 
+ 	generic_fillattr(idmap, request_mask, inode, stat);
+ 
+diff --git a/fs/stat.c b/fs/stat.c
+index 41e598376d7e3..80344764a3297 100644
+--- a/fs/stat.c
++++ b/fs/stat.c
+@@ -158,8 +158,12 @@ int vfs_getattr_nosec(const struct path *path, struct kstat *stat,
+ 	if (IS_DAX(inode))
+ 		stat->attributes |= STATX_ATTR_DAX;
+ 
++	if (IS_VERITY(inode))
++		stat->attributes |= STATX_ATTR_VERITY;
 +
- 	/* Reserve terminating null byte even for empty name */
- 	size = sizeof(*fne) + name_len + name2_len + 2;
- 	if (dir_fh_len)
-@@ -623,7 +626,7 @@ static struct fanotify_event *fanotify_alloc_name_event(struct inode *dir,
- 		size += FANOTIFY_FH_HDR_LEN + dir2_fh_len;
- 	if (child_fh_len)
- 		size += FANOTIFY_FH_HDR_LEN + child_fh_len;
--	fne = kmalloc(size, gfp);
-+	fne = kvmalloc(size, gfp);
- 	if (!fne)
- 		return NULL;
+ 	stat->attributes_mask |= (STATX_ATTR_AUTOMOUNT |
+-				  STATX_ATTR_DAX);
++				  STATX_ATTR_DAX |
++				  STATX_ATTR_VERITY);
  
-@@ -1006,7 +1009,7 @@ static void fanotify_free_fid_event(struct fanotify_event *event)
- 
- static void fanotify_free_name_event(struct fanotify_event *event)
- {
--	kfree(FANOTIFY_NE(event));
-+	kvfree(FANOTIFY_NE(event));
- }
- 
- static void fanotify_free_error_event(struct fsnotify_group *group,
-diff --git a/fs/notify/fanotify/fanotify.h b/fs/notify/fanotify/fanotify.h
-index e5ab33cae6a76..1ebae4d989c2c 100644
---- a/fs/notify/fanotify/fanotify.h
-+++ b/fs/notify/fanotify/fanotify.h
-@@ -42,9 +42,16 @@ struct fanotify_info {
- 	u8 dir_fh_totlen;
- 	u8 dir2_fh_totlen;
- 	u8 file_fh_totlen;
--	u8 name_len;
--	u8 name2_len;
--	u8 pad[3];
-+	u8 pad;
-+	/*
-+	 * Deliberately not limited to NAME_MAX: some filesystems return longer
-+	 * names (vfat up to 255 UTF-16 characters, as Windows allows, which is
-+	 * up to 765 bytes of UTF-8; FUSE up to PATH_MAX - 1), and readdir() and
-+	 * inotify report them in full. Only names of PATH_MAX bytes or more,
-+	 * which no path can refer to, are dropped.
-+	 */
-+	u16 name_len;
-+	u16 name2_len;
- 	unsigned char buf[];
- 	/*
- 	 * (struct fanotify_fh) dir_fh starts at buf[0]
-@@ -167,7 +174,7 @@ static inline char *fanotify_info_name2(struct fanotify_info *info)
- static inline void fanotify_info_init(struct fanotify_info *info)
- {
- 	BUILD_BUG_ON(FANOTIFY_FH_HDR_LEN + MAX_HANDLE_SZ > U8_MAX);
--	BUILD_BUG_ON(NAME_MAX > U8_MAX);
-+	BUILD_BUG_ON(PATH_MAX > U16_MAX);
- 
- 	info->dir_fh_totlen = 0;
- 	info->dir2_fh_totlen = 0;
-@@ -213,8 +220,7 @@ static inline void fanotify_info_set_file_fh(struct fanotify_info *info,
- static inline void fanotify_info_copy_name(struct fanotify_info *info,
- 					   const struct qstr *name)
- {
--	if (WARN_ON_ONCE(name->len > NAME_MAX) ||
--	    WARN_ON_ONCE(info->name2_len > 0))
-+	if (WARN_ON_ONCE(info->name2_len > 0))
- 		return;
- 
- 	info->name_len = name->len;
-@@ -224,9 +230,6 @@ static inline void fanotify_info_copy_name(struct fanotify_info *info,
- static inline void fanotify_info_copy_name2(struct fanotify_info *info,
- 					    const struct qstr *name)
- {
--	if (WARN_ON_ONCE(name->len > NAME_MAX))
--		return;
--
- 	info->name2_len = name->len;
- 	strcpy(fanotify_info_name2(info), name->name);
- }
+ 	idmap = mnt_idmap(path->mnt);
+ 	if (inode->i_op->getattr)
 -- 
 2.53.0
 
