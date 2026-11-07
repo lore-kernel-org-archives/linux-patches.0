@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062646;
-	b=0KqrBovU2br5L1fXEQaapFi2dlb4ysAwKRddtlgWHDceyypaBNEzkmb/Fhk2De579qu1
-	 fWdYJOiHI6aXjkkwy+WHO6xTAfvsYectE/PqKo1OuXDKkMVv47K07GJ6YZVKk5djA1xay
-	 GoYqR8dZtlaY2In1MEj9YnGAEERlABKo2b/6QlHgHAMcj07bMk3ikWv9XE3q06KNhvzBw
-	 3kCtw0n0TY69arlMKfZR6w7/GwIDnnMEpCCrrwACjeI97V5wB+sj9RI3IGgHn6s8iC6TI
-	 FdNRjCaVzN0paSarXuO6SdniXP32SZYbmL5s1KNFkUeYrAFTuZsFqqQs6YllapW/fdQ==
+	t=1794062647;
+	b=fO+TJ4FJKsZj1d3PYZ7400lUMpnvOneELLzHrREgZgD0tEsSVhITQZAhzawCXEkSILaj
+	 MYOK8OGzSVITDCAvHMGpLrQ2qor5L1K9qoT+f9vHwxsNcTwOeXbC28X1hhdL6U6HGWChq
+	 Xe9Dz/CJ1sPVG1oTJEZx+a1MvGyRsTsIgNf6MCoZqFnpSsaDHNH1182Pn6wlfEiI92GIT
+	 RYVmwg9gOJL6jqTDZI7S3qvjqv87cyA0Jqh9KaWGnW1gW3ZwOLH1JWlQ074XcNbfe7RHp
+	 M3NBzkPnzvBR8rLIyr0MBby12tPi9rDKL5i0ps/wv3yUbgjcY9H9nJzXJxV97Hvmo7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062647;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OlBWvtGADBlrm66oiuUC6YYoQZjuMknlz+VFGMq5dLI=;
-	b=Xp5EokeWz/WxBG0XOgqN67YCftGOwcqGzxEZJPzmr/YcWWYdDFWBsUXVeVfNphOHEJC/
-	 RLloFjzTQekSGoJs4b8DaMQyUkCpqj/Uh2S6JIw6KIbFYXSYB5TzemTPPH9Blkcmx/yXv
-	 nZI12/vzf7xQU+v1zKbpnQVWiMFATeZWrn1wBLXmaYAWAMMaoLikDWR0lWGn74SvKEFS9
-	 ZLsH8qB8dTAzfQlztHgHtKpUQZQgfhYCOasrMZKslFZb8V+fIu5D0WVbAwbF1rBjAxNgf
-	 TOkcFTspD5XxyCB6q3liCIVbVFLjUJwMv76gFylAT/35lmKQNoMlYUrcA9y1ym5juMg==
+	bh=InXqhY3DbS9wEMmSqU/fy7R4Tyo8rwIKzxvJEQ44GuE=;
+	b=2mwuGTQ9xClhoV0BjqxxtCMCU9MKcS1N7cBdav4mm4gcAyXYQg1ZefO299y7yl/3vqCQ
+	 LXHoZGRyPGGugVJtbTa6e9Tphx8AR9YdQj9WxdWlpA52SmE42MqejsEtakueJjQOApmiS
+	 KtBdKcXbQJQOq0NxfW4qmAM0ewCELVfLBHSaCKIFzIu8lq7ON8bzc6HaeExQfb4Gx2v1P
+	 SvWNpDlIrGqUJCcDQTSRyN1Y5a2D+8R8g2ZPXBZFLeGzqcNA+1dsCFWmZjVKZB6ft3JFc
+	 idV+mu/KC2p58atjmWicrSn9VSQBTIYvJ05AnWBw9z+V1q6q4AY0LHtHDUpEYSWHr9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rKI5UJqP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdFt9wGM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF16606A339;
-	Sat,  7 Nov 2026 14:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69C0606A339;
+	Sat,  7 Nov 2026 14:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rKI5UJqP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6D41F0089F;
-	Sat,  7 Nov 2026 14:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdFt9wGM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D951F008A2;
+	Sat,  7 Nov 2026 14:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062645;
-	bh=OlBWvtGADBlrm66oiuUC6YYoQZjuMknlz+VFGMq5dLI=;
+	s=korg; t=1794062646;
+	bh=InXqhY3DbS9wEMmSqU/fy7R4Tyo8rwIKzxvJEQ44GuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rKI5UJqPJEhm0yRcRZM1GL3lt3VZiCfNoOmGks/m5tatINnVZIwG2lk0KH4EaHz1F
-	 Rxg5ysSeZ2jpebk2h7OfzLR7Fj+NL7v2GP5xJ6GxQhhLy+AkjaokZQFE+fzz0q6spc
-	 A7IZWk97pO/HDyGSgTkWRE5UvR/R3CLid+htWxSo=
+	b=EdFt9wGMxWCjSbrWtmAugEuvr4ZiVHMyOPg+saEdLJCMLNCREp71CrvH3+gGvYIEY
+	 kCXe7CSr0MHqN+5W2S065FtTzhkCGNS2j5TzVpF+Qf6cbABhFzUJ6WCBCqn4twVySM
+	 vlUXU2Oip60wr/7MYbqQY+n2F+AUzGI2nJizMPO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Martin Belanger <martin.belanger@dell.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1512/1536] nvme-tcp: start error recovery when read_sock fails
-Date: Sat,  7 Nov 2026 08:58:48 -0500
-Message-ID: <20261107135040.330054503@linuxfoundation.org>
+Subject: [PATCH 6.12 1486/1536] LoongArch: Use pa_to_nid()/nid_to_addrbase() rather than hard-code
+Date: Sat,  7 Nov 2026 08:58:22 -0500
+Message-ID: <20261107135039.591652281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,58 +67,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Belanger <martin.belanger@dell.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 288cfa187208cc9d0809eb8e1508658151a444dd ]
+[ Upstream commit 244eb26bbd152896f976db6415550993cd60b46d ]
 
-nvme_tcp_recv_skb() disables the queue and starts error recovery for
-errors it detects itself. An error returned by the transport reaches
-nvme_tcp_try_recv() without either action.
+NODE_ADDRSPACE_SHIFT is 44 now but may be changed in future, so use
+pa_to_nid()/nid_to_addrbase() rather than hard-code.
 
-nvme_tcp_io_work() returns on a negative result and does not requeue
-itself, so the queue stops receiving and remains stalled until a command
-times out.
-
-Report the error and start error recovery when the queue is still
-enabled, which indicates that the error was not handled by the actor.
-Do this under the socket lock, as nvme_tcp_recv_skb() does.
-
-Fixes: be8e82caa685 ("nvme-tcp: enable TLS handshake upcall")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Martin Belanger <martin.belanger@dell.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/loongarch/include/asm/numa.h | 2 +-
+ arch/loongarch/kernel/irq.c       | 3 ++-
+ arch/loongarch/pci/pci.c          | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 93e743d6e9846..67d02cfb47ec7 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -1421,6 +1421,19 @@ static int nvme_tcp_try_recv(struct nvme_tcp_queue *queue)
- 	lock_sock(sk);
- 	queue->nr_cqe = 0;
- 	consumed = sock->ops->read_sock(sk, &rd_desc, nvme_tcp_recv_skb);
-+	/*
-+	 * nvme_tcp_recv_skb() handles its own errors, so a queue that is
-+	 * still enabled failed inside read_sock(). Handle it before
-+	 * release_sock() processes the backlog.
-+	 */
-+	if (unlikely(consumed < 0 && consumed != -EAGAIN &&
-+		     queue->rd_enabled)) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"queue %d: receive failed: %d\n",
-+			nvme_tcp_queue_id(queue), consumed);
-+		queue->rd_enabled = false;
-+		nvme_tcp_error_recovery(&queue->ctrl->ctrl);
-+	}
- 	release_sock(sk);
- 	return consumed == -EAGAIN ? 0 : consumed;
+diff --git a/arch/loongarch/include/asm/numa.h b/arch/loongarch/include/asm/numa.h
+index b5f9de9f102e4..553d8f72f0e23 100644
+--- a/arch/loongarch/include/asm/numa.h
++++ b/arch/loongarch/include/asm/numa.h
+@@ -14,7 +14,7 @@
+ #define NODE_ADDRSPACE_SHIFT 44
+ 
+ #define pa_to_nid(addr)		(((addr) & 0xf00000000000) >> NODE_ADDRSPACE_SHIFT)
+-#define nid_to_addrbase(nid)	(_ULCAST_(nid) << NODE_ADDRSPACE_SHIFT)
++#define nid_to_addrbase(nid)	(_U64CAST_(nid) << NODE_ADDRSPACE_SHIFT)
+ 
+ #ifdef CONFIG_NUMA
+ 
+diff --git a/arch/loongarch/kernel/irq.c b/arch/loongarch/kernel/irq.c
+index d129039b368b0..f53af120bea78 100644
+--- a/arch/loongarch/kernel/irq.c
++++ b/arch/loongarch/kernel/irq.c
+@@ -19,6 +19,7 @@
+ 
+ #include <asm/irq.h>
+ #include <asm/loongson.h>
++#include <asm/numa.h>
+ #include <asm/setup.h>
+ 
+ DEFINE_PER_CPU(unsigned long, irq_stack);
+@@ -68,7 +69,7 @@ static int __init early_pci_mcfg_parse(struct acpi_table_header *header)
+ 
+ 	for (i = 0; i < n; i++, mptr++) {
+ 		msi_group[i].pci_segment = mptr->pci_segment;
+-		pch_group[i].node = msi_group[i].node = (mptr->address >> 44) & 0xf;
++		pch_group[i].node = msi_group[i].node = pa_to_nid(mptr->address);
+ 	}
+ 
+ 	return 0;
+diff --git a/arch/loongarch/pci/pci.c b/arch/loongarch/pci/pci.c
+index a25307d6aee81..d4deff031ded7 100644
+--- a/arch/loongarch/pci/pci.c
++++ b/arch/loongarch/pci/pci.c
+@@ -13,6 +13,7 @@
+ #include <linux/io-64-nonatomic-lo-hi.h>
+ #include <asm/cacheflush.h>
+ #include <asm/loongson.h>
++#include <asm/numa.h>
+ 
+ #define PCI_DEVICE_ID_LOONGSON_HOST     0x7a00
+ #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
+@@ -44,7 +45,7 @@ int raw_pci_write(unsigned int domain, unsigned int bus, unsigned int devfn,
+ 
+ phys_addr_t mcfg_addr_init(int node)
+ {
+-	return (((u64)node << 44) | MCFG_EXT_PCICFG_BASE);
++	return (nid_to_addrbase(node) | MCFG_EXT_PCICFG_BASE);
  }
+ 
+ static int __init pcibios_init(void)
 -- 
 2.53.0
 
