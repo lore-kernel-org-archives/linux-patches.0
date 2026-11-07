@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060675;
-	b=Tx69OSPtJJfFaVtWNBISLvd9SS5ShxdCg1T1DEdQPu+6vpp7jl8qS0GPmP1X6GfYypgP
-	 fmsqXQVYVf8O3wtK6C09xG0ZfjoBhubqaT2ntwxoFo6S7C3ZBzsLDHHg3Vv+0Izip0Rq+
-	 L3wqQ1fuFvvZByx8CQOEJOWrui5vbCaQkfhYufZfDSMy2QKO2v0HJC+bjK2JwHGFlBp6M
-	 mU6V9ti5F1z4cRsuXdTxH+4XH7Jjh5/rZ2R8jMQLbSKFIuzkm3AyUTUtJ37X8tNg3tCog
-	 +d4AG97bRlG6WZXA7CHiUjzheo1E3q05PJH9CZ2uvCCdCYPGzp/FPECi3nD9YzYPH5Q==
+	t=1794060677;
+	b=5ZvCzwjwU47mAIOwHxz/37PaxDPakxg8aoYFktulfUC3GRQrn2kqMI4+EeoJquF6seGo
+	 9VIRjsLFIYb54JN1e6gI3lBykIYGQtng5edtnsJ9tcYJCCi3WEJHrr4PKMQsh50hvS/Kx
+	 w3xSc4X2S/0Ljy9gQrPkD9OtHrv5zylJybxRaV9sRlmFAUT/yFWpwt2O/jSD5+exfUPO5
+	 Xc6KPcnLEWzBaFVeEQgFOlM1vvbwDD9FDSZUbsY4yNrX+ZHISVpP5yRqyBvixM8KuDxYz
+	 DQ50J1og3nIV/pByItGkxVONARbpoFRMYN5zEKcM/WCvZbNG2JWYRZR8+sixJJPmwdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060675;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060677;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ivbit3SAc3bTmHKkyssr/OnOiZwAw9sh+4zYqqsvMJk=;
-	b=RGHcTBerCkhqJvGcStJlkLjOF6037AHW8r6GuiMDVr1RcuV5k7fmICJpLukmNqqPlRrI
-	 XGKXy3u6jRAIzKO/wQxJRJeXq4aQzG63v5hfBogPQwfAvXNXlzSQgOlNtGhvt29pvT55/
-	 Yyj+aVbkV1klDFYFhe4DaJcJHDX8ChAUCXQb+YHx4W2A9hKX9o9M1iwJ89zS/jvfe1hyC
-	 uGDC/nrlKnhRBNvN/qVYM30Uq+igFGhqZiiHNx1/AdvYylR7ByS7wcvSqNQ1Pxg7HrlKH
-	 yJ18hZIn7AbfPce0VwlOCJq024c3F8wRrBtQFVxsJbImgHgldqqvdpL8P9Jghe5Z4uQ==
+	bh=tQ+YWF4mawam4DjHkdSqsYSTAjYyAS0DJnOMvXdzxaY=;
+	b=0qsRRK/yWRJSrcWEyQN/j8/K1TW7hd1IpsR9uKo/fbO2/tbw4tGDIGDnMIqxpC0P60XF
+	 FBNbRr2dmh2fbUsqJ0giaN1cizZvhaAvlRVxSsGo+zRH3OqDV8n05cGv4lJoc2RoM+WEU
+	 F1/M8hP2yyaYbJ8V2EnRfre8caFUKIYFXbtPsPKkrHlQ1TJJS8rbFIrA2BntIyCLjg72c
+	 HVaDxE7WkwI98xog2y0h/HGOg24OJFfm0wcTxqhRSERmH4JN+lQWyU73hYrj59iofTKx9
+	 068w9kXz4siRZ9aoXNQSIkDPzuobGy3D8zA+9nO8Im21C/nymBXidjIYKB92Q/FCNVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cTkccfDo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+RZy8km;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8961D606A32C;
-	Sat,  7 Nov 2026 14:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0412606A330;
+	Sat,  7 Nov 2026 14:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cTkccfDo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBF41F0089F;
-	Sat,  7 Nov 2026 14:11:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+RZy8km
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7263B1F0089F;
+	Sat,  7 Nov 2026 14:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060675;
-	bh=ivbit3SAc3bTmHKkyssr/OnOiZwAw9sh+4zYqqsvMJk=;
+	s=korg; t=1794060676;
+	bh=tQ+YWF4mawam4DjHkdSqsYSTAjYyAS0DJnOMvXdzxaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cTkccfDolevV9o74KDklndB85bcnsy3Ij5zIgPm0zusodKlO9xGbpzSaVSDUE+6Ps
-	 Tq9zBj+5kDaDd6598NZDfsJJM/X8zCUVEW1pa7Xcw/gG1z2Rf+dMdZudAvv52adgHq
-	 MGVW8e6B5OsDqTgYvXIH0BAEvCVkIBXil8pA9lLA=
+	b=o+RZy8kmX4V5IQDGy8wsPcXb9nXK34OrCmkFyZ8gEB36lpOPrZWdgQzot5YDmVaqO
+	 0tR8adaHYzx0L9YoW1GomwOjlpZFpTz4eC0Q55ZrQ1GKno21qc7UpWJaCKGF8N1Gn/
+	 g+ZUsnXGIbkGHXZtpzHlIOtUz+3zE0wVrQtUN1Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aniket Randive <aniket.randive@oss.qualcomm.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0109/1536] serial: qcom_geni: Disable closing_wait for console to prevent shutdown timeout
-Date: Sat,  7 Nov 2026 08:35:25 -0500
-Message-ID: <20261107135000.735432793@linuxfoundation.org>
+Subject: [PATCH 6.12 0110/1536] usb: fsl_qe_udc: check qe_alloc_request() failure in ch9getstatus()
+Date: Sat,  7 Nov 2026 08:35:26 -0500
+Message-ID: <20261107135000.764588428@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,55 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aniket Randive <aniket.randive@oss.qualcomm.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit acba38e675dd66f52925cb9edf9ed8db16335875 ]
+[ Upstream commit 612551bf7cf7113b8bbd5e8c1eea86d9427c2f95 ]
 
-During system power-off, systemd closes the console UART and blocks in
-tty_wait_until_sent() waiting for pending TX completion before
-uart_shutdown() can cancel pending TX operations. With the default
-closing_wait of 30s, this causes a watchdog reset when systemd is
-responsible for watchdog feeding.
+qe_alloc_request() may return NULL on allocation failure. ch9getstatus()
+passes the return value directly to container_of() and then immediately
+dereferences the resulting qe_req pointer. Check the allocation result
+before using it and stall the control request on failure.
 
-Set closing_wait to ASYNC_CLOSING_WAIT_NONE in startup() for console
-ports to bypass tty_wait_until_sent() on close, allowing uart_shutdown()
-to cancel TX commands cleanly. This change doesn't impact regular ports
-functionality.
-
-Signed-off-by: Aniket Randive <aniket.randive@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260706093749.836121-1-aniket.randive@oss.qualcomm.com
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Link: https://patch.msgid.link/20260620120631.2894977-1-haoxiang_li2024@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/gadget/udc/fsl_qe_udc.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index e02d988da16aa..e12be40ec4896 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1207,6 +1207,7 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
+diff --git a/drivers/usb/gadget/udc/fsl_qe_udc.c b/drivers/usb/gadget/udc/fsl_qe_udc.c
+index 4e88681a79b63..45c0b04675727 100644
+--- a/drivers/usb/gadget/udc/fsl_qe_udc.c
++++ b/drivers/usb/gadget/udc/fsl_qe_udc.c
+@@ -1945,6 +1945,7 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
+ 			u16 index, u16 length)
  {
- 	int ret;
- 	struct qcom_geni_serial_port *port = to_dev_port(uport);
-+	struct tty_port *tport = &uport->state->port;
- 
- 	if (!port->setup) {
- 		ret = qcom_geni_serial_port_setup(uport);
-@@ -1214,6 +1215,13 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
- 			return ret;
+ 	u16 usb_status = 0;
++	struct usb_request *usb_req;
+ 	struct qe_req *req;
+ 	struct qe_ep *ep;
+ 	int status = 0;
+@@ -1983,8 +1984,11 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
+ 		}
  	}
  
-+	/*
-+	 * Skip the close-time transmit drain for console ports so that
-+	 * shutdown can proceed without waiting for pending TX completion.
-+	 */
-+	if (uart_console(uport))
-+		tport->closing_wait = ASYNC_CLOSING_WAIT_NONE;
+-	req = container_of(qe_alloc_request(&ep->ep, GFP_KERNEL),
+-					struct qe_req, req);
++	usb_req = qe_alloc_request(&ep->ep, GFP_KERNEL);
++	if (!usb_req)
++		goto stall;
 +
- 	uart_port_lock_irq(uport);
- 	qcom_geni_serial_start_rx(uport);
- 	uart_port_unlock_irq(uport);
++	req = container_of(usb_req, struct qe_req, req);
+ 	req->req.length = 2;
+ 	req->req.buf = udc->statusbuf;
+ 	*(u16 *)req->req.buf = cpu_to_le16(usb_status);
 -- 
 2.53.0
 
