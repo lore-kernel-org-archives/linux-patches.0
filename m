@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061010;
-	b=CBWj9abhhHLrbqA2SGB67fEbng0nhxF76CFhEb7wamShvru2Im5VebUO8YhjNweh9zXc
-	 L6GxQQLGoXmRVkxyN2JobGqGV7epElPaN/WZXQUmLDTvRBXTMzUtAZdxw80EQogbNtThd
-	 rLaNbcmUCKY3VkmbuE49UHiwd+lOB6zRZDbTG7Q321pF+OTJdhCEYVjUdtGRiVLTY+qq9
-	 msGLMTB53qjMTfj2A/ENQA5bIPtCGbBsNtoFho7KHLGMLlkX4gtC9hSL0I2tBP7gEkCbh
-	 8FVNvWfSt51lYb5r3MMBDHI2KiEUCI0m+3MyFo0YMKCJtMH84jLjpTwMM2lr+U+Zn5w==
+	t=1794061012;
+	b=NZxXP0gnGtcwS+ZJIptaswt+qzLDRmvQa7kj6xqcxdHGc/C+W5Qo90H4f0P16LARxMrR
+	 VA0TeoQoqZkHFqHpCgesbiK/Iija42EETa8IFitJ+OVU6W29JkrKAYhBugogwBHpKnJDe
+	 TFGEGiYx/s+T48l1U+THqYR6pKn8hjbe+KvpqEm88i2T6CXnBOaQJ+aZN5GgtU3BsGgGP
+	 SQ/G26X2sRUlFozer7/8lUMMX09Flbbi0sfjJbFI6243Qh8n/p7cJi103fylzt3/LlIm6
+	 hckpycm370Sud+aulXfcHcE9fzWYcbCLEU21CyHWhTvCSntdJAywPR/59r3djLk9xAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061012;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rjEBcH0RnCBxDudztVP4w9J1j7R0hNp1A+wLJQSFoCQ=;
-	b=hHDV30X+QIRb+ZsbNB4pYmpEudPU0dnncd5wUl++nvWWRuoHHFcN0CL6YxZT3783URqN
-	 Q6XrhIBWd0hsAMRdtvmnAtG8UFs9ZUZX2f9fk3JYvqa0dfQo4qNc0MCfo7qNSlMmWmwJs
-	 AOh2JipJid0qzHreshtuUzkGjZubpftej3CeoeVHrKYZKsM2tnXhs5s0smSvMVXtJ15o7
-	 GHCK0ZI2RJmWRgbqb5E2QIZ83XPuYTMhTL5xmcIDXb7YkMyOJoibRBusZ4r73ibtEIJ16
-	 4WfbIcEhgxFx7Eu30dpXj/ApX1PlVg+tqD8SVn/qUuR+oDP2MFXo80WG5oL97fYRhAQ==
+	bh=8YjGmLjUFPbiHIt46X18/cYfPSH0YHcVAtDzNo9t4BI=;
+	b=iI2uVJjCt7inUtIMrHEBNlmGOCpYy0VaHgD3loC/biLHbYSwLiN9dFCEkNzIgRcweKaU
+	 s6wZ3IYeUw2KKRdnq3fH00mCgbryCuGfOB7tiWrBTUf6nhRtbGDJetAcRtt/4gDqGZ2Gm
+	 Vz+SIzv2YttXyEQ3vxyTZOW+luAc8tEj6+7/5j2uucpQEmP3fGrXPkJPez0PFhjJv4LMA
+	 XvxFauQxPNzfLBR424sjtjmLelzzrftjVv+e34CvsvJDl/KnuJjt9vi8hmwnVa99GfhEs
+	 gHYn7ZTLbyW/d7bhYlrJkDUYrpfMjnZznskjeaqfphOtvfTUzxFJaQh+q1bmSGkhRwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="evVT/+tP";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlnvIKcO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDBD606D80E;
-	Sat,  7 Nov 2026 14:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA422606D80E;
+	Sat,  7 Nov 2026 14:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=evVT/+tP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3866E1F008A1;
-	Sat,  7 Nov 2026 14:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlnvIKcO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6E71F0089F;
+	Sat,  7 Nov 2026 14:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061010;
-	bh=rjEBcH0RnCBxDudztVP4w9J1j7R0hNp1A+wLJQSFoCQ=;
+	s=korg; t=1794061011;
+	bh=8YjGmLjUFPbiHIt46X18/cYfPSH0YHcVAtDzNo9t4BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=evVT/+tPDHysKU7JIjzPq4XdR1OCHFA7vbV/zujjZWSztev4oRD4x3xeKZ/TRtcTJ
-	 hZPQiwJ+wOvWcS+4jrvGmGqfU0QEQZNWjJH5B42F5IA7bnm7AgnJcDaXVsWpy3i0ss
-	 sEjtmiEwKq5hbwPuQWVfHCr5wy31Hn7+zyXQnZXY=
+	b=VlnvIKcO06hRnvrHHlFhLWuLVUm7rPoAyxgPfHnVIreAhSmwZuqoO3qwZIIxFYr2W
+	 09ufSYhFU8AslRLbKc0DdS6ZJqE5W+OXWi70AO5s03pzirDQMYMC5sSSan0PMTjLuq
+	 ptzBdT/uUHYbUCtPT+r7Vesz7getD9s1Cxg3WGlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0353/1536] ksmbd: reject blocking compound lock requests
-Date: Sat,  7 Nov 2026 08:39:29 -0500
-Message-ID: <20261107135007.581500357@linuxfoundation.org>
+Subject: [PATCH 6.12 0354/1536] ksmbd: honor client signing-required in all modes
+Date: Sat,  7 Nov 2026 08:39:30 -0500
+Message-ID: <20261107135007.611477469@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,42 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 16a7f7c2ecf3c893b65f0fb78fa7a7171ae0ba9e ]
+[ Upstream commit bc2f3f3dd69424f76e2ed3dc53d29bfd6c9966d4 ]
 
-Clients set SMB2_LOCKFLAG_FAIL_IMMEDIATELY when a LOCK request contains
-multiple lock elements, and servers reject requests that omit it.
-Accepting such a request can leave earlier elements locked while a later
-element waits asynchronously, enabling prolonged partial lock ownership
-and avoidable deadlocks.
+The SMB2 NEGOTIATE request's SMB2_NEGOTIATE_SIGNING_REQUIRED bit requires
+the server to set Connection.ShouldSign. KSMBD represents that state with
+conn->sign, but previously set it only when its signing configuration was
+auto or disabled.
 
-Return STATUS_INVALID_PARAMETER before processing any element when a
-multi-element lock request contains a blocking lock. Unlock arrays remain
-unaffected.
+Set conn->sign whenever the client requires signing, independently of the
+server's signing mode. Keep the mandatory server-mode handling unchanged.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/smb/server/smb2pdu.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index e5d5a08022198..4bbff7f413003 100644
+index 4bbff7f413003..06f1c82ba42d2 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -7706,6 +7706,13 @@ int smb2_lock(struct ksmbd_work *work)
- 	}
+@@ -1252,11 +1252,9 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
+ 	rsp->SecurityMode = SMB2_NEGOTIATE_SIGNING_ENABLED_LE;
+ 	conn->use_spnego = true;
  
- 	list_for_each_entry_safe(smb_lock, tmp, &lock_list, llist) {
-+		if (lock_count > 1 &&
-+		    !(le32_to_cpu(lock_ele[0].Flags) & SMB2_LOCKFLAG_UNLOCK) &&
-+		    !(smb_lock->flags & SMB2_LOCKFLAG_FAIL_IMMEDIATELY)) {
-+			err = -EINVAL;
-+			goto out;
-+		}
-+
- 		if (smb_lock->cmd < 0) {
- 			err = -EINVAL;
- 			goto out;
+-	if ((server_conf.signing == KSMBD_CONFIG_OPT_AUTO ||
+-	     server_conf.signing == KSMBD_CONFIG_OPT_DISABLED) &&
+-	    req->SecurityMode & SMB2_NEGOTIATE_SIGNING_REQUIRED_LE)
++	if (req->SecurityMode & SMB2_NEGOTIATE_SIGNING_REQUIRED_LE)
+ 		conn->sign = true;
+-	else if (server_conf.signing == KSMBD_CONFIG_OPT_MANDATORY) {
++	if (server_conf.signing == KSMBD_CONFIG_OPT_MANDATORY) {
+ 		server_conf.enforced_signing = true;
+ 		rsp->SecurityMode |= SMB2_NEGOTIATE_SIGNING_REQUIRED_LE;
+ 		conn->sign = true;
 -- 
 2.53.0
 
