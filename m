@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065519;
-	b=ZhJvQar0UjEEm852YiMnElngONba4SBlnqE3l/o7vnicXO88G5ptCQLV2lMNx9NHkN1U
-	 Kghbcquo6yUP9aVYfLnXHZZy6jUt7q0uZD7xVScMqJLgWCtVRUd5e+zVKH6LdcO1G//oQ
-	 C1a9HvmGq67LTO/CvQjHgdN+NY9gmvNeBlp6bEH6YV6ESNxA2BVk0D09D0/1suVl7Uax1
-	 YG3dzQW6UuyUu5rNFrW96gDR2sgaoCGCjHkAXAqT72yZnl+7p42VYp4Se7KL2RSgPk1Wi
-	 Mw8gZNyBFWk1ndbG5BLDJyj1pbBq4d8jWvV1Aolq66aLDlDvj/tJOIHChC11NclujoA==
+	t=1794065520;
+	b=4XEw6UrzPW0uHx47Ds+5Xzx8yf50WKO0lYCNf6DL7Sp1iXA7xogjURb43dURH5Z0H624
+	 ZFAEMk9EQLPIZeXO7B4aNaO6veYf6jVJWqQT34f3T4N5iLTw89SgjudP+PZxZQLyfPlMm
+	 sx5vHM3oWZeQegKeMV+QoGRKH5NU0Ng1yRYiKfOY0splN6ornrrOdJPR8EkPJvourFHuN
+	 NuL07b8NK40ABmKRXbe5XN4N8Kx6bq+tF2yd5LAzp1z65WIrsPwJIBOSOLc3+GzT5sq+8
+	 wuQSmjf/rUojKtmOTENc/kJLHJ5PxWXGsBuO7/4XscwCN3uMaudlKT+83+4YUdRM2pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065520;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ssza+YUrofN+aNIo1ppGVZ2KVXO2MwWk4STf9kg/x8A=;
-	b=tXn5z1hczOc3vsZoVU+yUdnCjBFb9M+I1DyhWtLGyKHlKpY2+kVgzaRo3O8v7r9PQ6HL
-	 ui7U6HkI734+/zJqFjn+FtqAWHxREiLHQxI7Fu9EjewXhRbszyGhOGaaYJeR3J+kiQIj4
-	 dkD9ceYzED3RbuVgWf3ky8t59zxPV948egkdTLr5VZCeROESbCekBzP+M+vJbhW16Nl46
-	 2lH0edgpg9p8KcHIO/bnPZyukj2IkCWXiv3QRQIQpx7umo12/v9wpLUX63r8xSns/lHg4
-	 VqY9tKHQWxqcPmx73BSiCm53CA+Dh8/ns7B3FZgPoha/SC52eeBPfXLiWSz4s9NHicQ==
+	bh=IlD22tehWBEfEqCwkL06NJi5uEz41tvIXGuIapWWfx4=;
+	b=4BLOfevvosj2Yjlc/CqLfImRSBjmRF6VK/R1ODoBR90jUe6eyv/IQ7yQj/gnsJX69jJn
+	 TjntoaaRBwxORc6F0UrnuMlL/wVPhrNOMc2rw8wzhUlbvjSamq2e2ylshRescKsm30Jo+
+	 59IF+3ej60cK9b2vhV7IMTjSRvI/Cvm9L2ww/N+b9US7h3rsJ/KXD2R9kFF7oubCCN50H
+	 /FGO7JWwI4q7miF41Zue/VEfYka33P4sRi1aE5yV2M36opTFZvWkTMfLV5+XCkOxiizO/
+	 1R6ednFQ73BSOpv0uwl1oLS+srOKuhNN37stnHf70BtVe8sNvUOwd/ppB5TUnu8wHgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wL2r3lzS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9+PV1dT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B849606A32C;
-	Sat,  7 Nov 2026 15:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD01606A32C;
+	Sat,  7 Nov 2026 15:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wL2r3lzS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE831F0089F;
-	Sat,  7 Nov 2026 15:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9+PV1dT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079621F0089F;
+	Sat,  7 Nov 2026 15:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065519;
-	bh=Ssza+YUrofN+aNIo1ppGVZ2KVXO2MwWk4STf9kg/x8A=;
+	s=korg; t=1794065520;
+	bh=IlD22tehWBEfEqCwkL06NJi5uEz41tvIXGuIapWWfx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wL2r3lzSGbkKHhs/QkqtvoXWIZwqUY62d1wBgGuu+WgETetpe4bVq0T7ArohjUyXl
-	 ZDU7brrNlFhj8fMS5TMVXJiCLNs8QmkEoNxsxDNjPMYe79zhAseJDaGhbyMkriENbN
-	 JPhvsk4RvaE0gH0zasxPt8yCdAGha2YaGTzZv7nQ=
+	b=K9+PV1dT9TyAjv+ojG8/99QqN3ykqiWQyIeDv4yBzWbSyyymLfysmNCLdbIob4+Ux
+	 pmDJX8t/eW/lr+WlCCFw11fNSXNt5qSGD0cuMPldxBOEW8RPx5Ra1htZbSW0l47Io8
+	 6ZArMS0u/UqtgNh4euSRsqvRjg495AATRTySQMdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	co+e015e82956da641b@bugs.sh,
+	Christoph Hellwig <hch@lst.de>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1200/1257] ppp: fix stale pointer access after pskb_may_pull in ppp_ccp_peek
-Date: Sat,  7 Nov 2026 08:58:16 -0500
-Message-ID: <20261107135012.498483712@linuxfoundation.org>
+Subject: [PATCH 7.3 1201/1257] nvmet-rdma: reject short connection requests
+Date: Sat,  7 Nov 2026 08:58:17 -0500
+Message-ID: <20261107135012.525243589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,42 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 1e860f42f41c6fbf3304f6a52be38245b9394982 ]
+[ Upstream commit 635e760169a87abf03874cd4636cd91b580cb427 ]
 
-ppp_ccp_peek() caches a pointer to skb->data in dp after the first
-pskb_may_pull(), then uses dp after a second pskb_may_pull(skb, len + 2)
-in the CCP_CONFACK handler. If the second pull triggers
-pskb_expand_head() due to a cloned skb or frag linearization,
-skb->head is freed and reallocated, leaving dp stale.
+nvmet_rdma_parse_cm_connect_req() treats RDMA-CM private data as a
+struct nvme_rdma_cm_req but accepts any nonzero private_data_len.  The
+iWARP path allocates exactly the peer-provided length, so a six-byte MPA
+request reaches the parser and the hsqsize load reads two bytes past the
+allocation.
 
-The stale dp is subsequently used in CCP_OPT_LENGTH() and passed to
-decomp_init()/comp_init() which read from the freed memory.
+Require the complete request structure before reading any of its fields.
+The decoded KASAN report is:
 
-Re-derive dp from skb->data after the second pskb_may_pull.
+  BUG: KASAN: slab-out-of-bounds in nvmet_rdma_cm_handler
+    (drivers/nvme/target/rdma.c:1427 drivers/nvme/target/rdma.c:1475
+     drivers/nvme/target/rdma.c:1614 drivers/nvme/target/rdma.c:1814)
+  Read of size 2 at addr ff1100010459d366 by task kworker/u16:1/41
+  Workqueue: iw_cm_wq cm_work_handler
+  Call Trace:
+   <TASK>
+   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+   kasan_report (mm/kasan/report.c:595)
+   nvmet_rdma_cm_handler
+    (drivers/nvme/target/rdma.c:1427 drivers/nvme/target/rdma.c:1475
+     drivers/nvme/target/rdma.c:1614 drivers/nvme/target/rdma.c:1814)
+   cma_cm_event_handler (drivers/infiniband/core/cma.c:2181)
+   iw_conn_req_handler (drivers/infiniband/core/cma.c:2640)
+   cm_work_handler
+    (drivers/infiniband/core/cm.c:2502
+     drivers/infiniband/core/cm.c:3858)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+   </TASK>
 
-Fixes: 1da177e4c3f41 ("Linux-2.6.12-rc2")
+  Allocated by task 12:
+   __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+   __kmalloc_node_track_caller_noprof
+    (mm/slub.c:5414 mm/slub.c:5545)
+   kmemdup_noprof (mm/util.c:138)
+   cm_event_handler
+    (drivers/infiniband/core/iwcm.c:194
+     drivers/infiniband/core/iwcm.c:1076)
+   siw_cm_upcall (drivers/infiniband/sw/siw/siw_cm.c:408)
+   siw_proc_mpareq (drivers/infiniband/sw/siw/siw_cm.c:750)
+   siw_cm_work_handler (drivers/infiniband/sw/siw/siw_cm.c:1086)
+
+  The buggy address is located 0 bytes to the right of
+  allocated 6-byte region [ff1100010459d360, ff1100010459d366)
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: 8f000cac6e7a ("nvmet-rdma: add a NVMe over Fabrics RDMA target driver")
+Reported-by: <co+e015e82956da641b@bugs.sh>
+Assisted-by: LLM
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/target/rdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 1a610a18893ba..3998ce4332f42 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -3157,6 +3157,7 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
- 		len = CCP_LENGTH(dp);
- 		if (!pskb_may_pull(skb, len + 2))
- 			return;		/* too short */
-+		dp = skb->data + 2;
- 		dp += CCP_HDRLEN;
- 		len -= CCP_HDRLEN;
- 		if (len < CCP_OPT_MINLEN || len < CCP_OPT_LENGTH(dp))
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index ffa1e172c259b..075ab58d8c884 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -1412,7 +1412,7 @@ nvmet_rdma_parse_cm_connect_req(struct rdma_conn_param *conn,
+ 	struct nvme_rdma_cm_req *req;
+ 
+ 	req = (struct nvme_rdma_cm_req *)conn->private_data;
+-	if (!req || conn->private_data_len == 0)
++	if (!req || conn->private_data_len < sizeof(*req))
+ 		return NVME_RDMA_CM_INVALID_LEN;
+ 
+ 	if (le16_to_cpu(req->recfmt) != NVME_RDMA_CM_FMT_1_0)
 -- 
 2.53.0
 
