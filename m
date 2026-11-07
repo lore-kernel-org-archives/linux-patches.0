@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062860;
-	b=wO0Tew/JYTeHnd4DEiAh9W30xVSnHG85c15iZhjJXkNBoXsz95Sies+9le00veF9beeV
-	 G23jwh1yjdkTPsl9r53/5LfgLQWB6jPbIsEvlhpbkb30J6O0UYa5O3FqhHwudUNeP1f3B
-	 IcqStiU5eLXE3YfVeQVjDHh4kCpg0BZLSBaG/Vj8kWSHcqEF1TWwnfTEay82JMPrpZdSJ
-	 nPPDOTayQGSrx9Hc8OGYqzqawA+wS1Hr9vcL1aUZRJ924bdRu8hEBOybxbJ4N4nQJPxRB
-	 ombO5H7lMO4lBcZXu6JZ6EXEqXRub+wVaXDT29bj6d7ZCRlHyQ0qfpFnC9upC1MN8vA==
+	t=1794062862;
+	b=imwqvWwYXE2qdEKttbHtt2j8sC9u09sFB8AHarMFmbIqUpEpwWzPvzQYN3T5h3mTA7WV
+	 vkLcGeOjM7uf9Vq4PeZ0lnYSBWyJUuA/Jkk/vHT5yuW9L2JafICaICZE8e5zPBKUzme0E
+	 Z6DSMinBFLpCGgN6WYhyK1b90sgT20Qo4AP03vXgxJu2cQqYgTe3w/KXT06TIunov8Cex
+	 yi/XO6xHAtzmMhXWzKtEByQMFwyS92sS2ngQEW0oLUrQZcaahujTAUaSe/u8JpL+ki8xa
+	 oqh+EwmzC7D+p0iAQUrT6s7qb4SkW1NH7a4YbxWA6ax5GlXXISWDJ+zD4sFG6391Y4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062862;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ptXqVwRqtfxVAclmj8HHa11+5ROndYTFqKyuQjRA5XI=;
-	b=R1CPXCNCQy7u5FNtpguQmyWdwdihFHSu8VUfegnnX5V198phZeIuNKbKIT/gNRW+JLzN
-	 oKAEyyDgmmhU7e38sK417iPm1apnGEGcu6pM+RXIFvLGjrZ1F4k+vkVgVSppeAxsL/zKV
-	 50RRSm78z6ucUS8RQQUSO1YCAhTS5CDOsK3JCHP7Mo7o7L3iXZfk0fnlt4pZjK2lcHApy
-	 IKHHWIwB1j/yzE97790yMwenTDcESnLF5/zYrgQuSgVqVF7jjZSTJ0Ds66aMAiCfkfLaz
-	 9NnYFqU69xABiS7zkV0K8PPsQt6x/ClOi40/8hl+wL8MAL9MvbdhSLq1JeR91DPn9gA==
+	bh=0GVHo4wHFKLWhCaP2SEB0i226Z51Fjz/gzEa0yvd/Yo=;
+	b=JGOHmZfXOdawM0qnvmkKwC39RJAt5FcbBkWuEsyoUSVzxjboTx119OCdMyVKEld75eRK
+	 vuVsVdh+/xP82eAu+5hyR5g92rw/O5nLzsJrchKolgGGjvx/J82++SUV5at9LZfm9r9jA
+	 BzH21Mv+ZkA0wYFHuMrRqk0LtRa0Re6M99n09gaWVihAPAevKJX8cDOGEGKsVL3GfZEna
+	 pwY8IdYpu82UtsZz4cpO1ufZSambsKV6R48g167OTP9nFU8ShttU53BlJdfbY2/p1FORn
+	 RLY9chE+toBsQpeyGs+uohJNR17UGZ4q6ohQ5D4k7+dzF5dBtJdqzXqmHls80nGY6SQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=To+wOp51;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AyrZ2xod;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FF9606A32F;
-	Sat,  7 Nov 2026 14:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FF3606A326;
+	Sat,  7 Nov 2026 14:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=To+wOp51
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1421F0089F;
-	Sat,  7 Nov 2026 14:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AyrZ2xod
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1195C1F0089F;
+	Sat,  7 Nov 2026 14:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062859;
-	bh=ptXqVwRqtfxVAclmj8HHa11+5ROndYTFqKyuQjRA5XI=;
+	s=korg; t=1794062862;
+	bh=0GVHo4wHFKLWhCaP2SEB0i226Z51Fjz/gzEa0yvd/Yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=To+wOp51+k1XllXBKo2UXeuOdj2xGRrsnqDC8FferW5umKbZ1RmPKMtyrmbO22ptA
-	 1un0jBS/yp8bgwlLZ8FtrXgLEEDiZTdJVyx3UYdp4Di7YDSBCuZd9QCB4Le3Blvvn4
-	 yRxqbhXxhnS3BxY7fQOL6mdNVEupwMl6MdsWH50c=
+	b=AyrZ2xodfWlOKMhHAM5KauNLInCcLoIkVqsSdycsCV3wJXwT/RYHvZnrlP0bKioWa
+	 fy+hhTtNHZ6Q9clrjwPFe2Aso28l1pZ2ouAGSHj2d2+ogLPg8YzWlmon2n8xV/Hot/
+	 +80icPzUWk9IYwxEIz8rfk5bvpoGQ0NjGccPjLAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 148/869] ASoC: arizona-jack: Fix runtime PM imbalance in arizona_start_hpdet_acc_id()
-Date: Sat,  7 Nov 2026 08:47:10 -0500
-Message-ID: <20261107134857.372289891@linuxfoundation.org>
+Subject: [PATCH 6.18 149/869] iio: accel: kxcjk-1013: Disable autosuspend on remove
+Date: Sat,  7 Nov 2026 08:47:11 -0500
+Message-ID: <20261107134857.400116037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,41 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit e04dcb895b4622d67164e218a1179785e2c75999 ]
+[ Upstream commit 1de1206a42741adfb72ca8b37dc71a6bc80cb074 ]
 
-In arizona_start_hpdet_acc_id(), pm_runtime_get_sync() is called to keep
-the device powered during headphone detection. If setting the HPDET mode
-or starting the measurement fails and the function jumps to err,
-pm_runtime_put_autosuspend() was not called while info->hpdet_active was
-set to false, resulting in a runtime PM usage count leak.
+kxcjk1013_probe() enables runtime PM autosuspend with
+pm_runtime_use_autosuspend(). The probe error path correctly undoes
+this setting with pm_runtime_dont_use_autosuspend(), but the normal
+remove path only disables runtime PM.
 
-Add pm_runtime_put_autosuspend() in the err error path to keep runtime PM
-balanced.
+The runtime PM API requires pm_runtime_use_autosuspend() to be undone
+with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
+was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
+set therefore leaves the runtime PM state incompletely cleaned up after
+the driver is unbound.
 
-Fixes: 9dd5e53d9d2f ("extcon: arizona: Retry HPDET identification for high impedance")
+Add the missing pm_runtime_dont_use_autosuspend() call to the remove
+path.
+
+This issue was found by manual code inspection.
+
+Fixes: 124e1b1d0924 ("iio: accel: kxcjk-1013: support runtime pm")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260916072900.1971595-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/arizona-jack.c | 1 +
+ drivers/iio/accel/kxcjk-1013.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/arizona-jack.c b/sound/soc/codecs/arizona-jack.c
-index 6b55610ad535d..b17c4539f4e49 100644
---- a/sound/soc/codecs/arizona-jack.c
-+++ b/sound/soc/codecs/arizona-jack.c
-@@ -713,6 +713,7 @@ static void arizona_start_hpdet_acc_id(struct arizona_priv *info)
- 	snd_soc_jack_report(info->jack, SND_JACK_HEADPHONE,
- 			    SND_JACK_LINEOUT | SND_JACK_HEADPHONE);
+diff --git a/drivers/iio/accel/kxcjk-1013.c b/drivers/iio/accel/kxcjk-1013.c
+index 297853cd39e59..a8652bdd011a6 100644
+--- a/drivers/iio/accel/kxcjk-1013.c
++++ b/drivers/iio/accel/kxcjk-1013.c
+@@ -1548,6 +1548,7 @@ static void kxcjk1013_remove(struct i2c_client *client)
  
-+	pm_runtime_put_autosuspend(arizona->dev);
- 	info->hpdet_active = false;
- }
+ 	iio_device_unregister(indio_dev);
+ 
++	pm_runtime_dont_use_autosuspend(&client->dev);
+ 	pm_runtime_disable(&client->dev);
+ 	pm_runtime_set_suspended(&client->dev);
  
 -- 
 2.53.0
