@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060706;
-	b=iERyZj1DuzYDVfHT/mcpY2Lp9nB5kJnpbhgLYg12RSwGO1DY3WKX1DDL6xUpZLPMTKeG
-	 6VFq9h4GU5uW8ofmJEZuUS2qqcgOdfZuUV4TJJLpi1YHMJ37LXK4yV5jiXyhq0gFGim87
-	 AHRMECE18W1aIjtXZAlrx2wIEZ2RSfeB14XhTvqwDfjBm0d6q4UBZPwlDHjSQMpHsNBUs
-	 ORNkiWzLpSfGzDOu+qkZW6X8ATN7UZuEWrGPwhaYFX9drGF/zIbBkuttXCpV0a7hxSqRg
-	 jYq3wXyKLDhxmtfGhKr+Bxi/FwhAZhK0AmjC7UyWoURaMENDxHvUuISr15CUPX2ugIQ==
+	t=1794060707;
+	b=YgOrQtngV74ZxkpP4+EweqHH3oPaL4OECBf41Q267GFftMg+MyEjt0jK7nzCzCFq8gjY
+	 v2Uli9vT6mdQTLR6hSLv67DyKV/Xa7873+pe0ogF0Y+nw76reOXJlNTaFkro1J0+XiJL1
+	 V/lwv8WZ08A67+xKlebJGhRllQTyaWwgIVpMocYtS+kN3KwSfnqjQreUwhCjYipKZIEaX
+	 vMBl8gZJB7CKl41DwsmdOVV3TA/OGGt2eZJGkjcRVAXzpmu++Pt9BlBB3//wI6uJpO8+w
+	 ljBTOrhlFTYs0CVonEy4Ah8R3z/ABVXs/+mtBKedcybPyBK/u9Mw5nRqBwpHUnX7zRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060706;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060707;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Te5oS1Vn7DAHLR5rCOLvC9VzFnw443JzIQ0fm5m9i+g=;
-	b=iYdcKOCyDNgalaynueKpRtsOWXNX5KYH1TryeIc1dBUbtNjrQSzXKPR4LkO8ahYNI/9D
-	 AGWdeGhvzB5FKdt8TVff+4rT9YpJ8sJgBmd/Sw1m7IiWek8toJYZprw9s5koM1hw9uWd7
-	 NkbUOuBQUmZs3h/hafG5304JBurCT57K+F+Ycxr5wxrCu1CnOg61vvIbJWR+ttmyi/H7V
-	 4dilNLCQuAP6k89e7GHVmMSopWmDpto46nWM2KAAby/A3x/5JtcFYEadKxTJ7psjE3y6Y
-	 aVBIvOz8OD63Y1BtVyXAnHpPX8HO8q0VcOgwRj74sgzlgUSSmYmZhhmskul+IOqaLiw==
+	bh=ZcvGNZF2hk2uVhAfUHwOqh/cE/c1WMRn1TAMxKd8qaQ=;
+	b=mOU2tLsA3Bv8nCBuS0obwswm6nyT5ru4k5bMnGKcAfIv69LcBxuZs+8AFz0FVD4bSTDO
+	 BM64J7+xZ4d/OqoQC87YnFUtWbGUGpS60Ww0BcyMqrXoVH7KGNHjnmyGig95NRBc6haoC
+	 LM3fHkXz37Iu37aVbCw2Umo5RF7JhHnVlU0z24q7VvH7GxokM4xFvc4WD79bb/ZV/MahK
+	 3g5+S0ZkliEEDYbMovL5DvpgpE4o5i6VHMK4AkAI3W+CkPNty7V7FlLdKfJ5IBZEOW1rk
+	 sbKqA5BS8ig8RMS75zP9+K3hnz9H8BiGGrOv/87z89v+UhsWHMLVjgseqwGnskI/yVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NMwHLzb3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=odmP61My;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03FA606A326;
-	Sat,  7 Nov 2026 14:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7749F606A326;
+	Sat,  7 Nov 2026 14:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NMwHLzb3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790EC1F0089F;
-	Sat,  7 Nov 2026 14:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=odmP61My
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD27A1F0089F;
+	Sat,  7 Nov 2026 14:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060705;
-	bh=Te5oS1Vn7DAHLR5rCOLvC9VzFnw443JzIQ0fm5m9i+g=;
+	s=korg; t=1794060707;
+	bh=ZcvGNZF2hk2uVhAfUHwOqh/cE/c1WMRn1TAMxKd8qaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NMwHLzb3ieoxcGb44y4l1rySjOi8AUiuSvXPxOG/rrF8oxTiN3RABbhCjd0QfQopu
-	 ZdjQ3JtBM65hEgnc5eeg8hcpk10nXqsIyDUs+59AzCJWqZEiRSzsWGeCvFh9X7xMYS
-	 VDuoUF20fDhPvDvm6tnRpVlw7MIFDMhvl7EEkOFM=
+	b=odmP61MyzdChPwQ8YEjJbdEPx2omT9yvEvovxj9CVCHxFpnkg7lS8Bw3LPAnACjtW
+	 FnMvC+BXBw/oKbeJd6nqW5RGlo4MTPpTj7+grkElBkDqJ5sDBNyzTLKdZmZMVyZKo0
+	 0y9agnsxBDRoI/a1XiOWMNXOpcnUWrM6sVEn06oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sashiko Review <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0134/1536] wifi: iwlwifi: mvm: reset the smart fifo state upon FW stop
-Date: Sat,  7 Nov 2026 08:35:50 -0500
-Message-ID: <20261107135001.452648410@linuxfoundation.org>
+Subject: [PATCH 6.12 0135/1536] tools/lib/api: Fix potential double-free from fdarray__grow()
+Date: Sat,  7 Nov 2026 08:35:51 -0500
+Message-ID: <20261107135001.480082045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,42 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit a51cc8131214870af92abbceab64877b27e690c2 ]
+[ Upstream commit eadce0f46a1d066b812c7e5aa46a33711c78a755 ]
 
-The smart fifo is a feature in the firmware configured by the driver.
-The driver keeps a state to remember what was the last configuration
-sent to the firmware. Obviously, if the firmware stops, we need to
-reconfigure the smart fifo. Since we didn't reset that state upon
-firmware stop, we thought the firmware is already properly
-configured and we didn't send the smart fifo configuration command
-as part of the init sequence.
+If the realloc for fda->entries succeeds but the realloc for fda->priv
+fails, the error path frees the newly allocated entries.
 
-Reset the smart fifo state in iwl_mvm_stop_device() so that we
-will properly send the command during the init that will come
-later.
+However, fda->entries is neither updated to point to the new entries block
+nor cleared to NULL. If realloc moved the allocation to a new block, the
+old fda->entries pointer is now freed memory.
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714165826.7d3c5efe2d1a.I16b23c328a677257257f695fa6f439e41fbcd081@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+When fdarray__exit() is later called to clean up, it executes
+free(fda->entries), which would trigger a double-free on that old pointer.
+
+Reported-by: Sashiko Review <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-perf-users/20260710200150.11FE71F00A3A@smtp.kernel.org
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/ops.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/lib/api/fd/array.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-index 52fd6b2093c9c..f43b54fe28306 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-@@ -1585,6 +1585,7 @@ void iwl_mvm_stop_device(struct iwl_mvm *mvm)
- 	iwl_fw_cancel_timestamp(&mvm->fwrt);
+diff --git a/tools/lib/api/fd/array.c b/tools/lib/api/fd/array.c
+index f0f195207fca9..dcb396ab51eb1 100644
+--- a/tools/lib/api/fd/array.c
++++ b/tools/lib/api/fd/array.c
+@@ -31,7 +31,8 @@ int fdarray__grow(struct fdarray *fda, int nr)
  
- 	clear_bit(IWL_MVM_STATUS_FIRMWARE_RUNNING, &mvm->status);
-+	mvm->sf_state = SF_UNINIT;
+ 	priv = realloc(fda->priv, psize);
+ 	if (priv == NULL) {
+-		free(entries);
++		/* this will be freed by fdarray__exit() */
++		fda->entries = entries;
+ 		return -ENOMEM;
+ 	}
  
- 	iwl_mvm_pause_tcm(mvm, false);
+@@ -50,7 +51,7 @@ struct fdarray *fdarray__new(int nr_alloc, int nr_autogrow)
  
+ 	if (fda != NULL) {
+ 		if (fdarray__grow(fda, nr_alloc)) {
+-			free(fda);
++			fdarray__delete(fda);
+ 			fda = NULL;
+ 		} else {
+ 			fda->nr_autogrow = nr_autogrow;
 -- 
 2.53.0
 
