@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063430;
-	b=1sVEYY+5g897mcFGnhrfMdWcxWMlz3WBhOOlioi27eCxDz1hobrWxS6ztisJQrBbjhD9
-	 fI0nIMU/sWFicOx7OoZWA8DjM5gcIDdvvZKG94t6ylvNf4DXSzl0TYJ+uzQrjINiZHYRr
-	 /ysL+46Lau+KWwUMRo6Jrii6qSicTggGhTJPbzptXMUqFTKDcqmuta7OCsc8dtxqRhBX9
-	 iM8cRajSeDSiN18/AWR/mMEEyE9QYpvv4Q9PaXny6/l2H8pTFVKKrUGrJR83g6ifemE5n
-	 ag2X6TE6bWVfWSxkijr1V1AlyAhHYdjgyPVMORayuElYlj2KPtjnFF/zVMUf43CxY2A==
+	t=1794063431;
+	b=NBkG+XQmMAvaReoGPONQrHqFC+dWtU6IHi64Ukx5zGzc9Oba72Yy8VrY492+KEhnYW3X
+	 vRgs2hHpk46W9ja1aOHRjTpyypfIqd3MmzrfTiQZ4il+DbwcotrumLIHISLs4/Q0jAdO+
+	 b/q/YLhWGkgKXQ2uMij/GBjgfeJUHTTr59CDyNbygelK/b2tbgc5eoBE37ylsQZUZgpFT
+	 cPmQEBQi9KDDn1BLLIj17Som9BRyhaj4pJMy84E89vVADgRtMg7mJzgasuh9qgqJ+bko4
+	 xGXilgaf/heeQdT+nFCTwZjyRQjBgCS/7JnRZfnbzX1xbo9a6k0YJ7MjYizK/bNeurg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063430;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063431;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ya5QYlL+08nLD0c5LH1Zytio/4YTr2VP6s0h8HXYxsY=;
-	b=xpvlULQbzNn2ct4ylIKJ1XRnB6NZTAi1DFUGpcVuuUpg6cJG9bTETPRbfiXIbf8GqtHc
-	 yxfndQTteicj7pUiPRSjVR0NpgL1NoGNde2l7IhV2HMMCpufZvh7Cvk4bhlYRLF1YMWHI
-	 Pm5NvhSC5WSFZEbqq9k1w29K4aPSnekSJu9thWTbYq72Z++YQbI/3QdyJ6o8LiZ5yyanh
-	 zxHepsRa4sYmuTNI6j2nsDey8xjd1hMNNRiwNUxBW+dsGtSsoop9RhVZXr+c7GyDqxq+I
-	 3sSofanwbQKvxrk0JKniob2CLNL6+7fATzfB6OxS9Q3ZtRkTwaFnyGTZAFqKPrf6V6w==
+	bh=VaozzPD8IRRdKfRR61D/DwsEzYnHN2dyceXc1dT/XGo=;
+	b=CRvN8VRon6HduUyuB+dqk1W7yZb9r2eussp2TveXwdrGaTNMp/z2MvW2m0pxaxNEYLsq
+	 aAuCvvDmdb2LwbixU1cRZDiURmXAj/dPSjA6c4zTuUNnxd4qmV9RTEUuwACuPSWabrv2Y
+	 nOUsbIEGOodztqsx00h9NclUyAFoziWFShTujk4PTGYxG073h6ZXUA2TJ/eKndacbJ/nk
+	 ydKca50tiaQF8ay5JtCo3zEr4spVrzGfP8AD05n/pwSCMsozH8/5s5rNcz5d/g/JQAWV9
+	 86ONBR+U/A9lFOaG5N4LjiD6DC+p3tZM94E5Zs5DlDa71LU5GmANFtcYqL4eAWC3KdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TQVra1mR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Z/i5wLyp";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CD86083627;
-	Sat,  7 Nov 2026 14:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EC6606D801;
+	Sat,  7 Nov 2026 14:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TQVra1mR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A261F008A1;
-	Sat,  7 Nov 2026 14:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z/i5wLyp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4197D1F008A1;
+	Sat,  7 Nov 2026 14:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063430;
-	bh=Ya5QYlL+08nLD0c5LH1Zytio/4YTr2VP6s0h8HXYxsY=;
+	s=korg; t=1794063431;
+	bh=VaozzPD8IRRdKfRR61D/DwsEzYnHN2dyceXc1dT/XGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TQVra1mR46+PgGYFivjeaOd8EYqJwkx61oJDwxxuY7R666NzE1WtOUQYoQ7L6ftTx
-	 djitNpcj1JUBK0KmmkdN20WrWmG9MBYl8KYXODfUgitgZUFn2hSpEUURq8kWMcSQur
-	 NChI9JRj449fTks6Frg36rZZ1gPLbBcW397wO6CI=
+	b=Z/i5wLypoX/mVIaTpNxqoDQ3RhwgXJjAPKmWfnB+j+UyZUQjPQxnhCG/1EiuPGlKn
+	 6unQ99zK9oL2APs5ZmNbivDtomj+2jxpWMr0MP59rIwj9k6kM/5xnkxcMsPd8R8eOd
+	 k/RFErExqTrAuURkVO1YXVgegjiaXu/sPhErapk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Keng-Yu Lin <keng-yu.lin@hpe.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Desnes Nunes <desnesn@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>
-Subject: [PATCH 6.18 594/869] PCI/PM: Restore BARs after powering up during enumeration
-Date: Sat,  7 Nov 2026 08:54:36 -0500
-Message-ID: <20261107134913.239449832@linuxfoundation.org>
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 595/869] spi: amd: fix len==0 underflow and FIFO overflow
+Date: Sat,  7 Nov 2026 08:54:37 -0500
+Message-ID: <20261107134913.267377136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -72,88 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keng-Yu Lin <keng-yu.lin@hpe.com>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit f043083843cac1105206437d8c58e725b6412fad ]
+[ Upstream commit e2f4edfc061e493fddde16c4bbe1c4f230f41e4a ]
 
-Commit 4d4c10f763d7 ("PCI: Explicitly put devices into D0 when
-initializing") added pci_pm_power_up_and_verify_state() to pci_pm_init().
-The helper ignores pci_power_up()'s return value indicating that BARs need
-restoring. Its resume callers restore saved configuration afterwards;
-pci_pm_init() does not.
+amd_spi_fifo_xfer() unconditionally decrements xfer->len when a tx_buf
+is present. The SPI core does not reject zero-length transfers, so a
+transfer submitted through the SPI_IOC_MESSAGE ioctl with len == 0 and
+a tx_buf makes the u32 len wrap to 0xFFFFFFFF, and the following
+per-byte loop writes far past the FIFO window.
 
-D3hot-to-D0 may reset a device and lose its BARs (PCI PM 1.2, sec 5.4.1).
-After enumeration powers it up, pci_enable_device() reads D0 and skips the
-full power-up path. Previously, a device still in D3hot at enable time took
-that path, including BAR restoration.
+The driver also never checks the cumulative FIFO offset against
+AMD_SPI_FIFO_SIZE. The core splits each transfer down to the
+controller's max transfer size but does not bound the total message
+length, so a message of several transfers whose total exceeds the FIFO
+overflows it with out-of-bounds MMIO writes (tx) and reads (rx).
 
-On AMD Venice SP7, two AMD xHCI controllers [1022:17d2] are in runtime
-D3hot with No_Soft_Reset clear before kdump. Diagnostic reads on
-v7.3-rc6-37 show the following for 0000:01:00.4 in the crash kernel:
+Skip zero-length transfers and reject any transfer that would run past
+the end of the FIFO window.
 
-                                   PMCSR      BAR0
-  before the platform power call   0003       f4100004
-  after the platform power call    0003       f4100004
-  after native D0 power-up         0000       00000004
+Tested with a user-space replica of the fifo_xfer length arithmetic
+(ASAN build): a zero-length transfer with tx_buf makes len-- wrap to
+0xffffffff, and skipping zero-length transfers avoids the wrap. No AMD
+SPI hardware was available, so the FIFO bound check was verified by
+inspection against AMD_SPI_FIFO_SIZE.
 
-The upper BAR DWORD stays zero. pci_power_up() returns 1, but the BAR
-address remains zero while dev->resource[0] still contains 0xf4100000.
-Without BAR restoration, the crash kernel hangs during boot. The last
-console output includes:
-
-  pci 0000:01:00.4: enabling device (0000 -> 0002)
-
-Restoring both controllers' BARs gives matching readbacks and allows kdump
-to save a vmcore and reboot. An AMD Turin xHCI [1022:1557] shows the same
-BAR loss; restoring its BAR also allows kdump to complete.
-
-Read the initial power state first. Otherwise, pci_power_up() may request a
-BAR restore based on a cached PCI_UNKNOWN state, even when the device is
-already in D0.
-
-For devices already in D0, only synchronize the platform state so
-that ACPI calls such as _REG still run. For other states, use
-pci_set_full_power_state() to power up the device and restore BARs
-when needed.
-
-Fixes: 4d4c10f763d7 ("PCI: Explicitly put devices into D0 when initializing")
-Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
-Suggested-by: Rafael J. Wysocki <rafael@kernel.org>
-Link: https://lore.kernel.org/r/CAJZ5v0ie2AvCbdv8-zkpYzHLcTwUPUj+=WWOQjDAPmSepSAQPg@mail.gmail.com/
-Signed-off-by: Keng-Yu Lin <keng-yu.lin@hpe.com>
-[bhelgaas: shorten comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>> ---
-Reviewed-by: Desnes Nunes <desnesn@redhat.com>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261015020811.1132314-1-keng-yu.lin@hpe.com
+Fixes: bbb336f39efc ("spi: spi-amd: Add AMD SPI controller driver support")
+Cc: stable@vger.kernel.org # 5.8+
+Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261014-spi-amd-fifo-fix-v1-1-9fec9ab753e8@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/spi/spi-amd.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 8cfcd71163031..25720f28518ad 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3242,7 +3242,15 @@ void pci_pm_init(struct pci_dev *dev)
- 	}
+diff --git a/drivers/spi/spi-amd.c b/drivers/spi/spi-amd.c
+index 71a6e5c475b03..ddf89e5353c55 100644
+--- a/drivers/spi/spi-amd.c
++++ b/drivers/spi/spi-amd.c
+@@ -322,11 +322,22 @@ static inline int amd_spi_fifo_xfer(struct amd_spi *amd_spi,
  
- poweron:
--	pci_pm_power_up_and_verify_state(dev);
-+	pci_update_current_state(dev, PCI_UNKNOWN);
-+	if (dev->current_state == PCI_D0) {
-+		/* No need for full power-up, just sync-up platform state */
-+		platform_pci_set_power_state(dev, PCI_D0);
-+	} else {
-+		/* Power up the device and restore BARs if necessary */
-+		pci_set_full_power_state(dev, false);
-+	}
-+	pci_update_current_state(dev, PCI_D0);
- 	pm_runtime_forbid(&dev->dev);
+ 	list_for_each_entry(xfer, &message->transfers,
+ 			    transfer_list) {
++		/* Skip zero-length transfers to avoid len underflow below */
++		if (!xfer->len)
++			continue;
++
+ 		if (xfer->speed_hz)
+ 			amd_set_spi_freq(amd_spi, xfer->speed_hz);
+ 		else
+ 			amd_set_spi_freq(amd_spi, spi->max_speed_hz);
  
- 	/*
++		/* Reject transfers that would overflow the FIFO window */
++		if (fifo_pos + xfer->len >
++		    AMD_SPI_FIFO_BASE + AMD_SPI_FIFO_SIZE) {
++			message->status = -EMSGSIZE;
++			goto fin_msg;
++		}
++
+ 		if (xfer->tx_buf) {
+ 			buf = (u8 *)xfer->tx_buf;
+ 			if (!tx_len) {
+@@ -369,6 +380,12 @@ static inline int amd_spi_fifo_xfer(struct amd_spi *amd_spi,
+ 
+ 		list_for_each_entry(xfer, &message->transfers, transfer_list)
+ 			if (xfer->rx_buf) {
++				/* Reject transfers that would overflow the FIFO window */
++				if (fifo_pos + xfer->len >
++				    AMD_SPI_FIFO_BASE + AMD_SPI_FIFO_SIZE) {
++					message->status = -EMSGSIZE;
++					goto fin_msg;
++				}
+ 				buf = (u8 *)xfer->rx_buf;
+ 				/* Read data from FIFO to receive buffer */
+ 				for (i = 0; i < xfer->len; i++)
 -- 
 2.53.0
 
