@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794059982;
-	b=bG/Lj3J0+avDFQayBAVuGBOMUwCzxm3DSGctivQkVbmNwSZsb98a+0wZXxAsb/5SglQp
-	 MsyMcs7tayjtbKs/5LMNrnACRHYVdiZjSsCG1bFsXa/77ehLBqxVXgtQXbrw3Kk1w6HpK
-	 3CdtjyxXcky/ctZj1QQUX2S8Ygjwzt2G2GcclEe/UmZBccSRtYyeWv9Qf9zuWpvQUFxkf
-	 JkvOI24PxXjsY/CvbVQPcsqAY58v0HKZ89/Mq4rlUR0C/TuEo3n/FbyogcaHImkZQIPMN
-	 JVxsB+Jfl4DeGUUcFu8J1ca8w0cfS4ie5pZbNICcw2iNi7GBjX+GwuUSruA93dGRC/A==
+	t=1794059984;
+	b=AD7k08aw4nFTCprQvRX0yia8+8NZutoAgeuifC4pZW5WLS6RIL2Ca811Ou17FUCyCsfE
+	 OBJ0l9LXZWuv4IGFo2sqfEUhUmIxuE291iZ0w5X6Blk4/44a2itinh8DZ2hIFZYTpvP/1
+	 K62V0jgWeJjzmn3alAsS0HOfMj7VzplhJBqADfEc2P8gdeMpAdYBaLbnlwR56bRTKHhyX
+	 ugZEc/JOQouOp5ceL0uWJmll2TYtoPq5HqNVNj2orlJWmhHrA1Ll7QuOFiBjhPGdJXvCU
+	 r3wHcB7YaE0++up/XaqAYtQ3D9EOtkgHpj7dzvc0wQ3hJGw18ndYvb0ycuvtAll1HrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794059982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794059984;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=UZ1GntbeW+7RxqsCleqLGoE8q8Ky87PU4/ZBTwrLM4w=;
-	b=YG8n2OnTnUc87wce3vd7SkFwAJvnNaUUe1iXltwHlKhx47JZKhrblwegHr9beCSv0dyJ
-	 8k5GgsEChR8N5eTvxTOMsMLUYnApSeRL0EPToK4+0BVofd5FIlTe+dI+m0Oi2y2poEle1
-	 3+54MNolI2ZkUwKnfNAQHIydoid9Du4zjEht6PF+JnScCzj0b1l78Rn2mnNRV48lpYeLH
-	 tWr5FCHpWgMCynlBpSw9RT7ZijFlg/goGKlgoG1qgjhvIJ3EUz0ak6KyfwTI4ZRKtvTco
-	 qYvv/H3Y+kTlSVJl3e4vTM680iNEju27IjYwj6PQwwnU4znJ8UBkthkqX2rPVtAW8Rw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=VOX8IV8SKTyW4iS9zsEAUt/0CSZ6/37Pi+UG5YafkkQ=;
+	b=KvfvkdAzdkQrYC1YlKp95e8l3M4an7fu/j34kEF1erWbbSqhkMR7aQRI96Rzat9VEqtx
+	 hyb0ahfn+OGaYy3ruM5aHy6KyqvHH4feWHC/MZFujse4yKcT77igaaGXUbO7YobS2KdM5
+	 z17CJcEkKouE2zHpvcMzI7K/iXt2B3HXq1pp7rXjX8p8IjonGxPQvD99xsuzzPo/mj0iz
+	 Wy8BV5AlkEcNvpP3vCbv0OfB7J00SJ115R9JIW9LNg3nIhHHMCHDyWOoaCWgS3XO66dSv
+	 G9T1xHGj8CRKy94CAgjl1u9bllc7Cm+okReUBGdcPhhXx2hWi9t40PF9BbItmPCaNSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tIlbyhAb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YUhrJZOJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABE8606A330;
-	Sat,  7 Nov 2026 13:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F9F606A333;
+	Sat,  7 Nov 2026 13:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tIlbyhAb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F371F008A4;
-	Sat,  7 Nov 2026 13:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YUhrJZOJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CA51F0089F;
+	Sat,  7 Nov 2026 13:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794059982;
-	bh=UZ1GntbeW+7RxqsCleqLGoE8q8Ky87PU4/ZBTwrLM4w=;
+	s=korg; t=1794059983;
+	bh=VOX8IV8SKTyW4iS9zsEAUt/0CSZ6/37Pi+UG5YafkkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tIlbyhAb32NVmDocoYAOYDsoqXWe8A2UK/HCZ4DJVAs0m0Hze7XADUdy+4b7LNYQ0
-	 ErDL8uuPg0CWtf4kPTM9DDC2MtuzLaUQe99yddomkTsxsuAIB5Pd18WoVVnFbYrEn0
-	 FqmLEDqUuSMVxSZ584JFqQaJdN7v+o+BY+Cztcds=
+	b=YUhrJZOJ7DdkElSnqKR044bXiOpZFfJGi6SAzL/OMiyjaupX5SKU0tly7AtF71KsQ
+	 ueg9PYBzLAekLb/lcaIJwDPLjDWhybMz0IXkCrd5ap8uHx2IXiImvl0tTcyIB9pQdr
+	 6Yb1HhQoTJfgLgbE0dbSThoCcDhzeFjqHHkZxFjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	"=?UTF-8?q?Tales=20A . =20Mendon=C3=A7a?=" <talesam@gmail.com>,
+	Navon John Lukose <navonjohnlukose@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0002/1257] media: cx88: Specify rc type at rc_allocate_type()
-Date: Sat,  7 Nov 2026 08:38:18 -0500
-Message-ID: <20261107134939.508332120@linuxfoundation.org>
+Subject: [PATCH 7.3 0001/1257] drm/xe: Implement Wa_22016122933
+Date: Sat,  7 Nov 2026 08:38:17 -0500
+Message-ID: <20261107134939.482764241@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,83 +64,266 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Tales A. Mendonça <talesam@gmail.com>
 
-[ Upstream commit a127f5e9f9ea0470ee3bf83fab82441ae11af208 ]
+[ Upstream commit d5b0bf3f37f152583a884c696cf6caa152aa7ed5 ]
 
-Changing the type of the rc device after allocation is ugly and
-this will also break in a future commit. Ensure that the allocation
-happens with the correct type in the first place.
+On platforms with a standalone media GT and media version 13.00
+(MTL/ARL), memory shared between the CPU and the media GT's GuC must
+not be mapped cached on the CPU side: the CPU can otherwise read stale
+cache lines for data the GuC has already written.
 
-Signed-off-by: Sean Young <sean@mess.org>
-Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+i915 implements this as Wa_22016122933 (see
+intel_gt_needs_wa_22016122933(), used by intel_guc_allocate_vma() and
+intel_gt_coherent_map_type()); xe never inherited it.
+
+The visible symptom on ARL is TLB invalidation acks stalling for a
+near-constant ~2.3s: the GuC writes the G2H ack in time, but the CPU
+keeps reading a stale (empty) view of the G2H CTB until the line is
+naturally evicted, so the fence timeout at 2.25s fires first. GuC log
+decode confirmed all invalidations were handled promptly by the
+firmware, and only the media GT was affected. See Link for the full
+investigation (three machines affected: 7d51, 7dd1, Arc Pro 130T).
+
+Making the mapping coherent instead of uncached does not help: with a
+GGTT PAT entry repurposed to WB|COH_2WAY the driver comes up and the
+media GT GuC runs, but the stalls remain (request-to-ack 2290ms).
+Uncached really is required here. Note that 2-way coherency is not
+normally reachable from a GGTT PTE (only 2 PAT bits), so that
+experiment needed a modified PAT table and may not reflect a supported
+configuration.
+
+Add the OOB workaround scoped like i915 (media version 13.00, media GT
+only - MEDIA_VERSION() OOB rules only match the media GT on standalone
+media platforms) and apply XE_BO_FLAG_NEEDS_UC to the GuC-shared
+allocations the CPU reads from: the CTBs, the GuC log, ADS, the SLPC
+shared data and the engine activity buffers. hwconfig and the G2G
+buffer are allocated on the primary GT only, where the workaround does
+not apply.
+
+Note that XE_BO_FLAG_NEEDS_UC drives both the CPU mapping (uncached)
+and the GGTT cache mode (XE_CACHE_NONE instead of XE_CACHE_WB), which is
+stricter than i915: i915 documents the workaround as WC on the CPU side
+and UC on the GPU side. A CPU-WC variant with the GGTT side kept at
+XE_CACHE_NONE was measured to be equally effective, but expressing it
+would require either a new BO flag or decoupling the GGTT cache-mode
+selection from XE_BO_FLAG_NEEDS_UC - simply swapping in
+XE_BO_FLAG_FORCE_WC silently relaxes the GPU side back to WB and the
+stalls return. The stricter mapping is kept here since it is the tested
+configuration and no throughput difference between the two was
+measurable; the extra plumbing can be added later if parity with i915 is
+preferred.
+
+Scope is limited to the GuC-shared allocations, which is where the
+failures were observed. i915 additionally covers media-GT LRC/ring
+state; extending xe to match can be done as a follow-up if wanted.
+
+Validation on two ARL machines (7d51 and 7dd1): before, 20-60 TLB
+invalidation ack stalls per day, every day, for weeks, on every kernel
+and on two GuC firmware versions (70.53.0 and 70.72.1). After: zero
+stalls in six weeks of combined runtime, over 10M TLB invalidations
+processed under the same workloads, across kernels 7.1.6, 7.1.8 and
+7.2. The 7dd1 machine, which could not survive a day of media
+workloads on xe without a platform freeze, has been running xe full
+time since 11 August, including days with heavy video transcoding,
+with zero stalls and zero freezes.
+
+The coherency experiment, the CPU-WC measurements and the engine
+activity coverage gap were found by Navon John Lukose while A/B
+testing v2 on an ARL 7d51.
+
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8678
+Suggested-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Signed-off-by: Tales A. Mendonça <talesam@gmail.com>
+Tested-by: Navon John Lukose <navonjohnlukose@gmail.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260922144634.55130-4-talesam@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cx88/cx88-input.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/xe/xe_guc.c                 | 16 ++++++++++++++++
+ drivers/gpu/drm/xe/xe_guc.h                 |  2 ++
+ drivers/gpu/drm/xe/xe_guc_ads.c             |  3 ++-
+ drivers/gpu/drm/xe/xe_guc_ct.c              |  6 ++++--
+ drivers/gpu/drm/xe/xe_guc_engine_activity.c |  6 ++++--
+ drivers/gpu/drm/xe/xe_guc_log.c             |  7 +++++--
+ drivers/gpu/drm/xe/xe_guc_pc.c              |  3 ++-
+ drivers/gpu/drm/xe/xe_wa_oob.rules          |  1 +
+ 8 files changed, 36 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/pci/cx88/cx88-input.c b/drivers/media/pci/cx88/cx88-input.c
-index 5d9ce4f9af011..c96d289e5ab78 100644
---- a/drivers/media/pci/cx88/cx88-input.c
-+++ b/drivers/media/pci/cx88/cx88-input.c
-@@ -259,7 +259,7 @@ static void cx88_ir_close(struct rc_dev *rc)
- int cx88_ir_init(struct cx88_core *core, struct pci_dev *pci)
+diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
+index 4286bd05c6861..c988a2a3b7bdb 100644
+--- a/drivers/gpu/drm/xe/xe_guc.c
++++ b/drivers/gpu/drm/xe/xe_guc.c
+@@ -1468,6 +1468,22 @@ int xe_guc_suspend(struct xe_guc *guc)
+ 	return 0;
+ }
+ 
++/**
++ * xe_guc_bo_wa_flags - Extra BO flags for memory shared with the GuC
++ * @gt: the &xe_gt whose GuC the buffer will be shared with
++ *
++ * Wa_22016122933: on the standalone media GT, memory shared between the
++ * CPU and the GuC must not be mapped cached on the CPU side, otherwise
++ * the CPU can read stale data written by the GuC (e.g. G2H CTB writes)
++ * for multiple seconds.
++ *
++ * Return: additional XE_BO_FLAG_* to use when allocating GuC-shared memory
++ */
++u32 xe_guc_bo_wa_flags(struct xe_gt *gt)
++{
++	return XE_GT_WA(gt, 22016122933) ? XE_BO_FLAG_NEEDS_UC : 0;
++}
++
+ void xe_guc_notify(struct xe_guc *guc)
  {
- 	struct cx88_IR *ir;
--	struct rc_dev *dev;
-+	struct rc_dev *dev = NULL;
- 	char *ir_codes = NULL;
- 	u64 rc_proto = RC_PROTO_BIT_OTHER;
- 	int err = -ENOMEM;
-@@ -268,11 +268,8 @@ int cx88_ir_init(struct cx88_core *core, struct pci_dev *pci)
- 				 */
+ 	struct xe_gt *gt = guc_to_gt(guc);
+diff --git a/drivers/gpu/drm/xe/xe_guc.h b/drivers/gpu/drm/xe/xe_guc.h
+index 61e3ee19a59bf..c4eca40d69cfc 100644
+--- a/drivers/gpu/drm/xe/xe_guc.h
++++ b/drivers/gpu/drm/xe/xe_guc.h
+@@ -30,6 +30,7 @@
+ 	xe_guc_fw_version_at_least((guc), MAKE_GUC_VER_ARGS(ver))
  
- 	ir = kzalloc_obj(*ir);
--	dev = rc_allocate_device(RC_DRIVER_IR_RAW);
--	if (!ir || !dev)
--		goto err_out_free;
--
--	ir->dev = dev;
-+	if (!ir)
-+		return -ENOMEM;
+ struct drm_printer;
++struct xe_gt;
  
- 	/* detect & configure */
- 	switch (core->boardnr) {
-@@ -439,6 +436,13 @@ int cx88_ir_init(struct cx88_core *core, struct pci_dev *pci)
- 		goto err_out_free;
- 	}
+ void xe_guc_comm_init_early(struct xe_guc *guc);
+ int xe_guc_init_noalloc(struct xe_guc *guc);
+@@ -45,6 +46,7 @@ void xe_guc_runtime_suspend(struct xe_guc *guc);
+ void xe_guc_runtime_resume(struct xe_guc *guc);
+ int xe_guc_suspend(struct xe_guc *guc);
+ int xe_guc_softreset(struct xe_guc *guc);
++u32 xe_guc_bo_wa_flags(struct xe_gt *gt);
+ void xe_guc_notify(struct xe_guc *guc);
+ int xe_guc_auth_huc(struct xe_guc *guc, u32 rsa_addr);
+ int xe_guc_mmio_send(struct xe_guc *guc, const u32 *request, u32 len);
+diff --git a/drivers/gpu/drm/xe/xe_guc_ads.c b/drivers/gpu/drm/xe/xe_guc_ads.c
+index 58a3f6293ce46..9ceb662ca40e4 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ads.c
++++ b/drivers/gpu/drm/xe/xe_guc_ads.c
+@@ -435,7 +435,8 @@ int xe_guc_ads_init(struct xe_guc_ads *ads)
+ 					  XE_BO_FLAG_SYSTEM |
+ 					  XE_BO_FLAG_GGTT |
+ 					  XE_BO_FLAG_GGTT_INVALIDATE |
+-					  XE_BO_FLAG_PINNED_NORESTORE);
++					  XE_BO_FLAG_PINNED_NORESTORE |
++					  xe_guc_bo_wa_flags(gt));
+ 	if (IS_ERR(bo))
+ 		return PTR_ERR(bo);
  
-+	dev = rc_allocate_device(ir->sampling ?
-+				 RC_DRIVER_IR_RAW : RC_DRIVER_SCANCODE);
-+	if (!dev)
-+		goto err_out_free;
-+
-+	ir->dev = dev;
-+
- 	/*
- 	 * The usage of mask_keycode were very convenient, due to several
- 	 * reasons. Among others, the scancode tables were using the scancode
-@@ -477,12 +481,10 @@ int cx88_ir_init(struct cx88_core *core, struct pci_dev *pci)
- 	dev->close = cx88_ir_close;
- 	dev->scancode_mask = hardware_mask;
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index fe70c0fd85c52..1ad96e4b4f893 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -376,7 +376,8 @@ int xe_guc_ct_init(struct xe_guc_ct *ct)
+ 					  XE_BO_FLAG_SYSTEM |
+ 					  XE_BO_FLAG_GGTT |
+ 					  XE_BO_FLAG_GGTT_INVALIDATE |
+-					  XE_BO_FLAG_PINNED_NORESTORE);
++					  XE_BO_FLAG_PINNED_NORESTORE |
++					  xe_guc_bo_wa_flags(gt));
+ 	if (IS_ERR(bo))
+ 		return PTR_ERR(bo);
  
--	if (ir->sampling) {
-+	if (ir->sampling)
- 		dev->timeout = MS_TO_US(10); /* 10 ms */
--	} else {
--		dev->driver_type = RC_DRIVER_SCANCODE;
-+	else
- 		dev->allowed_protocols = rc_proto;
--	}
+@@ -386,7 +387,8 @@ int xe_guc_ct_init(struct xe_guc_ct *ct)
+ 					  XE_BO_FLAG_SYSTEM |
+ 					  XE_BO_FLAG_GGTT |
+ 					  XE_BO_FLAG_GGTT_INVALIDATE |
+-					  XE_BO_FLAG_PINNED_NORESTORE);
++					  XE_BO_FLAG_PINNED_NORESTORE |
++					  xe_guc_bo_wa_flags(gt));
+ 	if (IS_ERR(bo))
+ 		return PTR_ERR(bo);
  
- 	ir->core = core;
- 	core->ir = ir;
+diff --git a/drivers/gpu/drm/xe/xe_guc_engine_activity.c b/drivers/gpu/drm/xe/xe_guc_engine_activity.c
+index a782be57caadb..729ce8ac140b6 100644
+--- a/drivers/gpu/drm/xe/xe_guc_engine_activity.c
++++ b/drivers/gpu/drm/xe/xe_guc_engine_activity.c
+@@ -97,7 +97,8 @@ static int allocate_engine_activity_buffers(struct xe_guc *guc,
+ 
+ 	metadata_bo = xe_bo_create_pin_map_novm(gt_to_xe(gt), tile, PAGE_ALIGN(metadata_size),
+ 						ttm_bo_type_kernel, XE_BO_FLAG_SYSTEM |
+-						XE_BO_FLAG_GGTT | XE_BO_FLAG_GGTT_INVALIDATE,
++						XE_BO_FLAG_GGTT | XE_BO_FLAG_GGTT_INVALIDATE |
++						xe_guc_bo_wa_flags(gt),
+ 						false);
+ 
+ 	if (IS_ERR(metadata_bo))
+@@ -105,7 +106,8 @@ static int allocate_engine_activity_buffers(struct xe_guc *guc,
+ 
+ 	bo = xe_bo_create_pin_map_novm(gt_to_xe(gt), tile, PAGE_ALIGN(size),
+ 				       ttm_bo_type_kernel, XE_BO_FLAG_VRAM_IF_DGFX(tile) |
+-				       XE_BO_FLAG_GGTT | XE_BO_FLAG_GGTT_INVALIDATE, false);
++				       XE_BO_FLAG_GGTT | XE_BO_FLAG_GGTT_INVALIDATE |
++				       xe_guc_bo_wa_flags(gt), false);
+ 
+ 	if (IS_ERR(bo)) {
+ 		xe_bo_unpin_map_no_vm(metadata_bo);
+diff --git a/drivers/gpu/drm/xe/xe_guc_log.c b/drivers/gpu/drm/xe/xe_guc_log.c
+index 538d4df0f7aa7..7d006268ce916 100644
+--- a/drivers/gpu/drm/xe/xe_guc_log.c
++++ b/drivers/gpu/drm/xe/xe_guc_log.c
+@@ -17,6 +17,7 @@
+ #include "xe_force_wake.h"
+ #include "xe_gt_printk.h"
+ #include "xe_gt_types.h"
++#include "xe_guc.h"
+ #include "xe_map.h"
+ #include "xe_mmio.h"
+ #include "xe_module.h"
+@@ -624,14 +625,16 @@ void xe_guc_log_print_lfd(struct xe_guc_log *log, struct drm_printer *p)
+ int xe_guc_log_init(struct xe_guc_log *log)
+ {
+ 	struct xe_device *xe = log_to_xe(log);
+-	struct xe_tile *tile = gt_to_tile(log_to_gt(log));
++	struct xe_gt *gt = log_to_gt(log);
++	struct xe_tile *tile = gt_to_tile(gt);
+ 	struct xe_bo *bo;
+ 
+ 	bo = xe_managed_bo_create_pin_map(xe, tile, GUC_LOG_SIZE,
+ 					  XE_BO_FLAG_SYSTEM |
+ 					  XE_BO_FLAG_GGTT |
+ 					  XE_BO_FLAG_GGTT_INVALIDATE |
+-					  XE_BO_FLAG_PINNED_NORESTORE);
++					  XE_BO_FLAG_PINNED_NORESTORE |
++					  xe_guc_bo_wa_flags(gt));
+ 	if (IS_ERR(bo))
+ 		return PTR_ERR(bo);
+ 
+diff --git a/drivers/gpu/drm/xe/xe_guc_pc.c b/drivers/gpu/drm/xe/xe_guc_pc.c
+index 7cf8f48585988..58e41b2319bc5 100644
+--- a/drivers/gpu/drm/xe/xe_guc_pc.c
++++ b/drivers/gpu/drm/xe/xe_guc_pc.c
+@@ -1378,7 +1378,8 @@ int xe_guc_pc_init(struct xe_guc_pc *pc)
+ 					  XE_BO_FLAG_VRAM_IF_DGFX(tile) |
+ 					  XE_BO_FLAG_GGTT |
+ 					  XE_BO_FLAG_GGTT_INVALIDATE |
+-					  XE_BO_FLAG_PINNED_NORESTORE);
++					  XE_BO_FLAG_PINNED_NORESTORE |
++					  xe_guc_bo_wa_flags(gt));
+ 	if (IS_ERR(bo))
+ 		return PTR_ERR(bo);
+ 
+diff --git a/drivers/gpu/drm/xe/xe_wa_oob.rules b/drivers/gpu/drm/xe/xe_wa_oob.rules
+index 3001155f8d09e..6662987effd73 100644
+--- a/drivers/gpu/drm/xe/xe_wa_oob.rules
++++ b/drivers/gpu/drm/xe/xe_wa_oob.rules
+@@ -14,6 +14,7 @@
+ 16017236439	PLATFORM(PVC)
+ 14019821291	MEDIA_VERSION_RANGE(1300, 2000)
+ 14015076503	MEDIA_VERSION(1300)
++22016122933	MEDIA_VERSION(1300)
+ 14018913170	GRAPHICS_VERSION_RANGE(1270, 1274)
+ 		MEDIA_VERSION(1300)
+ 		PLATFORM(DG2)
 -- 
 2.53.0
 
