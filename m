@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061642;
-	b=v2B2yBAbyKNSa81Dom2pBJb5Ag/iaF3tylOyiVW75qDgJ4DQelCMRCZ4e1wkBFNTdyhX
-	 GY0YQudmNvgfYh+w64I5nZNtr5QAkfNohABfaK4FXpSAzeg0j4K8eqbPblKnMnk4GKgGb
-	 wAUpurUWHi2ARgdrElViG12Cu2alfcFtxUvwGGYC8XbFfNs44RrmmmlLXpTzO142VizqD
-	 8OYZhDqxTbLYkBW1Et5TyOyZh2MH+vqCgPx6W5cf4NkN1XI5pm7UGS5KeY+zT8Sn49S/E
-	 6g37ruCA6Y/e14r9FAcOtoKKZ0byydPC11kbTYDpYrRI/4edr4n86d0Um3tgw4UUrBg==
+	t=1794061643;
+	b=KsitSPfQeGfJBjYTnJJntC2pRGBh7Z5AUDh1Q4q7nDtuzTuZrIpREeH6D9Ad0PTC4ZUq
+	 lDo3v5FTgqXKYlYKFBeyOi3H+Fr1j4nkPDAfIRFjMaecL4sPQwKcweedWXfKfVPDb2su+
+	 7/GjBWeQoplPROzDupsEKfrErBidV/k+VKOp7/8UQLPTCVUhWxINYkdbJ09eSDYbSD70L
+	 cL3c1pbH1vEhl15soC1ERbAgSPoChl9gBC3bbM+/GN7i81W2WqYfrD6/JNYkiVN3ILePi
+	 EhEC/3jcAWdaTNQMsTITlpT2YQfFTOj71nWWft1TLyi4QTarCACZKv6k7NHjYjUi8uQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BsqUoH+i7YklJN1FsHGbJy1QDbgfwi8478526VWXm1s=;
-	b=XlihyYW5vgI+UcWK9Pg74R9WLvERLAGxz4+kgMEkBXQUmEDCOKZB3ZXqF+JrYo9z29Fe
-	 nP7xJ47rCCnwWG6MvknRZ2YHnFzVJnT8esmbRtMrOspgLD7x8urVff3ciPQ6xyduzhND8
-	 jRFaQpqmtDu8TEofOSEiewqIrM1+VKYMymKFGiN4OwMLcJyCwzsgp3ieQTlrdk6aIP6fG
-	 lRfjhnP9ZOUd35v8qWMhrVxBevgZND2W27KuoeG+XWNaQGU0DO6vJG8gAlbYl5qdhW7o5
-	 /zzF+uJE7VCT93dlZSV3X5NzDDxW4xo6uAXf2fLJpZExA58C/qYmgNEnM5g1jwwLuug==
+	bh=r/Jr9sXuPLmsXnW+ekDOQ3wUptqCY7qZEpANNV2c3k8=;
+	b=5IUIKwwdg+O+KMuJVOIc2sNUgbr3dppZ9PAMi0KhT3fkkNK3tHzyYXWUsmcS7jlNCa+l
+	 Nz+2X4JtZwdir79hA6xPsV8lvh/VRUlRjrzvuwbNQItLTC93epMaZwYLTSbtxuyuQkgqn
+	 INaR32hZkPx+Oyj7heDpfRAt9Ertzw7pVXxiDP3gUFMAgWcwDwHSwfFiQMXaYY6gA+W0P
+	 AAnf7oq3ywKy0BjvDGKsyDyFoV/NLbT92z+6pJYylJoKxZk9grWBs7+s5HMJzZsJJTDDk
+	 oZdnGK1aMa0oWWdyi+FzJz4mzj0X67IV3d8H881p7+OgbsypP593PA94Lc38sTYsv+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qmlkBug7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qkYlnzOM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EA3606A334;
-	Sat,  7 Nov 2026 14:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB0A606A336;
+	Sat,  7 Nov 2026 14:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qmlkBug7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FDC1F0089F;
-	Sat,  7 Nov 2026 14:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qkYlnzOM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D30F1F0089F;
+	Sat,  7 Nov 2026 14:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061641;
-	bh=BsqUoH+i7YklJN1FsHGbJy1QDbgfwi8478526VWXm1s=;
+	s=korg; t=1794061643;
+	bh=r/Jr9sXuPLmsXnW+ekDOQ3wUptqCY7qZEpANNV2c3k8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qmlkBug7r/3XI9cssFKssqzhU1uDvoBkwpw7peJVxVdQqJanUX8BlL+BXPCEFgTwb
-	 EGx7LPE+KDQ7kLDtogi36AO59nW8YWxc6Norr2cE8glob4M3GMstwO3r5ENIxwvRnd
-	 WZVBCAmhhf/tLsxEOhAkQw81YkPbGnsqg7txkZcw=
+	b=qkYlnzOMBDcLg0lQr8aw0mhnpiJfeXX/YSzEFpednsisnCkPf0kk8fv4GOiivhoDp
+	 9b5Sr4+8BXGLN3b2TX3CVQ8cl5vU5yHP97d7eJxOEFPUvlBIpDCuIEbre+++BksSDs
+	 5vqknj6DPNN13wGzIs1/nDdNXcBi7V+ssUW/E2bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0665/1536] media: rc: Use after free in ir_raw_event_handle()
-Date: Sat,  7 Nov 2026 08:44:41 -0500
-Message-ID: <20261107135016.178228630@linuxfoundation.org>
+Subject: [PATCH 6.12 0666/1536] media: rc: After rc_unregister_device() timers can be re-armed
+Date: Sat,  7 Nov 2026 08:44:42 -0500
+Message-ID: <20261107135016.202377323@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,53 +69,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Young <sean@mess.org>
 
-commit 3ae19773168104fa57d2a2ec57731e89df54175f upstream.
+commit ef41a67979aed4d7d4f393c56c1e25b6754e2b78 upstream.
 
-If rc_unregister_device() is called while IR is being processed, then
-ir_raw_event_handle() could call wake_up_process(dev->raw->thread)
-after kthread_stop(dev->raw->thread). Avoid use after free by using
-get_task_struct().
+If rc_keydown() is called after rc_register_device(), then the timers
+can be re-armed. Delete them again for a final time.
 
 Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
 Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/rc-ir-raw.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/media/rc/rc-main.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/rc/rc-ir-raw.c
-+++ b/drivers/media/rc/rc-ir-raw.c
-@@ -647,8 +647,13 @@ int ir_raw_event_register(struct rc_dev
- 
- void ir_raw_event_free(struct rc_dev *dev)
- {
--	kfree(dev->raw);
--	dev->raw = NULL;
-+	if (dev->raw) {
-+		timer_delete_sync(&dev->raw->edge_handle);
-+		if (dev->raw->thread)
-+			put_task_struct(dev->raw->thread);
-+		kfree(dev->raw);
-+		dev->raw = NULL;
-+	}
- }
- 
- void ir_raw_event_unregister(struct rc_dev *dev)
-@@ -658,6 +663,13 @@ void ir_raw_event_unregister(struct rc_d
- 	if (!dev || !dev->raw)
+--- a/drivers/media/rc/rc-main.c
++++ b/drivers/media/rc/rc-main.c
+@@ -1742,6 +1742,11 @@ void rc_free_device(struct rc_dev *dev)
+ 	if (!dev)
  		return;
  
-+	/*
-+	 * After ir_raw_event_unregister() is called, an sync
-+	 * call to ir_raw_event_handle() can still arrive. This function
-+	 * may call wake_up_process(dev->raw->thread). Ensure this memory
-+	 * is not freed by kthread_stop().
-+	 */
-+	get_task_struct(dev->raw->thread);
- 	kthread_stop(dev->raw->thread);
- 	del_timer_sync(&dev->raw->edge_handle);
++	if (dev->input_dev) {
++		timer_delete_sync(&dev->timer_keyup);
++		timer_delete_sync(&dev->timer_repeat);
++	}
++
+ 	input_put_device(dev->input_dev);
  
+ 	put_device(&dev->dev);
 
 
