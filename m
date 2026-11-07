@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065491;
-	b=m5wNTHfPRlCF/917NmDGaSb7Fk2QyXv7ntI9/RtPd9LbQxRldVYk0I1qiGndq99uLz2A
-	 7VlEtrusbIjV5EBeX2qKIfQ6mPrDWoDB1HflJZdxbJtznnuG/l6K2xILRMJMiCY/J7o16
-	 1Lyny59jP+zTWqQnEiAJI9xZGh8FU/j5NQKXq1ynU7T95Xhy5W7BeSO7UmgCaxDHS9tVw
-	 LxMw7QlMrHMTAMZ410DdS7g1WpZJzFXdSEBoFa+97mN4Jt9mswddbOym1R7JZQJDhtQJH
-	 Zac9BEQ/kmy0MctjbDtZGhnraJMyL1wIw4IeKCn9gjltGWRLWH+3s9dIH/Kk7Sl2V4w==
+	t=1794065492;
+	b=sCPmXnpkM0BDPc5s3bAjhWhSsuohvxDy/eG/T6uNYwhLa6VBCP9av3Nwvzg8lMF6cXxw
+	 wvxOceRlZQXrPPk1AA7HfvMR70d1wXuo76eRS+yYzDSflfFKoKLyFLNe3ipmirXqZUZ+A
+	 oJWNuBWr8xmbAclu9QdUAtDGwso/7zGzkHC5BNfuAOu3yoC4FJouEavIdU9ORlOKnpFa4
+	 PfeItJEtzlMTHf5XlphOS43Zxy1TnzmB95D3+/Vk3qh9v+0wnFDe+/0FScDmRYDGoG7wW
+	 AmFqvwGAgkTCK1Tyqc/L8dxEcCsxojTg46xILVwsT9MM2ufxiabWMoBTIv02eS/wxug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065491;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065492;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nl2R8ShqnwyikqVU+KMz61tmxMmsWBfv9x1Z7FBj8Co=;
-	b=lVIoL6/uyGgPQ0ycs7mbBLudx305GlZriF1Wnwz2PsY+bgYrHuM088IAh+9qd7+7xBYo
-	 DXqWv6tYUi8Xewf4x/NSRUCg03FSOuDnzaiMhaPPdJGLgnHSmntflTSnyX8gxSGY6Kd2l
-	 Afj5a0+8awhmga5NA0JHYAWjMY0+yPc1sxxY5lWJLZA/AVJSfZQd/VZLfMXkrWA67aTgu
-	 wV8qnhyGn82ZpCoDmqvDaLfPPGhWQ8TxGPXnL5Kov0QgRzmT5Ad0Y9CNBNEhFWVFmMPos
-	 Prf1nOy9OL/yVip0HlwC0Th3RTj2Pfj0TILjo/ggyjxLd8Hima3qRMOXqrTg4yXMs8g==
+	bh=1Lu2A6vSzob+KeqiNXnN5aVBCd8HYe8YJu8VK5sNiNE=;
+	b=Z+w2jqaPZSHnkZfqrnoX6skWpgxTciH7O+bjwToSQEHkGAbF2R9SRjNBupqlHspyVcdo
+	 +rt6bnJOQDLKuN7MM9pfdq/Nmv0W6pL1f4uvS5B/h2D6t+lXg8xVnQ3/uLPkZgU3Q9/bL
+	 nOutVL3cTWJD48GCTy/GtKFxrebV+G67CyfeHpRNYb1HsEIDH9yce3k+wZwTSB2tZIZwO
+	 CAsWNyfAdlByhcKd3aopVHLgFX4b0RFB6Q92uHimQl24DmT1V7M5w6o6NDzR4PZCyf6qw
+	 FmNpOUyG0Oh3NrnOyQ0IbiJ8Q2gm2Up9N0xkMHf3C21EleBome/CSvzp88LT/CTIryQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Xktp/LJh";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ezH/dmt0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB57606A335;
-	Sat,  7 Nov 2026 15:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BFC606A335;
+	Sat,  7 Nov 2026 15:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xktp/LJh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A921F008A2;
-	Sat,  7 Nov 2026 15:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ezH/dmt0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F771F008A1;
+	Sat,  7 Nov 2026 15:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065490;
-	bh=nl2R8ShqnwyikqVU+KMz61tmxMmsWBfv9x1Z7FBj8Co=;
+	s=korg; t=1794065492;
+	bh=1Lu2A6vSzob+KeqiNXnN5aVBCd8HYe8YJu8VK5sNiNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xktp/LJhn37/UQrH+uCC4SrRi7oq7ijyXPEWuZUY2JvL6wzUbzwXaTc7pBDitQrTT
-	 WKdDSrV5+kWjH3RiHLRIj6sFhk68fWpDNeRMCAOrE8wCPxcsbfkXzwdXrp2h92T0AY
-	 BmxwTVm3YUJUI+UzLJV3AGFTIh45fcZFUMJwjTGc=
+	b=ezH/dmt0d1e7QQP6VOrcJpxgLiEgO8uvwla8UyuhYWzkE4tvok+tZAQ+sCpGDiI+X
+	 FQ053KujEboCj2xD68tyXXX/HyFj8tAtSKzU6k7vlia9ieaN+jYHa6nxeha+oDaRKl
+	 A14hi06yU4bq8i3NkKx3jjSXKGxYh2ZeHjn353pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Philip Yang <philip.yang@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1164/1257] LoongArch: Use pa_to_nid()/nid_to_addrbase() rather than hard-code
-Date: Sat,  7 Nov 2026 08:57:40 -0500
-Message-ID: <20261107135011.338221295@linuxfoundation.org>
+Subject: [PATCH 7.3 1182/1257] drm/amdkfd: split vram_pages of SVM ranges prefetched without a GPU mapping
+Date: Sat,  7 Nov 2026 08:57:58 -0500
+Message-ID: <20261107135011.816949214@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,77 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 244eb26bbd152896f976db6415550993cd60b46d ]
+[ Upstream commit 52957e813f2f025c86e4aa6e86cb4963ef94fd00 ]
 
-NODE_ADDRSPACE_SHIFT is 44 now but may be changed in future, so use
-pa_to_nid()/nid_to_addrbase() rather than hard-code.
+When an SVM range is split, svm_range_split_pages() gives the new range
+the number of VRAM pages counted in its part of the dma_addr arrays and
+subtracts it from the old range. Pages migrated to VRAM by a prefetch
+have no dma_addr entries until the range is mapped on a GPU, e.g. with
+no ACCESS attribute, or with XNACK off before the delayed restore worker
+mapped it, so the new range gets 0 and the old one keeps the count for
+both.
 
+Migrating the parts back to system memory then gets the accounting
+wrong: the old part keeps a VRAM page count after all its pages are
+gone, so its svm_bo is never freed, and the new part underflows. On
+navi31, as an unprivileged process: prefetch 4 MiB to the GPU, prefetch
+the upper 2 MiB and then the lower 2 MiB back to system memory:
+
+  Recorded vram pages(0x0) should not be less than migration pages(0x200).
+  WARNING: ../amdkfd/kfd_migrate.c:922 at svm_migrate_vram_to_ram+0xbdc/0xcd0 [amdgpu]
+
+and /sys/class/kfd/kfd/proc/<pid>/vram_<gpu_id> stays at 4194304 until
+the process exits.
+
+Without dma_addr arrays, the split is still exact when the old range is
+completely in VRAM, which is what a prefetch of the whole range leaves.
+Give the new range all its pages in that case. The warning is gone and
+the VRAM usage drops back to 0.
+
+This doesn't cover a range that is only partly in VRAM without dma_addr
+arrays, e.g. after a partial migration, since svm_migrate_ram_to_vram()
+only counts the pages it actually migrated. That would need VRAM
+residency to be tracked per page independently of dma_addr.
+
+v2:
+- Rename counted to has_dma_addr and compare against old->npages (Philip)
+- Mention the XNACK off case and the partial migration limitation (Philip)
+
+Fixes: 006ad514a50c ("drm/amdkfd: Use partial hmm page walk during buffer validation in SVM")
+Reviewed-by: Philip Yang <philip.yang@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7ca6f3359b557a267c7b07a2fd748b1473395e10)
 Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/numa.h | 2 +-
- arch/loongarch/kernel/irq.c       | 3 ++-
- arch/loongarch/pci/pci.c          | 3 ++-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/include/asm/numa.h b/arch/loongarch/include/asm/numa.h
-index bbf9f70bd25f4..c9654ff900a3a 100644
---- a/arch/loongarch/include/asm/numa.h
-+++ b/arch/loongarch/include/asm/numa.h
-@@ -14,7 +14,7 @@
- #define NODE_ADDRSPACE_SHIFT 44
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 54bdae99d4971..ff7a895bdd7cd 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -1019,9 +1019,12 @@ svm_range_split_pages(struct svm_range *new, struct svm_range *old,
+ 		      uint64_t start, uint64_t last)
+ {
+ 	uint64_t npages = last - start + 1;
++	bool has_dma_addr = false;
+ 	int i, r;
  
- #define pa_to_nid(addr)		(((addr) & 0xf00000000000) >> NODE_ADDRSPACE_SHIFT)
--#define nid_to_addrbase(nid)	(_ULCAST_(nid) << NODE_ADDRSPACE_SHIFT)
-+#define nid_to_addrbase(nid)	(_U64CAST_(nid) << NODE_ADDRSPACE_SHIFT)
- 
- #ifdef CONFIG_NUMA
- 
-diff --git a/arch/loongarch/kernel/irq.c b/arch/loongarch/kernel/irq.c
-index 7bf68a7a5f4b3..29e0f2baaa8c1 100644
---- a/arch/loongarch/kernel/irq.c
-+++ b/arch/loongarch/kernel/irq.c
-@@ -20,6 +20,7 @@
- 
- #include <asm/irq.h>
- #include <asm/loongson.h>
-+#include <asm/numa.h>
- #include <asm/setup.h>
- 
- DEFINE_PER_CPU(unsigned long, irq_stack);
-@@ -69,7 +70,7 @@ static int __init early_pci_mcfg_parse(struct acpi_table_header *header)
- 
- 	for (i = 0; i < n; i++, mptr++) {
- 		msi_group[i].pci_segment = mptr->pci_segment;
--		pch_group[i].node = msi_group[i].node = (mptr->address >> 44) & 0xf;
-+		pch_group[i].node = msi_group[i].node = pa_to_nid(mptr->address);
+ 	for (i = 0; i < MAX_GPU_INSTANCE; i++) {
++		if (old->dma_addr[i])
++			has_dma_addr = true;
+ 		r = svm_range_split_array(&new->dma_addr[i], &old->dma_addr[i],
+ 					  sizeof(*old->dma_addr[i]), old->start,
+ 					  npages, new->start, new->npages,
+@@ -1029,8 +1032,16 @@ svm_range_split_pages(struct svm_range *new, struct svm_range *old,
+ 		if (r)
+ 			return r;
  	}
+-	if (old->actual_loc)
++	if (old->actual_loc) {
++		/*
++		 * Pages migrated by prefetch have no dma_addr until they are
++		 * mapped on a GPU. A fully resident range still splits exactly,
++		 * old->npages isn't adjusted yet here.
++		 */
++		if (!has_dma_addr && old->vram_pages == old->npages)
++			new->vram_pages = new->npages;
+ 		old->vram_pages -= new->vram_pages;
++	}
  
  	return 0;
-diff --git a/arch/loongarch/pci/pci.c b/arch/loongarch/pci/pci.c
-index f33c7ea1443d9..0b99b32110a5d 100644
---- a/arch/loongarch/pci/pci.c
-+++ b/arch/loongarch/pci/pci.c
-@@ -12,6 +12,7 @@
- #include <linux/io-64-nonatomic-lo-hi.h>
- #include <asm/cacheflush.h>
- #include <asm/loongson.h>
-+#include <asm/numa.h>
- 
- #define PCI_DEVICE_ID_LOONGSON_HOST     0x7a00
- #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
-@@ -43,7 +44,7 @@ int raw_pci_write(unsigned int domain, unsigned int bus, unsigned int devfn,
- 
- phys_addr_t mcfg_addr_init(int node)
- {
--	return (((u64)node << 44) | MCFG_EXT_PCICFG_BASE);
-+	return (nid_to_addrbase(node) | MCFG_EXT_PCICFG_BASE);
  }
- 
- static int __init pcibios_init(void)
 -- 
 2.53.0
 
