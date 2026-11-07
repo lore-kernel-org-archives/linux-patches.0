@@ -1,61 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065365;
-	b=cJvD0/LK0oAA+lpqOY4ueYpTX9aXoWbmYm360YsTJxZniabsjSIB1Qgb0jpK05vWlk9k
-	 osZRrfIBZteVAX0jzpU6NT2uuxCsT2yEA7jIjJpMz4wkyykw4qZwDrC1SYorWGpYI1YUb
-	 nPbRLxv61dZqCkWCdzc+dwzm47Vi0XeX6nW8FVAwg2rnjuLd/ED0ZP8ees4HDgTKCAAKo
-	 e/rDUX8V3/TPzyrtZkfXCYiPvDDKLZrEBy0NiQTT0zoSfXqEMikVIhR58uzjTgTwl0mBe
-	 MR79TpwDFBL7L0X4E5Y5jOD9hjZotnvfR6O/3s5FUE5uV8W2OlZPnc+1CZlEGKIqIDw==
+	t=1794065366;
+	b=qjktS+3r2+xC2Mgw6ArTkqmLFeOakPiPLxeEhmCkZ/TaUZ/rPv0byf445s1dXWSfV03b
+	 sRsPznxGE0O930Xct4GFUAR6oFVTtFmcGUM6qwLLl1nfaKsnSrWmlxMwyvEmAGtBEvnt6
+	 EOBizPze0DrQSOc+GO7dT7vH2Ft5x49m9zCwKm3LQe5hW6kEItgY1udJrdd9p5N/FP3En
+	 CfkKTExuU8g54M81P9GrUIs1T1Nsvg8SHbxfDsFRc2h8NZEDXtB1jVuGDnCXIN6TrqAXY
+	 5w+AjHAzrB6RIu5lNEBXCiQ1yXNvUPMP5gSr/KAZfa9RQthKuJwkpns2F/Fcb5O6VYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065365;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065366;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fcuIReQAaUWUgN06BaM5p6Np7/tMRMkyICarAhFSRzE=;
-	b=yAoZ43JkZZXbJXNp9WbgT0p1jhyk0kZ9QGJiHL5lV6YRhKCaiapD05UuJ0JhjFaVjSwE
-	 JG93FgijIBXU03P/6uTXMdTCtrArscYlOPC5dA3e4Wrwy1KHDVmEj9RPemNiaZfJbMMIP
-	 ycXF1TBYofUvXdxsVLM3islUQYMGZXB98SVTqc6pjb3iZ6IBzi8uop48ZNoxnkcAre2Wl
-	 WLANJ2b3lcjMzdF23ZPVwIFnzaUG0UH1ZJYav6qU2un75rqUxmpj8QlELvDYJehbhhgSF
-	 mdTmSrSIm7/bO0z2L9pBzzL/ZFOW13DbdP3IFDS+Q2P9ANesrOWrcuDvZx770KfZKAA==
+	bh=4kKOvlOBvPGB7C20yNXGUWWzG5b9TJUQ9fANqN6e82o=;
+	b=kQ7MvxKY7QmnIGcHVxRdWiDbt8p2k1P7YBXa+/duVtDMlAjOBTUyiLCbyJvkNjuBxU9W
+	 0e7IRTJrPHFGqs+h9rBsevMsqtOBwf0YjbYOP1CG7luypWZoqmiIboWWjQn/LEyVZ3y3T
+	 TRh3zFLhSWKHf8DXcpAu2HJjh4dvUm+nWCdKhQY6p6lilj6ArtTzjRqE9jPV/jbQw9F2s
+	 eIKn6x66aJuTVcGNy9Z+zhsWPFoDSfSYz++h9YxYgFERKgMTM9yL3+Rj9VyKdpT6l/+Pr
+	 mrRPvZMGJL86Y/RlPhhsk2gLGPvZtK2B5BDSouS32h3S5mBqcTsfm5lnMVQAdY11kDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPTvo9JC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qBqZrSrt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08690606A32C;
-	Sat,  7 Nov 2026 15:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8A1606A326;
+	Sat,  7 Nov 2026 15:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cPTvo9JC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B147B1F008A1;
-	Sat,  7 Nov 2026 15:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qBqZrSrt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0271F0089F;
+	Sat,  7 Nov 2026 15:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065364;
-	bh=fcuIReQAaUWUgN06BaM5p6Np7/tMRMkyICarAhFSRzE=;
+	s=korg; t=1794065366;
+	bh=4kKOvlOBvPGB7C20yNXGUWWzG5b9TJUQ9fANqN6e82o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cPTvo9JCdnsu5Y6g34TAWU1ExzcuWgGZFr9fgktWMK9lyCuebDG57/Vl+WhZdFzdC
-	 oMSj/BjRoqVsGNXKSzknQSDHafixNHfeF9al2YyOW6TYVHFEp+jOIfktIiRvTurd1r
-	 BYuujsScv2YkGYMMyZSH1fYtx6N5LlqPyecqKO9k=
+	b=qBqZrSrtSZF2FacOZaASC1TLWlr3Lp4bM/yBG/DuwgrExuQAw+csAJ2Al1TRtv/Ys
+	 Ed5o2N6uBoFVadGI+ufJBx9T4+DiwjNw/h46AT1Sq8io+ArfkXIjeyB1MIKCchXG3A
+	 Ns9+gbJcy8ksiy9wgC3MzCfWUeJEGK9chtjYMnTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunhui Cui <cuiyunhui@bytedance.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	tongtiangen <tongtiangen@huawei.com>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	Yaxing Guo <guoyaxing@bosc.ac.cn>,
+	shaos <shawnq1@163.com>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Xueyuan Chen <xueyuan.chen21@gmail.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Mike Rapoport <rppt@linux.vnet.ibm.com>,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1098/1257] riscv: mm: exclude invalid THP PMDs from page table check
-Date: Sat,  7 Nov 2026 08:56:34 -0500
-Message-ID: <20261107135009.586290066@linuxfoundation.org>
+Subject: [PATCH 7.3 1099/1257] mm/vma: avoid broken uffd merge on mremap
+Date: Sat,  7 Nov 2026 08:56:35 -0500
+Message-ID: <20261107135009.611389179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -77,76 +79,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunhui Cui <cuiyunhui@bytedance.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit bdda2887cbf3937c2d0f56589c2124c4167324e1 ]
+[ Upstream commit 68cb098eadda190783f8f8bdf9fe764df59f7d32 ]
 
-RISC-V THP splitting uses a temporary invalid PMD state where
-pmd_mkinvalid() clears _PAGE_PRESENT and _PAGE_PROT_NONE but leaves
-_PAGE_LEAF set so the MM code can still recognize the PMD as a THP split
-in-progress entry.
+Userfaultfd often causes unexpected interactions within mm, and does so at
+the intersection of uffd, mremap() and VMA merging.
 
-That temporary state no longer describes a user-accessible mapping, but
-page_table_check currently treats it as one because the RISC-V PMD
-user-accessibility test only checks whether the PMD is a leaf and has user
-permissions.
+When an mremap of a VMA occurs, copy_vma_and_data() calls
+mremap_userfaultfd_prep() to notify uffd of this.
 
-As a result, when a PMD-sized anonymous THP is split during a COW fault,
-page_table_check can account the invalid intermediate PMD as a live PMD
-mapping, and then account the replacement PTE mappings again when the
-split installs the PTE table.  This leaves stale PMD accounting behind and
-later triggers page_table_check failures such as a non-zero anon_map_count
-when the folio is freed.
+However, mremap_userfaultfd_prep() simply drops the UFFD context for the
+VMA if the user did not register it for remap, i.e. didn't specify the
+UFFD_FEATURE_EVENT_REMAP flag.
 
-Fix this by tightening pmd_user_accessible_page() so PMD page-table-check
-accounting only considers leaf PMDs that still carry either _PAGE_PRESENT
-or _PAGE_PROT_NONE.  This preserves the THP split semantics required by
-the MM code while preventing page_table_check from treating invalid split
-PMDs as live user mappings.
+This is OK for the VMA itself, as upon page table move, move_ptes() clears
+UFFD page table flags, using vma_has_uffd_without_event_remap() to
+determine whether to do so.
 
-With CONFIG_PAGE_TABLE_CHECK=y and CONFIG_PAGE_TABLE_CHECK_ENFORCED=y,
-tools/testing/selftests/mm/cow completes successfully on RISC-V after this
-change.
+However, this doesn't account for merging with adjacent VMAs, whose page
+tables won't have received this treatment, and thus latent UFFD markers
+will be left around.
 
-Link: https://lore.kernel.org/20260523042052.35476-1-cuiyunhui@bytedance.com
-Fixes: 3fee229a8eb9 ("riscv/mm: enable ARCH_SUPPORTS_PAGE_TABLE_CHECK")
-Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
+Worse, it'll break UFFD for any VMAs it is merged with. This is very
+surprising behaviour for a user, who will then simply not receive UFFD
+events for VMAs they ought to.
+
+Resolve the issue by explicitly checking for this case via
+vma_has_uffd_without_event_remap() in vma_merge_copied_range(), the merge
+function explicitly designated for mremap() operations.
+
+Also update the userland VMA tests accordingly.
+
+Link: https://lore.kernel.org/20261020-uffd-remap-fix-v1-1-0f34fc181f0a@kernel.org
+Fixes: 3cfd22be0ad6 ("userfaultfd: clear flag if remap event not enabled")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: tongtiangen <tongtiangen@huawei.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Cc: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Yaxing Guo <guoyaxing@bosc.ac.cn>
+Reported-by: shaos <shawnq1@163.com>
+Closes: https://lore.kernel.org/all/20261020110748.959870-1-shawnq1@163.com/
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Xueyuan Chen <xueyuan.chen21@gmail.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: David Hildenbrand <david@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/pgtable.h | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ mm/vma.c                          | 5 +++++
+ tools/testing/vma/include/stubs.h | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
-index 40b1ed4f3ea89..bda7c021b4299 100644
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -993,7 +993,14 @@ static inline bool pte_user_accessible_page(struct mm_struct *mm, unsigned long
+diff --git a/mm/vma.c b/mm/vma.c
+index 81e2c93a1cc52..3d63f73e723b9 100644
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -1225,6 +1225,11 @@ static struct vm_area_struct *vma_merge_copied_range(struct vma_merge_struct *vm
  
- static inline bool pmd_user_accessible_page(struct mm_struct *mm, unsigned long addr, pmd_t pmd)
- {
--	return pmd_leaf(pmd) && pmd_user(pmd);
-+	/*
-+	 * page_table_check() must ignore THP split invalidation entries created by
-+	 * pmd_mkinvalid(). These retain _PAGE_LEAF so pmd_present()/pmd_leaf() stay
-+	 * true during the split, but they no longer describe a user-accessible
-+	 * mapping once both _PAGE_PRESENT and _PAGE_PROT_NONE are cleared.
-+	 */
-+	return (pmd_val(pmd) & (_PAGE_PRESENT | _PAGE_PROT_NONE)) &&
-+		(pmd_val(pmd) & _PAGE_LEAF) && pmd_user(pmd);
+ 	vmg->copied_from = vmg->middle;
+ 	vmg->middle = NULL;
++
++	/* If not registered for remap, uffd context will be cleared. */
++	if (vma_has_uffd_without_event_remap(vmg->copied_from))
++		return NULL;
++
+ 	return vma_merge_new_range(vmg);
  }
  
- static inline bool pud_user_accessible_page(struct mm_struct *mm, unsigned long addr, pud_t pud)
+diff --git a/tools/testing/vma/include/stubs.h b/tools/testing/vma/include/stubs.h
+index d6136e19a8af3..ab441162ac10e 100644
+--- a/tools/testing/vma/include/stubs.h
++++ b/tools/testing/vma/include/stubs.h
+@@ -356,6 +356,11 @@ static inline bool is_mergeable_vm_userfaultfd_ctx(struct vm_area_struct *vma,
+ 	return true;
+ }
+ 
++static inline bool vma_has_uffd_without_event_remap(struct vm_area_struct *vma)
++{
++	return false;
++}
++
+ static inline bool anon_vma_name_eq(struct anon_vma_name *anon_name1,
+ 				    struct anon_vma_name *anon_name2)
+ {
 -- 
 2.53.0
 
