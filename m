@@ -1,54 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061864;
-	b=EM9AR8o9oddy+LLvEvtmeqBbHQCvNooax4HotUbgqUkpF7r6BG+H2/5xS/4laLEtCfuX
-	 m3TX1PHE5wtcuQJy+rowemvU44ylR2spXVW/+gsgeh0fNRmNPrfb+LvSJ64HN3tNZVxj1
-	 sbDBkCtmJwIaK7iB9q+oce/wpKnHXAcycuRIdOujGSxJRQFUh7y8Ee9433BcRt+8rEVoY
-	 zLPW/zFOzVIGPldCfS0shUST/ZKdOLKaztLUkmGTfOPeUiVifU6MkkwQ8XzjBAPtSH6c/
-	 4isCdqPkTn7hTq1OSV2FLr6Zl+Oty1LzymNsPQb8DajGCtgjTOkzZ8oryZ4oZoTMItg==
+	t=1794061866;
+	b=PLPzWEtKkAGF9HeQOtrfM0HwR6WUrSP4a41+/mK/BcBz2myp/mjMNXEv5C96giUbmOJE
+	 bYVjjmH6zIwWq02/L3YacVGR10Ys2MXYPOibhVAAMdbtzwhOJvvukN8HqK0euQ7kYrkJX
+	 GIQmq+fGcjyMU772IEMU8ZDMTW+IkzzXtY4WX+0ZKivJKiKkQBRIlmKkvbl+3fM5z/8FF
+	 1gn9UdMCoVkNTmGKL5jb7rNONoF2e3sA652VlY4RIMHRD2Qm/kocm2iIkc+vbZDu1gh8u
+	 JP5peUHFziObvF8itGFl78qQ9mN/s031GlnRETASL5g98dxIaSsXEHAIV1ObnET1Umw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061866;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZZslalt/RF1cbATMAA4wnwV38phRVqZ6ZlLBrF6/+Zs=;
-	b=OppDAWmlje7U8smb6MgTFO7lo5EJnAEKSzI/m7weBCyF/NcQNvycQn3gwcTNiPe5aKq1
-	 YUKWY1M9EVfPnazvV7f1tqfOc+5SUI8WwzIQMqFr/8GIkHnqz3CnfnBlWqdVpXNcn0wvd
-	 xg0sP93p6GmqYkjoT2NsEgD74EaCsX7gSwlsR0K8ZrXPUoFlrUKvXvVre/O8eSGYIAT/9
-	 S/x9A2zHm80I5BPzIuIrais28tmf9md+5l/ru1TBWs6lGYNUuSHDHHwE9Sza9wLctRye5
-	 jGo3ArvekJ/41U36WhG1fPbYIC1h53XivoYKeCvMXGI4GJPZRH4SJwr5ootcl3Tu1rQ==
+	bh=Po89/uq1dgyZAssOGrkZXfxImhU1SUTSVEsD14MbRuw=;
+	b=OUByHKiyb89UlMAzSI67kYZ+5+/lKnfWDAWu5DuDmxTQvwc2DXw/R969slQJXNmj0n9Y
+	 Lx4aCfCznvzeOABeyvQnT/oAUGogO4/bvGImRBPb9rmTYLOzj/AhBfBPXUJ001ZYnUi2V
+	 AJGKsL7QNFZCquwQEHm9Rh0Gwm7U0s3DCTIrsfz3FZ/cOMJEULVDzIMecCrIQ33aKPwB4
+	 tLi8V3boT45oR0CMgzo3Hq8YayGAcAqydrD1VQv9xJiAaoEFFx8N3zpr9MIPQuEj6BWRC
+	 cXY/q0DZL9MsiRBm/tWCeo5TKCDBr46YTT70xvJKg5fjK01cgsTjhmg1o4siQ/o9TEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yn1GcO4X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2E5r2a2/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC5E606A326;
-	Sat,  7 Nov 2026 14:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAF7606A326;
+	Sat,  7 Nov 2026 14:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yn1GcO4X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC1B1F0089F;
-	Sat,  7 Nov 2026 14:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2E5r2a2/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFCA1F0089F;
+	Sat,  7 Nov 2026 14:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061864;
-	bh=ZZslalt/RF1cbATMAA4wnwV38phRVqZ6ZlLBrF6/+Zs=;
+	s=korg; t=1794061865;
+	bh=Po89/uq1dgyZAssOGrkZXfxImhU1SUTSVEsD14MbRuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yn1GcO4Xlp/m4xe/tiXyoBGp2S037bvSOdmNO1lydLgI4lR/CPdQpj4La7yoREUEs
-	 UYMDmTtULAsUMGn5Pk8RE9Y1CxpjUssxlFyftq8H/DBIKGai/WnA1oq5qCFoDWcxXE
-	 EOw/tBVIy5RsxmgNuv5Eb/yDl4WBnPwcpcxto6PI=
+	b=2E5r2a2/tHAFVKGKfBF4T6yurgOIMJQmT67+kuJQ9RbUSFR+n1f8QTlLUFgRqMKlK
+	 nz7qEhyl3rZFLOciSQfC0h1oy8WXQVG27FPjwNiDQZxhIc7ZIqyQ78CzSwrs//brq2
+	 h6YD7EUycsHynbmXPNNWkO0Qb/uhexgyU+T6aZUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Vernon Yang <yanglincheng@kylinos.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Zach OKeefe <zokeefe@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0881/1536] ASoC: amd: ps: fix snd_acp63_remove() teardown ordering
-Date: Sat,  7 Nov 2026 08:48:17 -0500
-Message-ID: <20261107135022.369648504@linuxfoundation.org>
+Subject: [PATCH 6.12 0882/1536] mm: khugepaged: fix swap entry value to folio_pfn()
+Date: Sat,  7 Nov 2026 08:48:18 -0500
+Message-ID: <20261107135022.401552473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,58 +75,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Vernon Yang <yanglincheng@kylinos.cn>
 
-[ Upstream commit c53791d673ed4da6759d276078627ec4d0c6536b ]
+[ Upstream commit 942c8ec27aa4ffc587511650718349964e1696e6 ]
 
-The ACP IRQ handlers dereference the SoundWire, SoundWire DMA, and PDM
-child platform devices, but snd_acp63_remove() unregisters them while
-the interrupt is still held by devres, which frees it only after remove
-returns. An interrupt in this window is a use-after-free.
+Patch series "mm: khugepaged: fix tracepoint UAF", v5.
 
-Mask the ACP interrupt sources and call devm_free_irq() before the
-first child device is unregistered. The masking goes through the new
-acp_hw_ops->disable_interrupts callback, keeping the remove path
-platform-agnostic. The interrupt line is shared, and acp_hw_deinit()
-clears the sources only after the children are gone, which would
-leave the line raised with no handler left to ack it. The window
-predates the tagged refactor, which only reshaped the dereferences.
+The khugepaged tracepoints take a folio pointer and call folio_pfn(), but
+by then the folio may no longer be valid: freed after folio_put(),
+folio_unlock() or pte_unmap_unlock(), or not a folio at all but an
+xarray-encoded swap entry.  On classic SPARSEMEM, dereferencing it oopses
+khugepaged as soon as the trace event is enabled; on other memory models
+it merely prints a bogus pfn.
 
-devm_free_irq() waits for in-flight handlers, but not for work the
-hardirq has already queued: acp63_irq_handler() schedules
-amd_sdw_irq_thread on the SoundWire manager. Draining that work in
-the manager's remove path is a soundwire-side change and follows
-separately.
+Pass the pfn to the tracepoints directly, captured while the folio is
+still pinned, closing the use-after-free windows in
+mm_khugepaged_scan_file(), mm_khugepaged_scan_pmd() and
+mm_khugepaged_collapse_file().
 
-This issue was found by an in-house static analysis tool.
+This patch (of 3):
 
-Fixes: eaf825037d6d ("ASoC: amd: ps: refactor acp child platform device creation code")
-Cc: stable@vger.kernel.org
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20260929061349.3879-1-fanwu01@zju.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: Replaced acp_hw_disable_interrupts() with the existing acp63_disable_interrupts() helper because the hardware operations framework is absent. ]
+When the swap entries found exceed max_ptes_swap, the loop is left via
+break with folio still holding the xarray value that encodes the swap
+entry, not valid folio pointer.
+
+That value is passed to trace_mm_khugepaged_scan_file(), which feeds it to
+folio_pfn().  On FLATMEM and SPARSEMEM_VMEMMAP, the page_to_pfn() is plain
+pointer arithmetic, so the trace event merely prints bogus scan_pfn.  On
+classic SPARSEMEM, the page_to_pfn() reads page->flags, dereferencing the
+tiny encoded integer and oopsing khugepaged whenever the trace event is
+enabled.
+
+So when folio is the swap entry value, simply set pfn to -1, just like
+exhausted scan naturally.
+
+And the folio_put() has maybe dropped the last reference of folio.  The
+trace_mm_khugepaged_scan_file() is left with a dangling folio pointer.  so
+using the folio_pfn() before dropping the reference, closing
+use-after-free window.
+
+Link: https://lore.kernel.org/20260909025804.3233645-1-vernon2gm@gmail.com
+Link: https://lore.kernel.org/20260909025804.3233645-2-vernon2gm@gmail.com
+Fixes: d41fd2016ed0 ("mm/khugepaged: add tracepoint to hpage_collapse_scan_file()")
+Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Zach O'Keefe <zokeefe@google.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: adjusted PFN capture context for the existing scanner, which lacks temporary folio references and corresponding folio_put() calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/ps/pci-ps.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/trace/events/huge_memory.h | 6 +++---
+ mm/khugepaged.c                    | 7 ++++++-
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/amd/ps/pci-ps.c b/sound/soc/amd/ps/pci-ps.c
-index eb4b552c94241..8875989d63651 100644
---- a/sound/soc/amd/ps/pci-ps.c
-+++ b/sound/soc/amd/ps/pci-ps.c
-@@ -724,6 +724,8 @@ static void snd_acp63_remove(struct pci_dev *pci)
- 	int ret;
+diff --git a/include/trace/events/huge_memory.h b/include/trace/events/huge_memory.h
+index 61967625c53d7..8f63af61c3ccb 100644
+--- a/include/trace/events/huge_memory.h
++++ b/include/trace/events/huge_memory.h
+@@ -174,10 +174,10 @@ TRACE_EVENT(mm_collapse_huge_page_swapin,
  
- 	adata = pci_get_drvdata(pci);
-+	acp63_disable_interrupts(adata->acp63_base);
-+	devm_free_irq(&pci->dev, pci->irq, adata);
- 	if (adata->sdw) {
- 		amd_sdw_exit(adata);
- 		platform_device_unregister(adata->sdw_dma_dev);
+ TRACE_EVENT(mm_khugepaged_scan_file,
+ 
+-	TP_PROTO(struct mm_struct *mm, struct folio *folio, struct file *file,
++	TP_PROTO(struct mm_struct *mm, unsigned long pfn, struct file *file,
+ 		 int present, int swap, int result),
+ 
+-	TP_ARGS(mm, folio, file, present, swap, result),
++	TP_ARGS(mm, pfn, file, present, swap, result),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(struct mm_struct *, mm)
+@@ -190,7 +190,7 @@ TRACE_EVENT(mm_khugepaged_scan_file,
+ 
+ 	TP_fast_assign(
+ 		__entry->mm = mm;
+-		__entry->pfn = folio ? folio_pfn(folio) : -1;
++		__entry->pfn = pfn;
+ 		__assign_str(filename);
+ 		__entry->present = present;
+ 		__entry->swap = swap;
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index 0c111142e1e4d..7a54ce0f126bc 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -2258,6 +2258,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
+ 	int present, swap;
+ 	int node = NUMA_NO_NODE;
+ 	int result = SCAN_SUCCEED;
++	unsigned long failed_pfn = -1;
+ 
+ 	present = 0;
+ 	swap = 0;
+@@ -2283,6 +2284,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
+ 		    folio->index == start) {
+ 			/* Maybe PMD-mapped */
+ 			result = SCAN_PTE_MAPPED_HUGEPAGE;
++			failed_pfn = folio_pfn(folio);
+ 			/*
+ 			 * For SCAN_PTE_MAPPED_HUGEPAGE, further processing
+ 			 * by the caller won't touch the page cache, and so
+@@ -2295,17 +2297,20 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
+ 		node = folio_nid(folio);
+ 		if (hpage_collapse_scan_abort(node, cc)) {
+ 			result = SCAN_SCAN_ABORT;
++			failed_pfn = folio_pfn(folio);
+ 			break;
+ 		}
+ 		cc->node_load[node]++;
+ 
+ 		if (!folio_test_lru(folio)) {
+ 			result = SCAN_PAGE_LRU;
++			failed_pfn = folio_pfn(folio);
+ 			break;
+ 		}
+ 
+ 		if (!is_refcount_suitable(folio)) {
+ 			result = SCAN_PAGE_COUNT;
++			failed_pfn = folio_pfn(folio);
+ 			break;
+ 		}
+ 
+@@ -2335,7 +2340,7 @@ static int hpage_collapse_scan_file(struct mm_struct *mm, unsigned long addr,
+ 		}
+ 	}
+ 
+-	trace_mm_khugepaged_scan_file(mm, folio, file, present, swap, result);
++	trace_mm_khugepaged_scan_file(mm, failed_pfn, file, present, swap, result);
+ 	return result;
+ }
+ #else
 -- 
 2.53.0
 
