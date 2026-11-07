@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062842;
-	b=p/EZkTpq7O7Xxsx0PTztlyyXbhxbGUOhxwHWS+Z7TQv648HkIH2n2LeQg5HeRtPIFSqv
-	 a05MN+eO495BFgnXWlZB/2Wu/XjrGTdnf4WTYwZXXUBY+49ZF1DBI83hf0tPIvUpRfjDi
-	 ZiWSREYw5kJduLNWWqM5h4yT+sHsw4WNEn4ctnmCssiP0tOZOiUz20yYkF/UkbsI/TkFG
-	 1TqLuDrP/WaSYVm7FnFXxKr81+iCd3WLVIOLSuDhOWRWcGa3M/yMo2jRG1E+jjgiDOT4r
-	 smgxdhYCt2fEgIMyu2RDs9pX+WfHx0tSdymy6qCn9tzgj8902gM4lOGbCHstmONrTBQ==
+	t=1794062843;
+	b=lLzb6i9WZ67UaWOyoT8bMYg7Tq7DdKCbieZSWBaTQ6iIoKAsI9u9IhbyIYglGuvPFeKw
+	 Kyi5Ozz05lHEooPcLOC7xvwIkvbFvWo9XV3aQd6CMVBI9gNYe0tbyhVnWNQskupZLfseE
+	 lLKpoMIWPDRIP87mflGjw/PDfSbb6ISE0WLKnbNSZNctDw+fPkNybSCBUPP2FqwMrA7nV
+	 GEjaAn3X9TWOWFBkAdmdFrVOPiaqRBXCoObfILz8sDLG24ZflMjCOO+RoMc1FygK1LXGa
+	 UXF+a3oGDuEYRZIebXVEIJVbXkyhggM29YfZ9xdDZ9HShj4i8KaaRt8LfGKWHh0cq3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062842;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062843;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9q7T9KcQJKQiICxGbS8UnX/EYsWrSmNZqbZf/RZkiPI=;
-	b=R0WGfLnq7lWHFKihwLUOq5HLz0hOwM7BzYeNpAKm6JAP1NFVsmn7Pa0wVvHf2dKuzOlm
-	 pFhUxJNIBoPiI5wVFQ4/2MTd4gK9il02ltE3GEaIbiKA3VKbD+C0zAqc5EQ+QlBCEhIhr
-	 VthK0Cp2no+ljFZB1EV/YpNcVe80cPHrzvgqdvJVkHaLpV1oSoo62eWgUWENd3njWATTq
-	 8DSW3ZFOLfQ4IqRFetZnWcBmWBKaxDNwarf1pNavEheiMn1HSp1KlO9A16WceikwIEIWn
-	 9rehGl229yIupbnv5dOr21Blg3lUy7pitryg/ee79sy/5zm9H3WYbFnshQQ3R9L7Iug==
+	bh=o3MZk7aVg9YqEeWm9Rmd/dvYsoxkiUctwPTo60UMjyk=;
+	b=JWTYJ3iGXEyyHthWJRsS+mKIb6zCSoMUYiUF+pi+n4Qkuv/LQc4+TTJbIqzUWoZXyRco
+	 +kcelkS2bEwAcsfHiqcygb1JINO5ei2YO9Ij+cxv9s6ZcsghPzogbkLQmtFchEkA0srQG
+	 hr2K/qXG5/oX1F7k0CPVzagPAkxLci2lS4vf5nQs2BMxRb+ky3+TWWSdJO6ERLwudOcd6
+	 BUqFvLTsvWi8Bxssebs99/w18+3T+aDuQ/tiKPsqYobmXJl8V/4GO3gg+VhrBnehkD8jT
+	 9SPn6BdU8ZOOS0VwrsCdYgp0cg8FjTZaCUF5oyuyrfJ6N2qNlOL3oFOwpUPBGdi23LQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RHqmtr7S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xZSzR+g5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7916606A334;
-	Sat,  7 Nov 2026 14:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059CD606A32F;
+	Sat,  7 Nov 2026 14:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RHqmtr7S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746A31F0089F;
-	Sat,  7 Nov 2026 14:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xZSzR+g5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79521F0089F;
+	Sat,  7 Nov 2026 14:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062841;
-	bh=9q7T9KcQJKQiICxGbS8UnX/EYsWrSmNZqbZf/RZkiPI=;
+	s=korg; t=1794062842;
+	bh=o3MZk7aVg9YqEeWm9Rmd/dvYsoxkiUctwPTo60UMjyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RHqmtr7SuL2mnEn93Kw0LRFSVnbw8wGFsT3KpOMrZC6/R4OoXq+QyD40sCs7aERbr
-	 i75iwdf8veLF0PfEuiLafhEYDIaLVtRA0Wnob8lTjOdWVO2RHlkgehiUyBX8kGJgUT
-	 0JYiJ3TQAF69E9H33UndPLlg2wPvgjhIHR3i3C+U=
+	b=xZSzR+g5hTXXI1ur3Rkkf50afG9bY5y/1S3KUdzolc0ZE43GUqrbpg/zVWHQAaEtk
+	 XULRBhumg32p0BwIw7xEVr3wYNMl9b5Bq3qGOr662/Le+bbxUHMSpBlYw+8sl7IYpL
+	 ElLNtHwWML3JrzGVipeSHYsGkBcRqoGwHGJFTY5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 136/869] f2fs: compress: fix to handle race between truncate and writeback
-Date: Sat,  7 Nov 2026 08:46:58 -0500
-Message-ID: <20261107134857.035258360@linuxfoundation.org>
+Subject: [PATCH 6.18 137/869] ata: ahci_st: Do not ignore errors when getting the reset controls
+Date: Sat,  7 Nov 2026 08:46:59 -0500
+Message-ID: <20261107134857.062693550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,98 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit c0337e331b065074ce20e4258a578e07dd7e4083 ]
+[ Upstream commit c74ee9230a8d1d2f6fcbceff55f56f7dd9b9cccd ]
 
-fsstress reports a kernel BUG in f2fs_truncate_partial_cluster():
+st_ahci_probe_resets() treats any error from devm_reset_control_get() as
+"reset control not defined" and continues with a NULL reset control:
 
-kernel BUG at fs/f2fs/compress.c:1238!
-RIP: 0010:f2fs_truncate_partial_cluster+0x292/0x2a0
-Call Trace:
- <TASK>
- f2fs_truncate+0xf6/0x210
- f2fs_setattr+0x6b7/0x770
- notify_change+0x33b/0x520
- do_truncate+0xc2/0xf0
- vfs_truncate+0x153/0x1d0
- ksys_truncate+0x78/0xd0
- __x64_sys_truncate+0x16/0x20
- do_syscall_64+0xbe/0x540
+	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
+	if (IS_ERR(drv_data->pwr)) {
+		dev_info(dev, "power reset control not defined\n");
+		drv_data->pwr = NULL;
+	}
 
-The root cause is that Thread A (truncate) and Thread B (background
-writeback or fsync) can race as follows:
+This also swallows -EPROBE_DEFER, which is returned when the reset
+controller providing the reset has not been probed yet. probe() then
+continues as if the device tree did not specify any reset, so the resets
+of the SATA IP are never deasserted, and st_ahci_configure_oob() and
+ahci_platform_init_host() access the MMIO of an IP which is still held in
+reset and powered down, which can result in an external abort.
 
-Thread A                             Thread B
-- f2fs_setattr
- - f2fs_truncate
-  - f2fs_truncate_blocks
-   - f2fs_truncate_partial_cluster
-    - f2fs_is_compressed_cluster
-      return 1
-                                     - f2fs_write_cache_pages
-                                      - f2fs_write_multi_pages
-                                       - f2fs_write_raw_pages
-                                        - f2fs_write_single_data_page
-                                          dn.data_blkaddr != COMPRESS_ADDR
-                                          (cluster converted to normal)
-    - f2fs_prepare_compress_overwrite
-     - f2fs_is_compressed_cluster
-       return 0
-     - return 0
-    - f2fs_bug_on(sbi, err == 0): BUG!
+The resets are optional in the binding, as they are not part of its
+required properties, so use devm_reset_control_get_optional(), which
+returns NULL if the reset is not specified in the device tree, and
+propagate all other errors.
 
-Writeback path does not acquire i_gc_rwsem or filemap_invalidate_lock.
-When a compressed cluster fails compression during writeback, it is
-overwritten with raw data blocks. If Thread A checked
-f2fs_is_compressed_cluster() before the conversion, but calls
-f2fs_prepare_compress_overwrite() after the conversion,
-f2fs_prepare_compress_overwrite() returns 0 because the cluster is no
-longer a compressed cluster.
+Note that an absent reset is now indicated by a NULL reset control
+instead of an error, so the "reset control not defined" messages are
+dropped.
 
-To fix this, remove the f2fs_bug_on() and retry checking the cluster status
-when f2fs_prepare_compress_overwrite() returns 0, so that it can fall back
-to f2fs_do_truncate_blocks() to handle it as a normal cluster.
-
-Cc: stable@kernel.org
-Fixes: 3265d3db1f16 ("f2fs: support partial truncation on compressed inode")
-Reviewed-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 76884cb2f7da ("ahci: st: Add support for ST's SATA IP")
+Cc: stable@vger.kernel.org
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260915084127.692494-9-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/ata/ahci_st.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 0399db98fccfc..8fea48dc50bad 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -1219,6 +1219,7 @@ int f2fs_truncate_partial_cluster(struct inode *inode, u64 from, bool lock)
- 	int i;
- 	int err;
+diff --git a/drivers/ata/ahci_st.c b/drivers/ata/ahci_st.c
+index 4336c8a6e2087..819269a022efd 100644
+--- a/drivers/ata/ahci_st.c
++++ b/drivers/ata/ahci_st.c
+@@ -104,23 +104,20 @@ static int st_ahci_probe_resets(struct ahci_host_priv *hpriv,
+ {
+ 	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
  
-+repeat:
- 	err = f2fs_is_compressed_cluster(inode, start_idx);
- 	if (err < 0)
- 		return err;
-@@ -1230,12 +1231,11 @@ int f2fs_truncate_partial_cluster(struct inode *inode, u64 from, bool lock)
- 	/* truncate compressed cluster */
- 	err = f2fs_prepare_compress_overwrite(inode, &pagep,
- 						start_idx, &fsdata);
+-	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
+-	if (IS_ERR(drv_data->pwr)) {
+-		dev_info(dev, "power reset control not defined\n");
+-		drv_data->pwr = NULL;
+-	}
 -
--	/* should not be a normal cluster */
--	f2fs_bug_on(F2FS_I_SB(inode), err == 0);
+-	drv_data->sw_rst = devm_reset_control_get(dev, "sw-rst");
+-	if (IS_ERR(drv_data->sw_rst)) {
+-		dev_info(dev, "soft reset control not defined\n");
+-		drv_data->sw_rst = NULL;
+-	}
 -
--	if (err <= 0)
-+	if (err < 0)
- 		return err;
-+	else if (err == 0)
-+		/* the cluster became non-compressed one due to race case */
-+		goto repeat;
+-	drv_data->pwr_rst = devm_reset_control_get(dev, "pwr-rst");
+-	if (IS_ERR(drv_data->pwr_rst)) {
+-		dev_dbg(dev, "power soft reset control not defined\n");
+-		drv_data->pwr_rst = NULL;
+-	}
++	drv_data->pwr = devm_reset_control_get_optional(dev, "pwr-dwn");
++	if (IS_ERR(drv_data->pwr))
++		return dev_err_probe(dev, PTR_ERR(drv_data->pwr),
++				     "failed to get pwr-dwn reset\n");
++
++	drv_data->sw_rst = devm_reset_control_get_optional(dev, "sw-rst");
++	if (IS_ERR(drv_data->sw_rst))
++		return dev_err_probe(dev, PTR_ERR(drv_data->sw_rst),
++				     "failed to get sw-rst reset\n");
++
++	drv_data->pwr_rst = devm_reset_control_get_optional(dev, "pwr-rst");
++	if (IS_ERR(drv_data->pwr_rst))
++		return dev_err_probe(dev, PTR_ERR(drv_data->pwr_rst),
++				     "failed to get pwr-rst reset\n");
  
- 	rpages = fsdata;
- 
+ 	return st_ahci_deassert_resets(hpriv, dev);
+ }
 -- 
 2.53.0
 
