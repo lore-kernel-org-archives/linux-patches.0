@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062369;
-	b=MAMfIhor9433n+dpyaFeiCMmcpvEj3UOPUmkdZJfA+DRWk00o3zFsT9jqfE6iNiTGEQ7
-	 FTQpMpsJA1C9eMnViY44bvNKsuVbX4rPuN5OZMxZDbjfKLWmXe58VgVmkjrWIaS9rDEMd
-	 BDHTN/LkAjMk9bVD9cioSuYV62qIBIcCEZPVdd8+aGXBY9VKfwSHkw80+1u+uxH7AXxjZ
-	 rDZ/3tv03AwqNnmKsA/V4TcDDAFq+DfILKK7Vy3NB78otXyrRTWYCtk07ujXMXR5axSfD
-	 rsfAoS6/L0DX3bEXto7HXEaM0MJDGbEctXmcag2RwhVFaQt2utMOcwOEzPZ/u7NC/mg==
+	t=1794062370;
+	b=GIjsm+zx1MhIy+M1AjaHSwwf/rUzVGTuFsBkdNmpnmx1djKtuhjZx3u8GIXtcKNAjWLh
+	 OYulp/Bs3guwlEQevGfoYl/bH1oS+bPH1HObHE4jvg9ds1qlrQHNP4/aH59dC14JrM/UM
+	 NY99CzwWCx8gG4csAgfP/zwt/sLZkrznQVfn3oaq8buf5wnbQmR9EVO/wapM31XCyj8zN
+	 +Vxf+ZrAe3TOblCwf5XagLBC9rg2H6FLr/gx4vdZr6wk10XEbETBidts3yJnYBLq/ilrH
+	 jZbXksFt+xrQz2V3jjrCcsTEC3082rS8uLSIthodj0UL8tqA0H6t+p8WlGrohtysckw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062369;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062370;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7A93o2qb3dmXqeNWX+Gy1ETHivrIjNcCgI3HTm6xMUk=;
-	b=sPD+2U+97oxe4ni7HC8/GGbia4eX+kdX3fHrPqY61fz0jZ334Kc2n++h1o29tTN427y9
-	 +twJHG3PhF7ZuWp7ceVAmQawGWirTx5P10RKXb2idpZ7haBCtN3kdO4pDvg3neQvdHYO5
-	 nxyt6c5ADS+9/ZBdl9e0vyJIxQ1guj9wX88YYK8zfAtMy32MIaqM2DYg25VCIWnXmzvYg
-	 nPhAUyhvYklMHheZ/U6Jfflyc5BLFpshJx2qOjM//4z6BVnB54IMuCe4ErWxgNkMeuokr
-	 zmQ/ineupqG1MemRtNzL9+XrtvzaKDCu0UKsWlXcunnjQISHWl+olr9zOt0+fjAFQ9g==
+	bh=0KGUfiwTxUon+ZG8YfyVZWeqaV9uJkfxHj31q7vwbVw=;
+	b=bwO0cr1/fplziIeE+Mu5B2jxtUcRqQDu9jir8DDCxQcN9XCdpCQlJJhqBbZc/Hj74Sbi
+	 gYnkHzoIDdvgbdDeB+Ug59QwZZcTf5xNGQyR6ZvVXY4gPt3MpoYGWd6r9ydSIpp7JqSLP
+	 7gOnnhrnXkYaw3xfGyrUuEM+705y3qU/2raCoVWF/GwE/6RfJ6BR5ELjZzd5LKa4cpEi5
+	 DMiDPeoBSqGByNbLM8+lFQjf8AquiVCbuuB4nPXkE5iNLbehiNNwsv5ADNcULXV3W8mLB
+	 rUIxdAeSiysx7EPdYm3BMn7DWqu4613dFzXNGwMDiJrmnWghw/OYZLsFEezJXpIxiuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2KIzL8+F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoPmGaS2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D8D606D838;
-	Sat,  7 Nov 2026 14:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6532B606D838;
+	Sat,  7 Nov 2026 14:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2KIzL8+F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D267B1F008A1;
-	Sat,  7 Nov 2026 14:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoPmGaS2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138271F0089F;
+	Sat,  7 Nov 2026 14:39:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062369;
-	bh=7A93o2qb3dmXqeNWX+Gy1ETHivrIjNcCgI3HTm6xMUk=;
+	s=korg; t=1794062370;
+	bh=0KGUfiwTxUon+ZG8YfyVZWeqaV9uJkfxHj31q7vwbVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2KIzL8+Fk8WEoNJ1zHSA8G28PEeb1Y9p4z5lqW4CU0z5UXhhODURmEz0BLmWK6kpo
-	 +lOjqSWMa8ECFQVr7Qpz7qHhtieU4UjtE89JklnSPhw7bNTLtYF1KekYUjP6kerLSw
-	 0uZzOTnK3KZoX02eSlEd8oNljVo6a/G1lOCxfIag=
+	b=GoPmGaS2EAuuDdflDftzX6HGOGmSo3cAJJa9RgZLjPv73ttBe6ddDVKBIGeQ3txbj
+	 S9RImGSSqePn0mrUVujWicl3J0k8sTajtBU9IZM1ifQRZEZIiAGH5IdnOXCpDYfDnp
+	 3uHHTjn3iv2MC6BIFNjhJObLY7e3+bDEVA75flJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Stian Halseth <stian@itx.no>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Tony Rodriguez <unixpro1970@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1294/1536] ARM: 9491/1: alignment: restore uaccess state on emulation fault
-Date: Sat,  7 Nov 2026 08:55:10 -0500
-Message-ID: <20261107135034.135710481@linuxfoundation.org>
+Subject: [PATCH 6.12 1295/1536] PCI: Set supported_speeds in set_pcie_port_type()
+Date: Sat,  7 Nov 2026 08:55:11 -0500
+Message-ID: <20261107135034.164128834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,199 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Stian Halseth <stian@itx.no>
 
-[ Upstream commit 80dafbcb705cead6d25cb821cf29c47da8860c8c ]
+[ Upstream commit 926767a9be8866d26cc27ca46c46c03d921e2193 ]
 
-The alignment handlers enable access to user memory while emulating
-unaligned instructions. If a checked access faults, its exception table
-fixup jumps to the handler's fault label and bypasses uaccess_restore().
-This leaves DOMAIN_USER as DOMAIN_CLIENT with SW domain PAN, or leaves
-TTBR0 page table walks enabled with TTBR0 PAN, while the fault is handled.
+sparc64 and powerpc create PCI devices from the device tree in
+of_create_pci_dev(), which calls set_pcie_port_type() but not
+pci_setup_device(). Since d2bd39c0456b, supported_speeds is only set in
+pci_setup_device(), so it stays 0 for these devices.
 
-An ARM926 QEMU test using LDMIA across an unmapped page boundary reports
-DOMAIN_USER=1 at TYPE_FAULT before this change and DOMAIN_USER=0 after it.
-SW domain PAN is the default on ARMv5, ARMv6, and non-LPAE ARMv7 builds.
+pcie_get_speed_cap() then returns PCI_SPEED_UNKNOWN, the sysfs
+'max_link_speed' attribute reads "Unknown", and the failed link retraining
+quirk passes PCI_SPEED_UNKNOWN to pcie_set_target_speed(), which warns on a
+SPARC T7-1:
 
-Keep the saved uaccess state at function scope and track whether it was
-saved. Restore it at the fault label only when needed. Paths that did not
-enable user access continue to skip the restore.
+  WARNING: drivers/pci/pcie/bwctrl.c:125 at pcie_set_target_speed+0x284/0x2e0
 
-Assisted-by: Codex:gpt-5.6-sol
+Set supported_speeds in set_pcie_port_type(), which all three paths call.
 
-Fixes: 274e91b81ed2 ("ARM: alignment: fix alignment handling for uaccess changes")
+Fixes: d2bd39c0456b ("PCI: Store all PCIe Supported Link Speeds")
+Closes: https://github.com/sparclinux/issues/issues/109
+Signed-off-by: Stian Halseth <stian@itx.no>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Tony Rodriguez <unixpro1970@gmail.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20261007131304.309511-1-stian@itx.no
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/alignment.c | 51 ++++++++++++++++++++++++++++++-----------
- 1 file changed, 37 insertions(+), 14 deletions(-)
+ drivers/pci/probe.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
-index 812380f30ae36..2b470a419dda3 100644
---- a/arch/arm/mm/alignment.c
-+++ b/arch/arm/mm/alignment.c
-@@ -341,6 +341,8 @@ static int
- do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	ai_half += 1;
- 
-@@ -364,10 +366,11 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
-  user:
- 	if (LDST_L_BIT(instr)) {
- 		unsigned long val;
--		unsigned int __ua_flags = uaccess_save_and_enable();
- 
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get16t_unaligned_check(val, addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 
- 		/* signed half-word? */
- 		if (instr & 0x40)
-@@ -375,14 +378,17 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
- 
- 		regs->uregs[rd] = val;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put16t_unaligned_check(regs->uregs[rd], addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 
- 	return TYPE_LDST;
- 
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -391,6 +397,8 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
- 	unsigned int rd2;
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 	int load;
- 
- 	if ((instr & 0xfe000000) == 0xe8000000) {
-@@ -425,26 +433,30 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
-  user:
- 	if (load) {
- 		unsigned long val, val2;
--		unsigned int __ua_flags = uaccess_save_and_enable();
- 
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get32t_unaligned_check(val, addr);
- 		get32t_unaligned_check(val2, addr + 4);
- 
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 
- 		regs->uregs[rd] = val;
- 		regs->uregs[rd2] = val2;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put32t_unaligned_check(regs->uregs[rd], addr);
- 		put32t_unaligned_check(regs->uregs[rd2], addr + 4);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 
- 	return TYPE_LDST;
-  bad:
- 	return TYPE_ERROR;
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -452,6 +464,8 @@ static int
- do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd = RD_BITS(instr);
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	ai_word += 1;
- 
-@@ -469,18 +483,22 @@ do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
-  trans:
- 	if (LDST_L_BIT(instr)) {
- 		unsigned int val;
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		get32t_unaligned_check(val, addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 		regs->uregs[rd] = val;
- 	} else {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		put32t_unaligned_check(regs->uregs[rd], addr);
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	}
- 	return TYPE_LDST;
- 
-  fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	return TYPE_FAULT;
- }
- 
-@@ -502,6 +520,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- {
- 	unsigned int rd, rn, correction, nr_regs, regbits;
- 	unsigned long eaddr, newaddr;
-+	unsigned int ua_flags;
-+	bool ua_saved = false;
- 
- 	if (LDM_S_BIT(instr))
- 		goto bad;
-@@ -547,7 +567,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index 718293b4bdb98..5ff2ad01235c4 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -1596,6 +1596,8 @@ void set_pcie_port_type(struct pci_dev *pdev)
+ 		pdev->aspm_l1_support = 1;
  #endif
  
- 	if (user_mode(regs)) {
--		unsigned int __ua_flags = uaccess_save_and_enable();
-+		ua_flags = uaccess_save_and_enable();
-+		ua_saved = true;
- 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
- 		     regbits >>= 1, rd += 1)
- 			if (regbits & 1) {
-@@ -559,7 +580,7 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- 					put32t_unaligned_check(regs->uregs[rd], eaddr);
- 				eaddr += 4;
- 			}
--		uaccess_restore(__ua_flags);
-+		uaccess_restore(ua_flags);
- 	} else {
- 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
- 		     regbits >>= 1, rd += 1)
-@@ -581,6 +602,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
- 	return TYPE_DONE;
++	pdev->supported_speeds = pcie_get_supported_speeds(pdev);
++
+ 	parent = pci_upstream_bridge(pdev);
+ 	if (!parent)
+ 		return;
+@@ -1981,9 +1983,6 @@ int pci_setup_device(struct pci_dev *dev)
  
- fault:
-+	if (ua_saved)
-+		uaccess_restore(ua_flags);
- 	regs->ARM_pc -= correction;
- 	return TYPE_FAULT;
+ 	set_pcie_untrusted(dev);
+ 
+-	if (pci_is_pcie(dev))
+-		dev->supported_speeds = pcie_get_supported_speeds(dev);
+-
+ 	/* "Unknown power state" */
+ 	dev->current_state = PCI_UNKNOWN;
  
 -- 
 2.53.0
