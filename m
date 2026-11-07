@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060835;
-	b=uokArDf+c0IkqbPCEHR36QVeowlsXQemFmKNvD3qKNox8xOYaAK/83P2bsqJP0Wf2xl1
-	 ilOjDMmRym1k3EofIaxbpSxPYHgBWjCHM73yQ45sAbxUSyGL7ufc6GpVZn5JkYK1S/uVG
-	 37U1eOCMDBleF3kGKz1QZKREvcbkNWavRKpC/9ZSywkE3DaALS/Ic4ZGhxHXGJYEfdoBD
-	 mhUPLowKwOkY6o/SPi9eiR10GwbVmVW+T0pLA7uw1QTkA3ToM02PEUzvWA6RCvuwMKqAm
-	 Qv7tXs+eP0llN6SkLvbQ7NvO042m41ur3KwXcuyfnLXCS10tPhpIwjgS0Domexivk5A==
+	t=1794060836;
+	b=x51lZ9z4H4tw2xXM68UCEEnjn4jfIMWutKKoZM5CAXSUsFI4RksRYs4jnQx+XWkL4W/g
+	 5E32TU9zeE4rWZ0eQf0qw+AvGfv+q4oL0hrTpSRZszPXFWukUnJwNUeiE5CaPHeT/S2yd
+	 RcJos5szLdz30L4zgAPkkyyiLsUGffIGvnp5M7urAq1RAwvdzx4E6Xd1P3HUunFSJwZVF
+	 aUBbbqDxrIBpreeLqdatdwwM1tvsywmRCOiythDh3OwXildaEVJ3jl2YFtkBj+1jNJUIM
+	 ccYBSUo+rLFSw/OxpozIPtqTW3hd482JUvPsmbRPqEvDi8BZLSjd2OKTk1T3lWR36Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060835;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jJFfgFgpKt7DuN6+/JH6QzB2nT3lShWMb/0rv3V9I0A=;
-	b=ww92S/9CLE/KBQ1RwzM8SwEMjmdqolBx95XldMQWqZVCbWIrX62EYlmJSSu+8fbjPhvD
-	 TNGMkgHYyMM1Y1GSXii/eUmpx0BmiHnxtPhiED6TdlRqzkDu2ZCE1/ISF9OO65ldZ0vvv
-	 LlKsiRSiVcnJyCGzKTdCZJKHFtoi3FPQ/2ZN+8aBm+tB6F8lDjeh1Rgb/6THm8Anbwifi
-	 LvXXI73/H9BGwCE3nfsM9a1ED86KkZSJyMhFNh2bXV3Seyygv0FOVBEbffwQd85t9hhgE
-	 5hscINe3L+i2kBRVN67I8goTDRmScysSDtWo6SXAnwTxTbdETDcdv90xKe/FvnfPnDQ==
+	bh=k3mmRXJtOgHPhc+FwUKcM+qsLmRbZ9tzmWcdaHeL9lM=;
+	b=lXW2SLrXzn9wOVoh58u7w2eVJfLVP73/MDTt4H2gnhNHzRfxuIrtqufqsI0/CCaKmR3e
+	 PSshU6YtEFnczMxFcfPRd6Qhz0g13dhAQg/bq+KRrtpK+MJk1XZV7bPMjKvCOBwtoyqfE
+	 RANs98435Zd7zQVRDI2AtAxj8KsX6cxmnvsY7AlbDHPuI/4SrN5T1hZ+pyg+AJw1Umjku
+	 h5nood088c529xLDxi3i/6/imkFiXlx3e8nvNErbTfJv+UcVahpKXY4Crx3n2UHnjWjEs
+	 RW5p2ETQ/MtGfMicRoUWBv9lhNoGGxUnoFrWmUXm1S3Am6ttsFbkPGjMaZ4cH2Ot0Hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LgT50YHq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3pJBtrQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F83606A33E;
-	Sat,  7 Nov 2026 14:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C27F606A336;
+	Sat,  7 Nov 2026 14:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LgT50YHq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F691F008A1;
-	Sat,  7 Nov 2026 14:13:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3pJBtrQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2D61F008A1;
+	Sat,  7 Nov 2026 14:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060834;
-	bh=jJFfgFgpKt7DuN6+/JH6QzB2nT3lShWMb/0rv3V9I0A=;
+	s=korg; t=1794060836;
+	bh=k3mmRXJtOgHPhc+FwUKcM+qsLmRbZ9tzmWcdaHeL9lM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LgT50YHqiw+gMl44TULYbVnknfYYvdkQ09dVjo5Sj+LUzW8LRfMQYZtZyaTqZdktK
-	 F4cuVTy0qAOrD2XETvfQGbbNuWunRLVWE1LHnHG4McNbNwv25kYjIWJrH8694mUNvs
-	 xqTwMqxKr1ZAw2njEcx2JsyigjnaktErd1OFm3HE=
+	b=t3pJBtrQOAeHHUAGvTlABzhKJpaFTw6eyP1g2cLO5b+TLfrxeimj9F0zgeoTr/OAq
+	 OPp1gpPJRG4PQEu+qKqPm/6NsY0cKutkz/jenwR5vLTMh7Dc79GOYcmjhjCwa0FZfA
+	 +NeEhkpAUxW1pqMn69o3g7g4xuqkP9dKw7DUAzmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	David Strahan <david.strahan@microchip.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0226/1536] ata: ata_generic: Dont store pci_device_id
-Date: Sat,  7 Nov 2026 08:37:22 -0500
-Message-ID: <20261107135004.016712637@linuxfoundation.org>
+Subject: [PATCH 6.12 0227/1536] scsi: smartpqi: Add new PCI device-ids
+Date: Sat,  7 Nov 2026 08:37:23 -0500
+Message-ID: <20261107135004.045053983@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,51 +69,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: David Strahan <David.Strahan@microchip.com>
 
-[ Upstream commit 4f3075f629077a8cb3d3455c794a1f4a8fc8b43e ]
+[ Upstream commit 1a220e6e87a31c2572cd07ff47023e5cd92ac80f ]
 
-pci_device_id is not guaranteed to live longer than probe due to presence
-of dynamic ID. All information apart from driver_data can be easily
-retrieved from pci_dev, so just store driver_data.
+All PCI ID entries in Hex.
 
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Acked-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20260723-pci_id_fix-v4-1-3580726844e1@garyguo.net
+Add PCI IDs for Hurray Data controllers:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+                                            9005 / 028f / 207d / 4246
+                                            9005 / 028f / 207d / 4256
+                                            9005 / 028f / 207d / 4356
+                                            9005 / 028f / 207d / 4940
+                                            9005 / 028f / 207d / 4a46
+
+Add PCI IDs for ZTE controllers:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+                                            9005 / 028f / 1cf2 / 5451
+                                            9005 / 028f / 1cf2 / 5452
+                                            9005 / 028f / 1cf2 / 5453
+
+Add PCI ID for Ramaxel controller:
+                                            VID  / DID  / SVID / SDID
+                                            ----   ----   ----   ----
+                                            9005 / 028f / 1f3f / 0670
+
+Signed-off-by: David Strahan <david.strahan@microchip.com>
+Reviewed-by: Don Brace <don.brace@microchip.com>
+Link: https://lore.kernel.org/linux-scsi/20260722220401.6357-1-david.strahan@microchip.com/
+Link: https://patch.msgid.link/20260722220401.6357-4-david.strahan@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ata_generic.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 36 +++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/drivers/ata/ata_generic.c b/drivers/ata/ata_generic.c
-index 2f57ec00ab821..ef5e817e96b26 100644
---- a/drivers/ata/ata_generic.c
-+++ b/drivers/ata/ata_generic.c
-@@ -51,11 +51,11 @@ enum {
- static int generic_set_mode(struct ata_link *link, struct ata_device **unused)
- {
- 	struct ata_port *ap = link->ap;
--	const struct pci_device_id *id = ap->host->private_data;
-+	unsigned long driver_data = (unsigned long)ap->host->private_data;
- 	int dma_enabled = 0;
- 	struct ata_device *dev;
- 
--	if (id->driver_data & ATA_GEN_FORCE_DMA) {
-+	if (driver_data & ATA_GEN_FORCE_DMA) {
- 		dma_enabled = 0xff;
- 	} else if (ap->ioaddr.bmdma_addr) {
- 		/* Bits 5 and 6 indicate if DMA is active on master/slave */
-@@ -206,7 +206,7 @@ static int ata_generic_init_one(struct pci_dev *dev, const struct pci_device_id
- 			return rc;
- 		pcim_pin_device(dev);
- 	}
--	return ata_pci_bmdma_init_one(dev, ppi, &generic_sht, (void *)id, 0);
-+	return ata_pci_bmdma_init_one(dev, ppi, &generic_sht, (void *)id->driver_data, 0);
- }
- 
- static struct pci_device_id ata_generic[] = {
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 32c92678d5916..8ecbe30ee6d27 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -10116,10 +10116,30 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x207d, 0x4240)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4246)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4256)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4356)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x207d, 0x4840)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4940)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x207d, 0x4a46)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_ADVANTECH, 0x8312)
+@@ -10304,6 +10324,18 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1cf2, 0x544f)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1cf2, 0x5451)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1cf2, 0x5452)
++	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1cf2, 0x5453)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1cf2, 0x54da)
+@@ -10344,6 +10376,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       0x1f3f, 0x0610)
+ 	},
++	{
++		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
++			       0x1f3f, 0x0670)
++	},
+ 	{
+ 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
+ 			       PCI_VENDOR_ID_LENOVO, 0x0220)
 -- 
 2.53.0
 
