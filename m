@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060856;
-	b=21TAozu7NSVsKoIrlV7Snxm6LJLhtWigSlbdT51auu/etnPPMGCvwp+0KN0OTsdVvUIr
-	 Cw7wU/rvkkeCy6URjqzvv6FpuVUwGhjTJzWIrnyrH6RKaK6p80cCTYYaxLPSwQ2l5G0Wp
-	 4Vt8IqdxtiMF48Zb2whkCSzU/hKQFYHasZJYlAMiFeNJMcRGiVc06XGUpQR0pth5A/l1p
-	 FxfmNvLbMXLIbfKhy37CJrgeaJs/gvwEMgfk99NnkmtxFbM5KZKoOCkC4vZ51SF6g1BuY
-	 TBMUM3X46g7P3m5bl3vmFvE+P3O3ijOGUYG2exDqQahBNeEQknAs16R5Avru4DOSVfg==
+	t=1794060857;
+	b=nbHdoFEDa5vybwOfObhJh4540MoHb6r+nm5a4RtRccDSCkOO7omwMidiKJ1ddNpEiJ9y
+	 IB+sAGkmKGeZtCGOlxTGbHqpfZu2nQ93lsnBrdW0Nvv46Bv8sv+RJcCJB6dDYs7YnX8tS
+	 wc8NbbJNGSeCQbzeflI5yBpwh3j3j4SRf4zXaiY+QgjnPkLQP869mTwK1XDjSLeoN/Bye
+	 RxQ51DmDbDKkYyMYnkCmoSAWpjmln0Wb1HgY22K3ujxxTmKG1dd44PGGmkVt2oDskKVzz
+	 8w13qkPcgU1EbbVQf3LvNRUghI0q1JOtO5mTQd5SDuDDWKRUvLqYmwZc++9qulhTiKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060857;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vo3Vw54tJVCF1E75b4x60phq7cbrQ51xIFcCna3AgTk=;
-	b=utKM4yo7CAsxIzuIuPARcwWYTuXSuuY0HK2ywIaZedOLrAedlBNioSXen8CsiUAV99y4
-	 ahWsxjuus360sZBtVD91yQLbV0w3XeDHr8r0sEWYfdFXlzbMjH4QLBausmVI0nS814Ovq
-	 FAqIIFB9PqERBH/XxhT5la1I6cT2fvLcYu9uTOa25HQ/IaFt9SNg5A+vv/ipm7yMvn+2N
-	 rU/Dd4JxRaM5nNUcB14BJyR6FI/K+/2zmQj0z57pyz5rX8SB6R42xW5Elostl3no14Y/g
-	 +IWuXRwPR2RHdpsmC/wlFC7BSH0eL4uZI2bxSmOUbRCxajT2+1cg91rxa7qYhYrWPaQ==
+	bh=X7uuoQFJMj9L1T9xmmtJ22GHV3lwukAnMHLjBZYYfwE=;
+	b=qqPWwbgratSPP5llTwenOfbo2zxa4l3eieYgqqNCXsYAecZ1IczU+oGfp9bp2ShdwLIl
+	 QzVru1fq1VcWZYwU5attqg0yp2a2t6/ipZK4R0yx/ySPsC9s8mawFKWM9HRJ7ADNnjEfM
+	 hBwWZN4BNByxYRgu2rvIYfQhW7VqaENoBhc5KBjucDIEoSEdobXDNpwvFWZQGnozApjsc
+	 /czSUQEx4oe4HmKaBJwGqEs70Km8KO5b2HvT7ZVvL95aqaprB5bqANaarELW71c2jwgpJ
+	 +62oSWpVUbFucmSL8U/hJGqDgrOXIUW8Tgcf0LCQN0g1Z28JVpcN9V7Gh73elOVs7Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sh0oNqVA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mxd6SoKp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D751606A330;
-	Sat,  7 Nov 2026 14:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966AB606A330;
+	Sat,  7 Nov 2026 14:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sh0oNqVA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3ACA1F0089F;
-	Sat,  7 Nov 2026 14:14:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mxd6SoKp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFBE1F008A1;
+	Sat,  7 Nov 2026 14:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060856;
-	bh=vo3Vw54tJVCF1E75b4x60phq7cbrQ51xIFcCna3AgTk=;
+	s=korg; t=1794060857;
+	bh=X7uuoQFJMj9L1T9xmmtJ22GHV3lwukAnMHLjBZYYfwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sh0oNqVAEV6p7TF/ijoPJn31I9OA5wpxVTo0nMYOhcWRbkQEuZp22dg1tpiOndJ7S
-	 AQayTP3LNnE/bDxmcMwLLZZqwhnqu5VHlNo3vff+8RH2h6hqakbDkGc5v9fexkixW0
-	 SED9YSFiQobngspx09FxvZvguWro58cKOuSbGYzs=
+	b=mxd6SoKpLDorjLv0Ahn4vI5FhvqXGvwkg0KoaOiZirM2PvovOYFlr6eKSAyyC3iB0
+	 OLYGAJpyW4ixmPm/wCvhZJN32qZqg5q2RaXT+iaR0PJBYJzxQj3fhIpYAkNP5KrG4v
+	 JZ9EPN9FPcRl5+NgJ3VYJamAliF8DXBILdtG5ZXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Hari Mishal <harimishal1@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0240/1536] nvmem: brcm_nvram: fix out-of-bounds access on malformed flash data
-Date: Sat,  7 Nov 2026 08:37:36 -0500
-Message-ID: <20261107135004.414131899@linuxfoundation.org>
+Subject: [PATCH 6.12 0241/1536] virtio_console: take a kref in find_port_by_vq() to fix port UAF
+Date: Sat,  7 Nov 2026 08:37:37 -0500
+Message-ID: <20261107135004.446306609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,53 +67,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit a67e2c323a47a2254ed3472b5e4c53abac20f116 ]
+[ Upstream commit 18dd0b4e489e4f0e3b748cf36ccb909c75a3efab ]
 
-The length check in brcm_nvram_parse() validated header->len against
-priv->nvmem_size (the full partition size) instead of priv->data_len
-(the actual allocated data buffer). A malformed flash partition with
-header->len between the two would pass the check, causing
-brcm_nvram_add_cells() to read and write priv->data[len - 1] beyond
-the heap allocation.
+find_port_by_vq() returns a raw struct port pointer without taking a
+reference on it, unlike find_port_by_devt_in_portdev() which does.
+find_port_by_vq()'s only two callers, in_intr() and out_intr(), run as
+virtqueue interrupt callbacks, entirely independent of and possibly
+concurrently with unplug_port(), which itself runs from a workqueue when
+the host sends a VIRTIO_CONSOLE_PORT_REMOVE control message.
 
-Also add a minimum bound: len < sizeof(*header) could underflow the
-data[len - 1] access.
+unplug_port() removes the port from portdev->ports under ports_lock,
+then later drops its last reference with kref_put(), freeing it via
+remove_port(). find_port_by_vq() also walks portdev->ports under
+ports_lock, so if it finds the port still on the list, the list removal,
+and therefore the eventual kref_put(), has not happened yet, and taking
+a reference at that point is always safe. Without doing so,
+in_intr()/out_intr() can be left holding a pointer to a port that
+unplug_port() frees on another core before they are done using it.
 
-Fix both bounds by rejecting len outside [sizeof(*header), priv->data_len].
+Both triggers are host-controlled as the host decides when to send the
+PORT_REMOVE control message and when to kick the port's data vq. So a
+malicious backend could race the two on purpose, without any guest side
+cooperation. The freed object is a generic kmalloc allocation containing
+a wait_queue_head_t, which in_intr()/out_intr() pass to
+wake_up_interruptible() after touching the stale pointer.
+wake_up_interruptible() invokes a function pointer read out of the wait
+queue's entries. If the freed slab slot is reclaimed with attacker
+influenced content before that call, then this is an arbitrary function
+call primitive rather than just undefined behaviour.
 
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260729094647.111468-14-srini@kernel.org
+Take a reference in find_port_by_vq() while still holding ports_lock,
+matching find_port_by_devt_in_portdev(), and release it in in_intr() and
+out_intr() once they are done with the port.
+
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Link: https://patch.msgid.link/20260717150622.23636-1-harimishal1@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/brcm_nvram.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/char/virtio_console.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvmem/brcm_nvram.c b/drivers/nvmem/brcm_nvram.c
-index 6a142f8feac39..3e85b6e6447ca 100644
---- a/drivers/nvmem/brcm_nvram.c
-+++ b/drivers/nvmem/brcm_nvram.c
-@@ -192,9 +192,13 @@ static int brcm_nvram_parse(struct brcm_nvram *priv)
+diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
+index 75ba23fa2187b..7559ecb9b4d90 100644
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -303,6 +303,12 @@ static struct port *find_port_by_id(struct ports_device *portdev, u32 id)
+ 	return port;
+ }
+ 
++/*
++ * Finds a port by the virtqueue and returns a pointer to struct port
++ * with the reference count incremented.
++ *
++ * Callers MUST decrement it when finished.
++ */
+ static struct port *find_port_by_vq(struct ports_device *portdev,
+ 				    struct virtqueue *vq)
+ {
+@@ -311,8 +317,10 @@ static struct port *find_port_by_vq(struct ports_device *portdev,
+ 
+ 	spin_lock_irqsave(&portdev->ports_lock, flags);
+ 	list_for_each_entry(port, &portdev->ports, list)
+-		if (port->in_vq == vq || port->out_vq == vq)
++		if (port->in_vq == vq || port->out_vq == vq) {
++			kref_get(&port->kref);
+ 			goto out;
++		}
+ 	port = NULL;
+ out:
+ 	spin_unlock_irqrestore(&portdev->ports_lock, flags);
+@@ -1709,6 +1717,7 @@ static void out_intr(struct virtqueue *vq)
  	}
  
- 	len = le32_to_cpu(header->len);
--	if (len > priv->nvmem_size) {
--		dev_err(dev, "NVRAM length (%zd) exceeds mapped size (%zd)\n", len,
--			priv->nvmem_size);
-+	if (len < sizeof(*header)) {
-+		dev_err(dev, "NVRAM length (%zd) too small\n", len);
-+		return -EINVAL;
-+	}
-+	if (len > priv->data_len) {
-+		dev_err(dev, "NVRAM length (%zd) exceeds data size (%zd)\n", len,
-+			priv->data_len);
- 		return -EINVAL;
- 	}
+ 	wake_up_interruptible(&port->waitqueue);
++	kref_put(&port->kref, remove_port);
+ }
  
+ static void in_intr(struct virtqueue *vq)
+@@ -1754,6 +1763,8 @@ static void in_intr(struct virtqueue *vq)
+ 
+ 	if (is_console_port(port) && hvc_poll(port->cons.hvc))
+ 		hvc_kick();
++
++	kref_put(&port->kref, remove_port);
+ }
+ 
+ static void control_intr(struct virtqueue *vq)
 -- 
 2.53.0
 
