@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061057;
-	b=crcPSG5GiQ1AEKGvmLhLwCnSl7JU3nCphwUlUxzOFH08O3c1lqXYOtdFJayoGrUhkQ3G
-	 uZrLyivDAmUfGgU6ybBm8kniOX/QL4yewNEnbioBU03vNFkpgGUajnraNNEGqYFuPARTm
-	 u4YDnlhPNfobNuHH58c9+HaXumw6Cn0bciYBhEWVL/SB4LwK+/piY9wdcP0zxxmf4uTfp
-	 MYlmGSrXb4luaubetzB/EkAipKPJAYJ44D279AxZC+ua4qqTcyQT7ltP/+TFGmBL7rvra
-	 PLhVkag+7qAHksZSfTNq9ArqNC6Il78Gfha9t8jtpbKVcslw5oW5PdfFnzuN4tPqcXg==
+	t=1794061058;
+	b=A6Jwj4aluGLz1cK51ql/OC+2OP6p9eE2dW3dMgubEbpx0yumrLPWxfrsiQ6XyoXFp8iZ
+	 mH2xp9ngasRm4CoQYjRgXkZuKkvRznhKdZL8nupP5pB0ApzfCrxydJ7P9nM8ZrLTUTP6o
+	 8Mj+BimpDVmXlRF9Ta0Sl4AXyiu41eX332hm3MXOor7zBI2PXhRe6L45KtU2n5tVY2Ijh
+	 kjaNPHOyrJ99/zX3Q9f5azFjB1hpe1277uEZQaWeW2k6n1AagexjeyDJ/Z3SApFj+zp4Z
+	 OvseZBTr+8fxKxljSEGmVoizDP402BVFi/OztQ+NnlMRa1WT5WzjiUO7Sh+jXYiJN+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061058;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vrxarUSzikNWGt8kL+tmm2UBD3FLwmNC6n8ffTt5WbA=;
-	b=BpDcf1olP0bnd46R6qmzgx0aqVrKem9CTb/vvTAPJJzwXwp7SyFSU3LIZanVsGpIjsR9
-	 +yT2Wofr2dCrVv080kt25/MTLZuiZWjkL5zTL5fd2kLGiq9gsESzWk2RQRkKoO5SNOR5D
-	 As27wA0JhgLPkrEaxPn6RVXY63tI4y8x2zkW4QUfTYAdfUMvX1wQBB+xlEEbmNAR6rekv
-	 i/VOayk7iGtwdefAR9/Vuqif0lj5sjIy1c+AFUHM+5YnQQ7D1sP2f0AYGj9dNSHgCXv+u
-	 ZwSNissWX/z49NH1uUA6x2MjXRFUOly6CzMv42JtkdoLIw7It1vWg7+nEIcPj/THpwg==
+	bh=1PAQgp4x9e/+fUNFtHZx15J3E1Eme6hI6lBZZBTTHJc=;
+	b=MWTFurpEeVuN/HyTUm0YwqP9XOYgKI5SXbau3i/T+nrB1A/Z3YCpuoIB8J0UrvxXWjXL
+	 eu0va8Cwv4CdWChSyYZn1Z4jEZjPgP5c91HRK/zHmYRa6BRVHkl59vKlh4I6SBf3v2N62
+	 iUPDcHPjVcS941URdKVci1E4aYhRspnGMwziMDnldEI1nDXo1uEUby33FwzeBDYYn1QbI
+	 FlKT34jBhUf9/NT7AWK71CQZ2MCk/j3wFw+hcXdoRiKoRmDurDr/ZakJJt6WkgAAGQ35q
+	 cedoiamWdI5cICb7BS6fwhiFoNLGgNYg4N89xh3x3zaSj48sj1QPAh/BHkD+P8PLy1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0B+4Z1zT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IuwzztR9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC90606A339;
-	Sat,  7 Nov 2026 14:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF486082BC0;
+	Sat,  7 Nov 2026 14:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0B+4Z1zT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21001F0089F;
-	Sat,  7 Nov 2026 14:17:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IuwzztR9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198C81F0089F;
+	Sat,  7 Nov 2026 14:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061057;
-	bh=vrxarUSzikNWGt8kL+tmm2UBD3FLwmNC6n8ffTt5WbA=;
+	s=korg; t=1794061058;
+	bh=1PAQgp4x9e/+fUNFtHZx15J3E1Eme6hI6lBZZBTTHJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0B+4Z1zTsgkySiSPj0u7r4O3weeKxRM4/QSfVZZoEyzNhfHBvNYpuIpu2JSOl3f7T
-	 +ktL6TIUhDJOZoVOYgmDxXKW25bXMfFjksANLIIPDhEvCEZSgJZg0teqGyPeTkwQUo
-	 z6DLzPE/+TE7o7WU5ev3HBU69p+hCNjIJm5B4PtI=
+	b=IuwzztR9VZmN0O9FP6sLgtl+aGQZO2WwgwnbO6nTPGyvdfzbREP1GUHDE8Rd3SLhw
+	 2vtQseSFCBTBIG4lX1ALAGW/xIpe1dTVBWUaTU4185KpJXjX7p/42jIMGlV6o0MBU8
+	 NNk8jXx2Zo5eXvo01Y0/SWthuHP76uLwGXQSxlu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Md Rabbani <rabbanyhmm@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jack Yu <jack.yu@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0388/1536] net: stmmac: fix device node reference leaks in stmmac_mtl_setup()
-Date: Sat,  7 Nov 2026 08:40:04 -0500
-Message-ID: <20261107135008.508030303@linuxfoundation.org>
+Subject: [PATCH 6.12 0371/1536] ASoC: rt712-sdca: Pull high JD2 to prevent from entering TV mode
+Date: Sat,  7 Nov 2026 08:39:47 -0500
+Message-ID: <20261107135008.065787200@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,70 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Md Rabbani <rabbanyhmm@gmail.com>
+From: Jack Yu <jack.yu@realtek.com>
 
-[ Upstream commit 317fe168f4c0fc30e5c375c22d9c8911940aea9b ]
+[ Upstream commit dfb8bc1d286fd97b7cf47e3af5df84cfb068d214 ]
 
-In stmmac_mtl_setup(), q_node is shared across the RX and TX queue
-parsing loops. When the RX queue loop breaks early because the number
-of parsed queues reaches plat->rx_queues_to_use, q_node retains an
-acquired reference count. If the error check passes
-(queue == plat->rx_queues_to_use), execution proceeds directly to the
-TX queue loop, where of_get_next_child() immediately overwrites q_node
-with the first TX child, permanently leaking the retained RX child
-device node reference.
+Add a patch setting to prevent ALC712 from entering TV mode which
+may cause unexpected issues.
 
-Switch both loops to for_each_child_of_node_scoped() so child node
-references are automatically dropped upon loop exit or early break,
-and remove the now-unnecessary function-scoped q_node variable and
-its manual of_node_put() at the exit label.
-
-Signed-off-by: Md Rabbani <rabbanyhmm@gmail.com>
-Link: https://patch.msgid.link/20260821055718.57-1-rabbanyhmm@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jack Yu <jack.yu@realtek.com>
+Link: https://patch.msgid.link/20260820092415.2979641-1-jack.yu@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/soc/codecs/rt712-sdca.c | 1 +
+ sound/soc/codecs/rt712-sdca.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index b79826a61ec47..8a1c20135f031 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -131,7 +131,6 @@ static struct stmmac_axi *stmmac_axi_setup(struct platform_device *pdev)
- static int stmmac_mtl_setup(struct platform_device *pdev,
- 			    struct plat_stmmacenet_data *plat)
- {
--	struct device_node *q_node;
- 	struct device_node *rx_node;
- 	struct device_node *tx_node;
- 	u8 queue = 0;
-@@ -174,7 +173,7 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
- 		plat->rx_sched_algorithm = MTL_RX_ALGORITHM_SP;
+diff --git a/sound/soc/codecs/rt712-sdca.c b/sound/soc/codecs/rt712-sdca.c
+index 7a214d4a9105f..f48ebdf6b6226 100644
+--- a/sound/soc/codecs/rt712-sdca.c
++++ b/sound/soc/codecs/rt712-sdca.c
+@@ -1733,6 +1733,7 @@ static void rt712_sdca_vb_io_init(struct rt712_sdca_priv *rt712)
+ 	dev_dbg(dev, "%s jack/mic/amp func_status=0x%x, 0x%x, 0x%x\n",
+ 		__func__, jack_func_status, mic_func_status, amp_func_status);
  
- 	/* Processing individual RX queue config */
--	for_each_child_of_node(rx_node, q_node) {
-+	for_each_child_of_node_scoped(rx_node, q_node) {
- 		if (queue >= plat->rx_queues_to_use)
- 			break;
- 
-@@ -237,7 +236,7 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
- 	queue = 0;
- 
- 	/* Processing individual TX queue config */
--	for_each_child_of_node(tx_node, q_node) {
-+	for_each_child_of_node_scoped(tx_node, q_node) {
- 		if (queue >= plat->tx_queues_to_use)
- 			break;
- 
-@@ -290,7 +289,6 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
- out:
- 	of_node_put(rx_node);
- 	of_node_put(tx_node);
--	of_node_put(q_node);
- 
- 	return ret;
- }
++	rt712_sdca_index_write(rt712, RT712_VENDOR_REG, RT712_JD_CTL3, 0x7778);
+ 	/* DMIC */
+ 	if ((mic_func_status & FUNCTION_NEEDS_INITIALIZATION) || (!rt712->first_hw_init)) {
+ 		rt712_sdca_index_write(rt712, RT712_VENDOR_HDA_CTL, RT712_DMIC2_FU_IT_FLOAT_CTL, 0x1526);
+diff --git a/sound/soc/codecs/rt712-sdca.h b/sound/soc/codecs/rt712-sdca.h
+index 2169f2f726b9f..ebe81d68135bd 100644
+--- a/sound/soc/codecs/rt712-sdca.h
++++ b/sound/soc/codecs/rt712-sdca.h
+@@ -70,6 +70,7 @@ struct rt712_dmic_kctrl_priv {
+ #define RT712_JD_PRODUCT_NUM			0x00
+ #define RT712_ANALOG_BIAS_CTL3			0x04
+ #define RT712_JD_CTL1				0x09
++#define RT712_JD_CTL3				0x0b
+ #define RT712_IO_CTL				0x0c
+ #define RT712_LDO2_3_CTL1			0x0e
+ #define RT712_PARA_VERB_CTL			0x1a
 -- 
 2.53.0
 
