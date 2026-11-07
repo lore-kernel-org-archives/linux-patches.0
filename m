@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061649;
-	b=J2J5SGgKYjbBvdHAgu7i8a5IDK6OihCiuf9lbcSXLM6o+w53vtilfaO6k4VofkEJsgzc
-	 BYZpvxOSoOvoAev+a6od5v7937uUMatoDaab9rbuZsYe/LmZ55tIc/lX1uBawjWDfQvHC
-	 ZAqQTEdtoau31hCzQ9atv41emwR2Wv/JbuQcacEhJ0sqM0Xld2JOFDKzfjX/sdj22MOva
-	 juJUtqHKbRWED1BUdjPag/tQ6a+8/xqOlqChmwammbObQJBa5UipwlKql6kYQnvld0J1Z
-	 JOGzdAw8GhmY1sQeFAbHhwsBl1gCkMFBYyUmMicDYJGHw7LGnAWUsMxTCeaJe4lJAXg==
+	t=1794061650;
+	b=YUd3CH6FrCWVzFOgQVT3djckCy8qjN7XXGubDRlOSHjtkHxgREWBnBYHva7R6nyLeExA
+	 O1HSJwHU8AECGgoBsRxE9pb04q3iCB+MtuZinnGqOJv6UYmvAn6al1n99wU9cW+SqVW1E
+	 thBlbADCXiIOk3t58u0IG09FiUKF2pk83XZ3qydm+31IZHiXGDxwoGqGdW9TNLUB4vtaa
+	 cbTRBCHKIf02/6uDpW0/eFdH/WPcugZPSaVZUGK/RUBwgJM+DTJOqRzVTi08rtiVaJ6uC
+	 0LYF3vxodurAgkSid+H6dWc25NRAsjduZxlTuqTghOIjcP/M3lHPsRPqnWZ0d6KX4KQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061650;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T7aBBXXeUPhAtS69KBxfgf/0TxdRbJSavdhc8090ycc=;
-	b=MpWsWh4pTPq9kpVKicloM9T5X+HF6dNhVk2TWhtu++D3j3BIibYOsHxdeu3ZO816woUx
-	 +d0RvXQRMa6UjUVn8pGm4bUz6k1eWuGSfeVkmfy54bjn3oTZ1RkdOybt4sdSJxZp9B3BD
-	 53B2s9IqBCQIdCIxFgkpwZe6H690XCk9qpHy0kPvueN2A7Xp52Tqev7rIrRUjRCv1S7HT
-	 zNWTklUTm+08HcLh8wbcmTEAlryvr5pz2i+bK8A0ZnrzfM9Qrg3IxOdwpQOURywRa4Hyc
-	 +Mh+XPZjDtI4HUsgi9kaWiQo5M9roozkAXH4KcnyZemo71mRt8FDgHqfywTD+cinQuQ==
+	bh=QYJz2GlSByTiODk9Qn0VAoaRPdyEiHklQly+rx9T+bc=;
+	b=klEBUBhP9y0uWezrg62hvhwYCkb6yEfyDGnBmF9xkOOG6nSVl0HajT2qojyCpBI6PrWi
+	 e84y0ILKZ4LkaJCKpZJ2ui01DtwwyY5cu4fBAYok/r4tz5I7MDmFMLsScjDDkj7POCH2i
+	 fDdb/6I3JOU8ixkaGcx3wb0TH6aD9NYkOdgqs8Que5HNWmrditWMpq0Lwr5k5+oDPBndo
+	 5UqBkc/du1GEjYrMGumXnZ5mpa0m6Pz+VcWSCydPm0dsm2bXR2xTph38m9F/NYBteJBuX
+	 RA5vVx6E9cl6qNWqoHCbvjyHr1aiCdBX03RbIL14gS7hOU4a6NLkThnnffVwy8ZmLrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OCSbi948;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=huf5ety6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CE6606A333;
-	Sat,  7 Nov 2026 14:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE340606A33B;
+	Sat,  7 Nov 2026 14:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OCSbi948
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDF21F0089F;
-	Sat,  7 Nov 2026 14:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=huf5ety6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2BD1F008A1;
+	Sat,  7 Nov 2026 14:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061648;
-	bh=T7aBBXXeUPhAtS69KBxfgf/0TxdRbJSavdhc8090ycc=;
+	s=korg; t=1794061649;
+	bh=QYJz2GlSByTiODk9Qn0VAoaRPdyEiHklQly+rx9T+bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OCSbi948U9+iQxbPRBESDLziNmi7x+Du7EcEEN/sMHeAWbygKM2CR6atOmLkzUTPt
-	 tb7j/ElnFGny3z7w63l8oE3FrfX40rSnQKx6TdBPows7nP+lR1NSGq/J3YkJD+WYTI
-	 5urJ9nNxRr6dL7OnM/WIh3EBGk2ejuoTiI396JKk=
+	b=huf5ety6llhZLZ1S1+HQ5JOvPCYhRKSy/BM+lubUOvvKwCLrx627M5vK8Z6RC2U69
+	 SaHV+MmvZthaq8VB9/eKZbh5vWyp3oBa1K3dGEjNfH2gFZPaTJ2TU4RNeRAg0Rwb4o
+	 petzWluvxLdJZ48MekeIqVfUaaWJZZqohEWVcu6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Sinyavin <sinyavin@gmail.com>,
-	Janne Grunau <j@jannau.net>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.12 0660/1536] nvmem: core: Fix OOB read for bit offsets of more than one byte
-Date: Sat,  7 Nov 2026 08:44:36 -0500
-Message-ID: <20261107135016.056962130@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.12 0702/1536] xfs: fix skipped inode mask handling in iscan
+Date: Sat,  7 Nov 2026 08:45:18 -0500
+Message-ID: <20261107135017.210653742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,47 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 24530401e8001aaa637dd5007fcdc6fbc00300be upstream.
+commit 63341d4af16fe850716b454fcd18990590d07d97 upstream.
 
-When the bit offset is BITS_PER_BYTE or larger the read position is
-advanced by `bytes_offset`. This is not taken into account in the
-per-byte read loop which still reads `cell->bytes` resulting in an out of
-bounds read of `bytes_offset` bytes. The information read OOB does not
-leak directly as the erroneously read bits are cleared.
+xfs_highbit64() returns -1 if none of the bits in its argument are set.
+In this particular callsite, a totally zeroed mask means that no inodes
+were skipped, so executing the if-body is incorrect.  Fix that.
 
-Detected by KASAN while looking for a use-after-free in simplefb.c.
-
-Cc: stable@vger.kernel.org
-Fixes: 7a06ef751077 ("nvmem: core: fix bit offsets of more than one byte")
-Tested-by: Dmitry Sinyavin <sinyavin@gmail.com>
-Signed-off-by: Janne Grunau <j@jannau.net>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20261002101329.1084348-5-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org # v6.9
+Fixes: 82334a79c6eb1c ("xfs: iscan batching should handle unallocated inodes too")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/iscan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -1626,12 +1626,14 @@ static void nvmem_shift_read_buffer_in_p
- 		*p = *b++ >> bit_offset;
+--- a/fs/xfs/scrub/iscan.c
++++ b/fs/xfs/scrub/iscan.c
+@@ -545,7 +545,7 @@ xchk_iscan_finish_batch(
  
- 		/* setup rest of the bytes if any */
--		for (i = 1; i < cell->bytes; i++) {
-+		for (i = 1; i < (cell->bytes - bytes_offset); i++) {
- 			/* Get bits from next byte and shift them towards msb */
- 			*p++ |= *b << (BITS_PER_BYTE - bit_offset);
+ 	mutex_lock(&iscan->lock);
  
- 			*p = *b++ >> bit_offset;
- 		}
-+		/* point to end of the buffer unused bits will be cleared */
-+		p = buf + cell->bytes - 1;
- 	} else if (p != b) {
- 		memmove(p, b, cell->bytes - bytes_offset);
- 		p += cell->bytes - 1;
+-	if (iscan->__batch_ino != NULLFSINO) {
++	if (iscan->__batch_ino != NULLFSINO && iscan->__skipped_inomask) {
+ 		highest_skipped = iscan->__batch_ino +
+ 					xfs_highbit64(iscan->__skipped_inomask);
+ 		iscan->__visited_ino = max(iscan->__visited_ino,
 
 
