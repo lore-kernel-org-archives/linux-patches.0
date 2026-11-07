@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062700;
-	b=3i3FnBpPUaoXdR61Frn1/gV2JbCG02BIoJlmbjcdl8Zqfi49EHVE5HihEXMnFuGBDeRj
-	 oEepdg+FBAQqUylZv8iN6l0HmBPZaeAbWUkCCwzGUC9yOk7t1dwVGTAo8HuLD7GjaGoeq
-	 XmVwAzn09qHhGYvhFVNNSiJj5sWmvYGqwmWz9wp+AADD6tH7sxDHv1vuc+vDR4mFFCXqE
-	 OBqDGgid9Iw5IgZHKfuFKSeYuoRD6cJAIESFrNPVGjJvBXPvXkk/NQccU4NxGRzxFPUQ0
-	 9LcldajjIeqNyBSVtyjz6Z6ZnhALHDUrpHlA8nitGuuHxw4t06B+3oH5GoT4Vjg8uEA==
+	t=1794062701;
+	b=4uhTu/HDcqZ0EEdkFKA1tSBWx4MrPNZGWYAyxuAZ/UpqIdYAQlBWyleanE5DNPGhJQ14
+	 YkArIJmovUw3YeshMcj3djlAjVRi6IaffyAqz7Z1FpsKNgGwkgfDjWzcdcuiZYKMX51NR
+	 jJqjAT5mSPckohV4pt+2lQRucLPjTWkMHI1pSKnIMwBI7yrImqRfLwfvj2t6431+J/zQ8
+	 HVwnDapAYAfnaL/H+9QbopcFhxvsLL/DFkyrU2XAXjFbqHM85E1QeBJNZINxLb8yz8Fdi
+	 KzjC7HulbKkXDLjP/sSbceWd95Ucrq7IAQHRzsAJsYQpqM7T1E0LxPJczs28tl6SmaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062700;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062701;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0wzeTcRBnWsM9ouKePO356YuJTyRq1O/5/bFQ+SC1mI=;
-	b=p4IS1aeJoc+AuaANMigtnqgQd71Wng0E267u66LU+EubKi08OCTI0XCoUni8xLcN8i9s
-	 IFwmFJRg/12mMfTSUgqara1DghCKTIQT7UMF/bvvAf05ZPhtq2lEG7FOy9nDHcb5KUqhn
-	 EhGoUEd6qMa679wd3aFEzKTMRQtNCitNDfbF9rc4jMexUSJE9/9K+tZF9Dw6YxaUypmAS
-	 jHW3BOeytg8POwFcABKcZhq9izIP3wTZP2Wq6eLlUDN/Ci5o10BcZB8NmBl8IWLB6zdzr
-	 wxtWWPq8ZJ564sHxqXZU99xUT3i2RMqKMnn/6mG/Fq3gJfPrL84iHoz1ElsHTroDF7Q==
+	bh=VKBykAa/TxtSlX4pPZ+zhq08Lxn42IWranMiS+s7cyQ=;
+	b=SRFjTmVm3o6ggBnNcMk8qRYyiO7nnnKT5DQMqRfs3IZJ1ZXcqitqFS8wSbKd35XXyvt5
+	 wQo8dPQjcWP/VS+GgE8reKWTOlU+zTGPX2LOZx3N4Jo7cLfXx2SmGMozRL9XBDo4uO603
+	 xpCeHG0wAczfEXhein2vHAl20D7wv6+j5/aiXskm4HetyM7nt+BurFF5pEGZNZuGoNZ8G
+	 K4WzzXSrn0dfa1hEnrZLMioD6hpvwXQ1jf4KwPc0pmt3qS+9hIhPj8uLkpDxtlwDE5QwT
+	 tvO2qQokIhSktSB7Y92vC8Wv+R3BeKS54qvnCdTbzpNinuDOhmF3vuC9MiYdYBpVy3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VyeSsTAY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2reluQF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B724F606A326;
-	Sat,  7 Nov 2026 14:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110B2606A32F;
+	Sat,  7 Nov 2026 14:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VyeSsTAY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671101F0089F;
-	Sat,  7 Nov 2026 14:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z2reluQF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E891F0089F;
+	Sat,  7 Nov 2026 14:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062699;
-	bh=0wzeTcRBnWsM9ouKePO356YuJTyRq1O/5/bFQ+SC1mI=;
+	s=korg; t=1794062700;
+	bh=VKBykAa/TxtSlX4pPZ+zhq08Lxn42IWranMiS+s7cyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VyeSsTAYRn8BlOh1NN8azRP9fYFMJf3SemFSR9maJLpOgSlPCFlX88AMJkv7zX2f+
-	 eEMgiKjqj0UqDQHmvqCN8NBQdvKCqX7nFsholUCmzIZP4SAHE8rnBZcH0XljALrkdm
-	 WuZl0k8n6hUBUvZ5Rez9Mhwf35WYemUp5jB754y8=
+	b=z2reluQF6M04Z7AirOb09FG4RXNNcnqC4/XBTYfxwweFyk9m9WFFmY7vH507/d7u7
+	 L8rRsXl0HDAeL+6bAMMpEEqgR8LNgzxx1gXGyEj9gbENf00tre4bRRwbt9IMNWMTpj
+	 gtBlQewc8+7NOr/6tWd66rxQyKwOypqbpI4Xv2lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Marek Czernohous <marek@czernohous.de>,
-	Lyude Paul <lyude@redhat.com>,
+	Tianchu Chen <flynnnchen@tencent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 025/869] drm/nouveau: cancel the DP IRQ work before freeing the connector
-Date: Sat,  7 Nov 2026 08:45:07 -0500
-Message-ID: <20261107134852.943850020@linuxfoundation.org>
+Subject: [PATCH 6.18 008/869] staging: rtl8723bs: fix protected RX frame validation in decrypt path
+Date: Sat,  7 Nov 2026 08:44:50 -0500
+Message-ID: <20261107134852.317779995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,63 +67,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Czernohous <marek@czernohous.de>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-[ Upstream commit f60849975a886d70883bcb6b3658c0fa83c6971f ]
+[ Upstream commit 495cb31c791bdf3f9efef255a9587b05b0526c9d ]
 
-nouveau_connector_destroy() tears the two nvif events down and then
-frees the connector, but never cancels the work the IRQ event queues:
+The RX software decrypt path mishandles crafted protected frames from a
+malicious AP in two ways:
 
-	nvif_event_dtor(&nv_connector->irq);
-	nvif_event_dtor(&nv_connector->hpd);
-	kfree(nv_connector->edid);
-	...
-	kfree(connector);
+1) decryptor() never checks that a protected frame is long enough to
+hold the 802.11 header plus the per-cipher trailer.  All of
+rtw_wep_decrypt(), rtw_tkip_decrypt() and rtw_aes_decrypt() compute
 
-nouveau_connector_irq() queues that work unconditionally:
+	length = hdr.len - hdrlen - iv_len;
 
-	schedule_work(&nv_connector->irq_work);
-	return NVIF_EVENT_KEEP;
+and act on the result, and recvframe_chkmic() similarly computes
 
-A DP IRQ arriving just before nvif_event_dtor() therefore leaves
-nv_connector->irq_work on the system queue past the kfree(). When it
-runs, nouveau_dp_irq() derives both nv_connector and connector from the
-work_struct and dereferences them, and goes on to take
-outp->dp.hpd_irq_lock.
+	datalen = hdr.len - hdrlen - iv_len - icv_len - 8;
 
-There is no cancel_work_sync() for irq_work anywhere in the driver, so
-nothing else covers this. Add it after the event teardown, where no
-further work can be queued, and before anything is freed.
+for TKIP (the 8-byte Michael MIC is not accounted for in icv_len).
+A frame shorter than hdrlen + iv_len + icv_len (+ 8 for TKIP) underflows
+these unsigned subtractions, turning into a ~4 GiB iteration count in
+aes_decipher()/arc4_crypt()/rtw_seccalctkipmic() or a ~4 GiB crc32_le()
+length, causing out-of-bounds reads/writes of up to ~4 GiB starting from
+the rx skb.  Reject such frames in decryptor() before touching the IV;
+this covers all three ciphers and the TKIP MIC check, and also keeps the
+unconditional iv[3] access within the frame.
 
-Reported by the Sashiko review bot as a pre-existing issue, in its review
-of an earlier nv04 FIFO series of mine, and confirmed against the source.
+2) validate_80211w_mgmt() keeps using the frame - two memcpys through
+the stale rx_data pointer and a pkt_len update - before checking
+whether decryptor() returned NULL.  On decrypt failure (e.g. a unicast
+protected deauth/disassoc/action frame with a bad MIC, which this path
+always software-decrypts) the skb has already been freed, so this is a
+use-after-free read/write, and the caller's error path frees the frame
+a second time, drifting free_recvframe_cnt.  Bail out immediately when
+decryptor() fails, freeing the temporary mgmt_DATA buffer first.
 
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260812231330.705425-1-mczernohous@gmail.com?part=1
-Fixes: 773eb04d14a1 ("drm/nouveau/disp: expose conn event class")
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Marek Czernohous <marek@czernohous.de>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/178682366002.3748010.4096452389040554615@gmail.com
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/8ee3bdd1c45034200cb1aa9a7e9b575b9584643a@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_connector.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/rtl8723bs/core/rtw_recv.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_connector.c b/drivers/gpu/drm/nouveau/nouveau_connector.c
-index 7c6d91ee2722d..f9662e067c56c 100644
---- a/drivers/gpu/drm/nouveau/nouveau_connector.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
-@@ -397,6 +397,7 @@ nouveau_connector_destroy(struct drm_connector *connector)
- 	struct nouveau_connector *nv_connector = nouveau_connector(connector);
- 	nvif_event_dtor(&nv_connector->irq);
- 	nvif_event_dtor(&nv_connector->hpd);
-+	cancel_work_sync(&nv_connector->irq_work);
- 	kfree(nv_connector->edid);
- 	drm_connector_unregister(connector);
- 	drm_connector_cleanup(connector);
+diff --git a/drivers/staging/rtl8723bs/core/rtw_recv.c b/drivers/staging/rtl8723bs/core/rtw_recv.c
+index 9f9d80e42e4db..f8ade0bea1da0 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_recv.c
++++ b/drivers/staging/rtl8723bs/core/rtw_recv.c
+@@ -437,8 +437,21 @@ static union recv_frame *decryptor(struct adapter *padapter, union recv_frame *p
+ 	u32  res = _SUCCESS;
+ 
+ 	if (prxattrib->encrypt > 0) {
+-		u8 *iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
++		u8 *iv;
++		u32 min_len = prxattrib->hdrlen + prxattrib->iv_len + prxattrib->icv_len;
+ 
++		/* TKIP appends an 8-byte Michael MIC that icv_len doesn't account for */
++		if (prxattrib->encrypt == _TKIP_)
++			min_len += 8;
++
++		/* a protected frame must be long enough to hold the IV and ICV/MIC */
++		if (precv_frame->u.hdr.len < min_len) {
++			rtw_free_recvframe(precv_frame,
++					   &padapter->recvpriv.free_recv_queue);
++			return NULL;
++		}
++
++		iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
+ 		prxattrib->key_index = (((iv[3]) >> 6) & 0x3);
+ 
+ 		if (prxattrib->key_index > WEP_KEYS) {
+@@ -1411,6 +1424,10 @@ static signed int validate_80211w_mgmt(struct adapter *adapter, union recv_frame
+ 			if (!mgmt_DATA)
+ 				goto validate_80211w_fail;
+ 			precv_frame = decryptor(adapter, precv_frame);
++			if (!precv_frame) {
++				kfree(mgmt_DATA);
++				goto validate_80211w_fail;
++			}
+ 			/* save actual management data frame body */
+ 			memcpy(mgmt_DATA, ptr + pattrib->hdrlen + pattrib->iv_len, data_len);
+ 			/* overwrite the iv field */
+@@ -1418,8 +1435,6 @@ static signed int validate_80211w_mgmt(struct adapter *adapter, union recv_frame
+ 			/* remove the iv and icv length */
+ 			pattrib->pkt_len = pattrib->pkt_len - pattrib->iv_len - pattrib->icv_len;
+ 			kfree(mgmt_DATA);
+-			if (!precv_frame)
+-				goto validate_80211w_fail;
+ 		} else if (is_multicast_ether_addr(GetAddr1Ptr(ptr)) &&
+ 			(subtype == WIFI_DEAUTH || subtype == WIFI_DISASSOC)) {
+ 			signed int BIP_ret = _SUCCESS;
 -- 
 2.53.0
 
