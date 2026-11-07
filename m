@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060849;
-	b=19gGPPD8kgmuzyNqHVqD4MKsIW0oG4u6aH119iLfzLRTyB85KJ1QH5Pklg0TKOx84Lna
-	 d/5QQOQZmdvC3v4FSWcnkH5ZTf4h5bLVNYeViPJDB2VM1d+zS508/KpaY8UimwDBLMHCd
-	 zKQw7QzEfhBVW3sFq9kdjcyMXXFKiGdSxwUas9k3W/xV2n9m2Q9ZZfbNHPNjrx5kZNuz0
-	 XtZJV4V5OXM1ojezui0HcrLfwtIeVF87tD6GifNwPsemLcY8OnOkCp0GvjfYAeI1yVr/s
-	 lFRhkRWzMBWmxdDENORRzYx48DXfWiBAb6I0+D/hr2Lfw5ltXDmPGsrUD4qJKajooTA==
+	t=1794060851;
+	b=SRPnVnZ5i/tv4JGovf/ScvxnJ2ygxIOdj0tnjGYh+FnBd1Fo703liNSc2RWc6YxR/obd
+	 77CgVtLqHiJ7kwlYua/WYhDIyQXZdJo/rTW2cQ0D3LcP9A8xxuQI2MmedA20IcdohxRwI
+	 l3GAEUiCnyKvzQTHcpMRBNYkbSL/BlUuPZdgxK1fJ3BEyetKrH3fWyH+6L4VTkl4KfNSz
+	 tsFazZvg3me7zW5GjVUoe8hYFQ8SKR0xfDC73gH2brjXxPVadMf0laIk/bYhikUrmUTE/
+	 Mx2ol+wNS6eSVQPYR3f9nYoGEhdG4LSbg34C5+yyTMj+AxFnM+HY5uQFKnvRppvtzRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060849;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060851;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7yZqmQoAQLCq9roUVhGanOET4j0qUzliAMIY+eOy23M=;
-	b=l5OZ7uVCgnzSNQBL5qotc4rLBtc35qEGU9vsM+burzhOfuBOUau4jKLXctRU1Sljp4t2
-	 G91iStC32ziY5gRwrttZqKYXuyPpg9rRlcxncj8Qsob+gf+pef908/y/A2MUNvfTOteur
-	 pVbDzFzvAgFYE7cy31Casyt5tWPLlH0ogmlvDDwGbxWJfIHOqC8gSkBOYg7OcCMd/uFoK
-	 HGlbypTPv0tFsg0oLZHQ8rTmArrX5+eekxgn2y1brAbtlC8GBB+9rC8ZRVnjLlydW0iGb
-	 EZaP1BrLe336f1NHEdad4KjGLtmwRUiy6gdza83uEWrhkMeQHi2i+fqn4KJepw78URw==
+	bh=kFZqHNqUDTxY1IisTWWyZ7xNgjjOM/O1h8u4Dif9AHw=;
+	b=EnjBIz4rSz9W2fb+FCdRed6GsM4yXDYd6s1ePEdUqKEWpJfgohmtKGnf7aalNIjSE6Ld
+	 AuJ5yPw0xxZd/Rdd+YsZ+A02hXza76UHWJPud/KwLEuiUgw8QN9LKjYsIam76Wf3OaOs0
+	 lvpOwmMM+ff4dj9lsTzQX86mmtBMksmij6UMpY6S3+SGqJQLbtroeqdXAKQUgWrsAGDoa
+	 tNFwx0EOLskAlNN2G12JX1BnxTIYbxtkoIfQiNHgP+9SIYCVFM22dM39+Of9xCro4t5Iu
+	 UkBsYuHerAoV3pdgyxWZO1dkVxBh06sjSnwvwLJcNu0dV+LfjqJEiRsZyITwSPmE6Ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=welsnLC0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sAZ3++8x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C424606A326;
-	Sat,  7 Nov 2026 14:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF0F606D805;
+	Sat,  7 Nov 2026 14:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=welsnLC0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F321F008BF;
-	Sat,  7 Nov 2026 14:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sAZ3++8x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B311F00901;
+	Sat,  7 Nov 2026 14:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060849;
-	bh=7yZqmQoAQLCq9roUVhGanOET4j0qUzliAMIY+eOy23M=;
+	s=korg; t=1794060850;
+	bh=kFZqHNqUDTxY1IisTWWyZ7xNgjjOM/O1h8u4Dif9AHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=welsnLC0vr8wms3QrS8lge/BN/LsXAyJBrXvJg7xy6IenXQ5vY++vwNwUG/i9jiA0
-	 RYJxUIW71gtzEk6O7tLcZ2/8S7CFUkKfqb5YkOTKne9JrH5HUKxBVL6zypbykMy/4H
-	 L/dH+9xAFw3fukvgU4C++6yCQs/Zg+a/IEfxJrkI=
+	b=sAZ3++8xHU7BoqQ66LF7xrlrtAdkmM6R5YrLY9rTSYQcAdhLBNlB6AKiPzA0qxOj2
+	 7fR40xU9+Q20YZNY4b9f/tYI6URlKhJTnDeVw2wCPuEbhWvjWHfMDKXIghsaik42gW
+	 fnr9qIxck+ptfvEx+NXARjpnzFmUKepNcUAwV0rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Proshkin <oleg.pro171@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0236/1536] mfd: axp20x: Preserve other control bits when powering off
-Date: Sat,  7 Nov 2026 08:37:32 -0500
-Message-ID: <20261107135004.303164701@linuxfoundation.org>
+Subject: [PATCH 6.12 0237/1536] regulator: rt6245: Restore state on enable failure
+Date: Sat,  7 Nov 2026 08:37:33 -0500
+Message-ID: <20261107135004.331627693@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,53 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Proshkin <oleg.pro171@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 3756bf05c963563f1325af105356541882dd5899 ]
+[ Upstream commit e95a0a309ca02bf26dc937cdeb3fe2a235c65f63 ]
 
-axp20x_power_off() triggers shutdown by writing AXP20X_OFF (BIT(7)) to
-the power-off control register with regmap_write(), which rewrites the
-whole register and clears other control bits in it.
+Currently, if regcache_sync() fails after the enable GPIO has been
+asserted, the driver returns with enable_gpio still set high and
+regcache_cache_only() left disabled. This leaves the device state
+inconsistent with the disabled state, where the enable GPIO is low and
+cache_only is enabled.
+On failure, restore the original state by setting cache_only back to
+true and driving the enable GPIO low before returning the error.
 
-On the AXP221/AXP223 (and the register-compatible AXP228) - that
-register also holds the CHGLED auto-control bit.
-Clearing it during an orderly shutdown disables the hardware charge
-indicator, so the charge LED stays dark while the board is powered off
-and charging. Other variants keep unrelated configuration in the same
-register too.
-
-Set only the power-off bit with regmap_set_bits() and leave the rest of
-the register untouched. The shutdown register is readable on every
-variant, so the read-modify-write should be safe.
-
-Tested on a ClockworkPi uConsole (Raspberry Pi Compute Module 4, AXP228,
-which enumerates as AXP221): register AXP20X_OFF_CTRL reads 0x08 at
-runtime, so the old code left it 0x80 whereas setting only BIT(7)
-leaves 0x88. Writing 0x88 at power-off enables the charge LED
-while still powering off the PMIC.
-
-Signed-off-by: Oleg Proshkin <oleg.pro171@gmail.com>
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/20260611154629.76607-1-oleg.pro171@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260729100018.66577-1-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/axp20x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/rt6245-regulator.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
-index cbf1029d03335..f1dcff165f613 100644
---- a/drivers/mfd/axp20x.c
-+++ b/drivers/mfd/axp20x.c
-@@ -1231,7 +1231,7 @@ static int axp20x_power_off(struct sys_off_data *data)
- 		break;
- 	}
+diff --git a/drivers/regulator/rt6245-regulator.c b/drivers/regulator/rt6245-regulator.c
+index 1843ecec19229..5c0ee04e97ac7 100644
+--- a/drivers/regulator/rt6245-regulator.c
++++ b/drivers/regulator/rt6245-regulator.c
+@@ -49,8 +49,11 @@ static int rt6245_enable(struct regulator_dev *rdev)
  
--	regmap_write(axp20x->regmap, shutdown_reg, AXP20X_OFF);
-+	regmap_set_bits(axp20x->regmap, shutdown_reg, AXP20X_OFF);
+ 	regcache_cache_only(regmap, false);
+ 	ret = regcache_sync(regmap);
+-	if (ret)
++	if (ret) {
++		regcache_cache_only(regmap, true);
++		gpiod_direction_output(priv->enable_gpio, 0);
+ 		return ret;
++	}
  
- 	/* Give capacitors etc. time to drain to avoid kernel panic msg. */
- 	mdelay(500);
+ 	priv->enable_state = true;
+ 	return 0;
 -- 
 2.53.0
 
