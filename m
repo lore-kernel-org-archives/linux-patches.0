@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063918;
-	b=UBSMUUqjIyqbu2FfWgxvIDDYsTIyO3eMmAMFK1EGTTv1p0YVaCLgvuGOSoU7kMYTqdo/
-	 YcCzAXEaYSePGdEqzSfaqUs0fCC6PoUe7BJvP4ESIACFf50RBDoEDp+DHbUHjhaB1Ya6W
-	 f+QKOqWQ2Iku50xgdU4qkXYbtnpbCYt1JH3Lbx2KTBV4Gf1PfpT4yyOl8wBC9ePh9xLAS
-	 eupb/Du7PzF/vcswm8NHWQJX95tKZAcQUJqvBI9T2dFwxJABZ1LJFRdbtzrFee9CneFHU
-	 lESy8FsdAfTdc0S0DiNEniT55qNU9ukRs1pg0oqxfk4aLH6xaxJKyYG0GfUIu/gNvhA==
+	t=1794063919;
+	b=T0vtyn9RxKL/iyloJmdKkb24nLfUBGCctvjuxB+bAX8qByb7i7jJLNRqAqwQf8usBPzY
+	 oexHin23YsWjwF51OwCk8W4RSRDH/ou13YGoQ6TsP83+j5olei2O5kS8TMtHtmrY/VmKv
+	 q0S9tcBFj0V4y/qCLoDogRNqH3t2NTwbUTP4cIobQcW2R2FZa1GaSfTLJ7wz6upxzkrYu
+	 8GDppNKyaVTyA9cro9UcURuMyxc/bPS/k0Xl7dzYnNms9u3vrQzysNrU2BfOJhUrFF1xs
+	 yjm5g4HctdHCtT8bQtRH9jQLM2nm0GKAz0OXpt9KUQLMK3kVh12GvibzsREh7gRoRLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063919;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m1XjBtUVsajiSPN6eTNugYWT5fedzbOR4oBD8E7NAXk=;
-	b=vSZV1JNIO0UFpviKOyieYMaeUMaoqY0H8n230x9iPZfl3tEKw54PmnsZgHHNvYObojVP
-	 fhEEr/7/249ykQtgtlQ0vywYu7sjOs580gxfgNz4CmZi7PcD0+e7aKrFL9/fJcGLcMw+/
-	 hKZIRskPyUFR2MQj/2Dlu2lh4JW+ii/d8NBVQnqyTYAMCAGnMN0PVbNDxBfye4/C9+0V2
-	 BlnCHk3dAlHSHjEJsi/JehFwtMBhc6YmUE3gxBAHNUDA+YaT1AAnSxBRx7UqE2c0avMXi
-	 jeUuY952iTH2VdNs7E/XfCXgrmLMsj8QMzH9UsREqltE8/8WR02QpMqRHBugBNU0odA==
+	bh=O1lk7XeyKauQj8y4N5FE7VEGVNE+eMiTBSoRpyR1x64=;
+	b=fWXYCnmy0o8HdMscG8gT4NBgv1a9X/tM0OHcKQi2RAjOsjJsssI2Nkek8PV/gxCEB1Bc
+	 F0z/SLGTX9QoLPzO1pMKkDQe7AW2Pt56Qu9IjsBDctxM/MHgfomHUtcr/yQFj7KyfDy7v
+	 5eI9PsAaLEqBd74MduBSPllHUdP1VbShuWMF513Odk+1fRkiq6ya7uidZVO+k9YAekUWg
+	 z4/JT4Lz+ebfj+HJ/pYbGmmCr8UY2twNFUQpvVr4viaIgXnC/BKM2gP1z6m5Ac2/pQzx4
+	 ecpEiRyhCQTlSmEt9/Jpten+wibH4AUoeS6fvfhr5MXSmKfeoC5cQSBWrrPv3XlO0SA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDsA9ljt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHvMqOwy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF2B606E8E9;
-	Sat,  7 Nov 2026 15:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98ABB606E8E9;
+	Sat,  7 Nov 2026 15:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jDsA9ljt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147FD1F0089F;
-	Sat,  7 Nov 2026 15:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHvMqOwy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DF11F0089F;
+	Sat,  7 Nov 2026 15:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063918;
-	bh=m1XjBtUVsajiSPN6eTNugYWT5fedzbOR4oBD8E7NAXk=;
+	s=korg; t=1794063919;
+	bh=O1lk7XeyKauQj8y4N5FE7VEGVNE+eMiTBSoRpyR1x64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jDsA9ljt/cj7LkMQ/N84M9JARcM4VJb8FhIW+NrBXLB5L5uBiK5H+Pu4hYgBj4IPK
-	 kxn+u6nYsiUUUGJE3rJUJME/Q7A8DgBreMdJkXS9f32DgS5vQzFVEh3Z8D/gmUD/VI
-	 uRyph6k06ANwgz0xyCM/o/CwXuXG/D9CYR5PI9x4=
+	b=qHvMqOwynxsqveRTNnpm6WbRqcghSlPdUqoEhqxBBjQ/HIuuiOFue6+VLDuYxmcmN
+	 bAfLzLuGLZGFbLDaUXOQMsnwQWW+708MTtlhkS4r9Mw8zxCGV0oV5s5iFoYGUeLhLz
+	 Ey39t8cKuakjKANVSvsp5xRZxClgWj8NyuGrau0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Alain Volmat <alain.volmat@foss.st.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0114/1257] media: stm32: csi: correct remote pad retrieval
-Date: Sat,  7 Nov 2026 08:40:10 -0500
-Message-ID: <20261107134942.495991166@linuxfoundation.org>
+Subject: [PATCH 7.3 0115/1257] media: stm32: csi: unregister async notifier on cleanup
+Date: Sat,  7 Nov 2026 08:40:11 -0500
+Message-ID: <20261107134942.521033865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,39 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit b83651d321d4fd07979a59f359dcb0266391f17a ]
+[ Upstream commit 4957d480a0c87cf3d024e6ff1f57d1222f9212cb ]
 
-The function media_entity_get_fwnode_pad is called in order to
-retrieve the remote pad, which is the source of the CSI.
-However this function is expecting the sensor endpoint fwnode
-and not sensor device fwnode as it is currently given.
-Correct this by properly relying on the notified matched fwnode
-data instead of the subdev entity fwnode.
+stm32_csi_parse_dt() registers the async notifier before probe finishes.
+If a later operation fails, the error path only cleans up the notifier's
+connections.  It does not unregister the notifier, leaving its entry on
+the global notifier list after the devm-allocated csidev is freed.
 
-Cc: stable@kernel.org
+The remove path has the same problem.  A later async operation can then
+walk the stale notifier entry and access freed memory.
+
+Unregister the notifier before cleaning up its resources on both paths.
+
 Fixes: dcb0f4c16be5 ("media: stm32: csi: addition of the STM32 CSI driver")
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
+Cc: stable@vger.kernel.org
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/st/stm32/stm32-csi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/st/stm32/stm32-csi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/media/platform/st/stm32/stm32-csi.c b/drivers/media/platform/st/stm32/stm32-csi.c
-index fd2b6dfbd44c5..ecd0ed8e76b59 100644
+index ecd0ed8e76b59..78c68cf90ffcb 100644
 --- a/drivers/media/platform/st/stm32/stm32-csi.c
 +++ b/drivers/media/platform/st/stm32/stm32-csi.c
-@@ -825,7 +825,7 @@ static int stm32_csi_async_bound(struct v4l2_async_notifier *notifier,
- 	int remote_pad;
+@@ -1059,6 +1059,7 @@ static int stm32_csi_probe(struct platform_device *pdev)
+ 	return 0;
  
- 	remote_pad = media_entity_get_fwnode_pad(&s_subdev->entity,
--						 s_subdev->fwnode,
-+						 asd->match.fwnode,
- 						 MEDIA_PAD_FL_SOURCE);
- 	if (remote_pad < 0) {
- 		dev_err(csidev->dev, "Couldn't find output pad for subdev %s\n",
+ err_cleanup:
++	v4l2_async_nf_unregister(&csidev->notifier);
+ 	v4l2_async_nf_cleanup(&csidev->notifier);
+ 	return ret;
+ }
+@@ -1067,6 +1068,8 @@ static void stm32_csi_remove(struct platform_device *pdev)
+ {
+ 	struct stm32_csi_dev *csidev = platform_get_drvdata(pdev);
+ 
++	v4l2_async_nf_unregister(&csidev->notifier);
++	v4l2_async_nf_cleanup(&csidev->notifier);
+ 	v4l2_async_unregister_subdev(&csidev->sd);
+ 
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.53.0
 
