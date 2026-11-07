@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062330;
-	b=rL+O8gkiF5C7xQOQG2UWnhbcpIEHK8Cno6RaIH0LejSee5uGYK0ZVW/9fblexcJA5ZK4
-	 Ky8d3rnhLu8xU9pSkFUJgK6eJ/ga2GYSai2O1OqIppY0rNi4QaPrQxNjtoiRv+w7i1R1w
-	 sGX2LUPcqY6tb1fKQieNIN2MT3OmnFmbcHPqBfWXJ3LWte73fESHgKq89chmc226/hGy5
-	 62VwPu638c4tLZ1+LD88C6GNwp3hJNponVziV1jn83wd25Rxh/v3EDzB2+NVOzIY9VYnD
-	 NlyeBWX7zlG9fiqqB4yjQHWZfalbfduN/S/nEL1GNU6iHN1Vat5Pu5c8kHm8NJtqRdg==
+	t=1794062331;
+	b=M2hX0E13hEWa7N17+3W5qB8FFtbTn10ZYMmswvOhBj+N3t3k4r/fqsYcWqkwqzyUXvCH
+	 gCTe+qWIX7zggzY+AbYgKevumAGUjlE1cj+gy/iVpG7xpTH4N26nI53fec7XIqrBrI89D
+	 jhqVEpSjMA1J4Z80RtqSCkMuVKxhZUs1wy0amdrg1IJwHC11Ew6rn78M1dN5VnZLhu7/G
+	 QEAUH3tAPdMxVIGSnShGd6W89ba0hFVOUvxEqBQzdG2UOz2OPO1Gw71zS/ERBK4zvgnqF
+	 kPGYo0DMZTL7GTpPv/jDW2Fix69/NlbVjbxYgRxXri8+MZPde/xBNWRAJ4JKP18qecg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062331;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=46SFuSiQcO+ltrWgMuoCuWZUGYaJfFnEpaFri8g8RoY=;
-	b=GfSfW86T+vuj0XKQAhOS+I/JkBm5OxC667T1YiB9t+2RJls60yo5mpyuTp6YEylwOYUr
-	 uds93VGAvTfFJXLWjUuAmTCx9dws6M3vjP/CH+sEJy/euEUGcO0Mt0yWp1B8E5P6XS87x
-	 UwU6IAsPpi/QJ8t3qaHLAZzE7Cjk08G0jtcj3P2boR5RWprDMaUxo2/KwKCE8SR95jvcB
-	 Dvwi17lw3PpsE7FPvixpXFUEhZDsJat9KxX9FVik3fo0/Wi9VQxhzI96rHTubU6FDGEO2
-	 yHui9Zl/9ghI+C4Vx6/k5QL+6rlZ9UfS8RUfk6z/PCJ/eeEtaFRzbkcWo/FvY/YSr9Q==
+	bh=4uKcsX/bOWMuIMIAea8frNCug0dY3x0/CvWtd6sIn4o=;
+	b=zkD940RhoNUqxHN2WUe/PTcsl1MAPKpKrg0KiQjgUONxSyPfBTyVrIYoYExHHDhMcnxC
+	 EbkC6JBJTqjPVl3/LmmVmIioTo3kHSWcObJHmZG96cKDMFwDfEaAPN1DdA/byMu+k9Q1p
+	 ZXnlk5URwjsSXx6pmj0xxXh3TfzYAIFCvwQwHBil0nasmqhuG+U+Z0Tr6YFs5NMYrKmLS
+	 bzhp/DXHV9idsCrKrQQXFMosSoW2BLOxrPYcBIYbBo7nBVi46Fk39pp787LHrCInBS4C6
+	 mdqtcitlqTh1PVWojpJwAXFDg1UTY57LTQRUHXf3HlrV3JOjkvw2r8ZkXedtDOT+hng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MlH72MoB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nX7kVOBF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64016606A660;
-	Sat,  7 Nov 2026 14:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48735606A660;
+	Sat,  7 Nov 2026 14:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MlH72MoB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFB51F0089F;
-	Sat,  7 Nov 2026 14:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nX7kVOBF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93B41F0089F;
+	Sat,  7 Nov 2026 14:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062330;
-	bh=46SFuSiQcO+ltrWgMuoCuWZUGYaJfFnEpaFri8g8RoY=;
+	s=korg; t=1794062331;
+	bh=4uKcsX/bOWMuIMIAea8frNCug0dY3x0/CvWtd6sIn4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MlH72MoBhqOxc8xR2r0HLRrT7ycNthvEXPCbQpzpGAg+7keIKwE5eyPH7ejeaz+qw
-	 wJCidm3A7QAZm/UOBXjMlD6/nYl4TRdff/qkLCN/g6bpYad4+KRfQLDBC5x2s1MNeD
-	 gMoUIrb/T6zQo0X3JahklZUpCiw6tmx3k+tfHJgk=
+	b=nX7kVOBFZBqDnSs18DojVGX2j/Vh9vOAuePB4klu8bBxTTZavukKthr7/z1hp5I+I
+	 COu0mKlYTcZ7og1PitrP87b9Q9pGDYqbtrmVNGboC1iZ+sTr+yT9Me+n3tuz+JAYXb
+	 T1v+zA2qm07i3u3XQ8nXDaMRS34eZJ3JBYEF1f3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	co+e5693071d903b832@bugs.sh,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>,
 	stable@kernel.org,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1261/1536] mei: vsc: Fix packet CRC computed over pointer size
-Date: Sat,  7 Nov 2026 08:54:37 -0500
-Message-ID: <20261107135033.186685868@linuxfoundation.org>
+Subject: [PATCH 6.12 1262/1536] speakup: Fix NULL pointer dereference on VT switch + selection
+Date: Sat,  7 Nov 2026 08:54:38 -0500
+Message-ID: <20261107135033.216531043@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,43 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
 
-[ Upstream commit 1d2a50533aac7046488da78b0d25f69673cbb028 ]
+[ Upstream commit e1301ab8a8411fccc7effe0711fc09939a94953c ]
 
-vsc_tp_xfer() computes the packet CRC over sizeof(pkt) + olen bytes,
-but pkt is a pointer, so sizeof(pkt) evaluates to the pointer size
-instead of the size of struct vsc_tp_packet_hdr. The value correctly
-match the 8-byte header on 64-bit builds.
+When selecting/pasting very quickly after VT switch, the tty is not set
+yet, leading to a NULL dereference. We can just abort the operation.
 
-Use sizeof(pkt->hdr), consistent with the header size used everywhere
-else in the driver, e.g. in VSC_TP_PACKET_SIZE().
-
+Reported-by: co+e5693071d903b832@bugs.sh
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
 Cc: stable@kernel.org
-Fixes: 566f5ca97680 ("mei: Add transport driver for IVSC device")
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20261006-vcs_fix_crc-v1-1-b7b149f13c1d@intel.com
+Tested-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260829164945.2691317-3-samuel.thibault@ens-lyon.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/vsc-tp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accessibility/speakup/selection.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/misc/mei/vsc-tp.c b/drivers/misc/mei/vsc-tp.c
-index 27c921c752e9a..1fe760adb2e4f 100644
---- a/drivers/misc/mei/vsc-tp.c
-+++ b/drivers/misc/mei/vsc-tp.c
-@@ -291,7 +291,7 @@ int vsc_tp_xfer(struct vsc_tp *tp, u8 cmd, const void *obuf, size_t olen,
- 	pkt->hdr.seq = cpu_to_le32(++tp->seq);
- 	memcpy(pkt->buf, obuf, olen);
+diff --git a/drivers/accessibility/speakup/selection.c b/drivers/accessibility/speakup/selection.c
+index 7df7afad5ab42..463a7ef19315e 100644
+--- a/drivers/accessibility/speakup/selection.c
++++ b/drivers/accessibility/speakup/selection.c
+@@ -61,6 +61,9 @@ static struct speakup_selection_work speakup_sel_work = {
  
--	crc = ~crc32(~0, (u8 *)pkt, sizeof(pkt) + olen);
-+	crc = ~crc32(~0, (u8 *)pkt, sizeof(pkt->hdr) + olen);
- 	memcpy(pkt->buf + olen, &crc, sizeof(crc));
+ int speakup_set_selection(struct tty_struct *tty)
+ {
++	if (!tty)
++		return -ENODEV;
++
+ 	/* we get kref here first in order to avoid a subtle race when
+ 	 * cancelling selection work. getting kref first establishes the
+ 	 * invariant that if speakup_sel_work.tty is not NULL when
+@@ -120,6 +123,9 @@ static struct speakup_selection_work speakup_paste_work = {
  
- 	ret = vsc_tp_wakeup_request(tp);
+ int speakup_paste_selection(struct tty_struct *tty)
+ {
++	if (!tty)
++		return -ENODEV;
++
+ 	tty_kref_get(tty);
+ 	if (cmpxchg(&speakup_paste_work.tty, NULL, tty)) {
+ 		tty_kref_put(tty);
 -- 
 2.53.0
 
