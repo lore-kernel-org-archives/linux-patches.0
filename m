@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061795;
-	b=0vXDJp5YHvVnUiGkBlVFyGNGIf2JWdnoStOY4HiWcW3hU5KXOwzkea/atcSe7CM5FMQG
-	 AIAPgAk81yk0qN4Yv2ADo2GbZZoTrhS6vNyVdbCChKqcDdIk9oY/n6s3DbdV52LWClxiT
-	 GJtcp7phOkpssrvr6GYR9UnGetykL1fzecxwipze5UQxM+mMBfP6JZEJNtTqnFZ0+FSjh
-	 hvJ7psw2YSRO3RcetimB/7AGbsWxxQWMi4xPh5zs30M5V+cA2ya28DzTTaVjXqa8NmQ7n
-	 cBCymKvSJ63kEfCO35tK22av1+8dH3hR5WKpof8SI52/29I1ox5sy6gZxTLDBFIUidg==
+	t=1794061796;
+	b=hj4sZ4D5/uL1e81o6g4+HZNQtUi1zglvVSBdPavRngQBjruj35RYe6k8tJQNl3NLRJwM
+	 8QESek3YqV70XdwQ5uxVa0KBXQGgPt62IcgJjSneHskRqIeGgVXAhVgBrsPJHvJF+hoTO
+	 Fux8BHeqrviEmQV4b/3b3VzM2lEG+kziZ1wjQhVkL2y/GB8XIFCz58I2mAumklOd8o2yz
+	 cVaojLosi5sWtRoJbfr4gFbzZVpqp4nO1Dq7UT+Edimrc2cMHmW7Bru6O+Inbqn6nUmmh
+	 ACdVwBKcVQijVJUAnsWT5bOHfijTvn1U4Ys4u/gxWnbH8YWpeXwtjQHL5Ye1Y0ahX0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061795;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061796;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kKBGLMEoqYIU3t7ju6aiMSjAE/7bvfkpVsaI9qMUebg=;
-	b=MS7e6XIR07p53u2JZ1OQLXQgFSuELRwzcmwp0Q131FVG5i9qYJD2E7na8dBJaFC8he6u
-	 U/ooNG6U0gNvabdD/Q1SwfSTC3fsPKqKMdJDeAZy9BrDv2w/qKlFjXwzoHrWPleN+QCFN
-	 pOrwrkRfJx6FrjmYR4vz/Qc0U84FNDvLf6tb0W2I7ntcJs10+DYJx7a0jAfUJ2EG8uQN0
-	 /URcVZt9JMEKeKoL0H85mEq5xJH29gYGISSdJtezq+XRXdkNdCDDKnBSMfcUBciEa4QW3
-	 /PCGT3flLHCRA7chLLZFWPr4+ILMlsH7pHEnvKwImOPbhMl9cBVps7YY00L4cTrwQgw==
+	bh=zuh5mVYj/DJfefZyiVyJEqUYipi2WUxxqOZ0Y3HfPFs=;
+	b=oR8r9kGURxhKk/+gWhc6VNFn2jpcDzjqyRS16xfXXZ7asJGbmS0Xs4S18LjmbchybVg6
+	 Wcj2x6q/b5tB0Uv5Y7qbYahCihQNXMd5OjGlCYVj1ZcK46oRxpiDHpLGchSeQpz8BjvM/
+	 ugD1gdja/qSi9xDXEYbtqQDDNmhPkSlH7tkTywZCUgILVVRUWtJl7leWNMAp5cRKWM6Ay
+	 aM7PxFUqd9wben7miGZ3xchJpTWlQe9PcI7B8OLml1xQGB8OMHO7J1mJsKwEe928Axx9O
+	 XP/EKDFRGt4ArXYGm4NhJCISc/qLqaj/eTOxQ3nKnlpaJ/4DxQQP2NtNWEA4mbgDlPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b4EAyd5R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1V7DYmwC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290D2606A326;
-	Sat,  7 Nov 2026 14:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540AD606A32C;
+	Sat,  7 Nov 2026 14:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b4EAyd5R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64691F0089F;
-	Sat,  7 Nov 2026 14:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1V7DYmwC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026101F0089F;
+	Sat,  7 Nov 2026 14:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061795;
-	bh=kKBGLMEoqYIU3t7ju6aiMSjAE/7bvfkpVsaI9qMUebg=;
+	s=korg; t=1794061796;
+	bh=zuh5mVYj/DJfefZyiVyJEqUYipi2WUxxqOZ0Y3HfPFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b4EAyd5R4Irqa/hAxmNe+HOa2sqa4GWQpVvHQLKXbgIykGQr+RzAibxtj0pnIVV1o
-	 8xq7tuzmJscnZrysUBEsXBn6i8geLT1Rw+ydcJfSqRSjE3zQfkX+YoEOG+DV7UPXvz
-	 3dC5lHHVHSzwMt3lUxb0ePQwIhJY+MrHhUZT6n5g=
+	b=1V7DYmwC8lKYU9hs8yGK9cVuLptqyJmWxX1WZf2cpIUMcKmNH6Tbt+UPnfnABdAop
+	 /pOqCeWXS5knWlmd1ZCC0qHxMz6GpyKQ3hPLjJKQ/B8Lit3EU818AiCbOvD2JZtcr0
+	 f9nzGfI72BpoT7P07vlIHrvBXF4QK6ixTjdAtWOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0787/1536] SUNRPC: trace an accepted transport before publishing it
-Date: Sat,  7 Nov 2026 08:46:43 -0500
-Message-ID: <20261107135019.645319461@linuxfoundation.org>
+	Jiale Yao <yaojiale02@163.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.12 0823/1536] HID: roccat: kovaplus: reject short button reports
+Date: Sat,  7 Nov 2026 08:47:19 -0500
+Message-ID: <20261107135020.658268899@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,46 +67,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Jiale Yao <yaojiale02@163.com>
 
-commit 06f90cf104fc21ee01e7ef1eb80e092173089b9f upstream.
+commit e95917a606f486e46f5136fc1b72190742a091d6 upstream.
 
-svc_handle_xprt() publishes a newly accepted transport before tracing
-it. svc_add_new_temp_xprt() places the transport on sv_tempsocks and
-clears XPT_BUSY, so another nfsd thread can dequeue it at once. If the
-peer has already closed the connection, that thread runs
-svc_delete_xprt(), which drops the list reference, the only reference
-the new transport holds. trace_svc_xprt_accept() then reads the
-transport's addresses and network namespace from freed memory.
+The raw event callback runs before HID core validates and zero-pads the
+report.  It passes the buffer to helpers which inspect data[0] and read a
+complete struct kovaplus_mouse_report_button for button reports.  A
+truncated report can therefore cause an out-of-bounds read.
 
-Before publication the accepting thread owns the transport
-exclusively: XPT_BUSY is still set from svc_xprt_init() and the
-transport is on no list. Emit the tracepoint there.
+Require enough data for the button report before calling either helper.
+Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
+sequence") added the same kind of raw-event length validation to hid-asus.
 
-Fixes: 11bbb0f76e99 ("SUNRPC: Trace a few more generic svc_xprt events")
+Fixes: 0e70f97f257e ("HID: roccat: Add support for Kova[+] mouse")
 Cc: stable@vger.kernel.org
-Reported-by: VEGA <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/d15495bff2247e3f9d4f9ef36df8e246a3898380.1789220778.git.zhilinz@nebusec.ai
-[ cel: trace before publication instead of taking an extra reference ]
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc_xprt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-roccat-kovaplus.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/sunrpc/svc_xprt.c
-+++ b/net/sunrpc/svc_xprt.c
-@@ -797,8 +797,8 @@ static void svc_handle_xprt(struct svc_r
- 		newxpt = xprt->xpt_ops->xpo_accept(xprt);
- 		if (newxpt) {
- 			newxpt->xpt_cred = get_cred(xprt->xpt_cred);
--			svc_add_new_temp_xprt(serv, newxpt);
- 			trace_svc_xprt_accept(newxpt, serv->sv_name);
-+			svc_add_new_temp_xprt(serv, newxpt);
- 		} else {
- 			module_put(xprt->xpt_class->xcl_owner);
- 		}
+--- a/drivers/hid/hid-roccat-kovaplus.c
++++ b/drivers/hid/hid-roccat-kovaplus.c
+@@ -614,6 +614,9 @@ static int kovaplus_raw_event(struct hid
+ 	if (kovaplus == NULL)
+ 		return 0;
+ 
++	if (size < sizeof(struct kovaplus_mouse_report_button))
++		return 0;
++
+ 	kovaplus_keep_values_up_to_date(kovaplus, data);
+ 
+ 	if (kovaplus->roccat_claimed)
 
 
