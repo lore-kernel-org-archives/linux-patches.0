@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062992;
-	b=y2QdjLuupx07VmvOy2X7McsYgpz0iwPfewc9uPF29yBtzbil7bXmxY3/n1v2eaLiTDNh
-	 7UMGR2Q2BbRshXhdD/fXNFC2E9JURwaHYAj6kH0064+VCdSs6A/AZDrecCiH48hQnfz7A
-	 ts6bPy4pk4L+TNg6UhxmJNYsCjjKVXI27q6ay5llK1bo9k6ATtMFLkRAiEeJDcUWF8BT1
-	 111ogiqinTfD+X4Vs858mRSdxB/08+w0qQctopRRrauxwY5k6RiITqHdGgGL6wgIxb7mu
-	 zitbjVmW1w4zghG49OcbbuBPii9n+3SCAcKizZnmIldm/QleIGNLTYUv4Y+uo/qvFkg==
+	t=1794062994;
+	b=A9BO00nx5qPi2EOAeMJQqKmBzWnRnauRxHK1BrM+ATLGEEHg73rHyKBTwli8M56IWO8B
+	 7mnyylkf6q0B+O1pb2C9NCmBGXOTAwRFzv5FGsG9D3twkZNtHX3VsgK+fOOiWnDydYQG5
+	 izl/by0sHvmV0KQTqgSekIcATRd8DxxGKh4f5xMHvk7WCUDdcvR7eyNTh8aoIOmrW7R3N
+	 85b2WVmm/Hb+3mEXyVgCr9DuzBznJsuPEEUbemDXYqz9Wee2FeQLZFzf7WNEdX+FfpF+O
+	 KfxKBeOb/pKfPyd0Ap2dwgq7HAPNCJOQBqkGKb0Y/AQqRsMHUDmwZjW8G31ZWp4dQDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062994;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PbHgEUbJpraozfh9Bci9HgSPEF3clrx+zIrUrF6Ex40=;
-	b=Dj9mb73yYJrlebleewPMMXJcstcze7ZVcxyCoYcAZeGMLb1w0sTwWlCkfYKp/2eCPL/h
-	 SSPL1yRHMWxKRJnEnA06K3o26Y36n7Au0Vc61ergtI0TZj8mY6t2gt8xp3F8rLF9dpKS4
-	 5GTkZtftQtxpEYZVhlQmq9oSGt6bnlg6JQf41s0qFMyZAbzNmgD+vOTFMc+M+G0hjqhoo
-	 iWi2hqeQ0xsIMarLsjC1cvdFwo9E8UQwS87DpNr51CDYhI+OGHyBdat7vBBc0sdlQuFZz
-	 Y0NXJGqbRGX/voCRlNLxGufButLe0Bzc/xFs5aBb3vhdUaIqqJSZqjZmegfyINAsC4Q==
+	bh=ltdTr0v0X2YZOFdPY6bqsqCBc05ouVBmdkNqPGu43fw=;
+	b=XgNb1TVxAIbrU+3r8Q3YlD7ReQJuP9c4waahZkbJW4scm10CfqMKK8dAzyZK3Iu/A4pw
+	 R6ak9OGdJGpkJEaQIlaV98Zhi42FPnL6OdGDYcMaO09u5gmkzmZ8VbamviTIN9hFGAsBE
+	 x0Iuf/vN//yycPUePRnmJuAH5xT8I6vn/TE27OfwZBrKaQwgyfljj7ROpaPSuSqv9bQgF
+	 58LyFFXGQn633AGj8Qr0v5hjfIcvLhJbsSKYgurK+qRURjl8Kj7KNSaCM0TKhNYKh83wC
+	 P3VXXTjy9HJtx2GLfkWDLS1TMu3iNFYE+MXAQk2Fns1D9heIoqw4PMLCbuAgr3P0qPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I46ArmAz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wLPmtleW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603DD606A330;
-	Sat,  7 Nov 2026 14:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB484606A330;
+	Sat,  7 Nov 2026 14:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I46ArmAz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFA61F0089F;
-	Sat,  7 Nov 2026 14:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wLPmtleW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D351F0089F;
+	Sat,  7 Nov 2026 14:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062992;
-	bh=PbHgEUbJpraozfh9Bci9HgSPEF3clrx+zIrUrF6Ex40=;
+	s=korg; t=1794062993;
+	bh=ltdTr0v0X2YZOFdPY6bqsqCBc05ouVBmdkNqPGu43fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I46ArmAzkjCsv9+3tq0DxzQCf/FLAmUZ+EFkqB9GkRja3RXcdsQKIWiMN5BX1hEm1
-	 DE6DIc3t8JfonxEx+VLt4TUou9AeYIOvUa0dFmKOYhN5xHtJPW7ryDIhx5sYMk1LRb
-	 C4IygywCfC15PMRn8i/m//EPmUnzyIeVBRmJCtEk=
+	b=wLPmtleW7ZO/q/Nm5wjrPXy85KgDxrWERZcnF+edp8FExDn+48Hzlu4YqjZZti31T
+	 QbUxojCWw0uQEdcCcfDDMwJbJeykeVlLcea+i0iwUmfUY3NDUgXCF5H2mSMdSlqKOo
+	 kRV9ItrzB2oNxeVH/ABn+tTpScU6pgvrVraW0/oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 249/869] mtd: maps: l440gx: Fix double put of the PM device in init_l440gx()
-Date: Sat,  7 Nov 2026 08:48:51 -0500
-Message-ID: <20261107134900.217069195@linuxfoundation.org>
+Subject: [PATCH 6.18 250/869] mtd: mtdsuper: Fix MTD device reference leak in mtd_get_sb()
+Date: Sat,  7 Nov 2026 08:48:52 -0500
+Message-ID: <20261107134900.243204936@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,37 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit e6ca524ee5b2705be30ea19ce2e55122d9f9ed8f ]
+[ Upstream commit 62ee3da38f41bef83c1cf250f6816a0ee187674b ]
 
-The PIIX4 PM device reference taken with pci_get_device() is dropped
-again before the iobase resource is allocated.  If pci_assign_resource()
-fails, the error path calls pci_dev_put() on pm_dev a second time,
-releasing a reference that is no longer owned and underflowing the
-reference count.
+mtd_get_sb() is called with a reference to the MTD device already
+taken by the caller.  When sget_dev() fails, the function returns the
+error without dropping that reference, so the device is never released
+and its refcount never reaches zero.  Every mount attempt on an MTD
+device whose superblock cannot be set up leaks a reference.
 
-Remove the extra pci_dev_put().
+Restore the put_mtd_device() that the fs_context conversion dropped on
+this path.
 
-Fixes: dd8e9ed6ed54 ("[MTD] Switch to pci_get_device and do ref counting")
+Fixes: 0f071004109d ("mtd: Provide fs_context-aware mount_mtd() replacement")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/maps/l440gx.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/mtd/mtdsuper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/maps/l440gx.c b/drivers/mtd/maps/l440gx.c
-index 85cd273ce0654..1df5ea5fafcac 100644
---- a/drivers/mtd/maps/l440gx.c
-+++ b/drivers/mtd/maps/l440gx.c
-@@ -110,7 +110,6 @@ static int __init init_l440gx(void)
+diff --git a/drivers/mtd/mtdsuper.c b/drivers/mtd/mtdsuper.c
+index b7e3763c47f0c..22ddeaa7d5221 100644
+--- a/drivers/mtd/mtdsuper.c
++++ b/drivers/mtd/mtdsuper.c
+@@ -31,8 +31,10 @@ static int mtd_get_sb(struct fs_context *fc,
+ 	int ret;
  
- 		/* Allocate the resource region */
- 		if (pci_assign_resource(pm_dev, PIIXE_IOBASE_RESOURCE) != 0) {
--			pci_dev_put(pm_dev);
- 			printk(KERN_WARNING "Could not allocate pm iobase resource\n");
- 			iounmap(l440gx_map.virt);
- 			return -ENXIO;
+ 	sb = sget_dev(fc, MKDEV(MTD_BLOCK_MAJOR, mtd->index));
+-	if (IS_ERR(sb))
++	if (IS_ERR(sb)) {
++		put_mtd_device(mtd);
+ 		return PTR_ERR(sb);
++	}
+ 
+ 	if (sb->s_root) {
+ 		/* new mountpoint for an already mounted superblock */
 -- 
 2.53.0
 
