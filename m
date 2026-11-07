@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064612;
-	b=KOGQLhH8KVAFGkGshCC0+ZBJw0173hgN++zz7yHuQIK4eYQtFO66jnyv7dzPsVdP56sw
-	 z7nto3uw07ULosO3axPOuZWxHLUVfcGlawiUKapRNFt/DWovwPdyvPiiSjvMg+Nse3+1t
-	 H0cXps30NpvSftDqmM59e9VQvf/COGFdbe8jY7Tmn6ZTvEQ/dxfgxbcfXTzjxWTMYjgpy
-	 tAhEmht569wRPgtktD3oKYKU1EY8XltI5As2NSRXQ1pDJaXpLsa5BQ2hkwq18A9SexoiD
-	 Vnp/otFRu9EBaTi1joXnWXTC8H+I27vExrENT2zyvGOZ8oL/zK/QC/MSj3LC9hQhk0w==
+	t=1794064614;
+	b=l1TDc/Of/Zq9lVSJWiCotpBJiLfXksXwDb8Te/D8rBl09zi/ZWKPncI+SP+X86DN0zWw
+	 mWSlGQXMvahBfZ0HzFITQZwC/XIUVum+3Q4l2DD3dmZ14glRUjSgj086mbNzy6zKazois
+	 A6R5ry/e4lE7GumIi78SugxFM8BSH1mfzj94zzrtHWD099Ya/Lw1kvibgbwVBN06VvyAl
+	 yE05BNYZYv5bKaeZRi9mPLTbjFI202ff0cOP/cjt4vPFVuSKywVQG3LUdE4+q0ym4yAXS
+	 rr44uRZkMxDKtrSS7h7TQATE5IQgWKu6pxkA8hWuc+nXKzytXYrQYN0c0z/HBAKi98w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064612;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064614;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l1USSPQctGoLFhdR+coFb72twaRlt/Zd5f8TzSyOgwg=;
-	b=uQwMWuz0xbL/OV3LbDmgi3B2Mm5ZCY+HnRF+xvzvk1zNH04t/vIKf9DYsOtR4orjagP/
-	 P/tBabdzgAgQAWZiAhUg1hhOtpPuubDIbhAkUmzYXMYWKZRd985+hNUtrvQmdA0CI/LoW
-	 IKrdZ5jLrQSnjcU82ngG1yNXA244CyaQHCH74pptTX21CvIGC89GtpRqdOU9i2f3qxb2b
-	 bOFubQEVptcB5aTvlRW93GSyThvb/Vi+8+UUgRf1y/IQSc6BqSyOc6MyHTuN10Zch28s6
-	 q4WBLbwWJJCt0DuaVERBpNySQ9mYvaPG4m278VwJqw8pW+aXZSsGLBjJg+evzS25SNg==
+	bh=YUlJy5LR0H19revfhpkRQiLXUievYu1Q0vSFjSx67o0=;
+	b=CDbY7l1LtJpadvKVD8qhpuFezhPpLw4Amq9hhdXHiUOSG7gQ+wBJQiZUdUoYaAFnY65k
+	 7Y51rWu7OexktDoqoQooikfTpanBE8ZTrJkB+SRgZu0gbBXrsiXI39cm+XqO/TkfJGvG4
+	 aPfo24HsEbYlcSjfqQ0WXvGGjk34ey8cRn2f0magdynf/WRgyUNKJQdJZvf4TcUuOorGL
+	 WfyBtNgE4WRWuk6dtMrEFRkfYWc58w0RYQ97rgRazp9YQ/fFDSEa5XLrTy9PSKCn/YNy5
+	 FLPtPBPzWOGvoObPy9IKBPllw+wMCdS6DGNjs9q8rKG7mjHwgRHYbhl2N9v5hBa/MYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d0rXMNWG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2RWPE0n5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69810606EE88;
-	Sat,  7 Nov 2026 15:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC01606EE9B;
+	Sat,  7 Nov 2026 15:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d0rXMNWG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2821F0089F;
-	Sat,  7 Nov 2026 15:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2RWPE0n5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E92A1F0089F;
+	Sat,  7 Nov 2026 15:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064612;
-	bh=l1USSPQctGoLFhdR+coFb72twaRlt/Zd5f8TzSyOgwg=;
+	s=korg; t=1794064613;
+	bh=YUlJy5LR0H19revfhpkRQiLXUievYu1Q0vSFjSx67o0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d0rXMNWG7Pgev5bKqQMwApsXs1hn8NxhWr1DyWKcwG9QMlO2DxFfET/RUumXn8jNq
-	 TlmEdKcRDAMmdrnph1BRtGe5xb1rMYK3NPfGicx92LOjGJdtFbeTthw/QXJho7Sjke
-	 dsQI9SvwRyBqNotu8jNV62ejPR4wQuwBMqe78SSk=
+	b=2RWPE0n5oIgCDKXFH71DhkWxx20xs6/PdtzKFdc3EFGAlNGUuZRruBwPEVTxIsF/0
+	 IK5RN9Ox7M3ZaKhz9vLBhL7PSpQ8LMSfB8f4V7SAyrUBfv/fcrih3RPmBnpkpJ9F7V
+	 0PL4EbEwqrH7glNikCLaTSNpZhIPPruVkVZFo2T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Orgad Shaneh <orgads@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0622/1257] usb: octeon-hcd: release the USB block when initialization fails
-Date: Sat,  7 Nov 2026 08:48:38 -0500
-Message-ID: <20261107134956.477782427@linuxfoundation.org>
+Subject: [PATCH 7.3 0587/1257] clk: imx: Fix clock reference leak in imx_get_clk_hw_by_name()
+Date: Sat,  7 Nov 2026 08:48:03 -0500
+Message-ID: <20261107134955.555519393@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,86 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orgad Shaneh <orgads@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit b8c063059f304abebc11039195f5b28298aeddbb ]
+[ Upstream commit 8e177ca735761a1f03e1dedffd7ab00d6d0540ae ]
 
-cvmx_usb_initialize() gets as far as selecting the reference clock,
-enabling USBN_CLK_CTL and taking the PHY out of reset (steps 2b-2e)
-before anything can go wrong, and its only caller frees the HCD and
-returns without touching the hardware. Both of its error returns
-therefore leave the USB block clocked and out of reset on a failed
-probe.
+imx_get_clk_hw_by_name() obtains a consumer clock with
+of_clk_get_by_name(), extracts the hardware pointer with __clk_get_hw()
+and returns it without ever calling clk_put(), leaking the consumer
+reference on both return paths.
 
-Release it on the way out with cvmx_usb_shutdown(), which is the undo
-the retry path a few lines above already uses. It cannot refuse with
--EBUSY here: the pipe lists it checks are initialised by
-octeon_usb_probe() before cvmx_usb_initialize() is called, and no pipe
-can have been opened yet.
+Extract the hardware pointer first and drop the clock reference with
+clk_put() before returning.
 
-Fixes: 22bce6d2b3fd ("usb: octeon-hcd: fail the probe when the USB core does not respond")
-Cc: stable <stable@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-Link: https://patch.msgid.link/20261011072238.2381564-1-orgads@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3b315214e091 ("clk: imx: implement new clk_hw based APIs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260915055515.1730145-1-vulab@iscas.ac.cn
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/octeon-hcd.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/clk/imx/clk.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/octeon-hcd.c b/drivers/usb/host/octeon-hcd.c
-index 256e459ff6d8d..4d6558e5492c2 100644
---- a/drivers/usb/host/octeon-hcd.c
-+++ b/drivers/usb/host/octeon-hcd.c
-@@ -708,6 +708,7 @@ static int cvmx_usb_initialize(struct device *dev,
- 	int channel;
- 	int divisor;
- 	int retries = 0;
-+	int status;
- 	union cvmx_usbcx_hcfg usbcx_hcfg;
- 	union cvmx_usbnx_clk_ctl usbn_clk_ctl;
- 	union cvmx_usbcx_gintsts usbc_gintsts;
-@@ -872,7 +873,8 @@ static int cvmx_usb_initialize(struct device *dev,
- 	if (usbcx_gahbcfg.u32 == 0xffffffff || usbcx_gahbcfg.u32 == 0) {
- 		dev_err(dev, "USB core is not responding (GHWCFG3=0x%08x)\n",
- 			usbcx_gahbcfg.u32);
--		return -ENODEV;
-+		status = -ENODEV;
-+		goto err_shutdown;
- 	}
+diff --git a/drivers/clk/imx/clk.c b/drivers/clk/imx/clk.c
+index f38506830ccf3..e113e30514fa2 100644
+--- a/drivers/clk/imx/clk.c
++++ b/drivers/clk/imx/clk.c
+@@ -119,12 +119,16 @@ struct clk_hw *imx_obtain_fixed_of_clock(struct device_node *np,
+ struct clk_hw *imx_get_clk_hw_by_name(struct device_node *np, const char *name)
+ {
+ 	struct clk *clk;
++	struct clk_hw *hw;
  
- 	usbcx_gahbcfg.u32 = 0;
-@@ -961,14 +963,27 @@ static int cvmx_usb_initialize(struct device *dev,
- 	dev_dbg(dev, "gintsts after reset: 0x%x\n", (int)usbc_gintsts.u32);
- 	if (!usbc_gintsts.s.disconnint && !usbc_gintsts.s.prtint)
- 		return 0;
--	if (retries++ >= 5)
--		return -EAGAIN;
-+	if (retries++ >= 5) {
-+		status = -EAGAIN;
-+		goto err_shutdown;
-+	}
- 	dev_info(dev, "controller reset failed (gintsts=0x%x) - retrying\n",
- 		 (int)usbc_gintsts.u32);
- 	msleep(50);
- 	cvmx_usb_shutdown(usb);
- 	msleep(50);
- 	goto retry;
+ 	clk = of_clk_get_by_name(np, name);
+ 	if (IS_ERR(clk))
+ 		return ERR_PTR(-ENOENT);
+ 
+-	return __clk_get_hw(clk);
++	hw = __clk_get_hw(clk);
++	clk_put(clk);
 +
-+err_shutdown:
-+	/*
-+	 * Steps 2b-2e above selected the reference clock, enabled
-+	 * USBN_CLK_CTL and took the PHY out of reset, and the caller only
-+	 * frees the HCD, so hand the block back before giving up. The pipe
-+	 * lists cvmx_usb_shutdown() checks are initialised by the caller
-+	 * before it gets here, so it cannot refuse with -EBUSY.
-+	 */
-+	cvmx_usb_shutdown(usb);
-+	return status;
++	return hw;
  }
+ EXPORT_SYMBOL_GPL(imx_get_clk_hw_by_name);
  
- /**
 -- 
 2.53.0
 
