@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063117;
-	b=mdGkx4T0HoeBIqU2rgvq+UJQco3ITQ19YrGjRDtPw5pEAoFRTcNujG+lL0KcMhigLFp9
-	 HkfKZG9nczAyfFbK8m7LOBegC1F4kEzlcfGa94ynilBXO86EtRUULkOyavLVEfBr9dzSg
-	 Le0al+0AUNXWuBUiJIB6Ds7224OLxk5QHxC22WDU5fYXGOcvX2/XLbrSFc7MO2CGY1Vor
-	 L3eiG/9fN5yERUKTqcCiDbshukUwmh+9uWDzW9rJgXroafoAlT9NLChtESIry+U+mYTDa
-	 qb2qs/tlDjVsY1lET0PiVYi9T3mgqRdueHpiXXykSKJ8piXUjx7nghxnXutNY+pPAFg==
+	t=1794063118;
+	b=B4/KCVrg4x0nyrGvxx9+jL4oMGp5jQcglqvq8AAM/wWRJA5/KeYCjDH5vNzVcRYt1XNX
+	 R4dNUZnce6/5qIURnrKuSt3abmZR3hbrsh1mQKIXbD8cusQ+JNzU105T8koOjakrq3F59
+	 5jpJXJpArbih/gTL1jdcmsxrgc9HKaPkF4Rf7EhmmGU6q6VqQKqHj5ZU+tZZztg73NjCs
+	 jVMaUbE1gR/ViL/7YwkrMWs2xAe2D+rxlXgC5cub7IW2EtJiVr0c/41PyNj/bDz2yi/r7
+	 dLxMH9rgcioCgnnSSsABqQw5khGYgPQz2syPiTmdw++IKhI6BC447vm66vT5iSMZI0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063117;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063118;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P9iYgqpjnxaQW/ShoBVNX2ac5K6HURpJ4BFNnyTSMwg=;
-	b=5LTs90le1zWVNUgo0uHpVJecrQmJTOP277IYSz4Qhrhzof7F6Agnx78bngBxUJ5ZoD6U
-	 lPjogkLRviKN1qDHWn/KqfT70PkqY+Wu54K5HqetAXX6X3LGUoCDd3zjBy4y9JMqRSwpU
-	 A+bZUR13No8HBJt+aiSmvsMUmaowZBiAEU183JHzohsyf+asCW8epvAPHNWk9XUwWeFJG
-	 t6qtkApr4Xx/klSjJHSDOAbSYhGGkFnW3Lxk8kG9PbZaoCzGK7rVzfAlaezbuNNPC/BMW
-	 CZp6EL26PJfRgry8MHpGd/VgM3PM+KAoSARMlboMsoSN7QJGbx3Kn8aOGwNg0BhyT9g==
+	bh=8pBFb9etE8E3ZR43ErPARbTDz5oOeR/uPt8mNE/CqoY=;
+	b=KaQdUy0dnnvRthoP37Dd2vmNxEtSwYh379Da8r3A7bhFXAW6hJ390YaPd80L1BJkSud9
+	 N28xX9qEUXJvZRhH9Xx8j0WEnXbBGHICOIMppS1CaUzJ7AV2LqVgx1eAM/mPXpuAcxbIZ
+	 2ODQeyvpnExnBvZ27Lj0of1DyvacSXPBmA1W3TwRKAXnKN7UHqlUkZa1DfuSpRl0UWpKw
+	 xPukm858Tb9ywpUbOUV6j2PULEb8MmlQJ2bRonfuIViZM/wSPS9YVRPbreOl5v/3IV5Ld
+	 SI0Zomrz7xZzVlv/Y1/r8fOqUDDRLDcLusJoFxXRWGrdMu74M55G/GpGRrBfNk2lUEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwmrNoUn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="GDaALI/P";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FF0606A33B;
-	Sat,  7 Nov 2026 14:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1B5606A33B;
+	Sat,  7 Nov 2026 14:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwmrNoUn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8E61F0089F;
-	Sat,  7 Nov 2026 14:51:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GDaALI/P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0DB1F008A1;
+	Sat,  7 Nov 2026 14:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063116;
-	bh=P9iYgqpjnxaQW/ShoBVNX2ac5K6HURpJ4BFNnyTSMwg=;
+	s=korg; t=1794063117;
+	bh=8pBFb9etE8E3ZR43ErPARbTDz5oOeR/uPt8mNE/CqoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CwmrNoUnmgkeINGQLnV8IDeZ4/xcsnPXqdZWjhQB5DID8wqV5BqMBM559+g8fhX70
-	 OYM3bUfCjYbSrQPLIVnL9CpTPV/JNkeAtwun2wWqaMwmDg4qsy3aT9fhiLeHt/jdj0
-	 /AsB/+zOGoJpwLTVhRoXxx2kepCQTxRkOjbxKGAo=
+	b=GDaALI/PdR9g2NSeGjnHXz3XcTW2+2+GZ6kAwRc8r24HDqHJC6M/GVWv7RC7asMM6
+	 XL3Ctos/YQ4CzM8mP0BYhmmJmWdqhI5AO0E7gWpB5+BZsbk1DvryBFuUFFJkDdqglI
+	 Ws2vavdvzcqosqKpKXkk6OsriVubjmeOY4etDcJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 347/869] media: mediatek: vpu: free IRQ before destroying watchdog workqueue
-Date: Sat,  7 Nov 2026 08:50:29 -0500
-Message-ID: <20261107134904.161032894@linuxfoundation.org>
+Subject: [PATCH 6.18 348/869] media: platform: mtk-mdp3: Fix device reference leak in mdp_comp_init()
+Date: Sat,  7 Nov 2026 08:50:30 -0500
+Message-ID: <20261107134904.191206693@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,47 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 2c50b58d4105f6dbaa36d6306087954b9100e9ae ]
+[ Upstream commit ff3308afa9c9da0ef9113cb80803588adabef902 ]
 
-mtk_vpu_remove() destroys the watchdog workqueue while the interrupt
-handler requested with devm_request_irq() is still registered: the
-devres core frees the interrupt only after remove() has returned. If
-the VPU watchdog fires in that window, vpu_irq_handler() queues
-vpu->wdt.ws on the already destroyed vpu->wdt.wq.
+mdp_comp_init() takes a reference to the component platform device
+with of_find_device_by_node(), but the error path taken when the
+clock array cannot be allocated and the one taken for a component
+without a GCE EOF event return without dropping it.  The caller
+frees the mdp_comp in those cases, so the reference is leaked.
 
-Fix this by calling devm_free_irq() before destroy_workqueue(), which
-releases the interrupt and waits for a running handler, so no new work
-can be queued while the workqueue is drained and freed.
+Release the reference on both error paths.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 3003a180ef6b ("[media] VPU: mediatek: support Mediatek VPU")
+Fixes: c4320f9721fd ("media: platform: mtk-mdp3: dynamically allocate component clocks")
 Cc: stable@vger.kernel.org
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/vpu/mtk_vpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../media/platform/mediatek/mdp3/mtk-mdp3-comp.c   | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vpu/mtk_vpu.c b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-index 8d8319f0cd221..b6bd80b684459 100644
---- a/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-+++ b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-@@ -962,6 +962,7 @@ static void mtk_vpu_remove(struct platform_device *pdev)
- #ifdef CONFIG_DEBUG_FS
- 	debugfs_remove(vpu_debugfs);
- #endif
-+	devm_free_irq(&pdev->dev, vpu->reg.irq, vpu);
- 	if (vpu->wdt.wq)
- 		destroy_workqueue(vpu->wdt.wq);
- 	vpu_free_ext_mem(vpu, P_FW);
+diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c
+index 7fcb2fbdd64ee..acb2758a7b42d 100644
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c
+@@ -1730,6 +1730,7 @@ static int mdp_comp_init(struct mdp_dev *mdp, struct device_node *node,
+ 	struct device *dev = &mdp->pdev->dev;
+ 	struct platform_device *pdev_c;
+ 	int clk_ofst;
++	int ret;
+ 	int i;
+ 	s32 event;
+ 
+@@ -1756,8 +1757,10 @@ static int mdp_comp_init(struct mdp_dev *mdp, struct device_node *node,
+ 	comp->clk_num = mdp->mdp_data->comp_data[id].info.clk_num;
+ 	comp->clks = devm_kzalloc(dev, sizeof(struct clk *) * comp->clk_num,
+ 				  GFP_KERNEL);
+-	if (!comp->clks)
+-		return -ENOMEM;
++	if (!comp->clks) {
++		ret = -ENOMEM;
++		goto err_put_device;
++	}
+ 
+ 	clk_ofst = mdp->mdp_data->comp_data[id].info.clk_ofst;
+ 
+@@ -1782,7 +1785,8 @@ static int mdp_comp_init(struct mdp_dev *mdp, struct device_node *node,
+ 		if (of_property_read_u32_index(node, "mediatek,gce-events",
+ 					       MDP_GCE_EVENT_EOF, &event)) {
+ 			dev_err(dev, "Component id %d has no EOF\n", id);
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto err_put_device;
+ 		}
+ 	} else {
+ 		event = MDP_GCE_NO_EVENT;
+@@ -1791,6 +1795,10 @@ static int mdp_comp_init(struct mdp_dev *mdp, struct device_node *node,
+ 	comp->gce_event[MDP_GCE_EVENT_EOF] = event;
+ 
+ 	return 0;
++
++err_put_device:
++	put_device(&pdev_c->dev);
++	return ret;
+ }
+ 
+ static void mdp_comp_deinit(struct mdp_comp *comp)
 -- 
 2.53.0
 
