@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061364;
-	b=bcZGf6bb0rvjRNJPAlHTQAUwIVpHr7CQ7w9rmeI5nN0I7/syiK6T1DX5KvDu591VRk2Q
-	 a49m1mpagX3g+U51f2zrLcCuk+EiHxeQp9a0MloenrYBt3iIrjUhH4NAvzthA7O7osFwR
-	 v11KFR5AgnOzV9NiUDbSNPH1DnMSFVVROo6kGU1cM5CF7gRmzG2PtgJCIk7vuhBh1CUND
-	 gPdfa/Xako0yVq/hlBThTqTZRhdkPjw4f4ATnS4nJfFG+WnzGNMfhydts1Ii6l2buX6ck
-	 wFrKIi9rF+seLGka6v5UR6yjC98/ySWUkttnRnp0OrPB7xDKky1vvcVbfkgo7wouhDQ==
+	t=1794061366;
+	b=SL6rZxdMpmvXvVzA9775R7Z32PxHPoJ0LnX2bzkunTRBzUsbQFDgEsFNRgiSe+ztkyAQ
+	 lsHbUx+UPPKtoWEU4/b7Qw+WEsc7UZ8YstkRDutvxSRKm4fCQvyBDqi6tKIzrBbiRj/UV
+	 NCEe6Rf9hKKsDDbbnw3YSE23JGk8uOf4m47K2syXK+jVZ1WHUcsGBcVwOfBSVgUzGIHYY
+	 mm2Km1v8wWCSPkZjA2yzjAT81WajX+6cUHNd1tXzHXJIK2uFPhWFzFlhx/tngyT+QFqV6
+	 ql1vjnpC/8gUhNcUiIo8OTWqZYFfteSbyxps0oxDn2wD5D7Zs0Tum598+HZJ5FOhOag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061364;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061366;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KfqTxVaNM++43fET2xiHBR60Nwcr9NY8CHKihXcMsE8=;
-	b=vxdP6Vf3632GLqEtXtjOnJMHmo7yZRRElNkyGYsjSUFGxISC4nkclvVYVbe27Ta+E7/C
-	 2fYHb0a270Q11t8zzwlPULIYOem58Xpcatd3zACDWFYs5g6tVtTHC1dcUKs25Llot7dfD
-	 iFZ/uX6ea7ziwwL6dnpITKBgmopcexumi22seTBQPT9qEh205GTrWbztcGjwPVxkbR/rw
-	 cxk06cb9rXqt1spAEnHwAxgZD32N8tZmmhmditeGsO9+e90uoq07QZONzCqfW+NDQBmHl
-	 hqHoXmgSh4b2bgXqr+JU7SS0QD6ar7DUpw/BaV7l4TGXFDy/00UfMwt4K0fx23zjwkg==
+	bh=XTI5cTw0DBlOq4YKFbLZLckSyw13f5ofp7ZRHE8GduA=;
+	b=5pc75AapUG9mYQnmDvyDqyL80iQHInSEO7tHVEucQ1oh/IxCCxyQ89G50xBhvevgfF0Z
+	 mMa2N3Ylyc9Yd765jrRJGX26rJld1fKfHKylawGlVLSX4V1q1aqumMnasWiAnkQ6xnykC
+	 eQeML1F0V5Mzf3Goc1cDU5no7Uz6/pFQtkrOEAMokMmAt7mxosufHiQpjvfeafPsZnA7S
+	 beBd7F24alY3vMfFtj3ZGtsRvPVJQ68xQ+Hu9T+2Po0+OdsGrZ4WFLVMUxxse0L03PAPG
+	 0SSn2EllUE5WvpakcoT8Cd0UJolenP4Q97IxsnxiB5ilLrOq4Rd1FbvLmNEOth6Apeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MkSBjU/9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUtZ732s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A53606A326;
-	Sat,  7 Nov 2026 14:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13B1606A339;
+	Sat,  7 Nov 2026 14:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MkSBjU/9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D021F0089F;
-	Sat,  7 Nov 2026 14:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUtZ732s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E35B1F0089F;
+	Sat,  7 Nov 2026 14:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061364;
-	bh=KfqTxVaNM++43fET2xiHBR60Nwcr9NY8CHKihXcMsE8=;
+	s=korg; t=1794061365;
+	bh=XTI5cTw0DBlOq4YKFbLZLckSyw13f5ofp7ZRHE8GduA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MkSBjU/9tuBqguZvGOp+ffLP3FVN5yso6i1kkSoWigoFt++2FWpSH7VDTgMuRD8Dh
-	 wnOU4VTt7dpqTp2Se25Jb6E5RK8MMTOEpm68N6mKq81P0PiZoSCvGCwXacg2FanqbJ
-	 ouyRCsN7uQkBHuY1/f6AK0VQnoHdEe+RutWzlmxs=
+	b=KUtZ732sFXlG7HzDd7f+PaKAD6w7e29eH1YxsaJGHiunt1xTOywnNM+jtJfEFsWAy
+	 oAKrf3LpYYTP1Gvv2nr1Z8C4Yg+iyySqIkB47sWIUUkAR/F8Ml1DdTFLQs4bhOr8KW
+	 gXSTlXP5eQJq7dte3AuyjAoknUC0dmZSyuzDL5O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <yi1.lai@intel.com>,
-	Gary Guo <gary@garyguo.net>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Eckhart Mohr <e.mohr@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0488/1536] rust: cfi: disable function merging if CFI is enabled
-Date: Sat,  7 Nov 2026 08:41:44 -0500
-Message-ID: <20261107135011.182949173@linuxfoundation.org>
+Subject: [PATCH 6.12 0489/1536] ALSA: hda/realtek: Add quirk for TongFang X6xx45xU
+Date: Sat,  7 Nov 2026 08:41:45 -0500
+Message-ID: <20261107135011.208430423@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,66 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Eckhart Mohr <e.mohr@tuxedocomputers.com>
 
-[ Upstream commit 29b03d1de967a177176d12811d970cac7882afcf ]
+[ Upstream commit d595255241e5fec0c94adeebf2565524398e37c5 ]
 
-In Rust doc tests, there is a dummy `__module_firmware_test_init` function
-generated by the example in `module_firmware!`'s documentation, which
-just returns zero. Many other documentation examples generate functions
-that produce zero. LKP test robot reports [1] a `Flags::zeroed` instance;
-my local reproduction has a `Bounded::new::<0>`.
+Fix microphone detection on built in headphone jack for some devices.
 
-LLVM's MergeFunctionsPass incorrectly merges functions with different
-KCFI types, causing `__module_firmware_test_init` to be merged into
-one of the zero-returning functions. As module init is invoked via an
-indirect function call, KCFI is checked and this produces a KCFI failure.
-
-I've reported this bug to upstream LLVM [2]; in the meantime, disable
-function merging if CFI is enabled. No separate treatment is needed for
-CONFIG_RUST_INLINE_HELPERS, as Clang does not enable function merging
-by default.
-
-[ LLVM already has a pending PR:
-
-    https://github.com/llvm/llvm-project/pull/217665
-
-  which solves the issue. In addition, I asked upstream Rust if the
-  unstable `-Zmerge-functions=disabled` flag will remain around:
-
-    https://rust-lang.zulipchat.com/#narrow/channel/425075-rust-for-linux/topic/.60-Zmerge-functions.3Ddisabled.60/
-
-  and it does indeed look like that will be the case. - Miguel ]
-
-Reported-by: kernel test robot <yi1.lai@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202608201017.100a4511-lkp@intel.com [1]
-Link: https://github.com/llvm/llvm-project/issues/217629 [2]
-Signed-off-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Eckhart Mohr <e.mohr@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Fixes: ca627e636551 ("rust: cfi: add support for CFI_CLANG with Rust")
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Link: https://patch.msgid.link/20260820135733.37121-1-gary@kernel.org
-[ Fixed typos as discussed. Reworded slightly for other typos. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20260708132135.102680-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: e72d5659a260 ("ALSA: hda/realtek: Add quirk for TongFang XxAF5xxx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Makefile b/Makefile
-index 82dfb3e137ea9..2c0181b4b7871 100644
---- a/Makefile
-+++ b/Makefile
-@@ -971,7 +971,8 @@ endif
- ifdef CONFIG_RUST
- 	# Always pass -Zsanitizer-cfi-normalize-integers as CONFIG_RUST selects
- 	# CONFIG_CFI_ICALL_NORMALIZE_INTEGERS.
--	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers
-+	# Disable function merging as LLVM incorrectly merges functions with different KCFI types.
-+	RUSTC_FLAGS_CFI   := -Zsanitizer=kcfi -Zsanitizer-cfi-normalize-integers -Zmerge-functions=disabled
- 	KBUILD_RUSTFLAGS += $(RUSTC_FLAGS_CFI)
- 	export RUSTC_FLAGS_CFI
- endif
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 159e9a6db49e8..2c76c6812a9ef 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11749,6 +11749,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1d05, 0x300f, "TongFang X6AR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d05, 0x3019, "TongFang X6FR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d05, 0x3031, "TongFang X6AR55xU", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1d05, 0x3034, "TongFang X6xx45xU", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+ 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
 -- 
 2.53.0
 
