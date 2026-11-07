@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065219;
-	b=Zt4h/or4e/i4JryslP8UaRRQgPhRVUYIQJLEqrlrHEX2E40iRS5DNfnsXDIF8yRejCka
-	 DZesaf+lo/RyFgRwJYV5Diei789sFpFzI/NUH+1fuYANrAPFMmHT0HxXmqkjCXzrHQXaL
-	 bjPgr8oWx4fWeIrSxr0nOZOaojpsjtBjnx3OvMc+imgnDUNN1YW4Q5mu8hmKPHhFJaCFT
-	 1ZkPVFW9yjNRbDOrhyv+DaCSafZsLBGEz5H0m5IQMRZve8c8C7zLmuILQLTSJDA5c/GFH
-	 c1gofsdA9nX+JzW4fA/PIqjLhyMdw8PIV+VJd5cBb+K1MdnURUz96U1E/zwUVa73GIw==
+	t=1794065221;
+	b=qJpbYQvhog/OQAfb8tsyvmLDXePSBxQs8ACLe7Y660pPkAgkWCPdRjg1bk+ZiB/HO4WL
+	 GtYj4g2VaP0oL91Ngw2/DfaalKeHAcv+g4Rc6RSTSFQN3+tjorEaR/e0drBuWcTAlkjXM
+	 4+FyOl7G/Yca6aYp3mqYxUGMR7Firc3UDYhQkZ2eYXwDdGGB71jArUmKWpeYSiePosXTk
+	 poK3zW20od32JeLXlX1gQQMvx5rwMbwaEO1lMrqtZtYXy5uv32yucPaxHAqQfA45r8m6Q
+	 kio+lcE/mSzRIcQdQmBG851Gcz19KLBBzW6D5ZZR1RieEQCDjpsjuV1pc7DCTHCXYOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065219;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065221;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RFgpxMYf9Q/H6x2agZQzmrPTOo8Ys6OveuEK1MTDXdw=;
-	b=I1j4iZRgx+7GWTz71Iu3I/Ul7ryC7PDkgF6U7Blyr8envaJMFJs0b5RjZ0UdfmUe8ILy
-	 03wfysrW25qXI+ONA+X4rdKMJgr12qT7Nac4oc/Kax3J04C2W2aM5n9nSu8r8nQztY3jk
-	 7eU+qd479CKsU3gYiQY0L52IUN+YyFrfyl0PVVnoDaWhDIYm/4LbbgokWqFBJtPe+Q5m7
-	 EBizUGg+Wcqg0KPpPEuEXGWy2y53XjvlqrT2z4CJsFSwj/gcktEqKAjZ9gcxJjprOQtbV
-	 9teAzNc2xXyBhpSapVTP1HkoxYwKl6aKK860fcP92DrfINFrYkVl+ZWRNCZy4lT3k2Q==
+	bh=HNGFmNr1u/gQnTBwr3AnnvIceE8/w45AV/CxfAcMKPQ=;
+	b=BQKURnPO6alct1jXL5fM4zlZR+c/l4XWK30BskRaOewtC/o5nxx7fsiwxyjsAN0JwGAZ
+	 PPmd3QBwdAi0KySmxN9CLZtbmSDpFrNyBvAJhhQd/J5ZAHDrdicYUdV7/PUGbqRQK2ZLx
+	 NVYiWRypLk2PBx6Rbb6vH1wV2amvuEgMUos+2gvuYfSX00fUZ7KsuSpW/Yd9lcAEDS/lz
+	 W5nhKVw/JSZTyOK1VScNzTsbpHH0AhY174+PbXYu7SON6vQT46TgBpN3HMC7xeocYmDZZ
+	 iTk7psE7kLSh8zfRjTjFiaJ3y180//2TO5ke8gHAyPyWoX4Vczuht+Q4YgYG2uKtxMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ke48Jd2J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HS48yKt0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39112606D801;
-	Sat,  7 Nov 2026 15:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F4B606D801;
+	Sat,  7 Nov 2026 15:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ke48Jd2J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF231F0089F;
-	Sat,  7 Nov 2026 15:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HS48yKt0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E311F0089F;
+	Sat,  7 Nov 2026 15:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065218;
-	bh=RFgpxMYf9Q/H6x2agZQzmrPTOo8Ys6OveuEK1MTDXdw=;
+	s=korg; t=1794065220;
+	bh=HNGFmNr1u/gQnTBwr3AnnvIceE8/w45AV/CxfAcMKPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ke48Jd2JZv7xd5Mrpsm0xAVPGipq72xJQUusLXUrT3AEoc2tVTYOYFwdvdncvAYxZ
-	 5VmYZXwbOdg2q1Ev9Y0aNeGDa2nceUiyx4YPrVU9AsvI4rWr8D/JP3y1Y5YlcUm61G
-	 1Il1ObeTkK0D9KXnw32/mKJ9Pkoo9XY8ij3TDh2g=
+	b=HS48yKt0pLS12ALilA/DQgtEVTT7Y3Hp6AXv9K+8IQ5RBjUtrh5RPIlXh76BpGfbq
+	 wJLTffKdFUm7EbaBXxp/DapXjRZffmbnDlH08YvR5viF3leZLYhShl8dFtXO3uA0fG
+	 3VsTIYWsXgWWyIBoE6+hHq91wKTFXo+mgvj6aIcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
+	Fang Xieyan <fangxy@xiaopeng.com>,
+	Liu Chao <liuc63@xiaopeng.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1012/1257] pppoe: delete session hash entries by pointer match
-Date: Sat,  7 Nov 2026 08:55:08 -0500
-Message-ID: <20261107135007.288686921@linuxfoundation.org>
+Subject: [PATCH 7.3 1013/1257] net: wwan: iosm: validate msg_head before indexing msg_ring
+Date: Sat,  7 Nov 2026 08:55:09 -0500
+Message-ID: <20261107135007.315589442@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,103 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Liu Chao <liuc63@xiaopeng.com>
 
-[ Upstream commit b5b8c81836e2bec7b444dfa2b14fd14e912e9d63 ]
+[ Upstream commit 46cbf85155e5451b6682ea0c17bc62ec564aec36 ]
 
-pppoe_connect() copies the requested PPPoE address to a socket before
-attempting to insert the socket into the session hash table. If the
-tuple already exists, __set_item() returns -EALREADY, but the copied
-address and ifindex remain set on the failed socket.
+ipc_protocol_free_msg_get() reads msg_head from shared memory and
+uses it directly as an index into msg_ring[]. If the head is out
+of range, the subsequent memset() writes beyond the message ring.
 
-Closing that socket then deletes the existing socket's hash entry
-through pppoe_release(), preventing it from receiving further session
-traffic. An unprivileged process in the same network namespace can
-trigger this through a duplicate connection attempt.
+Validate head against IPC_MEM_MSG_ENTRIES before using it as an
+index. The ring is a circular buffer, so a value outside the valid
+range indicates a corrupted head pointer; report the error and fail
+the allocation instead of writing out of bounds.
 
-To avoid the accidental delete, pass the pppox_sock to __delete_item(),
-and unlink only an entry whose pointer matches the requested socket.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 64516f633bfd ("net: iosm: protocol operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Link: https://patch.msgid.link/20261020092118.47416-1-qingfang.deng@linux.dev
+Reviewed-by: Fang Xieyan <fangxy@xiaopeng.com>
+Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261020094254.4017726-1-liuc63@xiaopeng.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/pppoe.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
-index bf7414b46a260..ee0e318d6a2a4 100644
---- a/drivers/net/ppp/pppoe.c
-+++ b/drivers/net/ppp/pppoe.c
-@@ -194,18 +194,16 @@ static int __set_item(struct pppoe_net *pn, struct pppox_sock *po)
- 	return 0;
- }
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c b/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c
+index f2f86f41fd10e..004920068c45b 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c
+@@ -14,6 +14,11 @@ ipc_protocol_free_msg_get(struct iosm_protocol *ipc_protocol, int *index)
+ 	u32 new_head = (head + 1) % IPC_MEM_MSG_ENTRIES;
+ 	union ipc_mem_msg_entry *msg;
  
--static void __delete_item(struct pppoe_net *pn, __be16 sid,
--					char *addr, int ifindex)
-+static void __delete_item(struct pppoe_net *pn, const struct pppox_sock *po)
- {
--	int hash = hash_item(sid, addr);
-+	int hash = hash_item(po->pppoe_pa.sid, po->pppoe_pa.remote);
- 	struct pppox_sock *ret, __rcu **src;
- 
- 	ret = rcu_dereference_protected(pn->hash_table[hash], lockdep_is_held(&pn->hash_lock));
- 	src = &pn->hash_table[hash];
- 
- 	while (ret) {
--		if (cmp_addr(&ret->pppoe_pa, sid, addr) &&
--		    ret->pppoe_ifindex == ifindex) {
-+		if (ret == po) {
- 			struct pppox_sock *next;
- 
- 			next = rcu_dereference_protected(ret->next,
-@@ -236,11 +234,10 @@ static inline struct pppox_sock *get_item(struct pppoe_net *pn, __be16 sid,
- 	return po;
- }
- 
--static inline void delete_item(struct pppoe_net *pn, __be16 sid,
--					char *addr, int ifindex)
-+static void delete_item(struct pppoe_net *pn, const struct pppox_sock *po)
- {
- 	spin_lock(&pn->hash_lock);
--	__delete_item(pn, sid, addr, ifindex);
-+	__delete_item(pn, po);
- 	spin_unlock(&pn->hash_lock);
- }
- 
-@@ -570,8 +567,7 @@ static int pppoe_release(struct socket *sock)
- 	 * protect "po" from concurrent updates
- 	 * on pppoe_flush_dev
- 	 */
--	delete_item(pn, po->pppoe_pa.sid, po->pppoe_pa.remote,
--		    po->pppoe_ifindex);
-+	delete_item(pn, po);
- 
- 	sock_orphan(sk);
- 	sock->sk = NULL;
-@@ -621,8 +617,7 @@ static int pppoe_connect(struct socket *sock, struct sockaddr_unsized *uservaddr
- 	if (stage_session(po->pppoe_pa.sid)) {
- 		pppox_unbind_sock(sk);
- 		pn = pppoe_pernet(sock_net(sk));
--		delete_item(pn, po->pppoe_pa.sid,
--			    po->pppoe_pa.remote, po->pppoe_ifindex);
-+		delete_item(pn, po);
- 		if (po->pppoe_dev) {
- 			dev_put(po->pppoe_dev);
- 			po->pppoe_dev = NULL;
-@@ -672,8 +667,7 @@ static int pppoe_connect(struct socket *sock, struct sockaddr_unsized *uservaddr
- 
- 		error = ppp_register_net_channel(dev_net(dev), &po->chan);
- 		if (error) {
--			delete_item(pn, po->pppoe_pa.sid,
--				    po->pppoe_pa.remote, po->pppoe_ifindex);
-+			delete_item(pn, po);
- 			goto err_put;
- 		}
- 
++	if (head >= IPC_MEM_MSG_ENTRIES) {
++		dev_err(ipc_protocol->dev, "invalid message head %u", head);
++		return NULL;
++	}
++
+ 	if (new_head == le32_to_cpu(ipc_protocol->p_ap_shm->msg_tail)) {
+ 		dev_err(ipc_protocol->dev, "message ring is full");
+ 		return NULL;
 -- 
 2.53.0
 
