@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060743;
-	b=xmplnRhqym/zMMWUEFwGIR/Sllq4xFenL66p0/x8b08R1xJnab0gBAcR1IdUCaLd/Fxt
-	 EpSOjVI0IQDXBBopQRqJTi1CX8B+xppnI13GzJS1TtrA3imuv63DMm4nCr72RcSFICrOQ
-	 bapf5g6+NydKGS23ps+GrYmbpQFn8/TEA11ROyXxtObUWFAx+cDNcMQEOiNsp1RC5iigk
-	 kUZr5fPIArBAAkn4FLirNKt5Dgy+mUZo9j4hAl4eEaZtAofuZ5RNUwJmC7dU80tVAnHA+
-	 JUGBrw1lyDTquoXbK6wkjAtDeV8LehyVCw05n/emZGvLBIucUZ0iEuycOG/r8Nw679w==
+	t=1794060744;
+	b=hRx95Ka4/2Ch+4+xY/KMs+PFpJDVLXTOlxUbuE0urV/Q8e4I3LBzV8GLfuNEgySTbaDC
+	 Wg1cNwIwQh25TI8dCD1fye9rpNCEHwAWjAeXhok9nnlyGCsM8+W3igfQejgHSn6sGjbvt
+	 rCsXE5aVYyYXiznOfQ0wwNPPUzYAWYP3D/8BYvRtpwG7+ALHINeJmll5qVMLBPcg+YqOJ
+	 cNcWrz7QB2L8wO3GtmiqIGSyBr9lZGNN6rLOg83B6I4v3K7ve/qs5EM7noHouspWjdgYn
+	 /4xiaHtQqYJs3lqxbFbb9XtaJVRab1FXFZlel1HMtZ1rLpoEeHYk1HnxTsNQ0PhS48Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060743;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jgh1QxIXiwNauEyfYeu78ZhCAp3xmDslPDQTggclXx0=;
-	b=h0VAjCAZLM6KOq57iN9COGVXKpfNMmEATzikW7ogFzPBQzNYakX7GyxqUoVw6TP7ye/a
-	 YT9sKGq5gjb5X9xUsT8E66eWhMb6w2XzjTzhVGkQGo1i50ce2Tu2wqUOQ58KosV6elYS0
-	 SXf7yXHwWunOZzSxEd+Gk3NOqleyAa2fY5OOgVqNjVOtKIPg3K7lhcAg6MQcwx8KzToaQ
-	 FEj4jsHKRHdvQcthbgX7rgCFoGlNPljVinmhApgMM42+SWQIbZcZhu9qBwMOZbmlpuXBd
-	 4rAEoXI13081FqNltP2UKYfg1hkN1tWZtpIEH4202wKDMvDZ3bsoP8h3sJ/xofYFBAQ==
+	bh=8yZiHElVxqLG93wBnh8J+7qQ/w08ZKJ5kD0NjDMYM/Q=;
+	b=Evq/fj0qMOcuoPOxe94kNR+UMqNtlS1j3rY4d6uV/Y0OFUreuPxQTMYemEcOLsTq5IP3
+	 1rFFaKcNGIa16f3HaOgrhwgEWhAo3DgpwtyM7ygHnGEDxIXhC1P0t8IdRdm6IVqQ5/X1g
+	 ssGvOD4c63qwwUpimolwADmYP7e2rG0Pqr6FSrpqRynt+rRB7AHI0Ay377VGJvLNi3Q15
+	 RN2KtEOikck3iIlJhQ1ktDL+whZr75lQhTaif41gCsBJjX39zODO3hoy3BlhqPjUyMopG
+	 bwX/ATj/PezohTcVlQ1u7r60VBkedp/lpxizAxS4iWQYrpcEawyFOkHIaRSVVDyE46g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="MA7iDC/u";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="AHi/8AHq";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35AB606A326;
-	Sat,  7 Nov 2026 14:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEC2606A326;
+	Sat,  7 Nov 2026 14:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MA7iDC/u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0FA1F0089F;
-	Sat,  7 Nov 2026 14:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AHi/8AHq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89F41F0089F;
+	Sat,  7 Nov 2026 14:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060742;
-	bh=jgh1QxIXiwNauEyfYeu78ZhCAp3xmDslPDQTggclXx0=;
+	s=korg; t=1794060744;
+	bh=8yZiHElVxqLG93wBnh8J+7qQ/w08ZKJ5kD0NjDMYM/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MA7iDC/uIToUY0qiBXr1aJ/F0wtNim42jiSKc8uYwnEFBzDqAlofoj5kE8NoZFolD
-	 cL9S8Llrz8oHobzG2KOpCLa9wZWd7ZqZSKqIpBDYhXNLOr019jm5ogVL0zr9FQKlYC
-	 1n+f/iV5IlI86xsybXuBrh8sndsM/4lP6CL0Cw6k=
+	b=AHi/8AHqcZnpn4XNlA3lK3G8PL6q2HIUEVp1lsMq9ET5phiKKvPAU8wBZt3bbGS9v
+	 hBlZ1E9UyIMFOImsCOvhbJ2LPzMBtmCNF//L8kohzL3MtFxuOnO6lZTOf0JL0BXPDx
+	 DK01GJgYwTn5peMB9f/dNhTi1x0yIFOww1ghIZqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0158/1536] greybus: manifest: validate string descriptor header
-Date: Sat,  7 Nov 2026 08:36:14 -0500
-Message-ID: <20261107135002.116007287@linuxfoundation.org>
+Subject: [PATCH 6.12 0159/1536] misc: ibmvmc: release send buffer on write errors
+Date: Sat,  7 Nov 2026 08:36:15 -0500
+Message-ID: <20261107135002.141326970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,38 +67,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 18b6510f642dbcb856c3af8be974d1600f3ba2d3 ]
+[ Upstream commit fd62c1f591372f7dc4c5bc041569c2f0a4a86be1 ]
 
-identify_descriptor() computes a string descriptor size from
-desc->string.length.
+ibmvmc_get_valid_hmc_buffer() marks the selected send buffer busy before
+ibmvmc_write() validates the backing storage or copies data from user
+space. Error exits after that point leave the buffer permanently busy.
 
-Require the descriptor to contain the fixed string descriptor header
-before reading the variable string length. The existing descriptor-size
-check then reports the short descriptor.
+Keep the buffer pointer until ownership is handed to the hypervisor, and
+mark it free again on local write failures. Also report an RDMA send
+failure instead of returning a successful byte count.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706091935.78020-1-pengpeng@iscas.ac.cn
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260624185925.2133-1-alhouseenyousef@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/greybus/manifest.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/misc/ibmvmc.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/greybus/manifest.c b/drivers/greybus/manifest.c
-index dd7040697bde9..469da3f39afb4 100644
---- a/drivers/greybus/manifest.c
-+++ b/drivers/greybus/manifest.c
-@@ -122,6 +122,8 @@ static int identify_descriptor(struct gb_interface *intf,
- 	switch (desc_header->type) {
- 	case GREYBUS_TYPE_STRING:
- 		expected_size += sizeof(struct greybus_descriptor_string);
-+		if (desc_size < expected_size)
-+			break;
- 		expected_size += desc->string.length;
+diff --git a/drivers/misc/ibmvmc.c b/drivers/misc/ibmvmc.c
+index e5f935b5249d5..af84e94ec5f0e 100644
+--- a/drivers/misc/ibmvmc.c
++++ b/drivers/misc/ibmvmc.c
+@@ -1040,7 +1040,7 @@ static ssize_t ibmvmc_write(struct file *file, const char *buffer,
+ 			    size_t count, loff_t *ppos)
+ {
+ 	struct inode *inode;
+-	struct ibmvmc_buffer *vmc_buffer;
++	struct ibmvmc_buffer *vmc_buffer = NULL;
+ 	struct ibmvmc_file_session *session;
+ 	struct crq_server_adapter *adapter;
+ 	struct ibmvmc_hmc *hmc;
+@@ -1130,9 +1130,15 @@ static ssize_t ibmvmc_write(struct file *file, const char *buffer,
+ 	dev_dbg(adapter->dev, "write: file = 0x%lx, count = 0x%lx\n",
+ 		(unsigned long)file, (unsigned long)count);
  
- 		/* String descriptors are padded to 4 byte boundaries */
+-	ibmvmc_send_msg(adapter, vmc_buffer, hmc, count);
++	if (ibmvmc_send_msg(adapter, vmc_buffer, hmc, count)) {
++		ret = -EIO;
++		goto out;
++	}
++	vmc_buffer = NULL;
+ 	ret = p - buffer;
+  out:
++	if (vmc_buffer)
++		vmc_buffer->free = 1;
+ 	spin_unlock_irqrestore(&hmc->lock, flags);
+ 	return (ssize_t)(ret);
+ }
 -- 
 2.53.0
 
