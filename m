@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064177;
-	b=bIffBdAziyXo/ZVGlocv6qd0L/k4UMc7k7ZNYHyQeHgbziBLOroTa+TBfvz5v+4umTDJ
-	 KZxY2+hr4FEdy5ZAgXIwVFE6jKYeDumQShN+NWtL3iHMl+ZNX+l+jnb30NFLV+n7xxBmk
-	 SINuYHnfqOw8bru5nUUwPHy+1WyVP5IZklheSgyRxZXKXqCxjxgtX7vVc8MgA4jIjqMrd
-	 nvSJ0jIDsMyAOmPIJwlZMTiP8iX8QQeDzPcKdD3Sd8jTRuZ0cnT0AWXnWgJdj96mmhcmL
-	 1tF0y68hVmwUSzuPDLWYUSE7R3+YdLaH/dabCLuL3S9SR9AIDeO6g6+Pp6u/CXBHONA==
+	t=1794064178;
+	b=vfQrUnsCUX6UbKbyrWDOY4pVeKCr6dl33m3Ktfn0aGAWXDMgP66+rKyVwZUUFd/OoHZo
+	 ZF8LXFQ9tuCoQardDvBW9pCuYmtaZxHRNIGSRplDiBSJ4Z93VW72kzLyKyCq7rQSsOLKs
+	 S+P0fkOYJGNaLUHZzqOfLOGjM1Uo6pBZtnCYIebqcM/Byr+sgFPvppsMLTAhocsX7nmu3
+	 qU5nmiwPkKGRlXIi3Kb483P3P2A6pHI/MpPO1Csjp4wIJfaePe3/IkMMvYZlV8z3/acDB
+	 Zly3SFqTieJlvf7wKyQhvXyPHCTXScOm8Pthu/EMTjQh6XThNzllthq2tgIxGvCsqWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064177;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064178;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f1BWSabXsgYCvq7Bgz8oEA6OeIPFLH96BFYojYRs1JU=;
-	b=oBmctRIZTcw86DDzoyMDn38QZq+jGzyy4r4oS7Nwm3jNh+e3olZEIHWIJQcaWfmRg4rY
-	 kgbrZcShLZ2D+RnwI6apd7XC1YCp9fLmMMIh9TZD02wZmllSSx/wDqjF6rFUCXiws+xhr
-	 YunIiW+OZUlD51S+TccEagzHPjeEKY3IKTmMDGuJ1HU+JLFJbt/aUYmptNe25AgW/gGAb
-	 IIP0gipBg76FZEzxXw56ynCqaJ+h6YJUNJHojzNDhJYWRTrOSoN4HIrNnOEFEE5p1/LGW
-	 4j/eOLYrzYfE+7qsjf9T8G/jzj14W8NqtB2E8x44cpeX1gOFL3XHOwU0XRI+lXqBUSw==
+	bh=EyOcKsLrj2Q54kVT/zHE/iv9bki2QaJLzZ9bZGo0lA0=;
+	b=uBicC7NRKidKvGrxnHn6C/dnfXkMnnpFkEA8JMw7lnKuQkvUyAEku0X+qI9kIxILJ99s
+	 4EXtKQ/3Bs+MkYDevcqC0p+AVI2U0xTGJnaXz8z9BTeljb5LH3HaXsTjExVY0ZAB9NF+b
+	 ixUuqyUVLcMihNCqSgOpCfvk7q8jdsVMK28XQuHpozcaQKoULIM5XbAaYdUzhkzmJlSgV
+	 w2kRdj4pgN6A+AfrvpkMtQERm8oIiI82fl1Z7A8UMiBdVsyZ3fypcEiwolweLafPMojs1
+	 BMiptXYCZBNBAQ+P4In2LLpdcqVNfRvnWrlTtTk7WTdavUPnzdSpGOnhvqjgE4ZK+nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="f/xbaCa6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bA8HaOtC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EAE606A335;
-	Sat,  7 Nov 2026 15:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182B3606A335;
+	Sat,  7 Nov 2026 15:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f/xbaCa6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4891F0089F;
-	Sat,  7 Nov 2026 15:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bA8HaOtC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEEB1F008A2;
+	Sat,  7 Nov 2026 15:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064176;
-	bh=f1BWSabXsgYCvq7Bgz8oEA6OeIPFLH96BFYojYRs1JU=;
+	s=korg; t=1794064178;
+	bh=EyOcKsLrj2Q54kVT/zHE/iv9bki2QaJLzZ9bZGo0lA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f/xbaCa6AfKwmIjIoaKYRJ+ZYXQY15XyPAmidf+1U6HZgIndF9xFAGd87l5cY9zBZ
-	 YH5CwckV3l5ttsFV3sHXUqBHHsxEI2cXn/wGa68Aa6lhZuw8lflguKPjBJAfQlxCCb
-	 pxWaq35Nn7eGv1pHY+WFaNZ7fRvDuXMxlG/uZTsU=
+	b=bA8HaOtCy0BMGhxvw6bWz8yEim0H1VZ4CpDexm3GbY1XipoEuNArHkjqJGNOi2c29
+	 V0c2iG6EJ10rt9u6ewJVEydC3vIK7UiQmLQFKbPOYBp6D05xpX+/z+GH5EDsy9CUvM
+	 7yqjxTkHS2GqXi+0TwuKMT5zNLps1R11+wtDFqYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Kubik <piotr@kubik.pl>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Itaru Kitayama <itaru.kitayama@fujitsu.com>,
+	Wei-Lin Chang <weilin.chang@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0321/1257] netfilter: ctnetlink: fix inverted IPv6 address match in dump filter
-Date: Sat,  7 Nov 2026 08:43:37 -0500
-Message-ID: <20261107134948.293313992@linuxfoundation.org>
+Subject: [PATCH 7.3 0295/1257] KVM: arm64: ptdump: Fix shadow ptdump sleep-in-atomic-context problem
+Date: Sat,  7 Nov 2026 08:43:11 -0500
+Message-ID: <20261107134947.613447733@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,56 +69,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Piotr Kubik <piotr@kubik.pl>
+From: Wei-Lin Chang <weilin.chang@arm.com>
 
-[ Upstream commit 1ae2d094b0200f687923298c0e42579273558988 ]
+[ Upstream commit b1cc219eb21ab5f31fe4caa32be8057159e42db5 ]
 
-ctnetlink_filter_match_tuple() rejects an entry when
-!ipv6_addr_cmp(filter, entry) is true. ipv6_addr_cmp() is a memcmp() and
-returns 0 for equal addresses, so the condition is true exactly when the
-addresses match: a CTA_FILTER dump with an IPv6 CTA_IP_SRC or CTA_IP_DST
-skips every entry that matches the requested address and returns all the
-others. The IPv4 branch compares with != and behaves correctly.
+Previously we exposed shadow page tables by creating a debugfs ptdump
+file whenever a nested mmu instance gets bound to a new context, and
+deleting the debugfs file whose context was getting unbound.
 
-Observed with libnetfilter_conntrack NFCT_FILTER_DUMP_TUPLE: a dump
-filtered on src 2001:db8::10 returned only the unrelated entries, and a
-dump filtered on ::1 returned every entry except the ::1 ones.
-conntrack-tools does not use the tuple filter for -L, which is why this
-went unnoticed.
+This turned out to be buggy, as the instance<->context binding process
+is done with the mmu_lock held, and debugfs creation/deletion can sleep.
 
-Use ipv6_addr_equal() so the IPv6 branch mirrors the IPv4 one.
+Change the approach and create a shadow ptdump file for each nested mmu
+instead during kvm_vcpu_init_nested(), in a sleepable context. The files
+will be named nested_mmu<index>, and reading it will return the nested
+context's VTTBR, VTCR, and s2 enabled or not before dumping the shadow
+page tables, given the nested mmu is valid.
 
-Fixes: cb8aa9a3affb ("netfilter: ctnetlink: add kernel side filtering for dump")
+Fixes: 19e15dc73f0f ("KVM: arm64: nv: Expose shadow page tables in debugfs")
+Reported-by: Itaru Kitayama <itaru.kitayama@fujitsu.com>
+Closes: https://lore.kernel.org/kvmarm/aiuF0KSvvv-ZozI1@sm-arm-grace07/
+Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com>
+Signed-off-by: Wei-Lin Chang <weilin.chang@arm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Piotr Kubik <piotr@kubik.pl>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://patch.msgid.link/20260924094951.727352-3-weilin.chang@arm.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/kvm_mmu.h |  6 ++----
+ arch/arm64/kvm/nested.c          |  9 ++++-----
+ arch/arm64/kvm/ptdump.c          | 32 +++++++++++++++-----------------
+ 3 files changed, 21 insertions(+), 26 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 4e5d7c7014368..e8477f792c957 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -1098,13 +1098,13 @@ static int ctnetlink_filter_match_tuple(struct nf_conntrack_tuple *filter_tuple,
- 		break;
- 	case NFPROTO_IPV6:
- 		if ((flags & CTA_FILTER_FLAG(CTA_IP_SRC)) &&
--		    !ipv6_addr_cmp(&filter_tuple->src.u3.in6,
--				   &ct_tuple->src.u3.in6))
-+		    !ipv6_addr_equal(&filter_tuple->src.u3.in6,
-+				     &ct_tuple->src.u3.in6))
- 			return 0;
+diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
+index 6eae7e7e2a684..ac2b0637692ad 100644
+--- a/arch/arm64/include/asm/kvm_mmu.h
++++ b/arch/arm64/include/asm/kvm_mmu.h
+@@ -392,12 +392,10 @@ static inline bool kvm_supports_cacheable_pfnmap(void)
  
- 		if ((flags & CTA_FILTER_FLAG(CTA_IP_DST)) &&
--		    !ipv6_addr_cmp(&filter_tuple->dst.u3.in6,
--				   &ct_tuple->dst.u3.in6))
-+		    !ipv6_addr_equal(&filter_tuple->dst.u3.in6,
-+				     &ct_tuple->dst.u3.in6))
- 			return 0;
- 		break;
- 	}
+ #ifdef CONFIG_PTDUMP_STAGE2_DEBUGFS
+ void kvm_s2_ptdump_create_debugfs(struct kvm *kvm);
+-void kvm_nested_s2_ptdump_create_debugfs(struct kvm_s2_mmu *mmu);
+-void kvm_nested_s2_ptdump_remove_debugfs(struct kvm_s2_mmu *mmu);
++void kvm_nested_s2_ptdump_create_debugfs(struct kvm_s2_mmu *mmu, int idx);
+ #else
+ static inline void kvm_s2_ptdump_create_debugfs(struct kvm *kvm) {}
+-static inline void kvm_nested_s2_ptdump_create_debugfs(struct kvm_s2_mmu *mmu) {}
+-static inline void kvm_nested_s2_ptdump_remove_debugfs(struct kvm_s2_mmu *mmu) {}
++static inline void kvm_nested_s2_ptdump_create_debugfs(struct kvm_s2_mmu *mmu, int idx) {}
+ #endif /* CONFIG_PTDUMP_STAGE2_DEBUGFS */
+ 
+ #endif /* __ASSEMBLER__ */
+diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+index b191365d97cc2..41253fe45941c 100644
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -124,6 +124,9 @@ int kvm_vcpu_init_nested(struct kvm_vcpu *vcpu)
+ 			return ret;
+ 		}
+ 
++		for (i = 0; i < S2_MMU_PER_VCPU; i++)
++			kvm_nested_s2_ptdump_create_debugfs(&tmp[i], i + kvm->arch.nested_mmus_size);
++
+ 		guard(write_lock)(&kvm->mmu_lock);
+ 
+ 		for (i = 0; i < S2_MMU_PER_VCPU; i++)
+@@ -837,10 +840,8 @@ static struct kvm_s2_mmu *get_s2_mmu_nested(struct kvm_vcpu *vcpu)
+ 	kvm->arch.nested_mmus_next = (i + 1) % kvm->arch.nested_mmus_size;
+ 
+ 	/* Make sure we don't forget to do the laundry */
+-	if (kvm_s2_mmu_valid(s2_mmu)) {
+-		kvm_nested_s2_ptdump_remove_debugfs(s2_mmu);
++	if (kvm_s2_mmu_valid(s2_mmu))
+ 		s2_mmu->pending_unmap = true;
+-	}
+ 
+ 	/*
+ 	 * The virtual VMID (modulo CnP) will be used as a key when matching
+@@ -854,8 +855,6 @@ static struct kvm_s2_mmu *get_s2_mmu_nested(struct kvm_vcpu *vcpu)
+ 	s2_mmu->tlb_vtcr = vcpu_read_sys_reg(vcpu, VTCR_EL2);
+ 	s2_mmu->nested_stage2_enabled = vcpu_read_sys_reg(vcpu, HCR_EL2) & HCR_VM;
+ 
+-	kvm_nested_s2_ptdump_create_debugfs(s2_mmu);
+-
+ out:
+ 	atomic_inc(&s2_mmu->refcnt);
+ 
+diff --git a/arch/arm64/kvm/ptdump.c b/arch/arm64/kvm/ptdump.c
+index b5a0584260e8b..7829fe376385b 100644
+--- a/arch/arm64/kvm/ptdump.c
++++ b/arch/arm64/kvm/ptdump.c
+@@ -17,7 +17,7 @@
+ 
+ #define MARKERS_LEN		2
+ #define KVM_PGTABLE_MAX_LEVELS	(KVM_PGTABLE_LAST_LEVEL + 1)
+-#define S2FNAMESZ		sizeof("0x0123456789abcdef-0x0123456789abcdef-s2-disabled")
++#define S2FNAMESZ		sizeof("nested_mmu0000")
+ 
+ struct kvm_ptdump_guest_state {
+ 	struct kvm_s2_mmu	*mmu;
+@@ -173,6 +173,15 @@ static int kvm_ptdump_guest_show(struct seq_file *m, void *unused)
+ 		.seq		= m,
+ 	};
+ 
++	if (kvm_is_nested_s2_mmu(kvm, mmu)) {
++		if (kvm_s2_mmu_valid(mmu))
++			seq_printf(m, "VTCR: 0x%016llx VTTBR: 0x%016llx s2: %s\n",
++				   mmu->tlb_vtcr, mmu->tlb_vttbr,
++				   mmu->nested_stage2_enabled ? "enabled" : "disabled");
++		else
++			return 0;
++	}
++
+ 	ret = kvm_pgtable_walk(mmu->pgt, 0, BIT(mmu->pgt->ia_bits), &walker);
+ 	if (ret)
+ 		return ret;
+@@ -299,26 +308,15 @@ static const struct file_operations kvm_pgtable_levels_fops = {
+ 	.release	= kvm_pgtable_debugfs_close,
+ };
+ 
+-void kvm_nested_s2_ptdump_create_debugfs(struct kvm_s2_mmu *mmu)
++void kvm_nested_s2_ptdump_create_debugfs(struct kvm_s2_mmu *mmu, int idx)
+ {
+-	struct dentry *dent;
+ 	char file_name[S2FNAMESZ];
+ 
+-	snprintf(file_name, sizeof(file_name), "0x%016llx-0x%016llx-s2-%sabled",
+-		 mmu->tlb_vttbr,
+-		 mmu->tlb_vtcr,
+-		 mmu->nested_stage2_enabled ? "en" : "dis");
+-
+-	dent = debugfs_create_file(file_name, 0400,
+-				   mmu->arch->debugfs_nv_dentry, mmu,
+-				   &kvm_ptdump_guest_fops);
++	snprintf(file_name, sizeof(file_name), "nested_mmu%d", idx);
+ 
+-	mmu->shadow_pt_debugfs_dentry = dent;
+-}
+-
+-void kvm_nested_s2_ptdump_remove_debugfs(struct kvm_s2_mmu *mmu)
+-{
+-	debugfs_remove(mmu->shadow_pt_debugfs_dentry);
++	debugfs_create_file(file_name, 0400,
++			    mmu->arch->debugfs_nv_dentry, mmu,
++			    &kvm_ptdump_guest_fops);
+ }
+ 
+ void kvm_s2_ptdump_create_debugfs(struct kvm *kvm)
 -- 
 2.53.0
 
