@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063670;
-	b=5dDWWwudFyOLqxXU06cSBoPAViamEF8jXLopHz9piHEEQoKa23QbtioXwXWYSo0O6CEK
-	 W7ggbTufGUGUqvW0KOTQZ4zEkj5c/BOf0wKfav7wwpL1DDKq/Gx7c+tFIeUZsXud52EDV
-	 zVSqOCv68YGYRhQ/VVfYazIrwqS72T51JGgHPvZiSlTOJ2riRONlNUfgZglFhyPslgygf
-	 zu/DiTx6ikyw01zWRHUBJLTZVn+vQMAzm2nVueCrN8kTZD+IqCE1ANCo0cR7SpCa64YK6
-	 BofTro5AfyKZWAT3dCnHDfmGEWJSjH7Z8uwBicBxBdHy2ij1hlfd4RGUqAsBWpMNbqA==
+	t=1794063672;
+	b=sfDGLp5ql+ceMNmQpTDfQdZmQgqgZHoZaKbIGJep2LOWzsFPLdYHLIhY4Cv9e8VwrAJ/
+	 Zmz1Pa6ibGq28n/2EHpp0o8kzza1VWHhO+8vAnTqWbTYnQgbZPcpudfWE4e5UfTqtI1uu
+	 UZSfTjtOrp17Eeur5ElGcByhnKg0GVyeGQLJTyt9ztDkdBDckqAw6YhM1lOoHrmv1TTxo
+	 e2BwKgowfOJI0G+++ujQ851y1nPxme9nPWAissraWuOlWhRUK36HoppilLKKaNQLCtLwi
+	 b1mSavRQA3Q/Fce7kCazIOivHuo8y/WKVddT5PbZcoT5+iiyFgn6XEms4U8vp6dpfLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063670;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063672;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HChrjCnUftQHUjMtT5fqb2R6OS0ktPTLuRGXJG7XdFk=;
-	b=llvGQF/KLo3l0zL8EVhFkjHUus/0X2XOqc847sS9hN2ILm9W9hd/r5xKSemoBZemUsnj
-	 DExfD4LGksFev66bQMN4dJB5DJ9DRiZya37a4/1vMAN/7dLqs4la8+tny8k8WgVAWKnb1
-	 DX8zc8fSQWghwTGH4xZnvVZbAGXlsyphf5Ybd/RpWfJ6YXNsI2g2z/E/UsSllS380Vs4L
-	 aemYvSMQcN+wGrYjqadB4ZVwrzzq6lAF2GnewK6ZAxuuzC1P1qBFOy3NtyJi0kt2phQSM
-	 W6Hsh+UJyT8Fu85hiOb1uLHteLr9ZTHd1mllqLRAe1CnWidqaSdIayzOZ/v8qMJ446Q==
+	bh=NLI00r9hxFpLUyvV7Vf04qdIj4wmMaM7ZeKOo++hFVk=;
+	b=30ZbjZ25egWnYgNds/vYiaDbakjrT+hhZoIAaMpB/XOPExSHoxhn/RgiCMY/Sy2Ok8IO
+	 MhICqMg4kJx53QjAzn8QSwngMXTTcR0RcAO1HOP40IS7a0TJ1UqtztFIWrX5N1yY9x5oN
+	 ugc9VdP8hEh0DHEjFbIqGgNdiYDF81o+9jnkts3yznm2fjU4+U3i7ny337PiZmphfc4LE
+	 niOXTB/24rvVHPyTa2d+c+B7fzwBOowE80fXltkLh5s/0pkCdnB0mHfqA8KP5O3G/U6Ei
+	 keSKzPMQMZ9TnBplz+3r5FAIBYW2LOQvDiYynOnAT9ziS9W8tY6kEDgcbBGynsbhx2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nyZsW4vi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yHh7nEEP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2FA606A9EF;
-	Sat,  7 Nov 2026 15:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB27C606A9EF;
+	Sat,  7 Nov 2026 15:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nyZsW4vi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE491F0089F;
-	Sat,  7 Nov 2026 15:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yHh7nEEP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590B11F0089F;
+	Sat,  7 Nov 2026 15:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063670;
-	bh=HChrjCnUftQHUjMtT5fqb2R6OS0ktPTLuRGXJG7XdFk=;
+	s=korg; t=1794063671;
+	bh=NLI00r9hxFpLUyvV7Vf04qdIj4wmMaM7ZeKOo++hFVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nyZsW4vi1Mc28hGj0syhU4CHpc8kcdlYu+IitQi0ypPXenOONUkjj/dVk7C4xeND8
-	 lvPQ0wDcMtRRiAwQ1Exjp+xJWapjMIrULZjzbjqtu0Ulziyu6lj0pVZqYgVAa0O3pl
-	 bWtiAIbBvib19UhMGF+LbK1u4P7rNzJyqAzKS1EU=
+	b=yHh7nEEPwgkSl1KzpxRvYxlh+c16XqNOrJFO/7uNs4wrH1tjyOxa2/fBd4xW2Phfp
+	 0VRXsQnDbqZKX1Aar5nTrbWx2YqHsXWChYSqugtCQy75I+uxIj+ap1m9/luIkbK4Rv
+	 tecnmMjiCdFGUMQk1bdbrxTDJAW0NOOrSGPDmcc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	sung byeongchan <tjdqudcks0424@naver.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 764/869] time/namespace: Fix overflow when converting absolute deadlines
-Date: Sat,  7 Nov 2026 08:57:26 -0500
-Message-ID: <20261107134918.619113164@linuxfoundation.org>
+Subject: [PATCH 6.18 782/869] ceph: validate fscrypt auth blob length
+Date: Sat,  7 Nov 2026 08:57:44 -0500
+Message-ID: <20261107134919.190559465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,47 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: sung byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit d69cfd33b5a8d176124c564513b9ceb933595d93 ]
+[ Upstream commit bc418e234e5be14b97dec90e84a680e615b4134e ]
 
-do_timens_ktime_to_host() subtracts the namespace offset from an absolute
-deadline and clamps the result to [0, KTIME_MAX]. A negative offset can
-make a large deadline overflow to a negative value. Since ktime_t is
-signed and KTIME_MAX is its maximum value, the subsequent comparison
-against KTIME_MAX can never detect this overflow.
+ceph_crypt_get_context() trusts cfa_blob_len after checking only that the
+inode-owned fscrypt_auth allocation contains the fixed header and one byte.
+An MDS can therefore place a larger inner length in a shorter outer object,
+causing memcpy() to read beyond the allocation when a caller requests the
+encryption nonce.
 
-For example, with a -1 second boottime offset, an absolute CLOCK_BOOTTIME
-timerfd deadline of KTIME_MAX can expire immediately. An absolute
-clock_nanosleep() using the same clock and deadline can also return
-immediately instead of waiting.
+Require the complete blob to fit in the inode-owned allocation before using
+the inner length.
 
-The earlier tim < offset check already handles the lower bound. A
-negative subtraction result in the remaining branch therefore indicates
-overflow. Detect that result and clamp it to KTIME_MAX.
+On the tested baseline, the malformed reply produced the same KASAN
+slab-out-of-bounds read twice. An ordinary UID obtained sixteen wire-absent
+SLUB redzone bytes in two non-KASAN production-path runs. The input was
+rejected twice after this change, while a complete context still worked.
 
-Fixes: 89dd8eecfe961 ("time: Add do_timens_ktime_to_host() helper")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261020233433.20997-1-dennylin0707@gmail.com
+Fixes: 2d332d5bc424 ("ceph: fscrypt_auth handling for ceph")
+Assisted-by: LLM
+Signed-off-by: sung byeongchan <tjdqudcks0424@naver.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ceph/crypto.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/time/namespace.c b/kernel/time/namespace.c
-index 99dcdb3315db7..632f331572847 100644
---- a/kernel/time/namespace.c
-+++ b/kernel/time/namespace.c
-@@ -51,7 +51,7 @@ ktime_t do_timens_ktime_to_host(clockid_t clockid, ktime_t tim,
- 		tim = 0;
- 	} else {
- 		tim = ktime_sub(tim, offset);
--		if (unlikely(tim > KTIME_MAX))
-+		if (unlikely(tim < 0))
- 			tim = KTIME_MAX;
- 	}
+diff --git a/fs/ceph/crypto.c b/fs/ceph/crypto.c
+index a236035f3a7a4..f23ba5c148780 100644
+--- a/fs/ceph/crypto.c
++++ b/fs/ceph/crypto.c
+@@ -83,6 +83,9 @@ static int ceph_crypt_get_context(struct inode *inode, void *ctx, size_t len)
+ 		return -ENOBUFS;
+ 
+ 	ctxlen = le32_to_cpu(cfa->cfa_blob_len);
++	if (ctxlen > ci->fscrypt_auth_len -
++		     offsetof(struct ceph_fscrypt_auth, cfa_blob))
++		return -ENOBUFS;
+ 	if (len < ctxlen)
+ 		return -ERANGE;
  
 -- 
 2.53.0
