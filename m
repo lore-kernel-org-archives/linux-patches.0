@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062546;
-	b=2uIPowwOmZk2JLVJsEVq0E69jBNds2pWo5N6657xXEDVL9R7SVJlrhSQxAqMAgQutltK
-	 24r+HHm7Rk20EXN1CaziYYDOYZ/8uafhi1dQVLSboKcHa4XSmiZZC8jA+7ITRkr0ixYFZ
-	 xMjbe5zYQt3OZf4Aqc14YZq/ReC1zjYv3YExTRym6b8MmTtVzZb8XOGSvt+ZaT/ijPs8W
-	 WClo+MJuk31l4z4W0Z4YGkJmp3R4TU3CBxK26NQ8mqRVPw5cRPvnZ07P27yfmpso/jIuc
-	 lWC+ee2wZDl8zYRe8fe4XsZ1E0nA9BmnwMmUrTvrQdztMVNqefjR4SYY746wsrBC32Q==
+	t=1794062548;
+	b=mtyjc8OWKULdsr6mwqDTrze/o0Q2wuPQ2z4P82O8Mrrqpvusozp2CP7zHyr0ZkMYS4hD
+	 DIJwNpIdKwDccEqXxIsPJZt5v4LcjMkW6v5HG+HRFWwp5hRGkafB+cQpyx1ThhIT0gK6F
+	 M/yYHsEYX0DWaFjBuRtnpeBOaK55ig/E8l/trserKGi/PRdv9p6T5e/0G67h8/fj1IVRa
+	 6xDCsbebwEQrvFn8TM1Sr6wy2SGgL5E9VuTksCVDQ4NgXHBHh5gNuj2oplqrujpa8vtjr
+	 EWccFk/2zMeuOQT3XNWYi5tlb/AUTlI2XCXnZwGFTZ2Edm5Twvr7jsYoY3ezbEj3W2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062548;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IA/T3f+2jL1CW7TAmUp6bcikM/RbWuJD3d2UvT/iy0E=;
-	b=cgqz2M3YdXDlJ++4Uqi5f4yIa8hELT6HCM+iHBSV0mjmJqAT3G6F/ppHGAoa27DV8IEh
-	 0ubSv5GObUiIDv+ekeIXWJhVdyh3tygiimLqqagf9WncsX2sPtr20Qce6SSbXffbX/Ciz
-	 15MaZxzOZe3R8C56Iijevo+9eUJmfD4xg4Xp/aBK6Qrzplbx4tIhPqPHaDe15HCg54qDg
-	 7ecGTyhqNTxnk/wDlJj9HDGaCKmSmGkV2xpPvMJvS9h3oA3B+YdqWTWYJka9aSfoFHGWl
-	 QtZB29aJs5n8Z1HyF5yoo8v97THr0pdqJqCfikQESHFFXqUstOtg4Ugm7W4TMQZL5cA==
+	bh=NtYxa/i6h+/M9duBVebWNkL4iKTzOJGe/KqY5nxWQoc=;
+	b=HRJCB0LaIAHkVB++SFHS71DSA6oAgEpYsj7cqfFAF12zfO88NUG+AZRz62kqzVoLhTf/
+	 Yv6g0lxHZ3lRCD2zwZoX3eKxVBpR1KArSQxr87f9ZH/96h6V3NwQ8zJxbbZ7lvCSwfH84
+	 7nBXzL2k+kvfQlSKoF2BSnW1nFwNgmKV9DMFOTpZ9Eem/huWUWzt4khQ0aoo1XlimWesZ
+	 A/yaia0gtjg/UOec9wSNr20IAhTTGfA+b71e5qtTD0pKaLf5vPIro8iv5sM7Zhtxv5NWW
+	 Dsx7bnGzJ8DnmSZieOv939xaIk2d9Lv5M89dOSkrp00HS7gN+ihnmEE2AeXruP5sdwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ky5t2VJY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YaA2Po8a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638FB606A33C;
-	Sat,  7 Nov 2026 14:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87F5606EE95;
+	Sat,  7 Nov 2026 14:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ky5t2VJY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1375B1F008A2;
-	Sat,  7 Nov 2026 14:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YaA2Po8a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD111F008A3;
+	Sat,  7 Nov 2026 14:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062546;
-	bh=IA/T3f+2jL1CW7TAmUp6bcikM/RbWuJD3d2UvT/iy0E=;
+	s=korg; t=1794062547;
+	bh=NtYxa/i6h+/M9duBVebWNkL4iKTzOJGe/KqY5nxWQoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ky5t2VJYS8hZydR3p759Vz12ZY42skQaAzsXA4YxIKKZxot83QgU65gTCHt8qwgMs
-	 hm1Yo8Ac9BXvkYoAq/7i3KUYWX/ADbd6/YeB55hZARdHD4uvLy/4gBhJ9SspffUXyu
-	 limOnTprIRSKEYpfF0i0u5XHYOEPyaTCaCrg9Sxs=
+	b=YaA2Po8adcsQQhbiTezCpfAKei7BppUVuNUdlgPnG+GEhTG6GhncQkYMVC7ENzJUJ
+	 vk1bQv2hRlSWRVnYa8qYG8wg0uBXvHVET9HHg4Mzkhltg/XfkLlydJ6O3DMsTQ4x6A
+	 7INiW1O2A4P3DNfsIR8zvgJVECSmsfLkHzDrnlIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
-	Chris Leech <cleech@redhat.com>,
+	Bean Huo <beanhuo@micron.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Stanley Jhu <stanleyjhu@google.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1434/1536] scsi: libiscsi_tcp: Prevent R2T range check overflow
-Date: Sat,  7 Nov 2026 08:57:30 -0500
-Message-ID: <20261107135038.111649907@linuxfoundation.org>
+Subject: [PATCH 6.12 1435/1536] scsi: ufs: core: Remove an always-false WARN_ONCE()
+Date: Sat,  7 Nov 2026 08:57:31 -0500
+Message-ID: <20261107135038.139869142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,47 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+From: Stanley Jhu <stanleyjhu@google.com>
 
-[ Upstream commit eb7aa7fd673fdc1582223cd133bcc5f54e7af19f ]
+[ Upstream commit cd37a69c367b6a5f685db0ac7d01f08545081a30 ]
 
-An iSCSI target controls the R2T data offset and length as 32-bit
-values. Adding them before comparing the result with the SCSI data buffer
-length can wrap. An R2T with offset 1 and length U32_MAX then passes the
-check for a 4096-byte write.
+The WARN_ONCE() in ufshcd_poll() can never fire. completed_reqs is set to
+~tr_doorbell & hba->outstanding_reqs on the line above, and
+hba->outstanding_reqs cannot change in between because ufshcd_poll() holds
+hba->outstanding_lock. So completed_reqs & ~hba->outstanding_reqs is always
+zero. Remove it. No functional change.
 
-The transmit path treats the wrapped range as valid, exhausts the command
-scatterlist, and dereferences the NULL next entry in
-iscsi_tcp_segment_done().
-
-Check the offset first, then compare the length with the remaining bytes in
-the data buffer.
-
-Fixes: a081c13e39b5 ("[SCSI] iscsi_tcp: split module into lib and lld")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Acked-by: Chris Leech <cleech@redhat.com>
-Link: https://patch.msgid.link/DB5PR08MB100629CD3750FBF71475B5224FD982@DB5PR08MB10062.eurprd08.prod.outlook.com
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Link: https://patch.msgid.link/20261022034443.3034432-2-stanleyjhu@google.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libiscsi_tcp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/scsi/libiscsi_tcp.c b/drivers/scsi/libiscsi_tcp.c
-index 646a2142ed666..4cce6bfb55c57 100644
---- a/drivers/scsi/libiscsi_tcp.c
-+++ b/drivers/scsi/libiscsi_tcp.c
-@@ -612,7 +612,8 @@ static int iscsi_tcp_r2t_rsp(struct iscsi_conn *conn, struct iscsi_hdr *hdr)
- 			      data_length, session->max_burst);
- 
- 	data_offset = be32_to_cpu(rhdr->data_offset);
--	if (data_offset + data_length > task->sc->sdb.length) {
-+	if (data_offset > task->sc->sdb.length ||
-+	    data_length > task->sc->sdb.length - data_offset) {
- 		iscsi_conn_printk(KERN_ERR, conn,
- 				  "invalid R2T with data len %u at offset %u "
- 				  "and total length %d\n", data_length,
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 69d043053340b..cc730a2463df2 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5673,9 +5673,6 @@ static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
+ 	spin_lock_irqsave(&hba->outstanding_lock, flags);
+ 	tr_doorbell = ufshcd_readl(hba, REG_UTP_TRANSFER_REQ_DOOR_BELL);
+ 	completed_reqs = ~tr_doorbell & hba->outstanding_reqs;
+-	WARN_ONCE(completed_reqs & ~hba->outstanding_reqs,
+-		  "completed: %#lx; outstanding: %#lx\n", completed_reqs,
+-		  hba->outstanding_reqs);
+ 	if (queue_num == UFSHCD_POLL_FROM_INTERRUPT_CONTEXT) {
+ 		/* Do not complete polled requests from interrupt context. */
+ 		ufshcd_clear_polled(hba, &completed_reqs);
 -- 
 2.53.0
 
