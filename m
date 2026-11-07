@@ -1,54 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064793;
-	b=Wtl7XkNqr+/vwi+JPbAJDD/ek4YH+jg55ksbht5p4MLDHxIsbKvnmjPPbGk4Ns1kcC2d
-	 fPOQXZzjNux46A4rfBPiJqG8I9v1uoHzZ3CyTcH30Va5W2Aze9cyMKQ5h9t73tRYdf27D
-	 qU0vZV0sNkrWGegIuY9LtXYokXfYgGFjr3HUBIYXtFI4yZeDEt7WA3TpGxASe65jDyQE5
-	 y8AJLdPgEilBSR4k/w8cSqqkK3+FmVwzBjuOrCF51azmUCJgukykJn0PdNC7z5xixMvFw
-	 vsPqueaLBQUK6qZ4njapsLgzrXnznhWkE2YJRKIk0HyF4q/EBFPRViMxvFbsuQSVoaA==
+	t=1794064795;
+	b=q1AfqVRF0Ar4HfGTxgWjo05UEehLUhjaliOEh0NXfc7OcBAcXxT0IItrRtrWWXdBOGWF
+	 zi+41owFBmrCG9AJC6AeE2ZL4Zk6B1obUV4L5nJJKS1F4r+vjvhU7HozmZDgyMwbgLTDQ
+	 PozJBAnZ67/jfZWZepiHqHW+TEv8hkk08SrojXOQbwJaS1IF7qw+k8qjkL542nxlPW0zk
+	 wN5p3V4LiJ/u0+FTLmZkDGVTEh7DH7R3mw3cmr+GiwbQqF6fSNi07HiqfACVvjfu80AAy
+	 RuAkjZCaNifFgE+IldKy6uU45r3VVsjWGG+p5iaTyXL8/dZAtCqf3VhF2ACOMZN0GgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064793;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064795;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UOfTf9UxB2QjcNhRt1NgTnJwYYuJlIEkzOlR1573E+s=;
-	b=Cvtw7uQqO8GHxl5rrdfpVylKdcNP0MgSzniLmrwH4NOtY92ZHPuJysORiShruMudPP++
-	 70ORvJVhaiev4O6L3iPPvbrVGEv1g7MYO63g7iFtTvcACJsAxwU2/0+LOR9/DGnKzFq3c
-	 IYVXr0JNLfwT4BTcwMspvbDkTNvKZJqXrBB2KA7srRxWgnZziV7QQ2ey7CnxTszcqdtIb
-	 0045S14Juuft9vkjw9J1exueiPy4Y2mS8JjT2Ot6yJ6YvxOzkm/v3ujffEl48MG7LIRtK
-	 gcHLm5CiKzz73hdr+o+EgKMTjbtqtcEmkFqI4blTwaTNhOyi1HScjVOFIBLcP8YiwbA==
+	bh=rBO3dKZyDmE6UlHkUY+gnLAJSU/rF8YYFl93jbl/BAQ=;
+	b=vJ/UggnlbQMmiIUP8SBTmy0knWxwh+1Ol7A49rVvOnqK+uLLQxOc5p93moKqSKuGomnS
+	 02GhF8Qgn2fTMEHIbAqdUt1LCeksi6CAc4+I6D1vwsqLV6XnzunQsJXI7qTVSjHUZ0Die
+	 kcWlW1Q3FnNVZYcsZKeFL4uIB1LmPWkXqEC03u4u4T11rCPwenV2nx1M8RcISEbfa/CJJ
+	 ax65Ivi62a8PBGMXxwV4qx/yxs610lq70CBtSoE1owF0pBNmHg3JTx2i5IAlaPYDVYBSQ
+	 CHN7+4qmhQJjZIOwTczVQuMptsltF05FHA5RZcvOYjMn1yO4816J8UGD+f9SCt1uG+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FIi2r4bX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rKh0gjbL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAD9606A9EF;
-	Sat,  7 Nov 2026 15:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22EA606A9D5;
+	Sat,  7 Nov 2026 15:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FIi2r4bX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777CA1F0089F;
-	Sat,  7 Nov 2026 15:19:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rKh0gjbL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D41B1F0089F;
+	Sat,  7 Nov 2026 15:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064792;
-	bh=UOfTf9UxB2QjcNhRt1NgTnJwYYuJlIEkzOlR1573E+s=;
+	s=korg; t=1794064794;
+	bh=rBO3dKZyDmE6UlHkUY+gnLAJSU/rF8YYFl93jbl/BAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FIi2r4bXdwZuZzUV8Ui4CLr057H8qXO/bL2rS+tUPuzJwaiA2Q42rMBmt/SB1h0oM
-	 w2IRM3onhZOgqae1xowpM8iSrYdaUnz+SJG3cf/rGqHhV38DW8iPYX2QEfYclAxgfN
-	 pbZbfr5og+l8hTeJ9xJTbXruNC4DVVuwg5bZnlRI=
+	b=rKh0gjbL2B4H9X2c5antkm447IMBfXAxz1v3T57ykTOWj34egDIHu/rQofVlInmv6
+	 9Jv1tDEihhJ08dDxXgll62CvVY6eF0MMVclLowQN2RrjlaE2MM2UAHnSqW5VYuhxG2
+	 JF06zdsnIzrEgvVozziDoDsocFLZNiH4L9uprP2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Su Yue <glass.su@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Alain Knaff <alain@knaff.lu>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0737/1257] lib: decompress_bunzip2: fix integer overflow in run-length decoding
-Date: Sat,  7 Nov 2026 08:50:33 -0500
-Message-ID: <20261107134959.633531809@linuxfoundation.org>
+Subject: [PATCH 7.3 0738/1257] ocfs2: update xattr count before moving bucket entries
+Date: Sat,  7 Nov 2026 08:50:34 -0500
+Message-ID: <20261107134959.665068554@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,54 +75,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Su Yue <glass.su@suse.com>
 
-[ Upstream commit b822ad8d702df0be9fe3f24f71caeb0522d72319 ]
+[ Upstream commit cd6920b6f3e5c6402d49e1128d0e53ee1c7c9b55 ]
 
-The RUNA/RUNB decoder in get_next_block() accumulates a run length into
-the signed int t with no bound.  runPos doubles per symbol, so t grows as
-at least 2^n-1 and reaches INT_MAX after 31 RUNA symbols.  The guard that
-follows, dbufCount+t >= dbufSize, is itself a signed addition, and as the
-kernel builds with -fno-strict-overflow it wraps negative once dbufCount
-is nonzero, so the guard is skipped.  while (t--) dbuf[dbufCount++] = uc
-then writes INT_MAX entries into a buffer holding at most 900000.  One
-literal symbol ahead of the run is enough to make dbufCount nonzero.
+Since commit 2f26f58df041 ("ocfs2: annotate flexible array members with
+__counted_by_le()"), the xh_entries array is annotated with
+__counted_by_le(xh_count), so FORTIFY uses xh_count to determine its
+bounds.  When inserting an entry into a bucket,
+ocfs2_xa_bucket_add_entry() shifts existing entries before incrementing
+xh_count.  The destination therefore extends one entry past the bounds
+described by the old count.
 
-Bound t to the block size as it is accumulated.  t only grows within a
-run, so the value tested never exceeds the final run length; any stream
-that decodes today satisfies dbufCount+t < dbufSize at the flush, hence t
-< dbufSize throughout, and no such stream is rejected.  Because t grows as
-at least 2^n-1 the bound trips by the 20th symbol, leaving runPos at most
-2^19, so the following runPos <<= 1 cannot overflow either.
+With CONFIG_CC_HAS_COUNTED_BY and CONFIG_FORTIFY_SOURCE enabled,
+ocfs2-test: single_run-WIP.sh -t reflink triggers the following failure
+while adding an extended attribute:
 
-Link: https://lore.kernel.org/AS8P251MB00010FE5E38D253CF98A652AC8B92@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+[  150.156484] memmove: detected buffer overflow: 352 byte write of buffer size 336
+[  150.156487] WARNING: lib/string_helpers.c:1036 at __fortify_report+0x3d/0x50, CPU#15: reflink_test/2336
+[  150.160496] RIP: 0010:__fortify_report+0x40/0x50
+[  150.164031] Call Trace:
+[  150.164141]  <TASK>
+[  150.164232]  __fortify_panic+0x9/0xb
+[  150.164383]  ocfs2_xa_bucket_add_entry.cold+0x17/0x28 [ocfs2]
+[  150.164661]  ocfs2_xa_set+0x8fb/0xf40 [ocfs2]
+
+Increment xh_count before memmove() so the destination bounds include the
+new entry.  Keep the local count unchanged to calculate the insertion
+position and move length from the original number of entries.  The caller
+has already checked that there is enough space for the new entry.
+
+Link: https://lore.kernel.org/20260916024750.9450-1-glass.su@suse.com
+Fixes: 2f26f58df041 ("ocfs2: annotate flexible array members with __counted_by_le()")
+Signed-off-by: Su Yue <glass.su@suse.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: LLM
-Cc: Alain Knaff <alain@knaff.lu>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/decompress_bunzip2.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ocfs2/xattr.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
-index aaa75404250e2..a9236d3e9678d 100644
---- a/lib/decompress_bunzip2.c
-+++ b/lib/decompress_bunzip2.c
-@@ -428,6 +428,10 @@ static int INIT get_next_block(struct bunzip_data *bd)
- 			t += (runPos << nextSym);
- 			/* +runPos if RUNA; +2*runPos if RUNB */
- 
-+			/* Bound the run so t and runPos cannot overflow. */
-+			if (t >= dbufSize)
-+				return RETVAL_DATA_ERROR;
-+
- 			runPos <<= 1;
- 			continue;
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index bfafe059bedff..8933d0f301199 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -2073,12 +2073,17 @@ static void ocfs2_xa_bucket_add_entry(struct ocfs2_xa_loc *loc, u32 name_hash)
  		}
+ 	}
+ 
++	/*
++	 * Increment xh_count before memmove() so __counted_by_le(xh_count)
++	 * includes the new entry in the destination bounds.
++	 */
++	le16_add_cpu(&xh->xh_count, 1);
++
+ 	if (low != count)
+ 		memmove(&xh->xh_entries[low + 1],
+ 			&xh->xh_entries[low],
+ 			((count - low) * sizeof(struct ocfs2_xattr_entry)));
+ 
+-	le16_add_cpu(&xh->xh_count, 1);
+ 	loc->xl_entry = &xh->xh_entries[low];
+ 	memset(loc->xl_entry, 0, sizeof(struct ocfs2_xattr_entry));
+ }
 -- 
 2.53.0
 
