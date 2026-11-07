@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063841;
-	b=u4HUyfr8UvDgJ8xYEabqfYED37skL50jQewbALEwTkKApAabM8nXOpQatsAbOiPARQqk
-	 5I4OA2QjoeyOUR/sl0WtMsuS07KgalaMRdsy6MUCnsCNQ3XEnIwqXBA8G1Umvgs+GI9QB
-	 VsoDxcbgrPi2NmFVHVXGdfC39DAC7y7KNReybeU9hKKG0JPzHQSoYEeBUnfUAalmpgU+B
-	 rCJJqryymKR9PgjwItNaE+EhCPBioCb1FdEqpJmHdYozbkmedOzUO3OoBtxo+WR6mLTld
-	 /rlk7iDO3TH4ikFee+E3B1gegL1QFmrum2BDb0pNbLIelrlus7Qs+kXqoCq36scyIWA==
+	t=1794063842;
+	b=3PHvObz5h2EhBrqUp2lXl97DEjQvyybkmnps/SshslF1SWI4XXLr7vTp/K0M6feyy74l
+	 +3EBugsoOSfCuKSEKCIdj/2wyIu2YYbmG/e07hm1e8Rv0rIvAG9SIvI3ZVEPmHPkB+dGk
+	 gDDxp5y1pY0Y2tGspVQyOqr3Jb0++fBq6GBDaFxK2c5FjnUl5UUMaGgUeJNKzSu5uIbRN
+	 lb60tWaOqyG61EbR1WoXMI8BxMjk4iOyRwUu2xOndtgSee15ETVuQzGZl+GOGS2momdUJ
+	 Gq42IXAgmo9Xd3QwspnlWR1DTtjaN1p/bcrlUbu57vxDbo4D2zb5NWOeYrVOAG5UvCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063841;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ES+sk11/9VNJIO1TfVKd7hl1WF3FgDbqGAI+OUpmLAs=;
-	b=EUjB6wzBNzTe8Z0HvMRlpVBncTziuFOFA2g0h0mPiDITx+6F06BT9Tjg7hP5haEfj5c6
-	 7PSpfpRDIsEQ38Jhm/g44tNGM7TlKcNLMFdgsVwmMq0/JB2iIDEnoBe/FjWjo9T3oZR+u
-	 qd0swXtYGLRUJjpWzt1+VDDHVlLLO4pktouNWTCcw+8wQYM+5naaOZIpN9+CIY5id2D4l
-	 LITd7jYD9MhjwXdwoXVzoeCSBf7aAua1kCouHFYiZAQRClBX47vPciRHDa94idl2N+yoS
-	 40Bu+17ef8qDzn+aoJODJhMq58Na8bxTp1Zb3atyRpGhlSHfo9meKFe31O3hCoTq7/w==
+	bh=/5funkBZFxr13uOeDTCtYlSlQkDmD+HoBR/RZXN5b1U=;
+	b=Qef54ct9yJvlKKRIoiW3Pz9mqYju+1yXBRFKzirhh8SoyoF0AbJWafCHLNorP5eaEW1i
+	 HC6JIAzLdIEZVeNKv7GdhUFo5ZyzxViMhHKFsoHuMUsCObLYmIrSpivSquhDwjCEVcoqb
+	 sMv4Fs0Pm6/QJ4HmAM5BPuw3/J/FQfmVU/zCD8QIjUUsZ2HuFl/4zjgjuCpGx94n6WDYs
+	 xz45DRovAf4xEgQojAdYTEOsMCWJ64ekBaxgGAtY6qiXDdBCiVPttSn8oRnGLuFjk7p3H
+	 5YS4Y/lg+xf/XocRLVJeYhY/bKUVejAxRu1j0anocmy5174v1p43h/SWcnZ7ie6uokg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iXVT/8pR";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pE+Wyrou;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F4360A5BFE;
-	Sat,  7 Nov 2026 15:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A3260A6F48;
+	Sat,  7 Nov 2026 15:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iXVT/8pR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C561F0089F;
-	Sat,  7 Nov 2026 15:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pE+Wyrou
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2651F008A2;
+	Sat,  7 Nov 2026 15:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063840;
-	bh=ES+sk11/9VNJIO1TfVKd7hl1WF3FgDbqGAI+OUpmLAs=;
+	s=korg; t=1794063841;
+	bh=/5funkBZFxr13uOeDTCtYlSlQkDmD+HoBR/RZXN5b1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iXVT/8pRGdqFeW0MS5T5uAOb/Kw1mF5wK5vG9a6mI5aLMKfZUYsBB0OIShGrzPnVX
-	 ma+KXDRMN+Sx8nhULwtKDFaZLoHyFvc10UumAL3TPriB9Q0LGWngRLdessxBdzkoDm
-	 ltV9Psak9gwDhpSLYn8YdZxhmvBUqo5gv1qAq6nI=
+	b=pE+Wyroump+Gitj+NM/emB0UuhbyzRugIhexvyc9x3IzbUHefPOk1hhMQAscNXrEw
+	 1CjbzhU8FOLZJQ0BZVu65snSz5y76ls1DUqyRJu4WT/phO3HJPo0ApHG66/+Jy0/h+
+	 U7xcmXsidSUB/krimsXUJsCYIDw8md0rMKpOuFss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Zhenlong <dragonliu2018@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Danesh Petigara <danesh.petigara@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0053/1257] PCI: aspeed: Fix clk and PHY leak in aspeed_pcie_port_init() error paths
-Date: Sat,  7 Nov 2026 08:39:09 -0500
-Message-ID: <20261107134940.871663717@linuxfoundation.org>
+Subject: [PATCH 7.3 0054/1257] memory: brcmstb_dpfe: Fix out-of-bounds access due to DCPU offset
+Date: Sat,  7 Nov 2026 08:39:10 -0500
+Message-ID: <20261107134940.898274712@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,63 +70,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Zhenlong <dragonliu2018@gmail.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit a54ac2eb6eca8baa86b89494b8a0d9439a0f72ee ]
+[ Upstream commit 7c0b82d087908765c6c7daeb06943e21b78d523e ]
 
-aspeed_pcie_port_init() calls clk_prepare_enable() to enable the port
-clock, but if phy_init() or phy_set_mode_ext() fails afterwards, the
-function returns without calling clk_disable_unprepare(), leaking the
-clock reference on every probe failure. Additionally, when
-phy_set_mode_ext() fails, phy_init() has already succeeded, so
-phy_exit() is also missing, leaking the PHY reference.
+On API v1/v2 boards, the DCPU coprocessor can steer kernel readl_relaxed()
+and writel_relaxed() to any address within 256 MB of the ioremapped DPFE
+dmem or regs base. The DCPU firmware provides a 28-bit offset which the
+driver adds to the ioremap base without any bounds checking in
+get_msg_ptr().
 
-Add the matching clk_disable_unprepare() to both error paths, and
-phy_exit() to the phy_set_mode_ext() failure path, mirroring the
-cleanup pattern in pci-aardvark.
+This allows a compromised DCPU firmware to trick the host kernel into
+reading or writing arbitrary memory-mapped I/O registers in vmalloc
+space. When combined with a root-writable sysfs file like dpfe_refresh,
+it provides an arbitrary MMIO write primitive. Similarly, world-readable
+sysfs files can be used to leak other devices' register contents.
 
-Compile-tested with gcc on arm64 defconfig using COMPILE_TEST.
+Fix this by recording the resource_size() of the dmem and regs ioremaps
+at probe time, and rejecting any offset that, along with the largest
+field accessed (DRAM_VENDOR_ERROR + sizeof(u32)), exceeds the recorded
+mapping size.
 
-Fixes: 9aa0cb68fcc1 ("PCI: aspeed: Add ASPEED PCIe RC driver")
-Signed-off-by: Liu Zhenlong <dragonliu2018@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Assisted-by: LLM
+Fixes: fee5f1ef6cf7 ("memory: brcmstb: dpfe: support new way of passing data from the DCPU")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260816171633.15025-1-dragonliu2018@gmail.com
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Assisted-by: Gemini:gemini-3.1-pro-preview cursor
+Signed-off-by: Danesh Petigara <danesh.petigara@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260826201500.3000125-2-danesh.petigara@broadcom.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-aspeed.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/memory/brcmstb_dpfe.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-aspeed.c b/drivers/pci/controller/pcie-aspeed.c
-index 74b03a55643fa..ecb7562f84c01 100644
---- a/drivers/pci/controller/pcie-aspeed.c
-+++ b/drivers/pci/controller/pcie-aspeed.c
-@@ -761,16 +761,21 @@ static int aspeed_pcie_port_init(struct aspeed_pcie_port *port)
- 				     port->slot);
+diff --git a/drivers/memory/brcmstb_dpfe.c b/drivers/memory/brcmstb_dpfe.c
+index 08d9e05b1b338..66343205f585b 100644
+--- a/drivers/memory/brcmstb_dpfe.c
++++ b/drivers/memory/brcmstb_dpfe.c
+@@ -182,6 +182,8 @@ struct brcmstb_dpfe_priv {
+ 	void __iomem *regs;
+ 	void __iomem *dmem;
+ 	void __iomem *imem;
++	resource_size_t regs_size;
++	resource_size_t dmem_size;
+ 	struct device *dev;
+ 	const struct dpfe_api *dpfe_api;
+ 	struct mutex lock;
+@@ -401,9 +403,14 @@ static void __iomem *get_msg_ptr(struct brcmstb_dpfe_priv *priv, u32 response,
+ 	 */
+ 	switch (msg_type) {
+ 	case 1:
++		if (DCPU_MSG_RAM_START + offset + DRAM_VENDOR_ERROR +
++		    sizeof(u32) > priv->regs_size)
++			goto bad_offset;
+ 		ptr = priv->regs + DCPU_MSG_RAM_START + offset;
+ 		break;
+ 	case 0:
++		if (offset + DRAM_VENDOR_ERROR + sizeof(u32) > priv->dmem_size)
++			goto bad_offset;
+ 		ptr = priv->dmem + offset;
+ 		break;
+ 	default:
+@@ -415,6 +422,12 @@ static void __iomem *get_msg_ptr(struct brcmstb_dpfe_priv *priv, u32 response,
+ 	}
  
- 	ret = phy_init(port->phy);
--	if (ret)
-+	if (ret) {
-+		clk_disable_unprepare(port->clk);
- 		return dev_err_probe(dev, ret,
- 				     "failed to init phy pcie for slot (%d)\n",
- 				     port->slot);
-+	}
+ 	return ptr;
++
++bad_offset:
++	dev_err(priv->dev, "DCPU returned out-of-range offset %#x\n", offset);
++	if (buf && size)
++		*size = sprintf(buf, "ERROR: DCPU offset out of range\n");
++	return NULL;
+ }
  
- 	ret = phy_set_mode_ext(port->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
--	if (ret)
-+	if (ret) {
-+		phy_exit(port->phy);
-+		clk_disable_unprepare(port->clk);
- 		return dev_err_probe(dev, ret,
- 				     "failed to set phy mode for slot (%d)\n",
- 				     port->slot);
-+	}
+ static void __finalize_command(struct brcmstb_dpfe_priv *priv)
+@@ -858,6 +871,7 @@ static int brcmstb_dpfe_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct brcmstb_dpfe_priv *priv;
++	struct resource *res;
+ 	int ret;
  
- 	reset_control_deassert(port->perst);
- 	msleep(PCIE_RESET_CONFIG_WAIT_MS);
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+@@ -869,17 +883,21 @@ static int brcmstb_dpfe_probe(struct platform_device *pdev)
+ 	mutex_init(&priv->lock);
+ 	platform_set_drvdata(pdev, priv);
+ 
+-	priv->regs = devm_platform_ioremap_resource_byname(pdev, "dpfe-cpu");
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "dpfe-cpu");
++	priv->regs = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(priv->regs)) {
+ 		dev_err(dev, "couldn't map DCPU registers\n");
+ 		return -ENODEV;
+ 	}
++	priv->regs_size = resource_size(res);
+ 
+-	priv->dmem = devm_platform_ioremap_resource_byname(pdev, "dpfe-dmem");
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "dpfe-dmem");
++	priv->dmem = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(priv->dmem)) {
+ 		dev_err(dev, "Couldn't map DCPU data memory\n");
+ 		return -ENOENT;
+ 	}
++	priv->dmem_size = resource_size(res);
+ 
+ 	priv->imem = devm_platform_ioremap_resource_byname(pdev, "dpfe-imem");
+ 	if (IS_ERR(priv->imem)) {
 -- 
 2.53.0
 
