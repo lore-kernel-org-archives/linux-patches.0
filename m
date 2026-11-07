@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061659;
-	b=3LQ3R0WjdaJw8oTTtlsH7WyrS7AOILnK/iEaQdoXaTPivaXd6rQhKNsXFZX4cFlPt2rY
-	 Rn9eoXalqLc0Z9xzM8iFMybhIgkODuQKAv/1c6Fid2Azoq3kpsi1GvMYCqlj+LbGkn5hG
-	 FbuJgEEu2NYnnfo98i6SZcVWB4RbuK5sPc3LWCWXI2wLwpp7Hut0GggRaz3dnzQ/O1LVm
-	 bQu7/c6zeclSw3BXTZ9drVeSxTPQBfzOxPI8evty9oTXguScAuPuQwXdxfzejSUE3HyRj
-	 ioIEVKUc4Aqf49lT0aIiZ/dWPLVB8WNwVWoSW8DjK2i47M0E56tUdRAcSF+YHHZ5avQ==
+	t=1794061660;
+	b=sEal/Usberhn1P6AHpSocjnD3DjJ5mV3py1ceWTkivQ7Xj41S55Qq/lkM9G3FZmPCyLI
+	 GtKhY2/WISz8LSYbxslciLwv5g+aden2h+zscj9PS44dC6DT/J7VifD5sVqNJNpjlTM2u
+	 akp9yt8tSq6HyTE09ve/Rf9Eo8NlX0alez2nDHKvRva4QveC6wMydvLC+crNUm/uOfpXA
+	 UNTVlcZ34XWVOwbQiti2IaXXeAlH45mPI4fB6UujGPrh7dTRgrl/LfvVIduuT0R4Yn7Q9
+	 FQybagtHd3SIBhgHB7v+8AC6JeT3Q7akq7MIZjCKqVtFYQzZL6P+gNqoehhBHqEoVKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061659;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061660;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h1fxGKvj6yxWv3aS2N7jsKhUNxiYWCEGaojo2jpMEQY=;
-	b=gff8dHKxkYgEj6KOsJi/f2IurKLroxVr3kAFIZoM5zYF11oH2w5WOVQdWKb0uUkRPZB9
-	 EITGURzeCbeSpUJXI4uMyMmwpE5yjY7uGTVquW+w8Enm9IcWA19wjkA4KovLGObTtq5Fs
-	 DeOGbYqiZounuyNxx1QapByMFPEYC9J/9WLy2qmbV8RGskz3hPrcIASEUSdsCL05/Btjt
-	 oR2wzKxgNNyuYHGmvOLv5jN5LQbtV0oK2nTR/v78RG8jUBBRLBqGzQCPdm532sojjObvq
-	 6InH6sv6MQ59CP66FSslZwGRenmzWwTCXARlcvjFplLB+6yUmrxmTBHs4Leip9mVViw==
+	bh=qCdHut/uu1zbJUxnXcx9YT0NZJXL3F/22vUuAyKuKbQ=;
+	b=WvIG96RTnYGXvkHj+VP0YRFAkn5CJFoRqhg23pEmuQvpt1hVhm2evqewxGSfcAYuEIrK
+	 auwUshOJOre1GX/8sz/r8Q9VF/T+N9AkhFUa+iAyak81FOa4hjlCc2/Tj9xjLqWyvx+HT
+	 w4fgtHNF0sMezr9hfgg68+1EGySLcty6kEkgQP9tL2XWdqU/OcCF2m5z6PS0BdcK7ZENC
+	 /Uqy4NEOvqhh6Oi1HEPLWZ7/7yv8b9scRBiCbrPED9BBdhpLrZLvwuSfCv7hT47tPeCsX
+	 +4MIQAoUE90nu8xF1UIFjwrj4BP1TchbeNSnrM+fD2kFn8RiP5jQBKcfrq3a1Z9cLtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ppn7BbNm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BJuaqWSu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF83606A32D;
-	Sat,  7 Nov 2026 14:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5613C606A32D;
+	Sat,  7 Nov 2026 14:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ppn7BbNm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96C81F008A3;
-	Sat,  7 Nov 2026 14:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BJuaqWSu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B741F008A2;
+	Sat,  7 Nov 2026 14:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061658;
-	bh=h1fxGKvj6yxWv3aS2N7jsKhUNxiYWCEGaojo2jpMEQY=;
+	s=korg; t=1794061660;
+	bh=qCdHut/uu1zbJUxnXcx9YT0NZJXL3F/22vUuAyKuKbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ppn7BbNmmIkkjmu07JBhdyaGeRT8J8flT+TRlxFn8XrNcHEzH4qH/gLKFf66YzMWP
-	 Vu3kjmc8o6PqkKR1qirEFvucGs1FPMrxei5yVOCmFuH8A22JYx+4mHAL5LZqEiDAiD
-	 afS4iZu46DarTy6FirOt0Q3sN/i71M4jGp8iSQ0U=
+	b=BJuaqWSuUu3lkkFvWyV0GDnNl2np6LuRPr1LzeIH1l37Hont9lE2C3qkXpFtUYvRD
+	 1udDVH5Ux9kQhEpJgMMjoqWc4ylBg7uWTnFzaLJHyTEXTW+wIpYBZ5JQwsJR16U8CM
+	 psINq4Zkvehz6y6li/E77S/nloIWyEtlX4XP1QTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0717/1536] ksmbd: fix breaking_cnt leak on early return in oplock_break()
-Date: Sat,  7 Nov 2026 08:45:33 -0500
-Message-ID: <20261107135017.637233078@linuxfoundation.org>
+	Jean Delvare <jdelvare@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.12 0718/1536] EDAC/mc: Really fix error path ordering in edac_mc_alloc()
+Date: Sat,  7 Nov 2026 08:45:34 -0500
+Message-ID: <20261107135017.662461291@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,61 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Jean Delvare <jdelvare@suse.de>
 
-For leases, oplock_break() increments breaking_cnt before calling
-oplock_break_pending(), and returns early when the pending check
-reports nothing to break: the level is already at or below the
-requested level and, for a lease, the state is not HANDLE|READ
-caching.  Neither early return decrements the counter, and
-wait_lease_breaking(), the only place that force-clears it, sits
-below those returns, so breaking_cnt stays elevated for the life of
-the open.
+The backport of 51520e03e70d ("EDAC/mc: Fix error path ordering in
+edac_mc_alloc()") to stable kernel branches is incomplete due to a
+different memory allocation scheme. In v6.19 and earlier, the device
+initialization must be moved further up so that all jumps to the
+error label are covered.
 
-A stuck breaking_cnt makes same_client_has_lease() skip lease
-upgrades forever, and every subsequent same-client CREATE on that
-lease is answered with SMB2_LEASE_FLAG_BREAK_IN_PROGRESS, so the
-client never resumes caching.
-
-The ordering dates back to the original SMB3 server code, but the
-early return became routinely reachable for leases already broken to
-NONE when smb_break_all_levII_oplock() stopped filtering out
-non-level-II leases in 17699905a381, "ksmbd: fix lease break and ack
-state handling".
-
-Move the increment below the pending check so the early returns
-cannot strand the counter.  This is the minimal equivalent of the
-reorder that mainline made in b0148dc5625d, "ksmbd: serialize oplock
-close with pending break ownership".
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+Cc: stable@kernel.org # v6.19-
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/edac/edac_mc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 7d78d4ae43acb..90cd8c962f785 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1012,10 +1012,15 @@ static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
- 	if (brk_opinfo->is_lease) {
- 		struct lease *lease = brk_opinfo->o_lease;
+diff --git a/drivers/edac/edac_mc.c b/drivers/edac/edac_mc.c
+index a3d4860c8fbe5..5771feec249eb 100644
+--- a/drivers/edac/edac_mc.c
++++ b/drivers/edac/edac_mc.c
+@@ -366,13 +366,13 @@ struct mem_ctl_info *edac_mc_alloc(unsigned int mc_num,
+ 	if (!mci)
+ 		return NULL;
  
--		atomic_inc(&brk_opinfo->breaking_cnt);
- 		err = oplock_break_pending(brk_opinfo, req_op_level);
- 		if (err)
- 			return err < 0 ? err : 0;
-+		/*
-+		 * Increment breaking_cnt only after the pending check
-+		 * above: its early returns would otherwise strand the
-+		 * counter, as wait_lease_breaking() is never reached.
-+		 */
-+		atomic_inc(&brk_opinfo->breaking_cnt);
++	mci->dev.release = mci_release;
++	device_initialize(&mci->dev);
++
+ 	mci->layers = kcalloc(n_layers, sizeof(struct edac_mc_layer), GFP_KERNEL);
+ 	if (!mci->layers)
+ 		goto error;
  
- 		if (brk_opinfo->open_trunc) {
- 			/*
+-	mci->dev.release = mci_release;
+-	device_initialize(&mci->dev);
+-
+ 	mci->pvt_info = kzalloc(sz_pvt, GFP_KERNEL);
+ 	if (!mci->pvt_info)
+ 		goto error;
 -- 
 2.53.0
 
