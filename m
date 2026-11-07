@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064602;
-	b=tFNFaG3hW0TJRah0LAuonkM2na/sfVud+KpJqoYbOyWTvqjgJKWMrUBw11qOf2wAiSvd
-	 rcuwlDkZLbDCOcsSbC5bGECm5bczQtiQAPPFdRAiAyArvUtyY1QNZyE+6HgEPzQkAzXn1
-	 b53sJKYGaThYNjKcXh1IbNxeH9yQxnz+Ld6xizu8nxo21AxwuJU97XcK3l9n56OHy4SRK
-	 SHE/nUbAFzD8kJxEApiKalz5a6ut7LL0Ri1z+jBelKwDyuyyQFswpKi6HMdbilcNxlck/
-	 bgKFUmVfNNgj9d/oMA5u3PmtJwuVqWIUjUiWk1PGqkebpWU7eJfV/iPU6hGVtbwb0Mw==
+	t=1794064604;
+	b=XffJ8abuTF9zvNJIOOCKE7WxKxaQlOm4V5jAGf6Td0raaD56vDxvQ9QPncK+x2eBYd6O
+	 KKC8pVuWiGTunZzIkJWrH/LgVwk8x1Q/6GM9yUugv1TSYjzYnunxbLMruhjPUVHqGziX/
+	 UMN2Rq+fV8hoy6t2fUbrZibj9ZPXuGMx68EhNd/+aMiXfn5x+WIzh60kRbIJ7OhGC3GrA
+	 qqTCWP78cJzKXN94eyU/jumk9z+3Ty1t+HAzVHges96XZhVqr/xXKCJ8oWwF69xE7UBbe
+	 WibC/3j9okL6EglJmzC242md1r1H9qu7GteEJ/IayReV5CvDUzvN3EGqkJZUlYc4YDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064602;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064604;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gU3DM+V6KIbt92OS733/cS247gMkdpDOYhuiNAioBLE=;
-	b=Ybcg/0RX1Y7v0q+2KI40X3Wsstlzvdr3w9H3eKt9GdPNKK//lXYlJjlWe1Juen+CEQYv
-	 4h3k0v7bFX3aPCXnaDXe/fVYLfbuJv48e40wsmKQbaQdyRkBP7p71xRwy7RBHkGhvmOJB
-	 G/PFR3xA9oX//TRpbIUSfo614biaBBlDeewo40iGn1mHZJ5XH+mD3Sj7oZQfG1D77fKIg
-	 UG2e/D3535KEnRpEaqITZ1o297UN0lf/7FasBPMx+MHiIpLNpasualUtYoKR08ZZI3MqO
-	 8d2kRbM7oJ1fE+4+O8zqqCRxOgmi+6NGDokXmG+Mojxw5m5H4FbWUWKlu2C6LYBCz7w==
+	bh=PWr8DhV6fGVimK/o4pA6MfiRs6hg1MXLgRI3o+BNahY=;
+	b=S25JSf4Vl9tcWbxB6ICT2oYfy1n9gb0A124TrK4Jau82UEHFdHV0LMtPuAxhC++xSeH1
+	 kigaFEmzO+k+5Nk47tAO0u8qUKNX3+XHLVejYinKp5dDLRP2rQLbtweWKLszbGYpYALQK
+	 cOo6ZqLi94xp7+YCGeWq9KI/VKO5ewZR+OxtkEWnWOiXaWdhbiJnavxNTp7PEgWMm97/b
+	 ykQ5h2K9ziCNUoxfvWFiScdY6QUGtixSKJ2iuNeX56XulIQibseSE3erUic8GAQQz/nup
+	 A65icfEXD5Ord9WiW03R+NSho5lHaB2FZX67BrA//RVuUxIDbvqUM6oeZzTdq5kMCdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5t2rH8u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V5k2SstF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30D6606A9D3;
-	Sat,  7 Nov 2026 15:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB15606E8F7;
+	Sat,  7 Nov 2026 15:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5t2rH8u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6F61F0089F;
-	Sat,  7 Nov 2026 15:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V5k2SstF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F324E1F0089F;
+	Sat,  7 Nov 2026 15:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064601;
-	bh=gU3DM+V6KIbt92OS733/cS247gMkdpDOYhuiNAioBLE=;
+	s=korg; t=1794064604;
+	bh=PWr8DhV6fGVimK/o4pA6MfiRs6hg1MXLgRI3o+BNahY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r5t2rH8ufkZ5WmrlWxOeekXG/FjsuhB43tQ+Ivuwnq92gfxP82svu+OiL0E+c9mW7
-	 26+/5cfSdq0cB8EvZPJ0VehPp11A9uCBXorFnqahqxMzmZnSs/mA7N+gEkQCG5aM+K
-	 JjGQVOXvxgi2BhkEEkMXOh7xtRbXI4IU53J68wVU=
+	b=V5k2SstFbaGvfIWdlXRdC70d2xzu0aTQfiVDIflKsJ+R0OLZlYf+KZqx3GRQNTi6A
+	 PZIyfJqGgXr2w2YX4okB6Q76VgGhJAVz24mYNV003z0UobLs0bi+deLufakYObGG6O
+	 9kqleeyEPS6/rqCp+EReUKfNMcDQVh+KqBtCRWew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Koichiro Den <den@valinux.co.jp>,
 	Alison Schofield <alison.schofield@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0614/1257] cxl/pci: Program the Port GPF timeouts before caching the DVSEC
-Date: Sat,  7 Nov 2026 08:48:30 -0500
-Message-ID: <20261107134956.262995852@linuxfoundation.org>
+	Dave Jiang <dave.jiang@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 7.3 0616/1257] cxl: Account for link width in latency calculation
+Date: Sat,  7 Nov 2026 08:48:32 -0500
+Message-ID: <20261107134956.317001771@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,99 +70,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit ec2e30a682945616d194d7999cf96606b7ee5a88 ]
+[ Upstream commit db4503d4575cdd2fad7e8a13a8a8ffcbc86d152d ]
 
-cxl_gpf_port_setup() caches the Port GPF DVSEC offset in the dport
-before programming the phase timeouts, and ignores the return value
-of both update_gpf_port_dvsec() calls: the function always reports
-success.
+cxl_pci_get_latency() derives bandwidth from the per-lane speed returned
+by pcie_link_speed_mbps(), ignoring the negotiated link width. This
+overestimates the FlitLatency contribution for multi-lane links.
+Sections 2.11.3 and 2.11.4 of the Intel CXL Memory Device Software Guide
+describe the link bandwidth as the product of the negotiated speed and
+width.
 
-A failing config write is therefore not only silent, it is also
-permanent: the timeouts stay at the hardware defaults instead of the
-maximum flush window the kernel is asking for, and the cached offset
-keeps any later endpoint attach from retrying the update.
+Replace pcie_link_speed_mbps() with pcie_link_bandwidth_mbps() and
+migrate both CXL callers (the only users of the API). The new helper
+obtains speed and width from a single Link Status read. The CXL
+bandwidth calculation no longer needs a separate width read and
+multiplication.
 
-Propagate the errors and cache the offset only after both phases are
-programmed, so the next endpoint attach retries the setup.
+While at it, make error handling more robust by converting PCI config
+read errors to negative errno values and checking for zero bandwidth
+before calculating latency.
 
-Fixes: 6af941db6a60 ("cxl/pci: Update Port GPF timeout only when the first EP attaching")
+Fixes: 4d07a05397c8 ("cxl: Calculate and store PCI link latency for the downstream ports")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
 Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20261008034619.28059-3-kanie@linux.alibaba.com
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>	# pci/pci.c
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20261009045452.1107921-3-den@valinux.co.jp
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/pci.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ drivers/cxl/core/pci.c | 22 ++++++++--------------
+ drivers/pci/pci.c      | 23 ++++++++++++++++++-----
+ include/linux/pci.h    |  2 +-
+ 3 files changed, 27 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
-index e31aad7a525a2..1f470ab0df3b7 100644
+index 1f470ab0df3b7..bb6ad0753a421 100644
 --- a/drivers/cxl/core/pci.c
 +++ b/drivers/cxl/core/pci.c
-@@ -840,7 +840,7 @@ static int update_gpf_port_dvsec(struct pci_dev *pdev, int dvsec, int phase)
+@@ -660,8 +660,8 @@ long cxl_pci_get_latency(struct pci_dev *pdev)
+ {
+ 	long bw;
  
- 	rc = pci_read_config_word(pdev, dvsec + offset, &ctrl);
- 	if (rc)
--		return rc;
-+		return pcibios_err_to_errno(rc);
+-	bw = pcie_link_speed_mbps(pdev);
+-	if (bw < 0)
++	bw = pcie_link_bandwidth_mbps(pdev);
++	if (bw <= 0)
+ 		return 0;
+ 	bw /= BITS_PER_BYTE;
  
- 	if (FIELD_GET(base, ctrl) == GPF_TIMEOUT_BASE_MAX &&
- 	    FIELD_GET(scale, ctrl) == GPF_TIMEOUT_SCALE_MAX)
-@@ -850,11 +850,17 @@ static int update_gpf_port_dvsec(struct pci_dev *pdev, int dvsec, int phase)
- 	ctrl |= FIELD_PREP(scale, GPF_TIMEOUT_SCALE_MAX);
+@@ -756,18 +756,12 @@ EXPORT_SYMBOL_NS_GPL(cxl_pci_setup_regs, "CXL");
  
- 	rc = pci_write_config_word(pdev, dvsec + offset, ctrl);
--	if (!rc)
--		pci_dbg(pdev, "Port GPF phase %d timeout: %d0 secs\n",
--			phase, GPF_TIMEOUT_BASE_MAX);
-+	if (rc) {
-+		rc = pcibios_err_to_errno(rc);
-+		pci_warn(pdev, "Port GPF phase %d timeout write failed: %d\n",
-+			 phase, rc);
-+		return rc;
-+	}
- 
--	return rc;
-+	pci_dbg(pdev, "Port GPF phase %d timeout: %d0 secs\n",
-+		phase, GPF_TIMEOUT_BASE_MAX);
+ int cxl_pci_get_bandwidth(struct pci_dev *pdev, struct access_coordinate *c)
+ {
+-	int speed, bw;
+-	u16 lnksta;
+-	u32 width;
+-
+-	speed = pcie_link_speed_mbps(pdev);
+-	if (speed < 0)
+-		return speed;
+-	speed /= BITS_PER_BYTE;
+-
+-	pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnksta);
+-	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, lnksta);
+-	bw = speed * width;
++	int bw;
 +
-+	return 0;
++	bw = pcie_link_bandwidth_mbps(pdev);
++	if (bw < 0)
++		return bw;
++	bw /= BITS_PER_BYTE;
+ 
+ 	for (int i = 0; i < ACCESS_COORDINATE_MAX; i++) {
+ 		c[i].read_bandwidth = bw;
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index d79d2ee4ac69b..38c7cb8221223 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -6000,18 +6000,31 @@ static enum pci_bus_speed to_pcie_link_speed(u16 lnksta)
+ 	return pcie_link_speed[FIELD_GET(PCI_EXP_LNKSTA_CLS, lnksta)];
  }
  
- int cxl_gpf_port_setup(struct cxl_dport *dport)
-@@ -864,16 +870,22 @@ int cxl_gpf_port_setup(struct cxl_dport *dport)
+-int pcie_link_speed_mbps(struct pci_dev *pdev)
++/**
++ * pcie_link_bandwidth_mbps - get the current bandwidth of a single PCIe link
++ * @pdev: PCI device to query
++ *
++ * The bandwidth includes all negotiated lanes and does not account for
++ * encoding overhead. A negotiated width of zero gives zero bandwidth.
++ *
++ * Return: Bandwidth in Mb/s, or a negative errno on failure.
++ */
++int pcie_link_bandwidth_mbps(struct pci_dev *pdev)
+ {
+ 	u16 lnksta;
+-	int err;
++	int speed, err;
  
- 	if (!dport->gpf_dvsec) {
- 		struct pci_dev *pdev;
--		int dvsec;
-+		int dvsec, rc;
- 
- 		dvsec = cxl_gpf_get_dvsec(dport->dport_dev);
- 		if (!dvsec)
- 			return -EINVAL;
- 
--		dport->gpf_dvsec = dvsec;
- 		pdev = to_pci_dev(dport->dport_dev);
--		update_gpf_port_dvsec(pdev, dport->gpf_dvsec, 1);
--		update_gpf_port_dvsec(pdev, dport->gpf_dvsec, 2);
-+		rc = update_gpf_port_dvsec(pdev, dvsec, 1);
-+		if (rc)
-+			return rc;
+ 	err = pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnksta);
+ 	if (err)
+-		return err;
++		return pcibios_err_to_errno(err);
 +
-+		rc = update_gpf_port_dvsec(pdev, dvsec, 2);
-+		if (rc)
-+			return rc;
-+
-+		dport->gpf_dvsec = dvsec;
- 	}
++	speed = pcie_dev_speed_mbps(to_pcie_link_speed(lnksta));
++	if (speed < 0)
++		return speed;
  
- 	return 0;
+-	return pcie_dev_speed_mbps(to_pcie_link_speed(lnksta));
++	return speed * FIELD_GET(PCI_EXP_LNKSTA_NLW, lnksta);
+ }
+-EXPORT_SYMBOL(pcie_link_speed_mbps);
++EXPORT_SYMBOL(pcie_link_bandwidth_mbps);
+ 
+ /**
+  * pcie_bandwidth_available - determine minimum link settings of a PCIe
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 5ffcf5ce8c966..272378dd8973b 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1478,7 +1478,7 @@ int pcie_set_mps(struct pci_dev *dev, int mps);
+ u32 pcie_bandwidth_available(struct pci_dev *dev, struct pci_dev **limiting_dev,
+ 			     enum pci_bus_speed *speed,
+ 			     enum pcie_link_width *width);
+-int pcie_link_speed_mbps(struct pci_dev *pdev);
++int pcie_link_bandwidth_mbps(struct pci_dev *pdev);
+ void pcie_print_link_status(struct pci_dev *dev);
+ int pcie_reset_flr(struct pci_dev *dev, bool probe);
+ int pcie_flr(struct pci_dev *dev);
 -- 
 2.53.0
 
