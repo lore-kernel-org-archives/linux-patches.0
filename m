@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063964;
-	b=vjMziiuAq4rIxIIAHPv1vhN9zZNP1bSMa/pRrZ1bhSTzqOCqA+RehyvrcjC0E786J0+S
-	 CX7o24EdoM5AXilJkaoFaCilQ7vib8uKXXY/PQJv2gf3rcGiY1cNVTGAKWqZB0d74L0R3
-	 jarU/bNsepOiCjv7pQYP61RwsIIgHbm8LBrBfeCrV0mV8rlsvQYUWFpnenbbukgJzmWr0
-	 l4dn5043UDu31V3Toh4g78bes1LB4SvmlDHgRuMbR5aUtIuNkI9trZglu0c5ehsJLyUes
-	 7zOhFU9JYKAOHs4PQ+g0AEnWpy2vXMDPHahUZiK+b6c1w9uBXOpvAirPEFWZRWCYCxw==
+	t=1794063966;
+	b=bHZmJByzRUhvWcq/xtmq3lcxpHkXCGHzX7RAPNsZnE3bCV2bQ3rd+45K/5/vfyp5RI2E
+	 bc99NrZiUPug8YjJyPYe8qY3FoZuIY+NQrRcNcVOpqh/Xgqv7dEJpxMjmEzcxrHnCyLDW
+	 DFTgahyyiTLGZSKVwzqXcS92vrjJU1LBfa4OGqTxuS9FfTK1/vKKDPoMrmD95Ih5AWK+f
+	 0LfOWFO2Ke3hSFLDQHhMLeJ5/IJ58iuwSiGfRAJXPJ++Q7at9J9ZYGP8E+x/w4hFx5xDE
+	 qUMmsxqMgoCiywXT3DdUNlHs6ojjX90xIAI/aG8pdOqu1u1rwf4hBQWYSgpotQUsEvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063966;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fWP4V6LKTaHQgJwhZWGSE2al3FiWU8gRnecimM8OvoA=;
-	b=rZJBzomYKfneSTpHZ1xh2PfTRzoe6oiGAo+EaP47njjOjwKcHlqmIKP3tmE11lVv+Pdf
-	 AOvLdz+fUjKE0pC1i1Kn0QfV9sc7RCQmozB1ZoVlsiLoycBd2nqYYgRSp33lpCOELGQDs
-	 vMtt9++cLXK5HoZabXPCtmdk+japxMjznHhkb7nxLFuE5Q6vbq3K++aTCA0xpCz9Lb8ZS
-	 3HeMyIccQcXF10oYS858kKkNumooYvgC8YUWImcrNIoW6el5g77J6x+3voWvUiqAcT8Bi
-	 TTNWqz4Zffcun2HWfHWDh441Gs/0Wu+v2PjoK6lYRJvbDas/LNQVKZWpu+F8p+6gkfw==
+	bh=zXB63G2JFDhkFi9gAzRUGqf7fdZJkOu+0lS4J6yR5mQ=;
+	b=21Z+VxF4MM/42mzmzsSqYwgi8FRhkzV5OBRx8RGivN7YXkT2pJdLsLw41fDTPZjhSHH+
+	 80Iqwvav1LHri23IgHYQvCBKqSHpVwkcICixXROo5gpbyojc31Q89G44tMqCPreIrPkek
+	 1Rff0CQiJk6XSAB79Z2LoBL6lgmYZQ6KXlrB7/xWd7s0s4Z+20KmyWpLUP/Iz13oOz+1R
+	 zTgEhtqbE5c08ZzjwhQmWHSZ9/7RKOjRY6m6ll96WKsdq62Hd6aPxFFoUa4gD8F0cUEEA
+	 KsksCw2tdiF+vZiEzu11bl0NwM+9sxzsFxbvUGc0pfhrJqHXceLBSWCBpufvBUwOqFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12KfcaWG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hpYl8u1M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CF6606EE97;
-	Sat,  7 Nov 2026 15:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8522606EE97;
+	Sat,  7 Nov 2026 15:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12KfcaWG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2B01F008BC;
-	Sat,  7 Nov 2026 15:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hpYl8u1M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D941F0089F;
+	Sat,  7 Nov 2026 15:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063964;
-	bh=fWP4V6LKTaHQgJwhZWGSE2al3FiWU8gRnecimM8OvoA=;
+	s=korg; t=1794063965;
+	bh=zXB63G2JFDhkFi9gAzRUGqf7fdZJkOu+0lS4J6yR5mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=12KfcaWG3v3Xbio/HPpYwMjKrr6lM+WPiCOd6vqhr21XoTQG0qTaDPBzDV8jRgVOI
-	 WES8bMh3KEpXu6Cdh9PMgYf3T2goAXIlc1/7VjWP7eOw7LRqtANrvvfdJcKrzkFNUZ
-	 ySErTKW+PA8dkhcRSnH4dxurkHIhbPkwBdypBwjY=
+	b=hpYl8u1MNjhfSU/qHtY4EQf5XJi2/ptF6JT6s7EhpjBcZp7hk37+mNxHxFi/F2NuE
+	 nHDyegMEjzuCh8hWIskOVhyoUX8boDmS/hkvsVPdjElGp/wsEIq5RByEIr2I4RKXXU
+	 cM4kCmwTlo/vObitz0EWW2u2skLmstH1xHObWWes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Bradley Morgan <include@grrlz.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0151/1257] gfs2: reject invalid inode sizes
-Date: Sat,  7 Nov 2026 08:40:47 -0500
-Message-ID: <20261107134943.486618372@linuxfoundation.org>
+Subject: [PATCH 7.3 0152/1257] PM: CPU: Restore synchronize_rcu() to cpu_pm_unregister_notifier()
+Date: Sat,  7 Nov 2026 08:40:48 -0500
+Message-ID: <20261107134943.513806777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,73 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Bradley Morgan <include@grrlz.net>
 
-[ Upstream commit 33ed0a0567e0abe66ea65e89dad2e35082890fbe ]
+[ Upstream commit 61f7eee7d4664079fbce821576891c3ee5ccf597 ]
 
-A corrupted GFS2 image can store a dinode size that is larger than what VFS
-i_size can represent. gfs2_dinode_in() reads the on-disk di_size as a u64 and
-writes it directly into inode->i_size. If the value is larger than S64_MAX, the
-incore i_size becomes negative. That negative value can bypass the existing
-stuffed inode size check:
+cpu_pm_notify() walks the notifier chain lockless under only
+rcu_read_lock(). That only works if a removed notifier block is not
+freed until every concurrent walker is done with it.
 
-inode->i_size > gfs2_max_stuffed_size(ip)
+The chain used to be an atomic_notifier, whose unregister ends in
+synchronize_rcu(). Commit b2f6662ac08d ("PM: cpu: Make notifier chain
+use a raw_spinlock_t") switched it over to a raw_notifier, and in
+doing so replaced that with raw_notifier_chain_unregister(), which
+does not synchronize. The grace period quietly went away, so a driver
+that frees the memory holding its notifier block right after
+cpu_pm_unregister_notifier() returns can race with a concurrent
+walker:
 
-Later, gfs2_quotad may try to sync the quota file and unstuff the quota inode.
-gfs2_unstuffer_folio() reads the negative i_size into an unsigned length and
-passes it to memcpy(), turning it into a huge copy size and triggering a
-out-of-bound issue.
+  cpu1 (idle exit)                  cpu2 (driver remove)
+  ----------------                  --------------------
+  cpu_pm_notify(CPU_PM_EXIT)
+    rcu_read_lock()
+    nb = rcu_dereference_raw(*nl)
+                                    cpu_pm_unregister_notifier(&od->nb)
+                                      unlink, no grace period
+                                      remove() frees od (devm)
+    nb->notifier_call(nb, ...)
+      /* use after free */
 
-Reject dinodes whose size exceeds sb->s_maxbytes before storing the value in
-inode->i_size. Also make the stuffed inode check use the raw on-disk size while
-it is still unsigned.
+The rcu_read_lock() on cpu1 does not stop cpu2 from freeing the
+block, and nothing else does. The read side is the idle exit path,
+so this can hit on any system where a driver with a cpu_pm notifier
+gets unbound.
 
-Fixes: 70376c7ff312 ("gfs2: Always check inode size of inline inodes")
-Closes: https://lore.kernel.org/lkml/CANypQFaF6bvORKKbRALvEL0k_epFaneFiOQqco4gjdmKVbdURg@mail.gmail.com/
-Assisted-by: Codex:gpt-5.5-xhigh
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Add the grace period back. It is only needed when a notifier was
+actually removed, so wait on success and return -ENOENT without
+waiting otherwise. The kerneldoc gets back the "may sleep" note that
+the same commit dropped.
+
+Fixes: b2f6662ac08d ("PM: cpu: Make notifier chain use a raw_spinlock_t")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+[ rjw: Subject tweak ]
+Link: https://patch.msgid.link/20260813074343.26460-3-include@grrlz.net
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glops.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ kernel/cpu_pm.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 28f32424ee64b..2e53ba3709eb6 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -393,6 +393,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	umode_t mode = be32_to_cpu(str->di_mode);
- 	struct inode *inode = &ip->i_inode;
- 	bool is_new = inode_state_read_once(inode) & I_NEW;
-+	u64 size;
+diff --git a/kernel/cpu_pm.c b/kernel/cpu_pm.c
+index 7481fbb947d32..a2a598ad6e6d5 100644
+--- a/kernel/cpu_pm.c
++++ b/kernel/cpu_pm.c
+@@ -10,6 +10,7 @@
+ #include <linux/cpu_pm.h>
+ #include <linux/module.h>
+ #include <linux/notifier.h>
++#include <linux/rcupdate.h>
+ #include <linux/spinlock.h>
+ #include <linux/syscore_ops.h>
  
- 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr))) {
- 		gfs2_consist_inode(ip);
-@@ -418,7 +419,12 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	i_uid_write(inode, be32_to_cpu(str->di_uid));
- 	i_gid_write(inode, be32_to_cpu(str->di_gid));
- 	set_nlink(inode, be32_to_cpu(str->di_nlink));
--	i_size_write(inode, be64_to_cpu(str->di_size));
-+	size = be64_to_cpu(str->di_size);
-+	if (unlikely(size > inode->i_sb->s_maxbytes)) {
-+		gfs2_consist_inode(ip);
-+		return -EIO;
-+	}
-+	i_size_write(inode, size);
- 	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
- 	atime.tv_sec = be64_to_cpu(str->di_atime);
- 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
-@@ -462,7 +468,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 		return -EIO;
- 	}
- 
--	if (gfs2_is_stuffed(ip) && inode->i_size > gfs2_max_stuffed_size(ip)) {
-+	if (gfs2_is_stuffed(ip) && size > gfs2_max_stuffed_size(ip)) {
- 		gfs2_consist_inode(ip);
- 		return -EIO;
- 	}
+@@ -76,7 +77,8 @@ EXPORT_SYMBOL_GPL(cpu_pm_register_notifier);
+  *
+  * Remove a driver from the CPU PM notifier list.
+  *
+- * This function has the same return conditions as raw_notifier_chain_unregister.
++ * This function may sleep, and has the same return conditions as
++ * raw_notifier_chain_unregister.
+  */
+ int cpu_pm_unregister_notifier(struct notifier_block *nb)
+ {
+@@ -86,6 +88,11 @@ int cpu_pm_unregister_notifier(struct notifier_block *nb)
+ 	raw_spin_lock_irqsave(&cpu_pm_notifier.lock, flags);
+ 	ret = raw_notifier_chain_unregister(&cpu_pm_notifier.chain, nb);
+ 	raw_spin_unlock_irqrestore(&cpu_pm_notifier.lock, flags);
++
++	/* Wait for the rcu_read_lock() walkers in cpu_pm_notify(). */
++	if (!ret)
++		synchronize_rcu();
++
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(cpu_pm_unregister_notifier);
 -- 
 2.53.0
 
