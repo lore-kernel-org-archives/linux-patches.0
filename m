@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062774;
-	b=kym+GmAjKoGirpFH8+uxvEu/cj2jnxHjb/x7zUyqdt2z5rOVE5oMJpdJIm8vPiOWdy/i
-	 siUZyYm39MG74yhIs9URYB1IlApxXKlYfC35ibPNVX1YypxVDzfgZIrftRc/s6F+2xhmt
-	 F11LjNNLhS4PDpXQ67+c2L+pItfB8VYUiB7qNmroGG8WE33BePCy4NWx3vHBaXZZP8dju
-	 nqBLZhg4f95vx5wC/BD7jVjq2Eo7mktxCs1xV0kdJdQwZIrjMIZKyisq4AlaUiUKEtT13
-	 3KftYXD6JlijViIIOpOJNfxLEm0+pchnjjQCiHO8x5EaumI66YrEk8G+Slkgl0CMktw==
+	t=1794062775;
+	b=Z2cJH1fjiFVwgo7qmZy1I2SbOeuM3HWp9TLEHqsHGIwYjnMN/yxcbyXmIj5XCVZwqHsg
+	 J7D66fT5X8i5M+FgGTO2o5lF9QdIcW26nUpSxSok4t+ibYKWV3IaiBL2vrBl7ygFjlp2n
+	 ZsuAInH9H14srhQPYyHg2zRFtDnmGqJvAykbFllXl8AVOx6PHY1YA1O4WTcEfwNL83cYG
+	 0C+ZajEJR43MGnpd0H+BQ2puSab2tXrpD1RQHYPT6vm7lUKcdhtU4mzf4Zd/swbRrT2yw
+	 hK5wDeB/N6UN2gb4u7AqcUmJA8Ynh2wuxJEp9ovGq1ppA0Qzxc+u1NH8iXRVhG9ayIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RTvqh10eXWUhO2li3P6t6O7+He774wW5C0RjwNj1czo=;
-	b=k+aD3XvBuW2Ocl7IPA+kWBNOrlGM1ptmFxCT7Gum5y4f/E7MeY1Lgj6LTjoo0VgKJ+Ey
-	 etE0TvM9nghHbtNXd6jDspV1EX9f0f/4ZJjZESeqF1hm0ycum2bBRLhb7YA+fb/CcvYKB
-	 l2PNmyPpC7+va9/MM/vchQsicKQzUEpf3S4KMvpm3mp8V5njb2E+qjKShF5G4DnncE3DD
-	 VZAE+cYVFfx3067iqTPnYaJszcGoa5C36jkrE0wwHN5YdX9Aw4RY67tMwLFiKZjFP9k4k
-	 RBlVx2JGdHWhJnk/VPuZ4cL7NTcA6W1fxNmzBrUXTSzUZVri1wVOhO7yMYj5BD1K3Mg==
+	bh=yG5l3K6QXpE38e6LTZol7D4kWciM0ywiMeh0xB3SWX8=;
+	b=ITjP3nzEfmeyfqsIiYf5G1cr6ji8t2cYojnanwK5ciP6K8t/eIN5Q+QXOAuXmZigjcL8
+	 CPsoa3IS7SWUiwmgTYlw6TGq5VvXH+MsOFbWw7t4lXm6QTTYYayibk1E85r/PnbVojktz
+	 Ii7VEPXQXf8TOLN3L8TQIhX34uSwfC+/DLLruDxELc+s1Vu2sFtURExY4IFfa+yCpzaev
+	 vFsGC5DTHFilWBTn0BY5qT454ple5LNWBUyBtjBYoiKXWRchaQ5KFGfzVIewQDWWNnsxQ
+	 ryPs0n+e/ciL8o9dkVyQna6TpWjBhK5dbS3cyPI57bkMW5RNFSGP8tWTMGAMVb6Y5Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cpb6e8n0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YnWeOaD0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD46606A32C;
-	Sat,  7 Nov 2026 14:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2A7606A32C;
+	Sat,  7 Nov 2026 14:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cpb6e8n0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D49D1F0089F;
-	Sat,  7 Nov 2026 14:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YnWeOaD0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3F81F0089F;
+	Sat,  7 Nov 2026 14:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062773;
-	bh=RTvqh10eXWUhO2li3P6t6O7+He774wW5C0RjwNj1czo=;
+	s=korg; t=1794062775;
+	bh=yG5l3K6QXpE38e6LTZol7D4kWciM0ywiMeh0xB3SWX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cpb6e8n03S29cSfm9+2CCluhn3usrqaksaptGG9XhWsY0KpOmAgOoHkxJj/8at2ji
-	 Lx70RQzVnM3MwRd1P+47vafzZ++Zmn1N18IBqS2go2FOiziQhF6AVfFXEqnlMmNbkO
-	 zA9JD383HXojtpt2V8DZVO3YWqYtwCooizh2byY4=
+	b=YnWeOaD08WGhVBBggwpAWMNgxm/uS4ETBwIdmdeg8TiNU7XwialIM08U0XLSuK8vC
+	 hURDBXdKqhxkvdwrGMJb7IDZvEfmh23ixIMoyXcSwHzDvXmKTErsgSlW45w0eJS4ZV
+	 cUCGtiOa5FS/8DSh2uW9UaGZ5FYHAZXOmWXF0QKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 080/869] media: au0828: Free URBs when starting DVB streaming fails
-Date: Sat,  7 Nov 2026 08:46:02 -0500
-Message-ID: <20261107134855.432889950@linuxfoundation.org>
+Subject: [PATCH 6.18 045/869] soc: qcom: geni-se: Fix endian conversion for serial_protocol comparison
+Date: Sat,  7 Nov 2026 08:45:27 -0500
+Message-ID: <20261107134853.651389834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,102 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-[ Upstream commit b8dd133d96a40012f4b67fd48d8ddd7306a3e024 ]
+[ Upstream commit 0231382f070df26a8b267f9e68c5440928b87c89 ]
 
-start_urb_transfer() stores each allocated URB in dev->urbs[], but sets
-urb_streaming only after all URBs have been submitted. If a later URB or
-transfer buffer allocation fails, earlier entries are left allocated. A
-submission failure calls stop_urb_transfer(), but that function returns
-immediately while urb_streaming is false, leaving both submitted and
-unsubmitted URBs behind.
+serial_protocol is declared as __le16 in struct se_fw_hdr, but was
+decoded with le32_to_cpu(). On big-endian systems the extra byte swap
+causes the field to always compare unequal to the protocol argument,
+so no firmware segment is ever selected.
 
-Make stop_urb_transfer() release every populated slot regardless of the
-streaming flag and clear each slot after release. Route all start errors
-through this cleanup. usb_kill_urb() safely handles both submitted and
-unsubmitted URBs, while the existing preallocation check preserves the
-lifetime of shared transfer buffers.
+Use le16_to_cpu() to match the field width.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 265a6510629a ("V4L/DVB (7621): Add support for Hauppauge HVR950Q/HVR850/FusioHDTV7-USB")
+Fixes: d4bf06592ad6 ("soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux subsystem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260821-fix-write-to-read-only-firmware-buffer-v3-1-43e6a3abd651@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/au0828/au0828-dvb.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/soc/qcom/qcom-geni-se.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/au0828/au0828-dvb.c b/drivers/media/usb/au0828/au0828-dvb.c
-index 51752a922a744..4dc6377466858 100644
---- a/drivers/media/usb/au0828/au0828-dvb.c
-+++ b/drivers/media/usb/au0828/au0828-dvb.c
-@@ -163,9 +163,6 @@ static int stop_urb_transfer(struct au0828_dev *dev)
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index 2fa6a45904e97..53e53736766fc 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -1059,7 +1059,7 @@ static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct
+ 		if (le32_to_cpu(sefw->magic) != SE_MAGIC_NUM || le32_to_cpu(sefw->version) != 1)
+ 			continue;
  
- 	dprintk(2, "%s()\n", __func__);
+-		if (le32_to_cpu(sefw->serial_protocol) != protocol)
++		if (le16_to_cpu(sefw->serial_protocol) != protocol)
+ 			continue;
  
--	if (!dev->urb_streaming)
--		return 0;
--
- 	if (dev->bulk_timeout_running == 1) {
- 		dev->bulk_timeout_running = 0;
- 		timer_delete(&dev->bulk_timeout);
-@@ -179,6 +176,7 @@ static int stop_urb_transfer(struct au0828_dev *dev)
- 				kfree(dev->urbs[i]->transfer_buffer);
- 
- 			usb_free_urb(dev->urbs[i]);
-+			dev->urbs[i] = NULL;
- 		}
- 	}
- 
-@@ -200,8 +198,10 @@ static int start_urb_transfer(struct au0828_dev *dev)
- 	for (i = 0; i < URB_COUNT; i++) {
- 
- 		dev->urbs[i] = usb_alloc_urb(0, GFP_KERNEL);
--		if (!dev->urbs[i])
--			return -ENOMEM;
-+		if (!dev->urbs[i]) {
-+			ret = -ENOMEM;
-+			goto err;
-+		}
- 
- 		purb = dev->urbs[i];
- 
-@@ -217,7 +217,7 @@ static int start_urb_transfer(struct au0828_dev *dev)
- 			ret = -ENOMEM;
- 			pr_err("%s: failed big buffer allocation, err = %d\n",
- 			       __func__, ret);
--			return ret;
-+			goto err;
- 		}
- 
- 		purb->status = -EINPROGRESS;
-@@ -235,10 +235,9 @@ static int start_urb_transfer(struct au0828_dev *dev)
- 	for (i = 0; i < URB_COUNT; i++) {
- 		ret = usb_submit_urb(dev->urbs[i], GFP_ATOMIC);
- 		if (ret != 0) {
--			stop_urb_transfer(dev);
- 			pr_err("%s: failed urb submission, err = %d\n",
- 			       __func__, ret);
--			return ret;
-+			goto err;
- 		}
- 	}
- 
-@@ -249,6 +248,10 @@ static int start_urb_transfer(struct au0828_dev *dev)
- 	dev->bulk_timeout_running = 1;
- 
- 	return 0;
-+
-+err:
-+	stop_urb_transfer(dev);
-+	return ret;
- }
- 
- static void au0828_start_transport(struct au0828_dev *dev)
+ 		if (fw_size % 2 != 0) {
 -- 
 2.53.0
 
