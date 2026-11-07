@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064245;
-	b=uL61pIt7rN3QZn/r0449ISfqwJ5q+RkIKi+RNh/wEKiwJBvGXaA9G1JTK90qacH/g0nY
-	 8pZ2nhS5IaVGvSQTTJuPWCFW4AVBDysyOEoQfd6lrB2XD2COCL+iouVzIOO2zSM2gLmrm
-	 Q2vkSlchmPBfWv6tpD4bShnQ77+IaaUGvXi/OH899EApmpXQW94pxNRn4mqMVeVUXP0sI
-	 A4fjY0wyFWt5xj0jTTHtDZtSY3SdqU/A0OGfZbEPRqGn+dQ6x6utKixKTmD5LIwus991w
-	 2P63zi019yzK4Pv3ELUDuBGr47IYXM/+W0YAyB0j+WzfOrS5Ea/iL1lszSQxjVtDMzA==
+	t=1794064246;
+	b=qkqGU1n8axebaU+HuAu7O8AQ/L9UtSNxu3RKn1w4PsXlquJlLMd8b2ZJGk6LqPO/2Ish
+	 ItEppdeGwXQ6Y3ptn6zEzQZm6jpf3CVv6ZBYXE82ycd3pDGz8uc6W/dtxOETs8/5Ve7xw
+	 J0q0BOd8q8YYeY6q4GKvofXEDeB1hwFMxi0U5Q+arKTumbcqnqghYtGnMJrqIhjAbDnJB
+	 jF2pAA3rAdABNL6GNu9OzttAMToofxmwJb/257gto293hxWb8XvIAdxGjwubvibX0q+72
+	 43kM4NRlvodfTPv9MmbWZuCQnLjnhcH/z7eHCrnpP3qPsG+FhGbT3VBJkx52uvfohZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064245;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064246;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GuKVTa38+1g6b7OQp1kTJX4eCfJ+jGGceg1CXz2xf8M=;
-	b=0fDNx/jMq/HNGPl6PU6tWe2Gfw1bTX9nxhvlYVXAscwj1hRqcgM3lbd5QLin1XTGwr1e
-	 aFT8iLgl98sJzJp42oMgeGDabKc6cWcRo6aWCobJZFDzw/cQyVR2DQHyfkuEhOXbSLjnZ
-	 1RYs1iw+NWTD8LpHKq3IO764aGWck9g6zgTyqRlrhlYxFb6da00dpV+WmCy985ZxJpwBY
-	 vRKks5YpfAY9zLZIuIUveIuQAamDVYyjXaBX5WhtSLqHpDzyyYhvo/L5w05s0Vg/aCpxY
-	 rjJE2IkingrrbAUAgemRxj9B3PuvU/SP6zo3QvHEclFGI7+9O9ykluzInghOHK4h1QA==
+	bh=vga4M5WP7fTvIuFfrEadwHg65DDOmZBK1JsubpHF0kA=;
+	b=za3csVBe9NH+KxGFrNgZ/j4nLPRNHaORrA0outTLKzsf6PXbSzZwk4Wp0ORGQV0Vjreb
+	 ElLf6Q6+pERXIBkY/KSLQLqtNKS0292jxm1AnM8bCFrUnFijZeKoZOOcZnDNwtFoNbveZ
+	 5cQRvCiQx+20Wxtynh4x5z5Slnxnw/D4jEVHEJBcd4LLMPAc11DwdNkjrzslalP/FOgOU
+	 XLMUoSyb9DahMI3TISnAhScZ0XVwrgSfqrAjo8jZnSmGHkVDkaWsU8vg02bgXIK9CEU0g
+	 YGT81HzUWUobEYTUO9pYYdB2EnTtpYR9eFMdTi7Bo4Niaiq3/fBEVE2Rs1v5QEfRtZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r+TcED70;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjQOAZsV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC927606A332;
-	Sat,  7 Nov 2026 15:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03871606A332;
+	Sat,  7 Nov 2026 15:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r+TcED70
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7611F008A1;
-	Sat,  7 Nov 2026 15:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjQOAZsV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C551F0089F;
+	Sat,  7 Nov 2026 15:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064244;
-	bh=GuKVTa38+1g6b7OQp1kTJX4eCfJ+jGGceg1CXz2xf8M=;
+	s=korg; t=1794064245;
+	bh=vga4M5WP7fTvIuFfrEadwHg65DDOmZBK1JsubpHF0kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r+TcED70USpp7A9SeM6vOtYlZKU3T46Zb/ptaE4AFgGkin2Syai5ZKTzJKeRpv7nr
-	 q7YqaIfg98Sb7h+HIQYEA1m4UrWXz4Z5kNK5ri5iEgofwkPEqpZGq3pXmDowROIGjo
-	 OjxtVvoChEqKSKOmFs62Zz/OfoE4QoZR+E7v/HEg=
+	b=ZjQOAZsV9lNyxJtCVLIQ+O9X7CBXJ8u5oRsecLcEV+DdJtxgFKg/mpyHQPavKMLCy
+	 GSZ4TZ9CgvJV5dW75IY65Gc6GU9YvYV7/1uyZKUVcmuvU57v5JI9bXNNobHC0FoHaH
+	 r2ZZUA83RL1v0yn9+EjuF2657BJGbveoqqrpEfdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiale Yao <yaojiale02@163.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0348/1257] iio: accel: adxl380: reject devices without match data
-Date: Sat,  7 Nov 2026 08:44:04 -0500
-Message-ID: <20261107134949.008465027@linuxfoundation.org>
+Subject: [PATCH 7.3 0349/1257] iio: accel: sca3000: reject devices without match data
+Date: Sat,  7 Nov 2026 08:44:05 -0500
+Message-ID: <20261107134949.034859559@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,42 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 9f6d174e9fa5b265e7a0a6caa0c5b579bf899702 ]
+[ Upstream commit bee629c18a9389cfbbe182df954cf49a9066b383 ]
 
 SPI driver_override allows a device to bind to this driver without
 matching either the OF or SPI device ID table. In that case,
 spi_get_device_match_data() returns NULL.
 
-adxl380_spi_probe() passes the result to adxl380_probe(), which
-dereferences chip_info to set the IIO device name and operations,
-causing a NULL pointer dereference.
+sca3000_probe() immediately dereferences the returned chip information
+to set the IIO device name and channel layout, causing a NULL pointer
+dereference.
 
 Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
 data") fixed the same driver_override issue in another SPI driver.
-Reject devices without match data in the SPI frontend.
+Reject devices without match data before using the chip information.
 
-Fixes: df36de13677a ("iio: accel: add ADXL380 driver")
+Fixes: d6ae9f202f61 ("iio: sca3000: simplify with spi_get_device_match_data()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/adxl380_spi.c | 2 ++
+ drivers/iio/accel/sca3000.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/accel/adxl380_spi.c b/drivers/iio/accel/adxl380_spi.c
-index ae8467f4e6c01..8ffb3a8690a63 100644
---- a/drivers/iio/accel/adxl380_spi.c
-+++ b/drivers/iio/accel/adxl380_spi.c
-@@ -25,6 +25,8 @@ static int adxl380_spi_probe(struct spi_device *spi)
- 	struct regmap *regmap;
- 
- 	chip_data = spi_get_device_match_data(spi);
-+	if (!chip_data)
+diff --git a/drivers/iio/accel/sca3000.c b/drivers/iio/accel/sca3000.c
+index 8f1ac1d3305ed..acd0890c78a58 100644
+--- a/drivers/iio/accel/sca3000.c
++++ b/drivers/iio/accel/sca3000.c
+@@ -1462,6 +1462,8 @@ static int sca3000_probe(struct spi_device *spi)
+ 	st->us = spi;
+ 	mutex_init(&st->lock);
+ 	st->info = spi_get_device_match_data(spi);
++	if (!st->info)
 +		return -ENODATA;
  
- 	regmap = devm_regmap_init_spi(spi, &adxl380_spi_regmap_config);
- 	if (IS_ERR(regmap))
+ 	indio_dev->name = st->info->name;
+ 	indio_dev->info = &sca3000_info;
 -- 
 2.53.0
 
