@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063174;
-	b=MdpjXJFaDNkllYTDkGWVkOGxVvFja4KiRDTNHzs3If+hkT0eJ7wfhqVL0tErY2E4vy3Z
-	 cn9SDjEWDy6pwcwWM9yyujY9oDKnsJLa1SqLVol7bEjqsN7omqdiyByM1jGFEOWF4sRzl
-	 apB5Yp3MFQvH4XmH5KJeLB4U+dgzj1Kr5jH4pNcfAwJ0Tq1KVaO0Gg7j9O7sh2ju+erYp
-	 DsOuWI66bW8trOtHm26aNdCjXszgsv2sR4ILx93yESAhuaGGmpZEAzv3B68fJf2Dd9Lxp
-	 IUjkUMcJsCHjg0I+WOuLv3BEQCN5F5S5h/VbJJ5EJOa7N0yHsMekOYxBoY1pw+S0zfQ==
+	t=1794063175;
+	b=O+tx38ivOXCNK6OHr2Sd0ajAPPpdtTEVPiFeBsqMVx99Y4pNfj+fpaasYt606S1tZflh
+	 nEQlM8SI3W7efeS21HHrtx4C39zXRFW8j9Dr++vjoy24E1qHSFBw/ur6wCnJp93J0bnWO
+	 cDNXXUbEJPG56k9CmdI4Z+qK6GqIZzFXvS8v8rZ2O3Gr86FHLIqipKmMBxJi++JZWmyfZ
+	 z67ShH/uOh5YqXNZBssaNaN8/8wkRvn1IxJWi1X1f4QCWa6WVxhmRNBd5/bZ9AnHcgEIo
+	 LtlRXkOURpNcspfvWbbSfGc8P/Po9gpuY0wfswR/Kbm0CaGtuNflijMcyDYRdA2yiTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063174;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=koQq91PkYfAueu0o1qhTlOGMqHCcWPavjzhKHDzREx4=;
-	b=FwizEx4JI/F3FyvkJOO+AYs7g1VxEkmZ1iu/QjZJ23Ff59iEAQj2FfH4dg6uVQnz8e54
-	 KPrX+AY4Wg+p/2xVpCucOkeBjDk/uZolW1V43JJfTrQ4crT4mHaoI8TdII9i9sy+tACDv
-	 wKUrItZFqiufih/RS3e58kVo1ArYcmkdfAFQp8xS28wJi3yci0U1xIykIwA/VgUW81Hxc
-	 VlAbcLEq6hndhF/hCNQGOjd0VTKThhzzaUD2ynq89BdJfdSUL9ZpTBDCLWWsHGZTXszBp
-	 W3pCX8QHdEkCapDrsAGPnv/Wdt7WIc+6Z6qA8Bu+IQOE6ZSVd20zKUiO93ssbErbygA==
+	bh=aGVQVVNLrlbVcv2e+V5QAVHRkNAPjBq+wvdzDfv/wqg=;
+	b=4L5bA0k9fPKFXa2P8HB8iAQegIU/gsoHq60MmJKcLBLRhhdTWgChBNzso30U80agztyI
+	 CxuNlb72dMlx5cCWQgkNgCrOFt8Tu4Ga5yUMQkEn9BaKm7I4uoUFqdI0AyRJPNyvR8VVs
+	 VK0X3lUrv5SbmM1OdCUmBHMmDTXjcxNheGkLWivaN4KliGOR9TEcFsMhat97+o/gWW3DG
+	 BIn1IFjd4waMLaUQePp6hTD3QI/qRk9o0WZaFYmf9EzoyCR7+qeVeQ9/+iTSBs0NNlY4f
+	 r5BUScwkGUflA3DluMSNG01JYEotCT9IYiMwwFYDJvljkapUS6RdDMgbAl1R+H2Kd1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kn0fv3MA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZuRRbv4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A44606A330;
-	Sat,  7 Nov 2026 14:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAD1606A330;
+	Sat,  7 Nov 2026 14:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kn0fv3MA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A254D1F0089F;
-	Sat,  7 Nov 2026 14:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZuRRbv4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C5D1F0089F;
+	Sat,  7 Nov 2026 14:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063173;
-	bh=koQq91PkYfAueu0o1qhTlOGMqHCcWPavjzhKHDzREx4=;
+	s=korg; t=1794063175;
+	bh=aGVQVVNLrlbVcv2e+V5QAVHRkNAPjBq+wvdzDfv/wqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kn0fv3MA0lEjTbQndtPpctEytPTnXYjzZzK/A78iJo3rkonuDZgIo4ExRP2KYyRe5
-	 X2YkclmM8uSgIDHhgF+K7M7cQq0FAHtCJKpNINxEIcincMZ3ittBOJ0L7NouEO9Y3z
-	 KIeqyry2CsCB7h7LDW3i92uWoKhm7btOAUIA1dO4=
+	b=0ZuRRbv4rP7Z+Px2NGrvVwRtnjzPNX7erwHFCufBVegMOr+s0MCjfehk9mEZA2fr1
+	 jR8eofOHNe8az377/c2WI8KN6kRmQYaaFJrZ8YR+lHe8NjYgQjRMqiWN4j7a1Qvctv
+	 jSJehL8UPm3AS96o975nY94pokpcr0XCpX0F79lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 355/869] media: vicodec: fix NULL deref on oversized frame
-Date: Sat,  7 Nov 2026 08:50:37 -0500
-Message-ID: <20261107134904.414795573@linuxfoundation.org>
+Subject: [PATCH 6.18 391/869] ocfs2: exit recovery thread on mount error path
+Date: Sat,  7 Nov 2026 08:51:13 -0500
+Message-ID: <20261107134906.685238375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,55 +74,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit c657eb609197e289b054bc2c4e86a0fc32dd7ebe ]
+[ Upstream commit 6163a859649e9432e9c79c541f36dbf3bba9172f ]
 
-job_ready() only honours the is_header_valid() verdict when
-ctx->comp_has_frame is set, and comp_has_frame is only set once
-comp_size reaches the full frame size. Since the copy is clamped to
-ctx->comp_max_size, a header advertising a larger size leaves comp_size
-stuck at comp_max_size, so comp_has_frame stays false and the failed
-validation is discarded.
+When a mount fails after the cluster connection has been established, e.g.
+in ocfs2_mount_volume(), ocfs2_fill_super() unwinds via
+out_debugfs/out_super and frees the osb without disabling recovery.
 
-Control then falls into the resolution change branch, which calls
-update_capture_data_from_header(). That function re-derives info via
-info_from_header(), assigns it to q_dst->info and dereferences it as
-q_dst->info->sizeimage_mult, with no NULL check of its own.
-is_header_valid() does check that same info_from_header() result --
-if (!info) return false which is precisely the false verdict
-job_ready() discarded above. info_from_header() returns NULL whenever the
-header flags resolve to no supported pixel format.
+A node failure event can concurrently launch the recovery thread, which
+blocks in __ocfs2_wait_on_mount() waiting for the volume state to become
+VOLUME_MOUNTED or VOLUME_DISABLED.  As the mount error path neither sets
+VOLUME_DISABLED nor wakes osb_mount_event, the thread can never make
+progress: the kthread leaks and stays blocked on the wait queue embedded
+in the freed osb, which may then be accessed as freed memory.
 
-Drop the comp_has_frame conjunct so an invalid header always bails out.
-The resolution change path is unaffected, as it is entered with a valid
-header. Oversized frames are then rejected by device_process(), which
-already returns -EINVAL when comp_frame_size exceeds comp_max_size.
+Fix it by setting VOLUME_DISABLED and waking osb_mount_event on this path
+so the thread bails out, and replace the plain kfree(osb->recovery_map)
+with ocfs2_recovery_exit(), which waits for a running recovery thread to
+exit before the recovery map is freed.
 
-Fixes: 3b15f68e19c2 ("media: vicodec: Add support for resolution change event.")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://lore.kernel.org/20260828112825.666097-1-joseph.qi@linux.alibaba.com
+Fixes: f1e75d128b46 ("ocfs2: rewrite error handling of ocfs2_fill_super")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vicodec/vicodec-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/super.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
-index 841dc03d0edd2..3052d248a7286 100644
---- a/drivers/media/test-drivers/vicodec/vicodec-core.c
-+++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
-@@ -652,7 +652,7 @@ static int job_ready(void *priv)
- 	 * if the header is invalid the device_run will just drop the frame
- 	 * with an error
- 	 */
--	if (!is_header_valid(&ctx->state.header) && ctx->comp_has_frame)
-+	if (!is_header_valid(&ctx->state.header))
- 		return 1;
- 	flags = ntohl(ctx->state.header.flags);
- 	hdr_width_div = (flags & V4L2_FWHT_FL_CHROMA_FULL_WIDTH) ? 1 : 2;
+diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
+index dc252b53c7dcf..433b673ae5158 100644
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -1170,8 +1170,17 @@ static int ocfs2_fill_super(struct super_block *sb, struct fs_context *fc)
+ out_debugfs:
+ 	debugfs_remove_recursive(osb->osb_debug_root);
+ out_super:
++	/*
++	 * A recovery thread launched by a node failure event may still be
++	 * waiting for the volume to be mounted.  Set VOLUME_DISABLED and
++	 * wake it up, then wait for it to exit before osb is freed,
++	 * otherwise the kthread would leak and stay blocked on the wait
++	 * queue embedded in the freed osb.
++	 */
++	atomic_set(&osb->vol_state, VOLUME_DISABLED);
++	wake_up(&osb->osb_mount_event);
+ 	ocfs2_release_system_inodes(osb);
+-	kfree(osb->recovery_map);
++	ocfs2_recovery_exit(osb);
+ 	ocfs2_delete_osb(osb);
+ 	kfree(osb);
+ out:
 -- 
 2.53.0
 
