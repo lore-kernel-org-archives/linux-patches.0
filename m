@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064887;
-	b=EQDecu12C0H6ZteIn34ggtY73SFeXE4IwOarheKpuRCjTg7FC6aJ8ORfhk+UFGKBYtNN
-	 NoMBXBkGxppF89MUXcwFyzh81NO0GcKnCozLQatgZB7X25fCuZgnspcmFeA7RIChq27Pm
-	 UpX/wbx3FQHe7igemQFjEnu3FroemdIFPAU9bRm6SVuMahJkbF7B9fU8Noeb6HiLVY8k2
-	 jHJar4hfWrkhN3yg+qIsMrX2OI+KHoP6OFRHk5uuKjWC4/iJm3mJjAQQ/dfy+XSc0Cpi1
-	 6IdOgLeq7t+IXIKzbl2P+qzSNA+TxL0784tQ9GYje+hLWOzwYezZc8euITmomkM8lSQ==
+	t=1794064889;
+	b=d5FlImfgdxArZWi3VyV/6tlsWlv60vUNN+4HMfXe9BXhuRmiU/tBNd4roayqDtFXw84Q
+	 wo6q8Wk9pK+O7Fb2GkEKnsMk8NYnAsjjL9QSf5zfLfJlsJfpOgtXqaMK1c0NFUPOGaD5Z
+	 jdyiPRvcdeselE0n9bxmqSNYTiIA6JZl2OXyUd3NDMVMgS0i3mxzLWZ88Xtw7y6n+xoy9
+	 btod8thjdYg2sQHWJfzHz1ZHXLi4BD7uMleSedxVejHX1nn637LSAkpA196W5S+q6TZMZ
+	 qtd4CFe8CjVpqhwQmoAovLLM83WqsCZ4LtWFSqjD9oAB2QfQWCNFvIE4IPfLiBPOsNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064887;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064889;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zdO61LGIliVNbX3uDHQUywyW6m2xvmo9OyQQjBILk+8=;
-	b=ygzj1kzP2Cpf3v1Hnt9DpesAz0GxkvGYlz2Nv51TYLKNDMrfBEZHJushXKFam9+vAx05
-	 EDVtj4Icqyzv9lcMRw+Tk26VvFFZtfxR3mhVVDxUymFBo9rzKPsPPHKijr30Fyq29q61C
-	 EEktB1e6kcp7H9GokN/l8VlyD8Uh9rkUKKB/KpnA4WWZXStkI96j/adnLjArNwlZJXfuT
-	 +Teenuu9ZlTtVccMOyE4Kb/Gl17zTy2OBEg9jvyN3h18ccGJM25gJsR0g/88G6GxyCKv5
-	 jPa8GZES/TS765tV9bt/xI5/j2GHW1XyTMW4QMNdonwTRzDn1OqhHLl+Yzo26p0QVoQ==
+	bh=U78I90RbgYuz5qRks2G0XbdznQWbQH/NPD8WGcHnSEU=;
+	b=AKvCKPKjGY2SpuoyLY1P/x6yCvE7/aS7QaY3lg01MjIjDey4N6bKjN2IOvI4yA/3TWsw
+	 xc+zvpZHHUSzGkT0flbQqZL9ieGl8b+uzPPuF2VHa+3kuRUOROtGtgvQA3jVUPEyvWRkk
+	 WSFfJauRudbCVUDapD7xsUOJg/VSZC2mBREuU+tLY6796rK8vb//UMuNH4XspXjazjNSj
+	 2Zkmic8HyiccphVBeeSrXIiP105frJFka9F5ccYNv/HroM/5oTdyLcQPM5udLd0Bra1BH
+	 cU0Koc2TYEWN+Xf1+iuS1dhJVYk4OEXqaYuLEuQ/ZtgnATQIv1BGDxF+EEdfGXvZL9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="I/f1BdmW";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PyVhNo+9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BC8606C000;
-	Sat,  7 Nov 2026 15:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B63606A334;
+	Sat,  7 Nov 2026 15:21:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I/f1BdmW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A128A1F0089F;
-	Sat,  7 Nov 2026 15:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PyVhNo+9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E6D1F0089F;
+	Sat,  7 Nov 2026 15:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064886;
-	bh=zdO61LGIliVNbX3uDHQUywyW6m2xvmo9OyQQjBILk+8=;
+	s=korg; t=1794064889;
+	bh=U78I90RbgYuz5qRks2G0XbdznQWbQH/NPD8WGcHnSEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I/f1BdmWdT4tdgHtClB8aFykrJJRaIgMoPCk9rI98Io/36QdEbyVyeTGZz7d7QSm1
-	 TS98IunbrJn3didnsoY/v4tWwmTEWDT2IQPqHpyuhq3ph7EXt6Ins3wTEJpZ9ImHve
-	 psRah9bRTwReqHw4Fjab1t+Ws/MGA8MhQx+n+TNk=
+	b=PyVhNo+9KYGdyR+n2H1hx6uYAx0Ucq3nT+DjezjTuahEYj8RQYd69xVGouiPaPY26
+	 OI028LBqeSEIYqOTZKqf+iSxSnSu+LirKf7GAWBb9NP04hJilVf/qDPpjN+u0K4n8k
+	 +vmMxDveLDg4dVHLotw3iwzs/AcrFrys9NdBLOVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Radu Rendec <radu@rendec.net>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0790/1257] irqchip/atmel-aic[5]: Disable interrupts in the irq_pm_shutdown() callbacks
-Date: Sat,  7 Nov 2026 08:51:26 -0500
-Message-ID: <20261107135001.144293147@linuxfoundation.org>
+Subject: [PATCH 7.3 0799/1257] KVM: arm64: Move OUTSIDE_GUEST_MODE publication past context being saved
+Date: Sat,  7 Nov 2026 08:51:35 -0500
+Message-ID: <20261107135001.398529562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,76 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 0ca21fe111457c843624a835641bb490e704bb2f ]
+[ Upstream commit 1d4ce2901f1e25b06d447c0b02d105d6dd3550d8 ]
 
-irq_gc_shutdown() calls the irq_pm_shutdown() callbacks from
-syscore_shutdown() with interrupts enabled. aic_pm_shutdown() and
-aic5_pm_shutdown() take the generic chip lock with raw_spin_lock(), and
-irq_gc_eoi() takes the same lock from the interrupt handler. An
-interrupt from the chip while the lock is held spins in irq_gc_eoi()
-and hangs the reboot.
+OUTSIDE_GUEST_MODE indicates to the rest of KVM that the vcpu has
+exited. So far, this is set as soon as we return from the notional
+hypervisor (which with VHE is just a function call away).
 
-Lockdep reports this on every reboot of a SAM9X75 Curiosity board:
+However, code that uses OUTSIDE_GUEST_MODE as a synchronisation point
+relies on the vcpu state to have been written back to the in-memory
+structures. Clearly, this is not what is happening.
 
-  WARNING: inconsistent lock state
-  inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage.
-  busybox/101 [HC0[0]:SC0[0]:HE1:SE1] takes:
-  c1c2b434 (&gc->lock){?.-.}-{2:2}, at: aic5_pm_shutdown+0x34/0xd8
-  {IN-HARDIRQ-W} state was registered at:
-    ...
-    irq_gc_eoi+0x28/0x60
-    handle_fasteoi_irq+0x120/0x214
-  ...
-   aic5_pm_shutdown from irq_gc_shutdown+0x4c/0x58
-   irq_gc_shutdown from syscore_shutdown+0x5c/0x9c
-   syscore_shutdown from kernel_restart+0x34/0x78
-   kernel_restart from sys_reboot+0x180/0x25c
+Move the publication of OUTSIDE_GUEST_MODE to the point where the state
+is actually written, and give this write release semantics to ensure the
+correct ordering.
 
-Use the irqsave guard, as
-commit 33517881ede7 ("irqchip/brcmstb-l2: Use _irqsave locking variants in non-interrupt code")
-did for brcmstb-l2.
-
-Fixes: b1479ebb7720 ("irqchip: atmel-aic: Add atmel AIC/AIC5 drivers")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: LLM
-Reviewed-by: Radu Rendec <radu@rendec.net>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260926004124.88221-1-kmehltretter@gmail.com
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261015100539.1011760-3-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-atmel-aic.c  | 2 +-
- drivers/irqchip/irq-atmel-aic5.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/arm.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-atmel-aic.c b/drivers/irqchip/irq-atmel-aic.c
-index 1dcc52760ecae..4a7935e75e4dd 100644
---- a/drivers/irqchip/irq-atmel-aic.c
-+++ b/drivers/irqchip/irq-atmel-aic.c
-@@ -123,7 +123,7 @@ static void aic_pm_shutdown(struct irq_data *d)
- {
- 	struct irq_chip_generic *gc = irq_data_get_irq_chip_data(d);
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 73706464d2653..7ce9f3bfa7fff 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1334,13 +1334,13 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 		smp_store_mb(vcpu->mode, IN_GUEST_MODE);
  
--	guard(raw_spinlock)(&gc->lock);
-+	guard(raw_spinlock_irqsave)(&gc->lock);
- 	irq_reg_writel(gc, 0xffffffff, AT91_AIC_IDCR);
- 	irq_reg_writel(gc, 0xffffffff, AT91_AIC_ICCR);
- }
-diff --git a/drivers/irqchip/irq-atmel-aic5.c b/drivers/irqchip/irq-atmel-aic5.c
-index 1f14b401f71d0..07a317ed06ef4 100644
---- a/drivers/irqchip/irq-atmel-aic5.c
-+++ b/drivers/irqchip/irq-atmel-aic5.c
-@@ -217,7 +217,7 @@ static void aic5_pm_shutdown(struct irq_data *d)
- 	struct irq_chip_generic *gc = irq_data_get_irq_chip_data(d);
- 	int i;
+ 		if (ret <= 0 || kvm_vcpu_exit_request(vcpu, &ret)) {
+-			vcpu->mode = OUTSIDE_GUEST_MODE;
+ 			isb(); /* Ensure work in x_flush_hwstate is committed */
+ 			if (kvm_vcpu_has_pmu(vcpu))
+ 				kvm_pmu_sync_hwstate(vcpu);
+ 			if (unlikely(!irqchip_in_kernel(vcpu->kvm)))
+ 				kvm_timer_sync_user(vcpu);
+ 			kvm_vgic_sync_hwstate(vcpu);
++			smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
+ 			local_irq_enable();
+ 			preempt_enable();
+ 			continue;
+@@ -1356,7 +1356,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
  
--	guard(raw_spinlock)(&bgc->lock);
-+	guard(raw_spinlock_irqsave)(&bgc->lock);
- 	for (i = 0; i < dgc->irqs_per_chip; i++) {
- 		irq_reg_writel(bgc, i + gc->irq_base, AT91_AIC5_SSR);
- 		irq_reg_writel(bgc, 1, AT91_AIC5_IDCR);
+ 		ret = kvm_arm_vcpu_enter_exit(vcpu);
+ 
+-		vcpu->mode = OUTSIDE_GUEST_MODE;
+ 		vcpu->stat.exits++;
+ 		/*
+ 		 * Back from guest
+@@ -1390,6 +1389,13 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 
+ 		kvm_arch_vcpu_ctxsync_fp(vcpu);
+ 
++		/*
++		 * The state that was pushed into the CPU on entering
++		 * the guest has been synchronised back, let's
++		 * advertise we're outside of the guest.
++		 */
++		smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
++
+ 		/*
+ 		 * We must ensure that any pending interrupts are taken before
+ 		 * we exit guest timing so that timer ticks are accounted as
 -- 
 2.53.0
 
