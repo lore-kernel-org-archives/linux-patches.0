@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061725;
-	b=zfeNH+ijtoZiqNjMdVL2Bh+eaC6i84zJ+zH8U00f1RULdhQ1gg6rLkiuKYF0tAAONHQX
-	 RbbL++joU0uV/JpPdwkqKNFcRoez2rLm72MSh32Hpif9hNohsFGbPeaNPYLesX35K3pr9
-	 lQEAgW5n9DZof/ZS2YZVtw5KYJ+gZMCYnduZFfzRQeuBIgaJ3ZqCkA3VD3SEd5DvLegSL
-	 Mu2uxSbXd4XAdi/JAmG8nbRVdzDoTMfoAEICR5bdJnhduvwEBEbp/2KGp2x0A1BvApe2J
-	 fcFhCNwFZywoSDUT1zL1lLUCFTNvDCdBrNLDOurMQ40lMbfgqgQntJircJH0WWQQMBw==
+	t=1794061727;
+	b=D0aMI6hpjPxOpcj8CvitxP8pft0tGB/NlKttlARwLjuRXI8yGIR0IhL71xRKrVG4k0Xh
+	 5NUs2xCMIlvaP8IFftjTSyJOaUbjbCIHtlxrsp0gCb9NDrftIJ+LrSI3MNl+mN641yQQP
+	 K6MEOJQtEn+NzcoX71JDOk+0K2TmSlpAFfOjmsUdrCFv4FS74pl6aB+jtWBqJ+w0RB+JT
+	 bavb0Fb9uFY4UpWuJkt78Qb2y/22IrupuBnzfz47BE2DPAKpZ+SRThZtTFXHZLtecE0ll
+	 4joGooCjPeWMRsxXuukoWdP7uopOMiWvtlsvsM4rLQ+pTR/YvfpZ6Apb5Q3MK6PPT3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061725;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061727;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QBWuy5xPwi27breLHISAeI0xqQPqlRRXJkRb+TTmDyY=;
-	b=GRsSiOAPLetQ1tKvXkXY0bq0wTygduK7nB6et9QY4XO/6lWAmFpofk2MYlvwLNCSs8pH
-	 v/vMveZcn7TnsoDjjaoGq7lXRsAi60wuRcx6Nq5ZRlwpNq1JWeerXKAMgKzl33MQKazg7
-	 KI0chIdPlw7GpfFrNvt0m1kvuS+b2asZRy9pzE8lQMgnKkXZD5fRObvMss3lIIqjiPYpt
-	 W6f6a232T/qQko8Qu9PQ85xOOAkjNVLQyn5tTDWqzokUQgziv4qS40T0VKHbOmPddIiab
-	 zJzIBX0a2b4qJxKIXZMMf176qTPYqE7R55ohCuLvg/NC57ZWeDODX/rrG4a6eDKgxXw==
+	bh=UDlr7kQOYSAgq8jWldG8eXjRo8q1V9mHUt1agHjvMEo=;
+	b=Ohdoz1SjZIkyjrznuD2eJ2ytDD2B9dH6UwONcHg1T5Az4d9CI0Koe0zlFu9QoOgdx0su
+	 JsaXsEfcJLlESBtP6O4v2qEo0eEx/fJAVLTbuU4m/xJVCUdi/ap70QZtqUMhXM+0pva9u
+	 DAJ89L2mjnPqC36RfKGEW7RZ3xFQo08arQFHjr9kPBbyG1043nViawBtliT701vyI+8Lc
+	 TsRmIQ7R8JdFl2dJMOPYOVc/7qfMfZABPGZ6QxP2/uMMIzCSn33NxTuCuSct3aV20yfX8
+	 iTwK1uKRrm3GmwoCSWvSYKd9r6K6dO0jsss4Q1YNE1bzSozKKD6b8BvOP9X+W/flxcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eeqZpRMB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ufr79oFB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D615606A32E;
-	Sat,  7 Nov 2026 14:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D04606A326;
+	Sat,  7 Nov 2026 14:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eeqZpRMB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472FB1F008A1;
-	Sat,  7 Nov 2026 14:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ufr79oFB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750731F0089F;
+	Sat,  7 Nov 2026 14:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061725;
-	bh=QBWuy5xPwi27breLHISAeI0xqQPqlRRXJkRb+TTmDyY=;
+	s=korg; t=1794061726;
+	bh=UDlr7kQOYSAgq8jWldG8eXjRo8q1V9mHUt1agHjvMEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eeqZpRMBmhEI0Q24dsxaPYjNWUuM6HhchgW+6Ca+Wm5FdJy2AIHysTpzA/FNxMIEN
-	 LnrK7FCsHDtCh5uNk+lhvS/h79pOmUuuQX0VJtS+K+dKUZNFTBXRnG9til3qjCeZxC
-	 g3jo6PcbTflnDPsBVad6dGL+TBCiTSbtREyOLkh0=
+	b=Ufr79oFBIEr4xI3Zlbgct7LFUlvYTn3anlLOHTx+ojo998syoF2/WXt2S4iTvpR+D
+	 QIQCI+LQAvoWGVo/9blBt3ewqD97jxQAPA0mKtWaOTXYVUSsJNbrl3iOOFXzrMqtX2
+	 pXjgpmCEb/ym6+veM0BmFlnQCq+obVTzYl4twNig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0769/1536] nfsd: honour client-provided attributes for NFS4_CREATE_EXCLUSIVE4_1
-Date: Sat,  7 Nov 2026 08:46:25 -0500
-Message-ID: <20261107135019.132503589@linuxfoundation.org>
+Subject: [PATCH 6.12 0770/1536] NFSD: map fh_verify() status codes for NFS_ACLv3 replies
+Date: Sat,  7 Nov 2026 08:46:26 -0500
+Message-ID: <20261107135019.159663851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,43 +67,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Chuck Lever <cel@kernel.org>
 
-commit ddfabbc7840891e09cd500ab97c9cd36b650ec24 upstream.
+commit b1eb9f1aea88a0d7ec8116a70c33b7b31ad0a3eb upstream.
 
-When a file is created with a v4.1 OPEN which requests
-NFS4_CREATE_EXCLUSIVE4_1, the request can include attributes to be set.
-However when the mtime/atime are set to hold the verifier, the other
-ia_valid flags are cleared, so no attributes requested by the client are
-used.
+The NFS_ACLv3 protocol shares its status code space with NFSv3,
+which has NFS3ERR_BADHANDLE but no NFSERR_NOFILEHANDLE. An
+NFS_ACLv3 GETACL or SETACL request that carries an empty file
+handle gets a reply with status 10020, a value the client cannot
+interpret.
 
-This code was originally written for NFSv3 where NFS3_CREATE_EXCLUSIVE
-never includes attributes.  When it was updated for v4.1, the fact that an
-exclusive create CAN include attributes was not handled properly.
+Commit 1459ad57673b ("nfsd: Move error code mapping to per-version
+proc code.") made fh_verify() return nfserr_nofilehandle for an
+empty handle regardless of protocol version. The NFSv3 procedures
+gained nfsd3_map_status() in exchange, but the NFS_ACLv3 procedures
+did not, so the unmapped status reaches the encoder.
 
-Fixes: ac6721a13e5b ("nfsd41: make sure nfs server process OPEN with EXCLUSIVE4_1 correctly")
+Add the same mapping to the NFS_ACLv3 procedures.
+
+Fixes: 1459ad57673b ("nfsd: Move error code mapping to per-version proc code.")
 Cc: stable@vger.kernel.org
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: NeilBrown <neil@brown.name>
-Link: https://patch.msgid.link/20260717093001.1972119-2-neilb@ownmail.net
+Link: https://patch.msgid.link/20260916004240.141975-2-cel@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs3acl.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -359,8 +359,8 @@ nfsd4_create_file(struct svc_rqst *rqstp
- 	if ((iap->ia_valid & ATTR_SIZE) && (iap->ia_size == 0))
- 		iap->ia_valid &= ~ATTR_SIZE;
- 	if (nfsd4_create_is_exclusive(open->op_createmode)) {
--		iap->ia_valid = ATTR_MTIME | ATTR_ATIME |
--				ATTR_MTIME_SET|ATTR_ATIME_SET;
-+		iap->ia_valid |= ATTR_MTIME | ATTR_ATIME |
-+				 ATTR_MTIME_SET|ATTR_ATIME_SET;
- 		iap->ia_mtime.tv_sec = v_mtime;
- 		iap->ia_atime.tv_sec = v_atime;
- 		iap->ia_mtime.tv_nsec = 0;
+--- a/fs/nfsd/nfs3acl.c
++++ b/fs/nfsd/nfs3acl.c
+@@ -13,6 +13,19 @@
+ #include "xdr3.h"
+ #include "vfs.h"
+ 
++static __be32 nfsd3_map_status(__be32 status)
++{
++	switch (status) {
++	case nfserr_nofilehandle:
++		status = nfserr_badhandle;
++		break;
++	case nfserr_wrongsec:
++		status = nfserr_acces;
++		break;
++	}
++	return status;
++}
++
+ /*
+  * NULL call.
+  */
+@@ -71,6 +84,7 @@ static __be32 nfsd3_proc_getacl(struct s
+ 
+ 	/* resp->acl_{access,default} are released in nfs3svc_release_getacl. */
+ out:
++	resp->status = nfsd3_map_status(resp->status);
+ 	return rpc_success;
+ 
+ fail:
+@@ -124,6 +138,7 @@ out_errno:
+ 	resp->status = nfserrno(error);
+ out:
+ 	/* argp->acl_{access,default} are released in nfs3svc_release_setacl. */
++	resp->status = nfsd3_map_status(resp->status);
+ 	return rpc_success;
+ }
+ 
 
 
