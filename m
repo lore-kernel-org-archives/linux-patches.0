@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065463;
-	b=gt+8CTdwpF2NLYiH1NurreCB0nTlNkJuPOVOlRwbbD1ii2GGf8SnnO52Ed5BIvKOF/te
-	 /BvOB1Et00KX0/2Nv1zS58L55+YwtQqeagVqBM5O2L8bhO5nHp5JjDXBbL861/8DDFspP
-	 j1wUBDLyCZrPiSX3BFQjJHCJPIxzW4h1Ayw0MwYR0QkhZaM8negKUxC7iZc/bMl0v8OO/
-	 oFhlecKJYKv0i7gIvbmYeicSfQL4LzrSczWOhm5pYyEwsD8m+tg9ohedIdfosOk1X5GTE
-	 iJOOw8cLCFLH1XuCFkQe8lS8NP6IONG8TWFDYY95oYDO+JQeuUsfMnStflhtwlaPT7g==
+	t=1794065464;
+	b=IlkWAZh9L/8OSaywT2DppvSIBG5g7dUWDcgfnXmdrwT9MSzwKkDapZlOKIbpoVL4YWRX
+	 kTdgkqLGB1JGKBIJUwk75aOfZWVc716HoC2nZtuoICmYX+n7sFykq3+7mgPWtY3wEbXF/
+	 bOt/CX2nsmTVOEKCtOPtRsz8UAQq8FjCHj1PGJILQMyhZn3lhv9jPeXLDmyaDxvazZsGC
+	 ZgBn4ubQlDQmQyWbCwgJG6/po/G+dzLuINL1ucMlWI6D11VkDhJonFbKV7El+9DaFedf4
+	 QgJPUnTRiyHV1eHfI92+av8TYphOn2gcCSR7uqLqiS+JoAWeGhUJN6t0XrqTBUOjdXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065463;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065464;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ADQ54xGN145jRe1Z7+0WAWJJwKChsf6SyvC6IJQxpWE=;
-	b=fjEpQPuHSsZo+cQn33dUZ7iKZdaDnTaWYGUJ+01+AUzuSmowMnsoGVnMCqJd+a7q6YMM
-	 eURgpzm4TU2EF/gjr1oI1claZXf0fRY5xIxgkYrRUBu/GJe6W0A+MVmTTmTVc9zeuSNQ9
-	 sDL5RHp46jaBJajMPoNeNW6TEkiZa+75p1sTwW+4wPCfjvEbkDYo5p5/nFhOcKWdovcP3
-	 h36S8GE+BZP7SmZTUMlG2q3EabZn8Gx8gZGRl7Z4/yogdxd4AsT6BDevHSmOSIkvoHaf0
-	 6c+u8jQTGp+RDTpOLbpq4Pz7stytb39Xsl9bgAk+lsU8sEl538ud4wgDKnVXiO4Thjw==
+	bh=V6LgQzGQIqUFxfeCAEwgSIkJqMSpRshJ/yG9cVkhdUk=;
+	b=Ks/Tbksx63AwVWB6klJmRp2x8BwAuauCBhBVQAHJ3MyMyET/4mduVECZq/4+e+dIhGk3
+	 4VpfaBaO7ojwgoyBLxC0QBf9gTzn3zn3UNUIXCeabPgxYHzPiO3wXcvLC8rnYiQ4l2ZL2
+	 nbC4ex/kndSMRzXhH78Q+tDpRo5KZBfLfTXpBMMgjsvWABs015y4kolM1LAL+qYIzlhjx
+	 v5FHR4j/vDZZtZgoD/4eHJ5EW5y0lqyj6bzPsjpi55TTYEq8MavlyRgIwzxKW3ICSM/fg
+	 /PNc3/kOgq889RbiFQ3Xklr/YWaR3RVHPmRi+E48qPhfPrCU6lT0rsEfbXzEQoxHbGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BGWttjvc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0L9JFv5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6B6606A32C;
-	Sat,  7 Nov 2026 15:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665EA606A335;
+	Sat,  7 Nov 2026 15:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BGWttjvc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C6D1F0089F;
-	Sat,  7 Nov 2026 15:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0L9JFv5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8091F0089F;
+	Sat,  7 Nov 2026 15:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065462;
-	bh=ADQ54xGN145jRe1Z7+0WAWJJwKChsf6SyvC6IJQxpWE=;
+	s=korg; t=1794065464;
+	bh=V6LgQzGQIqUFxfeCAEwgSIkJqMSpRshJ/yG9cVkhdUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BGWttjvc8gcX3Ie8slk5k756gT8vD+PmXvLfr7cyp+eiOgviox7Jj2rRX9EfCgVxR
-	 75XWMDf49YBrKWTdasqQm6B/V0zNP3q7sysko0ozOsy/1CXaL+qxduLrgnClfCQpbj
-	 SvYjtMOQcjS9iEneiLaXkApE4/2qH7qU3ouVECJg=
+	b=g0L9JFv5DrCs6z1JZgDWrVOxMKDe8cKWGNGYB55vJGBJb7b02HOTXamA31eEfZh5P
+	 Rc/WLLXCyHaEt0Zq84Z+foUNYmJK6xsodnZczYS66sSKCczdbT/lYYAPHOGx1GVeei
+	 pBfHSyVdCp13dpADXWlvskZkwzoN0rezed3jVO0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1160/1257] ixgbe: reserve TX timestamp after skb preparation
-Date: Sat,  7 Nov 2026 08:57:36 -0500
-Message-ID: <20261107135011.234739962@linuxfoundation.org>
+Subject: [PATCH 7.3 1125/1257] ceph: Fix xattr buffer leak in __send_cap()
+Date: Sat,  7 Nov 2026 08:57:01 -0500
+Message-ID: <20261107135010.306822614@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,101 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit f75062536e2d45ee182828f0e47e0124be2fdc8d ]
+[ Upstream commit e51cf76e7275d1bb5ad2d529bb00feade632dadc ]
 
-ixgbe_xmit_frame_ring() takes an extra skb reference with skb_get()
-for the pending TX timestamp before preparing the skb for transmit.
-Several of the following steps may need to reallocate the skb head:
+__prep_cap() takes a reference on the xattr blob via ceph_buffer_get()
+and also grabs a reference to the old xattr blob returned by
+__ceph_build_xattrs_blob(). These references are normally dropped in
+__send_cap() after the cap message has been sent, but when ceph_msg_new()
+fails, __send_cap() requeues the cap and returns early without dropping
+them, leaking both buffers on every allocation failure.
 
-- ixgbe_tso() calls skb_cow_head(), which reaches pskb_expand_head()
-  when the header is cloned (e.g. a packet tap holds a clone).
-- ixgbe_tx_csum() falls back to skb_checksum_help() for unsupported
-  checksum offsets, which can call pskb_expand_head() through
-  skb_ensure_writable().
-- With DCB and a software VLAN tag, skb_cow_head() is called to
-  rewrite the VLAN priority.
+Release arg->old_xattr_buf and arg->xattr_buf on the ceph_msg_new()
+failure path before returning.
 
-pskb_expand_head() used to BUG() on shared skbs. Since commit
-c7d8bc3dd511 ("net: skbuff: don't BUG() on bad arguments to
-pskb_expand_head()") it returns -EINVAL instead, so these packets
-are dropped (TSO, DCB) or sent with an unfinished checksum
-(skb_checksum_help() errors are ignored by ixgbe_tx_csum()).
-
-Reserve the TX timestamp right before ixgbe_tx_map(), after all skb
-preparation, as i40e and ice already do. The timestamp request
-remains covered on the FCoE path, and the cleanup on ixgbe_tx_map()
-failure is unchanged.
-
-Fixes: 891dc0821d20 ("ixgbe: Add ptp work item to poll for the Tx timestamp")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://patch.msgid.link/20261026082035.335770-1-edumazet@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 16d68903f56a ("ceph: break up send_cap_msg")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_main.c | 40 +++++++++++--------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ fs/ceph/caps.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-index f91856498eb2d..b9496f0bee131 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -9444,23 +9444,6 @@ netdev_tx_t ixgbe_xmit_frame_ring(struct sk_buff *skb,
+diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
+index 86e195c5fd325..4cedbdd1d4033 100644
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -1569,6 +1569,8 @@ static void __send_cap(struct cap_msg_args *arg, struct ceph_inode_info *ci)
+ 		spin_lock(&ci->i_ceph_lock);
+ 		__cap_delay_requeue(arg->session->s_mdsc, ci);
+ 		spin_unlock(&ci->i_ceph_lock);
++		ceph_buffer_put(arg->old_xattr_buf);
++		ceph_buffer_put(arg->xattr_buf);
+ 		return;
  	}
- 	protocol = vlan_get_protocol(skb);
- 
--	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) &&
--	    adapter->ptp_clock) {
--		if (adapter->tstamp_config.tx_type == HWTSTAMP_TX_ON &&
--		    !test_and_set_bit_lock(__IXGBE_PTP_TX_IN_PROGRESS,
--					   &adapter->state)) {
--			skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
--			tx_flags |= IXGBE_TX_FLAGS_TSTAMP;
--
--			/* schedule check for Tx timestamp */
--			adapter->ptp_tx_skb = skb_get(skb);
--			adapter->ptp_tx_start = jiffies;
--			schedule_work(&adapter->ptp_tx_work);
--		} else {
--			adapter->tx_hwtstamp_skipped++;
--		}
--	}
--
- #ifdef CONFIG_PCI_IOV
- 	/*
- 	 * Use the l2switch_enable flag - would be false if the DMA
-@@ -9525,6 +9508,29 @@ netdev_tx_t ixgbe_xmit_frame_ring(struct sk_buff *skb,
- #ifdef IXGBE_FCOE
- xmit_fcoe:
- #endif /* IXGBE_FCOE */
-+	/* Reserve the Tx timestamp only after all skb preparation:
-+	 * skb_get() makes the skb shared, and pskb_expand_head()
-+	 * (reached from skb_cow_head() or skb_checksum_help())
-+	 * refuses shared skbs.
-+	 */
-+	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) &&
-+	    adapter->ptp_clock) {
-+		if (adapter->tstamp_config.tx_type == HWTSTAMP_TX_ON &&
-+		    !test_and_set_bit_lock(__IXGBE_PTP_TX_IN_PROGRESS,
-+					   &adapter->state)) {
-+			skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
-+			tx_flags |= IXGBE_TX_FLAGS_TSTAMP;
-+			first->tx_flags |= IXGBE_TX_FLAGS_TSTAMP;
-+
-+			/* schedule check for Tx timestamp */
-+			adapter->ptp_tx_skb = skb_get(skb);
-+			adapter->ptp_tx_start = jiffies;
-+			schedule_work(&adapter->ptp_tx_work);
-+		} else {
-+			adapter->tx_hwtstamp_skipped++;
-+		}
-+	}
-+
- 	if (ixgbe_tx_map(tx_ring, first, hdr_len))
- 		goto cleanup_tx_timestamp;
  
 -- 
 2.53.0
