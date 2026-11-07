@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063851;
-	b=4quky1QnW1goD0FRsq+9TKUbXQQIRMLqrVQ+12AQEwgMf27oo4O+eqo6SXXyYGgvOtaT
-	 yp0sDa2fTF7vZ8qyROARsZRJ/BikGz+O7IvcY3wH/RDUC7aiCd+5SJWkBnf8eX1PG6NTX
-	 /pTJZN46dx6VGznwNEdmGZ3ELQyVsMIeH/++YTbjsOI+0CuE8bY1baBV1IL1UBKMv9Xhh
-	 vo7rXEwnYkD3rzaaqqkHSfQKte1rH/nj6EP2eGiJW1Fj7gfkrqbMfYIIfGGGmu7tnDU3W
-	 F3FVCbJwKzMciM7CuThwf9XA6xE7MVoV2lAUjLaftg8Kprrw9o6KpOPHuiAy/BoYtPA==
+	t=1794063853;
+	b=aqnHezTN6enJEEjLvePP9G3BUzNETUaEd33DpdvvNCaxYNO2ALon+Wx/QP0Nw/MM1k2a
+	 R2iX5SxKpryUUqSjOMzL11IaKTdKcF68ATAjneRWH+pxEoLr3ERHafiH2BiDMvFpVjVeM
+	 7WX8y/HyFo+GUy+fJPIyWd4XkQKCack8frKAydraU63lavSXYG6BGMcHc11tRdzNKvwpg
+	 lUhupBnc/Ve0D6ah4h+Iv+jnwqtGpDXd8cbWyqb9jkInhe/SMN48GnA7ygMmuqBecdnqB
+	 jjo22bweAX7KdQgSzpJl1eUvj00aduc4QLEaUfbIiCgyakPVu1gGOcWriIRIvwUS0+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063851;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063853;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q7AncIuv2aTF9efxI4uC4XcMAEGa9qMs/9IrNUUmbqs=;
-	b=1Q+5amVKytKUeIci4aigiUv0U7zDSbytL6mC8rkAnF+RE0EIPlh1yIqrqi2rto++gi0L
-	 pJaCVkvH0QLK8C9csr6wgXte2GBteGqlu0hR/gNPPidtLwJ1K36ssS3MvrF/DyEiMCCnc
-	 TCx0M+TYOxZR/7jn4KvyIGM2XzwnKoTZ7aMlUTS1iDkh6lfWCQcCx+U3PPV9sPeM5yiR7
-	 sjdzd3H+qxf1XTx6SfDL8uyT1b6jnJDpcFYcvDXXeTeodQxaUrWUmQYqiZqfJorLD69V0
-	 tyJ6RjE8tvXdA21lbDpnLRONqAONMcpt1Iajyt1f0YiicPoJ+9wENBzly+frz8QbFyw==
+	bh=ZDQD99cL0wlNfsNUdQ8DJdG8XNiCVCWauTB/018+NKU=;
+	b=g0cXDBHKtjwMTqu8fpBikEgT5A+whV+TsMseNnnTEF52mYpcumPZYRrAqIornGDVgKd0
+	 h+7tqGfro9twv5GYybd60WnbZvThWeQ2fmpAM/IqOQTtyC1tumsPSrIxmx/oSQ8mlIP+f
+	 NvfOBKG37g6Uc1+Uh/yXvXIrajbK+cjNI6wDGQWLyBAqXa589IzqV33bVKLfdmXAxQqPc
+	 1gmhpEzOHd9UpMC7YqNkYkqqyUleaq7nm4UeKnvyxpEjWCjkn/TebmHp+NVS3GSCkvDOG
+	 Qsf/PAuM+I1MDC0Yx4Vcbmy8MntuYyKDPvINlQfp2UiTPw4c4gCSobhiqlEtzaj+vlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I7IHvbyE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6nf2QMZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3AA606A9EE;
-	Sat,  7 Nov 2026 15:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C265B606C034;
+	Sat,  7 Nov 2026 15:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I7IHvbyE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06601F008A1;
-	Sat,  7 Nov 2026 15:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6nf2QMZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF6E1F0089F;
+	Sat,  7 Nov 2026 15:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063851;
-	bh=q7AncIuv2aTF9efxI4uC4XcMAEGa9qMs/9IrNUUmbqs=;
+	s=korg; t=1794063852;
+	bh=ZDQD99cL0wlNfsNUdQ8DJdG8XNiCVCWauTB/018+NKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7IHvbyEb3wX+r4S2Ec7b9d2cfgNdnQ9eOXksnnvqiAPic2sD0o8oJwgT+wgc5FNY
-	 RyVDwiaag60okG0VG/AzNnBp7yTTWPa7rabdSbgD526JOxlknduLc19ITB6LNTRlXJ
-	 Iag5c/r55vOnJZv+HdG6X3FbXyUTd0az/U8yfZG0=
+	b=u6nf2QMZTZOCzwrlG1PGJxKGRgQAm6nEibXayN1PywlCOnyUT9XO7a8siVhTJqGY/
+	 pr+jZgdeBIe57kvO5B+spqLD9b13xVAZ9pcWI472FQRMUayBXfLZSfhhdReMc0RFY+
+	 XqkvBJdV6q50xGs6WLrPYzRBPqmV9JuxX5SnpOlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Alexander <opensource@inspiredexperts.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0061/1257] platform/x86: int3472: Increase handshake GPIO delay to 200 ms
-Date: Sat,  7 Nov 2026 08:39:17 -0500
-Message-ID: <20261107134941.086207273@linuxfoundation.org>
+Subject: [PATCH 7.3 0044/1257] soc: qcom: geni-se: Fix fw_end computed before round-up; propagate size to caller
+Date: Sat,  7 Nov 2026 08:39:00 -0500
+Message-ID: <20261107134940.626438233@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,76 +69,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <johannes.goede@oss.qualcomm.com>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-[ Upstream commit 844982d3b99340c21dd2125f44e1ad04ace6a38e ]
+[ Upstream commit d1750c530e9b9b75c8d1b29d3c76e052a049f51f ]
 
-There have been several reports of the sensor not properly powering on,
-on laptops where an INT3472 handshake GPIO is used. Both with ov08x40 and
-hi556 sensors.
+fw_end was computed from the raw fw_size_in_items, before the odd-word
+round-up. A segment with an odd word count could pass the bounds check
+at the unrounded value but then be copied one word past the validated
+limit. Move fw_end (and the cfg_{idx,val}_end) calculations to after
+the round-up so they always reflect the true copy extent.
 
-Testing has shown that a delay of 200 ms is necessary in some cases.
-The handshake GPIO is typically used to signal an extra bridge or other IC
-with that IC running the full sensor power sequence based on the handshake
-signal and also possible controlling I2C pass-through.
+The caller geni_load_se_fw() re-read hdr->fw_size_in_items for the
+memcpy_toio() length, bypassing the validated and rounded value
+established by geni_find_protocol_fw(). Add a fw_size_out output
+parameter and use it in the caller.
 
-It seems that in some cases that extra IC takes up to 200 ms to before
-the sensor is fully powered up and ready for I2C communication.
-
-With the default handshake signal delay increased to 200 ms the quirk to
-increase it to 45 ms for the ov08x40 is no longer necessary and is actually
-undesirable since some ov08x40 setups also need the longer delay, drop it.
-
-Fixes: 30359c239ba8 ("platform/x86: int3472: Increase ov08x40 handshake GPIO delay to 45 ms")
-Closes: https://lore.kernel.org/platform-driver-x86/20260816204247.2844986-1-opensource@inspiredexperts.com/
-Reported-by: James Alexander <opensource@inspiredexperts.com>
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2333331
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2333647
+Fixes: d4bf06592ad6 ("soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux subsystem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260821-fix-write-to-read-only-firmware-buffer-v3-3-43e6a3abd651@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/int3472/discrete.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/soc/qcom/qcom-geni-se.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/int3472/discrete.c b/drivers/platform/x86/intel/int3472/discrete.c
-index 9cd4f78875abf..6bc0ab3e8d1f4 100644
---- a/drivers/platform/x86/intel/int3472/discrete.c
-+++ b/drivers/platform/x86/intel/int3472/discrete.c
-@@ -15,6 +15,7 @@
- #include <linux/platform_data/x86/int3472.h>
- #include <linux/platform_device.h>
- #include <linux/string_choices.h>
-+#include <linux/time64.h>
- #include <linux/uuid.h>
+diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+index 54c0a66d6dd6f..11ca8223fbcd6 100644
+--- a/drivers/soc/qcom/qcom-geni-se.c
++++ b/drivers/soc/qcom/qcom-geni-se.c
+@@ -1230,6 +1230,8 @@ EXPORT_SYMBOL_GPL(geni_se_resources_init);
+  * @se: Pointer to the serial engine structure.
+  * @fw: Pointer to the firmware image.
+  * @protocol: Expected serial engine protocol type.
++ * @fw_size_out: Non-NULL output parameter; receives the rounded, validated
++ *               firmware word count on success.
+  *
+  * Identifies the appropriate firmware image or configuration required for a
+  * specific communication protocol instance running on a Qualcomm GENI
+@@ -1239,7 +1241,8 @@ EXPORT_SYMBOL_GPL(geni_se_resources_init);
+  * Return: pointer to a valid 'struct se_fw_hdr' if found, or NULL otherwise.
+  */
+ static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct firmware *fw,
+-					       enum geni_se_protocol_type protocol)
++					       enum geni_se_protocol_type protocol,
++					       u32 *fw_size_out)
+ {
+ 	struct device *dev = se->dev;
+ 	const struct elf32_hdr *ehdr;
+@@ -1289,11 +1292,6 @@ static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct
  
- /*
-@@ -178,13 +179,6 @@ static const struct int3472_gpio_map int3472_gpio_map[] = {
- 		.type_to = INT3472_GPIO_TYPE_RESET,
- 		.con_id = "enable",
- 	},
--	{	/* ov08x40's handshake pin needs a 45 ms delay on some HP laptops */
--		.hids = (const char * const[]) { "OVTI08F4", NULL },
--		.type_from = INT3472_GPIO_TYPE_HANDSHAKE,
--		.type_to = INT3472_GPIO_TYPE_HANDSHAKE,
--		.con_id = "dvdd",
--		.enable_time_us = 45 * USEC_PER_MSEC,
--	},
- 	{	/* Sensors which expect "vana" as con_id for power enable */
- 		.hids = power_enable_hids_vana,
- 		.type_from = INT3472_GPIO_TYPE_POWER_ENABLE,
-@@ -273,8 +267,8 @@ static void int3472_get_con_id_and_polarity(struct int3472_discrete_device *int3
- 	case INT3472_GPIO_TYPE_HANDSHAKE:
- 		*con_id = "dvdd";
- 		*gpio_flags = GPIO_ACTIVE_HIGH;
--		/* Setups using a handshake pin need 25 ms enable delay */
--		*enable_time_us = 25 * USEC_PER_MSEC;
-+		/* Powering up the sensor through the handshake pin takes up to 200 ms */
-+		*enable_time_us = 200 * USEC_PER_MSEC;
- 		break;
- 	default:
- 		*con_id = "unknown";
+ 		sefw = (struct se_fw_hdr *)(fw->data + phdr->p_offset);
+ 		fw_size = le16_to_cpu(sefw->fw_size_in_items);
+-		fw_end = le16_to_cpu(sefw->fw_offset) + fw_size * sizeof(u32);
+-		cfg_idx_end = le16_to_cpu(sefw->cfg_idx_offset) +
+-			      le16_to_cpu(sefw->cfg_size_in_items) * sizeof(u8);
+-		cfg_val_end = le16_to_cpu(sefw->cfg_val_offset) +
+-			      le16_to_cpu(sefw->cfg_size_in_items) * sizeof(u32);
+ 
+ 		if (le32_to_cpu(sefw->magic) != SE_MAGIC_NUM || le32_to_cpu(sefw->version) != 1)
+ 			continue;
+@@ -1306,6 +1304,12 @@ static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct
+ 			sefw->fw_size_in_items = cpu_to_le16(fw_size);
+ 		}
+ 
++		fw_end = le16_to_cpu(sefw->fw_offset) + fw_size * sizeof(u32);
++		cfg_idx_end = le16_to_cpu(sefw->cfg_idx_offset) +
++			      le16_to_cpu(sefw->cfg_size_in_items) * sizeof(u8);
++		cfg_val_end = le16_to_cpu(sefw->cfg_val_offset) +
++			      le16_to_cpu(sefw->cfg_size_in_items) * sizeof(u32);
++
+ 		prog_ram_depth = FIELD_GET(PROG_RAM_DEPTH_MSK,
+ 					   readl_relaxed(se->base + SE_HW_PARAM_2));
+ 		if (fw_size >= prog_ram_depth) {
+@@ -1320,6 +1324,7 @@ static struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const struct
+ 			continue;
+ 		}
+ 
++		*fw_size_out = fw_size;
+ 		return sefw;
+ 	}
+ 
+@@ -1430,11 +1435,11 @@ static int geni_load_se_fw(struct geni_se *se, const struct firmware *fw,
+ {
+ 	const u32 *fw_data, *cfg_val_arr;
+ 	const u8 *cfg_idx_arr;
+-	u32 i, reg_value;
++	u32 i, reg_value, fw_size_in_items;
+ 	int ret;
+ 	struct se_fw_hdr *hdr;
+ 
+-	hdr = geni_find_protocol_fw(se, fw, protocol);
++	hdr = geni_find_protocol_fw(se, fw, protocol, &fw_size_in_items);
+ 	if (!hdr)
+ 		return -EINVAL;
+ 
+@@ -1511,7 +1516,7 @@ static int geni_load_se_fw(struct geni_se *se, const struct firmware *fw,
+ 
+ 	/* Program RAM address space. */
+ 	memcpy_toio(se->base + SE_GENI_CFG_RAMN, fw_data,
+-		    le16_to_cpu(hdr->fw_size_in_items) * sizeof(u32));
++		    fw_size_in_items * sizeof(u32));
+ 
+ 	/* Put default values on GENI's output pads. */
+ 	writel_relaxed(0x1, se->base + GENI_FORCE_DEFAULT_REG);
 -- 
 2.53.0
 
