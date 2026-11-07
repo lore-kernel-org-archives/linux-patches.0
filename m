@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065280;
-	b=4EDCYuleFt1Y4MyihzZlNsVmHo/pfY6v5+q6xzDYdRXK1G6o8bYK/kIKErMd/ckkgr2L
-	 N1gkOFY7uQuc7eJNFZvYoxHnuRvsqukm5AlT5EYXq70i9hVAokzepwd9pJvB5zeNYuGQ4
-	 gblRLO14A1hjPuivkOJPsdYzJ6mJYW3QHy/bsu9yvu0uUIhn1Dy3uILRG/ss1dgPJ8/A6
-	 jn+5wlwKr/b+M3vRJKwcIGqhjj1EpnOjtiREm7pW9sXRIPTkhkZPJquAaM0yFQsCXQD+L
-	 mKihQvoko4J8IF5cPR+8PfSgZBP8Gu3egFZUvCtqc+wCK4dSreXuuDz3qaHTEgc/pfw==
+	t=1794065281;
+	b=WwPuVJV3McEzbEo6T1Fx8orqom/8ltLvUkX8f2Ctt+T9bDW6DVYGPk6tFmUQaL/eYcrH
+	 WczCt1P0OHx+7RpkguSamrmuMXWcw4x5GJ2K7VySCj+9CXBp9Z6czkG5pSqa/0FNORJTZ
+	 RYMVlOCfRfDkRmT8H9bndXAJX7pF90Eb6WuJUUGUigM5mDWH+RrLzJBovtPW2HEOQskE4
+	 RxjG3jvYpXxlTRResea+frxwizouTuifekQkvX3S9tRQclSKDhtCsRrCAvovjgjeD83PX
+	 Z4cGHukQBm84/sKjjmPSuu0NVpoi5DdP7TouAzUrCQIIVAZ+lA/DViYkJRjTIqzq8ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uodxvcuAI96auqYC9IiN3ID+/mOmM426EKo57OSW/ig=;
-	b=IMFrnYxDGqWMD2b+uYxNxqfnV88GY6xAzONVLwstkYrQbQOVkYbKuWo9oiBx5yOaoHpU
-	 30+YDSW4zLzBxDPyuV2qUERJNlykLmdjAYAJUDG5hGkkgDJj/MuqCdWLbd1UU6Z85uVEz
-	 Hv6YwFkixyGTSSZtT8dLI3T023QIR0TMXxkJuLWxBegaHnxjnh0e+JhtYAP2gsTZpoXL5
-	 bS28h42maB93pKv3LYErnDfjkt82NafunNekfVWC3ydhfs+oxpEZtDowLhI2DVe2iFxAl
-	 WyX7ddrD3Ww1n0t7S06Zrpb5V4ViK7A/H4cHTxJ6XUi78l5tChLGQCSsm0oqorXAACg==
+	bh=vA3mtX6KS0nbSawHYZocFisBRYSwYkXm52ks3eB4OUY=;
+	b=jyQpyljvrjNwVZmTSZAXRZKEKLm41b5bvCVUGuDinvMdgxqFV9sS2D2gM3pZKYPGjga9
+	 9pn1Raia/n4o4owUPA2GVnNY6fUnSi3Ab26p06Njp6IVI3/OZMIJPcUJIg+/bvaVtEovX
+	 vfM9AAuF7B0bDUwq8vZ4MUtqq8AFFXH5zIROfYGDPlCgte194V4U7WI+EndKCwmElx++I
+	 1jvmpTN25l2ot2JqBCfAKRdB/FUdnMqHHRoL6pjBc2cveDz6xmh8CCeauft3S4XMENZKk
+	 COMpd1wSXsuWqJyW2eRmQMeo4GZKjXRMpwXb2zQdBFAMYK0JQPvNEHXnBNZe8+ks67g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jgyh7WGX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="o/eUMdHc";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D2E606A331;
-	Sat,  7 Nov 2026 15:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7609606A32C;
+	Sat,  7 Nov 2026 15:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jgyh7WGX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3535E1F008A6;
-	Sat,  7 Nov 2026 15:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o/eUMdHc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965EB1F008A1;
+	Sat,  7 Nov 2026 15:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065279;
-	bh=uodxvcuAI96auqYC9IiN3ID+/mOmM426EKo57OSW/ig=;
+	s=korg; t=1794065280;
+	bh=vA3mtX6KS0nbSawHYZocFisBRYSwYkXm52ks3eB4OUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jgyh7WGX0AjlVChh04IzlMTKXdM9pGJI701DeNBPLZeO4TSEkTO7TmpskkfJkQR0A
-	 Ta4Gl7L1gt2cyD6b+vLlrL4GTNQDFkzvQnoT7PPhZRSq94KrgOl0M5h4GCGEalv5vY
-	 1YGXtyF1Nw5F+vGVSpVLMhAlep+cVLhr3EhvpDKA=
+	b=o/eUMdHcdJc4sXNWxooaHDHmpdXqp0DI1XMCYTDb0lXs4sJVZ86ntZJgeWI6SILbY
+	 GukWagAC7JFB2Uk0GERzgtBGZZx5S4POLh1sCkDohp1QnLI4KBr0mZMr6X9ltNMB/s
+	 8B+5o94PAlKe3w3t2W103pZ87qCrlbWa7Ur5FmLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	Thomas Gleixner <tglx@kernel.org>,
+	shaos <shawnq1@163.com>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1041/1257] posix-cpu-timers: Fix pid refcount leak in do_cpu_nanosleep() signal path
-Date: Sat,  7 Nov 2026 08:55:37 -0500
-Message-ID: <20261107135008.065869390@linuxfoundation.org>
+Subject: [PATCH 7.3 1042/1257] timekeeping: Require permission to set auxiliary clocks
+Date: Sat,  7 Nov 2026 08:55:38 -0500
+Message-ID: <20261107135008.092375963@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,56 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 8ccd731b63a0183ca2b0e18f3ca15864b3f37eda ]
+[ Upstream commit 524d95c8a2000cba6cb80a173d76cb746c561244 ]
 
-do_cpu_nanosleep() sleeps on a temporary k_itimer whose reference on the
-target's struct pid is taken by posix_cpu_timer_create() and dropped by
-posix_cpu_timer_del(). When a signal ends the sleep, the timer is
-disarmed with posix_cpu_timer_set(), but posix_cpu_timer_del() is only
-called for a result of 0 or TIMER_RETRY. If the target thread or process
-has exited in the meantime, timer_lock_sighand() finds no task,
-posix_cpu_timer_set() returns -ESRCH and the pid reference is leaked.
+The generic clock_settime() entry point delegates permission checks to
+each clock-specific callback. aux_clock_set() does not perform one. Once
+an administrator enables an auxiliary clock, any local process can
+therefore change the global clock offset.
 
-An unprivileged user can trigger this: sleep on the CPU clock of a
-thread, let that thread exit, then signal the sleeper. Each round leaks
-one struct pid. Repeating it exhausts unreclaimable slab memory
-within minutes:
+A test process running as UID and GID 65534 with no effective, permitted,
+inheritable, or ambient capabilities set CLOCK_AUX0 successfully, and a
+separate process observed the new value. The same process was denied by
+clock_adjtime(). An AppArmor profile denying sys_time also blocked
+CLOCK_REALTIME changes but did not see the auxiliary clock operation.
 
-  Out of memory: Killed process 150 (poc) total-vm:789292kB, anon-rss:484kB
-  Kernel panic - not syncing: System is deadlocked on memory
+Call security_settime64() before mutating the auxiliary timekeeper. This
+matches CLOCK_REALTIME's permission model, enforces initial-user-namespace
+CAP_SYS_TIME, and gives LSMs the settime hook while preserving authorized
+clock changes.
 
-Fix this by also calling posix_cpu_timer_del() on -ESRCH. With the
-target gone, the deletion is safe. It finds no task either and only
-drops the pid reference.
-
-Fixes: e26d70d271ee ("posix-timers: Cleanup reaped target handling")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Fixes: 60ecc26ec5af ("timekeeping: Provide time setter for auxiliary clocks")
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: shaos <shawnq1@163.com>
+Acked-by: John Stultz <jstultz@google.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261012235149.66531-1-cenzhang@linux.microsoft.com
+Link: https://patch.msgid.link/20261019080324.4147815-1-4ncienth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-cpu-timers.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/time/timekeeping.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/time/posix-cpu-timers.c b/kernel/time/posix-cpu-timers.c
-index 0bf4fcd969c87..65cc612046d18 100644
---- a/kernel/time/posix-cpu-timers.c
-+++ b/kernel/time/posix-cpu-timers.c
-@@ -1600,8 +1600,8 @@ static int do_cpu_nanosleep(const clockid_t which_clock, int flags,
- 		 */
- 		expires = cpu_timer_getexpires(&timer.it.cpu);
- 		error = posix_cpu_timer_set(&timer, 0, &zero_it, &it);
--		if (!error) {
--			/* Timer is now unarmed, deletion can not fail. */
-+		if (error != TIMER_RETRY) {
-+			/* Unarmed or target gone (-ESRCH), deletion can not fail. */
- 			posix_cpu_timer_del(&timer);
- 		} else {
- 			while (error == TIMER_RETRY) {
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index ea2e6e55f37bf..1b342825bd8f1 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -14,6 +14,7 @@
+ #include <linux/random.h>
+ #include <linux/sched/clock.h>
+ #include <linux/sched/loadavg.h>
++#include <linux/security.h>
+ #include <linux/static_key.h>
+ #include <linux/stop_machine.h>
+ #include <linux/syscore_ops.h>
+@@ -3215,11 +3216,15 @@ static int aux_clock_set(const clockid_t id, const struct timespec64 *tnew)
+ 	struct tk_data *aux_tkd = aux_get_tk_data(id);
+ 	struct timekeeper *aux_tks;
+ 	ktime_t tnow, nsecs;
++	int ret;
+ 
+ 	if (!timespec64_valid_settod(tnew))
+ 		return -EINVAL;
+ 	if (!aux_tkd)
+ 		return -ENODEV;
++	ret = security_settime64(tnew, NULL);
++	if (ret)
++		return ret;
+ 
+ 	aux_tks = &aux_tkd->shadow_timekeeper;
+ 
 -- 
 2.53.0
 
