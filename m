@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064509;
-	b=iNQdLkmfOkJ3+QiORB50Lin7mW9TPL/jGZ4uNEzbYwy4qS4R0VNum6eczCAqwNZRCC82
-	 Czjaf6kWGIQqcz6daxHcMM2ol1QPcT3zHxmji8TMGA+XhghtKZ9zgCZWo/GauU4zfcAR+
-	 PtgSfm2zAuNzeH05nf/i1LPOKW4PgFSI1QggdILwWJ3fmI8A9JbrNONjgJ3XhUvc9o+yO
-	 QwVmJ/QNNMk/Jho4Jh0p1SoSo00MIlYtRpE9Pg3wSCN/zDJLfV8e4rc8ZkUlB7dyTKs5D
-	 MHQBTHvq1ZXJ8VDJkYjspHGHnRVdlfDH8LorKfkxvZQsaBlZWkT1hB0vJZ3cgg58epw==
+	t=1794064510;
+	b=ZXjEkb3DJgEF9rrmXgoyEodxjpGuoqj36ldcq8U+eRac0NmTCYEJFXtOr1LKVd6w3LFM
+	 f+kRTKCPvVqOwvI2muYTblhyO8ImbOkI5DY8SoOGigI1/SdO04PD4+XM4Znj8ojiuteYJ
+	 xbuDdkk7f8s9AxBL1ArK9C9H2a3L1By8RNRIaSi/ZgdlDagQsW/8DVmi9z/0Ix2hokc+1
+	 UHv8EMMCg84IsHC0nMicpcQWQE9p2YxWDpvjT9cu4JCq1RBKjK111fZXd2oYWJjbwUN36
+	 rI3UNxbytiltzeZRokRbJnaCAw8p1PJpDZcSmzSx3Pmabm3F34Su/gtXb+NyleUXSgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064509;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064510;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qpIaKGC8GvuQlyr/IKzaCsJARzCkDkf+VrxjTasKA8k=;
-	b=NDeXY4vXPhMjwcyezb0wzvUBCEFPyPTpGqIlMblIXwqEW9rWvHDLfzWCfCQ1LLclu2yz
-	 5ywhz1AXeXX4W+GkRtmjWaZBBHhIHhEWiTYYy4xi24CTdPafK6J/9BxiQWGH1Fae16mnP
-	 HcRSs28z9ibCirwQYm3Pr/RLGwixyAFXNwRiup65kYd1L4jkCaPFiNqjvZeAoOUXtkOnR
-	 QkbXek1ld6WLGFYH4tj4SDmeGfOnLc77TIjSsTMfI81a+gBb3T4QrggmQOT6AljJvfccN
-	 jJwJtILN50h68sKrFqWTC3piZFVWBY6MvExM3D+sz+IyuJvkyBuKgRm91PyMmu3dUzw==
+	bh=4sQYqe6FfEyaZsvqXlKeC3kLUgIEY5hCRxX775nhzAw=;
+	b=2oPZER1n+HL+FY4wlESCb1vhz12Vwgz2kcnxd4BEegOvfNc1MZZ2oH/18LA4+YJeVVMf
+	 /thTz4uzdPzCfvIqDS2ToQFL4Le86nxEdxh4WZPJpfmSIh2LrUAwmKAvLzrBcMuVdhB0Y
+	 D8i/ode9Z/dLW+3eLrxlx6vKfYgcOFC+gLW5cDJMM6HgnLlOs+4tUK9xrKUVmkakq9qTE
+	 lIAInER+z/u3NZ/15S4sPMOtEoAJOAx+N+yNLsGrvIQJ+doIOmcfneh1cK8TyKTQbKLuU
+	 m5ICdSYXD/VEZLUaMHx4dSASOZR2Y9k2ewaGLUzKxZMNkm18mnRC8t6XYS8KpJOx/zQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TuGZbS9G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CAtA0qxy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25ADF606CE4F;
-	Sat,  7 Nov 2026 15:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FAD606CE57;
+	Sat,  7 Nov 2026 15:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TuGZbS9G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF561F0089F;
-	Sat,  7 Nov 2026 15:15:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CAtA0qxy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45AD1F0089F;
+	Sat,  7 Nov 2026 15:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064508;
-	bh=qpIaKGC8GvuQlyr/IKzaCsJARzCkDkf+VrxjTasKA8k=;
+	s=korg; t=1794064509;
+	bh=4sQYqe6FfEyaZsvqXlKeC3kLUgIEY5hCRxX775nhzAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TuGZbS9GOas4eNGztuiV/Mhk7HG1g+Cdqajxlz0PONfjj/nYItTH9+kZZvQUAdjyi
-	 NZLf4HQFtD9QPJRjxSHu0N6YVeoLQDHWshQfL+XKfhoOzUl1H2zXBCavYzFp/gh/Ra
-	 IsL9WYpaHlxiBQKW1gK6xz+2B9OuPbjYerOoSkCM=
+	b=CAtA0qxyXm+iCS0ISgFb3BtmuRDuE/hThv53cUEAX45cisKBmlzBdiFmP0xuZUz1H
+	 3LMqbHKtBTwrEt+xxyIsFL6OdVub+R1R1ZF6sBsj8H+qCcPdu8o717eM7I300YxVbZ
+	 XFIxUg3Urv3AyH9GS1ffWd7eiqVtCkkG8MUQiOWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Usama Arif <usamaarif642@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0540/1257] wifi: mt76: take rcu_read_lock in the USB/SDIO tx completion path
-Date: Sat,  7 Nov 2026 08:47:16 -0500
-Message-ID: <20261107134954.315119597@linuxfoundation.org>
+Subject: [PATCH 7.3 0505/1257] mm/damon/paddr: respect folio end for DAMOS_STAT
+Date: Sat,  7 Nov 2026 08:46:41 -0500
+Message-ID: <20261107134953.374556799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,88 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit a7871a7ae5a8625f0ba0a89454ac734c383dd538 ]
+[ Upstream commit ac733f921d4fc02da70a98b175a6055a206b2a36 ]
 
-The USB and SDIO completion path reads a station pointer that RCU
-protects, without holding the read lock. Lockdep catches it on the
-first association:
+The function for applying DAMOS_STAT in DAMON physical address space
+operation set (paddr), namely damon_pa_stat(), applies DAMOS filters to
+folios of the given region.  For that, it gets folios of addresses in the
+region.  It starts from the region start address and advances the address
+by the size of the folio of the address until it goes out of the region.
+If the start address is in the middle of a large folio, and if the next
+folios are small, some of the next folios could be skipped.  Fix the issue
+by advancing the address to exactly the start address of the next folio.
 
-  mt76.h:1305 suspicious rcu_dereference_check() usage!
-  no locks held by mt76-usb-status/1254.
-   mt7925_usb_sdio_tx_complete_skb+0x119/0x130 [mt7925_common]
-   mt76_queue_tx_complete+0x27/0x60 [mt76]
-   mt76u_status_worker+0xed/0x1e0 [mt76_usb]
+The user impact is that the DAMOS_STAT-based page level monitoring results
+become inaccurate.  Since the page level monitoring is supposed to provide
+relatively high precision, this is definitely a problem.  It is arguably
+not critical since it is only monitoring quality degradation.
 
-  mt7925/mac.c:856 suspicious rcu_dereference_check() usage!
-   mt7925_tx_check_aggr.part.0+0xc2/0xe0 [mt7925_common]
-   mt7925_usb_sdio_tx_complete_skb+0xa0/0x130 [mt7925_common]
-
-mt7921 does the same, and warns once instead of twice because its
-aggregation check reads the default link directly. The DMA path makes
-the same reads but completes from softirq, so it stays quiet.
-
-Take the read lock around the lookup and the check.
-
-Tested on 7.2-rc5 with lockdep, fresh module load per arm, 4000
-packets each and no change to the link:
-
-                             splats before   after
-    MT7925  Netgear A9000          2           0
-    MT7921  Alfa                   1           0
-    mt7921e same kernel            0           0
-
-Fixes: dc66a129adf1 ("wifi: mt76: add a wrapper for wcid access with validation")
-Fixes: c22769de2509 ("wifi: mt76: mt7925u: use connac3 tx aggr check in tx complete")
-Cc: stable@vger.kernel.org
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20261003233056.94497-1-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/20260901131850.98037-3-sj@kernel.org
+Fixes: bdbe1d7bc325 ("mm/damon/paddr: increment pa_stat damon address range by folio size")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: <stable@vger.kernel.org> # 6.14.x
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mac.c | 3 +++
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 3 +++
- 2 files changed, 6 insertions(+)
+ mm/damon/paddr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-index e69978184f68c..ad1352ddf1fcc 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-@@ -831,11 +831,14 @@ void mt7921_usb_sdio_tx_complete_skb(struct mt76_dev *mdev,
- 	u16 idx;
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 5c6c3a597fd0b..2ab7b3842701e 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -379,7 +379,7 @@ static unsigned long damon_pa_stat(struct damon_region *r,
  
- 	idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
-+
-+	rcu_read_lock();
- 	wcid = __mt76_wcid_ptr(mdev, idx);
- 	sta = wcid_to_sta(wcid);
- 
- 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
- 		mt76_connac2_tx_check_aggr(sta, txwi);
-+	rcu_read_unlock();
- 
- 	skb_pull(e->skb, headroom);
- 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-index 3b82c9de26c5b..2e34e950e111d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -1688,11 +1688,14 @@ void mt7925_usb_sdio_tx_complete_skb(struct mt76_dev *mdev,
- 	u16 idx;
- 
- 	idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
-+
-+	rcu_read_lock();
- 	wcid = __mt76_wcid_ptr(mdev, idx);
- 	sta = wcid_to_sta(wcid);
- 
- 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
- 		mt7925_tx_check_aggr(sta, e->skb, wcid);
-+	rcu_read_unlock();
- 
- 	skb_pull(e->skb, headroom);
- 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
+ 		if (!damos_pa_filter_out(s, folio))
+ 			*sz_filter_passed += folio_size(folio) / addr_unit;
+-		addr += folio_size(folio);
++		addr = PFN_PHYS(folio_pfn(folio)) + folio_size(folio);
+ 		folio_put(folio);
+ 	}
+ 	s->last_applied = folio;
 -- 
 2.53.0
 
