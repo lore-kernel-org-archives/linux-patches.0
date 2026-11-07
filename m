@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062943;
-	b=VjVj1oK4RU9xqi+SbQfODz+rD75fTdYzny2qrt8FpMd43TNclyRf9roxfZ8564jFJI6H
-	 UEqmf+Leq6OfQbVMKLyexl7wkLGthXjRqC3Im2ef64/u1DUqkrgkzz+vFFe96MMuicZ/Y
-	 +bMnzJZhh3ul0NVuHgEVXMg2ew25KXJzQdXsda7DJyo6G3z8aZzdWBtczPRBLxEa8svp1
-	 jM0CbNfV4Nai40xrmk/jiB3WAlr9Fsr2GNy9ByU/ywqWRYCaCIEuWhKigcchSRRvdRNSu
-	 itTcr4kk5fjrwjUoyQ1WU0ITZT5Wzsg7dYtMjq15RYtI1aGZrYQhienD6awhPj0OECw==
+	t=1794062944;
+	b=hFTJa/NTaXeIWzGBAviSElpCmSWrXO6xBoxvXWjZ4MDRXr5fFhIPB8sFEvthubWdy00o
+	 0Aba0ludvJr5D1A2E2xp2SAtgkfnQvwYK4spBUME5rGBS4t6YhDgE1uNEjhz/pzd4Ra4i
+	 ++xxfrTcBHFHhOhkHyPIL5t2U9slN9zhnopcGK2Dt0sx1KoaZmc8scTdBsynFeMYErGf0
+	 isu92MoeILSMtk2Xffx0G0r9q3TDJvsqcNGgmGk0fBtvMrhdlDfOd6X4qwcksBKzhmPsP
+	 K2WFNgGtmB+vcbQCWFpx3DxV50c12WtiQaLfLxrYjsP/9Z6MaunFkqzrpzVwP2/+c9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062944;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lo8uZVLGLtyxZLrX225UsHdS3nPHnrvP1rF1awii4Jk=;
-	b=ozG9SpXsevEIgYzUFo6SkSpqBaxOYpylTYfpqAhsSAsbWSWxy2LnGDykoQKKGiJowsX+
-	 Hh3fg/JQZwx+jXJ46TtnGCKxa1PH/nA8Vo7yhKWGUfljUysNS+80OZdjoTQZ0xqAx6Ujn
-	 URrm93ag93nPviW7bmffujgPEnQqleB2NtUNe3ikb0tb0YnNWpCnJoKb/H9qZqnsbSjNN
-	 SuPHv74Rwh13qp9qUH+LiYfAkab/qAkF+ci+RH9gXOqucqO/QGr5uO3wYo+452ZK/VEdP
-	 jFMNrn1opKllDXBu0WCKVpgS0Ren3evWsd5SjnrlIrQxvMXj282/V3r0mJifg/dqxVw==
+	bh=qItGR8KpPUh/+jyHrgII8jRfKtSYoTWN3YELX0NJjyM=;
+	b=CKYlZ0vhbBHR9uyAOVnywl04AwaKR9YEGwG4pbgCr+NK5qKgyDNVALdTLi5EOWfeRGyg
+	 pfr/wEFAN1hBiQPC7J5nxTyiWq5bLxBWO4KVW6xYYLFTaKrC7FaZb+5i2DQDWogBnI0oD
+	 0xgRNkFTSjCU9IwV8yKm8mCFMGh5VmGY5c36Jcy5yUqY3J6kl7O65ydKxM6t866DbJ1Md
+	 nlkl3fRU9JeMU0rijOjQKWfzrzKyX3SfEjAtSZBaKK7auK9F8hCEbkjpwtFwYrGV5s3+c
+	 oFcuDkrOTU5dHwGB/BZfVyST+nrS70GbetZiUE4+WE14+tEnfgrarwolEodBmejv6Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d/hUKeO5";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ohgyKJgh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6495606A33E;
-	Sat,  7 Nov 2026 14:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C179606A330;
+	Sat,  7 Nov 2026 14:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d/hUKeO5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D04A1F0089F;
-	Sat,  7 Nov 2026 14:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ohgyKJgh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAFA1F0089F;
+	Sat,  7 Nov 2026 14:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062942;
-	bh=Lo8uZVLGLtyxZLrX225UsHdS3nPHnrvP1rF1awii4Jk=;
+	s=korg; t=1794062944;
+	bh=qItGR8KpPUh/+jyHrgII8jRfKtSYoTWN3YELX0NJjyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d/hUKeO5xKNzPnLMyXOmZoYs+3SzuJqxFdKKFXWPDK/DJwadOL00HZxTOC8Cgf1AF
-	 GTzTManYIpnDWQxO3p+wK9MWbh4gOdMvAa+IbMDHbOF5aUgEG4yQ5EDsXfGzFZo3bd
-	 wyj73ImAm4VbEkQFiFsijKdGT801iOIdlcZvv54k=
+	b=ohgyKJghwsGHMz67cN4I6F1XJr+yjYY/YMW4wXsa7SkWfsBhTGYYKu3uoo2ISB5hE
+	 IQ/RqHnOofNCaWfQYs4gwMl1pSTmseYLdk/cFL0vpSaHxQDusT6fH0FesoYvSvd3X9
+	 FvLE26SqigbvxIk9fhfPV7ZD/szh8x+tYrQ0QYXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cf896de36144391bcde1@syzkaller.appspotmail.com,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Rohinthan P <rokinthanp03@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 209/869] media: v4l2-ctrls: do nothing if controls[0] == NULL in cluster functions
-Date: Sat,  7 Nov 2026 08:48:11 -0500
-Message-ID: <20261107134859.060229637@linuxfoundation.org>
+Subject: [PATCH 6.18 210/869] media: marvell: manage the MMP camera clock provider
+Date: Sat,  7 Nov 2026 08:48:12 -0500
+Message-ID: <20261107134859.088134344@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,98 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohinthan P <rokinthanp03@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 9ff738f93084351ed6e818d4d58679a9e9083a8d ]
+[ Upstream commit 9887716132d6c3c58cc67841dfb441c5a4a0d209 ]
 
-The V4L2 control framework is designed to allow drivers to instantiate
-controls and clusters without checking for errors after each call,
-checking hdl->error only once at the end.
+mmpcam_probe() registers an OF clock provider before requesting the IRQ.
+Neither a later probe failure nor driver removal unregisters that provider,
+although the underlying clock is registered with devm_clk_register().
+This leaves the provider referring to a clock whose lifetime has ended.
 
-However, if allocating the master control (controls[0]) fails, e.g. due to
-memory allocation failure, v4l2_ctrl_cluster() triggers a WARNING:
+Use devm_of_clk_add_hw_provider() with the existing mclk_hw so the provider
+is unregistered before the managed clock and camera storage are released.
 
-      ncontrols == 0 || controls[0] == NULL
-      WARNING: drivers/media/v4l2-core/v4l2-ctrls-core.c:2525 at v4l2_ctrl_cluster
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Additionally, v4l2_ctrl_auto_cluster() attempts to dereference
-master->minimum without checking if controls[0] is NULL, leading to a
-NULL pointer dereference when master control creation fails.
-
-Update both v4l2_ctrl_cluster() and v4l2_ctrl_auto_cluster() to silently
-return if controls[0] is NULL, preserving the design that control
-creation errors are caught at the end when the driver checks hdl->error.
-Also update function documentation in include/media/v4l2-ctrls.h.
-
-Fixes: 71c689dc2e73 ("media: v4l2-ctrls: split up into four source files")
+Fixes: 81a409bfd551 ("media: marvell-ccic: provide a clock for the sensor")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+cf896de36144391bcde1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cf896de36144391bcde1
-Suggested-by: Hans Verkuil <hverkuil@kernel.org>
-Signed-off-by: Rohinthan P <rokinthanp03@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[hverkuil: simplified the v4l2_ctrl_auto_cluster code a bit]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c | 12 ++++++++++--
- include/media/v4l2-ctrls.h                |  6 ++++++
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/media/platform/marvell/mmp-driver.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-ctrls-core.c b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-index 02e2ae93d1764..579787f0be351 100644
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -2431,7 +2431,10 @@ void v4l2_ctrl_cluster(unsigned ncontrols, struct v4l2_ctrl **controls)
- 	int i;
+diff --git a/drivers/media/platform/marvell/mmp-driver.c b/drivers/media/platform/marvell/mmp-driver.c
+index d3da7ebb4a2be..4c31b62751a12 100644
+--- a/drivers/media/platform/marvell/mmp-driver.c
++++ b/drivers/media/platform/marvell/mmp-driver.c
+@@ -25,6 +25,7 @@
+ #include <linux/list.h>
+ #include <linux/pm.h>
+ #include <linux/clk.h>
++#include <linux/clk-provider.h>
  
- 	/* The first control is the master control and it must not be NULL */
--	if (WARN_ON(ncontrols == 0 || controls[0] == NULL))
-+	if (WARN_ON(ncontrols == 0))
-+		return;
-+
-+	if (!controls[0])
- 		return;
+ #include "mcam-core.h"
  
- 	for (i = 0; i < ncontrols; i++) {
-@@ -2453,8 +2456,13 @@ void v4l2_ctrl_auto_cluster(unsigned ncontrols, struct v4l2_ctrl **controls,
- 	u32 flag = 0;
- 	int i;
- 
-+	if (WARN_ON(ncontrols <= 1))
-+		return;
-+
-+	if (!master)
-+		return;
-+
- 	v4l2_ctrl_cluster(ncontrols, controls);
--	WARN_ON(ncontrols <= 1);
- 	WARN_ON(manual_val < master->minimum || manual_val > master->maximum);
- 	WARN_ON(set_volatile && !has_op(master, g_volatile_ctrl));
- 	master->is_auto = true;
-diff --git a/include/media/v4l2-ctrls.h b/include/media/v4l2-ctrls.h
-index 31fc1bee3797b..b900734ee9c1c 100644
---- a/include/media/v4l2-ctrls.h
-+++ b/include/media/v4l2-ctrls.h
-@@ -834,6 +834,9 @@ bool v4l2_ctrl_radio_filter(const struct v4l2_ctrl *ctrl);
-  *
-  * @ncontrols:	The number of controls in this cluster.
-  * @controls:	The cluster control array of size @ncontrols.
-+ *
-+ *		If controls[0] is NULL, then this function does nothing and just
-+ *		returns.
-  */
- void v4l2_ctrl_cluster(unsigned int ncontrols, struct v4l2_ctrl **controls);
- 
-@@ -845,6 +848,9 @@ void v4l2_ctrl_cluster(unsigned int ncontrols, struct v4l2_ctrl **controls);
-  * @ncontrols:	The number of controls in this cluster.
-  * @controls:	The cluster control array of size @ncontrols. The first control
-  *		must be the 'auto' control (e.g. autogain, autoexposure, etc.)
-+ *
-+ *		If controls[0] is NULL, then this function does nothing and just
-+ *		returns.
-  * @manual_val: The value for the first control in the cluster that equals the
-  *		manual setting.
-  * @set_volatile: If true, then all controls except the first auto control will
+@@ -269,8 +270,8 @@ static int mmpcam_probe(struct platform_device *pdev)
+ 	/*
+ 	 * Add OF clock provider.
+ 	 */
+-	ret = of_clk_add_provider(pdev->dev.of_node, of_clk_src_simple_get,
+-								mcam->mclk);
++	ret = devm_of_clk_add_hw_provider(&pdev->dev, of_clk_hw_simple_get,
++					  &mcam->mclk_hw);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "can't add DT clock provider\n");
+ 		goto out;
 -- 
 2.53.0
 
