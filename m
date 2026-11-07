@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060832;
-	b=tOmK9mt8lYP4ST1S9Sx6lpoCU6fzS/WBO57JsmI/7/aeSb0N7UxW/2DG2uRAvc8YfMp8
-	 sNVtIR6t2uSZjn+7XRG4WPKWl7ItEsrZad5y3qDth5yKlSOeutGWsvtTz6ZNfLDOuxfVd
-	 dQVdwruv1ypnIffuiG9rFatC5XeDPWhRLWNBh3YVYsRcwT+EyZN5IIwvRJxZdOcyuo11k
-	 +Kc50Tx3uLZJNeC4IknHVE9Zta5m3G4Spsel/HTP0hysCY+LtsQZaXc/K070SmdSWMy8D
-	 2yb83Y8wPMM509sOT6IKEEOjQH96Su5jpsr7DVvFrr3Lw80snA0juVxoEyDNsKQyHmg==
+	t=1794060835;
+	b=uokArDf+c0IkqbPCEHR36QVeowlsXQemFmKNvD3qKNox8xOYaAK/83P2bsqJP0Wf2xl1
+	 ilOjDMmRym1k3EofIaxbpSxPYHgBWjCHM73yQ45sAbxUSyGL7ufc6GpVZn5JkYK1S/uVG
+	 37U1eOCMDBleF3kGKz1QZKREvcbkNWavRKpC/9ZSywkE3DaALS/Ic4ZGhxHXGJYEfdoBD
+	 mhUPLowKwOkY6o/SPi9eiR10GwbVmVW+T0pLA7uw1QTkA3ToM02PEUzvWA6RCvuwMKqAm
+	 Qv7tXs+eP0llN6SkLvbQ7NvO042m41ur3KwXcuyfnLXCS10tPhpIwjgS0Domexivk5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060832;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=iZR/BBqEPWnAGwf94IqEZieX8HcJNEFkpDWK3wpXr3U=;
-	b=yPV2yAMS1aDEVre3U4OANmGJdbUZWDbbFIfE+/OtDNMQNrgj/ThGrmS6cR2CiInJrP2T
-	 u/GU0coMm83JmZOfTPczpSC8TTnu4OMHso+/BLjhq9BlUmEq1lgMukQj8OHJko3lpp50d
-	 4Wn2SOU9139Fkk6xNIFJ3OaLJIx+oTBy8e2/LH08oEQ0o7D3j1ctFAn0EGnILVRb3XLyf
-	 GAPuFkd3DZ08GqxeFJ+proshfFQPXGCJb9V7WhuJp79Dy1j2Qd0vXnj6LHE3sFChZMAb5
-	 j4XF2yhBg4iHdG3c4sprBP9BCRbNa5FnNHNssAR7NTrMQxoohat22WZaogSjzF5wFhw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=jJFfgFgpKt7DuN6+/JH6QzB2nT3lShWMb/0rv3V9I0A=;
+	b=ww92S/9CLE/KBQ1RwzM8SwEMjmdqolBx95XldMQWqZVCbWIrX62EYlmJSSu+8fbjPhvD
+	 TNGMkgHYyMM1Y1GSXii/eUmpx0BmiHnxtPhiED6TdlRqzkDu2ZCE1/ISF9OO65ldZ0vvv
+	 LlKsiRSiVcnJyCGzKTdCZJKHFtoi3FPQ/2ZN+8aBm+tB6F8lDjeh1Rgb/6THm8Anbwifi
+	 LvXXI73/H9BGwCE3nfsM9a1ED86KkZSJyMhFNh2bXV3Seyygv0FOVBEbffwQd85t9hhgE
+	 5hscINe3L+i2kBRVN67I8goTDRmScysSDtWo6SXAnwTxTbdETDcdv90xKe/FvnfPnDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uODZmrLl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LgT50YHq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7816D606D80B;
-	Sat,  7 Nov 2026 14:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F83606A33E;
+	Sat,  7 Nov 2026 14:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uODZmrLl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87A61F008A5;
-	Sat,  7 Nov 2026 14:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LgT50YHq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F691F008A1;
+	Sat,  7 Nov 2026 14:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060832;
-	bh=iZR/BBqEPWnAGwf94IqEZieX8HcJNEFkpDWK3wpXr3U=;
+	s=korg; t=1794060834;
+	bh=jJFfgFgpKt7DuN6+/JH6QzB2nT3lShWMb/0rv3V9I0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uODZmrLljh5xMHlwB7lGNIXK6UXCJYD2W23ykIVYDo5iqKRLnsPQ/pm/zKyWy43qm
-	 xE9tjga7dupZstvFb6vrfGSsQm6aUIJDt7pxmh6xydG3MfoEqEWmS8u088lVZQ5hop
-	 5XsYUWcjFamBirY+DsGRcvAdkrawdE+FCWi0Obpg=
+	b=LgT50YHqiw+gMl44TULYbVnknfYYvdkQ09dVjo5Sj+LUzW8LRfMQYZtZyaTqZdktK
+	 F4cuVTy0qAOrD2XETvfQGbbNuWunRLVWE1LHnHG4McNbNwv25kYjIWJrH8694mUNvs
+	 xqTwMqxKr1ZAw2njEcx2JsyigjnaktErd1OFm3HE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Dmitry Osipenko <digetx@gmail.com>,
-	=?UTF-8?q?Jonas=20Schw=C3=B6bel?= <jonasschwoebel@yahoo.de>,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Gary Guo <gary@garyguo.net>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0225/1536] clk: tegra: support 48MHz clock for pll_p_out1
-Date: Sat,  7 Nov 2026 08:37:21 -0500
-Message-ID: <20261107135003.986290903@linuxfoundation.org>
+Subject: [PATCH 6.12 0226/1536] ata: ata_generic: Dont store pci_device_id
+Date: Sat,  7 Nov 2026 08:37:22 -0500
+Message-ID: <20261107135004.016712637@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -65,42 +64,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Osipenko <digetx@gmail.com>
+From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit 46e31d69a547530fbef499bde888b6bb45a1deac ]
+[ Upstream commit 4f3075f629077a8cb3d3455c794a1f4a8fc8b43e ]
 
-UEFI on Surface2 sets pll_p_out1 to 48MHz which is not supported by kernel
-and causes BUG() early on. Add 48MHz clock support for pll_p_out1.
+pci_device_id is not guaranteed to live longer than probe due to presence
+of dynamic ID. All information apart from driver_data can be easily
+retrieved from pci_dev, so just store driver_data.
 
-Acked-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
-Signed-off-by: Jonas Schwöbel <jonasschwoebel@yahoo.de>
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Acked-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20260723-pci_id_fix-v4-1-3580726844e1@garyguo.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/tegra/clk-pll.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ata/ata_generic.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/tegra/clk-pll.c b/drivers/clk/tegra/clk-pll.c
-index 100b5d9b7e26e..976feb8f41277 100644
---- a/drivers/clk/tegra/clk-pll.c
-+++ b/drivers/clk/tegra/clk-pll.c
-@@ -575,6 +575,7 @@ static int _calc_rate(struct clk_hw *hw, struct tegra_clk_pll_freq_table *cfg,
- 		break;
- 	case 9600000:
- 	case 28800000:
-+	case 48000000:
- 		/*
- 		 * PLL_P_OUT1 rate is not listed in PLLA table
- 		 */
+diff --git a/drivers/ata/ata_generic.c b/drivers/ata/ata_generic.c
+index 2f57ec00ab821..ef5e817e96b26 100644
+--- a/drivers/ata/ata_generic.c
++++ b/drivers/ata/ata_generic.c
+@@ -51,11 +51,11 @@ enum {
+ static int generic_set_mode(struct ata_link *link, struct ata_device **unused)
+ {
+ 	struct ata_port *ap = link->ap;
+-	const struct pci_device_id *id = ap->host->private_data;
++	unsigned long driver_data = (unsigned long)ap->host->private_data;
+ 	int dma_enabled = 0;
+ 	struct ata_device *dev;
+ 
+-	if (id->driver_data & ATA_GEN_FORCE_DMA) {
++	if (driver_data & ATA_GEN_FORCE_DMA) {
+ 		dma_enabled = 0xff;
+ 	} else if (ap->ioaddr.bmdma_addr) {
+ 		/* Bits 5 and 6 indicate if DMA is active on master/slave */
+@@ -206,7 +206,7 @@ static int ata_generic_init_one(struct pci_dev *dev, const struct pci_device_id
+ 			return rc;
+ 		pcim_pin_device(dev);
+ 	}
+-	return ata_pci_bmdma_init_one(dev, ppi, &generic_sht, (void *)id, 0);
++	return ata_pci_bmdma_init_one(dev, ppi, &generic_sht, (void *)id->driver_data, 0);
+ }
+ 
+ static struct pci_device_id ata_generic[] = {
 -- 
 2.53.0
 
