@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064941;
-	b=Fg+Mr8yLKK+RlubEx2Q763SjF/1GZvsV3GOrT/hHNtC3hxyGRtJ8Q5UVs99BRe7JXMjz
-	 uwjIfqe3HQNXYpPU+oP3aY3JNjFRE9/ThgZToAcx3o9u+e3CqL6RKNKClfzvBxe7EqCsP
-	 ahiyvU963Ax6+lfm051E9VHG7LgWaR3mGnLE4JYv2yTIBvms6KQtDbyXUm28Ivfc3T0Cs
-	 xyxljsVxHDcNMPLN7r3qYabDvu0SY8X/25kuxnAiQjBrtJv6cNz59DlrhOlQiismXKoX0
-	 /w70J8+knJo+xsRa5uPmLhC1qKKGUhCS1LCm3nteluqSBdmAOYTksG1HdwPpN1TeDrQ==
+	t=1794064942;
+	b=K3+VaOr7j291SRYtE7U6Qi1p90SJkrbmF7FASxTCxUbXH+Yt1IJAj44VuNsywpENXwJZ
+	 Y7lJ6tZeFJG76vumBMtm0PaHQOIOsJsLangpc2GSBHtqCS4aTd3UJp/pIjuUohIs0IE9J
+	 1E37+RnpeSJQGWMcBdi1QRCl/wW4GEhMGHUf5Z7JFD9E0fnKiRg7XtiqTYZXkZOHgBcjK
+	 QNZSLJiI8bE462NwwDpoyzqLsOA4NDW6c5+CA78FD5N1tG2sdGaELRaHQi1I0Oe4+Vvai
+	 uRA5K3LMDpcC7y4Xawh2hAEeaVRbYGqNcGfvt96USVVrrStseIGPQrnbmmfNoXZYSZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064942;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rHkLppVNw39KrN7PH2OYqah2NSdph9eV45tdQC6GuNc=;
-	b=zqkT5zFIGSN6pNKK1AJHSADQAaD9r5PEkv85zQ0ykC/adsc/ey4H/xQFkcC2tsOWtSJx
-	 f5AvGh1OXkzxc0PsGtWdvaEOq3yIw4SuhUgy7cy5s8392BLP2H1+gOSaUu87dsqnmQ6fX
-	 pi0xS64/rzqUkgiwbPLL3ZBtDjMBxiAW8GvrzrPn9i6MP+VqQUmzVk3LBzwNQHhCkk8Mi
-	 ZH8BckHrFT8IVW56LK3hNmyCvIqmFfKZ9GS85f4W+fZW9DQNZ5eH2Y+z8v/U51zLQm0dj
-	 AzvTDyDy7tq2VOxq0uyL3Kxsoee+og6ZHknedvHPvJBNAgQUbYxa0SrsnUmDjp5/jew==
+	bh=LEN1vfQYeim3ouGzD8cOh6N8JJ23ZRkqAMPbpPBz3dQ=;
+	b=kX/vZTl2Wu0951Dwk5tFIsmJ2IrUIc4W8iMtOFRBRVJ7pdxcvLDkHU6Pd1lB7MZHySDg
+	 ae6m6X38DV4EUSgZJWK9SppnXxoXCnAA3t2eKe6CcbuyHdqujUqZVka7qQcZOhsCfQ9oI
+	 Ti/4XMjveTxM2J5zoBAl7hJ00DqOR29Alpeeh8Xf7afhgfXnIjegisPqiGE+4hBbZJTWi
+	 jWIM5dzxIjo6qPt69vrvJzTL9Iou9ME07Z+R0b8bO9GitqTvchVvcR//3JmB2DKPnM6dy
+	 Yx0w3YSegOridQ9dDdaSxIzG69/EhH1E9vdNKMVTbDwHjo1Tt7kFEUuJiXLHc+f/9XQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LAyCy9nd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CHwsZ5hr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC189606A331;
-	Sat,  7 Nov 2026 15:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D971B606A331;
+	Sat,  7 Nov 2026 15:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LAyCy9nd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1531F0089F;
-	Sat,  7 Nov 2026 15:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CHwsZ5hr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850FB1F008A1;
+	Sat,  7 Nov 2026 15:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064940;
-	bh=rHkLppVNw39KrN7PH2OYqah2NSdph9eV45tdQC6GuNc=;
+	s=korg; t=1794064941;
+	bh=LEN1vfQYeim3ouGzD8cOh6N8JJ23ZRkqAMPbpPBz3dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LAyCy9nda75NSSuGHmD/gpQ9A7ZCKAP/n17H7BKDc1YAczNlnKZD2PzFGygZ3IoP+
-	 yIKposXOuOG90JjWMavhVisyB2uJI4R0aaZg8CzHKsSA7N2w3adSHpq6bJYOXTi1et
-	 AOW8IEtqif6kNKYlVLuAK/m6C/bhprYZ3sMofHzk=
+	b=CHwsZ5hrlRQaZtHxfxJ2vr9H7PITJgkqJBjfM0ctNYIJQj+DkR6oDhW4jOr2wOxdc
+	 1coii2U8EsIpj2lFgFn1MVqUPkFcPUvBaiO7hHZflS95JG5IDV8aKmk39vjcmw4WR1
+	 i78+7B8wEVHCu4nlG9PtP/Qlhthr0kHbcLh8otO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Seung Min Shin <guncraft2000@naver.com>,
+	sungbyeongchan <tjdqudcks0424@naver.com>,
+	Giovanni Vignone <gio@octane.security>,
+	Robert van Eijk <robert@octane.security>,
+	Paolo Gentry <paolo@octane.security>,
+	Shubham Antil <shubham@octane.security>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0829/1257] sctp: hold transport reference across connect wait
-Date: Sat,  7 Nov 2026 08:52:05 -0500
-Message-ID: <20261107135002.230375366@linuxfoundation.org>
+Subject: [PATCH 7.3 0830/1257] RDS/IB: validate receive fragment completions
+Date: Sat,  7 Nov 2026 08:52:06 -0500
+Message-ID: <20261107135002.256752592@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,129 +73,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seung Min Shin <guncraft2000@naver.com>
+From: Shubham Antil <shubham@octane.security>
 
-[ Upstream commit 5bef8649bb9ac4b2a014bcc227202ebd2df824be ]
+[ Upstream commit 65cf6863606b0507a7c3bd1711317e4f5d6b8b7e ]
 
-sctp_sendmsg_to_asoc() selects a transport before waiting for a new
-interleaved association to become established. sctp_wait_for_connect()
-drops the socket lock while sleeping.
+rds_ib_process_recv() accounts every receive fragment as contributing
+min(i_recv_data_rem, RDS_FRAG_SIZE) bytes, regardless of the completion
+length. When a completion is shorter than the header-declared amount,
+receive accounting can advance beyond the payload supplied by the
+completion.
 
-While the lock is dropped, backlog processing can handle a COOKIE ACK and
-an ASCONF DEL-IP that removes the selected transport. sctp_assoc_rm_peer()
-then marks the transport dead and drops its association-owned reference.
-The transport can be freed through RCU before the send path resumes.
+Only an IB_WC_RECV completion has the buffer layout expected by this
+receive path. Other successful completion opcodes must not be interpreted
+as ordinary receive completions.
 
-After the wait, the stale pointer is assigned to newly created DATA or
-I-DATA chunks and later dereferenced by sctp_outq_select_transport().
+Reject successful completions with any other opcode before processing
+their length. For ordinary receive completions, require enough payload
+to cover the amount accounted to the fragment before linking its page
+into the incoming message.
 
-Hold a reference to the selected transport across
-sctp_wait_for_connect(). After the socket lock is reacquired, abort the
-send if the transport was marked dead. Callers without a selected
-transport pass NULL and retain their existing behavior.
+This is compatible with the current transmit paths. MSG_ZEROCOPY is
+restricted to RDS/TCP, while RDS/IB copied and page-vector messages use
+full-sized non-final scatterlist entries.
 
+Found during an LLM-assisted source audit and validated under KMSAN with
+a malformed short receive completion.
+
+Reported-by: sungbyeongchan <tjdqudcks0424@naver.com>
+Closes: https://lore.kernel.org/netdev/20261006205204.1322102-1-tjdqudcks0424@naver.com/
+Reported-by: Giovanni Vignone <gio@octane.security>
+Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
+Reported-by: Robert van Eijk <robert@octane.security>
+Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
+Reported-by: Paolo Gentry <paolo@octane.security>
+Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
+Fixes: 1e23b3ee0e94 ("RDS/IB: Receive datagrams via IB")
 Cc: stable@vger.kernel.org
-Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Seung Min Shin <guncraft2000@naver.com>
-Link: https://patch.msgid.link/20261011162750.1529631-1-guncraft2000@naver.com
+Signed-off-by: Shubham Antil <shubham@octane.security>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20261013025729.40815-1-shubham@octane.security
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ net/rds/ib_recv.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 321898f22d80d..c616f1609d0cf 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -75,7 +75,8 @@ static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
- 				struct sctp_transport *transport,
- 				long *timeo_p, size_t msg_len);
- static int sctp_wait_for_packet(struct sock *sk, int *err, long *timeo_p);
--static int sctp_wait_for_connect(struct sctp_association *, long *timeo_p);
-+static int sctp_wait_for_connect(struct sctp_association *,
-+				 struct sctp_transport *, long *timeo_p);
- static int sctp_wait_for_accept(struct sock *sk, long timeo);
- static void sctp_wait_for_close(struct sock *sk, long timeo);
- static void sctp_destruct_sock(struct sock *sk);
-@@ -1245,7 +1246,7 @@ static int __sctp_connect(struct sock *sk, struct sockaddr *kaddrs,
- 		*assoc_id = asoc->assoc_id;
- 
- 	timeo = sock_sndtimeo(sk, flags & O_NONBLOCK);
--	return sctp_wait_for_connect(asoc, &timeo);
-+	return sctp_wait_for_connect(asoc, NULL, &timeo);
- 
- out_free:
- 	pr_debug("%s: took out_free path with asoc:%p kaddrs:%p err:%d\n",
-@@ -1847,7 +1848,7 @@ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
- 
- 		if (asoc->ep->intl_enable) {
- 			timeo = sock_sndtimeo(sk, 0);
--			err = sctp_wait_for_connect(asoc, &timeo);
-+			err = sctp_wait_for_connect(asoc, transport, &timeo);
- 			if (err || sk->sk_shutdown & RCV_SHUTDOWN) {
- 				err = -ESRCH;
- 				goto err;
-@@ -1890,7 +1891,7 @@ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
- 
- 	if (unlikely(wait_connect)) {
- 		timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
--		sctp_wait_for_connect(asoc, &timeo);
-+		sctp_wait_for_connect(asoc, NULL, &timeo);
+diff --git a/net/rds/ib_recv.c b/net/rds/ib_recv.c
+index bd6cb3ffaa571..aa50b85b0f994 100644
+--- a/net/rds/ib_recv.c
++++ b/net/rds/ib_recv.c
+@@ -949,6 +949,12 @@ static void rds_ib_process_recv(struct rds_connection *conn,
+ 		}
  	}
  
- 	err = msg_len;
-@@ -9390,7 +9391,9 @@ static bool sctp_writeable(const struct sock *sk)
- /* Wait for an association to go into ESTABLISHED state. If timeout is 0,
-  * returns immediately with EINPROGRESS.
-  */
--static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
-+static int sctp_wait_for_connect(struct sctp_association *asoc,
-+				 struct sctp_transport *transport,
-+				 long *timeo_p)
- {
- 	struct sock *sk = asoc->base.sk;
- 	int err = 0;
-@@ -9399,12 +9402,16 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
- 
- 	pr_debug("%s: asoc:%p, timeo:%ld\n", __func__, asoc, *timeo_p);
- 
--	/* Increment the association's refcnt.  */
-+	/* Hold references while the socket lock is dropped. */
-+	if (transport)
-+		sctp_transport_hold(transport);
- 	sctp_association_hold(asoc);
- 
- 	for (;;) {
- 		prepare_to_wait_exclusive(&asoc->wait, &wait,
- 					  TASK_INTERRUPTIBLE);
-+		if (transport && transport->dead)
-+			goto do_transport_dead;
- 		if (!*timeo_p)
- 			goto do_nonblock;
- 		if (sk->sk_shutdown & RCV_SHUTDOWN)
-@@ -9433,7 +9440,8 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
- out:
- 	finish_wait(&asoc->wait, &wait);
- 
--	/* Release the association's refcnt.  */
-+	if (transport)
-+		sctp_transport_put(transport);
- 	sctp_association_put(asoc);
- 
- 	return err;
-@@ -9452,6 +9460,10 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
- do_nonblock:
- 	err = -EINPROGRESS;
- 	goto out;
++	if (data_len < min_t(u32, ic->i_recv_data_rem, RDS_FRAG_SIZE)) {
++		rds_ib_conn_error(conn,
++				  "fragment shorter than header-declared length; forcing reconnect\n");
++		goto done;
++	}
 +
-+do_transport_dead:
-+	err = -EAGAIN;
-+	goto out;
- }
+ 	list_add_tail(&recv->r_frag->f_item, &ibinc->ii_frags);
+ 	recv->r_frag = NULL;
  
- static int sctp_wait_for_accept(struct sock *sk, long timeo)
+@@ -1004,7 +1010,12 @@ void rds_ib_recv_cqe_handler(struct rds_ib_connection *ic,
+ 	 * event is processed.
+ 	 */
+ 	if (wc->status == IB_WC_SUCCESS) {
+-		rds_ib_process_recv(conn, recv, wc->byte_len, state);
++		if (wc->opcode != IB_WC_RECV)
++			rds_ib_conn_error(conn,
++					  "recv completion had unexpected opcode %u, disconnecting and reconnecting\n",
++					  wc->opcode);
++		else
++			rds_ib_process_recv(conn, recv, wc->byte_len, state);
+ 	} else {
+ 		/* We expect errors as the qp is drained during shutdown */
+ 		if (rds_conn_up(conn) || rds_conn_connecting(conn))
 -- 
 2.53.0
 
