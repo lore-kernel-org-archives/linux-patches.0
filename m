@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060980;
-	b=pvNitFLdpEY//0e/aKJl8rXs/M12oKk4YXp8mf8AgH6nsCX2TfZHF+n+jbof11x66uPm
-	 p88cJMHSsKj6qreQqarzAQoaG7mvE6ec3+dxY925jIrVhq57y2l14V7VonjmrtKN+UG+B
-	 MraVogC803AsRAvtM6jTUz1N5K7EDEDtUHsWZCWos46Mc6ew2m/irOMCedOxh7D9+7cfr
-	 i9wNclYfxZibhBI2oahsXgqR9L/hdnxnzjewKTVuQ0k7xkrvVMohXj9mNDqhE+QV3czzU
-	 6umZqS6gETVKYBB8a3qIT2Aw33Huq3+BOdh/OTjcHQ7Mu/xD0aePngJQyGHy91oB2pA==
+	t=1794060981;
+	b=A8C1KdGY0GuUAQfXHNsRoy6/UH9EUW+4Y11MR+evXQ+rMUoAi8P3VCdov/9U6uvkbY27
+	 Tvv2Y8/65QItzopiQM+DHCwz6jh/++WvMysbAwo1dQf1Ejft+1VCataDeImb81Kukavkn
+	 0W/NHMCbkAeabiWl5jO9JN/N3/xcbyXY+HJ8t94Bl1xw8XHzpCMqUvtcjPk+PRkNdVoa6
+	 YhHCO0erZ+EgZUyVA4DTs36XIE9oUsOTLwfl473NBrt/paFq2Vc4iEcl3RmKUIHt5x4Ds
+	 gaHpvADr7kYcVnTwqhnYBe72328D6CQ57Ma3IhmtXtmSz9AepHmuOvPnezPbH6jr3fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060980;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060981;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mAcr55Rj4Vz7RWTcONmTVIJXrEkhLlpQDc4+F02ZWbY=;
-	b=X04Rp4b1deksftqLYrYpJgdfsmRCBDId9c5f0Q7nRTe2PA+VW2nlXfT5/jKAk7vhelBr
-	 dgsmqsEnbI6mooh3bKv2PCOXaiJThAY42n5/lwbsdR1mNEyrmkjoyQCAjDY+uGIlH4O2U
-	 XzGva2F0kN5PSHg5nQceZJBgfpd/9N/EeUG9+GKMW13mQ6YooKFi0NjF6gw4Ybeipru/W
-	 xRlSUrXZ0/PoDtw/ejJf2dWISyOSACZQHf56odcHbtyvS4sXDwmj4ES2casUY1Kzsm2dd
-	 F3QINV1fkoEmJ0LvB8tgltUR6lsKwUHT0OlRARowjOFsKNrrW/K+20uYcc9szhn7ihQ==
+	bh=LEhKbPF/taC0ui8BZzeKt15tlWR4nkwojDobFXdzO5w=;
+	b=WtpXAZuNbC/wolRoKP0qXdpROfFkzPhI3PGxSY+/IzNLXz6ytM2bbxsJSofYa5xRcPpa
+	 phCBfgOey+/c/mzqDV1BlrHUiZKfTb7NC9I+CK9FQknb+st9kjJFSHMUMZJYVrb50kMyJ
+	 FI2/bDq9QZxwgn8evot1EHNf1V6lbkyPwQgjQQKiPRTddAAUR8vK/6OquK4fgfmzFOXwN
+	 s3MMcbGbtUz0wJyEPVbP632dmq3A5OquIGacUz5oVm3UimaFH900R9IZ38xOcQWqe9NVF
+	 2ovmYOU99puFA6BDUijxO2EjkyPG2L6mZWwNanStHXxG5HUs/wU51PIiyaSnZcu7bug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcF1YGkz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbi8RjrE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F16606A33C;
-	Sat,  7 Nov 2026 14:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C18D606A33C;
+	Sat,  7 Nov 2026 14:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XcF1YGkz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41341F0089F;
-	Sat,  7 Nov 2026 14:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbi8RjrE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1698F1F0089F;
+	Sat,  7 Nov 2026 14:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060979;
-	bh=mAcr55Rj4Vz7RWTcONmTVIJXrEkhLlpQDc4+F02ZWbY=;
+	s=korg; t=1794060981;
+	bh=LEhKbPF/taC0ui8BZzeKt15tlWR4nkwojDobFXdzO5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XcF1YGkz6wr6z+DAIPnRVOU/zyynfl54BmpbJpcH+XGcmPYD/DcTLnyRY1ZTZQpfK
-	 NClrr9elZf2q1749FNsQCyiJ2nm/Vsns1Jyr0HO6v+nxRM2FNugA5XS2OaxMRZNG5L
-	 xe/LZESbT4VKCJNqkN8HD2IU3Vw4FFZznffaXvks=
+	b=qbi8RjrEFU+5kQnLTG683jgyJGcC2fQF67D3MFJUt/I3nunyXX7dzfJzbE/zDyVKy
+	 2Rk4A29VIn3P9DTKi3q3hkpqOQ+Sy/3LjPayxSUET9UFHd3CdZ///shcyyRxQctroF
+	 sKCsF2sFTcJsuZG4MtBe0IsumQC3o9RDsvlfQ2zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya <acharyalaxman8848@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0297/1536] Bluetooth: hci_event: fix out-of-bounds read in LE PA report reassembly
-Date: Sat,  7 Nov 2026 08:38:33 -0500
-Message-ID: <20261107135006.072323660@linuxfoundation.org>
+Subject: [PATCH 6.12 0298/1536] net: dsa: mt7530: check bus->read() error in core_rmw()
+Date: Sat,  7 Nov 2026 08:38:34 -0500
+Message-ID: <20261107135006.098212860@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,68 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya <acharyalaxman8848@gmail.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit e3643fbddb257c928c075cab05bbd929106b56ee ]
+[ Upstream commit 573d6e3afe3d01e34dc82c77bf22ca96a74d805e ]
 
-hci_le_per_adv_report_evt() is dispatched with a minimum length of
-sizeof(struct hci_ev_le_per_adv_report), which only covers the fixed
-part of the event and not the trailing data[] array:
+core_rmw() accesses the MMD core registers directly rather than
+through the regmap and has the same unchecked bus->read() as the
+one just fixed in the MDIO regmap backend: a negative errno is
+consumed as register data, modified and written back to the switch.
+Check the read and bail out like the surrounding bus accesses do.
 
-	struct hci_ev_le_per_adv_report {
-		__le16   sync_handle;
-		__u8     tx_power;
-		__u8     rssi;
-		__u8     cte_type;
-		__u8     data_status;
-		__u8     length;
-		__u8     data[];
-	} __packed;
-
-The handler notifies the ISO layer via hci_proto_connect_ind(), which
-reaches iso_connect_ind(). That function retrieves the stored event with
-hci_recv_event_data() and, while reassembling the periodic advertising
-data, does:
-
-	memcpy(hcon->le_per_adv_data + hcon->le_per_adv_data_offset,
-	       ev->data, ev->length);
-
-ev->length is taken directly from the event and is never validated
-against the amount of data the event actually carries.  A controller
-that reports a length larger than the received event therefore causes
-the memcpy() to read past the end of the event buffer.  The leaked bytes
-are stored in hcon->le_per_adv_data and can subsequently be read back
-from user space via getsockopt(BT_ISO_BASE).
-
-Validate that the event contains ev->length data bytes before it is
-consumed, mirroring the check already performed by
-hci_le_ext_adv_report_evt() and hci_le_adv_report_evt().
-
-Signed-off-by: Laxman Acharya <acharyalaxman8848@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/48bb9f0b311a9efeda2a6b24a7e05d4792393a3b.1785811140.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/dsa/mt7530.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index cbb1c3ee07525..0716b1a9ddc3f 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6490,6 +6490,13 @@ static void hci_le_per_adv_report_evt(struct hci_dev *hdev, void *data,
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 4718f1fcca6d8..d0b2b478ac22e 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -152,8 +152,12 @@ core_rmw(struct mt7530_priv *priv, u32 reg, u32 mask, u32 set)
+ 		goto err;
  
- 	bt_dev_dbg(hdev, "sync_handle 0x%4.4x", le16_to_cpu(ev->sync_handle));
- 
-+	/* The reassembly in iso_connect_ind() copies ev->length bytes from the
-+	 * stored event, so make sure the event actually carries that many data
-+	 * bytes before it is consumed.
-+	 */
-+	if (!hci_le_ev_skb_pull(hdev, skb, HCI_EV_LE_PER_ADV_REPORT, ev->length))
-+		return;
+ 	/* Read the content of the MMD's selected register */
+-	val = bus->read(bus, MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
++	ret = bus->read(bus, MT753X_CTRL_PHY_ADDR(priv->mdiodev->addr),
+ 			MII_MMD_DATA);
++	if (ret < 0)
++		goto err;
++	val = ret;
 +
- 	hci_dev_lock(hdev);
- 
- 	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, PA_LINK, &flags);
+ 	val &= ~mask;
+ 	val |= set;
+ 	/* Write the data into MMD's selected register */
 -- 
 2.53.0
 
