@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064429;
-	b=E2r20ODMx+2dO07Kf+jKex86TrMd2X0dMGnOfkXyTuKhOLfbeLybqWCAfxANkK8XnGf/
-	 O1oth0fgTrV0wjpquFXyZS24VYzsGuiRmC0EUtoJGoVKVVPDEwqNT8mfiyqxWhKnvMoqd
-	 vtrZNH/yYuU7IEOyh/hbDrSEB2k0JLx8kiflOfbHRNeOlcZ7AiKl4pi9D+R/GH1k6nYdo
-	 vS1kxdONTYIb6GGTQf1ATPSPp+eI9vNFdvrBgCy3I+J+NM8z4OoyOpKIvj4paPUasf5yJ
-	 06uyh+Iuh2FCYv4nSaWrathZofzbj8Dfwm6w1TQjz6axBwulLkLkCtZIZ5u0RoIELcA==
+	t=1794064430;
+	b=PEQr8+np1nZomSgHr/UCGCYFybB5E2GpTMcNxYQUxJQSj+5PzY9kcX/cfOEFFwvjUfhy
+	 ftR6Gfuc8t9MXvNspxNc3URrdpwwXjTbnFqFUMs0tnpN7zFuKn1BYg/7C+pa+g/00tE5O
+	 N02dFa4UBDmHAZ99dyKBoVI70HuVdiyIWtiyE7fiKjPUyRlPyrxsynSX3kc+G2p68+T6/
+	 K/GqB9Cm1tdzYClwgwDg0kd1i7Wqw4RekobkAbayhIZUOQY1X/8XZAMRx21X8iBF4r3E4
+	 +O+z3I/S8Q4RAp0aUZBY4b7+/kPyhLpsbvzI8DIFLK/yVgDaLBYCTwPhpoJEiqRqkag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064429;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064430;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9eYZWx9JuHCvuH3H4+29rheaXrMlvIFU+1OG2qUw3rY=;
-	b=4XCpY6dQzoKFcpt7dIJg3AnaIxS5/eksOwYFgSwM3maTAi3gmLLxnnZM/z6ijjzRYyrE
-	 EEULVJCB5EbkouUrGyr03QqmVm+oO9ZBXb5DUR/u2wa0StXYrKRF8u5ZX5qC7/IkBLta4
-	 yJRuL9lEMPvda+ur9Uzg3RF9c4EztIJ9VmTARxqlsyfoCWYmLsD9enuZSXFR5aiCxRrWk
-	 5Q+UeA/hO/IpABE1QMYsYY7buM2k59YT0bTm77+zUSkiQCEzC7j5f6irCrnvn69ff7pM2
-	 qdu2tmNc/A3+5WD8kEORlopBeefRvO7sYRl4WFoXvtGybEugS0+0n9FZXpPzZ9d7htA==
+	bh=uVQoagnpjswp06qGRUWStKf4eBSlqy7kSJJnKuQc6r8=;
+	b=QnGRkFwtc40JfhD4Q4ajHs3CxP1cuXqkaOb6x3yafM6lRcKbUeMvDu/zzLKbJ2KPdzju
+	 44wBmb2LbEabzk5r8/Gmdk2On+3KbsK8OjO8vK67E948Tic/jRnoF+JN2RnlPfb2kJsWz
+	 GY/relHdjkKTh7yYXcDWdSOFObmhqUFjjVXOlYbqm8G/40rKAkE5ZGU3jTXmP0Ak3bXBy
+	 xw52n+ZQQVsiCH8slWsC8oDcFvLZQGcwZ7K24Ukje2ufdYtR937gAqmboExdrDtYJtquy
+	 9hZlzDK/mCRL+AcvzOFQsteW0oai2JsZePE4Hcm/MJgYh9/2Bue2MeTnqZfN30y7lgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BtKujigq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jjH7tZPf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE3F606A9C8;
-	Sat,  7 Nov 2026 15:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F181606A326;
+	Sat,  7 Nov 2026 15:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BtKujigq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE11E1F0089F;
-	Sat,  7 Nov 2026 15:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jjH7tZPf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D1F1F0089F;
+	Sat,  7 Nov 2026 15:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064429;
-	bh=9eYZWx9JuHCvuH3H4+29rheaXrMlvIFU+1OG2qUw3rY=;
+	s=korg; t=1794064430;
+	bh=uVQoagnpjswp06qGRUWStKf4eBSlqy7kSJJnKuQc6r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BtKujigq1QglBbRSd141uKVsyrQpMSUDQ4BaP5qijt4lrB0Tkt54SIe4YsnBH0RV3
-	 z+yiKExCc+Qx5rQe1DAiSvk76CD70PsZdMcPtWMtHOltXAjhbaxXpV/+H6lhW0Yg48
-	 YvBAjkG+5exV5vS6bCXE7f0l9GrgmFH4U+G/lnOY=
+	b=jjH7tZPfmB0+/Ws2gDb7SHf6E9zDyXs7edoKy4I/r1T/94cEdSLyuPkU6ih1PWpOz
+	 OnisTIvhuORktjamMyrstIS5A5X3f+OHoDkYrjFQcoVeV+olPn8mmyGLdHP7JBz3J7
+	 Qv98PzH1z1fF4FlFZxhvScU2yfeVRyesDD6qVO/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0478/1257] svcrdma: Grant credits from the clamped sc_max_requests
-Date: Sat,  7 Nov 2026 08:46:14 -0500
-Message-ID: <20261107134952.651993427@linuxfoundation.org>
+Subject: [PATCH 7.3 0479/1257] xfarray: dont crash when sorting if array element crosses a folio
+Date: Sat,  7 Nov 2026 08:46:15 -0500
+Message-ID: <20261107134952.679811210@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,50 +69,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit b7037e5da3fb81abcd6309daecb112f1d5926760 ]
+[ Upstream commit 329750292e9dfbb594b375d7b30cf5ddb58b7bb9 ]
 
-svc_rdma_accept() computes sc_fc_credits from sc_max_requests before
-the Receive Queue depth is checked against the device's max_qp_wr.
-When that check lowers sc_max_requests, the credit grant keeps the
-original value, so the server advertises more credits than it has
-Receives posted. A client that uses the full grant overruns the
-Receive Queue, and the connection is lost with an RNR error.
+LOLLM points out that if an array element crosses a folio boundary,
+xfile_get_folio returns a NULL folio pointer.  If this happens,
+si->folio is also set to NULL, and calling folio_pos/folio_address will
+just crash the kernel.  Teach this function to handle this condition by
+falling back to reading the array element into scratchpad memory.
 
-Set sc_fc_credits after the clamp so the grant matches the number
-of Receives the server posts.
-
-Fixes: fc2e69db82c1 ("svcrdma: Clean up comment in svc_rdma_accept()")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260828135036.796842-2-cel@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Cc: stable@vger.kernel.org # v6.6
+Fixes: cf36f4f64c2d4e ("xfs: cache pages used for xfarray quicksort convergence")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/xfarray.c | 69 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 47 insertions(+), 22 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-index 927269598ac24..f949601b21447 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -471,7 +471,6 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
- 	newxprt->sc_max_requests = svcrdma_max_requests;
- 	newxprt->sc_max_bc_requests = svcrdma_max_bc_requests;
- 	newxprt->sc_recv_batch = RPCRDMA_MAX_RECV_BATCH;
--	newxprt->sc_fc_credits = cpu_to_be32(newxprt->sc_max_requests);
+diff --git a/fs/xfs/scrub/xfarray.c b/fs/xfs/scrub/xfarray.c
+index dc18c6310cbd8..24e9837211f35 100644
+--- a/fs/xfs/scrub/xfarray.c
++++ b/fs/xfs/scrub/xfarray.c
+@@ -794,6 +794,46 @@ xfarray_sort_scan_done(
+ 	si->folio = NULL;
+ }
  
- 	/* Qualify the transport's resource defaults with the
- 	 * capabilities of this particular device.
-@@ -492,6 +491,8 @@ static struct svc_xprt *svc_rdma_accept(struct svc_xprt *xprt)
- 		newxprt->sc_max_bc_requests = 2;
++static int
++xfarray_sort_load_folio(
++	struct xfarray_sortinfo	*si,
++	xfarray_idx_t		idx,
++	loff_t			idx_pos)
++{
++	struct folio		*folio;
++	loff_t			next_pos;
++
++	folio = xfile_get_folio(si->array->xfile, idx_pos, si->array->obj_size,
++			XFILE_ALLOC);
++	if (IS_ERR(folio))
++		return PTR_ERR(folio);
++	si->folio = folio;
++
++	/* No folio?  Get the caller to read into the scratchpad. */
++	if (!si->folio)
++		return 0;
++
++	si->first_folio_idx = xfarray_idx(si->array,
++			folio_pos(si->folio) + si->array->obj_size - 1);
++
++	next_pos = folio_next_pos(si->folio);
++	si->last_folio_idx = xfarray_idx(si->array, next_pos - 1);
++	if (xfarray_pos(si->array, si->last_folio_idx + 1) > next_pos)
++		si->last_folio_idx--;
++
++	/*
++	 * If this folio still doesn't cover the desired element, it must cross
++	 * a folio boundary.  Get the caller to read into the scratchpad.
++	 */
++	if (idx < si->first_folio_idx || idx > si->last_folio_idx) {
++		xfarray_sort_scan_done(si);
++		return 0;
++	}
++
++	trace_xfarray_sort_scan(si, idx);
++	return 0;
++}
++
+ /*
+  * Cache the folio backing the start of the given array element.  If the array
+  * element is contained entirely within the folio, return a pointer to the
+@@ -819,33 +859,18 @@ xfarray_sort_scan(
+ 	    (idx < si->first_folio_idx || idx > si->last_folio_idx))
+ 		xfarray_sort_scan_done(si);
+ 
+-	/* Grab the first folio that backs this array element. */
++	/* Grab the folio that backs this array element. */
+ 	if (!si->folio) {
+-		struct folio	*folio;
+-		loff_t		next_pos;
+-
+-		folio = xfile_get_folio(si->array->xfile, idx_pos,
+-				si->array->obj_size, XFILE_ALLOC);
+-		if (IS_ERR(folio))
+-			return PTR_ERR(folio);
+-		si->folio = folio;
+-
+-		si->first_folio_idx = xfarray_idx(si->array,
+-				folio_pos(si->folio) + si->array->obj_size - 1);
+-
+-		next_pos = folio_next_pos(si->folio);
+-		si->last_folio_idx = xfarray_idx(si->array, next_pos - 1);
+-		if (xfarray_pos(si->array, si->last_folio_idx + 1) > next_pos)
+-			si->last_folio_idx--;
+-
+-		trace_xfarray_sort_scan(si, idx);
++		error = xfarray_sort_load_folio(si, idx, idx_pos);
++		if (error)
++			return error;
  	}
  
-+	newxprt->sc_fc_credits = cpu_to_be32(newxprt->sc_max_requests);
-+
- 	/* Estimate the needed number of rdma_rw contexts. The maximum
- 	 * Read and Write chunks have one segment each. Each request
- 	 * can involve one Read chunk and either a Write chunk or Reply
+ 	/*
+-	 * If this folio still doesn't cover the desired element, it must cross
+-	 * a folio boundary.  Read into the scratchpad and we're done.
++	 * If we don't have a folio mapping the entire array element, read into
++	 * the scratchpad and we're done.
+ 	 */
+-	if (idx < si->first_folio_idx || idx > si->last_folio_idx) {
++	if (!si->folio) {
+ 		void		*temp = xfarray_scratch(si->array);
+ 
+ 		error = xfile_load(si->array->xfile, temp, si->array->obj_size,
 -- 
 2.53.0
 
