@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063820;
-	b=Sp9xEHo02qsxnNXXQ8LKYdTO/P9aakoDtA6BWtbijr/GS5U/Xx9rbqWwGsAhjIVPeii8
-	 XGcS19Rc8HFvtBedui2DDmmb6aTb/DjkXB8EfeEaEMw1BLVDj5MtlbXkhlK+hqM4Lqzye
-	 JsCJaADY8F6pfD0zMJ+bIKyMIpQK6CvraXW63lBnUw4z9cTbwAdXK+aYlRfMPi+WJw2j/
-	 MfrcGKMY/JC2iW7BzbLWSIJFqPBiZnjbx8XQ2NNqlOb9nF9Db8+VKrR6+YmX5OpKC2Ljr
-	 lytqUmMERV2a1iBx08pGMojwyF+lvyBSieB3QnVi6RPJBVHIUXlH15SyX/wmRj0mvxg==
+	t=1794063821;
+	b=yFBUqfCkuKobFYFL9ZGcmYvsDTWn80P5pLjhwdKqkXwmThUE6DPDfejj3Nj/VgYFFwDD
+	 m+3MTPHh/D6q7YZT6vhWkeCE0eOuHRazEpb4NSmd49oumUzWIGJ2t1l/Zt3YemDbIR2Mx
+	 8eN1ZPcGNXiVx43aBfoc8MAKbFbTZQpPJ198QW7RWAzz5IGyxTb9+ffAjrdz8VBdZlRsY
+	 Z3I/PGEeTmgBS97qzCKt8YVSK14kZM6ABOQ1Ji8Y3CBJiMiUeCoOlFt+8fvRM4L1oAtZH
+	 399LodTsUpCT/pTCGE/u3YfH6C7bqAiKWPlIsrVePyEwLQk8WiqIJoUOQhCMWG81Bhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063821;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sADATc2ResSVDSDVcGHbsrvjedP/deCGjQ1iibVFyh8=;
-	b=bi1lnDseyxebrmDGqTy9g5NJ9seV7buqSbLlk4MkPt+e82HxRlM6nIYRSupxarhiN1MW
-	 9VLYph7hMYMN/MEDbBH6/JUyGw1+e7KAihj88O8jtqNjgveUp1zWOLcDBk+QUiCZkjG3u
-	 +Fd8YXv+blSgLU1Gh5vdGPJvHV05ZteiJuUhhJyvs2c4RXS5e5Z7HvHgSR6Z3p359p9KJ
-	 DyvmU2Xm7a7u63NKNGwhOzjVx/OblFLal0trob3U+VS82IjGlkSbJ6nNh6OxELhjAQ73Q
-	 ND/snkzQ5OoQ2CQBS71zd2K3hEEbDvxzhCnMm2AgfveTvK9l83ojiZHlWK5967CF23w==
+	bh=0gU7kx6lAUrkcrvufhN7XC3VDBmi5jU63WuT4gmel9E=;
+	b=UeWUGOc1mSTQOjP3nKSIKpUJIi5mY6EXoDvVKbncXbz1/X+dyTnYxlhaO/qTYZ/TEAhF
+	 DcJCvHG35CFh6ulsQ5y4gYU5VXPSfTD6xnQlUMmU0R3jIy72yMfgn71plUMcdimGn2j41
+	 5CXHR+N0QqViZjj8uqW8ZhzO34LX03dTt9oOlT68g1cF+FGvUR5YwTnJn98P20eG6+iZ+
+	 mXYahFXTav1WfPXm7EybvMFnkBsOeqdngv0cA+aMQkUSaeDg80FU7R4UCOuCqDaGirN3r
+	 tLN3bWT/fDYTx3aTeziyJixYzVLl1hafLuYuoT0JQfg4Qok2VHuFMCfP2GPf0UvREeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wp+oMZiI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQ4bhjrY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020AD606A326;
-	Sat,  7 Nov 2026 15:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFD2606A326;
+	Sat,  7 Nov 2026 15:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wp+oMZiI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842891F0089F;
-	Sat,  7 Nov 2026 15:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQ4bhjrY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA081F008A1;
+	Sat,  7 Nov 2026 15:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063819;
-	bh=sADATc2ResSVDSDVcGHbsrvjedP/deCGjQ1iibVFyh8=;
+	s=korg; t=1794063820;
+	bh=0gU7kx6lAUrkcrvufhN7XC3VDBmi5jU63WuT4gmel9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wp+oMZiISJrWF2e/7iDkpG2NmX3iMDcYVWlAeJk52VPt9HqfFGj+ZFrasIiv8TZ81
-	 OSwuN+1FMBxHMEoJOXrVa12znue/GcbRwYZEd1cFkNbADoxgZlBPR9FYUTs7eoiaoS
-	 kIhLRZWKhDpnpbuWsb6t3SPyCH4tJNEp7KpAq02c=
+	b=VQ4bhjrYoB+7R792ADKG0mOVIvKruoieW0tUnH3KlX+ZPdzuadTb4i7efT9nRlYW5
+	 YWlMC8kIpVMdOiXKqxa2PwvGltx+OQuwKucAkM5Tbw3CF12h+rdcxbaQ6OyDG14+8n
+	 NDS5lOO+UouGYRx8TLGnuzztzOliLubdbrJkV8jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Gary Guo <gary@garyguo.net>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
+	Simon Liebold <simonlie@amazon.de>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Eric Sandeen <sandeen@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0009/1257] rust: dma: declare cfi_encoding for dma_data_direction
-Date: Sat,  7 Nov 2026 08:38:25 -0500
-Message-ID: <20261107134939.688409105@linuxfoundation.org>
+Subject: [PATCH 7.3 0036/1257] devtmpfs: restore mount option reconfiguration on get_tree
+Date: Sat,  7 Nov 2026 08:38:52 -0500
+Message-ID: <20261107134940.404115963@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,110 +70,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sami Tolvanen <samitolvanen@google.com>
+From: Eric Sandeen <sandeen@redhat.com>
 
-commit 7d109178cd644268326cd31702ed46c7ac8bb300 upstream.
+[ Upstream commit 1c7df6fa838a46f0d5090ef134f67511f0592f33 ]
 
-bindgen generates bindings::dma_data_direction as an integer by default,
-while C callback tables such as dma_buf_ops declare the parameter as
-enum dma_data_direction. kCFI encodes enum types by name even with
-integer normalization, so the type ids would not match when C calls into
-a Rust callback taking bindings::dma_data_direction.
+commit cb0e0a8bf4e1 ("devtmpfs: replace ->mount with ->get_tree in
+public instance") converted the public devtmpfs instance to the new
+mount API but broke the ability to reconfigure the shared superblock
+options via subsequent mount() calls, as had been fixed once in
+a6097180d884 ("devtmpfs regression fix: reconfigure on each mount")
 
-Generate dma_data_direction as a newtype with a cfi_encoding, as is done
-for lru_status, and convert DataDirection through the newtype's
-constants.
+This makes boot-time defaults permanent.
 
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
+Fix this using an approach suggested by Al Viro: at init_fs_context
+time, create a reconfigure-mode context via fs_context_for_reconfigure()
+and save it in fc->fs_private. The devtmpfs parse ops can then use
+this context to parse options appropriately for the underlying filesystem.
+
+This also removes the devtmpfs_configure_context() one-time ops-copying
+approach and the global mutable ops table it required.
+
+Fixes: cb0e0a8bf4e1 ("devtmpfs: replace ->mount with ->get_tree in public instance")
+Reported-by: Simon Liebold <simonlie@amazon.de>
 Cc: stable@vger.kernel.org
-Fixes: c2437c43cfb1 ("rust: dma: implement DataDirection")
-Link: https://patch.msgid.link/20261019-rust-cfi-fixes-v1-3-9503472ba738@google.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-[ Adjusted insertion context. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Eric Sandeen <sandeen@redhat.com>
+Link: https://patch.msgid.link/b1bd3b15-78ea-4487-b6a8-aad0b05dd3bb@redhat.com
+Tested-by: Simon Liebold <simonlie@amazon.de>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/bindgen_parameters |  2 ++
- rust/kernel/dma.rs      | 21 +++++++++++----------
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ drivers/base/devtmpfs.c | 108 ++++++++++++++++++++++++----------------
+ 1 file changed, 64 insertions(+), 44 deletions(-)
 
-diff --git a/rust/bindgen_parameters b/rust/bindgen_parameters
-index 45f6eb56a1f73..5bab3cf063360 100644
---- a/rust/bindgen_parameters
-+++ b/rust/bindgen_parameters
-@@ -29,6 +29,8 @@
- # enums that appear in indirect function calls should specify a cfi type
- --newtype-enum fwctl_rpc_scope
- --with-attribute-custom-enum=fwctl_rpc_scope='#[cfi_encoding="15fwctl_rpc_scope"]'
-+--newtype-enum dma_data_direction
-+--with-attribute-custom-enum=dma_data_direction='#[cfi_encoding="18dma_data_direction"]'
- --newtype-enum hrtimer_restart
- --with-attribute-custom-enum=hrtimer_restart='#[cfi_encoding="15hrtimer_restart"]'
- --newtype-enum irqreturn
-diff --git a/rust/kernel/dma.rs b/rust/kernel/dma.rs
-index 2ce09f8e90c69..2ec5fe7d56bc4 100644
---- a/rust/kernel/dma.rs
-+++ b/rust/kernel/dma.rs
-@@ -310,25 +310,25 @@ pub enum DataDirection {
-     ///
-     /// This is used when the buffer can be both read from and written to by the device.
-     /// The cache for the corresponding memory region is both flushed and invalidated.
--    Bidirectional = Self::const_cast(bindings::dma_data_direction_DMA_BIDIRECTIONAL),
-+    Bidirectional = Self::const_cast(bindings::dma_data_direction::DMA_BIDIRECTIONAL),
+diff --git a/drivers/base/devtmpfs.c b/drivers/base/devtmpfs.c
+index aef0fcc6aba1e..11c70888f38be 100644
+--- a/drivers/base/devtmpfs.c
++++ b/drivers/base/devtmpfs.c
+@@ -72,39 +72,90 @@ static struct file_system_type internal_fs_type = {
+ 	.kill_sb = kill_anon_super,
+ };
  
-     /// The DMA mapping is for data transfer from memory to the device (write).
-     ///
-     /// The CPU has prepared data in the buffer, and the device will read it.
-     /// The cache for the corresponding memory region is flushed before device access.
--    ToDevice = Self::const_cast(bindings::dma_data_direction_DMA_TO_DEVICE),
-+    ToDevice = Self::const_cast(bindings::dma_data_direction::DMA_TO_DEVICE),
+-/* Simply take a ref on the existing mount */
++struct devtmpfs_context {
++	struct fs_context *fc;
++};
++
++static void devtmpfs_free(struct fs_context *fc)
++{
++	struct devtmpfs_context *ctx = fc->fs_private;
++
++	if (ctx) {
++		put_fs_context(ctx->fc);
++		kfree(ctx);
++	}
++}
++
++static int devtmpfs_parse_param(struct fs_context *fc, struct fs_parameter *param)
++{
++	struct devtmpfs_context *ctx = fc->fs_private;
++
++	return ctx->fc->ops->parse_param(ctx->fc, param);
++}
++
++static int devtmpfs_parse_monolithic(struct fs_context *fc, void *data)
++{
++	struct devtmpfs_context *ctx = fc->fs_private;
++
++	if (ctx->fc->ops->parse_monolithic)
++		return ctx->fc->ops->parse_monolithic(ctx->fc, data);
++	return generic_parse_monolithic(ctx->fc, data);
++}
++
+ static int devtmpfs_get_tree(struct fs_context *fc)
+ {
++	struct devtmpfs_context *ctx = fc->fs_private;
+ 	struct super_block *sb = mnt->mnt_sb;
++	int err;
  
-     /// The DMA mapping is for data transfer from the device to memory (read).
-     ///
-     /// The device will write data into the buffer for the CPU to read.
-     /// The cache for the corresponding memory region is invalidated before CPU access.
--    FromDevice = Self::const_cast(bindings::dma_data_direction_DMA_FROM_DEVICE),
-+    FromDevice = Self::const_cast(bindings::dma_data_direction::DMA_FROM_DEVICE),
- 
-     /// The DMA mapping is not for data transfer.
-     ///
-     /// This is primarily for debugging purposes. With this direction, the DMA mapping API
-     /// will not perform any cache coherency operations.
--    None = Self::const_cast(bindings::dma_data_direction_DMA_NONE),
-+    None = Self::const_cast(bindings::dma_data_direction::DMA_NONE),
+ 	atomic_inc(&sb->s_active);
+ 	down_write(&sb->s_umount);
++
++	if (ctx->fc->ops->reconfigure) {
++		err = ctx->fc->ops->reconfigure(ctx->fc);
++		if (err) {
++			deactivate_locked_super(sb);
++			return err;
++		}
++	}
++
+ 	fc->root = dget(sb->s_root);
+ 	return 0;
  }
  
- impl DataDirection {
-@@ -340,7 +340,7 @@ const fn const_cast(val: bindings::dma_data_direction) -> u32 {
-         // CAST: The C standard allows compilers to choose different integer types for enums.
-         // To safely check the value, we cast it to a wide signed integer type (`i128`)
-         // which can hold any standard C integer enum type without truncation.
--        let wide_val = val as i128;
-+        let wide_val = val.0 as i128;
+-/* Ops are filled in during init depending on underlying shmem or ramfs type */
+-static struct fs_context_operations devtmpfs_context_ops = {};
++static const struct fs_context_operations devtmpfs_context_ops = {
++	.free		  = devtmpfs_free,
++	.parse_param	  = devtmpfs_parse_param,
++	.parse_monolithic = devtmpfs_parse_monolithic,
++	.get_tree	  = devtmpfs_get_tree,
++};
  
-         // Check if the value is outside the valid range for the target type `u32`.
-         // CAST: `u32::MAX` is cast to `i128` to match the type of `wide_val` for the comparison.
-@@ -358,11 +358,12 @@ const fn const_cast(val: bindings::dma_data_direction) -> u32 {
- impl From<DataDirection> for bindings::dma_data_direction {
-     /// Returns the raw representation of [`enum dma_data_direction`].
-     fn from(direction: DataDirection) -> Self {
--        // CAST: `direction as u32` gets the underlying representation of our `#[repr(u32)]` enum.
--        // The subsequent cast to `Self` (the bindgen type) assumes the C enum is compatible
--        // with the enum variants of `DataDirection`, which is a valid assumption given our
--        // compile-time checks.
--        direction as u32 as Self
-+        match direction {
-+            DataDirection::Bidirectional => Self::DMA_BIDIRECTIONAL,
-+            DataDirection::ToDevice => Self::DMA_TO_DEVICE,
-+            DataDirection::FromDevice => Self::DMA_FROM_DEVICE,
-+            DataDirection::None => Self::DMA_NONE,
-+        }
-     }
+-/* Call the underlying initialization and set to our ops */
+ static int devtmpfs_init_fs_context(struct fs_context *fc)
+ {
+-	int ret;
+-#ifdef CONFIG_TMPFS
+-	ret = shmem_init_fs_context(fc);
+-#else
+-	ret = ramfs_init_fs_context(fc);
+-#endif
+-	if (ret < 0)
+-		return ret;
++	struct devtmpfs_context *ctx;
++	int err;
++
++	ctx = kzalloc_obj(struct devtmpfs_context);
++	if (!ctx)
++		return -ENOMEM;
++
++	/* Each mount will reconfigure the shared superblock w/ new options */
++	ctx->fc = fs_context_for_reconfigure(mnt->mnt_root,
++					     mnt->mnt_sb->s_flags, MS_RMT_MASK);
++	if (IS_ERR(ctx->fc)) {
++		err = PTR_ERR(ctx->fc);
++		kfree(ctx);
++		return err;
++	}
+ 
++	fc->fs_private = ctx;
+ 	fc->ops = &devtmpfs_context_ops;
+ 
+ 	return 0;
  }
  
+ static struct file_system_type dev_fs_type = {
+-	.name = "devtmpfs",
++	.name		 = "devtmpfs",
+ 	.init_fs_context = devtmpfs_init_fs_context,
+ };
+ 
+@@ -442,31 +493,6 @@ static int __ref devtmpfsd(void *p)
+ 	return 0;
+ }
+ 
+-/*
+- * Get the underlying (shmem/ramfs) context ops to build ours
+- */
+-static int devtmpfs_configure_context(void)
+-{
+-	struct fs_context *fc;
+-
+-	fc = fs_context_for_reconfigure(mnt->mnt_root, mnt->mnt_sb->s_flags,
+-					MS_RMT_MASK);
+-	if (IS_ERR(fc))
+-		return PTR_ERR(fc);
+-
+-	/* Set up devtmpfs_context_ops based on underlying type */
+-	devtmpfs_context_ops.free	      = fc->ops->free;
+-	devtmpfs_context_ops.dup	      = fc->ops->dup;
+-	devtmpfs_context_ops.parse_param      = fc->ops->parse_param;
+-	devtmpfs_context_ops.parse_monolithic = fc->ops->parse_monolithic;
+-	devtmpfs_context_ops.get_tree	      = &devtmpfs_get_tree;
+-	devtmpfs_context_ops.reconfigure      = fc->ops->reconfigure;
+-
+-	put_fs_context(fc);
+-
+-	return 0;
+-}
+-
+ /*
+  * Create devtmpfs instance, driver-core devices will add their device
+  * nodes here.
+@@ -482,12 +508,6 @@ int __init devtmpfs_init(void)
+ 		return PTR_ERR(mnt);
+ 	}
+ 
+-	err = devtmpfs_configure_context();
+-	if (err) {
+-		pr_err("unable to configure devtmpfs type %d\n", err);
+-		return err;
+-	}
+-
+ 	err = register_filesystem(&dev_fs_type);
+ 	if (err) {
+ 		pr_err("unable to register devtmpfs type %d\n", err);
 -- 
 2.53.0
 
