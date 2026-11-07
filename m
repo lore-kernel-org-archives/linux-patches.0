@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063383;
-	b=z1CS0cgXQ+TvR7EVnUxVzs7BYE+eX+9jtNBpjcvzeCMB5539EQDhzut+54uHZxCgd8nY
-	 dWjPJxjie/+vLLR0UZp7I9U4UTGp7SP3pdN1qlzowzlUD+BOgOfzfsDw7uhOAzT+ofqWS
-	 paEecjsoJIxM9jT6DQwpms+xDGiGsPhDkqiVKxAVWSxYtEXA6O10JUhg5WW0q8b3OAy8C
-	 2BFsBrxgGhjs13a+9wYn3IkXl7UE/0TmHT5w7GBTR7Py5FS7kBkdOKLNZ7JZ6DSlCjWdf
-	 4LcccyAhoeHdxKgYrroXJ3AS1YF5Evdd5wblNOaZ7l0Z4weyIw3Dltn824ljmkfdb9w==
+	t=1794063384;
+	b=zef/syPnZaN88/SpGuAI1mUV2nPmYFnwe0uVVy+zT9LUG9t/W/ZqU327kOSP9mwCSZg8
+	 8u+Z90E5IzFg9d5p9f486wbJCE4fRgBcRlVybhU8hM/Oc3egZXbnqxhb0GUFWiYlJRdt3
+	 PtCaE0/w177gsMQbacq8Rb8+sG5V6CAfQXfeciphXmeD6WxWth3hXU07ww9aXb29p7bvR
+	 Q3nOvXjR1NNDnwM3HYAyaVBxAw/ftMjzA+PIf/lTUTwcQQS2XkCNL10kYhs0HS/W3Iy0J
+	 iIswSARgSrTsIsXYTO8+8Css/ne8QQw/lRyQrGGert8hiE215mRrq1dohZaGNpAwu2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063384;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7sMsRLl4HcEn01YJXHWFu/pWwFFnpNQTqC0gM+eghv8=;
-	b=mAmAYTYMSsQ2xClH/6Cn3G/4PcW3j0s313jrIaXbGVppC4yM+B0Bc2vKvkJNbdqUGB0g
-	 0Z/w5vFqR/5DZYQTaRxmZR6xSNLxaaJFs2uLHeHASEFiqzSskTDJgaBD0w78bT9pHMhxv
-	 RnHC7F8/KX+10R0zR6tCmiHP7GpojNcSGUnU8l9yq6Gf5Z0EEtkoXs9JeskNJMB11uvRu
-	 AKiVKYyC38dn2Rf605ZtyglmzAPbzqlPguhQ4wsearPHJPoOG/7WwuvHotTyG9377bobZ
-	 jEzEKyn7uYg1cHBwXprLnMj2M0eEs2+znugE5FRz0kPxacHAP1R7wr98pdx51w53+jA==
+	bh=6qIBvFGcnFO2hI16o+NwwKc8q4Bv5qCCqSa42ac3kWk=;
+	b=KQzqdNyjYNb41rU+YtpsIK+U8/TK8AMfk2Lnf1HJhY0DA5XTl12ecZxCE7mgBoA+sRWF
+	 x5QoGUysDeWuSDDPCVqp/l5ukP2lH7OQV5QlKuQRkFKfOWye26NdLj+KAtRaVsZoJaI19
+	 upioz44eZdZuGARHB8hDjI4W5rczYNipzNQOG0p+8jGz+X9pyHtAkQPyKmgV5yRr56FWr
+	 Xsmh4K644WB6HuYeIwofBu7xzztR5TlNDVaVyAxIUSNK1DC8PpTqhDblYXmvNTiytBTE/
+	 C5ex9bFNRJ6vRpj5wrlZWb7v0w+6Yhe8U2HjxK1BhWnJcGlZhlSFOv6Aft/3j6BWDGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOoxRsvJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fpaieytj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEC5606D810;
-	Sat,  7 Nov 2026 14:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DC0606D810;
+	Sat,  7 Nov 2026 14:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EOoxRsvJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C122A1F0089F;
-	Sat,  7 Nov 2026 14:56:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fpaieytj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1701F0089F;
+	Sat,  7 Nov 2026 14:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063383;
-	bh=7sMsRLl4HcEn01YJXHWFu/pWwFFnpNQTqC0gM+eghv8=;
+	s=korg; t=1794063384;
+	bh=6qIBvFGcnFO2hI16o+NwwKc8q4Bv5qCCqSa42ac3kWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EOoxRsvJy+C4OO0HfqhLz5p9XhWSzD+137yQwBSMLK9WFxGJ0HfFlmawtwRc68I0e
-	 HyUEWafMZP2AKjYX2/qAhNsZrPp3AQEuaNQSA08rroKY5RIu0iVioc9Uja7zOR3Lcv
-	 3wLMVd2KdENGbkOlTbcaySlFptV0epPyfYbV0BVc=
+	b=fpaieytjhPhDVcwVH3OnADnPYk+ELY16+sutvfAoYCqK2ZP7H5mu5EziRD77NTYDS
+	 NbtdsmV4Z8C8vToMhXkzqOW70YlWEuKLKljxLIprlo440ULrZ1k+SrpDV3Yu+T14pW
+	 3xZu337Awq5JMBH1RB6acWPPWwwjqX7GjyiS+k+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 555/869] spi: cadence-xspi: fix stack buffer overflow in the Marvell b0 path
-Date: Sat,  7 Nov 2026 08:53:57 -0500
-Message-ID: <20261107134912.159347618@linuxfoundation.org>
+Subject: [PATCH 6.18 556/869] ARM: 9488/1: smp: set current pointer in assembly before jumping into C
+Date: Sat,  7 Nov 2026 08:53:58 -0500
+Message-ID: <20261107134912.189840864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,91 +69,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit ef9690269999ddf9b204731baca1bd6b7aea1aa7 ]
+[ Upstream commit f6e551e7d515579b952422c93415470fb672d848 ]
 
-transfer_one_message_b0() falls back to a 10-byte stack buffer for
-transfers which carry no TX data and points both in_buffer and
-out_buffer into it.
+With CONFIG_KCOV_INSTRUMENT_ALL=y, secondary CPUs fail to come online
+on ARMv6K/ARMv7 SMP:
 
-With a transfer longer than 10 bytes the SDMA branch of the loop moves
-up to MRVL_XFER_QWORD_COUNT * MRVL_XFER_QWORD_BYTECOUNT (256) bytes
-through those pointers and then advances them by the same amount, so
-both directions overflow the scratch buffer: a read transaction copies
-SDMA data past the end of the buffer, a write transaction sends stack
-contents from beyond it to the SPI bus.
+  CPU1: failed to boot: -38
 
-Size the scratch buffer for the largest chunk the loop can request,
-keep the buffer pointers pinned to it when the message does not carry
-the corresponding TX or RX data, and only advance the pointers which
-reference real transfer buffers. Also zero-initialize the scratch
-buffer so that padding bytes sent for TX-less transfers no longer leak
-uninitialized stack contents.
+The compiler inserts a call to __sanitizer_cov_trace_pc() at the entry
+of secondary_start_kernel(), before set_current(task). The KCOV hook
+dereferences current while TPIDRURO is still uninitialized, causing a
+data abort before cpu_init() has installed the exception stacks. The
+secondary CPU consequently never completes startup.
 
-Fixes: 5cb7651f78e1 ("Marvell HW overlay support for Cadence xSPI")
-Cc: stable@vger.kernel.org # 6.11+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20260929081146.41041-3-liuwb@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Initialize current in the secondary assembly handoff, as
+__mmap_switched already does for the boot CPU.
+
+With current set in assembly, the set_current() call in
+secondary_start_kernel() is redundant. Drop it together with the
+function and the task argument. The hotplug resuscitate path in
+arch_cpu_idle_dead() needs no hand-off either, as smp_ops.cpu_die()
+can only return if the CPU kept its register state, TPIDRURO included.
+
+Assisted-by: Claude:claude-fable-5
+
+Fixes: 50596b7559bf ("ARM: smp: Store current pointer in TPIDRURO register if available")
+Cc: stable@vger.kernel.org
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-xspi.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ arch/arm/include/asm/smp.h   |  2 +-
+ arch/arm/kernel/head-nommu.S |  1 +
+ arch/arm/kernel/head.S       |  1 +
+ arch/arm/kernel/smp.c        | 15 ++-------------
+ 4 files changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence-xspi.c b/drivers/spi/spi-cadence-xspi.c
-index 6dcba0e0ddaa3..c3676b21e8167 100644
---- a/drivers/spi/spi-cadence-xspi.c
-+++ b/drivers/spi/spi-cadence-xspi.c
-@@ -268,6 +268,7 @@
- #define MRVL_XFER_FUNC_START		 BIT(0)
- #define MRVL_XFER_QWORD_COUNT		 32
- #define MRVL_XFER_QWORD_BYTECOUNT	 8
-+#define MRVL_XFER_MAX_LEN (MRVL_XFER_QWORD_COUNT * MRVL_XFER_QWORD_BYTECOUNT)
+diff --git a/arch/arm/include/asm/smp.h b/arch/arm/include/asm/smp.h
+index 8c05a7f374d8b..84aa6a663e816 100644
+--- a/arch/arm/include/asm/smp.h
++++ b/arch/arm/include/asm/smp.h
+@@ -43,7 +43,7 @@ extern void set_smp_ipi_range(int ipi_base, int nr_ipi);
+  * Called from platform specific assembly code, this is the
+  * secondary CPU entry point.
+  */
+-asmlinkage void secondary_start_kernel(struct task_struct *task);
++asmlinkage void secondary_start_kernel(void);
  
- #define MRVL_XSPI_POLL_TIMEOUT_US	1000
- #define MRVL_XSPI_POLL_DELAY_US		10
-@@ -1047,7 +1048,7 @@ static int cdns_xspi_transfer_one_message_b0(struct spi_controller *controller,
- 	struct spi_device *spi = m->spi;
- 	struct spi_transfer *t = NULL;
  
--	const unsigned int max_len = MRVL_XFER_QWORD_BYTECOUNT * MRVL_XFER_QWORD_COUNT;
-+	const unsigned int max_len = MRVL_XFER_MAX_LEN;
- 	int current_transfer_len;
- 	int cs = spi_get_chipselect(spi, 0);
- 	int cs_change = 0;
-@@ -1070,13 +1071,16 @@ static int cdns_xspi_transfer_one_message_b0(struct spi_controller *controller,
- 	list_for_each_entry(t, &m->transfers, transfer_list) {
- 		u8 *txd = (u8 *) t->tx_buf;
- 		u8 *rxd = (u8 *) t->rx_buf;
--		u8 data[10];
-+		u8 data[MRVL_XFER_MAX_LEN] = {0};
- 		u32 cmd_regs[6];
+ /*
+diff --git a/arch/arm/kernel/head-nommu.S b/arch/arm/kernel/head-nommu.S
+index b9d6818f1ee16..f80bbfbd3a6f8 100644
+--- a/arch/arm/kernel/head-nommu.S
++++ b/arch/arm/kernel/head-nommu.S
+@@ -116,6 +116,7 @@ ENTRY(secondary_startup)
+ 	ldr	r7, __secondary_data		@ reload r7
+ 	ldr	sp, [r7, #12]			@ set up the stack pointer
+ 	ldr	r0, [r7, #16]			@ set up task pointer
++	set_current r0, r1
+ 	mov	fp, #0
+ 	b	secondary_start_kernel
+ ENDPROC(secondary_startup)
+diff --git a/arch/arm/kernel/head.S b/arch/arm/kernel/head.S
+index f22c50d4bd417..a22403a629efa 100644
+--- a/arch/arm/kernel/head.S
++++ b/arch/arm/kernel/head.S
+@@ -442,6 +442,7 @@ ENTRY(__secondary_switched)
+ 	adr_l	r7, secondary_data + 12		@ get secondary_data.stack
+ 	ldr	sp, [r7]
+ 	ldr	r0, [r7, #4]			@ get secondary_data.task
++	set_current r0, r1
+ 	mov	fp, #0
+ 	b	secondary_start_kernel
+ ENDPROC(__secondary_switched)
+diff --git a/arch/arm/kernel/smp.c b/arch/arm/kernel/smp.c
+index 50999886a8b5c..e302063658779 100644
+--- a/arch/arm/kernel/smp.c
++++ b/arch/arm/kernel/smp.c
+@@ -371,12 +371,9 @@ void __noreturn arch_cpu_idle_dead(void)
+ 	 */
+ 	__asm__("mov	sp, %0\n"
+ 	"	mov	fp, #0\n"
+-	"	mov	r0, %1\n"
+ 	"	b	secondary_start_kernel"
+ 		:
+-		: "r" (task_stack_page(current) + THREAD_SIZE - 8),
+-		  "r" (current)
+-		: "r0");
++		: "r" (task_stack_page(current) + THREAD_SIZE - 8));
  
- 		if (!txd)
- 			txd = data;
+ 	unreachable();
+ }
+@@ -397,23 +394,15 @@ static void smp_store_cpu_info(unsigned int cpuid)
+ 	check_cpu_icache_size(cpuid);
+ }
  
--		cdns_xspi->in_buffer = txd + 1;
-+		if (rxd)
-+			cdns_xspi->in_buffer = rxd;
-+		else
-+			cdns_xspi->in_buffer = data;
- 		cdns_xspi->out_buffer = txd + 1;
+-static void set_current(struct task_struct *cur)
+-{
+-	/* Set TPIDRURO */
+-	asm("mcr p15, 0, %0, c13, c0, 3" :: "r"(cur) : "memory");
+-}
+-
+ /*
+  * This is the secondary CPU boot entry.  We're using this CPUs
+  * idle thread stack, but a set of temporary page tables.
+  */
+-asmlinkage void secondary_start_kernel(struct task_struct *task)
++asmlinkage void secondary_start_kernel(void)
+ {
+ 	struct mm_struct *mm = &init_mm;
+ 	unsigned int cpu;
  
- 		while (t->len) {
-@@ -1101,8 +1105,10 @@ static int cdns_xspi_transfer_one_message_b0(struct spi_controller *controller,
- 				if (!cdns_xspi_is_stig_ready(cdns_xspi, true))
- 					return -EIO;
+-	set_current(task);
+-
+ 	secondary_biglittle_init();
  
--				cdns_xspi->in_buffer += current_transfer_len;
--				cdns_xspi->out_buffer += current_transfer_len;
-+				if (rxd)
-+					cdns_xspi->in_buffer += current_transfer_len;
-+				if (t->tx_buf)
-+					cdns_xspi->out_buffer += current_transfer_len;
- 			}
- 
- 			if (rxd) {
+ 	/*
 -- 
 2.53.0
 
