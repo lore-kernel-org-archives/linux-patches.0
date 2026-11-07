@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061418;
-	b=MPNe+sZ5bD66NIsCTqd5/kqnOeBHIVrxXAIP05ycBxoxF3kzB4QQOOHBpQ7O7/UITbg2
-	 nNEeSezx6Lj8T/UoAtbn7/v+f12qs0zyOxyICmW50EZ1A1Bc297tu5lCHVfN3Wq/px9le
-	 TuL3NCc+LrvvkdJZvmJyhFSlZY/DVqMJ+Epd5e/Ev4p7aKO8sGyWsL5nSD6lcDmIwNK5X
-	 5tPYmzaG9jUt5e3w8QYuhxXaDn2N4Q8UF0AyFtfmqnMThtj0Tr+LVaod/uh063mQZDwjG
-	 /zCgELIfXINQ6PT7WlO1InriCFcxesIrHxuvWK/WoK3dFvOQY186020wMVaLDcBfcHQ==
+	t=1794061420;
+	b=sr8oWuZvQXPla88/vdbDUtGTNy+v36CB7JkJw5xLDkou+De2JZXoK53mDOLX1jRHiLoL
+	 ePaRo/AhkQmQbw7wGcHDjxqVhDGVXCDbzrueDj4NivSdLSFgMODraWJQGLZMucLRrumil
+	 NXpju4CY3xBorMaHabOJ3dpeJ1OrKnnC4fRDMOQ2Oeaos3fmkf+YqkirTFFsnt+HEpqrg
+	 Os1rdc4HUmmB4iuxsbqInH03ZQg9QyU3GWndxohOxdY+7unPsNUhG+Yqro6ZbPTMq359q
+	 Ai2tGRcJihaGBiwgaKti6/dHy1w9BfZ1hMe+f7jsHqFyjoYsx49OzC6pwI95dwnUiog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061420;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GKGeXhp8lnVXEuZLbT8sFiYVp5BvFWNIhU38C87sGvg=;
-	b=FXCAlOIONxB2kZODE0XcFYLZL7MNywlLJ2a8fgAt1Idt5En5dnacUMT0A0AVTz8t/z+A
-	 9laLLuglF/SGyFnM312B+sV+8VfClkYAbNyl1050+q7NgngW0xd8cm4ZrEbpkJWB2DLkV
-	 dtpB4Hbg/q80w+YYAdEucvUrVBoEYf0ysHGPb6zK9J2xjGCULqmLJbs5VlDeRRbGIQHYa
-	 KubIPlk9u5WnIJjb1PNX+ydCh1W+LJd0Car0RKp9t8BhOZHdZ2vTeip+pVEQ1rA790lq2
-	 3phTcNXHd7Q1JU0eaN2ky9RAK0XmHbfDcMebksXrx/wMB6ewXyEHs96mz6Vf/wtJbcA==
+	bh=274D2ipJ0AKWod+Fv22HtE+wkWzmreiMAlafDi5GFOU=;
+	b=0RNeeHR6st2BkM8tGU5NCWMxPdWL52iMAvkJE/9HTOvGWxwQx/bWu+rwF3tLHIAY3x29
+	 eI+oBjB732jQAjE4BdaiRnxvEiEBtqURPIItsHsxXgJ2vay7BDK1CU8vUpxVyYUjnEzFd
+	 PFaargELpeU/8do41j9+G3JZIuDeu04beoaGgsRiQAMcVCZ0sdpg7kgqQxCv5hf8efnaZ
+	 +K6IsMMzBJHLasNupdZLjVWR4t0oUkXpHWjdcadHs0hOzHDnRYKCEx4+U22FnBwh04232
+	 cKrLCsQyx1MKo+5utoKvJtHMqVPdxgSxIg97KFGDNJsgXm3TF/dqQRInO/kuvqfKjJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tp8OL9Us;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPkEkUSG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD99606A326;
-	Sat,  7 Nov 2026 14:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8571606A32F;
+	Sat,  7 Nov 2026 14:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tp8OL9Us
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1441A1F0089F;
-	Sat,  7 Nov 2026 14:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPkEkUSG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966D31F0089F;
+	Sat,  7 Nov 2026 14:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061418;
-	bh=GKGeXhp8lnVXEuZLbT8sFiYVp5BvFWNIhU38C87sGvg=;
+	s=korg; t=1794061419;
+	bh=274D2ipJ0AKWod+Fv22HtE+wkWzmreiMAlafDi5GFOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tp8OL9UsL2273t9U/7abJTM6YF9xk5ilJY62XkBuQx6WsaEnGej0gpWQTdvt0i294
-	 gY/lBPf/AoMK/mNpD+fR7Om9Qge6ftj9jFdK4i5aQ94Age0I0azUbIRgI0Qw3c8q/M
-	 U9brAfEBzVPlfVR2Ls59OVe+hyUMqp42qmfWNBAw=
+	b=FPkEkUSGuIJeBGk6qsmzERoBQknZj6CvMSjQOrZ5wyp7/oP0CLqKaJ2Ag+tN1GNOL
+	 /M0cw5lk6rqITosnhYEkcGIQZ23yAX8n3JLTTEQKKLEL2fdBU/RLybC2rVEyVUyOBk
+	 Mz52mA50uqZW2L6OQfU6TKjv2FmqPVUQQA1hh6Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stefan Teodorescu <fane@google.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0530/1536] KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails
-Date: Sat,  7 Nov 2026 08:42:26 -0500
-Message-ID: <20261107135012.502425120@linuxfoundation.org>
+Subject: [PATCH 6.12 0531/1536] KVM: x86: Fill kvm_run exit fields in common get_nested_state_pages() error paths
+Date: Sat,  7 Nov 2026 08:42:27 -0500
+Message-ID: <20261107135012.527164180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,44 +71,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 10180a277549339020b08000206092c07e0bff5a ]
+[ Upstream commit c1214f293d77c6e425a379f90d09bdb4815993a8 ]
 
-Re-pend GET_NESTED_STATE_PAGES before exiting to userspace if getting the
-nested pages fails in the KVM_RUN path.  If userspace re-runs the vCPU, and
-vmcs02 holds valid PFNs from the *previous* run of L2, then KVM could
-re-enter L2 with stale, unpinned PFNs mapped into e.g. the vAPIC page.
+Fill kvm_run with "internal error, emulation" in the common error handling
+paths for getting nested state pages, as requiring each check to manually
+fill kvm_run is error prone and requires a non-trivial amount of copy+paste.
 
-Note, both SVM and VMX (as of commit 11722439fb20 ("KVM: nVMX: Ensure
-KVM_REQ_GET_NESTED_STATE_PAGES is cleared on VM-Exit") ensure the request
-is cleared on VM-Exit (including the "forced" case), i.e. there is no risk
-of double-mapping due to emulated VMLAUNCH/VMRESUME/VMRUN *and* the request
-trying to map the nested pages.
+Specifically, both SVM and VMX fail to fill kvm_run if load_pdptrs() fails,
+and SVM fails to fill kvm_run if kvm_hv_verify_vp_assist() fails.  If those
+flows fail, the *best* case scenario is that KVM will exit to userspace
+with KVM_EXIT_UNKNOWN.  The worst case scenario is that KVM exits with a
+stale exit_reason and confuses userspace.
 
-Fixes: 671ddc700fd0 ("KVM: nVMX: Don't leak L1 MMIO regions to L2")
+Note, SVM never exits to userspace if something goes sideways when dealing
+with vmcb12 assets while emulating VMRUN, i.e. lack of SVM-specific code is
+not a bug.
+
+Fixes: 0f85722341b0 ("KVM: nVMX: delay loading of PDPTRs to KVM_REQ_GET_NESTED_STATE_PAGES")
+Fixes: 232f75d3b4b5 ("KVM: nSVM: call nested_svm_load_cr3 on nested state load")
+Fixes: 3f4a812edf5c ("KVM: nSVM: hyper-v: Enable L2 TLB flush")
 Cc: stable@vger.kernel.org
 Reported-by: Jinwoo Lee <rkskek9254@gmail.com>
 Closes: https://lore.kernel.org/all/20260813043932.3214460-1-rkskek9254@gmail.com
 Reported-by: Stefan Teodorescu <fane@google.com>
-Link: https://patch.msgid.link/20260921211608.1030158-2-seanjc@google.com
+Link: https://patch.msgid.link/20260921211608.1030158-3-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ sashal: Replaced the kvm_nested_call(get_nested_state_pages)(vcpu) context line with a direct kvm_x86_ops.nested_ops->get_nested_state_pages(vcpu) call, since the wrapper doesn't exist here. ]
+[ sashal: Adapted to local code by keeping nested_svm_vmrun_msrpm(svm), vmx->nested.nested_run_pending, and the open-coded nested_ops->get_nested_state_pages(vcpu) call instead of kvm_nested_call(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kvm/svm/nested.c |  7 +------
+ arch/x86/kvm/vmx/nested.c | 15 +++++----------
+ arch/x86/kvm/x86.c        |  3 +++
+ 3 files changed, 9 insertions(+), 16 deletions(-)
 
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index 4aee865718fe3..c1ecaf1578052 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1834,13 +1834,8 @@ static bool svm_get_nested_state_pages(struct kvm_vcpu *vcpu)
+ 		if (CC(!load_pdptrs(vcpu, vcpu->arch.cr3)))
+ 			return false;
+ 
+-	if (!nested_svm_vmrun_msrpm(svm)) {
+-		vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
+-		vcpu->run->internal.suberror =
+-			KVM_INTERNAL_ERROR_EMULATION;
+-		vcpu->run->internal.ndata = 0;
++	if (!nested_svm_vmrun_msrpm(svm))
+ 		return false;
+-	}
+ 
+ 	if (kvm_hv_verify_vp_assist(vcpu))
+ 		return false;
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index a107b2a6d1152..016acc678fc03 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3361,10 +3361,6 @@ static bool nested_get_vmcs12_pages(struct kvm_vcpu *vcpu)
+ 		} else {
+ 			pr_debug_ratelimited("%s: no backing for APIC-access address in vmcs12\n",
+ 					     __func__);
+-			vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
+-			vcpu->run->internal.suberror =
+-				KVM_INTERNAL_ERROR_EMULATION;
+-			vcpu->run->internal.ndata = 0;
+ 			return false;
+ 		}
+ 	}
+@@ -3435,11 +3431,6 @@ static bool vmx_get_nested_state_pages(struct kvm_vcpu *vcpu)
+ 	if (!nested_get_evmcs_page(vcpu)) {
+ 		pr_debug_ratelimited("%s: enlightened vmptrld failed\n",
+ 				     __func__);
+-		vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
+-		vcpu->run->internal.suberror =
+-			KVM_INTERNAL_ERROR_EMULATION;
+-		vcpu->run->internal.ndata = 0;
+-
+ 		return false;
+ 	}
+ #endif
+@@ -3844,8 +3835,12 @@ static int nested_vmx_run(struct kvm_vcpu *vcpu, bool launch)
+ 
+ vmentry_failed:
+ 	vmx->nested.nested_run_pending = 0;
+-	if (status == NVMX_VMENTRY_KVM_INTERNAL_ERROR)
++	if (status == NVMX_VMENTRY_KVM_INTERNAL_ERROR) {
++		vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
++		vcpu->run->internal.suberror = KVM_INTERNAL_ERROR_EMULATION;
++		vcpu->run->internal.ndata = 0;
+ 		return 0;
++	}
+ 	if (status == NVMX_VMENTRY_VMEXIT)
+ 		return 1;
+ 	WARN_ON_ONCE(status != NVMX_VMENTRY_VMFAIL);
 diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 6c358aab53287..0e7fac0012605 100644
+index 0e7fac0012605..4c6cae3a0f3f6 100644
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -10300,6 +10300,7 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+@@ -10300,6 +10300,9 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
  
  		if (kvm_check_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu)) {
  			if (unlikely(!kvm_x86_ops.nested_ops->get_nested_state_pages(vcpu))) {
-+				kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
++				vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
++				vcpu->run->internal.suberror = KVM_INTERNAL_ERROR_EMULATION;
++				vcpu->run->internal.ndata = 0;
+ 				kvm_make_request(KVM_REQ_GET_NESTED_STATE_PAGES, vcpu);
  				r = 0;
  				goto out;
- 			}
 -- 
 2.53.0
 
