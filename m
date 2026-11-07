@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061753;
-	b=FfaB6slqrxm4SXnCACEGM8z8qZ2yuRJngUt3P24nsUAr9c7SxN+4EUtKhIUOYoWYyOQI
-	 j+B8cpT0hq76B3Ux0XrFFYKo6lbHdBIJFOTb0QFQEQ/r15rLlOPhx5kUdQgCX40JPqEBH
-	 QFnHKmBNEEX1srknZkpqydI7iOFPZqh30vuOVzTGT+QozL0TbIP045ss0O6qe1DtFxFOK
-	 OCrSnsco4hY5xngtJmoHLmkHqtjsy1S8tfqPXtuuUtAI6768S/dyQEezAxqSN5jPFJX+K
-	 V8YpoLnM2ABUKy7JwsAEbVWHi+3oEqyw9keqm3/Ii97ctpGq+ZQmRwngmJPc7361Q+A==
+	t=1794061755;
+	b=34+FYuNhs9S8XsiyMsZWr89dEw6/hb9dfxtrxjRVxTeGJtUVirOfwhd8xqPdszSjMQ6s
+	 q02nuDfOLB2vYr2kIjMbvCfQ61COu+3NUIdr+yOYfdgur9NOKpvJgd1Ep8pPd655rVUYx
+	 6OSU7RcXmxo37OE1d8qFhtcvphVjKYvkC/4DXAzTj9QTsoOHR5d4H9Cgks6mN/6eog+u8
+	 SrWgo2lYXxviwH8/LF0ixSDvxuixd402N1AaqJlk7b7ElWFcSwzPqoXZP9GjGraPv1iXx
+	 Sf2qKUqN8DwB0eN+65F+AvLTRNVtEDMmJKiCKzWdu4WXC/fr5vPbz5CVHcK7h5qID9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061753;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061755;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T7fg7XhnvOHgFxRwcWxbYx9xafnOEJirI+I822fuTHY=;
-	b=RJfYTiiciV3RKARmIwJBV3il2BK3fXgzLm0FAQI6dHE7ktv0DmAEydYl2JLjET+osy8M
-	 L/+s3iUvhi/IGooHIJU/7Pyf4FyKjeMHrR82ntc1Mx16BTqd79xySZCPk3aOqHndP2ZZv
-	 KgBoqhVUZgkoSvc9neuxmdpBcI3bBIxoVs6sGv/afLjjcwLfnOsW3460+RAj6tcau086d
-	 y9U4yW2BTiqfSuiM5922I31nJDwi+/wOuzH5qNdi4KLABVU1PbZpK74RB2OGBr4EXmRok
-	 EsOZdOGFqH9gFkMHHGvsc0Dv2jJl4aQHQds2tJXjlp/3EmT0izpceHUl6mIrYbRjHig==
+	bh=L12xjBVDOiIHtJOnYED8KofQEMpBCtF46LxlAfzWdIk=;
+	b=Caz4i/CG/9oio+9oT8vehA2CrcGZ2+GfhRPja662Sp+CdpChPUhQGKrj5Iqdha35YH8J
+	 GTl5BgfeZSDdlxiOmT47DOmot5Yfwc1xg47anB7JggG6GQAdh+EqojHQWcrioS3tL2/xo
+	 CQ6mYgtOEE/8nyb33LVnftNU6UitAbsEbcSZxVeJO3fyDIwSOfxacJvbhyybbkfi0JUc2
+	 CcVFhhtp9Q/BmArxK+/ow3ty3KwmlcRWzfM/5jiU+T/yqDcwX+z+kAL6HSmg6JVsvRXNq
+	 5pofWD65/SGLawp6uK6YhiPmCgkUlPT3CP5BHD/CVC8hZ+61WqJaIjBHwZt61ezkoAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAKq2fWm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jpWnb9/a";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BCF606A326;
-	Sat,  7 Nov 2026 14:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83ED606A32F;
+	Sat,  7 Nov 2026 14:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAKq2fWm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F461F0089F;
-	Sat,  7 Nov 2026 14:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpWnb9/a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553AF1F0089F;
+	Sat,  7 Nov 2026 14:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061753;
-	bh=T7fg7XhnvOHgFxRwcWxbYx9xafnOEJirI+I822fuTHY=;
+	s=korg; t=1794061754;
+	bh=L12xjBVDOiIHtJOnYED8KofQEMpBCtF46LxlAfzWdIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MAKq2fWm/LLoOWcrSvBMu2XZVYZkqmqB4K6EAaWU2xoFP70iBYpnhdzVcCdXvuqkt
-	 Iw5bdA8sS1d0PRWo2fQGIT1S64ul0/7jzOzP1scnaUm7CvA8VbrUxexwxNKmc+ozAG
-	 J23Phr5AmExK4S834zlmZS3T+q3g04LmF10PWqzc=
+	b=jpWnb9/apPUo1l3zGPDj38OMaue224wBE+JHYwVT/g9RwUoJ+jzL//v678FSIl1Hf
+	 5vnCm8/Iq4FeyPzTXgh693v5hYDLkxGbnTRxwlkqntfoSc8KJhHReS8YOmX0wutmY/
+	 BqOtwK2o2iiFHES48o9noZIP3H24H8PbjFlal1D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0784/1536] SUNRPC: Reject a socket that already has an svc_sock attached
-Date: Sat,  7 Nov 2026 08:46:40 -0500
-Message-ID: <20261107135019.562293322@linuxfoundation.org>
+	Stefan Teodorescu <fane@google.com>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 0793/1536] KVM: SVM: Trigger new ASID allocation in both VMCBs on pCPU switch
+Date: Sat,  7 Nov 2026 08:46:49 -0500
+Message-ID: <20261107135019.815785127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,64 +69,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit 0995447b8059c4d23853cdcddbe789c4a2b6bb88 upstream.
+commit bf260dc9e7b8bfcd06c1a8e739797b1cf0917c72 upstream.
 
-Writing the same socket descriptor to /proc/fs/nfsd/portlist twice
-attaches a second svc_sock to one socket. svc_setup_socket() saves
-the socket's callbacks before installing its own, so the second
-attach records svc_write_space() as the old write_space callback.
-svc_udp_init() invokes that callback by way of svc_sock_setbufsize(),
-and svc_write_space() then calls itself until the kernel stack is
-exhausted:
+When the pCPU where the VMCB was most recently used is switched, reset
+the ASID generation in both VMCBs, triggering new ASID allocation for
+the immediate VMRUN as well as the next VMRUN on the other VMCB.
 
-  BUG: TASK stack guard page was hit at ffffc900037d7ff8
-   svc_write_space+0x90/0x2b0 net/sunrpc/svcsock.c:429
-   svc_write_space+0xe6/0x2b0 net/sunrpc/svcsock.c:430
-   ... 700 more ...
-   svc_sock_setbufsize+0x18d/0x220 net/sunrpc/svcsock.c:386
-   svc_udp_init net/sunrpc/svcsock.c:854 [inline]
-   svc_setup_socket+0xb2f/0x1090 net/sunrpc/svcsock.c:1498
-   svc_addsock+0x2fd/0x760 net/sunrpc/svcsock.c:1547
-   __write_ports_addfd fs/nfsd/nfsctl.c:742 [inline]
-   write_ports+0xa5b/0xcc0 fs/nfsd/nfsctl.c:861
-   nfsctl_transaction_write+0x106/0x1a0 fs/nfsd/nfsctl.c:112
+The ASID is shared between vmcb01 and vmcb02, and gets flushed on every
+nested transition. However, since pCPU tracking is done per VMCB, it is
+possible for one VMCB to allocate a new ASID when migrated to a new
+pCPU, and then the other VMCB reuses that ASID on the old pCPU. This can
+result in the same ASID being used by multiple vCPUs on the old pCPU.
 
-svc_data_ready() and svc_tcp_state_change() chain through their saved
-callbacks the same way, so a TCP descriptor added twice recurses on
-the next incoming segment instead. Reaching any of this takes a
-writer on portlist, and the nfsd filesystem sets no FS_USERNS_MOUNT,
-so the reproducer needs CAP_SYS_ADMIN in the initial user namespace.
+Example scenario:
+- vCPU runs on pCPU A, vmcb01 is active, asid=1.
+- vCPU migrates to pCPU B, vmcb01 pCPU changes, new asid=2.
+- Another vCPU runs on pCPU A and allocates asid=2 as well.
+- vCPU migrates back to pCPU A, and then switches to vmcb02 before it
+  runs again with vmcb01.
+- No pCPU switch is detected for vmcb02, so VMRUN is done with asid=2.
+- Two vCPUs end up using asid=2 on the same pCPU.
 
-Reject a socket that already carries sk_user_data. svc_setup_socket()
-overwrites that field unconditionally, so a socket some other
-consumer has claimed is one NFSD would corrupt whether or not the
-callbacks recurse.
+Keep the VMCB dirtying to the active VMCB only. Clean bits are tracked
+by a pCPU for each VMCB, so do not unnecessarily dirty a VMCB if its
+pCPU does not change.
 
-Fixes: b41b66d63c73 ("[PATCH] knfsd: allow sockets to be passed to nfsd via 'portlist'")
+Additionally, initialize the tracked pCPU for vmcb02 to -1 on nested
+enablement as hardening, so that a new ASID allocation is always
+triggered when nested is disabled and re-enabled.
+
+No performance regression was noticed when overcommitting L1 vCPUs in L0
+(to force rescheduling), pinning L1 <-> L2 vCPUs, and running CPUID in a
+tight loop bouncing between 2 vCPUs in L2.
+
+An alternative (and perhaps more proper) fix would be tracking the ASID
+per-VMCB instead (e.g. [1]). However, that's a more involved change, and
+it would result in having different ASIDs for L1 and L2 without actually
+properly maintaining them. It would probably work because all TLB
+flushes target the current VMCB, and the other VMCB is always flushed on
+nested transitions, but the code ends up in an arguably more fragile
+state. Punt a proper clean fix to an incoming (and overdue) overhaul of
+SVM's ASID usage [2].
+
+[1] https://lore.kernel.org/lkml/20250205182402.2147495-2-yosry.ahmed@linux.dev
+[2] https://lore.kernel.org/kvm/20260728003557.1136583-1-yosry@kernel.org
+
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=54cdc566f64abf51b7f1
-Link: https://patch.msgid.link/20260815162844.8219-1-cel@kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
+Link: https://patch.msgid.link/20260903223258.486034-1-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kvm/svm/nested.c |    1 +
+ arch/x86/kvm/svm/svm.c    |   19 +++++++++++++++----
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -1531,6 +1531,9 @@ int svc_addsock(struct svc_serv *serv, s
- 	err = -EISCONN;
- 	if (so->state > SS_UNCONNECTED)
- 		goto out;
-+	err = -EBUSY;
-+	if (so->sk->sk_user_data)
-+		goto out;
- 	err = -ENOENT;
- 	if (!try_module_get(THIS_MODULE))
- 		goto out;
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1227,6 +1227,7 @@ int svm_allocate_nested(struct vcpu_svm
+ 		goto err_free_vmcb02;
+ 	svm_vcpu_init_msrpm(&svm->vcpu, svm->nested.msrpm);
+ 
++	svm->nested.vmcb02.cpu = -1;
+ 	svm->nested.initialized = true;
+ 	return 0;
+ 
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3713,14 +3713,25 @@ static void pre_svm_run(struct kvm_vcpu
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 
+ 	/*
+-	 * If the previous vmrun of the vmcb occurred on a different physical
+-	 * cpu, then mark the vmcb dirty and assign a new asid.  Hardware's
+-	 * vmcb clean bits are per logical CPU, as are KVM's asid assignments.
++	 * If the previous VMRUN of the VMCB occurred on a different physical
++	 * cpu, then mark the VMCB dirty as hardware's clean bits are per pCPU.
++	 *
++	 * Reset the ASID generation in both VMCBs. This will lead to assigning
++	 * a new ASID now, and then again when switching to the other VMCB.
++	 * However, this is needed as the ASID is shared between the VMCBs, and
++	 * otherwise it would be possible to use an ASID allocated on one pCPU
++	 * on another, for example:
++	 * - vCPU migrates from pCPU A to pCPU B, allocates a new ASID.
++	 * - vCPU migrates back to pCPU A, and then switches the VMCB.
++	 * - The new VMCB does not detect a pCPU change and runs on pCPU A with
++	 *   the new ASID allocated on pCPU B, which is potentially used by
++	 *   another vCPU/VM.
+ 	 */
+ 	if (unlikely(svm->current_vmcb->cpu != vcpu->cpu)) {
+-		svm->current_vmcb->asid_generation = 0;
+ 		vmcb_mark_all_dirty(svm->vmcb);
+ 		svm->current_vmcb->cpu = vcpu->cpu;
++		svm->vmcb01.asid_generation = 0;
++		svm->nested.vmcb02.asid_generation = 0;
+         }
+ 
+ 	if (sev_guest(vcpu->kvm))
 
 
