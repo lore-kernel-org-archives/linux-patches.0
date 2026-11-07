@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060652;
-	b=kJ140J9hR4u3ymMVjj31sWXbNcvrMPkhkFI3BEBeba1eoqpi/pJSxjjyircMw5RxQ/C1
-	 SNSciowWkcIEC8kYVfqGSonNVUXMhJ0XNtMHwtIPZ3qODhLu5qIAZg8WSTKaUxYmArUGV
-	 lLI+DeG83LZTWK/r/+48LA+aeZlBjVpIzug6Uci7BZHaGKqAPi6VHMtkfYdMnMb3YVHaT
-	 Jxuyp582JVLewbhoamevAlybpapCn4wXH3F/3Z0kgBQl1Q38rKbJM/AynG6LbpAmtjSlJ
-	 UlFUi3Ow6pJ21OoZWM3R8EiAv2Wo9S+eX/fZveZWW62iIwtyNrI2dP7VIBexFDPD+1A==
+	t=1794060654;
+	b=SRERgzuXN9Ub1elqAqh3lmWwnw19SyjyktbMY/pVqDSyqkLT0ackKfT7EILTW+zDcnVO
+	 j1wOd1Ox7ExiJKtZoeIKo3fIFxqRwGH8zbOHPu3wGAN9wmib9HDCFHlmI2+KPHXekfz0Q
+	 DHD2Luil7keAo5FlCIEfud20OPXvFaJwCYfbuGOh8TZKcG5HEl8aftfTCEtgmGxZ+l3ST
+	 3N9U1zLzn8qJuMfjCCdWoE1LpvNhNaehizrrNQWp8AspJlltLcdoQt9zOzWVtfgR+tyiK
+	 iJb23QjRZVjpeqqj45v42VFk14N/MvBpEgk9l8B6hpVVBoOsUIlRRWx776mzvBCJvwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060652;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060654;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Os46eE3MpP63mh3sgj8HX6RGlQrUgQQCIholYJzkoko=;
-	b=f6RaNvKghwuC1URb9wh5NWOGw5+xADtXjS8t2BUuERuhwe5xltt9mRzizjgQUXM+8f5M
-	 9Kwp8k+jnntCzzNfxsCtpBnyQuegJEIKA57oMDK/rVrnKGz7mgjIp0WAm5uA9h41wGCYX
-	 K+QQwAyAXVh0Fjg2mkWvFayrGSrqBBtI55DYlARf/yyFytrDMbAQXhH6NLyNG9zT0TGk7
-	 T+dkcPRPmQBFDG7pe3INcv/yKrpPe5pX7aECVks8cW/ToCuJUIurVwyV/lcGOoDUSezjn
-	 DSfQ6Kx6TN12i6y5BK2M5pHa4vu20od2qLM/mK+zR5rot/Gb73MAJU8LSC6+RRYDZ5A==
+	bh=I9xfptSxBgaCyF6eOo4XknwSYqcrTWmkF2y5i11I7es=;
+	b=HopDJTwia7mTK1sCbcUbWbSda6lSCtJ9gEwe2izJdM20iR4GjN25p34EL7Zq7o3UQucG
+	 we+QjczMMqHId4hUysEylh6UxJnHjrh9AXCyV+bDO+ntZU6V4QtQwKlokiLrdtJdVWjYL
+	 4RlcCu4Jwd2sX99J302zDDJThTe5inVMGgaob58Zbgwnt6Gal31aQ8moFQsP04HNLovSF
+	 xXBNB/+AA7ku9jBK9mYtCb7Au/kjaqXCrMtd8gAyN7hczPI+pGXHk2gY7hNdJH7j8OB9b
+	 aEI86yrt6kZNZT+Eh4Ts4Ll2SrRBWY6zKZrqAOiMJk3Epg8Dp8rrRSbl4NpHoNd0gbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PsjSbfsL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0BeLGEY4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D5E606A326;
-	Sat,  7 Nov 2026 14:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A3D606A326;
+	Sat,  7 Nov 2026 14:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PsjSbfsL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238AE1F0089F;
-	Sat,  7 Nov 2026 14:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0BeLGEY4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF551F0089F;
+	Sat,  7 Nov 2026 14:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060652;
-	bh=Os46eE3MpP63mh3sgj8HX6RGlQrUgQQCIholYJzkoko=;
+	s=korg; t=1794060653;
+	bh=I9xfptSxBgaCyF6eOo4XknwSYqcrTWmkF2y5i11I7es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PsjSbfsLe/rjYSyZGj3gFcaApV/FShY70MYxKoGngkaK2BOii2Jvy28SfGybivxVA
-	 b4iWLqViSqbnX+cMGJ7d5IxIQLHdDQA03ov7zLMHVf/cGWkM5tuJyWKG3l56B8q7N2
-	 3FHutRgS8vXLkfp2nZc9KC/EbkaaOOSQ6++1q12Q=
+	b=0BeLGEY42EuKcYoE4KRiOMs4iyXyI+iCUhxQ4NgRq71UkD/mMtiYjwkhdxIsbzl8O
+	 6Cv82KHbDW6VtjUqdFAEvFU5s8JTLDI7myggk+huh/Vn83E/uEz5bwi5OUAnRtw+/z
+	 RVMj4hoVn5RRS7jbnzsnX9AAj5uLWvTM7OFYMkJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Devansh Soni <devanshsoni874@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0093/1536] nvme: zns: cap zone report nr_zones by DMA buffer size
-Date: Sat,  7 Nov 2026 08:35:09 -0500
-Message-ID: <20261107135000.276342402@linuxfoundation.org>
+Subject: [PATCH 6.12 0094/1536] staging: rtl8723bs: fix missing unregister_netdev on sdio_alloc_irq failure
+Date: Sat,  7 Nov 2026 08:35:10 -0500
+Message-ID: <20261107135000.305414455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,59 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Devansh Soni <devanshsoni874@gmail.com>
 
-[ Upstream commit 09c9062d4f62199a634a45e2bb9e6e8e572cc78c ]
+[ Upstream commit 51b554f1a758570159a770983c7a0ccd7c761491 ]
 
-With Partial Report (PR=1), the Number of Zones (NZ) field in the report
-header must equal the number of zone descriptors fully transferred in the
-DMA buffer (ZNS Command Set Specification Rev 1.2, section 3.4.2).
+In rtw_drv_init(), if rtw_drv_register_netdev() succeeds but
+sdio_alloc_irq() fails, the error path jumps to free_if1 and calls
+rtw_sdio_if1_deinit(). However, rtw_sdio_if1_deinit() calls
+rtw_free_netdev() without a preceding unregister_netdev(), freeing a
+still-registered netdev but leaving stale sysfs entries behind.
 
-nvme_ns_report_zones() does not cap the parse loop by max_in_buf derived
-from buflen.  Cap nz with min3() over the device-reported count, nr_zones -
-zone_idx, and max_in_buf.
-
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Devansh Soni <devanshsoni874@gmail.com>
+Link: https://patch.msgid.link/20260619125724.12458-1-devanshsoni874@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/zns.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/sdio_intf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/zns.c b/drivers/nvme/host/zns.c
-index 9a06f9d98cd68..06a32d3a93ffa 100644
---- a/drivers/nvme/host/zns.c
-+++ b/drivers/nvme/host/zns.c
-@@ -179,7 +179,7 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
- 	struct nvme_zone_report *report;
- 	struct nvme_command c = { };
- 	int ret, zone_idx = 0;
--	unsigned int nz, i;
-+	unsigned int max_in_buf, nz, i;
- 	size_t buflen;
+diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+index c9a90d5293b02..c1e02f2a84c3c 100644
+--- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
++++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
+@@ -381,11 +381,14 @@ static int rtw_drv_init(
  
- 	if (ns->head->ids.csi != NVME_CSI_ZNS)
-@@ -189,6 +189,9 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
- 	if (!report)
- 		return -ENOMEM;
+ 	status = sdio_alloc_irq(dvobj);
+ 	if (status != _SUCCESS)
+-		goto free_if1;
++		goto free_netdev;
  
-+	max_in_buf = (buflen - sizeof(struct nvme_zone_report)) /
-+		sizeof(struct nvme_zone_descriptor);
-+
- 	c.zmr.opcode = nvme_cmd_zone_mgmt_recv;
- 	c.zmr.nsid = cpu_to_le32(ns->head->ns_id);
- 	c.zmr.numd = cpu_to_le32(nvme_bytes_to_numd(buflen));
-@@ -208,7 +211,8 @@ int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
- 			goto out_free;
- 		}
+ 	rtw_ndev_notifier_register();
+ 	status = _SUCCESS;
  
--		nz = min((unsigned int)le64_to_cpu(report->nr_zones), nr_zones);
-+		nz = min3((unsigned int)le64_to_cpu(report->nr_zones),
-+			  nr_zones - zone_idx, max_in_buf);
- 		if (!nz)
- 			break;
- 
++free_netdev:
++	if (status != _SUCCESS)
++		rtw_unregister_netdevs(dvobj);
+ free_if1:
+ 	if (status != _SUCCESS && if1)
+ 		rtw_sdio_if1_deinit(if1);
 -- 
 2.53.0
 
