@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065413;
-	b=qon/wwwQdNnOo7xi4u6cnNAEsa5BKAuE+fKqPCT25nLNvxgdSmMnLRULq36phAWVMlVh
-	 lu1HCKgxqxSW/uyXAXGHMRERpIMJrzy79HGtZskSv6Otr94HWlb0aweSD828K5af23kPv
-	 ySoRx1S3GMKwefy9lXs7DnYv/xxZr/ejxgFevzV1HMpsY/xbIZfiHQbciUHtynnJV+J93
-	 RJE90siuiUrX41/Ya7hN04ZXMd3ajzXXYoVMzS/298Hvgz2Vdv6rAG6gU3QH2K3YPhy9C
-	 4Rso0xk9Kz7yhXAU7i2cW/Mlj0WgnrRBUPCWOfWMdwzYe2Lcvab1qv18k1Go+72SXfA==
+	t=1794065414;
+	b=MfGcMC5tQrg7gDwDuqDhShy13V3kJ35hOVAzb9UpgL59l/Fp9izwRAQgAfEYmXFSb39o
+	 XJlv9fTqOOrrgCOCK8W6L/Dle1zrlx1DMwnoQIr+b65BWqGUzCtDR6fdp74mik4gu+XEK
+	 b2YsO/i5QJkOCjrJ5onn5OcyfmFCpPCdC2dsegE6vTs0szFyytullnm+8mtN4Yb4czCGO
+	 ScydXZgB/bY4i7lzs/oSYmMDvpWFAGQxIga8iBsh1ObuF7qiGDTcMcoeHn0bnLUEg/ECa
+	 Xhf3unuLXnDqfrOc1+TG5L8aJ5vtVnPOdJ0IPBBHGkKZJ/edheF3wA4xK2DUDQuEq6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065413;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065414;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p0RLjJonUKh/C8d0M0jIu6I21pXHkhJy00AyIQ16DpY=;
-	b=tB19BH0b6jt2dmPNNfiXchle+j2DiY3nsbTR4Ej1un+vNa7HSyyvtlrunxaoTZlTy89L
-	 KYReDaET2T59X3p4U1fbyH4/MKc26nFUlrb4+IGaSRQ4x4de8vbmsBiQVXpoVMbABMSQN
-	 kKHNDlk4zSRQig1rn9tq/76JU72vzPEtiUXcd91UyHS1dK2Vh7quyU6Szn5lTSQL7I6D/
-	 Hx4c83Eb0xqpB2F8pGlKq7+7TqPoQ7qeZCLIz7FDAfZIVK8ey6qSLyrysmiA9jGHrOdMQ
-	 DwtaYqrmNi6N+wyaMaMRkXgH6fVZb4anCQtabqEnMmpg2sfSzGau+m6+4Y3oMYgFAng==
+	bh=heJ+AUgHmsRJtroxDv7a4Fpkw4prM/hKKHtj3dUq0O8=;
+	b=MXRJEeH10WHz9uggUv2LjgH8dY8kYN/wP2E9reP8oG/+n3YPlKSyjIvvNZZqLZ76V26H
+	 4fOE+YqxzfB6SK0KegJxPh39cFxOOkuDKgKXIP//0+1AeeV+7zI3AvBEMa2BbY6grkNWl
+	 jNc5RcvocS/fpmve2dnye8Tsj4X+U/pEcc55hdpbP/40/Acfssc3CWrH4dpD7Wg+ylrzl
+	 PYXJoAE89U3G9hLKivALckX9DnAcdTMs3FjSvGu1tV2KnDVX7LBfr8a9hWtSyBtgIzjTa
+	 BgIG4E3/gos1UkMz+o4YCQgU4Wb5Nqi5wSu5KsUkGlK1OO939UIqvNIKzty/OJbdI/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvPDdMB0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQAd0h33;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21D3606D811;
-	Sat,  7 Nov 2026 15:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39324606D80F;
+	Sat,  7 Nov 2026 15:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvPDdMB0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA521F008A2;
-	Sat,  7 Nov 2026 15:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQAd0h33
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D961F008A2;
+	Sat,  7 Nov 2026 15:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065412;
-	bh=p0RLjJonUKh/C8d0M0jIu6I21pXHkhJy00AyIQ16DpY=;
+	s=korg; t=1794065414;
+	bh=heJ+AUgHmsRJtroxDv7a4Fpkw4prM/hKKHtj3dUq0O8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FvPDdMB01ngvlzwOOr1bwF7WKZ1zTaHF9lakJcvFapqPDWl+SBH1KV5SE1+dl+FGI
-	 PPL+8edgHNWYKeBFUDii8Z3RjSsO/TXiPyYdJ60DUK+lGUPYaBzcYjVgNbWBaPUmmb
-	 UcPzYI003Q8Njxr2f4VZddyEydhisOnIYfE5RPho=
+	b=aQAd0h33riL/NqYgOGOQNEl5uKfvvuwGNZSOtNvidAepmZbVWyajo6JhUKq4IQesl
+	 8uIzDNpifLAmGyPr7ZYsFJOGnnMvGWmmF09ua26NDdmeoxSMqvuU1ZV5rXmVWMQLK2
+	 XDIDNwQXO9gbhiunzcOqPsqYK1+xF+bGfHK9nZQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Hoffmann <f3lix.dev@gmx.de>,
+	Venky Shankar <vshankar@redhat.com>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1122/1257] libceph: reject mismatched CRUSH weight-set sizes
-Date: Sat,  7 Nov 2026 08:56:58 -0500
-Message-ID: <20261107135010.225735953@linuxfoundation.org>
+Subject: [PATCH 7.3 1131/1257] ceph: dont fail write_begin with -EAGAIN after flushing old snapc
+Date: Sat,  7 Nov 2026 08:57:07 -0500
+Message-ID: <20261107135010.468150985@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,71 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Hoffmann <f3lix.dev@gmx.de>
+From: Venky Shankar <vshankar@redhat.com>
 
-[ Upstream commit d8fc89b5bfe4cb3aebe4c8a818247d11291b841c ]
+[ Upstream commit 6ff7920ca78f6edcabc26c63d20f681d938027c7 ]
 
-A CEPH_MSG_OSD_MAP message can contain CRUSH choose args with replacement
-weight vectors for straw2 buckets.  decode_choose_args() validates the
-optional IDs vector against the referenced bucket, but does not validate
-the size of any replacement-weight vector.
+When ceph_netfs_check_write_begin() finds the folio dirty in an older
+snap context, it drops the folio, waits for that snap context to be
+flushed and then returns -EAGAIN so that the write is retried.
 
-The CRUSH mapper assumes that each replacement vector has exactly as many
-entries as the bucket.  A zero-length vector for a nonempty bucket makes
-bucket_straw2_choose() dereference NULL, while a shorter nonzero vector
-causes an out-of-bounds read.  An authenticated monitor or OSD can deliver
-such a map and crash a kernel client when it performs placement for an
-ordinary request.
+However, since commit fac47b43c760 ("netfs: do not unlock and put the
+folio twice"), netfs_write_begin() retries only when ->check_write_begin()
+returns 0 with *foliop cleared -- every error, -EAGAIN included, is
+returned as is. The -EAGAIN thus propagates up to write(2), which fails
+with "Resource temporarily unavailable" once the dirty data has been
+flushed, rather than being retried.
 
-Reject a nonempty collection of weight sets for an absent bucket and
-require every replacement-weight vector to match its bucket size.
+This is easily hit by buffered writers rewriting dirty pages while
+snapshots are being taken, e.g. a kernel build linking vmlinux into a
+directory under a snapshot schedule:
+
+  ld: final link failed: Resource temporarily unavailable
+
+Return the wait_event_killable() result as is so that netfs re-gets the
+folio and retries on success.
 
 Cc: stable@vger.kernel.org
-Fixes: 5cf9c4a9959b ("libceph, crush: per-pool crush_choose_arg_map for crush_do_rule()")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Felix Hoffmann <f3lix.dev@gmx.de>
+Fixes: fac47b43c760 ("netfs: do not unlock and put the folio twice")
+Link: https://tracker.ceph.com/issues/57656
+Signed-off-by: Venky Shankar <vshankar@redhat.com>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/osdmap.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/ceph/addr.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
-index cf34b35c9a901..7bd27c2fc8726 100644
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -376,7 +376,9 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
- 		ceph_decode_32_safe(p, end, num_buckets, e_inval);
- 		while (num_buckets--) {
- 			struct crush_choose_arg *arg;
-+			struct crush_bucket *bucket;
- 			u32 bucket_index;
-+			u32 i;
- 
- 			ceph_decode_32_safe(p, end, bucket_index, e_inval);
- 			if (bucket_index >= arg_map->size)
-@@ -387,10 +389,18 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
- 			if (ret)
- 				goto fail;
- 
-+			bucket = c->buckets[bucket_index];
- 			if (arg->ids_size &&
--			    (!c->buckets[bucket_index] ||
--			     arg->ids_size != c->buckets[bucket_index]->size))
-+			    (!bucket || arg->ids_size != bucket->size))
- 				goto e_inval;
-+
-+			if (arg->weight_set_size && !bucket)
-+				goto e_inval;
-+
-+			for (i = 0; i < arg->weight_set_size; i++) {
-+				if (arg->weight_set[i].size != bucket->size)
-+					goto e_inval;
-+			}
- 		}
- 
- 		if (!__insert_choose_arg_map(&c->choose_args, arg_map)) {
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index 286eff8849dfd..ec14a5606886f 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -1895,7 +1895,12 @@ static int ceph_netfs_check_write_begin(struct file *file, loff_t pos, unsigned
+ 		r = wait_event_killable(ci->i_cap_wq,
+ 					context_is_writeable_or_written(inode, snapc));
+ 		ceph_put_snap_context(snapc);
+-		return r == 0 ? -EAGAIN : r;
++		/*
++		 * *foliop is cleared, so a return of 0 makes
++		 * netfs_write_begin() grab the folio again and call us again
++		 * to recheck it. Any error (fatal signal) fails the write.
++		 */
++		return r;
+ 	}
+ 	return 0;
+ }
 -- 
 2.53.0
 
