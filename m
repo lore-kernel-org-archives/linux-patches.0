@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065057;
-	b=g1KB2dR+orAGWkfSkD6P36JQ4RkJgCDI2Ia+V64BKTw5V847scf0Cg9xZFkToDQlpnOt
-	 75ySLGqYMw0G2e8YZ9ZNrALf9pNI7UZydV+cLJOqqjTceSLuYu0TJY4DgAnq/fBbTnnoH
-	 KxUpQ/+0R4+1RYAdFK6i6hBXb+6NXspER7+gc6SdKQa7Az7oZKjBadbe06RH2c/bhctWD
-	 c2av12VQgbWVkAY5ESSiDjDo4p1w4lqgOgafM6Xyy5wEQsliDrzdMzc4OUp5s3WOQgl3E
-	 60SA8kZ89FIodx6mTE8n01hrimaIzYtlyvjfD6+v5GyB6PvH5t1W9qz2ohhiC2hMn4g==
+	t=1794065059;
+	b=guwygFC/OD8ngb+DRDvbXOiqL8HyV1mzZevWSofG/DHvsPJcPWaZVM9JxRCBRMOGdZLA
+	 Ss3OUS3uBe3YN3M3TtiNq35TI+eIfBZDgYO+i9SX7/4Jh9t7hSFVZi3yqLnMWbNNxixlP
+	 7zMfgBkffAhi+973JHl5BCISuiC7sr1FUpGJVp/FWMGYjDksX0Vfr42PriK/rAitvlkdo
+	 CjTwD26DSjzBmQwwRNCdqpQsX2Joqskxv2UYhR3cYwNdkpy9g/2KRYV4zzE931y17wSgW
+	 ZN4awdu/diQzGVHE5nkhntJBGb9jgIuYs4q4uuf1tP+HcvZiS5kqjmeJDfmiBZdxyHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065059;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LoGaRsGbjsnw2iPNqkBJ7GTWz/DVI7LY/rhwntJVgU8=;
-	b=bF8PXu1G7WbV+hSmJZv2ULUpbUs2tsaIdeGXqeGLsEq/qiNPOY5Gz9F+oCVvYAswa6xR
-	 XukLfqay5nj04AkXE8v8xPhuDFYMYgIMZEkGnofcFjoBRT3EdBuvrsxH87dpGXIvQ7w8t
-	 AsQl4faNkgLWpSvrNzPLTnB7/eqXw5Iy8QV1PNiSt+UAaQdbKBJo4HuB+H0jEdaSc4r7F
-	 VkxLR/qFNekSRk6sLYQlO+mPawJRkSIffRl1xB9p31nj0JB5EdB1IeCoZJNwqPvoft986
-	 7GXcbpDq1VGRePlw8NxpM1cE0scgsSROhYkx8U/4a6UhAj3E64JYFACtb/dNVyRaGsA==
+	bh=pj2Y3WUQFIo8yI5OAe3mc4xalcMH76I2+xFnnVtMel8=;
+	b=kSNMvJFfIRyMlWWjqj6eHIeYsyCClNgGXANWW0RGpvPM8GRaULCFCFtoG2/sRH8g0A7B
+	 MPhaB1GXt+A+zSC9wmXpGlEyFBwgfX/bELMU6jLsPhHUbrUVLtyV5cJTlaHq98pTA1i4c
+	 pGh7SnfNsWG7YgZnOaWh/VExZet1chmCxnjaLy74nez6DvDbcR2IgHf5qWyNPVW3l4q4o
+	 beH1mmfwrFUJ0zLjHM5kWuzysTgty8gw8d5bkAykYVb8f6r6qvZ2B0dfVDKUbqby2jwnL
+	 eiW+A8a4LslmpHbD5q03UegHNQdrJOvOYXm2c6GVJfarS4wODueWo3a1Y+r6F541oRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTzLiKBQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i9V/SjV2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434EE606A32E;
-	Sat,  7 Nov 2026 15:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3DB606A32F;
+	Sat,  7 Nov 2026 15:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTzLiKBQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422431F0089F;
-	Sat,  7 Nov 2026 15:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i9V/SjV2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A96F1F008A1;
+	Sat,  7 Nov 2026 15:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065057;
-	bh=LoGaRsGbjsnw2iPNqkBJ7GTWz/DVI7LY/rhwntJVgU8=;
+	s=korg; t=1794065058;
+	bh=pj2Y3WUQFIo8yI5OAe3mc4xalcMH76I2+xFnnVtMel8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hTzLiKBQAMREqtThyn4tNsC9Y3Gns+lAdgiEVWN/sqBILCp20o6h9NyB0Hi0mrN8z
-	 s/Vr43X6+cHicAVj1WEoImQIqKXSicPTQZyh767LrZ0KneF3jojclQe26BdxVgKA5Q
-	 TpwdgkdqT+KPNde/bDlykvrF+bEoT5OossczxPoU=
+	b=i9V/SjV2jbAV4IX3+lj+0nL2s2Zw1Kk1eSd3J+EbE8jasMH6H+EUp5bOkyGQKPx4U
+	 Oo2JW5NYsA+TQfaq+6/BCtIc0yKS70OmdFPMeLWn3bCx/zQpPWEiGH1SL5cEnDjj+g
+	 cijQCmzBVzWNcOa1tzbRRx6HizFgrnQCdbjRT5m4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Thomas Nemer <thomas.nemer@fortytwo.fr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0904/1257] l2tp: snapshot sequencing state when building transmit headers
-Date: Sat,  7 Nov 2026 08:53:20 -0500
-Message-ID: <20261107135004.302235987@linuxfoundation.org>
+Subject: [PATCH 7.3 0878/1257] ALSA: usb-audio: Fix missing sample-rate control for PreSonus AudioBox USB
+Date: Sat,  7 Nov 2026 08:52:54 -0500
+Message-ID: <20261107135003.574509433@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,333 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Thomas Nemer <thomas.nemer@fortytwo.fr>
 
-[ Upstream commit d06ae66516e1aaf023808912af6292aef09d46c3 ]
+[ Upstream commit 1869c47e5d59c6940823a58d58b647645cb69017 ]
 
-Updates to send_seq from netlink, PPP setsockopt and receive-side
-negotiation race with packet transmission. The header length is updated
-separately, while transmit reads both fields repeatedly without
-synchronization.
+The fixed audio formats for the PreSonus AudioBox USB declare
+.attributes = 0, dropping UAC_EP_CS_ATTR_SAMPLE_RATE that the device
+advertises in its class-specific endpoint descriptors (EP_GENERAL
+bmAttributes 0x01 on both EP 0x01 and EP 0x82).
 
-For example, transmit can push a ten-byte L2TPv2 header, then a concurrent
-writer clears send_seq before the header builder reads it. The builder
-writes only six bytes, leaving four bytes of uninitialized skb headroom
-in the outgoing packet. The reverse mismatch overwrites the beginning of
-the payload. A later hdr_len read can also make the UDP length disagree
-with the skb length.
+As a result set_sample_rate_v1() bails out and the kernel never sends
+the UAC1 SET_CUR SAMPLING_FREQ request, leaving the device on its
+power-on default clock. Playback and capture then run distorted
+whenever the stream rate differs from that default. The device keeps
+the last rate set by a host as long as it stays powered, which made the
+regression look intermittent (e.g. it disappears after the device was
+initialized by a host running a kernel without this quirk entry).
 
-KCSAN reported:
+Restore the sample-rate attribute on both streams.
 
-  BUG: KCSAN: data-race in l2tp_session_set_header_len / l2tp_xmit_skb
-
-  write to 0xffff888100d0944a of 2 bytes by task 116 on cpu 1:
-   l2tp_session_set_header_len+0x81/0xc0
-   l2tp_nl_cmd_session_modify+0x122/0x2c0
-   genl_family_rcv_msg_doit+0x170/0x1d0
-
-  read to 0xffff888100d0944a of 2 bytes by task 115 on cpu 0:
-   l2tp_xmit_skb+0x9c/0xc80
-   pppol2tp_sendmsg+0x21c/0x2a0
-   __sys_sendto+0x28c/0x2a0
-
-The bug can lead to leak kernel base address for KASLR bypass, the
-corresponding reproducer can be provided per request.
-
-Initialize hdr_len to the maximum header size and leave it unchanged
-when sequencing is toggled. Snapshot send_seq once per packet and use
-that snapshot for the actual header length and header construction,
-including the sequence flag. Use the same length for headroom, the header
-push and the UDP length. PPP callers can safely reserve the maximum size;
-L2TPv3 header sizes do not depend on sequencing.
-
-Make send_seq a separate bool so READ_ONCE() and WRITE_ONCE() can be used
-without sharing a bitfield storage unit with other configuration flags.
-Preserve the netlink attribute's existing low-bit truncation.
-
-Fixes: 3557baabf280 ("[L2TP]: PPP over L2TP driver core")
+Fixes: 34fe4a9df247 ("ALSA: usb-audio: Add quirk for PreSonus AudioBox USB")
 Cc: stable@vger.kernel.org
-Assisted-by: GPT-6 Astra
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Link: https://patch.msgid.link/20261013090500.1180376-1-nicoyip.dev@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Thomas Nemer <thomas.nemer@fortytwo.fr>
+Link: https://patch.msgid.link/20261018111519.191844-1-thomas.nemer@fortytwo.fr
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_core.c    | 51 +++++++++++++++++++----------------------
- net/l2tp/l2tp_core.h    |  6 ++---
- net/l2tp/l2tp_debugfs.c |  4 ++--
- net/l2tp/l2tp_netlink.c | 11 ++++-----
- net/l2tp/l2tp_ppp.c     |  8 +++----
- 5 files changed, 35 insertions(+), 45 deletions(-)
+ sound/usb/quirks-table.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
-index 4712cc41881a3..7e042a3e648ce 100644
---- a/net/l2tp/l2tp_core.c
-+++ b/net/l2tp/l2tp_core.c
-@@ -915,11 +915,9 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
- 		 * check if we sre sending sequence numbers and if not,
- 		 * configure it so.
- 		 */
--		if (!session->lns_mode && !session->send_seq) {
-+		if (!session->lns_mode && !READ_ONCE(session->send_seq)) {
- 			trace_session_seqnum_lns_enable(session);
--			session->send_seq = 1;
--			l2tp_session_set_header_len(session, tunnel->version,
--						    tunnel->encap);
-+			WRITE_ONCE(session->send_seq, true);
- 		}
- 	} else {
- 		/* No sequence numbers.
-@@ -937,12 +935,10 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
- 		 * If we're the LNS and we're sending sequence numbers, the
- 		 * LAC is broken. Discard the frame.
- 		 */
--		if (!session->lns_mode && session->send_seq) {
-+		if (!session->lns_mode && READ_ONCE(session->send_seq)) {
- 			trace_session_seqnum_lns_disable(session);
--			session->send_seq = 0;
--			l2tp_session_set_header_len(session, tunnel->version,
--						    tunnel->encap);
--		} else if (session->send_seq) {
-+			WRITE_ONCE(session->send_seq, false);
-+		} else if (READ_ONCE(session->send_seq)) {
- 			pr_debug_ratelimited("%s: recv data has no seq numbers when required. Discarding.\n",
- 					     session->name);
- 			atomic_long_inc(&session->stats.rx_seq_discards);
-@@ -1138,7 +1134,8 @@ static void l2tp_udp_encap_err_recv(struct sock *sk, struct sk_buff *skb, int er
- 
- /* Build an L2TP header for the session into the buffer provided.
-  */
--static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf)
-+static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf,
-+				    bool send_seq)
- {
- 	struct l2tp_tunnel *tunnel = session->tunnel;
- 	__be16 *bufp = buf;
-@@ -1147,14 +1144,14 @@ static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf)
- 	u32 tunnel_id = tunnel->peer_tunnel_id;
- 	u32 session_id = session->peer_session_id;
- 
--	if (session->send_seq)
-+	if (send_seq)
- 		flags |= L2TP_HDRFLAG_S;
- 
- 	/* Setup L2TP header. */
- 	*bufp++ = htons(flags);
- 	*bufp++ = htons(tunnel_id);
- 	*bufp++ = htons(session_id);
--	if (session->send_seq) {
-+	if (send_seq) {
- 		*bufp++ = htons(session->ns);
- 		*bufp++ = 0;
- 		session->ns++;
-@@ -1165,7 +1162,8 @@ static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf)
- 	return bufp - optr;
- }
- 
--static int l2tp_build_l2tpv3_header(struct l2tp_session *session, void *buf)
-+static int l2tp_build_l2tpv3_header(struct l2tp_session *session, void *buf,
-+				    bool send_seq)
- {
- 	struct l2tp_tunnel *tunnel = session->tunnel;
- 	char *bufp = buf;
-@@ -1191,7 +1189,7 @@ static int l2tp_build_l2tpv3_header(struct l2tp_session *session, void *buf)
- 	if (session->l2specific_type == L2TP_L2SPECTYPE_DEFAULT) {
- 		u32 l2h = 0;
- 
--		if (session->send_seq) {
-+		if (send_seq) {
- 			l2h = 0x40000000 | session->ns;
- 			session->ns++;
- 			session->ns &= 0xffffff;
-@@ -1225,19 +1223,24 @@ static int l2tp_xmit_queue(struct l2tp_tunnel *tunnel, struct sk_buff *skb, stru
- static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, unsigned int *len)
- {
- 	struct l2tp_tunnel *tunnel = session->tunnel;
-+	bool send_seq = READ_ONCE(session->send_seq);
- 	unsigned int data_len = skb->len;
- 	struct sock *sk = tunnel->sock;
-+	u16 hdr_len = session->hdr_len;
- 	int headroom, uhlen, udp_len;
- 	int ret = NET_XMIT_SUCCESS;
- 	struct inet_sock *inet;
- 	struct udphdr *uh;
- 
-+	if (tunnel->version == L2TP_HDR_VER_2 && !send_seq)
-+		hdr_len -= 4;
-+
- 	/* Check that there's enough headroom in the skb to insert IP,
- 	 * UDP and L2TP headers. If not enough, expand it to
- 	 * make room. Adjust truesize.
- 	 */
- 	uhlen = (tunnel->encap == L2TP_ENCAPTYPE_UDP) ? sizeof(*uh) : 0;
--	headroom = NET_SKB_PAD + sizeof(struct iphdr) + uhlen + session->hdr_len;
-+	headroom = NET_SKB_PAD + sizeof(struct iphdr) + uhlen + hdr_len;
- 	if (skb_cow_head(skb, headroom)) {
- 		kfree_skb(skb);
- 		return NET_XMIT_DROP;
-@@ -1245,9 +1248,9 @@ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, uns
- 
- 	/* Setup L2TP header */
- 	if (tunnel->version == L2TP_HDR_VER_2)
--		l2tp_build_l2tpv2_header(session, __skb_push(skb, session->hdr_len));
-+		l2tp_build_l2tpv2_header(session, __skb_push(skb, hdr_len), send_seq);
- 	else
--		l2tp_build_l2tpv3_header(session, __skb_push(skb, session->hdr_len));
-+		l2tp_build_l2tpv3_header(session, __skb_push(skb, hdr_len), send_seq);
- 
- 	/* Reset control buffer */
- 	memset(skb->cb, 0, sizeof(skb->cb));
-@@ -1290,7 +1293,7 @@ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, uns
- 		uh = udp_hdr(skb);
- 		uh->source = inet->inet_sport;
- 		uh->dest = inet->inet_dport;
--		udp_len = uhlen + session->hdr_len + data_len;
-+		udp_len = uhlen + hdr_len + data_len;
- 		if (udp_len > U16_MAX) {
- 			kfree_skb(skb);
- 			ret = NET_XMIT_DROP;
-@@ -1759,16 +1762,11 @@ static void l2tp_session_del_work(struct work_struct *work)
- 	l2tp_session_put(session);
- }
- 
--/* We come here whenever a session's send_seq, cookie_len or
-- * l2specific_type parameters are set.
-- */
--void l2tp_session_set_header_len(struct l2tp_session *session, int version,
--				 enum l2tp_encap_type encap)
-+static void l2tp_session_set_header_len(struct l2tp_session *session, int version,
-+					enum l2tp_encap_type encap)
- {
- 	if (version == L2TP_HDR_VER_2) {
--		session->hdr_len = 6;
--		if (session->send_seq)
--			session->hdr_len += 4;
-+		session->hdr_len = 10;
- 	} else {
- 		session->hdr_len = 4 + session->cookie_len;
- 		session->hdr_len += l2tp_get_l2specific_len(session);
-@@ -1776,7 +1774,6 @@ void l2tp_session_set_header_len(struct l2tp_session *session, int version,
- 			session->hdr_len += 4;
- 	}
- }
--EXPORT_SYMBOL_GPL(l2tp_session_set_header_len);
- 
- struct l2tp_session *l2tp_session_create(int priv_size, struct l2tp_tunnel *tunnel, u32 session_id,
- 					 u32 peer_session_id, struct l2tp_session_cfg *cfg)
-diff --git a/net/l2tp/l2tp_core.h b/net/l2tp/l2tp_core.h
-index ffd8ced3a51ff..25ae4c25d3eff 100644
---- a/net/l2tp/l2tp_core.h
-+++ b/net/l2tp/l2tp_core.h
-@@ -76,7 +76,7 @@ struct l2tp_session {
- 	u8			peer_cookie[8];
- 	int			peer_cookie_len;
- 	u16			l2specific_type;
--	u16			hdr_len;
-+	u16			hdr_len;	/* maximum L2TP header length */
- 	u32			nr;		/* session NR state (receive) */
- 	u32			ns;		/* session NR state (send) */
- 	struct sk_buff_head	reorder_q;	/* receive reorder queue */
-@@ -94,8 +94,8 @@ struct l2tp_session {
- 
- 	char			name[L2TP_SESSION_NAME_MAX]; /* for logging */
- 	char			ifname[IFNAMSIZ];
-+	bool			send_seq;	/* send packets with sequence numbers? */
- 	unsigned int		recv_seq:1;	/* expect receive packets with sequence numbers? */
--	unsigned int		send_seq:1;	/* send packets with sequence numbers? */
- 	unsigned int		lns_mode:1;	/* behave as LNS?
- 						 * LAC enables sequence numbers under LNS control.
- 						 */
-@@ -257,8 +257,6 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
- int l2tp_udp_encap_recv(struct sock *sk, struct sk_buff *skb);
- 
- /* Transmit path helpers for sending packets over the tunnel socket. */
--void l2tp_session_set_header_len(struct l2tp_session *session, int version,
--				 enum l2tp_encap_type encap);
- int l2tp_xmit_skb(struct l2tp_session *session, struct sk_buff *skb);
- 
- /* Pseudowire management.
-diff --git a/net/l2tp/l2tp_debugfs.c b/net/l2tp/l2tp_debugfs.c
-index c12d5e1ee550c..58d1d6a7768ef 100644
---- a/net/l2tp/l2tp_debugfs.c
-+++ b/net/l2tp/l2tp_debugfs.c
-@@ -182,12 +182,12 @@ static void l2tp_dfs_seq_session_show(struct seq_file *m, void *v)
- 		   session->pwtype == L2TP_PWTYPE_ETH ? "ETH" :
- 		   session->pwtype == L2TP_PWTYPE_PPP ? "PPP" :
- 		   "");
--	if (session->send_seq || session->recv_seq)
-+	if (READ_ONCE(session->send_seq) || session->recv_seq)
- 		seq_printf(m, "   nr %u, ns %u\n", session->nr, session->ns);
- 	seq_printf(m, "   refcnt %d\n", refcount_read(&session->ref_count));
- 	seq_printf(m, "   config 0/0/%c/%c/-/%s %08x %u\n",
- 		   session->recv_seq ? 'R' : '-',
--		   session->send_seq ? 'S' : '-',
-+		   READ_ONCE(session->send_seq) ? 'S' : '-',
- 		   session->lns_mode ? "LNS" : "LAC",
- 		   0,
- 		   jiffies_to_msecs(session->reorder_timeout));
-diff --git a/net/l2tp/l2tp_netlink.c b/net/l2tp/l2tp_netlink.c
-index 38aac59d052c4..89ef04c78787d 100644
---- a/net/l2tp/l2tp_netlink.c
-+++ b/net/l2tp/l2tp_netlink.c
-@@ -700,12 +700,9 @@ static int l2tp_nl_cmd_session_modify(struct sk_buff *skb, struct genl_info *inf
- 	if (info->attrs[L2TP_ATTR_RECV_SEQ])
- 		session->recv_seq = nla_get_u8(info->attrs[L2TP_ATTR_RECV_SEQ]);
- 
--	if (info->attrs[L2TP_ATTR_SEND_SEQ]) {
--		struct l2tp_tunnel *tunnel = session->tunnel;
--
--		session->send_seq = nla_get_u8(info->attrs[L2TP_ATTR_SEND_SEQ]);
--		l2tp_session_set_header_len(session, tunnel->version, tunnel->encap);
--	}
-+	if (info->attrs[L2TP_ATTR_SEND_SEQ])
-+		WRITE_ONCE(session->send_seq,
-+			   nla_get_u8(info->attrs[L2TP_ATTR_SEND_SEQ]) & 1);
- 
- 	if (info->attrs[L2TP_ATTR_LNS_MODE])
- 		session->lns_mode = nla_get_u8(info->attrs[L2TP_ATTR_LNS_MODE]);
-@@ -748,7 +745,7 @@ static int l2tp_nl_session_send(struct sk_buff *skb, u32 portid, u32 seq, int fl
- 	    (session->peer_cookie_len &&
- 	     nla_put(skb, L2TP_ATTR_PEER_COOKIE, session->peer_cookie_len, session->peer_cookie)) ||
- 	    nla_put_u8(skb, L2TP_ATTR_RECV_SEQ, session->recv_seq) ||
--	    nla_put_u8(skb, L2TP_ATTR_SEND_SEQ, session->send_seq) ||
-+	    nla_put_u8(skb, L2TP_ATTR_SEND_SEQ, READ_ONCE(session->send_seq)) ||
- 	    nla_put_u8(skb, L2TP_ATTR_LNS_MODE, session->lns_mode) ||
- 	    (l2tp_tunnel_uses_xfrm(tunnel) &&
- 	     nla_put_u8(skb, L2TP_ATTR_USING_IPSEC, 1)) ||
-diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
-index ef8fdfaf051d4..4f311d473a646 100644
---- a/net/l2tp/l2tp_ppp.c
-+++ b/net/l2tp/l2tp_ppp.c
-@@ -1195,9 +1195,7 @@ static int pppol2tp_session_setsockopt(struct sock *sk,
- 			err = -EINVAL;
- 			break;
- 		}
--		session->send_seq = !!val;
--		l2tp_session_set_header_len(session, session->tunnel->version,
--					    session->tunnel->encap);
-+		WRITE_ONCE(session->send_seq, !!val);
- 		break;
- 
- 	case PPPOL2TP_SO_LNSMODE:
-@@ -1307,7 +1305,7 @@ static int pppol2tp_session_getsockopt(struct sock *sk,
- 		break;
- 
- 	case PPPOL2TP_SO_SENDSEQ:
--		*val = session->send_seq;
-+		*val = READ_ONCE(session->send_seq);
- 		break;
- 
- 	case PPPOL2TP_SO_LNSMODE:
-@@ -1546,7 +1544,7 @@ static void pppol2tp_seq_session_show(struct seq_file *m, void *v)
- 		   state, user_data_ok);
- 	seq_printf(m, "   0/0/%c/%c/%s %08x %u\n",
- 		   session->recv_seq ? 'R' : '-',
--		   session->send_seq ? 'S' : '-',
-+		   READ_ONCE(session->send_seq) ? 'S' : '-',
- 		   session->lns_mode ? "LNS" : "LAC",
- 		   0,
- 		   jiffies_to_msecs(session->reorder_timeout));
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index dd02c6294edf2..0426cbda314b0 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -2719,7 +2719,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 					.iface = 2,
+ 					.altsetting = 1,
+ 					.altset_idx = 1,
+-					.attributes = 0,
++					.attributes = UAC_EP_CS_ATTR_SAMPLE_RATE,
+ 					.endpoint = 0x01,
+ 					.ep_attr = USB_ENDPOINT_XFER_ISOC,
+ 					.rates = SNDRV_PCM_RATE_44100 |
+@@ -2740,7 +2740,7 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+ 					.iface = 3,
+ 					.altsetting = 1,
+ 					.altset_idx = 1,
+-					.attributes = 0,
++					.attributes = UAC_EP_CS_ATTR_SAMPLE_RATE,
+ 					.endpoint = 0x82,
+ 					.ep_attr = USB_ENDPOINT_XFER_ISOC,
+ 					.rates = SNDRV_PCM_RATE_44100 |
 -- 
 2.53.0
 
