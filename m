@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060893;
-	b=y0O80HX1k5RHq6/obE76cG05Xo3u+HH+agF3Kh/xkPFGQxuVYOy1sjzfnyaMsxSmDpOe
-	 MNn/ihgG7wP1QbHEksjfhb+pyQJ9nHFVmLiforFIzYRcvTO6GEUIuaZyt+cEsvTeAbTT4
-	 bzOKzFYDQ0elTZHZ4pBbWYD0IdHrjh6h821sGGGPoyu2iCAdyoq+7+spCHkYFJPHJpvGK
-	 AJjITiX6bxjiL6i7yXvvvDeQovpLyhBPVAQXr1yXxHzqRDsB3ENksq+CaRNG4DCUqJGrP
-	 DhBXOLtMtDbIh4XSVR1w9vvv5C69Nb5b/wF3yoN1iHpxlpEEzs9yVfpCPhxGsUj3Vvg==
+	t=1794060894;
+	b=rO1qqpLINwGdGwO9lntmCDeA5Gdt8s6MSiuzd5uGkfwDV4oyea/BbrBlvgVeLuHrN3Ug
+	 UFZalanBBQotgJR20dNeUnNHYuCJo5EL9Rrehb+oPDxHP4rYtIHFExq7Hc7g2PsdODGQo
+	 240hot2ZwMmhVqhtR0TwnMlxj7bkV/dzFuY+TGrOkQ1jXTaE52z1PwasceewWCOD9Ja+C
+	 7ntBboM5xXeiW8iTJauzGa16E1pLmO6wujrUTguCMUiHmpXbReJY5sG4CzOdhUjQUSY7j
+	 9vpDIXz86tOonDUuzzgVLjzlKUGdsrUu7bjSWSPewjXX7bK4FCKPGeClLHQdyazbEDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060893;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060894;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0myzE/3AqqifM+opNuUkkHURVaqXO0/xgLlKsrfvZuI=;
-	b=Cb5qjD65ev/BiXGaIbqy0Sapz7OQjIfhulItq+blofvObr2shvAZKlu7JfKO3gGbdo12
-	 fzl8WOIVQxFFw6TcIg8Y3t02smRHSeUdQI46Cx50JtXPhTqy0OP3S0vZwZAsB93ihWG4H
-	 pIzNi3YFO0IH90REvxnVxa6o93bjYe27HKeIaJZW4WfsVaeglpd3kp53o5GZsJKgPJJJF
-	 PNCsrvUlQ7xAUXRh4B0iNHork6VPrOwZF4Odn4xIFHIRBgD3gIdtXCSueQnXFZIsQfEDI
-	 XrGrcY0pqBbRWP43gt8j8EySJnD3ChuQOZhsFJVHxINZaeMD3wHFpm0SwYg//17Yo4w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=BNtf0R54clMLcNnuRoZUQC0LNFnWNvco38EK4qK4McQ=;
+	b=NDD+z86pxcSrAQMZhIcDkexpTo4/b21rELDqa1qRlIfXu1BH/RAXoL1esIYNoVvwq6x6
+	 UeYd4FTeSe9JKkwbbZ6cQ/cKAnntRLSYzyvz8rCTH6RfHCWKPTiVNZ13KuD7re2roQ5SN
+	 1aM+zvjPAF5zmGRfCSD10BZQR5MLEowDQUnr9WedD9iOAcVHzkAl9WT9Z7l6c5xVqBmkP
+	 6x6LyA+35OSiBCUbLSUVi3YUjToutt5fzHaw7uI1sSTT35nz6TubwIuskP+EjRb70kxqk
+	 eFdQQcKHeodHKxZmShKF15ERBbNjJsKmvwZdx84U5lbJSOfi+92+JLl6XtJ+NpHN06g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdAYScFg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dBuimt2j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D9D606D835;
-	Sat,  7 Nov 2026 14:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D87606A326;
+	Sat,  7 Nov 2026 14:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EdAYScFg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E00E1F0089F;
-	Sat,  7 Nov 2026 14:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dBuimt2j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D791F0089F;
+	Sat,  7 Nov 2026 14:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060892;
-	bh=0myzE/3AqqifM+opNuUkkHURVaqXO0/xgLlKsrfvZuI=;
+	s=korg; t=1794060894;
+	bh=BNtf0R54clMLcNnuRoZUQC0LNFnWNvco38EK4qK4McQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EdAYScFg5eRv6FXW8XZyu/APLrSL1GrwdIvPun/7CmB78uj5MXSQay4KJ8wlAex4Z
-	 wrc2f9PZlmXnNC1WcfKc4S43Me1xNyQ9KjgLmoHJwiQh+cuDthoSI3LqVaSNwtiac7
-	 zAVjOo/JJgo4HAkX/OqqJJ3jpfvvf80zRH9IeHOc=
+	b=dBuimt2jJf9Mqp+h3Gf3E/8a5O+XIli0Xd187F52yow5mifE5kt3dbN2hZ/TDobW+
+	 0VPg1T5dhb71F61j1b8+Do8h8XGXoxa0rVoFGWwRQpjVG6VSp9Ed5nSwflJBPRYj3p
+	 nmF0saWf8227TF1ArgcU62XOe0H7G/m8hJ1zXzuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Marcos Paulo Medeiros <maarcospm1996@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0268/1536] s390/dasd: Snapshot intrc before freeing the request block
-Date: Sat,  7 Nov 2026 08:38:04 -0500
-Message-ID: <20261107135005.210453313@linuxfoundation.org>
+Subject: [PATCH 6.12 0269/1536] ACPI: video: force native backlight on Acer Nitro AN515-46
+Date: Sat,  7 Nov 2026 08:38:05 -0500
+Message-ID: <20261107135005.238474170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -63,64 +62,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Marcos Paulo Medeiros <maarcospm1996@gmail.com>
 
-[ Upstream commit dc3e3f7306cb74066f231251602b1be5aaec7bd8 ]
+[ Upstream commit 525ba51157ac6e1772b5412eae26b20dd7ef8bda ]
 
-__dasd_cleanup_cqr() maps the completion result to a block status by
-reading cqr->intrc, but only after discipline->free_cp() has returned the
-request block to its memory pool (dasd_eckd_free_cp() ends in
-dasd_sfree_request()). On SMP another CPU can reallocate that block and
-overwrite cqr->intrc before it is read, completing the request with the
-wrong error. proc_bytes is already snapshotted before free_cp() for the
-same reason; do the same for intrc.
+The Acer Nitro AN515-46 is a hybrid graphics laptop whose internal
+panel is driven by the AMD GPU (Radeon 680M); the discrete NVIDIA GPU
+only drives external outputs. The firmware nevertheless advertises the
+NVIDIA WMI EC backlight GUID, so the backlight type resolves to
+nvidia_wmi_ec. The nvidia-wmi-ec-backlight driver however fails to
+probe ("EC backlight control failed: AE_NOT_FOUND") and, since the
+backlight type is still nvidia_wmi_ec, amdgpu skips registering its
+own backlight device. The result is no backlight device at all,
+leaving the brightness keys and the desktop brightness slider
+non-functional.
 
-Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://patch.msgid.link/20260805111612.1285190-5-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Booting with acpi_backlight=native makes amdgpu register its backlight
+interface and brightness control works. Add a DMI quirk to use the
+native backlight on this model by default.
+
+Signed-off-by: Marcos Paulo Medeiros <maarcospm1996@gmail.com>
+Link: https://patch.msgid.link/20260727132151.12792-1-maarcospm1996@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/acpi/video_detect.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/s390/block/dasd.c b/drivers/s390/block/dasd.c
-index 4d4bf50e6462f..12b219b72bd4a 100644
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -2734,17 +2734,23 @@ static void __dasd_cleanup_cqr(struct dasd_ccw_req *cqr)
- 	struct request *req;
- 	blk_status_t error = BLK_STS_OK;
- 	unsigned int proc_bytes;
--	int status;
-+	int status, intrc;
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 2a562cb425081..2b48b02f8a953 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -917,6 +917,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16-n0xxx"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_native,
++	 /* Acer Nitro AN515-46 */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "Nitro AN515-46"),
++		},
++	},
  
- 	req = (struct request *) cqr->callback_data;
- 	dasd_profile_end(cqr->block, cqr, req);
- 
-+	/*
-+	 * free_cp() returns the request block to its memory pool, so snapshot
-+	 * everything still needed from cqr before calling it - another CPU can
-+	 * reallocate and overwrite the block right after.
-+	 */
- 	proc_bytes = cqr->proc_bytes;
-+	intrc = cqr->intrc;
- 	status = cqr->block->base->discipline->free_cp(cqr, req);
- 	if (status < 0)
- 		error = errno_to_blk_status(status);
- 	else if (status == 0) {
--		switch (cqr->intrc) {
-+		switch (intrc) {
- 		case -EPERM:
- 			/*
- 			 * DASD doesn't implement SCSI/NVMe reservations, but it
+ 	/*
+ 	 * x86 android tablets which directly control the backlight through
 -- 
 2.53.0
 
