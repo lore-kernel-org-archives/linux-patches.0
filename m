@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063252;
-	b=ZR6Kx4bfayw/och9Z+KWp9eZu8y1pfFKI6AaWzxzx8rJxkfeVH5bFfMLvEWObuJ4Q0V7
-	 yt6NYipf9T977Tl5KLKZioC7+K/OytFsBgsnfS+hAZH4rJ656tJxcym3aXrR8B4u9Hqdr
-	 aeLJHUHUXmmrUFLCKgwaVojvxPTluA+6KixTUngaQc+F2coR2CX1H3hfOk+IaUW9RK2O2
-	 iX0I6KI8JWiOA45B2qWeLqiZNzEx5UNIrNNhtEr4Mc+QKxOzZqOFIUc/MysNz8J+WyK91
-	 wWYV3Up9VZ7/kAVJlodv+lWYdSiN1RssjXqbXJ/0VD/+sHFJRDIgU3F+LyurS0mGc3A==
+	t=1794063254;
+	b=NalxO1wSgnGzImvYUx6XywLadRph9E8sXHOg4e9MedkqnXhV+gipX2oO3PxoI7Wd3hBS
+	 TmkF0To+VEf7ZHs1DVx9o8FOJayhpFluh5oW1+XI0wwPV+GN1oSwe9XFcuZ9m4D6cDmLF
+	 yfZH+vLbx2aLAHM18PYegmw9FNXocB1JzU8Egb5Yr1wETB5mLFS8JZS+k7niHqkQKODFf
+	 8Wkp2nFkV5W3nZNCCGBTSfK1cDds2PBc6yQlzo5RTmZvMqzuXfUwtBIUCFbpQtdskJ2OO
+	 vd8Zq3bhRdQs1O90jehXjMdqKYJiE7mnIqjPyzkXWVMHRLepLitRxgxd+vgeBGLkGCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063252;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063254;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yFrERnuEbzvHZSEEYkL+xHJ5wqCs8WS1fVaOEE3PY2Y=;
-	b=zS4MwqEjqbmITi712VwH3EbPSZJtEyQ83GqERIKMKRBhw/hvAhdgUrhcpCYrOoVWSx//
-	 W8cYB54wAmSxj5rsK+3Lwm4pS05Fi81KIVm7RjpceLTA9K0Y6ZHb16y8v9OUA+eXarLsJ
-	 7oMvKVCGdD0xHqChU5aJ2NhmlbdU9TGJ+6LZcmB1/4bTdz2WuoPTilJb5Wf08OXi5be85
-	 PGBFAv/wI4U6n5kmISbsmqyl0DklaJ6z/aro4r3C3/+Qcn4l0nQnJKawjnVZpsK24b4Xz
-	 sqxXhEW2VXhAR2OmJBpXUByIjYgwUpCtyGUb+Nouhd0DXUDIDrUSgKci5tDsREp+KLw==
+	bh=402qWaZ/J4IRHVTI6WKVEvyP0OMQa0BgPQY9PprX68Y=;
+	b=iQ8NFN6LUcWYNDktWt2+SnXzp6VWfE7jddexXr3pLefiZDF+pyU+zEmrp23/bduRIsnS
+	 SFsIQ6zOrHkcziRfGkdztJRT1B/3dp2e3wn/P8Mdof/ZcjkY2YOJcQ4QMUBpjp3jUZJM0
+	 5jY79Ia9LEvXN02j8Ld0NFi1Fz/H3PT5bJlbnn18Qb16IQlyTPDqXujcX00hPhRiHfDbT
+	 /EgeTacxBR078Yevli++9d25U0ZCD3ehrRSSl5DRZO5UxPP6waR3tDcalaOtouSRW3FJB
+	 3aMyB9GcepGsj8ywlr/gAh5CqHdwziFTIqZUin2pJbrJOVHSPQ4qxdAxI1KD7KYPoPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6G2fnQB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f5MqPF8s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7993B606D818;
-	Sat,  7 Nov 2026 14:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FA2606A330;
+	Sat,  7 Nov 2026 14:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t6G2fnQB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271B71F0089F;
-	Sat,  7 Nov 2026 14:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f5MqPF8s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6297B1F0089F;
+	Sat,  7 Nov 2026 14:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063252;
-	bh=yFrERnuEbzvHZSEEYkL+xHJ5wqCs8WS1fVaOEE3PY2Y=;
+	s=korg; t=1794063253;
+	bh=402qWaZ/J4IRHVTI6WKVEvyP0OMQa0BgPQY9PprX68Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t6G2fnQBqkOMBrjgfEijwdVyeXWZb8I53GY5b7igAFVTIyWRj5Tx24CXYyrzD2G3o
-	 Wa9GEcegzC8XO2w/B7StieQgq7RxShANWFU/EBFczNFZ4uOO+O34RVa96w9fuVDrE9
-	 DSCcXuiwlpassGKkvgtvlKA5ElvhuGIoYZ3g6ZzU=
+	b=f5MqPF8s1o3yUKBXjWuxsOs5ldrcZiMBrwDd9mrytKADQxjVUSQZbI9u8HDfrq27s
+	 wivjxYIq9ZEYhelyX68sYuF2mx8laXVqXniuYdY4NoW7bQD1IZjoyyoE3PaYxuUQ4Y
+	 7HiJatnxF8sBZKEznDKtGFGITAOAgFIqdEyFyWC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,10 +44,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Koichiro Den <den@valinux.co.jp>,
 	Alison Schofield <alison.schofield@intel.com>,
 	Dave Jiang <dave.jiang@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 454/869] cxl/port: Convert PCIe link latency to nanoseconds
-Date: Sat,  7 Nov 2026 08:52:16 -0500
-Message-ID: <20261107134909.100470097@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.18 455/869] cxl: Account for link width in latency calculation
+Date: Sat,  7 Nov 2026 08:52:17 -0500
+Message-ID: <20261107134909.129577977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,47 +72,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 16440d6e4bf1175cda83438d9f9a8ae84bfcf0ee ]
+[ Upstream commit db4503d4575cdd2fad7e8a13a8a8ffcbc86d152d ]
 
-Commit 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
-converted CDAT latencies to nanoseconds and removed the conversion in
-cxl_region_perf_data_calculate(), but left PCIe link latencies in
-picoseconds.
+cxl_pci_get_latency() derives bandwidth from the per-lane speed returned
+by pcie_link_speed_mbps(), ignoring the negotiated link width. This
+overestimates the FlitLatency contribution for multi-lane links.
+Sections 2.11.3 and 2.11.4 of the Intel CXL Memory Device Software Guide
+describe the link bandwidth as the product of the negotiated speed and
+width.
 
-This inflates the FlitLatency contribution to region and node latencies
-by a factor of 1000, exposing incorrect values in sysfs. The resulting
-abstract distances can incorrectly reverse the memory tier ordering of
-nodes.
+Replace pcie_link_speed_mbps() with pcie_link_bandwidth_mbps() and
+migrate both CXL callers (the only users of the API). The new helper
+obtains speed and width from a single Link Status read. The CXL
+bandwidth calculation no longer needs a separate width read and
+multiplication.
 
-Convert the FlitLatency contribution to nanoseconds before adding it to
-the access coordinates, rounding up as cdat_normalize() does.
+While at it, make error handling more robust by converting PCI config
+read errors to negative errno values and checking for zero bandwidth
+before calculating latency.
 
-Fixes: 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
+Fixes: 4d07a05397c8 ("cxl: Calculate and store PCI link latency for the downstream ports")
 Cc: stable@vger.kernel.org
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
 Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>	# pci/pci.c
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20261009045452.1107921-2-den@valinux.co.jp
+Link: https://patch.msgid.link/20261009045452.1107921-3-den@valinux.co.jp
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/cxl/core/pci.c | 22 ++++++++--------------
+ drivers/pci/pci.c      | 23 ++++++++++++++++++-----
+ include/linux/pci.h    |  2 +-
+ 3 files changed, 27 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 8d2dc4b741781..599aa9d9eddca 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -2286,6 +2286,9 @@ EXPORT_SYMBOL_NS_GPL(schedule_cxl_memdev_detach, "CXL");
- 
- static void add_latency(struct access_coordinate *c, long latency)
+diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
+index 3e88c2e3304a3..48c1f3854b799 100644
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -738,8 +738,8 @@ long cxl_pci_get_latency(struct pci_dev *pdev)
  {
-+	/* Convert link latency from picoseconds to nanoseconds. */
-+	latency = DIV_ROUND_UP(latency, 1000);
+ 	long bw;
+ 
+-	bw = pcie_link_speed_mbps(pdev);
+-	if (bw < 0)
++	bw = pcie_link_bandwidth_mbps(pdev);
++	if (bw <= 0)
+ 		return 0;
+ 	bw /= BITS_PER_BYTE;
+ 
+@@ -777,18 +777,12 @@ EXPORT_SYMBOL_NS_GPL(cxl_endpoint_decoder_reset_detected, "CXL");
+ 
+ int cxl_pci_get_bandwidth(struct pci_dev *pdev, struct access_coordinate *c)
+ {
+-	int speed, bw;
+-	u16 lnksta;
+-	u32 width;
+-
+-	speed = pcie_link_speed_mbps(pdev);
+-	if (speed < 0)
+-		return speed;
+-	speed /= BITS_PER_BYTE;
+-
+-	pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnksta);
+-	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, lnksta);
+-	bw = speed * width;
++	int bw;
 +
++	bw = pcie_link_bandwidth_mbps(pdev);
++	if (bw < 0)
++		return bw;
++	bw /= BITS_PER_BYTE;
+ 
  	for (int i = 0; i < ACCESS_COORDINATE_MAX; i++) {
- 		c[i].write_latency += latency;
- 		c[i].read_latency += latency;
+ 		c[i].read_bandwidth = bw;
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index bab3213bafbda..8cfcd71163031 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5892,18 +5892,31 @@ static enum pci_bus_speed to_pcie_link_speed(u16 lnksta)
+ 	return pcie_link_speed[FIELD_GET(PCI_EXP_LNKSTA_CLS, lnksta)];
+ }
+ 
+-int pcie_link_speed_mbps(struct pci_dev *pdev)
++/**
++ * pcie_link_bandwidth_mbps - get the current bandwidth of a single PCIe link
++ * @pdev: PCI device to query
++ *
++ * The bandwidth includes all negotiated lanes and does not account for
++ * encoding overhead. A negotiated width of zero gives zero bandwidth.
++ *
++ * Return: Bandwidth in Mb/s, or a negative errno on failure.
++ */
++int pcie_link_bandwidth_mbps(struct pci_dev *pdev)
+ {
+ 	u16 lnksta;
+-	int err;
++	int speed, err;
+ 
+ 	err = pcie_capability_read_word(pdev, PCI_EXP_LNKSTA, &lnksta);
+ 	if (err)
+-		return err;
++		return pcibios_err_to_errno(err);
++
++	speed = pcie_dev_speed_mbps(to_pcie_link_speed(lnksta));
++	if (speed < 0)
++		return speed;
+ 
+-	return pcie_dev_speed_mbps(to_pcie_link_speed(lnksta));
++	return speed * FIELD_GET(PCI_EXP_LNKSTA_NLW, lnksta);
+ }
+-EXPORT_SYMBOL(pcie_link_speed_mbps);
++EXPORT_SYMBOL(pcie_link_bandwidth_mbps);
+ 
+ /**
+  * pcie_bandwidth_available - determine minimum link settings of a PCIe
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 95c77e2a1d1f5..72d1ca12aaa8c 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1413,7 +1413,7 @@ int pcie_set_mps(struct pci_dev *dev, int mps);
+ u32 pcie_bandwidth_available(struct pci_dev *dev, struct pci_dev **limiting_dev,
+ 			     enum pci_bus_speed *speed,
+ 			     enum pcie_link_width *width);
+-int pcie_link_speed_mbps(struct pci_dev *pdev);
++int pcie_link_bandwidth_mbps(struct pci_dev *pdev);
+ void pcie_print_link_status(struct pci_dev *dev);
+ int pcie_reset_flr(struct pci_dev *dev, bool probe);
+ int pcie_flr(struct pci_dev *dev);
 -- 
 2.53.0
 
