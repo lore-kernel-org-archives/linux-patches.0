@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060905;
-	b=GwQcwbGZ+2Edfm3QQUW4CaNjUCGuC/aiq2vIuyuJYLIGSdE5qQFZTyOwblUg+s9Ijd4P
-	 5a6exJUqq3cfmSV6xEwhePOB8AroOrrs4bg0uPIwqNauWNgPWYgN9KVfL1317lSdKQ3BJ
-	 M/ykDrSOuaOXmDvokE8TmuWmbU0f2v8FBkLcWB0shpbZPCHJUcTmMVvsRRybPDoLSPxVz
-	 xDL4hzAIFsrpe2UWh5nel7ZpiC+FNqOjDrOyoL4MuMz1udf41PyI9ZIPPzSmqk4NcT8Z7
-	 iu3HKTRZULHeywFGzdY6/HIG/L3UZLYFDyco8AL26YQhFWyMKwmz4C3aZYShkBtXDGQ==
+	t=1794060907;
+	b=WtHUFvqh7O8r05CZVlPZ9hzdtwY+GvZRfBhnzcKsTWGsZHcZLEEyvkd/sG44hNMAQgZc
+	 DgXgriYXi/A+MQkgsPSPqdigvpZWhnklp/fd3PZmzv2yL23F5gwHN1+OgT4GD48+3F2fX
+	 zxbkoH7/ujng92Qg+7dvVtkZZVZMK3ixG313VDic7inpnR/LZpERV7gOSqA8OPZzJIjLN
+	 3F1c0OGhXxBvnN/5h6nRB2uFOMrcsWwoYHf+VV7FkUL+yxws10d9sGN0vI2liHdBqsGGt
+	 9yQlhau8W1br/sGnZWYYyabZDuOQgFg746V6RiHc5ekFevDfRrpjEyC4VRRNHMyInnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060907;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KH5LRHUG7GY+f8tS72XOEXl6WAGnr3Feda39hpKws8s=;
-	b=m74BXu6Szfz/ypDHZhwW3Ne9e5n60MWScABvFhwYPD8A1GL16ZUT65IT7lHOPHTz5H1y
-	 BpR343PXmohgdeVcX7Cd1/80eXiy3syblbT/Y8FSkwmO5+XQ41UsPuhuxgX+9pcoD8EEq
-	 LxEKf2hGgpByuUbocCzIOB+Dl1XOZDH5qN8bDxTztfmteGCiVN0A0jFozY0wkWbERayfu
-	 swp3bF+Y/OcJoOdY3o26ZlUm/vh9kj44iHrU9K8VxIjIpfWk4R0Vhqks8GgnaUeEQZYwp
-	 YHD+EwZcrsnXjnk0xJQo2D8u4GrPpbYUyDhqThhcJO7DiiNxiQOClubhVHmn/EeWqBw==
+	bh=TMGC496JWDes6PsjHzQ17p+xo5OCo1Zv0BzLmdN4e3k=;
+	b=HYUPLW2Ai6RTr5xRgD9txb47CUqK23b5IGP9hTWqbi3jFoQQ3oSKcmncX6DVGjo/cu5z
+	 Shcx2OrzQBuuutwtpKESHUuBdhMRhYqo2E4uuo2S8c8/awfI5IvfRW9WLzMaG+1GLQVso
+	 Pi+ojCpbvZNmNbb7NL/6YLQNNCL6KsgUdBcCsjuh8hbRdOGIuzkiRApndG13A2qx0v8nH
+	 w49RtCjPTGns/rsgvJEDUFSnQHqoF2cR8m1W+RJq4s4OkcqxfD6MRuoLlDzh1o5uInY3D
+	 g41JJv2/bUmr8pT/bq9gvjO/NmaTQ/ScKn+2sthf/su6Yu3YhesX+AVvif1eXRpCf9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iKwYHFYU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HJEe9WHr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADDC606D81D;
-	Sat,  7 Nov 2026 14:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EC1606D823;
+	Sat,  7 Nov 2026 14:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iKwYHFYU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF3E1F0089F;
-	Sat,  7 Nov 2026 14:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HJEe9WHr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C700F1F0089F;
+	Sat,  7 Nov 2026 14:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060905;
-	bh=KH5LRHUG7GY+f8tS72XOEXl6WAGnr3Feda39hpKws8s=;
+	s=korg; t=1794060907;
+	bh=TMGC496JWDes6PsjHzQ17p+xo5OCo1Zv0BzLmdN4e3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKwYHFYUfSlCo3D0BsxtZg0m/XInL5/Vl7sDMkq8gbFvDcdcXLKXa6wVJlSl64dKV
-	 EDRwuKnsutugecJEyPMC4/yZdZgDPDojl/9ikCm6iPJlHYw9ZW0qSdRn3NFNHiA7Rn
-	 dE2a1U2TwFp/6wF/OgjLJXWs+to8jHdrMkrpYKHA=
+	b=HJEe9WHrbJtkHS5EXOPHTdbwGAC3Pp4o3Epgrg6iK+yqvtjL3PDj2lzMdIn4isvdw
+	 9CIRBK5JT3sIYRJcIJOsJ3WOVXMP9X8MywWiADetGx0IpVJYjN939cpoIjpFMQlMTO
+	 L3e03lWUBbAuS/sDhG+7ibHwml09dJ1xkSgyF5cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Hansson <newbyte@postmarketos.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0277/1536] wifi: rsi: Fix types to appease CFI
-Date: Sat,  7 Nov 2026 08:38:13 -0500
-Message-ID: <20261107135005.447425295@linuxfoundation.org>
+Subject: [PATCH 6.12 0251/1536] ASoC: SOF: Intel: mtl: Power down DSP if it is left enabled in pre_fw_run()
+Date: Sat,  7 Nov 2026 08:37:47 -0500
+Message-ID: <20261107135004.732836284@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,141 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Hansson <newbyte@postmarketos.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit da308f6e471252ae5e8009dcea16bc5e9c9dc5dd ]
+[ Upstream commit 31fd7a0bbfa4b7e8aff11f278e817664c6a5f68b ]
 
-Avoids errors like:
+It is expected that the DSP is in power down state when the firmware boot
+is attempted.
+If the DSP for any reason was left powered up then the DSP boot will
+fail since the ROM boot sequence might not be able to run.
 
-    CFI failure at kthread+0x124/0x1cc (target: rsi_coex_scheduler_thread+0x0/0x1b4 [redpine_91x]; expected type: 0x89fb613d)
+Make sure that the DSP is off before proceeding to boot it up.
 
-As seen in the aforementioned error this was tested using the downstream
-redpine_91x driver found in the Librem 5's downstream source tree.
-However, it appears that this driver is a modified version of the rsi
-driver found in mainline Linux and as such I decided to port the changes
-here too.
-
-Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
-Link: https://patch.msgid.link/20260804-rsi-cfi-fix-v2-1-59679a520240@postmarketos.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Link: https://patch.msgid.link/20260730122857.5294-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_coex.c     | 3 ++-
- drivers/net/wireless/rsi/rsi_91x_main.c     | 7 ++++---
- drivers/net/wireless/rsi/rsi_91x_sdio_ops.c | 3 ++-
- drivers/net/wireless/rsi/rsi_91x_usb_ops.c  | 7 ++++---
- drivers/net/wireless/rsi/rsi_common.h       | 2 +-
- drivers/net/wireless/rsi/rsi_sdio.h         | 2 +-
- drivers/net/wireless/rsi/rsi_usb.h          | 2 +-
- 7 files changed, 15 insertions(+), 11 deletions(-)
+ sound/soc/sof/intel/mtl.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_coex.c b/drivers/net/wireless/rsi/rsi_91x_coex.c
-index 372eaaa2b9efc..05525d5e2edb1 100644
---- a/drivers/net/wireless/rsi/rsi_91x_coex.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_coex.c
-@@ -50,8 +50,9 @@ static void rsi_coex_sched_tx_pkts(struct rsi_coex_ctrl_block *coex_cb)
- 	} while (coex_q != RSI_COEX_Q_INVALID);
+diff --git a/sound/soc/sof/intel/mtl.c b/sound/soc/sof/intel/mtl.c
+index 2b9d22ccf345b..f8ed7db15d949 100644
+--- a/sound/soc/sof/intel/mtl.c
++++ b/sound/soc/sof/intel/mtl.c
+@@ -236,6 +236,17 @@ int mtl_enable_interrupts(struct snd_sof_dev *sdev, bool enable)
  }
+ EXPORT_SYMBOL_NS(mtl_enable_interrupts, SND_SOC_SOF_INTEL_MTL);
  
--static void rsi_coex_scheduler_thread(struct rsi_common *common)
-+static int rsi_coex_scheduler_thread(void *data)
++static bool mtl_dsp_is_enabled(struct snd_sof_dev *sdev)
++{
++	int val;
++
++	val = snd_sof_dsp_read(sdev, HDA_DSP_BAR, MTL_HFDSSCS);
++	if (val & MTL_HFDSSCS_CPA_MASK)
++		return true;
++
++	return false;
++}
++
+ /* pre fw run operations */
+ int mtl_dsp_pre_fw_run(struct snd_sof_dev *sdev)
  {
-+	struct rsi_common *common = data;
- 	struct rsi_coex_ctrl_block *coex_cb = common->coex_cb;
- 	u32 timeout = EVENT_WAIT_FOREVER;
+@@ -249,6 +260,18 @@ int mtl_dsp_pre_fw_run(struct snd_sof_dev *sdev)
+ 	u32 dsppwrsts;
+ 	const struct sof_intel_dsp_desc *chip;
  
-diff --git a/drivers/net/wireless/rsi/rsi_91x_main.c b/drivers/net/wireless/rsi/rsi_91x_main.c
-index 2112d8d277a99..0b4d691580054 100644
---- a/drivers/net/wireless/rsi/rsi_91x_main.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_main.c
-@@ -246,12 +246,13 @@ EXPORT_SYMBOL_GPL(rsi_read_pkt);
- /**
-  * rsi_tx_scheduler_thread() - This function is a kernel thread to send the
-  *			       packets to the device.
-- * @common: Pointer to the driver private structure.
-+ * @data: Pointer to the driver private structure.
-  *
-- * Return: None.
-+ * Return: 0.
-  */
--static void rsi_tx_scheduler_thread(struct rsi_common *common)
-+static int rsi_tx_scheduler_thread(void *data)
- {
-+	struct rsi_common *common = data;
- 	struct rsi_hw *adapter = common->priv;
- 	u32 timeout = EVENT_WAIT_FOREVER;
- 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c b/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c
-index 597b238e22949..18a28aa974460 100644
---- a/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_sdio_ops.c
-@@ -62,8 +62,9 @@ int rsi_sdio_master_access_msword(struct rsi_hw *adapter, u16 ms_word)
- 
- static void rsi_rx_handler(struct rsi_hw *adapter);
- 
--void rsi_sdio_rx_thread(struct rsi_common *common)
-+int rsi_sdio_rx_thread(void *data)
- {
-+	struct rsi_common *common = data;
- 	struct rsi_hw *adapter = common->priv;
- 	struct rsi_91x_sdiodev *sdev = adapter->rsi_dev;
- 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_usb_ops.c b/drivers/net/wireless/rsi/rsi_91x_usb_ops.c
-index 25c2b232394a6..e899631b9aed2 100644
---- a/drivers/net/wireless/rsi/rsi_91x_usb_ops.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_usb_ops.c
-@@ -21,12 +21,13 @@
- /**
-  * rsi_usb_rx_thread() - This is a kernel thread to receive the packets from
-  *			 the USB device.
-- * @common: Pointer to the driver private structure.
-+ * @data: Pointer to the driver private structure.
-  *
-- * Return: None.
-+ * Return: 0.
-  */
--void rsi_usb_rx_thread(struct rsi_common *common)
-+int rsi_usb_rx_thread(void *data)
- {
-+	struct rsi_common *common = data;
- 	struct rsi_hw *adapter = common->priv;
- 	struct rsi_91x_usbdev *dev = adapter->rsi_dev;
- 	int status;
-diff --git a/drivers/net/wireless/rsi/rsi_common.h b/drivers/net/wireless/rsi/rsi_common.h
-index c40f8101febcb..4f6738ba72be2 100644
---- a/drivers/net/wireless/rsi/rsi_common.h
-+++ b/drivers/net/wireless/rsi/rsi_common.h
-@@ -58,7 +58,7 @@ static inline void rsi_reset_event(struct rsi_event *event)
- 
- static inline int rsi_create_kthread(struct rsi_common *common,
- 				     struct rsi_thread *thread,
--				     void *func_ptr,
-+				     int (*func_ptr)(void *data),
- 				     u8 *name)
- {
- 	init_completion(&thread->completion);
-diff --git a/drivers/net/wireless/rsi/rsi_sdio.h b/drivers/net/wireless/rsi/rsi_sdio.h
-index 7c91b126b350f..eb2b7f36a7e4c 100644
---- a/drivers/net/wireless/rsi/rsi_sdio.h
-+++ b/drivers/net/wireless/rsi/rsi_sdio.h
-@@ -134,5 +134,5 @@ int rsi_sdio_master_access_msword(struct rsi_hw *adapter, u16 ms_word);
- void rsi_sdio_ack_intr(struct rsi_hw *adapter, u8 int_bit);
- int rsi_sdio_determine_event_timeout(struct rsi_hw *adapter);
- int rsi_sdio_check_buffer_status(struct rsi_hw *adapter, u8 q_num);
--void rsi_sdio_rx_thread(struct rsi_common *common);
-+int rsi_sdio_rx_thread(void *data);
- #endif
-diff --git a/drivers/net/wireless/rsi/rsi_usb.h b/drivers/net/wireless/rsi/rsi_usb.h
-index 961851748bc4c..78067eaffe8b1 100644
---- a/drivers/net/wireless/rsi/rsi_usb.h
-+++ b/drivers/net/wireless/rsi/rsi_usb.h
-@@ -81,5 +81,5 @@ static inline int rsi_usb_event_timeout(struct rsi_hw *adapter)
- 	return EVENT_WAIT_FOREVER;
- }
- 
--void rsi_usb_rx_thread(struct rsi_common *common);
-+int rsi_usb_rx_thread(void *data);
- #endif
++	/* Power down the DSP if it is left enabled to ensure clean boot state */
++	if (mtl_dsp_is_enabled(sdev)) {
++		dev_dbg(sdev->dev, "powering down DSP first\n");
++
++		ret = mtl_power_down_dsp(sdev);
++		if (ret < 0) {
++			dev_warn(sdev->dev,
++				 "%s: failed to power down already-enabled DSP\n", __func__);
++			/* Continue anyway to attempt recovery */
++		}
++	}
++
+ 	chip = get_chip_info(sdev->pdata);
+ 	if (chip->hw_ip_version > SOF_INTEL_ACE_2_0) {
+ 		dsppwrctl = PTL_HFPWRCTL2;
 -- 
 2.53.0
 
