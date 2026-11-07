@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064479;
-	b=jiaMKwPKCvJsMGuwNtIfTu8HNg/0CgixgoAzMrKGW1gW3ujhZRml1k9NCqu5xP/oLvWJ
-	 u4HZag8Uecqo3xQ3Rz+OIZunPGyGoz+rFi6Gswd91RAxxNsBlcXLCnL+Y3G0+Wa5HSC+e
-	 UfxCT+GgGVAmQHBDprm1d150605CVrGCAR6iNNjMOy5kwBt2vzEHyQxirz9SyMbjsVRtV
-	 04INFOhGLbs7csC/HwiviSV9avgn8ACLv+DD1o29AcmQvx9ZL7E7aeVdAm1+l65mRNjX1
-	 Hw1+q1kn7x2Kuc3dVe4SmAUQAUFn2erhpYwyTXdoOcuSR672brOGj9u22psk3vaVweQ==
+	t=1794064481;
+	b=JbuA7tw3c0Lo65d3bIRV3if9zMvUzPN/hOcyG1SQnVz4hhomp4eOpDMWX7nMb4333C/J
+	 EQHjCzw/uKWcnnv34Jb4ABmd9QB6kHVyJVMlYRR5pPRphu2PU4GQICQU5ew15W0L41mdw
+	 ZFpL5zmsC3vQvouzVjEg6NM4oUfiZLpdFX9hOP+NjY4jhek3hRjZ47vNKtKG6vbuzoQWI
+	 X2SHMnzRIOW6HC4ehy32R3Rp8v0GGoYJ2emTrWUNjHk1TtHCTZOWwlTEpCi+mhsSgeNJ1
+	 3Zu5/u4WK0YMJI3v8REoBcE9GDtm2JcyuEbI44aPiVZPXps0ela2cZUQqrxTrEtI9Zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064479;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064481;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OT3+8sNzvHlWPq04reOaUnBTpyWiBUGOf9EmZUHtEEU=;
-	b=Tv5zscm1CHxwheGDLwL2X9ea+Uj4sONBB6eFq7UHYqvTQuehSAv4w47M+CdkOCJND+pN
-	 aKqatRw+1lMzrfX/97YW8f07Ka80Cx5dKyH1+wGVHGcGGoM2xSP0XW6Qq4doOKhk9+dpp
-	 emUOo3fDdCI/djvUDEwW4ifMw6tm6qQJ0muljmHWCKnn4rqA9XjheTE8tnX5wihNqrQqh
-	 jGo8aSACuL2oTisEGEv1xnfSTJcCTxT33ia8hIpakp/Jnh4eHRrtCDxlhYTwOdVuJHM9C
-	 YUZ98P4ORhy0TID2BhoEPjrBoQphxtPTnR/JGOThIIUC5hh7tqpjeLtUHpjUKshlNGA==
+	bh=gcR/vsX/QD5Q3kj/Dy2s7NdBhas9IIHikzKQJXJdWp4=;
+	b=uiRG7z6fUjS9apll58KUHiA8pOv8I2c4FKhYZ03r4nnGBT7Z3UKr1Do5NtaWjO7Yp3u9
+	 bsA6WCQh6KC7AViE/PP/pCuk+ldjiLDkos6hlTGMcuz42zHGrh0i0Xm4DbwxD38VCLodh
+	 9oGh7UvWeClRmcQj30D9TW9/2og/YBYvOzlBYy8GhZEPILzs8B9JcHcuNCEyB+13rVLzX
+	 /TfSVmtd0qvD9kiejNDge3qeimqW6ChfXudjLuvNkkTzyRE5Whp1s0B30ZKJw2k9diZWA
+	 FR5ERTW31BThde2/WI5bNMseu+UZmVUwlwivaNWpKLjojinaHz1YNBiUtJzDgXTkKNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkcM4YSj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQmt5hbS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EFC606A9F0;
-	Sat,  7 Nov 2026 15:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31CE606A9F0;
+	Sat,  7 Nov 2026 15:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkcM4YSj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F641F008A5;
-	Sat,  7 Nov 2026 15:14:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQmt5hbS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB9D1F008A2;
+	Sat,  7 Nov 2026 15:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064479;
-	bh=OT3+8sNzvHlWPq04reOaUnBTpyWiBUGOf9EmZUHtEEU=;
+	s=korg; t=1794064480;
+	bh=gcR/vsX/QD5Q3kj/Dy2s7NdBhas9IIHikzKQJXJdWp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wkcM4YSjlUeU8JH9/TAhq2skdeUuoh55Hct1c865flfKIdmrLe4xpKRW/Ug9SezYr
-	 13t6FwSfsu0QRq+ksiO8DKGGf75ylCx69oSdcydVtq6nGzB3+PQfLD8NHWfpDpFm5n
-	 yP1Ccu3Wz0DJbDFFUrStBNIOpWtc6CHmgZ0vuf58=
+	b=JQmt5hbSOnBuMz7tYAgLGtYvexbuvjxhrTZea4z/wJvP+weKj9IYs1BcUS/D2zHUu
+	 grvHawkggclL/tUp5PLhNb62nbBw5DPjdOoB4nlYyZqZ3gj87I5tYYxPup1KNqpsSq
+	 shIHxZ1CDP6oJ4OYjxBlcmRZe9P0j1MWvWwvHQzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -70,9 +70,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	Yanteng Si <si.yanteng@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0518/1257] mm: hugetlb: return -ENOSPC on memcg charge failure
-Date: Sat,  7 Nov 2026 08:46:54 -0500
-Message-ID: <20261107134953.737343823@linuxfoundation.org>
+Subject: [PATCH 7.3 0519/1257] mm: hugetlb: drop refcount before freeing on memcg charge failure
+Date: Sat,  7 Nov 2026 08:46:55 -0500
+Message-ID: <20261107134953.764677109@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -96,39 +96,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Ackerley Tng <ackerleytng@google.com>
 
-[ Upstream commit 956aeff185e7e16b989202bde0bb29859adba99d ]
+[ Upstream commit e95d29c5df84f19881cd30b491fc81aa98f44b45 ]
 
-Patch series "Fix bugs in HugeTLB allocation when
-mem_cgroup_charge_hugetlb() fails", v2.
+When mem_cgroup_charge_hugetlb(folio, gfp) returns -ENOMEM, the folio has
+its refcount set to 1 via folio_ref_unfreeze(folio, 1).
 
-In hugetlb_alloc_folio(), when mem_cgroup_charge_hugetlb() fails, there
-are 2 issues:
+The error path calls free_huge_folio(folio) directly, which expects a
+refcount of 0.  Hence, VM_BUG_ON_FOLIO(folio_ref_count(folio), folio) is
+triggered.
 
-1. free_huge_folio() expects a non-refcounted folio and will
-   VM_BUG_ON_FOLIO().
+Even with CONFIG_DEBUG_VM disabled, returning a folio with refcount 1 to
+the freelist can corrupt allocator state later.
 
-2. -ENOMEM is returned, causing an infinite loop retrying the fault.
+Use folio_put(folio) instead of free_huge_folio(folio) to properly drop
+the reference before freeing it.
 
-This patch (of 2):
-
-When mem_cgroup_charge_hugetlb() fails with -ENOMEM, alloc_hugetlb_folio()
-currently propagates this error.  This results in the page fault handler
-returning VM_FAULT_OOM.
-
-Because HugeTLB allocations are high-order and use __GFP_RETRY_MAYFAIL,
-they bypass the OOM killer.  Returning VM_FAULT_OOM to the #PF handler
-without triggering the OOM killer (or having it make progress) leads to an
-infinite loop of retrying the fault.
-
-Avoid this loop by returning -ENOSPC when charging fails, which maps to
-VM_FAULT_SIGBUS, terminating the process cleanly.
-
-Make mem_cgroup_charge_hugetlb() fault handling use a common error
-handling path, the same handling used for
-hugetlb_cgroup_uncharge_cgroup{,_rsvd}(), which also don't trigger the OOM
-killer and hence opt to terminate the process with a SIGBUS.
-
-Link: https://lore.kernel.org/20260909-hugetlb-alloc-folio-memcg-charge-error-handling-v2-1-4b4a8a19a7f7@google.com
+Link: https://lore.kernel.org/20260909-hugetlb-alloc-folio-memcg-charge-error-handling-v2-2-4b4a8a19a7f7@google.com
 Fixes: 991135774c0e ("memcg/hugetlb: introduce mem_cgroup_charge_hugetlb")
 Signed-off-by: Ackerley Tng <ackerleytng@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
@@ -161,34 +144,22 @@ Cc: Yanteng Si <si.yanteng@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ mm/hugetlb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 86928d76ef12d..7a8f605881d86 100644
+index 7a8f605881d86..930e40ac77077 100644
 --- a/mm/hugetlb.c
 +++ b/mm/hugetlb.c
-@@ -2834,7 +2834,6 @@ void wait_for_freed_hugetlb_folios(void)
-  *
-  * Return: A pointer to the allocated folio, or an ERR_PTR on failure.
-  *         -ENOSPC if cgroup charging fails or no folio is available.
-- *         -ENOMEM if mem cgroup charging fails.
-  */
- struct folio *hugetlb_alloc_folio(struct hstate *h,
- 		struct mempolicy_interpreted *mpoli, u8 alloc_flags)
-@@ -2907,7 +2906,11 @@ struct folio *hugetlb_alloc_folio(struct hstate *h,
- 		 * were committed to the folio and freeing the folio
- 		 * would have cleared those up.
- 		 */
--		return ERR_PTR(ret);
-+		/*
-+		 * Return -ENOSPC, since retrying the fault is futile:
-+		 * the OOM killer is not triggered for HugeTLB.
-+		 */
-+		return ERR_PTR(-ENOSPC);
- 	}
+@@ -2900,7 +2900,7 @@ struct folio *hugetlb_alloc_folio(struct hstate *h,
+ 	lruvec_stat_mod_folio(folio, NR_HUGETLB, nr_pages);
  
- 	return folio;
+ 	if (ret == -ENOMEM) {
+-		free_huge_folio(folio);
++		folio_put(folio);
+ 		/*
+ 		 * Skip uncharging hugetlb_cgroup since the charges
+ 		 * were committed to the folio and freeing the folio
 -- 
 2.53.0
 
