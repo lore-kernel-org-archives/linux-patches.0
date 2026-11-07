@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063233;
-	b=XVlmXj9yKTb4cf1Y2kRyjVBXgfsB7+fQ0wweNmRS7Q1M6hFvtBoYCCgKL9EYN4uDIuiM
-	 avsxHAmoGLfD2ftFWFyRf5i/RyiSzsPrImzjYjCF0IvbHMU3kmNDNpkiuqzKsA57yVtzm
-	 mc0YGwNvlLlngoqbwOw8pNWKMQFyQEwEWoiBf2dO9aFCBU6UprT2/eDjjelJ2VgmRrlW3
-	 UlGXuzEJoOC2ofGJtCmY68iRG/uix1cI0bEtzV/xFiNMiPaSg/slDVdBcr0587xbnDGWD
-	 WrBupGMOlWMgllu2/eS17COmfWP7zTNILznl1THhaqDu3sBi8JWzxi4JxiRAEnx4tNQ==
+	t=1794063234;
+	b=kOq+GDJwprbUItNJcE4/WfQ2pTf2ocxg2sfV8JlFaweAilGzMxKfNqYImSsJ6utW49bS
+	 khsZ9txq9AskDUmzKC1nsTbDjnGmdg5fvr1gOMYevlAVqNDmKVczYCm50fL92b0AEe9Iy
+	 f6M5AcEDHoEMo/HGs25k8jxj+GenPtAmFZORQE+YChdGf4krgNbJ1sK2SbJzyFs6ZSCz3
+	 TZz1lmxnFeFvj//AY4UO+p5+SwekqIPmFxdzoWJFflma3MpbzN5y4S067qaW6+12EdiIw
+	 onEbr5XDtODjsLsGkULlNTSmkj9Y8L/rMD/Q3hT+r5CYJWCLZWn80tqcxiqH61eajjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063234;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7cHlCJrcd/DK3MjnFwDcoZ5vQu1zX9AQxnQdQ92KUmg=;
-	b=V779Zh+WW8H3cG/tJSL8lceA0VDZHJb3tMPxt+pWvRBJganp4+SFdW9kxJ6LQtr4r0RB
-	 LhSHXVHwRnt1UVDHqpHmJbw/VVFMuhHswlm9M28kNMv9yb5UYKU65Ac7MdsjGypPNmvD+
-	 +fPzHUjpCZ4a80RNOp1av6Q8dfVLn5xjX1i9+OWol1arwUUnbjV2PPuNwqx6Dbxh3bbiy
-	 cUB0IYpghMczM7/dDa1Ok95ODTqYjyXdeNAO3fq34hQFfN8ZyLRjlmHs8J76EIm3/WVuf
-	 Jw4CQ/TM32kqGo2swSqyUwxmCJTdRdoG3ft8oP6i8G9veylg+S+FtA2TTBN7MAZAp6w==
+	bh=DtNUgwRDaBcG63uSuw35ic/XZkomzRtHrTyiug28Lhk=;
+	b=gCVtw6uk9cFULJnMnyKQUyZjRHRk6mydtwGZCwERhNXSFvXoP9Dec1AOCOlR0jziBKxZ
+	 x4Cco3w52nGSzfKAPod3lPUKxSqyOSZPKRZvWNIWn8msOl0UN5q5g4cSbsO6pcAwp5xDi
+	 BEMUhuVhmKOHt2KMmENZd/QBxW/dgA5TpnGgN1IumIc0g3cLXGHfzIA1zGHZ0zvUgu7Hm
+	 8DBsAN1l/2ciDYmrRLbsGDoftj6jFyaZjP/DxWOSl9/ilkKQFhFkIufQvOe0qXnJYVMrS
+	 r07NARX/+QmGq/MGYnHuGpFtjEfiZWxHCKEZWRdv/46FzpAHn6Kj8s95pST3aUE0zFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLDelSzU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTACeDP2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACEA606A32D;
-	Sat,  7 Nov 2026 14:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF74606D805;
+	Sat,  7 Nov 2026 14:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eLDelSzU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBB81F0089F;
-	Sat,  7 Nov 2026 14:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTACeDP2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFF21F0089F;
+	Sat,  7 Nov 2026 14:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063232;
-	bh=7cHlCJrcd/DK3MjnFwDcoZ5vQu1zX9AQxnQdQ92KUmg=;
+	s=korg; t=1794063233;
+	bh=DtNUgwRDaBcG63uSuw35ic/XZkomzRtHrTyiug28Lhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eLDelSzUa8vG7T+CHsuOEGMa7UN1pc3qGmrKrIl/18UO1MZJJHpm2/uaRHjX/7vcp
-	 HoKt1ZXCdmuHJ851CyQUHDbF8/PfWBvS5mc57L+Oj8aupawFX1726BBwSNGI+tthjA
-	 gTAD8nouaDn4b75QzrQ/w/Y8Esewc0AFp2ezsAmQ=
+	b=eTACeDP2DdO945vippPei119KKbmijMdlBv49Ns6+2nUtFUlSotE6fYaiugeXDoyH
+	 xvuqBrcqd4uG1Iyx97b7AbKAymQOABPI9RQ8o/V6U71vNU0r7H2gsGQ47LTQQFeNPT
+	 09t5PevJxD7VcAE55+QCLtx2pYIw8RDJraGCoOuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 401/869] wifi: mt76: mt7615: restore DBDC state after ext PHY failure
-Date: Sat,  7 Nov 2026 08:51:23 -0500
-Message-ID: <20261107134906.985190886@linuxfoundation.org>
+Subject: [PATCH 6.18 392/869] ocfs2: free replay slots in ocfs2_recovery_exit()
+Date: Sat,  7 Nov 2026 08:51:14 -0500
+Message-ID: <20261107134906.717387464@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,76 +74,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 7907d5270dc5c13b6a95754c08a77d5b06bbc786 ]
+[ Upstream commit 1ddadc6d41c1a29fd8fad1891bdcd2956e08b7f0 ]
 
-mt7615_register_ext_phy() limits the primary PHY to DBDC capabilities
-before allocating and registering the secondary PHY. If allocation,
-EEPROM override, or PHY registration fails, it returns without restoring
-the primary PHY capabilities. The EEPROM override failure also leaks the
-newly allocated ieee80211_hw.
+Commit ce2fcf1516d6 ("ocfs2: fix memory leak in ocfs2_mount_volume()")
+added ocfs2_free_replay_slots() calls to the mount error paths
+out_dismount and out_check_volume to fix a leak of osb->replay_map.
+However these calls are unlocked while the bail path of the recovery
+thread, which is woken up by out_dismount right before the call, also
+frees the replay slots under osb->recovery_lock.  Both sides can thus
+observe a non-NULL osb->replay_map and trigger a double free.
 
-Route all failures through common labels that free the secondary hardware
-when it was allocated and restore the primary PHY capabilities.
+Fix this by moving ocfs2_free_replay_slots() into ocfs2_recovery_exit()
+after ocfs2_recovery_disable(), which waits for a running recovery thread
+to exit under osb->recovery_lock, and drop the unlocked call sites.  Both
+ocfs2_dismount_volume() and the out_super path of ocfs2_fill_super() call
+ocfs2_recovery_exit(), so the replay slots are freed on every path.  Since
+super.c no longer references it, make ocfs2_free_replay_slots() static
+again.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: 0f2173f093b3 ("mt76: mt7615: add support for registering a second wiphy via debugfs")
-Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260910215441.76683-1-mhun512@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/20260828112825.666097-2-joseph.qi@linux.alibaba.com
+Fixes: ce2fcf1516d6 ("ocfs2: fix memory leak in ocfs2_mount_volume()")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7615/init.c    | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ fs/ocfs2/journal.c | 3 ++-
+ fs/ocfs2/journal.h | 1 -
+ fs/ocfs2/super.c   | 5 +----
+ 3 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-index c4f5f6ee916af..4b41462413bcf 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-@@ -541,8 +541,10 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
- 
- 	mt7615_cap_dbdc_enable(dev);
- 	mphy = mt76_alloc_phy(&dev->mt76, sizeof(*phy), &mt7615_ops, MT_BAND1);
--	if (!mphy)
--		return -ENOMEM;
-+	if (!mphy) {
-+		ret = -ENOMEM;
-+		goto error;
-+	}
- 
- 	phy = mphy->priv;
- 	phy->dev = dev;
-@@ -572,7 +574,7 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
- 
- 	ret = mt76_eeprom_override(mphy);
- 	if (ret)
--		return ret;
-+		goto error_free_hw;
- 
- 	/* second phy can only handle 5 GHz */
- 	mphy->cap.has_5ghz = true;
-@@ -590,7 +592,14 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
- 	ret = mt76_register_phy(mphy, true, mt76_rates,
- 				ARRAY_SIZE(mt76_rates));
- 	if (ret)
--		ieee80211_free_hw(mphy->hw);
-+		goto error_free_hw;
-+
-+	return 0;
-+
-+error_free_hw:
-+	ieee80211_free_hw(mphy->hw);
-+error:
-+	mt7615_cap_dbdc_disable(dev);
- 
- 	return ret;
+diff --git a/fs/ocfs2/journal.c b/fs/ocfs2/journal.c
+index 8c07610692d06..2b8b57e914f08 100644
+--- a/fs/ocfs2/journal.c
++++ b/fs/ocfs2/journal.c
+@@ -158,7 +158,7 @@ static void ocfs2_queue_replay_slots(struct ocfs2_super *osb,
+ 	replay_map->rm_state = REPLAY_DONE;
  }
+ 
+-void ocfs2_free_replay_slots(struct ocfs2_super *osb)
++static void ocfs2_free_replay_slots(struct ocfs2_super *osb)
+ {
+ 	struct ocfs2_replay_map *replay_map = osb->replay_map;
+ 
+@@ -246,6 +246,7 @@ void ocfs2_recovery_exit(struct ocfs2_super *osb)
+ 	/* XXX: Should we bug if there are dirty entries? */
+ 
+ 	kfree(rm);
++	ocfs2_free_replay_slots(osb);
+ }
+ 
+ static int __ocfs2_recovery_map_test(struct ocfs2_super *osb,
+diff --git a/fs/ocfs2/journal.h b/fs/ocfs2/journal.h
+index f8b3b2a3d6309..19fc920d26b1c 100644
+--- a/fs/ocfs2/journal.h
++++ b/fs/ocfs2/journal.h
+@@ -151,7 +151,6 @@ void ocfs2_recovery_exit(struct ocfs2_super *osb);
+ void ocfs2_recovery_disable_quota(struct ocfs2_super *osb);
+ 
+ int ocfs2_compute_replay_slots(struct ocfs2_super *osb);
+-void ocfs2_free_replay_slots(struct ocfs2_super *osb);
+ /*
+  *  Journal Control:
+  *  Initialize, Load, Shutdown, Wipe a journal.
+diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
+index 433b673ae5158..fe4ab1659e0d9 100644
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -1163,7 +1163,6 @@ static int ocfs2_fill_super(struct super_block *sb, struct fs_context *fc)
+ out_dismount:
+ 	atomic_set(&osb->vol_state, VOLUME_DISABLED);
+ 	wake_up(&osb->osb_mount_event);
+-	ocfs2_free_replay_slots(osb);
+ 	ocfs2_dismount_volume(sb, 1);
+ 	goto out;
+ 
+@@ -1778,14 +1777,12 @@ static int ocfs2_mount_volume(struct super_block *sb)
+ 	status = ocfs2_truncate_log_init(osb);
+ 	if (status < 0) {
+ 		mlog_errno(status);
+-		goto out_check_volume;
++		goto out_system_inodes;
+ 	}
+ 
+ 	ocfs2_super_unlock(osb, 1);
+ 	return 0;
+ 
+-out_check_volume:
+-	ocfs2_free_replay_slots(osb);
+ out_system_inodes:
+ 	if (osb->local_alloc_state == OCFS2_LA_ENABLED)
+ 		ocfs2_shutdown_local_alloc(osb);
 -- 
 2.53.0
 
