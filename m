@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063009;
-	b=cZtu9ReCd1ZqR10g5o8uUGcC+34GRZvjHviX0E0ghBIaq9NG7tCFAqB7TR6jla/fUX5e
-	 tFU4BuLTLe/cnHpCrfexu+V0JTsupK2+WOc60Lh70YiGeub07Gc0wLChJGqODv6nIj0Fx
-	 E1UdjTaHXw8jlFaq4lq5sXXfRNFbld//JIYj/SrhNG9XMk1+IOrAoIse+Jv2SwMr3P1VE
-	 YjNgESnvLh6QwG5zZb6TuaNH79GW8S8GggwhGXc9kwFq+cs4ZUhs71YwDVFtTc0in2dhn
-	 2q4pzhl/B8e8ATXyU1DepKJhLuhyhYxxqXU+QqZqeDW9pvTnDWS0K/nENujavMGEBLQ==
+	t=1794063011;
+	b=r0htAw1+PupEqNUvx+tcfg9c1/ModnXrCAGLzFLotMj0Iexub2cKH4Pa2N0W+iBctN78
+	 aiAOzDAJEVng8ryxadThh+4itLTq5zE0R5xB5DqOuZirAduItpN/mMSetJwDmh+4KgNWo
+	 qgLwg4knTsh4Oe2ERERvGce1CDZy0ya/ZGZZtYFixALFtm2Huu6dspT5gUxt6a/7Sbwfv
+	 vk6yk2yKAkpKoqKyYKmLMNXJZs2d30IGv6aTtoR/GQh52grjD7uuf8i4eoSQRrYtDWhK6
+	 6gqOCCDeDYTLDbTNbzuXVvErt13pWF5p30f6Ww2xzEqC34/kG43mHLWyt8t5rlk1ubg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063011;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fNfK738ct0hvmy24s2tx1WQ7mAmnjhS6CoVbTZU3/3w=;
-	b=Z9llqZzoQdjxJ6Uq1NaSsiSslqQXSoOFXULDVrQvhmo7eMjwVnAomqTOxAvTWRAB1oQo
-	 OLm0eMN4iRX8P5ozuX9DN5LFhs52WZJRrNZSYcBi7BfbyfsF/V5FGCT1KsOk1sBr9M/cb
-	 kyeeNHkxUP5jSXvcbAgEXv3VLl5kqrB0Z76H4qSy1bRctJ4Wyy72ghFmyewmyL6HKeKPy
-	 VpnXGLsd5M87g0qoNlNRDK0hlhhrZQAlc0XX8N4efgrn4iYe9m9VworYdnUioZJ0ZGqFQ
-	 2f/ORBRTt6FbVDfshRJRBKdhZuTVJNgrOn7n7EkwEAz/TB8Z4muN5Y3uHQCjXEReIsg==
+	bh=/XOZUhaskGV0VcW8X22wi8qmOdutGQvTmczBqIjR5KA=;
+	b=3uGQmcwSpCTPBF9hMCMEnZkzga13kjbb45ugVFvKoeTxmp+kdHt1dKPu3L2gDxlg33IA
+	 6/hkvG8l/EaACPyQWH84PL/3reYPc24pUjzNwFy6vxMxkjjExmA+25zrWMs9i/Oe3fj3M
+	 l2HKrGGGJhxfMpVhXXtcBvPtLGFUoi4At9cm16vBB1D3TrOLYcETDKCHfRq75Tth1ZM/m
+	 nIN6rBFKDmWMjobmKMBPpYU9BZ0snsiDpjpXLcV7ovHjTHTXim2RuUNX/IS+hmvEirlVp
+	 fko25QOu/L8Yg/IEpALVWPGGIAtgNbumtl1IoI+BCdqbFjWdunOik1R4mHhnzXo1apA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Zyd/PfTC";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CrwZaEE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6338C606D818;
-	Sat,  7 Nov 2026 14:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AF0606D801;
+	Sat,  7 Nov 2026 14:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zyd/PfTC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1243A1F008A1;
-	Sat,  7 Nov 2026 14:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CrwZaEE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617211F008A1;
+	Sat,  7 Nov 2026 14:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063009;
-	bh=fNfK738ct0hvmy24s2tx1WQ7mAmnjhS6CoVbTZU3/3w=;
+	s=korg; t=1794063010;
+	bh=/XOZUhaskGV0VcW8X22wi8qmOdutGQvTmczBqIjR5KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zyd/PfTCiA/17XrnXPn8rnRaZU8LWSNnpJM1cpslBq4rUWb5Xbs3Ec9QcoGbJfJdR
-	 DxmX5lAN+wuE5TrH3aKYuUq26T+wzS9PAFLZhBmtcS0HwICeQmbg5K+80bEdv82leB
-	 /13O2Vs9VDL4OEMoGZ9nsGGw2d3npd9PcST9dXAs=
+	b=1CrwZaEEu8KnLh+dNcfxwrk1zdMwZYqcc4dyFia79TGtMeGJwKadUVIoEqef66Kty
+	 jyBhUZzUEt/bmmHH1pPrgCzBVNpRJ4Tt11+4St+YpmBoNLT+jBKIyDMsgH1AiMDuDt
+	 5XVeCDHV1p0O7ueSESvvbhEMfpRgpeffzqt1BVbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Heidelberg <david@ixit.cz>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 261/869] arm64: dts: qcom: sdm845-xiaomi-beryllium: Extend the xbl_mem region
-Date: Sat,  7 Nov 2026 08:49:03 -0500
-Message-ID: <20261107134900.599523460@linuxfoundation.org>
+Subject: [PATCH 6.18 262/869] arm64: dts: qcom: sdm845-xiaomi-polaris: Extend the xbl_mem region
+Date: Sat,  7 Nov 2026 08:49:04 -0500
+Message-ID: <20261107134900.626755932@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,46 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 511c4fea32708a065e03503c0e4d44f48990c530 ]
+[ Upstream commit 38458f12419f456b16385c118bcacd76899d99b9 ]
 
 Xiaomi's Oreo-era tree still had the CAF 1 MiB region, the 2 MiB version
 arrived with the Pie import. This isn't a board-layout quirk, it tracks
 the firmware. The later XBL wants one extra MiB below the old region.
 
 Cc: stable@vger.kernel.org
-Fixes: 77809cf74a8c ("arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)")
+Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
+
 Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260916-sdm845-xbl-mem-v1-1-6e3c88507997@ixit.cz
+Link: https://patch.msgid.link/20260916-sdm845-xbl-mem-v1-2-6e3c88507997@ixit.cz
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 6 ++++++
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-index dbd5f08b5cdd3..3db935a7442ea 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-@@ -27,6 +27,7 @@
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+index 1c50a0563bc47..8fc7cbc087ed1 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
+@@ -32,6 +32,7 @@
+ /delete-node/ &mba_region;
  /delete-node/ &slpi_mem;
  /delete-node/ &spss_mem;
- /delete-node/ &rmtfs_mem;
 +/delete-node/ &xbl_mem;
  
  / {
- 	chassis-type = "handset";
-@@ -55,6 +56,11 @@ key-vol-up {
+ 	model = "Xiaomi Mi MIX 2S";
+@@ -63,6 +64,11 @@ key-vol-up {
+ 	};
  
- 	/* Reserved memory changes from downstream */
  	reserved-memory {
 +		xbl-mem@85d00000 {
 +			reg = <0 0x85d00000 0 0x200000>;
 +			no-map;
 +		};
 +
- 		tz_mem: memory@86200000 {
- 			reg = <0 0x86200000 0 0x4900000>;
+ 		adsp_mem: memory@8c500000 {
+ 			reg = <0 0x8c500000 0 0x1e00000>;
  			no-map;
 -- 
 2.53.0
