@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063882;
-	b=Hez6NXU2o2B8sQihssBtWs/AoUnltBMEIEyW1ibyEOlwN1mu0msnQGqIac+C1H8U6ZBF
-	 H8fThDtKdrQKxr1b5u5ZgKQQtwASIVjzGymJTFsr+FgDsi46pJc+p7lfHjRBHt1evFwxm
-	 m7smYuMJihyrI8LcOhmYMFyzpYzHUFfYDdklEWyJT7niwSJCm5B2Hzr0x4I4YRvQwlFvN
-	 qmtRr54M7Q8LNfRQXt7GHFw4kETm/KYJiX+UIMp+PwQGwPfG0tJjOjMp/L0P2F3gZXfPh
-	 gTF2I2rsI3YSZcFQbJx5y9OJy4DExW9oBckUgDRYIFACi/kj9kZ2eS4I9mZhNv0JCnQ==
+	t=1794063883;
+	b=MUcfgdFB/cWYuMgFnhQ62pRHoWUgmMklWSgqxU+23ae6bO5kVxGcQ/7orGitoqQmBNKs
+	 tGGMjvy+J/PW56n53eYXFH5hL9jFp2jCFFZTjn+fg3b9GVN6Gvu7qvEfdQA9AFnx7MFnH
+	 IMrIxtB5KMIBEDjYuDO4pHGQV2XvpVT8Av6ryyoNEDSCIQ8ilT4Dkvl04WIf+FGH5cvuS
+	 sxLR2sTbSZR5mf20I/mC4qeCMjw1lHKUleEtfyyXQUxqm+7vuk1Qc4F9OzRCpDlF9E0Ie
+	 9iKxTD4XWa/Q2LhFT3HlRmNxnU7TX4pAL9gNLpCRosCzCTo6oZs6gCZsYHSaknYUFUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063882;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063883;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pgoFmkk6qYaazPvMStb/oZlmf1o8NetSfik5E55KtrM=;
-	b=QcPsSc+lx8ru1IVs5Z0R2BzObRy6n60fnn9VykH4skWWAC+daqVBfbIyxGAR22nFZTJU
-	 5J+ZPHRM9AI9LH0WiXIkdvV7dn3IYM0S9jBUqtGnhY7yHiJjJWabCm09vGmUIiEinnVst
-	 /esXJukqTG0UhB7J1vP/w8ABe5PbsfoB8470Ny/Zuj+u+N4Kjxbz5nIGBFqaYDf9wPlnt
-	 B9VpgMzDHn0Ncnyt+2Qy3IwYvPR+DZS7YIjMiYAo7K9WN9YTblWoKcKWt6Q1uj91BsGqL
-	 8/771Qiw0ju4fizKzWC9y/MIZknRiOg1C6BP0HU44J4+7lVixitBdHKI+mbPhQZ3YjQ==
+	bh=O0iF6N0zmK6MWZoRMRFtehbkHe1yiYJA+nZQ1AKP4Tk=;
+	b=BmiI73TC1EpR8xZKAtIpwkbvd46gbavWdM5+m9aJSMKViwzOYRFLm9b5jF+ld5NpQX0U
+	 GU9yFTn9D6KJXk0/KzwX33Pp5hfw17pDZz/RkoQ1Le5uM87trDrI3moprvR3BmETzPBYy
+	 s2uJehJtDSSZ9hu9k5K2Qq8gZN0IzGpx/A4qsDFBu1+fPC4olenW1o00xjDORcsNybil1
+	 CDyneka3L40PReSlu+hil3WVSu6pNNH3XgQhkwU1C8G4YIpbYqxWQxoKIxxFOA+qIk3xU
+	 kbS3CyaGy4FpXXjC4c1DPJv2KFIxQw6wsNn1j0olrycuor58DEUkpK1NcMNgCar/1vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FG8XNYFa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sEkNVHaC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA567606A32F;
-	Sat,  7 Nov 2026 15:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03F7606A32F;
+	Sat,  7 Nov 2026 15:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FG8XNYFa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546331F008A1;
-	Sat,  7 Nov 2026 15:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sEkNVHaC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B771F008A1;
+	Sat,  7 Nov 2026 15:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063881;
-	bh=pgoFmkk6qYaazPvMStb/oZlmf1o8NetSfik5E55KtrM=;
+	s=korg; t=1794063882;
+	bh=O0iF6N0zmK6MWZoRMRFtehbkHe1yiYJA+nZQ1AKP4Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FG8XNYFaYpNgyyDCaGcXJEzMGSOtYdrs2lEJqjczTdBP6YjKtik/FPJNHox5MXdCY
-	 AJoECjGq0Oyymc2We7CWkVmld7oAcRCoJZxtJVARbYw1y9SXYCC4gnb+Pi0A9Xj0TU
-	 QXHgUOwg6pS4aBVBY1R9AMQToiEpMssdOYewiidk=
+	b=sEkNVHaCxWPYBlPt/n6UB/cn1g9oDZr0muN6ho8GOthI819xJN20lbI77jt+Vk6/s
+	 PoC4E9Jp261HNhM36i2Q0tgR9Kng95V+AwClQnyi80+Zzrt58S4bMC7ttf8joSYURK
+	 lOdhudHJUmL5nUnCE780gqiVyGgF0XkkR6G3RusM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Obbard <chris.obbard@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Yunpeng Tian <shionthanatos@gmail.com>,
+	Gongming Wang <gmwgg05@gmail.com>,
+	Mingda Zhang <npczmd@qq.com>,
+	Qinrun Dai <jupmouse@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0047/1257] PCI: qcom: Only check bridge nodes for PERST# GPIOs
-Date: Sat,  7 Nov 2026 08:39:03 -0500
-Message-ID: <20261107134940.709754792@linuxfoundation.org>
+Subject: [PATCH 7.3 0048/1257] udf: validate the device specification EA before using it
+Date: Sat,  7 Nov 2026 08:39:04 -0500
+Message-ID: <20261107134940.738362978@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,111 +71,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Obbard <chris.obbard@oss.qualcomm.com>
+From: Yunpeng Tian <shionthanatos@gmail.com>
 
-[ Upstream commit 1b3b0bc2b3672e928e06997444528f8797579eb2 ]
+[ Upstream commit 9a2390959685ac35a58c80c8016120849a2babf6 ]
 
-qcom_pcie_parse_perst() walks the PCIe hierarchy described in the device
-tree below its Root Port and collects the PERST# GPIOs from each bridge
-node so all PERST# lines can be driven in unison during controller
-bring-up, reset and power sequencing.
+udf_get_extendedattr() bounds an extended attribute only against
+struct genericFormat, which is 12 bytes.  A type-12 device
+specification is struct deviceSpec, which is 24 bytes plus a flexible
+impUse array. Thus a corrupted filesystem can contain extended attribute
+that is accepted by udf_get_extendedattr() but udf_write_inode() or
+udf_read_inode() may access beyond the end of provided buffer.
 
-However, the recursive device tree walk currently visits every available
-child node without checking that it is a PCI bridge. This allows the walk
-to leave the PCI hierarchy and collect reset lines from children of PCI
-Endpoint nodes, where those reset lines belong to other drivers.
+Provide a udf_device_spec_valid() check to validate correctness of
+extended attribute that is a deviceSpec. While here, check the result of
+udf_add_extendedattr() before dereferencing it as it can return NULL in
+case of error.
 
-This is reproducible on the Qualcomm RB3Gen2, where a Renesas uPD720201
-USB host controller sits behind a PCIe switch downstream port. A Genesys
-GL3590 USB hub connected to that controller is described as a child of
-the PCI endpoint:
+[JK: Removed duplicated validity checks]
 
-	pcie@2,0 {
-		device_type = "pci";
-
-		usb-controller@0,0 {
-			compatible = "pci1912,0014";
-
-			hub@1 {
-				compatible = "usb5e3,610";
-				reset-gpios = <&tlmm 162 GPIO_ACTIVE_HIGH>;
-			};
-		};
-	};
-
-The USB controller is a PCI Endpoint, and not a bridge, but the PERST#
-walk descends through it and incorrectly claims the hub's reset GPIO:
-
-	$ gpioinfo
-	line 162: unnamed output consumer=PERST#
-
-As a result, the onboard-usb-dev driver cannot acquire its reset GPIO
-during probe:
-
-	onboard-usb-dev 1c08000.pcie:...:usb-controller@0,0:hub@1: \
-	  error -EBUSY: failed to get reset GPIO
-	onboard-usb-dev 1c08000.pcie:...:usb-controller@0,0:hub@1: \
-	  probe with driver onboard-usb-dev failed with error -16
-
-The GPIO is also added to the root port's PERST# list and is asserted
-and deasserted as part of PCIe reset sequencing. On the RB3Gen2 this
-causes the USB hub to repeatedly re-enumerate:
-
-	[  116.479598] hub 2-1:1.0: USB hub found
-	[  116.488601] hub 2-1:1.0: USB hub found
-	[  116.496971] hub 2-1:1.0: USB hub found
-	...
-
-This disrupts the hub and devices connected to it.
-
-Restrict the recursive walk to children with device_type "pci", so
-PERST# GPIOs are collected only from PCI bridge nodes and the walk
-does not descend through endpoints.
-
-qocm_pcie_parse_ports() has made the same distinction since
-commit 45df22935bdc ("PCI: qcom: Restrict port parsing only to PCIe
-bridge child nodes"), but the PERST# walk added later did not carry over
-that check.
-
-This bug is distinct from commit 3edb3a038d42 ("PCI: qcom: Skip PERST#
-GPIOs provided by downstream PCIe devices"), which filters PERST# GPIOs
-based on their provider. Here the GPIO is provided by the SoC TLMM; the
-bug is that reset-gpios is consumed from a non-bridge node at all.
-
-Fixes: 2fd60a2edb83 ("PCI: qcom: Parse PERST# from all PCIe bridge nodes")
-Signed-off-by: Christopher Obbard <chris.obbard@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reported-by: Gongming Wang <gmwgg05@gmail.com>
+Reported-by: Mingda Zhang <npczmd@qq.com>
+Reported-by: Qinrun Dai <jupmouse@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260829-wip-obbardc-drivers-pcie-qcom-rb3gen2-usb-fix-v1-1-337821131a99@oss.qualcomm.com
+Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/udf/inode.c | 43 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 38 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index b58a607b713f5..89a476c370988 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1953,7 +1953,7 @@ static bool qcom_pcie_is_child_node(struct device *dev,
- 	return false;
+diff --git a/fs/udf/inode.c b/fs/udf/inode.c
+index 2f04c4f0e1b85..49673b555c624 100644
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -1336,6 +1336,26 @@ int udf_setsize(struct inode *inode, loff_t newsize)
+ 	return err;
  }
  
--/* Parse PERST# from all nodes in depth first manner starting from @np */
-+/* Collect PERST# GPIOs from PCI bridge nodes depth-first, starting at @np */
- static int qcom_pcie_parse_perst(struct qcom_pcie *pcie,
- 				 struct qcom_pcie_port *port,
- 				 struct device_node *np)
-@@ -2019,6 +2019,9 @@ static int qcom_pcie_parse_perst(struct qcom_pcie *pcie,
- 
- parse_child_node:
- 	for_each_available_child_of_node_scoped(np, child) {
-+		if (!of_node_is_type(child, "pci"))
-+			continue;
++/*
++ * Verify validity of struct deviceSpec on disk. udf_get_extendedattr() has
++ * already verified the generic header and made sure attribute fits in the
++ * inode so we just have to make sure attribute space is large enough for
++ * deviceSpec struct and required impUse information.
++ */
++static bool udf_device_spec_valid(struct deviceSpec *dsea)
++{
++	u32 attr_length, imp_use_length;
 +
- 		ret = qcom_pcie_parse_perst(pcie, port, child);
- 		if (ret)
- 			return ret;
++	attr_length = le32_to_cpu(dsea->attrLength);
++	imp_use_length = le32_to_cpu(dsea->impUseLength);
++	if (attr_length < sizeof(struct deviceSpec) ||
++	    imp_use_length < sizeof(struct regid) ||
++	    imp_use_length > attr_length - sizeof(struct deviceSpec))
++		return false;
++
++	return true;
++}
++
+ /*
+  * Maximum length of linked list formed by ICB hierarchy. The chosen number is
+  * arbitrary - just that we hopefully don't limit any real use of rewritten
+@@ -1654,13 +1674,12 @@ static int udf_read_inode(struct inode *inode, bool hidden_inode)
+ 	if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode)) {
+ 		struct deviceSpec *dsea =
+ 			(struct deviceSpec *)udf_get_extendedattr(inode, 12, 1);
+-		if (dsea) {
+-			init_special_inode(inode, inode->i_mode,
++
++		if (!dsea || !udf_device_spec_valid(dsea))
++			goto out;
++		init_special_inode(inode, inode->i_mode,
+ 				MKDEV(le32_to_cpu(dsea->majorDeviceIdent),
+ 				      le32_to_cpu(dsea->minorDeviceIdent)));
+-			/* Developer ID ??? */
+-		} else
+-			goto out;
+ 	}
+ 	ret = 0;
+ out:
+@@ -1757,6 +1776,7 @@ int udf_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 	struct udf_sb_info *sbi = UDF_SB(inode->i_sb);
+ 	unsigned char blocksize_bits = inode->i_sb->s_blocksize_bits;
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
++	int err;
+ 
+ 	bh = sb_getblk(inode->i_sb,
+ 			udf_get_lb_pblock(inode->i_sb, &iinfo->i_location, 0));
+@@ -1821,6 +1841,10 @@ int udf_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 				udf_add_extendedattr(inode,
+ 						     sizeof(struct deviceSpec) +
+ 						     sizeof(struct regid), 12, 0x3);
++			if (!dsea) {
++				err = -ENOSPC;
++				goto out_unlock;
++			}
+ 			dsea->attrType = cpu_to_le32(12);
+ 			dsea->attrSubtype = 1;
+ 			dsea->attrLength = cpu_to_le32(
+@@ -1828,6 +1852,10 @@ int udf_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 						sizeof(struct regid));
+ 			dsea->impUseLength = cpu_to_le32(sizeof(struct regid));
+ 		}
++		if (!udf_device_spec_valid(dsea)) {
++			err = -EFSCORRUPTED;
++			goto out_unlock;
++		}
+ 		eid = (struct regid *)dsea->impUse;
+ 		memset(eid, 0, sizeof(*eid));
+ 		strcpy(eid->ident, UDF_ID_DEVELOPER);
+@@ -1962,6 +1990,11 @@ int udf_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 	set_inode_metadata_writeback(inode);
+ 
+ 	return 0;
++
++out_unlock:
++	unlock_buffer(bh);
++	brelse(bh);
++	return err;
+ }
+ 
+ struct inode *__udf_iget(struct super_block *sb, struct kernel_lb_addr *ino,
 -- 
 2.53.0
 
