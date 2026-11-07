@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061856;
-	b=RcV5K8vgKx30mt01+MNJ+TwAuKZlJM+wX9Vb1/H0Mez18frt4VTIK7R1KkZceLG+/PB9
-	 +L179RMkWSSWly/lMZgoZpzoI5eIGFtZCj10OIW9ep9DWQIKlpT0waJs15SQ1D+/gWm8C
-	 qlqZxJH6JQ34kcX7h9uN+mBItvF0xbmxujyPns7QQswQ/oHqAThbAlTbsLLJkrGw7d2bS
-	 twWwK8Tp6vaAUOPsY7HZunXzOQ7fO6LZqaYkb4ULD4Xrnx8eD5EBwS6mIa3GuJjt2/VxZ
-	 l2XIuoQ9buJLxwBS5HIRFW6c1xByY64v4eKjA1tG4gSyP/J4N3eJCdcE23JKtIiAMgQ==
+	t=1794061857;
+	b=Kp0Tr2Dt+l/z0MQpJEsLw+8j8S8Ffv1YbW3N1FxH5CivOIzkFeTnk+cFkh2ZslolgLw5
+	 XUnj4LIALbtPM9bNFMe5Re3MJ20fTG2s/b0k+wPNQEV2BzxPjnNGKt6v/RpLDcqm/VVNj
+	 bx5E4s0m6WKma8+EbKLqn2CvynD2y6zU8ZepV9aKXGKbuFmEwmMjowR5aqlQedsH3UahI
+	 NOeInQNN61W06vwkotP3NN7by0E11AKh4CqQVtCMvVkK1IpFklD2ZHEBh89jGWdZgRTB/
+	 wMPk/3ucvSoA1bEJLtquoG004bQjV0f+0ogiKfo9zUBqo6sVkCHmb6P2cvymNpQmA0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061857;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7k0ja8Y9A3TsxhOjPkhrg2DL+OYmadytppQnMApUVoI=;
-	b=nfsszTY/ChT+vd6ZeBA3H2ql9I+YT9wzk6SZEID5knkpGEStcO1lk6J99TXpGmIKxQD6
-	 EO9eS62SOj8pM9iBFSS1sKrkqVoQSd80rJ19+1+wUMFAApAZikQjUM083PU4QkD4vKJLw
-	 2tTKwYEI4spGWpNu8IFjgbFZ3OBCkkiEE7eaHr9rGcEG2Xk0IZgUdKDO2L2Jx+JEH6/JF
-	 KoJAwj7nZrLmDZIQQo6U037CaiM0M4dILVgomQ3wIaGf742cAq6cb796BeImaISwsWYDD
-	 iuxeAZr2qMqbM7LwxRSLAHP4mmOkU6oAlg0s8VuF5kPGaSIlqmKpA9cSxtZg89qIJvA==
+	bh=L1xYteOfh9vjVBOi8Qn9J+8pHcUK0/+fr3rdSZWMw9g=;
+	b=DUZtmexmYvrFyKYfgWb6GmpbGm/Jf9WrWFr9oFeEEI1zouXdSenOkO/4fYAcC1Y7dXW6
+	 7rbs+b4apIVux2fZ+gBgX0bPV2BcIUq2c6g0cAZfMjrgx98A7fUE1PvlkCaC/kJuRuKbq
+	 B0JwjijV9rTcWbvvhfwGrlOnnFtTOkR2NjuV6Om8HoZdvEiSVEW8K1iqVfNep41Kt5YGZ
+	 eC0u9Vv+EQU2gO14HRNUX23O+QtDwTUC1b2Tu2nxQhnN3rfxnQbWLZRoGXal14oXWghpy
+	 rUAis7CIoyVfmEHQFGpy4ilM32w9WFfLAN+xttSzou1qgIwgo/R5jYv+jY13wftZpHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F9EaSyXu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=is1QrP7J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C509606A32D;
-	Sat,  7 Nov 2026 14:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77005606A32C;
+	Sat,  7 Nov 2026 14:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F9EaSyXu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9DA1F0089F;
-	Sat,  7 Nov 2026 14:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=is1QrP7J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E141F0089F;
+	Sat,  7 Nov 2026 14:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061856;
-	bh=7k0ja8Y9A3TsxhOjPkhrg2DL+OYmadytppQnMApUVoI=;
+	s=korg; t=1794061857;
+	bh=L1xYteOfh9vjVBOi8Qn9J+8pHcUK0/+fr3rdSZWMw9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F9EaSyXu3V2xoTytPLUTfJGRGXVYSETEImfUd/aIekzl4bnjpAFWW43e3Iio6E6PF
-	 6dhR+iVO479MgGyMDxtR4j6BH4IEPgk7IrM3UTLXiovjS4VDvGZWSpCY34umuPeGAt
-	 pQ8ineTBq8oWOSVVv52Gggm5xxSd++msU0zTWYhw=
+	b=is1QrP7JgSMCoCFPXe1DkGnFoFQSmAmIpHl1MU8oUrdOe+Sn0JeEuJl13XgfZ/KLH
+	 erDIE/9Ki8MIweLY699XODYZYcXqhWvpWl6hNuPFSAqNSwu/1Iv9adYd/Mc1xKrAiy
+	 v5WzvR7IhniwY8IUzxtMT/pJdIYUwC6WKlZ650lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0874/1536] staging: rtl8723bs: fix protected RX frame validation in decrypt path
-Date: Sat,  7 Nov 2026 08:48:10 -0500
-Message-ID: <20261107135022.095850805@linuxfoundation.org>
+Subject: [PATCH 6.12 0875/1536] wifi: mt76: mt7996: unlink TWT flow if the MCU rejects the agreement
+Date: Sat,  7 Nov 2026 08:48:11 -0500
+Message-ID: <20261107135022.123351546@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,101 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 495cb31c791bdf3f9efef255a9587b05b0526c9d ]
+[ Upstream commit 022f5f8b7a0580da50fcbc34da853d03d4321fe2 ]
 
-The RX software decrypt path mishandles crafted protected frames from a
-malicious AP in two ways:
+mt7996_mac_add_twt_setup() links a new flow into dev->twt_list before
+asking the MCU to add the agreement, but exits without unlinking the flow
+if the request fails. The flow-ID and table masks are only committed
+after MCU success, so the still-linked flow is invisible to the
+mask-gated teardown paths.
 
-1) decryptor() never checks that a protected frame is long enough to
-hold the 802.11 header plus the per-cipher trailer.  All of
-rtw_wep_decrypt(), rtw_tkip_decrypt() and rtw_aes_decrypt() compute
+If the station retries the setup, the same slot is cleared and its
+embedded list node reinitialized while it is still linked, corrupting
+dev->twt_list. If the station disassociates instead, teardown skips the
+flow and station storage can be freed while the node remains linked. A
+later scheduling or debugfs twt_stats walk can then dereference the
+freed flow, resulting in a use-after-free.
 
-	length = hdr.len - hdrlen - iv_len;
+Unlink the flow when the MCU rejects the agreement. This restores the
+list to its pre-request state while leaving the unchanged mask and
+agreement accounting untouched.
 
-and act on the result, and recvframe_chkmic() similarly computes
-
-	datalen = hdr.len - hdrlen - iv_len - icv_len - 8;
-
-for TKIP (the 8-byte Michael MIC is not accounted for in icv_len).
-A frame shorter than hdrlen + iv_len + icv_len (+ 8 for TKIP) underflows
-these unsigned subtractions, turning into a ~4 GiB iteration count in
-aes_decipher()/arc4_crypt()/rtw_seccalctkipmic() or a ~4 GiB crc32_le()
-length, causing out-of-bounds reads/writes of up to ~4 GiB starting from
-the rx skb.  Reject such frames in decryptor() before touching the IV;
-this covers all three ciphers and the TKIP MIC check, and also keeps the
-unconditional iv[3] access within the frame.
-
-2) validate_80211w_mgmt() keeps using the frame - two memcpys through
-the stale rx_data pointer and a pkt_len update - before checking
-whether decryptor() returned NULL.  On decrypt failure (e.g. a unicast
-protected deauth/disassoc/action frame with a bad MIC, which this path
-always software-decrypts) the skb has already been freed, so this is a
-use-after-free read/write, and the caller's error path frees the frame
-a second time, drifting free_recvframe_cnt.  Bail out immediately when
-decryptor() fails, freeing the temporary mgmt_DATA buffer first.
-
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Assisted-by: LLM
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/8ee3bdd1c45034200cb1aa9a7e9b575b9584643a@linux.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/20260729173632.14387-3-enderaoelyther@gmail.com/
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: Kimi:K3
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260825112620.97568-1-enderaoelyther@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[ sashal: Changed the MCU helper argument from &msta->vif->deflink to msta->vif to match the existing interface. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_recv.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_recv.c b/drivers/staging/rtl8723bs/core/rtw_recv.c
-index f43429c72298e..96630315d46a7 100644
---- a/drivers/staging/rtl8723bs/core/rtw_recv.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_recv.c
-@@ -386,8 +386,21 @@ static union recv_frame *decryptor(struct adapter *padapter, union recv_frame *p
- 	u32  res = _SUCCESS;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 89d8a22e967c3..5b12f152b0acb 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -2654,8 +2654,10 @@ void mt7996_mac_add_twt_setup(struct ieee80211_hw *hw,
+ 	}
+ 	flow->tsf = le64_to_cpu(twt_agrt->twt);
  
- 	if (prxattrib->encrypt > 0) {
--		u8 *iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
-+		u8 *iv;
-+		u32 min_len = prxattrib->hdrlen + prxattrib->iv_len + prxattrib->icv_len;
+-	if (mt7996_mcu_twt_agrt_update(dev, msta->vif, flow, MCU_TWT_AGRT_ADD))
++	if (mt7996_mcu_twt_agrt_update(dev, msta->vif, flow, MCU_TWT_AGRT_ADD)) {
++		list_del(&flow->list);
+ 		goto unlock;
++	}
  
-+		/* TKIP appends an 8-byte Michael MIC that icv_len doesn't account for */
-+		if (prxattrib->encrypt == _TKIP_)
-+			min_len += 8;
-+
-+		/* a protected frame must be long enough to hold the IV and ICV/MIC */
-+		if (precv_frame->u.hdr.len < min_len) {
-+			rtw_free_recvframe(precv_frame,
-+					   &padapter->recvpriv.free_recv_queue);
-+			return NULL;
-+		}
-+
-+		iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
- 		prxattrib->key_index = (((iv[3]) >> 6) & 0x3);
- 
- 		if (prxattrib->key_index > WEP_KEYS) {
-@@ -1371,6 +1384,10 @@ static signed int validate_80211w_mgmt(struct adapter *adapter, union recv_frame
- 			if (!mgmt_DATA)
- 				goto validate_80211w_fail;
- 			precv_frame = decryptor(adapter, precv_frame);
-+			if (!precv_frame) {
-+				kfree(mgmt_DATA);
-+				goto validate_80211w_fail;
-+			}
- 			/* save actual management data frame body */
- 			memcpy(mgmt_DATA, ptr + pattrib->hdrlen + pattrib->iv_len, data_len);
- 			/* overwrite the iv field */
-@@ -1378,8 +1395,6 @@ static signed int validate_80211w_mgmt(struct adapter *adapter, union recv_frame
- 			/* remove the iv and icv length */
- 			pattrib->pkt_len = pattrib->pkt_len - pattrib->iv_len - pattrib->icv_len;
- 			kfree(mgmt_DATA);
--			if (!precv_frame)
--				goto validate_80211w_fail;
- 		} else if (is_multicast_ether_addr(GetAddr1Ptr(ptr)) &&
- 			(subtype == WIFI_DEAUTH || subtype == WIFI_DISASSOC)) {
- 			signed int BIP_ret = _SUCCESS;
+ 	setup_cmd = TWT_SETUP_CMD_ACCEPT;
+ 	dev->twt.table_mask |= BIT(table_id);
 -- 
 2.53.0
 
