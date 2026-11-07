@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064335;
-	b=4lNjxb9RPzaAC7+66WmDmivrdQVGQdx0l1zdbJ89tnix9g8zF1n7BlGaKdUDKzh8HIru
-	 fn4pmmwi9kQYLMd7fHUL8iIbraFc0MQSCmUsXg3v6V/C2+m3KNPRoBW33JS0hbfVTfqAI
-	 wXnVJulsHU90b43WdQvGPR8tOpQQeW/9TvOgOm+Zu5Vzoa+kRKhRUt7tmgPiUXUXaAeO9
-	 SvKLazY4+qCp0wuEv/Nzz+UNsWpWH86Cdo7rjdcLCZ3qOiFG2mC0iNjK5T5TJZmPefd8r
-	 kwXypxTlEVzq9xLwXuME6f9vLSP6P6Pwl/ioc6SJMKgsbyWmQwc0zcc803tG9/sIUxg==
+	t=1794064336;
+	b=1XPTKLsDpsQouH9SOumdS2yI2TPwf+jp3DbjqFTxavVypLU5WukmkuHbM+WfkB67JiQc
+	 jcmyvk/PCMItOCflAInQeHarks4JuH51MStAob5rPTtuxcbLF6CUwBwPhBeO4BfSh555i
+	 dyyjQ/Kf/OBBkCJ5H0OBV5VR5Ymp45wlN7h49LS5+ss44EwtPrtdZP6VCsVpTNhJFVbpG
+	 HCTH/a9VUTQYptx3fcdXyjkEeAOtTi7p27Gt+g8GAHtXqAi42WRl88wUTZqCfH7dsD5sn
+	 E8K1iQbosSGvV6VnPk5JwLF/I/NNuERVWGj+6OocArcT2mAWvoaDt2oflS70efZYbsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064335;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064336;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cVNQyLM/A5tn0wRFgjaIA+IJgZ5Nu22VmDstLnPLmHs=;
-	b=ZRhsgNwbift/R6rqourKpixlPoY8B8i2axe6YHqvGpf+0r6mcJvqhwxND4QPFryxhQXh
-	 q9lzwo7zFhCvikFMvZLR0wkcTvef5xWYwc0ywC5axe2YFM3PDRfClisZvzzaNfTNRsef9
-	 Ssn7A7xBFpzlPuBcC28I9dshwGn6RCIFTBYS/C7NwNyEOVivUJclnR8oxwthdU/abZrzg
-	 2AzVqnfgWzl93aFAN1Kod4trtzDXWVb0doaenFP6QsixbiJiujl8V7vSNZrOcG/wiIj2R
-	 SboQEnBUriPm6fJOhF/5c4X/CvGD6SPqeVGW6szFyvN3WnY6FYuwxijNHDCrQshEMDQ==
+	bh=WYWXl1afOkwDJrIFRyWcWVZ6BmCF23abSxwSISZfyw0=;
+	b=e0oYFbLgJknvkD2w0O+6uFqUNPCd4PsunVxLExNuSqkKZa/i0irjEAEVoM82TCDaYGVT
+	 sh3/HTknmLzjIavGxfpOIgrmZqIz6aMfr82ZSKyE8eeoKB5Oufko/uLHkhxw2u8f2n7xb
+	 Gg92NSXm7RoL6VgBS99jybr+6f60bamgCRhR9YId9TR2yAdjfXgOkm0qYj/qZD8Acd8lu
+	 ODtx1rjgZ9QZNXGxIsfKRu6a/21U2XEV5G0p3Q3JY29wYckvjNYo3Ky1rV7TsvTn/bCzA
+	 hDG1yWJdkDi8n2OSdj95yXUVhjYmoRycu1cv1a8Nuw/buLGH8kTkbrZj4ybdaMjCu8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u+iYjLcy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ciVmG9UJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5EB606A33A;
-	Sat,  7 Nov 2026 15:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5528F606A33A;
+	Sat,  7 Nov 2026 15:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u+iYjLcy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BD21F0089F;
-	Sat,  7 Nov 2026 15:12:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ciVmG9UJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0135A1F0089F;
+	Sat,  7 Nov 2026 15:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064335;
-	bh=cVNQyLM/A5tn0wRFgjaIA+IJgZ5Nu22VmDstLnPLmHs=;
+	s=korg; t=1794064336;
+	bh=WYWXl1afOkwDJrIFRyWcWVZ6BmCF23abSxwSISZfyw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u+iYjLcygROS6Z+kuD+IKKOfig7+ng94odDLfYRyAYU17y+b8eEGOYLkJonJBH6m5
-	 QS4kTIe23WMOZzPjaSoLzc5px+J/5YDrE2BxM+VEvVUNJvqiQYOaBrARwvTbdZTNoJ
-	 JN+p8j/nIBpqGkXGRh7Yyd78Gf8uY2ufBFrbuI1s=
+	b=ciVmG9UJC0462kNTSmJQpBdCS0W6utcmPHmHyw3FSN1aPIBM8mH/GNqRrHAX88xwL
+	 4zn/jnSGJnRRdLQ+gYYeuj/25bS7RejCyxhTeFe5SJ+mvoNEnHF2d9oFvH4QoD7je5
+	 JBm1E5+j8BHpFw3Qb7DQQluXmGUCrTT92DL9QL7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srish Srinivasan <ssrish@linux.ibm.com>,
 	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Greg Joyce <gjoyce@linux.ibm.com>,
+	Srish Srinivasan <ssrish@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0382/1257] pseries/plpks: clear SED key data after use
-Date: Sat,  7 Nov 2026 08:44:38 -0500
-Message-ID: <20261107134950.101857800@linuxfoundation.org>
+Subject: [PATCH 7.3 0383/1257] pseries/plpks: fix self-reference in plpks_var initializer
+Date: Sat,  7 Nov 2026 08:44:39 -0500
+Message-ID: <20261107134950.128164255@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -72,64 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Srish Srinivasan <ssrish@linux.ibm.com>
 
-[ Upstream commit 217ba01e5b9096091acc2c1a3776cb3eb88c00ff ]
+[ Upstream commit abcccecf4aa4b681f50eb7d7de93fc9a0a61c181 ]
 
-Explicitly clear the temporary buffer containing SED key data after read
-and write operations.
+In plpks_gen_wrapping_key() and plpks_wrap_object(), strlen(var.name) is
+used to initialize var.namelen within the same struct initializer. This
+references a member of var before initialization of var is complete.
 
-Fixes: ec8cf230cecc ("powerpc/pseries: PLPKS SED Opal keystore support")
-Cc: stable@vger.kernel.org # 6.7
+Use the compile-time length of PLPKS_WRAPKEY_NAME instead.
+
+Reported-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Fixes: 133aa79e211d ("pseries/plpks: add HCALLs for PowerVM Key Wrapping Module")
+Cc: stable@vger.kernel.org # 7.0
 Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
 Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Reviewed-by: Greg Joyce <gjoyce@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260923182816.151451-8-ssrish@linux.ibm.com
+Link: https://patch.msgid.link/20260923182816.151451-9-ssrish@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/plpks_sed_ops.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ arch/powerpc/platforms/pseries/plpks.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/plpks_sed_ops.c b/arch/powerpc/platforms/pseries/plpks_sed_ops.c
-index 7c873c9589eff..ac3ec2ca7fbee 100644
---- a/arch/powerpc/platforms/pseries/plpks_sed_ops.c
-+++ b/arch/powerpc/platforms/pseries/plpks_sed_ops.c
-@@ -84,14 +84,16 @@ int sed_read_key(char *keyname, char *key, u_int *keylen)
- 
- 	ret = plpks_read_os_var(&var);
- 	if (ret != 0)
--		return ret;
-+		goto out;
- 
- 	len = min_t(u16, be32_to_cpu(data.key_len), var.datalen);
- 	memcpy(key, data.key, len);
- 	key[len] = '\0';
- 	*keylen = len;
- 
--	return 0;
-+out:
-+	memzero_explicit(&data, sizeof(data));
-+	return ret;
- }
- 
- /*
-@@ -102,6 +104,7 @@ int sed_write_key(char *keyname, char *key, u_int keylen)
- 	struct plpks_var var;
- 	struct plpks_sed_object_data data;
- 	struct plpks_var_name vname;
-+	int ret;
- 
- 	plpks_init_var(&var, keyname);
- 
-@@ -127,5 +130,8 @@ int sed_write_key(char *keyname, char *key, u_int keylen)
- 	vname.name = var.name;
- 	plpks_remove_var(var.component, var.os, vname);
- 
--	return plpks_write_var(var);
-+	ret = plpks_write_var(var);
-+	memzero_explicit(&data, sizeof(data));
-+
-+	return ret;
- }
+diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
+index b057e378a6b39..896eda3eb65f4 100644
+--- a/arch/powerpc/platforms/pseries/plpks.c
++++ b/arch/powerpc/platforms/pseries/plpks.c
+@@ -939,7 +939,7 @@ int plpks_gen_wrapping_key(void)
+ 	int rc = 0, pseries_status = 0;
+ 	struct plpks_var var = {
+ 		.name = PLPKS_WRAPKEY_NAME,
+-		.namelen = strlen(var.name),
++		.namelen = sizeof(PLPKS_WRAPKEY_NAME) - 1,
+ 		.policy = PLPKS_WRAPPINGKEY,
+ 		.os = PLPKS_VAR_LINUX,
+ 		.component = PLPKS_WRAPKEY_COMPONENT
+@@ -1034,7 +1034,7 @@ int plpks_wrap_object(u8 **input_buf, u32 input_len, u16 wrap_flags,
+ 	bool sb_enforce_bit = wrap_flags & BIT(1);
+ 	struct plpks_var var = {
+ 		.name = PLPKS_WRAPKEY_NAME,
+-		.namelen = strlen(var.name),
++		.namelen = sizeof(PLPKS_WRAPKEY_NAME) - 1,
+ 		.os = PLPKS_VAR_LINUX,
+ 		.component = PLPKS_WRAPKEY_COMPONENT
+ 	};
 -- 
 2.53.0
 
