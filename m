@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065060;
-	b=VQYVQ09gBFEACfN6yjHHRjzTHBhbcaDoQzJPCuNOgOFFy+VvgHhIeCz3Gp4J6E0bFnnp
-	 nduAPPFhEvAnOZZV+niWSGA0TzbMkRPDSzgUhKl40hSp+Dqgu+ga791JlCHeqZb3wfK0V
-	 IholrrKlrhr5PUQDuJCFR++QYsGxVyD5hwkem/K2ZLFh+e8XLUMS07dbRhbilBtvDFdGG
-	 CJ/eUF0gZtgXjILWldH4vafmTkzGYjiORRNrOqRF3Jxm3uUqqqLJ2qFa1SRj30wqjG7M6
-	 XHqLBL6Jd0J6kbBo5Yk6eYJ/6TrKupbO2TH0uQ7p18uLXu6ftkIWAq7vdgpRvWn4Vgg==
+	t=1794065062;
+	b=FMNYxWjH5FQtCwswYHLSSBsAK8vM9/3YYwSFBasVr6jfqxtjeZwh8mmYcsIHE+Bnz2Z+
+	 wDxhgEHQEZlhkr/ete9LFgA176pTbRKeRFjcLYPeAHG1HnsdOc3248WquBLfXQC6htIK/
+	 cJIX7n0YQ/ZrF9cTCz/iABNFq5B3xMA04QNMpjX+k/qLBXzXKa7Zcd615+qWo2iZXpTwo
+	 JexCh7BNU3eMYaH2JwyIifQAZJsH+SruG+bcGSEmj8OLlJMD6OXlm8eobM60IUq7QwRyo
+	 mxNpsoMHBr9gpYZLBoi8orwkmKTZtv2XMaZ37a5T3zeEofVIwMdJ4s9f7x2r2j4Bvpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065062;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7H1FNBOBdWGyKy1KPe/oGPy25jJz67mhRDKc5/0Gez4=;
-	b=2kt+xaKb39CxmuGBjbCADCgcIQknrC1BtOz8V6xC0DYB7DUHBtMoRFiDV4kxPq8VdfGm
-	 wCzWf/2owKTIJlbGGNnRJxvCD8VnFoTO0XZBqAWeuOBXyfiizV62nRbdpNCuGBwhRayW5
-	 COH40fGbOVQC0U5ZraZdsYNYYD3saq3ZwfohsQ6hDBW0ZTylLIrZh9cjbezDaoBJY9UkR
-	 YHJwRvsJ9a4eQ8B4mQ1qkPBlJYJTh1x4jRWWa5b3WfIqbPzrEfpkY03A0599RbQPRinld
-	 A4f5lc01FtBjFj5GMu9KhhvYXlUEsrTVhDq6RXbX8Km8TrbyfNLaftQmgRapKnlFvYQ==
+	bh=Ir1Ee0RiPUwkDwHOPAu3f/h+WZZqsJKo2lriRJV8H6s=;
+	b=xz1ZsSlm84Nx8fdxQuV+pdjZyn61plq0VWYnYEsGDXf1lkLdkjjURRP5jBXE/1SwvSI5
+	 /RKGzmP68o0JJwmogbw2cPzpyXB5RFdhdZOcYg2dySZvymoyLKbzgsrPCxyJEiv3KqBRM
+	 Um8tgDJ6pOVP4adMpWNgsjSAlCzmO5PESSLV2OoZLVgp63Gvi/HaqVzlpLp33I2PtM6ge
+	 7o1l/cbzM1oPk7SLpQo9qzBDyShb+RadMgSCxmfsGqL7g4yLyKJZsUSgjvFFTUMITn3AQ
+	 q4miyGQDMuIiVPqA3t6JUPdDGl2rrHsMK1mdyEEBbYmMIhhUE1MeFFlMzKnYdwq5yGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJ+OTgZB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4mYa+a7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD83606A32F;
-	Sat,  7 Nov 2026 15:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4185D606A326;
+	Sat,  7 Nov 2026 15:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJ+OTgZB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09341F0089F;
-	Sat,  7 Nov 2026 15:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4mYa+a7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D071F0089F;
+	Sat,  7 Nov 2026 15:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065060;
-	bh=7H1FNBOBdWGyKy1KPe/oGPy25jJz67mhRDKc5/0Gez4=;
+	s=korg; t=1794065061;
+	bh=Ir1Ee0RiPUwkDwHOPAu3f/h+WZZqsJKo2lriRJV8H6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dJ+OTgZBoWvAkbP6duwa37NZ7CDk5fHkVnLMRrIiPM86iiFN5h1ZRjvXaC2go1d99
-	 LR5UftkehKIRB1l87OIa7r5QwxWYzgF6RSewvfaAcaOfOD/gjp/rO8h6p+MB75zS7a
-	 QDHfNl4vgFCYzvuwMRnXO8b35HtPn6bqgwjM1oNI=
+	b=h4mYa+a7iZ0w73pszWtq9olGqCcxGYCVVHggFG13ip9BC47y2bz/opDgnXpZ7Gqqu
+	 7TA/lB0+oER5CcjUXReaudyWbtwIMC4fAI2kjEGQVwDz5yIoRdt9uVy6PE2xz7dl6i
+	 tyCjqTdO8z040c/xpJHSU9fH0ihxHOg5wE0LtxoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0905/1257] ntfs: read MFT writeback bounds under size_lock
-Date: Sat,  7 Nov 2026 08:53:21 -0500
-Message-ID: <20261107135004.332788397@linuxfoundation.org>
+Subject: [PATCH 7.3 0906/1257] ntfs: validate the MFT I/O geometry
+Date: Sat,  7 Nov 2026 08:53:22 -0500
+Message-ID: <20261107135004.361226782@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,12 +70,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Hyunchul Lee <hyc.lee@gmail.com>
 
-[ Upstream commit 50ed298b6a4be68cac85801d21a5e25555f64668 ]
+[ Upstream commit dfe7ed335b686d53e4441a15382024058b664d3a ]
 
-Read the MFT inode size and allocated size under the size_lock critical
-section before deriving the folio writeback limits. This prevents
-writeback from combining an old allocation boundary with a concurrently
-updated file size while the MFT is extended.
+MFT writes must consider both the device logical block size and the NTFS
+record geometry. Validate those values at mount time, then cache the MFT
+I/O unit used by all MFT write paths.
+
+Use the larger of the device logical block and MFT record sizes as the MFT
+I/O unit. Keep valid geometries that the current write paths cannot safely
+handle read-only until their mapping support is generalized.
 
 Fixes: 115380f9a2f9 ("ntfs: update mft operations")
 Cc: stable@vger.kernel.org
@@ -83,33 +86,168 @@ Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/mft.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/ntfs/super.c  | 76 ++++++++++++++++++++++++++++++++++++++++++++++--
+ fs/ntfs/volume.h |  8 +++++
+ 2 files changed, 82 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs/mft.c b/fs/ntfs/mft.c
-index 4b74494953757..c9ea11198aa64 100644
---- a/fs/ntfs/mft.c
-+++ b/fs/ntfs/mft.c
-@@ -2901,9 +2901,17 @@ static int ntfs_write_mft_block(struct folio *folio, struct writeback_control *w
- 	struct ntfs_inode *tni;
- 	s64 lcn;
- 	s64 vcn = ntfs_pidx_to_cluster(vol, folio->index);
--	s64 end_vcn = ntfs_bytes_to_cluster(vol, ni->allocated_size);
-+	s64 end_vcn;
- 	unsigned int folio_sz;
--	loff_t i_size = i_size_read(vi);
-+	loff_t i_size;
-+	s64 allocated_size;
-+	unsigned long flags;
-+
-+	read_lock_irqsave(&ni->size_lock, flags);
-+	i_size = i_size_read(vi);
-+	allocated_size = ni->allocated_size;
-+	read_unlock_irqrestore(&ni->size_lock, flags);
-+	end_vcn = ntfs_bytes_to_cluster(vol, allocated_size);
+diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
+index 4066bacabe377..99a95ee32f228 100644
+--- a/fs/ntfs/super.c
++++ b/fs/ntfs/super.c
+@@ -286,6 +286,12 @@ static int ntfs_reconfigure(struct fs_context *fc)
+ 		static const char *es = ".  Cannot remount read-write.";
  
- 	ntfs_debug("Entering for inode 0x%llx, attribute type 0x%x, folio index 0x%lx.",
- 			ni->mft_no, ni->type, folio->index);
+ 		/* Remounting read-write. */
++		if (!vol->mft_write_supported) {
++			ntfs_error(sb,
++				   "MFT writeback is unsupported for this geometry%s",
++				   es);
++			return -EROFS;
++		}
+ 		if (NVolErrors(vol)) {
+ 			ntfs_error(sb, "Volume has errors and is read-only%s",
+ 					es);
+@@ -530,6 +536,8 @@ int ntfs_write_volume_label(struct ntfs_volume *vol, char *label)
+ static bool is_boot_sector_ntfs(const struct super_block *sb,
+ 		const struct ntfs_boot_sector *b, const bool silent)
+ {
++	u16 sector_size = le16_to_cpu(b->bpb.bytes_per_sector);
++
+ 	/*
+ 	 * Check that checksum == sum of u32 values from b to the checksum
+ 	 * field.  If checksum is zero, no checking is done.  We will work when
+@@ -550,8 +558,8 @@ static bool is_boot_sector_ntfs(const struct super_block *sb,
+ 	if (b->oem_id != magicNTFS)
+ 		goto not_ntfs;
+ 	/* Check bytes per sector value is between 256 and 4096. */
+-	if (le16_to_cpu(b->bpb.bytes_per_sector) < 0x100 ||
+-	    le16_to_cpu(b->bpb.bytes_per_sector) > 0x1000)
++	if (sector_size < 0x100 || sector_size > 0x1000 ||
++	    !is_power_of_2(sector_size))
+ 		goto not_ntfs;
+ 	/*
+ 	 * Check sectors per cluster value is valid and the cluster size
+@@ -632,6 +640,60 @@ static char *read_ntfs_boot_sector(struct super_block *sb,
+ 	return boot_sector;
+ }
+ 
++static bool ntfs_validate_mft_io_geometry(struct ntfs_volume *vol,
++					  const unsigned int logical_block_size)
++{
++	struct super_block *sb = vol->sb;
++	u32 mft_io_unit_size = 0;
++	bool mft_write_supported = true;
++
++	if (!is_power_of_2(logical_block_size) ||
++	    logical_block_size > PAGE_SIZE ||
++	    !is_power_of_2(vol->sector_size) ||
++	    vol->sector_size < logical_block_size ||
++	    vol->sector_size % logical_block_size ||
++	    !is_power_of_2(vol->cluster_size) ||
++	    !is_power_of_2(vol->mft_record_size) ||
++	    vol->mft_record_size > PAGE_SIZE)
++		goto err;
++
++	mft_io_unit_size = max(logical_block_size, vol->mft_record_size);
++	if (mft_io_unit_size > PAGE_SIZE ||
++	    mft_io_unit_size % logical_block_size ||
++	    mft_io_unit_size % vol->mft_record_size)
++		goto err;
++
++	/*
++	 * The current direct-write path stores at most two MFT runlist
++	 * segments. Keep valid but larger records read-only until that path
++	 * can map an arbitrary number of segments.
++	 */
++	if (vol->mft_record_size > 2 * (u64)vol->cluster_size)
++		mft_write_supported = false;
++
++	/*
++	 * A containing device block is currently mapped through one MFT
++	 * runlist element. Keep valid geometries that require crossing a
++	 * cluster read-only until the mapping is generalized.
++	 */
++	if (mft_io_unit_size > vol->mft_record_size &&
++	    (vol->cluster_size < mft_io_unit_size ||
++	     vol->cluster_size % mft_io_unit_size))
++		mft_write_supported = false;
++
++	vol->mft_io_unit_size = mft_io_unit_size;
++	vol->mft_write_supported = mft_write_supported;
++	return true;
++
++err:
++	ntfs_error(sb,
++		   "Unsupported MFT I/O geometry (logical %u, block %lu, sector %u, cluster %u, MFT record %u, I/O unit %u).",
++		   logical_block_size, sb->s_blocksize,
++		   (unsigned int)vol->sector_size, vol->cluster_size,
++		   vol->mft_record_size, mft_io_unit_size);
++	return false;
++}
++
+ /*
+  * parse_ntfs_boot_sector - parse the boot sector and store the data in @vol
+  * @vol:	volume structure to initialise with data from boot sector
+@@ -644,9 +706,11 @@ static bool parse_ntfs_boot_sector(struct ntfs_volume *vol,
+ 		const struct ntfs_boot_sector *b)
+ {
+ 	unsigned int sectors_per_cluster, sectors_per_cluster_bits, nr_hidden_sects;
++	unsigned int logical_block_size;
+ 	int clusters_per_mft_record, clusters_per_index_record;
+ 	u64 ll;
+ 
++	logical_block_size = bdev_logical_block_size(vol->sb->s_bdev);
+ 	vol->sector_size = le16_to_cpu(b->bpb.bytes_per_sector);
+ 	vol->sector_size_bits = ffs(vol->sector_size) - 1;
+ 	ntfs_debug("vol->sector_size = %i (0x%x)", vol->sector_size,
+@@ -719,6 +783,9 @@ static bool parse_ntfs_boot_sector(struct ntfs_volume *vol,
+ 		ntfs_warning(vol->sb, "Mft record size (%i) is smaller than the sector size (%i).",
+ 				vol->mft_record_size, vol->sector_size);
+ 	}
++	if (!ntfs_validate_mft_io_geometry(vol, logical_block_size))
++		return false;
++
+ 	clusters_per_index_record = b->clusters_per_index_record;
+ 	ntfs_debug("clusters_per_index_record = %i (0x%x)",
+ 			clusters_per_index_record, clusters_per_index_record);
+@@ -2290,6 +2357,11 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 			ntfs_error(sb, "Unsupported NTFS filesystem.");
+ 		goto err_out_now;
+ 	}
++	if (!vol->mft_write_supported && !sb_rdonly(sb)) {
++		sb->s_flags |= SB_RDONLY;
++		ntfs_warning(sb,
++			     "MFT writeback is unsupported for this geometry. Mounting read-only.");
++	}
+ 
+ 	if (vol->sector_size > blocksize) {
+ 		blocksize = sb_set_blocksize(sb, vol->sector_size);
+diff --git a/fs/ntfs/volume.h b/fs/ntfs/volume.h
+index bc85a95922458..8c17a66b4f22c 100644
+--- a/fs/ntfs/volume.h
++++ b/fs/ntfs/volume.h
+@@ -43,6 +43,7 @@
+  * @mft_record_size: in bytes
+  * @mft_record_size_mask: mft_record_size - 1
+  * @mft_record_size_bits: log2(mft_record_size)
++ * @mft_write_supported: Whether the MFT write paths support the geometry.
+  * @index_record_size: in bytes
+  * @index_record_size_mask: index_record_size - 1
+  * @index_record_size_bits: log2(index_record_size)
+@@ -111,6 +112,13 @@ struct ntfs_volume {
+ 	u32 mft_record_size;
+ 	u32 mft_record_size_mask;
+ 	u8 mft_record_size_bits;
++	bool mft_write_supported;
++	/*
++	 * Unit size used for MFT I/O. This is the MFT record size when
++	 * it is at least as large as the device logical block, or the
++	 * containing device logical block when the record is smaller.
++	 */
++	u32 mft_io_unit_size;
+ 	u32 index_record_size;
+ 	u32 index_record_size_mask;
+ 	u8 index_record_size_bits;
 -- 
 2.53.0
 
