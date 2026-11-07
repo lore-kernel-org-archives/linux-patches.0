@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061855;
-	b=n/EY8AwaMOw3DYrVfG4oz0VmxC4zmSLBCv/aAKfIGLEZdOs1sL8Jp6MbNQeBaweaXtsk
-	 PXWzOrIWiLoXDf8WHCs+JPoG4GG0Co1eUto/ZTXO/BVmzItMIqo3NVTQB6wLWr3nQ7qwA
-	 IEOIN7+zMw1Zr6nFAhuJNRGMh++QRb1Q7b8rw8Ld/BpXXK1FF6QlJFGA4rK79QMimQxGy
-	 ljsGKik5p4Lurxi9Tg8eKE249KGq7tmTDgub/4yV8R5gSuF6+BHU/c69HMEAsBAGoNpRw
-	 HUplcO45hem0J8PwleQvJfU/IyWWba+4calqDLK9ZshQESAQzMD0KEIM+UmJJgvdnog==
+	t=1794061856;
+	b=RcV5K8vgKx30mt01+MNJ+TwAuKZlJM+wX9Vb1/H0Mez18frt4VTIK7R1KkZceLG+/PB9
+	 +L179RMkWSSWly/lMZgoZpzoI5eIGFtZCj10OIW9ep9DWQIKlpT0waJs15SQ1D+/gWm8C
+	 qlqZxJH6JQ34kcX7h9uN+mBItvF0xbmxujyPns7QQswQ/oHqAThbAlTbsLLJkrGw7d2bS
+	 twWwK8Tp6vaAUOPsY7HZunXzOQ7fO6LZqaYkb4ULD4Xrnx8eD5EBwS6mIa3GuJjt2/VxZ
+	 l2XIuoQ9buJLxwBS5HIRFW6c1xByY64v4eKjA1tG4gSyP/J4N3eJCdcE23JKtIiAMgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061855;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061856;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=1Oqb3rj0x4Xk1l3fStDlCfIn1pPFTlTdRtIVuy/Hqaw=;
-	b=Hg+f4VjyHia+CHVifcEC83UnGQ3aJvnynkxmNiZksPcdC87c/iKfuS5vVlABKOXSKSjL
-	 Ff6TnwuJuoJ7HRe5aH52xGdwQ4V4r0qOU+Ayklaj6H9xyIL6bol8Twq5aK98kko2MMHUo
-	 CBwA/QHxgz5fXrUb9iaI3w064wGbxSbLB1XBJiW9iKm2i7BBUBA3ZexieilhCvCHeUPH+
-	 bVOBb8p0+loJgyoujLhSlEzHqE8zhA11baqpQ6VxiUR/jiS9RdC7bF2g2KGTLE8KhXv68
-	 LNdPo+za82M3rznzvuhdoBucmquBwbL/MQ5Fe37mpxtTWx/5KdUfQQ0SMRnuSr5UfyQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=7k0ja8Y9A3TsxhOjPkhrg2DL+OYmadytppQnMApUVoI=;
+	b=nfsszTY/ChT+vd6ZeBA3H2ql9I+YT9wzk6SZEID5knkpGEStcO1lk6J99TXpGmIKxQD6
+	 EO9eS62SOj8pM9iBFSS1sKrkqVoQSd80rJ19+1+wUMFAApAZikQjUM083PU4QkD4vKJLw
+	 2tTKwYEI4spGWpNu8IFjgbFZ3OBCkkiEE7eaHr9rGcEG2Xk0IZgUdKDO2L2Jx+JEH6/JF
+	 KoJAwj7nZrLmDZIQQo6U037CaiM0M4dILVgomQ3wIaGf742cAq6cb796BeImaISwsWYDD
+	 iuxeAZr2qMqbM7LwxRSLAHP4mmOkU6oAlg0s8VuF5kPGaSIlqmKpA9cSxtZg89qIJvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rc5hXzAk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F9EaSyXu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC46606A32E;
-	Sat,  7 Nov 2026 14:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C509606A32D;
+	Sat,  7 Nov 2026 14:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rc5hXzAk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01D51F0089F;
-	Sat,  7 Nov 2026 14:30:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F9EaSyXu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9DA1F0089F;
+	Sat,  7 Nov 2026 14:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061855;
-	bh=1Oqb3rj0x4Xk1l3fStDlCfIn1pPFTlTdRtIVuy/Hqaw=;
+	s=korg; t=1794061856;
+	bh=7k0ja8Y9A3TsxhOjPkhrg2DL+OYmadytppQnMApUVoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rc5hXzAkJEi02urpchcHcfrjrLpxfbMwq9Y9LymA7p7rH1bCYmkraA36QHBWt5Tx6
-	 OZQy2hQ1GIny5+38P1VH2gPxk13zqL7Mfc9ZfT7yiDVWR9Iyg6wY2DP4BvAmia265g
-	 uZUCaABCgiMEv5/O1wJOEeN/IZc22UC5Ha9B1PeU=
+	b=F9EaSyXu3V2xoTytPLUTfJGRGXVYSETEImfUd/aIekzl4bnjpAFWW43e3Iio6E6PF
+	 6dhR+iVO479MgGyMDxtR4j6BH4IEPgk7IrM3UTLXiovjS4VDvGZWSpCY34umuPeGAt
+	 pQ8ineTBq8oWOSVVv52Gggm5xxSd++msU0zTWYhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Honglei Huang <honghuan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Tianchu Chen <flynnnchen@tencent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0865/1536] drm/amdgpu: drop retry loop in amdgpu_hmm_range_get_pages
-Date: Sat,  7 Nov 2026 08:48:01 -0500
-Message-ID: <20261107135021.844664117@linuxfoundation.org>
+Subject: [PATCH 6.12 0874/1536] staging: rtl8723bs: fix protected RX frame validation in decrypt path
+Date: Sat,  7 Nov 2026 08:48:10 -0500
+Message-ID: <20261107135022.095850805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -63,82 +61,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Honglei Huang <honghuan@amd.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-[ Upstream commit 342981fff32802a819d6fc7cf3c9fedf9f3d9d60 ]
+[ Upstream commit 495cb31c791bdf3f9efef255a9587b05b0526c9d ]
 
-Since commit c08972f55594 ("drm/amdgpu: fix amdgpu_hmm_range_get_pages")
-moved mmu_interval_read_begin() out of the per-chunk loop, the
-captured notifier_seq is no longer refreshed across retries. As a
-result, the existing -EBUSY retry path can never make progress:
+The RX software decrypt path mishandles crafted protected frames from a
+malicious AP in two ways:
 
-  hmm_range_fault() returns -EBUSY only when
-  mmu_interval_check_retry(notifier, notifier_seq) reports that the
-  sequence is stale. Once the sequence has advanced, the stored seq
-  will never match again, so every subsequent call within the same
-  invocation returns -EBUSY immediately.
+1) decryptor() never checks that a protected frame is long enough to
+hold the 802.11 header plus the per-cipher trailer.  All of
+rtw_wep_decrypt(), rtw_tkip_decrypt() and rtw_aes_decrypt() compute
 
-The "goto retry" therefore degenerates into a busy spin that simply
-burns CPU for the full HMM_RANGE_DEFAULT_TIMEOUT (~1s) window before
-finally bailing out with -EAGAIN. This is pure latency with no chance
-of recovery, and it actively hurts the KFD userptr stack: the caller
-ends up blocked for a second while holding mmap_lock, only to return
--EAGAIN to the restore worker (or to userspace) which would have
-re-driven the operation immediately anyway.
+	length = hdr.len - hdrlen - iv_len;
 
-Drop the retry/timeout entirely and let -EBUSY propagate straight to
-out_free_pfns, where it is already translated to -EAGAIN. Recovery is
-handled at a higher level: the KFD restore_userptr_worker reschedules
-itself, and the userptr ioctl path returns -EAGAIN to userspace.
+and act on the result, and recvframe_chkmic() similarly computes
 
-No functional regression: the previous behaviour on -EBUSY was already
-to fail with -EAGAIN after a 1s stall; we just skip the stall.
+	datalen = hdr.len - hdrlen - iv_len - icv_len - 8;
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Honglei Huang <honghuan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ sashal: Removed the timeout/retry: loop and the -EBUSY special case; the only adaptation is keeping this tree's kzalloc'd struct hmm_range *hmm_range; declaration instead of upstream's &range->hmm_range context. ]
+for TKIP (the 8-byte Michael MIC is not accounted for in icv_len).
+A frame shorter than hdrlen + iv_len + icv_len (+ 8 for TKIP) underflows
+these unsigned subtractions, turning into a ~4 GiB iteration count in
+aes_decipher()/arc4_crypt()/rtw_seccalctkipmic() or a ~4 GiB crc32_le()
+length, causing out-of-bounds reads/writes of up to ~4 GiB starting from
+the rx skb.  Reject such frames in decryptor() before touching the IV;
+this covers all three ciphers and the TKIP MIC check, and also keeps the
+unconditional iv[3] access within the frame.
+
+2) validate_80211w_mgmt() keeps using the frame - two memcpys through
+the stale rx_data pointer and a pkt_len update - before checking
+whether decryptor() returned NULL.  On decrypt failure (e.g. a unicast
+protected deauth/disassoc/action frame with a bad MIC, which this path
+always software-decrypts) the skb has already been freed, so this is a
+use-after-free read/write, and the caller's error path frees the frame
+a second time, drifting free_recvframe_cnt.  Bail out immediately when
+decryptor() fails, freeing the temporary mgmt_DATA buffer first.
+
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Assisted-by: LLM
+Cc: stable@vger.kernel.org
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/8ee3bdd1c45034200cb1aa9a7e9b575b9584643a@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_recv.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
-index 52882d88c290a..f58f6cfdf4e0e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
-@@ -171,7 +171,6 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
- 	const u64 max_bytes = SZ_2G;
+diff --git a/drivers/staging/rtl8723bs/core/rtw_recv.c b/drivers/staging/rtl8723bs/core/rtw_recv.c
+index f43429c72298e..96630315d46a7 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_recv.c
++++ b/drivers/staging/rtl8723bs/core/rtw_recv.c
+@@ -386,8 +386,21 @@ static union recv_frame *decryptor(struct adapter *padapter, union recv_frame *p
+ 	u32  res = _SUCCESS;
  
- 	struct hmm_range *hmm_range;
--	unsigned long timeout;
- 	unsigned long *pfns;
- 	unsigned long end;
- 	unsigned long i;
-@@ -203,15 +202,9 @@ int amdgpu_hmm_range_get_pages(struct mmu_interval_notifier *notifier,
- 		pr_debug("hmm range: start = 0x%lx, end = 0x%lx",
- 			hmm_range->start, hmm_range->end);
+ 	if (prxattrib->encrypt > 0) {
+-		u8 *iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
++		u8 *iv;
++		u32 min_len = prxattrib->hdrlen + prxattrib->iv_len + prxattrib->icv_len;
  
--		timeout = jiffies + msecs_to_jiffies(HMM_RANGE_DEFAULT_TIMEOUT);
--
--retry:
- 		r = hmm_range_fault(hmm_range);
--		if (unlikely(r)) {
--			if (r == -EBUSY && !time_after(jiffies, timeout))
--				goto retry;
-+		if (unlikely(r))
- 			goto out_free_pfns;
--		}
++		/* TKIP appends an 8-byte Michael MIC that icv_len doesn't account for */
++		if (prxattrib->encrypt == _TKIP_)
++			min_len += 8;
++
++		/* a protected frame must be long enough to hold the IV and ICV/MIC */
++		if (precv_frame->u.hdr.len < min_len) {
++			rtw_free_recvframe(precv_frame,
++					   &padapter->recvpriv.free_recv_queue);
++			return NULL;
++		}
++
++		iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
+ 		prxattrib->key_index = (((iv[3]) >> 6) & 0x3);
  
- 		if (hmm_range->end == end)
- 			break;
+ 		if (prxattrib->key_index > WEP_KEYS) {
+@@ -1371,6 +1384,10 @@ static signed int validate_80211w_mgmt(struct adapter *adapter, union recv_frame
+ 			if (!mgmt_DATA)
+ 				goto validate_80211w_fail;
+ 			precv_frame = decryptor(adapter, precv_frame);
++			if (!precv_frame) {
++				kfree(mgmt_DATA);
++				goto validate_80211w_fail;
++			}
+ 			/* save actual management data frame body */
+ 			memcpy(mgmt_DATA, ptr + pattrib->hdrlen + pattrib->iv_len, data_len);
+ 			/* overwrite the iv field */
+@@ -1378,8 +1395,6 @@ static signed int validate_80211w_mgmt(struct adapter *adapter, union recv_frame
+ 			/* remove the iv and icv length */
+ 			pattrib->pkt_len = pattrib->pkt_len - pattrib->iv_len - pattrib->icv_len;
+ 			kfree(mgmt_DATA);
+-			if (!precv_frame)
+-				goto validate_80211w_fail;
+ 		} else if (is_multicast_ether_addr(GetAddr1Ptr(ptr)) &&
+ 			(subtype == WIFI_DEAUTH || subtype == WIFI_DISASSOC)) {
+ 			signed int BIP_ret = _SUCCESS;
 -- 
 2.53.0
 
