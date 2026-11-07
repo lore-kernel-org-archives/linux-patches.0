@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063963;
-	b=Z6+DWakm+JRYuyMbNmU46TYMhmMVN0ALfRlPTJdExt7J/qtnJWW/eWfzbgZQXJT0YMUy
-	 fMAt2GhBRtReGSKKWsq93lYy7dLpt8sVODW4yim2xn9YqrXtklU4aO3JOOmA0vrR81fDY
-	 gihA+oPrmu/4/Z18nN8vFDSXjXD2rFWXT5QjKlgc42xAQcMfIKchqn40JLnxHA96NW77/
-	 N5UKh+dns39BsCXUbTtygWKqHB3LUF5zKM2BjX1oAkydUizA6gBqHhKtX4BcC8RF+N5pu
-	 sEcUPc5L+ttFmpzHoo/fuIN+rdHH02LMQx+ZTeNwVvquN0stdKVMdWA5z9FmQhE6zOg==
+	t=1794063964;
+	b=vjMziiuAq4rIxIIAHPv1vhN9zZNP1bSMa/pRrZ1bhSTzqOCqA+RehyvrcjC0E786J0+S
+	 CX7o24EdoM5AXilJkaoFaCilQ7vib8uKXXY/PQJv2gf3rcGiY1cNVTGAKWqZB0d74L0R3
+	 jarU/bNsepOiCjv7pQYP61RwsIIgHbm8LBrBfeCrV0mV8rlsvQYUWFpnenbbukgJzmWr0
+	 l4dn5043UDu31V3Toh4g78bes1LB4SvmlDHgRuMbR5aUtIuNkI9trZglu0c5ehsJLyUes
+	 7zOhFU9JYKAOHs4PQ+g0AEnWpy2vXMDPHahUZiK+b6c1w9uBXOpvAirPEFWZRWCYCxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063963;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G8qlTyWqRIcwMA0UCy5qSmZmsQqwsg/Msm2SO+nKJls=;
-	b=HsgbzalfsaxmMBHO/r0kQ6cu7nec1rnhuDXdLfKLJZTGi7g9xOTcBymaehuUJ39gEdrG
-	 TKFpeIqJJQCcBdfF98PhF+K4JKL1vv9iKPLuMmqYDTGVOKo5I1bvQ7hhIXwu/Egrp7Qxm
-	 yMr47BsC/G6EuprwcBKD68FC1OWHF0+vFgrG7mJMT36U4rUtcju+QoCMRse01tuXY1GUU
-	 lQ6veP0d+UHppYxhLZMuLZGVn5t13QeWN0oHn5znRX5X0f5TbBOHyeiBJCo05TtHfGbXZ
-	 ajOpzGYzl1MSMQsMoV9DUF2HpskDgue3iWn66Q7vQWsCzJJOv8yLBiap9dPqGsZrPZQ==
+	bh=fWP4V6LKTaHQgJwhZWGSE2al3FiWU8gRnecimM8OvoA=;
+	b=rZJBzomYKfneSTpHZ1xh2PfTRzoe6oiGAo+EaP47njjOjwKcHlqmIKP3tmE11lVv+Pdf
+	 AOvLdz+fUjKE0pC1i1Kn0QfV9sc7RCQmozB1ZoVlsiLoycBd2nqYYgRSp33lpCOELGQDs
+	 vMtt9++cLXK5HoZabXPCtmdk+japxMjznHhkb7nxLFuE5Q6vbq3K++aTCA0xpCz9Lb8ZS
+	 3HeMyIccQcXF10oYS858kKkNumooYvgC8YUWImcrNIoW6el5g77J6x+3voWvUiqAcT8Bi
+	 TTNWqz4Zffcun2HWfHWDh441Gs/0Wu+v2PjoK6lYRJvbDas/LNQVKZWpu+F8p+6gkfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAjVbi5w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12KfcaWG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8519D606EE97;
-	Sat,  7 Nov 2026 15:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CF6606EE97;
+	Sat,  7 Nov 2026 15:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAjVbi5w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040B91F008A7;
-	Sat,  7 Nov 2026 15:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12KfcaWG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2B01F008BC;
+	Sat,  7 Nov 2026 15:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063963;
-	bh=G8qlTyWqRIcwMA0UCy5qSmZmsQqwsg/Msm2SO+nKJls=;
+	s=korg; t=1794063964;
+	bh=fWP4V6LKTaHQgJwhZWGSE2al3FiWU8gRnecimM8OvoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BAjVbi5wrQwTrSADjum36Q/A4U6AYxmRMX3eaw0fxcqBIPHKazPVZnKCZLeU61IjP
-	 U3i3G1/fydEyISBfTlsA8On/uQWAoS0wbCCvOnU4vAm34ZFwZLyLk2LTxANC39NIS3
-	 IjUAX8qFpauq0Lmda1zfPfkHBlBcIZifCcDWLpFA=
+	b=12KfcaWG3v3Xbio/HPpYwMjKrr6lM+WPiCOd6vqhr21XoTQG0qTaDPBzDV8jRgVOI
+	 WES8bMh3KEpXu6Cdh9PMgYf3T2goAXIlc1/7VjWP7eOw7LRqtANrvvfdJcKrzkFNUZ
+	 ySErTKW+PA8dkhcRSnH4dxurkHIhbPkwBdypBwjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>
-Subject: [PATCH 7.3 0150/1257] crypto: ccp - Initialize DBC ioctl mutex before registering device
-Date: Sat,  7 Nov 2026 08:40:46 -0500
-Message-ID: <20261107134943.457845686@linuxfoundation.org>
+	Jiaming Zhang <r772577952@gmail.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 0151/1257] gfs2: reject invalid inode sizes
+Date: Sat,  7 Nov 2026 08:40:47 -0500
+Message-ID: <20261107134943.486618372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,52 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit e9b1d168f2a70c0764d5748893fdf631c504c171 ]
+[ Upstream commit 33ed0a0567e0abe66ea65e89dad2e35082890fbe ]
 
-dbc_dev_init() registers the DBC misc device before initializing
-ioctl_mutex. Once misc_register() publishes the device, userspace can
-open it and invoke dbc_ioctl() while the mutex is still uninitialized.
+A corrupted GFS2 image can store a dinode size that is larger than what VFS
+i_size can represent. gfs2_dinode_in() reads the on-disk di_size as a u64 and
+writes it directly into inode->i_size. If the value is larger than S64_MAX, the
+incore i_size becomes negative. That negative value can bypass the existing
+stuffed inode size check:
 
-Initialize ioctl_mutex before calling misc_register() so the published
-ioctl callback always sees an initialized mutex.
+inode->i_size > gfs2_max_stuffed_size(ip)
 
-Fixes: c04cf9e14f10 ("crypto: ccp - Add support for fetching a nonce for dynamic boost control")
+Later, gfs2_quotad may try to sync the quota file and unstuff the quota inode.
+gfs2_unstuffer_folio() reads the negative i_size into an unsigned length and
+passes it to memcpy(), turning it into a huge copy size and triggering a
+out-of-bound issue.
+
+Reject dinodes whose size exceeds sb->s_maxbytes before storing the value in
+inode->i_size. Also make the stuffed inode check use the raw on-disk size while
+it is still unsigned.
+
+Fixes: 70376c7ff312 ("gfs2: Always check inode size of inline inodes")
+Closes: https://lore.kernel.org/lkml/CANypQFaF6bvORKKbRALvEL0k_epFaneFiOQqco4gjdmKVbdURg@mail.gmail.com/
+Assisted-by: Codex:gpt-5.5-xhigh
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260829133410.1708684-1-runyu.xiao@seu.edu.cn/
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Assisted-by: Codex:GPT-5
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>> ---
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/dbc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/gfs2/glops.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/ccp/dbc.c b/drivers/crypto/ccp/dbc.c
-index 410084a9039c9..4db49a14550c9 100644
---- a/drivers/crypto/ccp/dbc.c
-+++ b/drivers/crypto/ccp/dbc.c
-@@ -236,6 +236,8 @@ int dbc_dev_init(struct psp_device *psp)
- 		goto cleanup_mbox;
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index 28f32424ee64b..2e53ba3709eb6 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -393,6 +393,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 	umode_t mode = be32_to_cpu(str->di_mode);
+ 	struct inode *inode = &ip->i_inode;
+ 	bool is_new = inode_state_read_once(inode) & I_NEW;
++	u64 size;
+ 
+ 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr))) {
+ 		gfs2_consist_inode(ip);
+@@ -418,7 +419,12 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 	i_uid_write(inode, be32_to_cpu(str->di_uid));
+ 	i_gid_write(inode, be32_to_cpu(str->di_gid));
+ 	set_nlink(inode, be32_to_cpu(str->di_nlink));
+-	i_size_write(inode, be64_to_cpu(str->di_size));
++	size = be64_to_cpu(str->di_size);
++	if (unlikely(size > inode->i_sb->s_maxbytes)) {
++		gfs2_consist_inode(ip);
++		return -EIO;
++	}
++	i_size_write(inode, size);
+ 	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
+ 	atime.tv_sec = be64_to_cpu(str->di_atime);
+ 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
+@@ -462,7 +468,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 		return -EIO;
  	}
  
-+	mutex_init(&dbc_dev->ioctl_mutex);
-+
- 	dbc_dev->char_dev.minor = MISC_DYNAMIC_MINOR;
- 	dbc_dev->char_dev.name = "dbc";
- 	dbc_dev->char_dev.fops = &dbc_fops;
-@@ -244,8 +246,6 @@ int dbc_dev_init(struct psp_device *psp)
- 	if (ret)
- 		goto cleanup_mbox;
- 
--	mutex_init(&dbc_dev->ioctl_mutex);
--
- 	return 0;
- 
- cleanup_mbox:
+-	if (gfs2_is_stuffed(ip) && inode->i_size > gfs2_max_stuffed_size(ip)) {
++	if (gfs2_is_stuffed(ip) && size > gfs2_max_stuffed_size(ip)) {
+ 		gfs2_consist_inode(ip);
+ 		return -EIO;
+ 	}
 -- 
 2.53.0
 
