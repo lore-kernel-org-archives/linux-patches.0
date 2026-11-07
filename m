@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065569;
-	b=zZGBF0JxjQlGUFE0WVQ7MwHDq0dSdTgWA6J9naIhc4cpFMSKikQcQrIIQ7z/iPJrH03Z
-	 ZijUIhKbzHE7a1B9xY8f2NZYgk3YvIhuxEz/72b3O+ZMzx3fuIzHImUMWy9QtqzJ8IxPc
-	 bFe408BjCqm0YEH7lzbrSVqsGvenNjtPdkYRiwstoY4F1F/tkl7bvu5qBFTgXerKTVUXK
-	 lAY8Zxl42xqRnfE5pIVR4Wi6T8Lm8qkN/XgC5lfmjI2JwA+kXGc9th+Bo0mYRjUAElO7L
-	 ZOC4J6bcRgvqBNLvvgRvCmEaEg0d6Z/HAoI0ynixbNsAm3ytLQWeBrfvAMC5xAbExdw==
+	t=1794065570;
+	b=bba+qnKciFLQ0UNe0eWDQtZypKBDo/YbljS6+ooZnRG5IcNnLcq5eAm78ICIBtYe4RnC
+	 h/J4IfjcutqzyYS3NybdwoRxhNKqxkwik+GkMwqSh3GrLMCjyNkn9zJ5rL42msJJti07E
+	 BKYnZWrmThr9bmAh+DPVI4juCMkcKkwNR+/FfW/PKQMj9AiYwufx8vrrQ2bRYizyYxhiL
+	 nMiWNcmkWgMroAhwrtB1CnnGn+BFuSSR80TrpwvzHcW1BaeBPQaLRboABCEV17OZEVB8w
+	 iFiS2ApN8N0+VOuCgE0qI+z9MeUP/fSjRmoXQp5Jbkzkndz25ja0sbTb9tD6uFLVPmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065570;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8eaW1BzovXnPNWXcuZ7JWstWa0aJy4JNH2NE6qthOtw=;
-	b=XN18bIonCwN4T2lqo6VEaomKsOqne7GbY+9lCdwAY6TkgSfrtHVx4fG9ObSFuHfTvufh
-	 yxL9b/+DQl+IpkUoTGZGZ4nIKnEt8u2OmWMuI8VjROAX6fjUqhxbj5fHe7XjYVkSr08Yt
-	 3ppXz6fwpYPju6royeojhX6/lUd8fkNGZ+Ao+MqbmhqgFJbkbqBPllUwLmOGGrFQvtKnk
-	 bPJ/j+ztPCbEVbzNxY1xXscEvYvsJARKTVmrrbEPNgVQUdDbtulzNdtPddZvH3ThGBNXy
-	 Xc6zABywyQDoX6KKwDD+fF+lZnFZNPoh7kJwv4XgZ3gSrchItn9S3v+ToHN8fS4c9Gg==
+	bh=FXT74zVeTEdvz9m/c6LpNBRGyP9BiGOORJfYrRRZM2A=;
+	b=LMy7/ZUPcXIdYBc8rw08rYhp7zA3VlTrs1ktGcUjf6BFwQsEUYWJLoWb4a6BDUFjdDQE
+	 2v5AeVVYfBxXkLpOreqAfm8oT0VDEszaz1L/Qqa5rWUGA2yODo7qpCQa0ZqaBZL63z81g
+	 btWxbsCYXdzAieXht5SIEvJgFvyrIAqkSi8fuasIIsph8oFFd13PW9eeM9W987QCJkTxC
+	 7JqPblbLLU34f0Bylmdq7l4lR0dHCj/sPCyq+ujsKyylwxGbltGUdkGEWHe11nUQmfmOf
+	 qVm8pep3eKVUMOtME0domY3l6RzfZOpP+Jcbh5Tmh/LLuunwLOP0oYcNRaBC7raj81Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T55VHlLd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DozCIvbS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4425606A335;
-	Sat,  7 Nov 2026 15:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868D5606A32C;
+	Sat,  7 Nov 2026 15:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T55VHlLd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F051F0089F;
-	Sat,  7 Nov 2026 15:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DozCIvbS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CD41F0089F;
+	Sat,  7 Nov 2026 15:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065568;
-	bh=8eaW1BzovXnPNWXcuZ7JWstWa0aJy4JNH2NE6qthOtw=;
+	s=korg; t=1794065570;
+	bh=FXT74zVeTEdvz9m/c6LpNBRGyP9BiGOORJfYrRRZM2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T55VHlLdYZkAVEp7boHYh2GS1gz8/XroDLs/iHiI7k95hV9oEUau2BpQl3OD7w3Rf
-	 Uh7VKQ/DgJSByLgjL2Otf6gQa+/0HcegfOIYnnv/50lHWV0Sw+OPmXdvKcaz+j2op7
-	 QnPfDtAnxswZgxc1Bgx8k0ECT1WM5u6xi9NusiSk=
+	b=DozCIvbSm5X3IhDghW0jtc0JPGJRNI7IirsjP15cw2oyDJ3ZBBZ0nTVm8YkztLJDf
+	 7lEE6wuFeKu0Y30bBwmF/9vZjIT3dchbsWPp9wLud1mrYaWyF/ZHmlQ22FJGrKxvrf
+	 Cff2YfI53CFtkWIGXVE/TEZllnUT6qGkr6qckN5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shao Mingyin <shao.mingyin@zte.com.cn>,
-	Keith Busch <kbusch@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1206/1257] nvmet-auth: fix error handling on CHALLENGE failure
-Date: Sat,  7 Nov 2026 08:58:22 -0500
-Message-ID: <20261107135012.654856358@linuxfoundation.org>
+Subject: [PATCH 7.3 1233/1257] tcp: check congestion control restriction first
+Date: Sat,  7 Nov 2026 08:58:49 -0500
+Message-ID: <20261107135013.397031910@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,54 +72,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shao Mingyin <shao.mingyin@zte.com.cn>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 96da408bb4a24bf87b366b13f41c2687d3c05671 ]
+[ Upstream commit dda51b73721684637ab8e9bd97c78228b99c4bd2 ]
 
-In nvmet_execute_auth_receive(), when nvmet_auth_challenge() fails (for
-example when the initiator-supplied allocation length is shorter than the
-DH-HMAC-CHAP challenge response, or the challenge nonce allocation fails),
-the error path sets status = NVME_SC_INTERNAL and breaks out of the
-switch. The unconditional
+tcp_set_default_congestion_control() takes a reference to an algorithm
+before checking whether a non-init network namespace may select it. A
+rejected request returns -EPERM without dropping the reference.
 
-    status = nvmet_copy_to_sgl(req, 0, d, al);
+This affects module-backed algorithms too; BPF is not required. For
+example, after root loads tcp_bbr, a user with CAP_NET_ADMIN in a
+non-init network namespace can repeatedly request it as the default
+although it is not in tcp_allowed_congestion_control. Each rejected
+write leaks a module reference. Since module->refcnt is an atomic_t,
+2^31 such writes can make it negative; later module_put() calls warn,
+and rmmod can hit the BUG_ON() in try_release_module_ref().
 
-after the switch then overwrites the error status (nvmet_copy_to_sgl()
-returns 0 on success), so the AUTH_RECEIVE command incorrectly completes
-with SUCCESS and the initiator proceeds with a truncated/empty challenge.
+Check the namespace restriction before acquiring the reference, as
+tcp_set_congestion_control() already does.
 
-Fix this by freeing the buffer and jumping to the common done: label on
-CHALLENGE failure, skipping the copy_to_sgl() entirely and preserving the
-NVME_SC_INTERNAL status.
-
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
+Fixes: 8d432592f30f ("net: Only allow init netns to set default tcp cong to a restricted algo")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Eric Dumazet <edumazet@kernel.org>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/71c142b2d45af6a2fe7fc6cd4a5ca52c53afbe23.1793075984.git.zhilinz@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_cong.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index f30c2539a6fd9..51d6ad4d021d0 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -599,10 +599,11 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
- 	switch (req->sq->dhchap_step) {
- 	case NVME_AUTH_DHCHAP_MESSAGE_CHALLENGE:
- 		if (nvmet_auth_challenge(req, d, al) < 0) {
--			pr_warn("ctrl %d qid %d: challenge error (%d)\n",
--				ctrl->cntlid, req->sq->qid, status);
-+			pr_warn("ctrl %d qid %d: challenge error\n",
-+				ctrl->cntlid, req->sq->qid);
- 			status = NVME_SC_INTERNAL;
--			break;
-+			kfree(d);
-+			goto done;
- 		}
- 		req->sq->dhchap_step = NVME_AUTH_DHCHAP_MESSAGE_REPLY;
- 		break;
+diff --git a/net/ipv4/tcp_cong.c b/net/ipv4/tcp_cong.c
+index 8e83ef81fc187..e3f462f161dd6 100644
+--- a/net/ipv4/tcp_cong.c
++++ b/net/ipv4/tcp_cong.c
+@@ -288,12 +288,12 @@ int tcp_set_default_congestion_control(struct net *net, const char *name)
+ 	ca = tcp_ca_find_autoload(name);
+ 	if (!ca) {
+ 		ret = -ENOENT;
+-	} else if (!bpf_try_module_get(ca, ca->owner)) {
+-		ret = -EBUSY;
+ 	} else if (!net_eq(net, &init_net) &&
+ 			!(ca->flags & TCP_CONG_NON_RESTRICTED)) {
+ 		/* Only init netns can set default to a restricted algorithm */
+ 		ret = -EPERM;
++	} else if (!bpf_try_module_get(ca, ca->owner)) {
++		ret = -EBUSY;
+ 	} else {
+ 		prev = xchg(&net->ipv4.tcp_congestion_control, ca);
+ 		if (prev)
 -- 
 2.53.0
 
