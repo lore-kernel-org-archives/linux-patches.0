@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065471;
-	b=MtEQuE25KmW00mUwLymcO3V2NG5Ho08q8dKj4j7MbKKGy81X4p3mBF+qx+kr1Ci/3hAq
-	 ETDQLiYjNffYUkUs+hJO36IyOafXaLdSn4GacMtgEjsq1XJzUXtsLUj2pWlScDuWoV4j1
-	 vc/B8q3gL4d4HK08nzH/ifZhP/R/hRLVqHbAt65A62FWU9dk/EkP3xUqzo9kqwfemRVYZ
-	 FTlq+GnYtUSE9Q0AreRWA69zpnV/95N7PNZeXtkwBFpTP06oh5r6lISIn+cuinUi5lQnw
-	 5d1K+hC/L7JsB3l7/xRSGglEj8BanYkbnk5Jw6278itXpQb/cGexoMmCrfyvsiS97ow==
+	t=1794065472;
+	b=o6vdISt0YooLvh66KsJwPVNpi6NbTJFZUbMbdNW1aY0I9lTP8Scq5AaYb6eupotP+An3
+	 Fq7+SnByVu3LXQup9KSDD3CISEjxWYwfcOOepMhoIbhWsydJZbroclKvllWseZrT+hGsW
+	 E0VBEyeCxBH7/LPLxYlvsCCd3viBDagCFp43OXi2sBtWzrJrntAd43Cka5A8Y/mgoqIp+
+	 AFa6rpvMhfHtYIqDJRve/wJSCU99p6KuDhzSb2rzZWyVYnibBLFuDdSTLmJf0N77Y9Pru
+	 6xdOXTRqxpBFlcz5PT0cZ4kZoG3wxTG/Y1tK3pIzTmFoSymKLodoSuPsa8dyPwKt+xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065471;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a8FM9OrHxGyPW50BoxIFsA5IEdEjOYTrgRsSaoheop4=;
-	b=m6H/HKnzBU8ARpoNmlIIdjCzgw+DuYLXBGlMCS2Q2dVQ0K2YOGCishPfye/sILTovc8c
-	 broUywk41EK5wAjNf5slhGPHDeK6i0NehnvbjpOLCHcSXMjNpEH1nHg6DTjKu+4IODF+w
-	 ndmwwk3BCdHP0XgEGSPwPNRFU7R0ubO33EQLC0VuxPNu3Gy24NmUncmMbzk4ch3GgrW8V
-	 r+1RYD/IhnbtGjTMVtz23DVxeh+Vkb/yyO//KSsl4Dte9aTrqSjnJUrH3C7RYm7g/mE6t
-	 s6WHM+IDw4LkxYosXLhQPxKpnARzfXcVDln1mrZzuVlXeshkQVG5Mf1PRNsGTXUxi7g==
+	bh=k4cPftndcBwtt5HrAmFQ5KepoF6Onot5T7IrQHaPg/Y=;
+	b=ngB7D5qXmPOvUD7TMU/r0uH2fIjdT+qU4YOjDJrpwO2GK0yWZ66xcskWa44UlnSee9qc
+	 Mi21zy1hS0gH2J+kym3FpwB8+yA87t+VHIl/U+VGDqw+kMxfgLBYF4da1GBRncTHyrtmH
+	 I/RECsSt+GH5gYWLMYMMTfwgRLCpYzeaqWhNygrcWSYn4MglHjLgK0z382z4AiNy47DK5
+	 cA83KJ2EkUevr9CW7gKOrmrzTpqAXKV+2/f+So0rkvWL8Dk1s03RtkKBTNgC1Q3jKEMwA
+	 QzRfTfn9bFNeR/UPCfgyK3XkAnOC9jVdki1M7wpGUv6nVGabSlVwCeYIKlmmaCof5Cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eiSRyNvb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FwKpJ16S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D360E606A330;
-	Sat,  7 Nov 2026 15:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC37606A330;
+	Sat,  7 Nov 2026 15:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eiSRyNvb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886791F0089F;
-	Sat,  7 Nov 2026 15:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FwKpJ16S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4AE1F0089F;
+	Sat,  7 Nov 2026 15:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065470;
-	bh=a8FM9OrHxGyPW50BoxIFsA5IEdEjOYTrgRsSaoheop4=;
+	s=korg; t=1794065471;
+	bh=k4cPftndcBwtt5HrAmFQ5KepoF6Onot5T7IrQHaPg/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eiSRyNvb/c9kVT33H5/zO+F40xiqTxoWxJSLGbM2ySARj8SNeNMKUxhqaLmO32kHw
-	 xGekIps3Qu56VUlOPROc45PYaSc3HT4mq5CeV96d+/SiS3gnQaOIY6qqY+B2qGBDFd
-	 nDKLm9icuVCQ+co2Cp1ohA6wdXJstnt//Oc/Bjc8=
+	b=FwKpJ16SyFSbMQTCMB4Hr+UuO6K6PsMwKkbqPWFlPwmRKbC5FLGEfeOtcrMuInI4S
+	 YyvzGGH8+LTonMMw5tiqrDWzEvg2dwUQRh1sbD8ca6U0c4wnkrPKSQmHIvmuzgIZAm
+	 C4r5G7AqU400zHKssTxSpORc9G+a/ilbw9+sZP5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Darong Lu <zzyy19904204639@163.com>,
-	Ren Wei <weir@nebusec.ai>,
+	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1129/1257] libceph: initialize CRUSH choose argument weights
-Date: Sat,  7 Nov 2026 08:57:05 -0500
-Message-ID: <20261107135010.416183488@linuxfoundation.org>
+Subject: [PATCH 7.3 1130/1257] ceph: clamp MDS reply result code to the errno range
+Date: Sat,  7 Nov 2026 08:57:06 -0500
+Message-ID: <20261107135010.442551128@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,39 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darong Lu <zzyy19904204639@163.com>
+From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
 
-[ Upstream commit c3a995ff0782587789333c621e1f6bd5e574371e ]
+[ Upstream commit ec8d583469ed64b4973192a21b5a41c33219721f ]
 
-Initialize the CRUSH choose argument weight-set array before decoding so
-entries start in a defined state while the decoder fills them.
+ceph_mdsc_wait_request() returns the reply head result code of the MDS
+request to its callers as a plain int errno.  The value is a
+server-controlled u32 and nothing checks that it actually is an errno;
+several callers pass it straight to ERR_PTR(), e.g.
+ceph_finish_lookup() on the atomic open path:
+
+	err = ceph_mdsc_wait_request(...)	/* e.g. +0x50fc00 */
+	...
+	if (err)
+		dentry = ERR_PTR(err);
+
+IS_ERR() only recognizes the [-MAX_ERRNO, -1] window, so an
+out-of-range value is not caught anywhere and survives as a "struct
+dentry *".  On the open path the positive error travels
+ceph_finish_lookup() -> ceph_atomic_open() -> ERR_PTR() in
+fs/namei.c's atomic_open() wrapper -> step_into(), which dereferences
+it as a dentry and oopses (mainline 7.3-rc3-135-g4982d3552a3b, the
+value in R12 is the server-supplied result):
+
+BUG: KASAN: probably user-memory-access in range
+[0x000000000050fc00-0x000000000050fc07]
+RIP: 0010:step_into_slowpath+0x3e3/0xe60
+R12: 000000000050fc00
+Call Trace:
+ <TASK>
+ ? __pfx_ceph_atomic_open+0x10/0x10
+ path_openat+0xf41/0x2440
+ do_file_open+0x228/0x480
+ do_sys_openat2+0x103/0x1d0
+ __x64_sys_openat+0x141/0x200
+ do_syscall_64+0xe8/0x4f0
+ entry_SYSCALL_64_after_hwframe+0x77/0x79
+ </TASK>
+
+(0xdffffc00000a1f80 in the full report is the KASAN shadow of 0x50fc00;
+without KASAN the raw value is read.)  Values with the top bit set fare
+no better: 0xd8000000 sign-extends through the int conversion into the
+kernel address range and takes a page fault instead.
+
+Clamp the result at the single read and return -EIO for anything
+outside the errno range, which is what a malformed reply means there.
+net/9p does the same to server errno values with safe_errno().  This
+is the path the reported crash takes; the other readers of
+head->result, including the ceph_async_create_cb() and
+ceph_async_unlink_cb() callbacks, are not covered by this patch.
+
+Each of the six crashing opens was run on a build of
+7.3-rc3-135-g4982d3552a3bf with only this change applied: it crashes
+the unpatched kernel on the first openat() (verified on the same
+tree without the patch), and with the patch the open fails cleanly
+without an oops.  A few hundred normal file operations on the
+patched kernel also completed without a crash; valid errno values
+pass through unchanged.
 
 Cc: stable@vger.kernel.org
-Fixes: 5cf9c4a9959b ("libceph, crush: per-pool crush_choose_arg_map for crush_do_rule()")
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Darong Lu <zzyy19904204639@163.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
+Fixes: 2f2dc053404febedc9c273452d9d518fb31fde72 ("ceph: MDS client")
+Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/osdmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ceph/mds_client.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
-index 7d65a81148166..e69a2249ddfbf 100644
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -319,7 +319,7 @@ static int decode_choose_arg(void **p, void *end, struct crush_choose_arg *arg)
- 	if (arg->weight_set_size) {
- 		u32 i;
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index d370c43cf02f5..b354c3296de36 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -3987,6 +3987,14 @@ int ceph_mdsc_wait_request(struct ceph_mds_client *mdsc,
+ 	/* only abort if we didn't race with a real reply */
+ 	if (test_bit(CEPH_MDS_R_GOT_RESULT, &req->r_req_flags)) {
+ 		err = le32_to_cpu(req->r_reply_info.head->result);
++		if (err > 0 || err < -MAX_ERRNO) {
++			/*
++			 * The result is server-controlled.  Values outside
++			 * the errno range are turned into bogus pointers by
++			 * the ERR_PTR() users among the callers.
++			 */
++			err = -EIO;
++		}
+ 	} else if (err < 0) {
+ 		doutc(cl, "aborted request %lld with %d\n", req->r_tid, err);
  
--		arg->weight_set = kmalloc_objs(*arg->weight_set,
-+		arg->weight_set = kzalloc_objs(*arg->weight_set,
- 					       arg->weight_set_size, GFP_NOIO);
- 		if (!arg->weight_set)
- 			return -ENOMEM;
 -- 
 2.53.0
 
