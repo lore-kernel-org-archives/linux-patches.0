@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065285;
-	b=I7Y83cLe38g4GpdC/J2ymnOKSyurnaE0IMqlTchf0dNdB+re510l6J3yXRNvQBeFL8Px
-	 ohL8AAIwDMjskXlvitZ+83XzaNxoYCBmdtEqS+cB7Jn0Y3kKidf63cihp6DVW+3xuLDfY
-	 gJH4mgVn6htDdCMxdMBFxHJaY9vZQl1xd9lfZyeqeFiKSn3owOH6lDj1ydbpfuHvGOyfS
-	 eqWxEKvxPlXo9v+uEFj1x0aPJHKGEA7rtDKt/aaSyhuzXR/lWt4o0VkmPaZeJWxwwKWoD
-	 tYypoQ7nv5CrWVPTqeoPCLzxka/b0+F36bilgm/kEnRyKsazmktPE2EaAIrLOXLgCdw==
+	t=1794065286;
+	b=bK4QdvPVrbRNS5DCjv6SxZT9qD5QsZPSK7fWGgriROehxWJAUrJ7nUpD7jkRqerC+DAi
+	 Bqv+iltcPbLgHuo+q1ApWRi4BDLomsR6GhIvY1GkcNSnM+yP/ALdZFmj2a9IByN2kvi/1
+	 jkwhsMDEHivMyBH3IPmycnZCUSUiwYO762wiqnaEUo60HOUg6TewRTiJ7ta3mtrvuEVAo
+	 ucW6yvp0Mkb406A2tM0y4znZEWBBz3x3Vzwr5OzgSc6PQM4itT2qW0ElJEItSFqiK+Nl9
+	 jL/TME4oahqviXIJVmbueFIFh62zioGILRra+gFPBGVgQbZNi5XWwcrt81WnaRIECvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065285;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065286;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z1C2RxqTcMbk9URwcLSfX1gEF/SpEijCW4yTY0CDSa4=;
-	b=bykUDtZKZ3CzJRUx7WxVFn06EkjvKwShXvHAATY2AX5Lhj3/MJtlx2i5+d9UBd2v5Jlw
-	 cuUeXPzlLEMA9OQmLh2bpQSUmAYIzMDd0ke0QIZjT5Pxvt7jCEUxLa6eqaCI+djjbFfsF
-	 Cup2ekDtePrK+hN7Ilj7mrDW64O4+NU6qbIX3hGnc/8jjT0FklKv8JtIMrrQTiyupGvSW
-	 pG4yKmhHnmqhJep7OEOWfo6CNRja14xlgYNLrqsHl/hKiywskqyXj03uYQHOUUuwWWmst
-	 n+aq1+MqVksJMZoxta/KX3+CzFOS0rFvYOjqBbPjhCQT3sgnAvSeOlKDEhkBa/H1M4Q==
+	bh=9kaiW/bo/VHT8fqrgnvUIVJfyJw3gRCMkHWZr/iuNd0=;
+	b=VeT3r0RL+TgA+jfwQKlfbWgEuFcsv9AufHkLu/Gc1i3+V4qjggPDT1zUQACzk0kk5DJH
+	 Qz0hjKzlXQWZx+6CQ0VoYiUIJRed7TZMYOipm2msyigJbgRZFlE9wmpgROcjuJlJSN1yl
+	 st3aUGP1ccrnqLsf+QNK3mAfP/YFyDwAyDmBhtklpXdjbRcINdlnUHu2FpwIcM00urhFt
+	 W0WFewAMjKnG2VXwwX2GZhwhWqWj82urWHO6k8pACAd8Ms52IaOsSjqsSyk3JB01r24bb
+	 nkq+dEA5IwIjXjtRrYBbJTMw+Sd40nld6IYQvr2Q3dq9umE67WPSplOj9uspWArkuDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BuQO7b/k";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=En21A71b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4E1606A32E;
-	Sat,  7 Nov 2026 15:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F747606A32D;
+	Sat,  7 Nov 2026 15:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BuQO7b/k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B19B1F008A1;
-	Sat,  7 Nov 2026 15:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=En21A71b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCEE1F008A1;
+	Sat,  7 Nov 2026 15:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065284;
-	bh=Z1C2RxqTcMbk9URwcLSfX1gEF/SpEijCW4yTY0CDSa4=;
+	s=korg; t=1794065286;
+	bh=9kaiW/bo/VHT8fqrgnvUIVJfyJw3gRCMkHWZr/iuNd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BuQO7b/kCefzpfiEIr8IOPnw8Z3UkRekU3kJNaO5q+TzCWdmPBddPmidExfw2Svkj
-	 gujSXdrV9DQNdXQLiCXTsXbCzWUvKoNuf5hHp1FeDCnvbfbxZYNlAZIUIKwsW0kfHc
-	 D19S5SbLCcJihK8qLutCLKRQVa5QkHzKuscF26NA=
+	b=En21A71b8y0u6RYXIFWp/K78DgqqqvMS16ezvnN5OKWteXbIFLiYyyzuLGYm26mOh
+	 r8PgCEgxerDOjjyopd3kGdwc/7RGJohdfSK0vJC2z4lOQIWw6f4DoKVr2YouHmG43e
+	 0/0xkvuBfKfPmtxBNhY5fMcUAIX7PB/YjIMsggyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Eugene Lee <eugenehlee@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Igor Velkov <iav@iav.lv>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1045/1257] gve: fix out-of-bounds read in gve_get_flow_rule_entry()
-Date: Sat,  7 Nov 2026 08:55:41 -0500
-Message-ID: <20261107135008.170174062@linuxfoundation.org>
+Subject: [PATCH 7.3 1046/1257] genirq/kexec: Do not take the bus lock of an interrupt chip on the crash path
+Date: Sat,  7 Nov 2026 08:55:42 -0500
+Message-ID: <20261107135008.194527072@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,53 +68,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Igor Velkov <iav@iav.lv>
 
-[ Upstream commit 45e0a63f9c86a558afc70d79b6df38f8ec7f502a ]
+[ Upstream commit 717862eac6eff0eea8ac30a0c0de0bed84922aab ]
 
-gve_get_flow_rule_entry() checks the requested location against the
-first and last cached rules, but rules_cache_num can be 0 while
-rules_cache_synced is true: GVE_FLOW_RULE_QUERY_RULES returns the rules
-from the requested location onwards, so a request past the last
-installed rule - or any request when no rules are installed - returns
-zero rules, which the driver accepts and marks as synced.
+machine_kexec_mask_interrupts() calls irq_set_irqchip_state() for every
+started interrupt. That function takes the bus lock of the chip and
+desc->lock, and syncs the chip when it drops them. On the crash path
+interrupts are off and the other CPUs are stopped, so a chip whose bus
+transfer is completed by an interrupt never returns from the sync.
 
-The next query evaluates rules_cache[*cache_num - 1] with
-*cache_num == 0. The zero-initialised cache does not trip the earlier
-comparison, *cache_num - 1 wraps to 0xFFFFFFFF in u32, and the read
-faults about 352 GiB past the cache. ETHTOOL_GRXCLSRULE needs no
-capability, so an unprivileged user can trigger it:
+On RK3399 boards with an RK808 PMIC the RTC alarm interrupt belongs to
+the regmap-irq chip of the RK808, which sits on I2C. rk808_irq_chip sets
+init_ack_masked, so regmap_irq_sync_unlock() writes the ack register on
+every unlock, and the I2C controller needs its own interrupt to finish
+the transfer. A panic with a crash kernel loaded prints
 
-    BUG: unable to handle page fault for address: ff240996c4c64fa8
-    #PF: supervisor read access in kernel mode
-    RIP: gve_get_flow_rule_entry+0xd4/0x110 [gve]
+  SMP: stopping secondary CPUs
 
-Treat an empty cache as a cache miss and re-query.
+and then nothing until the watchdog resets the board.
 
-Fixes: 6f3bc487565d ("gve: Add flow steering ethtool support")
+machine_kexec_mask_interrupts() takes neither lock for the other
+operations on the descriptor. Move the search for the chip that
+implements irq_set_irqchip_state() into __irq_set_irqchip_state(), which
+takes no locks, and call it from machine_kexec_mask_interrupts().
+
+Fixes: 78fd584cdec0 ("arm64: kdump: implement machine_crash_shutdown()")
+Suggested-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Reviewed-by: Eugene Lee <eugenehlee@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Link: https://patch.msgid.link/AS8P251MB0001135AF3233180DC42DCD1C8672@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20261015-kexec-irq-bus-lock-v2-1-2af15f0757b6@iav.lv
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_flow_rule.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/irq/internals.h |  1 +
+ kernel/irq/kexec.c     |  2 +-
+ kernel/irq/manage.c    | 43 +++++++++++++++++++++++-------------------
+ 3 files changed, 26 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_flow_rule.c b/drivers/net/ethernet/google/gve/gve_flow_rule.c
-index 2c80cda28ef30..db8b9a39bfc89 100644
---- a/drivers/net/ethernet/google/gve/gve_flow_rule.c
-+++ b/drivers/net/ethernet/google/gve/gve_flow_rule.c
-@@ -206,6 +206,7 @@ int gve_get_flow_rule_entry(struct gve_priv *priv, struct ethtool_rxnfc *cmd)
- 		return -EOPNOTSUPP;
+diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
+index 2c30e7537987c..703a062be8783 100644
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -83,6 +83,7 @@ enum {
+ #include "settings.h"
  
- 	if (!priv->flow_rules_cache.rules_cache_synced ||
-+	    !*cache_num ||
- 	    fsp->location < be32_to_cpu(rules_cache[0].location) ||
- 	    fsp->location > be32_to_cpu(rules_cache[*cache_num - 1].location)) {
- 		err = gve_adminq_query_flow_rules(priv, GVE_FLOW_RULE_QUERY_RULES, fsp->location);
+ extern int __irq_set_trigger(struct irq_desc *desc, unsigned long flags);
++extern int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val);
+ extern void __disable_irq(struct irq_desc *desc);
+ extern void __enable_irq(struct irq_desc *desc);
+ 
+diff --git a/kernel/irq/kexec.c b/kernel/irq/kexec.c
+index 1a3deffe6b5b6..f245b98764225 100644
+--- a/kernel/irq/kexec.c
++++ b/kernel/irq/kexec.c
+@@ -25,7 +25,7 @@ void machine_kexec_mask_interrupts(void)
+ 			 * First try to remove the active state from an interrupt which is forwarded
+ 			 * to a VM. If the interrupt is not forwarded, try to EOI the interrupt.
+ 			 */
+-			check_eoi = irq_set_irqchip_state(i, IRQCHIP_STATE_ACTIVE, false);
++			check_eoi = __irq_set_irqchip_state(desc, IRQCHIP_STATE_ACTIVE, false);
+ 		}
+ 
+ 		if (check_eoi && chip->irq_eoi && irqd_irq_inprogress(&desc->irq_data))
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index 3b647d9b458ad..ec3ecb0e48cec 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -2748,6 +2748,28 @@ int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which, bool *
+ }
+ EXPORT_SYMBOL_GPL(irq_get_irqchip_state);
+ 
++int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val)
++{
++	struct irq_data *data = irq_desc_get_irq_data(desc);
++	struct irq_chip *chip;
++
++	do {
++		chip = irq_data_get_irq_chip(data);
++
++		if (WARN_ON_ONCE(!chip))
++			return -ENODEV;
++
++		if (chip->irq_set_irqchip_state)
++			break;
++
++		data = irqd_get_parent_data(data);
++	} while (data);
++
++	if (data)
++		return chip->irq_set_irqchip_state(data, which, val);
++	return -EINVAL;
++}
++
+ /**
+  * irq_set_irqchip_state - set the state of a forwarded interrupt.
+  * @irq:	Interrupt line that is forwarded to a VM
+@@ -2762,25 +2784,8 @@ EXPORT_SYMBOL_GPL(irq_get_irqchip_state);
+  */
+ int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which, bool val)
+ {
+-	scoped_irqdesc_get_and_buslock(irq, 0) {
+-		struct irq_data *data = irq_desc_get_irq_data(scoped_irqdesc);
+-		struct irq_chip *chip;
+-
+-		do {
+-			chip = irq_data_get_irq_chip(data);
+-
+-			if (WARN_ON_ONCE(!chip))
+-				return -ENODEV;
+-
+-			if (chip->irq_set_irqchip_state)
+-				break;
+-
+-			data = irqd_get_parent_data(data);
+-		} while (data);
+-
+-		if (data)
+-			return chip->irq_set_irqchip_state(data, which, val);
+-	}
++	scoped_irqdesc_get_and_buslock(irq, 0)
++		return __irq_set_irqchip_state(scoped_irqdesc, which, val);
+ 	return -EINVAL;
+ }
+ EXPORT_SYMBOL_GPL(irq_set_irqchip_state);
 -- 
 2.53.0
 
