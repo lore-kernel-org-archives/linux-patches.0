@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062414;
-	b=BKywcjH5abUe15XTpx4fAEalj84lzYuwqWWoZ9+l01kh+9rcs0akDiwAwExifUeH8vDO
-	 3cNJ64WCTjnYZUSwxHMPntlphXCojUziQ9cIC/RsouH/T8xHHTb0R3+9jz89dRPGgWwJ0
-	 c5qtE9ZjpcnU9cXZQqQzZMI5yISxXeTbBU8C3E4mc7E5LLsx8WR/6Rjl9BcBSAZCai9pA
-	 IiABGxNciyTcsXzded3iyqQA6badgtX4TKqIjbFEiFtXOXqrrLAVknFhLE2PtleMJvYo/
-	 uLZc1PO7V0AeRrqAWCYNM4Cafr8f3YfwADn61zQghlUPKYnYc+V5f5I/dSrl1bRc/gw==
+	t=1794062415;
+	b=T0sG/JXyuj/kQOTEZTvwjnrTI6X431VvsbNE6Kq+Yj7S1cUSEPDLbNvg4aJzfpH/CP8k
+	 hr1A19f7b+ijyRq+sXWOnvfcvLurV5PpHiqFIG0DthX5NwWxck4HLQMcxG0MDWq75v2TK
+	 xRS/8+2qyRlQ35qjgOmV/BItlv4/EyESwsFlOSJi5ZZmU4l/MnXIJqnO63q2Rlx+MX+5N
+	 k5HqnOPnwAEU4xphGimMCDDPtGuXMhmrhkBm99uyy2ahRdVWhQQIuycAC7PkSoueSgaPl
+	 1HCg2X5dV37Vuum4Cp6MqR/PJJXxAj0zF08ZJ7a5rDKmlk1cDXru+vEsqrUbZXzro4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062415;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/NoMxERFsN3RrVGPxAwIQqHOEwu0h3wV4etkrKAlUwI=;
-	b=fbgRfA0bsAPqQBBnqxua76mQVTpZDjTrhPY3e5ygGx4exoaD/cH3eFsXWfJrq2+eGl3f
-	 43jFaepkvTFv4JPASD9eE7kTkq7STDRQ8vPgYNpQFVbgV94vUUQH9DiJoe4126BNYvdu7
-	 WkG9UDsfyYKZpc21SE9KyXKuu6J1D9+1lf03U/SQsT+wWjpUrUMtEiQHB2mY5dwIBwMIc
-	 DM2V3xIf9tf3fuepuHDCJZNX58T2HjAeCrb2x1bjHzBs/vLoCRcU8AixxV3h3Lc0rT82O
-	 UbkI0D5JinGgh/d0gErOAHTeXjB1VR40DUqa5iscPDyub1jvAYa7zpe2OQHIJrbgaDg==
+	bh=uHHdqkieW6sGG9exIU2irx1t8BDJoWW8ZIOq/dBn+ew=;
+	b=yRnIxeVqeKxIUaza7y8GFW+5VI14CxQUnbzWNTo/YLylsChewlf3UljVNKqHLdOcZVl0
+	 PMx2Q5JouoKsLGocTGOL+EdbMRti/E3UM1U7lyZ89UwusuG2rZRgcR0UXkAt6wcfHNj1T
+	 W0fBK66YLBPGdQxl6X1h1n+OqLMsyZgyEx+BEpR49JrBJftAWKs9mJoolQEJ3JifDjMTu
+	 brxlQ5DL/MCVEMzRqeVkwzP4QH/Wn7i2mbnsn+zgS2JnR6wvdg6pYCWPiyp6i13GrkFdi
+	 6MO7JJXnSZdgq70Iln0e/KacJPXZ9Qo7SNWOUCSaeYWiSt40fgaAbS5ZaLe7SiBLN7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c39ytVqu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HEVZouaI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7E660A260D;
-	Sat,  7 Nov 2026 14:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D09C606A33C;
+	Sat,  7 Nov 2026 14:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c39ytVqu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08311F008A1;
-	Sat,  7 Nov 2026 14:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HEVZouaI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A911F0089F;
+	Sat,  7 Nov 2026 14:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062414;
-	bh=/NoMxERFsN3RrVGPxAwIQqHOEwu0h3wV4etkrKAlUwI=;
+	s=korg; t=1794062415;
+	bh=uHHdqkieW6sGG9exIU2irx1t8BDJoWW8ZIOq/dBn+ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c39ytVqumw0quHL74nLezuK/VjRuHkLBj5OXq5F1qlyKw8MGB1c9HSdJGilrbn4Zb
-	 g2IJpZZl0OCVzH0zfG4KAqyu3hpf1cV5t5Xgw5usKGDxRNvw44J8jE2caapr1RjWx2
-	 vkqIZ96maKDJ0+quN9nnogWEnECEeay49HqIuVcw=
+	b=HEVZouaIvHxA/4w2Od/N/cf6gic9OXJ1bW+7hCbQy8wSOOZABmIUS1MGdT31rQjXl
+	 pQjiIIgwK+Jxbxj0OlHPBhd0Hh++SPJcbwpKDFb0EX7gw5YaiRBO3mSVYEzy8p7Hzl
+	 4MnBHCcwEEgwSxj/TXS8/iLKt8hCReyM9yVnkzN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sungbyeongchan <tjdqudcks0424@naver.com>,
-	Giovanni Vignone <gio@octane.security>,
-	Robert van Eijk <robert@octane.security>,
-	Paolo Gentry <paolo@octane.security>,
-	Shubham Antil <shubham@octane.security>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1330/1536] RDS/IB: validate receive fragment completions
-Date: Sat,  7 Nov 2026 08:55:46 -0500
-Message-ID: <20261107135035.174184521@linuxfoundation.org>
+Subject: [PATCH 6.12 1331/1536] cpufreq: loongson3: Make this driver depend on MACH_LOONGSON64
+Date: Sat,  7 Nov 2026 08:55:47 -0500
+Message-ID: <20261107135035.202427545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -73,82 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubham Antil <shubham@octane.security>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 65cf6863606b0507a7c3bd1711317e4f5d6b8b7e ]
+[ Upstream commit 48a82a3f44576a1b227f964fdb150e1cae7455bf ]
 
-rds_ib_process_recv() accounts every receive fragment as contributing
-min(i_recv_data_rem, RDS_FRAG_SIZE) bytes, regardless of the completion
-length. When a completion is shorter than the header-declared amount,
-receive accounting can advance beyond the payload supplied by the
-completion.
+32BIT Loongson machines don't have SMC and FreqCtrl registers, so make
+this driver depend on MACH_LOONGSON64 (only for LoongArch based 64bit
+machines currently).
 
-Only an IB_WC_RECV completion has the buffer layout expected by this
-receive path. Other successful completion opcodes must not be interpreted
-as ordinary receive completions.
-
-Reject successful completions with any other opcode before processing
-their length. For ordinary receive completions, require enough payload
-to cover the amount accounted to the fragment before linking its page
-into the incoming message.
-
-This is compatible with the current transmit paths. MSG_ZEROCOPY is
-restricted to RDS/TCP, while RDS/IB copied and page-vector messages use
-full-sized non-final scatterlist entries.
-
-Found during an LLM-assisted source audit and validated under KMSAN with
-a malformed short receive completion.
-
-Reported-by: sungbyeongchan <tjdqudcks0424@naver.com>
-Closes: https://lore.kernel.org/netdev/20261006205204.1322102-1-tjdqudcks0424@naver.com/
-Reported-by: Giovanni Vignone <gio@octane.security>
-Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
-Reported-by: Robert van Eijk <robert@octane.security>
-Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
-Reported-by: Paolo Gentry <paolo@octane.security>
-Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
-Fixes: 1e23b3ee0e94 ("RDS/IB: Receive datagrams via IB")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shubham Antil <shubham@octane.security>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261013025729.40815-1-shubham@octane.security
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ccf51454145b ("cpufreq: Add Loongson-3 CPUFreq driver support")
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_recv.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/cpufreq/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/rds/ib_recv.c b/net/rds/ib_recv.c
-index 7310ac4d4be48..7f918fb377de4 100644
---- a/net/rds/ib_recv.c
-+++ b/net/rds/ib_recv.c
-@@ -949,6 +949,12 @@ static void rds_ib_process_recv(struct rds_connection *conn,
- 		}
- 	}
- 
-+	if (data_len < min_t(u32, ic->i_recv_data_rem, RDS_FRAG_SIZE)) {
-+		rds_ib_conn_error(conn,
-+				  "fragment shorter than header-declared length; forcing reconnect\n");
-+		goto done;
-+	}
-+
- 	list_add_tail(&recv->r_frag->f_item, &ibinc->ii_frags);
- 	recv->r_frag = NULL;
- 
-@@ -1004,7 +1010,12 @@ void rds_ib_recv_cqe_handler(struct rds_ib_connection *ic,
- 	 * event is processed.
- 	 */
- 	if (wc->status == IB_WC_SUCCESS) {
--		rds_ib_process_recv(conn, recv, wc->byte_len, state);
-+		if (wc->opcode != IB_WC_RECV)
-+			rds_ib_conn_error(conn,
-+					  "recv completion had unexpected opcode %u, disconnecting and reconnecting\n",
-+					  wc->opcode);
-+		else
-+			rds_ib_process_recv(conn, recv, wc->byte_len, state);
- 	} else {
- 		/* We expect errors as the qp is drained during shutdown */
- 		if (rds_conn_up(conn) || rds_conn_connecting(conn))
+diff --git a/drivers/cpufreq/Kconfig b/drivers/cpufreq/Kconfig
+index f089a1b9c0c98..42cb32e928a62 100644
+--- a/drivers/cpufreq/Kconfig
++++ b/drivers/cpufreq/Kconfig
+@@ -263,6 +263,7 @@ endif
+ if LOONGARCH
+ config LOONGSON3_CPUFREQ
+ 	tristate "Loongson3 CPUFreq Driver"
++	depends on MACH_LOONGSON64
+ 	help
+ 	  This option adds a CPUFreq driver for Loongson processors which
+ 	  support software configurable cpu frequency.
 -- 
 2.53.0
 
