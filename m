@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065431;
-	b=3gHyFmFVXsxAjXYY6OLJuy1qH7MH2uiHam+25WDieQlMvAwFTgNVmDOmd9QpjIZPIFn6
-	 ddf60jx0K6bH3DS0VxmCjePrgFhc2loCst41UTbAO1x7kjqRcK79nywP9WGBFitSgmhXE
-	 DxX7bA1HKWIZrAM4dm45sXLE28YgI8trLyF8IJIim7H7MzoPXN34BQLl64WQhv+rUCv6T
-	 Gcd50cesMWTbpCjogQR8kUrVtvtxDiIU9NyiUM5JQZlAPP4j4SZ3fxwRwEBeveVq+mV0x
-	 3/fsxHDyiBLUpZh0tm5VcVJmDm7xADO6V5RzigHcatNmAl7xl5RdZ+o+0M9UAnZdb6Q==
+	t=1794065432;
+	b=QUQ70Smw5OIVDVz87vrP1KRnyo3qhM20Kbyr7rkSLB9mJYEAV5WkjOl9COhxlkiVYaW9
+	 4VjO6CErDqTO3TuQQu7BhiQlQVe2Ry7BmJ7jCiaxEEPi9zlg7Uf+I4afqMW+/RH5GMGrN
+	 KIZwrBr+2mWbSdfBZ46YSNftRtOW0g2ZpyvqI+rgZzhA5J7e4nlQ3zLAgsjltZqH3p3VX
+	 eWwfeAAQW5zJ26X5wYM3eugDIfOtFj72DPpNLasog6kuGIUSO7lTnuf5NkmUyiVhxdkMD
+	 30CRqXepBWc7Ka9SIU+dE4Eq4Wioau4ReeBqnSirDEdzpFb31IBti/PJpDSsbhXD5+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065432;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Zr/Hm3oaVewKJBUBXtLCcBc3UDbG/qj/LnY/uRBU6Y=;
-	b=gIY5tr6F7bsO+37Hs+xpeLmW2iPkWpxw/2IPnGvsWnwpVvWTMaCSl0nYWLWMeWT/gqVG
-	 lT5U3Sc2reaWsL2SRcH1G/S6yrGbkKDHEHvifDctzc6gLugIuBz/u4Q3tieSMrSe5agzp
-	 A5KmXct7yB9bDuJnWiqzZ6uxY7yXO6ej/6pIWTKkiyvtL2BotxdWsqR8qLpYRJB98iPC4
-	 Sn9tWLVv2rm8sklMZd5p5QuKirKya0bizxAfnjUcH7WGstX7TrRbATXUZdrdmiOvEUF22
-	 0Uoi2lozSQXPvuyiSgWnm25P1UaTFdke894Q6CK26mrqwS4PfCA8Kh6WIDVRaN2tkVA==
+	bh=Z6do+8KN395hdDC/qxl3/QjWJHsPx/jecnxC9qpanss=;
+	b=x4jSCeyw1kkMMOMGMGtoD2/RtKJvL7Kx6+a9CKUjdXxG02+I8Yu49MsPGiJY/uHpLb3y
+	 grctDYRwI/vB9rfdZJbYz28OZzcGx0yvuQ5KfRayPn6Q2Di2lqsfIffhzNWCDUz4B3TYn
+	 usehT5F2s9AKBvPkL8faM7vV7+OqjNfOcfQzixaRyEZETHr4D7esuCkg9DEHic2raDcnt
+	 aivygXiuFotXKLkUa0S0IbZn+nET/Sut4riA6A2/pdvSNUpkfa6AN3FK4wHQ2aLr3EKEe
+	 zSI3KHKgVMdgQ0i7QuJnQPSvCwPdtSSRiNQN7sNXsuJGRvjky4dmL013P6rlhiry+wQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uXhYVhsV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bU0nWsc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F3F606D813;
-	Sat,  7 Nov 2026 15:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2787A606D80A;
+	Sat,  7 Nov 2026 15:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uXhYVhsV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E211F0089F;
-	Sat,  7 Nov 2026 15:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bU0nWsc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD84E1F0089F;
+	Sat,  7 Nov 2026 15:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065430;
-	bh=1Zr/Hm3oaVewKJBUBXtLCcBc3UDbG/qj/LnY/uRBU6Y=;
+	s=korg; t=1794065432;
+	bh=Z6do+8KN395hdDC/qxl3/QjWJHsPx/jecnxC9qpanss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uXhYVhsVcbUMYrj6f7OyqWWkLy9FsEy4U2cZwwkCo54w0CJ7ZWX4HmXCpv4O874uu
-	 YWNq67VYPTNgTWvt6EbHp0BC+Lpb/1GdnpJbG1jGRngFktswfYNyF++BIecBZ8Y6mc
-	 rGT9zCp1iqMV1f4bfVSivpHz6J/GIPxLR1jU7pqA=
+	b=0bU0nWscCjdQYQ1+0ieKpUfI2pB/0DWL5vWXj1q3ZHtjFXR1PLM4Aghq8bnZUISCP
+	 2P8jHh6XCE7QYiGXGTF/zZOBLiioVOpFOpafttpICAlbkwImRoeo5UQ9bD3A+dfu8x
+	 ZSXaaE1r8HVy6ofxaZpf6YIT4QA4awFEXUwb9sjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1123/1257] libceph: reject an initial monmap with no monitors
-Date: Sat,  7 Nov 2026 08:56:59 -0500
-Message-ID: <20261107135010.255373253@linuxfoundation.org>
+Subject: [PATCH 7.3 1141/1257] ASoC: qcom: q6apm: Unmap DSP buffers before removing the topology
+Date: Sat,  7 Nov 2026 08:57:17 -0500
+Message-ID: <20261107135010.738609503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,72 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
 
-[ Upstream commit 94dbce2ae4fdb57bdb53ffa3456da777a5cfb981 ]
+[ Upstream commit a51c5dd7f7fc7cdf4ae28fec4a013d8418d1cb53 ]
 
-build_initial_monmap() takes the monitor count straight from
-ceph_options::num_mon and builds a monmap with that many entries without
-checking that there is at least one. ceph_parse_ips() writes *count only
-after it has parsed an address successfully, so a ceph_options that went
-through a failed parse still has num_mon == 0 and the resulting monmap
-has no monitors in it at all.
+Since buffers are mapped once in pcm_new() and unmapped in pcm_free(),
+the unmap relies on the graph info still being registered. During card
+teardown, however, soc_cleanup_card_resources() removes the components
+before it frees the PCM runtimes. q6apm-audio's remove callback unloads
+the topology, which frees every audioreach_graph_info, so by the time
+q6apm_dai_pcm_free() runs the idr lookup fails and the unmap silently
+returns -ENODEV. The DSP keeps the old mapping.
 
-The first thing the client does with that monmap is open a session, and
-pick_new_mon() asserts the invariant that it is non-empty:
+When the card is bound again, for example after unbinding and binding
+any codec on it, pcm_new() maps the same buffer once more, the DSP
+rejects it and the front-end PCM is not created:
 
-  kernel BUG at net/ceph/mon_client.c:211!
-  RIP: 0010:pick_new_mon net/ceph/mon_client.c:211 [inline]
-  RIP: 0010:__open_session+0x60f/0x740 net/ceph/mon_client.c:245
-  Call Trace:
-   ceph_monc_open_session+0x46/0x60 net/ceph/mon_client.c:534
-   __ceph_open_session+0x135/0x590 net/ceph/ceph_common.c:798
-   ceph_real_mount fs/ceph/super.c:1173 [inline]
-   ceph_get_tree+0xd98/0x1fd0 fs/ceph/super.c:1362
-   vfs_get_tree+0x92/0x320 fs/super.c:1947
-   vfs_cmd_create+0xd7/0x2a0 fs/fsopen.c:231
-   __do_sys_fsconfig+0x55a/0xcb0 fs/fsopen.c:463
+  qcom-apm gprsvc:service:2:1: Error (1) Processing 0x0100100c cmd
+  qcom-apm gprsvc:service:2:1: DSP returned error[100100c] 1
+  q6apm-dai ...: Audio Start: Buffer Allocation failed rc = -22
+  snd-sc8280xp sound: ASoC: can't create pcm MultiMedia1 Playback :-22
 
-The reproducer gets there through the new device syntax: an fsconfig()
-mon_addr= that does not resolve ("libceph: resolve '127.0.0.' (ret=-3):
-failed") leaves fsopt->mon_addr set but num_mon at 0, so the "No monitor
-address" check in ceph_get_tree() passes and the mount proceeds with an
-empty monmap. The next patch stops that string from being kept, but the
-assertion should not be reachable from a mount option in the first place.
+Release the circular and position buffer mappings of all graphs in
+q6apm_audio_remove() while the graph info still exists. The unmap
+helper now takes the q6apm instance directly, since it is called from
+the APM component rather than from a q6apm-dai child device.
 
-Commit 40480eee361e ("libceph: Reject monmaps advertising zero monitors")
-made the same BUG_ON() unreachable from the wire by rejecting
-num_mon == 0 in ceph_monmap_decode(). Apply the same rule to the initial
-monmap, which is the only other way one gets built, and fail the mount
-with -EINVAL rather than assert afterwards.
-
+Fixes: 8ea6e25c8536 ("ASoC: qcom: q6apm: Add support for early buffer mapping on DSP")
 Cc: stable@vger.kernel.org
-Fixes: 7b19b4db5add ("ceph: new device mount syntax")
-Reported-by: syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1dbed5969931c19d3eb5
-Assisted-by: Cursor
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261021041044.2080369-4-shengchao.guo@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/mon_client.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/qcom/qdsp6/q6apm.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/net/ceph/mon_client.c b/net/ceph/mon_client.c
-index 59b304eca2732..2f0181b2566dc 100644
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -1141,6 +1141,9 @@ static int build_initial_monmap(struct ceph_mon_client *monc)
- 	int num_mon = opt->num_mon;
- 	int i;
+diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
+index 1f8d915b5e699..a79bbb34c777e 100644
+--- a/sound/soc/qcom/qdsp6/q6apm.c
++++ b/sound/soc/qcom/qdsp6/q6apm.c
+@@ -320,11 +320,10 @@ int q6apm_alloc_fragments(struct q6apm_graph *graph, unsigned int dir, phys_addr
+ }
+ EXPORT_SYMBOL_GPL(q6apm_alloc_fragments);
  
-+	if (num_mon < 1 || num_mon > CEPH_MAX_MON)
-+		return -EINVAL;
+-static int __q6apm_unmap_memory_fixed_region(struct device *dev, unsigned int graph_id,
++static int __q6apm_unmap_memory_fixed_region(struct q6apm *apm, unsigned int graph_id,
+ 					     bool is_pos_buf)
+ {
+ 	struct apm_cmd_shared_mem_unmap_regions *cmd;
+-	struct q6apm *apm = dev_get_drvdata(dev->parent);
+ 	struct audioreach_graph_info *info;
+ 	uint32_t mem_map_handle;
+ 	uint32_t pos_mask = is_pos_buf ? APM_MMAP_TOKEN_MAP_TYPE_POS_BUF : 0;
+@@ -356,13 +355,15 @@ static int __q6apm_unmap_memory_fixed_region(struct device *dev, unsigned int gr
+ 
+ int q6apm_unmap_memory_fixed_region(struct device *dev, unsigned int graph_id)
+ {
+-	return __q6apm_unmap_memory_fixed_region(dev, graph_id, false);
++	return __q6apm_unmap_memory_fixed_region(dev_get_drvdata(dev->parent),
++						 graph_id, false);
+ }
+ EXPORT_SYMBOL_GPL(q6apm_unmap_memory_fixed_region);
+ 
+ int q6apm_unmap_pos_buffer(struct device *dev, unsigned int graph_id)
+ {
+-	return __q6apm_unmap_memory_fixed_region(dev, graph_id, true);
++	return __q6apm_unmap_memory_fixed_region(dev_get_drvdata(dev->parent),
++						 graph_id, true);
+ }
+ EXPORT_SYMBOL_GPL(q6apm_unmap_pos_buffer);
+ 
+@@ -845,6 +846,21 @@ static int q6apm_audio_probe(struct snd_soc_component *component)
+ 
+ static void q6apm_audio_remove(struct snd_soc_component *component)
+ {
++	struct q6apm *apm = dev_get_drvdata(component->dev);
++	struct audioreach_graph_info *info;
++	int id;
 +
- 	/* build initial monmap */
- 	monc->monmap = kzalloc_flex(*monc->monmap, mon_inst, num_mon);
- 	if (!monc->monmap)
++	/*
++	 * The card core removes components before freeing the PCMs, so
++	 * q6apm-dai's pcm_free() runs after the topology (and graph_info)
++	 * is gone and can no longer unmap. Release the DSP mappings here,
++	 * otherwise the next pcm_new() fails to map the same buffer again.
++	 */
++	idr_for_each_entry(&apm->graph_info_idr, info, id) {
++		__q6apm_unmap_memory_fixed_region(apm, id, false);
++		__q6apm_unmap_memory_fixed_region(apm, id, true);
++	}
++
+ 	/* remove topology */
+ 	snd_soc_tplg_component_remove(component);
+ }
 -- 
 2.53.0
 
