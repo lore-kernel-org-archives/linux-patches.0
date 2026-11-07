@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063578;
-	b=A6HD3kzC9/EluL+jl5/jw/HKqDCTzvnZgZsovgET5eh3RlWWd2UdZ+GXBhH+win/ii32
-	 k6wlhEgZiSJQRKoC8G6ONYbQ8wzJBTasDynKOxWkff4ReRnEYDLt97oyh+TzmGvlJaxMD
-	 d4tej+hXOE4SRCewGgWsxZzZ0Sxpyg6E7fv46tL3UpA4hHjE2X0ZvC0RxeGvb3yqe28dQ
-	 Lohsg5rYVlOH7q0KR0w/79mzCaSMMIQvtYs/iaJ0pxeHUGSXOBwYp85iSYGGo3U5vR1Uq
-	 eM+IEVW2nENH/W+TBKRzk5W8T/Wi1Quk/TuH0Uh2gDEPA24lk0zu9Bij8rqUZL+8PfQ==
+	t=1794063579;
+	b=zwu3nRithdJsFhfazoVWFoJLwXagsR2JXe1TN6sCtyPGZZjEZrfl3IagFP8L+5+J4PRp
+	 /5m/hRfFuhzFQGwH3bMdrNppoSP/ld5d7WbtafUkfPOFn8MQUpyQs9ti2UepBmFUxoHqk
+	 HIB9j6x+T/BZM9BWQrKIXQ4NCRaqzDH/NejvQwwJlN+k6gM/XNYputdSa/4XjPxMEsb/k
+	 4V7OK3a1nnWO5N0mUlTwpzElTYUMVmmqhJIl7b8ATK65ZYOs9Oy7W/wkwiZrFpgNV57xc
+	 ST9n6VEszbRlkXKrsv/T5mwYRsdlEAFr+9/mNzqF2MEEnW6wFnEXuAKkJ6YF5iM2gwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063578;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063579;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VhfUWgjd3XYU/6nkhbUBA/VQN2Q007WEJuHmjwCiamg=;
-	b=KugbmrRj2tkU6DO5VJ34pcZRinXhAW6lk5BCzJcHjmSFptYBZLhk3EnxoEWFyW1YvNax
-	 ivWiDejoq8E5PeA6Xsa/AbqLLAabTVwuY+2zl+dSS25/6PoYsfRRxOj4Xr44siIECGjeg
-	 h4WBT9K6BxEReUsUsaJGPgUMKCoejhqKBpZXPEXq+CsiaqdZX+mzZ6Tp3sdLXvZoi6Hqa
-	 W+x5aGVxfw9IVbmijMoiBjxtRtB1EKZVXk6XV813m76cRisJGVQpQOCQF0O9F3pCyalX1
-	 QawEzBXXSTfkScSdMZnTkyW4cw/03DYLnbvy5IiXk/V1utFyeyrF0gmEUkRL175YvfA==
+	bh=xw9ZwWMa7Xc6YF8mkhgGTxt1trJH/F59+BRdqNrYnoQ=;
+	b=iNsn1MQ6Wo7gr4/wEA0CJWDg8fDTvWMhMFVyfDWFgcpWkJmgsGHlJ95Uxhfr/BHk4FGO
+	 VpNhF4VVY9wNqUfzexfkmf6LtC+zL7q3SfaA+ByHl+RMfH54sPfKWlgRJ4p3zNqSoKmpR
+	 OUkZQT03BXnXAHa3A8HJXC7SWN47nE/r1FR53FXzAkqkRQMNrZrd94akUh9hKAsOsmYOe
+	 K01lJBjVVx3CSQVlvbAeNcu+weYykAgGKJhTlRCgShOjmms4Z8BQ95Mwf/6kdJ7qQ0IS9
+	 57Pa+TAcvdXOwabsqujwwh6NE/RFWknLgEMqvhlNOGDlSibKHEikZlAnUE3yy2+fstQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KtlOBmMv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jHOi0hXF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5C060A262E;
-	Sat,  7 Nov 2026 14:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C3460A2634;
+	Sat,  7 Nov 2026 14:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KtlOBmMv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC2D1F008A2;
-	Sat,  7 Nov 2026 14:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jHOi0hXF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42B01F008A2;
+	Sat,  7 Nov 2026 14:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063577;
-	bh=VhfUWgjd3XYU/6nkhbUBA/VQN2Q007WEJuHmjwCiamg=;
+	s=korg; t=1794063579;
+	bh=xw9ZwWMa7Xc6YF8mkhgGTxt1trJH/F59+BRdqNrYnoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KtlOBmMvelnqg8SSyKoxII3RbrsPLSBg1nEHVWe9AsNNu2l5ZF9IShJ1lDHgrZ7GD
-	 L9L9g+Jtl4jGdWHYTsTY12EqXNjibhtYb/Jw7qQY/ZtNoa1LNIXiEjbr0d3q5z/jbu
-	 mDnw8FfqNMskHBeRcoD9HyIxgjFZuFYZ3QtIm8/I=
+	b=jHOi0hXFfFxI7cdRqNd6XVSi3dyiORrr7tqLTGOhyNRp5Nb0uRmZ1zp2JpDr/4BhX
+	 b8hWbqODa70/d0fGCUcEiA8665TDir4gqmWagd/nw8HAkpn0L0g5X7MGn7we5Xmw6E
+	 KovBxep6SX3tZjzVQkL5/JUFaOc8siNHD6LW6a+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Yu Zhang <yuz08559@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Fang Xieyan <fangxy@xiaopeng.com>,
+	Liu Chao <liuc63@xiaopeng.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 707/869] nvmet: take subsys->lock while force-reconnecting in nvmet_subsys_attr_qid_max_store()
-Date: Sat,  7 Nov 2026 08:56:29 -0500
-Message-ID: <20261107134916.878286669@linuxfoundation.org>
+Subject: [PATCH 6.18 708/869] net: wwan: iosm: validate msg_head before indexing msg_ring
+Date: Sat,  7 Nov 2026 08:56:30 -0500
+Message-ID: <20261107134916.906186252@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,66 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Zhang <yuz08559@gmail.com>
+From: Liu Chao <liuc63@xiaopeng.com>
 
-[ Upstream commit 9f426f14051181e251590783e68ce589a63e2b1c ]
+[ Upstream commit 46cbf85155e5451b6682ea0c17bc62ec564aec36 ]
 
-nvmet_subsys_attr_qid_max_store() sets subsys->max_qid and then walks
-subsys->ctrls to force every controller to reconnect, but it holds only
-nvmet_config_sem (for write).  subsys->ctrls is protected by subsys->lock:
-nvmet_alloc_ctrl() adds an entry under subsys->lock, and nvmet_ctrl_free()
-removes it under subsys->lock with list_del() + kfree() (not kfree_rcu).
-The free path takes no nvmet_config_sem, so the two locks are independent.
+ipc_protocol_free_msg_get() reads msg_head from shared memory and
+uses it directly as an index into msg_ring[]. If the head is out
+of range, the subsequent memset() writes beyond the message ring.
 
-A controller teardown (host disconnect, keep-alive timeout or fatal error
--> nvmet_sq_destroy() -> nvmet_ctrl_put() -> nvmet_ctrl_free()) can
-therefore list_del() an entry while qid_max_store() is iterating the list,
-corrupting the walk.
+Validate head against IPC_MEM_MSG_ENTRIES before using it as an
+index. The ring is a circular buffer, so a value outside the valid
+range indicates a corrupted head pointer; report the error and fail
+the allocation instead of writing out of bounds.
 
-KASAN, concurrent "echo 128 > .../subsystems/<nqn>/attr_qid_max" racing
-nvme-loop controllers connecting and disconnecting, panics in seconds:
-
-  BUG: KASAN: null-ptr-deref in nvmet_subsys_attr_qid_max_store+0x10d/0x1b0
-  Read of size 8 at addr 0000000000000090
-  Call Trace:
-   nvmet_subsys_attr_qid_max_store+0x10d/0x1b0
-   configfs_write_iter+0x1a7/0x250
-   vfs_write+0x5df/0x940
-   ksys_write+0xfd/0x1e0
-
-(also seen as a general-protection fault dereferencing a LIST_POISON
-pointer at the same instruction.)
-
-Take subsys->lock around the list_for_each_entry() loop, matching every
-other subsys->ctrls accessor.  ->delete_ctrl() only queues asynchronous
-controller teardown, so it does not re-enter subsys->lock under the loop.
-
-Fixes: 3e980f5995e0 ("nvmet: expose max queues to configfs")
+Fixes: 64516f633bfd ("net: iosm: protocol operations")
 Cc: stable@vger.kernel.org
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Yu Zhang <yuz08559@gmail.com>
-Tested-by: Yu Zhang <yuz08559@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Fang Xieyan <fangxy@xiaopeng.com>
+Signed-off-by: Liu Chao <liuc63@xiaopeng.com>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261020094254.4017726-1-liuc63@xiaopeng.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index f6ac42eaac0e0..e2032b58191c5 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -1662,8 +1662,10 @@ static ssize_t nvmet_subsys_attr_qid_max_store(struct config_item *item,
- 	subsys->max_qid = qid_max;
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c b/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c
+index 4627847c6daab..455b3b6f09917 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_protocol_ops.c
+@@ -14,6 +14,11 @@ ipc_protocol_free_msg_get(struct iosm_protocol *ipc_protocol, int *index)
+ 	u32 new_head = (head + 1) % IPC_MEM_MSG_ENTRIES;
+ 	union ipc_mem_msg_entry *msg;
  
- 	/* Force reconnect */
-+	mutex_lock(&subsys->lock);
- 	list_for_each_entry(ctrl, &subsys->ctrls, subsys_entry)
- 		ctrl->ops->delete_ctrl(ctrl);
-+	mutex_unlock(&subsys->lock);
- 	up_write(&nvmet_config_sem);
- 
- 	return cnt;
++	if (head >= IPC_MEM_MSG_ENTRIES) {
++		dev_err(ipc_protocol->dev, "invalid message head %u", head);
++		return NULL;
++	}
++
+ 	if (new_head == le32_to_cpu(ipc_protocol->p_ap_shm->msg_tail)) {
+ 		dev_err(ipc_protocol->dev, "message ring is full");
+ 		return NULL;
 -- 
 2.53.0
 
