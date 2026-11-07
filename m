@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064780;
-	b=IutSOQg0uHd2SjlmQIE4iwUIdKZLpmpUXXe8enOvdzxU7TTsnQg2t89pV7SEV1EnYvLr
-	 Ujz7GXpyvwZdTRj8Oy6ZU8lnfzMsCvd05URaVIYLoa+UGgDHsZSOqihsBYSgHNS8YCpm7
-	 tjSmjMpZybKKXYCcA5kTuvSctw7pnYQt70EHRL+339tTbjuPNBGM/fv34tH4F9recNzaj
-	 0LvHJnjRvsHQXTVHCVY/1Xe2kGdcvI9QRr1fdiyKLclCkoltht0w2a/zHtFe2CQkcBKGU
-	 HY3jg8MR84blvaEmnQONVacMXE0BDPP1qjwIMWQGoji/hhkSUnQiEbl1jc2+FhRjTnA==
+	t=1794064781;
+	b=xD+OGV4rMZmGv3O/5jEKdN5cSy2sWh6fOf03XHgd9E/kYim0H5M+eOm4vMIdrzkITUcQ
+	 pDgNN3wrG9DG5xYaY5Axy1G1ZIu/ely1Svc7XowphhJgc1hUoXUFnbnVm6hzVSHFqxfjn
+	 YJlKNsBPPCVdfY9hGH2mqvlG0hXFXs0E0KUtsLgAZs7pAUhfC4UrsPVKMmKT/PMw5MfnH
+	 PlbQJz991Rp9E42Rgxl28sp4abwkU+shuAfse8/O1LhO5E4suplXZOMy5EsR2si4hxhkx
+	 bHK1V1HnZgsHdmKYr+6/0+LSuJFNdBl21TQ5tYD7crPxSQnZriZBcvwjsntELwx2Png==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064780;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064781;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+evxeFJmhswJXa32v8blcxqiambzWVfwP6bvhPIu8Eg=;
-	b=y5pocozeqA3AqMOvpGbWdIeW/86sGrCyP4wyQ0hMbibu4EunolPeI9q+qRz8nR3KUg/F
-	 2dKTEK08jgA8X3djrSa+LMEkFE7TcB1Xo17xoUeqrMPOQFbi4crMjMVov7uG01VYNvNGl
-	 J9gI15gfDd4HPsDx852Aq0T8Hye5oLg+DQZAN5LeZ9cKwRmwlFXrqWOXtRSPvIpXgPY8N
-	 X1LzH7dqEQR7OUwdOx6fLXqbzq5ZMsOBZPStonzyRcOgRQj3AUxg7rD13eqTanYu79GtZ
-	 18wZaY8NlMlChUUnmnNbNbWQvLBDTvTALlTw+oUDLEy3Hqd9O/hYhH1iG2gSH7UMs1A==
+	bh=3zlvuXcFCmeU6QEY8Z2n43Y4Xjnom0WeKNIPi91b/KI=;
+	b=vslCi792OQjZcMkQHUgF7pxGgEuO9YPP2nyWZqZgPzVoQsfLRz83iyyRfh/YlWzEtuPo
+	 YDNLO94Q07hnMrallnly/FS2G0FAAApnWd5aA6aQwNU5lD74788c+O14yFIXZcgf72ybn
+	 eOdKVHZ1d3e59eXgUG+rCPo12M6fOBSmWw6KZZuh+sJHhbi0DcWzSH9lJFgK2wbwFRwE+
+	 +mW6Oz8BauYhX0xyy+qemYT0yziuQSo0/b+muZcLW36iTTjGCO3T5b3OxImJ14kT6v4Px
+	 5AqM0obJhGzGaA/KKYDXY2wvrDOXQvQSkolptJM3Wvx13tAW+/02WnXOghaC855FmXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1MvuuDf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k62t1KqE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75B2606A9E6;
-	Sat,  7 Nov 2026 15:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DEB606A9F2;
+	Sat,  7 Nov 2026 15:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1MvuuDf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3151F0089F;
-	Sat,  7 Nov 2026 15:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k62t1KqE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C5D1F0089F;
+	Sat,  7 Nov 2026 15:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064779;
-	bh=+evxeFJmhswJXa32v8blcxqiambzWVfwP6bvhPIu8Eg=;
+	s=korg; t=1794064781;
+	bh=3zlvuXcFCmeU6QEY8Z2n43Y4Xjnom0WeKNIPi91b/KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a1MvuuDfhnWzitoWpex78IF7VnW8Br8Y35Q0+1tZSIB581dvDWCZk++WrbEGRq4mf
-	 eKnf7G5hc3sUz2eUCnyc0wNq77dGT55aoIMF+mBv6HDiwm2/REDRSDPmfyuvN/0WfV
-	 +YTG6pd7DuiA4/DKM8DhBA/wuT9Hv0OU8Vh9IJa4=
+	b=k62t1KqEzwK+hrgvI5fiV7telwUiYL8LTOTcMQK0TlYbT8RW9N/hMuWVMpxqWcIRc
+	 FKk/xJjUZ02ROgLJGHUuQTbzNvn7yFRFFEoBp5YrFljwGPHwtsMJf4f62kziYd+umk
+	 xs07LU2hwckFbnYmgHu7w3gAohOAARJzG36Spksg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
+	Bradley Morgan <brads@mainlining.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Alain Knaff <alain@knaff.lu>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Guenetr Roeck <linux@roeck-us.net>,
+	Wang Jinchao <wangjinchao600@gmail.com>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0730/1257] lib/decompress_bunzip2: fix off-by-one in run-length bounds check
-Date: Sat,  7 Nov 2026 08:50:26 -0500
-Message-ID: <20261107134959.435032385@linuxfoundation.org>
+Subject: [PATCH 7.3 0731/1257] panic: fix redirect CPU race in panic_try_force_cpu()
+Date: Sat,  7 Nov 2026 08:50:27 -0500
+Message-ID: <20261107134959.463237241@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,57 +73,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Bradley Morgan <brads@mainlining.org>
 
-[ Upstream commit 69919be2b93ef3922f646729ff42b4bd9a30846b ]
+[ Upstream commit 73554d8db4951d2a486405a2759cc0ffd282c0b2 ]
 
-The run-length path rejects a block when dbufCount+t equals dbufSize, but
-the loop that follows writes exactly t bytes starting at dbufCount, so a
-block that fills the buffer exactly is legal.  bzip2 allows it too: its
-decompressor bounds a block at 100000 * blockSize100k and checks that
-limit per byte appended.  Use > instead of >=.
+Patch series "panic: fix panic_force_cpu= redirect races and NMI bypass",
+v7.
 
-bzip2's encoder stops filling a block 19 bytes early, so nothing it
-produces ever reaches the limit and the bug stays hidden.  Compressors
-that use the full block size do reach it: an lbzip2 -9 image whose block
-ends on a run fails to decode, and a self-extracting kernel built that way
-does not boot.
+The panic_force_cpu= parameter redirects a panic to a specific CPU so the
+crash kernel runs there.  The redirect code in panic_try_force_cpu() had
+two races and an NMI bypass, all found by Sashiko.  This series closes
+them and kills one more hack that the rework turned up.
 
-This code came from busybox, which fixed the same line in 2013 in commit
-932e233a491b ("bunzip2: fix off-by-one check").
+Panic from NMI still goes through the redirect path first, so the crash
+kernel ends up on the CPU the admin asked for.  The redirect buffer is a
+static 1KB now, no initcall, no fallback message.
 
-I ran into this because my system uses lbzip2 as /bin/bzip2 -- a common
-thing on Gentoo I believe.  As far as I can tell, anyone using lbzip2
-as their system bzip2 would run into this and it's only because it's
-very uncommon these days to compress a kernel with bzip2 that no one
-has noticed.  I only noticed because I was adding support for various
-compression formats on alpha.
+This patch (of 6):
 
-Link: https://lore.kernel.org/20260912-b4-bunzip2-blocksize-fix-v1-1-c7384bbfc954@gmail.com
-Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+The cmpxchg() in panic_try_force_cpu() makes sure that only one CPU tries
+to redirect panic() to the requested CPU.  It is similar to the cmpxchg()
+in panic_try_start() which makes sure that only one CPU does the panic().
+In both situations, only the winner of cmpxchg() should proceed further.
+Other CPUs should go offline.
+
+There is a bug because the cmpxchg loser returns false and falls through
+into vpanic().  Two non-target CPUs A and B panic, the requested CPU is C:
+
+             cpu A                          cpu B
+          ----------                     ----------
+    panic()                              panic()
+    vpanic()                             vpanic()
+    panic_try_force_cpu()                panic_try_force_cpu()
+        cmpxchg wins                        cmpxchg fails
+        redirect = A                        old_cpu = A
+        IPI -> C                            return false      <- BUG
+        return true                     panic_try_start() wins
+    panic_smp_self_stop()                __crash_kexec() on B
+    (A stops)                            (target C bypassed)
+
+The loser must stop, not fall through.  It cannot just return true,
+though.  A CPU that already won the redirect cmpxchg can reenter
+panic_try_force_cpu() on the same CPU, for example a nested NMI during the
+message formatting, before the IPI is sent:
+
+             cpu A (1st)                  cpu A (nested)
+          ----------                     ----------
+    panic()
+    vpanic()
+    panic_try_force_cpu()
+        cmpxchg wins (redirect = A)
+        vsnprintf(msg) ...
+            <-- NMI, nested panic -->
+                                     panic()
+                                     vpanic()
+                                     panic_try_force_cpu()
+                                         cmpxchg fails
+                                         old_cpu == A (this CPU)
+                                         return true   <- would halt
+                                     panic_smp_self_stop()
+                                     (IPI never sent, panic abandoned)
+
+Check old_cpu against this_cpu so a second call from the same CPU returns
+false and falls through to panic_try_start() instead.
+
+Also fix the panic_in_progress() check.  We must not redirect when
+panic_cpu is already assigned.  Return true to stop when the panic is on
+another CPU, false to proceed when it is this one.
+
+Update the panic_try_force_cpu() doc comment for the new return value
+semantics.
+
+Link: https://lore.kernel.org/20260916182957.7788-1-brads@mainlining.org
+Link: https://lore.kernel.org/20260916182957.7788-2-brads@mainlining.org
+Fixes: 2e171ab29f91 ("panic: add panic_force_cpu= parameter to redirect panic to a specific CPU")
+Signed-off-by: Bradley Morgan <brads@mainlining.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Alain Knaff <alain@knaff.lu>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260705164123.18746-1-include@grrlz.net
+Closes: https://sashiko.dev/#/patchset/20260707172252.4842-1-include@grrlz.net
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Cc: Guenetr Roeck <linux@roeck-us.net>
+Cc: Wang Jinchao <wangjinchao600@gmail.com>
+Cc: Wim Van Sebroeck <wim@linux-watchdog.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/decompress_bunzip2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/panic.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
-index 1288f146661f1..aaa75404250e2 100644
---- a/lib/decompress_bunzip2.c
-+++ b/lib/decompress_bunzip2.c
-@@ -439,7 +439,7 @@ static int INIT get_next_block(struct bunzip_data *bd)
- 		   array.) */
- 		if (runPos) {
- 			runPos = 0;
--			if (dbufCount+t >= dbufSize)
-+			if (dbufCount+t > dbufSize)
- 				return RETVAL_DATA_ERROR;
+diff --git a/kernel/panic.c b/kernel/panic.c
+index 213725b612aa1..010b331658b6b 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -371,8 +371,9 @@ int __weak panic_smp_redirect_cpu(int target_cpu, void *msg)
+  * for the crash kernel to function correctly. This function redirects
+  * panic handling to the CPU specified via the panic_force_cpu= boot parameter.
+  *
+- * Returns false if panic should proceed on current CPU.
+- * Returns true if panic was redirected.
++ * Returns true when this CPU must stop: the panic was redirected or is
++ * already running on another CPU.
++ * Returns false when panic() should proceed on this CPU.
+  */
+ __printf(1, 0)
+ static bool panic_try_force_cpu(const char *fmt, va_list args)
+@@ -396,16 +397,20 @@ static bool panic_try_force_cpu(const char *fmt, va_list args)
+ 		return false;
+ 	}
  
- 			uc = symToByte[mtfSymbol[0]];
+-	/* Another panic already in progress */
++	/*
++	 * Don't redirect when a panic is already in progress. Stop this
++	 * CPU when it's another one, proceed when it's this one.
++	 */
+ 	if (panic_in_progress())
+-		return false;
++		return panic_on_other_cpu();
+ 
+ 	/*
+-	 * Only one CPU can do the redirect. Use atomic cmpxchg to ensure
+-	 * we don't race with another CPU also trying to redirect.
++	 * Only one CPU can do the redirection. Others should go offline.
++	 * Continue with panic() when we already tried the redirection
++	 * from this CPU before, for example via nmi_panic().
+ 	 */
+ 	if (!atomic_try_cmpxchg(&panic_redirect_cpu, &old_cpu, this_cpu))
+-		return false;
++		return old_cpu != this_cpu;
+ 
+ 	/*
+ 	 * Use dynamically allocated buffer if available, otherwise
 -- 
 2.53.0
 
