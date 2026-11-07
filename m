@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062329;
-	b=XSxeygsI9I99wAafOMwVLqmrljcoG6My1qC1rnrsWcXg7G82WDz/w61Xc8610nNp9vI0
-	 p3Z8lw1/CuIf9jvqgGT/B2JxkXpiRH5Kqi9wAM8mpMZciEaMTg6WQ6yKBSrhggC8D0BAM
-	 hGRvngeCi69QQaW+o0UluO2FHRxSQ0rMrZUHmyqn5ohyQK10vTA39G43aJKzODs33xK/J
-	 mVkHg40RhF25oS9IUtg4BjIwneTIHbnghO2Y9DWNJzL/++apyh+Rnd5Tnkw3kLch57rMW
-	 sVtRIf8LVkK/Di9boj75NViTQ59Vh1Qg/uBoL2x+vIvJwiPHICAO2kfISVU1poEkP4g==
+	t=1794062330;
+	b=rL+O8gkiF5C7xQOQG2UWnhbcpIEHK8Cno6RaIH0LejSee5uGYK0ZVW/9fblexcJA5ZK4
+	 Ky8d3rnhLu8xU9pSkFUJgK6eJ/ga2GYSai2O1OqIppY0rNi4QaPrQxNjtoiRv+w7i1R1w
+	 sGX2LUPcqY6tb1fKQieNIN2MT3OmnFmbcHPqBfWXJ3LWte73fESHgKq89chmc226/hGy5
+	 62VwPu638c4tLZ1+LD88C6GNwp3hJNponVziV1jn83wd25Rxh/v3EDzB2+NVOzIY9VYnD
+	 NlyeBWX7zlG9fiqqB4yjQHWZfalbfduN/S/nEL1GNU6iHN1Vat5Pu5c8kHm8NJtqRdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062329;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062330;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MgyhiW4Brlp6P/IaoG3NC7h4QAk96m+a2dQh3nroZTA=;
-	b=kV5xxcfQ04NlIqW+UzfMhxYXVFmQRbkXoBhvvWiy+RATq1GurhXxomKmy/Z4b3R5DjbU
-	 ORJh0N6UHuDbH9ntkcRwB3OOG1Lvr8Xz972ggNYo6rqGwJsYTydRH2U3mStbap9IizT8Z
-	 SFCdEET6vfrus7kR3db/heMSuIcYntB8uJmHMFtFYB7TK1btHj5gO+5gV1YJxsl1N3Oiw
-	 w6ewopusZGu8xPautIjR2W0ZbucAk3exnFgATHJfSme+vWE9cCViQTh9mXOgMGQR+5fZZ
-	 4RrDhcWwinr6OTCHTJK/39oyJ2IW9+cC7n1L0kefEN3zvEmfI/W95iVRSiQ3qBt5EEg==
+	bh=46SFuSiQcO+ltrWgMuoCuWZUGYaJfFnEpaFri8g8RoY=;
+	b=GfSfW86T+vuj0XKQAhOS+I/JkBm5OxC667T1YiB9t+2RJls60yo5mpyuTp6YEylwOYUr
+	 uds93VGAvTfFJXLWjUuAmTCx9dws6M3vjP/CH+sEJy/euEUGcO0Mt0yWp1B8E5P6XS87x
+	 UwU6IAsPpi/QJ8t3qaHLAZzE7Cjk08G0jtcj3P2boR5RWprDMaUxo2/KwKCE8SR95jvcB
+	 Dvwi17lw3PpsE7FPvixpXFUEhZDsJat9KxX9FVik3fo0/Wi9VQxhzI96rHTubU6FDGEO2
+	 yHui9Zl/9ghI+C4Vx6/k5QL+6rlZ9UfS8RUfk6z/PCJ/eeEtaFRzbkcWo/FvY/YSr9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BKaQBn3e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MlH72MoB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EAD606A660;
-	Sat,  7 Nov 2026 14:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64016606A660;
+	Sat,  7 Nov 2026 14:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BKaQBn3e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5DE1F0089F;
-	Sat,  7 Nov 2026 14:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MlH72MoB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFB51F0089F;
+	Sat,  7 Nov 2026 14:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062328;
-	bh=MgyhiW4Brlp6P/IaoG3NC7h4QAk96m+a2dQh3nroZTA=;
+	s=korg; t=1794062330;
+	bh=46SFuSiQcO+ltrWgMuoCuWZUGYaJfFnEpaFri8g8RoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BKaQBn3eCGHXOvTpF6yMZymxp8vWt6zGrA8r17b54uLWdujiJrOpG0VB8V4n5BFfc
-	 nARZUE9X0ofHkG04vJiYFDYs3KKtJjzWwydmwrRPJIicJHpQu4ltQQasJ4bSj1tmGd
-	 /8ZkrUf1veKVR0E4BhiAdTjTrepllsmnDfP19VzQ=
+	b=MlH72MoBhqOxc8xR2r0HLRrT7ycNthvEXPCbQpzpGAg+7keIKwE5eyPH7ejeaz+qw
+	 wJCidm3A7QAZm/UOBXjMlD6/nYl4TRdff/qkLCN/g6bpYad4+KRfQLDBC5x2s1MNeD
+	 gMoUIrb/T6zQo0X3JahklZUpCiw6tmx3k+tfHJgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	stable@kernel.org,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1260/1536] dm-bufio: fix a race leading to an unsigned integer underflow
-Date: Sat,  7 Nov 2026 08:54:36 -0500
-Message-ID: <20261107135033.157446540@linuxfoundation.org>
+Subject: [PATCH 6.12 1261/1536] mei: vsc: Fix packet CRC computed over pointer size
+Date: Sat,  7 Nov 2026 08:54:37 -0500
+Message-ID: <20261107135033.186685868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,49 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-[ Upstream commit 005d2ec5723cd4ac740de678274623f1fadd6a6e ]
+[ Upstream commit 1d2a50533aac7046488da78b0d25f69673cbb028 ]
 
-The function __scan tests "count - freed <= retain_target" and then sets
-"atomic_long_set(&c->need_shrink, 0);" It exits with the condition "if
-(!atomic_long_read(&c->need_shrink)) break;" It may be possible that
-between these two statements, another thread sets &c->need_shrink to a
-non-zero value. In this case, the function __scan continues and it may
-possibly the "freed" variable is larger than the "count" variable. The
-expression "count - freed" underflows and the function __scan will
-continue to free all the buffers, even those that are below
-retain_target.
+vsc_tp_xfer() computes the packet CRC over sizeof(pkt) + olen bytes,
+but pkt is a pointer, so sizeof(pkt) evaluates to the pointer size
+instead of the size of struct vsc_tp_packet_hdr. The value correctly
+match the 8-byte header on 64-bit builds.
 
-Fix this bug by immediatelly exiting if we set
-"atomic_long_set(&c->need_shrink, 0)"; and don't attempt to re-read
-c->need_shrink afterwards.
+Use sizeof(pkt->hdr), consistent with the header size used everywhere
+else in the driver, e.g. in VSC_TP_PACKET_SIZE().
 
-Fixes: 450e8dee51aa ("dm bufio: improve concurrent IO performance")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
+Cc: stable@kernel.org
+Fixes: 566f5ca97680 ("mei: Add transport driver for IVSC device")
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://patch.msgid.link/20261006-vcs_fix_crc-v1-1-b7b149f13c1d@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-bufio.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/misc/mei/vsc-tp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-bufio.c b/drivers/md/dm-bufio.c
-index be83be5081526..601c3e3fe56bb 100644
---- a/drivers/md/dm-bufio.c
-+++ b/drivers/md/dm-bufio.c
-@@ -2405,8 +2405,10 @@ static void __scan(struct dm_bufio_client *c)
+diff --git a/drivers/misc/mei/vsc-tp.c b/drivers/misc/mei/vsc-tp.c
+index 27c921c752e9a..1fe760adb2e4f 100644
+--- a/drivers/misc/mei/vsc-tp.c
++++ b/drivers/misc/mei/vsc-tp.c
+@@ -291,7 +291,7 @@ int vsc_tp_xfer(struct vsc_tp *tp, u8 cmd, const void *obuf, size_t olen,
+ 	pkt->hdr.seq = cpu_to_le32(++tp->seq);
+ 	memcpy(pkt->buf, obuf, olen);
  
- 	for (l = 0; l < LIST_SIZE; l++) {
- 		while (true) {
--			if (count - freed <= retain_target)
-+			if (count - freed <= retain_target) {
- 				atomic_long_set(&c->need_shrink, 0);
-+				break;
-+			}
- 			if (!atomic_long_read(&c->need_shrink))
- 				break;
+-	crc = ~crc32(~0, (u8 *)pkt, sizeof(pkt) + olen);
++	crc = ~crc32(~0, (u8 *)pkt, sizeof(pkt->hdr) + olen);
+ 	memcpy(pkt->buf + olen, &crc, sizeof(crc));
  
+ 	ret = vsc_tp_wakeup_request(tp);
 -- 
 2.53.0
 
