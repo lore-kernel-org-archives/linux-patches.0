@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060572;
-	b=YWAshHfcOQ4yWpOoBR5lCAxFGuyxE2YygKHPgtDU8BKqNlGbs2IQ5l/SYgGNQplqnYCX
-	 SCv1FzcRtS/yZMG+KvtjtF/yVxFPwpQ4ik2DvoVJXD0fUvsUK1nyG5HqwMZMtxLQTH1q5
-	 r2PgCGs1HMSl652D2IuqOd8y4K1cS3+8LdvIZGotDz4pBYqOTEIlxi6SRZ02DR1Rg7OOA
-	 kpAl/8sEKYw3QMO6m4nUKUgJJHY2gv45NI8FwneoJrlYJ+RgPQ0KOSRVJQg5WGK6vBFQZ
-	 qYsxuoqBLcFxCK9/rclCI7MjoyN9UeW9r6ID9TYhjtRjvJJSdMpiQL6Z7HZ2Y3nYp3g==
+	t=1794060573;
+	b=18s3/IMhCiebsPhCGZRIhB81jPX9bYKmzd7B0S2S37SsNJ11kMjns55kKSPw6cVILovW
+	 XBJVt+XLkVrkmwLJXpmVGRHTtJ1QsavmVVm6PGqhw9UBPSuULhoDlZSJnBwoIprSCYnJQ
+	 abAEJh1+VD6Mr8rkAwQ7+K/jk5bu0EuSTTDgwgCNsjwXfFaja7lzheIUDCfwRShSkSYKd
+	 /lM2ifp1hxD+rQ63EjPLA/iMLTQ9wckxYURsglmVG6ujLUW/T78V66XI9e+47K89daRJX
+	 b23MWpxdN+xKu/v6CEejTMEWySnt6GEELxLVHI4cyHxthVoIIgNH0dFGDPJ9F3UHFtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060572;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060573;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=TRZl/IWjuRZtiBExvAhxr/IdgvIMkdp3N6WZxtp15Tg=;
-	b=ZtBT0ddW2QazFVx7JQC/efRweGHQG4WWupnPXl7UuCGvKHGYOkbtQZrb4V/31ldJOli4
-	 MuxHLd2wMGK23Qy7ww0eRwGz8xPOERFYG55cjvLMSyqko6oZHjTSx5QeJljeOaohCucgy
-	 Ps1+zedO05hLWCcJJvb1gNjyXDYArl/mD+maVYCjV5FTrcV5rIPK03f0+Kfljz0NgozsY
-	 zYw7nPsxooNYfl5phezYyl/G6jnWMfZZUuEXVWXD13gMKDWQZbnEjJPyXKVnTPvxt6mZW
-	 YTxTo/FLemLafWOIHqk5xtNzsTk6XwMwgcMjRCF5EU6BRm7odVkagCtwVgg8oA3vw1g==
+	bh=/USbAiXcbsz/57AzdG4Vnwn9skmW5reoe1u3tpNFsUA=;
+	b=i3x/OVL0zEXWgJcCtzX4UZ7OOCaP1iZE9AH2qynlRZVJeX2LU7/ZH8KK+jP5v6IfQBui
+	 UtNZ7rQRP/0uDhxrvMShXUSy4M8cnQHg/0sk3ImJWw8Oxd0tTD1/jcdCrHtzhHR5n8jIB
+	 hFSmKpb0N2wEJwLyAUvFTbDSgXPLeu/m4KwbISu4e0fDm0ZNHICRFtmPvBBy0rkb1hmzr
+	 KOcQQLa2lU++EFuvR7CLhX7dzyaNWSygez/G/REOZvst675u5RHxGrZAo/Tx18JwXSerC
+	 1spo5qRxEYCoQC4jUwHbbLPaIdnUrY01lKAYHPxnRgHUiRH3eNAWjL6W9skepQyrs4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mkxrUVnu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLDt3Ssa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAFA606A326;
-	Sat,  7 Nov 2026 14:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51675606A326;
+	Sat,  7 Nov 2026 14:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mkxrUVnu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDF41F0089F;
-	Sat,  7 Nov 2026 14:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLDt3Ssa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26151F008A1;
+	Sat,  7 Nov 2026 14:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060571;
-	bh=TRZl/IWjuRZtiBExvAhxr/IdgvIMkdp3N6WZxtp15Tg=;
+	s=korg; t=1794060573;
+	bh=/USbAiXcbsz/57AzdG4Vnwn9skmW5reoe1u3tpNFsUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mkxrUVnuPPL665JOzxtetz8wI2RK/8G7nsJ+VqdUYJYV9VmmGmcCG3B5gqAo0oi1T
-	 I/V2GDX7M9DSQI19TE6O8KvpUdIx6MK3fAWDizIC7kxTcS6HzspnpWyilTANN8Zdku
-	 Z7UzKT9u5jnOhJDAKhBgi2aNVxG3F6+WnWQnRQtI=
+	b=hLDt3SsaNXTMmaUeZDtYfNCyExSfjCPFeueg5KR+ZWZgi89XX5t8itI+z+vuP2iDs
+	 1Ls04h4n9qLadBHGKHlX6QddLJfrdk65LCFHabpjj9FQsGBL+FddLX5TkVsSG1DgEY
+	 p9oB9NppBJHUfxs3cw/dVd6SeN9dqrim3MzZF2bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kry=C5=A1tof=20=C4=8Cern=C3=BD?= <cleverline1mc@gmail.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0032/1536] w1: ds2482: add OF device match table
-Date: Sat,  7 Nov 2026 08:34:08 -0500
-Message-ID: <20261107134958.571942839@linuxfoundation.org>
+Subject: [PATCH 6.12 0033/1536] media: cec: stm32: return an error when log-address wait times out
+Date: Sat,  7 Nov 2026 08:34:09 -0500
+Message-ID: <20261107134958.598405250@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,45 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kryštof Černý <cleverline1mc@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 53f33fd74d3993af0fbb5494b5be709f6ca6b712 ]
+[ Upstream commit 3bc2e4a26465386332ee1a40219d8dafba335b0b ]
 
-Add an of_device_id table and hook it into the i2c driver so the
-ds2482/ds2484 can be matched and auto-probed from Device Tree.
+stm32_cec_adap_log_addr() waits for TXSOM to clear before disabling CEC
+and updating the logical address registers. The wait result is ignored,
+so a timeout can still be reported as a successful logical address
+update.
 
-This allows automatic module loading when instantiated via DT.
+Return the polling error before touching the address registers. Compute
+the address mask only for valid logical addresses so the invalid-address
+path does not evaluate a shift based on CEC_LOG_ADDR_INVALID.
 
-Signed-off-by: Kryštof Černý <cleverline1mc@gmail.com>
-Link: https://patch.msgid.link/20260612-w1-of-autoload-v1-1-74e8a17626e6@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/masters/ds2482.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/media/cec/platform/stm32/stm32-cec.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/w1/masters/ds2482.c b/drivers/w1/masters/ds2482.c
-index a7fc6ec31938e..226c480b48182 100644
---- a/drivers/w1/masters/ds2482.c
-+++ b/drivers/w1/masters/ds2482.c
-@@ -551,9 +551,17 @@ static const struct i2c_device_id ds2482_id[] = {
- };
- MODULE_DEVICE_TABLE(i2c, ds2482_id);
+diff --git a/drivers/media/cec/platform/stm32/stm32-cec.c b/drivers/media/cec/platform/stm32/stm32-cec.c
+index 35f5ea42a802d..dbe0968303c05 100644
+--- a/drivers/media/cec/platform/stm32/stm32-cec.c
++++ b/drivers/media/cec/platform/stm32/stm32-cec.c
+@@ -194,18 +194,24 @@ static int stm32_cec_adap_enable(struct cec_adapter *adap, bool enable)
+ static int stm32_cec_adap_log_addr(struct cec_adapter *adap, u8 logical_addr)
+ {
+ 	struct stm32_cec *cec = adap->priv;
+-	u32 oar = (1 << logical_addr) << 16;
+ 	u32 val;
++	int ret;
  
-+static const struct of_device_id ds2482_of_match[] = {
-+	{ .compatible = "maxim,ds2482", },
-+	{ .compatible = "maxim,ds2484", },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, ds2482_of_match);
+ 	/* Poll every 100µs the register CEC_CR to wait end of transmission */
+-	regmap_read_poll_timeout(cec->regmap, CEC_CR, val, !(val & TXSOM),
+-				 100, CEC_XFER_TIMEOUT_MS * 1000);
++	ret = regmap_read_poll_timeout(cec->regmap, CEC_CR, val, !(val & TXSOM),
++				       100, CEC_XFER_TIMEOUT_MS * 1000);
++	if (ret)
++		return ret;
 +
- static struct i2c_driver ds2482_driver = {
- 	.driver = {
- 		.name	= "ds2482",
-+		.of_match_table  = ds2482_of_match,
- 	},
- 	.probe		= ds2482_probe,
- 	.remove		= ds2482_remove,
+ 	regmap_update_bits(cec->regmap, CEC_CR, CECEN, 0);
+ 
+-	if (logical_addr == CEC_LOG_ADDR_INVALID)
++	if (logical_addr == CEC_LOG_ADDR_INVALID) {
+ 		regmap_update_bits(cec->regmap, CEC_CFGR, OAR, 0);
+-	else
++	} else {
++		u32 oar = BIT(logical_addr) << 16;
++
+ 		regmap_update_bits(cec->regmap, CEC_CFGR, oar, oar);
++	}
+ 
+ 	regmap_update_bits(cec->regmap, CEC_CR, CECEN, CECEN);
+ 
 -- 
 2.53.0
 
