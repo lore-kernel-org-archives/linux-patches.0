@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061867;
-	b=VXMr0S+ef/Ql+zAH3npfa2twyF5PlfPt8cBCoQyEN0as8BNg326pyxuo2mOAqh6mP3KA
-	 Ex3HuhVlwlRbNW0tEb0J9d/K2Nj2oiyZB7YLty8+GLumuvYe6uJ6npCr1+oaAh/Y5b/gT
-	 d1wdi2GRD8KgcM353MMzfBfJccR8UKor+6OaPqOIc3ykpcEqJ+thimpTIuXvT9YQnoozr
-	 hiFXma5gCxEQV3YxSXERKwYwyBKdPwTWIEGmSUxsbA1kQE7vCQUw7x6QAk/FLipZ1fbCP
-	 uyl3FlRlrtTFGF0m+PSYdbRIOItrK8l8UsqVC/XyYDbz41f4Y+XQyfi1g8ifhAsZ9Dg==
+	t=1794061868;
+	b=BrBYeEYd/rs55eTctWBWRZjrUCS+lOU+9GzaTt7l+7ztL3POlbQ+ctX0JG70molILwuL
+	 unt8ejpo1nkFVIreX4Tv2TRi5uXVAjC1+M+/2GtTH7AVLZAeV/lGy3exwe+GCV659mKa+
+	 vx2ix2fMie/Je+dDgIswoxb+0s/7KXL8PisZWnhRXJv301R/v6lnxYFHXI98jORNkF113
+	 mWvznT0aPUJAYXvamSTMQhHA3bACZUFlBecSRnKuOkM+xpoC/aWiRqYss/4AHjFa3TwSA
+	 bAsJecO/Sn62vUCbbBAcNwEXOcOHTY34jlvm5S8/ehcfweIoAKzDQsSH+5yHVvV5tHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061868;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lN4S0OPjgmJ8BqdkP/0SISCP8nNyHDTWMn2P0ztt0a8=;
-	b=lM3fndKC9EZ3gP4sDKRceliuFjeEH4AsR9Owop87B0pgTzoLyKPaCOWAQ7gL7gvQFbAY
-	 KGz5+Jdx1lL9kV1HssVR8zRziozEkT0/xYETM1Ywv/WC5+mt0uBXzvt5XVd9cZtJ5Onrf
-	 iOJ/B7feqC8PFxzqe4UYRAymlWW9m8k8a26RcViR1zJ7bcodxA9ByNcjvUKlEdkdsouTE
-	 ubWm+8RvOHbi0nofottB1W230uCUWQkWNj+0WFFygn4xakwNOdhKCvXpxnPXguAW8Pv4J
-	 8cT3m3sBlKPEPG4ZhcdtgS5OC54nQOIVvBs7zceWJ//eGtrKdTKAkozEGvMoTxQYVdg==
+	bh=NNj1ao9zg4ScTYejRDjqIBognm9KW0OkAGaWFkqnm3k=;
+	b=ZtSVV85MyiuGMGSQuiI1bAGd9Za6WGjPwMbjOf4yQRsWiw8eKa84ITD6ay9nn2DEm1FJ
+	 PpQL74ow/8GhtL/olYVkKsq/q6o/jy2bA7Vi8piFuCL9jmGTZ52Fq92ISPIBST4nyrCn3
+	 r2aawGbn1+fvA6N2BTVOEWqYOilyk8twoVtsfh1dck+B3dqXzI/JzTjA2JqbZ4B1WjP/7
+	 qOq/cYPFYMx2+HEp/KDagWoGneJS2PXmBMcEOPgnbxiTjtecXODcJKfkqZo/vC6yI6kAb
+	 p5fKX94s1Q/m71x7mqVXjIydEVYALmXJ2RbpOEPcQ8PhGuOf6m8B+bKsvGA2TPBnKzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjFosJRZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZDLq6AYZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B96606A326;
-	Sat,  7 Nov 2026 14:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21506606A326;
+	Sat,  7 Nov 2026 14:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjFosJRZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974771F0089F;
-	Sat,  7 Nov 2026 14:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZDLq6AYZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C223F1F0089F;
+	Sat,  7 Nov 2026 14:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061866;
-	bh=lN4S0OPjgmJ8BqdkP/0SISCP8nNyHDTWMn2P0ztt0a8=;
+	s=korg; t=1794061868;
+	bh=NNj1ao9zg4ScTYejRDjqIBognm9KW0OkAGaWFkqnm3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kjFosJRZ3lrLo8w7N1MLWW42z7ufNIuVqUEnTWYyvC126o1m3cZ7peKXTC9NGcT7m
-	 JSM5Mm4cxcH9MMSSvNGrg0+EeA0ZHsMn6h2SjI8hRommdl0PaOV37kyyWM+kUddoZM
-	 MFP9Sqk7RiTGekpb7zlK8Z3NuiQ3MWhx/l1I4Y+E=
+	b=ZDLq6AYZNsKU6ZrQRlv2F0MBHLmSkRq0i5dMNoBXtgC6DvORxDtAIRYSoQpO39JJ6
+	 S/66LB1E/wi9qFJBnrR4pw7YGCnHF0pftqRLdhluhavLwOkFELM09txchL1b9o/9PK
+	 gnA3w/YTDIiYDjvty/WSIlG3c8eUfevEZlapEuxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Nirmoy Das <nirmoyd@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0883/1536] media: s5p-mfc: use timer_shutdown_sync() for the self-rearming watchdog
-Date: Sat,  7 Nov 2026 08:48:19 -0500
-Message-ID: <20261107135022.426543026@linuxfoundation.org>
+Subject: [PATCH 6.12 0866/1536] iommufd: Fix event queue release use-after-free
+Date: Sat,  7 Nov 2026 08:48:02 -0500
+Message-ID: <20261107135021.872434620@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,62 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Nirmoy Das <nirmoyd@nvidia.com>
 
-[ Upstream commit 63069b5917cba2e15b1a78b3f4ff99e45102c56f ]
+[ Upstream commit 440ca8a4b69f40088065b9e05ef11373292a254e ]
 
-The MFC watchdog timer (s5p_mfc_watchdog) is self-rearming: every
-callback re-arms itself with add_timer() and, on a timeout, schedules
-watchdog_work. s5p_mfc_remove() tears this down with timer_delete_sync()
-followed by flush_work().
+iommufd_eventq_fops_release() drops the file's users reference before
+reading eventq->ictx. Once that reference is dropped, IOMMU_DESTROY in
+another thread can remove and free the event queue, so the later load
+accesses freed memory.
 
-timer_delete_sync() dequeues the timer and waits for a callback that is
-already running, but it does not prevent a subsequent re-arm. Because the
-watchdog callback re-arms via add_timer(), this is the wrong shutdown
-primitive: once the wait returns nothing guarantees a just-queued re-arm
-will not fire later, dereferencing dev (clock on/off, deinit_hw,
-load_firmware, init_hw) after video_unregister_device(), DMA teardown and
-s5p_mfc_final_pm() have run, a potential use-after-free.
+Read ictx while the users reference still pins the event queue, then
+drop the reference and put the saved context. The context reference
+taken by iommufd_eventq_init() keeps ictx valid until the put. Fault and
+vEVENTQ file descriptors share this release path.
 
-Use timer_shutdown_sync(), which puts the timer into a shutdown state so
-that any add_timer()/mod_timer() from the callback becomes a no-op and no
-later firing is possible. Switch flush_work() to cancel_work_sync() so any
-watchdog_work that was already queued before the timer was stopped is
-cancelled rather than allowed to run to completion against the torn-down
-device.
-
-This issue was found by an in-house static analysis tool. No runtime
-reproducer is available.
-
-Fixes: af9357467810 ("[media] MFC: Add MFC 5.1 V4L2 driver")
+Fixes: 07838f7fd529 ("iommufd: Add iommufd fault object")
 Cc: stable@vger.kernel.org
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: adapted the timer replacement to remove del_timer_sync() instead of timer_delete_sync() ]
+Assisted-by: LLM, Specula
+Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
+Link: https://patch.msgid.link/20261014133632.3440297-1-nirmoyd@nvidia.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+[ sashal: Adapted eventq identifiers to fault identifiers in the existing fault release callback. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/fault.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
-index 50451984d59f7..eb844ddfd8a2d 100644
---- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
-+++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc.c
-@@ -1458,8 +1458,8 @@ static void s5p_mfc_remove(struct platform_device *pdev)
- 	}
- 	mutex_unlock(&dev->mfc_mutex);
+diff --git a/drivers/iommu/iommufd/fault.c b/drivers/iommu/iommufd/fault.c
+index bdaecb6e1f7a3..6e918eb0ffbf0 100644
+--- a/drivers/iommu/iommufd/fault.c
++++ b/drivers/iommu/iommufd/fault.c
+@@ -373,9 +373,11 @@ static __poll_t iommufd_fault_fops_poll(struct file *filep,
+ static int iommufd_fault_fops_release(struct inode *inode, struct file *filep)
+ {
+ 	struct iommufd_fault *fault = filep->private_data;
++	/* fault may be freed once the users reference is dropped. */
++	struct iommufd_ctx *ictx = fault->ictx;
  
--	del_timer_sync(&dev->watchdog_timer);
--	flush_work(&dev->watchdog_work);
-+	timer_shutdown_sync(&dev->watchdog_timer);
-+	cancel_work_sync(&dev->watchdog_work);
+ 	refcount_dec(&fault->obj.users);
+-	iommufd_ctx_put(fault->ictx);
++	iommufd_ctx_put(ictx);
+ 	return 0;
+ }
  
- 	video_unregister_device(dev->vfd_enc);
- 	video_unregister_device(dev->vfd_dec);
 -- 
 2.53.0
 
