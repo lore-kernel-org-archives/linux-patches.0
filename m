@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063905;
-	b=kw7MDTKomIQtWiN6iQW8jPonB5KzMfd8JGLM+D7paouDw7zcOStRwtMHX9RtnsKRLmvx
-	 gXXlqsF+D25QoWJi+ikBOFR59ThWtWgNIIR7+XKkAbPvjBeCDfxaF5EWBtZmfC+Reo71a
-	 8ib4MA7WkRhueqekt5hJiH6xgmg19Pc4iRXcJUwBZ7qXoS0YIjvlAmQ5pqFedxpfPFEJz
-	 J0q23qevOWoEWF2tDy1oa6pnqvso8Uccj1dUvtLyr4pVwuB8ADnSCsetJ5I4+hHYiZ4Hf
-	 /lYW6iCaYNgoKfg1nFURZNToB/GXKgJRFGylBdFw3hRA/yIYzraZ4Z6ZHVqM5alm9uw==
+	t=1794063906;
+	b=ltDkQJFIDBADi3/tNq6aVPq7lGEMfomRUaVmDNo/Qrne9Qx+73Ork7jP6oj8hZxS2MA2
+	 zxWoXhKI56TRuTyLd8Rt+aZzjUKRjhXiei5bWE3uy3RMvssXesOF3gin/mo0JYqBHQ0JJ
+	 TkAvsi4w1uildE0z6+LvCTSE203XJf+Om/kHXAv26APcrpNKxNnJ8zku/qruXucB58Fz+
+	 9LmHASRpdln/KrMaNgNZpsI8B1OEuY/mLiGYjlrEPAHQdtlYPPgQkti4+KlcrBkuMh9Jk
+	 RMsVhGpCE8XuEgCGbnu8XHvpTuf7sLWEUjO1pO+ETA61sdzzm0pKfw/OQg9iku/gR2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fu+EBv7/+OsP9fStfvBMKt72EXSmNV0yWnG26D9s6rM=;
-	b=n8SJHP9T46rgFadUnimFcKLL1pNCefKL6koyyNs7/5XjAW8jB9C0iLklf4GH59SeJ/co
-	 gyo/zb/Qx5LhusZuJaWQWCiINU1vWLof6qmetZMCDnQET6cOZwAUvH18xJc7EpRxWmEnp
-	 E7YPhgIymRGnFaHntLANy2lvnp+fL12f71mdsX+m8tiXmei5AXyWr33nFCF1TGMBHbqfH
-	 kyxAKYZB4BGd42aZPzHAhYLpByexahM2v/x/i7xCS/P8TmArVRCMqxA+2AdU12EoT6148
-	 2IfoPccAndebfhNhhKAfzpBug0KudgB4LxlwQOPyL5/wjBZ00oK5l8lsGpksQbeJ0sA==
+	bh=0UBXoNUR6Nu5v6Bx8r+G2YMq+pQwK/UGfME7tVXE8fg=;
+	b=Z9onZXyCZN32Lr6+kIVw2BqI/rNekHBdI52KtFpX2Zh8dnm3OQPs2NTHDIQhj2veDjCb
+	 6+okSc2FA/bHuGOPgBzbol6y/Ux0OAaubK8CEaWbi+b0ELPCXjvu82YB874DRFm74P8w1
+	 +lhz8ZHntr9J7ETwPIPcQzcBra1tBWG+rXuz8Yq07oKi/qvwZkYjFwrTCH0VPZSBH40Kp
+	 aoNFkJblqFmh9jT6adq18SlPBCpYM8J2xI8xsMcbxItRw6Q+HJZ55x4bcwzAzurqKX6tr
+	 kgh1YBIOEMQYjpcFDCdUkXPc95JCQTcJoXAaP2iiwOGoLXL9nV5C12aMc1om3XvQLBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQKa5Hmr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhSGElne;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA21A606D81A;
-	Sat,  7 Nov 2026 15:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20BE606A337;
+	Sat,  7 Nov 2026 15:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQKa5Hmr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670A71F008A1;
-	Sat,  7 Nov 2026 15:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhSGElne
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF891F0089F;
+	Sat,  7 Nov 2026 15:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063904;
-	bh=fu+EBv7/+OsP9fStfvBMKt72EXSmNV0yWnG26D9s6rM=;
+	s=korg; t=1794063905;
+	bh=0UBXoNUR6Nu5v6Bx8r+G2YMq+pQwK/UGfME7tVXE8fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KQKa5HmrX4QvC9Om0dGuGk/ujIg2VVsGxPi+9vuD0H3/fq5fSnjw1xSQKuJN+nOvS
-	 WQbT8yTeKWCEOp+7f0c4oCFdUgOe8i43rVtEn20qMA+oMXtIu09E9WQzjoXn5RzWxp
-	 6IjFHgs16q0/kJ4cN63Jy1bxjkfamFpsIz7etfxI=
+	b=UhSGElne0awrZ5Ii6M0unpvasu8Hfva3qv01uu7NDcT+tAufQoMJHBNHcddiBjzwi
+	 r5B/g79yHNZP/IhqWuotu5SSsokxv0yNoutgL1r4bApzPL2hs8dvMFgtNoaugqhoZn
+	 q9Gkgzz+Ajh87/HYB0evGHtjpYugl/ml9tyB6nWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Xu Rao <raoxu@uniontech.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0104/1257] media: m2m-deinterlace: fix default capture field
-Date: Sat,  7 Nov 2026 08:40:00 -0500
-Message-ID: <20261107134942.229366419@linuxfoundation.org>
+Subject: [PATCH 7.3 0105/1257] wifi: mac80211: queue frames while off-channel
+Date: Sat,  7 Nov 2026 08:40:01 -0500
+Message-ID: <20261107134942.257076151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,49 +68,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-[ Upstream commit 4ee3ebede5d01efdcdd88c94f9df271d2eb237de ]
+[ Upstream commit 13e51269b6656768dc595ed6025e4974f2026543 ]
 
-queue_init() initializes default formats for both the source and capture
-queues.  It first sets the source field to V4L2_FIELD_SEQ_TB, but then
-stores the capture default, V4L2_FIELD_INTERLACED_TB, in the source queue
-again while initializing the capture queue.
+Drivers without FAST_XMIT and hardware scan support currently drop TX
+frames during software scanning while being off-channel. This happens
+in ieee80211_tx_h_check_assoc() before frames reach internal TX queue.
 
-This overwrites the valid source default and leaves the capture field at
-its zero-initialized value, V4L2_FIELD_ANY.  vidioc_streamon() accepts
-only V4L2_FIELD_SEQ_TB or V4L2_FIELD_SEQ_BT on the source queue, and
-requires the capture queue to use a compatible interlaced or NONE field.
-Userspace that relies on the default formats can therefore get -EINVAL
-when starting streaming.
+Move the off-channel check to invoke_tx_handlers_late(), after
+ieee80211_queue_skb(). Frames can then remain queued and be transmitted
+when the interface returns on-channel. This how TX works currently when
+code goes via ieee80211_xmit_fast() path.
 
-Initialize the capture field instead.  The bug is usually hidden because
-mem2mem applications commonly call S_FMT on both queues before streaming;
-the TRY_FMT paths normalize the fields and S_FMT overwrites q_data[].field.
+Below is rt2x00 driver ping output example while scanning, before and
+after the fix. After the fix, packets are no longer lost. Some have
+increased latency, what is expected behavior.
 
-Fixes: 8f0755c06b90 ("[media] media: Add mem2mem deinterlacing driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+BEFORE:
+64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.61 ms
+64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=3.33 ms # Missed 30
+64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.03 ms
+64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=3.10 ms # Missed 33
+64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=3.04 ms # Missed 35
+64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.05 ms # Missed 37
+64 bytes from 192.168.0.1: icmp_seq=40 ttl=64 time=4.14 ms # Missed 39
+64 bytes from 192.168.0.1: icmp_seq=41 ttl=64 time=4.50 ms
+
+AFTER:
+64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.40 ms
+64 bytes from 192.168.0.1: icmp_seq=30 ttl=64 time=6.10 ms
+64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=4.69 ms
+64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.49 ms
+64 bytes from 192.168.0.1: icmp_seq=33 ttl=64 time=148 ms
+64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=6.83 ms
+64 bytes from 192.168.0.1: icmp_seq=35 ttl=64 time=8.66 ms
+64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=13.0 ms
+64 bytes from 192.168.0.1: icmp_seq=37 ttl=64 time=4.78 ms
+64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.85 ms
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260908124651.2995-1-stf_xl@wp.pl
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/m2m-deinterlace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/tx.c | 52 +++++++++++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/media/platform/m2m-deinterlace.c b/drivers/media/platform/m2m-deinterlace.c
-index 1d0e70eaea3d0..9dcc4bd6cbdd5 100644
---- a/drivers/media/platform/m2m-deinterlace.c
-+++ b/drivers/media/platform/m2m-deinterlace.c
-@@ -822,7 +822,7 @@ static int queue_init(void *priv, struct vb2_queue *src_vq,
- 	q_data[V4L2_M2M_DST].width = 640;
- 	q_data[V4L2_M2M_DST].height = 480;
- 	q_data[V4L2_M2M_DST].sizeimage = (640 * 480 * 3) / 2;
--	q_data[V4L2_M2M_SRC].field = V4L2_FIELD_INTERLACED_TB;
-+	q_data[V4L2_M2M_DST].field = V4L2_FIELD_INTERLACED_TB;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index d51f810dd2c5b..5714634c81033 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -269,7 +269,6 @@ ieee80211_tx_h_dynamic_ps(struct ieee80211_tx_data *tx)
+ static ieee80211_tx_result debug_noinline
+ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
+ {
+-
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
+ 	bool assoc = false;
+@@ -277,20 +276,6 @@ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
+ 	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
+ 		return TX_CONTINUE;
  
- 	return vb2_queue_init(dst_vq);
+-	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
+-	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
+-	    !ieee80211_is_probe_req(hdr->frame_control) &&
+-	    !ieee80211_is_any_nullfunc(hdr->frame_control))
+-		/*
+-		 * When software scanning only nullfunc frames (to notify
+-		 * the sleep state to the AP) and probe requests (for the
+-		 * active scan) are allowed, all other frames should not be
+-		 * sent and we should not get here, but if we do
+-		 * nonetheless, drop them to avoid sending them
+-		 * off-channel. See __ieee80211_start_scan() for more.
+-		 */
+-		return TX_DROP;
+-
+ 	if (tx->sdata->vif.type == NL80211_IFTYPE_OCB)
+ 		return TX_CONTINUE;
+ 
+@@ -807,6 +792,33 @@ ieee80211_tx_h_rate_ctrl(struct ieee80211_tx_data *tx)
+ 	return TX_CONTINUE;
  }
+ 
++static ieee80211_tx_result debug_noinline
++ieee80211_tx_h_check_offchannel(struct ieee80211_tx_data *tx)
++{
++	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
++
++	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
++		return TX_CONTINUE;
++
++	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
++	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
++	    !ieee80211_is_probe_req(hdr->frame_control) &&
++	    !ieee80211_is_any_nullfunc(hdr->frame_control)) {
++		/*
++		 * When software scanning only nullfunc frames (to notify
++		 * the sleep state to the AP) and probe requests (for the
++		 * active scan) are allowed, all other frames should not be
++		 * sent and we should not get here, but if we do
++		 * nonetheless, drop them to avoid sending them
++		 * off-channel. See __ieee80211_start_scan() for more.
++		 */
++		return TX_DROP;
++	}
++
++	return TX_CONTINUE;
++}
++
+ static __le16 ieee80211_tx_next_seq(struct sta_info *sta, int tid)
+ {
+ 	u16 *seq = &sta->tid_seq[tid];
+@@ -1873,6 +1885,7 @@ static int invoke_tx_handlers_late(struct ieee80211_tx_data *tx)
+ 		goto txh_done;
+ 	}
+ 
++	CALL_TXH(ieee80211_tx_h_check_offchannel);
+ 	CALL_TXH(ieee80211_tx_h_michael_mic_add);
+ 	CALL_TXH(ieee80211_tx_h_sequence);
+ 	CALL_TXH(ieee80211_tx_h_fragment);
+@@ -4745,10 +4758,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
+ 	queue = ieee80211_select_queue(sdata, sta, skb);
+ 	skb_set_queue_mapping(skb, queue);
+ 
+-	if (unlikely(test_bit(SCAN_SW_SCANNING, &local->scanning)) &&
+-	    test_bit(SDATA_STATE_OFFCHANNEL, &sdata->state))
+-		goto out_free;
+-
+ 	skb = skb_share_check(skb, GFP_ATOMIC);
+ 	if (unlikely(!skb))
+ 		return;
+@@ -4825,11 +4834,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
+ 	ieee80211_tpt_led_trig_tx(local, len);
+ 
+ 	ieee80211_tx_8023(sdata, skb, sta, false);
+-
+-	return;
+-
+-out_free:
+-	kfree_skb(skb);
+ }
+ 
+ static bool ieee80211_check_mcast_offload(struct ieee80211_sub_if_data *sdata,
 -- 
 2.53.0
 
