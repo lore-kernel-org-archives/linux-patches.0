@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064741;
-	b=1h/3Au8HF2WARIbIWnJfa0y9oI1jIG3F4faWQBp55a4BTIxz5MwjWVfVTPBg1iPVErEq
-	 Of0f/m3ISp9bWnEji/ohaiHY0aiuHLew4Khu01bCFHsr1GCQ0cmg/uwH6kL7Uh55ocBmN
-	 2pukLYlPTuXOt04siLWilav7PQtKnkN9Kpagvf0zkQD9eu3tVYZOvB0MfPlzjT/V4u7Kt
-	 PmYHyOATX34+Gxlbfab/8RpzKPTJvYQGxQ1CkOjKzKZ/j+dj9k2L5sdpfHt65ZGAX5+uS
-	 fhAA6HYKSckILMJcqtGjas3G5Z+wvwY1k3A/SmvUoWeMGMM5fw87CCvGcK4haf51/xA==
+	t=1794064742;
+	b=JrGyVhjNcETACVdmWa1F2DD9KAvOPHHC8RuhlnzM5RiGpHAaNZcSiO9Ha0/ayM/j8bcz
+	 9chFfJa+TokAZwFNy25UYXTcOWStuHTxIBijvqQbO/AkCjGrKyn6uPxQsxzKOYPmhMp/7
+	 Q/Uhl7W46JWOyDa7F0vpN2FAeUYMxDlhkO7Dgm+A36n/MOPU7rW2NxS+dEunfqzxaeqQN
+	 WXnfeK6Qv2ao/k5HRuFksnUQ/nugv1smVW+7fbkwseZ4EFQvPcupj9Z8aiTeMeWUQ9QQK
+	 XvBsxrMUmf0kHmlaVOCK1cHBGxkePjL+wW+iHrEF2ZyGCFEiY6kQyZY2ENjLM2BnQ7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YfjNtvhxjU+B7Jjh0JlqHeKVG+gwP220EW/6OpVQIXk=;
-	b=RFJAhU4AAcYRNHdla4Gv83PWdrSw4vFxddlutGLoLH0BasDcZVFNVoBOf73om9VsCwr0
-	 PdMj3fXlMXtVu2PNl3o1igfwlpM4bMMP0fvdVUMWn1YegX8LZsIdFdqDQsIeMuHZSXSfd
-	 AFGXempajn6rcX007d+rqWfvtg+EG/a21KwalAwuaKdVaHGAodR9iHSYnqmMAZvwRqpGx
-	 X1gVERye6kygnOBn8oLY8MsBVbOcT8pVucgwCxhGDrgP3jSydNPgx+dLEMBwPjye9ZADK
-	 Zi/nizuga0nk7VUwwC+8Yg3fgYz7qqyUrzogZupk1TskIeaRcpiJrL2/y0A6W8CyQbg==
+	bh=eNte88nego8p6jeYZUFESIL0iF/jGB+JJIXzRJ2t90Q=;
+	b=hJaYs/y81claOefYnXX7DCasMm6pP+AOa4UMVL7Vmyi3HZfnzlyK64jkzzapHB3eLCSa
+	 o2Ei+doF3UxduyD5LbLS75ZOdoTyaP00PBJNNh2A0oQ1Pwc6601gtUBz7eujJeQoXLIsc
+	 orcb85J5wY2uUC5IPJ2k/ZFC7OExN8jvscYTYlHZrzbMa2Q1DeVbnarEHCSnBvZaEkqxG
+	 ALbQ5t1LW59G3FLF1gJWjecGMZ8yCtRTA/sCcNMyXDheIQKNrk46ICWigleODT4294S9R
+	 kyJS/EeuccjB+8emFHaC1QGEB/5SgUkpSHR7jz+w3SMTByo00ymCk46OFvGQK2q89LA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JODnX5u1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqPND7cw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C7A606A9DB;
-	Sat,  7 Nov 2026 15:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70865606D834;
+	Sat,  7 Nov 2026 15:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JODnX5u1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC4C1F008A1;
-	Sat,  7 Nov 2026 15:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqPND7cw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216F21F008A3;
+	Sat,  7 Nov 2026 15:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064741;
-	bh=YfjNtvhxjU+B7Jjh0JlqHeKVG+gwP220EW/6OpVQIXk=;
+	s=korg; t=1794064742;
+	bh=eNte88nego8p6jeYZUFESIL0iF/jGB+JJIXzRJ2t90Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JODnX5u1u73vCBvP8WRHPaFpu4jD2rdgnwrFSCulhhFCiLwplsbohYmsDlrqOH8/J
-	 e62FZGldBMQ2T2G8oR9TADHDu64GvJT2WW/QEnEobyZGTglYGjpRhd5CfXT1dvHnAQ
-	 fHeRFhovm93uGjnzhw0SVVkRPeKjpgY+Pb0LDl2M=
+	b=eqPND7cwTmBjiV9Oqbt8n0VyLjB5P/d563WRLHzG0otrjHnpQld1gEhmMHC99IvgH
+	 9Q8oyxcJvpKCo/F8moX6J9mlQuaL+7KseBvVtlHjlcQuqpti2oMHqedeKFxq42Fw7d
+	 YtgCCZCmIvvsAfAxSIvd7kI/r6+8zsbTfwPD3yag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0717/1257] PCI: rockchip: Drive at 2.5 GT/s, error other speeds
-Date: Sat,  7 Nov 2026 08:50:13 -0500
-Message-ID: <20261107134959.063855226@linuxfoundation.org>
+Subject: [PATCH 7.3 0718/1257] sh: intc: Sort the prio and sense lists after filling them
+Date: Sat,  7 Nov 2026 08:50:14 -0500
+Message-ID: <20261107134959.092178552@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,95 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geraldo Nascimento <geraldogabriel@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 84d08ff902f1ec01177fef1a21a38934927f5aee ]
+[ Upstream commit 94a219eda3b5fb1d1753a5ecf28b171c8f308a27 ]
 
-Configure the core to be driven at 2.5 GT/s Link Speed and ignore any other
-speed with a warning. Also drop the 5.0 GT/s Link Speed defines from
-Rockchip PCIe header.
+register_intc_controller() sorts d->prio and d->sense right after
+allocating them, with hw->nr_prio_regs and hw->nr_sense_regs as the
+element count. The lists hold hw->nr_vectors entries and are only
+filled later, by intc_register_irq().
 
-The reason is that Shawn Lin from Rockchip has reiterated that there may be
-danger of "catastrophic failure" in using their PCIe with 5.0 GT/s speeds.
+On SH7785, sh7785-irq0123 and sh7785-irq4567 have four vectors but the
+SoC's eleven priority registers, so sort() swaps 88 bytes in a 32 byte
+kmalloc object at boot. slub_debug=FZPU reports "Right Redzone
+overwritten" in kmalloc-32, and v6.5 and v6.6 panic in
+__kmem_cache_alloc_node() while registering sh7785-irq0123.
 
-While Rockchip has done so informally without issuing a proper errata, and
-the particulars are thus unknown, this may cause data loss or worse.
+Found with a custom QEMU model of the SH7785LCR. On it, v6.4
+sh7785lcr_defconfig boots with SLAB, the defconfig default before v6.5,
+and hangs before the console is up when built with SLUB.
 
-This change is corroborated by RK3399 official datasheet [1], which states
-maximum link speed for this platform is 2.5 GT/s.
+Sort the lists once all vectors are registered, with the number of
+entries that were added.
 
-[1] https://opensource.rock-chips.com/images/d/d7/Rockchip_RK3399_Datasheet_V2.1-20200323.pdf
-
-Fixes: 956cd99b35a8 ("PCI: rockchip: Separate common code from RC driver")
-Reported-by: Dragan Simic <dsimic@manjaro.org>
-Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://lore.kernel.org/all/ffd05070-9879-4468-94e3-b88968b4c21b@rock-chips.com/
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Fixes: b59f9f9775e6 ("sh: intc: optimize intc IRQ lookup")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/7421df7a7b7778ee99363cccfdfabbfa8aa6ab5e.1781622998.git.geraldogabriel@gmail.com
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip.c | 14 ++++++--------
- drivers/pci/controller/pcie-rockchip.h |  3 ---
- 2 files changed, 6 insertions(+), 11 deletions(-)
+ drivers/sh/intc/core.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rockchip.c b/drivers/pci/controller/pcie-rockchip.c
-index 8d78ab1b31f0f..45cc888ac5537 100644
---- a/drivers/pci/controller/pcie-rockchip.c
-+++ b/drivers/pci/controller/pcie-rockchip.c
-@@ -66,8 +66,10 @@ int rockchip_pcie_parse_dt(struct rockchip_pcie *rockchip)
+diff --git a/drivers/sh/intc/core.c b/drivers/sh/intc/core.c
+index aa68fe190865d..ffbe60234eefc 100644
+--- a/drivers/sh/intc/core.c
++++ b/drivers/sh/intc/core.c
+@@ -275,9 +275,6 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 			k += save_reg(d, k, hw->prio_regs[i].set_reg, smp);
+ 			k += save_reg(d, k, hw->prio_regs[i].clr_reg, smp);
+ 		}
+-
+-		sort(d->prio, hw->nr_prio_regs, sizeof(*d->prio),
+-		     intc_handle_int_cmp, NULL);
  	}
  
- 	rockchip->link_gen = of_pci_get_max_link_speed(node);
--	if (rockchip->link_gen < 0 || rockchip->link_gen > 2)
--		rockchip->link_gen = 2;
-+	if (rockchip->link_gen < 0 || rockchip->link_gen >= 2) {
-+		rockchip->link_gen = 1;
-+		dev_warn(dev, "invalid max-link-speed, limited to 2.5 GT/s\n");
-+	}
+ 	if (hw->sense_regs) {
+@@ -287,9 +284,6 @@ int __init register_intc_controller(struct intc_desc *desc)
  
- 	for (i = 0; i < ROCKCHIP_NUM_PM_RSTS; i++)
- 		rockchip->pm_rsts[i].id = rockchip_pci_pm_rsts[i];
-@@ -147,12 +149,8 @@ int rockchip_pcie_init_port(struct rockchip_pcie *rockchip)
- 		goto err_exit_phy;
+ 		for (i = 0; i < hw->nr_sense_regs; i++)
+ 			k += save_reg(d, k, hw->sense_regs[i].reg, 0);
+-
+-		sort(d->sense, hw->nr_sense_regs, sizeof(*d->sense),
+-		     intc_handle_int_cmp, NULL);
  	}
  
--	if (rockchip->link_gen == 2)
--		rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_2,
--				    PCIE_CLIENT_CONFIG);
--	else
--		rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_1,
--				    PCIE_CLIENT_CONFIG);
-+	rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_1,
-+			    PCIE_CLIENT_CONFIG);
+ 	if (hw->subgroups)
+@@ -357,6 +351,11 @@ int __init register_intc_controller(struct intc_desc *desc)
+ 		}
+ 	}
  
- 	regs = PCIE_CLIENT_ARI_ENABLE |
- 	       PCIE_CLIENT_CONF_LANE_NUM(rockchip->lanes);
-diff --git a/drivers/pci/controller/pcie-rockchip.h b/drivers/pci/controller/pcie-rockchip.h
-index 3e82a69b9c006..b5da15601b585 100644
---- a/drivers/pci/controller/pcie-rockchip.h
-+++ b/drivers/pci/controller/pcie-rockchip.h
-@@ -42,7 +42,6 @@
- #define   PCIE_CLIENT_MODE_RC			HWORD_SET_BIT(0x0040)
- #define   PCIE_CLIENT_MODE_EP			HWORD_CLR_BIT(0x0040)
- #define   PCIE_CLIENT_GEN_SEL_1			HWORD_CLR_BIT(0x0080)
--#define   PCIE_CLIENT_GEN_SEL_2			HWORD_SET_BIT(0x0080)
- #define PCIE_CLIENT_LEGACY_INT_CTRL	(PCIE_CLIENT_BASE + 0x0c)
- #define   PCIE_CLIENT_INT_IN_ASSERT		HWORD_SET_BIT(0x0002)
- #define   PCIE_CLIENT_INT_IN_DEASSERT		HWORD_CLR_BIT(0x0002)
-@@ -197,8 +196,6 @@
- 	(((x) & PCIE_CORE_PL_CONF_LS_MASK) == PCIE_CORE_PL_CONF_LS_READY)
- #define PCIE_LINK_UP(x) \
- 	(((x) & PCIE_CLIENT_LINK_STATUS_MASK) == PCIE_CLIENT_LINK_STATUS_UP)
--#define PCIE_LINK_IS_GEN2(x) \
--	(((x) & PCIE_CORE_PL_CONF_SPEED_MASK) == PCIE_CORE_PL_CONF_SPEED_5G)
++	sort(d->prio, d->nr_prio, sizeof(*d->prio),
++	     intc_handle_int_cmp, NULL);
++	sort(d->sense, d->nr_sense, sizeof(*d->sense),
++	     intc_handle_int_cmp, NULL);
++
+ 	intc_subgroup_init(desc, d);
  
- #define RC_REGION_0_ADDR_TRANS_H		0x00000000
- #define RC_REGION_0_ADDR_TRANS_L		0x00000000
+ 	/* enable bits matching force_enable after registering irqs */
 -- 
 2.53.0
 
