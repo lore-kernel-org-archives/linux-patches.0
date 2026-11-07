@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063586;
-	b=y2zhJO7j9DqPOrTZDjplryU7HV0zSBsAjLl/QWKkKcKAxCN3mQhZIbkYb2UQY6e14VOK
-	 iLYX1i81MDakdZvQJfW3oPG9kxVqltfhVWjcIK9JyN5Z6PXcIN4s49v+jbynLYfOfzEvz
-	 2gl232E0FD1GXRUKy1jV6mCQmtd20f0dz3Km4LeF9c4cXnu/Pdi/+DmONGx2BwUkXP5l4
-	 qFThJo9+e8dUJmnXrW5sWyEJXCiQ1u4XUecC89CzXMMiKAidXqerIY8nP6j42nzGO7oFT
-	 6xXad4TOuDaaPtxiMMKKs2x+/aDu89eB+Kkwcxc476ZoqVyUkLWSjaDbdGGC+YRQwfg==
+	t=1794063587;
+	b=JUd9bkWrJ+FpW/3E/bwKI7rQc/42yxc3oO7gB27+nZ7DV2gG8LnZrhm5mW4g0SMu9WoG
+	 qRIzk9ivPaApCPSJ2Q/Z6g7w6NkJQi2QkrazqBdj5EWpbayQSlk9Lr6waelJ5xGjWJuvW
+	 loYoiymufVX5bLXvDjzxULJ+wUlsYhjAhi/M79buyOeg4XvUZ+gl+e0cjekWLAYiMetXP
+	 JOuU2fLrd3a2BidsyaEUv7lIE+8UI1Cpa5XGKukFHSG3LB35lJd/FJRl4bqs6YRzVllo8
+	 LGusxw/NzWr6QluYryk5IQo6SxnVsq+/z4LUMOLilfwxphBB5UXr6HwRUk4YQH688cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063587;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xofuk4/QLRugsOrEnIG5pdT1Xq9P7Nn6TyTJsHaV4Cw=;
-	b=l+MrqOlq3U91tpU2S1uMq/1q0R7GV5wH5b3HlCR0eUP+VRPCZC4iAA56iX3+OD3AxatH
-	 FHKQSIzzCdtXPUdnfjqOso9YJgU8LutDd5uUVAKO/LkuAtozpMVoGrUmKh5V7vrRaWfS9
-	 XH5t5bOfUNtyOFB9AKnglfrzmIEwgl4Q0hTvoh4zurcTFk3o010WzosBRPrOh59epWQwR
-	 nA27EJiQEHeNg4IqkTY2S7isIEYBwIv6KdmgxNmGK6P7xnfiLs6WSX66m5i937rzZil8R
-	 xfyPjtytOjUeM7mBLos3zhhc6p8Jw89gP9UBnY23syEuH8rLELXvocbDtq5NR/20g2Q==
+	bh=fqGW0xC5W03wMTZOMl8Ap56+sdUyx6oK3nqaD0x93aI=;
+	b=4y1q0yTDMRpgABOaUOqnnDjWGAh+JWu5cZpfMOyTkBVnkSS802YrxAXD8JqPrE572XyT
+	 4Y4a4EhzXPLsyGbR59BhFvw7HysbIpPa7xhuV8n43LwH5ptP6tBZdFukRYYVUeIAppx3P
+	 q7I9OkHgkl8leKW9yd9C/QTW1mCJu1MxxGy+XxJ5QxqTcLBTbJ+0fdMuzXmB8JZ6oY6FT
+	 vwBpQekgdKhPLpnsdqUNapQ0e63pcSltrzLGIkzEvNY7gHR+5E2oRLj2XvXxosKg4PRVT
+	 w00QdDx5pBG+z3WBDEcecDxulToUtvGGNVfJuPY2/CzCULQeH4bPaSbivsOOnJrJ1bQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkY+crE4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2lZgeFS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C541160A263F;
-	Sat,  7 Nov 2026 14:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B663660A263F;
+	Sat,  7 Nov 2026 14:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkY+crE4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226B31F008A2;
-	Sat,  7 Nov 2026 14:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2lZgeFS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630CD1F008A3;
+	Sat,  7 Nov 2026 14:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063585;
-	bh=xofuk4/QLRugsOrEnIG5pdT1Xq9P7Nn6TyTJsHaV4Cw=;
+	s=korg; t=1794063586;
+	bh=fqGW0xC5W03wMTZOMl8Ap56+sdUyx6oK3nqaD0x93aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wkY+crE4PkbDSeSURzoB2SzZsWLxv7EHmOsaIiX+mmwwkPdm4uNzwH/0nvlI21wCi
-	 H6QA9JY50QpTwBM803WKETpEOZPhaLkaA0H+1JQhubnKcdZD0H1HCnLcGMuhdnx7Bp
-	 KUw8F4YEYvb3EV6wBDx60m/ySElxNLNtq+qh7gdw=
+	b=G2lZgeFS740KADDmqHCz8d3GLM/6TOKy/eLeFxXG7yIKyuBuY4LA9CoMUlxjF+Xr8
+	 HiTkI8jeqgcBNj+Q7hXJ2GB6Lht1jiwuvm72SkNX+nJTPyZMehZAuVbvh5Lvh0ru0H
+	 rsoTr88Nf8KUz1zfKW/IevDgcEzOZvO2gF/CLK/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shaos <shawnq1@163.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Alexey Gladkov <legion@kernel.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 712/869] listmount: dont wrap around with a U64_MAX cursor
-Date: Sat,  7 Nov 2026 08:56:34 -0500
-Message-ID: <20261107134917.020840911@linuxfoundation.org>
+Subject: [PATCH 6.18 713/869] ucount: take the rlimit reference before checking the limit
+Date: Sat,  7 Nov 2026 08:56:35 -0500
+Message-ID: <20261107134917.049053012@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,100 +69,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 95a5412022e437691f4eb1924ff249d9044f5ed1 ]
+[ Upstream commit b14fcabd34e02c40f72d3cd1e9bd4fd18df40ff1 ]
 
-do_listmount() takes the last mount id the caller saw and looks up the
-first mount after it by searching for last_mnt_id + 1. With U64_MAX
-that wraps around to zero and the search finds the first mount in the
-namespace. So a cursor at the largest possible id restarts the listing
-from the beginning instead of ending it. A cursor of U64_MAX - 1
-correctly returns nothing.
+inc_rlimit_get_ucounts() takes the reference that pins a ucounts level
+while its rlimit count is non-zero only in the walk whose increment is
+the 0 -> 1 transition, and only after that walk passed the limit check.
+A walk that raises the count from zero and then fails the limit backs
+out without the reference, while a concurrent walk that raised it past
+one keeps its increment and never takes one either:
 
-No mount will ever have that id. Mount ids come from a counter that
-starts at MNT_UNIQUE_ID_OFFSET + 1 and a caller that only feeds back
-ids it got from us can't hit this. It's still wrong. Nothing can come
-after the largest possible id so return no entries for it, just like
-for any other cursor past the last mount.
+  CPU0 (obeys the limit)              CPU1 (overrides it)
+  new = add_return(1) -> 1
+                                      new = add_return(1) -> 2
+                                      new != 1, no get_ucounts()
+  new > max -> dec_unwind
+  sub_return(1) -> 1   (no put)
 
-The reverse direction isn't affected. A cursor of zero is special-cased
-and anything else is larger than MNT_UNIQUE_ID_OFFSET so last_mnt_id - 1
-can't underflow.
+The count is 1 with no reference held. When CPU1 drops its charge,
+dec_rlimit_put_ucounts() takes the count to 0 and puts a reference
+nobody took, which frees the live struct ucounts, and the user_namespace
+it pins, with kfree_rcu(). The mirror interleaving leaks the reference
+instead.
 
-Reproducer, unprivileged:
+An unprivileged user reaches this on a kernel with CONFIG_USER_NS=y: in
+a user namespace with RLIMIT_SIGPENDING 0, one process taking
+synchronous SIGSEGVs (forced, so override_rlimit is set) races a second
+process in the same namespace and uid that queues real-time signals,
+which obey the limit. The two hold different sighand->siglock but charge
+the same per-namespace SIGPENDING ucounts. Unpatched, with rcuref
+debugging:
 
-    #define _GNU_SOURCE
-    #include <errno.h>
-    #include <stdint.h>
-    #include <stdio.h>
-    #include <sys/syscall.h>
-    #include <unistd.h>
-    #define LSMT_ROOT 0xffffffffffffffffULL
-    struct mnt_id_req {
-    	uint32_t size, mnt_ns_fd;
-    	uint64_t mnt_id, param, mnt_ns_id;
-    };
-    static void list(uint64_t cursor)
-    {
-    	struct mnt_id_req req = {
-    		.size = sizeof(req), .mnt_id = LSMT_ROOT, .param = cursor,
-    	};
-    	uint64_t ids[8];
-    	long ret;
-    	errno = 0;
-    	ret = syscall(__NR_listmount, &req, ids, 8, 0);
-    	printf("cursor %llu: ret %ld errno %d", (unsigned long long)cursor,
-    	       ret, errno);
-    	for (long i = 0; i < ret && i < 1; i++)
-    		printf("%s%llu", i ? "," : " ids ", (unsigned long long)ids[i]);
-    	printf("%s\n", ret > 1 ? ",..." : "");
-    }
-    int main(void)
-    {
-    	list(0);
-    	list(UINT64_MAX - 1);
-    	list(UINT64_MAX);
-    	return 0;
-    }
+  rcuref - imbalanced put()
+  WARNING: lib/rcuref.c:266 at rcuref_put_slowpath+0xf4/0x120
+   put_ucounts+0x5a/0x180
+   do_dec_rlimit_put_ucounts+0x70/0x90
+   __sigqueue_free+0x33/0xc0
+   get_signal+0x56f/0xd20
+   arch_do_signal_or_restart+0x87/0x380
+   irqentry_exit+0x243/0x650
+   asm_exc_page_fault+0x26/0x30
 
-Before, on 7.3.0-rc7-00252-g4e3259b08c54 (vfs.fixes) in a VM:
+Take the reference on the 0 -> 1 transition before the limit is checked,
+so the walk that raises the count from zero owns that level's reference
+even when its request is rejected, and unwind a rejected level through
+do_dec_rlimit_put_ucounts(), which releases the reference when the count
+returns to 0. The get_ucounts() failure path is unchanged. With the
+patch the same interleaving, forced some 80000 times in a KASAN build,
+produces no warning and no KASAN report.
 
-    cursor 0: ret 5 errno 0 ids 2147483651,...
-    cursor 18446744073709551614: ret 0 errno 0
-    cursor 18446744073709551615: ret 5 errno 0 ids 2147483651,...
-
-After:
-
-    cursor 0: ret 5 errno 0 ids 2147483651,...
-    cursor 18446744073709551614: ret 0 errno 0
-    cursor 18446744073709551615: ret 0 errno 0
-
-Reported-by: shaos <shawnq1@163.com>
-Link: https://lore.kernel.org/r/20261020110732.959552-1-shawnq1@163.com
-Fixes: b4c2bea8ceaa ("add listmount(2) syscall")
+Fixes: 15bc01effefe ("ucounts: Fix signal ucount refcounting")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261021-work-mount-statmount_listns_fixes-v1-3-8917a4c1bd14@kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Link: https://patch.msgid.link/20261019185913.805378-1-nickolai@csail.mit.edu
+Acked-by: Alexey Gladkov <legion@kernel.org>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/ucount.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index fd7949d88a6c5..bb73b317f9e72 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -5998,6 +5998,8 @@ static ssize_t do_listmount(struct klistmount *kls, bool reverse)
- 	} else {
- 		if (reverse)
- 			first = mnt_find_id_at_reverse(ns, last_mnt_id - 1);
-+		else if (last_mnt_id == U64_MAX)
-+			first = NULL; /* nothing comes after the largest id */
- 		else
- 			first = mnt_find_id_at(ns, last_mnt_id + 1);
+diff --git a/kernel/ucount.c b/kernel/ucount.c
+index fc4a8f2d30965..5cbf1553658ea 100644
+--- a/kernel/ucount.c
++++ b/kernel/ucount.c
+@@ -302,23 +302,26 @@ long inc_rlimit_get_ucounts(struct ucounts *ucounts, enum rlimit_type type,
+ 
+ 	for (iter = ucounts; iter; iter = iter->ns->ucounts) {
+ 		long new = atomic_long_add_return(1, &iter->rlimit[type]);
+-		if (new < 0 || new > max)
++		/*
++		 * Take the extra reference on the 0 -> 1 transition before the
++		 * limit check: a rejected walk must not leave a concurrent one
++		 * holding the surviving increment with no reference.
++		 */
++		if (new == 1 && !get_ucounts(iter))
+ 			goto dec_unwind;
++		if (new < 0 || new > max) {
++			/* undo iter too, releasing the reference taken above */
++			do_dec_rlimit_put_ucounts(ucounts, iter->ns->ucounts, type);
++			return 0;
++		}
+ 		if (iter == ucounts)
+ 			ret = new;
+ 		if (!override_rlimit)
+ 			max = get_userns_rlimit_max(iter->ns, type);
+-		/*
+-		 * Grab an extra ucount reference for the caller when
+-		 * the rlimit count was previously 0.
+-		 */
+-		if (new != 1)
+-			continue;
+-		if (!get_ucounts(iter))
+-			goto dec_unwind;
  	}
+ 	return ret;
+ dec_unwind:
++	/* get_ucounts() failed for iter: undo iter without a put */
+ 	dec = atomic_long_sub_return(1, &iter->rlimit[type]);
+ 	WARN_ON_ONCE(dec < 0);
+ 	do_dec_rlimit_put_ucounts(ucounts, iter, type);
 -- 
 2.53.0
 
