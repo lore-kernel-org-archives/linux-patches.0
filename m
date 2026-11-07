@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062182;
-	b=Dym7Yd3rMCQgKMtyALbBw8YDJSb3eC0hDol/gk8PEL8jaiFXMGVA0H74gaiRoi/CG3TH
-	 TXwNzbls+deZTxPhGsOvKSe3ambb3K5VOEDebE5UCYgfA9iKs5SH5xTghY2T4E86wK1JL
-	 zVz6vcdb2DCobFisHfCWFrW5r3YmkGkLLuA7OjqwzkuCNv2JjrRQ3YSakvgwpOvYSXbij
-	 Q1IqFW9ArYx/jmmfm/vxyTLs1LxUng1q+wyrfpAHJMwegTrmX4vx4VrlMBaw822mFVGDz
-	 1lL4QwG8ED9WgUlHYFTI9W1pu8a9i1a8RXtaAlRpsxosq2GkQjItqmBwA9o5KJB83hQ==
+	t=1794062183;
+	b=Q2/SVXoEpEL2LVjUmQK4tI7ONODAefDtxFul+Nu3gwo8X93cOHInRnSZWOhqjxgZAOm4
+	 MhMIy7A0B9J1Qrd1hQAcwEuV2UlcXOpL5O6yTqsg4X3MQSX/N6gmjGEDgPjsr3elZjaN0
+	 0rcBHqiWIvmIt6sUCLJCO4+Ll/qIrLVG+KP+N4v44V2dI3U6yTUYs3RhUXDvFJrOQOzBj
+	 XwQz+dGOi1Ukfb3Fgn2k17G3uT7WbadPCnkfFVuxayfRbHpiZMwU8foGQU8hJ/lla+mfB
+	 nhnFQEpGRcURlvgm0oomKzASEyZEuSf166c0R9KKWmYSt6KLKLvLA4jjs62yoL3LoRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062182;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062183;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oP51uGYahEl1JtL0iTOXU3V62oofSPob7G1kFwK9oB0=;
-	b=tfxTQRYZfADm1YBQc8yKEKjw6CMpRJihaBMENzoQ28WDwKAPiZQgAHsDlxV0zcxS0PLg
-	 KgCkYviUigtYWRAgnOY9WkuuhxnZQ/by3T3KJ/zrf0fIMu89Aznpd6mnDLuc7HpjxZhwC
-	 YeqzqWoRxYF0eFxC4gxobzeuloH40O7s8tqCgcS8Zu7/d9M5cHiY2SATNihlQrTosyU6M
-	 vVUdqeW7bVT8r+C/O3/mHcb+g+EpLLEI7Ecq0bBYrcYoVd7RMayIlolevX/p99xUrvrie
-	 F5zWa9Up7Ki3GY3WTYkS24SrJirHUFTkrYKF5lRLckYC14jiePmctaH4JYHHGXDY2RA==
+	bh=L0tjN9oV5KhyKqDo90nGoj9zQgvyPsBOzM25UhquyM4=;
+	b=xV94UC3FkjmXGrETudIpu4ap9AJ8lbbmI3YK0wJ2AJ4oBrDeWG+DdVGN0N7ZYjq7QJ7Q
+	 brz9atshm9ZBHNaYGppGThjmY9BwZDY6LyAzIMIZnCqea3Y7nCNvOeZdZnVgK9lcpJWfM
+	 DQnDMnZRR/7yMeJ/U0kAPudB0oEhL48beRKHdVuWjkt5C82RZT+Jc90gsvzqmWCOdTJqc
+	 tXdAE+ezSUPH1v2q6eKvNYuE0oWSNsWNHbW1SLPVIKK96wnXaHvtBOkFMcotKToXdHmtr
+	 TJZ6YN+J8ePcuFtl6oVc5aC4bu9Vl9eAF9t0/Ptt1095AfH1MxlE0JiGdPEqhVJOZmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NBXeulEF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBbBpJN5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53510606A326;
-	Sat,  7 Nov 2026 14:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82685606A326;
+	Sat,  7 Nov 2026 14:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NBXeulEF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0195D1F0089F;
-	Sat,  7 Nov 2026 14:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WBbBpJN5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5891F0089F;
+	Sat,  7 Nov 2026 14:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062182;
-	bh=oP51uGYahEl1JtL0iTOXU3V62oofSPob7G1kFwK9oB0=;
+	s=korg; t=1794062183;
+	bh=L0tjN9oV5KhyKqDo90nGoj9zQgvyPsBOzM25UhquyM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBXeulEFvLq7ptGiUDatnd1qE/EpNWvtr1jP8gpRz/GTyToTxnZKTK5Mdo0+83bBL
-	 6CI5OtNMyUxxlygxJeiJCCu3xWoXnTmTAebxAxgFMrqQZZ7KeaKOmYlqXTDG/6NZuO
-	 zZK9cSt7tCneHajr5IDf4lODJsaa76Avfe7/IsOM=
+	b=WBbBpJN5xFSOKYMmGmycp2sdWmlkmNrhsV36dXdwNysk1al7oqPvgJfpV5Z1lKjTk
+	 4U5vbfgykJkLUp3XOG6AM8dynrhXOLnf9/Z0H79B7Mi5d7Z0onIM0hsL59prA6bK1P
+	 9oAoVs1hPpVMVZmv4KtknQ77CkoG8V54RqLxEB9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Michael Freidkin <freidkin@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1114/1536] drm/msm/hdmi_bridge: Correct poweroff/audio cleanup order in post_disable
-Date: Sat,  7 Nov 2026 08:52:10 -0500
-Message-ID: <20261107135028.997300465@linuxfoundation.org>
+Subject: [PATCH 6.12 1141/1536] media: meson: vdec: size capture planes from the aligned canvas
+Date: Sat,  7 Nov 2026 08:52:37 -0500
+Message-ID: <20261107135029.763549516@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,47 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Michael Freidkin <freidkin@gmail.com>
 
-[ Upstream commit 0499f0576e4442d67c164119f9d7f75d3cc945e7 ]
+[ Upstream commit b3a805dd5a83ba8c85e2085d3411eb9975e0aea4 ]
 
-Turning off the power in msm_hdmi_bridge_atomic_post_disable() should
-follow reverse order of powering up, not only because it is logical, but
-also because msm_hdmi_audio_update() accesses registers thus block
-should still be powered on.
+The decoder writes a whole canvas of ALIGN(width, 32) x ALIGN(height, 32)
+(amvdec_set_canvases()) and reports bytesperline = ALIGN(width, 32), but
+get_output_size() derives sizeimage from the raw width x height.
 
-Depending on specific timing, existing code could have accesses to MMIO
-of powered off block.
+When the width is not a multiple of 32 the planes are too small for the
+advertised stride: for 720x360 NV12M the luma plane is 262144 bytes while
+736 * 360 = 264960 are needed (282624 for the canvas the firmware fills).
+The decoder writes past the buffer, and importing the capture dma-buf
+into DRM fails: drmModeAddFB2() returns -EINVAL, so e.g. Kodi plays the
+sound over a black screen. 1280x720 and 1920x1080 are not affected.
 
+Size the planes from the aligned canvas the hardware actually uses.
+
+Tested on an S905X (GXL p212) board with LibreELEC 12 (6.16.0-rc3):
+720x360 and 1920x1080 H.264 play through V4L2 m2m + DRM PRIME with no
+AddFB2 errors.
+
+Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
 Cc: stable@vger.kernel.org
-Fixes: c0c0d9eeeb8d ("drm/msm: hdmi audio support")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/752655/
-Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-3-87bdb9f1987f@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Michael Freidkin <freidkin@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 2 +-
+ drivers/staging/media/meson/vdec/vdec.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index 4a5b5112227f5..b4abac49f5d96 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -167,10 +167,10 @@ static void msm_hdmi_bridge_post_disable(struct drm_bridge *bridge)
- 	msm_hdmi_phy_powerdown(phy);
+diff --git a/drivers/staging/media/meson/vdec/vdec.c b/drivers/staging/media/meson/vdec/vdec.c
+index fffafc77c8b6c..b52b5221c4d19 100644
+--- a/drivers/staging/media/meson/vdec/vdec.c
++++ b/drivers/staging/media/meson/vdec/vdec.c
+@@ -34,7 +34,7 @@ struct dummy_buf {
  
- 	if (hdmi->power_on) {
--		power_off(bridge);
- 		hdmi->power_on = false;
- 		if (hdmi->hdmi_mode)
- 			msm_hdmi_audio_update(hdmi);
-+		power_off(bridge);
- 		msm_hdmi_phy_resource_disable(phy);
- 	}
+ static u32 get_output_size(u32 width, u32 height)
+ {
+-	return ALIGN(width * height, SZ_64K);
++	return ALIGN(ALIGN(width, 32) * ALIGN(height, 32), SZ_64K);
  }
+ 
+ u32 amvdec_get_output_size(struct amvdec_session *sess)
 -- 
 2.53.0
 
