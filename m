@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064033;
-	b=NvBCjcFQNBTchk8SI4B11Aua1Wluh2DDFkNtVfafHX2qpoCEOs2gDSTmcz+0GiNUez1i
-	 k6f8yS3PfIiUmrT9WZP8hMtD6CbmawRIcoT2zZAIHbPJ7EktASfBPqzHt5Kd6IB2FBQdx
-	 yyEhK1YXhZzIlk1y+sZSGUj798yT8IfXPYsFIInWKxth9ar2E0GzZbylXi1NVpFdsH8O1
-	 wR6edfREzRZUODvwY7nV7kh3DnEvSQzqsJ/ip3xLE567wzPANpsyt2BjCwe4UYHgrJeF4
-	 Z+yxw6EeaP+weBWoiJT2UhVqIKd5PyQTCk4VykmQDlQj70CmI0dpYWrNSHE2utXKE+A==
+	t=1794064034;
+	b=HFczvFs89MgdC6NifnImJlWbMWeOtPN6rkf899z0oho2C8aTfo7SYDCHMqLzDHN0FaKc
+	 nI0Br6RPL1l4cA0jFChm8K0aDt0e03Rt6wc6GoJKrrqrsPjMvVNDshLiztg5dmJ5xhRBJ
+	 cRxxs2MoDfOiibPhIEVVpzUGe9g4IqlF7SAi0bjcJxjhPUltXuym2ZGS3elJqzrTnTscC
+	 JqNKyVpJlqKqLbk6fapUiZF7RDL0wh8PPCG1ohKzvigdougFHLWRm9QRizXbw9tanu2RW
+	 tuIK4V2NWWW4tx89XIVNRB/xF3wjBrE6q4BjS2adXAlyar06mV8wTTOre6wZSC9qmqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064034;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IMzCP+lnmoGfGw9xDy++AP89HP2uIy5T9WfsRukxa7k=;
-	b=mVfqHiqhumX0VPfvexamcxNbdE2HuMEprrP8bU+eiPmcpwa7fmptX0SM01dTp36DpHSe
-	 9i0fxgmh+7k8fMAmu/BJz5yJ2i77+3YnmK1tayARs70F9NyQop5vOuuUGHs+Bj0ekJmMq
-	 x/jO/CfaPkH27PA+GPqRztVPSqJMcRiMl+QYXbFDQtXC4L8k+zLkukXUxWWt0d5KBTmuY
-	 0Ud47K8cgrLLj9/2lk0qQxWuIDbnN5qNHcBYDfsg2HYEfgugL22NloSuAkxhG3PGXui3C
-	 ca6DKYIS+8+K3kdROdnfMe/KeiWIILFcdAqntiMCzDtWc5DSgn/PfbRn+TYRfdUyQuQ==
+	bh=KCqXSIShK3VwKtf+YCMuGyb4R9ViIPi836BXVScTSa0=;
+	b=kCctalCAjoy1ainFikJBCb4mXLV6XDE3ab0AQiyqPmfSGdroH2QlozSWjglmykzEOHNX
+	 vlyZjK/5EPi8mfTRYcF9Xaq3JmawxyvQfTjtDswTzEMAgG9qcqUNKrj+oiw7q9zuDgDJK
+	 EByLCds2YibnmSz3JqMoKfeyeX+2HKAGML61gEhYuTpS6QiTJAYmN+0luBREu9iVdKYvI
+	 4dJb8ZnPozah8hTPrcwjVTKcmTB2eUmjgNxnVq2gSEn/gIUE+KvsWiczvt8GAVkXlpVSH
+	 aq4Pba1EbYSdJA5d+LH9fG5fwlOGIYvG6/BkQYUvG6iokG0xP39lieLFkY1vOoa8IOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bjxoAu30;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fsKYsTtw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64353606A9CB;
-	Sat,  7 Nov 2026 15:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92434606A9CB;
+	Sat,  7 Nov 2026 15:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bjxoAu30
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112651F0089F;
-	Sat,  7 Nov 2026 15:07:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fsKYsTtw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D1F1F008A2;
+	Sat,  7 Nov 2026 15:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064033;
-	bh=IMzCP+lnmoGfGw9xDy++AP89HP2uIy5T9WfsRukxa7k=;
+	s=korg; t=1794064034;
+	bh=KCqXSIShK3VwKtf+YCMuGyb4R9ViIPi836BXVScTSa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bjxoAu30GUQGYmMGKC9rE4Ci/KjQmXT82Q0RWMzh1k93IhcXsktOK34rokfWBoBs2
-	 /gj7Q86rP4tkiUA0uT09YmnOLiMOP1qtnHICjNZ84yD6qEntZ6Ar0WTNz7+rllIDzU
-	 dUh67lPDG8zdervml1KpJp+fJP9dedYtQvjzVez0=
+	b=fsKYsTtwXdUp/3HJS3hSdP/t3J5Uw3P1cZY7KEriJrkY3fgf01BF3qcMy0uJHFr8g
+	 MAyxqS17NH4+0T9LmMcD9MMWbTirRJnvfFst7J4QVjVpRyY/YEb+vjGhiNDEzvfudl
+	 /z0XTzxB739NklU6UiDg+4lnLwcAnPv6qs3LC82Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0206/1257] cpufreq: CPPC: Create the FIE worker before enabling PCC callbacks
-Date: Sat,  7 Nov 2026 08:41:42 -0500
-Message-ID: <20261107134945.231219176@linuxfoundation.org>
+Subject: [PATCH 7.3 0171/1257] ata: libata: Do not leave ata_host_stop() registered when activation fails
+Date: Sat,  7 Nov 2026 08:41:07 -0500
+Message-ID: <20261107134944.071745310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,136 +68,276 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 995e7d4680706e47154adb68f0b682485ea8d873 ]
+[ Upstream commit d2f977008cbbae195df678ee1e70e5802f9bd0b8 ]
 
-cppc_freq_invariance_init() creates the PCC worker only if an online CPU
-currently has PCC counters. A shared policy can also initialize an offline
-PCC member. When that CPU comes online, its callback queues work through
-the missing kworker_fie and dereferences NULL. A later hot-added PCC policy
-can encounter the same missing worker.
+ata_host_start() registers ata_host_stop() as a devres action as soon as
+it has succeeded, which hands the release of the host resources over to
+devres: ->port_stop() and ->host_stop() are then called by the driver
+core when probe() fails.
 
-Create the worker when policy initialization encounters PCC counters,
-before initializing their work and publishing any callbacks. Serialize
-creation and reuse the worker until driver teardown. This covers offline
-policy members and later PCC policies without creating an unused deadline
-worker on direct-counter-only systems.
+ata_host_activate() and ahci_host_activate_multi_irqs() can both fail
+after ata_host_start() has succeeded, e.g. if devm_request_irq() or
+ata_host_register() fails, and they return the error with the devres
+action still registered. A driver which releases the host resources in
+its probe() error path therefore releases them twice: once itself and
+once through ->host_stop().
 
-If worker allocation or scheduling setup fails, leave FIE unregistered for
-that policy. Keep the global FIE setting unchanged so direct-counter
-policies remain independent of worker setup and existing policies still
-drain their initialized work during teardown. Publish kworker_fie only
-after successful setup, allowing a later policy initialization to retry.
+All ahci-platform drivers are in that situation, e.g. ahci_probe() calls
+ahci_platform_disable_resources() while ahci_host_stop() does the same
+through devres. This gives refcount underflow warnings from the clk,
+regulator and phy cores and, for shared resources, can disable resources
+which are still in use by other devices.
 
-Fixes: 997c021abc6e ("cpufreq: CPPC: Update FIE arch_freq_scale in ticks for non-PCC regs")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Sumit Gupta <sumitg@nvidia.com>
-Link: https://patch.msgid.link/20260916162805.1039247-21-christian.loehle@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Add ata_host_undo_start(), which stops the ports and drops the devres
+action without calling ->host_stop(), and call it from both activation
+helpers when they fail. Releasing the host resources on failure is then
+always left to the caller, which is what all callers having a probe()
+error path already assume.
+
+This changes the semantics for the drivers which implement ->host_stop()
+while also completely lacking error handling for the activate host call.
+Add activate host error handling for sata_qstor and sata_fsl. For
+sata_fsl this also means that hcr_base and host_priv are now released
+when activating the host fails, which ->host_stop() did not do when
+ata_host_start() itself failed.
+
+Note that ata_pci_sff_activate_host() is deliberately left as is: none of
+its callers releases the host resources in its probe() error path, they
+all rely on ->host_stop() being called by devres, including
+ata_pci_init_one(), which releases the devres group of the host itself.
+
+Fixes: 1896b15eddb4 ("ahci_platform: perform platform exit in host_stop() hook")
+Cc: stable@vger.kernel.org
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260915084127.692494-13-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cppc_cpufreq.c | 39 ++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 16 deletions(-)
+ drivers/ata/libahci.c          |  2 +
+ drivers/ata/libahci_platform.c |  4 ++
+ drivers/ata/libata-core.c      | 75 +++++++++++++++++++++++++++++++---
+ drivers/ata/libata-sff.c       |  5 +++
+ drivers/ata/sata_fsl.c         |  6 ++-
+ drivers/ata/sata_qstor.c       |  8 +++-
+ include/linux/libata.h         |  1 +
+ 7 files changed, 91 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/cpufreq/cppc_cpufreq.c b/drivers/cpufreq/cppc_cpufreq.c
-index 80893844353ca..5f20c4a7ba2f2 100644
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -18,6 +18,7 @@
- #include <linux/cpufreq.h>
- #include <linux/irq_work.h>
- #include <linux/kthread.h>
-+#include <linux/mutex.h>
- #include <linux/time.h>
- #include <linux/vmalloc.h>
- #include <uapi/linux/sched/types.h>
-@@ -49,10 +50,12 @@ struct cppc_freq_invariance {
+diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
+index 950c26e6953d0..f3fd56f153340 100644
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -2762,6 +2762,8 @@ static int ahci_host_activate_multi_irqs(struct ata_host *host,
+ 			      host->ports[i]);
+ 	}
  
- static DEFINE_PER_CPU(struct cppc_freq_invariance, cppc_freq_inv);
- static struct kthread_worker *kworker_fie;
-+static DEFINE_MUTEX(cppc_fie_lock);
++	ata_host_undo_start(host);
++
+ 	return rc;
+ }
  
- static int cppc_perf_from_fbctrs(u64 reference_perf,
- 				 struct cppc_perf_fb_ctrs *fb_ctrs_t0,
- 				 struct cppc_perf_fb_ctrs *fb_ctrs_t1);
-+static int cppc_fie_kworker_init(void);
+diff --git a/drivers/ata/libahci_platform.c b/drivers/ata/libahci_platform.c
+index f6524135ea117..ae342080556ae 100644
+--- a/drivers/ata/libahci_platform.c
++++ b/drivers/ata/libahci_platform.c
+@@ -689,6 +689,10 @@ EXPORT_SYMBOL_GPL(ahci_platform_get_resources);
+  * ahci-platform host, note any necessary resources (ie clks, phys, etc.)
+  * must be initialized / enabled before calling this.
+  *
++ * On failure, ->host_stop() is not called, so the caller has to release the
++ * resources it enabled (clocks, regulators, resets, PHYs) in its probe()
++ * error path.
++ *
+  * RETURNS:
+  * 0 on success otherwise a negative error code
+  */
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index 92233fb25051a..f218773f187fc 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -6128,6 +6128,46 @@ int ata_host_start(struct ata_host *host)
+ }
+ EXPORT_SYMBOL_GPL(ata_host_start);
  
++/**
++ *	ata_host_undo_start - undo ata_host_start()
++ *	@host: ATA host to undo_start
++ *
++ *	Stop the ports of @host and drop the devres action registered by
++ *	ata_host_start(), without calling ->host_stop().  Nothing is done if
++ *	@host has not been started.
++ *
++ *	This gives the release of the host resources back to the caller, which
++ *	is what a driver whose probe() error path releases those resources
++ *	itself needs when starting or activating the host fails.
++ *
++ *	LOCKING:
++ *	Inherited from calling layer (may sleep).
++ */
++void ata_host_undo_start(struct ata_host *host)
++{
++	int i;
++
++	if (!(host->flags & ATA_HOST_STARTED))
++		return;
++
++	for (i = 0; i < host->n_ports; i++) {
++		struct ata_port *ap = host->ports[i];
++
++		if (ap->ops->port_stop)
++			ap->ops->port_stop(ap);
++	}
++
++	/*
++	 * Drop the action added by ata_host_start() without calling it.
++	 * It does not exist if neither ->port_stop() nor ->host_stop() is
++	 * implemented, in which case there is nothing to drop.
++	 */
++	devres_destroy(host->dev, ata_host_stop, NULL, NULL);
++
++	host->flags &= ~ATA_HOST_STARTED;
++}
++EXPORT_SYMBOL_GPL(ata_host_undo_start);
++
  /**
-  * __cppc_scale_freq_tick - CPPC arch_freq_scale updater for frequency invariance
-@@ -161,6 +164,9 @@ static void cppc_cpufreq_cpu_fie_init(struct cpufreq_policy *policy)
- 		cppc_fi->cpu = cpu;
- 		cppc_fi->cpu_data = policy->driver_data;
- 		if (cppc_perf_ctrs_in_pcc_cpu(cpu)) {
-+			if (cppc_fie_kworker_init())
-+				return;
+  *	ata_host_init - Initialize a host struct for sas (ipr, libsas)
+  *	@host:	host to initialize
+@@ -6202,6 +6242,12 @@ static void async_port_probe(void *data, async_cookie_t cookie)
+  *	starts ports, registers @host with ATA and SCSI layers and
+  *	probe registered devices.
+  *
++ *	On failure, the host remains started, i.e. the devres action
++ *	registered by ata_host_start() is kept, so ->host_stop() is called by
++ *	the driver core when probe() fails.  A caller which releases the host
++ *	resources in its own probe() error path must therefore call
++ *	ata_host_undo_start().
++ *
+  *	LOCKING:
+  *	Inherited from calling layer (may sleep).
+  *
+@@ -6295,6 +6341,10 @@ EXPORT_SYMBOL_GPL(ata_host_register);
+  *	have set polling mode on the port. In this case, @irq_handler
+  *	should be NULL.
+  *
++ *	On failure, the ports are stopped again and the devres action
++ *	registered by ata_host_start() is dropped without calling
++ *	->host_stop(), so releasing the host resources is left to the caller.
++ *
+  *	LOCKING:
+  *	Inherited from calling layer (may sleep).
+  *
+@@ -6315,27 +6365,40 @@ int ata_host_activate(struct ata_host *host, int irq,
+ 	/* Special case for polling mode */
+ 	if (!irq) {
+ 		WARN_ON(irq_handler);
+-		return ata_host_register(host, sht);
++		rc = ata_host_register(host, sht);
++		if (rc)
++			goto undo_start;
 +
- 			kthread_init_work(&cppc_fi->work, cppc_scale_freq_workfn);
- 			init_irq_work(&cppc_fi->irq_work, cppc_irq_work);
- 			sftd = &cppc_sftd_pcc;
-@@ -211,8 +217,9 @@ static void cppc_cpufreq_cpu_fie_exit(struct cpufreq_policy *policy)
- 	}
- }
- 
--static void cppc_fie_kworker_init(void)
-+static int cppc_fie_kworker_init(void)
- {
-+	struct kthread_worker *worker;
- 	struct sched_attr attr = {
- 		.size		= sizeof(struct sched_attr),
- 		.sched_policy	= SCHED_DEADLINE,
-@@ -228,23 +235,28 @@ static void cppc_fie_kworker_init(void)
- 	};
- 	int ret;
- 
--	kworker_fie = kthread_run_worker(0, "cppc_fie");
--	if (IS_ERR(kworker_fie)) {
-+	guard(mutex)(&cppc_fie_lock);
-+
-+	if (kworker_fie)
 +		return 0;
-+
-+	worker = kthread_run_worker(0, "cppc_fie");
-+	if (IS_ERR(worker)) {
- 		pr_warn("%s: failed to create kworker_fie: %ld\n", __func__,
--			PTR_ERR(kworker_fie));
--		fie_disabled = FIE_DISABLED;
--		kworker_fie = NULL;
--		return;
-+			PTR_ERR(worker));
-+		return PTR_ERR(worker);
  	}
  
--	ret = sched_setattr_nocheck(kworker_fie->task, &attr);
-+	ret = sched_setattr_nocheck(worker->task, &attr);
- 	if (ret) {
- 		pr_warn("%s: failed to set SCHED_DEADLINE: %d\n", __func__,
- 			ret);
--		kthread_destroy_worker(kworker_fie);
--		fie_disabled = FIE_DISABLED;
--		kworker_fie = NULL;
-+		kthread_destroy_worker(worker);
-+		return ret;
- 	}
+ 	irq_desc = devm_kasprintf(host->dev, GFP_KERNEL, "%s[%s]",
+ 				  dev_driver_string(host->dev),
+ 				  dev_name(host->dev));
+-	if (!irq_desc)
+-		return -ENOMEM;
++	if (!irq_desc) {
++		rc = -ENOMEM;
++		goto undo_start;
++	}
+ 
+ 	rc = devm_request_irq(host->dev, irq, irq_handler, irq_flags,
+ 			      irq_desc, host);
+ 	if (rc)
+-		return rc;
++		goto undo_start;
+ 
+ 	for (i = 0; i < host->n_ports; i++)
+ 		ata_port_desc_misc(host->ports[i], irq);
+ 
+ 	rc = ata_host_register(host, sht);
+-	/* if failed, just free the IRQ and leave ports alone */
+-	if (rc)
++	if (rc) {
++		/* Free the IRQ, so that the handler can no longer run */
+ 		devm_free_irq(host->dev, irq, host);
++		goto undo_start;
++	}
 +
-+	kworker_fie = worker;
 +	return 0;
++
++undo_start:
++	ata_host_undo_start(host);
+ 
+ 	return rc;
+ }
+diff --git a/drivers/ata/libata-sff.c b/drivers/ata/libata-sff.c
+index 976e4e160494d..d5ef0338735c3 100644
+--- a/drivers/ata/libata-sff.c
++++ b/drivers/ata/libata-sff.c
+@@ -2267,6 +2267,11 @@ EXPORT_SYMBOL_GPL(ata_pci_sff_prepare_host);
+  *	hosts.  This separate helper is necessary because SFF hosts
+  *	use two separate interrupts in legacy mode.
+  *
++ *	Note that, unlike ata_host_activate(), the devres action registered
++ *	by ata_host_start() is kept on failure, i.e. ->host_stop() is called
++ *	by the driver core when probe() fails.  All callers of this function
++ *	rely on that, none of them releases the host resources itself.
++ *
+  *	LOCKING:
+  *	Inherited from calling layer (may sleep).
+  *
+diff --git a/drivers/ata/sata_fsl.c b/drivers/ata/sata_fsl.c
+index c6df55886fe1b..987d8acf1486c 100644
+--- a/drivers/ata/sata_fsl.c
++++ b/drivers/ata/sata_fsl.c
+@@ -1490,8 +1490,10 @@ static int sata_fsl_probe(struct platform_device *ofdev)
+ 	 * device discovery process, invoking our port_start() handler &
+ 	 * error_handler() to execute a dummy Softreset EH session
+ 	 */
+-	ata_host_activate(host, irq, sata_fsl_interrupt, SATA_FSL_IRQ_FLAG,
+-			  &sata_fsl_sht);
++	retval = ata_host_activate(host, irq, sata_fsl_interrupt,
++				   SATA_FSL_IRQ_FLAG, &sata_fsl_sht);
++	if (retval)
++		goto error_exit_with_cleanup;
+ 
+ 	host_priv->intr_coalescing.show = fsl_sata_intr_coalescing_show;
+ 	host_priv->intr_coalescing.store = fsl_sata_intr_coalescing_store;
+diff --git a/drivers/ata/sata_qstor.c b/drivers/ata/sata_qstor.c
+index 4e7f5b2ff3f69..f38310b84f51c 100644
+--- a/drivers/ata/sata_qstor.c
++++ b/drivers/ata/sata_qstor.c
+@@ -584,8 +584,12 @@ static int qs_ata_init_one(struct pci_dev *pdev,
+ 	qs_host_init(host, board_idx);
+ 
+ 	pci_set_master(pdev);
+-	return ata_host_activate(host, pdev->irq, qs_intr, IRQF_SHARED,
+-				 &qs_ata_sht);
++	rc = ata_host_activate(host, pdev->irq, qs_intr, IRQF_SHARED,
++			       &qs_ata_sht);
++	if (rc)
++		qs_host_stop(host);
++
++	return rc;
  }
  
- static void __init cppc_freq_invariance_init(void)
-@@ -259,11 +271,6 @@ static void __init cppc_freq_invariance_init(void)
- 			fie_disabled = FIE_ENABLED;
- 		}
- 	}
--
--	if (fie_disabled || !perf_ctrs_in_pcc)
--		return;
--
--	cppc_fie_kworker_init();
- }
- 
- static void cppc_freq_invariance_exit(void)
+ module_pci_driver(qs_ata_pci_driver);
+diff --git a/include/linux/libata.h b/include/linux/libata.h
+index 48bde275968d0..3bd74d79f8126 100644
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -1147,6 +1147,7 @@ extern struct ata_host *ata_host_alloc_pinfo(struct device *dev,
+ extern void ata_host_get(struct ata_host *host);
+ extern void ata_host_put(struct ata_host *host);
+ extern int ata_host_start(struct ata_host *host);
++void ata_host_undo_start(struct ata_host *host);
+ extern int ata_host_register(struct ata_host *host,
+ 			     const struct scsi_host_template *sht);
+ extern int ata_host_activate(struct ata_host *host, int irq,
 -- 
 2.53.0
 
