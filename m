@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064605;
-	b=TFjMDE3ujD6eYHFFYPYSL5qzVbl+IxfRiiBsRSwUdaJ3NDAsNBBxyPCCxP6RTLEECqJA
-	 5lq1G7mcsuGtKY5niKpcQO9KyXvH58VJ++8OACumOdYKWAMo1BOENqcq/5YTxQlBqgnx8
-	 nMX2pB/bqJdQjmRg4gKn9mHzVYv5IQwH/1kK4MDE5a+w4xQdoxo+us1o7omXd4tULPNKR
-	 Jf87zoLd/PxXYolDAVNo3HkpXySeuL+QQb++KUg3mntrSG9TR7oflGbbxoq0QVuuuXKRr
-	 gR6aSUTzdfy9TRoYojxpqo/zObAYw1jhMP5VaYh7dq22cyHOh6meQH7HEJUAT1MAXGg==
+	t=1794064607;
+	b=hN+9OwarkI3+GzgoNc+jIL9S1KZt4S6pRB/jvqPsT5XUOj7iDOiNNU0YBljytgvgW7Gy
+	 DiJuaDl7KaRtI7ZDbttL9rUh5L7HWwRqMbuUJxw+6pZk4jHZScninvn6ETFW2nuJdMYeq
+	 Q+lbvgEabFTypQwLb1QFwYG1pHOTuTB95k55TeRQCgq7RSDjnUOX2lYV4VtdnlON9Tcof
+	 +ALpiVjSosfORqcqYeHnuJtE3VRu3tlqZGmfzA22cRL1kuKKv5VmHHRXBzIVV2zPl+XSc
+	 XbWXdz0+pQxRq6o+cz0XlsT6RNc+NhgxhHu2y4dRSp5dOd4/gNrenQeexQVKuT9BVHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DEATxnvEAdq4o2MEMpkTMccS1j3lsROc8nHBbWSnUIQ=;
-	b=0nZlUrsnO2cfrZUTltze5qzht77rkq2Olv9imdAsO9Mov3vsFvkflXmf+t9Qe/crRdBA
-	 4NJIR+z0QUydSbfZUymcVL1d+8bvYu6Y+Edo7LjaE+jhgDo+PNKDQr5NeXFghZxkPNkXO
-	 ljW6ZrBtAXphcnTdNVyufBUMxfnHN/X7qu3IUhHUZgS9JF2zJlqaT577oUsCFWyfojkc2
-	 dmZAova9E0GtOzHLcYuACvpXmY6HSjT7VBPGJAuUPVIiZa4Ncv4D+NhQpfwVdba+QNNJo
-	 +CiqEUHOteDsiiD2TPONVR5cqDxYtmnfZcBX14RQxgDkisR/OSzcs4bJUT5vIFLDZFg==
+	bh=AVmbFX6t6xcUu/vimmAgkG5zOzmY8smU+XL6/FLtg/4=;
+	b=YnmgFRXucrWXWCuZnQjcXmf4DNyp9qpw54sRhvR0yLGCU0NbYeXmT4mmCcmziBDPBzOx
+	 Pegh4K6oeY361l3uncRsCt8CjgzxhCcUy3nT8398uStGdxixAHZ0w9Fn2C4Xn45fzb2Ks
+	 MzZQbsVQuO1deLPD/pzaaMYTcp7j+IIpaW5C2M6pSNr06BwWvGsnKYXDdjSB0BrN8Rl9n
+	 1K7Dy2brUjrTfRkNSpWD1xARrQGzgRBo77qf/DvGS4vixYAm1Pn3u2kjqc5xtA7qN79Tc
+	 dazpuluQF+u1oT/XqWSrHLfIIkEHEgvLMOhXqJFeRdaCvUwBsuMMF1V+CM7hNrg62lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f7M4Ox4O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1h3y6eti;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902EE606E8F7;
-	Sat,  7 Nov 2026 15:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23966606E8FE;
+	Sat,  7 Nov 2026 15:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f7M4Ox4O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE1E1F0089F;
-	Sat,  7 Nov 2026 15:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1h3y6eti
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A371F0089F;
+	Sat,  7 Nov 2026 15:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064605;
-	bh=DEATxnvEAdq4o2MEMpkTMccS1j3lsROc8nHBbWSnUIQ=;
+	s=korg; t=1794064606;
+	bh=AVmbFX6t6xcUu/vimmAgkG5zOzmY8smU+XL6/FLtg/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f7M4Ox4Os8UAU7rMuR0sikk1P6ffhF5+DKpuU1x34RUtUuKX0yD7EKLLfIoj0Sxjx
-	 L1jdIKkRWo75quQOU9+6mLoCttTnzd5NBd584EXFXxpCObWrn9/VePrH06SJkebWQz
-	 irwNhZeLxFOEUAjn7FnYfav3PKIcdHMRcdX9wr3Q=
+	b=1h3y6etinK5QspZoej9U42A0Vwv1UfFRUSMbBlY9laIB3p2Y/Hr//zn8WL/SszJxx
+	 Xm6h/EEibWzOkD38DdoYwqXPbU0yGsOiitaESLJM6o4OHKcyyt8IX5tgUKvEOpGuJJ
+	 dya4sUGActGUJgNGv7jPU19Q+hNx+lf+5Fe+bv+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Evgeny Akhtimirov <evgeny@devduty.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0617/1257] cxl/acpi: Convert QTG _DSM latencies to picoseconds
-Date: Sat,  7 Nov 2026 08:48:33 -0500
-Message-ID: <20261107134956.343411985@linuxfoundation.org>
+Subject: [PATCH 7.3 0618/1257] ALSA: hda/realtek: Enable all four speaker amps on Lenovo ThinkBook X G2 IAH
+Date: Sat,  7 Nov 2026 08:48:34 -0500
+Message-ID: <20261107134956.368725671@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,65 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Evgeny Akhtimirov <evgeny@devduty.com>
 
-[ Upstream commit 2658c66a5efb5f30f5ced708a5de831845b43f6d ]
+[ Upstream commit f2293e7b2ddd803b1461e0490f9b2f32089c1dd0 ]
 
-The QTG _DSM expects read and write latencies in picoseconds, as
-specified in CXL 3.0, Table 9-30.
+The Lenovo ThinkBook X G2 IAH (MTM 21TU) has an ALC287 codec with four
+CS35L41 amplifiers on I2C (CSC3551). It reports codec SSID 17aa:3929,
+which it shares with the ThinkBook 13x Gen 5, and PCI SSID 17aa:3842.
 
-The code base originally kept the latencies passed to the QTG _DSM in
-picoseconds in effect. Commit 51293c565cf4 ("cxl: Fix incorrect region
-perf data calculation") normalized CDAT and host bridge latencies to
-nanoseconds, but did not add a conversion back to picoseconds when
-constructing the _DSM input. Firmware can therefore select QTG IDs using
-understated latencies.
+Since PCI SSID 17aa:3842 has no quirk entry, the codec SSID matches
+ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD. That fixup binds only
+two amps (cs35l41-hda.0 and .1), while the CS35L41 configuration table
+describes four for 17AA3929. Amps .2 and .3 probe and load firmware,
+but they are never bound to the codec, so half of the speakers stay
+silent.
 
-Convert the latencies to picoseconds when constructing the _DSM input
-package. Multiply in 64 bits and reject latencies that cannot fit in the
-DWORD inputs defined by the specification.
+Add a ThinkPad-style fixup chain that binds four I2C amps, and match the
+laptop by its PCI SSID so the ThinkBook 13x Gen 5 is not affected.
 
-Fixes: 51293c565cf4 ("cxl: Fix incorrect region perf data calculation")
+Tested with hda_model=1028:0c4d (alias to ALC287_FIXUP_CS35L41_I2C_4):
+all four amps bind, apply their calibration and are runtime-active
+during playback.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20261009045452.1107921-4-den@valinux.co.jp
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Evgeny Akhtimirov <evgeny@devduty.com>
+Link: https://patch.msgid.link/20261009-thinkbook-x-g2-iah-v1-1-56012188aee0@devduty.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/acpi.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
-index fb09a5ff48c16..b7ce6b59c680b 100644
---- a/drivers/cxl/acpi.c
-+++ b/drivers/cxl/acpi.c
-@@ -231,9 +231,10 @@ cxl_acpi_evaluate_qtg_dsm(acpi_handle handle, struct access_coordinate *coord,
- 			  int entries, int *qos_class)
- {
- 	union acpi_object *out_obj, *out_buf, *obj;
-+	/* QTG _DSM expects latencies in picoseconds. */
- 	union acpi_object in_array[4] = {
--		[0].integer = { ACPI_TYPE_INTEGER, coord->read_latency },
--		[1].integer = { ACPI_TYPE_INTEGER, coord->write_latency },
-+		[0].integer = { ACPI_TYPE_INTEGER, coord->read_latency * 1000ULL },
-+		[1].integer = { ACPI_TYPE_INTEGER, coord->write_latency * 1000ULL },
- 		[2].integer = { ACPI_TYPE_INTEGER, coord->read_bandwidth },
- 		[3].integer = { ACPI_TYPE_INTEGER, coord->write_bandwidth },
- 	};
-@@ -251,6 +252,11 @@ cxl_acpi_evaluate_qtg_dsm(acpi_handle handle, struct access_coordinate *coord,
- 	if (!entries)
- 		return -EINVAL;
- 
-+	/* Latency inputs must fit in the DWORD fields defined by the spec. */
-+	if (coord->read_latency > U32_MAX / 1000 ||
-+	    coord->write_latency > U32_MAX / 1000)
-+		return -ERANGE;
-+
- 	out_obj = acpi_evaluate_dsm(handle, &acpi_cxl_qtg_id_guid, 1, 1, &in_obj);
- 	if (!out_obj)
- 		return -ENXIO;
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index c66dd4a003f39..980e5029b2dbf 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -4339,6 +4339,8 @@ enum {
+ 	ALC245_FIXUP_HP_X360_MUTE_LEDS,
+ 	ALC287_FIXUP_THINKPAD_I2S_SPK,
+ 	ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD,
++	ALC287_FIXUP_CS35L41_I2C_4_THINKPAD_ACPI,
++	ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_4_THINKPAD,
+ 	ALC2XX_FIXUP_HEADSET_MIC,
+ 	ALC289_FIXUP_DELL_CS35L41_SPI_2,
+ 	ALC256_FIXUP_ACER_SFG16_MICMUTE_LED,
+@@ -6906,6 +6908,18 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
+ 	},
++	[ALC287_FIXUP_CS35L41_I2C_4_THINKPAD_ACPI] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = cs35l41_fixup_i2c_four,
++		.chained = true,
++		.chain_id = ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK,
++	},
++	[ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_4_THINKPAD] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc287_fixup_tb_vmaster_led,
++		.chained = true,
++		.chain_id = ALC287_FIXUP_CS35L41_I2C_4_THINKPAD_ACPI,
++	},
+ 	[ALC2XX_FIXUP_HEADSET_MIC] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc2xx_fixup_headset_mic,
+@@ -8236,6 +8250,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3827, "Ideapad S740", ALC285_FIXUP_IDEAPAD_S740_COEF),
+ 	SND_PCI_QUIRK(0x17aa, 0x3834, "Lenovo IdeaPad Slim 9i 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ 	SND_PCI_QUIRK(0x17aa, 0x383d, "Legion Y9000X 2019", ALC285_FIXUP_LEGION_Y9000X_SPEAKERS),
++	SND_PCI_QUIRK(0x17aa, 0x3842, "ThinkBook X G2 IAH", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_4_THINKPAD),
+ 	SND_PCI_QUIRK(0x17aa, 0x3843, "Lenovo Yoga 9i / Yoga Book 9i", ALC287_FIXUP_LENOVO_YOGA_BOOK_9I),
+ 	/* Yoga Pro 7 14IMH9 shares PCI SSID 17aa:3847 with Legion 7 16ACHG6;
+ 	 * use codec SSID to distinguish them
 -- 
 2.53.0
 
