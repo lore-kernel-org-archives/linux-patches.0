@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063053;
-	b=XeLAxfXfjK7scd0evuzTehnA4fSNj56on/1DVw90ys2Is30XDYdIfJD4T2redHdNk0rG
-	 6tJ1bN11tPJAPkLVBk3hFFXlX/b36XaU1Db4p2dimuZ5ZE+JqZp3iOmWzVvuyfm5K3Cpq
-	 iDBB9YUMvROz+weHPNxQ4n2/1+liivwQ9kDWwuc6EKJ6b/+IFDQmhi1ge70PcAMfymxJZ
-	 K92wuaSf+hrTVRM3DUr6OKihugMFdmJq9nBpmlpXMTnp597PtNyn5yzz0yCTvbvZeMZhH
-	 piWOeXOP8+h243VG0ZHdeCypOV/3jS3cgXpw4OcMkxGv9q1Q4G6uEJN4CM2KG7nSALA==
+	t=1794063054;
+	b=14fcBNMS+1DqzUVg1JWsGba7flaRF8c2yi+BXWz+93w6SXXSeifi+PVzz19fe1Qvjq67
+	 VevS6/UADIT9wfdCTlVYGk1GKvuRgyLaY9p8q55DzSIMK1WIQhC52pojIWuMJNlpDtBoN
+	 qvnXkCcfVDZv3v2zNpaVPpPfyy+lFGkZ0iSH+Orq/TgZ8DQ8PdQMQgyC/DfhVauain112
+	 GQPEcVOKp2QU6fGhb4uPHF6cV+HLIVeSLrZxKlNyAHymqsjsWlpxJbAnDrpd/muePzj/x
+	 92AyVElVjJafwOig8cBf2ydxad8L5s8cgi8M35lJe/loNo2RcJ8HDyO7ijT7hhuajVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063053;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lT6pFEFrU+Wqb9tVM4h7LndLsmYyZz8UnHJjS52WCP4=;
-	b=hKfdrjtx7B+sracQcFwhRF3cNLGEun97SiXjizNyskU2MhKnAEl2h/StsIocvCSbxpp8
-	 QLh7+eJaeTV02d5muhEZvOYOuVYrrvLs5HCfSQYgHDPb8fnYLcF7C+BfwR56BxNdCEOkr
-	 Q2ym17zS9o1yFwNK0XrnD4gmthAeiyTsXBUbEjC0n2qDVImctnvvf9V7hlUydvvPtEm2u
-	 cOhKGZUDlCQ57uYg5CeDP7Jfvi5z6shfO58GjeqYrSvS79MVnwp04tfTeAzVx9mFSf6C7
-	 fAwe58ZLDqy1kYGVQf8sVU/FRPsi/AYOAdxaQdvHoogpxx3ttgokjw5hCg9xi7+rkSw==
+	bh=t3HaC5/iumFoUaU4nH736iaVBlw0iytZlC7WhPBWBOA=;
+	b=YY5UqpwkVvCF5x5O9x8ddHuaee7zYIJSPRJv21HHlAF5bEaHzk0kq2q6KyKLXNxe6Zq2
+	 7Sbfnn8z1jlfsGTaKocewqic8eZoWPOh4/3i3MDa9i1g3hAI/HpWm1qPU1M8sSfgKxpek
+	 en2OGYJKWYOJyUYTtVZxzNyWUIkaOMc3KPcAzF46w5uEovPPSEhliWAXhjEX5AS8ztwli
+	 7EHvRGp8Jym+Gev/Yd5PP/6FrDTxDLxXn1lgHP7kiZ8zHE16r795ap5wDhVNBnAPTskBf
+	 qNYiwehClCOfjj+N++w9bwrgDmCirhIUlKvDQWNeAQjdHb5E0BvPvaP02Nq08GsJ1GA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gwZT3XLR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syaOrmww;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A98606A331;
-	Sat,  7 Nov 2026 14:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FAE606A331;
+	Sat,  7 Nov 2026 14:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gwZT3XLR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841461F0089F;
-	Sat,  7 Nov 2026 14:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syaOrmww
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B724D1F0089F;
+	Sat,  7 Nov 2026 14:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063052;
-	bh=lT6pFEFrU+Wqb9tVM4h7LndLsmYyZz8UnHJjS52WCP4=;
+	s=korg; t=1794063053;
+	bh=t3HaC5/iumFoUaU4nH736iaVBlw0iytZlC7WhPBWBOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gwZT3XLRylJ1TbHI0Ixm/OzBVaCKGFyJhbJXO+z/XXKvnYD7HpOK4Yl+lKnLaijTT
-	 IWloOUrHnduyRlGmPSNYJQGcKrQTtzd+H71YHivn1dHbfP+nJFH/XwzfrZ+iBYeYFs
-	 Q43mGUY8sigUg2nSsWLOXHAMLrBCplfz6SAgPKTo=
+	b=syaOrmww/XSN4yn2+DhAkNeZWSFGcXVbWlqsficiNzPT5UAEWbgem6vlEiXYv2QpM
+	 TNo3eQHUAiYrI4drZ0LFovLCM/hrs/yJ7vFw1zYLmVRErRQKJ96CKu8j4zDTcxYqXD
+	 onmkvB623M/pH+3TOKCz2TLu+VZhyQFoI+P3ZRLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srish Srinivasan <ssrish@linux.ibm.com>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Greg Joyce <gjoyce@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 297/869] pseries/plpks: clear SED key data after use
-Date: Sat,  7 Nov 2026 08:49:39 -0500
-Message-ID: <20261107134902.365437335@linuxfoundation.org>
+Subject: [PATCH 6.18 271/869] iio: pressure: bmp280: validate SPI match data
+Date: Sat,  7 Nov 2026 08:49:13 -0500
+Message-ID: <20261107134900.871006391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,66 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srish Srinivasan <ssrish@linux.ibm.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 217ba01e5b9096091acc2c1a3776cb3eb88c00ff ]
+[ Upstream commit 206fc54554c28d76c5d8f66091b846ef1dd88f64 ]
 
-Explicitly clear the temporary buffer containing SED key data after read
-and write operations.
+A device bound through driver_override need not match an entry in the
+driver tables. In that case spi_get_device_match_data() returns NULL,
+but bmp280_spi_probe() immediately dereferences the result.
 
-Fixes: ec8cf230cecc ("powerpc/pseries: PLPKS SED Opal keystore support")
-Cc: stable@vger.kernel.org # 6.7
-Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Reviewed-by: Greg Joyce <gjoyce@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260923182816.151451-8-ssrish@linux.ibm.com
+Validate the match data before selecting the regmap bus.
+
+Fixes: faac4dda9a91 ("iio: pressure: bmp280: Use spi_get_device_match_data()")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/plpks_sed_ops.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/iio/pressure/bmp280-spi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/platforms/pseries/plpks_sed_ops.c b/arch/powerpc/platforms/pseries/plpks_sed_ops.c
-index 7c873c9589eff..ac3ec2ca7fbee 100644
---- a/arch/powerpc/platforms/pseries/plpks_sed_ops.c
-+++ b/arch/powerpc/platforms/pseries/plpks_sed_ops.c
-@@ -84,14 +84,16 @@ int sed_read_key(char *keyname, char *key, u_int *keylen)
+diff --git a/drivers/iio/pressure/bmp280-spi.c b/drivers/iio/pressure/bmp280-spi.c
+index 3b90384f17d73..e303923df6757 100644
+--- a/drivers/iio/pressure/bmp280-spi.c
++++ b/drivers/iio/pressure/bmp280-spi.c
+@@ -83,6 +83,8 @@ static int bmp280_spi_probe(struct spi_device *spi)
+ 	struct regmap *regmap;
  
- 	ret = plpks_read_os_var(&var);
- 	if (ret != 0)
--		return ret;
-+		goto out;
+ 	chip_info = spi_get_device_match_data(spi);
++	if (!chip_info)
++		return -ENODATA;
  
- 	len = min_t(u16, be32_to_cpu(data.key_len), var.datalen);
- 	memcpy(key, data.key, len);
- 	key[len] = '\0';
- 	*keylen = len;
- 
--	return 0;
-+out:
-+	memzero_explicit(&data, sizeof(data));
-+	return ret;
- }
- 
- /*
-@@ -102,6 +104,7 @@ int sed_write_key(char *keyname, char *key, u_int keylen)
- 	struct plpks_var var;
- 	struct plpks_sed_object_data data;
- 	struct plpks_var_name vname;
-+	int ret;
- 
- 	plpks_init_var(&var, keyname);
- 
-@@ -127,5 +130,8 @@ int sed_write_key(char *keyname, char *key, u_int keylen)
- 	vname.name = var.name;
- 	plpks_remove_var(var.component, var.os, vname);
- 
--	return plpks_write_var(var);
-+	ret = plpks_write_var(var);
-+	memzero_explicit(&data, sizeof(data));
-+
-+	return ret;
- }
+ 	if (chip_info->spi_read_extra_byte)
+ 		bmp_regmap_bus = &bmp380_regmap_bus;
 -- 
 2.53.0
 
