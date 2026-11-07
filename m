@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062813;
-	b=JzAgN1izwcxiuRKQNLHzOlzCg8Xlf5SICA+EFScdioa0ROmhm1LH4j2d0lXrlnuiuJuh
-	 /uT/KuQaL/YT+1k+19xBmOE9bFVVNWeCrPoL5EAj/DSNmdJrM0jJA7kkSwurGI8aHzTFu
-	 0Jd69bw94vzk0fmvH0PyfSu6eaMcMVlNHgr8m+JQ1Bzo4Qrza8h+3TBkeOSddW8/00V0P
-	 FKK5IKD/xbfo44Z9SJvk1MRAfWGSVpDHhIVPH/YCZOD2zDHdVYXGFBLeRR3DCG+E1EwRg
-	 cjKG+C9RSeP8qj2Aa1LTA8TR6OFt3fekhlAiExf0aLCjXPc9RhtQ3OC5xLIkOTMrwog==
+	t=1794062814;
+	b=Dep1izwJjfvtuxiyzoapd1F4APuNhDeLmNqichnIvg3j6qOIuhY0r+rynIDKaycQ8ssv
+	 j8cCo4YbyZJVrmjCi8ZcEUVGfhHl4fOc8zt/38uXN71iOM0JtFJbXMTWSdINRDZEnwiDl
+	 LWoSfbcCdb0SuN4Wv532MWWkaSzhTKI4HFwFIYrdVKW9Cm2Y/GjUjCX2qnZOMLBjy52Zi
+	 7CJHgI4T+kv7WHseBQjkLzvO1xlQE6H/KoxuqSDi64cR4+nG5AwJb4Q/dWGQBxO5szzLC
+	 EncWivIA7TCOzsgTJ1kyKxOfuwD6bWBe3GwMXGpag7+hK9ZAd08GdGWsYi4LFL5YpsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FFy2Udmx0NIb98/tQIsu50NgiVPjL/fJlsFy+tDVPEU=;
-	b=VXtxuTtt1CUbk+BWYIoJQkJm5XkiGeVWHdB0oi7RPp9zMVrM9/G0w+DQChkcnIOVHmFp
-	 x1RlPkGK5QIW791XZsQ87Y4DfViWsxdD3XLS8NUUDaw+GkTRohTJnvXhGjlRyhg0PBA74
-	 ZQYLxljHDr+bEMXMrwtsrL9/ve26SURpgtX1kCOaazVDy+x/tA7n2g4iqG0q81po8MQma
-	 TOYUTmsA3AfjSs+tXlqEc8+zPYpELnNAcNVCGa+hz895if81TI8+A4sdbUN8WG1HKykpR
-	 XY/sqY8wyVltsrRbxdNWL4h+LRiX5dLCtfEtJhsBWWhuhDThl6zrJLetiUZxmPpDPpg==
+	bh=6phHUxDV7JZGx4VJY6yvmxzVJmooWJuBGhlQG38Aek4=;
+	b=CLJ+tkmPcq8fBWbfWXCi4cWATELUA3yUyHPCGBXIsMg8JyDwHbEs8sdS2jkDMctBMzfL
+	 q32A7YZzveRByGO1VlsHp2qPdOEU+4gFbvn/dba+zHSPvV1xYndbEC7iFdBMoh/ZdQ5xC
+	 niD6TjUfOWtZ/asPfabLaMKkAHEKuM9Nj951SoomdijZ1qcw4NnczV/jRhVB3GwMv7KFX
+	 hZ1PPnFCSvrkkJQb4tvShVS0OCgZtF5rmhbgBcA/auWXc7zM4/jfsDq/n0pGX6NdRzMYp
+	 ITrEUrSd2QtN6fsU1UhaS9VAqx4wix+2FWkB72VxsqcFJIxyZMPEMhOMc1WE+8TdlKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LsqyWLHA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMPw5ib9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE625606A33E;
-	Sat,  7 Nov 2026 14:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC83606D806;
+	Sat,  7 Nov 2026 14:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LsqyWLHA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541721F0089F;
-	Sat,  7 Nov 2026 14:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMPw5ib9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829A41F0089F;
+	Sat,  7 Nov 2026 14:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062812;
-	bh=FFy2Udmx0NIb98/tQIsu50NgiVPjL/fJlsFy+tDVPEU=;
+	s=korg; t=1794062813;
+	bh=6phHUxDV7JZGx4VJY6yvmxzVJmooWJuBGhlQG38Aek4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LsqyWLHAoq2V8xkMbVZ5obUI2d7ctyQWBjAklEBUq/xDIhFw8EiYicy4+b/f7Rr3v
-	 SK76jrqJzZEHIzVGuSQRC+6/kxuwx7Fni7sa3YKaVp36QdZ1AREEcegOilRwSVnkU7
-	 +j/EWxIZ8TM+G+QcXIr+OIZdGpbrtVEgUaVpnjIw=
+	b=jMPw5ib96eXqos9cCVXFnqQw9Hapu7KpB0OREs92jjC17rUykKFxXEr9mTxmx7O5U
+	 mqjJUFTXLHlZBzVvh5sxXnZT/2Hi8GV3vuoe2jeSAQWxNYafRo/0u8wRAQ8phrfEe4
+	 E+eXMdVDCdrfQrS1tiLeaUA6UgV8qc3kyxkxlEyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Dipen Patel <dipenp@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 111/869] ACPI: pfr_update: zero-initialize capability query result
-Date: Sat,  7 Nov 2026 08:46:33 -0500
-Message-ID: <20261107134856.347605824@linuxfoundation.org>
+Subject: [PATCH 6.18 112/869] hte: tegra194-test: shut down timer before GPIO release
+Date: Sat,  7 Nov 2026 08:46:34 -0500
+Message-ID: <20261107134856.376172496@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,50 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit d776369a9eded071df83e4738e1572c4c5b912d7 ]
+[ Upstream commit 30167fadbf87fa901a2fee49c30a5c5a506a43e8 ]
 
-query_capability() copies four ACPI buffers into fixed-size fields using
-the firmware-supplied lengths.  The existing overflow guard rejects
-oversized buffers, but shorter buffers are accepted and leave trailing
-bytes of the stack-allocated cap_hdr uninitialized.  PFRU_IOC_QUERY_CAP
-then copies the entire structure to userspace.
+tegra_hte_test_remove() releases GPIO descriptors before stopping
+hte.timer. gpio_timer_cb() accesses hte.gpio_out and rearms the timer, so
+a callback concurrent with remove can use a released descriptor and rearm
+after teardown.
 
-Zero-initialize cap_hdr before querying the firmware.  This preserves the
-existing handling of short firmware responses while preventing disclosure
-of kernel stack data.  Oversized buffers remain rejected.
+Shut down the timer before releasing the GPIO descriptors.
+timer_shutdown_sync() waits for a running callback and prevents it from
+being rearmed.
 
-A QEMU _DSM returning one-byte buffers reproduced nonzero stack suffix
-bytes in all four fields.  With this change, the ioctl still succeeds and
-each unwritten suffix is zero-filled, while 64-byte buffers continue to
-return -EINVAL.
-
-Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/1a001e1fee9.637da6dc3533246.238498880682901704%40a0rg.com
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260827053741.79425-1-kmehltretter@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9a75a7cd03c9 ("hte: Add Tegra HTE test driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Dipen Patel <dipenp@nvidia.com>
+Signed-off-by: Dipen Patel <dipenp@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pfr_update.c | 2 +-
+ drivers/hte/hte-tegra194-test.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/pfr_update.c b/drivers/acpi/pfr_update.c
-index 9afd2c52fdbd8..98ace679601b8 100644
---- a/drivers/acpi/pfr_update.c
-+++ b/drivers/acpi/pfr_update.c
-@@ -422,7 +422,7 @@ static int start_update(int action, struct pfru_device *pfru_dev)
- 
- static long pfru_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
+index 94e931f453059..4951049e00b09 100644
+--- a/drivers/hte/hte-tegra194-test.c
++++ b/drivers/hte/hte-tegra194-test.c
+@@ -218,10 +218,10 @@ static void tegra_hte_test_remove(struct platform_device *pdev)
  {
--	struct pfru_update_cap_info cap_hdr;
-+	struct pfru_update_cap_info cap_hdr = {};
- 	struct pfru_device *pfru_dev = to_pfru_dev(file);
- 	void __user *p = (void __user *)arg;
- 	u32 rev;
+ 	(void)pdev;
+ 
++	timer_shutdown_sync(&hte.timer);
+ 	free_irq(hte.gpio_in_irq, &hte);
+ 	gpiod_put(hte.gpio_in);
+ 	gpiod_put(hte.gpio_out);
+-	timer_delete_sync(&hte.timer);
+ }
+ 
+ static struct platform_driver tegra_hte_test_driver = {
 -- 
 2.53.0
 
