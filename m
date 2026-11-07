@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062672;
-	b=NhVHsN7an8+GNINlLSjIBlCkYJRnizdOKQA8L9aAi0Iu3nOQ8Sm2QkeX/fPg91X26KEM
-	 wuqjxQVzmlO44M7ZiPzyd3O0G39+sOcbR6v7MvoH77nXBIZHU20ZbbRtF3n3+liiqQC2+
-	 2aiDnZo4S7i+r9+DegPpErqH1OYXqqTfoeYpm253Ckuz2Fi6FXOAb/BpwuQFAMTX3sKlb
-	 vDu97GXpTwLpmWOKNVQ0vfIuuHBkQv28AGKSiP66yMRcAZ/ejKWZseJsvCXQnEuPM3BZG
-	 7JehjHgeFAhWLFhHDV7QZZFzuX5oUD1jYTxlbOHWCykydifg/v7SMoH479+c4Fnjrdg==
+	t=1794062673;
+	b=ccjsDtIt7o4ID2O8NQLx486HxcP8B0+4l8JIXS5KHgfbiR6QROyS2RzxVywb0a7Yz3WQ
+	 SC2xeSCWrtqYW2Fg+K0zUfmcqkB2tLRa8iLN1KC0C32U/ARDgWwvjJDNZdnLEZXez4zVd
+	 YX3qXrtO2hsnj5cr3XoA+RoTsVinFwzVpQlLws7tJ1b3E5IH0miCyUegF9EZZdmGYwX6B
+	 8Jl4TMSEycCN3u0Aki5hZwnWJALprt7naYcjYs6XiwTEz5AxIX4HPbW2M/6NN+cJiQymT
+	 VqOLR9nImd6G8uEq6JoUXbD+hOG6Yj7urv+ItAYs/QTSTCEfeMl3p+L91KsmXlV03gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062672;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062673;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RN4DxICy9W/uC2XEjd3SscZZjUJHHdgmwz4bb/qVshg=;
-	b=UYLze3PI9RpnSSVptj/+rNUi5Ad9SFHk/HzpUYoEI/8eDd5teK2rrEEwDLbHpNnAIN8N
-	 MxxBkfl1YecXJ0utKTTXmhgV5phtz2ApdPSETng+aFgqfIKKseFNJWjqxksh72K3qXdCy
-	 Y0zzfm3uDt99LmIMND3DUz/qgXMbpY3Q0+TbV/AV6QLajSo5VfajX9GDitWy8v51kmix5
-	 5mjXcJnnfOJG+8Mf2B+5XnGnhfhCqOXIjGFH58F4ZHPN4dWxNn4O5kke4JMopDcTEZ8zI
-	 1LeZG/rwToDZ41+TMv4TwPTo0rJXzWUsNPN/yGbM+V+qBPVL0jOg4zfORJbT/QXD4yA==
+	bh=eRwL61e3vl21xJEiz14b+ikqzS7yobucCl/JHRKgx4c=;
+	b=wE5rYEOftHnXd2N0QvzzEs7zA64UK2/XGKw2uL23MLhUgSzbYVqhD+lD3+qUxRRYq5Wg
+	 Nh7pIE4FY52pQUaGou3ev7iszRxCBsOhxXD4D2CDs5yEw0D9oTeY/eDhgdRLLq/VepusY
+	 +KKaiP1i0fXctMBI215Cwq0ms9SazJdlH0OqbPcVdsoC8QowJhMAZt/JM+pntzLQ2pWl5
+	 Nfai7YV8Lcc/JBGEM2cm8sUEK7fxCECuTtZNgv59A37637gSL+NF7x7MafwHrOI1eo5/+
+	 VDSW5UK3nGAARYUziXZjsZnLWVaMPwvclmCRUsJb+Ah+bHgYmwlDKwSZLmm3Xh8T/mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=smRmw2iM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iOkzuIEl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6E0606A330;
-	Sat,  7 Nov 2026 14:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B427606A326;
+	Sat,  7 Nov 2026 14:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=smRmw2iM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3E71F008A1;
-	Sat,  7 Nov 2026 14:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iOkzuIEl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51161F0089F;
+	Sat,  7 Nov 2026 14:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062671;
-	bh=RN4DxICy9W/uC2XEjd3SscZZjUJHHdgmwz4bb/qVshg=;
+	s=korg; t=1794062673;
+	bh=eRwL61e3vl21xJEiz14b+ikqzS7yobucCl/JHRKgx4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=smRmw2iMvYsutvC/ZbtYNG14sKpNN9MSpPKS1ViwAJ0DnbKop98WV5mohEH2WLLrO
-	 B+fPlY5Wg1J90fRIB1s5Jovh8AJ6iHczzLZr3ueVfhxrJuGQT7HyR28hd4j0lA0bD2
-	 ROJw+bJutLU3VBdL/TPm7IVavc8tXRmP/n5GqUB8=
+	b=iOkzuIEl5CN0k4b1J8zwQzzQzzze+rl7UPMGrseRCZwC+yg4JA4o7rF4i8N8QCAJO
+	 OdnrppDenFGgWCRugZbbvmxtCa0uuz7SfmlWPp57GguPcc9j4RlLG2fE3YHA78j9MX
+	 34OEzRW2VkP+FfbQTSjuSS6foDX4Eo8DKUNLgvX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Gauche <scott-dev@scottgauche.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1534/1536] ALSA: hda/realtek: Fix audio after Windows reboot on ASUS Q423SA
-Date: Sat,  7 Nov 2026 08:59:10 -0500
-Message-ID: <20261107135040.971253115@linuxfoundation.org>
+Subject: [PATCH 6.12 1535/1536] ocfs2: read the xattr entry hash before defragmenting the bucket
+Date: Sat,  7 Nov 2026 08:59:11 -0500
+Message-ID: <20261107135041.002286228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,80 +71,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Gauche <scott-dev@scottgauche.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 8acd6469f42784f38872ad83b14c41152d986b63 ]
+[ Upstream commit f48151da595e74efdc23d83d8d6d142207b8c731 ]
 
-The ASUS Vivobook S 14 Q423SA-U5512 (DMI family S5406SA) with the
-ALC294 codec has working analog audio when booted directly after a full
-shutdown. After a warm reboot from Windows 11, audio works briefly during
-Linux startup, then both the internal speakers and headphones become
-silent. PCM playback continues without errors.
+Patch series "ocfs2: fix stale xattr entry pointers and empty header
+reads", v1.
 
-Coefficient 0x1b is 0x4e4b on a direct cold boot, but 0x4a4b after the
-Windows warm reboot. Restoring bit 10 changes it back to 0x4e4b and
-immediately enables both analog outputs. Speaker playback, headphone
-playback, jack switching, cold boot, and suspend/resume were tested
-successfully. The same 0x4a4b state and immediate recovery with 0x4e4b
-were independently confirmed on another S5406SA with subsystem 1043:10c4.
+Five defects in the ocfs2 extended attribute code, plus one robustness
+measure that belongs with them, all on the paths that move entries
+between a block, a bucket and an index tree.  They fall into two groups.
 
-The same coefficient write is already used by
-ALC294_FIXUP_ASUS_COEF_1B for the ASUS UX431DA. That fixup cannot be
-reused here because it chains to ALC289_FIXUP_ASUS_GA401 and applies
-unrelated DAC routing and microphone pin configuration.
+Stale entry pointers (patches 1 to 3)
 
-Add a model-specific fixup for subsystem 1043:10c4 and chain it to the
-existing ALC2XX_FIXUP_HEADSET_MIC fixup instead.
+ocfs2_xa_set() writes through a pointer into xh_entries[] that two of
+its callers invalidate first.  Defragmenting a bucket ends in a sort()
+on xe_name_hash, and lib/sort.c is an unstable heapsort, so entries that
+share a hash can trade slots.  Copying a block into a bucket changes the
+order outright, since a block holds its entries in insertion order while
+a bucket holds them by hash, yet ocfs2_xattr_update_xattr_search()
+relocates the search by the index the entry had in the block.  Neither
+path compares the entry's name with the one being set, so setxattr() can
+replace a neighbouring attribute's value and still report success, or
+trip ocfs2_xa_reuse_entry()'s BUG_ON.  Patch 1 takes the hash before the
+sort; patches 2 and 3 look the entry up again afterwards.
 
-Link: https://github.com/thesofproject/sof/issues/11051
-Fixes: f2d08f3651fb ("ALSA: hda/realtek: Fix headset mic on ASUS Vivobook S14 S5406SA")
-Signed-off-by: Scott Gauche <scott-dev@scottgauche.com>
-Link: https://patch.msgid.link/20261005154017.1164657-1-scott-dev@scottgauche.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reads of an empty entry array (patches 4 to 6)
+
+A block and a bucket may both hold no entries: ocfs2_xa_remove_entry()
+keeps the last slot when it removes the only one, so an empty bucket
+still carries the hash it is keyed by.  Three sites index xh_entries[]
+without checking xh_count and so read xh_entries[-1], which lands on the
+header and comes back as xh_count | xh_free_start << 16.  Nothing
+faults, but the value is acted on: the collision check reports no
+collision for an empty bucket, the divide commits a sentinel hash that
+hides part of the key space from ocfs2_xattr_bucket_find(), and the
+block to bucket copy claims storage the bucket does not hold.  Patches 4
+to 6 guard each site and keep the one read of xh_entries[0] that
+ocfs2_xa_remove_entry() documents as intentional.
+
+This patch (of 6):
+
+ocfs2_xattr_set_entry_index_block() takes the hash a bucket split has to
+work with out of xs->here, but only after ocfs2_xattr_set_entry_bucket()
+has tried and failed to fit the entry.  That call defragments the bucket
+when it runs out of room, and ocfs2_defrag_xattr_bucket() finishes by
+sorting the entry array by name hash.  lib/sort.c is not stable, so two
+entries sharing a hash may trade slots and xs->here is left naming an
+entry other than the one the search found.
+
+The hash value itself survives the permutation -- the array is already
+sorted, so a slot can only exchange with an equal-hash neighbour -- but
+there is no reason to depend on that.  Pick the hash up before the set,
+where xs->here is unambiguously the entry the search landed on.
+
+No functional change intended.
+
+Link: https://lore.kernel.org/20261024151012.1059683-1-joseph.qi@linux.alibaba.com
+Link: https://lore.kernel.org/20261024151012.1059683-2-joseph.qi@linux.alibaba.com
+Fixes: e39baff18b85 ("ocfs2: use the stored hash when checking xattr bucket collision")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ fs/ocfs2/xattr.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 899394885ae81..0b370a9eb9f2d 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -8104,6 +8104,7 @@ enum {
- 	ALC294_FIXUP_ASUS_MIC,
- 	ALC294_FIXUP_ASUS_HEADSET_MIC,
- 	ALC294_FIXUP_ASUS_SPK,
-+	ALC294_FIXUP_ASUS_Q423SA,
- 	ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE,
- 	ALC285_FIXUP_LENOVO_PC_BEEP_IN_NOISE,
- 	ALC255_FIXUP_ACER_HEADSET_MIC,
-@@ -9481,6 +9482,17 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC294_FIXUP_ASUS_HEADSET_MIC
- 	},
-+	[ALC294_FIXUP_ASUS_Q423SA] = {
-+		.type = HDA_FIXUP_VERBS,
-+		.v.verbs = (const struct hda_verb[]) {
-+			/* Restore bit 10 lost after reboot from Windows */
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x1b },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x4e4b },
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC2XX_FIXUP_HEADSET_MIC,
-+	},
- 	[ALC295_FIXUP_CHROME_BOOK] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc295_fixup_chromebook,
-@@ -11250,7 +11262,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
--	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS Vivobook S14 S5406SA", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS S5406SA/Q423SA", ALC294_FIXUP_ASUS_Q423SA),
- 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1154, "ASUS TP3607SH", ALC287_FIXUP_TAS2781_I2C),
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index de4a7070d4ac5..f73bfcfcde546 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -5898,6 +5898,22 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
+ 
+ 	trace_ocfs2_xattr_set_entry_index_block(xi->xi_name);
+ 
++	/*
++	 * An existing entry keeps the hash it was stored under, and that is
++	 * the hash a split has to work with.  A new entry is stored under the
++	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
++	 *
++	 * Read it before the set below.  Filling the bucket may defragment it,
++	 * and ocfs2_defrag_xattr_bucket() re-sorts the entry array, so
++	 * afterwards xs->here only denotes whichever entry the sort left in
++	 * that slot.
++	 */
++	if (xs->not_found)
++		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
++						  xi->xi_name_len);
++	else
++		name_hash = le32_to_cpu(xs->here->xe_name_hash);
++
+ 	ret = ocfs2_xattr_set_entry_bucket(inode, xi, xs, ctxt);
+ 	if (!ret)
+ 		goto out;
+@@ -5913,17 +5929,7 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
+ 	 * the maximum number of collisions we will allow for then is
+ 	 * one bucket's worth, so check it here whether we need to
+ 	 * add a new bucket for the insert.
+-	 *
+-	 * An existing entry keeps the hash it was stored under, and that is
+-	 * the hash a split has to work with.  A new entry is stored under the
+-	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
+ 	 */
+-	if (xs->not_found)
+-		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
+-						  xi->xi_name_len);
+-	else
+-		name_hash = le32_to_cpu(xs->here->xe_name_hash);
+-
+ 	ret = ocfs2_check_xattr_bucket_collision(xs->bucket, name_hash);
+ 	if (ret) {
+ 		mlog_errno(ret);
 -- 
 2.53.0
 
