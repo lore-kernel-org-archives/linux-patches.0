@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060566;
-	b=msqlpGjW/G3jbsxoFV2O6DA//ylc0uLr7K5wci4foa11iUtrvMvgD/LVr2vBpVbNJhcl
-	 OdC0ZSZ2YNQHdiXiF/ibAYa/wIOfYwzhbeJPXmiuFkRha/aJQZgMi3qtCi1c6DWW7zhP3
-	 s9PRnoE27RFqjYRHz338lQHIUbxzEoJN97ll9nrK+Ppyp5DuMfl884seag4Smhi6CSE3z
-	 jmGMbp7enQfwnMmD4sX1nXbiJ5rb248TKKWnK+zE7XsaauBUDIHgNlT6vz7kTTu7omTcJ
-	 Rp5O++kN59P3ExvMB8m8hWkNurwmycezXVl1BUP6FyVALqMyvaQGXvHQC9gpoP5+PxA==
+	t=1794060568;
+	b=xmJtzyrPuoyw20cOTKbdLoOUSYM/+ofOgGact+vcKGnHuxhldDJCQvSpFPB9DxX8Hyhe
+	 ulnKe3RW4LH7NTYflnSM+QQ4wK6FdJETajFf1jBljXihSZBOpyteEmFTafWT82dyicXVS
+	 Js+c6raXdDpP0lJ6gC0xQnDe9DMmWxq2Al6/+OnBzFTSs44T1qqAk47TZf5FpCoVFRWrh
+	 G7jWwI80i4lROlEoeN+G6P4Jf6HMDMKQZn90bPowaztG1RfyPb6PSxGXLR/KAqTkkXSpn
+	 sdNQ8f9ccGOcunwFeI0/T2pTVNPSsBg7n15dsOOPJ6KVMFXvbWag3pZ562Jv8QqogTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NBZlaEbhfwr9kPfaPN+d3xUBDlnArd1TOZQ2EwWKZfw=;
-	b=nU8ofTYNPLkLVO1ud4vWTR20ijXzdffSVno2LTS5RY9tbYbLlM4m8MvgTFmLXWDfLfRm
-	 v1WFLaUQFDvm3qnKl1qoo2sCft073bvfcUMFwPmF9+mRmW7gMHx367iBOhl2i7lwwSmD1
-	 KgXotrSROpzjI9hO0Iu0wU13vd72Poi41VYKWgUhlAd9pYOLZpNdPkmXeZT3WOm3glCIe
-	 M1Q2catisPCN9oxwwCAVQMhxegEGpuYTfA8SyLy0I7aXy/eLeCQYyaHvcCOq+CykBN5J2
-	 dTQfasnO+wxLOstIgN8SnIOMwgl9bvMwjffVqTh5QeK8XTZGnslparlNSdT/LtTdW5Q==
+	bh=nGswOsxKpoDMj9PD7r1/NtNhbjTHjpNLEUoBBgrFYTc=;
+	b=ic7wWojeQeslztpV7DkVUrp1+eJn5i+irrGoUMTJq5sRWT6RVuWfIvtsy+S1CYZOrF1U
+	 /itwLCvdJe1VpYAR4irarXLj+kh0n3y7+4+YB8+xsblEx1J+aJo+OcwbWXTMHTkfS+Ln3
+	 xwPe7v2l43eoAZNTNF52s2ECZGxqFiQaGzy0sIOkOuo5RG8HXOmlr9Lmrk5xqSQ1RVKX/
+	 b6be7NFdi823rU2BHow0Mlx9D7hPYRSCkQ+tFSj+/T2bQ1bvtlIGMykDLir7VpVzEIbPu
+	 gaUZwA9FV5NjMgW+C14+U9J4+EddzG3ex3wk31o2NVI/DF8ug8drtowL/ZNglJO97xA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CYE2i2+s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a8chR7c5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A023B606A330;
-	Sat,  7 Nov 2026 14:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4301D606A326;
+	Sat,  7 Nov 2026 14:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CYE2i2+s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C221F0089F;
-	Sat,  7 Nov 2026 14:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a8chR7c5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA52E1F0089F;
+	Sat,  7 Nov 2026 14:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060566;
-	bh=NBZlaEbhfwr9kPfaPN+d3xUBDlnArd1TOZQ2EwWKZfw=;
+	s=korg; t=1794060567;
+	bh=nGswOsxKpoDMj9PD7r1/NtNhbjTHjpNLEUoBBgrFYTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CYE2i2+sPnptkSzsmJaXVjiFUGb3tql+g4wLgX0VGg7IHfeLbgbQfbkG06irU41fD
-	 Urgr8/Oz+IIyoOAoRbDrMyyq6r9W4SNyTCpOi/TCsVjiwBDPcr7eQw+2F5sktnPtHE
-	 A2/hKTKxPyZHgsGqjvjpbIGvgpxA8Ucl1Qzmzx2Q=
+	b=a8chR7c5HEGtbtv6YYQQ+jiW5Ya3qpl4+PhyrTUdKA98AhmmS2VjVRAIKw8jYBILl
+	 1urPt5c+mYeSnFZnBsxirRZmW8q8SeLrnSzx4yEjWNA18NRui3KhshRJWvYQnnzKyX
+	 +W5U06qLq/7VoZUpW9kaad/noON5Z/cESQlCfzfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Gangliang Xie <ganglxie@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0028/1536] drm/radeon: avoid double free in r600 DPM cleanup
-Date: Sat,  7 Nov 2026 08:34:04 -0500
-Message-ID: <20261107134958.463929334@linuxfoundation.org>
+Subject: [PATCH 6.12 0029/1536] drm/amdgpu: add buf length check
+Date: Sat,  7 Nov 2026 08:34:05 -0500
+Message-ID: <20261107134958.490662702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,91 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Gangliang Xie <ganglxie@amd.com>
 
-[ Upstream commit d3f30034f861a585f8e487ae1555d9f288a96f87 ]
+[ Upstream commit 473f99e4a262776141366f7fb10f101d0f22b019 ]
 
-r600_parse_extended_power_table() uses manual kfree() calls for some
-early allocation failures, but the freed pointers are left in the
-dynamic power-management state. If device teardown later calls
-r600_free_extended_power_table(), those stale pointers can be freed
-again.
+add buf length check before using it to access data
 
-Use the common extended power table cleanup helper for those early
-failure paths as well, and clear each pointer after freeing it so
-repeated cleanup stays safe.
-
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Gangliang Xie <ganglxie@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/r600_dpm.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/r600_dpm.c b/drivers/gpu/drm/radeon/r600_dpm.c
-index 81d58ef667dd4..2bc0bdfd11590 100644
---- a/drivers/gpu/drm/radeon/r600_dpm.c
-+++ b/drivers/gpu/drm/radeon/r600_dpm.c
-@@ -933,7 +933,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
- 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk,
- 							       dep_table);
- 			if (ret) {
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
-+				r600_free_extended_power_table(rdev);
- 				return ret;
- 			}
- 		}
-@@ -944,8 +944,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
- 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk,
- 							       dep_table);
- 			if (ret) {
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
--				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
-+				r600_free_extended_power_table(rdev);
- 				return ret;
- 			}
- 		}
-@@ -956,9 +955,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
- 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.mvdd_dependency_on_mclk,
- 							       dep_table);
- 			if (ret) {
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
--				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
--				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk.entries);
-+				r600_free_extended_power_table(rdev);
- 				return ret;
- 			}
- 		}
-@@ -1298,17 +1295,29 @@ void r600_free_extended_power_table(struct radeon_device *rdev)
- 	struct radeon_dpm_dynamic_state *dyn_state = &rdev->pm.dpm.dyn_state;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
+index 0d3c18f04ac36..8ae72c862d112 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
+@@ -166,7 +166,8 @@ static ssize_t ta_if_load_debugfs_write(struct file *fp, const char *buf, size_t
+ 	if (ret)
+ 		return -EFAULT;
  
- 	kfree(dyn_state->vddc_dependency_on_sclk.entries);
-+	dyn_state->vddc_dependency_on_sclk.entries = NULL;
- 	kfree(dyn_state->vddci_dependency_on_mclk.entries);
-+	dyn_state->vddci_dependency_on_mclk.entries = NULL;
- 	kfree(dyn_state->vddc_dependency_on_mclk.entries);
-+	dyn_state->vddc_dependency_on_mclk.entries = NULL;
- 	kfree(dyn_state->mvdd_dependency_on_mclk.entries);
-+	dyn_state->mvdd_dependency_on_mclk.entries = NULL;
- 	kfree(dyn_state->cac_leakage_table.entries);
-+	dyn_state->cac_leakage_table.entries = NULL;
- 	kfree(dyn_state->phase_shedding_limits_table.entries);
-+	dyn_state->phase_shedding_limits_table.entries = NULL;
- 	kfree(dyn_state->ppm_table);
-+	dyn_state->ppm_table = NULL;
- 	kfree(dyn_state->cac_tdp_table);
-+	dyn_state->cac_tdp_table = NULL;
- 	kfree(dyn_state->vce_clock_voltage_dependency_table.entries);
-+	dyn_state->vce_clock_voltage_dependency_table.entries = NULL;
- 	kfree(dyn_state->uvd_clock_voltage_dependency_table.entries);
-+	dyn_state->uvd_clock_voltage_dependency_table.entries = NULL;
- 	kfree(dyn_state->samu_clock_voltage_dependency_table.entries);
-+	dyn_state->samu_clock_voltage_dependency_table.entries = NULL;
- 	kfree(dyn_state->acp_clock_voltage_dependency_table.entries);
-+	dyn_state->acp_clock_voltage_dependency_table.entries = NULL;
- }
+-	if (ta_bin_len > PSP_1_MEG)
++	if (ta_bin_len < sizeof(struct common_firmware_header) ||
++	    ta_bin_len > PSP_1_MEG)
+ 		return -EINVAL;
  
- enum radeon_pcie_gen r600_get_pcie_gen_support(struct radeon_device *rdev,
+ 	copy_pos += sizeof(uint32_t);
+@@ -321,6 +322,8 @@ static ssize_t ta_if_invoke_debugfs_write(struct file *fp, const char *buf, size
+ 	ret = copy_from_user((void *)&shared_buf_len, &buf[copy_pos], sizeof(uint32_t));
+ 	if (ret)
+ 		return -EFAULT;
++	if (!shared_buf_len || shared_buf_len > PSP_1_MEG)
++		return -EINVAL;
+ 	copy_pos += sizeof(uint32_t);
+ 
+ 	shared_buf = memdup_user(&buf[copy_pos], shared_buf_len);
 -- 
 2.53.0
 
