@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064080;
-	b=n/evZKUkkuZvku1dmzu/ADFZ1kUpqk+l8T3knIVsNGn493VYT0+f025CahK4bj4JfGB0
-	 yafl95gX++v6I9C5jS/DLdm2mekGsiXpiPKZEAxJL91ND3u28VJpDpDYcQxx1rdEsLZer
-	 mtXbEx3Jw5h3OSEFZ5RsqbAzIClmmtXdZL9RoF81fsdZArUbgnE8b6iGvQsm+oV1mGCQH
-	 HoPC7MKPRiLV/NODlPGMEcD6gSgBNrmQNm++ipS4ENqAMwWqVw79nQHjHrs4TlqY7Y4ll
-	 v1C2utUsZk3ssJCcTD1l6L/Z3P7wOBHfOnpz/81xoWi3ljINw/7bW3zJx3PgCuCcUaw==
+	t=1794064081;
+	b=HZKNFbTqkBIspN+tobBoN1fRVENTjIRr2QVAuTs+ShUnJav+zbmAIKT9GqvSJZoX3oGO
+	 9okrodcBczqMZ70aEKXIflsJ34aUvECR8l5HEsJLxSsJJok8p7AhEkpb9rOtRKL7o72mD
+	 qddX+a/gGyybWKPjR5n/EnzKn0W4Qpe7dK95OQ6iiNfohTCt2N7f4ag3bpFmjzmDaaoBY
+	 wSbgFtcuDY1/7MDSkA961rhKsAWoi6zgqbIzRvhkgFqTxsnZG1K56lhDDI4b+/R1z/KPl
+	 rXgIpitGuADEt1T4Cf/+B/3icNuaiAN49U+5z3oyZljBVl/G5UnIGpwn73d4SAfePoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064080;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064081;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vRbCxOePjlicgHfS+P2GbOQgUFYIfL4ol2aIlu4DJCY=;
-	b=OwMXl5fM/dna9waQDC3VdNZHjYL9uCPh1zhgYYJXbdFmZAv7K8X0U1nmqy0uxZrdniGF
-	 8eBkkcv4v2HvRU7sqL8jxvc3avzd90dbT5ZuEPuP7k18HYgDgnGs4N6y7d+d1LZJEWWCa
-	 wDQgT9XQBTcD/YLC3w0tN2T5YB0oQIH4GK1oYsmfpD3v/4cgPPZLjqmtMRa2y8A72fWtc
-	 trI3d2K31IU1E3LKQ+7+1BAQlJzKpbQktzrYVe9iqnlCteECNUCHd6DXqt3a61cHbS2nX
-	 xER94i/bhlz2747ckI1QM63xbWuPEf4Bjadv2Bkk93lZ+YSyznGtyQhdCi5/66mugcA==
+	bh=B5zZ+GCK8AbDU5kpxYXVsc0Ll3GfmCsQOEfGLNhjlzE=;
+	b=5e4ttVPafFvVQJ98GBQnOX88xEzM1VrQ5PlUq75eyumZ0SLp/mglsN1I05T1Mixa1AEP
+	 V3JMtcTN/o64a7kGBGbzOOBEOCXDtErXze167txyqIVvzjntNSYVKd70ktCGkbcp/kVSK
+	 7HcUmRzEDRAzaVXU3Rn5eZ2r+j4lG9fe7jtU4ihz3X2hVXjBovVwKeTFDtwj6St/iS1ie
+	 uyLgFbF6H95WlNhz7n7+h4iDD19tNzXsE5mDv+w0GtZnPkvW/12tSdz6kW1ZO8ynhb4Lb
+	 mn1HcjwiuBPM3Hxn1JO6acO6DexFMRAEKHfdoyPVnZR0hJaXdIM9rWevh4fr2NkU2yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W1VhY31s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DceCcyuk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819F3606A9E4;
-	Sat,  7 Nov 2026 15:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDF660A5BE8;
+	Sat,  7 Nov 2026 15:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W1VhY31s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85AC1F0089F;
-	Sat,  7 Nov 2026 15:07:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DceCcyuk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6B71F008A3;
+	Sat,  7 Nov 2026 15:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064080;
-	bh=vRbCxOePjlicgHfS+P2GbOQgUFYIfL4ol2aIlu4DJCY=;
+	s=korg; t=1794064081;
+	bh=B5zZ+GCK8AbDU5kpxYXVsc0Ll3GfmCsQOEfGLNhjlzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W1VhY31s2sy3ta49lQzJNZyh+zKxCaU/5FTQt8KmrDBVxGCAm6DfawjL14RtSmAIe
-	 YJqBgKVm7EEeN6mFVDj8bhbWK9SWJSxBqCv6nyBMZmTyMrFTF3Dlf3mCPo8AGOcEGr
-	 c+Ci+92JcVyqTSui0kibZM/hCKTNR6zeahUCRYaM=
+	b=DceCcyukzrUzWaHuVXdOCZbUaZ+CfgYUs21WmbFrrH6Z/mPFt2eqVzaT59xnn1BEv
+	 f0qZwcpUeRWh6bdYRrctvYw1GkxvLu1fivT6uFZdlgySAIG3S0kG2eCDsOBQqNG3B3
+	 hmt3LZYtem7/Atl6lxPLbkccVzNxMgWJPJvPcgrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Nishanth Menon <nm@ti.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0245/1257] arm64: dts: ti: k3-am62p5-verdin: build zinnia dtbs
-Date: Sat,  7 Nov 2026 08:42:21 -0500
-Message-ID: <20261107134946.279130503@linuxfoundation.org>
+Subject: [PATCH 7.3 0246/1257] drm/mali-dp: Fix runtime PM leak in malidp_crtc_atomic_enable()
+Date: Sat,  7 Nov 2026 08:42:22 -0500
+Message-ID: <20261107134946.306951404@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,43 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 237fda81c2b4984c2212f0d3f510405aad8b25db ]
+[ Upstream commit 73ef663c75688168e31dbe9c585b939be410a945 ]
 
-Add the zinnia dtbs to the Makefile, they were forgotten when zinnia
-support was added and were therefore never built.
+malidp_crtc_atomic_enable() resumes the device with
+pm_runtime_get_sync() and returns early when the resume fails.  The
+runtime PM usage count is incremented by pm_runtime_get_sync() even
+when the resume fails, so returning without dropping the reference
+leaks it and, once the error has been hit, prevents the device from
+ever suspending again.
 
-Fixes: 71c2a8124527 ("arm64: dts: ti: k3-am62p-verdin: Add Zinnia")
+Drop the runtime PM reference with pm_runtime_put_noidle() on the
+resume failure path before returning.
+
+Fixes: 85f6421889ec ("drm: mali-dp: Enable power management for the device.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260914174651.6195-1-francesco@dolcini.it
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260916102112.2018372-1-vulab@iscas.ac.cn
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/arm/malidp_crtc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/ti/Makefile b/arch/arm64/boot/dts/ti/Makefile
-index 795978e962ee8..ec03d594f23a6 100644
---- a/arch/arm64/boot/dts/ti/Makefile
-+++ b/arch/arm64/boot/dts/ti/Makefile
-@@ -91,6 +91,7 @@ dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-nonwifi-dev.dtb
- dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-nonwifi-ivy.dtb
- dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-nonwifi-mallow.dtb
- dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-nonwifi-yavia.dtb
-+dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-nonwifi-zinnia.dtb
- dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-ov5640-24mhz.dtbo
- dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-ov5640.dtbo
- dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-wifi-dahlia.dtb
-@@ -98,6 +99,7 @@ dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-wifi-dev.dtb
- dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-wifi-ivy.dtb
- dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-wifi-mallow.dtb
- dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-wifi-yavia.dtb
-+dtb-$(CONFIG_ARCH_K3) += k3-am62p5-verdin-wifi-zinnia.dtb
+diff --git a/drivers/gpu/drm/arm/malidp_crtc.c b/drivers/gpu/drm/arm/malidp_crtc.c
+index ebe8e10787772..af62bc1027648 100644
+--- a/drivers/gpu/drm/arm/malidp_crtc.c
++++ b/drivers/gpu/drm/arm/malidp_crtc.c
+@@ -56,6 +56,7 @@ static void malidp_crtc_atomic_enable(struct drm_crtc *crtc,
  
- # Common overlays for SK-AM62* family of boards
- dtb-$(CONFIG_ARCH_K3) += k3-am62x-sk-csi2-ov5640.dtbo
+ 	if (err < 0) {
+ 		DRM_DEBUG_DRIVER("Failed to enable runtime power management: %d\n", err);
++		pm_runtime_put_noidle(crtc->dev->dev);
+ 		return;
+ 	}
+ 
 -- 
 2.53.0
 
