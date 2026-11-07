@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064240;
-	b=QOaPNXgjNy+g5gGshWsmQxuR9BegZ8UBa6+AXUJj5mj35FWiIuI5NouLKNy/ZEU47QGn
-	 SVhYuxZAfF/EmQeoI7vH4saacNfH4oPTbl7BN3dEAyw76kvhv8m8v9+KHldorX+LV/9Om
-	 yTtqUmn8gYyXDdsVMIuQQQYYjs5TRPHaOVtkZr2TiGLdHna3fSx8QlGiJLIv8yO8E2DEo
-	 UtTP5L7qcgEHHRtFM0HeLGWCvKpE18Yy1r0f1vGesRolfhhwBalvInSflCB8LwUxg/j0x
-	 lZT0OaX4RpJDAzgM+fojp9LWapCiXH/XAGYctbaB8qhN2ioqMhQmF6mv5Jxu4gsx7QA==
+	t=1794064241;
+	b=ROgQMVJnec8k7ditpcRATm6PZYSco/qDaNwOYlIi/izid60vAyIiHoCzr9LnKFLTdN/K
+	 AQgNvOo/bcbs9kVDYsaHx5pH9eGKZxS/gRynKOvS4UlhJ/ADsgvW/h02dvye5R4w632vd
+	 OzbKYdaXltMeeTBdF1k0Drx/08SzfPBfs+VaobiHaaLiA8EXKAbHi+ezl5yfTGRwFn772
+	 TM2M8qi44A4owCK4ZtlMTa0iKg08498pbUAJbP49FUctGPSaRq1IuWHn57HWQvxQkNbrt
+	 e/seI7sA5D5mF/lklpWXNs30qe8lHA66L47IFEnKDqIEjkL6K5ur7UsjiGSPDXxjWfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064240;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DnvALqDx3h+o1PA85e7RfY0TvNBwnu4CYK+S3BeM33U=;
-	b=S6Bgv24NQMyRYyxHL35moejzr30bA9PhuqLVD8OAbQkE7bPc8i8KkvLLfwmikq6a85jm
-	 SuXlM9zLfJVyzQmwXnGz6z3mVm/YUxik39rzniVId/RoWSswMnaA6WXxNYUlqqcqSZjcL
-	 evNwpe6fiZZifUtebl2uwDzEHlx8IH+1+YVJQA9napkU3k5g5YaYHrB+CvDwjgRWihyBd
-	 oQWHjHucBXGP7f1KrJvdK2Sf1uNSvWVAO5xYcyUk/4BIEEgOCRCrpd/kVXPt3ZigxTXAc
-	 gjoUcE52HsVsOYUHrrfB/jnQ2znlkPupEZSAoerEfa6KCibPDSN23OLYuuZddSXokHA==
+	bh=IuYNnVSieXY6iesFZXwe0jcLUF31I7QpuE2frtNH/yg=;
+	b=Ywrj4WD7N8yqpc/T6b3ZhFfE7Utc6Si46mXd5hzX0PLSgi0B8cW8qwxCtDoqYtSXFqmM
+	 ZKv3/MvlkITE6g+oMdzr9C6Uz+TCPMWuhpIHoNx9VElO2GevZ8k3vy/77XZc9QL8se/gM
+	 2Af24TcmpRUKZ67lgR3uTPeTBHPZ1byVtUIba3BJKtKCYjZBzoEHCVFJ/223K/KmQGXJc
+	 x9n5TAsP1iEL5XRIZQjAVeMb/jW9ZjFiUXrTRMMS0DcOzfczLxn4xgd5Wt6EQoTU9iGEX
+	 b66WIvkA0YgIs8XYNMMcHicEVn7YzajV2WaNL2Pj5+YEZbrZhMgGAuxrvm8ZhZTGbbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7rVZvqO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ehjocq9D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBDD606A332;
-	Sat,  7 Nov 2026 15:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B575606A332;
+	Sat,  7 Nov 2026 15:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V7rVZvqO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BF01F008A1;
-	Sat,  7 Nov 2026 15:10:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ehjocq9D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4511F008A1;
+	Sat,  7 Nov 2026 15:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064239;
-	bh=DnvALqDx3h+o1PA85e7RfY0TvNBwnu4CYK+S3BeM33U=;
+	s=korg; t=1794064241;
+	bh=IuYNnVSieXY6iesFZXwe0jcLUF31I7QpuE2frtNH/yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V7rVZvqOJgybGpFLwmlM2SSi1xnsXqyZ2KtgzTDGREGcxgE21JSQRL2AM6lLGQmHz
-	 cCEg4J6pN5xueEoL2gFE6ObJ/tfYoDHmV3nyOdelspILLgG0Yd4NVJAkAQk+G90EMv
-	 RFbIX2dROuq0EkcPu0AAEeU7HSXN8IfstAHahtzk=
+	b=ehjocq9DsmYl8Qg8/LDM2F7S76t51KOXUO9EGlIamfJ7rSuqa1Dh2OfOMI6Xpe7Yw
+	 5pRRL0w9/NEY2zZ6G53f5KrfbN7CohWUBMoNzMdREIEqSKAXNNInZ9fYlgICKrD4R9
+	 g3I5Ik1Ic6rshrKCFFo8mwTqBvz29lahdMC1uawM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiale Yao <yaojiale02@163.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0336/1257] iio: pressure: bmp280: validate SPI match data
-Date: Sat,  7 Nov 2026 08:43:52 -0500
-Message-ID: <20261107134948.686483377@linuxfoundation.org>
+Subject: [PATCH 7.3 0345/1257] iio: adc: ti-ads7950: validate SPI match data
+Date: Sat,  7 Nov 2026 08:44:01 -0500
+Message-ID: <20261107134948.925463679@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,36 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 206fc54554c28d76c5d8f66091b846ef1dd88f64 ]
+[ Upstream commit 6bdeaf23ef8062f4c38c025c50e524f1e4d59647 ]
 
-A device bound through driver_override need not match an entry in the
-driver tables. In that case spi_get_device_match_data() returns NULL,
-but bmp280_spi_probe() immediately dereferences the result.
+SPI driver_override allows a device to bind to this driver without
+matching either the OF or SPI device ID table. In that case,
+spi_get_device_match_data() returns NULL.
 
-Validate the match data before selecting the regmap bus.
+ti_ads7950_probe() also obtains the IIO device name by dereferencing the
+result of spi_get_device_id(), which is NULL on the same override path.
+The probe can therefore crash before dereferencing the chip information.
 
-Fixes: faac4dda9a91 ("iio: pressure: bmp280: Use spi_get_device_match_data()")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
+data") fixed the same driver_override issue in another SPI driver.
+Reject devices without match data and use the always available SPI
+modalias for the IIO device name.
+
+Fixes: ff0843ceb1fb ("iio: adc: ti-ads7950: remove chip_info[]")
 Cc: stable@vger.kernel.org
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/bmp280-spi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/ti-ads7950.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/pressure/bmp280-spi.c b/drivers/iio/pressure/bmp280-spi.c
-index a02a621b80150..95d9635f47111 100644
---- a/drivers/iio/pressure/bmp280-spi.c
-+++ b/drivers/iio/pressure/bmp280-spi.c
-@@ -83,6 +83,8 @@ static int bmp280_spi_probe(struct spi_device *spi)
- 	struct regmap *regmap;
+diff --git a/drivers/iio/adc/ti-ads7950.c b/drivers/iio/adc/ti-ads7950.c
+index d27c1f2885fd6..0d5708e0b831d 100644
+--- a/drivers/iio/adc/ti-ads7950.c
++++ b/drivers/iio/adc/ti-ads7950.c
+@@ -527,8 +527,10 @@ static int ti_ads7950_probe(struct spi_device *spi)
+ 	st->spi = spi;
  
- 	chip_info = spi_get_device_match_data(spi);
-+	if (!chip_info)
+ 	info = spi_get_device_match_data(spi);
++	if (!info)
 +		return -ENODATA;
  
- 	if (chip_info->spi_read_extra_byte)
- 		bmp_regmap_bus = &bmp380_regmap_bus;
+-	indio_dev->name = spi_get_device_id(spi)->name;
++	indio_dev->name = spi->modalias;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 	indio_dev->channels = info->channels;
+ 	indio_dev->num_channels = info->num_channels;
 -- 
 2.53.0
 
