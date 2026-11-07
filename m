@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062054;
-	b=IdOBVsqTtdPCF6LRGEpLLGf1p1m3dGrrRuc8Yn7/H/HBpbkoEXgQBN8WeoS8TmE2W2iN
-	 0UeLAkNyfRh5QEYvWMshzhKgK0bnbKjaoas/A1AQfBQ3lqf9HDH8Go5gg1JMz3aRNgD8t
-	 zYQE7xwHog2+4eNkz256PUsPEIbVwYqyy97LvJNFULwukHerz3yPRFqZ9W7wJhwaXN4B8
-	 PKZ8cq+3+DwC7QTJYh7y7JkapFC+s/mlly8dlA5nBNKrwW2H0CIm6HBf1QAmJFGj7qnkv
-	 Q/t/oOcefmexpUS4PRC/4h2ziiMlDbHMudtt574xmNcUNNG4FFu+yCsC0QdXQ/OVPvg==
+	t=1794062055;
+	b=5c/qtN8Er0sMlaPa3zT+aQwYoKZDyMIhtqZk83vxx8TaAPTVE7NnJrYOjCaUa/BjP3zy
+	 4draGt9dgecbw2t1Hs7V2mVi05eVesVO1oyIZkUoyv6mn7DAZir8f4uEXPHdlbOO2D5dT
+	 /eJrF3Bd1/JF49xCndwb18x+u8qqbOnFvtGZZq6gaHXJ/fsDKBnmG8qK2jx0DCJZDwwtT
+	 2BN1lVSG5y+artto9ts1g2QqmAs8tDS4N4iC+HkuY0vH69Gaa3t9NCVM2A8cFyVeYTRp5
+	 icnuSVycUZyOUdNDNRdeE9LSR2aYB/wx1igXt5sJtZ904hZuYoLEA7WJlfe8klOBDKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062054;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062055;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XBXvHX0s7t2GFvJDUZ+cxVeF8JBfpb44ufENSF69vT8=;
-	b=DFeEuTRug4DpJ81jcw5eM8icuBq3VrAZ1YcPhe4vZJZgr2S7T+fASSXgMJeMtr9Jk+zi
-	 J/zogRhiUC9Mm5HJCSoQ5GYbrku28AiBbSi8vrZ5W+8KbdcXhj+TUZSZWHczbrnQprp2R
-	 pC4rg9PZExL/HZVs1eBBem+nU4FWw9qANN36lcsJ7ls2JY674zN2JctdR7TZlumUDsDwG
-	 F5KlgsBOCDkX0DHBTJtMGZiA0JMKC/Vws388oFErwbLbaJydedwkSLmC39MzNiMDqC4x2
-	 YeJxEdtrC3+irWiRLU0ZSYtoBSs6fMfIxa65O6APwON+wxdgrTOCcK1odxEzVkNixmw==
+	bh=4UPCP8E7+6zzVyafAOHx+g4x7QJsiwNT74L8N1bn31k=;
+	b=3PHg1/v8TzNIsA8uJMf5O2GW++rtP3y0afDjx2BoRI2eJ69L/jtHrrZU0R8s1UdSKqT6
+	 RbyHJmNZ2svY0fFstJW2RO4f0bkoCStWaQRP5N9Gk/gLzl8vTwdkdjPDgzU6/y4dgMGDb
+	 LrH2q1tNJOuHSuUYnBZ5vCk15HIhpt0S4vFvXLfjhKdBvYGVFCorOenweJATF1TXyfSkz
+	 zM3wI24zEnGcNlGrmxNrMueCfbDBlqyTbCqM4kHKsv0J8Is9Fiz9PIcGZIaBtA0pQu6+s
+	 vGS4zeqDyg984knydaGcyJx72nRzampQ3ZOINU3T/fXUBAHzUaSmqoLgjDmkLxReYCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0QUtRtCw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SeNpixR9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535B3606A337;
-	Sat,  7 Nov 2026 14:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811AA606A337;
+	Sat,  7 Nov 2026 14:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0QUtRtCw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EF71F0089F;
-	Sat,  7 Nov 2026 14:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SeNpixR9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F54C1F0089F;
+	Sat,  7 Nov 2026 14:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062054;
-	bh=XBXvHX0s7t2GFvJDUZ+cxVeF8JBfpb44ufENSF69vT8=;
+	s=korg; t=1794062055;
+	bh=4UPCP8E7+6zzVyafAOHx+g4x7QJsiwNT74L8N1bn31k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0QUtRtCw5QhyeudyOckiXKLiRo7ioElxiNoasP3rgjl9XBjpb80Oia4bJXYnPtY9q
-	 fTpSP12kWeMYZls0pdLxPszeVepBHf59coyDtZu1YfcP+qTifR2GeVzGHwg3VfRMwP
-	 v8htBpbdSDicyoiuPDfdyhKY+LXXPKgefHZRRIBs=
+	b=SeNpixR9MSptzhW0jFC3Eq6l1MVU7XKGD3jpGR7YKOfcunOMnf8HI51pRuYYv4tJf
+	 8GzMh0pKQp91LApd3mei8G4fH5W2BaHW74PfOzPd9XLK/Hy6Q6nUXFbntDvXf2IW4U
+	 4bLzW73HocQvBTOQV4hdhjQkU16SBSK64qzW7tkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guangshuo Li <lgs201920130244@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0997/1536] iio: accel: mma9553: disable autosuspend on remove
-Date: Sat,  7 Nov 2026 08:50:13 -0500
-Message-ID: <20261107135025.668887849@linuxfoundation.org>
+Subject: [PATCH 6.12 0988/1536] media: i2c: alvium-csi2: balance runtime PM usage count on remove
+Date: Sat,  7 Nov 2026 08:50:04 -0500
+Message-ID: <20261107135025.407614874@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,46 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 4dda1f9d25fb889649e81bbf015809daa512a049 ]
+[ Upstream commit 0d2ca640318612402ae1c640d2da56b2914ff994 ]
 
-mma9553_probe() enables runtime PM autosuspend with
-pm_runtime_use_autosuspend(). The probe error path correctly undoes
-this setting with pm_runtime_dont_use_autosuspend(), but the normal
-remove path only disables runtime PM.
+alvium_probe() increments the runtime PM usage count with
+pm_runtime_get_noresume() before enabling runtime PM. The probe error
+path correctly balances this reference with pm_runtime_put_noidle(),
+but the normal remove path only disables runtime PM.
 
-The runtime PM API requires pm_runtime_use_autosuspend() to be undone
-with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
-was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
-set therefore leaves the runtime PM state incompletely cleaned up after
-the driver is unbound.
+pm_runtime_disable() does not decrement the usage count, so a
+successful probe followed by driver removal leaves the runtime PM
+usage count unbalanced.
 
-Add the missing pm_runtime_dont_use_autosuspend() call to the remove
-path.
+Add the missing pm_runtime_put_noidle() to the remove path, matching
+the existing probe error cleanup.
 
 This issue was found by manual code inspection.
 
-Fixes: 40cb761306d6 ("iio: add driver for Freescale MMA9553")
+Fixes: 0a7af872915e ("media: i2c: Add support for alvium camera")
 Cc: stable@vger.kernel.org
 Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma9553.c | 1 +
+ drivers/media/i2c/alvium-csi2.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/accel/mma9553.c b/drivers/iio/accel/mma9553.c
-index 86543f34ef17c..2840ccc40a80c 100644
---- a/drivers/iio/accel/mma9553.c
-+++ b/drivers/iio/accel/mma9553.c
-@@ -1155,6 +1155,7 @@ static void mma9553_remove(struct i2c_client *client)
- 
- 	iio_device_unregister(indio_dev);
- 
-+	pm_runtime_dont_use_autosuspend(&client->dev);
- 	pm_runtime_disable(&client->dev);
- 	pm_runtime_set_suspended(&client->dev);
- 
+diff --git a/drivers/media/i2c/alvium-csi2.c b/drivers/media/i2c/alvium-csi2.c
+index 5f365674b91c3..6b7193a7cec55 100644
+--- a/drivers/media/i2c/alvium-csi2.c
++++ b/drivers/media/i2c/alvium-csi2.c
+@@ -2527,6 +2527,7 @@ static void alvium_remove(struct i2c_client *client)
+ 	 * make sure to turn power off manually.
+ 	 */
+ 	pm_runtime_disable(dev);
++	pm_runtime_put_noidle(dev);
+ 	if (!pm_runtime_status_suspended(dev))
+ 		alvium_set_power(alvium, false);
+ 	pm_runtime_set_suspended(dev);
 -- 
 2.53.0
 
