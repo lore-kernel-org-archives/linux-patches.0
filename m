@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063740;
-	b=Vu789bDSFGrtMD37vL8b+diNdhZpA5eQ3pMxqERxPNFv4DfbjtL9gqjLHhLQ4YSjmFLV
-	 8eH/Q4yOxjwvAmk3VCY0ZowqC2lWGP45tgmu6iQZ96qhpatyIGlS2Df+vBVSGdW49G7PO
-	 KKS2oJEvgs+jnEf8OCRpQW0b8tDjZRhBalUaVGqbzBda4f8O0K4cO8u5ZSG8CvlbKlo1G
-	 ra9D1/fGZ7LQhxPdvIysoDw5ykCiCQnWfkyoEx+vIBiquSNMOBL173B1L2/DY1soGH1qz
-	 fOFJDM2g8CKl+59bcOnElnYssMX/JCcpZB9xa/453vOmAGLQt9M+9a2k9MzcSKt9Itw==
+	t=1794063741;
+	b=VY0mgpoIJgWiEU/SsBwbJGb4Jz77l6arZXV55Ca4rGqt+kvg2IP3ofSzA6xRaG/8QXAx
+	 4giBzoW6cQ+yglQgQr+gS8RQB8JjrWdrQDm5Hox7qKbW/jyy78l6MR36sf43IOTIJ3eM8
+	 3gfNZeBMrnvrzZ2Jyy2RQ2Uu1vhF1o2nggMzIlbafDzex6cFB7FWrdnVEnu2Gq+AnSYdL
+	 7217PHg7JJL5YRLD3wkEYZHQ/+AqqLumv6FC/7psbHBBf0X7FMJtwBvf6OPyiMnOKYozg
+	 lsWXFPuJHwTLDC0hmOOd8UbjhQBilrpvBjstU8huIGVe1eP1lp5y2aLcJEHahKnTiJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063740;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063741;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5xSw3MTQoQIfXdmyb8v8wq6J6wQCuDalL0TDXSnX0sg=;
-	b=cOe18QFzP1nwuyV6tSrQbafCXqZ5RjbpvQxKN00dFq02Y8eylEdpCplOJCYhI5fZN+56
-	 qxYAfmf1J+M7ONTX0+ar0FBSmM6Qkn7Q9CHXj7MlVMxuMy34+ajjDkITuR/iXyifrHW7i
-	 OQ86oPE/R1LrYX5vCAstzLZQ8Sy/qLHex1hbJtvcdprbY0HtgBeBv/gRqZhlzjyTDuCZY
-	 JDxp/JMCdljonuhdnvL6td6ng25sjud7Ps9t1MabcUyU9DbL4lhFT7hbttG06HEY8FAVx
-	 9dOrFBtD2O7r19y+0Pj28q2DSi2OFkTjXHU9WkPReed4dFUjzWo7R/2ty9hAvr7yyQQ==
+	bh=ec1CVW08h+kDshcUdUIjf8SZ5Bvm6xiGsP0Y5bU89PE=;
+	b=WIE2tQoZNfeMZeVw0v7nP3LRspKApQnizC3Xspdwu1R11mE3P8VyblFLmRLZqlAl3Rww
+	 lp+Hzb2BkRa4Te7nY++gVJ8UXKliaSamLrfYQqUrkHnNeLCePzVGnLlLmgfhseLn/CYy3
+	 xG0bIxFUAB/qmcwpLJRih5Y1DYDnf4FElzhWlvKdEPid9M7wP6bvB1mZFeWEdwCpOfhbF
+	 IHydCM8aQDpbCCk2qLIVUV/sQ0OrP/ToBK0xpSHgE5aIYi/hC45TbmLU9/nCrB0a87Fle
+	 uYljFHW8169vpwLavWqhDLja2hlro0q2OpQt0VYqdVRKRaJzJbjYoldhRmaFWNzcQvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mTtPWy/m";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fn39URCU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F878606A32D;
-	Sat,  7 Nov 2026 15:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CF6606A32D;
+	Sat,  7 Nov 2026 15:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mTtPWy/m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9601F0089F;
-	Sat,  7 Nov 2026 15:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fn39URCU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A411F008A2;
+	Sat,  7 Nov 2026 15:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063740;
-	bh=5xSw3MTQoQIfXdmyb8v8wq6J6wQCuDalL0TDXSnX0sg=;
+	s=korg; t=1794063741;
+	bh=ec1CVW08h+kDshcUdUIjf8SZ5Bvm6xiGsP0Y5bU89PE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mTtPWy/mezQUVYZHVncp71FFPzjO1OXAg2qL6uYwmcCBprs1B9kmAiRpjUmYOSA1E
-	 LQKYgaQtcptLvbwHnN2Q/EuvZNH1ob39rFXKsEP+EJh3lAMFBTWtif7J5UjA0RJGao
-	 60fnsEfVj15rydTCBfCncM6u7SrtK4jQlGUeQORQ=
+	b=fn39URCUi/TKX2vavXMJw81mZLQbEIGY2i4LV18E2p0IRZy+16s7EYwxuJkym7vC+
+	 VRDs1mJ19na6BrkmtMnNWuQ0uEUztPQtoZ0mDIfEufsuEUw7635WHZEdN0VHc/DXFE
+	 BmhzBGPX+jisR58uvoeEPGQ6q7GBoqR+IVgB20jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seiji Nishikawa <snishika@redhat.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 835/869] nvme-tcp: fix io_work priority inversion when send_mutex is held
-Date: Sat,  7 Nov 2026 08:58:37 -0500
-Message-ID: <20261107134921.209535330@linuxfoundation.org>
+Subject: [PATCH 6.18 836/869] nvmet: Finish the blk plug when integrity allocation fails
+Date: Sat,  7 Nov 2026 08:58:38 -0500
+Message-ID: <20261107134921.236972828@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,99 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seiji Nishikawa <snishika@redhat.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 5db358f3a7f9c33717622c1597d15c4c91997b19 ]
+[ Upstream commit 18fc5f6f1ca945630dae5404265de55d65194e22 ]
 
-Commit f42d4796ee10 ("nvme-tcp: fix I/O stalls on congested sockets")
-added a check in nvme_tcp_io_work() that sets pending to true when the
-queue has pending requests and the socket is writeable. The check is
-placed after the mutex_trylock() block, so it also runs when
-mutex_trylock(&queue->send_mutex) failed and io_work did not send
-anything.
+nvmet_bdev_execute_rw() starts a plug before building the bios, but
+the two error exits taken when nvmet_bdev_alloc_bip() fails return
+without calling blk_finish_plug().  current->plug is left pointing
+at the stack frame of the returned function, so the next
+blk_flush_plug() walks a stale list.
 
-When .queue_rq sends a request directly from its own context, it holds
-send_mutex and can give up the CPU in lock_sock_nested() when another
-task needs the CPU, for example the io_work kworker of the same queue,
-which runs on the same CPU. Then io_work cannot take send_mutex, but
-the requests are still on req_list and the socket is writeable, so
-pending is set to true. io_work loops until the deadline and queues
-itself again on io_cpu, without sleeping.
+Route both failures through a common exit that finishes the plug.
 
-This is a priority inversion. io_work runs on the high priority
-nvme_tcp_wq and cannot make progress until send_mutex is released, but
-it keeps running. The task holding send_mutex runs at normal priority
-and needs the CPU to release it. The scheduler keeps giving the CPU to
-io_work, so the task holding send_mutex may not run again, and the
-requests on the queue are not sent and time out.
-
-This is the same problem that commit 70f437fb4395 ("nvme-tcp: fix
-io_work priority inversion") fixed. That commit removed
-"pending = !llist_empty(&queue->req_list)" from the path where
-mutex_trylock() fails, and let the task holding send_mutex queue
-io_work again in nvme_tcp_queue_request() after it releases the mutex.
-The new check brings back the same behavior in a different form.
-
-Two things make this easier to hit. nvme_tcp_queue_request() sends
-directly only when it runs on io_cpu, so the task that takes send_mutex
-is on the same CPU as the io_work kworker of that queue when it takes
-the mutex. Also, when the tasks are in a cgroup with the cpu controller
-enabled, the whole group competes with the nice -20 kworker as one
-entity, so each task in the group gets even less CPU time.
-
-We hit this on a 6 CPU VM running a database on nvme-tcp storage. In
-the vmcore, 2 tasks held send_mutex of 2 queues and were runnable in
-lock_sock_nested() for 103 seconds, while the kworkers for those queues
-kept running io_work on their CPUs. All database tasks were in one
-cgroup, which got only about 0.3% of the CPU against the nice -20
-kworker. Requests timed out, and blk_mq_timeout_work() waited in
-synchronize_srcu() for the tasks still in .queue_rq.
-
-Only do the pending check if io_work could take send_mutex. If it could
-not, the task holding send_mutex sends what it can in
-nvme_tcp_send_all(), and queues io_work again after it releases the
-mutex if requests are still pending, so no request is left behind.
-
-Fixes: f42d4796ee10 ("nvme-tcp: fix I/O stalls on congested sockets")
-Cc: stable@vger.kernel.org # v6.16+
-Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
+Fixes: c6e3f13398123 ("nvmet: add metadata support for block devices")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/nvme/target/io-cmd-bdev.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 5d7581a1dc41d..94495b0228714 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -1450,9 +1450,11 @@ static void nvme_tcp_io_work(struct work_struct *w)
+diff --git a/drivers/nvme/target/io-cmd-bdev.c b/drivers/nvme/target/io-cmd-bdev.c
+index 0103815542d49..160364cc8c980 100644
+--- a/drivers/nvme/target/io-cmd-bdev.c
++++ b/drivers/nvme/target/io-cmd-bdev.c
+@@ -305,7 +305,7 @@ static void nvmet_bdev_execute_rw(struct nvmet_req *req)
+ 							  &prot_miter);
+ 				if (unlikely(rc)) {
+ 					bio_io_error(bio);
+-					return;
++					goto out_plug;
+ 				}
+ 			}
  
- 	do {
- 		bool pending = false;
-+		bool got_send_mutex = false;
- 		int result;
+@@ -325,11 +325,12 @@ static void nvmet_bdev_execute_rw(struct nvmet_req *req)
+ 		rc = nvmet_bdev_alloc_bip(req, bio, &prot_miter);
+ 		if (unlikely(rc)) {
+ 			bio_io_error(bio);
+-			return;
++			goto out_plug;
+ 		}
+ 	}
  
- 		if (mutex_trylock(&queue->send_mutex)) {
-+			got_send_mutex = true;
- 			result = nvme_tcp_try_send(queue);
- 			mutex_unlock(&queue->send_mutex);
- 			if (result > 0)
-@@ -1467,8 +1469,13 @@ static void nvme_tcp_io_work(struct work_struct *w)
- 		else if (unlikely(result < 0))
- 			return;
- 
--		/* did we get some space after spending time in recv? */
--		if (nvme_tcp_queue_has_pending(queue) &&
-+		/*
-+		 * did we get some space after spending time in recv?
-+		 * Only check this if we could take send_mutex. Otherwise
-+		 * the task holding it sends the requests and queues io_work
-+		 * again after it releases the mutex.
-+		 */
-+		if (got_send_mutex && nvme_tcp_queue_has_pending(queue) &&
- 		    sk_stream_is_writeable(queue->sock->sk))
- 			pending = true;
+ 	submit_bio(bio);
++out_plug:
+ 	blk_finish_plug(&plug);
+ }
  
 -- 
 2.53.0
