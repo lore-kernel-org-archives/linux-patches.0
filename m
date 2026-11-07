@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063774;
-	b=uTSV5H+m6qxb3Ak+lu5yQvmhOvqHQCTcmDimu9ZUDbV84Cje3wpvBnzWY94lqYW4Pixq
-	 kKUQCCbJlHmeZe+QwY1CCu758R+wbDas5idxvY6eFyhJTtyo7LIPtVZN6aOagnDGKZofk
-	 1Vue7/I49lJK9080xn67gA67PsWMtkhoW1o+kUDBz5GstdAEAsEpkZAVyLcfRycWhcEU1
-	 sqoN84kFpJapvVNtgAtQb1b4aiS/6tV6o/iaeORshVWWHPi3uL+ZYCWx0pcODVnf8jbLG
-	 6JvLyubZPh1eWxFw9oiVsvckpoKxaiXWQERaQ3R19HAGt7fL0ANVnb1jnsB3WV9AYew==
+	t=1794063775;
+	b=MHQB0mpv2Xz5HQEqjlsDFDSElF6b8+wTdv8Gqyxess2VuzndDsNmk2s9OJaXOia7id4E
+	 PSAqq1DUysZ09fNcSkbywxcGfkEmngtkgWsXtiKVQvkKzMBX2n94R7ilOWMcW7qpqtDqs
+	 iHxZII14fCHTvkUltsUia0AB9QDgeFySaWTl0+QTarb1LKiHqXjmFqkvyCjz4NCF4Rw4q
+	 CVvtwWxp3z2uRboYJ3I/3q1eASiAM1regM7r1f5pW8nizpNyQS8A7GpcYqByoZxr+N7j4
+	 vQ5gSag+qAqpNQPYXPl/hG4i63YKgrG1Is0kkswee4v2d/7QfRyCr0/cTnsOHwzttxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RAxu54Lt0c44tgqqkCDwBSbpEkLw/g5uQBqUXzDf9fs=;
-	b=iDKIvk5v/gMa0zovPp4QlwKFcgDX4h7GU6r6i4STsdL02SnYAKWWTrbuBvy/pWeIavaq
-	 JguZsdM9M3WH6N8JPpPlUbv8Ahi2y2+wOOUzPpgvIbQVTuzdIzcALki5J9Wh6Bu+X9JBI
-	 QVN/380IpBdzgYJk7EvpXex06vWwJy1ViTMNe8B8MMSvLDE5QSw3vZDWVmdz8S+GOewaA
-	 FNY1BbBjipKAQADpygLcuzmiG4sR6eWqHPj88Q4dCgJTECCSqGcZoNkk9us95FSeFiG6K
-	 K/ZvwOfpKipkLJznBytShDAzbNkoUXT/KX0lqPrqzHVtZ25Ux16YJLiYCWevvBKV1Hw==
+	bh=/Dq3eH4TvPXoeBDyCX0UQ2bCgHRiGnLQzTd6ViuE8CE=;
+	b=ZB8i+U8nqc/Ibe+Cbml0lyrQI8BvSIiXgcJT9pz08hYuTPW2IUbBBvQvSbKdR2udlWjj
+	 AhA3twtzRmA2kB9iTmPzAV57Ci/4ODxYC3oIP9XaLxl3z8wI1l47tJB6ouB44pkDSutZW
+	 fIHtG2cV2XG/5wytS53bEawanF3zeCJIJ0nkaVEgrRuog1xdrBYYiN2VzPcP7BFMBprWN
+	 vFy8/RaTk0H1DAC0bLWDnD7Ug1lPy0+sQrn54ahGX2DVErlWvF17oRMMstt+fUV6CexIr
+	 p7zE8WvPcnyrdy3lqmdoSbPurATduYcQBeluf1PODZWZufs74bz2GSmm44O5ipt0JwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sCeL0UAS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m7wHhfm8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1077960A2615;
-	Sat,  7 Nov 2026 15:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4001360A2615;
+	Sat,  7 Nov 2026 15:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sCeL0UAS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03541F0089F;
-	Sat,  7 Nov 2026 15:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m7wHhfm8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16201F0089F;
+	Sat,  7 Nov 2026 15:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063773;
-	bh=RAxu54Lt0c44tgqqkCDwBSbpEkLw/g5uQBqUXzDf9fs=;
+	s=korg; t=1794063775;
+	bh=/Dq3eH4TvPXoeBDyCX0UQ2bCgHRiGnLQzTd6ViuE8CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sCeL0UASEm4tr69DN/S13u2kaPScj3IWdSG6dMJZWL5T4YtZ8hl3VtMr2e/lN3zbm
-	 K/eAAMBPNC5Fk10NdxorznR6mGN1f3Dfe6IwHXFPCu1kyzabepKdw3BVs1OEDAMHh6
-	 C1Kuz2mGXAnPE3RRDSPdzmxtCdCg05GhQvVR3qww=
+	b=m7wHhfm8rRV0YNt17tJC9rxC8bdaRFN/fH7s8VPA0Xo5meS9h4M0o42zueTu5eGf7
+	 d9Ti1jYfRtjhGacARXGau3MHcQSGue8e9NJmpyKI2hKAAQ5Vrkfyu2qJzoDm+SzV+/
+	 NeVO2vGE+zSiBqgzO+PU9Ryth4VJ26SH9nn+DgE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 864/869] fs: skip copy_file_range write limits when there is no data
-Date: Sat,  7 Nov 2026 08:59:06 -0500
-Message-ID: <20261107134922.109239239@linuxfoundation.org>
+Subject: [PATCH 6.18 865/869] fs: dont fail __d_obtain_alias() for unlinked inodes
+Date: Sat,  7 Nov 2026 08:59:07 -0500
+Message-ID: <20261107134922.142358856@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,53 +70,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 81dfa035891f0502674332ee97db348a16486de0 ]
+[ Upstream commit a522dd871024a0f065bfa7638afdb929607f58fc ]
 
-generic_copy_file_checks() reduces count to zero for a source offset at
-or beyond EOF, but still checks the destination write limits. If pos_out
-is at RLIMIT_FSIZE, this sends SIGXFSZ and returns -EFBIG even though
-there is no data to write.
+Commit 669bb5af15d4 ("fs: make sure to call fsnotify_inoderemove() only
+once when inode is dead") did two things. It made dentry_unlink_inode()
+call fsnotify_inoderemove() only once the inode has neither links nor
+aliases left. And it made __d_obtain_alias() fail with -ESTALE for an
+inode in that state so that open_by_handle_at() can't create a new alias
+after FS_DELETE_SELF has been reported and the inode marks are gone.
 
-For example, GNU cat copying a 1024-byte regular file to another regular
-file with RLIMIT_FSIZE=1024 copies all bytes and is then killed by its
-next copy_file_range() call at EOF. A zero-length request can fail in
-the same way.
+The second part is wrong for network filesystems. __d_obtain_alias()
+backs d_obtain_alias() and d_obtain_root(). Those are what the
+->fh_to_dentry() and ->get_parent() methods use to turn the inode they
+looked up into a dentry for exportfs_decode_fh_raw(), i.e., for
+open_by_handle_at() and for nfsd file handle decoding.
 
-Check write limits only when count is nonzero, as the ordinary write
-checks already do. Keep the other copy validation in place.
+For a local filesystem an in-core inode without links and aliases is an
+orphan that goes away on the final iput(). For a network filesystem
+that's not true. i_nlink is just the link count the server last
+reported and whether the object is still reachable through its file
+handle is up to the server. If a file is unlinked while it is still
+open elsewhere, e.g., by another NFSv4 client or by a process on the
+server, the server keeps the object alive and its file handle stays
+valid. nfs_fh_to_dentry() fetches the attributes for such a handle,
+nfs_fhget() sets i_nlink to 0 from them, the new inode has no aliases
+yet and so __d_obtain_alias() now fails with -ESTALE. The same applies
+to fuse_get_dentry() which takes i_nlink from the fuse server.
+Filesystems that care about unlinked inodes already make that decision
+themselves in ->fh_to_dentry(), e.g., ceph's __fh_to_dentry() fetches
+the link count with CEPH_CAP_LINK_SHARED and only refuses an unlinked
+inode if it isn't open.
 
-Fixes: 96e6e8f4a68d ("vfs: add missing checks to copy_file_range")
+Note that on a network filesystem i_nlink drops to zero through
+attribute updates when another client unlinks the file. So the inode
+might never have gone through dentry_unlink_inode() with i_nlink == 0,
+i.e., fsnotify_inoderemove() might never have been called for it and
+there's nothing for the -ESTALE to protect.
+
+So drop the two checks from __d_obtain_alias() again and go back to the
+unconditional alias lookup. While at it, update the comment above
+inode_notify_dead() since it no longer blocks new aliases.
+
+Amir sent this as v3 to replace 669bb5af15d4 but that commit was already
+in mainline by then. So do it as a fix on top. The resulting code is
+identical to v3.
+
+This means open_by_handle_at() can again create a new alias for an
+unlinked inode after FS_DELETE_SELF has been reported. Closing that file
+reports a second FS_DELETE_SELF and the file has none of the inode marks
+that were torn down. That's what Daehyeon's open_by_handle_at() LTP test
+checks so it is expected to fail again. This needs to be handled
+separately. A mark that is added through such a file while
+fsnotify_destroy_marks() is still running is rejected with -ENOENT since
+36ebddca56b9 ("fsnotify: prevent mark additions during connector
+teardown") so it can't end up on a detached connector.
+
+Christian Brauner <brauner@kernel.org> says:
+
+Amir's v3 replaced 669bb5af15d4 as a whole. I turned it into an
+incremental fix on top of mainline and wrote a new commit message.
+Jan's Reviewed-by was given on v3 and the resulting code is identical.
+
+Fixes: 669bb5af15d4 ("fs: make sure to call fsnotify_inoderemove() only once when inode is dead")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261026015738.46230-1-dennylin0707@gmail.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reported-by: Daehyeon Ko <4ncienth@gmail.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/CAOQ4uxg7Qt436SiKhKEJKOjtCjeB_XyTjazYF7HMyQAGGcgx2A@mail.gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20261030-work-dcache-obtain_alias-v1-1-a1f7e44536d2@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/read_write.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/dcache.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/fs/read_write.c b/fs/read_write.c
-index 833bae068770a..011fe55c94cdb 100644
---- a/fs/read_write.c
-+++ b/fs/read_write.c
-@@ -1530,9 +1530,11 @@ static int generic_copy_file_checks(struct file *file_in, loff_t pos_in,
- 	else
- 		count = min(count, size_in - (uint64_t)pos_in);
+diff --git a/fs/dcache.c b/fs/dcache.c
+index 04adb623e584e..3ad74a3abf9ad 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -443,10 +443,9 @@ static void dentry_free(struct dentry *dentry)
+ }
  
--	ret = generic_write_check_limits(file_out, pos_out, &count);
--	if (ret)
--		return ret;
-+	if (count) {
-+		ret = generic_write_check_limits(file_out, pos_out, &count);
-+		if (ret)
-+			return ret;
-+	}
+ /*
+- * If inode is unlinked and doesn't have any aliases (i.e., all fds pointing to
+- * it are closed), it is pretty much dead. Except that file handle lookup could
+- * still revive it which causes issues to fsnotify. So once inode reaches this
+- * state we make sure to block creating any new aliases.
++ * When inode is unlinked and doesn't have any aliases (i.e., all fds pointing
++ * to it are closed) we report FS_DELETE_SELF to fsnotify and cleanup all inode
++ * marks.
+  */
+ static bool inode_notify_dead(struct inode *inode)
+ {
+@@ -2035,12 +2034,7 @@ static struct dentry *__d_obtain_alias(struct inode *inode, bool disconnected)
  
- 	/* Don't allow overlapped copying within the same file. */
- 	if (inode_in == inode_out &&
+ 	sb = inode->i_sb;
+ 
+-	spin_lock(&inode->i_lock);
+-	if (!inode_notify_dead(inode))
+-		res = __d_find_any_alias(inode);	/* existing alias? */
+-	else
+-		res = ERR_PTR(-ESTALE);
+-	spin_unlock(&inode->i_lock);
++	res = d_find_any_alias(inode); /* existing alias? */
+ 	if (res)
+ 		goto out;
+ 
+@@ -2052,10 +2046,7 @@ static struct dentry *__d_obtain_alias(struct inode *inode, bool disconnected)
+ 
+ 	security_d_instantiate(new, inode);
+ 	spin_lock(&inode->i_lock);
+-	if (!inode_notify_dead(inode))
+-		res = __d_find_any_alias(inode);	/* recheck under lock */
+-	else
+-		res = ERR_PTR(-ESTALE);
++	res = __d_find_any_alias(inode); /* recheck under lock */
+ 	if (likely(!res)) { /* still no alias, attach a disconnected dentry */
+ 		unsigned add_flags = d_flags_for_inode(inode);
+ 
 -- 
 2.53.0
 
