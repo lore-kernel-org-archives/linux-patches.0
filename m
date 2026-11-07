@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065225;
-	b=TJwdEsqPBdOjlfzuXHj2iGvjzP0QsYd2eH6PoLOjs717abj/PAi7xFktW7WnSq0CGTMc
-	 qAJOTBSRfw9pBy/632V4tdtskWrZDWOZmtth8kvU1lirqXqjy0EMOuiyRSZzvz3B9XmTm
-	 f0CRLAuda/w0VHd2E6q1ibxKlsD8drFX4xlU1WVdI5f31zPmmenS7z+ADEK4OXwrZEhg4
-	 UsYgS51q7vwYxei8FNv8ROiYvE9kyZkWUSXwEmCzxP8KYvNvCzuUrF0bjmHiF3fZJDfU+
-	 bMJrrP0xM2sq9k3UBXJVMo1lDZrKPkCyZ2J+Z3yoiDDpdTf5sU/BKSTj4rMaO7hO7og==
+	t=1794065226;
+	b=AsXWEzO/O6mro1zW0dJUBW31zpSZbn4+CeaNOOCuaik1vvlYocFwRKSjQXArm5F7FN/O
+	 5ocB/7ABonSfeMesuJvDPrsrXikoAaihcz/rAfxkFPs7mBraWc7+rhMvNvvuBArwhjope
+	 z7OzmOdmS0BDeDWMvDQKaSUc+dtRdzv3a6xkMDsUN+pJ62CluZV3j+2bzz0QllmqL+TBt
+	 /dnAH9NNaVpOEXoaP8cgZRgPtg3j4i/GBrTanASTCad5VgFhPyHBa+XEVoAspXRxYNDSz
+	 +eNVYQZ68cJPjOYxdQUbQxcK4GeQG3/WEsZv7gV+3A/kbAAR9P59ta0Kgz+Ceg5Fkxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065225;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065226;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6DNU5qhugjPLgBlLIt/FgPQ84sWbkHehbC+sAeaHx7Y=;
-	b=y1SnGxnMPAfID1sbasPOyAYugEulZ0MtXgI84UjVlhXjN/hly/hj04a8OzZpWzTlfj5l
-	 4ZvjqXCpG26kOS8xluHeDVaZqE9B/Px206fgyxA3j0SrO4vLPdh+XhibO3PW6HMKDHOBY
-	 Ll6Lj1y7QF2cM2Z4w67+q6o0wsCAr359JqjykXGhF0Bw+CqBLnRng0VDF6RwW6r5vM5nT
-	 38A1leY3AazEmSdDlMWBXHdUH7yeOlM+PZTDuRzmWDcqiqXUUk5d6yM7CJo7TzLZfVj1v
-	 A6NxqqlTq0Lp99G9ZxIQxfshJ+pWECX1wXe4SPrt1mQqdCWzJcl89C+MNcTAzMVyqFg==
+	bh=uUYkIVx428SQ+5HhyT/L1vY5Ko+fBuTgvTvMIx6vN1Q=;
+	b=mtZgU5EonH4yLuQb4IGbNkPiR6Px1ppWWDR1B+CJnQ/2Nzuu5ukKM7RjeWlVpMXOi3Km
+	 UtwRFqH2g8H/J3/NMj7yfmekU0wof25Qjz0rikh4i7harjX7Y+UQMIadK9v6ToaB+drHo
+	 LkxNHJENs00+JyGb9ehxzyZCIf7T3WTHJ6KXvQ5kSKGu2JjmFCLGy1x3oeLaGZEiGOuiw
+	 B/7RxZeQY8p2Y4dxRU3IgS+opayTsVOb0BcstDjmF1KNO2QTfNZqerOIUH8IoTWE7ju5C
+	 k6etqXYsquBv5V7a0vQ2XHGYak4bWKdKlWU9wtiAUb2L1mURivO836+TrhMRNiagATA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zKxaeMop;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QzJDiF4Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2B0606D811;
-	Sat,  7 Nov 2026 15:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB12606A339;
+	Sat,  7 Nov 2026 15:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zKxaeMop
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F701F0089F;
-	Sat,  7 Nov 2026 15:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QzJDiF4Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA531F008A3;
+	Sat,  7 Nov 2026 15:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065224;
-	bh=6DNU5qhugjPLgBlLIt/FgPQ84sWbkHehbC+sAeaHx7Y=;
+	s=korg; t=1794065225;
+	bh=uUYkIVx428SQ+5HhyT/L1vY5Ko+fBuTgvTvMIx6vN1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zKxaeMopNLU+vI7gPvwA4vlCIBQca8mdEKamw+XGGuDsCxGnno7SHiSGAVw974i6M
-	 +EBV5iDTizE3onJSVaM4+qOyUQd0WGwyFwk7bhDl+zCGGSCqPfgV2fkre53Xsmlics
-	 GbuxIDawinj2IevZx+rnedyOYiRcS536fCWFf0JI=
+	b=QzJDiF4Y/ueWTNpDyHMandImJ8ig3El5obbU4jFvEHGBTU3dr+3sex1RdL/VW0i2i
+	 F7vmvKiqJwA3t+PO4B5g+IXfJTEyx1TBP1rAK0gujfE56HkDqQLu77DgxdyoNegwxM
+	 aXKENh/31ol9ki4yYa/qynpVX6Lif5LfVFg7v6AI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1015/1257] tipc: fix broadcast sender hang on last acker departure
-Date: Sat,  7 Nov 2026 08:55:11 -0500
-Message-ID: <20261107135007.368176146@linuxfoundation.org>
+Subject: [PATCH 7.3 1016/1257] cgroup/cpuset: Fix task checking when enabling a partition
+Date: Sat,  7 Nov 2026 08:55:12 -0500
+Message-ID: <20261107135007.396517912@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,151 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-[ Upstream commit f4377bf85887f57b59abb5479f7660a81ffe4449 ]
+[ Upstream commit f5b5cf2be574df6f25cbf1b000960340bff9a0bb ]
 
-TIPC group broadcast senders are blocked while a replicast still has
-outstanding member acks: tipc_group_bc_cong() returns true as long as
-grp->bc_ackers is non-zero, and clears *grp->open, which is what
-tipc_poll() uses to report EPOLLOUT (via tsk->group_is_open).
+Creating a child partition can fail when tasks are present in its
+descendants, even though the parent has no tasks of its own.
 
-When the last outstanding acker departs before acking,
-tipc_group_delete_member() decrements grp->bc_ackers to zero but
-never restores *grp->open.  As a result poll(EPOLLOUT) never fires
-again.  A writer blocked in sendmsg() is only released if some other
-wakeup happens after the deletion: with TIPC_GROUP_MEMBER_EVTS the
-leave event delivery calls sk_data_ready() and wakes it, but without
-member events nothing does and it sleeps indefinitely, since the
-default send timeout is MAX_SCHEDULE_TIMEOUT.
+On a cgroup v2 system with CPUs 0-7 online:
 
-Commit 99cc2a62e07a ("tipc: reject invalid and unexpected
-GRP_ACK_MSG to prevent bc_ackers underflow") already calls this out
-in its changelog as a pre-existing issue.
+    cd /sys/fs/cgroup
+    echo +cpuset > cgroup.subtree_control
+    mkdir A
+    echo 1-2 > A/cpuset.cpus
+    echo root > A/cpuset.cpus.partition
+    echo +cpuset > A/cgroup.subtree_control
+    mkdir A/B
+    echo 1-2 > A/B/cpuset.cpus
+    echo +cpuset > A/B/cgroup.subtree_control
+    mkdir A/B/C
+    echo 1-2 > A/B/C/cpuset.cpus
+    echo $$ > A/B/C/cgroup.procs
+    echo root > A/B/cpuset.cpus.partition
+    cat A/B/cpuset.cpus.partition
+    root invalid (Parent unable to distribute cpu downstream)
+    cat A/cpuset.cpus.effective
+    1-2
 
-Restore the open state exactly on the 1->0 transition in the delete
-path, mirroring the GRP_ACK_MSG completion path, and invoke
-sk->sk_write_space() from tipc_sk_filter_rcv() when the group just
-became writable again.
+B should be a valid root, leaving A with an empty effective CPU list.
+The task in C belongs to B's partition and does not need CPUs in A.
 
-Also make the ack accounting precise.  The delete path used to test
-less(m->bc_acked, grp->bc_snd_nxt - 1), which also matches members
-that were never counted for the current replicast (JOINING/LEAVING
-members keep a stale bc_acked), and the GRP_ACK_MSG handler accepted
-an ack from any member whose bc_acked differed from the expected
-value.  Either could zero bc_ackers on behalf of a member that owes
-nothing and silently void an ack still owed by a real acker.  Track
-whether a member owes an ack for the current replicast in a new
-per-member bc_pending flag, set when the member is counted and
-cleared when its ack arrives, and use it both to accept an ack and
-to decide on deletion.  bc_acked has no remaining user and is
-removed.  Suggested by Tung Quang Nguyen.
+partition_is_populated() is called with B as excluded_child, but
+continue only skips B in the pre-order walk. The walk still visits C
+and finds the task there, so A is considered populated.
 
-This issue was discovered by Tencent CodeBuddy Security.
+Fix this by skipping the whole excluded subtree with
+css_rightmost_descendant(), as is already done for valid child
+partitions. Also add a test case to test_cpuset_prs.sh with a task in
+a grandchild cpuset.
 
-Cc: stable@vger.kernel.org
-Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20261019115859.3471295-1-bsdhenrymartin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: b1bcaed1e39a ("cpuset: Treat cpusets in attaching as populated")
+Cc: stable@vger.kernel.org # v6.19+
+Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/group.c  | 19 ++++++++++---------
- net/tipc/socket.c | 12 +++++++++++-
- 2 files changed, 21 insertions(+), 10 deletions(-)
+ kernel/cgroup/cpuset.c                            | 4 ++--
+ tools/testing/selftests/cgroup/test_cpuset_prs.sh | 3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/group.c b/net/tipc/group.c
-index 74f6d3dac0784..0c6a762000b02 100644
---- a/net/tipc/group.c
-+++ b/net/tipc/group.c
-@@ -74,7 +74,7 @@ struct tipc_member {
- 	u16 window;
- 	u16 bc_rcv_nxt;
- 	u16 bc_syncpt;
--	u16 bc_acked;
-+	bool bc_pending;
- };
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 8b220e9df91e9..86b5921998afa 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -478,10 +478,10 @@ static inline bool partition_is_populated(struct cpuset *cs,
  
- struct tipc_group {
-@@ -316,7 +316,6 @@ static struct tipc_member *tipc_group_create_member(struct tipc_group *grp,
- 	m->node = node;
- 	m->port = port;
- 	m->instance = instance;
--	m->bc_acked = grp->bc_snd_nxt - 1;
- 	ret = tipc_group_add_to_tree(grp, m);
- 	if (ret < 0) {
- 		kfree(m);
-@@ -340,9 +339,12 @@ static void tipc_group_delete_member(struct tipc_group *grp,
- 	rb_erase(&m->tree_node, &grp->members);
- 	grp->member_cnt--;
+ 	rcu_read_lock();
+ 	cpuset_for_each_descendant_pre(cp, pos_css, cs) {
+-		if (cp == cs || cp == excluded_child)
++		if (cp == cs)
+ 			continue;
  
--	/* Check if we were waiting for replicast ack from this member */
--	if (grp->bc_ackers && less(m->bc_acked, grp->bc_snd_nxt - 1))
--		grp->bc_ackers--;
-+	/* If this member owed an ack for the current replicast and it
-+	 * was the last one, restore the open state so blocked broadcast
-+	 * senders can proceed.
-+	 */
-+	if (grp->bc_ackers && m->bc_pending && !--grp->bc_ackers)
-+		*grp->open = true;
- 
- 	list_del_init(&m->list);
- 	list_del_init(&m->small_win);
-@@ -394,7 +396,6 @@ void tipc_group_update_member(struct tipc_member *m, int len)
- 
- void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
- {
--	u16 prev = grp->bc_snd_nxt - 1;
- 	struct tipc_member *m;
- 	struct rb_node *n;
- 	u16 ackers = 0;
-@@ -403,8 +404,8 @@ void tipc_group_update_bc_members(struct tipc_group *grp, int len, bool ack)
- 		m = container_of(n, struct tipc_member, tree_node);
- 		if (tipc_group_is_receiver(m)) {
- 			tipc_group_update_member(m, len);
--			m->bc_acked = prev;
- 			ackers++;
-+			m->bc_pending = ack;
+-		if (is_partition_valid(cp)) {
++		if (cp == excluded_child || is_partition_valid(cp)) {
+ 			pos_css = css_rightmost_descendant(pos_css);
+ 			continue;
  		}
- 	}
+diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+index 7efd5e645767c..f7cc9da57b556 100755
+--- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
++++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+@@ -385,6 +385,9 @@ TEST_MATRIX=(
+ 	# Enabling partition with child cpusets is allowed
+ 	"   C0-1    C1      .    C2-3    P1      .      .      .     0 A1:0-1|A2:1 A1:P1"
  
-@@ -800,9 +801,9 @@ void tipc_group_proto_rcv(struct tipc_group *grp, bool *usr_wakeup,
- 		if (!m || !grp->bc_ackers)
- 			return;
- 		acked = msg_grp_bc_acked(hdr);
--		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
-+		if (acked != grp->bc_snd_nxt || !m->bc_pending)
- 			return;
--		m->bc_acked = acked;
-+		m->bc_pending = false;
- 		if (--grp->bc_ackers)
- 			return;
- 		list_del_init(&m->small_win);
-diff --git a/net/tipc/socket.c b/net/tipc/socket.c
-index d5d70eb230b56..65cc0c4964b31 100644
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -2356,8 +2356,18 @@ static void tipc_sk_filter_rcv(struct sock *sk, struct sk_buff *skb,
- 	if (unlikely(!msg_isdata(hdr)))
- 		tipc_sk_proto_rcv(sk, &inputq, xmitq);
- 
--	if (unlikely(grp))
-+	if (unlikely(grp)) {
-+		bool was_open = tsk->group_is_open;
++	# Tasks below a new partition belong to it, not to its parent.
++	" C1-2:P1 C1-2 C1-2:T    .      .      P1     .      .     0 A1:|A2:1-2|A3:1-2 A1:P1|A2:P1"
 +
- 		tipc_group_filter_msg(grp, &inputq, xmitq);
-+		/* A departing member may have held the last outstanding
-+		 * replicast ack, which can restore the open state inside
-+		 * tipc_group_filter_msg(); wake up senders blocked in
-+		 * poll()/write() if the group just became writable.
-+		 */
-+		if (!was_open && tsk->group_is_open)
-+			sk->sk_write_space(sk);
-+	}
- 
- 	if (unlikely(!grp) && mtyp == TIPC_MCAST_MSG)
- 		tipc_mcast_filter_msg(net, &tsk->mc_method.deferredq, &inputq);
+ 	# A partition root with non-partition root parent is invalid| but it
+ 	# can be made valid if its parent becomes a partition root too.
+ 	"   C0-1    C1      .    C2-3     .      P2     .      .     0 A1:0-1|A2:1 A1:P0|A2:P-2"
 -- 
 2.53.0
 
