@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064445;
-	b=froHWstNaUauUcG0lLlYu2QyLul1oX39uNRVo6/vGsQppaSooYQxnC/dANstkfzp28d2
-	 VPEdOFeo11gPovMVo7Pwh4VhZtdakfVapyf8oba19cd/0gFXWSoKpdyrnxhEiDFWVyZAw
-	 0I2DM8hrJERb/Un5WZmhMal8BLigS8WyXOEvaxyXtxf+JoHCeYekO7sqF+cFUKBi0+JWm
-	 kfzBklRNGV417C8rUbyrItMpE+zyyuXeMgOgByKIRf8TaQzkyraTPW0+buZm4x4OBzYcf
-	 MrSkNx8ix/ov/q9Yyr9qq6ZgIgwqwhVLZeo9wh5Yie4eupnsLhG97Hg1YhZ1E9yonBQ==
+	t=1794064446;
+	b=kwEQxebOAyjubDEbVcyZJ5cIn36VRPOUla6qzOB/Wl+1nxoIUWpPCcfy2vW+ltR/9cD2
+	 8I62vIjMjQomzYIDcGNf+KiOW1SWPswKqvR+pS//rLJdJlpjdKQAZV/w1izmPkvPka+dO
+	 YZvwED+1azNk0a3XE90CgoJ7tdrsySJodAdxV8ph+/PK79lIMJZ+C/zg7rInHq99Jlgbw
+	 seR4sPWi+KLiUTvrOCwJvpxCprmOR/lgkM1PfK5kNw4vm3xQAzHeeArUYcQRy6ZPulobB
+	 XY8zn7abGiA4P/zamGGpZLfpOJexCWOHgjetxcgi4Ax1gAqdaKJ2jGjLm4KSLu1WPig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064445;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064446;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ilzLuWLR4dhPjk7wP29zVK5t6JH4DGP4vtY4zWkAo7M=;
-	b=gKFTcqS2Mc8bzIp2+QQV5imWNKhaGZ1IcaQlNxp9XIOUsG7PGex/ZeTlaG6B9V8slWb3
-	 ewBCPbf56TAgYJW1LtCJbOovFq0QeqmO9/n+B6i+cz4Bqkky2qd2KzvW2pZC9Qn997sz+
-	 twvMrdZFH4VWMYydYO0DnXO+MMc+Vr78cFQK06sf6KjHr3Mvd2ONrtW+okWQFB1iC+GEr
-	 qV1mhwi9BId0twsf+wZHNmMudvD3p4Dqipmkxr2SxmE2dqFxzA0EmaWTtFLsjhCODV/ah
-	 P+pLIP3URhID0fnqQoCWUyWUdjCIHETuZ4JzlhXzanVPO0X8JspjYkuEXGStBxSZBiw==
+	bh=HrK1rEvFKOUqTbT8zxzBTndVcdFVI44H/oSs6xqr0j0=;
+	b=yemFQ5OqOlEBrEsU5AaBJ77j8547pMlb7xkATwbbjTQpTrPL5+t350czDbP5Tax77evh
+	 ZcZl6vkQ1BFWXuABYlQ5ErhOcEo1R7oFmIkBkl/f2C+m+vS2Rj5K4KU2eeDqMEEY9EPdC
+	 2qGBhxlK7y91vWrUlzDlPwx8OGhZqML63VFConFzk6jYuhTn0X7PpAAlTW3HKnqvWOjD3
+	 F76CabJbAfJ6ogpLon7Oa9iik+mU5aFG1kpVQLucpfpbez1f0zSDnGjl8Oc8OA5+fpuhq
+	 tBkyTIrn0FJgla9CpN47AuVjAFn0KQ8aL5JWEI5APNS1dAI9HCLl6UPp41BNL+oDI6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BB+Aio9n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ESquviBA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F026606C000;
-	Sat,  7 Nov 2026 15:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93AD4606EEB6;
+	Sat,  7 Nov 2026 15:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BB+Aio9n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1301F0089F;
-	Sat,  7 Nov 2026 15:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ESquviBA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A80C1F0089F;
+	Sat,  7 Nov 2026 15:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064445;
-	bh=ilzLuWLR4dhPjk7wP29zVK5t6JH4DGP4vtY4zWkAo7M=;
+	s=korg; t=1794064446;
+	bh=HrK1rEvFKOUqTbT8zxzBTndVcdFVI44H/oSs6xqr0j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BB+Aio9nLQnBTmMX6q26mVXC1cEd9rOpN69qTIYyda4RElhhCVH/OcKqQSffwmuJR
-	 /KQDIizXNqx3KEP9/xlRCqkquKkK1PbuhIJaYbxQqa9IZPZQ6Wht7BWVyxV7DfIppl
-	 Sqf/zw2ZLywO3A+qfPJScuj2DaYIGZDdY0Bg2yK8=
+	b=ESquviBAnPPqMtbh2wBuX3sB4v1kLqDO8of13tT54bmkg/mu3OciJU5evI0+TPvwT
+	 QhmLgT/STKAKkcd78lcBbKELcOot7MmzlL/aWxd9l9GqHEcJNXRJQ8I6r1HbNfF6m0
+	 nKZMAq/gD20f14AGEtUCxROgQH45acXfg8fDnVRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michail Tatas <michail.tatas@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0463/1257] media: verisilicon: rockchip: Fix leaks in init
-Date: Sat,  7 Nov 2026 08:45:59 -0500
-Message-ID: <20261107134952.250748571@linuxfoundation.org>
+Subject: [PATCH 7.3 0490/1257] wifi: brcmsmac: Adjust txpwrindex value in nphy_ipa_rxcal_gaintbl_2GHz
+Date: Sat,  7 Nov 2026 08:46:26 -0500
+Message-ID: <20261107134952.976140275@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,144 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michail Tatas <michail.tatas@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 96f6b5e2295996a9e2dd1e2382d3872f98cbb554 ]
+[ Upstream commit f7463a9c99a506b3308a852f9aaaf2a26b659e95 ]
 
-If one of the dma_alloc_coherent in the init function fails then
-the previously allocated ones leak.
+After a recent change in clang to warn on signed char conversions within
+array initializers [1], there is a warning (or error with
+CONFIG_WERROR=y / W=e) from nphy_ipa_rxcal_gaintbl_2GHz:
 
-Fix by freeing them in the error path.
+  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c:224:18: error: implicit conversion from 'int' to 's8' (aka 'signed char') changes value from 128 to -128 [-Werror,-Wconstant-conversion]
+    224 |         {0, 0, 0, 0, 0, 128},
+        |         ~               ^~~
+  1 error generated.
 
-Fixes: 727a400686a2 ("media: verisilicon: Add Rockchip AV1 decoder")
+This value was introduced in the original staging merge of brcmsmac in
+commit a9533e7ea3c4 ("Staging: Add initial release of brcm80211 - Broadcom
+802.11n wireless LAN driver.") and it is the same in the proprietary
+driver [2]. Presumably it is correct since there have been no reported issues,
+so update the value to '-128' to be type correct and clear up the warning.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Michail Tatas <michail.tatas@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: a9533e7ea3c4 ("Staging: Add initial release of brcm80211 - Broadcom 802.11n wireless LAN driver.")
+Link: https://github.com/llvm/llvm-project/commit/a5ef934a8d295dc03be3960f2b3744ec2e53238e [1]
+Link: https://lore.kernel.org/1a107e21b08.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com/ [2]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20261005-brcmsmac-clang-24-constant-conversion-v1-1-a30c5692d582@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../verisilicon/rockchip_vpu981_hw_av1_dec.c  | 68 +++++++++++++++----
- 1 file changed, 55 insertions(+), 13 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-index 00aa566a4ccdb..2a145433e6d17 100644
---- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-+++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-@@ -369,6 +369,7 @@ void rockchip_vpu981_av1_dec_exit(struct hantro_ctx *ctx)
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
+index 86cfa3e87a042..9ddd5d519893e 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
+@@ -221,7 +221,7 @@ static const struct nphy_ipa_txrxgain nphy_ipa_rxcal_gaintbl_5GHz[] = {
+ };
  
- int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
- {
-+	int ret = 0;
- 	struct hantro_dev *vpu = ctx->dev;
- 	struct hantro_av1_dec_hw_ctx *av1_dec = &ctx->av1_dec;
- 
-@@ -377,39 +378,54 @@ int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
- 	av1_dec->global_model.cpu = dma_alloc_coherent(vpu->dev, GLOBAL_MODEL_SIZE,
- 						       &av1_dec->global_model.dma,
- 						       GFP_KERNEL);
--	if (!av1_dec->global_model.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->global_model.cpu) {
-+		ret = -ENOMEM;
-+		goto global_model_cpu_err;
-+	}
-+
- 	av1_dec->global_model.size = GLOBAL_MODEL_SIZE;
- 
- 	av1_dec->tile_info.cpu = dma_alloc_coherent(vpu->dev, AV1_TILE_INFO_SIZE,
- 						    &av1_dec->tile_info.dma,
- 						    GFP_KERNEL);
--	if (!av1_dec->tile_info.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->tile_info.cpu) {
-+		ret = -ENOMEM;
-+		goto tile_info_cpu_err;
-+	}
-+
- 	av1_dec->tile_info.size = AV1_TILE_INFO_SIZE;
- 
- 	av1_dec->film_grain.cpu = dma_alloc_coherent(vpu->dev,
- 						     ALIGN(sizeof(struct rockchip_av1_film_grain), 2048),
- 						     &av1_dec->film_grain.dma,
- 						     GFP_KERNEL);
--	if (!av1_dec->film_grain.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->film_grain.cpu) {
-+		ret = -ENOMEM;
-+		goto film_grain_cpu_err;
-+	}
-+
- 	av1_dec->film_grain.size = ALIGN(sizeof(struct rockchip_av1_film_grain), 2048);
- 
- 	av1_dec->prob_tbl.cpu = dma_alloc_coherent(vpu->dev,
- 						   ALIGN(sizeof(struct av1cdfs), 2048),
- 						   &av1_dec->prob_tbl.dma,
- 						   GFP_KERNEL);
--	if (!av1_dec->prob_tbl.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->prob_tbl.cpu) {
-+		ret = -ENOMEM;
-+		goto prob_tbl_cpu_err;
-+	}
-+
- 	av1_dec->prob_tbl.size = ALIGN(sizeof(struct av1cdfs), 2048);
- 
- 	av1_dec->prob_tbl_out.cpu = dma_alloc_coherent(vpu->dev,
- 						       ALIGN(sizeof(struct av1cdfs), 2048),
- 						       &av1_dec->prob_tbl_out.dma,
- 						       GFP_KERNEL);
--	if (!av1_dec->prob_tbl_out.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->prob_tbl_out.cpu) {
-+		ret = -ENOMEM;
-+		goto prob_tbl_out_cpu_err;
-+	}
-+
- 	av1_dec->prob_tbl_out.size = ALIGN(sizeof(struct av1cdfs), 2048);
- 	av1_dec->cdfs = &av1_dec->default_cdfs;
- 	av1_dec->cdfs_ndvc = &av1_dec->default_cdfs_ndvc;
-@@ -420,11 +436,37 @@ int rockchip_vpu981_av1_dec_init(struct hantro_ctx *ctx)
- 						   AV1_TILE_SIZE,
- 						   &av1_dec->tile_buf.dma,
- 						   GFP_KERNEL);
--	if (!av1_dec->tile_buf.cpu)
--		return -ENOMEM;
-+	if (!av1_dec->tile_buf.cpu) {
-+		ret = -ENOMEM;
-+		goto tile_buf_cpu_err;
-+	}
-+
- 	av1_dec->tile_buf.size = AV1_TILE_SIZE;
- 
--	return 0;
-+	return ret;
-+
-+tile_buf_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->prob_tbl_out.size,
-+			  av1_dec->prob_tbl_out.cpu,
-+			  av1_dec->prob_tbl_out.dma);
-+prob_tbl_out_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->prob_tbl.size,
-+			  av1_dec->prob_tbl.cpu,
-+			  av1_dec->prob_tbl.dma);
-+prob_tbl_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->film_grain.size,
-+			  av1_dec->film_grain.cpu,
-+			  av1_dec->film_grain.dma);
-+film_grain_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->tile_info.size,
-+			  av1_dec->tile_info.cpu,
-+			  av1_dec->tile_info.dma);
-+tile_info_cpu_err:
-+	dma_free_coherent(vpu->dev, av1_dec->global_model.size,
-+			  av1_dec->global_model.cpu,
-+			  av1_dec->global_model.dma);
-+global_model_cpu_err:
-+	return ret;
- }
- 
- static int rockchip_vpu981_av1_dec_prepare_run(struct hantro_ctx *ctx)
+ static const struct nphy_ipa_txrxgain nphy_ipa_rxcal_gaintbl_2GHz[] = {
+-	{0, 0, 0, 0, 0, 128},
++	{0, 0, 0, 0, 0, -128},
+ 	{0, 0, 0, 0, 0, 70},
+ 	{0, 0, 0, 0, 0, 20},
+ 	{0, 0, 0, 3, 0, 20},
 -- 
 2.53.0
 
