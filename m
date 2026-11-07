@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063761;
-	b=pIv6QVYfyButZqsA1q/OKfa79W2sc227BLs7LiG40p8qnIoLpeT14hP+jrQsFj7m3MAh
-	 xt5ettXlq8TBP0LE7tWke+Gya+NBwd/EE4rrMJ51kEcTgpeGX2ZpIaxC6/Z2lPulGgNq3
-	 34AWFvHD8K30xyS35H2HIMq/31e15C+LIOQXj0t1F4SktQJzGW+85Q0nECbMBrzY39AW+
-	 PkyM09iogLRrGyqm9hKREmyWb0WQNhUN3e7h3UuDzBXHBE4Pas4AsIVjdJe7ybMyaz8iX
-	 VMiEsyMPc+iXRG/37J3P8CtSGzlmK/JTeOQV5Ktj5VoRbQOwIu3h5jO2vn5upN9UCKA==
+	t=1794063762;
+	b=qQ9Bl/vIw4WbV53EqUJR5Z40dc85YkJVtZM21Y9yFQZsJhlEIStyT8GmyapmIbcDGAVb
+	 jxkwYNdKiEpv89Hq4BR3zm48+c2lGKWiLo9zoxepYJdQFZymS6YdiAO1ZqbLK22m8TGBi
+	 fvaBGHisTCzoriYoHCKBqnVgPVVCipxM9plVZmh81/fyksvKXvBBdy9ZCTEavAATjbNaM
+	 s+Vw60pN5i6yKcQRQD62ALGzXqtSLs4DobthEp6ygx0CIUM1ixnS/jxSh5FP7ZfnddnR0
+	 BL0Xtm0eJraolKWiT0hbWtOioIuU20IoZV5Vmk11Ypv7RglULzwIX7Ekx6k4iMkMMVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063762;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ewSO2obtSolPvDRTT37tE5dH7mhdNQuvgKqg79bAxhM=;
-	b=bBYwgiDAuNUJJ1PdT4no8l7uY8qkWjKrKKhq0boOOWagFdY52Fx4QomLKU64kWmTMUlK
-	 zklJu8ZvkDHAxOl/a8gRWgOmQX1TQ9Una6L1zaoxryb0sNFU8ndRCWF2EnehimWJAa1Rc
-	 G3g9B0SFlGTgkiC1AcJgMwZShhrsFNDc6NY7gtTJkJKO5HFnZadUGFlnYooQkMEj1O9l0
-	 kf283yWMCGeqUqUjTMcxgMc63YEJtp1DTKGmhMKP4glZZpAuGijzk51fifFQ//7N585Lg
-	 VS0iMt+WqVBSFgk5QJnNG02FIBd+bTsDbZzT9wQG5NQjArC/OzyKaS17FaCtfMIIbAQ==
+	bh=fDuBYK1zbIdOlCw8X2Y/vZ/8dG36WrZNJSZleCddeYk=;
+	b=P4IkcHtkAUIP5SBXOXfnmenHTafR21pYEIPTQAvqD7qKcs9WMnctDa5dR8JrPJJVqd4d
+	 WW9RZgneeQ1igQ3ANzuBdvPoea2+Ts/QE8/84uAjVQ4kWP7x+8qzQwqnXxNtDjxMyvO8e
+	 Y71WkW38YKlc7EUL0oHtMlArrl7TKvYXlq7zlyPdhzsu+ZP3FYZh3SeXcfpTFtq3hHi1r
+	 Om1CTPHN0ELL/HzJ/ZvgORCL7byQPRscu/9y5RnTK1FVw+ydaBglSmhuXt+XKxab44OnJ
+	 87+Wj9A9QqhhD3AjG2+bkx9lCwE5hs4+TBXP5MIOYAgJdQFXEqgsqA5b8xXhbdkwdyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GVUfcF1K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vnNIoUVD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21A76083637;
-	Sat,  7 Nov 2026 15:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B6F6083629;
+	Sat,  7 Nov 2026 15:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GVUfcF1K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906EF1F0089F;
-	Sat,  7 Nov 2026 15:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vnNIoUVD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE981F008A1;
+	Sat,  7 Nov 2026 15:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063760;
-	bh=ewSO2obtSolPvDRTT37tE5dH7mhdNQuvgKqg79bAxhM=;
+	s=korg; t=1794063762;
+	bh=fDuBYK1zbIdOlCw8X2Y/vZ/8dG36WrZNJSZleCddeYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GVUfcF1KAvkrecchto1krBfoqe9eS6I6lQyQ5lmAmRaS85GJu44CnS/kYISA5+pdz
-	 Fmkds18Awx5ss+5IWB2BlJBD30KjjAi2AlqucZeywhkz3o5dH6J8SzuNz5o7es6ajx
-	 TWfJ89il/8CA0CnkjD1iGUt5qsbEW/4w6OFP2U7E=
+	b=vnNIoUVDjhpyBQWz+0MIEl83MlbLgM4BgarRtX6Zk/hNbzKMgycRPu1Aw70PL+El3
+	 RCDvB+SB0qP6w+nu/H8nhe7jJIIu9LeSwnc9D77r95uXgwL3VDG35vj2VX/rU/MNf3
+	 6cuuFhSjlXbQksWrabhWVUBKLpdm2hPx+0rEu3Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 854/869] apparmor: avoid potential double free when remapping DFA tables
-Date: Sat,  7 Nov 2026 08:58:56 -0500
-Message-ID: <20261107134921.729563903@linuxfoundation.org>
+Subject: [PATCH 6.18 855/869] apparmor: check accept index + 1 is in bounds
+Date: Sat,  7 Nov 2026 08:58:57 -0500
+Message-ID: <20261107134921.755827297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,54 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Guanglei Zhu <zhugl3@xiaopeng.com>
 
-[ Upstream commit 7ccd884a5e5386f4c7d98625113f4924f70286b4 ]
+[ Upstream commit afe5d5a747393cb3d00795db31d7fce5108a766a ]
 
-When unpacking a DFA, aa_dfa_unpack() stores a table in dfa->tables
-before attempting to remap a 16-bit table to 32-bit.
+aa_lookup_condperms() returns perms[index + 1] when an accept entry has
+ACCEPT_FLAG_OWNER set and the subject uid does not match the file uid,
+so such an entry consumes two slots in the perms table.  But
+verify_dfa_accept_index() only checks that index is within the perms
+table, so a policy that sets the owner flag on the last entry is
+accepted, and the runtime lookup then reads perms[index + 1] one entry
+past the end of the table.
 
-However, remap_data16_to_data32() frees the original table when
-allocation of the new table fails. This leaves the corresponding
-dfa->tables entry pointing to freed memory. If the unpacking then
-fails, dfa_free() attempts to free the same table again.
+The perms table is allocated by unpack_perms_table() with a u16 size
+read from the policy blob, so a crafted policy can place the owner flag
+at index size - 1 to reach the out-of-bounds read.
 
-Only publish the table to dfa->tables after any required remapping
-has completed successfully, so that dfa->tables never contains a
-pointer to a table that has already been freed.
+Check that index + 1 is also in bounds when the owner flag is set.
 
-Fixes: 9208c05f9fdf ("apparmor: add support for 2^24 states to the dfa state machine.")
+Fixes: 6f442d42c0d89 ("apparmor: fix profile verification and enable it")
 Cc: stable@vger.kernel.org
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/match.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ security/apparmor/policy_unpack.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/security/apparmor/match.c b/security/apparmor/match.c
-index b2a4bee4e3939..e4ef1057e2c06 100644
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -397,7 +397,6 @@ struct aa_dfa *aa_dfa_unpack(void *blob, size_t size, int flags)
- 		/* check for duplicate table entry */
- 		if (dfa->tables[table->td_id])
- 			goto fail;
--		dfa->tables[table->td_id] = table;
- 		data += table_size(table->td_lolen, table->td_flags);
- 		size -= table_size(table->td_lolen, table->td_flags);
- 
-@@ -414,9 +413,9 @@ struct aa_dfa *aa_dfa_unpack(void *blob, size_t size, int flags)
- 				if (!table)
- 					goto fail;
- 			}
--			dfa->tables[table->td_id] = table;
- 			break;
- 		}
-+		dfa->tables[table->td_id] = table;
- 		table = NULL;
+diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
+index 1e1792d3ff5a4..391665c27ede1 100644
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -1244,6 +1244,15 @@ static bool verify_dfa_accept_index(struct aa_dfa *dfa, int table_size)
+ 	for (i = 0; i < dfa->tables[YYTD_ID_ACCEPT]->td_lolen; i++) {
+ 		if (ACCEPT_TABLE(dfa)[i] >= table_size)
+ 			return false;
++		/*
++		 * Accept indexes for owner-conditional permissions come in
++		 * pairs, so the non-owner entry at index + 1 must also be
++		 * in bounds.
++		 */
++		if (dfa->tables[YYTD_ID_ACCEPT2] &&
++		    (ACCEPT_TABLE2(dfa)[i] & ACCEPT_FLAG_OWNER) &&
++		    ACCEPT_TABLE(dfa)[i] + 1 >= table_size)
++			return false;
  	}
- 	error = verify_table_headers(dfa->tables, flags);
+ 	return true;
+ }
 -- 
 2.53.0
 
