@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064905;
-	b=pHvrAGYP0SaRFWx+zs0U8kvbEyn+wMI6uCR7ch+E3DEJV0mw9Gw9ejs2uY+qZrzn+mWF
-	 88eryGvPbWW1A+a8DpXSBsR6Bwj2kqorPmiv4OUxaL6aZMupBvl/+RE+3pydPrp3ONzAy
-	 4u1S/SuLvsiAlwkKdZmbclZZXBk5ZWoW5xTUfbxr/l148T7iAdDoFsDY8w3ilYcAZ1ZKO
-	 IdCDR3kWTM3CM3Ju3tDzy7SBJ2Ux05ONndZOWbEG6/vPQhzc9UPt80TJaVEWq1pQ8zrmM
-	 AeSq6nyXAbvcpdzs20560XkfYyry60r0jF2gc2EQkhubGNEqCXIAZE9+0PxtcxhepzQ==
+	t=1794064906;
+	b=iTC5s1ceRzTU4J2zSRPRS969ATBW9hBM4S0gcmZovC7ayfBj/p6CEBvk0uWkT/jGnYWx
+	 T/43XIw0ZvceUWGs1tGbm0k4PeG2taGIH40nnBsDmvCOPe1o70WnakTypoBTAzPjTFCU/
+	 zDkz9nNsbuspz4/4T8gmZzyp5REs4Tduo3UWhVCkr4SwV+wnCaXhjRcYOyO9aIX8jLGWy
+	 pi17L6r/S8Yfs8Ox0jtDnJS8akkCrFUEU0Fqt82CzRLhY6QkaF9CH0lJHhQn5gd3auk5J
+	 oYTUcZ03EkSfXE91x1BIHZ7Xb0Wp65Zj/exqcXUhsfbazSUzwTN7cGcpMtnTCCtb32g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064905;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TYhlFokkr3dsVtQlAy/fK5EMGSXIRgNP1eHLHc/+PNA=;
-	b=AGtaP6j+Kttb85wfmm0kBfFsCOUi1RIzWfGLcqYVHUbaq+fdy8SRdssFKllEOdHLDZpK
-	 jITAEpiWNaQnuOBJwlA4jPM2X+qFyEZQI3i9JxRRdKC3qpGAGjUkL9v6MtinoYXYIsN5j
-	 S0uRydkobUiKU1O/pM0c8yZB1A6WVv+nZtBa65IIGNMAiHzONPeNIasRVaXNVc5cMunk7
-	 xTO5PsngumTqy9BHFwKIYKJU0MVQKl0+3pcZNOFaA/VHUpxsj2puYsaaC6iC8DVQS11Rn
-	 2EaT+Mrbt2dW3a7xl0glzadytLQkfe47y9YKFueLdJNWrYOd5VPJ+8tnV2m1Xi/TJkg==
+	bh=aA/FUHFMSVCv5FHPA+/dIYcLET56TSGzXlvTFY4jwr4=;
+	b=av0xlTzP3Ept8aL1805H1T13dbce5ILG4Or9hhuNuCv54q72rOmM4iv/BsdyCnR3bQ2N
+	 wllFIlXxbobMnUz7a1cHwxTK/aAB9btjwyGa0psajg0cVFqkq+vjTNQ8SKw+BrDkg/ojz
+	 8yECy0eg7oxUunw8NJgQnh2H7BYekS4FpCP/edTerYnJ4rPUnGVQ1CYURlYT+6tiP7OXC
+	 xWdjS6+bvaeUy6kFt1dUd+k0rmwoIhVtFw+I9tzQz7oXRVz80l7V+t7liJm+1K7FpfKWA
+	 hXMZedx2uZoUsiZiu3VKf+8/mwKU4tzlAi5eQQ4M+zs8YxCtpE+mkMGgWKzcwulL7YA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zw3LqpL9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mT57U7EG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB42606A9CA;
-	Sat,  7 Nov 2026 15:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D219606A9CA;
+	Sat,  7 Nov 2026 15:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zw3LqpL9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C76D1F0089F;
-	Sat,  7 Nov 2026 15:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mT57U7EG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075301F0089F;
+	Sat,  7 Nov 2026 15:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064904;
-	bh=TYhlFokkr3dsVtQlAy/fK5EMGSXIRgNP1eHLHc/+PNA=;
+	s=korg; t=1794064906;
+	bh=aA/FUHFMSVCv5FHPA+/dIYcLET56TSGzXlvTFY4jwr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zw3LqpL9KuJqbj1hTqN9BU8G7JDVn5UGEhFKLhlS8LyjF9a8bZj1scM1t/iYKEfhZ
-	 41xSxE1Pgn3UNCjS5raw64drQzb5zGPo4k6/89NB5upRCcwGzu0/NMBw0fx8SFMxfZ
-	 oETEGsczngtRtcCHcvyl0mnUjlHZju5zkLNr5ups=
+	b=mT57U7EGFn5PA+wLDysapvvgVwMAueKC20fc9nON4URrb3+y2Z/vELFxtMxLWAj6n
+	 O4Ry2yVPrvVxhLdjrRYJnxSTM/5RSF8zM8ypW1kmC4Qc4k00YqScfk8FGjlX1+cijK
+	 yQTsYT4KIWfs2qgW/txbo3dXv+tMqncB/GaLeTQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladyslav Tymoshchuk <tvlad744@gmail.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0808/1257] ASoC: qcom: q6apm-dai: wrap the position of a full ring to 0
-Date: Sat,  7 Nov 2026 08:51:44 -0500
-Message-ID: <20261107135001.656878512@linuxfoundation.org>
+Subject: [PATCH 7.3 0791/1257] irqchip/jcore-aic: Fix lost IPIs on SMP
+Date: Sat,  7 Nov 2026 08:51:27 -0500
+Message-ID: <20261107135001.172250970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,74 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladyslav Tymoshchuk <tvlad744@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 0ea3e0b196f9dcc17b40ac881a6efef06459975b ]
+[ Upstream commit f556f008f704a8777c73fb3a4177dc57c0dbe769 ]
 
-q6apm_dai_pointer() turns the number of period buffers the DSP has
-returned in the current lap, 1..periods, into a position and reports
-one frame less than that. Commit a93dad6f4e6a ("ASoC: q6apm-dai: make
-use of q6apm_get_hw_pointer") added the "- 1" so that the end of the
-ring is not reported as a position equal to the buffer size.
+Since commit bdf4e2ac295fe ("genirq: Allow per-cpu interrupt sharing for
+non-overlapping affinities"), handle_percpu_devid_irq() only runs an
+action whose affinity mask contains the current CPU. Only actions set up
+through the percpu_devid request functions have such a mask.
 
-One frame short has a cost once the application stops feeding the
-stream. The DSP returns the last queued buffer and the position stops
-at appl_ptr - 1, so avail stays at buffer_size - 1, below the default
-stop_threshold. The DSP sends nothing more as its queue is empty, so
-no period interrupt comes either: ALSA never detects the underrun and
-the stream stays RUNNING. A poll-driven application that missed its
-last wakeup waits forever, and drain only ends on its timeout, with
--EIO. On capture, the last frame of each period is held back until
-the next one.
+handle_jcore_irq() passes every per-CPU interrupt to
+handle_percpu_devid_irq(). The J2 IPI is not a percpu_devid interrupt.
+j2_prepare_cpus() requests it with request_irq() and IRQF_PERCPU, so its
+action has no affinity mask and cpumask_test_cpu() reads through a NULL
+pointer. J2 has no MMU to catch this. The read returns whatever is at
+address 0, the action is not found, and IPIs are dropped as spurious
+("Spurious percpu IRQ20 on CPU1", printed once).
 
-Before that commit the position wrapped to 0 at the end of the ring.
-Do that again. A full lap is the start of the ring, and
-snd_pcm_update_hw_ptr0() accounts for the wrap: the position cannot
-move by more than one lap between two updates, as each returned buffer
-calls snd_pcm_period_elapsed() and the DSP holds at most periods
-buffers.
+Pass only percpu_devid interrupts (the PIT) to handle_percpu_devid_irq()
+and the other per-CPU interrupts to handle_percpu_irq() again, as before
+commit d7e3fd658248f ("irqchip/jcore-aic, clocksource/drivers/jcore: Fix
+jcore-pit interrupt request").
 
-Seen on a OnePlus Pad 3 (SM8750) with PipeWire in interrupt-driven
-scheduling: after a stall the PCM sat at hw_ptr 78239, appl_ptr 78240
-(avail 3839 of 3840) for two hours.
+Found with a two-CPU J2 model simulated from the J-Core RTL. Without
+this change the boot stalls with both CPUs idle shortly after
+"smp: Brought up 1 node, 2 CPUs". With it, the boot reaches userspace.
 
-Fixes: a93dad6f4e6a ("ASoC: q6apm-dai: make use of q6apm_get_hw_pointer")
+Fixes: bdf4e2ac295fe ("genirq: Allow per-cpu interrupt sharing for non-overlapping affinities")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Assisted-by: LLM
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Vladyslav Tymoshchuk <tvlad744@gmail.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Tested-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261014162703.10172-2-tvlad744@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260928035408.25871-1-kmehltretter@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-dai.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-jcore-aic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
-index 033197bdd8705..cac59c1015862 100644
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -498,11 +498,15 @@ static snd_pcm_uframes_t q6apm_dai_pointer(struct snd_soc_component *component,
- 		ptr = bytes_to_frames(runtime, index);
- 		return ptr;
- 	}
--	ptr = q6apm_get_hw_pointer(prtd->graph, substream->stream) * runtime->period_size;
--	if (ptr)
--		return ptr - 1;
-+	/*
-+	 * The hw pointer counts the period buffers the DSP has returned in
-+	 * this lap, 1..periods. A full lap is the start of the ring again:
-+	 * report 0 rather than one frame less, so that the position of a
-+	 * drained buffer reaches appl_ptr and ALSA sees the underrun.
-+	 */
-+	ptr = q6apm_get_hw_pointer(prtd->graph, substream->stream) % runtime->periods;
+diff --git a/drivers/irqchip/irq-jcore-aic.c b/drivers/irqchip/irq-jcore-aic.c
+index 94c05cf974be8..b4fee02997eee 100644
+--- a/drivers/irqchip/irq-jcore-aic.c
++++ b/drivers/irqchip/irq-jcore-aic.c
+@@ -37,8 +37,10 @@ static struct irq_chip jcore_aic;
  
--	return 0;
-+	return ptr * runtime->period_size;
+ static void handle_jcore_irq(struct irq_desc *desc)
+ {
+-	if (irqd_is_per_cpu(irq_desc_get_irq_data(desc)))
++	if (irq_is_percpu_devid(irq_desc_get_irq(desc)))
+ 		handle_percpu_devid_irq(desc);
++	else if (irqd_is_per_cpu(irq_desc_get_irq_data(desc)))
++		handle_percpu_irq(desc);
+ 	else
+ 		handle_simple_irq(desc);
  }
- 
- static int q6apm_dai_hw_params(struct snd_soc_component *component,
 -- 
 2.53.0
 
