@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063940;
-	b=AmEb4rrGwX0lhYmP7zJ3k+3LkxzLhZfP4J2qqH6ErNbLi0q4miEr5LL1jFFNUyuuqits
-	 e56WhTzacFeG03R0iVrcNcXrfpZF2C8+XZOrTcva7hchlDlLEbPqsSImenScRnEoPqULt
-	 jL7maEuQI1gYoWvXHyyIs/vxQBLVjaruqapTirh0AsNlalmoq/iaRyFeo5JB+PJDRWVO3
-	 5K8Cg5/TD89So26Eoab7LHHB6Lo8bTKwYpIbpJPsFtWhLPVVt0DOxG7hedXKVUAkCZ69u
-	 +Q1WeySOd8EIyfNKSOIlZi5cW6rLNdBQm2Fjju4zFqsK/4Qr+VKBXVMEykJlSynYcyQ==
+	t=1794063942;
+	b=gUc2CkjY7LgqdCx8IFKU/vxj0ffx5JD5xVuW2RaBSi1C2idS2X1NgfesFmLNHpJo8MDu
+	 yLMlGfEb+rJW5hLHf9jPuHRmoxSFpPyuwBmpiVvv1zJlopa+4/AOUeUo/f64+vDw93Kt3
+	 /Gbe1T1QhvFZnmC1J91wPBfblmoifD7nK74j5ILbDX6TRAdFJehrXZa93jf1rB6zRzB5e
+	 vIdFrYO+MT8Ck+7WfovFw7gLoYVVGf/adaZvH9k/T5wOu54IdcgNKj7gk4PywyxZ9OEua
+	 sYbSr6Y5R8rabbZMnBujnJjfjlNmVd2lSfcXelzlEQ+Ctr9A9nzWNrtjMplh62Xtn3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063940;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063942;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nhPG/n7kIs4VI7PlGiIHOSandl3caqcUoHKmaPfc5cE=;
-	b=Fx13t0JFA/UvsEVPw71qCZUhaxk2o+UpJTNzs08PPnlRb5L+Fx/8rMq5ajaJGX5gqHPU
-	 gXr2DDCwHpT4LjrgFge+59xg/wkt5piH/tB5xBjQxRDkQEg1CcaIVwuaimy4wt3RoONm/
-	 nV1x0C0ennnSVYVu+n36t5XOAwbSaoq5nOPve+eYaXE4KqQuSgI28y7WiRUSSXejCXpro
-	 bmIGtnBopDnUfRrrICCJnow+83q180RY51T1DuCeoRM2mFVlIUKmGKKM0DAwzwT0crdMf
-	 QJpQMZSZ5fLgP4xrXEIcQ9xPyjntNcZmrXzk2Gc/QrjYsL4u4EF3gLkluwTdlgbNjxg==
+	bh=y0a+kWrFBMH/xDBJQrevYw/UpQQXU3bAT4kXS/4slbg=;
+	b=IWlDRGDxaQpj8LeCiIgXt/Dc892kkZlFyH1YivyptXsRbefiW4zG75QdzuHQxnccu3aG
+	 WWSqMJIyYUpA7+H//xhWWkVisoS8OKwm84Op/V84SWP1XwTbAK3pmCioB5DBv9dzFYNTi
+	 PRKHStcIaLyj+QaGYkLWj5Xln0c7hZ4qF/vtT+P2agCEUK40A6UuCw1T990HhIRP4cd6f
+	 E8lOS4w2Em0/GgvOdQUs+si+UMaUsxFli/YHoHUbwT602c/FObQIir1jM9/mnf13apfKp
+	 dQakFj3eYjo95kdsR5qbibw6q+YWNM2c59tx6D0VQpcag5sSz5T7/rZ+S/TCkUyZuGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PThHyVt+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBMQQmMq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867C1606D829;
-	Sat,  7 Nov 2026 15:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA89A606D829;
+	Sat,  7 Nov 2026 15:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PThHyVt+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FE71F0089F;
-	Sat,  7 Nov 2026 15:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RBMQQmMq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4591F008A2;
+	Sat,  7 Nov 2026 15:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063940;
-	bh=nhPG/n7kIs4VI7PlGiIHOSandl3caqcUoHKmaPfc5cE=;
+	s=korg; t=1794063941;
+	bh=y0a+kWrFBMH/xDBJQrevYw/UpQQXU3bAT4kXS/4slbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PThHyVt+Y7ghWQ+EzV8CUhSM590PEAYpvZLkGzVd5J/pD7LOiYTkEOdjgXN7gQfvx
-	 xIDQ5V0mrkumj28YM2PRatxu4smbt1Gw0PkSBOEbu9rScoNEEtqnSqVdgVEHvaxY8q
-	 7TWRTS6a0x2gDwrCS5xam3NL2ta7AF6XryrsN2hg=
+	b=RBMQQmMqc18lJPTmJO7I2CWup4OoA5xjiLIK5Hw9maKH/FZsAwdGejYqOZjHav0rr
+	 ugnAKglf/41pk7EN96KNLv1BuCiOnGXT9ba1jbVexHjx20PZhb4XHkANfQhdJJ7OlA
+	 i4ITQ6MhtRwkf/a9MedbwdkhzHNWlAtH0tfMLl1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Jan Kara <jack@suse.cz>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Damon Ding <damon.ding@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0083/1257] isofs: fix Rock Ridge CE extent validation on multisession media
-Date: Sat,  7 Nov 2026 08:39:39 -0500
-Message-ID: <20261107134941.664843622@linuxfoundation.org>
+Subject: [PATCH 7.3 0126/1257] drm/bridge: analogix_dp: Restore mandatory samsung DP DT properties
+Date: Sat,  7 Nov 2026 08:40:22 -0500
+Message-ID: <20261107134942.805884501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,119 +68,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Liu <liubaolin@kylinos.cn>
+From: Damon Ding <damon.ding@rock-chips.com>
 
-[ Upstream commit 43de050fa4a31f7e7a73cf8974dcf6037e161a39 ]
+[ Upstream commit 02f569dd66c94dd67b2586f776235cf4177409ed ]
 
-Commit a36d990f5913 ("isofs: validate Rock Ridge CE continuation extent
-against volume size") compares the CE extent directly with s_nzones.  The
-extent is an absolute block number, while s_nzones is the number of blocks
-relative to the selected ISO session.  The comparison is therefore wrong
-when a multisession disc starts at a non-zero block.
+Revert the change that made samsung,link-rate and samsung,lane-count
+optional for Exynos DP. Add error checking to fail probe early if the
+required DT properties are missing.
 
-isofs_get_last_session() selects the last session on multisession
-media, and its volume descriptors describe a volume beginning at that
-session's LBA.
-For example, a session beginning at LBA 45447 with 64 blocks can contain a
-valid CE at absolute LBA 45467.  The existing check rejects that CE, so the
-ER continuation record is not read, Rock Ridge is disabled, and the mount
-falls back to Joliet names.
+If these properties are missing, video_info->max_link_rate and
+video_info->max_lane_count remain zero, and so do link_train.link_rate
+and link_train.lane_count used in the subsequent link training flow,
+resulting in link training failure.
 
-Save the selected session start in filesystem-block units and validate the
-CE extent against the half-open interval [session_start, session_end).
-Scale the session length to the same block units and retain a separate
-block-device limit.  The lower bound is intentional: accepting arbitrary
-blocks before the selected session could make a CE read data from a
-previous session or another filesystem on the device.
+There is no way at all a device can work without these properties.
+Here is the code flow when either max_link_rate or max_lane_count is 0:
 
-Only apply the bounds check when cont_extent is non-zero.  A zero extent is
-the in-memory sentinel indicating that no CE continuation was found, rather
-than a request to read block zero.
+  analogix_dp_commit()
+    -> analogix_dp_full_link_train(dp, max_lanes = 0, max_rate = 0)
 
-For a single-session image, session_start is zero and the effective volume
-boundary remains unchanged.
+  analogix_dp_full_link_train(max_lanes, max_rate):
+      // Read sink capabilities via DPCD and sanitize them
+      link_rate  = read_dpcd(DP_MAX_LINK_RATE);  // >= 0x06 after fixup
+      lane_count = read_dpcd(DP_MAX_LANE_COUNT); // >= 1 after fixup
 
-Build-tested with:
+      // Clamp by the limits from DT
+      if (link_rate > max_rate)    // 0x06 > 0, always true
+          link_rate = max_rate;    // link_rate = 0
+      if (lane_count > max_lanes)  // 1 > 0, always true
+          lane_count = max_lanes;  // lane_count = 0
 
-    make CONFIG_RUST= CONFIG_RUST_DRIVERS= fs/isofs/
+      // Configure TX with the zeroed values
+      set_link_bandwidth(link_rate = 0)
+          // writel() is only executed for bwtype == 0x06/0x0a,
+          // so LINK_BW_SET is never written and stays at
+          // reset value; phy_configure() gets link_rate = 0.
 
-Fixes: a36d990f5913 ("isofs: validate Rock Ridge CE continuation extent against volume size")
+      set_lane_count(lane_count = 0)
+          // writel(0, ANALOGIX_DP_LANE_COUNT_SET) enables 0 lanes;
+          // phy_configure() is called with lanes = 0.
+
+      // Program sink for link training
+      drm_dp_dpcd_write(DP_LINK_BW_SET, {link_rate = 0/lane_count = 0})
+          // DP spec requires link rate in {0x06, 0x0a, 0x14} and
+          // lane count in {1, 2, 4}. Writing zeros is illegal, so
+          // the sink cannot enter the training state.
+
+      // Training loop
+      for (lane = 0; lane < lane_count /* 0 */; lane++)
+          // loop body never executes; training_lane[] stays
+          // uninitialized and no training register is programmed
+
+Since the sanitized sink values are always non-zero (link_rate >= 0x06,
+lane_count >= 1), the clamping with a zero maximum unconditionally
+forces the training parameters to zero. Clock recovery can never be
+achieved, so link training fails deterministically.
+
+Consequently, making these properties mandatory again cannot break
+any existing device: a DT without them could never have worked in
+the first place. Failing probe early with a clear error message is
+more helpful than a silent link training failure at runtime.
+
+Fixes: 0d0abd894ead ("drm: bridge: analogix/dp: add max link rate and lane count limit for RK3288")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
-Link: https://patch.msgid.link/20260907082602.3777551-1-liubaolin12138@163.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+Link: https://patch.msgid.link/20260828065153.590802-4-damon.ding@rock-chips.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/inode.c |  2 ++
- fs/isofs/isofs.h |  2 ++
- fs/isofs/rock.c  | 11 +++++++++--
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/fs/isofs/inode.c b/fs/isofs/inode.c
-index 337836a0a1704..b766b5c9c593b 100644
---- a/fs/isofs/inode.c
-+++ b/fs/isofs/inode.c
-@@ -821,6 +821,8 @@ static int isofs_fill_super(struct super_block *s, struct fs_context *fc)
- 	if (!sb_set_blocksize(s, orig_zonesize))
- 		goto out_freesbi;
- 
-+	sbi->s_session_start = (sector_t)vol_desc_start <<
-+				(ISOFS_BLOCK_BITS - s->s_blocksize_bits);
- 	sbi->s_nls_iocharset = NULL;
- 
- #ifdef CONFIG_JOLIET
-diff --git a/fs/isofs/isofs.h b/fs/isofs/isofs.h
-index dacb9cdae4fd1..79ca0256843aa 100644
---- a/fs/isofs/isofs.h
-+++ b/fs/isofs/isofs.h
-@@ -35,6 +35,8 @@ struct isofs_sb_info {
- 	unsigned long s_firstdatazone;
- 	unsigned long s_log_zone_size;
- 	unsigned long s_max_size;
-+	/* Session start in filesystem block units. */
-+	sector_t s_session_start;
- 	
- 	int           s_rock_offset; /* offset of SUSP fields within SU area */
- 	s32           s_sbsector;
-diff --git a/fs/isofs/rock.c b/fs/isofs/rock.c
-index 2628f31bd3a5d..84e0d764c2100 100644
---- a/fs/isofs/rock.c
-+++ b/fs/isofs/rock.c
-@@ -9,6 +9,7 @@
- 
- #include <linux/slab.h>
- #include <linux/pagemap.h>
-+#include <linux/blkdev.h>
- 
- #include "isofs.h"
- #include "rock.h"
-@@ -84,6 +85,10 @@ static void init_rock_state(struct rock_state *rs, struct inode *inode)
-  */
- static int rock_continue(struct rock_state *rs)
+diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+index 30c0c0b41d5aa..4213cd68d5a0d 100644
+--- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
++++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+@@ -1248,6 +1248,7 @@ static int analogix_dp_dt_parse_pdata(struct analogix_dp_device *dp)
  {
-+	struct super_block *sb = rs->inode->i_sb;
-+	struct isofs_sb_info *sbi = ISOFS_SB(sb);
-+	sector_t session_end = sbi->s_session_start +
-+		((sector_t)sbi->s_nzones << (ISOFS_BLOCK_BITS - sb->s_blocksize_bits));
- 	int ret = 1;
- 	int blocksize = 1 << rs->inode->i_blkbits;
- 	const int min_de_size = offsetof(struct rock_ridge, u);
-@@ -101,11 +106,13 @@ static int rock_continue(struct rock_state *rs)
- 		goto out;
+ 	struct device_node *dp_node = dp->dev->of_node;
+ 	struct video_info *video_info = &dp->video_info;
++	u32 val;
+ 
+ 	switch (dp->plat_data->dev_type) {
+ 	case RK3288_DP:
+@@ -1269,10 +1270,14 @@ static int analogix_dp_dt_parse_pdata(struct analogix_dp_device *dp)
+ 		 * NOTE: those property parseing code is used for
+ 		 * providing backward compatibility for samsung platform.
+ 		 */
+-		of_property_read_u32(dp_node, "samsung,link-rate",
+-				     &video_info->max_link_rate);
+-		of_property_read_u32(dp_node, "samsung,lane-count",
+-				     &video_info->max_lane_count);
++		if (of_property_read_u32(dp_node, "samsung,link-rate", &val))
++			return dev_err_probe(dp->dev, -EINVAL,
++					     "Failed to get samsung,link-rate\n");
++		video_info->max_link_rate = val;
++		if (of_property_read_u32(dp_node, "samsung,lane-count", &val))
++			return dev_err_probe(dp->dev, -EINVAL,
++					     "Failed to get samsung,lane-count\n");
++		video_info->max_lane_count = val;
+ 		break;
  	}
  
--	if ((unsigned)rs->cont_extent >= ISOFS_SB(rs->inode->i_sb)->s_nzones) {
-+	if (rs->cont_extent &&
-+	    (rs->cont_extent < sbi->s_session_start ||
-+	     rs->cont_extent >= session_end)) {
- 		printk(KERN_NOTICE "rock: corrupted directory entry. "
- 			"extent=%u out of volume (nzones=%lu)\n",
- 			(unsigned)rs->cont_extent,
--			ISOFS_SB(rs->inode->i_sb)->s_nzones);
-+			sbi->s_nzones);
- 		ret = -EIO;
- 		goto out;
- 	}
 -- 
 2.53.0
 
