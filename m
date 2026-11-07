@@ -1,57 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063357;
-	b=paBZ0Ndlv1IW/bDnjbe5DBcmSKI9nOsvjTWj1YIWjAe55aGW/5wk7lSOtXH8Cl32Ziww
-	 xSkP5tKvYSYlAZRRWD9jbqUVIlQVgOCfjB6PNvQf6exDx2nzzJbL95fpnC/rT02Su5J0f
-	 Mc+rX/glyTVeOXugSJ5FsHnwOZQnKngRr0QCO5/lh9zA4FwYmdCiMEKTNmodp66H8bSWB
-	 lB+oHwv7qdqghy3+wtPZqEBLsKGCNqvmYeTdTT8w8rmXZw6svEB2jNwPJzMeeyrYXuJTm
-	 +FalpDVu15LAL3qZEJRsfB/eN6D63J9FLc7ud2ohAeEF2GxblsaBEHHBCpNHiEEtHEA==
+	t=1794063358;
+	b=tFXKgQNTiJ5bsRdBzlEQbD5N27U/uuGoLAFnU0glUqDV9Fum/rI9Reh/JTIxwWQg7B6x
+	 +5lqsA97qAOxLgBwM18sPRtnADIuaj8eFRZjQKFV9VYwie6ossYXbzcFZc/aCOFW7L3vE
+	 ufYbtkvnO3zTN8/0M6BsscdHk1dSTEW2VKmI2I0MNTE/XzjqI9C6KP16eRIl58WVOAPsR
+	 scWaYyCqezwfosNT4eYnNHkHr1BA2uyQhZ3rU+TiHbUrhTP2HHRfoE1op2chHPXAIdGXY
+	 ePMWu3JfGUKkj53fa/EYTqJ5JX1z5/975OVKuwb5Y8iNxj7jvLxQO/TA2effHSqp6gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063357;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063358;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HUwhMjgV4B2QE9ndvlkk2yHEjm3VmOOK3bUbe7t8W3E=;
-	b=gqL1NLMUDcy7+oIP76Rpv1stUvgPNqvFAMOH3g8ZsVUaoPPc1w5GaBJ+d0PampPF8gbt
-	 Z22PHwEcQXg+Y8C9UDmVXGw8v8QbvYvNHG3Owykmog2niF7Z9YCVYQhcUJ8nJa+JjCkn3
-	 Fmr1fz8LxrTmC8vfTnCd1tqGXU3hUssWms22BPOXd22PJUZH3NGSioxwQ+FowgbYBLTdB
-	 JwamoXaMdDX7heWzKQrMXuUQGy4ae31SYRghn+7iSoGh2wOdWRLZRTZ0lOJTc+T8GjgUk
-	 hEkM/Et4pljzB4pcKeO4jTGhRbX9sc9FxnwSTW/ul9C7oDkmkHwsVyT98b/CaiDly3A==
+	bh=EWEIJuChYGoLJLH6PrNYwVKQ+4fEfyB6P9TmRNy/Q9A=;
+	b=licX5s6KfLJkjx2aQRtqpvr4tUQxuFSOxhykVWEBdBjskHblmuwUHqjtDDK83hu2haQl
+	 QyvhZ3Z0NFkPuN7Tcq7rHgTZA9eH7VmzKyB3GH+HpzwtW8taRlAUwiBKKgZpS4CFl9SP+
+	 vitbSy6Yr3GO/CteOA22jZ3NiL3SgenF9vfJFNHl9K0H5AM7+VeUZEzROKLCMyiJn5gsT
+	 EzVNfL3mIu9Y2xFTd5LYqAZBMB/9ix8ROR6C/YeEzRQFfMMyWr6I9ukYIM0pWP8WALaAs
+	 P4rbuDy7zTDba870T6X02nPyWdueVj84TWSGHKZjhsGm0nGtS/QroFwD+mQX55T/3Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xErSNM70;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Za31+DnB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E8F606A336;
-	Sat,  7 Nov 2026 14:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFD4606A336;
+	Sat,  7 Nov 2026 14:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xErSNM70
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB9F1F0089F;
-	Sat,  7 Nov 2026 14:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Za31+DnB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475851F0089F;
+	Sat,  7 Nov 2026 14:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063357;
-	bh=HUwhMjgV4B2QE9ndvlkk2yHEjm3VmOOK3bUbe7t8W3E=;
+	s=korg; t=1794063358;
+	bh=EWEIJuChYGoLJLH6PrNYwVKQ+4fEfyB6P9TmRNy/Q9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xErSNM70MDctUqfEo9TijsDa3FDwVVXrj4req+295X/Qptc3ZT5vzVpb6Z8K5nayc
-	 dwm/6Muzq0R8JXo+zt7chXwJm+CCdCVAE/21Fa17n7TZhAufoeH4j5AuU30qxLNsKp
-	 LF4GV3Uq95Th4IQiCYQdX8E598pZcQWGiFCnZ1Kw=
+	b=Za31+DnBwggyKtdyrDJWxwFYx+T6xN/ayOPW4/I12VN3KE7bPKLAkYuFUV3ql6210
+	 uAYKrkYqjIsE/Ki5I+Bovd8cHYUjsDkqVsi8x9hMv+g152FUB6yuVN4jAw1epTJwfa
+	 LGI7CQz4pf8mDDsfh5pkCYOAzUcv9YOmHpPQpKUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <brads@mainlining.org>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Guenetr Roeck <linux@roeck-us.net>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Wang Jinchao <wangjinchao600@gmail.com>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Alain Knaff <alain@knaff.lu>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 536/869] panic: flatten nmi_panic control flow
-Date: Sat,  7 Nov 2026 08:53:38 -0500
-Message-ID: <20261107134911.613874956@linuxfoundation.org>
+Subject: [PATCH 6.18 537/869] lib: decompress_bunzip2: fix integer overflow in run-length decoding
+Date: Sat,  7 Nov 2026 08:53:39 -0500
+Message-ID: <20261107134911.644007068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -73,41 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <brads@mainlining.org>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-[ Upstream commit 75eb687ff2bcec9fba31bbe266e5f91e5c283efe ]
+[ Upstream commit b822ad8d702df0be9fe3f24f71caeb0522d72319 ]
 
-panic() is __noreturn, so the else after panic_try_start() is dead.  Drop
-it so the force_cpu path can be added cleanly on top.
+The RUNA/RUNB decoder in get_next_block() accumulates a run length into
+the signed int t with no bound.  runPos doubles per symbol, so t grows as
+at least 2^n-1 and reaches INT_MAX after 31 RUNA symbols.  The guard that
+follows, dbufCount+t >= dbufSize, is itself a signed addition, and as the
+kernel builds with -fno-strict-overflow it wraps negative once dbufCount
+is nonzero, so the guard is skipped.  while (t--) dbuf[dbufCount++] = uc
+then writes INT_MAX entries into a buffer holding at most 900000.  One
+literal symbol ahead of the run is enough to make dbufCount nonzero.
 
-Link: https://lore.kernel.org/20260916182957.7788-3-brads@mainlining.org
-Signed-off-by: Bradley Morgan <brads@mainlining.org>
+Bound t to the block size as it is accumulated.  t only grows within a
+run, so the value tested never exceeds the final run length; any stream
+that decodes today satisfies dbufCount+t < dbufSize at the flush, hence t
+< dbufSize throughout, and no such stream is rejected.  Because t grows as
+at least 2^n-1 the bound trips by the 20th symbol, leaving runPos at most
+2^19, so the following runPos <<= 1 cannot overflow either.
+
+Link: https://lore.kernel.org/AS8P251MB00010FE5E38D253CF98A652AC8B92@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Cc: Guenetr Roeck <linux@roeck-us.net>
-Cc: Sashiko <sashiko-bot@kernel.org>
-Cc: Wang Jinchao <wangjinchao600@gmail.com>
-Cc: Wim Van Sebroeck <wim@linux-watchdog.org>
+Assisted-by: LLM
+Cc: Alain Knaff <alain@knaff.lu>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/panic.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ lib/decompress_bunzip2.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/panic.c b/kernel/panic.c
-index b13f040680ac1..7f8725f2154b8 100644
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -364,7 +364,8 @@ void nmi_panic(struct pt_regs *regs, const char *msg)
- {
- 	if (panic_try_start())
- 		panic("%s", msg);
--	else if (panic_on_other_cpu())
+diff --git a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
+index 4f98cdea7e0b3..b8fb40ed06d22 100644
+--- a/lib/decompress_bunzip2.c
++++ b/lib/decompress_bunzip2.c
+@@ -428,6 +428,10 @@ static int INIT get_next_block(struct bunzip_data *bd)
+ 			t += (runPos << nextSym);
+ 			/* +runPos if RUNA; +2*runPos if RUNB */
+ 
++			/* Bound the run so t and runPos cannot overflow. */
++			if (t >= dbufSize)
++				return RETVAL_DATA_ERROR;
 +
-+	if (panic_on_other_cpu())
- 		nmi_panic_self_stop(regs);
- }
- EXPORT_SYMBOL(nmi_panic);
+ 			runPos <<= 1;
+ 			continue;
+ 		}
 -- 
 2.53.0
 
