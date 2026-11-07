@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065286;
-	b=bK4QdvPVrbRNS5DCjv6SxZT9qD5QsZPSK7fWGgriROehxWJAUrJ7nUpD7jkRqerC+DAi
-	 Bqv+iltcPbLgHuo+q1ApWRi4BDLomsR6GhIvY1GkcNSnM+yP/ALdZFmj2a9IByN2kvi/1
-	 jkwhsMDEHivMyBH3IPmycnZCUSUiwYO762wiqnaEUo60HOUg6TewRTiJ7ta3mtrvuEVAo
-	 ucW6yvp0Mkb406A2tM0y4znZEWBBz3x3Vzwr5OzgSc6PQM4itT2qW0ElJEItSFqiK+Nl9
-	 jL/TME4oahqviXIJVmbueFIFh62zioGILRra+gFPBGVgQbZNi5XWwcrt81WnaRIECvA==
+	t=1794065287;
+	b=05R8bYKFbU9CX3rGQOBY+eSgv8TVi2iaiBsAiZpbKRs35H0fdmoux3lOoPay1HLi7g7j
+	 ATe90GwN8HMY2qlnRr1q66GDsSVkocHl01UyXqebEgx5KZmZzXnBnoNyCI9YMYECc4tnx
+	 Ou/JMdxdRevaQSPDrXFKiRd4soL+fB38tJEF1cJWghDM545qEDqNCdHUEij7G9zv2jKtn
+	 MBPcHzRVYATTUrlp/aEFhjVQeqlj6ARi/kolURMmdpAS0Pg0PHrbD1jpkpNM0bNQdsY9o
+	 fnlBDfvXj1GgCiSEV6vipeQbLboByRKUMhRJL+ruh43F0u5cKhvFWSwRDr/ot32Xmrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065287;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9kaiW/bo/VHT8fqrgnvUIVJfyJw3gRCMkHWZr/iuNd0=;
-	b=VeT3r0RL+TgA+jfwQKlfbWgEuFcsv9AufHkLu/Gc1i3+V4qjggPDT1zUQACzk0kk5DJH
-	 Qz0hjKzlXQWZx+6CQ0VoYiUIJRed7TZMYOipm2msyigJbgRZFlE9wmpgROcjuJlJSN1yl
-	 st3aUGP1ccrnqLsf+QNK3mAfP/YFyDwAyDmBhtklpXdjbRcINdlnUHu2FpwIcM00urhFt
-	 W0WFewAMjKnG2VXwwX2GZhwhWqWj82urWHO6k8pACAd8Ms52IaOsSjqsSyk3JB01r24bb
-	 nkq+dEA5IwIjXjtRrYBbJTMw+Sd40nld6IYQvr2Q3dq9umE67WPSplOj9uspWArkuDw==
+	bh=p30YaA2hM2IWfo2eztuyKWGtMudwdnDUqvkvSVsBJHk=;
+	b=jlQicmLdktUaBXBS8dksQXdD4o2wlB7IuJ5qXEMLLpgwWxLAkvxh/R0ng1HGuh56i19X
+	 b3UX7PEY15wKFyjQ6VscMlRUzrzaTqWZa9CPXFBk2d7chlTIhIefKUiJaVPOW+92iF2of
+	 wu9o7NpvzvUF/M+noSk0VA3UNGMQB94ziCSsZKCShgwlk3i9yXvWtkSvrimNFW3DxYFjo
+	 4x3OBOd0oiaXjT9W1jpypB+y8IyCAX8LabhS44aIYa53aI9HPY9lTtDiOeUGwT43cjaqI
+	 I8dHtjcgJ4/QBBu0Tvd4DCcbSwYpPT58rqopnChmkN/hi+jkHhi2Y5bEC0xi+y+Flyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=En21A71b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J9vG/n3b";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F747606A32D;
-	Sat,  7 Nov 2026 15:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A69606A331;
+	Sat,  7 Nov 2026 15:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=En21A71b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCEE1F008A1;
-	Sat,  7 Nov 2026 15:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9vG/n3b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E2C1F008A2;
+	Sat,  7 Nov 2026 15:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065286;
-	bh=9kaiW/bo/VHT8fqrgnvUIVJfyJw3gRCMkHWZr/iuNd0=;
+	s=korg; t=1794065287;
+	bh=p30YaA2hM2IWfo2eztuyKWGtMudwdnDUqvkvSVsBJHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=En21A71b8y0u6RYXIFWp/K78DgqqqvMS16ezvnN5OKWteXbIFLiYyyzuLGYm26mOh
-	 r8PgCEgxerDOjjyopd3kGdwc/7RGJohdfSK0vJC2z4lOQIWw6f4DoKVr2YouHmG43e
-	 0/0xkvuBfKfPmtxBNhY5fMcUAIX7PB/YjIMsggyg=
+	b=J9vG/n3bNQbBvBAYTNHvSYo3Rlmo3v+ttxRBlMPwBZBG0/oghskAbpyRo0E7CWQ4D
+	 cQzUokdPesrVON8Y39BSYYONYMnf+HpQGgZmyGkcLrKbQnsvBbXs4qnTaMoNYRs/eB
+	 UXEjXCV6zsWCGIkuepN9Y2JUUySj12Q9Em8Mx51k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@kernel.org>,
-	Igor Velkov <iav@iav.lv>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1046/1257] genirq/kexec: Do not take the bus lock of an interrupt chip on the crash path
-Date: Sat,  7 Nov 2026 08:55:42 -0500
-Message-ID: <20261107135008.194527072@linuxfoundation.org>
+Subject: [PATCH 7.3 1029/1257] tpm: tpm2_probe: propagate transport errors
+Date: Sat,  7 Nov 2026 08:55:25 -0500
+Message-ID: <20261107135007.743175564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,130 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Velkov <iav@iav.lv>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 717862eac6eff0eea8ac30a0c0de0bed84922aab ]
+[ Upstream commit 7d4f1cbfe063af5581dac66abe9e9c965e1031cc ]
 
-machine_kexec_mask_interrupts() calls irq_set_irqchip_state() for every
-started interrupt. That function takes the bus lock of the chip and
-desc->lock, and syncs the chip when it drops them. On the crash path
-interrupts are off and the other CPUs are stopped, so a chip whose bus
-transfer is completed by an interrupt never returns from the sync.
+tpm2_probe() reads the protocol version from the response tag and is
+documented to return -errno on failure, but it always returns 0.  A
+transport error (tpm_transmit_cmd() < 0) is thus swallowed together with
+the intentionally ignored TPM response code, leaving TPM_CHIP_FLAG_TPM2
+unset. A transient bus failure on the first command then misdetects a
+TPM 2.0 as a 1.2 and the probe fails on the TPM 1.2 path:
 
-On RK3399 boards with an RK808 PMIC the RTC alarm interrupt belongs to
-the regmap-irq chip of the RK808, which sits on I2C. rk808_irq_chip sets
-init_ack_masked, so regmap_irq_sync_unlock() writes the ack register on
-every unlock, and the I2C controller needs its own interrupt to finish
-the transfer. A panic with a crash kernel loaded prints
+  tpm_tis_i2c 0-002e: 1.2 TPM (device-id 0x1C, rev-id 22)
+  tpm tpm0: A TPM error (-62) occurred attempting to determine the timeouts
 
-  SMP: stopping secondary CPUs
+Return the transport error instead; rc >= 0 still means a valid header was
+received and the TPM's own response code is still ignored.
 
-and then nothing until the watchdog resets the board.
-
-machine_kexec_mask_interrupts() takes neither lock for the other
-operations on the descriptor. Move the search for the chip that
-implements irq_set_irqchip_state() into __irq_set_irqchip_state(), which
-takes no locks, and call it from machine_kexec_mask_interrupts().
-
-Fixes: 78fd584cdec0 ("arm64: kdump: implement machine_crash_shutdown()")
-Suggested-by: Thomas Gleixner <tglx@kernel.org>
-Signed-off-by: Igor Velkov <iav@iav.lv>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Fixes: 94e266ba1fa3 ("tpm: migrate tpm2_probe() to use struct tpm_buf")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261015-kexec-irq-bus-lock-v2-1-2af15f0757b6@iav.lv
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20261001060114.1582092-1-alexander.sverdlin@siemens.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/internals.h |  1 +
- kernel/irq/kexec.c     |  2 +-
- kernel/irq/manage.c    | 43 +++++++++++++++++++++++-------------------
- 3 files changed, 26 insertions(+), 20 deletions(-)
+ drivers/char/tpm/tpm2-cmd.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
-index 2c30e7537987c..703a062be8783 100644
---- a/kernel/irq/internals.h
-+++ b/kernel/irq/internals.h
-@@ -83,6 +83,7 @@ enum {
- #include "settings.h"
- 
- extern int __irq_set_trigger(struct irq_desc *desc, unsigned long flags);
-+extern int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val);
- extern void __disable_irq(struct irq_desc *desc);
- extern void __enable_irq(struct irq_desc *desc);
- 
-diff --git a/kernel/irq/kexec.c b/kernel/irq/kexec.c
-index 1a3deffe6b5b6..f245b98764225 100644
---- a/kernel/irq/kexec.c
-+++ b/kernel/irq/kexec.c
-@@ -25,7 +25,7 @@ void machine_kexec_mask_interrupts(void)
- 			 * First try to remove the active state from an interrupt which is forwarded
- 			 * to a VM. If the interrupt is not forwarded, try to EOI the interrupt.
- 			 */
--			check_eoi = irq_set_irqchip_state(i, IRQCHIP_STATE_ACTIVE, false);
-+			check_eoi = __irq_set_irqchip_state(desc, IRQCHIP_STATE_ACTIVE, false);
- 		}
- 
- 		if (check_eoi && chip->irq_eoi && irqd_irq_inprogress(&desc->irq_data))
-diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index 3b647d9b458ad..ec3ecb0e48cec 100644
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -2748,6 +2748,28 @@ int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which, bool *
+diff --git a/drivers/char/tpm/tpm2-cmd.c b/drivers/char/tpm/tpm2-cmd.c
+index ae22295df7981..119c73a603e65 100644
+--- a/drivers/char/tpm/tpm2-cmd.c
++++ b/drivers/char/tpm/tpm2-cmd.c
+@@ -483,8 +483,9 @@ int tpm2_probe(struct tpm_chip *chip)
+ 		out = (struct tpm_header *)buf->data;
+ 		if (be16_to_cpu(out->tag) == TPM2_ST_NO_SESSIONS)
+ 			chip->flags |= TPM_CHIP_FLAG_TPM2;
++		return 0;
+ 	}
+-	return 0;
++	return rc;
  }
- EXPORT_SYMBOL_GPL(irq_get_irqchip_state);
+ EXPORT_SYMBOL_GPL(tpm2_probe);
  
-+int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val)
-+{
-+	struct irq_data *data = irq_desc_get_irq_data(desc);
-+	struct irq_chip *chip;
-+
-+	do {
-+		chip = irq_data_get_irq_chip(data);
-+
-+		if (WARN_ON_ONCE(!chip))
-+			return -ENODEV;
-+
-+		if (chip->irq_set_irqchip_state)
-+			break;
-+
-+		data = irqd_get_parent_data(data);
-+	} while (data);
-+
-+	if (data)
-+		return chip->irq_set_irqchip_state(data, which, val);
-+	return -EINVAL;
-+}
-+
- /**
-  * irq_set_irqchip_state - set the state of a forwarded interrupt.
-  * @irq:	Interrupt line that is forwarded to a VM
-@@ -2762,25 +2784,8 @@ EXPORT_SYMBOL_GPL(irq_get_irqchip_state);
-  */
- int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which, bool val)
- {
--	scoped_irqdesc_get_and_buslock(irq, 0) {
--		struct irq_data *data = irq_desc_get_irq_data(scoped_irqdesc);
--		struct irq_chip *chip;
--
--		do {
--			chip = irq_data_get_irq_chip(data);
--
--			if (WARN_ON_ONCE(!chip))
--				return -ENODEV;
--
--			if (chip->irq_set_irqchip_state)
--				break;
--
--			data = irqd_get_parent_data(data);
--		} while (data);
--
--		if (data)
--			return chip->irq_set_irqchip_state(data, which, val);
--	}
-+	scoped_irqdesc_get_and_buslock(irq, 0)
-+		return __irq_set_irqchip_state(scoped_irqdesc, which, val);
- 	return -EINVAL;
- }
- EXPORT_SYMBOL_GPL(irq_set_irqchip_state);
 -- 
 2.53.0
 
