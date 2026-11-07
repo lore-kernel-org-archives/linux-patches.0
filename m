@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065237;
-	b=pPwl1DY5tuaKveRJvdEeQqyaTrFZqYtUcjoVfHOvlNC4BCsazbDPEly+5OFYNfJ7UnxW
-	 NJW2H777Xo2IawnEiRs7WL70VXnVROpEcjpnmf2NAuENGqDfpMMn+UEjPinjdB2BZCq/R
-	 hDx3A+zrsrNqMiX33NHrmRqhf8mtv75aPAakifDGfUd9gLz+Kfg0M668TMrTNBRNQ6JbX
-	 3Hfe9DnqxS7yYAZeZ9qTh0Jnqy5pNc5oNgCga3Tj+VdBuB9/DNbyIyeY2MIw+tRCLvl/b
-	 YiLS3mlJBt7ASgh0Tje6IgQP5oXHuTLyccEdvgVBWgwud498rSmLrKaBrUQsqm8WJEA==
+	t=1794065240;
+	b=pFYCcrLWqjUucLPJGRMFcQmBibAstq83KgLoFQEm6+PpTEG+WSUwH4QP5/nmIWSx1g8F
+	 F6CjBTNpTnoVSgyGY3kBiq77fFjovbW3QHlGX/AoiE3CWWkrNkt8Y3gk5q7c3js1OjMWg
+	 Q9VB4o/ghweF+Hgtsyng4iyzUGWqciprfO7FsgmSxxKn5GuXWL/uYlr0ylhWTuzWUTEg9
+	 uLCCjRXwubk+HhFHOQfBmJGbdvUMi4RlizB7ccOCgZJtqzeQE6qGZ9N/xf9rBTszgKtk6
+	 D7WOELaZSN829nBOwebwIV7ZAF/ur1PVCCoZe8CWHg8gK4YNFyc+m7YVuPC0yuQYYrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065237;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065240;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dbwAe1YM7JSEK/FOaSfT2/5PkEvUPNb6zOpX8oOGPNA=;
-	b=y12/Vq4GTd7VuvXIlPB+4h3BZa42oksXY6L67OqAT0DjSNLDfIfiMeAgB6K+NnXektrz
-	 9ZjkBqpP9vqV3S+XAbuhc8A+qRY66L53aqn45fEsPht0/x86mlHgX5YPlpRGqsuKyjUOh
-	 c4fjbJCuowGAXB706sUQFRgDpncZvicTAOHM70kEmjldKdh4edfg41Cln+SMphOKG/CcD
-	 CdwAv1eUV15dObv4CxmxC9umcSRl6c1xlG0D6mfsmTAKTVTCiOoEnvoPLEZT2q4jKJT7e
-	 zq4R6vqsiOpA7xdmagw5r0+cP12LgJU8mWZA1Yj1ca5NRlEH/Al2TH/T5jkBNJv4W1w==
+	bh=cGlnTOEVd6wCMMxiQjhGGnmIba9BsS94CRMR9TwJ2sQ=;
+	b=NBFrBnfKOLd20dqQLCizCnGMJFiW3RlDh9DPXr8rU0OUq+4khX+vc4i1rKq9h1l7PBtc
+	 Pz7P0rhoZjgovJaqMl404GA5i5fpR6K8XZgaccpAImBlvdyjb0vo3j9EI7RD2CJCo6XCa
+	 G2g3fK4GYMFi+XwGjwBpUYfe9x3TwubeksOAnzd6etXCgEKXutYLcEta1RsyEKXELDgSI
+	 krjdBT0bMfWLYKuIF3q0YzKYCFxIn4tXE1znqIfveM16tdVPKrLZ13DhIzumMU0eVGAPs
+	 FsfQ8tUfDiOZ8lbsjdVdNAYZMDi5JelJqvHyMQQgqyc2R8IjjykNi+k3UXS7U11LDqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1PMa7b5e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=11EIc2Li;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB35606A32E;
-	Sat,  7 Nov 2026 15:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD36606A32E;
+	Sat,  7 Nov 2026 15:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1PMa7b5e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2EB81F0089F;
-	Sat,  7 Nov 2026 15:27:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=11EIc2Li
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0241F0089F;
+	Sat,  7 Nov 2026 15:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065236;
-	bh=dbwAe1YM7JSEK/FOaSfT2/5PkEvUPNb6zOpX8oOGPNA=;
+	s=korg; t=1794065239;
+	bh=cGlnTOEVd6wCMMxiQjhGGnmIba9BsS94CRMR9TwJ2sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1PMa7b5eKNVPmlh+0KK0XtaUq3G4d6o79hACw2n/zqWHu4VhPA+uaFEvaTCRgj+Po
-	 U0zfnCRVVX0qhGATG9PZbp3eKjv4vAez07olkSryf/5y3k4EoQBuLdfK9QPSr5v3FH
-	 Trcbqf5qySpt3zJqZIDfqIbbI5TOlxSFAcn1z0r8=
+	b=11EIc2Liss58Lsr4LKLI29SfJeQNdE/SkOkN9uJRCN/l3lGnUdwi0UOLgNjc+5D1d
+	 aqZSt7uYP6YcQ6dv1yvPAuP5NRc65o9/SXISMArm4B5WoxIaov3r+AhDaQkaKekLBq
+	 fOhGksoysB5G4m+2NhotGhVDZIpiYQ8of0sKGyi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danny Pidutti <danny_pidutti@hotmail.com>,
-	Danny Pidutti <danny@lightningiq.io>,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Chuck Lever <cel@kernel.org>,
+	shaos <shawnq1@163.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1019/1257] exportfs: Release the get_name() directory file synchronously
-Date: Sat,  7 Nov 2026 08:55:15 -0500
-Message-ID: <20261107135007.477880686@linuxfoundation.org>
+Subject: [PATCH 7.3 1020/1257] statmount: dont copy the reserved empty string past the buffer
+Date: Sat,  7 Nov 2026 08:55:16 -0500
+Message-ID: <20261107135007.504882168@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,69 +69,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 49184daab01674ca400cbef58ee101dba6dbbb9d ]
+[ Upstream commit 11eef75006819f4e71d04ca2b9a1fb1580854a55 ]
 
-get_name() opens the parent directory with dentry_open() and
-releases it with fput(). From a kernel thread, fput() defers the
-final __fput() to the delayed_fput work item. NFSD threads are
-kernel threads, and NFSD reaches get_name() through
-exportfs_decode_fh() whenever a file handle's dentry is not
-connected to the root.
+statmount_string() reserves an empty string at the start of the seq
+buffer before it calls the handler for the requested string. That's
+what the offsets of unset strings point to since commit e52e97f09fb6
+("statmount: let unset strings be empty").
 
-On a filesystem with more directories than the dcache retains,
-nearly every READDIRPLUS needs a reconnect. The deferred releases
-arrive faster than the work item retires them, and each pending
-file pins the directory's readdir state. On ext4 that state is the
-htree fname cache for the last leaf block read. A 64-thread NFSv3
-server under a parallel tree walk showed unreclaimable slab growing
-by about 90 MB per second, and the same workload on a 5.15 kernel
-ended in a global OOM.
+If the handler emits nothing the early return from commit 75ead69a7173
+("fs: don't let statmount return empty strings") skips the size check
+against the caller's buffer. Back then an empty emission meant an empty
+seq buffer and there was nothing to copy. Now the reserved NUL byte is
+there and copy_statmount_to_user() copies it to buf + sizeof(struct
+statmount) no matter how small bufsize is.
 
-Commit 5ff318f645eb ("nfsd: use __fput_sync() to avoid delayed
-closing of files.") stopped NFSD's own closes from feeding the
-delayed_fput queue but did not cover the exportfs reconnect path.
+So request a string that may turn out empty with a buffer that's
+smaller than struct statmount and the kernel writes one zero byte past
+the caller's buffer and reports a size that's larger than the buffer.
+STATMOUNT_MNT_UIDMAP or STATMOUNT_MNT_GIDMAP on a mount that isn't
+idmapped will do, so will STATMOUNT_FS_SUBTYPE on anything but fuse or
+STATMOUNT_OPT_ARRAY on a filesystem without ->show_options(). None of
+this needs privileges. The byte only lands in the caller's own address
+space but that's still not ok.
 
-Release the file with __fput_sync(). get_name() opened the file
-itself, read-only, on a directory, so __fput() involves nothing
-that could wait on the caller.
+prepare_kstatmount() already refuses a buffer of exactly sizeof(struct
+statmount) for string requests. A smaller buffer can't hold a string
+either and it can't even hold the reserved empty string. So refuse any
+buffer that isn't larger than the fixed part. That's also what the uapi
+header says: string requests need space after the fixed part of the
+structure.
 
-Note for LTS backports: Kernels before v6.6 need the __fput_sync()
-call guarded by current->flags & PF_KTHREAD, with a plain fput()
-otherwise.
+Reproducer, unprivileged, on any mount that isn't idmapped:
 
-Fixes: 4a9d4b024a31 ("switch fput to task_work_add")
-Cc: stable@vger.kernel.org # see above, needs adjustments for < v6.2
-Reported-by: Danny Pidutti <danny_pidutti@hotmail.com>
-Closes: https://lore.kernel.org/linux-fsdevel/DS4PR04MB9846BA3C16BC5ACED8B589228D952@DS4PR04MB9846.namprd04.prod.outlook.com/
-Tested-by: Danny Pidutti <danny@lightningiq.io>
-Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Chuck Lever <cel@kernel.org>
-Link: https://patch.msgid.link/20261008140903.2784-1-cel@kernel.org
+    #define _GNU_SOURCE
+    #include <errno.h>
+    #include <fcntl.h>
+    #include <stdint.h>
+    #include <stdio.h>
+    #include <string.h>
+    #include <sys/mman.h>
+    #include <sys/syscall.h>
+    #include <unistd.h>
+    #define STATMOUNT_FS_SUBTYPE	0x00000100U
+    #define STATMOUNT_MNT_UIDMAP	0x00002000U
+    #define STATX_MNT_ID_UNIQUE	0x00004000U
+    #define SM_SIZE			512 /* sizeof(struct statmount) */
+    struct mnt_id_req {
+    	uint32_t size, mnt_ns_fd;
+    	uint64_t mnt_id, param, mnt_ns_id;
+    };
+    static uint64_t root_mnt_id(void)
+    {
+    	unsigned char stx[256]; /* struct statx, stx_mnt_id at offset 144 */
+    	uint64_t id;
+    	if (syscall(__NR_statx, AT_FDCWD, "/", 0, STATX_MNT_ID_UNIQUE, stx))
+    		_exit(1);
+    	memcpy(&id, stx + 144, sizeof(id));
+    	return id;
+    }
+    static void probe(uint64_t mnt_id, uint64_t mask, int guard)
+    {
+    	struct mnt_id_req req = {
+    		.size = sizeof(req), .mnt_id = mnt_id, .param = mask,
+    	};
+    	long page = sysconf(_SC_PAGESIZE);
+    	unsigned char *map, *buf;
+    	uint32_t size;
+    	long ret;
+    	map = mmap(NULL, 2 * page, PROT_READ | PROT_WRITE,
+    		   MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    	memset(map, 0xaa, 2 * page);
+    	/* 100 byte buffer ending right at the page boundary */
+    	buf = map + page - 100;
+    	if (guard)
+    		mprotect(map + page, page, PROT_NONE);
+    	errno = 0;
+    	ret = syscall(__NR_statmount, &req, buf, 100, 0);
+    	printf("mask 0x%04llx%s: ret %ld errno %d", (unsigned long long)mask,
+    	       guard ? " guard page" : "", ret, errno);
+    	if (!guard) {
+    		memcpy(&size, buf, sizeof(size));
+    		printf(", size 0x%x, byte[%d] 0x%02x", size, SM_SIZE,
+    		       buf[SM_SIZE]);
+    	}
+    	printf("\n");
+    	munmap(map, 2 * page);
+    }
+    int main(void)
+    {
+    	uint64_t id = root_mnt_id();
+    	probe(id, STATMOUNT_MNT_UIDMAP, 0);
+    	probe(id, STATMOUNT_FS_SUBTYPE, 0);
+    	probe(id, STATMOUNT_MNT_UIDMAP, 1);
+    	return 0;
+    }
+
+Before, on 7.3.0-rc7-00252-g4e3259b08c54 (vfs.fixes) in a VM, the
+same on a distro 7.1.13:
+
+    mask 0x2000: ret 0 errno 0, size 0x65, byte[512] 0x00
+    mask 0x0100: ret 0 errno 0, size 0x65, byte[512] 0x00
+    mask 0x2000 guard page: ret -1 errno 14
+
+After:
+
+    mask 0x2000: ret -1 errno 75, size 0xaaaaaaaa, byte[512] 0xaa
+    mask 0x0100: ret -1 errno 75, size 0xaaaaaaaa, byte[512] 0xaa
+    mask 0x2000 guard page: ret -1 errno 75
+
+Reported-by: shaos <shawnq1@163.com>
+Link: https://lore.kernel.org/r/20261020110747.959829-1-shawnq1@163.com
+Fixes: e52e97f09fb6 ("statmount: let unset strings be empty")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261021-work-mount-statmount_listns_fixes-v1-1-8917a4c1bd14@kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exportfs/expfs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/namespace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/exportfs/expfs.c b/fs/exportfs/expfs.c
-index eafd99507afee..b5768f94fbb59 100644
---- a/fs/exportfs/expfs.c
-+++ b/fs/exportfs/expfs.c
-@@ -336,7 +336,11 @@ static int get_name(const struct path *path, char *name, struct dentry *child)
- 	}
+diff --git a/fs/namespace.c b/fs/namespace.c
+index c30f063742f40..6c9c0cdbe890e 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -6058,7 +6058,8 @@ static int prepare_kstatmount(struct kstatmount *ks, struct mnt_id_req *kreq,
+ 	ks->bufsize = bufsize;
  
- out_close:
--	fput(file);
-+	/*
-+	 * @file is the read-only directory opened above, so __fput()
-+	 * cannot block on anything the caller holds.
-+	 */
-+	__fput_sync(file);
- out:
- 	return error;
- }
+ 	if (ks->mask & STATMOUNT_STRING_REQ) {
+-		if (bufsize == sizeof(ks->sm))
++		/* Even the reserved empty string needs room past the fixed part. */
++		if (bufsize <= sizeof(ks->sm))
+ 			return -EOVERFLOW;
+ 
+ 		ks->seq.buf = kvmalloc(seq_size, GFP_KERNEL_ACCOUNT);
 -- 
 2.53.0
 
