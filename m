@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065535;
-	b=Hmo/FtFxldVdDGettc+/fwcfWs1zbWeHKg/yyB3CcEkJNf5c+KcUo76qoAWfx7ffr6MF
-	 xOpldiNLTyQcxPSGsxPutbwuoLQLWWD7jlHUjqIXRs7rbOOVNfEMF+jOvK7h/15rghqOS
-	 Fg+tpFVAyDBpoPVZ6WjoUJ1JOhyRS5+AZwuULOwiRXQ8l20gm11pDN64gKuiMFdQQ7VKc
-	 5c4ksKx/2xbHhP9LBH1Zz5QCrKe8TsLuqewKXYRF/7tjo41LzSXlj/+M0IddUkfYF00Dw
-	 ickm5hx4hpqqLEw+kUTVUevO/ei1JA5eSFmPBNOmLEvxRdW4SzWo5pVc/1HbDKDZOJQ==
+	t=1794065537;
+	b=OpiMed0iBXkIm7sZUf3fmxrUPwZaEn7PzgQ46CaENScwx2Sj56lRtaAakly8maj5rsOY
+	 b0HwX1yMVKxft8+9O+SHnYYN0Mxk0XpyB9eR8amA3LmdK2dVjDV0L+lKUceirzOLXrJy4
+	 P22wmjhyoGIWL4uAxgxFL9aOd5GnqEahe3x5RuhM7G1TVi1tygKQzSCb5o9a5SWKR2FOD
+	 OEB9/QOb0H0cz6BnH90r+CKaUabUN5nIiuvRls2r8Xakr6P0jDw89wIZ2/rwF/bMyf1lb
+	 3S8Q9Ud8855wX6+l8x7w94SXsCZlfKVSHudAp9RdP/Cas3tpGfhGxA/yylLDAw1UchA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065537;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fPOxwlRGXSEipHZIHlVOxh8lbwE2QY3Cm8IE4J8jcoA=;
-	b=G4PDbuqrlCMR50t4t7NlJvy3DuNU0dMj27FU0YleVo/uxZt0k4lVmvkS0/AN18Niy8ZW
-	 t+hysFN7xWKE9r6upKJxM4oiZujRpS4NEwZhsFLIPhBdSBttUufW7pbxSL9q0qKTkvK6Z
-	 EWuv5ZV2jqpAkIrtdwp/MteFr8IIDIXhA6XnIonpfHaeZITHgqG8Y0jsWxKVPfS7kCtRO
-	 y/NWNN07ccQO/H4XZC6FZpcJsaicazqd8fBV/KHx6nWbmVNfqnP+TprfiN9wJdzMRcW2O
-	 5L97sAXSHNwtxORNpsg6qMoJhOpMqYT23elIck9w9gcdJzZXNIFeP7k2x6a15nEEtZQ==
+	bh=3bnvhPIbVEa/tHfUfadX5bnwdo7E7R51siz179SqPzg=;
+	b=Mq7iGlYateeT4OJeIOrCjQcMPwrjZXjSXSMljvlaTP0vBFJzHbSeVplhNQq8mGpiAwzk
+	 X5wYLsgQKpZ7WB4ywov47DF3kX/pjhW27Ivou+BjqC/Ga2L5esxvN215Mq2+jRTavwXnR
+	 OqVBSpUVC2AYgTbG35yaWebPcyzqHv13xQUrdUOK4MbH6lF7CvfDihXft2AmOmYk8H2p9
+	 PwtdNPZLI+xPixlKloRj+VwyN2mbcyyEjTtjnHo7Qexvc9VPrfh154DZ80MSdVmJMX7tp
+	 1L/vXFL4W4j/3lVRBhCeW8jxh/7M1hK/a3P+b5QZazjv9LlqvJXSr/xhdP8Zg4x1rKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjpJaLjD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7GnWJKo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F87E606A32C;
-	Sat,  7 Nov 2026 15:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9C6606A32C;
+	Sat,  7 Nov 2026 15:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wjpJaLjD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADA61F0089F;
-	Sat,  7 Nov 2026 15:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G7GnWJKo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D3E1F0089F;
+	Sat,  7 Nov 2026 15:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065535;
-	bh=fPOxwlRGXSEipHZIHlVOxh8lbwE2QY3Cm8IE4J8jcoA=;
+	s=korg; t=1794065536;
+	bh=3bnvhPIbVEa/tHfUfadX5bnwdo7E7R51siz179SqPzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjpJaLjDnSfnsb4jylpWYqmfLPU71BLD11OanECTR3Vf+2VuCiIxoTtXoowtc9N1B
-	 ndXUn6X9oLDkfcA9X5NJJ5Dr8unRD/XOjErhBrzDMYxI29ACVJuXX1gy2j8KECAwVc
-	 q/K8yCAwa4lUIILdxndi/WoViasJD+ykjyqiZDv0=
+	b=G7GnWJKooy2zLpG04KriiXh8rKHNr6W+pzKuaJpBxuvnhg97QkutnuDE6tKf/Cv+Q
+	 gJ4PtG9PS8+Hzxf2ehbP/XowtNe7I+gsGu+Gt+w5VvQQfY5mo2QV3TyIHkWaQgg0Kk
+	 X+o/x+ojg1FKAIb+HC2M4yvzoj0mk06q5It4aDHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Yingjie Wang <1075151112@qq.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Fang Xieyan <fangxy@xiaopeng.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel@riscstar.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1213/1257] nvme-tcp: validate the TLS handshake timeout
-Date: Sat,  7 Nov 2026 08:58:29 -0500
-Message-ID: <20261107135012.873819958@linuxfoundation.org>
+Subject: [PATCH 7.3 1214/1257] kgdb: Fix buffer overflow in the m packet handler
+Date: Sat,  7 Nov 2026 08:58:30 -0500
+Message-ID: <20261107135012.898378058@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,137 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Fang Xieyan <fangxy@xiaopeng.com>
 
-[ Upstream commit 799203afd298b1f8e9ee49815eb38f775f211299 ]
+[ Upstream commit ac0159129e2cb99a70c4b80cfbf58d03e092dc7b ]
 
-tls_handshake_timeout is writable but stored as a signed int. Multiplying
-the value by MSEC_PER_SEC and HZ therefore uses signed arithmetic.
+gdb_cmd_memread() passes the length of the 'm' packet straight to
+kgdb_mem2hex(), which hex-encodes the reply into
+remcom_out_buffer[BUFMAX] without checking that the reply fits. A
+client on the KGDB I/O console can ask for a read of any size, and
+the hex encoding runs off the end of the buffer. kgdb_mem2hex() takes
+that length as an int count, so 2^31 truncates to a negative value
+and copy_from_kernel_nofault() is handed buf + count as its
+destination.
 
-With HZ=1000, setting it to 2147484 overflows both multiplications. If
-the handshake request is accepted and its completion remains pending,
-schedule_timeout() reports a wrong timeout value with a stack dump and
-returns zero. The handshake then fails immediately with -ETIMEDOUT,
-while the handshake agent was given about 24.9 days. Negative values
-such as -1 have the same kernel-side effect.
+On x86 BUFMAX is 1024, so a read of 512 bytes overruns by the single
+byte that terminates the hex string:
 
-Store the parameter as an unsigned int and reject values that cannot be
-represented both by tls_handshake_args::ta_timeout_ms and by a safe
-jiffies delay. Take one snapshot so a concurrent parameter update cannot
-give the handshake agent and completion wait different timeouts.
-Document the accepted range for built-in use.
+  BUG: KASAN: global-out-of-bounds in kgdb_mem2hex+0x1dd/0x230
+  Write of size 1 at addr ffffffff87651780 by task sh/1
+  ...
+  The buggy address belongs to the variable:
+   remcom_out_buffer+0x400/0x420
 
-wait_for_completion_interruptible_timeout() returns the remaining
-jiffies as a long after a successful completion. Keep that result in a
-long because an accepted timeout can exceed INT_MAX jiffies on 64-bit
-systems.
+Bounds check the length before the hex encoding:
 
-Negative and oversized values now fail with -EINVAL. Keep zero valid,
-preserving the existing immediate-timeout behavior.
+		if (length > (BUFMAX - 1) / 2) {
+			error_packet(remcom_out_buffer, -EINVAL);
+			return;
+		}
 
-Fixes: be8e82caa685 ("nvme-tcp: enable TLS handshake upcall")
+gdbstub_msg_write() already bounds the count it hex-encodes
+against BUFMAX. Reads over the limit never returned valid data,
+so an error reply loses nothing.
+
+Fixes: dc7d55270521 ("kgdb: core")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Assisted-by: Hawkeye:GLM-5.3-flash
+Assisted-by: Qoder:Qwen3.8-Max
+Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20260914180344.15485-1-fangxy@xiaopeng.com
+Signed-off-by: Daniel Thompson <daniel@riscstar.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/kernel-parameters.txt         |  5 +++
- drivers/nvme/host/tcp.c                       | 34 ++++++++++++++-----
- 2 files changed, 31 insertions(+), 8 deletions(-)
+ kernel/debug/gdbstub.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index a6aded898b668..4e64219c8da4c 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4802,6 +4802,11 @@ Kernel parameters
- 			Example:
- 			nvme.quirks=7710:2267:bogus_nid,^identify_cns-9900:7711:broken_msi
+diff --git a/kernel/debug/gdbstub.c b/kernel/debug/gdbstub.c
+index e271a436d60e4..5774292c93aec 100644
+--- a/kernel/debug/gdbstub.c
++++ b/kernel/debug/gdbstub.c
+@@ -563,6 +563,14 @@ static void gdb_cmd_memread(struct kgdb_state *ks)
  
-+	nvme_tcp.tls_handshake_timeout=
-+			[NVME] NVMe/TCP host TLS handshake timeout in seconds.
-+			Valid values range from 0 to the smaller of
-+			UINT_MAX / 1000 and MAX_JIFFY_OFFSET / HZ. Default: 10
-+
- 	nvmet_tcp.tls_handshake_timeout=
- 			[NVME] NVMe/TCP target TLS handshake timeout in seconds.
- 			Valid values range from 0 to the smaller of
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 54b49bc10dc34..ce28c9b038178 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -6,6 +6,7 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- #include <linux/module.h>
- #include <linux/init.h>
-+#include <linux/jiffies.h>
- #include <linux/slab.h>
- #include <linux/err.h>
- #include <linux/crc32.h>
-@@ -47,9 +48,24 @@ MODULE_PARM_DESC(wq_unbound, "Use unbound workqueue for nvme-tcp IO context (def
- /*
-  * TLS handshake timeout
-  */
--static int tls_handshake_timeout = 10;
-+static unsigned int tls_handshake_timeout = 10;
- #ifdef CONFIG_NVME_TCP_TLS
--module_param(tls_handshake_timeout, int, 0644);
-+static int tls_handshake_timeout_set(const char *val,
-+				     const struct kernel_param *kp)
-+{
-+	return param_set_uint_minmax(val, kp, 0,
-+		min_t(unsigned long, UINT_MAX / MSEC_PER_SEC,
-+		      MAX_JIFFY_OFFSET / HZ));
-+}
-+
-+static const struct kernel_param_ops tls_handshake_timeout_ops = {
-+	.set = tls_handshake_timeout_set,
-+	.get = param_get_uint,
-+};
-+
-+module_param_cb(tls_handshake_timeout, &tls_handshake_timeout_ops,
-+		&tls_handshake_timeout, 0644);
-+__MODULE_PARM_TYPE(tls_handshake_timeout, "uint");
- MODULE_PARM_DESC(tls_handshake_timeout,
- 		 "nvme TLS handshake timeout in seconds (default 10)");
- #endif
-@@ -1804,8 +1820,10 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
- {
- 	int qid = nvme_tcp_queue_id(queue);
- 	int ret;
-+	long wait_ret;
- 	struct tls_handshake_args args;
--	unsigned long tmo = tls_handshake_timeout * HZ;
-+	unsigned int timeout = READ_ONCE(tls_handshake_timeout);
-+	unsigned long tmo = (unsigned long)timeout * HZ;
- 	key_serial_t keyring = nvme_keyring_id();
- 
- 	dev_dbg(nctrl->device, "queue %d: start TLS with key %x\n",
-@@ -1819,7 +1837,7 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
- 	if (nctrl->opts->keyring)
- 		keyring = key_serial(nctrl->opts->keyring);
- 	args.ta_keyring = keyring;
--	args.ta_timeout_ms = tls_handshake_timeout * 1000;
-+	args.ta_timeout_ms = timeout * MSEC_PER_SEC;
- 	queue->tls_err = -EOPNOTSUPP;
- 	init_completion(&queue->tls_complete);
- 	ret = tls_client_hello_psk(&args, GFP_KERNEL);
-@@ -1828,10 +1846,10 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
- 			qid, ret);
- 		return ret;
- 	}
--	ret = wait_for_completion_interruptible_timeout(&queue->tls_complete, tmo);
--	if (ret <= 0) {
--		if (ret == 0)
--			ret = -ETIMEDOUT;
-+	wait_ret = wait_for_completion_interruptible_timeout(&queue->tls_complete,
-+							     tmo);
-+	if (wait_ret <= 0) {
-+		ret = wait_ret < 0 ? -ERESTARTSYS : -ETIMEDOUT;
- 
- 		dev_err(nctrl->device,
- 			"queue %d: TLS handshake failed, error %d\n",
+ 	if (kgdb_hex2long(&ptr, &addr) > 0 && *ptr++ == ',' &&
+ 					kgdb_hex2long(&ptr, &length) > 0) {
++		/*
++		 * The hex-encoded reply needs 2 * length + 1 bytes
++		 * in remcom_out_buffer[BUFMAX].
++		 */
++		if (length > (BUFMAX - 1) / 2) {
++			error_packet(remcom_out_buffer, -EINVAL);
++			return;
++		}
+ 		err = kgdb_mem2hex((char *)addr, remcom_out_buffer, length);
+ 		if (!err)
+ 			error_packet(remcom_out_buffer, -EINVAL);
 -- 
 2.53.0
 
