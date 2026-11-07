@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060877;
-	b=wVouTZ23ymnvKKBSmkTgvp7z5teags0ZJBcXySYrlIn1GWdwOzEACz+ZG2jbRhrav1Yh
-	 BftzIEhnZU+wNo6wEEwbD1eleWmVZ2Gk/L6+OmOTmEuhxoQ9WKj/V2ZZawb7FgqcenhdB
-	 p8KeJoB8atqtttFJwemLS+g9JxQs2Cxf3gjyFyzUlaJJT3zEnY5sfBBJ6y7px9iShkNS5
-	 tlKlCTnukTeqGn3gWd2klxafvQGBsLTwRQ3q+N9I3PHySOWH1LnydGpNFcgsB2HwEv1jp
-	 dqh31a7upyUSTNKxBKklb0BSAzrJR3UIHOAWmdMwDcgiFT8WeqhLBN2hx81hCteAIPw==
+	t=1794060879;
+	b=sE/Tf/x4pY+18jgDq8q56oUKiXB4Pl7leJw4yZWFI5dXJMppXu6NGrmU0iH1rZVY4gPm
+	 Bh/fTGhqh8mZMlqgvtph2w0OuqomRhZiJQMkPgPQIbYKZPTn2+tl8SBiD4nhhUg1vuKW4
+	 TOGz/bMmLByRLUnJ1kN/0RaM35b6kBGR6ENF8Udvni6lq0P8/bOj1j4/LSfJaj/x0PG9E
+	 5BosLXtHbhisuf1BI1v5fifDhYZNgDnN336vjHmOLfqGHMosVqeWYgMe+f+GFMz8ZvbVo
+	 nP6qLPRar5LD4FOTztn/rHbraliR71rXkp7zsTb9PmrmzWm63MJWhMox3eTa3740jnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060879;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jINyvYZKMvlqyQqwKDG/399GChbgr/ROuj6TqUyZRW8=;
-	b=LHHVdMPBAY46FbokCEpD0FGZZw/uisogSK4M6agsSuBzsuq4bPlwjIkoQ/IrEBahOvxZ
-	 IqwjCFd0R18leqHxWglpl1x56AUTN6Tjv2kTjeaTCn8Q5ezHJjiTfrBhcTsSpyAl4Fq6T
-	 wMSXar6r62zQ0vpX5TaWcc1zKSh4YKnbTIRwYgObM3JMdDWsJg0edgLgLnVpi86EP2K9F
-	 YGBftHyC7zVH1Pnp863cgPID+kNMcOMa7qKLasgn325PZRSaIhrdY7cw/kPwPeDS8QOsR
-	 bywMy9YzuaIynpc1zZpOmvt66QF0YVVeYrjB+Kjz/51JOzM/i+bE7Ek6BZty6f9ue8A==
+	bh=YY4/VrQa3aPUxRk8SQvWytkLA3BtP6vfukqBTJd5Zp0=;
+	b=mcNQIUNlnfbTuu9Ftqy3D+eJbDArhncV6m/KJOgBvOKriDDX0icgv/Dduf8z5Hfv8ppX
+	 te0fn59pq7Mvr2okUq4sLZCMdtgkre8TxVmMTXOJGYLvBiotRlP2Ed7DzoGC2jzFx+cCI
+	 SPNW6M5XQsOayPqWvHgOupHmqKmJyeyVwM6fUfaTX0PVmsvJpuskfMuIRgTxYRwEIf1wB
+	 iMDM5F+PTRfGhnoLDzwJ1kya85qO4PCcKTw9VgTMp0FtrX787NClIPR+8ee6pDw9yjufk
+	 Urm7pkwNDynIYd+XyP7jFfZdDD5MjHDm2GmsK/SVzoiAjC/DSnREtzO8Et5STfb+bBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCxMcwWy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OA4UpDuO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4192D606D80D;
-	Sat,  7 Nov 2026 14:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA40D606D80D;
+	Sat,  7 Nov 2026 14:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCxMcwWy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F611F0089F;
-	Sat,  7 Nov 2026 14:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OA4UpDuO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED241F0089F;
+	Sat,  7 Nov 2026 14:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060877;
-	bh=jINyvYZKMvlqyQqwKDG/399GChbgr/ROuj6TqUyZRW8=;
+	s=korg; t=1794060878;
+	bh=YY4/VrQa3aPUxRk8SQvWytkLA3BtP6vfukqBTJd5Zp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DCxMcwWy1Z78MFieWwKPCEwhfu48gyJmPW09LptK8ZESJ7rGQElTwtyVM4/U4eAiw
-	 ZNii6DiyMikX85IQEHD0KmiFlm6RWhqn7ftsbNxV6fZsoi9F1dj40gz5rMPXJo8DDZ
-	 Qr8PK/cYDZsoJO9yNzs6Qm1JGqhuAlQhskZRZybw=
+	b=OA4UpDuOReSX3puSvnYt3aWmv4iSGrXaAFSCHRAiRa5IseMQxumT7rNGdn5jWdvcJ
+	 zc6yvo//NfoV/m6C9i2MR41hMj6JvKh5KnJnPlYBJGmnVl51WaYvZgJk9AlOjqPxrz
+	 Yhj87GouDhliQnKqeM4kvCGoF0rLMHy3wtoFrHOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauricio Orozco <maudob@live.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
+	Bastien Nocera <hadess@hadess.net>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0258/1536] ALSA: hda/realtek: Add quirk for ASUS VivoBook M515DA/X515DAP
-Date: Sat,  7 Nov 2026 08:37:54 -0500
-Message-ID: <20261107135004.931654350@linuxfoundation.org>
+Subject: [PATCH 6.12 0259/1536] HID: logitech-hidpp: Add support for G502 X Plus USB mouse
+Date: Sat,  7 Nov 2026 08:37:55 -0500
+Message-ID: <20261107135004.959773354@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,41 +69,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauricio Orozco <maudob@live.com>
+From: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
 
-[ Upstream commit a9fa2a016e805504223abf8c9b373ac9f7bfb9b3 ]
+[ Upstream commit 6f4b44abe4ccdcfdab75c9493b8c7634fee37133 ]
 
-The ASUS VivoBook M515DA/X515DAP (subsystem ID 1043:1e3e)
-requires the ALC256_FIXUP_ASUS_MIC_NO_PRESENCE fixup to
-enable the internal microphone.
+The wireless dongle is already supported, this adds detection for
+the mouse in wired mode. Supports battery reporting.
 
-Without this quirk, the internal microphone captures only
-silence under Linux, while it works correctly under Windows.
-
-The fix has been verified on real hardware.
-Tested on an ASUS VivoBook M515DA/X515DAP running Linux Mint
-22.3 with Ubuntu HWE kernel 7.0.0-28.
-
-Signed-off-by: Mauricio Orozco <maudob@live.com>
-Link: https://patch.msgid.link/20260730033506.8958-1-mauoro3@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
+Reviewed-by: Bastien Nocera <hadess@hadess.net>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-logitech-hidpp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index eff234786c162..bb02bc8962713 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11291,6 +11291,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1df3, "ASUS UM5606WA", ALC294_FIXUP_BASS_SPEAKER_15),
- 	SND_PCI_QUIRK(0x1043, 0x1e02, "ASUS UX3402ZA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e10, "ASUS VivoBook X507UAR", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1043, 0x1e3e, "ASUS VivoBook M515DA/X515DAP", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1e11, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA502),
- 	SND_PCI_QUIRK(0x1043, 0x1e12, "ASUS UM3402", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1e1f, "ASUS Vivobook 15 X1504VAP", ALC2XX_FIXUP_HEADSET_MIC),
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index c84bd26faea96..25cdf5ebccb3b 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4643,6 +4643,8 @@ static const struct hid_device_id hidpp_devices[] = {
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC082) },
+ 	{ /* Logitech G502 Lightspeed Wireless Gaming Mouse over USB */
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC08D) },
++	{ /* Logitech G502 X Plus Wireless Gaming Mouse over USB */
++	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC095) },
+ 	{ /* Logitech G703 Gaming Mouse over USB */
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC087) },
+ 	{ /* Logitech G703 Hero Gaming Mouse over USB */
 -- 
 2.53.0
 
