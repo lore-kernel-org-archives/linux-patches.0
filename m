@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063967;
-	b=GvqV/vDWzUUOfkplfTENBqcElTM19MIJDoShfvY6KPmicuALZhX6+i5vWnRldwrxSzAB
-	 OJJ4tiYkKwzVeR3yRSq5H69QtrFhS0/mPFP09sFf0VoNLnGbbwCZLEM0S+gz2loQW8uyB
-	 cNnr9SFqRZlKTCbKE/pMitXVHqV73MX4wWsSmLT1ovPY4sog+VdS+Xz7JOlnZ+ZiXtNx+
-	 V1mI9dmH270Vla3DFMbDf3fjyUNXih8chpOwLVydleX+xr9s/37unHe8lOcYt6pYYS3Vv
-	 nr9vLGZYWHXRSnzV4RCSjpy/xqgDDkVoNqdLjtDIKKKYFanrH3GoPMZu+r5b9R8bV2A==
+	t=1794063968;
+	b=OccJ23cOxo+rJOO0ISufABFQbtj0xxEcQ05NWl88hZla8nIjqVB4M1u64CqEcO+KCpw+
+	 lXmxsm9MZUNV+4kuHXa7SBQr9fp1YvQqGfLSp1lq7SmzLIqJGzmClsbR9AlsEwJIFOI75
+	 HcThQ5N2uAgvVO+cLlgWXmQuKhxQP3W71qzXMPUsAjvKUCQzDiTGgKjhTAOTuGBgHK2qy
+	 G9q/TOJalTw7mu0x3soWxsi63FTe/kxuBVq/DZ2hpVz0GiF5WCHq8kQ8k0MD9lJfZp4lF
+	 izjJVmNJf9oo4PpKYt1HXHYRzbSPnJ/sGqZOcfEFWhk+DvlQgNUjRIMVMO4rKZUfbSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063967;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063968;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WDZxF3EpEahgdE27tH0UN4yam8DyVPjB2onWGlYmaPU=;
-	b=oVrgq6hxRSZ14yZzWF2PFlAaZyeJNHYb97/NfdwlVA3o3watLt1M7OEeO0Q/A0Z+EuQ5
-	 IctrrJKXL3S0qJfDVG9l0dYYgmwe7cwkN5rwU+cVtuIaOwyDldMC48qi/m+n0YjXUA5En
-	 AaH7n+Vno0juri04wNW4zIqUQ2r36rtiFRDn6KzDE24Wb8TDRr+LLpDRm/JgF7M9umOHM
-	 GD57UYTEPhByJC1EK9rcWxE5pZsVIC1h7A+1W40hRIXZE3TX9c3s236qnGidQrQkfrS8J
-	 oJtBdUZliD1oVnxZeBOtu5aCrZDByf6RWk4wyXVtfFPIaEjNqCCqDnz7ahLnEG3S3JQ==
+	bh=ojNEEzOmgQHbxZ2ZuRhWj+oyH82/ZxWdhUa6dGCluIs=;
+	b=JLYRTj8N4x9DE7U4x19nI0SI33OubNCG3/FiUuses/iaJ/+16JTifoJEVZwbzMkhfdTx
+	 gqW7xq+NQ5kRZKKLrEqegVngYZuNSEnVyzBZWGY/EooOYeOiQKIpzuCiWPvQpHPdSsCr3
+	 Smd0HXNlJI6LgGW6+wpFupyBIFs+gYW/+tjjiymtYKO1A1gyhGVBi52cZup0CrI9JsiiV
+	 PbXSj1+I9ZwmB4CQA/YCfLWdaNzwXBng3BleNAA3f9V3tevphl1eTAp+P/NqEYTDKzIgX
+	 CDyvIfv6MJRNU1SXrtkkl+aE0GDyW0CQBYhMkFEXMgMptpA18/h0BuQ0WlbAr1ANWeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VaUoNfox;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pmUbe7va;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1991606EE97;
-	Sat,  7 Nov 2026 15:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5D6606EE97;
+	Sat,  7 Nov 2026 15:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VaUoNfox
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F27E1F008A2;
-	Sat,  7 Nov 2026 15:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pmUbe7va
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCE71F008A4;
+	Sat,  7 Nov 2026 15:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063966;
-	bh=WDZxF3EpEahgdE27tH0UN4yam8DyVPjB2onWGlYmaPU=;
+	s=korg; t=1794063967;
+	bh=ojNEEzOmgQHbxZ2ZuRhWj+oyH82/ZxWdhUa6dGCluIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VaUoNfoxESavV70T+Hks8LTxzesXRMhdYPZAI9gVXzEM/G7X6/MSBUrIfdXwB/NmD
-	 LUegwlQael11V87eS1V1DzhuKy6ZSHJbtQZUw+i0I0SIsdy+kI7pVt6CU8kRdjYXTL
-	 w6pOW3QHJqwqzIcO47UKwaNTyvlppy7lNizNISsE=
+	b=pmUbe7vazjUCoXp2OUwQaiThEQ3sqFiGCiVKNVD6MwI9v6BS0dIvmpdzvuJbYrHQQ
+	 zaAEMMq6vEyJJeCZFuuTgtIK3xRmaGnKuWdQHsT2xrXrQ0jhdFepkp+shgQuC6RaHU
+	 2QgmEb/9t/zx2eiNghRMEs2+njEzN2NbA6OEvsqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0153/1257] iommu/arm-smmu-v3-iommufd: Reject unsupported bits in invalidation commands
-Date: Sat,  7 Nov 2026 08:40:49 -0500
-Message-ID: <20261107134943.542719855@linuxfoundation.org>
+Subject: [PATCH 7.3 0154/1257] PCI: endpoint: pci-epf-vntb: Manage virtual NTB and PCI bus lifetime
+Date: Sat,  7 Nov 2026 08:40:50 -0500
+Message-ID: <20261107134943.571200165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,254 +70,241 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 26564d25cd814dfd72a21a2c52b81e678cf02bae ]
+[ Upstream commit 5cdbd6d3a3a147fa9975e35f2602cbec9a72a932 ]
 
-The arm_vsmmu_cache_invalidate() op hands a guest's invalidation commands
-to the trusted main command queue after enforcing only the VMID or the SID,
-and passes the rest of the command through to the queue unchanged.
+The virtual PCI driver registers an ntb_dev but has no remove callback.
+Unbinding the endpoint function can therefore free BARs while the NTB
+device and its client still use them. It also leaves the virtual PCI
+devices and root bus allocated.
 
-That lets a guest set bits the host never meant to forward: a reserved or
-undefined bit makes a command malformed; per the Arm SMMUv3 specification,
-in its section 4.1.3 "Command errors", a CERROR_ILL is raised, among other
-cases, when:
+Allocate an ntb_dev for each virtual PCI probe and unregister it from the
+matching remove callback. Start command processing only after registration.
+Publish the device for doorbell IRQs at the same point. During remove, stop
+the command work and drain IRQ handlers before unregistering the device.
 
-  A valid command opcode is used and a Reserved or undefined field is
-  optionally detected as non-zero, which results in the command being
-  treated as malformed.
+Retain the root bus returned by pci_scan_bus() so it can be removed on
+unbind. Unregister the virtual PCI driver before releasing endpoint
+resources. Stop and remove the root bus under the PCI rescan/remove lock,
+then release its host bridge.
 
-Restrict each opcode to the fields that the driver supports and reject the
-command with -EIO if it sets any other bit, before the command reaches the
-queue. This stops the host from forwarding any bit whose meaning it does
-not control. Document this contract in the uAPI header, so user space must
-take the responsibility to forward valid commands only.
-
-Some fields and whole opcodes are legal only on an SMMU that implements
-the matching feature, so accept them conditionally:
-
- - NUM, SCALE, TG and TTL need FEAT_RANGE_INV.
- - SCALE bit 25, for values above 31, and TTL == 0b01 with a 16KB TG
-   need SMMU_IDR5.DS, gated on ARM_SMMU_FEAT_DS so that a VMM exposing
-   DS from the reported IDR5 register keeps working.
- - ASID is limited to asid_bits, since its upper 8 bits are RES0 on an
-   SMMU that only supports 8-bit ASIDs.
- - ATC_INV needs FEAT_ATS. Per the specification's section 4.5 "ATS and
-   PRI", CMD_ATC_INV is ILLEGAL when:
-
-     SMMU_IDR0.ATS == 0 and this command is issued on a Non-secure or
-     Secure Command queue.
-
- - SSV, SSID and Global need a non-zero ssid_bits. Without it, setting
-   them is not illegal but CONSTRAINED UNPREDICTABLE, which a guest
-   should not be able to provoke. Global also takes effect only when
-   SSV == 1, broadening the invalidation from the one SSID to all the
-   PASIDs of the single device that the SID field addresses.
-
-Some values inside the accepted fields are Reserved too:
-
- - NUM == 0, SCALE == 0 and TTL == 0 together are a Reserved combination
-   and cause a CERROR_ILL.
- - NUM, SCALE and TTL turn RES0 when TG == 0.
- - An ATC_INV Size above 52, the invalidate-all span, is permitted to
-   raise a CERROR_ILL.
-
-Reject these Reserved values the same way. In contrast, an out-of-range
-address or ID value is defined as CONSTRAINED UNPREDICTABLE that would
-be scoped to the guest itself, so it does not deserve a check.
-
-Fixes: d68beb276ba2 ("iommu/arm-smmu-v3: Support IOMMU_HWPT_INVALIDATE using a VIOMMU object")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://patch.msgid.link/40f4aabf98e434d6ac9f42a8d278b92200f202ca.1788127877.git.nicolinc@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Cc: stable@vger.kernel.org # 6.0+
+Link: https://patch.msgid.link/20260901063238.631166-3-den@valinux.co.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 129 ++++++++++++++++--
- include/uapi/linux/iommufd.h                  |   4 +-
- 2 files changed, 121 insertions(+), 12 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 85 +++++++++++++++----
+ 1 file changed, 70 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-index 25982bdbcbd9a..747b9d47ff7e4 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-@@ -322,6 +322,106 @@ struct arm_vsmmu_invalidation_cmd {
- 	};
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index c3caec927d748..8ae50779452a9 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -132,7 +132,7 @@ struct epf_ntb_ctrl {
+ } __packed;
+ 
+ struct epf_ntb {
+-	struct ntb_dev ntb;
++	struct ntb_dev *ntb;
+ 	struct pci_epf *epf;
+ 	struct config_group group;
+ 
+@@ -166,10 +166,15 @@ struct epf_ntb {
+ 	void __iomem *vpci_mw_addr[MAX_MW];
+ 
+ 	struct delayed_work cmd_handler;
++	struct pci_bus *vpci_bus;
  };
  
-+/* Reject the range field values that the spec defines as Reserved */
-+static int arm_vsmmu_validate_range(struct arm_smmu_device *smmu, u64 data[2])
-+{
-+	bool range = !!(data[0] & (CMDQ_TLBI_0_NUM | CMDQ_TLBI_0_SCALE));
-+	u8 ttl = FIELD_GET(CMDQ_TLBI_1_TTL, data[1]);
-+	u8 tg = FIELD_GET(CMDQ_TLBI_1_TG, data[1]);
+ #define to_epf_ntb(epf_group) container_of((epf_group), struct epf_ntb, group)
+-#define ntb_ndev(__ntb) container_of(__ntb, struct epf_ntb, ntb)
 +
-+	/* NUM, SCALE and TTL are RES0 when TG == 0 */
-+	if (!tg)
-+		return (range || ttl) ? -EIO : 0;
-+	/* TTL == 0b01 with a 16KB TG requires SMMU_IDR5.DS */
-+	if (tg == 2 && ttl == 1 && !(smmu->features & ARM_SMMU_FEAT_DS))
-+		return -EIO;
-+	/* NUM == 0, SCALE == 0 with TTL == 0 is a reserved combination */
-+	if (!range && !ttl)
-+		return -EIO;
-+	return 0;
++static struct epf_ntb *ntb_ndev(struct ntb_dev *ntb)
++{
++	return ntb->pdev->sysdata;
++}
+ 
+ static struct pci_epf_header epf_ntb_header = {
+ 	.vendorid	= PCI_ANY_ID,
+@@ -195,7 +200,7 @@ static int epf_ntb_link_up(struct epf_ntb *ntb, bool link_up)
+ 	else
+ 		ntb->reg->link_status &= ~LINK_STATUS_UP;
+ 
+-	ntb_link_event(&ntb->ntb);
++	ntb_link_event(ntb->ntb);
+ 	return 0;
+ }
+ 
+@@ -284,7 +289,7 @@ static void epf_ntb_cmd_handler(struct work_struct *work)
+ 	     i++) {
+ 		if (ntb->epf_db[i]) {
+ 			atomic64_or(1 << (i - EPF_IRQ_DB_START), &ntb->db);
+-			ntb_db_event(&ntb->ntb, i - EPF_IRQ_DB_START);
++			ntb_db_event(ntb->ntb, i - EPF_IRQ_DB_START);
+ 			ntb->epf_db[i] = 0;
+ 		}
+ 	}
+@@ -348,12 +353,18 @@ static void epf_ntb_cmd_handler(struct work_struct *work)
+ static irqreturn_t epf_ntb_doorbell_handler(int irq, void *data)
+ {
+ 	struct epf_ntb *ntb = data;
++	struct ntb_dev *ndev;
+ 	int i;
+ 
++	/* Pair with smp_store_release() in pci_vntb_probe() */
++	ndev = smp_load_acquire(&ntb->ntb);
++	if (!ndev)
++		return IRQ_HANDLED;
++
+ 	for (i = EPF_IRQ_DB_START; i < ntb->db_count; i++)
+ 		if (irq == ntb->epf->db_msg[i].virq) {
+ 			atomic64_or(1 << (i - EPF_IRQ_DB_START), &ntb->db);
+-			ntb_db_event(&ntb->ntb, i - EPF_IRQ_DB_START);
++			ntb_db_event(ndev, i - EPF_IRQ_DB_START);
+ 		}
+ 
+ 	return IRQ_HANDLED;
+@@ -985,7 +996,6 @@ static int epf_ntb_epc_init(struct epf_ntb *ntb)
+ 	}
+ 
+ 	INIT_DELAYED_WORK(&ntb->cmd_handler, epf_ntb_cmd_handler);
+-	queue_work(kpcintb_workqueue, &ntb->cmd_handler.work);
+ 
+ 	atomic64_set(&ntb->peer_db_pending, 0);
+ 	enable_work(&ntb->peer_db_work);
+@@ -1337,6 +1347,7 @@ static int vpci_scan_bus(void *sysdata)
+ 		pr_err("create pci bus failed\n");
+ 		return -EINVAL;
+ 	}
++	ndev->vpci_bus = vpci_bus;
+ 
+ 	pci_bus_add_devices(vpci_bus);
+ 
+@@ -1420,7 +1431,7 @@ static int vntb_epf_mw_set_trans(struct ntb_dev *ndev, int pidx, int idx,
+ 	int ret;
+ 	struct device *dev;
+ 
+-	dev = &ntb->ntb.dev;
++	dev = &ndev->dev;
+ 	barno = ntb->epf_ntb_bar[BAR_MW1 + idx];
+ 	epf_bar = &ntb->epf->bar[barno];
+ 	epf_bar->phys_addr = addr;
+@@ -1558,7 +1569,7 @@ static void vntb_epf_peer_db_work(struct work_struct *work)
+ 			ret = pci_epc_raise_irq(epf->epc, func_no, vfunc_no,
+ 						PCI_IRQ_MSI, interrupt_num);
+ 			if (ret)
+-				dev_err(&ntb->ntb.dev,
++				dev_err(&epf->dev,
+ 					"Failed to raise IRQ for interrupt_num %u: %d\n",
+ 					interrupt_num, ret);
+ 		}
+@@ -1676,13 +1687,18 @@ static const struct ntb_dev_ops vntb_epf_ops = {
+ 
+ static int pci_vntb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
+-	int ret;
+ 	struct epf_ntb *ndev = (struct epf_ntb *)pdev->sysdata;
+ 	struct device *dev = &pdev->dev;
++	struct ntb_dev *ntb;
++	int ret;
+ 
+-	ndev->ntb.pdev = pdev;
+-	ndev->ntb.topo = NTB_TOPO_NONE;
+-	ndev->ntb.ops =  &vntb_epf_ops;
++	ntb = devm_kzalloc(dev, sizeof(*ntb), GFP_KERNEL);
++	if (!ntb)
++		return -ENOMEM;
++
++	ntb->pdev = pdev;
++	ntb->topo = NTB_TOPO_NONE;
++	ntb->ops = &vntb_epf_ops;
+ 
+ 	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
+ 	if (ret) {
+@@ -1690,16 +1706,41 @@ static int pci_vntb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		return ret;
+ 	}
+ 
+-	ret = ntb_register_device(&ndev->ntb);
++	ret = ntb_register_device(ntb);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register NTB device\n");
+ 		return ret;
+ 	}
+ 
++	/* Publish after ntb_register_device() succeeds */
++	smp_store_release(&ndev->ntb, ntb);
++	queue_delayed_work(kpcintb_workqueue, &ndev->cmd_handler, 0);
++
+ 	dev_dbg(dev, "PCI Virtual NTB driver loaded\n");
+ 	return 0;
+ }
+ 
++static void pci_vntb_remove(struct pci_dev *pdev)
++{
++	struct epf_ntb *ndev = pdev->sysdata;
++	struct ntb_dev *ntb;
++	unsigned int i;
++
++	/* Stop the work reader, then close and drain the IRQ gate */
++	cancel_delayed_work_sync(&ndev->cmd_handler);
++
++	ntb = xchg(&ndev->ntb, NULL);
++
++	if (ndev->msi_doorbell)
++		for (i = 0; i < ndev->db_count; i++) {
++			if (epf_ntb_db_irq_is_duplicated(ndev->epf, i))
++				continue;
++			synchronize_irq(ndev->epf->db_msg[i].virq);
++		}
++
++	ntb_unregister_device(ntb);
 +}
 +
-+static int arm_vsmmu_validate_user_cmd(struct arm_vsmmu *vsmmu, u64 data[2])
-+{
-+	struct arm_smmu_device *smmu = vsmmu->smmu;
-+	u64 allowed[2] = { CMDQ_0_OP };
+ static struct pci_device_id pci_vntb_table[] = {
+ 	{
+ 		PCI_DEVICE(0xffff, 0xffff),
+@@ -1711,6 +1752,7 @@ static struct pci_driver vntb_pci_driver = {
+ 	.name           = "pci-vntb",
+ 	.id_table       = pci_vntb_table,
+ 	.probe          = pci_vntb_probe,
++	.remove         = pci_vntb_remove,
+ };
+ 
+ /* ============ PCIe EPF Driver Bind ====================*/
+@@ -1791,12 +1833,25 @@ static int epf_ntb_bind(struct pci_epf *epf)
+  */
+ static void epf_ntb_unbind(struct pci_epf *epf)
+ {
++	struct pci_host_bridge *bridge;
+ 	struct epf_ntb *ntb = epf_get_drvdata(epf);
+ 
++	pci_unregister_driver(&vntb_pci_driver);
 +
-+	/* Collect the fields userspace is allowed to set for each opcode */
-+	switch (data[0] & CMDQ_0_OP) {
-+	case CMDQ_OP_TLBI_NSNH_ALL:
-+		break;
-+	case CMDQ_OP_TLBI_NH_VA:
-+		/* An SMMU with 8-bit ASIDs treats the upper 8 bits as RES0 */
-+		allowed[0] |= FIELD_PREP(CMDQ_TLBI_0_ASID,
-+					 GENMASK(smmu->asid_bits - 1, 0));
-+		fallthrough;
-+	case CMDQ_OP_TLBI_NH_VAA:
-+		/* NUM/SCALE/TG/TTL are range fields gated on FEAT_RANGE_INV */
-+		if (smmu->features & ARM_SMMU_FEAT_RANGE_INV) {
-+			if (arm_vsmmu_validate_range(smmu, data))
-+				return -EIO;
-+			allowed[0] |= CMDQ_TLBI_0_NUM | CMDQ_TLBI_0_SCALE;
-+			allowed[1] |= CMDQ_TLBI_1_TG | CMDQ_TLBI_1_TTL;
-+			/* SCALE bit 25 (values above 31) is RES0 without DS */
-+			if (!(smmu->features & ARM_SMMU_FEAT_DS))
-+				allowed[0] &= ~FIELD_PREP(CMDQ_TLBI_0_SCALE,
-+							  BIT(5));
-+		}
-+		allowed[0] |= CMDQ_TLBI_0_VMID;
-+		allowed[1] |= CMDQ_TLBI_1_LEAF | CMDQ_TLBI_1_VA_MASK;
-+		break;
-+	case CMDQ_OP_TLBI_NH_ASID:
-+		/* An SMMU with 8-bit ASIDs treats the upper 8 bits as RES0 */
-+		allowed[0] |= FIELD_PREP(CMDQ_TLBI_0_ASID,
-+					 GENMASK(smmu->asid_bits - 1, 0));
-+		fallthrough;
-+	case CMDQ_OP_TLBI_NH_ALL:
-+		allowed[0] |= CMDQ_TLBI_0_VMID;
-+		break;
-+	case CMDQ_OP_ATC_INV:
-+		/* ATC_INV is illegal unless the SMMU implements ATS */
-+		if (!(smmu->features & ARM_SMMU_FEAT_ATS))
-+			return -EIO;
-+		/* A Size above 52 (invalidate-all) may raise a CERROR_ILL */
-+		if (FIELD_GET(CMDQ_ATC_1_SIZE, data[1]) > ATC_INV_SIZE_ALL)
-+			return -EIO;
-+		/*
-+		 * SSV/SSID/Global need substream support. SSID and Global are
-+		 * IGNORED (not RES0) when SSV == 0, so they need no SSV check.
-+		 */
-+		if (smmu->ssid_bits)
-+			allowed[0] |= CMDQ_0_SSV | CMDQ_ATC_0_SSID |
-+				      CMDQ_ATC_0_GLOBAL;
-+		allowed[0] |= CMDQ_ATC_0_SID;
-+		allowed[1] |= CMDQ_ATC_1_SIZE | CMDQ_ATC_1_ADDR_MASK;
-+		break;
-+	case CMDQ_OP_CFGI_CD:
-+		/* No SSV for CFGI_CD; SSID requires substream support */
-+		if (smmu->ssid_bits)
-+			allowed[0] |= CMDQ_CFGI_0_SSID;
-+		allowed[1] |= CMDQ_CFGI_1_LEAF;
-+		fallthrough;
-+	case CMDQ_OP_CFGI_CD_ALL:
-+		allowed[0] |= CMDQ_CFGI_0_SID;
-+		break;
-+	default:
-+		return -EIO;
++	if (ntb->vpci_bus) {
++		bridge = to_pci_host_bridge(ntb->vpci_bus->bridge);
++
++		pci_lock_rescan_remove();
++		pci_stop_root_bus(ntb->vpci_bus);
++		pci_remove_root_bus(ntb->vpci_bus);
++		ntb->vpci_bus = NULL;
++		pci_unlock_rescan_remove();
++
++		pci_free_host_bridge(bridge);
 +	}
 +
-+	/*
-+	 * Reject any other bit, e.g. a RES0 bit or a Secure bit, before the
-+	 * command reaches the trusted main cmdq, so a guest cannot wedge the
-+	 * shared queue for every device with a CERROR_ILL.
-+	 *
-+	 * By contrast, an out-of-range address or ID value does not need a
-+	 * check: the spec defines it as CONSTRAINED UNPREDICTABLE, which is
-+	 * scoped to the guest itself and does not raise a CERROR_ILL.
-+	 */
-+	if ((data[0] & ~allowed[0]) || (data[1] & ~allowed[1]))
-+		return -EIO;
-+	return 0;
-+}
-+
- /*
-  * Convert, in place, the raw invalidation command into an internal format that
-  * can be passed to arm_smmu_cmdq_issue_cmdlist(). Internally commands are
-@@ -332,33 +432,40 @@ struct arm_vsmmu_invalidation_cmd {
- static int arm_vsmmu_convert_user_cmd(struct arm_vsmmu *vsmmu,
- 				      struct arm_vsmmu_invalidation_cmd *cmd)
- {
-+	u64 *data = cmd->cmd.data;
-+	int ret;
-+
- 	/* Commands are le64 stored in u64 */
--	cmd->cmd.data[0] = le64_to_cpu(cmd->ucmd.cmd[0]);
--	cmd->cmd.data[1] = le64_to_cpu(cmd->ucmd.cmd[1]);
-+	data[0] = le64_to_cpu(cmd->ucmd.cmd[0]);
-+	data[1] = le64_to_cpu(cmd->ucmd.cmd[1]);
-+
-+	ret = arm_vsmmu_validate_user_cmd(vsmmu, data);
-+	if (ret)
-+		return ret;
+ 	epf_ntb_epc_cleanup(ntb);
+ 	epf_ntb_config_spad_bar_free(ntb);
+-
+-	pci_unregister_driver(&vntb_pci_driver);
+ }
  
--	switch (cmd->cmd.data[0] & CMDQ_0_OP) {
-+	switch (data[0] & CMDQ_0_OP) {
- 	case CMDQ_OP_TLBI_NSNH_ALL:
- 		/* Convert to NH_ALL */
--		cmd->cmd.data[0] = CMDQ_OP_TLBI_NH_ALL |
--			      FIELD_PREP(CMDQ_TLBI_0_VMID, vsmmu->vmid);
--		cmd->cmd.data[1] = 0;
-+		data[0] = CMDQ_OP_TLBI_NH_ALL |
-+			  FIELD_PREP(CMDQ_TLBI_0_VMID, vsmmu->vmid);
-+		data[1] = 0;
- 		break;
- 	case CMDQ_OP_TLBI_NH_VA:
- 	case CMDQ_OP_TLBI_NH_VAA:
- 	case CMDQ_OP_TLBI_NH_ALL:
- 	case CMDQ_OP_TLBI_NH_ASID:
--		cmd->cmd.data[0] &= ~CMDQ_TLBI_0_VMID;
--		cmd->cmd.data[0] |= FIELD_PREP(CMDQ_TLBI_0_VMID, vsmmu->vmid);
-+		data[0] &= ~CMDQ_TLBI_0_VMID;
-+		data[0] |= FIELD_PREP(CMDQ_TLBI_0_VMID, vsmmu->vmid);
- 		break;
- 	case CMDQ_OP_ATC_INV:
- 	case CMDQ_OP_CFGI_CD:
- 	case CMDQ_OP_CFGI_CD_ALL: {
--		u32 sid, vsid = FIELD_GET(CMDQ_CFGI_0_SID, cmd->cmd.data[0]);
-+		u32 sid, vsid = FIELD_GET(CMDQ_CFGI_0_SID, data[0]);
- 
- 		if (arm_vsmmu_vsid_to_sid(vsmmu, vsid, &sid))
- 			return -EIO;
--		cmd->cmd.data[0] &= ~CMDQ_CFGI_0_SID;
--		cmd->cmd.data[0] |= FIELD_PREP(CMDQ_CFGI_0_SID, sid);
-+		data[0] &= ~CMDQ_CFGI_0_SID;
-+		data[0] |= FIELD_PREP(CMDQ_CFGI_0_SID, sid);
- 		break;
- 	}
- 	default:
-diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
-index 206fa667c7828..5d47d1421c1fc 100644
---- a/include/uapi/linux/iommufd.h
-+++ b/include/uapi/linux/iommufd.h
-@@ -948,7 +948,9 @@ struct iommu_hwpt_vtd_s1_invalidate {
-  *     CMDQ_OP_CFGI_CD
-  *     CMDQ_OP_CFGI_CD_ALL
-  *
-- * -EIO will be returned if the command is not supported.
-+ * User space must forward only valid commands: the kernel rejects, with
-+ * -EIO, any command carrying an unsupported opcode, an unsupported field,
-+ * or a field value that the underlying SMMU hardware does not implement.
-  */
- struct iommu_viommu_arm_smmuv3_invalidate {
- 	__aligned_le64 cmd[2];
+ // EPF driver probe
 -- 
 2.53.0
 
