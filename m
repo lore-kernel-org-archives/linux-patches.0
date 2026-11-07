@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064095;
-	b=YMsBg2UM5cGuHG1aepvuwvqnGafNtHHJjRyD9FuQOWuNxS4w0sglby9FgMkTBedw/rlD
-	 IaTVff2FsH28JCrzbVrPxrt62HGiTtyhTZoISZM9kny9BjZ3Ow5gOscFD1buMYMiVuGGH
-	 on2DAuuKSlSg9uP3n+MTj5Z5P2xWPog2e1m6U7PZdGxnhQ/Qw3g5Us+MCbv8SEQdYALMl
-	 GaCumCiqZsunorRH4E+dkvAeRUluoWwgZUAntIxS+phF82mGTxpUAR571g7rUrWyGgkN3
-	 dKLbvQeo3XkSjrFkEfGIGKb42Y/b/g6ZwHTQwdMGCNasaLvTTWnBY4CPQER9Vazjxeg==
+	t=1794064097;
+	b=zSRANbBBCb3c9dSGj91vd7GLZIckyxtOymXgGX72bXfmrSlUFqXWmb08RYDeJCZNkQtF
+	 Up1hsYtUv1XmVRbNVKsB4eAjDwKXlpELyP5MghPQFjf0+Mo9tqfsf0Sqjw7qsmlO5YnWr
+	 UKJc2q+MhO4CLsxbJXmViP7AU4QvIka85qRLa2d1+tPTos+jdcu61n3IJHCONOfRL5bzr
+	 uBl1/hfPtYoK6Ucct/dyAzLWrcXB8li3ucZ+8aF03o9Wb3P/ePqKi3fMKVlPbgwIVhcDH
+	 VeK+gf8w4AsygmTHk6hWQQwQ1k+8jbWHOsbDCUijCpXnZx8qfNY6O9Ns2zX60gmrdQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064095;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q7tMH2tHuPM7WogLQ0Zv8siEZaB+Pr5MV09tnbBflYo=;
-	b=l/trkyHIj6LU0JEtt5NU9tzGGDO5WmEybTdU4Um6dbHMc/RUX3yAKBJEOMc8QEEKA28q
-	 BzP6YmAkLqwzHcEGwFm98K5j00hM/QCEQa138Ek59pz0GpgmL/PTgXyL1ajc8vhJQSwuc
-	 FPRvqkKn6yBVk3WCPCed1tc3ed1dX65F2MUBdxA9KD8YGrTawqVGjhVqZ/NyyNI8OFTOA
-	 ZFHRE7LJDkWW5efIVQAYW3gUAIYNNmZNcbQaN5X9N+PO4/Te4/7DIMXhXabzukuLjBKSP
-	 3Gc1UKz3MKFx3FWX7wxsTsmzIA8YYLQz6Zxl4/WsQbDcbFab0r1+0lQEINwHchsVWWg==
+	bh=w3RuHhJIpmoxJK9yfggTTqDfKYKWI7N6G2nJBYPkKcI=;
+	b=zG19BWEmG6jxqBlR0IcD6macYxlbc4RQ7ZBeoaL2UkN3Lw7mdNpo0ArM4ZNIFMP5iMls
+	 HU6F133B+PtdCElThaEu075Q3qZrZAgobCLyp5r3kFhQ9doLD5dmOCpaeKcUaqcvMBdu4
+	 FWE6lUHnMKlGpj5c4DLYD+pzsxGYyk6mF3LRWQFUbB/Sjly95rZizvFM8dBk0kNFzMTq4
+	 RsRvYJ5ONivTzRxp00Tcl5zSFBWHIPshEtgLFOhUoL+deWylCTvHgDh+/eqSznJj5zKAw
+	 wDhWXczPJv/eD1rmD/Z5ZDNCCZwQLXXLyRaAktPTQ28OV1noknTpuPk62BRcaJqXBPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9U6YVed;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/oKS/8n";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D29606CE56;
-	Sat,  7 Nov 2026 15:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA63606A9EE;
+	Sat,  7 Nov 2026 15:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9U6YVed
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354EE1F0089F;
-	Sat,  7 Nov 2026 15:08:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/oKS/8n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C0E1F0089F;
+	Sat,  7 Nov 2026 15:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064095;
-	bh=Q7tMH2tHuPM7WogLQ0Zv8siEZaB+Pr5MV09tnbBflYo=;
+	s=korg; t=1794064096;
+	bh=w3RuHhJIpmoxJK9yfggTTqDfKYKWI7N6G2nJBYPkKcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t9U6YVedVlGBNlrv9MsXmsOBOHC8IPJR3K9m+5JPYGcWWAV7jCXHDs8pO2KnUzZzw
-	 yDwnGhGplHePMT7DW58qLBIpZ2FTGqDcUv8V+mwBa5MgFx9sAX7UBGs34yzBj9CGem
-	 LshpcCmBbH/ZM8uGjnRj+Y8yCHB1hjJM+HyzQTpg=
+	b=a/oKS/8nvbz6qFyoV433vNdXy72orJXZp7enUIjTRmAvhObFIUYZRb3bLofuc51au
+	 5BJkD3Dfw+1qKCdo8X86xnKLYAHNQeCPeHCuP8cNN73Gb0R7uNwzGBeT/TqodBPWiy
+	 oXN6HNzrkxeQHOh/Vn1n429USYQmNGNjPuU8O9ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Tony Luck <tony.luck@intel.com>,
-	Qiuxu Zhuo <qzhuo@nvidia.com>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0249/1257] EDAC/i10nm: Fix mdev reference leak in i10nm_get_ddr_munits()
-Date: Sat,  7 Nov 2026 08:42:25 -0500
-Message-ID: <20261107134946.384853740@linuxfoundation.org>
+Subject: [PATCH 7.3 0258/1257] media: cec: extron: clear response tail before dispatch
+Date: Sat,  7 Nov 2026 08:42:34 -0500
+Message-ID: <20261107134946.626924100@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,41 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit f0d8c34b3b5e845113581d7d3b24ddaa61bce1f0 ]
+[ Upstream commit a601427f03e015e3d4d2ba44cfa6e0de144983b9 ]
 
-In i10nm_get_ddr_munits(), get_ddr_munit() returns a PCI device with
-its reference count incremented.  If ioremap() fails to map the MMIO
-space of the memory controller, the function returns -ENODEV without
-putting the reference held by mdev, leaking it.
+The serial receive buffer is reused between responses. Terminating a
+short response with one NUL leaves bytes from the previous response
+behind it, while the dispatcher also checks fixed offsets beyond some
+prefixes. Those checks can consume stale tail bytes.
 
-Put the device reference before returning on the ioremap failure path.
+Clear up to ten bytes at the end of each completed response, limited by
+the remaining array capacity. This includes the terminator and covers
+the dispatcher's fixed-offset tests without adding a separate length
+condition to every prefix branch.
 
-[Tony: Dropped the Cc: stable tag]
+The issue was found by our static-analysis tool.
 
-Fixes: c545f5e41225 ("EDAC/i10nm: Skip the absent memory controllers")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Qiuxu Zhuo <qzhuo@nvidia.com>
-Link: https://patch.msgid.link/20260916091251.1997522-1-vulab@iscas.ac.cn
+Fixes: 056f2821b631 ("media: cec: extron-da-hd-4k-plus: add the Extron DA HD 4K Plus CEC driver")
+Cc: stable@vger.kernel.org
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/i10nm_base.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
-index fa1853f252b06..12e1949fcf44f 100644
---- a/drivers/edac/i10nm_base.c
-+++ b/drivers/edac/i10nm_base.c
-@@ -634,6 +634,7 @@ static int i10nm_get_ddr_munits(void)
- 
- 			mbase = ioremap(base + off, size);
- 			if (!mbase) {
-+				pci_dev_put(mdev);
- 				i10nm_printk(KERN_ERR, "Failed to ioremap 0x%llx\n",
- 					     base + off);
- 				return -ENODEV;
+diff --git a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
+index 3c6ce6f3d93e7..1f8ed7ff31e52 100644
+--- a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
++++ b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
+@@ -847,7 +847,9 @@ static irqreturn_t extron_interrupt(struct serio *serio, unsigned char data,
+ 			return IRQ_HANDLED;
+ 		memcpy(extron->data, extron->buf, extron->idx);
+ 		extron->len = extron->idx;
+-		extron->data[extron->len] = 0;
++		/* Keep fixed-offset response tests from using stale tail bytes. */
++		memset(extron->data + extron->len, 0,
++		       min_t(size_t, 10, sizeof(extron->data) - extron->len));
+ 		if (debug)
+ 			dev_info(extron->dev, "received %s\n", extron->data);
+ 		extron->idx = 0;
 -- 
 2.53.0
 
