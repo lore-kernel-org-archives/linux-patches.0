@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060772;
-	b=XbO84cbVPtvAnTaDUN9HYci5g8iGeDzFtftQrOKOhaezTecVSp/0NmFop+/duiIvdEka
-	 yXZC7n/lTiHdl037MKpHVYBfJDvJCkaYrI+tL4n4QLjhypYsJHrqGffEVaAvbRkoo+H53
-	 0/cK+BfmY0G9blopmwMWMr5XjjthtgMAiEAWQgdoPjpjvEexw4GTaVTsXQLuypZcOgWDu
-	 OI51dEpZTgBDgZDO1g/Lc/kYaFC76KPyOw/98E2jkxvnHSvouvzvWoJXC3N6lxuXfjhsX
-	 BvIJaUzAjH4ZJCz6xT/he08s2ODRK+qIzsQOcmiBUGxfXmYIjl9uNzW7VA9GbHzuMCg==
+	t=1794060773;
+	b=mVgp/zJ2qghpbzR+yjUcULrL/rKCiYk72tCGKkAwC9Vyk2IQKJCUcB8dogNMvOBDPOAm
+	 QJ3DcJGfdaymOejVn/Oz353dbm6lhqo9Bm1fr3+/BXL8agNXFy1wvlK07D+yyuIR6hciu
+	 ARcoUAi/VrQSWSF6BZUK/h0TElvy+gTx44ibugx0tLdRQRTLXmze4xtvh7jkqh5sj8X04
+	 qI/2+HM3kuDXubEWbKJpLMHn4gsd8p8EjqO8+JFQPDaP1xLSYxPDmve+U6RssX5yh9UIk
+	 jyq9MXHnXXZuIxfReqWeMkKGIxwvAY/BKrREtUZGKHh85NzMqt685STNjBaysakfRcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060773;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e74Tt9yctcf6+KUhg2KWXEYZdSQUSM1XCBpUHgGh3v4=;
-	b=Ix44jKWUFE+fd7Uqmd2GV8OJxg5iKIuRxi13cekXGsl2ayiRXiz/bSyaF8qUaP6u5DrF
-	 MWSe7nkFoCaGrLxsUpvWrkcHuUslcBdntbvSVp6woc5g0KNKOtNa7k8lbEkrY2bTbZol2
-	 +yT4skjWCcHs6qxL5DTVkT5iyQgqyYGf4/DL/AZs7rr/OVdn3OhSZagS9sOT1CpZjichr
-	 mlCPnwYKBKgCtI1beMdxz4KOY7Y13TX+arGBVOxuEcwJDC89lzmW7JPl7JqLieaHIqzrP
-	 jhDz9TVYDnLDWTj7EpPXaJiMv/bBOPGrkPWy1HNYIeFTmLIFcC0W/aDktjwpNwzXZng==
+	bh=JDPScyye4AegKSI6eyO2VPZ5gS8FRpn96+uoZR67rL0=;
+	b=Oj7OVtdvwJgmMiqnGD6C3/nmeMjYPgMDlfd32KTSsJerZ5MoRvcY+U0B0pvr2yXCW4El
+	 p3LNo6WlOOUeTcnGoB3jmkWk4gJ3AZV7CzkctEUoN+ZQYDryrqwwr52woRgjuTygDt76g
+	 z1NuMYvksnq6ff5TZlYtUEX8Qh/lCfX4w+55y8F0EofyyjDRPympnWaKioVMtIhsMi8wd
+	 CE7QNCiKwXf65shxHniB+2EvEM4FUNFPuiwNlZHwCfSCHh7xgiGH0RHmEoghf4P6l/txr
+	 B014OFl7KYVik69Vx6/G1nmiYaSUTwqpNmqhHvUMggNqQXmB/vtT+3TnFH8PPBp/AIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="QkzKLBw/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HmYN3lCH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF240606A32D;
-	Sat,  7 Nov 2026 14:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA93606A330;
+	Sat,  7 Nov 2026 14:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QkzKLBw/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CC01F0089F;
-	Sat,  7 Nov 2026 14:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HmYN3lCH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C041F1F0089F;
+	Sat,  7 Nov 2026 14:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060771;
-	bh=e74Tt9yctcf6+KUhg2KWXEYZdSQUSM1XCBpUHgGh3v4=;
+	s=korg; t=1794060773;
+	bh=JDPScyye4AegKSI6eyO2VPZ5gS8FRpn96+uoZR67rL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QkzKLBw/YbBf0lpNu+GAJ9PP5o/tOeHtDbByCBLyYvYN3DtqAWJXFVxccjN8dxR1w
-	 mhLshvc6Z+SiDl8tXcRrtwa25lnQ0ivM/YP8T1lET3bifINfmf+cXE1TSlc0Kp3/Kw
-	 ny+LzYcUCYyKFzHR9leS3zYoGOZYJOTXo9isfcN4=
+	b=HmYN3lCHvKPv5WaqC8i8rj9bpYnXsYStW1iOqZuC+zkJFcQobpZdFPRZjZXNv88/8
+	 bp5+EFWR1Y8xlDL08xR2M4UoLvxb6RwBnBqqJeXXcVXDfkiXVO7ON7iThfi76Echh9
+	 AfO3KmEw9NB0wmXlENF6iSThUI7vmxiOOjCYjVI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Yuyang Huang <yuyanghuang@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0181/1536] net: sfp: add quirk for HORACO copper SFP+ module
-Date: Sat,  7 Nov 2026 08:36:37 -0500
-Message-ID: <20261107135002.745540974@linuxfoundation.org>
+Subject: [PATCH 6.12 0182/1536] net: prestera: ignore duplicate RIF destruction events
+Date: Sat,  7 Nov 2026 08:36:38 -0500
+Message-ID: <20261107135002.771509568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,36 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Yuyang Huang <yuyanghuang@google.com>
 
-[ Upstream commit 1bb028baab541900d3603d4f93c1c0fb5aba5401 ]
+[ Upstream commit 3cbbc9fa33382d03f2813118e672eb318eba9cde ]
 
-Add quirk for a copper SFP+ module that identifies itself as "OEM"
-"HC-10GE-113C". It uses RollBall protocol to talk to the PHY.
+During address teardown, the inetaddr notifier may be called multiple
+times for the same interface. Ignore NETDEV_DOWN events if the RIF has
+already been destroyed, rather than returning -EEXIST, which aborts the
+notifier chain.
 
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260719100158.874882-1-olek2@wp.pl
+Cc: Ido Schimmel <idosch@nvidia.com>
+Cc: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Yuyang Huang <yuyanghuang@google.com>
+Link: https://patch.msgid.link/20260711005405.2861680-2-yuyanghuang@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/marvell/prestera/prestera_router.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 512f817607c82..55388b77dd3b9 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -569,6 +569,9 @@ static const struct sfp_quirk sfp_quirks[] = {
- 
- 	SFP_QUIRK_F("YV", "SFP+ONU-XGSPON", sfp_fixup_potron),
- 
-+	// HORACO HC-10GE-113C uses Rollball protocol to talk to the PHY.
-+	SFP_QUIRK_F("OEM", "HC-10GE-113C", sfp_fixup_rollball),
-+
- 	// OEM SFP-GE-T is a 1000Base-T module with broken TX_FAULT indicator
- 	SFP_QUIRK_F("OEM", "SFP-GE-T", sfp_fixup_ignore_tx_fault),
- 
+diff --git a/drivers/net/ethernet/marvell/prestera/prestera_router.c b/drivers/net/ethernet/marvell/prestera/prestera_router.c
+index de317179a7dcc..e36d023fe9c30 100644
+--- a/drivers/net/ethernet/marvell/prestera/prestera_router.c
++++ b/drivers/net/ethernet/marvell/prestera/prestera_router.c
+@@ -1302,10 +1302,8 @@ static int __prestera_inetaddr_port_event(struct net_device *port_dev,
+ 		dev_hold(port_dev);
+ 		break;
+ 	case NETDEV_DOWN:
+-		if (!re) {
+-			NL_SET_ERR_MSG_MOD(extack, "Can't find RIF");
+-			return -EEXIST;
+-		}
++		if (!re)
++			return 0;
+ 		prestera_rif_entry_destroy(port->sw, re);
+ 		dev_put(port_dev);
+ 		break;
 -- 
 2.53.0
 
