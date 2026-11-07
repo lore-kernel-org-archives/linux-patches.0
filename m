@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064313;
-	b=nreBz0J7Rx6Xzly+jowEGigKLzQxAy7ru4C2bnZj1gi5o7jg2SyCkS3kE8msxfFY/I2U
-	 Y9x7SHwZBxv00u9FYWwr2xeZrKGK3GbKTZJwoTDyORPSUswLzryyurzoZymIK5DSvJaKz
-	 dcf3AqiLph6g1eWBdLGooi03EpEKLwwsDFrYwiXQ4RI8MUwXHdVNklwsbHRD+wg4ljLV+
-	 bRLo62TJp7FTiQAOyrPmZXMVU6fatQXGO0ivbW1UnYfHnkEKHd4/Wex6yFgWDo6x+o2uB
-	 Jz4MpuFfmKGDnK+jGcrC3BX2ycLw48ctyR+IXyMr5LJdKXFO9mvlt1zOWptzdpXidcA==
+	t=1794064308;
+	b=vWTLlL8xWVL4l7+G9NuvYLQyLzMQkax9qXbJl2lg8rIauu2+KNf/y1ShCTz9XQATS2Bb
+	 0h5uNCXwSE970JHT6bCW5h64FN+0puvHju3xIv6z9X1z00aLG+u4KKmHrweAgK64OfFRw
+	 c5KPQ8+hRqR3CLwqfEoZJuifSE5rFswPwaNYnxKxFcPivAMNT8nr+iz1X84kelf0lVPvD
+	 ovmHdkr1Ybc6C6Dl9o6uEu3gMzcvxQp3EEwT/OdtOL0FGElDwfeuAGY2ZThECMA72mjJ2
+	 mqhrzCP6/WFPFIGTljexA18y6QBeszVH7p+hPm6QSOo5MWilst5b0kPoZVQZgEMQaLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064313;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064308;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1QgCEOdA0ZDn5dHR1SGfYuzies2xBzX0dfd/9uky7KU=;
-	b=vqCkkxeBeiZF/RH1K5wzP5MTwvmDYTrTj24AxotL86tRlWoNeBVvo8QrP4WxVucU+ZHe
-	 quGZ9OUUWpKuT9yFJaFy5s4bPV2Fc+Trtt8j/+k6B1j2LbeKhrIgOlw32B7AGxsi5vI4B
-	 fEnpvHaLgXyK9z4f36YZ/n/nzST5fbBn4VDS1NZlopG3lCgiUFoL7PUA7G90ahrlJPYlj
-	 iSfCJjrquGant32UTDX8U2DCby0bzEiqH0s/887vwXGulp3lKNOQOndTWiBW7IHp/88pS
-	 d9uBDIna+BlOSCkchj2wUh/3UMIgc8EFnZie6+NZU9ZGVGHVK80HcqiJmZ08AtLA0Fw==
+	bh=ARZWEgiPvBt042VS/Eyf17eiQDLu/pUoeDj+j9Y5YEA=;
+	b=T7uftXp5YPCVN+A8GZKzI6LvDNZLpI2FDjKcwONgKYhl6t6AH2xe0rdvjNbzlFp+eQHW
+	 jfbCCVuPpD8yKhadfy75s8Pr4L0f2xWpJ5Ft6N2xS2QhGAA6T5KuTnMvcxpGWEjU8d8Xt
+	 qvrniUO+PoBuGBNvWG/VyTCt57ZrnQrBAYzz3HCF3LZomWT3zewcRXQTEcQjkNWFHJM9P
+	 ggMxd+ZqgEnZozCA+sMi8fnRmO3mRMoajfcXPHBy9FV8woASLZyKOxAzoqXgw0kAoa9QR
+	 yapmHVHwGXCvzqFFaN+irpsuYjgTF5rUvnuAV8Mn7O3YLp8ckaeAoC5Uw/i8+gbC5uQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MbFgqfg6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iq1gCTjA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170C6606C02E;
-	Sat,  7 Nov 2026 15:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4505F606C025;
+	Sat,  7 Nov 2026 15:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MbFgqfg6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B989E1F0089F;
-	Sat,  7 Nov 2026 15:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iq1gCTjA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84AD1F0089F;
+	Sat,  7 Nov 2026 15:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064312;
-	bh=1QgCEOdA0ZDn5dHR1SGfYuzies2xBzX0dfd/9uky7KU=;
+	s=korg; t=1794064308;
+	bh=ARZWEgiPvBt042VS/Eyf17eiQDLu/pUoeDj+j9Y5YEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MbFgqfg6tsxkYX5lJpfwmZviEizB9h82CJP0HgrS4WfGn0xEmX/4qIQVm6xrQ9biX
-	 6uI8z6ZbBxVo2Wl2Lttsayva5ve0jvOeomEVnBBSdDZBmKPMYPE74G01FC3bnUX1mI
-	 bY/KBCAhDlHKkJG9pG0w8kfdFl2DQPxGYx+fnaQc=
+	b=Iq1gCTjAHAKk+FOUyYiRnC6eKU2vln3F3ECQ56x1LjoUAwL3fZCZBhgGodhHpGNxx
+	 gCX2X4SGoWYgAA6Yps2xLUp9COPu5LuuJoGZe+seV2A+BknBiEJgeIdGdiqj3MYe+n
+	 qf/4wFEhW6Uct7Srwdcaxrq+dAS456LJC03e70vM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Rob Clark <rob.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0403/1257] media: renesas: rzv2h-ivc: manage runtime PM with devres
-Date: Sat,  7 Nov 2026 08:44:59 -0500
-Message-ID: <20261107134950.660520197@linuxfoundation.org>
+Subject: [PATCH 7.3 0399/1257] drm/msm/dsi: Fix VM leak in dsi_tx_buf_alloc_6g()
+Date: Sat,  7 Nov 2026 08:44:55 -0500
+Message-ID: <20261107134950.557715505@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,65 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 64e07ebcb3d054672cff678edb5344586d2d3286 ]
+[ Upstream commit ab91ba61871a896ca2ecc6e048d80a152136da44 ]
 
-Runtime PM is enabled before the IRQ is looked up.  If that lookup
-fails, probe returns without disabling runtime PM.  The subdevice
-initialization error path disables runtime PM but leaves autosuspend
-enabled, while the remove path does neither.
+dsi_tx_buf_alloc_6g() takes a reference to the kms VM with
+drm_gpuvm_get() and stores it in msm_host->vm.  If
+msm_gem_kernel_new() fails, the function returns early without
+dropping that reference.  Since msm_host->tx_gem_obj is cleared on
+the error path, msm_dsi_tx_buf_free() will never see a non-NULL
+tx_gem_obj and thus never calls drm_gpuvm_put(), leaking the VM
+reference.
 
-Use devm_pm_runtime_enable() so the driver core disables autosuspend and
-runtime PM on every failed probe and after remove.  This also makes the
-manual subdevice error unwind unnecessary.
+Drop the VM reference and clear msm_host->vm on the error path.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: f0b3984d821b ("media: platform: Add Renesas Input Video Control block driver")
+Fixes: 5e05be782645 ("drm/msm/dsi: free TX buffer in unbind")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/754332/
+Link: https://lore.kernel.org/r/20260916175738.2089950-1-vulab@iscas.ac.cn
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/renesas/rzv2h-ivc/rzv2h-ivc-dev.c  | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-dev.c b/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-dev.c
-index 355842abb24b8..48f9fd818bfff 100644
---- a/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-dev.c
-+++ b/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-dev.c
-@@ -202,7 +202,9 @@ static int rzv2h_ivc_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index b292dfd266d17..d92659d80f172 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1254,6 +1254,8 @@ int dsi_tx_buf_alloc_6g(struct msm_dsi_host *msm_host, int size)
  
- 	pm_runtime_set_autosuspend_delay(dev, 2000);
- 	pm_runtime_use_autosuspend(dev);
--	pm_runtime_enable(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		return ret;
+ 	if (IS_ERR(data)) {
+ 		msm_host->tx_gem_obj = NULL;
++		drm_gpuvm_put(msm_host->vm);
++		msm_host->vm = NULL;
+ 		return PTR_ERR(data);
+ 	}
  
- 	ivc->irqnum = platform_get_irq(pdev, 0);
- 	if (ivc->irqnum < 0)
-@@ -210,14 +212,9 @@ static int rzv2h_ivc_probe(struct platform_device *pdev)
- 
- 	ret = rzv2h_ivc_initialise_subdevice(ivc);
- 	if (ret)
--		goto err_disable_pm_runtime;
-+		return ret;
- 
- 	return 0;
--
--err_disable_pm_runtime:
--	pm_runtime_disable(dev);
--
--	return ret;
- }
- 
- static void rzv2h_ivc_remove(struct platform_device *pdev)
 -- 
 2.53.0
 
