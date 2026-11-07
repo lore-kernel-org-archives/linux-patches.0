@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063031;
-	b=0yu5+ULhWI1Gyy6LMl1rfEELHg+fPKLxQLYVzrOqAqKy2oxeVwEn3WjwSL0gFOamgFqg
-	 89glFW5jJevwkyg5z7qvVhPfO4jALZcl7LIW1PPb1dRBrM8OuM5YUDi0BkNc4elcR8od1
-	 WHhw5+tykTE9pY9OZ/KbyjkuXCtuwOL8xYyMLD/mNtXlTCPldWLiTObWIKjaWV45Xhd6G
-	 peX3Jfm8kgXgjNiZYn2ge71LDBfIDw6NVmkb7Sya39PIVPnbyjssBXNRVyaAoEMWuNpwk
-	 FXPJU3ul2Xi/XnGPlQmlKaBIPfq0X47wtE57sqQQNuyECGzeAUQHJeCOgy2C7zrwj8A==
+	t=1794063033;
+	b=StZ9VEbNntY1Y91x2z1s6TkCF1jMvUJcFJB9Z4d/lVmZ5Q4EueChnXBztxYUe7hdnRzO
+	 P8s60hwYyxN/57JKzy38mqRC5Yai7+M2DKCZ/tRBIRB3uG5jAcnoopXkyDOccvrniJ8Ku
+	 A5+8RiBxo0s11n2f3Spr/IjAJ+pMxhLNW99mv/wV7XdEZM6dRUm0B+gjLiAZbJIwFTuaR
+	 aBsfpU6dGZqoNDpolxcfIOsDr1AY7vls3a6Z4oQEbDB/UQa7XXpx7Hzh2mz3ivHf2oC9H
+	 BZfNgXTfnSy5ZRthTDQYthVSvAb6yBfe2m5KFER2l884mmqpXQpJ55TjmlEqxAfW5gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063031;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D3dP83B9qfnS2EH3XcmkBK3xgGpCbu8OiB4W0cfYNEY=;
-	b=q1K+Nac6N6/Av4E1+L/BuXgRLhRWSVUYKy22oG1RkhFIPYsTyKA30ttwD3vMdKT/qjnp
-	 Q6BV02HBvE34t+t+dIjPAYX5Rv0CJoTP5B55H8Mqlm7LjwpQALnToBUv1Kourg4TaPkmf
-	 8QEbu+fcXiSxALtsxwiPuWc1AhmRSltF7fNEQvcaei5L2t07fjDXDjPY6lTnvWI99Ndym
-	 cE3TONh6v+0pMea5IVriUC49k1xoNNqGVJ2rOWX7oxhr+19Z8tkdmWqs9ee1ysaUDR0Xw
-	 H0+o5EX+B//DijbKUAtciaci6qyIkqy1g9e0H5LMgU+NIIDvJ2IVEM9QT4xR8KV2cbQ==
+	bh=bfoUVXa89xKmt/AkAizWDjk4Ls9MhW70PDNCyWu0sMQ=;
+	b=G8GqwqPdeHLQHbkVM2WdV87sIYljIJUqCJww+mI23CQGEwn4Dl/xg4TzAfUyUECuOnQ/
+	 cDk9LVt5z6lwm/tCRIMnAsxf1ah+Ye5rOqod4PwHvvHFdNMzgwfTVLGQBbatGzniYYUMm
+	 dMgK12navklWVcH6zoelFyrra7hSlkDSfHKMOHuZ4TTDaZTFr89aOUHJnUAS8/+nYq7Kn
+	 Q+lc3lnWnnSKPLsYva+fd5GfF9s6FVrH6Ey2U81noLPz7FTfJmhOccqtVJGCVOKTTcxzq
+	 CDkuwdR5ziMwIfCtl0qsUpsyLhuj6yH3+LSBngmcs7BFRWe2+5ZV6tGhRAVYVozzh+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bO0TBrS8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=reogAJC1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E11606D802;
-	Sat,  7 Nov 2026 14:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6248606D802;
+	Sat,  7 Nov 2026 14:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bO0TBrS8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BF91F0089F;
-	Sat,  7 Nov 2026 14:50:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=reogAJC1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A951F0089F;
+	Sat,  7 Nov 2026 14:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063031;
-	bh=D3dP83B9qfnS2EH3XcmkBK3xgGpCbu8OiB4W0cfYNEY=;
+	s=korg; t=1794063032;
+	bh=bfoUVXa89xKmt/AkAizWDjk4Ls9MhW70PDNCyWu0sMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bO0TBrS8dLnmPVPc59mhtJGKXr0S+XxfvPWSJKnv8ExnCKbKuSaoPDJfqYIAr+5Rf
-	 FQp+WwrcV10wdqbfXynaY8JYfhdj4zBu/3OCckwOeqfeSa67wYQ2Z91SXxymyfqMhD
-	 ac2mKDYWZ0kceASIesqvBlXaIWeKvgMi63A9+HeQ=
+	b=reogAJC1jvjTET25tAaBKXpCOf2zXlFAy2o7RrklFh4zg5ggMyHLH0ArvfMfugNuU
+	 +1Pk4l2a8M+GMHgC06l0wbMalL9TmblpIMZ6sO8tatExoiihVy1o4dmTjP6VqFqdio
+	 V5CmMouPgiv4bNLjLnZOVlu4SJXKFZeGg9R5T57o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Hitesh Patel <hitesh@ebytelogic.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 281/869] cxl/acpi: Check ACPI companion before use
-Date: Sat,  7 Nov 2026 08:49:23 -0500
-Message-ID: <20261107134901.243272208@linuxfoundation.org>
+Subject: [PATCH 6.18 282/869] media: qcom: camss: vfe-17x: Fix write master buffer done being dropped
+Date: Sat,  7 Nov 2026 08:49:24 -0500
+Message-ID: <20261107134901.282273861@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,69 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Hitesh Patel <hitesh@ebytelogic.com>
 
-[ Upstream commit 371c2ad1624283b6c7a62a28199f5161d388a738 ]
+[ Upstream commit eed550a8191c2f6984047a1b794b313d1bacf77d ]
 
-Platform drivers can be forced to match devices outside their ID tables
-through driver_override.  cxl_acpi_probe() assumes that every bound device
-has an ACPI companion and dereferences adev->dev.bus without checking the
-result of ACPI_COMPANION().  Force-binding cxl_acpi to a platform device
-without a companion therefore causes a NULL pointer dereference.
+The VFE 17x interrupt handler reads and clears the bus status
+registers on every interrupt, but only acts on the per write master
+BUF_DONE bits when bit 9 of IRQ_STATUS_0 is set as well. Bit 9 is the
+ping-pong flag of image master 1. It has nothing to do with the other
+write masters, and it is not guaranteed to be set in the same
+interrupt in which a write master reports a completed buffer.
 
-This was reproduced by setting the driver override for the pcspkr platform
-device to cxl_acpi and binding it through sysfs:
+The bus status is read-to-clear. When a buffer done arrives while bit
+9 is not set, the handler clears the status and never calls
+wm_done() for it. The buffer stays queued in the driver and the video
+node never receives that frame.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000280
-  #PF: supervisor read access in kernel mode
-  RIP: cxl_acpi_probe+0xf4/0x220
-  Call Trace:
-   platform_probe+0x4d/0x80
-   really_probe+0x106/0x370
-   device_driver_attach+0x4c/0xa0
-   bind_store+0xd0/0x100
+With one RDI streaming this is rare. With two RDIs streaming on the
+same VFE, for instance two virtual channels demultiplexed by the CSID,
+the interrupt rate doubles and one of the two lines loses buffer done
+events continuously.
 
-Commit 2b3a5dabe89e ("platform/surface: acpi-notify: Check ACPI
-companion before use") fixed the same force-binding issue in another
-platform driver.  Check the companion before setting up the CXL root and
-return -ENODEV when it is absent.
+Act on the bus status alone, as the other gen2 VFE handlers do.
 
-Fixes: 7d4b5ca2e2cb ("cxl/acpi: Add downstream port data to cxl_port instances")
+Fixes: 7319cdf189bb ("media: camss: Add support for VFE hardware version Titan 170")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260926071605.3013893-1-yaojiale02@163.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Signed-off-by: Hitesh Patel <hitesh@ebytelogic.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/acpi.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe-17x.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
-index bd2e282ca93a0..5e9bb0df46dd8 100644
---- a/drivers/cxl/acpi.c
-+++ b/drivers/cxl/acpi.c
-@@ -892,13 +892,17 @@ static int pair_cxl_resource(struct device *dev, void *data)
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-17x.c b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+index e5ee7e717b3bc..c011f64f63e93 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-17x.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+@@ -364,9 +364,8 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 			vfe->isr_ops.comp_done(vfe, i);
  
- static int cxl_acpi_probe(struct platform_device *pdev)
- {
--	int rc;
-+	struct cxl_cfmws_context ctx;
-+	struct acpi_device *adev;
- 	struct resource *cxl_res;
- 	struct cxl_root *cxl_root;
- 	struct cxl_port *root_port;
- 	struct device *host = &pdev->dev;
--	struct acpi_device *adev = ACPI_COMPANION(host);
--	struct cxl_cfmws_context ctx;
-+	int rc;
-+
-+	adev = ACPI_COMPANION(host);
-+	if (!adev)
-+		return -ENODEV;
+ 	for (wm = 0; wm < MSM_VFE_IMAGE_MASTERS_NUM; wm++)
+-		if (status0 & BIT(9))
+-			if (vfe_bus_status[1] & STATUS1_WM_CLIENT_BUF_DONE(wm))
+-				vfe->isr_ops.wm_done(vfe, wm);
++		if (vfe_bus_status[1] & STATUS1_WM_CLIENT_BUF_DONE(wm))
++			vfe->isr_ops.wm_done(vfe, wm);
  
- 	device_lock_set_class(&pdev->dev, &cxl_root_key);
- 	rc = devm_add_action_or_reset(&pdev->dev, cxl_acpi_lock_reset_class,
+ 	return IRQ_HANDLED;
+ }
 -- 
 2.53.0
 
