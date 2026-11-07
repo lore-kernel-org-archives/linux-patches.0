@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065152;
-	b=opOScHNHXou8s7/YWXs6fW1gIP7fAwdTiwhWbU43+r+WRvFcAPcSrlkobKP1I0VJEa82
-	 rgoC77UpAPOXLTeCDC9laWLvXgvT/LE7DC5MsYuSyyBSeK4rBMqszd0s+xhepVyG3DjT9
-	 /C2R682+rqg9DDWwtZ7lscEFdWqCWCljV9+dYGrmWVHFiSIAQ/nsFTJ2pdlv8CSIxbxiA
-	 2OVDBBLPHgNZj3c/VCohCW2GnoQxkflRVdvPOxoQcXmDctHO0Drj1ZGKzENt0bPY5t4x7
-	 gEVLbez7mfi2Kx6U6DZOzTTTTGbk9p8plIzl1YpdPvnJPpTaCkn6pZzGKrlVV2Lq9xg==
+	t=1794065154;
+	b=JNeG/e7ANGRiGuMQHANO7xR5l67Yr/9SwrSrQwXNV4BTb2d3ZaE65YlMt0eQaCiphFTD
+	 XQJrldBG2bCZ77ojHmg5+OQ92g3ocfprzPrTbxeNJ/wbl/nH6A8WftgKNx/JdzDp+9hTE
+	 Zgk2m15Pb1j/3WdFGgGYn04ofy0wl2cTICVwAAvcdQafZL6ziyxG0PogbgVZol0FQ+heY
+	 W3FRq5DF6q2z/teELfiGrBoblktLbZsEzaJf1nZ/pb37oHh38vphgQWzxVl02CnMasD7U
+	 l9oDX672PgvQjNQ7P9+RgJteJCO5NZrnWwFdALiO01FRFqg8KRUn8wDQQdDfL3V4EWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065154;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xd4Jd5yXqPjFZGx47s/npVh7xLaS2E/kScqon8uYTGM=;
-	b=4bJ0F4h5CcGew+4D9nyQRkx0oFSHI7DVyzBUQv6bvtJhQ5734jL7BGyMfvmlGUb/ORn2
-	 dpT8gQwYLR93+Td2vbqpzezBH8oIXO8w7Ucc89N482YzYF+mI0ATgNk9z+Bp8Afscf9HL
-	 C19f34vomot+h8JFViwfCgTzvdTlGrREoFd8XjziGYIzTHSdq/B2YVHcXdqn3khk+EWn8
-	 UqcRQHDs3Rofh/BaHp+lgFw3xNNK4Fn0GPL+DMBdIEL9mEgMX+pAFYTeSapUSJnYSoruV
-	 /yW9GhCir+6hK575dezL1yt5hrqQaf/RmQp+qAsq5/In5QEKPh4AsDl3pOqoLQC/9IA==
+	bh=zNB4jJp+HEXaK4vTtDphfmjnikNlwRWEmIEVBDYNHok=;
+	b=JhVfdJT35lpGYDJ3RGCipn/xvyxWECKzjL6ZdBUrM4d3/NSKKSONpmuv7X2+kkedwzu+
+	 etyRCrbmtxfgrQq2tvse5sijU+KHPHytKaYY0yn2atdlUQJ3wl1LK7RwhSyqd31hwp3/P
+	 DzL4AwtUh66a7AlDvecwHFmjbzFe/6tKZcXA2Knm3kVCn3Lp6ptH9vycyWfLGqoU+MD8/
+	 h6spN5cketds9iar+12tpg8W2U+eatjdNvI4W0uGAaUKy4NwgD5xUT4Ea5JDhBiCELZx2
+	 7gaUGFpMMR/wbEAa7xqh4UUtkWWyC8oUShMCZag62VohdtEpeyWnVV9IoalGcMLrDYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sacbCzu1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nGRyeh+8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C90606A32E;
-	Sat,  7 Nov 2026 15:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F864606A32E;
+	Sat,  7 Nov 2026 15:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sacbCzu1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2147E1F008A1;
-	Sat,  7 Nov 2026 15:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nGRyeh+8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348801F0089F;
+	Sat,  7 Nov 2026 15:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065152;
-	bh=xd4Jd5yXqPjFZGx47s/npVh7xLaS2E/kScqon8uYTGM=;
+	s=korg; t=1794065154;
+	bh=zNB4jJp+HEXaK4vTtDphfmjnikNlwRWEmIEVBDYNHok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sacbCzu1iTmUPSNXOUayKec7IhxBNpJ4ZwDwxuwlda6sEvv7EEC0ehqfOtI2j23ax
-	 /IdM44SaP9Zr+fEcHLm2fc80cg71IF07tTpT3UyeJA7SRzYJm0cgun4J4OaR1RJ0cO
-	 vVhB6PgjrJh54VWjQYiN6IkBBg1G9HNMZCyUg1CM=
+	b=nGRyeh+8xu3NFPWIHgRnvzrAjEkNEd5Ny8KDYtFxW11n6JEY6kcT2Ba3Rp9Dg0WaI
+	 2+l9ss/TfOgh8MU4i+Cze4aHvN64eyLoLUqd0TRPk8GBRoYrtlmcJav7IfSknTG+OP
+	 waYVm/oXJPdynTQfYWlp8e9lImMLZpRYiB4/10UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahzeb Ahmed <shahzeb.ahmed@amd.com>,
-	Manjunath Gaonkar <Manjunath.Gaonkar@amd.com>,
-	Elena Sakhnovitch <Elena.Sakhnovitch@amd.com>,
-	Apurv Mishra <apurv.mishra@amd.com>,
+	Keita Morisaki <kmta1236@gmail.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Roman Li <roman.li@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0963/1257] drm/amdgpu/gmc9: add extra type-2 TLB flush for gfx942/gfx950
-Date: Sat,  7 Nov 2026 08:54:19 -0500
-Message-ID: <20261107135005.937871476@linuxfoundation.org>
+Subject: [PATCH 7.3 0964/1257] drm/amd/display: Fix swap in median3() for DSC rate control
+Date: Sat,  7 Nov 2026 08:54:20 -0500
+Message-ID: <20261107135005.964423601@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,56 +70,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elena Sakhnovitch <Elena.Sakhnovitch@amd.com>
+From: Keita Morisaki <kmta1236@gmail.com>
 
-[ Upstream commit 232213c9bd7f703836164f23160b76657094a7db ]
+[ Upstream commit 7b23bf82ccbdb4cf0752f2b8686e7319a7ce497f ]
 
-Add extra type-2 TLB flush for GC 9.5.0, similar race condition was
-observed as Vega20+XGMI. Add to GC 9.4.3 and 9.4.4 too, as they share
-the same multi-XCD TLB topology.
+median3() is meant to return the median of three values, but its last
+compare-and-swap step swaps b and c instead of a and b. When c is
+smaller than both a and b, it returns max(a, b) instead of min(a, b).
+For example, median3(2, 3, 1) returns 3 instead of 2.
 
-Reported-by: Shahzeb Ahmed <shahzeb.ahmed@amd.com>
-Reported-by: Manjunath Gaonkar <Manjunath.Gaonkar@amd.com>
-Signed-off-by: Elena Sakhnovitch <Elena.Sakhnovitch@amd.com>
-Reviewed-by: Apurv Mishra <apurv.mishra@amd.com>
+_do_calc_rc_params() always passes 0 as the first argument, and the
+second argument is never below 12. So whenever the third argument is
+negative, first_line_bpg_offset (and second_line_bpg_offset for 4:2:0)
+is set to the second argument instead of 0.
+
+Fix this by swapping a and b in the last step, as intended.
+
+Note that this change does not affect valid DSC configurations. The
+third argument is negative only when bits per pixel exceeds the
+uncompressed rate of the colour format:
+
+ - 3 * bpc for 4:4:4, 3 * bpc + 2 for RGB
+
+ - 2 * bpc for 4:2:2
+
+ - 1.5 * bpc for 4:2:0
+
+Fixes: 97bda0322b8a ("drm/amd/display: Add DSC support for Navi (v2)")
+Signed-off-by: Keita Morisaki <kmta1236@gmail.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 138cfb165ae6aa98c0767b431e718d1a8199db28)
+(cherry picked from commit 1ddc4bc97a62fc89d9d3681413d9f977e1fa1a83)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-index 1192682735300..bb0d013e1fa12 100644
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-@@ -2172,10 +2172,22 @@ static int gmc_v9_0_hw_init(struct amdgpu_ip_block *ip_block)
- 	 * (type 2), which flushes both. Due to a race condition with
- 	 * concurrent memory accesses using the same TLB cache line, we still
- 	 * need a second TLB flush after this.
-+	 *
-+	 * GC 9.4.3, 9.4.4 and 9.5.0 hit a similar race.
- 	 */
--	adev->gmc.flush_tlb_needs_extra_type_2 =
--		amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 0) &&
--		adev->gmc.xgmi.num_physical_nodes;
-+	switch (amdgpu_ip_version(adev, GC_HWIP, 0)) {
-+	case IP_VERSION(9, 4, 0):
-+		adev->gmc.flush_tlb_needs_extra_type_2 =
-+			adev->gmc.xgmi.num_physical_nodes;
-+		break;
-+	case IP_VERSION(9, 4, 3):
-+	case IP_VERSION(9, 4, 4):
-+	case IP_VERSION(9, 5, 0):
-+		adev->gmc.flush_tlb_needs_extra_type_2 = true;
-+		break;
-+	default:
-+		break;
-+	}
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c
+index b8fc27a5361e8..657173d8081c3 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dsc/rc_calc_fpu.c
+@@ -46,7 +46,7 @@ static int median3(int a, int b, int c)
+ 	if (b > c)
+ 		swap(b, c);
+ 	if (a > b)
+-		swap(b, c);
++		swap(a, b);
  
- 	/* The sequence of these two function calls matters.*/
- 	gmc_v9_0_init_golden_registers(adev);
+ 	return b;
+ }
 -- 
 2.53.0
 
