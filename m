@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060915;
-	b=G4XkVxfmHSsS94Y21KeqrsAYmB4SdWgQ8+hOAbTh5OjZk9iDFR/dBfRwUSfPsrz3GSs5
-	 m8qF/H6qrXTBOU5BlW6DpbWzuZsDAChdZJA5kt5MvdKDmdvpyjXTlO1OxcXITUGC+imlq
-	 hwv5qjsczwVg/WvWf8J2RgXQto3CRyedjSOEhtEyR+juCX2byB+bvw2XBKo74GcsT+H6w
-	 yzaBoPBOSHRRYKyvSE9oCVBYr5Z7QTLvVudOGI/yx7RseYa0YkUOZ6wfpxLDQuD5cyx/y
-	 wsOmatyur0kRxf2t+SC3nnRFFt7Uo6bHw3T0XZIwL616Ct8VJcVW2P6R1/7znIBz8fg==
+	t=1794060916;
+	b=BI5BU1PfLFF0nnqXFF0ctPSlNv05bdWSrPkBRvHl4MW1OxxZc0OXM+UKo9oSurF0Q2h5
+	 bN5x9Cn/BDTHpGGA8umPJM6MiyAAd1UIRideDm7mO5g7UvW5+vYxcd1TkbLRwU8Q9qkMz
+	 86CNDwJ4A84quOeu31GhhKprSBNlAKqc1ViJXiiH8UoOeHF0GwtJCzpTD+vp03OUIxFk7
+	 A93WPYE5vXLo9BTxQvOu9nbwvHMVFRA6HK5kUaw8hpBUMeiCyLFKRJCxX0nmZWPnhQvAX
+	 nFYmzugCFbOf0OofB6jUMhgfhwSVqHVk4zXzQ/wTXC3AIaRtFOoYJXxVxC4XDe5JBOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060915;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060916;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x9o6ybrOTMPzmNTEnQG9mHVRt4EV5AWgpeKRuUlCvLw=;
-	b=aAeHQ1QGrba4+MaIhuZHAhFiUHDLbnaA0HjRYxrBf0zP6QBSjXySUuE6uI+x60hpJPih
-	 AEXIyffeQ7G6PBinol9k7cEFZRsS/5F2eZVdwlFPJGyOfJB4k3kxn+owxZh5kK2I5+NKj
-	 8F7MR1eTC40uIXvaB2ulKtFOpZ1kRHScY9V8tV4b/uhK59OC2HOQKrRYGqKsK8lBZ6P66
-	 AFZ8utzOUL10hzdKEp6Dk6DBAl7LPEZoRQ0f+yF5IeayfJ92dwPvRN4D7gw7tG41YvP39
-	 cWfBYZ5CGeQDRuka/xnWAUDEHQ79fy1iLh0bF8X2czJ8GW9H2ccKBY0m+hJttLwLssQ==
+	bh=9+BeZLhJfW3HdUAl1xTbQqL6A8YbK1ibixIjpapoCE4=;
+	b=zde7vjt5domK8kummhfLahynOU/hwk+44WUtmbL9DNkxu0DlHMlEpF77wp65DM1ZLjsk
+	 14MLFIuG+IkPJqdVCOgF2XJuv766uIh9aGp+ZlQH9sf3cxE2mWN2x35PY8ehsKX7CzQsa
+	 /9FVloASxRkXqx/PSIuLrN0TBwQJX3DwZHNq6qGgJ+zVBU4ys6dGq7RKGiQhB6GnG6lPx
+	 UTabpsbGLC0KBEphJ1DBH1/7jKO5M50miYQMnrvqm/48/yA2CVd01chGGyBUCnTnaAJlo
+	 lpoxX7N28B9C5oV1WzzegcNlO8X9nQArkAEF4XGcD+Lu9+zgrsATYqnAIpx20oYmBww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SZJ/aKND";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hq0zF0Lq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000CF606D809;
-	Sat,  7 Nov 2026 14:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BF8606D80F;
+	Sat,  7 Nov 2026 14:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SZJ/aKND
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9881F0089F;
-	Sat,  7 Nov 2026 14:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hq0zF0Lq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D551D1F0089F;
+	Sat,  7 Nov 2026 14:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060914;
-	bh=x9o6ybrOTMPzmNTEnQG9mHVRt4EV5AWgpeKRuUlCvLw=;
+	s=korg; t=1794060916;
+	bh=9+BeZLhJfW3HdUAl1xTbQqL6A8YbK1ibixIjpapoCE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SZJ/aKNDT2TAfdtbMzT6DFd8J3Bc601OR7so7PfsRWou+58yKvVgwhLTU9eOPJVw6
-	 Txjx9/36AmgUwKdI3D9hGQllW2DFBoxYibS14exqlIhOO/caHSLICqNFyPW6WlK+XY
-	 6Gdgvc4jMf4NDo9wa2Az/O85IKunLzSFlhDX4jJU=
+	b=Hq0zF0Lq2W0jaxD/3RiCMLs2sD1F0KabOY4GZy3r7dfp1pdjUhN3Ar+aEq3xJVHCG
+	 8nX7dU2R+bo4JZhCv+I66CU87aQ/AtwiKB3BTYrpTzM2EjbGJpeUTceTTcVyOGjSgq
+	 ZQgDKnJM7ydlHStsW+cl4Cxf3CwI8y0YgjfxKpuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunye Zhao <yunye.zhao@linux.alibaba.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Andreas Haufler <andreas@haufler.info>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0283/1536] md: add cond_resched() to md_do_sync()s skip path
-Date: Sat,  7 Nov 2026 08:38:19 -0500
-Message-ID: <20261107135005.612042604@linuxfoundation.org>
+Subject: [PATCH 6.12 0284/1536] tools/lib/thermal: Fix misplaced extern "C" closing brace
+Date: Sat,  7 Nov 2026 08:38:20 -0500
+Message-ID: <20261107135005.638841347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,58 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunye Zhao <yunye.zhao@linux.alibaba.com>
+From: Andreas Haufler <andreas@haufler.info>
 
-[ Upstream commit 162eb5ba791f6260fdaabae75fa2df20134f67d8 ]
+[ Upstream commit cb0ec27efac2aaf92393ad563a35fb6f00d0a6cd ]
 
-When sync_request() reports a skipped region (*skipped == 1),
-md_do_sync()'s main loop advances the cursor and takes an early
-continue:
+The public libthermal header opens the C++ 'extern "C" {' block inside
+the __LIBTHERMAL_H include guard, but places the closing brace after
+the guard has already ended:
 
-	j += sectors;
-	...
-	if (last_check + window > io_sectors || j == max_sectors)
-		continue;
+	#endif /* __LIBTHERMAL_H */
 
-If the personality returns a small span per call (raid10 recovery
-returns only 128 sectors), syncing a large, mostly clean array iterates
-this branch an enormous number of times without ever yielding the CPU.
-On a non-preemptive kernel the resync thread then trips the soft-lockup
-watchdog:
+	#ifdef __cplusplus
+	}
+	#endif
 
-  watchdog: BUG: soft lockup - CPU#149 stuck for 313s! [mdX_resync]
-   md_bitmap_start_sync+0x6f/0xe0
-   raid10_sync_request+0x2c9/0x1530 [raid10]
-   md_do_sync+0x810/0x1030
-   md_thread+0xa7/0x150
+On a single inclusion the braces still balance, so the problem is
+invisible. On the second inclusion of the header in the same C++
+translation unit the include guard skips the opening 'extern "C" {',
+while the closing '}' lives outside the guard and is emitted anyway.
+This leaves a stray '}' and breaks compilation for any C++ consumer
+that includes the header more than once.
 
-Add a cond_resched().  This does not reduce the wasted iterations; the
-excessive iteration count is a raid10 problem addressed separately.
+Move the closing block inside the include guard so both halves of the
+'extern "C"' declaration are guarded consistently.
 
-Signed-off-by: Yunye Zhao <yunye.zhao@linux.alibaba.com>
-Link: https://patch.msgid.link/20260723135535.101995-3-yunye.zhao@linux.alibaba.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Signed-off-by: Andreas Haufler <andreas@haufler.info>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20260721083230.91246-1-andreas@haufler.info
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/lib/thermal/include/thermal.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index db8df74fcf67a..634b68b6632ea 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9293,8 +9293,10 @@ void md_do_sync(struct md_thread *thread)
- 			 */
- 			md_new_event();
+diff --git a/tools/lib/thermal/include/thermal.h b/tools/lib/thermal/include/thermal.h
+index 1abc560602cfb..cf8381121c78e 100644
+--- a/tools/lib/thermal/include/thermal.h
++++ b/tools/lib/thermal/include/thermal.h
+@@ -135,8 +135,8 @@ LIBTHERMAL_API thermal_error_t thermal_sampling_handle(struct thermal_handler *t
  
--		if (last_check + window > io_sectors || j == max_sectors)
-+		if (last_check + window > io_sectors || j == max_sectors) {
-+			cond_resched();
- 			continue;
-+		}
+ LIBTHERMAL_API int thermal_sampling_fd(struct thermal_handler *th);
  
- 		last_check = io_sectors;
- 	repeat:
+-#endif /* __LIBTHERMAL_H */
+-
+ #ifdef __cplusplus
+ }
+ #endif
++
++#endif /* __LIBTHERMAL_H */
 -- 
 2.53.0
 
