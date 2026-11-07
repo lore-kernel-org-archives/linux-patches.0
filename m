@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063711;
-	b=h13afZ2lIUy2YWjdSkW6XRq3Xo3T2bz6IbBPYzm+U3XcnJ7UO4UV6KeTxkupddkV4xCf
-	 8d9qiU8asCOTRqzkdKEyAbhaGxBehCYsWRTEYKzFsrhFVghrKkB9N5F13dyCao9o3Fzvt
-	 56D5Wi/o7q5Xwwq5352NuprDUYD/z1/z0Vz9jR/Pe/YdQsGSc8D+8nsmXeWKl6mdg/hjE
-	 6WDQKy63FJDFE1bbGfVbgKmSykxTCVz1jX8ugHePyb8t5UevUTQ0qB9AajtUJ3wRIr85H
-	 t9OHo67rGwndgH+aN9wwJ7XzFwGX0LQuDF6U9ytw/69sZF7Z3fdVHzdZZP695RPArbw==
+	t=1794063712;
+	b=MswbxD8tHlWFYXbG/UIN7VHzvJsKJ23zn/ZwFeguqryh0yYAGRUcIHvMMFduJV28qSZs
+	 1apMJH9e9Vsv3D1u+E9ti1eS6bbAjRkfpen1t/9MEESAiI4y79IkVaPL6qkfLmcjhNRwn
+	 EUeHioyen4VGEjEd4ltZfpFEl6bhUPkXCgnaPXAiRWCk3ZRUM8Ic01lNcg6rBUr2QDZQS
+	 NwVoA2f1cFxIMP+T0IxW0mcVJaYK+xUjhGKnX3Fhra5HkkLKsh2D0a4FGXnCxwsjjH7sL
+	 w7+wTdtDEdaIRBjJznbi1EnHDsfxiXKuiJ0DXMunTh5m6umAeCTKnv6dZY3EkjSKHbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063711;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063712;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zDHohq66J67P/NJ1bvaYWTh7a+f5o5eSQDCpTLiq09E=;
-	b=whaeYDr057KJUJvt6JK4mO+VDCFRkL47YcEQHZdym0YSIvkAFUoPvFdW/42hs+RER+Hc
-	 DHyN/dXU2Nx0eoWnkLRUqqUiqBwJxUAre7N68DTliK8cPNXbEdExFAF17dyFFZSuy81oE
-	 adyGQyC6N0+C1zGpoI+rsYEBdJWXquQ+pBTW1ovR3Vc75pdMOHTZzszhn74KdWx3ULrtK
-	 aXJrDCwArVIfWbs51tDmkd82SEtJBDvoFKh7jtRPvxqUjrpmp+5I6QdMo5TRBibwSRXvu
-	 z8wpPcr7nUy6QSfRTFVVo4MeBegrIDCzGbQ6lDUEWaj/vIdhKy2F7xI1UFjitOaV6Vg==
+	bh=d7OwJ4UfiAYvSiS13U7P90kdO+1V55hWPtzFgxp8Qkk=;
+	b=TBSasbF+/VjM/YhkDQz7RmD9zoQs+qfV3w46jYYWlG975o5TaU8PuUKfiWNlKYRkjUpd
+	 XaEMXhSOff4JUWns4rZXvxahlIwcGeVls3MloNxH7Z8oRF+oU0vyePWV+p7goyj/vVGXS
+	 smP7lOtBW3/BHihxEBMUg3aWRpCUL30su32APVEj7x8fVKBhNyCkuFJfaP9HSusvtNYxx
+	 jMcuJEDz9K0sPQZp8NDxgTf8GJkTStCVEPX6qmQjHpU6fJwWi7op2n0PzmTHevLmO+jVB
+	 4flndFwwVUsfwtJPXdONzVEYHGmsMvJwwOrJ4gP0YOPz+3TDMcxme6D3LsHZvLcNqzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JizUWvZ3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JsltKg5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B250E606B8AF;
-	Sat,  7 Nov 2026 15:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E816B606B8AF;
+	Sat,  7 Nov 2026 15:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JizUWvZ3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B66A1F0089F;
-	Sat,  7 Nov 2026 15:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JsltKg5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F9A1F0089F;
+	Sat,  7 Nov 2026 15:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063710;
-	bh=zDHohq66J67P/NJ1bvaYWTh7a+f5o5eSQDCpTLiq09E=;
+	s=korg; t=1794063711;
+	bh=d7OwJ4UfiAYvSiS13U7P90kdO+1V55hWPtzFgxp8Qkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JizUWvZ3KJnFbHvOJremtEjAU00Yl9w+Z/P7YKX+IjPP3ViSaMucr+BVoIZlCZqnG
-	 jziBEvtK1DggoJjnCjLktLrDxN9q4dH91fxB2UbS7gmSk0vSnxiANqdtM44CXiYjy6
-	 XoSogud1CtQEGFlYyY/mwCezfV6DGWSHWx9jGHa4=
+	b=1JsltKg530du1+1OnaE6HY1ksxt0iJV/YAF85Xo6sIP47mRyHU/b8nZWbxFLZL9xT
+	 kN3qTdTku3yft619ldwwlmEX8cYrUOlhgdTPalYqvK9i9+eKl+mVqO7hfhuyGzHxHz
+	 4nVGJhocDE3vAUAJtzAsilv45nng6IfqI2sMkcrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Li <vincent.mc.li@gmail.com>,
-	Xi Ruoyao <xry111@xry111.site>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Xiaogang Chen <xiaogang.chen@amd.com>,
+	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 804/869] LoongArch: Remove arch-specific __smp_mb__{before,after}_atomic()
-Date: Sat,  7 Nov 2026 08:58:06 -0500
-Message-ID: <20261107134920.183466995@linuxfoundation.org>
+Subject: [PATCH 6.18 813/869] drm/amdkfd: stop restore retries on device unplug
+Date: Sat,  7 Nov 2026 08:58:15 -0500
+Message-ID: <20261107134920.589322312@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,67 +70,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 
-[ Upstream commit 85cebdfee765e92e748e71b9b91889eef5988282 ]
+[ Upstream commit 3254ed0b15f2fe656c9cb36ccb59b92422440bf8 ]
 
-When running BPF selftest "test_progs -t timer_lockup" on a LoongArch
-machine, the kernel intermittently experiences soft lockups and panics
-in hrtimer_cancel().
+amdgpu_amdkfd_restore_userptr_worker() and svm_range_restore_work()
+reschedule themselves when validation fails with evicted objects
+pending. After a surprise removal the restore paths fail with -ENODEV
+permanently, so rescheduling just spins the worker uselessly until
+cancel_delayed_work_sync() in fini finally stops it - which can take
+a while, since process teardown itself is delayed by the dead device.
 
-The root cause is that the bpf_timer_cancel() implementation relies on
-smp_mb__after_atomic() to provide a full data barrier after a relaxed
-atomic_inc() to ensure the proper store-load ordering before performing
-lockless dependency checks on weakly-ordered architectures, such as on
-LoongArch, but the current definition of smp_mb__after_atomic() is just
-a plain compiler barrier.
+Treat -ENODEV as terminal in both workers.
 
-This allows a subsequent read to bypass the prior write due to store-
-load reordering, enabling concurrent CPUs to simultaneously bypass the
-software deadlock detection, enter hrtimer_cancel(), and then trigger a
-severe ABBA deadlock in the hrtimer core.
-
-Moreover, there are hundreds of smp_mb__after_atomic() call sites across
-the core kernel (kernel/, drivers/, mm/, net/, fs/) that currently lack
-necessary full data barriers on LoongArch, which have potential risks.
-
-To comply with the LKMM specification, fix this by removing the arch-
-specific definition of __smp_mb__after_atomic(), so that this macro can
-automatically fall back to the generic definition in asm-generic that
-maps to __smp_mb() and emits the required hardware DBAR instruction.
-
-While at it, do the same thing for __smp_mb__before_atomic().
-
-With this patch the BPF timer_lockup selftest was stressed for millions
-consecutive loops on a physical LoongArch machine, without encountering
-any further lockups.
-
-Cc: stable@vger.kernel.org # 6.7+
-Fixes: affef66b65889a0e ("LoongArch: Relax memory ordering for atomic operations")
-Closes: https://lore.kernel.org/loongarch/CAK3+h2xOSEZUHhou7N2cRL-aGrZCNSm45g+P7thObMe+fpgYCA@mail.gmail.com/
-Reported-by: Vincent Li <vincent.mc.li@gmail.com>
-Reviewed-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: Xiaogang Chen <xiaogang.chen@amd.com>
+Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 266fab83139600e58db7e900e930c722e619b78c)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/barrier.h | 3 ---
- 1 file changed, 3 deletions(-)
+ .../gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c   | 18 +++++++++++++-----
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c           |  8 +++++---
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/barrier.h b/arch/loongarch/include/asm/barrier.h
-index 4b663f1977061..84c6d739119d1 100644
---- a/arch/loongarch/include/asm/barrier.h
-+++ b/arch/loongarch/include/asm/barrier.h
-@@ -57,9 +57,6 @@
- #define __WEAK_LLSC_MB		"			\n"
- #endif
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index 35dffb14a20aa..6de7dfa30ce50 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -2824,6 +2824,7 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ 	struct task_struct *usertask;
+ 	struct mm_struct *mm;
+ 	uint32_t evicted_bos;
++	int ret;
  
--#define __smp_mb__before_atomic()	barrier()
--#define __smp_mb__after_atomic()	barrier()
--
- /**
-  * array_index_mask_nospec() - generate a ~0 mask when index < size, 0 otherwise
-  * @index: array element index
+ 	mutex_lock(&process_info->notifier_lock);
+ 	evicted_bos = process_info->evicted_bos;
+@@ -2843,14 +2844,16 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ 
+ 	mutex_lock(&process_info->lock);
+ 
+-	if (update_invalid_user_pages(process_info, mm))
++	ret = update_invalid_user_pages(process_info, mm);
++	if (ret)
+ 		goto unlock_out;
+ 	/* userptr_inval_list can be empty if all evicted userptr BOs
+ 	 * have been freed. In that case there is nothing to validate
+ 	 * and we can just restart the queues.
+ 	 */
+ 	if (!list_empty(&process_info->userptr_inval_list)) {
+-		if (validate_invalid_user_pages(process_info))
++		ret = validate_invalid_user_pages(process_info);
++		if (ret)
+ 			goto unlock_out;
+ 	}
+ 	/* Final check for concurrent evicton and atomic update. If
+@@ -2859,11 +2862,14 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ 	 * reference counting inside KFD will handle this case.
+ 	 */
+ 	mutex_lock(&process_info->notifier_lock);
+-	if (process_info->evicted_bos != evicted_bos)
++	if (process_info->evicted_bos != evicted_bos) {
++		ret = -EAGAIN;
+ 		goto unlock_notifier_out;
++	}
+ 
+ 	if (confirm_valid_user_pages_locked(process_info)) {
+ 		WARN(1, "User pages unexpectedly invalid");
++		ret = -EINVAL;
+ 		goto unlock_notifier_out;
+ 	}
+ 
+@@ -2881,8 +2887,10 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ unlock_out:
+ 	mutex_unlock(&process_info->lock);
+ 
+-	/* If validation failed, reschedule another attempt */
+-	if (evicted_bos) {
++	/* If validation failed, reschedule another attempt, unless the
++	 * device is gone for good
++	 */
++	if (evicted_bos && ret != -ENODEV) {
+ 		queue_delayed_work(system_freezable_wq,
+ 			&process_info->restore_userptr_work,
+ 			msecs_to_jiffies(AMDGPU_USERPTR_RESTORE_DELAY_MS));
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 1b29dee7948d8..366b31191ac1e 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -1853,7 +1853,7 @@ static void svm_range_restore_work(struct work_struct *work)
+ 	struct mm_struct *mm;
+ 	int evicted_ranges;
+ 	int invalid;
+-	int r;
++	int r = 0;
+ 
+ 	svms = container_of(dwork, struct svm_range_list, restore_work);
+ 	evicted_ranges = atomic_read(&svms->evicted_ranges);
+@@ -1927,8 +1927,10 @@ static void svm_range_restore_work(struct work_struct *work)
+ 	mmap_write_unlock(mm);
+ 	mutex_unlock(&process_info->lock);
+ 
+-	/* If validation failed, reschedule another attempt */
+-	if (evicted_ranges) {
++	/* If validation failed, reschedule another attempt, unless the
++	 * device is gone for good
++	 */
++	if (evicted_ranges && r != -ENODEV) {
+ 		pr_debug("reschedule to restore svm range\n");
+ 		queue_delayed_work(system_freezable_wq, &svms->restore_work,
+ 			msecs_to_jiffies(AMDGPU_SVM_RANGE_RESTORE_DELAY_MS));
 -- 
 2.53.0
 
