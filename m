@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064115;
-	b=udVlTnU5xsWhQbTxUIOhoSf0A0dTYnTSIunrji5FUjBwH++c0U7zK96YYENyo6Mjaejh
-	 pJn2WqYmxzrzSQ8h82IlYZUWxAJYTkW0blFhYPXZ7/0kFQjpi1ZatW2tbpJlqWNpA68+d
-	 EyQR9b+MxQZKmtPMlfy1YZ5cz2pi0VvhZUOxnzwhsugY8tRWOB9gjFBQUJQlidCV3NfGZ
-	 gsUJoM/nmvM2txQ+6taJUV4035qAhFNGQdw17vc7bTxJRiT5lARmUUscRGPpAdSJsN6kY
-	 wSWNI9Y+Y1O2bc8yhrbnoq0RX/Mfv7CpdxuGzgkzmNKyHvYJ9iPWBl/6IzqjJAgk1BA==
+	t=1794064116;
+	b=gCDdIYmho50nhZQkrbskvrW0hVsBjeB77vpg6CL2SRczqy9eXEWT+CRrL1DuY3werws1
+	 gVxqZrrKMTPxVtRnwJERF9iI4xQ6r3KruTFHjWqYhqBezpTzb+1nvN3DD/y+YoFUMwGNK
+	 HPMUpVqDoWCvYpGXpdnf7nmr1XfZTh5VhukhRvWN5Vg458SzYlzbyspXFkkXVudyLaO9Q
+	 6PBSqYLak96WENIEvyvc8FRBMOEGZH5JoKKdUa/dcUPX0f/rGSki//b3pW7srecrwnZZ9
+	 ss8VJy663ZWW+aH96mB9WT1ZHPXDUAX9cI58hSDL2eqqJk7tXeAwDm23Fw8tQIhzhMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064116;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rBIzKFdMgXJM18Gi5e3/hNl750NnSvoSOlNpYKTJw+s=;
-	b=NwBnhEH9WtSi9YCFh4waumGfyx9S/xEz1ivdcdmpaxOsrUnnRFozq05x34+Vl5m5/k2Q
-	 NvsZ/8M27Dw1Gk9rSgeO5EcIcdQJYIqwL51GqGXYe4WOFZ4o0X5c3zd8mFBy6EkOLem/t
-	 DKMyqe1h/EuLlW0xPV25cKcgSq/7iFQ8LyeYo8xjS5zPG83XBYfHb1lzHY6qqlwd0Ki7D
-	 QS9D+ts4jrkYurSeytKlA5yEF+8QYoaGyCtlj6UQdG+IKjKE4I03WE/sDBgcCZVgyLaK2
-	 5BiYtqasFhR/YIOiozrCykuuiJ6kmEYReAtGPT3PYUX4NyqptSHBlkRir1jKv+MdJAA==
+	bh=okalbK3JG3zwmbiIMnW52UNAVFbWcALi9BCyey9UsDU=;
+	b=ZxCqyW26hzNOeDwoOvPlVI6AGBMIZVlyYJKEJoQeJeJuIZSZJjdYeLbnof25H35s7Ah7
+	 BzHvUp5n2yEKl1Z5c57ZOZROgDHDp7ZIUkBhwkrBT2mtNJCCZOt6ZTfFTUeylH714FvPx
+	 C5YLkNmb1qgfLHQZQze6MKLY5GyV3+wZxRUtTND2QSLmAUUewO0708O5MwlgIi9Hr3Kni
+	 MFZq0eud4AHc/3ceZMRmurshYZn+VK1wDYb5IKxuu2lnSpJuEck0R8pcReZuRH02P/SqU
+	 s048omZDrySvkqWvt4ickfgrm4fuX05ypkk6fonzbXXssUzhGA4tJSQqpsTLqQMFR2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSpTpo0w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZdPq6Xha;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1F2606A33E;
-	Sat,  7 Nov 2026 15:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9078C606A33E;
+	Sat,  7 Nov 2026 15:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSpTpo0w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E951F0089F;
-	Sat,  7 Nov 2026 15:08:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZdPq6Xha
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9751F0089F;
+	Sat,  7 Nov 2026 15:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064115;
-	bh=rBIzKFdMgXJM18Gi5e3/hNl750NnSvoSOlNpYKTJw+s=;
+	s=korg; t=1794064116;
+	bh=okalbK3JG3zwmbiIMnW52UNAVFbWcALi9BCyey9UsDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GSpTpo0wyLrZnx/n4ZgZ2yCB8YEwBlJvW6a0gSsj3vD93qmiokl/kH5OI9kXLwbKy
-	 4ZMuYe9jhL8CC4sqq2ELlp3Ukx7jnELUT5YQt0dD6rokkqfa2j0h9X6PiGDh4GPSge
-	 uely1q9miFJv4bEnR6UeEYP4pqN4nY76sSXPCAwE=
+	b=ZdPq6XhasF3H+9SgL3b7qmVzQIwMVq1dokvty2+/VFUjQcZM/aQg2xsLmwvhcPNKP
+	 EfIXUEfM1+/clwsAK8b7PLbemsctVGfiNIgroS0Q1vh4o15AND3DvvUcX73KUX1QJ3
+	 +P/aoa8JSQ8FEUZpr4HaaUOVGH2wfdQND8yyKmIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0272/1257] ASoC: fsl_xcvr: free IRQ before canceling reset work
-Date: Sat,  7 Nov 2026 08:42:48 -0500
-Message-ID: <20261107134946.999173300@linuxfoundation.org>
+Subject: [PATCH 7.3 0273/1257] memory: stm32_omm: fix child clock leak on set_amcr() error path
+Date: Sat,  7 Nov 2026 08:42:49 -0500
+Message-ID: <20261107134947.025738728@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,109 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
 
-[ Upstream commit 83701fdb2d8d644c547773791da48d6ecb3a5e1d ]
+[ Upstream commit a22355280361d2a376a2020059a2bae11e6cea10 ]
 
-irq0_isr() schedules work_rst on a preamble error, and reset_rx_work()
-touches regmap.  remove() cancels that work while the IRQ is still
-registered, so the handler can queue it again during teardown.  The IRQ
-is also requested before INIT_WORK() and spin_lock_init().  Probe
-failure does not call remove(), so freeing the IRQ leaves queued work
-running, and an earlier interrupt schedules uninitialized work.
+When the mux is enabled, stm32_omm_configure() enables the two OSPI
+child clocks via stm32_omm_toggle_child_clock(dev, true); they are meant
+to stay enabled for the device's lifetime and are disabled again in
+stm32_omm_remove() and on the devm_of_platform_populate() error path.
 
-Initialize the lock and devm_work_autocancel() before the IRQ.  Failed
-probe then frees the IRQ and cancels the work.  Unbind frees the IRQ
-before cancel_work_sync() and pm_runtime_disable().
+However, if the subsequent stm32_omm_set_amcr() call fails, the function
+jumps to the "error:" label which only calls pm_runtime_put_sync_suspend()
+before returning, leaving the two child clocks enabled. As this happens
+during probe, the error is propagated and .remove() is never called, so
+the clock enable references are leaked. devm_clk_bulk_get() only releases
+the clock handles on unwind, it does not undo clk_prepare_enable().
 
-Fixes: 1e5d0f106164 ("ASoC: fsl_xcvr: reset RX dpath after wrong preamble")
-Cc: stable@vger.kernel.org # 6.13+
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Link: https://patch.msgid.link/20260923054017.93553-1-mhun512@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Disable the child clocks on the set_amcr() error path, mirroring the
+cleanup already done on the devm_of_platform_populate() failure path.
+
+Fixes: 8181d061dcff ("memory: Add STM32 Octo Memory Manager driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
+Link: https://patch.msgid.link/20260917235925.44185-1-diegomancera.dev@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_xcvr.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ drivers/memory/stm32_omm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
-index 9828272043511..29929dfcce2a6 100644
---- a/sound/soc/fsl/fsl_xcvr.c
-+++ b/sound/soc/fsl/fsl_xcvr.c
-@@ -3,6 +3,7 @@
+diff --git a/drivers/memory/stm32_omm.c b/drivers/memory/stm32_omm.c
+index 84eb23c824f5b..3599683ab04ac 100644
+--- a/drivers/memory/stm32_omm.c
++++ b/drivers/memory/stm32_omm.c
+@@ -274,6 +274,8 @@ static int stm32_omm_configure(struct device *dev)
+ 	writel_relaxed(omm->cr, omm->io_base + OMM_CR);
  
- #include <linux/bitrev.h>
- #include <linux/clk.h>
-+#include <linux/devm-helpers.h>
- #include <linux/firmware.h>
- #include <linux/interrupt.h>
- #include <linux/module.h>
-@@ -57,6 +58,7 @@ struct fsl_xcvr {
- 	struct snd_aes_iec958 tx_iec958;
- 	u8 cap_ds[FSL_XCVR_CAPDS_SIZE];
- 	struct work_struct work_rst;
-+	int irq;
- 	spinlock_t lock; /* Protect hw_reset and trigger */
- 	struct snd_pcm_hw_constraint_list spdif_constr_rates;
- 	u32 spdif_constr_rates_list[SPDIF_NUM_RATES];
-@@ -1617,7 +1619,7 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
- 	struct fsl_xcvr *xcvr;
- 	struct resource *rx_res, *tx_res;
- 	void __iomem *regs;
--	int ret, irq;
-+	int ret;
+ 	ret = stm32_omm_set_amcr(dev, true);
++	if (ret && (mux & CR_MUXEN))
++		stm32_omm_toggle_child_clock(dev, false);
  
- 	xcvr = devm_kzalloc(dev, sizeof(*xcvr), GFP_KERNEL);
- 	if (!xcvr)
-@@ -1705,12 +1707,22 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(xcvr->reset),
- 				     "failed to get XCVR reset control\n");
- 
-+	/*
-+	 * irq0_isr() schedules work_rst. Prepare the work and its lock
-+	 * before the IRQ, and register the cancel action first so a failed
-+	 * probe frees the IRQ and then cancels any queued work.
-+	 */
-+	spin_lock_init(&xcvr->lock);
-+	ret = devm_work_autocancel(dev, &xcvr->work_rst, reset_rx_work);
-+	if (ret)
-+		return ret;
-+
- 	/* get IRQs */
--	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
--		return irq;
-+	xcvr->irq = platform_get_irq(pdev, 0);
-+	if (xcvr->irq < 0)
-+		return xcvr->irq;
- 
--	ret = devm_request_irq(dev, irq, irq0_isr, 0, pdev->name, xcvr);
-+	ret = devm_request_irq(dev, xcvr->irq, irq0_isr, 0, pdev->name, xcvr);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to claim IRQ0\n");
- 
-@@ -1751,8 +1763,6 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
- 			fsl_xcvr_comp.name);
- 	}
- 
--	INIT_WORK(&xcvr->work_rst, reset_rx_work);
--	spin_lock_init(&xcvr->lock);
- 	return ret;
- }
- 
-@@ -1760,6 +1770,8 @@ static void fsl_xcvr_remove(struct platform_device *pdev)
- {
- 	struct fsl_xcvr *xcvr = dev_get_drvdata(&pdev->dev);
- 
-+	/* Free the IRQ first so irq0_isr() cannot requeue work_rst. */
-+	devm_free_irq(&pdev->dev, xcvr->irq, xcvr);
- 	cancel_work_sync(&xcvr->work_rst);
- 	pm_runtime_disable(&pdev->dev);
- }
+ error:
+ 	pm_runtime_put_sync_suspend(dev);
 -- 
 2.53.0
 
