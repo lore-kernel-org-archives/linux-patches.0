@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062467;
-	b=Q/W0555QE2KU+KcV848Ov/3GU0EF/pzVI5qX/LzW/0asjjogkRQ1Tkn+9tZDpWzNcZ+o
-	 hom/WC6GPV/tIVrMKOkScgihAi5NPuG+lllgtfsL6lU97HQCXYEdSr3OFBJe+4q6vE8bJ
-	 GzsMnZRiyWKO29gzSkuEikE7s8Zo+9oa1RgHCcz8JnB12RDJbjvmDOXx4qFn2RGnAS6HV
-	 eQphyMWf2ox1pgcNMCgRmncVxtOGRmcWy6UP8Cq5Xp6jUwKKFDN1PltuwzfejSG5VJ2Ob
-	 F5P0cZ4qHDSHk37LqpXzBgc/TE0L/hXF8nlE85XsxULmYsdBxnzk7vOrq+IRbHXJgtA==
+	t=1794062468;
+	b=pLsrbXo7o+AHpEM0XVNAuAuBM02oDRcxxlsdKfXt6P6PVSjR0nBiWYzcqTyWiOLpRd9I
+	 JVnpRSgg4KETApjE/I6q8VG52wZi4EhVdwtOICrXTaKLcGOFbuwZ/+GmR7W9jT/UIssxG
+	 csy6c+kILes2qj5jXYVuMGulCya2NESIEb6VcFs8s7oKE2JciNqKmmyEp5bGPjRjp+sRL
+	 H5geuLP+yK+l+GfR5myAs0v+XctWFhwlwwOs9mINXoHJFQ3q6QpvVLcgdiCngr0oQHhaw
+	 w//9iVINm4b//5/TL+WM8qmPyxlsEDVZhhj/5y2iWQPlw715uexv5lUhuu7hFl04Ung==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JZdYKT17pieJpuQuc4lYQiEf/vOvtEVFepU7yrFE/wg=;
-	b=mZ+oAMm4rRa9JYc6VqbxEoU+Y3pJkU1iYdGkHqWep4CR/18ayiMpuWXg4x6zE+m+sqlN
-	 lFQHylmekyvFtSny5B2nKCK1idHg59HpjfSPF2Ty9InyVMtUsC5LlKyJ7RO6MtSz8QPef
-	 I9M0con4SbfhpZwLvPs9juM3O82tHQTlWo97b2DTRabGE7lWsG+EUshoC2j2SCPORoIEO
-	 rwU+I5Z/cIXwKAtAcYHsanTtmfk9lIuIFxKrDm+uf9ku87e892OL9GcjijSQ4mfpLH1w5
-	 YulnAr9KaGg9Fu0w2EDu0n7X7lTe9lz9+LyoM9pYs9TUnwSFpfJw/gg8KUXMMAfSgnQ==
+	bh=2e5kKl73qkpNwDlEPNmLRPhOtFgwZ3ZzyZZYFdMIQig=;
+	b=Hbq+qrtKmeQTLVcar8V79l0Wx0lTq7fomPh3MWZmGunWoc6hGGKFMAM7Bu5eyUkUwRnu
+	 WaJSCcpt1f0NC1Y/hAffFI8akxTxFkWkkTtq4xNmjeKQsSLXuS8EKCQ2xkksKJn/bU26O
+	 tR1zBmtTnr0q/AvLCe9ESvCJFD3i55gzVNdOCBSwy4o+zIqXjJYe4SpheOp7JNPiKcEb1
+	 ob1qYKeNkgUZXCcxPxPn+rs3rcWnukyrzh9h5w9ndehuHILYTkTDCqEngHmnT3UBx1tfd
+	 FWXjhReDZz/kyuda4sfpu6YZ3ZdGDGwhiyFKsLVLoLo+ArAKcwduL5VqegPj9hscVvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L1We/1Z1";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NCqeq/r7";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E026D606A662;
-	Sat,  7 Nov 2026 14:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2B1606A66F;
+	Sat,  7 Nov 2026 14:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L1We/1Z1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5B61F008A1;
-	Sat,  7 Nov 2026 14:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NCqeq/r7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1881F0089F;
+	Sat,  7 Nov 2026 14:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062466;
-	bh=JZdYKT17pieJpuQuc4lYQiEf/vOvtEVFepU7yrFE/wg=;
+	s=korg; t=1794062468;
+	bh=2e5kKl73qkpNwDlEPNmLRPhOtFgwZ3ZzyZZYFdMIQig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L1We/1Z1TYY45wVNWYJMlqom2AMeNJoyiNCK5YjDsJ1vqJCQsEjgitbv2Gmp5/8nf
-	 9efwC2PF85z2RFj9ublAeEhJ95kscpzzZa3x0qkrqEuh7NqYbIc8Z9Pp+TBDL19786
-	 FvbP4z/NsmTvB8R71FsfYxk69kNEkKDgRKztnGAc=
+	b=NCqeq/r7Z2yHLDf49AHreQDpACSH5h0rie82xaVRW6MPEHQr0UFlXaNwLDgxEGChO
+	 xRkxmhHCq0RLx8QJlhtc+incdixlmFvpnHnvjhi2aXMM9+Cte5VRpuWcxFwcvGGVmM
+	 Ca6BrFqUlPQn0kfvdqymCtZsnu/NTOh+p4XVE5go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1372/1536] ALSA: emux: Stop voices before freeing zones in all cases
-Date: Sat,  7 Nov 2026 08:56:28 -0500
-Message-ID: <20261107135036.375475733@linuxfoundation.org>
+Subject: [PATCH 6.12 1373/1536] gpiolib: Free chip resources when allocating the label fails
+Date: Sat,  7 Nov 2026 08:56:29 -0500
+Message-ID: <20261107135036.402881913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,79 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-[ Upstream commit 8a5d87c2ba30e8de31cfbe888fd4d95f43c63db9 ]
+[ Upstream commit 8381e1f15e27087fcb6f07046a526ac8b9b9b2b9 ]
 
-The emux voice caches the soundfont zone pointer in vp->zone, which
-is referred to later, e.g. in snd_emux_send_effect().  For avoiding
-dangling pointers, the soundfont code calls the sample_reset callback
-to stop all voices before freeing zones.  However, in a few cases
-(e.g. emu10k1's missing sample_reset or the call path via
-remove_info()), the sample reset isn't called properly, leaving the
-playing voices.
+If desc_set_label() fails after the chip's request callback succeeds,
+gpiod_request_commit() clears GPIOD_FLAG_REQUESTED without calling the
+free callback. The caller receives an error and has no GPIO to release,
+leaving resources acquired by the request callback held.
 
-Fix it by always registering the sample_reset callback, falling back
-to snd_emux_terminate_all() when the driver has no own ops, and by
-calling sample_reset in remove_info() before freeing the zones.
+Call the chip's free callback, if present, before clearing the requested
+bit on label allocation failure. Leave request callback errors on the
+existing path to avoid freeing a failed request.
 
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261020101624.205638-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1f2bcb8c8ccd ("gpio: protect the descriptor label with SRCU")
+Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+Link: https://patch.msgid.link/20261018044456.1259250-1-pocj8ur4in@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/synth/emux/emux.c      | 10 +++++++---
- sound/synth/emux/soundfont.c |  9 +++++++++
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/gpio/gpiolib.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/synth/emux/emux.c b/sound/synth/emux/emux.c
-index 01444fc960d08..863d35aff1960 100644
---- a/sound/synth/emux/emux.c
-+++ b/sound/synth/emux/emux.c
-@@ -71,7 +71,12 @@ static int sf_sample_free(void *private_data, struct snd_sf_sample *sp,
- static void sf_sample_reset(void *private_data)
- {
- 	struct snd_emux *emu = private_data;
--	emu->ops.sample_reset(emu);
-+
-+	/* stop all voices that might refer to zones and samples to be freed */
-+	if (emu->ops.sample_reset)
-+		emu->ops.sample_reset(emu);
-+	else
-+		snd_emux_terminate_all(emu);
- }
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index bffdaa91d86c5..115bf569dbdd0 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -2350,10 +2350,13 @@ static int gpiod_request_commit(struct gpio_desc *desc, const char *label)
  
- int snd_emux_register(struct snd_emux *emu, struct snd_card *card, int index, char *name)
-@@ -96,8 +101,7 @@ int snd_emux_register(struct snd_emux *emu, struct snd_card *card, int index, ch
- 	sf_cb.private_data = emu;
- 	sf_cb.sample_new = sf_sample_new;
- 	sf_cb.sample_free = sf_sample_free;
--	if (emu->ops.sample_reset)
--		sf_cb.sample_reset = sf_sample_reset;
-+	sf_cb.sample_reset = sf_sample_reset;
- 	emu->sflist = snd_sf_new(&sf_cb, emu->memhdr);
- 	if (emu->sflist == NULL)
- 		return -ENOMEM;
-diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
-index b38a4e231790f..47137cca50b8c 100644
---- a/sound/synth/emux/soundfont.c
-+++ b/sound/synth/emux/soundfont.c
-@@ -485,6 +485,15 @@ remove_info(struct snd_sf_list *sflist, struct snd_soundfont *sf,
- 	struct snd_sf_zone *prev, *next, *p;
- 	int removed = 0;
+ 	ret = desc_set_label(desc, label ? : "?");
+ 	if (ret)
+-		goto out_clear_bit;
++		goto out_free_gpio;
  
-+	/* stop voices before freeing the zones they might refer to */
-+	for (p = sf->zones; p; p = p->next) {
-+		if (!p->mapped && p->bank == bank && p->instr == instr) {
-+			if (sflist->callback.sample_reset)
-+				sflist->callback.sample_reset(sflist->callback.private_data);
-+			break;
-+		}
-+	}
-+
- 	prev = NULL;
- 	for (p = sf->zones; p; p = next) {
- 		next = p->next;
+ 	return 0;
+ 
++out_free_gpio:
++	if (guard.gc->free)
++		guard.gc->free(guard.gc, offset);
+ out_clear_bit:
+ 	clear_bit(FLAG_REQUESTED, &desc->flags);
+ 	return ret;
 -- 
 2.53.0
 
