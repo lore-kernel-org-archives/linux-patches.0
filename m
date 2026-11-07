@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063544;
-	b=xabRH6FOFa92iIPJmtnSD7UIDytyJFXSfkRJxtUSyeS0G+j3zuXKobz3FHT1MakFbLVz
-	 v5qIhoRPRPEGd2OK36lGwOB+vOIZej7TufhAEmXPA6tO31yyFqCbSLIXJK9VHpSqvfa9I
-	 V5tsJKimhWZ0bgEO1j6JiZYvoC761FrVey9RYmgmuVRamp3ZNe1X3HGVMsREQXUYDntkL
-	 auP0AsecO57EzSGULEM+TU1ZyRNEM7i2aoecVXF6cDYpNM8A4ApW2Xu0x3QDxkUEocHK7
-	 j1b72G7D9hyi0W8ylG1mLk8DRSwc0zJCz8Vnpe5xl+yiFof9Ypf+FAzHeMrhcXv6axg==
+	t=1794063545;
+	b=IdS1u+4e8HRd7owWQp5rO4oiopN/KI+IW6IBgGyiIL98NcU1Yhs80M+gP73S+oUjRjf0
+	 ItZCWUhFQjDga3WJ2hiYDRR7dktHsrjcYuvx0dsOONR6Tm1bfKd7ewAVg89LwstHC+gyY
+	 LWkfg8vsUW+8Oc7Gv8lcOEAdwWzzxvjAy9jbE80x53Z+KTNa1RZvpUV8VdGsVlDDZ41di
+	 wodqM8QUIf4GoHasB43WINVwJ1x+iJSAnA/o1ZzyDlOHH1rXE+XpYZhw7pgw9gcMXrcI9
+	 DU+9YTW/Cu9L75HLH0jElPCAX5mj2gWdiXhQem47u+K/FfulAETtj679iVTyzgLLrlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063544;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063545;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=baKXKnaKIxqHRpeZCEkztH2AZVHCHSqCyEdCPVNjU2s=;
-	b=PE+JnQBirQzd/UGoPCvb4KnUfUdebca1H0J28ChLXwQoBUcvJjK5N6uaIQ+9s2HvkkVx
-	 5Gv7fyGAAsiI2NGlmb65GgasTsSI9yKIjNvg7C3/wfgQ6sfN55WTbLMUK1bTnlfg7auo0
-	 d9EWiJNuX+2sVLhb5zYWGdj1j2mGUdc87M6wyfGtYVQa14IW0MOJ7DAu+mgSUUht9gg3z
-	 fUycoYu+Z5b0ZmBxkrLVsVwo0XE+R2gwMWYjj1qoGg8kTeRTBCzGXglKotut0AKaPCLfb
-	 MCqt78mJE0bjHjaa0ioeBBHndlzqyG9/Ly7lF1ZG0FSz+TE+Y0s6gSor6nuEJWAnDkQ==
+	bh=eLmmrCzCohLpgYOKeeLF4phEowLHE14pcT7EFpsxBXQ=;
+	b=xYZ58MgCgJYmcBboqZ43F8Iu8GGqSX7+ZatMpvy6ri5OI0kyVrtKLWCiK/LMBua1RnVt
+	 KoF7zzXDca3EKoFh811gWzTZZO1v/eRXXanVYAD9sYGpoO6M2bvsXq9DuPm7tQDgFVvo2
+	 amZndVBGz8oRdb3Bp/oxa9hZh2kxo8g+yK4mXORXXm3EMVHQ4jmjTieJHatImN5k0UvR5
+	 bcSI5qPQ3cYds2JdOj6P/qWrvCKTZFgGJztVjeCoohoAAdVc9kkjAxZbBLRt2tZS5Xp/x
+	 7fU2QDZD8P1VDqbn6QiVQVcKv735ivQ45rzWh1EUAbiaMlDeUom0UdTHbc8YW5tuP8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mWf/wAX3";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=irEoEwL3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199C66083606;
-	Sat,  7 Nov 2026 14:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA066083614;
+	Sat,  7 Nov 2026 14:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mWf/wAX3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF691F0089F;
-	Sat,  7 Nov 2026 14:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=irEoEwL3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA661F0089F;
+	Sat,  7 Nov 2026 14:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063544;
-	bh=baKXKnaKIxqHRpeZCEkztH2AZVHCHSqCyEdCPVNjU2s=;
+	s=korg; t=1794063545;
+	bh=eLmmrCzCohLpgYOKeeLF4phEowLHE14pcT7EFpsxBXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mWf/wAX34gO6EOAS34BMRBbtjBDyC6v7RbU3T206sa2MGeT7NwDICF4524IA7t4Uh
-	 QCek+Ce7NEX/ljwGdMovOiOa+bwHx7y8vGZY+MW8Aki5JehPvfkBaAkCoL58qCtBrf
-	 ifcgqMdPw4mC9BooQNx3rlvyvUWtjMmd/jFEhWYk=
+	b=irEoEwL3QSqoq03e7cVMWLhTSTG61tgD+8vshQe6anRf6Uzn+Dpo1c5V5A6VARHEJ
+	 qvbLLfveZdUYb7VxBXC1B1O+8UfETPqXIrPMQ/sUXbFE6ni+kOQjgBoloHpYgOdRPF
+	 okst8pDykINitM97TIP7E6QyOlcUuOlteawvRYqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Shahzeb Ahmed <shahzeb.ahmed@amd.com>,
+	Manjunath Gaonkar <Manjunath.Gaonkar@amd.com>,
+	Elena Sakhnovitch <Elena.Sakhnovitch@amd.com>,
+	Apurv Mishra <apurv.mishra@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 643/869] netfilter: nf_reject: initialize IPCB at inet ingress
-Date: Sat,  7 Nov 2026 08:55:25 -0500
-Message-ID: <20261107134914.724557505@linuxfoundation.org>
+Subject: [PATCH 6.18 679/869] drm/amdgpu/gmc9: add extra type-2 TLB flush for gfx942/gfx950
+Date: Sat,  7 Nov 2026 08:56:01 -0500
+Message-ID: <20261107134916.096172409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,78 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Elena Sakhnovitch <Elena.Sakhnovitch@amd.com>
 
-[ Upstream commit 73a73d442f9986353fe284bd1b504d0313d0f153 ]
+[ Upstream commit 232213c9bd7f703836164f23160b76657094a7db ]
 
-The inet ingress hook runs before ip_rcv_core() and ip6_rcv_core(), so
-neither IPCB nor IP6CB has been initialized when nft_reject_inet passes
-a packet to nf_send_unreach() or nf_send_unreach6(). skb->cb can
-therefore retain metadata from an earlier protocol layer.
+Add extra type-2 TLB flush for GC 9.5.0, similar race condition was
+observed as Vega20+XGMI. Add to GC 9.4.3 and 9.4.4 too, as they share
+the same multi-XCD TLB topology.
 
-For IPv4, icmp_send() treats IPCB(skb)->opt as parsed IPv4 options.
-Stale option offsets can make __ip_options_echo() copy an
-attacker-controlled length into its 40-byte reply option buffer and
-overflow the stack. On an unpatched v7.2-rc5 kernel, the IPv4
-reproducer produced:
-
-  BUG: KASAN: stack-out-of-bounds in __ip_options_echo()
-  Write of size 255
-
-For IPv6, icmpv6_send() consumes IP6CB(skb) as parsed IPv6 metadata. It
-always uses iif for source selection and, when MIP6 is enabled, uses
-dsthao as an extension-header offset. These fields must not be stale.
-
-For NF_INET_INGRESS, clear the address-family-specific control block and
-restore its input interface before constructing the ICMP error.  This
-matches similar initialization normally performed by ip_rcv_core() and
-ip6_rcv_core().
-
-Fixes: 117ca1f8920c ("netfilter: nft_reject_inet: allow to use reject from inet ingress")
+Reported-by: Shahzeb Ahmed <shahzeb.ahmed@amd.com>
+Reported-by: Manjunath Gaonkar <Manjunath.Gaonkar@amd.com>
+Signed-off-by: Elena Sakhnovitch <Elena.Sakhnovitch@amd.com>
+Reviewed-by: Apurv Mishra <apurv.mishra@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 138cfb165ae6aa98c0767b431e718d1a8199db28)
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 5 +++++
- net/ipv6/netfilter/nf_reject_ipv6.c | 5 +++++
- 2 files changed, 10 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index 59ec465a9df98..7cb33af671e26 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -357,6 +357,11 @@ void nf_send_unreach(struct sk_buff *skb_in, int code, int hook)
- 	if (!skb_valid_dst(skb_in) && nf_reject_fill_skb_dst(skb_in) < 0)
- 		return;
- 
-+	if (hook == NF_INET_INGRESS) {
-+		memset(IPCB(skb_in), 0, sizeof(*IPCB(skb_in)));
-+		IPCB(skb_in)->iif = skb_in->skb_iif;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+index 0f0d6cd52d916..230a346db3b1b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -2186,10 +2186,22 @@ static int gmc_v9_0_hw_init(struct amdgpu_ip_block *ip_block)
+ 	 * (type 2), which flushes both. Due to a race condition with
+ 	 * concurrent memory accesses using the same TLB cache line, we still
+ 	 * need a second TLB flush after this.
++	 *
++	 * GC 9.4.3, 9.4.4 and 9.5.0 hit a similar race.
+ 	 */
+-	adev->gmc.flush_tlb_needs_extra_type_2 =
+-		amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 0) &&
+-		adev->gmc.xgmi.num_physical_nodes;
++	switch (amdgpu_ip_version(adev, GC_HWIP, 0)) {
++	case IP_VERSION(9, 4, 0):
++		adev->gmc.flush_tlb_needs_extra_type_2 =
++			adev->gmc.xgmi.num_physical_nodes;
++		break;
++	case IP_VERSION(9, 4, 3):
++	case IP_VERSION(9, 4, 4):
++	case IP_VERSION(9, 5, 0):
++		adev->gmc.flush_tlb_needs_extra_type_2 = true;
++		break;
++	default:
++		break;
 +	}
-+
- 	if (skb_csum_unnecessary(skb_in) ||
- 	    !nf_reject_verify_csum(skb_in, dataoff, proto)) {
- 		icmp_send(skb_in, ICMP_DEST_UNREACH, code, 0);
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index 07cdaa10da0d0..5e08d8529cc88 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -444,6 +444,11 @@ void nf_send_unreach6(struct net *net, struct sk_buff *skb_in,
- 	if (hooknum == NF_INET_LOCAL_OUT && skb_in->dev == NULL)
- 		skb_in->dev = net->loopback_dev;
  
-+	if (hooknum == NF_INET_INGRESS) {
-+		memset(IP6CB(skb_in), 0, sizeof(*IP6CB(skb_in)));
-+		IP6CB(skb_in)->iif = skb_in->skb_iif;
-+	}
-+
- 	if (!skb_valid_dst(skb_in) && nf_reject6_fill_skb_dst(skb_in) < 0)
- 		return;
- 
+ 	/* The sequence of these two function calls matters.*/
+ 	gmc_v9_0_init_golden_registers(adev);
 -- 
 2.53.0
 
