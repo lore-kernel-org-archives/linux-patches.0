@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062066;
-	b=DSdrPRZF+k3uPLL2CglmfKHrL8QmdPmOIgAtCvbAxzS8bWCPBMHBBHBiQPBW6VCG7iEu
-	 T+JbwbJItadeWV80hvW17IgFsKKLu4rWj32udceYOAo73fOULjCX8K5TzOsLpy2OVSMTk
-	 t4R1rom5olanMLvHLCEFeDHvDwlUkvohzJ6nycptG7be96sPORbIYzQ4/sM4GMp7KLp2h
-	 Xs4OJYH0W/UWC+0Sh1HXILgchqMayZRXFXDYPy/B2y9HdgveOC/aib5Uu+BNipU4sqYkf
-	 oeuMKFGyTAHtpTZuaF2KA3orjF6Z+3nJlrt62+QkZpM2Auqyw+vDJ3HmbOWQmfUYk+g==
+	t=1794062068;
+	b=OS+jzVFu4rjuwL9+trwjnGClWvZkmyvNBS1aaOrfTf0AG2Qy0yq3IFKNUj1aJlSRVse9
+	 ujJ/D0WNWbMqGk5DMa5UM4juOQrQeHK0EM+AnTK+8f/5kt2KZzwjP0Sg7DM0aWpQER/sA
+	 w52R4JJNQ57aLBsaSP0ojRTky8eKZyGaPr81x4tN/JmZgsZKQtNdv62gTCIz3rt4EnsTQ
+	 biC6aKUHXJxVQ0Ou80aR7z1+vXiPNh6YfRn47rZbBcBGbIWgJSlcrsiQiIsvHz/PePLZv
+	 1SZcT9k9uOCkh5+wlz3vxOal19RjyMZ3eHz/j63o8KWGc9tVypukXSU7sqQfa2NgPAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NXaGbSF2TcnLFfYlIpHtY2kxO61i9Qk00xFwS1abQVU=;
-	b=ISUFmYgb49/HSvQ7S8FJBVPS6nif6RZgrja1wxnWeVRaGhbOtzRahD6ilTAveUaaUEDU
-	 bi8yusY+geJU5XqLgPPBYIuAAwKBiRzDjMtVeswAgBYokcyArhQaQqFoo3lZ/ZTGkbsL/
-	 y/DGl66hZcZx8fBibwaKfPEqzbjJclWhRJpFyBICnUcQRublKvJWwFBwqzHlayhU5qqq+
-	 +NonBMDvUTZZqbo9qc4ojprakpA1j3J5jifG07yXDb+7Xy2VbZfj90wsJmOdlq5Z55J1a
-	 E+wiQtCuvUsNUxD20Y9ARDDZ35g/uQ+rxD1lEh941i7yleUn8HeDdlv/xwzOEkGHChw==
+	bh=Cx34+HJjaI+Sx8HgNBEb1klzyWa9BM2Gv/X0dTkJr1Q=;
+	b=lmwFN3ZB3o4f/0koBSpeTs71bGvdQMh1BWaMIGM/J1NPTRuPBMnOIdYXMX0YNwlKebTA
+	 yRIBbzz4pK5l5h0z4yBg4h4eu/dY1YF05egLO/0B1fL91uePvZYLk28sBVz1Pa2SlOFuS
+	 PzFLNYoh/qO2ZmucZuc/WQWNReY0QE6x5HpBrcmaXuQVa5ZVqF+jJ84dql0YNt7L14stQ
+	 X4QKwtTakBifEPJreOgH0OQLCmii7f6EDB8/P0WeW3m26hgi3WxCKND3ktXFltlwsrfnl
+	 hDcGvxFrXxaFvYP/yP+Blc2XyMki+dca67eKUZ5N6oo5uKzcvEMn9IXqQRjjBtOUgvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tp2fK+sA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQXd7NXQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DBA606A335;
-	Sat,  7 Nov 2026 14:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34FE606A33B;
+	Sat,  7 Nov 2026 14:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tp2fK+sA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4682E1F008A1;
-	Sat,  7 Nov 2026 14:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQXd7NXQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723B61F008A1;
+	Sat,  7 Nov 2026 14:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062066;
-	bh=NXaGbSF2TcnLFfYlIpHtY2kxO61i9Qk00xFwS1abQVU=;
+	s=korg; t=1794062067;
+	bh=Cx34+HJjaI+Sx8HgNBEb1klzyWa9BM2Gv/X0dTkJr1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tp2fK+sAM/Q/4e9v8Bjk2+oPUdU69kTGkBZUtNNjG7YYtKnts81VXnEalgVidRlPC
-	 aUqA+3Hr1HtoMAzjQNf6vJa9Nb8e5a3umgl45pXlsw16h+FXC2DhKWGrh+dpuM5804
-	 Bmfom7emHVaVsTycq7/kaoKIidBLyJK7T9IYZweg=
+	b=VQXd7NXQif/a+6wNYK7igouZaMBTJn3r3b5r/y94GUTSrUk6WY0+uxQmVHgfPCy06
+	 k1gFwpTX7ZkoxBWURnVpRrBdRSSIFoh7JNdAv5Ltlfy+s8VbyG0X3z10rlw09WuSz+
+	 qpdYvuexQHDjhrEpLkcCQ0cb7T1TtM66CzuD9ogE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1046/1536] media: adv7180: Initialize mutex before ancillary clients
-Date: Sat,  7 Nov 2026 08:51:02 -0500
-Message-ID: <20261107135027.055117305@linuxfoundation.org>
+Subject: [PATCH 6.12 1047/1536] media: au0828: Fix media device leak in au0828_usb_probe()
+Date: Sat,  7 Nov 2026 08:51:03 -0500
+Message-ID: <20261107135027.083697938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,55 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 9d46d17a65e86010b1f5604e5cf61ce1e197f77a ]
+[ Upstream commit 7b7a69c91c0537d48150942d9707614a4fdd3766 ]
 
-The VPP ancillary-client error path unregisters the CSI client before
-destroying state->mutex. For I2P variants, the failure can occur before
-mutex_init(), so cleanup destroys an uninitialized mutex.
+au0828_media_device_init() takes a reference to a media device with
+media_device_usb_allocate().  When au0828_v4l2_device_register()
+fails right after, the error path only unregisters the entities and
+frees au0828_dev, so that reference is never released.
 
-Initialize the mutex immediately after allocating the driver state, before
-creating any ancillary clients. This keeps every cleanup path matched with
-a completed mutex initialization.
+Release it with media_device_delete() on that path.
 
-A QEMU x86_64 test using an i2c-stub bus instantiated an ADV7280 client
-at address 0x21 and occupied its VPP ancillary address 0x42. This forced
-i2c_new_ancillary_device() to return -EBUSY. An instrumentation oracle
-observed an uninitialized mutex on the buggy kernel and an initialized
-mutex on the fixed kernel. The failure was deliberately injected to
-exercise the error path; no natural crash was observed.
-
-Fixes: 851a54effbd8 ("[media] adv7180: Add I2P support")
+Fixes: 812658d88d26 ("media: change au0828 to use Media Device Allocator API")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM Codex
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7180.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/usb/au0828/au0828-core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
-index 36e0f7a8c6d57..58fe359cd1abe 100644
---- a/drivers/media/i2c/adv7180.c
-+++ b/drivers/media/i2c/adv7180.c
-@@ -1427,6 +1427,7 @@ static int adv7180_probe(struct i2c_client *client)
- 	if (state == NULL)
- 		return -ENOMEM;
- 
-+	mutex_init(&state->mutex);
- 	state->client = client;
- 	state->field = V4L2_FIELD_ALTERNATE;
- 	state->chip_info = i2c_get_match_data(client);
-@@ -1467,7 +1468,6 @@ static int adv7180_probe(struct i2c_client *client)
- 	}
- 
- 	state->irq = client->irq;
--	mutex_init(&state->mutex);
- 	state->curr_norm = V4L2_STD_NTSC;
- 	if (state->chip_info->flags & ADV7180_FLAG_RESET_POWERED)
- 		state->powered = true;
+diff --git a/drivers/media/usb/au0828/au0828-core.c b/drivers/media/usb/au0828/au0828-core.c
+index 1e246b47766dd..c7ff52044bd25 100644
+--- a/drivers/media/usb/au0828/au0828-core.c
++++ b/drivers/media/usb/au0828/au0828-core.c
+@@ -697,6 +697,10 @@ static int au0828_usb_probe(struct usb_interface *interface,
+ 	retval = au0828_v4l2_device_register(interface, dev);
+ 	if (retval) {
+ 		au0828_usb_v4l2_media_release(dev);
++#ifdef CONFIG_MEDIA_CONTROLLER
++		media_device_delete(dev->media_dev, KBUILD_MODNAME,
++				    THIS_MODULE);
++#endif
+ 		mutex_unlock(&dev->lock);
+ 		kfree(dev);
+ 		return retval;
 -- 
 2.53.0
 
