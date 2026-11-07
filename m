@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062810;
-	b=GAIwCoJyGiIcb4amADf5qkC6RlOG2vE5ATxeUrlMHS/ggiuhCRDN6dCdd2SZ+jjmCZav
-	 l60W9mRQKg+IEvSGeHajE0XOyIMQ+FsmEpweypsgeOmQRIJP7lTEmhcW9xEsKs4EHLbH1
-	 nFVsJtvQ3a1rDcsclR/y+NTUG491Ki2wKmLOwuCHA37bdry2WUK196wv+4QOwxGe93hl2
-	 Otv5Foho3GfWPqi3xSrP2Qu1SORjmPHnZgz/QHN3BRwinbQHxBhNCeQUY21BTPq7tqv3F
-	 FTAeRXHQc2XOlJrS5xhDXc8Bb8bx4yualpK1Su4WFxp2PqBtrz3vUlAsmUGlYkeb09w==
+	t=1794062811;
+	b=hRJ/wtJEC0ePA+z1FXec29/6XdBrr8pQ+kcjYg5c14vyDSNINVnyiD1ZoAzlYC+TUcKC
+	 gsBLddES4zUG6uHGYuFabZLq6qmEwyFUMEN0Y4ECiiMuDIioorZxBVeU/Ph5SkBsAwqjb
+	 h06MmsKWdiRbg/bLl+Bj0x/CwtQPHmvrEyWTcuaTCk+buZo12i6XDjiRg5CVw7ramwQ80
+	 SVJjPNcxbsUvm1TjqPzC9MIPa2WGFr5n0nsKKcGV51B6kA9JtkZuLYIHRSUuR5acbQJWz
+	 dDTgFO+kvoFeSRbnIq4ftGxZ2nDrmddfCfiT4+8G+AdAxnMLXoHf+GBiqgvKB/5J6og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062810;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uSCnuG3oe7frNLtVQayuPUSRRVg1QOUG52tbyAhuy9U=;
-	b=zuvJ9SUb5TCIT9OYi3TdQ/2C+LyS4pjdFEaiMKhoiPm1r/UDhva749MmBoPkiJEdxM+D
-	 nn/qnmixnnLL0x+GDttHH3C/ON5XmerGKnu9QLACW3b3fqhiSPUD730rZ3vHpo2kTy3gm
-	 BA8sSkVjXV+GiFhas2ifmxI367QE5uKw2dTCNv/VxQdC8L44Db9IfvNZKWP1qnTT4xbIa
-	 Wtv/jeGP252VIod0kk0tCtCnlkGiNTnkpv9pp3SF4lE85Dg+pb+hHTvkTy7qkI8yWv7kY
-	 wHM1cW1+2OcUckM42JbMPZz8bPVEFpAGWPc0toTAifdwpJdFKTc70yGe6tHg4EL2h4g==
+	bh=4xwNIyOzWiJdwk40vLsYtkAhQ9wQDmdLrPaHCAHDlfk=;
+	b=DsfGxXiKl7b7Aaldue2uom3xwogSdJ/FXfsrFSb8UafC4ENDTBUK3ek4ded6XURzi+WA
+	 v4PdUDT8D6dGmY/yoiYfiPoFiQyM9c4khBfz3QVSBOO+Cl5eybwOJKQEvLANGWGsnriZ5
+	 eQhQO3UeGahn30RJYtDtxwuB1PfWVLCv0++Hxos7MuxWq2QFxdZ9vGcVlWnnw5rtEEQEj
+	 tnGv1Kk3fRfX856UdY43fWKBtACDLCR6UrOoVWIlqTy2RfGkfhWUdmOEN8+d+icpaOqy0
+	 3G4WUrnijorohme/1GuwP8be5pTmpp5GTYg1ftyRxbKw/VHSrb82/koaw7pxpp3Umew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J7bYnI7+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcaJfJbU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9BF606A332;
-	Sat,  7 Nov 2026 14:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF51606A33E;
+	Sat,  7 Nov 2026 14:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J7bYnI7+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9E41F008A1;
-	Sat,  7 Nov 2026 14:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcaJfJbU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B54E1F0089F;
+	Sat,  7 Nov 2026 14:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062810;
-	bh=uSCnuG3oe7frNLtVQayuPUSRRVg1QOUG52tbyAhuy9U=;
+	s=korg; t=1794062811;
+	bh=4xwNIyOzWiJdwk40vLsYtkAhQ9wQDmdLrPaHCAHDlfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J7bYnI7+kVC7UT1gtTDtuL+cBbmk5WKEVl7Kf2YVKw15AkxbzojgPaQ4alzFuJh8b
-	 IfqYK2IScRYwzvAvG/xij/6gguhN3dTgGDM49SnjjU8jeY4JnFjS9x98O7tHTQrsDI
-	 Bnbh7hlDlQo+1FRTnFcT2UwK+oc4RqqJ6xz50JjU=
+	b=JcaJfJbU+Tx3Iv4gO/QBaNaDoxryTI6rfXJeeLhgj5Qq9wrSCiqYttb54rJZYUsa/
+	 xbj6sjx4E31JtCdB7TMqJbJ+SEJ1vKi42nDzPNFHs4AHVQH6uFRhTV/+ObQH4wc6Wx
+	 T9VCQz62fnXfZLCrOcu+yUcvD0gmi1XSqHXtn/gI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Younho Choi <gdool88@mju.ac.kr>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 110/869] dmaengine: altera-msgdma: initialize state before requesting IRQ
-Date: Sat,  7 Nov 2026 08:46:32 -0500
-Message-ID: <20261107134856.321115015@linuxfoundation.org>
+Subject: [PATCH 6.18 084/869] media: vim2m: keep transaction buffer count stable while streaming
+Date: Sat,  7 Nov 2026 08:46:06 -0500
+Message-ID: <20261107134855.548736411@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,58 +69,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Younho Choi <gdool88@mju.ac.kr>
 
-[ Upstream commit a5f8e3471fc20567df888267885dec3eb340eb37 ]
+[ Upstream commit 50f5fed44d8e24081e8feed5154746fe193f11b8 ]
 
-msgdma_probe() registers the IRQ before initializing the tasklet, lock,
-and descriptor lists used by the interrupt handler. A pending interrupt
-can access incomplete state during probe.
+V4L2_CID_TRANS_NUM_BUFS controls how many buffer pairs a vim2m
+mem2mem job processes before the job is completed. The driver stores
+the value in ctx->translen and device_work() uses it later to decide
+whether the current transaction should continue.
 
-Initialize the handler state before requesting the IRQ so the interrupt
-path observes ready software state.
+Letting userspace change this control while streaming is active can
+make a queued job observe a different transaction length than the one
+it started with. That leaves the transaction state inconsistent with
+the buffers currently queued for the job.
 
-Fixes: a85c6f1b2921 ("dmaengine: Add driver for Altera / Intel mSGDMA IP core")
+Grab the transaction buffer count control while either queue is
+streaming, and release it only after both queues have stopped
+streaming. The V4L2 control framework then rejects changes with
+-EBUSY while the value is in use, while still allowing userspace to
+configure the value before streaming starts.
+
+Keep the control handler alive until after v4l2_m2m_ctx_release(),
+since releasing the mem2mem context can call stop_streaming(), which
+now ungrabs the control.
+
+Fixes: 96d8eab5d0a1 ("V4L/DVB: [v5,2/2] v4l: Add a mem-to-mem videobuf framework test device")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260830053308.2190597-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Younho Choi <gdool88@mju.ac.kr>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/altera-msgdma.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/media/test-drivers/vim2m.c | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
-index e1811a9be0bbe..2d4bca495b3d5 100644
---- a/drivers/dma/altera-msgdma.c
-+++ b/drivers/dma/altera-msgdma.c
-@@ -849,11 +849,6 @@ static int msgdma_probe(struct platform_device *pdev)
- 	if (mdev->irq < 0)
- 		return -ENXIO;
+diff --git a/drivers/media/test-drivers/vim2m.c b/drivers/media/test-drivers/vim2m.c
+index 86c32699111ad..5db440bf728e9 100644
+--- a/drivers/media/test-drivers/vim2m.c
++++ b/drivers/media/test-drivers/vim2m.c
+@@ -205,6 +205,7 @@ struct vim2m_ctx {
+ 	struct vim2m_dev	*dev;
  
--	ret = devm_request_irq(&pdev->dev, mdev->irq, msgdma_irq_handler,
--			       0, dev_name(&pdev->dev), mdev);
--	if (ret)
--		return ret;
--
- 	tasklet_setup(&mdev->irq_tasklet, msgdma_tasklet);
+ 	struct v4l2_ctrl_handler hdl;
++	struct v4l2_ctrl	*trans_num_bufs_ctrl;
  
- 	dma_cookie_init(&mdev->dmachan);
-@@ -865,6 +860,11 @@ static int msgdma_probe(struct platform_device *pdev)
- 	INIT_LIST_HEAD(&mdev->done_list);
- 	INIT_LIST_HEAD(&mdev->free_list);
+ 	/* Processed buffers in this transaction */
+ 	u8			num_processed;
+@@ -1270,9 +1271,27 @@ static int vim2m_start_streaming(struct vb2_queue *q, unsigned int count)
+ 		ctx->aborting = 0;
  
-+	ret = devm_request_irq(&pdev->dev, mdev->irq, msgdma_irq_handler,
-+			       0, dev_name(&pdev->dev), mdev);
-+	if (ret)
-+		return ret;
+ 	q_data->sequence = 0;
++	v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, true);
 +
- 	dma_dev = &mdev->dmadev;
+ 	return 0;
+ }
  
- 	/* Set DMA capabilities */
++static bool vim2m_other_queue_is_streaming(struct vim2m_ctx *ctx,
++					   struct vb2_queue *q)
++{
++	struct vb2_queue *other_vq;
++
++	if (!ctx->fh.m2m_ctx)
++		return false;
++
++	if (V4L2_TYPE_IS_OUTPUT(q->type))
++		other_vq = v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx);
++	else
++		other_vq = v4l2_m2m_get_src_vq(ctx->fh.m2m_ctx);
++
++	return vb2_is_streaming(other_vq);
++}
++
+ static void vim2m_stop_streaming(struct vb2_queue *q)
+ {
+ 	struct vim2m_ctx *ctx = vb2_get_drv_priv(q);
+@@ -1286,11 +1305,14 @@ static void vim2m_stop_streaming(struct vb2_queue *q)
+ 		else
+ 			vbuf = v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
+ 		if (!vbuf)
+-			return;
++			break;
+ 		v4l2_ctrl_request_complete(vbuf->vb2_buf.req_obj.req,
+ 					   &ctx->hdl);
+ 		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
+ 	}
++
++	if (!vim2m_other_queue_is_streaming(ctx, q))
++		v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, false);
+ }
+ 
+ static void vim2m_buf_request_complete(struct vb2_buffer *vb)
+@@ -1392,7 +1414,8 @@ static int vim2m_open(struct file *file)
+ 
+ 	vim2m_ctrl_trans_time_msec.def = default_transtime;
+ 	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_time_msec, NULL);
+-	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
++	ctx->trans_num_bufs_ctrl =
++		v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
+ 	if (hdl->error) {
+ 		rc = hdl->error;
+ 		v4l2_ctrl_handler_free(hdl);
+@@ -1447,10 +1470,10 @@ static int vim2m_release(struct file *file)
+ 
+ 	v4l2_fh_del(&ctx->fh, file);
+ 	v4l2_fh_exit(&ctx->fh);
+-	v4l2_ctrl_handler_free(&ctx->hdl);
+ 	mutex_lock(&dev->dev_mutex);
+ 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
+ 	mutex_unlock(&dev->dev_mutex);
++	v4l2_ctrl_handler_free(&ctx->hdl);
+ 	kfree(ctx);
+ 
+ 	atomic_dec(&dev->num_inst);
 -- 
 2.53.0
 
