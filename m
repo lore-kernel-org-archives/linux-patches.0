@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061511;
-	b=Yf98zb41o02RTRgm7kM0hyFeKdpDMseCSGiVK5vsqcfVia/LMzB+YzG7ChIz5hqn6EQh
-	 JViW656E4dG5evxk6UNTBxLSNvh5DUciEm+2MCkHVcNTFowHy8+spr/ttBHJs1f64B3NA
-	 IR87hWwBYGhWNDzWK5n4umW1vX7yd8QZ7/VBFqliqcnbl4AvPys+X4iTpuUc2T2Deb28P
-	 Iz0Mi8Qm5rYahQXb1hQQe2pt3TUsNFmBi1p7eQY++KY5B/p2/L1GnoYACbr8CgdtaJOa8
-	 aHLDfK1cK50rPc9FDFz6OfImKjs7VOMpLTeSJoExuKRxmWzKNpjjcQhok8EbnglbPzw==
+	t=1794061513;
+	b=pIoxDe9eqsoq2cWgOPM64yh6nJ4aGKHZQ/KRrqIPNf2JFDSMYkU0iPIQBp4I9ouG/oaa
+	 N6tV7oZim9s4IXYKSXi/YkaR2qXQUL6OdwsrR2KtPFHfRQ8imRE0tieROCOarJKBMmTVq
+	 hpA5MOE86NzbYY1/KpbDTwNnnQliMzhbVrD7AiHkfJI96Blh2AOLYyXWVFBejowOkZtIK
+	 z7pmPQsRKNd/3pE5gLc9Hdve6zIkypTWiVyHgVjW18YiIwK0LQ/WZBbjr606gTeAahwC2
+	 LvVQlNMWgCS4UxhjTtgJtfMGj1xJOae0jLpi0t4N3ipXa+V19HeH5hTbPX4/foaUkLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061511;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061513;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dNuw9bQRMzI/HjX6HG5JB9R+is9U/1f5fcbaZrfRT9k=;
-	b=Ody5eMNvkuDECfA5ylOfcg1Huz1MGpOqeliZkIecGdL25LYfksxpVNl3RDcfBhLG7XWu
-	 PG0Y0hAZhppsIOqLFdE1KnA4J3PVns/aLgjSAIHm7FHp7l0gHLeM0kC2kJdzHjpw6qpgT
-	 mmsL5ziq8fiOTyTg9LuCoecw5zW7KL9C3M3nJaWymKizJZnrmh9nchPdiy/p8XtJmR/X4
-	 8tlgvLBjnj1WocS9EOGX7gWfn6XTs5kyPTORaM/jNAjWsISb9RJKrK438jTEz/a6wR6Vx
-	 OG11r3aJyFhG9SxrH55Gl6FBdyQz4RWl22VWDA1BT33c6rhMfAl9PECSvUZywdFd/rQ==
+	bh=xu9rNoSHmp0HgFS0TAY/x6Gj7Zv82q+3m/5pyu04oLk=;
+	b=GcaJQEq1KNp5WwfsiAw3Yh9Oka5esic21hXcVwc83HiSJkiOHVqiMf82vIKlUu6Iwx7W
+	 3Ftd4Gfsu+HDkvTkhG6eGsq6JXZ3sIeov9EXYgnfj9mq58OPuNNrPDT0dDSeOmYrNvzJL
+	 exVkqU6QxEmu/P60OigxfjiEqwCM2VViTk6KG/42uQKwwcmzmtLx9suU5nmtWyjo4DPDK
+	 8S8eCG+0wBQ8yagh/T022o6cXAIHkgebulsyX4eutxOXORYisuUpAbbk0ZRjd5KMwb8/q
+	 OUQrYmAr73A7zK36RD6BRR2aZ+ZZ3dZ6q+i/ocTUZuKbjRpvqkvaX1Kua++f4ph0Whw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eXz1q/r0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+0+zP1n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E21606A336;
-	Sat,  7 Nov 2026 14:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8348D606A331;
+	Sat,  7 Nov 2026 14:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXz1q/r0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19431F0089F;
-	Sat,  7 Nov 2026 14:25:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+0+zP1n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309711F008A1;
+	Sat,  7 Nov 2026 14:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061511;
-	bh=dNuw9bQRMzI/HjX6HG5JB9R+is9U/1f5fcbaZrfRT9k=;
+	s=korg; t=1794061513;
+	bh=xu9rNoSHmp0HgFS0TAY/x6Gj7Zv82q+3m/5pyu04oLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eXz1q/r0dxC0Izl0GBXA0I6KUmeQfzt7b40N/XNt38VHAtDh/rSwFrKDbq1a3kszk
-	 ohVqyEz2GhrbDZH4QklKzqbN2iKyGTVbq2zOJcCdXu6mctzKOoeEpDLsQnv6gCSHhX
-	 U+Ms/WtUMndKfnfqH+cpPJjBStifaT5HoDLjGLpo=
+	b=E+0+zP1nHuCt+RtOCVId77Yh928N3aXuuj3vA3U8jpMwe45jR6mAL9yE8QgAru3bH
+	 IU0j/0PU9LGSxcqGgt+Ndj0cW+dUyglK3PDqXwqfSeWFQqdM8k2FVRX6TBymEYsfnS
+	 QZOB+vaRoQfcTNp4U7kYzyf7wqQZewJp4ND7LV7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Wendleder <gonsolo@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 0602/1536] wifi: b43: fix use-after-free in b43_bcma_remove()
-Date: Sat,  7 Nov 2026 08:43:38 -0500
-Message-ID: <20261107135014.450958917@linuxfoundation.org>
+	Diego Oliva <diego@bynar.io>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.12 0604/1536] smb: client: fix use-after-free infoleak via the readdir resume name
+Date: Sat,  7 Nov 2026 08:43:40 -0500
+Message-ID: <20261107135014.508650596@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,53 +68,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Wendleder <gonsolo@gmail.com>
+From: Diego Oliva <diego@bynar.io>
 
-commit c6c8bc355657115664131b38c53c5ddf7d93b072 upstream.
+commit 59131dd72f62b198fc9ea1489ad9d3573154f684 upstream.
 
-b43_one_core_detach() frees the struct b43_wldev it is given the bus
-device of. b43_bcma_remove() then reads wldev->dev again to free the bus
-device, which is a read of freed memory.
+CIFSFindNext() copies the resume name that cifs_save_resume_key()
+recorded from the last entry of the previous response into its request;
+psrch_inf->presume_name points into the response buffer that entry came
+from, and nothing ever clears it. find_cifs_entry() records a new
+name only from a response with a usable last entry, and cifs_readdir()
+only from an entry it walks to, so a response that carries no entries
+and leaves last_entry NULL, because CIFSFindFirst() or CIFSFindNext()
+rejected LastNameOffset, refreshes neither and presume_name keeps
+pointing into the previous response. That buffer has already been
+released: by CIFSFindNext() before it installs the new response, or by
+find_cifs_entry() when it rewinds the search, which does not drop the
+name either and can then fail in initiate_cifs_search() before a new
+response replaces it. The next CIFSFindNext() then copies up to
+PATH_MAX - 1 bytes of the resume name out of the released buffer into
+its request and sends them to the server: a use-after-free read
+that leaks kernel memory to a malicious or compromised server, which
+can provoke it with a single FindNext response that carries no entries
+and a LastNameOffset above CIFSMaxBufSize, which is all the existing
+check rejects.
 
-b43_ssb_remove() does not have the problem: it takes a copy of wldev->dev
-at the start. Do the same here.
+With KASAN enabled, a server that answers a listing that way gives:
 
-Fixes: 96838d61102a ("b43: Fix memory leaks in b43_bus_dev_ssb_init and b43_bus_dev_bcma_init")
+ CIFS: VFS: ignoring corrupt resume name
+ ==================================================================
+ BUG: KASAN: slab-use-after-free in CIFSFindNext+0x8ca/0x14c0
+ Read of size 4080 at addr ffff88807c823f98 by task ls/83
+
+ CPU: 0 UID: 0 PID: 83 Comm: ls Tainted: G    B               7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
+ Tainted: [B]=BAD_PAGE
+ Call Trace:
+  <TASK>
+  kasan_report+0xdf/0x1a0
+  kasan_check_range+0x10f/0x1e0
+  __asan_memcpy+0x23/0x60
+  CIFSFindNext+0x8ca/0x14c0
+  cifs_readdir+0xf51/0x29c0
+  iterate_dir+0x1c0/0x570
+  __x64_sys_getdents64+0x133/0x270
+  do_syscall_64+0x109/0x5d0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  </TASK>
+
+ Allocated by task 83 on cpu 1 at 13.497119s:
+  cifs_buf_get+0x36/0x90
+  smb_init+0x4f/0x110
+  CIFSFindNext+0xf7/0x14c0
+  cifs_readdir+0xf51/0x29c0
+
+ Freed by task 83 on cpu 0 at 13.584018s:
+  cifs_buf_release+0x41/0x80
+  CIFSFindNext+0xfce/0x14c0
+  cifs_readdir+0xf51/0x29c0
+
+ The buggy address is located 16280 bytes inside of
+  freed 16588-byte region [ffff88807c820000, ffff88807c8240cc)
+ ==================================================================
+
+The same memcpy() first reads past the end of that object while it is
+still live, a slab-out-of-bounds read that the following patches
+bound; that is the taint the report above carries.
+
+SMB1 is not negotiated by default; reaching this code requires an
+explicit vers=1.0 mount.
+
+Clear presume_name and resume_name_len whenever a new response is
+installed and when the rewind path releases the search buffer, so that
+the name never outlives the buffer it points into, and reset
+resume_key with them, since it was taken from the same entry and would
+otherwise be sent with an empty name. A response without a usable
+last entry then continues the search with an empty resume name rather
+than a stale one; CIFSFindNext() skips the copy of a zero-length name
+so that it never runs on the NULL pointer.
+
+The next patch in the series leaves last_entry NULL for a response
+that carries no entries, and bounds LastNameOffset against the
+received response rather than against CIFSMaxBufSize. Responses that
+are given a last entry today then take the path fixed here, so that
+patch must not be applied without this one.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: b77d753c413e ("[CIFS] Check that last search entry resume key is valid")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andreas Wendleder <gonsolo@gmail.com>
-Link: https://patch.msgid.link/20261013000124.48605-1-gonsolo@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Assisted-by: Bynario AI
+Signed-off-by: Diego Oliva <diego@bynar.io>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/b43/main.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/smb/client/cifssmb.c |   11 ++++++++++-
+ fs/smb/client/readdir.c |    3 +++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/broadcom/b43/main.c
-+++ b/drivers/net/wireless/broadcom/b43/main.c
-@@ -5663,6 +5663,7 @@ static void b43_bcma_remove(struct bcma_
- {
- 	struct b43_wldev *wldev = bcma_get_drvdata(core);
- 	struct b43_wl *wl = wldev->wl;
-+	struct b43_bus_dev *dev = wldev->dev;
- 
- 	/* We must cancel any work here before unregistering from ieee80211,
- 	 * as the ieee80211 unreg will destroy the workqueue. */
-@@ -5677,14 +5678,14 @@ static void b43_bcma_remove(struct bcma_
- 		ieee80211_unregister_hw(wl->hw);
- 	}
- 
--	b43_one_core_detach(wldev->dev);
-+	b43_one_core_detach(dev);
- 
- 	/* Unregister HW RNG driver */
- 	b43_rng_exit(wl);
- 
- 	b43_leds_unregister(wl);
- 	ieee80211_free_hw(wl->hw);
--	kfree(wldev->dev);
-+	kfree(dev);
- }
- 
- static struct bcma_driver b43_bcma_driver = {
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -4131,6 +4131,9 @@ findFirstRetry:
+ 	psrch_inf->entries_in_buffer = le16_to_cpu(parms->SearchCount);
+ 	psrch_inf->index_of_last_entry = 2 /* skip . and .. */ +
+ 		psrch_inf->entries_in_buffer;
++	psrch_inf->presume_name = NULL;
++	psrch_inf->resume_name_len = 0;
++	psrch_inf->resume_key = 0;
+ 	lnoff = le16_to_cpu(parms->LastNameOffset);
+ 	if (CIFSMaxBufSize < lnoff) {
+ 		cifs_dbg(VFS, "ignoring corrupt resume name\n");
+@@ -4194,7 +4197,10 @@ int CIFSFindNext(const unsigned int xid,
+ 	name_len = psrch_inf->resume_name_len;
+ 	params += name_len;
+ 	if (name_len < PATH_MAX) {
+-		memcpy(pSMB->ResumeFileName, psrch_inf->presume_name, name_len);
++		if (name_len) {
++			memcpy(pSMB->ResumeFileName,
++			       psrch_inf->presume_name, name_len);
++		}
+ 		byte_count += name_len;
+ 		/* 14 byte parm len above enough for 2 byte null terminator */
+ 		pSMB->ResumeFileName[name_len] = 0;
+@@ -4249,6 +4255,9 @@ int CIFSFindNext(const unsigned int xid,
+ 	psrch_inf->endOfSearch = !!parms->EndofSearch;
+ 	psrch_inf->entries_in_buffer = le16_to_cpu(parms->SearchCount);
+ 	psrch_inf->index_of_last_entry += psrch_inf->entries_in_buffer;
++	psrch_inf->presume_name = NULL;
++	psrch_inf->resume_name_len = 0;
++	psrch_inf->resume_key = 0;
+ 	lnoff = le16_to_cpu(parms->LastNameOffset);
+ 	if (CIFSMaxBufSize < lnoff) {
+ 		cifs_dbg(VFS, "ignoring corrupt resume name\n");
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -748,6 +748,9 @@ find_cifs_entry(const unsigned int xid,
+ 			cfile->srch_inf.ntwrk_buf_start = NULL;
+ 			cfile->srch_inf.srch_entries_start = NULL;
+ 			cfile->srch_inf.last_entry = NULL;
++			cfile->srch_inf.presume_name = NULL;
++			cfile->srch_inf.resume_name_len = 0;
++			cfile->srch_inf.resume_key = 0;
+ 		}
+ 		rc = initiate_cifs_search(xid, file, full_path);
+ 		if (rc) {
 
 
