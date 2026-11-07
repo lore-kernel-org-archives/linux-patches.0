@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061692;
-	b=UPazxUCTooRGeHdmQ6QIbZEwVrlCgdltDS+lWF2E9OfiGsAZFJA1rpINQmUEh56m1AZK
-	 KKthIqASMsqKCGWJIXr600BKF02VaqoCYs+YhkueHhcFukmOtEM7d/0O/ppbICS2orlFY
-	 nOHGZD5lujuAW3YtkYSy62P0a7eEJXB9GS6slwYvh6QIplQsqRJqaqPM0Bt1mixnOqx0t
-	 oKSWTXfo6A2wMgH/sbgxnTVvpmvveEFAR43VaH3wPWNra/Vep+mDK0BBrF/d3arRJov3K
-	 hdIOEdf/rTZ9+l0e1ss9sWN1d5gRrPyC/qWYWg2AuRu3WgIrRfnRAxBgV1YviUmt1Ow==
+	t=1794061693;
+	b=3354uM8fSkn3cpXY9TBL6MKWfPEi3i29IAUI3loeGuOlA4msK+odFiqTv0PuNrN0J2wI
+	 qARh6GHMnnulMOWF28Nzc8aKG8L8H/tMmAELWqbzVE/1BhCJR++5ufmh9FcHGLFrDi6te
+	 WQ2EAHBNaLnApOEgOJufwm/mi7EUAQx/eANhiHlmUb/F/6/wTeKuTyHJRCsDhWRHOarKL
+	 4PAmKnv6qqokQEmS7RAZxtDOtzHZ3W7uxQ6Mv8EtcHUqMrorexipM6QaY9csd+F8C311s
+	 HwEXuKPLPyzNPlNhfAkZzVDC4DQsajkPQ1VBmtLCSM/3twHenvzeHeZZm0ZgvsvXWNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DhmMOujV+X4VahiFfAB969QFEePd4RHOScUghbr5BEg=;
-	b=NCZJMo3CLunUycn7vLiTRcIoAHTKjeyDpyQVfHatQGdqZ8n0I8WLaX9p07Jrz6XFNNT7
-	 dYVDb1KbqzJ6GuwtETxpPggfE9cw3Kq5ZE+bqhd9turef53BXrohNbbWm4JuMvfnjEJFX
-	 zfVpauh9N0muKen9gDBLUf6baI/gMnwOQoYM+CMPgpr7cbRObGji+zinD2X70Q/TDAuea
-	 LvHkFGT+haDV/vVR3WU1pCoEhPNRMg/kuja4LeY8rFJR21OqX8Y/YYFCDr9l6AnE73vYe
-	 hLd22G9PisJ3Eqg93dvWHIun/NvnOioIyBhtEiNcO9CUNbNXzqqlb6sUBVXmbnNhDeA==
+	bh=E1lxzS38NlKKYEMC6Vnqa3eVaieSjecMRUJQvtmlQnQ=;
+	b=JZPiAHGgFzU2FblHLF3vr6EN4fVe8qIJyKBcXOCIr8rmvp0nymnT/QdDAk2R9Wn8ogLh
+	 ZTkSDi/E1w+DKKeAvr4exT49bt19hjw1euelZO6jt5d8wdSYJ00p2hMJxTvrP2AE+SSsJ
+	 AuZK4DDIuVWl3VrDL+akfLoqou9nNaRdYheJqmAGKbEtcUfGmh6wIFGCkrZJBdiQFElVv
+	 qZ5/z20b8V0Wcf901S5YWCsD2ZQarZYPfZgx4M7CXnpBFUxJQKnJNa/1Lv/QJDPoT0RRj
+	 UV5EwqvcqkATY5FQYeTfTsKP0XDnpOEXvM7FaSrnuOpDmsGB/ddSFSz400JPYNSM/ZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DToDhRoF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XbyOPJhN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63AB606A326;
-	Sat,  7 Nov 2026 14:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14078606A326;
+	Sat,  7 Nov 2026 14:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DToDhRoF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF641F0089F;
-	Sat,  7 Nov 2026 14:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XbyOPJhN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A4C1F0089F;
+	Sat,  7 Nov 2026 14:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061691;
-	bh=DhmMOujV+X4VahiFfAB969QFEePd4RHOScUghbr5BEg=;
+	s=korg; t=1794061692;
+	bh=E1lxzS38NlKKYEMC6Vnqa3eVaieSjecMRUJQvtmlQnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DToDhRoF3PuLDBE0uHnm0kkH2TBZNZ95IdjU9/0lZfXh+kI5ZxMo8RoOr2g7hmGAU
-	 Y+f2vvRbDNfYawfoQekZ137teftkTjM1+FPlEw4qjeeOQw6TKkNk2G8XwBTRVrkxo7
-	 5p3tEKWdeXDvwl4JezuDKanpjIMFp3eoaMrST96M=
+	b=XbyOPJhNhscseMowH9dZVWV679FBNL5E5aTET7FOx7bK4DcUVGUetbyXfYcJ+xs4v
+	 pFHhS9nfPZnNze50zkOwNe+6viwcHd+6WptUHilx/3w9k3A6XcjGWFxJuPmuFmTLHz
+	 LW+loTuVYdaNdS5KsTn2fJaR/2YNkqwtg/TSTYLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 0705/1536] xfs: allow softlimit with no hardlimit in quota scrub
-Date: Sat,  7 Nov 2026 08:45:21 -0500
-Message-ID: <20261107135017.296392978@linuxfoundation.org>
+Subject: [PATCH 6.12 0741/1536] xfs: fix data fork block count check in xrep_inode_blockcounts
+Date: Sat,  7 Nov 2026 08:45:57 -0500
+Message-ID: <20261107135018.336661878@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,73 +70,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 342c2e00b3a99099a7088f7b8c8f075670c603a9 upstream.
+commit 147f9f8300cb284923e08bb8a7b32ba9681c45ed upstream.
 
-LOLLM observes that the sysadmin can set a user's soft limit to a
-nonzero value and the hard limit to zero, so those aren't corruptions.
+LOLLM notices that for non-reflink realtime files, the @count output of
+xchk_inode_count_blocks includes both the file blocks on the realtime
+volume and the bmap btree blocks on the data volume.  Therefore, we must
+compare this value to rblocks + dblocks to avoid unnecessary failure.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: c2fc338c87a31f ("xfs: scrub quota information")
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 2d295fe65776d1 ("xfs: repair inode records")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/quota.c        |    8 ++++----
- fs/xfs/scrub/quota_repair.c |    6 +++---
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ fs/xfs/scrub/inode_repair.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/quota.c
-+++ b/fs/xfs/scrub/quota.c
-@@ -185,21 +185,21 @@ xchk_quota_item(
- 	 * suspect, which is why we flag it for review.
- 	 *
- 	 * Complain about corruption if the soft limit is greater than
--	 * the hard limit.
-+	 * the hard limit and there's a hard limit set.
- 	 */
- 	if (dq->q_blk.hardlimit > mp->m_sb.sb_dblocks)
- 		xchk_fblock_set_warning(sc, XFS_DATA_FORK, offset);
--	if (dq->q_blk.softlimit > dq->q_blk.hardlimit)
-+	if (dq->q_blk.hardlimit && dq->q_blk.softlimit > dq->q_blk.hardlimit)
- 		xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, offset);
- 
- 	if (dq->q_ino.hardlimit > M_IGEO(mp)->maxicount)
- 		xchk_fblock_set_warning(sc, XFS_DATA_FORK, offset);
--	if (dq->q_ino.softlimit > dq->q_ino.hardlimit)
-+	if (dq->q_ino.hardlimit && dq->q_ino.softlimit > dq->q_ino.hardlimit)
- 		xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, offset);
- 
- 	if (dq->q_rtb.hardlimit > mp->m_sb.sb_rblocks)
- 		xchk_fblock_set_warning(sc, XFS_DATA_FORK, offset);
--	if (dq->q_rtb.softlimit > dq->q_rtb.hardlimit)
-+	if (dq->q_rtb.hardlimit && dq->q_rtb.softlimit > dq->q_rtb.hardlimit)
- 		xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, offset);
- 
- 	/* Check the resource counts. */
---- a/fs/xfs/scrub/quota_repair.c
-+++ b/fs/xfs/scrub/quota_repair.c
-@@ -197,17 +197,17 @@ xrep_quota_item(
- 		return error;
- 
- 	/* Check the limits. */
--	if (dq->q_blk.softlimit > dq->q_blk.hardlimit) {
-+	if (dq->q_blk.hardlimit && dq->q_blk.softlimit > dq->q_blk.hardlimit) {
- 		dq->q_blk.softlimit = dq->q_blk.hardlimit;
- 		dirty = true;
- 	}
- 
--	if (dq->q_ino.softlimit > dq->q_ino.hardlimit) {
-+	if (dq->q_ino.hardlimit && dq->q_ino.softlimit > dq->q_ino.hardlimit) {
- 		dq->q_ino.softlimit = dq->q_ino.hardlimit;
- 		dirty = true;
- 	}
- 
--	if (dq->q_rtb.softlimit > dq->q_rtb.hardlimit) {
-+	if (dq->q_rtb.hardlimit && dq->q_rtb.softlimit > dq->q_rtb.hardlimit) {
- 		dq->q_rtb.softlimit = dq->q_rtb.hardlimit;
- 		dirty = true;
- 	}
+--- a/fs/xfs/scrub/inode_repair.c
++++ b/fs/xfs/scrub/inode_repair.c
+@@ -1528,7 +1528,7 @@ xrep_inode_blockcounts(
+ 		 */
+ 		;
+ 	} else if (XFS_IS_REALTIME_INODE(sc->ip)) {
+-		if (count >= sc->mp->m_sb.sb_rblocks)
++		if (count >= sc->mp->m_sb.sb_rblocks + sc->mp->m_sb.sb_dblocks)
+ 			return -EFSCORRUPTED;
+ 	} else {
+ 		if (count >= sc->mp->m_sb.sb_dblocks)
 
 
