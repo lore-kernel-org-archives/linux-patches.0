@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064925;
-	b=Oqj0QRWG3ZodZ3ruVSPar9hLWwEWT2SjMM8T0LYKg8byL3WzTyYi86MmDGpD0pVwCX1a
-	 5HWYfSXaHUdlPcRJF31UZm/BqQ1yMGzhQeTvYmodG5pwg70gh2nealAh9PsXCYaVdh99Y
-	 s8y9/Cyej6CpdaABuyRLijyM6aUagMvgFnOmfXO3J7o1A1zyz1nLF+xShAcKrqr2MiyXE
-	 zJpLsxao+aB/3C+WrjR+fD9/ZPZuXp0pWH0BiVaUIy7imPTQ9xhSCdtqtp/B+2XVo8sV2
-	 qLGIleJR94l5Vc3eOJQlcqJrK+AZn/8CXGb/iXAF9lfPrAuoniNYPzC2w6hpTzddZkw==
+	t=1794064926;
+	b=17N/rOwrfUFx+X3newIPdmLY6sgOcTXNyFdPhH1ioPb60yolI19qKGbknrFAfdzoyXrc
+	 ++pw4bbvp9TaNMZAsJMNQQFUZTdAxu25HXKXnR2XAgSu7EubUkZs/vvbFZB7Gl059DNH3
+	 sOyvCflMVsDI5xGOxp0KTTTxz/lp2Tc/pbfsU+G1rGyzFdNo21ZBbUtseXSZB8hehS8Zx
+	 KIQIKb8qmCo5SwJMpmaxQkV0ByhdlXt0yGa/tOZrcJdqFuJrb5m64EdJq/JU2uaqGdsx8
+	 ZrvqBRy2ODFqdJ7iC+Ww8tKFlEPoDWdhf94BbzVEusrU4zLbpCjYPiLjXFQbDCDmaIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064926;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=2k0m29kLmOniaUxaSOXssrn+B5NVFejqbeWf3GXnbTY=;
-	b=TrW5zH8n9t2ya8aynlMFOO7ZlUKhdKTcURHB6zpTfMjyPwZjLjBMpXJiUbTMjvNUgHvl
-	 Yf3xQBDs4xkaO0YkniTPhjj0fQuPwewkjbpD79ryDVGpJAz5S6GzaHfvNTa0jS9HphDtD
-	 zS1fMLwvea21CO4nDQClZ2DvU8Pdb8UUeSU/fY5FrDuOjdO/88m6nbgzTjYiSnXzTfedq
-	 /55y/5tqRDAYpD5Ul3dednFFH3/oDGvsA/ItyGRxqIltoX72j5ukabEdRGVsNbGFD2E4t
-	 7Wt5pjaPy5MkQt2fIuuxVWuOnQVaar2U8PHYY2JHWT0syAJgY4D6+NvIlBqFcHolZZQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=9lsK0T0v5lOEkhRxoOxi94XKoHkKaDRvSN9Jk1jCF6g=;
+	b=dYNfslvCe5dntZvFasrSsjWGQG9KcgEyQka1U9uVRqH3DwxQ5rByN1a+z8ueqCDvVahB
+	 8vjxH4Xb8mBV7h9vf2rr0LCISMzY5lsgJxy6say3Y/dC9+X900X2+2Arjbk/tCL3+1Sgi
+	 nU56M4JAQP/CC7mFSa1shUhfEqw+fjuNTvQqFZ7EgKPVppP+k1tAkeFrqVq4FeguV9Mpj
+	 kHl8Nhd4U5D4Wrh3kVcbi/Yhgp6DFLnmgN8NdSuujCG+S6d++3LL5Jj6nWAzup4gtq86v
+	 tNDvmZ8Si8d5AaPAoW8sFKc7sF2t/Q/0yIJSyUsHN+rfxWBJp4bBf18xWRKKGC4tuvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XP+epv0a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SAvaTsnv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5120B606A33E;
-	Sat,  7 Nov 2026 15:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D59606A33E;
+	Sat,  7 Nov 2026 15:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XP+epv0a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2C21F0089F;
-	Sat,  7 Nov 2026 15:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SAvaTsnv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23FA1F008A1;
+	Sat,  7 Nov 2026 15:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064924;
-	bh=2k0m29kLmOniaUxaSOXssrn+B5NVFejqbeWf3GXnbTY=;
+	s=korg; t=1794064926;
+	bh=9lsK0T0v5lOEkhRxoOxi94XKoHkKaDRvSN9Jk1jCF6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XP+epv0alU+i82kPEPq41R7YPdnltekTpJvRKOTw469jdcaA/jBI9esZgrGYIENQJ
-	 F1OPsuO2ArFLmMx83eDlg58h2F/tiwQg6Ec4Ndb7PDq5/7D0dA8YxR2BCfrXqvxs5A
-	 arKcuoVXiIxSv+9qEOczxvviXjHJafu5ArYF6dM4=
+	b=SAvaTsnvI9yu/So0SnRGrgzaCIHwZR/PoCVQEaG4ZJmDqvpWwLm4gwZVKT/0j2Y1e
+	 IORTgfDEvYRzGMRpRdf5ftvIB95qv0W2OW00mTskHGZkiJ9gU2JNZlcsuRmm3FOZT/
+	 SLKeGN3cwA4VYDoWHoan8ejO4KDgtchYKnb4X57g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming Lei <tom.leiming@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0820/1257] ublk: keep a canceled FETCH round canceling until the server is gone
-Date: Sat,  7 Nov 2026 08:51:56 -0500
-Message-ID: <20261107135001.990807047@linuxfoundation.org>
+Subject: [PATCH 7.3 0821/1257] ublk: mark the io command cancelable before publishing it
+Date: Sat,  7 Nov 2026 08:51:57 -0500
+Message-ID: <20261107135002.017084989@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,6 +63,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -71,161 +72,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Lei <tom.leiming@gmail.com>
 
-[ Upstream commit 4c454b5b2634d982caf797fbe477770c3edfc983 ]
+[ Upstream commit a261f0cacacc022e4fab5b8e38c59f74ce4942e8 ]
 
-A cancel completes a fetched io command and sets io->cmd to NULL, but
-the io still counts as ready. Only ubq->canceling stops ublk_queue_rq()
-from using the NULL io->cmd. Two paths clear that flag too early:
+FETCH, COMMIT_AND_FETCH and NEED_GET_DATA publish the command in io->cmd
+before marking it cancelable. A cancel from the control path (STOP_DEV,
+QUIESCE_DEV) can complete it in between:
 
-  partial FETCH round                 recovery, two queues
-  -------------------                 --------------------
-  task A: FETCH tags 0-2              q0 ready: q0->canceling = false
-  task A exits:                       q0 task exits:
-    start_cancel(): mark queues         start_cancel(): ub->canceling
-    tags 0-2: io->cmd = NULL              is still set -> q0 not marked
-  task B: FETCH tag 3                   q0: io->cmd = NULL
-    queue ready: canceling = false    q1 ready
-  START_DEV                           END_USER_RECOVERY
-  read -> ublk_queue_cmd(NULL)        read on q0 -> ublk_queue_cmd(NULL)
+  issue path                       control-path cancel
+  io->cmd = C
+                                   take C, io_uring_cmd_done(C):
+                                     C not marked, nothing to unlink
+  ublk_prep_cancel(C)
+    the completed C is linked on the cancelable list
+  ring exit: the cancel walk hits it → GPF (KASAN, with a delay added)
 
-A FETCH round runs from the open of /dev/ublkcN until
-ublk_reset_ch_dev() resets the queues. A canceled command can't be
-fetched again in the same round. So the ready check only needs one
-fact: did this round see a cancel? ub->canceling already records it:
-ublk_start_cancel() sets it under cancel_mutex before any command is
-taken. It is only cleared too early, when all queues are ready.
+Mark the command before ublk_fill_io_cmd() publishes it. The handlers
+run with uring_lock held, as io_uring's cancel walk does, so marking
+takes no lock and the walk can't see a marked command before it is
+published. smp_wmb() orders the mark before the io->cmd store; the
+cancel loads cmd with READ_ONCE(io->cmd) before reading cmd->flags.
 
-Fix:
+A marked command has to be completed by io_uring_cmd_done(), so a failed
+FETCH and the inline UBLK_IO_RES_OK of NEED_GET_DATA now do that. The CQE
+is the same.
 
- - clear ub->canceling only in ublk_reset_ch_dev()
- - when a queue gets ready, clear ubq->canceling only if ub->canceling
-   is not set, and check it under cancel_mutex
-
-The check and the marking are ordered by cancel_mutex:
-
-  check first:   queue cleared -> start_cancel() marks it again
-                 -> command taken
-  cancel first:  check sees ub->canceling -> queue stays canceling
-
-While ub->canceling is set, no queue clears its flag. So the "all
-queues marked" shortcut in ublk_start_cancel() is correct again.
-
-UBLK_F_BATCH_IO follows the same rule. It does not dispatch through
-io->cmd, so it never hit the oops, but a round which lost a fetch
-command is treated the same way: it has to start over.
-
-Fixes: 728cbac5fe21 ("ublk: move device reset into ublk_ch_release()")
-Fixes: 3f3850785594 ("ublk: fix batch I/O recovery -ENODEV error")
-Cc: stable@vger.kernel.org # v6.17+: needs cancel_mutex
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Closes: https://lore.kernel.org/linux-block/20260928-b4-ublk-cancel-stop-v1-0-4a4360232a46@toxicpanda.com/
+Fixes: 216c8f5ef0f2 ("ublk: replace monitor with cancelable uring_cmd")
+Cc: stable@vger.kernel.org
 Tested-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20261011063555.1142277-2-tom.leiming@gmail.com
+Link: https://patch.msgid.link/20261011063555.1142277-3-tom.leiming@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 54 ++++++++++++++++++++++++----------------
- 1 file changed, 33 insertions(+), 21 deletions(-)
+ drivers/block/ublk_drv.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 66eb55e7162e5..38ed7d0e39793 100644
+index 38ed7d0e39793..6015fb2fb925f 100644
 --- a/drivers/block/ublk_drv.c
 +++ b/drivers/block/ublk_drv.c
-@@ -334,6 +334,11 @@ struct ublk_device {
- 	u16			nr_queue_ready;
- 	bool 			unprivileged_daemons;
- 	struct mutex cancel_mutex;
-+	/*
-+	 * A cancel started in this FETCH round. Set by ublk_set_canceling(),
-+	 * cleared only by ublk_reset_ch_dev() when a new round starts. While
-+	 * it is set, no queue clears its ->canceling.
-+	 */
- 	bool canceling;
- 	pid_t 	ublksrv_tgid;
- 	struct delayed_work	exit_work;
-@@ -2415,6 +2420,11 @@ static void ublk_reset_ch_dev(struct ublk_device *ub)
- 		spin_unlock(&ubq->cancel_lock);
+@@ -2800,7 +2800,8 @@ static void ublk_cancel_cmd(struct ublk_queue *ubq, u16 tag,
+ 	done = !!(io->flags & UBLK_IO_FLAG_CANCELED);
+ 	if (!done) {
+ 		io->flags |= UBLK_IO_FLAG_CANCELED;
+-		cmd = io->cmd;
++		/* dependency ordered against smp_wmb() in ublk_prep_cancel() */
++		cmd = READ_ONCE(io->cmd);
+ 		io->cmd = NULL;
+ 	}
+ 	spin_unlock(&ubq->cancel_lock);
+@@ -3163,6 +3164,12 @@ ublk_fill_io_cmd(struct ublk_io *io, struct io_uring_cmd *cmd)
+ 	return req;
+ }
+ 
++/*
++ * Call before ublk_fill_io_cmd() publishes @cmd in io->cmd: a control-path
++ * cancel may complete any command found there, and io_uring_cmd_done() only
++ * takes it off the cancelable list if it is marked already. The handlers
++ * hold uring_lock, so marking takes no lock.
++ */
+ static inline void ublk_prep_cancel(struct io_uring_cmd *cmd,
+ 				    unsigned int issue_flags,
+ 				    struct ublk_queue *ubq, u16 tag)
+@@ -3176,6 +3183,8 @@ static inline void ublk_prep_cancel(struct io_uring_cmd *cmd,
+ 	pdu->ubq = ubq;
+ 	pdu->tag = tag;
+ 	io_uring_cmd_mark_cancelable(cmd, issue_flags);
++	/* pairs with the cancel loading cmd from io->cmd, then cmd->flags */
++	smp_wmb();
+ }
+ 
+ static void ublk_io_release(void *priv)
+@@ -3423,11 +3432,11 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 		ret = ublk_check_fetch_buf(ub, addr);
+ 		if (ret)
+ 			goto out;
++		/* before ublk_fetch() publishes io->cmd, see ublk_prep_cancel() */
++		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
+ 		ret = ublk_fetch(cmd, ub, io, addr, q_id);
+ 		if (ret)
+-			goto out;
+-
+-		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
++			goto out_done;
+ 		return -EIOCBQUEUED;
  	}
  
-+	/* a new FETCH round starts, the queues stay canceling until ready */
-+	mutex_lock(&ub->cancel_mutex);
-+	ub->canceling = false;
-+	mutex_unlock(&ub->cancel_mutex);
-+
- 	/* set to NULL, otherwise new tasks cannot mmap io_cmd_buf */
- 	ub->mm = NULL;
- 	ub->nr_queue_ready = 0;
-@@ -3024,11 +3034,19 @@ static void ublk_reset_io_flags(struct ublk_queue *ubq, struct ublk_io *io)
- }
- 
- /* reset per-queue io flags */
--static void ublk_queue_reset_io_flags(struct ublk_queue *ubq)
-+static void ublk_queue_reset_io_flags(struct ublk_device *ub,
-+				      struct ublk_queue *ubq)
- {
--	spin_lock(&ubq->cancel_lock);
--	ubq->canceling = false;
--	spin_unlock(&ubq->cancel_lock);
-+	/*
-+	 * A cancel in this FETCH round took a command which still counts as
-+	 * ready, so the queue has to stay canceling. ub->canceling is set
-+	 * under cancel_mutex before any command is taken: either we see it
-+	 * here, or the cancel marks this queue again later.
-+	 */
-+	mutex_lock(&ub->cancel_mutex);
-+	if (!ub->canceling)
-+		ubq->canceling = false;
-+	mutex_unlock(&ub->cancel_mutex);
- 	ubq->fail_io = false;
- 	ubq->force_abort = false;
- }
-@@ -3051,24 +3069,17 @@ static void ublk_mark_io_ready(struct ublk_device *ub, u16 q_id,
- 		ub->nr_queue_ready++;
- 
- 		/*
--		 * Reset queue flags as soon as this queue is ready.
--		 * This clears the canceling flag, allowing batch FETCH commands
--		 * to succeed during recovery without waiting for all queues.
-+		 * Reset queue flags as soon as this queue is ready. Unless
-+		 * this round saw a cancel, this clears the canceling flag,
-+		 * allowing batch FETCH commands to succeed during recovery
-+		 * without waiting for all queues.
+@@ -3471,6 +3480,7 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 		if (ret)
+ 			goto out;
+ 		io->res = result;
++		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
+ 		req = ublk_fill_io_cmd(io, cmd);
+ 		ublk_apply_io_buf(ub, io, cmd, addr, &auto_buf, &buf_idx);
+ 		if (buf_idx != UBLK_INVALID_BUF_IDX)
+@@ -3489,19 +3499,24 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 		 * uring_cmd active first and prepare for handling new requeued
+ 		 * request
  		 */
--		ublk_queue_reset_io_flags(ubq);
-+		ublk_queue_reset_io_flags(ub, ubq);
++		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
+ 		req = ublk_fill_io_cmd(io, cmd);
+ 		io->buf.addr = addr;
+ 		if (likely(ublk_get_data(ubq, io, req))) {
+ 			__ublk_prep_compl_io_cmd(io, req);
+-			return UBLK_IO_RES_OK;
++			ret = UBLK_IO_RES_OK;
++			goto out_done;
+ 		}
+ 		break;
+ 	default:
+ 		goto out;
  	}
+-	ublk_prep_cancel(cmd, issue_flags, ubq, tag);
+ 	return -EIOCBQUEUED;
  
--	/* Check if all queues are ready */
--	if (ublk_dev_ready(ub)) {
--		/*
--		 * All queues ready - clear device-level canceling flag
--		 * and wake ublk_dev_ready() waiters.
--		 */
--		mutex_lock(&ub->cancel_mutex);
--		ub->canceling = false;
--		mutex_unlock(&ub->cancel_mutex);
-+	/* All queues ready - wake ublk_dev_ready() waiters */
-+	if (ublk_dev_ready(ub))
- 		wake_up_var(&ub->nr_queue_ready);
--	}
- }
- 
- static inline int ublk_check_cmd_op(u32 cmd_op)
-@@ -4433,9 +4444,10 @@ static bool ublk_validate_user_pid(struct ublk_device *ub, pid_t ublksrv_pid)
- 
- /*
-  * Wait until all queues have fetched their I/O commands, and return with
-- * ub->mutex held and readiness guaranteed: then every queue's ->canceling
-- * is cleared. Ready may regress between wakeup and mutex_lock() (F_BATCH
-- * UNPREP, daemon death), so re-check it under the mutex and wait again.
-+ * ub->mutex held and readiness guaranteed. The queues stay canceling if
-+ * this round saw a cancel, see ublk_queue_reset_io_flags(). Ready may
-+ * regress between wakeup and mutex_lock() (F_BATCH UNPREP, daemon death),
-+ * so re-check it under the mutex and wait again.
-  */
- static int ublk_wait_dev_ready_and_lock(struct ublk_device *ub)
- {
++ out_done:
++	/* marked cancelable: complete through io_uring_cmd_done() */
++	io_uring_cmd_done(cmd, ret, issue_flags);
++	return -EIOCBQUEUED;
+  out:
+ 	pr_devel("%s: complete: cmd op %d, tag %d ret %x io_flags %x\n",
+ 			__func__, cmd_op, tag, ret, io ? io->flags : 0);
 -- 
 2.53.0
 
