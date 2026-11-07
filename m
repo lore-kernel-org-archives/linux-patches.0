@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062761;
-	b=4NrkL6agGpRz+c9NQ8E/3h2LWn6k/pjlB4jb2Hyn44H5BGuMXKB6M0IT62oJNpmaoJbd
-	 Hq4VpbuXLgBqFiGj5Fd3nd8/+j9MKWll3c6/sCvLvYXDXVTxwU4hrgbVH3KRoa+uRgObn
-	 ROiLbwcLQy9s0At3b6ZlNsqCQ9Hnr1GpZDuCwhhlkIU+xFKXYRM/iM48ydbbFKEpscDzM
-	 OISIJEfANCjRPSfSLQTH3tgzp+tz6Ej7qgQegp0prUSmosnOMffah2R1Cn9l+s3YX3ZlS
-	 HDljg5wCLIkUWwv+SrW/HsNnm8d0WFmL8Jtly6hRaVkopMFYLL/Igj1xewVoFFjweOA==
+	t=1794062762;
+	b=W+rHFY9ScqBdvw4CbphiaxILfkORafKICpFKcW3La3cOK5zoZx3o7VV8MWbSvXD9g/KW
+	 YaAtvwaPBXNRdpZ5wUegtTpjcrLDVgAhGXqTfpGWuZHQCY06lggYu+jcDBEKtMPQ+7mLZ
+	 gnvsINz+pTWRz2frSa0L1Z4uJR+Mo6k4ny7MevU5hvQAJnFbb8TeDK/6o2/mfy+3UjB3N
+	 zbpTCWblC+7dXJ6JQ72Sif8TJ/hk1+W6QEnlz5V/V6XexvMKELLDEaCNMXqOhTH5p3/nr
+	 WePac6RhnRJuqmpClg1eCBbnMTtc7KI+BZZrZLYXOCQayTM5OAUzOGTuSdoDKZeHo5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062762;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lIRd2byUhxkWKiwME0rKq4Nnc+YmG/1dwVY07tqT0oM=;
-	b=J3EtAlF+B3af3dTRPDUiTzkUA2LzMjZKP97QaJzjpMFP6KGh4Lh1R1D6VgPGyIr7ifub
-	 sdTc2fniGxeKgDXYKtXpDCS49rrNxyhgsrrbOplhIloXWcGfVSy22dEgnMsR2dQJbLXXf
-	 w6ZbqhY2/0m38UYCCqvkn74ff3tFcrM3OSnW8bJOEx7LBtBJ/elHDE2yKiOtE/ZsGtK+I
-	 sd425rn+bt65mnBnCZPMpnezu3GzCM2fjZB4N8MOOkAi9A4K+RmJKESO7SVUoqPxtXd0o
-	 9LaJ7rZaMsa/kZL3lHmkb95Yh5eXi0KeE5LSteeqdxNSJ+fFL/1+4xRKs6PnODGfs4w==
+	bh=Lz+mqYqccLczJ68wrWRauG0OabmCs1ZKPiq17+UBBlk=;
+	b=PRP8/jyOazbDDXir5THgU3XEloweegPRwifmMLpvcyGPa4hZ0x6zNNrDMdnOFyLUfus1
+	 lpIcjBQ6xLnfsWHesDtzMOZFH1ykf4eWUTTzNHlgVgUd4X8xdHVSVI2qLxKsNUO0eaaao
+	 Q9AmnUrdTk8CkD4Xkw2Y9LCNAz7oRcrTJuNPdwpmLlGXi8WSHu1AnCrPKrWiq+S+yIiJZ
+	 wzRiZUL4zvrBmXy5NqlnLkybnoGjnMXuVhDA5csZuvyP1pPor0QCNNO8TGKJ7B7EAjQgr
+	 NQD4l5zsbwvN+yW7GODe78nXabl98wScNWW8P7u09kW0bk3G+vmmkTMRuqHpkgexD1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rYcIRIMJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nv+Wxxq7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFA9606A32C;
-	Sat,  7 Nov 2026 14:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E714606A32C;
+	Sat,  7 Nov 2026 14:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rYcIRIMJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5781F0089F;
-	Sat,  7 Nov 2026 14:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nv+Wxxq7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EE41F008A1;
+	Sat,  7 Nov 2026 14:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062760;
-	bh=lIRd2byUhxkWKiwME0rKq4Nnc+YmG/1dwVY07tqT0oM=;
+	s=korg; t=1794062762;
+	bh=Lz+mqYqccLczJ68wrWRauG0OabmCs1ZKPiq17+UBBlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rYcIRIMJX/s0GVWXtmzMVANSHw4jIwNKM5A5nn6DGS2ezCcXLSrQyG5FPzqFmUYqV
-	 d10smwloS9IUgGa4Wze5V9yF5AB/lFIG7INlTwe55uem0xzCGOENZCuVWYEEOngSlS
-	 likx4chqvMQSzR1d5jQW/H/ECJR2d4hzKlJRNtQo=
+	b=Nv+Wxxq75OB59JUtNHQzp2xQhxQASSlxHMoqnKsAAd19uWjuKeEZpS+FOJ7sF5OfS
+	 e6ENLgcK4yJVI0dNRkr0XwEGQS55ItrBYf2N2aX7HHAEv8G5GtoHtfcAeQVqwCxYIZ
+	 mi4qzR7QtD4tIoWckJPhGvNZNERfvMzQtnu4wUZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Daehyeon Ko <4ncienth@gmail.com>
-Subject: [PATCH 6.18 071/869] fs: make sure to call fsnotify_inoderemove() only once when inode is dead
-Date: Sat,  7 Nov 2026 08:45:53 -0500
-Message-ID: <20261107134854.962638087@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Judith Mendez <jm@ti.com>,
+	Nishanth Menon <nm@ti.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 072/869] arm64: dts: ti: k3-am62-verdin: Set MMC clock pins as OUTPUT
+Date: Sat,  7 Nov 2026 08:45:54 -0500
+Message-ID: <20261107134855.043751016@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,103 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 669bb5af15d41a21359d00a441490f87a88eb52a ]
+[ Upstream commit 0ddd661c19ec1465e1f2c204fa9b2488acfabf4b ]
 
-Daehyeon reported a race wherein fsnotify_removeinode() can be called
-when inode still has a live alias.  This can lead to several undesired
-outcomes such as crashes in fsnotify code or avoidance of inode mark
-notifications.
+MMC clock pins must be configured as OUTPUT-only per TRM [0] with
+receiver disabled (RXACTIVE bit = 0). Change MMC CLK pins from
+PIN_INPUT to PIN_OUTPUT to match documentation.
 
-Check that inode is really "dead", meaning no nlink and no more aliases
-before calling fsnotify_inoderemove() for final cleanup of inode marks.
-Also do not allow open_by_handle() to add new aliases to a "dead" inode.
-
-Ideally, we'd call fsnotify_inoderemove() once last inode reference is
-dropped to make things simpler. Alas fsnotify inode marks currently hold
-inode references and thus this doesn't work. Once we teach fsnotify to
-avoid holding inode references, these games with dead inodes can go as
-well.
-
-Reported-and-tested-by: Daehyeon Ko <4ncienth@gmail.com>
-Closes: https://lore.kernel.org/linux-fsdevel/20260827045007.3831259-1-4ncienth@gmail.com/
-CC: stable@vger.kernel.org
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260902164924.1333135-2-jack@suse.cz
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://www.ti.com/lit/pdf/spruiv7 Rev. C: Table 12-246. MMCSDi I/O Signals [0]
+Fixes: 316b80246b16 ("arm64: dts: ti: add verdin am62")
+Cc: stable@vger.kernel.org
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Judith Mendez <jm@ti.com>
+Link: https://patch.msgid.link/20260813111238.56892-1-francesco@dolcini.it
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dcache.c | 27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/dcache.c b/fs/dcache.c
-index 5ee1c3d592c85..1b4c210338022 100644
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -442,6 +442,17 @@ static void dentry_free(struct dentry *dentry)
- 		call_rcu(&dentry->d_u.d_rcu, __d_free);
- }
- 
-+/*
-+ * If inode is unlinked and doesn't have any aliases (i.e., all fds pointing to
-+ * it are closed), it is pretty much dead. Except that file handle lookup could
-+ * still revive it which causes issues to fsnotify. So once inode reaches this
-+ * state we make sure to block creating any new aliases.
-+ */
-+static bool inode_notify_dead(struct inode *inode)
-+{
-+	return !inode->i_nlink && hlist_empty(&inode->i_dentry);
-+}
-+
- /*
-  * Release the dentry's inode, using the filesystem
-  * d_iput() operation if defined.
-@@ -451,14 +462,16 @@ static void dentry_unlink_inode(struct dentry * dentry)
- 	__releases(dentry->d_inode->i_lock)
- {
- 	struct inode *inode = dentry->d_inode;
-+	bool notify_dead;
- 
- 	raw_write_seqcount_begin(&dentry->d_seq);
- 	__d_clear_type_and_inode(dentry);
- 	hlist_del_init(&dentry->d_u.d_alias);
- 	raw_write_seqcount_end(&dentry->d_seq);
-+	notify_dead = inode_notify_dead(inode);
- 	spin_unlock(&dentry->d_lock);
- 	spin_unlock(&inode->i_lock);
--	if (!inode->i_nlink)
-+	if (notify_dead)
- 		fsnotify_inoderemove(inode);
- 	if (dentry->d_op && dentry->d_op->d_iput)
- 		dentry->d_op->d_iput(dentry, inode);
-@@ -2022,7 +2035,12 @@ static struct dentry *__d_obtain_alias(struct inode *inode, bool disconnected)
- 
- 	sb = inode->i_sb;
- 
--	res = d_find_any_alias(inode); /* existing alias? */
-+	spin_lock(&inode->i_lock);
-+	if (!inode_notify_dead(inode))
-+		res = __d_find_any_alias(inode);	/* existing alias? */
-+	else
-+		res = ERR_PTR(-ESTALE);
-+	spin_unlock(&inode->i_lock);
- 	if (res)
- 		goto out;
- 
-@@ -2034,7 +2052,10 @@ static struct dentry *__d_obtain_alias(struct inode *inode, bool disconnected)
- 
- 	security_d_instantiate(new, inode);
- 	spin_lock(&inode->i_lock);
--	res = __d_find_any_alias(inode); /* recheck under lock */
-+	if (!inode_notify_dead(inode))
-+		res = __d_find_any_alias(inode);	/* recheck under lock */
-+	else
-+		res = ERR_PTR(-ESTALE);
- 	if (likely(!res)) { /* still no alias, attach a disconnected dentry */
- 		unsigned add_flags = d_flags_for_inode(inode);
- 
+diff --git a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
+index 059ec492a973e..5e8830fffb949 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
+@@ -573,7 +573,7 @@ AM62X_IOPAD(0x15c, PIN_INPUT, 0)  /* (AB22) MDIO0_MDIO */ /* ETH_1_MDIO, SODIMM
+ 	pinctrl_sdhci0: main-mmc0-default-pins {
+ 		pinctrl-single,pins = <
+ 			AM62X_IOPAD(0x220, PIN_INPUT,        0) /*  (Y3) MMC0_CMD  */
+-			AM62X_IOPAD(0x218, PIN_INPUT,        0) /* (AB1) MMC0_CLK  */
++			AM62X_IOPAD(0x218, PIN_OUTPUT,       0) /* (AB1) MMC0_CLK  */
+ 			AM62X_IOPAD(0x214, PIN_INPUT,        0) /* (AA2) MMC0_DAT0 */
+ 			AM62X_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
+ 			AM62X_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
+@@ -589,7 +589,7 @@ AM62X_IOPAD(0x1f8, PIN_INPUT_PULLUP, 0) /* (AC2) MMC0_DAT7 */
+ 	pinctrl_sdhci1: main-mmc1-default-pins {
+ 		pinctrl-single,pins = <
+ 			AM62X_IOPAD(0x23c, PIN_INPUT,        0) /* (A21) MMC1_CMD  */ /* SODIMM 74 */
+-			AM62X_IOPAD(0x234, PIN_INPUT,        0) /* (B22) MMC1_CLK  */ /* SODIMM 78 */
++			AM62X_IOPAD(0x234, PIN_OUTPUT,       0) /* (B22) MMC1_CLK  */ /* SODIMM 78 */
+ 			AM62X_IOPAD(0x230, PIN_INPUT,        0) /* (A22) MMC1_DAT0 */ /* SODIMM 80 */
+ 			AM62X_IOPAD(0x22c, PIN_INPUT,        0) /* (B21) MMC1_DAT1 */ /* SODIMM 82 */
+ 			AM62X_IOPAD(0x228, PIN_INPUT,        0) /* (C21) MMC1_DAT2 */ /* SODIMM 70 */
+@@ -601,7 +601,7 @@ AM62X_IOPAD(0x224, PIN_INPUT,        0) /* (D22) MMC1_DAT3 */ /* SODIMM 72 */
+ 	pinctrl_sdhci2: main-mmc2-default-pins {
+ 		pinctrl-single,pins = <
+ 			AM62X_IOPAD(0x120, PIN_INPUT, 0) /* (C24) MMC2_CMD   */ /* WiFi_SDIO_CMD   */
+-			AM62X_IOPAD(0x118, PIN_INPUT, 0) /* (D25) MMC2_CLK   */ /* WiFi_SDIO_CLK   */
++			AM62X_IOPAD(0x118, PIN_OUTPUT,0) /* (D25) MMC2_CLK   */ /* WiFi_SDIO_CLK   */
+ 			AM62X_IOPAD(0x114, PIN_INPUT, 0) /* (B24) MMC2_DAT0  */ /* WiFi_SDIO_DATA0 */
+ 			AM62X_IOPAD(0x110, PIN_INPUT, 0) /* (C25) MMC2_DAT1  */ /* WiFi_SDIO_DATA1 */
+ 			AM62X_IOPAD(0x10c, PIN_INPUT, 0) /* (E23) MMC2_DAT2  */ /* WiFi_SDIO_DATA2 */
 -- 
 2.53.0
 
