@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065501;
-	b=f1jLeuI6lrMeSKIU0awWohla6qYh0FEgNELBtcikgWZRBirJQeYeXRL5Z3lc1AzSvAir
-	 /KNZn97ffoxG3jau+HPF0qNyqdDbQCHtiTjHtAxHJP9t0CA8J5jBsbWdt/pNGJOVxDF4U
-	 J32UJMLjAHRdloo1wETsM2JFvMVYx3UAbf/JIixPM6DxtGmx9uE707lb9CwvBMtE//qxp
-	 7HH0/lsaAm8ODa0IEm5UdTO6SlykPwtNT4mbtiK0uFQP5NkfF1QgW4UERh1hNp3HnHHUs
-	 tYirN48axwLit5/RsZmbo0BaLK+I+Ar2xlBCR6H/R7HNcC4SF0ePMC36G/Ofr2uuzrg==
+	t=1794065502;
+	b=BJTMoQuxQyAaRap+AV5SYIvdUWa7Cz1gJGg4ByneM+bMXSF3k59v/zEMTiGm+veRXkpI
+	 rfUBBsUuOgoUEmk7KjlesMvZwdEN4PJ8zvGwzzgyu/lL/bMOlGDWzeNn1A29RrYQRJOv+
+	 CeZmOQY6cXyGwyym6Ubgeqimnfc5/nbG8Lnsy25JosYDjBXEFuiLYWy/DpaT6TZLbCztH
+	 mWQg3ZcDsxV2jq8Byu9P064eLlxVC52y7k8G804v2JIh/BzPoDHbQpni2kFx5qHF5UWym
+	 TGyPBhcWTNvDyRxi0bs8iqrPZsSlvU1lHLsjKcKboJd4PUy/Pbxuer564fW8AV+6sTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065501;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=RBXagl3LBuI2aUocqmzt3y0Hn56eqb/9pKz4aXBQ8cw=;
-	b=zQrj57KIJ+kgaB2Neias4mUoh4RUDPZsGPim6WyIQBJtp6aFH1+Fk2XgpwUuLD1/8G/J
-	 wVcoudalM5TqMv/kzS/wR/CQu6UD/cWRwxA3EedIbS6iBj1U5b7km5gPfsHZfgpfdBqXy
-	 YLqXGDLl+FA5/9iHGN7BqaNJDr3u26dWV1RqEvAiaTaJK7Sk84fGTJPQnVOPGuYOv4L5c
-	 F1eqZwblk4AOgSASnOlOPpzMkbpG7IoweXpF2053ch/QUyGkGt7xXK24J8W4oNMQfLVDq
-	 2Ht9zpGGkUI5KlGe9E9DDhhDNdk/VKDoe3+7jB6XQZKw/Z+xJaOZaR0uaDU0xkIMRJA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cKL1hf9HkrBZZEewleruNvYjXZWV+a+0qmU6oaMb1WY=;
+	b=bSUtnLQft76j+g2j8nyMLNJbtm3rF1YusIwAUumBjSekU7h2z3waz2vevj1j5RCMxNXo
+	 8l32KbSCdpITylhsZwsSaxfZtGCJcomkd0supgix5TvC2SFQBL67a1UymPhdkP04MCKKj
+	 QgJr9L9JUDQ7/LyjmLz6xvY//YP17gFEWt15SPNCVkVLCQothUUFhooHjsJZO9yjWzgh/
+	 mNGTp85aVOWq47BXwc6LF0uhQDwNTIvl75r/1vrrXIgOgbdBSqsLOZ5x+PElzalartOrT
+	 kWSjr4GOh35ps74V/Cum6KkQWu3cINJlVN4NIAA6ikr7T1o89gfZB7+hDpBZk2Udyqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjR5mXNC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vugo3YbG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E71606D803;
-	Sat,  7 Nov 2026 15:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1FC606D803;
+	Sat,  7 Nov 2026 15:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjR5mXNC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A732F1F0089F;
-	Sat,  7 Nov 2026 15:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vugo3YbG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72011F0089F;
+	Sat,  7 Nov 2026 15:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065500;
-	bh=RBXagl3LBuI2aUocqmzt3y0Hn56eqb/9pKz4aXBQ8cw=;
+	s=korg; t=1794065502;
+	bh=cKL1hf9HkrBZZEewleruNvYjXZWV+a+0qmU6oaMb1WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjR5mXNC0ZfKzo3yea/GvBOVfHP0UiLluhTrsVPNMVuOAGaW/nXkb2hqEFZT9su5l
-	 3eSOyEBHbTK7POSx4TzzUtWoRdjx5W/R6OvjjqBNesBCbfihV+303+Lh4wd1c974Nu
-	 6u3jz9BJq+QAnA2Juz8m8lQxJWfjZCAxvNaJZIOc=
+	b=vugo3YbGQ+8ZgYQtYu2RRnZ1BONCu/4dwP6/MKdzpLCzT4MjEEiPCnjx7F0ppJRKG
+	 1VcVzNmSXPBSBPbRIDWKawQPSRFd3f4moK5WssGNj8cAnYvuC3VNWORKU3k7/2seTW
+	 VaSl1oHCGNyPj5kq15V0TSz6GeMigsWeEcJrFkec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1188/1257] drm/amdgpu: drop the gang leader reference when freeing gang jobs
-Date: Sat,  7 Nov 2026 08:58:04 -0500
-Message-ID: <20261107135011.981926600@linuxfoundation.org>
+Subject: [PATCH 7.3 1189/1257] drm/amdkfd: evict the queues only once for CRIU PROCESS_INFO
+Date: Sat,  7 Nov 2026 08:58:05 -0500
+Message-ID: <20261107135012.007403080@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,7 +63,6 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -72,94 +71,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit c1584e10a7deb655438f21867b2b7a356a9aaf9f ]
+[ Upstream commit 8f3ecda0ab42fb5ba7310fe848013d3eff31b416 ]
 
-Every job of a gang except the leader holds a reference to the
-scheduled fence of the leader in job->gang_submit. Only
-amdgpu_job_free(), used for jobs which never ran, drops it, so for every
-gang submission which completes the scheduler fence of the leader, and
-with it its hardware fence, is leaked. amdgpu_job_free() in turn checks
-for the leader only after drm_sched_job_cleanup() cleared the scheduler
-fence, so a leader freed there drops a reference it never took.
+criu_process_info() evicts the queues of the process on every call, and
+each kfd_process_evict_queues() increments qpd->evicted, but CRIU UNPAUSE
+restores them only once. After PROCESS_INFO twice and UNPAUSE the queues
+stay evicted for good. On navi31, a barrier-AND packet on an HSA queue
+completes after PROCESS_INFO + UNPAUSE, but times out after
+PROCESS_INFO, PROCESS_INFO, UNPAUSE.
 
-On navi31, 100 submissions of a GFX + COMPUTE gang grow the slab cache
-drm_sched_fence is merged into by 60 to 180 objects each time, while
-100 GFX only submissions don't.
+The error path has a related problem: when kfd_process_evict_queues()
+itself fails, it has already rolled back its partial eviction, and the
+kfd_process_restore_queues() in the error path restores once more.
 
-Use amdgpu_job_free() for the jobs the scheduler frees too, and check
-for the gang leader there before drm_sched_job_cleanup() clears the
-scheduler fence. As the scheduler clears the entity of the jobs it
-picked up, check for the scheduler fence instead to tell whether the job
-needs cleaning up.
+Evict only when the queues are not paused yet, and on errors only undo
+an eviction done by this call. The barrier now completes after any
+number of PROCESS_INFO calls followed by UNPAUSE.
 
-Keep freeing the remaining IBs with amdgpu_job_free_resources() after
-drm_sched_job_cleanup(), so that it frees them with the hardware fence or
-right away and not with the scheduler fence, which nobody signals for
-jobs aborted after drm_sched_job_arm(), like a CS returning -EAGAIN.
-
-v2: unify amdgpu_job_free() and amdgpu_job_free_cb() (Christian), don't
-    free the remaining IBs with the scheduler fence
-v3: drop the comments (Christian)
-v4: free the IBs with amdgpu_job_free_resources() again (Christian)
-
-Fixes: 68ce8b242242 ("drm/amdgpu: add gang submit backend v2")
-Fixes: f7d66fb2ea43 ("drm/amdgpu: cleanup scheduler job initialization v2")
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Fixes: cd9f79103003 ("drm/amdkfd: CRIU Implement KFD unpause operation")
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit df4d6d404d44bbc8fc850bc7f9f136a25dabf180)
+(cherry picked from commit 4d79c9e3c32c677fcadf5ca10ab81ee0a4b81f99)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.c | 24 +++++-------------------
- 1 file changed, 5 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-index 1dedaf1698dc4..92323d0bdb4ab 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-@@ -313,22 +313,7 @@ void amdgpu_job_free_resources(struct amdgpu_job *job)
- 
- static void amdgpu_job_free_cb(struct drm_sched_job *s_job)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index cad60ccdb2166..d65ae53c81a5c 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -2876,6 +2876,7 @@ static int criu_process_info(struct file *filep,
+ 				struct kfd_process *p,
+ 				struct kfd_ioctl_criu_args *args)
  {
--	struct amdgpu_job *job = to_amdgpu_job(s_job);
--
--	drm_sched_job_cleanup(s_job);
--
--	amdgpu_sync_free(&job->explicit_sync);
--
--	if (dma_fence_was_initialized(&job->hw_fence->base))
--		dma_fence_put(&job->hw_fence->base);
--	else
--		kfree(job->hw_fence);
--	if (dma_fence_was_initialized(&job->hw_vm_fence->base))
--		dma_fence_put(&job->hw_vm_fence->base);
--	else
--		kfree(job->hw_vm_fence);
--
--	kfree(job);
-+	amdgpu_job_free(to_amdgpu_job(s_job));
- }
++	bool paused_here = false;
+ 	int ret = 0;
  
- void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
-@@ -349,13 +334,14 @@ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
+ 	mutex_lock(&p->mutex);
+@@ -2886,11 +2887,15 @@ static int criu_process_info(struct file *filep,
+ 		goto err_unlock;
+ 	}
  
- void amdgpu_job_free(struct amdgpu_job *job)
- {
--	if (job->base.entity)
-+	if (job->gang_submit != &job->base.s_fence->scheduled)
-+		dma_fence_put(job->gang_submit);
-+
-+	if (job->base.s_fence)
- 		drm_sched_job_cleanup(&job->base);
+-	ret = kfd_process_evict_queues(p, KFD_QUEUE_EVICTION_CRIU_CHECKPOINT);
+-	if (ret)
+-		goto err_unlock;
++	/* UNPAUSE restores the queues once, so evict them only once */
++	if (!p->queues_paused) {
++		ret = kfd_process_evict_queues(p, KFD_QUEUE_EVICTION_CRIU_CHECKPOINT);
++		if (ret)
++			goto err_unlock;
  
- 	amdgpu_job_free_resources(job);
- 	amdgpu_sync_free(&job->explicit_sync);
--	if (job->gang_submit != &job->base.s_fence->scheduled)
--		dma_fence_put(job->gang_submit);
+-	p->queues_paused = true;
++		p->queues_paused = true;
++		paused_here = true;
++	}
  
- 	if (dma_fence_was_initialized(&job->hw_fence->base))
- 		dma_fence_put(&job->hw_fence->base);
+ 	args->pid = task_pid_nr_ns(p->lead_thread,
+ 					task_active_pid_ns(p->lead_thread));
+@@ -2905,7 +2910,7 @@ static int criu_process_info(struct file *filep,
+ 				args->priv_data_size);
+ 
+ err_unlock:
+-	if (ret) {
++	if (ret && paused_here) {
+ 		kfd_process_restore_queues(p);
+ 		p->queues_paused = false;
+ 	}
 -- 
 2.53.0
 
