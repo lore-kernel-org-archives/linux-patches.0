@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065309;
-	b=YBBKL/vJdZKle4n1lYFd3vkBPj+FvHWmfZ76aonCnA3/5I9gSvpVCIhWSU0AAXkwutP9
-	 9BqNKFUtxX+UGBt26yz3iqVP+g8emWYO3dlyvz4XjWYiC0p/kgeaPtz3xfunounbBNJud
-	 GzZ3rThHMPkemPFdaf7fdM2A7eYdXNnrlQiQcgX1zdti6YczBuH4QMLEAjdBKTHmu/Mj0
-	 GscGSV/PQZuDQwTdwfsNZ42EEw1lg7NzJk4n7JQmkoCzKZ73g33Cyb/Cl3g7Q0oDeLJsJ
-	 otEX8FCX9/n9CCi5EYQNp6o6VnLK68HgSmUfJLQOCS0VMBEcW6Q1o7UCSzCyZu6l49A==
+	t=1794065310;
+	b=w5IcJ1ID62Acul4aIO5RLbpo8rqkyTGLnCJCU/b+38uTubEyOD4f8KoFS928qAs87X1H
+	 keYDL2wp2Ig+dUn2sbQmlEvKs0LwcOIY7IGbNdzSTwdSBxF5bhSrq9PHthGEQpGupTRyW
+	 rixFoAWbj2QVQeh7yblznhQ4EIlGItZ2RAM1BSeVZDO63j8+mr4NBMHrSNX/Y9Ra680Rq
+	 VBu5QuvAnzToM0lDUNA1WCAIurn4e+KUUuUqn6TeM0IlWDWR/JP3L4LBDsyaQ+wbVQCpK
+	 VrACMI8skrAu3GDwsF4iv0cbxKSf1jRz9AeevrJqvG7q0/IQPYaiJZjTEQXQEdF/55g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065309;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065310;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AK7t2i2Y8PGEub++H1J59y0d6jybAww1OGJd1xiB9Po=;
-	b=LJSyA21HK1+4c9RJHR+Epdazz/S3Veh8dZ9dBE0E9ow9nmKLoFKm1vATSthPKM0o4t0h
-	 dM+HSGDY+WA9La0Egs4zQPnxBe34/41leXbXj68fYIQTLtCuKQcPu8u+PV5xMyhx5IPhe
-	 XkP0X6akJpB3zxAXotWQy+Lj8oL3XVEhTbC7xIM0BeLWmfN7945V+nqrLD4es1WLNejwd
-	 EVzL/vB8cKA3ruH7fWWmkhXA1aV2LW5icgmZbuJyvyB+kG1dIzk9VmuSvNNXi3ady0knC
-	 oW0oe5qcsCDrvTaZUYLscfKsiJ6ClnfHX7LuWZlk0d7LvhLB3Ieck8lJUEYhDbYdouw==
+	bh=OoOGh+btoPjftWghASfdb4FgKzB+uD5tt4ZQid7X4+A=;
+	b=dW+5hM/dqtYuYEq9AuU6CErBR7ZTcmnC4d8I+C3vbLZa+P/mZKapEEmXrnpHaGRsEU+z
+	 LsJ21Sv3dhFFjrOfW8157DKzp7Ye/Eoz68tJd6/udhwEKMY93MSQ7B7DmUX/4I9P6Paqt
+	 giS6HT2uy22InilYq6pAA1daWhB7IdXVtmobySpAN1wlpUcNISmkoSuYZOQI+csBJhLjO
+	 LzXXkdxy49j3xfEZENHCj9DoqDR0asOBX4NDqyu7erGglifQLL/fHGAjS+oAwhR65yIqj
+	 SaGWTATt6dhtOHE566aCVbNqWYjVrNj0TrB3X7V02r+uPLCOUUyihz1bF/cMj3MnGVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vnojc1Lt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwfKUw55;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD95606A32C;
-	Sat,  7 Nov 2026 15:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF75C606A32C;
+	Sat,  7 Nov 2026 15:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vnojc1Lt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577761F0089F;
-	Sat,  7 Nov 2026 15:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwfKUw55
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832631F0089F;
+	Sat,  7 Nov 2026 15:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065308;
-	bh=AK7t2i2Y8PGEub++H1J59y0d6jybAww1OGJd1xiB9Po=;
+	s=korg; t=1794065309;
+	bh=OoOGh+btoPjftWghASfdb4FgKzB+uD5tt4ZQid7X4+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vnojc1Ltl5LurqmS/nLD92A/D4TpRTheJXNWUoVay0JSLLC2RVwfodS/M/7TqjcFk
-	 jh/pcnFHJyOVmwIeWJ2q6dRCAdSG1EEaE+ZMLqW8caBbK6se8FHKMLz+LW9JkyICIo
-	 /fh4lQ5Jryai2V2XuCh+6YckZPNCoqVA0h6qwwS8=
+	b=XwfKUw558nQ5yVHZxH6elbMEaG1qwVbdALrQMQHW1Fohx27OG8mcdkjDCLu2sH8TG
+	 GHTdiBdEjL7JEOJiEGCkeglXFcPYZE4qd/dr39Iwtqy31pNGuclZck0N69aTefMZNv
+	 RFvWZRm7Q3Eyx0Erej2TQVj6fOH5i59lLSiHxqR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bean Huo <beanhuo@micron.com>,
 	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
 	Stanley Jhu <stanleyjhu@google.com>,
+	Bean Huo <beanhuo@micron.cmo>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1059/1257] scsi: ufs: core: Fix double completion in ufshcd_clear_lu_cmds()
-Date: Sat,  7 Nov 2026 08:55:55 -0500
-Message-ID: <20261107135008.534143463@linuxfoundation.org>
+Subject: [PATCH 7.3 1060/1257] scsi: ufs: core: Fix double release in ufshcd_eh_timed_out()
+Date: Sat,  7 Nov 2026 08:55:56 -0500
+Message-ID: <20261107135008.561436675@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -73,47 +73,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanley Jhu <stanleyjhu@google.com>
 
-[ Upstream commit 6b9c1f49971e4dfe8b8916f0527d30e97c15f234 ]
+[ Upstream commit 3a7e551ae4bcc53f271fc15ab8e930598e28dad8 ]
 
-In SDB mode, ufshcd_clear_lu_cmds() clears the request slot in the
-controller and completes the request, but leaves its bit set in
-hba->outstanding_reqs. ufshcd_poll() treats a request whose bit is set in
-hba->outstanding_reqs and clear in the doorbell register as finished, so
-the next ufshcd_poll() completes the same request again and unmaps its DMA
-buffers twice.
+In SDB mode, a command that times out during a power management operation
+can be released twice:
 
-Clear the bit with ufshcd_clear_outstanding_reqs() before completing the
-request, and complete it only if the bit was still set. If ufshcd_poll()
-has already completed the request, the bit is already clear and
-ufshcd_clear_lu_cmds() skips it.
+ 1. The command times out while its normal completion is running.
 
-Fixes: f18fac1e2b72 ("scsi: ufs: core: Rework ufshcd_eh_device_reset_handler()")
+ 2. The completion path clears BIT(rq->tag) in hba->outstanding_reqs and
+    releases the command. It has not called scsi_done() yet, so
+    SCMD_STATE_COMPLETE is still clear.
+
+ 3. ufshcd_eh_timed_out() recovers the link, sees SCMD_STATE_COMPLETE
+    clear, clears BIT(rq->tag) in hba->outstanding_reqs without checking
+    whether it was still set, and releases the same command a second time.
+
+Return SCSI_EH_DONE when ufshcd_clear_outstanding_reqs() returns 0, as
+another path has already claimed the command.
+
+Fixes: 01d5e237b339 ("scsi: ufs: core: Handle PM commands timeout before SCSI EH")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bean Huo <beanhuo@micron.com>
 Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
-Link: https://patch.msgid.link/20261022034443.3034432-4-stanleyjhu@google.com
+Reviewed-by: Bean Huo <beanhuo@micron.cmo>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20261022034443.3034432-5-stanleyjhu@google.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 25aeab7a73aa3..d6c082b096796 100644
+index d6c082b096796..974bdadcff28e 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -7936,7 +7936,8 @@ static bool ufshcd_clear_lu_cmds(struct request *req, void *priv)
- 		return true;
- 	}
+@@ -9606,12 +9606,10 @@ static enum scsi_timeout_action ufshcd_eh_timed_out(struct scsi_cmnd *scmd)
+ 	 */
+ 	if (!test_bit(SCMD_STATE_COMPLETE, &scmd->state)) {
+ 		if (!hba->mcq_enabled) {
+-			unsigned long flags;
+ 			struct request *rq = scsi_cmd_to_rq(scmd);
  
--	ufshcd_compl_one_cqe(hba, tag, NULL);
-+	if (ufshcd_clear_outstanding_reqs(hba, BIT(tag)))
-+		ufshcd_compl_one_cqe(hba, tag, NULL);
- 	return true;
- }
+-			spin_lock_irqsave(&hba->outstanding_lock, flags);
+-			__clear_bit(rq->tag, &hba->outstanding_reqs);
+-			spin_unlock_irqrestore(&hba->outstanding_lock, flags);
++			if (!ufshcd_clear_outstanding_reqs(hba, BIT(rq->tag)))
++				return SCSI_EH_DONE;
+ 		}
  
+ 		if (ufshcd_is_scsi_cmd(scmd)) {
 -- 
 2.53.0
 
