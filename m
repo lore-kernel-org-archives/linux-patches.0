@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062724;
-	b=2QATKQZ+VCnUXMy1t7uVHEd5z1Cmf6npe8rr4O+ZIFSRrdIq5wz9+dFjTB1Fxl06ukYz
-	 zi1Js8i01FmVo50xaj0zeccOft777QGoywyi1jwBB85Y3FF+Gnz9dPBcZcbdl25b4foSr
-	 Y1MRx/HMWt5l9OjE98OmKklKFiglpd8/StV9tHFVwkl1QCw9WG11SC60M7wg+hmKL01CZ
-	 16MtlpBUZ3iu138SQ/fJKPdmErGk0e6eHFuzvvk3mgL4jDsUbPMgKhVYSfWuhQ7nK9vqE
-	 uBZTpfXrDpTc6yCjpG2ryOuBSw1ed7rkBO+WVJpJY+zINxJ+1o5ANM8q94TvqrCXJLQ==
+	t=1794062725;
+	b=g0tOAPhWTbJh7o3Se62YpHQ2RANgFElPZIa6cC0rKw9OMtcKDKgvmUz2ST2aoiuaiM9j
+	 y3t8RE4eMGCdsjyW19NlKr6+HQkXyBRWxBAKhIc+6rXJJ6ny5O22++Km5M3BDg3VufpTy
+	 /xOygzwxA7STGr9Nncej0QhmaBLXZYT3krFzV1j5OqU8OXBHWzwrm32M3EMCJAv0hzoIJ
+	 +MLuErIX1UdzmJbnA9mos3hr0t2r155FyGeTbXaIO88ATm/picHkBARaKtmCxTpV27mgm
+	 IHdFmNk/1ZPmK+XaMaFNV+DuKkdK0N0cantqw+V9p6zenPnAKHyveQnO9i1jts1WLCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062724;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PZEO4f3bTnGDXHmo+rcyPROdAD9m3ZuZKfb3H6gm5Bo=;
-	b=DOpeoj5YxOYPDWTwh0zkbS3Q0HMJpeyBeBMPijuYogb7WBx4vb0REVGn95u5D/yqMl99
-	 a9jyqv1yA8hv+lvFMZFJjaLQGYvaEDZPCVNtKNO6zt0m+HSV7qlRDQqq9oRapuX1Ep+95
-	 L35GKyL6//+xLYu+oNn3tugBwhDDkVdkOrv8Z4EK3DuZ5/7vXMSk3S90w40O2HiGzTWNQ
-	 3TqN1uHqJZQPuPaxAOu5LVSLmL14E55ohumZJ6wc2mqAGej8xBgdKU8A+1dCloDa4ZMM5
-	 61ftWYGDZUpOIO51mKzwzyBmum0nRoe7OwjldQb0+Uoa6MnGOPwn8NrERsP8WBcsn6w==
+	bh=SJqyqhDJEzR6bPC1LsdC6JQUaS5/Y3Y5IbqE6xMNmj8=;
+	b=ZQyyHGfxuOvB4FAaBCtTm3o81tcLw9FcYxAM9D0i775Akig7pi3tAyGfrXy+nz8H/bjd
+	 GF1QtH31QONytRtqibfTECi5Ss1SghAFyAfyu9OhTzsisVSLerBV9qeyQfAFFDW0w/X18
+	 7/28uq8xZTYCNX1pFTBAbJv9Ksj4AOyIcQFhQmjI1tOLVivVzHqg9j9o9mml3LWdGcy2G
+	 kzlLCM0xRY09rgal3Ey8hQUtndeINtNTmqNbJZ6nd6mOaKc3GQg3C8nqzIsm+Y3L9K9wk
+	 8EYXOCEJjPaadLMu/+/Ahl34R4bUjCLaJY3J4DeRsgUsRYYnZd55ePY2TCqZ4NJXZ1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRcQYUgu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQ0IrVGI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C62606A326;
-	Sat,  7 Nov 2026 14:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A98606A326;
+	Sat,  7 Nov 2026 14:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRcQYUgu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075F41F0089F;
-	Sat,  7 Nov 2026 14:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AQ0IrVGI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4310A1F0089F;
+	Sat,  7 Nov 2026 14:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062724;
-	bh=PZEO4f3bTnGDXHmo+rcyPROdAD9m3ZuZKfb3H6gm5Bo=;
+	s=korg; t=1794062725;
+	bh=SJqyqhDJEzR6bPC1LsdC6JQUaS5/Y3Y5IbqE6xMNmj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DRcQYUgubPeiyWhObVyAds7g8rnpn0ik79HpxHxxtFfIS/8NT4kBgNfsBb7Br3njS
-	 z4iImN8UeNIR2C/uYFZL2lICb4iOSsDS34sYgfygBd3QCherDyLM4D18enX68UPlmn
-	 pVeiC1zv7a2ZYkTWREpDOtwID5DrOYAofMktWMUE=
+	b=AQ0IrVGIHif3cbv1ITlE/T4WkNupn2FKn2m9go0xq+ho68Je96wHFWpIPs9UHn7ie
+	 LkTJjvtKnt7cJAeNM58t9WtN9x3BbNe/stMXbANulMn32S1bSoYjjgcRDTsM0sdouy
+	 OgfEKm67xd6Y1SKkRpabYx2WSYUd9l7HWqxpPMrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+d17c2bc750a9cbbb@bugs.sh,
-	Weiming Shi <bestswngs@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 012/869] virtio_net: atomically disable rx mode work
-Date: Sat,  7 Nov 2026 08:44:54 -0500
-Message-ID: <20261107134852.426692147@linuxfoundation.org>
+Subject: [PATCH 6.18 013/869] pps: generators: dont use the drivers info after unregister
+Date: Sat,  7 Nov 2026 08:44:55 -0500
+Message-ID: <20261107134852.453475383@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,156 +68,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit 1234707482053f1d1ac7c5756207d2c29057974c ]
+[ Upstream commit 4e8063cae337cb7328e6856235cf4de5d165516e ]
 
-virtio-net uses a boolean to gate rx_mode_work during device teardown.
-The flag is changed under RTNL, but ndo_set_rx_mode checks it under the
-address-list lock. A callback can therefore pass the check and enqueue work
-after teardown has flushed it. The work is also enabled before late
-probe operations that can fail, allowing probe unwind to free the netdev
-with work still queued.
+A file that was opened before pps_gen_unregister_source() keeps
+pps_gen, and with it the pointer to the driver's pps_gen_source_info.
+PPS_GEN_SETENABLE and PPS_GEN_USESYSTEMCLOCK keep using that pointer
+after the driver has gone:
 
-KASAN reports the worker using a virtqueue that probe unwind already freed:
+ - pps_gen_tio allocates its info with devm_kzalloc(), so after an
+   unbind both ioctls read freed memory, and SETENABLE calls the
+   driver's enable() with its freed private data.
 
-  BUG: KASAN: slab-use-after-free in virtqueue_add_split
-  Workqueue: events virtnet_rx_mode_work
-  Call Trace:
-   virtqueue_add_split (drivers/virtio/virtio_ring.c:706)
-   virtqueue_add_sgs (drivers/virtio/virtio_ring.c:2839)
-   virtnet_send_command_reply (drivers/net/virtio_net.c:3565)
-   virtnet_rx_mode_work (drivers/net/virtio_net.c:3833)
-   process_one_work (kernel/workqueue.c:3322)
-   worker_thread (kernel/workqueue.c:3405)
-  Freed by task 119:
-   kfree (mm/slub.c:6625)
-   vp_del_vq.isra.0 (drivers/virtio/virtio_pci_common.c:259)
-   vp_del_vqs (drivers/virtio/virtio_pci_common.c:285)
-   virtnet_probe (drivers/net/virtio_net.c:7129)
+ - pps_gen-dummy does not set info->owner, so it can be unloaded while
+   the file is open, and the ioctls then read the unloaded module's
+   data and call its code.
 
-Use the workqueue disable mechanism to atomically reject new queue attempts
-and drain running work. Keep work disabled until probe succeeds or restore
-has reattached the netdev, then enable it and replay receive-mode state for
-a running interface. Disable it before resource teardown in freeze and
-remove.
+TIO can't probe in a VM, as it needs ART. A test driver that registers
+its info in devm memory like TIO does, unbound while /dev/pps-gen0 is
+open, gives:
 
-Fixes: b9f7425239a0 ("virtio-net: convert rx mode setting to use workqueue")
+  BUG: KASAN: slab-use-after-free in pps_gen_cdev_ioctl+0x4c1/0x580
+  Read of size 1 at addr ffff88800e647f38 by task ppsgen64/145
+  ...
+  Freed by task 146:
+   kfree+0x25a/0x6d0
+   release_nodes+0xd1/0x140
+   devres_release_all+0x10e/0x1a0
+   device_unbind_cleanup+0x71/0x250
+   device_release_driver_internal+0x41b/0x570
+   unbind_store+0xd9/0x100
+
+and unloading pps_gen-dummy while its file is open oopses:
+
+  BUG: unable to handle page fault for address: ffffffffa0203040
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:pps_gen_cdev_ioctl+0x372/0x580
+
+Protect info in the ioctl handler with a mutex, and clear it under the
+mutex on unregister, so that unregister waits for the ioctls using it
+and later ones fail with -ENODEV. PPS_KC_BIND does the same for a
+removed PPS device since commit 3649f9a6b897 ("pps: don't allow
+PPS_KC_BIND on removed devices"). The sysfs attributes need nothing
+new: they are removed, and their callbacks drained, before info is
+cleared.
+
+Fixes: 86b525bed275 ("drivers pps: add PPS generators support")
 Cc: stable@vger.kernel.org
-Reported-by: <co+d17c2bc750a9cbbb@bugs.sh>
 Assisted-by: LLM
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20261017114237.2786302-2-bestswngs@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: Adjusted context to preserve existing refill handling and restore error paths. ]
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Link: https://patch.msgid.link/20260929124937.51114-3-danishkhateeb03@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+ drivers/pps/generators/pps_gen.c | 31 ++++++++++++++++++++++++++-----
+ include/linux/pps_gen_kernel.h   |  2 ++
+ 2 files changed, 28 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index b7ab57f4e277a..34390befdf8a8 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -458,9 +458,6 @@ struct virtnet_info {
- 	/* Work struct for setting rx mode */
- 	struct work_struct rx_mode_work;
+diff --git a/drivers/pps/generators/pps_gen.c b/drivers/pps/generators/pps_gen.c
+index 69a470fa164d6..630a8804d63e7 100644
+--- a/drivers/pps/generators/pps_gen.c
++++ b/drivers/pps/generators/pps_gen.c
+@@ -69,17 +69,28 @@ static long pps_gen_cdev_ioctl(struct file *file,
+ 		if (ret)
+ 			return -EFAULT;
  
--	/* OK to queue work setting RX mode? */
--	bool rx_mode_work_enabled;
--
- 	/* Does the affinity hint is set for virtqueues? */
- 	bool affinity_hint_set;
- 
-@@ -740,16 +737,13 @@ static void disable_delayed_refill(struct virtnet_info *vi)
- 
- static void enable_rx_mode_work(struct virtnet_info *vi)
- {
--	rtnl_lock();
--	vi->rx_mode_work_enabled = true;
--	rtnl_unlock();
-+	if (enable_work(&vi->rx_mode_work) && netif_running(vi->dev))
-+		schedule_work(&vi->rx_mode_work);
- }
- 
- static void disable_rx_mode_work(struct virtnet_info *vi)
- {
--	rtnl_lock();
--	vi->rx_mode_work_enabled = false;
--	rtnl_unlock();
-+	disable_work_sync(&vi->rx_mode_work);
- }
- 
- static void virtqueue_napi_schedule(struct napi_struct *napi,
-@@ -3996,8 +3990,7 @@ static void virtnet_set_rx_mode(struct net_device *dev)
- {
- 	struct virtnet_info *vi = netdev_priv(dev);
- 
--	if (vi->rx_mode_work_enabled)
--		schedule_work(&vi->rx_mode_work);
-+	schedule_work(&vi->rx_mode_work);
- }
- 
- static int virtnet_vlan_rx_add_vid(struct net_device *dev,
-@@ -5813,7 +5806,6 @@ static void virtnet_freeze_down(struct virtio_device *vdev)
- 	/* Make sure no work handler is accessing the device */
- 	flush_work(&vi->config_work);
- 	disable_rx_mode_work(vi);
--	flush_work(&vi->rx_mode_work);
- 
- 	if (netif_running(vi->dev)) {
- 		rtnl_lock();
-@@ -5840,7 +5832,6 @@ static int virtnet_restore_up(struct virtio_device *vdev)
- 	virtio_device_ready(vdev);
- 
- 	enable_delayed_refill(vi);
--	enable_rx_mode_work(vi);
- 
- 	if (netif_running(vi->dev)) {
- 		rtnl_lock();
-@@ -5853,6 +5844,8 @@ static int virtnet_restore_up(struct virtio_device *vdev)
- 	netif_tx_lock_bh(vi->dev);
- 	netif_device_attach(vi->dev);
- 	netif_tx_unlock_bh(vi->dev);
+-		ret = pps_gen->info->enable(pps_gen, status);
+-		if (ret)
+-			return ret;
+-		pps_gen->enabled = status;
++		scoped_guard(mutex, &pps_gen->info_lock) {
++			if (!pps_gen->info)
++				return -ENODEV;
 +
-+	enable_rx_mode_work(vi);
- 	return err;
++			ret = pps_gen->info->enable(pps_gen, status);
++			if (ret)
++				return ret;
++			pps_gen->enabled = status;
++		}
+ 
+ 		break;
+ 
+ 	case PPS_GEN_USESYSTEMCLOCK:
+ 		dev_dbg(&pps_gen->dev, "PPS_GEN_USESYSTEMCLOCK\n");
+ 
+-		ret = put_user(pps_gen->info->use_system_clock, uiuarg);
++		scoped_guard(mutex, &pps_gen->info_lock) {
++			if (!pps_gen->info)
++				return -ENODEV;
++			status = pps_gen->info->use_system_clock;
++		}
++
++		ret = put_user(status, uiuarg);
+ 		if (ret)
+ 			return -EFAULT;
+ 
+@@ -212,6 +223,15 @@ static void pps_gen_unregister_cdev(struct pps_gen_device *pps_gen)
+ {
+ 	pr_debug("unregistering pps-gen%d\n", pps_gen->id);
+ 	cdev_device_del(&pps_gen->cdev, &pps_gen->dev);
++
++	/*
++	 * An open file keeps pps_gen around, but the driver may free info as
++	 * soon as we return. The sysfs files are gone now, so wait for the
++	 * ioctls using info and make later ones fail.
++	 */
++	scoped_guard(mutex, &pps_gen->info_lock)
++		pps_gen->info = NULL;
++
+ 	put_device(&pps_gen->dev);
  }
  
-@@ -6952,6 +6945,7 @@ static int virtnet_probe(struct virtio_device *vdev)
+@@ -243,6 +263,7 @@ struct pps_gen_device *pps_gen_register_source(const struct pps_gen_source_info
+ 	pps_gen->info = info;
+ 	pps_gen->enabled = false;
  
- 	INIT_WORK(&vi->config_work, virtnet_config_changed_work);
- 	INIT_WORK(&vi->rx_mode_work, virtnet_rx_mode_work);
-+	disable_work(&vi->rx_mode_work);
- 	spin_lock_init(&vi->refill_lock);
++	mutex_init(&pps_gen->info_lock);
+ 	init_waitqueue_head(&pps_gen->queue);
+ 	spin_lock_init(&pps_gen->lock);
  
- 	if (virtio_has_feature(vdev, VIRTIO_NET_F_MRG_RXBUF)) {
-@@ -7103,8 +7097,6 @@ static int virtnet_probe(struct virtio_device *vdev)
- 	if (vi->has_rss || vi->has_rss_hash_report)
- 		virtnet_init_default_rss(vi);
+diff --git a/include/linux/pps_gen_kernel.h b/include/linux/pps_gen_kernel.h
+index f26f6aac000dc..c4d22b1af1186 100644
+--- a/include/linux/pps_gen_kernel.h
++++ b/include/linux/pps_gen_kernel.h
+@@ -11,6 +11,7 @@
+ #include <linux/pps_gen.h>
+ #include <linux/cdev.h>
+ #include <linux/device.h>
++#include <linux/mutex.h>
  
--	enable_rx_mode_work(vi);
--
- 	/* serialize netdev register + virtio_device_ready() with ndo_open() */
- 	rtnl_lock();
+ /*
+  * Global defines
+@@ -44,6 +45,7 @@ struct pps_gen_source_info {
+ /* The main struct */
+ struct pps_gen_device {
+ 	const struct pps_gen_source_info *info;	/* PSS generator info */
++	struct mutex info_lock;			/* protects info */
+ 	bool enabled;				/* PSS generator status */
  
-@@ -7204,6 +7196,8 @@ static int virtnet_probe(struct virtio_device *vdev)
- 		goto free_unregister_netdev;
- 	}
- 
-+	enable_rx_mode_work(vi);
-+
- 	pr_debug("virtnet: registered device %s with %d RX and TX vq's\n",
- 		 dev->name, max_queue_pairs);
- 
-@@ -7255,7 +7249,6 @@ static void virtnet_remove(struct virtio_device *vdev)
- 	/* Make sure no work handler is accessing the device. */
- 	flush_work(&vi->config_work);
- 	disable_rx_mode_work(vi);
--	flush_work(&vi->rx_mode_work);
- 
- 	virtnet_free_irq_moder(vi);
- 
+ 	unsigned int event;
 -- 
 2.53.0
 
