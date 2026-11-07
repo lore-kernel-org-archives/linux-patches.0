@@ -1,75 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=188.68.63.102
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.45
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794070284;
-	b=f5bmOn+tjO+TActBaf5AOWTWQ4LW/7SYIpBhazt/Z6lNDZQ0JqWnI+YP16bYbq9GpAx1
-	 axSgI8uTgZSVQGCav4Q4/sSRbY+LoNqYltxrTjAyv08aDsO9JF2z09kskHg0UNHV4q3Go
-	 2s1Y7j2fMKKS0j5T+Tfs9PTSvEf/n9yUqe7Xf0OGJiYOORmHgS6N67ahZyXt9T7ItpBWo
-	 edq0vP6gYQLAWOiCfD9LUOGAeQXLEBvddg6NWjl7n9vu/2ZAt/rt1hf6KqpGRcbPdJ7Pn
-	 2Pxwk71jZjc5DtxyEHIC7jlA9uIVdWrkqWmdkWhMmForFq0GKgcdkN+pPCXe8u9v+Ww==
+	t=1794070646;
+	b=gOhtq7jtpvXsg/dvZKMLnF3SspNTkk0t0bDPBmpvmu5AMTCdTAbUKBOc7c9PELmNFwLL
+	 jqTguDmyncJAcw7kR1+vH/alZS9AAP7E3T7eRYiVtAsGNVDOplReMKRSF8xax3QxYsxJf
+	 I+UQr3nTNOv1uORYZ5E9KrkMZghogNMWeWj+vQcoyiSPPM8/S20UC5lCbjgSFhsxBur5x
+	 nklvVCcCFSV0i4gwH4s+pZwv5e783OOk6OzXgFqhN94H0qlmfYb4KTyxyM0pTRJDs2gTJ
+	 Ht+Q+czefNgvfxXUq0ldiGb63bigLPQYcILkTihMARuy7hOTK/lt6CjFwvfJHXlHQnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794070284;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:X-Virus-Scanned:
-	 X-Spam-Flag:X-Spam-Score:X-Spam-Level:X-Spam-Status:Received:Received:
-	 Received-SPF:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:From:Content-Language:Autocrypt:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-PPP-Message-ID:X-Rspamd-Server:
-	 X-Rspamd-Queue-Id:X-NC-CID;
-	bh=qRO/LhoNHzQDuHYrAy6gaiy6iK5ILUoNKm7gazg+Oo0=;
-	b=nTXzIR0BnESvj35ySGj43XQSiKyAo9m8FDYAz0CjR7ls2CAokyoPzyVV3M50JPvVZFx5
-	 4wAt3aUUsno14SaLDs57oK9RIIvZFb0NwCR+AI+IBTv5RRuM6Q+d4oNoHjXLJmweL6oH3
-	 F67b2sHJgNYTdJ0mE21OAYsADhROFKTbP5Yc64Jd30ZqGUs/BOSiT+6jCE8GpU0iMFIWb
-	 M01ABfLQLV2ArhItMKuCMfCXCn7B7iBXNAkmV8f2b4dr2/jlSKAMVHxv8X5QZpPSx6skH
-	 lb2LVhGM0/n55W2OA5K+j1RzK//kYNm0vCvRPNeEgQWoD39+hLHSVh/rZmtFV1vb4TQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794070646;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=dZ/CQYskRN0JeHdAleff1h6SJqJJZnuoROXlSHd1Wv8=;
+	b=jy7ZyJpQ02vSySfDfUUVOmeTRubAjrOlgEcLIVSEmuvTdYtkyBoWQoQey8qk/E5NiaJ/
+	 fWbmC4iYRY+ZaQLQPtBfBPvkn//resrUSKnWGVWSnl8trr+iW2YhynmRqRj5phv+HiO0R
+	 2ioqBl3PLgXN9MSa8HCwJ0mL9IbkLk9mgMcW+wzAucDuQ2h2mAir4s+FdygdrDzwPO3Hi
+	 ZqOo0c1xWj9OSW29zFMeiAIQcEzGPDlrSyIq+jftAT7Ndxkr4feiyiJVWi3H1S/y+wcI4
+	 4hnNdqDGPny21reoobJaFEbIFaHZrEBaL+aiWcF9P4iZiADblXSFX/y47vsEnn0xnig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=leemhuis.info;
-	spf=pass smtp.mailfrom=leemhuis.info;
-	dkim=pass header.d=leemhuis.info header.i=@leemhuis.info header.a=rsa-sha256 header.s=key2 header.b=Ioa1txZy;
-	arc=none smtp.remote-ip=188.68.63.102
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=googlemail.com;
+	spf=pass smtp.mailfrom=googlemail.com;
+	dkim=pass header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=LBcnEPia;
+	arc=none smtp.remote-ip=209.85.221.45
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF8A606A326
-	for <patches@lists.linux.dev>; Sat,  7 Nov 2026 16:51:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1EF8A606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=leemhuis.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3239B606A33E
+	for <patches@lists.linux.dev>; Sat,  7 Nov 2026 16:57:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3239B606A33E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=leemhuis.info header.i=@leemhuis.info header.a=rsa-sha256 header.s=key2 header.b=Ioa1txZy
-Received: from mors-relay-2502.netcup.net (localhost [127.0.0.1])
-	by mors-relay-2502.netcup.net (Postfix) with ESMTPS id 4jMMVt7314z6Nh8;
-	Sat,  7 Nov 2026 17:50:46 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=leemhuis.info;
-	s=key2; t=1794070247;
-	bh=7sFUzNCPUQYAY+iiWHy92/LW8Ghkh3sGUkMXnoq7yUk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Ioa1txZy/QZf+iZLivL0kV8DdLztLwgUyUKSNstrdN7aN5QRi8FJkcJ+Q8bXABQlG
-	 4CArOVLbi4tlsHSguthL37NH+gDz3kNPqaiflk0YOX2VEoQumFcoU/4YjwotU/MU58
-	 XT7c9A7Q99jwo8H2qDk7l6oAfV/8I767XbjJIbOR6/ghHRI510VwUo9h7bL4VBLThb
-	 gWnywG/6oA20UpMaOJbaWezbbQR2xOH7nnYwMwtA+7Yi9U+3O0JUZ7vi3nsZSu8sX7
-	 2F+BtyW1gZZotr5pMaEXE6fytGdg2KhBlZWZok4xEM+BqO0bSHa5M/VQxQbxBtVcmy
-	 uLie1scdkYj2Q==
-Received: from policy01-mors.netcup.net (unknown [46.38.225.35])
-	by mors-relay-2502.netcup.net (Postfix) with ESMTPS id 4jMMTc5FXdz4yvc;
-	Sat,  7 Nov 2026 17:49:40 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at policy01-mors.netcup.net
-X-Spam-Flag: NO
-X-Spam-Score: -2.898
-X-Spam-Level: 
-Received: from mxe9fb.netcup.net (unknown [10.243.12.53])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by policy01-mors.netcup.net (Postfix) with ESMTPS id 4jMMTZ0Y6cz8v23;
-	Sat,  7 Nov 2026 17:49:37 +0100 (CET)
-Received: from [IPV6:2a02:8108:8984:1d00:a0cf:1912:4be:477f] (unknown [IPv6:2a02:8108:8984:1d00:a0cf:1912:4be:477f])
-	by mxe9fb.netcup.net (Postfix) with ESMTPSA id 938185FB03;
-	Sat,  7 Nov 2026 17:49:27 +0100 (CET)
-Authentication-Results: mxe9fb;
-        spf=pass (sender IP is 2a02:8108:8984:1d00:a0cf:1912:4be:477f) smtp.mailfrom=linux@leemhuis.info smtp.helo=[IPV6:2a02:8108:8984:1d00:a0cf:1912:4be:477f]
-Received-SPF: pass (mxe9fb: connection is authenticated)
-Message-ID: <0f632371-ee07-44ab-b574-a762b4063fca@leemhuis.info>
-Date: Sat, 7 Nov 2026 17:49:27 +0100
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.a=rsa-sha256 header.s=20260707 header.b=LBcnEPia
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-491971ac844so1423318f8f.2
+        for <patches@lists.linux.dev>; Sat, 07 Nov 2026 08:57:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20260707; t=1794070644; x=1794675444; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=dZ/CQYskRN0JeHdAleff1h6SJqJJZnuoROXlSHd1Wv8=;
+        b=LBcnEPiaQlzCsjdDIWA2GTs8f/BqRXzfkrxlvfSemQZtZ5Z6ZntqDlx+85gcueiU5k
+         oorBka0z/dokN/UQ7T5H0Ogll454ukqsdVJHYOyPf2o5Xj2RBSKK71hzm9aszorqwyD/
+         sRRvfDXdzZH1tiMIVksiJrZ9KqIYMkqo9qLjtpa8oXFH5slzQCx5KT3IJfJxNuvkV/iF
+         DZTBWxdwSJ7QpPYPYSuY8mVjelKbjHojRu8LXHXgggrF3Q89spqfaAJSihss+c0UVuc0
+         qk4KzKxClOYQciR4p0PqjnW+N6qupRWHg5baWu3i95EmxfgGybrBdIOJgV89TTyZcpgQ
+         ODKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794070644; x=1794675444;
+        h=content-transfer-encoding:content-type:in-reply-to:from:references
+         :cc:to:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=dZ/CQYskRN0JeHdAleff1h6SJqJJZnuoROXlSHd1Wv8=;
+        b=0guC7AxpU4S9l/Wja/rB716JgR3CrmAqhpgzlhRpbWskyce2Wq6O75ojH+7t9MQXx7
+         zB2XJs8FHLbpoVPMMv0JkJnwgNZzz00SlBxCGdO5qGIUvoBxUGDQPBNGb4J7u9YZsDvP
+         phcSvgvDsvkZxZ4zWvVN8DltoW846ytWhe7zid2QX0rOmTpFSQCIMLLEgzW5byMVSFmH
+         tcj9RIlJVT1abK52TKdmsz2Qpend9a5Ft3QBadxAIrDjsJKKzruFTNcSSvA5i2Gfc9CR
+         KvKVE80Wym0APL35P/W4BuhhAyz07IW121PkmtZQxSwiPM9VbFooOby885XtcQBt+/Ux
+         BWFA==
+X-Gm-Message-State: APuU4Z/+aX9MqlWQf8KzmfrLXL8MaNaxONBDsXtAQVk5opK5l7jJ084R
+	98qH59+A5nU7FBYrLOQhVXCSmmB7EaAQI16db3SAEzneyqLxn6L4kgc=
+X-Gm-Gg: AYBFou2xD7C5hv96xbgmY3zvUdpxh4mj+rg9/He8OvRo+JDlK9I7VPFuTWiHu7lT/tY
+	AZPKq8USUBrKptP9Ldp2RA6Jh+t/rwCeS92mv0Cy8uOBdYw0VeABhIAgW+V5G/0Raz3zEk01lcR
+	zFdjgsgzEsdeV1IQ1nJwg5jfg/zn6dPTjTcWpG1dzG0wZO0I1X9NTo3Uhu0DeCKXl7J5LrEc3HH
+	IjJYjaCDTQijVwjZpGKjo9tm7YNYQh7S2mHSoUb4ZSJYV7PnYfnyx+p/+Xq6Mxzkj/mX/eVNGll
+	koSN6L9DpXj83GdVwln2DiT+rnn6dmvx6mjQa3RK2Ehpt/A1tVp5741MwXE5A11ZvCrmeHbM+/T
+	Ba2BkyJcQ/q46o4hVgcWKO5xcCJ/R8CTPym8XTeuMgRywmiqL0sRNL+gRIMHLO+YexFe8+LbvDk
+	lFP+Ovxwaak2T68hqXDcMLvC2vSAJpNbm32HdbdeJs7I2lsqXmzcC7C/gA5oU8eAfgefjENDExW
+	CdPLrFt0Mh2DzcakZFjgWs9oVyHmWNxsK+2x34BIBKE3GobgKFWWCLvOn/remdfqLtxH/t3j3Pe
+	SnTnygQTButoXpeMZOogpekRuujub9qzQ1O2YN4n0V/4HfY6Ao7KQ2cxTYaXb1nTJCBaW2/wQDo
+	bflk=
+X-Received: by 2002:a05:600c:530f:b0:4a2:133:45e1 with SMTP id 5b1f17b1804b1-4b6dfbabcf9mr95721785e9.24.1794070644434;
+        Sat, 07 Nov 2026 08:57:24 -0800 (PST)
+Received: from [192.168.1.3] (p5b2acf48.dip0.t-ipconnect.de. [91.42.207.72])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b7efb1547fsm144188195e9.11.2026.11.07.08.57.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 07 Nov 2026 08:57:24 -0800 (PST)
+Message-ID: <2401f130-7358-4797-a872-592674a1888f@googlemail.com>
+Date: Sat, 7 Nov 2026 17:57:23 +0100
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -79,114 +90,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.3 0000/1257] 7.3.4-rc1 review
-To: Ronald Warsow <rwarsow@gmx.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.18 000/869] 6.18.63-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com, Pascal Ernster <git@hardfalcon.net>
-References: <20261107134939.434104957@linuxfoundation.org>
- <68c2efb8-e54f-40bc-9c36-76c719a590d5@gmx.de>
-From: Thorsten Leemhuis <linux@leemhuis.info>
-Content-Language: de-DE, en-US
-Autocrypt: addr=linux@leemhuis.info; keydata=
- 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 MEK4
-In-Reply-To: <68c2efb8-e54f-40bc-9c36-76c719a590d5@gmx.de>
-Content-Type: text/plain; charset=UTF-8
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20261107134852.069646174@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <179407016847.3182742.2836733914992484162@mxe9fb.netcup.net>
-X-Rspamd-Server: rspamd-worker-8404
-X-Rspamd-Queue-Id: 938185FB03
-X-NC-CID: kfG2x75ENRT7qX18+iX/yyMLXOzA8J5Bq4WFe1ephN6zwk5RJ0Y=
 
-On 11/7/26 16:34, Ronald Warsow wrote:
-> 
-> kernel build / boot test on x86_64 (Intel).
-> 
-> I need to revert (here)
-> 
-> 1564da6afd7ce5297ba24f2d1e61d6a79a9ff6db
+Am 07.11.2026 um 14:44 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.18.63 release.
+> There are 869 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-FWIW, that is "sched_ext: Fix the stall watchdog testing and blaming the
-wrong sched under bypass". Ran into the same problem; Pascal (now CCed)
-did so earlier (even before the new -rc was out afaics), too:
-https://lore.kernel.org/all/c2569e78-f102-429a-a4a6-0b59d14226e1@hardfalcon.net/
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
 
-Ciao, Thorsten
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-> otherwise I get:
-> 
-> In file included from kernel/sched/build_policy.c:71:
-> kernel/sched/ext/ext.c: In function ‘check_rq_for_timeouts’:
-> kernel/sched/ext/ext.c:3852:41: error: implicit declaration of function
-> ‘scx_exec_sched’; did you mean ‘scx_prog_sched’? [-Wimplicit-function-
-> declaration]
->  3852 |                 struct scx_sched *sch =
-> scx_exec_sched(scx_task_sched(p), cpu_of(rq));
->       |                                         ^~~~~~~~~~~~~~
->       |                                         scx_prog_sched
-> kernel/sched/ext/ext.c:3852:41: error: initialization of ‘struct
-> scx_sched *’ from ‘int’ makes pointer from integer without a cast [-
-> Wint-conversion]
-> make[4]: *** [scripts/Makefile.build:290: kernel/sched/build_policy.o]
-> Error 1
-> make[3]: *** [scripts/Makefile.build:551: kernel/sched] Error 2
-> make[2]: *** [scripts/Makefile.build:551: kernel] Error 2
-> make[2]: *** Waiting for unfinished jobs....
-> 
-> 
-> apart from that no regression
-> 
-> same .config:
-> https://marc.info/?l=linux-kernel&m=179390956799135&w=4
-> 
-> Thanks
-> 
-> Tested-by: Ronald Warsow <rwarsow@gmx.de>
 
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
