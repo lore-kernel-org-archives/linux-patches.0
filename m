@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064118;
-	b=cNoba1aApUncUppK5V6CTXvGphi/kdyTz1EBDvQycKXAqafmW3uoFp9sTBiuaQzUjxad
-	 XaKj+4bBIo9XqhtxObT0LclMVm5xn8+g/fsw+N1f4lw3+HFEd9pnY2wLfTv8zq86CWc6i
-	 ein0AsnxGuTcR8v2L0T5JcxvFgmKx5LClIaCqytAPS+oVFlJBzdsGTrQeVhHAxHMvxzCV
-	 5ngFP95MVB1H/Ye8h15459dVxbeqQEWTU6ryQgp0RBSWld/4M90CPJnulOKB+CdL0Yvpo
-	 BSpYVQNfg8XcyyxDHO4jjE9c5ME+dxrS17oZ/8iFj3QPEVxkiHjkfrAPNbEb9lnnE8Q==
+	t=1794064119;
+	b=deVxbld+50KHoUE4sEeWrH/WQEpZFSLmUwM8y17J4+NeM5l8eyfCJm1rqozvdSL4gIqn
+	 XgeAwO6hGsgi1sXQVnXvxcolts/IZ164EaOrhRoGzeyzHerGtw2tW4P9ccsVVlsUSH+7N
+	 cT6CeFhsRkf1CGBUK2aDKOrD9OX57azSy6nW+i1Cv1uBv614zLJpdpyiPlwPNaJWaibRm
+	 0hskV5+XcNOWBzu4Itt4in3g8ievMIoWT7vYbCM76fPp36C+o/MrT8tBBiSk+Y4xmvGJG
+	 I2/lop+abwcOtUWXkGSDVklBF4SoyD+/kW2YnQY8xzTasr8l1y8dGW6o2BAN39kvTfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=09J5Ly0IdCRvosKbIdOH11fjGbAJ6Bm16Mj12gIuVYo=;
-	b=Q2GHe43n7ld/a1E3YAE9/swAfEcIzl7+FnGuMOT2sd73zDSTRLbIx1P1UAi9uj8GrxDz
-	 RaoncgacnVfj4fxuUr5fPXwqJB39ZN5oeEonHIgI/KLmTx0ks+9QHuVr1MHk6Cwa52fzp
-	 ehiP6jMvmetNU3A3FqYG6+Fts08XQTO0GYXCaSHDU4D/eZl+y9fOlY8nUgGnoIDxRD8yg
-	 opwzuY0VqqncMIkaHz39ogu/0RnKZB4eNve/jYPMGGadyhhOOUybyOj+29+0eQKvOKxMP
-	 cqmISD0VfJVuiUoCDaQzte4nKnbUNO0JrBFx40ZwS3p7hDdTvADXCaXi6w2IpQm27rQ==
+	bh=IPwHsI894oFKbZkqO8ovSXLaz1aReSSi9/8WgiCojUE=;
+	b=SyX6tNQBliMRT7cTMRhfsCJizELeakLMQoYifQMiTNqU/OIeNtvd9d1uS6SNuKiu79KI
+	 9Y8CwJbrOpzMQXzQTuoAMKRTLgTL7EOe9wnP+J6fzK0wMSwLJVPv8064S7QM5Pu9Qtpme
+	 TbzhryMkD0V9V5ZOM66m04pF5desuVH0IFsZBv34Jl0Vlfrn8iJqi0x0scrR8RCsqj1fn
+	 HtbE/sCNVFz6JxelyT5F+/iECbKIOI9isDYmonOow2qK8yp7myE8dEfY0V95a526Onzii
+	 Gj/CzaqZahQ6nJK0CMumhU6UiyyxRu1ub5Z5XMKlzlPkeGj+h6AekpaULRU6AnRW1ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6bVvaqU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UF7M7SJQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC63606A33E;
-	Sat,  7 Nov 2026 15:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2BA606E8C2;
+	Sat,  7 Nov 2026 15:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6bVvaqU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEA21F0089F;
-	Sat,  7 Nov 2026 15:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UF7M7SJQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BAA1F008A3;
+	Sat,  7 Nov 2026 15:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064117;
-	bh=09J5Ly0IdCRvosKbIdOH11fjGbAJ6Bm16Mj12gIuVYo=;
+	s=korg; t=1794064118;
+	bh=IPwHsI894oFKbZkqO8ovSXLaz1aReSSi9/8WgiCojUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T6bVvaqUprsnk8/svwVhqMJCP771hiG5SnMvEXsOBDbVyOLVdtZjd0R4mW8uDoiaV
-	 FoGaBEZJCX9mrif3ypMyOQN3THFj+7il/y4bHnGL3SpKnP9hZKdIBszT0r9Kzyf0DJ
-	 zF8sJvBbiJx4Y1JKfByoDuINOnC/tCtUA6stLe9c=
+	b=UF7M7SJQZGcZcpyodm3t3uWvqIAQRYYciwljYMj1qbzmDbOCoWSPnFmReJOKtPDUc
+	 xLYGEsmxRtYyHsqE9h/TFm1+6d3VOKI8+lFGYLa2jB4unlWRwMXYXtIn5OfLu8Mmau
+	 URSjeAy3YuDwXwKxXI7yUPGX3177zg6cAiL1eu+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0274/1257] arm64: dts: freescale: imx8mm-verdin-ivy: fix DIGI_1/DIGI_2 gpio-line-names
-Date: Sat,  7 Nov 2026 08:42:50 -0500
-Message-ID: <20261107134947.051169976@linuxfoundation.org>
+Subject: [PATCH 7.3 0275/1257] arm64: dts: freescale: imx8mp-verdin-ivy: fix DIGI_1/DIGI_2 gpio-line-names
+Date: Sat,  7 Nov 2026 08:42:51 -0500
+Message-ID: <20261107134947.076567217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,7 +70,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 28cec01a2be2cf1e20aabd435f250f665ce24c8e ]
+[ Upstream commit cb45264c27fad31f7c58fbb1a5c2f7ec16018dae ]
 
 gpio3's gpio-line-names names the two Ivy digital inputs "DIG_1" and
 "DIG_2", while the official Ivy Carrier Board datasheet (Section 2.10,
@@ -82,7 +82,7 @@ and its carrier boards, so userspace GPIO tooling that looks up a line
 by name works the same regardless of which Verdin SoM is fitted on
 Ivy.
 
-Fixes: adca46171ff7 ("arm64: dts: freescale: imx8mm-verdin: Add Ivy carrier board")
+Fixes: b98948b04295 ("arm64: dts: freescale: imx8mp-verdin: Add Ivy carrier board")
 Cc: stable@vger.kernel.org
 Link: https://docs.toradex.com/116799-ivy_carrier_board_datasheet.pdf
 Assisted-by: LLM
@@ -90,14 +90,14 @@ Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mm-verdin-ivy.dtsi | 4 ++--
+ arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm-verdin-ivy.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-verdin-ivy.dtsi
-index 29075ff5eda63..b64751aa31d50 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm-verdin-ivy.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-verdin-ivy.dtsi
-@@ -270,8 +270,8 @@ &gpio3 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
+index db1b4ee7728c0..bf021e85cfc94 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
+@@ -333,8 +333,8 @@ &gpio3 {
  		"",
  		"",
  		"",
