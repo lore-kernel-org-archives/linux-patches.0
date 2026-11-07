@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065146;
-	b=jWYgNXYKpGf6Le+GQneeMa8Y9Dy7gWbQ7/aS7DEaq9mBHpjRO73wqZXQjgQALSioMQAS
-	 PerKrEpIFvLkVRuG+O7cBChEb3AfN6/4EdhIaxU6EqTQAw/t5rsGnLu6m6AiKDkW3lJs1
-	 Mal74VAKdUnI23LZmpHORJZkx9SVRe4G0LHnK67nFFoqTunAJ7h7OZc+OQuUU8K4u2ScJ
-	 YYBNCo00IYjkSgJcjMepVdxIpuEv7m7nxwlh8GZGXmoMW9JI5r9oiOH84AnGgKjn9LlBC
-	 C7IdjjN9tue2uyl1BhBSFTi+YDpwWTnGf3pOBk0aEnuoRAeYux/ASUndufjinsAvlTQ==
+	t=1794065148;
+	b=ogzsrxXk34uBlEaXw2aWwXsEmw21BlJZ+FyqXoSaG5pMMvgMU5VZGpu3YnBkNl0/7/7q
+	 O6+WSzJHOVLrTqbPfalPDOcj4K/15y3FPNHzH3m4mPe0fsuprVGbtt4X3JKZH6/5JbB/i
+	 sB1jjjGJKCjBD6OVZR/bfAiSSPitkX/wpRSJwR0aCiqcF0Md2h3tYxGa2lERjvQehG0+w
+	 hTtgdCZXwMI/ZHo+6XIpHfh94vCzMJ46PYWein6zucc+NLmd+OesUXTnpC2w1GRo6QQk9
+	 c5wDCm3jYScb4UPC1qbKLnj1MwbKckYEdjaC+mIqhlm4MMaUc8MlJYEycBqvERNW1Bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065146;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065148;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EsvHIS/DOI2EpVgQeGvhgRspceuLCWRO/9OzwvoSLwk=;
-	b=VzEDaYy6bzxsYiRHlLI0S+WZXU/EYpY/opgHQ/OXm5MDN3Qta5E2adUbR/QQvmgd2r8v
-	 slJQRkNfy1MLqtpBz0rWLlu9vdVMSEunDBkp2rDrpSIq8O0FbIfN4o46h3Ho4yifCQsJr
-	 NnGXqINhdz9PgpI2WnIFnOKfAYFoOZigOLibFGrVZu7sfrTeFXVVHTe7BdjhSZ/9U+Ebl
-	 o6YxMO08yejdepPsv8nPOIW2xl/Z9WN41LRZoUwNUx0BRYzB7v5C3TQLZj2blWJE/ovNe
-	 mFD8yacYJnEzMxS7emaCz/1y+uDaI4YE1jvG/+2WcyjkdCco4+OKw7xJdeWchzPtJVQ==
+	bh=b/N9raOstToGmcsmeyfQkMaGuezVs8jxsJ3IRZMO/Rw=;
+	b=cUwidQqOofmdHBByrjV2puiyFVM2FqeVczmie5GwnSca5giSX3cOuo4dMFjmKWAHoQ9q
+	 ebSGCvJ6w0aXTxfaR/nEjiaX/VYxRbcVPdQ5h6x4MGjgFzumzaznHOPjx63G/iyYrBiEi
+	 u+lCm12xO0JCtW+BGgjGoV/ZHEgcfp92Uam5CvINxktXkkuFvLRwMitmPX7RGj71/jayn
+	 jcE3GoIvNIeTlrzP7hsnb4YAtf3QmG0erGT73wCQCSCccqxhnYf1YVPAvV2lzCV1zo1nH
+	 8bGCdJ8F0nN8Hr2/MySS3xxt3GINZhiPoyrIqes6grAsEt/2bwq/HDQD1jTt6wYck+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IktHf4CI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cC33ewDx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4103606A32E;
-	Sat,  7 Nov 2026 15:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C73606A32E;
+	Sat,  7 Nov 2026 15:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IktHf4CI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732561F0089F;
-	Sat,  7 Nov 2026 15:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cC33ewDx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A85F1F0089F;
+	Sat,  7 Nov 2026 15:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065145;
-	bh=EsvHIS/DOI2EpVgQeGvhgRspceuLCWRO/9OzwvoSLwk=;
+	s=korg; t=1794065148;
+	bh=b/N9raOstToGmcsmeyfQkMaGuezVs8jxsJ3IRZMO/Rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IktHf4CInA3PPT7AabaYWa5E2HOy/pKkhBWUyR/yXM+9nYK7fesjNRxMSD/n75gVv
-	 U9JZhgYXaRiss5LQZN3f5qzb5v7/u7jt5a3rsxKqD/tsSfpDQNkllTQe39HDQ2GXkl
-	 st5wSL2nlNIE3Ah1T3s05EXhtZXf7K2bhG9scvxw=
+	b=cC33ewDxqpGAEysMEHcdEW4MZWn4HnGiMDFfs+3oEQ/EBBf8HrqIOlSN+9TDAHyeZ
+	 8BrWfRFLpamweNBiVxK8GVTCW7zcLUgfGXbdvZZ8ycWosBZmUU8cYbS3kvjxzECH5t
+	 704kKB13k2UJGt8/nz5lV9tI3XGBFhbjNni49SDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Wang <kevin.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0960/1257] drm/amd/pm: reapply umd profile state after recovery
-Date: Sat,  7 Nov 2026 08:54:16 -0500
-Message-ID: <20261107135005.856178929@linuxfoundation.org>
+Subject: [PATCH 7.3 0961/1257] drm/amdkfd: dont drop an SVM CWSR reference that was never taken
+Date: Sat,  7 Nov 2026 08:54:17 -0500
+Message-ID: <20261107135005.882452382@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,430 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Wang <kevin.wang@amd.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit ad6eb088a508d927641c8a76d1ca7911dfb7c80b ]
+[ Upstream commit 030d47cc6720e0f07b502876cdbd266e309f9461 ]
 
-Resume and full GPU reset retain the selected UMD profile level in
-driver state.
-The GFX and PMFW state behind it is reinitialized.
+When kfd_queue_acquire_buffers() fails, its error path calls
+kfd_queue_release_buffers(), which also drops a queue_refcount on the
+SVM range at ctx_save_restore_area_address. The SVM range is the last
+buffer acquired, and kfd_queue_buffer_svm_get() takes no reference when
+it fails, so on every error path this reference was never taken. If
+another queue of the process uses that CWSR range, its reference is
+dropped instead, and unmapping the range no longer evicts that queue
+while its CWSR area is unmapped from the GPU.
 
-Add a generic DPM reapply path after CG and PG restoration.
-It restores the UMD GFX state and asks the PM backend to replay the
-retained level.
+On navi31, with queue A using an SVM CWSR range: munmap() of the range
+logs
 
-v2:
-- Reapply only GFX CG to preserve the profile-owned GFX PG reference.
-- Fall back to AUTO when reapply fails without failing device recovery.
-- Propagate PowerPlay DPM errors before accepting AUTO fallback.
-- Limit workload-profile error reporting to the swSMU reapply path.
+  Freeing queue vital buffer 0x..., queue evicted
 
-This covers:
-- PCI runtime resume
-- Full GPU reset recovery
-- System resume, including S3 and s2idle
+but after a CREATE_QUEUE that reuses A's CWSR address with an unmapped
+write pointer (-EINVAL), the same munmap() leaves A running without the
+message.
 
-Signed-off-by: Kevin Wang <kevin.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Only put the BOs on the acquire error path. The warning and the eviction
+are back after the failed CREATE_QUEUE.
+
+Fixes: b049504e211e ("drm/amdkfd: Validate user queue svm memory residency")
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fd0699fc9f4266fc07d6ce6dbb484fac04601106)
+(cherry picked from commit 9a08122e6361ef73f4b512d5db9596d561305519)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c    |  6 ++
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c       | 14 ---
- .../gpu/drm/amd/include/kgd_pp_interface.h    |  2 +
- drivers/gpu/drm/amd/pm/amdgpu_dpm.c           | 85 ++++++++++++++++++
- drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h       |  1 +
- .../gpu/drm/amd/pm/powerplay/amd_powerplay.c  | 33 +++++--
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c     | 87 +++++++++++++++++--
- 7 files changed, 201 insertions(+), 27 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_queue.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 9128b60891c80..e55367ca3e951 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -2770,6 +2770,12 @@ static int amdgpu_device_ip_late_init(struct amdgpu_device *adev)
- 	amdgpu_device_set_cg_state(adev, AMD_CG_STATE_GATE);
- 	amdgpu_device_set_pg_state(adev, AMD_PG_STATE_GATE);
- 
-+	r = amdgpu_dpm_reapply_umd_profile(adev);
-+	if (r) {
-+		dev_err(adev->dev, "Failed to restore UMD profile state: %d\n", r);
-+		return r;
-+	}
-+
- 	amdgpu_device_fill_reset_magic(adev);
- 
- 	r = amdgpu_device_enable_mgpu_fan_boost();
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index d9d794a7db964..69278026c9355 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2929,19 +2929,6 @@ static int amdgpu_pmops_runtime_suspend(struct device *dev)
- 	return 0;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
+index 15eeaaebbbcd7..910d695bb962e 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
+@@ -230,6 +230,15 @@ void kfd_queue_buffer_put(struct amdgpu_bo **bo)
+ 	amdgpu_bo_unref(bo);
  }
  
--static void amdgpu_restore_umd_profile_pstate_after_runpm(struct amdgpu_device *adev)
--{
--	enum amd_dpm_forced_level level;
--	uint32_t profile_mode_mask = AMD_DPM_FORCED_LEVEL_PROFILE_STANDARD |
--		AMD_DPM_FORCED_LEVEL_PROFILE_MIN_SCLK |
--		AMD_DPM_FORCED_LEVEL_PROFILE_MIN_MCLK |
--		AMD_DPM_FORCED_LEVEL_PROFILE_PEAK;
--
--	level = amdgpu_dpm_get_performance_level(adev);
--	if (level & profile_mode_mask)
--		amdgpu_asic_update_umd_stable_pstate(adev, true);
--}
--
- static int amdgpu_pmops_runtime_resume(struct device *dev)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev);
-@@ -2987,7 +2974,6 @@ static int amdgpu_pmops_runtime_resume(struct device *dev)
- 	if (adev->pm.rpm_mode == AMDGPU_RUNPM_PX)
- 		drm_dev->switch_power_state = DRM_SWITCH_POWER_ON;
- 
--	amdgpu_restore_umd_profile_pstate_after_runpm(adev);
- 	adev->in_runpm = false;
- 	return 0;
- }
-diff --git a/drivers/gpu/drm/amd/include/kgd_pp_interface.h b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-index 606d481153019..4ec330dd8ead1 100644
---- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-+++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-@@ -433,6 +433,8 @@ struct amd_pm_funcs {
- 	int (*print_clock_levels)(void *handle, enum pp_clock_type type, char *buf);
- 	int (*emit_clock_levels)(void *handle, enum pp_clock_type type, char *buf, int *offset);
- 	int (*force_performance_level)(void *handle, enum amd_dpm_forced_level level);
-+	int (*reapply_performance_level)(void *handle,
-+					 enum amd_dpm_forced_level level);
- 	int (*get_sclk_od)(void *handle);
- 	int (*set_sclk_od)(void *handle, uint32_t value);
- 	int (*get_mclk_od)(void *handle);
-diff --git a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-index 808be6c425bff..5615af97a3493 100644
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-@@ -1085,6 +1085,91 @@ static void amdgpu_dpm_exit_umd_state(struct amdgpu_device *adev)
- 					       AMD_PG_STATE_GATE);
- }
- 
-+/**
-+ * amdgpu_dpm_reapply_umd_profile - Restore the active UMD profile
-+ * @adev: amdgpu device
-+ *
-+ * Resume and reset retain the selected DPM level in software, but the
-+ * underlying GFX and PMFW state is lost. Reapply a retained UMD profile
-+ * after the common resume path has restored its default CG and PG state.
-+ */
-+int amdgpu_dpm_reapply_umd_profile(struct amdgpu_device *adev)
++static void kfd_queue_put_bos(struct queue_properties *properties)
 +{
-+	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
-+	enum amd_dpm_forced_level level;
-+	int ret, fallback_ret;
-+
-+	if (!pp_funcs || !pp_funcs->reapply_performance_level ||
-+	    !pp_funcs->force_performance_level)
-+		return 0;
-+
-+	/* Serialize the retained level with the GFX and PMFW reprogramming. */
-+	mutex_lock(&adev->pm.mutex);
-+	if (adev->pm.dpm.thermal_active) {
-+		dev_warn(adev->dev,
-+			 "Cannot restore UMD profile while thermal control is active\n");
-+		ret = 0;
-+		goto unlock;
-+	}
-+
-+	if (pp_funcs->get_performance_level)
-+		level = pp_funcs->get_performance_level(adev->powerplay.pp_handle);
-+	else
-+		level = adev->pm.dpm.forced_level;
-+
-+	switch (level) {
-+	case AMD_DPM_FORCED_LEVEL_PROFILE_STANDARD:
-+	case AMD_DPM_FORCED_LEVEL_PROFILE_MIN_SCLK:
-+	case AMD_DPM_FORCED_LEVEL_PROFILE_MIN_MCLK:
-+	case AMD_DPM_FORCED_LEVEL_PROFILE_PEAK:
-+		break;
-+	default:
-+		ret = 0;
-+		goto unlock;
-+	}
-+
-+	/* The active profile already owns the GFX PG reference. */
-+	ret = amdgpu_device_ip_set_clockgating_state(adev, AMD_IP_BLOCK_TYPE_GFX,
-+					      AMD_CG_STATE_UNGATE);
-+	if (ret)
-+		goto fallback_auto;
-+
-+	ret = amdgpu_asic_update_umd_stable_pstate(adev, true);
-+	if (ret)
-+		goto fallback_auto;
-+
-+	ret = pp_funcs->reapply_performance_level(adev->powerplay.pp_handle,
-+						     level);
-+	if (ret)
-+		goto fallback_auto;
-+
-+unlock:
-+	mutex_unlock(&adev->pm.mutex);
-+
-+	return ret;
-+
-+fallback_auto:
-+	dev_warn(adev->dev, "Failed to restore UMD profile state: %d\n", ret);
-+
-+	/* Restore normal CG before releasing the profile's PG reference. */
-+	amdgpu_asic_update_umd_stable_pstate(adev, false);
-+	amdgpu_device_ip_set_clockgating_state(adev, AMD_IP_BLOCK_TYPE_GFX,
-+					       AMD_CG_STATE_GATE);
-+	mutex_unlock(&adev->pm.mutex);
-+
-+	mutex_lock(&adev->pm.stable_pstate_ctx_lock);
-+	fallback_ret = amdgpu_dpm_force_performance_level(adev,
-+						   AMD_DPM_FORCED_LEVEL_AUTO);
-+	if (fallback_ret)
-+		dev_warn(adev->dev, "Failed to fall back to AUTO performance level: %d\n",
-+			 fallback_ret);
-+	else
-+		adev->pm.stable_pstate_ctx = NULL;
-+	mutex_unlock(&adev->pm.stable_pstate_ctx_lock);
-+
-+	return 0;
++	kfd_queue_buffer_put(&properties->wptr_bo);
++	kfd_queue_buffer_put(&properties->rptr_bo);
++	kfd_queue_buffer_put(&properties->ring_bo);
++	kfd_queue_buffer_put(&properties->eop_buf_bo);
++	kfd_queue_buffer_put(&properties->cwsr_bo);
 +}
 +
- int amdgpu_dpm_force_performance_level(struct amdgpu_device *adev,
- 				       enum amd_dpm_forced_level level)
+ int kfd_queue_acquire_buffers(struct kfd_process_device *pdd, struct queue_properties *properties)
  {
-diff --git a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-index 8e8a052e1d531..3016f0d19f743 100644
---- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-+++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm.h
-@@ -482,6 +482,7 @@ void amdgpu_dpm_set_power_state(struct amdgpu_device *adev,
- enum amd_dpm_forced_level amdgpu_dpm_get_performance_level(struct amdgpu_device *adev);
- int amdgpu_dpm_force_performance_level(struct amdgpu_device *adev,
- 				       enum amd_dpm_forced_level level);
-+int amdgpu_dpm_reapply_umd_profile(struct amdgpu_device *adev);
- int amdgpu_dpm_get_pp_num_states(struct amdgpu_device *adev,
- 				 struct pp_states_info *states);
- int amdgpu_dpm_dispatch_task(struct amdgpu_device *adev,
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-index 7c70e228a5bae..59494959682b2 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -364,24 +364,46 @@ static void pp_dpm_en_umd_pstate(struct pp_hwmgr  *hwmgr,
- 	}
+ 	struct kfd_topology_device *topo_dev;
+@@ -343,7 +352,13 @@ int kfd_queue_acquire_buffers(struct kfd_process_device *pdd, struct queue_prope
+ 	 * dropping the VM reservation.
+ 	 */
+ 	kfd_queue_unref_bo_vas(pdd, properties);
+-	kfd_queue_release_buffers(pdd, properties);
++	/*
++	 * The SVM CWSR range is the last thing acquired and a failed
++	 * kfd_queue_buffer_svm_get() takes nothing, so only the BOs are held
++	 * here. Dropping the SVM reference would drop the one of another queue
++	 * using the same CWSR address.
++	 */
++	kfd_queue_put_bos(properties);
+ 	return err;
  }
  
--static int pp_dpm_force_performance_level(void *handle,
--					enum amd_dpm_forced_level level)
-+static int pp_dpm_apply_performance_level(struct pp_hwmgr *hwmgr,
-+					  enum amd_dpm_forced_level level,
-+					  bool reapply)
- {
--	struct pp_hwmgr *hwmgr = handle;
-+	int ret;
+@@ -352,11 +367,7 @@ int kfd_queue_release_buffers(struct kfd_process_device *pdd, struct queue_prope
+ 	struct kfd_topology_device *topo_dev;
+ 	u64 total_cwsr_size;
  
- 	if (!hwmgr || !hwmgr->pm_en)
- 		return -EINVAL;
+-	kfd_queue_buffer_put(&properties->wptr_bo);
+-	kfd_queue_buffer_put(&properties->rptr_bo);
+-	kfd_queue_buffer_put(&properties->ring_bo);
+-	kfd_queue_buffer_put(&properties->eop_buf_bo);
+-	kfd_queue_buffer_put(&properties->cwsr_bo);
++	kfd_queue_put_bos(properties);
  
--	if (level == hwmgr->dpm_level)
-+	if (!reapply && level == hwmgr->dpm_level)
- 		return 0;
- 
- 	pp_dpm_en_umd_pstate(hwmgr, &level);
- 	hwmgr->request_dpm_level = level;
--	hwmgr_handle_task(hwmgr, AMD_PP_TASK_READJUST_POWER_STATE, NULL);
-+	ret = hwmgr_handle_task(hwmgr, AMD_PP_TASK_READJUST_POWER_STATE, NULL);
-+	if (ret)
-+		return ret;
-+
-+	ret = phm_force_dpm_levels(hwmgr, level);
-+	if (ret)
-+		return ret;
-+
-+	hwmgr->dpm_level = level;
- 
- 	return 0;
- }
- 
-+static int pp_dpm_force_performance_level(void *handle,
-+					enum amd_dpm_forced_level level)
-+{
-+	return pp_dpm_apply_performance_level(handle, level, false);
-+}
-+
-+static int
-+pp_dpm_reapply_performance_level(void *handle,
-+					 enum amd_dpm_forced_level level)
-+{
-+	return pp_dpm_apply_performance_level(handle, level, true);
-+}
-+
- static enum amd_dpm_forced_level pp_dpm_get_performance_level(
- 								void *handle)
- {
-@@ -1542,6 +1564,7 @@ static const struct amd_pm_funcs pp_dpm_funcs = {
- 	.load_firmware = pp_dpm_load_fw,
- 	.wait_for_fw_loading_complete = pp_dpm_fw_loading_complete,
- 	.force_performance_level = pp_dpm_force_performance_level,
-+	.reapply_performance_level = pp_dpm_reapply_performance_level,
- 	.get_performance_level = pp_dpm_get_performance_level,
- 	.get_current_power_state = pp_dpm_get_current_power_state,
- 	.dispatch_tasks = pp_dpm_dispatch_tasks,
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-index cca32f74abf02..9e70a0f3ae305 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -2353,6 +2353,13 @@ static int smu_set_powergating_state(struct amdgpu_ip_block *ip_block,
- 	return 0;
- }
- 
-+static void smu_enter_umd_pstate(struct smu_context *smu)
-+{
-+	smu_gpo_control(smu, false);
-+	smu_gfx_ulv_control(smu, false);
-+	smu_deep_sleep_control(smu, false);
-+}
-+
- static int smu_enable_umd_pstate(void *handle,
- 		      enum amd_dpm_forced_level *level)
- {
-@@ -2371,9 +2378,7 @@ static int smu_enable_umd_pstate(void *handle,
- 		/* enter umd pstate, save current level, disable gfx cg*/
- 		if (*level & profile_mode_mask) {
- 			smu_dpm_ctx->saved_dpm_level = smu_dpm_ctx->dpm_level;
--			smu_gpo_control(smu, false);
--			smu_gfx_ulv_control(smu, false);
--			smu_deep_sleep_control(smu, false);
-+			smu_enter_umd_pstate(smu);
- 			amdgpu_asic_update_umd_stable_pstate(smu->adev, true);
- 		}
- 	} else {
-@@ -2432,7 +2437,8 @@ static void smu_power_profile_mode_put(struct smu_context *smu,
- 
- static int smu_adjust_power_state_dynamic(struct smu_context *smu,
- 					  enum amd_dpm_forced_level level,
--					  bool skip_display_settings)
-+					  bool skip_display_settings,
-+					  bool force_performance_level)
- {
- 	int ret = 0;
- 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
-@@ -2459,7 +2465,7 @@ static int smu_adjust_power_state_dynamic(struct smu_context *smu,
- 		}
- 	}
- 
--	if (smu_dpm_ctx->dpm_level != level) {
-+	if (force_performance_level || smu_dpm_ctx->dpm_level != level) {
- 		ret = smu_asic_set_performance_level(smu, level);
- 		if (ret) {
- 			if (ret == -EOPNOTSUPP)
-@@ -2482,6 +2488,39 @@ static int smu_adjust_power_state_dynamic(struct smu_context *smu,
- 	return ret;
- }
- 
-+static int
-+smu_reapply_power_state_dynamic(struct smu_context *smu,
-+				enum amd_dpm_forced_level level)
-+{
-+	struct smu_dpm_context *smu_dpm_ctx = &smu->smu_dpm;
-+	int ret;
-+
-+	ret = smu_apply_clocks_adjust_rules(smu);
-+	if (ret) {
-+		dev_err(smu->adev->dev, "Failed to apply clocks adjust rules!");
-+		return ret;
-+	}
-+
-+	ret = smu_asic_set_performance_level(smu, level);
-+	if (ret) {
-+		if (ret == -EOPNOTSUPP)
-+			dev_info(smu->adev->dev, "set performance level %d not supported",
-+				 level);
-+		else
-+			dev_err(smu->adev->dev, "Failed to set performance level %d",
-+				level);
-+		return ret;
-+	}
-+
-+	smu_dpm_ctx->dpm_level = level;
-+
-+	if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL ||
-+	    smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM)
-+		return 0;
-+
-+	return smu_bump_power_profile_mode(smu, NULL, 0);
-+}
-+
- static int smu_handle_task(struct smu_context *smu,
- 			   enum amd_dpm_forced_level level,
- 			   enum amd_pp_task task_id)
-@@ -2496,13 +2535,13 @@ static int smu_handle_task(struct smu_context *smu,
- 		ret = smu_pre_display_config_changed(smu);
- 		if (ret)
- 			return ret;
--		ret = smu_adjust_power_state_dynamic(smu, level, false);
-+		ret = smu_adjust_power_state_dynamic(smu, level, false, false);
- 		break;
- 	case AMD_PP_TASK_COMPLETE_INIT:
--		ret = smu_adjust_power_state_dynamic(smu, level, true);
-+		ret = smu_adjust_power_state_dynamic(smu, level, true, false);
- 		break;
- 	case AMD_PP_TASK_READJUST_POWER_STATE:
--		ret = smu_adjust_power_state_dynamic(smu, level, true);
-+		ret = smu_adjust_power_state_dynamic(smu, level, true, false);
- 		break;
- 	default:
- 		break;
-@@ -2631,6 +2670,37 @@ static int smu_force_performance_level(void *handle,
- 	return ret;
- }
- 
-+static int
-+smu_reapply_performance_level(void *handle,
-+			      enum amd_dpm_forced_level level)
-+{
-+	struct smu_context *smu = handle;
-+	struct smu_dpm_context *smu_dpm_ctx = &smu->smu_dpm;
-+
-+	if (!smu->pm_enabled || !smu->adev->pm.dpm_enabled)
-+		return -EOPNOTSUPP;
-+
-+	if (!smu->is_apu && !smu_dpm_ctx->dpm_context)
-+		return -EINVAL;
-+
-+	switch (level) {
-+	case AMD_DPM_FORCED_LEVEL_PROFILE_STANDARD:
-+	case AMD_DPM_FORCED_LEVEL_PROFILE_MIN_SCLK:
-+	case AMD_DPM_FORCED_LEVEL_PROFILE_MIN_MCLK:
-+	case AMD_DPM_FORCED_LEVEL_PROFILE_PEAK:
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	if (smu_dpm_ctx->dpm_level != level)
-+		return -EINVAL;
-+
-+	smu_enter_umd_pstate(smu);
-+
-+	return smu_reapply_power_state_dynamic(smu, level);
-+}
-+
- static int smu_set_display_count(void *handle, uint32_t count)
- {
- 	struct smu_context *smu = handle;
-@@ -3988,6 +4058,7 @@ static const struct amd_pm_funcs swsmu_pm_funcs = {
- 	.force_clock_level       = smu_force_ppclk_levels,
- 	.emit_clock_levels       = smu_emit_ppclk_levels,
- 	.force_performance_level = smu_force_performance_level,
-+	.reapply_performance_level = smu_reapply_performance_level,
- 	.read_sensor             = smu_read_sensor,
- 	.get_apu_thermal_limit       = smu_get_apu_thermal_limit,
- 	.set_apu_thermal_limit       = smu_set_apu_thermal_limit,
+ 	topo_dev = kfd_topology_device_by_id(pdd->dev->id);
+ 	if (!topo_dev)
 -- 
 2.53.0
 
