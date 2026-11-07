@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062928;
-	b=2K9G9FVH7/My60FOg15K6jmkzc/AYQKpl3wJp4UUw0OfaquXzZG17kpJo2d+nVzn6fJO
-	 Fu7poYHfYFTBXs2eM2RCyitHIQ/7Pd/CSR164hCPkKYHb5Bltuy6xV/MLDoOTTvfZgJPe
-	 FBXYuxQ8HeP2GLom2w7LDcWbanK0tU8bAfSzi+nGantrEGCExzN31X+XLsJz2K3e0PCv/
-	 Vk7SpmO4nEv6YYlBrBIfEJctHZEtVwGy+71CT7pLUikioDe4zWRHXLBZFGxNqfOmzN9LP
-	 uRg2D/LvbTJYc84joR7xn+/uj4ap2fKPeIsysBKUf0ZfmhsKZGtT/SQYVlYiz8ULe2Q==
+	t=1794062930;
+	b=jNVsYeHMErmM5W+yy2FCVW4XDzO1sCzt4K/YohERRCK3yDEV9uOKLRJzzrzsicmeYsRr
+	 OQVIw1uuQQhQ3knPyUY/drLR/bZTHn/2/6EmmJRUsnXevqcao1AcBmMF0POkckhUgdoMW
+	 zA6bfh11PjbfTelm2Bl6XtP2qJ/HKXkeawdeKP/dMXhhKLRnMkTs5b8Rh6/xc+HSa7DOZ
+	 muUlgwkmEKjYeKPLeBRbJYyOMW1crg+5ELfMDYL5X1KE7tYJMr5XuAZ23XUSPiuqTBmjm
+	 C2k3Qbkv+04piG/e4eo4EBkZOTaoqdvBfGA4SuruG897gif3yQqZgf1N+f0gZWE/vAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062928;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062930;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1dkX4tMaNgdYaAlI5hDJy7pduZ0CFDYiT1xSiFYz/Qg=;
-	b=oNRRNgF92hp0lGn3L/nccqcvAhfrTQH8lUBgrLXM6ZUJ+bPWGQYI23+tusZUxsavf7V3
-	 W4pHvufWQsnK3Tv3IK5p+lvcGFln6E3cwZdfGpqGe86wbvMV5ksDn2s8O8aqCx5chh4um
-	 fw0zxt09BQRfDlF0K5hEEILZDd2eUUT9/Yp9hlwZUPnqEs1uReI/133dGHp/8lDdRlwSE
-	 aX+JbZqdI52vMGOnEMWxErv6TVcm9koAJU9BnGwTH503ZSfsfJupRoDwKn6XXpaBfdUAe
-	 xybFKOnnWYRNcTK2QXY9kLMq6Q9cOfkhe2Pj/2AcIpgkc3393+yOz5Sz05nML7emDXQ==
+	bh=cKI5O9Pkm4zYJdzsElCf3/PF6HRFUi7jOA6xG3qVAuw=;
+	b=4Fs+iYwYBMD3KQq4AZWtDnFeshqUBhngNG27E1RRvfeRr7U5g4uSLa2Md+dAzt9Adfiq
+	 mAnu+ki//tjtUlzaztKSt3xGBTVZyUwJIcnCricpqabp9DwixWJGQ/rewPi/c7ZcLD1mZ
+	 XUnOOvHpH6qnZSAM840sLvXtgZE3SDDZZ8BCCuaE2WLwIlsrOhaKrv3VbwMB5KEYmWyLi
+	 6kXeSRTM9IBZUA0Xpep+2gnBKg0J41LaorFTwRQIYjbQgjEa58b+Er2gr0vjij/CsBYWI
+	 uPgrLCRCAWcN0pWJF5obPMe4qNXdiVeg5N1skeaC8EarpdDhi8V2Oj2QGCSIQUHFdWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TgYFjn93;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s4wVaeVL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B07A606A330;
-	Sat,  7 Nov 2026 14:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D6F606A330;
+	Sat,  7 Nov 2026 14:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TgYFjn93
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1011F0089F;
-	Sat,  7 Nov 2026 14:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s4wVaeVL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F76E1F0089F;
+	Sat,  7 Nov 2026 14:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062928;
-	bh=1dkX4tMaNgdYaAlI5hDJy7pduZ0CFDYiT1xSiFYz/Qg=;
+	s=korg; t=1794062929;
+	bh=cKI5O9Pkm4zYJdzsElCf3/PF6HRFUi7jOA6xG3qVAuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TgYFjn93c6UYJKGbXyOiaH6hceVFa5AoKQRo+qHV4JjWjw95l/CLlj5tE9lp6zLVK
-	 fT5vYm/CPxt6mOpiJtUz78th7b0E8817vcv6YUXoM1ucFZ0dAgOCOpMoN/AP8AuFxX
-	 zlqLa1L5flfyND9dbNmByD3M7i0t3/EoDx4Jce2I=
+	b=s4wVaeVLI0vANZZL7l8/Z9fWkdlT13Hk0VwtuWwnG1YU8BksbJa+N6H6Z1x4YUS4x
+	 c5gqzPcpN7knqOkVAnQKt/ncnyU+FXAIyszLZt819aiHVtBPzVZqEAydOZrtNopEAX
+	 siRXB0Fh0JCG/MWHAD3dV5KlNJTrldlblmZtLEBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuchao Zhang <ndaugoing@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 200/869] md: validate bblog_size when loading v1.x badblocks metadata
-Date: Sat,  7 Nov 2026 08:48:02 -0500
-Message-ID: <20261107134858.810065700@linuxfoundation.org>
+Subject: [PATCH 6.18 201/869] crypto: qat - fix error source for QAT GEN6 transmit interface faults
+Date: Sat,  7 Nov 2026 08:48:03 -0500
+Message-ID: <20261107134858.838978631@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,58 +70,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuchao Zhang <ndaugoing@gmail.com>
+From: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
 
-[ Upstream commit ae5f89b23cb88667cfa1273b42d6a551db9c651e ]
+[ Upstream commit eeaf1ccd4c05d9c6ad67345862b36670e8e4dfc2 ]
 
-In super_1_load(), when the on-disk feature_map does not have
-MD_FEATURE_BAD_BLOCKS set but sb->bblog_offset is non-zero,
-rdev->badblocks.shift is initialized to 0 without validating
-sb->bblog_size.  The same field is validated in the
-MD_FEATURE_BAD_BLOCKS branch ("sectors > (PAGE_SIZE / 512)"), but this
-branch bypasses that check.
+TI_CD_PAR_STS faults were being decoded under ERRSOU1, which is
+incorrect for QAT GEN6 devices. They are actually raised on ERRSOU3.
 
-A forged on-disk superblock (malicious storage device or crafted
-image) can therefore carry an oversized sb->bblog_size.  When bad
-blocks are later recorded, super_1_sync() sets bb->size from
-sb->bblog_size and md_write_metadata() issues a bio larger than the
-single rdev->bb_page, reading beyond the page and leaking kernel
-memory contents to disk.
+Move the handling of TI_CD_PAR_STS faults as part of the ERRSOU3 logic
+and split the status bits by their actual source:
 
-sb->bblog_size is never modified by the kernel between load and sync,
-and the MD_FEATURE_BAD_BLOCKS branch already validates it, so checking
-it in this branch is sufficient to cover both paths.
+ - Bits 0-18 (TI_INT_ERR_DEVHALT) handled when a DEVHALT is signalled
+   and are counted once as ADF_RAS_FATAL.
+ - Bit 19 (TIMISCSTS) handled separately and counted as ADF_RAS_UNCORR.
 
-Fix this by rejecting an oversized sb->bblog_size with -EINVAL,
-matching the existing check in the MD_FEATURE_BAD_BLOCKS branch.
+Previously, a TI_INT_ERR_DEVHALT fault also incremented ADF_RAS_UNCORR
+in addition to ADF_RAS_FATAL. Since a DEVHALT is already fatal, remove
+the redundant increment.
 
-Fixes: 2699b67223ac ("md: load/store badblock list from v1.x metadata")
+Bits 20-25 of TI_CD_PAR_STS are unused/reserved on QAT GEN6. Remove them
+from the mask.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
-Link: https://patch.msgid.link/20260922044606.30774-1-ndaugoing@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 7f3401d0a506 ("crypto: qat - enable RAS support for GEN6 devices")
+Signed-off-by: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../intel/qat/qat_common/adf_gen6_ras.c       | 20 +++++++++++++---
+ .../intel/qat/qat_common/adf_gen6_ras.h       | 24 ++++++++++---------
+ 2 files changed, 30 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 44f44219ed7fe..8d9e111939f64 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -1930,8 +1930,11 @@ static int super_1_load(struct md_rdev *rdev, struct md_rdev *refdev, int minor_
- 			if (!badblocks_set(&rdev->badblocks, sector, count, 1))
- 				return -EINVAL;
- 		}
--	} else if (sb->bblog_offset != 0)
-+	} else if (sb->bblog_offset != 0) {
-+		if (le16_to_cpu(sb->bblog_size) > (PAGE_SIZE / 512))
-+			return -EINVAL;
- 		rdev->badblocks.shift = 0;
-+	}
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen6_ras.c b/drivers/crypto/intel/qat/qat_common/adf_gen6_ras.c
+index 967253082a984..902c4b1a23e3b 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_gen6_ras.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_gen6_ras.c
+@@ -323,14 +323,26 @@ static void adf_handle_ti_cd_par_sts(struct adf_accel_dev *accel_dev, void __iom
+ 	u32 ti_cd_par_sts;
  
- 	if ((le32_to_cpu(sb->feature_map) &
- 	    (MD_FEATURE_PPL | MD_FEATURE_MULTIPLE_PPLS))) {
+ 	ti_cd_par_sts = ADF_CSR_RD(csr, ADF_GEN6_TI_CD_PAR_STS);
+-	ti_cd_par_sts &= ADF_GEN6_TI_CD_PAR_STS_MASK;
++	ti_cd_par_sts &= ADF_GEN6_TI_CD_PAR_STS_TI_INT_ERR_DEVHALT_MASK;
+ 	if (ti_cd_par_sts) {
+ 		dev_err(&GET_DEV(accel_dev), "TI CD parity error: %#x\n", ti_cd_par_sts);
+-		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
+ 		ADF_CSR_WR(csr, ADF_GEN6_TI_CD_PAR_STS, ti_cd_par_sts);
+ 	}
+ }
+ 
++static void adf_handle_ti_misc_cd_par_sts(struct adf_accel_dev *accel_dev, void __iomem *csr)
++{
++	u32 ti_misc_cd_par_sts;
++
++	ti_misc_cd_par_sts = ADF_CSR_RD(csr, ADF_GEN6_TI_CD_PAR_STS);
++	ti_misc_cd_par_sts &= ADF_GEN6_TI_CD_PAR_STS_TI_MISC_MASK;
++	if (ti_misc_cd_par_sts) {
++		dev_err(&GET_DEV(accel_dev), "TI MISC CD parity error: %#x\n", ti_misc_cd_par_sts);
++		ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_UNCORR);
++		ADF_CSR_WR(csr, ADF_GEN6_TI_CD_PAR_STS, ti_misc_cd_par_sts);
++	}
++}
++
+ static void adf_handle_ti_trnsb_par_sts(struct adf_accel_dev *accel_dev, void __iomem *csr)
+ {
+ 	u32 ti_trnsb_par_sts;
+@@ -367,7 +379,6 @@ static void adf_handle_ti_err(struct adf_accel_dev *accel_dev, void __iomem *csr
+ 	adf_handle_ti_ci_par_sts(accel_dev, csr);
+ 	adf_handle_ti_pullfub_par_sts(accel_dev, csr);
+ 	adf_handle_ti_pushfub_par_sts(accel_dev, csr);
+-	adf_handle_ti_cd_par_sts(accel_dev, csr);
+ 	adf_handle_ti_trnsb_par_sts(accel_dev, csr);
+ 	adf_handle_iosfp_cmd_parerr(accel_dev, csr);
+ }
+@@ -591,6 +602,8 @@ static void adf_handle_timiscsts(struct adf_accel_dev *accel_dev, void __iomem *
+ 	if (!(errsou & ADF_GEN6_ERRSOU3_TIMISCSTS_BIT))
+ 		return;
+ 
++	adf_handle_ti_misc_cd_par_sts(accel_dev, csr);
++
+ 	timiscsts = ADF_CSR_RD(csr, ADF_GEN6_TIMISCSTS);
+ 	if (timiscsts) {
+ 		dev_err(&GET_DEV(accel_dev), "Fatal error in transmit interface: %#x\n",
+@@ -730,6 +743,7 @@ static void adf_handle_ti_int_err_devhalt(struct adf_accel_dev *accel_dev, void
+ 	if (!(errsou & ADF_GEN6_ERRSOU3_TI_INT_ERR_DEVHALT_BIT))
+ 		return;
+ 
++	adf_handle_ti_cd_par_sts(accel_dev, csr);
+ 	dev_err(&GET_DEV(accel_dev), "DEVHALT due to a TI internal memory error\n");
+ 	ADF_RAS_ERR_CTR_INC(accel_dev->ras_errors, ADF_RAS_FATAL);
+ }
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_gen6_ras.h b/drivers/crypto/intel/qat/qat_common/adf_gen6_ras.h
+index 66ced271d1733..11f7b2986f567 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_gen6_ras.h
++++ b/drivers/crypto/intel/qat/qat_common/adf_gen6_ras.h
+@@ -170,23 +170,25 @@ struct adf_ras_ops;
+ #define ADF_GEN6_TI_CD_PAR_ERR_MASK			0x500638
+ 
+ /*
+- * TI CD parity status mask
++ * TI CD parity status mask - TI_INT_ERR_DEVHALT bits
+  * BIT(0) - BIT(15) - CtxMdRam[0:15]_sts parity status
+  * BIT(16) - Leaf2ClusterRam_sts parity status
+  * BIT(17) - BIT(18) - Ring2LeafRam[0:1]_sts parity status
+- * BIT(19) - VirtualQ_sts parity status
+- * BIT(20) - DtRdQ_sts parity status
+- * BIT(21) - DtWrQ_sts parity status
+- * BIT(22) - RiCmdQ_sts parity status
+- * BIT(23) - BypassQ_sts parity status
+- * BIT(24) - DtRdQ_sc_sts parity status
+- * BIT(25) - DtWrQ_sc_sts parity status
+  */
+-#define ADF_GEN6_TI_CD_PAR_STS_MASK \
++#define ADF_GEN6_TI_CD_PAR_STS_TI_INT_ERR_DEVHALT_MASK \
+ 	(BIT(0) | BIT(1) | BIT(2) | BIT(3) | BIT(4) | BIT(5) | BIT(6) | \
+ 	 BIT(7) | BIT(8) | BIT(9) | BIT(10) | BIT(11) | BIT(12) | BIT(13) | \
+-	 BIT(14) | BIT(15) | BIT(16) | BIT(17) | BIT(18) | BIT(19) | BIT(20) | \
+-	 BIT(21) | BIT(22) | BIT(23) | BIT(24) | BIT(25))
++	 BIT(14) | BIT(15) | BIT(16) | BIT(17) | BIT(18))
++
++/*
++ * TI CD parity status mask - TIMISCSTS bit
++ * BIT(19) - VirtualQ_sts parity status
++ */
++#define ADF_GEN6_TI_CD_PAR_STS_TI_MISC_MASK		BIT(19)
++
++#define ADF_GEN6_TI_CD_PAR_STS_MASK \
++	(ADF_GEN6_TI_CD_PAR_STS_TI_INT_ERR_DEVHALT_MASK | \
++	 ADF_GEN6_TI_CD_PAR_STS_TI_MISC_MASK)
+ 
+ /* TI TRNSB parity status */
+ #define ADF_GEN6_TI_TRNSB_PAR_STS			0x500648
 -- 
 2.53.0
 
