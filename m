@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065125;
-	b=xDmVWadHhQHuUPhFLiQ5mvb7zluxBzpzB2xZWQMMHdDhjpj/51BpjPFd39VoGGCcqCaz
-	 ITOZ9y7wM6ZHtId8wUHnpaC82qf9ET4zKs/1wftQXgLtHWSSBSJCnIftPSiPtboaYVkM9
-	 lox9C+nXtyGSXbKVb8gyx+7BXg+QuxiD45I1uZjeSaw/Q/t1qi1yobgTJGNnczuWoL38X
-	 2A76Zsx1LkfSE23IWOwnYpLi+/tXpzi7o0aI9qydYPA0c/VMInVnpt47HsVmrzbnka5mF
-	 PvMJVM+5qTtmPrlWPL+dQ52+Su/sp+yigBnoExr5joOg1rc/9h1flZgrvxx6fWz8szA==
+	t=1794065126;
+	b=UxyInaWze1W49hYbNfjxGmJIKlv6WhgFT4MKeErHrAfQ/0MDch2oYAeg+837X/oItGIg
+	 YsXU0uGULYhSMwP0BHb/Goe2KJQtG0OLTTiXR21FAZpmJrMA1PH/eVgE4ErZ3y4SPN+NW
+	 ualOPVwrOlzVkBtE/rsxOwjl7qHJb//zJ+FSi3ykW5zRxrKqayh0E8wzij2aRQN3Hb2ON
+	 hcMcodEeQDmuh4VjqdQTpUVTbyDOEWHBSNkTPJOq4Hd7uC1f7ylS8Crkw35VwNmXzVh1Y
+	 drn7yL31gK6U+I1dVuhuZiw7HcX05sA6PslYNVWNsotqzUOCmr2S2sKvjf8eixI6a9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065126;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qyY7ynoqoUGe4Q3wRrYhKMRyXMVofh/+ZzJX2BAuZkI=;
-	b=pjvXY3t0K9IWc7EsqnAXByl2IL0SRhqdHxRASsmSzWhlp5mrP1MXFPnYjmAsOuliZfa1
-	 zW7VQ3xhOmSIqpzauospdHZ4Os+ng9NacZF6WDf9BKpoqIUQJjHME3CmPdAYNgJckqIIO
-	 vZu0co8gTC+Kr2eSJ2fI7OVlmWSQeMnLhS2qMTns8ZtZJz3oJ1FunJ7KANc/ET/JaBn7U
-	 yUKV4szSIEtNZ0bQkaJjKLdOuvsJG/2i6dgisR7dmI9EZzNCAMlzqi7sMoQwZPi+BG25t
-	 JTpM4jecsgOTXsZB+8d6eT2+jl5XADDjCCk1UVNtMGcBd7CpH1RHZE42vRtrHXniDpQ==
+	bh=clOSdL3Ulzmse9czI1sKwy3viecDxLzwOxs3VMEZ8RM=;
+	b=pz5NS0hUITeDriKiNeA3fI6u3mSQOVlvab76DjKtN5aiQ2vLyEAxQBMmWFbhbWeqSq8B
+	 UAncs7pp/ETIqYZcF+SoPQJLTQAaMlcwcF+0AQ//CevFBQmM+AiZV+9HYpgyVdIDv+dmE
+	 Q5ORGuEaMjFYkX3g2zwYHQiSJoqXMH+B0CEzXTitBWvmHdbySSLtRSsuQ0esA+YZM9Og9
+	 pjxSABYMzPEUT2KnYT5orl4XGt+qDyWLQIPHT0W9EK/Gylnp3KUyxDGVaiifxLU776iZ5
+	 axeCISf+Uq5a60er1Xvua7009fWbKwnB1Ly9OmLR9bmiWyAi3PMfF/UZa0gIlKcX+oQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BcTL8Rg4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xgF7XM2T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E590606A32D;
-	Sat,  7 Nov 2026 15:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B88606A32D;
+	Sat,  7 Nov 2026 15:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BcTL8Rg4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A3F1F0089F;
-	Sat,  7 Nov 2026 15:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xgF7XM2T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005871F0089F;
+	Sat,  7 Nov 2026 15:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065125;
-	bh=qyY7ynoqoUGe4Q3wRrYhKMRyXMVofh/+ZzJX2BAuZkI=;
+	s=korg; t=1794065126;
+	bh=clOSdL3Ulzmse9czI1sKwy3viecDxLzwOxs3VMEZ8RM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BcTL8Rg4uXWLZoLctZgsUJLgvC9uxXZGsf+n8akuEKEL90xTSYlrCZEwCcPHI15bT
-	 iMGvbBUzkUCnjevODOoZrE4C3t4Ncw3n4MgCmW5Np4Au3hEMg3PgttSHficVkfI9IY
-	 7Ntvun4qG4NaRkNUQKdO3CWxvNOdw47Phi/wqaNk=
+	b=xgF7XM2TidpJAgjlLTqkOoimVl/jIvvfQwhVOA3faB3bem6L9BGElvGKVxpH9mo8w
+	 ttrruwORU0e+6yV5fwDoeXeoSDsqY9vbXPJTOVvsEn1S+crrWaF4LPbIhc2s81l9RX
+	 fiQuIRY5E8SacS1fk2vk/uSMYvOf3eFUvVSeSlQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0948/1257] gpio: pca953x: Preserve wakeup accounting on parent IRQ failure
-Date: Sat,  7 Nov 2026 08:54:04 -0500
-Message-ID: <20261107135005.529746434@linuxfoundation.org>
+Subject: [PATCH 7.3 0922/1257] ntfs: do not clear the volume dirty bit during sync
+Date: Sat,  7 Nov 2026 08:53:38 -0500
+Message-ID: <20261107135004.819864153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,60 +70,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit a38bf551726a21c9bcc001b02164f30378b64b64 ]
+[ Upstream commit 4a1bb54f571cbef67a7c470a3139ffec1a15a8e4 ]
 
-pca953x_irq_set_wake() updates wakeup_path before asking the parent
-IRQ controller to change its wake state. If irq_set_irq_wake() fails,
-the IRQ core rolls back its wake state but the driver's counter remains
-changed.
+ntfs_sync_fs() clears VOLUME_IS_DIRTY while the volume is still mounted
+read-write, so a sync running concurrently with an in-flight metadata
+modification can clear and persist a bit that was just set: the
+modification then lands on a volume that is clean on disk, and a crash
+does not run chkdsk.
 
-A failed enable can therefore leave the expander marked as part of the
-wakeup path when no child IRQ has successfully enabled wakeup. A failed
-disable can make the driver stop retaining power even though wakeup is
-still enabled. The suspend and resume paths use this counter to decide
-whether to disable or enable the regulator.
+Stop clearing the bit in ntfs_sync_fs() and leave the clearing to the
+remount-to-read-only path, which the VFS reaches only after
+sb_prepare_remount_readonly() has drained in-flight writers, and to
+ntfs_put_super(), which runs after evict_inodes() on a quiesced
+filesystem.  A mounted read-write volume now keeps the dirty bit until
+it is dismounted cleanly, which matches the NTFS semantics; the cost is
+a needless chkdsk if the machine crashes between a sync and the unmount.
 
-Update wakeup_path only after the parent operation succeeds, leaving it
-unchanged on error.
+A recorded error state is still persisted right away when the
+filesystem is synced: with NVolErrors() set,
+ntfs_sync_volume_dirty_state() can only set the bit, never clear it,
+so it cannot lose a modification the way the old unconditional call
+did.  This keeps the error report from being lost to a crash on a
+volume that has seen no modification; an error recorded after the
+last sync is still only persisted at the next quiescent transition.
 
-Fixes: f70fbc15bae2 ("gpio: pca953x: Configure wake-up path when wake-up is enabled")
+sync_blockdev() and blkdev_issue_flush() are both called and the first
+error is returned, so a writeback failure neither hides a flush failure
+nor skips it.
+
+A RWF_NOWAIT write still blocks in the marking when the volume looks
+clean, as it already did on the base; a non-blocking marking is
+follow-up work.
+
+Reported-by: Baolin Liu <liubaolin@kylinos.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
-Fixes: f70fbc15bae2c89f ("gpio: pca953x: Configure wake-up path when wake-up is enabled")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20261018161042.3298045-1-sahaj123.sc@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ntfs/file.c  |  7 ++++---
+ fs/ntfs/super.c | 31 ++++++++++++++++++++++++-------
+ 2 files changed, 28 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index aac9ea7520b60..869ed4264d48a 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -838,13 +838,18 @@ static int pca953x_irq_set_wake(struct irq_data *d, unsigned int on)
+diff --git a/fs/ntfs/file.c b/fs/ntfs/file.c
+index e3020a4bf805a..e290616be07d0 100644
+--- a/fs/ntfs/file.c
++++ b/fs/ntfs/file.c
+@@ -637,9 +637,10 @@ static ssize_t ntfs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 
+ 	/*
+ 	 * The volume must be marked dirty before the modification is made,
+-	 * without an unlocked check of the in-memory flag: ntfs_sync_fs()
+-	 * can clear the bit concurrently and the modification would then
+-	 * land on a volume that is clean on disk.
++	 * without an unlocked check of the in-memory flag: the dirty bit
++	 * is only cleared at the quiescent transitions, under the same
++	 * $Volume mrec_lock this call takes, so an unlocked skip could
++	 * lose the set to one of them.
+ 	 */
+ 	ntfs_set_volume_flags(vol, VOLUME_IS_DIRTY);
+ 
+diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
+index e13ede3cd836f..c3d73cd6909eb 100644
+--- a/fs/ntfs/super.c
++++ b/fs/ntfs/super.c
+@@ -493,8 +493,9 @@ int ntfs_set_volume_flags(struct ntfs_volume *vol, __le16 flags)
+  * This is the single point that persists the in-memory error state to disk.
+  * The runtime error paths only record NVolErrors() because they run under a
+  * variety of ntfs locks the dirty-bit write cannot be taken under (runlist
+- * locks, vol->lcnbmp_lock, vol->mftbmp_lock, mrec_locks); the first
+- * ntfs_sync_fs(), a remount, or the unmount then persists the flag here.
++ * locks, vol->lcnbmp_lock, vol->mftbmp_lock, mrec_locks); a sync of a
++ * volume with recorded errors, a remount to read-only, or the unmount,
++ * then persists the flag here.
+  *
+  * A hibernated volume is not written from these persistence paths:
+  * resuming Windows from a modified image corrupts it, so the dirty bit
+@@ -2029,7 +2030,7 @@ static void ntfs_shutdown(struct super_block *sb)
+ static int ntfs_sync_fs(struct super_block *sb, int wait)
  {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct pca953x_chip *chip = gpiochip_get_data(gc);
-+	int ret;
+ 	struct ntfs_volume *vol = NTFS_SB(sb);
+-	int err = 0;
++	int ret, err = 0;
+ 
+ 	if (NVolShutdown(vol))
+ 		return -EIO;
+@@ -2037,14 +2038,30 @@ static int ntfs_sync_fs(struct super_block *sb, int wait)
+ 	if (!wait)
+ 		return 0;
+ 
+-	/* If there are some dirty buffers in the bdev inode */
+-	if (ntfs_sync_volume_dirty_state(vol)) {
++	/*
++	 * The volume dirty bit is deliberately not cleared here: a sync
++	 * running concurrently with an in-flight modification could clear
++	 * and persist a bit that was just set, leaving the modification
++	 * on a volume that is clean on disk.  The bit is only cleared at
++	 * the quiescent state transitions, remounting read-only and clean
++	 * unmount.  A recorded error state, however, is persisted right
++	 * away so that it is not lost to a crash on a volume that has
++	 * seen no modification; with NVolErrors() set this can only set
++	 * the bit, never clear it.
++	 */
++	if (NVolErrors(vol) &&
++	    ntfs_sync_volume_dirty_state(vol)) {
+ 		ntfs_warning(sb, "Failed to sync dirty bit in volume information flags.  Run chkdsk.");
+ 		err = -EIO;
+ 	}
+ 	sync_inodes_sb(sb);
+-	sync_blockdev(sb->s_bdev);
+-	blkdev_issue_flush(sb->s_bdev);
++	ret = sync_blockdev(sb->s_bdev);
++	if (ret && !err)
++		err = ret;
 +
-+	ret = irq_set_irq_wake(chip->client->irq, on);
-+	if (ret)
-+		return ret;
- 
- 	if (on)
- 		atomic_inc(&chip->wakeup_path);
- 	else
- 		atomic_dec(&chip->wakeup_path);
- 
--	return irq_set_irq_wake(chip->client->irq, on);
-+	return 0;
++	ret = blkdev_issue_flush(sb->s_bdev);
++	if (ret && !err)
++		err = ret;
+ 	return err;
  }
  
- static void pca953x_irq_bus_lock(struct irq_data *d)
 -- 
 2.53.0
 
