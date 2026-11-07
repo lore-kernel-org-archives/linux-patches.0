@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062373;
-	b=VhRWW0zUa7bq/1zItTSIiAKq3Do9G9teI5wBAsPdGqU8ubdzLjKNIZatGSX9ipcJ8tP2
-	 lN6d4sC4UoTExq9HQY1M5/kRGLQp9MSlRWeFFPNgjB3FwWagyngd5IbHqiK8rAM3O00yz
-	 PqYyx/wF2+o+Ox+WJHWUJ3UK+Yr2v7smT/Mjis4sXfV+r+wuny6rfnmnEjowm6GtsmgB8
-	 PN6n8akRDFCPKDHnkG23dIU1jsTO2XZZ4ofRTj9XapOvwxK5pZTkBiS+vc5rRCQ7onSfB
-	 cZtdVr6fB95F8z3HzeppbAWNoIfZdTLSJOFuG/4Vt3lOcRexcPLkmObTcKKcWWhBKlQ==
+	t=1794062374;
+	b=XYhML9CIwl55dcUjcm5TtCtMqdlebGowrnKzMXTKaJzHn6lyjO6SwlF+LkGJ5EPwyud/
+	 waNmJvNulsoeDznW6IISJ8W+RCT8mUkBgL/AEol8+/beLWg0Q3bC+ck4PbMsybIX6vilm
+	 5ha1Uu3XMDvP5YRjbWzneFakPndSSFGOgxFLuTDog2Q6YHTuTPyrELbAryrOn/CCnuZMh
+	 j1Z8IyKizCQLugXx+drOQ7HKTTnLRfLzROyAGD9vlY+CaQrQ9zzdlbErZlahqPkepkHwX
+	 GhvyUebK7oOB3B+uggkwX55zWrYv3rg5DzWns5jlxzT3zH6jbW1cL/Y2KVAr3K4Gs9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062374;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=af+i+EcHj1d3TRiQJcz/3qGalMKHF74ntRefhcI+Atc=;
-	b=HlJ4DGetTktmOmwlndsTfTSIyvCuYvk8nntRqZOO1xq1PHZ3BtQoPUJjPw7MbWxpHtVj
-	 WHvsColn40lLK7iXf7mDs3SqwO2Tz3XDalYW9HeC5cD2GKsNQWz02xhOP6bdOBfFOlU3S
-	 Qdd7GKwA5zeRRG+95H47gjugG/EbsDUihPS+V7ii2s15MmEKi/hEV6edxKI6vFSMpSD8z
-	 BdOrozoEac1Tfs2rwHI16+K6gD0H4hfey5ZZe/uoIBN9aZyK18N1Bd7uIPRoSOzhIq6Pq
-	 5wh4Z8ckb9KEIADQokn3KXKyyCdzdx7oP8aJQQD45u2LmOwZonLcgcZgQu0KB3EajWA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=5fy2XKZ738ovi9hR+pilxVsTAHC7kiYe1BaDcmTAWy4=;
+	b=n05UBLmydvd0jEwoYjRYADccho4AvLs2bD+5TQNMEa8HmwJCZfEP4oVwivGEwwOXOxHT
+	 VTKAeoVcg/zaFGmhn2ZnUTMoQbrHj60axYAqy1FiAAUSWVkmtrYMBTZrP/wmbxVOLdUFO
+	 2EBNRbJd6lPu9aAeLp3kG7l7sUQBeYBUWpVAITXrFG2pnPThlehtbS3DN6dEBSgr8CiQ1
+	 hq9Tba040uwvu3mN5i2N2GDHQuoLbrSVH10J82RKad+KDKqXk/F3ezIqVKNOJHIX6mrh8
+	 aY0HzL8p/Ww9CQ20DduRQcvXUY8FPU2rX6pz0sQ/A8eHVyumESWsWVq+uzNX8tMmSlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="AA/pnHRD";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRItTZIN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C5A606D838;
-	Sat,  7 Nov 2026 14:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35F8606A33A;
+	Sat,  7 Nov 2026 14:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AA/pnHRD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764DD1F0089F;
-	Sat,  7 Nov 2026 14:39:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRItTZIN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A006A1F0089F;
+	Sat,  7 Nov 2026 14:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062372;
-	bh=af+i+EcHj1d3TRiQJcz/3qGalMKHF74ntRefhcI+Atc=;
+	s=korg; t=1794062373;
+	bh=5fy2XKZ738ovi9hR+pilxVsTAHC7kiYe1BaDcmTAWy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AA/pnHRDNtGiPdhxvw+2YniieIU+3Ce8Ug1zbYuZEoTDggGq1xHK/ezZ1kIz1UNes
-	 fFDVmpJI8Magw5VFYeVEEa6UrXpaTzxfciwpZTYrpH4Mmr98wXOdh1dxVDv6gMdfzD
-	 IIMsP8qvPLINKSz157wv7vYY5pkp52JJ6xb5EPbU=
+	b=iRItTZINmMbNUJG7tIwlu6iT8rG7/Y2REVPqSiFBanlrpLWLGvPX+zoTsBSDio4bO
+	 d2W7uvh+u23LpgQ0vNf1HkaLfLTm7k8joMbMnJkcp8QZPOE9L63ALT/tm9izR/TluW
+	 X5/2hJ2Izd6xsqJJPcyT1TUU12qz4gNfNpZhF8UY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nikolaj=20Klitlund=20B=C3=B8rty?= <nbn@sj.dk>,
+	Bui Viet Dung <dungvn2345@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1296/1536] Bluetooth: btusb: Add device ID for Realtek RTL8761BUE (StarTech AV53C1)
-Date: Sat,  7 Nov 2026 08:55:12 -0500
-Message-ID: <20261107135034.191675021@linuxfoundation.org>
+Subject: [PATCH 6.12 1297/1536] Bluetooth: 6lowpan: Pin module for 6lowpan_control debugfs file
+Date: Sat,  7 Nov 2026 08:55:13 -0500
+Message-ID: <20261107135034.217306585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,72 +62,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikolaj Klitlund Børty <nbn@sj.dk>
+From: Bui Viet Dung <dungvn2345@gmail.com>
 
-[ Upstream commit 1430308fc9d47a801a305700cd444b1a0051d14a ]
+[ Upstream commit 8368f0c2cde48c09ed70644059f24172b0c59f52 ]
 
-Add the USB ID 0x14b0:0x047a for the StarTech AV53C1-USB-BLUETOOTH
-adapter, a Realtek RTL8761BUE based Bluetooth 5.3 dongle.
+An open debugfs file retains lowpan_control_fops in the debugfs proxy
+state. However, lowpan_control_fops has no .owner set to THIS_MODULE.
+As a result, full_proxy_open_regular() calls fops_get() which succeeds
+without taking a reference to the bluetooth_6lowpan module.
 
-Without this entry btusb treats the device as a generic Bluetooth
-adapter and never loads the Realtek firmware, leaving the controller on
-its ROM firmware. In that state it advertises and scans actively, but
-never reports advertisements during passive scanning. LE connections
-initiated by the kernel wait for a passive-scan report before issuing
-LE Create Connection, so connecting and pairing from BlueZ time out
-without any error from the controller.
+With CONFIG_BT_6LOWPAN=m, a userspace process can keep the debugfs file
+descriptor for 6lowpan_control open across module unload
+(delete_module / rmmod bluetooth_6lowpan). When the process subsequently
+closes the file descriptor, full_proxy_release() accesses the already
+freed and unmapped lowpan_control_fops table, causing a kernel page fault
+or oops.
 
-The same product is also sold with the ID 0x2c0a:0x8761, which is
-already supported.
+The issue was discovered via manual code audit of
+net/bluetooth/6lowpan.c.
 
-lsusb -v output for the device:
+Set .owner = THIS_MODULE on lowpan_control_fops so that debugfs pins
+the module until all open file descriptors have finished.
 
-Bus 001 Device 010: ID 14b0:047a StarTech.com Ltd. Bluetooth Radio
-Device Descriptor:
-  bcdUSB               1.10
-  bDeviceClass          224 Wireless
-  bDeviceSubClass         1 Radio Frequency
-  bDeviceProtocol         1 Bluetooth
-  idVendor           0x14b0 StarTech.com Ltd.
-  idProduct          0x047a
-  bcdDevice            2.00
-  iManufacturer           1 Realtek
-  iProduct                2 Bluetooth Radio
-  iSerial                 3 00E04C239987
-  bNumInterfaces          2
-    Interface Descriptor:
-      bInterfaceClass       224 Wireless
-      bInterfaceSubClass      1 Radio Frequency
-      bInterfaceProtocol      1 Bluetooth
-
+Fixes: 6b8d4a6a0314 ("Bluetooth: 6LoWPAN: Use connected oriented channel instead of fixed one")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nikolaj Klitlund Børty <nbn@sj.dk>
+Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/6lowpan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 32465e6736d2a..84b1ee064f64f 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -816,6 +816,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x37ad, 0x0600), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x14b0, 0x047a), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 1cb37fbb668f9..c0cdb99c44e2c 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -1200,6 +1200,7 @@ static int lowpan_control_open(struct inode *inode, struct file *file)
+ }
  
- 	/* Additional Realtek 8821AE Bluetooth devices */
- 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
+ static const struct file_operations lowpan_control_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= lowpan_control_open,
+ 	.read		= seq_read,
+ 	.write		= lowpan_control_write,
 -- 
 2.53.0
 
