@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064610;
-	b=JdogNFJROmyQeZBsh/Jkmmqcs5YAikiLaZm8y/2Tzyi8KAt0zsIjZH0SGZ1uwewuWVXl
-	 KyW++MxZ3vQsWFsklEicoqHYPuNudA+MDkv4Je0XxwtwElP7Kmejk0jk9h1p3vl5PzVb3
-	 99ifLYB+6EGwk9I5GR79RyCkZguvZeMml3hS6JwGV6HYCEq9KkFeYB0Z0f4HLDrfPp8+F
-	 1l6LKXxkrDZfpWDUDnrZxoJZpsZEZc0peqVMQoyCZ+gQZFXjq8Uix+f877T5VSRT3Iyo3
-	 RtK8n5IV35SY832YN4KP8yXqFveZ7vehkKCCC8dnpDhlwkF24Be6zuEdoucbY2p+tqA==
+	t=1794064611;
+	b=tUmltQAveZdfZArKe3uicsO2O5+qaI3NAW817sl+5rR2TfeHgaAE7FcMXMbb/mFyNicW
+	 AhLrrm+vbHcTEodWeKkY7FYJlg6j1IoeMPTz02EAgQhSJog1QZeBe1qlMpV+M12pP+sx3
+	 0hg1axikKTslnXnIxP2ax+66WQqUK+dP3JSsSChixpYNF3UOKfZ3IMDrf6objmbqkBlGS
+	 NoJBllTtr7bQUi2HOIgJ5I2bInZoiirUdoTEWCgvZfqHwVMRK9b7W6WEGuH9cZza1TtxD
+	 Io4tez8bn6gV0zOUGbcrMuo5qu29Z0yxREmhrsotqm2eA/KgYO0XYxJDnNOXlbBFTkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064611;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jalbNmZ+GCa+Pzl39MlUQDg+dYDvlik+BG4r20ww36A=;
-	b=Z3MCn4WCeO+TFuq1cXauWQ55fyHHRWxVng5kXzjMOS0zoYwoX2u0u1hfzOpTcn6ctJkp
-	 19jIZQj9CS/P56c/WuBOidGEyHngeD63kg7tUEQySk5QixEKSqnLB0usXA6pri/LUAfBu
-	 zNE7lrPNdkvH2nVYZrcgCtBMXpv7uqUQZYCm0L7A4v8xhSGc1T+muvEo1ALy2PAs0J/pJ
-	 JpyybOoFKPUwASlS0kRs4aft9g9Acf4iTMSdocK+E1QkH1x+KfsmM+4iI6XRT/Hn4oy3s
-	 As/QgS7Y1e+xcOikl5qUNtUtb8XZN6aPykDAab7gJjiMgzXcUp/dMQDkRM2ULVnIsTg==
+	bh=QOabKzNsJfA8mVcOdcb7DcIJ2s3OwfTYgcyEFkQZqo4=;
+	b=jPvyI/enzgehySTKpm+SXYeT9h5v/ZUSQSkXbjrVa7c4gzTPjfeXtLFEnjPraPhRoj4P
+	 fnn9lMyEB66tEHdF5s3yHIzGm6qOo1W9YE4uNqiWJuvKPcnlz3Piyd9UhfghnvfmsmTsm
+	 nk+LNRURNgEsFUlnJzXpwm/aPZunoeEkV+V2DpteGCKmPIat/DIjBseIqmDN3IuhuRKMX
+	 ObR22zO4hJHpgsbkMHg1yo0WbeZfPeTcyK7HROSWicosTnI8kAJX18K+nTFIivG8MPIvU
+	 Pg4xc5+pykWsf12OmrbYyvcCThwQm9+fjjFFZOz/vBRVvtlDTqOohmmckOb1TOTiG5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MT7BB4Q3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rgKey0jf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CC0606EE88;
-	Sat,  7 Nov 2026 15:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BB6606EE88;
+	Sat,  7 Nov 2026 15:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MT7BB4Q3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759EC1F0089F;
-	Sat,  7 Nov 2026 15:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rgKey0jf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C553E1F0089F;
+	Sat,  7 Nov 2026 15:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064609;
-	bh=jalbNmZ+GCa+Pzl39MlUQDg+dYDvlik+BG4r20ww36A=;
+	s=korg; t=1794064611;
+	bh=QOabKzNsJfA8mVcOdcb7DcIJ2s3OwfTYgcyEFkQZqo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MT7BB4Q3tOtFMm2VZR9367QlJcrq6vFXCxSjNo1oM1LPjTfhnKH5+PU9iMglMA02K
-	 9YuPY/oMu0zIpvVSTCR5R0h73led1yEjRdLioRs+iXMGJf83mNItz3nOj++ar4dJaX
-	 b3PZUQvGczo/z+/iyxZf8QrzOOyvKUXZM990rVFk=
+	b=rgKey0jfWcYk/CEmZku4vlc4W52QuyCZYV1AR6DMstttRGPB2x3hdV9Q1MCLvmvzc
+	 S+21s762aZPDsXPnlPBmGW1b9qaLnifllS9eQCpeSjeNkoLNkA8MZ0f/7jrhpcqYGc
+	 12LX6ZQ1U5+Y+cXxolC9FXCA8OuqVEUy8DkXIplw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Harshbarger <handyhandyman.adam@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	I Hsin Cheng <richard120310@gmail.com>,
+	stable@kernel.org,
+	Johan Hovold <johan@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0620/1257] lib/plist: fix plist_requeue() corrupting order in the last bucket
-Date: Sat,  7 Nov 2026 08:48:36 -0500
-Message-ID: <20261107134956.423417140@linuxfoundation.org>
+Subject: [PATCH 7.3 0621/1257] usb: core: dont set drvdata to NULL in usb_unbind_interface()
+Date: Sat,  7 Nov 2026 08:48:37 -0500
+Message-ID: <20261107134956.451712343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,93 +70,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Harshbarger <handyhandyman.adam@gmail.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 43c91b1522435429a63d175f5a953e6f727a4f88 ]
+[ Upstream commit 8f0d16174102863936d583c90258ea02bf06205c ]
 
-plist_requeue() is meant to move a node to the end of its own priority
-run.  When the node heads the *last* priority bucket it is instead placed
-at the head of the whole list, leaving the plist unsorted:
+usb_unbind_interface() serves as the remove() callback of struct
+usb_driver and calls usb_set_intfdata(intf, NULL) to clear the bus
+device private data pointer.
 
-  built:      A(prio 0) B(prio 1) C(prio 1)
-  requeue(B): B(prio 1) A(prio 0) C(prio 1)
-  expected:   A(prio 0) C(prio 1) B(prio 1)
+However, the driver core code already sets the bus device private data
+pointer to NULL in device_unbind_cleanup() *after* devres_release_all(),
+which makes the call redundant.
 
-prio_list is a *headless* circular ring of the nodes that lead each
-priority bucket.  The shortcut added by commit 95d4b3450ebe ("lib/plist.c:
-add shortcut for plist_requeue()") takes
+In addition, it can create unexpected NULL pointer dereference scenarios
+when drivers use managed APIs.
 
-	iter = list_entry(iter->prio_list.next, struct plist_node,
-			  prio_list);
-	node_next = &iter->node_list;
+	int probe(struct usb_interface *intf,
+		  const struct usb_device_id *id)
+	{
+		struct data *data;
+		int ret;
 
-which from the last bucket wraps round to the *first* bucket, so node_next
-ends up pointing at the head of the list rather than at its end.  The
-plist_for_each_continue() loop immediately below it computes the correct
-answer (&head->node_list) for that case.
+		data = devm_kzalloc(&intf->dev, sizeof(*data), GFP_KERNEL);
+		if (!data)
+			return -ENOMEM;
 
-With any bucket after it the shortcut is correct, which is why this went
-unnoticed: the benchmark in that commit measured elapsed time and never
-checked the resulting order.
+		ret = devm_device_add_group(&intf->dev, &foo_attr_group);
+		if (ret)
+			return ret;
 
-Keep the shortcut -- it is a real win -- but exclude the case where iter's
-bucket is the last one, which is exactly when its ring successor is the
-first bucket again.
+		...
+	}
 
-Reachable from mm/swapfile.c, which rotates swap_avail_heads[] with
-plist_requeue().  It takes three or more swap devices: at least two
-distinct priorities, so that a later bucket exists for the ring to wrap
-round from, and two or more devices sharing the lowest priority, so that
-plist_requeue() does not return early.  One device per priority returns
-early at the node->prio != iter->prio test.  A single priority is also
-safe, but for a different reason worth stating: with one bucket no node is
-ever linked onto prio_list at all -- plist_add() skips it for the first
-node and for every node whose predecessor shares its priority -- so
-list_empty(&iter->prio_list) holds and the shortcut is never entered.
+	ssize_t foo_value_show(struct device *dev, struct device_attribute *attr,
+			       char *buf)
+	{
+		struct usb_interface *intf = to_usb_interface(dev);
+		struct data *data = usb_get_intfdata(intf);
 
-Tested by driving three implementations -- the pre-95d4b3450ebe code,
-current mainline, and this patch -- through 1,084,492 identical random
-add/del/requeue operations over 24 nodes and 1..5 distinct priorities,
-comparing the resulting node_list node for node after every operation:
+		/* Potential NULL pointer dereference */
+		return sysfs_emit(buf, "%u\n", data->value);
+	}
 
-  variant             differs from pre-95d4b3450ebe  left list unsorted
-  pre-95d4b3450ebe    -- (reference)                                  0
-  mainline                                  289,297             276,660
-  this patch                                      0                   0
+Nothing prevents usb_unbind_interface() to race with foo_value_show()
+and set usb_set_intfdata(intf, NULL).
 
-Link: https://lore.kernel.org/20260903222456.1881786-1-handyhandyman.adam@gmail.com
-Fixes: 95d4b3450ebe ("lib/plist.c: add shortcut for plist_requeue()")
-Signed-off-by: Adam Harshbarger <handyhandyman.adam@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Assisted-by: Claude:claude-opus-5
-Cc: I Hsin Cheng <richard120310@gmail.com>
-Cc: <stable@vger.kernel.org> # v6.15+
+The same applies to the unwind path of usb_probe_interface(), which also
+calls usb_set_intfdata(intf, NULL).
+
+Besides that, the Rust driver core code manages a driver's bus device
+private data and destroys it in device_unbind_cleanup().
+
+If usb_unbind_interface() sets the pointer to NULL prematurely, the Rust
+driver core code sees NULL, and hence skips the destructor of the bus
+device private data, which leaks all its resources.
+
+Thus, drop usb_set_intfdata(intf, NULL) from usb_probe_interface() and
+usb_unbind_interface(), and move it to usb_driver_release_interface(),
+which manually calls the remove() callback of struct usb_driver and
+hence can't rely on the driver core.
+
+Cc: stable@kernel.org
+Fixes: a995fe1a3aa7 ("rust: driver: drop device private data post unbind")
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/20261010135131.286498-1-dakr@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/plist.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/core/driver.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/lib/plist.c b/lib/plist.c
-index a5bef38add431..b0273533c04d2 100644
---- a/lib/plist.c
-+++ b/lib/plist.c
-@@ -174,8 +174,15 @@ void plist_requeue(struct plist_node *node, struct plist_head *head)
- 	/*
- 	 * After plist_del(), iter is the replacement of the node.  If the node
- 	 * was on prio_list, take shortcut to find node_next instead of looping.
-+	 *
-+	 * prio_list is a headless ring, so from the LAST bucket ->next wraps
-+	 * round to the first one; in that case node_next is the list head.
- 	 */
- 	if (!list_empty(&iter->prio_list)) {
-+		struct plist_node *first = plist_first(head);
-+
-+		if (iter->prio_list.next == &first->prio_list)
-+			goto queue;
- 		iter = list_entry(iter->prio_list.next, struct plist_node,
- 				  prio_list);
- 		node_next = &iter->node_list;
+diff --git a/drivers/usb/core/driver.c b/drivers/usb/core/driver.c
+index bf660b15a0f60..9af0184276c10 100644
+--- a/drivers/usb/core/driver.c
++++ b/drivers/usb/core/driver.c
+@@ -410,7 +410,6 @@ static int usb_probe_interface(struct device *dev)
+ 	return error;
+ 
+  err:
+-	usb_set_intfdata(intf, NULL);
+ 	intf->needs_remote_wakeup = 0;
+ 	intf->condition = USB_INTERFACE_UNBOUND;
+ 
+@@ -497,7 +496,6 @@ static int usb_unbind_interface(struct device *dev)
+ 	} else {
+ 		intf->needs_altsetting0 = 1;
+ 	}
+-	usb_set_intfdata(intf, NULL);
+ 
+ 	intf->condition = USB_INTERFACE_UNBOUND;
+ 	intf->needs_remote_wakeup = 0;
+@@ -644,6 +642,7 @@ void usb_driver_release_interface(struct usb_driver *driver,
+ 	} else {
+ 		device_lock(dev);
+ 		usb_unbind_interface(dev);
++		dev_set_drvdata(dev, NULL);
+ 		dev->driver = NULL;
+ 		device_unlock(dev);
+ 	}
 -- 
 2.53.0
 
