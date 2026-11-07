@@ -1,52 +1,68 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061527;
-	b=pT3wmzUBa0Bj4TlKx8KzmCbGwjGMkr6FcUtNKfzIP3VgqkQDQ5cz2udbzqKEN9urNtLi
-	 +sLoZDdwKpqYmNyfEHHT0LOyt3sjsGgZbBYUS57DnbZcBjDdXlxbGdA11wTaPa4yG+/Go
-	 UYOt0yn3YQRIbCTPYVWCfayJXPiCIaVXiFzRusX/bg0ctVopOHZrcAVApQVxiYhHkcre5
-	 8GRBOksYmmeFr7iV8Rl8dz9b+2XdOb1ReIMExFZD7KS5mrTIis9IejfqqVMTz/k3afrO5
-	 qHWT51yRFZAE8nfrVZLh6B6K0hbnUDB5PLeDlzVInWIl47xXfO9xFwfLB++ka2FekYQ==
+	t=1794061528;
+	b=4TfXBrmLOXUMDnT+SYiCFZcnZejbcouHQJ5AGy6BLLuRqwjZql0peIJY+pRmpSu7Vq9G
+	 fq4EZ2yBtqphaFd/P7WCCHt0GSl8vWzVcSc8H/Tdh+utux8qXZ1hb0bsgOm5Q5r1zOZL5
+	 t7dVt2KynLd6zGw9Mc1wB9LhGWpq6/34/LzjFvQ4jxj0xqDuNhrZNbhiim4sWGSMwYZai
+	 SB9Z5e5qNO+tVH4Pavx3/Ie3rQaz4d0K1RLqL5lC2FsBEa8MoXWnGL9sk3ROYvVvoETZ/
+	 e3CjK7YVJPy8FMgC4Dca0niAyc+6mD/XHPh516cPgzNm6Rzu1gsN/LoVQpdN5Pbzuqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061528;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rveA9HES3itPzhOdVep/18PpauqYotqxEuVKCU2sX8Y=;
-	b=OD8+wy2jRU0r4osQvPuANYLk5OAiff6dweTboqaAM81ihwdGEzAmTBukZiMnlZpPCavk
-	 FbbFuovIDo6C6S182JjVvJR2L+aiA9tN8NCQ/ufSbiIpXnvQzGeYihqUyRzTd4S1n//D2
-	 mcq5YHxRMohDWE9FWu+Kw4K4v2jrP9YbrVJrYQOTwFxWXV3k+OWWk3IQ8ANLyzKhUfBBv
-	 VsxqM8DtUJQK8q+gwUXUi+4T2yV//0tEMeaSTRlVNX8XFsba7nyZ+P+YBkAe3tNzGvwIf
-	 fkIgI9qQzNHYBnHnULO9arQ4lteoxvLAfPdSekf5QbN2kfxNcKYqnSevZ5pdIj04Fjg==
+	bh=FPMm80OxOMb5+atii+OGhfxNSiUb6xi2BrFQR2/IgJI=;
+	b=funON5IsrhgSWbMBLXojSY7xNzPb7fRQ0Fkyu0F5c70N9hEw1TMYsy71iAMcRAdPo6Vs
+	 0zUPxgz+4VfmRihTxGmojBSSRui9mZAsFBHHGs9aUAp3NYAwIK7+37nagzvnPmCqOsipN
+	 KTfrOoqp3VMbnd0HPIpbqY9AehTHgACFFFggemnr/DGCNxGnlbw6Zs/RhbS+d6jQEYzKT
+	 NdF4I0DqvGU8GQOXjuc6i5hU7c1kgNapEiqHkolZDoqDYtpj2ZPD0/7+ysLapLgM1Er2l
+	 9XgN7XP41DDoMvWimW4MFsqEHPcVHYtyBcYDLB1A9hWvOqKFzZRFbHv0jhVECGkbJtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=emTbPYPL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UT1PDRfR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C114B606A326;
-	Sat,  7 Nov 2026 14:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34CA606A326;
+	Sat,  7 Nov 2026 14:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=emTbPYPL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AC71F0089F;
-	Sat,  7 Nov 2026 14:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UT1PDRfR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B111F008A1;
+	Sat,  7 Nov 2026 14:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061526;
-	bh=rveA9HES3itPzhOdVep/18PpauqYotqxEuVKCU2sX8Y=;
+	s=korg; t=1794061527;
+	bh=FPMm80OxOMb5+atii+OGhfxNSiUb6xi2BrFQR2/IgJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=emTbPYPLTqsTik/8e0iDj+8YW983C2g31tp/BkWwJb4gKqeGt9TvI5mfNruIf1VS8
-	 Hwu5JhUP2qCZAegXUZpT8Pl2aoS8FRtHz1hcrw1UZ6Geehq3E3aw8butsdBlr1EMXn
-	 unf5C20HXgow99G1QRgffU5nmDii0AwubnEXpOjU=
+	b=UT1PDRfReCbJQMusU1SFvymHCIXfxCnEEKOOavW0r+ilhxJxWESW5afxrp/um0K1+
+	 Z8vpbdUEnvWzhMB5ls1gTHHW8klXvKQYnsWdidNMhhJqq0He326IXRjO8Pw7+MeYfQ
+	 Kf8RXhy795bHNOj9mFd7ojfYW+RJz17cjO2j89rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9bfac891bdd42eb708fc@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 6.12 0613/1536] media: imon: fix use-after-free in display_close via dev_dbg
-Date: Sat,  7 Nov 2026 08:43:49 -0500
-Message-ID: <20261107135014.753692064@linuxfoundation.org>
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Oscar Salvador <osalvador@suse.de>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
+	Adam Litke <agl@us.ibm.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Rik van Riel <riel@surriel.com>,
+	Peter Xu <peterx@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 6.12 0614/1536] mm/hugetlb: fix use-after-free in hugetlb_mfill_atomic_pte()
+Date: Sat,  7 Nov 2026 08:43:50 -0500
+Message-ID: <20261107135014.782401504@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,59 +84,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-commit 118a3590a4080c71c565265b05b3f92e814d7647 upstream.
+commit d8a9cd7fd2fb01211430c933932da58839b8ca65 upstream.
 
-ictx->dev is a raw pointer to the usb_interface's embedded device.
-On disconnect, usb_disconnect() can drop the last reference on the
-interface and free it while a userspace fd for /dev/lcd0 is still
-open. When that fd is later closed, display_close() dereferences
-the now-freed ictx->dev via dev_dbg(), causing a use-after-free.
+Let's fix another instance where we use a folio after dropping the PTL,
+where someone else could e.g., MADV_DONTNEED it once we drop the PTL,
+making us trigger a use-after-free on the folio.
 
-Remove the dev_dbg() calls that dereference ictx->dev in
-display_close() and free_imon_context(), rather than taking a
-reference on the device.
-
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+9bfac891bdd42eb708fc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9bfac891bdd42eb708fc
-Link: https://lore.kernel.org/all/20260918054851.26083-1-kartikey406@gmail.com/T/ [v1]
-Link: https://lore.kernel.org/all/20260928121230.35359-1-kartikey406@gmail.com/T/ [v2]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Link: https://lore.kernel.org/20261015-urgent_fixes-v1-3-42796911043b@kernel.org
+Fixes: cb6acd01e2e4 ("hugetlbfs: fix races and page leaks during migration")
+Fixes: 1c9e8def43a3 ("userfaultfd: hugetlbfs: add UFFDIO_COPY support for shared mappings")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: Adam Litke <agl@us.ibm.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Josef Bacik <josef@toxicpanda.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/imon.c |    5 -----
- 1 file changed, 5 deletions(-)
+ mm/hugetlb.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -497,16 +497,12 @@ MODULE_PARM_DESC(pad_thresh, "Threshold
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6772,11 +6772,16 @@ int hugetlb_mfill_atomic_pte(pte_t *dst_
+ 	/* No need to invalidate - it was non-present before */
+ 	update_mmu_cache(dst_vma, dst_addr, dst_pte);
  
- static void free_imon_context(struct imon_context *ictx)
- {
--	struct device *dev = ictx->dev;
--
- 	usb_free_urb(ictx->tx_urb);
- 	WARN_ON(ictx->dev_present_intf0);
- 	usb_free_urb(ictx->rx_urb_intf0);
- 	WARN_ON(ictx->dev_present_intf1);
- 	usb_free_urb(ictx->rx_urb_intf1);
- 	kfree_rcu(ictx, rcu);
--
--	dev_dbg(dev, "%s: iMON context freed\n", __func__);
- }
- 
- /*
-@@ -582,7 +578,6 @@ static int display_close(struct inode *i
- 		retval = -EIO;
- 	} else {
- 		ictx->display_isopen = false;
--		dev_dbg(ictx->dev, "display port closed\n");
- 	}
- 
- 	mutex_unlock(&ictx->lock);
+-	spin_unlock(ptl);
+ 	if (!is_continue)
+ 		folio_set_hugetlb_migratable(folio);
+ 	if (vm_shared || is_continue)
+ 		folio_unlock(folio);
++
++	/*
++	 * Hold the PTL until we're done with the folio: the page table owns the
++	 * folio reference now.
++	 */
++	spin_unlock(ptl);
+ 	ret = 0;
+ out:
+ 	return ret;
 
 
