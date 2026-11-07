@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060575;
-	b=1wHjsa5yoQO/2Ja5GcWBGBNzn8BGMp32iy4RHe3eezzDH24bT5d/p8emdGR8I3Is4fx9
-	 yJH5JO4cqFlV1TqBEWNP5OMyd0QgHa9nXGD8NgUDuN5VaJOqiyWdUTQcpTmnQ7wecdSSq
-	 KH7JteDFdVR+aNClaeR4Peqv4eZjpObCcML1W8dPPOc1wInXNRPXkR9KKu2xJi7PpTmLf
-	 InI/wg/BQH1GtP9KAZU2CBq7CRSVv6vIc8ub+TBfFTRUIBCLXHmxVgz9lAOk3F6habsni
-	 /YSxrRnLB0XdEl9tlrIqtNo18Ba8GdvaHpZSIP250+8REOEDHuuAKZaw6JF8N84lUpA==
+	t=1794060576;
+	b=xZrpPdA1vV203e6egRAj2TcSHxhtw5Mnf/+SEQ744emV0yVnb3AzXygq2D9rm8Pm8894
+	 ETTsiTEg3UD5thTVAZW0wZHq+GZZ0VbJjDPtuq4qqCVtKt47ytmMhNPCycayZQhDW37Uj
+	 zJMJhzhr+fGzQdoHyEJZyvpBpkRWAWrZvNdtLGhDJ4jrWXdvJgFNp8D9LNoNVCuX5lsWB
+	 yCGB8cu+cfWXFV6dLTwxGyI2OotdVt6xIHf2Nr8b9F43r3jb+J0wPoaGvYs7kz6J0aLqo
+	 pcHZNJjfeQs3z2WRrg4QuSyFa0NnxGVV2AIAuDTpkb+MKTKvWQCJ6EXBzK0Tr8S1wmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060576;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q6shfnPZwDviWyKPqbgAEJ+hVvEZR95CKmX4kiwosAE=;
-	b=2ArdXQ601OZxT0sfDFSb4qk6kpct2FHTLvQTTcGOmuhhD37RbwimpSosMAnd4TXg7JFC
-	 ERhzkFOkGQBVKXi8ipA5dMYNirLs6R24S/yVw1ZDozT2x5dYcsfy1wsUqfIBaE80+1qU4
-	 rCW692mTrmo/dNIAX4Qt60vSEaarkbLV2/IPlMHlAumLRRq4W56uEAJDBDzhd6YqWR/hl
-	 +tKhKqV3j6BNUa5URiM+tfG1luXNeuq3SUWjDE2qI5LB772dF+KhrbOFJyA6N5szgGOrh
-	 ydmMayY3BoCfLFK2VOsMy6hf6P8+bwt27IOic0nNdomugmZ3SKpMop1BYbajrAW8bSQ==
+	bh=xDnqgvUTUFD5G8BU7QPlG1U11lQCP8trAeNk6czxEpQ=;
+	b=G5+7UmK2XxJp+a5oMKCoFsFu8mbWHYWApho3ljke7Zr1YRFi5Ue0m4CW9YnWswMjvm73
+	 HjnsxWj0JVexd4Y3ZNMb+sLMgEWoicSUUCv4sMNv2HU2UbChFGsZsEz18P+sua5TAvPgX
+	 CwDvzJaH87aTxCHkJW/oDlauUDbUh3o0hFBABEq+eKROHmLEIV+qiIbnzGb55Xnr2YmKH
+	 cIvGSERZ12w60MD6AHKcNcIEtD2LoCOfHxJDb49CW9/L4wv+FX2VKkndcCr7cv1KvtsgS
+	 izQ9VUBBkyeiFjmsxO+fBm4+I4bhYI+NkaztThUyIoRQVYaH2po1GTxy3ACBqPtibiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LCODALdX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0/aFWlpu";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEBE606A32C;
-	Sat,  7 Nov 2026 14:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC1C606A32C;
+	Sat,  7 Nov 2026 14:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LCODALdX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364511F0089F;
-	Sat,  7 Nov 2026 14:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0/aFWlpu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778F31F008A1;
+	Sat,  7 Nov 2026 14:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060574;
-	bh=Q6shfnPZwDviWyKPqbgAEJ+hVvEZR95CKmX4kiwosAE=;
+	s=korg; t=1794060575;
+	bh=xDnqgvUTUFD5G8BU7QPlG1U11lQCP8trAeNk6czxEpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LCODALdXeOK55u6q2DbqBGjYoNe++ytBDgB2IO4LMll3N1UFhZkAXDsdlA8fXIWU3
-	 5p47em3CvFbS5bbP53U5OAl+7tDz2ZAC09M6IGo3Oa75k2lghNiwLf1wRdjeW6mihl
-	 wGn3hxMPvYXfyzV3uWMAMT5mbVqxYoeepV/9oaLc=
+	b=0/aFWlpuaze0RPvVGfYsKLqZq5y0q/iaVQvGJE6adgPyO8xi0n2qkctm/YF4TeZ7B
+	 KQ30Wa9ODH29mSRtf5R3k7/7tvPTnsWj2CBKm/pAzaWeqMq5o+1fbO0bty4qvFbVJo
+	 J5UzfyCTIG+KefmiSTMYhCU4l+xI88cYGaM3zaa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0034/1536] irqdomain: Plug leak in irq_domain_alloc_irqs_locked() error path
-Date: Sat,  7 Nov 2026 08:34:10 -0500
-Message-ID: <20261107134958.623671980@linuxfoundation.org>
+Subject: [PATCH 6.12 0035/1536] ASoC: sma1303: remove fault-check sysfs group on remove
+Date: Sat,  7 Nov 2026 08:34:11 -0500
+Message-ID: <20261107134958.651632680@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,47 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 13856e22217fbf7c1200633716ff87ccb50fd89a ]
+[ Upstream commit ce3733792d38ade8df8ce288a96ff0c6ad858bf3 ]
 
-When irq_domain_trim_hierarchy() fails in irq_domain_alloc_irqs_locked(),
-the error handling path fails to undo the hierarchy allocations.
+sma1303_i2c_probe() creates a sysfs group that exposes the fault-check
+controls. The check_fault_status store callback can queue
+check_fault_work.
 
-Add the missing cleanup.
+sma1303_i2c_remove() only cancels the delayed work. It does not remove
+the sysfs group, so the controls can remain published after remove while
+their callbacks still use the driver data and can queue the work again.
 
-[ tglx: Massage change log ]
+Remove the sysfs group before cancelling the delayed work.
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260623075134.4432-2-shikemeng@huaweicloud.com
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260615064456.28615-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/irqdomain.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/codecs/sma1303.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
-index e0bff21f30e0a..675b7a356e595 100644
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -1632,7 +1632,7 @@ static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
- 	for (i = 0; i < nr_irqs; i++) {
- 		ret = irq_domain_trim_hierarchy(virq + i);
- 		if (ret)
--			goto out_free_irq_data;
-+			goto out_free_irqs;
- 	}
+diff --git a/sound/soc/codecs/sma1303.c b/sound/soc/codecs/sma1303.c
+index 980c48cbc3482..e07ec1bbf2d50 100644
+--- a/sound/soc/codecs/sma1303.c
++++ b/sound/soc/codecs/sma1303.c
+@@ -1787,6 +1787,8 @@ static void sma1303_i2c_remove(struct i2c_client *client)
+ 	struct sma1303_priv *sma1303 =
+ 		(struct sma1303_priv *) i2c_get_clientdata(client);
  
- 	for (i = 0; i < nr_irqs; i++)
-@@ -1640,6 +1640,8 @@ static int irq_domain_alloc_irqs_locked(struct irq_domain *domain, int irq_base,
++	if (sma1303->attr_grp)
++		sysfs_remove_group(sma1303->kobj, sma1303->attr_grp);
+ 	cancel_delayed_work_sync(&sma1303->check_fault_work);
+ }
  
- 	return virq;
- 
-+out_free_irqs:
-+	irq_domain_free_irqs_hierarchy(domain, virq, nr_irqs);
- out_free_irq_data:
- 	irq_domain_free_irq_data(virq, nr_irqs);
- out_free_desc:
 -- 
 2.53.0
 
