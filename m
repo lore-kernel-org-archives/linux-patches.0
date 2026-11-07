@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062135;
-	b=2lOJquV7QEfC9gpx4b8yPp/dwxWlBl84RypptI9rcCy1rZ4Yq35MLWJnFExI0Y6546+0
-	 CcXjje5HRBHqtFZYLe1JsNlk7mT2GKtuxqpNSsrjawkKRpnLVUtvZWalGHiYy3rI9LqQK
-	 0JHr5Y+TjO8Od/H8WsRQWnrxA+Mi5ZsS9xuJyTjD206GhwgvrI453VzwBsJ2E0sAOgjk7
-	 Oa91/CLt3zZcMkw4/jv3PmuRLaSEuoFaRbo86YIEpQSLuZ9H0rdt5jt6YzLDGSGS5FjfN
-	 aShaxD0WfqchXleKKpZ25flwFhfAtSk81jVnPcp8Vv1NexJmmRsQ7rPutsCE9aYcVXw==
+	t=1794062136;
+	b=ki2CPoCOMnI0ARH74vmP5i6SPXexFhZpXymCdKVbhHTgtvV0KtbupoT+5AGCBWo2lEPb
+	 XwxUe4S86WFhqeVKAehNn17eG6HPtipzgm+usZSU3zZSgeq8ezGPNCd9JOSkyzm4ogF9y
+	 zeUzcJKIr4T7wBBKRfjXufljTG1XlQnViOObCtIPXsw48s2pWioyY0zN58lGpohPbCLOF
+	 JDhTRebAUkE7DM2OdDOguD3NlR5MG/XehK0NOLei00sXXafStZaSKzCMIWIr8rL45bMnR
+	 LYysukkUVE7DMCveOeMekCEFi/vrhOSNKsKLbLvK54eOr+6UjxW6nXK0kBw1ckdeDgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062135;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062136;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4az1awAxBLvs4V1klZZi+JnEc6HTdHMDa03igVF7z5g=;
-	b=yV4HmTKmB8vBkNYeDZ2S9P7W7ObqHg/PY1GaiPSNt+qCblbOBCEuxNj8FVKNJJnIUiib
-	 PPQ52DKsWlF/6V+WjrlIsLkNwP0Vl9rJ2NjsrCSZnrSo8x0aLwpFNCQ90V5K7Qep30WT0
-	 0w9zzEh+QQYxWeD+tC7wSWogX6oQE3QnaAQ42oLpH7dWXd8x6XNHOISBRI7CTKsdsMt/l
-	 Mxj9kZrkGLA/k7gigHg6VaNq7uksJx6C6Fxy1MA5MiJkHRGoh1KPMLjel78lX5HBYseu1
-	 u3YRnLqvZZS6cVrtUNOa6KNRnvMU32WgJHnFV0nUXjt1lOe4DMvPnikxzmVL0y8yU5g==
+	bh=J2ivk++NmjE2KZgNvPDkYUtNpSHPgv8a+BIQXk4/yFU=;
+	b=N5/vd+ji6kyj8lXiSBQCD6QL5RNaPefYIUfbGyjr2GB1OONZAbmSWqiXsfFqG8q+1MjR
+	 AU6YM83yOCH8o5/6q49MgEKuCOOqvcGfQ1PTsg8/xQ3I8RuzgKrRAe9nJr9YrVerpBGP+
+	 t2u0icUaJjPTB0QZu+7kcBJNBOtMIELWgFVQA8NZFRymzor3oq5ZUzatPavmQ4E2OnTh/
+	 WAdJFLfNL2/JCrAaOgHTrgHZaB5NkhyaFu4N04Zj/RGy/B4OUhFLaYoqy1BPBiUaesoAS
+	 yuDJWmHSvWZ8C4Za7McVMHkGEMhwGDjNqieV0kByMDvkAFfBYb90TpuAFjq8YD04DUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VrJ9+E9l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mtfhtiH4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126FC606A648;
-	Sat,  7 Nov 2026 14:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A403606A653;
+	Sat,  7 Nov 2026 14:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VrJ9+E9l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0AAE1F0089F;
-	Sat,  7 Nov 2026 14:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mtfhtiH4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF411F0089F;
+	Sat,  7 Nov 2026 14:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062134;
-	bh=4az1awAxBLvs4V1klZZi+JnEc6HTdHMDa03igVF7z5g=;
+	s=korg; t=1794062136;
+	bh=J2ivk++NmjE2KZgNvPDkYUtNpSHPgv8a+BIQXk4/yFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VrJ9+E9l6X3q43gTtWW4obNeQUs9jnNP9z2j//YaXSVNZu9nqtADXYWdS8o3s9ZaS
-	 YKdC41bjY2d8R4wNP+gEkN63fzqUu0hsEyWWxZZkYC4jh5i40ZKilybqgWSyWPm4yG
-	 Jyy52Nowtdi9odJN1GwaFunQqNlYCYLnw7D9rw0w=
+	b=mtfhtiH4PbCiavkClx4FTVrWMnGzMGX33ymxs5xc1VbqGVPF2tOodvRRUNb7ijTc+
+	 03kGPsJt+cOVrBMgCmMFOGjI7vSOA9ZdohJbtgEPnejUPstRuGuDMuSJx8JArv8KWH
+	 0aLjpK+rRuS8GG2fMlggEfW9Zn98tDu3sEEsuYzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1101/1536] ALSA: sgio2audio: Only free successfully requested IRQs
-Date: Sat,  7 Nov 2026 08:51:57 -0500
-Message-ID: <20261107135028.623066001@linuxfoundation.org>
+Subject: [PATCH 6.12 1102/1536] m68k: dmasound: Keep the Q40 IRQ handler registered
+Date: Sat,  7 Nov 2026 08:51:58 -0500
+Message-ID: <20261107135028.652072403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,85 +70,144 @@ Content-Transfer-Encoding: 8bit
 
 From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit af3d225b639c6f9fb8fd5e1e27f11672d56724b6 ]
+[ Upstream commit fa2e77ac5bf81a60864e71fc72196227692d7162 ]
 
-snd_sgio2audio_create() calls snd_sgio2audio_free() when an IRQ
-request fails. The cleanup helper currently walks the complete IRQ table,
-including entries whose request_irq() calls have not been attempted yet.
-free_irq() then receives an IRQ and dev_id pair that was never registered.
+Q40PlayNextFrame() re-registers the sample IRQ after stopping it. This
+function can be called with dmasound.lock held and from the sample IRQ
+handler, so free_irq() and request_irq() can sleep or deadlock. A failed
+re-registration can also leave playback without an IRQ.
 
-Pass the number of successfully requested IRQs to the cleanup helper on
-the request failure path, while retaining the full-table cleanup for
-teardown after all requests have succeeded.
+Register one handler for the lifetime of the driver and select mono or
+stereo sample handling inside that handler. Call the frame completion
+path after releasing dmasound.lock so it can refill the queue safely.
 
-Fixes: 862c2c0a61c5 ("ALSA: ALSA driver for SGI O2 audio board")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
 Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260929084540.2065213-1-runyu.xiao@seu.edu.cn
+Link: https://patch.msgid.link/20260929085400.2068977-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/mips/sgio2audio.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ sound/oss/dmasound/dmasound_q40.c | 65 ++++++++++++++-----------------
+ 1 file changed, 29 insertions(+), 36 deletions(-)
 
-diff --git a/sound/mips/sgio2audio.c b/sound/mips/sgio2audio.c
-index a8551ccdd1bf8..361b7497873ff 100644
---- a/sound/mips/sgio2audio.c
-+++ b/sound/mips/sgio2audio.c
-@@ -751,7 +751,8 @@ static struct {
+diff --git a/sound/oss/dmasound/dmasound_q40.c b/sound/oss/dmasound/dmasound_q40.c
+index e25a78dd1bf2a..339311e5d8070 100644
+--- a/sound/oss/dmasound/dmasound_q40.c
++++ b/sound/oss/dmasound/dmasound_q40.c
+@@ -49,9 +49,8 @@ static int Q40SetFormat(int format);
+ static int Q40SetVolume(int volume);
+ static void Q40PlayNextFrame(int index);
+ static void Q40Play(void);
+-static irqreturn_t Q40StereoInterrupt(int irq, void *dummy);
+-static irqreturn_t Q40MonoInterrupt(int irq, void *dummy);
+-static void Q40Interrupt(void);
++static irqreturn_t q40_audio_interrupt(int irq, void *dummy);
++static void q40_frame_done(void);
  
- /* ALSA driver */
  
--static int snd_sgio2audio_free(struct snd_sgio2audio *chip)
-+static int snd_sgio2audio_free(struct snd_sgio2audio *chip,
-+			       unsigned int irq_count)
+ /*** Mid level stuff *********************************************************/
+@@ -372,8 +371,8 @@ static void Q40Free(void *ptr, unsigned int size)
+ static int __init Q40IrqInit(void)
  {
- 	int i;
+ 	/* Register interrupt handler. */
+-	if (request_irq(Q40_IRQ_SAMPLE, Q40StereoInterrupt, 0,
+-		    "DMA sound", Q40Interrupt))
++	if (request_irq(Q40_IRQ_SAMPLE, q40_audio_interrupt, 0,
++			"DMA sound", q40_frame_done))
+ 		return 0;
  
-@@ -761,7 +762,7 @@ static int snd_sgio2audio_free(struct snd_sgio2audio *chip)
- 	writeq(0, &mace->perif.audio.control);
- 
- 	/* release IRQ's */
--	for (i = 0; i < ARRAY_SIZE(snd_sgio2_isr_table); i++)
-+	for (i = 0; i < irq_count; i++)
- 		free_irq(snd_sgio2_isr_table[i].irq,
- 			 &chip->channel[snd_sgio2_isr_table[i].idx]);
- 
-@@ -777,7 +778,7 @@ static int snd_sgio2audio_dev_free(struct snd_device *device)
+ 	return(1);
+@@ -384,7 +383,7 @@ static int __init Q40IrqInit(void)
+ static void Q40IrqCleanUp(void)
  {
- 	struct snd_sgio2audio *chip = device->device_data;
+         master_outb(0,SAMPLE_ENABLE_REG);
+-	free_irq(Q40_IRQ_SAMPLE, Q40Interrupt);
++	free_irq(Q40_IRQ_SAMPLE, q40_frame_done);
+ }
+ #endif /* MODULE */
  
--	return snd_sgio2audio_free(chip);
-+	return snd_sgio2audio_free(chip, ARRAY_SIZE(snd_sgio2_isr_table));
+@@ -403,7 +402,6 @@ static void Q40PlayNextFrame(int index)
+ 	u_char *start;
+ 	u_long size;
+ 	u_char speed;
+-	int error;
+ 
+ 	/* used by Q40Play() if all doubts whether there really is something
+ 	 * to be played are already wiped out.
+@@ -420,15 +418,6 @@ static void Q40PlayNextFrame(int index)
+ 	speed=(dmasound.hard.speed==10000 ? 0 : 1);
+ 
+ 	master_outb( 0,SAMPLE_ENABLE_REG);
+-	free_irq(Q40_IRQ_SAMPLE, Q40Interrupt);
+-	if (dmasound.soft.stereo)
+-		error = request_irq(Q40_IRQ_SAMPLE, Q40StereoInterrupt, 0,
+-				    "Q40 sound", Q40Interrupt);
+-	  else
+-		error = request_irq(Q40_IRQ_SAMPLE, Q40MonoInterrupt, 0,
+-				    "Q40 sound", Q40Interrupt);
+-	if (error && printk_ratelimit())
+-		pr_err("Couldn't register sound interrupt\n");
+ 
+ 	master_outb( speed, SAMPLE_RATE_REG);
+ 	master_outb( 1,SAMPLE_CLEAR_REG);
+@@ -456,31 +445,35 @@ static void Q40Play(void)
+ 	spin_unlock_irqrestore(&dmasound.lock, flags);
  }
  
- static const struct snd_device_ops ops = {
-@@ -828,7 +829,7 @@ static int snd_sgio2audio_create(struct snd_card *card,
- 				0,
- 				snd_sgio2_isr_table[i].desc,
- 				&chip->channel[snd_sgio2_isr_table[i].idx])) {
--			snd_sgio2audio_free(chip);
-+			snd_sgio2audio_free(chip, i);
- 			printk(KERN_ERR "sgio2audio: cannot allocate irq %d\n",
- 			       snd_sgio2_isr_table[i].irq);
- 			return -EBUSY;
-@@ -852,13 +853,13 @@ static int snd_sgio2audio_create(struct snd_card *card,
- 	/* initialize the AD1843 codec */
- 	err = ad1843_init(&chip->ad1843);
- 	if (err < 0) {
--		snd_sgio2audio_free(chip);
-+		snd_sgio2audio_free(chip, ARRAY_SIZE(snd_sgio2_isr_table));
- 		return err;
- 	}
- 
- 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
- 	if (err < 0) {
--		snd_sgio2audio_free(chip);
-+		snd_sgio2audio_free(chip, ARRAY_SIZE(snd_sgio2_isr_table));
- 		return err;
- 	}
- 	*rchip = chip;
+-static irqreturn_t Q40StereoInterrupt(int irq, void *dummy)
+-{
+-	spin_lock(&dmasound.lock);
+-        if (q40_sc>1){
+-            *DAC_LEFT=*q40_pp++;
+-	    *DAC_RIGHT=*q40_pp++;
+-	    q40_sc -=2;
+-	    master_outb(1,SAMPLE_CLEAR_REG);
+-	}else Q40Interrupt();
+-	spin_unlock(&dmasound.lock);
+-	return IRQ_HANDLED;
+-}
+-static irqreturn_t Q40MonoInterrupt(int irq, void *dummy)
++static irqreturn_t q40_audio_interrupt(int irq, void *dummy)
+ {
++	bool frame_done = false;
++
+ 	spin_lock(&dmasound.lock);
+-        if (q40_sc>0){
+-            *DAC_LEFT=*q40_pp;
+-	    *DAC_RIGHT=*q40_pp++;
+-	    q40_sc --;
+-	    master_outb(1,SAMPLE_CLEAR_REG);
+-	}else Q40Interrupt();
++	if (dmasound.hard.stereo) {
++		if (q40_sc > 1) {
++			*DAC_LEFT = *q40_pp++;
++			*DAC_RIGHT = *q40_pp++;
++			q40_sc -= 2;
++			master_outb(1, SAMPLE_CLEAR_REG);
++		} else {
++			frame_done = true;
++		}
++	} else if (q40_sc > 0) {
++		*DAC_LEFT = *q40_pp;
++		*DAC_RIGHT = *q40_pp++;
++		q40_sc--;
++		master_outb(1, SAMPLE_CLEAR_REG);
++	} else {
++		frame_done = true;
++	}
+ 	spin_unlock(&dmasound.lock);
++	if (frame_done)
++		q40_frame_done();
+ 	return IRQ_HANDLED;
+ }
+-static void Q40Interrupt(void)
++
++static void q40_frame_done(void)
+ {
+ 	if (!write_sq.active) {
+ 	          /* playing was interrupted and sq_reset() has already cleared
 -- 
 2.53.0
 
