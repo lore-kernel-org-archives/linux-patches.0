@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060932;
-	b=Msqx5qISXobQ/FYNvlHBReqBZKEq2hiVI7exYk7Nf7E5wOMOn5ZDpUYo5Hrs3lOMpEe0
-	 VPVt27gH8xSdmM8RVmf5+gKVLEqABNdnPmsbABqRnlrIVhIfzElE8FbGvuv81+NrFgGkN
-	 q0BW72N7G8/ymq1WBWiM0ZqEjARJf7+AjvWidPQrZFB5Romg+HI7t35bfX0Cw37CJKKWM
-	 vFUyzkeXYN5NPffx30/6NpqEwN3bZve7l5uWl25puzhj/FOONv+Ru6uXwrqLbFy18wvsA
-	 e+HFLEzOASpVCWtjDPmGTDB0MDX+tpHOHVJu8di4Z+BKgwggpS1jfZtpSHBbY/vrq2Q==
+	t=1794060934;
+	b=E3lAV8aZg7jQcmlp5JxH5z8lCyvjlcAFfWp+jtVWjU26tP/szZO0OQO1Lltyql518rM1
+	 IXcRmMgrUYyVxrIdVgoVNE6KSfX12LjuNd5Py8B7MSrcmJtQxHJxeaZxz55eqgUT/0VxX
+	 m+Pm2x+HE36tmfA1SBh7ftPQZMIOE4ofjg2r/l9pRv/VtQltzYiHSwEl80MEonX3oW/Ur
+	 tW48S0sO+SZH9TBxc5pxa2FOhNtTkj57cGdl4Abb2t2XnQhp8qBQXW5AdUK+g2uH7fKCS
+	 Eqe1NziY6R4HpB5UusB08ee++/Ax5sQlGUuavoQ4wyW/Ae0tTTxtEPxozlypHWW0tKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060932;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060934;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EX20CXYSEpSegSBKr4/fAQlBHq/bzvIMhpUlJeH2USE=;
-	b=E8lB0a12hMB7z3n6o2fetUUfcgyGJrWrGucyaiE5xnKjdDFhvVHVvw1FHd1565r5trJd
-	 lqErqQzVio0fKr5LFhh6ePIoThuH6/8wT8DTd1gmd1TBaJmX3E4ZcHeyZZHGZtJ3XYMBm
-	 pR8iirXbxWooq3ji9I8ADeKKDxWAtCbkBq+NB6oPbk1vHOMtkE/gQ7AJersg4pX0gmMmu
-	 yty/U/Skz3AzJlbJzKf5LAHFwA58L7uQOGgFEEHiwt+268CLq8z+jFAfLMJIaqTW/zDA+
-	 mxbk1K5H6eCOu5SJfUritYpZfQ6GdnihKmOR/tCbU7EpjERh4UWxyXz4GeuTtCw3XTw==
+	bh=9DK0JKywt1DIy6mmekR4oPnOAYU5SHrYqo6Y/1eSX8o=;
+	b=wKHwSwyirmxg4x2zZnnLqkTx9Mk8EAvv6Vq3znsz6h1B3bP0M6ng/QnZQ0hxLwNgANOd
+	 3d+0suI/xTmWaimhWFRH0HxwIoWPzeo3rAjsRMc6IcbBkxEsuRWC1SQszAZoFCC522l3r
+	 B5pp4HnXeQrK2wsFXygbgGcOupKjfoHykKfQ2qFbWOcwFaIfDjPpu9XhA2osifK0B2sbR
+	 pD1O6s8/5hqH/vPn2QiTruuhYkhVpX7H3ucMEMHQX7FEchuUAP/sFrwy5ogmL8J/QY8aA
+	 WdhH9SXrNkszrscU7BWpPHfLko00olmBTuSK3SJ0ugYoP6W1Kdc4IJW0RoRtkatpO2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=th972L1V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Sggf3/ra";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E091606D819;
-	Sat,  7 Nov 2026 14:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4A4606D819;
+	Sat,  7 Nov 2026 14:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=th972L1V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285031F0089F;
-	Sat,  7 Nov 2026 14:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sggf3/ra
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1281F0089F;
+	Sat,  7 Nov 2026 14:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060932;
-	bh=EX20CXYSEpSegSBKr4/fAQlBHq/bzvIMhpUlJeH2USE=;
+	s=korg; t=1794060933;
+	bh=9DK0JKywt1DIy6mmekR4oPnOAYU5SHrYqo6Y/1eSX8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=th972L1VIP8LVxXo8XPpRQy7gEaKuE8IfN+c/EuPKFIR/LfyhebpOBXS8IMLBd0h1
-	 rnH1NDU4Pckx28x19mLHo8BGrBFbpE3VTcUsDymOSyEIG6dTMlbhwexIt/4ShCG4Yb
-	 AtH1UtaeQmslgRmi0HQT1rHFOdohHvF4nkGIHVxc=
+	b=Sggf3/raj0ljEnzw4tDEXhRh1kjt2W3FMOG83pAMoTFoKLJzz3XN65ZDZoKT2PKb1
+	 7BS5uA/2OAGHmfn3nZ6ObXn8uqEWYkb+NO7mX10m6bNe+lhishidtD4hgZKfsU+5Fz
+	 ls7PRmCLfn94dylkux8mZQ59ixkySbEf4+NUvjIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@h-partners.com>,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Tony Luck <tony.luck@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0290/1536] ACPI: APEI: Handle repeated SEA error storms
-Date: Sat,  7 Nov 2026 08:38:26 -0500
-Message-ID: <20261107135005.876557163@linuxfoundation.org>
+Subject: [PATCH 6.12 0299/1536] net: pcs: mtk-lynxi: check regmap reads in mtk_pcs_lynxi_get_state()
+Date: Sat,  7 Nov 2026 08:38:35 -0500
+Message-ID: <20261107135006.124025381@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,99 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhao He <hejunhao3@h-partners.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit e61487226b7df39e5f4683b036ee6aa7a5039d7b ]
+[ Upstream commit 5cc65c01cdc577621d1320f4aa03a1382c5a4a45 ]
 
-When hardware memory corruption occurs and a user process accesses the
-corrupted page, the CPU triggers a Synchronous External Abort (SEA).
-The kernel invokes do_sea() to handle the exception, which calls
-memory_failure() to handle the faulty page.
+mtk_pcs_lynxi_get_state() ignores regmap_read()'s return value; a
+failed read leaves bm and adv holding uninitialized stack values
+which are then decoded into the reported link state. The regmaps
+backing the MT7531 SGMII PCS instances sit on an MDIO bus where
+reads can fail. Check both reads and report the link as down on
+error; phylink presets state->link before the callback, so a bare
+return would leave a failed read reported as link-up.
 
-Scenario 1: Memory Error Interrupt First, then SEA
-The page is already poisoned by the memory error interrupt path. The
-subsequent SEA handler sends a SIGBUS to the task, which accesses the
-poisoned page. This flow is correct.
-
-Scenario 2: SEA first, then memory error interrupt (problematic scenario)
-If a user task directly accesses corrupted memory through a PFNMAP-style
-mapping (e.g., devmem), the page may still be in the free-buddy state when
-SEA is handled. In this case, memory_failure() will poison the page without
-invoking kill_accessing_process(), and then takes the free-buddy recovery
-path.
-
-After the CPU returns to the task context, the task re-enters the SEA
-handler due to the same access. However, ghes_estatus_cached() suppresses
-all subsequent entries during the 10-second window, preventing
-ghes_do_proc() from being called. This suppression blocks the
-MF_ACTION_REQUIRED-based SIGBUS delivery, causing the kernel to fail to
-kill the task immediately. Consequently, the process keeps re-entering
-the SEA handler, leading to an SEA storm. Later, the memory error
-interrupt path also cannot kill the task, leaving the system stuck in
-this repeated loop.
-
-The following error logs are explained using the devmem process:
-  NOTICE:  SEA Handle
-  [Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 9
-  [Hardware Error]: event severity: recoverable
-  [Hardware Error]:   section_type: ARM processor error
-  [Hardware Error]:    physical fault address: 0x0000001000093c00
-  [T54990] Memory failure: 0x1000093: recovery action for free buddy page: Recovered
-  [ T9955] EDAC MC0: 1 UE Multi-bit ECC on unknown memory
-           (page:0x1000093 offset:0xc00 grain:1 - APEI location: ...)
-  NOTICE:  SEA Handle
-  NOTICE:  SEA Handle
-  ...
-  ...        ---> SEA storm
-  ...
-  NOTICE:  SEA Handle
-  [ T9955] Memory failure: 0x1000093: already hardware poisoned
-  ghes_print_estatus: 1 callbacks suppressed
-  [Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 9
-  [Hardware Error]: event severity: recoverable
-  [Hardware Error]:   section_type: ARM processor error
-  [Hardware Error]:    physical fault address: 0x0000001000093c00
-  [T54990] Memory failure: 0x1000093: already hardware poisoned
-  [T54990] 0x1000093: Sending SIGBUS to devmem:54990 due to hardware memory corruption
-
-To resolve this, return an error when encountering the same SEA again.
-The subsequent SEA handler invocation uses arm64_notify_die() to send a
-SIGBUS signal to the task, which terminates the process and prevents it
-from re-entering the handler loop.
-
-Signed-off-by: Junhao He <hejunhao3@h-partners.com>
-Reviewed-by: Wupeng Ma <mawupeng1@huawei.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20260527082707.2013499-1-hejunhao3@h-partners.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/fce70657fc03bbaf60a04c0fbf2f418531135c4f.1785811140.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/pcs/pcs-mtk-lynxi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index e1cbc35919cbf..03cf3d63e609c 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -1267,8 +1267,16 @@ static int ghes_in_nmi_queue_one_entry(struct ghes *ghes,
- 	ghes_clear_estatus(ghes, &tmp_header, buf_paddr, fixmap_idx);
+diff --git a/drivers/net/pcs/pcs-mtk-lynxi.c b/drivers/net/pcs/pcs-mtk-lynxi.c
+index 4f63abe638c4c..03e32abd649c7 100644
+--- a/drivers/net/pcs/pcs-mtk-lynxi.c
++++ b/drivers/net/pcs/pcs-mtk-lynxi.c
+@@ -95,8 +95,11 @@ static void mtk_pcs_lynxi_get_state(struct phylink_pcs *pcs,
+ 	unsigned int bm, adv;
  
- 	/* This error has been reported before, don't process it again. */
--	if (ghes_estatus_cached(estatus))
-+	if (ghes_estatus_cached(estatus)) {
-+		/*
-+		 * Return failure on duplicate SEA entries so that the
-+		 * subsequent SEA handler invocation sends a SIGBUS signal to
-+		 * the task to prevent it from re-entering the handler loop.
-+		 */
-+		if (is_hest_sync_notify(ghes))
-+			rc = -ECANCELED;
- 		goto no_work;
+ 	/* Read the BMSR and LPA */
+-	regmap_read(mpcs->regmap, SGMSYS_PCS_CONTROL_1, &bm);
+-	regmap_read(mpcs->regmap, SGMSYS_PCS_ADVERTISE, &adv);
++	if (regmap_read(mpcs->regmap, SGMSYS_PCS_CONTROL_1, &bm) ||
++	    regmap_read(mpcs->regmap, SGMSYS_PCS_ADVERTISE, &adv)) {
++		state->link = false;
++		return;
 +	}
  
- 	llist_add(&estatus_node->llnode, &ghes_estatus_llist);
- 
+ 	phylink_mii_c22_pcs_decode_state(state, FIELD_GET(SGMII_BMSR, bm),
+ 					 FIELD_GET(SGMII_LPA, adv));
 -- 
 2.53.0
 
