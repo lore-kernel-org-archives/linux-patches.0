@@ -1,69 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065369;
-	b=IdvR2UIj5DLfsOPO1PRslcyM58YLbB8+BS0NcX1sXNn920zG5afQglT+nbGqPo0Zu2i/
-	 t20xcb7R+FskFZv/VVBzgEGcR6nyii+GjPhg82WYnrU33cTvpuxHbnBsmXNflKprrzbw9
-	 1Sj0k6IL4r/ui3/5F6XLQUlANHSirb26BMQaD38sqbJQ2MTF/gefusq0eDrZ6j6kEb3JN
-	 N6Bh3VhY/71YJZKkB7xxK4ldKK+Ih6AoATTopg7AyDbZjNMpb5cMl4wqpy43lCQpxSjIv
-	 4HG72lKgEmxJn0/+dIZ2+96Gp9hw22oyt3iYAvaqDG2CNh1+qIr6fZI1Rekbg+chtug==
+	t=1794065371;
+	b=XES5vlpoahkH+NNOcXcvDWoH+bj2kg1WT5029ONObZjGynVRiiI+Fzyk3vkSS5syl/Tj
+	 trLldumwmIQ+aXUKQDg/g2MzcEeKhUE21Hnc9Dv03ZdMKdY7UnibpPna8QYjmKatDW88N
+	 f7KWf37MRoqmyaXsU7OuoVvjBn/eaYdIY25S74JBF2e6ds37MLsOYZ2f3vD/upX9FHLin
+	 wKV2/L1VahpNKuNhdViYYRSTFZa2g9I9hc+Ndf8iu07+J/NTw5Pr0/zvf1QNYxaEJqrzB
+	 zBcvR6PdWNwrd/w0AXC53nLLiMQvBYX9hpm3SFpGfIdZB1JrNslZTTc2YW+eLfu0Q6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065369;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065371;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=KmMf+HMXTD+85jtdS1GLHbwKZgQowuIHcaKj1/ysGc4=;
-	b=rLvHg8Sco+XL8uYcIrFnwA7+TqQKTFGH67wV8NTEj9zEU7sUo3aeCwRabMocJgGi5DEW
-	 r9q0wcLUanVUOxEyvkj24ZFBhJVlJOr0pZwl2ribCthGV1LLfCreCn26Xxm5ZWbBsQlWa
-	 QBqnGlUP7RBg3iVe1v5/s1mPS5mGT2HBZpa/idxaDBWnn8uSuY+fpPDOrgAvNCpyHs2Jc
-	 UBN/U1ix5egipBZQIyguwKMeG+09/aXtJ18ba0gzMlu+GgajkSZI9y2A6+nGzW1B8ogVI
-	 WK5hmJznRfcJaavWUCalh4+hB6k4/E6Ky4SMjn4/KtldKYfoYUKIA80V+1fUP6uKhGQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=B/y5s/20JKsYuYMLfEucvcJvdqAN84D1RT/UMAP5904=;
+	b=C58PmTHIwVHb6cwKTX/DmKGJMvG3i9BnTSiP+49dWy9/wKL8iASsnBIeNQ9q200D93g0
+	 jCy90GjwVYhGxVoT7/ZZP2HeAiRBpQua37QQ6LmNiD5Qrpy6c4JEbuEZOxDmHVrLifFHY
+	 MS+ZcsGOlKewUfvO8A3djuIGd69AqbKOPHtZU18N0GszRkTUYJI8KCHZIPf5K0V2VXEsp
+	 vlZk6boqPMKf9PaSzFge/yjVoVFiYTLVQkJIWQLsAVEnUxzSq1BY5gg3AjiC2aPNmPGrI
+	 Eo+j33fVbXQQJJlV+YBKlLLfVQemS8hsAE34m/1lDUZX8okwXz+YrXTJK+OXx8VlO9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bI769cnL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OVlwZBlM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E605606A335;
-	Sat,  7 Nov 2026 15:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C93606A335;
+	Sat,  7 Nov 2026 15:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bI769cnL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDF41F0089F;
-	Sat,  7 Nov 2026 15:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OVlwZBlM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63C01F0089F;
+	Sat,  7 Nov 2026 15:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065369;
-	bh=KmMf+HMXTD+85jtdS1GLHbwKZgQowuIHcaKj1/ysGc4=;
+	s=korg; t=1794065370;
+	bh=B/y5s/20JKsYuYMLfEucvcJvdqAN84D1RT/UMAP5904=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bI769cnLdyBoSuonSnQThD/rIU898JiA3kjOHKzvMbx1U+OrlANZiI63INsjrsV5f
-	 NHNKGaZ+/Wxo3rRrPQT7oafb6K9Rsn8i//AvTlpoVb6+Yq4FoRcDhWKP0a8XAVmaKD
-	 u0REQKD3dQMjpGYq16fPp9wrWsekqGjJl0b3rsx0=
+	b=OVlwZBlMhw9H6HzaXBN6a2D0ejtlqBMcmJU6LJrtXU1RWsIAhJqIhH/JTwWr3EZWE
+	 Jc3Jxp69Wj6IM3QgWvy8ToQXV/pOkMha2fm5d82Oqwy1FQAH97ujOKs0vj3BlUG9b2
+	 7kBcxGxMVO5DhOJnXoou1jlWFQU8L+L9TizB8TL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Chintamaneni <sidchintamaneni@gmail.com>,
-	Hardik Garg <hargar@linux.microsoft.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Barry Song <baohua@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	David Hildenbrand <david@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Qi Zheng <qi.zheng@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Kairui Song <kasong@tencent.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Wei Xu <weixugc@google.com>,
-	Baoquan He <baoquan.he@linux.dev>,
-	Yu Zhao <yuzhao@google.com>,
-	apais@microsoft.com,
-	rlmenge@gmail.com,
+	Eric Biggers <ebiggers@kernel.org>,
+	Baokun Li <libaokun@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1100/1257] mm: multi-gen LRU: fix NULL lruvec->pgdat deref with memcg disabled on cmdline
-Date: Sat,  7 Nov 2026 08:56:36 -0500
-Message-ID: <20261107135009.646304679@linuxfoundation.org>
+Subject: [PATCH 7.3 1101/1257] fscrypt: Fix missing barrier in fscrypt_find_mode_key()
+Date: Sat,  7 Nov 2026 08:56:37 -0500
+Message-ID: <20261107135009.676925417@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -79,123 +62,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit 183895979c441e52dbd651b388553b09eaa35cfa ]
+[ Upstream commit cf66375465b9ca531f5c294f468db1df293c178c ]
 
-When CONFIG_MEMCG=y, lruvec_pgdat() returns lruvec->pgdat, which for the
-per-node pgdat->__lruvec is left NULL by lruvec_init() and only filled in
-lazily by mem_cgroup_lruvec(). Normally that happens early, e.g. on the
-first folio_add_lru().
+fscrypt_find_mode_key() walks an RCU list and hands out a per-mode
+key without an acquire:
 
-With cgroup_disable=memory, lru_gen_shrink_node() passes &pgdat->__lruvec
-directly to shrink_one(). If direct reclaim runs before anything has
-called mem_cgroup_lruvec() for the node, which can happen during early
-boot under memory pressure (e.g. a kdump kernel), get_swappiness() ends
-up dereferencing a NULL pgdat:
+  setup task
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  setup_per_mode_enc_key()
+   ├─ fscrypt_prepare_key()
+   │  └─ fscrypt_prepare_inline_crypt_key()
+   │     └─ blk_crypto_start_using_key()
+   │        └─ blk_crypto_fallback_start_using_mode()
+   │           ├─ init profile, keyslots, tfms[]
+   │           └─ smp_store_release(tfms_inited[mode])  # init order
+   └─ list_add_tail_rcu(&new_node->link, ...)  # release -> finder
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000005040
-  pc : get_swappiness+0x68/0xb0
-  lr : try_to_shrink_lruvec+0x54/0x2c0
-  Call trace:
-   get_swappiness+0x68/0xb0 (P)
-   try_to_shrink_lruvec+0x54/0x2c0
-   shrink_one+0x8c/0x240
-   shrink_node+0xc6c/0xe08
-   do_try_to_free_pages+0xdc/0x570
-   try_to_free_pages+0x124/0x278
-   __alloc_frozen_pages_noprof+0x6e8/0xf78
-   alloc_pages_mpol+0xc4/0x1c0
-   alloc_frozen_pages_noprof+0x54/0xe8
-   alloc_pages_noprof+0x1c/0x40
-   atomic_pool_expand+0x98/0x300
-   __dma_atomic_pool_init+0x58/0xd8
-   dma_atomic_pool_init+0x154/0x170
-   do_one_initcall+0x64/0x350
-   kernel_init_freeable+0x214/0x430
-   kernel_init+0x2c/0x208
-   ret_from_fork+0x10/0x20
+  finding task (later submits the I/O itself)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  fscrypt_find_mode_key()
+   ├─ list_for_each_entry_rcu(node, ...)
+   └─ return &node->key                 # no acquire, chain breaks
+  ...
+  blk_crypto_fallback_bio_prep()        # WRITE path
+   ├─ tfms_inited[mode]                 # addr-dep, reads true
+   ├─ blk_crypto_fallback_profile       # no dependency
+   ├─ blk_crypto_keyslots               # no dependency
+   └─ slotp->tfms[mode]                 # no dependency
 
-The classic LRU path and MGLRU before per-node lru_gen_folio lists
-obtained the lruvec through mem_cgroup_lruvec(), which sets
-lruvec->pgdat.
+RCU publishes the node and the key reachable from it, so
+tfms_inited[mode] reads true through the address dependency.  The
+independent fallback globals are not covered by it and can be read as
+uninitialized.
 
-The above was hit on an arm64 kdump kernel (6.18-based) booted with
-cgroup_disable=memory nr_cpus=4. It also reproduces on mainline on an
-arm64 VM with CONFIG_ARM64_64K_PAGES=y, CONFIG_MEMCG=y,
-CONFIG_LRU_GEN_ENABLED=y and:
+On a weakly ordered machine, a WRITE bio can crash in
+blk_crypto_get_keyslot() or crypto_sync_skcipher_setkey().
 
-  mem=160M nr_cpus=4 coherent_pool=512M cgroup_disable=memory
+Other tasks reach the key through fscrypt_inode_info's
+cmpxchg_release()/smp_load_acquire(), which is already ordered after
+the list walk; only the finding task's own later I/O was not.
 
-These options only serve to force direct reclaim early in boot; with
-160M the boot eventually ends in OOM regardless. On mainline the first
-LRU reclaim happens while unpacking the initramfs, and faults the same
-way:
+Fix this by upgrading the control dependency to an acquire with
+smp_acquire__after_ctrl_dep() once a matching entry has been found.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000005040
-  pc : get_swappiness+0xd4/0x150
-  Call trace:
-   get_swappiness+0xd4/0x150 (P)
-   try_to_shrink_lruvec+0x44/0x2b8
-   shrink_one+0x80/0x1a0
-   shrink_node+0xd98/0xea8
-   do_try_to_free_pages+0xf4/0x4b0
-   try_to_free_pages+0x110/0x360
-   __alloc_frozen_pages_noprof+0x8b0/0x1718
-   ...
-   __filemap_get_folio_mpol+0x2ac/0x548
-   simple_write_begin+0x44/0xf8
-   page_symlink+0x178/0x198
-   ...
-   do_populate_rootfs+0x13c/0x200
-
-Link: https://lore.kernel.org/20261017050928.128582-1-sidchintamaneni@gmail.com
-Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
-Signed-off-by: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
-Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Qi Zheng <qi.zheng@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <apais@microsoft.com>
-Cc: <rlmenge@gmail.com>
-Cc: <stable@vger.kernel.org> # 6.3+
+Fixes: dd015b566d50 ("fscrypt: Fix key setup in edge case with multiple data unit sizes")
+Cc: stable@vger.kernel.org
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://lore.kernel.org/r/20261014161153.GC322435@quark
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20261024104350.2257313-1-libaokun@linux.alibaba.com
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/crypto/keysetup.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 1d1ef7ea52c59..6a53762d55447 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -5258,7 +5258,7 @@ static void lru_gen_shrink_node(struct pglist_data *pgdat, struct scan_control *
- 		sc->nr_reclaimed = 0;
- 
- 	if (mem_cgroup_disabled())
--		shrink_one(&pgdat->__lruvec, sc);
-+		shrink_one(mem_cgroup_lruvec(NULL, pgdat), sc);
- 	else
- 		shrink_many(pgdat, sc);
- 
+diff --git a/fs/crypto/keysetup.c b/fs/crypto/keysetup.c
+index 892044ebcaca6..a77b889d7578c 100644
+--- a/fs/crypto/keysetup.c
++++ b/fs/crypto/keysetup.c
+@@ -205,8 +205,14 @@ fscrypt_find_mode_key(struct fscrypt_master_key *mk, u8 hkdf_context,
+ 		if (node->hkdf_context == hkdf_context &&
+ 		    node->mode_num == mode_num &&
+ 		    node->data_unit_bits == ci->ci_data_unit_bits &&
+-		    fscrypt_is_key_prepared(&node->key, ci))
++		    fscrypt_is_key_prepared(&node->key, ci)) {
++			/*
++			 * Upgrade the RCU dereference to a full ACQUIRE, so
++			 * that blk-crypto global state is seen as initialized.
++			 */
++			smp_acquire__after_ctrl_dep();
+ 			return &node->key;
++		}
+ 	}
+ 	return NULL;
+ }
 -- 
 2.53.0
 
