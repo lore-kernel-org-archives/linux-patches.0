@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063883;
-	b=MUcfgdFB/cWYuMgFnhQ62pRHoWUgmMklWSgqxU+23ae6bO5kVxGcQ/7orGitoqQmBNKs
-	 tGGMjvy+J/PW56n53eYXFH5hL9jFp2jCFFZTjn+fg3b9GVN6Gvu7qvEfdQA9AFnx7MFnH
-	 IMrIxtB5KMIBEDjYuDO4pHGQV2XvpVT8Av6ryyoNEDSCIQ8ilT4Dkvl04WIf+FGH5cvuS
-	 sxLR2sTbSZR5mf20I/mC4qeCMjw1lHKUleEtfyyXQUxqm+7vuk1Qc4F9OzRCpDlF9E0Ie
-	 9iKxTD4XWa/Q2LhFT3HlRmNxnU7TX4pAL9gNLpCRosCzCTo6oZs6gCZsYHSaknYUFUQ==
+	t=1794063884;
+	b=Ms6jlKnJhGv/9MS9gA9BjoNQbysCbfyTVNzJRTP+8tVC7keaTxnsu32hKwvdPIZ3I1Fe
+	 Jr1PRnjgiw2SmEfYDTRmw+LoCAo4UR4pUsrtBEjgJ+86pCnnUE66NA99gkKyd3Qq/CWSw
+	 iv7PD3OTCAMIQMpWwS1fFSyb+FHNKIHmioemHY+Xvg+v4fP8SE0TARFSou8y0kqffIxYD
+	 /WGK0MKHfD3A9hNtnmNQz6eq3lt9yVlhrZXrFjBQD5fEkhXL2dpbOFtOiOAsQVkYsDzpR
+	 1rngLpEzFojvhjg//24iwThiLoUinZIXtESrjbx0lOKeKnXFElgz358Rm6cMLQylw3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063883;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063884;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O0iF6N0zmK6MWZoRMRFtehbkHe1yiYJA+nZQ1AKP4Tk=;
-	b=BmiI73TC1EpR8xZKAtIpwkbvd46gbavWdM5+m9aJSMKViwzOYRFLm9b5jF+ld5NpQX0U
-	 GU9yFTn9D6KJXk0/KzwX33Pp5hfw17pDZz/RkoQ1Le5uM87trDrI3moprvR3BmETzPBYy
-	 s2uJehJtDSSZ9hu9k5K2Qq8gZN0IzGpx/A4qsDFBu1+fPC4olenW1o00xjDORcsNybil1
-	 CDyneka3L40PReSlu+hil3WVSu6pNNH3XgQhkwU1C8G4YIpbYqxWQxoKIxxFOA+qIk3xU
-	 kbS3CyaGy4FpXXjC4c1DPJv2KFIxQw6wsNn1j0olrycuor58DEUkpK1NcMNgCar/1vg==
+	bh=OChwD5mv3wJQvQhIJBDsG1OKQzy1ahKxD+a7c9DByHc=;
+	b=hyW+HA66Ig/B0U0N4wV7I7Efyo01yuISgkuzS/kKL9wCb8b3BDaOclChYbZ4mStrv8wk
+	 cb4uNFFaqH2BgDSkYHB4nxiIDPhsxJYw1Q5X8JjnctWVvny0ZqXMt1zrOWxgmWdJGnYyY
+	 +S+C1XpNdb5aujUX1kGlbT29adwNW2U25+p2jgXVdFLj5YD3QtkLPmmEZTWolcjNk1Hal
+	 o0cUE4KFtHZ2idnqmVLuQqsy7InS/+4JRTLLp4Tr2BEbzxFXfd6KPsxWO4NA0OzTudIZF
+	 ryYfdMLouw/zhwvZl1LgXH4XtX9HpzBLYgQ++R897j650ujK7JTG6E5/XttS0K9HxWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sEkNVHaC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ifxn/wTm";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03F7606A32F;
-	Sat,  7 Nov 2026 15:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EC4606A32F;
+	Sat,  7 Nov 2026 15:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sEkNVHaC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B771F008A1;
-	Sat,  7 Nov 2026 15:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ifxn/wTm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7B51F008A1;
+	Sat,  7 Nov 2026 15:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063882;
-	bh=O0iF6N0zmK6MWZoRMRFtehbkHe1yiYJA+nZQ1AKP4Tk=;
+	s=korg; t=1794063883;
+	bh=OChwD5mv3wJQvQhIJBDsG1OKQzy1ahKxD+a7c9DByHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sEkNVHaCxWPYBlPt/n6UB/cn1g9oDZr0muN6ho8GOthI819xJN20lbI77jt+Vk6/s
-	 PoC4E9Jp261HNhM36i2Q0tgR9Kng95V+AwClQnyi80+Zzrt58S4bMC7ttf8joSYURK
-	 lOdhudHJUmL5nUnCE780gqiVyGgF0XkkR6G3RusM=
+	b=ifxn/wTmgXPy8UkqQH9e43H247mztCAEaRTwkYthjFaRmqIO9MHdOV/k7mtGGtxej
+	 j1jepyEII7L40ABWPpkGPGQpdzEeUGaN+GrKjVXloWEqQ3o0IPh57kdqAB76Cu7mdH
+	 pxoZT/fIyln8lS+A34qq7NrRlH+9uZsIY1B+Jn9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunpeng Tian <shionthanatos@gmail.com>,
-	Gongming Wang <gmwgg05@gmail.com>,
-	Mingda Zhang <npczmd@qq.com>,
-	Qinrun Dai <jupmouse@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Ramin Moussavi <ramin.moussavi@yacoub.de>,
+	Waldemar Brodkorb <wbx@openadk.org>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0048/1257] udf: validate the device specification EA before using it
-Date: Sat,  7 Nov 2026 08:39:04 -0500
-Message-ID: <20261107134940.738362978@linuxfoundation.org>
+Subject: [PATCH 7.3 0049/1257] microblaze: reserve the ABI argument-home area in the signal frame
+Date: Sat,  7 Nov 2026 08:39:05 -0500
+Message-ID: <20261107134940.765084567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,127 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunpeng Tian <shionthanatos@gmail.com>
+From: Ramin Moussavi <ramin.moussavi@yacoub.de>
 
-[ Upstream commit 9a2390959685ac35a58c80c8016120849a2babf6 ]
+[ Upstream commit c5947d28c20955de897eeb98430f96db0494f7d7 ]
 
-udf_get_extendedattr() bounds an extended attribute only against
-struct genericFormat, which is 12 bytes.  A type-12 device
-specification is struct deviceSpec, which is 24 bytes plus a flexible
-impUse array. Thus a corrupted filesystem can contain extended attribute
-that is accepted by udf_get_extendedattr() but udf_write_inode() or
-udf_read_inode() may access beyond the end of provided buffer.
+The MicroBlaze procedure call standard reserves [r1+0] for the return
+address and lets a callee store its incoming register arguments r5..r10
+into the caller-provided home slots at [r1+4]..[r1+24].  When the kernel
+enters a signal handler it sets r1 to point at struct rt_sigframe, whose
+leading member is the siginfo prepared for the handler.  A handler that
+homes its arguments - which an unoptimised (-O0) build always does -
+therefore overwrites the first 24 bytes of that siginfo, so an
+SA_SIGINFO handler reads corrupted values.  The stores stay within
+siginfo (128 bytes) and do not reach the ucontext behind it.
 
-Provide a udf_device_spec_valid() check to validate correctness of
-extended attribute that is a deviceSpec. While here, check the result of
-udf_add_extendedattr() before dereferencing it as it can return NULL in
-case of error.
+Reserve the home area by making a seven-word gap -- the return-address
+slot plus the six argument slots, 28 bytes -- the first member of struct
+rt_sigframe, so the handler's argument stores land in scratch space
+instead of clobbering siginfo.
 
-[JK: Removed duplicated validity checks]
+Tested on qemu-system-microblazeel (petalogix-s3adsp1800) with the
+uClibc-ng NPTL test suite: tst-timer4, tst-timer5, tst-mqueue5 and
+tst-signal6 pass; before this change they failed because the handler
+clobbered the signal frame.
 
-Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
-Reported-by: Gongming Wang <gmwgg05@gmail.com>
-Reported-by: Mingda Zhang <npczmd@qq.com>
-Reported-by: Qinrun Dai <jupmouse@gmail.com>
+Fixes: 2148daa9c45f ("microblaze_v8: Signal support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+Tested-by: Waldemar Brodkorb <wbx@openadk.org>
+Link: https://patch.msgid.link/20260821151809.1233057-3-ramin.moussavi@yacoub.de
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c | 43 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 38 insertions(+), 5 deletions(-)
+ arch/microblaze/kernel/signal.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/udf/inode.c b/fs/udf/inode.c
-index 2f04c4f0e1b85..49673b555c624 100644
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -1336,6 +1336,26 @@ int udf_setsize(struct inode *inode, loff_t newsize)
- 	return err;
- }
+diff --git a/arch/microblaze/kernel/signal.c b/arch/microblaze/kernel/signal.c
+index c78a0ff480660..4956014a99379 100644
+--- a/arch/microblaze/kernel/signal.c
++++ b/arch/microblaze/kernel/signal.c
+@@ -49,6 +49,14 @@ struct sigframe {
+ };
  
-+/*
-+ * Verify validity of struct deviceSpec on disk. udf_get_extendedattr() has
-+ * already verified the generic header and made sure attribute fits in the
-+ * inode so we just have to make sure attribute space is large enough for
-+ * deviceSpec struct and required impUse information.
-+ */
-+static bool udf_device_spec_valid(struct deviceSpec *dsea)
-+{
-+	u32 attr_length, imp_use_length;
-+
-+	attr_length = le32_to_cpu(dsea->attrLength);
-+	imp_use_length = le32_to_cpu(dsea->impUseLength);
-+	if (attr_length < sizeof(struct deviceSpec) ||
-+	    imp_use_length < sizeof(struct regid) ||
-+	    imp_use_length > attr_length - sizeof(struct deviceSpec))
-+		return false;
-+
-+	return true;
-+}
-+
- /*
-  * Maximum length of linked list formed by ICB hierarchy. The chosen number is
-  * arbitrary - just that we hopefully don't limit any real use of rewritten
-@@ -1654,13 +1674,12 @@ static int udf_read_inode(struct inode *inode, bool hidden_inode)
- 	if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode)) {
- 		struct deviceSpec *dsea =
- 			(struct deviceSpec *)udf_get_extendedattr(inode, 12, 1);
--		if (dsea) {
--			init_special_inode(inode, inode->i_mode,
-+
-+		if (!dsea || !udf_device_spec_valid(dsea))
-+			goto out;
-+		init_special_inode(inode, inode->i_mode,
- 				MKDEV(le32_to_cpu(dsea->majorDeviceIdent),
- 				      le32_to_cpu(dsea->minorDeviceIdent)));
--			/* Developer ID ??? */
--		} else
--			goto out;
- 	}
- 	ret = 0;
- out:
-@@ -1757,6 +1776,7 @@ int udf_write_inode(struct inode *inode, struct writeback_control *wbc)
- 	struct udf_sb_info *sbi = UDF_SB(inode->i_sb);
- 	unsigned char blocksize_bits = inode->i_sb->s_blocksize_bits;
- 	struct udf_inode_info *iinfo = UDF_I(inode);
-+	int err;
- 
- 	bh = sb_getblk(inode->i_sb,
- 			udf_get_lb_pblock(inode->i_sb, &iinfo->i_location, 0));
-@@ -1821,6 +1841,10 @@ int udf_write_inode(struct inode *inode, struct writeback_control *wbc)
- 				udf_add_extendedattr(inode,
- 						     sizeof(struct deviceSpec) +
- 						     sizeof(struct regid), 12, 0x3);
-+			if (!dsea) {
-+				err = -ENOSPC;
-+				goto out_unlock;
-+			}
- 			dsea->attrType = cpu_to_le32(12);
- 			dsea->attrSubtype = 1;
- 			dsea->attrLength = cpu_to_le32(
-@@ -1828,6 +1852,10 @@ int udf_write_inode(struct inode *inode, struct writeback_control *wbc)
- 						sizeof(struct regid));
- 			dsea->impUseLength = cpu_to_le32(sizeof(struct regid));
- 		}
-+		if (!udf_device_spec_valid(dsea)) {
-+			err = -EFSCORRUPTED;
-+			goto out_unlock;
-+		}
- 		eid = (struct regid *)dsea->impUse;
- 		memset(eid, 0, sizeof(*eid));
- 		strcpy(eid->ident, UDF_ID_DEVELOPER);
-@@ -1962,6 +1990,11 @@ int udf_write_inode(struct inode *inode, struct writeback_control *wbc)
- 	set_inode_metadata_writeback(inode);
- 
- 	return 0;
-+
-+out_unlock:
-+	unlock_buffer(bh);
-+	brelse(bh);
-+	return err;
- }
- 
- struct inode *__udf_iget(struct super_block *sb, struct kernel_lb_addr *ino,
+ struct rt_sigframe {
++	/*
++	 * Home area for the handler's register arguments: the MicroBlaze
++	 * ABI reserves [r1+0] for the return address and lets the callee
++	 * store r5..r10 at [r1+4]..[r1+24], and r1 points at this frame
++	 * when the handler is entered.  Without the gap those stores
++	 * corrupt frame->info.
++	 */
++	unsigned long abi_gap[7];
+ 	struct siginfo info;
+ 	struct ucontext uc;
+ 	unsigned long tramp[2];	/* signal trampoline */
 -- 
 2.53.0
 
