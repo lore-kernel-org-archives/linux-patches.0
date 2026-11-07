@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064036;
-	b=E4TtoKavwE4DkgEjqs8grruBCFaqY8fPZXYJ8y0TiABJKxHg/jth9q59m3JNUvBYeVKk
-	 hqF59nzLE/WDzZgjxwJB1jVgBMd+8cyZtULLpfQFoISHP4KcByYvITSrR2ihCFRLMsjFA
-	 Bz6O/4vaq1ylgHhDc+VKqxqU9Uq/Dv31O1ZkfPIsGhCsyesVRBmv7eQxCXjbtLcHGuGD5
-	 BOkSn4985eQHRhC/bi2U2NErPTHjjdzRutkhL9ylPlTRD3oxMSI6+tX9LgPXhA9f/ChR5
-	 Y6YhgknVWYuWfd/azkyPuliehOgLxpMr6KaCKw/czKCe+Sbohuyf7/hfIXm4QB1fCeg==
+	t=1794064037;
+	b=myeWJ3G08VDQOUKI+kONtX0moXBINYI/xPKzfaiz+Co0I1qH0PCJjgZiWwBhU+A5mjGc
+	 Du+ihUQqHhZCowU7hhI1tHVXzIRHfHpD8SFoEfp8mDQf+LhNxeDpVf7paPF/tVu5BmRH/
+	 b0Xz8I4ErIM0M3tUrOdmuW+TT4NOiEu5uXvzQBUgdS3bjN706Xa/RqB8GKVuEsS/rDQGt
+	 Q9JNyPL46OTz8fCQjV4dKZ8YW7ezatr/7fC+dN+Ziy114CYWSRJyAio1xpuODoGw6G45A
+	 0VgiHtr/2k2wLhHqZdgFogYUd6UqXSRFwuL4RZJGQCGeMore2otPT6mbDutLBE8gYnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064036;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064037;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jmZugGC91Micsi1lxPis3p0i6WlXZ0VXnNVGX8CMMYs=;
-	b=0wUSCujbizBMvRsSVil5mTGztYmbR39KKf4Usvg4bJiC37ZDEG0kPjM6EutcTY0AlTI5
-	 bp46fEj1DxWuX71KrN5yew1nIiY5k+d7NXtuJ3MBeu9MtzuZVd5tcbWNZJrQ4G6L4bWZH
-	 xsznU2dpYSy6cArHivNhzqUXS3WK5iakdOl/vAXLU1fitQjrzggwEU65haNCFeP1yRqTj
-	 YkEGrBc8qjysiBYaVzg5Vm6sB5+hieg0+y58pegAJz7SMZTN7Ge313WeA67qhaJ958aOA
-	 5tNPh8+CeqCPSXgP5uCyTMWnxkd/xTidR79szdFWvlMCHh4X/HwFJIq7M36Pmw8TDlA==
+	bh=H+inYJf8LY1cjBz+WOo5b1w0SJEf6XQcNsg1mE6RhxI=;
+	b=mUmDnZ8drYXiL2+hCaU3De94QBF2FrKRvmdcjGyzE9xZ0PLyoWk/PboaQn8xZprx5GVV
+	 SNG8MHIM0jtcrXA8IsBfLXT+ItbnNZUv44NiLDTZk/y/I2JKh2evoBdFENemGerBezk06
+	 9as3cY6OO1vpny1HTCwC4W071g5rMNUN12h+MbcPPkaURFIWSfkm4lZw2nCRhHrE//AmR
+	 QyTJpiqcRLx7UltOom7UnYigNmFIk5ahCzkOgqTHTI1f+eS15uhtCFIHHVB9wnED1IzCu
+	 G8oqaWMTJoWWeY0f7ZsZXfXRM9z3TDJyTl/wbteew4NOZ44G5zGjqmw74Bj/sC4X/3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TpWFNRfo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2OR8up4Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2A9606A9CB;
-	Sat,  7 Nov 2026 15:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED40C606A9CB;
+	Sat,  7 Nov 2026 15:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TpWFNRfo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2E51F008A3;
-	Sat,  7 Nov 2026 15:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2OR8up4Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA881F008A3;
+	Sat,  7 Nov 2026 15:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064035;
-	bh=jmZugGC91Micsi1lxPis3p0i6WlXZ0VXnNVGX8CMMYs=;
+	s=korg; t=1794064036;
+	bh=H+inYJf8LY1cjBz+WOo5b1w0SJEf6XQcNsg1mE6RhxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TpWFNRfoYgMzFJp7RJoNNtbm2kXy/pmK1Y0P1iubj00XYqHgt+1mRZTPi5uY9N29w
-	 qWVrwT85wge+Rltgi5xqM01sxHwoAmfEMMvB2TQNLYZwEQiV6zg3htAWG6bVGcF1hw
-	 0WipIlllj2Dxikolzb7ytN6Qry3eK0O/k1zxekMU=
+	b=2OR8up4QGCWenBjaS+MQsouVDvOzsNwAI4EhufDW432i5cool2fMGLjU+BPXgFGtj
+	 rwDO1l+kIq43BEB0DkN2rn9FwpNEeJtvueXR74LB1Dm4BQoSGD6M080V9lbYqAPDO0
+	 KrgCVzoZPxWhAY7s3Kdc1dek2WFthVPwK1DKDtFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guangshuo Li <lgs201920130244@gmail.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0172/1257] media: i2c: alvium-csi2: balance runtime PM usage count on remove
-Date: Sat,  7 Nov 2026 08:41:08 -0500
-Message-ID: <20261107134944.101594789@linuxfoundation.org>
+Subject: [PATCH 7.3 0173/1257] media: i2c: og01a1b: power off sensor on remove
+Date: Sat,  7 Nov 2026 08:41:09 -0500
+Message-ID: <20261107134944.130307183@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,43 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 0d2ca640318612402ae1c640d2da56b2914ff994 ]
+[ Upstream commit a26c5ac46191ae34b3413f7a45d6241f63e15d42 ]
 
-alvium_probe() increments the runtime PM usage count with
-pm_runtime_get_noresume() before enabling runtime PM. The probe error
-path correctly balances this reference with pm_runtime_put_noidle(),
-but the normal remove path only disables runtime PM.
+og01a1b_probe() powers the sensor on explicitly before identifying and
+initializing it. After a successful probe, runtime PM is enabled and
+pm_runtime_idle() is used to allow the runtime suspend callback to
+power the sensor off.
 
-pm_runtime_disable() does not decrement the usage count, so a
-successful probe followed by driver removal leaves the runtime PM
-usage count unbalanced.
+The probe error path explicitly calls og01a1b_power_off(), but the
+normal remove path only disables runtime PM. pm_runtime_disable() does
+not guarantee that an active device is runtime suspended, so the
+sensor can remain powered when the driver is removed. This also leaves
+the xvclk enable performed by og01a1b_power_on() unbalanced.
 
-Add the missing pm_runtime_put_noidle() to the remove path, matching
-the existing probe error cleanup.
+After disabling runtime PM, check whether the device is already
+suspended. If it is still active, power the sensor off explicitly and
+update the runtime PM state accordingly. Avoid powering it off again
+when runtime suspend has already done so.
 
 This issue was found by manual code inspection.
 
-Fixes: 0a7af872915e ("media: i2c: Add support for alvium camera")
+Fixes: a95ffde28783 ("media: i2c: og01a1b: Add support of xvclk supply clock in power management")
 Cc: stable@vger.kernel.org
 Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/alvium-csi2.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/og01a1b.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/media/i2c/alvium-csi2.c b/drivers/media/i2c/alvium-csi2.c
-index f51f9b9877592..f218999e0ed90 100644
---- a/drivers/media/i2c/alvium-csi2.c
-+++ b/drivers/media/i2c/alvium-csi2.c
-@@ -2523,6 +2523,7 @@ static void alvium_remove(struct i2c_client *client)
- 	 * make sure to turn power off manually.
- 	 */
- 	pm_runtime_disable(dev);
-+	pm_runtime_put_noidle(dev);
- 	if (!pm_runtime_status_suspended(dev))
- 		alvium_set_power(alvium, false);
- 	pm_runtime_set_suspended(dev);
+diff --git a/drivers/media/i2c/og01a1b.c b/drivers/media/i2c/og01a1b.c
+index 1675f0460969a..1cece90c59eeb 100644
+--- a/drivers/media/i2c/og01a1b.c
++++ b/drivers/media/i2c/og01a1b.c
+@@ -956,6 +956,11 @@ static void og01a1b_remove(struct i2c_client *client)
+ 	media_entity_cleanup(&sd->entity);
+ 	v4l2_ctrl_handler_free(sd->ctrl_handler);
+ 	pm_runtime_disable(og01a1b->dev);
++
++	if (!pm_runtime_status_suspended(og01a1b->dev)) {
++		og01a1b_power_off(og01a1b->dev);
++		pm_runtime_set_suspended(og01a1b->dev);
++	}
+ }
+ 
+ static int og01a1b_probe(struct i2c_client *client)
 -- 
 2.53.0
 
