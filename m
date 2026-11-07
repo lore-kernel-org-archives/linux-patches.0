@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062358;
-	b=Nr3QjW07kLiHbHWWhG2Ttg7vNEbLl4AesjFWDo4Hetd4xl9Kla9zDBHvgxv0IjgC2LYb
-	 L+9q7CIG0KEkWAI42YR1Vx8fxnEGh/1l4YBi3AXn9EhxU4icyVPjxiVXtPf+DDYYMsPcD
-	 b8t3HoSKJvhxDvouz8uOyBJPdTrqXGid8PuJ6uAsH7U3DAKgBkA/jJLjSsTLuv5I5veE5
-	 UlRfkjRvPac3qxLhzkFUDVj+8N1SPmo3ZoovkYD5ZWSOKOIKzay5w5dS4hT+iHX2zjdod
-	 TBgihjtpZTx8CkQFVg1H6bMgd0puYlYj7uS9o8qRiRtqgO1rVrOkPSlrHkGxrXJVykA==
+	t=1794062360;
+	b=SzLRoDVIxe+h/9Wi4FLjMab4K9EWWnaJoJdG6+yu60+x0P0dcClqhuCwt3TOMio3OI57
+	 EnKgy7cvKo4lHqIgNbzZzj1lOhcRGGX6tEu78KEM+bLgRaZR0ONBJJgkqUBL/4mWpLZpS
+	 pai8Yz0giXLc/v4eXqFYi96n+S+BEFE+5OqsNNfvs1XuomtxlAy8gB3dPp4j4W6vnYdPy
+	 qhBCCSQI2TMuSgyIi7xXb7nQEcJXcP5lcJuYd8CX5/uI8YutL8QTqf+TGz3EpDlSx5kHv
+	 2XlgNNGXlmnCvMIdp4f/yw1HvtQDU0dyDmcD4A7O8ZSqJymJT85wdLgJVci3mLUHoAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062360;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=HyfBEsowucCwkyil6jO488kJGwufhUjGBDo8pgt48f0=;
-	b=RKQdYSu5leywgWjE6LeJYmh0QPNAO63DCoTVqHKZLEaoyKxYZCrC83rL14XKiUlUyusV
-	 D+JRvrzxmp4tjGvBDYrh235d+N9+EL+9P/RveLWGRCadFRSjJnlaTI5EjsJp9KWw4MB6U
-	 7p1myI8jj6JUVmX+Z6RuRxazzdnX7iekt/lrhh7dFgAUwGVuDfLd3BWzisXbmoEbwO2x3
-	 zNmW9QIWfOqR8yn4UIbRo+lZrn18RRH9V0Pp+lfSvqXc9ib4LJinu0ERp6i4s+4S0K3Vw
-	 9+NSB69UjToc8WhYJm1KSPU7TxLXAI7/8UsIMIIEwnyXfj8J+KOoW2AXHCDYMzJ6X+A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=VDITY/3aqTiyw10Zap7kTA/nnSRpoe/FjdzhKD0EXHg=;
+	b=M2SwAigo0L0SdKIiqaaN3wHx5Lpgni0iStO6S5gEMIALetToHqRRjz5ZZGwzfq4XuSM2
+	 qWfgyjc60CMmO8tQ9Uewq+0WOOqNNW9Jomqu0yGmVL9zxBPxaHfIo57wo3ne3Hw0n89i9
+	 OkLHP4Is0/Udl/eGdkaNJ149pl74DqzgQg1/uOuS1QnLxhs5SDHxFO+/c8A2JRapKad5B
+	 VVg+a1AwVC+PYCoO+nCM3w/FHPYsSijG9esaGbRLhk3e2Rb0dYEnBoxsHpYNF1S9keaZc
+	 dCOnASr0vCOuDOs+gn3BndZ7IGdCPGJKbxQQiwucNjaieZnoR/M5RS3sR9srzGvL74w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qLY1hVBE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nX/WD3B3";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC00606A32E;
-	Sat,  7 Nov 2026 14:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93B9606A32C;
+	Sat,  7 Nov 2026 14:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qLY1hVBE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78C01F0089F;
-	Sat,  7 Nov 2026 14:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nX/WD3B3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D4E1F0089F;
+	Sat,  7 Nov 2026 14:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062358;
-	bh=HyfBEsowucCwkyil6jO488kJGwufhUjGBDo8pgt48f0=;
+	s=korg; t=1794062359;
+	bh=VDITY/3aqTiyw10Zap7kTA/nnSRpoe/FjdzhKD0EXHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qLY1hVBEJXJBUt/+3It2dhf/YHKt65MF01cP3z8k4+qoK9j3CEmht1xz7p4X/7MmG
-	 KxSoFz8pNiAx7Og7MuzLxAUsYdoUeUlOwfUedtdmDoWCNQF2HCJo5dRfRHFK2h5Ru+
-	 3fbRxkCwY/D7WEEKTD3CGbPMGi7+SIHdt6lULFyI=
+	b=nX/WD3B3THDhmwq3owv3Z2XA+WK3WzSJs5n3opSkz/V0Mb7IHNSPo6E6rfCl9BlS3
+	 k/SoUaCSc3DI9PF8oT9yybVh8/Lz414h/DvGIq+5Mfk2EvnpYfE5/Gk0yFzRjoAqic
+	 4gRb7/1Yhsug1AR7i+7+Qolt9FDA4EfqdTLIjo/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1277/1536] f2fs: fix defragment writeback range truncation on 32-bit
-Date: Sat,  7 Nov 2026 08:54:53 -0500
-Message-ID: <20261107135033.645258649@linuxfoundation.org>
+Subject: [PATCH 6.12 1286/1536] platform/x86: hp-bioscfg: return -E2BIG from validate_password_input()
+Date: Sat,  7 Nov 2026 08:55:02 -0500
+Message-ID: <20261107135033.903304854@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -64,66 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 92154fe28c3701bebf75176dc5522bec62519a8f ]
+[ Upstream commit a4f19c589b21e18567d3c0ac7b9294f81e29b1de ]
 
-f2fs_defragment_range() flushes the range it is about to defragment:
+validate_password_input() returns the positive INVALID_BIOS_AUTH on
+rejection. store_password_instance() skips the store on nonzero ret,
+but its final "return ret < 0 ? ret : count" treats the positive value
+as success, so userspace sees count instead of an error.
 
-	filemap_write_and_wait_range(inode->i_mapping,
-				pg_start << PAGE_SHIFT,
-				(pg_end << PAGE_SHIFT) - 1);
+Return -E2BIG for an invalid password length.
 
-pg_start and pg_end are pgoff_t, 32 bits on 32-bit kernels, so both
-shifts are evaluated in 32 bits and truncated before they are widened to
-the loff_t parameters.  pg_end is only capped by the file's page count,
-so for a file larger than 4 GiB the shift wraps.
+Tested on HP EliteBook 840 G2 (Fedora 44, Linux 7.2.7): writing 999
+bytes to current_password returned 999 before this change.
 
-For a 5 GiB file pg_end is 1310720 and the range collapses from
-[0, 5 GiB) to [0, 1 GiB), leaving the rest of the dirty pages unwritten
-before the blocks are moved.  For 8 GiB the shift yields 0, the minus one
-makes it (loff_t)-1, and the range becomes [0, LLONG_MAX].
-
-The matching call in f2fs_collapse_range() already casts:
-
-	filemap_write_and_wait_range(inode->i_mapping,
-				(loff_t)index << PAGE_SHIFT,
-				((loff_t)pg_end << PAGE_SHIFT) - 1);
-
-Do the same here.  On i386 the shift changes from "shl $0xc,%ecx" to
-"shld", i.e. from a 32-bit shift to a double-precision one.
-
-Cc: stable@kernel.org
-Fixes: d323d005ac4a ("f2fs: support file defragment")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
+Link: https://patch.msgid.link/20261007134711.473857-4-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index e85d22daaafbc..8b57b2feafa6d 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2931,8 +2931,8 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+index 34740f29f41a5..00e91ade56293 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+@@ -70,12 +70,13 @@ static int validate_password_input(int instance_id, const char *buf)
+ 		length--;
  
- 	/* writeback all dirty pages in the range */
- 	err = filemap_write_and_wait_range(inode->i_mapping,
--						pg_start << PAGE_SHIFT,
--						(pg_end << PAGE_SHIFT) - 1);
-+						(loff_t)pg_start << PAGE_SHIFT,
-+						((loff_t)pg_end << PAGE_SHIFT) - 1);
- 	if (err)
- 		goto out;
+ 	if (length > MAX_PASSWD_SIZE)
+-		return INVALID_BIOS_AUTH;
++		return -E2BIG;
  
+ 	if (password_data->min_password_length > length ||
+ 	    password_data->max_password_length < length)
+-		return INVALID_BIOS_AUTH;
+-	return SUCCESS;
++		return -E2BIG;
++
++	return 0;
+ }
+ 
+ ATTRIBUTE_N_PROPERTY_SHOW(is_enabled, password);
 -- 
 2.53.0
 
