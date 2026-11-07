@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063040;
-	b=0FLFHqsGR8MmdIZEKdV+i42aeRZiCyYp87e32HbockgtVRSuj5COAbgydrbOlBPdOGyZ
-	 7flXor5OTK3Nq21rBNCa+onr2lpSkD6glUhJhfsU/rh/CPwuJfgcma/UCHdia2tSeBOv4
-	 C8aJsSAruKtBvv/3y7J7dehz1p149KKD+B7HY48/v+THJFNYQ4+AA5xA21kzoWhVH31Ff
-	 CeGIdnLB9LLQxeR8d4ih8pFRio47LZrghm5KGOF3M0uieUdMqSexvWSnAix+V53peWrta
-	 bc+QTgOsXUKt9X2BWKm+z9BNtPNEQQ2bd1kvpW6vVrh7IqxFicXakNdq4rsx2B5zcUQ==
+	t=1794063041;
+	b=Vjdi7f0fNin+qMJF68PlaWoRvx0700rA2tJMAfRdcmNgMD5+07uBJwOR2L8UbtOoB/j1
+	 tNVcgxnZLRrOfszFLphZu06H5VzRfuM5k6oZcxNkEevvaWyoV5KDHXpwffNMuCvnvDQaf
+	 cthGAWV9JwpZo26hcNbSkX/3kbpOggs9modDHP/YIlhQzvMPNxjxsQCKDAJeN4fA1neO9
+	 XPDWknj5TxhhYotrBmZJAD9DxjT8uqiJfAIonh2GQT9Zha8WIXQIgfM6KyN1mIR312dFk
+	 m51DEA2U3av/wDfyJnKcULq73SP7f6apaBDF8BcZDYzqfNVIuoRP5FAm/L2YBuotGBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063040;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063041;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5Pe6GMoY10fjL1jC4cPBonNRoX8jQa+5VTFM5we1rOA=;
-	b=gaF6LJzCNSF+7z+yPUwgWY56L12EA/KfJOtyrgH7Yp/6b4RajMoU4MMYtbSWsJ1yxFsc
-	 n6x3Db2CqnQPT9IALMb5o6Ppoh2BKgOnxFyZwmPmCIZOU/Ik81PWAQGv4CaNWK2W5BlG6
-	 NLcz9bX+cEf5+uib08nLLZA1WlUKeXh8JHh7TSCn6d9X3wkUmTmqpqcFdgsMA1tTDM0ce
-	 Hb4gBC7iIyCrSFQAJf5/wXCdw+PGM7/E1luWKd/Ue0pFtdfqbQmZzYJjWTjqhZeq5ZoQa
-	 vxVvD3hHQUlaWgA5GAOP7mctje1KX49zYEBdV40flMwHp1NmWjleEBY6mCNsBOLagUQ==
+	bh=wu5Sf4N2ANt2frUPCaRWXZCVeV0eQcRnA1EUqrhigN0=;
+	b=ohEMq/Q5oXBosmADAJqcTtkX4od2M6G7jy9hms3FiWNdyGuqPISUkbQMTGXzFMfFMqof
+	 S1hGVcV2060Sn+YIKOc2ocksqtJe+FePd+7i5+lR/LZzZuDLGXkLYr+/PniG8asBIUwRJ
+	 1iI46amiDU2PqNghvLh4cz2WIsxp6OE9xxnvSKJK4171tyr3W81cS/NlM3Q/GxFIPzpCh
+	 kDUaQqomSlylBlKMpIB/PAoYdHMiORhwmF8llE5Abla8BIup54052ZGyyGz0R6PwNdJkm
+	 iiGKYMxZDZyyW6yZ8xpLSTCe3G+dRbXqT3ccJziiDYSeRXNdQEe6qWDoPTv2KYsr4LA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="p7ff8/7S";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NpGiEsDY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22572606D81C;
-	Sat,  7 Nov 2026 14:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D71C606D81A;
+	Sat,  7 Nov 2026 14:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p7ff8/7S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C164F1F008A2;
-	Sat,  7 Nov 2026 14:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NpGiEsDY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0871F008A1;
+	Sat,  7 Nov 2026 14:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063040;
-	bh=5Pe6GMoY10fjL1jC4cPBonNRoX8jQa+5VTFM5we1rOA=;
+	s=korg; t=1794063041;
+	bh=wu5Sf4N2ANt2frUPCaRWXZCVeV0eQcRnA1EUqrhigN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p7ff8/7SzknIJq8+cAZ5IOS/IGkmLi87gQDlG6x1EKNWTvzMyeJxt1N+TbTYD+FRl
-	 YmTgGogBiydBjJCgpa/PtjRKo6SG13Ajcgz1OC6AwBZegKVQgF0uYWLT5r1YEiUvzB
-	 Ehb4jNgJBfv3Wnwkc3wcg2bZm4mL/X7lYZ3FVzSw=
+	b=NpGiEsDYtvOC9+bUKjlPI3pCmkr2+fIpYDj8cQSKj/1spzkf9roBbbOj9uwfy/fL6
+	 pWyZRvnEYyCuHp0sgvdOfyg9cFTkwrDCfXRaxa2J8bPDZpzSjbMLmzClEFZQXq/2xD
+	 2FE9V1oQ+BihwKVCi0HT0WFCTFYjUiTiNBQbSDiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 270/869] iio: potentiometer: x9250: reject devices without match data
-Date: Sat,  7 Nov 2026 08:49:12 -0500
-Message-ID: <20261107134900.843351312@linuxfoundation.org>
+Subject: [PATCH 6.18 288/869] media: iris: Fix frame interval enumeration for non-divisor framerates
+Date: Sat,  7 Nov 2026 08:49:30 -0500
+Message-ID: <20261107134901.580385206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,55 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 
-[ Upstream commit d13716e3defd5b8cec3ee2c27f4d9b7e01314067 ]
+[ Upstream commit 3ad393b701dd99274f09403185f71ec7a93135bd ]
 
-A device bound through driver_override need not match an entry in the
-driver tables. In that case spi_get_device_match_data() returns NULL,
-but x9250_probe() later dereferences the result while naming the IIO
-device.
+iris_enum_frameintervals() advertised frame intervals using
+V4L2_FRMIVAL_TYPE_STEPWISE with step=1/MAXIMUM_FPS where MAXIMUM_FPS
+is 480. This caused client to enumerate only framerates of the form
+MAXIMUM_FPS/n (where n is a positive integer), restricting support to
+exact divisors of MAXIMUM_FPS (e.g., 480, 240, 160, 120, 96, 80, 60,
+30, 24, 1).
 
-Reject devices without match data before enabling the regulators.
+Framerates that are not exact divisors of MAXIMUM_FPS, such as 29 fps,
+25 fps, were excluded from the enumerated list. There is no hardware
+restriction to framerates that are exact divisors of MAXIMUM_FPS. This
+caused GStreamer caps negotiation to fail with an "internal data
+stream error" when encoding content at such framerates.
 
-Fixes: 66bfc528a6fd ("iio: potentiometer: Add support for the Renesas X9250 potentiometers")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Fix this by using V4L2_FRMIVAL_TYPE_CONTINUOUS. With CONTINUOUS type,
+GStreamer creates a continuous framerate range [1, max_fps], allowing
+any integer framerate within the range to pass caps negotiation. The
+step field is set to 1/1 as required by the V4L2 specification for
+continuous frame intervals.
+
+Fixes: a6882431a138 ("media: iris: Add support for ENUM_FRAMESIZES/FRAMEINTERVALS for encoder")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/potentiometer/x9250.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/iris/iris_vidc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/potentiometer/x9250.c b/drivers/iio/potentiometer/x9250.c
-index 7353484926997..1c9e22459058b 100644
---- a/drivers/iio/potentiometer/x9250.c
-+++ b/drivers/iio/potentiometer/x9250.c
-@@ -155,10 +155,15 @@ static const char *const x9250_regulator_names[] = {
+diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
+index d6db5ae85990b..b916e8c8a6456 100644
+--- a/drivers/media/platform/qcom/iris/iris_vidc.c
++++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+@@ -434,14 +434,14 @@ static int iris_enum_frameintervals(struct file *filp, void *fh,
+ 	mbpf = NUM_MBS_PER_FRAME(fival->height, fival->width);
+ 	fps = DIV_ROUND_UP(core->iris_platform_data->max_core_mbps, mbpf);
  
- static int x9250_probe(struct spi_device *spi)
- {
-+	const struct x9250_cfg *cfg;
- 	struct iio_dev *indio_dev;
- 	struct x9250 *x9250;
- 	int ret;
+-	fival->type = V4L2_FRMIVAL_TYPE_STEPWISE;
++	fival->type = V4L2_FRMIVAL_TYPE_CONTINUOUS;
+ 	fival->stepwise.min.numerator = 1;
+ 	fival->stepwise.min.denominator =
+ 			min_t(u32, fps, MAXIMUM_FPS);
+ 	fival->stepwise.max.numerator = 1;
+ 	fival->stepwise.max.denominator = 1;
+ 	fival->stepwise.step.numerator = 1;
+-	fival->stepwise.step.denominator = MAXIMUM_FPS;
++	fival->stepwise.step.denominator = 1;
  
-+	cfg = spi_get_device_match_data(spi);
-+	if (!cfg)
-+		return -ENODATA;
-+
- 	ret = devm_regulator_bulk_get_enable(&spi->dev, ARRAY_SIZE(x9250_regulator_names),
- 					     x9250_regulator_names);
- 	if (ret)
-@@ -176,7 +181,7 @@ static int x9250_probe(struct spi_device *spi)
- 
- 	x9250 = iio_priv(indio_dev);
- 	x9250->spi = spi;
--	x9250->cfg = spi_get_device_match_data(spi);
-+	x9250->cfg = cfg;
- 	x9250->wp_gpio = devm_gpiod_get_optional(&spi->dev, "wp", GPIOD_OUT_LOW);
- 	if (IS_ERR(x9250->wp_gpio))
- 		return dev_err_probe(&spi->dev, PTR_ERR(x9250->wp_gpio),
+ 	return 0;
+ }
 -- 
 2.53.0
 
