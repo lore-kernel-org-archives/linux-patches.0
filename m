@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060836;
-	b=x51lZ9z4H4tw2xXM68UCEEnjn4jfIMWutKKoZM5CAXSUsFI4RksRYs4jnQx+XWkL4W/g
-	 5E32TU9zeE4rWZ0eQf0qw+AvGfv+q4oL0hrTpSRZszPXFWukUnJwNUeiE5CaPHeT/S2yd
-	 RcJos5szLdz30L4zgAPkkyyiLsUGffIGvnp5M7urAq1RAwvdzx4E6Xd1P3HUunFSJwZVF
-	 aUBbbqDxrIBpreeLqdatdwwM1tvsywmRCOiythDh3OwXildaEVJ3jl2YFtkBj+1jNJUIM
-	 ccYBSUo+rLFSw/OxpozIPtqTW3hd482JUvPsmbRPqEvDi8BZLSjd2OKTk1T3lWR36Dw==
+	t=1794060839;
+	b=cvdh7r9by55AyTTzkDlums1ebxsIHm1pJzLeLxjX1PRGM/W+WS5TMG/IgzEH09zgnE+0
+	 /dvnde/6wgg7Tc9pmyYnl3smJd/+1ZhuKRJSsIIRMeu7+uecaXUxzWUYBTiuXPZhkwLKc
+	 Gr8FvUQMgC3dhKNGjFpGENRUoVvfJutRDrzKdveMR07YlEweTwb3/A0lCeMKJUR5th8Up
+	 Wf1KAWQSe6CCPQJ7oyivYaNDIP0mQn7mfezuCqiB2LzQCs95CIjg//Xk+OjnaVpQm3Ie0
+	 Z8qVcL3Kd9bKcUbE/vzgoJMWt6EqUv/FQY8jjRgXI87ELRcm+AkGx8zLzElXH/1silA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060836;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k3mmRXJtOgHPhc+FwUKcM+qsLmRbZ9tzmWcdaHeL9lM=;
-	b=lXW2SLrXzn9wOVoh58u7w2eVJfLVP73/MDTt4H2gnhNHzRfxuIrtqufqsI0/CCaKmR3e
-	 PSshU6YtEFnczMxFcfPRd6Qhz0g13dhAQg/bq+KRrtpK+MJk1XZV7bPMjKvCOBwtoyqfE
-	 RANs98435Zd7zQVRDI2AtAxj8KsX6cxmnvsY7AlbDHPuI/4SrN5T1hZ+pyg+AJw1Umjku
-	 h5nood088c529xLDxi3i/6/imkFiXlx3e8nvNErbTfJv+UcVahpKXY4Crx3n2UHnjWjEs
-	 RW5p2ETQ/MtGfMicRoUWBv9lhNoGGxUnoFrWmUXm1S3Am6ttsFbkPGjMaZ4cH2Ot0Hw==
+	bh=2/IBqaQSieYLxnzc8yYp4v5RUWWzbVGaqiIuEbQ9ZTg=;
+	b=WklG4d13bvf5I0hqLUaHHJbrkxj0mjQ4jI+c1wzcAo/sBPam76xEBt5w4Ms87YCdeUwG
+	 q8X7EJiq80wzYqVwmc35fwD9hEK68/CME2RlXsDd19e4HjXj/bN9BM9Ly/MfvRYmt1nLJ
+	 o+85jrVHEnGAnE0Dz4bSEgY/C8RHZy5RyNvp+GKMzlWOgg4pnAXSNNWzy8AhXqJuO3m/U
+	 MR/pkkrwTfg/FQS5bvDQfjfwgl0uqlldHq0zeW6+aruin/GECmFzOaycX5tTWjVyTkD94
+	 qpyNPRcRm+gO8bNc8YOON2ytWRWmJgUPyd5iD8t6fYVxDv/s3G36zptJVt3rECDP4xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3pJBtrQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPnphAqK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C27F606A336;
-	Sat,  7 Nov 2026 14:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCD2606A33E;
+	Sat,  7 Nov 2026 14:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3pJBtrQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2D61F008A1;
-	Sat,  7 Nov 2026 14:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPnphAqK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773C41F0089F;
+	Sat,  7 Nov 2026 14:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060836;
-	bh=k3mmRXJtOgHPhc+FwUKcM+qsLmRbZ9tzmWcdaHeL9lM=;
+	s=korg; t=1794060837;
+	bh=2/IBqaQSieYLxnzc8yYp4v5RUWWzbVGaqiIuEbQ9ZTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t3pJBtrQOAeHHUAGvTlABzhKJpaFTw6eyP1g2cLO5b+TLfrxeimj9F0zgeoTr/OAq
-	 OPp1gpPJRG4PQEu+qKqPm/6NsY0cKutkz/jenwR5vLTMh7Dc79GOYcmjhjCwa0FZfA
-	 +NeEhkpAUxW1pqMn69o3g7g4xuqkP9dKw7DUAzmE=
+	b=HPnphAqKxJODK6d1XYlvC+AoRQkDItq7PoUMjLWhV/xgZ8NFF8m9DG28+Ef9N4PVm
+	 VZyrvXqQXRc/B9OJ5C+OgSIcODGdAaAuLuSu2OM3Npp0agw7fbyva0ZCPZm0avdwxJ
+	 QzRq+X9uQFckeNOvtB/1i/jYZ5J6VaqCQPNWv5QA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Strahan <david.strahan@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0227/1536] scsi: smartpqi: Add new PCI device-ids
-Date: Sat,  7 Nov 2026 08:37:23 -0500
-Message-ID: <20261107135004.045053983@linuxfoundation.org>
+Subject: [PATCH 6.12 0228/1536] exfat: clean up new entry on add entry failure
+Date: Sat,  7 Nov 2026 08:37:24 -0500
+Message-ID: <20261107135004.074263696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,108 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Strahan <David.Strahan@microchip.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 1a220e6e87a31c2572cd07ff47023e5cd92ac80f ]
+[ Upstream commit 0901a71e8cff5c60dd464529cba2ed30a2ab0a3f ]
 
-All PCI ID entries in Hex.
+exfat_add_entry() initializes a new directory entry set before writing it
+with exfat_put_dentry_set().  If the write fails, mkdir/create returns an
+error but a partially written entry may be left behind.
 
-Add PCI IDs for Hurray Data controllers:
-                                            VID  / DID  / SVID / SDID
-                                            ----   ----   ----   ----
-                                            9005 / 028f / 207d / 4246
-                                            9005 / 028f / 207d / 4256
-                                            9005 / 028f / 207d / 4356
-                                            9005 / 028f / 207d / 4940
-                                            9005 / 028f / 207d / 4a46
+For non-zero-size directories, the failure also happens after a cluster
+has been allocated for the new directory.  Clean up the new entry
+best-effort, and free the newly allocated directory cluster only when the
+cleanup writeback succeeds.  This avoids freeing a cluster that may still
+be referenced by an on-disk entry if the cleanup fails.
 
-Add PCI IDs for ZTE controllers:
-                                            VID  / DID  / SVID / SDID
-                                            ----   ----   ----   ----
-                                            9005 / 028f / 1cf2 / 5451
-                                            9005 / 028f / 1cf2 / 5452
-                                            9005 / 028f / 1cf2 / 5453
-
-Add PCI ID for Ramaxel controller:
-                                            VID  / DID  / SVID / SDID
-                                            ----   ----   ----   ----
-                                            9005 / 028f / 1f3f / 0670
-
-Signed-off-by: David Strahan <david.strahan@microchip.com>
-Reviewed-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/linux-scsi/20260722220401.6357-1-david.strahan@microchip.com/
-Link: https://patch.msgid.link/20260722220401.6357-4-david.strahan@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 36 +++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ fs/exfat/namei.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 32c92678d5916..8ecbe30ee6d27 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -10116,10 +10116,30 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x207d, 0x4240)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4246)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4256)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4356)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x207d, 0x4840)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4940)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x207d, 0x4a46)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_ADVANTECH, 0x8312)
-@@ -10304,6 +10324,18 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1cf2, 0x544f)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1cf2, 0x5451)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1cf2, 0x5452)
-+	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1cf2, 0x5453)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1cf2, 0x54da)
-@@ -10344,6 +10376,10 @@ static const struct pci_device_id pqi_pci_id_table[] = {
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       0x1f3f, 0x0610)
- 	},
-+	{
-+		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
-+			       0x1f3f, 0x0670)
-+	},
- 	{
- 		PCI_DEVICE_SUB(PCI_VENDOR_ID_ADAPTEC2, 0x028f,
- 			       PCI_VENDOR_ID_LENOVO, 0x0220)
+diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
+index 80acb54531126..d6e910ed7f41d 100644
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -465,6 +465,7 @@ static int exfat_add_entry(struct inode *inode, const char *path,
+ 	struct exfat_entry_set_cache es;
+ 	int clu_size = 0;
+ 	unsigned int start_clu = EXFAT_FREE_CLUSTER;
++	bool dir_allocated = false;
+ 
+ 	ret = exfat_resolve_path(inode, path, &uniname);
+ 	if (ret)
+@@ -491,6 +492,7 @@ static int exfat_add_entry(struct inode *inode, const char *path,
+ 		}
+ 		start_clu = clu.dir;
+ 		clu_size = sbi->cluster_size;
++		dir_allocated = true;
+ 	}
+ 
+ 	/* update the directory entry */
+@@ -501,8 +503,21 @@ static int exfat_add_entry(struct inode *inode, const char *path,
+ 	exfat_init_ext_entry(&es, num_entries, &uniname, NULL, 0);
+ 
+ 	ret = exfat_put_dentry_set(&es, IS_DIRSYNC(inode));
+-	if (ret)
++	if (ret) {
++		int cleanup_ret;
++
++		cleanup_ret = exfat_get_dentry_set(&es, sb, &info->dir,
++						   dentry, ES_ALL_ENTRIES);
++		if (!cleanup_ret) {
++			exfat_remove_entries(inode, &es, ES_IDX_FILE, false);
++			cleanup_ret = exfat_put_dentry_set(&es,
++							   IS_DIRSYNC(inode));
++		}
++
++		if (!cleanup_ret && dir_allocated)
++			exfat_free_cluster(inode, &clu);
+ 		goto out;
++	}
+ 
+ 	info->dir = *p_dir;
+ 	info->entry = dentry;
 -- 
 2.53.0
 
