@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060860;
-	b=QtEOsRq54UCXCtQq6S0yApyPoUyzvcUQ60U4Wc/O1gzUDJtlQNr7YDGoln8NDSX1enzv
-	 JcZ5BY14RDTBASc82RnPadZu+w9Jwvy7QcVle6qpzx65f0DB9OHiBaeWn0Hmk53NaIH4T
-	 0IU2xOyyvX1Iw5qOmKPVFFXWoGn4DebNZMftuTTpOrxZ8oi8MY+6i8P5Oioe8VFwUDQch
-	 SPCPZ4A6fUhQ+GV9XErtD/alXbekghll9sYHUXm433aWPZJMblF4DyPa6Dj5ZfHUr9Kln
-	 SQGmVYM/JCHhkXhd49NsuyH6PglXFbGdkZmeECgtU65zNqy0n8glJkLq+C3edmVMpAQ==
+	t=1794060862;
+	b=uecHIo5sisQbS2QnxRerhmeTIAtvo0nevBZqebWvxer+Lx++QJ3Ouh1qXN9VkDri2beY
+	 /O1Mux6vAd7+U8MOG2sekqSmqIEECeIVnWSTk1Y1gJnm8T/pSUqksCqtYcz+p+31/JRGf
+	 UD4xrLqe//i8pZaI8BThRJCxQkOam0lcEo5RiC8yQy0M5BOzb5rRPpbAyYvq8NyQpH+rG
+	 ye9PTJpMs2EwTTL4p0/L+di0dKI4jT5Gxw8JtUq9Q7/5F9Ltjn8SgLBVxWXxkXdMpAuRL
+	 t6QSdkrYiw5/phhjzWJEIIz9VDytsVAHImbiQBsgWAFaAqdezWzVEhtMuPQd5spfPkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060862;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=43CO0ohove8IA1ts1NfpEgCmcfXdz+C9mnwjO7zyNlI=;
-	b=YVYWngH/2uiqClhOb5RyLe4DYeQcVxdr29mwuyYaMKoWSQ/UMzJ/8ceec2t+o3EgreTp
-	 uqnTDyJ9dCvYG7djwjT9YxfvgxTG3211bDQUh7c4JeWEu3N1qqDL+6tjFhc3uCoYr6/zO
-	 H8We+aF94IXEil7GcxIYJD9omCrvGdPKFljAVmkmilendmfByMEuRwDomI/WDpmNZ6VWv
-	 7GeTLjlZ3BvoAHrm4hiOHHzQphJ1sOb7xzT1XZ/eYFofwjjnzHbMtxwPqkeiT+0KQ/2Cm
-	 0kLsmh9smxeCGvMBxbDnDcCYSO3LKmsGZojcef3qyxf9FURJkB42VJnpSGzHI65vjMQ==
+	bh=AVj1H0xqke5detJijRK9rko9BlM4gMQu2oN6L2CAS+4=;
+	b=qoAkTJ3LPjkZkA3wY40tyvmp9UsciPu14L1gni/Lcx/ZAr5LZdDDrHhzkDbptORcALiM
+	 UYPdP9IrJD4XPsD3Nn4iDnle/69Se2SxUvQWXK7VkLrF9VVLjk4nqP5+PovXcAWw1cD7J
+	 9AckDi2ddFrRopcwEw2Lw1lCFf66BywhmeszalOwElosCDHVesI5cug7STFS/uEp9GMQd
+	 cENEfcw3BW5UZCX0PnzORK2hM15oyRo6st3dZHDhv/IHgcOWjbcfawJO9cpPGorIACNsk
+	 5DuC48ZhNO1K5jatqsoclUCSB/m0s3N1afi6rnqr4P7z/hUOvN+PcxEhLWWDSfVAxcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJgyB0He;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AObOXNg+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893A0606D813;
-	Sat,  7 Nov 2026 14:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B85C606EE80;
+	Sat,  7 Nov 2026 14:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJgyB0He
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347EA1F008A1;
-	Sat,  7 Nov 2026 14:14:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AObOXNg+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E1961F008A1;
+	Sat,  7 Nov 2026 14:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060860;
-	bh=43CO0ohove8IA1ts1NfpEgCmcfXdz+C9mnwjO7zyNlI=;
+	s=korg; t=1794060861;
+	bh=AVj1H0xqke5detJijRK9rko9BlM4gMQu2oN6L2CAS+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJgyB0HeABIn74nQCcjX6Dn9QaSWA0cSZqZrOLdxvDwMwhFrlXcE91mo3lpth1G8B
-	 aYiX94w3IPLJ2P8SMgPb/nr0LDl+zrK3/Agz5Edbo5sl5gG/NWHwRpTsBDSII2gs+e
-	 ViOYCJPSGgEiem5f6PvsDK7OVJ5ef4qr8HAgYrv8=
+	b=AObOXNg+8bAuiim2NmYlU8sZTQBoUj5zNJ/44SFLZTN300epl/cA9NKFqiXLGHPYB
+	 xyZOfm1xHxh4zRnN0yk+fJqDCgGn9iUKh6FbAhAU/tZ2oj936qoXMp6MFXYVqjFcpB
+	 WZLxVkJK8fVM3dYP4orvVv665cxZqTJNiyoPaFiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	0072a70 <90307219+0072a70@users.noreply.github.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	David Bauer <mail@david-bauer.net>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0243/1536] wifi: mt76: mt76x02: report rx FCS errors to mac80211
-Date: Sat,  7 Nov 2026 08:37:39 -0500
-Message-ID: <20261107135004.506072649@linuxfoundation.org>
+Subject: [PATCH 6.12 0244/1536] wifi: mt76: mt7915: configure noise floor reporting on reset
+Date: Sat,  7 Nov 2026 08:37:40 -0500
+Message-ID: <20261107135004.535134104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,45 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: David Bauer <mail@david-bauer.net>
 
-[ Upstream commit ddae0bcb01e71c1184bb3f526f9622e31dc38f3b ]
+[ Upstream commit a92cd5dd792a63a5d8a72142835382d4edbe9933 ]
 
-When the fcsfail filter is enabled the hardware passes frames with a bad
-FCS up to the driver, but mt76x02_mac_process_rx() never checks
-MT_RXINFO_CRCERR and hands them to mac80211 without
-RX_FLAG_FAILED_FCS_CRC. In monitor mode the radiotap flags byte then
-never gets IEEE80211_RADIOTAP_F_BADFCS set and corrupted frames cannot be
-told apart from clean ones.
+When performing a full system recovery of the MCU on a dual-phy
+platform, band 0 (usually 2.4GHz) stops reading correct noise floor
+data.
 
-Set RX_FLAG_FAILED_FCS_CRC from the descriptor CRC error bit, matching
-mt7603, mt7615, mt7915, mt7921, mt7925 and mt7996.
+This is due to noise floor reporting only being configured correctly
+for the second device PHY.
 
-Reported-by: 0072a70 <90307219+0072a70@users.noreply.github.com>
-Closes: https://github.com/morrownr/mt76/issues/38
-Tested-by: 0072a70 <90307219+0072a70@users.noreply.github.com>
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260613002544.27750-3-lucid_duck@justthetip.ca
+Configure the respective registers correctly after restarting the MCU
+firmware to fix reported noise-floor values.
+
+Signed-off-by: David Bauer <mail@david-bauer.net>
+Link: https://patch.msgid.link/20260516144944.2574053-1-mail@david-bauer.net
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x02_mac.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-index 338f5b46c6511..14cfa597fb622 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-@@ -794,6 +794,9 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
- 	if (rxinfo & MT_RXINFO_L2PAD)
- 		pad_len += 2;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index 147c0fbfbeb84..175a9a44ae643 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -1309,6 +1309,7 @@ mt7915_mac_restart(struct mt7915_dev *dev)
+ 	struct mt7915_phy *phy2;
+ 	struct mt76_phy *ext_phy;
+ 	struct mt76_dev *mdev = &dev->mt76;
++	bool run_main, run_ext;
+ 	int i, ret;
  
-+	if (rxinfo & MT_RXINFO_CRCERR)
-+		status->flag |= RX_FLAG_FAILED_FCS_CRC;
+ 	ext_phy = dev->mt76.phys[MT_BAND1];
+@@ -1399,13 +1400,17 @@ mt7915_mac_restart(struct mt7915_dev *dev)
+ 	mt7915_init_txpower(phy2);
+ 	ret = mt7915_txbf_init(dev);
+ 
+-	if (test_bit(MT76_STATE_RUNNING, &dev->mphy.state)) {
++	run_main = test_and_clear_bit(MT76_STATE_RUNNING, &dev->mphy.state);
++	run_ext = ext_phy &&
++		  test_and_clear_bit(MT76_STATE_RUNNING, &ext_phy->state);
 +
- 	if (rxinfo & MT_RXINFO_DECRYPT) {
- 		status->flag |= RX_FLAG_DECRYPTED;
- 		status->flag |= RX_FLAG_MMIC_STRIPPED;
++	if (run_main) {
+ 		ret = mt7915_run(dev->mphy.hw);
+ 		if (ret)
+ 			goto out;
+ 	}
+ 
+-	if (ext_phy && test_bit(MT76_STATE_RUNNING, &ext_phy->state)) {
++	if (run_ext) {
+ 		ret = mt7915_run(ext_phy->hw);
+ 		if (ret)
+ 			goto out;
 -- 
 2.53.0
 
