@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063955;
-	b=xmozNwDC1aIg56d0+69PP2U1CTMTMgvNvPW5EtJ5e5nF8Nf1B9dP5zHJTH4P2sV2vjIG
-	 3jEZXLBB4IvOkUdgOGQHyZNovVW0KxM3lJVHgD7+Om2WlDG6KF9R9njXyCiv4rVNIMmzs
-	 YjbwvQzLLA2+8E3kx1Lh4UdfvcjTzw4R/8VHD8vIEZWczDqBHqKCC+gniqBAPSf5bRGlf
-	 q3E8LQfwdA49Nb1aM5eRTNPlSTx2IpdLJ6SIprN4zN4HoGL5kJBkoFjObGdVNil5uuMKH
-	 C/omhl6jOoLIXw58DURhjl8eJ+jjOABZUvrvZe54Ux2MWuQQTuVpw8LOpBKeOFi5cjQ==
+	t=1794063956;
+	b=3eIzlcoel8NvgBoB6Vxdsn3XV6fxPAUohsAcFqihOkNFLgGu4V5TmGo60obmHaBYjyFA
+	 AG9rC7Wun3hyGMe3/5GG9FCCtzc4zPL1kRNJZL0uRSxK8fIS0oSEjWS7FylY5jUAuIZe5
+	 wf2wvYi1sDk9HAGe2aAcevU1+VgpEndUrJq8xISO6OjVA4+LWYpsv1aW9wdljnGIFtmYw
+	 2E6NVvtCuzVpPgq8v5jbv/kVok6WHcFdtipbWB0ZuqrgYnL3cHbhEBvHWWJSFZ0nvls3O
+	 DcyOBJPGN8F+zaMABJ0gahO7RTbFWHUdpP+A2T7/A7Z95ZQD+Von5UDg5jikKvXxojQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063955;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063956;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mbr7nzieq95pMgSXGsxfFNGgpKySEgengTRH1CI7g7w=;
-	b=cmiyVYekeJiImCU2SYLPxb3BGOPTy18qv2VfhxTvJ1LtjmvsoqVUOZMt7xiwdD7tpi/+
-	 5jq0PN4LiuO1XtVbUU59/TWRlDHCpw6IdXwMTDBiIC3cMWbVTOw9aDs+ruq+Z/PSDbzh7
-	 p7rusWeajpRhg5FqYhNJKjjXn/5Y87m3Fvc4YeYmhZnfeeXQXSn5qB1tFgPKeu17mjHWH
-	 aCHWDD8Uw12J5ySFB7hFm04qDhuSeQEypXf9H86rZQ3drdbL9ngNzffmBWbIJcDktdhiE
-	 0ZDfzXrR6nAOAvibfDnQk056iFxvqx+yEa4pYKrCOf9GYnQo6VOiV1mf1VbzPov3eUg==
+	bh=G4up1Lwv2yuBL6aszzUL/P7krhsObhItFNWGxao9KgQ=;
+	b=AerfiKVyLA8I9AX1/VREgvxI0n533ndHmKgkwqNkhdgRPnq9jrdri/mofpdmKAgv0Q1c
+	 mmrc3im2rF6T2HCg1tR9pvjkacZXbVaxSr9J4frMUPQmxgP8IiLDc3WykNM6QEz1yFtMP
+	 ogKWNsOgb4Cb9WMNrSPrNYRwtEoqcsrIIEydnxQmnHDVxrUVLuD6FA6rlwxkgIDL4wv7X
+	 AtQ/CUE0VloRreDxmNt1VvEe5FAD67824RKooS6/nvst993NUhaBUqx5kTkY4lCq20Hr7
+	 AHJ7QoLH/fsP8OIb0bvQjMZPoW1PB9GspRtuhdc0DGpuLmDITi+a7+q+T5peFSNrxHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xrxg9lQG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zBE2d2lt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DB76082BFF;
-	Sat,  7 Nov 2026 15:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487B9608360F;
+	Sat,  7 Nov 2026 15:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xrxg9lQG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993491F008A6;
-	Sat,  7 Nov 2026 15:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zBE2d2lt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABBB1F0089F;
+	Sat,  7 Nov 2026 15:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063954;
-	bh=mbr7nzieq95pMgSXGsxfFNGgpKySEgengTRH1CI7g7w=;
+	s=korg; t=1794063956;
+	bh=G4up1Lwv2yuBL6aszzUL/P7krhsObhItFNWGxao9KgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xrxg9lQGZwZE7ZPA9KqrSlH1P1hdwukOwx1Q53Amf8J56VX4gPZmua+FvQcEF8639
-	 1p2TAuq6Ea+PV+34iVULg/uqGc2x3ye9uJ4jC1aG50b41FO+P2vbudwLqKo8IJ3cbK
-	 MV/wv1x3XqUPfMuo3wzjheHNUVMEMknMjeaGEJ+4=
+	b=zBE2d2ltfmQNWNRmDN41EIixOGKWzwuy8x/FQegVDld2rYp+Ef01tQuuHN1eHC7gd
+	 kHdve21aERqH4SAksBto0B82U2nv2lP+mEXGePYuXPeiOLpGtEBXmv7sjtaMwWJDbO
+	 ee5YKINVYCeQC+hKSK7Cnn2UNSA9RGdyWu5iGZ+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0127/1257] dmaengine: altera-msgdma: initialize state before requesting IRQ
-Date: Sat,  7 Nov 2026 08:40:23 -0500
-Message-ID: <20261107134942.833288058@linuxfoundation.org>
+Subject: [PATCH 7.3 0145/1257] media: vicodec: zero-initialize stateful decoder heap buffers
+Date: Sat,  7 Nov 2026 08:40:41 -0500
+Message-ID: <20261107134943.316581924@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,58 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit a5f8e3471fc20567df888267885dec3eb340eb37 ]
+[ Upstream commit 27953c044974baf7e24dee3e9342fe0103dea80c ]
 
-msgdma_probe() registers the IRQ before initializing the tasklet, lock,
-and descriptor lists used by the interrupt handler. A pending interrupt
-can access incomplete state during probe.
+The stateful decoder leaks uninitialized kernel heap memory to userspace.
+A process that can open the decoder video node gets it back in the CAPTURE
+buffers it dequeues.
 
-Initialize the handler state before requesting the IRQ so the interrupt
-path observes ready software state.
+The reference frame and the compressed frame buffer are allocated with
+kvmalloc() in vicodec_start_streaming(), and the decoder can read them
+before they have been written. The first frame is allowed to be a P-frame,
+in which case it is decoded against a reference frame that was never
+produced, and the padding rows below the visible area are never written
+for any frame.
 
-Fixes: a85c6f1b2921 ("dmaengine: Add driver for Altera / Intel mSGDMA IP core")
+Use kvzalloc() for both allocations.
+
+Fixes: 256bf813ba39 ("media: vicodec: add the virtual codec driver")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260830053308.2190597-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/altera-msgdma.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/media/test-drivers/vicodec/vicodec-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
-index e23e5b441a24e..412f4bce1d4aa 100644
---- a/drivers/dma/altera-msgdma.c
-+++ b/drivers/dma/altera-msgdma.c
-@@ -847,11 +847,6 @@ static int msgdma_probe(struct platform_device *pdev)
- 	if (mdev->irq < 0)
- 		return -ENXIO;
+diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
+index 25ec3a43fc712..7ea024b14f0e9 100644
+--- a/drivers/media/test-drivers/vicodec/vicodec-core.c
++++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
+@@ -1605,9 +1605,9 @@ static int vicodec_start_streaming(struct vb2_queue *q,
+ 	}
+ 	state->ref_stride = q_data->coded_width * info->luma_alpha_step;
  
--	ret = devm_request_irq(&pdev->dev, mdev->irq, msgdma_irq_handler,
--			       0, dev_name(&pdev->dev), mdev);
--	if (ret)
--		return ret;
--
- 	tasklet_setup(&mdev->irq_tasklet, msgdma_tasklet);
+-	state->ref_frame.buf = kvmalloc(total_planes_size, GFP_KERNEL);
++	state->ref_frame.buf = kvzalloc(total_planes_size, GFP_KERNEL);
+ 	state->ref_frame.luma = state->ref_frame.buf;
+-	new_comp_frame = kvmalloc(ctx->comp_max_size, GFP_KERNEL);
++	new_comp_frame = kvzalloc(ctx->comp_max_size, GFP_KERNEL);
  
- 	dma_cookie_init(&mdev->dmachan);
-@@ -863,6 +858,11 @@ static int msgdma_probe(struct platform_device *pdev)
- 	INIT_LIST_HEAD(&mdev->done_list);
- 	INIT_LIST_HEAD(&mdev->free_list);
- 
-+	ret = devm_request_irq(&pdev->dev, mdev->irq, msgdma_irq_handler,
-+			       0, dev_name(&pdev->dev), mdev);
-+	if (ret)
-+		return ret;
-+
- 	dma_dev = &mdev->dmadev;
- 
- 	/* Set DMA capabilities */
+ 	if (!state->ref_frame.luma || !new_comp_frame) {
+ 		kvfree(state->ref_frame.luma);
 -- 
 2.53.0
 
