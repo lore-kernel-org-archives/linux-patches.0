@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063184;
-	b=jBgocMRKhMzyFveGLqrLTIwVXPe5bMCWLuXJ0YK5fU80aPoKM3GtfU3Zn6BdQWuiUDvP
-	 HByAC5idfJ7F+TWO6cJoP2hmDnI3ccEYVjeDe5BPVI1GkLZcpx9HVUj/nnLdUyLpZdcRD
-	 Sb3Ypoz9YR99482izD2vxtKt1D/gEgOMWl5MAqBePAU5cZPJgitXa30jLvTj7qld2tcHG
-	 /xL9cDNUN1wloQVyYgH4NTihC+J+l61pwM4hXhyGdiHClbi6Zldh75mV/4sNTyuBFmpvB
-	 xbOiIqV8tdQ5KCaAS1WpPSOcN65KKPF87Bxw8xw7Q+4cSmYOsgN+5wo+G1VbSQTJ2GA==
+	t=1794063185;
+	b=k6z4DWmV1c6O+393yJyNFVMD0IRXzIJZXImknFZ6prgHNWryF0twxd9DM17/R6AXMBti
+	 k1dVrevvc5WISJMseiJnAm99bLqW648iKYkj04X4ZUUTikDQYFPytCXg1+CHdvZYkIqFJ
+	 k6le/awuxPh9RPlQI1MoGQa3OUnDMWi52YI+afSKyK5VLPQvL3ozNPQbOCLGkpnFrhEMT
+	 j6E1+DZinX7JG0InBZETYQEeoqWn/EiJM8OZxn1m7FZmi+B+rv5mCs3ebJsmH+BpHm2yZ
+	 BvrU7qmBEhjba8+0RUZF3FjY/J10A3VEvPD9HK9SwzkGZf1LygsojXl4gQOShXsyKPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063184;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063185;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z7Mh7rzP+NOv55u7C/VB4Kkwzg+aOznES8lkEly7hZk=;
-	b=IhypxsRf2t1C3HiCgBmF96+pVNibyB16/3MGI/Es6DB0Y9HsBhPJ5pYTpOIM2EwY0cNp
-	 LjXFVmmjU59D3VVzJ3xdpEtfGpPGl3L62hlGpqSpGVYP4/iIKChxAZBWMUOJvEtCKYHO1
-	 QKFteWnB7meK8MAmG7x845JvfiUxvKS+RNV1V4Jam8Csrc+0Yl+R9kt3xJnwDJ4eDgQWd
-	 +toTwhD9EnxclyQgDNHHSOIKPtGL8bAZWdyzf60MV1rocLa7NsqtZcH3nyPzzfuFBTT9Y
-	 Wv5lCqLDlf6J9SA0axqZy9vMmruEAIW1PujnQHjBYneUB2pcRtb7sCGH4+wrYdXExKg==
+	bh=nGUVZIPUITDi5NpjOfdjUJc9M+S5upSUXejadCu9FXw=;
+	b=T8c+RPwVGyTpJhF48oW48uKrIK1z3/cPfeoh3pH0BItOLvgjzih4BzVuiINKR691RgXv
+	 E+cCeUxFyRsRiIsVWVNyhMKH8CpRQ2paEzRP0GcKmbmcvRt07d67g7M5V5Ov6pP2yy2D/
+	 L1mMH29OwPp2e4MMVc1w50oVUMK6c5DV+lWjyQ8XFZLZPyvYWkx+8wJXRi1vumBaUvUkj
+	 B0V1I8zEb6I30ikCQaNBxsBk5gk/6TuVKaxONybXrvo5t2zNgeFyUO7vSeCX/mxF27JFp
+	 glErTXZ3Kp8Ql7skBU2/TszRtl3e+WJUf4qb3tMhEMoR3K1FOfP3uMVGTNyCe57jJAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=njDxWus5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1+F6U7Fi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A7E606A330;
-	Sat,  7 Nov 2026 14:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB95606A330;
+	Sat,  7 Nov 2026 14:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=njDxWus5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89C81F0089F;
-	Sat,  7 Nov 2026 14:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1+F6U7Fi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC3BE1F0089F;
+	Sat,  7 Nov 2026 14:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063183;
-	bh=Z7Mh7rzP+NOv55u7C/VB4Kkwzg+aOznES8lkEly7hZk=;
+	s=korg; t=1794063185;
+	bh=nGUVZIPUITDi5NpjOfdjUJc9M+S5upSUXejadCu9FXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=njDxWus5btCtVtFBVeCKmtRt+WpOYuwttHAJLE64th/ud869q+ECIzN1XyHaLWHsV
-	 CIZUmQ+86SBG2+78SJ5mISigRh8tNVHEVL51r2yjjDfcwCtKxjCaO5Dsxt2FrtKDpF
-	 UkHluBVaAuDlpBDxGr0omiH8KV+xv84ddkt3Byv0=
+	b=1+F6U7Fifv2YC1kHWL/4BmY9UgiLcwI81gQDshE1erO6vr5YZa5J/GzriidnF8DOF
+	 ncuzDiUzfnWkGUgvnvDdX/4vx+VSyE0GP3ndSp+1CPuljKDUELndGFk5odCgSvCmy7
+	 NDI0O6tWLA7r7U3Ds+lHpRLm5ul2URjnx5GmajAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Khorenko <khorenko@virtuozzo.com>,
-	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yang <richard.weiyang@gmail.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 393/869] selftests/core: fix unshare_test with large fs.nr_open
-Date: Sat,  7 Nov 2026 08:51:15 -0500
-Message-ID: <20261107134906.745613715@linuxfoundation.org>
+Subject: [PATCH 6.18 402/869] wifi: mt76: mt7925: cancel mlo_pm_work on the USB stop path
+Date: Sat,  7 Nov 2026 08:51:24 -0500
+Message-ID: <20261107134907.014797899@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,86 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Khorenko <khorenko@virtuozzo.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit df0b7e0ea59c43708cff8c7e34da5e2f8d430e5e ]
+[ Upstream commit 9f299215d1d835aeeee8b269dad09e1be06f856e ]
 
-The test assumes fs.nr_open is close to the default 1048576, but some
-systems set it much higher (e.g.  1073741816).  This is systemd's doing:
-since systemd v240 (2018), PID 1 bumps fs.nr_open and fs.file-max to their
-largest possible values on boot, as file descriptors are already accounted
-for by memcg [1].
+Every other teardown path cancels this work, PCIe unbind included. USB
+unbind does not: PCIe has its own unregister hook for it, while USB
+shares a generic one and the stop callback that would have covered it is
+replaced in probe.
 
-In that case, dup2() to nr_open + 64 requires the kernel to allocate a
-file descriptor table with ~1 billion entries, which fails with ENOMEM.
+That cancel came in commit 81faf578320d ("wifi: mt76: mt7925: cancel
+mlo_pm_work on stop"), whose last line says it covers both buses. That's
+mine and it's a boo-boo.
 
-On a kernel that already carries 04a2c4b4511d1, dup2() no longer fails
-with ENOMEM.  The allocation is now rejected up front and the caller
-gets EMFILE instead, without the WARNING, but the test still fails.
+Give the USB path its own stop that cancels the work first.
 
-Cap the nr_open value used for the test's own arithmetic to a known
-reasonable base value (1048576) and restore the true original value once
-the test has completed.
+Two-link MLO on a Netgear A9000, work armed then the interface down:
 
-Link: https://lore.kernel.org/20260814165709.513263-1-khorenko@virtuozzo.com
-Link: https://github.com/systemd/systemd/commit/a8b627aaed409a15260c25988970c795bf963812 [1]
-Signed-off-by: Konstantin Khorenko <khorenko@virtuozzo.com>
-Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yang <richard.weiyang@gmail.com>
-Cc: <stable@vger.kernel.org>
+                   stock    patched
+    stop ran        3/3      3/3
+    work still ran  3/3      0/3
+
+Skipping the stop entirely leaves both builds running it, so the zero is
+the cancel.
+
+Fixes: 276a56883257 ("wifi: mt76: mt7925: update the power-saving flow")
+Cc: stable@vger.kernel.org
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20261003234944.96066-1-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/core/unshare_test.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/usb.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/core/unshare_test.c b/tools/testing/selftests/core/unshare_test.c
-index 7fec9dfb1b0e3..6716e0f74d7da 100644
---- a/tools/testing/selftests/core/unshare_test.c
-+++ b/tools/testing/selftests/core/unshare_test.c
-@@ -40,6 +40,14 @@ TEST(unshare_EMFILE)
- 
- 	ASSERT_EQ(sscanf(buf, "%d", &nr_open), 1);
- 
-+	/*
-+	 * Cap nr_open for the duration of the test to avoid ENOMEM from a
-+	 * huge fd table allocation; buf/n keep the real original value so
-+	 * fs.nr_open can be restored to it once the test is done.
-+	 */
-+	if (nr_open > 1024 * 1024)
-+		nr_open = 1024 * 1024;
-+
- 	ASSERT_EQ(0, getrlimit(RLIMIT_NOFILE, &rlimit));
- 
- 	/* bump fs.nr_open */
-@@ -73,10 +81,13 @@ TEST(unshare_EMFILE)
- 
- 	if (pid == 0) {
- 		int err;
-+		char buf3[32];
-+		ssize_t n3;
- 
--		/* restore fs.nr_open */
-+		/* restore fs.nr_open to the (possibly capped) test baseline */
-+		n3 = sprintf(buf3, "%d\n", nr_open);
- 		lseek(fd, 0, SEEK_SET);
--		write(fd, buf, n);
-+		write(fd, buf3, n3);
- 		/* ... and now unshare(CLONE_FILES) must fail with EMFILE */
- 		err = unshare(CLONE_FILES);
- 		EXPECT_EQ(err, -1)
-@@ -89,6 +100,10 @@ TEST(unshare_EMFILE)
- 	EXPECT_EQ(waitpid(pid, &status, 0), pid);
- 	EXPECT_EQ(true, WIFEXITED(status));
- 	EXPECT_EQ(0, WEXITSTATUS(status));
-+
-+	/* restore the real fs.nr_open value */
-+	lseek(fd, 0, SEEK_SET);
-+	write(fd, buf, n);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/usb.c b/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
+index 95047ee48a425..0ad86526dddc8 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/usb.c
+@@ -132,6 +132,15 @@ static int mt7925u_mac_reset(struct mt792x_dev *dev)
+ 	return err;
  }
  
- TEST_HARNESS_MAIN
++static void mt7925u_stop(struct ieee80211_hw *hw, bool suspend)
++{
++	struct mt792x_dev *dev = mt792x_hw_dev(hw);
++
++	cancel_delayed_work_sync(&dev->mlo_pm_work);
++
++	mt792xu_stop(hw, suspend);
++}
++
+ static int mt7925u_probe(struct usb_interface *usb_intf,
+ 			 const struct usb_device_id *id)
+ {
+@@ -178,7 +187,7 @@ static int mt7925u_probe(struct usb_interface *usb_intf,
+ 	if (!ops)
+ 		return -ENOMEM;
+ 
+-	ops->stop = mt792xu_stop;
++	ops->stop = mt7925u_stop;
+ 
+ 	mdev = mt76_alloc_device(&usb_intf->dev, sizeof(*dev), ops, &drv_ops);
+ 	if (!mdev)
 -- 
 2.53.0
 
