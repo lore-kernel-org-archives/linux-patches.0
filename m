@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064199;
-	b=vw534Jcy3L7dmF3/nV4/X9TQtD01WDRVMY8r84mHVYVrObluSegKvkJo59BVnLLiAsp+
-	 C+q0PO6+aTRHDjWQ8crwC/Tj7MxpM3oDVLAye4fw94yr3oh4W/RHqg8RWWLV+Xb3bZfHo
-	 X1Ph/YXx/IbL2OKUW/V7vayoLdf4xNMmIy0VNXsIzTPKObnr97WpfxL4xemQjh1Y9GjEW
-	 51D+U2L4VgL2hgis53BbaNEXAk/n8wUUp1iJaTlmxO7rohuQUuD6DLB/XoRkmexwtlihR
-	 kGHBBlHoWckf74OJBq7wJJqn+HSG8D3itMVCFVMJeXXpbUky75zP2OTRSpuFEioy4SA==
+	t=1794064200;
+	b=FQuiaQh1/QEKaOle4iPkL/QCuMnwQgfsB0wH24ODMhar3+aB04/0al2o5LVTZaq0mm5u
+	 /plG36yuJiIM3HDa19ViW4Qnk6CeXKB0SdvGCcOgVvCOaF4HF5wsHZESiq9niTpzJTtW7
+	 cfeDKF3+SMDnK0U197iQvYTZYzP4PwL+pNi2lnxEepliqup4y8SnGjjCWaGoR/P7AiR4X
+	 gDwZcGowQs0pGLOBYPTFNMIzWkp9HC0bIhteBXNJ0toZbzTHQoaKgRtNKwSre4DSEcM3H
+	 9XpFlE/gCxlW52MgtMc2rpkClGQKmq7hutFJo7er4xJd9SWr0JZLX/mjCfZzI1lVmcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064200;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Dx1vRwxgW+rt2YzUgdoxCKC39dH8zPP49BQ46ZlggMM=;
-	b=Iv0bs7QY7Jz8La5bq2Db5SGKi4dy7iSrENkp5RY4F1e2l9pR5B2pcoSkCsFr0AfhZVSh
-	 ohw0InRLAjVpfz9v5vGcAV87HQqC/5xilXo64WQGKp7L1awFeObNV3pIx245msfiV1nMp
-	 XPPjiRwZULJn6EDee4gnkzO587JE5i+1dJl7ZtIBF8A7FMEmdTNgv74tZzZOjn8wfmzEx
-	 GLjiTGznuEvmOSpV3Hi7lKvn+9FXPwblutXoWtPO+HI4kE7AkJBns1tfT/PBS2hYUULtQ
-	 AU1/lo/jYDiAqxgrhUBhMoA5XkaNhHRiQjm4yCD6lBsM0dOQvwAl8yh+69znTRkSc+A==
+	bh=Df6i0TunELCDwFkwnNZAmKfi0rrcLEzaUFe6DusB07o=;
+	b=n+sZ0N9FD+v+aYUyAwnuSz83ujY4Ltuyiq3oZWfBL83AHa/O991b86LD7HONEczbj1OZ
+	 pb+qOBylMktAtu2WsW332V4wYxKtWS0JcFCFntM5pzlDtxVrG4iVreulcb/XYorlbbLDV
+	 oVBOkwQSoj67Xkc5YPrUS6dFD7/q9rkDRXC+N+8xAmM/rjY80cOb0sinYtceaLPf9kfyh
+	 x36RymrZoqtT8Aaye1wXKJ+7U99PdN3olxkJ0RoNZ1WTTWFhVF7icVddyPutUq0fSEPDX
+	 CSv6IT6jhMba6aEgWM4oNqAt0fvcnLXLw4VofTp917VvaaeACrm1JSm6BgxZeUBXYaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpn+0ntZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZsRs42ZZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D67606EEB2;
-	Sat,  7 Nov 2026 15:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDD8606EEB2;
+	Sat,  7 Nov 2026 15:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jpn+0ntZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C12F1F008A2;
-	Sat,  7 Nov 2026 15:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZsRs42ZZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599BC1F008A2;
+	Sat,  7 Nov 2026 15:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064198;
-	bh=Dx1vRwxgW+rt2YzUgdoxCKC39dH8zPP49BQ46ZlggMM=;
+	s=korg; t=1794064199;
+	bh=Df6i0TunELCDwFkwnNZAmKfi0rrcLEzaUFe6DusB07o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jpn+0ntZjVEldzsJtUAv+l3ASTZWjTCi1kRLguiqgfwkfGOZ0Bb8H3c/nusl4IY/x
-	 1q5XVFNTQQxyh8kah22r5Cx8TZ0b/khukQKcOrYiQXCe7Om/JrwlNaDSUdCUv8HbvP
-	 vwrkP2yPGQyijRSdJUI47/Wt1He+CUJKSTSMUo8Y=
+	b=ZsRs42ZZy0A7ll0jTcFRuiO0+wQOLqK2SjZ45O++8Y9Og/CdOXyBO5lpN4X4qgvbP
+	 vwwDPERQfe6N1cem0yesfLDNNMqTKJpuqzeHOHmlk3CwEAbJMnVIOPG9GNH07hTw80
+	 tZYzDLsM6EuP/hlLAJC39LkbZV4+Qb4avV+nx6F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Joanne Koong <joannelkoong@gmail.com>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0299/1257] fuse: dont shorten the folio descriptor at LLONG_MAX
-Date: Sat,  7 Nov 2026 08:43:15 -0500
-Message-ID: <20261107134947.717580456@linuxfoundation.org>
+Subject: [PATCH 7.3 0300/1257] fuse: dont drop destination page cache on a zero byte copy reply
+Date: Sat,  7 Nov 2026 08:43:16 -0500
+Message-ID: <20261107134947.742722834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,115 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 4c72635f913850512d5fa74bf3eb7db3670398cf ]
+[ Upstream commit f7585e1ce3418ec282485854b3d8d31c6a961e37 ]
 
-fuse_send_readpages() and fuse_do_readfolio() both decrement the folio
-descriptor length when handling the overflow case where a read would
-exceed LLONG_MAX after incrementing the file position by the number of
-bytes that need to be read in.
+__fuse_copy_file_range() clears the destination page cache after the
+server replies:
 
-Shortening it is unnecessary (and for the virtio-fs paths, a bug), and
-with fuse using iomap for handling reads, shortening it is buggy.
+	truncate_inode_pages_range(inode_out->i_mapping,
+				   ALIGN_DOWN(pos_out, PAGE_SIZE),
+				   ALIGN(pos_out + bytes_copied, PAGE_SIZE) - 1);
 
-For fuse_send_readpages(), ap->descs[] is also what fuse_readpages_end()
-reports back to iomap_finish_folio_read(). iomap accounted the full
-length when the range was submitted, so the lengths reported on
-completion have to add up to what was submitted. Reporting one byte less
-leaves ifs->read_bytes_pending nonzero, folio_end_read() is never called,
-and the folio stays locked.
+A server may legitimately reply that it copied nothing, eg if the source
+file turns out to be shorter than the size the kernel has cached for it.
 
-This is currently reachable on fuseblk mounts configured with block
-sizes smaller than the page size.
+If pos_out is 0 as well, the end of the range is ALIGN(0, PAGE_SIZE) - 1,
+which is -1. lend is a uoff_t and truncate_inode_pages_range() takes -1
+as its end of file sentinel, so rather than clearing nothing it drops
+every folio in the destination mapping.
 
-Fix this by leaving the descriptor length untouched. The reply will then
-be one byte shorter than what the descriptor lengths add up to, and the
-last byte will be zeroed in fuse_copy_folios().
+That is not only a cache drop. truncate_cleanup_folio() calls
+folio_cancel_dirty(), and fuse_writeback_range() only wrote back
+[pos_out, pos_out + len - 1], so dirty data elsewhere in the destination
+file is discarded without ever reaching the server.
 
-This also fixes a bug in virtio-fs that existed before any iomap changes
-were added to fuse. For virtio-fs, data there arrives by DMA rather than
-through fuse_copy_folios(), so the only zeroing is in
-virtio_fs_request_complete(), which compares the reply size against the
-descriptor length. With the descriptor length shortened, the two are
-equal and nothing gets zeroed, which means the unrequested byte is left
-holding whatever was in the folio, when the folio is marked uptodate.
-This is both in the fuse_do_readfolio() and fuse_send_readpages() paths.
-This dates back to commit 2f1398291bf3 ("fuse: don't overflow LLONG_MAX
-with end offset").
+Skip the call when the server copied nothing, since there is nothing
+stale to clear in that case.
 
-Fixes: 4ea907108a5c ("fuse: use iomap for readahead")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 9b46418c40fe ("fuse: copy_file_range should truncate cache")
 Cc: stable@vger.kernel.org
 Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 38 +++++++++++++++++++++++++++++---------
- 1 file changed, 29 insertions(+), 9 deletions(-)
+ fs/fuse/file.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index 9a36d0329e221..b52f5b45646c9 100644
+index b52f5b45646c9..0f2c9404af74a 100644
 --- a/fs/fuse/file.c
 +++ b/fs/fuse/file.c
-@@ -864,18 +864,29 @@ static int fuse_do_readfolio(struct file *file, struct folio *folio,
+@@ -3058,9 +3058,11 @@ static ssize_t __fuse_copy_file_range(struct file *file_in, loff_t pos_in,
+ 		goto out;
+ 	}
  
- 	attr_ver = fuse_get_attr_version(fm->fc);
+-	truncate_inode_pages_range(inode_out->i_mapping,
+-				   ALIGN_DOWN(pos_out, PAGE_SIZE),
+-				   ALIGN(pos_out + bytes_copied, PAGE_SIZE) - 1);
++	if (bytes_copied)
++		truncate_inode_pages_range(inode_out->i_mapping,
++					   ALIGN_DOWN(pos_out, PAGE_SIZE),
++					   ALIGN(pos_out + bytes_copied,
++						 PAGE_SIZE) - 1);
  
--	/* Don't overflow end offset */
--	if (pos + (desc.length - 1) == LLONG_MAX)
--		desc.length--;
-+	/*
-+	 * Don't overflow end offset.
-+	 *
-+	 * Ask the server for len - 1 bytes. desc.length still holds the full
-+	 * length. When the reply comes back, it will be one byte shorter than
-+	 * desc.length and fuse_copy_folios() will zero that last byte.
-+	 *
-+	 * For this reason, desc.length must not be decremented too. The caller
-+	 * reports the full length to iomap_finish_folio_read(), which marks
-+	 * every block it covers uptodate. Shortening the descriptor would
-+	 * suppress zeroing and leave the last byte holding stale data.
-+	 */
-+	if (pos + (len - 1) == LLONG_MAX)
-+		len--;
- 
--	fuse_read_args_fill(&ia, file, pos, desc.length, FUSE_READ);
-+	fuse_read_args_fill(&ia, file, pos, len, FUSE_READ);
- 	res = fuse_simple_request(fm, &ia.ap.args);
- 	if (res < 0)
- 		return res;
- 	/*
- 	 * Short read means EOF.  If file size is larger, truncate it
- 	 */
--	if (res < desc.length)
-+	if (res < len)
- 		fuse_short_read(inode, attr_ver, res, &ia.ap);
- 
- 	return 0;
-@@ -1068,11 +1079,20 @@ static void fuse_send_readpages(struct fuse_io_args *ia, struct file *file,
- 	ap->args.page_zeroing = true;
- 	ap->args.page_replace = true;
- 
--	/* Don't overflow end offset */
--	if (pos + (count - 1) == LLONG_MAX) {
-+	/*
-+	 * Don't overflow end offset.
-+	 *
-+	 * Ask the server for count - 1 bytes. The reply is then one byte
-+	 * shorter than what the descriptor lengths add up to, so
-+	 * fuse_copy_folios() zeroes the last byte when it walks the folios.
-+	 *
-+	 * ap->descs[] must not be decremented here. It is what
-+	 * fuse_readpages_end() reports back to iomap_finish_folio_read(), and
-+	 * iomap has already accounted the full descriptor length, so shortening
-+	 * it would leave ifs->read_bytes_pending nonzero and the folio locked.
-+	 */
-+	if (pos + (count - 1) == LLONG_MAX)
- 		count--;
--		ap->descs[ap->num_folios - 1].length--;
--	}
- 	WARN_ON((loff_t) (pos + count) < 0);
- 
- 	fuse_read_args_fill(ia, file, pos, count, FUSE_READ);
+ 	file_update_time(file_out);
+ 	fuse_write_update_attr(inode_out, pos_out + bytes_copied, bytes_copied);
 -- 
 2.53.0
 
