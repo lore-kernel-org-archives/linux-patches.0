@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063261;
-	b=Lndd+oQZTfTGJvnc9/8il4aOBAIL8N0YGgHEDcrsZMbaJNXdga9OkKqoa1fKWEA1wkiB
-	 WbtzBdEql9XqrpWGhMvuntRGApeakEW2XCBLCK18Df/jpWprBl8WTPqj+yanHdJs8SpUy
-	 3uDe+gvZbZHN+mI8WmkEuWmz9gx/uhuiBWwth068h01SNAC2jck4d0NWOKZfhT21ncHIt
-	 +0vaP2dvuqg3qBajtJQk1kuOz///LRom5mbNqcQHe5o9uGmmUHlovoWTRlHJgGKzxzB89
-	 gzw3KdjSrGI3KdYp6XN13tVz5YfrRrwgMo3tH1FXOnT0+Vv3fSvUFv9QzI1sbKoTEzQ==
+	t=1794063263;
+	b=1CWWYltP4aeLqWs3eUNWhyKVs2F6yXnQGaPkWwcOhSnIbpbvRUgvTr34Qjk/dGeS0Tq5
+	 z+xbvlw0liOeY+hf7WAycjwziyqszdGzC6DtDtq+mSeeTRosTbZmqMDYX548j46WYibuc
+	 bkeQmPFUI2KUIaJh/WQAOo6cjvPxRqqbDqDhlEORgYQuOKVgwBYZLfxktjOnKGo9GBEyA
+	 LFVeNXQaMcPJkqpFlejHa8hFLzre/Grtxc7NzytZV0/6q5eWv09Or8Wl9QUdggXmZusIz
+	 95HoFsCVCHcr3XaGSM2rnAtA/bqSPCSJtR9f+MiLictJvMByMXa+MYiS8rF34wHWqZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063263;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ay4SnrDerLx5rHXMG8sQIrsJSbskjy3aPwNTXEV+J/M=;
-	b=qiJa29uaeUrtmYNNJ289SHSy5Qpud1UIX4aG98aMmzGKGmldsEXHzYYqzvyjxbYkOyIv
-	 4R/h9ZJ+ThZS8P+aKFFE+Gd+Nt9m8p/1Qi1aW/ks9jjAkPQdUDcnldE2hQ245/1HAJZiL
-	 cwNybcU2ozMO3ICCa+0ZlSl4MDdIvw2RQMU6ipWIHcX9sgFr22gAPJ8zXyP18irBart54
-	 O2t3XWQkhU4kZLaK2aWgaA95Z7BiaIWuFWBgvpuMjwT6u9sbd/jQf8HDH7Ov1Mhe3w7Y1
-	 K57PnvQdL/UbHwmMvw9Qwzm/LeVcrwtY2YDXq6dpg7M7+Fh6KsYtnj7g6CkPmJ2JN6A==
+	bh=24gU/KgfGj8QeJAz0ZStW064iZpc+XW34zBhP7nLStQ=;
+	b=APhqtv4rnSnlc0n521bLHSgP5Qn1j88iymKukHAH1D9NDov1sds1jLx4c5zEiUTx9xoz
+	 r/0gITMqmTOHpbwdzHqmz7ki1vNBOMlJSSYrUYN6/K7wxWX+O1WgCnDk5XoQDLSAaXQJd
+	 /iFoimAhP1FsG5UsRZxFBgp4T0aFygT/ZKZRHD8W1iOd5sWpTZGu26Y+fbsaWfhBSn0PX
+	 kow+JArob6lTYN3+P4G9fUJI7s49+7kcUTGTRNraPaedX9/II7B4OayX6aMAXMOoZTiNW
+	 LBVVDNmuo+Mc1gp6rEl3o1D5v/nUul4kN4nIebvs6m92U/aguMb9qRkAy9d+/DszJ/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O3ZoGT0T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUiwfoYW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E2C606A331;
-	Sat,  7 Nov 2026 14:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE871606A331;
+	Sat,  7 Nov 2026 14:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O3ZoGT0T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054BD1F0089F;
-	Sat,  7 Nov 2026 14:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cUiwfoYW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C061F0089F;
+	Sat,  7 Nov 2026 14:54:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063261;
-	bh=ay4SnrDerLx5rHXMG8sQIrsJSbskjy3aPwNTXEV+J/M=;
+	s=korg; t=1794063262;
+	bh=24gU/KgfGj8QeJAz0ZStW064iZpc+XW34zBhP7nLStQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O3ZoGT0TWrbbz8LIxMJu/pVkxyAlM50ZKNRJoKR1No8Q392gt5ooD3CagmoDHFley
-	 zFchqlVTu0baKbQqYnflus0FXnquqe3OaeQARjzaKTvXHRacc6iyzn7hhkSoPeudj6
-	 mhTvRLy8WFZHATaajcOT1XEDoP1EUjiErOSkBExI=
+	b=cUiwfoYWkmRoPGPK0WmZ1NySQhJItUdrfJ00QX5vuNXptXR5qnO/KGnI8c6Jc7HnZ
+	 0Jz+MKJz3W3ExPF5933bDo/DEnwH4yzK7wZq/Qv4vEJ9qDIKarIfgcYrrjGGzFI+G3
+	 7GlN7XQi0QdCB+IOW57yZW0n1H7P6xpIaYGrYqkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+fd80bc5967eb22c3@bugs.sh,
-	Michal Pecio <michal.pecio@gmail.com>,
+	Lianqin Hu <hulianqin@vivo.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 461/869] usb: xhci: Fix bounce buffer overflow
-Date: Sat,  7 Nov 2026 08:52:23 -0500
-Message-ID: <20261107134909.307877236@linuxfoundation.org>
+Subject: [PATCH 6.18 462/869] xhci: Prevent invalid vdev dereference during sideband unregister
+Date: Sat,  7 Nov 2026 08:52:24 -0500
+Message-ID: <20261107134909.338568420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,71 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 68c5cb7574c567e83ba95258cb146db95e069a87 ]
+[ Upstream commit fd616dc74e8f58f351f2b295620027116cd6e92e ]
 
-High-speed devices with out of spec 1024 byte bulk endpoints exist and
-are allowed by USB core, but xhci-hcd always sets packet size to 512.
-The exact nature of these devices isn't documented, commit fb5ee84ea72c
-("USB: Accept bulk endpoints with 1024-byte maxpacket") only states
-that they "don't work with xHCI host controllers", whatever it means.
+Offloaded USB audio devices using the xhci-sideband API store a pointer to
+the xhci virtual device (vdev) in the sideband structure when registering.
 
-But somebody (or a malicious device) can try, and then the driver will
-allocate a 512 byte bounce buffer for this endpoint and may write up to
-1024 bytes into it if particular scatter-gather URBs are used, because
-xhci_align_td() obtains packet size from the descriptor. Fix this.
+This pointer typically remains valid throughout the lifetime of the USB
+device. If a configured offloaded device requires a reset, the USB core
+usually unbinds or notifies the audio driver beforehand, ensuring that the
+sideband is unregistered before the vdev is freed.
 
-As a side effect, TRBs will be aligned to the packet size chosen by the
-driver on all endpoints of all speeds. Alignment serves the xHC, not
-device, so this is fine. Only out of spec devices are affected anyway.
+An exception occurs when the USB core resets a device to recover from a
+failed resume, but a subsequent 'address device' request also fails. To
+recover in this specific scenario, the xHCI driver disables and re-enables
+the slot, which frees and re-allocates the vdev.
 
-Reported-by: co+fd80bc5967eb22c3@bugs.sh
-Link: https://lore.kernel.org/linux-usb/D4tcSGerkYkIV1DmaUo1t8TaR5qQElDLkidn@bugs.sh/
-Fixes: f9c589e142d0 ("xhci: TD-fragment, align the unsplittable case with a bounce buffer")
+xhci_sideband_unregister() later dereferences the stale, previously freed
+vdev pointer during disconnect, triggering a kernel oops:
+
+ Unable to handle kernel paging request at virtual address dead000000000122
+ Call trace:
+  xhci_get_ep_ctx+0x0/0x38
+  xhci_sideband_unregister+0x68/0xf0
+  uaudio_disconnect+0x70/0x144
+  usb_audio_disconnect+0x7c/0x268
+  usb_unbind_interface+0x13c/0x340
+  device_release_driver_internal+0x1c4/0x2bc
+  usb_disable_device+0x84/0x190
+  usb_disconnect+0xe8/0x338
+  hub_event+0xbd8/0x19ac
+
+Fix this by preventing the reallocation of the vdev in this specific error
+path if the device is registered for sideband use.
+
+Just propagate the error directly to the USB core. It should either retry
+enumeration or detect the disconnected device, and handle it accordingly.
+
+Debugging this issue to the dangling vdev pointer, reporting it, testing,
+and initial patch with different solution by Lianqin Hu
+
+Reported-by: Lianqin Hu <hulianqin@vivo.com>
+Closes: https://lore.kernel.org/linux-usb/TYUPR06MB6217000B59003EDF233D7246D2B22@TYUPR06MB6217.apcprd06.prod.outlook.com/
+Tested-by: Lianqin Hu <hulianqin@vivo.com>
+Fixes: de66754e9f80 ("xhci: sideband: add initial api to register a secondary interrupter entity")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20261009151624.618967-11-mathias.nyman@linux.intel.com
+Link: https://patch.msgid.link/20261009151624.618967-12-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/usb/host/xhci.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index dc18da8385a21..071a0310d6100 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -3600,15 +3600,13 @@ static u32 xhci_td_remainder(struct xhci_hcd *xhci, int transferred,
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index a4fab82da76b6..b894ba988a3d9 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -4435,10 +4435,13 @@ static int xhci_setup_device(struct usb_hcd *hcd, struct usb_device *udev,
+ 		dev_warn(&udev->dev, "Device not responding to setup %s.\n", act);
  
- 
- static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
--			 u32 *trb_buff_len, struct xhci_segment *seg)
-+			 u32 *trb_buff_len, struct xhci_segment *seg, u32 max_pkt)
- {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	unsigned int unalign;
--	unsigned int max_pkt;
- 	u32 new_buff_len;
- 	size_t len;
- 
--	max_pkt = xhci_usb_endpoint_maxp(urb->dev, urb->ep);
- 	unalign = (enqd_len + *trb_buff_len) % max_pkt;
- 
- 	/* we got lucky, last normal TRB data on segment is packet aligned */
-@@ -3753,9 +3751,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
- 		if (enqd_len + trb_buff_len < full_len) {
- 			field |= TRB_CHAIN;
- 			if (trb_is_link(ring->enqueue + 1)) {
--				if (xhci_align_td(xhci, urb, enqd_len,
--						  &trb_buff_len,
--						  ring->enq_seg)) {
-+				if (xhci_align_td(xhci, urb, enqd_len, &trb_buff_len,
-+						ring->enq_seg, ring->bounce_buf_len)) {
- 					send_addr = ring->enq_seg->bounce_dma;
- 					/* TD bounced at least, and last on this seg */
- 					td->bounce_seg = ring->enq_seg;
+ 		mutex_unlock(&xhci->mutex);
+-		ret = xhci_disable_and_free_slot(xhci, udev->slot_id);
+-		if (!ret) {
+-			if (xhci_alloc_dev(hcd, udev) == 1)
+-				xhci_setup_addressable_virt_dev(xhci, udev);
++
++		if (!virt_dev->sideband) {
++			ret = xhci_disable_and_free_slot(xhci, udev->slot_id);
++			if (!ret) {
++				if (xhci_alloc_dev(hcd, udev) == 1)
++					xhci_setup_addressable_virt_dev(xhci, udev);
++			}
+ 		}
+ 		kfree(command->completion);
+ 		kfree(command);
 -- 
 2.53.0
 
