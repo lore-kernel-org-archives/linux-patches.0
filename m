@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064623;
-	b=bUqwKONJ6/0boE/8MoGdQPtHmDwGdJ9kUjnJrg0b+wGo7kiOEnzgE8eIPdJTFfm/OvT3
-	 XLFGyoYv6WrRNXEbngkYaZddR6fDua2l2b2bocH/zs190GuA2xVbACCbnfkPU2NnJoGkD
-	 PUjZMmJYehq+5q+8V5eftSCUpalrKO3DQSiGH/CkO0QxkKcG6gJBidkNaV9iYSn25YZjE
-	 chfBeCFgXdCamWBMHIA5QJJ4fW1P2k3fHaK7UPw/y60slQSOf++gFvw590gnY8sVIUThB
-	 mDeRRLPNCaxuBnVAtrGGVMNvS/R9vtfK+uZB4Ua6MwfKXqc1m2DsXblPEVvXZZ2vGLQ==
+	t=1794064625;
+	b=DDkrs+Fq+9MTOlZ/bqWALukhWQh3PxLY67jyupCQOgv0rsybcRqQmo9ZmdKYDuIUs3zS
+	 Z/1T4BHejE0bVQXD4naAcXNv1AHvuOUzP6PLxnCsk511d8LmYh6XUER/dm2BjAUbIjyqb
+	 BHrC2BUbZsmMs52+m+rn+9nOWRQ/9zIPRdavBRemA3Pxxjt3hJxu/W+LKjDziwKohkzPE
+	 z9NqY0cZOP8e2uld50pe4QVB3kSKNNU2XXNgi116gwNEnM+rBNYt5ZtfqI8VO1tyy1pxD
+	 8pINhYOhQF1fVbxC4Yk7BZm2xDwtCp69wSPoUpmOYv+dfrLn9J4X8poTsb68YsIBS8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064623;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064625;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=axpHqBWsMUgU2JLJ1UNRqooeiq5uYx77CXnJLOeMMO0=;
-	b=DB881Zy67Ex1WXV60XrF0Vic4ZtMmMoY+O2F3EVDyjAP/GFxr7WkbkBk4Jh1f7CuFYpm
-	 3OQURNUdePvwG7vqx24ctOul4SOm1Ya6t9xVjFt83XL8DTUncMoFmQfz3kjiYiMhOgRhU
-	 kpA7nDKSSYBTMmyPebmPodq67MAcA1lQSN2tat6zIInw77M+/5zAgOz7whcsYrN/BekHR
-	 eaKaDCDhCanB2B9k61nfSp1iJZyVV2coKKk6Mmqj4V+2eZm/JS8raJoPX+as/rjn44MrZ
-	 LhhsOIVJK/RzDe3VoDALBsgIx80facv4bYV1DbpHSCyq3TSHHsEquyehY0cF/jfFd+Q==
+	bh=ClnY2YjkhvpCJjXF+Me6soxnttz9zf81pBGR+vXCbBA=;
+	b=MVZ7nM2Zx+ChyUXS5BFLGXIk5DbRFqnY6AQRjtd1I82d8aF1BzlxNUvVlecWbrX0MC8g
+	 LfKgQ3ZhYlTIh2nEBfeVeVrwqfUtiedt0IDRg97gCpF73/3JKSnUZExXE+CtNdET7gvAO
+	 CccEDTubgtwSDPDKnLOzF1a+nQf1joYoRRSOojwNmvia1BZ9zNzd8gGW6efVRExKetnhc
+	 qFEOQnKG7bUMMmzdsoQZcFM7lHYuN1sgJjPrVRiLGDYQhByXBPjjvbFZtM4ePuOUf1kpu
+	 xa/gAG2qTUwbJWGisCaa3hSN7AaeF0Rh9BadmA0f+oHV4j/Lg//gNM45f0ybOiEwlDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZT+akseS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9JSXy5J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF8D606A9DE;
-	Sat,  7 Nov 2026 15:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3B4606C007;
+	Sat,  7 Nov 2026 15:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZT+akseS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1D71F0089F;
-	Sat,  7 Nov 2026 15:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9JSXy5J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5D41F0089F;
+	Sat,  7 Nov 2026 15:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064623;
-	bh=axpHqBWsMUgU2JLJ1UNRqooeiq5uYx77CXnJLOeMMO0=;
+	s=korg; t=1794064624;
+	bh=ClnY2YjkhvpCJjXF+Me6soxnttz9zf81pBGR+vXCbBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZT+akseSbQScLh5syINAJDzJRtMlDwhw9/YWN0JX3XyQXZysXhioDNM/tImOLGx06
-	 Sa6CW+1NYBzsuLMApYIAzsbg8PvyAE3iiIRAB8l4lJ7/suxlK0IEZURKjnTl3Fljak
-	 peMmf2GfHCC6Q8sQDwsQ0PaThGPJQov17fQkTTpo=
+	b=t9JSXy5JMIE0RQo+PjTi86Oq65n2A3losJj8D3SJqobfsZpvolbbFgiTsKCD5v7xe
+	 eUJw0c7BG6aY8vbw5Qn9oXuSXTtRblkTS0TZlE5gkA528Xuvr0UAxhSDVKjXRkEgx8
+	 iDQIql4yDJTh5BBFL0/rhjyG1i4eFYTk/xv2jRVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ali Resool Tuama <aliresool567@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0625/1257] USB: quirks: add USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE for GameSir G7 SE
-Date: Sat,  7 Nov 2026 08:48:41 -0500
-Message-ID: <20261107134956.556392314@linuxfoundation.org>
+Subject: [PATCH 7.3 0634/1257] mailbox: mtk-cmdq: Fix runtime PM leak in cmdq_mbox_flush()
+Date: Sat,  7 Nov 2026 08:48:50 -0500
+Message-ID: <20261107134956.796543172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,51 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Resool Tuama <aliresool567@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 40224df29729618ecd88c5c0077e71b1e82c7a3a ]
+[ Upstream commit 18e3e979826795b62e8916743bec4de660e7cb22 ]
 
-The GameSir G7 SE wired controller first enumerates as 3537:10a0 and
-then re-enumerates in a mode it picks from how the host enumerated it.
+pm_runtime_get_sync() leaves the runtime PM usage counter incremented
+even when it fails, but cmdq_mbox_flush() returns the error without
+dropping it.  The same happens when the GCE thread does not drain in
+time and the function bails out with -EFAULT.
 
-When the configuration descriptor is fetched the Linux way, 9 bytes
-followed by the full 80, the controller disconnects about 1 ms after
-its string descriptors have been read, before SET_CONFIGURATION, and
-comes back as 3537:1082, a generic HID gamepad without force feedback.
+Undo the reference on both error paths.
 
-When the configuration descriptor is fetched in one 255-byte request,
-as Windows does, it comes back as 3537:1010 in Xbox One (GIP) mode,
-which xpad already supports, including rumble.
-
-Skipping the device qualifier requests (USB_QUIRK_DEVICE_QUALIFIER)
-makes no difference; the configuration descriptor request size alone
-decides the mode. Add USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE for the 10a0
-identity, as is already done for the ShanWan Wireless Gamepad.
-
-Cc: stable <stable@kernel.org>
-Assisted-by: claude-opus-5-5
-Signed-off-by: Ali Resool Tuama <aliresool567@gmail.com>
-Link: https://patch.msgid.link/20261002-master-v2-1-24b05d8792b5@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b0524f7c9635 ("mailbox: mediatek: implement flush function")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/quirks.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mailbox/mtk-cmdq-mailbox.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/core/quirks.c b/drivers/usb/core/quirks.c
-index b5b577f0b931c..a4bcbe9c913cf 100644
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -612,6 +612,9 @@ static const struct usb_device_id usb_quirk_list[] = {
- 	/* ezcap401 - BOS descriptor fetch hangs at SuperSpeed Plus */
- 	{ USB_DEVICE(0x32ed, 0x0401), .driver_info = USB_QUIRK_NO_BOS },
+diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
+index e523c84b48088..96462ca844715 100644
+--- a/drivers/mailbox/mtk-cmdq-mailbox.c
++++ b/drivers/mailbox/mtk-cmdq-mailbox.c
+@@ -565,8 +565,10 @@ static int cmdq_mbox_flush(struct mbox_chan *chan, unsigned long timeout)
+ 	int ret;
  
-+	/* GameSir G7 SE */
-+	{ USB_DEVICE(0x3537, 0x10a0), .driver_info = USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE },
+ 	ret = pm_runtime_get_sync(cmdq->mbox.dev);
+-	if (ret < 0)
++	if (ret < 0) {
++		pm_runtime_put_noidle(cmdq->mbox.dev);
+ 		return ret;
++	}
+ 
+ 	spin_lock_irqsave(&thread->chan->lock, flags);
+ 	if (list_empty(&thread->task_busy_list))
+@@ -603,6 +605,9 @@ static int cmdq_mbox_flush(struct mbox_chan *chan, unsigned long timeout)
+ 		dev_err(cmdq->mbox.dev, "Fail to wait GCE thread 0x%x done\n",
+ 			(u32)(thread->base - cmdq->base));
+ 
++		pm_runtime_mark_last_busy(cmdq->mbox.dev);
++		pm_runtime_put_autosuspend(cmdq->mbox.dev);
 +
- 	/* DELL USB GEN2 */
- 	{ USB_DEVICE(0x413c, 0xb062), .driver_info = USB_QUIRK_NO_LPM | USB_QUIRK_RESET_RESUME },
- 
+ 		return -EFAULT;
+ 	}
+ 	pm_runtime_mark_last_busy(cmdq->mbox.dev);
 -- 
 2.53.0
 
