@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064324;
-	b=0BuyTRqJ86hFIKOg05+uPY35ObqnF5US1G8H/Of3qNha5bY9TIenChYcS41h27C115ZX
-	 eaqitEPm7vW81WldjL6k08Bp00n/r8rjFrSj9CNO+OQn7ZAR5VAL6jUnC4V2h7i/NHnaP
-	 okxGJPp4afZPKK4gYz/ad6r3GgTrK+HnwyIFRiCOegCFh0l//mmKN26m88OoKl2QtGsc6
-	 TwyOc309DszJVvV/R8jLExKfkHLNYuajhf95XOQavZhojLm1IYo+Ehg8H8FQF5wfzoG5k
-	 zkHPU0NGoOZxtMhXzXz/l0pYBsqruH2q++9n8h3tQtCPcbEzzpT6qxq7U8ZPgfRHMLA==
+	t=1794064325;
+	b=txF/nMhQdpkSWBJEBuKrva2rLDa5C1wNjEArgqSJdfkMZMgw3x0r8FsYBPPefZFshWsc
+	 FMnQldnvp/fGw3fxxyCo9BZPcdFbvUBBj4jcODCkSMf8JUXm1jf2bHGSoV4tzX6MTAp7V
+	 FlDgwKE8JLtsR4f8eWybBKr3WCxAv96oQBWXqWPOdrZVTifmt80l4PsDH6sGLYePJO6wC
+	 RThAQ9M5S6dRfGnnfBcPGhU+V9SxF8XHkMMokdjcajnLzTQRYVVoulJDifi2GZPnATzce
+	 xI3fWotJZDwseSdwpctIYmCyZ+xTISVAuai9F5ZPPfXNyoRsaRTXYQo2L7C6G2SBQNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064324;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064325;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NiNhqI8WVGzx0qVm9slMhKRpYfd9XoNlJWAhMl/wkQI=;
-	b=mUvrQVRhR3Q0XtWQqp5BFuReqNvXgyLakXrYjDkuu1TByrbk/Qr5vqy3sB8CbJVwxlwP
-	 swKYSOsULA5qsW3+rTUhpGvXRWAv/l4OVBs0BLRcYJhd9n0hYFmBVTCpjJDyhkWRP6VHA
-	 jUsruwirtlHsJJa8NXrNr0Uaf48PyC9JK27K3xIpqU63CfSEke3SOeb3mPTZEH5gHdzH1
-	 ArtVBo6w9RReI2oZ6mjxnq8SppWO3lqBBzG4uoUGa6AFX3q4KTaH5Rz3nXIUBxfnZ5zmr
-	 ou/V/h6DEW3P+ByxdhvJZk66dx1id5HoQ9kfGrzkSIHXb/7FNBoF1iBDkmUO+5usE+Q==
+	bh=yruELJ+lbGBPRXv5Y3PlT/nd7PXPxdAEZSkVw/THFwQ=;
+	b=kFrf3GMYVXQcwGslDUlFdnJhRhKB6iFYew15H9wa5S2wcPtE8Eot8oE2wpdi3pxPXNeQ
+	 SksvaE5os8kzUxR6u0ZQznYrD+CYacnMR64SiN3ygnSSeDM+gNe61Cfc/HrJfSRvjrqNO
+	 hFBl8vZ0qLQgg0mhwJoXAu9boFysh7L7Yx6nutQ5NMMcmhu6aHno/+cQtYKyO7BveBHwU
+	 vpHOfez0vJt/1Z5g9/Cf/2MyyXHz90oryl8ng1FaF554+747UdMwtbOYomVw6yJID3Jzi
+	 G8az/LuLQPqdQhu2yiOqGpDRntcy380agdD9qIqBc4N+z37i+j3GU8JhX3Zx+ssHNmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qSoNbTUo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQkfNdzT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DBB606B880;
-	Sat,  7 Nov 2026 15:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698F6606CE4D;
+	Sat,  7 Nov 2026 15:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qSoNbTUo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88121F008A2;
-	Sat,  7 Nov 2026 15:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rQkfNdzT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163CF1F0089F;
+	Sat,  7 Nov 2026 15:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064324;
-	bh=NiNhqI8WVGzx0qVm9slMhKRpYfd9XoNlJWAhMl/wkQI=;
+	s=korg; t=1794064325;
+	bh=yruELJ+lbGBPRXv5Y3PlT/nd7PXPxdAEZSkVw/THFwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qSoNbTUonW9z7y8tRMXYriRL560lZk8MuO/7xuce68XYYUCNx6hMYKyZXfsylEgdI
-	 uHcglSmXAB8WCbHEBWJVcsxRaxv3jBJ+2WEEBHvVVEjEf4FqkM4WmSFqF5LUDvnSiY
-	 tylXm6Q9kp7o7w054iDuQiVQMtLjxv/lG0nH+GGY=
+	b=rQkfNdzThGDs+4RMU0HD1QHuc59MzLQKBAb8ExnjZqpYK/h3+asG2LGbfc49a9IU2
+	 QjF3Cpv+H1H7EKDFC4C/xAlLa8YvxAYqbAlFBH/aPUNV9WgsTHmqSKno92bPmJapio
+	 p0p4aHghLJXtuMT3Hiq4DI0hCMYI7KOkrBYju2Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0411/1257] media: pvrusb2: Fix USB parent device leak in class_dev_create()
-Date: Sat,  7 Nov 2026 08:45:07 -0500
-Message-ID: <20261107134950.870736941@linuxfoundation.org>
+Subject: [PATCH 7.3 0412/1257] media: rtl28xxu: fix SDR platform device leak
+Date: Sat,  7 Nov 2026 08:45:08 -0500
+Message-ID: <20261107134950.895093482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,38 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 02421d7278e4a62c3daf37ad6c45d4af96ee4252 ]
+[ Upstream commit 083a92996598a5080965f1baa84175082e14a45b ]
 
-class_dev_create() stores a reference to the USB device obtained with
-get_device() in class_dev->parent, which class_dev_destroy() releases.
-When device_register() fails the function only drops class_dev, so the
-reference to the USB parent device is never released.
+rtl2832u_tuner_attach() registers an rtl2832_sdr platform device, but
+does not unregister it if no driver is bound. It also does not take a
+reference on the bound driver module.
 
-Drop the parent reference on the failure path as well.
+Unregister the platform device when no driver is bound or the module
+reference cannot be acquired. Drop the module reference in
+rtl28xxu_tuner_detach() before unregistering the device.
 
-Fixes: 28c4a5e6d324 ("V4L/DVB: pvrusb2: Fix USB parent device reference count")
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fixes: a2f7f220df5e ("[media] rtl28xxu: switch SDR module to platform driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/pvrusb2/pvrusb2-sysfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/dvb-usb-v2/rtl28xxu.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c b/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c
-index dba43d4c24f23..678e069b4c924 100644
---- a/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c
-+++ b/drivers/media/usb/pvrusb2/pvrusb2-sysfs.c
-@@ -633,6 +633,7 @@ static void class_dev_create(struct pvr2_sysfs *sfp)
- 	if (ret) {
- 		pvr2_trace(PVR2_TRACE_ERROR_LEGS,
- 			   "device_register failed");
-+		put_device(class_dev->parent);
- 		put_device(class_dev);
- 		return;
- 	}
+diff --git a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+index 487c6ab784abd..d2957e4bf0173 100644
+--- a/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
++++ b/drivers/media/usb/dvb-usb-v2/rtl28xxu.c
+@@ -1391,8 +1391,16 @@ static int rtl2832u_tuner_attach(struct dvb_usb_adapter *adap)
+ 						     "rtl2832_sdr",
+ 						     PLATFORM_DEVID_AUTO,
+ 						     &pdata, sizeof(pdata));
+-		if (IS_ERR(pdev) || pdev->dev.driver == NULL)
++		if (IS_ERR(pdev))
+ 			break;
++		if (!pdev->dev.driver) {
++			platform_device_unregister(pdev);
++			break;
++		}
++		if (!try_module_get(pdev->dev.driver->owner)) {
++			platform_device_unregister(pdev);
++			break;
++		}
+ 		dev->platform_device_sdr = pdev;
+ 		break;
+ 	default:
+@@ -1426,8 +1434,10 @@ static int rtl28xxu_tuner_detach(struct dvb_usb_adapter *adap)
+ 
+ 	/* remove platform SDR */
+ 	pdev = dev->platform_device_sdr;
+-	if (pdev)
++	if (pdev) {
++		module_put(pdev->dev.driver->owner);
+ 		platform_device_unregister(pdev);
++	}
+ 
+ 	/* remove I2C tuner */
+ 	client = dev->i2c_client_tuner;
 -- 
 2.53.0
 
