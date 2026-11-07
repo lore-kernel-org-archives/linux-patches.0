@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064682;
-	b=sMKolf2hcQp97fjmIfAqe+ifNDSF9vmgJV2CC3JTfbJw8ucwRygH3R8zW0OUW3kObkwY
-	 9T8kbS+g4+QhDRS0eO7bEMkvHHm5uTJh+e0ahXL+Ryu3kUqtq4gf7dJxPcmuk79A5/gd2
-	 Ao+T+ba/+Sg+m9eO8Z6vc4iFK2v0ppEFGkHd+0byiAd40exCiZ+hIm3FYmU5qzrof3+/M
-	 58H3PivuHQR+wcYfv6lu4ZU4J21ucjT/2ps0m93GBU0DNHbj99hvHNp8dX8+nG29JCOeI
-	 OP2MmDNBHe5H5Cqxc6bcgqBO0KiIU2fW4aLVeRYNAuEttN6oE2flB0johIA3HmtSReg==
+	t=1794064683;
+	b=yNLLhoTriK0WrAcQIAN/s/aGiGssne4oRGQjRbDrZd9be+pr3HoqLLytjSMu2UtMBXaf
+	 0nZeKwlioYzig+rI5miED3q/98XfIC06oM6L9aoSXEdtEu2EV9m6+RByMJqgScP9sbcmP
+	 8kZbbHHGDcJeCUXRcQbBD8kQ22/m6V9TdhEllTWwJIMllaryB7Jlfbznq+Z4iT9pHDgCm
+	 RWasZnjehrzHSJT+0h+p13nS0Q0DM36Evl8/vJnTEJcW9TTXjPVnUik99YbW0/kre41di
+	 kR20+sRdJWrDuP/LfH1FqdGcJTlntOd+yRSxufEXIhSPaNrVPyUDrtKAM9spnIHzyfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064682;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064683;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=NrO833E0MFzkNHI1jH/yC+1FKU+LU0fKnetC9dKTOZk=;
-	b=WqTu7NAwBhmRrtzNukiVTV7K1qIzADJd3M7S68MBjG2iZYxGB5Msqn7lNor9vpWnxbIl
-	 ZyhFZ/t1+7V4fr1cVUQpfiKXzXmFBCdnKpO4Qufety1mheSdphSDYQhjTIjVBqtKmlFJK
-	 0hhnOighjLdbAUcBM8DLSoiUUNLFymEkksuVGP0HgizRi/+V67VTE7jHNZSCPmBAkc5zS
-	 +2fGY9n2YvUdLALyfYfEyHqMUePF2Zh1aJWG+RNIGdqaCdQCuHmFuD7lyrqOQQM62JGJ9
-	 2yCqFz2mLOvtXakdoDt7u82gcKQ/8IepJV/K06I6uRsetv9/rYCFZ8ZmPPvYV88Db+Q==
+	bh=wy90t5TmgSGfrpWdXsG3J+TWSfGPoTMsdUpVl/Wuehc=;
+	b=WFCBiToWZYOI4e6P2gSqp1qD+sHjKrvbFTfSrgAyY5WgAhInPL6z1913gYmj20H7QSXJ
+	 PQWFy1XP0ZWp3S8akN1dTMlOH4IezCCCJh4G5bn3ySWIEebpjBlP1QbXAIwx+8WxOhYB0
+	 SpNLb+epCorEDFzxYZ401TkxgBzQLxC9RiDoCX6EHCxibzxUBFRwnFVtrv0fbzjxbskLg
+	 Our/LX83FNOV+xb0OskbRRba9OAS+rX6tZ770rczARR5ubXyerRq2VEWn82j74zmMcgDs
+	 xnRNCXpGWL9RRVn3fuDvvJuMVU7ofiwkI9mu1QBE5qtV8o1gYMqVKkqWhUlEOyL64XA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfCZz3g3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WvcuTJa/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5F1606A33F;
-	Sat,  7 Nov 2026 15:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63417606B8A5;
+	Sat,  7 Nov 2026 15:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfCZz3g3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760911F008A2;
-	Sat,  7 Nov 2026 15:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WvcuTJa/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F0A1F008A1;
+	Sat,  7 Nov 2026 15:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064681;
-	bh=NrO833E0MFzkNHI1jH/yC+1FKU+LU0fKnetC9dKTOZk=;
+	s=korg; t=1794064683;
+	bh=wy90t5TmgSGfrpWdXsG3J+TWSfGPoTMsdUpVl/Wuehc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HfCZz3g3r5zFcVlq1VLTEN3hIK78cmnyLDG9ko9Ce062VaJrACvGouryVKyu0ADi5
-	 EE863VazkyB4wojFfq1Jm7KMvk3+HFBi/hWyCPzBKDB+wnOj5XEnERjHaMfGtEaBGT
-	 TJHGxI8M4tK5HvpqjoeN5mA3CCjzRHBNN0Z5vdPo=
+	b=WvcuTJa/hBCHx1d1wORDsHbTp0p/FgVoCchmvPG6q6m6dOtF6QWRUuclGl2kN+t+j
+	 v+0jzrWnUmN8p3y9wFHzeNOmEx7bVts7BnAXLAPBmGIk3W/2JxPYR+KZTWsWyPdb8w
+	 3GeDL4oBqXOH7sIKqEZwRaPGpvatcQv01c9l//4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0677/1257] platform/x86: simatic-ipc: fix platform device leak on registration failure
-Date: Sat,  7 Nov 2026 08:49:33 -0500
-Message-ID: <20261107134957.959233623@linuxfoundation.org>
+Subject: [PATCH 7.3 0678/1257] platform/x86/amd: hfi: Fix out-of-bounds reads when parsing ranking data
+Date: Sat,  7 Nov 2026 08:49:34 -0500
+Message-ID: <20261107134957.988387876@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,88 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 9523698252fd583d6987582b9c34ec6500d10986 ]
+[ Upstream commit b7b273844b94af9cc64907dccd9e7997c2b60f1a ]
 
-register_platform_devices() registers the battery, LED, and watchdog
-platform devices in sequence. If LED registration fails, the battery
-device remains registered. If watchdog registration fails, the LED and
-battery devices remain registered.
+amd_hfi_fill_metadata() parses CPU core ranking data out of the
+firmware-provided PCC shared memory but trusts two values it should not:
 
-These failure paths leave successful platform_device_register_data()
-calls without the matching platform_device_unregister() calls.
+ - n_bitmaps is used to bound the outer loop that reads the APIC ID
+   bitmaps from table_data[], but it is never validated against the size
+   of the shared memory region (pcct_ext->length).  A firmware-supplied
+   count larger than the region reads past the end of table_data.
 
-Add an unwind ladder to unregister previously registered platform
-devices in reverse order before returning the registration error.
+ - When resolving the base of the ranking data for a processor, the
+   pointer is shifted by an extra "i * nr_class" term, where i is the
+   current bitmap index.  The per-processor offset is already applied
+   through apic_index, which uses the running count of active processors
+   (apic_start).  The extra shift compounds for every logical processor
+   beyond the first bitmap (APIC ID >= 32), reading out of bounds.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
+Both result in out-of-bounds reads that can corrupt the ranking metrics,
+oops, or otherwise destabilise the system.
 
-Fixes: dd123e62bded ("platform/x86: simatic-ipc: add main driver for Siemens devices")
+Reject an n_bitmaps value that would not fit within the shared memory
+region, and drop the bogus "i * nr_class" term so the ranking data is
+addressed only through its correct per-processor offset.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260924115617.1578309-1-lgs201920130244@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: d4e95ea7a78e ("platform/x86: hfi: Parse CPU core ranking data from shared memory")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260921170411.1149960-3-mario.limonciello@amd.com
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/siemens/simatic-ipc.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/platform/x86/amd/hfi/hfi.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/siemens/simatic-ipc.c b/drivers/platform/x86/siemens/simatic-ipc.c
-index 7039874d8f112..4a4509fc9263e 100644
---- a/drivers/platform/x86/siemens/simatic-ipc.c
-+++ b/drivers/platform/x86/siemens/simatic-ipc.c
-@@ -92,6 +92,7 @@ static int register_platform_devices(u32 station_id)
- 	u8 wdtmode = SIMATIC_IPC_DEVICE_NONE;
- 	u8 battmode = SIMATIC_IPC_DEVICE_NONE;
- 	char *pdevname;
-+	int ret;
- 	int i;
- 
- 	for (i = 0; i < ARRAY_SIZE(device_modes); i++) {
-@@ -139,8 +140,10 @@ static int register_platform_devices(u32 station_id)
- 				pdevname, PLATFORM_DEVID_NONE,
- 				&platform_data,
- 				sizeof(struct simatic_ipc_platform));
--		if (IS_ERR(ipc_led_platform_device))
--			return PTR_ERR(ipc_led_platform_device);
-+		if (IS_ERR(ipc_led_platform_device)) {
-+			ret = PTR_ERR(ipc_led_platform_device);
-+			goto err_unregister_batt;
-+		}
- 
- 		pr_debug("device=%s created\n",
- 			 ipc_led_platform_device->name);
-@@ -153,8 +156,10 @@ static int register_platform_devices(u32 station_id)
- 				KBUILD_MODNAME "_wdt", PLATFORM_DEVID_NONE,
- 				&platform_data,
- 				sizeof(struct simatic_ipc_platform));
--		if (IS_ERR(ipc_wdt_platform_device))
--			return PTR_ERR(ipc_wdt_platform_device);
-+		if (IS_ERR(ipc_wdt_platform_device)) {
-+			ret = PTR_ERR(ipc_wdt_platform_device);
-+			goto err_unregister_led;
-+		}
- 
- 		pr_debug("device=%s created\n",
- 			 ipc_wdt_platform_device->name);
-@@ -169,6 +174,14 @@ static int register_platform_devices(u32 station_id)
+diff --git a/drivers/platform/x86/amd/hfi/hfi.c b/drivers/platform/x86/amd/hfi/hfi.c
+index e1c776b71f3e6..6d1d3b6c28a97 100644
+--- a/drivers/platform/x86/amd/hfi/hfi.c
++++ b/drivers/platform/x86/amd/hfi/hfi.c
+@@ -20,6 +20,7 @@
+ #include <linux/module.h>
+ #include <linux/mailbox_client.h>
+ #include <linux/mutex.h>
++#include <linux/overflow.h>
+ #include <linux/percpu-defs.h>
+ #include <linux/platform_device.h>
+ #include <linux/smp.h>
+@@ -168,6 +169,21 @@ static int amd_hfi_fill_metadata(struct amd_hfi_data *amd_hfi_data)
+ 		return -EINVAL;
  	}
  
- 	return 0;
++	/*
++	 * The bitmaps enumerating the APIC IDs occupy the first n_bitmaps
++	 * words of table_data.  Reject a firmware-provided count that would
++	 * push those reads past the end of the shared memory region.
++	 */
++	if (struct_size(amd_hfi_data->shmem, table_data, amd_hfi_data->shmem->n_bitmaps) >
++	    pcct_ext->length) {
++		dev_err(amd_hfi_data->dev, "invalid number of bitmaps: %u\n",
++			amd_hfi_data->shmem->n_bitmaps);
++		return -EINVAL;
++	}
 +
-+err_unregister_led:
-+	if (ledmode != SIMATIC_IPC_DEVICE_NONE)
-+		platform_device_unregister(ipc_led_platform_device);
-+err_unregister_batt:
-+	if (battmode != SIMATIC_IPC_DEVICE_NONE)
-+		platform_device_unregister(ipc_batt_platform_device);
-+	return ret;
- }
++	/* The ranking data for each processor follows the bitmaps */
++	u32 *table = amd_hfi_data->shmem->table_data + amd_hfi_data->shmem->n_bitmaps;
++
+ 	for (unsigned int i = 0; i < amd_hfi_data->shmem->n_bitmaps; i++) {
+ 		u32 bitmap = amd_hfi_data->shmem->table_data[i];
  
- static void request_additional_modules(u32 station_id)
+@@ -192,10 +208,6 @@ static int amd_hfi_fill_metadata(struct amd_hfi_data *amd_hfi_data)
+ 			info = per_cpu_ptr(&amd_hfi_cpuinfo, cpu_index);
+ 			apic_index = apic_start * info->nr_class * 2;
+ 			for (unsigned int k = 0; k < info->nr_class; k++) {
+-				u32 *table = amd_hfi_data->shmem->table_data +
+-					     amd_hfi_data->shmem->n_bitmaps +
+-					     i * info->nr_class;
+-
+ 				info->amd_hfi_classes[k].eff = table[apic_index + 2 * k];
+ 				info->amd_hfi_classes[k].perf = table[apic_index + 2 * k + 1];
+ 			}
 -- 
 2.53.0
 
