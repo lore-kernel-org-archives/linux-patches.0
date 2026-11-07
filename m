@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062868;
-	b=dIrTdf/oJ4BpJiod514rHNndvrrncWRcKR2qQpLPshvDDiWx/7hBJqOZIkvMjKMBswzU
-	 lLfuklxuY0SakGA7qwnYvImo0OoPij7MtpRKEB9nQpIoRY5B918vk5o4PtB6NyJMn/PNT
-	 0K2YGjENm97csAQ0Y3ULAEZ/1O9P+3+0MrhLNMPNy8L4PJ2nnihy/p/+vtC+jslid91Y1
-	 IxatxfbhKSh/aTlSsJW7D03OCYKzL5zHbUXnfggzyyeLIo+bWpR4MDNGn0BauAsfonM22
-	 GQW/40Aq2b0cQVjwZQRxKU+SSyfa0j1oX6uxBHdDWC6sACrARNgLcXjpG1TV84BY4pQ==
+	t=1794062869;
+	b=Xrat+81oqDfg/PRqebwT9DeVsA33XjrhNQMFNZbqpDSU6MVfnQtCHdZsvIdCMTPU5qfj
+	 Y73bRxsccyVvHlrhIeE8qt2414TXUfSK1v2gz928Us3VKUcepV7tc+v4pX2QaESmBqECP
+	 8pj1+mapKeiJm4Zq1lvGT4jVJrYCFA7bBPcQLCi+jHDsu+dt0xZPfRNwkAFQglZTOLxal
+	 SiBmXQO4n8fJFmSmNI6Wf9bcteYUO+6y8ANU6/aqLtVmpJpjkCw9YNZajouW+6ijSU/mt
+	 ckHCbm7Cxny4325ePbH9anv4HY/8rPO7rD5GxbFcgZ7zkiE5VlRoRUYDY5rbeQwSADw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062869;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3wDCLEskeYTZg7FuGblA00IozpDyD6uwKWXaJ/SOvHE=;
-	b=miSzemW0LQ8S/tk7N+tLmcJwlI+Y8YdcVJgwtUXdq4+xQxyeCKZu+hyMBmHooKVOqY83
-	 qEY39Ti2GYltFdDFDqfdjjCkj2V9ciTUh4vBBjWotrZEPx+CmEWuHLPxsnzlv+Mht7ZnE
-	 uQ02WMJtSHRwY82yIpnRH8RJqnA9m6r8/4AvSvLo/N0+mpHtEKwU2aemH2ZOWFfMZwqFs
-	 4gG3BOPCPDAEGJm9/IkXoxTZOD2UO9saXxeyJDfs3gVG/8gwQb3ktvlrHuv42LWwAAVYF
-	 FGJ0lT7OQhYoumx84WOXK7UJh2n9nplzR4p8BYwNDm/zj7DBiuFgefTlNfgNLG9O+YQ==
+	bh=NEx6KOtxUTp0zvQXoGz7qLV7yueClt06U10oIN7nuF8=;
+	b=UTorXxCUr/qy409AS3W486rBinaGbwNzVcCRFz2p96oml0sKszLS1RQi9LBBrhrfi/RX
+	 kA+YRvhVu195TIEkf2tIJkfeapHwNXBbuW+e03mwqbtgjBonjPTrG5OeiC2ds6K1tz0yj
+	 tfOlNHp3MeobvpG92oRFb0LlceMQ+2AJr6RxMxu+KGx0BbiKv9Om/H7xDtAWE/m+/QsqF
+	 bOOw1fXcs1Eb5OKI0JFA11n33WnQUnB/ZvV45e8n+80bO74LZX2cwCKmUuo8pbLUAs5qn
+	 D9/mupUHfTcMZkaEpC82rfuBsM04fJj4sjKS8reOtJpUDpTpzoiIpdSJsBvUIrlo4ZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okhDVCxS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nuDjEIM/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D23606A335;
-	Sat,  7 Nov 2026 14:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF9F606A32E;
+	Sat,  7 Nov 2026 14:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okhDVCxS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5DD1F0089F;
-	Sat,  7 Nov 2026 14:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nuDjEIM/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFC61F0089F;
+	Sat,  7 Nov 2026 14:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062868;
-	bh=3wDCLEskeYTZg7FuGblA00IozpDyD6uwKWXaJ/SOvHE=;
+	s=korg; t=1794062869;
+	bh=NEx6KOtxUTp0zvQXoGz7qLV7yueClt06U10oIN7nuF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=okhDVCxSk52OmQDkmpwUNJBghHgutHjXpIpkauORFYjxrnGRx+6PJnQx26M0LENNu
-	 n3AxQbHPli/ymzT+7O65dPmlk/b6ZoK6p3MsOagSB0HufoLJOkgKcyrNni0p/+7oUP
-	 V+cYmFwZEaM+v7Hz5WdEvBwH/Dc4p0ohvS17v51k=
+	b=nuDjEIM/tG5TGz3rcoAEavfEvybC9tnqctn2916NqJDybA8YlhzovRjQqkRItP7cI
+	 qqLWhDlViZlLqXSGidS2u9vfsaPq6zeDSVuMAmhpWkVQ/TxXiTjV9qaJ0A1zkiP4UH
+	 t5w2yZXqLm8DQq0Ivz3p2gd7zLlLCWkCu6O2fRXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cao Guanghui <caoguanghui@kylinos.cn>,
-	Yu Kuai <yukuai@fygo.io>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 153/869] md/raid5: track disks array size to fix extra_page leak on error paths
-Date: Sat,  7 Nov 2026 08:47:15 -0500
-Message-ID: <20261107134857.514526212@linuxfoundation.org>
+Subject: [PATCH 6.18 127/869] crypto: atmel-aes - fix AADLENR for standalone GHASH
+Date: Sat,  7 Nov 2026 08:46:49 -0500
+Message-ID: <20261107134856.788480829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,87 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cao Guanghui <caoguanghui@kylinos.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 5028ceee173bfcf844469cfb0d1c151d3f6d0296 ]
+[ Upstream commit 0dd8cded0e6f8c9635fe1d79d60dc7b2599b099b ]
 
-free_conf() iterates conf->pool_size entries to free extra_page
-allocations, but pool_size may not reflect the actual size of the
-conf->disks array.  Two scenarios cause a mismatch:
+atmel_aes_gcm_ghash_init() writes dd->total, the request's text length,
+to AES_AADLENR.  But the GHASH it runs hashes the dd->datalen bytes passed
+in: the 16-byte length block, or the padded IV when the IV is not 96 bits.
+The data sheet requires AES_AADLENR to hold the length of that input.
 
-1. setup_conf() early abort: pool_size is 0 (not yet set by
-   grow_stripes) but conf->disks has max_disks entries with
-   extra_page allocated.  The loop iterates 0 times, leaking all
-   pages.
+With empty plaintext and empty AAD, dd->total is 0 and the tag comes out
+wrong.  Later requests only pass because dd->total still holds the
+previous request's length.
 
-2. resize_stripes() Step 4 failure: conf->disks was replaced with
-   a newsize-entry array in Step 3, but pool_size is only updated
-   on success.  The loop iterates pool_size (old, smaller value)
-   times, leaking (newsize - pool_size) pages.
+This is testmgr's first gcm(aes) vector, so CONFIG_CRYPTO_SELFTESTS=y
+fails at boot:
 
-Add a dedicated disks_cnt field to track the actual number of
-entries in conf->disks.  Set it immediately after each allocation
-or replacement (in setup_conf and resize_stripes Step 3, where the
-array is safely stalled with no concurrent access), and use it in
-free_conf() instead of pool_size.
+  alg: aead: atmel-gcm-aes encryption test failed (wrong result) on test
+  vector 0, cfg="in-place (one sglist)"
 
-This leaves pool_size untouched, preserving the check_reshape()
-retry behavior that depends on pool_size only being updated on
-full success.
+Without selftests the broken atmel-gcm-aes is preferred at priority 300.
+Seen on a SAM9X75 Curiosity with 6.18 and current mainline.
 
-Fixes: d7bd398e97f2 ("md/r5cache: handle alloc_page failure")
+Write dd->datalen instead.
+
+Fixes: d4419548dba9 ("crypto: atmel-aes - add support to GCM mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cao Guanghui <caoguanghui@kylinos.cn>
-Link: https://patch.msgid.link/20260827080341.112296-1-ghuicao@163.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 5 +++--
- drivers/md/raid5.h | 1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/crypto/atmel-aes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 56d7e05e94ce6..fded4b3eb88b9 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -2627,6 +2627,7 @@ static int resize_stripes(struct r5conf *conf, int newsize)
- 		} else {
- 			kfree(conf->disks);
- 			conf->disks = ndisks;
-+			conf->disks_cnt = newsize;
- 		}
- 	} else
- 		err = -ENOMEM;
-@@ -7405,7 +7406,7 @@ static void free_conf(struct r5conf *conf)
- 	free_thread_groups(conf);
- 	shrink_stripes(conf);
- 	raid5_free_percpu(conf);
--	for (i = 0; i < conf->pool_size; i++)
-+	for (i = 0; i < conf->disks_cnt; i++)
- 		if (conf->disks[i].extra_page)
- 			put_page(conf->disks[i].extra_page);
- 	kfree(conf->disks);
-@@ -7588,7 +7589,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
+diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
+index b393689400b4c..e057be7fc7130 100644
+--- a/drivers/crypto/atmel-aes.c
++++ b/drivers/crypto/atmel-aes.c
+@@ -1272,7 +1272,7 @@ static int atmel_aes_gcm_ghash_init(struct atmel_aes_dev *dd)
+ 	struct atmel_aes_gcm_ctx *ctx = atmel_aes_gcm_ctx_cast(dd->ctx);
  
- 	if (!conf->disks)
- 		goto abort;
--
-+	conf->disks_cnt = max_disks;
- 	for (i = 0; i < max_disks; i++) {
- 		conf->disks[i].extra_page = alloc_page(GFP_KERNEL);
- 		if (!conf->disks[i].extra_page)
-diff --git a/drivers/md/raid5.h b/drivers/md/raid5.h
-index eafc6e9ed6ee1..fa9647a862add 100644
---- a/drivers/md/raid5.h
-+++ b/drivers/md/raid5.h
-@@ -668,6 +668,7 @@ struct r5conf {
- 	unsigned long		cache_state;
- 	struct shrinker		*shrinker;
- 	int			pool_size; /* number of disks in stripeheads in pool */
-+	int			disks_cnt; /* number of entries in disks[] array */
- 	spinlock_t		device_lock;
- 	struct disk_info	*disks;
- 	struct bio_set		bio_split;
+ 	/* Set the data length. */
+-	atmel_aes_write(dd, AES_AADLENR, dd->total);
++	atmel_aes_write(dd, AES_AADLENR, dd->datalen);
+ 	atmel_aes_write(dd, AES_CLENR, 0);
+ 
+ 	/* If needed, overwrite the GCM Intermediate Hash Word Registers */
 -- 
 2.53.0
 
