@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064013;
-	b=c3ja0MRTRe6i93dcFXxp17NCaulRP3LUHnBuCB4Lv3qHJTXRZh6Px3JyK4ovmcRV++0D
-	 c+kXwm5pB0ByvijywanFl5XNioehjVAANDobZrxwm32p8XLW/OJWNmoVCU21RGJuyKZ9J
-	 E5AwZZoV9dp/+zZrineC43Gy+NZZAgqv6ANjOvWGH8AgwyZz+kD9yx6Ecdl5hcy0P5YsI
-	 CSDkGpkh96V41C2Nzv5DhgYk4KGpx13AWMPK17fw6YWK2EU1wPb+W4q6cltXhRSbmWes3
-	 ptQxhchWOTdHTLCG53T7Cr7j4uA0OgHHU8kBd8bwYXixzmArljDyFceSxGkzqnod+lQ==
+	t=1794064014;
+	b=QO22KaktQgUV3C9aqiAt9Ii/l5Thdi3E8cXLH03fx7tKf0HVkiCC7I2D/SHvzZ0TXq3G
+	 NmzstT8jKj5a4OTt3ZgUaqz4fsZIIA0IUfd4AhgObzxlfw2Y6Zn/MwuXLH+79tnhN/2FT
+	 ouCuqOpPS9l5sk7alZT5FQR94bmRe/h668au7TqSS0vkP9Clw0sUpn+JTX7twHnujRyiH
+	 JjEDQQF9xm9st3H7FUXdvaCnTFpvFcwwTfJrDIDN/MFiCp8n/yDMiDCXL1PIwJIL+9mJ6
+	 LvuFvwnchgeZ3jEq8WQG4W4CZIB/JAnvNVRtIF29mLZ+MCOikTVu7JwLUaAp3y+zREg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064013;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064014;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6WOceJEJFs6lyHgJ50XHRtAGNJsPue1CndtoUAz+Qbw=;
-	b=zK7RidlCJ2/nmImoshV+8QLD7yVgUhWBBZapONZWcU2mSmXesTwgBncvwmwS9tTGIIy2
-	 dOu925J2jfnUFMHPwiEu5HHPsRwsBedfTIQGD6ZLsjRHGe78WrtAJDDq7xWAo2Xvf1pGd
-	 iw6tUVfL/Y8LNUIIwC9oA5HCMgIu11Mi85US0hAhsKgFs6f2QQOKpO3gsYyl4h6SP3nr1
-	 GqLYU1h6v00ZllN33rfDP5ojtJ+WBaqDMsvmtSJTmvnfbBIqjG810LL6lgpRK2yH0FtPH
-	 0iZcSrgvFjS0rEUStUtjWCT3W80Zt7JMLDWYkjtGTTobtR72l9cLYLABpptn6+CO4xg==
+	bh=6C1Kp8y7W8wKjK5aPuI0X/dUuveXqMZjEuanX6W28d4=;
+	b=X82DVqSy/3h/d7S7JUqWfFJdrSp9/qROJoR0+hCeAEadCiX9ujPP0bcz2BPadxzekvGL
+	 PFnNsFEjMIgWzQr89pBge0fu1RM47vP8kSdnNBmblMGYlj5az9RzeYrD9HGho7bs9wTTr
+	 gV7tC8I+J55bjXnha/r59BA5y5NQfrR0WBD2iJZiD1KYT4JE4sXn4RwIXel/TfGTasSbq
+	 RjnjTTxfWbDDj8mJjG/LwDIIDxfwYrrDrkJcmo1ziXgTvkC7/R4oNAytRBLZDy8YtDqm5
+	 jeolY1/uAMBecIK+HGIJEyNG6vHp7ScillDt+7a9CjioFRLBsUkG382Y0Osnx/qHcpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e2acplEb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yh2hB2+3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE014606A9C0;
-	Sat,  7 Nov 2026 15:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD0A606A334;
+	Sat,  7 Nov 2026 15:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e2acplEb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC261F008A1;
-	Sat,  7 Nov 2026 15:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yh2hB2+3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0E01F008A2;
+	Sat,  7 Nov 2026 15:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064012;
-	bh=6WOceJEJFs6lyHgJ50XHRtAGNJsPue1CndtoUAz+Qbw=;
+	s=korg; t=1794064014;
+	bh=6C1Kp8y7W8wKjK5aPuI0X/dUuveXqMZjEuanX6W28d4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e2acplEbWsQ8CO9BFbXN67aXHnsAu81Z53Vd1Qd9xf6x1DfBJkRzLmXYsNAWtGEIp
-	 c0gFjD7A37z8XQ+2QYqiZKmLLX2oQWKPXKxQvIIM62UVD+6n1DNoMMqfu4NQHCfhWw
-	 t31okDHfPSzZanL69/daPO2Rh38WbhBlebPJTnTo=
+	b=yh2hB2+3coqmkUL2oIWFD7HtQr7LwooH9YkMemZNrgu9F2Fnwi7nq1IZLZrXU6pR1
+	 fzN3yjaKr1wN/vmizfdt5pvALIGwTya8WKWwyRox6imdiRRDEQiXV0ezOuYIVl1j81
+	 b3ILzn9Tq2F4M7kt+Gq/7c+X7DEc20fL9kJmZ92k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"jan p. springer" <regnirpsj@gmail.com>,
-	Junjie Cao <junjie.cao@intel.com>,
-	Manuel Knitza <manuel.knitza@googlemail.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0191/1257] media: i2c: cvs: Get the wake IRQ without claiming the GPIO
-Date: Sat,  7 Nov 2026 08:41:27 -0500
-Message-ID: <20261107134944.732909208@linuxfoundation.org>
+Subject: [PATCH 7.3 0192/1257] media: imx219: Account rate_factor in setting upper exposure limit
+Date: Sat,  7 Nov 2026 08:41:28 -0500
+Message-ID: <20261107134944.762344614@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,89 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit ed447e2b1da9bfe7d076e12cde496f3f689f7fdd ]
+[ Upstream commit db111b66f2db7f3f79d9359f4a9762e832d6fde9 ]
 
-The wake line is only used as an IRQ source, yet the driver requests
-it with devm_gpiod_get(). On the Dell XPS 14 DA14260 (Panther Lake)
-that request lands on the pin the four CS35L57 amplifiers read their
-speaker ID from. Each amplifier's _CRS carries
+The rate_factor multiplier is used to multiply a few values in the
+sensor's timing configuration and the exposure time is one of them. This
+also needs to be taken into account in exposure time margin: multiply it
+by rate_factor so that sensor's exposure time margin is respected.
 
-  GpioIo (Shared, PullNone, 0, 0, IoRestrictionInputOnly,
-          "\_SB.GPI1", 0, ResourceConsumer,,) {20}
-
-and INTC10E1 builds its _CRS at runtime from pad numbers kept in NVS:
-a GpioInt (Edge, ActiveLow, Shared) first, then an Exclusive
-output-only GpioIo for reset and two lines on the USB GPIO expander.
-The driver maps index 0 to "wake". While it holds the line, cs35l56
-fails and does not retry:
-
-  cs35l56 sdw:0:2:01fa:3557:01:2: error -EBUSY: Failed to get spk-id-gpios
-
-All four fail and no card is registered. Fedora 7.1.13 is the first
-Fedora kernel with the driver enabled; 7.1.12 on the same board
-creates the card, and 7.2.4 creates it again with intel_cvs
-blacklisted. Where ipu-bridge does not expose the CSI endpoints, CSI
-init returns -EPROBE_DEFER and every retry claims the line again for
-the length of the handshake, which is how 7.1 fails as well.
-
-Take the IRQ from the GpioInt entry with acpi_dev_gpio_irq_get_by(),
-as the I2C core does for client->irq; this also applies the trigger
-type from _CRS. The vendor driver in intel/vision-drivers does the
-same. The driver binds as a platform device too, hence the explicit
-lookup. A DKMS build of the patched driver on a DA14260 running
-7.2.4 binds with all four amplifiers probing and the camera working
-(third link).
-
-Fixes: 8e2b43d2c10b ("media: i2c: cvs: Add driver of Intel Computer Vision Sensing Controller(CVS)")
+Fixes: f513997119f4 ("media: i2c: imx219: Scale the pixel rate for analog binning")
 Cc: stable@vger.kernel.org
-Reported-by: jan p. springer <regnirpsj@gmail.com>
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2529031
-Link: https://github.com/thesofproject/sof/issues/11152
-Link: https://github.com/omacom/omarchy-pkgs/pull/419
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Tested-by: Manuel Knitza <manuel.knitza@googlemail.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/cvs/core.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/media/i2c/imx219.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/cvs/core.c b/drivers/media/i2c/cvs/core.c
-index d4a3b9c3bab1e..8d857bbd8ab51 100644
---- a/drivers/media/i2c/cvs/core.c
-+++ b/drivers/media/i2c/cvs/core.c
-@@ -725,8 +725,6 @@ static int cvs_core_probe(struct device *dev, struct i2c_client *i2c)
- 	}
+diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
+index 9571f3622d2d4..5184523de8bed 100644
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -466,7 +466,8 @@ static int imx219_set_ctrl(struct v4l2_ctrl *ctrl)
+ 		int exposure_max, exposure_def;
  
- 	if (ctx->res == ICVS_FULLCAP) {
--		struct gpio_desc *wake;
--
- 		ctx->rst = devm_gpiod_get(dev, "rst", GPIOD_OUT_HIGH);
- 		if (IS_ERR(ctx->rst)) {
- 			ret = dev_err_probe(dev, PTR_ERR(ctx->rst),
-@@ -734,14 +732,12 @@ static int cvs_core_probe(struct device *dev, struct i2c_client *i2c)
- 			goto err_put_ipu;
- 		}
+ 		/* Update max exposure while meeting expected vblanking */
+-		exposure_max = format->height + ctrl->val - IMX219_EXPOSURE_OFFSET;
++		exposure_max = format->height + ctrl->val -
++			IMX219_EXPOSURE_OFFSET * rate_factor;
+ 		exposure_def = (exposure_max < IMX219_EXPOSURE_DEFAULT) ?
+ 				exposure_max : IMX219_EXPOSURE_DEFAULT;
+ 		ret = __v4l2_ctrl_modify_range(imx219->exposure,
+@@ -893,6 +894,7 @@ static int imx219_set_pad_format(struct v4l2_subdev *sd,
+ 	crop->top = (IMX219_NATIVE_HEIGHT - crop->height) / 2;
  
--		wake = devm_gpiod_get(dev, "wake", GPIOD_IN);
--		if (IS_ERR(wake)) {
--			ret = dev_err_probe(dev, PTR_ERR(wake),
--					    "failed to get wake GPIO\n");
--			goto err_put_ipu;
--		}
--
--		ctx->irq = gpiod_to_irq(wake);
-+		/*
-+		 * Do not request the line: another device's _CRS may list
-+		 * the same pin, and its driver would then fail with -EBUSY.
-+		 */
-+		ctx->irq = acpi_dev_gpio_irq_get_by(ACPI_COMPANION(dev),
-+						    "wake", 0);
- 		if (ctx->irq < 0) {
- 			ret = dev_err_probe(dev, ctx->irq,
- 					    "failed to get wake IRQ\n");
+ 	if (fmt->which == V4L2_SUBDEV_FORMAT_ACTIVE) {
++		int rate_factor = imx219_get_rate_factor(state);
+ 		int exposure_max;
+ 		int exposure_def;
+ 		int llp_min;
+@@ -911,7 +913,8 @@ static int imx219_set_pad_format(struct v4l2_subdev *sd,
+ 			return ret;
+ 
+ 		/* Update max exposure while meeting expected vblanking */
+-		exposure_max = mode->fll_def - IMX219_EXPOSURE_OFFSET;
++		exposure_max = mode->fll_def -
++			IMX219_EXPOSURE_OFFSET * rate_factor;
+ 		exposure_def = (exposure_max < IMX219_EXPOSURE_DEFAULT) ?
+ 				exposure_max : IMX219_EXPOSURE_DEFAULT;
+ 		ret = __v4l2_ctrl_modify_range(imx219->exposure,
 -- 
 2.53.0
 
