@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060828;
-	b=x6yVaKb9NqV8w/EEjPGWYbbwXkHRMlBYRBRyRpkF4GBBVOr5lrPme/4QpaWN1eGEDiM3
-	 m3cnDONKGLmCs5isXgR6+N0PSrJTMf8HvwzPkofg3Ir+U0woHrPiZdIQSQMNWaFN+VcWE
-	 An/DPw1TmUuTnyDbQDfJ3qEj7z24KBkA2I/Nl16fI9C2cD0BATEKEui0heDGKecQHfVUb
-	 5QkfpslKFEzvxz3vrJPxYO4SjjopjskMb8g+dY7/NqvKTvAfqjSxSojuCZ6iXYSIaRcaG
-	 sclHSGbPAOh88lT4A+pRj4P73YONY6o07oce40aX6g++SWxOkgUHXkMyao7i9rF5dww==
+	t=1794060829;
+	b=zpDFOfRpXePagab6tzn6oKjligAEopFPIk1HMa16Spn++Mrvd2nDiyhAcTmLLcJt2ZJu
+	 PSfc4a0Oz4jlqUzkeFC3AFIzZu6YbaGA8ncy1xEkEDuC/ZG8h9YH97y4FanbjCo9UVxZ7
+	 wg3eOFy3Q5UXos0ooI1tPKObDspsWS3XUjrgurzrEnmKz5u9eatLRCm7drGoh6eHYW4GQ
+	 L0b8Xi2Yhk74v5kAyA3YH7e9z4KqTX7X74wYpUrMbjpo4ae7j5cnlJhHoFEIXW1f+ArEK
+	 a6nXdV0f9b1AGcpFd/wizAzKIoVdS09zN2mKZQCFrC/Ynk7PS10EzrFNY66BAOat9PA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060828;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GnzO33mplxhzeILeW6SX+5B7dkz6j/IQeDNulXy1bGI=;
-	b=heDKGfBEBvGojmfDy5pDOnjZ55I2B10ojriw6WgZLvqVacBEi8kwd0zdTyL3AFCwdyY0
-	 b6qiBwI1NdrOAOUpMBzx3E2WLeJTtPSTQbxFruMa6w0JY0J9Ih4J7OFzY8qE8kEaJTCkQ
-	 GPYEYSc6zv/bUenuIuoGK0OwGwNwfr1ui1faieJtwPFckXA02lDzeOarUuVZmF4bPToVF
-	 HBxbEhuphqG+/j5+v8n3r4AU/hfqF4hnoSDlJiJwVVAjDq2k9bGcuB0BT+kIK2FQkdznr
-	 0idO6m9zHNEunqmKTqaji0PIXCf+vW5CZlAkHsjOBr+/tAUyZOCg+SxRxAoKFrO67Lw==
+	bh=bkHT1/HNA+ffN9OMzn1fK137Z9s3jnwnUCrVi/CnJNo=;
+	b=KOV1+nWmGURpu/dmHT+YDKw2BtcnaN5EBmTU2AZM9lLYuCRgMrOoqQQ5eDzShcoxbKFh
+	 EQVy9KcpVOslJ1TLZBMr0k3AjV2KOt+sp1e8k+cGxMpWR8JDRyWz7jy4IBcG1T4kMX0Ro
+	 DRRaPzs+svw6J0LWwJXnBz9FCMU0zr2iV1iPm3HqSkaz1GFvSHP7O6a/MeUii4OStbvRQ
+	 rftd/Na1YX6ubzR5p5RdGcB38blOx01bl6rxWfPNjkrZVYd5JaZ5F2VyygHQ0D5Nrzth8
+	 FHiic4C6OQu97+091v7cYXYpZyyfY6eFmAuurhExJXG7OEq494S2nPWcb3SNwYeIYEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s9TdaAJd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SG6uNlvA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBD6606A330;
-	Sat,  7 Nov 2026 14:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614A3606A326;
+	Sat,  7 Nov 2026 14:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s9TdaAJd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645221F0089F;
-	Sat,  7 Nov 2026 14:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SG6uNlvA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9FD1F0089F;
+	Sat,  7 Nov 2026 14:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060827;
-	bh=GnzO33mplxhzeILeW6SX+5B7dkz6j/IQeDNulXy1bGI=;
+	s=korg; t=1794060829;
+	bh=bkHT1/HNA+ffN9OMzn1fK137Z9s3jnwnUCrVi/CnJNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s9TdaAJdO5RLRz1+dNJrCYMqJ31O2NWPcpTEKiqY/0680k2JwfVz37aGYDYKDYgz2
-	 yYPnMnNrFtu49xg1GnVvwC2f3FIao1SD4rQa2x/Njppuz4I8hV/y6ksoNACMdgIDSD
-	 gBc7WZTbUTPIwOqNQAzNhn97IWKl89FsnvDvVyQs=
+	b=SG6uNlvAalsenUjCp4lwUkzn5JZh7GMky0VMbvPELcBhJyTaaHUnzSgn0rGTj58jx
+	 8fvvSSRYjEi9bphISn7kkjmuYFm0rlsAt8wCDUOaGLh4HQCZ7w76XeD/3tx40rj1Pn
+	 kuXt4zEyLylgW79Zs9dfZwQqn8xXXNcR1HcirYTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Frank Li <Frank.Li@nxp.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0223/1536] clk: imx: imx8qxp-lpcg: add missing MODULE_DEVICE_TABLE()
-Date: Sat,  7 Nov 2026 08:37:19 -0500
-Message-ID: <20261107135003.927579497@linuxfoundation.org>
+Subject: [PATCH 6.12 0224/1536] media: cx88: fix memory leak in cx8802_register_driver() error path
+Date: Sat,  7 Nov 2026 08:37:20 -0500
+Message-ID: <20261107135003.956738277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,44 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit e89485455ac49925565061733c0d73d568333fc0 ]
+[ Upstream commit e228b8b1a5b47a72b265671dc6d864c0da5528d0 ]
 
-The driver has a match table for the of bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+In cx8802_register_driver(), when drv->probe(driver) fails (non-zero),
+the allocated cx8802_driver struct is freed neither in the else branch
+nor later in cx8802_unregister_driver() (which only frees entries that
+were added to dev->drvlist on success). Each failed probe leaks the
+driver struct.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+Add kfree(driver) in the else branch to fix the leak.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20260704150344.59563-1-pengpeng@iscas.ac.cn
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8qxp-lpcg.c | 1 +
+ drivers/media/pci/cx88/cx88-mpeg.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/imx/clk-imx8qxp-lpcg.c b/drivers/clk/imx/clk-imx8qxp-lpcg.c
-index d0ccaa0402252..36d7ed46d426f 100644
---- a/drivers/clk/imx/clk-imx8qxp-lpcg.c
-+++ b/drivers/clk/imx/clk-imx8qxp-lpcg.c
-@@ -355,6 +355,7 @@ static const struct of_device_id imx8qxp_lpcg_match[] = {
- 	{ .compatible = "fsl,imx8qxp-lpcg", NULL },
- 	{ /* sentinel */ }
- };
-+MODULE_DEVICE_TABLE(of, imx8qxp_lpcg_match);
- 
- static struct platform_driver imx8qxp_lpcg_clk_driver = {
- 	.driver = {
+diff --git a/drivers/media/pci/cx88/cx88-mpeg.c b/drivers/media/pci/cx88/cx88-mpeg.c
+index 2c1d5137ac470..bc08b35e247e0 100644
+--- a/drivers/media/pci/cx88/cx88-mpeg.c
++++ b/drivers/media/pci/cx88/cx88-mpeg.c
+@@ -640,6 +640,7 @@ int cx8802_register_driver(struct cx8802_driver *drv)
+ 			list_add_tail(&driver->drvlist, &dev->drvlist);
+ 		} else {
+ 			pr_err("cx8802 probe failed, err = %d\n", err);
++			kfree(driver);
+ 		}
+ 		mutex_unlock(&drv->core->lock);
+ 	}
 -- 
 2.53.0
 
