@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061968;
-	b=QjAX9mYFIpIFsqQ6C/YED6B/bcFKlueIhhVgS1FCDS1eRk78Er2my7j20mRpwvEnMrj2
-	 bP5Dg/lZ7jVRR3VK+krf4mE4WsMoNFffcJsE+RgROHyGBLjv6HF5vvRBrazcJYQcn6OiK
-	 Idd8cZdx1siOCGPTjRuf2m05r/ACTnpLmcFtsbFBXjJplQRoXxmHZmjC8SFhBtDoZu0HO
-	 /L8nvEOP+3jCfuE9E9zZQkVGGJ2J81mfhIxrQyOKu2dcTc6iObPuODa+vTJYpOiRxY7IR
-	 ZpKMEp6DcXjkGegN69SpAs8dSSXTFwPGqHB/svfdu8gjYEr2Pop4EO2mvmp0HKqdQog==
+	t=1794061970;
+	b=FfsaKHB5fRLk1znKVF3Ud1k/4ULHtdsMATmcselnPI1ui0Uaq8GMg2361S96wj5fGles
+	 VdWCV2ynpHCVvyAP+Gf1Wj++f2Et7xF0e0chE1anJZHVu8hf7YE01KlIT4WCUdmEfJPPc
+	 IjYBzyrSH1u93CKDrH1s9yGwi+t+E3eUa54RoQ+wkaHJt4bLzPOWA+JVU4kaJnOgtVzI+
+	 2KeDnK5svASOnljXp7GUIjPPZm7mcJ8i9K1oTaxBTp8dGjR5UGgORvivFrb49vSVn+HU2
+	 Aopxp2R8Vut1M3ximDWi5ww2qCTgrBLbk0c4241ebbOy3eXcWI1lVJqV0SPkacYKElA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061968;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f6zxvSRbcf04potQCLOG7WEwFZNu2hft8BVSHMkkM74=;
-	b=LYgxq8E21nRHj5cqeTov89m/P2sPW2c90ew6gM20FZC5P0i7Sppt+xMfObYUCagFxHVX
-	 VIQYhnVrDyspGT/d02dJXqX0yCy/5jsfgqRSgF+nef4svU4RQYcusEIEtPb3YPqzhqvgI
-	 UJP7YoZx82SpPB86SnfljT0odM7bm6Ne1xWynrreYSDQgzKbmuelo36ExXHWIpRcSA5DU
-	 Ics2HGnDRTAIznoJyH8JgkeAd3p0P4RYahiR4iy72LaplNz8lnWeKBWWblgbnQ/5hCMxs
-	 kTmQIfSyZmsteK50gH2L+aFrg6VlT2bCocWuDppSps0NWmNctM1H+Fd7ojsyDSnvGmQ==
+	bh=Q4vNBI7yno6pj+YKxA2dcojZ94uxRO0KxsC1tBnJ4vQ=;
+	b=4XyApRTbKvMGdrKeNa49cjoAm7tuoM6UJNsJbNWiiGl2m6nbtcLW3+7avb1XP5NTc2X9
+	 HRjskNb9QmDU6SsPsKcIOLhRgbpeU3nkhMFUcq6auXh5YnmQAAcBcKUMNZmfXLo/GJwxH
+	 GPbkS8aYeTUHqomXxyNcoBpbaEcIsdsH7FKxnWViZKZphJekxMAdDlaeD6LeaeXUBshrJ
+	 6o4uwhUv/fk71Iw9s9zTFIq0Vy2E+N2aziPavtE1qgjQ6mncvDaYxM6peq1d3PFqdPp06
+	 V4LxWLw9WbqyLHfPwoOhc0hQL7SReq7NZEx0jkEsHNGz57h8UbE5ePPuCU25jwEEBIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcpOA2kW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YEoWhCTN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849FE606A332;
-	Sat,  7 Nov 2026 14:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B846E606A32E;
+	Sat,  7 Nov 2026 14:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcpOA2kW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331A61F008A1;
-	Sat,  7 Nov 2026 14:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YEoWhCTN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663B11F0089F;
+	Sat,  7 Nov 2026 14:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061968;
-	bh=f6zxvSRbcf04potQCLOG7WEwFZNu2hft8BVSHMkkM74=;
+	s=korg; t=1794061969;
+	bh=Q4vNBI7yno6pj+YKxA2dcojZ94uxRO0KxsC1tBnJ4vQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UcpOA2kWo+QcmCH0jTIGAJMRhxpoNHntGpYCtGV8oNEPf5SfxSNfakHXSVCT2oBEY
-	 05xzNNkC1nYEbbQRPW1JWdn1Mu++w0Z4kPXvRdpm/f0zX2qpltGVO5LUMmINTCLdI2
-	 1iImyvC5O9s3rgIB8i9nyx3VoHzmd0ITOcT+t/38=
+	b=YEoWhCTNSmSlylk15ig4ke3PhJRg7kKDQNo3TFp5+fSZE2tNHZl7We4p3IrDRsZ6w
+	 kiU+dr+//zXsEfMbenguHf9fIZLzeQcvKNT5vSCtXvQQi48Q1CfeusLpFiAWthWYNv
+	 5rQcWqxiFXc4Ky/c74musmwnsh/HiyDeLqbcZxLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Snyders <robin@snyders.xyz>,
+	Shengzhuo Wei <me@cherr.cc>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0965/1536] power: supply: qcom_smbx: notify battery overvoltage recovery
-Date: Sat,  7 Nov 2026 08:49:41 -0500
-Message-ID: <20261107135024.753462128@linuxfoundation.org>
+Subject: [PATCH 6.12 0966/1536] power: supply: bq27xxx: synchronize work cancellation on suspend
+Date: Sat,  7 Nov 2026 08:49:42 -0500
+Message-ID: <20261107135024.782540821@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,56 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Snyders <robin@snyders.xyz>
+From: Shengzhuo Wei <me@cherr.cc>
 
-[ Upstream commit 2548e4fa576a87a3b0d1b15a9c3f909bc54887b5 ]
+[ Upstream commit f0ff5673aa07ded2bb383ac526c1faee4fe9ca07 ]
 
-The battery-overvoltage IRQ is configured for both edges, but its handler
-only notifies the power-supply core while the fault bit is asserted. The
-falling edge therefore does not publish the recovered health and status.
-The handler also ignores register-read failures before testing status.
+The poll work requeues itself via mod_delayed_work() while the device
+is not removed. cancel_delayed_work() does not wait for a callback
+that is already running, so a poll racing with suspend can keep
+issuing I2C transfers after suspend returns and requeue itself into
+early resume.
 
-Handle read errors, log only an asserted fault, and notify the
-power-supply core after every successful edge read.
+Use cancel_delayed_work_sync() to quiesce polling before suspend
+completes, as the teardown path already does.
 
-Fixes: 8648aeb5d7b7 ("power: supply: add Qualcomm PMI8998 SMB2 Charger driver")
+Fixes: dfcb264a01a9 ("power: supply: bq27xxx: Stop and start delayed work in suspend and resume")
 Cc: stable@vger.kernel.org
-Signed-off-by: Robin Snyders <robin@snyders.xyz>
-Link: https://patch.msgid.link/20260812-qcom-smbx-fixes-v1-5-eb48246be599@snyders.xyz
+Signed-off-by: Shengzhuo Wei <me@cherr.cc>
+Link: https://patch.msgid.link/20260827-bq27xxx-suspend-cancel-sync-v1-1-77a67711cbc3@cherr.cc
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_pmi8998_charger.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/qcom_pmi8998_charger.c b/drivers/power/supply/qcom_pmi8998_charger.c
-index a9dbe050ef248..d4c9f85654da3 100644
---- a/drivers/power/supply/qcom_pmi8998_charger.c
-+++ b/drivers/power/supply/qcom_pmi8998_charger.c
-@@ -712,16 +712,22 @@ static irqreturn_t smb2_handle_batt_overvoltage(int irq, void *data)
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index fb16354fcb975..19c73aad769a5 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -2225,7 +2225,7 @@ static int bq27xxx_battery_suspend(struct device *dev)
  {
- 	struct smb2_chip *chip = data;
- 	unsigned int status;
-+	int rc;
+ 	struct bq27xxx_device_info *di = dev_get_drvdata(dev);
  
--	regmap_read(chip->regmap, chip->base + BATTERY_CHARGER_STATUS_2,
--		    &status);
-+	rc = regmap_read(chip->regmap,
-+			 chip->base + BATTERY_CHARGER_STATUS_2, &status);
-+	if (rc < 0) {
-+		dev_err(chip->dev, "Couldn't read charger status: %d\n", rc);
-+		return IRQ_HANDLED;
-+	}
- 
- 	if (status & CHARGER_ERROR_STATUS_BAT_OV_BIT) {
- 		/* The hardware stops charging automatically */
- 		dev_err(chip->dev, "battery overvoltage detected\n");
--		power_supply_changed(chip->chg_psy);
- 	}
- 
-+	power_supply_changed(chip->chg_psy);
-+
- 	return IRQ_HANDLED;
+-	cancel_delayed_work(&di->work);
++	cancel_delayed_work_sync(&di->work);
+ 	return 0;
  }
  
 -- 
