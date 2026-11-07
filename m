@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061947;
-	b=h611ERj5+YWjdJYZUg5kn2fCc/n1vTjhhSuGAizWJhcYpa4KZ3X19sWFR4PrNdjXF5t/
-	 E4ESEBQ1Rmq394lCFYYPzNhQ3A3bh5FTntUgxppi309X7/+VVlJhDHAqRC4rbgFLZ9KIN
-	 DK42v8X74nk2LGBYzCkxFy5ClMxDGFN61n1H3N4R1z92fupdjxsL7rLa7MVyWFedW1iR6
-	 ooWQBMz8q7ShedwiOwaXA2x2ilgHJRsfu3sJGvdWpmFa/MEtYYQOEtU9Ur+OpEJVh131G
-	 z0EtoCxxuEsWQIR2HPhWo98kFB8+rFBcYq2WRjmN5kfhBHEEF/Gy6dxh4CIWRHoUn9A==
+	t=1794061948;
+	b=XOZaVq3Zf743Iw72CC9TgbvGpuSWkhsobKa692m51o4uOUVHdQWr2cwr4JZKLWi/Vf7+
+	 8FhGAfxDqs4L2RLhXly3/YSH+1K6oKFm3Lj7Mrt9n4LJwYf8OBxKmjmXoeJ1zjLCWDwCx
+	 9S2WQbobEcHVONLvabFJ5jUiPqMe9aDmJm+Au+FmlVVOvVIaS0VKNIQIxW3LsCRNuZJ8u
+	 g8Pd1QkL16odCvKZ+FbusbHEshyoVfUXqShnT/nxrOb93wxkhSh0BhLTPCkr35ePESzsT
+	 ogaDuSNH/vM2jl5TmSjldPdNhErDlSN59kn+TmIU+JYuefVBsQj25m6dVZVV2d2E9nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061948;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UUvFnTegr3tQCS2VJ2Mx7QxOLWXK4nyvsWFF3NLsYTM=;
-	b=LffeDuCOYtbBFC8vuXE5eed7czaN0R7DElr6jHS6SBxnkcQxeGpPo3pMY/WZK0yylO7Y
-	 aFFy5jdivy/wW7wTBY2uZTj/ubmg4LZRzcyTNPOKhhE8GxpC6UvRNSRJ2f7/UJV3GBGks
-	 fTc4WbwNAC6A5/7hNd1Nr8dGiIvbidaMeHNZg+9dtWBsYWPNUWsH2lVpFjQqh3WDtgkV7
-	 4im7JuwDxKyEx++I+/ZUrtAppF8t/LOaBLc+UWkmL/eyIlkCzp7vDhdCF0XYQkeYJoQbk
-	 fuA0zpH9MxTZo9IrlGn/ngcC8WBvWd6hBYfgJC4H8Mf1pKJTlGsOHg5v1VmIX124O6Q==
+	bh=xbJPJo/Hztz8GE368rgjIGCnbkpww8VaDpyhrKKYsLg=;
+	b=YO964J1N8sVQaauBLN4TMlAdyUMn7GjMo7tCg8EKQwoW6ROfeDQp/Sdij/5YME05siNn
+	 zC53ohlPoilmmHR/w4S+CUmgF4rL0X+wjB8WAQHszE77qkBOVa+6fE4fy5JsZBl1JVnVz
+	 eDElpoAGFmehFS9Fc2YmfC1pny98WYd6ATR4pAEgtK26sg57AwL+2/KZFXLP0Zwq+eSZ3
+	 bICi/7+IX4wlB7sTEOZQXWJSjhs509vfW4NCfMGm4I14WIXm5y0kcigDffKN0kgsnOjkx
+	 5ZboLHPrTzdOMMVaoFUW8A8DmAeFtjtsG5x6ZG2w4kISZRthkR5ttvotySsj4pGIyUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuCDUy9d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vsoeyh9N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EE5606A32E;
-	Sat,  7 Nov 2026 14:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DB2606A32E;
+	Sat,  7 Nov 2026 14:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuCDUy9d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A3E1F0089F;
-	Sat,  7 Nov 2026 14:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vsoeyh9N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA27A1F0089F;
+	Sat,  7 Nov 2026 14:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061946;
-	bh=UUvFnTegr3tQCS2VJ2Mx7QxOLWXK4nyvsWFF3NLsYTM=;
+	s=korg; t=1794061947;
+	bh=xbJPJo/Hztz8GE368rgjIGCnbkpww8VaDpyhrKKYsLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JuCDUy9dk9PBrXlLqm3BssxZOe1p5dOxHDrIQ/fn+dt0NE+PKHNOAtpDF1AGA2Jxt
-	 kg0Dl+H0QWZxV2u/udtjbXUxVztR/cFtBscEFxtGPlzv2IC4WjKACqzFiwFei+NVmE
-	 unbF9e1l00TdR7/OyssNMnjVjHHJ+JuBws1sBszE=
+	b=vsoeyh9NKUMc/EEDvRrbhHIjAqzx1oFsenNbAGOxbAqYES4Gw7rZzoiw27Hso/fHC
+	 Bz1Sy+LrvoZrrPT7ngxmrMAJf2jRND9S5PX/kLLPoSsMBMUDOwHf05JPYkcIlAShJH
+	 eknDi9MKPGZoe+572wOX6JgjKryYXSayu66th94g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Price <thesamprice@gmail.com>,
-	Ramin Moussavi <ramin.moussavi@yacoub.de>,
-	Waldemar Brodkorb <wbx@openadk.org>,
-	Michal Simek <michal.simek@amd.com>,
+	Punnay Sharma <punnaysharma805@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0909/1536] microblaze: preserve the MSR carry flags across signals
-Date: Sat,  7 Nov 2026 08:48:45 -0500
-Message-ID: <20261107135023.166607586@linuxfoundation.org>
+Subject: [PATCH 6.12 0945/1536] staging: media: av7110: fix sp8870 initialization failure state
+Date: Sat,  7 Nov 2026 08:49:21 -0500
+Message-ID: <20261107135024.196887249@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,107 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Price <thesamprice@gmail.com>
+From: Punnay Sharma <punnaysharma805@gmail.com>
 
-[ Upstream commit ca35dd21a5f8343f47a23e4e5b3f0ffccf76a4ae ]
+[ Upstream commit 30684fa98394bc0eb4362282908612aab7d4dad9 ]
 
-setup_sigcontext() and restore_sigcontext() copy r0-r31, pc, ear, esr and
-fsr to and from the signal frame but never touch MSR.  The interrupted
-MSR is therefore dropped from the signal context entirely: the handler's
-ucontext does not expose it, a handler cannot adjust the resumed
-arithmetic flags through uc_mcontext.regs.msr, and -- because
-restore_sigcontext() leaves regs->msr as whatever the rt_sigreturn trap
-left in it -- the interrupted context resumes with the carry produced by
-the syscall entry path (_user_exception does "addi r14, r14, 4", which
-writes carry), not with its own.
+The SP8870 DVB frontend driver prematurely flags the device as
+initialized at the very beginning of the sp8870_init() routine, prior
+to requesting the firmware (dvb-fe-sp8870.fw) and executing the I2C
+upload sequence.
 
-Other architectures round-trip the user-visible flags through the signal
-frame (arm's cpsr, csky's carry, x86's eflags), so a handler can both read
-and adjust the resumed flags; purely privileged status registers such as
-riscv's sstatus are left out.  MicroBlaze should do the same for the
-user-writable bits.
+If request_firmware() times out or sp8870_firmware_upload() encounters
+an I2C bus error, the function aborts and returns -EIO. However,
+because `state->initialised` is already set to 1, all subsequent
+invocations of `fe->ops.init()` by the DVB core will immediately return
+0 (success) without attempting to load the firmware again. This leaves
+the demodulator microcontroller halted and the frontend permanently dead
+until the module is forcibly reloaded.
 
-Concretely, MSR[C] (carry) is lost across signal delivery.  Code that
-keeps a live carry across a point where a signal can be delivered -- for
-example an lwx/swx compare-and-swap retry loop, between the swx and the
-carry test -- resumes with the handler's carry and mis-evaluates the
-result; the same failure class as the rt_sigreturn r3/r4 clobber, reached
-through a different register.  Demonstrated under qemu-system-microblazeel
-(machine petalogix-s3adsp1800): a handler that sets MSR_C in
-uc_mcontext.regs.msr has no effect before this change (0 of 132 in-window
-signals propagated) and takes effect after (130 of 132).
+Relocate the `state->initialised = 1` assignment to the end of
+sp8870_init(), ensuring the flag is only set after the firmware is
+successfully uploaded and the system controller is actually restarted.
 
-Save MSR in setup_sigcontext() so the handler's ucontext exposes it.  The
-signal frame is user-writable, so restore_sigcontext() must not restore it
-verbatim: MicroBlaze packs the user-writable carry (MSR_C, MSR_CC) and the
-privileged control bits (MSR_UM, MSR_VM, MSR_IE, MSR_EE, ...) into the one
-register, and a verbatim restore would let userspace alter privileged
-return state -- rtbd derives the resumed mode from MSR_UMS/MSR_VMS.
-Restore only MSR_C | MSR_CC from the frame and keep the rest from the
-current regs->msr.  This mirrors x86's
-restore_sigcontext(), which masks the restored EFLAGS to FIX_EFLAGS for
-the same reason; arches whose status register is purely privileged (e.g.
-riscv sstatus) simply do not restore it at all.
-
-Comment on the exposed MSR reworded: it is not read-only,
-restore_sigcontext() applies MSR_C|MSR_CC from the frame.  Author's
-Signed-off-by kept; he agreed to comment and changelog cleanups.
-
-Fixes: 2148daa9c45f ("microblaze_v8: Signal support")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sam Price <thesamprice@gmail.com>
-Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
-Tested-by: Waldemar Brodkorb <wbx@openadk.org>
-Link: https://patch.msgid.link/20260821151809.1233057-6-ramin.moussavi@yacoub.de
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Punnay Sharma <punnaysharma805@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/signal.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/staging/media/av7110/sp8870.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/microblaze/kernel/signal.c b/arch/microblaze/kernel/signal.c
-index 4956014a99379..6bbc16f98d5eb 100644
---- a/arch/microblaze/kernel/signal.c
-+++ b/arch/microblaze/kernel/signal.c
-@@ -33,6 +33,7 @@
- #include <linux/linkage.h>
- #include <linux/resume_user_mode.h>
- #include <asm/entry.h>
-+#include <asm/registers.h>
- #include <asm/ucontext.h>
- #include <linux/uaccess.h>
- #include <linux/syscalls.h>
-@@ -81,6 +82,22 @@ static int restore_sigcontext(struct pt_regs *regs,
- 	COPY(pc);	COPY(ear);	COPY(esr);	COPY(fsr);
- #undef COPY
+diff --git a/drivers/staging/media/av7110/sp8870.c b/drivers/staging/media/av7110/sp8870.c
+index 96fd738777744..b5b49f1ef5e7b 100644
+--- a/drivers/staging/media/av7110/sp8870.c
++++ b/drivers/staging/media/av7110/sp8870.c
+@@ -315,7 +315,6 @@ static int sp8870_init(struct dvb_frontend *fe)
+ 	sp8870_wake_up(state);
+ 	if (state->initialised)
+ 		return 0;
+-	state->initialised = 1;
  
-+	/*
-+	 * The frame is user-writable, so restore only the user-writable
-+	 * status flags (carry) and keep the kernel-controlled MSR bits
-+	 * (UMS/VMS/IE/EE/...) from regs->msr: rtbd derives the resumed mode
-+	 * from UMS/VMS, so a verbatim restore would hand userspace the
-+	 * privileged return state.  Same idea as x86 masking the restored
-+	 * EFLAGS to FIX_EFLAGS.
-+	 */
-+	{
-+		unsigned long msr;
+ 	dprintk("initialising frontend...\n");
+ 
+@@ -353,6 +352,8 @@ static int sp8870_init(struct dvb_frontend *fe)
+ 	sp8870_writereg(state, 0x0D00, 0x010);
+ 	sp8870_writereg(state, 0x0D01, 0x000);
+ 
++	state->initialised = 1;
 +
-+		err |= __get_user(msr, &sc->regs.msr);
-+		regs->msr = (regs->msr & ~(MSR_C | MSR_CC)) |
-+			    (msr & (MSR_C | MSR_CC));
-+	}
-+
- 	*rval_p = regs->r3;
+ 	return 0;
+ }
  
- 	return err;
-@@ -140,6 +157,7 @@ setup_sigcontext(struct sigcontext __user *sc, struct pt_regs *regs,
- 	COPY(r26);	COPY(r27);	COPY(r28);	COPY(r29);
- 	COPY(r30);	COPY(r31);
- 	COPY(pc);	COPY(ear);	COPY(esr);	COPY(fsr);
-+	COPY(msr);	/* restore_sigcontext() accepts only carry state */
- #undef COPY
- 
- 	err |= __put_user(mask, &sc->oldmask);
 -- 
 2.53.0
 
