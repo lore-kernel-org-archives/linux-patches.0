@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061921;
-	b=Wwt7d8d15kz5Gw+dvKiKTLIOAnuSjabfjhk4QrPPyTefu9AxmWLCkt2sqANxvGweOC2z
-	 sRlAUxa1rAaorWx0hq+sndDwXUSXfRw2R+76T4LbBzSZ4gmmFOOBOIaSu9NvbfbrSGWer
-	 fwgZfs2yti81SH8gr/aCEshfaqbW5y/ccOciQVCUc/CYII9q1aNZ+t2ikU8+8DrCIR2B6
-	 jL8PWXEKBWYXw1iToomJuY0wZisHMv7D6hJtCj31D6cNwm6MeQmCqZyJ+difK18TJQL2B
-	 Md/LdQaCCByz1PLDGFUzfdWDcOq8Yupw+C1ukZmZZPf5E9LdeYbrFk+IhRFFoDBATzQ==
+	t=1794061922;
+	b=Hp8A/AvWnmM2lPa8QeauSRRPSEytorLrwUyWo2E4KXpkT80O6WXEm4vrlCECdGFQz3ek
+	 gkP/uU1ow/lR7EUbYKeG4Vt+A7S5e2iw42qxAu/NkOuvOqdvHfxSd0poDo4qvEil9pnri
+	 OFB6JASaovobPiYJr0r+p9REKQHKsW820W2M9IQTPNHgTbXqrz2QKOe8GLq6RQ7RVn0Mm
+	 AJd2FzuKDnNIoNWPX9CokuT7TfhG1JjgExs4xbDrMocxZ1OcBMYQd0mltL+pSkjyK4hS3
+	 shN33Q99IZgRdl94TTuMEx5SPEbKcCc3suqkrrAKqhxhaH0eAjYuDlOnUE5iLH02kVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061921;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bi5F/bgJe7hhosfWw0vxYbWiWcP1rTOGxvB4jr50Iyw=;
-	b=YAzI6K1ek2sTehEofacLF8rQkpLJ5aSeun1RS/25fOV3ol7zIbYPOqnBA+NW8ooGleL/
-	 wBbI5GVG0lVO0NxeSp5m6kuq7lmycMTkRZgGEJjRdjmyaEzM0Z+se8lq2hICmVJ8SzzBQ
-	 zCrd5FFy2C5Ldxtx0a5GB+CfQg5aNEZo58Aad/kNRhDjGzim5HfJzXmgDNi2SkNcoJ3lU
-	 OLclnEU4oXrq8sCUZT2ujmBmZDSc/C0pF+h24Pb2KPK1LvQD6ClwxsFlCmzRv2lNXoVvo
-	 Vw7hbdP7W+Z3PTfCGuQXAxdA/bHav3LSmciJa1Mwh0rN/hrgxFF+enwP5JMi5XfVTvw==
+	bh=FRbyUR9zZwqgoQ+eswsGX0Slhwmafu1ICrQ2ptjv1sM=;
+	b=HSmC3z1wQ5ZMoV6HOnJZ1o26psFDB4ksvBVjqUjIbNMir81CDIoIk/82+IOwcwCoC4sS
+	 wzoIKH+i1lyqd4ErVawJ1WdLGn6SvbL6/1JSldK+JEBuoPbRdxEvTdEfaoJeDfbnb3iZZ
+	 l6SaCmUAdn5eAS2kCJViyYiaF4gu655dROsUf/Zen/juk/45Wv2Bj2+kM55yzJS8TjmEH
+	 28NCE4CXZFPxxWQumP6YbbPS0j5QS+xRBrk7MsoEEIEBMMI00+93WHZwbaSf08ATJp3ri
+	 H7ApGY6ozFYm7SwLf8nJuIIw6mNswzcH9wd1EHgzEKS/cHA5+3Cmv6R18RYl12XlHpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IB9sVnzy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1X5K1Fn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DF7606A335;
-	Sat,  7 Nov 2026 14:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AB4606A335;
+	Sat,  7 Nov 2026 14:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IB9sVnzy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0901F008A1;
-	Sat,  7 Nov 2026 14:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1X5K1Fn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117D61F0089F;
+	Sat,  7 Nov 2026 14:32:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061921;
-	bh=bi5F/bgJe7hhosfWw0vxYbWiWcP1rTOGxvB4jr50Iyw=;
+	s=korg; t=1794061922;
+	bh=FRbyUR9zZwqgoQ+eswsGX0Slhwmafu1ICrQ2ptjv1sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IB9sVnzypoLtCbygVURqhvcrcStRzV/zvFHPR9PlIyPhFVk6pP4LVP6T4LAcHOSIl
-	 goFri+i2eErxui/4Uewuy2UHGCu+qA0IAVKEXNlGpjux5zzLksGhVuNIBsTYlnne+Q
-	 OuNwB1wWkBSukvYDDsCbSp4v7DZ+uBDi2TTsbR+A=
+	b=l1X5K1FnXIUYjmldToSBAKJoYuJKTYsZePw9tbZr4voZwbeEuPSm5ZtBPe2H+9E7v
+	 Sq/AqGAfEK4vlxq3JLcJiErUBoTdHui+SV2ZRf7q3ArJA+EbsOCFmROhQmSHVkgFpZ
+	 eTJ9GnPZvLPbLEOc73pxqAnzld3kOlPCeEwfZjvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Thorsten Blum <blum@kernel.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0927/1536] thermal: intel: powerclamp: Reject invalid window_size values
-Date: Sat,  7 Nov 2026 08:49:03 -0500
-Message-ID: <20261107135023.684547341@linuxfoundation.org>
+Subject: [PATCH 6.12 0928/1536] thermal: intel: int340x: Fix temperature selection around 0 C
+Date: Sat,  7 Nov 2026 08:49:04 -0500
+Message-ID: <20261107135023.713802885@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,43 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Thorsten Blum <blum@kernel.org>
 
-[ Upstream commit 40989202104e498ff9adfb8c575d6cd159f13988 ]
+[ Upstream commit e56e2b49c67d132728e52ce493079e83cc914657 ]
 
-window_size_set() sets ret to -EINVAL if new_window_size is outside the
-valid range, but then falls through and still updates window_size to the
-clamped value.
+Since commit 7251b9e8a007 ("thermal/intel: Fix intel_tcc_get_temp() to
+support negative CPU temperature"), intel_tcc_get_temp() can report
+negative temperatures.
 
-Return -EINVAL immediately and do not update window_size. Also drop the
-now-redundant clamp() call.
+proc_thermal_get_zone_temp() still uses *temp as the current maximum and
+as an implicit "no reading yet" marker. However, this breaks when a CPU
+reports 0 C, because a subsequent negative reading can overwrite it.
 
-Fixes: d6d71ee4a14a ("PM: Introduce Intel PowerClamp Driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://patch.msgid.link/20260815090136.88540-2-thorsten.blum@linux.dev
+Use bool temp_valid to track whether a valid temperature has been read.
+Initialize *temp with the first valid reading and only update it with
+warmer readings.
+
+Fixes: 7251b9e8a007 ("thermal/intel: Fix intel_tcc_get_temp() to support negative CPU temperature")
+Cc: 6.3+ <stable@vger.kernel.org> # 6.3+
+Signed-off-by: Thorsten Blum <blum@kernel.org>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20260826153144.299746-3-blum@kernel.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/intel_powerclamp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../intel/int340x_thermal/processor_thermal_device.c   | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thermal/intel/intel_powerclamp.c b/drivers/thermal/intel/intel_powerclamp.c
-index 4ba649370aa1a..5a8a59d344e8f 100644
---- a/drivers/thermal/intel/intel_powerclamp.c
-+++ b/drivers/thermal/intel/intel_powerclamp.c
-@@ -290,9 +290,10 @@ static int window_size_set(const char *arg, const struct kernel_param *kp)
- 		pr_err("Out of recommended window size %lu, between 2-10\n",
- 			new_window_size);
- 		ret = -EINVAL;
-+		goto exit_win;
+diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
+index 7c46dd6bee731..8296f6907d42c 100644
+--- a/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
++++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
+@@ -177,17 +177,21 @@ static int proc_thermal_get_zone_temp(struct thermal_zone_device *zone,
+ {
+ 	int cpu;
+ 	int curr_temp, ret;
+-
+-	*temp = 0;
++	bool temp_valid = false;
+ 
+ 	for_each_online_cpu(cpu) {
+ 		ret = intel_tcc_get_temp(cpu, &curr_temp, false);
+ 		if (ret < 0)
+ 			return ret;
+-		if (!*temp || curr_temp > *temp)
++		if (!temp_valid || curr_temp > *temp) {
+ 			*temp = curr_temp;
++			temp_valid = true;
++		}
  	}
  
--	window_size = clamp(new_window_size, 2ul, 10ul);
-+	window_size = new_window_size;
- 	smp_mb();
++	if (!temp_valid)
++		return -ENODATA;
++
+ 	*temp *= 1000;
  
- exit_win:
+ 	return 0;
 -- 
 2.53.0
 
