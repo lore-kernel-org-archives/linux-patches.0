@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064746;
-	b=vcR9o5m3TOib9I1YKxeKrWyjSvNt0Kia7vRZjUFthcrU97b7wLAN5XYjucgcuuluDvTL
-	 n1IKHTQMGPH5VAbdYdLrnFHfKWPCpRY0ImmKL5d9cR9xWtHWh77NuMa/q9xnJIZ9F6tCa
-	 uVAE7uClPElOq7bv+apK5EqtsxNVAcU7740oD8Dsp9YG09fXNwiuQLQapAMNE5PIIg2Yv
-	 AOrnk3U28TulzUugzY0a9M7o59Px4geViA8pL35FmqGGO6cNpcj4B73QxfSNNMdkTVj0c
-	 gcf+49BuReFedeLhM/YSEnWlI5x0EMyTFynkLgAxMill5E/dG6hJdYN8BkFLnh7QS4A==
+	t=1794064748;
+	b=oQWRPzVBnSeIJelUeOtpG5isvV/qD+PJEt4VAxAeZ/3lFNxnU6wLdLReTb+TONGsPL+4
+	 ZiadacmMDc68naZ32oyzpOgHaqG9q3TMpwrE9hzYqhh2adBwmOw4M2YZlaJEWWHCBFb3L
+	 wlwK85s2iNggX9ZU53k6bgOADHDfijci5jyFwpeRu+FCmeN833JGGX1QHIqKqYOD1nR79
+	 1l1cfx8p/ZBl6vmbVuTGXd12/9LW+IKNGEBZVxQbF8r0mnIBjSRUdKJGEvYs/X1RYXTlV
+	 hWPiicZ5nt0FJU2tN3J9jzRjMOCJfQR+Du0tlV+bdqgPZbs0mbM3Re0BqGhXpMaNgsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064748;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=rgjMCUenD9aPf7LrAbxKD9uRerL4wOpmOPFiMZ6oz04=;
-	b=Q7cdYPon0xX0wW1l1OR3k/yDkQRphXNnGUpaCe9H+DrTW1lGR/KN0PxGLIYBFl6s6BWX
-	 96z8Tb0ihdsFDZ6vVgiRcbuvkxSwJ7hvQbe5G5KABKzAB3LSYW3+TfDITJw9A3r/NhkCy
-	 H/jLC/h3xJV22/qd0FI3OgbGNPIVaZxlIooTIiTr91jX5dIcXxB1LuSNUo66Ut/VZ63Ke
-	 VaSVwBDKnR9zj9KWQOLtYmyjzShcgkLXDZBsXSlz+cCgccVY33fEYjlbCzZzSeUluqYBi
-	 LbFrQ1UOG2j4gwFkZPuDSkOnFsNtQo6ByLiTSQyMI6G7G+UIS+1sfzSBhTDWut1OOEA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=ZcggKSe1vu0rrSjVxaVQ1RkcR3UZfcprGtETrjlHV0c=;
+	b=h4PH2fD+xoCYNDRun6mwO4ELAf69qBP7DvhlkOuBeRlru5Sk71KbX1CK6/xyWH3kJBb1
+	 myeLcUM+PfLZL4suXIXs0BRi9NosfeQMgRrv4t6h9VUojCluKah2oiNM7n9aulnk79qeu
+	 ng1EeeClxXOtBRhoRY111uH2osi4Q/mENSbkrLE51JVqrJSKgpkkssuFWxvr2w2wZdUrs
+	 lzGqyg0eEbcvzciEGo1vqQjiTrnaeVhTuyH+z18JHxxRrkpNted5roH5t5aExn+1fTuDA
+	 Zl5P0jl4sDb41qbEyQluCktJJAyQrqrGsBwpGNCMP4PF62LQua1GiquNYKy6396C3rw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iKVYmRdQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iU2Dk7AY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DFF606D81C;
-	Sat,  7 Nov 2026 15:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C495E606A334;
+	Sat,  7 Nov 2026 15:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iKVYmRdQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071A31F0089F;
-	Sat,  7 Nov 2026 15:19:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iU2Dk7AY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F321F008A3;
+	Sat,  7 Nov 2026 15:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064746;
-	bh=rgjMCUenD9aPf7LrAbxKD9uRerL4wOpmOPFiMZ6oz04=;
+	s=korg; t=1794064747;
+	bh=ZcggKSe1vu0rrSjVxaVQ1RkcR3UZfcprGtETrjlHV0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKVYmRdQX0WlNUotTJQbD623euyrKi+Fr/XhWD8pZl39eGjdr9wsmPEiDj78cFimD
-	 6V9OJ1LUOwR91nwmdA+1U+sNJ8YIszXWsuFbJKRGSgZwi5ihul2fdVdNN5au86hrW4
-	 tru7zgAz4QPimpAs6dlTyRxfjbgvf/9dcHmeZWHc=
+	b=iU2Dk7AYU23kKl/OcseqLW5KWeZ81IGx/+f2Boi3f4KYD9+/jrjz+Mrvw4ofAmRPA
+	 Og3R+SQVzdBg4Wu3DISc0qxGCr2rIWsEuF+sSyLHXzqi2+UskNuxsyQXiIoUtxqJko
+	 drqAFEsJ8QnEVDBo8+PDaXdbPowXehOCUFhiYuFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Joanne Chang <joannechien@google.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Nanzhe Zhao <zhaonanzhe@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0721/1257] f2fs: allow pinning empty compressed files
-Date: Sat,  7 Nov 2026 08:50:17 -0500
-Message-ID: <20261107134959.175331475@linuxfoundation.org>
+Subject: [PATCH 7.3 0722/1257] f2fs: read i_size once in f2fs_vm_page_mkwrite
+Date: Sat,  7 Nov 2026 08:50:18 -0500
+Message-ID: <20261107134959.202457186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -64,53 +64,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joanne Chang <joannechien@google.com>
+From: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
 
-[ Upstream commit 2eebc31ae5f53e1066bb6238c8087c23b688ad17 ]
+[ Upstream commit c04f209773ecb31e592cababce0d6658ee0b8d58 ]
 
-Commit a64a3fec11e7 ("f2fs: force out-place update for all writes on
-compressed file") updated f2fs_should_update_outplace() to always
-return true for compressed files. However, this function is also
-called during f2fs_ioc_set_pin_file() validation, so pinning an
-empty file with compression enabled now fails with -EINVAL before the
-compression flag can be stripped.
+f2fs_vm_page_mkwrite() reads i_size twice: once to check whether the
+folio is partially beyond EOF, and once to calculate the offset for
+folio_zero_segment(). But a concurrent buffered write can extend isize
+and cause the following race condition to corrupt data:
 
-Fix this by guarding the f2fs_compressed_file(inode) check with fio in
-f2fs_should_update_outplace(). This preserves forced OPU for actual
-compressed writes (fio != NULL), while allowing f2fs_ioc_set_pin_file()
-(fio == NULL) to proceed to f2fs_disable_compressed_file(inode).
+buffered write writes [0,3500)
 
-Cc: stable@kernel.org
-Fixes: a64a3fec11e7 ("f2fs: force out-place update for all writes on compressed file")
-Assisted-by: LLM
-Signed-off-by: Joanne Chang <joannechien@google.com>
+CPU0 (write fault)                        CPU1 (buffered write)
+ ----                                     ----
+ f2fs_vm_page_mkwrite()
+ folio_lock(folio)
+ if (((loff_t)(folio->index + 1) << PAGE_SHIFT) >
+ i_size_read(inode))
+ /* i_size_read() = 3500 */
+                                           write(fd, buf, 200, 4096)
+                                           /* writes into page1, does not
+                                              wait for folio lock */
+                                           i_size_write(inode, 4296)
+ offset = i_size_read(inode) & ~PAGE_MASK
+ /* i_size_read() = 4296, offset = 200 */
+ folio_zero_segment(folio, offset, folio_size(folio))
+ /* valid data [200, 3500) is zeroed */
+
+Fix this by reading i_size once and using the same value for both the
+EOF check and the zeroing offset.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20261012030315.978375-1-zhaonanzhe%40xiaomi.com
+Fixes: fbfa2cc58d53 ("f2fs: add file operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/file.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index c9a1bb07a5b32..d8965229e3e7a 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2913,7 +2913,7 @@ bool f2fs_should_update_outplace(struct inode *inode, struct f2fs_io_info *fio)
- 	 * If IO comes from compressed write path and fallback to raw write,
- 	 * force out‑place to prevent metadata‑data inconsistency.
- 	 */
--	if (f2fs_compressed_file(inode))
-+	if (fio && f2fs_compressed_file(inode))
- 		return true;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index b391ced41edda..6843c2aa67444 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -124,6 +124,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	struct dnode_of_data dn;
+ 	bool need_alloc = !f2fs_is_pinned_file(inode);
++	loff_t isize;
+ 	int err = 0;
+ 	vm_fault_t ret;
  
- 	/* swap file is migrating in aligned write mode */
+@@ -187,8 +188,14 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ 	filemap_invalidate_lock_shared(inode->i_mapping);
+ 
+ 	folio_lock(folio);
++	/*
++	 * A concurrent buffered write can extend isize, so we store isize in a
++	 * local variable to let the zeroing offset match the EOF check below.
++	 */
++	isize = i_size_read(inode);
++
+ 	if (unlikely(folio->mapping != inode->i_mapping ||
+-			folio_pos(folio) > i_size_read(inode) ||
++			folio_pos(folio) > isize ||
+ 			!folio_test_uptodate(folio))) {
+ 		folio_unlock(folio);
+ 		err = -EFAULT;
+@@ -218,11 +225,10 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
+ 	f2fs_wait_on_block_writeback(inode, dn.data_blkaddr);
+ 
+ 	/* page is wholly or partially inside EOF */
+-	if (((loff_t)(folio->index + 1) << PAGE_SHIFT) >
+-						i_size_read(inode)) {
++	if (((loff_t)(folio->index + 1) << PAGE_SHIFT) > isize) {
+ 		loff_t offset;
+ 
+-		offset = i_size_read(inode) & ~PAGE_MASK;
++		offset = isize & ~PAGE_MASK;
+ 		folio_zero_segment(folio, offset, folio_size(folio));
+ 	}
+ 	folio_mark_dirty(folio);
 -- 
 2.53.0
 
