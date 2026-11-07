@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065183;
-	b=GWlJblyfOKg3E+uLQZnj1VEYF/zSW0XHIaYGAnuBhk4fvNBYUUW/03P3Bd6jhFOR8Srs
-	 V2qs72Y5V8tn5UZ0ABHwzlXhDD57Z4xyZxOghrKhaLCeqOHP3oFstYr1c6ngO5xOb7FpN
-	 wat5DdzJAmYIQpm42MCZzXj9IJN5txf2fyuFxDN+Cbg0rdnQDdNzvzJgNtoNrlIAIYjv4
-	 FTQ8QKjeamlsm3pe59DMHNpk1uKle+SRyBTWZt2rSLcabV+qrt3Jbu5G+3y3ZxTm7TIs+
-	 NB44M2IY/dbHrzht4kZ/vojB5ks1jCWkp5v50Db1r0JZMYyP679wzmujlpY2Y2GG5iA==
+	t=1794065184;
+	b=DoMNvBlPLQ/C4jewcIdXNFrkkHY0cspsIiF7ZJLHHDW4yhXTanfkAtLkani4fWoAEsLG
+	 KG4k0u87CV2dopty+nDU9SfyJ2CnhRvO4vudgbIno7huwV/7XtxEYYhUyCkU2ruSGZuWC
+	 VKS5uwF2sDKa3hNeyVMOSNYFHI5c+m1SkEBoH1scwXMZ8+mAfIayCRFHCZ/U2bdxAPzse
+	 auD6Pd045N/2vUuGg6bjYFS0mzty62sL2uSaYDH0nc9FfrnyDLRAiRLaooc3Mczlr0i91
+	 EqxYyFCiOLxR8abt+aWNNs3sT3a8t4I2ymM8cIixCS74Z95hHphAJl8j7lh7n/yvo0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065183;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065184;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2dx9471HhKEVi0TrX9Q0bSHhMOeMqrhpkv/PqAthfkA=;
-	b=Bhv3eOAwE+f2LKcRDA/ysAGN8aUKSndlH8rsI+xRSuF5Km4d2OXKxGIbmmYK4ukjfOol
-	 j0wDxhORsVRcNjb4R1j9/s/ztEDygObo+W1xJ8+39pJ20+KhORa0zuxP8wIIrTxfDjXn4
-	 wr/WP7qRtGhNp9oRvAA/H8sHqK2kwxniSYrT/z++hckkPTSBjcKgE0FyiUIxvfXvdTA/P
-	 T8QAWMktwBoZveCKhzyodi8FYZpnVjaayzDjmpdPfLM9WwGtDH720NxnJCf23MRy5PW9G
-	 evPvz9ybzqaEwwhW6V+7jBeu79LM0dKaW3NBcldWrJETIt2pFDZUAQJ/3FuVU7Iv6/g==
+	bh=GnCjdUnoioTKJmJUBz4+Re9pousG7lKn3GzE3jd++u4=;
+	b=S/BexmTcvH4gu2Jeg7gQ+bHA88QIiSIEBvMDbrbhHrrRFWdiSwaPF6ONZZzgei1PDQyn
+	 qDAkmX5XvpMH5tg6e/VhGfUDhaT5GlbZTdI9ZZdB5i2UpXH08SFNo5YIkEk8VidgPtIPo
+	 hozOcNluuEu6g03xskBUot0KLlg7ca0qecptgwtjpAQxEC2fVvZf6bI6IV42AU1OIobmj
+	 UcGCQhA7nMa0pWneRZQjjL1c1tVwLfqF1e1X/aIWwaWLxRU4WQ+EnHW5wmVLj/bUG6AV/
+	 Y2GXevKoXXhrR3whWrPELxU/zlt+eGywf0ksE20HdmO+NVlcA9Hxc3Pq4c+JRCxBkAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyJFoylD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0r7bn7na;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC63606A32E;
-	Sat,  7 Nov 2026 15:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED8A606A33A;
+	Sat,  7 Nov 2026 15:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyJFoylD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EED1F0089F;
-	Sat,  7 Nov 2026 15:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0r7bn7na
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FFA1F0089F;
+	Sat,  7 Nov 2026 15:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065182;
-	bh=2dx9471HhKEVi0TrX9Q0bSHhMOeMqrhpkv/PqAthfkA=;
+	s=korg; t=1794065184;
+	bh=GnCjdUnoioTKJmJUBz4+Re9pousG7lKn3GzE3jd++u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FyJFoylDj6qMPZY77RSqVzBgg7cCxblgQP7nlahrXQ4xj0U7B+f9VGGjeEgcVtGy2
-	 shoDWGmaIajrYU3IxF2Uf2YGl7Nv3j++XN6mblSPeh4AcwbDYUOEdcKAZNRmISCItM
-	 1MpTXf6WxBPNy9rkz0xkTaw9UZjxyviiBx1Spa8c=
+	b=0r7bn7nalFffjT2pnUOKH8h92hR6nQJhPq2SomMK06tT/aepkDhue88vfkxb+GeF5
+	 3/ZFcTu6r2idxmqGor+PUV6CkYldvUt/butZjZMgN0eqF5dKIrKzhdcXvtaug9vxyn
+	 ZzZYqsAHmsYa7ZDBoCg/GwNRuFcmQDbfFlSDCgZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0987/1257] exfat: drain in-flight DIO before buffered writes
-Date: Sat,  7 Nov 2026 08:54:43 -0500
-Message-ID: <20261107135006.625749174@linuxfoundation.org>
+Subject: [PATCH 7.3 0988/1257] exfat: zero invalid tail on partial overwrites
+Date: Sat,  7 Nov 2026 08:54:44 -0500
+Message-ID: <20261107135006.653279281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,83 +67,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit acea17f0f4c7742118375e96d3f876be34e449a5 ]
+[ Upstream commit 748ad4ba13cd14163ed7262c6ac304c380804167 ]
 
-An asynchronous direct write can remain in flight after the inode lock is
-released. If a buffered operation dirties page cache while the direct
-write is still pending, the direct write's post-I/O invalidation can find
-the dirty pages, report a page cache invalidation failure, and record -EIO
-in the mapping error sequence. A later fsync() therefore returns -EIO.
+Buffered overwrite that ends before valid_size in the same filesystem
+block reads the entire block without IOMAP_F_ZERO_TAIL. If an existing
+cluster contains stale bytes beyond valid_size, the synchronous read
+loads them into the page cache and marks the block uptodate. Subsequent
+buffered reads can return these bytes while i_size exceeds valid_size.
 
-Commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ("ext4: drain
-in-flight DIO before buffered write fallback") fixed the same race in
-ext4. ExFAT does not drain in-flight DIO before a regular buffered write,
-the buffered fallback after iomap_dio_rw() returns -ENOTBLK or a short
-write, or the page-cache operations used to extend valid_size.
+For example, with 512-byte blocks, valid_size of 1000 and i_size of 2048,
+a cold-cache overwrite of [900, 950) exposes stale data in [1000, 1024).
+Setting ZERO_TAIL for this write would also erase valid data in
+[950, 1000).
 
-Wait for in-flight DIO before these paths can dirty page cache.
+Use iomap_truncate_page() to zero only the invalid tail at valid_size
+before preparing such buffered overwrites. Call it after dropping s_lock
+and before iomap locks the write folio. The inode lock held by buffered
+writes serializes valid_size against truncation and page_mkwrite.
 
-A reproducer using concurrent AIO direct writes and buffered fallback
-triggered the following warning and made a subsequent fsync() return
--EIO:
+Skip direct I/O, fault mappings and new allocations. Writes that reach
+valid_size continue to use IOMAP_F_ZERO_TAIL.
 
-  Page cache invalidation failure on direct I/O. Possible data corruption
-  due to collision with buffered I/O!
-
-Fixes: 867b9c96dc83 ("exfat: add iomap direct I/O support")
+Fixes: 82a81a7352bc ("exfat: add iomap buffered I/O support")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20260629113827.4074335-3-libaokun@linux.alibaba.com
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/file.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/exfat/iomap.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index 89e2fdebcc2c1..d24f0650bfc88 100644
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -706,6 +706,8 @@ static int exfat_extend_valid_size(struct inode *inode, loff_t new_valid_size)
- 	int ret = 0;
- 
- 	if (old_valid_size < new_valid_size) {
-+		inode_dio_wait(inode);
+diff --git a/fs/exfat/iomap.c b/fs/exfat/iomap.c
+index faa9b116e5528..bcb7a9214f92b 100644
+--- a/fs/exfat/iomap.c
++++ b/fs/exfat/iomap.c
+@@ -149,7 +149,27 @@ static int exfat_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+ static int exfat_write_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+ 		unsigned int flags, struct iomap *iomap, struct iomap *srcmap)
+ {
+-	return __exfat_iomap_begin(inode, offset, length, flags, iomap, true);
++	struct exfat_inode_info *ei = EXFAT_I(inode);
++	loff_t valid_size = exfat_get_valid_size(ei);
++	loff_t end;
++	int err;
 +
- 		/* Do not re-zero blocks already covered by zeroed_size. */
- 		loff_t gap_start = max(old_valid_size, exfat_get_zeroed_size(ei));
- 
-@@ -757,6 +759,8 @@ static ssize_t exfat_fallback_buffered_write(struct kiocb *iocb,
- 
- 	iocb->ki_flags &= ~IOCB_DIRECT;
- 
-+	inode_dio_wait(file_inode(iocb->ki_filp));
++	err = __exfat_iomap_begin(inode, offset, length, flags, iomap, true);
++	if (err || flags & (IOMAP_DIRECT | IOMAP_FAULT) ||
++	    iomap->flags & IOMAP_F_NEW)
++		return err;
 +
- 	written = iomap_file_buffered_write(iocb, from, &exfat_write_iomap_ops,
- 			NULL, NULL);
- 	if (written < 0)
-@@ -840,11 +844,17 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
- 		pos = valid_size;
- 	}
++	end = iomap->offset + iomap->length;
++	if (end >= valid_size ||
++	    round_up(end, i_blocksize(inode)) <= valid_size)
++		return 0;
++
++	/*
++	 * Zero the invalid bytes from valid_size to the end of the block
++	 * to prevent stale data from being exposed through the page cache.
++	 */
++	return iomap_truncate_page(inode, valid_size, NULL, &exfat_iomap_ops,
++				   NULL, NULL);
+ }
  
--	if (iocb->ki_flags & IOCB_DIRECT)
-+	if (iocb->ki_flags & IOCB_DIRECT) {
- 		ret = exfat_dio_write_iter(iocb, iter);
--	else
-+	} else {
-+		/*
-+		 * Prevent concurrent direct I/O and buffered I/O to the same file
-+		 * range. Wait for in-flight DIO to finish before dirtying pages.
-+		 */
-+		inode_dio_wait(inode);
- 		ret = iomap_file_buffered_write(iocb, iter,
- 				&exfat_write_iomap_ops, NULL, NULL);
-+	}
- 	if (ret < 0)
- 		goto unlock;
- 
+ static DEFINE_IOMAP_ITER_NEXT(exfat_iomap_next, exfat_iomap_begin);
 -- 
 2.53.0
 
