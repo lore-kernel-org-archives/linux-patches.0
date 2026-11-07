@@ -1,52 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061480;
-	b=461TWXVVQ97Q1S1v3fguk0uuCqg0j7KyUkDJe+XJjdH845Mb2c9v64c/8/sYKoOkzyGw
-	 K2ee81k8N7XHm2PsPTNxXqw6Qxg19uyBo5ANC23YLFS02o+Z7TWt+7n5PWnHwY7xq3KTV
-	 KgD11oYWAa+xJWGNV3wtoJRQNyDUQUdhagaRDsnzm/kBVupn5P1ltvXbVsNyiMmw6Z08p
-	 Oi+sOScokSRknBogtgoBPF2La6yCAgjlxQlnn0zrDusGdDbhrMpzkfCf2wnTNbm7DyQwb
-	 k/2xckvo/3l9Pee+1XZLVeaXAqxDbwiValcnFv4r1hSr6haG5geTEkCi2ER4kzjIJ1A==
+	t=1794061482;
+	b=UTMpa/U6yZSoGSjA0eGcjQmeEf6JsHVhk4H92i/7OFbKXMWxkicSpQSFgaLUITBZwBIF
+	 P6gruSYjHYK4J2H/FcnxzJPR+Nxo2yHUtheWZYnt1NvU/S5zo3qLje5x8+iN72ZMAkvM0
+	 2veFwIYv6l0DxiSbgGHskQkkwjuPl+Fdz9AtzAn2AAOSMnGzy9IOIBmHkk3PFBvvDSv3Z
+	 vc8U8XKrgkuYArtinv2Kaaq2luguNKbDCaRA1RveekWdXfmM9XdBIGNZsTBmnF4b/p5cL
+	 R3+mAyNfrjDTaBC0oDMgExRa9WSDMIp22sF5Y5y56OWLnFZglXynzVMNcZuE+6wnbjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061482;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kZeauFbO5EslmVUVVuVCJOwsSx+vygnXPzqMov0/gec=;
-	b=kYI+ckfKThtxgfkKOK7gzqntglnfdkwiKODf/kPp2Fl1TvM0zOVc7Ocu6JJS2bBb+BE1
-	 ReiQqjjXrTavA2yh4HH0WNRpkViFZhAhlIQDpIifn0uVJXsks9V7gvv4y1Bop4PTB7Xeo
-	 /Aop7h7oM3yPkv/JfBHCdbyaIaHNtkb9Ce52oCzcvlD25I07dNRovhCFqIKJ0+remmDVT
-	 Gel2y1PbWqQybBimqz5cNLX/VfOgyXTXVQSkM2unwkoAW/bzQNb1qggZD3XZpRinsG7Cw
-	 2L5W2+wYL7ohgDPOcYZYIYGSdAw9qmOfBdIdufW6HP28BaYJDrrjZfxh1gYU393p/YA==
+	bh=gHg2XMSRlDvIpLRRg3IjINZxjNRh3iuywGZwmICk8J8=;
+	b=DmUduxf1d3pUi9uxr2/s/kxXYgIb8hIi++RaQlD4ahC+IaCWgVMd80JYZdEQD0/iaS8x
+	 dXZjSf8ud9xcgV9yzpI2XD79O7qyBBTQXNrIzbjtdM8wHXAFmi8w27yTmAeNoRDkv9ah4
+	 fTUMiYXMFsteMrUwMNiTn00fkJiGhqR/An+u6X6dv77MuUJXTGo5pmvea+Nb+jBSCTPzt
+	 zGIvf7zpO6+u8i2VmkSLReInjB9TXKq1kK3adz2IRF+GBaBGNVy5Swb/EvghW9C6ZfvpD
+	 6q/XsWhciwibvbT4kSxQD+e8OhzYq4+amsS5tirl6hSY0xzkEtFac10+dol63jUx2Fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E14ECMzi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mw63PuoG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121A0606A326;
-	Sat,  7 Nov 2026 14:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD313606A326;
+	Sat,  7 Nov 2026 14:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E14ECMzi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA89E1F0089F;
-	Sat,  7 Nov 2026 14:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mw63PuoG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601AD1F0089F;
+	Sat,  7 Nov 2026 14:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061479;
-	bh=kZeauFbO5EslmVUVVuVCJOwsSx+vygnXPzqMov0/gec=;
+	s=korg; t=1794061481;
+	bh=gHg2XMSRlDvIpLRRg3IjINZxjNRh3iuywGZwmICk8J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E14ECMzi+f44/Ucz5p41B4rfUsvk318s9h5J868AOHjnXi75+/UCNU624DJs64Yp6
-	 louc4d0FYshJU0t3NuzkDRf4BC+AiEFwf6l6EOnraqamvHNxpcfkoz1xY8F/x4fRqg
-	 GSrCJDkTMM/DxcpFqdftwDWOPFQdX+jMHOppsQuw=
+	b=mw63PuoGz6Est/IOeoT/FiGSdJL8GqWJky62hSV2E51HRAqbNWBiSxvt/bC2YykOz
+	 zP6/Pt34odmwDcLMy74+Mjqp8VVt+6bXxaZKHiHdSq/4V4FmDb0iiLJo8LJqPQuqlG
+	 feZjtK+/t0hY2w6GweNbhoKjCAKeEbgt/F+2281Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Kameron Carr <kameroncarr@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.12 0577/1536] Drivers: hv: vmbus: Bounds check the shared ring buffer indices
-Date: Sat,  7 Nov 2026 08:43:13 -0500
-Message-ID: <20261107135013.766626076@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0541/1536] smb: client: flush and commit data before querying allocated ranges
+Date: Sat,  7 Nov 2026 08:42:37 -0500
+Message-ID: <20261107135012.820356525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,102 +75,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kameron Carr <kameroncarr@linux.microsoft.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 1d287c17cc5bfd6386fe0770999be410b248d021 upstream.
+[ Upstream commit aa994489bd835547c191827acc460192e147032d ]
 
-In a CoCo VM the host is untrusted. Since the VMBus ring buffer read and
-write indices live in shared memory, the guest has to treat both as
-potentially malicious.
+The mode 0 / FALLOC_FL_KEEP_SIZE fallocate emulation for small interior
+ranges in smb3_simple_fallocate_range() issues
+FSCTL_QUERY_ALLOCATED_RANGES and zero-fills any sub-range the server
+reports as an unallocated hole, to force block allocation without
+changing file contents.
 
-hv_ringbuffer_write() copies into the ring at write_index with no bounds
-checking, so the host can make the guest write packet data at any offset
-up to 4 GiB past the start of the ring buffer. read_index matters too:
-the available space derived from both indices is the only bound on how
-much is copied, and an out-of-range index can make it far larger than
-the ring.
+This is unsafe against Windows servers.  Per the Win32 documentation,
+FSCTL_QUERY_ALLOCATED_RANGES only reports ranges that *may* contain
+nonzero data and is explicitly not coherent with recently written data:
 
-The fix is to validate both indices before use and to use the validated
-snapshot instead of re-accessing. For invalid indices,
-hv_ringbuffer_write() logs and returns -EIO.
+  "a call to FSCTL_QUERY_ALLOCATED_RANGES [after writing to a network
+   file] would not necessarily return a correct list of allocated
+   regions.  To ensure coherency [...] flush the data to the file"
 
-One re-read of write_index is left unchecked in this patch:
-hv_get_ring_bufferindices() fetches it again for the prev_indices
-trailer. The value is only returned to the host and is not used as an
-offset or length for indexing. Since this is not a security issue, it is
-addressed later in the series.
+fsx (generic/363) reproduces the resulting corruption against Windows
+Server 2022: a range is written, an uncached read returns the data, yet
+the next FSCTL_QUERY_ALLOCATED_RANGES on that range reports it as a whole
+hole, so the emulation overwrites live data with zeroes.  A network trace
+confirmed the WRITE, the READ returning data and the query returning an
+empty range list within microseconds.  Samba does not exhibit this; its
+query is coherent with the written data.
 
-Open-coding the bytes available arithmetic keeps the fix free of
-prerequisites; a later patch refactors it into a helper function.
+Write back the dirty pages, drain any outstanding I/O and issue an SMB2
+FLUSH to force the server to commit the data before querying the
+allocated ranges, so the query reflects the data actually present.
 
-Fixes: 3e7ee4902fe6 ("Staging: hv: add the Hyper-V virtual bus")
-Cc: stable@vger.kernel.org # 5.15.x
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Kameron Carr <kameroncarr@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+With this, generic/363 passes against both Windows Server 2022 and Samba
+over 100000 fsx operations.
+
+Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
+[ sashal: Added a local inode variable and moved the lock release into a single out_unlock label, since buf is allocated after the query here and no out: label is needed. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/ring_buffer.c |   29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ fs/smb/client/smb2ops.c | 36 ++++++++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
---- a/drivers/hv/ring_buffer.c
-+++ b/drivers/hv/ring_buffer.c
-@@ -69,15 +69,6 @@ static void hv_signal_on_write(u32 old_w
- 	}
- }
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index f2a78aee07e3b..1a205f20e55c5 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3683,6 +3683,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 				       struct cifsFileInfo *cfile,
+ 				       loff_t off, loff_t len)
+ {
++	struct inode *inode = d_inode(cfile->dentry);
+ 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
+ 	u32 out_data_len;
+ 	char *buf = NULL;
+@@ -3690,6 +3691,24 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 	loff_t l;
+ 	int rc;
  
--/* Get the next write location for the specified ring buffer. */
--static inline u32
--hv_get_next_write_location(struct hv_ring_buffer_info *ring_info)
--{
--	u32 next = ring_info->ring_buffer->write_index;
--
--	return next;
--}
--
- /* Set the next write location for the specified ring buffer. */
- static inline void
- hv_set_next_write_location(struct hv_ring_buffer_info *ring_info,
-@@ -281,6 +272,7 @@ int hv_ringbuffer_write(struct vmbus_cha
- 	u32 totalbytes_towrite = sizeof(u64);
- 	u32 next_write_location;
- 	u32 old_write;
-+	u32 read_index;
- 	u64 prev_indices;
- 	unsigned long flags;
- 	struct hv_ring_buffer_info *outring_info = &channel->outbound;
-@@ -295,7 +287,20 @@ int hv_ringbuffer_write(struct vmbus_cha
- 
- 	spin_lock_irqsave(&outring_info->ring_lock, flags);
- 
--	bytes_avail_towrite = hv_get_bytes_to_write(outring_info);
-+	read_index = READ_ONCE(outring_info->ring_buffer->read_index);
-+	old_write = READ_ONCE(outring_info->ring_buffer->write_index);
-+	if (unlikely(read_index >= outring_info->ring_datasize ||
-+		     old_write >= outring_info->ring_datasize)) {
-+		spin_unlock_irqrestore(&outring_info->ring_lock, flags);
-+		pr_err_ratelimited("outbound ring indices out of range: relid %u read %u write %u size %u\n",
-+				   channel->offermsg.child_relid, read_index,
-+				   old_write, outring_info->ring_datasize);
-+		return -EIO;
-+	}
++	filemap_invalidate_lock(inode->i_mapping);
 +
-+	bytes_avail_towrite = old_write >= read_index ?
-+		outring_info->ring_datasize - (old_write - read_index) :
-+		read_index - old_write;
++	/*
++	 * Flush and commit the data to the server, otherwise
++	 * FSCTL_QUERY_ALLOCATED_RANGES might report recently written data as
++	 * unallocated holes on Windows Servers, and the loop below would
++	 * then zero-fill them and corrupt the file.
++	 */
++	rc = filemap_write_and_wait_range(inode->i_mapping, off,
++					  off + len - 1);
++	if (rc)
++		goto out_unlock;
++	netfs_wait_for_outstanding_io(inode);
++	rc = SMB2_flush(xid, tcon, cfile->fid.persistent_fid,
++			cfile->fid.volatile_fid);
++	if (rc)
++		goto out_unlock;
++
+ 	in_data.file_offset = cpu_to_le64(off);
+ 	in_data.length = cpu_to_le64(len);
+ 	rc = SMB2_ioctl(xid, tcon, cfile->fid.persistent_fid,
+@@ -3699,12 +3718,12 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 			1024 * sizeof(struct file_allocated_range_buffer),
+ 			(char **)&out_data, &out_data_len);
+ 	if (rc)
+-		goto out;
++		goto out_unlock;
  
- 	/*
- 	 * If there is only room for the packet, assume it is full.
-@@ -317,9 +322,7 @@ int hv_ringbuffer_write(struct vmbus_cha
- 	channel->out_full_flag = false;
+ 	buf = kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE), GFP_KERNEL);
+ 	if (buf == NULL) {
+ 		rc = -ENOMEM;
+-		goto out;
++		goto out_unlock;
+ 	}
  
- 	/* Write to the ring buffer */
--	next_write_location = hv_get_next_write_location(outring_info);
--
--	old_write = next_write_location;
-+	next_write_location = old_write;
+ 	tmp_data = out_data;
+@@ -3715,12 +3734,12 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 		if (out_data_len == 0) {
+ 			rc = smb3_simple_fallocate_write_range(xid, tcon,
+ 					       cfile, off, len, buf);
+-			goto out;
++			goto out_unlock;
+ 		}
  
- 	for (i = 0; i < kv_count; i++) {
- 		next_write_location = hv_copyto_ringbuffer(outring_info,
+ 		if (out_data_len < sizeof(struct file_allocated_range_buffer)) {
+ 			rc = -EINVAL;
+-			goto out;
++			goto out_unlock;
+ 		}
+ 
+ 		range_start = le64_to_cpu(tmp_data->file_offset);
+@@ -3728,7 +3747,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 		if (check_add_overflow(range_start, range_len, &range_end) ||
+ 		    range_end > S64_MAX) {
+ 			rc = -EINVAL;
+-			goto out;
++			goto out_unlock;
+ 		}
+ 
+ 		if (off < range_start) {
+@@ -3743,11 +3762,11 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 			rc = smb3_simple_fallocate_write_range(xid, tcon,
+ 					       cfile, off, l, buf);
+ 			if (rc)
+-				goto out;
++				goto out_unlock;
+ 			off = off + l;
+ 			len = len - l;
+ 			if (len == 0)
+-				goto out;
++				goto out_unlock;
+ 		}
+ 		/*
+ 		 * We are at a section of allocated data, just skip forward
+@@ -3766,7 +3785,8 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 		out_data_len -= sizeof(struct file_allocated_range_buffer);
+ 	}
+ 
+- out:
++ out_unlock:
++	filemap_invalidate_unlock(inode->i_mapping);
+ 	kfree(out_data);
+ 	kvfree(buf);
+ 	return rc;
+-- 
+2.53.0
+
 
 
