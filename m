@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063615;
-	b=yFvG+YDgXmDpJeJJ/2m0m0DVqAAHGFYy5sQvwycTjUj4ry+/zShh6SHc0BOWZAKPpp8j
-	 xmTwbaTOJPBWdZ02f4VmYPgIDfLqNtlRfWG42PlScDXBvTkY/pR8g+vgRWZY5SCxZxHQg
-	 O0amwS0JPcen0iB586QkJmfl6m1EBssy0UdU52J4GPbw36Ee2VWVkCBJHsd6SB0DegHld
-	 DLU8H+foOnwzsXUIjGpazsAJb9LqqH5+VocFbnzE+QfTzerNmi3rd2Gd9lvSHUpD4x5MN
-	 hJ0Bgm6HRa3F+7q7JuqVUvZJR/rZe0TFpSCzWt1DPS7ga1LYG8CgLoYPKQXt6FFnTew==
+	t=1794063616;
+	b=sm7kLWdsYR4gXk4q0KFhOY4hEKcJVAIRioX2v3ZnCtCpwnDH8F5OlYre7fUfztsq6sRE
+	 qfngH+ugmZijj0fZoHoPulFDoBySO7hm+BCgwz8cemwWtyV/x9gluwzy/rrrEeRnm7LSQ
+	 4fP5aIQ7gtGrupRWYm1EdlXmIvb4T40azVcF+tD3gh88e19Bw9wLd48fuDBUejtyKKN7W
+	 +bwBBLr4GpsA+iVNqphJX47aw3v5A1PxBTeYa9d649AIrO7j6Iy1B1F05JKXcYJKOCY6s
+	 d/hP2sEJl6r2yxgdvfVTS59oz/ob/VvikQlM8akzqyaVrgShsx2q7DRFJq/U7tkdcCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063616;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GjxCNClJQejwtDtWzzPDCt2l1yH0YdoyVedIuAqWZm4=;
-	b=1bvmbWoDaUIfRm2C16k8ME/zqa94fx1mlcjSIEklHc6oN7p3PJaszNvHydMAjOMHvVkP
-	 5UogxJSwWIi9JMmA35aGNdrRtHSvixwWzlzApL/4EA5o4pAZx8zv0DMRz+jX8MMl7ae40
-	 4d4s9dTecXqaZS031TxGgrYR/SdxbR+IQfu3EA0sHJNEkMdCxu0HT9EUertoLoTaeecd1
-	 dG191muevBfevBx6BdyvWj2SCEgdA1Ki+/SuC4nifRlt2EN3jWywX7mrKe837EoLOTyGB
-	 1WevcJpbI+s2toOflCGjNazVtaD+WcDVsr16ySPK+z9NTytbB13vyV83LBKOZjulXLg==
+	bh=EuwknmXehDX1nw6S2UH1y2kRkut7NWv6kwgTSN83SIE=;
+	b=tSaPm/t0eR4222PNixElPnFycC8cL52YS449R2R0PO8icL766BgRJhOoYEg89mhr48Os
+	 Q7OGlcRj/Q3HK0jx55E133kSnSZutj4Eaqc4WjJN9VQx9bQ+0iTc9YjkT+0GaLpN6Haf4
+	 H4ITFLoVKiWHKYlxf4qAw5ni3UCHCYscEyL43+0HAzJLwJlbSoT2zXTlwBp9WwIAvxWek
+	 i3rH5fKFxysdMQcam5uNNKauUMiibBLEE58X9gi6bgTv2HSiBaE6zpZJLlBwEkZPfkPrL
+	 gVfhH+LIBN72/FbmjnX//nx+zRq+gqMVUOnmR/nIk1ag7TgIJ7k26k1OgDP8d4CiHYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ETH5iIG4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zM43aaSR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A186082BE2;
-	Sat,  7 Nov 2026 15:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FEC6082BEA;
+	Sat,  7 Nov 2026 15:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ETH5iIG4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67701F0089F;
-	Sat,  7 Nov 2026 15:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zM43aaSR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DAE1F0089F;
+	Sat,  7 Nov 2026 15:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063614;
-	bh=GjxCNClJQejwtDtWzzPDCt2l1yH0YdoyVedIuAqWZm4=;
+	s=korg; t=1794063616;
+	bh=EuwknmXehDX1nw6S2UH1y2kRkut7NWv6kwgTSN83SIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ETH5iIG4PZJVvi3bI2GH0fNxeOp2MoSUIrJf+xSgPNrxy2Dmwc/4a2llJbX6y4IZD
-	 1+al37D7intLp1NWdkudnULXCsfCRpQRFXnsZeOeSJUGd8qRbvhCVDn+TVr9XTcuhP
-	 B+8MANChPc8kk6NSJeMF9qelkmPyJ65s5oHZV12k=
+	b=zM43aaSRfBTcUImUHsNUF8NpbUuJzlQysrBOrBew84j22mTGl62HMqqbCpYStXYUM
+	 kBSqlWw9wzTlBkZ44A+M4+yZua8zblFmhWEW0jCesSchEfvdlz/GMfTgGCKQXPwZJ+
+	 SEu1o1KRcmFnfNwIkL1gYMiuagD7LJZrvSR5gMXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Jhu <stanleyjhu@google.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bean Huo <beanhuo@micron.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 736/869] scsi: ufs: core: Remove completed-without-interrupt path in ufshcd_abort()
-Date: Sat,  7 Nov 2026 08:56:58 -0500
-Message-ID: <20261107134917.788781875@linuxfoundation.org>
+Subject: [PATCH 6.18 737/869] compat: avoid double rounding in times()
+Date: Sat,  7 Nov 2026 08:56:59 -0500
+Message-ID: <20261107134917.818132631@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -71,67 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Jhu <stanleyjhu@google.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 7cfdfdd6557906fd09cf0a9a564a07012e7fb0c1 ]
+[ Upstream commit 6b30c39a5e333cfb1475acf0f73de6ef954eea8a ]
 
-In SDB mode, a command that times out right as the controller finishes it
-can be completed twice:
+do_sys_times() already converts CPU time to USER_HZ ticks.  The compat
+path converts each value back to jiffies before converting it to
+COMPAT_USER_HZ.  This round trip can lose precision even when the two
+userspace rates match.
 
- 1. The command times out and scsi_timeout() schedules ufshcd_abort().
+With HZ=250 and USER_HZ=COMPAT_USER_HZ=100, one user tick becomes two
+jiffies and then zero compat ticks.  Every odd tick count loses one tick,
+so any of the four tms fields can underreport CPU time by an additional 10
+ms.
 
- 2. The controller finishes the command and clears its doorbell bit in
-    REG_UTP_TRANSFER_REQ_DOOR_BELL, while the completion handler has not
-    yet cleared BIT(tag) in hba->outstanding_reqs.
+Return the value directly when the native and compat units match.  Keep
+the existing conversion for differing rates.
 
- 3. ufshcd_abort() sees the doorbell bit clear and calls
-    __ufshcd_transfer_req_compl() without clearing BIT(tag) in
-    hba->outstanding_reqs.
-
- 4. The normal completion handler or the logical unit reset that follows
-    sees BIT(tag) still set in hba->outstanding_reqs and completes the same
-    command a second time.
-
-This branch only exists for a rare corner case, a completion interrupt that
-is lost or arrives late. Remove it to simplify the abort path and leave
-such a command to the SCSI error handler, like any other command that
-cannot be aborted. The cost is a slower recovery in this corner case, which
-is acceptable since it only happens after a timeout.
-
-Fixes: 169f5eb28869 ("scsi: ufs: Optimize SCSI command processing")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/fdb5c391-01ef-4a23-94c2-4f3853909348@acm.org
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261022034443.3034432-6-stanleyjhu@google.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Link: https://lore.kernel.org/20261020210157.52057-1-dennylin0707@gmail.com
+Fixes: f06febc96ba8 ("timers: fix itimer/many thread hang")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Thomas Gleixner <tglx@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ kernel/sys.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index b3dbfd3552dc4..97f86b6905b56 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -7777,15 +7777,6 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
- 	}
- 	hba->req_abort_count++;
+diff --git a/kernel/sys.c b/kernel/sys.c
+index c8376d7a0741b..bc89bd1331119 100644
+--- a/kernel/sys.c
++++ b/kernel/sys.c
+@@ -1077,6 +1077,9 @@ SYSCALL_DEFINE1(times, struct tms __user *, tbuf)
+ #ifdef CONFIG_COMPAT
+ static compat_clock_t clock_t_to_compat_clock_t(clock_t x)
+ {
++	if (USER_HZ == COMPAT_USER_HZ)
++		return x;
++
+ 	return compat_jiffies_to_clock_t(clock_t_to_jiffies(x));
+ }
  
--	if (!hba->mcq_enabled && !(reg & (1 << tag))) {
--		/* only execute this code in single doorbell mode */
--		dev_err(hba->dev,
--		"%s: cmd was completed, but without a notifying intr, tag = %d",
--		__func__, tag);
--		__ufshcd_transfer_req_compl(hba, 1UL << tag);
--		goto release;
--	}
--
- 	/*
- 	 * Task abort to the device W-LUN is illegal. When this command
- 	 * will fail, due to spec violation, scsi err handling next step
 -- 
 2.53.0
 
