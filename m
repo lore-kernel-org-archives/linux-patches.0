@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1794061073;
-	b=Xdi3eqJdHxx87MdY/JlsvYg4Am89Hx08a8VwIfnm5zZ/0cZvvhBPfJY2ZvG9B9R6kdZn
-	 aVjTsljxRtEEFUussU2VrXQ4/N9/C+rDzWUPLDd0HQUx2eXOaIgN4shTbMwezzvEXLu7d
-	 xT9lUpPeYPNA0UGBKwQHD1UKSm5qlcWNyARs8d+e51LFFRG6kiXyPeaHP9FiXoW7xR3Jf
-	 L+pw4reO6gJKsHL27OYaCTR9RXjK+h1zNuM3h/eVM63PAepLp2uqqiuMkgQWQif/kX74Y
-	 XE97c0z6a/7ZcP9xL6LtuwiRU2onjlMHOKne892XI2LFlkSEStLnw32zgrpj+SyrZYw==
+	b=VdRF2sWnq7YdkMHz0+kCJu+Aci9d5mXxON9l7N55fEfWDAFoHyvKNlNf15fx2Xqhtln0
+	 u6grqWTu2p8+Rsa9wVX8vmiqt+AcefzmE5GTPcPIQ7eRIwohclYJVMOXjk+Gaww8V5io2
+	 lgfPyH9N6KUAiQ/Iad0k/TGzJx5uKH3IqznuDHnApIVMYhg+6YZivMwYjbx4BNSQ7xeux
+	 sfZwGS0nJm/iyOAPUQ0/rucAc/UFLRcG00Y9/Tt5rSGozCVD3v+Cn8U3w5eWC4/h21liH
+	 zXI+LqISQaJWArtlAZuTDWSswnZECwH2954hjsDIQM1A0aUS7RL740o9LIWh3uFZBYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794061073;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V/byLz1wPodOf2azukHDgZ8q6TzmJj95DXWy/c5AoFY=;
-	b=VXw7INCVYuXGk2SiLR/N5LbM99sUfpfA2f+vR51XSZMqvBCXpe1PZVkCwo99rIS4eNod
-	 6kE7sTfuiaD3d8pZWO5cU2p5PhMLcd1dWcQkqyZOjId+89zIYSTaCjzZaBpFeislwg2tn
-	 HnXYwVGaa8uxi6VTnGpl4ry9MK8bjT2mIP0hrrPi5PqMQBhkbW+hCtX4DTK8CuYaEzVQe
-	 4S9PLCoXGqtwI6he/giACedBtIiWq9XfdgWeKO54Qa4aNl/04lITRfrgpBcAAA4x/VT2C
-	 KyJefTJCxtitDmK8k65Ue7gYcwcBu1flVRsCDWHYqmm3Egn+olf3fAmQaGppOfj36Vg==
+	bh=aiIBHQw/BQ8iBNWjoQpSeqETwq+rbwSlye0+md8cFik=;
+	b=vg9veS9GcdEn8ApHUtDBKqcwJEn293N+7dh7zMo77x0YNJfbwHG/YW8rt/enWalWVOim
+	 LaVbWB6oyyZFoO/NAqiVLgHxRrTuCa2dAn56Mc9R2rNcP+NBh8P43fRFsqPkwhjykyPQ4
+	 1cnMUTMpxXH5rGnacaEi76WyI7zqxV0vmnaOr6hf9ELtsi5LzXKlCy5HegFwOvM11iB2/
+	 zc7Ra7Iyl7G6/nSFVT9TCFSaJU3pnKIGDp/W/vvckWJCtL6MB6Ae3oS7xbYtm+N0DglXa
+	 1OzRiJITcBaCVeomsck/9094DGmhUvuE65p//pHhlleaL3nzGX+g/2pHO7h9/+wIs7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBAULcLt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAaJhZTI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0D1606D80D;
-	Sat,  7 Nov 2026 14:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C3A606D80C;
+	Sat,  7 Nov 2026 14:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pBAULcLt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FED1F0089F;
-	Sat,  7 Nov 2026 14:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAaJhZTI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27051F008A3;
+	Sat,  7 Nov 2026 14:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061071;
-	bh=V/byLz1wPodOf2azukHDgZ8q6TzmJj95DXWy/c5AoFY=;
+	s=korg; t=1794061072;
+	bh=aiIBHQw/BQ8iBNWjoQpSeqETwq+rbwSlye0+md8cFik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pBAULcLtcbnuK/0kbJ8NjDK2VUGlINu/nbiQumuhYbA9McMZh2D8jYzrxW+Uv/Lo+
-	 +7Mf+HVFBK7ehDR2eiE/Vu1MlgPpmq/2A1gw7bIPA3/K27X0ndo8woSZLSfT82LnlP
-	 Wd2hz1KbhWhPDNeOWYYy27nqSuJPpfBXVPAZPmR0=
+	b=uAaJhZTIltd2/8MdkJS702/inH+bujx3bFxO5S5hLGuY6hSsYhyEkc2MN6BB75yLH
+	 8zOsg+ZoULMqjvH47BS65XqagpDLmieO+9JdcSLWKSFoSW79AoTqXplaM14nU8EaY8
+	 8Y9IR9pEwAUgJ8o3yqSo92cenhS20VrTX0+bhfl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Song <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Robert Leussler <robert.leussler@leica-geosystems.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0398/1536] ALSA: hda/conexant: Always enable the headset-mic pin on plugin
-Date: Sat,  7 Nov 2026 08:40:14 -0500
-Message-ID: <20261107135008.769535667@linuxfoundation.org>
+Subject: [PATCH 6.12 0372/1536] rtc: ds1307: fix RX8130 wakeup alarm WADA bit for day-of-month mode
+Date: Sat,  7 Nov 2026 08:39:48 -0500
+Message-ID: <20261107135008.090852234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,53 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: Robert Leussler <robert.leussler@leica-geosystems.com>
 
-[ Upstream commit 9642a5e843758686e02a7f0d1df9eb0f7f96603c ]
+[ Upstream commit 878d93aaa596a861dbc8d71f7c38e62a2e805f01 ]
 
-Rename the function to cx_process_headset_detect_plug_type() to reflect
-that it only reports the detected plug type, and move the pin control
-write into cx_update_headset_mic_vref() so that node 0x19 is always set
-to enable the headset mic with the 80% VREF whenever the mic is
-present, regardless of the type detection result.
+The RX8130 wakeup alarm never fired when set via
+/sys/class/rtc/rtc0/wakealarm. The root cause is that the WADA bit
+(bit 3) in the Extension register (0x1c) was never set before
+programming the alarm registers.
 
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260826115344.2128835-1-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Per the RX8130 datasheet:
+WADA=0 - Week alarm: register 0x19 is compared against day-of-week
+WADA=1 - Day alarm:  register 0x19 is compared against day-of-month
+
+rx8130_set_alarm() always writes a BCD day-of-month value to alarm
+register 0x19, so WADA must be 1. With WADA=0 the hardware matched the
+day-of-month value (e.g. 15) as a day-of-week index, which is always
+out of range (valid weekdays are 0-6), so the alarm interrupt was never
+asserted.
+
+Fix by setting the WADA bit in rx8130_set_alarm() before writing the
+Extension register back to the device.
+
+This is consistent with rx8130_read_alarm(), which decodes the same
+register under the same assumption (24-hour and day-of-month mode).
+
+Signed-off-by: Robert Leussler <robert.leussler@leica-geosystems.com>
+Link: https://patch.msgid.link/20260721081907.3518648-1-robert.leussler@leica-geosystems.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/rtc/rtc-ds1307.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index 6b688832d71d4..4e72ddde7165e 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -213,7 +213,7 @@ static void cx_auto_free(struct hda_codec *codec)
- 	snd_hda_gen_free(codec);
- }
+diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
+index 858c29494f5f5..0b32e94f4fe51 100644
+--- a/drivers/rtc/rtc-ds1307.c
++++ b/drivers/rtc/rtc-ds1307.c
+@@ -662,7 +662,7 @@ static int rx8130_set_alarm(struct device *dev, struct rtc_wkalrm *t)
+ 	if (ret < 0)
+ 		return ret;
  
--static void cx_process_headset_plugin(struct hda_codec *codec)
-+static void cx_process_headset_detect_plug_type(struct hda_codec *codec)
- {
- 	unsigned int val;
- 	unsigned int count = 0;
-@@ -249,10 +249,12 @@ static void cx_update_headset_mic_vref(struct hda_codec *codec, struct hda_jack_
- 	 * Check hp&mic tag to process headset plugin & plugout.
- 	 */
- 	mic_present = snd_hda_codec_read(codec, 0x19, 0, AC_VERB_GET_PIN_SENSE, 0x0);
--	if (!(mic_present & AC_PINSENSE_PRESENCE)) /* mic plugout */
-+	if (!(mic_present & AC_PINSENSE_PRESENCE)) { /* mic plugout */
- 		snd_hda_codec_write(codec, 0x19, 0, AC_VERB_SET_PIN_WIDGET_CONTROL, 0x20);
--	else
--		cx_process_headset_plugin(codec);
-+	} else {
-+		cx_process_headset_detect_plug_type(codec);
-+		snd_hda_codec_write(codec, 0x19, 0, AC_VERB_SET_PIN_WIDGET_CONTROL, 0x24);
-+	}
- }
+-	ctl[0] &= RX8130_REG_EXTENSION_WADA;
++	ctl[0] |= RX8130_REG_EXTENSION_WADA;
+ 	ctl[1] &= ~RX8130_REG_FLAG_AF;
+ 	ctl[2] &= ~RX8130_REG_CONTROL0_AIE;
  
- static int cx_auto_suspend(struct hda_codec *codec)
 -- 
 2.53.0
 
