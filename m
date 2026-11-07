@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063502;
-	b=h9eXSmp9rNdIxsKgRhMjBY3ip0r9+vXNLU2mJ3+Vpag4/P1w3hzypwx6+qjzm18t/oal
-	 E5OgVnuvES6cbuuu4OzzGICkvx6lOyZHn8aPppZ+bqfTbU0+/fJvNbs8XYr43sJfvEvef
-	 DKRMiocQ2voCkD4S/n37j6arCVya/2TfyaNpOvvsrm7gqey+Gx63aL/DmzpK15LqMtvqK
-	 RP7AHsnYF4iRLt3zis5xTI7NCQ0TVOEGGd/Bu9egZYrO4eiVuhV9uGbUa2W5ZXbgy1jYJ
-	 vURuA0Z1MRz60wj6oEpid9JqeV7IFBxvzyLeYeEvtNT+OYp+QMasqik8LOsUnLbRWhA==
+	t=1794063503;
+	b=D1gfoDoPs9AE8s0u5d6eSJys7mjmo03HhDBgXnb+wXtTyqc+yG5IMJCQeAzUYXHbfiyM
+	 FB6IcCKS4bBvVR0w/q373dhVV5YpsKCOes5rzKpAKv5DftERJ1BQ6tmH6Pzn3+c/Y+tvN
+	 o3Vat65+cJPp/Ue8JxLNQ+GhvcQs9XwiaTIBE8uMZUd2U2Yu1IJ6FadtBZskE4PVZkZ5B
+	 ZbTVqtrTy7SlO42y6Dd14QGxE1ozhpw7exMcKN8UmwF3pyVh+UafSfZ8vGka384xdXerf
+	 Byt9Xw850XL9Mk4Lbe2ukHGUgbr5di3mL2gRvV0fHpMx2hm7K9B3NKzmdi+kKJWUK+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063502;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063503;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=knJ00KqCfpfP/Wk0jbRY9if4jj3c6dkS0dFHqI82zEA=;
-	b=yV9hznMli3yZ23Py8GovkgMSjJm812q9NChtDDsXIUPSjKjhjlTu/TfJpdfiufZ9yej9
-	 1aRe/zYk1ihtXUX2tPp24cbwfgCtAmB8ZLXp+Z1sLrS3Kqp2GWvrOw673S0+el6l1BLYF
-	 lep6hB+CDU6yNHp37k5LBxEB8Alo48JsdV6Tb2pNmS9v/sHrIMrQEIWBYqrO5297suXBz
-	 pqnWnJ3oFQcwV77bVTEGCt3v5TK5r+cjO+spe0jdpL+MPbERKxa01Ssp1DjD4gyVaY01i
-	 WCC+3rIVElmS9Yhg/DKj8GorwQqbravu8DMuevcASrU1YZ14YjElIY2A3rsr7kARX/w==
+	bh=GFKWwiSZHP72k86nakMT6XfsSi5OJO2+/KxDn72LBEg=;
+	b=hPZXTJU7yLr9ld0odclcP6ptgpDml5f2rAHUZPFgDVho8VdO2DQUnwNwxzLWXYnvVrwu
+	 of+XbvixW1itigKMkLM8QP2lyJEzGJJFRmm/OVctzs5IW9KGZttdNgn37BVRn7SAmxX6d
+	 nbIVuGYPurzNM1wlngcJvJh1KbCCmxz6FxOu+cxOX5vQmbYiLIP8ocAuuuYVWuhSzRe0o
+	 mzX7r5MDu4nTJUDWITFBw6VfnbcuY5qSw8JwyzddnsmfI6Z6/Wa2AFFXq4Vm3yU+zJjYy
+	 1cN2nE4BsRgBgv799P32t+kge0Q+HNtfBHWFmZzbdPf+POWo6coM0CmfUfmsEAgqvgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJzhoOks;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4GBx9gK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD68E606B89F;
-	Sat,  7 Nov 2026 14:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20528606A338;
+	Sat,  7 Nov 2026 14:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJzhoOks
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692401F008A5;
-	Sat,  7 Nov 2026 14:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4GBx9gK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF56B1F008A2;
+	Sat,  7 Nov 2026 14:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063501;
-	bh=knJ00KqCfpfP/Wk0jbRY9if4jj3c6dkS0dFHqI82zEA=;
+	s=korg; t=1794063503;
+	bh=GFKWwiSZHP72k86nakMT6XfsSi5OJO2+/KxDn72LBEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJzhoOksIwyDphoXQdOwdzRj+KEUjbFnwPqgIzOlZLDDrLRRiif9Fghp6liUy3oeD
-	 wYU/nxgT5hdvU52R2nUxY7QlDzhTeDzuciM8XYIzF1b7cKDHQscrVrYarLTAhhjfRX
-	 0XaeCfG0+BOqzhv6FehQDtyWRmh2CG/34DzIYRvE=
+	b=f4GBx9gKo71VonT8HzRRnKMk4ot81z1yojZw2XfKTDhVVNkH+hgctJbyA6zJ3BTwv
+	 Akoe1p8JWRIN+Vs2ITL2qqda3MeoMA2PNXMfa8xLZTxWxliwwQfRPV0X9e5fVwhE07
+	 CoYWtNwkAWgjMOtxk0kdo4Cjqc+j80bQ61/GiAD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianyun Gao <jianyungao89@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 598/869] dax: Return errors from dax_core_init()
-Date: Sat,  7 Nov 2026 08:54:40 -0500
-Message-ID: <20261107134913.351156912@linuxfoundation.org>
+Subject: [PATCH 6.18 640/869] lib/buildid: reject file offsets that do not fit in pgoff_t
+Date: Sat,  7 Nov 2026 08:55:22 -0500
+Message-ID: <20261107134914.618286150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,47 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianyun Gao <jianyungao89@gmail.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 4da700e2cadf84a6e858391d5be51d64dcba080f ]
+[ Upstream commit 0007654a7bf13ef2a19afd398bbc6507087f19fd ]
 
-dax_core_init() returns success when either the character device
-number allocation or DAX bus registration fails, even though the
-error paths have already released the initialized resources.
+On a 32-bit kernel, parsing the build ID of a crafted ELF file can copy
+far more than the intended bytes into a 64-byte on-stack buffer in
+__build_id_parse(), corrupting the stack of whatever context fetches the
+build ID.  This might be reachable without privilege: perf records a build ID
+for PERF_RECORD_MMAP2 on the no-fault path when a process mmaps its own file
+(build_id_parse_nofault() from perf_event_mmap()), and BPF build-id stack
+maps do the same.
 
-For modular DAX, this allows the module to remain loaded despite
-failed initialization, leaving subsequent users and module removal
-to access resources that have already been released.
+freader_get_folio() turns a 64-bit file offset into a page cache index
+with file_off >> PAGE_SHIFT and passes it to filemap_get_folio().
+pgoff_t is unsigned long, 32-bit on a 32-bit kernel, so an ELF64 e_phoff
+of 2^44 + k * PAGE_SIZE truncates to index k.  filemap_get_folio()
+returns the cached folio at index k, whose folio_pos() is far below the
+requested file_off.  In freader_fetch() the folio does not contain
+file_off, so the "crossing folio boundaries" path computes
+part_sz = folio_off + folio_sz - file_off as a large u64 (file_off is
+much larger), and the following memcpy() truncates it to size_t and
+copies a page into the 64-byte buffer.  On a 64-bit kernel the index is
+not truncated, the folio is not cached and the fetch returns -EFAULT, so
+only 32-bit kernels are affected.
 
-Return the error code from the failed operation so that module
-loading fails rather than reporting successful initialization
-after the resources have been released.
+Reject a file offset that cannot be represented as a page cache index
+before the lookup, so such a file fails the build ID parse cleanly as it
+already does on 64-bit.
 
-Fixes: 9567da0b408a ("device-dax: Introduce bus + driver model")
+Reproduced on i386 under QEMU with CONFIG_STACKPROTECTOR_STRONG: mmapping
+a crafted ELF (ELFCLASS64, e_phoff = 2^44) while a perf event with
+attr.build_id is open panics with "stack-protector: Kernel stack is
+corrupted in: __build_id_parse"; with this patch the parse returns
+-EFAULT and the mmap completes cleanly.  Built for i386 with W=1, no new
+warnings.
+
+Fixes: de3ec364c3c3 ("lib/buildid: add single folio-based file reader abstraction")
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20261012151857.22534-1-jianyungao89@gmail.com
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/buildid.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/dax/super.c b/drivers/dax/super.c
-index efa5f61860190..9b46166fd2148 100644
---- a/drivers/dax/super.c
-+++ b/drivers/dax/super.c
-@@ -601,7 +601,7 @@ static int __init dax_core_init(void)
- 	unregister_chrdev_region(dax_devt, MINORMASK+1);
- err_chrdev:
- 	dax_fs_exit();
--	return 0;
-+	return rc;
- }
+diff --git a/lib/buildid.c b/lib/buildid.c
+index ef112a7084ef1..015a1f9d2b48b 100644
+--- a/lib/buildid.c
++++ b/lib/buildid.c
+@@ -66,6 +66,10 @@ static int freader_get_folio(struct freader *r, loff_t file_off)
  
- static void __exit dax_core_exit(void)
+ 	freader_put_folio(r);
+ 
++	/* the page index must fit in pgoff_t */
++	if (file_off < 0 || file_off > MAX_LFS_FILESIZE)
++		return -EFAULT;
++
+ 	/* only use page cache lookup - fail if not already cached */
+ 	r->folio = filemap_get_folio(r->file->f_mapping, file_off >> PAGE_SHIFT);
+ 
 -- 
 2.53.0
 
