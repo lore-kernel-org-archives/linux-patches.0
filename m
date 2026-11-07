@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061869;
-	b=01U0nQwmuLez/SOffmX2sMHBvCS3uqptHSNlVKf2kehY4HI3Zn4OHz0jNjSyxljnid7I
-	 fM7Fm+HIYZqzqlKYd9qVoK1L7eGhk1zXuwuoE1wclVMUFohempUf88Ziesw4X7Kz7uZji
-	 oxktjNCFYrCYC07Cl5kzmUkPGSSPBBOnti8TzVBicPssICLK+zhtH5wFdT2iZv6uUtd1V
-	 9epSw6vZhvZlg91lnAdfoakBzW0iqPZC91qmy9bcBz2hxqm/On22/VhkOR6+lODdJe+yt
-	 pg+Gp0CYTkbiKsxNQSAQkQTm7uwkWQDOYLWs9fLM6QVRAHWN3rDUfHwIOlplhcOtgNw==
+	t=1794061870;
+	b=g25AOhcbLfzXNHo8/0EvRucsZhWr0Sw4Taf5GBjx3Z2R0z2aMWdo1lW7/c87AvRavwDU
+	 tIbZPYH38odLRZkn+dJn7fnmXTs/X+B9KiuiOckQwLRFGtiC5gwdpR5qJtbHxLOvrW+88
+	 qHVLlxqOAjFkw2ilUoSSr2zq3ZCsLg2shWVAntuxEG/tgUUL4VdJK15NOHAxO/8p8yZVE
+	 mfdgIN2Td0hZjkrn0+RJmStwLcgddha9y9drUzaB3Dz1J84RRWEb6ArYPGlkyrDVG+YQs
+	 LhXmbv3xT/ADlZncMHk4/GJYFSrLFPZ+ViiwDomhgfhjpnpexNGLp9mMpRpJ4vbEVvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061869;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061870;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iXCqEoJBzmE812vnjyLqUPM1jF8HXQNv74uBBchbauE=;
-	b=uCSd17H/zmzTT3g8SlJ0powsT7BSfXPkWnG67qj2OXZ8+yJuRbrLx8vEpj6CWgRVE4DL
-	 eDQCrCFTdJvK0xM2slZSAeNdQFQ6XBEWfrMqnwoXRYlWEGR8frWKBzYPA67+/6ucRkS5q
-	 3GDngT1ljnxKcplzzejm3YtyVaQM8t6/0gUiQ8Ir8tpIyZSCAeERiyYJa9XpYeGTbD+AJ
-	 8MCk63x51YDcUxkrfHZprdZNQKzN/XSepDir/3NrXUqnNI3yIngc1VrcgOzJFHs7GNMwI
-	 LrGjllwd6tglqM4W2KAk/q55x9i8mO3t/EsO04HgyAP+86up1wboIXjx7ykDrFYMfJw==
+	bh=/YH2+vlv0GQWOBIvlaM1gpz0YUzJrhXVVMdDwsFhBb4=;
+	b=jNjyLpQR0fb6geC8K8CsbbzCMeyJ2tyGjJrTU8VeFvrx3Gm+nr40p8soX88XNflCpGKt
+	 v4qyD+6kNz8P+Bqvq8Ett3t6cFfFzStHqn2Du1zoF3JUab0Qsk9nVfbNt2mDZmnEp7do/
+	 gllqRGa9ewkFR3DQ/XoOMyplCrQXal37FAu/Mw5/TpRkioHkcWU3kVtE6NXOnSupOwFNZ
+	 k1F/tHuEGF6zOH1I4KIRVXqaezNpg0+IbYmT5LoB7UCCun0CM2sFz8yvCqIqXdxNBHEiN
+	 r8gBlQ0e1flb8CRu7w70nh5sE02aEBUSRSRu3NwyC44X9jpYrWGOs3eXeDbt0e8BuVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e0ZERGeF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vBGuTpzW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B99606A32D;
-	Sat,  7 Nov 2026 14:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAAC606A32E;
+	Sat,  7 Nov 2026 14:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e0ZERGeF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27F31F0089F;
-	Sat,  7 Nov 2026 14:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vBGuTpzW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2811F0089F;
+	Sat,  7 Nov 2026 14:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061869;
-	bh=iXCqEoJBzmE812vnjyLqUPM1jF8HXQNv74uBBchbauE=;
+	s=korg; t=1794061870;
+	bh=/YH2+vlv0GQWOBIvlaM1gpz0YUzJrhXVVMdDwsFhBb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e0ZERGeFDnvpLNCGGSPmmwRvjhc8FaQKrGrMreVxfhei29RTlZFjrPILnCPHNKXEh
-	 CpAHEkNuSa/Pw3KaqhOeGyGNTY9aNvEP2acgC55CtqOLn7QvQR3l/d+Zrc2AkpEAlb
-	 iibbaSra1g6fX8l+gmxqWmw+Olz7p7WBhL9GOgeg=
+	b=vBGuTpzWkwmB7UfBWJcQtJcyv8AfV+flw5vQfidM5dez19pe+4oWykXbETUPfmB6H
+	 zkQ3estl81HpufkBg0IEzSsZY078svLv9ikGukJjJgMJvLmhZIJbya1dxuyarU1vyQ
+	 9kYoHNOEwJ/FEX1Z5NAXB6yTXSanVfI+m3z+1J34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Lenehan <lenehan@twibble.org>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0884/1536] scsi: dc395x: sync the waiting_timer before freeing the host
-Date: Sat,  7 Nov 2026 08:48:20 -0500
-Message-ID: <20261107135022.455213731@linuxfoundation.org>
+Subject: [PATCH 6.12 0885/1536] media: rc: Fix race between bpf(BPG_PROG_ATTACH) and device unregister
+Date: Sat,  7 Nov 2026 08:48:21 -0500
+Message-ID: <20261107135022.482465087@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,65 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 0b1a79f2791a06f139dce5450e487307cf0e241f ]
+[ Upstream commit b3f5daf3222999d3f92f606a4eb5e35ab90fd0e4 ]
 
-The waiting_timer callback re-arms itself and takes the host lock.
-adapter_uninit() currently stops it with timer_delete(), which does not
-wait for a callback already running on another CPU. The final
-scsi_host_put() that frees the host (and the host lock the callback
-dereferences) runs right after adapter_uninit(), so a concurrent or just
-re-armed callback can fire after the free, leaving a potential
-use-after-free window.
+Mark the device as unregistered before tearing down raw IR/bpf
+state, so that racing bpf(BPF_PROG_{ATTACH,DETACH,QUERY}) calls
+cannot slip in between ir_raw_event_unregister() completing and
+dev->registered being cleared.
 
-Replace timer_delete() with timer_shutdown_sync() at the top of
-adapter_uninit(), before the host-lock section: the timer is dequeued,
-a running callback is waited for and rearming is blocked before the chip
-is halted, so it cannot fire at all once the adapter has ceased to
-function. Waiting outside the lock avoids the self-deadlock that would
-result from syncing a callback blocked on the lock we still hold.
-
-No shutdown is needed for selto_timer because it has no reachable armer
-or callback.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Cc: Jamie Lenehan <lenehan@twibble.org>
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260911020544.42966-1-fanwu01@zju.edu.cn
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: Adjusted patch context to remove del_timer() calls where upstream removes timer_delete() calls. ]
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/dc395x.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/media/rc/rc-main.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/dc395x.c b/drivers/scsi/dc395x.c
-index d108a86e196ef..f4be99c8eb472 100644
---- a/drivers/scsi/dc395x.c
-+++ b/drivers/scsi/dc395x.c
-@@ -4411,13 +4411,11 @@ static void adapter_uninit_chip(struct AdapterCtlBlk *acb)
- static void adapter_uninit(struct AdapterCtlBlk *acb)
- {
- 	unsigned long flags;
--	DC395x_LOCK_IO(acb->scsi_host, flags);
+diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
+index fb52ed2d4ef6b..eb19ee6765dfb 100644
+--- a/drivers/media/rc/rc-main.c
++++ b/drivers/media/rc/rc-main.c
+@@ -2030,18 +2030,18 @@ void rc_unregister_device(struct rc_dev *dev)
+ 	if (!dev)
+ 		return;
  
--	/* remove timers */
--	if (timer_pending(&acb->waiting_timer))
--		del_timer(&acb->waiting_timer);
--	if (timer_pending(&acb->selto_timer))
--		del_timer(&acb->selto_timer);
-+	/* Drain the self-rearming timer; must not run under host_lock. */
-+	timer_shutdown_sync(&acb->waiting_timer);
++	mutex_lock(&dev->lock);
++	dev->registered = false;
++	if (dev->users && dev->close)
++		dev->close(dev);
++	mutex_unlock(&dev->lock);
 +
-+	DC395x_LOCK_IO(acb->scsi_host, flags);
+ 	if (dev->driver_type == RC_DRIVER_IR_RAW)
+ 		ir_raw_event_unregister(dev);
  
- 	adapter_uninit_chip(acb);
- 	adapter_remove_and_free_all_devices(acb);
+ 	del_timer_sync(&dev->timer_keyup);
+ 	del_timer_sync(&dev->timer_repeat);
+ 
+-	mutex_lock(&dev->lock);
+-	if (dev->users && dev->close)
+-		dev->close(dev);
+-	dev->registered = false;
+-	mutex_unlock(&dev->lock);
+-
+ 	rc_free_rx_device(dev);
+ 
+ 	/*
 -- 
 2.53.0
 
