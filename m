@@ -1,53 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064544;
-	b=h2P2Q/xWU/jo/Mhwf25MRQ4Mk6hscQMBFOOpOxp2x3cdhIt4Zd01AsuoThp9fn7DgryF
-	 zHmImUsQmotWEcH22qxtEb207SjD2WytIbvki5kMgcqK7dThKGAqTbX6AHQPMD8X0Wvvu
-	 r1Hw7Hva4O0D1sh9+mhVJtP7M40/ai9JbWyen3lXSlzGWvUXL+hoI0gEgVkCZqYgOxvuq
-	 D98B3lkmDYZ9BhHADJnuP9xOmSrUxAsPnwqaocIUtVpGFkKdxgI02W0pw5eQvjbUqaW+7
-	 CLMhV19fO9f2u9AIl0is7QWrj7+A8L91ZvouhIXaGvuWoVBTNdyAFv34H43FaxG9c3g==
+	t=1794064545;
+	b=KMen9VXWYH2VzvxAGSEKlyYiBduKethfW9K95pGXc7zdFtd6ZdCoWrBDLmbZq+aWJ5vo
+	 gLp8n3SbAWdr1GdtI/qg/SEKvn2SVxVDa0j1LWYBAihj/TUIkrGtTJ+is1PucbnStaSPs
+	 geqkrJmouJTnVCf0R0kcWumEX8dym9SHRJXqfEKJkwz5n549lrat75R4LP6iVp1v3PYfE
+	 Ep4qYHvevUSBf8Nil6sSwJCyO9TbYaxM/jV73RkTxqcMaQv9yd4oC+/dLQ+WCGFvtKlNh
+	 F2NASkyZP2KgU7TCaekKXwCr6tg+uURNsWqAhK4mGJHOt6ElV8YXUGlT9IrjvTvGP5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064544;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064545;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e7peFHV9U4W9PdRBdYu6u5fQalHK0xW1yFS40vLN1LY=;
-	b=pSLng/bZkg0Lqqe/SKM6wKOccv186/Xn8PFlwQPqWAQJ1NuAEX8hAhcV+My4E5BgmXn6
-	 CELizDlSCtGbS++KcBVSJ0/puqQHN2TqlNNSRWLRw7VVXAQthMNu+EcoCX5fRYt+Dp+b/
-	 PvQ+iU5QfemYlkSZwWA66O8EDkbI6QUQn4lucuSY8xyLja4pBrqANlxVReZw+qSfxd67x
-	 p41G6GcUg1OakINC9PmqqUvf5fGrASGjE2TUgtqS5SpC/5tnst5o4OXJr/GcuGHzAf6ej
-	 yg/JC/pge1wyvDw11wCaAfe4s5iiU4OiPtWtSMRp18dFjUMYetT9Lw2Kg8KYu38mI5A==
+	bh=nw0tIXAYduMwEc6d74Zei7482J4Y/4mmFDwp0gvhSHc=;
+	b=gHlAi3ZklT93DnYBbX7CD45jscCEBfzJZ7oMQO8kNpdPXO3rye1XDi6qsEs1ZC7Shdyp
+	 abfSGjbWJaehk4qvi7F1UxsSwPGI+jyrW/5p3vWCo5R3zjpyrJyPyAHOtjimUakkW9CNf
+	 V4pK/1ITmpOFeW1ZJDJgnXYKVHZyAInXlfeyFEHLLoivkYrZnMIk/mOnS8SDkNDmmVQiP
+	 Rz2rajzcQ0mllsExniajYRc8ILaPhlEfjNYBsCsUGik3YmCI0UWqLZ0kzz26T89jS/axo
+	 jwY+L9BMU6UOBFf7stCn20oy8+1g6rtS1sIwndUmij0aLBqaZdtTx/LcRe4DkMwmM+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GnLvpFtT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EoFUNhMM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9BA606CE6D;
-	Sat,  7 Nov 2026 15:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557A2606B8A6;
+	Sat,  7 Nov 2026 15:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GnLvpFtT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC601F008A1;
-	Sat,  7 Nov 2026 15:15:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EoFUNhMM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F391A1F008AB;
+	Sat,  7 Nov 2026 15:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064544;
-	bh=e7peFHV9U4W9PdRBdYu6u5fQalHK0xW1yFS40vLN1LY=;
+	s=korg; t=1794064545;
+	bh=nw0tIXAYduMwEc6d74Zei7482J4Y/4mmFDwp0gvhSHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GnLvpFtTE/kujFZUV7T9RNGkKW3CWQRO8xoSi1dEygvR+737IS510I6CdjIs0SYCc
-	 CfeWJATsPH5oubmkplOsJhm5s8yOnpCNI5gavp9TYchjbIzP8sVAWaflRCQiArI7z0
-	 nJ6ajMOf6+R2FNLb10jQPPflXzqhy4XYiYiGy3Wc=
+	b=EoFUNhMM8RycHG2T4psAzRUvxB8cQHkOpqx5bP9vI/MHi60f4/2DUT+sJ7LtJ2Ofx
+	 cKLGYfB82tlMy01YcLg1y6v2ZZRttduAbOxsw9EcGTWHzOHr+MuW9W9SNjksEE9AUJ
+	 l5lKE0/uDr+w1H8Pql6GtaFJ2x7EWZkmkJkfbvsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+95eeb4ada2349a2170ea@syzkaller.appspotmail.com,
-	Yu Kuai <yukuai@fygo.io>,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Jinmeng Zhou <zhoujinmeng@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Hongfu Li <lihongfu@kylinos.cn>,
+	David Hildenbrand <david@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0570/1257] md: dont hand out the array before md_alloc() has added mddev->kobj
-Date: Sat,  7 Nov 2026 08:47:46 -0500
-Message-ID: <20261107134955.098259601@linuxfoundation.org>
+Subject: [PATCH 7.3 0571/1257] mm/hugetlb: charge folios to the target mms memcg
+Date: Sat,  7 Nov 2026 08:47:47 -0500
+Message-ID: <20261107134955.124617120@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,96 +77,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Jinmeng Zhou <jinmengzhou22@gmail.com>
 
-[ Upstream commit d1472ca2ca5de8ecd2b358411eb14c031404ecf0 ]
+[ Upstream commit c2deb1356d82c9d54bd2fcf1241cc97eb66fd81f ]
 
-md_alloc() publishes the gendisk before it is done setting the mddev up:
+HugeTLB folios are currently charged to the memcg of the allocating task.
+This gives the wrong result when a userfaultfd handler populates a HugeTLB
+VMA that belongs to another process.  The UFFDIO_COPY ioctl operates on
+the userfaultfd context's mm, but get_mem_cgroup_from_current() charges
+the folio to the handler's memcg instead.
 
-	disk->private_data = mddev;
-	...
-	error = add_disk(disk);
-	if (error)
-		goto out_put_disk;
+This can be reproduced by placing the faulting process and its userfaultfd
+handler in different memory cgroups.  Have the target process register a
+HugeTLB mapping with userfaultfd, trigger a missing fault, and let the
+handler resolve it with UFFDIO_COPY.  The hugepage usage is then reported
+in the handler's memory.current instead of the target's.
 
-	kobject_init(&mddev->kobj, &md_ktype);
-	error = kobject_add(&mddev->kobj, &disk_to_dev(disk)->kobj, "%s", "md");
+The generic userfaultfd population path avoids this problem by charging
+folios to dst_vma->vm_mm.
 
-add_disk() makes /dev/mdN openable.  mddev comes from mddev_alloc() and
-is zeroed, so anything that gets in between add_disk() and kobject_add()
-sees an mddev->kobj that has never been through kobject_init() - no
-ktype, no kref, state_initialized clear.
+Pass the target mm through hugetlb_alloc_folio() and charge the folio by
+using get_mem_cgroup_from_mm().  This preserves the existing charge timing
+and error handling while making HugeTLB userfaultfd population consistent
+with the generic path.
 
-syzbot opens the array in that window and issues ADD_NEW_DISK:
-
-  kobject: '(null)' (ffff8880120640f0): is not initialized, yet
-  kobject_get() is being called.
-  WARNING: lib/kobject.c:642 at kobject_add_internal+0xea/0xcd0 lib/kobject.c:225
-   kobject_add_varg lib/kobject.c:374 [inline]
-   kobject_add+0x163/0x240 lib/kobject.c:426
-   bind_rdev_to_array+0x80c/0xdd0 drivers/md/md.c:2621
-   md_add_new_disk+0xe3b/0x1850 drivers/md/md.c:7684
-   md_ioctl+0x200a/0x2610 drivers/md/md.c:8499
-
-bind_rdev_to_array() is not the only way in.  md_run() calls
-sysfs_create_group(&mddev->kobj, &md_redundancy_group), and
-internal_create_group() has its own WARN_ON(!kobj->sd), so RUN_ARRAY in
-the same window warns too.
-
-Every ioctl that can reach mddev->kobj runs under reconfig_mutex, so
-hold it across add_disk() and kobject_add().  An ioctl issued in the
-window now waits for md_alloc() to finish instead of seeing a
-half-built mddev, and opening the array still succeeds.  The ioctls
-md_ioctl() serves without the mutex only read array state and return
--ENODEV on an array with no disks.
-
-Hoisting kobject_init() above add_disk() is not an option: commit
-ca39f7502425 ("md: fix mddev->kobj lifetime") moved it below add_disk()
-so that md_alloc()'s error paths, which free the mddev directly, never
-see an initialised kobject.
-
-Fixes: ca39f7502425 ("md: fix mddev->kobj lifetime")
-Reported-by: syzbot+95eeb4ada2349a2170ea@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6aaf3284.514bccd6.255447.0003.GAE@google.com/
-Suggested-by: Yu Kuai <yukuai@fygo.io>
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20261006122904.1538-1-yogeshgaur.83@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Link: https://lore.kernel.org/20260903075048.3316-1-zhoujinmeng@bytedance.com
+Fixes: 8cba9576df60 ("hugetlb: memcg: account hugetlb-backed memory in memory controller")
+Signed-off-by: Jinmeng Zhou <zhoujinmeng@bytedance.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Hongfu Li <lihongfu@kylinos.cn>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ include/linux/hugetlb.h    | 3 ++-
+ include/linux/memcontrol.h | 8 +++++---
+ mm/hugetlb.c               | 9 ++++++---
+ mm/memcontrol.c            | 6 ++++--
+ 4 files changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 1caa92b40f9a7..d8ecf76d4a5f1 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -6388,12 +6388,22 @@ struct mddev *md_alloc(dev_t dev, char *name)
+diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+index 16c4c4caa126c..45ada75dc04e9 100644
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -699,7 +699,8 @@ enum hugetlb_alloc_flag {
+ #define HUGETLB_ALLOC_USE_GLOBAL_RESERVATIONS BIT(HUGETLB_ALLOC_USE_GLOBAL_RESERVATIONS_BIT)
  
- 	disk->events |= DISK_EVENT_MEDIA_CHANGE;
- 	mddev->gendisk = disk;
-+
-+	/*
-+	 * add_disk() makes the array openable before mddev->kobj exists.
-+	 * Hold reconfig_mutex until kobject_add() is done so that ioctls
-+	 * issued in between wait instead of using an uninitialised kobj.
-+	 */
-+	mddev_lock_nointr(mddev);
- 	error = add_disk(disk);
--	if (error)
-+	if (error) {
-+		mddev_unlock(mddev);
- 		goto out_put_disk;
-+	}
+ struct folio *hugetlb_alloc_folio(struct hstate *h,
+-		struct mempolicy_interpreted *mpoli, u8 alloc_flags);
++		struct mempolicy_interpreted *mpoli, struct mm_struct *mm,
++		u8 alloc_flags);
+ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 				unsigned long addr, bool cow_from_owner);
+ struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index 7d1c0ce189a88..362af58e50a43 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -662,7 +662,8 @@ static inline int mem_cgroup_charge(struct folio *folio, struct mm_struct *mm,
+ 	return __mem_cgroup_charge(folio, mm, gfp);
+ }
  
- 	kobject_init(&mddev->kobj, &md_ktype);
- 	error = kobject_add(&mddev->kobj, &disk_to_dev(disk)->kobj, "%s", "md");
-+	mddev_unlock(mddev);
- 	if (error) {
- 		/*
- 		 * The disk is already live at this point.  Clear the hold flag
+-int mem_cgroup_charge_hugetlb(struct folio* folio, gfp_t gfp);
++int mem_cgroup_charge_hugetlb(struct folio *folio, struct mm_struct *mm,
++			      gfp_t gfp);
+ 
+ int mem_cgroup_swapin_charge_folio(struct folio *folio, unsigned short id,
+ 				   struct mm_struct *mm, gfp_t gfp);
+@@ -1156,9 +1157,10 @@ static inline int mem_cgroup_charge(struct folio *folio,
+ 	return 0;
+ }
+ 
+-static inline int mem_cgroup_charge_hugetlb(struct folio* folio, gfp_t gfp)
++static inline int mem_cgroup_charge_hugetlb(struct folio *folio,
++					    struct mm_struct *mm, gfp_t gfp)
+ {
+-        return 0;
++	return 0;
+ }
+ 
+ static inline int mem_cgroup_swapin_charge_folio(struct folio *folio,
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 930e40ac77077..1c2b5825b5614 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2827,6 +2827,7 @@ void wait_for_freed_hugetlb_folios(void)
+  * hugetlb_alloc_folio - Allocate a hugetlb folio.
+  * @h: Hugetlb state control block.
+  * @mpoli: Interpreted memory policy to use for allocation.
++ * @mm: Memory descriptor of the allocation target.
+  * @alloc_flags: Flags controlling the allocation behavior.
+  *
+  * Allocates a hugetlb folio and handles cgroup charging and global hstate
+@@ -2836,7 +2837,8 @@ void wait_for_freed_hugetlb_folios(void)
+  *         -ENOSPC if cgroup charging fails or no folio is available.
+  */
+ struct folio *hugetlb_alloc_folio(struct hstate *h,
+-		struct mempolicy_interpreted *mpoli, u8 alloc_flags)
++		struct mempolicy_interpreted *mpoli, struct mm_struct *mm,
++		u8 alloc_flags)
+ {
+ 	bool charge_hugetlb_cgroup_rsvd = alloc_flags &
+ 					  HUGETLB_ALLOC_CHARG_CGROUP_RSVD;
+@@ -2891,7 +2893,8 @@ struct folio *hugetlb_alloc_folio(struct hstate *h,
+ 
+ 	spin_unlock_irq(&hugetlb_lock);
+ 
+-	ret = mem_cgroup_charge_hugetlb(folio, gfp | __GFP_RETRY_MAYFAIL);
++	ret = mem_cgroup_charge_hugetlb(folio, mm,
++					gfp | __GFP_RETRY_MAYFAIL);
+ 	/*
+ 	 * Unconditionally increment NR_HUGETLB here because if
+ 	 * mem_cgroup_charge_hugetlb failed, freeing the page will
+@@ -3034,7 +3037,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 		.nodemask = nodemask,
+ 	};
+ 
+-	folio = hugetlb_alloc_folio(h, &mpoli, alloc_flags);
++	folio = hugetlb_alloc_folio(h, &mpoli, vma->vm_mm, alloc_flags);
+ 
+ 	mpol_cond_put(mpol);
+ 
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 259f9f43b38b1..1f03f5e775554 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -5242,6 +5242,7 @@ int __mem_cgroup_charge(struct folio *folio, struct mm_struct *mm, gfp_t gfp)
+ /**
+  * mem_cgroup_charge_hugetlb - charge the memcg for a hugetlb folio
+  * @folio: folio being charged
++ * @mm: mm context of the allocation target
+  * @gfp: reclaim mode
+  *
+  * This function is called when allocating a huge page folio, after the page has
+@@ -5251,9 +5252,10 @@ int __mem_cgroup_charge(struct folio *folio, struct mm_struct *mm, gfp_t gfp)
+  * Returns ENOMEM if the memcg is already full.
+  * Returns 0 if either the charge was successful, or if we skip the charging.
+  */
+-int mem_cgroup_charge_hugetlb(struct folio *folio, gfp_t gfp)
++int mem_cgroup_charge_hugetlb(struct folio *folio, struct mm_struct *mm,
++			      gfp_t gfp)
+ {
+-	struct mem_cgroup *memcg = get_mem_cgroup_from_current();
++	struct mem_cgroup *memcg = get_mem_cgroup_from_mm(mm);
+ 	int ret = 0;
+ 
+ 	/*
 -- 
 2.53.0
 
