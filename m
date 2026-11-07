@@ -1,55 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064654;
-	b=V52RfUyBb0NgjChtHdoNqGSBpBDzxAW1z4mmgchNcnRHBE6TFh8S+WUL0bgK5BYLEGcI
-	 0+jZQ/zHKbC/LxdZ4T+C7hHWaZWRvwU9V6Nxi2rsKpWgPbjsGI56FP2YMREeHRv8aqgWJ
-	 /8Cla5LyPqYCWqEUdv8/AkgQJC75R+tEDm3A5dW6/twOC9xKaf7rIzjJzINt/tMqr/XEd
-	 1n+uwftGMl/y2QZMrGHe5R3royysDTKKhGy497y8K/viPcma1rr6GzQuXnBzOVxwNAWwR
-	 U7OmFj4+JYupLIFe2OgkjsyJT8xUv9XTNb2im0bPhB3MR75XgpN3fEKGVocmYXSMj1A==
+	t=1794064656;
+	b=mb2SvtMVoZj7m3vJvnrbxEVny8sPC7gdcgkcDcrCFPcIEnMghv/5E/AvLnUQSDNwae6O
+	 0lyvzE6O7W8uCmTSNkuB1IW4iPXOZtYIQvmL/CQjFNp+84yVmI3E4QprO4IBTjjgJWEDO
+	 4KPJFtIIENcu2wRbk3NM2uI5V6MvdOLZX4tTrEcK6VyjkWAcI8vxWswibXqt9TxQlpdj1
+	 kB7pDTuI6qEDz1CMuGn836eVL54hWB9Mse/7PkznbL9kO5OPe2ZIVirHPiahUyMKgtzom
+	 xlQy1u6G58jATV/ktrn3pwUn8z+RNU5XhAhzP++GJvNEr0k7uDeuplsjQMgAWvL6J/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064654;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064656;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2HTo0ro6KYhClIlblgX1pV6dWeQe+/OTb3dukItC96E=;
-	b=F1Qv0ehjC6uS6Zs4VoRq6QAMeoHaxFB5YsPsNykTimtyi9JDTw825iigI36LvnTkA3Zg
-	 mXGsIcIwiG1pWEEY3JZvmmVagr7VNkZ4RBan1Tg+R83q7/OvKxjiD2QG/c+I2njTipuyd
-	 69V3+NRNPunPOkrpW+wQ6rEXCLZxlHhXD1RYqIlipTTm7jUVYD9DJ9ehG9Ol+8Q1j8Dvb
-	 pNB7/qQbpzyRETJm78TwxOIbw0SWG9CrqM4PmazU3JPKas3Urrd+Si9EBwTK7oUXyI5/V
-	 VwTiJnO8wiyapp39+Hj0TL0QnSCezgbAAQhI3s5knuvTLvDWfzNZtQLxZdqPumVruqA==
+	bh=Xdt/jX6KkjhVkmcKEvlL1IHyaPzatXXzbd6fc7aTAFE=;
+	b=Gyq+pn5dB4dFe9FaVlelkNSSaKFDvHlgiS3iLR5Y4JndOoC8vXXqNFb5QozCurT8TBOD
+	 tuDTM9t0FXLXX8vrRSFKn2jnvXeJYWdo3YYbrKYLipvKX4favKW//tOJe5Mm4dAEkJvWX
+	 nB+YlalSVqDHWcT7ru9qFB55IbO76bL9eJtUoyDhRRZdZdS3VbuQPDiewDnZMHZjr/Mqn
+	 hOtcllo8PK/5BwJe1vuLwKMki3Gvu4beohAJAa9pEl1wvg0vN3/jWZi00GVlETQXUPAjP
+	 mZE1Sw8LjkV1LmNaABzIBP9kdKzzLPlVE9ZvkV64JqVQ/hqV9QQaj2zIpMpykiKGx9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hkFlmyW8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UmeooTaI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5DF606A9D5;
-	Sat,  7 Nov 2026 15:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CF7606A9D5;
+	Sat,  7 Nov 2026 15:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hkFlmyW8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2110C1F008A5;
-	Sat,  7 Nov 2026 15:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UmeooTaI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC531F008A1;
+	Sat,  7 Nov 2026 15:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064654;
-	bh=2HTo0ro6KYhClIlblgX1pV6dWeQe+/OTb3dukItC96E=;
+	s=korg; t=1794064655;
+	bh=Xdt/jX6KkjhVkmcKEvlL1IHyaPzatXXzbd6fc7aTAFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hkFlmyW8a1dPmaSGovAUNYgvJv1Ivk/5gIKgTyocjEn1Hmvzt5qnxzuAtCvA9UW2X
-	 twgb7T8cdlWioihC0hlMB3hjIG/N159stopDJ9eyNAj87WmMxAjqS6jSg87SIxzUkQ
-	 0onpyJR+yOx84Maoh5TBqdwx0YmSOIBRWhhMMNCM=
+	b=UmeooTaI+uEcHUawtgOBisV96WWlQ7rrPhUYkGMNm2Y6X0NXzSR2LD5f8oAeA4e/S
+	 24YcGwiYFLjFnFmpnCYi7W3Hn9oNbttzQqaU+DXMi+D7YQOTjEplr3b3iJqUJ2Wmkk
+	 49u23CtRs/HXpEfGnpORuLxuyM/OcrYUdYL6VO94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
+	Gregory Price <gourry@gourry.net>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Usama Arif <usamaarif642@gmail.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0655/1257] mm/damon/core-kunit: test invalid damos filter commits
-Date: Sat,  7 Nov 2026 08:49:11 -0500
-Message-ID: <20261107134957.352235224@linuxfoundation.org>
+Subject: [PATCH 7.3 0656/1257] proc/task_mmu: handle special PMDs in clear_refs and pagemap
+Date: Sat,  7 Nov 2026 08:49:12 -0500
+Message-ID: <20261107134957.379529607@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -71,57 +77,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit 409d2ab6d98209c30d45123920721710475a30b4 ]
+[ Upstream commit d350956d829f4b620faf294c86116de640f1518c ]
 
-Add test cases for testing the validation of damos filter arguments in
-commit time.
+mshv_vtl_low can install a special PMD from a PFN supplied in the mmap file
+offset.  That PFN need not have a memmap entry.  Reading /proc/PID/pagemap
+or writing /proc/PID/clear_refs for such a mapping oopses the kernel.
 
-Link: https://lore.kernel.org/20260914142327.92510-9-sj@kernel.org
-Signed-off-by: SJ Park <sj@kernel.org>
+With a test driver mapping the PFN at the 1 TiB mark:
+
+  echo 1 > /proc/self/clear_refs
+
+  BUG: unable to handle page fault for address: fffffb5b80000008
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  RIP: 0010:clear_refs_pte_range+0xb1/0x1e0
+  Call Trace:
+   walk_pgd_range+0x50a/0xad0
+   __walk_page_range+0x6a/0x1d0
+   walk_page_range_mm_unsafe+0x193/0x230
+   clear_refs_write+0x18e/0x3f0
+
+  pread(pagemap_fd, buf, 512 * 8, addr / PAGE_SIZE * 8)
+
+  BUG: unable to handle page fault for address: fffff57840000008
+  RIP: 0010:pagemap_pmd_range+0x3cf/0x6b0
+  Call Trace:
+   walk_pgd_range+0x50a/0xad0
+   __walk_page_range+0x6a/0x1d0
+   walk_page_range_mm_unsafe+0x193/0x230
+   pagemap_read+0x1dc/0x350
+
+clear_refs_pte_range() passes the PMD to pmd_folio(), while
+pagemap_pmd_range_thp() uses pmd_page() followed by page_folio().
+
+Both paths assume the PFN has a struct page and dereference bad address.
+
+Use vm_normal_folio_pmd() and vm_normal_page_pmd() so clear_refs skips
+folio operations and pagemap skips folio-derived flags for special PMDs.
+This matches the PTE paths, which already use vm_normal_folio() and
+vm_normal_page().
+
+User-facing notes:
+ - Pagemap still reports PM_PRESENT and the PFN to a CAP_SYS_ADMIN reader.
+
+ - For a special PMD backed by a valid memmap entry and for the huge
+   zero PMD, PM_FILE changes from set to clear.
+
+ - PM_MMAP_EXCLUSIVE is already clear in both cases.
+
+ - The output for an anonymous THP is unchanged.
+
+Tested in QEMU with the test driver on broken and fixed kernels.  Both proc
+operations oops before the fix and return 0 after it.
+
+This is technically reachable via mshv_vtl_low, so I tagged it stable.
+
+Link: https://lore.kernel.org/20260912122822.3348978-1-gourry@gourry.net
+Fixes: 3c8e44c9b369 ("mm: mark special bits for huge pfn mappings when inject")
+Signed-off-by: Gregory Price <gourry@gourry.net>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@davidgow.net>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: <stable@vger.kernel.org>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260912034833.2952750-1-gourry%40gourry.net
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: LLM
+Cc: Jann Horn <jannh@google.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org> # v6.19+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/tests/core-kunit.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/proc/task_mmu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 0d09a081cd84a..062332fe847ce 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -1130,6 +1130,13 @@ static void damos_test_commit_filter(struct kunit *test)
- 			.allow = false,
- 			.sz_range = {.min = 234, .max = 345},
- 			}, false);
-+	damos_test_commit_filter_for(test, &dst,
-+			&(struct damos_filter){
-+			.type = DAMOS_FILTER_TYPE_HUGEPAGE_SIZE,
-+			.matching = false,
-+			.allow = false,
-+			.sz_range = {.min = 456, .max = 123},
-+			}, true);
- 	damos_test_commit_filter_for(test, &dst,
- 			&(struct damos_filter){
- 			.type = DAMOS_FILTER_TYPE_UNMAPPED,
-@@ -1143,6 +1150,13 @@ static void damos_test_commit_filter(struct kunit *test)
- 			.allow = false,
- 			.addr_range = {.start = 456, .end = 567},
- 			}, false);
-+	damos_test_commit_filter_for(test, &dst,
-+			&(struct damos_filter){
-+			.type = DAMOS_FILTER_TYPE_ADDR,
-+			.matching = false,
-+			.allow = false,
-+			.addr_range = {.start = 567, .end = 456},
-+			}, true);
- 	damos_test_commit_filter_for(test, &dst,
- 			&(struct damos_filter){
- 			.type = DAMOS_FILTER_TYPE_TARGET,
+diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+index dd025474b0fc9..a2db957aa7996 100644
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -1786,7 +1786,9 @@ static int clear_refs_pte_range(pmd_t *pmd, unsigned long addr,
+ 		if (!pmd_present(*pmd))
+ 			goto out;
+ 
+-		folio = pmd_folio(*pmd);
++		folio = vm_normal_folio_pmd(vma, addr, *pmd);
++		if (!folio)
++			goto out;
+ 
+ 		/* Clear accessed and referenced bits. */
+ 		pmdp_test_and_clear_young(vma, addr, pmd);
+@@ -2106,7 +2108,7 @@ static int pagemap_pmd_range_thp(pmd_t *pmdp, unsigned long addr,
+ 		goto populate_pagemap;
+ 
+ 	if (pmd_present(pmd)) {
+-		page = pmd_page(pmd);
++		page = vm_normal_page_pmd(vma, addr, pmd);
+ 
+ 		flags |= PM_PRESENT;
+ 		if (pmd_soft_dirty(pmd))
 -- 
 2.53.0
 
