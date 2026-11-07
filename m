@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062869;
-	b=Xrat+81oqDfg/PRqebwT9DeVsA33XjrhNQMFNZbqpDSU6MVfnQtCHdZsvIdCMTPU5qfj
-	 Y73bRxsccyVvHlrhIeE8qt2414TXUfSK1v2gz928Us3VKUcepV7tc+v4pX2QaESmBqECP
-	 8pj1+mapKeiJm4Zq1lvGT4jVJrYCFA7bBPcQLCi+jHDsu+dt0xZPfRNwkAFQglZTOLxal
-	 SiBmXQO4n8fJFmSmNI6Wf9bcteYUO+6y8ANU6/aqLtVmpJpjkCw9YNZajouW+6ijSU/mt
-	 ckHCbm7Cxny4325ePbH9anv4HY/8rPO7rD5GxbFcgZ7zkiE5VlRoRUYDY5rbeQwSADw==
+	t=1794062871;
+	b=pWkyKXPAZ1bmZ86dsY2nEEOcqRvMMqu2eAaEuUK8r16SAaJ3iY2frydfXl8PcXvhcHAH
+	 aT6Gg1OwK63ewTtg16RQ7fqbER+zwys5c+XwNDFNDYshaT79+Ij742VtK7NRRSFSYl3Gg
+	 +x3Ow/F9TzR/+CFae3uffCCS3Dx5KqNZ1eU1yDYLUSnDATpH3wCSRhgtCpJh9siNNBgQ0
+	 sBOvI4zeRNAbhRjRoj0RBxg8RO60kyKQ/+sjmTfj0eAUASiezTlJQc0xC3BncldpCAI2X
+	 ZKY916m8dlaRAV1q3d7D3nt+QqIfOxleCj6qz2L00r78fQ5iTz9J77GpI8aXmDSWT6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062869;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NEx6KOtxUTp0zvQXoGz7qLV7yueClt06U10oIN7nuF8=;
-	b=UTorXxCUr/qy409AS3W486rBinaGbwNzVcCRFz2p96oml0sKszLS1RQi9LBBrhrfi/RX
-	 kA+YRvhVu195TIEkf2tIJkfeapHwNXBbuW+e03mwqbtgjBonjPTrG5OeiC2ds6K1tz0yj
-	 tfOlNHp3MeobvpG92oRFb0LlceMQ+2AJr6RxMxu+KGx0BbiKv9Om/H7xDtAWE/m+/QsqF
-	 bOOw1fXcs1Eb5OKI0JFA11n33WnQUnB/ZvV45e8n+80bO74LZX2cwCKmUuo8pbLUAs5qn
-	 D9/mupUHfTcMZkaEpC82rfuBsM04fJj4sjKS8reOtJpUDpTpzoiIpdSJsBvUIrlo4ZQ==
+	bh=eI4/bdKM/f0xNsw0jnmxHv7y/iygg9zEG+gOiMXs+bY=;
+	b=b/zZe6sVjPM9wf57fu5uupE8n6FCZO+v85wLfk5OnQTMONWrxq8xFByFhEpCwDulq7z3
+	 Gcc2dsdTsfsKJ4IPUhVfNI8EKkXDEe7RZCMtoYdyDYQqgB0Um6yjpGJCX7CIPGQ5XDx7h
+	 owLFWMebko1O4vBmLB2RC2kWPHk6HVGhBOPB2Uu/PZvuMYDx4jSONBjZkGzjoIES50LRf
+	 5Jf10CYrBqsG5SgyN8Sslj233TOhzT1UxCBc4q6qDhPGxxUcrs+xMze95yWp4Z9Twp54u
+	 5DW7tp8649AnnPN5qMCxlh2/28DcPk+cydxLHBlAObK7AU+MCR/gSLmNCpwFC/KdloQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nuDjEIM/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="buHQc/5r";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF9F606A32E;
-	Sat,  7 Nov 2026 14:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2624606A326;
+	Sat,  7 Nov 2026 14:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nuDjEIM/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFC61F0089F;
-	Sat,  7 Nov 2026 14:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=buHQc/5r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA531F0089F;
+	Sat,  7 Nov 2026 14:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062869;
-	bh=NEx6KOtxUTp0zvQXoGz7qLV7yueClt06U10oIN7nuF8=;
+	s=korg; t=1794062870;
+	bh=eI4/bdKM/f0xNsw0jnmxHv7y/iygg9zEG+gOiMXs+bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nuDjEIM/tG5TGz3rcoAEavfEvybC9tnqctn2916NqJDybA8YlhzovRjQqkRItP7cI
-	 qqLWhDlViZlLqXSGidS2u9vfsaPq6zeDSVuMAmhpWkVQ/TxXiTjV9qaJ0A1zkiP4UH
-	 t5w2yZXqLm8DQq0Ivz3p2gd7zLlLCWkCu6O2fRXA=
+	b=buHQc/5rL7zEttVJZ6RucyQeThlPcKZnGSx/rWLFRTvUHJb8CECkeOMU+caZo4cTC
+	 QWVKkX+bcvzs9DuYffII0ANeYcRxDJacDuwrGR684RpaoZNcsAl6HmqQGNM+pe/KC+
+	 xCTOuo+oqxRri6pGxGEb+89LBee65dGEov2XdGII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Cao Guanghui <caoguanghui@kylinos.cn>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 127/869] crypto: atmel-aes - fix AADLENR for standalone GHASH
-Date: Sat,  7 Nov 2026 08:46:49 -0500
-Message-ID: <20261107134856.788480829@linuxfoundation.org>
+Subject: [PATCH 6.18 154/869] md/raid5: fix NULL pointer dereference in raid5_free_percpu
+Date: Sat,  7 Nov 2026 08:47:16 -0500
+Message-ID: <20261107134857.540164718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,53 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Cao Guanghui <caoguanghui@kylinos.cn>
 
-[ Upstream commit 0dd8cded0e6f8c9635fe1d79d60dc7b2599b099b ]
+[ Upstream commit 41742e35268d6a45161b187f51f42bc2ade14d0d ]
 
-atmel_aes_gcm_ghash_init() writes dd->total, the request's text length,
-to AES_AADLENR.  But the GHASH it runs hashes the dd->datalen bytes passed
-in: the 16-byte length block, or the padded IV when the IV is not 96 bits.
-The data sheet requires AES_AADLENR to hold the length of that input.
+If cpuhp_state_add_instance() fails in raid5_alloc_percpu() (e.g., the
+startup callback raid456_cpu_up_prepare fails due to an allocation
+failure), conf->node is never added to the cpuhp instance list and
+its pprev remains NULL (from kzalloc initialization).
 
-With empty plaintext and empty AAD, dd->total is 0 and the tag comes out
-wrong.  Later requests only pass because dd->total still holds the
-previous request's length.
+When setup_conf() then jumps to abort, free_conf() calls
+raid5_free_percpu(), which checks conf->percpu (non-NULL, since it was
+allocated before the cpuhp failure) and proceeds to call
+cpuhp_state_remove_instance().  This calls hlist_del() on the unhashed
+node, which dereferences node->pprev (NULL), causing a kernel panic.
 
-This is testmgr's first gcm(aes) vector, so CONFIG_CRYPTO_SELFTESTS=y
-fails at boot:
+Guard the removal with hlist_unhashed_lockless() so that the cpuhp
+instance is only removed if it was actually added.  The lockless variant
+uses READ_ONCE() for the pprev read, which is safe here because the
+actual removal is synchronized by cpuhp_state_mutex inside
+cpuhp_state_remove_instance().
 
-  alg: aead: atmel-gcm-aes encryption test failed (wrong result) on test
-  vector 0, cfg="in-place (one sglist)"
-
-Without selftests the broken atmel-gcm-aes is preferred at priority 300.
-Seen on a SAM9X75 Curiosity with 6.18 and current mainline.
-
-Write dd->datalen instead.
-
-Fixes: d4419548dba9 ("crypto: atmel-aes - add support to GCM mode")
+Fixes: 29c6d1bbd7a2 ("md/raid5: Convert to hotplug state machine")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Cao Guanghui <caoguanghui@kylinos.cn>
+Link: https://patch.msgid.link/20260827080341.112296-2-ghuicao@163.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-aes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid5.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
-index b393689400b4c..e057be7fc7130 100644
---- a/drivers/crypto/atmel-aes.c
-+++ b/drivers/crypto/atmel-aes.c
-@@ -1272,7 +1272,7 @@ static int atmel_aes_gcm_ghash_init(struct atmel_aes_dev *dd)
- 	struct atmel_aes_gcm_ctx *ctx = atmel_aes_gcm_ctx_cast(dd->ctx);
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index fded4b3eb88b9..6dfefbacfe3c0 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -7392,7 +7392,8 @@ static void raid5_free_percpu(struct r5conf *conf)
+ 	if (!conf->percpu)
+ 		return;
  
- 	/* Set the data length. */
--	atmel_aes_write(dd, AES_AADLENR, dd->total);
-+	atmel_aes_write(dd, AES_AADLENR, dd->datalen);
- 	atmel_aes_write(dd, AES_CLENR, 0);
+-	cpuhp_state_remove_instance(CPUHP_MD_RAID5_PREPARE, &conf->node);
++	if (!hlist_unhashed_lockless(&conf->node))
++		cpuhp_state_remove_instance(CPUHP_MD_RAID5_PREPARE, &conf->node);
+ 	free_percpu(conf->percpu);
+ }
  
- 	/* If needed, overwrite the GCM Intermediate Hash Word Registers */
 -- 
 2.53.0
 
