@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064711;
-	b=ZepOthmB89tqqwiHy/uZ8uDm790U05/6fskbiZOJEQkPelTevNlEXfdklN7mbB6VupX1
-	 Z9jpnQtXwTj81AEvSU8mW8I+QUM5fXyJ3WzcAPwsKPOfXIGkt7uQohU31G6iBbvOwjMzK
-	 5khbfKX8o7cBThF9NGCzjehw/XJlIRr2sZuxsGEnk5qsfBm6Cmsnt5bO3pOviK6lcH6B/
-	 9HhXfg64yuewj4jc4hXxnmaZ7lo8S8L4Q3obES2pBE4f8ysortyZ/wAvOW2CegwAMJ+ti
-	 JkyLGb2iue/JnMU8arPX7ja7UparYN+/MbUwaxJXURRR4Qi7UiIxwhzY9SbGasU0IyQ==
+	t=1794064712;
+	b=OJL293YjK1FyS4uwuoZ3OgvsfaHSnixCeGIPX6Y2lv+Zfc7YOmfbX4GGIfVx8icmG5yp
+	 wr4KJAxZ/ZAWCSE+qlGWaQkCUS03g31gxcVDahQNRdvHUFYAQSfWmE0x/zMOx62rZUdd1
+	 5K/q/q1LoP45r09mXhzPUM6GUibl3VVCiTeOSSpu4LmQVyvxNBMLTxyP1vniyiN9fbc5f
+	 sdhX/WmFoem9Doxa7vBT4Oy53rmi1Zl6KToqhRN7bM0LblCSD0DTdkU38SPtb/uVkYKcY
+	 nNdol8JgvcUnwPGRunFVUrBcDiTJ6MvQk5dY9q69eLfbpFvEHEKbEUaWI/moagkhZcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064711;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064712;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=yOZiKaTd+gagVh4GfQ50ZiCAH+gU7f7iYGJHBWVAtfU=;
-	b=vlsr6kyWxz6ObSIT9jWT/fa3li3M9PtPbWy91iPFT3S6iICvmkjcbBGGqB6Nv9BbJQT6
-	 +fQajejU2uaH7SbPcDBiG0605ojy8iSs82KstuguneguyRG8yIsgYktKwusQOaflTXiKN
-	 49sCgU6Bf3XM2ZynlJzjPK8vnJV/sMWU0Q3aWIyBIoOaF8MFVkOfv2I86WToFAlvsZsgS
-	 RU5PyGIDtt69NqRGS7smE2jszQ0wZ6qYlMuSaBwxNzqLsjInkGwFBY7cLbeVz3gv59ZMC
-	 ai0lz3yhGf5ns55kMlOOGlqlIPXj0xGAzJ2A32OFhq26qa2OpSeej/C+p0g7LM5Iqxg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=oa8ytqQOal/Bh9dZSXx2BVTiqX6D8FVfmOtLxUIk05s=;
+	b=z969vBnmzQACg7xQMzLF1+QrjEhW1c0ie6ywcwZimoxu+4ZnGrJGSPydpf5AVwTRFX5R
+	 53ZSp+VL9ccEXxmCBHXPL1/VXLGPnzIcLvIVO4Hf8uhf8pmTWSw/aEouVgc45QeBA5xqT
+	 ZM9vjnYIPWjvKeuy2dBboOx+n1kT+EKo6vezmLMbx5/tWYz2pyMwTxRE4IE6h3A7gAxGy
+	 xH4XHW5Zn/re9NplwbOIaLJJ9cZbLozpawBXOH2/v0MgXYClVlvOv1kz3F2fxLUxXvYex
+	 8XF8dSdmLyo99saq3cPpa9i7ArMgJQX3k9ZGqm6uAYkhpE25a1jr+mNXybPLFep9NQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVxwwzEQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MSzVBsuN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D5F606A32E;
-	Sat,  7 Nov 2026 15:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE26606A32E;
+	Sat,  7 Nov 2026 15:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVxwwzEQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CD01F008A1;
-	Sat,  7 Nov 2026 15:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MSzVBsuN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79031F008A6;
+	Sat,  7 Nov 2026 15:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064710;
-	bh=yOZiKaTd+gagVh4GfQ50ZiCAH+gU7f7iYGJHBWVAtfU=;
+	s=korg; t=1794064712;
+	bh=oa8ytqQOal/Bh9dZSXx2BVTiqX6D8FVfmOtLxUIk05s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yVxwwzEQQ5fbKgO/0NUvOQrNonceUpRvxSwu4DuPdu7FrhV3baAPmDYLN+XqzrVUX
-	 KAohYdAiZhc50Crx/ACsq6CkhLNS73A2lyNlLQ+dnLptZkkA5aZYPa5S8qymRhUADJ
-	 UvtuVTHf6e1c4msl0De0yPh1z5uJrsujlopvs8B8=
+	b=MSzVBsuNKkSNt1lvfFsQyRwrpxz2Ho64R8FZnN3d6yRZVEXTAWQSWqK4h3ldtkV7c
+	 NXT7ViCnRH9z76pDJCodRaDi6vRNVDaVhTLSORdFMMZzg/9EcyLi1njgwQguxFnrpx
+	 NP0/ntx5uaWem+haBj+gVbZ+7S4ER2XXUAEuC2q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0668/1257] platform/x86/amd/pmf: Validate the APTS state index
-Date: Sat,  7 Nov 2026 08:49:24 -0500
-Message-ID: <20261107134957.703441135@linuxfoundation.org>
+Subject: [PATCH 7.3 0695/1257] dm-bufio: fix non-working memory limit
+Date: Sat,  7 Nov 2026 08:49:51 -0500
+Message-ID: <20261107134958.454631565@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,68 +61,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 192dddd5aa45166450820cef16521bdf23976a73 ]
+[ Upstream commit 1190dbeaeaa026a4879e675b8556a150c36a7ced ]
 
-The static slider APTS state index is supplied by the BIOS as an 8-bit
-value, but apts_config_store contains only APTS_MAX_STATES entries. An
-invalid firmware value can therefore cause amd_pmf_update_slider_v2() to
-read beyond the end of the array.
+The function evict_old is supposed to loop and evict buffers while the
+allocated size is above the threshold. However if it hits one bufio
+client that is empty, it stops and doesn't attempt to scan other
+clients.
 
-Validate the selected index before applying the slider values and return
-an error when it is out of range.
+This commit fixes it, so that it skips empty clients and retries up to
+dm_bufio_client_count times.
 
-Fixes: 8362e862fb87 ("platform/x86/amd/pmf: Update sps power thermals according to the platform-profiles")
+Fixes: 450e8dee51aa ("dm bufio: improve concurrent IO performance")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260903182927.3556274-1-mario.limonciello@amd.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-5
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/sps.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/md/dm-bufio.c | 41 +++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmf/sps.c b/drivers/platform/x86/amd/pmf/sps.c
-index 0b70a5153f465..0918fb388fde6 100644
---- a/drivers/platform/x86/amd/pmf/sps.c
-+++ b/drivers/platform/x86/amd/pmf/sps.c
-@@ -248,20 +248,24 @@ static int amd_pmf_update_sps_power_limits_v2(struct amd_pmf_dev *pdev, int pwr_
- 	switch (pwr_mode) {
- 	case POWER_MODE_PERFORMANCE:
- 		index = config_store_v2.sps_idx.power_states[src][POWER_MODE_BEST_PERFORMANCE];
--		amd_pmf_update_slider_v2(pdev, index);
- 		break;
- 	case POWER_MODE_BALANCED_POWER:
- 		index = config_store_v2.sps_idx.power_states[src][POWER_MODE_BALANCED];
--		amd_pmf_update_slider_v2(pdev, index);
- 		break;
- 	case POWER_MODE_POWER_SAVER:
- 		index = config_store_v2.sps_idx.power_states[src][POWER_MODE_BEST_POWER_EFFICIENCY];
--		amd_pmf_update_slider_v2(pdev, index);
- 		break;
- 	default:
- 		return -EINVAL;
- 	}
+diff --git a/drivers/md/dm-bufio.c b/drivers/md/dm-bufio.c
+index d58eed96a8ff5..edad64654ef68 100644
+--- a/drivers/md/dm-bufio.c
++++ b/drivers/md/dm-bufio.c
+@@ -2545,6 +2545,13 @@ struct dm_bufio_client *dm_bufio_client_create(struct block_device *bdev, unsign
+ 	init_waitqueue_head(&c->free_buffer_wait);
+ 	c->async_write_error = 0;
  
-+	if (index >= APTS_MAX_STATES) {
-+		dev_err(pdev->dev, "Invalid APTS index: %d\n", index);
-+		return -EINVAL;
++	/*
++	 * A client with no buffers yet is not holding the oldest buffer in
++	 * the system; leaving this zeroed would claim exactly that and keep
++	 * the client pinned at the front of dm_bufio_all_clients.
++	 */
++	c->oldest_buffer = jiffies;
++
+ 	c->dm_io = dm_io_client_create();
+ 	if (IS_ERR(c->dm_io)) {
+ 		r = PTR_ERR(c->dm_io);
+@@ -2779,9 +2786,23 @@ static unsigned long __evict_a_few(unsigned long nr_buffers)
+ 
+ 	dm_bufio_unlock(c);
+ 
+-	if (count)
++	if (count) {
+ 		c->oldest_buffer = oldest_buffer;
+-	__insert_client(c);
++		__insert_client(c);
++	} else {
++		/*
++		 * We evicted nothing, so 'oldest_buffer' tells us nothing new
++		 * and the client keeps its old, possibly very stale, value.
++		 * Requeue it at the back rather than by that value, otherwise
++		 * __insert_client() would put it straight back at the front
++		 * and every subsequent call would pop this same client again,
++		 * never reaching any of the others.
++		 *
++		 * This leaves the list slightly out of order, which is fine -
++		 * it is only ever an approximation.
++		 */
++		list_add_tail(&c->client_list, &dm_bufio_all_clients);
 +	}
-+
-+	amd_pmf_update_slider_v2(pdev, index);
-+
- 	return 0;
- }
  
+ 	return count;
+ }
+@@ -2806,11 +2827,23 @@ static void evict_old(void)
+ {
+ 	unsigned long threshold = dm_bufio_cache_size -
+ 		dm_bufio_cache_size / DM_BUFIO_LOW_WATERMARK_RATIO;
++	int unproductive = 0;
+ 
+ 	mutex_lock(&dm_bufio_clients_lock);
+ 	while (dm_bufio_current_allocated > threshold) {
+-		if (!__evict_a_few(64))
+-			break;
++		if (__evict_a_few(64)) {
++			unproductive = 0;
++		} else {
++			/*
++			 * This client had nothing to give.  Try the others
++			 * before giving up: one idle client, or one whose
++			 * buffers are all held, must not stop us evicting
++			 * from everybody else.  Stop once a whole sweep of
++			 * the client list has freed nothing.
++			 */
++			if (++unproductive >= dm_bufio_client_count)
++				break;
++		}
+ 		cond_resched();
+ 	}
+ 	mutex_unlock(&dm_bufio_clients_lock);
 -- 
 2.53.0
 
