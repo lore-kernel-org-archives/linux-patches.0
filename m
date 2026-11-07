@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062976;
-	b=NL06JxKh0XUMJ2AdTfcCi3Vow5c/uHGpDLDhcKy3/mhRAHwmrTVmrWXj8bWmZAnXCnvP
-	 Q6d9QuE/IyN2HrtE6+YXfH+LGtA+9+i7AYsLsglQ3iimEEqtsiPLQUX9B7Xz56y4BqLGx
-	 gT3nXtNl5OgOwKlRqXE9FiGmbaB2kgvCNV2pqw1JNXahpO2Zrjv5UiDRhC8IrSs+ZHCHA
-	 DGLXB8N1/ynoHszYmC8+euLSPWH/xRqHV/RMEIhvPlQsgWejHPIg6awRs9OaGTTTKf76X
-	 XtzADStsQH7EP01dX05jXexZbMYFTZYMucwP2sC1bybJ8mnqkozNYO0w7oc6b+KFZng==
+	t=1794062977;
+	b=rMP8j0ygnyGrdTRKS3cZIwxszxWE9kDBmw2c7+8+qK2pbp420Qo524lwh5ePPbhJRQMY
+	 wQa0VyziDmlRtTJ9xH0K6BHxVKkWBH7Q+MHLVnQoL9UQAT5sT+ZhWpG+/btxWB41Yeuhg
+	 M9I2eXuwOlzX6z68nlIECr5sf7yBFhH38Rw5gyJjLURH0DTgo+zRfoVPs5REKfc0BjwTV
+	 t/qRVESVPkCZHw4J3FY9gKEWjj9eIgTng+7I1P/b8W4WgBuhWq/DlgDZesJjvzv/SmGE0
+	 Lgnzk7LbUyQ4tu3PaiLxewMGRjoWT96mktGCQo89Gl9DN02iLci4QQ3bT2gwymK/29w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ccw7mfRDQGYPnWITBpQfUHzSSDCNuBpiuuPeE/FbThY=;
-	b=SOudcjs7NTbkmutueCMXRr2wbfatuGrme14LuB8ri2AXcVGYLnYjML9z0kxZKqW/hvMw
-	 QpVYAvF7P+LwjdHrt7wcCMVnIlbgxw36BqRlOvDAx3RBlKiIWn1mydyEvBA1hEx64vAzh
-	 Vf2LA7dTi28diGVo9uf4cVkdQzKCS3+Au6phnLAyLLJuZhv+uws8HXOla8G5gJm28xFky
-	 aqEW7MTmHJGGsaUcVMVX3Li0ackDIevskFo/fPAQFbVlzmcOp9QqZ9eHvC5i++t5kSoYl
-	 VMMPDLdsPZqLxwgfmOPXTpIeUl/crUpgLw70gAzOV/bDRIZ7C0u4fizwtwtKPFFhecQ==
+	bh=HBqZ4YTdkwTE4m7ab0+IQ03kPMeavOIfvQlFfxXXDsg=;
+	b=NZgoFq5TJlAyKOCV8K+BUFQN9czg4RiM2vkvj2iKTC70S0iywB5JtJR/zoK1C19sZoq6
+	 2oKXwvcEUKbiN1Al218Ht/p0FdkHMYJ58yXgfaUwEsJXPYL5TVnnlU4FhVCsVRBLqCodu
+	 8fsv4VkyndTDFaZfCGR7TFLSTk6SBOHsGh0KDstqB2JrWzMOodv/MwaIK42KNtjWQDo7Q
+	 ovufN0r4hu/Tf5RB96f5ipWsJ3WXVbFKbsOFuRNF74PaeyzYBqwgbC55fK4/2plo8M7lh
+	 J1TfAQhNimCiXhSDsz36KN2zVfskkeH7RvDK1dc9XREs5LymOgFa7cj7p8f4X9hnlqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mg1iBbdQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZYCFDyM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95CE606A33B;
-	Sat,  7 Nov 2026 14:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F460606A33B;
+	Sat,  7 Nov 2026 14:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mg1iBbdQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878171F0089F;
-	Sat,  7 Nov 2026 14:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZYCFDyM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03A71F0089F;
+	Sat,  7 Nov 2026 14:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062975;
-	bh=Ccw7mfRDQGYPnWITBpQfUHzSSDCNuBpiuuPeE/FbThY=;
+	s=korg; t=1794062976;
+	bh=HBqZ4YTdkwTE4m7ab0+IQ03kPMeavOIfvQlFfxXXDsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mg1iBbdQ1uC6SpJapvdd16deRpXcXBoFVAXp7Q5hS8u6VtTRYl56gL4on7V1etVu/
-	 czVfTrRVkqnhKu+MTfrRnHnvRsF1Bx4mR2yQlROLOIoEPsA24+89kzddh1fFe0wSOl
-	 7wNjRyyRG6XIupbda+mAvVOcwOdAxcT2aee6nndA=
+	b=ZZYCFDyM6afp7g6qAOgX48scHD4YgNnvDCuyFsJ18/q471j8a7Bh3xlgTI/lZ7nps
+	 N+wMSinAWI62qvTbuvbiezTj6vcHFgxshqdaCaDMgSOfjFk+25jhd4McuJuwHfwF8x
+	 FIz/wg/t9aXzgMWiw2Mz9kPeAtrwC1ndFbjVQNoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junjie Cao <junjie.cao@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 237/869] ASoC: rt712-sdca-dmic: fix drvdata type in the gain controls
-Date: Sat,  7 Nov 2026 08:48:39 -0500
-Message-ID: <20261107134859.877637993@linuxfoundation.org>
+Subject: [PATCH 6.18 238/869] clk: mvebu: ap-cpu-clk: Assign .num before accessing .hws
+Date: Sat,  7 Nov 2026 08:48:40 -0500
+Message-ID: <20261107134859.909350401@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,66 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-[ Upstream commit 0bc42544a4a06e8d76eb412d2b1414db910a311d ]
+[ Upstream commit b4243850393f2f24e21b9f4b2c56233e60c904b4 ]
 
-rt712_sdca_dmic_set_gain_get() and rt712_sdca_dmic_set_gain_put() take
-the component drvdata as struct rt712_sdca_priv, but this driver stores
-a struct rt712_sdca_dmic_priv.
+Commit f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with
+__counted_by") annotated the hws member of 'struct clk_hw_onecell_data'
+with __counted_by, which informs the bounds sanitizer (UBSAN_BOUNDS)
+about the number of elements in .hws[], so that it can warn when .hws[]
+is accessed out of bounds. As noted in that change, the __counted_by
+member must be initialized with the number of elements before the first
+array access happens, otherwise there will be a warning from each access
+prior to the initialization because the number of elements is zero.
+This occurs in ap_cpu_clock_probe(), which reads .hws[] to skip clusters
+that have already been set up and writes it inside the CPU node loop,
+but only assigns .num after the loop. With CONFIG_UBSAN_BOUNDS and a
+compiler that implements __counted_by (GCC 15.1+ or Clang 20.1+), this
+triggers an array-index-out-of-bounds report during probe of the AP806
+and AP807 CPU clocks, and with CONFIG_UBSAN_TRAP the first access traps.
 
-regmap and mbq_regmap are at the same offsets in both structs, so the
-register accesses work. slave is not: rt712_sdca_priv has dmic_component
-in front of it, so its slave overlays rt712_sdca_dmic_priv's params,
-which this driver never writes. When regmap_write() fails in the put
-handler, dev_err() is called with &NULL->dev (RSI below):
+Initialize .num with nclusters, the number of elements .hws[] was
+allocated with, right after the allocation. For the in-tree AP806 and
+AP807 device trees, which list the CPU nodes in ascending order, this is
+exactly the value the old assignment produced. It is also the correct
+value for any other node order, since of_clk_hw_onecell_get() rejects
+indices at or beyond .num.
 
-  rt712-sdca-dmic sdw:0:3:025d:1713:01: Defer on undeferrable control: 40800f13
-  BUG: kernel NULL pointer dereference, address: 0000000000000058
-  RIP: 0010:__dev_printk+0x10/0x70
-  RDX: ffffcdac45f83cd0 RSI: 0000000000000008 RDI: ffffffffa09cb5cb
-  Call Trace:
-   _dev_err+0x7f/0x99
-   rt712_sdca_dmic_set_gain_put.cold+0x20/0x25 [snd_soc_rt712_sdca_dmic]
-   snd_ctl_elem_write+0x19a/0x1f0 [snd]
-   snd_ctl_ioctl+0x658/0x8a0 [snd]
-
-Seen on a Dell Precision 5690 running 7.2.5-200.fc44, with alsactl
-writing the control during boot. Compile-tested only.
-
-Fixes: 63a511284c9e ("ASoC: rt712-sdca: Add RT712 SDCA driver for Mic topology")
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2532834
 Cc: stable@vger.kernel.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Link: https://patch.msgid.link/20260920024232.710189-1-junjie.cao@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with __counted_by")
+Assisted-by: LLM
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt712-sdca-dmic.c | 4 ++--
+ drivers/clk/mvebu/ap-cpu-clk.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/rt712-sdca-dmic.c b/sound/soc/codecs/rt712-sdca-dmic.c
-index bc5b872f1e42f..bbbea9af73cd2 100644
---- a/sound/soc/codecs/rt712-sdca-dmic.c
-+++ b/sound/soc/codecs/rt712-sdca-dmic.c
-@@ -247,7 +247,7 @@ static int rt712_sdca_dmic_set_gain_get(struct snd_kcontrol *kcontrol,
- 		struct snd_ctl_elem_value *ucontrol)
- {
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
--	struct rt712_sdca_priv *rt712 = snd_soc_component_get_drvdata(component);
-+	struct rt712_sdca_dmic_priv *rt712 = snd_soc_component_get_drvdata(component);
- 	struct rt712_sdca_dmic_kctrl_priv *p =
- 		(struct rt712_sdca_dmic_kctrl_priv *)kcontrol->private_value;
- 	unsigned int regvalue, ctl, i;
-@@ -278,7 +278,7 @@ static int rt712_sdca_dmic_set_gain_put(struct snd_kcontrol *kcontrol,
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct rt712_sdca_dmic_kctrl_priv *p =
- 		(struct rt712_sdca_dmic_kctrl_priv *)kcontrol->private_value;
--	struct rt712_sdca_priv *rt712 = snd_soc_component_get_drvdata(component);
-+	struct rt712_sdca_dmic_priv *rt712 = snd_soc_component_get_drvdata(component);
- 	unsigned int gain_val[4];
- 	unsigned int i, adc_vol_flag = 0, changed = 0;
- 	unsigned int regvalue[4];
+diff --git a/drivers/clk/mvebu/ap-cpu-clk.c b/drivers/clk/mvebu/ap-cpu-clk.c
+index 1e44ace7d9519..ed3ca59e0ee97 100644
+--- a/drivers/clk/mvebu/ap-cpu-clk.c
++++ b/drivers/clk/mvebu/ap-cpu-clk.c
+@@ -284,6 +284,8 @@ static int ap_cpu_clock_probe(struct platform_device *pdev)
+ 	if (!ap_cpu_data)
+ 		return -ENOMEM;
+ 
++	ap_cpu_data->num = nclusters;
++
+ 	for_each_of_cpu_node(dn) {
+ 		char *clk_name = "cpu-cluster-0";
+ 		struct clk_init_data init;
+@@ -333,8 +335,6 @@ static int ap_cpu_clock_probe(struct platform_device *pdev)
+ 		ap_cpu_data->hws[cluster_index] = &ap_cpu_clk[cluster_index].hw;
+ 	}
+ 
+-	ap_cpu_data->num = cluster_index + 1;
+-
+ 	ret = of_clk_add_hw_provider(np, of_clk_hw_onecell_get, ap_cpu_data);
+ 	if (ret)
+ 		dev_err(dev, "failed to register OF clock provider\n");
 -- 
 2.53.0
 
