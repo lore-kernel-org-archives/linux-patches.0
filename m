@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062085;
-	b=yHjhMt5NVsKU51yfSoh57/ZzhajcaOczNFMizWlg+mA5FhBMFEtVs1BctLOdFHkCCrMV
-	 PLIRTdkL5/4dk5tyfHW0yqu7b9ISVDxgbZsS8tlytXs7VtqkOWRzLyc2gJIKbzXhghrcB
-	 F10Pm24LX3urR3R3OWztcq346I3wyJAle13+u7bXJ1GltnBMEssN5AV9HnZihAbkQCgDw
-	 ehuF7mFWPy5tEzQzi4ZPYXNAIcFn2836ntE8Sfqt1VSOuR2S/j+dC22e9sm+4DFwQLt0n
-	 QFmOA1Xe9jn92iqF+Op5fQZAYMlNiL+nM1zEpOx1fppsJwekZMrc4cl6qUctEEYnjbw==
+	t=1794062086;
+	b=CwwaUiNAKpldsh5HbITgya6mK8DwQQuYeYNo+L+FPKDteulXZjGSnN8d5ABdqY/8PCfb
+	 X+w4MO8OMwoLtBXCbyYqqq61xQae5++RY9PX6zStI8+dERjbUUROZ6+OO+CenobYMz08P
+	 eBflA3UXGhiqMPRrS+yAkd5JpuJ4vqCAa0QVo7HQpTnQoy0yuU4e1iOBRj6ph3yOD7dqt
+	 2Ma6LWEmRduW46w+a3wAfw2St24sas9o+j4pwDsFwlihrQafaEzVPGdwbk5XDF8xajgHP
+	 MGgTj1si1Ik5+k5uBW7oFQdtxYyAswkIAAoms3ov+fD4bI62Moz/E9p6j1O0vjMU+xQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062085;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062086;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pijzlkf/nsyYMuzRQj1Xd9VeI/TADbSaU2yehhB9bA0=;
-	b=2+4bQ8yso4scAo3RhAwt3GlNW6gwrNBQ1xj5Trn+mhhl7sR2B2nHUXeHn/7gEda7NyvH
-	 e0Yr87kNl9TPfZvr8e4Zv1HtmHAOipYa9EoIrBZlz7guNMdZ7wBrYtbX7Zd7W1Ncf5x65
-	 IpU8S/Cw45+lBVWJdO8W299BkJMT/IpxrG1VnE7YByHdKDzOzsuXjsnMBtJLV8r6aHTnd
-	 JdXktmFNKHfVP+a+npZ32ghHcWEuf7Ry4rN+tb2zVxs3TteMlr19ohyYZYlAo5vBWio/V
-	 4xonSXzi4APMhqnj1lwJm0tjHf6W5CY1sk1UF37QQ+3T8Wvr/24bUbdJxH8Hc6uzBgA==
+	bh=CmkGILkJ2CPiZU0i8Jwj8A9sQjWTKjTRAvbussBLako=;
+	b=s+Yjk4uK4LhzmkNQ1TRLXQrLWru7b+wsVVEG5Q2rmD1WxlkuU8Bz9oieXKPI5r9T/zpf
+	 f051D0RaO984DdstpN+h1CHJto4fsQ8ofXqol5lI2aMVAPQuQ5h4XcTJaq4k9SceZS0QE
+	 cDGNnCD9WSuGmdxDpY/nNXXkCnLpHOSoNTbbCDNPms+DUXVV/GLc5hA6HvoNRD1NYTq9F
+	 c1INuZY2PJyzrGiF/TfCtos9a3hWBsgF5ng3sAHDNuyC1sq+MJIfDgCtDPiRRwMHZ15r8
+	 zp710+JpHPPkhsHjWZwVZ62L+sue8CCmG/rAJibw0RDBnQdmuawpfDP/RACrcQ+1pSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lO2V5iwc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pR/XQfvJ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B21606EEBF;
-	Sat,  7 Nov 2026 14:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45696082BEA;
+	Sat,  7 Nov 2026 14:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lO2V5iwc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F91C1F008A4;
-	Sat,  7 Nov 2026 14:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pR/XQfvJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627781F008A1;
+	Sat,  7 Nov 2026 14:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062084;
-	bh=Pijzlkf/nsyYMuzRQj1Xd9VeI/TADbSaU2yehhB9bA0=;
+	s=korg; t=1794062085;
+	bh=CmkGILkJ2CPiZU0i8Jwj8A9sQjWTKjTRAvbussBLako=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lO2V5iwcx/iPuT/pxdMaavnGqP5xVVwE3l5sg0hxZw7VM29BiR4h+cI8GvlzBcYVQ
-	 QS7CwImS9zZFi9Y7n6detfrfKh80iNzJ90DsBjjmIzgozb29Q0uGQmfuZW1Zkeus0F
-	 iXUv3MhcPCLV2M8ESPpEtEX1AxXgGPBUcIBbUD98=
+	b=pR/XQfvJoYqFTw+Kf4GZcXNcnFArw7AmasEm/YPP3G4My7/tWZL12NLeJuvGDGyD3
+	 GLfx2SuFEYsYaxkoLL8g7h3HpYFu3+tY+BDcWtPdclrhrrS+mzlw4WF3fWBYEm9F62
+	 YhuhRPLj1hUXJWpCyPVv7zIWfn7jm9FGdJldM67c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jiacheng Xu <stitch@zju.edu.cn>,
-	"Vishal Moola (Fractile)" <vishal.moola@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1059/1536] kobject: fix out-of-bounds access in kobject_action_type()
-Date: Sat,  7 Nov 2026 08:51:15 -0500
-Message-ID: <20261107135027.426722247@linuxfoundation.org>
+Subject: [PATCH 6.12 1060/1536] ASoC: Intel: atom: Fix platform device leak on probe failure
+Date: Sat,  7 Nov 2026 08:51:16 -0500
+Message-ID: <20261107135027.455215409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,48 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiacheng Xu <stitch@zju.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit d516455c940555566642b975d1835c67f08136b3 ]
+[ Upstream commit dcc36d766dc82bc57cd730915d484119befcfca8 ]
 
-kobject_action_type() compares the input against each known action
-using strncmp() and then indexes the action string using count_first
-to check for an exact-length match.
+sst_acpi_probe() registers platform devices for the SST platform and
+machine board using platform_device_register_data(), but does not
+unregister them when later probe steps fail.
 
-An embedded NUL can make strncmp() return zero even when count_first
-exceeds the length of the action string. For example, the five-byte
-input "add\0X" makes the parser access kobject_actions[KOBJ_ADD][5],
-which is beyond the end of the "add" string.
-
-Check the action string length with strlen() instead of indexing it
-with the input-derived offset. This rejects malformed action strings
-containing embedded NUL bytes with -EINVAL instead of invoking
-undefined behavior.
-
-Cc: stable@kernel.org
-Fixes: 60a96a59569b ("Driver core: accept all valid action-strings in uevent-trigger")
-Signed-off-by: Jiacheng Xu <stitch@zju.edu.cn>
-Reviewed-by: Vishal Moola (Fractile) <vishal.moola@gmail.com>
-Link: https://patch.msgid.link/20260920053726.22626-1-stitch@zju.edu.cn
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: caf94ed8629a ("ASoC: Intel: bytcr_rt5640: fixup DAI codec_name with HID")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260924134932.1590967-1-lgs201920130244@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kobject_uevent.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/atom/sst/sst_acpi.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/lib/kobject_uevent.c b/lib/kobject_uevent.c
-index 2bb08826680ff..c1c3d94dea7eb 100644
---- a/lib/kobject_uevent.c
-+++ b/lib/kobject_uevent.c
-@@ -83,7 +83,7 @@ static int kobject_action_type(const char *buf, size_t count,
- 	for (action = 0; action < ARRAY_SIZE(kobject_actions); action++) {
- 		if (strncmp(kobject_actions[action], buf, count_first) != 0)
- 			continue;
--		if (kobject_actions[action][count_first] != '\0')
-+		if (strlen(kobject_actions[action]) != count_first)
- 			continue;
- 		if (args)
- 			*args = args_start;
+diff --git a/sound/soc/intel/atom/sst/sst_acpi.c b/sound/soc/intel/atom/sst/sst_acpi.c
+index 2571806304755..92a68dbd841ed 100644
+--- a/sound/soc/intel/atom/sst/sst_acpi.c
++++ b/sound/soc/intel/atom/sst/sst_acpi.c
+@@ -253,6 +253,11 @@ static int sst_platform_get_resources(struct intel_sst_drv *ctx)
+ 	return 0;
+ }
+ 
++static void sst_unregister_platform_device(void *data)
++{
++	platform_device_unregister(data);
++}
++
+ static int sst_acpi_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -341,7 +346,10 @@ static int sst_acpi_probe(struct platform_device *pdev)
+ 			pdata->platform);
+ 		return PTR_ERR(plat_dev);
+ 	}
+-
++	ret = devm_add_action_or_reset(dev, sst_unregister_platform_device,
++				       plat_dev);
++	if (ret)
++		return ret;
+ 	/*
+ 	 * Create platform device for sst machine driver,
+ 	 * pass machine info as pdata
+@@ -354,6 +362,10 @@ static int sst_acpi_probe(struct platform_device *pdev)
+ 		return PTR_ERR(mdev);
+ 	}
+ 
++	ret = devm_add_action_or_reset(dev, sst_unregister_platform_device,
++				       mdev);
++	if (ret)
++		return ret;
+ 	/* Fill sst platform data */
+ 	ctx->pdata = pdata;
+ 	strcpy(ctx->firmware_name, mach->fw_filename);
 -- 
 2.53.0
 
