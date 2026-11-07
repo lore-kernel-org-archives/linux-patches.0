@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062982;
-	b=eQF/dgMLYw7jbPl0VPrxc7ts45exAU8hfMOVUXtSxVoxfE5dMwfMLZ5fcsrdXN/y8r3R
-	 63otuZQNIsyv2i7nUrQRlD2v6pIaHTONtVbgMyZGEMITDr0c628H/uetQA89LPcCSEuat
-	 KBd73bZRw+7cy37pIy+JhI1dLawECRzFjq70+A+Etgylvs73I9gEjXKTjgWPy79tL0Bkh
-	 1/15g/2bWZzo4qUM66jZ1rIPmaoXzoopuDW06/qbzZxsl9++NoDtalp1GRrM8YiGvXk0v
-	 OadWxwLGw9hmycESc06yYhiBo5BnAHjdCgwaly7rKd6faJxW7MmmDJdNTO6BT6nvIIw==
+	t=1794062983;
+	b=qU+I4m38Gj3hVQcGOMAWbBtZ8dNDJPHOc3/0UdtZyCTPMKDPCno8MaaWsP7fQLfm+0rX
+	 d8rGxmX0OpSYhCbxO/shB9XD/yC4xlUeVNQf+tVHHySyhYSCgeld/HK0I3NB4RVkki11o
+	 wKU1CdhGJC92CFTQrk2Tm9g3Amoftk/TfAJN63cTFysCbV3gqyk3iKUQqW1eGQDYT0eAJ
+	 EIgKn9CSiJqd+xx6rMp1JutUyvRLz6vpGUxRIZQpKG+FfBou/SHurps3mVd0o5YP9B04q
+	 GdYkpKYKtSXS3z2ovi5+jDCq8w891RJco9spLOob5jkk6cc+0dhoxjOI/jH7Y1zwVMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062983;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=MS1Zvgb7YJNCKgI7hAKyrMRSBXGZbCdCh5Hw2VQSquo=;
-	b=dVPp1sdydUowF/HPffwwHD70SAgIdUEYUo0yFvndI9NYnZb9eWoQglGqg4VUzgS8PtP1
-	 uSELHZq2P50knM6z+ZlsC+Ns/D4pfi0t5oKXurIql7y1ag49yDqPNiJsfqhvQTShXkKzS
-	 xRFvodlTj8j9wniU7flY5sTFbr7pPjHTYK+YWaGlDFIKADfreqLya5iFJjVPofNJZ6W8f
-	 VNVJi3RelYVyer4ELR9Uhc81wCAGx25d/+gs1K9wMOZePSktufOjpbGrSBDt8nuhYCKm5
-	 Pcr7tuh4r/Ik+4B007AldKnaH1hj9ZQpOdH7NLdrIINFItLbGZ/TsTYM23uUsMbW/nA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CbPre33r/0idbt2JMGjSm2faFIJ6aNEtvNyGba9mGC8=;
+	b=hduBp1tUwffV5iEvF7atRqfpcQ06w6kWtB9vbHlyWm9wdYWfSESsUrFEVKt2L49PCSia
+	 zjYwgDEb1d5pVl3H4rTMwgIEG3bDBokycg7cg7ZZQ8B1d+bZygkzDawNCohUB3b46Ct4h
+	 68t9LqDzYG5JIoPSjRWtmOc76X2gXhc1eRKyMnVlYYuiZG9IsAjNWsMdsJiLIUExntal3
+	 POXcb4CIeQfy2J1e5npnVa4hCkBvmcFH8a2ecL8hH9SCMwLXL27NWHiGEYfpNC7xP44Nb
+	 ChpR7+FPG3zZVH5jmbf8NBoaSOMZfsktZeYWGXnTOup19kfb2inQQQ2aApoRUTbynDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIUepbGi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DqpTDK4l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3009D606A33B;
-	Sat,  7 Nov 2026 14:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0BE606A32C;
+	Sat,  7 Nov 2026 14:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIUepbGi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA951F0089F;
-	Sat,  7 Nov 2026 14:49:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DqpTDK4l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F2C1F0089F;
+	Sat,  7 Nov 2026 14:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062982;
-	bh=MS1Zvgb7YJNCKgI7hAKyrMRSBXGZbCdCh5Hw2VQSquo=;
+	s=korg; t=1794062983;
+	bh=CbPre33r/0idbt2JMGjSm2faFIJ6aNEtvNyGba9mGC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bIUepbGi8Q7zt20G8META8keFD4ZKVEDw8Lb0+Dwh7xhPmdDa16QwukXEqX+UDIet
-	 caa6lVAwL6Blo0R7Dzd4nfy69fSCeyq8SNOVbWT0JrwitYk4MEcDHMZNnHOyDuPL3Y
-	 a8btTmFHUI+yoy2NSWLv83oI4Z1KxiHqBzelE7MU=
+	b=DqpTDK4lnkZ3+LsuwOTTy0I8TYBLxWvZbbaMW9u9hMKOBYHZHcDrRkL6HwbBShKIl
+	 9lmqarWXHxOvH1gKENMzA5EF45UZFgBavuQiBCaH2NYmjJSbiyDr15MX4r0c58Kzpl
+	 MFn965vXhXTRygS9J/tn+Yi3Yyct0MEU0neM0pUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 242/869] platform/x86/intel/pmt: Block mmap when callback is present
-Date: Sat,  7 Nov 2026 08:48:44 -0500
-Message-ID: <20261107134900.020474635@linuxfoundation.org>
+Subject: [PATCH 6.18 243/869] mtd: rawnand: nuvoton: fix clock cleanup on probe failure
+Date: Sat,  7 Nov 2026 08:48:45 -0500
+Message-ID: <20261107134900.047931160@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -62,56 +62,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael J. Ruhl <michael.j.ruhl@intel.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 0d4cd92b41dd33a3112959f9be86002ff309de73 ]
+[ Upstream commit 8a485a40f45a19c5fcafb5cbee7387c2762af7c4 ]
 
-With the introduction of the .read_telem() callback, control
-for access to a devices data area must be done by the callback
-owner.
+ma35_nand_probe() gets and enables the NAND clock with
+devm_clk_get_enabled(), but the ma35_nand_chips_init() failure path
+also calls clk_disable() before returning.
 
-This means that an area cannot be mmap-ed with the default PMT
-handler.
+devm_clk_get_enabled() registers a managed cleanup that calls
+clk_disable_unprepare() on probe failure and driver removal. Calling
+clk_disable() explicitly first drops the clock enable count, so the
+managed cleanup attempts to disable the clock again and triggers the
+clock framework warning for an already disabled clock.
 
-If the .read_telem() callback is present, do not support mmap.
+Remove the redundant clk_disable() and let the managed clock cleanup
+handle the clock state.
 
-Fixes: 045a513040cc ("platform/x86/intel/pmt: Use PMT callbacks")
+This issue was found by manual code inspection.
+
+Fixes: 5abb5d414d55 ("mtd: rawnand: nuvoton: add new driver for the Nuvoton MA35 SoC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Link: https://patch.msgid.link/20260910135954.1586360-2-michael.j.ruhl@intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/pmt/class.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/nuvoton-ma35d1-nand-controller.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/pmt/class.c b/drivers/platform/x86/intel/pmt/class.c
-index 8077274726b5d..9ec843617e3c9 100644
---- a/drivers/platform/x86/intel/pmt/class.c
-+++ b/drivers/platform/x86/intel/pmt/class.c
-@@ -339,7 +339,14 @@ static int intel_pmt_dev_register(struct intel_pmt_entry *entry,
- 	sysfs_bin_attr_init(&entry->pmt_bin_attr);
- 	entry->pmt_bin_attr.attr.name = ns->name;
- 	entry->pmt_bin_attr.attr.mode = 0440;
--	entry->pmt_bin_attr.mmap = intel_pmt_mmap;
-+
-+	/*
-+	 * The read_telem callback controls access to the memory area. Block
-+	 * usage if the read_telem callback is present.
-+	 */
-+	if (!(entry->cb && entry->cb->read_telem))
-+		entry->pmt_bin_attr.mmap = intel_pmt_mmap;
-+
- 	entry->pmt_bin_attr.read = intel_pmt_read;
- 	entry->pmt_bin_attr.size = entry->size;
+diff --git a/drivers/mtd/nand/raw/nuvoton-ma35d1-nand-controller.c b/drivers/mtd/nand/raw/nuvoton-ma35d1-nand-controller.c
+index 1a285cd8fad62..f659d3a6b9ef4 100644
+--- a/drivers/mtd/nand/raw/nuvoton-ma35d1-nand-controller.c
++++ b/drivers/mtd/nand/raw/nuvoton-ma35d1-nand-controller.c
+@@ -993,7 +993,6 @@ static int ma35_nand_probe(struct platform_device *pdev)
+ 	ret = ma35_nand_chips_init(&pdev->dev, nand);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to init NAND chips\n");
+-		clk_disable(nand->clk);
+ 		return ret;
+ 	}
  
 -- 
 2.53.0
