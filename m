@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063030;
-	b=iKB5+dDsntjhKif8SelPU51yt4Q5AWvtEcw34TwgDzIN8ncvELDEIuPh5ime+jTImKuT
-	 Jw6vFbMSlGQ9WlqFbEA3ihg9GSJwVa2Ng5vTJrGfwAy+bRUXO6FWBqDFwprt6lSRPw3GY
-	 i62iMUtf3lh5QDFMfw+fY7IWZfCOgW09rY3EHzFVT+Jh71LvYIvPvwVY17Uk+WgbLt1Qq
-	 qc9hgyomW3mlokWGBccXxOUnFqgNgMCg7zviOkKjN8AIqFz48jqg52jX8OzKrokBJLU2i
-	 ob9+kR6Up3aAqkb7oq6wJCcDYdC6HVrorQfgNVujXMQ472nI43KxGMSKmMG8XyY5x0A==
+	t=1794063031;
+	b=0yu5+ULhWI1Gyy6LMl1rfEELHg+fPKLxQLYVzrOqAqKy2oxeVwEn3WjwSL0gFOamgFqg
+	 89glFW5jJevwkyg5z7qvVhPfO4jALZcl7LIW1PPb1dRBrM8OuM5YUDi0BkNc4elcR8od1
+	 WHhw5+tykTE9pY9OZ/KbyjkuXCtuwOL8xYyMLD/mNtXlTCPldWLiTObWIKjaWV45Xhd6G
+	 peX3Jfm8kgXgjNiZYn2ge71LDBfIDw6NVmkb7Sya39PIVPnbyjssBXNRVyaAoEMWuNpwk
+	 FXPJU3ul2Xi/XnGPlQmlKaBIPfq0X47wtE57sqQQNuyECGzeAUQHJeCOgy2C7zrwj8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063030;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063031;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t6L4RuMGNbjyl9WlBYBqxw7Cj30C+3b06dy3HEriPhY=;
-	b=xCGk1zaeZAxKJfBm1uLvwkMQfEZd0/lMq23+N7P6rEPGhdncmJZcuRSm9p5g7V88vZnj
-	 1VsJWOU5HmVlG9z21V8SQUaE40mp9TE3cGiN9GsCBd2oDcdo6SwHfrogVgf/TNJNCxYB0
-	 t38OAOsj+bnrJhRRJLMxs8YjQ/LWRa9cQ0aeUfAF5d5O/h17R0sA/21+11hzOA49bP7xe
-	 KjU6YP/or24VRKlt8uDsLZBRfWqOqSvoS6QOLbr0dWo0mjks8MNFq7VPd62s/9xBCc9RJ
-	 WIF/rTD1c2anBrb57LLXB4pbz2pIDY4BIJkTV4AiCkeeMrSu3vm3ZCwq8BHC2gZBTIA==
+	bh=D3dP83B9qfnS2EH3XcmkBK3xgGpCbu8OiB4W0cfYNEY=;
+	b=q1K+Nac6N6/Av4E1+L/BuXgRLhRWSVUYKy22oG1RkhFIPYsTyKA30ttwD3vMdKT/qjnp
+	 Q6BV02HBvE34t+t+dIjPAYX5Rv0CJoTP5B55H8Mqlm7LjwpQALnToBUv1Kourg4TaPkmf
+	 8QEbu+fcXiSxALtsxwiPuWc1AhmRSltF7fNEQvcaei5L2t07fjDXDjPY6lTnvWI99Ndym
+	 cE3TONh6v+0pMea5IVriUC49k1xoNNqGVJ2rOWX7oxhr+19Z8tkdmWqs9ee1ysaUDR0Xw
+	 H0+o5EX+B//DijbKUAtciaci6qyIkqy1g9e0H5LMgU+NIIDvJ2IVEM9QT4xR8KV2cbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E8FegisK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bO0TBrS8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733F4606D80F;
-	Sat,  7 Nov 2026 14:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E11606D802;
+	Sat,  7 Nov 2026 14:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E8FegisK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B7D1F0089F;
-	Sat,  7 Nov 2026 14:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bO0TBrS8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BF91F0089F;
+	Sat,  7 Nov 2026 14:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063030;
-	bh=t6L4RuMGNbjyl9WlBYBqxw7Cj30C+3b06dy3HEriPhY=;
+	s=korg; t=1794063031;
+	bh=D3dP83B9qfnS2EH3XcmkBK3xgGpCbu8OiB4W0cfYNEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E8FegisKejJnTLHbJbdr+7EuRhnny0dZbin279U+8g/CNyh79A0g1m4B6PhhZWIWB
-	 BpF9BIJJToXIJoIjmu15O/LGLn2Sx4HwwvpXem/2mdxPztSMLzbU0nInPVjpdh8XpO
-	 i/NeJd8olD7grKoJm6V4g+COuxrBDlCApLsZZS/s=
+	b=bO0TBrS8dLnmPVPc59mhtJGKXr0S+XxfvPWSJKnv8ExnCKbKuSaoPDJfqYIAr+5Rf
+	 FQp+WwrcV10wdqbfXynaY8JYfhdj4zBu/3OCckwOeqfeSa67wYQ2Z91SXxymyfqMhD
+	 ac2mKDYWZ0kceASIesqvBlXaIWeKvgMi63A9+HeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 280/869] fs/ntfs3: fix integer overflow in find_log_rec() causing OOB read
-Date: Sat,  7 Nov 2026 08:49:22 -0500
-Message-ID: <20261107134901.202482147@linuxfoundation.org>
+Subject: [PATCH 6.18 281/869] cxl/acpi: Check ACPI companion before use
+Date: Sat,  7 Nov 2026 08:49:23 -0500
+Message-ID: <20261107134901.243272208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,111 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit e2fcb0040b0b4097b2e97f3fbe77d3b66df9e816 ]
+[ Upstream commit 371c2ad1624283b6c7a62a28199f5161d388a738 ]
 
-find_log_rec() validates the on-disk LFS_RECORD_HDR.client_data_len
-field (`len`, a raw u32 read straight from a mounted $LogFile page)
-against the log's total available space:
+Platform drivers can be forced to match devices outside their ID tables
+through driver_override.  cxl_acpi_probe() assumes that every bound device
+has an ACPI companion and dereferences adev->dev.bus without checking the
+result of ACPI_COMPANION().  Force-binding cxl_acpi to a platform device
+without a companion therefore causes a NULL pointer dereference.
 
-    len = le32_to_cpu(rh->client_data_len);
-    rec_len = len + log->record_header_len;
-    if (rec_len >= log->total_avail)
-            return -EINVAL;
+This was reproduced by setting the driver override for the pcspkr platform
+device to cxl_acpi and binding it through sysfs:
 
-The addition is unchecked. For len in [0xffffffd0, 0xffffffff] (i.e.
-log->record_header_len away from UINT_MAX), `rec_len` wraps to a small
-u32 value that trivially clears the `rec_len >= log->total_avail`
-guard, so a record whose declared length is actually ~4 GiB is
-reported as valid and in-page.
+  BUG: kernel NULL pointer dereference, address: 0000000000000280
+  #PF: supervisor read access in kernel mode
+  RIP: cxl_acpi_probe+0xf4/0x220
+  Call Trace:
+   platform_probe+0x4d/0x80
+   really_probe+0x106/0x370
+   device_driver_attach+0x4c/0xa0
+   bind_store+0xd0/0x100
 
-Because find_log_rec() wrongly accepts the record, its caller
-read_log_rec_lcb() hands it back to log_replay() as good. On the
-transaction-table replay leg, log_replay() re-derives the record
-length directly from the same raw, still-unclamped client_data_len
-field and uses it to size the restart-table blob:
+Commit 2b3a5dabe89e ("platform/surface: acpi-notify: Check ACPI
+companion before use") fixed the same force-binding issue in another
+platform driver.  Check the companion before setting up the CXL root and
+return -ENODEV when it is absent.
 
-    rec_len = le32_to_cpu(frh->client_data_len);   /* ~0xffffffff */
-    ...
-    t16 = le16_to_cpu(lrh->redo_off);
-    rt  = Add2Ptr(lrh, t16);
-    t32 = rec_len - t16;                            /* still ~4 GiB */
-    if (!check_rstbl(rt, t32))
-            return -EINVAL;
-
-check_rstbl()'s own `bytes < ts` bounds guard is defeated because the
-caller-supplied `bytes` (t32) is itself the poisoned ~4 GiB value, so
-the guard can never trigger. The subsequent entry-validation loop then
-walks `rt->used` (also attacker-controlled) entries of
-sizeof(struct RESTART_TABLE) == 0x18 bytes each straight past the end
-of the kmalloc(log->page_size) log-page buffer allocated in
-read_log_page(), producing an out-of-bounds read that is reachable
-simply by mounting a crafted $LogFile (no genuine dirty-page /
-crash-recovery state is required). Confirmed via KASAN as a
-slab-out-of-bounds read in check_rstbl(), called from log_replay() ->
-ntfs_loadlog_and_replay() -> ntfs_fill_super() -> mount(2).
-
-Fix the root cause instead of hardening every downstream consumer of
-the poisoned length: make the addition in find_log_rec() overflow-safe
-with check_add_overflow(), mirroring the pattern fs/ntfs3/run.c
-already uses to validate other attacker-controlled on-disk
-length/offset arithmetic decoded from MAPPING_PAIRS runs, e.g.:
-
-    if (check_add_overflow(vcn64, len, &next_vcn))
-            return -EINVAL;
-    ...
-    if (check_add_overflow(lcn, len, &lcn_end))
-            return -EINVAL;
-
-(fs/ntfs3/run.c, run_unpack()).
-
-With the overflow rejected instead of silently wrapped, `rec_len` is
-only ever a true, non-wrapped sum, so the existing
-`rec_len >= log->total_avail` check now correctly rejects any
-oversized record up front. log_replay()'s transaction-table leg then
-never gets a chance to re-read the poisoned client_data_len, and
-check_rstbl() is never invoked with an attacker-inflated `bytes` for
-this path.
-
-Verified on a v6.19 KASAN build: mounting a crafted $LogFile whose
-client_data_len overflows trips a KASAN slab-out-of-bounds-read
-report in check_rstbl() before this fix; with check_add_overflow()
-applied, the same image is cleanly rejected during log replay and no
-KASAN report fires.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Fixes: 7d4b5ca2e2cb ("cxl/acpi: Add downstream port data to cxl_port instances")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260926071605.3013893-1-yaojiale02@163.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cxl/acpi.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index ae15c2fc48646..ca3533a10d064 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -7,6 +7,7 @@
+diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
+index bd2e282ca93a0..5e9bb0df46dd8 100644
+--- a/drivers/cxl/acpi.c
++++ b/drivers/cxl/acpi.c
+@@ -892,13 +892,17 @@ static int pair_cxl_resource(struct device *dev, void *data)
  
- #include <linux/blkdev.h>
- #include <linux/fs.h>
-+#include <linux/overflow.h>
- #include <linux/random.h>
- #include <linux/slab.h>
+ static int cxl_acpi_probe(struct platform_device *pdev)
+ {
+-	int rc;
++	struct cxl_cfmws_context ctx;
++	struct acpi_device *adev;
+ 	struct resource *cxl_res;
+ 	struct cxl_root *cxl_root;
+ 	struct cxl_port *root_port;
+ 	struct device *host = &pdev->dev;
+-	struct acpi_device *adev = ACPI_COMPANION(host);
+-	struct cxl_cfmws_context ctx;
++	int rc;
++
++	adev = ACPI_COMPANION(host);
++	if (!adev)
++		return -ENODEV;
  
-@@ -2455,7 +2456,8 @@ static int find_log_rec(struct ntfs_log *log, u64 lsn, struct lcb *lcb)
- 	 * Check that the length field isn't greater than the total
- 	 * available space the log file.
- 	 */
--	rec_len = len + log->record_header_len;
-+	if (check_add_overflow(len, log->record_header_len, &rec_len))
-+		return -EINVAL;
- 	if (rec_len >= log->total_avail)
- 		return -EINVAL;
- 
+ 	device_lock_set_class(&pdev->dev, &cxl_root_key);
+ 	rc = devm_add_action_or_reset(&pdev->dev, cxl_acpi_lock_reset_class,
 -- 
 2.53.0
 
