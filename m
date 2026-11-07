@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063859;
-	b=GOJEsZ0DxK4uxeyIX+CMYMrpkxZuSGTpoqoWUn+sKgekTe6Jo3aCMocZQjXU3vaQ9Ikq
-	 tZIq8gbwXeJtTJI82+/5SJVuNWtgDCgQrMu3HBZfCbkhEaCFNlElITpps+3pYj59X6dWm
-	 7h501UgGJoxzhogRC/LUDMgAWV8yFX3tpliezTtcoq3Jj9CJ7mqn8KaqNfdjdBSAOWET3
-	 Yqxc+PaHjKLZpLkdFYzs/ADweLFN1updIzk0ss9202OvhALETGMPlnItNAL6nB9r7T1kE
-	 zeGtEYybnICEpO4yWLqwGso2n9mwbZoIdYv79e6wE4Lozl1V3CTrI2POKBHsOb59Htw==
+	t=1794063860;
+	b=Sko6U0o/1DWIDEI3z8nXpHuNxbkxRRaCfo8F/YYPoRby5G+eiLEeDKvmvM08nnutnCBs
+	 HApLPtREawxWV86OMq5RWRxjmWrnx8tB5VXlSkW0vQzZFNA0RNhJXg0GDyL7OM+G8EJbE
+	 l1GU3rdiCBTjF1N01vvsX2rGUm9aQ1F6fjm+muCWyThiCl2haW9HwhKMzVRSxJNPgGjpq
+	 VgATbHbZhiJlV3lCoGt4upqkd+YsJ4Tt5yg0HfZ+rX5Kp//YS0QoLL76NPGZaXDcJTPHx
+	 3UDpQtKqNSzTtEYShVtJnAfsFbUnGVZMy91sIfYdf1NE7OUQCQmWc8h9go9AeOsvp8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063859;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063860;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kkxq3DQ9Gq22KLCYppUi8GwVoHsesSolngFfVQawd9c=;
-	b=MvU499EfRoD3OwG1SdwABw3W1LxpzbEPRmoT8iYD87dvSnGsa7n0ZuVe3hWQAm2+NyMT
-	 oStBDyFu3ODlU83I8I47OH87oCyBLb5XQGH6Ka2fLSoC4fvuYJ1pyanwUD2yMoIBOdw9q
-	 m+NTM2bRn9tkOWssJ3MvL3EhMYt2AnXRlsvjdhhXBK5BlFYlJjN1lCFROXq0IH7o5K9Hy
-	 AdwHaAW68VasNYCDkI3THrqnf4yD1jj5skgTEF8AR09mFENu4Wsuy8qTdLzTszwVNCFzq
-	 vUaMU2lVkJ0djuvxGSRPPFfyJmEJSlxte1Pt8OpDfR/JlrlnG5QIQyuxfZzEyrdK5Vg==
+	bh=5h9vuvEqUCqSsD2awmeSgm7Ub1uIHVBE6QXVF38Rmzs=;
+	b=wafuNkWCdHIyqvQrDH1+k++4U72GYP4h5vcCGT9+AdhXpVOZwfFdZzO/hyVODzqqqNCe
+	 JVsE2hUZ/q4PcrE/UFV7N+dkKVURYdMwS3+u+rvUk73tn720TqL1LDo5ifFpetw78nk5C
+	 dLxDdhaMRxb/JhMrrpAnTU4TMdNx6SZgClJfjw119vwXKk4ozvaXq5oR5l8BELuKHHAuw
+	 oEFA9BLnofXimGFfn2VoQM1aqv73NczWl80uzNtrzQ98oqcb5CDpS0orS3oPwexqGe1lM
+	 IgrH99hYSBQtq5/GncFOuMgyn7/JZ+WHBHqcSh47pDZiYBdPAZ1YXKrQVhf8CNO4RXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pFC59Iru;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukYznIaP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B722E606A9FF;
-	Sat,  7 Nov 2026 15:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25D7606A9CA;
+	Sat,  7 Nov 2026 15:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pFC59Iru
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D8B1F008A1;
-	Sat,  7 Nov 2026 15:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ukYznIaP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEEE1F0089F;
+	Sat,  7 Nov 2026 15:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063858;
-	bh=Kkxq3DQ9Gq22KLCYppUi8GwVoHsesSolngFfVQawd9c=;
+	s=korg; t=1794063859;
+	bh=5h9vuvEqUCqSsD2awmeSgm7Ub1uIHVBE6QXVF38Rmzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pFC59IrudCmKvrdW/lVmaVA8Sj7lqX16os+44RLZHnbgDrB+y47usN+LePS1f9cHo
-	 bJdWWrqRVGpXOac1W2TMzcDkgbUgrYz8R5YogN6eQX+T+IURr3liC9HR/h7uwhtw9t
-	 wNBbx4NjDSUddrvpqWQShYRcetWdeYI/AfQnhDfE=
+	b=ukYznIaP9ANNVKVctQp2NejAF+Jr0ii4T29e82HukeiE8MuYQvgnxVVCCnwfIXhHN
+	 WFum5Rhejzrab7KPLq8vG/0YJLfTq5FX98ERsr0CRAi8/gxS6ulTlNwWHNTyHrHqym
+	 mWPSJeCDQTRVRs5x3hKx/+Eare2YZUxEBS90b1eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antti Laakso <antti.laakso@linux.intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	David Heidelberg <david@ixit.cz>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0066/1257] media: i2c: cvs: Add sensor node in bound callback
-Date: Sat,  7 Nov 2026 08:39:22 -0500
-Message-ID: <20261107134941.219216673@linuxfoundation.org>
+Subject: [PATCH 7.3 0067/1257] arm64: dts: qcom: sdm845-google: Set i2c3 frequency to 400 kHz
+Date: Sat,  7 Nov 2026 08:39:23 -0500
+Message-ID: <20261107134941.246327059@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,66 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antti Laakso <antti.laakso@linux.intel.com>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 7456b40bc992a3fc34b587545716729923d507b9 ]
+[ Upstream commit a317bee7cd894188d99b4edd841744f70ed9cd8c ]
 
-Sensor device nodes are created in the complete callback, which is only
-called when all devices are successfully registered. If any device fails
-to register, e.g. due to a missing driver, the complete callback is
-never invoked and sensor nodes are not created.
+The Device Tree found in the downstream kernel for this device doesn't
+explicitly set a bus frequency, resulting in 400 kHz being chosen.
 
-Create sensor device nodes in the bound callback instead, ensuring they
-are available as soon as sensor is bound regardless of other devices
-registration status.
+This upstream DT also lacks it, however that results in a different
+default value of 100 kHz. Set it to 400 explicitly to match the
+downstream kernel.
 
-Fixes: 8e2b43d2c10b ("media: i2c: cvs: Add driver of Intel Computer Vision Sensing Controller(CVS)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Antti Laakso <antti.laakso@linux.intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 10f91b0dfaf6 ("arm64: dts: qcom: sdm845-google-common: Enable NFC")
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://lore.kernel.org/r/20260902-sdm670-sargo-nfc-v1-1-bed1cbbffc46@ixit.cz
+[bjorn: Updated commit message based on suggestion from Konrad]
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/cvs/v4l2.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/i2c/cvs/v4l2.c b/drivers/media/i2c/cvs/v4l2.c
-index 9fadca7a3beed..863112cde2665 100644
---- a/drivers/media/i2c/cvs/v4l2.c
-+++ b/drivers/media/i2c/cvs/v4l2.c
-@@ -13,6 +13,7 @@
- #include <media/v4l2-async.h>
- #include <media/v4l2-common.h>
- #include <media/v4l2-ctrls.h>
-+#include <media/v4l2-device.h>
- #include <media/v4l2-event.h>
- #include <media/v4l2-fwnode.h>
- #include <media/v4l2-mc.h>
-@@ -400,7 +401,7 @@ static int cvs_csi_notify_bound(struct v4l2_async_notifier *notifier,
- 				struct v4l2_async_connection *asc)
- {
- 	struct icvs *ctx = notifier_to_csi(notifier);
--	int pad;
-+	int pad, ret;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
+index 9e952f9862f24..f73d4ea57705f 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
+@@ -392,6 +392,8 @@ &gpu_zap_shader {
+ };
  
- 	pad = media_entity_get_fwnode_pad(&sd->entity, asc->match.fwnode,
- 					  MEDIA_PAD_FL_SOURCE);
-@@ -409,9 +410,13 @@ static int cvs_csi_notify_bound(struct v4l2_async_notifier *notifier,
- 
- 	ctx->remote = &sd->entity.pads[pad];
- 
--	return media_create_pad_link(&sd->entity, pad, &ctx->subdev.entity,
--				     ICVS_CSI_PAD_SINK, MEDIA_LNK_FL_ENABLED |
--				     MEDIA_LNK_FL_IMMUTABLE);
-+	ret = media_create_pad_link(&sd->entity, pad, &ctx->subdev.entity,
-+				    ICVS_CSI_PAD_SINK, MEDIA_LNK_FL_ENABLED |
-+				    MEDIA_LNK_FL_IMMUTABLE);
-+	if (ret)
-+		return ret;
+ &i2c3 {
++	clock-frequency = <400000>;
 +
-+	return v4l2_device_register_subdev_nodes(sd->v4l2_dev);
- }
+ 	status = "okay";
  
- /**
+ 	nfc@28 {
 -- 
 2.53.0
 
