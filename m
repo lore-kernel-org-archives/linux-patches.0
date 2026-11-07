@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064027;
-	b=MULMrcc4iS2Bk3DhFM92DkTGEBrzf3uiA+/t4K6VqcCC5/o+B1+8C8yBIDBN6X6Y2tlR
-	 +eg+dKRgGEuDUQKTj8SuqEmlspqFoO0H+A3vHILReDA4WBPmCrHcmOdCB2D3ucVSoj/TN
-	 Axuvggoz7F0KpUCycAJjURr+p/zzD4anR8T8AVw1qKrtrrgkuXyIi5slE8E8U/k+sLNA/
-	 GjoTOf9kxoqd38UWR8JdV4u872U+a8Dl3P+tUHHzPuDOvxJ5vVRkD9vSNCGh9Am2EpLeZ
-	 /Yz6oMBjUFR1wma8Dafp5g4B9Bqe1JPtUni71U1AnDWxrcq94zyuci0QTHJpGRemeHQ==
+	t=1794064029;
+	b=BsyA5vTiC6l7zGby5pxTBbxhnFVF8qEs60i/Qn/cghAivS/0IPnsuy3W9gBaPt6/cJyo
+	 JTfL7phQLW6pLcWV6BAOw6am0uaNP3rYPVD2naTnweCG4Xw+ssLL6xPW+Mk6aHNp9bm5b
+	 1yBuj9NfG8pQfNoT3Q6dLbTB8FRFnUeY085CR4I7mWQ5fxLIDoCpU0bKSBhzRoM4xAOLz
+	 b3eHYSreLULpmiX5Bue7zPAaE+wNoPFdCSXX7Wk1wyDIBwHYNkxI52k44ij1gHMmLJ8kT
+	 gKEU4k/NrzGTy1Qnx0P8/qj8cPTSvnMjj+/ffoEL/pfj4uFmZXxT6yx2oluiVMCtB5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064027;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064029;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kc3f2yVm/TfsGW/ypbkeGf7+pVHZdvZQHEq9axFZYOQ=;
-	b=ixIrSj06de5Q57LcQbIhpoP9GManeE6hwlwJLpkgiN/EW9OrKHRd4rxe/AxejRZjDJ+F
-	 Q5NlXOnyS5NcSxeBt7PfzZiklbcq1mLF5v79l9P4V6ncH0ZjLCTVdjOc/iAqRmXT2MBND
-	 fbVj8QukLzb25qyPvEibv+AbEEpoueCHNUVa42XJd7l7UdgOmBZZWbjQ+AgWtF9vU3IXH
-	 Rau/aW5dbtCkh7mhmdja1b4P6XW/DzvXRSyKFe/GECe3Lf1AXJ9GroNO1uETZvZuzMIvv
-	 a2c+NxNdbzEmo6yMg4yU+tFR5MSlPlEo4FGtwN3ono3YLRuz/seeEa7L7lMNLHskQ6g==
+	bh=b8NzSoxUTfZpB8r7lbUQWi5dWJyD/jDXo5r+//lCAXg=;
+	b=yPQYKaTqMFuV44Q2c7jv/0OdBtdif3HvNgUn6eOGuiiyFQqrFsTYbRRAtYA5dETws3ZE
+	 74RJtxwui3Vw2sVcFeD44K33NFLwFLBDHEqRbCw+s6GGWIUflw2yResBqeffh93UKKDFS
+	 E2ezbCFc/0uBjAMU15YCHzJf2FJweSzXUP0/4RAWode9w4yx0C1l7ye5aaYw0fQdAkwo/
+	 iWUUqhhLxzu+X3C63utQthNNGMlQcxVB9fY5IJv2PUFNoSvhAm9d1uYIiwl9ccZrGJV49
+	 RHPFpbEL/ztJ54TTiIM9I/RII7hfenHCNcaauV0r5HQZj2h3fVfTQkoMY1ljCldyJbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yILGtJkO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzYFyzIZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6A9606A9D3;
-	Sat,  7 Nov 2026 15:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55C5606A9CB;
+	Sat,  7 Nov 2026 15:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yILGtJkO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277071F008A1;
-	Sat,  7 Nov 2026 15:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzYFyzIZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C551F0089F;
+	Sat,  7 Nov 2026 15:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064027;
-	bh=Kc3f2yVm/TfsGW/ypbkeGf7+pVHZdvZQHEq9axFZYOQ=;
+	s=korg; t=1794064028;
+	bh=b8NzSoxUTfZpB8r7lbUQWi5dWJyD/jDXo5r+//lCAXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yILGtJkOH66iYNBtS1ezsPYc9bVuKQ8z85Rt2lM3b1324C3kEJ5g8WyK9QeGN9BS+
-	 jURlDej0ixmAsnuPDiCLZ/wNf0r8wXxZMQ2TsOa3W1eLNjWDytgr+/V571PFUdA9Wu
-	 35PcE92nB9cFX/ouWuhzsC+UckhCUpd3qv2AoRgI=
+	b=NzYFyzIZ/2R0vF6FssIX44ugYGv0Cb6LgxsZapltIu3Gw7s8VVyfond01Mx3NkIKT
+	 DmpOHBo/Ae3dv4eekYndZyWVjkFnUDy4tugmcdKPqGnBsUKmumEDkCG7mArQyCcCU4
+	 XPNTofJC1EdrbcLDVYRTzymsEeryuGW8tTUOjUlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	Thomas Huth <thuth@redhat.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0202/1257] crypto: xilinx - clear AES key buffer before freeing it
-Date: Sat,  7 Nov 2026 08:41:38 -0500
-Message-ID: <20261107134945.134564233@linuxfoundation.org>
+Subject: [PATCH 7.3 0203/1257] crypto: omap-des - fix crypto engine cleanup
+Date: Sat,  7 Nov 2026 08:41:39 -0500
+Message-ID: <20261107134945.157690043@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,37 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 1e4d31c4eb86982319245d8973473a621a256842 ]
+[ Upstream commit 5d69ed4cd4f9c68ff9a6ebb2e8a1079223a4ec6e ]
 
-In xilinx_aes_aead_exit(), the AES key buffer is freed without being
-cleared, which allows key material to remain in memory. Use
-kfree_sensitive() to clear the buffer before freeing it.
+omap_des_probe() allocates and starts a crypto engine, but the remove
+path does not call the matching crypto_engine_exit(). The probe failure
+path already performs this cleanup.
 
-Fixes: c315cb0005be ("crypto: xilinx - Change coherent DMA to streaming DMA API")
+crypto_engine_alloc_init() creates a kthread worker for processing
+requests. Without crypto_engine_exit() during driver removal, the
+worker is left running after the device is removed.
+
+Call crypto_engine_exit() after unregistering the algorithms and before
+tearing down the remaining request handling resources. This stops the
+engine and destroys its worker.
+
+This issue was found by manual code inspection.
+
+Fixes: f1b77aaca85a ("crypto: omap-des - Integrate with the crypto engine framework")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/xilinx/zynqmp-aes-gcm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/omap-des.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/crypto/xilinx/zynqmp-aes-gcm.c b/drivers/crypto/xilinx/zynqmp-aes-gcm.c
-index d54c268dfe34a..ebee37dddb1f0 100644
---- a/drivers/crypto/xilinx/zynqmp-aes-gcm.c
-+++ b/drivers/crypto/xilinx/zynqmp-aes-gcm.c
-@@ -766,7 +766,7 @@ static void xilinx_aes_aead_exit(struct crypto_aead *aead)
- 	struct xilinx_aead_tfm_ctx *tfm_ctx = crypto_tfm_ctx(tfm);
+diff --git a/drivers/crypto/omap-des.c b/drivers/crypto/omap-des.c
+index 3b7104cb4487b..4b5a8d13f505e 100644
+--- a/drivers/crypto/omap-des.c
++++ b/drivers/crypto/omap-des.c
+@@ -1082,6 +1082,8 @@ static void omap_des_remove(struct platform_device *pdev)
  
- 	dma_unmap_single(tfm_ctx->dev, tfm_ctx->key_dma_addr, AES_KEYSIZE_256, DMA_TO_DEVICE);
--	kfree(tfm_ctx->key);
-+	kfree_sensitive(tfm_ctx->key);
- 	if (tfm_ctx->fbk_cipher) {
- 		crypto_free_aead(tfm_ctx->fbk_cipher);
- 		tfm_ctx->fbk_cipher = NULL;
+ 	omap_des_unregister_algs(dd->pdata);
+ 
++	crypto_engine_exit(dd->engine);
++
+ 	cancel_work_sync(&dd->done_task);
+ 	omap_des_dma_cleanup(dd);
+ 	pm_runtime_disable(dd->dev);
 -- 
 2.53.0
 
