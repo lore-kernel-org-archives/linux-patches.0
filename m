@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061529;
-	b=P3g3YIFvwPcgs0x70QC7e+rg1nk5DdWu/viKWYcNqmx95c/DHpZOAjAGbXA50jenJF3/
-	 eX2ga/CSMpgpEE3LSpJVLlABPgKGEBH3bUSYH7aLKfEDk8eJSshhSoKZJnmTAIUAz9ugD
-	 oksntU4WCaGfRr1w2w+nwIlCs955PlvTs4P5W4IOk8pktKNhm3P8Towj7RUTLhOX9546T
-	 Fc2QjzcEAkfZOYdkmyVtJwCc0nZ8mDmg18sZ0H55/evpSkTCunQUQAEzDgh8KmFCXwVc2
-	 BqZn4mq2x4lcm7wVzf1mcCkOQtM4np3KFom4ziIEWO4Q1PlswHSjFXKhbcSNiOyj7Aw==
+	t=1794061530;
+	b=Wo/cLmiVRng8mSTrahaugi+lhoCfzgJcLL1o5GeSHibrGh5w8mp+zIdQu6NklPuqdSI3
+	 8hJSQL/hpuLkNbwmCu6Dj4aRCJydeYQCi0WrzRJVSdWGuw9UpidcumC+1UKtSS35KbojA
+	 lLPdRdh1RvG9vu36fSLb8U+kugKAzl8pZ9B3g11oT23UIq5Fhc2JfanLK5ZvSvmrPmBd7
+	 0AMx9jNjE/G+WPTmKTD9xETmNKXIt82cuhL9FIBCjxqzZ2QKFGLigthShBg7ouy7lCraa
+	 DO/kMYOeuLBlviPmWsQUG6UFZGuQRO6+Vgt1XZCRu91JycEjJgvopmZBTu3rLCSofZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061529;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GHy3193gcYeq6t1VLvQxvUy5YJrpA/9nBQotdGe/ShM=;
-	b=abc510RYT0EO94PUBoR4NlKNa2Gxh6NfoGLK3DS+6t9anycTNPGlWCj7iF+UGi0m8QNp
-	 phSBIKwZNrIk0DOfYbI7u2ptJZ078rnNAWSf2UOosrk44YOwpUVuFT0Cw/zQSQ1KhOJeG
-	 jwEjhO2tN5rxge3xfjHfsxb/ipD6hS3uF/xb9XVh/ZvmtI2MmBSPsOHhTcOL5ZlzZkOXd
-	 flcux4gXj2/RMD2ekY4Muq1C0nPmn4KwzJ0XYiEnsRFKItEPIkw+WlJ8LifZeicCHkGSC
-	 7Vud3bpxZfeZwi2F6W0ZU8qXmq0FxEQ4fYTYefTvWJGgkFcpATz5EO3rn9FxGNMdKaA==
+	bh=cSnWznrahvOR9P3XBDPYQ7rxX6qlob7BBmu+vT0ZFOs=;
+	b=fTkwG+TcLB/xJ507Erir+MgVo4PyQEQx8h7x+HRgKESShidJ0cICRd+Z+mzdOxOZ695m
+	 GqRn/YdF0wJJAlYiKFNX7oA5IqcRnBiAc5eOh/DR89bQUx7p9HMAm0CNf7z4jSnpZ1bOC
+	 Nj2mm40gx26o+AoZGoKxf9RS6qdUDpB2EaVs9bZdqj7qbw6LhQCc/lZ8XGtEFTXi6iBJh
+	 m4pe2AsA3ESPZHZ3H335HI/J6e8KfBQdN+YC3NEJkRH69ReAvuCgsO9tT6XKhNTGJctOX
+	 oYmhe/fzhaxzkAgsa1qVPdyg0TwUF/MmtZGvXRh9hXtztm1R1y7k0ttdWj4N9fHy40g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cLabEE/m";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAiaKltD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564D5606A326;
-	Sat,  7 Nov 2026 14:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD59606A32D;
+	Sat,  7 Nov 2026 14:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cLabEE/m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22D31F0089F;
-	Sat,  7 Nov 2026 14:25:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAiaKltD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396D11F0089F;
+	Sat,  7 Nov 2026 14:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061529;
-	bh=GHy3193gcYeq6t1VLvQxvUy5YJrpA/9nBQotdGe/ShM=;
+	s=korg; t=1794061530;
+	bh=cSnWznrahvOR9P3XBDPYQ7rxX6qlob7BBmu+vT0ZFOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cLabEE/maTPyddJ2fArgccUVqznZaLO5YXLVTs30Kkgb/g5pPxHRp2GiSitJWLDK4
-	 KvLcn2JVHlChdaAu+cxO+ndW66CYkabG7P+FcfLMR0LOlxaeRUpKuKpAeU7hJF3uVU
-	 PnZhhqaJYIbaxOvn8BQRcUrgIOtKKpKc+UYrgE5Y=
+	b=wAiaKltDP3KZWjsaOqmElSMF64Xp7W6vgQyX2wKvKDDmF16t8PnrzgjEIisA3+9i6
+	 L3ulRKjzVTM3fyOVBLDT/Sr2wUlI/U7QRLs4kLgjEN5uGMrNsNnhYwArQP0ZWJBp14
+	 5GMYU5+XvrBUXKAESCXXUZS1hWyqjiUieE5o/KMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Deng <18983559317@163.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.12 0615/1536] apparmor: fix a use-after-free in aa_lookupn_ns()
-Date: Sat,  7 Nov 2026 08:43:51 -0500
-Message-ID: <20261107135014.809605919@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.12 0616/1536] ata: sata_fsl: Fix use-after-free of host_priv on probe() failure
+Date: Sat,  7 Nov 2026 08:43:52 -0500
+Message-ID: <20261107135014.837313161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,98 +67,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Deng <18983559317@163.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit f292873ceb4bd3a1a0f75f884361cd556e457692 upstream.
+commit 70b1196740d61aabda13b2ad0e9c1dfa2ef9cfa3 upstream.
 
-aa_lookupn_ns() takes a reference on the namespace it finds with
-aa_get_ns(), which is kref_get() on the reference count that the
-namespace is released through, without checking whether the namespace
-is still in use.  A concurrent removal of a ":"-prefixed namespace
-looks the same namespace up and only then takes the parent lock to
-remove it, so the last reference can be dropped between the lookup and
-the aa_get_ns() call: the reference count then reports the increment on
-a zero count and the kernel classifies the following use of the object
-as a use-after-free.  A user with CAP_MAC_ADMIN can trigger this by
-writing a ":<name>" removal and a ":<name>/<profile>" removal to
-/sys/kernel/security/apparmor/.remove concurrently.
+sata_fsl_host_stop() releases hcr_base and host_priv:
 
-refcount_t: addition on 0; use-after-free.
-WARNING: lib/refcount.c:25 at refcount_warn_saturate+0xc0/0xe0, CPU#6
-Call Trace:
- <TASK>
- aa_lookupn_ns+0xa9/0xc0
- aa_remove_profiles+0x4fb/0x730
- ? __kvmalloc_node_noprof+0x219/0x5c0
- ? __pfx_aa_remove_profiles+0x10/0x10
- ? aa_loaddata_alloc+0x65/0x1f0
- ? _copy_from_user+0x2d/0x80
- ? aa_loaddata_alloc+0x111/0x1f0
- profile_remove+0x2ee/0x4a0
- vfs_write+0x21e/0xcf0
- ? rcu_core+0x29c/0x1740
- ? timerqueue_linked_add+0x1f4/0x3d0
- ? __pfx_vfs_write+0x10/0x10
- ? mutex_lock+0x81/0xe0
- ? __pfx_mutex_lock+0x10/0x10
- ? __pfx_rcu_core+0x10/0x10
- ? __pfx_hrtimer_update_next_event+0x10/0x10
- ? mutex_unlock+0x7b/0xd0
- ? fdget_pos+0x24d/0x4b0
- ksys_write+0xf7/0x1c0
- ? __pfx_ksys_write+0x10/0x10
- ? restore_fpregs_from_fpstate+0x37/0xc0
- do_syscall_64+0xf9/0x540
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+	static void sata_fsl_host_stop(struct ata_host *host)
+	{
+		struct sata_fsl_host_priv *host_priv = host->private_data;
 
-Fix by rejecting a namespace whose reference count is zero.
+		iounmap(host_priv->hcr_base);
+		kfree(host_priv);
+	}
 
-Fixes: 3664268f19ea0 ("apparmor: add namespace lookup fns()")
+->host_stop() is called by the driver core through the ata_host_stop()
+devres action which ata_host_start() registers, so it is called both when
+the device is unbound and when probe() fails after the host has been
+started.
+
+The error_exit_with_cleanup label of sata_fsl_probe() releases hcr_base
+and host_priv as well, and it is reachable from the two
+device_create_file() calls which are done after the host has been
+activated. In that case sata_fsl_host_stop() runs on an already freed
+host_priv, resulting in a use-after-free and a double iounmap()/kfree().
+
+Add a separate error label for the failures happening after the host has
+been activated, which only detaches the host and leaves hcr_base and
+host_priv to sata_fsl_host_stop().
+
+Note that ata_host_detach() is dropped from error_exit_with_cleanup, as
+that label is now only reachable while host is still NULL.
+
+Fixes: 6c8ad7e8cf29 ("sata_fsl: fix UAF in sata_fsl_port_stop when rmmod sata_fsl")
 Cc: stable@vger.kernel.org
-Signed-off-by: Binbin Deng <18983559317@163.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260915084127.692494-11-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/include/policy_ns.h |   16 ++++++++++++++++
- security/apparmor/policy_ns.c         |    2 +-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/ata/sata_fsl.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/security/apparmor/include/policy_ns.h
-+++ b/security/apparmor/include/policy_ns.h
-@@ -118,6 +118,22 @@ static inline struct aa_ns *aa_get_ns(st
- }
+--- a/drivers/ata/sata_fsl.c
++++ b/drivers/ata/sata_fsl.c
+@@ -1499,7 +1499,7 @@ static int sata_fsl_probe(struct platfor
+ 	host_priv->intr_coalescing.attr.mode = S_IRUGO | S_IWUSR;
+ 	retval = device_create_file(host->dev, &host_priv->intr_coalescing);
+ 	if (retval)
+-		goto error_exit_with_cleanup;
++		goto error_exit_detach;
  
- /**
-+ * aa_get_ns_not0 - increment references count on @ns found via lookup
-+ * @ns: namespace to increment reference count of (MAYBE NULL)
-+ *
-+ * Returns: pointer to @ns, if @ns is NULL returns NULL,
-+ *          NULL if @ns is being freed
-+ * Requires: @ns must be held with valid refcount when called
-+ */
-+static inline struct aa_ns *aa_get_ns_not0(struct aa_ns *ns)
-+{
-+	if (ns && aa_get_profile_not0(ns->unconfined))
-+		return ns;
-+
-+	return NULL;
-+}
-+
-+/**
-  * aa_put_ns - decrement refcount on @ns
-  * @ns: namespace to put reference of
-  *
---- a/security/apparmor/policy_ns.c
-+++ b/security/apparmor/policy_ns.c
-@@ -207,7 +207,7 @@ struct aa_ns *aa_lookupn_ns(struct aa_ns
- 	struct aa_ns *ns = NULL;
+ 	host_priv->rx_watermark.show = fsl_sata_rx_watermark_show;
+ 	host_priv->rx_watermark.store = fsl_sata_rx_watermark_store;
+@@ -1509,16 +1509,24 @@ static int sata_fsl_probe(struct platfor
+ 	retval = device_create_file(host->dev, &host_priv->rx_watermark);
+ 	if (retval) {
+ 		device_remove_file(&ofdev->dev, &host_priv->intr_coalescing);
+-		goto error_exit_with_cleanup;
++		goto error_exit_detach;
+ 	}
  
- 	rcu_read_lock();
--	ns = aa_get_ns(__aa_lookupn_ns(view, name, n));
-+	ns = aa_get_ns_not0(__aa_lookupn_ns(view, name, n));
- 	rcu_read_unlock();
+ 	return 0;
  
- 	return ns;
+-error_exit_with_cleanup:
++error_exit_detach:
++	/*
++	 * Once the host has been activated, hcr_base and host_priv are
++	 * released by sata_fsl_host_stop(), which is called by the driver core
++	 * through the ata_host_stop() devres action registered by
++	 * ata_host_start(). Releasing them here as well would result in a
++	 * double iounmap() and a use-after-free.
++	 */
++	ata_host_detach(host);
+ 
+-	if (host)
+-		ata_host_detach(host);
++	return retval;
+ 
++error_exit_with_cleanup:
+ 	if (hcr_base)
+ 		iounmap(hcr_base);
+ 	kfree(host_priv);
 
 
