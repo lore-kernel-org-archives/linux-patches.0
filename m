@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065593;
-	b=BHlZBdZgDERYN486DTrx4IVTgxsclr+2h9anZQtJP6dlnaOH7g3jE4P2DR8BSieQPx6I
-	 vPmBlFZxwSGVcOfZoPyY2eRCWOSBAvFuZHAUkWHPhnLSggoWXN1N4kCR/dVdHP+SPf9O5
-	 mZmsVTIe8cLqplm5UTsXOZZCjchpXqgR8e3AdceWIAQwSCiJsHWvTLu8XYqewJ7D9YV9K
-	 hlTr6tIUzgOylCiK3l1LvbQwraItcnX5H9PDkpqUNouSP4y8MPqk2FajvzCuqVD979y0W
-	 4eHkKclIlbGsPKHa975y5oj/VARCXKBlB/WIF0NPXpqeSylyTQ6dMafVRcR6+RRYDLw==
+	t=1794065594;
+	b=Uq2VmcT1/0g5qV2aMHOQkC9QAB4U9MYMnzFQuhARwL7B26oAXkE/XFOcA2gv1d+KGRb0
+	 aXTkNAw3b/ExGJKCFo9XC5mreACTy09hpLzqDixpx+4f9iMm+vtYGbpIeSiNZxnD+KVZM
+	 Tnfdxf4HLqWdQJEnyqd8gvAikw4EW9iAI8WkGm4ciBs4yQTnRk9F5zOcuk9zvJw4oIJO4
+	 ObkTJEi2xG5WBdrygIJwIisrMiz2dFdsjdW6oYx3Pf3X1an1YofiiBFDMhuUET6EN56t0
+	 1Bbga9V2NW1eby3WBVs5JcHES18TxJB5q5qAC5EacapFdD2IUsFQ9d+D3vROzl6qbCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065593;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065594;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5DNhsHP1dig34cakIkG12XFuRZrlMB7D5fnnUygeNf0=;
-	b=SIq9fOZrF0TSKGlIXVX+bcVHSpBAOdYlX4WExUPyA/21v9y/0DFot2GKWuGfAYTUCYqw
-	 OTyOQXTAEze0xt78p/GOixqroL8EMe5T+W9kjxkYW2Y+q2LuGoMz8Gy50/apKWgOnubaT
-	 PZLA1PlqpHdEiVl+fUkruwmL1B/J2IRqrIkQ0D7DmezzpVWCsBlxUMbNjQTS/8AAfHXyD
-	 XVjaY6TgOrF4wYNH7MdvOBY5JwtU9uHeC48WuGMHvOaNBu4mm7Zu5uvj82r3rLONwvNWW
-	 R4r2q7oFYFkrn1xbIoIqzNCvaznrrRAt+9JT0KVhVD73Wqek5i92G5OFKZaBmb/nS3g==
+	bh=1ZYlAfQHlm/Bk+TOSJXMw2HB+19AmBAgZE3xedTenWs=;
+	b=R1jUq5ZszeO1+blrDOqfzd0+cCeUsluuKLyZIoxm/py4jj0Xg5TU0QvAGIkAG6NuKPcK
+	 P8bJncciiJv6GwGNWw/DgaeU7ybqTrPI58htodwg2T/JD7wwPKU0lUQkjrEWkdICJEO5E
+	 mUT0YivtO7mb+6tSaq9Z7Gk+oIDfYUdqbPFW3cNWdhrmpw8IkYAORQbAQ1SrPEzDrz2nn
+	 xL6TQLb/WuwthewBzbrN4Jv1AI7JiZ9TYLs53IA14FREWSjaWad8drXkAWTHFZ4BgfQfu
+	 U9H3IIx9Q+GmhoTc+bi+B94Fvw9nR97iIcLyewqq7PbRUdOzYqwl9YA7UeuTuh0StYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lueXSg8M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UkI4Ejyn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF0F606A337;
-	Sat,  7 Nov 2026 15:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6AE606A337;
+	Sat,  7 Nov 2026 15:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lueXSg8M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897801F0089F;
-	Sat,  7 Nov 2026 15:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UkI4Ejyn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E6A1F0089F;
+	Sat,  7 Nov 2026 15:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065592;
-	bh=5DNhsHP1dig34cakIkG12XFuRZrlMB7D5fnnUygeNf0=;
+	s=korg; t=1794065594;
+	bh=1ZYlAfQHlm/Bk+TOSJXMw2HB+19AmBAgZE3xedTenWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lueXSg8MtyvyfX5yIsLs9dAcQQ2TnckipI4Uqm/KMdaffKKDz6/WY5JgMOSzsI5yZ
-	 1V2TF2oCneJ3dMaPWfyySgxXDDq59mULNQ/yequzIwmlo9DE+xFHQJGDFbtoIh4XrA
-	 ATyc+5sVUdsrStWLIdlJ7VKWZQnnjUAwY4dyQ1yE=
+	b=UkI4Ejyngupy0PRiQHnBO/jIDtIHUMXgORrEDeyQ5COdWYqM/AHaoUXRPy+ISl4cd
+	 qrBcqqbz8V2HIOawnnDfLuYPo4zOuVrvXiWnoViWLhTxDYp2oyqlc8xrwxAPy7KP4F
+	 GHDNOFmDi1z0f2wpQrRTZOj76Z8a07iUsctfYARs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Yingjie Wang <1075151112@qq.com>,
+	Andrea Parri <parri.andrea@gmail.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1212/1257] nvmet-tcp: validate the TLS handshake timeout
-Date: Sat,  7 Nov 2026 08:58:28 -0500
-Message-ID: <20261107135012.848686311@linuxfoundation.org>
+Subject: [PATCH 7.3 1203/1257] nvmet-fc: only send read data for successful commands
+Date: Sat,  7 Nov 2026 08:58:19 -0500
+Message-ID: <20261107135012.579041202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,122 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit e3e7a85730a4b17efa1e2ff4088443c4753be683 ]
+[ Upstream commit 94f93c61b1a5dd08d011be58172ce4392b849008 ]
 
-tls_handshake_timeout is writable but stored as a signed int. Multiplying
-the value by MSEC_PER_SEC and HZ therefore uses signed arithmetic.
+When a read command completes with an error,
+__nvmet_fc_fcp_nvme_cmd_done() still pushes the whole data buffer to
+the host before the response. nvmet_fc_alloc_tgt_pgs() allocates that
+buffer with sgl_alloc() and no __GFP_ZERO, and a command rejected by
+nvmet_check_transfer_len() leaves it untouched, so the host receives
+stale target memory.
 
-With HZ=1000, setting it to 2147484 overflows both multiplications. If
-the handshake request is accepted and remains pending, the timer wheel
-treats the jiffies delay as already expired and queues the timeout work
-on its next advance, while the handshake agent was given about 24.9
-days. Negative values such as -1 cause the same immediate kernel-side
-timeout.
+The buffer is as large as the data length in the command IU, so the
+amount of stale memory returned is up to the host.
 
-Store the parameter as an unsigned int and reject values that cannot be
-represented both by tls_handshake_args::ta_timeout_ms and by a safe
-jiffies delay. Take one snapshot so a concurrent parameter update cannot
-give the handshake agent and delayed work different timeouts. Document
-the accepted range for built-in use.
+The tcp and rdma targets send data only when cqe->status is zero (see
+nvmet_tcp_need_data_out() and nvmet_rdma_need_data_out()), so no nvmet
+command can rely on returning data with an error status. Do the same
+for fc. The ERSP then reports a transferred length of fod->offset,
+which is 0, matching what nvme_fc_fcpio_done() checks on the host.
 
-Negative and oversized values now fail with -EINVAL. Keep zero valid,
-preserving the existing immediate-timeout behavior.
+Tested over nvme-fcloop: a failed read command no longer transfers
+data and still completes with its error status, and successful reads
+are unaffected.
 
-Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
+Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/kernel-parameters.txt         |  5 ++++
- drivers/nvme/target/tcp.c                     | 26 ++++++++++++++++---
- 2 files changed, 27 insertions(+), 4 deletions(-)
+ drivers/nvme/target/fc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index e75344f4e0cde..a6aded898b668 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4802,6 +4802,11 @@ Kernel parameters
- 			Example:
- 			nvme.quirks=7710:2267:bogus_nid,^identify_cns-9900:7711:broken_msi
- 
-+	nvmet_tcp.tls_handshake_timeout=
-+			[NVME] NVMe/TCP target TLS handshake timeout in seconds.
-+			Valid values range from 0 to the smaller of
-+			UINT_MAX / 1000 and MAX_JIFFY_OFFSET / HZ. Default: 10
-+
- 	ohci1394_dma=early	[HW,EARLY] enable debugging via the ohci1394 driver.
- 			See Documentation/core-api/debugging-via-ohci1394.rst for more
- 			info.
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index e598101752620..7937377436d3b 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -6,6 +6,7 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- #include <linux/module.h>
- #include <linux/init.h>
-+#include <linux/jiffies.h>
- #include <linux/slab.h>
- #include <linux/crc32c.h>
- #include <linux/err.h>
-@@ -76,8 +77,24 @@ MODULE_PARM_DESC(idle_poll_period_usecs,
- /*
-  * TLS handshake timeout
-  */
--static int tls_handshake_timeout = 10;
--module_param(tls_handshake_timeout, int, 0644);
-+static unsigned int tls_handshake_timeout = 10;
-+
-+static int tls_handshake_timeout_set(const char *val,
-+				     const struct kernel_param *kp)
-+{
-+	return param_set_uint_minmax(val, kp, 0,
-+		min_t(unsigned long, UINT_MAX / MSEC_PER_SEC,
-+		      MAX_JIFFY_OFFSET / HZ));
-+}
-+
-+static const struct kernel_param_ops tls_handshake_timeout_ops = {
-+	.set = tls_handshake_timeout_set,
-+	.get = param_get_uint,
-+};
-+
-+module_param_cb(tls_handshake_timeout, &tls_handshake_timeout_ops,
-+		&tls_handshake_timeout, 0644);
-+__MODULE_PARM_TYPE(tls_handshake_timeout, "uint");
- MODULE_PARM_DESC(tls_handshake_timeout,
- 		 "nvme TLS handshake timeout in seconds (default 10)");
- #endif
-@@ -1904,6 +1921,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
- {
- 	int ret = -EOPNOTSUPP;
- 	struct tls_handshake_args args;
-+	unsigned int timeout = READ_ONCE(tls_handshake_timeout);
- 
- 	if (queue->state != NVMET_TCP_Q_TLS_HANDSHAKE) {
- 		pr_warn("cannot start TLS in state %d\n", queue->state);
-@@ -1917,7 +1935,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
- 	args.ta_done = nvmet_tcp_tls_handshake_done;
- 	args.ta_data = queue;
- 	args.ta_keyring = key_serial(queue->port->nport->keyring);
--	args.ta_timeout_ms = tls_handshake_timeout * 1000;
-+	args.ta_timeout_ms = timeout * MSEC_PER_SEC;
- 
- 	ret = tls_server_hello_psk(&args, GFP_KERNEL);
- 	if (ret) {
-@@ -1925,7 +1943,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
- 		pr_err("failed to start TLS, err=%d\n", ret);
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index f3e80095d7d16..c45a98cc094bb 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -2486,11 +2486,11 @@ __nvmet_fc_fcp_nvme_cmd_done(struct nvmet_fc_tgtport *tgtport,
  	} else {
- 		queue_delayed_work(nvmet_wq, &queue->tls_handshake_tmo_work,
--				   tls_handshake_timeout * HZ);
-+				   (unsigned long)timeout * HZ);
- 	}
- 	return ret;
- }
+ 
+ 		/*
+-		 * try to push the data even if the SQE status is non-zero.
+-		 * There may be a status where data still was intended to
+-		 * be moved
++		 * A failed command may not have filled its read buffer, so
++		 * only push data for success, as the tcp and rdma targets do.
+ 		 */
+-		if ((fod->io_dir == NVMET_FCP_READ) && (fod->data_sg_cnt)) {
++		if (fod->io_dir == NVMET_FCP_READ && fod->data_sg_cnt &&
++		    !cqe->status) {
+ 			/* push the data over before sending rsp */
+ 			nvmet_fc_transfer_fcp_data(tgtport, fod,
+ 						NVMET_FCOP_READDATA);
 -- 
 2.53.0
 
