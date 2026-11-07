@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061841;
-	b=35RBePvwc7MySXtLPWuOTII/W1rt4E386Qv6RTxiyjvcuo2gJcuG9bTs4+tPryddQ0z9
-	 mifqiqpizjUUnVhjOF91KdyrUivw6Mp+r+C9pFhoV2aplLa6RjM3gmoZPlLbGMYCR5P0v
-	 3cvVM1a0TcrbD2O5KCdH61gh8rR0uPq5pG4wDPrg6gFcywIaWNRFHeLoOYrXyy04j2oYv
-	 7CdfZMOUctpQOxQysvH1qJ95jdQG6gwnxkPMJV8czaxbvmENDPPXSpD1tHVSo+My2bDlp
-	 B3X9ntMKwg5+dJOe0T5LxQJWBAODCgzJZ832biZNuwR8dRjbPmWxUWzw4t6om8/aGEQ==
+	t=1794061842;
+	b=3/D0umcemYSkuYWiVnKJVm9jJQZcLriTeOfrR7l3A1Aw+polMVSHR+xncYXYAaezqtxZ
+	 q4e8v9VKcVNb1R+yXbpF2Z6Oj6Gps6LLr2j6veMINtin+fOsv0VYeUkOVxznQ/7WyVKeJ
+	 CiK+slyULw87Lk21+IThsFmI1eJGnG/VzTkeGWpQbAcGunubIpQcmlFJ/1eR9sUglW/TU
+	 0ekDKMBmWNryCjrtW1kWynfcyamHBMTvaJCMoFdGRiX2yzCNkPniuLTeVwc7/bZKu+fD5
+	 ps3JRmZV/ZYY3TUYbE3i7LgMb5i7WbHmMwmRjoCpOhfRGpIMbslpovsoPCK4fxGexmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061841;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UsZhs2xXJ2OYoNgoz7um3bSMKgVzJa5k9lS2Rmo7A7A=;
-	b=wb+xUqpKA3+QDwIHz0ZyP78vV4UfGZEAJSnBJ9blApA+XuQA2DmD2dTCLFw7eK/+whfh
-	 BKe7+wBepMDZxtqeEwqRy/bMbXGU168UOm7BdLKQ5C2NClA3w8sx+9Do10wF8qdZdP5b9
-	 mNX7GXhm4/DIFABX3Q5IB9kXQT8CukN+cMrtxYgyQBJY+4xypv+D3F9ZU4gUHLLdKbYZ9
-	 9m3zh3uEtkqlYpfAHjx/uo493D4I+sYol07sG9JQS0WO4yfb/E5vXBI3ER70Jw46PCCKS
-	 cHq73ldgc1w10KlWPuktN9g5h/bRUJ1O6+ZQBKeo5bPSJZO+uhWJCqjxic4s6G4ff3g==
+	bh=HRrdcVQ0UZ6D6dCPhjBEjjTmVglsJ9sVxqRE62Lkcao=;
+	b=Yk00986JBMxB3DAN+7uUAwxY3M2NsmXEvq8cWNk4GXnvb0UOaZrrEvJXBDr9J502MPea
+	 VmDSx1V4NjaUQRbe7D4ptmrP1Rsi+qjk7ESzHapzpuC1DFKKuYH2GRjARs+ACpz0ZLoGD
+	 3AekIlnOcoV3NBa69SqsA0spSeWmfZutZnwXDz7U6+7jPg02CQHDXqJ94g6f8fhBva8qF
+	 XNgKZ4Q/JDlCp23fu6yMfMP7j5+F25IN7/0Ar7469BoZy2GehCxJ1h+XZQW0+x/w/jfJr
+	 EmPbjWmjOaxqG+gksX+U1GOYJEtCMGi/AV/wfuM+Q02hkrhklUasi3L1lNbUgqOtFFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSBbYySg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i8cHmoS/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7980606A326;
-	Sat,  7 Nov 2026 14:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA73F606A326;
+	Sat,  7 Nov 2026 14:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSBbYySg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6775F1F0089F;
-	Sat,  7 Nov 2026 14:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i8cHmoS/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9788C1F0089F;
+	Sat,  7 Nov 2026 14:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061840;
-	bh=UsZhs2xXJ2OYoNgoz7um3bSMKgVzJa5k9lS2Rmo7A7A=;
+	s=korg; t=1794061841;
+	bh=HRrdcVQ0UZ6D6dCPhjBEjjTmVglsJ9sVxqRE62Lkcao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iSBbYySgHDliRL5/sSomFxWctcXWQcBL2JtyU5J0g6qUt5NpL4a1jOXhCYXWO29wE
-	 UNN9ouOmAUAeelVZmKP/rhaOedIq+PML9KhI4UcUZDz/0HLHFPaUlUpG4JwstHTCRG
-	 C3XvjL5+MPj1E9fq3Zux47KgeIcrbVaN1YcICdGU=
+	b=i8cHmoS/iMGD/3PSwEu40cb7e4EBKRGD+mEcKjPR4soLsvZo6n1HFns2NhipZrP63
+	 vWk98P4Kft/ItZyFG7z/BElSD/Oz8YvUd1O+OTxGgJ78YNAzEALMxAsrkhHfxL1OEO
+	 PQ5gvys2LcPpEV2pNj/LVKyIZtOElHEmL4OhVySU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0859/1536] x86/mm/pat: Use pr_warn() for early W^X warnings
-Date: Sat,  7 Nov 2026 08:47:55 -0500
-Message-ID: <20261107135021.676572094@linuxfoundation.org>
+Subject: [PATCH 6.12 0860/1536] inet: reject unhashed sockets during established lookups
+Date: Sat,  7 Nov 2026 08:47:56 -0500
+Message-ID: <20261107135021.704137018@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,69 +70,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit ea6fd393cb9e6811a748c7551de0dd3090f9dcde ]
+[ Upstream commit 4e2b3ef19e0e04adca38442f07dd6bc93c712bf1 ]
 
-Nathan Chancellor reports the following warning:
+TCP established ehash lookups are lockless. The socket caches involved
+use SLAB_TYPESAFE_BY_RCU, so memory can be reused before an RCU reader
+that retained its old address has finished.
 
-  CPA detected W^X violation: 8000000000000123 -> 0000000000000123 range: 0xffffffffc0400000 - 0xffffffffc0400fff PFN 100e00
+After a tuple match, __inet_lookup_established() and
+__inet6_lookup_established() acquire a reference and repeat the tuple
+check. They do not check whether the new object is hashed. If the
+address is reused for a socket with the same tuple, the lookup can
+acquire a reference to the new object and return it while its nulls node
+is unhashed.
 
-from its_alloc() doing set_memory_x() during early retpoline setup.
+A PoC that drives reuse with a SYN cookie request socket reproduced the
+crash. The new request socket is unhashed and has a NULL rsk_listener.
+A lookup that had loaded the address of the old request socket acquired
+the reference published by tcp_get_cookie_sock() and returned the new
+object. tcp_v4_rcv() then read sk_state through the NULL listener.
 
-The warning is not factually wrong but it is unproductive. First, the RWX
-permission is temporary and fixed up by execmem_restore_rox(). Second,
-at the time of the warning, all kernel text is mapped RWX. So there is not
-even a transient actual security issue.
+The resulting crash was:
 
-The right way to fix this up is to relax RWX detection during boot but
-make a final verification pass over all kernel page tables before running
-userspace.  There is code to do that today (debug_checkwx()) but it
-must be enabled explicitly in Kconfig.
+  BUG: kernel NULL pointer dereference, address: 0000000000000012
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  ...
+  Oops: Oops: 0000 [#1] SMP NOPTI
+  CPU: 4 UID: 0 PID: 0 Comm: swapper/4 Not tainted 7.3.0-00591-g0e135910deec #1 PREEMPT(lazy)
+  ...
+  RIP: 0010:tcp_v4_rcv+0x44e/0x1280
+  ...
+  R10: 0000000000000001 R11: 00000000024ca8c0 R12: 0000000000000000
+  ...
+  CR2: 0000000000000012 CR3: 0000000103d50004 CR4: 0000000000770ef0
+  ...
+  Call Trace:
+   <IRQ>
+   ? raw_local_deliver+0xae/0x240
+   ip_protocol_deliver_rcu+0x2d/0x180
+   ip_local_deliver_finish+0x84/0x100
+   ip_sublist_rcv_finish+0x5f/0x70
+   ip_sublist_rcv+0x12a/0x1d0
+   ip_list_rcv+0xfd/0x130
+   __netif_receive_skb_list_core+0x223/0x250
+   netif_receive_skb_list_internal+0x1d2/0x2c0
+   ? try_fill_recv+0x39/0x7b0
+   napi_complete_done+0x74/0x170
+   virtnet_poll+0x445/0x600
+   __napi_poll+0x27/0x1e0
+   net_rx_action+0x2fe/0x3b0
+   handle_softirqs+0xc2/0x2c0
+   __irq_exit_rcu+0x74/0xd0
+   common_interrupt+0x7f/0x90
+   </IRQ>
+  ...
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-For now, retain the warning even if it's unproductive, but make it
-scream less loudly: use pr_warn_once() rather than WARN_ONCE().
+After taking a reference, check whether the nulls node is unhashed in
+both IPv4 and IPv6 established lookups. If it is unhashed or the tuple
+no longer matches, drop the reference and restart the lookup.
 
-Remove the warning once debug_checkwx() behavior becomes unconditional.
+Lookups racing with the TIME_WAIT hashdance, or with a request being
+replaced by its child, now restart and find the new socket instead of
+returning the old one.
 
-Closes: https://lore.kernel.org/all/20260905044253.GA3816371@ax162
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://patch.msgid.link/20260913-fixes-verify-rwx-v3-1-5e1d6a08bd02@kernel.org
+Request sockets that were never inserted into ehash can have a nonzero
+refcount, and a stale lookup can hold a transient reference. Therefore,
+when SYN cookie, Fast Open, and request migration paths fail after
+setting a nonzero refcount, release the references held by those paths
+with reqsk_put() instead of freeing the request directly.
+
+Fixes: 079096f103fa ("tcp/dccp: install syn_recv requests into ehash table")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261029214219.1035176-2-imv4bel@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/pat/set_memory.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ net/ipv4/inet_connection_sock.c | 10 +++++++---
+ net/ipv4/inet_hashtables.c      |  5 +++--
+ net/ipv4/syncookies.c           |  2 ++
+ net/ipv4/tcp_input.c            |  4 +++-
+ net/ipv6/inet6_hashtables.c     |  4 +++-
+ 5 files changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
-index e3a20be305bdf..de8f065706518 100644
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -647,6 +647,21 @@ static inline pgprot_t verify_rwx(pgprot_t old, pgprot_t new, unsigned long star
- 		return new;
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 14f54dc8e0179..4093bbbd687ab 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1177,10 +1177,14 @@ static void reqsk_timer_handler(struct timer_list *t)
+ 	 */
+ 	if (nreq) {
+ 		__NET_INC_STATS(net, LINUX_MIB_TCPMIGRATEREQFAILURE);
++		/* The timer was not armed, drop its reference here. */
++		reqsk_put(nreq);
+ no_ownership:
+ 		reqsk_migrate_reset(nreq);
+ 		reqsk_queue_removed(queue, nreq);
+-		__reqsk_free(nreq);
++		/* Drop the temporary reference and the one reserved for ehash. */
++		reqsk_put(nreq);
++		reqsk_put(nreq);
+ 	}
  
- 	end = start + npg * PAGE_SIZE - 1;
-+
-+	/*
-+	 * If the kernel text is still RWX, gently complain, this could be a
-+	 * false positive.
-+	 * Once debug_checkwx() becomes mandatory for CONFIG_STRICT_KERNEL_RWX,
-+	 * the warning can be removed completely.
-+	 */
-+	if (!kernel_set_to_readonly) {
-+		pr_warn_once("CPA detected W^X violation: %016llx -> %016llx range: 0x%016lx - 0x%016lx PFN %lx\n",
-+		  (unsigned long long)pgprot_val(old),
-+		  (unsigned long long)pgprot_val(new),
-+		  start, end, pfn);
-+		return new;
-+	}
-+
- 	WARN_ONCE(1, "CPA detected W^X violation: %016llx -> %016llx range: 0x%016lx - 0x%016lx PFN %lx\n",
- 		  (unsigned long long)pgprot_val(old),
- 		  (unsigned long long)pgprot_val(new),
+ drop:
+@@ -1467,7 +1471,7 @@ struct sock *inet_csk_complete_hashdance(struct sock *sk, struct sock *child,
+ 
+ 			__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPMIGRATEREQFAILURE);
+ 			reqsk_migrate_reset(nreq);
+-			__reqsk_free(nreq);
++			reqsk_put(nreq);
+ 		} else if (inet_csk_reqsk_queue_add(sk, req, child)) {
+ 			return child;
+ 		}
+@@ -1523,7 +1527,7 @@ void inet_csk_listen_stop(struct sock *sk)
+ 					__NET_INC_STATS(sock_net(nsk),
+ 							LINUX_MIB_TCPMIGRATEREQFAILURE);
+ 					reqsk_migrate_reset(nreq);
+-					__reqsk_free(nreq);
++					reqsk_put(nreq);
+ 				}
+ 				rcu_read_unlock();
+ 
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index 37a6acff537e6..e8adf8530596c 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -512,8 +512,9 @@ struct sock *__inet_lookup_established(const struct net *net,
+ 		if (likely(inet_match(net, sk, acookie, ports, dif, sdif))) {
+ 			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
+ 				goto out;
+-			if (unlikely(!inet_match(net, sk, acookie,
+-						 ports, dif, sdif))) {
++			if (unlikely(hlist_nulls_unhashed_lockless(&sk->sk_nulls_node) ||
++				     !inet_match(net, sk, acookie, ports, dif,
++						 sdif))) {
+ 				sock_gen_put(sk);
+ 				goto begin;
+ 			}
+diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
+index 66d5272c5abb9..16361ce3e8062 100644
+--- a/net/ipv4/syncookies.c
++++ b/net/ipv4/syncookies.c
+@@ -217,6 +217,8 @@ struct sock *tcp_get_cookie_sock(struct sock *sk, struct sk_buff *skb,
+ 
+ 		bh_unlock_sock(child);
+ 		sock_put(child);
++		reqsk_put(req);
++		return NULL;
+ 	}
+ 	__reqsk_free(req);
+ 
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 96eb6d2421413..c11faca825ff9 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -7379,7 +7379,9 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 		if (!inet_csk_reqsk_queue_add(sk, req, fastopen_sk)) {
+ 			bh_unlock_sock(fastopen_sk);
+ 			sock_put(fastopen_sk);
+-			goto drop_and_free;
++			/* tcp_disconnect() already dropped one reqsk ref. */
++			reqsk_put(req);
++			goto drop;
+ 		}
+ 		READ_ONCE(sk->sk_data_ready)(sk);
+ 		bh_unlock_sock(fastopen_sk);
+diff --git a/net/ipv6/inet6_hashtables.c b/net/ipv6/inet6_hashtables.c
+index 9ec05e354baa6..70633fed6e6af 100644
+--- a/net/ipv6/inet6_hashtables.c
++++ b/net/ipv6/inet6_hashtables.c
+@@ -74,7 +74,9 @@ struct sock *__inet6_lookup_established(const struct net *net,
+ 		if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
+ 			goto out;
+ 
+-		if (unlikely(!inet6_match(net, sk, saddr, daddr, ports, dif, sdif))) {
++		if (unlikely(hlist_nulls_unhashed_lockless(&sk->sk_nulls_node) ||
++			     !inet6_match(net, sk, saddr, daddr, ports, dif,
++					  sdif))) {
+ 			sock_gen_put(sk);
+ 			goto begin;
+ 		}
 -- 
 2.53.0
 
