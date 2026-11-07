@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063922;
-	b=EnXyMLzUU6jCgKciN0kahu0YR3SmT4LyTfVShtO/JI7oiJlOC5vaN30R0p0EDyLAUYv4
-	 SVz/CJ1QNJUITcS5GV5p8vBPBWSrxkEzmy+dHGYvxvNlxp+JL2jBhes3VdXrxXGWKdTfO
-	 CRNQTs47GVrveeLeFbS9o7y66xyoLrXTafZhyNVXeXAFGAVWuHrdWbsZQLs9g9qbwnMC5
-	 SJkLQwuncxHtXDNsuHnPQ1HSBmvYtot8xccsaiCw5lC1s0bq3JehjuR4oTrk1V+vA3dx3
-	 eCAkAAI6Hen1j41Bcwx0oyNFEzXkse+vmhlWseI38/5SlEpL82tw7N+1iwMVY+Q3n2A==
+	t=1794063923;
+	b=Ejus4RawzyPJVIrTrD5kzXMM8WMJEQ51PsLbtsmGDIVsr8tnejsHvaa0A7UJI1sLqoB3
+	 rkBpZGarw3bKAG5vZVPXwIiSNAvQFY5S8cVpkSXnnL6EGqlmugOmPgtDwbwoVFXnC4Ci1
+	 48QrGxc4UmYoK7zYzOZqDyicYyyFbwk8z09R+O9TZX0ke5Se0F0/n3O72T50zOoMTgNJr
+	 EMEXHkRDuSZdxcx4sc5Y52s/4eLE+sT3b8WjbxzNnd8nUdwQaWuIYTV9AShEuCnRYC1Jh
+	 iJbQzXUGvzQbP61dx42sqnNHkbDq2PSqLy3tFhs8cnT1w98ofzcvGHbuSiZKrEe9pfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063922;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063923;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+f3UUGfAqxOIKJ96Dza6RAwqVdF3D9Cl5w2x3UVpAts=;
-	b=Y6JMybgbgkoSAKtxlS6QPJl61Jee9Mm5aXTbBGLZiRh2lxvhZWa3F2UxSd4OjWtzQxE4
-	 DDNJpkWs88/nOc2swXwnss7AKZkfAK5PBQZorUMClkChQG/E7SR2cuOyM0kuY8ejUvMaQ
-	 cSgcCxAW7/XMuK7XElome3dmj1zuIt1C+OMDZOZpHOPb6PWXQyTuHIj6jZXmw93WLBlYR
-	 7Vy+rxKRhzilIhjNH2h5kuNoFpW7faRxu4g5u0PvJzzRyr+34buLVKBnhiBEt6ynF8p8U
-	 kruBxMu8hMOLHTT+ybuVsOdVphH45rGXxB7fWxAw8er1+URaHiD2aGC4krp3LPdvZFQ==
+	bh=rqJIzZjeGW871mTsPQ17IO20mRNuUCrXE5fYBQjkuzY=;
+	b=BOGD5C8K+AJ0Y/aAeB6xrW3wZVRP3mJlGAY+EXjPP+A8isGsOGJXSa4OH1+wUCFGUpUl
+	 ppK2TBrG3x8yYBYOS156scNVUG+tAgyUUMk/RtIVzQuffyuB+90gOmBLROn4L9gYMqnZT
+	 eNOEV/GQtF3+3ez2680DDd2KBWfFurpUxPZGmrarvJxtXVwRat6KhO0qBB/+9sMaY4C5v
+	 5kW6itQT9b1c5FS/uZ4+BF2avtpNKwYqqEikOgW2raruGCASS/tz6fFsGPZVl+owP0Y9K
+	 FJ8U3TyTvHNbxhz+sVQrQCTPGJ+pQcRCJxG3PWs7JhIddE7xGYwns8CAKo+Ue+ULlmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BdUWMD5e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="TkU5l/Fs";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB7C606E8E9;
-	Sat,  7 Nov 2026 15:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B375606E8E9;
+	Sat,  7 Nov 2026 15:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BdUWMD5e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5C21F0089F;
-	Sat,  7 Nov 2026 15:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TkU5l/Fs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F461F0089F;
+	Sat,  7 Nov 2026 15:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063921;
-	bh=+f3UUGfAqxOIKJ96Dza6RAwqVdF3D9Cl5w2x3UVpAts=;
+	s=korg; t=1794063923;
+	bh=rqJIzZjeGW871mTsPQ17IO20mRNuUCrXE5fYBQjkuzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BdUWMD5e5EHKNurMxSr89BFt7PphOQTBnKNSsTFkVTh0KgaTwfOCYCMsXCWRVyZj6
-	 lzStBMd7J4b2ZQ+tDWdBc7K+sh3Z5YA9qAITUeKhz00sIPICDaLZdVr83PuwhASQYE
-	 lvIHy9tNrJTLXMkF9pvT04IFJisd9JV4W/+66IWk=
+	b=TkU5l/FstDzInzhKEsia2xbzyKvmedTAIHRxRP4S67djOA6462l4FSv5ptD/y2vIG
+	 CHn7hbMVHELaxShDPosVEozPLTZ+bKAqgTcTFKFq4KgdcCWVShmWxeuCcx13ujLolc
+	 aaQaB9oUEWjTI5BMKY7HuYKl3IUoR49to+xsxhqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	stable@kernel.org,
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0117/1257] mtd: rawnand: sunxi: fix free OOB section offsets
-Date: Sat,  7 Nov 2026 08:40:13 -0500
-Message-ID: <20261107134942.573642698@linuxfoundation.org>
+Subject: [PATCH 7.3 0118/1257] pinctrl: renesas: rzt2h: Fix used_irqs indexing in clear path
+Date: Sat,  7 Nov 2026 08:40:14 -0500
+Message-ID: <20261107134942.598987864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,43 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-[ Upstream commit c56d52865624ca236c44838ef9366a8597b6af6c ]
+[ Upstream commit c0de88659b68402ed7e53fb998a058ef430c787b ]
 
-The sunxi hardware ECC OOB layout places protected user data before the
-ECC bytes for every step. Since variable user-data lengths were
-introduced, free sections after the first use sunxi_get_ecc_offset(),
-which skips the protected user data and points at the ECC bytes instead.
+struct rzt2h_pinctrl::used_irqs is supposed to be indexed based on the
+parent IRQ number.  Do the translation using rzt2h_gpio_irq_map and
+clear it properly.
 
-As a result, the MTD free-OOB interface addresses ECC bytes rather than
-the protected user data for those sections. Use sunxi_get_oob_offset() to
-point each free section at the beginning of its protected user data. Keep
-the special two-byte offset for section zero to reserve the bad block
-marker.
-
-Fixes: 54dcd6aa69db ("mtd: rawnand: sunxi: introduce maximize variable user data length")
-Cc: stable@vger.kernel.org
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: stable@kernel.org
+Fixes: 829dde3369a9 ("pinctrl: renesas: rzt2h: Add GPIO IRQ chip to handle interrupts")
+Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260817185700.322370-2-cosmin-gabriel.tanislav.xa@renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/sunxi_nand.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/renesas/pinctrl-rzt2h.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/sunxi_nand.c b/drivers/mtd/nand/raw/sunxi_nand.c
-index 4f9c229c34bc0..89fe3c0379f74 100644
---- a/drivers/mtd/nand/raw/sunxi_nand.c
-+++ b/drivers/mtd/nand/raw/sunxi_nand.c
-@@ -2012,7 +2012,7 @@ static int sunxi_nand_ooblayout_free(struct mtd_info *mtd, int section,
- 		return 0;
- 	}
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzt2h.c b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
+index eb70aee39f1ae..a37f1e3994467 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzt2h.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzt2h.c
+@@ -1050,8 +1050,13 @@ static void rzt2h_gpio_irq_domain_free(struct irq_domain *domain, unsigned int v
+ 	irq_hw_number_t hwirq = irqd_to_hwirq(d);
+ 	u8 port = RZT2H_PIN_ID_TO_PORT(hwirq);
+ 	u8 pin = RZT2H_PIN_ID_TO_PIN(hwirq);
++	u8 parent_irq;
++
++	parent_irq = rzt2h_gpio_irq_map[hwirq];
++	if (parent_irq < RZT2H_INTERRUPTS_START)
++		return;
  
--	oobregion->offset = sunxi_get_ecc_offset(sunxi_nand, ecc, section);
-+	oobregion->offset = sunxi_get_oob_offset(sunxi_nand, ecc, section);
- 	oobregion->length = user_data_sz;
+-	if (test_and_clear_bit(hwirq - RZT2H_INTERRUPTS_START, pctrl->used_irqs))
++	if (test_and_clear_bit(parent_irq - RZT2H_INTERRUPTS_START, pctrl->used_irqs))
+ 		rzt2h_pinctrl_set_gpio_en(pctrl, port, pin, false);
  
- 	return 0;
+ 	irq_domain_free_irqs_common(domain, virq, nr_irqs);
 -- 
 2.53.0
 
