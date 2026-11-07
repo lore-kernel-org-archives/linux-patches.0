@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065191;
-	b=Sguhutsukv6wbHyOLOtaXpAgwkCJl0gW6tEKgOYdiNpHIEq10zhUDk+Q6WLpOLw5CEN+
-	 bv2X4bRJlXbnH2lAPxrsugJeWzqpjwYEF/yrizxV+2zcLoFPMgFSchhSPfsFXgfhnKJWi
-	 IjT6uS8xOgryV6jKH0YW1UKlv36pZBzzyM2sdPqj1KAfVIQtg9nQlfm/m+xn2Te7NWHbI
-	 NtRZmQNSsfd3gH9Cl2JiexSWkM4eG4iPqXeN0izDxiOl5LWN1AjUiC5Pak7ooKJEWE2JO
-	 LtvIWTlye6nAfCFXD7Io9Zft8HFu4+denmfs/0EqHovKAJyITxeGvKJ+8o1BfEBcTeA==
+	t=1794065192;
+	b=PuwzxVTgTBrrUlt3DCA3bz4568LPq4RwZJD1635l036e3LjFrIOwYr0Xf+YajmJngjNn
+	 Cz/TXdi+y7vA+lAZtiDOvQ4fB46F9LC65u0tMF2eiXp2lVAVdV0WMKY/urASMJV8AlYSf
+	 OR6Rb7QfbEZPKN1w0Fe0lhqNKryQ9oSeRdeR88mQEMCZZ3Xci8AUFhydpyzR0uDEenfgR
+	 KkY8Dg4lbI7leB9nBtRCNwE0ETZuDEGNzvaWjkhLrYvkonVGkG8Ll5cNW6ApikS2F9b4L
+	 4mI7FvCY0l156xv7O3j0yDWnQ4PHRtLXFvr746Pngk0sDQ+7QFj7X6FNaEJsmI0xiPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065192;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ztfNtwYd9TwKQDdZVtiEnEZO/iEwLjcLyCC3TT1dIGI=;
-	b=Cq7/k6c7s2uuk8CERr9YLamLt9fBl9qj1nh9lcaV9p4gs8e1pmbLRyIyBE9jRgLId3z3
-	 2PoUrVgkAj9jw70UWzBiho+oU0sKfUn/m0IAzMRg7mcj5SARaZtbFFOitcYdqGqpfs2LG
-	 MCTjDIXv0y67RfShV6qhJsTcYI6XtPoJdA9210gmoFcfrEg5VQepoCOTg1B7DkmOCiO56
-	 yqEFUpUwpi1/wMLTFix+Wc5oqP3xdfuk9C7TEyEaudxwKEMUCRLINkeb4pDpoyoQihPc6
-	 /2hA9F9lmJ7l8aWww06oheUD+kBXg3UwQRWjVWzNal9n0Jzv4iy/FQ+Lps92vX691UQ==
+	bh=NW/0E35H4jc9u37ojsx8nl5I/XKgNsA0rE+9KR/wBYg=;
+	b=ck2u5ylzWlULObmoz6kTmJDtLj2ogIfSP+4Mk5zeEUHecOC/Bgvlvh0vNikcCKu6LfUQ
+	 Lv/iQIxasZyPkuOukAfatM/qnuNQQ7EvOO3m7PDClrHJBYTYV/0uwQNSGyyC7MKvhZsoI
+	 vviv6nS0wWH6qngrrMetTnXhofGcG2e7770KLiBHZv7Fi0eXWJqam2Pigshea1pbIYU4r
+	 SBTYvWKQWgZmJFsBE2RiivwZq7mV7l2+xnBahoazntOHCfj1G+37CWqxuG0FM6yqUr8Ey
+	 JlbE9Q3/MJUyxSE9BagP+AhCeAuUM6YFQCzE8P2/885eh8cpCigv4twE2bQ1K4TwCuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oTUA1vSn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yHN7LzMo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA6C606A339;
-	Sat,  7 Nov 2026 15:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E439606A32E;
+	Sat,  7 Nov 2026 15:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oTUA1vSn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7341F0089F;
-	Sat,  7 Nov 2026 15:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yHN7LzMo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDEE01F008A2;
+	Sat,  7 Nov 2026 15:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065190;
-	bh=ztfNtwYd9TwKQDdZVtiEnEZO/iEwLjcLyCC3TT1dIGI=;
+	s=korg; t=1794065192;
+	bh=NW/0E35H4jc9u37ojsx8nl5I/XKgNsA0rE+9KR/wBYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oTUA1vSnjzdDGhVTly6l3T14FW5L/3s3bfnqoBjY7bKQV3Ovmq94BVeGYbi/trsTu
-	 w+YmhNG5LlW14bpRKEzfn2xEgKtdxLX1c+ccFzZ7LZJzH1q7fn+G+cBERwAkly5/X1
-	 vvvUqPfNpWqwup66vImwWCT7G7JzIMdGNLNFyCxs=
+	b=yHN7LzModBrIqCqhq4bmTcUfmbCEUieCsQF+0ysrM653WDyTQ+Fy+QfOSN/HJZAtj
+	 ZDgxBhITuDp3CKgSwKeka2r640k9LYrEAEciWfriVRPSvP7zyXScFO1D5swr1nO9HM
+	 3JZsOvu6SRty7UCPNMCmEczIBD4azh/jfPbJHh8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yao Yiqi <yaoyiqi3@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0993/1257] net/smc: queue the copied chunk when smc_tx_sendmsg() faults
-Date: Sat,  7 Nov 2026 08:54:49 -0500
-Message-ID: <20261107135006.791058553@linuxfoundation.org>
+Subject: [PATCH 7.3 0976/1257] fbcon: Include font geometry in the rotated font cache
+Date: Sat,  7 Nov 2026 08:54:32 -0500
+Message-ID: <20261107135006.313808471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,50 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Yao Yiqi <yaoyiqi3@huawei.com>
 
-[ Upstream commit c0703534b223a5c6993e0f000fd1c3abe621fb65 ]
+[ Upstream commit 10463bcd43495fb88ff667b2c5348200860f6bdc ]
 
-When a send wraps the end of the send buffer, smc_tx_sendmsg() copies
-the data in two chunks. If memcpy_from_msg() faults on the second one,
-smc_tx_sendmsg() returns send_done, which already counts the first
-chunk, but leaves tx_curs_prep and sndbuf_space as they were. send()
-reports bytes the peer never receives, and the next send() overwrites
-them. Any caller can hit this on its own stream with a buffer whose
-tail is unreadable.
+fbcon_rotate_font() caches a rotated copy of the console font and
+skips the rebuild when the fontdata pointer and the rotation match.
+Raw font data carries no geometry, though: width, height and
+charcount live in vc->vc_font. fbcon_set_font() deduplicates uploads
+by byte equality, so the same bytes re-uploaded with different
+dimensions keep the fontdata pointer while the geometry changes, and
+the early-out skips the rebuild.
 
-On a fault in the second chunk, queue the first one. The next pass
-retries the rest and returns send_done if it faults again, so send()
-reports only what it queued, as TCP does.
+The rotated cell size depends on the geometry (rotation swaps width
+and height), so the stale buffer is indexed with the new cell size.
+Re-uploading a 4x16 font as 16x8 on a CW-rotated console, for
+example, doubles the rotated cell size and reads past the end of the
+old buffer.
 
-Fixes: e6727f39004b ("smc: send data (through RDMA)")
+Record the geometry the buffer was built from and compare it in the
+early-out. The pointer-only key used to be backed by an explicit
+width check in the deduplication, which commit 1e3c49aa03fb
+("lib/fonts: Compare font data for equality with font_data_is_equal()")
+dropped.
+
+Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20261013-b4-disp-872a3689-v1-1-2a4c63b04761@proton.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yao Yiqi <yaoyiqi3@huawei.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_tx.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/video/fbdev/core/fbcon.h        | 9 ++++++---
+ drivers/video/fbdev/core/fbcon_rotate.c | 9 ++++++++-
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/smc_tx.c b/net/smc/smc_tx.c
-index 3144b4b1fe290..495fb1354728c 100644
---- a/net/smc/smc_tx.c
-+++ b/net/smc/smc_tx.c
-@@ -249,6 +249,13 @@ int smc_tx_sendmsg(struct smc_sock *smc, struct msghdr *msg, size_t len)
- 			rc = memcpy_from_msg(sndbuf_base + chunk_off,
- 					     msg, chunk_len);
- 			if (rc) {
-+				if (chunk) {
-+					/* send_done counts the first chunk:
-+					 * queue it and retry the rest
-+					 */
-+					copylen -= chunk_len;
-+					break;
-+				}
- 				smc_sndbuf_sync_sg_for_device(conn);
- 				if (send_done)
- 					return send_done;
+diff --git a/drivers/video/fbdev/core/fbcon.h b/drivers/video/fbdev/core/fbcon.h
+index 407d207b14f16..bfbd70f8b1cdf 100644
+--- a/drivers/video/fbdev/core/fbcon.h
++++ b/drivers/video/fbdev/core/fbcon.h
+@@ -89,10 +89,13 @@ struct fbcon_par {
+ 	char  *cursor_data;
+ #ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
+ 	struct {
+-		font_data_t *fontdata;  /* source font */
+-		u8 *buf;                /* rotated glyphs */
++		font_data_t *fontdata;       /* source font */
++		u8 *buf;                     /* rotated glyphs */
+ 		size_t bufsize;
+-		int buf_rotate;         /* rotation of buf */
++		int buf_rotate;              /* rotation of buf */
++		unsigned int buf_width;      /* geometry of source font */
++		unsigned int buf_height;
++		unsigned int buf_charcount;
+ 	} rotated;
+ #endif
+ 	u8    *cursor_src;
+diff --git a/drivers/video/fbdev/core/fbcon_rotate.c b/drivers/video/fbdev/core/fbcon_rotate.c
+index 6cdbc96eeca6f..660a3fa81baed 100644
+--- a/drivers/video/fbdev/core/fbcon_rotate.c
++++ b/drivers/video/fbdev/core/fbcon_rotate.c
+@@ -21,11 +21,18 @@ int fbcon_rotate_font(struct fb_info *info, struct vc_data *vc)
+ 	unsigned char *buf;
+ 	int ret;
+ 
+-	if (par->p->fontdata == par->rotated.fontdata && par->rotate == par->rotated.buf_rotate)
++	if (par->p->fontdata == par->rotated.fontdata &&
++	    par->rotate == par->rotated.buf_rotate &&
++	    vc->vc_font.width == par->rotated.buf_width &&
++	    vc->vc_font.height == par->rotated.buf_height &&
++	    vc->vc_font.charcount == par->rotated.buf_charcount)
+ 		return 0;
+ 
+ 	par->rotated.fontdata = par->p->fontdata;
+ 	par->rotated.buf_rotate = par->rotate;
++	par->rotated.buf_width = vc->vc_font.width;
++	par->rotated.buf_height = vc->vc_font.height;
++	par->rotated.buf_charcount = vc->vc_font.charcount;
+ 
+ 	if (info->fbops->fb_sync)
+ 		info->fbops->fb_sync(info);
 -- 
 2.53.0
 
