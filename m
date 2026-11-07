@@ -1,57 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063155;
-	b=C3Mv8t9V+ZCmYAQqcaU/+ZJt97jYqmq96Im+yfROklV5wcSDrld+rGww4RLElUlwCyvf
-	 bPv+EMfawSiUJJbYtzZ86DaLZ6Sl3KTg1h6D5eECHvC73QEBhrdvaCBX6CA8P8IA88esx
-	 Ail+gHJM/9KAi83TmroCxKhqNl2u4OGDvy2Gq/e/Ru0gq9lWR8MiJr3j4Qm6plWZsPo4d
-	 SAbjjt7KmXYIE0BTS1884oXmfL4B9QriuvwOnNdKk5nS+Za/5HtxLb1Qb8P/X/EUZlOuf
-	 F+BLB0/dRtQBJChDKw+80+QShaCTSnqHZExP0dxjEVaoBEjkAqKahd9Ggzx2J0t53dQ==
+	t=1794063156;
+	b=oUOlHMl6Y+v46JbEHUfVTUL/RAstM5n5uD/GTpT00LRoJ2LucY8JcFPCuqUCErgOvj9q
+	 fklJOJQg9FQFVPahhRAKBSnRVcz2d/lavU18Mdin9czdMIkiAfnuHNDFHQYtnE/uhsa33
+	 UgpCvm452bXG4EB8l9y/4vmi2LFCGhHNJTXYJMqKLCx0N+5eDUOUq03xwMHQXjaqlAsOi
+	 JMSfEuwmv8u0l8c2/vtVq4YCCnyk58FjRJOTQFgjz5AZmWYNPN6/nBOw6DlGlZZ+wrJzY
+	 V62FE7vUBoY8Tdi3jok7DXB1VJSXkxHgqEeNOFQgpUM+OfrSB+QRUE0Y7HoQUnwmPIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063155;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063156;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jw6fNHaaxYdbtydtu/vM6i3UzTktKX17y1A8k4Gi1NE=;
-	b=Go2k+Tahlt6xuC7k9VFhgHbygaYAKdnpAschRd67QvZQCM3nNoQD3djkWp8ekrBapU4q
-	 F1uaBzBj/dlDUjFHHSWFvThC3qN4i0GpQfrTl9A2yZYQ7vwq7rxVkzovfDTsCI0aEh9SK
-	 yjjvlgtd7InACUrJFKHwnynB/AZpWDnpdGP2ZdwHiQ41FtJ5KoT2OILV+aIQlVkCJ2diL
-	 A55kxUe8JUz9rufNadUQpEGVcuHo1MhbHyzcPBWq45WT1p/7duI1l6GEW8SrXGZDk8Hsa
-	 4koCujrhGPC1mlelFKzOwQeeMmTnHjYBVmiwCvFwotpRFMP7W0NMr6o1sEh9C1KxwBg==
+	bh=itRltcLOtnouIHVcmdWR+2Wc9FfF2hNAP1aSaMllA5E=;
+	b=Mm8/HzgcrutxDkH9Mi0SthnQluChEUBw7iFPY8n9xgqHb0BCpnsRefBTp8GCXC3VbTUk
+	 msutoFt40xXzSSwoZ+a4XrJAC+k8URTUgfujG/DFimGWlMd1vG1Io25Va1L4j0Q8G020P
+	 nQI9kymqVmxayvGsb7W2a+T1k/jV1CeIjwggRV0K+NZY1syXkikBXHTbkiEWmOOeYOh1S
+	 yYmbTSxRu+rsLHJWjflrperHawwBL6vZw5M1MNw5gEFYgQ8qQ6axEGMDP+NwL9EJqpPMY
+	 7Zs5BeB2YJbHDz//RYZ5Cy3dqPc2h/VXpPRNm0NldXNQWk0WrOkCCZpGpNHveu5XgNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRkAnNKP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGz53Enq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4EA606A331;
-	Sat,  7 Nov 2026 14:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21340606A331;
+	Sat,  7 Nov 2026 14:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRkAnNKP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECBE1F0089F;
-	Sat,  7 Nov 2026 14:52:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGz53Enq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAEF51F0089F;
+	Sat,  7 Nov 2026 14:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063154;
-	bh=Jw6fNHaaxYdbtydtu/vM6i3UzTktKX17y1A8k4Gi1NE=;
+	s=korg; t=1794063156;
+	bh=itRltcLOtnouIHVcmdWR+2Wc9FfF2hNAP1aSaMllA5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VRkAnNKPPFPnDlW850BoF5pp8t37DrYg2WY6CwqRknca5J3m+vnUhfkc+XOZfHQDr
-	 5Y9DwjfQRSeXkIDe3VLq5qPJz+y1YS/VD6E3o/FxGcaofeXGTHGnGjaA3hPODgooZD
-	 azojWmL0gtjpSBQidQbIFnF2RtOgELOq/O8vrUJI=
+	b=FGz53EnqznPq4GOBy4fTvEzs8eygg/vZpUuCnE+nmty26Kpi8/ygh14jakctBSkLE
+	 zOTvJaMcDu5mWO4qDBnm3pyarp3EybJEE49/4zPFX4ETZAJi1abbVw6gk+QH6uzjCf
+	 zdB3m94Wcf6HRAHGBIvfSLSyQa05mKH2riUXDxtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	Vega <vega@nebusec.ai>,
+	Ye Liu <liuye@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 379/869] mm: memcontrol: raise MEMCG_MAX for charges that fail without reclaiming
-Date: Sat,  7 Nov 2026 08:51:01 -0500
-Message-ID: <20261107134905.981367734@linuxfoundation.org>
+Subject: [PATCH 6.18 380/869] mm/page_table_check: skip zero pages
+Date: Sat,  7 Nov 2026 08:51:02 -0500
+Message-ID: <20261107134906.021709789@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -73,120 +71,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <joe@dama.to>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-[ Upstream commit 374f65b1481992eb6b9c6bffd53f3afa5c2e94cf ]
+[ Upstream commit 33afd07412a1efe5b750a3fd5eb0272ebdd12761 ]
 
-Charges that exceed memory.max and return through the nomem label can
-raise no event and simply return -ENOMEM.
+page_table_check_set() accounts pages by whether they are PageAnon().  The
+shared zero page is a special page, not an ordinary file-backed page.
+Read faults on private anonymous mappings can install many read-only PTEs
+that point at the zero page, but page_table_check currently accounts them
+in file_map_count.
 
-A non-blocking charge can hit the limit, get rejected, but is not visible
-in memory.events.
+That lets an unprivileged process populate enough zero-page mappings to
+overflow file_map_count and trip the BUG_ON() in page_table_check_set().
 
-This was noticed in a production setting where bpf_mem_alloc() attempted
-to refill its per-cpu freelists, which triggered a non-blocking charge
-while at the limit.
+Skip zero pages in page_table_check accounting.  They do not need the
+anonymous/file mapping conflict checks that page_table_check performs for
+ordinary pages, and this keeps the existing counter size and page_ext
+layout unchanged.
 
-Commit d6e103a757fa ("mm: memcontrol: do not miss MEMCG_MAX events for
-enforced allocations") added raised_max_event to cover charges that are
-force charged without ever reaching reclaim, but charges that are rejected
-outright were left out.  Getting an allocation failure without the
-corresponding MEMCG_MAX event is unexpected and makes debugging and
-monitoring harder.
-
-Raise the event on the way out for rejected charges as well, by routing
-the -ENOMEM return through the same exit path that already covers forced
-charges.  The existing behavior of raising a MEMCG_MAX event on every
-charge/reclaim/retry iteration is left unchanged.
-
-Tested with a module that performs accounted GFP_NOWAIT page allocations
-from a task in a cgroup at its memory.max, and measures the resulting
-memory.events:max delta.  Without this patch the rejected charges raise no
-event at all; with it the delta matches the number of rejected charges
-exactly.  A GFP_KERNEL|__GFP_NORETRY control, which reaches reclaim,
-raises the same two events per failed charge before and after, confirming
-the existing charge/reclaim/retry accounting is unchanged.
-
-Link: https://lore.kernel.org/20260831174836.3102406-1-joe@dama.to
-Fixes: d6e103a757fa ("mm: memcontrol: do not miss MEMCG_MAX events for enforced allocations")
-Signed-off-by: Joe Damato <joe@dama.to>
+Link: https://lore.kernel.org/1f8848512d2e3ded944f8d595c29faee8fdaeab0.1784645969.git.roxy520tt@gmail.com
+Fixes: df4e817b7108 ("mm: page table check")
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Cc: Ye Liu <liuye@kylinos.cn>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol.c | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ mm/page_table_check.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 82ad23d689c7f..2aa741316b49f 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2311,10 +2311,11 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
- 	bool raised_max_event = false;
- 	unsigned long pflags;
- 	bool allow_spinning = gfpflags_allow_spinning(gfp_mask);
-+	int ret = 0;
+diff --git a/mm/page_table_check.c b/mm/page_table_check.c
+index 91c4dacc41fb8..fa2c12e76a9e7 100644
+--- a/mm/page_table_check.c
++++ b/mm/page_table_check.c
+@@ -67,7 +67,7 @@ static void page_table_check_clear(unsigned long pfn, unsigned long pgcnt)
+ 	struct page *page;
+ 	bool anon;
  
- retry:
- 	if (consume_stock(memcg, nr_pages))
--		return 0;
-+		return ret;
+-	if (!pfn_valid(pfn))
++	if (!pfn_valid(pfn) || is_zero_pfn(pfn) || is_huge_zero_pfn(pfn))
+ 		return;
  
- 	if (!allow_spinning)
- 		/* Avoid the refill and flush of the older stock */
-@@ -2424,16 +2425,11 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
- 	 * put the burden of reclaim on regular allocation requests
- 	 * and let these go through as privileged allocations.
- 	 */
--	if (!(gfp_mask & (__GFP_NOFAIL | __GFP_HIGH)))
--		return -ENOMEM;
-+	if (!(gfp_mask & (__GFP_NOFAIL | __GFP_HIGH))) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
- force:
--	/*
--	 * If the allocation has to be enforced, don't forget to raise
--	 * a MEMCG_MAX event.
--	 */
--	if (!raised_max_event)
--		__memcg_memory_event(mem_over_limit, MEMCG_MAX, allow_spinning);
--
- 	/*
- 	 * The allocation either can't fail or will lead to more memory
- 	 * being freed very soon.  Allow memory usage go over the limit
-@@ -2443,7 +2439,15 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
- 	if (do_memsw_account())
- 		page_counter_charge(&memcg->memsw, nr_pages);
+ 	page = pfn_to_page(pfn);
+@@ -102,7 +102,7 @@ static void page_table_check_set(unsigned long pfn, unsigned long pgcnt,
+ 	struct page *page;
+ 	bool anon;
  
--	return 0;
-+out:
-+	/*
-+	 * Don't forget to raise a MEMCG_MAX event for forced or rejected
-+	 * requests.
-+	 */
-+	if (!raised_max_event)
-+		__memcg_memory_event(mem_over_limit, MEMCG_MAX, allow_spinning);
-+
-+	return ret;
+-	if (!pfn_valid(pfn))
++	if (!pfn_valid(pfn) || is_zero_pfn(pfn) || is_huge_zero_pfn(pfn))
+ 		return;
  
- done_restock:
- 	if (batch > nr_pages)
-@@ -2502,7 +2506,7 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
- 	    !(current->flags & PF_MEMALLOC) &&
- 	    gfpflags_allow_blocking(gfp_mask))
- 		__mem_cgroup_handle_over_high(gfp_mask);
--	return 0;
-+	return ret;
- }
- 
- static inline int try_charge(struct mem_cgroup *memcg, gfp_t gfp_mask,
+ 	page = pfn_to_page(pfn);
 -- 
 2.53.0
 
