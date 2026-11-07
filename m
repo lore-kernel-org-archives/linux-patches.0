@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065001;
-	b=mT2AEo4J5efFnAuKqVP3bB7MQ4IfgdC6v7AlXOgAUoV5Dv9PM8KEoFIfQvT4If4qGCCi
-	 beZz7BViO54zo57G4tinIokh/kmL5bsdK+ZeGQr8h1rlpZICIHO/Me7AsvjU3jlowyoxj
-	 c2uIdBw+3ND4lT/P18ydLaXEwmEwvRzr0vslEOLWaIX5iy9ZD6L3gaVOro7YFOQde7aTL
-	 47Y+2GcTTpCvBTKQHnXPwrEcUVBUhjTBHkMZ2GnFhmYxwxEVKxRJxPcDfXqFWE6Io8rPR
-	 YpdVVst4EWQjoS831EED2HQrk/SA0tSKVbMzjaWTKtjb0bj6Lguk1O/qOsmQu3RSDuw==
+	t=1794065002;
+	b=sCHd6hlTWbHt6py5p6dwg0NyJYxfGR9uKZZEm/baRr2YktvHuMgnDl+/9QSB77A6AXi3
+	 GIp1GPa5V61m0M5UGwlnJ47oZmEu7G3SQXf6wYMHP8DiCGKEiFSJdFxQMLkQgIVouzkY1
+	 rKEJRF7Zcy2QSlih5wnocWlzW4DEeHQjH0ci7lFmkVgyEKiufERqXpy2XEEo0O9nUtrO3
+	 NiQH10U354gRrn6j755JIrGqETwp0uIqSGeZCA4H/rcWnGLw0rJF1oaR/QMYQgfM/RGem
+	 hRtUQjJbh6o/IvXJFrIB0Rg0uw+gLGPcrFNz9CeMSCb282hsmxdlbtwXLLoFWTJ/kQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065001;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065002;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6Ta/zYbXdpzaIIDQcTbTTA2KhTtgt295s5fupNTWQuA=;
-	b=UjbTTGYIfovaZ7YXpl2L0GePSfRCUzMeIc0pIDplBiXN4rXCO+bYIlXTgOCEEL5PW2uC
-	 avtjh/+dlK12LNfEGhibq1+fgAYxdBauZnhfBR5swIpHUq8rMurLTMebFgp9PmVlsnSOR
-	 /sNQH+pi4Z7I59JuACc9JH2VWgrq/RwlfL5lEGgG30oXAXsJOtEvfHdN4ATc48CgHxN+t
-	 l0bCnzkX8BBwdBlfIchkvZaLWnbgQQ/wZFBOLjfJS/T6uP6fJ0ND6fEobxK27+omArIIu
-	 Z3ZulzA3SiaH2JqF7kMukBW0GF/WeH1KGBkI0426wVpqe+Lt9WIP50uTUQQRRaNj6TA==
+	bh=nRljaqg3h8DjFhr2QB5xmwXID3cZlsLoQ7rerWWdiD0=;
+	b=wqHH4hi6LteADWCclMWAWBIDCNM3AaPBUzd+4TUy0uvozDMgpASySYZMXkxuPR3lur2K
+	 xttv/tVCuRVDBFIdh7SIxAG/WOK+Fo7U/HKxDmth9zLOO0/u6WDGrr+01K4O4WvTV5En0
+	 Tvn7ttoOMOkQ+WkLTw/lECxqM6WcGJsM1PBEIFzxPkEI+mUmu4M8zuu+Smpsmgj/buEz/
+	 ueWgnO3FBy5R3kj6+7skLN0UvpLkZrPY2yH5QR0gH9iMHBpwY4nkpBdY3SLDGebtZJmhf
+	 h2ikE9HPRo/8Pd8zondJrYxE4++GXBLdK42D3+AQDsXBtMcu8xSvWWqDyzKfD8oFq+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EduE87H+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKdEsPCI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8066606A333;
-	Sat,  7 Nov 2026 15:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438FC606A333;
+	Sat,  7 Nov 2026 15:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EduE87H+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4AB1F0089F;
-	Sat,  7 Nov 2026 15:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKdEsPCI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C8F1F0089F;
+	Sat,  7 Nov 2026 15:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065000;
-	bh=6Ta/zYbXdpzaIIDQcTbTTA2KhTtgt295s5fupNTWQuA=;
+	s=korg; t=1794065002;
+	bh=nRljaqg3h8DjFhr2QB5xmwXID3cZlsLoQ7rerWWdiD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EduE87H+nw8LAokPZgMfzGu9tPbXRa1TT/M6PXxu9S5EU1/e9nKHz/TYbgD2cK5P2
-	 pWnOpYgrSaRDQSOef1jKhjjfr0Vli5QaHHleRit8o3aFs+o8kvJ5+vy67GxMQ7aeZf
-	 myAty2WfvRXJU3QVcxfTOiNeolprRX79NkFLjasc=
+	b=mKdEsPCI/ZDdDmtNd7RPG5mdwgZtZ/xpnXZB1+w0ZSQMPZBVklDVEJwzvZPIfzRnc
+	 xDvNf+pVprijNPyrTLpznlGMz2PmGRBdFPV7nxkKXeSHQ707a5MRXyLKEGuWc0LCzZ
+	 uKaLmAWBgBPK5Nxf1HTUMaJgt90xJ1ezpi973/Yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deep Shah <deepshah146@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0869/1257] RDMA/uverbs: Fix uobject leak in DMABUF release
-Date: Sat,  7 Nov 2026 08:52:45 -0500
-Message-ID: <20261107135003.326465710@linuxfoundation.org>
+Subject: [PATCH 7.3 0870/1257] spi: ch341: handle transfers without a TX or RX buffer
+Date: Sat,  7 Nov 2026 08:52:46 -0500
+Message-ID: <20261107135003.353945882@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,57 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deep Shah <deepshah146@gmail.com>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit 4a953ee228f5544a3e5515eed88bf09d1a5adb94 ]
+[ Upstream commit 84182c48999f856c3865e4a537c244f9569c9f6c ]
 
-uverbs_dmabuf_release() treats a NULL uobj->context as an aborted
-allocation, but normal ufile cleanup also clears it. Closing the uverbs
-FD before the dma-buf FD therefore skips uverbs_uobject_release() and
-leaks the uobject and ufile references.
+ch341_transfer_one() unconditionally copies from trans->tx_buf into the
+TX packet and hands trans->rx_buf to usb_bulk_msg() for the readback.
 
-Clear dmabuf->priv before dma_buf_put() on allocation failure and use
-that NULL pointer to identify an abort. Otherwise, always call
-uverbs_uobject_release(). This also avoids reading a freed uobject if
-release is deferred until after the allocation has been aborted.
+The SPI core allows half-duplex transfers where either of the buffers
+is NULL, so a transfer without TX data crashes the kernel on the memcpy
+and a transfer without RX data makes usb_bulk_msg() store the received
+data at address 0.
 
-Fixes: 0ac6f4056c4a ("RDMA/uverbs: Add DMABUF object type and operations")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Deep Shah <deepshah146@gmail.com>
-Link: https://patch.msgid.link/20261015083637.200958-2-deepshah146@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The CH341A clocks data in both directions on every transfer; there is
+no mode to disable a direction. Set SPI_CONTROLLER_MUST_TX and
+SPI_CONTROLLER_MUST_RX so the SPI core fills in dummy buffers for
+half-duplex transfers.
+
+Fixes: 8846739f52af ("spi: add ch341a usb2spi driver")
+Cc: stable@vger.kernel.org # 6.11+
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261013054339.77477-1-liuwb@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_std_types_dmabuf.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/spi/spi-ch341.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/infiniband/core/uverbs_std_types_dmabuf.c b/drivers/infiniband/core/uverbs_std_types_dmabuf.c
-index 33bafadc695df..8d8c997a48834 100644
---- a/drivers/infiniband/core/uverbs_std_types_dmabuf.c
-+++ b/drivers/infiniband/core/uverbs_std_types_dmabuf.c
-@@ -68,9 +68,10 @@ static void uverbs_dmabuf_release(struct dma_buf *dmabuf)
- 	struct ib_uverbs_dmabuf_file *priv = dmabuf->priv;
+diff --git a/drivers/spi/spi-ch341.c b/drivers/spi/spi-ch341.c
+index 6448a44a8b67e..56a5caa5975a4 100644
+--- a/drivers/spi/spi-ch341.c
++++ b/drivers/spi/spi-ch341.c
+@@ -189,6 +189,12 @@ static int ch341_probe(struct usb_interface *intf,
+ 	ctrl->transfer_one = ch341_transfer_one;
+ 	ctrl->set_cs = ch341_set_cs;
+ 	ctrl->auto_runtime_pm = false;
++	/*
++	 * The CH341A SPI_STREAM command clocks data in both directions on
++	 * every transfer, so the driver always needs a TX and an RX buffer;
++	 * let the SPI core supply dummy buffers for half-duplex transfers.
++	 */
++	ctrl->flags = SPI_CONTROLLER_MUST_TX | SPI_CONTROLLER_MUST_RX;
  
- 	/*
--	 * This can only happen if the fput came from alloc_abort_fd_uobject()
-+	 * This can only happen if the fput came from the error unwind of
-+	 * UVERBS_METHOD_DMABUF_ALLOC. The abort cleans up the uobject.
- 	 */
--	if (!priv->uobj.context)
-+	if (!priv)
- 		return;
+ 	usb_set_intfdata(intf, ch341);
  
- 	/*
-@@ -161,6 +162,8 @@ static int UVERBS_HANDLER(UVERBS_METHOD_DMABUF_ALLOC)(
- 	return 0;
- 
- err_revoked:
-+	/* Tell uverbs_dmabuf_release() that the uobject is being aborted */
-+	uverbs_dmabuf->dmabuf->priv = NULL;
- 	dma_buf_put(uverbs_dmabuf->dmabuf);
- err:
- 	rdma_user_mmap_entry_put(mmap_entry);
 -- 
 2.53.0
 
