@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061860;
-	b=qEDKnF3mRmZ2WlJH3H2qQ/iJl1a4zBWsCWQgwBljQ5xu3QH9WrfzY+xJTMSRO55YH6xx
-	 uVgHa52U+QvqKnx7GjitPDAij7b+8RlrBrWSIrWuXIXyiT8eG5CSdGp3W/Bbi456tBLdE
-	 EKFkommt7Cxj7K4ikv/0ErSe5C+9JQypznXhxPIawsUKMucTXIm+My5gSHLzbrALe+ucg
-	 W4kIMl+as8b5dqYsT3bvQU/XY00JcbOLoOleEYVZHDfaERsII0ntLGtNWxctu79Bh37qr
-	 KaXSEMwEWcm7VDhGnA59Ce+p/Qu9M/O0pjrQZgJHeFJfikqAlQT3O0HDrX6Wl+Ewayg==
+	t=1794061861;
+	b=TeoxMk8Dxfa60gj4jqK+5vxnx7ohpDahW1Bq977b/B7VM/1dEKxTwtUM8XdAshosFzbr
+	 QHojzdyf9tix699m0fL+a9PP6T/umi+fZ8Q4LRYKuY6Pkel4vxri2nFAyWRhMYQgRHtHX
+	 iQFM7DRYCdRgDf5PiHT/6p81ErpJRWxnEpewmnCSDk1rZ7YJ2R06eY8oDQrRR9kdrQ2Ho
+	 xYzGGHLcvTeL3Q3PaL4g13Q2kG6Jq0KSyHPYNOUE+r16oqlcicMICIvaB8carfIhO9WbP
+	 JKAktkfbNR6o/Jqw6pAQ1UXFezTcUhVln/1s7PvBIuhWTYPfOeytVPuMHFT4FgE7gLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061861;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+VnnomsQnz72YXdOOHxbjqRMp0lP6WT5QPtSuVq3+mg=;
-	b=jFyl31/biirXPyExokQtD7//sCoi4eQjr54aUiRXR66qDTc5Er90ARoNHrzfybXm65P4
-	 /j4P6m5yDfhOa9H+k9DuSlSmVwaVUXMXQ0biMcUyDnRgBX2CtvQtR0KnuE4ay3DZOLFRY
-	 klZe0B1iETkum3luscSouxxBVYaujtldQ64Cu57fjKY9IMGfqApvjKz70mbh1xvtMlzeW
-	 DSU3uzDHihB+HgkcNnxf+FImGUXbLwuyW8gvz5jM71RDEMRAF7NzZzbD0UbNyMjWgECtM
-	 12SCILgDMidl99WQIeQxHfcqH+E070mQ75fVLf8KDUr5b85Wr5GlkKBXIWVm3bq6+0g==
+	bh=iyF1w7XWT7tJUjziMlJGMSNaO0vkJ1/F/TmQchWorxg=;
+	b=OYz1ncDfQMKH52PsWovk6On+K/sTYCPzT9qOKLX+o1K6hFbnOgaNTyphtzYT43gPchKy
+	 n5TjHGJGOisYP74c0YDe2m8HvqjeEwgeDyvZta9fW7zvSLwCE6RM+WOevuGVJlUe818Cp
+	 inbeiXpNPuMTytO0XSmROQGud8TUvO1+TztJHKAu5Dis2IbC4fe+KBRFSOrXnWMJaNIhX
+	 1F5bedKmRz3rsvooj4mg/VO3L/GldHdjff86mE02vr2u09MurydOhZfk2snmXdL9zokxO
+	 ocd048Jr7XbU2blRzHz2QWgsvng7pDi4NCAPBPutH7uRa3W/3lrLrmvZwX8r5XFoh3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDQ17vW7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hJUZEpX0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8FC606A32C;
-	Sat,  7 Nov 2026 14:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E861606A32C;
+	Sat,  7 Nov 2026 14:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDQ17vW7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7C91F0089F;
-	Sat,  7 Nov 2026 14:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hJUZEpX0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10501F0089F;
+	Sat,  7 Nov 2026 14:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061859;
-	bh=+VnnomsQnz72YXdOOHxbjqRMp0lP6WT5QPtSuVq3+mg=;
+	s=korg; t=1794061860;
+	bh=iyF1w7XWT7tJUjziMlJGMSNaO0vkJ1/F/TmQchWorxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uDQ17vW7zw5WP2hGZqzHMPnJy5+xPYSg1R+zmePw4+ghIcNixk7neoQk65l80uUzt
-	 WXdcQOm/X0YaAaCxDmw0y3JxxG4tVACCx2PMih36YBHTK1L9OzfBdOpaS356iR1NB1
-	 /3DIXXABbK2NGs4H0BJymDriisXSl5H6eZPh6oJI=
+	b=hJUZEpX0qUXB8ArAzAU8OoR749cmanuycxYAifFGg06/ip4eO7BfAWHwiqy5eknAl
+	 uzjBzVuA2PTiOyQxsHtUZTHMPvJj/3zZJTS552kYFIxpTCGop4olkIz4x8KJkDBQ73
+	 70Bw04gLHy/6OKf280Sul6WEnLHTYl94Z2zsm8KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+d17c2bc750a9cbbb@bugs.sh,
-	Weiming Shi <bestswngs@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0877/1536] virtio_net: atomically disable rx mode work
-Date: Sat,  7 Nov 2026 08:48:13 -0500
-Message-ID: <20261107135022.179345387@linuxfoundation.org>
+Subject: [PATCH 6.12 0878/1536] nvmet: replace use of system_wq with system_percpu_wq
+Date: Sat,  7 Nov 2026 08:48:14 -0500
+Message-ID: <20261107135022.206377307@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,156 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Marco Crivellari <marco.crivellari@suse.com>
 
-[ Upstream commit 1234707482053f1d1ac7c5756207d2c29057974c ]
+[ Upstream commit 3d553be6d295b6cca8fd35cb673fd13934ac4cbc ]
 
-virtio-net uses a boolean to gate rx_mode_work during device teardown.
-The flag is changed under RTNL, but ndo_set_rx_mode checks it under the
-address-list lock. A callback can therefore pass the check and enqueue work
-after teardown has flushed it. The work is also enabled before late
-probe operations that can fail, allowing probe unwind to free the netdev
-with work still queued.
+This patch continues the effort to refactor workqueue APIs, which has begun
+with the changes introducing new workqueues and a new alloc_workqueue flag:
 
-KASAN reports the worker using a virtqueue that probe unwind already freed:
+   commit 128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
+   commit 930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
 
-  BUG: KASAN: slab-use-after-free in virtqueue_add_split
-  Workqueue: events virtnet_rx_mode_work
-  Call Trace:
-   virtqueue_add_split (drivers/virtio/virtio_ring.c:706)
-   virtqueue_add_sgs (drivers/virtio/virtio_ring.c:2839)
-   virtnet_send_command_reply (drivers/net/virtio_net.c:3565)
-   virtnet_rx_mode_work (drivers/net/virtio_net.c:3833)
-   process_one_work (kernel/workqueue.c:3322)
-   worker_thread (kernel/workqueue.c:3405)
-  Freed by task 119:
-   kfree (mm/slub.c:6625)
-   vp_del_vq.isra.0 (drivers/virtio/virtio_pci_common.c:259)
-   vp_del_vqs (drivers/virtio/virtio_pci_common.c:285)
-   virtnet_probe (drivers/net/virtio_net.c:7129)
+The point of the refactoring is to eventually alter the default behavior of
+workqueues to become unbound by default so that their workload placement is
+optimized by the scheduler.
 
-Use the workqueue disable mechanism to atomically reject new queue attempts
-and drain running work. Keep work disabled until probe succeeds or restore
-has reattached the netdev, then enable it and replay receive-mode state for
-a running interface. Disable it before resource teardown in freeze and
-remove.
+Before that to happen, workqueue users must be converted to the better named
+new workqueues with no intended behaviour changes:
 
-Fixes: b9f7425239a0 ("virtio-net: convert rx mode setting to use workqueue")
-Cc: stable@vger.kernel.org
-Reported-by: <co+d17c2bc750a9cbbb@bugs.sh>
-Assisted-by: LLM
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20261017114237.2786302-2-bestswngs@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: adjusted context to match the existing virtio-net device lifecycle code ]
+   system_wq -> system_percpu_wq
+   system_unbound_wq -> system_dfl_wq
+
+This way the old obsolete workqueues (system_wq, system_unbound_wq) can be
+removed in the future.
+
+Link: https://lore.kernel.org/all/20250221112003.1dSuoGyc@linutronix.de/
+Suggested-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 53f6efe00cea ("nvmet-auth: serialize access to DH-HMAC-CHAP state to fix UAF")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 25 +++++++++----------------
- 1 file changed, 9 insertions(+), 16 deletions(-)
+ drivers/nvme/target/admin-cmd.c        | 2 +-
+ drivers/nvme/target/fabrics-cmd-auth.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 2c62371666cd5..bf4f177417384 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -437,9 +437,6 @@ struct virtnet_info {
- 	/* Work struct for setting rx mode */
- 	struct work_struct rx_mode_work;
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 72a5de1f8252d..c8ff53faddbc3 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -1003,7 +1003,7 @@ void nvmet_execute_keep_alive(struct nvmet_req *req)
  
--	/* OK to queue work setting RX mode? */
--	bool rx_mode_work_enabled;
--
- 	/* Does the affinity hint is set for virtqueues? */
- 	bool affinity_hint_set;
- 
-@@ -678,16 +675,13 @@ static void disable_delayed_refill(struct virtnet_info *vi)
- 
- static void enable_rx_mode_work(struct virtnet_info *vi)
- {
--	rtnl_lock();
--	vi->rx_mode_work_enabled = true;
--	rtnl_unlock();
-+	if (enable_work(&vi->rx_mode_work) && netif_running(vi->dev))
-+		schedule_work(&vi->rx_mode_work);
+ 	pr_debug("ctrl %d update keep-alive timer for %d secs\n",
+ 		ctrl->cntlid, ctrl->kato);
+-	mod_delayed_work(system_wq, &ctrl->ka_work, ctrl->kato * HZ);
++	mod_delayed_work(system_percpu_wq, &ctrl->ka_work, ctrl->kato * HZ);
+ out:
+ 	nvmet_req_complete(req, status);
  }
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index 83571f5a50d99..92e75ebe7a173 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -360,7 +360,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
+ 		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
  
- static void disable_rx_mode_work(struct virtnet_info *vi)
- {
--	rtnl_lock();
--	vi->rx_mode_work_enabled = false;
--	rtnl_unlock();
-+	disable_work_sync(&vi->rx_mode_work);
- }
- 
- static void virtqueue_napi_schedule(struct napi_struct *napi,
-@@ -3688,8 +3682,7 @@ static void virtnet_set_rx_mode(struct net_device *dev)
- {
- 	struct virtnet_info *vi = netdev_priv(dev);
- 
--	if (vi->rx_mode_work_enabled)
--		schedule_work(&vi->rx_mode_work);
-+	schedule_work(&vi->rx_mode_work);
- }
- 
- static int virtnet_vlan_rx_add_vid(struct net_device *dev,
-@@ -5515,7 +5508,6 @@ static void virtnet_freeze_down(struct virtio_device *vdev)
- 	/* Make sure no work handler is accessing the device */
- 	flush_work(&vi->config_work);
- 	disable_rx_mode_work(vi);
--	flush_work(&vi->rx_mode_work);
- 
- 	netif_tx_lock_bh(vi->dev);
- 	netif_device_detach(vi->dev);
-@@ -5538,7 +5530,6 @@ static int virtnet_restore_up(struct virtio_device *vdev)
- 	virtio_device_ready(vdev);
- 
- 	enable_delayed_refill(vi);
--	enable_rx_mode_work(vi);
- 
- 	if (netif_running(vi->dev)) {
- 		err = virtnet_open(vi->dev);
-@@ -5549,6 +5540,8 @@ static int virtnet_restore_up(struct virtio_device *vdev)
- 	netif_tx_lock_bh(vi->dev);
- 	netif_device_attach(vi->dev);
- 	netif_tx_unlock_bh(vi->dev);
-+
-+	enable_rx_mode_work(vi);
- 	return err;
- }
- 
-@@ -6610,6 +6603,7 @@ static int virtnet_probe(struct virtio_device *vdev)
- 
- 	INIT_WORK(&vi->config_work, virtnet_config_changed_work);
- 	INIT_WORK(&vi->rx_mode_work, virtnet_rx_mode_work);
-+	disable_work(&vi->rx_mode_work);
- 	spin_lock_init(&vi->refill_lock);
- 
- 	if (virtio_has_feature(vdev, VIRTIO_NET_F_MRG_RXBUF)) {
-@@ -6752,8 +6746,6 @@ static int virtnet_probe(struct virtio_device *vdev)
- 	if (vi->has_rss || vi->has_rss_hash_report)
- 		virtnet_init_default_rss(vi);
- 
--	enable_rx_mode_work(vi);
--
- 	/* serialize netdev register + virtio_device_ready() with ndo_open() */
- 	rtnl_lock();
- 
-@@ -6849,6 +6841,8 @@ static int virtnet_probe(struct virtio_device *vdev)
- 		goto free_unregister_netdev;
+-		mod_delayed_work(system_wq, &req->sq->auth_expired_work,
++		mod_delayed_work(system_percpu_wq, &req->sq->auth_expired_work,
+ 				 auth_expire_secs * HZ);
+ 		goto complete;
  	}
- 
-+	enable_rx_mode_work(vi);
-+
- 	pr_debug("virtnet: registered device %s with %d RX and TX vq's\n",
- 		 dev->name, max_queue_pairs);
- 
-@@ -6900,7 +6894,6 @@ static void virtnet_remove(struct virtio_device *vdev)
- 	/* Make sure no work handler is accessing the device. */
- 	flush_work(&vi->config_work);
- 	disable_rx_mode_work(vi);
--	flush_work(&vi->rx_mode_work);
- 
- 	virtnet_free_irq_moder(vi);
- 
 -- 
 2.53.0
 
