@@ -1,70 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064460;
-	b=HW5kqT1G01kztJ86+S7Yn1k0QedYAhUd+RD8Uq4NgD2HqGvZD1QcyUUL79pKvJYNkf5z
-	 tjoyh0u0ymGJlrd7TR0iTQBfUMz6tKqDp3/JR48zAHsmmmoTkbsIMLvAi4FCWRTX2tBpT
-	 YpK2zjJlMch3cgd0AJArSeF6ONTiZLRrQqcflVKJjG5A2Mc/QVs1syVnmjPTxqRTKgYg4
-	 3CpOn2vg2OYiG0oIHvyEclxjs1WhjX/3/kYHQivN1VMrFtHeodIRKylQheC7Bla/2OFG2
-	 Uo92Ly0n8w0Gkiipk2+1JwHVixtGGNBK8eCjzIypoT+RE01QV7vbP21De0pK0A53Cgw==
+	t=1794064461;
+	b=KfOdjtzMv5Dz16FXWFU7djbgfctocEeOtb2wBoUEHl81RN6Izbn2UzkZoCbJVi26vXND
+	 LSH1yTuumobtlxCgyGP8qn/WsNTeuALev3DUeeXvwDa9um6Zg4wtUpEOuh6DFXVvSwZ4H
+	 R49GJWgclTFCfEaaJnbUyIOEFNCP4enwxc8Z1B0rnOCRkfdHNFcJ4Do3Ve2sK2wXSkGfR
+	 KdAQrrWKMAvxo79xfnPUkt2TnM6oCW6F4iNln2rv/OdIkkiqhGN30BjbvHCYnCRGw4x1k
+	 N3OuhZDHxJoseOC2iKAzjJOcRDyN63i4NRwwYEOycgig+u5rx4HRWEIiO0p7TiN9nEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064460;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064461;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1ytzPab2Mx9ii+alS4i+f5QH3xdAHgXKgv7T3OlfHpg=;
-	b=AFhYVMpmorizcAGUfyYnrrHLMf69pPJXp639yC4GPgUeC1Yi5Zxk1vavS4rmZIWrDlKZ
-	 uGwvJIPmiwpaWedJL5wjXnJ4KawOsexJlwJEeSuykv5Kp+VFuQTmjoQtkMVoFDsO3QUyq
-	 OMmZ1776jbk+VfvhjStn6yUHPJzV5sJpoHF1nrpBuCJwbT+FqOHu8LxvEDE9Z4NYS91Rv
-	 RLmZK0cDJZjpcay0CmFNAX0Z2vKP21Y6Fj5wO0jdigCR/ldXhyz3XseyehfK5Qs0kNZG0
-	 fmCgvhIc2ncYt6fu4HI1CJo/SzX4P709l9Ci2ER763Fj+Fb0RBqmU5lKxFJFrYbJmxg==
+	bh=h+vY/VEegiDafKFsZkueMPTIr/PUPQdNJWSeIrYxxpg=;
+	b=uO6Uz2dpOCCRgnd89dtIYua4XM4wZ6jQh6EeFHbaxH0CaGg+3/lN2W6Volttg1A5n4VG
+	 S7JFmaht4RG2XJeC8LMK5bfX7VPh97VfR3xfiLgYBxRETolYc0SSykubVCrxlvteB6F3t
+	 FMMr7Depdz2R7krc7FlHTIkw2Df5Zu5NIjYFdxLREoPtKIDGhwqmgW73SOtk3r62klNCK
+	 X9E9111kK+Ov67A7oT3OGRYPSyNbIt7Xu25TOrOSaY1kap626Wk5ODrQzO7pocwkYR/vF
+	 xzwWfIOK7cURFqef6Zh46PqfKAjiPw3CPhS7EdDqcdUN6stjVXTlkInXYQSq79I2fjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wah3XoLz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1hnjMXv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDCE606C013;
-	Sat,  7 Nov 2026 15:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F28606A9E7;
+	Sat,  7 Nov 2026 15:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wah3XoLz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE67D1F008A2;
-	Sat,  7 Nov 2026 15:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1hnjMXv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1201F008A2;
+	Sat,  7 Nov 2026 15:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064460;
-	bh=1ytzPab2Mx9ii+alS4i+f5QH3xdAHgXKgv7T3OlfHpg=;
+	s=korg; t=1794064461;
+	bh=h+vY/VEegiDafKFsZkueMPTIr/PUPQdNJWSeIrYxxpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wah3XoLzT1qITjOzBFNaGuceCpHzyarx/W5xlQhZ2rg835DCmpCknj3pcE6Bg3WeK
-	 A6OmgA3jnkaHZ2+JmNEF0c46gZnSSf1Z5LiRh29XoNyRDbORqRcv/RacfgsArMQjk5
-	 6ClKg1/F03lIMAXudUz3tDh5En1gUdiaWTFMy8oc=
+	b=I1hnjMXv+vPreiyVoLNS6jtThcWggUPxXbifF8LgNVXTQt+hqz0hY2aQwDuD/ate/
+	 /oBdccP9pUxPrX2BdgulYbGNh18QsOFQ+ig03MShSnWsdWz9pIrqe+x8/YT8S4kPzv
+	 SUqaxwJXfIMbZY1OVLO9Jg+ytv5NJBxE7pJjt7/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	Alistair Popple <apopple@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Byungchul Park <byungchul@sk.com>,
-	Dev Jain <dev.jain@arm.com>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0500/1257] mm/mempolicy: skip zone device folios when queueing folios
-Date: Sat,  7 Nov 2026 08:46:36 -0500
-Message-ID: <20261107134953.241137878@linuxfoundation.org>
+Subject: [PATCH 7.3 0465/1257] media: vicodec: fix NULL deref on oversized frame
+Date: Sat,  7 Nov 2026 08:46:01 -0500
+Message-ID: <20261107134952.304469904@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -86,73 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 1f834ba9b42e3f3c298c7e8ef1df21b9947c92b4 ]
+[ Upstream commit c657eb609197e289b054bc2c4e86a0fc32dd7ebe ]
 
-queue_folios_pte_range() already pairs vm_normal_folio() with an explicit
-folio_is_zone_device() check before adding folios to the migration
-pagelist.
+job_ready() only honours the is_header_valid() verdict when
+ctx->comp_has_frame is set, and comp_has_frame is only set once
+comp_size reaches the full frame size. Since the copy is clamped to
+ctx->comp_max_size, a header advertising a larger size leaves comp_size
+stuck at comp_max_size, so comp_has_frame stays false and the failed
+validation is discarded.
 
-vm_normal_folio() alone does not reject zone device memory (a present
-device-coherent page in a normal VMA is returned as "normal").
+Control then falls into the resolution change branch, which calls
+update_capture_data_from_header(). That function re-derives info via
+info_from_header(), assigns it to q_dst->info and dereferences it as
+q_dst->info->sizeimage_mult, with no NULL check of its own.
+is_header_valid() does check that same info_from_header() result --
+if (!info) return false which is precisely the false verdict
+job_ready() discarded above. info_from_header() returns NULL whenever the
+header flags resolve to no supported pixel format.
 
-Mirror the explicit check in queue_folios_pmd() as well.
+Drop the comp_has_frame conjunct so an invalid header always bails out.
+The resolution change path is unaffected, as it is entered with a valid
+header. Oversized frames are then rejected by device_process(), which
+already returns -EINVAL when comp_frame_size exceeds comp_max_size.
 
-queue_folios_pmd() uses pmd_folio() directly and can encounter a present
-zone device PMD - e.g. a device-coherent THP.
-
-This is not filtered by existing checks:
-  !pmd_present()   - only rejects non-present device-private and
-                     migration entries
-
-  vma_migratable() - excludes DAX and VM_PFNMAP.
-
-The early return also means such a folio is no longer counted in
-qp->nr_failed under MPOL_MF_STRICT.  This is the same pattern used by
-queue_folios_pte_range() (skipping zone device without failing).
-
-Link: https://lore.kernel.org/20260817220810.1175596-4-gourry@gourry.net
-Fixes: a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages")
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 3b15f68e19c2 ("media: vicodec: Add support for resolution change event.")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/test-drivers/vicodec/vicodec-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 060a0eb269170..7627d33e509c3 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -662,6 +662,8 @@ static void queue_folios_pmd(pmd_t *pmd, struct mm_walk *walk)
- 		return;
- 	}
- 	folio = pmd_folio(pmdval);
-+	if (folio_is_zone_device(folio))
-+		return;
- 	if (is_huge_zero_folio(folio)) {
- 		walk->action = ACTION_CONTINUE;
- 		return;
+diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
+index 7ea024b14f0e9..a6d12ab66a0f3 100644
+--- a/drivers/media/test-drivers/vicodec/vicodec-core.c
++++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
+@@ -654,7 +654,7 @@ static int job_ready(void *priv)
+ 	 * if the header is invalid the device_run will just drop the frame
+ 	 * with an error
+ 	 */
+-	if (!is_header_valid(&ctx->state.header) && ctx->comp_has_frame)
++	if (!is_header_valid(&ctx->state.header))
+ 		return 1;
+ 	flags = ntohl(ctx->state.header.flags);
+ 	hdr_width_div = (flags & V4L2_FWHT_FL_CHROMA_FULL_WIDTH) ? 1 : 2;
 -- 
 2.53.0
 
