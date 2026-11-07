@@ -1,70 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064457;
-	b=LZaNNloX7aakixHw6CZIFNU7/NI1l6+JnAda/VLsE8JrO5epOGarjAnDIFdAE9FoLIx2
-	 xurIXqjTXB1eUxbfU5oazLmf69/sbTl/ImK3Thw3Aoh6hdkK/v6v3WLulKaVOVxAxl8fN
-	 YYMQTsx7jei25Q6RLbjXRSo094fobt0utq3PkmM21FaG3onsrZXLpNuBWoiRQ8O7lPbPt
-	 ohCOnf31uyjqJ8R4ZkYW1cCnysr9huiFPMclM/sKu10oj4GbLHZN9AHTzBbEuIykXpvud
-	 UNQ3wPNtuM6htQVy9pLTp+1f2nT3pXyPCcTVa0TiTmS3tMATNM5rEeojBCAKg+6Ukkg==
+	t=1794064463;
+	b=OksnUzPEv1O/cSn3OA+/2Hn/H4BntMXuJYAh2SRF3gtItVL7c+nlJGvgqL1PtQ7cbOVx
+	 3wy6KvhlrYH1Drx1c8SjEiGrBXL50ERD+itxAhBaurFyazkhHB8LyPRSUrHGCPt/Mm7UT
+	 RLWtyW3qr5sGbYXvdHO4u7MqzMtK9g7IaxiAcv2mXTuMhECco4LpHFEGgOPdQGYSXAHGt
+	 OtdHLBGL+drIEEdMDbAK8hoAEse32MhZza5cbuVBLxG5o71OyReZP61dvwJt43C9r5bjU
+	 6kbMbNOcMBMHUC1HEMV88JFgC4G2H4fcv66otHNyT43EERHKSlMcdZz51IgcbXymUpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AVDkckZJQ2Td4cJJs3VwJP2zNK1dE/hSA35pHL34ctU=;
-	b=RYr6crDjphDookIMHL6vE3BekyZ0Y7ozV6zK5q8WozepsIufZ5mxBn/Ws7+pH7YeDQ0G
-	 UOvF6E/N0El3i3U9CIdmHWRfRiBhc2+yQ3reCQgKjzm8wautGmqqB3d/mNdMPOGUr6h4g
-	 J5JGxYvxsRA3364Ecd8Cpg5O7V0hKr+S4wS2qHEfusiCyjaJchDYvJ1B3jtV9kZzattNq
-	 bofWxPije9tR0qZBV21vw7yuOweYY5MLJVEsAUWx6G9rubVyP3iOfEjgK4J4R8/S1m108
-	 J88gEMfls356utQ7viV59EumoYcE1zS/27g9Bt88jOIOdJAK+IU414V7hWbR3fMPUnw==
+	bh=U9BL02B7l7LEN6mIvp1lgK6Hmd5y26tImZZbReeHUO8=;
+	b=B4cOofoxOY3Q8RHpkRDBoJ5Ibjy9rDWV//do1HeBvCCRIpAB3wbRGYYXnkTo5pbvn0SY
+	 aA1kWjmvyUNiQ9yCLXM+WQtVPGRnkNB7/FMHzvF4VNG2/OHX8ljNL2krA1UxV5Zyno1HU
+	 DHDLMCwaVY+chO9luHtnNFtg29VvLkZ3+W8CjrkwNPglA4KIcz4lZhNWcfvnInk7ElbDM
+	 GyPHaW/6Bg+nK7CLeYQWiZeus4o2uzH9AkrYq2Nt6zbpM6Jcm61NWjhbi110Ycim7ZSwY
+	 +gY5osaD+5t61a00JIwqL5BGPi+cNFG7QE/aoLJ+VtR1uFXQk0F1mxm/ns4ckw+CGXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=afVlwhtE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sIpTPV39;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83B96082BF2;
-	Sat,  7 Nov 2026 15:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEBF606A9E7;
+	Sat,  7 Nov 2026 15:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=afVlwhtE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410CA1F008A1;
-	Sat,  7 Nov 2026 15:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sIpTPV39
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7CA1F008A3;
+	Sat,  7 Nov 2026 15:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064456;
-	bh=AVDkckZJQ2Td4cJJs3VwJP2zNK1dE/hSA35pHL34ctU=;
+	s=korg; t=1794064462;
+	bh=U9BL02B7l7LEN6mIvp1lgK6Hmd5y26tImZZbReeHUO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=afVlwhtEX4VvPplcHWzk4P282aH5Q4YszEpIvdVWs3aiCIFAgXydhw9zXrykHHEFD
-	 X/NXVplPVKzBx5X1qk7Q71uWhglzAl/iwmbn+t4Ib4jKaFy5oYNwREcPsRJpF54bAK
-	 8r6fFnuYhK3zGSV5pNo4DHdIyrUKt7k+GWauqL9A=
+	b=sIpTPV39uDh2NvNjQBnqG/96VRsE+qYqzBuDqRiVxQUbcSkeww8BZnGdX2Up/7Lwz
+	 YmG2UOTQ7oybslaog6CQ25Tp/ZAioifPVfaYtv3px7zuVotvT1ez7++WDQA9I9SaN4
+	 azkTCbSPCbIupkButicz/LRXEcQTzzUQI2z6OSfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	Alistair Popple <apopple@nvidia.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Byungchul Park <byungchul@sk.com>,
-	Dev Jain <dev.jain@arm.com>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
+	Tharit Tangkijwanichakul <tharitt97@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0498/1257] mm/huge_memory: skip zone device folios in madvise_free_huge_pmd()
-Date: Sat,  7 Nov 2026 08:46:34 -0500
-Message-ID: <20261107134953.186963530@linuxfoundation.org>
+Subject: [PATCH 7.3 0466/1257] media: hantro: Harden MPEG-2 control access against NULL
+Date: Sat,  7 Nov 2026 08:46:02 -0500
+Message-ID: <20261107134952.335715169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -86,94 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
 
-[ Upstream commit 3a09df924fa2ba75ac80acb9bce4eed79be218fa ]
+[ Upstream commit 2b685dba4226792933f45b1cbf8991e89ccd21ce ]
 
-Patch series "mm: reject zone device folios in more folio walkers", v2.
+The MPEG-2 sequence and picture controls are validated
+before a job is queued, so hantro_get_ctrl() is not expected to return
+NULL in hantro_g1_mpeg2_dec_run(). The controls are nonetheless
+dereferenced unconditionally.
 
-Several LRU-oriented mm walkers resolve the folio backing a PMD entry (or
-a physical pfn) and then reclaim, age, migrate, or lazyfree it without
-ever checking for ZONE_DEVICE memory.
+Harden the invariant by checking the sequence and picture controls with
+WARN_ON().
 
-This series adds missing folio_is_zone_device() rejections, matching the
-checks that comparable walkers already perform.
+Found by code inspection.
 
-- mm/huge_memory, mm/madvise: the !pmd_present branch above these sites
-  only filters device-private entries (which are non-present).
-
-  A present zone device PMD (e.g. device-coherent) would still reach the
-  folio and be lazyfreed / aged / paged out. Add an explicit check.
-
-- mm/mempolicy: queue_folios_pmd() can see a present zone device PMD
-  (e.g. device-coherent) and queue it for migration.
-
-No crash reproducer - this is a correctness/hardening cleanup found by
-inspection.  All checks are placed after the folio is resolved and before
-it is acted upon, on paths that already hold the relevant page-table lock,
-so no locking or refcount changes are involved.
-
-This patch (of 3):
-
-madvise_free_huge_pmd() resolves the folio backing a PMD via pmd_folio()
-and marks it lazyfree without checking for zone device memory.
-
-The surrounding guards do not cover every zone device case:
-
- - MADV_FREE only operates on anonymous VMAs (DAX mappings are excluded)
-
- - !pmd_present() branch rejects device-private and migration entries
-
- - present zone device PMD (device coherent THP) is not filtered.
-   Unlike vm_normal_page_pmd(), it performs no special/pfnmap check,
-   and would be marked lazyfree here.
-
-Bail out when the folio is a zone device folio.
-
-Link: https://lore.kernel.org/20260817220810.1175596-1-gourry@gourry.net
-Link: https://lore.kernel.org/20260817220810.1175596-2-gourry@gourry.net
-Fixes: a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages")
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Balbir Singh <balbirs@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
+Fixes: f329e21e9dad ("media: uapi: mpeg2: Split sequence and picture parameters")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 1e5d68acf62a5..54494c3fa9835 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2423,6 +2423,10 @@ bool madvise_free_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 	}
+diff --git a/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c b/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c
+index e0d6bd0a6e44f..6a942f4b8a2dd 100644
+--- a/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c
++++ b/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c
+@@ -161,8 +161,13 @@ int hantro_g1_mpeg2_dec_run(struct hantro_ctx *ctx)
  
- 	folio = pmd_folio(orig_pmd);
+ 	seq = hantro_get_ctrl(ctx,
+ 			      V4L2_CID_STATELESS_MPEG2_SEQUENCE);
++	if (WARN_ON(!seq))
++		return -EINVAL;
 +
-+	if (folio_is_zone_device(folio))
-+		goto out;
-+
- 	/*
- 	 * If other processes are mapping this folio, we couldn't discard
- 	 * the folio unless they all do MADV_FREE so let's skip the folio.
+ 	pic = hantro_get_ctrl(ctx,
+ 			      V4L2_CID_STATELESS_MPEG2_PICTURE);
++	if (WARN_ON(!pic))
++		return -EINVAL;
+ 
+ 	reg = G1_REG_DEC_AXI_RD_ID(0) |
+ 	      G1_REG_DEC_TIMEOUT_E(1) |
 -- 
 2.53.0
 
