@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064750;
-	b=cfEFbYJB+fVrL7PGRH+p2opP1WrrKpxlm8WSe/a5NFcX4IkeTNGseswx8hs87fWZN0pl
-	 e6F8CPeABpcUeSc6EGZSBILSH046JA45KhTc4Xww2zpc4FnU9GBoisgKX3GthFZnkyTsE
-	 NMwouqZAmBSz1rE9kdpP99Wjrg76+f8XdsMttaZeNREBhixjqr52C8NqRXnuiSIg/B1+k
-	 ctVYccRMeYheWLcqS6wkn5QcUbaVGrBbQ9zILCyregZ2HhomRSorhVOoQG0J6ZY3Zpbg3
-	 wlmOlqTLwZ2OXT96+LJe0O80dJ2n+uFEiUFbkevgpjpGER2nEDrLMImHB3awvWe6SKQ==
+	t=1794064752;
+	b=WOnb0mjcIzwczc5xyAaWbjGdjT//pctTg5IgsJfcYORVWG8rx0Nw52Cx77uZqZVIn5xm
+	 xIXhV/DsYRPX43uRR88NnWpkbtGFg6TJqDaGDI65l13QlzFzMAakOClPJVlBIUfEOLzrf
+	 CF31La1+UoaUatFmeDyBbUudcLNuypJWdj0miO4Iai/ybKX2kULJV2bDRwsgLzwCU6JN4
+	 3tvj2GvCpMMF/3hNQWXcXPZZjU/LvEFQLRyyqPJW3vu0/jgsI2y+iC3+LYltYhVxQQ3AZ
+	 sYXpd1yAq3HKO+JvEVWwe1oOxyDoDBEbuLaECAaKf6P5HHHXqmjDDRkb1F3Tjkg2XUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064750;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064752;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HLcMBcU5eYXkgg7WBCptmcn5yPDmtLxLwiitrwiHBWo=;
-	b=dSrf8cpHi62euUsJXqKURKFl4fI8CLq+hjwOt7nOtfhjhk0/UxNMQ0TkOJwAMMjW4Ut9
-	 hq16ZM2RGdYXdHIzawixe0CN/Xl2j7xKt/2aqPprHKYcEBk1aZrMJKAGLC3VvRryFTY6m
-	 LDNPeyIC35LAKxxA7F94TvO0IFUqiO8Q5nWSgPJhoDMEqQPlIE+DyhI/1bTYOq1yH/ote
-	 mH9zJpQgg0RibytXbVxWPjN38bsnUoln49a2C+ZlymMFPp9aE45E1mJsuHWb/feAomKC2
-	 k/DCwAUH/9pHQMHgP9QEEyHJFkz5G3mYxH6P3kHTphcBl9jjHcy0oTBy0NHmYpAu6GQ==
+	bh=s9iAWRukTfci2j7hA3bGVh1UhCzlJBeDC8F3YqKFrIQ=;
+	b=rhtnq1LjLSRheQkC/XpYrX7ToZBbX1cP7wDXdaHfGa0do7RUlCVZ0/+JuReDiCUJu25v
+	 CEV7C5Q4jMjnaTV1qrMJEhTJbqVXQLaCDpHcEWdrgwJ8n/WwL6xrX57cT5iMlGQyMyfOu
+	 NxGTSlmBWXfJLgeXZsYmkwEk7HUSOV2qY+a8Pw8agxKgfwLBGMm9YB/7jMBElbYvnAf5r
+	 s1bVh+1qY2GQYyYwMcaCL6g1U+IRcxJByy4jNwkAKVuTk/ouMuUsJBUehK8ddh7pASpEy
+	 E1CcBUei+jsst8fCy+bzaP+mFQPoHtBzXlHk4e2VJPUmfYny0nv+803oQo1xn1ehfqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BQotAmfU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TbIES1Te;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7592B606A334;
-	Sat,  7 Nov 2026 15:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79B5606A334;
+	Sat,  7 Nov 2026 15:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BQotAmfU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259321F008A1;
-	Sat,  7 Nov 2026 15:19:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TbIES1Te
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548581F008A1;
+	Sat,  7 Nov 2026 15:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064750;
-	bh=HLcMBcU5eYXkgg7WBCptmcn5yPDmtLxLwiitrwiHBWo=;
+	s=korg; t=1794064751;
+	bh=s9iAWRukTfci2j7hA3bGVh1UhCzlJBeDC8F3YqKFrIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BQotAmfUTDqExq/I4g/3Tt+bQLwY7W7i7G1RvG2Kt+s/nmdLPtdyEspNUcDuB1zOT
-	 uqj//HM4Ub8rVC9UNKYL+lZ32esHW3czEzob+yMBWCEtKxELGy1oIO1AFkbTEFLZFv
-	 mkDum7ezBx9AuA/lZ4rgLDGaZdM2LrGoi0t9jkk4=
+	b=TbIES1TexXo5ZHLVykW4MAKNr8FyoqU5c3FKw5P4vbVuM7xB57BcNeuSL4/En/CKv
+	 LgSEWue2selInrbFLITtOfEnO6/iBLEGM6cqnMBXw4/8SO2SUmddjFHBSorEUB7Zi5
+	 p3lnDcNiG2ujJJUDGK6F1LTwXmYOzFifzwYnD6V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengyu Liang <hengyul@cs.unc.edu>,
+	stable@kernel.org,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0724/1257] f2fs: allow empty strings for journaled quota options
-Date: Sat,  7 Nov 2026 08:50:20 -0500
-Message-ID: <20261107134959.259469469@linuxfoundation.org>
+Subject: [PATCH 7.3 0725/1257] f2fs: fix defragment writeback range truncation on 32-bit
+Date: Sat,  7 Nov 2026 08:50:21 -0500
+Message-ID: <20261107134959.287247667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,60 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengyu Liang <hengyul@cs.unc.edu>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit 0354a04b8c34e26cc66d0f43785d388163b6bacc ]
+[ Upstream commit 92154fe28c3701bebf75176dc5522bec62519a8f ]
 
-Commit 2a3db1e02ce0 ("f2fs: allow empty mount string for
-Opt_usr|grp|projjquota") added support for passing usrjquota,
-grpjquota and prjjquota as flags to disable journaled quotas.
+f2fs_defragment_range() flushes the range it is about to defragment:
 
-However, it also replaced fsparam_string_empty() with fsparam_string(),
-which rejects an empty string. As of now, mount(2) and
-fsconfig(FSCONFIG_SET_STRING) reject usrjquota=, grpjquota= and
-prjjquota= with EINVAL, although these forms are still documented in
-Documentation/filesystems/f2fs.rst.
+	filemap_write_and_wait_range(inode->i_mapping,
+				pg_start << PAGE_SHIFT,
+				(pg_end << PAGE_SHIFT) - 1);
 
-The issue can be reproduced on an F2FS device with:
+pg_start and pg_end are pgoff_t, 32 bits on 32-bit kernels, so both
+shifts are evaluated in 32 bits and truncated before they are widened to
+the loff_t parameters.  pg_end is only capped by the file's page count,
+so for a file larger than 4 GiB the shift wraps.
 
-    mount -t f2fs -o usrjquota= /dev/loop5 /mnt/f
+For a 5 GiB file pg_end is 1310720 and the range collapses from
+[0, 5 GiB) to [0, 1 GiB), leaving the rest of the dirty pages unwritten
+before the blocks are moved.  For 8 GiB the shift yields 0, the minus one
+makes it (loff_t)-1, and the range becomes [0, LLONG_MAX].
 
-Before this commit, the command succeeds. Afterwards, it fails with
-EINVAL and logs "f2fs: Bad value for 'usrjquota'".
-The same failure occurs when remounting to clear a quota file name.
+The matching call in f2fs_collapse_range() already casts:
 
-This patch will restore fsparam_string_empty() for the three options
-while retaining the flag entries, so both forms are accepted.
+	filemap_write_and_wait_range(inode->i_mapping,
+				(loff_t)index << PAGE_SHIFT,
+				((loff_t)pg_end << PAGE_SHIFT) - 1);
 
-Fixes: 2a3db1e02ce0 ("f2fs: allow empty mount string for Opt_usr|grp|projjquota")
-Cc: stable@vger.kernel.org # 7.1+
-Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
+Do the same here.  On i386 the shift changes from "shl $0xc,%ecx" to
+"shld", i.e. from a 32-bit shift to a double-precision one.
+
+Cc: stable@kernel.org
+Fixes: d323d005ac4a ("f2fs: support file defragment")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/f2fs/file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 7a7348b59f97e..0278f2f193fbc 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -338,11 +338,11 @@ static const struct fs_parameter_spec f2fs_param_specs[] = {
- 	fsparam_flag("usrquota", Opt_usrquota),
- 	fsparam_flag("grpquota", Opt_grpquota),
- 	fsparam_flag("prjquota", Opt_prjquota),
--	fsparam_string("usrjquota", Opt_usrjquota),
-+	fsparam_string_empty("usrjquota", Opt_usrjquota),
- 	fsparam_flag("usrjquota", Opt_usrjquota),
--	fsparam_string("grpjquota", Opt_grpjquota),
-+	fsparam_string_empty("grpjquota", Opt_grpjquota),
- 	fsparam_flag("grpjquota", Opt_grpjquota),
--	fsparam_string("prjjquota", Opt_prjjquota),
-+	fsparam_string_empty("prjjquota", Opt_prjjquota),
- 	fsparam_flag("prjjquota", Opt_prjjquota),
- 	fsparam_flag("nat_bits", Opt_nat_bits),
- 	fsparam_enum("jqfmt", Opt_jqfmt, f2fs_param_jqfmt),
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 6843c2aa67444..da7564e4904f0 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3029,8 +3029,8 @@ static int f2fs_defragment_range(struct f2fs_sb_info *sbi,
+ 
+ 	/* writeback all dirty pages in the range */
+ 	err = filemap_write_and_wait_range(inode->i_mapping,
+-						pg_start << PAGE_SHIFT,
+-						(pg_end << PAGE_SHIFT) - 1);
++						(loff_t)pg_start << PAGE_SHIFT,
++						((loff_t)pg_end << PAGE_SHIFT) - 1);
+ 	if (err)
+ 		goto out;
+ 
 -- 
 2.53.0
 
