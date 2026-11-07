@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064156;
-	b=U7oW6GtkTFCW0EkX54QkPHy9QJHF+p4CzocEzcijZFlcH3JXbyIZHTTfW7VQuRvjwcpw
-	 3pcPIthWwBUOUhl77zN+RRp6yr3iaYcHONJXB2KB3gLfH8edYRVEmlupDGpU6HUOoVg1Y
-	 LFoJK5M8U+aDTOkgq15tRCAaC6tVmAF0PgK15H3AlHGiDcIUbkPdJVVtondv2Fndy4PJP
-	 LqB049mChWiqcI0aIFa99xmUbFO9XBD/OJ/CiprF32OxlT4GVQ4E6DaoB9wkIqq077nxV
-	 yJBJCtBJ5vFkcHJznXe0xQAUug72SjH8R+mo44ErNE1vG1/sAEt1RYeMr8TarZHI7cA==
+	t=1794064157;
+	b=mSmf6n9oxPUD/H0r5Z+F41HKPHBwur3xAv0NlcGdp1Dqp68hiisevohsY1s1WuYGJ9Iu
+	 9Wxsx3xZ96O5Mi1HpdfxznXlF7Wdk3rss23lena/r9Z0a+m6OJhcx3P/VSniC76F946w+
+	 4TCyV1HK8ZRLZ2LD0+OTF/pxR4oSAbzu8iI5HAY3Zc8UdDWaq9vXwlDzrAjwwAzR0EWHP
+	 50rfytQEOAbO84zo4zH9Mca0vbKUqMXKQLfk7751N/Gg2mbYcpCYmfHbUZmSodI2vC/+9
+	 2u3o7/VAsjUi+uMNT/5Aq7Cj8t/kIBgmD5jpuSYOs3/8q1aZD6RRtUcl/b2sR2nOxOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064157;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1/0gx5JNgKOeFi3iOBp72JhyvREJVdkWECYN0igeXQM=;
-	b=Z2bgLLS03QbY/m3dGX8LYhrVIEPftva5RWn4RA02IjNJDeXH2B7p8fqYd2UvQm2q8QlK
-	 3Be49XyZXEmFUZguzdgonmml2wWw/knPawnc+Eg+WOUVZuesiVhUjwA9oMIIDyzVqtvjd
-	 YjKgYYtdHes1A2dmH2fivsccZj6DoxTLb4IAuxd+NIPYq0AtdJtQAH4DgbAaDhY+MeoyO
-	 B62lvldZSiHZbcMmmp9aU8/44fbhE6Cqi8xC9s0Sz5KhZ/4ypFG5963Q/arSkfiKPf6EH
-	 iUvgiUIxIveMkNpmEkj5+qhb1phBMheI3ncTeG3MAxS4Vj8J/uz7E4W61MXnJ318eCQ==
+	bh=6m9LA4fEDn36SjK0p1z/jvA5dja+ZcScfSEjuyAp8Fo=;
+	b=ye63a3T/DB2GGCxjaEp+QcSZDAlaMMCT5cYeq9Xaal86kh3zgkejtlJrQZlGsoyyp6MW
+	 oEpDsWA5j9Y0sQRLB/KRkjgcQLIaz5ImQEZhTccpiaeYFvSg0SF2skH7wGWx6/3FpkPuT
+	 dbtFtusDYD9gg+TYNQOBJqrBn4LvX1epUyux3vGCo9K69UJOv4e9Mc3XXIFhlZBr8T6VX
+	 vA7RA0Tzeh0kcN3+vr2VICpkBFOaPD+6Lw/mG7/Jm3LXnPXyPVWJO8NBVrqPKrjozocHD
+	 jdyt+YSUAqU4HRRH1xDTm6gf4QP/iyURjzoLVYWIoFxocPa7xisi9cF6ktm4qr9OSvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhpCDgJo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2RKN3Mbk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57214606A32E;
-	Sat,  7 Nov 2026 15:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FDF606A32E;
+	Sat,  7 Nov 2026 15:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZhpCDgJo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044F31F008A3;
-	Sat,  7 Nov 2026 15:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2RKN3Mbk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A371F008A6;
+	Sat,  7 Nov 2026 15:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064156;
-	bh=1/0gx5JNgKOeFi3iOBp72JhyvREJVdkWECYN0igeXQM=;
+	s=korg; t=1794064157;
+	bh=6m9LA4fEDn36SjK0p1z/jvA5dja+ZcScfSEjuyAp8Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZhpCDgJofXzphzdVKUe/LsTwbvydSe/RGdnEEztzfmMiUf5j6F9i0SAVO1KBa9pFP
-	 OIJ/rnymZDIZ3T0X0m8b4+eWj8epi931hBP5Mi7h8tyJMGBiJc/rB2gPDbZV5EUL/q
-	 LtdfDg/hQUcK7k2qAGS52UOnADg6S4uh0lBFd+u8=
+	b=2RKN3MbkZmC1kTlFodg/Swr6zy+VlTxVbbJIjdNXKVsNhzrzj5znhZ5q7ueLqY1r/
+	 4UFS5HBtnaTxd+n7hsiIQtBsF0S7OuJ0bSb2JHIlVzAlOQVoIZTvAXWXGDu0qpio0m
+	 ylhDV/yXfzd/w6o91n638hS78ALRwXcngBnH2K04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orgad Shaneh <orgads@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0305/1257] mtd: cfi_cmdset_0002: cap the write-buffer chunk at 256 bytes on an x8 device
-Date: Sat,  7 Nov 2026 08:43:21 -0500
-Message-ID: <20261107134947.870899684@linuxfoundation.org>
+Subject: [PATCH 7.3 0306/1257] mtd: amd76xrom: Fix PCI device reference leak in amd76xrom_init_one()
+Date: Sat,  7 Nov 2026 08:43:22 -0500
+Message-ID: <20261107134947.895519948@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,78 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orgad Shaneh <orgads@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit cfc5ebc9540e29f8f96db88bbfa261139e5afedb ]
+[ Upstream commit 1a122f5fecbabd47b81b1be3f0934f57b78aad42 ]
 
-The Write to Buffer command takes the number of words to program minus
-one, and do_write_buffer() sends that count as a single bus word:
+init_amd76xrom() obtains the PCI device with pci_get_device() and
+hands the reference over to amd76xrom_init_one(), which stores it in
+window->pdev.  When reserving the ROM window fails, that function
+returns -EBUSY directly instead of going through amd76xrom_cleanup(),
+so the reference is neither released nor cleared.
 
-	map_write(map, CMD(words - 1), cmd_adr);
+Drop the reference and clear window->pdev on that path.
 
-CMD() replicates the value into every device lane, so each device reads
-the count off its own data lines - eight of them on an x8 part. A count
-that does not fit in eight bits is truncated there, which limits one
-Write to Buffer to 256 words on an x8 device, however large a buffer the
-chip advertises in its CFI query.
-
-The M29EW on a Cavium Octeon CN6335 board (an x16 part strapped to x8)
-advertises MaxBufWriteSize = 512 bytes, so cfi_amdstd_write_buffers()
-split the data into 512-byte chunks and do_write_buffer() sent a count of
-511. The chip saw 511 & 0xff = 255, expected 256 bytes, and aborted the
-program when the 257th arrived. Chunks below 256 bytes - the leading
-partial chunk of a write - completed normally, so only the full-size ones
-failed:
-
-  MTD do_write_buffer_wait(): software timeout, address:0x03278bff.
-  jffs2: Write of 4164 bytes at 0x02c789b4 failed. returned -5, retlen 68
-  jffs2: No space for garbage collection. Aborting GC thread
-
-Clamp MaxBufWriteSize for x8 devices in the write-buffer fixup, and
-recompute mtd->writebufsize, which cfi_cmdset_0002_setup() derives from
-MaxBufWriteSize before the fixups run.
-
-The clamp deliberately keys off the device width rather than the part,
-even though the driver already recognises this one in is_m29ew(): the
-ceiling comes from the width of a device's data bus, not from the chip,
-so any x8 device advertising a larger buffer is told a count it cannot
-receive. The M29EW is only where it was found.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: dd8e9ed6ed54 ("[MTD] Switch to pci_get_device and do ref counting")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/chips/cfi_cmdset_0002.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/mtd/maps/amd76xrom.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mtd/chips/cfi_cmdset_0002.c b/drivers/mtd/chips/cfi_cmdset_0002.c
-index 517db2f2707f4..100cab95a17b1 100644
---- a/drivers/mtd/chips/cfi_cmdset_0002.c
-+++ b/drivers/mtd/chips/cfi_cmdset_0002.c
-@@ -283,6 +283,21 @@ static void fixup_use_write_buffers(struct mtd_info *mtd)
- 		pr_debug("Using buffer write method\n");
- 		mtd->_write = cfi_amdstd_write_buffers;
+diff --git a/drivers/mtd/maps/amd76xrom.c b/drivers/mtd/maps/amd76xrom.c
+index 457e6ab7f3fb1..0c3e0eb08b8d8 100644
+--- a/drivers/mtd/maps/amd76xrom.c
++++ b/drivers/mtd/maps/amd76xrom.c
+@@ -152,6 +152,8 @@ static int amd76xrom_init_one(struct pci_dev *pdev,
+ 		printk(KERN_ERR MOD_NAME
+ 		       " %s(): Unable to register resource %pR - kernel bug?\n",
+ 		       __func__, &window->rsrc);
++		pci_dev_put(window->pdev);
++		window->pdev = NULL;
+ 		return -EBUSY;
  	}
-+
-+	/*
-+	 * The word count of the Write to Buffer command is a single bus
-+	 * word per device, so an x8 device can be told to program at most
-+	 * 256 bytes however large a buffer it advertises - including when
-+	 * several of them are interleaved on a wider bus, where CMD()
-+	 * replicates the count into each device's lane and it is truncated
-+	 * there.
-+	 */
-+	if (cfi->device_type == CFI_DEVICETYPE_X8 &&
-+	    cfi->cfiq->MaxBufWriteSize > 8) {
-+		cfi->cfiq->MaxBufWriteSize = 8;
-+		mtd->writebufsize = cfi_interleave(cfi) <<
-+				    cfi->cfiq->MaxBufWriteSize;
-+	}
- }
- #endif /* !FORCE_WORD_WRITE */
  
 -- 
 2.53.0
