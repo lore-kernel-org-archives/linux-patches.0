@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063282;
-	b=eIDCDsL/AUf+/FY4LyirtzxZ7WvmPkhLWL++wYcyMzvaFBRX0hrgF+cQP+0M9k5pI+4g
-	 wuj2gjabNLqQVhCChIKk/s2eL2XVhAwdSHqnWAC5HTiiddpVSkdYQwgvGMM4qV1FKwHg2
-	 O++feNIQAo49PgM8m3PFI0t24pCIoeJ++LM798qTVPow56VJz/Nmc6UHaLnzYiivL5pIn
-	 WZSSFISgrRKB6gZ9+lXHPDb/bF1MUfv+hHkFEEZXnbTvbXaPkpPJ85SeQLoW8SzZ1YCSg
-	 VU9QBkAO6+ui4Bf6wZSOX9fkRreWWW5vksUtcXJtb24EuDdycWXieq/e2RyW+P1nZ3A==
+	t=1794063285;
+	b=zDpqobzg+R9cnMYlTohcoiPCGvi6bHeGdfKBOaTm28OryJ+Tqa8J/NCud6jO78KRT+Gi
+	 xfbiTplh2vm1bOKuY6CtbBSsrPD0F5KIsOI+aLYx5znmiqHf+gJ4xtR3Uf9AX2XGXOtIF
+	 2L5VvDG1oTEPIsoyedsH0vWgp3L1Vbf2ZT3s057+OrAEcMpj4QHzOqZgwWgMMoQzuLX9S
+	 mXnQ4j4Jeu2/AXcNnvFDu4q7gkUVOlMPTDjQWcbLAIyhyfObbPlr8eCntPGsKvJyWCH9o
+	 CJd0GKkFraUu1XJKMXLLwDpQD9W2C5sfuGWUEaOEKKNgPmlOj86sXvGoRKzkaqiygCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063282;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WJpKPgFfeshsJ0lnO44fSvr39LsbaEp+4yqr1m/EyIU=;
-	b=WAZdR/2o3E48o4gvzht8MsmW+JmPGxT9i8zvnIVF4aQD3dz9SJXsfPM3XSkSx8lGooaj
-	 xkpWhqvOSNFaB1PttYO1okXKK+cYSN6symBASKx28TpSPejkUhkIUHnI4M7whCix/46GH
-	 49szRWXhtHZJtTdaB8itGQAUYlCwY0lhnwCZgCbRUZdFcozhPTkR+mgWhRmKN6YVrITw9
-	 ZnNTaWsl5dH6AJpkVEmVtm4Q4L7GBPervHcKW7m0NqmQgK6KUORXU+y0cWVLuTFAPkepZ
-	 joLgfsw6UWL+ivMibzGaTz4Q3dwrUnqIpmaL2psTVovs9hZj5bY+mi7c2iN6rail30g==
+	bh=0Lj524IKhI3F6pz2kXdrvgT59drpL+6DOrrVgnKN+b8=;
+	b=b71akF9OE9hi/rI332YtwSN6siE1uoZ2+VXusbEKBWCPajfpvJ3OgW7wIwuA3jsJG9YT
+	 wPdJPozcO7eAMnRJpEcrJuHHVsxsbvdrsSf0ftPBTAKtL8PljRZyHHDuoGbSdYJSyOJ65
+	 DvckxsdPzjoIY7FX1Euhxu06EcVhgsV95L3xt6ZkxbFT/ff66nlYzulkqcB+4qp6NIqWS
+	 ricQiYh9fvT60UZlID4oxrA1LSwNga6oHixkA07MM/XY70clY5o0K+mwH2B40BlyYXdIE
+	 p7RGwB4Lw/cMnMXFoPPUdI1mpEB9xP5EA5iXYDFvV2xAGOeeACA/bHnxiloIMfr664Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TktNeLGM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GpGJc09j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38363606A32D;
-	Sat,  7 Nov 2026 14:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2A9606A32E;
+	Sat,  7 Nov 2026 14:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TktNeLGM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE611F0089F;
-	Sat,  7 Nov 2026 14:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GpGJc09j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BA81F0089F;
+	Sat,  7 Nov 2026 14:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063282;
-	bh=WJpKPgFfeshsJ0lnO44fSvr39LsbaEp+4yqr1m/EyIU=;
+	s=korg; t=1794063284;
+	bh=0Lj524IKhI3F6pz2kXdrvgT59drpL+6DOrrVgnKN+b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TktNeLGMV82sf81IEU59KRk0WD63nNkJ6mW4f8JKW3krdxTgZpP0FW2yXfiVOi9/W
-	 GAI9uKCGWO8tPZgRkVtdBgW5QF4LzCAZvxoDijZjy8Y1fIkAB3/Ugey/hH/7GE64BP
-	 ib/xj3I0SkvBWojKFaTRITVWrb6YViZY5/6NoZS4=
+	b=GpGJc09jQTkTrf2Dhq3oihA1HJTIfGbkwubnLQ3KfZPdSghKSPmiK3cZZKVLcDWqg
+	 W7d/XdaPtfvGN9I+eE/cWxGeiLQam8jcAepaQ4RMdAuq5grubf5AG4qcytCAviRlx2
+	 vlW0T20A4dI14PrsmAPbnzWewQKPZ89Ee/b4tJsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Juergen Gross <jgross@suse.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Jiqian Chen <Jiqian.Chen@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 439/869] xen/pcifront: check that an AER callback exists before calling it
-Date: Sat,  7 Nov 2026 08:52:01 -0500
-Message-ID: <20261107134908.659347229@linuxfoundation.org>
+Subject: [PATCH 6.18 440/869] xen-pciback: Fix pcistub_device ref leak in pcistub_get_gsi_from_sbdf()
+Date: Sat,  7 Nov 2026 08:52:02 -0500
+Message-ID: <20261107134908.688951686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,65 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 3b4854b69ee70fffb2fa7acac09e715a7efcbae1 ]
+[ Upstream commit cfaf31becde901f7a2376d36db628f8be0bc7283 ]
 
-pcifront_common_process() handles an AER request from the backend by
-dispatching on aer_op.cmd to the bound driver's PCI error handler.  It
-only checks that err_handler and err_handler->error_detected are present,
-then for the mmio_enabled, slot_reset and resume commands it calls the
-corresponding callback unconditionally.  Those three callbacks are
-optional -- the PCI core NULL-checks each of them individually before
-use -- and many drivers (for example igb, igc, ice and ixgbevf) install
-error_detected without all of them.
+pcistub_get_gsi_from_sbdf() obtains the stub device with
+pcistub_device_find(), which returns it with its kref incremented, and
+returns psdev->gsi without dropping that reference again.  The caller
+cannot release it either, so every lookup leaks one reference to the
+stub device.
 
-aer_op.cmd comes from the shared ring, so a malicious or buggy backend
-can send XEN_PCI_OP_aer_mmio (or _slotreset/_resume) for a device whose
-driver leaves that callback NULL and make the frontend call through a
-NULL pointer, crashing the guest.
+Release the reference after reading gsi.
 
-Check each callback before calling it.  When mmio_enabled or slot_reset is
-absent, return PCI_ERS_RESULT_RECOVERED so recovery proceeds, as the PCI
-core does for a missing callback; returning PCI_ERS_RESULT_NONE would
-instead make xen-pciback tear the guest domain down.
-
-Fixes: 956a9202cd12 ("xen-pcifront: Xen PCI frontend driver.")
+Fixes: 2fae6bb7be32 ("xen/privcmd: Add new syscall to get gsi from dev")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Juergen Gross <jgross@suse.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Jiqian Chen <Jiqian.Chen@amd.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261006023443.338194-1-yhlee@isslab.korea.ac.kr>
+Message-ID: <20260916171141.2086627-1-vulab@iscas.ac.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/xen-pcifront.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/xen/xen-pciback/pci_stub.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/xen-pcifront.c b/drivers/pci/xen-pcifront.c
-index 11636634ae512..451476ce10ae9 100644
---- a/drivers/pci/xen-pcifront.c
-+++ b/drivers/pci/xen-pcifront.c
-@@ -599,11 +599,16 @@ static pci_ers_result_t pcifront_common_process(int cmd,
- 		case XEN_PCI_OP_aer_detected:
- 			return pdrv->err_handler->error_detected(pcidev, state);
- 		case XEN_PCI_OP_aer_mmio:
--			return pdrv->err_handler->mmio_enabled(pcidev);
-+			if (pdrv->err_handler->mmio_enabled)
-+				return pdrv->err_handler->mmio_enabled(pcidev);
-+			return PCI_ERS_RESULT_RECOVERED;
- 		case XEN_PCI_OP_aer_slotreset:
--			return pdrv->err_handler->slot_reset(pcidev);
-+			if (pdrv->err_handler->slot_reset)
-+				return pdrv->err_handler->slot_reset(pcidev);
-+			return PCI_ERS_RESULT_RECOVERED;
- 		case XEN_PCI_OP_aer_resume:
--			pdrv->err_handler->resume(pcidev);
-+			if (pdrv->err_handler->resume)
-+				pdrv->err_handler->resume(pcidev);
- 			return PCI_ERS_RESULT_NONE;
- 		default:
- 			dev_err(&pdev->xdev->dev,
+diff --git a/drivers/xen/xen-pciback/pci_stub.c b/drivers/xen/xen-pciback/pci_stub.c
+index 7de2fa67743c6..b128ceeee21bc 100644
+--- a/drivers/xen/xen-pciback/pci_stub.c
++++ b/drivers/xen/xen-pciback/pci_stub.c
+@@ -234,13 +234,16 @@ static int pcistub_get_gsi_from_sbdf(unsigned int sbdf)
+ 	int bus = PCI_BUS_NUM(sbdf);
+ 	int slot = PCI_SLOT(sbdf);
+ 	int func = PCI_FUNC(sbdf);
++	int gsi;
+ 
+ 	psdev = pcistub_device_find(domain, bus, slot, func);
+-
+ 	if (!psdev)
+ 		return -ENODEV;
+ 
+-	return psdev->gsi;
++	gsi = psdev->gsi;
++	pcistub_device_put(psdev);
++
++	return gsi;
+ }
+ #endif
+ 
 -- 
 2.53.0
 
