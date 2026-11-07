@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064119;
-	b=deVxbld+50KHoUE4sEeWrH/WQEpZFSLmUwM8y17J4+NeM5l8eyfCJm1rqozvdSL4gIqn
-	 XgeAwO6hGsgi1sXQVnXvxcolts/IZ164EaOrhRoGzeyzHerGtw2tW4P9ccsVVlsUSH+7N
-	 cT6CeFhsRkf1CGBUK2aDKOrD9OX57azSy6nW+i1Cv1uBv614zLJpdpyiPlwPNaJWaibRm
-	 0hskV5+XcNOWBzu4Itt4in3g8ievMIoWT7vYbCM76fPp36C+o/MrT8tBBiSk+Y4xmvGJG
-	 I2/lop+abwcOtUWXkGSDVklBF4SoyD+/kW2YnQY8xzTasr8l1y8dGW6o2BAN39kvTfQ==
+	t=1794064120;
+	b=G7xuGKNPRmvjLHUMOsu283Ur18wwK8GrNZB/M6uqVluorFTC2nYz4+p7z8e6ljJYOhg7
+	 3jtKBX7/Jnv3GcfuRRMlQjvXQL75xIHhF25Sxscs+9utWlJ5nLZJZ2Y5Q313Yg6w6MgXX
+	 Ky3RaWgMuO2QkeWcKW0z3f7SoVC2Y9B2g1hszb7XgaRr3n4iwqgicuKKwg5VAljgB3kJB
+	 snp5Bfwk8sMC60lCcVlboIkIPPA6Ig4OfXw+f2TXeYgGYwPSkdi8RTUTMnZl4WIL7ACK5
+	 cIMcB1PJ6ZqnS/26fv1QruErEeP+gCB7Ptu4W86Ogq83K5VtveCYYzVhf9ebOJ/JUCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064119;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064120;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IPwHsI894oFKbZkqO8ovSXLaz1aReSSi9/8WgiCojUE=;
-	b=SyX6tNQBliMRT7cTMRhfsCJizELeakLMQoYifQMiTNqU/OIeNtvd9d1uS6SNuKiu79KI
-	 9Y8CwJbrOpzMQXzQTuoAMKRTLgTL7EOe9wnP+J6fzK0wMSwLJVPv8064S7QM5Pu9Qtpme
-	 TbzhryMkD0V9V5ZOM66m04pF5desuVH0IFsZBv34Jl0Vlfrn8iJqi0x0scrR8RCsqj1fn
-	 HtbE/sCNVFz6JxelyT5F+/iECbKIOI9isDYmonOow2qK8yp7myE8dEfY0V95a526Onzii
-	 Gj/CzaqZahQ6nJK0CMumhU6UiyyxRu1ub5Z5XMKlzlPkeGj+h6AekpaULRU6AnRW1ww==
+	bh=JKiRfQHwmXZFR5QIaZkLpWUsnWVtjgfbBNnJMdzz6ig=;
+	b=Q1lFv9TAnSDhiASm2ozQZsSp9nlE8IgGvL5863ZiAssLl/S0dkZIfgS/G1Iwpav9ZR6E
+	 6q6nTaYNkKSiYaNKjCyL5Km7Pu+6Ah78tsW423V8T08jHm5z6diOU1+l4zGTVKOrlPE0O
+	 9waUCJ1p8ewtqPehdv4hqmz6x6lihGvVFHjd0b+eiNlP2sVDs7Kc5UhcK/immW5vXdbDu
+	 TRzinR6osYzBIxh46ILZ9x8u/hQ4Rt097LayxCHoDyaqshZBP9odtScSmFWwrapTvQkD8
+	 /t3nDexe8GPgGyEyinz3s6EeEEzrnxaOA+4c3mtsHhu6L0x8lwfypg/DcBan0uH0GOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UF7M7SJQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N9ekPTRv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2BA606E8C2;
-	Sat,  7 Nov 2026 15:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4398A60A6F45;
+	Sat,  7 Nov 2026 15:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UF7M7SJQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BAA1F008A3;
-	Sat,  7 Nov 2026 15:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N9ekPTRv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53C91F0089F;
+	Sat,  7 Nov 2026 15:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064118;
-	bh=IPwHsI894oFKbZkqO8ovSXLaz1aReSSi9/8WgiCojUE=;
+	s=korg; t=1794064120;
+	bh=JKiRfQHwmXZFR5QIaZkLpWUsnWVtjgfbBNnJMdzz6ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UF7M7SJQZGcZcpyodm3t3uWvqIAQRYYciwljYMj1qbzmDbOCoWSPnFmReJOKtPDUc
-	 xLYGEsmxRtYyHsqE9h/TFm1+6d3VOKI8+lFGYLa2jB4unlWRwMXYXtIn5OfLu8Mmau
-	 URSjeAy3YuDwXwKxXI7yUPGX3177zg6cAiL1eu+4=
+	b=N9ekPTRvNmcIn2j2BBPgC7/Ct5Wneu2WPQTfLaY+jgDqQOIUbtHzFBW4gT5acrp6F
+	 SHg/YSnH5PTA2gZVGrRQCoRRCikE6StM5XajooBNurr1U2RMYhCZEDGdzwuJrJWLJE
+	 nT3T+HxWKwPyEXOUZ2fBEXXSsxfcyrQTmAVExhDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0275/1257] arm64: dts: freescale: imx8mp-verdin-ivy: fix DIGI_1/DIGI_2 gpio-line-names
-Date: Sat,  7 Nov 2026 08:42:51 -0500
-Message-ID: <20261107134947.076567217@linuxfoundation.org>
+Subject: [PATCH 7.3 0276/1257] arm64: dts: freescale: imx95-aquila: fix gpio-line-names padding
+Date: Sat,  7 Nov 2026 08:42:52 -0500
+Message-ID: <20261107134947.102444881@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,44 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit cb45264c27fad31f7c58fbb1a5c2f7ec16018dae ]
+[ Upstream commit 66a5b2bf9d217668ae683eecfaba38bcd61cfe94 ]
 
-gpio3's gpio-line-names names the two Ivy digital inputs "DIG_1" and
-"DIG_2", while the official Ivy Carrier Board datasheet (Section 2.10,
-Table 12) names them DIGI_1 and DIGI_2, matching the
-k3-am62-verdin-ivy.dtsi variant for the same carrier board pins.
+som_gpio_expander_1's gpio-line-names use "AQUILA_C1".."AQUILA_C4"
+instead of the zero-padded "AQUILA_C01".."AQUILA_C04" used by every
+other Cxx entry in this file and by k3-am69-aquila.dtsi, a different
+board implementing the same Aquila Family Specification. The
+zero-padded form is the official pin naming per the Aquila Family
+Specification and the Aquila iMX95 module datasheet.
 
-GPIO line names are meant to be stable across the whole Verdin family
-and its carrier boards, so userspace GPIO tooling that looks up a line
-by name works the same regardless of which Verdin SoM is fitted on
-Ivy.
+GPIO line names are meant to be stable across the whole Aquila
+family, so userspace GPIO tooling that looks up a line by name works
+the same on any Aquila SoM.
 
-Fixes: b98948b04295 ("arm64: dts: freescale: imx8mp-verdin: Add Ivy carrier board")
+Fixes: d5c082ba23db ("arm64: dts: freescale: add Aquila iMX95 support")
 Cc: stable@vger.kernel.org
-Link: https://docs.toradex.com/116799-ivy_carrier_board_datasheet.pdf
+Link: https://docs.toradex.com/116801-aquila_family_specification.pdf
+Link: https://docs.toradex.com/117671-aquila_imx95_datasheet.pdf
 Assisted-by: LLM
 Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx95-aquila.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
-index db1b4ee7728c0..bf021e85cfc94 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin-ivy.dtsi
-@@ -333,8 +333,8 @@ &gpio3 {
- 		"",
- 		"",
- 		"",
--		"DIG_1", /* SODIMM 56 */
--		"DIG_2", /* SODIMM 58 */
-+		"DIGI_1", /* SODIMM 56 */
-+		"DIGI_2", /* SODIMM 58 */
- 		"REL1",  /* SODIMM 60 */
- 		"REL2",  /* SODIMM 62 */
- 		"", /* 10 */
+diff --git a/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi b/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi
+index 69dc962a24a1d..4a809e1a840e4 100644
+--- a/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx95-aquila.dtsi
+@@ -406,10 +406,10 @@ som_gpio_expander_1: gpio@21 {
+ 		#gpio-cells = <2>;
+ 		gpio-controller;
+ 		gpio-line-names =
+-			"AQUILA_C1", /* 0 */
+-			"AQUILA_C2",
+-			"AQUILA_C3",
+-			"AQUILA_C4",
++			"AQUILA_C01", /* 0 */
++			"AQUILA_C02",
++			"AQUILA_C03",
++			"AQUILA_C04",
+ 			"AQUILA_C36",
+ 			"AQUILA_B74",
+ 			"AQUILA_B75",
 -- 
 2.53.0
 
