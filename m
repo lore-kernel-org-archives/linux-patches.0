@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061764;
-	b=mKGfqKkfbq0SmOEef71+0rI69W3QDIHKNVdPF93Iiy+esQOAGABD8SNpgh6GUDiTX5+L
-	 evYyqyvXCIu0mlbN4X3sdBBbX7BRgPAAIgW8FXCWAkQrC0Yf2RKzhH5X734J8TET16kM9
-	 GOau57BmzXxgX5qIoqmYqUuMl2wXnHM9Ds/AWte2+FL2l/Juqgb8s5qGiCCKzFXM5SU3p
-	 xerjSVARNvudK7VPJL15Tv9AexlEIT/PS9YbLL4i9Kibun7pD9ihUk4PvkcMyIihQfTmS
-	 GB1MPs7mubrPwgQjPHfcRh0eHRrMfr0o97HTOSwIvkEcz8N+PNYItUOPCg51JQ7wi6g==
+	t=1794061766;
+	b=MtghPlUHxGUs9Y59PDvrQsRffXuYvfhhFFWvTlFlQhGquCFTsmc8mm22poFqCHEIT1Pq
+	 +Y1NpvDqRLm9ohyWrE8YgTETp9JFowyFhv2RlLCVzl9GbSk7VLYqL6FPR5wj95Fm4BiK8
+	 DZaJgc23WyxnYbItbBZrqmqdg6LFGI48xkqutZgzFq59jxM5xROOyS2eWSTprbu2UKVpq
+	 4mUv+IC0m4ia5j0+C0pwuT676U9Zho6GD9l3JHhMxvsxMfoLjjSnMT/S/xn5nwDPxZgyM
+	 6Xy+mof6IQ17sFxitMZzoCJcbUbIJETWUhC3/2JGwPhKObGDTUy88v+JjhQyJjOAwyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061764;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vJ9zib0JwkPdGW+FrVjxOIeYNsJtSxaIiUDDoOpn9wQ=;
-	b=el50AyZ4bgxBEnr5DYMaQAv/2CF6qxMIcbLkxa6qcoFhKJf4i1pTpW3VrNqunxr8yXy0
-	 pF6DE+6HazbBPKbRF5eoVvGbIUwgucVM5uVDTszNGrjOFgzwbEt8bQtb8UcfgOPYWyara
-	 zEw1MOh2gcYQzJw9Q4fU6SfGMXzI9/acYvyaEZzs1liVpqqKBBEBbJjkWuPWB+m0+tQHv
-	 ibHbvuwgBSkSruY5QNI6YpkN744HPsSBvbDLbgpRyGhifTHtxfrpJR+AqCMF7q8bP57AQ
-	 G4FI+YG7MDwPFFKN8xyFZMVxCDni/U5Nwap/zyfPDTZwQP2BTmj4zZI1uksE/YfJPdw==
+	bh=nnmflxyDcp+Hgfpx/HOgsaiuqKhznERafhVYCfDTsF0=;
+	b=5a4+vmfHMqcYbfWGLBfxEI1TnILWaf7G6UnzSY5Ep+SBEvqIE0mQYxm/5O5HRXLClrim
+	 Gz1b0iriYGBSCQ5a+WEzL/oB9E3eyMkn0M1tXdhKcYRTfGE/DrhbZ4G1qM+ufs1LeO/PK
+	 iGsQ+4UlQAUvKFW6H4ImtJax47EvjNDePjWM6VBBXuKeDl//BVfhkxcm1e0PMsgHdwWdv
+	 Hi8daUF60coEIqvLTjiVkUXFmAZOrM9UluRBvJ0Uh4ecBpSchbLp71biA8nIuABfI87Jt
+	 Mo7LxXM/fiPe3AxvWxEpQU83KgCjiAzhiwng75iZuTcWpAxvNsw4IDSKDcs227JUXAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L/4HTl4i";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OYVtyD0k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953E2606A326;
-	Sat,  7 Nov 2026 14:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29645606A326;
+	Sat,  7 Nov 2026 14:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L/4HTl4i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B2A1F0089F;
-	Sat,  7 Nov 2026 14:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OYVtyD0k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C532D1F0089F;
+	Sat,  7 Nov 2026 14:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061764;
-	bh=vJ9zib0JwkPdGW+FrVjxOIeYNsJtSxaIiUDDoOpn9wQ=;
+	s=korg; t=1794061766;
+	bh=nnmflxyDcp+Hgfpx/HOgsaiuqKhznERafhVYCfDTsF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L/4HTl4it/cTYXLrT4WvYExS1yhBTuDkKoobHc17VkbQJ92wX1oFvduKL0HLQLcI7
-	 xQ/gXa+6YoDcrFw7oLilDJJHAdM+3uRwFy43/mFhWiXO2Y3gpWp+MgvQ40OSOCuFys
-	 wvDxLeqUYswbLu61q81WpEaXurtfgT5DUkBDQKAA=
+	b=OYVtyD0kVAH49FYpHMthbpLDQvSWI3BTD1GnFTG2S1cUqP7z2WO2/mtz/mzDwI2VO
+	 Uwilgpt8mZEamYRmh08BYtfDYgQsjZFnahN/yMtJSw1KPh/iV141h5XL8Ihp9kpmyI
+	 ZF8TYP46cXoOh/IyXA8nuZLu+ueGLqVg5r4gC1mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loc Nguyen <loc@ryzome.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Kai Huang <kai.huang@intel.com>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 0801/1536] KVM: x86: Request event processing for exception VM-Exits
-Date: Sat,  7 Nov 2026 08:46:57 -0500
-Message-ID: <20261107135020.042976954@linuxfoundation.org>
+Subject: [PATCH 6.12 0802/1536] KVM: x86: Take SRCU in kvm_zap_gfn_range()
+Date: Sat,  7 Nov 2026 08:46:58 -0500
+Message-ID: <20261107135020.072429163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -67,44 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loc Nguyen <loc@ryzome.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 88b23a2e8286b7016c3b58dc10093cf28c22aa3d upstream.
+commit b59a87c1ba3c347e8aec5f932eb7abf13064fd62 upstream.
 
-Request event processing whenever kvm_queue_exception_vmexit() queues an
-exception VM-Exit.  Most callers reach the helper through
-kvm_multiple_exception(), which already sets KVM_REQ_EVENT, but nested
-asynchronous page faults call it directly.
+kvm_zap_gfn_range() walks memslots and rmaps and may drop mmu_lock to
+reschedule. Callers that do not already hold kvm->srcu (or slots_lock)
+can race with memslot deletion: synchronize_srcu_expedited() does not
+wait, kvm_free_memslot() frees the old slot and its rmap, and the zap
+resumes on freed memory.
 
-Without another event request, vcpu_enter_guest() skips
-kvm_check_and_inject_events() and re-enters L2.  A subsequent VM-Exit can
-clear the pending exception while reconstructing vectoring state, losing
-the synthetic #PF VM-Exit.  The APF reason remains PAGE_NOT_PRESENT and a
-later regular #PF can consume the stale value.
+The VFIO noncoherent-DMA path hits this by zapping the entire GPA
+space without SRCU. KASAN reported:
 
-Setting KVM_REQ_EVENT in the common helper ensures that L1 receives the
-queued VM-Exit before KVM re-enters L2.
+  BUG: KASAN: vmalloc-out-of-bounds in slot_rmap_walk_next+0x82/0x1c0
+  Read of size 8 at addr ffffc900005c1008
+  Call Trace:
+   slot_rmap_walk_next+0x82/0x1c0
+   __kvm_rmap_zap_gfn_range+0x17a/0x280
+   kvm_zap_gfn_range+0x2a6/0x6a0
+   kvm_vfio_set_attr+0x576/0x770
+   kvm_device_ioctl+0x1ff/0x3b0
 
-Fixes: 7709aba8f716 ("KVM: x86: Morph pending exceptions to pending VM-Exits at queue time")
+Take SRCU inside kvm_zap_gfn_range() so every caller is covered.
+Nesting with an existing kvm->srcu critical section is fine; the
+helper uses a local index. Drop the now-redundant SRCU pair from
+__kvm_set_or_clear_apicv_inhibit().
+
+Fixes: 362ff6dca541 ("KVM: x86/mmu: Zap KVM TDP when noncoherent DMA assignment starts/stops")
 Cc: stable@vger.kernel.org
-Signed-off-by: Loc Nguyen <loc@ryzome.com>
-Link: https://patch.msgid.link/20261002053723.3275202-2-loc@ryzome.com
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Link: https://patch.msgid.link/20260825183924.237727-1-nicoyip.dev@gmail.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/mmu/mmu.c |    2 ++
+ arch/x86/kvm/x86.c     |    2 --
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -6664,6 +6664,8 @@ void kvm_zap_gfn_range(struct kvm *kvm,
+ 	if (WARN_ON_ONCE(gfn_end <= gfn_start))
+ 		return;
+ 
++	guard(srcu)(&kvm->srcu);
++
+ 	write_lock(&kvm->mmu_lock);
+ 
+ 	kvm_mmu_invalidate_begin(kvm);
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -790,6 +790,8 @@ static void kvm_queue_exception_vmexit(s
- {
- 	struct kvm_queued_exception *ex = &vcpu->arch.exception_vmexit;
+@@ -10207,10 +10207,8 @@ void __kvm_set_or_clear_apicv_inhibit(st
+ 		kvm->arch.apicv_inhibit_reasons = new;
+ 		if (new) {
+ 			unsigned long gfn = gpa_to_gfn(APIC_DEFAULT_PHYS_BASE);
+-			int idx = srcu_read_lock(&kvm->srcu);
  
-+	kvm_make_request(KVM_REQ_EVENT, vcpu);
-+
- 	ex->vector = vector;
- 	ex->injected = false;
- 	ex->pending = true;
+ 			kvm_zap_gfn_range(kvm, gfn, gfn+1);
+-			srcu_read_unlock(&kvm->srcu, idx);
+ 		}
+ 	} else {
+ 		kvm->arch.apicv_inhibit_reasons = new;
 
 
