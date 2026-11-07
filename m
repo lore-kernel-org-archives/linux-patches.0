@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065349;
-	b=yHcR0HMdVcV1xLqruk9ncVp2gj6n34ASRJoO2mJyTwDJK+nuPSuuwNACF1pfWDEBmG5Y
-	 /heeFR/ucA0RsdeBNFvvj40Di41MACwE9gQxI4hOh3QLThxRlZ583FHRnpg1mlHRTQQt6
-	 MHnsK+pCdk0rQ0ND452c2j1u1D9TdbJygs8TGK6Dc9WFnSEwCsGq1h7bGeRpWsNzavuRv
-	 K3Xh54qEGzLBVJJXWQ6DiW/rDNqgPHoXunqE1ILoM6Mtm5FQhYytHuVadL31GbZupzve8
-	 JdlOvcHzCqHrwOASdlu1CtmcxsNYTP8Pj2jIAnlVBoyYuOKL15SfgMQb9phSJHPJtog==
+	t=1794065350;
+	b=2enNckht+lQqounEqmnB3K/CZl0NWYacNFOcZJ1ZKaWunTtnsYHXrMy6T31yGnGF3afN
+	 hJ/t+czTqyv79XHNoX/t+P0DpiPTZKPBcKuf7N/S4IMrsKGNhvkaRxNSKcp035kaR+lYD
+	 R11VQJ4t6+RDBpj1BXozTWvBN4/4duKK6M5NRqcD7yTu5hjx8lMp+wiCf51nmfv87awnn
+	 G3L9mjXL1Wh2Wkt4l4l7J4CBtZzs75AHD+XdNiHyGatiBjaCWjniCu0Vu6tYsFXIfJHpw
+	 68JEAIpDnpPVMp3uHymR0YTb8W5QkAGFDqP6YipBJXeVcepR/rI1CC4oEizr9CrxFOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065349;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065350;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qUTmN1YJF6hYPha3b9ycf9IiyCxf0e58RB8b5z/dWdw=;
-	b=I6IffFHgcYcF7ATJM3kRPJ5vNw6/CNBGtP5e3F7RZY2S0cJmUA8afeY3r1u9evoe3GYO
-	 v7NEy6l3DwBgl3NYsWbIOXbnSNbJTqhNPGdzm4aAj/ckE3iWJDkZYWjxWwvv35wYoKt8H
-	 nhmC+mqsdf2dlFqJm2EkbmDX/W0SD8sBJTGEhST2+dDL8Wp3IZ91CreTUaasTlUM5l+Rb
-	 D80vkDUSV+gwziLZ/liT8c0+natRmgAyj0GplWr2TJjJSOItrwwvESd55MPINfUg3sNVj
-	 sxk0eirUWM2BMdrI7UV61qlw9EYXDW8bazWKMJ9frPh8UvIdiL2QWSWF8Bjd9i+Mqug==
+	bh=yqve7dMJHSM1mK4c+wVu0YoADZkZeJQK+i79JRts10A=;
+	b=Q5375CVYziUzL0L12G4r7ZGG6GCzz6K862sFdYAod6XFFI8mWJwwjjrbGwxCjmtOSYUd
+	 5RvJuO6ipsjH4MAru2kUWWqO3jLYvPvxV/ooYDFr3cT+ukYb+7ve8EhEgi+qlAhqwZ2MP
+	 T3asEpGRuZj3eOadjPxKtfE5Dp8BFruK+ZK0n9mrmHoPRfTZxoX/pqbD5C5kw4aq5nApp
+	 AUnL8zhGIMMQpflAizTtjsdfxKJgNZlebHVLQm2jGZu8WtHOm3Oa6j3AraSlYdVbB8217
+	 RrFCp8dVdB8aG7/PsL0oXrxGkvV0m4ngeZvHLqxCzrW+5OIXxNqMDt9bkdmo47KtljQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgBs4gla;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TV8nm7lo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D79B606A326;
-	Sat,  7 Nov 2026 15:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6521A606A326;
+	Sat,  7 Nov 2026 15:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgBs4gla
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17951F0089F;
-	Sat,  7 Nov 2026 15:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TV8nm7lo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCFA1F0089F;
+	Sat,  7 Nov 2026 15:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065349;
-	bh=qUTmN1YJF6hYPha3b9ycf9IiyCxf0e58RB8b5z/dWdw=;
+	s=korg; t=1794065350;
+	bh=yqve7dMJHSM1mK4c+wVu0YoADZkZeJQK+i79JRts10A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hgBs4glaBZiyQgVPXNTqfptGx0Z6GaxpYmXrfjPCuSM9aKZC6Qyd8UyQf25LXbiOF
-	 02SYHiqnYb1Z0bpEO2FEzxlNrHP8yPn1HAFvIjnszP62EHV7g27b1YolU994EYNPny
-	 yrBOebYloV1QHNlz9BNspo1kD/dItcXTtSxgouQU=
+	b=TV8nm7lojgvpK/F+FiKoXBTbpKUYBklqSJW++SLGKInyNkL1IM0H4uxJaag7CUs5y
+	 P++pJQWdg0gsP/GK2kzwi5t0qNgFICwPu5Ps7YjuLuEE4GQD5/nUhga3t+CbMr7fBX
+	 YGHl6yCKTfBtCeRA54GF7dFbmyn5XIcJJYiZB6nE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
+	Ma Ke <make_ruc2021@163.com>,
 	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1036/1257] i2c: mt7621: fix copying uninitialized kernel stack with reduced page_len
-Date: Sat,  7 Nov 2026 08:55:32 -0500
-Message-ID: <20261107135007.932249926@linuxfoundation.org>
+Subject: [PATCH 7.3 1027/1257] i2c: acpi: Fix adapter reference leak in i2c_acpi_new_device_by_fwnode()
+Date: Sat,  7 Nov 2026 08:55:23 -0500
+Message-ID: <20261107135007.685771143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,68 +68,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit b7fd977fec0d3f2bdd4f13bb59949c817a365652 ]
+[ Upstream commit a65917d0a22f9b10694853b725f9cd399fc3ef4d ]
 
-When a page_len is less than 5 bytes in mtk_i2c_xfer, uninitialized kernel
-stack data is copied and written to REG_SM0D1_REG. Equally on the read
-part, an unnecessary read is done.
+i2c_acpi_new_device_by_fwnode() obtains an i2c_adapter through
+i2c_acpi_find_adapter_by_handle(). That helper uses bus_find_device()
+internally, so it returns the adapter with a reference held:
 
-Guard these extra copy/write and read for the page_len to fix leaking
-uninitialized stack memory.
+        adapter = i2c_verify_adapter(dev);
+        if (!adapter)
+                put_device(dev);
 
-Fixes: d04913ec5f89 ("i2c: mt7621: Add MediaTek MT7621/7628/7688 I2C driver")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.3+
+        return adapter;
+
+The reference is only put on the failure path inside that helper. The
+caller owns it otherwise. i2c_acpi_new_device_by_fwnode() never drops
+it, neither on the -EPROBE_DEFER path nor after
+i2c_new_client_device(), so every call leaks one reference on the
+adapter and the adapter can never be released.
+
+i2c_new_client_device() does not consume that reference. It registers
+the new client with the adapter as its parent, and device_add() takes
+its own reference on the parent, which device_del() releases when the
+client goes away.  The reference obtained by the lookup is a separate
+one and has to be dropped here.
+
+i2c_acpi_notify() in the same file already does exactly this. It takes
+the adapter from the same helper, registers the client through
+i2c_acpi_register_device(), which calls i2c_new_client_device(), and
+then puts the reference.
+
+i2c_new_client_device() gives the client its own reference on the
+adapter, so ours can be dropped unconditionally.
+
+Found by code review.
+
+Fixes: 605f8fc22442 ("i2c: core: Add new i2c_acpi_new_device helper function")
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Cc: <stable@vger.kernel.org> # v4.12+
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20261022193853.670625-1-ansuelsmth@gmail.com
+Link: https://patch.msgid.link/20261012013421.3597430-1-make_ruc2021@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-mt7621.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/i2c/i2c-core-acpi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-mt7621.c b/drivers/i2c/busses/i2c-mt7621.c
-index 0a288c998419b..9ea5e3f9a7632 100644
---- a/drivers/i2c/busses/i2c-mt7621.c
-+++ b/drivers/i2c/busses/i2c-mt7621.c
-@@ -144,7 +144,6 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 	u16 addr;
- 	int i, j, ret, len, page_len;
- 	u32 cmd;
--	u32 data[2];
+diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
+index 8f3bdd50186e3..37d1309e93b59 100644
+--- a/drivers/i2c/i2c-core-acpi.c
++++ b/drivers/i2c/i2c-core-acpi.c
+@@ -547,6 +547,7 @@ struct i2c_client *i2c_acpi_new_device_by_fwnode(struct fwnode_handle *fwnode,
+ {
+ 	struct i2c_acpi_lookup lookup;
+ 	struct i2c_adapter *adapter;
++	struct i2c_client *client;
+ 	struct acpi_device *adev;
+ 	LIST_HEAD(resource_list);
+ 	int ret;
+@@ -574,7 +575,10 @@ struct i2c_client *i2c_acpi_new_device_by_fwnode(struct fwnode_handle *fwnode,
+ 	if (!adapter)
+ 		return ERR_PTR(-EPROBE_DEFER);
  
- 	i2c = i2c_get_adapdata(adap);
- 
-@@ -186,6 +185,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 
- 		/* transfer data */
- 		for (len = pmsg->len, j = 0; len > 0; len -= 8, j += 8) {
-+			u32 data[2] = { };
+-	return i2c_new_client_device(adapter, info);
++	client = i2c_new_client_device(adapter, info);
++	put_device(&adapter->dev);
 +
- 			page_len = (len >= 8) ? 8 : len;
++	return client;
+ }
+ EXPORT_SYMBOL_GPL(i2c_acpi_new_device_by_fwnode);
  
- 			if (pmsg->flags & I2C_M_RD) {
-@@ -194,7 +195,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 			} else {
- 				memcpy(data, &pmsg->buf[j], page_len);
- 				iowrite32(data[0], i2c->base + REG_SM0D0_REG);
--				iowrite32(data[1], i2c->base + REG_SM0D1_REG);
-+				if (page_len > 4)
-+					iowrite32(data[1], i2c->base + REG_SM0D1_REG);
- 				cmd = SM0CTL1_WRITE;
- 			}
- 
-@@ -204,7 +206,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 
- 			if (pmsg->flags & I2C_M_RD) {
- 				data[0] = ioread32(i2c->base + REG_SM0D0_REG);
--				data[1] = ioread32(i2c->base + REG_SM0D1_REG);
-+				if (page_len > 4)
-+					data[1] = ioread32(i2c->base + REG_SM0D1_REG);
- 				memcpy(&pmsg->buf[j], data, page_len);
- 			} else {
- 				if (!(pmsg->flags & I2C_M_IGNORE_NAK)) {
 -- 
 2.53.0
 
