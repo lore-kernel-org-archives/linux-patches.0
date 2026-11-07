@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062341;
-	b=RO1ZASN1xrCdGqV7fZwcYKCyjO/dVJa4XFhNSEXKzboPNrIh0TNagM5e0oZYUDd3cIuV
-	 6OSZ88pS7mE8NiSOqeM+ipMJt2gi1TBb/luuXQq6ApxmjjM6lNOUPStHtFHfgYJtpfKck
-	 mht/qfCwGtdXdvAGSYBWJO+Tvl80mx8HQv+j3PpAZJIpRss3gZcT328FLIPf4XkGglK/s
-	 mrzZ5vc8DES/Id/Xy4pZLTqWvNNXXB5rKSDaD9CYd/NVinPU+cnW0XtLq6h2cGa0UC6+/
-	 15clWozH37N01+I18ciiKYL4Nqt1PYuMMXWDfwJqaFKhYjhv81tUJTzutZvXNde6rnA==
+	t=1794062342;
+	b=KUt7rZC21KScSNdmU8DHnOtxnz7PAXgw+L31inypHvW8d9tbfm2dronFvGGlKZd50K/8
+	 ZKdjNhXEpxY5uyFiwIf7DEf7VgS9okaus+bvhPJQeF3bPdKearwQh609gSYjHdCAYY2eN
+	 M9HtH7uqXKWtcbdrSOqe9PGCf8J41BDasExs2bbXaUWyO24J7Yfb24aDw39bD5A0FiGP7
+	 P092Q6K5Vn77DF//3e20YQjKJ+vrW4WHxOn+Nhf44pHr5/yqCmfU/IHCkP7vdp73ogUlx
+	 ja+0F5QALDlWImuYm2URUJ48wKWOcb6vZuua4ExIPrDoXOmjPIusyySJcd9mOQuST3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062341;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062342;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yCtWtAO6pA4nfAExb++4vaozwKrmXdeAH5OQzIXI7hY=;
-	b=nL0y30roJFfZxyGhQXwgIcPG4A4XsT+W7PeN2BQ4Bgb4H7XfUhcSBpMBs2ndQTANk06t
-	 6UbA85aiPQlHNFY3VYbgIzh1uLc5lFTlopuOERn13kEeLyNsfF/nufzQnwtB2XtdgRLcu
-	 EGvt0ZfVuABDWQ4Lqaw9sO+z8dLJ3tjBih05JazdjQoLBQCr8d2Fs9fBWm7cXqkbRGIFZ
-	 dzOUcoPFI2/MV4Eman7vIReUdJaJYXWu22ZinmFj3T2VVppxXo01dbS/V5pxXXvu/OZZU
-	 lFwxSR050td77oJG3Xzc5FehcFbhuzqIDCsImLRj2v7nXF55dsgCN+OyKvEsmAaB+Ag==
+	bh=ak+FplF4N+7NxsnNBeQ6ezl1n0qOfjstb4SVq3ehhvk=;
+	b=G+4j875AV/9dgBMw2acsi5uJPTsQII6tn55QylcDiYNii27y01L5E7qgJtHSQ6Pf/FU5
+	 ik7pGFvyGWSoYG0HdFFR64FQN0p9z7ktqBFZczGpKC/yB0Xttwy3dpkmGucICQS369SB3
+	 uXAU4N2Ekv5izlwbOmQL/ZYKDWQL9YDom6A7p2liv25qYQsJ8TKvpkT8MWbTYttD9F3Hv
+	 aJgcOaA1dKlYtqayCYjH9aQ5vOt5Em+R5HnFLpHyQj5n4sP8FUEYn3WpNAKaiLcphacID
+	 Lb6ElpZQwYCTIM+Y5Bd5u3DOJqeo3sNzD4Fnto2FLPX+uTh/J69JAViCCq3LZVj7aOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0HxkCbvQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OrcMqZPB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38260606EE8A;
-	Sat,  7 Nov 2026 14:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792C26082BC0;
+	Sat,  7 Nov 2026 14:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0HxkCbvQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA29C1F008A3;
-	Sat,  7 Nov 2026 14:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OrcMqZPB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4D41F008A1;
+	Sat,  7 Nov 2026 14:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062341;
-	bh=yCtWtAO6pA4nfAExb++4vaozwKrmXdeAH5OQzIXI7hY=;
+	s=korg; t=1794062342;
+	bh=ak+FplF4N+7NxsnNBeQ6ezl1n0qOfjstb4SVq3ehhvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0HxkCbvQH7aPe9PqK/C8c6KQyOTFLLfx1B/5/fEwyCJxidDGd9sIE7Rq8jK4VipyH
-	 1X3uZNGWRAg5bOOz2Bh2/4X/HqeWlN1Z2bx7WQNJKbMq8tWREqFHtTRFs7+PkT3ij3
-	 NdwoSV3jpRnJfaZ9KIYogqurw6LHf/9oP/NBxvwU=
+	b=OrcMqZPB3mIxgt9YcqrGWw3lgwGRjNVqIFqny+w7dpxNXULPijPk2OkqayIIPbOCR
+	 VD81whfRo70B0I56nrBxpfpgyhWmn7oxnwBsON0fOyHxqSlVe3X1EBx8wI8Tw57nsS
+	 ZThZoRXokLXyzjV7J1EdGJVs0RMx5Ckg/zdBC2Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	stable@kernel.org,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1269/1536] nvmet: zns: dont leak stale memory in zone management receive
-Date: Sat,  7 Nov 2026 08:54:45 -0500
-Message-ID: <20261107135033.415816696@linuxfoundation.org>
+Subject: [PATCH 6.12 1270/1536] f2fs: convert inline quota files when turning quota on
+Date: Sat,  7 Nov 2026 08:54:46 -0500
+Message-ID: <20261107135033.444639153@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,83 +70,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit 31b8a6af19b73e6167c4b655cd5e86681bac1c41 ]
+[ Upstream commit a85e09bd6cc80059b9e0ef5cd1467719aa3129a8 ]
 
-A Zone Management Receive report returns the full buffer the host asked
-for, but nvmet_bdev_zone_zmgmt_recv_work() writes only the 8-byte
-Number of Zones field and one 64-byte descriptor for each matching zone
-that fits. The 56 reserved header bytes and every descriptor slot past
-the last match keep whatever the buffer held before. A 4096-byte report
-covering a single zone leaves 4024 bytes unwritten.
+With a block size larger than 4KB, the inline data area is large enough
+to hold a freshly created quota file (quotacheck writes 6KB), so
+aquota.user/aquota.group stay inline after quotaon. f2fs does not
+expect quota files to be inline, and this causes two problems:
 
-The tcp, rdma and fc transports allocate that buffer with sgl_alloc()
-and pci-epf with kmalloc(), none with __GFP_ZERO, and on success each
-sends the whole buffer to the host (nvmet_setup_c2h_data_pdu() for
-tcp), so the host receives old kernel memory from the target.
+1. Quota file corruption. f2fs_write_single_data_page() sends quota
+   inodes straight to f2fs_do_write_data_page(), which sees NULL_ADDR
+   for index 0, treats the folio as truncated and drops it. Updates to
+   the quota file are lost once the folio is reclaimed, so the quota
+   tree reads stale data: chown/chgrp fail with EIO and quota entries
+   of users disappear. For example, the kernel log shows:
 
-nvmet_bdev_execute_zone_mgmt_recv() also never checks the transport
-data length against NUMD, so on transports where the host sets that
-length, the buffer sent back can be much larger than the report NUMD
-describes. pci-epf derives its data length from NUMD, so the length
-check below does not apply there, but the zeroing still covers the
-report.
+     find_free_dqentry: Data block full but it shouldn't
+     qtree_write_dquot: Error -5 occurred while creating quota
 
-Reject a data length that does not match NUMD with
-nvmet_check_transfer_len(), as nvmet_bdev_execute_zone_append() does,
-and zero the report with nvmet_zero_sgl() before filling it. Zeroing
-NUMD bytes is only enough because of the length check, so the two go
-together.
+2. Deadlock. Writing a quota file past MAX_INLINE_DATA converts it from
+   f2fs_write_begin() under f2fs_lock_op(). dquot_transfer() is called
+   from f2fs_setattr() with f2fs_lock_op() already held, so chown/chgrp
+   take cp_rwsem for read twice and hang, together with the checkpoint
+   and every other writer, once a checkpoint waits for cp_rwsem in
+   between (seen with generic/232).
 
-Allocating with __GFP_ZERO in the transports would also close the leak,
-but it adds a memset to every read command to fix one handler, so the
-transports are left alone.
+Quota files only grow and there are at most MAXQUOTAS of them, so there
+is no point in keeping them inline. Convert them in f2fs_quota_on() and
+after dquot_quota_on_mount(), which keeps every block size on the same
+path as 4KB blocks, where quota files never fit inline. Quota sysfiles
+are created by mkfs with real blocks and are not affected.
 
-Tested over the loop, tcp, rdma and fc transports with a zoned
-null_blk namespace: before this patch, zone reports carried stale bytes
-and a data length larger than NUMD was accepted; with it, reports are
-fully initialized and such a length fails with Data SGL Length Invalid.
-
-Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: stable@kernel.org
+Fixes: d7e9a9037de2 ("f2fs: Support Block Size == Page Size")
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/zns.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/f2fs/super.c | 33 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
-index 40f261a4927ce..497e75a292f75 100644
---- a/drivers/nvme/target/zns.c
-+++ b/drivers/nvme/target/zns.c
-@@ -286,6 +286,11 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
- 	if (status)
- 		goto out;
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index c278ce7842056..1e5aea6352497 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -2823,15 +2823,42 @@ static qsize_t *f2fs_get_reserved_space(struct inode *inode)
+ 	return &F2FS_I(inode)->i_reserved_quota;
+ }
  
-+	/* Only the zone count and matching descriptors are written below. */
-+	status = nvmet_zero_sgl(req, 0, out_bufsize);
-+	if (status)
++/*
++ * Quota files only grow and there are at most MAXQUOTAS of them, so there is
++ * no point in keeping them inline. Writeback of quota files does not handle
++ * inline data and would drop what was written to them.
++ */
++static int f2fs_quota_convert_inline(struct inode *inode)
++{
++	int err;
++
++	if (!f2fs_has_inline_data(inode))
++		return 0;
++
++	inode_lock(inode);
++	err = f2fs_convert_inline_inode(inode);
++	inode_unlock(inode);
++	return err;
++}
++
+ static int f2fs_quota_on_mount(struct f2fs_sb_info *sbi, int type)
+ {
++	int err;
++
+ 	if (is_set_ckpt_flags(sbi, CP_QUOTA_NEED_FSCK_FLAG)) {
+ 		f2fs_err(sbi, "quota sysfile may be corrupted, skip loading it");
+ 		return 0;
+ 	}
+ 
+-	return dquot_quota_on_mount(sbi->sb, F2FS_OPTION(sbi).s_qf_names[type],
++	err = dquot_quota_on_mount(sbi->sb, F2FS_OPTION(sbi).s_qf_names[type],
+ 					F2FS_OPTION(sbi).s_jquota_fmt, type);
++	if (err)
++		return err;
++
++	err = f2fs_quota_convert_inline(sb_dqopt(sbi->sb)->files[type]);
++	if (err)
++		dquot_quota_off(sbi->sb, type);
++	return err;
+ }
+ 
+ int f2fs_enable_quota_files(struct f2fs_sb_info *sbi, bool rdonly)
+@@ -3043,6 +3070,10 @@ static int f2fs_quota_on(struct super_block *sb, int type, int format_id,
+ 
+ 	inode = d_inode(path->dentry);
+ 
++	err = f2fs_quota_convert_inline(inode);
++	if (err)
 +		goto out;
 +
- 	if (!req_slba_nr_zones) {
- 		status = NVME_SC_SUCCESS;
+ 	err = filemap_fdatawrite(inode->i_mapping);
+ 	if (err)
  		goto out;
-@@ -314,6 +319,11 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
- 
- void nvmet_bdev_execute_zone_mgmt_recv(struct nvmet_req *req)
- {
-+	u32 out_bufsize = (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
-+
-+	if (!nvmet_check_transfer_len(req, out_bufsize))
-+		return;
-+
- 	INIT_WORK(&req->z.zmgmt_work, nvmet_bdev_zone_zmgmt_recv_work);
- 	queue_work(zbd_wq, &req->z.zmgmt_work);
- }
 -- 
 2.53.0
 
