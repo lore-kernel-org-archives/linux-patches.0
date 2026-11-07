@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062474;
-	b=sBMEfG4fQWdEHE4s/rMI9lqwlQwZraLZBrC6lNdYdaWtydevyqi0OC0qrL3iao5BYrZo
-	 Y7cJ/zohcKurMqpcSAltixyy4OvuEwcNGYUCuw1176nTOc479+L4iGPdgR765sar2yl+5
-	 Jq5+qYuUyj3epNWMR8jDqsow6zr+H0xrmXdl9bhZLUV6VUS/CcLbS5Bk3OBbpxQVHrPTP
-	 vBw9mKS6jllXArj5AONx4SgGNtdyPKLM0AROA9GogNVkFsG2/P+UWAkXpWF/uOsnqmG5R
-	 EwAikxUucM9ISD5Ah5hMaSNawdEP6XuC+5YA2w6J9H1U5x0FU9KVzYAjuZlH5/n6PWg==
+	t=1794062475;
+	b=waQZfzS7NX/P8w1FXQYSzsER1tDz8Mux2Wwenioyv6xfVt/BC1HT88F/ZwATrrF5ldtR
+	 8UeWfD9uaocXmWiPbw0nOtimPdRfWO/12uf1MK+SDF5h4q60H/Is/72sjqKkFEckIpere
+	 wS5nMBJH72gZkGtb4wwuRo4SKPQwbMGVknEPhIj65WE1eyC+ufF7SARe+atmAdoaOF8Xz
+	 kdYewO2MwNUCRsIrs4OMuPihxPIir3Kr5sQruEqB+K8wa+SP2rdfm4QsRPWMkj80CdklI
+	 KPWcCiEu/wEZr92q/C+aoefEis8FRAEdzYSpXR38hc0KxS7jyJm+pBZU5Gd9RZbC0qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062474;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062475;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wtvw75RS80mX0Wvoqdp4fziB/raiZTtNZsmibtA+buo=;
-	b=3VnJiRfaKjY1eQJ5tj4EuNPKYNRJ11RdrILbTX7gMzqwO2dOxf2OMkc/8ebJyjW8ihiy
-	 /os0okrvPo7aSx6LMW8PkAfYPaCrYKwU33/E/w0uFFzkmRkjgvpuvpmLkZx/NlAH9/mrl
-	 StZFGqahVlftyJBhlBt9TBaqL2JOl1e1E+V5zu2KBcgpF7vldRciZduNlOcnG2zV1x8FC
-	 U1ddpx5edM9rK2J+grGAVSwOtJWjlJIG6/17v+G8/8MJtMSJMSzZvnZtfYv6ZkZDG7ohu
-	 LXWksKmHOp9Xdvl2SDw5rObDbKELA/QvwbXKiyAlUTsYAWEv38x0ZrOe1Ww72IuXShw==
+	bh=f+CpnRfghLdrP//xZWHNiXI+w5zDnTwpzhkNbyHpeAc=;
+	b=dhywmnaLrGXQPRUcIQdrG5EoCxEXuJngnGHEAxp1R6/nW8412y+mIp+EHOuIllo7740J
+	 Dzbzy9vmdvV2HwuXtJvdhMh2RA7TU44Btc4Hdll/tuSzI1O272acnlbte7sZrE+8CrDO1
+	 1igvlGUzOEvcy2Q37SXc1avvC4SwM4YP0Aoue5W/WRcm9eQ5Nf3VsgizqjHrfhjw4Wu6I
+	 lLhEs/Dtk0YT2TuK8inioL6nTt8B6fRGxuFpyddEPCM//Z2MTbK3OoiN5NxYyhL1a3z/8
+	 non3f2YV/ozuTYd0dfFdzoTDimIhpCyVssFeEsysXpT8SEWSXadHzmb4NzO2zX2wK7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gfi1scic;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ACr2gmJU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA82606A65A;
-	Sat,  7 Nov 2026 14:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808D4606A33D;
+	Sat,  7 Nov 2026 14:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gfi1scic
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00691F0089F;
-	Sat,  7 Nov 2026 14:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ACr2gmJU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F05C1F0089F;
+	Sat,  7 Nov 2026 14:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062474;
-	bh=Wtvw75RS80mX0Wvoqdp4fziB/raiZTtNZsmibtA+buo=;
+	s=korg; t=1794062475;
+	bh=f+CpnRfghLdrP//xZWHNiXI+w5zDnTwpzhkNbyHpeAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gfi1scicpjL+01dVQhbnx5Q0WUydgDfE6edD6tnGKybKKjSC99x2aGLtjwPjfWaIi
-	 etex/ozP+Tp+APK47qE7BIW+qPuJk4/Wos8iLmJgr2+KMbS2ZfE3EXgpaztrPTrTyV
-	 qu4nl+mWHXhAQlSgMzu2zJV1Upmd6TJkIFfXTWu0=
+	b=ACr2gmJUR9MNqmDXw606N/d2OaEPQ7ELYin/BrjoaIjt05QGraUyD1vPYf5FVGZbw
+	 qwU0lfzLCzNbMp7RmJmsR+eCqFQ9Lbx5MNRl4oCyJ2qi4kqeT9VPVsDOiG5Thl8cnT
+	 UwltFQSemkOC5OyMF+rr0mvDTGGjnVQQ5gqL2TuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Maciej Kucharek <qchcio@gmail.com>,
+	stable@kernel.org,
+	Seongjae Jeong <jsjlee1020@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1378/1536] drm/amdgpu: reset CIK ASIC on Apple boards with VRAM at 0
-Date: Sat,  7 Nov 2026 08:56:34 -0500
-Message-ID: <20261107135036.539453086@linuxfoundation.org>
+Subject: [PATCH 6.12 1361/1536] f2fs: fix submit accounting for IPU writeback
+Date: Sat,  7 Nov 2026 08:56:17 -0500
+Message-ID: <20261107135036.059594839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,62 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Kucharek <qchcio@gmail.com>
+From: Seongjae Jeong <jsjlee1020@gmail.com>
 
-[ Upstream commit 095f634ea0aa5b9da19495520b5fc1a155b2c137 ]
+[ Upstream commit 6d1f622b9c069378cdb83088be2b15a9b480b8a3 ]
 
-On MacBookPros with switchable graphics, the firmware puts VRAM at MC
-address 0 when the iGPU is enabled.  A later post (S3 resume, GPU
-reset) moves VRAM back to the VBIOS default.  The SI fix resets and
-posts the ASIC at load, so the driver uses the VBIOS layout from the
-start:
+f2fs_write_cache_pages() uses the submitted count, which is set to
+fio.submitted in f2fs_write_single_data_page(), to update nwritten
+and decrement wbc->nr_to_write.
 
-  "drm/amdgpu: reset SI ASIC on MacBookPros with VRAM at 0"
+In the OPU path, f2fs_submit_page_write() sets fio->submitted to 1.
+However, in the IPU path, fio->submitted is never set and remains zero.
+As a result, successful IPU writes are not accounted for.
+This can cause asynchronous writeback to continue beyond its budget.
 
-No MacBookPro has a CIK GPU, and no affected CIK board is known.  Add
-the same test to cik_need_reset_on_init(), so that SI, CIK and VI
-handle this firmware layout in the same way.  gmc_v7_0 reads
-MC_VM_FB_LOCATION once at init and does not reprogram it.  A CIK board
-with VRAM at 0 therefore has the same problem as the SI boards.
+Set fio->submitted in f2fs_inplace_write_data() after a page is
+successfully merged into a bio or submitted, so that successful
+IPU writes are included in the writeback accounting.
 
-After the reset, FB_BASE is not 0, so the new test does not fire again
-on a module reload.
-
-Only compile-tested.
-
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Maciej Kucharek <qchcio@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6bb4b79d6a6c461b40750fd67cb4e2a070e20b67)
-Cc: stable@vger.kernel.org
+Cc: stable@kernel.org
+Fixes: d68f735b3bc9 ("f2fs: check io submission more precisely")
+Signed-off-by: Seongjae Jeong <jsjlee1020@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/cik.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/f2fs/segment.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/cik.c b/drivers/gpu/drm/amd/amdgpu/cik.c
-index 0a0114de11b49..46a0ba1900045 100644
---- a/drivers/gpu/drm/amd/amdgpu/cik.c
-+++ b/drivers/gpu/drm/amd/amdgpu/cik.c
-@@ -1932,6 +1932,16 @@ static bool cik_need_reset_on_init(struct amdgpu_device *adev)
- {
- 	u32 clock_cntl, pc;
- 
-+	/*
-+	 * MacBookPros with switchable graphics put VRAM at 0 when the iGPU
-+	 * is enabled.  Any later post (S3 resume, GPU reset) moves it back to
-+	 * the vbios default, so reset and post on load to start with the
-+	 * vbios layout.
-+	 */
-+	if (adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE &&
-+	    !(RREG32(mmMC_VM_FB_LOCATION) & MC_VM_FB_LOCATION__FB_BASE_MASK))
-+		return true;
-+
- 	if (adev->flags & AMD_IS_APU)
- 		return false;
- 
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 6abe435b9f0d8..49146476882b1 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3954,6 +3954,7 @@ int f2fs_inplace_write_data(struct f2fs_io_info *fio)
+ 	else
+ 		err = f2fs_submit_page_bio(fio);
+ 	if (!err) {
++		fio->submitted = 1;
+ 		f2fs_update_device_state(fio->sbi, fio->ino,
+ 						fio->new_blkaddr, 1);
+ 		f2fs_update_iostat(fio->sbi, fio->page->mapping->host,
 -- 
 2.53.0
 
