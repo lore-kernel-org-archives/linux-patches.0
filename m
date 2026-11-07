@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063669;
-	b=D4q5gVf1ZeBg97LQTY7haASQtzLuwGd17toFEDiI8Ys3Zeq4KsBeQE2cIq+u6FcIJAmz
-	 twPJHmHvR1GoCOHStoCI4cwFbzP/u6RP3ZMpWilRB/Lhcl0tkrelXaFrEz7v0vRgx9Zkf
-	 bmVORQFD4LL9tCaX6C6gxHmDrCqxga8CX8GWkdTfIm9M40/wBy/mHD9WOYZvL4Hg64kvj
-	 UQDo4o2Yodf/O7xm/I3esgj4Quj3Uzd7Juq7kzna+P70t1AIdRWiHI6PXcry1vDZW4yC4
-	 ++1PViZ/HAU/ekgR8fM9c1Z6DfGTGUed8wQzAEffw38ZqKh2sPWEexSGQorywQJG9Kw==
+	t=1794063670;
+	b=5dDWWwudFyOLqxXU06cSBoPAViamEF8jXLopHz9piHEEQoKa23QbtioXwXWYSo0O6CEK
+	 W7ggbTufGUGUqvW0KOTQZ4zEkj5c/BOf0wKfav7wwpL1DDKq/Gx7c+tFIeUZsXud52EDV
+	 zVSqOCv68YGYRhQ/VVfYazIrwqS72T51JGgHPvZiSlTOJ2riRONlNUfgZglFhyPslgygf
+	 zu/DiTx6ikyw01zWRHUBJLTZVn+vQMAzm2nVueCrN8kTZD+IqCE1ANCo0cR7SpCa64YK6
+	 BofTro5AfyKZWAT3dCnHDfmGEWJSjH7Z8uwBicBxBdHy2ij1hlfd4RGUqAsBWpMNbqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BRaKevM9JyoZs9eKsuMNyV/TBSzQ0YbJzVli9hJLhTM=;
-	b=RQ6jXwwrVnfaJHS9TFgKgG4hiTPkmRfNEFI0TKS99EnokKlAfrdye5TGuSgVyYfsLk4M
-	 GE8xFSVFiVNL3xOGX1MKJo4O0eIfYuF33o9FA+YULR/msSnIuEq+R/ICas7uZtdiPcxlR
-	 tATqzRxnMWc5oWua3jIgdsyOlqjKBh+XrVUM46Axe2CyZ8T+lF+tldAL2f67tIqGlhUMD
-	 Yho4I08olJgg/kN5SMvpnOdszf34FwYSxzvtY/sRcHn8qNfhK43q4Qj2cZ1QFwd5xw6qn
-	 d7fNIyPTcHCFYDAZei2wesclYiH1gtrVg9K5uqnyQ5r0cKR63amoNhHHm/rADkhfR9A==
+	bh=HChrjCnUftQHUjMtT5fqb2R6OS0ktPTLuRGXJG7XdFk=;
+	b=llvGQF/KLo3l0zL8EVhFkjHUus/0X2XOqc847sS9hN2ILm9W9hd/r5xKSemoBZemUsnj
+	 DExfD4LGksFev66bQMN4dJB5DJ9DRiZya37a4/1vMAN/7dLqs4la8+tny8k8WgVAWKnb1
+	 DX8zc8fSQWghwTGH4xZnvVZbAGXlsyphf5Ybd/RpWfJ6YXNsI2g2z/E/UsSllS380Vs4L
+	 aemYvSMQcN+wGrYjqadB4ZVwrzzq6lAF2GnewK6ZAxuuzC1P1qBFOy3NtyJi0kt2phQSM
+	 W6Hsh+UJyT8Fu85hiOb1uLHteLr9ZTHd1mllqLRAe1CnWidqaSdIayzOZ/v8qMJ446Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DAX0O00k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nyZsW4vi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A62606A9CA;
-	Sat,  7 Nov 2026 15:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2FA606A9EF;
+	Sat,  7 Nov 2026 15:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DAX0O00k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9831F008A1;
-	Sat,  7 Nov 2026 15:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nyZsW4vi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE491F0089F;
+	Sat,  7 Nov 2026 15:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063668;
-	bh=BRaKevM9JyoZs9eKsuMNyV/TBSzQ0YbJzVli9hJLhTM=;
+	s=korg; t=1794063670;
+	bh=HChrjCnUftQHUjMtT5fqb2R6OS0ktPTLuRGXJG7XdFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DAX0O00kBjBtEoByf6pPq77ENe0V6ak2Q8dk0Iwfo2AD3XMwp+L1Q47mulKLsyKGD
-	 Os6FpXEapdrvxgiWOjNNFumh0XSg9iIyAcUA/rV+8EQQ1mcJkU7rHAz3EmkqssacOl
-	 CwTawwz2ZIqYiJwn2wgcrg4KIVyyuPfW2A21UaH8=
+	b=nyZsW4vi1Mc28hGj0syhU4CHpc8kcdlYu+IitQi0ypPXenOONUkjj/dVk7C4xeND8
+	 lvPQ0wDcMtRRiAwQ1Exjp+xJWapjMIrULZjzbjqtu0Ulziyu6lj0pVZqYgVAa0O3pl
+	 bWtiAIbBvib19UhMGF+LbK1u4P7rNzJyqAzKS1EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venky Shankar <vshankar@redhat.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 781/869] ceph: dont fail write_begin with -EAGAIN after flushing old snapc
-Date: Sat,  7 Nov 2026 08:57:43 -0500
-Message-ID: <20261107134919.156569908@linuxfoundation.org>
+Subject: [PATCH 6.18 764/869] time/namespace: Fix overflow when converting absolute deadlines
+Date: Sat,  7 Nov 2026 08:57:26 -0500
+Message-ID: <20261107134918.619113164@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,59 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venky Shankar <vshankar@redhat.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 6ff7920ca78f6edcabc26c63d20f681d938027c7 ]
+[ Upstream commit d69cfd33b5a8d176124c564513b9ceb933595d93 ]
 
-When ceph_netfs_check_write_begin() finds the folio dirty in an older
-snap context, it drops the folio, waits for that snap context to be
-flushed and then returns -EAGAIN so that the write is retried.
+do_timens_ktime_to_host() subtracts the namespace offset from an absolute
+deadline and clamps the result to [0, KTIME_MAX]. A negative offset can
+make a large deadline overflow to a negative value. Since ktime_t is
+signed and KTIME_MAX is its maximum value, the subsequent comparison
+against KTIME_MAX can never detect this overflow.
 
-However, since commit fac47b43c760 ("netfs: do not unlock and put the
-folio twice"), netfs_write_begin() retries only when ->check_write_begin()
-returns 0 with *foliop cleared -- every error, -EAGAIN included, is
-returned as is. The -EAGAIN thus propagates up to write(2), which fails
-with "Resource temporarily unavailable" once the dirty data has been
-flushed, rather than being retried.
+For example, with a -1 second boottime offset, an absolute CLOCK_BOOTTIME
+timerfd deadline of KTIME_MAX can expire immediately. An absolute
+clock_nanosleep() using the same clock and deadline can also return
+immediately instead of waiting.
 
-This is easily hit by buffered writers rewriting dirty pages while
-snapshots are being taken, e.g. a kernel build linking vmlinux into a
-directory under a snapshot schedule:
+The earlier tim < offset check already handles the lower bound. A
+negative subtraction result in the remaining branch therefore indicates
+overflow. Detect that result and clamp it to KTIME_MAX.
 
-  ld: final link failed: Resource temporarily unavailable
-
-Return the wait_event_killable() result as is so that netfs re-gets the
-folio and retries on success.
-
+Fixes: 89dd8eecfe961 ("time: Add do_timens_ktime_to_host() helper")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: fac47b43c760 ("netfs: do not unlock and put the folio twice")
-Link: https://tracker.ceph.com/issues/57656
-Signed-off-by: Venky Shankar <vshankar@redhat.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://patch.msgid.link/20261020233433.20997-1-dennylin0707@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/time/namespace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index f58eba5456e36..fe8b7b4f6e8bf 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1889,7 +1889,12 @@ static int ceph_netfs_check_write_begin(struct file *file, loff_t pos, unsigned
- 		r = wait_event_killable(ci->i_cap_wq,
- 					context_is_writeable_or_written(inode, snapc));
- 		ceph_put_snap_context(snapc);
--		return r == 0 ? -EAGAIN : r;
-+		/*
-+		 * *foliop is cleared, so a return of 0 makes
-+		 * netfs_write_begin() grab the folio again and call us again
-+		 * to recheck it. Any error (fatal signal) fails the write.
-+		 */
-+		return r;
+diff --git a/kernel/time/namespace.c b/kernel/time/namespace.c
+index 99dcdb3315db7..632f331572847 100644
+--- a/kernel/time/namespace.c
++++ b/kernel/time/namespace.c
+@@ -51,7 +51,7 @@ ktime_t do_timens_ktime_to_host(clockid_t clockid, ktime_t tim,
+ 		tim = 0;
+ 	} else {
+ 		tim = ktime_sub(tim, offset);
+-		if (unlikely(tim > KTIME_MAX))
++		if (unlikely(tim < 0))
+ 			tim = KTIME_MAX;
  	}
- 	return 0;
- }
+ 
 -- 
 2.53.0
 
