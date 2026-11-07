@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061073;
-	b=VdRF2sWnq7YdkMHz0+kCJu+Aci9d5mXxON9l7N55fEfWDAFoHyvKNlNf15fx2Xqhtln0
-	 u6grqWTu2p8+Rsa9wVX8vmiqt+AcefzmE5GTPcPIQ7eRIwohclYJVMOXjk+Gaww8V5io2
-	 lgfPyH9N6KUAiQ/Iad0k/TGzJx5uKH3IqznuDHnApIVMYhg+6YZivMwYjbx4BNSQ7xeux
-	 sfZwGS0nJm/iyOAPUQ0/rucAc/UFLRcG00Y9/Tt5rSGozCVD3v+Cn8U3w5eWC4/h21liH
-	 zXI+LqISQaJWArtlAZuTDWSswnZECwH2954hjsDIQM1A0aUS7RL740o9LIWh3uFZBYg==
+	t=1794061074;
+	b=EhteKAbPcIgk3xVnbkP73Nn1fX/pCiCtVWNPkemCcgbtvqqEPxLNFuRsTIpuh78Of42Z
+	 6puC+1iRaUEq7WBEUczMwAFtKwwmbQnawMxs40VlHb59RUmcpWpvV8hXEGXo2aXJzf38B
+	 YHMHYHg5V2RH4OAVCT1PRYyEBSVifmlaeugLsvUPaEzaSCKDlOChX8GosUfctauXyeeHT
+	 I4hREBni//WTZA/+UAT5LQGuEGv5blDjjmw7ptjzwzgz8HvvhVpQxcYfk1XfF3Zl9Yxv0
+	 FV0YT5LI8nyc9dmS1KgJHQ4cpa00+d/uisrpMMq+GfCqKxEBWj47hzy80nw2L3XhMMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061074;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aiIBHQw/BQ8iBNWjoQpSeqETwq+rbwSlye0+md8cFik=;
-	b=vg9veS9GcdEn8ApHUtDBKqcwJEn293N+7dh7zMo77x0YNJfbwHG/YW8rt/enWalWVOim
-	 LaVbWB6oyyZFoO/NAqiVLgHxRrTuCa2dAn56Mc9R2rNcP+NBh8P43fRFsqPkwhjykyPQ4
-	 1cnMUTMpxXH5rGnacaEi76WyI7zqxV0vmnaOr6hf9ELtsi5LzXKlCy5HegFwOvM11iB2/
-	 zc7Ra7Iyl7G6/nSFVT9TCFSaJU3pnKIGDp/W/vvckWJCtL6MB6Ae3oS7xbYtm+N0DglXa
-	 1OzRiJITcBaCVeomsck/9094DGmhUvuE65p//pHhlleaL3nzGX+g/2pHO7h9/+wIs7w==
+	bh=5ejBnC4EwKyAAnMKpX2iz/MNaOH8gYcqKZeqU0bhLjY=;
+	b=pgISLLkxRiHNkki1q/VUHghiFq3ZuyMt45LcSdF73lN61OI4OTzFtBQVI+FJw4XwISsi
+	 hrE1UCNRMKYdblwiph2kvNZeDrsQDu047p6OblVBSiKIhGkEskEQWVcvcshHZ4MgpmK00
+	 7a1+4s3fA5TdAGKQ2KBCoKGGsolL1unEcKixqHnSGesHewOiTto7RKAbBf7mWYq4NCAQR
+	 U7Z2gzs0gINZ3BtAPPTEoYJ0+ypwx9K1QolZZBVfKKeYGaEgP2Q9XYPSn2F+bZyC2cyJt
+	 BGOFmSHt3zFaqX6X1IHNfr+Zu+W1Fp6z7UXAEzDXQ9qP7fGlR3C7qzWWdyU4bsDLAcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAaJhZTI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uewv+CcK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C3A606D80C;
-	Sat,  7 Nov 2026 14:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31858606A33A;
+	Sat,  7 Nov 2026 14:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAaJhZTI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27051F008A3;
-	Sat,  7 Nov 2026 14:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uewv+CcK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27221F0089F;
+	Sat,  7 Nov 2026 14:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061072;
-	bh=aiIBHQw/BQ8iBNWjoQpSeqETwq+rbwSlye0+md8cFik=;
+	s=korg; t=1794061074;
+	bh=5ejBnC4EwKyAAnMKpX2iz/MNaOH8gYcqKZeqU0bhLjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uAaJhZTIltd2/8MdkJS702/inH+bujx3bFxO5S5hLGuY6hSsYhyEkc2MN6BB75yLH
-	 8zOsg+ZoULMqjvH47BS65XqagpDLmieO+9JdcSLWKSFoSW79AoTqXplaM14nU8EaY8
-	 8Y9IR9pEwAUgJ8o3yqSo92cenhS20VrTX0+bhfl4=
+	b=uewv+CcKnkz4qCjboP3dP/f3U51QXegXchyw3E1hwD7Ht9vZq06IBLRDNyOnC3QCm
+	 odp1bBhgL/WZ6pc5yvF3VpLi1mZAQ4xJ2K3RHxFvpi1p4qzi3wna7VRqU6SXWjLyuy
+	 JAd035Qi8bBrF5yREImSX7rNv/de6rOsqTxac8cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Leussler <robert.leussler@leica-geosystems.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Mehmet Aysel <mehmet4ysel@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0372/1536] rtc: ds1307: fix RX8130 wakeup alarm WADA bit for day-of-month mode
-Date: Sat,  7 Nov 2026 08:39:48 -0500
-Message-ID: <20261107135008.090852234@linuxfoundation.org>
+Subject: [PATCH 6.12 0399/1536] ASoC: amd: acp-config: Add HVY-WXX9/M1060 DMI quirk
+Date: Sat,  7 Nov 2026 08:40:15 -0500
+Message-ID: <20261107135008.795526711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,52 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Leussler <robert.leussler@leica-geosystems.com>
+From: Mehmet Aysel <mehmet4ysel@gmail.com>
 
-[ Upstream commit 878d93aaa596a861dbc8d71f7c38e62a2e805f01 ]
+[ Upstream commit 032bb633e0c34a88b70a4bfc65ebd4e2b510f706 ]
 
-The RX8130 wakeup alarm never fired when set via
-/sys/class/rtc/rtc0/wakealarm. The root cause is that the WADA bit
-(bit 3) in the Extension register (0x1c) was never set before
-programming the alarm registers.
+Add DMI match table entry for HUAWEI HVY-WXX9 board, product version
+M1060, a MateBook D16 2021 (Ryzen 5 4600H) revision not covered by the
+existing M1010/M1020/M1040 entries. This board uses the same
+FLAG_AMD_LEGACY / ACP_PCI_DEV_ID configuration as the other HVY-WXX9
+variants.
 
-Per the RX8130 datasheet:
-WADA=0 - Week alarm: register 0x19 is compared against day-of-week
-WADA=1 - Day alarm:  register 0x19 is compared against day-of-month
-
-rx8130_set_alarm() always writes a BCD day-of-month value to alarm
-register 0x19, so WADA must be 1. With WADA=0 the hardware matched the
-day-of-month value (e.g. 15) as a day-of-week index, which is always
-out of range (valid weekdays are 0-6), so the alarm interrupt was never
-asserted.
-
-Fix by setting the WADA bit in rx8130_set_alarm() before writing the
-Extension register back to the device.
-
-This is consistent with rx8130_read_alarm(), which decodes the same
-register under the same assumption (24-hour and day-of-month mode).
-
-Signed-off-by: Robert Leussler <robert.leussler@leica-geosystems.com>
-Link: https://patch.msgid.link/20260721081907.3518648-1-robert.leussler@leica-geosystems.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Mehmet Aysel <mehmet4ysel@gmail.com>
+Link: https://patch.msgid.link/20260825092432.56292-1-mehmet4ysel@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1307.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/acp-config.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
-index 858c29494f5f5..0b32e94f4fe51 100644
---- a/drivers/rtc/rtc-ds1307.c
-+++ b/drivers/rtc/rtc-ds1307.c
-@@ -662,7 +662,7 @@ static int rx8130_set_alarm(struct device *dev, struct rtc_wkalrm *t)
- 	if (ret < 0)
- 		return ret;
+diff --git a/sound/soc/amd/acp-config.c b/sound/soc/amd/acp-config.c
+index 365209ea53f36..653e8ce946082 100644
+--- a/sound/soc/amd/acp-config.c
++++ b/sound/soc/amd/acp-config.c
+@@ -159,6 +159,20 @@ static const struct config_entry config_table[] = {
+ 			{}
+ 		},
+ 	},
++	{
++		.flags = FLAG_AMD_LEGACY,
++		.device = ACP_PCI_DEV_ID,
++		.dmi_table = (const struct dmi_system_id []) {
++			{
++				.matches = {
++					DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "HUAWEI"),
++					DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "HVY-WXX9"),
++					DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "M1060"),
++				},
++			},
++			{}
++		},
++	},
+ };
  
--	ctl[0] &= RX8130_REG_EXTENSION_WADA;
-+	ctl[0] |= RX8130_REG_EXTENSION_WADA;
- 	ctl[1] &= ~RX8130_REG_FLAG_AF;
- 	ctl[2] &= ~RX8130_REG_CONTROL0_AIE;
- 
+ static int snd_amd_acp_acpi_find_config(struct pci_dev *pci)
 -- 
 2.53.0
 
