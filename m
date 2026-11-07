@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064691;
-	b=INr4CyVPJUCuLR6hqpqJLlhXkS4/3eEmK5N/iD/b2Yg4isvwSFnnbSJ9hhYWsJ0QjtHg
-	 12kUZsn7ukhcAD1UnQ++R3cPBJrnIxzzM1mHGd7kdtduH+pOlNfYs2+Tf05utSV/D1Iqn
-	 dnL6IsCke5LylJBesQO8QS2uLv1kEJ0xtXVrmoGtIr4EJxiX8YWRUQ1aqdpr+eGHnDOnj
-	 0T5PF2NO5dtQ8AKBfH90MbJ2uUy3f7vY8Xyd/5XnmCMhfvic+vz6hFcQdDlIYI7OIDygA
-	 SP31ot54j+DiXrdPWeyFS0DPoO40SstzGp61f3nlMUmshuMOj3V1yl6g+OWXqoivx8g==
+	t=1794064693;
+	b=A8bU42GNPPSLTHFt9JapWFySQghCKGP7eicjw01m+QwFBlgp1k/DGNRUnoV2/73LVjhP
+	 pY40yktbqBVWJHcsXopvNfq5g4edGkVSgsVzroHtmrxySuknx5L0yMHQAF5f9K4x/VNeu
+	 6HloQnczZY8nJ60svKGkoXQ+Erxw/qSxuq+Cm4QzFfPomDm/eKJFgkBGhoFJComIUZtjd
+	 /58P8y9Obx3duUzTi76sVJuuEHzw+YQiNTDI+7+gLzvm9CjIwR3SmsFza9o+t0h+iwhFG
+	 ad4LB9lSaWCVS/6WoJ59DJK5XJJviz/nBRYsVY8VDDyUOt9W5NoSLor4IoG4Fbcq5yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=PHww749hcMMkriwCWcCeOzpF8p0607QyNNUPHAoBY6Y=;
-	b=eOU0mI+ZBoGEOLDILYlYADyQc9kpcS4Vs+amy0nIrlTM9uJqygENYzXqGTvp+yPSXpbQ
-	 /pLR+hHJjSEh/hSufIAm4ZNcwTr9GJUvZ223yH0mDU+6U1a9+qI06I1SmXs6z9MvTHxnM
-	 +Dm27I+jNGO651a4rtFvpP1hcAQMrD0WFECqORP/P1HwaSXesK2TFJDBRDI/f3NLRz/dE
-	 ORhqwvgRuLdBV4YgZZO60KyzsBMW6QdqiKtRIRh6NSlCphe+/lznXPQJoafmafobt2FHz
-	 0LzzqTiMazkT8fbpiw74t1yrYCKI15nY7sAUQ9N9tdaD8Dor3zuDje4LZOCtIIhHsBg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=hYL+LlNNafSET5H4l+rdoK5gETrSJi9pkdDvNMU2wao=;
+	b=12HxrIhGXtF52B71YWmCYFf5ERXkwhiXlc6+L6NCFaA1KdxSkAtzwclXNOtdn5Gwse8C
+	 VK+KOnqabGK1M0HEm9SbfKkpXhkQTMhGv3PpMiLA6YBmVV70+El7hpbuCyvMJdRGH5PUz
+	 DdJNosUuzu6AuR2e1MxPKFMA47ehVDStlIm2yHNIIDieixjPjSWDxd82cdKhpaC9ocOQA
+	 E1MsH7rLfF0Ggeukxrx5vssyZc1OpsYD7bvQJom4iFUVCzCqdhvzvCHVPRoz9Gm+Ryj+B
+	 iVk5CqT2N7glLpM+aNzEzdKpIhmf8vteyFOedyQ75EdS7+zTrxUSTZTZpbz/xJxR7Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xQlWiouY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HjDioXiD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D0E606B8AE;
-	Sat,  7 Nov 2026 15:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB84606B8B9;
+	Sat,  7 Nov 2026 15:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xQlWiouY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEB61F0089F;
-	Sat,  7 Nov 2026 15:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HjDioXiD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDD71F0089F;
+	Sat,  7 Nov 2026 15:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064691;
-	bh=PHww749hcMMkriwCWcCeOzpF8p0607QyNNUPHAoBY6Y=;
+	s=korg; t=1794064692;
+	bh=hYL+LlNNafSET5H4l+rdoK5gETrSJi9pkdDvNMU2wao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xQlWiouYgQug0UxboyVUXgIvUEWLZgvraBLK6uPgIQBdlL2QzGTmApHjZU7cCnt4M
-	 gS4HlpkROPcI25w5BmqZ/Jh2bWxQAH4JGb5rCfPfautHt1JL6ny/Gd41y1aZ5MqUx4
-	 eOrwjLj4liTaO0h3aE+Avgd3ivaGjll0Bf5Lu9ww=
+	b=HjDioXiDI2DccjX16AOj9rEESwZXjcP8Na3NqxMs+njYtcLo5idZ8yD9IJEtoD6YX
+	 wbw2Jna9pCK5qiBlXfV4stfjwl+555oo3icB/DvQNs+Fdmdt3Wwi20E4TP4hmgTPZ3
+	 /AjgsNnWHUpP7IJtkfwOo0bM43orl/3+rOdWbxWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Helge Deller <deller@gmx.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0684/1257] fbdev: xen-fbfront: check for fb_deferred_io_init() error
-Date: Sat,  7 Nov 2026 08:49:40 -0500
-Message-ID: <20261107134958.159670172@linuxfoundation.org>
+Subject: [PATCH 7.3 0667/1257] platform/x86/amd/pmf: Add AMDI0112 ACPI ID
+Date: Sat,  7 Nov 2026 08:49:23 -0500
+Message-ID: <20261107134957.677937969@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -62,63 +62,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 5b234b0dd29d79207c059c7b40851dd1e934fa3a ]
+[ Upstream commit 325bcc126cf7a512a0e2da0efddad665f69badac ]
 
-fb_deferred_io_init() allocates deferred I/O state, populating
-info->fbdefio_state, or leaving it NULL if an error occurs.
+The AMDI0112 ID is used to bind the PMF driver to some platforms.
+It doesn't have any Linux side code changes relative to the most
+similar AMDI0105.
 
-Currently xenfb_probe() ignores its return value.
-
-Therefore if an error arises in fb_deferred_io_init() (for instance, due
-to an allocation failure) info->fbdefio_state is left NULL.
-
-When the file is subsequently opened, fb_open() will dereference a NULL
-pointer (calling fb_deferred_io_open()).
-
-Fix this by checking for the error.
-
-Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260826163611.2268377-1-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/xen-fbfront.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmf/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/video/fbdev/xen-fbfront.c b/drivers/video/fbdev/xen-fbfront.c
-index 4385976277ac3..7ef909d4242d9 100644
---- a/drivers/video/fbdev/xen-fbfront.c
-+++ b/drivers/video/fbdev/xen-fbfront.c
-@@ -443,7 +443,11 @@ static int xenfb_probe(struct xenbus_device *dev,
- 	}
- 
- 	fb_info->fbdefio = &xenfb_defio;
--	fb_deferred_io_init(fb_info);
-+	ret = fb_deferred_io_init(fb_info);
-+	if (ret < 0) {
-+		xenbus_dev_fatal(dev, ret, "fb_deferred_io_init");
-+		goto error_cmap;
-+	}
- 
- 	xenfb_init_shared_page(info, fb_info);
- 
-@@ -465,6 +469,7 @@ static int xenfb_probe(struct xenbus_device *dev,
- 
- error_fb:
- 	fb_deferred_io_cleanup(fb_info);
-+error_cmap:
- 	fb_dealloc_cmap(&fb_info->cmap);
- 	framebuffer_release(fb_info);
- error_nomem:
+diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
+index b4eae65e675b8..5966190d1496b 100644
+--- a/drivers/platform/x86/amd/pmf/core.c
++++ b/drivers/platform/x86/amd/pmf/core.c
+@@ -454,6 +454,7 @@ static const struct acpi_device_id amd_pmf_acpi_ids[] = {
+ 	{"AMDI0107", 0},
+ 	{"AMDI0108", 0},
+ 	{"AMDI0109", 0},
++	{"AMDI0112", 0},
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, amd_pmf_acpi_ids);
 -- 
 2.53.0
 
