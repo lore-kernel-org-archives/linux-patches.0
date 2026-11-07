@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063291;
-	b=HOoTaePEqHOeYWturFpuLQ8Y8H/M1YLMYDxS2lFDFOCjeXjdSnKmiLk/Stpho5BIe6xm
-	 Xn0ThrlhcPkmkO1FzxQFqTLcSVXbT6xurT6QFrKv8YtnZNKdu8jbC+vqcWpf7q3CvwRFP
-	 Ea5sVPt6RW3ZxnUZOh6DmxNsPhIBQ2lHXuQKJ7mamxfiM4aVIaZpah+Qd/ICkR3phvfY9
-	 AGsv2AOy946iwBF9pZk7MMNxKO7uAMN0FmP8LbPFjqixEASHVHNaFs8Vtuq6DCHtid1Jd
-	 opWaGdYkSMRK2FZXMAOCIkZ2mVLogMfAOnfcERxh338uwuWDD/ZXDF6lQtRChQJuNLA==
+	t=1794063292;
+	b=ISFEzhOEx76J6V07Hx2d3VHkuqK1gxZbCn+fz6XA0OPvYpXGobMs94Un5xEqfzVnwPza
+	 XgGOHu9bxdpSSKJIAOBHBjP8pDHztOIc/w2zEtvRqm3bsvtie7mfu7f7r/JedNovQPmW2
+	 S4kAT84IqIDCrdqUFzY1yWTOdS00oUuDQftpjAv7Hc/DBH5jyMO//0VD4JAPlKJhMoSVS
+	 srtKoFYLRi7lkCccd6UY18dtDESniXJixIysXMllVW7UcNMGAcDmPRA1gt8CW5rWAJged
+	 PxrFI1KyTFbDjb8/k9m15WWwdLZTdg6k0LI9uLrAnwJGk5OLv8lZsDFUMObE/EmmQQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063291;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nFpOE08zt6LKiYAJkddKnt9FS54yYK4DK4eA7f2RHXU=;
-	b=ecWjaNIOt2IIkyD2sXQli6kWQROhxw6u///DvupXo5sLHM2+fdfdiwxvcQupDWp/1sB4
-	 CvpW08urYZ9Z/oq3I7noEnx+cc5To5ReML8TCnxuV3RuHGVXA76e/9k4U3TIY20bV21oO
-	 zDnz1BOgY0354Fyc91hos98zZ8rp+tv+YeIjC3YQlnHA55L0+1RZC6Tgk69rqK9JWuDGQ
-	 P0NMFGlGtTeWpH8uWc1UJlTVdRK492zHHfsHOqxOv9Hkn8NzyJnBG5kiyopYeeOgKyKZi
-	 bIK0kKikQwoSeOX6PikSxABx6gpjZ2qH+PFaFaFSDE9QbL7bi1iNjMhP1cF00hQxsAg==
+	bh=kavz4i8aceo78Di8VXnD32F13uinU8yLdqj0HbjxhJI=;
+	b=USdoTUVGmJdP+fPV88r0Ainv0L/AB7Y2uuIg0Huv9DIjCQH3rPXg4ntdQJOew3j5e7ME
+	 DBoLC2R0I13aZuXl9TdU7QxP0v8WK15Ll6TzQ8qfYzCzDn+Gy8LiDhcwd976AU9FmHSzY
+	 3cKMy8k7pUC4THNPhn/AVPo/ovLuhHBChbCXjIbIyQIUA5iEbkr9R4Qv7d4h683cw/ES+
+	 whIdGhRxZCD6uUyxydutq94gKY3b5DRjU482CCcbm21FFDstyhIE8tm3q8Iasyj2p6zqv
+	 mgUaCgGTaVKPiCBeJz0cyD/zLD0WI0fQQmJQ+VC/hk7jftGzv/Bfw1eO5eRzWyy5BHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rq2Zy7PN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZ9mIa1o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C1E606D805;
-	Sat,  7 Nov 2026 14:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34175606D80C;
+	Sat,  7 Nov 2026 14:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rq2Zy7PN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857E81F0089F;
-	Sat,  7 Nov 2026 14:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZ9mIa1o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52F11F008A2;
+	Sat,  7 Nov 2026 14:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063290;
-	bh=nFpOE08zt6LKiYAJkddKnt9FS54yYK4DK4eA7f2RHXU=;
+	s=korg; t=1794063292;
+	bh=kavz4i8aceo78Di8VXnD32F13uinU8yLdqj0HbjxhJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rq2Zy7PNG4FNL3sG6eExzJmWOFbaT+/YtNn8JH4opriLZODdOS/z3M/oXXuylVkM5
-	 DHlqq1HWhaUZPTx5UEPTHJdbtG3PVBHIxZp3X9stAJWrnKLcc4eFdyyvmTJ/JFDSDs
-	 d/wHARLMXkmhM8bMK4O6D6JugbiCQmzZuKn1v91I=
+	b=cZ9mIa1o+OJzOt44hhRf0ATS8qJIiEbD2PiG8ObxKP0IvSAiyOcU0I+AWf26PtASX
+	 ueI0FChAFmDyPIzlAHT5ykg4JPh3tqQeUQscJKB9vpV80D0zI+gi1d8hRGjXnqEtEM
+	 dfRlpn3DOLquCuzZ0EvRbI6lFl0fV4nXsEWAFVd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Hao Ge <hao.ge@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	SJ Park <sj@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Hugh Dickins <hughd@google.com>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 484/869] mm/shmem: report RCU-tasks quiescent states while undoing a range
-Date: Sat,  7 Nov 2026 08:52:46 -0500
-Message-ID: <20261107134909.991060057@linuxfoundation.org>
+Subject: [PATCH 6.18 485/869] mm/alloc_tag: account for reserved tag ids in the kernel tag check
+Date: Sat,  7 Nov 2026 08:52:47 -0500
+Message-ID: <20261107134910.021149940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -72,70 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Hao Ge <hao.ge@linux.dev>
 
-[ Upstream commit ebd1a08c192109c83a87ddf42793ed6283180faf ]
+[ Upstream commit c6e5c0b9a493891634d0a413c3485930a28a8903 ]
 
-This shows up in the Meta fleet on ftruncate() of large tmpfs files:
+The tag ids stored in the page flags include two reserved markers.
+Id 0 means the page has no tag and id 1 means the tag was cleared,
+so real tags start at CODETAG_ID_FIRST. The kernel-side check in
+alloc_tag_sec_init() compared kernel_tags.count alone against the
+addressable limit, so with the count at or just under the limit
+the last tag ids wrapped into those markers. Pages allocated
+through them then look the same as untagged pages on free, nothing
+is ever subtracted from the real tag and /proc/allocinfo shows
+that memory as still allocated.
 
-  INFO: rcu_tasks detected stalls on tasks:
-  00000000752fd185: .. nvcsw: 59455/59455 holdout: 1 idle_cpu: -1/0
-  task:rocksdb:bottom  state:R  running task
-    __folio_split
-    find_get_entry
-    find_get_entries
-    truncate_inode_partial_folio
-    shmem_undo_range
-    shmem_setattr
-    notify_change
-    do_ftruncate
-    __x64_sys_ftruncate
-    do_syscall_64
+Add the missing CODETAG_ID_FIRST, same as tags_addressable().
 
-shmem_undo_range() walks the whole of the requested range in folio_batch
-sized steps, twice, and its two cond_resched() calls are the only
-reschedule points in that walk.
-
-cond_resched() is not an RCU-tasks quiescent state.  Use
-cond_resched_tasks_rcu_qs() at both points so the walk reports an
-RCU-tasks quiescent state as it proceeds.
-
-Link: https://lore.kernel.org/20260918-shmem-tasks-rcu-v1-1-79acf91a2569@debian.org
-Fixes: 8315f42295d2 ("rcu: Add call_rcu_tasks()")
-Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://lore.kernel.org/20260916075557.121316-1-hao.ge@linux.dev
+Fixes: 4835f747d3ed ("alloc_tag: support for page allocation tag compression")
+Signed-off-by: Hao Ge <hao.ge@linux.dev>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: "Paul E . McKenney" <paulmck@kernel.org>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ lib/alloc_tag.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 0100110f77b8e..f2b5a11e88a55 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1129,7 +1129,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 		}
- 		folio_batch_remove_exceptionals(&fbatch);
- 		folio_batch_release(&fbatch);
--		cond_resched();
-+		cond_resched_tasks_rcu_qs();
- 	}
+diff --git a/lib/alloc_tag.c b/lib/alloc_tag.c
+index 7c6d3a086fdc4..fbe9e6c995210 100644
+--- a/lib/alloc_tag.c
++++ b/lib/alloc_tag.c
+@@ -276,7 +276,7 @@ void __init alloc_tag_sec_init(void)
+ 	kernel_tags.count = last_codetag - kernel_tags.first_tag;
  
- 	/*
-@@ -1170,7 +1170,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 
- 	index = start;
- 	while (index < end) {
--		cond_resched();
-+		cond_resched_tasks_rcu_qs();
- 
- 		if (!find_get_entries(mapping, &index, end - 1, &fbatch,
- 				indices)) {
+ 	/* Check if kernel tags fit into page flags */
+-	if (kernel_tags.count > (1UL << NR_UNUSED_PAGEFLAG_BITS)) {
++	if (CODETAG_ID_FIRST + kernel_tags.count > (1UL << NR_UNUSED_PAGEFLAG_BITS)) {
+ 		shutdown_mem_profiling(false); /* allocinfo file does not exist yet */
+ 		pr_err("%lu allocation tags cannot be references using %d available page flag bits. Memory allocation profiling is disabled!\n",
+ 			kernel_tags.count, NR_UNUSED_PAGEFLAG_BITS);
 -- 
 2.53.0
 
