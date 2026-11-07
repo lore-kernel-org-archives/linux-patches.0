@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063353;
-	b=1q0QbBOrvfxMJI1OjXa9c1d65w3Z6K+sZtdkzlvYJosAs70RuTt/G4Jh279+Io62bk6C
-	 U9glPfjJmdCmJFDv8lt83x9rBZz/1ZS+QFD/+JUKTCPEf1/Fs9ZYDhlLALhwaQ/kHWqL6
-	 HUZy6oOLTlZ0LQdp2vk/e2/rHeti7DvkwfVAdIKvIgpWY7Fmn15SvKQPR6E2fjlkjQGkL
-	 EndA1hXMVOmzHueRy3CV7YVHb1D8T71n2IsX6GpqQVNa0xPbOwzQNcm12SdM1Czw1kto8
-	 2I+462XwoQC1A+eoN6auyYiYJUeR93KOxSe76+l4QH5iDTycG49U1Dg667OKaMBp+OA==
+	t=1794063355;
+	b=aFLOW4Cy2cSbZ9gwiJdnMh/YkMp1OpS0TaJtygmoX/dYBZpZiH6TTFPUTDJkL77uA6W0
+	 BMYdGmxXV8hxOUtJnM0D1rHbjzENP3AVmcDIDki42ve9AP7QD3wtsDwh2PeFkDCI4B8m7
+	 yxLZ+0Yk+xYHwKnWT/5UB0SHEit4/+jMVxYXB5MFDUZiIVX++8OGWg3KPRizWHuEwNS5B
+	 g5daU3KmHWGrdXvs1DMg1iw4wi0kB0+0e2yU4OTNi3oF/ProTpf9h+Ddp4+aGHG40i2zt
+	 JVXE67gjGOzX5eK7fKkYatFzuTkdD1keQFp33NT5frH6XJaC1lJ0pzlMX2CoZFFjB6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063353;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063355;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=41N83LF452JgH7PxB+wKg0d7J4canzoumYXQlKPrm4k=;
-	b=IYNcY7pW5ANeptzY1+Yp9dse5eZ7zGvfL9rvWRMTbxCsVnx++8EEWYfdP5KW/XgdOMvx
-	 Esd0Cf77YQwxikW8GG6oylsgdCjNextDUq3UGAg/S5JUsWKELM4br9x/7uSHTFKG0AKyY
-	 znmjKIH5j6UB27G+kPvgxWCRwVptFJDBa9uWu6FWAk1DFzI04xjz9KcHes5Uv5OrUGr8V
-	 xrQacHcKMbPojZ+S+iPAXQH6FwWm7FNadU+NKOHgZc7EPiup8I8IgNBAenkm16h/SSduj
-	 +bO8SeFgds79Q2UeWHppStocEV+r7FeHF1mFh9kH6PkTRwOQ1Hu0q8fA0NQGcq1rTmQ==
+	bh=3Tf9RhvXzeVNzRrkJBzXw1S50nTMiaiyQhgHZI3xI0k=;
+	b=vv36ZBdZsXqT5fnzmW9c+oiYRNN8QlPsPijUQ37TCccJIXfB0wbFqtw74v9cNlAdDYJ4
+	 ZpI8KQPkViRTbNPxxiPNhsHxVJwQKaJe2Vg4mYmWpG7NIxitq/XfUyUkHV5oTBSjjiXgs
+	 7g+vuF0O2KZLToURRr9tMNX2//LMx5+tpAij+9gi3lpXxOjH87ly1FCnd+ld3L5nm17jN
+	 +KUxc9Cmuyyt+2eJ7qkcdYE4uLWu2snaZz6pfeIKu9LudXmzTuy61L9lTDAgMkXyapjez
+	 2Sxlhnz+2oHKJSlTcO9wyPv6l1HARVyXHYRCflWhIs+SIA+Fj+mhk7BuCfKUMJnNDAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2AuNsyL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=foiyteXe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C14606D808;
-	Sat,  7 Nov 2026 14:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7237606D808;
+	Sat,  7 Nov 2026 14:55:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G2AuNsyL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A0B1F0089F;
-	Sat,  7 Nov 2026 14:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=foiyteXe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840291F0089F;
+	Sat,  7 Nov 2026 14:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063353;
-	bh=41N83LF452JgH7PxB+wKg0d7J4canzoumYXQlKPrm4k=;
+	s=korg; t=1794063354;
+	bh=3Tf9RhvXzeVNzRrkJBzXw1S50nTMiaiyQhgHZI3xI0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G2AuNsyLultm5LcTXaJObhP0wG/SJEw6AOC0wd7T2v28C6RRNiBgSFFVLxifBshyr
-	 QgUDrVIhWfOXxm++nqFHBkVOcD+gkOth/Wr8avEhDItwbRg/sme+t07jputHmN8WSm
-	 2oOIAhS8tJSKTE0zcOEcU9jdZfdxVy1knQ+GPWoQ=
+	b=foiyteXebgv1wz0ovIeT0DlUeh3ouvzz+2B2Kzw/020wDdiYmsy0OiKrBT3TCDhI/
+	 eRRCbQibqlxUjcLPef1gDJyOuYKWMkIaPgOZc58K0Kp+DetYM+Ese2wgC+nzHntPGG
+	 pfGSwfFdgCRJTcEEqdTSLIco+jx4RzR6fg0iuLTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 534/869] pinctrl: stm32: Fix fwnode reference leak in stm32_gpiolib_register_bank()
-Date: Sat,  7 Nov 2026 08:53:36 -0500
-Message-ID: <20261107134911.557672082@linuxfoundation.org>
+Subject: [PATCH 6.18 517/869] nvme-auth: fail when the controller does not authenticate itself
+Date: Sat,  7 Nov 2026 08:53:19 -0500
+Message-ID: <20261107134911.067989690@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,55 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 54c66b5e47a9b10cbf4a1efe9b01301b7ffee205 ]
+[ Upstream commit f9e43d924bc74feeb56197de82b2845de2a4b85a ]
 
-stm32_gpiolib_register_bank() walks the "gpio-ranges" property with
-fwnode_property_get_reference_args().  As documented in
-drivers/base/property.c:
+nvme_auth_process_dhchap_success1() returns success as soon as the
+controller clears the rvalid flag in its DH-HMAC-CHAP success1 message,
+without looking at whether the host had asked the controller to
+authenticate.  A host configured with a controller secret sends a
+challenge in its reply, computes the expected controller response, and
+sets chap->bi_directional; if the controller then answers with
+rvalid = 0 the response is never compared, the host still sends
+success2, and the queue is marked as authenticated.
 
- * The caller is responsible for calling fwnode_handle_put() on the
- * returned @args->fwnode pointer.
+A malicious or man-in-the-middle controller therefore only has to clear
+one flag to turn the configured bidirectional authentication into a
+one-way one, without holding any secret of its own.  The target side
+already treats the mirror image of this as fatal: when the host supplied
+a challenge but no controller key is configured, nvmet_auth_success1()
+fails the authentication rather than answering with rvalid = 0.
 
-The returned reference is never put.  The function calls the helper
-twice, once directly and then repeatedly in a while loop, and each
-call overwrites args, so only the last reference is even reachable
-and all the earlier ones are leaked for good.
+Refuse the connection if the controller returns no response although
+bidirectional authentication was requested.  chap->bi_directional is the
+right condition rather than ctrl->ctrl_key, because secure concatenation
+sends a challenge only to derive the PSK and deliberately clears
+bi_directional; a one-way setup without a controller secret keeps
+returning success as before.
 
-Put the reference as soon as args.args[] has been consumed, both for
-the initial call and for every iteration of the loop.
-
-Found by code review.
-
+Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
 Cc: stable@vger.kernel.org
-Fixes: bb949ed9b16b ("pinctrl: stm32: Switch to use for_each_gpiochip_node() helper")
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/nvme/host/auth.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index e73feb8ac90d1..f64dbb29a99dc 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -1452,8 +1452,12 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
+diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
+index 9d73713d6f828..38506314248f6 100644
+--- a/drivers/nvme/host/auth.c
++++ b/drivers/nvme/host/auth.c
+@@ -378,8 +378,21 @@ static int nvme_auth_process_dhchap_success1(struct nvme_ctrl *ctrl,
+ 			 nvme_auth_hmac_name(chap->hash_id),
+ 			 nvme_auth_dhgroup_name(chap->dhgroup_id));
  
- 		/* get the last defined gpio line (offset + nb of pins) */
- 		npins = args.args[0] + args.args[2];
--		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args))
-+		fwnode_handle_put(args.fwnode);
-+
-+		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args)) {
- 			npins = max(npins, (int)(args.args[0] + args.args[2]));
-+			fwnode_handle_put(args.fwnode);
+-	if (!data->rvalid)
++	if (!data->rvalid) {
++		/*
++		 * The controller did not return a response.  If we asked it to
++		 * authenticate itself the session must not be used, otherwise
++		 * mutual authentication would silently degrade to one-way.
++		 */
++		if (chap->bi_directional) {
++			dev_warn(ctrl->device,
++				 "qid %d: controller did not authenticate\n",
++				 chap->qid);
++			chap->status = NVME_AUTH_DHCHAP_FAILURE_FAILED;
++			return -ECONNREFUSED;
 +		}
- 	} else {
- 		bank_nr = pctl->nbanks;
- 		bank->gpio_chip.base = bank_nr * STM32_GPIO_PINS_PER_BANK;
+ 		return 0;
++	}
+ 
+ 	/* Validate controller response */
+ 	if (crypto_memneq(chap->response, data->rval, data->hl)) {
 -- 
 2.53.0
 
