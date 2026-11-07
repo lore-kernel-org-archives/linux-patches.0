@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065601;
-	b=Ylcpi+PQd8OwlMDQI61TaJloxSvPu7TE41dZVtyXXqV9EbznL3xkwBQIbZ+Vo1jWtTeN
-	 Y9idzTZ1/MX4KNMrEcc7c37JlETBha7APgkwXPwXpVaOkMBSFEW9Z/NkgqA02/+IjT0fV
-	 AYlhI4waOqeHJrUwLLmIeLdXMxzgWjvCfb9unj6880pcICt1KuT6hyNVQvkeepjJMe/+b
-	 seUQASJXPhRgC8Kr+8mO4PeJe93zHQ8I8yBDZEKkuWyF2M3VuMyQ33GMLfAX5WzPi3JMD
-	 h/cQFiPF/rFAr9bLtTtFeXy5HFZJKpPBthRGHeBJQQ5O5iDSXjvnzspxOroVDdOoPVA==
+	t=1794065602;
+	b=J4Onz12BjGjDXTlyNJek73YdcFY6nt1dJ7KVgK6S9wQX3m1cCKAxsDR1wwDsEudIOLb6
+	 gZ5xoJH+fckvIzhPkGTMN1MzigZspCNhqHX3takDrHzOWPSR5lQEQ39WWN52XCXdQzRVw
+	 ci9z3OKbVzb4sHB6ZdF0g3iuqM3vMGLcmGXVflcvhFDjLZGSB/poryF+s13k2h6CM6YJS
+	 0PPkVbG3f3ISO+8H05/shpS4cT6paO5/61l0B9svCDbD+TqMJ/wg4AjZbZjjCdQXikfto
+	 cn4jtZKfDEoNj1eq6sDiKJfiIKzRK3D5A69RmpsbLZr4QXzRdOct37qxWqVHzdyH6tQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065601;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065602;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xDVls9iNcCWyDy8oGpdI68RbHviAseCereRvii6M3yo=;
-	b=WlGwBmAxlPRxg6QAIkLNe5veK6bpeu5N9hbnKlzif2yO+mpcLCcOx9B5Ovr7E+nm/QXv
-	 BKVfA1AlxUzCEr4JKvVqWA7dSuuLVviTWnjxBp+O6UbPe7LJGRIgPhXbjdWMWAdAFFdUd
-	 xyySpByUgzktLFILLYPTJOMeBT2vzByPUjm/bwoRsBPPN7MwiRoxw2xuedIeeln3qbDxk
-	 EqgXynZtu+KDafNItquz/bSqzh0/ihIDbXXSoSLayntepjBCxADlFzlthZNKtGA6QG7Sp
-	 n2QwpquJKJcjBU37YrmHHCE8PCPuwMQWM8lFrZk8YVmM1YbGSt/Yk8fq1gHfN+lpgPg==
+	bh=dpd1YXeDnarZPNawIHXfYOdREDFhcguoFU7y13k0YW4=;
+	b=FSraT0SToziiBauQj/3cAqFO1TTlsk+kp/fJ8NS0TZd5jstrSoM2d1eU4Lo6sOZXR3JH
+	 zPvGg3M84esecugKufGkWqg1hRYI8r87SReBLXAjDwRrzHuH6hikJ2QrElJCx8OmNdEPl
+	 JgqH1Ms9oAggrJ5IPrVQ9LGRBk5KzzUH6DLgXBguIcTggeuGARO9/h7kSAVg4f1Mgggny
+	 pYNCxcq7ktqvFawettZ3FEpzg8fpYk/FScwvx7w6c3YIW4222oR0RHzbgAAKpRAwbZe3X
+	 hcz37OW+HAwtH+6JouE71i04gr+U+DEZNK+YmRozeklIVDCTpP1h7N3IZwJEN5AeaYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MrIj7wek;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BgmHkWm8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633C9606A32C;
-	Sat,  7 Nov 2026 15:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B39606A32C;
+	Sat,  7 Nov 2026 15:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MrIj7wek
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F871F0089F;
-	Sat,  7 Nov 2026 15:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BgmHkWm8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A2D1F008A1;
+	Sat,  7 Nov 2026 15:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065601;
-	bh=xDVls9iNcCWyDy8oGpdI68RbHviAseCereRvii6M3yo=;
+	s=korg; t=1794065602;
+	bh=dpd1YXeDnarZPNawIHXfYOdREDFhcguoFU7y13k0YW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MrIj7wekxbHY15M2l6C343ZKIZelEGPs6k5vNh/FiGC3JHUOM2JOKepTiaM3DezUu
-	 gwSli8ur/xw9CXZadP4F749K7Ve3sv2+CHLB9KEyKa2vwtnJkcFwCd374V58BqGv2z
-	 8k7P4mVZRzleSuNxNgFTDUDIjGf28yOAKGlKglyI=
+	b=BgmHkWm8qA62Yekp7YI9IlNp1yHdNwSTczAQC3h/1nIiDWbzOs8n4HJsxkskwMGwg
+	 9NFY+ltSSXcVgpp2vNHQDQEKPihKalLgcdIdhk/O71HyobXoUhW8WTlugpo5RoGw5D
+	 ml3rtOcCqNAQycWIw42UlkJch6WVq4A+oj5fvmpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1256/1257] apparmor: fix uninitialized variable warning in aa_inherit_files
-Date: Sat,  7 Nov 2026 08:59:12 -0500
-Message-ID: <20261107135013.998565437@linuxfoundation.org>
+Subject: [PATCH 7.3 1257/1257] apparmor: on failed load ensure profile files are removed before parent
+Date: Sat,  7 Nov 2026 08:59:13 -0500
+Message-ID: <20261107135014.023622479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,65 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit ed35bbe7d06e6505401eff3f3c7a36bd1f167a17 ]
+[ Upstream commit 97ba44a2aa4c7ab011a93ce94cb595200fe4ea4f ]
 
-Fix the following warning
+The load interface does not guarantee the order profiles are loaded.
+When a parent is loaded after its child, and the load fails, the
+current code will issue a warning, and leak a dentry.
 
-All warnings (new ones prefixed by >>):
+For the loaded set of profiles, ensure that on failure list is ordered
+is traversed in reverse so any children processed after their parent
+is freed first. We do not need to deal with the cases where the
+children are processed before their parent, because either a parent
+outside the list already exists or a dummy parent outside of the list
+is created, and the list walk will not put those parents before their
+children.
 
->> security/apparmor/file.c:737:53: warning: variable 'file' is uninitialized when used here [-Wuninitialized]
-     737 |                 int error = aa_file_perm(OP_INHERIT, cred, label, file,
-         |                                                                   ^~~~
-   security/apparmor/file.c:724:36: note: initialize the variable 'file' to silence this warning
-     724 |         struct file *devnull = NULL, *file;
-         |                                           ^
-         |                                            = NULL
-   1 warning generated.
-
-vim +/file +737 security/apparmor/file.c
-
-   719
-   720	/* based on selinux's flush_unauthorized_files */
-   721	void aa_inherit_files(const struct cred *cred, struct files_struct *files)
-   722	{
-   723		struct aa_label *label = aa_get_newest_cred_label(cred);
-   724		struct file *devnull = NULL, *file;
-   725		bool devnull_tried = false;
-   726		unsigned int n = 0;
-   727
-   728		revalidate_tty(cred, label);
-   729
-   730		/*
-   731		 * Revalidate access to inherited open files. Each file is
-   732		 * revalidated holding only a reference to it, with no locks
-   733		 * held, as revalidation may sleep (e.g. unix socket mediation
-   734		 * dropping path refs, or allocating path buffers).
-   735		 */
-   736		while ((n = iterate_fd(files, n, get_next_file, &file)) != 0) {
- > 737			int error = aa_file_perm(OP_INHERIT, cred, label, file,
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610292346.ehqNujiE-lkp@intel.com/
-Fixes: a913281f60015 ("apparmor: don't revalidate inherited files under files->file_lock")
+Fixes: 6ec46f8f1977d ("apparmor: remove fs entries created by a failed policy load")
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/apparmor/policy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/file.c b/security/apparmor/file.c
-index b52781e05a5a1..baca370ddfc02 100644
---- a/security/apparmor/file.c
-+++ b/security/apparmor/file.c
-@@ -721,7 +721,7 @@ static int get_next_file(const void *p, struct file *file, unsigned int fd)
- void aa_inherit_files(const struct cred *cred, struct files_struct *files)
- {
- 	struct aa_label *label = aa_get_newest_cred_label(cred);
--	struct file *devnull = NULL, *file;
-+	struct file *devnull = NULL, *file = NULL;
- 	bool devnull_tried = false;
- 	unsigned int n = 0;
- 
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index 8f23f99d2a58f..63f7821b4dfff 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1432,8 +1432,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
+ 	 * them yet, and leaving them behind would leak the new profiles
+ 	 * (their dents pin the proxy) and make the next load at the same,
+ 	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
++	 * ensure children (which are at the end of the list are removed
++	 * before their parent
+ 	 */
+-	list_for_each_entry(tmp, &lh, list) {
++	list_for_each_entry_reverse(tmp, &lh, list) {
+ 		if (!tmp->old)
+ 			__aafs_profile_rmdir(tmp->new);
+ 	}
 -- 
 2.53.0
 
