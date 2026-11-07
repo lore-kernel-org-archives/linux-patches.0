@@ -1,64 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065405;
-	b=CmNccpaoAGnM1aBh2GCG6ekzKSDywa8PytVyvai/2jj38ieYd3gd/edz7MT1UlpmOZqi
-	 bQ9bA7V84+3uNXUxitOWypJDv36e7UaBP6Gw3406fDLs4dty+5umg7e19hVqsqhyx1BqY
-	 nTRk9qGN/Wn0Mg4yhJCfBTMIYB9ut1FCJAknuCwylVneCEDGReq9J8ykC8kP/S2gW4Xpy
-	 GcJ+9mcZ2Yz5+qG1ctJvXOwQr8VI/a3y8Xl0oPKwyZ7cUFef2n6g7DOanHO6GToxhT7E4
-	 ucjvYoxbumPy3y2VZ5R96CBVuYwFhWEdryxmvzA49/QDtXhNjIrFxl1cT76pZG8tgmA==
+	t=1794065406;
+	b=CxpUlJog1ZMzdSwDAItVu1YeCDJn1jT7usMMEyYxW9OUF2yeWu/lcaQyisVERuy62ri1
+	 4xeMcU3Au9ROQ2QNmHCvrXF34t3KSkVSI5b1kOFbWwpQYmoop5cTWV56q1Wy1oSI0WYps
+	 R/7P6eezpPFvHmMfJY4wcMFQg9rDuqVn9Szv+9mPvRvUBTSynyXjw34VBKEsLCKTQFGmu
+	 oBTbtGJEv5o6twTYYXvurdWTFMaHEwkcxbfivl5njemU4Y+Aw4hA1J5UNBTu4ljdczr3V
+	 xhQ9uo9ybbfHiTMZV1o++HbX0K4Dkxjsu9qnlx8FaW26HgNuchgZFrgnK83E3ebbCYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065405;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065406;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HQxaWyEzdZ+95AuNRJMsihPB9TWS7byC3b9zIrd6Pao=;
-	b=gxt3Gr2HhqvZP9NqAEe6u3BIprAU0cLppgiqywNkz6BZpI4FvE+tolRCg+8tydErP9d/
-	 pLDKvglIT+tMrjYERYp02WAyJxHQch8DearYaPVBYWKfuZKgssny2aYzjO0s7GsXuabe6
-	 /l2EbeO8kPAe0CNropJAhJN82ZZ2z0QIFrwyT/6tdGwX55pwAweK2exA5Bhzw1AELEfpA
-	 pgsE8+M29Ez4OuRbIs0elwsFG3aPrOx7wHLHnTFTCS5Nwz4ZLJj53QEccXD7G0LJC/6rN
-	 5pFSSmM9TXEsq3YwfMxl4kPQ26wepXv7bXxU7D8kPmFCNOQqaU0PI8StWN0r1EUQQAg==
+	bh=9oOHgj9rESHfSJumdyGod7ah3O0TuaaP0z7PB7wGhMw=;
+	b=qRiQMwfTBOyW2oCHPjLYCk52ApZ82WiuCs4ORDMgbweUENMtBFGF5qrxutGfk0w/XS3X
+	 QXRjuv39knp8ONdJ5nMrYJzStsfXQ1JQ3bhJ7w5Bf+P8rAHhnnmUAyt1ABhFxD6zuRNPB
+	 /fCM+FURAFhd6g+nul4aJTpfSef9PtCuXArRXOXooBabTJYxItqVgHnbc4N4PASFzGrer
+	 H9MyeYZwIdaMosTEgKiz16+MOj+2dNH7OG3UDuqc8NkdPN4A8fIUPkK8g82DBMnenFRBa
+	 wMU7klnwdjEVlVVYWB2YF+yVuAWczbcwF92XQcPgtiE3pcRIBJMcEPXZgtjuo/qI9iQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FdNJq0Mj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nkz+LWFA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018BA606D807;
-	Sat,  7 Nov 2026 15:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B2C606A338;
+	Sat,  7 Nov 2026 15:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FdNJq0Mj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6662E1F008A1;
-	Sat,  7 Nov 2026 15:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nkz+LWFA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9231F008A1;
+	Sat,  7 Nov 2026 15:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065404;
-	bh=HQxaWyEzdZ+95AuNRJMsihPB9TWS7byC3b9zIrd6Pao=;
+	s=korg; t=1794065406;
+	bh=9oOHgj9rESHfSJumdyGod7ah3O0TuaaP0z7PB7wGhMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FdNJq0Mj0UWR3JMfc8gcb+EtIWa2NMPzMUaIgWGkklH0CflpsDbWNEZXhjjobEsAp
-	 1zzS14YqH/mY/cE5jVDsLDSt2vi38NUeAs/VPECZyDELgqAdnz8RY/+SWfryeuo3CQ
-	 Cj/dKlVEfTpypHg5Ig/LHZwES2KM/I/tMGP+1qKM=
+	b=nkz+LWFA4127lhJtdEpd4qzHdvZYoru/OeyyhTNL2nUKGrB/kscH6bW2w9fDdC7nI
+	 6Qs7bjw/5aX9wTHfRM/HpShqXbNHIXXz/BDYkvWT5aRQAgD+AJI8CS7NLrX7l8IgSF
+	 qgIG07gHpNLO4N2cgqscvZprbeQJtBZaE+DI2lEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
+	Weilin Tong <tongweilin@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Samarth Narang <samarth.colleges@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@kernel.org>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1086/1257] mm/madvise: atomically clear the young bit on THP MADV_COLD
-Date: Sat,  7 Nov 2026 08:56:22 -0500
-Message-ID: <20261107135009.257765908@linuxfoundation.org>
+Subject: [PATCH 7.3 1087/1257] ipc/shm: fix RSS accounting for hugetlb shared memory
+Date: Sat,  7 Nov 2026 08:56:23 -0500
+Message-ID: <20261107135009.289581126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -80,81 +75,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Weilin Tong <tongweilin@linux.alibaba.com>
 
-[ Upstream commit 246c8cc33438a71c28f9b86baa492d9a0a130316 ]
+[ Upstream commit e387ebe5cd31720b1e0281fd045be4eef36fadb3 ]
 
-As-is, madvise_cold_or_pageout_pte_range() discards the hardware young bit
-by invalidating the PMD, doing pmd_mkold() and subsequently writing to the
-pmd again.  However, it does so in a racy manner, looking at a
-possibly-stale snapshot.  It's entirely possible that a write elsewhere
-set the hardware D bit, which this logic now loses.
+Commit a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in
+filemap.c") changed mapping->nrpages to count base pages for hugetlb
+folios.  However, shm_add_rss_swap() still multiplies it by
+pages_per_huge_page(), overcounting RSS in both SHM_INFO and
+/proc/sysvipc/shm.
 
-Fix it by using pmdp_test_and_clear_young().  This is an atomic
-modification of the PMD entry, and thus safe against any possible racing
-writes.  As a (nice) side-effect, this elides one non-required TLB flush
-in pmdp_invalidate().
+Use mapping->nrpages for RSS accounting across all backing types, and
+account swap only for non-hugetlb shmem.  Use READ_ONCE() for both
+counters instead of info->lock, which does not protect nrpages and cannot
+provide a consistent snapshot.
 
-This bug can interact with the swapping system in complicated ways,
-leading to data loss.  For instance, if a folio is marked lazyfree, but
-was later read from, and then MADV_COLD'd while racing a write to that
-same THP, dropping the dirty bit may lead to data loss as
-reclaim/MADV_PAGEOUT drops the "clean" anon folio:
-
-T0                                T1
-================================================================
-MADV_FREE(thp)			|
-  folio marked lazyfree		|
-read(thp)			|
-  PMD marked young by hardware	|
-				| MADV_COLD(thp)
-write(thp)			|   if (pmd_young(pmd)) {
-  PMD marked dirty by hardware	|     set(pmdp, pmd_mkold(pmd));
-MADV_PAGEOUT/reclaim		|
-  dirty bit may or may not be   |
-  set				|
-    reclaim/pageout may drop    |
-    the folio			|
-
-Link: https://lore.kernel.org/20261013191719.95502-1-pfalcato@suse.de
-Fixes: 9c276cc65a58 ("mm: introduce MADV_COLD")
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
+Link: https://lore.kernel.org/20261014082218.2236088-1-tongweilin@linux.alibaba.com
+Fixes: a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in filemap.c")
+Signed-off-by: Weilin Tong <tongweilin@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Samarth Narang <samarth.colleges@gmail.com>
-Closes: https://lore.kernel.org/linux-mm/20261011132227.413217-1-samarth.colleges@gmail.com/
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
+Suggested-by: Muchun Song <muchun.song@linux.dev>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ ipc/shm.c | 23 ++++-------------------
+ 1 file changed, 4 insertions(+), 19 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index aa52fd4708845..54d8397059ba6 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -429,10 +429,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		}
+diff --git a/ipc/shm.c b/ipc/shm.c
+index bb1a721a3e746..6862f681373f1 100644
+--- a/ipc/shm.c
++++ b/ipc/shm.c
+@@ -936,26 +936,11 @@ static inline unsigned long copy_shminfo_to_user(void __user *buf, struct shminf
+ static void shm_add_rss_swap(struct shmid_kernel *shp,
+ 	unsigned long *rss_add, unsigned long *swp_add)
+ {
+-	struct inode *inode;
++	struct inode *inode = file_inode(shp->shm_file);
  
- 		if (!pageout && pmd_young(orig_pmd)) {
--			pmdp_invalidate(vma, addr, pmd);
--			orig_pmd = pmd_mkold(orig_pmd);
+-	inode = file_inode(shp->shm_file);
 -
--			set_pmd_at(mm, addr, pmd, orig_pmd);
-+			pmdp_test_and_clear_young(vma, addr, pmd);
- 			tlb_remove_pmd_tlb_entry(tlb, pmd, addr);
- 		}
+-	if (is_file_hugepages(shp->shm_file)) {
+-		struct address_space *mapping = inode->i_mapping;
+-		struct hstate *h = hstate_file(shp->shm_file);
+-		*rss_add += pages_per_huge_page(h) * mapping->nrpages;
+-	} else {
+-#ifdef CONFIG_SHMEM
+-		struct shmem_inode_info *info = SHMEM_I(inode);
+-
+-		spin_lock_irq(&info->lock);
+-		*rss_add += inode->i_mapping->nrpages;
+-		*swp_add += info->swapped;
+-		spin_unlock_irq(&info->lock);
+-#else
+-		*rss_add += inode->i_mapping->nrpages;
+-#endif
+-	}
++	*rss_add += READ_ONCE(inode->i_mapping->nrpages);
++	if (IS_ENABLED(CONFIG_SHMEM) && !is_file_hugepages(shp->shm_file))
++		*swp_add += READ_ONCE(SHMEM_I(inode)->swapped);
+ }
  
+ /*
 -- 
 2.53.0
 
