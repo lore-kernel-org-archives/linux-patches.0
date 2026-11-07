@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065603;
-	b=5YA3gH9qZE6fYMRS1NzNS79Kc7M3Hq3xiF8N8qWagbVmQK9/imEf9X0FMoVwpVpFElGv
-	 S5IQ8h93czCzbM63q7Wr+elBljyna5iXg56Jqp+Rx+dkYYfnAd1WtlW83dodwOn6mztka
-	 P2fyEi94qx/hRGUYoULyZoSFsd/Ss3ZrjTbha/RSgpIiuGSmx7XclN4KiLya4dpHQ1GZj
-	 Mgi/U8/cklVTgPAqO6MmDQqaJC3KembtXpZlkJa9uSrg19WjqwV67X85lnGoHmuKg7O0g
-	 moeTFi3zauzaVw2LUTGUCO+EOnZmQKbU57GN0gplEHr3rQRmSO/Rdl3yGMyvAiIKTiQ==
+	t=1794065605;
+	b=nZKwNdyg8yyiqkMKSzti1mtW0qYNcLE5LmWWnzJTQYAQp3uds4IV+asftRueTJS60QnC
+	 FSfeedYhN0tKAKL30kW3SONb50QsTbnU5HRsATELyE/co11OqtuYl1NyQ1MaEQGLVLRLO
+	 sXpHhT/WPquncnLVu7E9o8SHhjOh4lukVICVeCRD/InR8aydtc/RRXwDuNK4moCW+rClK
+	 ImP7bLEM1BWXrqxZ0rsdgn1BxpN6xU1kayn4sCkGW3H+K9Gx4EttROHu0ddCHyRLKZo39
+	 vBbOIi9bqKV7H66MA4xYrXtmUZqbJ7Q+ssC3uw4ZrVy178Hv/9H281JHWfbddXjARVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065603;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065605;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AwBuojXDfc7LVwgepm2tP/1e5xTMDbKNTJgUgJhg8Wg=;
-	b=3T+ev2fgGz1xrQEW82x+u9RQKSc3p+K8rky7Bz3WRHAMQH1fi2VsSkT0SXOr3R/LhxIA
-	 Piyb8QS8p2l5aWalX54XjsYLfxhF+nlbvlwZl7C0n30Sx1qmFUO9EGJoYkpKbXaHGXJGK
-	 PqUKVdFcGgPPXCDUmUCh+TnC0KbaVI8ZxwdluTGZmXTfeda42wmdz1XGrINuMpQLCQZjR
-	 T6sZ0bu0F4BP2AUPXCziJewDeN8ObByUonYAaNiRKWoGNapzQYNgnpg0UKUE3xd+O8kka
-	 d5ed3ULW5n7kwbMFsOMVpz2GjI0GBWia6BfupRAKnvUA9AtZsCwS39wOfW60EBjItUw==
+	bh=4bQ/0300rd2BEZnuwS4TE0Xe1CaGoX0NIm9uaR5Q+JU=;
+	b=K9OZMwgQpHqKouHxw+TCZAYFIROTRS9TgQ3uqrtT6JCm4UzY3LQqxn9ggQ2FRhoarpmB
+	 b9WsZu9/KQSbEwcvFWJ/eRXJLsyJtlcVR8fbfLALaFB7zuMMo8V/k2jtjyGT5eYlsSbtK
+	 P+o3/mpL3o5b/+oAtH1s5ep+7+r7X5x8R1EPeH4nqh8nMh+yj0dpwLavvlVsbRqvCWKQp
+	 v2gw7mDKpbEZ0dJcbyCn3EDg1ZY7np47wTGRUEd1x082cU++Qs/XlsyFzlCIOAK/jezzX
+	 /rtUliXTZr6jdDYccRyXLK8+JJ/gQcYL+HH0Ga3T7zhRRegklcA/ctHa3p/9xggf0gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a4JxQOfm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LHb16vce;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A90E606A32C;
-	Sat,  7 Nov 2026 15:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D038C606A32C;
+	Sat,  7 Nov 2026 15:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a4JxQOfm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484A51F008A1;
-	Sat,  7 Nov 2026 15:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LHb16vce
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B4B1F0089F;
+	Sat,  7 Nov 2026 15:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065603;
-	bh=AwBuojXDfc7LVwgepm2tP/1e5xTMDbKNTJgUgJhg8Wg=;
+	s=korg; t=1794065604;
+	bh=4bQ/0300rd2BEZnuwS4TE0Xe1CaGoX0NIm9uaR5Q+JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a4JxQOfmv3t2VyqEfszBwwfasYCHraoYvqIXTvA9Re4t/3jVmyB44QbCOdDiHPY22
-	 BXmOr/MwXMvdreQtXL/0gt4URc/5diwCo38STOuCqftuO6vW6IGIV1Yf6VPwYrYezr
-	 uq2pVQ+kn9b3qHfia/fbTTTO/8O5jAoWBNcNEP8g=
+	b=LHb16vcers5pvop58JTHzFms/UtD0gzx2w8HOeDTJuhHA1LD/J5nWk0KCva3cujrH
+	 1K33SefhyyYfpTP96rD1IszRNySP8em/4upE6gIbQciONcNxlD6FgfUFH08o+MZZ/v
+	 odeRq4qcfnmwITVzQVvZjMgYeaeMfINjgL39yw3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1246/1257] backing-file: enforce append-only and immutable backing inodes
-Date: Sat,  7 Nov 2026 08:59:02 -0500
-Message-ID: <20261107135013.739648775@linuxfoundation.org>
+Subject: [PATCH 7.3 1247/1257] iov_iter: fix NULL deref in iov_iter_alignment()
+Date: Sat,  7 Nov 2026 08:59:03 -0500
+Message-ID: <20261107135013.765657474@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,131 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 19b18e01d0361ce495be153ecce80b581086ab3f ]
+[ Upstream commit a290a9e5cf5fbba05d6c59b94b36d00f4fc15ef2 ]
 
-FUSE passthrough opens the backing file anew whenever the FUSE file is
-opened. fuse_passthrough_open() passes the flags of that open to
-backing_file_open() which opens the backing file with vfs_open() and the
-credentials of the server. But vfs_open() doesn't go through may_open().
-So the backing inode is never checked for S_APPEND and S_IMMUTABLE. The
-checks that did run were done on the FUSE inode and that one never has
-either flag.
+Since commit 111a12b422a8 ("io_uring/rsrc: reject zero-length fixed
+buffer import") io_import_fixed() hands out an empty ITER_BVEC for a
+zero-length request. Its count is 0 and its bvec array is NULL.
 
-So anyone who may open the FUSE file for writing can overwrite an
-append-only backing file anywhere or write to an immutable one. The
-server only has to register the file and a read-only or even an O_PATH
-file descriptor is enough for that. Registering requires CAP_SYS_ADMIN
-but the writer can be any user that the server lets open the file.
+iov_iter_alignment() only checks the count for ITER_UBUF. For ITER_BVEC
+it calls iov_iter_alignment_bvec() and the do-while loop in there reads
+bvec->bv_len before it looks at the count. So it dereferences NULL.
 
-The FUSE inode is checked instead of the backing inode in a few more
-places:
+btrfs checks the alignment of a direct read with iov_iter_alignment()
+before it looks at the count and f2fs does the same. So any user that
+can open a file on btrfs can oops the kernel with a single zero-length
+IORING_OP_READ_FIXED on an O_DIRECT file descriptor. With IOSQE_ASYNC
+the oops happens in an io-wq worker. The dead worker stays on the worker
+list and when the task that submitted the request exits io-wq writes to
+the freed task_struct of the worker. That's just fallout from the oops
+though.
 
-- do_mmap() refuses a shared mapping of an append-only file that was
-  opened for writing. A FUSE file opened with O_RDWR | O_APPEND passes
-  the open check and can then be mapped shared and written to at any
-  offset.
+Empty iterators with a NULL array aren't unusual. afs, tls and tipc
+create them as well. So leave io_uring alone and make
+iov_iter_alignment() return 0 for an empty iterator of any type.
 
-- fcntl(F_SETFL) and RWF_NOAPPEND refuse to take append mode away from a
-  file on an append-only inode. On the FUSE file both succeed. A
-  synchronous write still appends because the backing file was opened
-  with O_APPEND. But an asynchronous write is submitted with the flags
-  of the user's kiocb and lands at the given offset.
-
-Do the checks on the backing inode. backing_file_open() refuses to open
-an immutable inode for writing and an append-only inode for writing
-without O_APPEND, just like may_open(). backing_file_mmap() refuses a
-shared mapping of an append-only inode, just like do_mmap(). And writes
-and splices to a backing file in append mode fail if append mode was
-taken away from the user file.
-
-A FUSE file that was opened before the backing file became append-only
-can still write anywhere. That's what happens on the native filesystem
-as well and the backing file of such a file isn't in append mode. Two
-differences remain. F_SETFL succeeds and the next write fails. And FUSE
-reports EIO for a refused open because it turns every error from opening
-the backing file into EIO.
-
-overlayfs uses the same helpers but it mirrors S_APPEND and S_IMMUTABLE
-in its own inode and a chattr through the overlay never sets them on the
-upper inode. So for overlayfs this only changes something if the upper
-inode is changed behind the overlay's back.
-
-Fixes: 4a90451bbc7f ("fuse: implement open in passthrough mode")
-Reported-by: Chris Mason <mason@kernel.org>
-Cc: stable@vger.kernel.org # v6.9+
-Link: https://patch.msgid.link/20261029-work-fs-ai-fixes-v1-2-88f22792f6f7@kernel.org
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Fixes: 111a12b422a8 ("io_uring/rsrc: reject zero-length fixed buffer import")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <mason@kernel.org>
+Link: https://patch.msgid.link/20261029-work-fs-ai-fixes-v1-3-88f22792f6f7@kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/backing-file.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ lib/iov_iter.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/backing-file.c b/fs/backing-file.c
-index cc101143f9212..37253f2e3084f 100644
---- a/fs/backing-file.c
-+++ b/fs/backing-file.c
-@@ -36,9 +36,21 @@ struct file *backing_file_open(const struct file *user_file, int flags,
- 			       const struct cred *cred)
- {
- 	const struct path *user_path = file_user_path(user_file);
-+	struct inode *real_inode = d_inode(real_path->dentry);
- 	struct file *f;
- 	int error;
- 
-+	/*
-+	 * may_open() checked the inode of the user file, which need not carry
-+	 * S_APPEND and S_IMMUTABLE of the backing inode.
-+	 */
-+	if ((flags & O_ACCMODE) != O_RDONLY) {
-+		if (IS_IMMUTABLE(real_inode))
-+			return ERR_PTR(-EPERM);
-+		if (IS_APPEND(real_inode) && !(flags & O_APPEND))
-+			return ERR_PTR(-EPERM);
-+	}
-+
- 	f = alloc_empty_backing_file(flags, cred, user_file);
- 	if (IS_ERR(f))
- 		return f;
-@@ -263,6 +275,14 @@ ssize_t backing_file_write_iter(struct file *file, struct iov_iter *iter,
- 	if (!iov_iter_count(iter))
+diff --git a/lib/iov_iter.c b/lib/iov_iter.c
+index 2072c04e99d05..56c59a2b589d3 100644
+--- a/lib/iov_iter.c
++++ b/lib/iov_iter.c
+@@ -848,6 +848,10 @@ unsigned long iov_iter_alignment(const struct iov_iter *i)
  		return 0;
+ 	}
  
-+	/*
-+	 * F_SETFL and RWF_NOAPPEND can take append mode away from the user
-+	 * file. They checked its inode, not the backing one.
-+	 */
-+	if ((file->f_flags & O_APPEND) && !(flags & IOCB_APPEND) &&
-+	    IS_APPEND(file_inode(file)))
-+		return -EPERM;
++	/* An empty iterator may have no segment array at all. */
++	if (!i->count)
++		return 0;
 +
- 	ret = file_remove_privs(iocb->ki_filp);
- 	if (ret)
- 		return ret;
-@@ -309,6 +329,10 @@ ssize_t backing_file_splice_write(struct pipe_inode_info *pipe,
- 	if (!out->f_op->splice_write)
- 		return -EINVAL;
- 
-+	/* splice refuses a user file in append mode, so F_SETFL cleared it */
-+	if ((out->f_flags & O_APPEND) && IS_APPEND(file_inode(out)))
-+		return -EPERM;
-+
- 	ret = file_remove_privs(iocb->ki_filp);
- 	if (ret)
- 		return ret;
-@@ -338,6 +362,10 @@ int backing_file_mmap(struct file *file, struct vm_area_struct *vma,
- 	if (!can_mmap_file(file))
- 		return -ENODEV;
- 
-+	/* do_mmap() checked the inode of the user file */
-+	if ((vma->vm_flags & VM_SHARED) && IS_APPEND(file_inode(file)))
-+		return -EACCES;
-+
- 	vma_set_file(vma, file);
- 
- 	scoped_with_creds(ctx->cred) {
+ 	/* iovec and kvec have identical layouts */
+ 	if (likely(iter_is_iovec(i) || iov_iter_is_kvec(i)))
+ 		return iov_iter_alignment_iovec(i);
 -- 
 2.53.0
 
