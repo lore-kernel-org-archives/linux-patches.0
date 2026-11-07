@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062339;
-	b=mT9Sc7tm9nbtam78GBBokacv9QijQ37Bpkwi9TQDEf0zU/1H7fTr/evBFjvdlrhlIgRO
-	 9toz/vz42TuEY/Nf3CJfHy09YgwVAiARTMh3pLmHm5zuN2EPIbmYBd6ErwtOP90V0lKaj
-	 iG1bwu6+D7eEPj2SgtRwtT0ThE7OvPZQH0MjQtRniTi8nLrgwCAIa4+9Oib9nhHJkA83r
-	 LNYHvHXv4Zi5Jot/mdDWVrPCCs1CJKNHd2jF3nPDu8OWbL6lZd4anFm4PoVKe6K1cGlSU
-	 htjlqZVZqUp6+cihZNKp/SBvoU+N7+WU7nGO9J2OGMcYPLLUj+tJO27FkqLOhKjru2w==
+	t=1794062340;
+	b=PGjbOPhnCXEBK1/wQ4fIz3k4O9AjchomsrPVEJbdu/HD2C4qyq1swiyRLtVTD4ghUrIY
+	 jdtEWXmRS0bwV9vP/H4C4m66YIfaUq9q8FR/0QuCzU8DV9DkLqVGLPcBvytxG5UYU6oeX
+	 khbn0LMyAVsD/UCO21zxXRR1yfkcfnVszV8BbG2+Ch9AWJofthoiLCPv0q85OWgauRVyI
+	 QQhRNcM8PAPpkMoXSF7Hw3Y/TiRk6cXoKmwZEpaJv294rr+Lre1zUoW6+FsNo7SiCHPq8
+	 LRhvtvhZu0GklkC1Fh/ZCKIZvZxspyKtkHRRgoeYntxOWWdmQz0zXO+AJUlTlAPczdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062339;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062340;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=gFYh3E/RWjTSNkUR9nnXlPo+EggG7myW07C6px8R6lk=;
-	b=e0YB8EcnIPo2qs3p2cDKG+Z33aHDcERW/ayyL3P+a1Iw9viEe4D98i63lzG3AF+vDqYG
-	 T1iEu3vrDTqtfLx320lrLj9pB12nV/UVQAkVjGYUiZQW5xZcxP1QS+fU79hM/ThrGS0rz
-	 jHhsd7VoDl2LF5F9lQzwtsCbWD1Hk8xcJKIIXOzAQ+UbAONWUf2wf+5n2OgFszYLmHwxe
-	 A5l/w7wtWD1syAJsFbITbUjFymZyVL4TgC6kN5Krvna+fl06BxKyV6k93APAujrXk4dKs
-	 tM1JEiSy4PCTE87DJel5D702kAQSQUdOwf0HyChy3F4aBUf+pXfkza5OWDwSqMzAIcA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=p9zkG5iFAwPpcYUOo7993val68ubUrqNClIl9mwpiDA=;
+	b=YL1gNBjrq72N3HwNQfQFtqBU4buHO3NBoDVCnPAWDOt6jziJCPaXP7Syq1FYfoRHmxla
+	 PMoIbpJfDFa2d6jxYBfMEYNqt2FhCitwdx7sH3LU1vTzMGe2MrhPytYXdyp7mJfphuJh0
+	 K075Bhm+Tc9vjXsHyVPuOPxmrED0v4L3FHew4V+nt7kWkl/QQ5iIQAsmX4b/n53/vxm7w
+	 i/hMh3s48QEPVJTNJ/rrBe6MdMHy29e509piRIia/i/t+6PgBMjFnVF3NcoL7JdXBFN4u
+	 GVkwdNpPRgKRPcmFRgNXGw8oIIkA8GL+sQMzKNrfu2u0mvFZo70kp43Csu7HWgbiKLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Qp/uA/qR";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cj9pO1C5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55CB606D807;
-	Sat,  7 Nov 2026 14:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ABA606D825;
+	Sat,  7 Nov 2026 14:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qp/uA/qR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591C01F0089F;
-	Sat,  7 Nov 2026 14:38:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cj9pO1C5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65F91F0089F;
+	Sat,  7 Nov 2026 14:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062338;
-	bh=gFYh3E/RWjTSNkUR9nnXlPo+EggG7myW07C6px8R6lk=;
+	s=korg; t=1794062339;
+	bh=p9zkG5iFAwPpcYUOo7993val68ubUrqNClIl9mwpiDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qp/uA/qRAxm1MKjM2748r/ywlvnsp7ZaJp11Dp6cO5iklGzR9qySnIaHZidHVVa6X
-	 Fdds1Vp/RONeYcfX/+uE6Ha4oeTWird3jGQEAsy7cZCWSdgIe4CYuS1uE3a0pofQ9O
-	 ZrMgY8uWlto9jdMKM4eMmQc2To/SFuULPB2EsH0E=
+	b=Cj9pO1C58EvXG7UvyXXSyP+skRfP5QmOYTNbM/pv75/uxtEz2kKdj379ZUOppTLBk
+	 hD2iS9y2dBCHkc9btdXjngZRMSC8KT0mWwUYGZ33pkNImAItNv78lrGcO5m/iM5YhT
+	 omCcWH79Lbuz6Uube1rC+vxtNn0IgweFcui1nRLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1267/1536] nvme-auth: fail when the controller does not authenticate itself
-Date: Sat,  7 Nov 2026 08:54:43 -0500
-Message-ID: <20261107135033.359201153@linuxfoundation.org>
+Subject: [PATCH 6.12 1268/1536] nvmet: free the bvec on file namespace range errors
+Date: Sat,  7 Nov 2026 08:54:44 -0500
+Message-ID: <20261107135033.388947908@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -64,77 +63,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit f9e43d924bc74feeb56197de82b2845de2a4b85a ]
+[ Upstream commit 9d820d55b3cb4859c7cf42a74dc78f6154f97398 ]
 
-nvme_auth_process_dhchap_success1() returns success as soon as the
-controller clears the rvalid flag in its DH-HMAC-CHAP success1 message,
-without looking at whether the host had asked the controller to
-authenticate.  A host configured with a controller secret sends a
-challenge in its reply, computes the expected controller response, and
-sets chap->bi_directional; if the controller then answers with
-rvalid = 0 the response is never compared, the host still sends
-success2, and the queue is marked as authenticated.
+nvmet_file_execute_rw() allocates the bvec before
+nvmet_file_execute_io() checks whether the request fits in the backing
+file. If the request extends beyond the file, nvmet_file_execute_io()
+calls nvmet_req_complete() to return an error. This skips
+nvmet_file_io_done(), so the allocated memory is never freed. Repeated
+requests can exhaust memory.
 
-A malicious or man-in-the-middle controller therefore only has to clear
-one flag to turn the configured bidirectional authentication into a
-one-way one, without holding any secret of its own.  The target side
-already treats the mirror image of this as fatal: when the host supplied
-a challenge but no controller key is configured, nvmet_auth_success1()
-fails the authentication rather than answering with rvalid = 0.
+Use nvmet_file_io_done() to free the bvec before returning the range
+error to the client.
 
-Refuse the connection if the controller returns no response although
-bidirectional authentication was requested.  chap->bi_directional is the
-right condition rather than ctrl->ctrl_key, because secure concatenation
-sends a challenge only to derive the PSK and deliberately clears
-bi_directional; a one-way setup without a controller secret keeps
-returning success as before.
-
-Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
+Fixes: 50a909db36f2 ("nvmet: use IOCB_NOWAIT for file-ns buffered I/O")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Assisted-by: LLM
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/auth.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/nvme/target/io-cmd-file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
-index 3812448aa9864..9aeab36c2578c 100644
---- a/drivers/nvme/host/auth.c
-+++ b/drivers/nvme/host/auth.c
-@@ -362,8 +362,21 @@ static int nvme_auth_process_dhchap_success1(struct nvme_ctrl *ctrl,
- 			 nvme_auth_hmac_name(chap->hash_id),
- 			 nvme_auth_dhgroup_name(chap->dhgroup_id));
+diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
+index 2d068439b129c..6e14700164724 100644
+--- a/drivers/nvme/target/io-cmd-file.c
++++ b/drivers/nvme/target/io-cmd-file.c
+@@ -133,8 +133,8 @@ static bool nvmet_file_execute_io(struct nvmet_req *req, int ki_flags)
  
--	if (!data->rvalid)
-+	if (!data->rvalid) {
-+		/*
-+		 * The controller did not return a response.  If we asked it to
-+		 * authenticate itself the session must not be used, otherwise
-+		 * mutual authentication would silently degrade to one-way.
-+		 */
-+		if (chap->bi_directional) {
-+			dev_warn(ctrl->device,
-+				 "qid %d: controller did not authenticate\n",
-+				 chap->qid);
-+			chap->status = NVME_AUTH_DHCHAP_FAILURE_FAILED;
-+			return -ECONNREFUSED;
-+		}
- 		return 0;
-+	}
+ 	pos = le64_to_cpu(req->cmd->rw.slba) << req->ns->blksize_shift;
+ 	if (unlikely(pos + req->transfer_len > req->ns->size)) {
+-		nvmet_req_complete(req, errno_to_nvme_status(req, -ENOSPC));
+-		return true;
++		ret = -ENOSPC;
++		goto complete;
+ 	}
  
- 	/* Validate controller response */
- 	if (crypto_memneq(chap->response, data->rval, data->hl)) {
+ 	memset(&req->f.iocb, 0, sizeof(struct kiocb));
 -- 
 2.53.0
 
