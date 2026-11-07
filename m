@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064709;
-	b=tpLhKMPBpq4rTu08B58OgXQ5hCXfLjQ00bRIc5W7elOpn8oltgVM0mdRbhHEf3CTklO3
-	 ZBXnIfLmjsREeweU9vsBPu5bZglIQIo1oAbdnKnQhK1HIyetImvJfq77GabPubkVAL7ED
-	 YXF4U5Uoz9cUEBgiRtHbQdo5/BLUtI1ETNzJSVrFddU6Uf2dO7MSUffiT4bwt87/wkZGr
-	 oHqqLWlYtHq8Cc7sqLz2kDCpLSs5dickiodZJFzaP8ZBtRkLojNc+wqDnqqrH5sXS71pE
-	 NknXnK2DXf4/CUQq+srfbIQOzZsOxrRMhS8PhkTUK+X8Yhvmt74U9G6DCleTCmAjMpg==
+	t=1794064711;
+	b=ZepOthmB89tqqwiHy/uZ8uDm790U05/6fskbiZOJEQkPelTevNlEXfdklN7mbB6VupX1
+	 Z9jpnQtXwTj81AEvSU8mW8I+QUM5fXyJ3WzcAPwsKPOfXIGkt7uQohU31G6iBbvOwjMzK
+	 5khbfKX8o7cBThF9NGCzjehw/XJlIRr2sZuxsGEnk5qsfBm6Cmsnt5bO3pOviK6lcH6B/
+	 9HhXfg64yuewj4jc4hXxnmaZ7lo8S8L4Q3obES2pBE4f8ysortyZ/wAvOW2CegwAMJ+ti
+	 JkyLGb2iue/JnMU8arPX7ja7UparYN+/MbUwaxJXURRR4Qi7UiIxwhzY9SbGasU0IyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064709;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064711;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=btayOxgMBff6KCXy+tPwyqwk2xPgSQLiEzF8YqdtLlE=;
-	b=tmlzxllbVFnKbBatrre3vnkHKb3SqzhFUyI6ZuaXvd6mfw/n5XGfmMEwmr110vBAVvON
-	 8hipVuBSGEWx/5aVqvhoDw/ED7rk7UGpKJVtzub4x5rLSi4z7Kjq1XTjxgSLCxVg+pQVe
-	 p4zXtA0IRyJG5ZNfTuXj52AQerqSXWXbqcZ93hdFSjQDIp7bM15OcWzZ+X3HUcCGz0ckz
-	 8pVpWHaNLZ/cx3e9ybmAXZI/Ddfm65BE6I3cd1C1PmUXizaeJ0m+haJpj/GhTwknCiErK
-	 AMrDPl0k+WzMoocOKq8PNc9tGOLHehyyNAmnWF5sNXortlknyTnwkxpqEG+ofqOr9QQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=yOZiKaTd+gagVh4GfQ50ZiCAH+gU7f7iYGJHBWVAtfU=;
+	b=vlsr6kyWxz6ObSIT9jWT/fa3li3M9PtPbWy91iPFT3S6iICvmkjcbBGGqB6Nv9BbJQT6
+	 +fQajejU2uaH7SbPcDBiG0605ojy8iSs82KstuguneguyRG8yIsgYktKwusQOaflTXiKN
+	 49sCgU6Bf3XM2ZynlJzjPK8vnJV/sMWU0Q3aWIyBIoOaF8MFVkOfv2I86WToFAlvsZsgS
+	 RU5PyGIDtt69NqRGS7smE2jszQ0wZ6qYlMuSaBwxNzqLsjInkGwFBY7cLbeVz3gv59ZMC
+	 ai0lz3yhGf5ns55kMlOOGlqlIPXj0xGAzJ2A32OFhq26qa2OpSeej/C+p0g7LM5Iqxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UDMpFvCg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVxwwzEQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D960606CE75;
-	Sat,  7 Nov 2026 15:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D5F606A32E;
+	Sat,  7 Nov 2026 15:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UDMpFvCg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E691F0089F;
-	Sat,  7 Nov 2026 15:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVxwwzEQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CD01F008A1;
+	Sat,  7 Nov 2026 15:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064709;
-	bh=btayOxgMBff6KCXy+tPwyqwk2xPgSQLiEzF8YqdtLlE=;
+	s=korg; t=1794064710;
+	bh=yOZiKaTd+gagVh4GfQ50ZiCAH+gU7f7iYGJHBWVAtfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UDMpFvCgcPqxgXJKbtqcBnfbx2HzdV7B2tj7vv09wzLd8091230mRLHIdFaeIJSSe
-	 2V6TF958cH6QvkdysuFXtlHqn8vrODnxzk7nnr2AX8Icn+IKRUPISqVuEndY0vT+Wh
-	 KuAKc2GfuVSPF0Q2Mavr9s/13HwX33QSavtXjLXg=
+	b=yVxwwzEQQ5fbKgO/0NUvOQrNonceUpRvxSwu4DuPdu7FrhV3baAPmDYLN+XqzrVUX
+	 KAohYdAiZhc50Crx/ACsq6CkhLNS73A2lyNlLQ+dnLptZkkA5aZYPa5S8qymRhUADJ
+	 UvtuVTHf6e1c4msl0De0yPh1z5uJrsujlopvs8B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0694/1257] serial: 8250_exar: store the GPIO platform device in struct exar8250
-Date: Sat,  7 Nov 2026 08:49:50 -0500
-Message-ID: <20261107134958.427742666@linuxfoundation.org>
+Subject: [PATCH 7.3 0668/1257] platform/x86/amd/pmf: Validate the APTS state index
+Date: Sat,  7 Nov 2026 08:49:24 -0500
+Message-ID: <20261107134957.703441135@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -61,154 +62,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 33d337816e00994daaf670243186d9e537ee090d ]
+[ Upstream commit 192dddd5aa45166450820cef16521bdf23976a73 ]
 
-The GPIO platform device is registered via platform->register_gpio()
-when port 0 is being set up. It is stored to port->port.private_data of
-the on-stack uart template (and from there it is copied into every
-registered port). pci_xr17v35x_exit() then fetches it back by
-serial8250_get_port(priv->line[0]).
+The static slider APTS state index is supplied by the BIOS as an 8-bit
+value, but apts_config_store contains only APTS_MAX_STATES entries. An
+invalid firmware value can therefore cause amd_pmf_update_slider_v2() to
+read beyond the end of the array.
 
-But port 0 does not have to exist at that point. If
-serial8250_register_8250_port() fails for port 0, priv->line[0] holds a
-negative error code. The probe still succeeds (it only breaks the loop),
-so on unbind, priv->line[0] (a negative value) is passed to
-serial8250_get_port(). The GPIO device is never unregistered and a
-bogus port is accessed.
+Validate the selected index before applying the slider values and return
+an error when it is out of range.
 
-The same problem would also occur after the planned conversion of
-serial8250_register_8250_port() to return a uart port instead of a
-line. As Sashiko pointed out in that case:
-  If board->setup() fails for the first port (i=0) in exar_pci_probe(),
-  priv->uport[0] remains NULL. If serial8250_register_8250_port() fails,
-  it returns an ERR_PTR. In either case, the loop breaks and probe
-  returns success. When the device is later unbound,
-  pci_xr17v35x_exit() unconditionally passes priv->uport[0] to
-  platform->unregister_gpio(), which will dereference it without
-  checking for validity.
-
-The GPIO device belongs to the PCI device, not to any particular port.
-So store it in a new struct exar8250::gpio member. Pass priv to both
-->register_gpio() and ->unregister_gpio(), so that pci_xr17v35x_exit()
-does not need to look up any port at all.
-
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Fixes: d0aeaa83f0b0 ("serial: exar: split out the exar code from 8250_pci")
-Link: https://lore.kernel.org/all/sashiko-outbox-166269@kernel.org/
-Assisted-by: LLM
+Fixes: 8362e862fb87 ("platform/x86/amd/pmf: Update sps power thermals according to the platform-profiles")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/03a8b5c71614fc672fef1e55c083bda6c73b5bf3.1791873876.git.jirislaby@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260903182927.3556274-1-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_exar.c | 36 ++++++++++++++---------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/platform/x86/amd/pmf/sps.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_exar.c b/drivers/tty/serial/8250/8250_exar.c
-index 836792e861bfc..2e7adf6a410c6 100644
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -231,8 +231,9 @@ struct exar8250_platform {
- 	int (*rs485_config)(struct uart_port *port, struct ktermios *termios,
- 			    struct serial_rs485 *rs485);
- 	const struct serial_rs485 *rs485_supported;
--	int (*register_gpio)(struct pci_dev *pcidev, struct uart_8250_port *port);
--	void (*unregister_gpio)(struct uart_8250_port *port);
-+	int (*register_gpio)(struct exar8250 *priv, struct pci_dev *pcidev,
-+			     struct uart_8250_port *port);
-+	void (*unregister_gpio)(struct exar8250 *priv);
- };
- 
- /**
-@@ -256,6 +257,7 @@ struct exar8250 {
- 	struct exar8250_board	*board;
- 	struct eeprom_93cx6	eeprom;
- 	void __iomem		*virt;
-+	struct platform_device	*gpio;
- 	int			line[];
- };
- 
-@@ -1167,22 +1169,21 @@ static const struct software_node exar_gpio_node = {
- 	.properties = exar_gpio_properties,
- };
- 
--static int xr17v35x_register_gpio(struct pci_dev *pcidev, struct uart_8250_port *port)
-+static int xr17v35x_register_gpio(struct exar8250 *priv, struct pci_dev *pcidev,
-+				  struct uart_8250_port *port)
- {
- 	if (pcidev->vendor == PCI_VENDOR_ID_EXAR)
--		port->port.private_data =
--			__xr17v35x_register_gpio(pcidev, &exar_gpio_node);
-+		priv->gpio = __xr17v35x_register_gpio(pcidev, &exar_gpio_node);
- 
- 	return 0;
- }
- 
--static void xr17v35x_unregister_gpio(struct uart_8250_port *port)
-+static void xr17v35x_unregister_gpio(struct exar8250 *priv)
- {
--	if (!port->port.private_data)
--		return;
--
--	__xr17v35x_unregister_gpio(port->port.private_data);
--	port->port.private_data = NULL;
-+	if (priv->gpio) {
-+		__xr17v35x_unregister_gpio(priv->gpio);
-+		priv->gpio = NULL;
-+	}
- }
- 
- static int sealevel_rs485_config(struct uart_port *port, struct ktermios *termios,
-@@ -1279,8 +1280,9 @@ static const struct software_node iot2040_gpio_node = {
- 	.properties = iot2040_gpio_properties,
- };
- 
--static int iot2040_register_gpio(struct pci_dev *pcidev,
--			      struct uart_8250_port *port)
-+static int iot2040_register_gpio(struct exar8250 *priv,
-+				 struct pci_dev *pcidev,
-+				 struct uart_8250_port *port)
- {
- 	u8 __iomem *p = port->port.membase;
- 
-@@ -1289,8 +1291,7 @@ static int iot2040_register_gpio(struct pci_dev *pcidev,
- 	writeb(IOT2040_UARTS_ENABLE, p + UART_EXAR_MPIOLVL_15_8);
- 	writeb(IOT2040_UARTS_GPIO_HI_MODE, p + UART_EXAR_MPIOSEL_15_8);
- 
--	port->port.private_data =
--		__xr17v35x_register_gpio(pcidev, &iot2040_gpio_node);
-+	priv->gpio = __xr17v35x_register_gpio(pcidev, &iot2040_gpio_node);
- 
- 	return 0;
- }
-@@ -1367,7 +1368,7 @@ pci_xr17v35x_setup(struct exar8250 *priv, struct pci_dev *pcidev,
- 		/* Setup Multipurpose Input/Output pins. */
- 		setup_gpio(pcidev, p);
- 
--		ret = platform->register_gpio(pcidev, port);
-+		ret = platform->register_gpio(priv, pcidev, port);
+diff --git a/drivers/platform/x86/amd/pmf/sps.c b/drivers/platform/x86/amd/pmf/sps.c
+index 0b70a5153f465..0918fb388fde6 100644
+--- a/drivers/platform/x86/amd/pmf/sps.c
++++ b/drivers/platform/x86/amd/pmf/sps.c
+@@ -248,20 +248,24 @@ static int amd_pmf_update_sps_power_limits_v2(struct amd_pmf_dev *pdev, int pwr_
+ 	switch (pwr_mode) {
+ 	case POWER_MODE_PERFORMANCE:
+ 		index = config_store_v2.sps_idx.power_states[src][POWER_MODE_BEST_PERFORMANCE];
+-		amd_pmf_update_slider_v2(pdev, index);
+ 		break;
+ 	case POWER_MODE_BALANCED_POWER:
+ 		index = config_store_v2.sps_idx.power_states[src][POWER_MODE_BALANCED];
+-		amd_pmf_update_slider_v2(pdev, index);
+ 		break;
+ 	case POWER_MODE_POWER_SAVER:
+ 		index = config_store_v2.sps_idx.power_states[src][POWER_MODE_BEST_POWER_EFFICIENCY];
+-		amd_pmf_update_slider_v2(pdev, index);
+ 		break;
+ 	default:
+ 		return -EINVAL;
  	}
  
- 	return ret;
-@@ -1377,9 +1378,8 @@ static void pci_xr17v35x_exit(struct pci_dev *pcidev)
- {
- 	const struct exar8250_platform *platform = exar_get_platform();
- 	struct exar8250 *priv = pci_get_drvdata(pcidev);
--	struct uart_8250_port *port = serial8250_get_port(priv->line[0]);
- 
--	platform->unregister_gpio(port);
-+	platform->unregister_gpio(priv);
++	if (index >= APTS_MAX_STATES) {
++		dev_err(pdev->dev, "Invalid APTS index: %d\n", index);
++		return -EINVAL;
++	}
++
++	amd_pmf_update_slider_v2(pdev, index);
++
+ 	return 0;
  }
  
- static inline void exar_misc_clear(struct exar8250 *priv)
 -- 
 2.53.0
 
