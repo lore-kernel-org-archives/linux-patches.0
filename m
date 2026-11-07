@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063398;
-	b=s/C7pmWLLB4jMHMgNuaUsnEGwIymum6Ptqlu8hB1iZCEWJiKCVnCe1elh8rrBOknSj/u
-	 OFtobnYyUxPnObayC9/GEnaEy70Ud+dHJuy8YIN6MF7t6SnsMSorCtxHTKkva1MN8CCZi
-	 bQF6zNxH89sAtXdUehihehG883cl48vejwqLKL+Ow4At8gQtUgemIx2feTvzs81VGvE1o
-	 laDkfAHv6NU7H6Jdr+HQfxZpbA4bWk0wr6o26noUJH3y9qyM3YM5EJwrpnnsjhShsOfXf
-	 s6am7KkMic3Zj3tBUXvKTVrG39c6jJcN4E/vv1bAtnJmqXWARg0pwSMkI8N+h4OwUPA==
+	t=1794063400;
+	b=vK4OUpsa3FLZSN9xx+XE4telvX9TpCDA+m+cl+bfErd+k/jhVRRlg5MtwFYC0t5MV/re
+	 sFyNy8NWaK5Rcf2uOB56ENoVU7o/xV/Dnt9hG1aXvzfGIlmuP2Ti4XTo9xa32N+AMyTCB
+	 4UvX9UQQ/Tp6zN75GmrJjbU0H3a01/qhyGW6rkqEfa4Z1vFQ2Vp7TfSXlJfxLu171gqnY
+	 BladbEh/VKeAkb2xRieFqgmlET2gXLAAo1j7gdhCwtrkRYIYCFHjJrBqDs2k/vCIOUr05
+	 ss0WtyE4YSaRd6UOCR8vLYz5SrbxvpG/NNJfHEqF4qOIQgssaK8h474s9HZYVw0mLbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063400;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CetzwYpV7M1Dqo3nHXB7NC+unSew3jfV4290XFMJ7oI=;
-	b=APcifkoRQSbD9V4Cmgh3c8dJVftQiy9ZmFKYnTOG2AdR87RFZ7UeK4f8SOAPsIhmiMee
-	 e7ogFCLw9ma0HpRsAGNIHdEYdvgZB+ZhrUSJ7KPrJI1hdEJstih1C/z3NOqF/KuqV8P3t
-	 rDXWDY0QhA+tfInMwAGIQTSiW3gR6fUbirWcmfDJmYVxpNda1Gn/xtOjIVm2vDi9WwmL9
-	 B/aGO5ePFyWMlI2GBpUuivc7P/OgvisWPq69EKsE5CX669ER2CBN3VzkbhJFeyAPwJ0AP
-	 ngXVb8n4ScwVX8P7pTvaGfE7K7PmBVNiykatmerqe6T1RD8XCiD9IW2FS5yaQ4SH8AQ==
+	bh=tdTmhk8Rv9MF6WRvEWTuqGLXbJu9kYfnHYi/zJtPzI4=;
+	b=JTjWaAQqoqVUeGwIBGP6OOOn38b6TcrLUii6z7lCvH3gak46ylK/kZmJdIVHQTslJG+G
+	 +Rd7+BJE3jG401aw23Sdm1Hi7wghHWVmOd260qIBCLRTCOCmezTfTnp1N/4+fGS8G4GJM
+	 /5emj23WFEwTdfdXN37T9gnst2wR+1HtrrWzlAZXuYsFZjJEIMvyWl5eu+IfRSoSIJb5q
+	 pmhOUmTnvCDjVE/Z4/AtTe0F+5Ss/HI2KEtcX6PcpOy0vfuJr0+7UxZ7LD/at17ui3Ojf
+	 J+M/a5btCY1g20I4d/T0rV149Z9X6meWn8i4bPELsy7Hn7bt979LqP4QYZMF/opq8hA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jFkVnK3X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nm+AR65S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD5E6082BE5;
-	Sat,  7 Nov 2026 14:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F1E6082BEF;
+	Sat,  7 Nov 2026 14:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jFkVnK3X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C051F008A1;
-	Sat,  7 Nov 2026 14:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nm+AR65S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2071F008A4;
+	Sat,  7 Nov 2026 14:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063398;
-	bh=CetzwYpV7M1Dqo3nHXB7NC+unSew3jfV4290XFMJ7oI=;
+	s=korg; t=1794063399;
+	bh=tdTmhk8Rv9MF6WRvEWTuqGLXbJu9kYfnHYi/zJtPzI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFkVnK3X9xftNqpQDl7NzlOaCW5fKm8l6sq6oeQEYV+KXQVaauSt83gV5FzW36wVE
-	 6BtvSTTypkVzLbPUtg+vkjFTzk8l5SG9HcqaL+ByyiBUWKn6zFbNWmD3IY6dCUQGfM
-	 RtTqdehXxQiSa6/pAYKWcKN+WV8Hj8wgHpqzM0HM=
+	b=nm+AR65SnRB6Ykt6HMNS0Uu6OoBeFQ3cU8BvOtF7IWIS/tnVgJM7GYUVB45+luC9G
+	 UbB6I9qPKM4RqKoaX1NeBqCnS9GuF/xIAfpwmkO//9QQln1gLppmfXY2ZGIxteVctH
+	 qTF4f4cRiBDkD1fTdxLSzo2PcobXd54wsF7PTSWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Hui Su <sh_def@163.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 570/869] cpufreq: schedutil: Serialize sugov_start() against rate limit updates
-Date: Sat,  7 Nov 2026 08:54:12 -0500
-Message-ID: <20261107134912.573251528@linuxfoundation.org>
+Subject: [PATCH 6.18 571/869] PCI: xilinx-xdma: Fix device node reference leak in xilinx_pl_dma_pcie_init_irq_domain()
+Date: Sat,  7 Nov 2026 08:54:13 -0500
+Message-ID: <20261107134912.599437848@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,65 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit ce390caf5541c493c9061e7a2d98a463e66b736a ]
+[ Upstream commit 73d3d81832708137ba6332fc011663feaf97deee ]
 
-The current value of sg_policy->tunables->rate_limit_us is used in
-sugov_start() without locking to update sg_policy->freq_update_delay_ns,
-so if rate_limit_us_store() runs in parallel with it, the rate limit
-update may go unnoticed and the new freq_update_delay_ns value may be
-stale until the rate limit is updated again.
+xilinx_pl_dma_pcie_init_irq_domain() takes a reference to the PCIe
+interrupt-controller child node with of_get_child_by_name(), but the
+error paths after the two irq_domain_create_linear() calls and after
+xilinx_pl_dma_pcie_init_msi_irq_domain() return directly without
+dropping it.  irq_domain_create_linear() gets its own reference on the
+fwnode, so the domains do not consume the caller's one.
 
-To avoid that, acquire the update_lock mutex of the rate limit sysfs
-attribute, that is held by rate_limit_us_store() during rate limit
-updates, around the freq_update_delay_ns in sugov_start().
+Add an err_put_node label that drops the reference before returning.
 
-Fixes: 9bdcb44e391d ("cpufreq: schedutil: New governor based on scheduler utilization data")
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Signed-off-by: Hui Su <sh_def@163.com>
-Cc: All applicable <stable@vger.kernel.org>
-[ rjw: Subject adjustment, new changelog, edits of the new comment ]
-[ rjw: Add empty code line after guard()() ]
-Link: https://patch.msgid.link/20261013034235.2678177-1-sh_def@163.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 8d786149d78c ("PCI: xilinx-xdma: Add Xilinx XDMA Root Port driver")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260917132459.2153240-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/cpufreq_schedutil.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pcie-xilinx-dma-pl.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
-index 22a1fbccb929f..9b5db92744aee 100644
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -72,6 +72,18 @@ static void sugov_update_rate_limit_us(struct sugov_policy *sg_policy)
- 		(s64)sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
+diff --git a/drivers/pci/controller/pcie-xilinx-dma-pl.c b/drivers/pci/controller/pcie-xilinx-dma-pl.c
+index b037c8f315e46..e18eeecdc8a9a 100644
+--- a/drivers/pci/controller/pcie-xilinx-dma-pl.c
++++ b/drivers/pci/controller/pcie-xilinx-dma-pl.c
+@@ -581,7 +581,7 @@ static int xilinx_pl_dma_pcie_init_irq_domain(struct pl_dma_pcie *port)
+ 	port->pldma_domain = irq_domain_create_linear(of_fwnode_handle(pcie_intc_node), 32,
+ 						      &event_domain_ops, port);
+ 	if (!port->pldma_domain)
+-		return -ENOMEM;
++		goto err_put_node;
+ 
+ 	irq_domain_update_bus_token(port->pldma_domain, DOMAIN_BUS_NEXUS);
+ 
+@@ -589,7 +589,7 @@ static int xilinx_pl_dma_pcie_init_irq_domain(struct pl_dma_pcie *port)
+ 						     &intx_domain_ops, port);
+ 	if (!port->intx_domain) {
+ 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
+-		return -ENOMEM;
++		goto err_put_node;
+ 	}
+ 
+ 	irq_domain_update_bus_token(port->intx_domain, DOMAIN_BUS_WIRED);
+@@ -597,13 +597,17 @@ static int xilinx_pl_dma_pcie_init_irq_domain(struct pl_dma_pcie *port)
+ 	ret = xilinx_pl_dma_pcie_init_msi_irq_domain(port);
+ 	if (ret != 0) {
+ 		irq_domain_remove(port->intx_domain);
+-		return -ENOMEM;
++		goto err_put_node;
+ 	}
+ 
+ 	of_node_put(pcie_intc_node);
+ 	raw_spin_lock_init(&port->lock);
+ 
+ 	return 0;
++
++err_put_node:
++	of_node_put(pcie_intc_node);
++	return -ENOMEM;
  }
  
-+static void sugov_update_rate_limit_us_sync(struct sugov_policy *sg_policy)
-+{
-+	/*
-+	 * Serialize with rate_limit_us_store() to prevent this path from using
-+	 * a stale rate limit tunable value to set the limit for the given
-+	 * policy.
-+	 */
-+	guard(mutex)(&sg_policy->tunables->attr_set.update_lock);
-+
-+	sugov_update_rate_limit_us(sg_policy);
-+}
-+
- static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
- {
- 	s64 delta_ns;
-@@ -859,7 +871,7 @@ static int sugov_start(struct cpufreq_policy *policy)
- 	void (*uu)(struct update_util_data *data, u64 time, unsigned int flags);
- 	unsigned int cpu;
- 
--	sugov_update_rate_limit_us(sg_policy);
-+	sugov_update_rate_limit_us_sync(sg_policy);
- 	sg_policy->last_freq_update_time	= 0;
- 	sg_policy->next_freq			= 0;
- 	sg_policy->work_in_progress		= false;
+ static int xilinx_pl_dma_pcie_setup_irq(struct pl_dma_pcie *port)
 -- 
 2.53.0
 
