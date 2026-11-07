@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061515;
-	b=OTCDLfeeN7yfd1xZWOpMqZxKU5J/Sw07dP5Dit8hqPYNenyRNQ1mnO3veQMMIyQhvPjQ
-	 g42Vt3kwAfy3lZXBtAWYroBnJC3n0YmDJ84WgVwz8r67BQFswOEdob9JMMeQxdc+6RQnQ
-	 zZ7du7uXNMxPMpoDgwBrAq3Kcd4zOGlR1AqlzLEU1nisb0LFsOh9lAbc5yx/4MbWKDlQD
-	 Xw9Sg1gF30mFkhbSFcBnb2MsyhIq1COG/wH2ZofpVlCWyWHj55sPFeqVIk9rHYnZGyOmE
-	 vzhhd54+wihQA9PcjrAoVn3K+TjJM3MQZbaPGaAiL5oYkMFBDmxoBt9YjVe6CHG7eMQ==
+	t=1794061516;
+	b=B0sRGO6dcVrvId7TyGP4CAqjE1TenoUM0AvqLBcGd88+anHKbGVuWBn2Uf69HO54nXnO
+	 qIWkBtnAJSLrbdWeqpAFx3Br3UzoS9U/sL4GFkXz7CjvoXfggLXs8pTgX8tVotP+ENAe1
+	 /dym8FPBzo5sarHpK6w6s7/nrsjAgcQ8vwbDImS7RuM3nsKFAd0IIL3tZPKxgsfhlcFYX
+	 uSccGRKfc5Uvak/LoBYeX17j651tOUswqNuVYPG//RYLe3tS3FWUm1dltc/MHzeh4+j+P
+	 y4U/LvAJcwjZNOSaDMGDqtzD+lgsI1MwOLVvCWNH9hiIP9CxZqgglHSG3vbxdlD2OXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061515;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061516;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DbqvKRmCqsmZqfE7gtX7Zf5l1sxqZboOle97IxVSMGM=;
-	b=GlKrh0F6z4VpZAW7kFF4i3a9zg/fj2va+/XOkwp+cq68pmo5A3/em8w8aenJH8sdUaAq
-	 mA8+ZOmEp7BGhsl5Ci9LHZVO+dFnQKOOqrY/E0ghiflY6IM5QFX8g7/7dVOhYvxmTbeqR
-	 rZv/FSuI7x8aQhx3BuzZ/SuHEzLekIuCyOqlEvkVZMeoswrltsJ4prtk8HvsYDus9sJBl
-	 /Dd358sr+zzzL076k5qe9catGeuAck4WvGudy0EvGoXKZciWIiHxsnVmqlVxeTWhBPu4v
-	 6GNqOb2K9oGNZijwAXoP1v7sNoHq255WeSvFB6aDVI8MW7s41CCD8qCkw07WWsf9IbA==
+	bh=keE+vP5Tx/p/Gijkdlt9rjJlAY5DG0vUWxGqYeJPY7Y=;
+	b=5g6GO1iAxIttMRs58QUqPUenuuZb5lr5uspaFrNpcivWwVcfXmdL0yqw3kLikiZa8e6A
+	 +TWPuf1jD67+MCWIH4KweCGUxRE0Co9C5A1SH0XJnGB7o9Q6UutF1SEyfpKINSF2QkjQC
+	 uu8jHqtDCETBQI8pOR2bcgw1shNiZPGi4ZvDjd2rVxXFEpgf4j7be7GH+gSxH6K+8hxHh
+	 NUEwoeCCtDeukN5nfrGoSvMnxi/fvQucQOBEeZbMRAtzi33H/9iXcpaKaJGajwWOpr+QW
+	 jed8WeNL5q340wjE3ta9bByxxOIldtE8CLB3ljg8JeMxVxVUFIf/XVj5cq6IOJbM89Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xmD9ybd0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y7rd3fLA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BE2606A32D;
-	Sat,  7 Nov 2026 14:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C328606A32C;
+	Sat,  7 Nov 2026 14:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xmD9ybd0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842CC1F008A1;
-	Sat,  7 Nov 2026 14:25:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y7rd3fLA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDE11F008A1;
+	Sat,  7 Nov 2026 14:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061514;
-	bh=DbqvKRmCqsmZqfE7gtX7Zf5l1sxqZboOle97IxVSMGM=;
+	s=korg; t=1794061516;
+	bh=keE+vP5Tx/p/Gijkdlt9rjJlAY5DG0vUWxGqYeJPY7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xmD9ybd0BGKF4r2vrOS0QKq8AF1gc/63huNrKzeJBb7Z1zfg+OaH3PQE9IHnh1L/v
-	 dKLnf10qkSNajqBkE/ySTadSUaloYi7My21V6046Z4f9ZQfLw8KJoJnrZ4BsrRuSKp
-	 TPgEyUuIUnPgdNWUZQQLKj4af4S5OpYzBTedJP3Q=
+	b=Y7rd3fLA1Tcc93gvIL6ypyo/04WqVXxn2BU4Delgp7gfEAt63uvFJLcWHiN6E98eA
+	 d2vFqqApLDTnvpwH1cD9nxA3NglpQapBqij9BgaW9saCZS8m8knnXZ8I9GHg6VS8mE
+	 Gig1BVWfeX8Sl9ZVj0avzXVWDi0h6waH3vawVePQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 0605/1536] smb: client: fix use-after-free in cifs_ses_add_channel()
-Date: Sat,  7 Nov 2026 08:43:41 -0500
-Message-ID: <20261107135014.537096433@linuxfoundation.org>
+	James Kim <james010kim@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Matt Porter <mporter@kernel.crashing.org>
+Subject: [PATCH 6.12 0606/1536] rapidio: mport_cdev: fix use-after-free in mport_mm_close()
+Date: Sat,  7 Nov 2026 08:43:42 -0500
+Message-ID: <20261107135014.562461044@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,64 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: James Kim <james010kim@gmail.com>
 
-commit 031278577380e7875d95aed81a2b2bcac39be923 upstream.
+commit 0f2cd84858e67cf8e02438bf28243bcdc67aa49a upstream.
 
-The error path of cifs_ses_add_channel() calls cifs_put_tcp_session()
-before cifs_chan_clear_need_reconnect().  The latter reaches
-cifs_ses_get_chan_index(), which dereferences server->terminate; if
-the put was the final reference, TCP_Server_Info is already freed and
-this is a use-after-free.  Same put-then-use pattern as the recently
-fixed sibling in commit 717e0a25036b ("cifs: Fix server use-after-free
-in cifs_chan_skip_or_disable()").
+A use-after-free vulnerability was identified in mport_mm_close() in
+drivers/rapidio/devices/rio_mport_cdev.c, identical to the pattern
+previously addressed in dma_req_free().
 
-Move the put last, but do not read chan->server after dropping
-chan_lock: chan points into ses->chans[], and once chan_count is
-decremented a concurrent add_channel can reuse the slot and overwrite
-the pointer, so the put would act on the new channel's server.  Cache
-the pointer under chan_lock, clear the reconnect bit and decrement
-chan_count while still holding the reference, and release it after
-the unlock.
+This is observable from userspace when an application creates an mmap
+mapping via the RapidIO character device and subsequently unmaps it (or
+terminates, triggering exit_mmap()).  During munmap, mport_mm_close() is
+invoked and drops the mapping reference via kref_put().
 
-This issue was discovered by Tencent CodeBuddy Security.
+If kref_put() drops the last reference, mport_release_mapping() is called,
+which frees the underlying rio_mport_mapping structure.  The subsequent
+mutex_unlock() then dereferences map->md to unlock buf_mutex, leading to a
+use-after-free:
 
-Fixes: ee1d21794e55a ("cifs: handle when server stops supporting multichannel")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+   mport_mm_close()
+     -> mutex_lock(&map->md->buf_mutex);
+     ...
+     -> kref_put(&map->ref, mport_release_mapping); /* map is freed */
+     -> mutex_unlock(&map->md->buf_mutex);          /* UAF: map used */
+
+Fix this by caching map->md before kref_put() and using the cached pointer
+for mutex unlocking, ensuring that freed memory is not accessed.
+
+Link: https://lore.kernel.org/20260914042327.49798-1-james010kim@gmail.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
+Signed-off-by: James Kim <james010kim@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/sess.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/rapidio/devices/rio_mport_cdev.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -648,12 +648,13 @@ cifs_ses_add_channel(struct cifs_ses *se
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -2188,11 +2188,12 @@ static void mport_mm_open(struct vm_area
+ static void mport_mm_close(struct vm_area_struct *vma)
+ {
+ 	struct rio_mport_mapping *map = vma->vm_private_data;
++	struct mport_dev *md = map->md;
  
- out:
- 	if (rc && chan->server) {
--		cifs_put_tcp_session(chan->server, 0);
-+		struct TCP_Server_Info *pserver;
+ 	rmcd_debug(MMAP, "%pad", &map->phys_addr);
+-	mutex_lock(&map->md->buf_mutex);
++	mutex_lock(&md->buf_mutex);
+ 	kref_put(&map->ref, mport_release_mapping);
+-	mutex_unlock(&map->md->buf_mutex);
++	mutex_unlock(&md->buf_mutex);
+ }
  
- 		spin_lock(&ses->chan_lock);
-+		pserver = chan->server;
- 
- 		/* we rely on all bits beyond chan_count to be clear */
--		cifs_chan_clear_need_reconnect(ses, chan->server);
-+		cifs_chan_clear_need_reconnect(ses, pserver);
- 		ses->chan_count--;
- 		/*
- 		 * chan_count should never reach 0 as at least the primary
-@@ -661,6 +662,7 @@ out:
- 		 */
- 		WARN_ON(ses->chan_count < 1);
- 		spin_unlock(&ses->chan_lock);
-+		cifs_put_tcp_session(pserver, 0);
- 	}
- 
- 	kfree(ctx->UNC);
+ static const struct vm_operations_struct vm_ops = {
 
 
