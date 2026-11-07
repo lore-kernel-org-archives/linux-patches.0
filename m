@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062007;
-	b=waYFuyXeGNPBX7oBiXcN0cN3/XrwnxfnJjhw/az49ErEmHeZQbmfJ/OUy8Ivuj2ICUsZ
-	 /55RghZhCPw3I7dw0880rZYji0fMxPJJCuBaQsgoUqvdjXB1KxOvb/RjYVHCBtzFanZLi
-	 s0+OivzQ6m4viigMjceNQStWXxmxNSlbL6jiW3NyVZDxu7kEEV7td2/eSFtEsHYD6tQHe
-	 ZqHm0fRfpzlopful97wZc28UXUf6yMjp8XuheZp6yHKYYCe3RM7eqqIg/omJGmWVu84Bp
-	 6NFx96TFVX0yyfxQg9GOVeeDoLA4cyGC7kSBmn6hc1u2uAyDQmmnyLgHTpwlOawMn3w==
+	t=1794062008;
+	b=SuHpyR0BI1moCdzWBpsjcB+2TwlgNsMWgTAuGkQjY7L19Rzo4ak1vRsrabQKaSFk7W5N
+	 EMKs63d905r4/DoaZcgorDbsiSGmcm4w/8AP9wW4muExSWqh4kAwbowPesbp32YnaM8PN
+	 wRmU+FVIiNlF4ShEooW+MjFoAWIMrk2Ee1F4o+ujvXwZe0PN9HcEramyq7p9sLFyX0M6X
+	 AdWHUY/jZ+1BISJu113DGfev07hNpgsr8rbXtJUbCWDivk73nnO/eJzegbeNW/KGb3Yef
+	 6nr1YF4SyPwdsHKy1a2gVZUOZVLddr7wWAb9+mvFFhdPkJabwgAfHaDt/kNewsdIzVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062008;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=9PzvN5RJz/U9gvG3uQf9YhigOHsBF6sWruC5ErWhdTc=;
-	b=zqJstlz+ZTs6Hzwqk5FAlKYx1SqhJAJPLztf5AzNDcZCSYTsUr7oPgOUO26yQNGVJhYo
-	 xN5S4gmcC3Pb++vX7AR5iPIyk0EmOBS9vV8E3yVQp+WGb20Jm9QlrtC70wVHKtt7jd39I
-	 PxE5opNO1HWDVf5VZg1bLnnO8GVHNNcj92QcN9yM4LlBYkxHydZ3KOcEJvA08/DFK+q/D
-	 D/7G92ZyfwTejup5SM4fWJUB1Ly2ju4vbcwnUF8ohN3O1wqUIag3l9ieJ4UCJhWrUkC32
-	 T2CSBzpsRTPZd8BF1SQMR+UBHL/1KGR0mjG/Q8nID6qgURUwlq2ofJG9WmMfQK12KJg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Gt/ASBzTfARgI+qrkoPqNcz9kinA9gbLq+kyXziOPKM=;
+	b=zZeAW0BjV58DK/srQ+qY34WyRnq+VfXhBbD+30AXhbUPSCiDE/qofU5E36hxKxSrDMcS
+	 6ZJiC6PYscd6/Unir/oFVtVImf07vbIC16ZJpMHhe5kMgnboK95yt5HMQBoUD5J1/qvk/
+	 /fng7XX1OiCaTz7Tyj15fO9KRRumZrut69EQpFKRz6z0I87APfFv+OhNDKuavt4Bf09hK
+	 xkQa1ui+G31YecziMrDbOma7GKhqO9P1Dg418KJr5oX7p+sEqs3M1jtBpZvtJhscImnqX
+	 +T9c6wH8EhDdmWNzX2iXXvF/PFFtYLpZgdVx9M3SO3cAozGX8ZlAYLmvSK1/xLvj2Pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uxg4dqfq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="R/Ehaek0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6276E606A333;
-	Sat,  7 Nov 2026 14:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BDE606A333;
+	Sat,  7 Nov 2026 14:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uxg4dqfq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C321F008A1;
-	Sat,  7 Nov 2026 14:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R/Ehaek0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D8E1F0089F;
+	Sat,  7 Nov 2026 14:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062006;
-	bh=9PzvN5RJz/U9gvG3uQf9YhigOHsBF6sWruC5ErWhdTc=;
+	s=korg; t=1794062008;
+	bh=Gt/ASBzTfARgI+qrkoPqNcz9kinA9gbLq+kyXziOPKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uxg4dqfqzkG1pV0B+JXxxVwKKgqjUicQ0Dt9wqYXuZB5X7DxvT9X4/jCrCYv0QArN
-	 Nz1HQo95ms8rXcaFVMh2UZjrbMaThuJ4TGyokJRPBgwcP6HZ/3PD8K/H3euhJEAfH4
-	 lyLZVR/ma8JAKvgNyzvjuud04kCMXhes0iEgtQr0=
+	b=R/Ehaek0JQMs6/dsIi3Yu2jov19W7PMzrTIaNpRPu2pYfvPcUqfxK+G/EhDL/2xAs
+	 FlTTW8nCVwrjit7+Ar9JvxojuDd9wNfZMmZlstvehvS4aAftIoPo7LgB1c4hgZ5oMW
+	 Pc+xPrwKXTahF1vJee0Bq3kGrx969k17ftb3IHRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0989/1536] platform/x86: hp-bioscfg: fix slab-out-of-bounds write in hp_convert_hexstr_to_str()
-Date: Sat,  7 Nov 2026 08:50:05 -0500
-Message-ID: <20261107135025.435151642@linuxfoundation.org>
+Subject: [PATCH 6.12 0998/1536] iio: adc: at91-sama5d2: disable autosuspend on remove
+Date: Sat,  7 Nov 2026 08:50:14 -0500
+Message-ID: <20261107135025.697033501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -62,74 +63,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 6a6f3051e705b5c8facb0bf5984d5b981509e0b7 ]
+[ Upstream commit 022996906e70c6bc9a7968ee663ebbe314fe1524 ]
 
-hp_convert_hexstr_to_str() decodes an ACPI string made up of
-space-separated ASCII hex-byte tokens of the form "0xHH". For
-example, the four-byte input "0x41" decodes to the single
-character 'A', and the nine-byte input "0x09 0x41" decodes to
-"\tA": each token is read in a five-byte step (four characters for
-the token, one for the trailing delimiter), and produces one output
-byte, or two if that byte is '\\', '\r', '\n', or '\t', which are
-written back out as a backslash followed by the matching letter.
+at91_adc_probe() enables runtime PM autosuspend with
+pm_runtime_use_autosuspend(). The probe error path correctly undoes
+this setting with pm_runtime_dont_use_autosuspend(), but the normal
+remove path only disables runtime PM.
 
-The output buffer is sized with kmalloc(input_len, GFP_KERNEL), the
-raw encoded length of the input, not the decoded length. For
-well-formed input this is generous, since five input bytes never
-decode to more than two output bytes. But input_len comes directly
-from the ACPI string length reported by firmware and isn't
-guaranteed to respect the five-byte encoding, so a short input_len
-can undersize the allocation. With input_len == 1, only one byte is
-allocated, yet decoding still produces at least one output byte
-plus the NUL terminator written unconditionally afterwards, so two
-bytes are needed. That terminator write then lands one byte past
-the end of the allocation.
+The runtime PM API requires pm_runtime_use_autosuspend() to be undone
+with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
+was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
+set therefore leaves the runtime PM state incompletely cleaned up after
+the driver is unbound.
 
-KASAN caught exactly this during BIOS attribute enumeration on
-boot, triggered by a one-byte encoded input value:
+Add the missing pm_runtime_dont_use_autosuspend() call to the remove
+path.
 
-BUG: KASAN: slab-out-of-bounds in hp_convert_hexstr_to_str+0x6d8/0x710 [hp_bioscfg]
-Write of size 1 at addr ffff8881032e5d81 by task (udev-worker)/520
-The buggy address is located 0 bytes to the right of
-allocated 1-byte region [ffff8881032e5d80, ffff8881032e5d81)
+This issue was found by manual code inspection.
 
-Size the allocation to the worst-case decoded length instead of the
-raw input length: two output bytes for every five-byte input chunk
-(DIV_ROUND_UP(input_len, 5)), plus one byte for the terminator.
-
-Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
+Fixes: 75d7556ac0e4 ("iio: adc: at91-sama5d2_adc: add runtime pm support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260915174615.63924-1-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/at91-sama5d2_adc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-index 8801d375441f2..1b84dad24cb68 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-@@ -445,7 +445,7 @@ int hp_convert_hexstr_to_str(const char *input, u32 input_len, char **str, int *
- 	*len = 0;
- 	*str = NULL;
+diff --git a/drivers/iio/adc/at91-sama5d2_adc.c b/drivers/iio/adc/at91-sama5d2_adc.c
+index e476b71cb2aab..34211d7066e31 100644
+--- a/drivers/iio/adc/at91-sama5d2_adc.c
++++ b/drivers/iio/adc/at91-sama5d2_adc.c
+@@ -2510,6 +2510,7 @@ static void at91_adc_remove(struct platform_device *pdev)
  
--	new_str = kmalloc(input_len, GFP_KERNEL);
-+	new_str = kmalloc(2 * DIV_ROUND_UP(input_len, 5) + 1, GFP_KERNEL);
- 	if (!new_str)
- 		return -ENOMEM;
+ 	pm_runtime_disable(st->dev);
+ 	pm_runtime_set_suspended(st->dev);
++	pm_runtime_dont_use_autosuspend(st->dev);
+ 	clk_disable_unprepare(st->per_clk);
  
+ 	regulator_disable(st->vref);
 -- 
 2.53.0
 
