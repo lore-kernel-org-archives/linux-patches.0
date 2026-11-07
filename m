@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061360;
-	b=T8zgokyIjGCttbowov7Q5iXHajst52xL7flp1gVWUVOOutoR+BKc8F6K0+RMAtdlb+JY
-	 VURtMznmFfzn5JG00J4LbMTddbDewaVK2vPoyxWPmmrjsAIsUZEbX0CAd6NB6ceGb/wNL
-	 MuoBjm9VoiirjpBoSDnBpZ1kKLaGXlSBNO5jEzirRKNZt2UrdvOj1cj34X5PRW+gRLd0v
-	 6Xjd0xl4k+okbI51w/wXmxxRNq2Mqai9MUrRsQY+F4KBjMJAJr1M+sGwXswlkbxFy4HSM
-	 V4ulOmUznrJ+yiYik0YxPBYgs5cKDWu4mOPENYr7lKrpNKW0VLF6H9+/HkRrdgAb+cQ==
+	t=1794061361;
+	b=B4tIVV8VsmY5U1BObGIiX+QYQrr7PSy3e7lNKhCaGBhtV4Wj8oJYWamAWKmz0lDHp6rC
+	 YxsH26Aj4P4aWJs7nnC1nMi/GncalUyoprtEJTMG1TQawcX2pI4WK3kCX0SXdSz/3E5Lo
+	 ZfDaAhedgxFaOqlJvYuO329qdKTCxZRQR8IKLY6Y6jmab05sQWG0Y5r6OvvseGFHdlksk
+	 /juWJ35RecL3WdLkY6zHWCbTpCpzNQUaIr1t7B1QyAxRBKkSsrgJTwf/10TokV4AdEba0
+	 0NDrGGJT4Oin84oPjRpqnMn8fSHW3qFa6QtXBcg3D3VH7bQXEONfx1KPtowdakAIcjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061360;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061361;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KJV3r3pgc8D0w1dv8PtT8RcAoTQJwtggSqxFIMXoMtw=;
-	b=rHNpsXn2Qhl91shDqfpbAZFI3jLHH9JV89syL+io8sqQ34l9DHSTZhR8ivuen5cWaQFC
-	 YQYDZV1darDEAkYGlMlkuxOSaq/QEEayk7FVaOyweafmMw7MZzOE7Zajg2LqJIspahLw4
-	 EsHJHGMjRQfNblf5QMkuP48jC12NJa8km46GfPuqiTsnz60w5tPaVTxsMPqTxtwQ7gT5y
-	 8UOF/9SQz/ADX0J6FOXcog/X3jIT7DJPbIinArkAxFkMdsMvuEoRF9wE6rGCxlc4/c/Vn
-	 7JYftNBpMBgLeKrpumtxRTr53O59jhy91+lOvR8rlG/ZlaADDyPO5JjZfNCTOVPh6bg==
+	bh=E1zIpUtzS2yXZSzlPNU48U3LB9PuL1N9qNBjftT1qvQ=;
+	b=tGX2X1dYLtSDNr/DbkHH4AActvpYIWdY5FYDPwufrSpVTAZAsUJC/GSlKKbXhpdpJ+yd
+	 1BicMAGr/Z00dgXAuidxUrhBNmg9cJwJ1655KVj9X8ygXotg/9gGUAMQMnX/BafSn+bAr
+	 UPOt2if7EW6gEC7JdkknjPkG8Cf4epQZSx2kIzq9w0owsW55yJh/wR7uB6JdDFxxPjbuL
+	 vlA8x5+G4Fjsk0MxIUgTtaeGeyo3i5HWmv0OrqLVvFwFf9L8QFI53SA6sJXTik31TnKWD
+	 A+eZaKKApBAKYvT15EtH9E5Qfy6bf5doG7a0d2+GgdVNfMcJ5iQ5k9UNEdpFnxHJ9rw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjyS9G1I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FlYEliED;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E8C606A326;
-	Sat,  7 Nov 2026 14:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03F9606A326;
+	Sat,  7 Nov 2026 14:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjyS9G1I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321EF1F008BE;
-	Sat,  7 Nov 2026 14:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FlYEliED
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5AC1F008A3;
+	Sat,  7 Nov 2026 14:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061359;
-	bh=KJV3r3pgc8D0w1dv8PtT8RcAoTQJwtggSqxFIMXoMtw=;
+	s=korg; t=1794061360;
+	bh=E1zIpUtzS2yXZSzlPNU48U3LB9PuL1N9qNBjftT1qvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjyS9G1IkUTA7lwWrwyXyeZQjxFQaO3GQfvYv31WcQDZTmw134O+JW/UHepq4NkOM
-	 rT3Z6cCWD9zVuGSltY/RepHIMhV7Rm2Qpr+cvtPpM7I2C6hX6yB4fwB71wDq3R0Xan
-	 uPiOETJwYtc1XJQBIE7aQnlDUH0q2zfa0KQBejQc=
+	b=FlYEliEDkLmMNDoU4ttxoT8gYKwpuki8goobRxEW7bdDTBP1ENwLSDHbFy2ETu6lh
+	 vGaUyEEiAseJyPU2Ett4nTmYwCBHc3ImdVpqNzJyWYQ0MbcLpsTmIN49T0I4ac+sNl
+	 tr8R0q0b6jw6PeAjJHTcRDjAV0oNnIX/aUoiEO50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	fangqiurong <fangqiurong@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0484/1536] sched_ext: Fix exit_task leak on fork failure during enable
-Date: Sat,  7 Nov 2026 08:41:40 -0500
-Message-ID: <20261107135011.078578653@linuxfoundation.org>
+Subject: [PATCH 6.12 0485/1536] LoongArch: Expand module virtual address space to 2GB
+Date: Sat,  7 Nov 2026 08:41:41 -0500
+Message-ID: <20261107135011.104892851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,40 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: fangqiurong <fangqiurong@kylinos.cn>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 03506edca637a8465dba9f635c50e9884fbcaf4e ]
+[ Upstream commit 18210a104bb97e28c26dc31fd9fc7b5c381fec62 ]
 
-scx_fork() initializes tasks when scx_init_task_enabled is set, but
-scx_cancel_fork() only exits them when scx_enabled() is true. A fork
-that fails in the enable window (between releasing scx_fork_rwsem and
-setting __scx_enabled) runs ops.init_task() but never ops.exit_task().
+The current 256MB module virtual address space is easily exhausted when
+loading massive graphics drivers such as amdgpu along with the large
+unstripped symbol tables, resulting in allocation failures of "execmem:
+unable to allocate memory".
 
-Gate scx_cancel_fork() on scx_init_task_enabled.
+Thus, expand the module virtual address space to 2GB while keeping
+the current normal code model '-mcmodel=normal', rather than using the
+medium code model '-mcmodel=medium'. This approach avoids the extra
+performance overhead and larger binary size of forcing every function
+call into a 2-instruction sequence of 'pcaddu18i + jirl'.
 
-Fixes: 4269c603cc26 ("sched_ext: Enable scx_ops_init_task() separately")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: fangqiurong <fangqiurong@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ sashal: Applied the fix to kernel/sched/ext.c with the older variable name scx_ops_init_task_enabled in place of scx_init_task_enabled. ]
+Given that individual module code segments rarely exceed 128MB, most
+jumps remain fast direct calls by using the bl instruction. For the
+long-distance jumps exceeding the +/-128MB limit, apply_r_larch_b26()
+emits PLT entries, while signed_imm_check() guarantees the run-time
+safety by rejecting any out-of-bound instruction offsets.
+
+There is still a risk that the distance between .init.text and .text of
+the same module exceeds 128MB. So we divide the 2GB virtual space to be
+two sub-regions: the first 256MB is for module text, and the rest is for
+module data.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+[ sashal: Adapted the hunk context to this tree, where the MODULES_VADDR defines sit outside CONFIG_64BIT and the init guard is plain CONFIG_EXECMEM, leaving the changed lines identical to upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/include/asm/pgtable.h |  2 +-
+ arch/loongarch/mm/init.c             | 17 ++++++++++++++---
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index ded7a0dd2e533..b18c3b4763b79 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3888,7 +3888,7 @@ void scx_post_fork(struct task_struct *p)
+diff --git a/arch/loongarch/include/asm/pgtable.h b/arch/loongarch/include/asm/pgtable.h
+index 8f1df75686e2d..59c5925a78a53 100644
+--- a/arch/loongarch/include/asm/pgtable.h
++++ b/arch/loongarch/include/asm/pgtable.h
+@@ -80,7 +80,7 @@ extern unsigned long empty_zero_page[PAGE_SIZE / sizeof(unsigned long)];
+  * still reliably trap.
+  */
+ #define MODULES_VADDR	(vm_map_base + PCI_IOSIZE + (2 * PAGE_SIZE))
+-#define MODULES_END	(MODULES_VADDR + SZ_256M)
++#define MODULES_END	(MODULES_VADDR + SZ_2G) /* 256MB for text, rest for data */
  
- void scx_cancel_fork(struct task_struct *p)
+ #ifdef CONFIG_KFENCE
+ #define KFENCE_AREA_SIZE	(((CONFIG_KFENCE_NUM_OBJECTS + 1) * 2 + 2) * PAGE_SIZE)
+diff --git a/arch/loongarch/mm/init.c b/arch/loongarch/mm/init.c
+index a6c5fd2df2f6d..9cd297fae9e64 100644
+--- a/arch/loongarch/mm/init.c
++++ b/arch/loongarch/mm/init.c
+@@ -247,15 +247,26 @@ pte_t invalid_pte_table[PTRS_PER_PTE] __page_aligned_bss;
+ EXPORT_SYMBOL(invalid_pte_table);
+ 
+ #ifdef CONFIG_EXECMEM
++#define MODULES_TEXT_START (MODULES_VADDR)
++#define MODULES_TEXT_END   (MODULES_VADDR + SZ_256M)
++#define MODULES_DATA_START (MODULES_VADDR + SZ_256M)
++#define MODULES_DATA_END   (MODULES_END)
++
+ static struct execmem_info execmem_info __ro_after_init;
+ 
+ struct execmem_info __init *execmem_arch_setup(void)
  {
--	if (scx_enabled()) {
-+	if (scx_ops_init_task_enabled) {
- 		struct rq *rq;
- 		struct rq_flags rf;
- 
+ 	execmem_info = (struct execmem_info){
+ 		.ranges = {
+-			[EXECMEM_DEFAULT] = {
+-				.start	= MODULES_VADDR,
+-				.end	= MODULES_END,
++			[EXECMEM_MODULE_TEXT] = {
++				.start	= MODULES_TEXT_START,
++				.end	= MODULES_TEXT_END,
++				.pgprot	= PAGE_KERNEL,
++				.alignment = 1,
++			},
++			[EXECMEM_MODULE_DATA] = {
++				.start	= MODULES_DATA_START,
++				.end	= MODULES_DATA_END,
+ 				.pgprot	= PAGE_KERNEL,
+ 				.alignment = 1,
+ 			},
 -- 
 2.53.0
 
