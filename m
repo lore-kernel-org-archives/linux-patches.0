@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065549;
-	b=W3gHUIee4eqtvaKrjl/9vZ0sb6sdC3pnSh2CCh3+NVrTNZNcSfpubrdChw5bJ3H+qxL/
-	 fflJzlKjnVdmeaxrnig1zNtz22q/T8F3CNIl6azsCbYkBNaZuheH3/YFWkihOyOsJmwrz
-	 BaiogmIwLUPKEXmgcqYxsf+/wMhUwUuLiSDojev7XO2qtGjd3LrUB3myUW3c9GrzzJwWH
-	 eGMlPS9eATbmnS0h+ANFo2nGlB0lr5phcvSwlHDtrTyyDWXkVxeGYq1ft5ctW9/UE0C9L
-	 nSG1Rk5SbZAJIDeiUXRRWx0r1zfcMqwgdHY+siZg5LYyP1hxypxqM5txEZA/l2IUz7w==
+	t=1794065550;
+	b=47Bbvx76CTIDCyNOPcU2V3QoW5Mza3tcgFz9eJUexnGPryFzAQs3hKDFOkwasBtUGzxh
+	 Uwwzg9bGFP+jP0uMyAPloxjkN9jksMMsQoKWGcsmxkAiZFYz0nX7W6GuWJyHvv7VzsDsH
+	 H79/+yZxpM0eX4fe8JEJHxwyfdjU8qxd1mlt1OKkhQoNyb5u6mdw3ScgKGU0m+iRbPGGw
+	 4ww1nb2ayV0glev9IiPL/noUL1bsgE0cBFcnk9un0vPxpSrs5YmhBkEmVlyeAP17XB3CX
+	 vxelIgM7MAT4je898mOqhNxS8WiMv6bVpxyvvCOIqacNBR1sfZc506B0cjKH+maoEXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065549;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065550;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=udvtJOBfuDw4WU7pBPLA9YQwkWj05ke0zPnByujIL3o=;
-	b=reIiGDJac3fqIjlplS43467CNI3TuslcR3vb42UeloHCEBqaBLviNF/dfpMqxSjdocAK
-	 UhJemjzS+eq0etqgeMS8ZfV66o6cVEBT5EOIxxw8dxLSDTdg17z0RI8P8aKfBwbcUUE12
-	 fXs6tA0hlSpq5HirlAdzHAGuT4XS4xRD7R9f126twbGj3FNHOq2/CcvmCxIHvnHAmYac/
-	 df4LcpTleKxYlDbn2UDlmtMWTSCbXngouDBgxIQ3trDfyWBm1ZPvwfgk3L1ur+9rygrJV
-	 l8tbP6oVmOj7EF6EVNiIvheGliVsprDzatshWpDxnG/h5OYy5yCUoVfb1z4J2bXfysA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=mTmW45QbuprZg95DqW1rmyZNg+XxaZY6JzwepZSjCTc=;
+	b=D97iiDOsRxMG18zVfha8uf4GTaJlx47aOZFjcMQAbt6JSnSekgxFgeIWcnnPYEF7elv/
+	 C5D3PnpYiQhHS9NjcmUDFQBCEkQX9QbKIKp+pNddkVjvK1TvjkW5+Iv4AAzEaFSrPVT9j
+	 wYLD9TfZD2tOpQL+4o8Y1J+RUq5WokftqnF+hxGbPFC5suKpK8z5hThKd4NmAbOHOWkh4
+	 S+OqpsPrLAgg+fcZIa7rstDwI7VI0Zs4Aj+TYtJtlLY+RHhUIPpyZY6hYPQU+GzTAEdSD
+	 JV6zLHp1tD2O7yBCmJ4nSxX93zHKEkO/ajZoi38XsV9PFPxX29qvXwRp4I6Wo1GOMTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZCi2NYM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p0xslZPF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538AD606A330;
-	Sat,  7 Nov 2026 15:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB7F606A330;
+	Sat,  7 Nov 2026 15:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ZCi2NYM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA191F0089F;
-	Sat,  7 Nov 2026 15:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p0xslZPF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34F31F0089F;
+	Sat,  7 Nov 2026 15:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065548;
-	bh=udvtJOBfuDw4WU7pBPLA9YQwkWj05ke0zPnByujIL3o=;
+	s=korg; t=1794065550;
+	bh=mTmW45QbuprZg95DqW1rmyZNg+XxaZY6JzwepZSjCTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ZCi2NYMGNYtWQaz+uA5+Kd3/bfhtnycJkVF5EncT2jgrMm3WVha507iao1wXXXXr
-	 6O+ufB1tOvm/qzWiwIYr7IljZB74TnNKGF8VcNoVQeJdnswBE65jlZMEESQ6ngE98D
-	 xzkz3nSE7l6Kc2fHgYVA3HDxycHly2RVPCMbZ7Xk=
+	b=p0xslZPFqJfwu5D1+GS8nCPpAiaF5Cuuwx8RS8eTY+iAf287+EErLsQeXoOrlXzog
+	 fqyajK6+5d+yid5VWipBrXQ1Tu54S22THXm21ttXzi6qjEq9sObQuVs7hJ/r16qWqP
+	 MEjKQh6tuDVt9dAZGiTnXaLkzNEuWv/BMQya0vzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	=?UTF-8?q?Fabian=20Gr=C3=BCnbichler?= <f.gruenbichler@proxmox.com>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1205/1257] nvmet: pci-epf: require SGLs to match the command data length
-Date: Sat,  7 Nov 2026 08:58:21 -0500
-Message-ID: <20261107135012.629510829@linuxfoundation.org>
+Subject: [PATCH 7.3 1223/1257] apparmor: fix NULL ctx->peer derefs in unix socket ctx updates
+Date: Sat,  7 Nov 2026 08:58:39 -0500
+Message-ID: <20261107135013.129228864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,101 +65,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Maxime Bélair <maxime.belair@canonical.com>
 
-[ Upstream commit 9fb4adbc39751697b9fcf71e45bd5d5119c3f07c ]
+[ Upstream commit 4de32fd05ce9e63b492899215ea929e7d306cdab ]
 
-The PCI endpoint target sends the host every byte a read command's SGL
-describes, even when the SGL describes more than the command transfers.
-The excess is kmalloc() memory the command never wrote, so the host
-receives stale target memory. Any successful read can do this,
-including Identify.
+aa_unix_file_perm lazily refreshes the AppArmor context cached on a unix
+socket. Two of the helpers it uses assume ctx->peer has already been set:
 
-nvmet_pci_epf_alloc_iod_data_buf() allocates each segment at the length
-of its SGL data descriptor, but sets req->transfer_len from
-iod->data_len, the length the command implies. Once the command
-completes, nvmet_pci_epf_transfer_iod_data() sends every segment in
-full. Nothing compares the descriptor lengths with iod->data_len, and
-the MDTS check only bounds iod->data_len.
+	update_peer_ctx ->  l = aa_label_merge(old, label, GFP_ATOMIC);
+	update_sk_ctx   ->  } else if (aa_label_is_subset(plabel, old)) {
 
-Fail the command with Data SGL Length Invalid when the data descriptors
-do not add up to iod->data_len, before any segment is allocated. The
-tcp and rdma transports take the data length from the SGL itself, so
-there most commands already reject a mismatch in
-nvmet_check_transfer_len(). PRP lists are built from iod->data_len and
-are unaffected.
+where @old is ctx->peer. Neither aa_label_merge nor aa_label_is_subset
+allows NULL. So both fault on the aa_label->size load.
 
-Found by code inspection.
+  BUG: kernel NULL pointer dereference, address: 000000000000004c
+  RIP: 0010:__aa_label_next_not_in_set+0xb/0xd0
+  Call Trace:
+   aa_label_is_subset+0x3f/0x70
+   aa_unix_file_perm+0x5e8/0x9d0
+   aa_file_perm+0x45a/0x550
+   apparmor_file_permission+0x44/0xb0
+   security_file_permission+0x40/0x100
+   rw_verify_area+0x56/0x180
+   vfs_write+0x7c/0x480
+   ksys_write+0xbf/0xf0
 
-Fixes: 0faa0fe6f90e ("nvmet: New NVMe PCI endpoint function target driver")
+ctx->peer is only recorded for stream connections and socket pairs.
+unix_dgram_connect sets unix_peer(sk) without going through that path,
+so a connected AF_UNIX datagram socket has unix_peer(sk) set while
+ctx->peer is still NULL, and the first write that needs revalidation
+reaches the helpers above.
+
+Both derefs date back to the Fixes: commit, but the update_sk_ctx() one
+was dormant until commit 4483efe4f215 ("apparmor: fix shadowing of plabel
+that prevents cache from being updated") stopped @plabel being shadowed,
+which is why bisecting the oops lands there.
+
+A NULL @old just means no peer label has been recorded yet, so install
+the label directly instead of merging or comparing against it.
+
+Fixes: 88fec3526e84 ("apparmor: make sure unix socket labeling is correctly updated.")
 Cc: stable@vger.kernel.org
-Tested-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reported-by: Aurelien Jarno <aurelien@aurel32.net>
+Closes: https://bugs.debian.org/1145111
+Tested-by: Fabian Grünbichler <f.gruenbichler@proxmox.com>
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/pci-epf.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ security/apparmor/af_unix.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nvme/target/pci-epf.c b/drivers/nvme/target/pci-epf.c
-index 4c5fff232fb99..a8df176c1a574 100644
---- a/drivers/nvme/target/pci-epf.c
-+++ b/drivers/nvme/target/pci-epf.c
-@@ -1073,10 +1073,22 @@ static int nvmet_pci_epf_iod_parse_sgl_segments(struct nvmet_pci_epf_ctrl *ctrl,
- 	return 0;
- }
- 
-+static u64 nvmet_pci_epf_iod_data_segs_len(struct nvmet_pci_epf_iod *iod)
-+{
-+	u64 len = 0;
-+	int i;
-+
-+	for (i = 0; i < iod->nr_data_segs; i++)
-+		len += iod->data_segs[i].length;
-+
-+	return len;
-+}
-+
- static int nvmet_pci_epf_iod_parse_sgls(struct nvmet_pci_epf_iod *iod)
- {
- 	struct nvmet_pci_epf_ctrl *ctrl = iod->ctrl;
- 	struct nvme_sgl_desc *sgl = &iod->cmd.common.dptr.sgl;
-+	int ret;
- 
- 	if (sgl->type == (NVME_SGL_FMT_DATA_DESC << 4)) {
- 		/* Single data descriptor case. */
-@@ -1084,10 +1096,23 @@ static int nvmet_pci_epf_iod_parse_sgls(struct nvmet_pci_epf_iod *iod)
- 		iod->data_segs = &iod->data_seg;
- 		iod->data_seg.pci_addr = le64_to_cpu(sgl->addr);
- 		iod->data_seg.length = le32_to_cpu(sgl->length);
--		return 0;
+diff --git a/security/apparmor/af_unix.c b/security/apparmor/af_unix.c
+index b908e744818c9..58c638830afc4 100644
+--- a/security/apparmor/af_unix.c
++++ b/security/apparmor/af_unix.c
+@@ -682,7 +682,7 @@ static void update_sk_ctx(struct sock *sk, struct aa_label *label,
+ 		if (old == plabel) {
+ 			rcu_assign_pointer(ctx->peer_lastupdate,
+ 					   aa_get_label(plabel));
+-		} else if (aa_label_is_subset(plabel, old)) {
++		} else if (!old || aa_label_is_subset(plabel, old)) {
+ 			rcu_assign_pointer(ctx->peer_lastupdate,
+ 					   aa_get_label(plabel));
+ 			rcu_assign_pointer(ctx->peer, aa_get_label(plabel));
+@@ -700,13 +700,17 @@ static void update_peer_ctx(struct sock *sk, struct aa_sk_ctx *ctx,
+ 	spin_lock(&unix_sk(sk)->lock);
+ 	old = rcu_dereference_protected(ctx->peer,
+ 					lockdep_is_held(&unix_sk(sk)->lock));
+-	l = aa_label_merge(old, label, GFP_ATOMIC);
+-	if (l) {
+-		if (l != old) {
+-			rcu_assign_pointer(ctx->peer, l);
+-			aa_put_label(old);
+-		} else
+-			aa_put_label(l);
++	if (!old) {
++		rcu_assign_pointer(ctx->peer, aa_get_label(label));
 +	} else {
-+		ret = nvmet_pci_epf_iod_parse_sgl_segments(ctrl, iod);
-+		if (ret)
-+			return ret;
++		l = aa_label_merge(old, label, GFP_ATOMIC);
++		if (l) {
++			if (l != old) {
++				rcu_assign_pointer(ctx->peer, l);
++				aa_put_label(old);
++			} else
++				aa_put_label(l);
++		}
  	}
- 
--	return nvmet_pci_epf_iod_parse_sgl_segments(ctrl, iod);
-+	/*
-+	 * The command executes on data_len bytes, but each segment is
-+	 * allocated and transferred in full, so they must describe exactly
-+	 * data_len bytes.
-+	 */
-+	if (nvmet_pci_epf_iod_data_segs_len(iod) != iod->data_len) {
-+		iod->status = NVME_SC_SGL_INVALID_DATA | NVME_STATUS_DNR;
-+		return -EINVAL;
-+	}
-+
-+	return 0;
+ 	spin_unlock(&unix_sk(sk)->lock);
  }
- 
- static int nvmet_pci_epf_alloc_iod_data_buf(struct nvmet_pci_epf_iod *iod)
 -- 
 2.53.0
 
