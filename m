@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061873;
-	b=1k4ZuNyZ1dIm0cBD9j0YGRnmD5eM76rYCGCvAoQaVw/vLiesUXODARm3zICLdkG/EBEg
-	 zdqpOz4qhwhg+/KOMT/1QbszlAQjeiCTfebVV7IGNqEpX9VajXYkabi+bQD6OB88HXtlm
-	 AwRUiXYOEjV7R1B54zh8zdEKmD4Q/vScqXqv5ReMwperw683LfHmbyhxN1XOf7WMJeGUT
-	 gM60WKip4W0WO96mmMKgiocFiZZwCIPGvu0oNIRe8H+6ZcSnGybPaUFejO5yiwfvObWVr
-	 DeJSd4FRGCNskJ0BsRKrSdGnIwY7+857L2+izEcMpMDyG5QFPZpHgwMel+kFcRu3JAg==
+	t=1794061874;
+	b=GhyWC0gyAR9K+OsgJEziZXFLY9NDzMTduNIr9D3VXO0PklfXSLQO2jZ2J2mxaZAAwDT0
+	 QyikeaslXqdy5pusoqPZJF27tzo18cMyqBdpXHLPyD93pv9VFya3Qi68aafiAKjn0jFXi
+	 g8p5rf9/cIiFx67oBa2vS7ZIz3mOrMvuTvl0e5HOu9/HT2+KQrpPalPtyLXw9ClP6Fs/S
+	 Ae2RZgT9qcxOFnF/7uKVhA2fl2PbcOr0mALNMggXZE563tZvimxJcFZZ2R5/3rqOasmdo
+	 U17mcnhF2FJWBA+nFciubIdZrQgb7/0bRP05TVOJbeRUFdeBPRGqpYrAcPIfAj8ayHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061873;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061874;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o3TDiQ1fntGFgtZeFoAnf75bzKvFZCydbsFgdTjeV6U=;
-	b=I5/g7JQVtj0eAqiiw+dtFwEwCv/50+m5PX2OvSILrc1Bjp3O1nVj/V6iRzPnlw+GqZ60
-	 NM8SfhH6aTG87G94L6RSR2aMXgrc25WYK+v/+mX7H1hL8SHkiaM8UFC/SCpFqP87Ihrqn
-	 3GXAHjErTa9oZtWe4o7bqjDQiGIkw5TOV0XmV4/E9iMDnQ421zbGKS5awZC8OEqjkUMwi
-	 Qjc5HwXYq8VwO1IKnwXCqmifqlWyRt5YjuyiKze652UEgtZfZVnDncdBHLBMmCI3LcB6b
-	 2JBFdzmAwTFiKNMcj0OgGIHfQSRagCDiWNuDbMbd4DW1yKzeZ31MeiVSLsUWyaRRJ4Q==
+	bh=y4cU7MTI6Tv1Sm1KZWxuOS0Fno7ab3bcs6goAqLa2C4=;
+	b=AX8r2CIsPVqCrJg/ib6hhIpPvlVrX744x+MurQnBbypD2pMgWpBjFRX6WZZ0P/I/lDCd
+	 nu9sQHBt1IdM8C22F4la4Wn6d5W93f1nniM7qr+54JQKq7PRiTsK65o+OSAkifWA+YG+Z
+	 REnQqTAD3S1golygTqAi6i+HGUkPPW+m8Z5Pxgw98M4odQyFsnWSDkMlfcfE//CdONTvW
+	 YC/bnPbOqlihKnGC40QzbXKizKKiE56Csfs1VvkvXd6oNaWOYcyDbu552k1adLnKOTua2
+	 tcUUDLavOX0BOZ0/J140S36br3MQnNK6FC+QaMER0SWnxMe5rblHx9eSv0Tgd7LZaQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rNU1NeKv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4b+2PRn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7F0606A32D;
-	Sat,  7 Nov 2026 14:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A8C606A326;
+	Sat,  7 Nov 2026 14:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rNU1NeKv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836291F0089F;
-	Sat,  7 Nov 2026 14:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4b+2PRn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60241F0089F;
+	Sat,  7 Nov 2026 14:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061872;
-	bh=o3TDiQ1fntGFgtZeFoAnf75bzKvFZCydbsFgdTjeV6U=;
+	s=korg; t=1794061873;
+	bh=y4cU7MTI6Tv1Sm1KZWxuOS0Fno7ab3bcs6goAqLa2C4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rNU1NeKvKWCZvQPKMs8jTx3B9zdGI68PuKUQfAR+AuUNj1vO60bUvQcadCFBovYbt
-	 9iEDYmxoL8awahIc5VOFMLqX4l05l36jgs0K3qfTtVpEDmFphZJepbu4L0nG8BS8hw
-	 6M6O5p9gt0SJzb4AWgUCPHFjQ0xjj5gNv2c6uxsI=
+	b=Y4b+2PRnpays+/jKrVq8ZKMWaENdvH2BQbAuU3fq2q7Gaup/FqmTAtDpq7OrMxOm1
+	 a9P44fSxuUZ1b8Kj6bnbGdoMzDnbdrR8WuMcn4jw0kAsafs/uRUSFrrTIe8Lcu0lCM
+	 /lS0FhQtDpBSJ+Xr5BiYcc4PIirisRDeWJ4HB6UI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Zhenhao Wan <whi4ed0g@gmail.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Marek Czernohous <marek@czernohous.de>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0887/1536] drm/nouveau/svm: drain fault handler before freeing svmm
-Date: Sat,  7 Nov 2026 08:48:23 -0500
-Message-ID: <20261107135022.536603652@linuxfoundation.org>
+Subject: [PATCH 6.12 0888/1536] drm/nouveau: disable the fence uevent work instead of just cancelling it
+Date: Sat,  7 Nov 2026 08:48:24 -0500
+Message-ID: <20261107135022.565977103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,67 +69,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenhao Wan <whi4ed0g@gmail.com>
+From: Marek Czernohous <marek@czernohous.de>
 
-[ Upstream commit b46ddaf0823405f81e681eb26ec98508f3eb9a07 ]
+[ Upstream commit 827eb9328eaed831d7cc426ac2705038a40835b6 ]
 
-The SVM fault handler nouveau_svm_fault() looks up each fault's
-nouveau_svmm under svm->mutex, caches it in the fault array, then drops
-svm->mutex and dereferences the svmm across blocking faults
-(mmu_interval_notifier_insert(), hmm_range_fault()).
+nouveau_fence_context_del() drains the uevent work while the event that
+feeds it is still armed:
 
-nouveau_svmm is not refcounted. On DRM file close nouveau_svmm_fini() ->
-mmu_notifier_put() frees it asynchronously via call_srcu() without
-waiting for the handler, and mmget_not_zero() pins the mm, not the svmm.
-flush_work() on the fault buffer otherwise runs only at device removal
-and suspend, never on close, so a fault handled concurrently with a close
-can dereference a freed svmm.
+	cancel_work_sync(&fctx->uevent_work);
+	nouveau_fence_context_kill(fctx, 0);
+	nvif_event_dtor(&fctx->event);
 
-The instance is already unlinked by nouveau_svmm_part() earlier in the
-same close, so no new fault can resolve to it. Drain the handler in
-nouveau_svmm_fini() before the free, guarding the flush with a NULL check
-on drm->svm: on device teardown nouveau_svm_fini() runs first and frees
-drm->svm (NULL) after blocking the notify and flushing the buffer, so the
-handler is already drained; on per-client close drm->svm is alive and the
-flush runs.
+nouveau_fence_wait_uevent_handler() queues the work unconditionally:
 
-Fixes: eeaf06ac1a55 ("drm/nouveau/svm: initial support for shared virtual memory")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+	schedule_work(&fctx->uevent_work);
+	return NVIF_EVENT_KEEP;
+
+so a non-stall interrupt arriving after cancel_work_sync() has returned
+re-arms the work that was just drained.  The window closes in two steps,
+neither of which is the drain.  The kill blocks the event when the last
+fence holding a notify_ref is signalled, which reaches
+atomic_xchg(&ntfy->allowed, 0) (nvkm/core/event.c:104), and
+nvkm_event_ntfy() skips a ntfy that is not allowed (:183).  That stops
+further handlers from starting, but not one that is already inside
+nvkm_event_ntfy(): the event is created with wait = false
+(nouveau_fence.c:201), so nvkm_event_ntfy_block_() leaves it on the list
+and never takes event->list_lock.  Only nvif_event_dtor() waits that one
+out: nvkm_event_ntfy_del() (:141) goes through nvkm_event_ntfy_remove(),
+which takes write_lock_irq() on that same list_lock (:84).
+
+Either way the re-arm happens after the drain, and the caller drops its
+reference immediately afterwards, for example nv84_fence_context_del():
+
+	nouveau_fence_context_del(&fctx->base);
+	chan->fence = NULL;
+	nouveau_fence_context_free(&fctx->base);
+
+That is a kref_put() on fctx->fence_ref, so the context outlives the
+teardown only while emitted fences still hold a reference of their own.
+That is no safety net: whenever none do, the count reaches zero right
+there and nouveau_fence_context_put() kfree()s fctx while the work is
+still queued.  &fctx->uevent_work is embedded in that allocation, so the
+workqueue already dereferences freed memory when it picks the item up,
+and nouveau_fence_uevent_work() can then take fctx->lock on it.  With
+CONFIG_DEBUG_OBJECTS_WORK and CONFIG_DEBUG_OBJECTS_FREE, kfree() of a
+still-queued work item is reported as the free of an active object.
+
+On live memory the re-armed work has nothing left to do:
+nouveau_fence_context_kill() empties fctx->pending and sets fctx->killed
+under fctx->lock, nouveau_fence_emit() then returns -ENODEV rather than
+queueing anything new, and nouveau_fence_update() only reaches
+nvif_event_block() if it signalled something off that list.  The defect
+is the access to freed memory, not what the work would have found.
+
+Only chips from G84 on can reach this at all: nouveau_fence_context_new()
+returns before nvif_event_ctor() when priv->uevent is clear, and
+nv84_fence_create() is the only place that sets it.
+nv84_fence_context_del() is the context_del for all of those, because
+nvc0_fence_create() and gv100_fence_create() build on nv84_fence_create()
+and override only context_new.
+
+Use disable_work_sync() instead.  It drains the work exactly like
+cancel_work_sync() does, and additionally increments the work item's
+disable count, after which "any attempt to queue @work will fail and
+return %false" (kernel/workqueue.c, disable_work()).  The handler's
+schedule_work() then has nothing to re-arm, and the teardown order stays
+as it is.
+
+Draining a second time after nvif_event_dtor() would close the window as
+well, and without the newer API: once nvkm_event_ntfy_remove() has
+returned, no handler can start or still be running, so nothing re-arms
+the work past that point.  disable_work_sync() is preferred here because
+it needs one synchronisation point instead of two, it keeps the work
+from being queued at all rather than cleaning up after it, and it is
+what drm has settled on for this (drm/xe, drm/panthor, drm_pagemap).
+Blocking the event rather than the work is not an option: fctx->event is
+created with wait = false, so a handler already inside nvkm_event_ntfy()
+can still queue the work.
+
+Note for backports: disable_work_sync() arrived in v6.10 with
+commit 86898fa6b8cd ("workqueue: Implement disable/enable for (delayed)
+work items"), while the fix being corrected here reached 6.6.18 and
+6.7.6.  linux-6.6.y therefore carries this bug without the API, and this
+patch would apply there and then fail to build.  A 6.6.y backport wants
+the second drain described above instead, as its own patch.
+
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260812233022.159301F000E9@smtp.kernel.org/
+Fixes: 39126abc5e20 ("nouveau: offload fence uevents work to workqueue")
+Cc: <stable@vger.kernel.org> # 6.10.x
 Assisted-by: Claude:claude-opus-5
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
+Signed-off-by: Marek Czernohous <marek@czernohous.de>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260814-nouveau-svm-svmm-uaf-v2-1-8e6590519f07@gmail.com
+Link: https://patch.msgid.link/178688513268.513871.3468844663561639695@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_svm.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_fence.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_svm.c b/drivers/gpu/drm/nouveau/nouveau_svm.c
-index 8ea98f06d39af..18ec4db06b962 100644
---- a/drivers/gpu/drm/nouveau/nouveau_svm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_svm.c
-@@ -304,6 +304,19 @@ nouveau_svmm_fini(struct nouveau_svmm **psvmm)
+diff --git a/drivers/gpu/drm/nouveau/nouveau_fence.c b/drivers/gpu/drm/nouveau/nouveau_fence.c
+index 65b7974defa10..17df6c3c17f94 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_fence.c
++++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
+@@ -103,7 +103,7 @@ nouveau_fence_context_kill(struct nouveau_fence_chan *fctx, int error)
+ void
+ nouveau_fence_context_del(struct nouveau_fence_chan *fctx)
  {
- 	struct nouveau_svmm *svmm = *psvmm;
- 	if (svmm) {
-+		struct nouveau_svm *svm = svmm->vmm->cli->drm->svm;
-+
-+		/* The fault handler caches svmm pointers under svm->mutex and
-+		 * dereferences them after dropping it, across blocking faults.
-+		 * The instance is already unlinked (nouveau_svmm_part), so drain
-+		 * the handler before the free to release any in-flight reference.
-+		 *
-+		 * On device teardown nouveau_svm_fini() ran first and freed
-+		 * drm->svm (NULL) after draining the buffer; nothing to flush.
-+		 */
-+		if (svm)
-+			flush_work(&svm->buffer[0].work);
-+
- 		mutex_lock(&svmm->mutex);
- 		svmm->vmm = NULL;
- 		mutex_unlock(&svmm->mutex);
+-	cancel_work_sync(&fctx->uevent_work);
++	disable_work_sync(&fctx->uevent_work);
+ 	nouveau_fence_context_kill(fctx, 0);
+ 	nvif_event_dtor(&fctx->event);
+ 	fctx->dead = 1;
 -- 
 2.53.0
 
