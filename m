@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065490;
-	b=IRAeT0BfpOQRXJX7+1KbRax6thDThqBlze1lGlAEaoumHn9nNptdtQcbv1AilGY9SY38
-	 dLzkkNl9sZC0WWhihYsdkjfjro3T38MDiS76Qj/JoyHCMFHy8MPe+VW7/jxkKsTB9laOs
-	 +p4w5z6HWovfmW0tpAhHASMxHYLbVy85Tc8RLapwyqd8DoXZXUKTMIsyCV08hvKmIF+Hc
-	 LoB4McWXboaOa8VRXoEiY7jTh6h8Jx9t4IicS7IY37LeSEgAKw2SBtyjU9il9xU/s2ymT
-	 /Is+Fznmj399aVPsp3vzIYhvrZ9T6FWGjghwvbGQc6PYiykdkcmCMWxrHjK7D6EkCXg==
+	t=1794065491;
+	b=m5wNTHfPRlCF/917NmDGaSb7Fk2QyXv7ntI9/RtPd9LbQxRldVYk0I1qiGndq99uLz2A
+	 7VlEtrusbIjV5EBeX2qKIfQ6mPrDWoDB1HflJZdxbJtznnuG/l6K2xILRMJMiCY/J7o16
+	 1Lyny59jP+zTWqQnEiAJI9xZGh8FU/j5NQKXq1ynU7T95Xhy5W7BeSO7UmgCaxDHS9tVw
+	 LxMw7QlMrHMTAMZ410DdS7g1WpZJzFXdSEBoFa+97mN4Jt9mswddbOym1R7JZQJDhtQJH
+	 Zac9BEQ/kmy0MctjbDtZGhnraJMyL1wIw4IeKCn9gjltGWRLWH+3s9dIH/Kk7Sl2V4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=mlkn+hy4YzHshxjWAHIfKBTKQRM16rgV9oBbVBS+A4U=;
-	b=zXHVBwHto8mGzKEQ63C4ov204AEQRYe9Sh7qF2FXcnAVbXtr52v5AAE2uBMIlrteZtAX
-	 tmuPne1YkgmZ22EPIZgmv99+R3XoKZSrPnd5RHjAjwd0o5VZDBFpiEAUmiHUP1VRiiyoP
-	 ftYN+gaPxMPi3f7vhaxRD86q2XtyoExRHuJOb1gDUyDxx9e/BG9mY+XpCsm36vNVEySZ3
-	 m2ru06rZroWx7qCAijekI2l9NP96TP9/36wQVZ81xCbsTz6YLE9VKNG2J6SCJIYmm6Eiv
-	 jebsa4IcqrFICKqcuhzI9Cq2IcJEgPZiIiEyi+ZyC8z7a5LJ9eqr1u2XsDHb8fWgMhQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=nl2R8ShqnwyikqVU+KMz61tmxMmsWBfv9x1Z7FBj8Co=;
+	b=lVIoL6/uyGgPQ0ycs7mbBLudx305GlZriF1Wnwz2PsY+bgYrHuM088IAh+9qd7+7xBYo
+	 DXqWv6tYUi8Xewf4x/NSRUCg03FSOuDnzaiMhaPPdJGLgnHSmntflTSnyX8gxSGY6Kd2l
+	 Afj5a0+8awhmga5NA0JHYAWjMY0+yPc1sxxY5lWJLZA/AVJSfZQd/VZLfMXkrWA67aTgu
+	 wV8qnhyGn82ZpCoDmqvDaLfPPGhWQ8TxGPXnL5Kov0QgRzmT5Ad0Y9CNBNEhFWVFmMPos
+	 Prf1nOy9OL/yVip0HlwC0Th3RTj2Pfj0TILjo/ggyjxLd8Hima3qRMOXqrTg4yXMs8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kiNOflTN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Xktp/LJh";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A8F606D81A;
-	Sat,  7 Nov 2026 15:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB57606A335;
+	Sat,  7 Nov 2026 15:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kiNOflTN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA691F008A5;
-	Sat,  7 Nov 2026 15:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xktp/LJh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A921F008A2;
+	Sat,  7 Nov 2026 15:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065489;
-	bh=mlkn+hy4YzHshxjWAHIfKBTKQRM16rgV9oBbVBS+A4U=;
+	s=korg; t=1794065490;
+	bh=nl2R8ShqnwyikqVU+KMz61tmxMmsWBfv9x1Z7FBj8Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kiNOflTNl0zqySqo5IC+VrdfoiYPVeejow+UWZ0M1xJ+jXwsLwZy+VHNmu33Y569Y
-	 N1iLHFNanf8uCh18QIm4dJBrybtNK9tQro2EHjY8xvcDmhj5x85crfu5k5L+mfZv5I
-	 TKzInGAWHUwthhJYcAZKJa/JC4zC/RDghWz7PTjs=
+	b=Xktp/LJhn37/UQrH+uCC4SrRi7oq7ijyXPEWuZUY2JvL6wzUbzwXaTc7pBDitQrTT
+	 WKdDSrV5+kWjH3RiHLRIj6sFhk68fWpDNeRMCAOrE8wCPxcsbfkXzwdXrp2h92T0AY
+	 BmxwTVm3YUJUI+UzLJV3AGFTIh45fcZFUMJwjTGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1181/1257] drm/amdgpu: reject CS chunks too large for kvmalloc()
-Date: Sat,  7 Nov 2026 08:57:57 -0500
-Message-ID: <20261107135011.791553911@linuxfoundation.org>
+Subject: [PATCH 7.3 1164/1257] LoongArch: Use pa_to_nid()/nid_to_addrbase() rather than hard-code
+Date: Sat,  7 Nov 2026 08:57:40 -0500
+Message-ID: <20261107135011.338221295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,55 +61,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit ba4c3c202919405f461a393e823e4b72c8518494 ]
+[ Upstream commit 244eb26bbd152896f976db6415550993cd60b46d ]
 
-The CS ioctl copies every chunk with vmemdup_array_user() before it
-looks at it, for whatever length_dw userspace gives. kvmalloc() warns
-about allocations above INT_MAX when called without __GFP_NOWARN, so any
-process with the render node can trigger a warning. On navi31, a CS with
-a chunk of length_dw 0x20000000 returns -ENOMEM after:
+NODE_ADDRSPACE_SHIFT is 44 now but may be changed in future, so use
+pa_to_nid()/nid_to_addrbase() rather than hard-code.
 
-  WARNING: mm/slub.c:6841 at __kvmalloc_node_noprof+0x5a5/0x7d0
-
-Reject such chunks with -EINVAL before trying to copy them.
-
-Fixes: 2098105ec65c ("drm: drop drm_[cm]alloc* helpers")
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit dab5f5280406088591645f499f048dcfefab8d7d)
 Cc: stable@vger.kernel.org
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/loongarch/include/asm/numa.h | 2 +-
+ arch/loongarch/kernel/irq.c       | 3 ++-
+ arch/loongarch/pci/pci.c          | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index ef8a61ce4b1d1..86a3dc3655b3c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -217,6 +217,12 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
+diff --git a/arch/loongarch/include/asm/numa.h b/arch/loongarch/include/asm/numa.h
+index bbf9f70bd25f4..c9654ff900a3a 100644
+--- a/arch/loongarch/include/asm/numa.h
++++ b/arch/loongarch/include/asm/numa.h
+@@ -14,7 +14,7 @@
+ #define NODE_ADDRSPACE_SHIFT 44
  
- 		size = p->chunks[i].length_dw;
+ #define pa_to_nid(addr)		(((addr) & 0xf00000000000) >> NODE_ADDRSPACE_SHIFT)
+-#define nid_to_addrbase(nid)	(_ULCAST_(nid) << NODE_ADDRSPACE_SHIFT)
++#define nid_to_addrbase(nid)	(_U64CAST_(nid) << NODE_ADDRSPACE_SHIFT)
  
-+		if (size > INT_MAX / sizeof(uint32_t)) {
-+			ret = -EINVAL;
-+			i--;
-+			goto free_partial_kdata;
-+		}
-+
- 		p->chunks[i].kdata = vmemdup_array_user(u64_to_user_ptr(user_chunk.chunk_data),
- 							size,
- 							sizeof(uint32_t));
+ #ifdef CONFIG_NUMA
+ 
+diff --git a/arch/loongarch/kernel/irq.c b/arch/loongarch/kernel/irq.c
+index 7bf68a7a5f4b3..29e0f2baaa8c1 100644
+--- a/arch/loongarch/kernel/irq.c
++++ b/arch/loongarch/kernel/irq.c
+@@ -20,6 +20,7 @@
+ 
+ #include <asm/irq.h>
+ #include <asm/loongson.h>
++#include <asm/numa.h>
+ #include <asm/setup.h>
+ 
+ DEFINE_PER_CPU(unsigned long, irq_stack);
+@@ -69,7 +70,7 @@ static int __init early_pci_mcfg_parse(struct acpi_table_header *header)
+ 
+ 	for (i = 0; i < n; i++, mptr++) {
+ 		msi_group[i].pci_segment = mptr->pci_segment;
+-		pch_group[i].node = msi_group[i].node = (mptr->address >> 44) & 0xf;
++		pch_group[i].node = msi_group[i].node = pa_to_nid(mptr->address);
+ 	}
+ 
+ 	return 0;
+diff --git a/arch/loongarch/pci/pci.c b/arch/loongarch/pci/pci.c
+index f33c7ea1443d9..0b99b32110a5d 100644
+--- a/arch/loongarch/pci/pci.c
++++ b/arch/loongarch/pci/pci.c
+@@ -12,6 +12,7 @@
+ #include <linux/io-64-nonatomic-lo-hi.h>
+ #include <asm/cacheflush.h>
+ #include <asm/loongson.h>
++#include <asm/numa.h>
+ 
+ #define PCI_DEVICE_ID_LOONGSON_HOST     0x7a00
+ #define PCI_DEVICE_ID_LOONGSON_DC1      0x7a06
+@@ -43,7 +44,7 @@ int raw_pci_write(unsigned int domain, unsigned int bus, unsigned int devfn,
+ 
+ phys_addr_t mcfg_addr_init(int node)
+ {
+-	return (((u64)node << 44) | MCFG_EXT_PCICFG_BASE);
++	return (nid_to_addrbase(node) | MCFG_EXT_PCICFG_BASE);
+ }
+ 
+ static int __init pcibios_init(void)
 -- 
 2.53.0
 
