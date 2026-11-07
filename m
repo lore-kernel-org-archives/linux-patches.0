@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060638;
-	b=373TntZFElQjDNhy9eEIfumefY6EgSW0wdOk2sXLGMoRSnjUCk5vU7TlLnbYk6j6jl3O
-	 PpNE27MChNCt2u6ICUyWTPEufnPrl3kBCa97x1U1ccLRrRQy3sMhbK29OH+L5tpAYWOAw
-	 GrvXCfcqbmZlyWMwS/Nkeza1UZbfxUfGK5glGaaXllvt6QOyrnIqOJhX4jkSQBq4tPjz2
-	 D/Ijl4YJtoAnB3Ocf7ZxtplwKNSjETp6a3L3HAt8Tck3JCAUltjxdOG3kmy6vi3yMyUfs
-	 CfgDDgiYqPFfFLcIIKzEko24PNdAWNTOXocid1gVm9+ncE4AvBqcgKjTiHdWxEDsyYw==
+	t=1794060639;
+	b=ntp2iTE9zIDgaBWnpOW2SeG0HBf+vYVgfPa7zsUriag/LRpUnJ4Nql1CKeomkcGk4Oz3
+	 Nasnvxuus8VbZoroJaIkY7d4sTQEGGsnmQFuiBGaUPbfcyHGTPXGsrIuQG3oDIoN0oJIq
+	 6MlEKRsQamIUhIFhIJui+Hoa5YS8z3Ase7lysaEFoelilBiEj72EIr1u4k8y5eiXxglUp
+	 0wQ4oc7SotKdU0UiFA3atbp7dTPghNkjx1Ap1znfQ1nAAsFzuoBu5XvDBpftA8vyxqd1r
+	 Jr3EHWUOnpIT5kyAmFlAx0Q44gjAcKhle78/dGYBW6M+21AYqSFXU60XfO1oD9rtehw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060639;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5Cgo/Drtn1AEEMMYfYaS1yoDSNcra9Mpkus71rsHNHI=;
-	b=jsG8bGKu7m8rIq2RJQbpn1G5NG/kwYnNWbQZ/55RrEnJ1Mgx6JPipq2ozRlYQixmIou2
-	 wt9MYFeKlXlJsm+nArayt39mi3qXA/PNxcJNkTT5wi3HZgr8odO0/oX+UH5ln50c8rByQ
-	 g5eMiHyfSDac5Wzw2cwF6BudBlVqfHQwuQEhEMz9fFY9D9hrWkACKipIBcWR3dPcSGFtV
-	 fvP2S5wNSOKHxBr7Ske1z9s2Dml4oIDOoEUU6qGlGeU/aGwElgwB4phzEwVr++1wgI7vU
-	 NzS1i1fTh5kZYoXir18oicaim8TQ2/PaHW5o6cx+K1wrOcDq8fv2g4s4BucJSuE3sxw==
+	bh=cgLNDiM1VcofbiHa8ppeZxta/meUL9M2PPePItYVEHs=;
+	b=hkoKC7h9BvRsgJwH0PLwDxz2CIN4zWi35vIvZZdP36N6YKzwUMAKpnYGHxB9f7bJSXn+
+	 dNvU/tPqzGu+oKXvoeMSpOygb14hdrLMZJbFND0eAJ+j0wGk8atYeR4in2VaiF0iG+11k
+	 07hRP+5zk088248YQYf1G2ma6c+OqgEpQXNwjc5dzjyXvOo7wLh2U5I2Y++58Ic6bTt/U
+	 qBLCvqSHxzDgchZjKfUQeS3nNX1OU/VaFXYh+P8a6bd5Bw1PZGwoSmWs8XYgI83SU5IZS
+	 Iwnw43JnqjASPviqWh5xF7gup2XWg7Mjs73n86My8Gv6vUQ8a/5D3e5jIGRBaB3LsyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aST9fVFW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4Aj7MUK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11082606A326;
-	Sat,  7 Nov 2026 14:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EF3606A32C;
+	Sat,  7 Nov 2026 14:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aST9fVFW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A509F1F0089F;
-	Sat,  7 Nov 2026 14:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4Aj7MUK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2891F0089F;
+	Sat,  7 Nov 2026 14:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060637;
-	bh=5Cgo/Drtn1AEEMMYfYaS1yoDSNcra9Mpkus71rsHNHI=;
+	s=korg; t=1794060639;
+	bh=cgLNDiM1VcofbiHa8ppeZxta/meUL9M2PPePItYVEHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aST9fVFWOwPmF6IskvgDu2LUfHIK0/wUqdp/xvv9PmNazsMUMxG28C6wfzXDpTxM+
-	 74A+/dv04bTFoxgaZti3CR/fRWTWwJZU75YPm7IWHRl8ZvnyNP3v4wp7OrMD0ZbGIQ
-	 I+HTEAMhtC67Ry2c2BNo15gNPsPS+/0yNpRxTfjk=
+	b=f4Aj7MUKQQjSJYQgpZyalntdJSNuvqDc3wmnsDMqdSn+ub0HC+37C5BKAZflGPe8d
+	 qKKj+bVWKiICXhVAhFar5Z+e2zr9mHbBuICamwXX02+THyXUhPYfoV4F71QznMPbTF
+	 1f+7iTK2Lp9UrDk2aUTUKKP7tSJj5k+KajSVqiog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0042/1536] perf/x86/intel: Fallback to sw branch type decoding if no hw decoding
-Date: Sat,  7 Nov 2026 08:34:18 -0500
-Message-ID: <20261107134958.841739370@linuxfoundation.org>
+Subject: [PATCH 6.12 0043/1536] fat: reject name longer than NAME_MAX in msdos_format_name()
+Date: Sat,  7 Nov 2026 08:34:19 -0500
+Message-ID: <20261107134958.869164029@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,47 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 170cc6b02e3d5203ccaa49ffea1ee5a7ab08c885 ]
+[ Upstream commit 9d7ed813ee5ff0d469bd99630828ed6fdef4e8da ]
 
-intel_pmu_lbr_filter() currently assumes arch-LBR provides hardware
-branch-type decoding and skips software decoding on that path.
+msdos_format_name() performs no upper-bound check on the input name length.
+It silently truncates an arbitrarily long name into the 8.3 form (11 bytes)
+and returns success. The subsequent fat_scan() then matches only against
+these 11 truncated bytes, so it returns an inode as long as any entry with
+the same 8.3 name exists on disk.
 
-However, arch-LBR may not always expose branch-type information. In
-that case, treating entries as hardware-decoded can misclassify sampled
-branches (for example, defaulting to JCC), which breaks branch-type
-filtering results.
+For example, passing a 300-byte name of all 'A's returns 0 with res set to
+"AAAAAAAA" (8 'A's + 3 padding spaces), reporting success for a name far
+longer than NAME_MAX.
 
-Fix this by using software branch-type decoding when hardware
-branch-type decoding is unavailable (that is, when x86_lbr_type is not
-enabled). This keeps branch classification and filtering behavior
-correct across arch-LBR configurations.
+As a result, when a user calls open() on a path component longer than
+NAME_MAX (255) bytes, the VFS only enforces PATH_MAX, not the length of an
+individual component. The dentry keeps the original long name but gets an
+inode attached and becomes positive. Later in vfs_open() -> fsnotify_open()
+-> fanotify_info_copy_name() triggers WARN_ON_ONCE(), and the event is
+reported to userspace with an empty name.
 
-Since x86_lbr_type is only set to true when arch-LBR is supported,
-it's unnecessary to check if the CPU has the arch-LBR feature.
+vfat is not affected, as create goes through xlate_to_uni() which refuses
+names longer than FAT_LFN_LEN.
 
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260616044654.3468742-4-dapeng1.mi@linux.intel.com
+Fix this by checking 'len > NAME_MAX' at the entry of msdos_format_name(),
+the single entry point for all msdos name handling, aligning with the
+NAME_MAX check that xfs/9p/ceph/simple_lookup() perform at lookup.
+
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://patch.msgid.link/20260629130943.3671939-1-wozizhi@huaweicloud.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/lbr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fat/namei_msdos.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
-index 7df17b5ff50cd..6c35a01e885cb 100644
---- a/arch/x86/events/intel/lbr.c
-+++ b/arch/x86/events/intel/lbr.c
-@@ -1222,7 +1222,7 @@ intel_pmu_lbr_filter(struct cpu_hw_events *cpuc)
- 		 * Doesn't support OTHER_BRANCH decoding for now.
- 		 * OTHER_BRANCH branch type still rely on software decoding.
- 		 */
--		if (static_cpu_has(X86_FEATURE_ARCH_LBR) &&
-+		if (static_branch_likely(&x86_lbr_type) &&
- 		    type <= ARCH_LBR_BR_TYPE_KNOWN_MAX) {
- 			to_plm = kernel_ip(to) ? X86_BR_KERNEL : X86_BR_USER;
- 			type = arch_lbr_br_type_map[type] | to_plm;
+diff --git a/fs/fat/namei_msdos.c b/fs/fat/namei_msdos.c
+index c75e3791514a2..78d044b51f46a 100644
+--- a/fs/fat/namei_msdos.c
++++ b/fs/fat/namei_msdos.c
+@@ -29,6 +29,9 @@ static int msdos_format_name(const unsigned char *name, int len,
+ 	unsigned char c;
+ 	int space;
+ 
++	if (len > NAME_MAX)
++		return -ENAMETOOLONG;
++
+ 	if (name[0] == '.') {	/* dotfile because . and .. already done */
+ 		if (opts->dotsOK) {
+ 			/* Get rid of dot - test for it elsewhere */
 -- 
 2.53.0
 
