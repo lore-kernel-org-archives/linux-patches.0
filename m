@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061113;
-	b=3lNEp9ADk469CATiU69GtUuGx6KM6G+9xofZ+enZ5F2sCEIWPvhMZlYJ9Jq9qd7PkE2X
-	 PGItJLjLrvi2JbevfPfgYEpQORGGMAv/L+ozr6I0uKHZ6EqRhkDhMieWWWk8QbQuoDwV/
-	 Y0LgQKIFLb/v2WnrkKFseA3d09a3r75ac6nf/iZkJyoQZZH6X02UwQOcB6rXYkgYNE3/2
-	 GSbpcGfDOw7OPmxXccipo2pjpAVPKXFtxJOKX2U0PEW4MuqYeVWOf30qsqM2WGvNIKnyf
-	 WFkblAghcqoA7ZXXY6oSOZxDYEOvv+pD/9KvYrIXsxQo5G+EhzqF6u3E8hY+VTV94PQ==
+	t=1794061114;
+	b=vBAJNSijQL29TC7H27FdU2OJQu0UDmRmpMmirPiRUjlpA651zyz0WRZCSJpjW4MUJht5
+	 R1nrRFgXURKf3QqCSs3coaxZnEfab9witA53tAhfY3NMiQ7q3Gy9gi2pcZm+9Wd+Ivzul
+	 PDr8wVwjomQKOqD143LhlVe6++8SGtPQy44QDLnsojV5JN5/M44omWfCOaw/7jRDUOJ8u
+	 nmUfNPOjJkYTAtGRDp5kvch05Z2bOz9NxHqLFVWU+lZnP6MVCrSuz48+UZ0BEbRcVkVUg
+	 xErhKSBC2jqqd/dGBg2CkMmdZX9w5jWimQp15wZJ1IEm5mo0qtyDwW0OgrNN/6A0ldw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061113;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061114;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r3yfC9kHygrHDvM1UtHs8PjVRgfX/dU50dQVozq1hyA=;
-	b=Im3+d1rO25MrADjDzLa+cyVqYWga2oRQE7rromJ0nLKxdycduQj16cgFIMu9gf/V0vcZ
-	 KWd2mU5W819VR2nzPECy6LRT34jp67s/e+Z6ms8+MRcArDCJs0kfpUV7NOUw4FUZvHw6n
-	 kMjT7qoPAmWWurOcHZ1t5KfN3vLeXpKIY6Y59LO4sJ6Sfpm6nIqlsegWkrtcGrSJPqHu0
-	 9xY0kttGzowWIdY8kL7ld9/cFOKt1nkMwAgvGpwru9krEtcysVSKafLd0haJmoqcoaIH/
-	 sx6RdhgxmcOtAYwTmdrj2EGNq1foJFQp7fkwQ/WO72JU5Dj8nn7UpTdi4KpG7sMLV5Q==
+	bh=YuQ4gepvSCSP5V6Zq/SgzO8qlbIiQDDwmg9p864ZkOg=;
+	b=JBr2SoJ/3HU8RdCATMJvGyS1a53y35rIJaoQILoiEw+Y6QkIlVaqh9/06EysRN2BI+6F
+	 F4qDWiVK6deD1e1nWW5y6Y9C+L6XagNEQt72UEeYSIOmDugmPKrFF3Yk0QJ0E6oI0v9p2
+	 hDS+KGvzJi44ecT78G9GVf8SaZa6USczvd1qnDCYlqvna5jxrS3K5V4uGAdt77t5g91Ve
+	 3gRx34GixDJEOKXLVBPyy9slugQHImX78jU064FbCaFw/UpQ+503V+s1lFB685W+Iumc2
+	 VOWUIyfXauIGXK8+YwUMf0qI5AnsOw6/WNGQgp8phoZ14ZfYV88iMFa54ZTdBjb0MTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLePL5tB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y5TaVlWE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CAA606A332;
-	Sat,  7 Nov 2026 14:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99533606D806;
+	Sat,  7 Nov 2026 14:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLePL5tB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133F71F0089F;
-	Sat,  7 Nov 2026 14:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y5TaVlWE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A711F0089F;
+	Sat,  7 Nov 2026 14:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061113;
-	bh=r3yfC9kHygrHDvM1UtHs8PjVRgfX/dU50dQVozq1hyA=;
+	s=korg; t=1794061114;
+	bh=YuQ4gepvSCSP5V6Zq/SgzO8qlbIiQDDwmg9p864ZkOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DLePL5tBcJwSX7e1zN9q+oS1phbYWjeEMZTkdC+7muKyJGV2HaPfZJ93ZF123TOF6
-	 nds8PTpXtatQ6dhvr+Zs+wYaTVJsJy1b/Px+kURmtHelYZcdgjJYpe8c7hQ29mFkHu
-	 3jYSNcIaFBNadakOH+IF2e+lI4JCDMoysadezHFg=
+	b=Y5TaVlWEWvvtPUSK0hZa+VgFsu4EbTmHvspAFCJDgkPWyt7N2ZoNwD+jF5M/8KE/D
+	 eydgEN78dVWjsCYssuc/30RiGAvh9R4F8wfgZsdaifUqMcXTyujGGc+U2NxgpQlIKL
+	 bLD8fmUBxhMD3JZvAqPqb22jLJ+IAmBM/TtxBqzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f26bc23e42eeb548dee1@syzkaller.appspotmail.com,
-	Rohinthan P <rokinthanp03@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Tomasz Bojanowski <tomasz@bojanowski.me>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0430/1536] media: em28xx: use video_unregister_device for radio_dev
-Date: Sat,  7 Nov 2026 08:40:46 -0500
-Message-ID: <20261107135009.644071852@linuxfoundation.org>
+Subject: [PATCH 6.12 0413/1536] ALSA: usb-audio: Add mixer mapping for MSI MAG B850M MORTAR WIFI
+Date: Sat,  7 Nov 2026 08:40:29 -0500
+Message-ID: <20261107135009.171621971@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,61 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohinthan P <rokinthanp03@gmail.com>
+From: Tomasz Bojanowski <tomasz@bojanowski.me>
 
-[ Upstream commit 2579cbe68005f46fc7f8f95364f6b101b07b9d1c ]
+[ Upstream commit 7b457ae8cf711831f19d20963f5ed2fdf4842d3a ]
 
-Commit 7c8bf63b7937 ("media: em28xx: use vb2_video_unregister_device")
-converted device unregistrations in em28xx to use
-vb2_video_unregister_device() instead of video_unregister_device().
+The USB audio device 0db0:cc78 (Realtek ALC4080) on the MSI MAG B850M
+MORTAR WIFI motherboard exposes all playback controls as "PCM", which
+makes it hard to tell the outputs apart.
 
-However, radio devices do not have an associated videobuf2 queue
-(v4l2->radio_dev.queue is NULL). Calling vb2_video_unregister_device()
-on a radio device triggers a WARNING in vb2_video_unregister_device():
+Its mixer layout matches the one of the MSI MPG X570S Carbon Max Wifi
+(units 29, 30 and 32), so reuse msi_mpg_x570s_carbon_max_wifi_alc4080_map
+for this device too. With the mapping applied, the controls show up as
+"Speaker", "Front Headphone" and "IEC958".
 
-    !vdev->queue
-    WARNING: drivers/media/common/videobuf2/videobuf2-v4l2.c:1264 at vb2_video_unregister_device+0x1f8/0x200
-    Call Trace:
-     em28xx_v4l2_init+0x1c39/0x3150 drivers/media/usb/em28xx/em28xx-video.c:3085
+Tested with a patched snd-usb-audio module on a 7.2.7 kernel.
 
-As documented in vb2_video_unregister_device(), video_unregister_device()
-should be used instead when vdev->queue is NULL.
-
-Revert to calling video_unregister_device() for v4l2->radio_dev in both
-em28xx_v4l2_fini() and the em28xx_v4l2_init() error unwind path.
-
-Fixes: 7c8bf63b7937 ("media: em28xx: use vb2_video_unregister_device")
-Reported-by: syzbot+f26bc23e42eeb548dee1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f26bc23e42eeb548dee1
-Signed-off-by: Rohinthan P <rokinthanp03@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Tomasz Bojanowski <tomasz@bojanowski.me>
+Link: https://patch.msgid.link/20260923184957.6687-1-tomasz@bojanowski.me
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/em28xx/em28xx-video.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/mixer_maps.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
-index d473f8dd5cdc1..6e3f3470b9d8a 100644
---- a/drivers/media/usb/em28xx/em28xx-video.c
-+++ b/drivers/media/usb/em28xx/em28xx-video.c
-@@ -2245,7 +2245,7 @@ static int em28xx_v4l2_fini(struct em28xx *dev)
- 	if (video_is_registered(&v4l2->radio_dev)) {
- 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
- 			 video_device_node_name(&v4l2->radio_dev));
--		vb2_video_unregister_device(&v4l2->radio_dev);
-+		video_unregister_device(&v4l2->radio_dev);
- 	}
- 	if (video_is_registered(&v4l2->vbi_dev)) {
- 		dev_info(&dev->intf->dev, "V4L2 device %s deregistered\n",
-@@ -2903,7 +2903,7 @@ static int em28xx_v4l2_init(struct em28xx *dev)
- 		dev_info(&dev->intf->dev,
- 			 "V4L2 device %s deregistered\n",
- 			 video_device_node_name(&v4l2->radio_dev));
--		vb2_video_unregister_device(&v4l2->radio_dev);
-+		video_unregister_device(&v4l2->radio_dev);
- 	}
- 	if (video_is_registered(&v4l2->vbi_dev)) {
- 		dev_info(&dev->intf->dev,
+diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
+index ace4ccad8f51c..a82b9c1d578d9 100644
+--- a/sound/usb/mixer_maps.c
++++ b/sound/usb/mixer_maps.c
+@@ -718,6 +718,10 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
+ 		.id = USB_ID(0x0db0, 0xa073),
+ 		.map = msi_mpg_x570s_carbon_max_wifi_alc4080_map,
+ 	},
++	{	/* MSI MAG B850M MORTAR WIFI */
++		.id = USB_ID(0x0db0, 0xcc78),
++		.map = msi_mpg_x570s_carbon_max_wifi_alc4080_map,
++	},
+ 	{	/* MSI TRX40 */
+ 		.id = USB_ID(0x0db0, 0x543d),
+ 		.map = trx40_mobo_map,
 -- 
 2.53.0
 
