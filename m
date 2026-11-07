@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065414;
-	b=MfGcMC5tQrg7gDwDuqDhShy13V3kJ35hOVAzb9UpgL59l/Fp9izwRAQgAfEYmXFSb39o
-	 XJlv9fTqOOrrgCOCK8W6L/Dle1zrlx1DMwnoQIr+b65BWqGUzCtDR6fdp74mik4gu+XEK
-	 b2YsO/i5QJkOCjrJ5onn5OcyfmFCpPCdC2dsegE6vTs0szFyytullnm+8mtN4Yb4czCGO
-	 ScydXZgB/bY4i7lzs/oSYmMDvpWFAGQxIga8iBsh1ObuF7qiGDTcMcoeHn0bnLUEg/ECa
-	 Xhf3unuLXnDqfrOc1+TG5L8aJ5vtVnPOdJ0IPBBHGkKZJ/edheF3wA4xK2DUDQuEq6g==
+	t=1794065416;
+	b=5n9sL5d1i9lj+MjSqTCLFAz/kFl1OzaLokSTouApy33y/qPWWATklWAUjvGPUi+YEjLM
+	 hwcsBZvXGaghiLdi9Y/OIdy8Em/ga2GAZaMctzlsxKIL5jZO40SemJfUiILSFPQDhOVzJ
+	 OtyZ4swlbCSKmfEPHJLF2HcQ+f9P+yN85XLYzZrf3loZ6QFDlZTB1zBIfwpaMvmTRZ772
+	 YCC5Z7WzRk5OwaUqtW+OgpTd9GIBR4Agblb+ox5lHU7e3Wl6HrT3RETjuwtSyLh48wesQ
+	 2o5NgcxBz3BHO76nIjc3VwQuD1zTCff2Bo3BznvDOc6VY4FtD+syXJRqlh1igPrADjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=heJ+AUgHmsRJtroxDv7a4Fpkw4prM/hKKHtj3dUq0O8=;
-	b=MXRJEeH10WHz9uggUv2LjgH8dY8kYN/wP2E9reP8oG/+n3YPlKSyjIvvNZZqLZ76V26H
-	 4fOE+YqxzfB6SK0KegJxPh39cFxOOkuDKgKXIP//0+1AeeV+7zI3AvBEMa2BbY6grkNWl
-	 jNc5RcvocS/fpmve2dnye8Tsj4X+U/pEcc55hdpbP/40/Acfssc3CWrH4dpD7Wg+ylrzl
-	 PYXJoAE89U3G9hLKivALckX9DnAcdTMs3FjSvGu1tV2KnDVX7LBfr8a9hWtSyBtgIzjTa
-	 BgIG4E3/gos1UkMz+o4YCQgU4Wb5Nqi5wSu5KsUkGlK1OO939UIqvNIKzty/OJbdI/g==
+	bh=9qXyMFxBgGxviX69DvYrHYBg3HfHd6BE0IY/KNIBzw4=;
+	b=R6vEzpiHlgd4cJIBQM/Efzk5YQeSGGtmsLzJdpYlSS0Fwn653hV0dAEsp72CmjTfYDBd
+	 5pMHAOnigHvSktNbtmFEDSF49frxVMRfHgaTyuXfC+TlencHqK6cDaqn51PhdjVlHuvZb
+	 g1RJffNZhRBVZ++5/3sI9/Bv4EnUBrKugS87c++1gQyBiEGm4bjXXnf27v/MDdGOjI6qn
+	 I9roTCcEhO+b0KBNcvmcLKgQvJfYh21hPfCbEBOcBa71uz8Jai8m0bHRZV2vNd7Q5eC5u
+	 QATtM9hEeKL1IUkTKwR6XsSHAsF6uKhunxTkfpY4FIVEGaXegViPaDwlhkS4u4xmz7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQAd0h33;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZd6Wx8Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39324606D80F;
-	Sat,  7 Nov 2026 15:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFED606D80F;
+	Sat,  7 Nov 2026 15:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQAd0h33
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D961F008A2;
-	Sat,  7 Nov 2026 15:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZd6Wx8Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5D91F008A2;
+	Sat,  7 Nov 2026 15:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065414;
-	bh=heJ+AUgHmsRJtroxDv7a4Fpkw4prM/hKKHtj3dUq0O8=;
+	s=korg; t=1794065415;
+	bh=9qXyMFxBgGxviX69DvYrHYBg3HfHd6BE0IY/KNIBzw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aQAd0h33riL/NqYgOGOQNEl5uKfvvuwGNZSOtNvidAepmZbVWyajo6JhUKq4IQesl
-	 8uIzDNpifLAmGyPr7ZYsFJOGnnMvGWmmF09ua26NDdmeoxSMqvuU1ZV5rXmVWMQLK2
-	 XDIDNwQXO9gbhiunzcOqPsqYK1+xF+bGfHK9nZQk=
+	b=kZd6Wx8Y4Rx28GIGEikPCub+DHQGJvBQaFdSzVOgwp0k1RsPwXNPKa7hDfPgMS+E5
+	 hkfnMsyIVnZ63XYkA9Dc2dXfqvJ3N6g6fMZAaT5t5ORjCYizPwxP/6S1oXCocLblFF
+	 0bqEuvN5GlaiD2t3AjFta13F0Vode/+aOUwvvvcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venky Shankar <vshankar@redhat.com>,
+	sung byeongchan <tjdqudcks0424@naver.com>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1131/1257] ceph: dont fail write_begin with -EAGAIN after flushing old snapc
-Date: Sat,  7 Nov 2026 08:57:07 -0500
-Message-ID: <20261107135010.468150985@linuxfoundation.org>
+Subject: [PATCH 7.3 1132/1257] ceph: validate fscrypt auth blob length
+Date: Sat,  7 Nov 2026 08:57:08 -0500
+Message-ID: <20261107135010.495088071@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,59 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venky Shankar <vshankar@redhat.com>
+From: sung byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit 6ff7920ca78f6edcabc26c63d20f681d938027c7 ]
+[ Upstream commit bc418e234e5be14b97dec90e84a680e615b4134e ]
 
-When ceph_netfs_check_write_begin() finds the folio dirty in an older
-snap context, it drops the folio, waits for that snap context to be
-flushed and then returns -EAGAIN so that the write is retried.
+ceph_crypt_get_context() trusts cfa_blob_len after checking only that the
+inode-owned fscrypt_auth allocation contains the fixed header and one byte.
+An MDS can therefore place a larger inner length in a shorter outer object,
+causing memcpy() to read beyond the allocation when a caller requests the
+encryption nonce.
 
-However, since commit fac47b43c760 ("netfs: do not unlock and put the
-folio twice"), netfs_write_begin() retries only when ->check_write_begin()
-returns 0 with *foliop cleared -- every error, -EAGAIN included, is
-returned as is. The -EAGAIN thus propagates up to write(2), which fails
-with "Resource temporarily unavailable" once the dirty data has been
-flushed, rather than being retried.
+Require the complete blob to fit in the inode-owned allocation before using
+the inner length.
 
-This is easily hit by buffered writers rewriting dirty pages while
-snapshots are being taken, e.g. a kernel build linking vmlinux into a
-directory under a snapshot schedule:
-
-  ld: final link failed: Resource temporarily unavailable
-
-Return the wait_event_killable() result as is so that netfs re-gets the
-folio and retries on success.
+On the tested baseline, the malformed reply produced the same KASAN
+slab-out-of-bounds read twice. An ordinary UID obtained sixteen wire-absent
+SLUB redzone bytes in two non-KASAN production-path runs. The input was
+rejected twice after this change, while a complete context still worked.
 
 Cc: stable@vger.kernel.org
-Fixes: fac47b43c760 ("netfs: do not unlock and put the folio twice")
-Link: https://tracker.ceph.com/issues/57656
-Signed-off-by: Venky Shankar <vshankar@redhat.com>
+Fixes: 2d332d5bc424 ("ceph: fscrypt_auth handling for ceph")
+Assisted-by: LLM
+Signed-off-by: sung byeongchan <tjdqudcks0424@naver.com>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ceph/crypto.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 286eff8849dfd..ec14a5606886f 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1895,7 +1895,12 @@ static int ceph_netfs_check_write_begin(struct file *file, loff_t pos, unsigned
- 		r = wait_event_killable(ci->i_cap_wq,
- 					context_is_writeable_or_written(inode, snapc));
- 		ceph_put_snap_context(snapc);
--		return r == 0 ? -EAGAIN : r;
-+		/*
-+		 * *foliop is cleared, so a return of 0 makes
-+		 * netfs_write_begin() grab the folio again and call us again
-+		 * to recheck it. Any error (fatal signal) fails the write.
-+		 */
-+		return r;
- 	}
- 	return 0;
- }
+diff --git a/fs/ceph/crypto.c b/fs/ceph/crypto.c
+index 845b69ba890c3..46acdaf9a822a 100644
+--- a/fs/ceph/crypto.c
++++ b/fs/ceph/crypto.c
+@@ -30,6 +30,9 @@ static int ceph_crypt_get_context(struct inode *inode, void *ctx, size_t len)
+ 		return -ENOBUFS;
+ 
+ 	ctxlen = le32_to_cpu(cfa->cfa_blob_len);
++	if (ctxlen > ci->fscrypt_auth_len -
++		     offsetof(struct ceph_fscrypt_auth, cfa_blob))
++		return -ENOBUFS;
+ 	if (len < ctxlen)
+ 		return -ERANGE;
+ 
 -- 
 2.53.0
 
