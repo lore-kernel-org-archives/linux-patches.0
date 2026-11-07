@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065051;
-	b=xDR1j28A4xInQ3D2ZSba6xv3B0JRvVcCnAWOrS0hQwJsd2DFsHqdOBjYT5V3A3ykxZ3z
-	 dA19iwfWoXQxktQ0ZU4tzVABm0FQbXFOlby56mNhyBBbAV9sJSRiYod2KpGVt3+WEIIoG
-	 GARgJCpAoxAlOVDQflJJ+pzL7sL1CGLvNAK+lb6hLMlXsv7Moechn3F0/XxXozQTZvCLe
-	 E5mEJTa4tSaz5sT7MxQiv2uI5HXzLgKVGhbPPX+UYSMJCku8daEXExl4ysLSWCnkq9zZa
-	 FFdWk5SF+gjpUNhKTREGSQ3u+MChWWRkYxBqi1qTa+YdNQZBc5T8gEvjLwW2yURyaqA==
+	t=1794065054;
+	b=IrR9Rhw5SETEv4PDgSOk1/9WHFROnGBxn/zpMT0EVa/qI7DbKG/Akd9I3Nkho6oP8mDk
+	 gWLijh0QI9LWY2VRJJAqr16/dQVEKsbC0szvP54LEnY9PYty6FA/ace9nySuqT/4JXk4W
+	 z2qIVUZAaquEcRTHz4sv1+XO98g+8kj6cnmCo8wGCfTf4G9iVGVr5xFL6NgwR+ASBKr/1
+	 CAjzF6ayP8cPm+nAOWVddNRDGI2U1yUFKRUtd6YQgBrVSiBsv02MWJgsz1KStRGEJS0XX
+	 xnEJ6GaaQ9ToCl0P70eHMpszXTkUJ84Iiy7v3GEFJo06OlROveRnxLndH7OI0IteJtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065051;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JfbaR1t8Vh6dgmsQtg0EyKU7+dkmPsTKvfBSbzJD/Eg=;
-	b=qk/zoYtGNYaSZeCetMuXzJ8Hns+yA7ZKMRmeXGeqCJN8e0K18mtDDBta/qc+gbpXBi11
-	 fzFQNy8FpQNbRV6WvmY3fkgDd88HJvPllGO54MiXx+AmjVODVv/mvVmhPORYcxbNibwE/
-	 4klojhE5PceinvzFlYq+wsjqAusKfxGnhotwS+AyPuEPihOyW4XEQvUFbOalGPD4s0N6U
-	 BHpL+IQByFN6mUuc+G5iBH69HfiC0FIIddgMAl180kCjibmvzU65J7/D0hbKDqpGdicFJ
-	 hf7ro0TGGiFOSMsl7HDzkkK9sprLqUXZuIfaLLOedy+5uAbMh9njmwH4X6PJ3zoR4lw==
+	bh=/SFPNKpcD6W3Z62yXoq5/2WYN8sdJOEsaLuWwYt0V8E=;
+	b=HT0XjimaaI58oieGfhnRUttvuakzMSTV4dpp4M6HRa1p360Cg2DLKUQghoJpCGAiDrFH
+	 WzjliPwx1sJZSoIQtNffWSEAPVPOQgp+NzkQWTI999IO5/IioQFenBXYzYa0UFtYCOpZh
+	 nJo+nHIde5t1TFABzgpXoVhz/2KC7AzINmxNukNejf0QVXQLN4/dpzddKQKnSoLsQmJOE
+	 C0w7b1lDEKzXK6wikGpA1txolJlflAXYmIRLcP/y3E3Xl7XlQakWTYdXUUCdI4AmSEV4p
+	 is/KwPRVyhOW9sNqSttOxseAgjUbQOb31P9KUpE0gP4RuTN/ba2eIMHDBc14uV7+vyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eyh0Io2X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WDwuLsJI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BDD606A32D;
-	Sat,  7 Nov 2026 15:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E174606A33A;
+	Sat,  7 Nov 2026 15:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eyh0Io2X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2171F0089F;
-	Sat,  7 Nov 2026 15:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WDwuLsJI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7631F0089F;
+	Sat,  7 Nov 2026 15:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065051;
-	bh=JfbaR1t8Vh6dgmsQtg0EyKU7+dkmPsTKvfBSbzJD/Eg=;
+	s=korg; t=1794065053;
+	bh=/SFPNKpcD6W3Z62yXoq5/2WYN8sdJOEsaLuWwYt0V8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eyh0Io2Xgo8BY5uKQKavd24C0MhWMh1ZfmQpfbCDb12Fbiikn8SNJSq5E6WkD7qPW
-	 kSf5LJnh6pObmAtqFdANpIgMY58taihHWB1UrAM0EWCq0oc1f08z+qboBEotzcRf51
-	 td8Gfj/qLpUcNWijL49jSrKx+yvUg6peAs1Xo9cs=
+	b=WDwuLsJI7WoW87BuWCKKmSTK1/zbzlNb+4DhKT+GOCIhJRzRbswXf9u0HojmIkJIy
+	 Lbs7cLTed5hXy4dqBDKs1JABh4+orrPplrAHLJt7XSNBPUBMXAjiKVJdlATV/4N26m
+	 6WZD5NAzM9ESf9j5Z5t/cZGfFCAzl9LQhtu4iBt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0901/1257] ALSA: compress: reject buffer geometry change on gapless next_track
-Date: Sat,  7 Nov 2026 08:53:17 -0500
-Message-ID: <20261107135004.216279558@linuxfoundation.org>
+Subject: [PATCH 7.3 0902/1257] ALSA: compress: add missing OPEN-state gate to SET_METADATA
+Date: Sat,  7 Nov 2026 08:53:18 -0500
+Message-ID: <20261107135004.246178719@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,61 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 82da1acad6fd60b6072dd5f3383e6a55efdd2ac7 ]
+[ Upstream commit 931f5714b7921290cd1a4742e185aeeae7270ee6 ]
 
-snd_compr_set_params() is invoked from the gapless next_track
-re-entry path, which calls snd_compr_allocate_buffer() again and lets
-buffer_size change while total_bytes_available and
-total_bytes_transferred still hold values computed for the previous
-buffer. snd_compr_calc_avail() then derives an avail/count value from
-those stale counters against the new buffer_size, and
-snd_compr_write_data() copy_from_user()s that many bytes into the
-new, potentially smaller buffer, overflowing it with user-controlled
-length and content.
+snd_compr_set_metadata() calls stream->ops->set_metadata() straight
+after copy_from_user(), without ever checking runtime->state, even
+though the function's own comment says a parameter change should only
+be allowed once the stream has left the OPEN state. Every other
+metadata/param entry point in this file (SET_PARAMS, WRITE, ...)
+enforces that gate.
 
-The buffer is set up once, with the initial SET_PARAMS, and neither the
-core nor the DSP expects it to change for a gapless track transition.
-Do not call snd_compr_allocate_buffer() on the next_track path and
-reject a request that changes the buffer geometry, so that the codec
-parameters that the driver receives match the buffer in use.
+A codec driver's set_metadata callback can assume SET_PARAMS has
+already run and initialised its private state; calling it while the
+stream is still OPEN can operate on that uninitialised state.
+
+Add the OPEN-state check the existing comment already documents.
 
 Fixes: 9727b490e543 ("ALSA: compress: add support for gapless playback")
 Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261019144533.30665-3-peter.ujfalusi@linux.intel.com
+Acked-by: Vinod Koul <vkoul@kernel.org>
+Link: https://patch.msgid.link/20261019144533.30665-4-peter.ujfalusi@linux.intel.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/compress_offload.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ sound/core/compress_offload.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
-index 85abcca385024..6edd1375a867a 100644
+index 6edd1375a867a..ce806ca875d3a 100644
 --- a/sound/core/compress_offload.c
 +++ b/sound/core/compress_offload.c
-@@ -669,9 +669,19 @@ snd_compr_set_params(struct snd_compr_stream *stream, unsigned long arg)
- 		if (retval)
- 			return retval;
+@@ -761,6 +761,9 @@ snd_compr_set_metadata(struct snd_compr_stream *stream, unsigned long arg)
+ 	* we should allow parameter change only when stream has been
+ 	* opened not in other cases
+ 	*/
++	if (stream->runtime->state == SNDRV_PCM_STATE_OPEN)
++		return -EBADFD;
++
+ 	if (copy_from_user(&metadata, (void __user *)arg, sizeof(metadata)))
+ 		return -EFAULT;
  
--		retval = snd_compr_allocate_buffer(stream, params);
--		if (retval)
--			return -ENOMEM;
-+		if (stream->next_track) {
-+			/*
-+			 * total_bytes_available/transferred still refer to the
-+			 * current buffer; its geometry must not change.
-+			 */
-+			if (params->buffer.fragment_size != stream->runtime->fragment_size ||
-+			    params->buffer.fragments != stream->runtime->fragments)
-+				return -EINVAL;
-+		} else {
-+			retval = snd_compr_allocate_buffer(stream, params);
-+			if (retval)
-+				return retval;
-+		}
- 
- 		retval = stream->ops->set_params(stream, params);
- 		if (retval) {
 -- 
 2.53.0
 
