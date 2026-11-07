@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062769;
-	b=B3eTzLsdMJoxenf35xoVJPVP5atbv/ISs/slyGifjIamp0Jrz68XL1FO+nh+BLDBKAYy
-	 QxhLQEXjHhbHysJh32Z9AjeeOgj4Nh1fGNnDZjDaNv52WjASySywD00zi+CUt1+uX8MRc
-	 a6vS8Lby55ST/5ZE+0udmuWGGoBtzEOE4WyqdV4u3JAkMvFGizZn1lLLaIXhVCzp10maL
-	 UfJ55Pl7Rn01fYJHw1kSHevLZfgLcwvNYrMn+AjNeGBv2wXiY26OFQnN5Vk+c70EIMiWB
-	 Ta1Tak9MwmLLNP47jA9+X2hrjLRok48dWrfGGaEeynOUJawW8sRvgSnJ6UbYH+fZt+w==
+	t=1794062770;
+	b=MRm4pPZQbw3kdQ87MQCkYzYAZ9LEGE2XLl9GG9ds0F0DSd5KWe08KHcNzgGrQimcPY2N
+	 8CyJ5D2akPSOC7uCBowMGCh0MmkEALAJOu4gSvwdlWyUMCc+iJp9ljkqNcgDJDWVQ8quk
+	 LdtpcEoTUApaINP4qmupyuoXZVTzF/9NqeFhr+S7XhElKHCjAU9npsY1haqg3Lhev8muY
+	 DmcJjUxcf5nd9LVdUbLk0bysqvrZHU/oGCS40+zAxc5vDEE302pmUIOPQ+yGqjrcLY13t
+	 yDRLwLJSaYqHBI7XiR5rjxpAR9prF5QPotkJHHaRYoG8oXER4ZwkyYCJvHD20kQKVCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062769;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062770;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lLuyz47LVa3cjjXH4iqhIhPlKA3bEefqa9hRFGBvfHg=;
-	b=xMgxao9gz56dlncQmHY0RujGD/QLhzaAxH9YSY/TC3EzV5kgNOxPvslaZchb7af2Wdwm
-	 0EDMD1MKM4SlLitTWLagAuTc0JCfucsc7cSItWFzKCpc9uYruTmW20Vqn1Oxt7xkIGBj9
-	 XGy/fMJ+Sq9zubcMK/hfK2m1Agqoo1BSvyQuLCz2VXHXZZ+ljWhfCqmk3TJu3rAUpOvLy
-	 +nR3YSsn+9B7Bwo+jUC4WTcPTZ7Lv9UJBiekKSeD7tqcwS0DuPXIySVNQKe6NVoEvAJ/s
-	 uX3JSZRwckxylcoliH6+oGhbfAjJPX8R3SbXbSRPbRioAcmJBdrZefV90RRajgvpBeQ==
+	bh=VMpDK/3vlgCVrv9YLW1YavrlcfSPc6WvjdBYp85ZKjQ=;
+	b=1nV/hvsTfG1gFf9EES1r1TuNDeWLXbh+0fpMXatslY4F/3+ZU2dOMyS0UKEL+EL5VOc1
+	 B3rpScrV1qHoUCrKYH0qCQ3q1AIoNd6K8haGTLKfZL2Wn5AKXoA76GdCOxx2TdKU18cLF
+	 0Eel/1E/R6G8u+SJ8/IiEoAKL+Bj8J0iLTTwM/H/BP/0sX/+JDT1iR6vVcbJFyT/4iocd
+	 6XrPj4e9zChoFRsZKgHg7mHJANYBHfZhxGhAyoqba5Ctgpn5IHry8/Fmx8LBobYw1KqTh
+	 04EDSbS8urqwejLxvrg7SdepEciQrCuISfjJQ10CyuNO9hGFiw9Oqx/64CCCI4kCCDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cbnoT52R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YlBsTaak;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C352606A326;
-	Sat,  7 Nov 2026 14:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF07606A32D;
+	Sat,  7 Nov 2026 14:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cbnoT52R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B06E1F0089F;
-	Sat,  7 Nov 2026 14:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YlBsTaak
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3431F008A1;
+	Sat,  7 Nov 2026 14:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062769;
-	bh=lLuyz47LVa3cjjXH4iqhIhPlKA3bEefqa9hRFGBvfHg=;
+	s=korg; t=1794062770;
+	bh=VMpDK/3vlgCVrv9YLW1YavrlcfSPc6WvjdBYp85ZKjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cbnoT52R83Or5AjUjIDAq0AmKtDRe8gEObKDWgbJrwUMW6La4Vx6ApUh0423W6YWQ
-	 5ct9vvCnrQH7jDsWH3d5wovx8m/ni0Cwz6RGg3N8OCI5OWCd0A7jwaA3RlCWMA0ONE
-	 1yxR8AcU+s8iB9O3pvEUC6ub6uH3qZ3h40BwXoWA=
+	b=YlBsTaak/cTKeqPZZqqKtMsUI4Z6kI6l9ytEXoR5JAUKqnNqZcpGEIgoADgKiYSfH
+	 QR5GUiczzeaIf4+hj+wrDpwGy5p56+X3GXpwPieWyKTZXvnjCrGEYv2iWove/w520q
+	 oIuLq1PI+4IF/StX/Do17QDGLLlz3Ng1dffCAXfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 077/869] media: cx231xx-audio: drain wq_trigger before audio fini
-Date: Sat,  7 Nov 2026 08:45:59 -0500
-Message-ID: <20261107134855.349195185@linuxfoundation.org>
+Subject: [PATCH 6.18 078/869] media: cx231xx: Fix cleanup path on failure
+Date: Sat,  7 Nov 2026 08:46:00 -0500
+Message-ID: <20261107134855.377931330@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,89 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Andi Shyti <andi.shyti@kernel.org>
 
-[ Upstream commit a691c54986412e1fa87f036d2577d5a78a75e658 ]
+[ Upstream commit 6e30287eaf3e41b86dfb86df3b811526693d74b4 ]
 
-audio_trigger() is deferred work (dev->wq_trigger) armed from
-snd_cx231xx_capture_trigger() on every PCM START/STOP; it dereferences
-dev->adev state and may free the URBs via cx231xx_isoc_audio_deinit().
-cx231xx_audio_fini() tore down that state without draining wq_trigger,
-so work armed before or racing fini ran against freed state.
+If cx231xx_init_v4l2() fails the probe currently jumps to
+err_init, which only unregisters the V4L2 device. The analog
+devices and I2C resources are left registered while the driver
+state can be released.
 
-Use disable_work_sync() in fini to drain the work and prevent further
-queueing.  Initialize the work, lock and stream_started counter at the
-top of cx231xx_audio_init(), before any fallible allocation, and clear
-the partially-built audio state on its error path, so fini is safe even
-if a later step fails.
+A subsequent driver bind attempts to create the same I2C mux
+channel links and triggers a warning when the existing
+"channel-0" link is encountered. The remaining devices may also
+access released driver state. This produces the following warning
 
-This issue was found by an in-house static analysis tool.
+    can't create symlink to channel 0
+    WARNING: drivers/i2c/i2c-mux.c:403 at i2c_mux_add_adapter+0xcd8/0xeb0
+    Call Trace:
+     i2c_mux_add_adapter+0xcdc/0xeb0
+     cx231xx_dev_init+0x2fb/0x1260
+     cx231xx_usb_probe+0xc48/0x2140
+     usb_probe_interface+0x657/0xc70
+     ...
 
-Fixes: 61b04cb24a12 ("[media] cx231xx-audio: fix some locking issues")
-Cc: stable@vger.kernel.org # v6.10+
-Link: https://lore.kernel.org/r/8c7e1294-b906-4636-890c-b64d03b0e1d0@kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Jump to err_video_alt instead, which performs the full device
+cleanup before unregistering the V4L2 device.
+
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Closes: https://github.com/farhad-alemi/public_bug_reports/tree/main/185-warning-in-i2c-mux-add-adapter/
+Fixes: 4d2a7d3509f5 ("[media] cx231xx: move analog init code to a separate function")
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Cc: <stable@vger.kernel.org> # v3.17+
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-audio.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/media/usb/cx231xx/cx231xx-cards.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/cx231xx/cx231xx-audio.c b/drivers/media/usb/cx231xx/cx231xx-audio.c
-index 9c71b32552df3..1179cb0334f4d 100644
---- a/drivers/media/usb/cx231xx/cx231xx-audio.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-audio.c
-@@ -576,12 +576,19 @@ static int cx231xx_audio_init(struct cx231xx *dev)
- 	dev_dbg(dev->dev,
- 		"probing for cx231xx non standard usbaudio\n");
+diff --git a/drivers/media/usb/cx231xx/cx231xx-cards.c b/drivers/media/usb/cx231xx/cx231xx-cards.c
+index d96b9ab276b76..1824e36e541f8 100644
+--- a/drivers/media/usb/cx231xx/cx231xx-cards.c
++++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
+@@ -1828,7 +1828,7 @@ static int cx231xx_usb_probe(struct usb_interface *interface,
  
-+	/*
-+	 * Extension init errors are ignored by the cx231xx core, so fini()
-+	 * must be safe even if initialization fails part way through.
-+	 */
-+	spin_lock_init(&adev->slock);
-+	INIT_WORK(&dev->wq_trigger, audio_trigger);
-+	atomic_set(&dev->stream_started, 0);
-+
- 	err = snd_card_new(dev->dev, index[devnr], "Cx231xx Audio",
- 			   THIS_MODULE, 0, &card);
- 	if (err < 0)
- 		return err;
+ 	retval = cx231xx_init_v4l2(dev, udev, interface, isoc_pipe);
+ 	if (retval)
+-		goto err_init;
++		goto err_video_alt;
  
--	spin_lock_init(&adev->slock);
- 	err = snd_pcm_new(card, "Cx231xx Audio", 0, 0, 1, &pcm);
- 	if (err < 0)
- 		goto err_free_card;
-@@ -596,8 +603,6 @@ static int cx231xx_audio_init(struct cx231xx *dev)
- 	strscpy(card->shortname, "Cx231xx Audio", sizeof(card->shortname));
- 	strscpy(card->longname, "Conexant cx231xx Audio", sizeof(card->longname));
- 
--	INIT_WORK(&dev->wq_trigger, audio_trigger);
--
- 	err = snd_card_register(card);
- 	if (err < 0)
- 		goto err_free_card;
-@@ -651,8 +656,10 @@ static int cx231xx_audio_init(struct cx231xx *dev)
- 
- err_free_pkt_size:
- 	kfree(adev->alt_max_pkt_size);
-+	adev->alt_max_pkt_size = NULL;
- err_free_card:
- 	snd_card_free(card);
-+	adev->sndcard = NULL;
- 
- 	return err;
- }
-@@ -669,6 +676,8 @@ static int cx231xx_audio_fini(struct cx231xx *dev)
- 		return 0;
- 	}
- 
-+	disable_work_sync(&dev->wq_trigger);
-+
- 	if (dev->adev.sndcard) {
- 		snd_card_free_when_closed(dev->adev.sndcard);
- 		kfree(dev->adev.alt_max_pkt_size);
+ 	if (dev->current_pcb_config.ts1_source != 0xff) {
+ 		/* compute alternate max packet sizes for TS1 */
 -- 
 2.53.0
 
