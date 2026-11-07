@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063743;
-	b=XOyPQTyp5i5alLTM7vUrxDxLlzqmDDUW7tFnxgfSB80VXo3BnWL0fYsPJ2QmAk9NeTBp
-	 bgWi178qqsb9QRdm4u3LsLsXBu+ldKXq95seCvZFOPUY9lEAXpVzmy5/3XNbeWnd6qZPR
-	 I7W2tWosTAGlCqJ1yFcEEFQ+4Ue7+pyuh59M2R6uDc1ZYO5xhB52NNzj1DR9MISPeWvus
-	 1AfzdhbhQ5wi2pkk43h1a2Pdne9KIPAqIYxsMNBIp4ok+PI4yCEzT4sP7KjQeaUy6ulNm
-	 Xu/GWMvBEhdisDjbPLC79KP9QUBCtQ3s8d+7UKBcSSPytsYR5YgjP4CnL1Vqc/Pa+0A==
+	t=1794063744;
+	b=Wm3qn8A7hEFenfbEDCOqXRaKc/jRgLWxRUTy9qQTL79oagK/NctfjzVGHHJECCM+hBgc
+	 lgvAy0SzUh1su3v7c++TI49tdyJLZ8FjcVO0+1J/3zUWWYRdlULe0zb59j3SFYHUSI246
+	 Gb0rZUV+fTf03rWqlun0GkyHszpBJA3LA+KVt/T9AuUB4B3H/hkKL8vQ/O94JMf6/cFOW
+	 3sb6E8NpNGFNcOY6Mwi3/K4QtnfDlgtjcVCBg8BM+/7IxYZBHE5KYW81C2FSlCYzsBl9T
+	 3uQHVXsec7kDs9flCXBpq33BFe+w6UhLh+ng8XHSPykvoo4pupENZCTEvGWj/ifObhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063743;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v0fsq2V463YmL6GppVoHtc3WiouAG8/sPuhXy72EOFs=;
-	b=rpMY34/H0q43roy2ZmXnw7MJgfBwDDLrNr+6QsXGa9+Yyq3zeESdafLQSlBJg9BBI8sG
-	 PdrQBMFw4AlMBTvFzog/ax2HmTjgMxozDVMtYrOqypf7vsouBW2N9KGFHOOefDb0CvZJO
-	 6iFfxS5NitqtRL0SEFHva4QdPblzVZrXx1SehZVFhtURqtBw9ykIdJh8YJY9zbl+6GxLi
-	 QQUzeXoNxqIZsAtT3wC1KPQI5vPSCWwl7HUPM/Q9fTehLqJjw+X+C/FT6ZiddXkLtX/MX
-	 kpzC9h4sJ3VnvV7Lj2qiMVP5zV+hgQK2kSaPvYAQb08XdMPOMa05as6vOEwmEvpLRRg==
+	bh=ppqVFicmgoe0f2Yab+ocoF6zxAChh+bhZ4bva2vXxJ8=;
+	b=sETRLjEQq7KP/QutIuCAn25gkXUDijhySoNxSfJvvhsK7MJI98e1R1BrTOho4yPaN1zM
+	 CjNCZv7c6L4P8SZVVWlLib6FUHY2QdSqxRi0DcRv0H1iopvuu9g1eGvqUqCrtEa45ZeCA
+	 8eMIN4Q2JzCmUZkNUS7z3m1hFCkGJMjiWcoolsri2hu37Kp0gWkBSD9CMWlzIpEgoxm82
+	 xX66AzyJ5ErjByFooBMTfG9keyc82W4pojelNmMsXnpJeeM7xyHmzdL37uPTeG9YrJ0P6
+	 YC/YgqVv56xgpJdt2q9LyuWAQLnxIizFK2t6Mx53p7/rHEacJ1BeUGdCXr1JFLUr7zA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pMA0lW4O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJDmAwgo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2535606A32D;
-	Sat,  7 Nov 2026 15:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE03606A32D;
+	Sat,  7 Nov 2026 15:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pMA0lW4O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CFE1F0089F;
-	Sat,  7 Nov 2026 15:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJDmAwgo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB0A1F0089F;
+	Sat,  7 Nov 2026 15:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063742;
-	bh=v0fsq2V463YmL6GppVoHtc3WiouAG8/sPuhXy72EOFs=;
+	s=korg; t=1794063743;
+	bh=ppqVFicmgoe0f2Yab+ocoF6zxAChh+bhZ4bva2vXxJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pMA0lW4O1GYr4WXgHxcEJ7QQ+DhRCnquZxAw0ReHYnApQti/4BTjVOHpteznGpbPT
-	 t4t0zB+wKDQsReG4aj/qS8GIBBnK3EihIWauwEA3X3FIa71U8Vs6cXnJi0elHI7emm
-	 C/wb/81qJVXD9P7Cn8+aVg5imx1r1pLWe4/Gf8tg=
+	b=iJDmAwgoY4Uga6Sp6EpaJlq/DfwrEqHNdaCU1c98986Y9fS6fLNLQHVNAo2TxAntK
+	 7831sExB23OVnjY3nnciNdkkYVe2tYwqnaifpDqVHk6vZgeqRBeP4BVOPxmZpkGFVm
+	 RY2v6WVdDgVSGAbLJrVziWHIWJ8UEzBXfvBoG/u0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Fang Xieyan <fangxy@xiaopeng.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel@riscstar.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 837/869] nvmet: Free the old negotiation state when restarting authentication
-Date: Sat,  7 Nov 2026 08:58:39 -0500
-Message-ID: <20261107134921.264380829@linuxfoundation.org>
+Subject: [PATCH 6.18 838/869] kgdb: Fix buffer overflow in the m packet handler
+Date: Sat,  7 Nov 2026 08:58:40 -0500
+Message-ID: <20261107134921.292081997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,61 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Fang Xieyan <fangxy@xiaopeng.com>
 
-[ Upstream commit 5c279fcabb0ea7ba61881c13027b15d8054b8abd ]
+[ Upstream commit ac0159129e2cb99a70c4b80cfbf58d03e092dc7b ]
 
-Restarting a DH-HMAC-CHAP negotiation with SEND(NEGOTIATE) resets
-sq->dhchap_step but does not release the previous c1/c2/skey, which
-are only freed in nvmet_auth_sq_free() at teardown.  The next
-CHALLENGE/REPLY exchange then overwrites those pointers with fresh
-allocations.
+gdb_cmd_memread() passes the length of the 'm' packet straight to
+kgdb_mem2hex(), which hex-encodes the reply into
+remcom_out_buffer[BUFMAX] without checking that the reply fits. A
+client on the KGDB I/O console can ask for a read of any size, and
+the hex encoding runs off the end of the buffer. kgdb_mem2hex() takes
+that length as an int count, so 2^31 truncates to a negative value
+and copy_from_kernel_nofault() is handed buf + count as its
+destination.
 
-An unauthenticated host can repeat the negotiate message endlessly,
-leaking a few dozen bytes per round and slowly exhausting target
-memory.
+On x86 BUFMAX is 1024, so a read of 512 bytes overruns by the single
+byte that terminates the hex string:
 
-Clear the old negotiation state with nvmet_auth_sq_free() before
-setting up the new one.  Also reset dhchap_skey_len to zero: if a DH
-session key was already established, a following round with dhvlen=0
-would otherwise pass a NULL skey with a stale non-zero length to the
-HMAC code and dereference it.
+  BUG: KASAN: global-out-of-bounds in kgdb_mem2hex+0x1dd/0x230
+  Write of size 1 at addr ffffffff87651780 by task sh/1
+  ...
+  The buggy address belongs to the variable:
+   remcom_out_buffer+0x400/0x420
 
-Fixes: db1312dd95488 ("nvmet: implement basic In-Band Authentication")
+Bounds check the length before the hex encoding:
+
+		if (length > (BUFMAX - 1) / 2) {
+			error_packet(remcom_out_buffer, -EINVAL);
+			return;
+		}
+
+gdbstub_msg_write() already bounds the count it hex-encodes
+against BUFMAX. Reads over the limit never returned valid data,
+so an error reply loses nothing.
+
+Fixes: dc7d55270521 ("kgdb: core")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Assisted-by: Hawkeye:GLM-5.3-flash
+Assisted-by: Qoder:Qwen3.8-Max
+Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20260914180344.15485-1-fangxy@xiaopeng.com
+Signed-off-by: Daniel Thompson <daniel@riscstar.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/auth.c             | 1 +
- drivers/nvme/target/fabrics-cmd-auth.c | 1 +
- 2 files changed, 2 insertions(+)
+ kernel/debug/gdbstub.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
-index 4c68225411be3..eb2b6c7a80838 100644
---- a/drivers/nvme/target/auth.c
-+++ b/drivers/nvme/target/auth.c
-@@ -249,6 +249,7 @@ void nvmet_auth_sq_free(struct nvmet_sq *sq)
- 	sq->dhchap_c2 = NULL;
- 	kfree(sq->dhchap_skey);
- 	sq->dhchap_skey = NULL;
-+	sq->dhchap_skey_len = 0;
- }
+diff --git a/kernel/debug/gdbstub.c b/kernel/debug/gdbstub.c
+index 22fe969c5d2e5..75b9cf07ebbe0 100644
+--- a/kernel/debug/gdbstub.c
++++ b/kernel/debug/gdbstub.c
+@@ -562,6 +562,14 @@ static void gdb_cmd_memread(struct kgdb_state *ks)
  
- void nvmet_auth_sq_destroy(struct nvmet_sq *sq)
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index fc50fde2947d4..61a36fb54e877 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -326,6 +326,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 			/* Restart negotiation */
- 			pr_debug("%s: ctrl %d qid %d reset negotiation\n",
- 				 __func__, ctrl->cntlid, req->sq->qid);
-+			nvmet_auth_sq_free(req->sq);
- 			if (!req->sq->qid) {
- 				dhchap_status = nvmet_setup_auth(ctrl, req->sq,
- 								 true);
+ 	if (kgdb_hex2long(&ptr, &addr) > 0 && *ptr++ == ',' &&
+ 					kgdb_hex2long(&ptr, &length) > 0) {
++		/*
++		 * The hex-encoded reply needs 2 * length + 1 bytes
++		 * in remcom_out_buffer[BUFMAX].
++		 */
++		if (length > (BUFMAX - 1) / 2) {
++			error_packet(remcom_out_buffer, -EINVAL);
++			return;
++		}
+ 		err = kgdb_mem2hex((char *)addr, remcom_out_buffer, length);
+ 		if (!err)
+ 			error_packet(remcom_out_buffer, -EINVAL);
 -- 
 2.53.0
 
