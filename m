@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065083;
-	b=YS+f2GMXaJIjKCyL7tHm75CL2ksZQYYgcxdHQ389S/gloUx3YXACPPZ3dGw/A2sGA34J
-	 JoDhPxh7w8DBIvUj8D2w9WSnpXS2S4AYTsfZv7qhybMj13VUm8klXmK0owb3DOtHops+u
-	 9HYlEUC6gcR+xg4PEraDbzWpZj12sMLlPEk9B5v7TmyYI2fd44pY66uVsbwTwx40WuKOE
-	 3rGhz1zBWqiOb6dhNkZnna/xDECvz1UGyKQRh8yLztP5qydMWwXvg8ZrGxvNHWgqPPMO8
-	 gAiu7y28pnjm7L45/CrbPkYVYCSl5jcTYchj1Kpsdp973BIzCtYDDrp93l5IyEEGacQ==
+	t=1794065084;
+	b=R4ZMFyFv4P54ZAYzbsDiLpRHUbPzwAl417iba7g3rMdFv64/GMJGL2hcdeSHm/GXIhq+
+	 XSBrW02+Q165iw6wgJFoYS5ovuwalqz0vgvhZQI9zWb2raf8RzSgsdvHnkUB8oLS1IPro
+	 5UXwawS18SBhAMLUAjb2ApcvCXghJpYKBx1OYtVTllYcSiHlFg4FjETqXq8EBHT8vJD88
+	 da+UHHC8LN83687RbdM1RwTrXamVdBXWdopnECs80syMjQb63Lp+kpGg4cKKa5GDE+Mz0
+	 dZTi779XyJ//jche5Vdv5jmZ8/rDcamtjHsYPweWJ4XE5H9VPx2FeoCJFwBlWpSfJ4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065083;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065084;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=IIREvKIMs981BE2DH7LrnkaTpe8nB/+xhV1nBSYlVP4=;
-	b=y5s7ksfT/Pmkm5/UeujRdQVBy35zmcAHG3VLIi1fNMax4c5pUKpfO9N7N28npFcXIsIu
-	 F96ZRbSTvUhqqY2Hj7Wvxsu7xp7FKtgvEysTVYpm3OM0eGUasSPq1HCK+lpa+JR347X8l
-	 I3cYbZ24RCXEC/9n213W3kecHO/DUQO1XQU7yZ5pwkgoMHTGNdj0yL1GPef17JAcqhNtS
-	 zdwvwP2ZCyk19x0Mf5T+GMYa2cteT7i3WEYJwJ4OEXZD5WrZIfsABwVixnfLgp3M7AAQA
-	 qlzM26Cu3gVdcAfXW39WT4JCM1+OhAV1bb4oXmnMR+2UkBBgnrcaq4Q/O3IFqCD1qZA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=gG9fQdpJtmYJQFqWX+RuCkogPI8mm+gW+Nl8BBtI+3o=;
+	b=KYYjNJI9SwVI+UNQ7iMlx7EtfGSgopvMe8v7yqBsG77/1kxj8Ju/7c/Kdzs3pe2gNQRY
+	 Sfscc1FD/ikFTLzZ3iBWUVcrqmjME0nbQBN/HJblSpT3SwZdIVOJZE2YWZlT+6Me7tKkc
+	 eYoUkwv/r3CwHZo+ke9Mwo9D5TBWLs5f2qolVc+AR8SJ4uZinTauhUb3aqPwfxCBY/Rrs
+	 GwS+eNfiPO1UH2s1z5sVTV5GHk+oI4LIN73mrCkjzYdnXsRFzdo8y0z2XQ/MvLeqD2U0Q
+	 gtzyUVakxMJVuVzhxP5D8NZtArE+kq+XkLR8tj8OZygHX567sgR2zLxqzkyMOJgoHKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZfFqXyn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pTpIVu2V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9260606A334;
-	Sat,  7 Nov 2026 15:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215F5606A326;
+	Sat,  7 Nov 2026 15:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZfFqXyn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705971F0089F;
-	Sat,  7 Nov 2026 15:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pTpIVu2V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20831F0089F;
+	Sat,  7 Nov 2026 15:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065082;
-	bh=IIREvKIMs981BE2DH7LrnkaTpe8nB/+xhV1nBSYlVP4=;
+	s=korg; t=1794065084;
+	bh=gG9fQdpJtmYJQFqWX+RuCkogPI8mm+gW+Nl8BBtI+3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IZfFqXyn2Gxo6DXxiAYtlGPeR9CdYZqQfyt6NAyxi3g3GlQlogQEhsJEfMIf5yNzs
-	 /9DQoeZ3GfZ4hzDy5RTC0oxoiZx30bKtuDM1b5+g0eUALxc6UXNwGIqXAFkXSHPx4e
-	 DmoW3qkZj3VzlI9T/CpGGaJrzT+Hb76fsLRUcAnA=
+	b=pTpIVu2VPsqQoNMbgUd+p0a+ETzneAKjim8XdQ6kxxUJzEBssLZDdVlzXrJYilaMs
+	 MAP06yBHYFA30V0F/ThjF4vgoWr+fLmegQ2u8uaAh1cce8HTbszP9Uv8Opcn6OqhjT
+	 eCxpFgX5Joe4ByLw2sa41aGLF/SKeGILvlqCgWvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
-	Baolin Liu <liubaolin@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Marcelo Tosatti <mtosatti@redhat.com>,
+	Ximing Zhang <xzhangjr@gmail.com>,
+	=?UTF-8?q?Asaf=20Nuri=20Bertizlio=C4=9Flu?= <ycistak@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0918/1257] ntfs: fix volume flag update races
-Date: Sat,  7 Nov 2026 08:53:34 -0500
-Message-ID: <20261107135004.701261508@linuxfoundation.org>
+Subject: [PATCH 7.3 0880/1257] hwmon: (coretemp) Fix handling of isolated SMT siblings
+Date: Sat,  7 Nov 2026 08:52:56 -0500
+Message-ID: <20261107135003.630328573@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -64,172 +64,127 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Ximing Zhang <xzhangjr@gmail.com>
 
-[ Upstream commit 56a64ee0f99d4ca1756cf743f951c110d39401e5 ]
+[ Upstream commit 37c1974a0ec4ec4624a270291a179c53f8f4fbca ]
 
-ntfs_set_volume_flags() and ntfs_clear_volume_flags() both read
-vol->vol_flags outside any lock to compute the new value before handing
-it to ntfs_write_volume_flags(), which only takes ni->mrec_lock around
-the actual write. The read-modify-write is therefore not atomic, and two
-concurrent callers can lose an update: ntfs_sync_fs() may derive a
-"clean" value from vol->vol_flags while a writer concurrently records an
-error and sets VOLUME_IS_DIRTY; the locked write then silently
-overwrites the freshly-set dirty bit. The on-disk volume looks clean
-despite the recorded errors, so chkdsk will not run on the next mount
-and corrupted metadata can persist.
+Commit 0f8b916bc5b5 ("hwmon: (coretemp) avoid RDMSR interrupts to
+isolated CPUs") prevents create_core_data() from creating temperature
+data for an isolated CPU. coretemp_cpu_online(), however, still adds
+that CPU to pdata->cpumask.
 
-Fix by moving the read-modify-write inside the mrec_lock: pass the bits
-to set and to clear separately, and combine them with the current flag
-state under the lock inside ntfs_write_volume_flags(). The set/clear
-helpers pass only the bits to modify, not the complete flag state. The
-bit manipulation is done on CPU-endian values, and the result is
-converted back to little-endian before storing it. The wrappers keep
-their signatures so callers are unchanged.
+When an isolated SMT thread is processed before a housekeeping sibling,
+the mask makes coretemp_cpu_online() believe that the core is already
+represented. The housekeeping sibling then gets no temperature
+attributes. Package attributes are similarly not retried when the first
+CPU processed in a die is isolated.
 
+The mask is also used to select a replacement CPU when a sensor target
+goes offline. Including isolated CPUs permits the driver to retarget a
+sensor to one, causing subsequent sysfs reads to send an RDMSR IPI to an
+isolated CPU.
+
+Keep isolated CPUs out of pdata->cpumask by moving the housekeeping check
+to coretemp_cpu_online(). Sensor creation is then deferred to an eligible
+CPU, and hotplug replacement targets remain on housekeeping CPUs.
+
+Tested on an Intel Core i7-10510U running 6.18.50-3-cachyos-lts, with
+nohz_full=1 on CPU 1 and its housekeeping SMT sibling on CPU 5. The stock
+driver omitted Core 1 after module load and retained its readable sensor
+after CPU 5 was offlined. The patched driver exposed Core 1, removed it
+when CPU 5 went offline, and restored it when CPU 5 returned.
+
+Fixes: 0f8b916bc5b5 ("hwmon: (coretemp) avoid RDMSR interrupts to isolated CPUs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
-Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>
+Signed-off-by: Ximing Zhang <xzhangjr@gmail.com>
+Tested-by: Asaf Nuri Bertizlioğlu <ycistak@gmail.com>
+Link: https://patch.msgid.link/20261016-codex-coretemp-housekeeping-v1-1-96618c5676b2@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/super.c | 63 +++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 45 insertions(+), 18 deletions(-)
+ drivers/hwmon/coretemp.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ntfs/super.c b/fs/ntfs/super.c
-index 9f5cf65fd3a55..57584f157f154 100644
---- a/fs/ntfs/super.c
-+++ b/fs/ntfs/super.c
-@@ -360,31 +360,45 @@ void ntfs_handle_error(struct super_block *sb)
- }
- 
- /*
-- * ntfs_write_volume_flags - write new flags to the volume information flags
-+ * ntfs_write_volume_flags - apply flag changes to the volume information flags
-  * @vol:	ntfs volume on which to modify the flags
-- * @flags:	new flags value for the volume information flags
-+ * @set_bits:	bits to set in the volume information flags
-+ * @clear_bits:	bits to clear in the volume information flags
-  *
-  * Internal function.  You probably want to use ntfs_{set,clear}_volume_flags()
-  * instead (see below).
-  *
-- * Replace the volume information flags on the volume @vol with the value
-- * supplied in @flags.  Note, this overwrites the volume information flags, so
-- * make sure to combine the flags you want to modify with the old flags and use
-- * the result when calling ntfs_write_volume_flags().
-+ * Combine @set_bits and @clear_bits with the current in-memory flag state and
-+ * write the result back.  The set/clear helpers pass only the bits to modify,
-+ * not the complete flag state.  The read-modify-write happens under
-+ * ni->mrec_lock so that concurrent set/clear operations cannot lose updates.
-+ * All bit manipulation is done on CPU-endian values, and the result is
-+ * converted back to little-endian before storing it.
-  *
-  * Return 0 on success and -errno on error.
-  */
--static int ntfs_write_volume_flags(struct ntfs_volume *vol, const __le16 flags)
-+static int ntfs_write_volume_flags(struct ntfs_volume *vol,
-+		const __le16 set_bits, const __le16 clear_bits,
-+		const bool skip_if_errors)
- {
- 	struct ntfs_inode *ni = NTFS_I(vol->vol_ino);
- 	struct volume_information *vi;
- 	struct ntfs_attr_search_ctx *ctx;
-+	u16 flags;
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index bee2c9896d4c5..9ed21c8c093a5 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -568,9 +568,6 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
+ 	u64 val;
  	int err;
  
--	ntfs_debug("Entering, old flags = 0x%x, new flags = 0x%x.",
--			le16_to_cpu(vol->vol_flags), le16_to_cpu(flags));
- 	mutex_lock(&ni->mrec_lock);
--	if (vol->vol_flags == flags)
+-	if (!housekeeping_cpu(cpu, HK_TYPE_MISC))
+-		return 0;
+-
+ 	tdata = init_temp_data(pdata, cpu, pkg_flag);
+ 	if (!tdata)
+ 		return -ENOMEM;
+@@ -690,6 +687,14 @@ static int coretemp_cpu_online(unsigned int cpu)
+ 	if (!cpu_has(c, X86_FEATURE_DTHERM))
+ 		return -ENODEV;
+ 
++	/*
++	 * Keep isolated CPUs out of pdata->cpumask. Besides tracking the CPUs
++	 * available to this driver, the mask is used to select the CPU on which
++	 * to read the temperature MSRs.
++	 */
++	if (!housekeeping_cpu(cpu, HK_TYPE_MISC))
++		return 0;
 +
-+	if (skip_if_errors && NVolErrors(vol))
-+		goto done;
-+
-+	flags = le16_to_cpu(vol->vol_flags);
-+	flags |= le16_to_cpu(set_bits) & le16_to_cpu(VOLUME_FLAGS_MASK);
-+	flags &= ~(le16_to_cpu(clear_bits) & le16_to_cpu(VOLUME_FLAGS_MASK));
-+	ntfs_debug("Entering, old flags = 0x%x, new flags = 0x%x.",
-+			le16_to_cpu(vol->vol_flags), flags);
-+
-+	if (le16_to_cpu(vol->vol_flags) == flags)
- 		goto done;
- 
- 	ctx = ntfs_attr_get_search_ctx(ni, NULL);
-@@ -400,7 +414,7 @@ static int ntfs_write_volume_flags(struct ntfs_volume *vol, const __le16 flags)
- 
- 	vi = (struct volume_information *)((u8 *)ctx->attr +
- 			le16_to_cpu(ctx->attr->data.resident.value_offset));
--	vol->vol_flags = vi->flags = flags;
-+	vol->vol_flags = vi->flags = cpu_to_le16(flags);
- 	mark_mft_record_dirty(ctx->ntfs_ino);
- 	ntfs_attr_put_search_ctx(ctx);
- done:
-@@ -421,13 +435,14 @@ static int ntfs_write_volume_flags(struct ntfs_volume *vol, const __le16 flags)
-  * @flags:	flags to set on the volume
-  *
-  * Set the bits in @flags in the volume information flags on the volume @vol.
-+ * The bits are combined with the current flag state under the lock in
-+ * ntfs_write_volume_flags(), so concurrent updates are not lost.
-  *
-  * Return 0 on success and -errno on error.
-  */
- int ntfs_set_volume_flags(struct ntfs_volume *vol, __le16 flags)
- {
--	flags &= VOLUME_FLAGS_MASK;
--	return ntfs_write_volume_flags(vol, vol->vol_flags | flags);
-+	return ntfs_write_volume_flags(vol, flags, 0, false);
- }
- 
- /*
-@@ -436,14 +451,27 @@ int ntfs_set_volume_flags(struct ntfs_volume *vol, __le16 flags)
-  * @flags:	flags to clear on the volume
-  *
-  * Clear the bits in @flags in the volume information flags on the volume @vol.
-+ * The bits are combined with the current flag state under the lock in
-+ * ntfs_write_volume_flags(), so concurrent updates are not lost.
-  *
-  * Return 0 on success and -errno on error.
-  */
- int ntfs_clear_volume_flags(struct ntfs_volume *vol, __le16 flags)
- {
--	flags &= VOLUME_FLAGS_MASK;
--	flags = vol->vol_flags & cpu_to_le16(~le16_to_cpu(flags));
--	return ntfs_write_volume_flags(vol, flags);
-+	return ntfs_write_volume_flags(vol, 0, flags, false);
-+}
-+
-+/*
-+ * ntfs_clear_volume_dirty_if_no_errors - clear dirty bit if no errors exist
-+ * @vol:	ntfs volume whose dirty bit should be cleared
-+ *
-+ * Check NVolErrors() and clear VOLUME_IS_DIRTY under the same mrec_lock so
-+ * ntfs_sync_fs() cannot clear the dirty bit after a concurrent error has been
-+ * recorded.
-+ */
-+static int ntfs_clear_volume_dirty_if_no_errors(struct ntfs_volume *vol)
-+{
-+	return ntfs_write_volume_flags(vol, 0, VOLUME_IS_DIRTY, true);
- }
- 
- int ntfs_write_volume_label(struct ntfs_volume *vol, char *label)
-@@ -1932,8 +1960,7 @@ static int ntfs_sync_fs(struct super_block *sb, int wait)
- 		return 0;
- 
- 	/* If there are some dirty buffers in the bdev inode */
--	if (!NVolErrors(vol) &&
--	    ntfs_clear_volume_flags(vol, VOLUME_IS_DIRTY)) {
-+	if (ntfs_clear_volume_dirty_if_no_errors(vol)) {
- 		ntfs_warning(sb, "Failed to clear dirty bit in volume information flags.  Run chkdsk.");
- 		err = -EIO;
+ 	pdata = platform_get_drvdata(pdev);
+ 	if (!pdata->hwmon_dev) {
+ 		struct device *hwmon;
+@@ -719,8 +724,8 @@ static int coretemp_cpu_online(unsigned int cpu)
  	}
+ 
+ 	/*
+-	 * Check whether a thread sibling is already online. If not add the
+-	 * interface for this CPU core.
++	 * Check whether a housekeeping thread sibling is already online. If
++	 * not, add the interface for this CPU core.
+ 	 */
+ 	if (!cpumask_intersects(&pdata->cpumask, topology_sibling_cpumask(cpu)))
+ 		coretemp_add_core(pdev, cpu, 0);
+@@ -750,9 +755,9 @@ static int coretemp_cpu_offline(unsigned int cpu)
+ 	cpumask_clear_cpu(cpu, &pd->cpumask);
+ 
+ 	/*
+-	 * If this is the last thread sibling, remove the CPU core
+-	 * interface, If there is still a sibling online, transfer the
+-	 * target cpu of that core interface to it.
++	 * If this is the last housekeeping thread sibling, remove the CPU core
++	 * interface. If there is still a housekeeping sibling online, transfer
++	 * the target CPU of that core interface to it.
+ 	 */
+ 	target = cpumask_any_and(&pd->cpumask, topology_sibling_cpumask(cpu));
+ 	if (target >= nr_cpu_ids) {
+@@ -764,7 +769,8 @@ static int coretemp_cpu_offline(unsigned int cpu)
+ 	}
+ 
+ 	/*
+-	 * If all cores in this pkg are offline, remove the interface.
++	 * If all housekeeping cores in this pkg are offline, remove the
++	 * interface.
+ 	 */
+ 	tdata = get_temp_data(pd, -1);
+ 	if (cpumask_empty(&pd->cpumask)) {
+@@ -777,7 +783,7 @@ static int coretemp_cpu_offline(unsigned int cpu)
+ 
+ 	/*
+ 	 * Check whether this core is the target for the package
+-	 * interface. We need to assign it to some other cpu.
++	 * interface. We need to assign it to some other housekeeping CPU.
+ 	 */
+ 	if (tdata && tdata->cpu == cpu) {
+ 		target = cpumask_first(&pd->cpumask);
 -- 
 2.53.0
 
