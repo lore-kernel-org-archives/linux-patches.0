@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060829;
-	b=zpDFOfRpXePagab6tzn6oKjligAEopFPIk1HMa16Spn++Mrvd2nDiyhAcTmLLcJt2ZJu
-	 PSfc4a0Oz4jlqUzkeFC3AFIzZu6YbaGA8ncy1xEkEDuC/ZG8h9YH97y4FanbjCo9UVxZ7
-	 wg3eOFy3Q5UXos0ooI1tPKObDspsWS3XUjrgurzrEnmKz5u9eatLRCm7drGoh6eHYW4GQ
-	 L0b8Xi2Yhk74v5kAyA3YH7e9z4KqTX7X74wYpUrMbjpo4ae7j5cnlJhHoFEIXW1f+ArEK
-	 a6nXdV0f9b1AGcpFd/wizAzKIoVdS09zN2mKZQCFrC/Ynk7PS10EzrFNY66BAOat9PA==
+	t=1794060831;
+	b=ghijXzGy9RaYvSEZiTpNS/L6YcCAbKa3WM7g1IkES6n3Qvmri0W8gtP+BdH4IJO/T0NW
+	 YPltvyh6grrn3/yGnrHodyuwHrd8m+fKZ3Nxp0u7wy9QCaAkvcy2/RGZ7XdkHBss4425/
+	 z8XGtvhbVJmz6kwfg90L2u0xGRvM+JZwvgZt4a20TQObIY1oD2ZgH7GRAf4P9gRNZfuUP
+	 PgCsnCqvYRdWEZDs38jRHOk3TnznDBZXXoR7ecQ3b+HaV01V+8aynOlxfjrTb59Eg6YF2
+	 +v4UHvs6uHjfRzSNa/wr/oMybJSpIL9t+ReSo25vXP7p5gqGoWX5JVgkfQJaFWfy+/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060829;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060831;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bkHT1/HNA+ffN9OMzn1fK137Z9s3jnwnUCrVi/CnJNo=;
-	b=KOV1+nWmGURpu/dmHT+YDKw2BtcnaN5EBmTU2AZM9lLYuCRgMrOoqQQ5eDzShcoxbKFh
-	 EQVy9KcpVOslJ1TLZBMr0k3AjV2KOt+sp1e8k+cGxMpWR8JDRyWz7jy4IBcG1T4kMX0Ro
-	 DRRaPzs+svw6J0LWwJXnBz9FCMU0zr2iV1iPm3HqSkaz1GFvSHP7O6a/MeUii4OStbvRQ
-	 rftd/Na1YX6ubzR5p5RdGcB38blOx01bl6rxWfPNjkrZVYd5JaZ5F2VyygHQ0D5Nrzth8
-	 FHiic4C6OQu97+091v7cYXYpZyyfY6eFmAuurhExJXG7OEq494S2nPWcb3SNwYeIYEw==
+	bh=UCqoZzOd1yucDaGpuVfnuX5dsisSjkCMZpSMHJFWBe0=;
+	b=NS+x+ruhy5R+Z5Sp663V+n9UeF+kqKMXmShtgCyNUGhkwNPfivr6yOxjlBwicUMHN5yQ
+	 QnnXVl4E3BhdwEA7VaViYycIrzNAXmKoFBgwvwP7vvvDQhjUbMuVf4XH/KBauvBmf/CZD
+	 hn49rRZPe39hk1o8zFPXyoQXCJmxrKqs5rfh2ZUiCMycln0WpZb/8JnVlS2CJ8VqFufsS
+	 2q4uQgsvG1yCox0JbmqSLsTpx4nAZccMm7wy921Tj+ijvyw4oaUieIxsvnxvSH2Rr6/Ko
+	 1HAN+Zxzq7/tgmLiD1u2kBHLZzH/4QOM391vEYMk/My5VXWa9zQ8NdsWds/zvS3LUtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SG6uNlvA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xLGTECpG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614A3606A326;
-	Sat,  7 Nov 2026 14:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B360606D801;
+	Sat,  7 Nov 2026 14:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SG6uNlvA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9FD1F0089F;
-	Sat,  7 Nov 2026 14:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xLGTECpG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1D61F008A3;
+	Sat,  7 Nov 2026 14:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060829;
-	bh=bkHT1/HNA+ffN9OMzn1fK137Z9s3jnwnUCrVi/CnJNo=;
+	s=korg; t=1794060830;
+	bh=UCqoZzOd1yucDaGpuVfnuX5dsisSjkCMZpSMHJFWBe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SG6uNlvAalsenUjCp4lwUkzn5JZh7GMky0VMbvPELcBhJyTaaHUnzSgn0rGTj58jx
-	 8fvvSSRYjEi9bphISn7kkjmuYFm0rlsAt8wCDUOaGLh4HQCZ7w76XeD/3tx40rj1Pn
-	 kuXt4zEyLylgW79Zs9dfZwQqn8xXXNcR1HcirYTk=
+	b=xLGTECpGkuBGzU+1eMy+EkWgwt54Nvex8vWtYEq9yrUxFKxp3EqWohBCJd4oJTnez
+	 Hqfuk5RPiffd/CqjtSiWknNRTdq1o/vgEzmdsKZxCOtFCCHOX84hsEnfk4hpm2NKrQ
+	 89/8oLhtHfQAfMV7+f1hZNdAC78dbPKMhv2e56vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Senjin <senjin@hatchling.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0224/1536] media: cx88: fix memory leak in cx8802_register_driver() error path
-Date: Sat,  7 Nov 2026 08:37:20 -0500
-Message-ID: <20261107135003.956738277@linuxfoundation.org>
+Subject: [PATCH 6.12 0207/1536] fs/ntfs3: load ATTR_BITMAP run extents from $MFT extension records
+Date: Sat,  7 Nov 2026 08:37:03 -0500
+Message-ID: <20261107135003.470148014@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,36 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit e228b8b1a5b47a72b265671dc6d864c0da5528d0 ]
+[ Upstream commit e31886cb6e0e14cf65e27da0bf1a422ff419d893 ]
 
-In cx8802_register_driver(), when drv->probe(driver) fails (non-zero),
-the allocated cx8802_driver struct is freed neither in the else branch
-nor later in cx8802_unregister_driver() (which only frees entries that
-were added to dev->drvlist on success). Each failed probe leaks the
-driver struct.
+When $MFT's ATTR_BITMAP attribute is heavily fragmented, its run list
+can span multiple MFT extension records (attribute list entries with
+vcn > 0). The non-primary segment handler in ntfs_read_mft() only
+processed ATTR_DATA extension segments for MFT_REC_MFT, silently
+skipping any ATTR_BITMAP segments. This left sbi->mft.bitmap.run
+incomplete, causing wnd_init() to fail with -ENOENT when wnd_rescan()
+tried to look up a VCN not covered by the truncated run list.
 
-Add kfree(driver) in the else branch to fix the leak.
+Observed on a 16 TB NTFS volume (0xFFFFFEFF total clusters) whose MFT
+bitmap run list was split across 97 extents in extension records.
+wnd_rescan() successfully looked up VCNs 0-122 from the runs loaded
+from the base record, then failed at VCN 123 (the last cluster of the
+bitmap) whose run was only present in an extension record.
 
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fix by extending the MFT_REC_MFT special case to also handle
+ATTR_BITMAP extension segments, storing their runs into
+sbi->mft.bitmap.run the same way the primary segment does.
+
+Signed-off-by: Senjin <senjin@hatchling.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cx88/cx88-mpeg.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ntfs3/inode.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/cx88/cx88-mpeg.c b/drivers/media/pci/cx88/cx88-mpeg.c
-index 2c1d5137ac470..bc08b35e247e0 100644
---- a/drivers/media/pci/cx88/cx88-mpeg.c
-+++ b/drivers/media/pci/cx88/cx88-mpeg.c
-@@ -640,6 +640,7 @@ int cx8802_register_driver(struct cx8802_driver *drv)
- 			list_add_tail(&driver->drvlist, &dev->drvlist);
- 		} else {
- 			pr_err("cx8802 probe failed, err = %d\n", err);
-+			kfree(driver);
- 		}
- 		mutex_unlock(&drv->core->lock);
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index e7339f2bc5fd1..b371f897bcf4c 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -126,10 +126,16 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 
+ 	if (le && le->vcn) {
+ 		/* This is non primary attribute segment. Ignore if not MFT. */
+-		if (ino != MFT_REC_MFT || attr->type != ATTR_DATA)
++		if (ino != MFT_REC_MFT)
++			goto next_attr;
++
++		if (attr->type == ATTR_DATA)
++			run = &ni->file.run;
++		else if (attr->type == ATTR_BITMAP)
++			run = &sbi->mft.bitmap.run;
++		else
+ 			goto next_attr;
+ 
+-		run = &ni->file.run;
+ 		asize = le32_to_cpu(attr->size);
+ 		goto attr_unpack_run;
  	}
 -- 
 2.53.0
