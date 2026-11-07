@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794060729;
-	b=semkZ6fpF8YJym7HGZukN+V3gOFI26JDEPdGRGm987H6QRfogXe6g4B39FOISEQX4f8V
-	 v0k70nGQikTD7PMIK/PyI6zmJzoEBZhUwSPJ598L75nHZieHSjd8T82RjWsc226Rh3zWo
-	 txnhakvIw9kf79Kg5HaIM2qoC14UvTLbMfllaFRec0DkH6tB3T+MTMsHaRC1Uw/9FS4Cr
-	 CAvfnv/sAQmfukjTXcUm1HrYgUavyKcbgl/KkGr1fF+Diq2c6i3ujm9O8gWb9zODyhgrR
-	 zAjaSOXYdHc8TygPAEwz1Enixw2eNVwc8i1LH4jqejM3eMw15p0Uz6NgZtvNta7D9Tw==
+	t=1794060730;
+	b=406KkUBTukUB4ii+ImNmDg4DoDbApoZWU/suyTMz5YWDxZP3jbb/ZkD8JZQ5NA8p3Dwz
+	 pXYvDLzjYjL1uMpQYmYoNuyxMS6KzfYJiK1DUqVT1WveFst/WfHsfvfQRrJEMdBgASakt
+	 Ck/bm0HpozqtKDt1xNmoKKCoeWKCIX+zCBwqksyPiJlNcB1HpCPa5p+GSsTNtsG735hVi
+	 /WQEkoZsnghFt95t4W7l6FmMuroRgv8lm5UxVhS/eogo3OshwLFJB7QP8D8VNsJYGdYjP
+	 8eTebz0RkLF/8Cdyw3f/lBeuGf9uYul8KTB4+fZH0kszLlYfcgUa3jbXAh/L83JYaHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794060729;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794060730;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i0h/yY7DW7mutaWRLzgHYaVdlKc72121gbQwHaHCQwQ=;
-	b=2x6Q0ZlNa1tQoOq8louVWdcmMeozztu0ttmTvjaX26/WSWsoAlLyfpItOde5me5IEtj+
-	 rQ9ukQtmzla3lWvjoiMrRTLYl7bCkW7Oa40V+GjOJ6hktXieakextBYW7r6UeQc1oaByE
-	 yMXmeJpSj/titD4i/orYR5Tye2HANu3hH4AYYFeOnl0nTPOg4JXLN+lvAVFO8DI9uGrM4
-	 MNq8RtHDCdg5P8zURlltKNJY+QFDJYeTCBZDD0tAkVqhYCNmBmhg7Ql623aLVYRa++J36
-	 EkHpmm9IKzmQRTMFHYeEAusVIauzrRzL2aadJ27VPd72/e/QstDOIWVxYlwKAc3Uk4A==
+	bh=9t2buXN3ky8LF+yNzfVEDFtKtmWKalH7DggeERryT9w=;
+	b=KUgTmODwRYjOaoul0MlJdSb2DGaiRzLcmTOOqqk991jUNfX8CSplvp9VgloDSCFzfkFJ
+	 BWqX1PPDh3oI5vueDUxOllvhpZuc9+ldEmyZrK6k1kNuJbjcT0O0V2O6368vUuzECIh0P
+	 ty4+ELNoV5pmA5nm2JpLk/IoOmHYXyowridEj1M7dkd6KkVYLx5xOxgxGU1hYpZgTPMyr
+	 WJFw99UgBiXvRlhQHMlURHWpQV4JU4QI2VaEJKfARXayk+HTyuFUxBJEkwFYbl3FtY1OF
+	 n1g9gbQYIoxj+SzdqlvWWakORZQDeRIUOx9xcrMHwgvsp3OYzbki90B0N6i2ocuyVLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqLrNUNy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jAAMd18A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9151606A32C;
-	Sat,  7 Nov 2026 14:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAF7606A338;
+	Sat,  7 Nov 2026 14:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqLrNUNy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F2E1F008A1;
-	Sat,  7 Nov 2026 14:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jAAMd18A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5B91F008A1;
+	Sat,  7 Nov 2026 14:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794060728;
-	bh=i0h/yY7DW7mutaWRLzgHYaVdlKc72121gbQwHaHCQwQ=;
+	s=korg; t=1794060730;
+	bh=9t2buXN3ky8LF+yNzfVEDFtKtmWKalH7DggeERryT9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tqLrNUNyXlE9hFpx36+3U0H1+yS/nODh5oXbgRlY7hdaTF7uAoKqmZJZXZl9S0VXk
-	 3OvCqA+9AKNkELbHZDCTz4rmJlsddlj2t+owoopCgHyvBIKVp8YRpbVGoPx+bGwToO
-	 M2t8cn5w9d6uA2vmmHOi0X6HgMgN20o1rVYThY+I=
+	b=jAAMd18AvnJDOW+eFPGgNi75UWOYNbeUXZ51/AbrGuRqPoMUBsI5ky0+IKnxS95Z5
+	 0CTfi6/P1j1krwjI08l6yep2MXbR02+dyGan8u9UFf7PAFO50NFyxwxl2fHXBKdf1j
+	 Ww4MC/rTImQjszE/ZxszIHXTBzXi9cDrJdGlo7E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
 	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0148/1536] comedi: das6402: Add sanity check to interrupt handler
-Date: Sat,  7 Nov 2026 08:36:04 -0500
-Message-ID: <20261107135001.844814218@linuxfoundation.org>
+Subject: [PATCH 6.12 0149/1536] comedi: dt2811: Fix sanity check in interrupt handler
+Date: Sat,  7 Nov 2026 08:36:05 -0500
+Message-ID: <20261107135001.870979961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -72,34 +69,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit e90d0550c5b3056c8821f5cd714f80902de0fca6 ]
+[ Upstream commit 8dda63825752ab19fcbc2a19ecab91d128112415 ]
 
 The driver requests an interrupt handler for the device, after setting
 device registers to disable interrupt generation.  The interrupt handler
 should not be called prematurely unless the user-configured I/O port
 base address and/or IRQ number are incorrect or the hardware is bad.
 
-For safety, check the dev->attached flag in the interrupt handler to
-ensure the device has been fully set up, avoiding a possible null
-pointer dereference of dev->read_subdev.
+For safety, the interrupt handler checks the dev->attached flag to
+ensure the device is fully set up, but it currently does that after
+dereferencing dev->read_subdev, which may be NULL if dev->attached is
+false.  Move the check to avoid the possible null pointer dereference.
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-3-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260618102949.26607-4-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/das6402.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/comedi/drivers/dt2811.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/comedi/drivers/das6402.c b/drivers/comedi/drivers/das6402.c
-index 7660487e563c5..f9a778390ac93 100644
---- a/drivers/comedi/drivers/das6402.c
-+++ b/drivers/comedi/drivers/das6402.c
-@@ -173,10 +173,16 @@ static irqreturn_t das6402_interrupt(int irq, void *d)
+diff --git a/drivers/comedi/drivers/dt2811.c b/drivers/comedi/drivers/dt2811.c
+index dbb9f38da2898..c2ec5e4fb689f 100644
+--- a/drivers/comedi/drivers/dt2811.c
++++ b/drivers/comedi/drivers/dt2811.c
+@@ -193,13 +193,16 @@ static irqreturn_t dt2811_interrupt(int irq, void *d)
  {
  	struct comedi_device *dev = d;
  	struct comedi_subdevice *s = dev->read_subdev;
@@ -109,15 +103,15 @@ index 7660487e563c5..f9a778390ac93 100644
 +	struct comedi_cmd *cmd;
  	unsigned int status;
  
-+	if (!dev->attached)
-+		return IRQ_NONE;
-+
+ 	if (!dev->attached)
+ 		return IRQ_NONE;
+ 
 +	async = s->async;
 +	cmd = &async->cmd;
 +
- 	status = inb(dev->iobase + DAS6402_STATUS_REG);
- 	if ((status & DAS6402_STATUS_INT) == 0)
- 		return IRQ_NONE;
+ 	status = inb(dev->iobase + DT2811_ADCSR_REG);
+ 
+ 	if (status & DT2811_ADCSR_ADERROR) {
 -- 
 2.53.0
 
