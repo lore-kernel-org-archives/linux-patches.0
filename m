@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064340;
-	b=RLT4yuLjKXJJ4QpslD3UWajBrHO961DfO63Pu4IcXhXdooAHuz3w4TLRtwh87ftnengi
-	 ORQ0AVM/I4UxAUmai960JXskTcfgI0WnqEowIc3cngTJmfP9TES5tLsmefOAxkNtMyX9z
-	 0oDzMHzK1nOLZjkZIlsWBCQpXetS5IgKpD4WxuDeriHStgXbf4JECGvRgyz9tZBwCoeo+
-	 NgUN2rc6sV3h7gzSYSYzUYPvuvpWaVj2LlVQLBNbJHzosD4Qr9en0TBA+zQ1ujh0mKahp
-	 QwfC7D8lhV3Vihsr52StJxjkdeVLunfCSrpcf5zNK35oAqjLWYT1d6r1Gbr8tPW7/ow==
+	t=1794064341;
+	b=mI/J7SO/G9MJuGJICN2pq1CCWPvZvKf/YsHz/HhTu83YzlHgpi58DRVTx/lsZkneQSiL
+	 zEUOmq4KqvPrso0K2evvtyAGeqoiaTyyw+iZk+FVkuDOYvGtXZzeQSfXoKxR3wD2F6Tuu
+	 6JE6VAxsDpQRUdA5TVgPbpag1EGJqdA2dw3dRTb467NMP4BV+h0mCxE5mOtpmCFLOfNNY
+	 D/wUBwWG+YEr8PYdcHAOhO7LAlQqwos0muBiBW2pvEVvV7bG3KxRvMtICU4lqNRhtV6LZ
+	 HNQdbObkXPD+ZpeLfsifbFiECjtdkJWuRgKJCwMsmZqkKqzhEVhuyRakk41D91qRowQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064340;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DS420GZDOM7X7KBR6yfc0sLakE1njJPgsE1Pj3ZJodE=;
-	b=NPMuoHa+8XUibJNJC/T2S3xYCi3h43O/E2NbN2t8PfYTUtAS8Hz0iF3zJjqYX+NO0ODF
-	 mpbc+cdjdhLTEKtDT9npMIAcjuvuo0t+BstqQM07dQhK392y/9p2yyB4k2fzopbpjKSbA
-	 A9AGhEvU3tT2gwIY0FJI1ldguD4bjM28N9RCYXcNe2JyV1XP97IHP7/aSyDXmZWQqOGMo
-	 pxb4blzyDbxPx1cd4JhVcSKSiBrkVep+Hq2qT+jwkAXMLebtOFnDMVgB7WcoTTva6pB69
-	 qvykLHRRB0qyIfKaevdIgkboK2ZwfeKLRbFvMJ9ZgIPtfuCzxMEIhfA2jHkpRTLgH+Q==
+	bh=qtt8iszu6t9GBOv6uPds3kqREccuyRZuOBi3nKr/H60=;
+	b=HVJlv+7rojiZunqUe/+31UReLa9PETBDY69FX7BJMrvEPa758ECQX7JPJBeA/Q9rKVMN
+	 g9f48X+YNHa9Ts4nyQJA8j/R5rh/MbWGLUjR4Lb9Zy/KJmyQa/ahotmy9H3xJ/vq4Ft9q
+	 3oQXUY6llzKvTsRulmVa7/8eOoT0krz2ZTvRE0TnAT1sF4RNZyOdANqOQO80QH17GWvjP
+	 KFZE52ErWv8MfRf/tctmyltvzHwOch5DdDUMf4ttPDmSPBWJ/91yZP0qx87xajo6Rgw0i
+	 D7pOC7aWxdTJVh6QknWrJuPHp72luxgvrcd467h5ZyHODAHrtOfHZt7sJF7px0HuBcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jCzVMcC1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SQZHR4tN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10196606A33A;
-	Sat,  7 Nov 2026 15:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DC0606A33A;
+	Sat,  7 Nov 2026 15:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jCzVMcC1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13481F0089F;
-	Sat,  7 Nov 2026 15:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SQZHR4tN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26C21F0089F;
+	Sat,  7 Nov 2026 15:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064339;
-	bh=DS420GZDOM7X7KBR6yfc0sLakE1njJPgsE1Pj3ZJodE=;
+	s=korg; t=1794064341;
+	bh=qtt8iszu6t9GBOv6uPds3kqREccuyRZuOBi3nKr/H60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jCzVMcC1R50kfe3wjqqw4lnR5X8pdifoTSqv3O4UxZTYDPrXVhsaN1yfSIGLQ5Rgt
-	 rhHEC6mswPXTbKllOIfw1J8LP2Jb2SEEkydVOBbVrHqfkekZXsauzAh03sPnRfFmsC
-	 e1hTd220lSE/9kk8KsWd0PRSZVZMWaU1tPtuwhDc=
+	b=SQZHR4tN3nWK25uL+PMxY7Q2BPz61efOsZNfX0hhDgXX5xKz7bMVdVpRjn1gzzafx
+	 i1QicYHJh/2lFPE6UX9qJ9abrJTGIpuuOeGorZZdABbxVnYD9SPVC7SxfZGO2dIOL/
+	 Ba97baUKv1qha3y1mo8Q/bONFS1QRoZsv9KEPGlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srish Srinivasan <ssrish@linux.ibm.com>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0376/1257] pseries/plpks: fix error handling in plpks_read_var()
-Date: Sat,  7 Nov 2026 08:44:32 -0500
-Message-ID: <20261107134949.937623476@linuxfoundation.org>
+Subject: [PATCH 7.3 0419/1257] dm-writecache: fix a crash if we attempt to use non-dax device
+Date: Sat,  7 Nov 2026 08:45:15 -0500
+Message-ID: <20261107134951.076527965@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,76 +67,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srish Srinivasan <ssrish@linux.ibm.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit d52a1659cb1718f93166ab8dd8621237e564a1c4 ]
+[ Upstream commit b15dc73f60ebf02410bc7014ce34fb7fd1040045 ]
 
-When a PLPKS variable is initialized without a policy and used to read an
-object with the PLPKS_WRAPPINGKEY policy set, the hypervisor returns
-H_AUTHORITY along with the object's policy. However, plpks_read_var()
-currently treats this the same as any other H_AUTHORITY failure and returns
-an error without propagating the policy information to the caller.
+If we specify a non-DAX device as a cache device in the 'P' mode,
+dm-writecache crashes on NULL pointer dereference inside dax_synchronous.
 
-Distinguish this case from other H_AUTHORITY failures and propagate the
-returned policy to the caller while preserving the authorization error.
-Remove the explicit assignment of zero to rc on H_SUCCESS, as it is
-redundant.
+Note that this is not a security bug because only root can trigger it.
 
-Also validate the PLPKS variable pointer before dereferencing it.
-
-Fixes: 2454a7af0f2a ("powerpc/pseries: define driver for Platform KeyStore")
-Cc: stable@vger.kernel.org # 6.0
-Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260923182816.151451-2-ssrish@linux.ibm.com
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: a46624580376 ("dm writecache: reject asynchronous pmem devices")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/plpks.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/md/dm-writecache.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
-index 23e4e2a922fcf..7e56b3dcacbc7 100644
---- a/arch/powerpc/platforms/pseries/plpks.c
-+++ b/arch/powerpc/platforms/pseries/plpks.c
-@@ -822,6 +822,9 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
- 	u8 *output;
- 	int rc;
- 
-+	if (!var)
-+		return -EINVAL;
-+
- 	if (var->namelen > PLPKS_MAX_NAME_SIZE)
- 		return -EINVAL;
- 
-@@ -856,22 +859,21 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
- 				 virt_to_phys(var->name), var->namelen, virt_to_phys(output),
- 				 maxobjsize);
- 
--
- 	if (rc != H_SUCCESS) {
- 		rc = pseries_status_to_err(rc);
--		goto out_free_output;
-+		if (rc != -EPERM || !retbuf[1])
-+			goto out_free_output;
-+		goto out_copy_policy;
+diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
+index e4559d1de3dde..6ec3e20553174 100644
+--- a/drivers/md/dm-writecache.c
++++ b/drivers/md/dm-writecache.c
+@@ -2502,6 +2502,11 @@ static int writecache_ctr(struct dm_target *ti, unsigned int argc, char **argv)
  	}
  
- 	if (!var->data || var->datalen > retbuf[0])
- 		var->datalen = retbuf[0];
- 
--	var->policy = retbuf[1];
--
- 	if (var->data)
- 		memcpy(var->data, output, var->datalen);
- 
--	rc = 0;
--
-+out_copy_policy:
-+	var->policy = retbuf[1];
- out_free_output:
- 	kfree(output);
- out_free_label:
+ 	if (WC_MODE_PMEM(wc)) {
++		if (!wc->ssd_dev->dax_dev) {
++			r = -EOPNOTSUPP;
++			ti->error = "Cache device is not a DAX device";
++			goto bad;
++		}
+ 		if (!dax_synchronous(wc->ssd_dev->dax_dev)) {
+ 			r = -EOPNOTSUPP;
+ 			ti->error = "Asynchronous persistent memory not supported as pmem cache";
 -- 
 2.53.0
 
