@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062188;
-	b=a4b3zy/OTwpVAcjSFcQUuxSz3LARyKadgGgoSMJuzmJJaSjSPDBnNs86Fe37bXxXAye3
-	 0vBTJYgjqNwutKZbn4Nq0f5P8heJ8WBYVQXbRksuMcjuhVyNlxIdfHRQ3ZRVzwOGU0zmB
-	 Mf/rlH2zLz6fJC2mRNdvMX83jRrAc9fZIla8BirNTwJkEVubtcM2mmzjB49A3AZzTStuo
-	 9W7sFe5TBQUEIv5EDQoyhxgdDSD6+E8E5FmDzBj5pmuFhx/AppdYDKTC8oE39Em29rY35
-	 u5gVTZuWv+rYysb9O31f+I6H5uM4cPStPd6bI+Z1Kf+qGJATHbQ0gAH/kK6No9+qZ5w==
+	t=1794062189;
+	b=2PLxq+lHiSGvbU/mqui3M7XxxTKciiNdhwUxdILLxFWU+dLF0jclICpxDaLf3Mh+/bNM
+	 G6R43MdA5UF4h5+PDGyIFAzK1a8Afr8+qMuGCU36ORLviCp/yhjunLKb/HlskiT7hVtSF
+	 7S2jyaZHdU/Jq4/ohLmm5lUCOcDMbcjyZ8quvB7ld3abyn9xMKVvnjkc36i0JSD7/rGdi
+	 /s/+sXX6VkM4tcju11ehetasdZ4VqAfuMOFqn3G4GxCHCXxEPC3bD58JikVYA3zV8jDtz
+	 N2tEsZ2w6tZC4+3fkjoqSgR0MLM5C6EvpAda72yqd2aeL7/6f5qWKjdFSVSgB4PS/3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rs7MDZaUbgEdJNzoWdwx0/tV/ekWDGjU/dnWf2oC0cc=;
-	b=cXlU84Zzy14A14y3qG8/aepT41o6vNfPMzzhDAvSD/kEKancRJS36Qfn9xOgCGMe+Z2c
-	 FkkXrNxZ/hV+J5l2bw58zkAiwsNAqIQPW73lMbff0DwLwQT/0mXCa6/xk7+RxaWXOhZxZ
-	 LyMrUADMqh8wE1WVAW9K9bhZVTweF2oUZN4wE/AAbvPNcPcp+A8+lKGn5LNqoNbkZ75rk
-	 HSQQJAga8Of8ltGltxqHGErEPt7m5aK6Iu5klhYOOSfnKN4UI800q67Bp+mmRENuW2Wpn
-	 F3ERX3BwrksyWV61yA4KFdx9/Q9A/xHNQYyqevEQYg4AxxR6Y/9l5wvvFH2a8Oj1OTA==
+	bh=ksI65YZ6Hc0DMkCBWWRTWAtJwm0bSjDcpiqGEROD+Gk=;
+	b=2NdPE6IQ5eEPrTUw2hpNGjPBnDB88QdnUsaUAVQhUcxjDXNu2i6a1lBAr2xDFS3DGP2c
+	 QxHkkrXz4VbmQ3zgZRfdJ3h8CNbW7T9A4/8lgowAUdC/ej7AwHCrfsqbx5Q8Fp17ReNlR
+	 3dnKTh1D7vvsar6uF2D9+sTcrzStVRREbSM18oVwEyGzt3cTHQR3vnfriLoVE9hEgG66U
+	 uJfIoqkV6GQkB2HcGic+JjdRll4O2wgNCotNlzcpHKnUeELFfEfdaDDVjR5GOCmrnyrpD
+	 c7scDOZ4F8uvIjhBRsgAcHVljCIXunr+DYwT+L6PFmGPCT74vEx3Ni2BX4VAtNeCQ9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g+uPrZEF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tOZVuuFj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51BC0606A326;
-	Sat,  7 Nov 2026 14:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907AF606A326;
+	Sat,  7 Nov 2026 14:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g+uPrZEF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF88B1F008A2;
-	Sat,  7 Nov 2026 14:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tOZVuuFj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5DA1F008A4;
+	Sat,  7 Nov 2026 14:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062188;
-	bh=Rs7MDZaUbgEdJNzoWdwx0/tV/ekWDGjU/dnWf2oC0cc=;
+	s=korg; t=1794062189;
+	bh=ksI65YZ6Hc0DMkCBWWRTWAtJwm0bSjDcpiqGEROD+Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g+uPrZEFBqz2d45v2qgd3y1QTXhMzsYrlMNTvAhurlmf8aur6GzS/xyJbLXelCbZa
-	 AQorBz8CPxE68f+RsZQFqUDOCKjfI6ojYtxb8jUx/6COXe0vYyDEHVycqF+CBDX39g
-	 D0JRdQjc5zG0sGJIlmialD0Oan4P0he4y8Hsk3pM=
+	b=tOZVuuFjoxaqdE1kOjsjsDj6z+a9AOJwDS+8QwI67+qfSAPW0Tvg6Va7SHtnOHr2z
+	 NisJy4Mp8NcwZqyBNwSaKb0hfs5aI16qJPGWcXdWgigHoDlowEcqO0xpQn3AIPFM9B
+	 PlifYQIFc+PbI0CtSb0mkys9EAb2dhch5IdBnc64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1145/1536] media: platform: mtk-mdp3: Fix device reference leak in mdp_comp_init()
-Date: Sat,  7 Nov 2026 08:52:41 -0500
-Message-ID: <20261107135029.879984692@linuxfoundation.org>
+Subject: [PATCH 6.12 1146/1536] media: mtk-jpeg: Fix runtime PM leak in mtk_jpegdec_worker()
+Date: Sat,  7 Nov 2026 08:52:42 -0500
+Message-ID: <20261107135029.910329850@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,17 +71,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit ff3308afa9c9da0ef9113cb80803588adabef902 ]
+[ Upstream commit befd4506174addc5e85641b4ef304c9247b48c55 ]
 
-mdp_comp_init() takes a reference to the component platform device
-with of_find_device_by_node(), but the error path taken when the
-clock array cannot be allocated and the one taken for a component
-without a GCE EOF event return without dropping it.  The caller
-frees the mdp_comp in those cases, so the reference is leaked.
+pm_runtime_get_sync() leaves the device's runtime PM usage count
+incremented even when it fails.  mtk_jpegdec_worker() jumps to
+dec_end on that failure, which does not call pm_runtime_put(), so
+the reference taken by the failed resume is leaked.
 
-Release the reference on both error paths.
+Use pm_runtime_resume_and_get() instead, which drops the reference
+again when resuming the device fails.
 
-Fixes: c4320f9721fd ("media: platform: mtk-mdp3: dynamically allocate component clocks")
+Fixes: dedc21500334 ("media: mtk-jpegdec: add jpeg decode worker interface")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
@@ -89,55 +89,22 @@ Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/mediatek/mdp3/mtk-mdp3-comp.c   | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c
-index 8f62fb167156d..9f7cf5ac20723 100644
---- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c
-+++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-comp.c
-@@ -1788,6 +1788,7 @@ static int mdp_comp_init(struct mdp_dev *mdp, struct device_node *node,
- 	struct device *dev = &mdp->pdev->dev;
- 	struct platform_device *pdev_c;
- 	int clk_ofst;
-+	int ret;
- 	int i;
- 	s32 event;
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+index 45868f0218393..9d0244b52baed 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -1743,7 +1743,7 @@ static void mtk_jpegdec_worker(struct work_struct *work)
+ 	jpeg_dst_buf->frame_num = ctx->total_frame_num;
  
-@@ -1814,8 +1815,10 @@ static int mdp_comp_init(struct mdp_dev *mdp, struct device_node *node,
- 	comp->clk_num = mdp->mdp_data->comp_data[id].info.clk_num;
- 	comp->clks = devm_kzalloc(dev, sizeof(struct clk *) * comp->clk_num,
- 				  GFP_KERNEL);
--	if (!comp->clks)
--		return -ENOMEM;
-+	if (!comp->clks) {
-+		ret = -ENOMEM;
-+		goto err_put_device;
-+	}
- 
- 	clk_ofst = mdp->mdp_data->comp_data[id].info.clk_ofst;
- 
-@@ -1840,7 +1843,8 @@ static int mdp_comp_init(struct mdp_dev *mdp, struct device_node *node,
- 		if (of_property_read_u32_index(node, "mediatek,gce-events",
- 					       MDP_GCE_EVENT_EOF, &event)) {
- 			dev_err(dev, "Component id %d has no EOF\n", id);
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto err_put_device;
- 		}
- 	} else {
- 		event = MDP_GCE_NO_EVENT;
-@@ -1849,6 +1853,10 @@ static int mdp_comp_init(struct mdp_dev *mdp, struct device_node *node,
- 	comp->gce_event[MDP_GCE_EVENT_EOF] = event;
- 
- 	return 0;
-+
-+err_put_device:
-+	put_device(&pdev_c->dev);
-+	return ret;
- }
- 
- static void mdp_comp_deinit(struct mdp_comp *comp)
+ 	mtk_jpegdec_set_hw_param(ctx, hw_id, src_buf, dst_buf);
+-	ret = pm_runtime_get_sync(comp_jpeg[hw_id]->dev);
++	ret = pm_runtime_resume_and_get(comp_jpeg[hw_id]->dev);
+ 	if (ret < 0) {
+ 		dev_err(jpeg->dev, "%s : %d, pm_runtime_get_sync fail !!!\n",
+ 			__func__, __LINE__);
 -- 
 2.53.0
 
