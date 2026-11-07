@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063223;
-	b=0uwYcCk56i+U71J38ipLTUV9MfsROmwb+2CkMJ4BJdDJ6Nzs6hgDEei1KF1eToYqXbGi
-	 8nWfDEvIV2e0NU1i3lZR5KQhy/sFPTpCryPRHFVE6WonSVnFv2p1zXY2zij0oA7YvBzzS
-	 xxATiLc8JBB9RHtaO2UPJlLj/BMsd87DrChI52mLaAqV2L8Pnihsof2ZXoSWD2AMQzafT
-	 C+1m3/euRsl4DcW6np9ttOTtW/YrlE2Jp3hVomZx0Kb7UTDcwLZGz4FHPRO14dJehlfAS
-	 6M9RU9eN6UWuxP2gtXfLZJfreZWK1uTkM5yf773GxZ+pIS+wdQBCM+gqiEjnUnQ47JQ==
+	t=1794063224;
+	b=S3HdxKZzG1Hkfs4ZUnMiNF4hABhDuyrcEXHsaKdNdn+ybvNl7Jkw12np37PwG7NPY+Cs
+	 mPnS3CqDEMtZqT1FsyYne8pQsSekdxGSOpRvyqAq2PKqk3z6Q6XDthl19lY8yEsqzE37/
+	 HewqxDdI3LtfEgNHabqLgz78/9vRVH31v9gZP+dRk48PIQtGearTtotgNjNZgHhb9Ettg
+	 hmfMknP0SjJHpRnYUzKOsvyfVmf8N6mPzE1biHGA1LimDPWF5jwj30049biuJMtTyo25S
+	 Mgov/GiRNhnpp0F/bE2clwvNriAvzLZAUmw4mgQ6d95wsz6uygkbTGiHoX0n2MVD6hQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063223;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O5uzda+5KCgzQl3p11weeyLCSIg5RI6R7Ev5V7bcGWg=;
-	b=Ry0obtlvBUCClE3XXtpAKX9op6cCPdzU4lAVlOqmbGn8EtCNLmhUwdD0UXUouxXYRrlh
-	 E4JXUnUcSDuErmryZzK6NuAwgeLZL22zskeNXN9M91ALqUGnrnQORHQ8JFKBC4XWgBKpf
-	 yy5qdE/T5QS4vZJeKARgG1fJ5kxf2I3jQFStibW4YY/T7ou9blD5+h1rja7qfReupx94O
-	 3RFcZXP1NOakMIc9YOgicB+qZ0EveKDzyeg7kGjFOkU4bpeyyKZ6ea0yby8xxuzib+T4y
-	 6ZSha1C2tqQTBRK2iMmVuGr3TJWx5RMCyzPaDoM+HKVO5mlnTePt9KZ969SKLcAAffA==
+	bh=thE0Hp3vZhsVYzyX7TQCUVn+S91U3gQaWeiY+0p7ehQ=;
+	b=uAqZTs6rayxf+vFL9SOvza+B8CO3S1oBOwnjr+A7WRUi7iRBHXFlWRvYFBvOga6uUHyO
+	 W4BzZSZffQkPb+eTqY7KDFJJmc1UZMSSGHpCabf2qcgKJkXYE9cFNRI5dGDS4pGi7vMCK
+	 XlC8RWM8mgvgK/q5kiftEGe0n9qt1a93Hk9C+oDiT3yLjAjkwqo2tT+Eo1WoCP8uFQP4t
+	 mWSRujCsHFurf8z2lmVPNhJW0bRZIWSwMh0BcYTHdyxl59kwVObjxSANT6m7GCu69vZ5L
+	 Y0SvEjyr4Aksa6IkW5sLq1dLvi3tA31FmXgDd4+wodXQTX1uBkVegktE0djKSsco3gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RUWFvtC+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QzMw3zGv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42FC606A326;
-	Sat,  7 Nov 2026 14:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E608B606A326;
+	Sat,  7 Nov 2026 14:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RUWFvtC+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3F71F0089F;
-	Sat,  7 Nov 2026 14:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QzMw3zGv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974F21F0089F;
+	Sat,  7 Nov 2026 14:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063222;
-	bh=O5uzda+5KCgzQl3p11weeyLCSIg5RI6R7Ev5V7bcGWg=;
+	s=korg; t=1794063223;
+	bh=thE0Hp3vZhsVYzyX7TQCUVn+S91U3gQaWeiY+0p7ehQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RUWFvtC+SQwfC4gC2QWJjORt+0MPRngSx8c8FBNoaPBsLEwD24AsUrqaiSbZR20Ol
-	 K1NJv1x+5L9A/Z0nbp4jDxDrD6KvRoG/1P1HQIgWVlqBKcop3dKrRO4Ta6cFP7ds4R
-	 nS8WeoHi2If7PiWZvK3ISCbpazUNCf/MVTP7A6JU=
+	b=QzMw3zGvl9azASzaAZ1MAbXdEVQ0b1R28AX4yagPxczX62Ed5An7lTA3ycTp+sibv
+	 xuIw7q9Whxnt53nsGTDFnxQy3Uc3uZnhQI0hzn9+HbhlePFqIdwg/NIk9GJ2kVPsf8
+	 MNCbluSW46gOhwqRbX/sV5VC4UOIniuZwcDu6xAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Longlong Xia <xialonglong@kylinos.cn>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sashiko <sashiko-bot@kernel.org>,
 	Yosry Ahmed <yosry@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
 	Chengming Zhou <chengming.zhou@linux.dev>,
 	Johannes Weiner <hannes@cmpxchg.org>,
+	Nhat Pham <nphamcs@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 430/869] mm/zswap: publish the initial pool with list_add_rcu()
-Date: Sat,  7 Nov 2026 08:51:52 -0500
-Message-ID: <20261107134908.410556587@linuxfoundation.org>
+Subject: [PATCH 6.18 431/869] mm/zswap: enable zswap_ever_enabled in zswap_pool_create()
+Date: Sat,  7 Nov 2026 08:51:53 -0500
+Message-ID: <20261107134908.437057369@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -75,59 +74,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Longlong Xia <xialonglong@kylinos.cn>
 
-[ Upstream commit c1dd5e24a82d19bff8eef50ba8205d4776584aff ]
+[ Upstream commit 91b4edb993e1549afdc3c2495216734b9f13f00e ]
 
-zswap_setup() publishes the pool on the zswap_pools list with a plain
-list_add(), but the list is walked by concurrent RCU readers holding
-nothing but rcu_read_lock() through zswap_total_pages(), e.g.
-/proc/meminfo and the shrinker count path.
+If zswap is enabled by default at boot and pool creation fails, then a
+pool is later created by updating the compressor, data written to zswap is
+corrupted on swapin.
 
-    CPU 0 (writer)                          CPU 1 (reader)
-    --------------                          --------------
-    zswap_pool_create():
-      pool->zs_pool = zs_create_pool(); (1)
-    list_add() -> __list_add():
-      WRITE_ONCE(zswap_pools.next,
-          &pool->list);                (2)   zswap_total_pages():
-                                                pool = READ_ONCE(     (a)
-                                                    zswap_pools.next);
-                                                zs_get_total_pages(   (b)
-                                                    pool->zs_pool);
+Enable the static key in zswap_pool_create(), covering boot-time and
+runtime pool creation with a single site.
 
-If (2) becomes visible to CPU 1 before (1), CPU 1 finds the pool at (a)
-but dereferences a wild pointer at (b).  Publish the node with
-list_add_rcu().
+Verified with fault injection on a stock kernel (compressor builtin,
+CONFIG_ZSWAP_DEFAULT_ON=n):
 
-Link: https://lore.kernel.org/20260908012801.1864430-1-xialonglong2025@163.com
-Fixes: 91cdcd8d624b ("mm: zswap: optimize zswap pool size tracking")
+  1. Boot with zswap.enabled=1; pool creation fails, init completes
+     pool-less (static key off).
+  2. Echo an available compressor name to zswap.compressor.
+  3. Enable zswap.
+  4. madvise(MADV_PAGEOUT) a pattern-verified 512 MiB region, then
+     fault it back in and verify.
+
+Step 4 reads back 131072/131072 zeroed pages (zswpin=0, zswpout=131072)
+without this patch; all pages intact (zswpin=131072) with it.
+
+Link: https://lore.kernel.org/20260906135938.3568108-1-xialonglong2025@163.com
+Fixes: 2d4d2b1cfb85 ("mm: zswap: add zswap_never_enabled()")
 Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260906133601.3563324-1-xialonglong2025%40163.com
+Suggested-by: Yosry Ahmed <yosry@kernel.org>
 Acked-by: Yosry Ahmed <yosry@kernel.org>
-Acked-by: Nhat Pham <nphamcs@gmail.com>
 Assisted-by: Zcode:GLM-5.3
 Cc: Chengming Zhou <chengming.zhou@linux.dev>
 Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/zswap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/zswap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/mm/zswap.c b/mm/zswap.c
-index 18249dd96ef86..e4b2f6abefafb 100644
+index e4b2f6abefafb..d2e5f0cff71db 100644
 --- a/mm/zswap.c
 +++ b/mm/zswap.c
-@@ -1818,7 +1818,7 @@ static int zswap_setup(void)
- 	pool = __zswap_pool_create_fallback();
- 	if (pool) {
+@@ -288,6 +288,8 @@ static struct zswap_pool *zswap_pool_create(char *compressor)
+ 
+ 	zswap_pool_debug("created", pool);
+ 
++	static_branch_enable(&zswap_ever_enabled);
++
+ 	return pool;
+ 
+ ref_fail:
+@@ -1820,7 +1822,6 @@ static int zswap_setup(void)
  		pr_info("loaded using pool %s\n", pool->tfm_name);
--		list_add(&pool->list, &zswap_pools);
-+		list_add_rcu(&pool->list, &zswap_pools);
+ 		list_add_rcu(&pool->list, &zswap_pools);
  		zswap_has_pool = true;
- 		static_branch_enable(&zswap_ever_enabled);
+-		static_branch_enable(&zswap_ever_enabled);
  	} else {
+ 		pr_err("pool creation failed\n");
+ 		zswap_enabled = false;
 -- 
 2.53.0
 
