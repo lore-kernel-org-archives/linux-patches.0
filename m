@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062300;
-	b=bg6BsHOiczrHsRVkveG481slClFRfzOnXz6IpB3B8Us1NkvJvW2+FnfePh1Ndf8svf+A
-	 nfCkjvZQpnTcxKKXJ8KPGKLv4jXBy/fpqd3vjbxRkJHEIa7xUn1OlCSjpZ6h/dV1z9Dj1
-	 OPgzd+9nXbYEsq1oUCWq20J2PZwo/RFGefhW8yfsWAENixPtI9dyOCP45oNDzJ8oV7ko9
-	 M11M5ZWVuCshcusTyKSQEuDmIBilcDJ5ZjU19IzlpthyraU5H5K/gjW/uB9CLSpZ4BQLu
-	 IhhKwoz2xfggKWyciNr4yBTXly21Ih9Ahtk9SDL3H+fXvTGVlKhi3pRtfTAy8WiB9zQ==
+	t=1794062301;
+	b=OHj13Pw+74oj4DKa2OdDzNHCuu4NIRMe1CPng15ot2C1B7NjpZu0vXEcx68TpRd/7CQL
+	 40/xoyY4i6DZUQ4qw/UT+N5rWhJzkKF5npdZfBZVMDGZpd2GJxN6T5HIDDjvMGG3PXUCM
+	 a4DaFnO3CnoS3aG0CXHuW2tIhG6cU+Tuqlz3SsUy8zQWQ6P6atcx439VYRqA37Rke3Ybh
+	 8MdpV6vIJhYQzTISUdtIQ+Yy84zBXkpnTC5C5AZDaQvhKrXSJb8EPvH2eH+I/ZH8NeJDx
+	 PeHcg35oh4npoGs5pWgl4Wl/3uoD9q7nmaF+w3ZrM+coaBTVdakhtwE7EIq+qEIDXyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062300;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062301;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LUNH8d1MxfR7/I7cxunKtI2xszJoa1dLsAOFLETdqF0=;
-	b=yzqp7Is1znEL+PoSmrv0xF3rcCdjHWYKRGyRFDfWmsc1+1Ciz/4JR1dYHYPWcX2ahvZO
-	 d13AIv4Oi+tLJl4+a7DgXSF6ixl2mCUFvX7Rvuhkve/JRnpBiq5F0hvukCuAlDtDIRxSZ
-	 MosG1ZAfCEA38cVwstQIcNNFtvmStm0/q2eRWyxbJ2LgxEWyInfqcWg+ruQQu4U51jwSK
-	 MRS78F6VMlt2dGmp/l9okhQ7sA7XaJt3QOC8vYON38YCp3lNyL7DkX54BRJr2bCM4w1UO
-	 QVqx8sfuSiKw65rUIqvGeZ9soQdLm6ziM4ElDUhHjiYFmCYD7//QirP9bodaeOgtEYQ==
+	bh=U5q8NN5XiTRstvtd8fdW8oDCL2hjfju98t2HL0uaUUQ=;
+	b=V0sqmfGzgetHlyBuSrg/Ttw9e8RlxigsJ74K/bXaYlGpDYHKO0+zDbI3Fz0+fDnEHxlR
+	 Uq5+sNVn5Vrq2PrDIecLnvVBN/i+n6X+zU5UP3w4jsvk746JZDwlRnaxgY2r6SUjhAa7U
+	 Hn9PVTgijyD0WtHUKbyX04lOMWwzBLwptyE0oSRVwG95m/xF4flcqTPdobtT3miJUyCFE
+	 nzJOfeXrBDNSR8Mer5de64JtZ/FMcFXXJrx4E5Q6cAzPZW2fKv0A6yruaZRU6Ud6w7EtD
+	 X3iY6jihm+RxnH3QzBIwA22fZ+1Tp8yYrFjouqzs4NIrMBNKBJs3x1+ZpMybMjHBb2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OSwFzzha;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWAc46DB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB842606EEB7;
-	Sat,  7 Nov 2026 14:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4F7606D818;
+	Sat,  7 Nov 2026 14:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OSwFzzha
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8705C1F0089F;
-	Sat,  7 Nov 2026 14:38:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TWAc46DB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82B91F0089F;
+	Sat,  7 Nov 2026 14:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062299;
-	bh=LUNH8d1MxfR7/I7cxunKtI2xszJoa1dLsAOFLETdqF0=;
+	s=korg; t=1794062301;
+	bh=U5q8NN5XiTRstvtd8fdW8oDCL2hjfju98t2HL0uaUUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OSwFzzhaStvgedgxlQNzCF5fxmmfhYp27dFWkM3xSAipemf4t0yy7gfLEMQj99QrW
-	 F7N6/3kRAnQ392derHqV7ndazVc8WWwQjVRygW/vkK/SAsg9cY9ZWtjDeFR7ehjNhM
-	 GMToCTsJ0IR+iN8iOm42borbu9NyfJzjuMetYTMI=
+	b=TWAc46DBPvL/Znm4HnyVKxHe72Zp07tiFwgqPLNbPjEj22n/eoky81Lpzl4ICR75P
+	 oNuAeh/fx9uU4zTU6LuD2T/l7FZtxIoB4fqRtW7SZTZkjlavsneGHZiJl9yJry1fxF
+	 O9Sgm7BMBbQZuMtynPZc8xUGUYDJvbesTsuic+ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Menninger <tmenninger@everpuredata.com>,
-	Chuck Lever <cel@kernel.org>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	syzbot+95eeb4ada2349a2170ea@syzkaller.appspotmail.com,
+	Yu Kuai <yukuai@fygo.io>,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1234/1536] xprtrdma: prevent disconnect feedback during endpoint teardown
-Date: Sat,  7 Nov 2026 08:54:10 -0500
-Message-ID: <20261107135032.416218518@linuxfoundation.org>
+Subject: [PATCH 6.12 1199/1536] md: dont hand out the array before md_alloc() has added mddev->kobj
+Date: Sat,  7 Nov 2026 08:53:35 -0500
+Message-ID: <20261107135031.426135473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,91 +69,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Menninger <tmenninger@everpuredata.com>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 0b5bb4e586f7b0a449f4d90a524f76a3be5db355 ]
+[ Upstream commit d1472ca2ca5de8ecd2b358411eb14c031404ecf0 ]
 
-xprt_autoclose() clears XPRT_CLOSE_WAIT before invoking the transport's
-->close() operation. For RPC/RDMA, ->close() calls
-rpcrdma_xprt_disconnect(), which disconnects the RDMA CM endpoint and
-drains its QP.
+md_alloc() publishes the gendisk before it is done setting the mddev up:
 
-Since commit 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on
-connect"), RDMA_CM_EVENT_DISCONNECTED requests a SUNRPC transport
-disconnect. Today that path, along with failed completion handling,
-reaches xprt_force_disconnect() through rpcrdma_force_disconnect().
+	disk->private_data = mddev;
+	...
+	error = add_disk(disk);
+	if (error)
+		goto out_put_disk;
 
-Commit c487eb7d8e41 ("xprtrdma: Clean up disconnect") later added
-re_force_disconnect to ensure that multiple failure indications request
-only one SUNRPC disconnect. However, the gate remains open when SUNRPC
-itself begins endpoint teardown.
+	kobject_init(&mddev->kobj, &md_ktype);
+	error = kobject_add(&mddev->kobj, &disk_to_dev(disk)->kobj, "%s", "md");
 
-If re_force_disconnect is still clear, either a CM disconnect event or a
-completion error can set XPRT_CLOSE_WAIT again while the current close
-is in progress. When the transport send lock is subsequently released,
-xprt_clear_locked() observes XPRT_CLOSE_WAIT and queues another
-autoclose.
+add_disk() makes /dev/mdN openable.  mddev comes from mddev_alloc() and
+is zeroed, so anything that gets in between add_disk() and kobject_add()
+sees an mddev->kobj that has never been through kobject_init() - no
+ktype, no kref, state_initialized clear.
 
-Requesting a disconnect this way is necessary when a connection is lost
-unexpectedly, but not when the event was generated by
-rpcrdma_xprt_disconnect() itself. In that case SUNRPC is already
-committed to closing the transport.
+syzbot opens the array in that window and issues ADD_NEW_DISK:
 
-Mark re_force_disconnect before initiating local endpoint teardown so
-that CM events and completion errors caused by that teardown cannot
-request another close. An unexpected error that wins the race before
-local endpoint teardown begins can still request a disconnect normally.
+  kobject: '(null)' (ffff8880120640f0): is not initialized, yet
+  kobject_get() is being called.
+  WARNING: lib/kobject.c:642 at kobject_add_internal+0xea/0xcd0 lib/kobject.c:225
+   kobject_add_varg lib/kobject.c:374 [inline]
+   kobject_add+0x163/0x240 lib/kobject.c:426
+   bind_rdev_to_array+0x80c/0xdd0 drivers/md/md.c:2621
+   md_add_new_disk+0xe3b/0x1850 drivers/md/md.c:7684
+   md_ioctl+0x200a/0x2610 drivers/md/md.c:8499
 
-Use a fully ordered exchange so that the gate is globally closed before
-rdma_disconnect() can transition the QP to error and generate the
-callbacks that the gate suppresses.
+bind_rdev_to_array() is not the only way in.  md_run() calls
+sysfs_create_group(&mddev->kobj, &md_redundancy_group), and
+internal_create_group() has its own WARN_ON(!kobj->sd), so RUN_ARRAY in
+the same window warns too.
 
-In 30-second traces of a sustained recovery loop, without this change
-there were 7,693 xprt_force_disconnect() calls, 6,267 SUNRPC autocloses,
-and 172,892 receive-side IB_WC_WR_FLUSH_ERR completions. With this
-change, the same tracepoints recorded 3,512 xprt_force_disconnect()
-calls, 3,212 autocloses, and 131,287 receive-side flush completions.
-Thus QP teardown continues to produce flushed completions, but closing
-the disconnect gate before teardown substantially reduces their
-feedback into the SUNRPC close path.
+Every ioctl that can reach mddev->kobj runs under reconfig_mutex, so
+hold it across add_disk() and kobject_add().  An ioctl issued in the
+window now waits for md_alloc() to finish instead of seeing a
+half-built mddev, and opening the array still succeeds.  The ioctls
+md_ioctl() serves without the mutex only read array state and return
+-ENODEV on an array with no disks.
 
-Fixes: 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on connect")
+Hoisting kobject_init() above add_disk() is not an option: commit
+ca39f7502425 ("md: fix mddev->kobj lifetime") moved it below add_disk()
+so that md_alloc()'s error paths, which free the mddev directly, never
+see an initialised kobject.
+
+Fixes: ca39f7502425 ("md: fix mddev->kobj lifetime")
+Reported-by: syzbot+95eeb4ada2349a2170ea@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6aaf3284.514bccd6.255447.0003.GAE@google.com/
+Suggested-by: Yu Kuai <yukuai@fygo.io>
 Cc: stable@vger.kernel.org
-Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
-Reviewed-by: Chuck Lever <cel@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Assisted-by: LLM
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Link: https://patch.msgid.link/20261006122904.1538-1-yogeshgaur.83@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/md/md.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 8449107b2a095..111c415f1aeda 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -114,9 +114,9 @@ static void rpcrdma_xprt_drain(struct rpcrdma_xprt *r_xprt)
- 	rpcrdma_ep_put(ep);
- }
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 4c17608e066dd..e54fe6f3319a8 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -6010,12 +6010,22 @@ struct mddev *md_alloc(dev_t dev, char *name)
  
--/* Ensure xprt_force_disconnect() is invoked exactly once when a
-- * connection is closed or lost. (The important thing is it needs
-- * to be invoked "at least" once).
-+/* Ensure xprt_force_disconnect() is invoked at most once for an
-+ * unexpected endpoint failure. Local endpoint teardown closes this
-+ * gate before it can generate CM events and flushed completions.
-  */
- void rpcrdma_force_disconnect(struct rpcrdma_ep *ep)
- {
-@@ -587,6 +587,9 @@ void rpcrdma_xprt_disconnect(struct rpcrdma_xprt *r_xprt)
- 	if (!ep)
- 		return;
- 
-+	/* Prevent teardown-generated events from requesting another close. */
-+	atomic_xchg(&ep->re_force_disconnect, 1);
+ 	disk->events |= DISK_EVENT_MEDIA_CHANGE;
+ 	mddev->gendisk = disk;
 +
- 	id = ep->re_id;
- 	rc = rdma_disconnect(id);
- 	trace_xprtrdma_disconnect(r_xprt, rc);
++	/*
++	 * add_disk() makes the array openable before mddev->kobj exists.
++	 * Hold reconfig_mutex until kobject_add() is done so that ioctls
++	 * issued in between wait instead of using an uninitialised kobj.
++	 */
++	mddev_lock_nointr(mddev);
+ 	error = add_disk(disk);
+-	if (error)
++	if (error) {
++		mddev_unlock(mddev);
+ 		goto out_put_disk;
++	}
+ 
+ 	kobject_init(&mddev->kobj, &md_ktype);
+ 	error = kobject_add(&mddev->kobj, &disk_to_dev(disk)->kobj, "%s", "md");
++	mddev_unlock(mddev);
+ 	if (error) {
+ 		/*
+ 		 * The disk is already live at this point.  Clear the hold flag
 -- 
 2.53.0
 
