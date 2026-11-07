@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063124;
-	b=Z0V1W+FtuCwRxTKPCpx7Xr5NcXHkUZ8oDuYkJl9uGCHmW6wnFuMmjSJuJbiMBiKChnLg
-	 kfCrjTK9cYGpqMcULaKGr68PDrw6WDYZYw3U+HYRt0TBenJjm8eO8IV7xEtx3XfxAe5le
-	 XSiRNYjRAqNHwck71IRWch2FcyGlwaJHjBR2aA3qAWrJXDRjC5B/5r9D6l9U7H213NBhR
-	 NXBUvpSA9M72Tzeky6g4o0BKiM/fLeqzeEinnjnSks8odzD6xoy8mIvXe+fmXlQeKDZLB
-	 pI1Dt4qe2mV+GwtL50ATSglguJ8kpuQUi0sQieZa8NC01ixXZApOjHv0+IB4MDM5eXA==
+	t=1794063125;
+	b=XLLhbceogSZN9dVXF9clhSAspL661MAxRtSL4f86ju0uvwTHsNlr9CTvBYfVl4SQ2QOm
+	 tuKXrb/um6Gt0wEhDMWRfA7pshNlz8675nb6H3G3TPqzqHnE6EAiybpQWSHEXchMJzh7S
+	 sLJ0E/EMNtcTshKmUa2KRIq4syfEDbHQ9p1Bx6lrro554udZnB5tlgE9fYoL96Tq8TUZz
+	 teQw/B7FGIaU+2stGISgneFYR+B/GFOtK82OMNGBDyXbjZA7f4IBuQzVYw5Q6jHF/uW40
+	 MLiKtOnzTY/wSfzD5PqAezhAYjTMgt4x7AFEA3MNpFOGd50llt5uSG7MLmZfyIFGewg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063125;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9aGtfobb+D8kfAilU700M6E/h4yVp0scNwQ6mU95xnI=;
-	b=tlZRXQf2vWxf/STsdKoWZQR/DuUW4Bma3+WeAmsi1CGqIr752xogjn0zkjoCPTBUhs91
-	 TbWyg7VXSITfepEgfAY5p4qCg/8XB6RsNuWfpLJ77/SoVeCcHrqN1N4uOBOg1xikSBcpX
-	 hmPtm136tTshhBvdgIJs8HAmqQl2DQVXtYM2zInnAnGEN6yIoEtI7dZ1SPX0LglK1S+Np
-	 YXn2NRSyJ+6bWU1dyFDItEgEFGexWZJwd46MTnKja9GbvMyRee4VPsCbWQz0PQXYeRE5Y
-	 hsuX+0wv0HfvDnqiwA2IeQiuQjaHhbReK0ItACCh6irGtVF+iyIh5ruK4cs/AfxNrPA==
+	bh=UIDAsNQ8Y7Nw+EvX0S2+JszGBg/+vZNQlqk9bHq+A6U=;
+	b=kTrx7p+yFJVkuceTcoj2lDP9k/HRM33EBSWWvdnar6gmIJ8TOPZzpzHD92//siA8hbmR
+	 GAFeRemb8t1nhK3N1aJi9mZ8Dx7hXh7dM66BUF6WRGqqzzvq0j7MHlLVv8GU9AcRgEJZk
+	 P4XR0xDmp4S8bNEck9Db7MQMFNPxIHwtUC7XAeq2tBbcnZ3kH5BVESwmOckxWHsJARf1I
+	 +611ApDY2SaK7iITcYUcT42MA39xoTH9+++xN19wfr12ioLeQoAfW+7Ojk3TlwSAx66uv
+	 NkJ7Y6WfEcaFOzhLanb0neLUhcQkkHx6+TUcc/jVsoJ9ZeX5+5jfuwsclbTWHIrFWxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0UFIgPU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TrDLQUx1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3742606A33B;
-	Sat,  7 Nov 2026 14:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354D1606A330;
+	Sat,  7 Nov 2026 14:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0UFIgPU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882631F0089F;
-	Sat,  7 Nov 2026 14:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TrDLQUx1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E471F0089F;
+	Sat,  7 Nov 2026 14:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063123;
-	bh=9aGtfobb+D8kfAilU700M6E/h4yVp0scNwQ6mU95xnI=;
+	s=korg; t=1794063125;
+	bh=UIDAsNQ8Y7Nw+EvX0S2+JszGBg/+vZNQlqk9bHq+A6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z0UFIgPUY+z1E5eBQiTu1BOZ3i0nscPlOcoJanPrlG06cWPfgYeHb62Gemv6Y4Vt/
-	 fl8EK1O1a/em83r4RCcCNgIkEkn4KgeRXBoxnO6GqCnIeHhScAoQARrK/yOZSHpWe4
-	 GLWZvEsZlU6mwZndZRpSkstZe2cJHbsPSJxEi+Mo=
+	b=TrDLQUx1Jv/872YFEklKmaHtIUvTB5ebqzMakcyNTbPVj7X1uQSvpztatuKlNOqED
+	 Ay8jPUkGiz1yoofXYCQrmHpGMDRdsv5vDbciPEwloSNFFFBKRmjzHxGI4R05+UqCEv
+	 gOSghPpRpWTeVdLVBpivMJU+bnQvretUyhO5asSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 315/869] dm: fix a bug in dm_accept_partial_bio
-Date: Sat,  7 Nov 2026 08:49:57 -0500
-Message-ID: <20261107134903.177609886@linuxfoundation.org>
+Subject: [PATCH 6.18 316/869] dm-writecache: report I/O error if flush failed
+Date: Sat,  7 Nov 2026 08:49:58 -0500
+Message-ID: <20261107134903.206884321@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -69,47 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit a279804752e6c767b7f9ecbb32a15bdfd2b80aea ]
+[ Upstream commit 78a6afc2999d26e5a30a56db77db34c22b88f5d5 ]
 
-dm-writecache doesn't work in pmem mode - mkfs.ext4 and the following
-fsck.ext4 fail with data corruption reported.
-
-The commit 7dd76d1feec7 ("dm: improve bio splitting and associated IO
-accounting") introduced a latent bug in dm_accept_partial_bio - it set
-tio->io->sectors = n_sectors;. This is incorrect, according to the
-diagram in the source code at dm_accept_partial_bio, it should be the
-size of regions 1+2, not the region 2 alone.
-
-The latent bug become real bug with the commit 8b211aaccb91 ("dm: add two
-stage requeue mechanism").
-
-dm-writecache in pmem mode is the only target that actually advances bio
-with bio_advance and then calls dm_accept_partial_bio (so, the region 1
-is non-empty). All the other targets call dm_accept_partial_bio with
-region 1 empty, so bug went unnoticed for so long.
+There was a bug that if writecache_flush fails due to I/O error, the
+error is not reported in the FUA bio. This commit fixes it.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-5
+Assisted-by: opencode:big-pickle
 Cc: stable@vger.kernel.org
-Fixes: 8b211aaccb91 ("dm: add two stage requeue mechanism")
+Fixes: 48debafe4f2f ("dm: add writecache target")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-writecache.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index f587b7229ce89..077bf8b16a0bd 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -1349,7 +1349,7 @@ void dm_accept_partial_bio(struct bio *bio, unsigned int n_sectors)
- 	 * for accounting but it is being reduced so update accordingly.
- 	 */
- 	dm_io_set_flag(io, DM_IO_WAS_SPLIT);
--	io->sectors = n_sectors;
-+	io->sectors = *tio->len_ptr;
- 	io->sector_offset = bio_sectors(io->orig_bio);
+diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
+index 34148aa4df799..1e32053c27172 100644
+--- a/drivers/md/dm-writecache.c
++++ b/drivers/md/dm-writecache.c
+@@ -1493,10 +1493,13 @@ static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio
+ 		}
+ 	} while (bio->bi_iter.bi_size);
+ 
+-	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks))
++	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks)) {
+ 		writecache_flush(wc);
+-	else
++		if (writecache_has_error(wc))
++			bio->bi_status = BLK_STS_IOERR;
++	} else {
+ 		writecache_schedule_autocommit(wc);
++	}
+ 
+ 	return WC_MAP_SUBMIT;
  }
- EXPORT_SYMBOL_GPL(dm_accept_partial_bio);
 -- 
 2.53.0
 
