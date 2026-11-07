@@ -1,54 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065314;
-	b=BcbHgUw5k0XqWwAzRiw6B3pakOGjQTt2ztWKvzMvabfvpcU6BhNVK8/3TLyvSMQOoATu
-	 xMg/ahIQPPr6MDDenpfQLwTs9z3t/jEYN10502p0mLtZxiHptpAhtOaz9KjjbfWytgMFv
-	 n5r5H+tX6q9KyHEsuaFw99hAsPwqe9Ukm0bUJXAOwjqoactPdDicIzjklolvSkrUa+9DG
-	 i98Kf+1NV+t4BaCEoiEvMVwk/jtLgV7TdTjxUBxUBCSV24bVZ3mFm7r2j1X2NKhxFbsOl
-	 ow7u0gsvqCaS4s2hQ1+m8p2KdQ5nwETvTGXPFeLdN5vzMEmfOFwcnCQng8QXzJyWVlw==
+	t=1794065317;
+	b=OSEIQQtTzEiJEcVFlN02hLmk8v9QPfNyXflLgtDgxTkBRJ+RU5BjOVMLjcN/IIGsOLlU
+	 gRw1gycVXYRq7kkccS0/6ll6lPfkz5yT4tkFxCbUzgVMoyFYWmR7L7UGJ2UYrZnW7jBRH
+	 lpjFJwM8IYiukjkNFjD+KNyEybX+AHPaPxtIA2PcAoYLWUan76fzCiXa54xxhlqZ7NwE6
+	 foSKbatFKw7cxYqK1a/kndEDaRR99kJHDAaHCBxehRJ4YIK6VLG/iOoGUyEx4buBQDn+y
+	 JaFrIJMC35eTRGbi5zBjuEpo91fW7waoT//ES0KjaujOSEdBs6IeRC/q/zK6RHoEDIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mh4elqeJ1JWnspvsgJn9iCllf7yZtH/3JAZQI96YxWQ=;
-	b=EUP+6Dz5yYFKbUQ0fI4H2JI9hnh12E/nxO3TvpUBM+UVM8fPdEcNhR5eR+xtFoEgKmcO
-	 ZiGR9D3TjnI674ixJ2S9TycyJGoZtVzakVM76bDDTL9EvMUYR43B/nsYPBCdQPtfcO4NZ
-	 k7MzI9ZJOOxwfrl2CXgltX3kn+cNaIa77VOzQMZlefjoZvV0z69NQzISTenucmt4tmk5L
-	 9bzpa3cYo26g+6NRs/V/Vcpr0WGunnHCXooxsEHx+yHtNyFDu0BEO8DE8cO71rWnGtGt7
-	 BIm70krSU5qFeE94V94IqsMuqCTwcahWKFl8Sh8wZ526XrC26QoQAvB8+ICyBpm9pjw==
+	bh=iQL8DFigNGINWv5P0/uIJp4jcu6jIAnBMcrk/Qo+J5s=;
+	b=gFJWPBYPLCeHgMov6UaArfZEMQ5pT5+aw0oc5/Wyj73XjQM07k2xGOwSjFAB0vupiihx
+	 KXmjj2lwpSjKsUAwzIfzgYc9xnjJDoAl8O3RjqsRyr3dIIHu1ahXzjY1EthUz+sZRmeJC
+	 01tHct+XCTmc8m+GYo9ySTF8r+zbH38Q5Q4pOw3kh1Zo+YbJkQLfz47NnFS6m8cfUtesi
+	 pXiUKQbli0n3zjIthWWZtEmSHyD5N12H81IvnSQ1sc75Xfv6mOqxr/hoWeNYFdfEESsZn
+	 kIOPKvjled8UfbChvlftis63U92m/uN+MtLPDVkX0oASTZhJdYTIrh8tH5tcX8SI4BQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EMuuNfzy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhLeVdaZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF93606A32D;
-	Sat,  7 Nov 2026 15:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082BF606A32D;
+	Sat,  7 Nov 2026 15:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EMuuNfzy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1AAE1F0089F;
-	Sat,  7 Nov 2026 15:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhLeVdaZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE491F0089F;
+	Sat,  7 Nov 2026 15:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065314;
-	bh=Mh4elqeJ1JWnspvsgJn9iCllf7yZtH/3JAZQI96YxWQ=;
+	s=korg; t=1794065316;
+	bh=iQL8DFigNGINWv5P0/uIJp4jcu6jIAnBMcrk/Qo+J5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EMuuNfzya43YHHKyOYn4xsvaSfBdZlyR7WUO/wVSNEjo02eTvCo3wgWhRXqzb6AzH
-	 deZ1O/8mOJrcmGkKDuKI2+grDcujYpadKGlqX2dzv11Bj46JMc2lFUR+DT9C0N6zrd
-	 Lsmqd0tSx8wVZgYx1L83CFnarTeCQnpQ3GMFQp/Q=
+	b=fhLeVdaZ1/fJ4sFChyweVJpdUMiDkZMGfjkduW+lLtDN2Z0cDCpAdFGoVSmxmlTlM
+	 Py+Kl0p3uGXKPCdCOU1lt2fO0hXhBJ0Co9m62wXfA7Yjm3OsP7Tt5TUfo/3WREEXSd
+	 k9xloqWiQTlduBnLu+sgSdfFPIPO8XOXV6Ykt9+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
+	Caleb Kan <ckan@cloudflare.com>,
+	Matt Fleming <mfleming@cloudflare.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Caleb Kan <calebkan1106@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1063/1257] compat: avoid double rounding in times()
-Date: Sat,  7 Nov 2026 08:55:59 -0500
-Message-ID: <20261107135008.637221933@linuxfoundation.org>
+Subject: [PATCH 7.3 1064/1257] stackdepot: stop preallocating after the final pool
+Date: Sat,  7 Nov 2026 08:56:00 -0500
+Message-ID: <20261107135008.663764697@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -70,50 +76,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Caleb Kan <ckan@cloudflare.com>
 
-[ Upstream commit 6b30c39a5e333cfb1475acf0f73de6ef954eea8a ]
+[ Upstream commit 8f56ea8e0706d92774603260779c7032f03ef3ac ]
 
-do_sys_times() already converts CPU time to USER_HZ ticks.  The compat
-path converts each value back to jiffies before converting it to
-COMPAT_USER_HZ.  This round trip can lose precision even when the two
-userspace rates match.
+depot_init_pool() decides whether another pool is needed before it
+increments pools_num. When it registers the last allowed pool, pools_num
+is still one below stack_max_pools, so the existing comparison clears
+new_pool.
 
-With HZ=250 and USER_HZ=COMPAT_USER_HZ=100, one user tick becomes two
-jiffies and then zero compat ticks.  Every odd tick count loses one tick,
-so any of the four tms fields can underreport CPU time by an additional 10
-ms.
+With new_pool cleared, stack_depot_save_flags() can allocate another
+order-2 pool after a lookup miss. depot_keep_new_pool() retains its pointer
+in the global new_pool, so the allocation is not lost. However, pools_num
+has already reached stack_max_pools, and depot_init_pool() rejects every
+attempt to register the pool. It remains allocated and unusable until
+reboot. The non-NULL pointer prevents later saves from allocating more
+spare pools.
 
-Return the value directly when the native and compat units match.  Keep
-the existing conversion for differing rates.
+Account for the pool being registered in the limit check so registering
+the final pool installs STACK_DEPOT_POISON and prevents the extra
+allocation.
 
-Link: https://lore.kernel.org/20261020210157.52057-1-dennylin0707@gmail.com
-Fixes: f06febc96ba8 ("timers: fix itimer/many thread hang")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://lore.kernel.org/20261022083330.3159793-1-matt@readmodwrite.com
+Fixes: 31639fd6cebd ("stackdepot: use variable size records for non-evictable entries")
+Signed-off-by: Caleb Kan <ckan@cloudflare.com>
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Marco Elver <elver@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Cc: Caleb Kan <calebkan1106@gmail.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sys.c | 3 +++
- 1 file changed, 3 insertions(+)
+ lib/stackdepot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sys.c b/kernel/sys.c
-index 35b538ba843c7..755bfa5ccd92c 100644
---- a/kernel/sys.c
-+++ b/kernel/sys.c
-@@ -1077,6 +1077,9 @@ SYSCALL_DEFINE1(times, struct tms __user *, tbuf)
- #ifdef CONFIG_COMPAT
- static compat_clock_t clock_t_to_compat_clock_t(clock_t x)
- {
-+	if (USER_HZ == COMPAT_USER_HZ)
-+		return x;
-+
- 	return compat_jiffies_to_clock_t(clock_t_to_jiffies(x));
- }
- 
+diff --git a/lib/stackdepot.c b/lib/stackdepot.c
+index dd2717ff94bff..90c52f2e0d3f4 100644
+--- a/lib/stackdepot.c
++++ b/lib/stackdepot.c
+@@ -323,7 +323,7 @@ static bool depot_init_pool(void **prealloc)
+ 	 * NULL; do not reset to NULL if we have reached the maximum number of
+ 	 * pools.
+ 	 */
+-	if (pools_num < stack_max_pools)
++	if (pools_num + 1 < stack_max_pools)
+ 		WRITE_ONCE(new_pool, NULL);
+ 	else
+ 		WRITE_ONCE(new_pool, STACK_DEPOT_POISON);
 -- 
 2.53.0
 
