@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061574;
-	b=KU8lYFp4RnRqq0lx0bUvsG+A038k/i2ozWzfricJ+6RmbCRsgDVcvACZVXZm3/ra1dSY
-	 VpKQnpKVuS4KqDVDOn6wkHbq4RK9OT8s2+wttXZHfKDNxaPtlRwoFxJKIpe8n+4tXdy6z
-	 vVrTRlO0tveSF9MvgWZXViF8akbAQ7zWp8df7QmxtfjWzrkmg2zMz2bb+Wb0uOKsWbZ0i
-	 1gWytKHMZTZ7ApGZriGxssTDFdVMW9dPhvLreFWsk/Pe2ZWBcii1Sy0UZiUorsCnANCFa
-	 RP7ATlyiVkue+Z1WkXwI4NGJQO65O8EkaXqMM0NvnCQFAbFhKM8a4d3vt2fSOOMhMdg==
+	t=1794061575;
+	b=jbRsb1QrIavcez6IFs7oqV8T3cH3DqtYZGGWaBepoKCANKvfuiP9M529kwjYE368Or+T
+	 XRysU8ND/U95Lj/yVYwEwY+gcjy8iOpRiGypyebw4rHVZpxyu/eUBR9Ssp5w8h0GU8jc0
+	 iirgU5BVe4pc7giQPV09cjWehGlSEbCPhr8AKbioejfS02fUZCNjLN/msOTgWkAAB5YtE
+	 sDGQMk1xmej5A8HpyxBiOd1zWTqNDvhI5T2ObwdjZ926RGPDSRQ2cktgvYh/nIOAYxCGF
+	 cBPvwXxLmNyL98+Jp4d72mi7XWEd9MhyZC4h/ENSdEm78rTR2YNrrAbkiIXmBWNWKFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061574;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G0EZudA3RjnRfBjs6AF4hK1IfOorzyX244Gws7hW5rY=;
-	b=Q1Nig5QD3RSfHFDqtDeS15sgz3XgHoBdRbIQaclP1at0wrxgkGAfCxVVAKXcK/RcqNZO
-	 Vx9pMZeCxvcicvhQ0wEPkKDDrQ2VdM1KZv60csQTeBsqab5F8/EBP9JV7UuZSCCXdceiA
-	 bUEes0arEGTjQaI5I0nTQPk5OeIZoduCJi6ZJaH5zSB3aouxLRE7C7p7lsV8xA0Uxafut
-	 P1A5LktDII+El7MsTjiPY2pI5k6+/PLPpbe1L7MZk0ngtN6GfyaRHAKxWsheQvogtOVMl
-	 9Kk6NoJ5/PlAOVJqev7PN4cQ5BvGDh3lNmjlZBIah/YsDA+LtC9FiS96ho+Ng28KAfw==
+	bh=OimwYWRR9fWnPsp4kW01WPKNRFxWkSEFxzTYQUNkTL8=;
+	b=Ejqr0rGZbqPijXh02zBxaLpST4Pq6MD8oqa1Wfud1FopM+wLrx/FYXREM99m4EbcMJr0
+	 /WwE3tJNpq9idIN6wHizpPdsykyyViy362hXaopdM29uKJfviO/JbhVC62uwU3CX6ZZct
+	 WSkKM7HAOWSQcgFixtPG9sF6PvLfJLAlvEVj00IW7sYJqXcmnvJs5Dvwf9IhSaHhKGzps
+	 8HtHYwmJwKMAL46qHJLuEKtpUJpPCXVuRhp4XVRxi7UlP7i+veIAsdU7G7UjDNwvXxduh
+	 CCYcQRwPMIfm/SWiwTGgUPA5uxaeWQIyQ6rPulz/Ot3Fqfshe5WirfZSYppbZd04y+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDcnm8b8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yvtCa/JM";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A265606A32D;
-	Sat,  7 Nov 2026 14:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E519606A32D;
+	Sat,  7 Nov 2026 14:26:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDcnm8b8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4361F0089F;
-	Sat,  7 Nov 2026 14:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvtCa/JM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D11F1F0089F;
+	Sat,  7 Nov 2026 14:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061574;
-	bh=G0EZudA3RjnRfBjs6AF4hK1IfOorzyX244Gws7hW5rY=;
+	s=korg; t=1794061575;
+	bh=OimwYWRR9fWnPsp4kW01WPKNRFxWkSEFxzTYQUNkTL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qDcnm8b8Rpr9lCg0zodtDV7arIIdcZJlUNl+g3Vzf5X0oON2Jmsri6LqjTFMu/VLZ
-	 o2DmExVyjCgVvYsSPBnYz2G+iEuDz5q+2ENs1u+kRgmlF2e6Kopwb+lZSg1IXl/tnE
-	 ZEeDESz15s7yj5jtfICdQrtep3tWM3GivV+LLyUA=
+	b=yvtCa/JMSf9khHrrgOx0ijZvXkmW9MSzukZyrtVFMcqGwv2u0XUkp6tw8VMx50XGU
+	 fz96fb5OtoJNSqpwYnww0zH+mrBebXwgrEKKxQcHSh7y7GIB4pP/+LLHsZyf99zhPo
+	 T8oCTmeARhA35FuA69u18jlQbYXmVi9GOdcTvm68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vernon Yang <yanglincheng@kylinos.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Zach OKeefe <zokeefe@google.com>
-Subject: [PATCH 6.12 0651/1536] mm: khugepaged: fix folio is used after folio_put/unlock()
-Date: Sat,  7 Nov 2026 08:44:27 -0500
-Message-ID: <20261107135015.812602408@linuxfoundation.org>
+	syzbot+843bf2f48f4d12e6682e@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Igor Putko <igorpetindev@gmail.com>
+Subject: [PATCH 6.12 0652/1536] serial: core: shut down initialized port on removal
+Date: Sat,  7 Nov 2026 08:44:28 -0500
+Message-ID: <20261107135015.839279060@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -74,86 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vernon Yang <yanglincheng@kylinos.cn>
+From: Igor Putko <igorpetindev@gmail.com>
 
-commit 9010383e71e6ce75fcd3c8f87133c8ce6c0e6ab4 upstream.
+commit 810d467c11f0c85107874d08dfdd11acba6aa0c0 upstream.
 
-On the rollback path, folio_put() has already dropped the last reference
-of new_folio.  On the success path, new_folio is already unlocked and can
-be freed concurrently.  The trace_mm_khugepaged_collapse_file() is left
-with a dangling folio pointer.
+When a serial port configured as a console is opened and subsequently
+closed, tty_port_shutdown() skips invoking port->ops->shutdown() because
+port->console is true. As a result, tty_port_initialized() remains true
+and the port's interrupt handler stays registered in the irq subsystem.
 
-So using the folio_pfn() before dropping the reference, closing
-use-after-free window.
+If the underlying device is later unbound or removed (e.g. via sysfs
+driver unbind or device hot-unplug), serial_core_remove_one_port()
+unregisters the console, frees uport->name via kfree(), and tears down
+the port without shutting it down or freeing its IRQ. Consequently, the
+irqaction descriptor remains registered in genirq with action->name
+pointing to freed memory.
 
-Link: https://lore.kernel.org/20260909025804.3233645-4-vernon2gm@gmail.com
-Fixes: 4c9473e87e75 ("mm/khugepaged: add tracepoint to collapse_file()")
-Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Zach O'Keefe <zokeefe@google.com>
-Cc: <stable@vger.kernel.org>
+This triggers a use-after-free read whenever genirq accesses action->name,
+such as when reading /proc/interrupts:
+
+  BUG: KASAN: slab-use-after-free in string+0x476/0x570
+  Call Trace:
+   string+0x476/0x570
+   vsnprintf+0x422/0x1300
+   seq_printf+0x...
+   show_interrupts+...
+
+Fix this by acquiring port->mutex in serial_core_remove_one_port() after
+console unregistration, clearing port->console under the mutex to prevent
+data races with concurrent tty_port_shutdown(), and invoking
+uart_shutdown(NULL, state) if the port remains initialized. This ensures
+that port->ops->shutdown() is called and the IRQ is freed before
+kfree(uport->name).
+
+Reported-by: syzbot+843bf2f48f4d12e6682e@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Closes: https://syzkaller.appspot.com/bug?extid=843bf2f48f4d12e6682e
+Fixes: 761ed4a94582 ("tty: serial_core: convert uart_close to use tty_port_close")
+Fixes: f7048b15900f ("tty: serial_core: Add name field to uart_port struct")
+Signed-off-by: Igor Putko <igorpetindev@gmail.com>
+Link: https://patch.msgid.link/20261003163337.45577-1-igorpetindev@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/huge_memory.h |    6 +++---
- mm/khugepaged.c                    |    4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/tty/serial/serial_core.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/include/trace/events/huge_memory.h
-+++ b/include/trace/events/huge_memory.h
-@@ -207,10 +207,10 @@ TRACE_EVENT(mm_khugepaged_scan_file,
- );
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -3271,6 +3271,13 @@ static void serial_core_remove_one_port(
+ 	if (uart_console(uport))
+ 		unregister_console(uport->cons);
  
- TRACE_EVENT(mm_khugepaged_collapse_file,
--	TP_PROTO(struct mm_struct *mm, struct folio *new_folio, pgoff_t index,
-+	TP_PROTO(struct mm_struct *mm, unsigned long new_pfn, pgoff_t index,
- 			unsigned long addr, bool is_shmem, struct file *file,
- 			int nr, int result),
--	TP_ARGS(mm, new_folio, index, addr, is_shmem, file, nr, result),
-+	TP_ARGS(mm, new_pfn, index, addr, is_shmem, file, nr, result),
- 	TP_STRUCT__entry(
- 		__field(struct mm_struct *, mm)
- 		__field(unsigned long, hpfn)
-@@ -224,7 +224,7 @@ TRACE_EVENT(mm_khugepaged_collapse_file,
- 
- 	TP_fast_assign(
- 		__entry->mm = mm;
--		__entry->hpfn = new_folio ? folio_pfn(new_folio) : -1;
-+		__entry->hpfn = new_pfn;
- 		__entry->index = index;
- 		__entry->addr = addr;
- 		__entry->is_shmem = is_shmem;
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1811,6 +1811,7 @@ static int collapse_file(struct mm_struc
- 	struct address_space *mapping = file->f_mapping;
- 	struct page *dst;
- 	struct folio *folio, *tmp, *new_folio;
-+	unsigned long new_pfn = -1;
- 	pgoff_t index = 0, end = start + HPAGE_PMD_NR;
- 	LIST_HEAD(pagelist);
- 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
-@@ -1823,6 +1824,7 @@ static int collapse_file(struct mm_struc
- 	result = alloc_charge_folio(&new_folio, mm, cc);
- 	if (result != SCAN_SUCCEED)
- 		goto out;
-+	new_pfn = folio_pfn(new_folio);
- 
- 	mapping_set_update(&xas, mapping);
- 
-@@ -2242,7 +2244,7 @@ rollback:
- 	folio_put(new_folio);
- out:
- 	VM_BUG_ON(!list_empty(&pagelist));
--	trace_mm_khugepaged_collapse_file(mm, new_folio, index, addr, is_shmem, file, HPAGE_PMD_NR, result);
-+	trace_mm_khugepaged_collapse_file(mm, new_pfn, index, addr, is_shmem, file, HPAGE_PMD_NR, result);
- 	return result;
- }
- 
++	scoped_guard(mutex, &port->mutex) {
++		port->console = false;
++
++		if (tty_port_initialized(port))
++			uart_shutdown(NULL, state);
++	}
++
+ 	/*
+ 	 * Free the port IO and memory resources, if any.
+ 	 */
 
 
