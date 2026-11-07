@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063870;
-	b=LWayuE7EeLkNdbywczNAW512ALrBu1zWx8sUq8HxwyFX/8ZPaPqCYWPaS570RFvi1svL
-	 0DRJEnuAfQInYMA82KVxIwqwPzlMF6Q1iQSiaX0tt7QPjtMrBIAurnXcZwhcwoRY3HIFX
-	 /6BYzh6DWzbPRNejVIkVvNse3CSW5UqFdWn/Nsa8B02F/mkiCrcP5fAJSPsaJcnD8IOA6
-	 QvWgYF0KZkK+2YNtW29s44sE6U1gpkYb6z9Sk6hnKO2UgNznkzXySjVIB3PlmabkIq5rs
-	 AnGukVZl3RqOa8ZoHqdUAb+GKIWvIs7uXoisEHwxpvwcHEkM3cjuhcRzGyp8JdIsm+A==
+	t=1794063871;
+	b=hdqldozVBOPYtfV9RnUnszByywWz9EOCRElHwMdSMyDLFpuft+y6hfIggvshL8LsdsAs
+	 O3bHVjRLqc9GrKffO6HaAF7jhA0bKCXSGTp7yzfYpD3lJxp9B5knaYvwdEYyvOadoShWJ
+	 KWtt40jZJx9B6vMUBdIlJalWl9KHnhPGnIMje1NZTbA8i58zHZg3XcgQCW6IOki+Eb3zt
+	 ZzUHqXh2sQDGD4InlaMSssZOy3/y0w8Ky+lJQQdBaOXboachDhxVk+fZzvtAI4Nnlx71R
+	 dDrE8tCW6sxQVxuwYlQpZHF4+MiDepNYKDTDQmEClT0kGPTJ1Hcprv81BYzH5WZnxBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063870;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WzQo5HAb1mPHyFYeg4tCceTsDSFhjy0RVoymhvoNnWI=;
-	b=fVMLlQ+Wb0973GvlQNqROuMTAdq5MQQnhD9o2QTfCz0xNj9QngiunVuwk/8yc6vVJzO7
-	 ghjS3kSzAzKGMVnf2SvuuYCYafq2BoLEIuoA+xRZvCMJjlGkCbxjP97TJNm34YGFSOhbl
-	 dG0V5bupoZ/KeVDzoAt1Hb1z7HUFJqR2OhNNvDBeRlSOt4v8aNd1+TB68yApub9FcTA4i
-	 ClGtOCqa58R9MRE10C4AOOlIHklA8D8IS7aE1haTfjrDFlh0h0An04ngo+grlJ9ZQpoNa
-	 7IFtD5KAD30H7V85viu11W/YofbXCCX1uLi3iGberzjwpSCGoe4ZNWXVTyJi57mVfzQ==
+	bh=8AwCLxlaDpqP3Kfvs53wrC4JT2Hja2i9Ns9yrCtahTE=;
+	b=Y4GVZX9rUo8hwgDYflQgkZAo/M8Q/0Bj9Qz8x4sVjD87ctuRKus+ZEw7JcFjbf3eoHrd
+	 cU4LI8CGBrBOFpPLcm5eMbgtar+BezezMPPXT7FAH1qYFNHF22Y44D3H13IyqbokzZ/ER
+	 EkPsK3z7X3doeA5PzkQp4seX7pCbcIdcXKyrqWLB7ZM0fQBWvwRNibyK+PfIBdnYYx9L4
+	 rKbTlVBvbKwjXXmnN2O9/c5kaWEyOzLuNT7Rs//RZ8HlK37KIWJuRvPwzkuq44SOwv8Qo
+	 mezjPWUeS6dFdxEMRkh/09x1wWqtIaZ97cWuy9qEPcP+kYfArbcCWnYf2jZXH8hACRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hWaGVqeo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xhti0Ycu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3F960A6F45;
-	Sat,  7 Nov 2026 15:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27901606E8D5;
+	Sat,  7 Nov 2026 15:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hWaGVqeo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D33B1F0089F;
-	Sat,  7 Nov 2026 15:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xhti0Ycu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A0D1F0089F;
+	Sat,  7 Nov 2026 15:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063869;
-	bh=WzQo5HAb1mPHyFYeg4tCceTsDSFhjy0RVoymhvoNnWI=;
+	s=korg; t=1794063870;
+	bh=8AwCLxlaDpqP3Kfvs53wrC4JT2Hja2i9Ns9yrCtahTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hWaGVqeoV+UJJ8Jdy+v+hb85pSOyr8I9Xbp9e+NCINjhznULCT97qwkGyuhUvRRL5
-	 vAJkepQcFuL1U4bCfhN3Mk7EjzocQJUE2n6soOxQZgMfTinvev2cV4GPDuJEEgQzwN
-	 1tLatI7Zo7/4ZQTcIJt5I+pE/vwB0jdW3jgemkgY=
+	b=xhti0YcuKhqOBNi/l2moe9GKCiWbTEB9EaotE9D3tOImsr3x+HphxVBfiJ82SwQ1c
+	 f6MhGBlj8TkRKF5m6VHCEm7ZDKqhRKcF6MGfn9cKcm7pf4b5UNqS/5kD9XXhI5fNf8
+	 MqBEM7EQLVTZsaYLIMq86CG6AjNYRwg+Ejo2mz+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Michael Walle <mwalle@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0074/1257] mtd: spi-nor: sfdp: check the length of the SCCR map
-Date: Sat,  7 Nov 2026 08:39:30 -0500
-Message-ID: <20261107134941.430470615@linuxfoundation.org>
+Subject: [PATCH 7.3 0075/1257] mtd: spi-nor: Unprepare legacy controllers upon RWW wait interruption
+Date: Sat,  7 Nov 2026 08:39:31 -0500
+Message-ID: <20261107134941.456730301@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -68,60 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 1413f38f37194673502e61cd3749e091c031370b ]
+[ Upstream commit f594a33f9721f08facd98d0a31adc14ff6da9d70 ]
 
-The spi_nor_parse_sccr() sizes its buffer from the table length the
-flash reports in the SFDP parameter header. But it then reads DWORD1
-and DWORD22 without ever checking the table is that long.
+All the parallel locking helpers (spi_nor_prep_and_lock(),
+spi_nor_prep_and_lock_pe() and spi_nor_prep_and_lock_rd()) call
+spi_nor_prep() then wait with a killable sleep. If the sleep gets
+killed, we leave the controller in its prepared state.
 
-So if a flash reports a length of one, the buffer is only four bytes
-while DWORD22 sits at byte offset 84. With a length of zero kmalloc()
-returns ZERO_SIZE_PTR rather than an error, so the NULL check doesn't
-catch it and the first read dereferences it.
+Call ->unprepare() in these cases.
 
-To fix this, reject a table that's too short for the highest DWORD the
-parser reads, the way spi_nor_parse_4bait() already does. The table is
-optional, so this isn't fatal. The spi_nor_parse_sfdp() warns and
-carries on.
-
-The spi_nor_parse_sccr_mc() doesn't need the same check. It works out
-the number of dice from the length it allocated with, so its highest
-index stays inside the buffer.
-
-Fixes: 7ab8b810757a ("mtd: spi-nor: sfdp: Add support for SCCR map for multi-chip device")
+Fixes: 74df43b3f626 ("mtd: spi-nor: Enhance locking to support reads while writes")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Michael Walle <mwalle@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/sfdp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/mtd/spi-nor/core.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
-index ece8bbd4bc47d..98559536d41b2 100644
---- a/drivers/mtd/spi-nor/sfdp.c
-+++ b/drivers/mtd/spi-nor/sfdp.c
-@@ -1266,6 +1266,7 @@ static int spi_nor_parse_profile1(struct spi_nor *nor,
+diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
+index 8bc117b46e028..250e996284f96 100644
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -1346,6 +1346,9 @@ int spi_nor_prep_and_lock(struct spi_nor *nor)
+ 		ret = wait_event_killable(nor->rww.wait,
+ 					  spi_nor_rww_start_exclusive(nor));
+ 
++	if (ret)
++		spi_nor_unprep(nor);
++
+ 	return ret;
  }
  
- #define SCCR_DWORD22_OCTAL_DTR_EN_VOLATILE		BIT(31)
-+#define SFDP_SCCR_DWORD_MIN				22
+@@ -1417,6 +1420,9 @@ static int spi_nor_prep_and_lock_pe(struct spi_nor *nor, loff_t start, size_t le
+ 		ret = wait_event_killable(nor->rww.wait,
+ 					  spi_nor_rww_start_pe(nor, start, len));
  
- /**
-  * spi_nor_parse_sccr() - Parse the Status, Control and Configuration Register
-@@ -1284,6 +1285,9 @@ static int spi_nor_parse_sccr(struct spi_nor *nor,
- 	size_t len;
- 	int ret;
- 
-+	if (sccr_header->length < SFDP_SCCR_DWORD_MIN)
-+		return -EINVAL;
++	if (ret)
++		spi_nor_unprep(nor);
 +
- 	len = sccr_header->length * sizeof(*dwords);
- 	dwords = kmalloc(len, GFP_KERNEL);
- 	if (!dwords)
+ 	return ret;
+ }
+ 
+@@ -1490,6 +1496,9 @@ static int spi_nor_prep_and_lock_rd(struct spi_nor *nor, loff_t start, size_t le
+ 		ret = wait_event_killable(nor->rww.wait,
+ 					  spi_nor_rww_start_rd(nor, start, len));
+ 
++	if (ret)
++		spi_nor_unprep(nor);
++
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
