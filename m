@@ -1,56 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063165;
-	b=l3nd7wjQGpyj+b0rVgnEONAK7ncNBtzaf8Azib3fArmUNFSAYMbGxA7h8/xYPPlQDMG8
-	 Xru1yD6rt+ppE5hFJ0F0kXPPOB+9AURXKPHC9NayTeflFJXHkZrLk8RLu0xjt+tuuMYJ5
-	 vvgYKUIG04zvDLm3LsJgBRq7IGTScy3F2HUmoKrd5k0X+maDd2jx8rd1Q0KIWQ2LK/8pj
-	 HB1akcBCqpxx/wEPoWXE4f8rV6Y26qcBUwgHPxMA64rKZ5BpELouDTJ5AUDlLU19uFTR4
-	 1aaJmceDstm+1WjugvnMMryi4OVmZ9hYDz4cfH/X7cxeE95jC/P/PzQAOtgpJND9zzw==
+	t=1794063167;
+	b=OsqGpNTQz4mEqizBxhnOfnY6PeCgOWKxEVX/zlwnZ9rVgG4hj30qliPipYFPv+v6PymN
+	 aO3R8MMp2GmQXiRnhe8bTD8VGaog00TEVjdE13vr/UvZ4TUOaiBGRZtb86Cb2CtQXCbMl
+	 l87QhoLDIblVYLe+Z0J2g3wu8CwS6VqZQZlnNDp6fFQTMHSkfDW7MHVhnf5bjPDxFeNF1
+	 QF4UG2yOKoEDvbwy8fyvcsfPNikvRr72KAAZ9y9s70HkNZIlnVNRSiTvJEw1K/O4bZf4H
+	 YZBq+B4MSoIbXGdyzYLDDCmawG/Q+BEF2ejTgpcvf19r0uHhI8kBhtOSimCPDDJtbKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063165;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063167;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IZI6z2m3JMVuc1CEMGIWHqQpid9jAcGqUQPFZ07PXjc=;
-	b=gC5FBjPniX6ohdU6BxdnDYQwblI9MwJRMP3itWNJ5KS5x72EUVuljy+ouPCnLcYce8YP
-	 wOFOTVnh4wmgOmwynaT+EXvwDk60Nt4fabFNS6EOvw/nQDyPZ0kBHLJn6h6yPfn5FLars
-	 Y2aXQnwn+dcvDz8nZN1SgS9TZ+e2pP+zu8aZFxS1Vw/K9fwVkC3syfTcyjsbCsY4G1vIN
-	 vK9+X/aD7Dw0+riG4pGQTwoqkHCs+LQuETJp3tuZKoqm4QSnFOGN207v9nxwlMQ9pVqnb
-	 ipcwUZa1ROBjRbPPoSxHjWcWPG9ASs74P18Xmc350EFbj0UXkvIzLqhi1f6Zn/gz6Lw==
+	bh=/Brg1FsUbp6gaxTEDBcwsXA3JAvMBTWh4mRVXl9wNKw=;
+	b=xv/wKJqHTAdAai5aGtAgpoajpb9UFYCOUCfPEr86O4WAhUjOEQqT6BAkAQykpQZm3X2O
+	 epGSefdVbzHvrtVbBJ7Qq3cEITFhhqS60blFadq8RQH4R6Re14eUHI3svYkanaN3fKJcE
+	 Ok0IybiAuhDu9aygHOvkN4dJbo/Cr4pSA9BXx6S41w6jvRrdcw3pOrPfkCemZezz3bYOP
+	 xzN/hCGnu0IY+jIRobahg/KnR1eNXtWiVVQXKWZsmsBD0Vsj3tgKz7ENOHAs/rl7qUv8E
+	 j5tKMoyfkJzEO5YbHzQmYxOCqHxC/CYdBf86LhlfTKGRZJcUsBgx1cExfGUC0EuO5JQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FsovErWI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="14V/vxa+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22ABF606D80F;
-	Sat,  7 Nov 2026 14:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E56B606D812;
+	Sat,  7 Nov 2026 14:52:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FsovErWI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BA21F0089F;
-	Sat,  7 Nov 2026 14:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=14V/vxa+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F941F0089F;
+	Sat,  7 Nov 2026 14:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063165;
-	bh=IZI6z2m3JMVuc1CEMGIWHqQpid9jAcGqUQPFZ07PXjc=;
+	s=korg; t=1794063167;
+	bh=/Brg1FsUbp6gaxTEDBcwsXA3JAvMBTWh4mRVXl9wNKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FsovErWIUtRgN/d/hKx5S2UACYAp43BkQuYmGZtJXOSvO6JLIL/i5UrkxQ7EidhVR
-	 DUhSqWIJWHKL7b4Zws6a1BPaBFK0f2RqCzfZPJSgnu2L/30AegKmQ2ZbCn/vUzuy1T
-	 TcQAbbvKST3m/fXd0miDJ7xIjgbqKFILLi82YRk4=
+	b=14V/vxa+FbJfBfO5Cb5K0tBScnOJv69Y+h9XllwALugUHZ8TynpMI7OcxF33QfW//
+	 6zPqrZAAObJhlrPpdkcnRJKIp3sFoCqDv/XmfBatF7o7jDp53k6nzlmrPsm3+Ql9ax
+	 lJfdZS/Qr55tYQb3gkwyJNISCYQ5PFST6/rs3Y/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DAI RENJIE <drj19981414013@gmail.com>,
+	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Bradley Morgan <brads@mainlining.org>,
-	Mark Brown <broonie@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	syzbot+e64c6472a3d96a75172a@syzkaller.appspotmail.com,
+	syzbot+26461e903494e689c24f@syzkaller.appspotmail.com,
+	Yemu Lu <prcups@krgm.moe>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 386/869] resource: fix lost wakeup when waiting for a muxed region
-Date: Sat,  7 Nov 2026 08:51:08 -0500
-Message-ID: <20261107134906.525810406@linuxfoundation.org>
+Subject: [PATCH 6.18 387/869] fat: fix fat_ent_write() for reverting the value
+Date: Sat,  7 Nov 2026 08:51:09 -0500
+Message-ID: <20261107134906.574528076@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -72,69 +76,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DAI RENJIE <drj19981414013@gmail.com>
+From: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
 
-[ Upstream commit 405c00e43a9c72a0b9b318cc2d2e298386ffb58e ]
+[ Upstream commit 63c4b67ee163b2a67a7561314bf2106d6c79c53c ]
 
-A task waiting for a muxed region can sleep forever in
-TASK_UNINTERRUPTIBLE even though the region it waits for is already free.
-__request_region_locked() queues itself on muxed_resource_wait and drops
-resource_lock before setting TASK_UNINTERRUPTIBLE, while
-__release_region() wakes the queue after dropping the same lock.  A wakeup
-landing in between finds TASK_RUNNING, does not match TASK_NORMAL and is
-discarded; callers hold a muxed region only across a bounded transaction,
-so no further release is coming.  The task is unkillable and its caller
-never returns.
+commit 64d9183203ee ("fat: restore original value when fat_ent_write
+failed") try to revert the fatent value to old value when got the error on
+mirror FAT.
 
-The window is one store wide, but an interrupt is enough to hold the
-waiter in it, and the machine this was seen on runs PREEMPT_DYNAMIC in its
-voluntary default.  Since v6.11 spd5118 exports the DDR5 sensors of AMD
-boards through i2c-piix4, which takes a muxed region per SMBus
-transaction; a third of the in-tree users of request_muxed_region() are
-hwmon drivers, so reading a world-readable attribute is all an
-unprivileged user needs to drive the contention.  The blocked task sleeps
-holding the i2c adapter bus lock, and 27 more piled up behind it.
+However it didn't work if the error is when writing the fatent bh.  In
+that case, the bh is cleared the uptodate flag, so reuse bh is invalid.
 
-Reproduced by building a kernel with the two orderings selectable at
-runtime and a 2ms delay inside the window.  Switching only that knob, a
-two-thread barriered reproducer loses the wakeup 200 times out of 200
-before the fix and 0 out of 200 after it; without the delay it goes 20000
-times through the wait path and loses none.
+Fix this by reverting the fatent only if got the error on mirror FAT.
 
-Fix it by setting the task state before dropping resource_lock, as
-prepare_to_wait() does: the releasing side needs resource_lock to unlink
-the resource, so it cannot reach the wakeup before the state is published.
-
-Link: https://lore.kernel.org/20260821-b4-resource-muxed-lost-wakeup-v1-1-37eb6473a76c@gmail.com
-Fixes: 8b6d043b7ee2 ("resource: shared I/O region support")
-Signed-off-by: DAI RENJIE <drj19981414013@gmail.com>
+Link: https://lore.kernel.org/87ik4yz9fv.fsf_-_@mail.parknet.co.jp
+Fixes: 64d9183203ee ("fat: restore original value when fat_ent_write failed")
+Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: Claude:claude-opus-5
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
+Reported-by: syzbot+e64c6472a3d96a75172a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e64c6472a3d96a75172a
+Reported-by: syzbot+26461e903494e689c24f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=26461e903494e689c24f
+Cc: Yemu Lu <prcups@krgm.moe>
+Cc: Ren Wei <n05ec@lzu.edu.cn>
+Cc: Yuan Tan <yuantan098@gmail.com>
+Cc: Yifan Wu <yifanwucs@gmail.com>
+Cc: Juefei Pu <tomapufckgml@gmail.com>
+Cc: Xin Liu <bird@lzu.edu.cn>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/resource.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fat/fat.h    |  2 +-
+ fs/fat/fatent.c | 21 ++++++++++++++++++---
+ fs/fat/file.c   |  3 ++-
+ fs/fat/misc.c   |  6 ++----
+ 4 files changed, 23 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/resource.c b/kernel/resource.c
-index fe1327753a135..139fb5e19cbe0 100644
---- a/kernel/resource.c
-+++ b/kernel/resource.c
-@@ -1300,8 +1300,8 @@ static int __request_region_locked(struct resource *res, struct resource *parent
+diff --git a/fs/fat/fat.h b/fs/fat/fat.h
+index d3e426de5f016..6748dea6cd216 100644
+--- a/fs/fat/fat.h
++++ b/fs/fat/fat.h
+@@ -389,7 +389,7 @@ extern void fat_ent_access_init(struct super_block *sb);
+ extern int fat_ent_read(struct inode *inode, struct fat_entry *fatent,
+ 			int entry);
+ extern int fat_ent_write(struct inode *inode, struct fat_entry *fatent,
+-			 int new, int wait);
++			 int new, int old, int wait);
+ extern int fat_alloc_clusters(struct inode *inode, int *cluster,
+ 			      int nr_cluster);
+ extern int fat_free_clusters(struct inode *inode, int cluster);
+diff --git a/fs/fat/fatent.c b/fs/fat/fatent.c
+index a7061c2ad8e4d..515bc0cfc64f1 100644
+--- a/fs/fat/fatent.c
++++ b/fs/fat/fatent.c
+@@ -408,7 +408,7 @@ static int fat_mirror_bhs(struct super_block *sb, struct buffer_head **bhs,
+ }
+ 
+ int fat_ent_write(struct inode *inode, struct fat_entry *fatent,
+-		  int new, int wait)
++		  int new, int old, int wait)
+ {
+ 	struct super_block *sb = inode->i_sb;
+ 	const struct fatent_operations *ops = MSDOS_SB(sb)->fatent_ops;
+@@ -417,10 +417,25 @@ int fat_ent_write(struct inode *inode, struct fat_entry *fatent,
+ 	ops->ent_put(fatent, new);
+ 	if (wait) {
+ 		err = fat_sync_bhs(fatent->bhs, fatent->nr_bhs);
+-		if (err)
++		if (err) {
++			/*
++			 * bhs are not uptodate after I/O error. So we
++			 * can't simply re-dirty to revert. And it
++			 * would not have value to write again on I/O
++			 * error.
++			 */
+ 			return err;
++		}
+ 	}
+-	return fat_mirror_bhs(sb, fatent->bhs, fatent->nr_bhs);
++
++	err = fat_mirror_bhs(sb, fatent->bhs, fatent->nr_bhs);
++	if (err) {
++		/* Try to revert if got the error on mirror FAT */
++		ops->ent_put(fatent, old);
++		if (wait)
++			fat_sync_bhs(fatent->bhs, fatent->nr_bhs);
++	}
++	return err;
+ }
+ 
+ static inline int fat_ent_next(struct msdos_sb_info *sbi,
+diff --git a/fs/fat/file.c b/fs/fat/file.c
+index 4fc49a614fb8f..ca2f9db34da5c 100644
+--- a/fs/fat/file.c
++++ b/fs/fat/file.c
+@@ -360,7 +360,8 @@ static int fat_free(struct inode *inode, int skip)
+ 				     __func__, MSDOS_I(inode)->i_pos);
+ 			ret = -EIO;
+ 		} else if (ret > 0) {
+-			err = fat_ent_write(inode, &fatent, FAT_ENT_EOF, wait);
++			err = fat_ent_write(inode, &fatent, FAT_ENT_EOF, ret,
++					    wait);
+ 			if (err)
+ 				ret = err;
  		}
- 		if (conflict->flags & flags & IORESOURCE_MUXED) {
- 			add_wait_queue(&muxed_resource_wait, &wait);
--			write_unlock(&resource_lock);
- 			set_current_state(TASK_UNINTERRUPTIBLE);
-+			write_unlock(&resource_lock);
- 			schedule();
- 			remove_wait_queue(&muxed_resource_wait, &wait);
- 			write_lock(&resource_lock);
+diff --git a/fs/fat/misc.c b/fs/fat/misc.c
+index 5c45603bf77ea..c0bc4356eded3 100644
+--- a/fs/fat/misc.c
++++ b/fs/fat/misc.c
+@@ -133,11 +133,9 @@ int fat_chain_add(struct inode *inode, int new_dclus, int nr_cluster)
+ 		ret = fat_ent_read(inode, &fatent, last);
+ 		if (ret >= 0) {
+ 			int wait = inode_needs_sync(inode);
+-			int old = ret;
+ 
+-			ret = fat_ent_write(inode, &fatent, new_dclus, wait);
+-			if (ret < 0)
+-				fat_ent_write(inode, &fatent, old, wait);
++			ret = fat_ent_write(inode, &fatent, new_dclus, ret,
++					    wait);
+ 			fatent_brelse(&fatent);
+ 		}
+ 		if (ret < 0)
 -- 
 2.53.0
 
