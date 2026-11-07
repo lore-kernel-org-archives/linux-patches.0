@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062218;
-	b=1X0XMqEoL7Wgr1Iy7rdhX1kN8F9Fg6b3LCs+EatXEGJ0tLanAnJ117/ZiEh7X0gTo6Ba
-	 vOx0kLrFl2SGZy0PlyWgF9vc0gWIhzfMdoFXbir2OoD0Gxvhkza428KuRHV4uyNinyWed
-	 nlhN+mvMucjGW7TWZeiFZM2nCnYb7exiFUeSgarAgGkBYmqzLyp3otIYXQ02raQDWanXr
-	 C0/ElFmJJ2ReewJyk9h7WMvynZHsX2LXsV/Ozrbm2DoMfjOMYlx+q7Y2E2bxKojO4xnZd
-	 zeWW4NPEi79YI5KNpU9yN8Ck0pJzjKtyA/J7UZKwEp9xwOVnkj+pr0AN98MU90BXcaA==
+	t=1794062220;
+	b=iaTm915dhK0VuZzOHfG2Hr4lZrtSeZ1wA+wuWfBGzee4qLpUBUvJIleVlvBMASYdLL8N
+	 Jn9cjX6jugZTYBfUL9OWulhA3ooPJ5PVxfpiohezDF+B5RpRH1eEMjiN35yLQINZAGXHR
+	 1HYrkcgIuvN9vPoXKFk31qXKRMMs4hpQWZB8VhhqjZKCiIGY2xebuM7X16lI0v+UR/0us
+	 HgVrZxPlJ+WEJslXTvx++5SbsMWutoXpBKVwcEXfee2E2a38C3Um74AMl2K/uACICmGT+
+	 AjsMqo1nDf3JlQHyhvSB8Y0OefoYrn6Sv6l4cXoLcZ5+EfZxZ+QjAFibVJNhmck4YSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062220;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hpj/QXjAhWS5JD7nRXwsq0K+40Gvc8iq9z43DXHdyck=;
-	b=G0J0qLoV6wKfBRDvYJqqltb299kZ/49mNaw3lLTRdL7474d13j4p6Iuxpk2k265IhRW9
-	 F/ghZdseDD1tifLLgMRy2vydUSaNTwQSHA32B4Lefz57665p0VlKLdKEU8OWVgcHI5KGx
-	 /I3uUTCZ0mdLa6ZMRB7wkjyKipU7yKCJN9x+9hOCo99/fJZbtkBgGQQSeWhVd4CQeLGi4
-	 +6+XizVMGmn0TMr15CpUTMLblP8cIG2DKqgSTtRhnnmdX1TK4NYh8FqwsLx/isRRoK6Zr
-	 lJP9gJicsLyEcnkMYfHgpkX/j0H1+41f+grhc+xJjsYUDo40nAZCcXFDd9OhpAxdxgw==
+	bh=5OhYB4MrwcHCnplqw7AucvXXSbx1HUmDuyNoDZaXypk=;
+	b=n4pHxFQjluzmMNTB45TzIUxgQK/yU6Z4EUiW4UzSvkjrKTgh54+CJOskQC9u9QkFHcCi
+	 Koy2N2nouOPsYPT1ztVgq6lotmyWY5FhSnW6ufi1shcS8QLsPz2ne8Pkn6UyIZQNYuDB3
+	 1O3z6e1tSQ0pXN+NbDIx/OEwjsBUsav73AcH9aU0k4k7VXQVFn4uMMNYCw2lIUPd9beLg
+	 tly79M7zvmxZKnQI/I0rXyQIN+uKq8/0d72WmVqHyzMiDo8KbbUVL0F7+5uacJWnysYig
+	 RM6G58FkHzn35yMui/vCeEx4yKvn77CH4AFirHhUm+cCKDOO5ybwmWL1RL4YOXMnQng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qEbCEyru;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GjgQhAm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1A8608361C;
-	Sat,  7 Nov 2026 14:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA90606D83C;
+	Sat,  7 Nov 2026 14:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qEbCEyru
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D391F008A1;
-	Sat,  7 Nov 2026 14:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GjgQhAm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489F41F008A1;
+	Sat,  7 Nov 2026 14:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062218;
-	bh=hpj/QXjAhWS5JD7nRXwsq0K+40Gvc8iq9z43DXHdyck=;
+	s=korg; t=1794062219;
+	bh=5OhYB4MrwcHCnplqw7AucvXXSbx1HUmDuyNoDZaXypk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qEbCEyruU/0v6V+pF3L0dh4eHEDGtpN6zg7uvMBlAI/FXCaNgm2gAxH/CDRt871kZ
-	 ffIBCiO+mSPV6g6YAC7oy9VPOhDAfjpASHpLCLgnz5nWkWvIT6cdg0oeNsqA3XklBa
-	 hu6XFFAri2K3KOQDqeUh1C6rPFy+T6So8gVKvqlc=
+	b=2GjgQhAmoSmBctO566l7AaLqtg8CHIUnrm4WsJMNtOfeejveAJMkYx1F2Z82yCZB9
+	 ZVGA72fsgwIJIcE3kVB1eyPdOI1uiIz3lx5QMhIB1npMmt9b1aF1LPfxxCOznRU77U
+	 xYWc/UsgFg9WUVQxyWFVykwmgTVjXgKlxJ5W5Jpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Liu <1298662399@qq.com>,
-	Ming Qian <ming.qian@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+805630f1453e490427fa@syzkaller.appspotmail.com,
+	Alan Stern <stern@rowland.harvard.edu>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1154/1536] media: amphion: fix runtime PM imbalance on probe failure
-Date: Sat,  7 Nov 2026 08:52:50 -0500
-Message-ID: <20261107135030.137720571@linuxfoundation.org>
+Subject: [PATCH 6.12 1172/1536] USB: gadgetfs: do not WARN about excessively large memory allocations
+Date: Sat,  7 Nov 2026 08:53:08 -0500
+Message-ID: <20261107135030.655651368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,44 +71,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Zi Yan <ziy@nvidia.com>
 
-[ Upstream commit 0cabf27cf1e6f7ee5f3c5893c0f1930814d949af ]
+[ Upstream commit a156148976eac47bee7210097afbb609cafe88b6 ]
 
-vpu_core_probe() enables runtime PM before calling
-pm_runtime_resume_and_get().
+GadgetFS passes an excessively large user input len to kmalloc and kmalloc
+gives a WARN (see below for details).  Suppress it by passing __GFP_NOWARN
+to kmalloc used by both ep_write_iter() and ep_read_iter().  Follow the
+same method as commit 4f2629ea67e72 ("USB: usbfs: Don't WARN about
+excessively large memory allocations").
 
-If pm_runtime_resume_and_get() fails, it has already dropped the runtime PM
-usage counter that it acquired before trying to resume the device.  Calling
-pm_runtime_put_noidle() again on this error path drops the counter one
-extra time.
+kmalloc is used to allocate physically contiguous memory for kernel
+allocations.  For requests larger than KMALLOC_MAX_CACHE_SIZE, kmalloc
+uses the page allocator and can only support up to KMALLOC_MAX_SIZE.  For
+request sizes bigger than KMALLOC_MAX_SIZE, the page allocator can emit a
+WARN because kmalloc allocates an order greater than MAX_PAGE_ORDER.
 
-Remove the extra put and keep the existing cleanup that marks the device
-suspended before disabling runtime PM.
-
-Fixes: 9f599f351e86ac ("media: amphion: add vpu core driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Reviewed-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://lore.kernel.org/DKTTMAS94IMH.2C6ERY0ZIVWVZ@nvidia.com
+Fixes: b3c466ce5129 ("page allocator: do not sanity check order in the fast path")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+805630f1453e490427fa@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a820ebc.9ebadd4d.20b15e.001b.GAE@google.com/
+Tested-by: syzbot+805630f1453e490427fa@syzkaller.appspotmail.com
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_core.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/usb/gadget/legacy/inode.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
-index 321f319d14a6a..d6e3b5042ec24 100644
---- a/drivers/media/platform/amphion/vpu_core.c
-+++ b/drivers/media/platform/amphion/vpu_core.c
-@@ -689,7 +689,6 @@ static int vpu_core_probe(struct platform_device *pdev)
- 	pm_runtime_enable(dev);
- 	ret = pm_runtime_resume_and_get(dev);
- 	if (ret) {
--		pm_runtime_put_noidle(dev);
- 		pm_runtime_set_suspended(dev);
- 		goto err_runtime_disable;
+diff --git a/drivers/usb/gadget/legacy/inode.c b/drivers/usb/gadget/legacy/inode.c
+index e916487267b22..d1eeeac01e8a2 100644
+--- a/drivers/usb/gadget/legacy/inode.c
++++ b/drivers/usb/gadget/legacy/inode.c
+@@ -615,7 +615,7 @@ ep_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 		return -EBADMSG;
  	}
+ 
+-	buf = kmalloc(len, GFP_KERNEL);
++	buf = kmalloc(len, GFP_KERNEL | __GFP_NOWARN);
+ 	if (unlikely(!buf)) {
+ 		mutex_unlock(&epdata->lock);
+ 		return -ENOMEM;
+@@ -677,7 +677,7 @@ ep_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 		return -EBADMSG;
+ 	}
+ 
+-	buf = kmalloc(len, GFP_KERNEL);
++	buf = kmalloc(len, GFP_KERNEL | __GFP_NOWARN);
+ 	if (unlikely(!buf)) {
+ 		mutex_unlock(&epdata->lock);
+ 		return -ENOMEM;
 -- 
 2.53.0
 
