@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063741;
-	b=VY0mgpoIJgWiEU/SsBwbJGb4Jz77l6arZXV55Ca4rGqt+kvg2IP3ofSzA6xRaG/8QXAx
-	 4giBzoW6cQ+yglQgQr+gS8RQB8JjrWdrQDm5Hox7qKbW/jyy78l6MR36sf43IOTIJ3eM8
-	 3gfNZeBMrnvrzZ2Jyy2RQ2Uu1vhF1o2nggMzIlbafDzex6cFB7FWrdnVEnu2Gq+AnSYdL
-	 7217PHg7JJL5YRLD3wkEYZHQ/+AqqLumv6FC/7psbHBBf0X7FMJtwBvf6OPyiMnOKYozg
-	 lsWXFPuJHwTLDC0hmOOd8UbjhQBilrpvBjstU8huIGVe1eP1lp5y2aLcJEHahKnTiJg==
+	t=1794063743;
+	b=XOyPQTyp5i5alLTM7vUrxDxLlzqmDDUW7tFnxgfSB80VXo3BnWL0fYsPJ2QmAk9NeTBp
+	 bgWi178qqsb9QRdm4u3LsLsXBu+ldKXq95seCvZFOPUY9lEAXpVzmy5/3XNbeWnd6qZPR
+	 I7W2tWosTAGlCqJ1yFcEEFQ+4Ue7+pyuh59M2R6uDc1ZYO5xhB52NNzj1DR9MISPeWvus
+	 1AfzdhbhQ5wi2pkk43h1a2Pdne9KIPAqIYxsMNBIp4ok+PI4yCEzT4sP7KjQeaUy6ulNm
+	 Xu/GWMvBEhdisDjbPLC79KP9QUBCtQ3s8d+7UKBcSSPytsYR5YgjP4CnL1Vqc/Pa+0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063743;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ec1CVW08h+kDshcUdUIjf8SZ5Bvm6xiGsP0Y5bU89PE=;
-	b=WIE2tQoZNfeMZeVw0v7nP3LRspKApQnizC3Xspdwu1R11mE3P8VyblFLmRLZqlAl3Rww
-	 lp+Hzb2BkRa4Te7nY++gVJ8UXKliaSamLrfYQqUrkHnNeLCePzVGnLlLmgfhseLn/CYy3
-	 xG0bIxFUAB/qmcwpLJRih5Y1DYDnf4FElzhWlvKdEPid9M7wP6bvB1mZFeWEdwCpOfhbF
-	 IHydCM8aQDpbCCk2qLIVUV/sQ0OrP/ToBK0xpSHgE5aIYi/hC45TbmLU9/nCrB0a87Fle
-	 uYljFHW8169vpwLavWqhDLja2hlro0q2OpQt0VYqdVRKRaJzJbjYoldhRmaFWNzcQvg==
+	bh=v0fsq2V463YmL6GppVoHtc3WiouAG8/sPuhXy72EOFs=;
+	b=rpMY34/H0q43roy2ZmXnw7MJgfBwDDLrNr+6QsXGa9+Yyq3zeESdafLQSlBJg9BBI8sG
+	 PdrQBMFw4AlMBTvFzog/ax2HmTjgMxozDVMtYrOqypf7vsouBW2N9KGFHOOefDb0CvZJO
+	 6iFfxS5NitqtRL0SEFHva4QdPblzVZrXx1SehZVFhtURqtBw9ykIdJh8YJY9zbl+6GxLi
+	 QQUzeXoNxqIZsAtT3wC1KPQI5vPSCWwl7HUPM/Q9fTehLqJjw+X+C/FT6ZiddXkLtX/MX
+	 kpzC9h4sJ3VnvV7Lj2qiMVP5zV+hgQK2kSaPvYAQb08XdMPOMa05as6vOEwmEvpLRRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fn39URCU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pMA0lW4O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CF6606A32D;
-	Sat,  7 Nov 2026 15:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2535606A32D;
+	Sat,  7 Nov 2026 15:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fn39URCU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A411F008A2;
-	Sat,  7 Nov 2026 15:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pMA0lW4O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CFE1F0089F;
+	Sat,  7 Nov 2026 15:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063741;
-	bh=ec1CVW08h+kDshcUdUIjf8SZ5Bvm6xiGsP0Y5bU89PE=;
+	s=korg; t=1794063742;
+	bh=v0fsq2V463YmL6GppVoHtc3WiouAG8/sPuhXy72EOFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fn39URCUi/TKX2vavXMJw81mZLQbEIGY2i4LV18E2p0IRZy+16s7EYwxuJkym7vC+
-	 VRDs1mJ19na6BrkmtMnNWuQ0uEUztPQtoZ0mDIfEufsuEUw7635WHZEdN0VHc/DXFE
-	 BmhzBGPX+jisR58uvoeEPGQ6q7GBoqR+IVgB20jc=
+	b=pMA0lW4O1GYr4WXgHxcEJ7QQ+DhRCnquZxAw0ReHYnApQti/4BTjVOHpteznGpbPT
+	 t4t0zB+wKDQsReG4aj/qS8GIBBnK3EihIWauwEA3X3FIa71U8Vs6cXnJi0elHI7emm
+	 C/wb/81qJVXD9P7Cn8+aVg5imx1r1pLWe4/Gf8tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
 	Guixin Liu <kanie@linux.alibaba.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 836/869] nvmet: Finish the blk plug when integrity allocation fails
-Date: Sat,  7 Nov 2026 08:58:38 -0500
-Message-ID: <20261107134921.236972828@linuxfoundation.org>
+Subject: [PATCH 6.18 837/869] nvmet: Free the old negotiation state when restarting authentication
+Date: Sat,  7 Nov 2026 08:58:39 -0500
+Message-ID: <20261107134921.264380829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -73,55 +71,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 18fc5f6f1ca945630dae5404265de55d65194e22 ]
+[ Upstream commit 5c279fcabb0ea7ba61881c13027b15d8054b8abd ]
 
-nvmet_bdev_execute_rw() starts a plug before building the bios, but
-the two error exits taken when nvmet_bdev_alloc_bip() fails return
-without calling blk_finish_plug().  current->plug is left pointing
-at the stack frame of the returned function, so the next
-blk_flush_plug() walks a stale list.
+Restarting a DH-HMAC-CHAP negotiation with SEND(NEGOTIATE) resets
+sq->dhchap_step but does not release the previous c1/c2/skey, which
+are only freed in nvmet_auth_sq_free() at teardown.  The next
+CHALLENGE/REPLY exchange then overwrites those pointers with fresh
+allocations.
 
-Route both failures through a common exit that finishes the plug.
+An unauthenticated host can repeat the negotiate message endlessly,
+leaking a few dozen bytes per round and slowly exhausting target
+memory.
 
-Fixes: c6e3f13398123 ("nvmet: add metadata support for block devices")
+Clear the old negotiation state with nvmet_auth_sq_free() before
+setting up the new one.  Also reset dhchap_skey_len to zero: if a DH
+session key was already established, a following round with dhvlen=0
+would otherwise pass a NULL skey with a stale non-zero length to the
+HMAC code and dereference it.
+
+Fixes: db1312dd95488 ("nvmet: implement basic In-Band Authentication")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
 Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/io-cmd-bdev.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/target/auth.c             | 1 +
+ drivers/nvme/target/fabrics-cmd-auth.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/nvme/target/io-cmd-bdev.c b/drivers/nvme/target/io-cmd-bdev.c
-index 0103815542d49..160364cc8c980 100644
---- a/drivers/nvme/target/io-cmd-bdev.c
-+++ b/drivers/nvme/target/io-cmd-bdev.c
-@@ -305,7 +305,7 @@ static void nvmet_bdev_execute_rw(struct nvmet_req *req)
- 							  &prot_miter);
- 				if (unlikely(rc)) {
- 					bio_io_error(bio);
--					return;
-+					goto out_plug;
- 				}
- 			}
- 
-@@ -325,11 +325,12 @@ static void nvmet_bdev_execute_rw(struct nvmet_req *req)
- 		rc = nvmet_bdev_alloc_bip(req, bio, &prot_miter);
- 		if (unlikely(rc)) {
- 			bio_io_error(bio);
--			return;
-+			goto out_plug;
- 		}
- 	}
- 
- 	submit_bio(bio);
-+out_plug:
- 	blk_finish_plug(&plug);
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index 4c68225411be3..eb2b6c7a80838 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -249,6 +249,7 @@ void nvmet_auth_sq_free(struct nvmet_sq *sq)
+ 	sq->dhchap_c2 = NULL;
+ 	kfree(sq->dhchap_skey);
+ 	sq->dhchap_skey = NULL;
++	sq->dhchap_skey_len = 0;
  }
  
+ void nvmet_auth_sq_destroy(struct nvmet_sq *sq)
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index fc50fde2947d4..61a36fb54e877 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -326,6 +326,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 			/* Restart negotiation */
+ 			pr_debug("%s: ctrl %d qid %d reset negotiation\n",
+ 				 __func__, ctrl->cntlid, req->sq->qid);
++			nvmet_auth_sq_free(req->sq);
+ 			if (!req->sq->qid) {
+ 				dhchap_status = nvmet_setup_auth(ctrl, req->sq,
+ 								 true);
 -- 
 2.53.0
 
