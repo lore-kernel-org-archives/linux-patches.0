@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063620;
-	b=pmERtONwb0h+nf1TE/8iiaDs/ui60c9MOOIOIkkHJSWTd0KwLeqPf62+cy0IWknYx3o1
-	 rt7T7f0N2jM1/mbY252NBKCC79BaR9SkYIxCFWbYV/7PDYJny1VqvMM+DUaHV2A+O87K1
-	 44HSww29rvN4Wf+DL1NRHonz9hv7y4KQk6tDlONn7MORvnLLLZ6uVoRlDq+g+cVspNm6l
-	 99cyghGkBO9yFPUR3JNoJob/XIWN3fVReunnqqQobPs0UxtHjc7utHhD9VKnNb0zJV0Ow
-	 Oqqc+O3VZSdOSd7CXdbNvWm0fsOh2dUh3FNnEpOcsAC0flq/H2Z30FhOmuFTx0jbFSw==
+	t=1794063621;
+	b=iO5PKUVTTuTbd6Nj6RLAUhZ4VQ1GimYu0HcalRF6ybXxABsKYoabMbMBV969j07Ec9j0
+	 AesbKo5RMO5lmdLwAZuiskYM+QgjoHQk1ec8fKFI2L2DLLoJO7O1zKnHoN0/wCJSDcZmc
+	 Xh39mnjKeSwjwmdXvjw5zQKW2wI65+ESFUpaGjvuOa4+El2NoLSmPXtln3q76yKp3pgQn
+	 p7PgnU/3fMgGNx8aiq7zYWfCHyeT+KivYzA114ESd09e/Z+qAU9fJbHcJ5XwfYU8HsPWO
+	 RZk517lF2b7898L8ChHba8bt3RdDs/+uMsHJzxeXOw+59U1mCuSZQvjWJowpr3OVK/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063620;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063621;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1abXxPfUbLjDxjoz2qQM2TRDrlDdJsMaDWU4SKxmXw4=;
-	b=j/9BYVgXpad8H6qjnga09rig4wxeV7pttOk/iswpi2Vqu0ewQzQx79KtxtkaW03b4Oqc
-	 xNin0SoX94E61q2Hb/98t6x8NwO8a0UQTlgGvwUaWQIulhJdLbOGAekhxCqmgCnsqPZzo
-	 laiDNaPglVrKeoJ4NKr4XqYVNhzVNyE/YkwDJ5ey/Qnhx/3k7Aqq4+H0ngs4vvdxNJ+fv
-	 IZCdShrxtllqDR/WQJyQ7kuOeHpoPL7JRm5iRtzjuLuPhl2eprM9RlmkNwf/VyTVxF0SZ
-	 EhMSGYx6ttXQg6s+Ch0hInAiHmiqaCocqRGqnHm+gZ6+pyylrPQvBujoO7jCmtY+tBA==
+	bh=HNZeKscwB/BtbLFMH+moNds+bX4Q6CJcIaI6b8vrXHE=;
+	b=c23Jcq5mLLI+eQjY/g55ZD0b7KUnx3/IH3KI5TdWSSg+Oqi9y245PMRYo4lSM0cIxE/l
+	 ktaWkSYW5b6D4WoZpGKKQTvgdEeuA34UCUMyQJbS8QQqoQaSEamoozzFbqV9UNXN0ZnGF
+	 xvHZrrlzaUS+O9UxRhHbPL25ZFWY3dc1FiUKSRXCR/zinmr2nJ6CauNWVwMBRMXzea71w
+	 lJYqhWON3qcI/mBCIBhJUNlBQyd6hnp39hVks9LvhszIxofvHb1Gqs3NWi6R7oOQ172un
+	 NPW7BdUkzu3i1ImiHJ41vkudsq960aVtNKe3YALuNMYL3NLIvUk3zV2Pzo41StSoNTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b9m2nhIB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UXNGTN2x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2038606EE9F;
-	Sat,  7 Nov 2026 15:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E310C606EE9F;
+	Sat,  7 Nov 2026 15:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b9m2nhIB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674151F0089F;
-	Sat,  7 Nov 2026 15:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UXNGTN2x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5491F0089F;
+	Sat,  7 Nov 2026 15:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063619;
-	bh=1abXxPfUbLjDxjoz2qQM2TRDrlDdJsMaDWU4SKxmXw4=;
+	s=korg; t=1794063620;
+	bh=HNZeKscwB/BtbLFMH+moNds+bX4Q6CJcIaI6b8vrXHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b9m2nhIBCfweZexBayhuSi/kQ7riw1VK+ztnsyAIiG/NgM2fpD/dJYFVSD8o56J1J
-	 fy3rfgsoC4x5hwY+6YrQmrzHABzyYDd5JOiHLpeDBuXiLhc8fiJf90CyJkwW0wi9dY
-	 gFFsgxYVGfOrNjUr9UCCze+Z+26yP0qaueDhTQ2o=
+	b=UXNGTN2xoIbPPzw52b6ZIeG1oYrNCp1H54bBWMNnwPwmrrztVg+6T9GfNbuhV6Z1d
+	 WRwmkvWx2jEX/of0Npse1MBWP28Nxcb6K2pcypmnoMeO6Ct4YmdZIyRJDDyXCL6MkO
+	 EByQe6Jx2vqUkyeXjTbpYChZCJyiG6xG/Nk7LEPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 740/869] ocfs2/cluster: remove zero-address nodes from IP tree on teardown
-Date: Sat,  7 Nov 2026 08:57:02 -0500
-Message-ID: <20261107134917.907650918@linuxfoundation.org>
+Subject: [PATCH 6.18 723/869] i2c: mt7621: fix copying uninitialized kernel stack with reduced page_len
+Date: Sat,  7 Nov 2026 08:56:45 -0500
+Message-ID: <20261107134917.331919762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -74,61 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 5dd57e77eff4ba3e85b3df126a55417c88245708 ]
+[ Upstream commit b7fd977fec0d3f2bdd4f13bb59949c817a365652 ]
 
-o2nm_node_ipv4_address_store() accepts 0.0.0.0. It sets
-O2NM_NODE_ATTR_ADDRESS and links nd_ip_node into cl_node_ip_tree under
-cl_nodes_lock, but o2nm_node_group_drop_item() uses nd_ipv4_address as a
-membership test. A zero address therefore leaves the rbtree node linked
-when config_item_put() releases and frees struct o2nm_node. A later
-address store or IP lookup can then walk the stale node and dereference
-freed memory.
+When a page_len is less than 5 bytes in mtk_i2c_xfer, uninitialized kernel
+stack data is copied and written to REG_SM0D1_REG. Equally on the read
+part, an unnecessary read is done.
 
-During teardown, drop_item takes cl_nodes_lock, skips rb_erase()
-for the zero key, and then calls config_item_put(). A later
-o2nm_node_ipv4_address_store() duplicate check or o2nm_get_node_by_ip()
-lookup takes the same lock and walks the stale cl_node_ip_tree entry. Use
-O2NM_NODE_ATTR_ADDRESS for teardown so every published nd_ip_node is
-erased before configfs can release the node, without rejecting 0.0.0.0
-or changing lookup semantics.
+Guard these extra copy/write and read for the page_len to fix leaking
+uninitialized stack memory.
 
-Link: https://lore.kernel.org/pm-ocfs2-node-ip-rbtree-zero-address-uaf-v5-e7f64be16b7c3b0988d1@gmail.com
-Fixes: 0c83ed8eeb28 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: d04913ec5f89 ("i2c: mt7621: Add MediaTek MT7621/7628/7688 I2C driver")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.3+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20261022193853.670625-1-ansuelsmth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/nodemanager.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-mt7621.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/nodemanager.c b/fs/ocfs2/cluster/nodemanager.c
-index 87aeb1a7a90ae..bfc7c0fb2be05 100644
---- a/fs/ocfs2/cluster/nodemanager.c
-+++ b/fs/ocfs2/cluster/nodemanager.c
-@@ -626,8 +626,11 @@ static void o2nm_node_group_drop_item(struct config_group *group,
+diff --git a/drivers/i2c/busses/i2c-mt7621.c b/drivers/i2c/busses/i2c-mt7621.c
+index 0a288c998419b..9ea5e3f9a7632 100644
+--- a/drivers/i2c/busses/i2c-mt7621.c
++++ b/drivers/i2c/busses/i2c-mt7621.c
+@@ -144,7 +144,6 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 	u16 addr;
+ 	int i, j, ret, len, page_len;
+ 	u32 cmd;
+-	u32 data[2];
  
- 	write_lock(&cluster->cl_nodes_lock);
+ 	i2c = i2c_get_adapdata(adap);
  
--	/* XXX sloppy */
--	if (node->nd_ipv4_address)
-+	/*
-+	 * 0.0.0.0 is a valid configured address, so nd_ipv4_address does
-+	 * not tell us whether nd_ip_node was published in the IP tree.
-+	 */
-+	if (test_bit(O2NM_NODE_ATTR_ADDRESS, &node->nd_set_attributes))
- 		rb_erase(&node->nd_ip_node, &cluster->cl_node_ip_tree);
+@@ -186,6 +185,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
  
- 	/* nd_num might be 0 if the node number hasn't been set.. */
+ 		/* transfer data */
+ 		for (len = pmsg->len, j = 0; len > 0; len -= 8, j += 8) {
++			u32 data[2] = { };
++
+ 			page_len = (len >= 8) ? 8 : len;
+ 
+ 			if (pmsg->flags & I2C_M_RD) {
+@@ -194,7 +195,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 			} else {
+ 				memcpy(data, &pmsg->buf[j], page_len);
+ 				iowrite32(data[0], i2c->base + REG_SM0D0_REG);
+-				iowrite32(data[1], i2c->base + REG_SM0D1_REG);
++				if (page_len > 4)
++					iowrite32(data[1], i2c->base + REG_SM0D1_REG);
+ 				cmd = SM0CTL1_WRITE;
+ 			}
+ 
+@@ -204,7 +206,8 @@ static int mtk_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 
+ 			if (pmsg->flags & I2C_M_RD) {
+ 				data[0] = ioread32(i2c->base + REG_SM0D0_REG);
+-				data[1] = ioread32(i2c->base + REG_SM0D1_REG);
++				if (page_len > 4)
++					data[1] = ioread32(i2c->base + REG_SM0D1_REG);
+ 				memcpy(&pmsg->buf[j], data, page_len);
+ 			} else {
+ 				if (!(pmsg->flags & I2C_M_IGNORE_NAK)) {
 -- 
 2.53.0
 
