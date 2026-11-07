@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062401;
-	b=r755xxscgn4M+KBK/E5CpGcjIUqGjzzGyqZmwt7rWhxwsE3fRjbhSpZX4bZ9bHGTzsAn
-	 XjbPOtRTjHkR37i0X8PKfYtn3HkIr65Q50ugiLzvn2cSvJer1GK7k9fWuN3CQVuM6NEI6
-	 KAHbajPoLQX2tH3FhvQjtxnj4fGioPxR3VwiSjxPFQB0ppaSj/mvbMl20CMRw1Z39ZVTr
-	 OWJRKB8XAUw9ieLlZnbv4BbI+C+f6+Rm0b8uetp+4TBdFnmSADxAyoxLZTxhOVE53XFr+
-	 J/Ego52A6Q+Je0A6gezAAPn1RkX8m397SpdX60PvmI2yBsvYinQSKOL1IhBJi+eAGSw==
+	t=1794062402;
+	b=J5kpLIdEos382Qxi4wW3gdBtUhKHhLkoK9zQHcP/FBJ5e7nsqp+BDGmgwX5tcO92XMTo
+	 iCg80n5NVeSNNL9QkA4qCW1sVMVdCCd0O5eLNgWecAvIZS+Xd7Vaq1IiPY9UzYr824M5c
+	 yOYFFc6ML59s0e2KUao/WhHr64fbCR8dU/zYIv8+86N7tpJVaxyAdqXVQUUUF15yKQr+A
+	 sDPt/vGEkwQFH8hTuPvsQaKtitfDwsHXpHmx+vIyT4R5oM4oKsFyuESM3qjD+pKW5OTjR
+	 V/FC3JEulRjyo/1Il12EYeAffJHk4kh8ElGK7nIu8NJNHvmBFH7b4J+X8RfU6B1TZ+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062401;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062402;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mh+ZAEKkPl4DQ3ltLwOlhMieAGfSq0vuK3MP8nLxmbw=;
-	b=AlMH8OWuMXrLyMqtCb9FI/m9UZlUH7G8/HPj0Hx5FePPM0IwZsCQPv5p5mqxZnLH1ciu
-	 0fmN556ncrR8FCfK1lq1NPH2bDNLnEDVkrlKy4yoDObUDczwK7dEgLFtsw41F8+3+dt80
-	 DTo3Y9v6ql7HkXzlJp/yjtjKyBhCp4nDdoTCiEf5XxYMqgFoxAdZ8X/bkcJkAzeANmtHe
-	 eFmUs1jFA2q1aMUGrxlUjz2VRm0eXkK1q3Y1dmbHTiOzpcPltMRdsVQVGaluMWrLrfKKP
-	 HT+5NdNRKj1pc9hj+yA5wATW1h6exvheGfG2fKTM9lCO14lx9jMepf7ncnM2dCaYCXg==
+	bh=xt/OiDbN55zAO7cSiv6iaQfc3yN5IFWe/Vq3kpBSAcA=;
+	b=yqzKi8FdfFx7LWYfQwLf/McHI7ly/8NBd/Kr2Lri4Qqko6DEcB8eGz0/exE34QeGYJs/
+	 Au90FpCHu8Kms57peZDheFeO0ZRDdY93RSQUKrk2QR2pSUcXak4XlHrxuk+0swrHkNuxQ
+	 gJcMeZA38V3gMDVUJff/Us+Ft3NbGk698GFqgqtTUNrDEMom+LOdDNgO3lVsThmypwmbq
+	 okqrCbVm+mZ+JBUry3z7bBDelPVbL6jKbZvH43IfDfYDJNPeTHDjcWnjqhmgqcjCY2/qd
+	 giN8b5v7fpeqwErYTcQ+HV568B0h0tbyQxfoJYsChofaqxt4wrqTVVPg6ZQetmYHKSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BacgiXLF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="G+KNysM/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346F3606D83E;
-	Sat,  7 Nov 2026 14:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8144A606EE96;
+	Sat,  7 Nov 2026 14:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BacgiXLF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11371F008A1;
-	Sat,  7 Nov 2026 14:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G+KNysM/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381121F0089F;
+	Sat,  7 Nov 2026 14:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062401;
-	bh=mh+ZAEKkPl4DQ3ltLwOlhMieAGfSq0vuK3MP8nLxmbw=;
+	s=korg; t=1794062402;
+	bh=xt/OiDbN55zAO7cSiv6iaQfc3yN5IFWe/Vq3kpBSAcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BacgiXLFZ+6z8d84OWvHZkyuB4iokdbYh6RKAT7zBFTpE/zqJ6S393KUzppRv5w/n
-	 IIx925kwCle8NTMpKKw2RaSs7qF24FEQbf19DihcLIhOorbEGYXagc4t+evDWvtB7d
-	 l3PBI0Zqo2wzrdu5P2cNUgAls1N6SkMzyNhmnOQg=
+	b=G+KNysM/FtttDXjF06s/+LoFs+insh/8e1CnPRvO/kHhFNBVys4a2aNJmDLg12LiY
+	 95378F0ItVe9RPB2Xpv5uWHTltu0xxa4hzT+j8bzTAYcTwwjuqicKSLQSMArnJosvS
+	 U8eVlzSIcLjnba5Ytl+ViDMqPmGyA40v4VgVXQ44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Lee Jones <lee@kernel.org>,
+	Matt Turner <mattst88@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alain Knaff <alain@knaff.lu>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1317/1536] mfd: tps65217: Fix NULL pointer dereference on IRQ init failure
-Date: Sat,  7 Nov 2026 08:55:33 -0500
-Message-ID: <20261107135034.796478254@linuxfoundation.org>
+Subject: [PATCH 6.12 1281/1536] lib/decompress_bunzip2: fix off-by-one in run-length bounds check
+Date: Sat,  7 Nov 2026 08:54:57 -0500
+Message-ID: <20261107135033.758809825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -69,47 +70,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
+From: Matt Turner <mattst88@gmail.com>
 
-[ Upstream commit 0473a5b0663663b75573bf284beb77459e07c461 ]
+[ Upstream commit 69919be2b93ef3922f646729ff42b4bd9a30846b ]
 
-tps65217_probe() ignores the return value of tps65217_irq_init(), so
-when the irq domain creation fails the probe still completes and the
-driver ends up bound with a NULL tps->irq_domain. Unloading the
-module then makes tps65217_remove() call irq_domain_remove() on the
-NULL pointer and oops the kernel. On top of that, irq_find_mapping()
-may fall back to the default irq domain and dispose of mappings that
-belong to other interrupt controllers.
+The run-length path rejects a block when dbufCount+t equals dbufSize, but
+the loop that follows writes exactly t bytes starting at dbufCount, so a
+block that fills the buffer exactly is legal.  bzip2 allows it too: its
+decompressor bounds a block at 100000 * blockSize100k and checks that
+limit per byte appended.  Use > instead of >=.
 
-Check the return value and abort the probe on failure so the error
-is reported and no inconsistent state is left for removal.
+bzip2's encoder stops filling a block 19 bytes early, so nothing it
+produces ever reaches the limit and the bug stays hidden.  Compressors
+that use the full block size do reach it: an lbzip2 -9 image whose block
+ends on a run fails to decode, and a self-extracting kernel built that way
+does not boot.
 
-Fixes: 6556bdacf646fcaa ("mfd: tps65217: Add support for IRQs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
-Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20261002113624.178588-2-r.zhambakiev@prosoftsystems.ru
-Signed-off-by: Lee Jones <lee@kernel.org>
+This code came from busybox, which fixed the same line in 2013 in commit
+932e233a491b ("bunzip2: fix off-by-one check").
+
+I ran into this because my system uses lbzip2 as /bin/bzip2 -- a common
+thing on Gentoo I believe.  As far as I can tell, anyone using lbzip2
+as their system bzip2 would run into this and it's only because it's
+very uncommon these days to compress a kernel with bzip2 that no one
+has noticed.  I only noticed because I was adding support for various
+compression formats on alpha.
+
+Link: https://lore.kernel.org/20260912-b4-bunzip2-blocksize-fix-v1-1-c7384bbfc954@gmail.com
+Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Alain Knaff <alain@knaff.lu>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps65217.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ lib/decompress_bunzip2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/tps65217.c b/drivers/mfd/tps65217.c
-index 029ecc32f0782..a88dd69a2febc 100644
---- a/drivers/mfd/tps65217.c
-+++ b/drivers/mfd/tps65217.c
-@@ -333,7 +333,9 @@ static int tps65217_probe(struct i2c_client *client)
- 	}
+diff --git a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
+index ca736166f1000..4f98cdea7e0b3 100644
+--- a/lib/decompress_bunzip2.c
++++ b/lib/decompress_bunzip2.c
+@@ -439,7 +439,7 @@ static int INIT get_next_block(struct bunzip_data *bd)
+ 		   array.) */
+ 		if (runPos) {
+ 			runPos = 0;
+-			if (dbufCount+t >= dbufSize)
++			if (dbufCount+t > dbufSize)
+ 				return RETVAL_DATA_ERROR;
  
- 	if (client->irq) {
--		tps65217_irq_init(tps, client->irq);
-+		ret = tps65217_irq_init(tps, client->irq);
-+		if (ret)
-+			return ret;
- 	} else {
- 		int i;
- 
+ 			uc = symToByte[mtfSymbol[0]];
 -- 
 2.53.0
 
