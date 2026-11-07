@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063861;
-	b=TFZ+U9EjFJj7jf4oGtkvgo26qKRo2bj/nqcsVjnqrspWVmkABtM2/LXAP0WaBYnTqyfp
-	 IK9puu+dQ8t1nszm8CjRg/tMV0PLHXvpgYq2E1Mia+T/oLTtHifq8ioXZukVrajrBMJ3W
-	 aEVgGC44P8bmAaNuuYrIXgRlTnNhnLIZI2yOqqdFjLUE7oQqPX32Iwgg2uZchhJrFS4K/
-	 M8TpjmOmvocErVZKLCNOeku6s47n8iNmCCZimL+LdSjSiAYAfx5vQP2g83pkUj66pX+vh
-	 /HB50NOWiJLKC3VBuvfGeVOM5T0BLmfReprQAOPMpCsAkTZ9eyJYlqieWMh/QDqfqWg==
+	t=1794063863;
+	b=3tA/894c6r713o3uaSXdsLzDiJ25+hOFDZeGBHw8bFOROFVXDXZMlAQxa5zJHQJCk0Lo
+	 6avauBvF2VZCjCK3Mi+oBZADzO5FBpqvUkfNoucjSPRwZs6DMMG3P/mpBxhX3+czQPhoM
+	 SLgqGzWOtp9eMnmhh0hTk45WZXswOp3Nl4e/EWVF1zA+G23NNWcnZwcsaLXf4Qd0SsNyL
+	 scf3alQxBLPcW87YO6a/PZBYBrEaR8GIHkRHLnMidpG6ecOq3iOvGlaDyxW5/QOu8b4CU
+	 9VUSsA8XcE4m78TMSZsgump3Bmi+i8WdNqBO7OL8zOTwIL590kh7ThgxCPwK0f8GGJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063863;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cWo4YV1LWp1wq6Kdz2GN/6JOmPqB0Znkm+uaRXtd5FQ=;
-	b=RhkaAPf7L13zRWgRMMObSI/QVInMVjHsimdP/KuxW9XNdz4TL8BchCxRwXFGV5Y6nRen
-	 IeSGuxVIuDY4b3C7h5LeEA5XLr1jEueafUNtUeCu74C0IX6EJtG1yPdZmOi7TgDBRswk6
-	 uGujvfTMjjctuI08a3gXGoi0YZm9iwx6yBE6St8eI/zTQc7c7KSpLYl6WU25VnF5s/d6Q
-	 sFppd28cuN2aj/C5P1zdYPuRwgL2BYXCSQhwsbf+l3B8nSOVWgCPz9Iaunp9U4GRCPmGm
-	 djbAHi8l7MGHtRmBwr/gTkZC4Fwvi4kCZP3wmFU+Kx/+RW7xLp9ImC9ukYIaYgXiJ5Q==
+	bh=lRXtN041X6iTmUFAInZW48v/QOffO6bTrwt48Dz3wWY=;
+	b=iJN8LHZDuQiUcHVnC9NowzksE+rjQceHJQ+7m0NYXRbxDN2cvYwKMkeTWmwAem2pCoQB
+	 mUfNnUHd75Cr+eRqbjy90RwNPPwxqPQvAvJ2iQEyfgAcH95//zv0NV0ZXNLiJH1FHyJfn
+	 rhzUjSxmatRRaaWd3CLU39G2tCWFfKpEchQMgwihX/ne2wAGVm1SBi9/f2yzf/AGzpbHE
+	 tPCmTEB27Tw/i7nevs3wgSCXxvppf1O+GX3TnLWRZ2/dhoy6WuRfgpLsSBmTHoEIDskEX
+	 Q1JkJXaKJ1w8jYx2TcJPRGyAStR82JXL4gdpU1dlb2nox58MoO9qecAA162pYxMOsMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jag2cmCt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JmTzr9W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2460E606A9FB;
-	Sat,  7 Nov 2026 15:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6794606CE5D;
+	Sat,  7 Nov 2026 15:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jag2cmCt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27811F0089F;
-	Sat,  7 Nov 2026 15:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JmTzr9W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB5B1F008A1;
+	Sat,  7 Nov 2026 15:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063861;
-	bh=cWo4YV1LWp1wq6Kdz2GN/6JOmPqB0Znkm+uaRXtd5FQ=;
+	s=korg; t=1794063862;
+	bh=lRXtN041X6iTmUFAInZW48v/QOffO6bTrwt48Dz3wWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jag2cmCtbCaGCUIsTQsMiGoVe6dO5ntAtV2zk5848ISFowNc+PRjuOrBo5R9/xFUx
-	 QSS1wSvQfmu92mIHSW8UkY/jVfVrgz3sEYVvWu0sayebMVr+QDKV1sx/O6/B3wFz/5
-	 YlC0fccN76UDI4pgxyxi2NNgYxqx5/2K+l085knY=
+	b=1JmTzr9WG9ftFuqW9lie7r/l81cm4ZAs3pw6lPPX0OCxS8fcdIuE+Y9FGDnZFC8in
+	 LLqN2UUzGJhWxYWwNr5Tg72wxAMSmL4hF2Versq+ddD3JToGPPLkTlPiqyhy5SfqId
+	 wenqaxa7vZtPVfW4mrxLAyk5gyuPcdLl0d0n7SVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Brian Masney <bmasney@redhat.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0068/1257] clk: mediatek: Add missing depend for COMMON_CLK_MT8173
-Date: Sat,  7 Nov 2026 08:39:24 -0500
-Message-ID: <20261107134941.271019015@linuxfoundation.org>
+Subject: [PATCH 7.3 0069/1257] wifi: ath11k: Fix possible memory leak in ath11k_dp_srng_setup()
+Date: Sat,  7 Nov 2026 08:39:25 -0500
+Message-ID: <20261107134941.295724427@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -69,42 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 84964d0ce3faed815e1b8e048ce5ce1c93badb18 ]
+[ Upstream commit 6132d70d0890c03546f6970893fd71938efb2a2f ]
 
-PM_GENERIC_DOMAINS_OF depends on OF, by adding a select to it without
-adding a depend on OF, the following warning is triggered:
+In ath11k_dp_srng_setup(), the memory allocated for
+ring->vaddr_unaligned is not freed in the error paths that follow.
+Fix that by calling ath11k_dp_srng_cleanup() in those error paths.
 
-WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS_OF
-  Depends on [n]: PM_GENERIC_DOMAINS [=y] && OF [=n]
-  Selected by [y]:
-  - COMMON_CLK_MT8173_MFGTOP [=y] && COMMON_CLK [=y] && (ARCH_MEDIATEK || COMPILE_TEST [=y]) && COMMON_CLK_MT8173 [=y] && PM [=y]
+Compile tested only. Issue found using a prototype static analysis tool
+built on the LLVM compiler infrastructure.
 
-This patch explicitly adds a dependency on OF to solve this issue.
-
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
 Cc: stable@vger.kernel.org
-Fixes: ebd0b73d2137 ("clk: mediatek: Add mt8173-mfgtop driver")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Assisted-by: Claude:claude-sonnet-4-6
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260801114911.91483-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath11k/dp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/mediatek/Kconfig b/drivers/clk/mediatek/Kconfig
-index b059d44577f1e..ba1ca9c90dbf1 100644
---- a/drivers/clk/mediatek/Kconfig
-+++ b/drivers/clk/mediatek/Kconfig
-@@ -541,6 +541,7 @@ config COMMON_CLK_MT8173_MFGTOP
- 	tristate "Clock and power driver for MediaTek MT8173 mfgtop"
- 	depends on COMMON_CLK_MT8173
- 	depends on PM
-+	depends on OF
- 	default COMMON_CLK_MT8173
- 	select PM_GENERIC_DOMAINS
- 	select PM_GENERIC_DOMAINS_OF
+diff --git a/drivers/net/wireless/ath/ath11k/dp.c b/drivers/net/wireless/ath/ath11k/dp.c
+index f389b97acbdd5..be65d73b904b6 100644
+--- a/drivers/net/wireless/ath/ath11k/dp.c
++++ b/drivers/net/wireless/ath/ath11k/dp.c
+@@ -313,6 +313,7 @@ int ath11k_dp_srng_setup(struct ath11k_base *ab, struct dp_srng *ring,
+ 	case HAL_RXDMA_DIR_BUF:
+ 		break;
+ 	default:
++		ath11k_dp_srng_cleanup(ab, ring);
+ 		ath11k_warn(ab, "Not a valid ring type in dp :%d\n", type);
+ 		return -EINVAL;
+ 	}
+@@ -324,6 +325,7 @@ int ath11k_dp_srng_setup(struct ath11k_base *ab, struct dp_srng *ring,
+ 
+ 	ret = ath11k_hal_srng_setup(ab, type, ring_num, mac_id, &params);
+ 	if (ret < 0) {
++		ath11k_dp_srng_cleanup(ab, ring);
+ 		ath11k_warn(ab, "failed to setup srng: %d ring_id %d\n",
+ 			    ret, ring_num);
+ 		return ret;
 -- 
 2.53.0
 
