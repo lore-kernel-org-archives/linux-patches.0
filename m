@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061768;
-	b=t2c+a/pOu7nbLASEJWXuSYJXJ3TmSSn+17/EsvGDHMxHRpZeqPs5eoMtJ3D/im7cR/qP
-	 cqMDJQXYHGIjF7gOxqK8CnLdZkHrH9ZLI5OjLOz7V1dyy1+1DZ/X+WS793d3Umc+OTwo2
-	 0cPINmToinU81VnylgGc8qKKKwxoN1XPD4q0OrfP7/bNG1vowzfRdvR0JR7k8jcZ4pDk4
-	 b9Uyy5mLj7dlBb0+GVJ/eP2+gs0/HkZ7KknSdKCNwYoye+lEww50XTDnctn6fzLxDXxO/
-	 XDggfWMDejUKhZInpY4/GfRo35k3GqiodVrsKUR76L2C/CoW7QW0pUjoIE8H93NELCQ==
+	t=1794061769;
+	b=L5xmX1s4xMRNhTzx1IP5feDfMFdLdt3MtNrxTV/YvzCGafGUxSU21jD3lMaCzGzV+qNx
+	 rXDkQbtQ8hCaQE8uXQsdQkEU6ei0CEdapZmKGwHQdR1ASUQFGjZRYKjPSP6lxETmczgTe
+	 6gw0EPg/JXKcqwPqIdOFNKb0GDDMCVLyPbruWppLhM7/ZtS3L1pKStb0Xo28fJLJxBl/e
+	 M/p6blES52uww0VUSWgy4rJcchwbKAMHqNGfGh0BAAga+o5uXxbNq0OWDDc4F8J1bZsCU
+	 Uqk0bMbFPWWcKeU0WniYyD3r9OY4fWChiM80OXe9Efisb6TNqtQVRSP8XPtBvivDfnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061768;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wMtKGt+iu89XTTm9/mgXJ1+cKk6HzODIGjK/U9QY+00=;
-	b=zlE4jAp7csDvN4jsFqTHMiIF3fvpeEnCaaUpU9dVnQzfrkxX+nq89XlQwvHNmRTco+f+
-	 8ndMuCI+xQea76qdlKW070QtZkSCWoBk40wwTo7ugtcflI9QyWQaKPNskddiaQrkPgKpk
-	 gzxRHjbzxc6tV220Is/hb53e2jkF8z5eSfRdSNOYNL5gTscYE/LLLy7F7IknZCcPJ5QNa
-	 JG4sGfOo15X9aNiGz88SFz8bs3e7p9+iLc/Odois/NRwDagmsVkljyPFQvjorEhwed3a+
-	 mtSHRhZj1mCHFu/LRjVX8qclf1uQ3CUuHHkTqG9E6gkej5+Lnbn2AOXQW82YXjP2t1A==
+	bh=GGkyv4CpqGMhqWQDf7xMTU9+nH8GNdg6oBJrFko1eyA=;
+	b=xwNxQh/HnXnKY98fzX+h+cHSKpCT+izBYJwkWiusQanqKmY62Rl0MgjHsndVLLNFT5pR
+	 q0wZwqrf7+ZrC4O3COTWd5LudLAlYajN5x40sYEYgfSamQK9b+6l/koMe5iHrEnLI3D6j
+	 ZYRW0tA6iH9vxVLllOyWTMK6iD7Hs1YOOO1zYiw9MP6NtGweWlUpg/580CgGyWVxWOlIo
+	 HJPUyon00+pay+JCCCNdZEOvrhytJR4A2PjegiFzHspViQbZ3+dqGEzuBzr/dswVmX+yX
+	 zDDgEPlODSEYYBRWQsEz8dEhsLRJTrtVxYjWP6ncFnBHRAOjgnS9VmBCMyV7wC7TDEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPgIifNk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pnnTqUSV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C4E606A32C;
-	Sat,  7 Nov 2026 14:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289AA606A330;
+	Sat,  7 Nov 2026 14:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPgIifNk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A911F0089F;
-	Sat,  7 Nov 2026 14:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pnnTqUSV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50B31F008A1;
+	Sat,  7 Nov 2026 14:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061767;
-	bh=wMtKGt+iu89XTTm9/mgXJ1+cKk6HzODIGjK/U9QY+00=;
+	s=korg; t=1794061769;
+	bh=GGkyv4CpqGMhqWQDf7xMTU9+nH8GNdg6oBJrFko1eyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jPgIifNkIbL3xyVTklomuq/hUHouiOJv8142PMK131XvW3s2H1TKxl2OUNY1AB659
-	 Y+DFLBZ58h4hbm6evCJWAqNTfH36NYkSOFXeqWUCvjwSbUJfqB14/eiN0EGCDrpjI6
-	 GehtYiCRF/SVVAN+FMkE+bEcbu3hsErxzYHEep2k=
+	b=pnnTqUSVlXsvS/FO7aByM+fHiGxtuLaaDgKLNGVHGKic6cMZiIYkLArP/IvOXVGwB
+	 b6UL+FHquoSM1SfAI5zSRSvmRZgSRWCFk1MTVg4K2Q6r892M7tTIvm+kb2i/5AGSP8
+	 TjKa8tVPoPAKXqC41rRol69DAz+JGp/EwxdMCy+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.12 0785/1536] SUNRPC: Reject a TLS alert record that is not two octets
-Date: Sat,  7 Nov 2026 08:46:41 -0500
-Message-ID: <20261107135019.589037526@linuxfoundation.org>
+	Stefan Teodorescu <fane@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 0803/1536] KVM: x86: Zero reserved synic flags when delivering message to avoid stack leak
+Date: Sat,  7 Nov 2026 08:46:59 -0500
+Message-ID: <20261107135020.099559268@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -66,64 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit d16bebe45272ced4f962d27b9efd8b32a3876bd9 upstream.
+commit 2616f497506a772db53e7bb1024cde50b4c165e0 upstream.
 
-tls_alert_recv() reads two octets from the kvec it is handed and does
-not check the length (net/handshake/alert.c). svc_tcp_sock_recv_cmsg()
-calls it for any positive receive, and the alert[] buffer it supplies
-carries no initializer. A one-octet alert body leaves the description
-read from uninitialized stack and reported through
-trace_tls_alert_recv().
+Ensure all reserved flags are zeroed when setting the msg_pending flag as
+part of SynIC message delivery, as setting only msg_pending can leak seven
+bits of kernel stack data to the guest.  E.g. gcc typically uses a
+bitwise-OR to set the msg_pending flag, without initializing the on-stack
+variable.
 
-The peer controls that length. Neither tls_rx_msg_size() nor
-tls_rx_one_record() enforces the two-octet Alert payload. A TLS 1.3
-record carrying only the inner content-type octet decrypts to a
-zero-length payload. RFC 8446 Section 5.1 requires a record with an
-Alert type to carry exactly one message, so any other length is
-malformed.
+Precisely zero the flags, e.g. as opposed to zeroing the entire structure,
+to make it somewhat more obvious that the flags *need* to be zeroed.  E.g.
+it would be quite easy to misread the initial read of guest memory and
+think that zeroing the entire structure is completely superfluous.
 
-Require exactly two octets before parsing and return -EBADMSG
-otherwise. That closes the transport rather than acting on a partly
-uninitialized alert. Gate the path on a control message rather than a
-positive count so that a zero-length record reaches the check.
-
-Fixes: bee47cb026e7 ("sunrpc: fix handling of server side tls alerts")
+Fixes: 3a0e7731724f ("x86: kvm: hyperv: simplify SynIC message delivery")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260808-svcsock-cmsg-fixes-v3-2-62d9a631c880@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://patch.msgid.link/20260826184449.814130-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/x86/kvm/hyperv.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -289,13 +289,23 @@ svc_tcp_sock_recv_cmsg(struct socket *so
- 	iov_iter_kvec(&msg.msg_iter, ITER_DEST, &alert_kvec, 1,
- 		      alert_kvec.iov_len);
- 	ret = sock_recvmsg(sock, &msg, MSG_DONTWAIT);
--	if (ret > 0) {
-+	/* put_cmsg() shrinks msg_controllen, so a short one means
-+	 * kTLS filled in u.cmsg.
-+	 */
-+	if (ret >= 0 && msg.msg_controllen < sizeof(u)) {
- 		/* Returning the count would credit the RPC stream with
- 		 * octets that never reached the caller's buffer.
- 		 */
- 		if (tls_get_record_type(sock->sk, &u.cmsg) !=
- 		    TLS_RECORD_TYPE_ALERT)
- 			return -EAGAIN;
-+		/* An Alert record carries exactly one two-octet message
-+		 * (RFC 8446 Section 5.1). alert_kvec caps the receive at two,
-+		 * so a longer record produces the same count. MSG_EOR appears
-+		 * only once kTLS has drained the whole record.
-+		 */
-+		if (ret != sizeof(alert) || !(msg.msg_flags & MSG_EOR))
-+			return -EBADMSG;
- 		iov_iter_revert(&msg.msg_iter, ret);
- 		ret = svc_tcp_sock_process_cmsg(sock, &msg, &u.cmsg, -EAGAIN);
- 	}
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -794,7 +794,9 @@ static int synic_deliver_msg(struct kvm_
+ 		if (no_retry)
+ 			return 0;
+ 
++		hv_hdr.message_flags.asu8 = 0;
+ 		hv_hdr.message_flags.msg_pending = 1;
++
+ 		r = kvm_vcpu_write_guest_page(vcpu, msg_page_gfn,
+ 					      &hv_hdr.message_flags,
+ 					      msg_off +
 
 
