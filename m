@@ -1,55 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062224;
-	b=lDQBEOfDJaaTSPJPLqPqZxCgiUI9tb4ld09aXv3qZ3NrpWrCPL4sCwI76lu7vrebvuYw
-	 VNNH0JGYRB8WZ/H/6SriG/95wOnVM3ScurCg9fstKL9cpGWZU7L13A9JuDbcV8tGYkuer
-	 yrdY0PIyJFkuNG1zzO4HH8UhIf1ea6quzJpfQDW+oSAmPxni70OFGXXafz/ydAsOEheRl
-	 wCSKy9RhuBNs0HfGvpPSZ+KQg00WVdS5j1xmL7Pe9Z08td5qIHNXq4vkLc+0rtAFhcia1
-	 +NjpLNMSp90mzVo/MszqLLwGYZqwB54j9iFzaWZPYhBLk+TiiitXxCecdQd1T2QquKA==
+	t=1794062225;
+	b=b7Ise34uc7uQgJNjdaMngUmEFxuDfARf4PJUY8mdWt0SlaCjrX+M+7nwHGL9L+JJ/GGL
+	 Y0uZINAFnvBMfArXjTl8ItFYfFq89OCLc5+clkGtnRDpsZe7SKn7qfOVoRgC2trAjslK/
+	 RBirav8sSnESH91z5whDNcBeQUdm1FrUwoI0dNwShRp+8+29BLQXNPCET/D5WuUef1/zW
+	 QQlR5Lq32HfDcQQg7Fdgw6oGBeZRwK7QLGrmGpY695EyvGsQIZw5/3wqmfZ/CxI6AVPOd
+	 jwh1/iv4QTSbCJdmDSSi8D0a/7tYBl6AFzoH5feBrZwbo2xUyWWxjvQdBV37Mq04ysA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062225;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7yaUSjcrR9o8fE4AnW1qWyqgEEEbfRTxJCB/e1InI4g=;
-	b=oOPJIoHhx6iVT3HuA6Rz6cCGpZarpYR+XnU3xKxqi5wpf7jbo4NRx/TUG3KKet8Tsf/s
-	 VLxFyO65oUMEiDIIVNBJHCV0IgCAB2KCYn261Btr04Cmw9rOWei4MyAw7c5BB74QD12Cd
-	 xYeLbVEYmlRjhwXqfE2St2SaJD0dtt6z575r3vqzeJ7LRA6YF/CurN05tLctD06heFxyJ
-	 2iUdiDnmAYqnS7kI8u9TeYgq5HnjEwxovHjCK6/B6EUlxLOuEOOuC6JWdfRC8s2r/r7LA
-	 zcTVe/3NpxNxaHdNnq6vSTGHiWeKfx7MzkfJrp2vjYmEbD/auQXD+o7M4ddij8e6WiQ==
+	bh=6DQ7OfR8INOV6bYMDx4tyCj1E1nQdiJoOOQpKcdmktQ=;
+	b=1La4+nGK4X3AXnLaD1LfwRDCmbCY2ev7dThi/g9ROqBj13JMxFp78lF4mP+kqtoUhmRQ
+	 +EUC4+XLVz8OzXJw0ZXW/tu71HMcTtNDTMZWkV+c0l0oQxADUFKvea6epQAXWD+R+MsAd
+	 vUjcRvYDGzUKbOmcZBfDrcRbMxG83Ul/2yi+Rh6IELPOH4bChe9/c3Es18nTmbgPh1vLP
+	 TuInkhClltPjHV2biDlqKeN8fKkfvwGNxIFhMTlwgA9AeNahma/EH1VDx49zm9pcV32ya
+	 gYd1JPJKXMLnYgM9Q1v5qvMqVKcMwMLKolwAAGzKgceaVnd+zhxN+WhcGhPaiVST1Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNgPZ22x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jcmDkV3I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534C2606D83C;
-	Sat,  7 Nov 2026 14:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E31606D83C;
+	Sat,  7 Nov 2026 14:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNgPZ22x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A5A1F008A5;
-	Sat,  7 Nov 2026 14:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jcmDkV3I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC051F008A5;
+	Sat,  7 Nov 2026 14:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062224;
-	bh=7yaUSjcrR9o8fE4AnW1qWyqgEEEbfRTxJCB/e1InI4g=;
+	s=korg; t=1794062225;
+	bh=6DQ7OfR8INOV6bYMDx4tyCj1E1nQdiJoOOQpKcdmktQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YNgPZ22xF6W7m1xMzDu+tAyn8Bi3hCAalnZSWG6p3fd8zCVwS1gZXXB0QW10F7e3d
-	 PWE28quJnJsxXqq8jptGRbvSpKKEVuLtJWXbEhywAh1Jq0Fj6e010OVFf1cIpVbXpD
-	 0NqJTvQXJYmotBcEgk0k1d6PYqb2SS32OgpOFzUc=
+	b=jcmDkV3ImmItLnBN/E4Jwm0cwxjBwDHhX61BCrF61GC61lUzW1NaBZUs22Ksb9Py8
+	 RSTE3QGFiauxSjFFETyjCtt6Mw52sZROYYtMk7mjiIH3v0/M9w6t+6BVLnv/UY3Szh
+	 hC1pux9KPXUBWqNI8j/ELK/fLZeEKYWh2C4tBuSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Khorenko <khorenko@virtuozzo.com>,
-	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yang <richard.weiyang@gmail.com>,
+	ZW Tang <tangzw515@gmail.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1176/1536] selftests/core: fix unshare_test with large fs.nr_open
-Date: Sat,  7 Nov 2026 08:53:12 -0500
-Message-ID: <20261107135030.769567396@linuxfoundation.org>
+Subject: [PATCH 6.12 1177/1536] ocfs2: skip uninitialized lockres in ocfs2_mark_lockres_freeing()
+Date: Sat,  7 Nov 2026 08:53:13 -0500
+Message-ID: <20261107135030.799481379@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -71,86 +75,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Khorenko <khorenko@virtuozzo.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit df0b7e0ea59c43708cff8c7e34da5e2f8d430e5e ]
+[ Upstream commit 6a3ed6b290513859bd27d9fcb67739347d6315fa ]
 
-The test assumes fs.nr_open is close to the default 1048576, but some
-systems set it much higher (e.g.  1073741816).  This is systemd's doing:
-since systemd v240 (2018), PID 1 bumps fs.nr_open and fs.file-max to their
-largest possible values on boot, as file descriptors are already accounted
-for by memcg [1].
+A hard readonly mount skips ocfs2_dlm_init(), so the per-osb lock
+resources are never initialized and osb->cconn stays NULL.  Before commit
+550842cc60987 ("ocfs2: fix freeing uninitialized resource on
+ocfs2_dlm_shutdown") ocfs2_dismount_volume() only called
+ocfs2_dlm_shutdown() when osb->cconn was set.  It now calls it
+unconditionally, so unmounting a hard readonly mount drops the osb locks
+and takes the never initialized l_lock in ocfs2_mark_lockres_freeing().
+With lockdep enabled this triggers:
 
-In that case, dup2() to nr_open + 64 requires the kernel to allocate a
-file descriptor table with ~1 billion entries, which fails with ENOMEM.
+INFO: trying to register non-static key.  The code is fine but needs
+lockdep annotation, or maybe you didn't initialize this object before use?
+turning off the locking correctness validator.
 
-On a kernel that already carries 04a2c4b4511d1, dup2() no longer fails
-with ENOMEM.  The allocation is now rejected up front and the caller
-gets EMFILE instead, without the WARNING, but the test still fails.
+ocfs2_drop_lock() and ocfs2_lock_res_free() already skip lock resources
+without OCFS2_LOCK_INITIALIZED.  Add the same check to
+ocfs2_mark_lockres_freeing(), which is reachable before them through
+ocfs2_simple_drop_lockres(), so an uninitialized lockres is never touched.
 
-Cap the nr_open value used for the test's own arithmetic to a known
-reasonable base value (1048576) and restore the true original value once
-the test has completed.
-
-Link: https://lore.kernel.org/20260814165709.513263-1-khorenko@virtuozzo.com
-Link: https://github.com/systemd/systemd/commit/a8b627aaed409a15260c25988970c795bf963812 [1]
-Signed-off-by: Konstantin Khorenko <khorenko@virtuozzo.com>
-Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+Link: https://lore.kernel.org/20260903104744.2164235-1-joseph.qi@linux.alibaba.com
+Fixes: 550842cc6098 ("ocfs2: fix freeing uninitialized resource on ocfs2_dlm_shutdown")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yang <richard.weiyang@gmail.com>
+Reported-by: ZW Tang <tangzw515@gmail.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/core/unshare_test.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ fs/ocfs2/dlmglue.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/core/unshare_test.c b/tools/testing/selftests/core/unshare_test.c
-index 7fec9dfb1b0e3..6716e0f74d7da 100644
---- a/tools/testing/selftests/core/unshare_test.c
-+++ b/tools/testing/selftests/core/unshare_test.c
-@@ -40,6 +40,14 @@ TEST(unshare_EMFILE)
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index 84f481cf2ae7c..ec44ed33afdf4 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3528,6 +3528,10 @@ void ocfs2_mark_lockres_freeing(struct ocfs2_super *osb,
+ 	struct ocfs2_mask_waiter mw;
+ 	unsigned long flags, flags2;
  
- 	ASSERT_EQ(sscanf(buf, "%d", &nr_open), 1);
- 
-+	/*
-+	 * Cap nr_open for the duration of the test to avoid ENOMEM from a
-+	 * huge fd table allocation; buf/n keep the real original value so
-+	 * fs.nr_open can be restored to it once the test is done.
-+	 */
-+	if (nr_open > 1024 * 1024)
-+		nr_open = 1024 * 1024;
++	/* We didn't get anywhere near actually using this lockres. */
++	if (!(lockres->l_flags & OCFS2_LOCK_INITIALIZED))
++		return;
 +
- 	ASSERT_EQ(0, getrlimit(RLIMIT_NOFILE, &rlimit));
+ 	ocfs2_init_mask_waiter(&mw);
  
- 	/* bump fs.nr_open */
-@@ -73,10 +81,13 @@ TEST(unshare_EMFILE)
- 
- 	if (pid == 0) {
- 		int err;
-+		char buf3[32];
-+		ssize_t n3;
- 
--		/* restore fs.nr_open */
-+		/* restore fs.nr_open to the (possibly capped) test baseline */
-+		n3 = sprintf(buf3, "%d\n", nr_open);
- 		lseek(fd, 0, SEEK_SET);
--		write(fd, buf, n);
-+		write(fd, buf3, n3);
- 		/* ... and now unshare(CLONE_FILES) must fail with EMFILE */
- 		err = unshare(CLONE_FILES);
- 		EXPECT_EQ(err, -1)
-@@ -89,6 +100,10 @@ TEST(unshare_EMFILE)
- 	EXPECT_EQ(waitpid(pid, &status, 0), pid);
- 	EXPECT_EQ(true, WIFEXITED(status));
- 	EXPECT_EQ(0, WEXITSTATUS(status));
-+
-+	/* restore the real fs.nr_open value */
-+	lseek(fd, 0, SEEK_SET);
-+	write(fd, buf, n);
- }
- 
- TEST_HARNESS_MAIN
+ 	spin_lock_irqsave(&lockres->l_lock, flags);
 -- 
 2.53.0
 
