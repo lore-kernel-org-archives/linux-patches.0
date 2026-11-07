@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794061961;
-	b=1KB5UUxqwsTPN5AmsrPiItgZpRRnCnvq8MKo57lGYgL42kyBDmzGp3mFpbWAXpTca7cn
-	 SSgobhXqYE/6QxSo1KTZOFBx2m+HVGou9GffD4ExY8sN/RGwjYU8rTHnRiN8owE0T1uLc
-	 P8/+qobo6FPg9El43X0f7dX3AIQABdyTuf+pdO3dg2E8L36bPW3ZDX1m3aSbNbYPO763G
-	 2tbmt0V3CTc7tdqbvt+yNA+P80enjQYYVAnETvRt98SJblNO2qIdULu893FjOYm8pTU3m
-	 CMaMeDdl/Yh4AxPXnpmPc0BlYOE3BpZ/JMTWFgQkOD9v4hRpGPOgHnBPjDz8RocSq1A==
+	t=1794061962;
+	b=xPEvVcmunw8ZoJSVXesJpbWYAuRDb83yYPYaGEruoBgWIntHHuvckDpsJWzso/LMgOtl
+	 zgjmBsdWU8xDdX0UtOHeR15xckH7B9Y7Faf9PccdFjLtjFTW7WHsIP9AbCP6/cGlBzda8
+	 and9ktMnj2yKVo7z4vvVHX9bayn5eh1e5gOIRp2EFOOvoqF6P9wTRQ0oeddNZmD247p8O
+	 5HYcpVwF2aHfWL2KfwdjfBnrDhhxyGxrH2cnx5i7mUiIUvU25gMB/eTiVBkjtOCo9sRIJ
+	 R0txCP2uRQsFdH9hKylEz2eVzF/5w93cHlsHx4QiSIxB/qd+PraqySJXxIPgrFoD70A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794061961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794061962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TQykZKR3mGtHfjaNJ4eHZxf29fTuC8ObaguN8F+7680=;
-	b=zupps/mrkOL5/8zt9nNC/f7utYF40hwYzU3ShwTsryanZBqTjMoA/Low/jI0ZoVGjrla
-	 u24PrWuumeR+br2yhJllvGRPkglJ0uhze56euqCFh91cFFnRS8DwiQcJ5npFFIXqK6Eop
-	 wERY2ieK2RBXK3RvV6gGXIeu0wtPsWX1B57CcIqUvE4X7r4fOq2lGxet39xr/ON5QtO/X
-	 UMdWm+1mp6X687I7IXjU4tL1jtKc4r9xRcbryvjsCYNeXMOLj+pLrh5a2uAYsJPxoyg9K
-	 RyvLcNoUrKmJ89NG670u6HU2VgED4kc/eHnjGIDr+MbE7DSSgMBivwKQwO1f0l+mmxQ==
+	bh=F2Qby3c5SjFXfgKdZb++wGMR9Hv5qhSY07FjsEdec0U=;
+	b=HOFHnSdDokrAX/KjRjOs71ESLuvlZ3iMIA1b85frl3cdCoDn+mu0XhL/UW5q/PDqK155
+	 Yi9Y1Q5KWShQRS7D4XUQMZMVlsG3B0ERkRKXxoXXnZ3WewXYGNHyZjLwSi5bRWGBR2UrG
+	 dCNaD+el8fpfO2Wnc5FbmxD/JIGjgtOTDqu1V/Saf4cBGIGJ8C3aeb7UtDOMfDXYNjfiX
+	 /zwZSsy99PaxT6uqjvqci2TDdTeTN+jTc+Js2zlxVK0U8Hqs8ram6iE9mBBpEhuuBLXiG
+	 7nUptQh4IKV1wnXaElf0mYJu9afcrF4GOHTyrAAJ1HG1yxVvB5vHeWb5RS4dv1BsS7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=poFZiCUZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MJq6tGsR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C684606A32E;
-	Sat,  7 Nov 2026 14:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3A8606A335;
+	Sat,  7 Nov 2026 14:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=poFZiCUZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE4F1F0089F;
-	Sat,  7 Nov 2026 14:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MJq6tGsR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0581F0089F;
+	Sat,  7 Nov 2026 14:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794061961;
-	bh=TQykZKR3mGtHfjaNJ4eHZxf29fTuC8ObaguN8F+7680=;
+	s=korg; t=1794061962;
+	bh=F2Qby3c5SjFXfgKdZb++wGMR9Hv5qhSY07FjsEdec0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=poFZiCUZvUc0dBl98PTQTXdKwpoJW9Qcalo3yIl7Cj6dj3BvJE3RGN4LP8ZnnNlwa
-	 I0oBYjfgAuH1fhTAuchIbJ2ZzsM41jDL0JPYTX8fqzWPoHeL0TeEg0dlrc3jLmek/L
-	 HRXuPp6XEunHuNDYyZ5pC+lyohLE716zsiOSuLLY=
+	b=MJq6tGsRcyt181Xtslm/3i49s//KZOCbeT53EifF8nNB+lQuaSamQ2ePXsHGmWh9u
+	 ERw7Zp10pb0nVF1DEIUIubYp6bGyMOcDOtJ0k9eavlYpxSLozs0N+ZhYB4SECkWVzW
+	 y3mUxzar9slUYM8RMQ+ZSTJeUJIj2BD7fdEQJKPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Damon Ding <damon.ding@rock-chips.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0959/1536] drm/bridge: analogix_dp: Restore mandatory samsung DP DT properties
-Date: Sat,  7 Nov 2026 08:49:35 -0500
-Message-ID: <20261107135024.586381788@linuxfoundation.org>
+Subject: [PATCH 6.12 0960/1536] dmaengine: altera-msgdma: initialize state before requesting IRQ
+Date: Sat,  7 Nov 2026 08:49:36 -0500
+Message-ID: <20261107135024.614950720@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -68,109 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damon Ding <damon.ding@rock-chips.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 02f569dd66c94dd67b2586f776235cf4177409ed ]
+[ Upstream commit a5f8e3471fc20567df888267885dec3eb340eb37 ]
 
-Revert the change that made samsung,link-rate and samsung,lane-count
-optional for Exynos DP. Add error checking to fail probe early if the
-required DT properties are missing.
+msgdma_probe() registers the IRQ before initializing the tasklet, lock,
+and descriptor lists used by the interrupt handler. A pending interrupt
+can access incomplete state during probe.
 
-If these properties are missing, video_info->max_link_rate and
-video_info->max_lane_count remain zero, and so do link_train.link_rate
-and link_train.lane_count used in the subsequent link training flow,
-resulting in link training failure.
+Initialize the handler state before requesting the IRQ so the interrupt
+path observes ready software state.
 
-There is no way at all a device can work without these properties.
-Here is the code flow when either max_link_rate or max_lane_count is 0:
-
-  analogix_dp_commit()
-    -> analogix_dp_full_link_train(dp, max_lanes = 0, max_rate = 0)
-
-  analogix_dp_full_link_train(max_lanes, max_rate):
-      // Read sink capabilities via DPCD and sanitize them
-      link_rate  = read_dpcd(DP_MAX_LINK_RATE);  // >= 0x06 after fixup
-      lane_count = read_dpcd(DP_MAX_LANE_COUNT); // >= 1 after fixup
-
-      // Clamp by the limits from DT
-      if (link_rate > max_rate)    // 0x06 > 0, always true
-          link_rate = max_rate;    // link_rate = 0
-      if (lane_count > max_lanes)  // 1 > 0, always true
-          lane_count = max_lanes;  // lane_count = 0
-
-      // Configure TX with the zeroed values
-      set_link_bandwidth(link_rate = 0)
-          // writel() is only executed for bwtype == 0x06/0x0a,
-          // so LINK_BW_SET is never written and stays at
-          // reset value; phy_configure() gets link_rate = 0.
-
-      set_lane_count(lane_count = 0)
-          // writel(0, ANALOGIX_DP_LANE_COUNT_SET) enables 0 lanes;
-          // phy_configure() is called with lanes = 0.
-
-      // Program sink for link training
-      drm_dp_dpcd_write(DP_LINK_BW_SET, {link_rate = 0/lane_count = 0})
-          // DP spec requires link rate in {0x06, 0x0a, 0x14} and
-          // lane count in {1, 2, 4}. Writing zeros is illegal, so
-          // the sink cannot enter the training state.
-
-      // Training loop
-      for (lane = 0; lane < lane_count /* 0 */; lane++)
-          // loop body never executes; training_lane[] stays
-          // uninitialized and no training register is programmed
-
-Since the sanitized sink values are always non-zero (link_rate >= 0x06,
-lane_count >= 1), the clamping with a zero maximum unconditionally
-forces the training parameters to zero. Clock recovery can never be
-achieved, so link training fails deterministically.
-
-Consequently, making these properties mandatory again cannot break
-any existing device: a DT without them could never have worked in
-the first place. Failing probe early with a clear error message is
-more helpful than a silent link training failure at runtime.
-
-Fixes: 0d0abd894ead ("drm: bridge: analogix/dp: add max link rate and lane count limit for RK3288")
+Fixes: a85c6f1b2921 ("dmaengine: Add driver for Altera / Intel mSGDMA IP core")
 Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
-Link: https://patch.msgid.link/20260828065153.590802-4-damon.ding@rock-chips.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260830053308.2190597-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/analogix/analogix_dp_core.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/dma/altera-msgdma.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-index bfa88409a7ff0..bc8de97a92055 100644
---- a/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-+++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
-@@ -1502,6 +1502,7 @@ static int analogix_dp_dt_parse_pdata(struct analogix_dp_device *dp)
- {
- 	struct device_node *dp_node = dp->dev->of_node;
- 	struct video_info *video_info = &dp->video_info;
-+	u32 val;
+diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
+index 5b1be7162b432..7cd736a96d521 100644
+--- a/drivers/dma/altera-msgdma.c
++++ b/drivers/dma/altera-msgdma.c
+@@ -849,11 +849,6 @@ static int msgdma_probe(struct platform_device *pdev)
+ 	if (mdev->irq < 0)
+ 		return -ENXIO;
  
- 	switch (dp->plat_data->dev_type) {
- 	case RK3288_DP:
-@@ -1518,10 +1519,14 @@ static int analogix_dp_dt_parse_pdata(struct analogix_dp_device *dp)
- 		 * NOTE: those property parseing code is used for
- 		 * providing backward compatibility for samsung platform.
- 		 */
--		of_property_read_u32(dp_node, "samsung,link-rate",
--				     &video_info->max_link_rate);
--		of_property_read_u32(dp_node, "samsung,lane-count",
--				     &video_info->max_lane_count);
-+		if (of_property_read_u32(dp_node, "samsung,link-rate", &val))
-+			return dev_err_probe(dp->dev, -EINVAL,
-+					     "Failed to get samsung,link-rate\n");
-+		video_info->max_link_rate = val;
-+		if (of_property_read_u32(dp_node, "samsung,lane-count", &val))
-+			return dev_err_probe(dp->dev, -EINVAL,
-+					     "Failed to get samsung,lane-count\n");
-+		video_info->max_lane_count = val;
- 		break;
- 	}
+-	ret = devm_request_irq(&pdev->dev, mdev->irq, msgdma_irq_handler,
+-			       0, dev_name(&pdev->dev), mdev);
+-	if (ret)
+-		return ret;
+-
+ 	tasklet_setup(&mdev->irq_tasklet, msgdma_tasklet);
  
+ 	dma_cookie_init(&mdev->dmachan);
+@@ -865,6 +860,11 @@ static int msgdma_probe(struct platform_device *pdev)
+ 	INIT_LIST_HEAD(&mdev->done_list);
+ 	INIT_LIST_HEAD(&mdev->free_list);
+ 
++	ret = devm_request_irq(&pdev->dev, mdev->irq, msgdma_irq_handler,
++			       0, dev_name(&pdev->dev), mdev);
++	if (ret)
++		return ret;
++
+ 	dma_dev = &mdev->dmadev;
+ 
+ 	/* Set DMA capabilities */
 -- 
 2.53.0
 
