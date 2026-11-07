@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063655;
-	b=fA9wPP2Iqb3ijnqRSGCMXaIgEdANr8F8ih+q3NEi/8IRIBT61cA9512r+VjoA3yXTjr2
-	 QTZe+2BQnoq4bH5Yvi8OZlghTFX/C3qPGxTFXXiLjgbsnDTRhjjW0mBEHXqlWcSUb9Scs
-	 ncbstUdt957ArXa3Gv3KfmFXQ8VvB+oh88WNAmwF5s75LPP7joCqm4rR1ag3uRCg5OS6H
-	 1FSCLgasojkAZSjU1SAnibShkogMB6Wj1y8tWEC/b0c7GS/M7vLbCtxOCyKbL9NWNsWA6
-	 wKaJ1vz2npYp1iEmAlhZaDHLLxJfD0hIPokhRfLuHwTvnE8JC5Gl5RqdasDl+awv4RQ==
+	t=1794063656;
+	b=NvdXkN2YuqNvj5pnkddvYXybuqf2R5fsM702ucIpP49FN/v/BiK4XU8BVEMKXfbo1VJG
+	 puIqYx7go1A9/Irlnm6ntUA0aXzBlb1W2v75LHO43M4Xf42s7d2mI/9JeR/VWv9+39stV
+	 usdvxBsDVQvO8BEZb5c3CHr0J1Q6Ok8o/5LoyYoXpRZjtC7Oms+N8MbC7QkRCcf6KWeSr
+	 ktxMNH2uk/a/RuS9yyZIe4guV6znpp/h+yAni0IzCqrEob/Uo6aN//HD2ftEL4sswr75J
+	 LE9movJ22ySicWleVQyx4H3evTVciUWHWoznmw4TMrlBQxK95t/D7Gi13me55eKenxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063655;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063656;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=VZXph0xTfLHCeh5HFXLUTfuFtXryESR3IEB/Qr+SXGA=;
-	b=L0nBRVTmaZwCJTBDQlSce58VnbJb0z2JFe2zfukUNQf6BousyvOQzuaaomoHaeROU5mY
-	 F2l/PfSdjBQqqRzO2W3R9JOOmMl+jmacIiX7pJz0GifH8HVieUp1HeVFAXvCldIi4yaaS
-	 Tua6NFTvgDGd4vFsfqNfSabM5pqHJRNoUSdQHue3q+pFHP66fdlDBTdRY2So8Yj+enLjD
-	 RsYOlOD/1AiwK9KV9vNWas2Y1ByV2m8PSGJBcl3XSQAsZmdWniy8R6iOY1NSU3RjXC/Uq
-	 qThHbTVPAopfRH+fGLfvBhweTyI1nKrcKU2+9/M8qN8XIWXBJieEw56I2qCf4oYu2ww==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=amBOvVAtCCXo8fcoW1rg0LB9JiJoBnnecSmMsTI8N5Q=;
+	b=JcdgJXykLS4c4e6z+pXDE0RvWWXcVCYYkUD0Ej+/Ks+NY0ruzlSaIA844FvhzW8u125M
+	 uyFDpJudj/Wd0+JiPdT8PciekokOZWkg7ovE/NFjyEOeeuIE67y1f4z+eHvNhBQNDcuYN
+	 i6ezb7w5D5oIxaQRTGZ4y+mU0RSkGLF6rqVRyOiqqOs9jFjOv/jNWQF06POLWrFWYCCHo
+	 OT3pVmeAOnN4+4UzDFWTl2wjztMYgVKKtazPcnsp/IZ5ZfxPu2npNItJb2fhI+SlBOKYH
+	 dTT/kKSzdwb2issStKys69jyfokTJF9twtX5S+Aql4Rv3PsmUl0HJD2nwH1ev/RgKJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b2xkkO2s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=poRtb3uZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD61B60A6F4F;
-	Sat,  7 Nov 2026 15:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11E7606D827;
+	Sat,  7 Nov 2026 15:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b2xkkO2s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9691F0089F;
-	Sat,  7 Nov 2026 15:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=poRtb3uZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594181F008A1;
+	Sat,  7 Nov 2026 15:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063654;
-	bh=VZXph0xTfLHCeh5HFXLUTfuFtXryESR3IEB/Qr+SXGA=;
+	s=korg; t=1794063655;
+	bh=amBOvVAtCCXo8fcoW1rg0LB9JiJoBnnecSmMsTI8N5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b2xkkO2sxtYth9eZeIvAxzymLIqAmCs1KJDPksPY9qkGStL/RrS3kz/HCTV4z82n8
-	 Je1XqwDaZ1y7US2rVflmisEbdRG7uzy3Q3E1MN6b24CX/I9tGp8KfH1zhQ9Q/yRThG
-	 lyuEWljmWWKAcawiRjXWyC6CQf3bmjSa2iLO4jtA=
+	b=poRtb3uZutPYgPHbez3Q/lQI6+y9xfvy8gB625DxdXnd5vR73GrX703RgM3WckzXE
+	 awaXdQ7fQbW0F/clrDZYgiiwxPxoyFIaB9/rVwx0kdqas+0GrxlaDoGHMwTful/QcN
+	 1bQF+MON2hZQdsvFvlSQBoYSJeA52ZxA/PQa9HGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yanxia <yanxia@cmss.chinamobile.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jean Delu <jeandelu@tutamail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 730/869] veth: fix stale peer max_mtu on XDP program replacement
-Date: Sat,  7 Nov 2026 08:56:52 -0500
-Message-ID: <20261107134917.529660429@linuxfoundation.org>
+Subject: [PATCH 6.18 721/869] parisc: eisa_enumerator: Fix out-of-bounds reads of the EEPROM buffer
+Date: Sat,  7 Nov 2026 08:56:43 -0500
+Message-ID: <20261107134917.276528629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -62,68 +62,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: yanxia <yanxia@cmss.chinamobile.com>
+From: Jean Delu <jeandelu@tutamail.com>
 
-[ Upstream commit c955325db639e9503941227e14e1f1ccc99442a1 ]
+[ Upstream commit c0a3e153804f0c14f4159ddbd2b73483c9cb3577 ]
 
-veth_xdp_set() calculates the peer MTU limit from the incoming program's
-XDP fragment capability, but only stores it when no program was attached.
-Replacing a program with one having a different fragment capability
-therefore leaves the peer's max_mtu stale.
+eisa_enumerator() trusts the contents of the EISA EEPROM.  The number
+of slots is read from the EEPROM header and used to access the slot
+records at HPEE_SLOT_INFO(i) = 20 + 48*i within the fixed-size
+eeprom_buf (HPEE_MAX_LENGTH, 8192 bytes) without any bound check.  As
+struct eeprom_eisa_slot_info is 48 bytes, only 170 records fit into the
+buffer, but num_slots is a u8 and may be up to 255, so a corrupted
+EEPROM makes the code read up to about 4 kB past the end of the buffer
+(e.g. record 254 is accessed at offset 20 + 48*254 = 12212).
 
-Replacing a regular program with an xdp.frags program keeps rejecting
-otherwise valid jumbo MTUs. The opposite replacement leaves a larger
-limit in place and permits MTUs which a fresh attachment of the regular
-program would reject.
+parse_slot_config() has the same kind of problem: it clamps
+config_data_length against HPEE_MAX_LENGTH but does not take
+config_data_offset into account, so the parser can walk past the end of
+the buffer even when the offset itself is valid.
 
-Update peer->max_mtu after every successful attachment or replacement.
-Keep the GSO feature update conditional on the first attachment.
+Clamp the number of slots so that all slot records fit into the buffer,
+and hand the number of bytes actually available to parse_slot_config()
+and bound the parse by it.
 
-Found during review of the XDP replacement path and confirmed with
-native XDP on an isolated veth pair. Before the fix, direct replacement
-rejects MTU 9000 after switching to xdp.frags, and accepts it after
-switching back to a regular program. Detaching and attaching instead
-produces the expected results in both directions.
-
-UML tests on net reproduce the problem before this change and match the
-detach/attach controls afterwards, with both devices up or down and
-with either endpoint receiving XDP. Failed replacements preserve the
-previous state; same-type replacements and detach also behave as
-expected. Small-frame traffic passes in the devices-up cases.
-
-Fixes: 7cda76d858a4 ("veth: Allow jumbo frames in xdp mode")
+Signed-off-by: Jean Delu <jeandelu@tutamail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: yanxia <yanxia@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20261020020147.790274-1-yanxia@cmss.chinamobile.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/parisc/eisa_enumerator.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 148114ab85ac3..25cdbba5dfa9b 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1621,10 +1621,9 @@ static int veth_xdp_set(struct net_device *dev, struct bpf_prog *prog,
+diff --git a/drivers/parisc/eisa_enumerator.c b/drivers/parisc/eisa_enumerator.c
+index f0cb31198a8f0..aa41d3abc6c22 100644
+--- a/drivers/parisc/eisa_enumerator.c
++++ b/drivers/parisc/eisa_enumerator.c
+@@ -311,6 +311,7 @@ static int configure_function(const unsigned char *buf, int *more)
+ 
+ static int parse_slot_config(int slot,
+ 			     const unsigned char *buf,
++			     unsigned int buflen,
+ 			     struct eeprom_eisa_slot_info *es, 
+ 			     struct resource *io_parent,
+ 			     struct resource *mem_parent)
+@@ -333,8 +334,8 @@ static int parse_slot_config(int slot,
+ 	printk(KERN_INFO "EISA slot %d: %s %s ", 
+ 	       slot, board, es->flags&HPEE_FLAG_BOARD_IS_ISA ? "ISA" : "EISA");
+ 	
+-	maxlen = es->config_data_length < HPEE_MAX_LENGTH ?
+-			 es->config_data_length : HPEE_MAX_LENGTH;
++	/* never parse beyond the data that is actually in the buffer */
++	maxlen = min_t(unsigned int, es->config_data_length, buflen);
+ 	while ((pos < maxlen) && (num_func <= es->num_functions)) {
+ 		pos+=configure_function(buf+pos, &function_len); 
+ 		
+@@ -491,6 +492,13 @@ int eisa_enumerator(unsigned long eeprom_addr,
+ 	printk(KERN_INFO "Enumerating EISA bus\n");
+ 		    	
+ 	eh = (struct eeprom_header*)(eeprom_buf);
++	/*
++	 * The EEPROM contents are not to be trusted: clamp the number of
++	 * slots so that all slot records fit into eeprom_buf.
++	 */
++	eh->num_slots = min_t(u8, eh->num_slots,
++				(HPEE_MAX_LENGTH - sizeof(*eh)) /
++				sizeof(struct eeprom_eisa_slot_info));
+ 	for (i=0;i<eh->num_slots;i++) {
+ 		struct eeprom_eisa_slot_info *es;
+ 		
+@@ -503,7 +511,8 @@ int eisa_enumerator(unsigned long eeprom_addr,
+ 		
+ 		if (es->config_data_offset < HPEE_MAX_LENGTH) {
+ 			if (parse_slot_config(i+1, &eeprom_buf[es->config_data_offset],
+-					      es, io_parent, mem_parent)) {
++						HPEE_MAX_LENGTH - es->config_data_offset,
++						es, io_parent, mem_parent)) {
+ 				return -1;
  			}
- 		}
- 
--		if (!old_prog) {
-+		if (!old_prog)
- 			peer->hw_features &= ~NETIF_F_GSO_SOFTWARE;
--			peer->max_mtu = max_mtu;
--		}
-+		peer->max_mtu = max_mtu;
- 
- 		xdp_features_set_redirect_target(peer, true);
- 	}
+ 		} else {
 -- 
 2.53.0
 
