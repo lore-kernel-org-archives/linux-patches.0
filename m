@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794065156;
-	b=YnZSvxlHPlsyVh5BSX/nBu45OuEdx/QygBL5LYe9usLRa4po1sjMWpsqJPRbMMsgmx/u
-	 y+hJKefZ6jcwluKq70+bfhbRv2zjDA8kQ4d+4fgjBw8c4e/5Xl15ooAeFbSF1B/dQy8IX
-	 pRn6BY8QTqOqmYPexCMO/v7pi47au7UIif6vwYNaBchCjij364gTgUY4IPHZVshoZg4+q
-	 2nxv841c8My3FQYhiCZk5Dq9AaZ8cXekwE6E5gaMECDulOhvxkoiu9jOZz9rOPw1BGUVS
-	 d6x2WgcqDTT+X9BT1/SRZjKmPwTQBw4PaRH0ZUUIRs2uh6S0CMts/8W2wlke11KPqCA==
+	t=1794065157;
+	b=GNRhcQTIhf4AN2ZquvL4W6BQ3JBPd7FnN/OQDdH5lmuLnooSnLquPZ1LqgMF92H1C1PX
+	 DPmP7xZleoYRYVYwrH6cB0ao470rPJ8wM+7FluS+aBL8Msny45TInlnY+qhEFT9VZav1R
+	 igJyO44RnHy/fU28+Y6sxJutj+xxD/gy4XFxSxVGNwTrI6ff42a6+ajCveJEEtBGkJWNj
+	 /8oC35LquASCWh2QXMZMVeAdLlS4NbvUENHDGe7K55sYDaJZYsbtw0ym+h5jvtEWC+8wk
+	 F6t6gVV/vUe5H6mb8iNfHGtQ+HLIBi0HmJKZoEtvw2Jk4E4jWT6Cc9tpHuYTt9hdslA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794065156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794065157;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=MTWv04G0+6QCJ0Rd5WalZ9hTpPdz/PwmnSsFXygwMk8=;
-	b=Ox1ktWvlISuEU54Oo6BQclACYtmTrX/9JDC2KgXQpatLEYGn1xvY8el9NaZ3BXdOcyrI
-	 7HqbHryuNRtwsyTw2liV3vG98Eqk7xrPKi2CiAT1hE5hLsUc9OsgfumHQ8XJ03e83zGFK
-	 D98uFaEltuZAEjzYNDqbMMMdRafJeCk2gvYF2+72p6vju+QV6+LBFlICZVTokZAhrZcjx
-	 kdAu/D3GL9oRW4Q3IpteOdj7UCgBJNo5ytYEo6HB5iu1UShwLmogNsC2qPPr6zEw8b135
-	 suSMV34KFJFO5kDaUcfeVEeHOdpuOd+LbUZmp1bZZ5ViEeyGCUEeVJYeBdoLC7DGgVA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=niYGLqQNCpHF2SuWSonMGt9b4c26VMBrNr56ypXslKw=;
+	b=j7dy97V54jOjMA88B7GCqweWR0z/8i+dYO8OWeiO5cLEGDfRvM8uL9J9/WCXQ8ePdsyn
+	 DcP/hdF155sIXYswgcxwhp1RjKqnvqS6qKfjQKCG3c04EIc1vvny/w1rc0QuJsrYH79Up
+	 7UHfabvXVKqDQy2Pksfv+ag3psx54j8FgSCQ10Dcnzvrde8b79en2LS+cHnbR/KMreT1I
+	 O2P4ZOv0ccaLr5Uv3VQo6Y7XgZczJ/a5/bg0NCFjLWGUn6toKJ/vkfslLleFVXmUXevWx
+	 CRhoImRha4/GVitwqwbsi9IxmRdGzqPA3Yp15QgU+fm3YpLixXFx8C0Uuw9TRr2rkLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LySbRxdS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NSEEctqG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3B7606A32E;
-	Sat,  7 Nov 2026 15:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F33F606A335;
+	Sat,  7 Nov 2026 15:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LySbRxdS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1C71F0089F;
-	Sat,  7 Nov 2026 15:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NSEEctqG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FAD1F0089F;
+	Sat,  7 Nov 2026 15:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794065155;
-	bh=MTWv04G0+6QCJ0Rd5WalZ9hTpPdz/PwmnSsFXygwMk8=;
+	s=korg; t=1794065157;
+	bh=niYGLqQNCpHF2SuWSonMGt9b4c26VMBrNr56ypXslKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LySbRxdS9wdp4uYMcCc8+hHpUlOLo6DxGknTyj6FLszGzclFoAUOletinlPjunVcf
-	 8J8a+Vvn+f8ZBa8PvGzKvRfHvdwAqn99ZBTdRoCuYJ4RptU1herjYaLad/5rtSN7NE
-	 WiHLHGjSpIdKnkjdVQn6K9hp3lWtD8Gm6nZZ3rSg=
+	b=NSEEctqG1IwluXqr4OcHn+WioTThuAwFjbfE8LcjDViBWm5KcqxbmGsUDUbFEifpe
+	 UELhzxmfhrJc887ll+kkAigRdUvRtnz82R13HoUxEv2keaXb/8/jlqgeNzu6Yod8q/
+	 TKwHhM+X5DaC+Gxn635xqcHQKCR8OOtSX0xPxQd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	William Palacek <William.Palacek@amd.com>,
+	Prike Liang <Prike.Liang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	John Fisher <jfisher84@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0965/1257] drm/amdkfd: wait for a GPU reset before freeing a BO
-Date: Sat,  7 Nov 2026 08:54:21 -0500
-Message-ID: <20261107135005.989518435@linuxfoundation.org>
+Subject: [PATCH 7.3 0966/1257] drm/amdgpu: wait for pending page table updates before switching a VM to CPU updates
+Date: Sat,  7 Nov 2026 08:54:22 -0500
+Message-ID: <20261107135006.021150366@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -63,101 +64,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: William Palacek <William.Palacek@amd.com>
+From: John Fisher <jfisher84@gmail.com>
 
-[ Upstream commit 47d799a718439764432d8ef3a0952af45f025f76 ]
+[ Upstream commit 53d9ef2f518add783bb48a69d77bbc8aea99e911 ]
 
-When a GPU reset takes the reset domain, KFD eviction cannot unmap
-user queues: execute_queues_cpsch() fails its trylock with -EIO, so
-the queues keep running until the ASIC is reset. The TLB flush is also
-skipped while the reset is in progress. If the process unmaps and frees
-a BO in that window, its pages are released while a queue can still
-access them through stale translations.
+amdgpu_vm_make_compute() switches a VM from SDMA to CPU page table
+updates when a KFD process acquires it. It syncs "with the last SDMA
+update/clear" through amdgpu_bo_sync_wait() on the root PD, but that
+walks the reservation with DMA_RESV_USAGE_READ, and the clears of the
+VM's page tables (the root PD from amdgpu_vm_init(), and the PDs/PTs
+the seq64 mapping allocates at the render node's open) are added there
+by amdgpu_vm_sdma_commit() with DMA_RESV_USAGE_BOOKKEEP only:
+amdgpu_vm_pt_clear() commits them with a NULL fence, so they do not
+reach vm->last_update. The CPU path's own waits (amdgpu_vm_cpu_update(),
+amdgpu_bo_kmap()) use DMA_RESV_USAGE_KERNEL. None of them waits for a
+clear that is still queued.
 
-On MI300X, munmap() then crashes in free_swap_cache() on a small bogus
-page pointer in its mmu_gather batch page:
+When one is, the CPU writes the first entries of the new compute VM (the
+KFD trap handler's TBA/TMA page at AMDGPU_VA_RESERVED_TRAP_START, mapped
+during ACQUIRE_VM) into a page directory the SDMA then clears. The
+entries are gone, the handler's page is unmapped, and the first wave
+save of any queue of the process faults in the SQC instruction fetch at
+the handler's address (GCVM_L2_PROTECTION_FAULT_STATUS 0x008012B1,
+PERMISSION_FAULTS 0xb). The MES then fails REMOVE_QUEUE and SUSPEND, and
+the device takes a MODE1 reset with VRAM lost on 7.2.9; on 7.3-rc6 the
+queue is reset instead.
 
-  BUG: unable to handle page fault for address: 0000000000002900
-  RIP: 0010:free_swap_cache+0x5/0xb0
-  Call Trace:
-   free_pages_and_swap_cache+0x3a/0x60
-   tlb_batch_pages_flush+0x43/0x80
-   tlb_flush_mmu+0x3d/0x110
-   zap_pte_range+0x80d/0xcd0
-   ...
-   do_vmi_align_munmap+0x3e8/0x5b0
-   do_vmi_munmap+0xdf/0x190
-   __vm_munmap+0xad/0x180
-   __x64_sys_munmap+0x1b/0x30
+The window is the time between the render node's open and ACQUIRE_VM.
+ROCr spends milliseconds there and is practically never hit; a minimal
+KFD client that opens the render node and acquires the VM at once is hit
+most of the time. On a Radeon AI PRO R9700 (gfx1201, Resizable BAR, so
+vm_update_mode defaults to CPU updates for compute VMs), a wave reading
+the trap handler's page right after queue creation found it unmapped in
+8 of 12 runs; a 5 ms sleep between the open and ACQUIRE_VM made that 0
+of 9, and the same sleep after queue creation instead 3 of 3.
 
-In a traced crash the bogus pointer was the read pointer value of an SDMA
-queue the process had just destroyed, at the read pointer's page offset:
-the queue's writeback landed in its freed rptr page after the page was
-reused as the batch page.
+The wait covered these jobs until commit 926c79ad6ecd ("drm/amdgpu:
+promote the implicit sync to the dependent read fences") narrowed
+amdgpu_sync_resv() from DMA_RESV_USAGE_BOOKKEEP to DMA_RESV_USAGE_READ;
+the VM's page table jobs have been added with BOOKKEEP since commit
+4247084057cf ("drm/amdgpu: use DMA_RESV_USAGE_BOOKKEEP v2"), so from
+v6.16 on the sync in amdgpu_vm_make_compute() waits for nothing of
+them.
 
-commit f0b4440cdc18 ("drm/amdkfd: Fix mode1 reset crash issue") fixed
-this race on process exit by waiting for the reset to complete before
-freeing the process's BOs. Free through the ioctl has the same race.
-Wait for the reset there too, using the same helper.
+Record the clears in vm->last_update, as amdgpu_vm_update_pdes() does
+with its updates, and wait for it, uninterruptibly, before switching the
+update functions. The clears all go through vm->delayed, so the last one
+covers the earlier ones; immediate clears are not recorded, as before.
 
-Fixes: 9c33e5fd4fb6 ("drm/amdgpu: fix locking scope when flushing tlb")
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: William Palacek <William.Palacek@amd.com>
+With this, on 7.3-rc6 and on 7.2.9, the same client reads the handler
+10 of 10 times, 8 busy queues on the 4 compute slots complete in 5 of 5
+runs on 7.3-rc6 and 3 of 3 on 7.2.9 (1 of 6 before), 16 and 32 queues
+complete on 7.3-rc6, and two processes with 8 queues each complete
+together on both, with no fault.
+
+Fixes: 926c79ad6ecd ("drm/amdgpu: promote the implicit sync to the dependent read fences")
+Cc: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: John Fisher <jfisher84@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 06ff8ce77726b15a98fcc285dd6005cb3f48558b)
-Cc: stable@vger.kernel.org
+(cherry picked from commit 9ec91b35baba45209c3fcd00f086224a158dd512)
+Cc: stable@vger.kernel.org # v6.16+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 3 +++
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h    | 1 +
- drivers/gpu/drm/amd/amdkfd/kfd_process.c | 2 +-
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c    | 5 +----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c | 2 +-
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 3081d9aaf053a..3831451240e97 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -1303,6 +1303,9 @@ static int kfd_ioctl_free_memory_of_gpu(struct file *filep,
- 		goto err_unlock;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index 4a63b472f68ec..fc3a8d38d5149 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2725,10 +2725,7 @@ int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm)
  
-+	/* Queues a reset could not stop may still access the buffer */
-+	kfd_process_wait_gpu_reset_complete(p);
-+
- 	ret = amdgpu_amdkfd_gpuvm_free_memory_of_gpu(pdd->dev->adev,
- 				(struct kgd_mem *)mem, pdd->drm_priv, &size);
+ 	if (vm->use_cpu_for_update) {
+ 		/* Sync with last SDMA update/clear before switching to CPU */
+-		r = amdgpu_bo_sync_wait(vm->root.bo,
+-					AMDGPU_FENCE_OWNER_UNDEFINED, true);
+-		if (r)
+-			goto unreserve_bo;
++		dma_fence_wait(vm->last_update, false);
  
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index aab7292e2cb12..f405f476ed182 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -1135,6 +1135,7 @@ void kfd_unref_process(struct kfd_process *p);
- int kfd_process_evict_queues(struct kfd_process *p, uint32_t trigger);
- int kfd_process_restore_queues(struct kfd_process *p);
- void kfd_suspend_all_processes(void);
-+void kfd_process_wait_gpu_reset_complete(struct kfd_process *p);
- int kfd_resume_all_processes(void);
+ 		vm->update_funcs = &amdgpu_vm_cpu_funcs;
+ 		r = amdgpu_vm_pt_map_tables(adev, vm);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+index e43a60d098082..cef4171b4ad06 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+@@ -422,7 +422,7 @@ int amdgpu_vm_pt_clear(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+ 	if (r)
+ 		goto exit;
  
- struct kfd_process_device *kfd_process_device_data_by_id(struct kfd_process *process,
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index dda300786bc4e..586a6dd53883f 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -1292,7 +1292,7 @@ static void kfd_process_remove_sysfs(struct kfd_process *p)
- /*
-  * If any GPU is ongoing reset, wait for reset complete.
-  */
--static void kfd_process_wait_gpu_reset_complete(struct kfd_process *p)
-+void kfd_process_wait_gpu_reset_complete(struct kfd_process *p)
- {
- 	int i;
- 
+-	r = vm->update_funcs->commit(&params, NULL);
++	r = vm->update_funcs->commit(&params, &vm->last_update);
+ exit:
+ 	drm_dev_exit(idx);
+ 	return r;
 -- 
 2.53.0
 
