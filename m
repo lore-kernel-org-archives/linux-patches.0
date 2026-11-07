@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794063691;
-	b=SVEdhPN1BYjN07bRd+1UwHtHS+iioX+1h6Phi0O4Ry2d6oVR2vXhlbo9NNkM5quyzUP+
-	 jQU3xOIaek+VwQxwmAGBpi39laXf4yIQN+Mv5zVMS/psAzQEiF+RJ+7PTglU/IxDlIXuC
-	 VONDorB7kF83CIthkfIWmBdmuQ/porzx/IV4O434UGtN18AEh99SyapKCn8A7RrMF6kt1
-	 wRVXyNeSPOo5//k198sPltfTxEy5UDXd8iksCJJOmz3rvP4vxisitYBOGZvgmmSzninpp
-	 C0tMVk85Amt+9A1jbEHvdETqc1eiAD8hUBeR1/L0nO0YMUDBQYjWf923QcDEMCDsINA==
+	t=1794063693;
+	b=UdnOjSbADolwthfWCqvfGLLjot9GJeFUgYIlFBh8whKzx0uvKTIttKnD64FVubjJKEZq
+	 GBjVTAouv4eugkBmMaF5w4uoUsAiTyBTxBlKG4vmGxEv8CV13rhb12j2D5S4sK9qsQCno
+	 YbHC82hCnO9I1NNe7ZsaosyHmBsFC6qFJRexWFvSF9c88ACApWldu1Vm+sAySp0VNdQpy
+	 w7hgs7z9Kq/ITt5e5z3SzKfu5azlkBDDfj3WxD1AYgJ5ibMSixjTUbLNei9kVvb7v1+/O
+	 smj0HYXA9tMZ7Z3g/fXoqZIg1PY1wSCnMw4OAKCyBf9D1Z6BsvCraOC6sm3zyJS5ylA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794063691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794063693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eeA49f8JeRLRTGiOktfxjkmbp6GS9Op0k/Agmpjuj9A=;
-	b=eL67JtZh8e7/ASENYbAaEjbKL8CuQjVVuTh3CtKi42NfRo9JaIoXzQhdrGVamGEjz3eq
-	 +U5LtgF31xi2Yvs/yCMDDRot4maDNkl3lcb2onpqu3xQoTcnBGuw2/ItkzEgFe667AYUp
-	 O6Ql/Ace1mg5jPtqivXAOEuF2ycQvTNFYv0KMR11vjfeE3zb78mSKG3FsdCYJkaf8g/Iw
-	 l/z3lPDzxiK7cMkJGNsfN2kb6BPWOmwtFRDe5jpOBW+JL8b5D+2ogh8tmd2z+MyrQvvjI
-	 UQ/RMVCWc7C2ykADF8WfM+IWJjv5AoEd3ryxmocVo2MgyW4v1UyCgVuz4yz4nmWtJ4A==
+	bh=uygsieeDqlun48Uc+ooUPg6HC4Zg/z0H/M/Sr9vGAo8=;
+	b=j4EtKQmYVeC+yVJ750YgL2AISAO6HzZsmqoAkBXsosvyIVJD4eGVyonEJfNAjHb3PuiG
+	 EPkKGw+E4hGyBR4r/9OEtJLICFOwXrpdoONyALfJx4ExUluQ7Q9yHwQ5r+r8W72ht+s0d
+	 pt3/NTHMrrkvxlArdeLAlhHvFppEZe1dWyk53FTgIzdjjqac+ToyQOTn1qIj2gSaAHYGl
+	 hBe0yo4RINMi41WZ5i/eie+++wKSZlAD7B5y6V0RZPUg/0XLHvxElZQyHfUoZwsw+gCmT
+	 DIBcz7wMVjicFCw66+pPp02YQ6RhuLDIL0ZbmgAnMOPNhBnLlTm7x43Frba/LOrTXCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUwnbP1r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJGbav4C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB83606A32C;
-	Sat,  7 Nov 2026 15:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ABB606A32C;
+	Sat,  7 Nov 2026 15:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUwnbP1r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B461F0089F;
-	Sat,  7 Nov 2026 15:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJGbav4C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716561F0089F;
+	Sat,  7 Nov 2026 15:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794063691;
-	bh=eeA49f8JeRLRTGiOktfxjkmbp6GS9Op0k/Agmpjuj9A=;
+	s=korg; t=1794063692;
+	bh=uygsieeDqlun48Uc+ooUPg6HC4Zg/z0H/M/Sr9vGAo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DUwnbP1rSOeMf9YiWJzYQ8aVNjnzmLIGDkCHdV7VD2doLHZs8pqc7EhfOAa7lu+8A
-	 GmhtcCQ3FIOrr+XySIwx4DpDZYCWy3APf0wrMLoeEQ7ANM1+/uf0M9LuzTGW5Mozi6
-	 1OvafivT3/mzb9dK8M+EiFG+9v23fwSzmYTsVFV8=
+	b=dJGbav4CjCTDjMlsXbK9gzGULzMjl+AX+pVfxGlWwuuWmrkqN6OeZMKLSef9TG5WY
+	 0YWoPxPMQNwlBcK0ko49Ruza7d4jQ844W6gj/x9svkLA06fWvU1T8EeRXCBO9sBsW/
+	 iZJeqS6uGILtG1p7i2YZbnCisxybSlfP2a8Mj+7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Maier <dmnk@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Sinan Turunc <enscrpt@pm.me>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 797/869] loop: check for read-write open mode on LOOP_SET_STATUS in lo_compat_ioctl()
-Date: Sat,  7 Nov 2026 08:57:59 -0500
-Message-ID: <20261107134919.825913383@linuxfoundation.org>
+Subject: [PATCH 6.18 798/869] ALSA: usb-audio: Bound packet copies by the PCM buffer size
+Date: Sat,  7 Nov 2026 08:58:00 -0500
+Message-ID: <20261107134919.894925027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -68,53 +68,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominik Maier <dmnk@google.com>
+From: Sinan Turunc <enscrpt@pm.me>
 
-[ Upstream commit 87409eedc543d288cdd49c2174f7d61eca7b8db5 ]
+[ Upstream commit 06be918062adc1a5a76dc346803b136b20bdb5ae ]
 
-lo_ioctl() checks for (mode & BLK_OPEN_WRITE) || capable(CAP_SYS_ADMIN)
-before allowing LOOP_SET_STATUS or LOOP_SET_STATUS64, but not
-lo_compat_ioctl(), the handler used by 32-bit user space on 64-bit
-kernels.
+retire_capture_urb() and prepare_playback_urb() assume that one USB
+packet never carries more data than the whole ALSA ring buffer. Nothing
+enforces that: the packet size comes from the device (wMaxPacketSize,
+and curpacksize == maxpacksize when the class-specific endpoint
+descriptor sets MaxPacketsOnly), while the PCM hardware constraints only
+require 64-byte periods, two periods and a period time of one data
+interval. An 8 kHz mono U8 stream on a 128-byte buffer is legal, and a
+full-speed device can send 1023-byte packets into it.
 
-As a result, on 64-bit kernels with CONFIG_COMPAT=y, a 32-bit
-unprivileged user-space process holding a read-only (O_RDONLY) file
-descriptor to an active /dev/loopN device can issue a compat
-LOOP_SET_STATUS ioctl to modify lo_offset, clear lo_sizelimit to 0
-(exposing backing-file data past the configured limit), or alter
-lo_flags.
+On the first oversized packet hwptr_done is wrapped once and stays
+beyond buffer_bytes (895 for 1023 bytes into 128). On the next packet
+the wrap arithmetic in the copy path computes
 
-Enforce the same (mode & BLK_OPEN_WRITE) || capable(CAP_SYS_ADMIN) check
-on LOOP_SET_STATUS in lo_compat_ioctl().
+    bytes1 = subs->buffer_bytes - oldptr
 
+with oldptr > buffer_bytes, so bytes1 wraps to about 4 GB and memcpy()
+runs off the end of the URB buffer and of the vmalloc'd DMA buffer:
+
+  BUG: KASAN: slab-out-of-bounds in retire_capture_urb+0x251/0x870
+  Read of size 4294966529 at addr ffff88800c1e2800 by task vhci_rx/82
+
+and for playback, where copy_to_urb() has the same shape:
+
+  BUG: KASAN: vmalloc-out-of-bounds in copy_to_urb.isra.0+0x188/0x430
+  Read of size 4294966529 at addr ffffc9000004537f by task vhci_rx/79
+   prepare_playback_urb+0x98a/0x1fc0
+
+Truncate an oversized capture packet to the buffer size, and stop
+filling a playback URB once it holds a whole buffer. With bytes <=
+buffer_bytes the single wrap of hwptr_done and the two-part memcpy()
+in both copy paths stay inside the buffer. A device whose packets do
+not fit the buffer at all was never going to play correctly anyway.
+
+Reproduced on 7.3-rc7 with a USB/IP device (dummy_hcd cannot carry
+isochronous data) advertising a UAC1 endpoint with MaxPacketsOnly and
+wMaxPacketSize 1023, and a PCM client using period_size 64, periods 2.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: ARTIST LLM
-Signed-off-by: Dominik Maier <dmnk@google.com>
-Reviewed-by: Bart Van Assche bvanassche@acm.org
-Link: https://patch.msgid.link/20261025200740.2064379-1-dmnk@google.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sinan Turunc <enscrpt@pm.me>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261026223543.620-2-enscrpt@pm.me
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/usb/pcm.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index 13ce229d450cd..57d3babbd63bf 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1686,8 +1686,10 @@ static int lo_compat_ioctl(struct block_device *bdev, blk_mode_t mode,
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 682b6c1fe76ba..c2f7b08607ac8 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1343,6 +1343,18 @@ static void retire_capture_urb(struct snd_usb_substream *subs,
+ 			bytes -= adj;
+ 			subs->stream_offset_adj -= adj;
+ 		}
++		/*
++		 * A packet can be as large as the endpoint's maxpacksize, which
++		 * the device chooses, while the ring buffer can be as small as
++		 * two 64-byte periods. The hwptr_done wrap below handles one
++		 * wrap only, so never take more than one buffer from a packet.
++		 */
++		if (unlikely(bytes > subs->buffer_bytes)) {
++			dev_warn_ratelimited(&subs->dev->dev,
++					     "%u-byte packet exceeds %u-byte buffer, truncating\n",
++					     bytes, subs->buffer_bytes);
++			bytes = subs->buffer_bytes;
++		}
+ 		frames = bytes / stride;
+ 		if (!subs->txfr_quirk)
+ 			bytes = frames * stride;
+@@ -1553,8 +1565,14 @@ static int prepare_playback_urb(struct snd_usb_substream *subs,
  
- 	switch(cmd) {
- 	case LOOP_SET_STATUS:
--		err = loop_set_status_compat(lo,
--			     (const struct compat_loop_info __user *)arg);
-+		err = -EPERM;
-+		if ((mode & BLK_OPEN_WRITE) || capable(CAP_SYS_ADMIN))
-+			err = loop_set_status_compat(lo,
-+				(const struct compat_loop_info __user *)arg);
- 		break;
- 	case LOOP_GET_STATUS:
- 		err = loop_get_status_compat(lo,
+ 		for (i = 0; i < ctx->packets; i++) {
+ 			counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
++			/*
++			 * Bound by the ring buffer as well as by the URB:
++			 * copy_to_urb() wraps hwptr_done once, so one URB must
++			 * never carry more than the whole buffer.
++			 */
+ 			if (counts < 0 ||
+-			    (frames + counts) * stride > ctx->buffer_size)
++			    (frames + counts) * stride > ctx->buffer_size ||
++			    (frames + counts) * stride > subs->buffer_bytes)
+ 				break;
+ 			/* set up descriptor */
+ 			urb->iso_frame_desc[i].offset = frames * stride;
 -- 
 2.53.0
 
