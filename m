@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062951;
-	b=5RNuOnGAhBjY4lz6eFBY8mKEGsYohF9vaBg+amX1NqxaRQZ+nfEU9u7/C89uAOEyW2Mm
-	 K3XV36+K+O287wHhgisD+t2NT7Xjz44GK4pDfCqIQfmggP/yqb1L8/MXcMFYu6Yc/CeQK
-	 pWzDX5+oWdv0Y3s5P4hemeLlhRFGsA/WRH+Z+XOY/o6GbI2h+qXR31I3cQMEo0yWhgZMt
-	 KXxQj1D5OOMoTyJOkJJ2JmW6numLkkAp6BsdPqmYXG5ucvRzFvVXRDtXpRY9gVZYZsQ7C
-	 t36GQ50Z+i5zwIyY6zk5LMljD3wSMPM148kTJTDR6Nz8A/XFHRkt9jZVlW0dL1vohxA==
+	t=1794062953;
+	b=XcMmQTzaHw8215RFGi1QfDhkMx+l4Zn5Z6lDAx7/2viub/HoCy5WONqYiVyqoDLk2xVl
+	 JKKtUuKGJfzelwpkfW/u641XCuX1bFy92ldEAOLbwZy/uMqjJBVYXd1vs1qedNHL7aPqk
+	 ENLSjZRfv0kf7Gi0LAd/Nqv19jWEVn/XLsE76owKyKGi0M3KXBdbEdTxx6DifOm9DxI+e
+	 AVOwD10olw3B6TOJgRm/Sd0NUaxc9bfkR01Mj2H37/H085wTqLAY0ncBnx7MFhfxAkxEZ
+	 qQlD4lrp6oPpznlwEkMvK2gw8UbhZmAcTme74yJI7BTnlRQ7cdeBPzhJUQxc+K5SOyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062953;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=26hR4L9FsXLXlyEme5tEY/+dsdLp/T4jOY/jPZTk6aA=;
-	b=oeqBXlSSdvVUp8yJin+liVnAMAzxY6rKSHwrxf3dyefh0cFOVFgUgMHh3EeCfyWEZhXE
-	 85FStcxzalsLw9lYjLXQwZ74+jnx9w+Sr9nDnsa3+rsxTNJeTcyrq0fjFg5hwg/4unCVM
-	 hsb8EB1O9g7r5YaYIiWDwiIxeHOwUTNkVfS8QgTyuhr5Hk4/0BKNkr276uv4PyyHeksTO
-	 DCsiB7Z6sLLtnHoH/mStzn/9MWOMzrveVqEXzWuOzJJUP2jyDnmDyIibAadZjvlIzU8a1
-	 1hTdixZKvWqWK/hRs3NXOYUk6d/9+0wk56VMDdus4T7RJgiTGGzbT21FMqRPw3FC51w==
+	bh=Kszl4sxdbyd6u13YlSbdF9YUlX3wgj+tsorSHJzqQ8M=;
+	b=hU0uJ45aMPyO8C5pYthKs29H7yl8Q54UxQqSHFPfTV38RJX8mIcW7AMmo3kjlixkd6Yh
+	 iih3/zO5fjxLGLEKQmmkMh9rZpBFJwLG4LR0FeF0LPzMMjTxniPVTc20MRQgdoYVxVoR3
+	 RneARDgyNUUqTUnf4JpOQbjLZxe4XnJ9JpgevngtTJfx+PdtO90LNFPEh27tadna03j6h
+	 VkQCI0eFE6MuQ1nPhBy2RugrX/FeeixN+mWv22FZkCp9aWP+P6vYCSzrSg3lPVZoMymfp
+	 HBmRFO0QHTheO3EBXOOdD0fcK8dspecIVicLuahOUZQ8wJo/qLiEzwct8KMGjfQTAyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUQ3UMYh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gWmK+YYN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAD3606A32C;
-	Sat,  7 Nov 2026 14:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABE1606A32C;
+	Sat,  7 Nov 2026 14:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUQ3UMYh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4461F0089F;
-	Sat,  7 Nov 2026 14:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gWmK+YYN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6711F0089F;
+	Sat,  7 Nov 2026 14:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062951;
-	bh=26hR4L9FsXLXlyEme5tEY/+dsdLp/T4jOY/jPZTk6aA=;
+	s=korg; t=1794062952;
+	bh=Kszl4sxdbyd6u13YlSbdF9YUlX3wgj+tsorSHJzqQ8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pUQ3UMYhg2wunSiyYKQl7W5aLONYz2v+PXIiYqvXe8fTVlYzvfCQc1i46sTRBHfxW
-	 aqySr3ifBSrLb/3fQBl13Va+EkngS2SqdBx5PBHsPzNSHEpf3ibXWTBdhcng6+gYJu
-	 /1GH6f7VGWQjBd370h64fNU9QIt/nBy+k/Kj1KB4=
+	b=gWmK+YYNUmflay0JE2nD4wTPRTFS7E5DxoCPIBM8kY4dwXyUheGN2nsPqXWolXBYS
+	 jqKQm+bXeMsVBsj9esW2r6v721KOZ9WUO6eiUTts4z8SZ2poAuaJjGOeN23d2shfiu
+	 FwhRHlFqpTPKL7yXNL7ebF7wHiPvDN2MDR6otC70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 216/869] media: vpif_capture: Fix i2c adapter reference leak in vpif_probe()
-Date: Sat,  7 Nov 2026 08:48:18 -0500
-Message-ID: <20261107134859.257399516@linuxfoundation.org>
+Subject: [PATCH 6.18 217/869] media: vpif_display: Fix i2c adapter reference leak in vpif_probe()
+Date: Sat,  7 Nov 2026 08:48:19 -0500
+Message-ID: <20261107134859.286701935@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
 References: <20261107134852.069646174@linuxfoundation.org>
@@ -70,7 +70,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit b00fbdad64d4ea7d594bc67988c1722fe5b3be50 ]
+[ Upstream commit f5863ea3f99265e5e297e3dcf0f47432fee2b8ac ]
 
 vpif_probe() takes a reference to the i2c adapter with
 i2c_get_adapter() and passes it to v4l2_i2c_new_subdev_board(),
@@ -78,35 +78,25 @@ which does not consume it, but the reference is never released, so
 it is leaked both when the probe succeeds and when it fails after
 the adapter has been acquired.
 
-Release the reference with i2c_put_adapter() on the success path
-and in the probe_subdev_out cleanup, and initialise i2c_adap so
-that the cleanup is a no-op when the adapter was never acquired.
+Release the reference with i2c_put_adapter() on the success path and
+in the probe_subdev_out cleanup.
 
-Fixes: 6ffefff5a9e7 ("V4L/DVB (12906c): V4L : vpif capture driver for DM6467")
+Fixes: e7332e3a552f ("V4L/DVB (12176): davinci/vpif_display: Add VPIF display driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/ti/davinci/vpif_capture.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/platform/ti/davinci/vpif_display.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/platform/ti/davinci/vpif_capture.c b/drivers/media/platform/ti/davinci/vpif_capture.c
-index 9fbef24025744..5158417fe603e 100644
---- a/drivers/media/platform/ti/davinci/vpif_capture.c
-+++ b/drivers/media/platform/ti/davinci/vpif_capture.c
-@@ -1603,7 +1603,7 @@ vpif_capture_get_pdata(struct platform_device *pdev,
- static int vpif_probe(struct platform_device *pdev)
- {
- 	struct vpif_subdev_info *subdevdata;
--	struct i2c_adapter *i2c_adap;
-+	struct i2c_adapter *i2c_adap = NULL;
- 	int subdev_count;
- 	int res_idx = 0;
- 	int i, err;
-@@ -1693,9 +1693,12 @@ static int vpif_probe(struct platform_device *pdev)
- 		}
- 	}
+diff --git a/drivers/media/platform/ti/davinci/vpif_display.c b/drivers/media/platform/ti/davinci/vpif_display.c
+index 1e7815e9f8e07..ba16370b70f98 100644
+--- a/drivers/media/platform/ti/davinci/vpif_display.c
++++ b/drivers/media/platform/ti/davinci/vpif_display.c
+@@ -1289,9 +1289,12 @@ static int vpif_probe(struct platform_device *pdev)
+ 	if (err)
+ 		goto probe_subdev_out;
  
 +	i2c_put_adapter(i2c_adap);
 +
@@ -114,9 +104,9 @@ index 9fbef24025744..5158417fe603e 100644
  
  probe_subdev_out:
 +	i2c_put_adapter(i2c_adap);
- 	v4l2_async_nf_cleanup(&vpif_obj.notifier);
- 	/* free sub devices memory */
  	kfree(vpif_obj.sd);
+ vpif_unregister:
+ 	v4l2_device_unregister(&vpif_obj.v4l2_dev);
 -- 
 2.53.0
 
