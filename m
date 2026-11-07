@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794062323;
-	b=jsas0FfJ509AVmvZQlgwtrAYOd9XcsKdIDY5uOWw0yXFExE1S2PoDQ1wsZeIFoatPq/8
-	 WCyGwzJgb8K9VxQ/43VrZLFe6o/NBsj4LiVXNxMUrJcIQnpQq1ocBR4jp9vhfc/SGoE6l
-	 aAPmAEhWpfGb3BU2vfJd+a0uC+uNegpRVJLytVkZgAiRSRVQA1gAt8pVC8kMEBtu/fY5K
-	 dof0wkx0O1QuHmQGUJ4Z6df+vsEmXdze8nrdV7aKlgebi1QvbjCLIyWlRngmDXUbSaWAb
-	 Dg7abIz5+UhZACukZpt8bH+pDyq+iJaaJMr5+iSoE29s6agGxYG1PZECRUZEcBZn28A==
+	t=1794062324;
+	b=YJSerZZ7/a4qjNCeC8zDoxzx744UjG4IWYqG3TCf1IBxeiBq+ynkGH3jy5K2uFxI+JTC
+	 7JOeu4XrBn8w1a4+qwJ93Gy2MWgkUx7qpAAgDGdnsPDrk50/PFjc7XWcqLc30ebnFdncn
+	 Ux3ndrcif/RfLpRybmmJRrj99atzLHA0eVmbapnimf8nyonBH0uC0eOPq1z98dloo3rPu
+	 ezqV7JCsk2NUKpo/uBxYwDcLSVQz+PxMoWHlRT/t2DTOSyRmT5/W07PyT+WUGf7a8blTL
+	 gfIeyWsnafW8zV4RldmyzaxnEy1aNnBUPAtu+ITjKR/ANeV28GuiP6vGYluNMAhSXhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794062323;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794062324;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wBP2lNPaxUb3tKdbkrRvahjudeMtRdq01Nx/IHOMnMA=;
-	b=2N7BNGTJ4xtqdfkSPYsX36QamW5GjWmAwN0vgvEpr29SyJUORsTME9gL9jGrxLXCILbC
-	 2iPKvl4TSUFMHf9dmHKh2BPrQ3fF5zBoP99Sf7/6L5pDBy9QovRM2ST2irpKsbNM/RQjL
-	 Zq/anw8OWWHxRfQkMsmo7/9PH0AF4OhasJCz1YJNmUjtRIrO8DX391dd6bMq7ntVhPkNl
-	 JeTd1H5njwDGmNZ+JtLJY0YHWDA3DCtWrcH9DxOK/mUBRGBkdoQQ1b4cpnnoFh5edawLh
-	 Yx2X42QLO3+yHbbYkbheMM75tu8Seag8Z1uZ31HUWILOsJNdaslb3Hmvh4QKmMn8pAg==
+	bh=8e15NLPrIus+kYtXp0R/mKfSJn55Zk8O5p6G8knW/bQ=;
+	b=CC20trIvlAU2TVS7G0x0joP5bvb2P9nFJRveGo/6fwiLU59UCBbYFRTSQ+OffQJPdmHt
+	 pPas6tlahQLwBgF5YBKLBe+tgmBQvbmidCdNcyTUbtceTsPDjXodSknNIr31rx22A5YY1
+	 wYQvOeKHqM3+3DMGZPenyaickaZHwefb4alesCfJbNzAVl7wWAtk2cL74Hkt6yXubG0uW
+	 j+yzuiUeLoTRSPWzv+s88j9I6uZmyZYAodl7eq/sz91w33BF49ZiJ54o4F0N3H2lgbu1/
+	 5LS+7uezN/IFzRZajt/HEZbBfjeQIIVFQbf1FaC8iJbqdmuPP335ePLmVk437ztr6PA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzt6Nrkx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R3TCthbN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF997606A666;
-	Sat,  7 Nov 2026 14:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1FD606A660;
+	Sat,  7 Nov 2026 14:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzt6Nrkx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E0A01F0089F;
-	Sat,  7 Nov 2026 14:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R3TCthbN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB041F0089F;
+	Sat,  7 Nov 2026 14:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794062322;
-	bh=wBP2lNPaxUb3tKdbkrRvahjudeMtRdq01Nx/IHOMnMA=;
+	s=korg; t=1794062324;
+	bh=8e15NLPrIus+kYtXp0R/mKfSJn55Zk8O5p6G8knW/bQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kzt6NrkxLF8WLXNXoMwcniJ/iQP3gZULHqnJevsQgtlVLIwtIs3cAdxsXokrCF/l/
-	 IHN2+sKncQPRx9KapeBd0vXINnJ9Lf0Lt0frv+w5JT1EOaxlGNt58YoHTKERjc/TLx
-	 WlAhwcde8he9K87pKueA30YZY9MuM0EVb6nAdk0I=
+	b=R3TCthbN++Dxpefc3cQeGbop9Vi742vpMAkKQViqRnfizhql58JZLKzwkv2aCOWAE
+	 TjA1riJ3NtVBzL4z27vbujH/TSNm0UNvax5kqVlxhWoJQyb+ogH6Pdz67LqDpbA/cv
+	 Zskv97gMfoVB8se7DNvzH6sd/i2ioaaUKgMivkzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1255/1536] fbdev: xen-fbfront: check for fb_deferred_io_init() error
-Date: Sat,  7 Nov 2026 08:54:31 -0500
-Message-ID: <20261107135033.022523966@linuxfoundation.org>
+Subject: [PATCH 6.12 1256/1536] fbdev: udlfb: check for fb_deferred_io_init() error
+Date: Sat,  7 Nov 2026 08:54:32 -0500
+Message-ID: <20261107135033.049601660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134957.653319350@linuxfoundation.org>
 References: <20261107134957.653319350@linuxfoundation.org>
@@ -70,55 +70,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 5b234b0dd29d79207c059c7b40851dd1e934fa3a ]
+[ Upstream commit eae055f33e41e1d3e1a7e905bdcb1e9f196ed31d ]
 
 fb_deferred_io_init() allocates deferred I/O state, populating
 info->fbdefio_state, or leaving it NULL if an error occurs.
 
-Currently xenfb_probe() ignores its return value.
+Currently dlfb_ops_open() ignores its return value.
 
-Therefore if an error arises in fb_deferred_io_init() (for instance, due
-to an allocation failure) info->fbdefio_state is left NULL.
+Therefore if an error arises in fb_deferred_io_init() (for instance, due to
+an allocation failure) info->fbdefio_state is left NULL.
 
-When the file is subsequently opened, fb_open() will dereference a NULL
-pointer (calling fb_deferred_io_open()).
+fb_open() will then dereference a NULL pointer (calling
+fb_deferred_io_open()) as soon as dlfb_ops_open() returns.
 
-Fix this by checking for the error.
+Additionally, if the allocation of info->fbdefio itself fails,
+dlfb_ops_open() sets info->fbdefio to NULL and invokes
+fb_deferred_io_init() regardless, hitting BUG_ON(!fbdefio).
 
-Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
+Fix this by only invoking fb_deferred_io_init() if the allocation
+succeeded, and checking for the error.
+
+The driver already supports operating without deferred I/O, so in either
+case fall back to that by setting info->fbdefio to NULL.
+
+The ignored return value was introduced in commit 56c134f7f1b5 ("fbdev:
+Track deferred-I/O pages in pageref struct").
+
+However, the BUG_ON() issue originates from the earlier
+commit 5bea1fbf9423 ("staging: udlfb: fix incorrect fb_defio
+implementation for multiple framebuffers"), so target that for the fix.
+
+Fixes: 5bea1fbf9423 ("staging: udlfb: fix incorrect fb_defio implementation for multiple framebuffers")
 Cc: stable@vger.kernel.org
 Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/xen-fbfront.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/udlfb.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/xen-fbfront.c b/drivers/video/fbdev/xen-fbfront.c
-index c90f48ebb15e3..3b1ff45cac783 100644
---- a/drivers/video/fbdev/xen-fbfront.c
-+++ b/drivers/video/fbdev/xen-fbfront.c
-@@ -443,7 +443,11 @@ static int xenfb_probe(struct xenbus_device *dev,
+diff --git a/drivers/video/fbdev/udlfb.c b/drivers/video/fbdev/udlfb.c
+index 1c3933c21e35b..2fffe5a2d66cf 100644
+--- a/drivers/video/fbdev/udlfb.c
++++ b/drivers/video/fbdev/udlfb.c
+@@ -947,10 +947,13 @@ static int dlfb_ops_open(struct fb_info *info, int user)
+ 			fbdefio->delay = DL_DEFIO_WRITE_DELAY;
+ 			fbdefio->sort_pagereflist = true;
+ 			fbdefio->deferred_io = dlfb_dpy_deferred_io;
+-		}
+ 
+-		info->fbdefio = fbdefio;
+-		fb_deferred_io_init(info);
++			info->fbdefio = fbdefio;
++			if (fb_deferred_io_init(info)) {
++				kfree(fbdefio);
++				info->fbdefio = NULL;
++			}
++		}
  	}
  
- 	fb_info->fbdefio = &xenfb_defio;
--	fb_deferred_io_init(fb_info);
-+	ret = fb_deferred_io_init(fb_info);
-+	if (ret < 0) {
-+		xenbus_dev_fatal(dev, ret, "fb_deferred_io_init");
-+		goto error_cmap;
-+	}
- 
- 	xenfb_init_shared_page(info, fb_info);
- 
-@@ -465,6 +469,7 @@ static int xenfb_probe(struct xenbus_device *dev,
- 
- error_fb:
- 	fb_deferred_io_cleanup(fb_info);
-+error_cmap:
- 	fb_dealloc_cmap(&fb_info->cmap);
- 	framebuffer_release(fb_info);
- error_nomem:
+ 	dev_dbg(info->dev, "open, user=%d fb_info=%p count=%d\n",
 -- 
 2.53.0
 
