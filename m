@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064333;
-	b=xDYkmur2aYUI5x+d8YRkG3HmToB8tgLl36M4UkjRhg9+iQ4klkeUbSD8ZHmGIclLLN87
-	 BVt9SOAVyTqCprF4W4PQmoa0auOTLuMVKivnfC7HDA5Ifnc4eu8qeBjCaNzV35nD6GfUi
-	 Uk6sAg6gA3HlcMm30fsqXhTMtRtL3+zpc4Ga3Fb+RgkS5AS1m0nmwh23gHP9DvfR1qHte
-	 Skz4UTtN/vphEEQUFN4AYjBXI2cLUCL6ZUz3/RkyDA26nn7NaP+9z+AiNKm8r2WiAGMIT
-	 BIkmPeh/coqyXY1vej37A3MuH2qnLPEGPEPzBl8qJipo6GrvF4TOkBLdI0DEVlBu+hQ==
+	t=1794064334;
+	b=ZlxgjOkSLWeR9GFJH+VkOBDh1ezZJ0O1ujv838H44ko58LklFvU8fhKrDJ1QOIuv6Fqp
+	 k6PTS6usGJh256Gh3EH1TE2V+pVrO4LGNunpgUe4TfmUY0DyRWH/IB6loQPSuV/trN6ia
+	 HZbxp20dE5VaxZIxZxKLRcvdQm8SxrzyJraXKrr7f9yR6HHtyXmGdrdQfKqbl4A5BYaxm
+	 6cz+sxknt76tlD6L+xWsZcL7SZsDRuDJp3vRbaESrwAp7SdCYvIuMgWts4FcGX2JEsTTD
+	 rioD6yrGGBS5aFpxsTjT2zgYTzcohAgKwbcqJH0Yd7BOvkvSBX1pZ4zFhoQEtvl2Fqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064333;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064334;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hal+IcfDvZylkfW1bmi9WzSFQFxuGI95KExG5MEXKOE=;
-	b=DB5VSeKW14Zno7WmzuoMpV5Hql6KCTyFXe9/EXliaJHi2sQNL2DrciW9IA9Iy8c6WGH7
-	 +T0k5pTz1xUmCIydUdZBG4/6U+BNFWd7DiafU4TQw0COeSRvw8ASlOORj3nU4TNiKhsRp
-	 fYwyqVRWlJ4CqSkKfcDtQRazWajBkgMf0U9crpFUDgmOq4C3EviJb8LxuZ2doiM9NwjCH
-	 RoIrCkjhYlYhF5H3Wk3qf90W1yXn5Y7s4oIxDvCwUcer+rekKPdPxLPMc1SpCUHaiUQFI
-	 fhfYUPOLev/MdyKuQJfIICavPTVfJDmmu2YDDFo9zHW8phza8l1B0DG+2Vb7uJFJxrA==
+	bh=6aAs1bCCN/1x0xo6T7rfOydgiue/eYXiu/cvIFUJ+YA=;
+	b=KSj9sG1XjBy32jmLNE5Kjby1h8MZuPqh/waY8cbOt4HI/07LmRdJ9hktGbFrkfeQIoko
+	 bl+p7lcj5f2mWgvL8rw3bnEsh3a/MkMS6orCi9Ri0FlMmeYk1mDInLFa1o/jzZ2041y/B
+	 vVpO1tPGvj+shEaTOHB6xOnEwkx5xHEiaPKysNKvRkdOfXzSLzMrN97BHuKZ0q1M/lTPs
+	 pdkVipNRou7QLYU+1bX8LQ1bfq/HJJZGHLVrlJNzbiW1lv/He3PeXNkq/NuxLpEQ6dOit
+	 FnOF+QxJAFfMLb8s0oZFEkxv9LEwxXyWoS8IB1Gd8shl2U310JgqYKsNCnCme7g6hMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cvMCy4Rx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6bEJ09c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A933F606A336;
-	Sat,  7 Nov 2026 15:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FAC606A33A;
+	Sat,  7 Nov 2026 15:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cvMCy4Rx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5648F1F0089F;
-	Sat,  7 Nov 2026 15:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6bEJ09c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817FC1F0089F;
+	Sat,  7 Nov 2026 15:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064332;
-	bh=hal+IcfDvZylkfW1bmi9WzSFQFxuGI95KExG5MEXKOE=;
+	s=korg; t=1794064333;
+	bh=6aAs1bCCN/1x0xo6T7rfOydgiue/eYXiu/cvIFUJ+YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvMCy4Rx3aDrU73F5PF5tryOpoVPpGnmv0W55quLbFmPI5H4mI+i/UkwO0hQgIn2U
-	 keBkzb7iNyYgMcAc9DoOC0KQxEXy9Gc3QgABmCtQxeSZcLladGs5f5ULeyalA3H/yP
-	 xUCFfgqWpKXS/HUku8cXy8lP6u0jfXuYUq/6at3w=
+	b=T6bEJ09c/p/8f3IelcrsaH3xNJC9+h5Gd6Ht98vuwZPq2p2tqwkqv72FfPxxdIqiT
+	 GPy8bVTzzKYkLQ3rtFiUmWJw2Ewl6BWg9q04x+tdibg7Adcl+aE6AEgCTHPrKAn/zD
+	 y/n0xv8W30DWT5yg4KZ6JQl9OvzeTnpKyH9MWYoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Srish Srinivasan <ssrish@linux.ibm.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Nayna Jain <nayna@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0417/1257] dm-writecache: report I/O error if flush failed
-Date: Sat,  7 Nov 2026 08:45:13 -0500
-Message-ID: <20261107134951.026386465@linuxfoundation.org>
+Subject: [PATCH 7.3 0381/1257] pseries/plpks: clear signed update authentication buffer
+Date: Sat,  7 Nov 2026 08:44:37 -0500
+Message-ID: <20261107134950.073265068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -67,41 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Srish Srinivasan <ssrish@linux.ibm.com>
 
-[ Upstream commit 78a6afc2999d26e5a30a56db77db34c22b88f5d5 ]
+[ Upstream commit 63de55024e7c85975f4410380323edb05b186d7c ]
 
-There was a bug that if writecache_flush fails due to I/O error, the
-error is not reported in the FUA bio. This commit fixes it.
+The PLPKS signed update operation uses an authentication buffer that
+contains a password. Freeing this buffer with kfree(), without wiping
+the contents, can leave sensitive data in memory.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: opencode:big-pickle
-Cc: stable@vger.kernel.org
-Fixes: 48debafe4f2f ("dm: add writecache target")
+Use kfree_sensitive() to wipe the buffer when freeing it.
+
+Fixes: 899d9b8fee66 ("powerpc/pseries: Implement signed update for PLPKS objects")
+Cc: stable@vger.kernel.org # 6.3
+Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Reviewed-by: Nayna Jain <nayna@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260923182816.151451-7-ssrish@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-writecache.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/powerpc/platforms/pseries/plpks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
-index 978646f71f996..5804cbc62a511 100644
---- a/drivers/md/dm-writecache.c
-+++ b/drivers/md/dm-writecache.c
-@@ -1493,10 +1493,13 @@ static enum wc_map_op writecache_map_write(struct dm_writecache *wc, struct bio
- 		}
- 	} while (bio->bi_iter.bi_size);
+diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
+index 17a73a04d45b4..b057e378a6b39 100644
+--- a/arch/powerpc/platforms/pseries/plpks.c
++++ b/arch/powerpc/platforms/pseries/plpks.c
+@@ -685,7 +685,7 @@ int plpks_signed_update_var(struct plpks_var *var, u64 flags)
  
--	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks))
-+	if (unlikely(bio->bi_opf & REQ_FUA || wc->uncommitted_blocks >= wc->autocommit_blocks)) {
- 		writecache_flush(wc);
--	else
-+		if (writecache_has_error(wc))
-+			bio->bi_status = BLK_STS_IOERR;
-+	} else {
- 		writecache_schedule_autocommit(wc);
-+	}
+ 	kfree(label);
+ out:
+-	kfree(auth);
++	kfree_sensitive(auth);
  
- 	return WC_MAP_SUBMIT;
+ 	return rc;
  }
 -- 
 2.53.0
