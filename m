@@ -1,70 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794064458;
-	b=y/1MKJtGLEBOpdl/dOD6+RFxKJxhDw67AXHQNuNVcmUf8SLuaZAgdaW/QEudgUFIFDqv
-	 k5s6d70HfDCYM3kfVAqZT1X8/T+6cINguB677Yd7A+LppYVPStg1+nqwBcHegvdBd01Q2
-	 3c6uohuAMzLyGYrZoXYihCozt4rZK+wGbWOxshlkRCAWhw6JJMhU+d7zZOxq7zIYpcr4L
-	 2+VYw+Ohr12IqQjP3nl8KP/0oEBHmDEK+RNrpgnm9iLOSiRl5F8JEBwEVTQahajzl+2xt
-	 +kDHkymmziJunkTmg9Po/X6f5B8P2McnLFDkktdHrcX8l+IScvq6OD/bPY46Kl7ed/w==
+	t=1794064459;
+	b=2VKk+DsTvLLV19DBI/fbHMqDXn3c7ll0+NF5Dg6silq4vuNBzbiL1GmmI96b9lZohoTr
+	 NB/lY9LFoRo51GRjQQjj0qV4t6gTydJrwvTzRmutiyUN7a2lXwwCLaP0Bd40tpTyrvgGT
+	 9N8+J6cQqUmRpUy3sIkIKPGWVF/wAfGR00yJHqW/XvUVbiW4uDVx6PwuXLwWu3uUobgeO
+	 d1GVXhz4b0xmiguhuR7cXRDuOfr0WZwpS8P4Zc6BaQxUxO6NqqwpcLQhmhuo+pGYJFfz+
+	 LW7Q8R6FU5vfuCRnDnjP/a0ax4gUSVt9A9c7jSMvfHsC6nqClrfWAlZKRQd7Ok9p1Tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794064458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794064459;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rc5luCszvGzsVSNBzMLasHxVhVRRZyIwc4Y+R1RFkbM=;
-	b=0See/fbTub/Bz8UmYf+IxlghMcuq/Z8FxY3kjPnFQsaOYKXaEpNJ396tO0ABRrnWQiLU
-	 U4bECtmSF74e564HNwKVCtjerWor85Fbyfocf2ZbwDmCBbt/hf5LMiPOyRBU8qRhtLoRD
-	 /5DGYercc6YMtMEhTnTDsrEByqx1Q3hQQGdvbDVg0d0TuuQjir06ZfCO3OYliT/Bx/r6b
-	 xb0ELnZHUARIzmJD8xSStkcPv44vuiw+kVcuksaFEDE5isZdC4XWJmpODysgDnwHyONGu
-	 OrS1IF26uvLBpZFVOjUIcBQYcTf5iPn6jjXxayJp6YRH+khffhzzsRvfovQGt3sLHrQ==
+	bh=8jy9HLr2zXkfTET8YOm2hP9q1cZI8VupGbFz47FGE0M=;
+	b=0RCf7lcjhDHxyaRc7Wp0TiFYkWhetElsNAuxh6RtJ6EZx1EZG99BHQRHmFxrLttn/vUj
+	 xkoegItUr656aASUn7/cbiPA7l++onGQxXqbNgsxnr91b/XKZrk40KV+pHxrz1D5bYXdO
+	 b2NCEReKGuDHziNPIfU+a9zR3g9P2D4o17QFNlXwtq7sfhbl1woVP4q+Hcc3TT001nxv0
+	 w9icbiGb2MI5qjmUdWaJ94L/eHktqQxQkJqQmoiEi40PhLvCwt7tDx8VEDwH5xSLlxJ0y
+	 vbR4FDzxKo5pBt10vaAs7q/nxDCVkaROdydv5d90bsX0FBTgspGnp8w2kAcEiEc/rlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IT8ZxUny;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KEL/jdiy";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CFE606A9E9;
-	Sat,  7 Nov 2026 15:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9636082BFF;
+	Sat,  7 Nov 2026 15:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IT8ZxUny
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1681F008A4;
-	Sat,  7 Nov 2026 15:14:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KEL/jdiy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEDC1F008A1;
+	Sat,  7 Nov 2026 15:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794064457;
-	bh=rc5luCszvGzsVSNBzMLasHxVhVRRZyIwc4Y+R1RFkbM=;
+	s=korg; t=1794064458;
+	bh=8jy9HLr2zXkfTET8YOm2hP9q1cZI8VupGbFz47FGE0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IT8ZxUnynIkl6wwNrdnJO/jTrmwlrlz3tjhV0rkJ1yBp/m+s0C9UdZaI8VHVbL36i
-	 qcCM1fxyssh3D8FVawOEV301obiKdh/E1RJYUP8aTXJiVyZzrlaxww06L8Ay9hSU75
-	 1NKrQ1xztwA0Z+m9dC/IxMiQEzmxqG5EDRhvFOYI=
+	b=KEL/jdiyf4chYdzCfndMrgQD4ESBcg/zu9eruGCp+T32RQoQa3J8xWDr3+IciyEPc
+	 3kgVfQdZfIMSUtARMParxXXeQRaOJw/UnwqZl3AfCurvWKXMlVRoGkzMLTP61nyJdr
+	 J6aX2liJba7B523t0ghiy153h0VsHhkQ7cbkH6yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Alistair Popple <apopple@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Byungchul Park <byungchul@sk.com>,
-	Dev Jain <dev.jain@arm.com>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0499/1257] mm/madvise: skip zone device folios in cold/pageout PMD range
-Date: Sat,  7 Nov 2026 08:46:35 -0500
-Message-ID: <20261107134953.214138770@linuxfoundation.org>
+Subject: [PATCH 7.3 0464/1257] media: mediatek: jpeg: retry HW selection after successful wait
+Date: Sat,  7 Nov 2026 08:46:00 -0500
+Message-ID: <20261107134952.275333822@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
 References: <20261107134939.434104957@linuxfoundation.org>
@@ -86,71 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ab7ace574f3da7f167fe1883116480a00c52150c ]
+[ Upstream commit eb0bbd0ad679bf363387e3b8be8892cfbedabb72 ]
 
-madvise_cold_or_pageout_pte_range() resolves the folio backing a PMD via
-pmd_folio() and ages or reclaims it without checking for zone device
-memory.
+wait_event_interruptible_timeout() returns a positive value when its
+condition becomes true before the timeout. mtk_jpegdec_worker() treats
+every nonzero result as a failure, so a normal decoder wakeup finishes
+the mem2mem job as though no hardware became available.
 
-The surrounding guards do not cover every zone device case:
+Handle interrupted waits and exhausted timeout retries separately, and
+retry hardware selection after a successful wakeup. Increment the retry
+count only for actual timeouts. The encoder uses
+wait_event_interruptible(), whose successful return is zero, so its
+existing check is correct; leave that separate no-timeout policy
+unchanged.
 
-  - can_madv_lru_vma() excludes VM_PFNMAP and VM_HUGETLB VMAs
-    (so device DAX is filtered)
-
-  - !pmd_present() branch above rejects device-private and
-    migration entries, which are non-present.
-
-  - A present zone device PMD - e.g. a device-coherent THP - is
-    not filtered by any of these, nor by pmd_folio() (unlike
-    vm_normal_page_pmd(), it performs no special/pfnmap check),
-    and would be aged or paged out here.
-
-Skip ZONE_DEVICE folios explicitly during MADV_COLD/PAGEOUT.
-
-Link: https://lore.kernel.org/20260817220810.1175596-3-gourry@gourry.net
-Fixes: a30b48bf1b24 ("mm/migrate_device: implement THP migration of zone device pages")
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
+Fixes: dedc21500334 ("media: mtk-jpegdec: add jpeg decode worker interface")
+Cc: stable@vger.kernel.org
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index eeee82cf2b3f4..73c2901b9adbf 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -404,6 +404,9 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 
- 		folio = pmd_folio(orig_pmd);
- 
-+		if (folio_is_zone_device(folio))
-+			goto huge_unlock;
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+index bddd0a070d665..cc375309e4f34 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -1698,9 +1698,15 @@ static void mtk_jpegdec_worker(struct work_struct *work)
+ 		ret = wait_event_interruptible_timeout(jpeg->hw_wq,
+ 						       atomic_read(&jpeg->hw_rdy) > 0,
+ 						       MTK_JPEG_HW_TIMEOUT_MSEC);
+-		if (ret != 0 || (i++ > MTK_JPEG_MAX_RETRY_TIME)) {
+-			dev_err(jpeg->dev, "%s : %d, all HW are busy\n",
+-				__func__, __LINE__);
++		if (ret < 0) {
++			dev_err(jpeg->dev, "decoder HW wait interrupted: %d\n",
++				ret);
++			v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
++			return;
++		}
 +
- 		/* Do not interfere with other mappings of this folio */
- 		if (folio_maybe_mapped_shared(folio))
- 			goto huge_unlock;
++		if (!ret && i++ > MTK_JPEG_MAX_RETRY_TIME) {
++			dev_err(jpeg->dev, "all decoder HW are busy\n");
+ 			v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
+ 			return;
+ 		}
 -- 
 2.53.0
 
