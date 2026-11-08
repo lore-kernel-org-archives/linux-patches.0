@@ -1,60 +1,77 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794155778;
-	b=bkVggFMOCAObkZE8AGuHVtOvd6iEqUNuhU6gm4U0TXXOLXuwqnP6S+WOGN6fLnfsDPds
-	 xiiBeUJ9nr2DMIHyvkXTXLRBCuuuN/B+5/mX8726s6tOrq9bppboyMLywC77PIA6+CLhh
-	 0udR13GBF+TLlSxLFDH5FxbgsW3bg6K/HZkQf1NfTvx8FfkIHDdj8AAN6R5zngXhiHV+9
-	 SdOs1srgSpT7PABCicZ5VzXyJqB4zVSNvvYDd67bUlJYsIHFwMNc8mi6epEMGFzj9lyPP
-	 ubXrETbqf0aljitBTi+Ep/2Lyd28qDi/KlLLae008GyBRu8VeuSkIKKXJrpcD0GFqEw==
+	t=1794156297;
+	b=i1Phh5cbrX+s8NTm4xuOgQwyIpnTxKVyxzRHCqL2/Mj10tYlkYyc+OYs0yn0LDnr0xKn
+	 OuPsB1Vxoq+aWgVKBXPXKrglbfuVrIHix7XUvySAC2LRCWZBseGTUMT8+PSm241ErTiQ+
+	 ErQUfdoxIIxJgoPr8ApRnshIcuP9WqY6FPxzrPGWwxk8kXlHjqgt477xo/HbWlIhnxnmC
+	 BOPFMM3lMGa28Z/CWkDQ1ysk/Qo8lKdMK7GTXSPcRcRZhNq3OB5c1kcwP59CDiAqiitpe
+	 khPgfmB/96dxXiWwXJpCw5LonvZ8Qc/PWOT8L3YFidsMNxR2UbpRPyIZIfa4pt9WiJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794155778;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
+	a=rsa-sha256; c=relaxed/relaxed; t=1794156297;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=yB7UQp3PMsWCYdqrryq4xgyn2qyEFFfma2wfNMpg+LY=;
-	b=e0lsUQmQEztaO1UOuo0Rn8yGk5zqjbj+X2W4h2J6yyNavRN+C1Egl6xMk9Q7jt89YErn
-	 OucBFgAmA3IwH4WeogCz2YcQqm+ZEcwFdS70BnAXK5kyOsQAJYa2E3WYedzljjSDOTR6g
-	 4aiwxq/2lwY4uZRoftxXIk6JJvLa/nj5W6eS4Nwb3H2Zco0cF542rldXGUQo4Ovkwtj9h
-	 VYvrZKi5ei7SKlsSJ0dFUvLKXqwlvoanUFHRy58MErmh3mrYu6i8xWjrNSefOhsRnQIqJ
-	 D/RlZg41e86WmmLdXfH+JsJfsNiJYEkW/1H78cAQqtQ0525M+3ykdKlw+FyJjmk2sMg==
+	bh=ocheey9ym6CpKRNuuU4ykX29RIoPZM6O0SiG9if3EI8=;
+	b=KYZVZrxm18aA+QpYi+YoorjuvT2XzlBawIWzN0qpuSVFqozIjRvJLFnr0WBZN7bGDFb4
+	 qQm90t7dxOMgm785V1dyrZvCxB3AGqExhNO8YKBsKZ77q5mUT65ov0I8sEnhv0JxN5/z4
+	 UY+l00bGz4TCD7oKoyKlqL6+P12x9TOy4IaTBb3a90cPJFffNxWq8kzx4Q+JAX0qmVP9m
+	 z/bdYUIgDxMt509rSbCmLFuPgwWwPjksCTuuK2HGrIPjgfgC5xD3eeoAb55qi09LTtx0F
+	 FPbrn2yeBTWuKi7VekSTeMonNSKxuSWQzeAOsH6syWbVDSjFN3HJEoFdZ8dxTO4pa0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KQOJ+8aW;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=amAPYSTF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6EF606A31C;
-	Sun,  8 Nov 2026 16:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8BA606A322;
+	Sun,  8 Nov 2026 16:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KQOJ+8aW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9641F0089F;
-	Sun,  8 Nov 2026 16:36:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=amAPYSTF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C821F0089F;
+	Sun,  8 Nov 2026 16:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794155777;
-	bh=yB7UQp3PMsWCYdqrryq4xgyn2qyEFFfma2wfNMpg+LY=;
+	s=k20260515; t=1794156296;
+	bh=ocheey9ym6CpKRNuuU4ykX29RIoPZM6O0SiG9if3EI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KQOJ+8aW5YX4tYfz3y9HYN2JIIQQF9NV/zVmmd4oW+hifMSX9d05cz8vRN3B8gcAD
-	 aOIZVfyHNREOBjEkUiNRK0e48rKJUM96iyX5qBTtOrsOhscTHE75imGWx6VbW6ZWWE
-	 XkFn58H2iN682xU+MF/vli9y1h58ucvsJgOqgH1wQBlVHRDtsmL1yD4FdTG8OTPUxG
-	 FRG9Q9L8wMxYKVNCzbP10SOIE2To6IMfBYdLhtbDVT0PZmWinFsx7OYda0hBwE83Jb
-	 ZtnHHfznStNuumSQCIll95MJZbwGIGNHs9BFA2XXyjKdO5fbQik3Bq/1PtGS6yW3Qz
-	 bQZjUeBAjm51A==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: a.hindborg@kernel.org,
-	axboe@kernel.dk,
-	patches@lists.linux.dev,
-	pgovind2@uci.edu,
+	b=amAPYSTFmSq+BATzwg+56go6sXKn7AoGQbCEcovJWUSB3BllnC0ucHrcJ4xwf5J7E
+	 NFlBxFI1wtVsixWwyOjjasEOL2zLvDpth4gFdRJP/VToblhfAgLKIEITDzezbPxfNr
+	 vR4JoY5FG21ca0Nxj3yCpCeCxJ9b6+DPos/qGuk5eWQbpsdDglZIok8CchhI7EV2bA
+	 Lzt0ckky1S80HhdQZK4lEOfvuwJ5Y932lxiocyIaxSHq4Knkc9Jw0L4uVHKPhz5qXR
+	 g8Eo0BGrbxgEaSTBLQFgVt9DoFpwo1cfpbwgpupp7tv48VjXqvrXR9k5v0urDf84nH
+	 dp5onlMWR8IaA==
+From: Sasha Levin <sashal@kernel.org>
+To: Ronald Warsow <rwarsow@gmx.de>
+Cc: Sasha Levin <sashal@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org,
-	ytan089@ucr.edu,
-	Boqun Feng <boqun@kernel.org>,
-	linux-block@vger.kernel.org,
-	rust-for-linux@vger.kernel.org
-Subject: Re: [PATCH 6.12 0630/1536] rust: block: fix `Send` bound for `GenDisk`
-Date: Sun,  8 Nov 2026 17:36:08 +0100
-Message-ID: <20261108163608.122524-1-ojeda@kernel.org>
-In-Reply-To: <20261107135015.226523646@linuxfoundation.org>
-References: <20261107135015.226523646@linuxfoundation.org>
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Pascal Ernster <git@hardfalcon.net>,
+	Thorsten Leemhuis <linux@leemhuis.info>,
+	Peter Schneider <pschneider1968@googlemail.com>,
+	Joungmin Lee <leejm516@gmail.com>,
+	Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Subject: Re: [PATCH 7.3 0000/1257] 7.3.4-rc1 review
+Date: Sun,  8 Nov 2026 11:44:47 -0500
+Message-ID: <20261108-rc-reply-01-sched-ext-7.3.4-rc1@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <68c2efb8-e54f-40bc-9c36-76c719a590d5@gmx.de>
+References: <20261107134939.434104957@linuxfoundation.org> <68c2efb8-e54f-40bc-9c36-76c719a590d5@gmx.de>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -66,63 +83,19 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 07 Nov 2026 08:44:06 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> I need to revert (here)
 >
-> 6.12-stable review patch.  If anyone has any objections, please let me know.
->
-> ------------------
->
-> From: Andreas Hindborg <a.hindborg@kernel.org>
->
-> commit e502b667ee70a7fa2a578e7722672ecd4fe0eb81 upstream.
->
-> The `Send` implementation for `GenDisk<T>` was conditioned on `T: Send`.
-> This constrains the wrong type. `T` is the `Operations` implementation,
-> which is typically a zero-sized marker type that carries no data, so `T:
-> Send` says nothing about whether the data a `GenDisk` actually owns can be
-> moved to another thread.
->
-> A `GenDisk<T>` owns the queue data `T::QueueData` (stored as the
-> `gendisk`'s `queuedata` and dropped when the `GenDisk` is dropped) and an
-> `Arc<TagSet<T>>`. These are the values transferred when a `GenDisk` is sent
-> across a thread boundary, so the `Send` bound must constrain exactly them.
-> Bound `T::QueueData: Send` and `Arc<TagSet<T>>: Send` instead.
->
-> Fixes: 3253aba3408a ("rust: block: introduce `kernel::block::mq` module")
-> Cc: stable@vger.kernel.org
-> Reported-by: Priya Bala Govindasamy <pgovind2@uci.edu>, Dylan Zueck <dzueck@uci.edu>, Yuan Tan <ytan089@ucr.edu>
-> Closes: https://lore.kernel.org/all/cover.1780633578.git.ytan089@ucr.edu
-> Signed-off-by: Yuan Tan <ytan089@ucr.edu>
-> Link: https://msgid.link/20260709100100.604252-1-yuantan098@gmail.com
-> [ Andreas: Fix tags to make checkpatch happy. Change summary line. ]
-> Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
-> Link: https://patch.msgid.link/20260929-rust-block-for-v7-4-rc1-b4-v1-4-642a4c1aebd7@kernel.org
-> Signed-off-by: Jens Axboe <axboe@kernel.dk>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> 1564da6afd7ce5297ba24f2d1e61d6a79a9ff6db
 
-This one breaks most Rust builds:
+Thanks for the reports (to Ronald, and to Pascal, Thorsten, Peter, Joungmin
+and Takeshi who hit the same thing).
 
-    error[E0220]: associated type `QueueData` not found for `T`
-       --> rust/kernel/block/mq/gen_disk.rs:198:8
-        |
-    198 |     T::QueueData: Send,
-        |        ^^^^^^^^^ associated type `QueueData` not found
+"sched_ext: Fix the stall watchdog testing and blaming the wrong sched under
+bypass" is dropped from the 7.3 queue. It needs 30fb2b1e4d41 ("sched_ext: Fix
+the running task keeping its protection into bypass") and 5809f749fbdb
+("sched_ext: Fix a bypassed task stalling on a cpu its scheduler has no caps
+on"), which provide scx_exec_sched().
 
-because there is no `QueueData` in 6.12.y. We would also need commit
-06dad60393f2 ("rust: block: implement `Send` and `Sync` for `TagSet`")
-for the other bound anyway.
-
-I would suggest dropping the patch for the moment.
-
-Andreas: could you please take a look and see how you would like to
-resolve it, if at all?
-
-Thanks!
-
-Cc: Andreas Hindborg <a.hindborg@kernel.org>
-Cc: Boqun Feng <boqun@kernel.org>
-Cc: linux-block@vger.kernel.org
-Cc: rust-for-linux@vger.kernel.org
-
-Cheers,
-Miguel
+-- 
+Thanks,
+Sasha
