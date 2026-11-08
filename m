@@ -1,102 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.181
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794102263;
-	b=tKQuEoKPtVsYSvBgQ/52Nce2zsrkcgc17RW9CRdp8NhCo8C9AycK5xbkmjka8z66bRj2
-	 mgdXlYYe9QEdWUZsrn3ZM9aOrPXtgD7iykUWnXtgDAX4HP5DjzDLFbdsNeqH4SR+nMO5j
-	 /ks0XV7BTFQ7GhkcMgn6sqo8SOJzoiWUGv4QSng8Sn8odGz3YSwHcic3dniTzM0veePFZ
-	 gMNgl6pt291C/tcvda7u4jZf/H1jd/nS+Wk5KEtkGxGfcaURi5TkDoiYBKBhxKFM+1QBq
-	 FYWFnNBwGs+5WVNxcIuTB6exPdlReV2bddtkM3YkvAVevp9jPASs8L+b9prfKF3Lenw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794102263;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.171
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794110850;
+	b=Tk4oPLYjH5I9SVwzn7rKn9WeRURWsglX0mdKOlxjtvD1WWkgmswT4cZP7BGZ3PN2TKKc
+	 8BERVFjp0BjFotV0IzclCKL27pvwNZKjUVrRptsgjlNxD1eGikKijwUypZdgcPhSlk9iH
+	 pmjOe3h4GASIXhZPrzbv/4NjP2eHBjCqctzh5MoFWqJlGFGn7+Uz26b+64KW1ckcQdxou
+	 WNx7RweBn5NFOTKpq5l40Vzm2Xyqsn87siZBB0YuHi0x2LzGiYpAspSqbHM4+XzO1DvQZ
+	 VaY8Rj4Zhb1rO0lGYak0IbLEVWWo/2nK2Vkw4oLQU15U9r0x8cn/DpgLzz6EY3cBWrw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794110850;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=/ej/hUBV1NBOGVDMaP5rt4w8zmL+CLNc6ALzKVqxDRc=;
-	b=mannT0iYI4Q5o1kJ6ztkD2FrBljMpCJ1K4Ihwb6JZFKBs4uRVCftb2bhdqTIEzlnk6Bx
-	 ptVRKkNKCdj14qxBVX1Dm49Q2qyBH+0CjMS2uIGvRpG7aiA9cssOoj+Aabfs04+xh6lGt
-	 GxLd+HENBUbq6X0gu5HhGX/IQMzHx82R7M3PD0mK5lksrGx1o9QpGjSzuXycWa0Y6HYcU
-	 NRioXnacDxruRFcc3oUUnocnkWwYU6SqlCvnIx16rBIAsU1tONfYi8mUSIi1rahmY6oV2
-	 3wjvN5lk9x199u32haL/lyaymZhcc02C/fTT2IXNFIF5lUw3t2mdft6HLNad80LrySg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=GRtN9zT+RI+2mfrHlzv7j/45DTS+Jv89S927Nei8sc0=;
+	b=gEdTiDUgUuwys8/2wr4PMnlPcJ65+qv06CmT54BjM+uIi0gk3cdjLqWeU51fYcOCE6Zo
+	 2jedZErNTCXzu0t3C/EqcYiouJ8cEypHIsJYjpt7G6TYT9ZizMGt1jiSHN0F7vscC/NqF
+	 iRYRndt0NHf4jY7RcXp81yvaG9kIOLRpjZSLoMZDoi2/ah+UaBxkTbwvWm/f+DLiDswgV
+	 LUP+7Q+ip+XFDKWX9XalcSNguL+k1TsYVeHlwNrz2OIShji1jLByK48BoxQeWC6WtAVpp
+	 JjCzavU6a2eanqv5M0okMfFRZTPZBb1iyR3Hsr6TMN8/Xd1eSMrdb6dnPaA8nMjMDZQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=i6TVdUzt;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.181
-Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Jode6FmF;
+	arc=none smtp.remote-ip=74.125.82.171
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E51606A326
-	for <patches@lists.linux.dev>; Sun,  8 Nov 2026 01:44:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78E51606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F0A606A31A
+	for <patches@lists.linux.dev>; Sun,  8 Nov 2026 04:07:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 16F0A606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=i6TVdUzt
-Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-35159e0092aso8571eec.2
-        for <patches@lists.linux.dev>; Sat, 07 Nov 2026 17:44:23 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794102263; cv=none;
-        d=google.com; s=arc-20260327;
-        b=QoGRXnKwlk0wc41RGjN6kjTmlLmWbjCNhfw/BAieX1O1fSkpmKFlKZU9+RSsxC4qHe
-         rcH7zs1h2Q3spljI+YUvyVux5SbrB4dIH7f2P/53QyJt6VH/QWHL7kP3IoxKmJxN6uvS
-         qfSANt09zat4f2bOMuMrO9Ub5C2gdYP2sG9+kvrWlixsgdvFJIyh5HEWViuIR4v+wO1x
-         a733RrZhvUSEOmTX/5L+14xsxnJscGhCa+UrrqV6Kpndo0Nw96kt4N6Iu0OC9CznRgpD
-         lNd8SFlKpfhr8WlqIKsfA7Kyq9qruNB1IqIr+SIW1DlJELsw2l1BTHksFGIkGbDcW2WP
-         vfIQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=/ej/hUBV1NBOGVDMaP5rt4w8zmL+CLNc6ALzKVqxDRc=;
-        fh=oI2h5C+6Xk3zeVhYd8Gpb/WUV4tqYv/VpjoK/Jte6KE=;
-        b=Gid9c4OJyStOIoXMP70akpDq6RkBW/7h70mu3Vm7rZmYVQ3o214rOIpL/n13yoeq4Z
-         Ai9RTkmXQ6y3WgltHb6M4ZK5PS93JhlvxQsefTUhGco5xgJXDGXWhaqZ9f9ksX5h90fd
-         BmXwRzwwPFY/S4gC/0r0BhveS/GymLtr+tuU9jQeIDBBdkN701N+o0cQeg0N8QLjiMeA
-         0A62WFm6b+GA4TGi7ZfIlaFRYw6tbc0WL07nYsOY43c/IOv+ffVClMvowCK7gK8wu59p
-         Jc/Lc7Sox7bZW3QpvHeLulTTNZPjNbQJCu0o3Qtqdta/1Viuj7dM44dUSNWySuY8c/zM
-         kWRw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Jode6FmF
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-370f4e5cfc9so16138eec.0
+        for <patches@lists.linux.dev>; Sat, 07 Nov 2026 20:07:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794102263; x=1794707063; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=/ej/hUBV1NBOGVDMaP5rt4w8zmL+CLNc6ALzKVqxDRc=;
-        b=i6TVdUztDovzMaRHliCBa9LQKyH4cPCPF2H69ttGXnMOsJV3g4kAUmUomeZJ7IOwaw
-         vFl3k7OoOUTO35bqV5dNZX9Cc9W6VNxq+mdMYuyS0J0rkun1qoiGI/YIsF6+sxw2l6Ma
-         rZFB5Q3SaA2iaUJbDdn4hP0AJXDH6xFp0z4P6fGUNc1i+X5UgEYJbl8jFdJhrerc6lVt
-         RgZoFKGUywEqXykWEY1Xx+p9MhWz9OIxt4o+mtx5U6DxfSdc5Y4cqNfZkjkR4hqplz75
-         sRSV/nRNCGJfDyR3LINrDnrwUl31vuz/tNWD3IBOSfsvEEV37Xu5RKeFWojUIRaZSVJ6
-         0mIQ==
+        d=gmail.com; s=20260707; t=1794110849; x=1794715649; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=GRtN9zT+RI+2mfrHlzv7j/45DTS+Jv89S927Nei8sc0=;
+        b=Jode6FmFTIhQo13fCG2THYAPsAbxviLkcuY5KrA6ljK9xvW6bHs5jQakBGB9i3QukP
+         g+3M4L5SxvtHDTp3fmjku6XJif7JBApta8I2YVIhF9G/k0d2aotIWMZbncokQPMCghnL
+         Kg5gIkC6ax1a91HhMOKThRDYsLNyRzdP02JZX2vaRF7FuJ4Btq+S9D1Ix2BWrJSnyJSX
+         dHJtwWvlz/ES3Lc1ds0s/ejWopBx7gz0Wr8H3MFecV94AAJ1zeVWnx+/G8zo0++9H55L
+         gTPmLxhe2gavXPyCPlj7O/YxRt2D9qfZDCT6AKf4HscGl9Tradolewk27vnWPbg5hiEW
+         1WNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794102263; x=1794707063;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/ej/hUBV1NBOGVDMaP5rt4w8zmL+CLNc6ALzKVqxDRc=;
-        b=z+2FZllhghfT9NVw+/jaK+ziwO5+/fOmDLCkMfbYncOEEIzgiTPasdHhlM3B4a62DN
-         GoBkRSs/5WugPdLekuLyP8olCaUdbcuca6NFjnKISrsN+dLq6suvqXTC3D1EFlTXS1oO
-         kNEn14ARsM2df2m1z6tqEpyTxJ2gx344/EI/QwvpaMPUX1SA4jpSxNT6ImJL5YH2bsf7
-         RxntHe+9p2NKqeRMa0g9oiXmxJsS2ZRqPxxFTBlR3y7g8YuBTAOyKqWwre2ElbdDec9A
-         jhP4ILPkHGwN20lW/XQtGyOMhzMfX65VnoCC9meOzTS1Z8DMJ2cTaaONl8pBi/YzRr8e
-         q+/Q==
-X-Forwarded-Encrypted: i=1; AL+hErH5WmQ9dL/J5lVzdG0K7CQ+eC6OuvHschwSY+4ps9Gj6uaLqvDdDlFF0pwfYULsA4B3MEFMAl8D@lists.linux.dev
-X-Gm-Message-State: APuU4Z8qbVy+rQogGEeKNG5WWMXhvH7suXvhMk9joyT5BtMRzPEy8iqi
-	Ilk7xRtUdEwdxfwDPZ6OQR3Tggm7kGuVEAxVyC9laXVTCnAFfQU6+OS8d0j7aol55pTQ4OZnTyU
-	yTr/jJ5s2SQd2BcIgxPeGNWOMbMDDqSI=
-X-Gm-Gg: AYBFou16zke3eVlGECSDr0x58zB1iYAk98gLeOUGhiVKV7XJPg15NMIs08TaWJ9TkNy
-	3MM/luDJi7mGSfxzi0rUmdgO8ulS52I+rMG9zezLNpsCXTMdcm3cb/p0y85hsCyl5aVTEIrTOmW
-	EIgmuNNO9bNcZK42T0AX/8Olq9Ur7PhYdC/Gosy1noTCGE3GFMKdWT87gROdgYfcOteUewxyMD5
-	fTUuwXMY3ULU/mIlS+XcAeNxjgBy582JsGD3E/M1wiStLRdgYvbIFokAw8qEiAEzPgu3NsfXna+
-	+nEv9hh2oqAyo7orQ+Z4NDqByo8KC0oi8bXyTX1MA2sVIl3tNn41UDMgbKACfxRcteFYySnkF3t
-	K1oUyyLCdT4BokbPOa8bHYXTl+W1zz/Ybd1HQSUaPVBAdbA4uRDm5iDLRysRbQJeC3Rh3HpBHbU
-	W4Z8J24O/DPqMgPscwobLz59pY9/nosHdFHAwaXtl65zBH90xptC+nPENTY8E0cnRBYRn8B6Npm
-	5J4dfAuCHwo6hiKCno2PzPfx5ktAiF8GJaj
-X-Received: by 2002:a05:7301:6e8c:b0:36c:a1bc:6114 with SMTP id
- 5a478bee46e88-37250050596mr1795949eec.0.1794102262529; Sat, 07 Nov 2026
- 17:44:22 -0800 (PST)
+        d=1e100.net; s=20260707; t=1794110849; x=1794715649;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=GRtN9zT+RI+2mfrHlzv7j/45DTS+Jv89S927Nei8sc0=;
+        b=vEUA1okssLvG/tUgEX5eda+i+wIXYftY4TQuNu7YqXk951aWPQnTcf+EhHfOvxseJ/
+         ai3nz49T6Vhk4XnY9O4ePyyAp+/xq9JyCUuamlPMVujdeUZzHZEThuyDRpwcgpfGav17
+         z6hlmcVtpOXAUgU6We96jovh8JJmSB7pF5Dmt0Jy5UN/sPZBYPJ/IZIpQsb+AqxZpKVx
+         efgGnJYiriStMASL3Exp0C4QOPF1IfGqXd/lyh9o8qWi5Te0wVPBAkvCQ5G2gGyRhPla
+         PqihIgbiHEO9xUTey/tZP9FfTrEDcFRfRU2zbim/oTn+x0MGyQCV9PBGQwj0VSYWAeAS
+         lnaw==
+X-Forwarded-Encrypted: i=1; AL+hErHPPcue/DfDAzC7sMzJ4NgiE3NDGANE9RDalgBHZmjU/6K3z1SRH5bTjdTym6iYQftsIhYntwsW@lists.linux.dev
+X-Gm-Message-State: APuU4Z9hkdYsq6k7Wdd6T4gxNa90cfecsmUtWTBkkVLrPc/JSy4279C7
+	RbhHd8djbO83GNlgZ5qQN3ePX9PgxoT1ebRxJYKFmAG6laO+rXq6NCDI
+X-Gm-Gg: AYBFou0CgJSr33JcFl6+4jb6A8Q6uH/MfCnBkOLsF7T/6yxEGgfzNvnceazVDMG1caG
+	Ozyu8W3N0+sBFxYagAbfQU3uTRZ7uuI0o2aQQA102D+sqZ1vXyJfvbU/X6wuIob2ZQAL1wu7t7X
+	GYMlJzd03bXLp2YfOBO0rEA6Q9Y9onkvwyi1A4CjnQaHl8jyYuX8DV3NMKwlFCdFdkP91B4fb6i
+	YpbXAhZIV3MS6ggIf8i0A1Lzd/XAzhRuwUWX/OmubTLywtSsYMoHcDpEMk2nRRKzvNDDb5Wa1n0
+	Th1XF9hT9K2F8h+8ijO+k/RfQwr9I1uwlTLJTYPy8cdokyaE10JTu48riTWLRi8ggN3oLOUOUxK
+	4DPYoiOvAkAzS1DAqS4dPeGacJ9hOX7iTw0xMR05Xof09iqXlgVoEovkpRA3A9//TVtMZqAHers
+	3LZTWICSn1XQKpOv6fNGUf8bftES/ryQI6o1roh0gt9eZlZcyOB8E4Z2oo/xxZCt6sOSXa2cfqR
+	dORAbj4zl6m01AD7ieHRVfpCgB58g79XXn/BEsqd+EkJz4mbP4R6SYM7PNyZkUPlO+XTKwyw37j
+	BMyUk/DXUrSmO7d3dY3NkDbLOxjNhBeoKkW3R4H92CiGwLBt8q/Nojbw/8ko7Vy9uOw/RD+RjQC
+	zYlTIC75vEsUTJ0XUujaruefxw38dMfbWbm4Iq4SX8zMiCdTpWDfj21hQgkugYWiGdN7iN3s6nG
+	l2a3vFalz9rg==
+X-Received: by 2002:a05:693c:62cc:b0:36e:66d8:1424 with SMTP id 5a478bee46e88-3725024039amr2449285eec.0.1794110848938;
+        Sat, 07 Nov 2026 20:07:28 -0800 (PST)
+Received: from cachyos-aura ([45.112.151.150])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37265a16f9csm2291812eec.12.2026.11.07.20.07.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Nov 2026 20:07:28 -0800 (PST)
+From: Navon John Lukose <navonjohnlukose@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	=?UTF-8?q?Tales=20A=2E=20Mendon=C3=A7a?= <talesam@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	intel-xe@lists.freedesktop.org
+Subject: Re: [PATCH 7.3 0001/1257] drm/xe: Implement Wa_22016122933
+Date: Sun,  8 Nov 2026 09:37:21 +0530
+Message-ID: <20261108040721.203040-1-navonjohnlukose@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261107134939.482764241@linuxfoundation.org>
+References: <20261107134939.482764241@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -106,33 +106,18 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261107134957.653319350@linuxfoundation.org> <20261107135011.630471081@linuxfoundation.org>
-In-Reply-To: <20261107135011.630471081@linuxfoundation.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 8 Nov 2026 02:44:07 +0100
-X-Gm-Features: AclHuK9nmE6X3XMNIv0YfpIZ8wppVgI9hnqEEIeGEre_LeP13ZN6imhA9BOOMSI
-Message-ID: <CANiq72kgADu2_hr0iK3E2+8HjBNww_b-w0K0_3Su9hCeLiMeYA@mail.gmail.com>
-Subject: Re: [PATCH 6.12 0505/1536] rust: allow `clippy::as_underscore` in the
- generated bindings
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	John Hubbard <jhubbard@nvidia.com>, Miguel Ojeda <ojeda@kernel.org>, Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Nov 7, 2026 at 3:23=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> [ sashal: Added only the as_underscore lint allow, omitting the unrelated=
- cast_lossless/ptr_as_ptr/ref_as_ptr context lines missing from this tree. =
-]
+On ARL-H at least, this commit adds about 3 s to xe probe and 2.5 s to
+every s2idle resume, because the GuC buffers are now mapped UC on the CPU
+side. A follow-up maps them WC and keeps the TLB fix. It has Tales's
+Reviewed-by and Tested-by and a Fixes: tag for this commit, but is not
+merged yet:
 
-I guess this means the other lints (from the context) were not added,
-which is what I would expect, i.e. the upstream one was only about
-`as_underscore` (but I checked because it sounded as if somehow the
-original patch had more added).
+https://lore.kernel.org/intel-xe/20261003222145.67240-1-navonjohnlukose@gmail.com/
 
-So it looks fine, thanks!
+Whether to take this now or wait for the follow-up is up to you and the
+xe maintainers (added to Cc).
 
-Cheers,
-Miguel
+Thanks,
+Navon
