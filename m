@@ -1,86 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.169
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794101420;
-	b=RO14vjBuK0umUF+KoX/ld5r8Cjh9G9lFWlEMXNT+gE1yI4ES0R6XO2+hhcb+wyWfmLNE
-	 KQfDfNY4dS5qgmU0Qh1IB/fSLZyqhIS3dakOYcjaCHLf+v5w1lmiLChtz4DONLZ43Ph1a
-	 +eOxXD0MrloaVHH0dau2Ag5Gdh8pQ395zrqfLyII4013Ijj1As41INruSD8bpQjlvjniy
-	 KvTPZyGlNoSlSQPg//WOwq2LfpT26hF18VmzExiW3neY7nkyCVG0X2wF0lBKz674YFcuQ
-	 sec4BAXhlzPwy9f9d5tSVWQsMFmi38jcb5kgvtjfOpLtYPWnAnxpL3fTDjOMSOIycZw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794101420;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.181
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794102263;
+	b=tKQuEoKPtVsYSvBgQ/52Nce2zsrkcgc17RW9CRdp8NhCo8C9AycK5xbkmjka8z66bRj2
+	 mgdXlYYe9QEdWUZsrn3ZM9aOrPXtgD7iykUWnXtgDAX4HP5DjzDLFbdsNeqH4SR+nMO5j
+	 /ks0XV7BTFQ7GhkcMgn6sqo8SOJzoiWUGv4QSng8Sn8odGz3YSwHcic3dniTzM0veePFZ
+	 gMNgl6pt291C/tcvda7u4jZf/H1jd/nS+Wk5KEtkGxGfcaURi5TkDoiYBKBhxKFM+1QBq
+	 FYWFnNBwGs+5WVNxcIuTB6exPdlReV2bddtkM3YkvAVevp9jPASs8L+b9prfKF3Lenw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794102263;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=9Mc5tpEd+rEFEriA57HIWZrFdKcU8gh5hZIGJp5Pbms=;
-	b=1JLb2ZlKITcOG4X3zFgrlPgPUAYgGBpezRYkvuXOUktQVHm7vCTIKme4MVsH+uMA9XKi
-	 +qwY/D0KksQkd8qZH7tOgMJdi8VuX/K4ClaXPXS5vGozHB6Dt1EBj16Go1vamyvn8ePaQ
-	 uxkLwOYqOsdFCly6p/eMKmXOCR3IA4ptvip3+ZRvEETZ7hIn87t68m6W4HnCrV7ibKuuM
-	 XEJDp2W1Q9KySLQxwwfXJ3nMU/ebpfL5nW2EY3c3AyYOqZzOH3q8+PijhA4N2xv2JWYsd
-	 wz8BiPzhvs1B22fcl32QG97dnOwSs1995R3YvodhPpcmi1/Jsw+sGr9yLSfFN6mQVmA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=/ej/hUBV1NBOGVDMaP5rt4w8zmL+CLNc6ALzKVqxDRc=;
+	b=mannT0iYI4Q5o1kJ6ztkD2FrBljMpCJ1K4Ihwb6JZFKBs4uRVCftb2bhdqTIEzlnk6Bx
+	 ptVRKkNKCdj14qxBVX1Dm49Q2qyBH+0CjMS2uIGvRpG7aiA9cssOoj+Aabfs04+xh6lGt
+	 GxLd+HENBUbq6X0gu5HhGX/IQMzHx82R7M3PD0mK5lksrGx1o9QpGjSzuXycWa0Y6HYcU
+	 NRioXnacDxruRFcc3oUUnocnkWwYU6SqlCvnIx16rBIAsU1tONfYi8mUSIi1rahmY6oV2
+	 3wjvN5lk9x199u32haL/lyaymZhcc02C/fTT2IXNFIF5lUw3t2mdft6HLNad80LrySg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FeACiYKG;
-	arc=none smtp.remote-ip=209.85.210.169
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=i6TVdUzt;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.181
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BF6606A331
-	for <patches@lists.linux.dev>; Sun,  8 Nov 2026 01:30:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F2BF6606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E51606A326
+	for <patches@lists.linux.dev>; Sun,  8 Nov 2026 01:44:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78E51606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FeACiYKG
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-8a070755c8cso27527b3a.0
-        for <patches@lists.linux.dev>; Sat, 07 Nov 2026 17:30:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=i6TVdUzt
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-35159e0092aso8571eec.2
+        for <patches@lists.linux.dev>; Sat, 07 Nov 2026 17:44:23 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794102263; cv=none;
+        d=google.com; s=arc-20260327;
+        b=QoGRXnKwlk0wc41RGjN6kjTmlLmWbjCNhfw/BAieX1O1fSkpmKFlKZU9+RSsxC4qHe
+         rcH7zs1h2Q3spljI+YUvyVux5SbrB4dIH7f2P/53QyJt6VH/QWHL7kP3IoxKmJxN6uvS
+         qfSANt09zat4f2bOMuMrO9Ub5C2gdYP2sG9+kvrWlixsgdvFJIyh5HEWViuIR4v+wO1x
+         a733RrZhvUSEOmTX/5L+14xsxnJscGhCa+UrrqV6Kpndo0Nw96kt4N6Iu0OC9CznRgpD
+         lNd8SFlKpfhr8WlqIKsfA7Kyq9qruNB1IqIr+SIW1DlJELsw2l1BTHksFGIkGbDcW2WP
+         vfIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=/ej/hUBV1NBOGVDMaP5rt4w8zmL+CLNc6ALzKVqxDRc=;
+        fh=oI2h5C+6Xk3zeVhYd8Gpb/WUV4tqYv/VpjoK/Jte6KE=;
+        b=Gid9c4OJyStOIoXMP70akpDq6RkBW/7h70mu3Vm7rZmYVQ3o214rOIpL/n13yoeq4Z
+         Ai9RTkmXQ6y3WgltHb6M4ZK5PS93JhlvxQsefTUhGco5xgJXDGXWhaqZ9f9ksX5h90fd
+         BmXwRzwwPFY/S4gC/0r0BhveS/GymLtr+tuU9jQeIDBBdkN701N+o0cQeg0N8QLjiMeA
+         0A62WFm6b+GA4TGi7ZfIlaFRYw6tbc0WL07nYsOY43c/IOv+ffVClMvowCK7gK8wu59p
+         Jc/Lc7Sox7bZW3QpvHeLulTTNZPjNbQJCu0o3Qtqdta/1Viuj7dM44dUSNWySuY8c/zM
+         kWRw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794101419; x=1794706219; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=9Mc5tpEd+rEFEriA57HIWZrFdKcU8gh5hZIGJp5Pbms=;
-        b=FeACiYKGLZwnCz9bsmDTyaqx8UxmrmvJ8V3WUD5SMpnIhGj63uHB+FCQZR9vi75APk
-         Fpy4HY93jEW3tMJ2tZwbw0wsaND+bN5ECO/68yCSKmahd08H8mAZFmSkWnVR1hyf0mgW
-         KaEIGHNcTPeZkRdA1k4ylWO3eE+iS6OEnx0l8iQsgQj4mNR+NjnRurfrRiPYRmOrY7Sr
-         vz+ve+VHZ3NPB1WNODCofAvjF2f0UQoPRwv4BVYeRxqR8A/3+hftjnO/i4oq8J9ff53b
-         dSLa42tI7z58INo2aLJG5i1hEbExmv/hQO8NtL5vp2TkLvcekGIg/N2rX/oAWNfCXMPR
-         45RQ==
+        d=gmail.com; s=20260707; t=1794102263; x=1794707063; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=/ej/hUBV1NBOGVDMaP5rt4w8zmL+CLNc6ALzKVqxDRc=;
+        b=i6TVdUztDovzMaRHliCBa9LQKyH4cPCPF2H69ttGXnMOsJV3g4kAUmUomeZJ7IOwaw
+         vFl3k7OoOUTO35bqV5dNZX9Cc9W6VNxq+mdMYuyS0J0rkun1qoiGI/YIsF6+sxw2l6Ma
+         rZFB5Q3SaA2iaUJbDdn4hP0AJXDH6xFp0z4P6fGUNc1i+X5UgEYJbl8jFdJhrerc6lVt
+         RgZoFKGUywEqXykWEY1Xx+p9MhWz9OIxt4o+mtx5U6DxfSdc5Y4cqNfZkjkR4hqplz75
+         sRSV/nRNCGJfDyR3LINrDnrwUl31vuz/tNWD3IBOSfsvEEV37Xu5RKeFWojUIRaZSVJ6
+         0mIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794101419; x=1794706219;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=9Mc5tpEd+rEFEriA57HIWZrFdKcU8gh5hZIGJp5Pbms=;
-        b=2dK0RzZ1z6L6DGheK3vt8/rw0c33VGmZ2y9DxY6UL01/hQ2iy62+5PvO/U1Ux0sUI7
-         Zx/wpRXiRevutx8CICiYCKz9UKoGcJli4PVGzgqtVn8/KX25F1E375zF/3bDspoDGa+L
-         Nf9UkX4qIJ+f+OzmUfxLuK+YBJ1ijMUAytCfPBFbkkZe5w/RGfbTvGcdLNLTvFmV+TmV
-         22OkXYCyE97WR8cQ7d/wLLV8dmEBsDs9mDI9BYUm5brsl+QPCxCiUK8OIm3mt2CmdXZS
-         +jxGdor38LSc3tatwI+j6XoHcuWwmngiigq7GMcviPPzzxJ+ziDSa6PNhQ57breSgS2b
-         DzyQ==
-X-Gm-Message-State: APuU4Z8M0wz0nzEFbSdSdmZVIoELKoCobI2Ep1u64aZIMOqj2vwmUYuC
-	1c/UoKqJYPxZe6p7cMjFxx/VYiXYMA9sfKtyQrD4H5Lr458DpePrj7dT
-X-Gm-Gg: AYBFou3x3EKtWSveHE32VC1J1/OJPrKKfp2gkUZ7vg7zPwYKVEKIiQl5MktgXSz89At
-	QzGLOMsLu/P8G8PXLZisP5RdJY4zGqoXNlznJX2vhehx3xQNyeERB3onFuhqoGXwNP9C2ga1v6C
-	qU0RTx+IR+DWgcOfqoqj/EFuCgr0pWAb6QuB0x2xrJPz9wZvENbK0+L+DEjXLAQiET2iA4e78NY
-	4T0f0bCNyJEB5ghjyqTGWumBuWK41y/D1tDx9dsh2tKIKh55i8fM2tdAPrWSNxg97PI/phAblMy
-	5pe04sVWw8kRpt75uvpQADp5lZiXZ/MS2MarJKGZq1/QyGqfZxGLCdnoGlqhgI+FK9UZhZ+vWSg
-	CXP85ujw+lULAZAuYnQx/SG8GFz0Vt1Ovwz+h4ChEDSEcirrZvryczZkpF4/quVUfr4dvkCMVnz
-	n5RJ0N58nf1D2XBOcTMAbz+YHvNBGBvjPtt8vdMf6EcdNsHOrLVUb+GX+QtnvQfsJahbNi/pgRT
-	IPOwD3Ax0mtx1wLcS4Fu9oSmv4EQSrY0iGLbqaIVtsAcCi419ianz7rGXzUT/BIDJ5vVFGgIvMA
-	sQ6IVW03JqFvlZzMXIljK7dv4vK4c6YB
-X-Received: by 2002:a17:90b:4a89:b0:3ac:83c1:2c0 with SMTP id 98e67ed59e1d1-3b12d6071a9mr171719a91.64.1794101419251;
-        Sat, 07 Nov 2026 17:30:19 -0800 (PST)
-Received: from [192.168.100.6] ([121.144.254.242])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b103472903sm2888812a91.4.2026.11.07.17.30.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 07 Nov 2026 17:30:18 -0800 (PST)
-Message-ID: <68e291d9-4696-498f-a7ea-087d87febe8c@gmail.com>
-Date: Sun, 8 Nov 2026 10:30:15 +0900
+        d=1e100.net; s=20260707; t=1794102263; x=1794707063;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/ej/hUBV1NBOGVDMaP5rt4w8zmL+CLNc6ALzKVqxDRc=;
+        b=z+2FZllhghfT9NVw+/jaK+ziwO5+/fOmDLCkMfbYncOEEIzgiTPasdHhlM3B4a62DN
+         GoBkRSs/5WugPdLekuLyP8olCaUdbcuca6NFjnKISrsN+dLq6suvqXTC3D1EFlTXS1oO
+         kNEn14ARsM2df2m1z6tqEpyTxJ2gx344/EI/QwvpaMPUX1SA4jpSxNT6ImJL5YH2bsf7
+         RxntHe+9p2NKqeRMa0g9oiXmxJsS2ZRqPxxFTBlR3y7g8YuBTAOyKqWwre2ElbdDec9A
+         jhP4ILPkHGwN20lW/XQtGyOMhzMfX65VnoCC9meOzTS1Z8DMJ2cTaaONl8pBi/YzRr8e
+         q+/Q==
+X-Forwarded-Encrypted: i=1; AL+hErH5WmQ9dL/J5lVzdG0K7CQ+eC6OuvHschwSY+4ps9Gj6uaLqvDdDlFF0pwfYULsA4B3MEFMAl8D@lists.linux.dev
+X-Gm-Message-State: APuU4Z8qbVy+rQogGEeKNG5WWMXhvH7suXvhMk9joyT5BtMRzPEy8iqi
+	Ilk7xRtUdEwdxfwDPZ6OQR3Tggm7kGuVEAxVyC9laXVTCnAFfQU6+OS8d0j7aol55pTQ4OZnTyU
+	yTr/jJ5s2SQd2BcIgxPeGNWOMbMDDqSI=
+X-Gm-Gg: AYBFou16zke3eVlGECSDr0x58zB1iYAk98gLeOUGhiVKV7XJPg15NMIs08TaWJ9TkNy
+	3MM/luDJi7mGSfxzi0rUmdgO8ulS52I+rMG9zezLNpsCXTMdcm3cb/p0y85hsCyl5aVTEIrTOmW
+	EIgmuNNO9bNcZK42T0AX/8Olq9Ur7PhYdC/Gosy1noTCGE3GFMKdWT87gROdgYfcOteUewxyMD5
+	fTUuwXMY3ULU/mIlS+XcAeNxjgBy582JsGD3E/M1wiStLRdgYvbIFokAw8qEiAEzPgu3NsfXna+
+	+nEv9hh2oqAyo7orQ+Z4NDqByo8KC0oi8bXyTX1MA2sVIl3tNn41UDMgbKACfxRcteFYySnkF3t
+	K1oUyyLCdT4BokbPOa8bHYXTl+W1zz/Ybd1HQSUaPVBAdbA4uRDm5iDLRysRbQJeC3Rh3HpBHbU
+	W4Z8J24O/DPqMgPscwobLz59pY9/nosHdFHAwaXtl65zBH90xptC+nPENTY8E0cnRBYRn8B6Npm
+	5J4dfAuCHwo6hiKCno2PzPfx5ktAiF8GJaj
+X-Received: by 2002:a05:7301:6e8c:b0:36c:a1bc:6114 with SMTP id
+ 5a478bee46e88-37250050596mr1795949eec.0.1794102262529; Sat, 07 Nov 2026
+ 17:44:22 -0800 (PST)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -90,56 +106,33 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.3 0000/1257] 7.3.4-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261107134939.434104957@linuxfoundation.org>
-Content-Language: en-US
-From: Joungmin Lee <leejm516@gmail.com>
-In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20261107134957.653319350@linuxfoundation.org> <20261107135011.630471081@linuxfoundation.org>
+In-Reply-To: <20261107135011.630471081@linuxfoundation.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sun, 8 Nov 2026 02:44:07 +0100
+X-Gm-Features: AclHuK9nmE6X3XMNIv0YfpIZ8wppVgI9hnqEEIeGEre_LeP13ZN6imhA9BOOMSI
+Message-ID: <CANiq72kgADu2_hr0iK3E2+8HjBNww_b-w0K0_3Su9hCeLiMeYA@mail.gmail.com>
+Subject: Re: [PATCH 6.12 0505/1536] rust: allow `clippy::as_underscore` in the
+ generated bindings
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	John Hubbard <jhubbard@nvidia.com>, Miguel Ojeda <ojeda@kernel.org>, Sasha Levin <sashal@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/7/26 10:38 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.3.4 release.
-> There are 1257 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 09 Nov 2026 13:46:08 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.4-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.3.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Sat, Nov 7, 2026 at 3:23=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> [ sashal: Added only the as_underscore lint allow, omitting the unrelated=
+ cast_lossless/ptr_as_ptr/ref_as_ptr context lines missing from this tree. =
+]
 
-Hi, Greg:
+I guess this means the other lints (from the context) were not added,
+which is what I would expect, i.e. the upstream one was only about
+`as_underscore` (but I checked because it sounded as if somehow the
+original patch had more added).
 
-7.3.4-rc1 successfully built and booted in my system once the commit
-1564da6afd7ce5297ba24f2d1e61d6a79a9ff6db was reverted.
+So it looks fine, thanks!
 
-The error Barry encountered was not noticed.
-
-Distribution: Gentoo Linux
-Architecture: x86_64 (ASUS Zenbook UM3504DA)
-CPU: AMD Ryzen 7 7735U
-iGPU: AMD Radeon 680M
-
-[    0.000000] Linux version 7.3.4-rc1-900-myllvm+
-(user1@gentoo-zenbook) (clang version 23.1.5, LLD 23.1.5) #1 SMP
-PREEMPT_DYNAMIC Sun Nov  8 10:04:35 KST 2026
-
-Tested-by: Joungmin Lee <leejm516@gmail.com>
+Cheers,
+Miguel
