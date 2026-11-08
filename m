@@ -1,115 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.157
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794113946;
-	b=sCyxBrjbnrWBdKbihFBq71T6177pVhx94giXok1ddCNHNOcbmA7U81M4R+0ZO5ZzK7kO
-	 zukvEPqrrkWyyq32xwv/lUKoMvhFf7m1o5WRxqtxoEwQ3U2WzqZVmgHZymiLAVwvLb0iV
-	 mEJaHt7cbIQDZHk1xjGrJiA0IU1Dr2EgjkIP3x2LYky89KRczF48HuTE99VRdHMHfJ8Wo
-	 88m36DZ9Pp78HzTn+uinou8Y7kJCxzaf7kylrUWO+T+k/U5saR/PyqBOpI+GchxQCyZl3
-	 eYnHsuBnRWIVY0o1+PD3GMIfZUyd3UzBPLJFfV3h9ARRGWM445YYkDlH7GY/bmR0IZA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794113946;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:From:To:Cc:
-	 References:Content-Language:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=WuJ6sQHXMs2ky6wQHLjTEQYKEnIZNvDrBjByHRgWWGo=;
-	b=OHz+t0AZ7nkE2eXoZkjhuww8AuwcAXIEaZsIq8OwFUThtarv2cGfdMNTf63vAgfG9Qpg
-	 u8TuUE9bxRIoljjenzpCvwx5frleFeKntk7zR6Wtk6LCzc4BPdnvkthdPk5tH6yVCTkNc
-	 MtEo0uz730SxNO5CmvYQH2Nzs54v+j4HrCTtpKIPbIDo6CzRf5lg+1igEq5rgCYhKmtQ8
-	 0xaILtucTLqkW74a8tACO5ha0HZZoSdeLI/KzMz+w/1bEIeBKKM/5EvWgi97CXSmtDqDa
-	 sC5kOp7gAf9Jxcxm8jSugWb8JzUnOciKRWvD4jnQY+5Z69mdnyQE96yyzfXY0/JriDg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=oIYLZ1tB;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=v24AmnZ+;
-	arc=none smtp.remote-ip=202.12.124.157
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=209.85.208.52
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794123748;
+	b=d31OaHQzDet9eUcTPNjEyPdbpJES/bwWqgPxea+FXdSQwbN6O+cLp+UstxAWxQWNaALr
+	 7fH1sKqZQGautXfiUXHXmFz8J5FEPk2ImGbUsf0dusDE7PxyBH61XXy35gasSaQEAMii5
+	 qUtR8WSOHwHiraOGrC840nD4VOeiT4i8734cRO7P7IZXKoXHFFGGM1yHLe6DCUk7fve1y
+	 0E8DK3d04Q62sjYqXeW/7e09Ym08FckKKbBSerEbCB3ojq2vbBS67tSykwfAA1tJ9blMB
+	 gHahZ3wDY90AfODx0xof17eg5J5KTP0yOu7NaoK5G8c77Q8fM091VOGxrJ6ZpxGXjrA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794123748;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=VLNz6RHfyZ2V0vojI2Wyp9rbbg58O57zxxjtT74LsU0=;
+	b=E5N3ty2G2LJetad6dCDETk3ziForS0Uqotc78k3oXwczMezXou79wUHR8e7McwBP8BPj
+	 U1XMVg7IOLcaiM3a0FkWK4So1ncmqCiTliRjrsjPj5hA166N0gJfz9i1qihxdOteNvZ03
+	 P6paKsqQNTcOT4XOAd/QQSSsakXqJDtZV52qofE64uIaW3TLmJBPUKoS9QXisI8hQ+kPE
+	 RyVjqPR9J3PCgeUtai1oZOBWkTVL7dD8oHAStul5WYEPikh5u1xWaOVcHjfJlZIqMHa5m
+	 qle37U+erd1cU9x+F0o2FNcEkIlv2sa3pYDpUiTANfXm0MWhPiGqX52iLVbY6j7vYUA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=futuring-girl.com;
+	spf=pass smtp.mailfrom=futuring-girl.com;
+	dkim=pass header.d=futuring-girl.com header.i=@futuring-girl.com header.a=rsa-sha256 header.s=google header.b=W9DzEUS4;
+	arc=fail smtp.remote-ip=209.85.208.52
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE33A606A31D
-	for <patches@lists.linux.dev>; Sun,  8 Nov 2026 04:59:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AE33A606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622FB606A320
+	for <patches@lists.linux.dev>; Sun,  8 Nov 2026 07:42:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 622FB606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=oIYLZ1tB;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=v24AmnZ+
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D56547A00F6
-	for <patches@lists.linux.dev>; Sat,  7 Nov 2026 23:59:04 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 07 Nov 2026 23:59:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1794113944;
-	 x=1794200344; bh=WuJ6sQHXMs2ky6wQHLjTEQYKEnIZNvDrBjByHRgWWGo=; b=
-	oIYLZ1tBoMXcfm6ohKNwvZL227IVOorBG3zMRtNNWJYAHgm8R2ljg3LSM4s0w+TB
-	O28MbkX6BSd4mmQnStnrklUzKXGGiATUoJMebpz0qPHYzT1FByFLzNIMmjvnQJbn
-	onSADx6YNhuL3IZvhFbh1sWgzsTS2npjUsSxE4jxEzzIYq3t+zuPTjOs1pAxVDYD
-	+yVEIjOWD3IKow3f+Bbr/hcWiE3K3jeqCzLNiWmub39z2+pbUNSQLpNjN9QxQBzG
-	oOeIJ05EWORWl1dJMiR8+7YFoLNY5R/dqEpNEjfqskm3bTz8nNiOza6e5tusXNmZ
-	hKURuCr5N+c2jVV9mJZRsA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794113944; x=
-	1794200344; bh=WuJ6sQHXMs2ky6wQHLjTEQYKEnIZNvDrBjByHRgWWGo=; b=v
-	24AmnZ+GctXU4ETSQi7D1uwHCrPDpDWxsnLo0ldrakrazmIij94JaQYDMgQ3X6dj
-	lP35QaIJFgvQPMFbEx3e3iszkra62577WLn6S8WVGmRxYwgDYLNcVGHFEqKRYLpe
-	TSSX6uxA0yMedD21JEF8cuqBNpwKzNIDIgT0yWr+MM5w6jVH5sIKmt0uU7PxLMv8
-	jcWgBL4zgJu734IYd/LM5bgZAVIhIFJ24fdIR5u+dA9YwZ+pnO0LnBbYCMHFMdup
-	o8prZh2XMkZfeEwp2nbPQ4fMo7GNpAO9elddzvrxZzc7nr7qRTbkM8t2D9b7DfRu
-	SH1jiWqb8vjROsKSJD++A==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794113944; d=pobox.com;
-	mf=PGJhcnJ5bkBwb2JveC5jb20+;
-	rt=PHBhdGNoZXNAbGlzdHMubGludXguZGV2Pg==;
-	s=fm2:rsa-sha256:QN9RygP1UkbTZPE2E/upuYWr3FNCh5t9NDaUi3jlVm+ngeC
-	Rpevq+ZMVBg37P8VDud1cUIy8O2eIB7Le2CR57is+A9mWMhq4HVIQ1unz2avS9Sa
-	8gW4vCU7mqrrKw5JZ+FM7GEsJY8iLaJA38+KmfrnBvw3xHoiAAlkSO67oyD0m+NJ
-	gRACvQm7qrct8HnbOoXACXEeBoDm+x2bqO7Vg8TI/RWxR4L3FK2ldRusLE+He1ag
-	JOZesI+lwz8qINGaj6Fr5HKne0cvRzEzo0tPOh9DyX3oPEC4ACpTaYTfiOze0ww2
-	NeNejQVWADQ0CHflOXyTO9CzBi6MozqSNEaB23g==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=14;
-	hn=cc,content-language,content-transfer-encoding,content-type,
-	date,feedback-id,from,in-reply-to,message-id,mime-version,
-	references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:S7xqqUEHsXvdnOJ3sbaOZojzc4EMkFHyUrmZYd6Fbzg=:2NhP3OwOeIw8AQPE8AiZL8ChlyjfFHjuxhPbpkxaciI=;
-X-ME-Sender: <xms:lwHwarKzpWAB7Kbr8_PIDkXpZdXfQxQhWbGeTxwWPP9KfcrTT6Gy2Q>
-    <xme:lwHwarC9GuYATEdB1LKEWI4-nDtPGis84JREH8Z7czPKeCHehLroI3E2oqGbsqAcs
-    -MwcS-f_uqmLD-eGKstS7H-vntSjPD0NM2ik3XAQq-3QShMAyMmTLCP_Q>
-X-ME-Received: <xmr:lwHwavPKIofWY97u8ZrRTLBvOxNt8gtwpn3XTcZBzNtVfDaNkPpFZzV4l7XS9RqVLUz7FgaPHy9mRbjw5Zj_oRRyHkfkuzlV>
-X-ME-Proxy-Cause: dmFkZTFlhusCx7UObVw2Cm68ypW8eHXNooAOS+ryzPCQRuNZJSy69S639WN4PJBrRZ3eoj
-    ++UE2FsBUkZ4fRhEPbMHZL7kG0i/Edpw11bbiHtoKvBmt5FAQX/xwLw9yXa6qMRjYBEhgp
-    V6DTYwM5j+4LEdOl1aj6la64hb/TdBDqFKUqHJDFjZIZ3Xan3FehHlOWE3y6TysZkqqfYw
-    hUKq7r7m35Rf/EHdTrmQcYSvwmLv1xiv7+whYsOuScWJEXFIoSZdiS0sVadaiY40/wNox8
-    e/iobdvzuk+sV052HPgxn6WgSwjsr937POp6JXE3hNqosYbzBnZtIH4Zx4pkQ4F3GMbMno
-    IQUjmxcArg2RzXGZ6BthayoPIJP4T8LwcgTkgXmCktWCrmq51bmBAxtdgiiV1iwVh9TGCX
-    RLqhhpP60CvcDPBugNRJ+qTSDelSCqcwaVrSg7Ku8qeqoK+1HoSEkeGanCPR88YAUMBC63
-    iDGAP3TjHHUCYU0wE1Q2sB7/2LJIXZV/55P/9DI2zmKbBZc2oAQ6mlyaPtWBn4rUkBaDho
-    0YUFr5AbX9jxF76TKK8/Tg0WKoa1N/w0gvWah464pgXBjVztvDbv6rAYv5Kxu5ekIBK1tl
-    lO9yF7KcuT28Lw7ap9/Ft2FAejCi+BAxJA9PeaYtMnayyhQVxS82H26sjLiA
-X-ME-Proxy: <xmx:lwHwaoWlnfFZSqxOsNdbUwblc8Jyu6slua-pCfHJNXFlwE0C7L7u-A>
-    <xmx:lwHwaqSw3OqthK20fvpas15LgVslir6VHdToOYa-hRL1KSSU5rehwA>
-    <xmx:lwHwam0kNhbuRA6Q-Y3kxkwCHPGYh-aC5ENW5NTKUXhhr7VexP-U8Q>
-    <xmx:lwHwaviRDT4fWJvRVQCiBkBk4PqFIUvKhMYnLtAxUOhOUSY5BvbaRQ>
-    <xmx:mAHwakeA-nG-lAxqf98fXm8aJxIU47ZItE2FYMca0F1YbPAlh7SEgudF>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Nov 2026 23:59:01 -0500 (EST)
-Message-ID: <f6e0e225-a80e-49ee-9555-be300f169503@pobox.com>
-Date: Sat, 7 Nov 2026 20:59:00 -0800
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.a=rsa-sha256 header.s=google header.b=W9DzEUS4
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-6b704171bc9so200745a12.0
+        for <patches@lists.linux.dev>; Sat, 07 Nov 2026 23:42:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794123747; cv=none;
+        d=google.com; s=arc-20260327;
+        b=F0If2VhUW0dvrzeCLy4MncTAORguxnvAFH84E7B+XdqZD60OtexOs6BhDzKAmWGT6t
+         ozPRHzfst7B7vi9WJYHhMaUYC+2yqu/KnCGokTKV7YPOOsD4YRS4+tL0YtHvTUlNJWmk
+         SfKSZ6GGWmqmn1O52A+EgeVChiJYCObLXXLRbTSjOLEFmw0HwdC8xO0D8tAj5bIfA7P9
+         2AoeSeMDTXMIFjxPFELBRimoZQEPbAifvtkBrln6UO91aPnMXbq+XsFSHJ+DXGb/GR/5
+         NJmQu73EcodJrKFigl8A3YC7QvepzdObjU/1b/LPjYB6Wx0BGYAA+O0MUn3iWm/zsL7P
+         gO5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=VLNz6RHfyZ2V0vojI2Wyp9rbbg58O57zxxjtT74LsU0=;
+        fh=QPX9sPZlLX1UCb+olueHhkV9fcbeMvprlrHCh7K4vl8=;
+        b=IsmCar6YZuZxszgHRg/H/CB6Kx8V1RpBVevQiJzNuw4Ir4wBWuXX5fhBzBOjFFn3Vs
+         w+VVLyfioaG360xs0qzbNuEzqGyi3Gcb54jq9hnixpGH3hmeiwY3tmKvA9kW5cBQREaE
+         vro/P26yb5ixL7HFGP7turyrTuVDovgj+voru9vBKF44qakfEwZiV7TSBOoiBAwEJuvC
+         /L4Rt0f7gVLPpaczU6vluYgkgVuK0SwxkmswPX1DqzER0u4v1gbZ774+ZU+6o0xavcQa
+         nCm6nyOgjMpAVhtVXAJvbdL7EhS/mGwaARZ/HSGJgxDCMaFMFBR/pjnh3zi4Nr8mhGUG
+         PHww==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl.com; s=google; t=1794123747; x=1794728547; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=VLNz6RHfyZ2V0vojI2Wyp9rbbg58O57zxxjtT74LsU0=;
+        b=W9DzEUS44NiCyN9VI9iSUNOQ/TNVMHGJ3d51Z0tqwjtscQ2gJt2o7GxQi+e5K5i8mz
+         C1DYZV5FEUZHhTAUzb+MSnOi8wMfGJlgoit6gWsBXENxHDOX0AhTTkbz9lTpPVqwxXyc
+         CVDRv9T/35m5vtDRMQQdq2u989yLl6DZ+p5rksjc5llbuEmOJODAqxTKLLx7f4fOuqHh
+         6gtfcmx5hzmSkgdUT6zfx18fykb257XG0qpnAGW6QbfbVky5Cf9ExUAcdAno0Ei6LBtM
+         IQgDKMoBQw/3RZmmROpAsYhrrtzmhOkOWT1+80zYQsRJ27e2wV2+mp03Zp3R6KHl2YOb
+         yJkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794123747; x=1794728547;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=VLNz6RHfyZ2V0vojI2Wyp9rbbg58O57zxxjtT74LsU0=;
+        b=PIFtjgd7opFSpVFoRfmjgUHcxo+zLQL2ah/+8lRE16id6e7kxrPpecu/ORLFFZWFas
+         4SZPMqLIX0A8z60G8CHrtTtPzVig2SefZh5rmfLZL3tsOxtQlUVvy2YnhkaMXi7LrYIJ
+         XbNagRr4HBYylxyMmjs9WwaxC+IDHy+Z8BMkysdmtaZTUhi11thmQNTSuWWzqQI9/y+x
+         C9CxntFxEu0ucZLreyslRImdSzlEOrkquOY9VpSUvZGtZWO5EMo+vcTKUyLC52K5dCTM
+         ewZ6uTML1CR0K+Ga4Ob1oNR7qHdFi31nayX3DuAA1jILZtCsRQSjdySvwugqL8QR4Xbv
+         0DuA==
+X-Forwarded-Encrypted: i=1; AL+hErFeRyLhWnRfqHdvud3Fdab7u9DiZHQJSOcldoAd7alOvWPVvy7z9/nDgYeEgbev57QJcDSQJzCa@lists.linux.dev
+X-Gm-Message-State: APuU4Z/y3v8BVUzpnSf1EA7VLIap/rHtJcNKOria0hc9nIUkSb/EYeTx
+	PjKmxM9s6Benq52QlFU6iFaLI1H4QfF5f4lew9dhfvm/AtCQz2SwwDt7rgz5051x+APoz9U1+Jo
+	ggrMOIwivlnPTjztQXKHE31N5B9a+sTJIsl7vR+MIvg==
+X-Gm-Gg: AYBFou2QzylIDogjLxJb6MIHyLND/mWV5Q/2ccTa2eRe7xWvcOOOzuBkGGXHDiTbK2F
+	GP+cubQGPHiXwdsDgDeaSuRAiO72OqQpbI0NbeWyWNWZepylZQO6fJRTqfOWvBAvegcykqnunkJ
+	FzvNFOKOI77pN6AEGGbUmBeO6AFZkEh4xHXzCF1QFFnvcnbmuMxeKsPMbTOmHUULo2MZ7dq4jil
+	Clb9yTc5kopjT7nCwFAP0aT635P9KBtgQ46xdOJMU+P/ryUOWu1pF0rMHeP71KZA4lSDjmgfMBn
+	tp3etxanHShNmgqcf4R7wJ5TE30e+rHxAQu3o1+9yoBZQoGxRZ+NR56pmbsGvtDGWLsBtUFeb/0
+	1UvrRPIOmz7mFs/rDjR3HFSPiONa8Tyi06Gsc
+X-Received: by 2002:a05:6402:2b91:b0:6b5:96e9:ae97 with SMTP id
+ 4fb4d7f45d1cf-6b722484ae7mr465101a12.34.1794123746308; Sat, 07 Nov 2026
+ 23:42:26 -0800 (PST)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -119,101 +104,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.3 0000/1257] 7.3.4-rc1 review
-From: "Barry K. Nathan" <barryn@pobox.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
 References: <20261107134939.434104957@linuxfoundation.org>
- <f65916c7-470b-4f64-84d1-da8cf4c8e7e8@pobox.com>
-Content-Language: en-US
-In-Reply-To: <f65916c7-470b-4f64-84d1-da8cf4c8e7e8@pobox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Sun, 8 Nov 2026 16:42:09 +0900
+X-Gm-Features: AclHuK_4Y2M3DeuqST9ji-ywEkqYo_2N9_-1XAV98U47LHLOvTm2zUmbhhFxDD4
+Message-ID: <CAKL4bV507bkW7uEgo4BqgE-ADALXc_ZhH1OjvwUVoa0QT29ysA@mail.gmail.com>
+Subject: Re: [PATCH 7.3 0000/1257] 7.3.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/7/26 3:49 PM, Barry K. Nathan wrote:
-> On 11/7/26 5:38 AM, Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 7.3.4 release.
->> There are 1257 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Mon, 09 Nov 2026 13:46:08 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->>     https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.4-rc1.gz
->> or in the git tree and branch at:
->>     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.3.y
->> and the diffstat can be found below.
->>
->> thanks,
->>
->> greg k-h
-> 
-> 7.3.4-rc1, 6.18.63-rc1, and 6.12.117-rc1 are all giving me the same build
-> error with clang that I previously had with 7.3.2-rc1 and 6.18.61-rc1,
-> due to the same xfs patch as before ("xfs: cross-reference the primary
-> superblock"):
-> 
-> fs/xfs/scrub/agheader.c:123:6: error: variable 'error' is used uninitialized
->        whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
->    123 |         if (agno == 0)
->        |             ^~~~~~~~~
-> fs/xfs/scrub/agheader.c:435:9: note: uninitialized use occurs here
->    435 |         return error;
->        |                ^~~~~
-> fs/xfs/scrub/agheader.c:123:2: note: remove the 'if' if its condition is always
->        false
->    123 |         if (agno == 0)
->        |         ^~~~~~~~~~~~~~
->    124 |                 goto out_xref;
->        |                 ~~~~~~~~~~~~~
-> fs/xfs/scrub/agheader.c:111:13: note: initialize the variable 'error' to silence
->        this warning
->    111 |         int                     error;
->        |                                      ^
->        |                                       = 0
-> 1 error generated.
-> make[4]: *** [scripts/Makefile.build:287: fs/xfs/scrub/agheader.o] Error 1
-> 
-> I sent an email about this earlier today, before the -rc was sent out:
-> https://lore.kernel.org/stable/7840e515-e7d5-4ef9-8c1d-6390374a5b33@pobox.com/
-> 
-> Reverting this patch fixes the build, or the minimal fix I proposed in
-> that email also fixes the build:
-> 
-> --- a/fs/xfs/scrub/agheader.c    2026-11-06 22:42:57.147299404 -0800
-> +++ b/fs/xfs/scrub/agheader.c    2026-11-06 22:45:59.898908897 -0800
-> @@ -108,7 +108,7 @@ xchk_superblock(
->       xfs_agnumber_t        agno = sc->sm->sm_agno;
->       uint32_t        v2_ok;
->       __be32            features_mask;
-> -    int            error;
-> +    int            error = 0;
->       __be16            vernum_mask;
-> 
->       /*
-> 
-> So far I've only tried building a minimal test config. Later today or
-> tomorrow I'll do testing with my normal configs, but (to make a long
-> story short) I will probably experience temporary health problems
-> for the next few days, so that will probably slow down my testing.
+Hi Greg
 
-I took 7.3.4-rc1, reverted "sched_ext: Fix the stall watchdog testing
-and blaming the wrong sched under bypass", and added the fix to
-initialize error to 0 in xchk_superblock() in fs/xfs/scrub/agheader.c
-(quoted above).
+On Sat, Nov 7, 2026 at 11:01=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 7.3.4 release.
+> There are 1257 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Mon, 09 Nov 2026 13:46:08 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-=
+7.3.4-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-7.3.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-The resulting kernel is running well on 3 different amd64 systems and
-an arm64 virtual machine, with no regressions observed. (This includes
-a successful XFS scrub on one of the amd64 systems.)
--- 
--Barry K. Nathan  <barryn@pobox.com>
+Linux version 7.3.4-rc1 tested.
 
+Build error
+The previously reported issue has recurred.
+Built successfully and confirmed startup following the procedure
+reported by the previous user.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
