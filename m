@@ -1,58 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=83.149.199.84
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.35
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794212677;
-	b=V9seoj0PcYIyKeLZSfNDlj8lY6I8KOY80NDSSco8SlaL7FDqRwB/hWZgYT49MaUjmc73
-	 qCr4yOb7CcRU+nLt9TftKOvfC7MqFJr1tuYyHld1+U0SzRUfZRiCYO3kPDSwQ9owQPcrF
-	 PUIY6yepsiqcflpm+1lRVwpcXMkhXWUuwl32Fd642jsBNGGE0IfQdj3ZVDb+7O479jSUv
-	 GvT9nk3hglXlp4zuNACbHhNzOkB5vrM1mVxIRyrYDh6GetsZpAvbXsKtmOj7mluVuoMHu
-	 yjbR+Q1VuzflW1ERNtVlPTvRxrRoir8mx4JkBb2S+nBGS9nRqqtXK2uzeYY1rFm4XYQ==
+	t=1794216337;
+	b=my0dS2GCCA489x7TF2GC1wT7YdiE4NScIOdop5ZmbdCqLqwJw2lDKv9Y1+l4yFUq6fkC
+	 zIyrgEGMhW0S9MUQlOugl+q1pc9j/mzJ+vxlu2SQL72yPJHNdJFUoNR5mkjcycWIAH8vf
+	 WKSHUgcf8PS0S07XH3pWlKRlr0Sm6oqkOGK7I9Ml5fbqM78vZmztg9/ECYcLb4jH9+8j2
+	 ugYmZ4P77xg11UYsA3/LY6lLVrT83REZVBPDfMcUaRqrdAgBiCW+bHbfcazhhdoBFTUMr
+	 Si/JTMWv7PaN/V0PcrEkl5xc3eAiZV9dlICVuWei7MAcD6nXriF4wW82UzLtCHpGVMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794212677;
-	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:Date:From:To:Cc:
-	 Subject:Message-ID:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To;
-	bh=OVoz92oNs2Ezhha7zJNPmA71hCd662/09DGYXCdVKRM=;
-	b=Bhg9JS0wzBc7SoatFJ0hxcHrYbquzTyzaIuNX/XDSqdoyPKKRtQBlPgylpJu6n266qPf
-	 0uuIAjr0MJAjcOLv17dUSrJ5KBADlf/+vZTndQQ3PmkNzwRi6RKHGCBXaSb/Jp1kTqApX
-	 WhGx4bCSKkvPZev3BN50tGvUSzFrDgaVt9U8Ey1MN7/NC0SK/sqbZ1ImHAWyha1dhQ5m3
-	 tugUkMvqlVL3Z21pm3scWXwOnQFIJWbeZssjGcCb7Izea6xPk0a+vPcWyEz+ggappHtB4
-	 RukQxlKuOiwQnNweRzIjOZDjL2uEPHresgBZvj28UzwaSyi8Ik8dEcasYKI8eh84LhQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794216337;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=qomxj4lfoPO9QXwfpSMD8HRawzKzamUyZqL9KhD7jvc=;
+	b=NpAPJlB/V2F/CX8HtrVrWQgVff+V+qVnV4NtZ+Af8KZFOcbTcP/z+TIhrUtEQoYmWu78
+	 syTpi2QBS/w4o9raFapLO132GUDwUtj44q/dnlBjqtI/hqAzGrlrU3oe0Ozl8A9OVusOO
+	 N3OGYljWgVOlTe0TXkpVRm9XxzbOlVnPmW/RMNC7gxvQ3uqbgvfrkzTRBk6oZCqMASr4X
+	 aeTWJJIEYGQ34LmJiw6kTFhzFfkLTd9qm83ygl8dtH8CYDx8rVCTO+MMBQ4JLQQQYtocG
+	 ePkyCTz1xqaastnBVK52m7mat5b1LkAMnwZKz3/BDIyNwDx8XenAya9IgOgMtu3f9gQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=ispras.ru;
-	spf=pass smtp.mailfrom=ispras.ru;
-	dkim=pass header.d=ispras.ru header.i=@ispras.ru header.a=rsa-sha256 header.s=default header.b=F9LvWubu;
-	arc=none smtp.remote-ip=83.149.199.84
-Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7E97606A321
-	for <patches@lists.linux.dev>; Mon,  9 Nov 2026 08:24:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C7E97606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
+	dmarc=none header.from=w6rz.net;
+	spf=pass smtp.mailfrom=w6rz.net;
+	dkim=pass header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=WaEydoSY;
+	arc=none smtp.remote-ip=44.202.169.35
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78F2606D809
+	for <patches@lists.linux.dev>; Mon,  9 Nov 2026 09:25:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D78F2606D809
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.a=rsa-sha256 header.s=default header.b=F9LvWubu
-Received: from localhost (unknown [10.10.165.10])
-	by mail.ispras.ru (Postfix) with ESMTPSA id A6F97400E772;
-	Mon,  9 Nov 2026 08:19:21 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru A6F97400E772
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
-	s=default; t=1794212361;
-	bh=OVoz92oNs2Ezhha7zJNPmA71hCd662/09DGYXCdVKRM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=F9LvWubupRXGAcSfSH9giFamWz6O47z59ApQhw9G+Ei8ds5M8ip4UtqtrlblIwyTS
-	 S6OOmp3Me9BqcipSZ3cYU/luvfkHaAQQSvvvCsbAEvFgWRJCYI36rfHbuWKG6br+yo
-	 Nep3zfCUHanU8xyp7TiiY/X4py1iVf/idQ2OWGXc=
-Date: Mon, 9 Nov 2026 11:19:21 +0300
-From: Fedor Pchelkin <pchelkin@ispras.ru>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev, Steve French <smfrench@gmail.com>, 
-	Tom Talpey <tom@talpey.com>, Long Li <longli@microsoft.com>, 
-	Namjae Jeon <linkinjeon@kernel.org>, linux-cifs@vger.kernel.org, samba-technical@lists.samba.org, 
-	Stefan Metzmacher <metze@samba.org>, Steve French <stfrench@microsoft.com>, 
-	lvc-project@linuxtesting.org
-Subject: Re: [PATCH 6.1 0847/1887] smb: client: let smbd_destroy() call
- disable_work_sync(&info->post_send_credits_work)
-Message-ID: <20261109105427-98d730a74a61a1220d868813-pchelkin@ispras>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=WaEydoSY
+Received: from eig-obgw-6007b.ext.cloudfilter.net ([10.0.30.166])
+	by cmsmtp with ESMTPS
+	id Pwsmxkh2W4vCDQLd3x5HHj; Mon, 09 Nov 2026 09:25:29 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id QLd2xdAL03nNNQLd2xiT2Z; Mon, 09 Nov 2026 09:25:28 +0000
+X-Authority-Analysis: v=2.4 cv=TuLmhCXh c=1 sm=1 tr=0 ts=6af19188
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=qomxj4lfoPO9QXwfpSMD8HRawzKzamUyZqL9KhD7jvc=; b=WaEydoSY1b6VZq9hbDFHGs7Q3F
+	Im0LrirtlkJ+QqFUwT/dtsFZl9wrwSvQJyzWR0Yb9qOWlNxmEfNEajzbOMognzYH7ZIyiCa2p2CEP
+	UuriQ6ZyKovO1FemgRyIKe9m01hr6irwLzy9ChNrSkIFo9oZStxCsOReeGnr2cTHGSulbZMChL2NM
+	ZaBU7ZWtkNEBpRylrrRfwQp+INfUMvXj9rI8EgVElXyaxOJjQvnvs4emisitz+olruyI8Sj6xsbVf
+	/qw/I1/X7R2o218MMOMl7uHMzxOAge5cKVsuFtYL5i1Cv1ZDQMPLuIhLnjFZMfq4SjGsL8s+Pq5YM
+	F8IGONfA==;
+Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:46368 helo=[10.0.1.180])
+	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.100.1)
+	(envelope-from <re@w6rz.net>)
+	id 1xQLd1-00000001PSJ-3UGa;
+	Mon, 09 Nov 2026 02:25:27 -0700
+Message-ID: <49dbc035-4651-42eb-b6f0-884c7a55e4d8@w6rz.net>
+Date: Mon, 9 Nov 2026 01:25:26 -0800
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,103 +76,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261028170518.701562757@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.3 0000/1257] 7.3.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20261107134939.434104957@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20261107134939.434104957@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.206.103
+X-Source-L: No
+X-Exim-ID: 1xQLd1-00000001PSJ-3UGa
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:46368
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 18
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfEezaAKFq1DP2CaEd59r2DRyh6RO3AxFZIJVuhcmK9eNN6u9sp69v1UoFpbQJuIB6v6DY0J78+Q3uwh0QvWotEFfiqXIPLnda7jvXYhD9f28ll/HH3KG
+ +csB+Glg4bZ7IbsO83H5iecO82CDCLqc8rweGJoXmdt+kqJO7T8U7G7BJhZc5sEmBmKx22llYaApaQ==
 
-Hi Greg, Sasha
+On 11/7/26 05:38, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.3.4 release.
+> There are 1257 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Mon, 09 Nov 2026 13:46:08 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.3.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-please see below on what may be potentially improved in managing these
-huge amounts of backports, many of which come with adaptations to old
-stable kernels.
+Built (with CONFIG_SCHED_CLASS_EXT=n) and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Greg Kroah-Hartman wrote:
-> 6.1-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Stefan Metzmacher <metze@samba.org>
-> 
-> [ Upstream commit d9dcbbcf9145b68aa85c40947311a6907277e097 ]
-> 
-> In smbd_destroy() we may destroy the memory so we better
-> wait until post_send_credits_work is no longer pending
-> and will never be started again.
-> 
-> I actually just hit the case using rxe:
-> 
-> WARNING: CPU: 0 PID: 138 at drivers/infiniband/sw/rxe/rxe_verbs.c:1032 rxe_post_recv+0x1ee/0x480 [rdma_rxe]
-> ...
-> [ 5305.686979] [    T138]  smbd_post_recv+0x445/0xc10 [cifs]
-> [ 5305.687135] [    T138]  ? srso_alias_return_thunk+0x5/0xfbef5
-> [ 5305.687149] [    T138]  ? __kasan_check_write+0x14/0x30
-> [ 5305.687185] [    T138]  ? __pfx_smbd_post_recv+0x10/0x10 [cifs]
-> [ 5305.687329] [    T138]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-> [ 5305.687356] [    T138]  ? srso_alias_return_thunk+0x5/0xfbef5
-> [ 5305.687368] [    T138]  ? srso_alias_return_thunk+0x5/0xfbef5
-> [ 5305.687378] [    T138]  ? _raw_spin_unlock_irqrestore+0x11/0x60
-> [ 5305.687389] [    T138]  ? srso_alias_return_thunk+0x5/0xfbef5
-> [ 5305.687399] [    T138]  ? get_receive_buffer+0x168/0x210 [cifs]
-> [ 5305.687555] [    T138]  smbd_post_send_credits+0x382/0x4b0 [cifs]
-> [ 5305.687701] [    T138]  ? __pfx_smbd_post_send_credits+0x10/0x10 [cifs]
-> [ 5305.687855] [    T138]  ? __pfx___schedule+0x10/0x10
-> [ 5305.687865] [    T138]  ? __pfx__raw_spin_lock_irq+0x10/0x10
-> [ 5305.687875] [    T138]  ? queue_delayed_work_on+0x8e/0xa0
-> [ 5305.687889] [    T138]  process_one_work+0x629/0xf80
-> [ 5305.687908] [    T138]  ? srso_alias_return_thunk+0x5/0xfbef5
-> [ 5305.687917] [    T138]  ? __kasan_check_write+0x14/0x30
-> [ 5305.687933] [    T138]  worker_thread+0x87f/0x1570
-> ...
-> 
-> It means rxe_post_recv was called after rdma_destroy_qp().
-> This happened because put_receive_buffer() was triggered
-> by ib_drain_qp() and called:
-> queue_work(info->workqueue, &info->post_send_credits_work);
-> 
-> Cc: Steve French <smfrench@gmail.com>
-> Cc: Tom Talpey <tom@talpey.com>
-> Cc: Long Li <longli@microsoft.com>
-> Cc: Namjae Jeon <linkinjeon@kernel.org>
-> Cc: linux-cifs@vger.kernel.org
-> Cc: samba-technical@lists.samba.org
-> Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
-> Signed-off-by: Stefan Metzmacher <metze@samba.org>
-> Signed-off-by: Steve French <stfrench@microsoft.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  fs/smb/client/smbdirect.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-> index 9b16840952c09..d2878973c1476 100644
-> --- a/fs/smb/client/smbdirect.c
-> +++ b/fs/smb/client/smbdirect.c
-> @@ -1358,6 +1358,9 @@ void smbd_destroy(struct TCP_Server_Info *server)
->  			info->transport_status == SMBD_DISCONNECTED);
->  	}
->  
-> +	log_rdma_event(INFO, "cancelling post_send_credits_work\n");
-> +	cancel_work_sync(&info->post_send_credits_work);
-> +
->  	log_rdma_event(INFO, "destroying qp\n");
->  	ib_drain_qp(info->id->qp);
->  	rdma_destroy_qp(info->id);
+Tested-by: Ron Economos <re@w6rz.net>
 
-It would be good to see a small backporter's comment, you know, on the
-reasons behind the performed backport adaptation.  Upstream commit adds a
-call to disable_work_sync(), while the backport only does
-cancel_work_sync() - and doesn't look to solve the problem completely.
-The commit's message says the work can be queued again during ib_drain_qp()
-processing a few lines below.  So canceling is not enough.
-
-However, there is no info on why cancel_work_sync() was chosen still: to
-reduce the existing race window as best effort, or maybe just calling
-cancel_work_sync() is actually fine on 6.1 and fixes the bug properly?
-
-I guess that adding a brief backporter's comment explaining the rationale
-behind the adaptation won't be too resource-consuming on your side,
-especially if major part is already done with AI stuff.  But it will make
-things clearer on whether the backport fix is correct and complete.
-
---
-Fedor
