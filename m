@@ -1,115 +1,71 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794217230;
-	b=1h5xtwiG5a05nCqeZ+qkdxynMhG2HOqo9HGOeph2pDEen4ZqU1feEK8K1kFBt8JpbNJm
-	 UZ0uHNBwgzqIX7tBrZXhe63Faz4I43kYSFWBItLXuo5/ENMNSX/QK/yjHbdeEY7GqKJfh
-	 zkknE5DEb2JSgMZK8VgIh+i27v0AOxTEEy/9TxWcfz3HFLr8W65RxyA6StSnvcEuCMn/e
-	 5osn7VEOCy6ZUD8MOjjUAyrdAI7T9BzVvDu1SYRl9uFzC+KtZGET5YP9MObAgvBv9mlWa
-	 yEl9sg8QOdbKdsfp3dBN8s5ZYOMLsrNmsMRajnP5v990VBZCMlmCOUaH6C/2/G7DpEg==
+	t=1794217252;
+	b=cw1Tw32ZSRhbduYODumsneFEbUQazAcNfeHjGCP2htClUqqxqxULPg5C9kkvlhQHKQ52
+	 2DD30Rg+gVQYweAew1mIccfr6gCB9DWNvyX2PqwaebbAcmJs07gyp0pdTBT5sMbgnQvFs
+	 byaE5pzDayFx2yvlqvVFsYFr/m6t+2sIkseRIegj+CympMax0xVFcHLGNoo75Jnq1k4pa
+	 nCZNAhvYiVPj+9rL7gsQglP/dSxgYspHpxJvZuIXtwOkNSm7J01jScbh5QDVKj673/zJ8
+	 9eA0f7EEwMTjWKBPTN/y/rSDlS0cOSwLK1J/E2eS6rV96wUSdjl+kYG0xaLQP1jILRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794217230;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=PB66Y9MaZYNl68MYlsrU5pArSwHdL9SHQj8fzOt+DQ4=;
-	b=rVCbD442S7iXhBUEaQ0x4WJUETA647oQvMthdlvcrVRKPW4/jAPl0wUjYRAZqdwplrBF
-	 0ZgGNZZnIMBULuNQSX77hxacqyuDwoAQPuaQD+ba3iG67R3zSBjH39UANNJZZWjZRvhdG
-	 mXxXRgWEwgaEykPejz3oRBiHwz/W5bVqpH4a0+rS3HpWh1mBcpb+c7GBby7AmLrxB1z+8
-	 9/+yjnf1VHhN56ZXU7RvMDhY/Jh7sqOanRLbxqNHN9TP67mEI0hmcsXm3rYOHeHBbdLcY
-	 az8+9NzhWfsPxWG/mAfhszMbNQmoMKrqnw8mUVR8v8o2itJ3tAzvbhmpq7SgGK5mfzg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794217252;
+	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=XpJVqtXGRVn1elHP4O9yUrO0bCUpsQD5MQPAcM2JVcc=;
+	b=ZY/myUhAOVFEk0PTM9VKukG9+R8uOimEdk7WboQWsJcc9MhwoxzSyBAVT5xNZ8VXK+r/
+	 kPD0/OmYFO5MF4+EtjJQxsFKPGljHnDe3WEniMoxqnaNXJtNGacWYQzw9jTvtuNmfjCY4
+	 duVUEsrnv4h/E5EYoUsW2RAYGx1luv1Hc/Zi19fM56j11MnJOFbziRf4dFSdf+KWVBv8d
+	 SS8kDJRQ9bYU9GwtDV2619jfXg4bUKAkL87DcLqTmuGXQtJLNaWFqbDYmOGTXoe376qfy
+	 Zzmf7NQwrBj53u1ril/zYA8syK6g+hTMXa0S4PbCEVaGoG+J9+sxDksDwNRtBnP2lOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=LxC+7+eq;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=z54cX5AR;
-	arc=none smtp.remote-ip=103.168.172.158
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZNTNv5wW;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C690E606A322
-	for <patches@lists.linux.dev>; Mon,  9 Nov 2026 09:40:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C690E606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E232A606A321;
+	Mon,  9 Nov 2026 09:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=LxC+7+eq;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=z54cX5AR
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F0EF91400159
-	for <patches@lists.linux.dev>; Mon,  9 Nov 2026 04:40:28 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 09 Nov 2026 04:40:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1794217228;
-	 x=1794303628; bh=PB66Y9MaZYNl68MYlsrU5pArSwHdL9SHQj8fzOt+DQ4=; b=
-	LxC+7+eq/K3BnvjrHL0M0QDWyjDG5QzvPt6sMwr4Ku2mh+iZD2FVNTPaNPWSRrlk
-	7suAbLuuHqzTjdVe+s+PeqzPECZNbFjLrLHIG02ply/OrqMzSmHgv1wuXOuzJgvH
-	oCV8fuixD99ud87jtqQ2uW9ZPHtuiCzUTArR/xZBg1gahqzJDnJ6ezYn3Y2OLnHJ
-	2QmqR5bSoYUFUGsNtcGAw0ZacPz2FFWW3aWngJwk2ifDq8s70UYfzUUt3zOTtxdh
-	3oaTz7GIaV1iK24Lrlm/HPumTianaI1IHt/cGz1yBXCVGqZdOfSgO4HhbTHGDZr1
-	6zK5EUQjz0Ljgfcwdk17eg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1794217228; x=
-	1794303628; bh=PB66Y9MaZYNl68MYlsrU5pArSwHdL9SHQj8fzOt+DQ4=; b=z
-	54cX5ARP98a1bT8b1LqoccvD3VjjdcJRY6sXTaz4aWbn+MrtHZGT1/NNwJlPmh7U
-	OVAQ3IjLvVS+tPDRXGA0jHFxrf6MnwWsk7G5mzRso6lv5ujqZHDiSiUQeBHCw1R0
-	G/Y2cvwHOw4u+IWJTXNYR+Z2jyShXVAeD89CmqPNlUDI31lYZpfuHYcNAnzrsZuY
-	kmVRjKeIvMQv62h3n2TnhDEH3OBvzqKzYIrQN+rCGThJusfHK5r5khVMdEm9Zm9b
-	VwShcGIQPCtbCSGP50bdkF3pTpmYHEqzCnUg2itpFkasJKLa/CtkNJTHpOgDZAZN
-	tw+CjBRw8LhxIuXlmbAyA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794217228; d=pobox.com;
-	mf=PGJhcnJ5bkBwb2JveC5jb20+;
-	rt=PHBhdGNoZXNAbGlzdHMubGludXguZGV2Pg==;
-	s=fm2:rsa-sha256:JH8XVzQqWOQgspjK7EdoNcVX+KzWBP39gFr2/OyMJzbHUh5
-	Ajk4E9DMRcODhJw9yAFuwIVmpOsGj6hoKQledxkUo8xYB5jAg8fWpQ9Vl61HdaDz
-	IPOh/mb6aLbHqMQ+yeESzfs6mph0umLHxPyVHwrq6gkmcp+pAmcmY8VdxaTxwJFI
-	fdJ8IQ4V3o9cAmwUelPICvxY8epJURDkqStSm+csc1z5yPgo0z1KPMTTFB6bm4/y
-	VObNOOXsi31GIDiukBflHsdgIxEEGP0cgO/CEL3mihhr0akzEtYIbA8LJOVE/GnT
-	3D0rn31DCyWv9mELlYTMMlY6HQ44/sOaP/SB9oQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=14;
-	hn=cc,content-language,content-transfer-encoding,content-type,
-	date,feedback-id,from,in-reply-to,message-id,mime-version,
-	references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:OkVipFi8E5Ktm3ZpzNFnloonNXGKEh6OFTuzi/kZ0Kg=:wE6zOE7uqD6R1gTlzonajC+ElazdVPqc2XU5HRSr1yU=;
-X-ME-Sender: <xms:C5XxalG7F-rjqszrMUWX5X-yrrdjHARMi6WZv2-2kWOkBs3SW_bjbQ>
-    <xme:C5XxamPWFMfjEw6KNaejHhRudQhgk2xs_pp7_oPUTk_gbwMrKzDB3q8wdGzPz28Ae
-    dy08nkRQtYUEcB0g3sWEFuN5itcNggE1HOdJJp3ktJEMoW4JDGL3bPO>
-X-ME-Received: <xmr:C5Xxaioh1AJYyIvPDkkrnrqsyT0X5Jc4HFR4wTzJlSJYXACRe_eFC1qplz0OTcU-C2PPl2rib8JPSCdBiYv_OhF5WK0zWOCR>
-X-ME-Proxy-Cause: dmFkZTGnZe2GvT2gfoWgG13EbEStaj7gxjVBeZBtfrNL6VkTuhZRkS+iuGyiDI62SMPXNp
-    PAJZG3ILMH8OgGo8/Dx2YdZpuDquzAXeJmI3UUdX+Hy4WfoNJn22rfiYUVz82IfAm5eJY9
-    mnMQ0Khip1Utgst2oUCdm6QUYrziKT+2+50jE2VVh+Xh9ZmDNp/nMNiLtWuCsNCH4k4RNH
-    BALW6y+HVaUBKSn/EUc++uFeYRDN5JttqYXiYzXUFa7JD32poKR9SjbtGDx68Ru/96SewQ
-    wKSEE2OqRViMrl6yPdMBzBLMPGLERTvvD8xm2I+V6zWejyQZIB7B4M1vQLv+4X+WQ7TRgA
-    mJfIgHuY7C8Uxqmtl0di+DDsfNt4Ducbxtfiq153F9kQH4V00Trq6cvVb7JViiJ1wpqK2s
-    r1zqfx/DiKLfqvVbC3QskYOiBOzGveQU/SIAb9UiX5JjVRkf8Hi7Y+1ptSlJsBX2UY7gQS
-    j9RALDxmKEFwmG9H79TNW5TY4MZ23cmOHzDxLVB5Iwdlq8lTLCCE9gob+UzvwVp75mAcSy
-    f/TowSZymCTJjzL1oW/pHn4gjrNXIcGDRARNPlgEjif8ez6RgDCNeyho4CSlo/S4OUGiqh
-    M56+tztioXA9I7rKs4Z2mgdWzb5d0bMpsdXWhuR62JEkc3HveOS+yCIiqcXg
-X-ME-Proxy: <xmx:C5XxavDESBzMKjbqEswYQv9XqgH6wCJxClmGq9HZG4sxTVUBgexXFQ>
-    <xmx:C5XxajMzl5TmuVHuJ66Px4mRYSj5_Yvyc5E8nTB6DmxV2gMPxXBYqQ>
-    <xmx:C5XxalA1wEnFEhMdErtkiRMrEcQMrbzC--yZIK_ru26r6ejpoaM3bw>
-    <xmx:C5Xxap-0Rqbqqx6Po4i-iHBZ8gmaNW0RrSzNJIey2lLL2Zc0esEl5w>
-    <xmx:DJXxalbrcx4H1yud408iSG1gxqkgxH9wRqQtIS0hqW7bBEaTc6cTBgmh>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Nov 2026 04:40:25 -0500 (EST)
-Message-ID: <d4dd6e3d-2f99-4912-be9d-aaf8a80e68ae@pobox.com>
-Date: Mon, 9 Nov 2026 01:40:24 -0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZNTNv5wW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9571F008A2;
+	Mon,  9 Nov 2026 09:40:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794217251;
+	bh=XpJVqtXGRVn1elHP4O9yUrO0bCUpsQD5MQPAcM2JVcc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=ZNTNv5wWK7nnfG6wv+W63m5aMOEEQxK3zEw7kZDbgJn5GkjfXRY5IqWTe6BJv//Dx
+	 +nTxT2goIpIgum8IyIueDmq2egm/eS3hGTHeMqEpZnLEZ1/SmQNWailBnF9JUGpMtW
+	 VM/BCJeumeZOUYtxCHs/Br+l67VPe8sgz5Hla0sbbFPRhm5eosSPr+i4+YjM+RH7IF
+	 47vTv5puXn46+KWDkI1zmxASoJauaFoikb2K3nS3NzQwdKBvJ/pIGxXBZUVV5yLrFF
+	 6qc/3uD6Qf/qdyiH37ZFKYr0PqbLGU50aLqsdnkGoEHMLXQQfgRhCYAivcEas254YS
+	 RURHpKrHNs5Jw==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: Fred Griffoul <griffoul@gmail.com>, linux-coco@lists.linux.dev
+Cc: Ackerley Tng <ackerleytng@google.com>,
+	Alex Williamson <alex@shazbot.org>,
+	David Woodhouse <dwmw2@infradead.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	"Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Steven Price <steven.price@arm.com>, iommu@lists.linux.dev,
+	kvm@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [RFC PATCH v4 06/25] KVM: guest_memfd: Support device-backed
+ PFN providers
+In-Reply-To: <20261104183754.10457-1-griffoul@gmail.com>
+References: <20261104150322.3516320-1-aneesh.kumar@kernel.org>
+ <20261104150322.3516320-7-aneesh.kumar@kernel.org>
+ <20261104183754.10457-1-griffoul@gmail.com>
+Date: Mon, 09 Nov 2026 15:10:40 +0530
+Message-ID: <yq5amrritk9z.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -119,51 +75,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 000/869] 6.18.63-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261107134852.069646174@linuxfoundation.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20261107134852.069646174@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 11/7/26 5:44 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.63 release.
-> There are 869 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 09 Nov 2026 13:46:08 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.63-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Fred Griffoul <griffoul@gmail.com> writes:
 
-I took 6.18.62 and applied the stable-queue as of commit
-85f15de479e79a3a7515d926437bde0a0f16306a ("Fixes for all trees").
-This drops the build-breaking XFS patch and is the current
-stable-queue as of this writing.
+> "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org> writes:
+>
+>> Device resources such as PCI BARs supply PFNs directly and cannot use
+>> the folio allocation path. Store the mapping owner and device ID in the
+>> core context during attach(), and use them when preparing device
+>> memslots. Keep device memory separate from ordinary PFN-backed RAM.
+>
+> The device rules you wrote down in api.rst and locking.rst helped a
+> lot. If I read v4 right, the device backing differs from the RAM PFN
+> backing in these places:
+>
+>   1. PFN mode calls RAM arch hooks: kvm_arch_gmem_make_shared() at
+>      conversion, kvm_arch_gmem_make_private() at fault, and
+>      kvm_arch_gmem_reclaim() on revoke and release. The device path
+>      has to skip them.
+>   2. lookup_pfn_range() only feeds those hooks, so the device path
+>      does not need it.
+>   3. The host mmap and stage-2 need a device memory type.
+>   4. In PFN mode, a conversion to private only updates the attributes,
+>      and the guest fault maps the page later. CCA has to map device
+>      memory at conversion, because the guest validates the mapping
+>      before it touches it.
+>   5. The device provider needs lock()/unlock(), the private range
+>      summary and prepare_memory_region().
+>   6. The provider gets the VM and the vDEVICE binding at attach.
+>
 
-Tested on my Lenovo ThinkPad T14 Gen 1 and an arm64 virtual machine.
-Working well, no regressions observed.
 
-Tested-by: Barry K. Nathan <barryn@pobox.com>
+Your KVM suggestion below prompted me to take a closer look at
+eliminating the distinction between kvm_gmem_ram_pfn_backing_ops and
+kvm_gmem_device_backing_ops. This appears to be doable.
 
--- 
--Barry K. Nathan  <barryn@pobox.com>
+> Would these changes to PFN mode be enough to drop the device table?
+>
+>   1. The arch hooks take the frame attributes. For RAM the arch does
+>      the RMP work. For MMIO it skips it, or does the RMM work instead.
+>
+
+We discussed making get_pfn() and lookup_pfn_range() return PFN
+attributes. We could define:
+
+#define GUEST_MEMFD_PFN_READONLY	(1ULL << 0)
+#define GUEST_MEMFD_PFN_MMIO	(1ULL << 1)
+#define GUEST_MEMFD_PFN_NOEXEC	(1ULL << 2)
+
+We can then use GUEST_MEMFD_PFN_MMIO to drive this. The attribute
+conversion then becomes:
+
+kvm_gmem_pfn_convert_attributes() {
+          gmem_provider_lookup_pfn_range()
+          ret = kvm_arch_gmem_convert(kvm, slot, gfn, pfn, nr_pages,
+				    pfn_attrs, attrs);
+
+}
+
+For RAM PFNs, there should be nothing to convert because
+lookup_pfn_range() will not find any pfns before they have been faulted-in?
+
+>      
+>   2. lookup_pfn_range() stays required. For vfio-pci it is the BAR
+>      start plus the offset.
+>   3. get_pfn() and lookup_pfn_range() report a memory type (MMIO) in
+>      their attributes, next to read only. The core mmap and the KVM
+>      fault path use it.
+>   4. A conversion calls an arch hook in both directions, and the hook
+>      can fail. CCA maps the private device range there.
+>   5. lock()/unlock(), the private range summary and
+>      prepare_memory_region() become optional ops for any PFN provider.
+>      A provider that moves RAM between guests needs them too: it has
+>      to order its moves with conversions and leave private pages
+>      alone.
+>
+> I'm less sure about 6. Could KVM ask the provider for the vDEVICE when
+> the memslot is created, passing the VM? The provider would then not
+> need to keep a VM pointer.
+>
+
+We can pass that as an argument. This is also preferable because it
+avoids storing a KVM reference without a clearly documented lifetime
+rule.
+
+-aneesh
