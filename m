@@ -1,11 +1,11 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.9
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1794284359;
-	b=skWBwoiqHQCzu8xL91t73XZWe9xDOIMselbjz0yZ9bkEiGGoiBjJbDpuZuvkkcwLzV3/
-	 pFaBuq9QN/Ceh60fs41c7yW143yOXOvFrryrqjsUTRVeEyIXFLOoToZydAfAg9OYqQanA
-	 NaJkFT8MGdxbz0+P9uk3914SeypgotiRlPC8ET/I62oW57Kjvtff4G4lN8vvmqTWjfZsA
-	 WsSezNehjzodu2frKekpNXZYpqm1ZM/wxDCdq4hJxmwCYSmgk7L3Mmplf3a3ASCR4LNBN
-	 BK+ThWmN6l7ek4H+QXKsaBmTf0ln8mQbAwASSm0Hm9QsOBGkg9PK1CjNQLM80JwWCCQ==
+	b=2vuSt19CFwH4ZQpj+Ng1erV91zVFL5d5rWI11v7iUiRgwDxAF0FEIESgBKRuSWNHG7+G
+	 G1RQI9gznVWWmtOimXLu8T7ORBOFZzADuANMw572qzIbj+z3pzhqTUCGkC+j+eoEeBtRe
+	 f1VE4qMCO1VxC2KHQeC4Mzl0Vrt6FE/NgF0D5ygkzwR9wHof3nA2ydzN71+qdqRG9HMau
+	 ekhNSldUIXJwnfAjHvA0miPHJIPOO1oBRDz9ItHSIs9dY2RPcIYfalUdNq3c2kN8Blf0c
+	 BcGekOOvd25i1A7/50fzE9M6kGRaUtwZO6lhl886XkAs45Ssx3GyxRrjYZwJYyxJYoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794284359;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
@@ -13,52 +13,52 @@ ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=9UdVGg/h64QrJFmMdvc8IRX8SR/hJQXPD1E3diwN+do=;
-	b=HTUPrvXCPdYErJ2OqeyXKvwRSXnx3ONkrJwfhKMKOsnswSrcZLDoFFRJ07RApli8zsfH
-	 rtSZxibumM3uDuUWIhb8SH5vdswCMZfU5Q5osgrkPRPDHypkp2JbnCaoGkeaRcU/3CZzz
-	 q3bvFqFcaZEJWPy4PloOhk6NKcWhE38upymY4KQzxhb2wz8tkAsTe8c8TPEd2tFrqJCcR
-	 pvpj9pT+mVwsea8KMhlRNWhrDEMSuPzcIclaEAMSfqyd5oIcPEY4wGzunBSnjHBC56du/
-	 NfOxN5w2/WxYblDJrGamrIPObN/XjPaT2LpIMBLLBXxiTKB+UlLQILisUrqfDsVMBRA==
+	bh=yVhAqM6znopF8DCUrXTkTPQPEoRWRqaKrGCzI/y/X/I=;
+	b=Lkc3QfvREowDw6RxXV9cvdMJZ0NnaUmPP3NVhLk3dV0YSjw6WKlNqd+WIJ3gS+MOXgwt
+	 RYn2GnigcvFATJBtYKtOzJ1jOztb7TuGZ/O3vysqB1qFIVP4kuuqas1FmlobPQ1Vrm6vA
+	 WZOzb53U+lLXldmCa5jCElN/EdQNxJT62m1Lcg8jpEMKTJmVJ7dqH4jyC+2j3Amci7CiI
+	 jRkt6CDudCID76njZy3E8RUKBKONTzZ9WDu1NE//uflkoNAS4IwSH7YJmB6w2mgBprgnM
+	 wbbAxGPsI0Rxxyjloof21Y/hVHa1VZXLKO7X4s+FvczAaweHPhYSdNAN/bx4innZJ0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kjRI09v+;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dZwro06L;
 	arc=none smtp.remote-ip=192.198.163.9
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8156160A2606
-	for <patches@lists.linux.dev>; Tue, 10 Nov 2026 04:19:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8156160A2606
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057D9606A334
+	for <patches@lists.linux.dev>; Tue, 10 Nov 2026 04:19:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 057D9606A334
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kjRI09v+
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dZwro06L
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1794284356; x=1825820356;
+  t=1794284359; x=1825820359;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=8dfFjAyH1NZ5O/UsFja1Hvgmiui6X/KQMbG0P2/bo+I=;
-  b=kjRI09v+5MtAwkG+6h5qCj6XGZrrhcEHQg7LjrljFDn4klPP2IkaJZ0R
-   2RKuOXg3vWlRBnBcfvGlK6NuEHyZDJARWNRkiTobN3w5wBryKwJ0E7w0j
-   gicvnmUQklAX0e+IwRXUa0fs1TkLcVkWnbRtQofVq5euo2XtRmll/nSaA
-   69yNbRiByIgiML3KrsUlzGOnzonmO8+4mTtb5bNfnNE5U87LPLBdAvNIv
-   WvND/4W91mINDXBIP7R8BmUNC1YFHvEPnHtXKKf81Wf7FwJE/6NXz1ypq
-   cZyL0YLThzYNzDkNIJXQoiGAR5TfqwWbDwkFWmF62mEY6jrJfQ3cXFaQ/
-   A==;
-X-CSE-ConnectionGUID: 4s+EUHyhQFOmAB3kzfP+wA==
-X-CSE-MsgGUID: y3vv48m1RpKN+ZmsctLSfQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11961"; a="2901293"
+  bh=JcvLWyniSyOFOOX7XlUH66SXY27TBGk1e1/SsTfDZCw=;
+  b=dZwro06Lz8w3t1okh019mA0gm/1OoJug0mcel5lBmtsjDN0I0bsZfCW0
+   v13Cs4MzwFOx9A6QBLUp5nMrpch5giPM5erkzBmVZ4/hDInBdPRidhZ/M
+   UShBiNpjJe28AKawJ6MqJ2u57Fu1SwYkKvun9HlolIBcYXRxlch0dcAMS
+   e3wqtiaCI+wmocyQsBtS5cqVTvNAFvXQ2g2Gsv19iXrOGmDDF6qddB6AQ
+   BvPLM2YrEdYRc2S20u9qjQij0vA9FgjXHZEvoePa0V8QvTwj8h4NzLiZJ
+   owLDaoO3nfwcdC7dEXq1cyOMROHozb4GqLBf9OnZmX9/F/MKevTiOaj4y
+   g==;
+X-CSE-ConnectionGUID: VOjhb6g/RNCU3brtb14lAw==
+X-CSE-MsgGUID: ODyUL7ZSSNuwGhr+1yQhfw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11961"; a="2901310"
 X-IronPort-AV: E=Sophos;i="6.27,205,1787036400"; 
-   d="scan'208";a="2901293"
+   d="scan'208";a="2901310"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 20:19:14 -0800
-X-CSE-ConnectionGUID: V2ig3Z3cTsuv9u0S8wjhJw==
-X-CSE-MsgGUID: skpaQYrwT4aODqJeOZQhDQ==
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 20:19:15 -0800
+X-CSE-ConnectionGUID: D7wP2FsWRtail10jcRH+rA==
+X-CSE-MsgGUID: rOZcpoX/SVmASyJ/22+8ug==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,205,1787036400"; 
-   d="scan'208";a="7856908"
+   d="scan'208";a="7856915"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 20:19:15 -0800
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -76,9 +76,9 @@ Cc: tony.luck@intel.com,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v3 1/8] arm_mpam: resctrl: Add a helper to find the component counting an event
-Date: Mon,  9 Nov 2026 20:19:01 -0800
-Message-ID: <8635f50f938afbe3f58dcd69966c2dd45e2394cd.1794283825.git.reinette.chatre@intel.com>
+Subject: [PATCH v3 3/8] arm_mpam: resctrl: Rename ctrl_comp in mpam_resctrl_alloc_domain()
+Date: Mon,  9 Nov 2026 20:19:03 -0800
+Message-ID: <622cee43d7d1ef89f1d28ad7cfc948efa9cd618d.1794283825.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <cover.1794283825.git.reinette.chatre@intel.com>
 References: <cover.1794283825.git.reinette.chatre@intel.com>
@@ -93,131 +93,73 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-resctrl_arch_cntr_read() and resctrl_arch_reset_cntr() both drive the
-monitors MPAM pre-allocated for bandwidth counting. Each starts with the
-same sequence: check that MPAM is enabled, reject cache occupancy and
-events without a class, then take the component counting the event from
-the monitoring domain.
+mpam_resctrl_alloc_domain() looks up the component of the resource's
+class that contains the CPU and fails the domain allocation if there is
+none. The component is held in a local variable named ctrl_comp and, when
+the resource supports allocation, it also backs the control domain.
 
-The duplicated sequence has to be kept in sync by hand. Only the failure
-handling differs: one reports the failure to its caller while the other
-has no way to do so.
+The lookup and its check apply to every resource, including one that
+supports only monitoring. For such a resource the component does not
+back a control domain, so the name ctrl_comp is misleading. The name also
+makes a comment in the same function ambiguous. The comment notes that
+there may be no ctrl_comp for the L3, which is true of the control
+domain's component but contradicts the local variable, which always
+refers to a component once the lookup succeeds.
 
-Add find_mbwu_mon_comp() to locate the component, returning an error
-pointer on the failures both callers test for. Ignore that error in
-resctrl_arch_reset_cntr(), which cannot report it.
+Rename the local variable to comp. Keep the ctrl_comp name for the
+control domain's reference to its component because it only ever refers
+to the component that backs the control domain. Leave the comment
+unchanged since it now unambiguously refers to that component.
 
-No functional change intended.
+No functional change.
 
-Suggested-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Tested-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 ---
 Changes since RFC v2:
-- New patch.
+- Add Reviewed-by tags from Jinjie and Ben.
+- Add Jinjie's Tested-by tag.
 ---
- drivers/resctrl/mpam_resctrl.c | 62 ++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 21 deletions(-)
+ drivers/resctrl/mpam_resctrl.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
-index 5468367776e2..1b1e724ae040 100644
+index a75f653031fd..d0c7c741ce90 100644
 --- a/drivers/resctrl/mpam_resctrl.c
 +++ b/drivers/resctrl/mpam_resctrl.c
-@@ -7,6 +7,7 @@
- #include <linux/cacheinfo.h>
- #include <linux/cpu.h>
- #include <linux/cpumask.h>
-+#include <linux/err.h>
- #include <linux/errno.h>
- #include <linux/limits.h>
- #include <linux/list.h>
-@@ -541,26 +542,51 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_domain_hdr *hdr,
- 				 closid, rmid, val);
- }
+@@ -1648,14 +1648,14 @@ mpam_resctrl_alloc_domain(unsigned int cpu, struct mpam_resctrl_res *res)
+ 	struct rdt_l3_mon_domain *mon_d;
+ 	struct rdt_ctrl_domain *ctrl_d;
+ 	struct mpam_class *class = res->class;
+-	struct mpam_component *ctrl_comp;
++	struct mpam_component *comp;
+ 	struct rdt_resource *r = &res->resctrl_res;
  
--/* MBWU counters when in ABMC mode */
--int resctrl_arch_cntr_read(struct rdt_resource *r, struct rdt_l3_mon_domain *d,
--			   u32 closid, u32 rmid, int mon_idx,
--			   enum resctrl_event_id eventid, u64 *val)
-+/*
-+ * find_mbwu_mon_comp() - Find the component counting @eventid in a domain
-+ * @d:		The monitoring domain to search.
-+ * @eventid:	The event to find the counting component for.
-+ *
-+ * The counters reached through this component are the monitors MPAM
-+ * pre-allocated for bandwidth counting. Cache occupancy is not counted by
-+ * those monitors, it is read on demand via resctrl_arch_rmid_read().
-+ *
-+ * Return: the component counting @eventid in @d, or an error pointer when
-+ * MPAM is disabled, when @eventid is cache occupancy, or when no class was
-+ * picked to count @eventid.
-+ */
-+static struct mpam_component *find_mbwu_mon_comp(struct rdt_l3_mon_domain *d,
-+						 enum resctrl_event_id eventid)
- {
--	struct mpam_resctrl_mon *mon = &mpam_resctrl_counters[eventid];
- 	struct mpam_resctrl_dom *l3_dom;
--	struct mpam_component *mon_comp;
-+	struct mpam_resctrl_mon *mon;
+ 	lockdep_assert_held(&domain_list_lock);
  
- 	if (!mpam_is_enabled())
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
+-	ctrl_comp = find_component(class, cpu);
++	comp = find_component(class, cpu);
+ 	/* class has no component for this CPU */
+-	if (WARN_ON_ONCE(!ctrl_comp))
++	if (WARN_ON_ONCE(!comp))
+ 		return ERR_PTR(-EINVAL);
  
-+	mon = &mpam_resctrl_counters[eventid];
- 	if (eventid == QOS_L3_OCCUP_EVENT_ID || !mon->class)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
+ 	dom = kzalloc_node(sizeof(*dom), GFP_KERNEL, cpu_to_node(cpu));
+@@ -1663,10 +1663,10 @@ mpam_resctrl_alloc_domain(unsigned int cpu, struct mpam_resctrl_res *res)
+ 		return ERR_PTR(-ENOMEM);
  
- 	l3_dom = container_of(d, struct mpam_resctrl_dom, resctrl_mon_dom);
--	mon_comp = l3_dom->mon_comp[eventid];
+ 	if (r->alloc_capable) {
+-		dom->ctrl_comp = ctrl_comp;
++		dom->ctrl_comp = comp;
  
--	return read_mon_cdp_safe(mon, mon_comp, mpam_feat_msmon_mbwu,
--				 USE_PRE_ALLOCATED, closid, rmid, val);
-+	return l3_dom->mon_comp[eventid];
-+}
-+
-+/* MBWU counters when in ABMC mode */
-+int resctrl_arch_cntr_read(struct rdt_resource *r, struct rdt_l3_mon_domain *d,
-+			   u32 closid, u32 rmid, int mon_idx,
-+			   enum resctrl_event_id eventid, u64 *val)
-+{
-+	struct mpam_component *mon_comp;
-+
-+	mon_comp = find_mbwu_mon_comp(d, eventid);
-+	if (IS_ERR(mon_comp))
-+		return PTR_ERR(mon_comp);
-+
-+	return read_mon_cdp_safe(&mpam_resctrl_counters[eventid], mon_comp,
-+				 mpam_feat_msmon_mbwu, USE_PRE_ALLOCATED,
-+				 closid, rmid, val);
- }
- 
- static void __reset_mon(struct mpam_resctrl_mon *mon, struct mpam_component *mon_comp,
-@@ -603,20 +629,14 @@ void resctrl_arch_reset_cntr(struct rdt_resource *r, struct rdt_l3_mon_domain *d
- 			     u32 closid, u32 rmid, int cntr_id,
- 			     enum resctrl_event_id eventid)
- {
--	struct mpam_resctrl_mon *mon = &mpam_resctrl_counters[eventid];
--	struct mpam_resctrl_dom *l3_dom;
- 	struct mpam_component *mon_comp;
- 
--	if (!mpam_is_enabled())
-+	mon_comp = find_mbwu_mon_comp(d, eventid);
-+	if (IS_ERR(mon_comp))
- 		return;
- 
--	if (eventid == QOS_L3_OCCUP_EVENT_ID || !mon->class)
--		return;
--
--	l3_dom = container_of(d, struct mpam_resctrl_dom, resctrl_mon_dom);
--	mon_comp = l3_dom->mon_comp[eventid];
--
--	reset_mon_cdp_safe(mon, mon_comp, USE_PRE_ALLOCATED, closid, rmid);
-+	reset_mon_cdp_safe(&mpam_resctrl_counters[eventid], mon_comp,
-+			   USE_PRE_ALLOCATED, closid, rmid);
- }
- 
- /*
+ 		ctrl_d = &dom->resctrl_ctrl_dom;
+-		mpam_resctrl_domain_hdr_init(cpu, ctrl_comp, r->rid, &ctrl_d->hdr);
++		mpam_resctrl_domain_hdr_init(cpu, comp, r->rid, &ctrl_d->hdr);
+ 		ctrl_d->hdr.type = RESCTRL_CTRL_DOMAIN;
+ 		err = resctrl_online_ctrl_domain(r, ctrl_d);
+ 		if (err)
 -- 
 2.56.0
 
