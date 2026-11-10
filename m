@@ -1,65 +1,66 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.9
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794284358;
-	b=00DIFhPa1DBtLkZSjBfrtH0FpUbiXgbacFPsSu5UUuHLF4gfVgJRbQcbxHVG8wp/dRXl
-	 fe/wG+NByWM1cSUGr7+u/qeoTHCOOWAGEuNUqSdu8olN9ptLXOX5rfSkJUe20qBfga3Hs
-	 uap8KtyTtFIQSsCd91IGDJsHFLNQFABrfeiNzSea+AfcYuYf1YnBoDbnEryWphd01d+Bb
-	 nmm1wy0z/Pdcrz7XPnC1JULore7NhPYYuoCaFf5KkQs+MCCGyf8/AOAgA1tfXXhKpSUhO
-	 7QBKegyMfmMd5JhxMSTt+8schswzmjIuxwq03tLhFEBz/NRpU1hL6N8oBAwe4oZ3gbA==
+	t=1794284359;
+	b=skWBwoiqHQCzu8xL91t73XZWe9xDOIMselbjz0yZ9bkEiGGoiBjJbDpuZuvkkcwLzV3/
+	 pFaBuq9QN/Ceh60fs41c7yW143yOXOvFrryrqjsUTRVeEyIXFLOoToZydAfAg9OYqQanA
+	 NaJkFT8MGdxbz0+P9uk3914SeypgotiRlPC8ET/I62oW57Kjvtff4G4lN8vvmqTWjfZsA
+	 WsSezNehjzodu2frKekpNXZYpqm1ZM/wxDCdq4hJxmwCYSmgk7L3Mmplf3a3ASCR4LNBN
+	 BK+ThWmN6l7ek4H+QXKsaBmTf0ln8mQbAwASSm0Hm9QsOBGkg9PK1CjNQLM80JwWCCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794284358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794284359;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=D6I+9mOh63hZoFlVcPImYCerGlblTsLsV4DNO+WiNiQ=;
-	b=WVMX24VmcZxKXK0W2r1xa4mnd9jlbtTByVUn4lMNSRk4HzdDzOnQTcFyR/eEdKyQCG/h
-	 JIsWCk6TwX3ps25l/0W/3w5DcAWtax8ez+bSNA2UXn/Aks4iHFIZfZWiKnCV2MOxk2Bch
-	 xpH6SpwzEfYKoo7RWXvSGZUUWCny1adr1nkoMvFma9/GNb/LYeImvUUqfXJPpKddBdPe6
-	 2QZM68g2e36wftm6Hz+LgUEIJPZr9rJkIIUz8T20WW95m4mnQEyIbS+JcbqVoeTX+KxYQ
-	 Kjr8Vgv8tFqUYr1ysfX0he7VdJG0VKtv/rXXJ8uq3U3H5YUBezr674cVHlzJQWAGN/w==
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=9UdVGg/h64QrJFmMdvc8IRX8SR/hJQXPD1E3diwN+do=;
+	b=HTUPrvXCPdYErJ2OqeyXKvwRSXnx3ONkrJwfhKMKOsnswSrcZLDoFFRJ07RApli8zsfH
+	 rtSZxibumM3uDuUWIhb8SH5vdswCMZfU5Q5osgrkPRPDHypkp2JbnCaoGkeaRcU/3CZzz
+	 q3bvFqFcaZEJWPy4PloOhk6NKcWhE38upymY4KQzxhb2wz8tkAsTe8c8TPEd2tFrqJCcR
+	 pvpj9pT+mVwsea8KMhlRNWhrDEMSuPzcIclaEAMSfqyd5oIcPEY4wGzunBSnjHBC56du/
+	 NfOxN5w2/WxYblDJrGamrIPObN/XjPaT2LpIMBLLBXxiTKB+UlLQILisUrqfDsVMBRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=bxEOLT6z;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kjRI09v+;
 	arc=none smtp.remote-ip=192.198.163.9
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6DF606A334
-	for <patches@lists.linux.dev>; Tue, 10 Nov 2026 04:19:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AF6DF606A334
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8156160A2606
+	for <patches@lists.linux.dev>; Tue, 10 Nov 2026 04:19:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8156160A2606
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=bxEOLT6z
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kjRI09v+
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1794284356; x=1825820356;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=M1DlmdfP/qnqzTDgZw6h2TGWtbHGaNHnFQKtmH0THtY=;
-  b=bxEOLT6zdBGGyLuXYgByQly6SSbQ4nGHpoP+3CTfb65vz47YKlicZJoQ
-   yUeWqYSMokzJEZZUEO/24GpuwSoCDy1dSn2iJudQqptSZCfJwPhuauUdo
-   qDe2Mugf/LWWIOBlVM83niJSN75xPh7oOzSBHKL+of+M67q9vRdH7/yzO
-   w7XBgdpsLzx+tgJkSQbAym9ExV2Zpr5UhW/+icYfIwZXzwgUSPrPWUj+v
-   SZTEg38X2Aq0bPFrVc45XjIDvqabuz8IdF/cXUAG03zVq7MU1u4tM0yWV
-   0f3Y19ggNlsgjIDRXG9cjytyPerJu4bN656rX7sA+v/WG58sIPjkPzu8M
-   Q==;
-X-CSE-ConnectionGUID: 4ncQa+jKTO2o02j5lCyHhw==
-X-CSE-MsgGUID: vKtkV+ZrQxODhy3FzelRYA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11961"; a="2901284"
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=8dfFjAyH1NZ5O/UsFja1Hvgmiui6X/KQMbG0P2/bo+I=;
+  b=kjRI09v+5MtAwkG+6h5qCj6XGZrrhcEHQg7LjrljFDn4klPP2IkaJZ0R
+   2RKuOXg3vWlRBnBcfvGlK6NuEHyZDJARWNRkiTobN3w5wBryKwJ0E7w0j
+   gicvnmUQklAX0e+IwRXUa0fs1TkLcVkWnbRtQofVq5euo2XtRmll/nSaA
+   69yNbRiByIgiML3KrsUlzGOnzonmO8+4mTtb5bNfnNE5U87LPLBdAvNIv
+   WvND/4W91mINDXBIP7R8BmUNC1YFHvEPnHtXKKf81Wf7FwJE/6NXz1ypq
+   cZyL0YLThzYNzDkNIJXQoiGAR5TfqwWbDwkFWmF62mEY6jrJfQ3cXFaQ/
+   A==;
+X-CSE-ConnectionGUID: 4s+EUHyhQFOmAB3kzfP+wA==
+X-CSE-MsgGUID: y3vv48m1RpKN+ZmsctLSfQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11961"; a="2901293"
 X-IronPort-AV: E=Sophos;i="6.27,205,1787036400"; 
-   d="scan'208";a="2901284"
+   d="scan'208";a="2901293"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
   by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 20:19:14 -0800
-X-CSE-ConnectionGUID: 203t+MEKTmimaDAVzZuetw==
-X-CSE-MsgGUID: 6Q/XI7PzR9mFU4x8bWf6KA==
+X-CSE-ConnectionGUID: V2ig3Z3cTsuv9u0S8wjhJw==
+X-CSE-MsgGUID: skpaQYrwT4aODqJeOZQhDQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,205,1787036400"; 
-   d="scan'208";a="7856905"
+   d="scan'208";a="7856908"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 20:19:14 -0800
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 20:19:15 -0800
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: ben.horgan@arm.com,
 	james.morse@arm.com,
@@ -75,10 +76,12 @@ Cc: tony.luck@intel.com,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v3 0/8] arm_mpam: resctrl: Separate MPAM domains
-Date: Mon,  9 Nov 2026 20:19:00 -0800
-Message-ID: <cover.1794283825.git.reinette.chatre@intel.com>
+Subject: [PATCH v3 1/8] arm_mpam: resctrl: Add a helper to find the component counting an event
+Date: Mon,  9 Nov 2026 20:19:01 -0800
+Message-ID: <8635f50f938afbe3f58dcd69966c2dd45e2394cd.1794283825.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <cover.1794283825.git.reinette.chatre@intel.com>
+References: <cover.1794283825.git.reinette.chatre@intel.com>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -90,86 +93,131 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Thank you very much to Ben, Jinjie, and Shaopeng for reviewing and testing RFC v2.
+resctrl_arch_cntr_read() and resctrl_arch_reset_cntr() both drive the
+monitors MPAM pre-allocated for bandwidth counting. Each starts with the
+same sequence: check that MPAM is enabled, reject cache occupancy and
+events without a class, then take the component counting the event from
+the monitoring domain.
 
+The duplicated sequence has to be kept in sync by hand. Only the failure
+handling differs: one reports the failure to its caller while the other
+has no way to do so.
+
+Add find_mbwu_mon_comp() to locate the component, returning an error
+pointer on the failures both callers test for. Ignore that error in
+resctrl_arch_reset_cntr(), which cannot report it.
+
+No functional change intended.
+
+Suggested-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
 Changes since RFC v2:
-  - RFC v2: https://lore.kernel.org/lkml/cover.1792443633.git.reinette.chatre@intel.com/
-  - Patch 1 is new. It adds find_mbwu_mon_comp() to replace the duplicate
-    code found in resctrl_arch_cntr_read() and resctrl_arch_reset_cntr(),
-    as suggested by Jinjie.
-  - WARN when domain allocation fails. (Ben)
-  - Squash three patches into the patches they build on. (Ben)
-  - Move "Require a component for each monitoring event" ahead of the
-    structure split so the check it adds precedes its first user.
-  - Fix the mpam_resctrl_get_mon_domain_from_cpu() function comment that
-    still referred to the control component.
-  - Add tags from Jinjie and Ben.
-  - Please see the individual patches for their detailed changelogs.
+- New patch.
+---
+ drivers/resctrl/mpam_resctrl.c | 62 ++++++++++++++++++++++------------
+ 1 file changed, 41 insertions(+), 21 deletions(-)
 
-Changes since RFC v1:
-  - RFC v1: https://lore.kernel.org/lkml/85ca29e89eacf12cfa7071249419e7cadb8f0691.1788220029.git.reinette.chatre@intel.com/
-  - Give each type of domain its own structure instead of duplicating the
-    shared one, set up each domain independently instead of undoing one
-    domain when setting up the other fails, add additional verification
-    checks.
-
-The MPAM driver represents a resctrl domain with a single structure,
-struct mpam_resctrl_dom, that holds both a control domain and a
-monitoring domain. On a system that supports both allocation and
-monitoring, one instance is created for each domain and its two
-domains are added to the resource's control and monitoring domain
-lists.
-
-Holding both domains in one structure requires control and monitoring
-to be done at the same scope, and ties each control domain to a
-monitoring domain. This does not fit the proposed support for multiple
-controls per resource [1]. There, each control of a resource, for
-example a "min" and a "max" memory bandwidth control, has its own list
-of control domains while the resource keeps a single list of
-monitoring domains. With one structure for both, every control domain
-would come with a monitoring domain of its own, which does not reflect
-the resource.
-
-This series gives control and monitoring domains their own structures,
-set up and torn down independently as CPUs come online and go offline,
-in preparation for supporting multiple controls per resource. Along
-the way it stops failing CPU online when a domain cannot be set up,
-and adds checks when setting up a monitoring domain.
-
-  1     Share the lookup of the component counting an event
-  2-3   Preparatory cleanups of domain allocation
-  4     Do not fail CPU online when domain setup fails
-  5-6   Preparation for separate domain structures
-  7-8   Separate the control and monitoring domain structures
-
-Transitioning this submission from RFC to PATCH after gaining more
-confidence in the changes thanks to Jinjie and Ben's reviews and testing.
-
-The series was rebased onto v7.4-rc2 since the for-next/mpam branch
-of the arm64 tree does not exist at this time.
-
-[1] https://lore.kernel.org/lkml/d258a32f-12d5-464d-abe9-4720fb3e44b3@intel.com/
-
-Reinette Chatre (8):
-  arm_mpam: resctrl: Add a helper to find the component counting an
-    event
-  arm_mpam: resctrl: Use find_component() when allocating a domain
-  arm_mpam: resctrl: Rename ctrl_comp in mpam_resctrl_alloc_domain()
-  arm_mpam: resctrl: Do not fail CPU online when domain setup fails
-  arm_mpam: resctrl: Split control and monitoring domain setup into
-    helpers
-  arm_mpam: resctrl: Require a component for each monitoring event
-  arm_mpam: resctrl: Give the monitoring domain its own structure
-  arm_mpam: resctrl: Rename struct mpam_resctrl_dom to
-    mpam_resctrl_ctrl_dom
-
- drivers/resctrl/mpam_devices.c  |   2 +-
- drivers/resctrl/mpam_internal.h |  11 +-
- drivers/resctrl/mpam_resctrl.c  | 384 ++++++++++++++++++--------------
- 3 files changed, 220 insertions(+), 177 deletions(-)
-
-
-base-commit: 7475ea8b58616b33c04afb976cf0fbaad9dd63fb
+diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
+index 5468367776e2..1b1e724ae040 100644
+--- a/drivers/resctrl/mpam_resctrl.c
++++ b/drivers/resctrl/mpam_resctrl.c
+@@ -7,6 +7,7 @@
+ #include <linux/cacheinfo.h>
+ #include <linux/cpu.h>
+ #include <linux/cpumask.h>
++#include <linux/err.h>
+ #include <linux/errno.h>
+ #include <linux/limits.h>
+ #include <linux/list.h>
+@@ -541,26 +542,51 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_domain_hdr *hdr,
+ 				 closid, rmid, val);
+ }
+ 
+-/* MBWU counters when in ABMC mode */
+-int resctrl_arch_cntr_read(struct rdt_resource *r, struct rdt_l3_mon_domain *d,
+-			   u32 closid, u32 rmid, int mon_idx,
+-			   enum resctrl_event_id eventid, u64 *val)
++/*
++ * find_mbwu_mon_comp() - Find the component counting @eventid in a domain
++ * @d:		The monitoring domain to search.
++ * @eventid:	The event to find the counting component for.
++ *
++ * The counters reached through this component are the monitors MPAM
++ * pre-allocated for bandwidth counting. Cache occupancy is not counted by
++ * those monitors, it is read on demand via resctrl_arch_rmid_read().
++ *
++ * Return: the component counting @eventid in @d, or an error pointer when
++ * MPAM is disabled, when @eventid is cache occupancy, or when no class was
++ * picked to count @eventid.
++ */
++static struct mpam_component *find_mbwu_mon_comp(struct rdt_l3_mon_domain *d,
++						 enum resctrl_event_id eventid)
+ {
+-	struct mpam_resctrl_mon *mon = &mpam_resctrl_counters[eventid];
+ 	struct mpam_resctrl_dom *l3_dom;
+-	struct mpam_component *mon_comp;
++	struct mpam_resctrl_mon *mon;
+ 
+ 	if (!mpam_is_enabled())
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
+ 
++	mon = &mpam_resctrl_counters[eventid];
+ 	if (eventid == QOS_L3_OCCUP_EVENT_ID || !mon->class)
+-		return -EINVAL;
++		return ERR_PTR(-EINVAL);
+ 
+ 	l3_dom = container_of(d, struct mpam_resctrl_dom, resctrl_mon_dom);
+-	mon_comp = l3_dom->mon_comp[eventid];
+ 
+-	return read_mon_cdp_safe(mon, mon_comp, mpam_feat_msmon_mbwu,
+-				 USE_PRE_ALLOCATED, closid, rmid, val);
++	return l3_dom->mon_comp[eventid];
++}
++
++/* MBWU counters when in ABMC mode */
++int resctrl_arch_cntr_read(struct rdt_resource *r, struct rdt_l3_mon_domain *d,
++			   u32 closid, u32 rmid, int mon_idx,
++			   enum resctrl_event_id eventid, u64 *val)
++{
++	struct mpam_component *mon_comp;
++
++	mon_comp = find_mbwu_mon_comp(d, eventid);
++	if (IS_ERR(mon_comp))
++		return PTR_ERR(mon_comp);
++
++	return read_mon_cdp_safe(&mpam_resctrl_counters[eventid], mon_comp,
++				 mpam_feat_msmon_mbwu, USE_PRE_ALLOCATED,
++				 closid, rmid, val);
+ }
+ 
+ static void __reset_mon(struct mpam_resctrl_mon *mon, struct mpam_component *mon_comp,
+@@ -603,20 +629,14 @@ void resctrl_arch_reset_cntr(struct rdt_resource *r, struct rdt_l3_mon_domain *d
+ 			     u32 closid, u32 rmid, int cntr_id,
+ 			     enum resctrl_event_id eventid)
+ {
+-	struct mpam_resctrl_mon *mon = &mpam_resctrl_counters[eventid];
+-	struct mpam_resctrl_dom *l3_dom;
+ 	struct mpam_component *mon_comp;
+ 
+-	if (!mpam_is_enabled())
++	mon_comp = find_mbwu_mon_comp(d, eventid);
++	if (IS_ERR(mon_comp))
+ 		return;
+ 
+-	if (eventid == QOS_L3_OCCUP_EVENT_ID || !mon->class)
+-		return;
+-
+-	l3_dom = container_of(d, struct mpam_resctrl_dom, resctrl_mon_dom);
+-	mon_comp = l3_dom->mon_comp[eventid];
+-
+-	reset_mon_cdp_safe(mon, mon_comp, USE_PRE_ALLOCATED, closid, rmid);
++	reset_mon_cdp_safe(&mpam_resctrl_counters[eventid], mon_comp,
++			   USE_PRE_ALLOCATED, closid, rmid);
+ }
+ 
+ /*
 -- 
 2.56.0
 
