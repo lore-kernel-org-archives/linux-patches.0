@@ -1,49 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794308435;
-	b=yRuZeDY/2q/PnRVKc0XeS82GE02Y23wmvINe0a3hWYvqMPmSmYhiKmf4Yjy4NjUBL5UX
-	 yh6dT4cSq3vfZ6NU8YpDNtDwzO9OF+GfrY8aF9wOIjuZOcEsaJ92UB1XIsddXauDCGJ00
-	 G8Z79euS71vjS5QFcwzUW/7lHBzmqCsqvpiuYxaX2fqh6vu6/SUlRvApEPJB5xu0m9bid
-	 M8ZAGgt9TnyOGfP9JSKtHCOg4GN2sudWZ7VtNIDGtI3qNCo5jyoBr4Gazac+rTfGl9NEz
-	 YlSTQVG0nsbBMv0Clej6s/Mhw68abB17H+YxA9uJrbK5jqI26lRtZigrCkct7mb9IJg==
+	t=1794310576;
+	b=5lnLpMtotxVGIr/78ZGtxTlI8SZ43Qt6fqmi23hTMY+HQa1P6hWkV6bWqWRQhLl6v6x6
+	 MoXhkqtRga1K9jj7XGmXKYgk0fI/Et6ftosFRQoCRnOurZCkKorPtE7JRLdO33Ki6nzAz
+	 WIhosk11L1ly5lpJ6bgKBcs5t4DUIb09Od8Rqvd66BP2b25UFKk+UcYKg2ZnhtRjxYgxY
+	 B2Va8RZeH05f9Umm/wZX4VxOv13x9ZD9bJ5vABT8Lb9JJiInexmqATCqDY/PafnJBaB+j
+	 j9zTYglifCW7T5TX6Isv0n+5jtE7kaTlx0dkjSYF/0wjSiM13jGd1QHnaRdooBujhMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794308435;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=mr+oYs8/abSZSj4lJ4PMIllB4JnBFwVNz1SRvIolKDk=;
-	b=FB2LywtsMBSFc+LiNQcCzeMkpRg5ajHvcPNXLLnuMJauKIoRbS6PWC0xUMMQD9FjAMTO
-	 ICzsHqvdBahTaAwd41eiXOqiwQmI7grHZGfZvMjqhg92KsklrF0mAgnDfX5Ircb0SW140
-	 rzXHoRuXZRVZ9FRZzVHxMFuwS1BTWBWz2zlKC9Xey1A7yifQqLQn5bCW2PTsq42H0DlQe
-	 m7gGnFMRxjj0IFNAQmt5fbrbrS07x2I1igQlkisv8i/ie1yMAzQ7nTOcxVJSedhWj1nAZ
-	 11gQ8UkU/XiW2J65xVza2h+YnqcFx7/i8koGrJFBcx2+pBFOG03til6DX4uEPMqpBqw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794310576;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=KARVFzaA2emNcbaNE7Zlfo9u+xQFHA5uL67hKotT2QY=;
+	b=HdoThk2Gb9lPOhUSttigPH86h+dl8R84/jSJk+P9rPskTIrehJOnIm/xRHIUjuHy5h7I
+	 bmdSarc117p21Dt1ufx58KwWMnqwGJ/Sq7zsX8whdeyB5/+m+h/vN53gsj2AkkstlSZRz
+	 5emiQ8zXrilJcVJDCVGDfsxtZDcgBZjd0RGGnZdLxaiu1CkJT68sxz3Ly4srANXULommN
+	 RREw6ccWs5UGEmmM+p9/1EmrgBZNRjjygghAkqaciVmZKblzOXXtSVPiSJ+xWDxeC4kPw
+	 kjWE7l1bMoDb5y8QJwERczeaGxV1Vmb2hz0I6YNGHZi6XMXcJJp0sDA0k/wVmNtV0Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=LblR3Mll;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F47260A380D
-	for <patches@lists.linux.dev>; Tue, 10 Nov 2026 11:00:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F47260A380D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=LsP5JWv0;
+	arc=none smtp.remote-ip=209.85.128.50
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF504606A32E
+	for <patches@lists.linux.dev>; Tue, 10 Nov 2026 11:36:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CF504606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=LblR3Mll
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 71D571BC0;
-	Tue, 10 Nov 2026 03:00:30 -0800 (PST)
-Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 886443F85F;
-	Tue, 10 Nov 2026 03:00:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1794308433; bh=4ck62cy1mlRNr4GFH/FwZpJqZdKAc0N4+tB/W3NHdFY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LblR3MllBiBoWbbp/bPau9MCduLwG1ZSwBtHEe+oMYAEMj36I3Mv+8I48Y6V1S/A3
-	 4DiT3rjIj15YNhjEKrgjKDo60yfQpeEqhmRGrJ3k4Cstjh62Bh3F8++Y84qbc+0NJx
-	 APrqPZZAwLmaPhwOrBjKvSsYJiMT9fe2+K6HTZ0o=
-Message-ID: <00a1bcb7-2884-4075-8d51-b8a465e37492@arm.com>
-Date: Tue, 10 Nov 2026 11:00:30 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=LsP5JWv0
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4b7252a32c8so20190185e9.0
+        for <patches@lists.linux.dev>; Tue, 10 Nov 2026 03:36:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1794310574; x=1794915374; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=KARVFzaA2emNcbaNE7Zlfo9u+xQFHA5uL67hKotT2QY=;
+        b=LsP5JWv0xszRBeY4ogvu3ZN5He2wqi1aNcOKkkv4ijtN+9rruAsQIP5pMcAOrvivwn
+         ojNNvfsy0cSIwf3Djj+1hun2I4sRQXRefCnDPnr8JkwPmrjl5jMpY4EipB2ZY08zUA7m
+         iiTR0SxGunYoABuZfseXEcz0G3qUdbgjcUr3g8fkJyzTu4k/cxgypk6xePOtL/c4laHe
+         UGHAFMxUM4q1pXSk5FUkc2w3nTqNOzdM5WvjiPmtw9JbwsD3VxOMvAfEOdEM1JP+QNZW
+         6NaE4z+R5WnJhl31hjOt+1suq10mZ9EllvgxiL6H5V4d8slFZlpf4Afqqbzff0cXqDb+
+         rx+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794310574; x=1794915374;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=KARVFzaA2emNcbaNE7Zlfo9u+xQFHA5uL67hKotT2QY=;
+        b=v8Kwkff30APbXIZk5w5BgZRUGjvmh4jpz/Pv06ves/SrhUVeYqbw9G5e0wTEyMR6wk
+         ZkPi8cx1AYe02i+Y5aQzGexdb9m4RCjm0Mk1X4WVx3lnDvN0CuaxDuwzvVKoTIXsIAQW
+         MtQq5MInKzbC8cbE4h+A74HTSThHtja0GSWKw5m14UslSa9pRrcdXWF/eWEJxkDVhfh7
+         WKfDkwuX/GAGG6Ed+5+eWCjrHQWRjSuEJYTmQvZ4+jSrdBy88cd3Bjujpm6czabsX1I8
+         vWTgaZmnNoyFZvcBj8iDX6tbqXeFEsQZu36aGFq+NDYEN9MydCE/zM7bIvwX8jc9ua7B
+         qIoQ==
+X-Forwarded-Encrypted: i=1; AL+hErF+N9Z0LK7QrIp2gR+rM8zhOtEN9eaBYa/H+gmEM6TuExqtAxbbzs4lET8CXlbxlZ51Vrw+t6RI@lists.linux.dev
+X-Gm-Message-State: APuU4Z94Stf9SVa/JsoP2Trg7X3mhtMpnUJdnwZ8i5wQJtS0aNKu8gqt
+	1+pnC3IIxdkeEeGUlOAiQOZv0TfW3PwiknTWxyU6/gZL20Lj3nWZeaug+wvIfyynaII=
+X-Gm-Gg: AYBFou1XUICzn/cxxznNLlX2DXsgIWppmNx338YKnO0ogQuiSJkK218VenoYGvhDwr3
+	Rzp5p+yG5fyFPqYLG9rFvJzZhF8IpoLQ3VNrf7sqx3RJBgCeGBeNlemIgkWciaIztmJBXPnG2N2
+	UPwNuHtVpN7aEV6h85IA1CHFE85pVmJ+GmTZrh9v8a9tTwCRquy/p5ifNhthLn9x++Wb1fQLe4W
+	eAH+2cH1WcsKzG/VRyz//qB3cFBoYP2vAvutN13/EnaoAs+v604XaO/HQOpjhZ4PQsimwehxsX3
+	IRVjJpgr3Y2BZCPQqo0fam4xEtI44k1Bzwdq0Mx3EBI59S2oDZ0cLvBGYrokZtD1jveY+0Ax2vF
+	G0dYrb8EBNBarPNYEz59j93PULQKSIJKsnern/rhQiGG2uMLV9RnctqgMzaqKyTaK97mDUkhhyA
+	mJPFRkYmWJHWmz2cKSmHxCeupEnImGIHK6sjdRBeuzTroM8cRRyX8EVjXTEAc3xYkGEjwlaQXUG
+	bTtx5UjtyaRg49OcnIXS77stG9sVbnGfF2ks+wbFAAaZwfpbqlejQgY2czUhV1/RBeLEJz9fWmB
+	KTgqfJfpfTV016VOvV+glxfqihu0t1lB6Q==
+X-Received: by 2002:a05:600c:34c7:b0:4a2:150f:1609 with SMTP id 5b1f17b1804b1-4ba0233bd68mr41274365e9.8.1794310574048;
+        Tue, 10 Nov 2026 03:36:14 -0800 (PST)
+Received: from [192.168.1.3] ([37.18.141.193])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba020485bcsm54874055e9.11.2026.11.10.03.36.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2026 03:36:13 -0800 (PST)
+Message-ID: <6d0fabcb-79eb-4a17-af3e-b58a1d1c93fa@linaro.org>
+Date: Tue, 10 Nov 2026 11:36:12 +0000
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -54,60 +93,66 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/8] arm_mpam: resctrl: Separate MPAM domains
-To: Reinette Chatre <reinette.chatre@intel.com>, james.morse@arm.com,
- Dave.Martin@arm.com, fenghuay@nvidia.com, ruanjinjie@huawei.com
-Cc: tony.luck@intel.com, yu.c.chen@intel.com, babu.moger@amd.com,
- fustini@kernel.org, tan.shaopeng@fujitsu.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <cover.1794283825.git.reinette.chatre@intel.com>
+Subject: Re: [PATCH 6.6.y] perf cs-etm: fix a compilation issue in
+ cs_etm_decoder__set_tid()
+To: Valentin Caron <valentin.caron@foss.st.com>, gregkh@linuxfoundation.org,
+ stable@vger.kernel.org, Leo Yan <leo.yan@arm.com>
+Cc: Paschalis.Mpeis@arm.com, aaupov@meta.com, acme@redhat.com,
+ corbet@lwn.net, irogers@google.com, jolsa@kernel.org, leo.yan@arm.com,
+ linux-doc@vger.kernel.org, mike.leach@arm.com, namhyung@kernel.org,
+ patches@lists.linux.dev, robert.walker@arm.com, sashal@kernel.org,
+ skhan@linuxfoundation.org, suzuki.poulose@arm.com,
+ amelie.delaunay@foss.st.com
+References: <20260912065621.463708027@linuxfoundation.org>
+ <20261109171457.1233670-1-valentin.caron@foss.st.com>
 Content-Language: en-US
-From: Ben Horgan <ben.horgan@arm.com>
-In-Reply-To: <cover.1794283825.git.reinette.chatre@intel.com>
-Content-Type: text/plain; charset=UTF-8
+From: James Clark <james.clark@linaro.org>
+In-Reply-To: <20261109171457.1233670-1-valentin.caron@foss.st.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Reinette,
 
-On 10/11/2026 04:19, Reinette Chatre wrote:
-> Thank you very much to Ben, Jinjie, and Shaopeng for reviewing and testing RFC v2.
+
+On 09/11/2026 17:14, Valentin Caron wrote:
+> When compiling coresight tool with the command:
+> make -C tools/perf CORESIGHT=1 all
 > 
-> Changes since RFC v2:
->   - RFC v2: https://lore.kernel.org/lkml/cover.1792443633.git.reinette.chatre@intel.com/
->   - Patch 1 is new. It adds find_mbwu_mon_comp() to replace the duplicate
->     code found in resctrl_arch_cntr_read() and resctrl_arch_reset_cntr(),
->     as suggested by Jinjie.
->   - WARN when domain allocation fails. (Ben)
->   - Squash three patches into the patches they build on. (Ben)
->   - Move "Require a component for each monitoring event" ahead of the
->     structure split so the check it adds precedes its first user.
->   - Fix the mpam_resctrl_get_mon_domain_from_cpu() function comment that
->     still referred to the control component.
->   - Add tags from Jinjie and Ben.
->   - Please see the individual patches for their detailed changelogs.
+> The following build issue occurs:
+> util/cs-etm-decoder/cs-etm-decoder.c:551:15: error: too many arguments to
+> function 'cs_etm_decoder__buffer_packet'
+>    551 |         ret = cs_etm_decoder__buffer_packet(etmq, packet_queue,
+>        |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 > 
-> Changes since RFC v1:
->   - RFC v1: https://lore.kernel.org/lkml/85ca29e89eacf12cfa7071249419e7cadb8f0691.1788220029.git.reinette.chatre@intel.com/
->   - Give each type of domain its own structure instead of duplicating the
->     shared one, set up each domain independently instead of undoing one
->     domain when setting up the other fails, add additional verification
->     checks.
+> Fix this by removing the parameter "etmq" from function call to match its
+> declaration:
+> cs_etm_decoder__buffer_packet(struct cs_etm_packet_queue *packet_queue,
+> 			      const u8 trace_chan_id,
+> 			      enum cs_etm_sample_type sample_type)
 > 
-> The MPAM driver represents a resctrl domain with a single structure,
-> struct mpam_resctrl_dom, that holds both a control domain and a
-> monitoring domain. On a system that supports both allocation and
-> monitoring, one instance is created for each domain and its two
-> domains are added to the resource's control and monitoring domain
-> lists.
+> Fixes: 99d324594165 ("perf cs-etm: Queue context packets for frontend")
+> Signed-off-by: Valentin Caron <valentin.caron@foss.st.com>
+> ---
+>   tools/perf/util/cs-etm-decoder/cs-etm-decoder.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c b/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
+> index 277da9f767b9d..caacab8c92e26 100644
+> --- a/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
+> +++ b/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
+> @@ -548,7 +548,7 @@ cs_etm_decoder__set_tid(struct cs_etm_queue *etmq,
+>   				elem->context.exception_level, tid))
+>   		return OCSD_RESP_FATAL_SYS_ERR;
+>   
+> -	ret = cs_etm_decoder__buffer_packet(etmq, packet_queue, trace_chan_id,
+> +	ret = cs_etm_decoder__buffer_packet(packet_queue, trace_chan_id,
+>   					    CS_ETM_CONTEXT);
+>   	if (ret != OCSD_RESP_CONT && ret != OCSD_RESP_WAIT)
+>   		return ret;
 
-Thank you for this respin.
+Reviewed-by: James Clark <james.clark@linaro.org>
 
-To avoid any confusion for others I mention here that the 'MPAM domains' mentioned here are the MPAM
-driver representations of resctrl domains and *not* related to the MPAM feature
-FEAT_MPAM_MSC_DOMAINS. There is currently no support for FEAT_MPAM_MSC_DOMAINS in the MPAM driver.
+I tested Coresight decoding on the 6.6.y branch in case there was some 
+other non-obvious dependency missing, but this is the only fix that's 
+required. Thanks!
 
-Thanks,
-
-Ben
 
