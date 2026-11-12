@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794469301;
-	b=JbKNcs/j0QRWbLkTDF3vHj/j4OA2bCFytL7pYBegfqfZ2izAFBUnaJr9aSgUDhVW/o29
-	 DooQj4OSf1N4W3MWusIlSFJBHaE2f4xUWs+Dt6vJpQPXsWhBQufoiXhxutEo+BzsckEW0
-	 SCCQfJHQsor2opksuc4ZEHh1FcGHDfNefeZqbyDvAVaGX8pvl4VMK7iiNBaM1/hakcZDl
-	 OPsgYCzAk/xkvdYZtmTgEPX/0sqizG416Vo8n/TpX7n5G1ETz+BqnPrciRtYfkA+bT8Z0
-	 lO8Xt1/UHmXNH9oWdkuyXAZOSh5oSR6I5IHRjQHbHLqtFV91UyjLrsMSl6ojcVWpVkQ==
+	t=1794469306;
+	b=XE7CFi0/owy+ioT6LY63O0d5n3BwxCzmuItS9kJZBJCNa5cXmbvsB4opXAjvQnjb56FX
+	 C55maIzBjV5Nd+sk8IOur4N2UFiP1tiuNtLLIygNymyWhqyC7zOxCr3BEdNKHmZiKOwdV
+	 GoGWjRb1zuKu9U8Pf3zCMbRQKu9EvhwsXrDFZ1ecdnhdRXHH0Lb/7RvwLsuECVrUS2dbw
+	 +kKYBijD5Dbl86tRth6WB9OmXw0mmrUPywUnaajwqB3k+wswJdODNXkohOD5RpB0BM9Bj
+	 jnx114WrNFpFHF3CAnuLognBVD4uenzITBm6Vs4YUCjWZdq5LaI8D0j7ZUVxhM8o8XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794469301;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794469306;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=UeXZwjvw4BU9ZuNpRASBLxs0cWObklTqXwxG1hakcs0=;
-	b=J3PDqvGpkArG7T6xoZeyNNfB2xjShnC/fpJ6xvW+cb9cEVrRpT5nx2jM78kqOs/84z9Q
-	 haH3Lti+ICGy2+FfjfE1NJuExl32IPEaTUUsh3qIpxCetmVPTUgOnV6paQEKKv5XY11uh
-	 Fd7QMCbS1bRhxf6PfkdZxVdb4fDkdU7vL8w2XgS3m+tMgqlEyONyMuMrbsnxdCbv1sqpJ
-	 11Jk9rWx6KnQzMapzehW4fPdcw1kNzlFxOYsOVz102z+T2TMa1W09HHgCQYUgI1HjcG6t
-	 a2UK4COUUuX4FxLtH5kF9q8ZpN3AL4xeS4qP2B7M+Ff3brdN8iwrSbbOFlK79CaL9kw==
+	bh=733XHS3lHTPFiN2IAEsYNhrbLpDn7MKjpwShXuMnNIo=;
+	b=4La10C+szSdXS9aN++yVvluaYlinv2RSAyESOw0JsD/wXiTVVd9Jj7N82tEon51mRw7B
+	 4vwYZEln7HPthaO9oKOc4R2DJgmw7x6e306UN+1H00fu/t1RuxRMfW9XffLwykiIiSxkP
+	 JmGJZEkEAxAP0vdGimS3Eseot+ubeVxWCFNJhKdtHz0zbMW4q+dNuQJ7gDs0xr49AL+8X
+	 PXDtLV2iGIbGe0oUvw+oNbIWImnVCpE9Wo11bgKxirdh+Cq4RZ+r2fwpgcpnSlvUjHx7v
+	 WbeEccAxxcCVzQEC7pMy0liLGBq/j8Bi93xYri7FENDF8FF7Ps+9I3eyADVVgOLKWqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gtz9jAwM;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kJi0v0P0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E579A606A333;
-	Thu, 12 Nov 2026 07:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957E6606A32E;
+	Thu, 12 Nov 2026 07:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gtz9jAwM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8AF41F00A05;
-	Thu, 12 Nov 2026 07:41:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kJi0v0P0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCC71F00A09;
+	Thu, 12 Nov 2026 07:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794469300;
-	bh=UeXZwjvw4BU9ZuNpRASBLxs0cWObklTqXwxG1hakcs0=;
+	s=k20260515; t=1794469306;
+	bh=733XHS3lHTPFiN2IAEsYNhrbLpDn7MKjpwShXuMnNIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gtz9jAwMWtmqacsEZTiZzpLSfhxAELarVuRosBT9bIDsiv0IIPix7cXcCRrU+m1Ke
-	 eY15myYkeOjptd0D/RJvGhSj9RbFtajRTUBVNDM5SjQxD0Uv2fTRgVH9NllfQsgxKx
-	 4iVzWOyYijZd7whHaPrcuVYLf7TR2Dt8AR4Ip+JJ2jp8Eh9YPrwhEU7HlludlV+IVK
-	 KP3IukZSTqBvhB+FVhncCH1CS6jCCuPW9PwIRhl7PSsCmKhxB9e9xNQAwuDm7caCci
-	 vAKV+Abqcaf2K7V5L06tYj3Z7OQhKEFTjMYSMdbiE5gR1g2uyWY0LDKjYshgPUcKTb
-	 EjAYdYK32spvQ==
+	b=kJi0v0P0GiPABukg2kyxWrNpRtxeim6kA1KHcW/7a/2QXDc0wiYKe1UQ1a8bi+qtx
+	 7GQJ1nHEkWYTw/PiJdyX5GtfODSKPrPepco76GU9dSdhNqc3pIPHNWjMmjefX9a+lx
+	 gQYkv0UBCxtXKZMH43hzGg8Ic0Ty4sgzmesFB1YvjuDZ5Um92cFtkAGzBEXwoK2rQz
+	 Sg0oiL+jF4sOAlkxa/uvdsrtPufDlgLNLa1KhVTdI+bsFH9ECLv21SssP4PJZ7kfs8
+	 UFZCVfIEzQtQ6kBGWElAXvOp6w9XUpSjmGyeGO+afA42uHEOq7cLlhKH91eUMdcYEY
+	 5jiJnlHnTR/Ig==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -58,9 +58,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v5 02/16] KVM: guest_memfd: Get PFNs through common provider operations
-Date: Thu, 12 Nov 2026 13:11:06 +0530
-Message-ID: <20261112074120.1570072-3-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v5 03/16] KVM: guest_memfd: Let providers coordinate mapping changes
+Date: Thu, 12 Nov 2026 13:11:07 +0530
+Message-ID: <20261112074120.1570072-4-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261112074120.1570072-1-aneesh.kumar@kernel.org>
 References: <20261112074120.1570072-1-aneesh.kumar@kernel.org>
@@ -75,495 +75,167 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use get_pfn() for both folios and external PFNs. Folio helpers return
-a locked folio reference in the handle. The core unlocks and releases
-that reference. PFN providers keep memory stable under the inode
-invalidate lock.
+Add optional paired lock() and unlock() callbacks so providers can prevent
+memory changes during guest invalidation and attribute conversion. Reject
+providers that supply only one callback.
 
-Declare native provider operations in their static table. Install the
-folio get_pfn() helper inside KVM for external folio providers, so
-built-in shmem does not depend on modular KVM.
+Take the provider lock with the inode invalidate lock held for write,
+before guest invalidation. Release it after invalidation and any
+successful attribute publication. Use the same locking for revocation
+and final inode cleanup.
 
+This lock is separate from the lock taken by get_pfn() for an individual
+PFN. Existing providers can omit both callbacks.
+
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: kvm@vger.kernel.org
+Cc: patches@lists.linux.dev
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- include/linux/guest_memfd.h       |  23 +--
- samples/kvm/mem_provider_sample.c |  10 +-
- virt/kvm/guest_memfd.c            | 245 +++++++++++++++++++-----------
- 3 files changed, 176 insertions(+), 102 deletions(-)
+ include/linux/guest_memfd.h |  8 ++++++
+ virt/kvm/guest_memfd.c      | 50 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+)
 
 diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-index 659d7d4baa58..3d84fd0adec1 100644
+index 3d84fd0adec1..b63ca59773f9 100644
 --- a/include/linux/guest_memfd.h
 +++ b/include/linux/guest_memfd.h
-@@ -18,6 +18,11 @@ struct mempolicy;
-  * @pfn_attrs: GUEST_MEMFD_PFN_* memory type and permissions
-  * @max_order: Largest order of a contiguous range with the same PFN attributes
-  * @folio: Optional locked folio reference, managed by the core
-+ *
-+ * The core unlocks the folio before dropping its reference. Population keeps
-+ * the reference while its callback runs without the folio lock. A host folio
-+ * fault instead transfers the locked reference to the MM. PFN providers leave
-+ * @folio NULL and keep their PFNs stable under the inode invalidate lock.
-  */
- struct guest_memfd_handle {
- 	unsigned long pfn;
-@@ -35,13 +40,13 @@ struct guest_memfd_handle {
+@@ -36,6 +36,12 @@ struct guest_memfd_handle {
+  * @attach: Attach to a resource file, perform filesystem-specific validation,
+  *          and return an opaque provider context.
+  * @release: Release provider context and unpin any resources.
++ * @lock: Optional provider lock for mapping and attribute changes. Called
++ *        with the inode invalidate lock held for write, before guest
++ *        invalidation starts.
++ * @unlock: Release the provider lock taken by lock(). Called after guest
++ *          invalidation ends and any successful attribute publication, with
++ *          the inode invalidate lock still held.
+  * @alloc_folio: Allocate an uninserted folio for a given index and NUMA policy.
   *               Must return a pointer to a struct folio on success, or an
   *               ERR_PTR() error code on failure. Must never return NULL.
-  * @invalidate_folio: Notify provider that a folio has been invalidated.
-- * @get_pfn: Obtain a PFN for a given index. The provider must ensure backing
-- *           memory is present and is responsible for its contents, such as
-- *           zeroing if necessary. On success, return 0 with the physical frame
-- *           number in @pfn and, if @max_order is non-NULL, the maximum page
-- *           order of contiguous backing memory containing @pfn. Returns a
-- *           negative error code on failure. The provider must define
-- *           @lookup_pfn_range when @get_pfn is defined.
-+ * @get_pfn: Get the PFN for initialized memory at an index. Return zero on
-+ *           success or a negative error code. Called with the inode
-+ *           invalidate lock held. Fill the handle with its PFN, attributes
-+ *           and order. Folio helpers also return a locked folio reference in
-+ *           guest_memfd_handle.folio for the core to unlock and release.
-+ *           PFN providers leave folio NULL and keep their PFNs stable until
-+ *           the caller releases the inode invalidate lock.
-  * @lookup_pfn_range: Look up the PFN for a given index. Returns 0 on success
-  *                    with the physical frame number in @pfn and the number of
-  *                    contiguous pages the mapping is valid for in @nr_pages.
-@@ -64,8 +69,8 @@ struct guest_memfd_provider_operations {
+@@ -66,6 +72,8 @@ struct guest_memfd_handle {
+ struct guest_memfd_provider_operations {
+ 	void *(*attach)(struct inode *gmem_inode, struct file *resource_file);
+ 	void (*release)(void *provider);
++	void (*lock)(void *provider);
++	void (*unlock)(void *provider);
  	struct folio *(*alloc_folio)(void *provider, pgoff_t index,
  				     struct mempolicy *mpol);
  	void (*invalidate_folio)(void *provider, struct folio *folio);
--	int (*get_pfn)(void *provider, pgoff_t index, unsigned long *pfn,
--		       int *max_order);
-+	int (*get_pfn)(struct inode *inode, void *provider, pgoff_t index,
-+		       struct guest_memfd_handle *handle);
- 	int (*lookup_pfn_range)(void *provider, pgoff_t index,
- 				unsigned long *pfn, size_t *nr_pages);
- 	void (*put_pfn_range)(void *provider, pgoff_t index, size_t nr_pages);
-diff --git a/samples/kvm/mem_provider_sample.c b/samples/kvm/mem_provider_sample.c
-index 5496e0c7864b..f1b0698268c0 100644
---- a/samples/kvm/mem_provider_sample.c
-+++ b/samples/kvm/mem_provider_sample.c
-@@ -178,8 +178,8 @@ static void mps_gmem_release(void *provider)
- 	fput(resource_file);
- }
- 
--static int mps_gmem_get_pfn(void *provider, pgoff_t index, unsigned long *pfn,
--			    int *max_order)
-+static int mps_gmem_get_pfn(struct inode *inode, void *provider,
-+		pgoff_t index, struct guest_memfd_handle *handle)
- {
- 	struct file *resource_file = provider;
- 	struct mps_info *info = resource_file->private_data;
-@@ -190,9 +190,9 @@ static int mps_gmem_get_pfn(void *provider, pgoff_t index, unsigned long *pfn,
- 	if (test_bit(index, info->absent))
- 		return -EFAULT;
- 
--	*pfn = info->base_pfn + index;
--	if (max_order)
--		*max_order = 0;
-+	handle->pfn = info->base_pfn + index;
-+	handle->max_order = 0;
-+	handle->pfn_attrs = 0;
- 
- 	return 0;
- }
 diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index 48d14a20fc0b..026a7bd0fe76 100644
+index 026a7bd0fe76..5fda14a53488 100644
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -38,6 +38,7 @@ struct gmem_inode {
- 
- 	void *provider;
- 	const struct guest_memfd_provider_operations *provider_ops;
-+	struct guest_memfd_provider_operations provider_operations;
- 
- 	u64 flags;
- 	/*
-@@ -49,6 +50,9 @@ struct gmem_inode {
- 	struct maple_tree attributes;
- };
- 
-+static int gmem_folio_get_pfn(struct inode *inode, void *provider, pgoff_t index,
-+		struct guest_memfd_handle *handle);
-+
- static __always_inline struct gmem_inode *GMEM_I(struct inode *inode)
- {
- 	return container_of(inode, struct gmem_inode, vfs_inode);
-@@ -83,6 +87,7 @@ static struct folio *gmem_native_alloc_folio(void *provider, pgoff_t index,
- static const struct guest_memfd_provider_operations gmem_native_provider_ops = {
- 	.attach = gmem_native_attach,
- 	.alloc_folio = gmem_native_alloc_folio,
-+	.get_pfn = gmem_folio_get_pfn,
- };
- 
- static bool gmem_provider_ops_valid(struct gmem_inode *gi,
-@@ -91,16 +96,47 @@ static bool gmem_provider_ops_valid(struct gmem_inode *gi,
+@@ -96,6 +96,9 @@ static bool gmem_provider_ops_valid(struct gmem_inode *gi,
  	if (!ops || !ops->attach)
  		return false;
  
-+	if (ops == &gmem_native_provider_ops)
-+		return !kvm_gmem_is_pfn_mode(gi);
-+
-+	/* get_pfn() and lookup_pfn_range() must describe the same memory. */
-+	if (!!ops->get_pfn != !!ops->lookup_pfn_range)
++	if (!!ops->lock != !!ops->unlock)
 +		return false;
 +
-+	if (ops->invalidate_folio && !ops->alloc_folio)
-+		return false;
-+
-+	/* Custom folio get_pfn() needs matching host mapping callbacks. */
-+	if (ops->alloc_folio && ops->get_pfn &&
-+	    (gi->flags & GUEST_MEMFD_FLAG_MMAP))
-+		return false;
-+
- 	if (kvm_gmem_is_pfn_mode(gi))
- 		return ops->get_pfn && ops->lookup_pfn_range;
+ 	if (ops == &gmem_native_provider_ops)
+ 		return !kvm_gmem_is_pfn_mode(gi);
  
- 	return ops->alloc_folio != NULL;
- }
- 
-+/*
-+ * Complete external folio providers here so built-in shmem does not reference
-+ * helpers in a potentially modular KVM. Native operations are declared statically.
-+ */
-+static void gmem_provider_init_ops(struct gmem_inode *gi,
-+		const struct guest_memfd_provider_operations *ops)
-+{
-+	gi->provider_operations = *ops;
-+	if (ops->alloc_folio) {
-+		if (!ops->get_pfn)
-+			gi->provider_operations.get_pfn = gmem_folio_get_pfn;
-+	}
-+	gi->provider_ops = &gi->provider_operations;
-+}
-+
- #define GMEM_RESOURCE_FD_NATIVE (-1)
- 
- static int kvm_gmem_attach_resource(struct inode *inode, int resource_fd)
- {
-+	struct gmem_inode *gi = GMEM_I(inode);
- 	const struct guest_memfd_provider_operations *ops = NULL;
- 	void *provider = ERR_PTR(-EOPNOTSUPP);
- 	struct file *resource_file = NULL;
-@@ -116,7 +152,7 @@ static int kvm_gmem_attach_resource(struct inode *inode, int resource_fd)
- 			ops = resource_file->f_op->gmem_provider_ops;
- 	}
- 
--	if (gmem_provider_ops_valid(GMEM_I(inode), ops))
-+	if (gmem_provider_ops_valid(gi, ops))
- 		provider = ops->attach(inode, resource_file);
- 
- 	if (resource_file)
-@@ -125,8 +161,11 @@ static int kvm_gmem_attach_resource(struct inode *inode, int resource_fd)
- 	if (IS_ERR(provider))
- 		return PTR_ERR(provider);
- 
--	GMEM_I(inode)->provider = provider;
--	GMEM_I(inode)->provider_ops = ops;
-+	gi->provider = provider;
-+	if (ops == &gmem_native_provider_ops)
-+		gi->provider_ops = ops;
-+	else
-+		gmem_provider_init_ops(gi, ops);
- 
- 	return 0;
- }
-@@ -141,18 +180,58 @@ static struct folio *gmem_provider_alloc_folio(struct gmem_inode *gi,
- 	return ERR_PTR(-EOPNOTSUPP);
+@@ -269,6 +272,42 @@ static void gmem_provider_put_pfn_range(struct gmem_inode *gi, pgoff_t index,
+ 		gi->provider_ops->put_pfn_range(gi->provider, index, nr_pages);
  }
  
 +/**
-+ * gmem_provider_get_pfn - Get a handle for a file index
++ * gmem_provider_lock_updates - Take the provider lock for memory updates
 + * @gi: guest_memfd inode containing the attached provider
-+ * @index: Page index within the file
-+ * @handle: Receives PFN information and an optional locked folio reference
 + *
-+ * Folio helpers return a locked folio with a reference. After success, call
-+ * gmem_unlock_handle(), then gmem_put_handle(). On failure, the provider
-+ * releases any folio lock or reference taken before the error.
++ * Prevent providers from moving or reassigning memory during guest
++ * invalidation, attribute conversion/publication, revocation, unbinding and
++ * final cleanup. Pair with gmem_provider_unlock_updates(). Providers
++ * requiring no additional locking may omit both lock() and unlock().
 + *
-+ * A host folio fault instead passes the locked reference to the MM, which
-+ * handles unlocking and releasing it. Do not call the cleanup helpers then.
++ * This is separate from locking inside get_pfn(); it neither acquires a PFN
++ * reference nor pairs with gmem_unlock_handle().
 + *
-+ * PFN providers leave handle->folio NULL and keep their PFNs stable while
-+ * the caller holds the inode invalidate lock. They must not leave per-lookup
-+ * locks or references requiring provider cleanup.
-+ *
-+ * Return: Zero on success, or a negative error code on failure.
++ * Caller holds the inode invalidate lock for write through
++ * gmem_provider_unlock_updates().
 + */
- static int gmem_provider_get_pfn(struct gmem_inode *gi, pgoff_t index,
--				 kvm_pfn_t *pfn, int *max_order)
-+		struct guest_memfd_handle *handle)
- {
--	unsigned long raw_pfn;
--	int r;
-+	int ret;
- 
--	r = gi->provider_ops->get_pfn(gi->provider, index, &raw_pfn, max_order);
--	if (r)
--		return r;
-+	*handle = (struct guest_memfd_handle){};
-+	ret = gi->provider_ops->get_pfn(&gi->vfs_inode, gi->provider, index, handle);
-+	return ret;
-+}
- 
--	*pfn = raw_pfn;
--	return 0;
-+/**
-+ * gmem_unlock_handle - Unlock the folio returned in a handle
-+ * @handle: Result returned by gmem_provider_get_pfn()
-+ *
-+ * Keep the folio reference until gmem_put_handle(). PFN providers return no
-+ * folio, so there is nothing to unlock.
-+ */
-+static void gmem_unlock_handle(struct guest_memfd_handle *handle)
++static void gmem_provider_lock_updates(struct gmem_inode *gi)
 +{
-+	if (handle->folio)
-+		folio_unlock(handle->folio);
++	if (gi->provider_ops && gi->provider_ops->lock)
++		gi->provider_ops->lock(gi->provider);
 +}
 +
 +/**
-+ * gmem_put_handle - Release the folio reference returned in a handle
-+ * @handle: Result already passed to gmem_unlock_handle()
++ * gmem_provider_unlock_updates - Release the provider lock for memory updates
++ * @gi: guest_memfd inode passed to gmem_provider_lock_updates()
 + *
-+ * PFN providers return no folio, so there is no temporary reference to drop.
++ * Release the provider lock after guest invalidation and any attribute
++ * publication are complete. This does not unlock or put an individual PFN reference.
++ *
++ * Caller holds the inode invalidate lock for write.
 + */
-+static void gmem_put_handle(struct guest_memfd_handle *handle)
++static void gmem_provider_unlock_updates(struct gmem_inode *gi)
 +{
-+	if (handle->folio)
-+		folio_put(handle->folio);
- }
- 
- #if defined(CONFIG_HAVE_KVM_ARCH_GMEM_CONVERT) || defined(CONFIG_HAVE_KVM_ARCH_GMEM_RECLAIM)
-@@ -523,19 +602,20 @@ static long kvm_gmem_allocate(struct inode *inode, loff_t offset, loff_t len)
- 		for (index = start; index < end; ) {
- 			pgoff_t next_boundary;
- 			pgoff_t max_nr_pages;
--			int max_order = 0;
--			kvm_pfn_t pfn;
-+			struct guest_memfd_handle handle;
- 
- 			if (signal_pending(current)) {
- 				r = -EINTR;
- 				break;
- 			}
- 
--			r = gmem_provider_get_pfn(gi, index, &pfn, &max_order);
-+			r = gmem_provider_get_pfn(gi, index, &handle);
- 			if (r)
- 				break;
- 
--			max_nr_pages = 1UL << max_order;
-+			max_nr_pages = 1UL << handle.max_order;
-+			gmem_unlock_handle(&handle);
-+			gmem_put_handle(&handle);
- 			next_boundary = ALIGN_DOWN(index + max_nr_pages, max_nr_pages);
- 			index += min_t(size_t, next_boundary - index, end - index);
- 			cond_resched();
-@@ -712,7 +792,7 @@ static vm_fault_t kvm_gmem_fault_user_mapping(struct vm_fault *vmf)
- 	struct gmem_inode *gi = GMEM_I(inode);
- 	vm_fault_t ret = VM_FAULT_LOCKED;
- 	struct folio *folio = NULL;
--	kvm_pfn_t pfn;
-+	struct guest_memfd_handle handle;
- 	int r = 0;
- 
- 	if (((loff_t)vmf->pgoff << PAGE_SHIFT) >= i_size_read(inode))
-@@ -722,9 +802,12 @@ static vm_fault_t kvm_gmem_fault_user_mapping(struct vm_fault *vmf)
- 	if (!kvm_gmem_is_shared_mem(inode, vmf->pgoff)) {
- 		r = -EACCES;
- 	} else if (kvm_gmem_is_pfn_mode(gi)) {
--		r = gmem_provider_get_pfn(gi, vmf->pgoff, &pfn, NULL);
--		if (!r)
--			ret = vmf_insert_pfn(vmf->vma, vmf->address, pfn);
-+		r = gmem_provider_get_pfn(gi, vmf->pgoff, &handle);
-+		if (!r) {
-+			ret = vmf_insert_pfn(vmf->vma, vmf->address, handle.pfn);
-+			gmem_unlock_handle(&handle);
-+			gmem_put_handle(&handle);
-+		}
- 	} else {
- 		folio = kvm_gmem_get_folio(inode, vmf->pgoff);
- 		if (IS_ERR(folio))
-@@ -1484,43 +1567,20 @@ void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- 	filemap_invalidate_unlock(file->f_mapping);
- }
- 
--/* On success, return a locked folio in folio mode and NULL in PFN mode. */
--static struct folio *__kvm_gmem_get_pfn(struct file *file,
--					struct kvm_memory_slot *slot,
--					pgoff_t index, kvm_pfn_t *pfn,
--					int *max_order)
-+/* Return a locked folio reference for the core to manage. */
-+static int gmem_folio_get_pfn(struct inode *inode, void *provider, pgoff_t index,
-+		struct guest_memfd_handle *handle)
- {
--	struct file *slot_file = READ_ONCE(slot->gmem.file);
--	struct gmem_inode *gi = GMEM_I(file_inode(file));
--	struct gmem_file *f = file->private_data;
- 	struct folio *folio;
--	int r;
--
--	if (file != slot_file) {
--		WARN_ON_ONCE(slot_file);
--		return ERR_PTR(-EFAULT);
--	}
- 
--	if (xa_load(&f->bindings, index) != slot) {
--		WARN_ON_ONCE(xa_load(&f->bindings, index));
--		return ERR_PTR(-EIO);
--	}
--
--	if (kvm_gmem_is_pfn_mode(gi)) {
--		r = gmem_provider_get_pfn(gi, index, pfn, max_order);
--		if (r)
--			return ERR_PTR(r);
--		return NULL;
--	}
--
--	folio = kvm_gmem_get_folio(file_inode(file), index);
-+	folio = kvm_gmem_get_folio(inode, index);
- 	if (IS_ERR(folio))
--		return folio;
-+		return PTR_ERR(folio);
- 
- 	if (folio_test_hwpoison(folio)) {
- 		folio_unlock(folio);
- 		folio_put(folio);
--		return ERR_PTR(-EHWPOISON);
-+		return -EHWPOISON;
- 	}
- 
- 	if (!folio_test_uptodate(folio)) {
-@@ -1528,47 +1588,64 @@ static struct folio *__kvm_gmem_get_pfn(struct file *file,
- 		folio_mark_uptodate(folio);
- 	}
- 
--	*pfn = folio_file_pfn(folio, index);
--	if (max_order)
--		*max_order = 0;
-+	handle->pfn = folio_file_pfn(folio, index);
-+	handle->max_order = 0;
- 
--	return folio;
-+	handle->folio = folio;
-+	return 0;
++	if (gi->provider_ops && gi->provider_ops->unlock)
++		gi->provider_ops->unlock(gi->provider);
 +}
 +
-+static int kvm_gmem_resolve_pfn(struct file *file, struct kvm_memory_slot *slot,
-+		pgoff_t index, struct guest_memfd_handle *handle)
-+{
-+	struct file *slot_file = READ_ONCE(slot->gmem.file);
-+	struct gmem_inode *gi = GMEM_I(file_inode(file));
-+	struct gmem_file *f = file->private_data;
-+
-+	if (file != slot_file) {
-+		WARN_ON_ONCE(slot_file);
-+		return -EFAULT;
-+	}
-+
-+	if (xa_load(&f->bindings, index) != slot) {
-+		WARN_ON_ONCE(xa_load(&f->bindings, index));
-+		return -EIO;
-+	}
-+
-+	return gmem_provider_get_pfn(gi, index, handle);
- }
- 
- int kvm_gmem_get_pfn(struct kvm *kvm, struct kvm_memory_slot *slot,
- 		     gfn_t gfn, kvm_pfn_t *pfn, int *max_order)
+ static void gmem_provider_release(struct gmem_inode *gi)
  {
- 	pgoff_t index = kvm_gmem_get_index(slot, gfn);
--	struct folio *folio;
--	int r = 0, __order;
--
--	max_order = max_order ?: &__order;
-+	struct guest_memfd_handle handle;
-+	struct inode *inode;
-+	int ret;
+ 	if (gi->provider_ops && gi->provider_ops->release)
+@@ -506,6 +545,7 @@ static int __kvm_gmem_revoke(struct inode *inode, pgoff_t start,
+ {
+ 	enum kvm_gfn_range_filter filter = kvm_gmem_get_all_gfns_filter(inode);
+ 	pgoff_t max_pages = i_size_read(inode) >> PAGE_SHIFT;
++	struct gmem_inode *gi = GMEM_I(inode);
+ 	loff_t offset, len;
+ 	pgoff_t end;
  
- 	CLASS(gmem_get_file, file)(slot);
- 	if (!file)
- 		return -EFAULT;
+@@ -526,6 +566,8 @@ static int __kvm_gmem_revoke(struct inode *inode, pgoff_t start,
+ 	 */
+ 	filemap_invalidate_lock(inode->i_mapping);
  
--	filemap_invalidate_lock_shared(file_inode(file)->i_mapping);
-+	inode = file_inode(file);
-+	filemap_invalidate_lock_shared(inode->i_mapping);
++	gmem_provider_lock_updates(gi);
++
+ 	kvm_gmem_invalidate_start(inode, start, end, filter);
  
--	folio = __kvm_gmem_get_pfn(file, slot, index, pfn, max_order);
--	if (IS_ERR(folio)) {
--		r = PTR_ERR(folio);
-+	ret = kvm_gmem_resolve_pfn(file, slot, index, &handle);
-+	if (ret)
- 		goto out;
--	}
+ 	if (kvm_gmem_is_pfn_mode(GMEM_I(inode))) {
+@@ -543,6 +585,7 @@ static int __kvm_gmem_revoke(struct inode *inode, pgoff_t start,
+ 	}
  
--	if (kvm_arch_has_gmem_convert() &&
--	    kvm_gmem_is_private_mem(file_inode(file), index))
--		r = kvm_arch_gmem_make_private(kvm, gfn, *pfn,
--					       (kvm_pfn_t)1 << *max_order);
--
--	if (folio) {
--		folio_unlock(folio);
--		folio_put(folio);
--	}
-+	if (kvm_gmem_is_private_mem(inode, index) && kvm_arch_has_gmem_convert())
-+		ret = kvm_arch_gmem_make_private(kvm, gfn, handle.pfn,
-+						 (kvm_pfn_t)1 << handle.max_order);
+ 	kvm_gmem_invalidate_end(inode, start, end);
++	gmem_provider_unlock_updates(gi);
  
-+	*pfn = handle.pfn;
-+	if (max_order)
-+		*max_order = handle.max_order;
-+	gmem_unlock_handle(&handle);
-+	gmem_put_handle(&handle);
+ 	filemap_invalidate_unlock(inode->i_mapping);
+ 
+@@ -1118,6 +1161,8 @@ static int __kvm_gmem_set_attributes(struct inode *inode, pgoff_t start,
+ 	 * checks and can proceed to do guest-breaking changes.
+ 	 */
+ 
++	gmem_provider_lock_updates(gi);
++
+ 	filter = to_private ? KVM_FILTER_SHARED : KVM_FILTER_PRIVATE;
+ 	kvm_gmem_invalidate_start(inode, start, end, filter);
+ 
+@@ -1127,6 +1172,7 @@ static int __kvm_gmem_set_attributes(struct inode *inode, pgoff_t start,
+ 	mas_store_prealloc(&mas, xa_mk_value(attrs));
+ 
+ 	kvm_gmem_invalidate_end(inode, start, end);
++	gmem_provider_unlock_updates(gi);
  out:
--	filemap_invalidate_unlock_shared(file_inode(file)->i_mapping);
--	return r;
-+	filemap_invalidate_unlock_shared(inode->i_mapping);
-+	return ret;
- }
- EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_gmem_get_pfn);
+ 	filemap_invalidate_unlock(mapping);
+ 	return r;
+@@ -1793,8 +1839,12 @@ static void kvm_gmem_destroy_inode(struct inode *inode)
+ 	if (gi->provider_ops && kvm_gmem_is_pfn_mode(gi)) {
+ 		pgoff_t nr_pages = i_size_read(inode) >> PAGE_SHIFT;
  
-@@ -1579,31 +1656,23 @@ static long __kvm_gmem_populate(struct kvm *kvm, struct kvm_memory_slot *slot,
- 				kvm_gmem_populate_cb post_populate, void *opaque)
- {
- 	pgoff_t index = kvm_gmem_get_index(slot, gfn);
--	struct folio *folio;
--	kvm_pfn_t pfn;
-+	struct guest_memfd_handle handle;
- 	int ret;
- 
- 	filemap_invalidate_lock(file->f_mapping);
--
--	folio = __kvm_gmem_get_pfn(file, slot, index, &pfn, NULL);
--	if (IS_ERR(folio)) {
--		ret = PTR_ERR(folio);
-+	ret = kvm_gmem_resolve_pfn(file, slot, index, &handle);
-+	if (ret)
- 		goto out_unlock;
--	}
--
--	if (folio)
--		folio_unlock(folio);
- 
-+	gmem_unlock_handle(&handle);
- 	if (!kvm_is_private_gfn(kvm, gfn)) {
- 		ret = -EINVAL;
--		goto out_put_folio;
-+		goto out_put;
++		filemap_invalidate_lock(inode->i_mapping);
++		gmem_provider_lock_updates(gi);
+ 		kvm_gmem_pfn_reclaim(gi, 0, nr_pages);
+ 		gmem_provider_put_pfn_range(gi, 0, nr_pages);
++		gmem_provider_unlock_updates(gi);
++		filemap_invalidate_unlock(inode->i_mapping);
  	}
  
--	ret = post_populate(kvm, gfn, pfn, src_page, opaque);
--
--out_put_folio:
--	if (folio)
--		folio_put(folio);
-+	ret = post_populate(kvm, gfn, handle.pfn, src_page, opaque);
-+out_put:
-+	gmem_put_handle(&handle);
- out_unlock:
- 	filemap_invalidate_unlock(file->f_mapping);
- 	return ret;
+ 	gmem_provider_release(gi);
 -- 
 2.43.0
 
