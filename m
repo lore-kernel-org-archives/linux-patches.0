@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794469365;
-	b=39RWTj5/n8FDSz/PR9JmAe82rFDgjHKz8cnes3qCdvH0fXXEo9/0033lgyXs7U9+RIOL
-	 qNsmOyAIeVqNAauFirvhqZx0eROFRDBTwFXZ1KVel0dU7soHCXirbnvYDcotHE8B4xq1l
-	 glGfnJ2Yq5Z5/VBlgY9KIKx3LsG87rdSo2iIKKPj/bl0H3HIaX0PkwRyuuBXu273gNvkR
-	 9v4NhAF996F/6f4kyyPdIK82PCpNfXNZfxWPkr8TFyZ2QLY8VlSbSIccojjdX1XDxfGbG
-	 tuy6iSmhLoJ/yaFvLFBzqb+3x4iIQAn5mdGeoDg9nhzIKTzY7bpRGPRPgy2/McBZ+rQ==
+	t=1794469371;
+	b=FJ0Dd3wMVGS1jBKNYJMvAYdAOPNKoXLN9WssKsH1gjDNkzH/9Bs7VIpWN7fs4j4Ipco8
+	 HkO8lE/ANlmz0WGpH00DDiM4HZWmpJDsQbkWW9vFF+5FijP9RpyflKHyLMk4hvxluanCo
+	 NayANLbfp8jgBW+QuzEazJlii6Awm3KRQX1MaUNTkijemSqM/12zeHE9Bl8Zh1oPip0OP
+	 noYKKjH+qakguRFQP5f3xTHGpOAJ0Q9YbT+ZyDMJT3r7g7/3JBo9FQHatppuFleHWRGra
+	 kzhypDHFxQAkMCGITJAbS8n4hWdO7AZZEQv5pLw2ETqod8HAtUosvGzOHGKtGce6qbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794469365;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794469371;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=cY0K1iD954gNsyU0+zow00ukpmP3gOeNdAP0lfDFP/Y=;
-	b=m4rDNgvUN6Fd38vlSzYnkxAacTDnBViehCYKnQJABo1n71sXVi6Qwi/ijZMHSHa7wahw
-	 ClaTqq/APLddnHPe9GfGHfxN3F5bxP89TiOkpFkRMoQr77qJX5+DE2sXF2nOsk+bmuEJW
-	 0o9NuNvDglhzVlWWysDnZ1LVzNsR96yA4sznwvaTjzhlXbV81w+uumcaI3D73MGxQy2cf
-	 8WKVnSEfceGeD382L3hPbEaGT6sjtmjvqYhu4dH8x58sYnOEIZqYHjzrNrTwx8lLK+wI1
-	 8Z54GVWDd6Uz5NWN34Zvru6R+T9vQ7K+e1xwQD3Yspq29errHzkBSPlYE90Ht9fLB0A==
+	bh=2hEc7j+3dZpIM0BbkPz5XVJm5OcV8IeH+pucDwQ3oZ8=;
+	b=FGBngIKAnePi+xSGy0GaodYIKAtviISAqgViZugAhMs7o+1VWSn2ZZ6ishY5IsnA9dzM
+	 XjQKxi95zxu6g70/y48g5bvg2g7/wBKvs7G0Ii8ntdEX+HJraHL80gCvBz2gw+hue5xo3
+	 G5xc2lnOMW4eAInruFe0hYouyBBYXw4tLmqDW93xy2wp3nG0ZEHtmRuExUk2S/bDnCRxN
+	 PdJ766+qePxPw3U9g5+JitAvS0/I5Il9gCg3RUAjQq3nZUGZ6tzqGJ4Bu/hIf3YJMHL46
+	 hOH3b9T1RI6Cq16n/DbNyJ2QBzsopBbFFBaDfSFdx5o9NBfsSKrhkHEHDMxtb7pVoAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WDpsWMzm;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="b5nR/ny4";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CC4606A32D;
-	Thu, 12 Nov 2026 07:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B948606A327;
+	Thu, 12 Nov 2026 07:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WDpsWMzm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950AA1F00A0A;
-	Thu, 12 Nov 2026 07:42:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b5nR/ny4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30691F00A0A;
+	Thu, 12 Nov 2026 07:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794469365;
-	bh=cY0K1iD954gNsyU0+zow00ukpmP3gOeNdAP0lfDFP/Y=;
+	s=k20260515; t=1794469370;
+	bh=2hEc7j+3dZpIM0BbkPz5XVJm5OcV8IeH+pucDwQ3oZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WDpsWMzmE7eSAMdngK+iYAypueOpmCmKuI2a2mxqGtLnN7FuULo8afw2iawplu6e0
-	 Z8lL6JfpkryCZRMxlJ5WW3e2Z4/1rjeM3Tugi0JJzUyw48ZFKOneHhvCo4GM1ubR2q
-	 AjJDFWPEo9fjGE5I5/YgT7znhZOBL9Yz9E3BqLRO9yN1bzuH4+ouLihQqGgs8Z9bqN
-	 T/gJE7k1ziQ1sEIbHQ0F4L4bTYF6iwwsjW3Ipc01cyFgZYttq7Dkm0Zf33O/c/G62o
-	 2ECJngUF615l+gNO6Ux+XX3ZFJpCFw5dFBDHRkXpdTe75X2aapBLa9ecLfuN2rc3fA
-	 kwXRt8SjlMDnw==
+	b=b5nR/ny4Lki6mzS7aWcCt7kalchRCzheJFmBGHUcwG0WVyAUqpbKam3p+PnplAKrF
+	 dg+kysTvAY7LBTqTvjCZBOZfzKlC22V1tFJ30caOczRSYn/Yl5dM0nWA8AwKwSP2fX
+	 nG3LgqQLx2PoY3Vcu8xHV9lIu8x+d69WCzbiM69VjKQ9V2+epiKf3L/36eBL8FS8F8
+	 GcVnmdsZkkQcN/o5qhEWrtPG2s/G8k5vZbKlzK8sJsMI7ikegljKj9fS1zCLZPhd7N
+	 2z8la2hsjaQaFcz50vxiXzR1szQ0SvWZFPuEge/Owsorpu/lv2bdO79LW3mpS8H87A
+	 tl8f4qZNb1pmw==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -58,9 +58,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v5 14/16] KVM: guest_memfd: Enable shared host mappings for device providers
-Date: Thu, 12 Nov 2026 13:11:18 +0530
-Message-ID: <20261112074120.1570072-15-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v5 15/16] KVM: guest_memfd: Notify providers during file release
+Date: Thu, 12 Nov 2026 13:11:19 +0530
+Message-ID: <20261112074120.1570072-16-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261112074120.1570072-1-aneesh.kumar@kernel.org>
 References: <20261112074120.1570072-1-aneesh.kumar@kernel.org>
@@ -75,76 +75,78 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use the PFN provider mmap and fault handlers for shared device memory.
-Apply device VMA flags and noncached, decrypted protections, retaining
-the inode invalidate lock across PFN lookup and PTE insertion.
-
-Private ranges remain inaccessible to host faults. Attribute conversion
-revokes host mappings before making memory private.
+When releasing the last file associated with an inode, invalidate its
+mappings and notify the provider that no private ranges remain. Hold the
+provider lock across both operations so device unlock waits for cleanup.
+Skip notification if provider attachment failed.
 
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- include/linux/guest_memfd.h |  4 +++-
- virt/kvm/guest_memfd.c      | 18 ++++++++++++++++--
- 2 files changed, 19 insertions(+), 3 deletions(-)
+ virt/kvm/guest_memfd.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-index 31cd5142e5f1..1fcce1240bb6 100644
---- a/include/linux/guest_memfd.h
-+++ b/include/linux/guest_memfd.h
-@@ -63,7 +63,9 @@ struct guest_memfd_handle {
-  *          providers must not retain it.
-  * @release: Release provider context and unpin any resources. Must not access
-  *           the VM here; its file reference may be gone.
-- * @device_memory: Memory is device MMIO rather than RAM.
-+ * @device_memory: Memory is device MMIO rather than RAM. The core maps its
-+ *                 userspace VMAs noncached and decrypted, with device flags.
-+ *                 Shared userspace faults are resolved through @get_pfn
-  * @prepare_memory_region: Optional check of a memory range and preparation
-  *                         for access. Called after common file checks and
-  *                         before publishing the memslot. Offset and size are
 diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index 1c90f59f480e..d3ae01aa6fe6 100644
+index d3ae01aa6fe6..bdee42ff6b26 100644
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -1053,6 +1053,8 @@ static vm_fault_t gmem_pfn_fault(struct inode *inode, void *provider,
- 	if (r)
- 		return gmem_fault_error(r);
+@@ -87,7 +87,6 @@ static bool gmem_provider_is_device(struct gmem_inode *gi)
+ 	return gi->provider_ops && gi->provider_ops->device_memory;
+ }
  
-+	if (gmem_provider_is_device(gi))
-+		prot = pgprot_decrypted(pgprot_noncached(prot));
- 	ret = vmf_insert_pfn_prot(vmf->vma, vmf->address, handle.pfn, prot);
- 	gmem_unlock_handle(&handle);
- 	gmem_put_handle(&handle);
-@@ -1114,6 +1116,11 @@ static const struct vm_operations_struct kvm_gmem_vm_ops = {
- #endif
- };
+-
+ static bool kvm_gmem_is_pfn_mode(struct gmem_inode *gi)
+ {
+ 	return gi->flags & GUEST_MEMFD_FLAG_PFN_MODE;
+@@ -904,12 +903,28 @@ static long kvm_gmem_fallocate(struct file *file, int mode, loff_t offset,
+ 	return ret;
+ }
  
-+/* Device PFNs have fixed addresses and do not use NUMA allocation policy. */
-+static const struct vm_operations_struct kvm_gmem_device_vm_ops = {
-+	.fault = kvm_gmem_fault_user_mapping,
-+};
-+
- static int gmem_folio_mmap(struct inode *inode, void *provider,
- 		struct vm_area_struct *vma)
- {
-@@ -1124,8 +1131,15 @@ static int gmem_folio_mmap(struct inode *inode, void *provider,
- static int gmem_pfn_mmap(struct inode *inode, void *provider,
- 		struct vm_area_struct *vma)
- {
--	vm_flags_set(vma, VM_PFNMAP);
--	vma->vm_ops = &kvm_gmem_vm_ops;
++/* No file users remain, so private attributes cannot create new mappings. */
++static void gmem_provider_release_views(struct inode *inode)
++{
 +	struct gmem_inode *gi = GMEM_I(inode);
 +
-+	/* Keep device memory protections in the VMA for mprotect(). */
-+	if (gmem_provider_is_device(gi))
-+		vma->vm_page_prot = pgprot_decrypted(pgprot_noncached(vma->vm_page_prot));
++	/* File release also runs after a failed provider attachment. */
++	if (!gi->provider_ops)
++		return;
 +
-+	vm_flags_set(vma, VM_IO | VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP);
-+	vma->vm_ops = gmem_provider_is_device(gi) ? &kvm_gmem_device_vm_ops :
-+						 &kvm_gmem_vm_ops;
- 	return 0;
- }
++	if (gi->provider_ops->update_private_ranges &&
++	    list_is_singular(&gi->gmem_file_list))
++		gi->provider_ops->update_private_ranges(gi->provider, false);
++}
++
+ static int kvm_gmem_release(struct inode *inode, struct file *file)
+ {
+ 	struct gmem_file *f = file->private_data;
++	struct gmem_inode *gi = GMEM_I(inode);
+ 	struct kvm_memory_slot *slot;
+ 	struct kvm *kvm = f->kvm;
+ 	unsigned long index;
++	enum kvm_gfn_range_filter filter = kvm_gmem_get_all_gfns_filter(inode);
+ 
+ 	/*
+ 	 * Prevent concurrent attempts to *unbind* a memslot.  This is the last
+@@ -922,6 +937,8 @@ static int kvm_gmem_release(struct inode *inode, struct file *file)
+ 
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 
++	gmem_provider_lock_updates(gi);
++
+ 	/*
+ 	 * Note!  synchronize_srcu() is _not_ needed after nullifying memslot
+ 	 * bindings as slot->gmem.file cannot be set back to a non-null value
+@@ -975,9 +992,10 @@ static int kvm_gmem_release(struct inode *inode, struct file *file)
+ 	 * Zap all SPTEs pointed at by this file.  Do not free the backing
+ 	 * memory, as its lifetime is associated with the inode, not the file.
+ 	 */
+-	__kvm_gmem_invalidate_start(f, 0, -1ul,
+-				    kvm_gmem_get_all_gfns_filter(inode));
++	__kvm_gmem_invalidate_start(f, 0, -1ul, filter);
+ 	__kvm_gmem_invalidate_end(f, 0, -1ul);
++	gmem_provider_release_views(inode);
++	gmem_provider_unlock_updates(gi);
+ 
+ 	list_del(&f->entry);
  
 -- 
 2.43.0
