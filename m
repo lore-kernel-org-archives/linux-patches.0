@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794469333;
-	b=UnvgA5T/eTHW8qutg1xWTcbbnbIm+bSHNU3RKhBavecnbFzXawd2h34tv6mcpUYC/al2
-	 ZtMbHW1FuLJu/DOcqa70BX28hv0YgKBLRVuMm7Jrp3mplxILdiqC9DOcKZP/vKP3AmWkW
-	 Hbt5RKFlKRW3xRuRxm75j307MwebbUG4PQQOLEbm19YAY1Bd2E78RR2YS7Tz1Fgy7vqnm
-	 Qqy66JmuyKpkkctN2bsXjfzvovf2lJX2XYCYEUYaOwLsL/9Nm+zwV8hmBp4YIiamZvf58
-	 ceibSQb/ydNwUe9SRvJc9NIbtsVMbeDXd0iPZsT8B8LgKxXOppnQO9M+tjJZ3cRCvJQ==
+	t=1794469338;
+	b=sDAkXlrBCGlFcRzrkP9MD8Izn+U3GQ60hJDa1Em/ibpSUL8Qp/EYXWdtSPZ36VnNWu4C
+	 LQMuLX9hiMws6vngJkKDWazT14O2jZWdP1KnLzPDuXf3eEecWOd3fG3tKOL5d3VukNPhK
+	 01FoGsqAkanVcY3wLUzNSBuBNLHjrPIIbVsl21rYC3Ln/DHihemJ8lDIUZwp4+fS+QXPi
+	 4S65P5XEAkRBl1uT/szR5hgDamN+88q6nFGvgOnDq2xuugAVWcWx8HlgkrjLrGTU+X5Jx
+	 fxAGBpDOsn1vQsEOQ15P5nnanhqdHfLo9Osmd/cPVs+Y8bpJZH/zL8MgI/bdJVz2bkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794469333;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794469338;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=iUmorQisNLh8D/04/1BxMpv3F30MU/CV/umiEAlyLlQ=;
-	b=nQuPCJGxQbw46ZFPYILimFVrPD6XpIVv95XmZl2A6uTPPb3ydgkeQ+cV+77i/Dvi6t1/
-	 8q/oHJJ8UoHTndy6RAIK/0MjDhlnuzKAM3xQsBRma8ZX6COH3DPk3+76q/LisGW4CIYuK
-	 /ypPKuaz8r0l8YhSAbYhjZ7X4eK2cHZcOxCF3WAky2XFNZ7R53T6CAm0yZNncr206tuai
-	 GY8HRZ+ELYJqgumicsC0TZx8DFJZ4wvW3oSPKBdPNRpJ1A2bqYqj4rMETeAuX8QfA1+B/
-	 gOwEmQqJtHicFfymm2tWxNJxevF1eD3UaaJQR33c1bcgqApbfJVfYsyY+yhrcNjMSrw==
+	bh=qXjMFNPQxrkvZZbXIb9HTUedBy+gHvxHgIW3twN5M44=;
+	b=f9HJLybPkPXW2GxUxj8ldKfulyfcnDubj5ir0Pj//aWi8p4121dhRxClU+QtxSPHpk3J
+	 Upgp8lqbEdRWbBQoI0/aHJigJfF+ms6dBGBoj+vYFHsUNZmGMV6kMNf2l+qNCVe0ytlsM
+	 yyaH+Q7GZKa+YNut6Km1vHbAxcwT8LliXDKUnM7IFw1DlK2Ym7T81gLNoeCudA4RSHWlS
+	 5hbrDP12/gjan0h4Rrwbcp0YNQt2Jhtc4rcwzLL28J+8opkzaQx0+qWb5WTV449cubA1X
+	 DtV0VUWDtF/ZklqFBwk0CA+ktThrUQx9QOMdnn+qUq0egDpqKU68R+Slv30ToAfIMuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UAp8UH17;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dSJBx6ns;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB23606A32D;
-	Thu, 12 Nov 2026 07:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03E9606A330;
+	Thu, 12 Nov 2026 07:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UAp8UH17
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4698B1F00A05;
-	Thu, 12 Nov 2026 07:42:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dSJBx6ns
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49DC1F00A09;
+	Thu, 12 Nov 2026 07:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794469333;
-	bh=iUmorQisNLh8D/04/1BxMpv3F30MU/CV/umiEAlyLlQ=;
+	s=k20260515; t=1794469338;
+	bh=qXjMFNPQxrkvZZbXIb9HTUedBy+gHvxHgIW3twN5M44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UAp8UH17INjunsxb7J7wChDbIBfMw19cGgVekiHCvwchRH7CpEifE/wTrNlufzTFO
-	 XexvrkBUfaR+zxUW7EMhxkcntNuMgSXZrDT2Zt0OY6KlnFyFVs5qAweFjiHt/g9dXO
-	 kNjIhjwMxr3LY7aSW9Kh0PecCQz0jBOI3q6M8V8rHJQPZPDuGuO3JUb9hmaPw2XyJ5
-	 gjyXgQCdklLoKZui+ioPzji+vdb4bGhTGuWdcdWdLY7QZEy0TdkUYP7Z8QFYhtU1Vi
-	 bMF4/wXEGr0VfUfXzp0wS3cey7UZAHEtsR2G8jAwx+LV2giTp7sVg9e/c2yN7G0Tqv
-	 bW/Y+PK+dnq+g==
+	b=dSJBx6nsUJ2BOIaERCMCJLYYc6RJnxunk2VDAKG6HtZgT6001eugR4UG2rEZdhZ66
+	 VA+1UPWJZQ66gbTYHjpQYYuSs95wDbymI7CaG6NsGRPPwpSIsogDoi/p/CDnFB4pBT
+	 p7uXPPMEErFa8v1bFVoLFBUYtUwqFWWugmaphBKyyQ4QtdFKCC6KpSKo3UQvddP/J5
+	 m3oEoutByaYT/Ccsk0ly45GPnxYp11o2GnknmSLQCgHEHRfmtdnRDKxjVCfwWJrQbY
+	 m0Hq4MZWILQFRh++I3muwRB8M4Zkdls6gUp63npI4ZOEY3urkDE8MUrLNr0NFxgHAA
+	 IfmkPWgJvbrCg==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -58,9 +58,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v5 08/16] KVM: guest_memfd: Use provider operations for fallocate allocation
-Date: Thu, 12 Nov 2026 13:11:12 +0530
-Message-ID: <20261112074120.1570072-9-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v5 09/16] KVM: guest_memfd: Use provider operations for host mappings and faults
+Date: Thu, 12 Nov 2026 13:11:13 +0530
+Message-ID: <20261112074120.1570072-10-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261112074120.1570072-1-aneesh.kumar@kernel.org>
 References: <20261112074120.1570072-1-aneesh.kumar@kernel.org>
@@ -75,228 +75,283 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use allocate_range() for fallocate allocation so providers can supply
-allocation and release callback. When a provider supplies neither callback,
-guest_memfd handles allocation and release for it. Providers that supply
-only release_range() cannot use fallocate(), including hole punching.
+Add mmap() and fault() callbacks so providers can set up host mappings
+and handle faults. Keep common permission checks, private/shared checks
+and inode locking in guest_memfd. Require providers to supply both
+callbacks together, or let guest_memfd handle both.
 
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- include/linux/guest_memfd.h |   8 +++
- virt/kvm/guest_memfd.c      | 122 +++++++++++++++++++++++-------------
- 2 files changed, 87 insertions(+), 43 deletions(-)
+ include/linux/guest_memfd.h |  14 ++++
+ virt/kvm/guest_memfd.c      | 146 +++++++++++++++++++++++-------------
+ 2 files changed, 106 insertions(+), 54 deletions(-)
 
 diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-index 2ed929a9dca5..e11b2392b001 100644
+index e11b2392b001..777507191603 100644
 --- a/include/linux/guest_memfd.h
 +++ b/include/linux/guest_memfd.h
-@@ -49,12 +49,18 @@ struct guest_memfd_handle {
-  *                      failure; it initially points to the range start. NULL
-  *                      selects folio validation for folio providers; for
-  *                      other providers, NULL skips this validation.
-+ * @allocate_range: Preallocate [start, end), without architecture private
-+ *                  preparation. Called with the inode invalidate lock held
-+ *                  for read.
-  * @release_range: Remove host mappings and release memory in [start, end),
-  *                 after core guest invalidation, under the inode invalidate
-  *                 write lock and any provider lock. Also called at final
-  *                 inode cleanup, when no bindings remain. The optional pfn
-  *                 identifies memory revoked by the provider. release_backing
-  *                 is false for provider-initiated revocation, true otherwise.
-+ *                 Supplying this without allocate_range()
-+ *                 supports a fixed memory range and disables fallocate(),
-+ *                 including hole punching.
+@@ -3,6 +3,7 @@
+ #define _LINUX_GUEST_MEMFD_H
+ 
+ #include <linux/bits.h>
++#include <linux/mm_types.h>
+ #include <linux/types.h>
+ 
+ #define GUEST_MEMFD_PFN_MMIO	BIT_ULL(0)
+@@ -61,6 +62,14 @@ struct guest_memfd_handle {
+  *                 Supplying this without allocate_range()
+  *                 supports a fixed memory range and disables fallocate(),
+  *                 including hole punching.
++ * @mmap: Configure provider-specific VMA flags and operations after common
++ *        mapping permission checks. Supply with fault(), or omit both to
++ *        select folio/PFN host-mapping defaults.
++ * @fault: Resolve a shared host fault under the inode invalidate read lock.
++ *         Default folio helpers transfer a locked page reference to the MM
++ *         and return VM_FAULT_LOCKED; default PFN helpers insert the PFN with
++ *         its memory type and permissions, then release their temporary
++ *         reference.
   * @alloc_folio: Allocate an uninserted folio for a given index and NUMA policy.
   *               Must return a pointer to a struct folio on success, or an
   *               ERR_PTR() error code on failure. Must never return NULL.
-@@ -92,6 +98,8 @@ struct guest_memfd_provider_operations {
- 	void (*unlock)(void *provider);
- 	int (*prepare_attributes)(struct inode *inode, void *provider, pgoff_t start,
- 			size_t nr_pages, u64 memory_attrs, pgoff_t *err_index);
-+	int (*allocate_range)(struct inode *inode, void *provider,
-+			      pgoff_t start, pgoff_t end);
+@@ -72,6 +81,9 @@ struct guest_memfd_handle {
+  *           guest_memfd_handle.folio for the core to unlock and release.
+  *           PFN providers leave folio NULL and keep their PFNs stable until
+  *           the caller releases the inode invalidate lock.
++ *           Folio providers supplying get_pfn() must also supply mmap() and
++ *           fault() when host mmap is enabled. The default fault expects a
++ *           locked folio reference in guest_memfd_handle.folio.
+  * @lookup_pfn_range: Look up the PFN for a given index. Returns 0 on success
+  *                    with the physical frame number in @pfn and the number of
+  *                    contiguous pages the mapping is valid for in @nr_pages.
+@@ -103,6 +115,8 @@ struct guest_memfd_provider_operations {
  	int (*release_range)(struct inode *inode, void *provider,
  			pgoff_t start, pgoff_t end, const unsigned long *pfn,
  			u64 pfn_attrs, bool release_backing);
++	int (*mmap)(struct inode *inode, void *provider, struct vm_area_struct *vma);
++	vm_fault_t (*fault)(struct inode *inode, void *provider, struct vm_fault *vmf);
+ 	struct folio *(*alloc_folio)(void *provider, pgoff_t index,
+ 				     struct mempolicy *mpol);
+ 	void (*invalidate_folio)(void *provider, struct folio *folio);
 diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index a224ae969d79..c6b1814b5e7e 100644
+index c6b1814b5e7e..3a92f2453e8b 100644
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -56,6 +56,10 @@ static int gmem_folio_lookup_pfn_range(struct inode *inode, void *provider,
- 		pgoff_t index, unsigned long *pfn, size_t *nr_pages, u64 *pfn_attrs);
- static int gmem_folio_prepare_attributes(struct inode *inode, void *provider,
- 		pgoff_t start, size_t nr_pages, u64 attrs, pgoff_t *err_index);
-+static int gmem_folio_allocate_range(struct inode *inode, void *provider,
-+		pgoff_t start, pgoff_t end);
-+static int gmem_pfn_allocate_range(struct inode *inode, void *provider,
-+		pgoff_t start, pgoff_t end);
- static int gmem_folio_release_range(struct inode *inode, void *provider,
+@@ -66,6 +66,14 @@ static int gmem_folio_release_range(struct inode *inode, void *provider,
+ static int gmem_pfn_release_range(struct inode *inode, void *provider,
  		pgoff_t start, pgoff_t end, const unsigned long *pfn,
  		u64 pfn_attrs, bool release_backing);
-@@ -100,6 +104,7 @@ static const struct guest_memfd_provider_operations gmem_native_provider_ops = {
- 	.get_pfn = gmem_folio_get_pfn,
- 	.lookup_pfn_range = gmem_folio_lookup_pfn_range,
++static int gmem_folio_mmap(struct inode *inode, void *provider,
++		struct vm_area_struct *vma);
++static int gmem_pfn_mmap(struct inode *inode, void *provider,
++		struct vm_area_struct *vma);
++static vm_fault_t gmem_folio_fault(struct inode *inode, void *provider,
++		struct vm_fault *vmf);
++static vm_fault_t gmem_pfn_fault(struct inode *inode, void *provider,
++		struct vm_fault *vmf);
+ 
+ static __always_inline struct gmem_inode *GMEM_I(struct inode *inode)
+ {
+@@ -106,6 +114,8 @@ static const struct guest_memfd_provider_operations gmem_native_provider_ops = {
  	.prepare_attributes = gmem_folio_prepare_attributes,
-+	.allocate_range = gmem_folio_allocate_range,
+ 	.allocate_range = gmem_folio_allocate_range,
  	.release_range = gmem_folio_release_range,
++	.mmap = gmem_folio_mmap,
++	.fault = gmem_folio_fault,
  };
  
-@@ -122,6 +127,10 @@ static bool gmem_provider_ops_valid(struct gmem_inode *gi,
- 	if (ops->invalidate_folio && !ops->alloc_folio)
+ static bool gmem_provider_ops_valid(struct gmem_inode *gi,
+@@ -131,8 +141,11 @@ static bool gmem_provider_ops_valid(struct gmem_inode *gi,
+ 	if (ops->allocate_range && !ops->release_range)
  		return false;
  
-+	/* A fixed memory range may support release without supporting allocation. */
-+	if (ops->allocate_range && !ops->release_range)
+-	/* Custom folio get_pfn() needs matching host mapping callbacks. */
+-	if (ops->alloc_folio && ops->get_pfn &&
++	if (!!ops->mmap != !!ops->fault)
 +		return false;
 +
- 	/* Custom folio get_pfn() needs matching host mapping callbacks. */
- 	if (ops->alloc_folio && ops->get_pfn &&
++	/* The default host fault expects a locked folio in guest_memfd_handle.folio. */
++	if (ops->alloc_folio && ops->get_pfn && !ops->fault &&
  	    (gi->flags & GUEST_MEMFD_FLAG_MMAP))
-@@ -148,11 +157,15 @@ static void gmem_provider_init_ops(struct gmem_inode *gi,
- 		}
- 		if (!ops->prepare_attributes)
- 			gi->provider_operations.prepare_attributes = gmem_folio_prepare_attributes;
--		if (!ops->release_range)
-+		if (!ops->release_range) {
-+			gi->provider_operations.allocate_range = gmem_folio_allocate_range;
+ 		return false;
+ 
+@@ -161,11 +174,19 @@ static void gmem_provider_init_ops(struct gmem_inode *gi,
+ 			gi->provider_operations.allocate_range = gmem_folio_allocate_range;
  			gi->provider_operations.release_range = gmem_folio_release_range;
+ 		}
++		if (!ops->mmap) {
++			gi->provider_operations.mmap = gmem_folio_mmap;
++			gi->provider_operations.fault = gmem_folio_fault;
 +		}
  	} else {
--		if (!ops->release_range)
-+		if (!ops->release_range) {
-+			gi->provider_operations.allocate_range = gmem_pfn_allocate_range;
+ 		if (!ops->release_range) {
+ 			gi->provider_operations.allocate_range = gmem_pfn_allocate_range;
  			gi->provider_operations.release_range = gmem_pfn_release_range;
+ 		}
++		if (!ops->mmap) {
++			gi->provider_operations.mmap = gmem_pfn_mmap;
++			gi->provider_operations.fault = gmem_pfn_fault;
 +		}
  	}
  	gi->provider_ops = &gi->provider_operations;
  }
-@@ -717,47 +730,11 @@ int kvm_gmem_revoke(struct inode *inode, pgoff_t start, size_t nr_pages,
+@@ -958,63 +979,69 @@ static bool kvm_gmem_supports_mmap(struct inode *inode)
+ 	return GMEM_I(inode)->flags & GUEST_MEMFD_FLAG_MMAP;
  }
- EXPORT_SYMBOL_GPL(kvm_gmem_revoke);
  
--static long kvm_gmem_allocate(struct inode *inode, loff_t offset, loff_t len)
-+static int gmem_folio_allocate_range(struct inode *inode, void *provider,
-+		pgoff_t start, pgoff_t end)
+-static vm_fault_t kvm_gmem_fault_user_mapping(struct vm_fault *vmf)
++static vm_fault_t gmem_fault_error(int ret)
++{
++	return ret == -EAGAIN ? VM_FAULT_RETRY : vmf_error(ret);
++}
++
++static vm_fault_t gmem_folio_fault(struct inode *inode, void *provider,
++		struct vm_fault *vmf)
  {
--	struct address_space *mapping = inode->i_mapping;
--	struct gmem_inode *gi = GMEM_I(inode);
--	pgoff_t start, index, end;
--	int r;
--
--	/* Dedicated guest is immutable by default. */
--	if (offset + len > i_size_read(inode))
--		return -EINVAL;
--
--	filemap_invalidate_lock_shared(mapping);
--
--	start = offset >> PAGE_SHIFT;
--	end = (offset + len) >> PAGE_SHIFT;
--
--	r = 0;
--	if (kvm_gmem_is_pfn_mode(gi)) {
--		for (index = start; index < end; ) {
--			pgoff_t next_boundary;
--			pgoff_t max_nr_pages;
--			struct guest_memfd_handle handle;
--
--			if (signal_pending(current)) {
--				r = -EINTR;
--				break;
--			}
--
--			r = gmem_provider_get_pfn(gi, index, &handle);
--			if (r)
--				break;
--
--			max_nr_pages = 1UL << handle.max_order;
+-	struct inode *inode = file_inode(vmf->vma->vm_file);
+ 	struct gmem_inode *gi = GMEM_I(inode);
+-	vm_fault_t ret = VM_FAULT_LOCKED;
+-	struct folio *folio = NULL;
+ 	struct guest_memfd_handle handle;
+-	int r = 0;
++	struct folio *folio;
++	int ret;
+ 
+-	if (((loff_t)vmf->pgoff << PAGE_SHIFT) >= i_size_read(inode))
+-		return VM_FAULT_SIGBUS;
++	ret = gmem_provider_get_pfn(gi, vmf->pgoff, &handle);
++	if (ret)
++		return gmem_fault_error(ret);
+ 
+-	filemap_invalidate_lock_shared(inode->i_mapping);
+-	if (!kvm_gmem_is_shared_mem(inode, vmf->pgoff)) {
+-		r = -EACCES;
+-	} else if (kvm_gmem_is_pfn_mode(gi)) {
+-		r = gmem_provider_get_pfn(gi, vmf->pgoff, &handle);
+-		if (!r) {
+-			ret = vmf_insert_pfn(vmf->vma, vmf->address, handle.pfn);
 -			gmem_unlock_handle(&handle);
 -			gmem_put_handle(&handle);
--			next_boundary = ALIGN_DOWN(index + max_nr_pages, max_nr_pages);
--			index += min_t(size_t, next_boundary - index, end - index);
--			cond_resched();
 -		}
--		goto out_unlock;
--	}
-+	pgoff_t index;
-+	int r = 0;
- 
- 	for (index = start; index < end; ) {
- 		struct folio *folio;
-@@ -785,7 +762,62 @@ static long kvm_gmem_allocate(struct inode *inode, loff_t offset, loff_t len)
- 		cond_resched();
- 	}
- 
--out_unlock:
-+	return r;
-+}
-+
-+static int gmem_pfn_allocate_range(struct inode *inode, void *provider,
-+		pgoff_t start, pgoff_t end)
-+{
-+	struct gmem_inode *gi = GMEM_I(inode);
-+	pgoff_t index;
-+	int r = 0;
-+
-+	for (index = start; index < end; ) {
-+		pgoff_t next_boundary;
-+		pgoff_t max_nr_pages;
-+		struct guest_memfd_handle handle;
-+
-+		if (signal_pending(current)) {
-+			r = -EINTR;
-+			break;
-+		}
-+
-+		r = gmem_provider_get_pfn(gi, index, &handle);
-+		if (r)
-+			break;
-+
-+		max_nr_pages = 1UL << handle.max_order;
+-	} else {
+-		folio = kvm_gmem_get_folio(inode, vmf->pgoff);
+-		if (IS_ERR(folio))
+-			r = PTR_ERR(folio);
++	folio = handle.folio;
++	if (WARN_ON_ONCE(folio_test_large(folio))) {
 +		gmem_unlock_handle(&handle);
 +		gmem_put_handle(&handle);
-+		next_boundary = ALIGN_DOWN(index + max_nr_pages, max_nr_pages);
-+		index += min_t(size_t, next_boundary - index, end - index);
-+		cond_resched();
-+	}
-+
-+	return r;
++		return VM_FAULT_SIGBUS;
+ 	}
+-	filemap_invalidate_unlock_shared(inode->i_mapping);
+-
+-	if (r) {
+-		if (r == -EAGAIN)
+-			return VM_FAULT_RETRY;
+ 
+-		return vmf_error(r);
+-	}
++	/* Pass the locked folio reference to the MM fault handler. */
++	vmf->page = folio_file_page(folio, vmf->pgoff);
++	return VM_FAULT_LOCKED;
++}
+ 
+-	if (kvm_gmem_is_pfn_mode(gi))
+-		return ret;
++static vm_fault_t gmem_pfn_fault(struct inode *inode, void *provider,
++		struct vm_fault *vmf)
++{
++	struct gmem_inode *gi = GMEM_I(inode);
++	pgprot_t prot = vmf->vma->vm_page_prot;
++	struct guest_memfd_handle handle;
++	vm_fault_t ret;
++	int r;
+ 
+-	if (WARN_ON_ONCE(folio_test_large(folio))) {
+-		ret = VM_FAULT_SIGBUS;
+-		goto out_folio;
+-	}
++	r = gmem_provider_get_pfn(gi, vmf->pgoff, &handle);
++	if (r)
++		return gmem_fault_error(r);
+ 
+-	if (!folio_test_uptodate(folio)) {
+-		clear_highpage(folio_page(folio, 0));
+-		folio_mark_uptodate(folio);
+-	}
++	ret = vmf_insert_pfn_prot(vmf->vma, vmf->address, handle.pfn, prot);
++	gmem_unlock_handle(&handle);
++	gmem_put_handle(&handle);
++	return ret;
++}
+ 
+-	vmf->page = folio_file_page(folio, vmf->pgoff);
++static vm_fault_t kvm_gmem_fault_user_mapping(struct vm_fault *vmf)
++{
++	struct inode *inode = file_inode(vmf->vma->vm_file);
++	struct gmem_inode *gi = GMEM_I(inode);
++	vm_fault_t ret;
+ 
+-out_folio:
+-	if (ret != VM_FAULT_LOCKED) {
+-		folio_unlock(folio);
+-		folio_put(folio);
+-	}
++	if (((loff_t)vmf->pgoff << PAGE_SHIFT) >= i_size_read(inode))
++		return VM_FAULT_SIGBUS;
+ 
++	filemap_invalidate_lock_shared(inode->i_mapping);
++	if (!kvm_gmem_is_shared_mem(inode, vmf->pgoff))
++		ret = VM_FAULT_SIGBUS;
++	else
++		ret = gi->provider_ops->fault(inode, gi->provider, vmf);
++	filemap_invalidate_unlock_shared(inode->i_mapping);
+ 	return ret;
+ }
+ 
+@@ -1055,11 +1082,27 @@ static const struct vm_operations_struct kvm_gmem_vm_ops = {
+ #endif
+ };
+ 
++static int gmem_folio_mmap(struct inode *inode, void *provider,
++		struct vm_area_struct *vma)
++{
++	vma->vm_ops = &kvm_gmem_vm_ops;
++	return 0;
 +}
 +
-+static long kvm_gmem_allocate(struct inode *inode, loff_t offset, loff_t len)
++static int gmem_pfn_mmap(struct inode *inode, void *provider,
++		struct vm_area_struct *vma)
 +{
-+	struct address_space *mapping = inode->i_mapping;
-+	struct gmem_inode *gi = GMEM_I(inode);
-+	const struct guest_memfd_provider_operations *ops = gi->provider_ops;
-+	pgoff_t start, end;
-+	int r;
++	vm_flags_set(vma, VM_PFNMAP);
++	vma->vm_ops = &kvm_gmem_vm_ops;
++	return 0;
++}
 +
-+	if (!ops->allocate_range)
-+		return -EOPNOTSUPP;
-+
-+	/* Dedicated guest is immutable by default. */
-+	if (offset + len > i_size_read(inode))
-+		return -EINVAL;
-+
-+	filemap_invalidate_lock_shared(mapping);
-+
-+	start = offset >> PAGE_SHIFT;
-+	end = (offset + len) >> PAGE_SHIFT;
-+	r = ops->allocate_range(inode, gi->provider, start, end);
-+
- 	filemap_invalidate_unlock_shared(mapping);
- 
- 	return r;
-@@ -796,6 +828,10 @@ static long kvm_gmem_fallocate(struct file *file, int mode, loff_t offset,
+ static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
  {
- 	int ret;
+-	struct gmem_inode *gi = GMEM_I(file_inode(file));
++	struct inode *inode = file_inode(file);
++	struct gmem_inode *gi = GMEM_I(inode);
  
-+	/* Providers without allocation support cannot be hole punched either. */
-+	if (!GMEM_I(file_inode(file))->provider_ops->allocate_range)
-+		return -EOPNOTSUPP;
-+
- 	if (!(mode & FALLOC_FL_KEEP_SIZE))
- 		return -EOPNOTSUPP;
+-	if (!kvm_gmem_supports_mmap(file_inode(file)))
++	if (!kvm_gmem_supports_mmap(inode))
+ 		return -ENODEV;
  
+ 	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
+@@ -1067,12 +1110,7 @@ static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (kvm_gmem_is_pfn_mode(gi))
+-		vm_flags_set(vma, VM_PFNMAP);
+-
+-	vma->vm_ops = &kvm_gmem_vm_ops;
+-
+-	return 0;
++	return gi->provider_ops->mmap(inode, gi->provider, vma);
+ }
+ 
+ bool kvm_gmem_is_private_gfn(struct kvm *kvm, gfn_t gfn)
 -- 
 2.43.0
 
