@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794469344;
-	b=aR6tS2G0a3ZDHKSdy2ohCk5wLsds3Kunpda1ZNWFyRUG5SeS69XfIgsj0PUYfoncz5Tr
-	 Smbmk3aqJgvYr+CbJFCHIVX6hV34+Rn2hz+vJh4GNzqmuUR3tsPgFvgITh0REQ2XlrKZv
-	 /IiSqfsHA26iL7bttWQQd5mlgqPTgcmQpSRId83t91Fgf/BlUZfMEmlMZaxdNd1fkq3Mg
-	 +hQDDYvKieMPi1BPVndeXuK9Wb7QNBMXlMWalZtvN0AI3egG9LPJTbrOPXUGsbANgcCGD
-	 AaLnd1PhtBk6Jvz+rQ2Jge8UMgzueOCgBSwgkdUgb5m+JH4+7TRpbxjXhawGsNSm8kw==
+	t=1794469349;
+	b=DbIyVEvH0TwXXJQqyj0grxb+QRbvS2O/MwK9p4XQd5At9/GsMAYhmGSQR7c+h42wUeny
+	 7EV2PLu3iG3r/DcJIpPCR/jsB/MymF5JL6kI90jmpfHNyWVM7PQ6w8794By8ASu8MLLBo
+	 zBXJc0fQBMniF4YuRiYD/Gq0mFG+K8hivRTRa1p7pRbqZUUdC/WgT94pNs70eI/vbELgN
+	 Q4VJe9jHqn7+owRhTLERcFCFwylUPvZuSuP+ZNNkQxjZPRE3ihGHtm2x05GWl4OS9z21P
+	 jQzmQUFCzSXXAadaHq/VmxtISk1yy3ZiYEUMKpRxI9jNmOTBwa3kwLBssgG8upQKHYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794469344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794469349;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=jiQk/6ewbuT9iekCPsyXSD03vyRNwTpuR8bjQs7mJmU=;
-	b=hAWlarhmtvVEDTyLQMJ7X+x+BVEQ+BZ43QLmAZLjaWWOCtuLWhoYqH2hgRtpv8IUYqlq
-	 +LSn6QRWgLW1t4LCkPh3sDMOZ2lOT0cDkHxCtQ65IxwFdT6K6Ug9ORJ17KLsNdyQffHFk
-	 HfyyJDQ0V8B2vrY+Jy1zDA8Y/JBRW/mJ2Mt9TjYV2Bf/G6Y6cJljs9AgJZMo84TnazqsU
-	 6fcreKppLDMuG7TxpjvBNH4k7etFqoiGOija5Jkb1nTpJ5EMgXeZVhhtxi2SqUkRRJ1CF
-	 uc+y+isn3U9Es1a8xeVUkyPOpxxhQxnhbcF7Xj1lCOwcbtdiPfoIedjoOsfQHUNvQYg==
+	bh=MZgf085JstJXuimawUrtWcrm+ZiPNmAehafJK7eNR/s=;
+	b=rniAxWoZiAq+P/rIdcFQfeHpWa6Tn4pu83VWP6URKdY2WB2E7eUsqNawoJgLqOwvT0By
+	 i7EgvL11ArB1/07b8sZqONxKkviTmAyWvkDC9QnSsnXZHesOjkAKDHzv87EW1RRcNP4Fg
+	 JAkjt7auMFhvtXA8c062sDvWLQ6mF6bEPVj8KotZDyHhXkPGiMh4N99fCIZnBkmUPyh+M
+	 cEiLbk/OZN8xDIoY0CQS/bRIjG9tqmhdKC93jjdR6JnBPAAUZj8hinUt3S0EchicLJMb4
+	 oefxy5v3dhrPUp8ZoE9x7FMvAmd4uiNjZg0e4WP/c4+kTU3IQn6PvdubOiHfnJyxBdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cirnWA+J;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nwi1GVYw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42572606A330;
-	Thu, 12 Nov 2026 07:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F875606A327;
+	Thu, 12 Nov 2026 07:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cirnWA+J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109971F00A05;
-	Thu, 12 Nov 2026 07:42:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nwi1GVYw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFA11F00A05;
+	Thu, 12 Nov 2026 07:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794469343;
-	bh=jiQk/6ewbuT9iekCPsyXSD03vyRNwTpuR8bjQs7mJmU=;
+	s=k20260515; t=1794469349;
+	bh=MZgf085JstJXuimawUrtWcrm+ZiPNmAehafJK7eNR/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cirnWA+Joz2KgHzUa1T5n9eIqWmrvOCg14C0JhlYpyxsAwi7j/lrbvrS/Bod1peF+
-	 Z2amUznGEF9I1iQ6CImvFPetw3k+apDhnyCz2R+VLzqS34NDjudwC2zwyuZn7jRgNZ
-	 AxCIEkdTbA9gIkxCvPqyV/D1oWMBALnn886Eo0pcNi4lsRqWJKkKCitQMtoam1SDQV
-	 PvM3nHhAu/foqd0fmV/eIeUpPLIInpUoSSeeSHERgSugPYIZiF+gphJhSFHPSPG4XO
-	 TGhVTNLDuQ7fKlor/Z/EoIINZrVx5hmpS2hFqlWM0irzen5zfru8RkHt6TyLjmWQQv
-	 fVapK/VItPu/A==
+	b=nwi1GVYwV1kiU8cGn+GY1lQClz26qMesckZMcJpNRfBwLrj9Zb59iAur4jKJKQtHo
+	 9Sl737WJO8FNUVcC3HraZEJ5iggjbwIqMsvugG5V/O7eRqOR7WMWdyrR3Va32E9F2i
+	 6OJY4Y1IOUVhEjugQyIVpNwN7hrwUdkF/GmU1cETf73Vrsx8J5B52NNfWFf1ObXH9X
+	 1S4iYI4l+7eaSSA5mHENApg6Xz5AtpQZr8lJ5xL4BOiTkMeHt0V6Ab2LiS2xgqrG+Q
+	 BzFC7PkzkoIcMEZtDdrsYXPEVPwt4wFeJGxSFVbZlcqjnOgredyt2JrQk49q+COfJp
+	 nsh+18I/LcRmw==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -58,9 +58,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	iommu@lists.linux.dev,
 	kvm@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [RFC PATCH v5 10/16] KVM: guest_memfd: Let providers prepare memory regions
-Date: Thu, 12 Nov 2026 13:11:14 +0530
-Message-ID: <20261112074120.1570072-11-aneesh.kumar@kernel.org>
+Subject: [RFC PATCH v5 11/16] KVM: guest_memfd: Pass KVM explicitly to provider attach
+Date: Thu, 12 Nov 2026 13:11:15 +0530
+Message-ID: <20261112074120.1570072-12-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261112074120.1570072-1-aneesh.kumar@kernel.org>
 References: <20261112074120.1570072-1-aneesh.kumar@kernel.org>
@@ -75,92 +75,106 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Memory providers may need to check memslot flags and memory ranges before
-KVM installs a memslot. Add an optional prepare_memory_region() callback to
-the common provider operations
+Pass the attaching VM to the resource-provider attach callbacks. The
+argument is valid during attachment and must not be retained. This
+avoids storing the VM in the device binding context introduced next.
 
-Pass the byte offset, size and requested dirty-logging and read-only
-flags, and return any error before publishing the slot. Providers do not
-need access to KVM's memslot structure or internal flags. Existing
-providers that do not implement the callback keep their current
-behavior.
-
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: kvm@vger.kernel.org
-Cc: patches@lists.linux.dev
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- include/linux/guest_memfd.h |  8 ++++++++
- virt/kvm/guest_memfd.c      | 14 ++++++++++++++
- 2 files changed, 22 insertions(+)
+ include/linux/guest_memfd.h       | 3 ++-
+ mm/shmem.c                        | 2 +-
+ samples/kvm/mem_provider_sample.c | 2 +-
+ virt/kvm/guest_memfd.c            | 9 +++++----
+ 4 files changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-index 777507191603..79e2983c3b26 100644
+index 79e2983c3b26..012174ad8ef8 100644
 --- a/include/linux/guest_memfd.h
 +++ b/include/linux/guest_memfd.h
-@@ -37,6 +37,12 @@ struct guest_memfd_handle {
-  * @attach: Attach to a resource file, perform filesystem-specific validation,
-  *          and return an opaque provider context.
-  * @release: Release provider context and unpin any resources.
-+ * @prepare_memory_region: Optional check of a memory range and preparation
-+ *                         for access. Called after common file checks and
-+ *                         before publishing the memslot. Offset and size are
-+ *                         in bytes. The flags contain only
-+ *                         KVM_MEM_LOG_DIRTY_PAGES and KVM_MEM_READONLY bits.
-+ *                         Return 0 on success or a negative error code.
-  * @lock: Optional provider lock for mapping and attribute changes. Called
-  *        with the inode invalidate lock held for write, before guest
-  *        invalidation starts.
-@@ -106,6 +112,8 @@ struct guest_memfd_handle {
+@@ -12,6 +12,7 @@ struct file;
+ struct folio;
+ struct inode;
+ struct mempolicy;
++struct kvm;
+ 
+ /**
+  * struct guest_memfd_handle - PFN information and an optional folio reference
+@@ -110,7 +111,7 @@ struct guest_memfd_handle {
+  * Used by filesystems and device drivers that provide memory for guest_memfd.
+  */
  struct guest_memfd_provider_operations {
- 	void *(*attach)(struct inode *gmem_inode, struct file *resource_file);
+-	void *(*attach)(struct inode *gmem_inode, struct file *resource_file);
++	void *(*attach)(struct inode *gmem_inode, struct file *resource_file, struct kvm *kvm);
  	void (*release)(void *provider);
-+	int (*prepare_memory_region)(void *provider, u64 offset, u64 size,
-+				     u32 flags);
- 	void (*lock)(void *provider);
- 	void (*unlock)(void *provider);
- 	int (*prepare_attributes)(struct inode *inode, void *provider, pgoff_t start,
+ 	int (*prepare_memory_region)(void *provider, u64 offset, u64 size,
+ 				     u32 flags);
+diff --git a/mm/shmem.c b/mm/shmem.c
+index a1c1cc92515b..f652a6c1009f 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -5462,7 +5462,7 @@ static const struct inode_operations shmem_special_inode_operations = {
+ 
+ #ifdef CONFIG_KVM_GUEST_MEMFD
+ static void *shmem_gmem_attach(struct inode *gmem_inode,
+-			       struct file *resource_file)
++		struct file *resource_file, struct kvm *kvm)
+ {
+ 	struct inode *inode = file_inode(resource_file);
+ 	struct shmem_sb_info *sbinfo;
+diff --git a/samples/kvm/mem_provider_sample.c b/samples/kvm/mem_provider_sample.c
+index 4b7a8f760fdf..2eb9748cec5b 100644
+--- a/samples/kvm/mem_provider_sample.c
++++ b/samples/kvm/mem_provider_sample.c
+@@ -152,7 +152,7 @@ static long mps_file_ioctl(struct file *file, unsigned int cmd,
+ }
+ 
+ static void *mps_gmem_attach(struct inode *gmem_inode,
+-			     struct file *resource_file)
++		struct file *resource_file, struct kvm *kvm)
+ {
+ 	struct mps_info *info = resource_file->private_data;
+ 
 diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index 3a92f2453e8b..ffecc4b19a17 100644
+index ffecc4b19a17..178ac5ad123f 100644
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -1671,9 +1671,11 @@ int kvm_gmem_prepare_memory_region(struct kvm *kvm, struct kvm_memory_slot *slot
- 				   unsigned int fd, uoff_t offset)
+@@ -86,7 +86,7 @@ static bool kvm_gmem_is_pfn_mode(struct gmem_inode *gi)
+ }
+ 
+ static void *gmem_native_attach(struct inode *gmem_inode,
+-				struct file *resource_file)
++		struct file *resource_file, struct kvm *kvm)
  {
- 	uoff_t size = slot->npages << PAGE_SHIFT;
-+	struct gmem_inode *gi;
- 	struct gmem_file *f;
- 	struct inode *inode;
- 	struct file *file;
-+	int ret;
+ 	return GMEM_I(gmem_inode);
+ }
+@@ -193,7 +193,8 @@ static void gmem_provider_init_ops(struct gmem_inode *gi,
  
+ #define GMEM_RESOURCE_FD_NATIVE (-1)
  
- 	BUILD_BUG_ON(sizeof(gpa_t) != sizeof(offset));
-@@ -1694,10 +1696,22 @@ int kvm_gmem_prepare_memory_region(struct kvm *kvm, struct kvm_memory_slot *slot
- 		goto err;
+-static int kvm_gmem_attach_resource(struct inode *inode, int resource_fd)
++static int kvm_gmem_attach_resource(struct kvm *kvm,
++		struct inode *inode, int resource_fd)
+ {
+ 	struct gmem_inode *gi = GMEM_I(inode);
+ 	const struct guest_memfd_provider_operations *ops = NULL;
+@@ -212,7 +213,7 @@ static int kvm_gmem_attach_resource(struct inode *inode, int resource_fd)
+ 	}
  
- 	inode = file_inode(file);
-+	gi = GMEM_I(inode);
+ 	if (gmem_provider_ops_valid(gi, ops))
+-		provider = ops->attach(inode, resource_file);
++		provider = ops->attach(inode, resource_file, kvm);
  
- 	if (!PAGE_ALIGNED(offset) || offset + size > i_size_read(inode))
- 		goto err;
+ 	if (resource_file)
+ 		fput(resource_file);
+@@ -1619,7 +1620,7 @@ static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags, int resour
+ 	 */
+ 	smp_wmb();
  
-+	if (gi->provider_ops->prepare_memory_region) {
-+		u32 flags = slot->flags & (KVM_MEM_LOG_DIRTY_PAGES | KVM_MEM_READONLY);
-+
-+		ret = gi->provider_ops->prepare_memory_region(gi->provider, offset,
-+							      size, flags);
-+		if (ret) {
-+			fput(file);
-+			return ret;
-+		}
-+	}
-+
- 	/*
- 	 * memslots of flag KVM_MEM_GUEST_MEMFD are immutable to change, so
- 	 * kvm_gmem_bind() must occur on a new memslot.  Because the memslot
+-	err = kvm_gmem_attach_resource(inode, resource_fd);
++	err = kvm_gmem_attach_resource(kvm, inode, resource_fd);
+ 	if (err) {
+ 		fput(file);
+ 		put_unused_fd(fd);
 -- 
 2.43.0
 
