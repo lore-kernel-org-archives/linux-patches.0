@@ -1,69 +1,84 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794469376;
-	b=wdJ9QTiNtBp9kpLHIyIKIjyX+OXsu6PRMd7jQYWUGpBXxr2/FkrhvjYNAana38UZ7+nv
-	 ArQQl6fmj1ZKsteCCmix7iUS1XGSE5l/Dv4aU+GmqxplHdXrz3ZNnfn8W4vMCaxGUH0Qy
-	 yq7uQ0Y7ljAo6juyZFMhYaxVSWY1LGKVOJu9Nh4Ez0E/TuO8oFq3Ydt7hIoOPQyknSuk/
-	 Awjttd7J+XxMvJpIKuvwcxCrkgTP2rsrRZ/Q4E+jKxXB5jV2lOUhKeH70bGp/8PMViHfR
-	 I4KlcYiCwHFP82YVVyqQEQ/93owK5GdC7AswCqxDU04KrgvNh62sp3OsMfIEN7LaiGg==
+	t=1794476275;
+	b=z0fb37j3uIrI2WQ0Daenp3Xs6jXGsUzW6bsTnHToRD3zCuO2fYLVYriWKGza3HLD10fi
+	 pcTMg+Z7kTWsaQTIfZUruRmqgzSxQKT2oEIbb/7J6HLvwnE+P+d2adOyXqZXYM3uxGLMS
+	 Qur87RrRWpggpQKacP59o+OC5KuAq3v/qwJKD4B1kOi89x1VP1gzEn/UobtkiIa70AX1c
+	 HaENFOXybbfv71C78a52M0qRaktYr3J2SF7bg3lG0MEZCyMO8SW0Ae7pfDGPzh1lPIW7k
+	 EcBBiCHSr+s9IP+NtHITQJDRzrgh6RMLUzQupzJDc6BqXbdMiE3e+3l8kyL2KFUVFNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794469376;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=Pxnr80fWS+ZWZIzsZX1b3FRLCLNebt7uApoQNfIHwI0=;
-	b=fDxZZqzMA7Nq7DNfNMl4PGE0H2vJHCcDyn06F56SIDRrSi+oRTA337C5H3WNS9df0tQT
-	 +YBDKJrS0JidGEh19h4Zy3tny+0IsbyOmqMuBkpLjLsjXx/Oip/1KIBRI2wvyfnr1I1MR
-	 iWuJzz4/tWnRJNEIYEILyWpVYL9k3xEK4wu9CbS6ae4R3M+OO5fvwFaeZ+2dVQY3jJvoa
-	 mRLtq1fRoyn5+ZVSnuqUBNWPDsdaGTvhTBgEa4iMF4+IRRpDs7x19enYwuHAXushOFj1l
-	 Si4n2sSIeaTtKM6IE131pXrMoVUUQLmnk6HlYBf/SrMpuHZBSTkN8O2eYYZHN26EeRg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794476275;
+	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=wxRCE/LxPKOqv1o6tdSJqmKO1PZhC9s43hWGJ13wQD8=;
+	b=mPoIFVF+0v75C9vj8YstCZaLexqXQqAOKARSCLwL6E0DKSgG/b0OYFUia8++bvWa9UMx
+	 t4OWJh5vuYc4AkrdUbAsrHC8+0KzU2sS0Sv9+47AKm8pjbd1d7OKlKmv2gbAw0cucHUNF
+	 NWRFbuO9QhtnxlMDbCbMDrgjNLFvp6e3xr55sBiFolyoFUG1oB+ej2W4viqjgVStlxcLJ
+	 1c+sIp6+r4+/BEJW6Bwh11Chxl8v1wJjIX51t55WId0htKMxb6tCwp5U9mjdhfWNKRJUD
+	 cYCRTmYh/3QDp/6z4YdSXcVVH7mJhJNxaVcr0jVNZaVGKQ763B/oTAyWkv9MpeugMtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AacrlaxT;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="ZohskrI/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C663606A327;
-	Thu, 12 Nov 2026 07:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B537606A321;
+	Thu, 12 Nov 2026 09:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AacrlaxT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D37B1F00A05;
-	Thu, 12 Nov 2026 07:42:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZohskrI/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F365E1F00A05;
+	Thu, 12 Nov 2026 09:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794469376;
-	bh=Pxnr80fWS+ZWZIzsZX1b3FRLCLNebt7uApoQNfIHwI0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AacrlaxTG2uHmH8rzhmGWRsg1KMtpEwisvSqvKHrV+bYsISwbsbe++F4lr9LVyvTb
-	 o73pFIZQdAGtYOV3kWc2NdbRvk7M+NHAHutKM9DzSULfKnrk9UcC/gHEhChn48GDcj
-	 UvTNGKVVq7pEpn/yPWy2Uq5LApJ2ywGwiZJ50PkJnxociwT36Ms0nFdLj7INlzT7VK
-	 qf1F4Ip1sK+ISoZC94AXMfySPi3v8H6is3NPg1OCB1W9F70MMhDTiRq1NuduFmJ0FR
-	 JnMRCHMOW/UpRXpkuZ6o1xqIh6xvfmoVrbAN1ezyVxYyFPfN6YB0sJMMfaTuA+8dr2
-	 hCZ2tih/X8Ohw==
-From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
-To: linux-coco@lists.linux.dev
-Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
-	Ackerley Tng <ackerleytng@google.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Alexey Kardashevskiy <aik@amd.com>,
+	s=k20260515; t=1794476274;
+	bh=wxRCE/LxPKOqv1o6tdSJqmKO1PZhC9s43hWGJ13wQD8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=ZohskrI/RQHQ3nr7RVll07GwmQqVVIdjCSuQyixKhz4IWTWjo9IyYMg7JF0BpBzBD
+	 oZR0tDxPhgWgQ9OnT4Rwe2pRWYUISHgnuBICZNmn6GWPsaQj4+UGg5QPS0tc8UReOM
+	 7T5PEFFT1BtMAl7f5vZzFxbvtCOLm/HFbIFllJtzEC8BxnZq/KW3mIEYOY3/8O+6gj
+	 n7lfoynPM64P9ZsR+OaIa6PyGk07bB6aR25zTYMojFdcbxHpUwSiFjpt9EHMmTrxky
+	 Ue3SklGO4UCYjS6jm7Vwm2JT3KL0tiVuV9mM68SRQjdMOqXI/z3yNXEROztqCxcQKE
+	 y1p7bfZrHcnWA==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Cc: "Reshetova, Elena" <elena.reshetova@intel.com>,
 	Xu Yilun <yilun.xu@linux.intel.com>,
+	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
+	Jiri Pirko <jiri@resnulli.us>, "Tian,
+	Kevin" <kevin.tian@intel.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Steven Price <steven.price@arm.com>,
-	Fred Griffoul <griffoul@gmail.com>,
-	iommu@lists.linux.dev,
-	kvm@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [RFC PATCH v5 16/16] KVM: guest_memfd: Invalidate mappings before memslot unbind
-Date: Thu, 12 Nov 2026 13:11:20 +0530
-Message-ID: <20261112074120.1570072-17-aneesh.kumar@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261112074120.1570072-1-aneesh.kumar@kernel.org>
-References: <20261112074120.1570072-1-aneesh.kumar@kernel.org>
+	Kiryl Shutsemau <kas@kernel.org>, "Edgecombe,
+	Rick P" <rick.p.edgecombe@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	John Allen <john.allen@amd.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [RFC PATCH v1 10/11] virt: coco: arm-cca-host: Publish slot
+ zero and establish streams after acceptance
+In-Reply-To: <20261106193018.GK770409@nvidia.com>
+References: <yq5apkwqa5ve.fsf@kernel.org>
+ <DS4PPFA84FA90FCEFB18E5620217FDCA728E76A2@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+ <20261102172640.GB274202@nvidia.com>
+ <DS4PPFA84FA90FC31B41ECA1F6ACF6D0600E7692@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+ <20261103151643.GI274202@nvidia.com>
+ <aurmtTe4ObBQhC4S@yilunxu-OptiPlex-7050>
+ <DS4PPFA84FA90FCDC94900C2FC6CEF4D428E7682@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+ <20261104134119.GR274202@nvidia.com>
+ <a3f95140-c49f-42fc-b92c-73c8cf98336d@intel.com>
+ <e05a71df-3b20-45a3-bb46-fb1bdad164c8@intel.com>
+ <20261106193018.GK770409@nvidia.com>
+Date: Thu, 12 Nov 2026 15:07:43 +0530
+Message-ID: <yq5a5wy2qtjs.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -73,65 +88,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Use the generic invalidate_start/end helpers to remove shared and
-private device mappings before removing the memslot's guest_memfd
-binding.
+Jason Gunthorpe <jgg@nvidia.com> writes:
 
-Hold gmem_provider_lock_updates() across invalidation and binding removal to
-prevent device unlock from racing with teardown.
+> On Fri, Nov 06, 2026 at 08:53:39AM -0700, Dave Jiang wrote:
+>> 
+>> 
+>> On 11/4/26 9:54 AM, Dave Jiang wrote:
+>> > 
+>> > 
+>> > On 11/4/26 6:41 AM, Jason Gunthorpe wrote:
 
-Keep the file attributes and has_private_ranges unchanged. Deleting a
-memslot removes mappings but does not share the memory range. Device unlock
-remains blocked until userspace shares the private ranges or closes the
-last guest_memfd reference.
+ [ ... 13 lines skipped ... ] 
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: kvm@vger.kernel.org
-Cc: patches@lists.linux.dev
-Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
----
- virt/kvm/guest_memfd.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+>> I generated a diagram that hopefully better reflects Option A with TDX better than the current public documentations:
+>> 
+>> Option (a) on TDX, with the current TDX Connect ABI: slot 0 only, no TDX
+>> change. Numbers in the left margin point to the notes below.
+>> 
+>>   ---->   call                 <- - -   return
+>>   <---->  SPDM request and response in clear text, relayed by the host
+>>   <====>  the same, inside the SPDM session
+>
+> It looks OK, thanks.
+>
+> I have a few thoughts
+>
+> 1) I would very much like it if the core SPDM code in the kernel
+>    can snoop the DOE messages from the TSM. If we do this then the
+>    kernel can directly capture the full transcript:
+>
+>> (4)  |                    |                       | GET_VERSION            |
+>>      |                    |                       |<---------------------->|
+>>      |                    |                       | GET_CAPABILITIES       |
+>>      |                    |                       |<---------------------->|
+>>      |                    |                       | NEGOTIATE_ALGORITHMS   |
+>>      |                    |                       |<---------------------->|
+>>      |                    |                       | GET_CERTIFICATE slot 0 |
+>>      |                    |                       |<---------------------->|
+>> (5)  |                    |                       | KEY_EXCHANGE slot 0    |
+>
+> With perfect consistency on all vendors.
+>
+> Further, it will also be able to capture the GET_CERTIFICATE during
+> the preamble so again we get greater consistency for everyone.
+>
+> I'm very interested in this because it frees the uABI from any
+> variation in choices the TSM may have made. I have the full perfect
+> transcript in the kernel and I will ALWAYS present the same uABI to
+> userspace regardless what the TSM offers.
+>
+> Like a whole bunch of TSM FW API just to do this:
 
-diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index bdee42ff6b26..93e2ccfc4540 100644
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -1877,6 +1877,8 @@ void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- 	unsigned long start = slot->gmem.pgoff;
- 	unsigned long end = start + slot->npages;
- 	struct gmem_file *f;
-+	struct gmem_inode *gi;
-+	enum kvm_gfn_range_filter filter;
- 
- 	/*
- 	 * Nothing to do if the underlying file was _already_ closed, as
-@@ -1896,8 +1898,13 @@ void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- 	 * drops slots_lock, so there's no need to verify the file is live.
- 	 */
- 	f = file->private_data;
-+	gi = GMEM_I(file_inode(file));
-+	filter = kvm_gmem_get_all_gfns_filter(file_inode(file));
- 
- 	filemap_invalidate_lock(file->f_mapping);
-+	gmem_provider_lock_updates(gi);
-+	__kvm_gmem_invalidate_start(f, start, end, filter);
-+	__kvm_gmem_invalidate_end(f, start, end);
- 	xa_store_range(&f->bindings, start, end - 1, NULL, GFP_KERNEL);
- 
- 	/*
-@@ -1906,6 +1913,7 @@ void kvm_gmem_unbind(struct kvm_memory_slot *slot)
- 	 * to guarantee kvm_gmem_get_pfn() can't see the slot+file.
- 	 */
- 	WRITE_ONCE(slot->gmem.file, NULL);
-+	gmem_provider_unlock_updates(gi);
- 	filemap_invalidate_unlock(file->f_mapping);
- }
- 
--- 
-2.43.0
+Can you help me understand why we need to snoop the DOE messages? IIUC,
+the earlier proposal for 1.2 was to use Rust SPDM to perform the
+following:
+
+GET_VERSION
+GET_CAPABILITIES
+NEGOTIATE_ALGORITHMS
+GET_DIGESTS
+GET_CERTIFICATE for all slots in the slot_mask returned by GET_DIGESTS
+CHALLENGE using the slot 0 key (At this point, we can also verify that
+we received the certificates for all slots supported by the device.)
+
+The host then select a slot and use it to establish the IDE connection?
+(For intel we can only select slot 0 here?)
+
+What does snooping provide in this context?
+
+-aneesh
+
+
 
