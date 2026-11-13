@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591331;
-	b=BCXa6hofeNRciX6OM/DBA2zuqa/kMxqiFIRtki3cB1ppYgIJ4gowg6Pbp1pvKncYU5YJ
-	 W/tn8fTipJ7XoMVMHmIIwC1RFrZ6slMLsk4A3InPqMx7SYxhkFfG6JHuKwYAjE+gaovGo
-	 hua538K5XKPPOpcGHTiuWdqJOSXaAee5k/NNhfvMWoaDzC1UBKYdM2rRKIbBUJXfUTEg2
-	 rbqItx7HbPrpTtenqdbwuqnfY3TH3QvgdgzDK99/+1hhWcnldwqUql3gt59vCbsrK+Dy9
-	 q4qC4dyyM0tSFGr0Pu7qNeJMacgGmWjW2C4mMdlICNxBkRFLWAi5MKAjk0B58V1u5gQ==
+	t=1794591333;
+	b=TpitYGXgwehcorMTcqjAbE56oTQEpbHMYXFD/uHQVnDoqFjbwsSzNsALFzD+rbeaQ0JS
+	 x8VKfCNrhd2SmgBmybde2tr+thiQf1jQzsx3yZpcFJlHmtOFTvUGo1Fpfric01wdqgr/3
+	 ZEjq0Uz0p/HSCvb/Gq8/H5LEfDErnzGoHFp14mn12YRz43aLG4PaS3153AKnojGjuZ530
+	 oF716JvrjLfNcWD+x/3YqggrV9gzNVKu0EWnlO3R+I8X6eVGLfvmhx4emMGNRk11RaW/k
+	 1RewdYbls1GaSEtyyYYUX3mjlQgfYZTEOUvwQUUTT8lLdf5E3gk6aUBX/7qsu6kIvCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591331;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591333;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/jRQCPfavg32Gmldmhjj2KMYhZNGkADmIBj/27JxhbQ=;
-	b=jhn2r56qHurCuecz6chOqEHaW03HzFc+yynFThcsgg/IcUEc22SHgJnW2QeyolAFBAru
-	 mI7jpIad3NQxlH/jS4Cib0vNHVOB5UdEFUPLcmHdWQNSHKyF/nJF9+EUxuuDzhK6e0Ja0
-	 DW1ehAeSVCNJeKLdH1P9NJHTNYGLLqzpjw6Gb5P/Wm/6/tLHX01sBmKZL/oIGk+UfNJfv
-	 KnUND++Z/uKKAw+h/8FRskYHNi4X4c+C9hx1TUZrn6WNu+OWK4X9qLPH0ccUjlgCsc7zr
-	 qDGUZzQdgR8DtW84WdUocGcXxfBCxurZv3b/AwE6bfbpSqnVDg6/xEFPNrtkabxg01Q==
+	bh=NdxFbI7ndGZsWJCikUP92ywfJvQjN2+MpmpHlUpSGpU=;
+	b=mvkX2L3bPumSi1zE31nTU1QvkkZUN+AqcxBRXJmDoCg4YqOb27sDBMASCQEssM327ZCX
+	 0Cgft8+fgu5eTaVCEiyTw4Fdz75nCcT8uYlI2AgNGyYZM2ghG04tmHAnRc3cdrCjNn0/J
+	 lf133KDATRkTsCkkx/XgYhytrmAHRocbe1fP30C7BI1I1baiEdj96aqi7nYNcJhGYqXFF
+	 Her4UZT6dzIdRAR0C/NXGznCzv4CCihNOCFTHbshlQGgRH53DwsgS9T2ALj6KDnfdonvm
+	 L+JR55JI9A+URVoZncajSonVDAJkczvMUUlHdChxY+4EOCXmJHmagZKxUX5bdG3WnTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnQ9OyFz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vKg1WMzn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6ED860A6F77;
-	Fri, 13 Nov 2026 17:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB13606CEC5;
+	Fri, 13 Nov 2026 17:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnQ9OyFz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72ADC1F000C6;
-	Fri, 13 Nov 2026 17:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vKg1WMzn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF861F000C4;
+	Fri, 13 Nov 2026 17:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591331;
-	bh=/jRQCPfavg32Gmldmhjj2KMYhZNGkADmIBj/27JxhbQ=;
+	s=korg; t=1794591332;
+	bh=NdxFbI7ndGZsWJCikUP92ywfJvQjN2+MpmpHlUpSGpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nnQ9OyFzqjaYlQxxR/fWbj9ybEyYZXdo1QcSZaDOq4GuldLnHmFr7Bojjdzj+C1tP
-	 5+LN2vFZg3Pu+iwNyfvnOE9YrXwTuMA0mbZ68WO7bLN/kAtJkf1N2+P/P3Qp3jdvbg
-	 W76Mx24eaLHiS6H3MmyTFTisO5fBmUXZyiHbS4GY=
+	b=vKg1WMzn5qfPM2cQxMc+3FA6N5hmbZBfoFv7FjLmKQj/r5PQZxCyP8WIRDpOivxga
+	 p32Q5YLZWV34R9/kAgFsDmZ3O0UfRJLGPuXzXE3ViHC68FG7uAmvbzi5dwdoP+dpS/
+	 Ko9ty6GnGiMbbXWytLWxyKSzzOUcjTxEB33hqBlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Andrew Davis <afd@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 443/670] ALSA: timer: Handle userspace-driven timer ioctls from 32-bit tasks
-Date: Fri, 13 Nov 2026 10:50:07 -0500
-Message-ID: <20261113153826.934709011@linuxfoundation.org>
+Subject: [PATCH 6.12 426/670] arm64: dts: ti: k3-am625-sk: Remove M4 mailbox node redefinition
+Date: Fri, 13 Nov 2026 10:49:50 -0500
+Message-ID: <20261113153826.178665778@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,60 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit 1bbc033983b76f41d51d4a48838bf94c5e6b6f50 ]
+[ Upstream commit 17d0723c6cf841ebaf510eaf9bb1ebf4991d6e9d ]
 
-32-bit tasks on a 64-bit kernel can't use userspace-driven timers. The
-compat handler for /dev/snd/timer doesn't list SNDRV_TIMER_IOCTL_CREATE,
-so creating a timer fails with -ENOTTY. The file returned for a timer
-has no .compat_ioctl either, so SNDRV_TIMER_IOCTL_TRIGGER fails with
--ENOTTY too.
+This node is already defined in the included k3-am62x-sk-common.dtsi.
+Remove this redefinition.
 
-struct snd_timer_uinfo has the same layout for 32-bit and 64-bit tasks,
-and SNDRV_TIMER_IOCTL_TRIGGER takes no argument, so both commands can
-be passed through unchanged.
-
-The utimer selftest doesn't catch this when built with -m32: it takes
--ENOTTY from SNDRV_TIMER_IOCTL_CREATE to mean CONFIG_SND_UTIMER=n and
-skips.
-
-Fixes: 37745918e0e7 ("ALSA: timer: Introduce virtual userspace-driven timers")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Link: https://patch.msgid.link/20260928182352.309457-1-danishkhateeb03@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20241203164031.20211-1-afd@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Stable-dep-of: 8ef8a0e38d13 ("arm64: dts: ti: k3-am625-sk-common: Set eMMC clock pin as OUTPUT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/timer.c        | 1 +
- sound/core/timer_compat.c | 1 +
- 2 files changed, 2 insertions(+)
+ arch/arm64/boot/dts/ti/k3-am625-sk.dts | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/sound/core/timer.c b/sound/core/timer.c
-index 688a2d1257485..8f84055d3e53f 100644
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -2104,6 +2104,7 @@ static const struct file_operations snd_utimer_fops = {
- 	.llseek		=	noop_llseek,
- 	.release	=	snd_utimer_release,
- 	.unlocked_ioctl	=	snd_utimer_ioctl,
-+	.compat_ioctl	=	snd_utimer_ioctl,
+diff --git a/arch/arm64/boot/dts/ti/k3-am625-sk.dts b/arch/arm64/boot/dts/ti/k3-am625-sk.dts
+index 0fa11d3aa71e9..d240165bda9c5 100644
+--- a/arch/arm64/boot/dts/ti/k3-am625-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am625-sk.dts
+@@ -243,13 +243,6 @@ cpsw3g_phy1: ethernet-phy@1 {
+ 	};
  };
  
- static int snd_utimer_start(struct snd_timer *t)
-diff --git a/sound/core/timer_compat.c b/sound/core/timer_compat.c
-index 4ae9eaeb5afb1..7b648edcb9cba 100644
---- a/sound/core/timer_compat.c
-+++ b/sound/core/timer_compat.c
-@@ -98,6 +98,7 @@ static long __snd_timer_user_ioctl_compat(struct file *file, unsigned int cmd,
- 	case SNDRV_TIMER_IOCTL_PAUSE:
- 	case SNDRV_TIMER_IOCTL_PAUSE_OLD:
- 	case SNDRV_TIMER_IOCTL_NEXT_DEVICE:
-+	case SNDRV_TIMER_IOCTL_CREATE:
- 		return __snd_timer_user_ioctl(file, cmd, (unsigned long)argp, true);
- 	case SNDRV_TIMER_IOCTL_GPARAMS32:
- 		return snd_timer_user_gparams_compat(file, argp);
+-&mailbox0_cluster0 {
+-	mbox_m4_0: mbox-m4-0 {
+-		ti,mbox-rx = <0 0 0>;
+-		ti,mbox-tx = <1 0 0>;
+-	};
+-};
+-
+ &fss {
+ 	bootph-all;
+ };
 -- 
 2.53.0
 
