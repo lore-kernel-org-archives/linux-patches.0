@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591445;
-	b=qhbK7tUqKObxS83XP5z+AGP0XlXdwkO6E+htGgNTaGiCD7BvcCqpws5UnAThvKkVD1dY
-	 YiqU4GDpP68iOE98XRBjR/1hOhfHXERjzac729RsX9GqusXZPoSm1ciifE9Huxrm4HVmO
-	 Drz3Jz9qNXsfq+I/FpiPVUfdVIeC74Ku/6NFJjjHIHlOWwrW1jQleqFrAou8mURJsb4gF
-	 nxHi9fRWI3vJM/77jVXxCArdZAuND+TPspqgjayGcCpaOmP0QOhCgyKEAathXH0cmru5w
-	 JWgCR3UOcVejd4uJAN67E1eONslOzRKczOMqHmZYMtmGVU4kVoY3dS8UfEJQiqQ778w==
+	t=1794591447;
+	b=tPIIpn/Rlt6C3GdP2Fs9WrGEe1UDt2DVEixk+M0zgzK4z3NM6gSPKPKER0XhZW1nAyND
+	 s8lbUs4R7md8xOuPI8P8ljQUdnAWLmeWqu42la3dmBJjJC1Cv+H5/n50+ze39G51fCmFN
+	 TACQ24vlP+nrf9oZEd+D+zrIAPXSe20K7GFuFUMK7RDEdDMF35lsUH2waxG7GCH78Vee9
+	 HgauZqAeBxL1+AEM2QHyw1jwSEkJzYHZx3S6e5ueJ3CrzhRW+vnYKWNY4viSALk1/MaSX
+	 bE7PObHI57Tx1GuG4L3G0HYU9MYx2vDJkUMF8D9+asjVB4N8FTzGlaUxZdwVw+HNoKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591445;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591447;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=x08crsXIfE6jAFP3wt5a1pnc4/EwAF7fLvl02YupyRU=;
-	b=QScvTG5j7SvQ6o7DKIxODigaR3fZyr5qo6nsjdXKVHfQRPkgv5p7eKp7L6BrVHvve/Bk
-	 bxvjbQWWY78v7xCflerUNwYkWdjm7VVIpo3iIOK07JFAwqnA7LuBZwj/v00qScJyEul1w
-	 9A/O4I1y8oaRghRsH1nKQPXgtjXe809nHirlAok/a0QJA8Hs+Qk3jvV6XMnhUUUaKGME0
-	 o/4ey5ZIP7HLGz1IJWc1DtFHgrsBPassN/d4m1h/mJ5iPD/7t47rQw9FAuoSXIRYr1Kxg
-	 qi82IU00usBJ7KLGYK3X+Qu9hvambTmJq775sSsXs9RK6M7FTY0OPha68167Zqopu7w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=DA/aIKO7SaxpSJHPGL73gL//804ZKgw/4WIOy5FoPtM=;
+	b=VT2q/ijSmx4z/U9dcfZPYioB1iboZAb/hacivSbT37QxYi2Ymy22AtrXMe+bPTV95OZz
+	 +FF+P1WE8DchexBlw5SzUw7+ij2yr/nalSlsQUPsGyl4neroCPNIwA5yXTSbO20ouBAcC
+	 yikkMgbACdTXjynhhS3OPafIotNOGKRwvdbM3ekoAYIs3AYOGjMQGICO021TnAq6MtHt7
+	 PSzdaS40yP0o45KnXW963b3b9H3T4CtcdST0k6/sisjuxdc3ywmOIGTX/q9Hn9qpuiBJS
+	 bHy1xu5wmsf6Uv1nAh1ZyhTrj/QaW6RnIjkkzv55MiI5Kpj0lOSUrZvCj7WDIfTLT0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zN1CClVI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aRbSmQBn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE391607C34F;
-	Fri, 13 Nov 2026 17:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2320E606E208;
+	Fri, 13 Nov 2026 17:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zN1CClVI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A16B1F000C4;
-	Fri, 13 Nov 2026 17:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aRbSmQBn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F0E1F000C4;
+	Fri, 13 Nov 2026 17:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591445;
-	bh=x08crsXIfE6jAFP3wt5a1pnc4/EwAF7fLvl02YupyRU=;
+	s=korg; t=1794591447;
+	bh=DA/aIKO7SaxpSJHPGL73gL//804ZKgw/4WIOy5FoPtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zN1CClVIwfJmPYUzX8OLn0DWhUlk3rU2QLS5vpztlVvf/kTdms4uD4Q8zbsE0h/eF
-	 wetmz0boaJouY7otG5oUgDD1llDoa6ha3gYLWLgzwUoJVW9gNmz5cLIRLg2KeUbENu
-	 0pnW+ujjWI3tOw3d7pUNvlL4tolTeK3Nll5Isnwc=
+	b=aRbSmQBnS+7N9xXHSYRK3CbuJi8xytnReyKyvidpIiVxcH+L7Ngpph0zbj1jy4cZn
+	 DnwVNS0MmoTD4Sx+R0eBjpcS2X7+TrTX9zphMMG//0xU0EvL61xUq/XpqP6r07RZ+4
+	 FiDgn7IrkCddOOwi8l8/v1cKJQy+hBDVkbrrWQpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Marco Scardovi <scardracs@disroot.org>,
+	Denis Benato <denis.benato@linux.dev>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 535/670] ALSA: hda: cs35l41: Fix ACPI device reference leak on probe failure
-Date: Fri, 13 Nov 2026 10:51:39 -0500
-Message-ID: <20261113153830.037987641@linuxfoundation.org>
+Subject: [PATCH 6.12 536/670] platform/x86: asus-wmi: Serialize WMI method evaluations with a mutex
+Date: Fri, 13 Nov 2026 10:51:40 -0500
+Message-ID: <20261113153830.067455316@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -62,98 +64,139 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Marco Scardovi <scardracs@disroot.org>
 
-[ Upstream commit 8d70e364e866bdfca81eee24d0688fac9472cfb9 ]
+[ Upstream commit b9428edaf4109e86a97254228d831767d0acc1f8 ]
 
-cs35l41_hda_probe() takes an acpi_device through
-cs35l41_hda_read_acpi() and stores it in cs35l41->dacpi. Only the
-failures that happen later reach the err: label, which is where that
-reference and cs35l41->acpi_subsystem_id are released, so the early
-return taken when cs35l41_hda_read_acpi() fails leaves both behind.
+Concurrent evaluations of ASUS WMI management methods (from ACPI notify,
+HID, userspace daemons, and debugfs) enter the BIOS ACPI/SMM interface
+simultaneously, triggering re-entrant SMIs or EC mailbox buffer corruption.
 
-Keep the ownership in the caller instead of dropping the reference
-inside cs35l41_hda_read_acpi(). That removes the need to work out
-whether a given failure path has already released it, and with it the
-double put that cs35l41_hda_parse_acpi() would otherwise cause when it
-fails after having released the device itself.
+Fix this at the root by introducing a centralized evaluation helper
+(asus_wmi_evaluate_method_locked()) protected by a global mutex
+(asus_wmi_eval_lock) using guard(mutex). Route all evaluations of
+ASUS_WMI_MGMT_GUID (method3, method5, method_buf, and show_call) through
+this helper.
 
-cs35l41_hda_parse_acpi() and the !physdev path no longer put the
-reference, and the early failure enters the existing err: cleanup tail
-through a new err_acpi label.
+A static mutex is required because asus_wmi_evaluate_method() is an
+exported symbol used by external modules (such as hid-asus and
+asus-armoury) that lack access to struct asus_wmi drvdata, and the
+underlying ASUS ACPI/EC management method is a single physical platform
+resource.
 
-The label sits between the reset of the codec and the gpio cleanup, so
-an early failure also releases the reset and chip-select descriptors
-that cs35l41_hda_parse_acpi() may already have taken, while still
-skipping cs35l41_safe_reset() on a codec that was never brought up.
+The mutex is non-recursive: nested ACPI/WMI notify handlers must not call
+back into evaluate on the same task (defer via workqueue, as
+asus_rfkill_notify already does).
 
-cs35l41->dacpi comes from devm_kzalloc() and is only assigned once the
-ACPI device has been found, so the put is a no-op when the lookup
-itself failed.
+The sysfs-versus-notify race predates the later export of
+asus_wmi_evaluate_method(), so Fixes points at the original shared
+evaluate helper rather than that export.
 
-Found by code review.
-
-Fixes: 447106e92a0c ("ALSA: hda: cs35l41: Support mute notifications for CS35L41 HDA")
+Link: https://github.com/OpenGamingCollective/asusctl/issues/328
+Fixes: d33da3b68669 ("asus-wmi: factorise wmi_evaluate_method call")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Link: https://patch.msgid.link/20261012084152.3740340-1-make_ruc2021@163.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Marco Scardovi <scardracs@disroot.org>
+Reviewed-by: Denis Benato <denis.benato@linux.dev>
+Reviewed-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/b6a1981777e63f0c28bd719d8203ebbda57d6957.1789722252.git.scardracs@disroot.org
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[ sashal: adjusted patch context to match the existing include list and WMI section ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l41_hda.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/sound/pci/hda/cs35l41_hda.c b/sound/pci/hda/cs35l41_hda.c
-index d01691c13bf33..210cf48faceca 100644
---- a/sound/pci/hda/cs35l41_hda.c
-+++ b/sound/pci/hda/cs35l41_hda.c
-@@ -1887,7 +1887,6 @@ int cs35l41_hda_parse_acpi(struct cs35l41_hda *cs35l41, struct device *physdev,
- 	hw_cfg->valid = false;
- 	hw_cfg->gpio1.valid = false;
- 	hw_cfg->gpio2.valid = false;
--	acpi_dev_put(cs35l41->dacpi);
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index 1465057b3e3d3..e71d2be12e78e 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -15,6 +15,7 @@
  
- 	return ret;
- }
-@@ -1908,10 +1907,8 @@ static int cs35l41_hda_read_acpi(struct cs35l41_hda *cs35l41, const char *hid, i
- 	cs35l41->dacpi = adev;
- 	struct device *physdev __free(put_device) =
- 		get_device(acpi_get_first_physical_node(adev));
--	if (!physdev) {
--		acpi_dev_put(adev);
-+	if (!physdev)
- 		return -ENODEV;
--	}
+ #include <linux/acpi.h>
+ #include <linux/backlight.h>
++#include <linux/cleanup.h>
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/dmi.h>
+@@ -27,6 +28,7 @@
+ #include <linux/leds.h>
+ #include <linux/minmax.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/pci.h>
+ #include <linux/pci_hotplug.h>
+ #include <linux/platform_data/x86/asus-wmi.h>
+@@ -337,6 +339,20 @@ struct asus_wmi {
  
- 	sub = acpi_get_subsystem_id(ACPI_HANDLE(physdev));
- 	if (IS_ERR(sub))
-@@ -1966,8 +1963,10 @@ int cs35l41_hda_probe(struct device *dev, const char *device_name, int id, int i
- 	dev_set_drvdata(dev, cs35l41);
+ /* WMI ************************************************************************/
  
- 	ret = cs35l41_hda_read_acpi(cs35l41, device_name, id);
--	if (ret)
--		return dev_err_probe(cs35l41->dev, ret, "Platform not supported\n");
-+	if (ret) {
-+		dev_err_probe(cs35l41->dev, ret, "Platform not supported\n");
-+		goto err_acpi;
-+	}
++/*
++ * Concurrent evaluations of ASUS WMI methods can re-enter firmware
++ * SMI/EC mailbox handling and corrupt the mailbox.
++ */
++static DEFINE_MUTEX(asus_wmi_eval_lock);
++
++static acpi_status asus_wmi_evaluate_method_locked(u32 method_id,
++						   struct acpi_buffer *input,
++						   struct acpi_buffer *output)
++{
++	guard(mutex)(&asus_wmi_eval_lock);
++	return wmi_evaluate_method(ASUS_WMI_MGMT_GUID, 0, method_id, input, output);
++}
++
+ static int asus_wmi_evaluate_method3(u32 method_id,
+ 		u32 arg0, u32 arg1, u32 arg2, u32 *retval)
+ {
+@@ -351,8 +367,7 @@ static int asus_wmi_evaluate_method3(u32 method_id,
+ 	union acpi_object *obj;
+ 	u32 tmp = 0;
  
- 	if (IS_ERR(cs35l41->reset_gpio)) {
- 		ret = PTR_ERR(cs35l41->reset_gpio);
-@@ -2055,6 +2054,7 @@ int cs35l41_hda_probe(struct device *dev, const char *device_name, int id, int i
- err:
- 	if (cs35l41_safe_reset(cs35l41->regmap, cs35l41->hw_cfg.bst_type))
- 		gpiod_set_value_cansleep(cs35l41->reset_gpio, 0);
-+err_acpi:
- 	gpiod_put(cs35l41->reset_gpio);
- 	gpiod_put(cs35l41->cs_gpio);
- 	acpi_dev_put(cs35l41->dacpi);
+-	status = wmi_evaluate_method(ASUS_WMI_MGMT_GUID, 0, method_id,
+-				     &input, &output);
++	status = asus_wmi_evaluate_method_locked(method_id, &input, &output);
+ 
+ 	pr_debug("%s called (0x%08x) with args: 0x%08x, 0x%08x, 0x%08x\n",
+ 		__func__, method_id, arg0, arg1, arg2);
+@@ -403,8 +418,7 @@ static int asus_wmi_evaluate_method5(u32 method_id,
+ 	union acpi_object *obj;
+ 	u32 tmp = 0;
+ 
+-	status = wmi_evaluate_method(ASUS_WMI_MGMT_GUID, 0, method_id,
+-				     &input, &output);
++	status = asus_wmi_evaluate_method_locked(method_id, &input, &output);
+ 
+ 	pr_debug("%s called (0x%08x) with args: 0x%08x, 0x%08x, 0x%08x, 0x%08x, 0x%08x\n",
+ 		__func__, method_id, arg0, arg1, arg2, arg3, arg4);
+@@ -451,8 +465,7 @@ static int asus_wmi_evaluate_method_buf(u32 method_id,
+ 	union acpi_object *obj;
+ 	int err = 0;
+ 
+-	status = wmi_evaluate_method(ASUS_WMI_MGMT_GUID, 0, method_id,
+-				     &input, &output);
++	status = asus_wmi_evaluate_method_locked(method_id, &input, &output);
+ 
+ 	pr_debug("%s called (0x%08x) with args: 0x%08x, 0x%08x\n",
+ 		__func__, method_id, arg0, arg1);
+@@ -4632,9 +4645,8 @@ static int show_call(struct seq_file *m, void *data)
+ 	union acpi_object *obj;
+ 	acpi_status status;
+ 
+-	status = wmi_evaluate_method(ASUS_WMI_MGMT_GUID,
+-				     0, asus->debug.method_id,
+-				     &input, &output);
++	status = asus_wmi_evaluate_method_locked(asus->debug.method_id,
++						 &input, &output);
+ 
+ 	if (ACPI_FAILURE(status))
+ 		return -EIO;
 -- 
 2.53.0
 
