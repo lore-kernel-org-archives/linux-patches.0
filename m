@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585569;
-	b=gmwwF4OzBnkPpZafPhoMky8vLDjAIoRVTvmNN7q3a986ImFtEZk1bxjxe5Mlxfe+8cPr
-	 xAmQ6RRFljN62RyHk7oS8Q37KKhn+mdr7cTtb6hDG/lsRNtufDDnSFXHWFOlPXC2dQPwt
-	 oZ/Y+dsYA0NZejDMwlLxENl5SySa29Tml4MzWyBzUtyuPq5m6XRTEkN2fIc8bGNtYUY4j
-	 G93mn0C7j1RhFlMncyzj2l3mLZ3WWUk6BoGNEyBxoK13GU1vo8oNxngpBNmKqh6A3dqHJ
-	 c/T0OUHcs8LauIvg46PeuS8RSWtWcBih4Th1CGnihq3FOcmwzPqZwJvObs0kYEMBVng==
+	t=1794585570;
+	b=i27GZet78MmBAtFWwdhpDGkJXnKy3mrNMgy5Urrpm7BDYTGQrkYwBwM4TtbLlUvc8Y8N
+	 aNuGKq9yYgz8uax9I0yJl6AownZLRhLwrERDAZWNNehxawAZfYx80Ayh5aKzC5OGWSeIE
+	 CLgxtPzovaLL75GkbR/fjPGPtV9evkNzMJ5RVpR8SyT6kuTc8gawz963KNO67f7JSI8y2
+	 JKcCxYqri1YtoW9cGUZbHFmUxYzpcLUgS06GvuT9Zqbdg6+pYd3zwKh83urZZIABZViSC
+	 t32Wc/CYMNpBWGyd2GynTM/j9UfwRAep19GMwA7r46/4m7gjrUi8FIbVRpLDHDwTebQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585570;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ssv8+DGh3oTpZjmOT0zt1mAUpK8cwKUy8Wr9JP1a8ZE=;
-	b=Cld5i7QirtIw+nRKPyNtTigldnI21uFN0x3++5Ho2ZGawYAgg5kCnwGFEifk1bgSZrkS
-	 U4skbOjoccK7D3hdpSWW6bA9urV7xY7E86S4Ekdj7zOXEx2xAs+48nFimYzaZrWeTN6S9
-	 hw+Gy7ChL2Jxmdn7pstBtlG21y/B200V1tJSaqRYRjX/4BkBX6TUbtc3wabHkCidNFHfm
-	 BO7Fg1DBoLNApySUDeQdmurJynzvSD3TFg9kY/JyCBeIsDVWnOBRrmIdAxuV7/ETGSwic
-	 Wz4txEwZXlbEvvRr63s+nTtUXY++M7Oz9TR8RLgm/Qk35KqP6RgpeNvTnHkdk9ndtrw==
+	bh=adXHz5Brv9DLaWJ+Mw2ZSb35M+MoLHRfECHBhWtE074=;
+	b=g8kigpXRE8s602DCvoVoMYhZCYAvg4b+1KidAuI6lHkdmvMhpRspU6FCQOu32VMEwUWe
+	 bkBV1jK1lWdnOGdshwCYZqPBg9DNP1gIr6FW7dUk6MvkJ+AyYrXaQx7k6fwvUvMVaJvcV
+	 Mzw7KjI6stMIjoVqMBVDJ/+lRnQP4LToQdBDSjQ/KYgg4fEkOhwESF5buANOn91KhCJrf
+	 uFOCrGcW4GU85K5gKRg3/R3eJTB6xRrDT5FwLJ03Hsjw4n/Geb1ZhF+fYTfZFRdIGwzSV
+	 K5566udRXmCLkBBH9tcyLI8A+pvk9NRX8y1qikGXCed5zUOShkrkV11/C0A5ykrOwKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPKFmSb0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=evUO6n4d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB00606BA88;
-	Fri, 13 Nov 2026 15:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A026606A891;
+	Fri, 13 Nov 2026 15:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPKFmSb0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED06A1F000C4;
-	Fri, 13 Nov 2026 15:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=evUO6n4d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352431F000C4;
+	Fri, 13 Nov 2026 15:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585569;
-	bh=ssv8+DGh3oTpZjmOT0zt1mAUpK8cwKUy8Wr9JP1a8ZE=;
+	s=korg; t=1794585570;
+	bh=adXHz5Brv9DLaWJ+Mw2ZSb35M+MoLHRfECHBhWtE074=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uPKFmSb06iJQuoBk6JYRKF/8Yxa1PuA0XunbUflTmJmjoOoirhy8ReHercE0KkRDQ
-	 VJpiYdKSc+B5ORSY6ztoPHoSci60WLUrVPFqbxJjC0wFTiWAoBEtB688Mbo+kWBaKp
-	 pj7txGTslSRHRVT46k3qM4vKGaFOuXre/f8Uo7KM=
+	b=evUO6n4dTz+ZJcjEG0O+ZnSIPrU6s4qw3OaKHh9Z8/WY51cubmGmPCRdO6nxZSujA
+	 6Ke80WqCx8IynlaLCTT0adW7yVaUgEOx99kF5qG1wJVFPCP6exSmX+I5DljlQdGZT6
+	 OpdEgTKzZKVZQQc+t3UNRlHSg/LeAEWU4URrMVew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Keith Busch <kbusch@kernel.org>,
+	James Seo <james@equiv.tech>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 204/507] nvme: unregister when pr_register() is given a zero new key
-Date: Fri, 13 Nov 2026 10:48:28 -0500
-Message-ID: <20261113153801.394375262@linuxfoundation.org>
+Subject: [PATCH 7.3 187/507] hwmon: (hp-wmi-sensors) Fix unbounded loops in scale_numeric_sensor()
+Date: Fri, 13 Nov 2026 10:48:11 -0500
+Message-ID: <20261113153800.862987889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,50 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit a9d431124fb2e58215daf0299d6fcf47bbc2d6b1 ]
+[ Upstream commit 185039b1c0389b70ec52a6d3e3c1494e2d0e23da ]
 
-The block layer PR API defines a zero new_key in pr_register() as
-unregistering old_key. nvme_pr_register() sends Replace Reservation
-Key with a zero NRKEY instead. The host stays registered with key 0,
-and its next registration with another key fails with Reservation
-Conflict.
+In scale_numeric_sensor() in the hp-wmi-sensors hwmon driver, an unbounded
+loop occurs if the ACPI WMI implementation provides a highly anomalous or
+malformed UnitModifier value for a numeric sensor.
+The UnitModifier property is extracted from a WMI ACPI object without
+bounds checking and cast to a signed 32-bit integer. This value directly
+controls the iteration count of two scaling loops. If the provided
+unit_modifier is extremely negative (e.g., INT_MIN), the first loop
+executes billions of times before reaching target_modifier. Conversely,
+if unit_modifier is extremely large (e.g., INT_MAX) and the current
+sensor reading (val) is exactly 0, the second loop's overflow safeguard
+(val > LONG_MAX / 10) never evaluates to true, resulting in billions of
+unnecessary iterations. This prolonged execution causes severe CPU stalls
+and thread soft lockups during driver initialization or whenever a
+user-space process reads the sensor attribute via sysfs, resulting in a
+denial of service on the affected CPU core.
 
-The pNFS SCSI layout client unregisters this way at umount. A later
-mount cannot register and sends all I/O through the metadata server.
+Fix the problem in the first loop by exiting it as soon as val is zero.
+Fix the problem with the second loop by only entering it if val is not
+zero. Also add a check for val < LONG_MIN / 10 and exit the loop if that
+is the case.
 
-Send Unregister Reservation Key when new_key is zero.
-
-Fixes: 1d277a637a71 ("NVMe: Add persistent reservation ops")
+Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: James Seo <james@equiv.tech>
+Acked-by: James Seo <james@equiv.tech>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pr.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/hwmon/hp-wmi-sensors.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvme/host/pr.c b/drivers/nvme/host/pr.c
-index fe7dbe2648158..d8b6ac4d83bb9 100644
---- a/drivers/nvme/host/pr.c
-+++ b/drivers/nvme/host/pr.c
-@@ -128,8 +128,12 @@ static int nvme_pr_register(struct block_device *bdev, u64 old_key, u64 new_key,
- 	data.crkey = cpu_to_le64(old_key);
- 	data.nrkey = cpu_to_le64(new_key);
+diff --git a/drivers/hwmon/hp-wmi-sensors.c b/drivers/hwmon/hp-wmi-sensors.c
+index dd1fa48314a54..12950666c9810 100644
+--- a/drivers/hwmon/hp-wmi-sensors.c
++++ b/drivers/hwmon/hp-wmi-sensors.c
+@@ -739,15 +739,21 @@ static long scale_numeric_sensor(const struct hp_wmi_numeric_sensor *nsensor)
  
--	cdw10 = old_key ? NVME_PR_REGISTER_ACT_REPLACE :
--		NVME_PR_REGISTER_ACT_REG;
-+	if (!new_key)
-+		cdw10 = NVME_PR_REGISTER_ACT_UNREG;
-+	else if (old_key)
-+		cdw10 = NVME_PR_REGISTER_ACT_REPLACE;
-+	else
-+		cdw10 = NVME_PR_REGISTER_ACT_REG;
- 	cdw10 |= (flags & PR_FL_IGNORE_KEY) ? NVME_PR_IGNORE_KEY : 0;
- 	cdw10 |= NVME_PR_CPTPL_PERSIST;
+ 	val = current_reading;
  
+-	for (; unit_modifier < target_modifier; unit_modifier++)
++	for (; val && unit_modifier < target_modifier; unit_modifier++)
+ 		val = DIV_ROUND_CLOSEST(val, 10);
+ 
+-	for (; unit_modifier > target_modifier; unit_modifier--) {
+-		if (val > LONG_MAX / 10) {
+-			val = LONG_MAX;
+-			break;
++	if (val) {
++		for (; unit_modifier > target_modifier; unit_modifier--) {
++			if (val > LONG_MAX / 10) {
++				val = LONG_MAX;
++				break;
++			}
++			if (val < LONG_MIN / 10) {
++				val = LONG_MIN;
++				break;
++			}
++			val *= 10;
+ 		}
+-		val *= 10;
+ 	}
+ 
+ 	if (sensor_type == HP_WMI_TYPE_TEMPERATURE) {
 -- 
 2.53.0
 
