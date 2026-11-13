@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591121;
-	b=DOkKSpoQwvZKKGKtnbYlb2JCGv5u3701rR7CoRTZ7MPWMJZfjYGrrEvja4g0dkoNhHE8
-	 hsD8cOobfwDTTlwTmKxloScydnkFq3ICcCMu+HYl22ulODTUWUk0uwLrjLCWeS2ahY8Lf
-	 8/rgZj+BIhpNhSMfPPyKIsbINjSuPVYgd75OKSgz03VLSbGoI4wR/cu5SorHJkVZow6+f
-	 hgYfpD9NIrJV7Xr2sc2Lfo6RVqZc+w1NDgVU54IFU7PNH5mZb3BeGS1q74jgdh+5HGscu
-	 mkeeJsT0qahf9S1+Yyz0o5KjTpRp4L8VBzFJOFiD/+qbCaMW49QjTj0S3quohMjzvCA==
+	t=1794591122;
+	b=pc+xUzHb5Fc0+DCDuuYASiWA1LT8t6Al90xkYTGBqDy9F07hShYclyjllM1r3gCmLzXi
+	 J+8E8tKnaiboD2DSCFp/QyP66fFI6wD6Yr/mU/9MajUm+Ftbshakmnll4BK35+pOkMw2U
+	 M9TN9+jxDoRuCiX5ht+ugRUH7I/3AodESOcEqSRdi12X/OePwEvxXAsz5tscHP8wuC/Si
+	 Bj8xugtezGNBS8iUqfa5TBalIth2cNKp2gKkKW9sXFTTdXH+glboq4xor/SZPyX7Ac2ma
+	 FnBFeD8Yhv4SAk7I97zjZ6Ppj6MtDE+zQQvLHMb6CBUQ0StxLLxCqpzVb5Qt4cfjGjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591122;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pwBTXxHGxCWHQnvQiB3XfK8pL/ZKj2UBe2sBlVr/eb4=;
-	b=mBmypstEiyBD0ml9evaPK4p0qt87k8WRrp8dMgjCwp+y+fhh1giCgKcJSdT8FJsT2B2W
-	 PAevgSBplLoyTbJaJYjlp1bHCPMfcej1pq5k6fZbEas9Aa4H1j5Ha8OD8OXyyVzhZiC+T
-	 M65CpDby3WdCCy4Tp9N8uEyBKOeNtl49XNKnhVreEgUhNIAcce6rbTg03deaxijPe/W11
-	 NISfMFhwJM6VLk/JO8gahUml8kFhVLwElIkxmsgRTOfO7ox+K/NtH7NXoOXI+5rxAfcEo
-	 KacCTVqhW8npdePVEbGnhy4Fy5bOCKiGkUBurKD0wadjIxYBs4QuEZFdC2DekBRt7pQ==
+	bh=QTbnhhJ/R3LXcyWOTnhh9uGHS8LLpmD5ALFMIHXd66k=;
+	b=bV3E4Uq7W4oXzRLHUl99Svw4RtUdB8dU0qssi93iF/rov+1S097bpHGVxBZaSLmIdy84
+	 CikRUHydMAjYh0PMTHl2VwFQ1gAP9v3qObtkLP3MrJkLENedJ5QjDrYOfUa7ESi0AiNEr
+	 14Y4QJvRpYLgyVs1qN4QoGHo2zQYQL5dHEhqRckHwToblGIxWhWUw2xq0i7aY1MFAGbyX
+	 3PqJ1QuDApn0qL1PJ12f1IlqDwNqlW4BAVmu8lFcVnWCB92nsx7UlE5MMoWjpMJ0FMZG/
+	 1pVuewC4xmWBuPxV1gCwzElyEpyEvIzx7/igYllsnl8rngvJFw6nP2BGlmTNrRQpnVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XuAHh8+3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oiel4lLt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E610E606A88C;
-	Fri, 13 Nov 2026 17:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DDB6074B1B;
+	Fri, 13 Nov 2026 17:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XuAHh8+3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975BC1F000C6;
-	Fri, 13 Nov 2026 17:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oiel4lLt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2AC1F000C4;
+	Fri, 13 Nov 2026 17:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591120;
-	bh=pwBTXxHGxCWHQnvQiB3XfK8pL/ZKj2UBe2sBlVr/eb4=;
+	s=korg; t=1794591122;
+	bh=QTbnhhJ/R3LXcyWOTnhh9uGHS8LLpmD5ALFMIHXd66k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XuAHh8+3MoOZG2U6uykQWtEVFwcz8ncTUCISTQXd+Qk5wdtp6YZ6jyaH9eylxK2GX
-	 ZiqWSTKd/a7gC5QHcybnvYMiAHSu9SwZzoYC1MFqeVlgEfz3kkNzeOq20VJt/8XkHD
-	 1XMp2rkFABW5bP5k+DdPBfnsqmxD3Ys7AnFWdujw=
+	b=oiel4lLtOBzGXuQUHQgttyqMylGH02XIEF+cZc5c1BQ+8Lh2fI9CJVRtcfPGHNprD
+	 2u3nyBBGg02Bca7/ItKozVdBcUPhtm95G6nuhlgLqW+fS5adTZSqOO2eG2+JLnLDFe
+	 PZPuHoBXrEnrtG7g5zEDW4yEZ6QXwGVtlRYIDtYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Teodorescu <fane@google.com>,
-	Oren Yomtov <thenameisoren@gmail.com>,
-	Chris Mason <mason@kernel.org>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Yingjie Wang <1075151112@qq.com>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 270/670] KVM: x86: Unconditionally reset MMU context when emulating INIT
-Date: Fri, 13 Nov 2026 10:47:14 -0500
-Message-ID: <20261113153821.047236436@linuxfoundation.org>
+Subject: [PATCH 6.12 271/670] ipv6: reject wrapped temporary address preferred lifetimes
+Date: Fri, 13 Nov 2026 10:47:15 -0500
+Message-ID: <20261113153821.079513051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -72,86 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yingjie Wang <1075151112@qq.com>
 
-[ Upstream commit c7c288d178cb0b78d3464a616b16b1aa0b316049 ]
+[ Upstream commit c3e67bd82b9b9b1a5118f09a429ccefe2aab0741 ]
 
-Force an MMU reset when emulating an INIT even if paging was already
-disabled, as the MMU page role includes guest_mode (L2), i.e. an INIT while
-L2 is running with CR0.PG=0 will result in KVM running L1 with a stale MMU
-context.
+ipv6_create_tempaddr() raises a temporary address's preferred lifetime to
+regen_advance + age + 1 when the configured lifetime is too short. The
+result is stored in a u32, while regen_advance and age are unsigned long.
+If the sum wraps or is truncated, the stored lifetime can still be less
+than or equal to regen_advance + age.
 
-Alternatively, the reset could be scoped strictly to paging being enabled
-or L2 being active, but SMM is also encoded in the page role.  Even though
-it _should_ be impossible for the vCPU to be INIT'd while SMM is active,
-there's zero value in not handling SMM.  At that point, the only scenario
-where KVM _doesn't_ need to reset the MMU context is on an INIT with the
-vCPU running in Real Mode or Unpaged Protect Mode, and while INIT in those
-modes is somewhat common, it's far from a hot path and re-initializing the
-MMU is not expensive, especially when the role isn't changing (KVM elides
-most of the re-configuration in that case).
+addrconf_verify_rtnl() then sees the new address as due for regeneration
+and creates another one. Temporary addresses are not limited by
+max_addresses since commit 4b08a8f1bd8c ("ipv6: remove max_addresses
+check from ipv6_create_tempaddr"), so this can cause unbounded address
+growth. With dad_transmits set to -1, a baseline kernel reached 2859
+loopback addresses in two seconds.
 
-Note, like the Fixes commit, this bug only affects nested SVM as INIT is an
-unconditional intercept on VMX, i.e. it's impossible to emulate INIT while
-L2 is active.
+After storing the adjusted lifetime, verify that it is still greater than
+regen_advance + age. Reject the new address if the check fails.
 
-Temporarily keep the guest TLB flush when CR0.PG is being cleared even
-though it is fully redundant with the flush that is emitted on all INIT
-events (KVM itself only does RESET when a vCPU is being created, i.e. when
-CR0.PG must be '0').
+On an x86-64 KASAN kernel, the normal configuration created three IPv6
+addresses. The negative dad_transmits, positive multiplication overflow,
+and large retransmission-time cases each left only the loopback and public
+addresses. An i386 defconfig and an x86-64 allmodconfig both built
+addrconf.o with W=1.
 
-Fixes: ed129ec9057f ("KVM: x86: forcibly leave nested mode on vCPU reset")
-Reported-by: Stefan Teodorescu <fane@google.com>
-Reported-by: Oren Yomtov <thenameisoren@gmail.com>
-Reported-by: Chris Mason <mason@kernel.org>
+Fixes: f4bcbf360ac8 ("net: ipv6/addrconf: clamp preferred_lft to the minimum required")
 Cc: stable@vger.kernel.org
-Cc: Yosry Ahmed <yosry@kernel.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20261022015407.279870-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/netdev/20261029175827.GA1411453@shredder/
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Alex Henrie <alexhenrie24@gmail.com>
+Link: https://patch.msgid.link/tencent_7A270291DDE5CD89DAFFE8A745D094D5BD06@qq.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ net/ipv6/addrconf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 627b5f53d1684..ee3b528ec1e27 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -11796,18 +11796,23 @@ void kvm_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event)
- 	kvm_x86_call(set_efer)(vcpu, 0);
- 	kvm_x86_call(update_exception_bitmap)(vcpu);
- 
-+	if (old_cr0 & X86_CR0_PG)
-+		kvm_make_request(KVM_REQ_TLB_FLUSH_GUEST, vcpu);
-+
- 	/*
--	 * On the standard CR0/CR4/EFER modification paths, there are several
--	 * complex conditions determining whether the MMU has to be reset and/or
--	 * which PCIDs have to be flushed.  However, CR0.WP and the paging-related
--	 * bits in CR4 and EFER are irrelevant if CR0.PG was '0'; and a reset+flush
--	 * is needed anyway if CR0.PG was '1' (which can only happen for INIT, as
--	 * CR0 will be '0' prior to RESET).  So we only need to check CR0.PG here.
-+	 * Unconditionally reset the MMU, even though super strictly speaking,
-+	 * a MMU reset is only necessary if and only one of the page role bits
-+	 * is changing.  All of the CR0/CR4/EFER bits effectively get covered
-+	 * by checking CR0.PG=1, as CR0.WP and the paging-related bits in CR4
-+	 * and EFER are irrelevant if CR0.PG was '0'.  Subtly, if the vCPU was
-+	 * in guest mode (L2) or SMM (although emulating INIT in SMM _should_
-+	 * be impossible), an MMU reset is also necessary as "guest mode" and
-+	 * "smm" are both encoded in the shadow page role.  As a result, the
-+	 * only scenarios where an MMU reset is *not* needed is if the vCPU is
-+	 * in Real Mode or Unpaged Protected Mode, and micro-optimizing those
-+	 * paths are not worth the risk of running with a stale MMU context.
- 	 */
--	if (old_cr0 & X86_CR0_PG) {
--		kvm_make_request(KVM_REQ_TLB_FLUSH_GUEST, vcpu);
--		kvm_mmu_reset_context(vcpu);
--	}
-+	kvm_mmu_reset_context(vcpu);
- 
- 	/*
- 	 * Intel's SDM states that all TLB entries are flushed on INIT.  AMD's
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index eb32a00978447..60b2ed8b8fe76 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1477,7 +1477,8 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, bool block)
+ 	age = (now - tmp_tstamp + ADDRCONF_TIMER_FUZZ_MINUS) / HZ;
+ 	if (cfg.preferred_lft <= regen_advance + age) {
+ 		cfg.preferred_lft = regen_advance + age + 1;
+-		if (cfg.preferred_lft > cfg.valid_lft ||
++		if (cfg.preferred_lft <= regen_advance + age ||
++		    cfg.preferred_lft > cfg.valid_lft ||
+ 		    cfg.preferred_lft > if_public_preferred_lft) {
+ 			in6_ifa_put(ifp);
+ 			in6_dev_put(idev);
 -- 
 2.53.0
 
