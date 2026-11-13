@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585461;
-	b=t3pc7UsTtqzRTJ4uQ/VrcGFGl0pdYNrGOr6ZW9667FYeUAcsxdOrGwjZ1gci+C3s7f82
-	 0BjkIaCi8dQzPOvA3SKVwECS5Re7zrLYPVA7PDfQPmG6U7Rv4TE85GhSAth6am7Cy1j44
-	 xzZgjmM8dqWKAQ0cL/AkovZMmB00q/HKTVvaBTVh3iiUho4Z8qhvFIGcwG/r6s/mZh1Yu
-	 iI46QrGHWK/9NNj+hciK+uJfVyhzYOUST3H5DreePwtMHW5KKaV4ODFbfAYQZ0OASr87k
-	 JchHp9jdkIE1qNbEZR8nRXJkS5rpX33rKU9EzaCHHI+M+SsSeX0wYaDedvIlnMbjimw==
+	t=1794585462;
+	b=4dxtmLIdAok8vcPj2ydZ4H7Ep8XQDNsCwfwQb/rFGBF/9nJTLI+fsfDvJh+d1iBCG69w
+	 ZbtkKgyQPewHQiWEPqPdDNxWI2SnqTVr8BQkQw3ei8o7j6v3upJSS90FpBefNplKB1H+o
+	 dQkPeBhEH7ThvC7W90WFGDPbulfA3KuOtEwA2FlkG6pD/1tfT3sCClkV5QzrDL52q6FBe
+	 gmdovbRdLg0tLGUmgGA5ae0tS0LQmQRGQAGnOmbXM1YMb7UlvmJ+MCqIWOxm6Aubrm60F
+	 MH53uQ6DBvm8LNZKhMp9uj2qMaEpI+1c0vv8ZoKNnF0q+soJj2Ku+hHW4Olichp9ciw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585461;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585462;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B1woB9tZ0xhRn7bZcSs+4n4/NgI+1esnUjqPiTYgszs=;
-	b=P59MtxUBBwGBCFKhBqQbBUr0uclQEMxWCh0EOeAlNJx1J80tmixBFeeF5h/TmmDbHq5H
-	 /CRGhw6njhS033jjCMshClN151qL/6XwEhOw826aTs1z/n8SUJjA7gINoRfWv0wQLYzhJ
-	 QyHZT82QOGfZN5MTKs1HHYfL7BtjlB1TpB86OM+0sOPiMXaEesJT9n1t44Yc7wRHJgw9A
-	 saC7puSTB2YfGi3M1tI02vbVIXfrrILxzZ+ZAYb4sT+LUTScdD2+iU1fmaYy9IR6owgH7
-	 /Y+pKj9vzjB1Yb0jf3TGhJ1csmv9YI4Eh/dp2oUDv2ADWyzTrI8UUtHSndZi+mAK6pA==
+	bh=6er7Nq8k1hOFD6BCdsWrMCs0ICI7DaWm5ZdWSY9gazM=;
+	b=L3lb6osI1+hcuPuQxPV3N8q/EDo5mUqHUfkY/ai/rJcEEA5rzdkK3UFSC2HwMMoJxTYJ
+	 7cNGgsyEEqea+2Ny5TgsT/NPa6nAfo7M5mrXHox6djKzdQ1dkf2f14vWb/0TCz2HYka37
+	 og/5RFxf+KPlvXkXt2k3UwsYrzx00wO6UhpJoPZNnqK6nYL/L17+vy/CjdfdMrde8SPye
+	 TdweCyyaTmuXeTR6C6qBKUZitK2ikqWiouOS5Pk1zbhEh6cU5fQSvFfWxPTSYN8xhAdgb
+	 NcfN77pq4fJHcZuH2aeannHQ9JIdtU6/JLWCEFGJig7n2Z/qauAumooPCTVNTNTHxJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYOa1vnU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrM6SYZl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100A360A6F71;
-	Fri, 13 Nov 2026 15:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDC760A6F4F;
+	Fri, 13 Nov 2026 15:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYOa1vnU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4521F000C4;
-	Fri, 13 Nov 2026 15:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrM6SYZl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26F61F000C6;
+	Fri, 13 Nov 2026 15:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585460;
-	bh=B1woB9tZ0xhRn7bZcSs+4n4/NgI+1esnUjqPiTYgszs=;
+	s=korg; t=1794585461;
+	bh=6er7Nq8k1hOFD6BCdsWrMCs0ICI7DaWm5ZdWSY9gazM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NYOa1vnUPL3QcNXjNhwTb3r5ErM14n5WnQaP3QiwJhDLnK1kLHnEEQ0KvybYmg9Y0
-	 pM4fmbry2ciu8sNopBg8HBXIFMC3+zuRERBeDrojSaAITBVuL0z2502PO82LTm622f
-	 YD4XVZtWFn4i6mN8GnQm1D8pmsTBgs+MY0k/jxRI=
+	b=FrM6SYZlzBmTSo2fSS7ovo3qluNqCG63Yo3iVkQ50mKQ54qZkt9CCfFS+HlcrHPtZ
+	 7u4oeRYNpBzX9NVoBI5qHnxLiGx7CvO0xZyfND6TiCReBdZcWQdjZnqaadFPeKEoJt
+	 /8mJVGz0JUubr5Vvvg0FAKbgqdjBfDZZVt6UE3WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	"kernelci.org bot" <bot@kernelci.org>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	David Kaplan <david.kaplan@amd.com>,
-	stable@kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 117/507] x86/bugs: Select the BHI mitigation based on the attack vector properly
-Date: Fri, 13 Nov 2026 10:47:01 -0500
-Message-ID: <20261113153758.309112375@linuxfoundation.org>
+	Nick Desaulniers <ndesaulniers@google.com>
+Subject: [PATCH 7.3 118/507] x86/csum: Relax the len and proto constraints in 32-bit csum_ipv6_magic()
+Date: Fri, 13 Nov 2026 10:47:02 -0500
+Message-ID: <20261113153758.346184062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,63 +71,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 3457b3bcd344005af894876cab4e634cabdcbb62 ]
+[ Upstream commit f01a394fe2a00d3cb4cf2cda279c58604a2540ad ]
 
-The BHI mitigation selection is inconsistent with the documentation
-(attack_vector_controls.rst), which lists BHI under both the
-user->kernel and guest->host attack vectors. bhi_select_mitigation()
-only enables it when CPU_MITIGATE_GUEST_HOST is set; otherwise it
-selects BHI_MITIGATION_OFF, even if CPU_MITIGATE_USER_KERNEL is set.
+Building an i386 allmodconfig kernel with clang fails since allmodconfig
+started building netfilter with GCOV profiling:
 
-As a result, a kernel compiled with KVM disabled gets BHI automatically
-disabled, since CPU_MITIGATE_GUEST_HOST defaults to off without KVM.
-This is a bug, given that CPU_MITIGATE_USER_KERNEL still needs it: on
-affected Intel CPUs these kernels lose BHI_DIS_S or the BHB clearing
-loop by default. Booting with mitigations=auto,no_guest_host has the
-same effect.
+  In file included from net/netfilter/nf_synproxy_core.c:7:
+  In file included from ./include/linux/skbuff.h:26:
+  In file included from ./include/net/checksum.h:21:
+  In file included from ./arch/x86/include/asm/checksum.h:9:
+  ./arch/x86/include/asm/checksum_32.h:149:6: error: inline assembly requires more registers than available
 
-Select BHI_MITIGATION_ON whenever user->kernel is mitigated, and keep
-BHI_MITIGATION_VMEXIT_ONLY for the guest->host-only case.
+The csum_ipv6_magic() asm needs five registers at once: the early-clobber sum
+plus register-only inputs for saddr, daddr, htonl(len) and htonl(proto). With
+frame pointers enabled, six general purpose registers are left to choose from.
 
-  [ bp: Clarify commit title. ]
+In synproxy_send_tcp_ipv6(), the GCOV instrumentation lets clang's machine
+scheduler move the copies of two incoming register arguments, EDX and ECX,
+below the asm.
 
-Fixes: ddcd4d3cb37c ("x86/bugs: Add attack vector controls for BHI")
-Signed-off-by: Breno Leitao <leitao@debian.org>
+Both registers then stay live across the asm, which leaves four registers for
+its five operands. This is LLVM issue #206307. The error goes away without
+either GCOV or frame pointers, and it reproduces with clang 19-22.
+
+Neither len nor proto has to be in a register: ADCL also takes a 32-bit memory
+or immediate source operand. Use "g" for both, so the asm needs at most three
+registers whatever the caller looks like.
+
+ASM_INPUT_G, which normally replaces "g" to avoid clang's poor handling of it,
+is not enough here. It expands to "ir" for clang, so callers that pass
+a variable protocol, like nf_ip6_checksum(), would still need five registers.
+With "g", clang passes a non-constant len or proto through the stack and still
+turns constants into immediates.
+
+  [ bp: Make Rosen Penev the author because of a previous identical submission
+    https://lore.kernel.org/all/20260904000833.2058186-1-rosenp@gmail.com/ and
+    Sasha graciously agreeing and giving his much more detailed commit message
+    explaining the background of why this exists. ]
+
+Fixes: 403cec8ab6d0 ("netfilter: add option for GCOV profiling")
+Closes: https://dashboard.kernelci.org/build/maestro:6ad55fe255fda507603d2651
+Closes: https://lore.kernel.org/a28df759-d0e9-41c0-97c7-5f89a18d54e2@oss.qualcomm.com
+Reported-by: kernelci.org bot <bot@kernelci.org>
+Reported-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Assisted-by: LLM
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: David Kaplan <david.kaplan@amd.com>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20261029-bhi-attack-vector-v1-1-29cfa697efb6@debian.org
+Acked-by: Nick Desaulniers <ndesaulniers@google.com>
+Cc: stable@vger.kernel.org
+Link: https://github.com/llvm/llvm-project/issues/206307
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/bugs.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ arch/x86/include/asm/checksum_32.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 000ebee2d247b..4ced10c6ba0db 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -2088,14 +2088,12 @@ static void __init bhi_select_mitigation(void)
- 	if (bhi_mitigation != BHI_MITIGATION_AUTO)
- 		return;
+diff --git a/arch/x86/include/asm/checksum_32.h b/arch/x86/include/asm/checksum_32.h
+index 17da953879976..f74873a5e3510 100644
+--- a/arch/x86/include/asm/checksum_32.h
++++ b/arch/x86/include/asm/checksum_32.h
+@@ -159,7 +159,7 @@ static inline __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
+ 	    "adcl $0, %0	;\n"
+ 	    : "=&r" (sum)
+ 	    : "r" (saddr), "r" (daddr),
+-	      "r" (htonl(len)), "r" (htonl(proto)), "0" (sum)
++	      "g" (htonl(len)), "g" (htonl(proto)), "0" (sum)
+ 	    : "memory");
  
--	if (cpu_attack_vector_mitigated(CPU_MITIGATE_GUEST_HOST)) {
--		if (cpu_attack_vector_mitigated(CPU_MITIGATE_USER_KERNEL))
--			bhi_mitigation = BHI_MITIGATION_ON;
--		else
--			bhi_mitigation = BHI_MITIGATION_VMEXIT_ONLY;
--	} else {
-+	if (cpu_attack_vector_mitigated(CPU_MITIGATE_USER_KERNEL))
-+		bhi_mitigation = BHI_MITIGATION_ON;
-+	else if (cpu_attack_vector_mitigated(CPU_MITIGATE_GUEST_HOST))
-+		bhi_mitigation = BHI_MITIGATION_VMEXIT_ONLY;
-+	else
- 		bhi_mitigation = BHI_MITIGATION_OFF;
--	}
- }
- 
- static void __init bhi_update_mitigation(void)
+ 	return csum_fold(sum);
 -- 
 2.53.0
 
