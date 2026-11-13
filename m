@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591534;
-	b=XbuOdkM3uC85T7xpc1qogltConfCDUAYKIdH+/hFXsDIUEroviYnUbg/QM2JKFW5EW8+
-	 uPDpGLhyFZF4NJqCfSrqWMjbu1Gu0GQJKAiOnvbUXFjLi/nD20bC/3A77B4Cv2qvvRdkG
-	 zWziJKJ4O3kv8dBUi/3P/1m25pM2FCJRjvdHX50UhaxPh6rAU8GY4nJqAkep1mnADbLYK
-	 hEGVAvAzc+QUHtgzt623iIVFh2pREelB1xaDI4tEGeIy02c762O0rj7DS9foLNKmtkmkN
-	 P82YzHFqZV3vagkqaHPk0RtcrSXhgqGVN/HKoP+ZMPSgHphppI4rqOLt9k1PoBqvccg==
+	t=1794591535;
+	b=kJdTQouuoglHQ2H+qY8zbnDvoTmxyp2yTEUhXYHh7D24oo+QS5+rOBRHUMp5r/MaqQdD
+	 Lal2Do7kVSptSsvJ1qZ/22Ok5axUUSoblAVCsaAqAUYvp96nL5pehQCz2n1NIzIZzEYxr
+	 nDlg8YMWTR0lwNlAzawuT1ousYjIuRfJ6xCpz25IfyupcMOBys1SD3BLdmBUY1TncelSR
+	 at/c7yu0enUIhX2D4AQbWAuMUQuk48ljqnoszsXRemk2tTuF5ai4J+BR1GRICBfi72G0i
+	 hyG5TCm37KwHdfx/QlKkrHMQ+kHeGQ1jI9VHVN9c/A4Q5/ItLjYE/lLWNqWe+3phjdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591534;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=YSP5B0YIFVO+Yee1HXlfXPrBX1LaioCkVdyjgh9NsE4=;
-	b=rX6/EouJddUuZr/Yby3R42KsJqE1gG9ECyRVe9ldlbG8qtKL7ZcdnxF1CMDZVch4HFcy
-	 ScNRExuwbRIr6oBXjCicjBcONNIMa+bI1F2yvDXK0j9z7T2SCiQsgrOxBoIDOV511gr7e
-	 vty/Gg//L1aldyUbPb6y/kZFTUszEvdrPv708HOX8u0KjXyZh2cJku31V7wdZJRqaaj0B
-	 zXMmX+dn7eNqmoD86LuamX7pyQw8kuJ/ZC4cHPY1sRv3JI2N4xAm0KD9QE8sa92uVadCb
-	 0TTcMOElJMgV+xrE87hctYdEAldvQy5s3NMuXqCP2/Ba+R+qd0NnJVK7qWNdDcAgh3g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=8h2g+s0XDZfdWzUU7c8BFQD9eJ73T9ef3Gu8FH37uTg=;
+	b=gIoEZpQGvOaboMGPrvEk142ED/n9ia5IEqDuN3qy41MmMqDlL2S22X4Ie7tTPoEmXnCH
+	 u8QBWVSJmrangjP8vReYRF6kX6P1Sa4h0R6wfML3Eh1BS1zGnA4V5JGUM/sYWbBYq87em
+	 YV41yve2Vika5izukzLfxA0hwDrWw1CBPCTO+7byg1eXTx0JEioV6iXYqYQ9oIoTEDFQs
+	 f83cQhgLTQOC5NzNjfooh/KUXdB8/j8mbr4eL6DV6kQHMAKbe+qE/Ywx6fs1k2CdoygDV
+	 LYRN9oTDu4CaKDUJjKWxZtXERB6r9AJbU+qMl3crVJVOv+98oWiCvE7BRZCH4Ktrk2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i1idE0xI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P3cd5Z1b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C05606D4B0;
-	Fri, 13 Nov 2026 17:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C49606D4B0;
+	Fri, 13 Nov 2026 17:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i1idE0xI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F801F000C5;
-	Fri, 13 Nov 2026 17:38:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P3cd5Z1b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A031F000C4;
+	Fri, 13 Nov 2026 17:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591534;
-	bh=YSP5B0YIFVO+Yee1HXlfXPrBX1LaioCkVdyjgh9NsE4=;
+	s=korg; t=1794591535;
+	bh=8h2g+s0XDZfdWzUU7c8BFQD9eJ73T9ef3Gu8FH37uTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i1idE0xI0UFT+eRkSJLFe6/2Xp3VR/UEQXvYw3vTym+vHja6jIxp9WLDHVxKxlzL5
-	 vZ3BmQFGTnvPxE440VPLaLf8YScFOBR1ZmE221YkxvOVZbZMPr48J+eTCmkKqXywyr
-	 x13CxA1onchjOPYphRkwW4bxdPyap7/CWQkBzjHg=
+	b=P3cd5Z1bfi3eS1e+AHSVCeAYr0GVXQTjGxhb3Mo8x1lYZxNPNTI5Ddxc8R/FtrZ11
+	 A+jbj5jGEDXp8iArts/497NcNfezIQcDm3s19/eyh9GJjEDbJazR9JfA+n+e+ABhOr
+	 Y1ZcmaZU8SUJWBLcgxNjo+RmzvIpGPfIrmvYB4do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 563/670] iomap: dont lose a failed direct I/O bios error when zeroing the tail
-Date: Fri, 13 Nov 2026 10:52:07 -0500
-Message-ID: <20261113153830.959777015@linuxfoundation.org>
+Subject: [PATCH 6.12 590/670] drm/amdgpu: reject CS chunks too large for kvmalloc()
+Date: Fri, 13 Nov 2026 10:52:34 -0500
+Message-ID: <20261113153831.833436078@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -65,102 +63,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit a9fd24bcbe690ed4a5b8ea6a7516fa297fae9360 ]
+[ Upstream commit ba4c3c202919405f461a393e823e4b72c8518494 ]
 
-iomap_dio_bio_iter() falls through to the sub-block tail zeroing when
-the data bio submission fails, so that the rest of the block is still
-zeroed and stale data is not exposed.  The zeroing result was assigned
-to ret, which overwrote the submission error with the successful
-zeroing result (zero) and the failed write was reported as success.
+The CS ioctl copies every chunk with vmemdup_array_user() before it
+looks at it, for whatever length_dw userspace gives. kvmalloc() warns
+about allocations above INT_MAX when called without __GFP_NOWARN, so any
+process with the render node can trigger a warning. On navi31, a CS with
+a chunk of length_dw 0x20000000 returns -ENOMEM after:
 
-iomap_dio_zero() can only return an error from a can't-happen
-WARN_ON_ONCE() (nr_vecs exceeding BIO_MAX_VECS, which the existing
-comment there says "shall never be reached" for any in-tree
-filesystem), so it isn't a real runtime failure worth reporting to
-userspace, let alone one worth losing the actual submission error for.
-Make iomap_dio_zero() return void and drop the error handling at both
-call sites instead of threading the result through a separate
-variable.
+  WARNING: mm/slub.c:6841 at __kvmalloc_node_noprof+0x5a5/0x7d0
 
-Fixes: 10553a91652d ("iomap: fix iomap_dio_zero() for fs bs > system page size")
-Cc: stable@vger.kernel.org # v6.12
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/0cbce1012f5333690be36a9adafb3e190fe2ca77.1790342457.git.parri.andrea@gmail.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Adjusted context for the existing 64 KiB zero buffer and length guard instead of the upstream zero folio and vector-count guard. ]
+Reject such chunks with -EINVAL before trying to copy them.
+
+Fixes: 2098105ec65c ("drm: drop drm_[cm]alloc* helpers")
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit dab5f5280406088591645f499f048dcfefab8d7d)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/direct-io.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
-index c81cfcbb1bb6d..92eb494aa0f0f 100644
---- a/fs/iomap/direct-io.c
-+++ b/fs/iomap/direct-io.c
-@@ -250,19 +250,19 @@ void iomap_dio_bio_end_io(struct bio *bio)
- }
- EXPORT_SYMBOL_GPL(iomap_dio_bio_end_io);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index bb207ba59e752..c49aabb343a72 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -239,6 +239,12 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
  
--static int iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
-+static void iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
- 		loff_t pos, unsigned len)
- {
- 	struct inode *inode = file_inode(dio->iocb->ki_filp);
- 	struct bio *bio;
+ 		size = p->chunks[i].length_dw;
  
- 	if (!len)
--		return 0;
-+		return;
- 	/*
- 	 * Max block size supported is 64k
- 	 */
- 	if (WARN_ON_ONCE(len > IOMAP_ZERO_PAGE_SIZE))
--		return -EINVAL;
-+		return;
- 
- 	bio = iomap_dio_alloc_bio(iter, dio, 1, REQ_OP_WRITE | REQ_SYNC | REQ_IDLE);
- 	fscrypt_set_bio_crypt_ctx(bio, inode, pos >> inode->i_blkbits,
-@@ -273,7 +273,6 @@ static int iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
- 
- 	__bio_add_page(bio, zero_page, len, 0);
- 	iomap_dio_submit_bio(iter, dio, bio, pos);
--	return 0;
- }
- 
- /*
-@@ -382,10 +381,7 @@ static loff_t iomap_dio_bio_iter(const struct iomap_iter *iter,
- 	if (need_zeroout) {
- 		/* zero out from the start of the block to the write offset */
- 		pad = pos & (fs_block_size - 1);
--
--		ret = iomap_dio_zero(iter, dio, pos - pad, pad);
--		if (ret)
--			goto out;
-+		iomap_dio_zero(iter, dio, pos - pad, pad);
- 	}
- 
- 	/*
-@@ -463,8 +459,7 @@ static loff_t iomap_dio_bio_iter(const struct iomap_iter *iter,
- 		/* zero out from the end of the write to the end of the block */
- 		pad = pos & (fs_block_size - 1);
- 		if (pad)
--			ret = iomap_dio_zero(iter, dio, pos,
--					     fs_block_size - pad);
-+			iomap_dio_zero(iter, dio, pos, fs_block_size - pad);
- 	}
- out:
- 	/* Undo iter limitation to current extent */
++		if (size > INT_MAX / sizeof(uint32_t)) {
++			ret = -EINVAL;
++			i--;
++			goto free_partial_kdata;
++		}
++
+ 		p->chunks[i].kdata = vmemdup_array_user(u64_to_user_ptr(user_chunk.chunk_data),
+ 							size,
+ 							sizeof(uint32_t));
 -- 
 2.53.0
 
