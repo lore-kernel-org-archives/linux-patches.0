@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591599;
-	b=cQARSZl85a0rb46yZiKvASX0Jf+gVx80vJyITsnQju4ZSmqT0VhP47MZYri/bluZlFRe
-	 jl1woSD4M/u7p8VbIwkA2BTL7LArqmC/5N7Y8TjA18ZfJssDU9o+tvm2Q6xHXbia6vtAc
-	 YWelDqi86HeFqrC9uLAsHZ57/Htce1WyySXxV1W4MTtk1l4dsscNZqbZinngiGWNM/+Ho
-	 wikEkcIE4la9/XETztU9lq/qlZQA6oMmONx9q1ar111vdAw2OrgGaOv7zeCV9CZyjdKme
-	 GwlAUWqy/QyR6lFx86+24PEG1DEVFxu1LAT7gJDG60w6fKCLpGFxq9auiDwdmaHrBbw==
+	t=1794591600;
+	b=yj3em5Dt1dcJ29Q54ai+s2rn6vcDQ2yw4KXp0WcLWCmCGLLRbPpoJMYX8IcRtTDnKssl
+	 XsvmRd+vk/oHajYoPq/hxh7n78LvQ9KCWmV3hCNkTSSk4+sCcucc/fJAl/BzpodbWDHhl
+	 y8ASiFqBCkGbxUB2xIfsaPCAK7vjtoF5dHZDyvFFy17hzOFZuX16MWgkXUKuoHzRA1yC9
+	 RzrrJ7j0LjQVTB1+h7agMhTPMxZELanSUaZGcu/fhoiwetnbrvJNntOHX0dPhdNejOdRp
+	 a6xY/rksTw2CiLb4BGAfd1Hasguc9tGGjrNbineldljbNtIWGrx+fewJjLZ9HP1ZcXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4xKlbjmKups0nGdj1pWQNbZ3YTflW4gqA4JbmWTsrc4=;
-	b=5M8MmUkP9OLrqSrfybGBFxYdzc64yps0baxd8yt0OvsaC8laE0CrlrBup8cMMZBefv8b
-	 GDou81a5sFme0mCiQhUqghJYrpDeVNqPVJMW+eKd7IyThYmytlGfRIO/OugIvgDq5t49I
-	 blxsb2EMwmgm6ZChgevBXMBOhIv0mqT/bXKHS7o+yj4Cbi+EjR3JP1uFkR3FguzA8RNhO
-	 T59cI9XqbZ4Jpj3f+aaF3cdy2szavSbbTLxYaeIckvnfDeuYzwtZ6FthyGZ8/umH9UxdK
-	 vkm4lavMFAW2lgyzNqF2DbICc+wipU76g4CDZiNTaoqHQJB7ZJOntfZpBP7L47v9wUQ==
+	bh=hKuxo9SSvb2O6VR53Im5kQExOK+KmFPxz9HU4IdWO74=;
+	b=eQtstx0sPul6ZIKvzopYYR5RXgip50rgBZMuYVXwirJRKgXgloT0c2WV6VYJvyz6mYKL
+	 HzWRdV9GBfI5vVyk0sAKWYbm/zbk9tcYbE58ED/nZbjtpvnZxuOPmovJKgd/L7LybF6fG
+	 leN4/sVXxXs62oN2quKxcCBMfZZqgfmY1ZuCFsXtRkHLmuIiaxt+TIbqAOSXnCwBHd6Ft
+	 uQk6DPDMDgYlrKv8TDIoR91ScFBPpMBLAWv9pfWhTZisvf2MotQw+RJUYz1WQupymQAck
+	 +scU1UTDU68tsFFGewRkgl2XoaHPzkFr6/5zYx6jMjQWdK8W+dVwJH6EYoKC2trACOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QtQtkhcW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tY2iIRKj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4C2606A89C;
-	Fri, 13 Nov 2026 17:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FC5606A8A1;
+	Fri, 13 Nov 2026 17:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QtQtkhcW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187351F000C4;
-	Fri, 13 Nov 2026 17:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tY2iIRKj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F92B1F000C4;
+	Fri, 13 Nov 2026 17:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591599;
-	bh=4xKlbjmKups0nGdj1pWQNbZ3YTflW4gqA4JbmWTsrc4=;
+	s=korg; t=1794591600;
+	bh=hKuxo9SSvb2O6VR53Im5kQExOK+KmFPxz9HU4IdWO74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QtQtkhcWAhrglAhd9aEYUOOmuLCyRUzPbZnznNhM1NteuEiZaOs2We8nnZj9iOBpa
-	 ezLczK1BrNnkUW/z2FfS/8TLbf0ckHxL0N2ErBEI8bNyCjc4YNsyec/RcU2vvC/MUj
-	 RdfT5aQkHKaAiA433cDgbIkcCeziGr5i6VH1IIpw=
+	b=tY2iIRKjth3gvSFF+xl+0eRNbooBlJpS2dk8cwEO62aRQc8bgfC7LRK+EQwowfbpO
+	 YShWUm2BVfMpXK2DHpK8dv4KCXDeUAFMm3dCZKCgeOQO/zvbY2K4Or/rkVFA1hYle9
+	 7OYoqN902YC/j92P7f0HTkFO2JRWonamDOi97JbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Huang <ychuang570808@gmail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 642/670] clk: nuvoton: ma35d1: Add missing WDT/WWDT parent clocks
-Date: Fri, 13 Nov 2026 10:53:26 -0500
-Message-ID: <20261113153833.549582636@linuxfoundation.org>
+Subject: [PATCH 6.12 643/670] f2fs: release a removed xattr node in roll-forward recovery
+Date: Fri, 13 Nov 2026 10:53:27 -0500
+Message-ID: <20261113153833.581330337@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,55 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit 1dc3871ce7ec819030c22297f8960c61cc42a990 ]
+[ Upstream commit f5924de8867c09206ba631b9faed63862ec00a10 ]
 
-The WDT and WWDT muxes list PCLK3/4096 and PCLK4/4096 among their
-possible parents, but the driver never registers the corresponding
-clocks, so these parents could never be used.
+When xattrs shrink enough to fit in the inline xattr area,
+write_all_xattrs() truncates the xattr node and clears i_xattr_nid. If
+the file is then fsynced without a checkpoint, only the inode block is
+written, with i_xattr_nid of 0.
 
-Add pclk3_div4096 and pclk4_div4096 as fixed factor children of pclk3
-and pclk4 and expose them through the clock provider.
+Roll-forward recovery starts from the checkpointed inode, whose
+i_xattr_nid still points to the old xattr node.
+f2fs_recover_inline_xattr() copies only the inline xattr area, and
+f2fs_update_inode() writes the old i_xattr_nid back. So the inode keeps
+the stale xattr node:
 
-Reported-by: Jacky Huang <ychuang570808@gmail.com>
-Closes: https://lore.kernel.org/linux-clk/b8a8a65b-e302-4747-bc90-4920fc48795a@gmail.com/
-Suggested-by: Jacky Huang <ychuang570808@gmail.com>
-Fixes: 691521a367cf ("clk: nuvoton: Add clock driver for ma35d1 clock controller")
+ - The node block is never released, and fsck reports "nonzero bytes in
+   xattr space after end of list".
+ - If the inline xattr list ends exactly at the end of the inline area,
+   its terminator is read from the stale node, and the removed xattrs
+   come back after recovery.
+
+When the fsynced inode has no xattr node but the checkpointed one has,
+release the old xattr node as truncate_node() does: check its block
+address, invalidate the block and drop its node cache, which may still
+be dirty.
+
+Fixes: 28cdce0459cc ("f2fs: recover inline xattr data in roll-forward process")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20260930-perso-ma35d1-upstream-clk-v6-5-48937ee6c9bb@bootlin.com
-[jbrunet@baylibre.com: removed stale link trailer]
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: adapted upstream API calls to the existing page-based cache and single-block invalidation interfaces ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/nuvoton/clk-ma35d1.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/node.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
-diff --git a/drivers/clk/nuvoton/clk-ma35d1.c b/drivers/clk/nuvoton/clk-ma35d1.c
-index 6aa42a3e1be3b..c914079cee2d4 100644
---- a/drivers/clk/nuvoton/clk-ma35d1.c
-+++ b/drivers/clk/nuvoton/clk-ma35d1.c
-@@ -17,7 +17,7 @@
- static DEFINE_SPINLOCK(ma35d1_lock);
- 
- #define PLL_MAX_NUM		5
--#define	MA35D1_CLK_COUNT	236
-+#define	MA35D1_CLK_COUNT	238
- 
- /* Clock Control Registers Offset */
- #define REG_CLK_PWRCTL		0x00
-@@ -544,6 +544,8 @@ static int ma35d1_clocks_probe(struct platform_device *pdev)
- 	hws[HCLK3] = ma35d1_clk_fixed_factor(dev, "hclk3", "sysclk1_mux", 1, 2);
- 	hws[PCLK3] = ma35d1_clk_fixed_factor(dev, "pclk3", "sysclk1_mux", 1, 2);
- 	hws[PCLK4] = ma35d1_clk_fixed_factor(dev, "pclk4", "sysclk1_mux", 1, 2);
-+	hws[PCLK3_DIV4096] = ma35d1_clk_fixed_factor(dev, "pclk3_div4096", "pclk3", 1, 4096);
-+	hws[PCLK4_DIV4096] = ma35d1_clk_fixed_factor(dev, "pclk4_div4096", "pclk4", 1, 4096);
- 
- 	hws[USBPHY0] = ma35d1_clk_fixed("usbphy0", 480000000);
- 	hws[USBPHY1] = ma35d1_clk_fixed("usbphy1", 480000000);
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 963adcf00e910..231a9281968e4 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -2779,6 +2779,45 @@ int f2fs_recover_inline_xattr(struct inode *inode, struct page *page)
+ 	f2fs_wait_on_page_writeback(ipage, NODE, true, true);
+ 	memcpy(dst_addr, src_addr, inline_size);
+ update_inode:
++	/*
++	 * The xattr node of the checkpoint was removed before fsync, e.g. the
++	 * xattrs became small enough to fit inline. Release it as well, or
++	 * the inode keeps pointing to the stale xattrs.
++	 */
++	if (!ri->i_xattr_nid && F2FS_I(inode)->i_xattr_nid) {
++		struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
++		struct node_info ni;
++		int err;
++
++		err = f2fs_get_node_info(sbi, F2FS_I(inode)->i_xattr_nid,
++								&ni, false);
++		if (err) {
++			f2fs_put_page(ipage, 1);
++			return err;
++		}
++
++		if (ni.blk_addr != NEW_ADDR &&
++		    !f2fs_is_valid_blkaddr(sbi, ni.blk_addr,
++					   DATA_GENERIC_ENHANCE)) {
++			f2fs_err_ratelimited(sbi,
++				"nat entry is corrupted, run fsck to fix it, ino:%u, nid:%u, blkaddr:%u",
++				ni.ino, ni.nid, ni.blk_addr);
++			set_sbi_flag(sbi, SBI_NEED_FSCK);
++			f2fs_handle_error(sbi, ERROR_INCONSISTENT_NAT);
++			f2fs_put_page(ipage, 1);
++			return -EFSCORRUPTED;
++		}
++
++		f2fs_invalidate_blocks(sbi, ni.blk_addr);
++		dec_valid_node_count(sbi, inode, false);
++		set_node_addr(sbi, &ni, NULL_ADDR, false);
++		/* drop the cached xattr node, which may be dirty */
++		truncate_inode_pages_range(NODE_MAPPING(sbi),
++				F2FS_BLK_TO_BYTES((loff_t)ni.nid),
++				F2FS_BLK_END_BYTES((loff_t)ni.nid));
++		f2fs_i_xnid_write(inode, 0);
++	}
++
+ 	f2fs_update_inode(inode, ipage);
+ 	f2fs_put_page(ipage, 1);
+ 	return 0;
 -- 
 2.53.0
 
