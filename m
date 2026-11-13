@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590677;
-	b=Lttrl+CksyCBk51uq18QCh+njEdLnmvPjEvLJga3ZaK8hNa69j2l+hqRFKBkjrUgbwHT
-	 YXqNTb/y+H44nj9Im045OT5sfA2ccPJwHaMf3X3kGu/z9Fw3GCOvVtvH0YgWoCY8CEqLw
-	 U21Y/bu+SqL35w2by5+naHI0zKCQBurhpw+LfrNqa+f368pgOk5hEeaHAij9gCGCnOk+0
-	 H5QvZEQIwASPPsRLhKDsAgWdkQh2E947fRpSGE6nyLjbNgVbV87p6m4/PaRmwd9AKqrGf
-	 6fEPPDsFfkfbjXLhCBEExCkuesPrPbS7Y6SnLVfbMmXGApc1gK5R+/U84zYNEpvSTpA==
+	t=1794590679;
+	b=27g5MXgXoKclfO4gLT3k6WHzeDLQ7zqx1Z+biDVsSAoOKcakTkKrrit0IHJb6M6NV4fG
+	 kz9F5A2yhQyiRaVPAEays//0ZoL0LBuM/gzs9l2aDzOKawN3Jli4wGNEuIwn9V7QGliox
+	 7t5wP2rXgY221CthCH3u1c/cFU+YRBIJmqk9QtKKSdbHn6qa1usrsRn0bwhS/nu0gfiUt
+	 R0X9+cfARcEPQ+Zub/wPEqpDP9A9Lej7zWmwLd6QHxeduqRkup+kXcw4ri13DC3zeRh1H
+	 6omUG32RDzVuObJoB+T40L0XqRQKfM4Ykp5bhyxRaPv40HzgZsOgE82u1Y88pD1sH/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590677;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590679;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zBeCeVfZj5QEIG9uC1fZzrfhZazs9kZyO2ismVNTDPU=;
-	b=N9PzzjkRjWMRAgftlB1Eyutgx6XqMVddef2+SzMydiO13q36a16mj2TcfpZT872S+qBj
-	 tCcJGvmYZrA2TYr17mrjOsM3btMWW7TiFaMozHH8lvCbZH6T+0UFKGNhcHxHPBbViBdVL
-	 GbrO3qS44VgmRMKvyUJFu0RtQbwKjS1Th+yi6pviq672+BjMkNKgzy9cODOH9O4p4hhgt
-	 oHIBcHbaSdehupHxQ8CS6jItIX2bsY35GZyN1y6H41/LLT/HgQJ9eBtz6n1zMvUcbs7+v
-	 By8c6IAxkBOzFcWCkGbDfEUHRdHwyKIZcINmZ5nq3Fi4ct9vlfSln6SpppUNme7MUbQ==
+	bh=G9xIrZEjzfF8U5Z+9qfuD2eeSXob7xFAXSd0DX/YSTE=;
+	b=e+zYIK4arYIqOsF3nH/1RGO2BR23Hn/RjRlUw4gRwY1eCUbTdBQ8ZhKQ7sXlbExnjXLe
+	 ii0rus04tZWhLtdUXXuhBcJxYuGnAIrGZOyChYdvQSgpkK7eprWDBD6w+K8/Ish2Egc0j
+	 bUxuzZwb/+FCmEIcIp4LlBjWZSZJHOe0KjwaEBvpPg+G1kg58fROSYjtFfcsdeY3Tt3Xh
+	 9uyvtKicW4ODmNplBJDuKHsy3Rjle2pIc2A/zz2K4cWuBLzD/CZzoq0Mg2EstrnvzRK+N
+	 IRC6qZuy7PJR5mr61cpoIz23Pz9vvdaSTj20T4VeELUrC//oz+KxEBPXR1VirajL7+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G34Lzaoe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLxxFjVa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B8B606CEC3;
-	Fri, 13 Nov 2026 17:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD18606CEC7;
+	Fri, 13 Nov 2026 17:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G34Lzaoe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1531F000C6;
-	Fri, 13 Nov 2026 17:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLxxFjVa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1D81F000C5;
+	Fri, 13 Nov 2026 17:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590677;
-	bh=zBeCeVfZj5QEIG9uC1fZzrfhZazs9kZyO2ismVNTDPU=;
+	s=korg; t=1794590678;
+	bh=G9xIrZEjzfF8U5Z+9qfuD2eeSXob7xFAXSd0DX/YSTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G34LzaoeFF0mV6feOhQ+AaVNTA1UZvnkn6XYG/Y1wGeoAGL5iM3N9IPA6LRyf8Wku
-	 K+IdglJ6QVOKqyjGAY4SDWhX5iyt1zG5JJ6WRxGlNw+LY9ZrBuV/n7KqInBD8JuAnx
-	 aLl6CHT5VUX0q/3bIMiNU9Ah3SizuKy8G9DJRx+Y=
+	b=hLxxFjVa+T1Adz1DXp+sUn2MYKEyptTGxxmjN+3+3RsjYETbYP361IMMcWbcy5woW
+	 qKl9ShWU6mmzyazywTHAvsLTYEuLJdZP6maeHXeT56xelyEU1/78zff1G7pPnM1NAA
+	 pQ4qtAWMTFsnB4cD17IcS1I3m1tA4VUfp7o0NroM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sinan Turunc <enscrpt@pm.me>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 591/686] mptcp: fix MP_CAPABLE token migration when cloning reqsk
-Date: Fri, 13 Nov 2026 10:52:04 -0500
-Message-ID: <20261113153841.951809304@linuxfoundation.org>
+Subject: [PATCH 6.18 592/686] ALSA: ua101: Bound packet copies by the PCM buffer size
+Date: Fri, 13 Nov 2026 10:52:05 -0500
+Message-ID: <20261113153842.012667137@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -72,295 +68,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Sinan Turunc <enscrpt@pm.me>
 
-[ Upstream commit 2093bc7fa50056fef8620d2b82bcb2e9a0a5575d ]
+[ Upstream commit 493a77a9f20fca07ca5654f61c1b03bef035df25 ]
 
-TCP request migration clones pending request sockets with
-inet_reqsk_clone().  For MPTCP MP_CAPABLE requests this byte-copies the
-token_node hlist state into the clone even though the token table still
-names the original request, and the following warning can be seen:
+copy_capture_data() and copy_playback_data() wrap the ring buffer
+position once and split the memcpy() in two at the buffer end, which is
+only correct when one packet holds at most buffer_size frames. The
+capture packet size is the device's (actual_length up to wMaxPacketSize,
+divided by 3 * bNrChannels from its own descriptor), the playback packet
+size is taken from the capture packets, and set_stream_hw() lets the
+PCM client pick period_bytes_min 1, periods_min 2 and a period time of
+1.5 packet intervals: 9 frames at 44.1 kHz high speed, an 18-frame
+buffer. A device sending 672-byte mono 24-bit packets delivers 224
+frames per packet.
 
-  WARNING: net/mptcp/token.c:364 at mptcp_token_destroy_request+0x2b0/0x330, CPU#2: swapper/2/0
-  CPU: 2 UID: 0 PID: 0 Comm: swapper/2 Not tainted 7.2.0-rc5-00353-gc27e36054537 #10 PREEMPT(full)
-  RIP: 0010:mptcp_token_destroy_request (net/mptcp/token.c:364 (discriminator 1))
-  Call Trace:
-   <IRQ>
-   subflow_v4_req_destructor (net/mptcp/subflow.c:694)
-   __reqsk_free (net/ipv4/inet_connection_sock.c:906)
-   reqsk_timer_handler (include/net/request_sock.h:137 net/ipv4/inet_connection_sock.c:1147)
-   call_timer_fn (kernel/time/timer.c:1748)
+After the first packet buffer_pos is 206 and stays beyond buffer_size.
+On the next packet frames1 = buffer_size - buffer_pos wraps and memcpy()
+runs away:
 
-Move token request ownership from the original request to the clone under
-the token bucket lock.  Make mptcp_token_accept() and
-mptcp_token_destroy_request() re-check token_node under the same lock and
-treat an already moved or removed request as a normal race instead of
-warning.  This also keeps token bucket chain_len accounting balanced.
+  snd-ua101 2-1:1.0: invalid position: , pos = 206, buffer size = 18,
+period size = 9
+  BUG: KASAN: slab-out-of-bounds in capture_urb_complete+0x9eb/0xcb0
+  Read of size 4294966732 at addr ffff88800d73e7e0 by task vhci_rx/81
 
-If a passive MP_CAPABLE socket cannot claim the token, destroy the
-provisional MPTCP socket and let the subflow fall back rather than
-installing a socket with mismatched token ownership.  Mark that path as a
-passive handshake fallback so MPCapableFallbackACK records the downgrade.
+and for playback:
 
-If the speculative clone later loses the inet_ehash_insert() ownership
-arbitration, the original request may find that its token was already moved
-and fall back to plain TCP.  The clone destructor then releases the token
-reservation and keeps chain_len balanced.  This trades an exceptionally
-rare fallback for eliminating the warning and persistent accounting drift.
+  BUG: KASAN: vmalloc-out-of-bounds in playback_work+0x789/0xac0
+  Read of size 4294966732 at addr ffffc9000002626a by task kworker/0:1H/80
 
-Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
+Clamp the capture copy to buffer_size. On playback, copy at most one
+buffer and fill the rest of the packet with silence, so the URB length,
+the delay accounting and the data sent stay consistent. With that bound
+the single wrap and both memcpy() halves stay inside the buffer. A
+device whose packets do not fit the buffer never played correctly
+anyway.
+
+Reproduced on 7.3-rc7 with a USB/IP device presenting the UA-101
+interface layout and a 672-byte isochronous endpoint.
+
+Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/86e2514b533bf4d55d4aa2fdbf1404022e8c9430.1776149210.git.caoruide123%40gmail.com
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-4-932c9b182fc7@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sinan Turunc <enscrpt@pm.me>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261026223543.620-3-enscrpt@pm.me
+[ sashal: changed urb->transfer_buffer to urb->urb.transfer_buffer to match the embedded URB representation ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c   | 31 +++++++++++++++----
- net/mptcp/protocol.h   |  4 ++-
- net/mptcp/subflow.c    |  6 +++-
- net/mptcp/token.c      | 68 +++++++++++++++++++++++++++++++++++++-----
- net/mptcp/token_test.c |  4 +--
- 5 files changed, 97 insertions(+), 16 deletions(-)
+ sound/usb/misc/ua101.c | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index df09dcfd15ce3..fdd4c7d87775b 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3410,6 +3410,24 @@ static void mptcp_copy_ip_options(struct sock *newsk, const struct sock *sk)
- 	rcu_read_unlock();
- }
- 
-+static void mptcp_sk_clone_destroy(struct sock *nsk)
-+{
-+	struct mptcp_sock *msk = mptcp_sk(nsk);
+diff --git a/sound/usb/misc/ua101.c b/sound/usb/misc/ua101.c
+index 426171aa6dd28..c1d081231d7c8 100644
+--- a/sound/usb/misc/ua101.c
++++ b/sound/usb/misc/ua101.c
+@@ -282,13 +282,29 @@ static void playback_work(struct work_struct *work)
+ 			/* fill packet with data or silence */
+ 			urb->urb.iso_frame_desc[0].length =
+ 				frames * ua->playback.frame_bytes;
+-			if (test_bit(ALSA_PLAYBACK_RUNNING, &ua->states))
++			if (test_bit(ALSA_PLAYBACK_RUNNING, &ua->states)) {
++				/*
++				 * The packet size comes from the capture stream,
++				 * i.e. from the device, while the ring buffer can
++				 * be as small as two tiny periods. The single wrap
++				 * in copy_playback_data() is only valid for
++				 * frames <= buffer_size, so copy at most one
++				 * buffer and send silence for the rest.
++				 */
++				unsigned int copy_frames = min(frames,
++					ua->playback.substream->runtime->buffer_size);
 +
-+	mptcp_release_sched(msk);
-+	mptcp_set_state(nsk, TCP_CLOSE);
-+	/* inet_csk_prepare_forced_close() clears TCP sock_ops state via
-+	 * tcp_sk(), but nsk is an MPTCP master socket; keep the inet-level
-+	 * destroy preparation here.
-+	 */
-+	bh_unlock_sock(nsk);
-+	sock_put(nsk);
-+	sock_set_flag(nsk, SOCK_DEAD);
-+	tcp_orphan_count_inc();
-+	inet_sk(nsk)->inet_num = 0;
-+	inet_csk_destroy_sock(nsk);
-+}
-+
- struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 				 const struct mptcp_options_received *mp_opt,
- 				 struct sock *ssk,
-@@ -3469,11 +3487,6 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 	list_add(&subflow->node, &msk->conn_list);
- 	sock_hold(ssk);
- 
--	/* new mpc subflow takes ownership of the newly
--	 * created mptcp socket
--	 */
--	mptcp_token_accept(subflow_req, msk);
--
- 	/* set msk addresses early to ensure mptcp_pm_get_local_id()
- 	 * uses the correct data
- 	 */
-@@ -3482,6 +3495,14 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
- 	mptcp_rcv_space_init(msk, ssk);
- 	msk->rcvq_space.time = mptcp_stamp();
- 
-+	if (!mptcp_token_accept(subflow_req, msk)) {
-+		list_del_init(&subflow->node);
-+		WRITE_ONCE(msk->first, NULL);
-+		sock_put(ssk);
-+		mptcp_sk_clone_destroy(nsk);
-+		return NULL;
-+	}
-+
- 	if (mp_opt->suboptions & OPTION_MPTCP_MPC_ACK)
- 		__mptcp_subflow_fully_established(msk, subflow, mp_opt);
- 	bh_unlock_sock(nsk);
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 184831b5b624a..1b6335408b17f 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -1033,9 +1033,11 @@ static inline void mptcp_token_init_request(struct request_sock *req)
- }
- 
- int mptcp_token_new_request(struct request_sock *req);
-+void mptcp_token_move_request(struct request_sock *req,
-+			      struct request_sock *new_req);
- void mptcp_token_destroy_request(struct request_sock *req);
- int mptcp_token_new_connect(struct sock *ssk);
--void mptcp_token_accept(struct mptcp_subflow_request_sock *r,
-+bool mptcp_token_accept(struct mptcp_subflow_request_sock *r,
- 			struct mptcp_sock *msk);
- bool mptcp_token_exists(u32 token);
- struct mptcp_sock *mptcp_token_get_sock(struct net *net, u32 token);
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index c2d6a7adca6b2..0f8b7396f446e 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -78,6 +78,8 @@ void mptcp_subflow_reqsk_clone(struct request_sock *req,
- 	}
- 
- 	new_subflow_req->msk = msk;
-+
-+	mptcp_token_move_request(req, new_req);
- }
- 
- static void subflow_generate_hmac(u64 key1, u64 key2, u32 nonce1, u32 nonce2,
-@@ -931,8 +933,10 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 
- 		if (ctx->mp_capable) {
- 			ctx->conn = mptcp_sk_clone_init(listener->conn, &mp_opt, child, req);
--			if (!ctx->conn)
-+			if (!ctx->conn) {
-+				fallback = true;
- 				goto fallback;
+ 				do_period_elapsed |= copy_playback_data(&ua->playback,
+ 									&urb->urb,
+-									frames);
+-			else
++									copy_frames);
++				memset(urb->urb.transfer_buffer +
++				       copy_frames * ua->playback.frame_bytes, 0,
++				       (frames - copy_frames) *
++				       ua->playback.frame_bytes);
++			} else {
+ 				memset(urb->urb.transfer_buffer, 0,
+ 				       urb->urb.iso_frame_desc[0].length);
 +			}
  
- 			ctx->subflow_id = 1;
- 			owner = mptcp_sk(ctx->conn);
-diff --git a/net/mptcp/token.c b/net/mptcp/token.c
-index 5bb9245343874..d5735d3ac793b 100644
---- a/net/mptcp/token.c
-+++ b/net/mptcp/token.c
-@@ -180,6 +180,43 @@ int mptcp_token_new_connect(struct sock *ssk)
- 	return 0;
- }
+ 			/* and off you go ... */
+ 			err = usb_submit_urb(&urb->urb, GFP_ATOMIC);
+@@ -317,6 +333,13 @@ static bool copy_capture_data(struct ua101_stream *stream, struct urb *urb,
  
-+/**
-+ * mptcp_token_move_request - move request token ownership to a clone
-+ * @req: original request socket
-+ * @new_req: cloned request socket
-+ *
-+ * Move the token hash entry from the original request to its clone.
-+ */
-+void mptcp_token_move_request(struct request_sock *req,
-+			      struct request_sock *new_req)
-+{
-+	struct mptcp_subflow_request_sock *subflow_req = mptcp_subflow_rsk(req);
-+	struct mptcp_subflow_request_sock *new_subflow_req;
-+	struct mptcp_subflow_request_sock *pos;
-+	struct token_bucket *bucket;
-+
-+	new_subflow_req = mptcp_subflow_rsk(new_req);
-+
-+	if (hlist_nulls_unhashed_lockless(&subflow_req->token_node)) {
-+		mptcp_token_init_request(new_req);
-+		return;
-+	}
-+
-+	bucket = token_bucket(subflow_req->token);
-+	spin_lock_bh(&bucket->lock);
-+	if (hlist_nulls_unhashed(&subflow_req->token_node)) {
-+		mptcp_token_init_request(new_req);
-+	} else {
-+		pos = __token_lookup_req(bucket, subflow_req->token);
-+		if (pos == subflow_req)
-+			hlist_nulls_replace_init_rcu(&subflow_req->token_node,
-+						     &new_subflow_req->token_node);
-+		else
-+			mptcp_token_init_request(new_req);
-+	}
-+	spin_unlock_bh(&bucket->lock);
-+}
-+
- /**
-  * mptcp_token_accept - replace a req sk with full sock in token hash
-  * @req: the request socket to be removed
-@@ -187,24 +224,36 @@ int mptcp_token_new_connect(struct sock *ssk)
-  *
-  * Called when a SYN packet creates a new logical connection, i.e.
-  * is not a join request.
-+ *
-+ * Return: true on success.
-  */
--void mptcp_token_accept(struct mptcp_subflow_request_sock *req,
-+bool mptcp_token_accept(struct mptcp_subflow_request_sock *req,
- 			struct mptcp_sock *msk)
- {
- 	struct mptcp_subflow_request_sock *pos;
- 	struct sock *sk = (struct sock *)msk;
- 	struct token_bucket *bucket;
-+	bool ret = false;
- 
--	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
- 	bucket = token_bucket(req->token);
- 	spin_lock_bh(&bucket->lock);
-+	if (hlist_nulls_unhashed(&req->token_node))
-+		goto unlock;
- 
--	/* pedantic lookup check for the moved token */
- 	pos = __token_lookup_req(bucket, req->token);
--	if (!WARN_ON_ONCE(pos != req))
--		hlist_nulls_del_init_rcu(&req->token_node);
-+	if (pos != req)
-+		goto unlock;
-+
-+	hlist_nulls_del_init_rcu(&req->token_node);
- 	__sk_nulls_add_node_rcu((struct sock *)msk, &bucket->msk_chain);
-+	ret = true;
-+
-+unlock:
- 	spin_unlock_bh(&bucket->lock);
-+	if (ret)
-+		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
-+
-+	return ret;
- }
- 
- bool mptcp_token_exists(u32 token)
-@@ -353,16 +402,21 @@ void mptcp_token_destroy_request(struct request_sock *req)
- 	struct mptcp_subflow_request_sock *pos;
- 	struct token_bucket *bucket;
- 
--	if (hlist_nulls_unhashed(&subflow_req->token_node))
-+	if (hlist_nulls_unhashed_lockless(&subflow_req->token_node))
- 		return;
- 
- 	bucket = token_bucket(subflow_req->token);
- 	spin_lock_bh(&bucket->lock);
-+	if (hlist_nulls_unhashed(&subflow_req->token_node))
-+		goto unlock;
-+
- 	pos = __token_lookup_req(bucket, subflow_req->token);
--	if (!WARN_ON_ONCE(pos != subflow_req)) {
-+	if (pos == subflow_req) {
- 		hlist_nulls_del_init_rcu(&pos->token_node);
- 		bucket->chain_len--;
- 	}
-+
-+unlock:
- 	spin_unlock_bh(&bucket->lock);
- }
- 
-diff --git a/net/mptcp/token_test.c b/net/mptcp/token_test.c
-index 4fc39fa2e262d..be9acce8a5673 100644
---- a/net/mptcp/token_test.c
-+++ b/net/mptcp/token_test.c
-@@ -99,7 +99,7 @@ static void mptcp_token_test_accept(struct kunit *test)
- 	KUNIT_ASSERT_EQ(test, 0,
- 			mptcp_token_new_request((struct request_sock *)req));
- 	msk->token = req->token;
--	mptcp_token_accept(req, msk);
-+	KUNIT_EXPECT_TRUE(test, mptcp_token_accept(req, msk));
- 	KUNIT_EXPECT_PTR_EQ(test, msk, mptcp_token_get_sock(&init_net, msk->token));
- 
- 	/* this is now a no-op */
-@@ -122,7 +122,7 @@ static void mptcp_token_test_destroyed(struct kunit *test)
- 	KUNIT_ASSERT_EQ(test, 0,
- 			mptcp_token_new_request((struct request_sock *)req));
- 	msk->token = req->token;
--	mptcp_token_accept(req, msk);
-+	KUNIT_EXPECT_TRUE(test, mptcp_token_accept(req, msk));
- 
- 	/* simulate race on removal */
- 	refcount_set(&sk->sk_refcnt, 0);
+ 	runtime = stream->substream->runtime;
+ 	frame_bytes = stream->frame_bytes;
++	/*
++	 * A packet can carry up to max_packet_bytes, the device's
++	 * wMaxPacketSize, which may exceed the whole ring buffer; keep what
++	 * fits so the single wrap below stays valid.
++	 */
++	if (unlikely(frames > runtime->buffer_size))
++		frames = runtime->buffer_size;
+ 	dest = runtime->dma_area + stream->buffer_pos * frame_bytes;
+ 	if (stream->buffer_pos + frames <= runtime->buffer_size) {
+ 		memcpy(dest, urb->transfer_buffer, frames * frame_bytes);
 -- 
 2.53.0
 
