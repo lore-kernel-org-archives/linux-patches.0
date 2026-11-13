@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585825;
-	b=tVDscRvBubMDOfeNZk1yOhKDTDrMzrQI5wv+VaY93xQw/gz3Ozbgr03dzfnLH5d0o/bt
-	 leIznnxrvb8O3QHIExz+VdJyOEFahP2dveMgRJNPEEoCOvD9UuVb4TAjmaVFFvuWXZn4o
-	 Xr5S5cFr3ir7qPbSDbS5pwUFuIArCn+gnbzC3H8kdQrxzWTSrIj/j7uosyrRNSOhs+6xu
-	 esnV8W/B5kxBC1+4fyOaf3/IvVMc0km9xsXZ+iioIjRrO9yqGqQH9vvcB7/n/zK1Gc9d6
-	 RZm336ML64kjxzoeu+7R3A75XYSzB7XqNvkJZRp1IwUvk3JlBKswCcuxxX3VRJnvd/w==
+	t=1794585826;
+	b=xpNYJMp0g00Pqt6JsOlAIcoqyZTt8JC7GoKVLYrwo7GEIdJ94lJhgKJv2ILkfNjQfDcR
+	 qKWngqGNT4DnOTCKGeg3hbwyq1T0Ys5VEhUpu7FZI5vkJPz2TivR9TGFv2Q0Uml83huLY
+	 kJBJsXSMTxN2klJkSMkV4RLJOQn+hLUfwsWVELZaXb6y4Cl8mVmEJDHnPOGFGxP5KuikY
+	 7mga13iby+O9t/p3p/4fzbMLEGh0PRf8gK+IKF+5Ig9BrgQJAP9YNIF6VLv6Vkhlis0B+
+	 5AowOPZfzBz2ToPNEWeUhBPMxdyFPT1YuhZzIa1XrgTG85YxScIBZCzf0c08rBvI3JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585825;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585826;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ANOu1gY07qxrEE9rVPgAVzdvI1bCdjD+jP2To0FCjE0=;
-	b=eoSpAStkZcMaj2gMgjjk9h8BX24lEMhT51GZNnpgraajNmJ1twbUeng0BttMDRNKhLf/
-	 prwcEgIjqv+odgIEwvKNxiYqNRdr6qHyIJgtmrH9QxIYPn+Yzu8sKgiwja4CvX22zcIaS
-	 +qyhM5/7SMHI8flOqWAdeNR8M/eii2Zt+jHBAUiXzGI5wB7b2TG7et2NZR86hwFg5WqBz
-	 Y/Z5DmboinJRYngaVjB1Q2w7g0uQtowGmUq7HaqmU/TXYYdVSqgsIC7p6esLRYA6169Ay
-	 N0tvsAaOF0YwAG2IzfLVGPJ0weKJJTFS1zB9x0LUkjjcXMAJMooWlIuE28xa7y4e9VA==
+	bh=YSEs0avsq/3/0AUxEBB7h2L7ieAnTM3BGTNTu9jHXP4=;
+	b=mh/LidbSs2rCdTDftqXp1eGpCNqbe5ARfNaz0st2Gyjd7SaWJKTZw6K2l4XixvdP3H8g
+	 S1CVY8eqk0gaHUWc+iUiGMyJccsAhi4EiyQnt1glN/eQQfmoigjRH6ovRe7UMuKG0zy/b
+	 r6IPg//3SdjtSPnZQL2QJZ53SCXr4klxyMTwA+JHR5RrPcKPmYf6KCXOZ6WD5AZ1Yxgm7
+	 L9ZTncFWvUKtTHdtSIsUTCwvazlzXGXGafG/TSgvmJn87g0wifsHAtYwJKx+KleIzUbhd
+	 6/zBFaQhcH3UtpM348Dhj5MpTZu5TJRKGBtD387Zg4fEFPfSuKb+RUJ9BbkEeASAQUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L7eEtTdP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BItMdhBF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535CC606BAA6;
-	Fri, 13 Nov 2026 16:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA209606C576;
+	Fri, 13 Nov 2026 16:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L7eEtTdP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40B71F000C5;
-	Fri, 13 Nov 2026 16:03:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BItMdhBF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1E01F000C4;
+	Fri, 13 Nov 2026 16:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585825;
-	bh=ANOu1gY07qxrEE9rVPgAVzdvI1bCdjD+jP2To0FCjE0=;
+	s=korg; t=1794585826;
+	bh=YSEs0avsq/3/0AUxEBB7h2L7ieAnTM3BGTNTu9jHXP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L7eEtTdPcROIbg7LeAoYvBJ4cqFJOjQCWbqGoN6vP+IyI3YARFq4Yrt/HVFVfisQs
-	 Q1dNfA/gAXbVEuj+25Oj6bJcEWHsRvO0hEnhfkuf2bX+CeY5NTRqRfakOOLujRUIPB
-	 FSBowVc2T80gcomhMHdaRIAFOf0clrgqDeS//LY0=
+	b=BItMdhBFp42CZA7fvvM2VOKvUotutvRkthFG9uQaHgvOOigQ1SJNBJEXHcDEO+25o
+	 9uZ51kA7sqEgC2KjZskfV38yDf6JaqiqsrBNNGkqfILTidZryaqj8KSHI+5Eqf0PnD
+	 CLmbqh5necRcnOJcchMpN0/TJdsF9qTtQVJN3L1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ray Zhang <sgzhang@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Pierre-Loup A. Griffais" <pgriffais@valvesoftware.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 405/507] net: count last skb of each sk_backlog pass in __release_sock()
-Date: Fri, 13 Nov 2026 10:51:49 -0500
-Message-ID: <20261113153810.468306181@linuxfoundation.org>
+Subject: [PATCH 7.3 370/507] drm/amd/display: Signal PQ EOTF in FreeSync infopacket for DP HDR
+Date: Fri, 13 Nov 2026 10:51:14 -0500
+Message-ID: <20261113153808.606538842@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,101 +70,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ray Zhang <sgzhang@google.com>
+From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit c4e4056b21355356f6a95bcdf03a850edd9f49e7 ]
+[ Upstream commit 81f923b065801c7d30042bcda31ccb9449b4f58b ]
 
-Running 500 concurrent TCPv6 streams (neper "tcp_stream -6 -T 1 -F 500")
-on a 2-core Cortex-A53 (CONFIG_PREEMPT_NONE=y, HZ=1000, LATENCY_WARN)
-triggers resched_latency_warn() in __release_sock():
+Commit c2791297013e ("drm/amd/display: Add color bit info to freesync
+infoframe") created the app_tf interface for FreeSync HDR and commit
+c21a764a98cb ("drm/amd/display: Send PQ bit in AMD VSIF") used it to set
+PB9 bit 5 (PQ EOTF) in v2/v3 AMD Freesync infopacket. However, Linux
+never made use of this interface: DM ignores what userspace sets
+regarding HDR and always passes TRANSFER_FUNC_UNKNOWN as app_tf, so the
+PQ bit is never set in the infopacket received by the eDP panel.
 
-  [ 3655.311821] sched: CPU 0 need_resched set for > 100006892 ns (100 ticks) without schedule
-  [ 3655.311889] Call trace:
-  ...
-  [ 3655.311944]  resched_latency_warn+0x7c/0x88
-  [ 3655.311958]  sched_tick+0x1c0/0x418
-  ...
-  [ 3655.312578]  net_rx_action+0x238/0x438
-  ...
-  [ 3655.312641]  do_softirq+0x4c/0x90
-  [ 3655.312651]  __local_bh_enable_ip+0x84/0x90
-  [ 3655.312663]  local_bh_enable+0x1c/0x28
-  [ 3655.312674]  __dev_queue_xmit+0x4a8/0xb00
-  ...
-  [ 3655.312782]  tcp_v6_do_rcv+0x240/0x5f8
-  [ 3655.312793]  __release_sock+0x9c/0x188
-  [ 3655.312806]  release_sock+0x150/0x168
-  [ 3655.312817]  tcp_sendmsg+0x4c/0x70
+Check the EOTF in the HDR static metadata and set the PQ bit in Freesync
+infopacket for DP accordingly. This fixes gray-washed HDR on KDE/GNOME
+on Framework 13 Pro AI 9 HX 370 (DCN 3.5) and may fix similar issues on
+other VRR-capable panels that advertise Replay in its AMD VSDB.
 
-__release_sock() can loop past 100 ms without calling cond_resched():
+It doesn't affect color/EOTF bits on infopackets for SDR and native
+HDMI.
 
-- Each outer-loop pass drains sk_backlog, but "if (!skb) break;" runs
-  before "++nb", so a pass of B skbs only adds B - 1 to nb (0 for 1 skb).
-- With 500 TCPv6 streams and NAPI sharing two Cortex-A53 cores, runnable
-  tasks keep TIF_NEED_RESCHED set on CPU 0.
-- During spin_unlock_bh() and TX softirqs (__dev_queue_xmit() ->
-  local_bh_enable()), tcp_add_backlog() coalesces arriving pure ACKs into
-  a single tail skb.
-- Repeated 1-skb passes never advance nb or call cond_resched(),
-  triggering resched_latency_warn() after 100 ticks.
-
-Restore the do-while loop and drop "if (!skb) break;" so every skb
-increments nb across passes and calls cond_resched() every 16 skbs.
-
-Reproduced the issue and verified the fix on two 2-core Cortex-A53 hosts
-(CONFIG_PREEMPT_NONE=y, HZ=1000, LATENCY_WARN, latency_warn_once=0) with
-a userspace reproducer over /dev/net/tun:
-
-- CPU 0 runs a TCPv6 sender and a second runnable task while CPU 1 writes
-  pure ACKs to /dev/net/tun (~30k TCPBacklogCoalesce/run), sustaining
-  1-skb sk_backlog refills in __release_sock() for ~400 ms (ftrace).
-- Before: CPU 0 stayed unscheduled in __release_sock(), hitting
-  resched_latency_warn() 293 and 275 times on the two hosts (> 100.9 ms).
-- After: cond_resched() yielded CPU 0 inside __release_sock(), with
-  0 resched_latency_warn() hits on both hosts.
-- Also observed no regression with the workload from
-  commit 16c610162d1f ("net: call cond_resched() less often in
-  __release_sock()"), "super_netperf 4 -H srv -T,10 -l 3000 &".
-
-Fixes: 16c610162d1f ("net: call cond_resched() less often in __release_sock()")
+Reported-by: Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/3200
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b318f3e13dd73781404670d3b3c6cf2177e0119c)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ray Zhang <sgzhang@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261101075145.698399-1-sgzhang@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ .../display/amdgpu_dm/amdgpu_dm_freesync.c    | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index e8551df8330ff..1108543f9fec5 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3262,7 +3262,7 @@ void __release_sock(struct sock *sk)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
+index f26dd206dffa0..a51cf46d0e448 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
+@@ -162,6 +162,18 @@ void amdgpu_dm_get_freesync_config_for_crtc(
+ }
+ EXPORT_IF_KUNIT(amdgpu_dm_get_freesync_config_for_crtc);
  
- 		spin_unlock_bh(&sk->sk_lock.slock);
++#define DP_HDR_SDP_EOTF_IDX 2
++
++static bool dm_dp_in_hdr_mode(const struct dc_stream_state *stream)
++{
++	const struct dc_info_packet *hdr = &stream->hdr_static_metadata;
++
++	if (!dc_is_dp_signal(stream->signal) || !hdr->valid)
++		return false;
++
++	return hdr->sb[DP_HDR_SDP_EOTF_IDX] == HDMI_EOTF_SMPTE_ST2084;
++}
++
+ void amdgpu_dm_update_freesync_state_on_stream(
+ 	struct amdgpu_display_manager *dm,
+ 	struct dm_crtc_state *new_crtc_state,
+@@ -177,6 +189,7 @@ void amdgpu_dm_update_freesync_state_on_stream(
+ 	bool pack_sdp_v1_3 = false;
+ 	struct amdgpu_dm_connector *aconn;
+ 	enum vrr_packet_type packet_type = PACKET_TYPE_VRR;
++	enum color_transfer_func app_tf;
  
--		while (1) {
-+		do {
- 			next = skb->next;
- 			prefetch(next);
- 			DEBUG_NET_WARN_ON_ONCE(skb_dst_is_noref(skb));
-@@ -3270,12 +3270,10 @@ void __release_sock(struct sock *sk)
- 			sk_backlog_rcv(sk, skb);
- 
- 			skb = next;
--			if (!skb)
--				break;
- 
- 			if (!(++nb & 15))
- 				cond_resched();
--		}
-+		} while (skb);
- 
- 		spin_lock_bh(&sk->sk_lock.slock);
+ 	if (!new_stream)
+ 		return;
+@@ -228,12 +241,16 @@ void amdgpu_dm_update_freesync_state_on_stream(
+ 					&new_stream->adaptive_sync_infopacket);
  	}
+ 
++	app_tf = dm_dp_in_hdr_mode(new_stream) ?
++		 TRANSFER_FUNC_PQ2084 :
++		 TRANSFER_FUNC_UNKNOWN;
++
+ 	mod_freesync_build_vrr_infopacket(
+ 		dm->freesync_module,
+ 		new_stream,
+ 		&vrr_params,
+ 		packet_type,
+-		TRANSFER_FUNC_UNKNOWN,
++		app_tf,
+ 		&vrr_infopacket,
+ 		pack_sdp_v1_3);
+ 
 -- 
 2.53.0
 
