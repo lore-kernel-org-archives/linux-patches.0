@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590833;
-	b=kP2fEY4p/DwtuX0zGt2SGywhnFZV/PCt/2ywwV2bnvJKws/DIAM9SqUDCKAop8C19WU9
-	 heOkwDA/q84kwsQSX3C7BJK1smRgn74GSrouYZWZ0lcV15TmlALGh7dJLTwxfsXnTHFfk
-	 ahVJXiGgGCKKK8lwrxPYssux0/uJ+pHZu3gT1of+Q/oXOiJfl9G2eoH04UIVR/V7mJP9b
-	 oWe/lo95xaRPKMJLX/L+TsbJ2MjZLKyrGO1EMhFPnA7+9ccV3zzRwrC2GHX+Jw7cQm9p6
-	 o12FE4Ety5XI0Ajarvj3HFCt2SNSNnmoW2wmg4v2XfJiyGza9ZHX38CWyy4fgPeXChA==
+	t=1794590834;
+	b=GrIQbfokK85Zve1cOFDqZDMr4aM1Srekoa5Vw6eb61NAivpHY5bKZSdsG8lUmuwhLlm8
+	 7cSLfziyYcPfU67w97/173OeQ6btoMaUCT/ebLRIYnFmH0aNqmsybcYQcg8J6rnaem4iD
+	 IC9+0xxe4U4iMwdtVysiiIluDyrCkFsN4Hs9kc0o2qcgd//vEldHiR4iLn4lrPJRJKuEZ
+	 yxNHQ1dJkqytbKN82vDUhSTXfE/IOojMdiuVdiVlHuCY6aB0bBeh1rCUahMhxa6qAFZeR
+	 NN+lnR22zJSx54EXlBNQbStbW2LrlwTT1spnTZN1CgtmuaCs8UDoA97vLlgEhqVe4ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590834;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FE81qHkr6J2GW283KvPMtqzkBCFXtAV5dF7a9SxsqI4=;
-	b=CSleOrXQiUNwzD9+Fk3k7NBlG/GCtWzrNaG/wFEOr/0+fW3xwQ69N1Xgatqtg+s8mO/d
-	 5VIZ46nDGgRTbvPchFVM0wXVfZ+qb0am0xp8Nk4JAQr1dyuOECKjzQ3n2CUNLWCmDhT5x
-	 rk36kIiH+3hhBMAOYTCDmeLjS38S87BSjxfYXY4FqfC5l2z/vNXGL4s9cKt+S4QDYpNgG
-	 MCAfQcrE6ux2drIqDngEp1oSJ6AIKlN1yFbO3TElUyKdQ/lTQO3J49YFAmXv1OPuj7uHG
-	 aabUG8GFjeAAKJCUUl8WFOHgg5L3BDdiJ9P58cpg3trynSeVR9wuDokUUR0FihqYkqg==
+	bh=YCFIdj4HveMnv0kPyKAcnoIKibLSQOGsFMOqHBV5siY=;
+	b=y7qLLEMQgTV52LwhEmI9hjDzD38tkESqC1ck258n16sFASHmrSSa3JCvbeA5vGtvrseE
+	 fFFy7th4d4BdaDhGED6Hao/skJDVdl7W26ngMP/M6/72Du29mq3MZkTQFbaT7BCmLAPji
+	 p/4qmU8purqDAow95dyERjvb9OOlFouhTm/VmPoqrF6xIlUxZkqg2qoIV6VN80AIPu7YO
+	 QFhvzgeMVZeC96O40L4C0Obi82PyUNabvtR2TYu2T1Dci99a3S6qYL9iriuiVvxGamzBr
+	 N6KBv3ohzvNVR7apE4x7dyTsjDkOs+vA328KIrSS4wlswn4lOEecDoilAKYOYkFr7DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=18aiElZ6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HjUwxsMK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650D4606D483;
-	Fri, 13 Nov 2026 17:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C98607E075;
+	Fri, 13 Nov 2026 17:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=18aiElZ6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128C11F000C4;
-	Fri, 13 Nov 2026 17:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HjUwxsMK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D461F000C4;
+	Fri, 13 Nov 2026 17:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590833;
-	bh=FE81qHkr6J2GW283KvPMtqzkBCFXtAV5dF7a9SxsqI4=;
+	s=korg; t=1794590834;
+	bh=YCFIdj4HveMnv0kPyKAcnoIKibLSQOGsFMOqHBV5siY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=18aiElZ6iWW7rVpAn8q44wXa5YY3LYSb0NWAv/g+W5R/twBRpzByyIDHJRwjo4Suk
-	 xu7iOERK37MEjsPqysJo64S8iWEkDaMy0px8dXNchS9uSbwLC92nlNLSIIXPNeAGo0
-	 GZKbK88LGQvRfXWGOU0WC9poHXbAPF1OSkkyEaGA=
+	b=HjUwxsMK5rjR8Xhbdd4P4WtWrLc6cEoiuEPs+YmSYezjEXtrNM/JrrbbRyhpCVotp
+	 t1+9ibHBuinnsnwc5aaooOBV0iaJ5ynZ0fSsgRqjurRDhns2B+u/opGzXKc4zHbVd0
+	 LLmI5lChr2kGDdq+T4MT62Z1rqmy+OH5QT9IdNfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
+	Jinwang Li <jinwang.li@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Siwei Zhang <oss@fourdim.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/670] NFSD: Complete a cld upcall when copying its reply fails
-Date: Fri, 13 Nov 2026 10:43:21 -0500
-Message-ID: <20261113153812.408869602@linuxfoundation.org>
+Subject: [PATCH 6.12 011/670] Bluetooth: L2CAP: Ignore connection responses with wrong ident
+Date: Fri, 13 Nov 2026 10:42:55 -0500
+Message-ID: <20261113153811.566443097@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -67,48 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Jinwang Li <jinwang.li@oss.qualcomm.com>
 
-[ Upstream commit 8cef2b0a01d28647facc57501a3df7ccd8d13ccd ]
+commit a9f9eeb5344fc7dc625e5700ccf09891bc2603b5 upstream.
 
-cld_pipe_downcall() removes the matching upcall from cn_list before
-copying the daemon's reply. When that copy_from_user() faults, the
-downcall returns -EFAULT without completing the upcall, and a
-retried write cannot reach it because its xid is no longer on the
-list. __cld_pipe_upcall() waits on cu_done uninterruptibly, so the
-nfsd thread that sent the upcall is stuck, and nfsd shutdown hangs
-behind it. The pipe is mode 0600, so only a broken or hostile
-nfsdcld can trigger the fault.
+Adjusted context as stable does not have the lockdep_assert_held()
+call in l2cap_connect_create_rsp().
 
-Record the fault in the upcall's pipe message and complete it, so
-the waiter returns the error to its client tracking operation.
+L2CAP/COS/CED/BI-28-C requires the IUT to ignore a Connection Response
+that carries an invalid Identifier.
 
-Fixes: f3f8014862d8 ("nfsd: add the infrastructure to handle the cld upcall")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260901-alemi-v2-3-e163f94a3a6e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+l2cap_connect_create_rsp() only checks that a connection request is
+outstanding, not that the response answers it. Add an ident check
+against the pending request so that a mismatched response is dropped.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jinwang Li <jinwang.li@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4recover.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 9c7f6d90a1b99..ef0388d92aca5 100644
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -920,8 +920,11 @@ cld_pipe_downcall(struct file *filp, const char __user *src, size_t mlen)
- 	if (status == -EINPROGRESS)
- 		return __cld_pipe_inprogress_downcall(cmsg, nn);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 2f107c036dd4d..514abca6ed88c 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4300,11 +4300,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
  
--	if (copy_from_user(&cup->cu_u.cu_msg_v2, src, mlen) != 0)
-+	if (copy_from_user(&cup->cu_u.cu_msg_v2, src, mlen) != 0) {
-+		cup->cu_pipe_msg.errno = -EFAULT;
-+		complete(&cup->cu_done);
- 		return -EFAULT;
-+	}
+ 	l2cap_chan_lock(chan);
  
- 	complete(&cup->cu_done);
- 	return mlen;
+-	/* Only accept a response to a connection request we sent and that
+-	 * is still outstanding. A channel waiting in BT_CONNECT for security
+-	 * or the feature mask has not sent one yet.
++	/* Only accept a response matching a connection request we sent and
++	 * that is still outstanding. A channel waiting in BT_CONNECT for
++	 * security or the feature mask has not sent one yet.
+ 	 */
+-	if (!l2cap_chan_connect_pending(chan))
++	if (!l2cap_chan_connect_pending(chan) || chan->ident != cmd->ident)
+ 		goto done;
+ 
+ 	switch (result) {
 -- 
 2.53.0
 
