@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590126;
-	b=AN+7vwak99Q/76q1jiRPMaZ/Wx+JOPNVlBef5EwLSv2PWHUCkwlB3khhDfqVskqbqVsu
-	 qdB8pHzKed8HM6ClKYBA2U8AgWiuPyg9EGugVRxu6CP3PxLUYcRwNTmjbRoAM/vHDGkA7
-	 rA1+HjiOZ7nDw71sqBNr6UebG4UJyZjL1FAXDgDOYgfo+Uuh7X0TnecqcGMTs0pvvpTRQ
-	 f5IPk4pL1jzDAO+X/1hcQc6HPCFyv/DFdTRISOX/t4Jc+kcW1QIIRMIq/yhRf6MpxnuxP
-	 95aw6mg/2+/+7B8fha4fx69deblDCpeYZXGH5szGpEusF+JB4Zfxgj5nMODE5s6mvIA==
+	t=1794590128;
+	b=twCJKFV5FXwd+XK5loyWNmAH8HmT7DIZZcpkohfy1AQeJZNuK0zQ4ewySTN0ET/hro3Q
+	 DQaa+8i8sydfAx+MznqFmJWOLoXY+cTc6Uk5vO/TcSQ7AJwLraAWH+7kdb+mwKoyAbbws
+	 UjUhr9s388N9xHG0k04LxHME2RNtvUh3kqwKI9GBSBJXxaS+coU90MtLZstVVP9iTu3Qi
+	 HND+p42VbyyErD1Pn7+jLBeKYrqIj9+zBVFujlgu8SQeF6Fm4aMu1IqlrvUATHQnSCQ6b
+	 PtxPGna0iNc0K6tFIW7hB//A2ISBbrsxKgLnVEa0WIsU8KpXTvG5L7xZTBGhhQjDWwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590126;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590128;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x3h0QqwwJCBNTsYXOmXA8k+2G3ySUi0MChZXw0scdcI=;
-	b=NkEuF30T/XA1ylUcF7f0CTuDneHLYJaj5QOyQ9rMmN+wP8IElm92U/YFPZZoPSVlUWOw
-	 YmXgBqAWwRM5N0wwSpu58Dmn0lDZMNVL5SUrcQXyt6OjFHEZpwrx1VRSmtb4B1DvaBUZD
-	 WE9yFGP6WbgSGvTKAev+Vx/Zwm8v3p1S2ov4QIEMOPosBURWB+oOLwqsVAZnHuO3LrF0l
-	 7uGVvMUAl159Pyr4lw+dgeV2UyDl8xBbhVIqUdoubCRYDjQgR1nHjOIIXcflmgQvX7gIA
-	 XhnOQCoZS7fouE4jZyBeJ3OeFHkWv0DMVwmEEbVGdRulO9Cj3Ly3SWoI2HTElrckofA==
+	bh=5rC0fjgp/nGnBEw6SVBqnUEm6hnjVuTL1YKuGyI3eH0=;
+	b=4pGkB8oOsVN7gFnT/tYlLaWU3+hFm03dOxtGzEgtyF67uJxa2FExejcB8AXOMdeqjvT0
+	 oHdTjrdIrDv/trnzGq8fZQScPmtUVVeMWX9it2a5vac/y/OezoSQB3xVKBC8C9H+UKUqr
+	 VRHFaVM18T8EWz2ZsNJzT9l/TUpuNiRPHxRPRD97gi5RZwGxu6jFmC1/ZZPzYWlstP/2E
+	 eefLRCeg+v20z1CGXCNd6FLN/04+3sn7MwP7qHiv9o2C5gzIS8BPk7I+q7xlj7FFxFSyp
+	 BqgaxESbfevebFZlIfe4aeBDbA3PWCHXNElhgio1JeNlTvoHqSLiPUXxYuvr0grN/YQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HotvNliC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=at5NbLDW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2D5606B22C;
-	Fri, 13 Nov 2026 17:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C108606B23B;
+	Fri, 13 Nov 2026 17:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HotvNliC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9F71F000C9;
-	Fri, 13 Nov 2026 17:15:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=at5NbLDW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38171F000C9;
+	Fri, 13 Nov 2026 17:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590126;
-	bh=x3h0QqwwJCBNTsYXOmXA8k+2G3ySUi0MChZXw0scdcI=;
+	s=korg; t=1794590127;
+	bh=5rC0fjgp/nGnBEw6SVBqnUEm6hnjVuTL1YKuGyI3eH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HotvNliCnoXycyK7btgrfzlvI9JQQwFXHVA+zbfIM8tCf9hVoUGeeRDViYXsRnkVO
-	 kLy5ZApNR24rXKRzNFR1B0Hl2j2Bs4+PEJa1b0G/7MJENpyBxkiBRcqt/6y187BU5g
-	 qBpd5WObwHFP0uZ3ZfKmVur2vtl1H4qoDLFlZfD4=
+	b=at5NbLDWCRzaGl10QHLN2n2WAxKgZWTTWCvhXJIj+Q4JReqqsGOdx07UTj/EqaXpA
+	 1hg2RDxcBxtEyjNvLl5OsYWTwWPctspL43v00CJqI26taoUsI2cd7EJN/SdR9PmPLh
+	 0QlLqaPAnzUVqQTt67jOtdWM9grTsKFri9tzPYtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Liebold <simonlie@amazon.de>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Eric Sandeen <sandeen@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Usama Arif <usamaarif642@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 147/686] devtmpfs: restore mount option reconfiguration on get_tree
-Date: Fri, 13 Nov 2026 10:44:40 -0500
-Message-ID: <20261113153825.785308861@linuxfoundation.org>
+Subject: [PATCH 6.18 148/686] mm/damon/sysfs-schemes: read sysfs_filter->sz_range only once
+Date: Fri, 13 Nov 2026 10:44:41 -0500
+Message-ID: <20261113153825.817525013@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,193 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 1c7df6fa838a46f0d5090ef134f67511f0592f33 ]
+[ Upstream commit af19aff38d6faea35b10f26cca32d0e54f8aea5e ]
 
-commit cb0e0a8bf4e1 ("devtmpfs: replace ->mount with ->get_tree in
-public instance") converted the public devtmpfs instance to the new
-mount API but broke the ability to reconfigure the shared superblock
-options via subsequent mount() calls, as had been fixed once in
-a6097180d884 ("devtmpfs regression fix: reconfigure on each mount")
+DAMON sysfs interface reads the user-provided size range arguments for
+hugepage_size type DAMOS filter twice.  Once for validation, and once
+again for assignments to the variable that will be passed to the core
+layer.  If the user updates the arguments in parallel, an invalid size
+range could be passed to the core layer.  Avoid it by doing the
+assignments first, and then validating the assigned variables before
+passing those to the core layer.
 
-This makes boot-time defaults permanent.
+User impact of the bug should be trivial.  From the core layer's
+perspective, the invalid size range is not really invalid.  It just works
+as having a weird size range.  No critical issues such as a crash or a
+leak could happen.  And sane users ain't do such parallel arguments update
+anyway.  If they do, such racy behavior is arguably somewhat expected and
+deserved.  That said, there is no reason to keep such races.
 
-Fix this using an approach suggested by Al Viro: at init_fs_context
-time, create a reconfigure-mode context via fs_context_for_reconfigure()
-and save it in fc->fs_private. The devtmpfs parse ops can then use
-this context to parse options appropriately for the underlying filesystem.
-
-This also removes the devtmpfs_configure_context() one-time ops-copying
-approach and the global mutable ops table it required.
-
-Fixes: cb0e0a8bf4e1 ("devtmpfs: replace ->mount with ->get_tree in public instance")
-Reported-by: Simon Liebold <simonlie@amazon.de>
-Cc: stable@vger.kernel.org
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Link: https://patch.msgid.link/b1bd3b15-78ea-4487-b6a8-aad0b05dd3bb@redhat.com
-Tested-by: Simon Liebold <simonlie@amazon.de>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Simon Liebold <simonlie@amazon.de>
+Link: https://lore.kernel.org/20260914142327.92510-3-sj@kernel.org
+Fixes: ea1f204ba29a ("mm/damon/sysfs-schemes: add files for setting damos_filter->sz_range")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@davidgow.net>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/devtmpfs.c | 108 ++++++++++++++++++++++++----------------
- 1 file changed, 64 insertions(+), 44 deletions(-)
+ mm/damon/sysfs-schemes.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/devtmpfs.c b/drivers/base/devtmpfs.c
-index 0bf3232b3ec14..645c9f2674e99 100644
---- a/drivers/base/devtmpfs.c
-+++ b/drivers/base/devtmpfs.c
-@@ -73,39 +73,90 @@ static struct file_system_type internal_fs_type = {
- 	.kill_sb = kill_litter_super,
- };
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index e95cddca0a10d..952e12fd6dbf7 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2493,12 +2493,11 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
+ 		} else if (filter->type == DAMOS_FILTER_TYPE_TARGET) {
+ 			filter->target_idx = sysfs_filter->target_idx;
+ 		} else if (filter->type == DAMOS_FILTER_TYPE_HUGEPAGE_SIZE) {
+-			if (sysfs_filter->sz_range.min >
+-					sysfs_filter->sz_range.max) {
++			filter->sz_range = sysfs_filter->sz_range;
++			if (filter->sz_range.min > filter->sz_range.max) {
+ 				damos_destroy_filter(filter);
+ 				return -EINVAL;
+ 			}
+-			filter->sz_range = sysfs_filter->sz_range;
+ 		}
  
--/* Simply take a ref on the existing mount */
-+struct devtmpfs_context {
-+	struct fs_context *fc;
-+};
-+
-+static void devtmpfs_free(struct fs_context *fc)
-+{
-+	struct devtmpfs_context *ctx = fc->fs_private;
-+
-+	if (ctx) {
-+		put_fs_context(ctx->fc);
-+		kfree(ctx);
-+	}
-+}
-+
-+static int devtmpfs_parse_param(struct fs_context *fc, struct fs_parameter *param)
-+{
-+	struct devtmpfs_context *ctx = fc->fs_private;
-+
-+	return ctx->fc->ops->parse_param(ctx->fc, param);
-+}
-+
-+static int devtmpfs_parse_monolithic(struct fs_context *fc, void *data)
-+{
-+	struct devtmpfs_context *ctx = fc->fs_private;
-+
-+	if (ctx->fc->ops->parse_monolithic)
-+		return ctx->fc->ops->parse_monolithic(ctx->fc, data);
-+	return generic_parse_monolithic(ctx->fc, data);
-+}
-+
- static int devtmpfs_get_tree(struct fs_context *fc)
- {
-+	struct devtmpfs_context *ctx = fc->fs_private;
- 	struct super_block *sb = mnt->mnt_sb;
-+	int err;
- 
- 	atomic_inc(&sb->s_active);
- 	down_write(&sb->s_umount);
-+
-+	if (ctx->fc->ops->reconfigure) {
-+		err = ctx->fc->ops->reconfigure(ctx->fc);
-+		if (err) {
-+			deactivate_locked_super(sb);
-+			return err;
-+		}
-+	}
-+
- 	fc->root = dget(sb->s_root);
- 	return 0;
- }
- 
--/* Ops are filled in during init depending on underlying shmem or ramfs type */
--static struct fs_context_operations devtmpfs_context_ops = {};
-+static const struct fs_context_operations devtmpfs_context_ops = {
-+	.free		  = devtmpfs_free,
-+	.parse_param	  = devtmpfs_parse_param,
-+	.parse_monolithic = devtmpfs_parse_monolithic,
-+	.get_tree	  = devtmpfs_get_tree,
-+};
- 
--/* Call the underlying initialization and set to our ops */
- static int devtmpfs_init_fs_context(struct fs_context *fc)
- {
--	int ret;
--#ifdef CONFIG_TMPFS
--	ret = shmem_init_fs_context(fc);
--#else
--	ret = ramfs_init_fs_context(fc);
--#endif
--	if (ret < 0)
--		return ret;
-+	struct devtmpfs_context *ctx;
-+	int err;
-+
-+	ctx = kzalloc_obj(struct devtmpfs_context);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	/* Each mount will reconfigure the shared superblock w/ new options */
-+	ctx->fc = fs_context_for_reconfigure(mnt->mnt_root,
-+					     mnt->mnt_sb->s_flags, MS_RMT_MASK);
-+	if (IS_ERR(ctx->fc)) {
-+		err = PTR_ERR(ctx->fc);
-+		kfree(ctx);
-+		return err;
-+	}
- 
-+	fc->fs_private = ctx;
- 	fc->ops = &devtmpfs_context_ops;
- 
- 	return 0;
- }
- 
- static struct file_system_type dev_fs_type = {
--	.name = "devtmpfs",
-+	.name		 = "devtmpfs",
- 	.init_fs_context = devtmpfs_init_fs_context,
- };
- 
-@@ -443,31 +494,6 @@ static int __ref devtmpfsd(void *p)
- 	return 0;
- }
- 
--/*
-- * Get the underlying (shmem/ramfs) context ops to build ours
-- */
--static int devtmpfs_configure_context(void)
--{
--	struct fs_context *fc;
--
--	fc = fs_context_for_reconfigure(mnt->mnt_root, mnt->mnt_sb->s_flags,
--					MS_RMT_MASK);
--	if (IS_ERR(fc))
--		return PTR_ERR(fc);
--
--	/* Set up devtmpfs_context_ops based on underlying type */
--	devtmpfs_context_ops.free	      = fc->ops->free;
--	devtmpfs_context_ops.dup	      = fc->ops->dup;
--	devtmpfs_context_ops.parse_param      = fc->ops->parse_param;
--	devtmpfs_context_ops.parse_monolithic = fc->ops->parse_monolithic;
--	devtmpfs_context_ops.get_tree	      = &devtmpfs_get_tree;
--	devtmpfs_context_ops.reconfigure      = fc->ops->reconfigure;
--
--	put_fs_context(fc);
--
--	return 0;
--}
--
- /*
-  * Create devtmpfs instance, driver-core devices will add their device
-  * nodes here.
-@@ -483,12 +509,6 @@ int __init devtmpfs_init(void)
- 		return PTR_ERR(mnt);
- 	}
- 
--	err = devtmpfs_configure_context();
--	if (err) {
--		pr_err("unable to configure devtmpfs type %d\n", err);
--		return err;
--	}
--
- 	err = register_filesystem(&dev_fs_type);
- 	if (err) {
- 		pr_err("unable to register devtmpfs type %d\n", err);
+ 		damos_add_filter(scheme, filter);
 -- 
 2.53.0
 
