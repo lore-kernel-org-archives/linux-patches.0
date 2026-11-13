@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590877;
-	b=DTUGp5CjBSpl98vwHvnBt5kgR6EfQXkgFcp9KM+mYfKP1FhzR3gkRvQZoSVlPjFYJFuo
-	 FsVrsdHEQS9Rl+NZcz+T6+Os84kQbQGeH/j7gGq6/uqGlvZtPGnyQ3YPkq0k4HCYuPCjy
-	 FoildkslCF2J74uQlAXfdncPree3T1eCFKHFRqFQgETltkaUIUKt+O1cnB8M7JZuFmz5I
-	 QUACOspy/yk3vuyclFsbPL4J08+uAjCMOvUz4QNTZ9KT4OMKFG+wErqTVs51lqCRabHpX
-	 RdzIBooMyiZg0XOhwZ68hJEEWoq1iNtX4FGljFslY+V5mxRbR0uew2XmzaerHYjx6zQ==
+	t=1794590879;
+	b=HQUHN/skvQgTEU34r4NtJOsPngjgG46lEQKK/WkSo2NmLFwfNwu3jd903f0z5K6qug47
+	 jq9Alotyq8RHeo0a3nr3d/cciFL2P2IcBDJ8af6YfcpBEmGb61PMqrVOCBE99TIziPyaO
+	 sedKjcBLPejuWupVI9OhXUmxjHn9uSbi9h1oK2BUjiUgIG1wAAja3rZuIH9ZpQPTYlC+r
+	 3DK/JNwIDFPgLeq8BKV27UGkINffN229KkqxT8S0aUOBiimZgr0JTlmW+LmCzRB4LPq8m
+	 m8uL2NdO8Xua6Zwjmb66iLnupyGxCA2QNDdyySW7VSjz8KbFsyaAJcg9WX8CsI+v7bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590879;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=06MxI6VppHp6+Zm7vAxoQvu2OxacKiPMbnSQuu95/uA=;
-	b=HFRVViiSL0uGxgQBkfHGnD/yoa07Tq9sUS/wenn5lF26m/c9n1ipx4OacG9AohZSld1l
-	 sD6iGYUfvoCp8fnzcOgwXcSonnzB4NDU4AHrEaFCYkNbYGthNJFy8aqdE9/A398ENlJy1
-	 XeiKpIkVAayA+bmaWhDA9E7E8JQRtp8BaC5mZbxxmcE9O3LfaO6iudOCArN86LVYTt6sB
-	 pk8bGi5QpiK3AHfoXxsQ8Hb77L5zGWndBFl7tIo0Je/0PPBVC9Iq6+LeUi4i3TdUGB6qk
-	 MKjsflrIejFXpMZwA+BsvaHQI5qui1lGKvMFoUUrtiq+baWAASq1JDvdIJ2/LmdLaOw==
+	bh=MOrn4XjSSjceFR2gA6glCZmjCxCanIgBiCbA92TiF2Y=;
+	b=IrD9sbtRqgR0ptO5EFV2/cgmmgTAi2gGMGHZLWvliMwVXA0iKCRGxq18e2PSyLdmnzNg
+	 4JRGsMJSABIq2M2TMrrrtBLLu8Wm4Dfy2XPy62Gj8cg1ohHIUL2OwxA+UqzSR0Dcm4Cq8
+	 6KMFVJWx1XFz/2elxt0s5sA17RCQL9F0iryjwHxQAp/VZ1ejk9j1nJ7yhaZ9aMTF1P7yV
+	 iwoYJVxc/+zWFIc1k96qg/InoqPaaOeKxAbnFYfDhqBZLVICwQWQdctlAs3u8ojKIcY1Z
+	 +AenlRYrh/mn3bWtK42mviq9EDNRstiEdKb2OfyOrrJrIsIE798k7Q2Oyq7O1vJS6YA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LLCp/Pat";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YbZs6ecN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84C8606D4B8;
-	Fri, 13 Nov 2026 17:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA25606D4BA;
+	Fri, 13 Nov 2026 17:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLCp/Pat
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E6D1F000C4;
-	Fri, 13 Nov 2026 17:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YbZs6ecN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06011F000C4;
+	Fri, 13 Nov 2026 17:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590877;
-	bh=06MxI6VppHp6+Zm7vAxoQvu2OxacKiPMbnSQuu95/uA=;
+	s=korg; t=1794590878;
+	bh=MOrn4XjSSjceFR2gA6glCZmjCxCanIgBiCbA92TiF2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LLCp/PatbDzFjRSr06UMbPqc0jT+ngWi2dMw7fIR/I+l6gwPUjpuIjE/hoXuMSmTG
-	 GiDmP4RB3YeyZYn+K9bBJBksQG0OZLuOWORaJxlfLCJ/q5Eu/D+eYY3ZU0oVp2lpax
-	 h/Xem37D66luOm5TqfvqVeLQK5baO3un8oAwe64g=
+	b=YbZs6ecNw8cbAYNzVkOLHsuHCcWyU+k5j9fo0sDMlUIvLXAskee0d8j/M7Gs4OYQH
+	 l7z1l9dEoLk4ZNftPMf7ETxK/3aGExzYL3fRcd8l2yZFKN7GXicy4aEIUZhTyU6xh0
+	 Abm44YofWYA56OFX9QR0Iz7wkt6sKjbTsx+yW27k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/670] xfs: complain loudly when dirtree checker finds broken links
-Date: Fri, 13 Nov 2026 10:43:57 -0500
-Message-ID: <20261113153814.023478929@linuxfoundation.org>
+Subject: [PATCH 6.12 074/670] xfs: reinitialize dquot block if non-first dquot cant load
+Date: Fri, 13 Nov 2026 10:43:58 -0500
+Message-ID: <20261113153814.073242718@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,48 +71,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit e09438cab72c2c6a32665829d4186155346bfee8 ]
+[ Upstream commit faa9aa9e846332aaad78096a2cebfeafe68a7776 ]
 
-LOLLM observed that the directory tree walk code bails out if it finds
-broken parent pointers along the way.  However, it flattens the return
-code to zero, which means that we can end up in the repair code having
-not completed the scan.  We should never proceed with a repair in this
-state, so let's mark the scrub incomplete and exit.
+LOLLM noticed that the early exit logic in xrep_quota_block is defective
+because it only looks in the first ondisk dquot for corruption that
+would prevent dquots from loading.  We need to scan all the dquots in
+the block, not just the first one.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 928b721a11789a ("xfs: teach online scrub to find directory tree structure problems")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: Retained xchk_ino_xref_set_corrupt(sc, sc->ip->i_ino) instead of upstream's xchk_ip_xref_set_corrupt(sc, sc->ip). ]
+Stable-dep-of: 780212c8d810 ("xfs: forcibly reset quota timers when upgrading to bigtime during repair")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/dirtree.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/quota_repair.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/fs/xfs/scrub/dirtree.c b/fs/xfs/scrub/dirtree.c
-index 8933506c4830a..35848cbfae929 100644
---- a/fs/xfs/scrub/dirtree.c
-+++ b/fs/xfs/scrub/dirtree.c
-@@ -849,7 +849,8 @@ xchk_dirtree_find_paths_to_root(
- 				 * A parent pointer of @sc->ip is bad, don't
- 				 * bother continuing.
- 				 */
--				break;
-+				xchk_set_incomplete(sc);
-+				return error;
- 			}
- 			if (error == -ESTALE) {
- 				/* This had better be an invalidation. */
-@@ -970,6 +971,7 @@ xchk_dirtree(
- 		 * parent pointers are corrupt; this scan cannot be completed
- 		 * without full information.
+diff --git a/fs/xfs/scrub/quota_repair.c b/fs/xfs/scrub/quota_repair.c
+index 95d5bb8c10032..368be503334fa 100644
+--- a/fs/xfs/scrub/quota_repair.c
++++ b/fs/xfs/scrub/quota_repair.c
+@@ -299,7 +299,6 @@ xrep_quota_block(
+ 	xfs_dqid_t		id)
+ {
+ 	struct xfs_dqblk	*dqblk;
+-	struct xfs_disk_dquot	*ddq;
+ 	struct xfs_quotainfo	*qi = sc->mp->m_quotainfo;
+ 	struct xfs_def_quota	*defq = xfs_get_defquota(qi, dqtype);
+ 	struct xfs_buf		*bp = NULL;
+@@ -321,14 +320,21 @@ xrep_quota_block(
+ 		break;
+ 	case 0:
+ 		dqblk = bp->b_addr;
+-		ddq = &dqblk[0].dd_diskdq;
++		error = 0;
+ 
+ 		/*
+ 		 * If there's nothing that would impede a dqiterate, we're
+ 		 * done.
  		 */
-+		xchk_set_incomplete(sc);
- 		xchk_ino_xref_set_corrupt(sc, sc->ip->i_ino);
- 		error = 0;
- 		goto out_scanlock;
+-		if ((ddq->d_type & XFS_DQTYPE_REC_MASK) == dqtype &&
+-		    id == be32_to_cpu(ddq->d_id)) {
++		for (i = 0; i < qi->qi_dqperchunk; i++, dqblk++) {
++			struct xfs_disk_dquot	*ddq = &dqblk->dd_diskdq;
++
++			if ((ddq->d_type & XFS_DQTYPE_REC_MASK) != dqtype ||
++			    id + i != be32_to_cpu(ddq->d_id))
++				error++;
++		}
++
++		if (!error) {
+ 			xfs_trans_brelse(sc->tp, bp);
+ 			return 0;
+ 		}
+@@ -341,7 +347,7 @@ xrep_quota_block(
+ 	dqblk = bp->b_addr;
+ 	bp->b_ops = &xfs_dquot_buf_ops;
+ 	for (i = 0; i < qi->qi_dqperchunk; i++, dqblk++) {
+-		ddq = &dqblk->dd_diskdq;
++		struct xfs_disk_dquot	*ddq = &dqblk->dd_diskdq;
+ 
+ 		trace_xrep_disk_dquot(sc->mp, dqtype, id + i);
+ 
 -- 
 2.53.0
 
