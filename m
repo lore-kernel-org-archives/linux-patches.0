@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585443;
-	b=A8U79/Gkt+IKHhP0E/Lpu+1wkH35mD0Utm502L1H66wtv2fWCDDW3HLqhtiISS4H86Pq
-	 n/JDTSII4Sn2zpDS4qODTAcuhLp54r/Tnl4gCzZAiHW9ksGr4ELE3jcqvmF+BiAmA1gS8
-	 cLDJy9b9KV8OTcbZ6xIqBjNVj6WJhk/aY65dtzdq8xtrq8a62yetvJmESuBP80olW/PkV
-	 Zdjm1VuXen7TBy6zisDkhb/3d5+LD/GLLtKKj5kWd1xdBB8BARz0Rc1sM27B4kWL8CvGq
-	 lWNtWa2mxNENlHwcEK4aXf0zJiAMbPVACLoX2NNZyuFV3Ixgyp1W9+p/3p+yhoZyGIA==
+	t=1794585444;
+	b=VmcFiNdAfYU113J6dLERS/cRcjWAjoeNI97/HD4CCG/BkxBU+JFGTP+tgfgOZ36JTA13
+	 a/dscXtUzoatWoohBNiw68LgzSBSkyfpw7VElJNsJZRcLf4N2wn9nE7QwDcIki7t82A1Z
+	 4IKhuSCDNSzhfhIQrUjt0sG0neJL8gEP9v+4q8c86p9BMDjA+Wegz2bGQPpo3whXCEvjB
+	 yY038TX2f4xPWLhtcN7SRPseOrrzeskmL13PG+wo1u4Q3MVPwj6Kfvl26eEQYJQAhXR4o
+	 6F/gjvzA7kNopiRUs1XdIUu/vSD/kEiat1a9gcY3TqQFKdE2ALjVZLqrMbKgM70Ay+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585443;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585444;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dRwGZuim3JNBIErYgE+9s6yRFH+UEJxhj6PrXtpP7MY=;
-	b=Tf7z0FRthWEmSGPEDFJSKPWFH6LY4kb27BOZloyUdT9Grsg6Sz+Z18qK+75CodVt5LU8
-	 k+5cDWW6CeOK6DnOBBrfJ8XTcnQPqkc4jMMrJSczVu0JytdHzEtz85Ra2nfmLx0WIg13S
-	 qieGq0VYzIzspJWbQUjfy/bYSq1Xx1ca3sStRbj/coiwTUxw2OxyX6Rc5wmVYvltqNsOG
-	 6fxYiqgI0MZvTMBJqSAw3idGplfQzRAr2NW7YEBAK7hm4TSWsu6qt8zcYzFA41ZcpN08n
-	 qzihaosDys2gTqkrnDYiN0cRK7Xsro9/yFW9RvWhyOHO1GGqfvDVIIf+xZFkw+Ae6Dw==
+	bh=vrLPp941v/8KTxhF3cyeW2QBm0WM6bUtZ4r2G7huD5s=;
+	b=4uvy2xNqb5UNYmq8P6VADa+WVm3u12HXT5TxpIDUV0jaSaq9K7AqMQR3knEbm+OEPlKt
+	 ElcMYogF5Bjgn8kUC3YxEoDHF3A2UY96/hzfhdBFF+gnIRCNWbYcLffSUc0lX4khzCu9u
+	 dPGEZJapMYj3ocqNXa2TX4FDn1EilTIXy/ROoOxK32Sywg2FuEGk0xAqRxXfPekwuu3i4
+	 +c34Ks1NCNat6HhhHlJuySwhZ/COIo/MI50l4bf9u68wi7Xa90dMvbX+tJjMI32HFTll1
+	 ECgmzygT78hS0qiEfC90G2eK7o5tUcjHvMi39P/xMNupwGrMUaPkHCDfsyB6sazWfUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wYUKeqRR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DpFVGpeS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0442F606A8A8;
-	Fri, 13 Nov 2026 15:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4179C606A8A8;
+	Fri, 13 Nov 2026 15:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wYUKeqRR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB97F1F000C5;
-	Fri, 13 Nov 2026 15:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DpFVGpeS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12EC1F000C6;
+	Fri, 13 Nov 2026 15:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585442;
-	bh=dRwGZuim3JNBIErYgE+9s6yRFH+UEJxhj6PrXtpP7MY=;
+	s=korg; t=1794585444;
+	bh=vrLPp941v/8KTxhF3cyeW2QBm0WM6bUtZ4r2G7huD5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wYUKeqRR/zvsLQ3kIFL2ZgwTHBT6qPKEGB1KwWLUR8w8UkeRqE+Z2kDdtIZy/uugd
-	 Dq7psHKiYZmSTq0JkpRZ1VQCLKKxzZZIqpvb/6hFENnlBCTIhz6oD27B07yTlyNBwT
-	 1eVu5B+jb9BeQr8J4JCMtYUaQNETB9MGlhAUpTJY=
+	b=DpFVGpeSU9mASkeSyleuJi/vvo05FIcIX3L21cXOZzl2VImq2LR6I7mufLi74Z1kS
+	 LYCX4oG4qxztqSQncMj0HyfHC11sVTlIoMyUORaanRVWX1nNHbdyrR3461VV+CmZYV
+	 Y9B03jat++w2YncKqptGuhInjBRk0w0jQU+k8Q4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Michael Grzeschik <mgr@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Qu Wenruo <wqu@suse.com>,
+	guolingxing <guolingxing@tju.edu.cn>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 050/507] net/9p/usbg: Fix use-after-free in disable_usb9pfs()
-Date: Fri, 13 Nov 2026 10:45:54 -0500
-Message-ID: <20261113153755.247005619@linuxfoundation.org>
+Subject: [PATCH 7.3 097/507] btrfs: prevent deleting the wrong subvolume by ID
+Date: Fri, 13 Nov 2026 10:46:41 -0500
+Message-ID: <20261113153757.441399922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -74,75 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: guolingxing <guolingxing@tju.edu.cn>
 
-[ Upstream commit 6f401e350939442b2ac905f7e5ac952e3802a5d8 ]
+[ Upstream commit 1960146913b31b288ed2cd607d103ee3b41681d4 ]
 
-disable_usb9pfs() frees the IN and OUT usb_request objects before it
-disables the corresponding endpoints. If either request is still queued,
-the later usb_ep_disable() call cancels the endpoint queue and the UDC
-driver can still access the already freed request.
+When deleting a subvolume by ID, btrfs_ioctl_snap_destroy() first
+resolves the requested ID to a name, then looks up that name again
+under the parent directory lock.
 
-With dummy_hcd and KASAN, this is reproducible by queueing the OUT
-request and then disconnecting the configfs gadget:
+A concurrent rename can change which subvolume is associated with
+the name between these operations. Since the deletion path does not
+verify the ID of the resolved subvolume, it can delete a different
+subvolume while leaving the requested one intact.
 
-  BUG: KASAN: slab-use-after-free in dummy_disable+0x2b4/0x300
-  Read of size 8 at addr ffff888009702400 by task sh/1
-  usb_ep_disable+0x8e/0x1f0
-  usb9pfs_func_unbind+0x193/0x350
-  gadget_dev_desc_UDC_store+0x135/0x280
+This was reproduced by repeatedly exchanging the names of two
+subvolumes using renameat2(RENAME_EXCHANGE) while deleting one of
+them by ID. The wrong subvolume was deleted in 9 out of 14 independent
+tests.
 
-dummy_free_request() also warns because the request is freed while its
-queue entry is still linked.
+Fix this by checking that the resolved subvolume ID matches the
+requested ID while holding the parent directory lock. Return -EAGAIN
+on a mismatch so that userspace can retry the operation instead of
+being told that the requested subvolume does not exist.
 
-Disable both endpoints before freeing the request objects. This lets
-usb_ep_disable() cancel any queued transfers and invoke the completion
-callback while the request storage is still valid. The request objects
-are then freed only after they have been removed from the endpoint
-queues.
-
-Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
-Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:GLM-5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260607130118.16579-1-zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: 949964c92843 ("btrfs: add new BTRFS_IOC_SNAP_DESTROY_V2 ioctl")
+CC: stable@vger.kernel.org
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/ioctl.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index f2619e8465d23..e2309500a8c74 100644
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -278,6 +278,9 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
- 	struct usb_composite_dev *cdev =
- 		usb9pfs->function.config->cdev;
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index 905b04ad0ae45..beae9dcb5a3e6 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -2393,6 +2393,17 @@ static noinline int btrfs_ioctl_snap_destroy(struct file *file,
  
-+	disable_ep(cdev, usb9pfs->in_ep);
-+	disable_ep(cdev, usb9pfs->out_ep);
+ 	inode = d_inode(dentry);
+ 	dest = BTRFS_I(inode)->root;
 +
- 	if (usb9pfs->in_req) {
- 		usb_ep_free_request(usb9pfs->in_ep, usb9pfs->in_req);
- 		usb9pfs->in_req = NULL;
-@@ -287,9 +290,6 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
- 		usb_ep_free_request(usb9pfs->out_ep, usb9pfs->out_req);
- 		usb9pfs->out_req = NULL;
- 	}
--
--	disable_ep(cdev, usb9pfs->in_ep);
--	disable_ep(cdev, usb9pfs->out_ep);
- 	dev_dbg(&cdev->gadget->dev, "%s disabled\n",
- 		usb9pfs->function.name);
- }
++	/*
++	 * A concurrent rename may have changed which subvolume the name
++	 * refers to. Verify that the resolved ID still matches the requested ID.
++	 */
++	if (destroy_v2 && (vol_args2->flags & BTRFS_SUBVOL_SPEC_BY_ID) &&
++	    btrfs_root_id(dest) != vol_args2->subvolid) {
++		ret = -EAGAIN;
++		goto out_end_removing;
++	}
++
+ 	if (!capable(CAP_SYS_ADMIN)) {
+ 		/*
+ 		 * Regular user.  Only allow this with a special mount
 -- 
 2.53.0
 
