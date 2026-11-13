@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585388;
-	b=dxNnhOolzFhK6Am3p9sWMcK/IKtgloq9XY8WM1m4/80YM8cgY0RxRZxnitQo+uoimIn/
-	 wSMKeU4l+GAnRMBelilJswe6pCLn3axD3lnQqr9AQ70GM2oHEE+1XLdsu5faa4t1WIQP5
-	 QeYo/+GCmJo+7KkM+38Ln47ll38WuFUKwF+dATsr7uLeXIwFTD3L2hTIJF8xANj64Fb8E
-	 AjYJlJj4GWLclB8icqItHA8Sh8ge1YHC6uy5T3QaKlEyUtDWeVSgdKAfKtKRRmzYoPMQS
-	 +ZElMJO//MWRPskoBILQvVbnl0OD6uLd4xllrn8EnvZjPqhumiebnFgWPPXpgXhFsjA==
+	t=1794585390;
+	b=yzXkCMDWsfzI0LZatS4wbSF4lK3wZVFcwYO11N8JUp9W5uHjtEOzqt/6A7n8zBfjNLZa
+	 ZVhP3EeUgQKGoS8Lt/MDs7r59aVOqBtSvuPfzYtXng23FUBQkk3lotiG0mfrj64M2Jran
+	 WyHXX0Kn7Qc3J7w043VBtNVW3NNdMjojJ5SacwBG02sylcoy4xS29trSbpkagOzt0NgNi
+	 VM3wmh3RDxaKxNGJdJATK36PV6jA0gOsfsJr6zfOi31CjVxiJb3iHk+mBPNNG1nH/9hGe
+	 /yOGXwA2nwTHlPjjM7jciYlG9dNIus7+QT5Gnrt3KcPGBFKk8/sSuBt+6NpvzpgalCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585388;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585390;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=yf+nqzpZwwfj0F3UKU4lLSXqZ3F7sCpPeeEbiClepPA=;
-	b=R5oS35pfjFEGbbEWeJchF+wKW2YMaBkfDkBYxOORL8EYZeifeeC9gOk78Dl3C+fgzIBj
-	 075mjh98tf8kjkYRWLLGSqUhDb1Wf9LUvNL/VOS2B7SeB8dq5QHOXCsVvPaokGMMknWjb
-	 NJWmJBvB5IOM3OdepY0mNOD9raDrRzTG1fjumOHRYk//Zm2FheFWuRyx+BrDtpdoDKiJ5
-	 MaaesdtEasfBmqVArGg23W7Bfpa6U0/14LkHv2uHrp4NlDM6b8S7kzuJKNDbmgE6rmI0V
-	 hA/dlEUUeAN9G86IP/EYrP3x12WvrSMW3Y4JMASj+y3/zWxo7HUxngOpjVzs+0GfvDA==
+	bh=s4GISVEZiUHu1eOYOBsZeBlM3+azUzLb75ojadsZj0w=;
+	b=gRiqOlpMOoYd3aPKJhWU/1Qdh9i0HHJxisbSCVOYd9qhojWSNwT45+tuQGsem2a4WPjh
+	 opMsttc+XEJRpUx2c7sf1vlCMg0+WWcKpECpnEj5DtTr7XHKVluP6nFCYb8EpKZAAkmfr
+	 uo9LnPCaI/32QfZ1MG3wABkYRVt3Loya+GjrOOyvUSzgf9K0CPVeObBaK0/3aOZftgxqu
+	 PXMVtCr99mlbtuI1hJRUXsUjTVmNwoBHi2peHUYCb28poE2if8IF8hddEH6NzoTfdTro7
+	 yrT9JCTTP8kgajV53bzMcJJOISbfuyIvtoyI/lWvSUVrp/44Q6ibgGLMvwUQTgjQlwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xhe0GwTo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z41LHglW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF20606D458;
-	Fri, 13 Nov 2026 15:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96F56070FC5;
+	Fri, 13 Nov 2026 15:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xhe0GwTo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AE91F000C8;
-	Fri, 13 Nov 2026 15:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z41LHglW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954FB1F000C4;
+	Fri, 13 Nov 2026 15:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585388;
-	bh=yf+nqzpZwwfj0F3UKU4lLSXqZ3F7sCpPeeEbiClepPA=;
+	s=korg; t=1794585389;
+	bh=s4GISVEZiUHu1eOYOBsZeBlM3+azUzLb75ojadsZj0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xhe0GwTouDoYFxUKY9cZcERPgw1XFR1/nz166y5EvB6dN6u7pbqIJz7WMf/XX0qB9
-	 pikJ8+Pg6JesxFK06DtOgmIPMV5WoejNi6mA3hrIAI9xe9LqViLzCc+LRyrii7arBO
-	 ZWw4XHKystDzl5e56dFJu26s3YJgz6syb25USVkE=
+	b=Z41LHglWUcMHm/KlytAgk8GmptDoiU/rv5EPS4bSHw2ad6HVALDLjeAVzlRhYhvYV
+	 nh78joiietVwfi7i2bleZiSJ4ED0fXm3EvsB+lyHfNc7sX6hULD6WTOxkeum+5DDMw
+	 cLFNatz4IDfb4zFi4ZrOPCE/yYujsawuuyf4BRGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Philipp Stanner <phasta@kernel.org>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 061/507] drm/drm_crtc: ensure dma_fence_ops remain valid during device unbind
-Date: Fri, 13 Nov 2026 10:46:05 -0500
-Message-ID: <20261113153755.624176048@linuxfoundation.org>
+Subject: [PATCH 7.3 062/507] drm/drm_crtc: fix race with dma_fence_signal() in ::get_driver_name()
+Date: Fri, 13 Nov 2026 10:46:06 -0500
+Message-ID: <20261113153755.654539977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -72,97 +72,85 @@ Content-Transfer-Encoding: 8bit
 
 From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit 3be436cbd3d265fe4fcfbb5b650edad7b2108443 ]
+[ Upstream commit cb104d395da48d965665fefe8502f71b6e7e3733 ]
 
-In [1], sashiko reported the following issue:
+Since commit 541c8f2468b9 ("dma-buf: detach fence ops on signal v3"),
+I'm seeing the BUG_ON() triggering in drm_crtc's fence_to_crtc() via
+drm_crtc_fence_get_driver_name() regularly:
 
-=== snip ===
-Looking at how these fences are managed, drm_crtc_create_fence()
-creates a dma_fence without taking a reference to the drm_device or
-drm_crtc. Because the sync_file framework exposes this fence to
-userspace, the fence can outlive the CRTC.
+    Call trace:
+     panic+0x58/0x5c
+     die+0x160/0x178
+     bug_brk_handler+0x70/0xa4
+     call_el1_break_hook+0x3c/0x1a0
+     do_el1_brk64+0x24/0x74
+     el1_brk64+0x34/0x54
+     el1h_64_sync_handler+0x80/0xfc
+     el1h_64_sync+0x84/0x88
+     drm_crtc_fence_get_driver_name+0x60/0x68 (P)
+     sync_file_get_name+0x184/0x45c
+     sync_file_ioctl+0x404/0xf70
+     __arm64_sys_ioctl+0x124/0x1dc
 
-The dma_fence contract requires that data accessed by dma_fence_ops
-(like get_driver_name) must remain valid for an RCU grace period after
-the fence is signaled. However, drm_crtc_cleanup() and the subsequent
-freeing of the device do not wait for an RCU grace period via
-synchronize_rcu().
+This looks to be caused by a code flow similar to the following:
 
-If userspace calls ioctl(SYNC_IOC_FILE_INFO) concurrently with a device
-hot-unplug:
++++ snip +++
+thread A                             thread B
 
-CPU1 (Userspace)
-sync_file_get_name()
-  ops = rcu_dereference(fence->ops);
-  if (!dma_fence_test_signaled_flag())
-    // Preempted or delayed here
+                                     ioctl(SYNC_IOC_FILE_INFO)
+                                     sync_file_ioctl()
+                                     sync_file_get_name()
+dma_fence_signal_timestamp_locked()  dma_fence_driver_name()
+                                       ops = rcu_dereference(fence->ops)
+                                       if (!dma_fence_test_signaled_flag())
+                                         ops->get_driver_name(fence) i.e.
+                                         drm_crtc_fence_get_driver_name()
+test_and_set_bit(SIGNALED)
+RCU_INIT_POINTER(fence->ops, NULL)
+                                     drm_crtc_fence_get_driver_name()
+                                       BUG_ON(rcu_access_pointer(fence->ops)
+                                              != &drm_crtc_fence_ops)
++++ snap +++
 
-CPU2 (Driver Teardown)
-Signals the fence (setting fence->ops = NULL)
-Destroys and frees the CRTC without waiting for an RCU grace period
+In other words, a fence's ops pointer can now change to NULL on signal,
+which wasn't the case before the culprit commit and hence the BUG_ON()
+triggers.
 
-CPU1 (Resumes)
-  ops->get_driver_name(fence) -> drm_crtc_fence_get_driver_name()
-  crtc = fence_to_crtc(fence); // Casts to the freed CRTC
-  return crtc->dev->driver->name; // Use-after-free
+Simply drop the BUG_ON() as it's usage of fence ops is invalid now, and
+because using BUG_ON() and friends to take down the system is an
+unacceptable way to handle a failure.
 
-...
+Note that the adjacent drm_crtc_fence_get_timeline_name() has the same
+problem and is fixed by this patch as well.
 
-Does the CRTC or DRM device need to be kept alive for the RCU grace
-period, or should the fence hold a proper reference to prevent the
-use-after-free when get_driver_name() and get_timeline_name() access
-the freed CRTC structure?
-=== snap ===
-
-I believe this to be a correct observation and this patch implements
-the suggestion of waiting for an RCU grace period before proceeding
-with destruction of the drm_crtc, so that get_driver_name() and
-get_timeline_name() can still work.
-
-Link: https://sashiko.dev/#/patchset/20260618-linux-drm_crtc_fix2-v1-1-c03e77b36f34@linaro.org?part=1
-Fixes: 6d6003c4b613 ("drm/fence: add fence timeline to drm_crtc")
+Fixes: 541c8f2468b9 ("dma-buf: detach fence ops on signal v3")
 Cc: stable@vger.kernel.org
 Signed-off-by: André Draszik <andre.draszik@linaro.org>
 Reviewed-by: Philipp Stanner <phasta@kernel.org>
 Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260721-linux-drm_crtc_fix2-v3-1-afa8c71506e6@linaro.org
 Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://lore.kernel.org/r/20260721-linux-drm_crtc_fix2-v3-2-afa8c71506e6@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_crtc.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_crtc.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
-index 63ead8ba67564..e8e80c9368529 100644
+index e8e80c9368529..5295ec122e0d1 100644
 --- a/drivers/gpu/drm/drm_crtc.c
 +++ b/drivers/gpu/drm/drm_crtc.c
-@@ -493,14 +493,23 @@ EXPORT_SYMBOL(__drmm_crtc_alloc_with_planes);
-  * drm_crtc_cleanup - Clean up the core crtc usage
-  * @crtc: CRTC to cleanup
-  *
-- * This function cleans up @crtc and removes it from the DRM mode setting
-- * core. Note that the function does *not* free the crtc structure itself,
-- * this is the responsibility of the caller.
-+ * This function cleans up @crtc and removes it from the DRM mode setting core,
-+ * after first waiting an RCU grace period to ensure @crtc->dev can safely be
-+ * dereferenced by our dma_fence_ops.
-+ *
-+ * Note that the function does *not* free the crtc structure itself, this is the
-+ * responsibility of the caller.
-  */
- void drm_crtc_cleanup(struct drm_crtc *crtc)
- {
- 	struct drm_device *dev = crtc->dev;
+@@ -154,11 +154,8 @@ static void drm_crtc_crc_fini(struct drm_crtc *crtc)
+ #endif
+ }
  
-+	/* Ensure our dma_fence_ops remain valid for an RCU grace period after
-+	 * the fence is signaled. This is necessary because our dma_fence_ops
-+	 * dereference crtc->dev.
-+	 */
-+	synchronize_rcu();
-+
- 	/* Note that the crtc_list is considered to be static; should we
- 	 * remove the drm_crtc at runtime we would have to decrement all
- 	 * the indices on the drm_crtc after us in the crtc_list.
+-static const struct dma_fence_ops drm_crtc_fence_ops;
+-
+ static struct drm_crtc *fence_to_crtc(struct dma_fence *fence)
+ {
+-	BUG_ON(rcu_access_pointer(fence->ops) != &drm_crtc_fence_ops);
+ 	return container_of(fence->extern_lock, struct drm_crtc, fence_lock);
+ }
+ 
 -- 
 2.53.0
 
