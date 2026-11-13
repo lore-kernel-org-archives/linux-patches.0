@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585784;
-	b=V+rkPwwZj9k0YYbYOp45NyY9v5i2pSi1ToY8a0whnC4QvNWO5u+9SvMu1vy/CztdUK3D
-	 23nB32WhEGkQVTtgS8zdWPU/5Qta6o0tMxdczVLcfBfEFB62CdcnklK4fP+zZRg8nyHGm
-	 U5w3yh8AnTHePl/QVK4NsxS76VECO/bRaf00EdwjZ+0iKXvA65PZt+8PMEJQGLE6mFxeC
-	 uka8U4M4l16F5EoLv1t8I6RJWN13NI+Ku6+m+Oac2mGbdWNX0orMEv9CJHJwCl9Rmxggf
-	 nZ7akqyUp3SvyrMe2A0EI4K42tPZ0CkkPd6k+a9Nc/yjG8tPsABPZ7qy+pUtxjilGOw==
+	t=1794585785;
+	b=olmj8NJHMhI7cWPEZLnnUZZcMca9ylDm/1zHwUbkFR8oW7/Rd3aRfvFY0SQyLxvExFha
+	 5TC7tbejWD2OXmrINfKw7HkIx+g2koAIzXe8Q8qiEvCHj3sqwLJ4d69PoylM5b8NzJZ66
+	 ntZUzTgR0SDhgl9ySF1DIAD8y26BiWtx1JIf0Ub4c95Y4Zy1vdYWu81hEdyT0UqSofTiL
+	 57OvQPEk1KEa5WY4XS3QLmOeTkBUignT4LUI09mi6Mp1ijDSgicyQCd8c9K8n19IJBg1m
+	 LMevGJtJZutjTr+xbU0aMXkZEVV4KNYL50d8thEn0YgJtmsCtW4uRZIlnchnOtjM/5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585784;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585785;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NMmkDUvh6R7Otp8J9cLOTMQVIv7DZcckspsq4LbAoZk=;
-	b=x282Tfb8yLbkXaDAmLjb6kZNqjWGi4ZvJ4S3Y9Tg9QAsDMyCHgxmNyRuMpLAnlaPpC+I
-	 6zFPN0C99aqgwNrsLyxuWtY4TJpi1sWA0dgC26/hhYAyxTxrJ82Tm8bjwJPaf8zyE5ETb
-	 3vehBoPA4Qjc1Pmkc948Nl2tfqkGGqZXiZ95jRImyqIo/iSpzkvdE59QjCIYEUFwDejpH
-	 IcLGplndthJ/ynXAtrNku4aqOsma7FbVVDERQ3zg9ubqNowxyfdTxVgebsNdC9VdUTdTI
-	 oVdPS63h8ilvYWyd5Aq9VD5e/iDhuUUD+o2NXihSYmdKqqim7KU3w/6GauWk50UzP/g==
+	bh=DWq/HOLvvTx0AQE3ZsYnn5Cps535Euqai6R8CYzqj80=;
+	b=v+roAIfUDenRim1cEhauxrjNIMLTkQVjrFyJKTCuqroZCt+KIf93hxWO3aPyxbKV9erO
+	 wdBHGDWHmf59vfnm9i+jJCKhlCV387uvDCyP1ao7ZK8O5Z3rRAhkv2Bbstz9zdmNLOsTE
+	 quORRsqZ3DAtjrk6Bus+OzSXNPUcCv3mC6gSIbOlPELCGXDC8UfHbdUyUOvdUwIl/PhE+
+	 0fx153rxeBzNkvqhYGhLHX9Zc9uGVcaD9XcObP/iesvuNGWT1BJfLXDXpBMBmT6ahAaBp
+	 UVERWQLbFcmHmGA2Hg/ADfEH4kfatVdmaF9myFOjrjboGC0e2T1p2zAw1JL7RWRG/gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yyFxDQkD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EwBF4i5Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402F5606BA81;
-	Fri, 13 Nov 2026 16:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A672606BA94;
+	Fri, 13 Nov 2026 16:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yyFxDQkD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63D71F000C4;
-	Fri, 13 Nov 2026 16:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EwBF4i5Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C971F000C7;
+	Fri, 13 Nov 2026 16:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585784;
-	bh=NMmkDUvh6R7Otp8J9cLOTMQVIv7DZcckspsq4LbAoZk=;
+	s=korg; t=1794585785;
+	bh=DWq/HOLvvTx0AQE3ZsYnn5Cps535Euqai6R8CYzqj80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yyFxDQkDkoUlVnYsSWqMf09kMT3/zJCtFFcVgZoqzdN/8HOWEoQhYPcit+89vaWUY
-	 lzT/4VmH8+y50YML778orWIm5ydOfs3UHbLZRA6RSIKPLdGXWb+Dekatf2Q5EXIfnC
-	 jGZRf6fddvzIaJIKExOgdtL782f6+9+mr2p/7JHg=
+	b=EwBF4i5QgMUVS/UA1DNjVhC+clnBCFK6VYPmPZfGTEpNVzdnD8Ot3THameh7l4dJf
+	 DKDNNG1hNdTCuBODvohEJ2HvSBC4rXV8nSJ18MNZ+ARWPWB1H95zeU2CA6xi5RXIxa
+	 eMSKz/mop5k8XOQJW+5O2M69sZsOMDE4vuKl6dqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 321/507] mm: fix unmap_mapping_range() beyond 4 GiB on 32-bit
-Date: Fri, 13 Nov 2026 10:50:25 -0500
-Message-ID: <20261113153806.277541173@linuxfoundation.org>
+Subject: [PATCH 7.3 367/507] drm/amd/display: Keep the nominal vtotal while VRR is inactive
+Date: Fri, 13 Nov 2026 10:51:11 -0500
+Message-ID: <20261113153808.481549841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -71,61 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-[ Upstream commit 7a81bc23dade8082187be6d9cc36e4be4b7207e2 ]
+[ Upstream commit f2853a06e4b923c77a8cba69d76d2222b198256b ]
 
-Commit 9eab0421fa94 ("mm: fix unmap_mapping_range high bits shift bug")
-made holebegin and holelen unsigned before they are shifted, by casting
-them to pgoff_t. That is an unsigned long: on a 32-bit kernel the cast
-cuts off the upper half of the two loff_t values, so a hole which begins
-at 4 GiB or beyond is taken for one in the first 4 GiB of the file.
+Commit 33c995709121 ("drm/amd/display: Allow VRR params change if
+unsynced with the stream") derives the inactive vtotal from
+max_refresh_in_uhz and rounds it up. The round trip through integer
+rates can add a line even with VRR off. The ASUS ROG Xbox Ally X20's
+120.0004 Hz mode exceeds its 120 Hz EDID maximum, so 1152 lines
+become 1153 and the CRTC vblank counter measures 119.89 Hz.
 
-truncate_pagecache() passes the new size of the file and asks for private
-COWed pages to be unmapped as well. If a file of 6 GiB is truncated to
-5 GiB, everything from 1 GiB on is unmapped, and what a process has
-written to a private mapping of the range between 1 GiB and 5 GiB is
-lost: it reads the contents of the file again.
+Take both limits from stream->timing.v_total, as
+mod_freesync_build_vrr_params() does, which keeps the resync to the
+stream's timing. Active VRR keeps the helper's rounding.
 
-Where the range has an end, the wrong range is unmapped instead of the
-right one. The page cache copes with that, as it unmaps every folio that
-it removes. The callers which only have unmap_mapping_range() to get
-rid of user mappings do not, for example drm_vma_node_unmap(), whose fake
-offsets reach beyond 4 GiB on 32-bit, and revoke_iomem() with physical
-addresses of more than 32 bits.
-
-Cast to u64 instead. Nothing changes for 64-bit kernels.
-
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: 9eab0421fa94 ("mm: fix unmap_mapping_range high bits shift bug")
+Fixes: 33c995709121 ("drm/amd/display: Allow VRR params change if unsynced with the stream")
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Reviewed-by: Ivan Lipski <ivan.lipski@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 428c95d380f07694cbbd9ebe3450214404f57b5a)
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-36-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/modules/freesync/freesync.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index c2d3d8d94346d..e773d51f0d6fc 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -4594,8 +4594,8 @@ EXPORT_SYMBOL_GPL(unmap_mapping_pages);
- void unmap_mapping_range(struct address_space *mapping,
- 		loff_t const holebegin, loff_t const holelen, int even_cows)
- {
--	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
--	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+	pgoff_t hba = (u64)holebegin >> PAGE_SHIFT;
-+	pgoff_t hlen = ((u64)holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
- 
- 	/* Check for overflow. */
- 	if (sizeof(holelen) > sizeof(hlen)) {
+diff --git a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
+index 4bd060e30799a..f154a619b5339 100644
+--- a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
++++ b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
+@@ -1281,10 +1281,8 @@ void mod_freesync_handle_v_update(struct mod_freesync *mod_freesync,
+ 	 * If VRR is inactive, set vtotal min and max to nominal vtotal
+ 	 */
+ 	 if (in_out_vrr->state == VRR_STATE_INACTIVE) {
+-		in_out_vrr->adjust.v_total_min =
+-			mod_freesync_calc_v_total_from_refresh(stream,
+-				in_out_vrr->max_refresh_in_uhz);
+-		in_out_vrr->adjust.v_total_max = in_out_vrr->adjust.v_total_min;
++		in_out_vrr->adjust.v_total_min = stream->timing.v_total;
++		in_out_vrr->adjust.v_total_max = stream->timing.v_total;
+ 		return;
+ 	}
+ }
 -- 
 2.53.0
 
