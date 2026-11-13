@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590260;
-	b=QCTTp/lp/ByczFuYVBSYHhuRohawy2I1nCt8+eStYbJD+CPPHseL2V2YiSLOFbUYBgza
-	 s3TmIbFLIO5T/WVl46r0gkN2DFGxxgsk4C+1tsu3AZWuwpGQPyqK5Ov8mkXMP+YLM9OTL
-	 J8uJsdMv1bx9NP1iFJPJ+HftCsAp/q9ULSgVHX9y4yctZChinUj4DfAwi0ZiLA1LyO49m
-	 S/JJlaiFjNa7WtrMSQZIhelwZe8q0cvxta4cJO5i6rbSYgd9x9lzl35S5qQ0+fF1JVONy
-	 xb/5uPKOXVqEaLcQPcufoPt2AU+K8PSyV4ocf4bmebU9+ZAz8HS2o/ZFMLKNwwmSn6Q==
+	t=1794590261;
+	b=nNinNBfGiU4KftVlRuODR99ErVosDBxyXa2ejhE6o7RbaTjRAE5tnmDwb1cJbbuEhh3q
+	 6kMU5W/f5Blp5gJmGgFp/LihYP+XFLo5g6iCLXBpl/xNFSzuoJy4svNzrMVRZDX54myhN
+	 iJnAPuCORBBOO9aaYhsBc7QBdquFtRA0Rsi6wP2jId552aun04UaCdrsmBzcNYJGiiY7O
+	 9RH+WUBZ65Y/I3ncGy8gx7ngml+TZWFSetMhtViuXrcyK6+fLXH2kl0xV2m06vADPSmC5
+	 r1RkIYVpHLQbuy49DN/lP9NdwPMFo+HQarW8athpRksfBK/ABUkQr2DmXNYtwaijLKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590260;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590261;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Av9nxfPh4CGVTv2R2a1ookLoVDhwdGLaAD5makudT84=;
-	b=x4ARd/1k1bfjmN8Pjwas+Y0YWNBhSCWxznP6R7BeYClBpGoA6b6Mwv7FAZd+bgbsMx4c
-	 eLLnHEmth/5rPyLq3mDZXsber3LeXxd8SyL6uVyadjTMtz3QuGaADkTutL1UWvJsCOUj5
-	 m+fPJKt3wmWIMay8FU/oTdy30aX5/jLnBsiW4Brk+N6w0c36YcMComjn1mePWevQn5YgD
-	 Ty7D1Hl7tC3Hu1C+yiO4lw63Vs5iHCICH194qFlzoX0ogImnBomMgnCooLLLMgUDnZVyR
-	 pnjDbHqwZnVpqtPXw4SN4gP0uZNBS8zO7SVAG1doypaHOuYQzuG2EHTq//LFMusHPvg==
+	bh=V9Xbleuq82hD8fUGko8C4lwk3NcXKyfTfVBM7d9RHc0=;
+	b=1Q11t1Te1aZaPTujjgnQm+3TgAw1fvJDd7EZihwJFJOT0tgB+gAo6Xo76wYPYkm/+rFv
+	 sm04LTvHKtot4NXrYxOqR9jwnv3FElrDIss5Edbt8n6+NZriUNnR2PC7QKENTjEplA9ae
+	 jqXXR+zbCwudDGEFCAi7lvGR3cFuhekl1EDC+NGdZHjac7lrsTStnE+zgqSktnWg8YKR0
+	 AhknleWi/rpNwPyfIABgD+Jrh2JAXaehuMzvP9OAqkJltgW43jDCXXLuvWXBG57kk1+Ll
+	 tnp3v8FTLX6PwaK2DXqmt6DmfO3VQoliOBMrb7Ku4aoD2Y0R3rDbBnnwbSjghiKGbmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xAM6HTxP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=og45YtNO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAED60A3818;
-	Fri, 13 Nov 2026 17:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC68360A380C;
+	Fri, 13 Nov 2026 17:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xAM6HTxP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFFC1F000C4;
-	Fri, 13 Nov 2026 17:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=og45YtNO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 786EA1F000C4;
+	Fri, 13 Nov 2026 17:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590260;
-	bh=Av9nxfPh4CGVTv2R2a1ookLoVDhwdGLaAD5makudT84=;
+	s=korg; t=1794590261;
+	bh=V9Xbleuq82hD8fUGko8C4lwk3NcXKyfTfVBM7d9RHc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xAM6HTxPPcGfZt4LAUxciAFCLkw/Ea7q+0pk8ZtVaYqf6Vv4ayxL5YSO3vLv0gyNR
-	 rFsUyLsq9VMM/PFgoraGYDlnOZZfs/10Bw4u7E4d6t1CA+rds5I3CMrmKJE9TkMUxP
-	 MS1eCHCWR8NIxXpXpsw/El5GJf+FLx9usV++Pkwc=
+	b=og45YtNORAzB/Ru/iYlZB4B7K2Rd7V3mIK3Io1Y8aAUz8EbG7m16BIBrCSkfxKKHs
+	 PtKz/Uqo7aVkKMMcmDQIHxwQKhre5DW6YoGcXioBrMV6Zic+uQaKMDSPzHi/qkh8pR
+	 nJqzpb8T0K0ORQTKI94qfyqTlGxiFGfQG3AGD30E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
 	"Gregory Price (Meta)" <gourry@gourry.net>,
 	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Nhat Pham <nphamcs@gmail.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 254/686] mm/shmem: fix truncate loop after boundary swapin failure
-Date: Fri, 13 Nov 2026 10:46:27 -0500
-Message-ID: <20261113153829.644185472@linuxfoundation.org>
+Subject: [PATCH 6.18 255/686] mm/shmem: fix truncation of files containing only swapin-error markers
+Date: Fri, 13 Nov 2026 10:46:28 -0500
+Message-ID: <20261113153829.674080341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -73,57 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 5f1ec2cf92a7d655a8eb39711987822f9b1f9d67 ]
+[ Upstream commit 59511d630a6942356ac4b6984797998a8f3a9017 ]
 
-If swapping in a large entry at the new EOF fails, shmem_undo_range()
-leaves the entry in place. Its final scan skips the entry, then restarts
-from the same start index and finds it again. Truncation can loop forever
-while holding i_rwsem.
+It might not be very common, but we can end up with shmem files that are
+composed only of swapin-error/poison markers.
 
-Advance start past the skipped entry so that a restarted scan can finish,
-as we already do for folios that cannot be split.
+Such markers are not counted in info->alloced. Consequently,
+shmem_setattr() can skip shmem_truncate_range(), leaving the markers
+behind.
 
-Note that this does not fix the missing zeroing when boundary swapin fails,
-it merely prevents the endless loop.
+Truncating the file to zero and growing it again will result in reads
+failing with -EIO instead of returning zeroes.
 
-Fixes: 8a1968bd997f ("mm/shmem, swap: fix race of truncate and swap entry split")
+Check whether the mapping contains entries, in addition to
+info->alloced, before skipping the truncation. Keep the info->alloced
+check so that shmem_recalc_inode(), called at the end of
+shmem_undo_range(), can fix up accounting after reclaim has emptied the
+mapping.
+
+Fixes: 6cec2b95dadf ("mm/shmem: fix infinite loop when swap in shmem error at swapoff time")
 Cc: stable@vger.kernel.org
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
 Tested-by: Gregory Price (Meta) <gourry@gourry.net>
 Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-13-392fc715d8f6@kernel.org
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-15-392fc715d8f6@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ mm/shmem.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/mm/shmem.c b/mm/shmem.c
-index 4c5e07c8f3173..169ba30664782 100644
+index 169ba30664782..da043ca0c2e22 100644
 --- a/mm/shmem.c
 +++ b/mm/shmem.c
-@@ -1197,14 +1197,16 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 					order = shmem_confirm_swap(mapping, indices[i],
- 								   radix_to_swp_entry(folio));
- 					/*
--					 * If found a large swap entry cross the end or start
--					 * border, skip it as the truncate_inode_partial_folio
--					 * above should have at least zerod its content once.
-+					 * Skip boundary entries when restarting
-+					 * the scan to avoid endless loops after
-+					 * swapin failure.
- 					 */
- 					if (order > 0) {
- 						base = round_down(base, 1 << order);
--						if (base < start || base + (1 << order) > end)
-+						if (base < start || base + (1 << order) > end) {
-+							start = max(start, base + (1 << order));
- 							continue;
-+						}
- 					}
- 					/* Swap was replaced by page or extended, retry */
- 					index = base;
+@@ -1351,7 +1351,8 @@ static int shmem_setattr(struct mnt_idmap *idmap,
+ 			if (oldsize > holebegin)
+ 				unmap_mapping_range(inode->i_mapping,
+ 							holebegin, 0, 1);
+-			if (info->alloced)
++			/* Swapin-error markers are not counted in alloced. */
++			if (info->alloced || !mapping_empty(inode->i_mapping))
+ 				shmem_truncate_range(inode,
+ 							newsize, (loff_t)-1);
+ 			/* unmap again to remove racily COWed private pages */
 -- 
 2.53.0
 
