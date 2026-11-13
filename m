@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590194;
-	b=Rbg0r9p+wPTJ4ZjWQcJFT3129MmF6+w2AEll8jSCQzwRbKSwe1It5H1WRHASOLWlrjhl
-	 a5ptGbrr7DIgCnot+z4ewc817JMG73J8ey04vboaQHzlX1gbZBpH3lvY1naFfnfn+3ZOB
-	 Tjt2jQulfxIPLHGwPZeWcBBTQxCmphtCSsZ7/Hq3Gq25SRIAa+qC4xQUbRU6wdgo07/aN
-	 /6xhJQAMEu3KWebg/QUi2QBULT7qeYIwOIJIXt6p3+K+nRQpFFaBiFT+z6tTsA041fnX7
-	 DQLVscjS4NE32hbIU11hanhabRWH018nB9zmqzAvNZz+okfhnxqFqd0JvzVjb1oQA+A==
+	t=1794590196;
+	b=A6NTt2TTIg4LiMnYdYO9Nte3Rj6We0cXJRj9KqG8esFKUMRTJxCEU1la8uXi3OByPiiV
+	 ifHFRVVgPL6XBamiJ7VQD8tdW8l0amrnfmV6ctoxJD9TqLQhpJl8TwgrZhQm5lHbV6mYJ
+	 5eAO8Rz/A3VdYPfOWnY7LtgAQA5hXvkPHxHFyvoOsJpcK6kUceZp54NrGCAfW9kUpK98k
+	 h4G/dBUXNs3wTr0g/xS4iWXjxz4zBUBZW7MvQe3tjQXriFyHRnwIy4btgO2IJRG7lZo/j
+	 yWdtMXcRS3RSjiaW0hMBwfpMFbfmj2SSKG9+jCyZTts3NojBKZV2EQsK14/uVXX1v3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590194;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=S/jjRwobw0q8EX9y+WsUHVUE4V8c94IsliIzms6wjN8=;
-	b=ydHWicSneCtPhdjbbF6gVDRyiL8Gj8Vk7MkCMWBLi5RN4b/TlYFNhyl1SRTCtUDkXgIM
-	 2/6fz+PUbFERv9maOnDB8L7Qw6fHVkfDEDQJUnDie3YSJxiOYdKzZuNRR+VfpaDEDeXoQ
-	 DfOL72KDf/DezBONL6IgzpzyZkotHvuDt4Pxtg3QPz1MhHHA6iIUOjat9CbTwt8ljtUkt
-	 I5iZ5vPcKOC/vx+oL2AnGT6nS1fH/aT0R54mSJWPOdyEphkNiceRLWInPxemKflTj+H5l
-	 Wrmn/xEX0Yq1vaCQAUll9lXz43PtdXXfPNDTgZQ3HcF/tNRD+0/OEH8Dw0BttFEVVAA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=EUIUNjf+XxYg7VlTiMKJGC3yptOeUZ6YuEeYf2iXdXI=;
+	b=YNelzF5MN88SOP5WVtU1RsgLagR+hCNbNcAL+YH1b8OzdbgZa5TcPyB+8+pwwaX3+8BG
+	 pwIGOAcycw6vk/xDECpE4/uPdow2yeRyIg8oF1H2lGHCTNytLk71mehDapx6a9XdPOsep
+	 m3AR5j/RV5XdgYBk1AEzUwZnRHSfGpTorQLYlKJhJ/KlU2Oel0sgJUkhQVvAWXcrV66Cv
+	 TlKMICv7V82iGUIhnUX5YvLlRcJHwZLckcX/gEUTmC6I+Hx31fVact09n/tZ8oXcJLEJa
+	 lbjYXMzoU9sA5zYWBkqVMU9zjT+3EVzrF3JrwnFa9iJXLRZfTM0WF/k7skQ0yzhWM/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rE7O42vi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0Kmkjpt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D778F6074B38;
-	Fri, 13 Nov 2026 17:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155C0606B36D;
+	Fri, 13 Nov 2026 17:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rE7O42vi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E841F000C8;
-	Fri, 13 Nov 2026 17:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0Kmkjpt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDD21F000C5;
+	Fri, 13 Nov 2026 17:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590194;
-	bh=S/jjRwobw0q8EX9y+WsUHVUE4V8c94IsliIzms6wjN8=;
+	s=korg; t=1794590195;
+	bh=EUIUNjf+XxYg7VlTiMKJGC3yptOeUZ6YuEeYf2iXdXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rE7O42viiPnSPA8T5GBjK8jkFf8x/KL7V9joOJ3xMeAOdBj0BbZupwpgBnz4eJBeb
-	 /d+qyla8Cvfl97IKpZQ4XS8iSz2I0il6y0pryGIbg+r4aUS3g+b2fgrgMFBqH9O30j
-	 EE/S+IKIRPv1SW6tcMFfMtpMA4Gz4PU/bvfsgBeU=
+	b=n0KmkjptTh9VU4Pn0nc3byWT+Q13y7RyzsneDUTm7UJHdXsMYlORlPNzLgwSDc3im
+	 E7Fbhe1duWP7RIH8hIHVFsilJj4aIIh5QaYpvUTS0kyDisGJk+ITZ60k0sVj1kgphz
+	 dkf+7uyN9/RieYlmPG2Gzx6JO0Wi++VDK6yZeSqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Michael Grzeschik <mgr@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 202/686] drm/vc4: Drop the BO reservations outside of job_lock
-Date: Fri, 13 Nov 2026 10:45:35 -0500
-Message-ID: <20261113153827.892125415@linuxfoundation.org>
+Subject: [PATCH 6.18 185/686] net/9p/usbg: Fix use-after-free in disable_usb9pfs()
+Date: Fri, 13 Nov 2026 10:45:18 -0500
+Message-ID: <20261113153827.273717622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -62,63 +68,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 8ef66514d7b993c9fb96a5886f001e3556610c1c ]
+[ Upstream commit 6f401e350939442b2ac905f7e5ac952e3802a5d8 ]
 
-vc4_queue_submit() calls drm_exec_fini() with job_lock held and interrupts
-disabled. Besides unlocking the reservations, drm_exec_fini() frees the
-object array with kvfree(), which asks for preemptible task context or a
-non-NMI interrupt, and may reach might_sleep() through vfree().
+disable_usb9pfs() frees the IN and OUT usb_request objects before it
+disables the corresponding endpoints. If either request is still queued,
+the later usb_ep_disable() call cancels the endpoint queue and the UDC
+driver can still access the already freed request.
 
-Considering that an array that exceeds a page can take the vmalloc
-fallback, call drm_exec_fini() once job_lock is dropped. The reservations
-are then held across the job kick, which is harmless as nothing in the
-completion path takes a BO reservation.
+With dummy_hcd and KASAN, this is reproducible by queueing the OUT
+request and then disconnecting the configfs gadget:
 
-Note that vc4_attach_fences() has to stay inside the critical section, as
-it walks exec, which the job done worker is free to release as soon as
-job_lock is dropped.
+  BUG: KASAN: slab-use-after-free in dummy_disable+0x2b4/0x300
+  Read of size 8 at addr ffff888009702400 by task sh/1
+  usb_ep_disable+0x8e/0x1f0
+  usb9pfs_func_unbind+0x193/0x350
+  gadget_dev_desc_UDC_store+0x135/0x280
 
+dummy_free_request() also warns because the request is freed while its
+queue entry is still linked.
+
+Disable both endpoints before freeing the request objects. This lets
+usb_ep_disable() cancel any queued transfers and invoke the completion
+callback while the request storage is still valid. The request objects
+are then freed only after they have been removed from the endpoint
+queues.
+
+Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
 Cc: stable@vger.kernel.org
-Fixes: 04630796c437 ("drm/vc4: Use DRM Execution Contexts")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20261004-vc4-misc-fixes-v1-2-b763df9e33e1@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM:GLM-5.1
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Michael Grzeschik <mgr@kernel.org>
+Message-ID: <20260607130118.16579-1-zhaoyz24@mails.tsinghua.edu.cn>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_gem.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/9p/trans_usbg.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
-index 812636318cd9f..4fa6e71140a84 100644
---- a/drivers/gpu/drm/vc4/vc4_gem.c
-+++ b/drivers/gpu/drm/vc4/vc4_gem.c
-@@ -647,8 +647,6 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
+diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
+index c682947dfb885..cd45d4a8597ad 100644
+--- a/net/9p/trans_usbg.c
++++ b/net/9p/trans_usbg.c
+@@ -277,6 +277,9 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
+ 	struct usb_composite_dev *cdev =
+ 		usb9pfs->function.config->cdev;
  
- 	vc4_attach_fences(exec);
- 
--	drm_exec_fini(exec_ctx);
--
- 	list_add_tail(&exec->head, &vc4->bin_job_list);
- 
- 	/* If no bin job was executing and if the render job (if any) has the
-@@ -665,6 +663,8 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
- 
- 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
- 
-+	drm_exec_fini(exec_ctx);
++	disable_ep(cdev, usb9pfs->in_ep);
++	disable_ep(cdev, usb9pfs->out_ep);
 +
- 	if (out_sync) {
- 		drm_syncobj_replace_fence(out_sync, &fence->base);
- 		dma_fence_put(&fence->base);
+ 	if (usb9pfs->in_req) {
+ 		usb_ep_free_request(usb9pfs->in_ep, usb9pfs->in_req);
+ 		usb9pfs->in_req = NULL;
+@@ -286,9 +289,6 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
+ 		usb_ep_free_request(usb9pfs->out_ep, usb9pfs->out_req);
+ 		usb9pfs->out_req = NULL;
+ 	}
+-
+-	disable_ep(cdev, usb9pfs->in_ep);
+-	disable_ep(cdev, usb9pfs->out_ep);
+ 	dev_dbg(&cdev->gadget->dev, "%s disabled\n",
+ 		usb9pfs->function.name);
+ }
 -- 
 2.53.0
 
