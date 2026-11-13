@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590717;
-	b=WJr/WQ/MXmuwy5QGcv7726Jr7PlNkT1NDtPxgmWbzxb6AOtWNST96IGF+i/IHTnuTHVk
-	 PDZTbzcI5aqf5ljcV1J8NLukkQjuRiah10dPbnqPA72G3LwyMsYN5yzarYOhLnsFdC8Qx
-	 D4RAk1EeSeDPJ/VBVV6W+GWRfv4D6YtacFSau3amhURY3b1L/aD1NWEBgv18WS7uE6e/W
-	 fdddfoH4erouWZ3dzkjN4qrmQv709eaAmrJN4mCFcutHTD3a38oZuCVGF/qtTy1TwGj/6
-	 BKCOW8M2DQnNQr10Xo3r5Hq0tmx3D+zt9XQe/fx6AVdAwP6VQL7ddDLRWTMJyg1EXIQ==
+	t=1794590718;
+	b=aZGwFId5d3wVu/36xW8gwspB6sS/ITbIVU1uhz/3Dgf63ZUJS8Rf8V8FiAlF3JdL17Dp
+	 RaP0srGFmr3Sb6ecNeTh707mq6r54Eex1vzbvqYRYafKySs0v/v5sKYk9WoEKC9yvpq1s
+	 YA05R9X216BI0mxuDi5Q5QPPdg3XI2X6iJUnFVu4GnMwt5lyqrb8ljvhrg5JBuDZDVBgx
+	 P/4xueoWQeXyg71Ew9fgTUYCgC+FRPi/6JNbgH7R3u8nS6UZ7H2rlZFnHsFz3w70pN2q6
+	 elFxVBirjTUibmwVXCncjb+ilx6ePiJQnk28JObxUmSMUVtptyxsRqORuJ7GZa34NqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590718;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n5btFGkPUkfBm/LJ8XOcQAHQEwIrMMTb3lOTNiWz4BY=;
-	b=IwvFt47KJLBTZdDfTcrho2SrZoXEWg2UvPjizJnTZdz6guqd9ewT2oXhsIpUGoNaK/UG
-	 6PqMU+zMX6/7zpZ1D2t8i+IbZ4z+4VRUsg7tnEOd7JdmIgue4f/iiYNbaP6bPfmox8jy9
-	 dIHy2nOsvyk88XE1XGvmRLvG5foCgEE3aZ7V4L1t/HGQr6SE1BVyt4EZbAdnTfcK7t7kw
-	 q9/wOL7//6s8b8iuKxMmaw41QhbZ8E+rMaTH9wjrbeHlSDpEKlfQleVWaF3ZlncHmiu+z
-	 /fOPJuDdE202s2WrCeJTyATE3Ro7KHmwUNpz8NJPGDqUWl60E0kkfYSYfvorVwUOMcw==
+	bh=f266gsDDF/plXmo0V8XsMax73EYqH0BNjgAvFWJ01e0=;
+	b=r3E96EcwyL8KSwYNumaDZZY7jBzw5AQLFQveKyKDDz2woXdkX/qfGfkryc8M0egqJkdt
+	 3gzVE00D7gxcwF3OtcXX01FHydl00v00v64BJTfXm0fnhkViv1HkXU1SdIet+iOXLrruZ
+	 PiQwihdYYtFFZG5wlSTAwlR7wcJ7aKIHfh93+kSkCDHNIcsuKUhF2WJYeLQ8bQdVMr7fw
+	 sFaMqb5of90GGG8bT7Q8b6PawzcfYDEKDb7BqVwDHymTbEZY1GLYel6jdiOKT/v8UyoMz
+	 ywpqSbTc8vNnhAseCVDK1uhRcSgjjOJ5fHf4C3rIn4GPYky4hlNiOlqfaZMWdAy2jPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0JVaksF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bB9wnQ3v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F60A606B237;
-	Fri, 13 Nov 2026 17:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BAA606B23A;
+	Fri, 13 Nov 2026 17:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0JVaksF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6541F000C4;
-	Fri, 13 Nov 2026 17:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bB9wnQ3v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2218F1F000C4;
+	Fri, 13 Nov 2026 17:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590717;
-	bh=n5btFGkPUkfBm/LJ8XOcQAHQEwIrMMTb3lOTNiWz4BY=;
+	s=korg; t=1794590718;
+	bh=f266gsDDF/plXmo0V8XsMax73EYqH0BNjgAvFWJ01e0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O0JVaksF4UzCsdCKkm1nlC+oX6luJsAgnel+uJTPSCPb/YF0P8c3ZpSaWL/3dEFJX
-	 XVcOk1fVepN6GoZMnl9mHTo6kUpa+3VgC6FMbjqDxShrfpP/nUmWiO3O0VY6LRkvBo
-	 EGwBwduURCqh20fB3DObSTLTTgqF662h3oFF8Lgk=
+	b=bB9wnQ3vudlyUNn0l2rTuXJ+MzEK9t5xgvcm3g2ni64CWUlJa5+A8a7fOwVQuLB7B
+	 jnNzeaRTudq3xBafpVLSSkok4i2zqZh5rYHmq3oazcho2QqX6jkqBqpwcLfhtOHRgd
+	 RepOFeJkles2wqqYzlkGS1VEyD6VBQWWZiTL6mrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 624/686] tpm: tpm2_probe: propagate transport errors
-Date: Fri, 13 Nov 2026 10:52:37 -0500
-Message-ID: <20261113153843.002363957@linuxfoundation.org>
+Subject: [PATCH 6.18 625/686] fs: assert on ->i_count in iput_final()
+Date: Fri, 13 Nov 2026 10:52:38 -0500
+Message-ID: <20261113153843.029959936@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,51 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Mateusz Guzik <mjguzik@gmail.com>
 
-[ Upstream commit 7d4f1cbfe063af5581dac66abe9e9c965e1031cc ]
+[ Upstream commit be97a4b63ca8c3ed8f5c3f5606a15a8379c78afb ]
 
-tpm2_probe() reads the protocol version from the response tag and is
-documented to return -errno on failure, but it always returns 0.  A
-transport error (tpm_transmit_cmd() < 0) is thus swallowed together with
-the intentionally ignored TPM response code, leaving TPM_CHIP_FLAG_TPM2
-unset. A transient bus failure on the first command then misdetects a
-TPM 2.0 as a 1.2 and the probe fails on the TPM 1.2 path:
+Notably make sure the count is 0 after the return from ->drop_inode(),
+provided we are going to drop.
 
-  tpm_tis_i2c 0-002e: 1.2 TPM (device-id 0x1C, rev-id 22)
-  tpm tpm0: A TPM error (-62) occurred attempting to determine the timeouts
+Inspired by suspicious games played by f2fs.
 
-Return the transport error instead; rc >= 0 still means a valid header was
-received and the TPM's own response code is still ignored.
-
-Fixes: 94e266ba1fa3 ("tpm: migrate tpm2_probe() to use struct tpm_buf")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20261001060114.1582092-1-alexander.sverdlin@siemens.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-[ sashal: Replaced the early return with rc = 0 so explicit tpm_buf_destroy() cleanup still runs. ]
+Signed-off-by: Mateusz Guzik <mjguzik@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 8ee09f597763 ("fs: rotate inodes whose page cache could not be dropped")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm2-cmd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/inode.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/char/tpm/tpm2-cmd.c b/drivers/char/tpm/tpm2-cmd.c
-index c5465834396af..85496fc5306b3 100644
---- a/drivers/char/tpm/tpm2-cmd.c
-+++ b/drivers/char/tpm/tpm2-cmd.c
-@@ -487,9 +487,10 @@ int tpm2_probe(struct tpm_chip *chip)
- 		out = (struct tpm_header *)buf.data;
- 		if (be16_to_cpu(out->tag) == TPM2_ST_NO_SESSIONS)
- 			chip->flags |= TPM_CHIP_FLAG_TPM2;
-+		rc = 0;
- 	}
- 	tpm_buf_destroy(&buf);
--	return 0;
-+	return rc;
- }
- EXPORT_SYMBOL_GPL(tpm2_probe);
+diff --git a/fs/inode.c b/fs/inode.c
+index 24762fd1f2f77..acf09822535ed 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -1875,6 +1875,7 @@ static void iput_final(struct inode *inode)
+ 	int drop;
  
+ 	WARN_ON(inode->i_state & I_NEW);
++	VFS_BUG_ON_INODE(atomic_read(&inode->i_count) != 0, inode);
+ 
+ 	if (op->drop_inode)
+ 		drop = op->drop_inode(inode);
+@@ -1889,6 +1890,12 @@ static void iput_final(struct inode *inode)
+ 		return;
+ 	}
+ 
++	/*
++	 * Re-check ->i_count in case the ->drop_inode() hooks played games.
++	 * Note we only execute this if the verdict was to drop the inode.
++	 */
++	VFS_BUG_ON_INODE(atomic_read(&inode->i_count) != 0, inode);
++
+ 	state = inode->i_state;
+ 	if (!drop) {
+ 		WRITE_ONCE(inode->i_state, state | I_WILL_FREE);
 -- 
 2.53.0
 
