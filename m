@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590951;
-	b=r9jhYwBnGeRdAj216lmi5St1WeHA41gMZBcErq9AZUAI5t0h2fvN27BQ4HsW2HaNY6mQ
-	 2bWvRoaI0wcs2TA//8vvLa+fO8YPq6w734yx2ROn8sMTIHoSsL6kTe3h9p537mW1KYla/
-	 STM8Dg9Fa4hFd2AkR/JgPSf92w9Mbtzkyoh+4MD4CoxyXYGobjHDHb1rZgy92TA7Tc4aF
-	 avEvVs6/81bTnnFZT1mg2tN9YIcukA4iUQoWQtiVXSrwdSHadw0kbw6e9KzHKYbeEIWKX
-	 VDzfwK9Y5jbCrrLW2B5jslXW06hw4ZK5BZoLZ+Fdl0P5WxvqxFi6byG43F5dRB9mQmg==
+	t=1794590953;
+	b=ewCLUCTABT6XlR5clVl16oLz/f94H/125tXgmJKYq4xyIdJPBIaW4oCNffLZO5pKmPEW
+	 a9xuXIfD6kdapVNnvdf1R12eLHRGyPBu3gsX3+RoC2qVT4ZSDguMuw5S+FczzAU1Xnax0
+	 3lXLzMNIeoT80xplue+uGFGKacVL/PAY2bcOoe76gNKl3r3s105Ud2Xj32sYh7b7HDnxq
+	 R9Lx1S07wid8D9jn0mrO+kyaBvFr5iuTpX+tUw/+v8KWrOwKW6bO4XRd3Evgx21kFTXsy
+	 jBw3Hig415UOe6xyPx5i668D4iZbaYs6Qgd3W/HL4wFIIkEh7UAuhuazAxMjB8xqpDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590953;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vXRLjGnMA96WNa9KLAY8f8cNA9qQ99E/Re8sZpesWgM=;
-	b=GuCz4azdlgL2c/vAQYy15QIiUYF5r0niroSrbOjNTwZWgf4EspQo5H1erPnQ355LIxVG
-	 ZZdWvsTVjJVV9QOHq1kzW4vILVpCT9j/bzUDsJt7ND2uTo7UMAzPp/H1tHKkxYZgvDs5a
-	 YQQEhfUU/f+ycMsEilAliLpyi7QPAXU0xAQ18DPL0igFf7AJNg+romFmGW3/Lu/vnzCEq
-	 MYGbPM4NhGV2SEwrmW+f+hI7x7O5eMEq7kabg1etIE9E+NUFiHCdwfykxZPpRDPCKB8iy
-	 xY5jJQHzpO2xn8rPs7hJuchSCrBJN9+Ouno6HQJflp4JYa4Dkp9lcN5rtf4mri2iWtg==
+	bh=jGzKK0RHC96g1qmQ7ckR3TxDRC6ML+W+gG6EdTbybcU=;
+	b=z0SWp9Ks7HEWgqSvmirs856tIjRAHj9XGEuC63zB+1QghmwbD2n4Fm1CMZsob0vQKu/g
+	 53c5iamJKCz1lBVc7wHt3hGeVVggdjnFAuaxZ6/cpzPIVYIbaKNpZnjZU4kUo8XHVdSFU
+	 641cvL931KfKzqqUVI6Zlx0FiRraoWIVQD+Hkr0bdHODB7vaE/7JEPOVF2T30ZFIBP5le
+	 doTqjh0GeTjGk8DuNJoT2EeeST4MJAOKueL2e7DIDS49v9oTev51mLxMmBpCvMkAzg9Bx
+	 fDoZzbMayb/6KpbKjz9WkLJgsYMZBpYsyaAhvcxRcNICsKP6tEzXDJhAtQAER/kxq8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EhetdHQG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJvt9cYd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D376D606F707;
-	Fri, 13 Nov 2026 17:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C9F606F70C;
+	Fri, 13 Nov 2026 17:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EhetdHQG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6C81F000C4;
-	Fri, 13 Nov 2026 17:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJvt9cYd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45EC1F000C4;
+	Fri, 13 Nov 2026 17:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590951;
-	bh=vXRLjGnMA96WNa9KLAY8f8cNA9qQ99E/Re8sZpesWgM=;
+	s=korg; t=1794590952;
+	bh=jGzKK0RHC96g1qmQ7ckR3TxDRC6ML+W+gG6EdTbybcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EhetdHQGfxcQxkGAJKqXbUR7bYyEa1XHMI6RWKOK8+9/diMMNGVxN5yAut4yEtx5K
-	 NM2J2SBzfxO/T+VuGsMQZqYuSpsrBU+EIpVDG5Jzqn+uI2zOHl/ge7rShKZsCuTeF4
-	 77I53Ps9/nxb3Raq3J+w2NSPZH5L3wIwsH+XusoY=
+	b=eJvt9cYd499f3XnowGHBrw7wn9iKHnBQtHRR5RYU57Fhqush7E65b9MMbTCvKtbbt
+	 czBZ1YY/V4SN/6OHXXyrKespylz/YCYIq3z9IO4ic+FMZ7OWptdmyn257lAfB60/rQ
+	 GNmpa9R2PCn6xWtstn8Jfp46zZcA+boHVi9LKVGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 132/670] netrom: check the window size given by the peer
-Date: Fri, 13 Nov 2026 10:44:56 -0500
-Message-ID: <20261113153816.296978260@linuxfoundation.org>
+Subject: [PATCH 6.12 133/670] netrom: dont send part of a message that cannot be fragmented whole
+Date: Fri, 13 Nov 2026 10:44:57 -0500
+Message-ID: <20261113153816.332817126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,92 +69,142 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-The window size of a circuit is negotiated in its CONNREQ and CONNACK.
-On a CONNREQ received, nr_rx_frame() keeps the smaller of ours and the
-peer's; on a CONNACK, nr_state1_machine() takes the peer's as is.
+nr_output() cuts a message longer than one frame into fragments and puts
+each one on the write queue as soon as it is built, the more flag set on
+all but the last. If allocating a fragment fails, it frees the rest of
+the message and returns, and nr_sendmsg() still reports the whole
+length as sent. The allocation waits for send buffer space, so this
+happens not only when memory is short but whenever a signal interrupts
+that wait.
 
-So a window of 0 from the peer, in either frame, becomes the window of
-the circuit, and nr_kick() then never sends anything: the circuit is
-established but stuck. And a CONNACK can raise the window above the
-one we asked for, even above NR_MAX_WINDOW_SIZE.
+The fragments already queued then go out ending with the more flag set:
+the peer joins them to the next message. If the first allocation fails,
+nothing is sent and the caller is told the message went.
 
-Negotiate both in one helper: take a window of 0 as 1 and keep the
-smaller of ours and the peer's.
+Build the fragments on a list of our own and only put them on the write
+queue once all of them exist; on failure, drop them and return the
+error, which nr_sendmsg() passes on. This is what ax25_output() does
+since #56.
 
 Tested on two QEMU guests (6.12.94, KASAN, lockdep) linked by KISS. A
-speaks NET/ROM itself over a raw AX.25 link and answers B's calls; after
-each circuit is up, B sends two messages and A counts the INFO frames
-(A does not acknowledge them):
+speaks NET/ROM itself and never acknowledges; on the circuit it accepted,
+B sends a 4000-byte message with SIGALRM set to interrupt it after 3 s,
+then the 4-byte message "fin.":
 
-                            before                after
-  CONNREQ with window 0     wnd 0, 0 frame sent   wnd 1, 1 frame sent
-  CONNACK with window 0     wnd 0, 0 frame sent   wnd 1, 1 frame sent
-  CONNACK with window 200   wnd 200, 2 frames     wnd 4 (ours), 2 frames
+  SO_SNDBUF 6000:
+    before: send() = 4000; A receives 4 fragments of 236 bytes, all with
+            the more flag, and "fin." is queued behind them
+    after:  send() = -1 EINTR; A receives "fin." alone
+  SO_SNDBUF at the minimum:
+    before: send() = 4000 but nothing of it is sent
+    after:  send() = -1 EINTR
 
-No kernel report in either run.
+No kernel report in any run.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit ce7485c6c0e52acdef785adfc46541c20beb55ed)
+(cherry picked from commit 6ab9b08cf19bef1a63c92bc030ae80d5f8e9c40a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netrom.h   | 13 +++++++++++++
- net/netrom/af_netrom.c |  3 +--
- net/netrom/nr_in.c     |  2 +-
- 3 files changed, 15 insertions(+), 3 deletions(-)
+ include/net/netrom.h   |  2 +-
+ net/netrom/af_netrom.c |  6 +++---
+ net/netrom/nr_out.c    | 23 ++++++++++++++++++++---
+ 3 files changed, 24 insertions(+), 7 deletions(-)
 
 diff --git a/include/net/netrom.h b/include/net/netrom.h
-index 2b4685d52bd81..b8f2e324962ba 100644
+index b8f2e324962ba..3f6fd2f894344 100644
 --- a/include/net/netrom.h
 +++ b/include/net/netrom.h
-@@ -87,6 +87,19 @@ struct nr_sock {
+@@ -202,7 +202,7 @@ void nr_loopback_clear(void);
+ int nr_loopback_queue(struct sk_buff *);
  
- #define nr_sk(sk) ((struct nr_sock *)(sk))
- 
-+/*
-+ * Window negotiation, for a CONNREQ received or a CONNACK: use the smaller
-+ * of our window and the peer's. A window of 0 would never let a frame
-+ * out: take it as 1.
-+ */
-+static inline void nr_negotiate_window(struct nr_sock *nr, unsigned char window)
-+{
-+	if (window == 0)
-+		window = 1;
-+	if (window < nr->window)
-+		nr->window = window;
-+}
-+
- struct nr_neigh {
- 	struct hlist_node	neigh_node;
- 	ax25_address		callsign;
+ /* nr_out.c */
+-void nr_output(struct sock *, struct sk_buff *);
++int nr_output(struct sock *sk, struct sk_buff *skb);
+ void nr_send_nak_frame(struct sock *);
+ void nr_kick(struct sock *);
+ void nr_transmit_buffer(struct sock *, struct sk_buff *);
 diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
-index 27ff6dd7878fe..cb996b2e3ffa4 100644
+index cb996b2e3ffa4..37952f858908e 100644
 --- a/net/netrom/af_netrom.c
 +++ b/net/netrom/af_netrom.c
-@@ -1034,8 +1034,7 @@ int nr_rx_frame(struct sk_buff *skb, struct net_device *dev)
- 	bh_lock_sock(sk);
+@@ -1173,9 +1173,9 @@ static int nr_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ 		goto out;
+ 	}
  
- 	/* Window negotiation */
--	if (window < nr_make->window)
--		nr_make->window = window;
-+	nr_negotiate_window(nr_make, window);
+-	nr_output(sk, skb);	/* Shove it onto the queue */
+-
+-	err = len;
++	err = nr_output(sk, skb);	/* Shove it onto the queue */
++	if (!err)
++		err = len;
+ out:
+ 	release_sock(sk);
+ 	return err;
+diff --git a/net/netrom/nr_out.c b/net/netrom/nr_out.c
+index 2b3cbceb0b52d..150cb4263d314 100644
+--- a/net/netrom/nr_out.c
++++ b/net/netrom/nr_out.c
+@@ -28,11 +28,19 @@
+ /*
+  *	This is where all NET/ROM frames pass, except for IP-over-NET/ROM which
+  *	cannot be fragmented in this manner.
++ *
++ *	A message too long for one frame is cut into fragments built on a list
++ *	of our own, and only put on the write queue once all of them exist: a
++ *	message that cannot be fragmented whole (no memory, or a signal while
++ *	waiting for send buffer space) is not sent at all, and the error is
++ *	returned. Consumes skb in all cases.
+  */
+-void nr_output(struct sock *sk, struct sk_buff *skb)
++int nr_output(struct sock *sk, struct sk_buff *skb)
+ {
++	struct sk_buff_head frags;
+ 	struct sk_buff *skbn;
+ 	unsigned char transport[NR_TRANSPORT_LEN];
++	unsigned long flags;
+ 	int err, frontlen, len;
  
- 	/*
- 	 * L4 timeout negotiation.  Ignore a proposal shorter than the
-diff --git a/net/netrom/nr_in.c b/net/netrom/nr_in.c
-index cf8844cd64b75..805881e5d6c01 100644
---- a/net/netrom/nr_in.c
-+++ b/net/netrom/nr_in.c
-@@ -129,7 +129,7 @@ static int nr_state1_machine(struct sock *sk, struct sk_buff *skb,
- 		nr->vl	       = 0;
- 		nr->state      = NR_STATE_3;
- 		nr->n2count    = 0;
--		nr->window     = skb->data[20];
-+		nr_negotiate_window(nr, skb->data[20]);
- 		sk->sk_state   = TCP_ESTABLISHED;
- 		if (!sock_flag(sk, SOCK_DEAD))
- 			sk->sk_state_change(sk);
+ 	if (skb->len - NR_TRANSPORT_LEN > NR_MAX_PACKET_SIZE) {
+@@ -42,10 +50,13 @@ void nr_output(struct sock *sk, struct sk_buff *skb)
+ 
+ 		frontlen = skb_headroom(skb);
+ 
++		__skb_queue_head_init(&frags);
++
+ 		while (skb->len > 0) {
+ 			if ((skbn = sock_alloc_send_skb(sk, frontlen + NR_MAX_PACKET_SIZE, 0, &err)) == NULL) {
++				__skb_queue_purge(&frags);
+ 				kfree_skb(skb);
+-				return;
++				return err;
+ 			}
+ 
+ 			skb_reserve(skbn, frontlen);
+@@ -63,15 +74,21 @@ void nr_output(struct sock *sk, struct sk_buff *skb)
+ 			if (skb->len > 0)
+ 				skbn->data[4] |= NR_MORE_FLAG;
+ 
+-			skb_queue_tail(&sk->sk_write_queue, skbn); /* Throw it on the queue */
++			__skb_queue_tail(&frags, skbn);
+ 		}
+ 
+ 		kfree_skb(skb);
++
++		spin_lock_irqsave(&sk->sk_write_queue.lock, flags);
++		skb_queue_splice_tail_init(&frags, &sk->sk_write_queue);
++		spin_unlock_irqrestore(&sk->sk_write_queue.lock, flags);
+ 	} else {
+ 		skb_queue_tail(&sk->sk_write_queue, skb);		/* Throw it on the queue */
+ 	}
+ 
+ 	nr_kick(sk);
++
++	return 0;
+ }
+ 
+ /*
 -- 
 2.53.0
 
