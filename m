@@ -1,67 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591029;
-	b=QEQcnYimz/52GWHv/m7JxXzsuMaovugCH5WVxp0lupCTOSImSCy9NkRQ22RcmjV4EEPs
-	 cMwLXjAkwK/WC0HBxnYCwwBmk5LSeF2lXPpPFWqHr7OYMd3jAcwUqcQZFbjebjhOnrEWO
-	 s31Oeqeby6tUUzVAsNcH6Spq9LK3Snu8EtqI+VbMuM5d3UwsEx1BMzQSQn2pOq/Wvq7KM
-	 8oRY8bGeQScot6eDT/G8TcRqsRDIr5zglfpRIrFgONo3rCJikH3wodvmA+l9xzMKKoXYo
-	 NConmjLQr8YwVnWWNGFi9XshFpn1WCp4O0agpRGAL2Nsjcpvf94QQsNoTcYdaoy3NXQ==
+	t=1794591031;
+	b=K2WeXOYrOLicCXZ+cLn6gFoy4neibQTdRkQ7+VJ5vejEVarvUI5I5EbIHewlhOUD7aic
+	 oiNnxdocw8Lq+WEyThPu0DD7ZtN5R2uOV88tuziOd55x6igLeF+uiUIG9r9poB10bslUm
+	 2j5bLJhcTSSd28NHTClkgs+k3HyfHa48oc693/tFw65i+QqH1AJFpjGf4haQjfEB7KoGM
+	 If4e3MyVq/aTIMRrQZJ0CLeHAsMGj6xxRyvXIMKiHZEijrsMDoCxg5Ym9Tjuy0gWItHAK
+	 PBhS9Ss+whRJgmgaXK4irrPsCQ0SZpBJ10+7nLLBU7hxKbuIr7/ZQYHhXacLgkN+77w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591029;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591031;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AxrobnMdDFV5XR21+xWmGQsY95+4jqmu3BEFkzueS/Y=;
-	b=R+6p3eDEmu2r8P5/p/MwNpOV6G63xSLgI+NF9gOd5JqJ6llPUFNfYNwZT0SLmm5bBlhP
-	 t5YIhR76hD5/gz+78Dkm7hldYIgPRrMdmNpzMkowf7VabhhpEkObpEjFQUcJdUCDPZp5q
-	 Z8qQivDK1eTRl01FKopktDOXiS3Us4PRBWBqN3sUFMQSaGO+FHH7cywvv46BJgt1FpKHw
-	 mx92Tg5V1HgfZSCcvw6KqbQ+fsjLfXfdqKA4RmEEQl7NZYaKCM86rqjCcagsxbemDwYGK
-	 3DDB1HB7nBhSZpqw7i8xusbDG9Oloyp2OKpSBlB3vmay5hx6O5xxy6rf8qp34dzzJvA==
+	bh=gUZFtZdymd3/Dd4Rz1aqsX2+kAimf8fYtgMDU2sBHjM=;
+	b=ri9qxz5YGju3Xae3JGdy2CPxoaT7SAV0LpnxGpGlj21EeplKWeyfSWJuL5p/CKajz5vC
+	 xgvBy2aS9fOXVHyamSJX0+UGI26rj9pd+wsxPG/0bUeS0fYRdEONEL+23uFq4PXX9wNOi
+	 s5bM4sG6lXsXYcpKJrYWAWotODME1GVPsvM/J+kzU1naH0e+fTzCJrudslYl8NbUyCqxL
+	 y1xBRdbcsgHZxKl8TA2y9HFV2a4DrCXqzkM6R3Bcl314YQuWz9SB1FQ+2UqYeDWmXj9y0
+	 5CkmmGFrniPK13cH5d/02SSzjlamkcPxNZp5GL4IgiN3X083myXmdz99E2QhbcGO/oA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CPMsg2PD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F6/0UxyN";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F78606A8A6;
-	Fri, 13 Nov 2026 17:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367CF606A8A6;
+	Fri, 13 Nov 2026 17:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CPMsg2PD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF8B1F000C6;
-	Fri, 13 Nov 2026 17:30:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F6/0UxyN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0921F000C6;
+	Fri, 13 Nov 2026 17:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591029;
-	bh=AxrobnMdDFV5XR21+xWmGQsY95+4jqmu3BEFkzueS/Y=;
+	s=korg; t=1794591030;
+	bh=gUZFtZdymd3/Dd4Rz1aqsX2+kAimf8fYtgMDU2sBHjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CPMsg2PDj6LRaCclojXwaannKiDFwtHtRaMWuq61H8p22D343giyc8R6YCW1FWEav
-	 vFFCw0YfAw0E6MnNuM6+JirKxYvFoRFMII2bHaL8OD37tn5p+m2CPb0hCd9tI4oTDY
-	 72LkKvwo/kSYnvKTQUA/WJpA62lvtP4fv5DK+Nzo=
+	b=F6/0UxyNJmkfBRa8qS9fT9dR6rEU5i6vobt/iyf9p28ZDL/ZGEYDb+Dv9mO++2sgx
+	 Oyx8Gnf6Y8LZAjbwCAjaIDw6uyZLc4fNONqeIe3Qe2Gv+o101gCMokEYFb89krJ6ud
+	 0sT65YXiKm1VTV5grhHF/XEjI3oyQgYbIl2V8SGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Barry Song <baohua@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Ridong Chen <chenridong@xiaomi.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Chris Down <chris@chrisdown.name>,
-	David Hildenbrand <david@kernel.org>,
-	Kairui Song <kasong@tencent.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Yu Zhao <yuzhao@google.com>,
+	Diego Oliva <diego@bynar.io>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 151/670] mm/page_counter: avoid integer overflow in effective_protection()
-Date: Fri, 13 Nov 2026 10:45:15 -0500
-Message-ID: <20261113153817.092466702@linuxfoundation.org>
+Subject: [PATCH 6.12 152/670] smb: client: fix OOB read in the SMB_FIND_FILE_UNIX name scan
+Date: Fri, 13 Nov 2026 10:45:16 -0500
+Message-ID: <20261113153817.163854918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -83,118 +69,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridong Chen <chenridong@xiaomi.com>
+From: Diego Oliva <diego@bynar.io>
 
-[ Upstream commit 7809ce47b05671e1fa6d74bead892d6ad6c1403b ]
+[ Upstream commit fa0c2f082946917c3f07d2475c8ce73a8c96d0e2 ]
 
-Patch series "mm/mglru: fix ineffective memory protection for non-kswapd
-reclaim", v4.
+cifs_fill_dirent_unix() finds the length of an SMB_FIND_FILE_UNIX
+entry name by scanning for its terminating NUL, over up to PATH_MAX + 1
+UTF-16 units in cifs_unicode_bytelen() or PATH_MAX bytes in strnlen().
+Neither scan knows where the response ends. cifs_fill_dirent() only
+requires the fixed part of the entry to fit, so the name can start
+exactly at the end of the received data, and a name that holds no
+terminator is then scanned for 8194 bytes, or 4096 bytes without
+unicode, past the end of the received data. SendReceive() copies at
+most 16468 bytes into the 16588-byte cifs_request allocation, so for a
+response of that length up to 8074 of the bytes scanned lie past the
+end of the allocation. Before the preceding patches bounded where the
+entry starts, the entry itself could start up to 820 bytes past the
+end of the allocation at the default CIFSMaxBufSize, and its name 928
+bytes past it, so all 8194 scanned bytes would lie outside.
+cifs_fill_dirent() rejects the name afterwards because it extends past
+the end of the response, so nothing of what was read is used, but the
+out-of-bounds read itself remains.
 
-For MGLRU, memory.min/low is not honored during non-kswapd global reclaim
-(global direct reclaim and root-level memory.reclaim), because these paths
-shrink memcgs using stale protection (emin/elow).
+SMB_FIND_FILE_UNIX is only used with SMB1 servers that offer the Unix
+extensions; SMB1 is not negotiated by default and requires an explicit
+vers=1.0 mount.
 
-Patch 2 is the actual fix.  Patch 1 is a prerequisite: an integer overflow
-in effective_protection(), spotted by the sashiko review tool, which patch
-2's new caller would also be exposed to.
+Before the preceding patches, an entry placed past the buffer left the
+scan out of bounds from its first read. They bound where the entry
+starts, but nothing bounds the scan, so a name that holds no
+terminator still runs off the end of the allocation. Reproduced on
+the unpatched tree with KASAN enabled, for an entry that starts
+inside the response, which is the case the preceding patches leave
+open:
 
-This patch (of 2):
+ ==================================================================
+ BUG: KASAN: slab-out-of-bounds in cifs_save_resume_key.isra.0+0x75c/0x7f0
+ Read of size 2 at addr ffff88807ee640cc by task ls/84
 
-effective_protection() scales a parent's protection by a ratio of page
-counts, e.g.  for recursive protection:
+ CPU: 0 UID: 0 PID: 84 Comm: ls Not tainted 7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
+ Call Trace:
+  <TASK>
+  kasan_report+0xdf/0x1a0
+  cifs_save_resume_key.isra.0+0x75c/0x7f0
+  cifs_readdir+0x1ed6/0x29c0
+  iterate_dir+0x1c0/0x570
+  __x64_sys_getdents64+0x133/0x270
+  do_syscall_64+0x109/0x5d0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  </TASK>
 
-	(parent_effective - siblings_protected) * (usage - protected)
-		/ (parent_usage - siblings_protected)
+ Allocated by task 84 on cpu 1 at 15.751078s:
+  cifs_buf_get+0x36/0x90
+  smb_init+0x4f/0x110
+  CIFSFindNext+0xf7/0x14c0
+  cifs_readdir+0xf51/0x29c0
 
-The multiply is done at unsigned long width before dividing.  On systems
-with >= 16TB RAM the product can exceed 2^64 and wrap, giving a bogus
-protection value and silently breaking memory.min/low enforcement.
+ The buggy address belongs to the object at ffff88807ee60000
+  which belongs to the cache cifs_request of size 16588
+ The buggy address is located 0 bytes to the right of
+  allocated 16588-byte region [ffff88807ee60000, ffff88807ee640cc)
+ ==================================================================
 
-Use mul_u64_u64_div_u64() to multiply in a 128-bit intermediate.  Because
-usage and parent_usage are not read atomically (a child is charged before
-its parent), usage - protected can briefly exceed the divisor, making the
-quotient overflow 64 bits and trap (#DE on x86).  Cap it so the ratio
-stays <= 1.
+The two bytes read there are one UTF-16 unit of the scan, at the first
+byte past the end of the object. The scan carries on from there,
+reported again 2, 4 and 6 bytes to the right.
 
-Reported by the sashiko review tool [1].
+Pass the number of bytes that follow the fixed part of the entry to
+cifs_fill_dirent_unix() and stop both scans there. A scan that reaches
+the end of the response without finding a terminator now fails: it
+returns a name that ends exactly at the end of the response and would
+otherwise pass the bound, so cifs_fill_dirent() requires the position
+of the terminator of an SMB_FIND_FILE_UNIX name to lie inside the
+response as well. Accepting such a name truncated at the end of the
+response would turn a malformed entry into a directory entry, or a
+resume name, that no server sent. A name longer than the PATH_MAX cap
+of the scans is still truncated there, as before, when the response
+extends past the cap. The message cifs_unicode_bytelen() logs when it
+finds no terminator now covers both limits.
 
-Link: https://lore.kernel.org/20260907025445.1836238-1-ridong.chen@linux.dev
-Link: https://lore.kernel.org/20260907025445.1836238-2-ridong.chen@linux.dev
-Link: https://sashiko.dev/#/patchset/20260826133054.88529-1-ridong.chen@linux.dev?part=1 [1]
-Fixes: bc50bcc6e00b ("mm: memcontrol: clean up and document effective low/min calculations")
-Fixes: 8a931f801340 ("mm: memcontrol: recursive memory.low protection")
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-Signed-off-by: Ridong Chen <chenridong@xiaomi.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: Claude:claude-opus-4-8
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Chris Down <chris@chrisdown.name>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <stable@vger.kernel.org>
+This patch depends on "smb: client: fix OOB read of the resume name
+sent in TRANS2_FIND_NEXT2", which adds the end argument of
+cifs_fill_dirent() and the length it derives from it; the backport
+note in that patch applies to this one as well.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Assisted-by: Bynario AI
+Signed-off-by: Diego Oliva <diego@bynar.io>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_counter.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ fs/smb/client/readdir.c | 29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/mm/page_counter.c b/mm/page_counter.c
-index b249d15af9dd8..9203b448e4f55 100644
---- a/mm/page_counter.c
-+++ b/mm/page_counter.c
-@@ -8,6 +8,7 @@
- #include <linux/page_counter.h>
- #include <linux/atomic.h>
- #include <linux/kernel.h>
-+#include <linux/math64.h>
- #include <linux/string.h>
- #include <linux/sched.h>
- #include <linux/bug.h>
-@@ -354,7 +355,8 @@ static unsigned long effective_protection(unsigned long usage,
- 	 * otherwise get a smaller chunk than what they claimed.
- 	 */
- 	if (siblings_protected > parent_effective)
--		return protected * parent_effective / siblings_protected;
-+		return mul_u64_u64_div_u64(protected, parent_effective,
-+					   siblings_protected);
+diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
+index 449e8dbc98309..55b4171cec09e 100644
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -454,17 +454,20 @@ initiate_cifs_search(const unsigned int xid, struct file *file,
+ }
  
- 	/*
- 	 * Ok, utilized protection of all children is within what the
-@@ -395,13 +397,20 @@ static unsigned long effective_protection(unsigned long usage,
- 	if (parent_effective > siblings_protected &&
- 	    parent_usage > siblings_protected &&
- 	    usage > protected) {
--		unsigned long unclaimed;
-+		unsigned long parent_unclaimed, parent_unprotected, unprotected;
+ /* return length of unicode string in bytes */
+-static int cifs_unicode_bytelen(const char *str)
++static size_t cifs_unicode_bytelen(const char *str, size_t maxlen)
+ {
+-	int len;
+ 	const __le16 *ustr = (const __le16 *)str;
++	size_t len;
  
--		unclaimed = parent_effective - siblings_protected;
--		unclaimed *= usage - protected;
--		unclaimed /= parent_usage - siblings_protected;
-+		parent_unclaimed = parent_effective - siblings_protected;
-+		parent_unprotected = parent_usage - siblings_protected;
+-	for (len = 0; len <= PATH_MAX; len++) {
++	maxlen = umin(PATH_MAX + 1, maxlen / sizeof(__le16));
++	for (len = 0; len < maxlen; len++) {
+ 		if (ustr[len] == 0)
+-			return len << 1;
++			return len * sizeof(__le16);
+ 	}
+-	cifs_dbg(FYI, "Unicode string longer than PATH_MAX found\n");
+-	return len << 1;
++	len *= sizeof(__le16);
++	cifs_dbg(FYI, "%s: Unicode string not terminated within %zu bytes\n",
++		 __func__, len);
++	return len;
+ }
  
--		ep += unclaimed;
-+		/*
-+		 * The usages aren't read atomically, so a child can transiently
-+		 * appear to use more than its parent, making the ratio exceed 1
-+		 * and the quotient overflow 64 bits (#DE on x86).  Cap it.
-+		 */
-+		unprotected = min(usage - protected, parent_unprotected);
-+
-+		ep += mul_u64_u64_div_u64(parent_unclaimed, unprotected,
-+					  parent_unprotected);
+ static char *nxt_dir_entry(char *old_entry, char *end_of_smb, int level)
+@@ -530,13 +533,13 @@ static void cifs_fill_dirent_posix(struct cifs_dirent *de,
+ }
+ 
+ static void cifs_fill_dirent_unix(struct cifs_dirent *de,
+-		const FILE_UNIX_INFO *info, bool is_unicode)
++		const FILE_UNIX_INFO *info, bool is_unicode, size_t maxlen)
+ {
+ 	de->name = &info->FileName[0];
+ 	if (is_unicode)
+-		de->namelen = cifs_unicode_bytelen(de->name);
++		de->namelen = cifs_unicode_bytelen(de->name, maxlen);
+ 	else
+-		de->namelen = strnlen(de->name, PATH_MAX);
++		de->namelen = strnlen(de->name, min_t(size_t, maxlen, PATH_MAX));
+ 	de->resume_key = info->ResumeKey;
+ 	de->ino = le64_to_cpu(info->basic.UniqueId);
+ }
+@@ -587,6 +590,7 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
+ 			    const char *end, u16 level, bool is_unicode)
+ {
+ 	size_t len = end > (const char *)info ? end - (const char *)info : 0;
++	size_t nul_len = 0;
+ 
+ 	memset(de, 0, sizeof(*de));
+ 
+@@ -599,7 +603,9 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
+ 	case SMB_FIND_FILE_UNIX:
+ 		if (len < offsetof(FILE_UNIX_INFO, FileName))
+ 			goto too_short;
+-		cifs_fill_dirent_unix(de, info, is_unicode);
++		cifs_fill_dirent_unix(de, info, is_unicode,
++				      len - offsetof(FILE_UNIX_INFO, FileName));
++		nul_len = is_unicode ? sizeof(__le16) : sizeof(__u8);
+ 		break;
+ 	case SMB_FIND_FILE_DIRECTORY_INFO:
+ 		if (len < offsetof(FILE_DIRECTORY_INFO, FileName))
+@@ -632,7 +638,8 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
  	}
  
- 	return ep;
+ 	if (de->name &&
+-	    (end < de->name || (size_t)(end - de->name) < de->namelen)) {
++	    (end < de->name ||
++	     (size_t)(end - de->name) < de->namelen + nul_len)) {
+ 		cifs_dbg(VFS, "%s: search entry name extends past end of SMB\n",
+ 			 __func__);
+ 		return -EINVAL;
 -- 
 2.53.0
 
