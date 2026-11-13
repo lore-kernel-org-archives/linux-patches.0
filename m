@@ -1,62 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585942;
-	b=aRfZKlS/8oiqavOZNMM7CqPZUtFzpn2obTGnnPqkMqk72gSyaV+UJDoL/CsSxxVietrd
-	 xoM33pOKXB/vj5JZ1m2jfViqxoTW07a5sYQ6hfXGaUN6cGiwlPNH2ZR2bcoBPpAm1RF8c
-	 P/A9DfCetE4OXST7E5NUJr7saVOYr0QB+jvcwyJiPitSl6vJx4R/otPSeMhFaOasBJQ6b
-	 I0cko3vCcx4EwrGTZR6kFKoH6vofYMzcVRn1NLd6hiXF/iA3h/BQ8zZEBl/xDDX3DIAol
-	 o5wjxblNELJf5hFUQ2ZPwBu1dkC/0Cjtzc1e+O6eh3sNbpteAGU3tUzrb0u6i9YPm4Q==
+	t=1794585943;
+	b=hoebKTnYs9x/BFs6rosbWkkVbrpr7wH42xHAlx244FwCYjM1H/p5Q18cO4XSwRnj3FG8
+	 zH/FnOOnGzzmiWRuEwL6qqDbA4krzy0zPPReLRy9yUfLzCq8r4+qTMX/k7d4VGcRI8di3
+	 jSFbX8gVkU4J5j6CCCrcFfLTmCxow1r1oPW9xxMXASSdLca2CdLV4/ATcpKj4q45HzpfP
+	 s55kLZtjFlVY0IA0PxIgXhyCgULkMnVCzr+MyexfPq/ymR6MHVtrNVT9iunZVoqNnHNAb
+	 /I6esczDVwayy7KyG5V1GGfVWGXvYMYT0YfTv43sydlorQdXIJYCbW0YOAT/r/xyJbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585942;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585943;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RM5NuQUPSQODLD9jSbKfb3pgCruUmPmXYd8WdjMcDHc=;
-	b=fxjk8dwFjXu+S5AXDqkE8U0gMztzZM9nJ4EZHQxokwIJajBDdXsT1l+a3iuxaUxIkaFi
-	 yNMNcVLH+fbvy4NeUnSjzfsCvlEE9ZeJgOd3cZ3dJINdiPS6LRLvqkKTuVr9ZSwdL/HrY
-	 9VowWpxrv0jXyENN4O+4w7CT2U/2MYGDtZcRG0B/mrDTb/sTRnvF8GcwJTwP4s4sisIQi
-	 31zImKefLrReGehj/z5Ge/xTYihu0DhvM/iO+kLN+1GWK8cenPhlcB1hazQreqM+maeZj
-	 54PCQlA8Jdj1edmindncdxl/+rdT38zVvFD/8EtvPzSRl8mwa8hqWQo7CfGl0D6M9Lw==
+	bh=qV11AP3BIvxWNM/2tGn9MyUHKzrQDMiQ1QT7PM0HiIY=;
+	b=BlcFqdc/8XCBGWAh/w+/PoApFgZRgwbIZHC1PIgXwtjaVwPQ61E9rK7e/U8ed4eqtVYc
+	 8Az63g2VHfjtxxkEfP5y7+SriIZp3/Vmd3BQYs6Tj0yvDcODOpQOOFKdg0DERgiyKBgMc
+	 U0aYlR6MBGa38pm/oHVGuDxkBWHqiJiQmwpe/7u7QTI8XPW8kq8MjKJ2VE2oo8WsknXIk
+	 0iO929b8x+inv6B7PgwxWPqcFvWhNIqvR7AtSZRjCWl1YCvAWGZI/D427QUCm22G4vMyg
+	 lXcF9kOIS3qE4ySSzopwzGZHu6z0B86YUoy+HD3sWlx5/gKJ25xDcu+fG715PtRnLWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qsiV7IE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZRhvilQD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14BF6070FC7;
-	Fri, 13 Nov 2026 16:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278466070FC6;
+	Fri, 13 Nov 2026 16:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qsiV7IE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934001F000C4;
-	Fri, 13 Nov 2026 16:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZRhvilQD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78F11F000C4;
+	Fri, 13 Nov 2026 16:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585941;
-	bh=RM5NuQUPSQODLD9jSbKfb3pgCruUmPmXYd8WdjMcDHc=;
+	s=korg; t=1794585943;
+	bh=qV11AP3BIvxWNM/2tGn9MyUHKzrQDMiQ1QT7PM0HiIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0qsiV7IE+uG5OawILg6xdqX1f4BxfmQlALkc9nH8oLV+63W0X657Rkdh2XVJmkgHD
-	 U4W1YVowQlEk+QBIF9EBBoFcImJdOzcz/deTI4e3XtR5OpRyKN7Gz68lIA8L8fazLS
-	 eN+/4lDSMl0sger/UkNV9caIquEbSz/sX8ck0vAU=
+	b=ZRhvilQD0Eid19ne0sQ57I5ItopA6D/7dud1ndDZYopyRxUyollnZRCkBuv55B5/Z
+	 OEm+xig0x97YjncWGAtf/lrsC9RssY16sAjqhq2mU+cIdP3mSXrdWRTadvPu8PUhZS
+	 USKAS1fXK1B2zBSjQg/XmR/EseFqhFjquoOBaStA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Kyle Zeng <kylebot@openai.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Lokesh Gidra <lokeshgidra@google.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
+	Antti Laakso <antti.laakso@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 461/507] mm/userfaultfd: only allocate anon_vma in CoW mappings
-Date: Fri, 13 Nov 2026 10:52:45 -0500
-Message-ID: <20261113153812.344662485@linuxfoundation.org>
+Subject: [PATCH 7.3 497/507] media: ipu6: Rename pointer to firmware context
+Date: Fri, 13 Nov 2026 10:53:21 -0500
+Message-ID: <20261113153813.949193495@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -78,151 +68,279 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Antti Laakso <antti.laakso@linux.intel.com>
 
-[ Upstream commit 514c9247db305922591d806ec65d3c3fe420538d ]
+[ Upstream commit ac1a76fdf7e1815445c76d90ef688eff85cbb012 ]
 
-find_vma_and_prepare_anon() can end up allocating an anon_vma in VMAs that
-are not CoW mappings, which is wrong.
+The name fwcom is used to refer firmware communication context
+and firmware communication configuration. Try to avoid confusion
+and rename context variable.
 
-If we have a MAP_SHARED R/O file mapped, we lack VM_SHARED (but do have
-VM_MAYSHARE) and lack VM_MAYWRITE.
-
-While uffd later rejects such mappings (uffd registration requires
-VM_MAYWRITE, see comment in validate_dst_vma) find_vma_and_prepare_anon()
-still wrongly allocates an anon vma before it validates the vma.
-
-This in turn later confuses copy_page_range()->vma_needs_copy() such
-that we end up calling copy_hugetlb_page_range() with ranges that
-actually do not contain *any* per-pagetable information that would
-require copying, which is the basis for PMD-table sharing in the first
-place.
-
-copy_hugetlb_page_range() should not have to worry about shared
-PMD tables at all: it doesn't make any sense to copy page tables that are
-shared, as they can be fully recreated later. Ending up in the function
-with shareable page tables is the real issue.
-
-If a destination PMD table is shared in copy_hugetlb_page_range(), it
-might get concurrently unshared as we are not holding relevant
-locks, resulting in us using a page table that is no longer mapped and
-possibly freed after calling:
-
-	dst_pte = huge_pte_alloc(dst, dst_vma, addr, sz);
-
-To fix it, do not allocate an anon_vma in non-CoW mappings and add a
-safety guard to copy_hugetlb_page_range(), making sure that we never
-end up messing with shared PMD tables in there.
-
-Before commit 867a43a34ff8a ("userfaultfd: use per-vma locks in userfaultfd
-operations") we would always validate the VMA before allocating an
-anon_vma, and consequently never wrongly allocate an anon_vma.
-
-As uffd_lock_vma() is part of the same lookup machinery and
-also contains a misleading VM_SHARED check, change that one as well
-directly for consistency.
-
-A follow-up cleanup will stop taking the hugetlb_vma_lock_read(src_vma)
-lock in copy_hugetlb_page_range() entirely. Further, the usage of
-VM_SHARED in userfaultfd code should be cleaned up later to focus on
-CoW vs. non-CoW mappings.
-
-Link: https://lore.kernel.org/20261014-copy_hugetlb_page_range-v1-1-5b68e03fe7fe@kernel.org
-Fixes: 867a43a34ff8 ("userfaultfd: use per-vma locks in userfaultfd operations")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Kyle Zeng <kylebot@openai.com>
-Tested-by: Kyle Zeng <kylebot@openai.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Lokesh Gidra <lokeshgidra@google.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: Replaced vma_has_anon_rmap(vma) with a direct vma->anon_vma check in uffd_lock_vma(). ]
+Signed-off-by: Antti Laakso <antti.laakso@linux.intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Stable-dep-of: d3d9bc694fe0 ("media: ipu6: Fix firmware config leak on stream start")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c     | 24 ++++++++++++------------
- mm/userfaultfd.c |  5 ++---
- 2 files changed, 14 insertions(+), 15 deletions(-)
+ drivers/media/pci/intel/ipu6/ipu6-fw-isys.c   | 56 ++++++++++---------
+ .../media/pci/intel/ipu6/ipu6-isys-video.c    |  4 +-
+ drivers/media/pci/intel/ipu6/ipu6-isys.c      |  6 +-
+ drivers/media/pci/intel/ipu6/ipu6-isys.h      |  5 +-
+ 4 files changed, 36 insertions(+), 35 deletions(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 09665fd220752..860c3c6b7673f 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -4939,10 +4939,11 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
- 		raw_write_seqcount_begin(&src->write_protect_seq);
- 	} else {
- 		/*
--		 * For shared mappings the vma lock must be held before
--		 * calling hugetlb_walk() in the src vma. Otherwise, the
--		 * returned ptep could go away if part of a shared pmd and
--		 * another thread calls huge_pmd_unshare.
-+		 * Shared mappings only need copying when we could have
-+		 * information stored in page tables (e.g., userfaultfd PTE
-+		 * bits or markers), which is incompatible with PMD sharing.
-+		 * Still take the hugetlb VMA lock for now to satisfy
-+		 * hugetlb_walk()'s locking requirements.
- 		 */
- 		hugetlb_vma_lock_read(src_vma);
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c b/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c
+index 62ed92ff1d303..a65e9f1aa1042 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c
+@@ -32,7 +32,7 @@ static int handle_proxy_response(struct ipu6_isys *isys, unsigned int req_id)
+ 	struct ipu6_fw_isys_proxy_resp_info_abi *resp;
+ 	int ret;
+ 
+-	resp = ipu6_recv_get_token(isys->fwcom, IPU6_BASE_PROXY_RECV_QUEUES);
++	resp = ipu6_recv_get_token(isys->fwctx, IPU6_BASE_PROXY_RECV_QUEUES);
+ 	if (!resp)
+ 		return 1;
+ 
+@@ -42,7 +42,7 @@ static int handle_proxy_response(struct ipu6_isys *isys, unsigned int req_id)
+ 
+ 	ret = req_id == resp->request_id ? 0 : -EIO;
+ 
+-	ipu6_recv_put_token(isys->fwcom, IPU6_BASE_PROXY_RECV_QUEUES);
++	ipu6_recv_put_token(isys->fwctx, IPU6_BASE_PROXY_RECV_QUEUES);
+ 
+ 	return ret;
+ }
+@@ -52,7 +52,7 @@ int ipu6_fw_isys_send_proxy_token(struct ipu6_isys *isys,
+ 				  unsigned int index,
+ 				  unsigned int offset, u32 value)
+ {
+-	struct ipu6_fw_com_context *ctx = isys->fwcom;
++	struct ipu6_fw_com_context *ctx = isys->fwctx;
+ 	struct device *dev = &isys->adev->auxdev.dev;
+ 	struct ipu6_fw_proxy_send_queue_token *token;
+ 	unsigned int timeout = 1000;
+@@ -96,7 +96,7 @@ int ipu6_fw_isys_complex_cmd(struct ipu6_isys *isys,
+ 			     dma_addr_t dma_mapped_buf,
+ 			     size_t size, u16 send_type)
+ {
+-	struct ipu6_fw_com_context *ctx = isys->fwcom;
++	struct ipu6_fw_com_context *ctx = isys->fwctx;
+ 	struct device *dev = &isys->adev->auxdev.dev;
+ 	struct ipu6_fw_send_queue_token *token;
+ 
+@@ -138,7 +138,7 @@ int ipu6_fw_isys_close(struct ipu6_isys *isys)
+ 	struct device *dev = &isys->adev->auxdev.dev;
+ 	int retry = IPU6_ISYS_CLOSE_RETRY;
+ 	unsigned long flags;
+-	void *fwcom;
++	void *fwctx;
+ 	int ret;
+ 
+ 	/*
+@@ -148,9 +148,9 @@ int ipu6_fw_isys_close(struct ipu6_isys *isys)
+ 	 * spinlock to wait the interrupt handler to be finished
+ 	 */
+ 	spin_lock_irqsave(&isys->power_lock, flags);
+-	ret = ipu6_fw_com_close(isys->fwcom);
+-	fwcom = isys->fwcom;
+-	isys->fwcom = NULL;
++	ret = ipu6_fw_com_close(isys->fwctx);
++	fwctx = isys->fwctx;
++	isys->fwctx = NULL;
+ 	spin_unlock_irqrestore(&isys->power_lock, flags);
+ 	if (ret)
+ 		dev_err(dev, "Device close failure: %d\n", ret);
+@@ -158,14 +158,14 @@ int ipu6_fw_isys_close(struct ipu6_isys *isys)
+ 	/* release probably fails if the close failed. Let's try still */
+ 	do {
+ 		usleep_range(400, 500);
+-		ret = ipu6_fw_com_release(fwcom, 0);
++		ret = ipu6_fw_com_release(fwctx, 0);
+ 		retry--;
+ 	} while (ret && retry);
+ 
+ 	if (ret) {
+ 		dev_err(dev, "Device release time out %d\n", ret);
+ 		spin_lock_irqsave(&isys->power_lock, flags);
+-		isys->fwcom = fwcom;
++		isys->fwctx = fwctx;
+ 		spin_unlock_irqrestore(&isys->power_lock, flags);
  	}
-@@ -4950,6 +4951,13 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
- 	last_addr_mask = hugetlb_mask_last_page(h);
- 	for (addr = src_vma->vm_start; addr < src_vma->vm_end; addr += sz) {
- 		spinlock_t *src_ptl, *dst_ptl;
-+
-+		if (WARN_ON_ONCE(want_pmd_share(src_vma, addr) ||
-+				 want_pmd_share(dst_vma, addr))) {
-+			ret = -EINVAL;
-+			break;
-+		}
-+
- 		src_pte = hugetlb_walk(src_vma, addr, sz);
- 		if (!src_pte) {
- 			addr |= last_addr_mask;
-@@ -4961,14 +4969,6 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
+ 
+@@ -176,11 +176,11 @@ void ipu6_fw_isys_cleanup(struct ipu6_isys *isys)
+ {
+ 	int ret;
+ 
+-	ret = ipu6_fw_com_release(isys->fwcom, 1);
++	ret = ipu6_fw_com_release(isys->fwctx, 1);
+ 	if (ret < 0)
+ 		dev_warn(&isys->adev->auxdev.dev,
+ 			 "Device busy, fw_com release failed.");
+-	isys->fwcom = NULL;
++	isys->fwctx = NULL;
+ }
+ 
+ static void start_sp(struct ipu6_bus_device *adev)
+@@ -212,7 +212,7 @@ static int query_sp(struct ipu6_bus_device *adev)
+ }
+ 
+ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
+-				    struct ipu6_fw_com_cfg *fwcom,
++				    struct ipu6_fw_com_cfg *fwcom_cfg,
+ 				    unsigned int num_streams)
+ {
+ 	unsigned int max_send_queues, max_sram_blocks, max_devq_size;
+@@ -258,14 +258,16 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
+ 	if (!output_queue_cfg)
+ 		return -ENOMEM;
+ 
+-	fwcom->input = input_queue_cfg;
+-	fwcom->output = output_queue_cfg;
++	fwcom_cfg->input = input_queue_cfg;
++	fwcom_cfg->output = output_queue_cfg;
+ 
+-	fwcom->num_input_queues = isys_fw_cfg->num_send_queues[type_proxy] +
++	fwcom_cfg->num_input_queues =
++		isys_fw_cfg->num_send_queues[type_proxy] +
+ 		isys_fw_cfg->num_send_queues[type_dev] +
+ 		isys_fw_cfg->num_send_queues[type_msg];
+ 
+-	fwcom->num_output_queues = isys_fw_cfg->num_recv_queues[type_proxy] +
++	fwcom_cfg->num_output_queues =
++		isys_fw_cfg->num_recv_queues[type_proxy] +
+ 		isys_fw_cfg->num_recv_queues[type_dev] +
+ 		isys_fw_cfg->num_recv_queues[type_msg];
+ 
+@@ -280,7 +282,7 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
+ 			isys_fw_cfg->buffer_partition.num_gda_pages[i] = 0;
+ 	}
+ 
+-	/* FW assumes proxy interface at fwcom queue 0 */
++	/* FW assumes proxy interface at fwcom_cfg queue 0 */
+ 	for (i = 0; i < isys_fw_cfg->num_send_queues[type_proxy]; i++) {
+ 		input_queue_cfg[i].token_size =
+ 			sizeof(struct ipu6_fw_proxy_send_queue_token);
+@@ -314,9 +316,9 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
+ 			IPU6_ISYS_SIZE_RECV_QUEUE;
+ 	}
+ 
+-	fwcom->dmem_addr = isys->pdata->ipdata->hw_variant.dmem_offset;
+-	fwcom->specific_addr = isys_fw_cfg;
+-	fwcom->specific_size = sizeof(*isys_fw_cfg);
++	fwcom_cfg->dmem_addr = isys->pdata->ipdata->hw_variant.dmem_offset;
++	fwcom_cfg->specific_addr = isys_fw_cfg;
++	fwcom_cfg->specific_size = sizeof(*isys_fw_cfg);
+ 
+ 	return 0;
+ }
+@@ -325,23 +327,23 @@ int ipu6_fw_isys_init(struct ipu6_isys *isys, unsigned int num_streams)
+ {
+ 	struct device *dev = &isys->adev->auxdev.dev;
+ 	int retry = IPU6_ISYS_OPEN_RETRY;
+-	struct ipu6_fw_com_cfg fwcom = {
++	struct ipu6_fw_com_cfg fwcom_cfg = {
+ 		.cell_start = start_sp,
+ 		.cell_ready = query_sp,
+ 		.buttress_boot_offset = SYSCOM_BUTTRESS_FW_PARAMS_ISYS_OFFSET,
+ 	};
+ 	int ret;
+ 
+-	ipu6_isys_fwcom_cfg_init(isys, &fwcom, num_streams);
++	ipu6_isys_fwcom_cfg_init(isys, &fwcom_cfg, num_streams);
+ 
+-	isys->fwcom = ipu6_fw_com_prepare(&fwcom, isys->adev,
++	isys->fwctx = ipu6_fw_com_prepare(&fwcom_cfg, isys->adev,
+ 					  isys->pdata->base);
+-	if (!isys->fwcom) {
++	if (!isys->fwctx) {
+ 		dev_err(dev, "isys fw com prepare failed\n");
+ 		return -EIO;
+ 	}
+ 
+-	ret = ipu6_fw_com_open(isys->fwcom);
++	ret = ipu6_fw_com_open(isys->fwctx);
+ 	if (ret) {
+ 		dev_err(dev, "isys fw com open failed %d\n", ret);
+ 		return ret;
+@@ -349,7 +351,7 @@ int ipu6_fw_isys_init(struct ipu6_isys *isys, unsigned int num_streams)
+ 
+ 	do {
+ 		usleep_range(400, 500);
+-		if (ipu6_fw_com_ready(isys->fwcom))
++		if (ipu6_fw_com_ready(isys->fwctx))
  			break;
- 		}
+ 		retry--;
+ 	} while (retry > 0);
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys-video.c b/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
+index 3ac48d2076da9..89eb265737d79 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
+@@ -1114,7 +1114,7 @@ int ipu6_isys_fw_open(struct ipu6_isys *isys)
+ 	 */
+ 	ipu6_cleanup_fw_msg_bufs(isys);
  
--#ifdef CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING
--		/* If the pagetables are shared, there is nothing to do */
--		if (ptdesc_pmd_is_shared(virt_to_ptdesc(dst_pte))) {
--			addr |= last_addr_mask;
--			continue;
--		}
--#endif
--
- 		dst_ptl = huge_pte_lock(h, dst, dst_pte);
- 		src_ptl = huge_pte_lockptr(h, src, src_pte);
- 		spin_lock_nested(src_ptl, SINGLE_DEPTH_NESTING);
-diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
-index cc37b60fc3e81..f8e2b7f2f61c6 100644
---- a/mm/userfaultfd.c
-+++ b/mm/userfaultfd.c
-@@ -115,8 +115,7 @@ struct vm_area_struct *find_vma_and_prepare_anon(struct mm_struct *mm,
- 	vma = vma_lookup(mm, addr);
- 	if (!vma)
- 		vma = ERR_PTR(-ENOENT);
--	else if (!(vma->vm_flags & VM_SHARED) &&
--		 unlikely(anon_vma_prepare(vma)))
-+	else if (vma_is_cow_mapping(vma) && unlikely(anon_vma_prepare(vma)))
- 		vma = ERR_PTR(-ENOMEM);
+-	if (isys->fwcom) {
++	if (isys->fwctx) {
+ 		/*
+ 		 * Something went wrong in previous shutdown. As we are now
+ 		 * restarting isys we can safely delete old context.
+@@ -1147,7 +1147,7 @@ void ipu6_isys_fw_close(struct ipu6_isys *isys)
+ 	isys->ref_count--;
+ 	if (!isys->ref_count) {
+ 		ipu6_fw_isys_close(isys);
+-		if (isys->fwcom) {
++		if (isys->fwctx) {
+ 			isys->need_reset = true;
+ 			dev_warn(&isys->adev->auxdev.dev,
+ 				 "failed to close fw isys\n");
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys.c b/drivers/media/pci/intel/ipu6/ipu6-isys.c
+index 24db2763de544..e13fbbae8c98b 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-isys.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-isys.c
+@@ -1212,10 +1212,10 @@ static int isys_isr_one(struct ipu6_bus_device *adev)
+ 	u32 index;
+ 	u64 ts;
  
- 	return vma;
-@@ -144,7 +143,7 @@ static struct vm_area_struct *uffd_lock_vma(struct mm_struct *mm,
- 		 * We know we're going to need to use anon_vma, so check
- 		 * that early.
- 		 */
--		if (!(vma->vm_flags & VM_SHARED) && unlikely(!vma->anon_vma))
-+		if (vma_is_cow_mapping(vma) && unlikely(!vma->anon_vma))
- 			vma_end_read(vma);
- 		else
- 			return vma;
+-	if (!isys->fwcom)
++	if (!isys->fwctx)
+ 		return 1;
+ 
+-	resp = ipu6_fw_isys_get_resp(isys->fwcom, IPU6_BASE_MSG_RECV_QUEUES);
++	resp = ipu6_fw_isys_get_resp(isys->fwctx, IPU6_BASE_MSG_RECV_QUEUES);
+ 	if (!resp)
+ 		return 1;
+ 
+@@ -1324,7 +1324,7 @@ static int isys_isr_one(struct ipu6_bus_device *adev)
+ 
+ 	ipu6_isys_put_stream(stream);
+ leave:
+-	ipu6_fw_isys_put_resp(isys->fwcom, IPU6_BASE_MSG_RECV_QUEUES);
++	ipu6_fw_isys_put_resp(isys->fwctx, IPU6_BASE_MSG_RECV_QUEUES);
+ 	return 0;
+ }
+ 
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys.h b/drivers/media/pci/intel/ipu6/ipu6-isys.h
+index 7fb8cb820912b..0b139ab244312 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-isys.h
++++ b/drivers/media/pci/intel/ipu6/ipu6-isys.h
+@@ -114,8 +114,7 @@ struct sensor_async_sd {
+  * @csi2_rx_ctrl_cached: cached shared value between all CSI2 receivers
+  * @streams_lock: serialise access to streams
+  * @streams: streams per firmware stream ID
+- * @fwcom: fw communication layer private pointer
+- *         or optional external library private pointer
++ * @fwctx: fw communication layer context pointer
+  * @phy_termcal_val: the termination calibration value, only used for DWC PHY
+  * @need_reset: Isys requires d0i0->i3 transition
+  * @ref_count: total number of callers fw open
+@@ -136,7 +135,7 @@ struct ipu6_isys {
+ 	spinlock_t streams_lock;
+ 	struct ipu6_isys_stream streams[IPU6_ISYS_MAX_STREAMS];
+ 	int streams_ref_count[IPU6_ISYS_MAX_STREAMS];
+-	void *fwcom;
++	void *fwctx;
+ 	u32 phy_termcal_val;
+ 	bool need_reset;
+ 	bool icache_prefetch;
 -- 
 2.53.0
 
