@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590558;
-	b=wWZlYOys97ss0uutHmpSIpWeMGwh63PxcGgtn9JbF0d0UAX/cxpsEk3mloRlO4NUwveH
-	 RKpwjxUuSPMwuN7fryqANRXWvEa8s+DjZNaL2FHvrqJM3eeJUOwdSztaHnnE5yffJWJOt
-	 mX+ZcodmkQRNldVCZTXXOLjh5notUX0yKJt7VE0AiF+cyLRfAWybFeYwl41jJd13XetxJ
-	 NFUbf+L59/zK77AxNlUqOlu3oMpCDNCu6RPFZsKkmpLfFzc+Dv98kVVAgQa+wKJIrle37
-	 BhpiVxYCOfAZ4f04Po+XmJhuH/Z7cN+EIyDTLQdSZnO8z4V7XfX2/KBrM3QyijC5P9g==
+	t=1794590559;
+	b=vXvB90Om7MjjmrM3GcCtd1tkV39Z3HcQCw4A9n0AQZa1r26Je4o98vaAiZ0XtE2aFKi2
+	 7gjyEe5eBPinQ8A+tlx0Is15XuJz2CxNB7UieOR1uj81YIQ669N5oSQ8hPrZSQTmU4zmL
+	 zmopwXMNkZ94Lg2DCiaN2DS6sGPQW63R8wW5EIHcxnPPyVEqsDwI62vogZZiS0EB/hvLQ
+	 Px7sXGKUGrEJbiiYwwptAdZgmM4ePseQvhISfW/1eI1RVQM7jnnyqT9khUk3sDkdd85Ii
+	 Z4OvxP7Azpn157kjsKsz4LeZmYEzbfz2H73M08xmoXp86airbTuQc7K2j//12ffQ9zQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590558;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590559;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HpY0FBT3KOkn/+xIIdkUP/mFG82+XVGwhWG3gt/nq60=;
-	b=tMtMFrgFSM0FzkpQkUfRG8OH5gxR0r6/aeRRjrrvsCRo3DTGEwvbbBAAMryS+2EovXuR
-	 dpKFUueMtyUfp6HtX0Chk2jc3JAf1/chtwI75U4/1sSIUtRkPDc5pp57S/fk7XIXF7+Xx
-	 CuG1M4UVUvTD2mbjufNaEZwe521kypepkVNlGVM8ayUT2DZbU8QRE7v6X0aadY8+syJcA
-	 TdiRDZBgz7PVzxeQ2Szcr6RBwQzqCGLkINL4+KsrE0kDk7wvH0kN7QohneOf5su2JK2nS
-	 R/+YIN+JBs3abkAfHdkTTWKA9+T6rIsilrFqFrcEIEeW4SZ7BaKCf8oEH/oXr4ag/qA==
+	bh=b20lmN9d5h1kPyd0KeIfvHZ8rYU5vDoxogqx/5SoyV0=;
+	b=bAl/o2lkIAn+sXgDzgAhOJGCO3Fl/VUeedBv8p3+YBEv/oboBjn3Hy05FZX9daHg0s3/
+	 dNzeyrhDQGetbLUmNHzhFwjpSsShHoca4q299O2THgANwwm4qVerwehUlYd05lKqfxETH
+	 380ASmf8xYySueVvS5Ep/YYBhFuaBnjbpusbfGtPr2iENnOCMWIK/3ZTUgM5RiW6bCGdm
+	 cKaz+DsSF3CYwkLCI/2qggYHdBC+kz+E6LTuwUKBWWw/V9cU3GMUdvp8HDFvTrru0f+Sh
+	 ViRbtVnUvngp5xSv2u/yjWvYI2t6FDLZ4WCUAFzdVgIMMcepe4XWNStuJu0v3YArvyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9Zzi0FT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HSFaObX6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D96C6084365;
-	Fri, 13 Nov 2026 17:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6066084362;
+	Fri, 13 Nov 2026 17:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9Zzi0FT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099AE1F000C4;
-	Fri, 13 Nov 2026 17:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HSFaObX6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416151F000C4;
+	Fri, 13 Nov 2026 17:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590558;
-	bh=HpY0FBT3KOkn/+xIIdkUP/mFG82+XVGwhWG3gt/nq60=;
+	s=korg; t=1794590559;
+	bh=b20lmN9d5h1kPyd0KeIfvHZ8rYU5vDoxogqx/5SoyV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y9Zzi0FTABp1SCTsnD8TV2JnM22hTnuPzSrYtaDx2Ok5KpJJYrBI+sbzgx64LZUsU
-	 mejxjbY1R/yEejLTRPoYYhAmcj4vmwOGMmD8BwADSiYttNKabyuIqTOPmrosWjUHn3
-	 BHIm8rur2dvkCbnd0wEIlhVscM6tYeQqGuDujQaM=
+	b=HSFaObX6uOxOi7qm1Ppe6hL0ytuKlArGpQsdQO6jSJSpBpEVAATMmHBCnv9dM6Ogd
+	 /gLZVKQzAL1zhNML0c17lIv8TmbhIfFaqvsyPw8e9aXoz9OpPge+LEzbt9AWyKVO29
+	 jWyvm92o+FKX8CadhXHO4WXv2Z5jeQi/ZgiL2ECk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Breno Leitao <leitao@debian.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 458/686] arm64: sdei: Run the event handler on the kernel vectors
-Date: Fri, 13 Nov 2026 10:49:51 -0500
-Message-ID: <20261113153836.387429499@linuxfoundation.org>
+Subject: [PATCH 6.18 494/686] KVM: arm64: Use kvm_s2_fault_vma_info in gmem_abort()
+Date: Fri, 13 Nov 2026 10:50:27 -0500
+Message-ID: <20261113153837.668309935@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,140 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 9bf6ee7952c7ee151c30e0fffcfc61b58127c899 ]
+[ Upstream commit 80b0b86dc5e4344e62a2fd3ee43d0ef816fe9122 ]
 
-With KPTI, VBAR_EL1 holds the trampoline vectors from the return to EL0
-until the next exception from EL0 maps the kernel and installs the
-kernel vectors. The trampoline vectors only handle exceptions from EL0;
-their current-EL half is zero-filled.
+gmem_abort() maps at s2fd->fault_ipa, which HPFAR_EL2 holds at 4K
+granularity whatever the page size. The generic page-table code aligns
+it, but pkvm_pgtable_stage2_map() looks up existing mappings over
+[addr, addr + size), so on a pKVM host with pages larger than 4K a
+guest_memfd-backed guest that faults past the first 4K of a page can
+find its neighbour's mapping, get -EAGAIN and take the same fault
+forever.
 
-An SDEI event is dispatched regardless of PSTATE.DAIF, so it lands there
-whenever the CPU is in user space. The SDEI entry trampoline maps the
-kernel but leaves VBAR_EL1 alone. An exception taken by the handler then
-executes the zeros, takes an undefined instruction exception to the same
-vector, and loops there forever. The event never completes and the CPU
-is lost; RCU stall reports are the first sign of it.
+The memory fault exit reports s2fd->fault_ipa too, which for a nested
+guest's fault is the nested IPA rather than the canonical one
+kvm_gmem_get_pfn() failed on.
 
-RAS notifications land in user space whenever a task consumes the
-error, and NMI backtraces land wherever the CPU happens to be. The GHES
-handler takes no exception on its own, but any exception in the handler
-path does it: a WARN, a kprobe hit, or a fault fixed up by a _nofault()
-accessor.
+Take the addresses from kvm_s2_fault_vma_info instead, as
+user_mem_abort() does, and report the canonical gfn in the memory fault
+exit. kvm_s2_fault_get_vma_info() itself isn't called: a guest_memfd
+memslot's userspace_addr doesn't need to be backed by a VMA.
 
-Install the kernel vectors in __sdei_handler() when VBAR_EL1 holds the
-trampoline vectors, and restore it before returning to firmware. The
-switch covers irqentry_nmi_enter() and irqentry_nmi_exit() too, as Usama
-Arif pointed out: their tracepoints and context tracking WARNs can take
-an exception as well.
-
-The IRQ-like resume into user space must still go through the
-trampoline to map the kernel. do_sdei_event() takes the interrupted
-VBAR_EL1 and keeps basing the resume address on it.
-
-Fixes: 79e9aa59dc29 ("arm64: sdei: Add trampoline code for remapping the kernel")
+Fixes: a7b57e0995927 ("KVM: arm64: Handle guest_memfd-backed guest page faults")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/20260913175105.A57AC1F000FF@smtp.kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Tested-by: Breno Leitao <leitao@debian.org>
-[catalin.marinas@arm.com: use raw_cpu_read() for this_cpu_vector]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Link: https://patch.msgid.link/20260928095454.3255918-4-vdonnefort@google.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ sashal: Adapted upstream kvm_s2_fault_desc and kvm_s2_fault_vma_info usage to existing gmem_abort() arguments and local variables. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/sdei.h    |  3 ++-
- arch/arm64/kernel/entry-common.c | 21 ++++++++++++++++++++-
- arch/arm64/kernel/sdei.c         |  6 ++++--
- 3 files changed, 26 insertions(+), 4 deletions(-)
+ arch/arm64/kvm/mmu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/sdei.h b/arch/arm64/include/asm/sdei.h
-index 484cb6972e99a..3b689185f3715 100644
---- a/arch/arm64/include/asm/sdei.h
-+++ b/arch/arm64/include/asm/sdei.h
-@@ -44,7 +44,8 @@ asmlinkage unsigned long __sdei_handler(struct pt_regs *regs,
- 					struct sdei_registered_event *arg);
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index af50fed5b5975..e8029ac82da74 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -1536,6 +1536,8 @@ static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	if (ret)
+ 		return ret;
  
- unsigned long do_sdei_event(struct pt_regs *regs,
--			    struct sdei_registered_event *arg);
-+			    struct sdei_registered_event *arg,
-+			    unsigned long vbar);
- 
- unsigned long sdei_arch_get_entry_point(int conduit);
- #define sdei_arch_get_entry_point(x)	sdei_arch_get_entry_point(x)
-diff --git a/arch/arm64/kernel/entry-common.c b/arch/arm64/kernel/entry-common.c
-index 5b97dfcf796d9..67ecb9fdb355e 100644
---- a/arch/arm64/kernel/entry-common.c
-+++ b/arch/arm64/kernel/entry-common.c
-@@ -30,6 +30,7 @@
- #include <asm/stacktrace.h>
- #include <asm/sysreg.h>
- #include <asm/system_misc.h>
-+#include <asm/vectors.h>
- 
- /*
-  * Handle IRQ/context state management when entering from kernel mode.
-@@ -993,6 +994,7 @@ asmlinkage void noinstr __noreturn handle_bad_stack(struct pt_regs *regs)
- asmlinkage noinstr unsigned long
- __sdei_handler(struct pt_regs *regs, struct sdei_registered_event *arg)
- {
-+	unsigned long vbar;
- 	irqentry_state_t state;
- 	unsigned long ret;
- 
-@@ -1018,10 +1020,27 @@ __sdei_handler(struct pt_regs *regs, struct sdei_registered_event *arg)
- 	else if (cpu_has_pan())
- 		set_pstate_pan(0);
- 
-+	/*
-+	 * With KPTI, VBAR_EL1 holds the trampoline vectors from the return to
-+	 * EL0 until the next exception from EL0 maps the kernel. They only
-+	 * handle exceptions from EL0: an exception taken here would run their
-+	 * empty current-EL half and never come back. Switch to the kernel
-+	 * vectors. The IRQ-like resume keeps using the interrupted VBAR, so it
-+	 * still goes through the trampoline.
-+	 */
-+	vbar = read_sysreg(vbar_el1);
-+	if (arm64_kernel_unmapped_at_el0() &&
-+	    vbar == (unsigned long)raw_cpu_read(this_cpu_vector)) {
-+		write_sysreg((unsigned long)vectors, vbar_el1);
-+		isb();
-+	}
++	fault_ipa = ALIGN_DOWN(fault_ipa, PAGE_SIZE);
 +
- 	state = irqentry_nmi_enter(regs);
--	ret = do_sdei_event(regs, arg);
-+	ret = do_sdei_event(regs, arg, vbar);
- 	irqentry_nmi_exit(regs, state);
+ 	if (nested)
+ 		gfn = kvm_s2_trans_output(nested) >> PAGE_SHIFT;
+ 	else
+@@ -1552,7 +1554,7 @@ static int gmem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
  
-+	write_sysreg(vbar, vbar_el1);
-+
- 	return ret;
- }
- #endif /* CONFIG_ARM_SDE_INTERFACE */
-diff --git a/arch/arm64/kernel/sdei.c b/arch/arm64/kernel/sdei.c
-index 95169f7b65319..f77e30314fe13 100644
---- a/arch/arm64/kernel/sdei.c
-+++ b/arch/arm64/kernel/sdei.c
-@@ -204,16 +204,18 @@ unsigned long sdei_arch_get_entry_point(int conduit)
-  *  SDEI_EV_HANDLED -  success, return to the interrupted context.
-  *  SDEI_EV_FAILED  -  failure, return this error code to firmare.
-  *  virtual-address -  success, return to this address.
-+ *
-+ * vbar is the interrupted context's VBAR_EL1, for the IRQ-like resume.
-  */
- unsigned long __kprobes do_sdei_event(struct pt_regs *regs,
--				      struct sdei_registered_event *arg)
-+				      struct sdei_registered_event *arg,
-+				      unsigned long vbar)
- {
- 	u32 mode;
- 	int i, err = 0;
- 	int clobbered_registers = 4;
- 	u64 elr = read_sysreg(elr_el1);
- 	u32 kernel_mode = read_sysreg(CurrentEL) | 1;	/* +SPSel */
--	unsigned long vbar = read_sysreg(vbar_el1);
- 
- 	if (arm64_kernel_unmapped_at_el0())
- 		clobbered_registers++;
+ 	ret = kvm_gmem_get_pfn(kvm, memslot, gfn, &pfn, &page, NULL);
+ 	if (ret) {
+-		kvm_prepare_memory_fault_exit(vcpu, fault_ipa, PAGE_SIZE,
++		kvm_prepare_memory_fault_exit(vcpu, gfn_to_gpa(gfn), PAGE_SIZE,
+ 					      write_fault, exec_fault, false);
+ 		return ret;
+ 	}
 -- 
 2.53.0
 
