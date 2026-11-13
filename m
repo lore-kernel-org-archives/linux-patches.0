@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585581;
-	b=vwhTMNz3dEpy7Y7txS/CuImURkyDsdYrj8mEkbVamBT6Wk4WRzZIsWHPrLwCuCp2A68Q
-	 0wEJep2+zKHrKSg0q22AEBaDdTSwRwhTKlsxnSCDgb/KA3g9lMs25vU83LpYKqsyPIwSz
-	 T4QjdzYc4H0E4BlEcbJmoaUK4SsAohPMMJfjbLGutLzj/bkZDg5kqPsSqFFWo4GqUguWv
-	 S6aUxt4bovjVvOZaCp9niVNKzEpGG7t1GlNZ3fRIz7eFiqoRZe/toBXqQ82jckRt+2lB0
-	 esfnh7fAD+X9RUupzcHu2YM5xEd0qt3bdTI4e9TtfEsNfTQpTb4LUM4VIkbE9cq4tQA==
+	t=1794585583;
+	b=zwzu9h/YCpaQ9bbk3vxtF0Wrzo8oh0Dnn2TBwQyKNMwB4ZCgreVy2+CDKU6i2Nouu1q9
+	 CGtq9WA6LtUeNh/KoCsM5e/lCgursFrkho3JiF669FrSUWDtKZ2I4b6PF3d5kPSGvE4CO
+	 ZrlWYHHfTByVZIGBRJaXQJ24nVdjHf3ogYUnTw64xbAgOvUnvfo7XDiGUQ2Tl3f0mg4kJ
+	 Ewh6Ce2ddEWTBgh9nLvjgIO+sutESkIhJMpWWxSNhVa3PKSJZkScoCaJd7eb6mv174Zj0
+	 PYHDsFHG0pTjcLAYdlSEUHcQow166twroKdXhBUC0/1X7zLUcnEmst9uZxCyCW/TmCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585581;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585583;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9eBrws0+ZT3S41wwHdM4NcOwXnTvMR1E6WVHnZv2Oeg=;
-	b=WUATOE2AJasSKKxKDsp1sl5sGAwZjFn+GsJIf+nP0UQeSUXwYt67pwPHQ3KifkxjZudX
-	 9cFfEpK6gns+pAUDUnyJq+BT3HdfW7AcLW/jYNME71uPCWJ+LWwFSUC+AbBV3clkMtMjm
-	 WvWT/7foxB7uBwVu06bpLKe/NgUqPh+ERs6IB/ySSJoTLaKdGSZM0FK21aMgkQSDvJdP7
-	 V6SyfZDx6kQuAK1AjZNlRqYQ9IXDB/Nlg68XZ8P4OES3ybblXdQsf+TxRhjtKW35laZ7z
-	 DRxFq8ReBANJCpouskmb4d7Xhii+M3AFljojlH+AaTOVm9cDiM2fm5EHXbej2au7rnQ==
+	bh=oykexeul6dWqrZoxk4phS6J0ftiIWR9bv9B+3z7CYQU=;
+	b=HypYWiil4z9J1iFOKhKmExe2AmHbRPfhi84TFNQus2P1KjstG23VOm5WFW8XeHJjWZij
+	 SCDzghEbR1v3YEvAXMc06FHAtY6LlDqtHRdDBf9P4t9UobZhHfKgD5HGgHD9+UAc7FfR8
+	 oJq3omrrKiXHgKSW/NOttZFfY30JEk1jWl2RS1jIjH3VCmayOejl60wy7vXVK8Ih1AzN8
+	 VdT3wUwAj9SIRJIIWwa8m2ZF9CkxTGZyNMUp5dRzO8EGWpAjqau3KrBzhZrtiQYCdFZHG
+	 nzbZtnFwxcvy4eb0QFatdUIZGbruuv4BhUeyKvuNXMayeQG8yGpLrWbR8/9kvZMUWxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUWB6ak6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p5Zcx975;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D8F607021A;
-	Fri, 13 Nov 2026 15:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B6F606A893;
+	Fri, 13 Nov 2026 15:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUWB6ak6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7341F1F000C4;
-	Fri, 13 Nov 2026 15:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p5Zcx975
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB151F000C6;
+	Fri, 13 Nov 2026 15:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585581;
-	bh=9eBrws0+ZT3S41wwHdM4NcOwXnTvMR1E6WVHnZv2Oeg=;
+	s=korg; t=1794585582;
+	bh=oykexeul6dWqrZoxk4phS6J0ftiIWR9bv9B+3z7CYQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUWB6ak60AkhkfQJxM6PCuWTTPXVmFo+LIMH4XVgKuLnntt1+zfyg5d/wqmjbkdzT
-	 e8iuTzkE/mzjFirBQbL0D9x/ZJJyxkY7g9pPxufgesRHQTQz5SvVzHaKK2DiIBUl73
-	 +Bo1STQqFrC1B9ZGL1yu3zHcPEvyS/LdTYIS2dbQ=
+	b=p5Zcx975DrP7oLAAqmRoAgsAshp5u+f0oSF5NbiiR/i9ZGAdpr9hRvlDHD5owtIbu
+	 QIB0xgm2v5Sym2AIxHLAl6w5u+JHJg1Hn5QF5QVSK7OIn5wTaa0JBXjnpFTAgN1R5v
+	 +FfKdTt9e2UAiVy9x8IWfYSgqS/qcrOuP+Ecxj0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Yingjie Wang <1075151112@qq.com>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 213/507] ipv6: reject wrapped temporary address preferred lifetimes
-Date: Fri, 13 Nov 2026 10:48:37 -0500
-Message-ID: <20261113153801.705595127@linuxfoundation.org>
+Subject: [PATCH 7.3 214/507] x86/vmware: Fix i386 high-bandwidth hypercall arguments
+Date: Fri, 13 Nov 2026 10:48:38 -0500
+Message-ID: <20261113153801.743410425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,60 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit c3e67bd82b9b9b1a5118f09a429ccefe2aab0741 ]
+[ Upstream commit e0e022004bbedc7caf1c18770980eb5372019189 ]
 
-ipv6_create_tempaddr() raises a temporary address's preferred lifetime to
-regen_advance + age + 1 when the configured lifetime is too short. The
-result is stored in a u32, while regen_advance and age are unsigned long.
-If the sum wraps or is truncated, the stored lifetime can still be less
-than or equal to regen_advance + age.
+The high-bandwidth hypercall helpers push %ebp before loading the in6
+operand into it. On i386 without frame pointers, both GCC and Clang can
+address the memory-constrained operand relative to %esp. The push then
+moves the stack and the helpers load the wrong value.
 
-addrconf_verify_rtnl() then sees the new address as due for regeneration
-and creates another one. Temporary addresses are not limited by
-max_addresses since commit 4b08a8f1bd8c ("ipv6: remove max_addresses
-check from ipv6_create_tempaddr"), so this can cause unbounded address
-growth. With dad_transmits set to -1, a baseline kernel reached 2859
-loopback addresses in two seconds.
+Typical i386 configurations use the frame-pointer unwinder and happen to
+address the operand through %ebp. However, UNWINDER_GUESS is available
+with EXPERT and permits the affected frame-pointer-disabled configuration.
+vmwgfx is also available on i386 and calls both helpers.
 
-After storing the adjusted lifetime, verify that it is still greater than
-regen_advance + age. Reject the new address if the check fails.
+Stage in6 through %eax before changing either stack register, then save
+%ebp and copy the staged value into it. Load the VMware magic immediately
+before the string I/O instruction. Mark %eax early-clobber so it cannot
+also provide in6 or an address register for it. Use the same sequence on
+x86-64, where the full-width register preserves in6.
 
-On an x86-64 KASAN kernel, the normal configuration created three IPv6
-addresses. The negative dad_transmits, positive multiplication overflow,
-and large retransmission-time cases each left only the loopback and public
-addresses. An i386 defconfig and an x86-64 allmodconfig both built
-addrconf.o with W=1.
-
-Fixes: f4bcbf360ac8 ("net: ipv6/addrconf: clamp preferred_lft to the minimum required")
-Cc: stable@vger.kernel.org
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/netdev/20261029175827.GA1411453@shredder/
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Alex Henrie <alexhenrie24@gmail.com>
-Link: https://patch.msgid.link/tencent_7A270291DDE5CD89DAFFE8A745D094D5BD06@qq.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 34bf25e820ae ("x86/vmware: Introduce VMware hypercall API")
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Cc: stable@vger.kernel.org # 6.11+
+Link: https://patch.msgid.link/4ab10678a8f50053934b62b56af81f881c1d3798.1788414669.git.zack.rusin@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/vmware.h | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index a2d3fb187f768..3350330c3f1c2 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -1484,7 +1484,8 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, bool block)
- 	age = (now - tmp_tstamp + ADDRCONF_TIMER_FUZZ_MINUS) / HZ;
- 	if (cfg.preferred_lft <= regen_advance + age) {
- 		cfg.preferred_lft = regen_advance + age + 1;
--		if (cfg.preferred_lft > cfg.valid_lft ||
-+		if (cfg.preferred_lft <= regen_advance + age ||
-+		    cfg.preferred_lft > cfg.valid_lft ||
- 		    cfg.preferred_lft > if_public_preferred_lft) {
- 			in6_ifa_put(ifp);
- 			in6_dev_put(idev);
+diff --git a/arch/x86/include/asm/vmware.h b/arch/x86/include/asm/vmware.h
+index 4220dae14a2d9..fb011cef01e76 100644
+--- a/arch/x86/include/asm/vmware.h
++++ b/arch/x86/include/asm/vmware.h
+@@ -276,20 +276,22 @@ unsigned long vmware_hypercall_hb_out(unsigned long cmd, unsigned long in2,
+ 
+ 	asm_inline volatile (
+ 		UNWIND_HINT_SAVE
++		"mov %[in6], %%" _ASM_AX "\n\t"
+ 		"push %%" _ASM_BP "\n\t"
+ 		UNWIND_HINT_UNDEFINED
+-		"mov %[in6], %%" _ASM_BP "\n\t"
++		"mov %%" _ASM_AX ", %%" _ASM_BP "\n\t"
++		"mov %[magic], %%eax\n\t"
+ 		"rep outsb\n\t"
+ 		"pop %%" _ASM_BP "\n\t"
+ 		UNWIND_HINT_RESTORE
+-		: "=a" (out0), "=b" (*out1)
+-		: "a" (VMWARE_HYPERVISOR_MAGIC),
+-		  "b" (cmd),
++		: "=&a" (out0), "=b" (*out1)
++		: "b" (cmd),
+ 		  "c" (in2),
+ 		  "d" (in3 | VMWARE_HYPERVISOR_PORT_HB),
+ 		  "S" (in4),
+ 		  "D" (in5),
+-		  [in6] VMW_BP_CONSTRAINT (in6)
++		  [in6] VMW_BP_CONSTRAINT(in6),
++		  [magic] "i" (VMWARE_HYPERVISOR_MAGIC)
+ 		: "cc", "memory");
+ 	return out0;
+ }
+@@ -304,20 +306,22 @@ unsigned long vmware_hypercall_hb_in(unsigned long cmd, unsigned long in2,
+ 
+ 	asm_inline volatile (
+ 		UNWIND_HINT_SAVE
++		"mov %[in6], %%" _ASM_AX "\n\t"
+ 		"push %%" _ASM_BP "\n\t"
+ 		UNWIND_HINT_UNDEFINED
+-		"mov %[in6], %%" _ASM_BP "\n\t"
++		"mov %%" _ASM_AX ", %%" _ASM_BP "\n\t"
++		"mov %[magic], %%eax\n\t"
+ 		"rep insb\n\t"
+ 		"pop %%" _ASM_BP "\n\t"
+ 		UNWIND_HINT_RESTORE
+-		: "=a" (out0), "=b" (*out1)
+-		: "a" (VMWARE_HYPERVISOR_MAGIC),
+-		  "b" (cmd),
++		: "=&a" (out0), "=b" (*out1)
++		: "b" (cmd),
+ 		  "c" (in2),
+ 		  "d" (in3 | VMWARE_HYPERVISOR_PORT_HB),
+ 		  "S" (in4),
+ 		  "D" (in5),
+-		  [in6] VMW_BP_CONSTRAINT (in6)
++		  [in6] VMW_BP_CONSTRAINT(in6),
++		  [magic] "i" (VMWARE_HYPERVISOR_MAGIC)
+ 		: "cc", "memory");
+ 	return out0;
+ }
 -- 
 2.53.0
 
