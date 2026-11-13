@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585414;
-	b=AWjEOwF8H1AYLlQYFDEcHZ/Evj9iIFSYQrrjxB2aPBDCaXC9lZPWdRPSuN49aB5FKWda
-	 QT/UjzgVcfaxilrd2x3KbgdcS3kpRZm7g8Sl0fqLaLW6BNtX2RbtuJVVZJhEBPINAOMTY
-	 hTC4Q9Cpm3QyoQgbeGBXWX4ScXE0qcjEGsh9F+RaKi+38MSf+vAs0/M1M+I6O4h7D9dPT
-	 BvZvr1RB+AaaLn6DKAcrLIBmNeywGegV3Jri5alDlAyLGziXaQg4hc363KINEZtlDJ+wT
-	 1eK9AkfdPcZLsThffSmeOYcXfoAKu6nlNDEvrhiaX3HIt20b4o77QiSGFQ4rrsmu9AA==
+	t=1794585416;
+	b=xTcEMgntYgUIGHVjqS7AETYbQkjWQOSsSqCJiuPq4jn15+LaqaK0bX/VoNTJGrpXJfWS
+	 ELbezhKshJcKnhX1uIDLEH5+YSLRDaSE3ZpSTX+5fqnERIVoBujA6FOd5u+8cl5cLqsBS
+	 im38PvOVOJ1NLvmMkj81ZaivtnxKceb6Uu40g9OP4S9otMtZqs1bK2Kciv7psIk6NSfSe
+	 SOmr6wLEaMEwdGUCZZNyHaMH/SsH6Ocqut7/qs19/3HFiliLsD1PHWmcy60mhWTUTwQgb
+	 bdXcDl+vydIIchsjUYgQS6LjKgNeA7dJrAzekOsMINFxacXPfTt44D68eJQ3fROYGKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cBoTnikl2Xohi06t9cpOIa0kQ/8RTvLmhUXu/E+gFQE=;
-	b=a3d7mRfUxMNl4d5S6Bf1gfr5uRxpk85YSdgrJaavtf2iKxAYwZ7bJubOqgdIo/Gmcz3u
-	 2TXsYNUAyqAMAGmhe2t/yA0FIbxGzsWdrchVb2F/YBeJf2K4qK+Nnsbq6ivEwh73pYyB7
-	 pKQI+nXjJyugkGTsj5ds/BAbSTULCQmdL1ReckcQe/jvTKoJHJUwYfC95AL+m/sG/m/LD
-	 m6VUCb9hE3PBIx5z7p5in5x4zJZwKfsdVkBuZ9ByFAlGNxFCozIfZBQILBKemlzkPlHJU
-	 3nG0Pha8UWJgdkA4gs9oFLzjuufCk7EMUn7xcbDwdqB7uDXpq6+VtMcWERMyf4E5p/A==
+	bh=OuJcI0tmUn8NkneothG+bXBiZF9oLCg3wfXglk840eM=;
+	b=eHiN5uAivYE3JQteeL15BKepfDuJTYVrP6BoJZnvsNGOhcEqT74/hbd0GCpmfK7YnFJR
+	 I8rd+rx3ONc74KhHL6vHS3VvOMO2KxY/QjP2JYzrKiVxtTYgSweu3VcJE/hkeEu7RMapN
+	 6VEmuJRaPZNBKejVDaJGhlYV1ozYIwnXKO8EszaSmweGR5vn/Yj7edZNGIpGGQdapxnR1
+	 eGn0JU6pLeR0/yj/UsP/bFVGKwRHaM2841WTsRXSpLC51NVLpmqkSX6OdvIYlVXUe6k0w
+	 tfndBngGg+XVSGy1LidpxP1Sa0sQvlDbUsWCuT0P/NUVdJxvzfvqgl2v/1+yKucofZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnAGqAaA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ez8SLaPm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D2F606B2ED;
-	Fri, 13 Nov 2026 15:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456D360A3828;
+	Fri, 13 Nov 2026 15:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LnAGqAaA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A001F000C4;
-	Fri, 13 Nov 2026 15:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ez8SLaPm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91641F000C4;
+	Fri, 13 Nov 2026 15:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585414;
-	bh=cBoTnikl2Xohi06t9cpOIa0kQ/8RTvLmhUXu/E+gFQE=;
+	s=korg; t=1794585415;
+	bh=OuJcI0tmUn8NkneothG+bXBiZF9oLCg3wfXglk840eM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LnAGqAaAVFJcBBlR9HUMcR6y588/qxQRQoNjQa3Qfx/2TgYYVD9gRdkO64VtUw4Nn
-	 Y9Ovmxz95dIQp2ff/tGfXLaYZvyMKN+D4E2c674AJqoiKmhyCkwTT41INxVjY5weP8
-	 KaGXd5P4qMF8G4rAWJCUCWMDG39p9CNMtZzOmq7o=
+	b=Ez8SLaPm6kYlTUx/2xWf2SmEYJymyaNQgVir6yVdWb/o+DoexIQF3+FspajZ+WiNp
+	 FirQQLQQTLvnW1owRjg0IccnrpaJM+mzLfjWuiwqxCW0s832kO8inAuAo4oR5z3I2I
+	 ABHbp+o2bTgQQb4ZY4098YXetPtz5PVggU/sTPak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 080/507] lib/crypto: mldsa: Explicitly check that alg is a valid value
-Date: Fri, 13 Nov 2026 10:46:24 -0500
-Message-ID: <20261113153756.463014934@linuxfoundation.org>
+Subject: [PATCH 7.3 081/507] lib/crypto: mldsa: Add __must_check to mldsa_verify()
+Date: Fri, 13 Nov 2026 10:46:25 -0500
+Message-ID: <20261113153756.514545889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,95 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit efb621a57d7e4ce28e12082ba5692231858c4a3a ]
+[ Upstream commit 01ad209f122b7c173477bd60c7997564f9c65961 ]
 
-C doesn't guarantee at the language level that an enum actually has one
-of the declared values.
+Signature verification status always must be checked.  Add __must_check,
+for consistency with e.g. the AES-GCM and ChaCha20Poly1305 functions.
 
-For robustness, make mldsa_verify() handle invalid values of 'alg'.
-
-No effect on current callers, who always pass a valid value for 'alg'.
-(Except for the KUnit test case that this commit adds.)
+No effect on current callers, who always check the return value.
 
 Fixes: 64edccea594c ("lib/crypto: Add ML-DSA verification support")
 Cc: stable@vger.kernel.org
 Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20261029054534.68481-3-ebiggers@kernel.org
+Link: https://patch.msgid.link/20261029054534.68481-4-ebiggers@kernel.org
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/crypto/mldsa.h         |  1 +
- lib/crypto/mldsa.c             | 10 ++++++++--
- lib/crypto/tests/mldsa_kunit.c |  9 +++++++++
- 3 files changed, 18 insertions(+), 2 deletions(-)
+ include/crypto/mldsa.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/include/crypto/mldsa.h b/include/crypto/mldsa.h
-index 3ef2676787c9e..e0754879e7452 100644
+index e0754879e7452..b156f166a1413 100644
 --- a/include/crypto/mldsa.h
 +++ b/include/crypto/mldsa.h
-@@ -48,6 +48,7 @@ enum mldsa_alg {
-  * Return:
-  * * 0 if the signature is valid
-  * * -EBADMSG if the signature and/or public key is malformed
-+ * * -EINVAL if @alg is not a valid value
+@@ -52,8 +52,9 @@ enum mldsa_alg {
   * * -EKEYREJECTED if the signature is invalid but otherwise well-formed
   * * -ENOMEM if out of memory so the validity of the signature is unknown
   */
-diff --git a/lib/crypto/mldsa.c b/lib/crypto/mldsa.c
-index 68a1b432315b1..80e0e63b418a7 100644
---- a/lib/crypto/mldsa.c
-+++ b/lib/crypto/mldsa.c
-@@ -528,8 +528,8 @@ static size_t encode_w1(u8 out[MAX_W1_ENCODED_LEN],
- int mldsa_verify(enum mldsa_alg alg, const u8 *sig, size_t sig_len,
- 		 const u8 *msg, size_t msg_len, const u8 *pk, size_t pk_len)
- {
--	const struct mldsa_parameter_set *params = &mldsa_parameter_sets[alg];
--	const int k = params->k, l = params->l;
-+	const struct mldsa_parameter_set *params;
-+	int k, l;
- 	/* For now this just does pure ML-DSA with an empty context string. */
- 	static const u8 msg_prefix[2] = { /* dom_sep= */ 0, /* ctx_len= */ 0 };
- 	const u8 *ctilde; /* The signer's commitment hash */
-@@ -537,6 +537,12 @@ int mldsa_verify(enum mldsa_alg alg, const u8 *sig, size_t sig_len,
- 	u8 *h; /* The signer's hint vector, length k * N */
- 	size_t w1_enc_len;
+-int mldsa_verify(enum mldsa_alg alg, const u8 *sig, size_t sig_len,
+-		 const u8 *msg, size_t msg_len, const u8 *pk, size_t pk_len);
++int __must_check mldsa_verify(enum mldsa_alg alg, const u8 *sig, size_t sig_len,
++			      const u8 *msg, size_t msg_len, const u8 *pk,
++			      size_t pk_len);
  
-+	if (alg != MLDSA44 && alg != MLDSA65 && alg != MLDSA87)
-+		return -EINVAL;
-+	params = &mldsa_parameter_sets[alg];
-+	k = params->k;
-+	l = params->l;
-+
- 	/* Validate the public key and signature lengths. */
- 	if (pk_len != params->pk_len || sig_len != params->sig_len)
- 		return -EBADMSG;
-diff --git a/lib/crypto/tests/mldsa_kunit.c b/lib/crypto/tests/mldsa_kunit.c
-index ec64e10c97f25..d0ee704a36944 100644
---- a/lib/crypto/tests/mldsa_kunit.c
-+++ b/lib/crypto/tests/mldsa_kunit.c
-@@ -372,6 +372,14 @@ static void test_mldsa_use_hint(struct kunit *test)
- 	}
- }
- 
-+static void test_mldsa_invalid_alg(struct kunit *test)
-+{
-+	KUNIT_ASSERT_EQ(test, -EINVAL,
-+			mldsa_verify(MLDSA44 - 1, NULL, 0, NULL, 0, NULL, 0));
-+	KUNIT_ASSERT_EQ(test, -EINVAL,
-+			mldsa_verify(MLDSA87 + 1, NULL, 0, NULL, 0, NULL, 0));
-+}
-+
- static void benchmark_mldsa(struct kunit *test,
- 			    const struct mldsa_testvector *tv)
- {
-@@ -414,6 +422,7 @@ static struct kunit_case mldsa_kunit_cases[] = {
- 	KUNIT_CASE(test_mldsa65),
- 	KUNIT_CASE(test_mldsa87),
- 	KUNIT_CASE(test_mldsa_use_hint),
-+	KUNIT_CASE(test_mldsa_invalid_alg),
- 	KUNIT_CASE(benchmark_mldsa44),
- 	KUNIT_CASE(benchmark_mldsa65),
- 	KUNIT_CASE(benchmark_mldsa87),
+ #if IS_ENABLED(CONFIG_CRYPTO_LIB_MLDSA_KUNIT_TEST)
+ /* Internal function, exposed only for unit testing */
 -- 
 2.53.0
 
