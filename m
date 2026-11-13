@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585402;
-	b=l8BscamhSRy4Hujxot8dJ7qavvVFNKmTQB1iELBrjAHZXweLgpaV0lTb9Ro3x6JZElfa
-	 L8k2fSUM6uEQw1i7mZXB4pYUwglyPzivWS1wHR2lB4hApedI6yqpVam3LiIcJUxajoh3Q
-	 ya8cCs2uK1dL0CM4HE+Hz2FswRxnPdRHS62nSGl4ITP0qTy6iW9T3mivB51YyqudSQEsF
-	 pPKsWJBBb/v1aVdPBrFM2ORaOuef48ntgxktfYN4q4SnTxruNyzFftDaQIJaaxIIWk63B
-	 sxhsqbXMZlowGBA/Vv72HBFei7HK1Mmk2RLHSWz4GO8a7PophJrPNRHY5A8sqCOb74Q==
+	t=1794585403;
+	b=xnNH8uNso2Yf9wC3Wj/QUAIHUg2GwsEvtEgr/WggPIN6GsjEtHM1K/kafegyxvnixown
+	 YmrbPQ/raQQqVUtedIEQok1IYBAbseKXV5j12KJcBgexNkjCddk/WGoaEqklEhTgA/qQe
+	 LV5M+OY24XwOnodtsOXs417CPrZfY1/I1m27L2BnXWwsD6xsWA9R8MNFAkO+L8Nc3uaBq
+	 L89GUEQZVDnR2a+Yn+FRf/rAJAAq8fDW2gfMCjPOLpRaD2fVGNjoXDFN3tC2Yweb4UIYX
+	 4DW6NiyrxT0qqjOeDhKfYQfF1e79vl6Q3vbmQ2jjdVFEuAY/M52DiUM0F+ErFIN1MTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585402;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585403;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=qedeY1F/f/Y8CUPllaZcgBbkOasw/qYTvQ4RWEnz1Qc=;
-	b=5ERIhaaijGqcx2TZzr/nOJ8RmAMjOhmgBrnM/pmC4dwCV8wUX2xWaQZOnbjiwiJgmFI2
-	 15x4ie9B/vmNthw8HI2YpwRrTp6PuOyht5CCJoovGShmNzhzch9CAVGjYJH1aVrF/52ZH
-	 YbrveUrXaZRMGWm3FOfCzk98MY2x8l/uTMmihqyGmITDX7R3KCcFg4gfUIUnqBUWsuvGb
-	 10PWIOLMHyzoyryny5AqpNwjvjT1KoA5UXX7c3mbdNqg+kyMy25vd7YtYvA3sq9vW65n0
-	 /++eLnhWUwYXpiruUWBxUl5v6ga+vUodikZsSvZtu56M94kW8QShPutHSoE2Jgo6CWQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=d4J4pdMPbHeZN8zWvVJJBh+88LmalqX9VMktCExGoVk=;
+	b=dtfZJU3erZFxP3fj4TjrUvMRawjV7N5wgZaUDz5nUZ0Rwpgbl531ISWTvR6WZK6X1MVC
+	 NJ99bR+k25VB//fT6EkklumJmOk4MvqbeyoOkq+h8hDQMG92j12VVlws2NJqZsmF5HU5W
+	 Ky5LuVSbfhJRSGqt9RaJW26T2cgNnxRqRxajGAAP29ROo/X8BLWB5mtoKmnQGCRli11I3
+	 GQydNQXMB/1G032tfPwXfNYfPM/grcpr2133OQySb2AbUkSmXwx8xCF5nmUk4Kb9bkP7G
+	 mBu31Gym76PccWznOHNzMG8GAqh8miKNG2ddjVGMvtoVtMn+W85LLvHKr+Jvb2YrOKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OKJiFaCl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NzXaQCD/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559086070FF4;
-	Fri, 13 Nov 2026 15:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC1E6070FF1;
+	Fri, 13 Nov 2026 15:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OKJiFaCl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019931F000CD;
-	Fri, 13 Nov 2026 15:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NzXaQCD/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395031F000D0;
+	Fri, 13 Nov 2026 15:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585402;
-	bh=qedeY1F/f/Y8CUPllaZcgBbkOasw/qYTvQ4RWEnz1Qc=;
+	s=korg; t=1794585403;
+	bh=d4J4pdMPbHeZN8zWvVJJBh+88LmalqX9VMktCExGoVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OKJiFaClKpYi0Uc7xZHdqq5oMvQWFeGEWszx5B/8zwc7H/Sw+TidCIrbOekUquoFB
-	 dIDurYSif4CmcCF9ZRmx09tyYiprt6jGwWA9WnHKJ7zp72cjPiUHYcy34wPhe2GvBT
-	 ehXaN72WzEUDvJiXePDDuZFw3zocYXf2FIH1c84Q=
+	b=NzXaQCD/enmhG1HBUO5bqx32xzswS6KLISQepaOwYrqCNCi4xppT7pBjcajOUas1z
+	 +6hjq+b/3k6DpJFQ4K6+bkPP0UBdFK1LNOQRl56Kzwc2e/NOr36vmrN6utHeNlbr+O
+	 lIR8HtGFP4zCXTIlKrG4JMEDvw6ZZoA9tQNaBdhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Severson <eseverson@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Johannes Berg <johannes.berg@intel.com>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Fourie Zhang <fouriezhang@tencent.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 071/507] wifi: mac80211: reinstate IEEE80211_TX_CTL_AMPDU flag in ieee80211_tx_prep_agg()
-Date: Fri, 13 Nov 2026 10:46:15 -0500
-Message-ID: <20261113153755.979793143@linuxfoundation.org>
+Subject: [PATCH 7.3 072/507] xfrm4: use a full socket for local errors
+Date: Fri, 13 Nov 2026 10:46:16 -0500
+Message-ID: <20261113153756.013214002@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -63,66 +64,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@toke.dk>
+From: Fourie Zhang <fouriezhang@tencent.com>
 
-[ Upstream commit 25e73f1d6868c759c8eb56cad4e411692c5341b4 ]
+[ Upstream commit 5def91015ba7b59de62a81384572da7281b8a033 ]
 
-The commit 592234e941f1 ("wifi: mac80211: Fix iTXQ AMPDU fragmentation
-handling") changed the way handling of the IEEE80211_TX_CTL_AMPDU flag
-is done in mac80211, so the only place it is set is in
-ieee80211_tx_dequeue().
+xfrm4_local_error() passes skb->sk to inet_sk() and ip_local_error()
+without ensuring it points to a full socket. TCP SYN-ACK skbs can be owned
+by TCP_NEW_SYN_RECV request sockets.
 
-This means that any frames that are sent to the driver via drv_tx() will
-no longer have the flag set. In particular, this affects packets going
-through ieee80211_tx_pending(). Evan reported that this can result in
-the ath9k driver failing to account such packets in its block ack
-window, eventually overrunning the window and stalling TX.
+xfrm4_tunnel_check_size() already checks sk_fullsock() since commit
+1620c88887b1 ("xfrm: Fix the usage of skb->sk"), so iptfs_is_too_big() is
+the only remaining IPv4 caller passing a request socket here: the sk it
+tests is the listener, while skb->sk is the request socket.
 
-Fix this by reinstating the flag in ieee80211_tx_prep_agg() when inside
-a valid block ack window. This should be harmless for the TXQ path, and
-will reinstate the previous behaviour for drivers that use the flag as a
-signal to track the packet in the window.
+When IP-TFS rejects such an skb because it exceeds its payload MTU, the
+local error path treats the request socket as a struct inet_sock. KASAN
+reports a slab-out-of-bounds read in ip_local_error() beyond the
+request_sock_TCP allocation.
 
-Fixes: 592234e941f1 ("wifi: mac80211: Fix iTXQ AMPDU fragmentation handling")
+Resolve the skb owner with skb_to_full_sk() before accessing inet_sock
+state or reporting the error. This maps a request socket to its listener
+and rejects sockets that cannot be used as full sockets, matching what
+commit 6973a21ee73c ("ipv6: xfrm: use full sockets in local error paths")
+did for xfrm6_local_error().
+
+Fixes: 0e4fbf013fa5 ("xfrm: iptfs: add user packet (tunnel ingress) handling")
 Cc: stable@vger.kernel.org
-Reported-by: Evan Severson <eseverson@gmail.com>
-Link: https://lore.kernel.org/all/20261014025734.2288693-1-eseverson@gmail.com/
-Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Tested-by: Evan Severson <eseverson@gmail.com>
-Link: https://patch.msgid.link/20261023110052.650519-1-toke@toke.dk
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Link: https://lore.kernel.org/netdev/20260908224856.1591189-1-kuba@kernel.org/
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Assisted-by: tencentos-corvus-ai:hy4-preview
+Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/xfrm4_output.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 5714634c81033..27bae2a4fa86e 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -1130,6 +1130,7 @@ static bool ieee80211_tx_prep_agg(struct ieee80211_tx_data *tx,
- 	struct sk_buff *purge_skb = NULL;
+diff --git a/net/ipv4/xfrm4_output.c b/net/ipv4/xfrm4_output.c
+index 0ae67d537499a..fffa3c4f456ee 100644
+--- a/net/ipv4/xfrm4_output.c
++++ b/net/ipv4/xfrm4_output.c
+@@ -38,9 +38,12 @@ int xfrm4_output(struct net *net, struct sock *sk, struct sk_buff *skb)
  
- 	if (test_bit(HT_AGG_STATE_OPERATIONAL, &tid_tx->state)) {
-+		info->flags |= IEEE80211_TX_CTL_AMPDU;
- 		reset_agg_timer = true;
- 	} else if (test_bit(HT_AGG_STATE_WANT_START, &tid_tx->state)) {
- 		/*
-@@ -1161,6 +1162,7 @@ static bool ieee80211_tx_prep_agg(struct ieee80211_tx_data *tx,
- 		if (!tid_tx) {
- 			/* do nothing, let packet pass through */
- 		} else if (test_bit(HT_AGG_STATE_OPERATIONAL, &tid_tx->state)) {
-+			info->flags |= IEEE80211_TX_CTL_AMPDU;
- 			reset_agg_timer = true;
- 		} else {
- 			queued = true;
+ void xfrm4_local_error(struct sk_buff *skb, u32 mtu)
+ {
++	struct sock *sk = skb_to_full_sk(skb);
+ 	struct iphdr *hdr;
+ 
++	if (!sk)
++		return;
++
+ 	hdr = skb->encapsulation ? inner_ip_hdr(skb) : ip_hdr(skb);
+-	ip_local_error(skb->sk, EMSGSIZE, hdr->daddr,
+-		       inet_sk(skb->sk)->inet_dport, mtu);
++	ip_local_error(sk, EMSGSIZE, hdr->daddr, inet_sk(sk)->inet_dport, mtu);
+ }
 -- 
 2.53.0
 
