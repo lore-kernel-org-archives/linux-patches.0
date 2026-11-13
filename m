@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590311;
-	b=NyP0OIRalCiMxQcsW+BbN3xHDECF5ntS6nOpMVRuujwUJBjeFoOmPssXJRGnL8XbdT20
-	 eTAufBZIM4hV8VGATHPCzT4tw+HbuLXz9KReOf4hs6JnPVe0Sn256EmhkmnB898ZFju5M
-	 33kG0Zx7LArQRSGFpNdOQDn7Rk4WmXi7H7+QXAxLOCAzJlZV903LMAFusywSeHCXcqP70
-	 uoTVbEhIH1MlOmTpUmgPR+vYcxIzkV8Rf/9z+Zkkvg2SB54kwShlWkUIn3uXSD6rPevdi
-	 jfdzgjuWDBlo0K/eGUu9I5o2A/v3j7P3PA302b5Mf8+1N4QViLmqh5Tvd2lLNZ0Lnww==
+	t=1794590312;
+	b=nFFBlwV5pQ9pvLZKRHdpRNgpWyprChpSKrLv4T02OwQypabStNKLEik9+0Ey4Qm50Eo1
+	 3vBtVz5LFtIjhMXhUbw5Sh/ON3izeiBqGsO0VILZqpLSXSV4FNHFgwsedyC7xa/Pxx6Jd
+	 Hgu/j+GbgA4migs1hVIe/R6tP5ucWm5A/G226tKE3clcRUP4pwlOrZyvuc5+RwL7yVYUZ
+	 2cRVXfOaWZc6YTTn1uVnT7qJlLvhK23LCP1WDPazkKCT/+3bNBLCbZmfrzH63IoNF2zVQ
+	 gCrrtTiAnHcdpDmOIQPrBu0DSgpLwIHdJ6Tz38yWQys5Xd84DOf9XHRn1qtCeTJldcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590311;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590312;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oyKkYhUVd+SAhk6ddham6dqqoUU3tEQPzsQ0M1Lqu30=;
-	b=Bxl2Nqk9W2calDJf09q27E0a1OpzKaSsSAvftpo6qnArIA8XboH612q+L8cdFCV/0Ug7
-	 QltZuAOyS20VhVGig/5q0NEi6AOvDQejci673U771350NOg9VKSQkGXSyWRBi4aLB21EE
-	 NN+bZg6lDnvulMkHAuhiP49p65B5ITlK7h5gvmQZ0y9Yg9JNFELTTY4KCKwKYVq0Gl47z
-	 rE3AcRSQQe90oDa8eIPSKyR0uL0CDpmIrianLQP0DobO4KoL4Mwu0Gw+16w3wh/+q3QG2
-	 wDpbJnTq1FoQufev4abYvi8Ev6FPxtjvpBg5Jdhf5cQbpILzmyMF6k2AamomrDGxUzA==
+	bh=BEoHnxlipzMIHFTaFPbRpvDuPAH4l1fURTzicekbsu0=;
+	b=rcOmjtQZU/Ka05aBrgQaYG8LYjfV4fREKbyTpljZHdjH4hxglXwXUMcPLZhQikmwV/6N
+	 HeZAMb0ViW4TgoSK1SDeqiOakfui4jYJEhPPeai9aWgiB20qP8Muv3+j1GtFqcsM5kFFX
+	 V46ISMSjt2FRRkHCTbUNG8JtLg8Xm8JkqSZ7JU6bJdELBbXQtfHLS+I6QYBU60kc8JxGF
+	 hFcPxkHEqIxmm4emVTGPAX04Uk7snNtf8yF3SC/1B1dDd2ksdWmnztO7B3rTuG7zqUx4e
+	 3Jf99+6yv2qqmaQq4MtqqtYgVOJFOhmG6I1Hgc5dMW62hbQKxTAFj+s3ZswgM+wEOLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rh9yiQpZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=INuGBbbA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29458607D2CF;
-	Fri, 13 Nov 2026 17:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A531B607D2E1;
+	Fri, 13 Nov 2026 17:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rh9yiQpZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D3A1F000C8;
-	Fri, 13 Nov 2026 17:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=INuGBbbA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDD31F000CF;
+	Fri, 13 Nov 2026 17:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590311;
-	bh=oyKkYhUVd+SAhk6ddham6dqqoUU3tEQPzsQ0M1Lqu30=;
+	s=korg; t=1794590312;
+	bh=BEoHnxlipzMIHFTaFPbRpvDuPAH4l1fURTzicekbsu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rh9yiQpZf6jb8pcvNwsXtgMi5NtwZQ047up6sxKeQLjGfC/uDneFlp7alxHVRq4Ps
-	 XslQ813yZVg7xzcPsn1D11WWGRhxOUoEhyXc87l++6i7+/OfJRCyo804BYzoHSgmbU
-	 cR1zw8LOFZbR5/PcqcpRN6BNAmp/fCPg1MJrx1SM=
+	b=INuGBbbAAK3piiqJw6WgkB3wYG/KjA92zd8HLLQq9sA/S65s9KTwRnFR6WgUPEGlq
+	 BXE0WLw5BBMT8MfQqQtabi9jl7s8Zr8/cF5YDLu8u1zTIqTaulVa/4LHNjRxKkffbD
+	 54d6D1STevh/+vERp14v/XTqR4itsX/BGbC8+LCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Woodhouse <dwmw2@infradead.org>,
 	Stefan Teodorescu <fane@google.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 295/686] KVM: x86/mmu: Conditionally resched when retrying gPTE walk on A/D update failure
-Date: Fri, 13 Nov 2026 10:47:08 -0500
-Message-ID: <20261113153830.959881051@linuxfoundation.org>
+Subject: [PATCH 6.18 296/686] KVM: x86: Conditionally resched when restarting REP string emulation
+Date: Fri, 13 Nov 2026 10:47:09 -0500
+Message-ID: <20261113153830.990389076@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -71,56 +72,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit b2691b3a6cd230209736c89684dab90d939aa56b ]
+[ Upstream commit ae85ac25eb671d174811cc3101549448671fd505 ]
 
-Conditionally reschedule when retrying a guest PTE walk because the CMPXCHG
-to update A/D bits failed, e.g. because a different task/vCPU modified the
-relevant gPTEs.  On kernels without involuntary preemption of some kind, a
-misbehaving guest can "capture" a pCPU effectively indefinitely and trigger
-soft lockups by continuously modifying its gPTEs such that the result of
-the walk is remains valid.
+When restarting emulation, e.g. of a REP-prefixed string instruction,
+conditionally reschedule as emulating guest writes can be deceptively slow
+and expensive, e.g. when shadow paging is in use and each write can trigger
+write tracking.
 
-Fixes: b3e4e63fd9ee ("KVM: MMU: Use cmpxchg for pte updates on walk_addr()")
+In a perfect world, restarting emulation (or not) would be less arbitrary,
+e.g. would honor not only host events (NEED_RESCHED, signals, etc.) but
+also guest events (e.g. by checking kvm_vcpu_has_events()).  Unfortunately,
+as pointed out by Sashiko, pio_in_emulated()'s read-ahead logic is baked
+into the restart logic, as KVM relies on restarting emulation to drain the
+cache and avoid duplicate reads from the I/O port.  I.e. re-entering the
+guest on kvm_vcpu_has_events() or __xfer_to_guest_mode_work_pending() would
+introduce architecturally-incorrect, guest-visible changes.
+
+Fixes: 5cd21917da24 ("KVM: x86 emulator: restart string instruction without going back to a guest.")
 Cc: stable@vger.kernel.org
+Cc: David Woodhouse <dwmw2@infradead.org>
 Reported-by: Stefan Teodorescu <fane@google.com>
+Suggested-by: Stefan Teodorescu <fane@google.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20261022015903.282261-1-seanjc@google.com>
+Message-ID: <20261028173638.1765329-1-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/paging_tmpl.h | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/x86/kvm/x86.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
-index 4e84b5a1eeaaa..ec265eb196da4 100644
---- a/arch/x86/kvm/mmu/paging_tmpl.h
-+++ b/arch/x86/kvm/mmu/paging_tmpl.h
-@@ -321,6 +321,13 @@ static int FNAME(walk_addr_generic)(struct guest_walker *walker,
- 	gpa_t real_gpa;
- 	gfn_t gfn;
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 6576c692a94eb..0a6fb6e08d1bd 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -9218,10 +9218,12 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+ 	} else if (vcpu->arch.complete_userspace_io) {
+ 		writeback = false;
+ 		r = 0;
+-	} else if (r == EMULATION_RESTART)
++	} else if (r == EMULATION_RESTART) {
++		cond_resched();
+ 		goto restart;
+-	else
++	} else {
+ 		r = 1;
++	}
  
-+	/*
-+	 * KVM might sleep/resched when retrying the walk if the updating A/D
-+	 * fails because the gPTE changed between reading the gPTE and trying
-+	 * the CMPXHG to set A/D bits.
-+	 */
-+	might_sleep();
-+
- 	trace_kvm_mmu_pagetable_walk(addr, access);
- retry_walk:
- 	walker->level = mmu->cpu_role.base.level;
-@@ -471,8 +478,10 @@ static int FNAME(walk_addr_generic)(struct guest_walker *walker,
- 							addr, write_fault);
- 		if (unlikely(ret < 0))
- 			goto error;
--		else if (ret)
-+		else if (ret) {
-+			cond_resched();
- 			goto retry_walk;
-+		}
- 	}
- 
- 	return 1;
+ writeback:
+ 	if (writeback) {
 -- 
 2.53.0
 
