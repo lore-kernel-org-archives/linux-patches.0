@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591386;
-	b=w5I/wdwt6cBKKNaGtikjdxzwmF9vJuPaylh5b676uWLbbkY8D3g7ARaqPmq9D3CkRR/5
-	 YSQ9V/7njPCqHv61vQqOOZm7u/L9n7yvPiAdgaYIaN+y7cndPxdy5KGDO1pO5T/9AYNvJ
-	 Ho/+tLX52JWuLTPBQghzwZw269+AxA4FgJr9wSYA/uIzzYYtC9yE/J8HbCVyp1YpETpjz
-	 zBxVu4kRR9kbYr+3U2e0KxvAKH8zUx53PMOnQIXypF/3YpMh2QL+BrbIaIo7N83IJyaHt
-	 tcVX5T1odzIPdds0MvHgZYl75Io3i28TtTN3OVysuin7eX/apfof9Um81m+HprH5d2g==
+	t=1794591387;
+	b=RBY2BHL83EPyJtgDQNGBKRwwHaqVzY7+wILe605pR8DcBZtiIApMopq1GXgyU3sPEm/b
+	 gCTqCjpgMh6zQ0pH3/xLnqATOq6yRhFHBMBTYz9INHkcN3YVtNzwQApbbkjTNm+HtpzZT
+	 qO+sDQ4FRXfD4GjBBux3nIrPeUaI2mIHprzT9IT3YQnMOIq2cc79Q4o3yUjvVqEYMWqLG
+	 TArZxiCMgK0+9HqHAQqSWVsFnhvbsWIaiKtsRGUfM3sUxrHYr/d0wt+ovFY3bYd01Bvoj
+	 inHG2Mj9LiFa6AQhsU/ACLoyGraL37lRIABcRTxqlMqjSOrTLCpwh8z+AQaKcln49uA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591386;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591387;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=loQ8kxXdXVQUUGoasCIkfxE2h8tAqDLDf4vijZYuBHg=;
-	b=xkQQR9MP9cs2r9mwTRiOkzqyAfVIQ7SZ96J0daDFhxpJftywdq2o03zYnp+xUURWQyto
-	 yEX7QZhzdvYf0S/UTjFatoh9SK5Aov3X7PtL3ZlAVQmxjAA+sfedhAkh67Z3zPqhOyiWC
-	 MA0kGGR/FOd+E0ZBq2fh1IRUE3eNcsVFAdoW+1j6sv3Mf00IiO1VoQnOg45qABZ+zrjv3
-	 kdiqX3Ijfw8FC5UkgGyuWUaDoJ5x3lPwyYKvK/xKSeoosS7CgZONaEQJlNkOCJ1fGVCED
-	 sNZlCVCK8Ndvk4Cy4+lN8wkiHE1pwFfgQFW/k8LV0UZ+r4UCgtcAQ1r86slNx5uqmnA==
+	bh=jk4S2SOYP6ZvcgKtYFH7gEFj+7p848lgjeHueNaj5rE=;
+	b=pFVwQbNWJd4u+eomZopHC0huUo6iJ2vvn7rI4sYY/BbBt45C/iOG1IdPiUodoD57eJPi
+	 CgAh0ITwYKoFq+q34XSXoWTxEm7XIpCGDXhDjtSvBTF0c1hVBv3ocP6bBx3oLlX5nmjkH
+	 D+vf4AINrlJssYBuOoZ06fy3/HKGVF1dJO3h5XSuopmEN4n4PdJ3l7DSzLP5rrK7DJY9q
+	 HiUsShN92okBguF4Z03abu0LNp6vMBoQMlIlbM+T0lm0ets5tVyD4bAoJgiH7rpGPsfPy
+	 pRhHonv4vtOMKCvZazCu74T5oeM0DCdxJdyrHJsVRDPkRRMg3y5QVS1N38M5UgEYANg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lCMMxFv3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Du18QOov;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8F0606B23A;
-	Fri, 13 Nov 2026 17:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2670F607A5C8;
+	Fri, 13 Nov 2026 17:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lCMMxFv3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EEBD1F000C4;
-	Fri, 13 Nov 2026 17:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Du18QOov
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B691F000C4;
+	Fri, 13 Nov 2026 17:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591385;
-	bh=loQ8kxXdXVQUUGoasCIkfxE2h8tAqDLDf4vijZYuBHg=;
+	s=korg; t=1794591387;
+	bh=jk4S2SOYP6ZvcgKtYFH7gEFj+7p848lgjeHueNaj5rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lCMMxFv3fPJ/qgQqBNRrwT7ADxHC02eex0Y/bNOReCtZvk0l/OHicaZF1obcvfLGz
-	 +7hnCnJvfU7ta7S+uC/iwu4NLH1SfNpxQnFbRRS11VxdEDeOP0ShyfbIl/8dXLEVLT
-	 vN1UtFEMLKVHA+5hQkgHxqlWmI3/AywxwX4+HwOg=
+	b=Du18QOovjsoQ2HtlawOtwelN7erAb3fR47OyZjmbK0I8FVPolDXvO3NHaTMzS82pr
+	 gq74MwK1KrY1SqfZNzVCRCoccRBMgD5vePpQDwFvmAuaXT/44C5dgq7Bg+OzlnXCwV
+	 sqNWblss7wRBDPqazMMU57oGI5vZBCcNVYTyeslw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 487/670] ipmr, ip6mr: validate packets injected into the register vif on xmit
-Date: Fri, 13 Nov 2026 10:50:51 -0500
-Message-ID: <20261113153828.441308136@linuxfoundation.org>
+Subject: [PATCH 6.12 488/670] ceph: fix longname buffer overflow in ceph_fname_to_usr()
+Date: Fri, 13 Nov 2026 10:50:52 -0500
+Message-ID: <20261113153828.472576824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,102 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-[ Upstream commit aa1799e93f5ebb973252aec649d84d12d9c7fd1c ]
+[ Upstream commit 71975d6e0db17646102488cf54480fda9de0f7a7 ]
 
-reg_vif_xmit() passes the packet to ipmr_cache_report() which copies its
-IP header into the IGMPMSG_WHOLEPKT report that is queued to the mroute
-socket. Nothing guarantees that the packet contains a full IP header, so
-when a short packet is injected on the register device (e.g., using
-AF_PACKET), the copy reads past the end of the packet and a recvmsg() on
-the mroute socket leaks the uninitialized bytes to user space [1].
+Snapshot longname reconstruction formats "_<name>_<inode>" via snprintf()
+and memcpy()s the result into oname->name.  Checking the length against
+NAME_MAX only protects the LOOKUPNAME/export callers, whose buffer is
+allocated with fscrypt_fname_alloc_buffer(NAME_MAX).  The readdir path
+points oname->name straight at the altname in the MDS reply, whose
+capacity is altname_len; the reconstructed name can exceed that while
+still fitting under NAME_MAX, overflowing the in-place destination.
 
-IPv6 has the same problem [2]. Its reg_vif_xmit() does call
-pskb_inet_may_pull(), but the helper keys off skb->protocol and does not
-pull anything when the protocol is neither IPv4 nor IPv6.
+Save the actual oname->len before the decryption overwrites it, and fail
+with -ENAMETOOLONG when the reconstructed name would not fit.
 
-Fix by dropping packets whose protocol does not match the address family
-of the register device or that do not contain a full network header.
-
-[1]
-BUG: KMSAN: kernel-infoleak in _copy_to_iter
- raw_recvmsg
-
-Uninit was stored to memory at:
- ipmr_cache_report
- reg_vif_xmit
- packet_sendmsg
-
-Uninit was created at:
- __alloc_skb
- sock_alloc_send_pskb
- packet_sendmsg
-
-Bytes 1-3 of 21 are uninitialized
-
-[2]
-BUG: KMSAN: kernel-infoleak in _copy_to_iter
- rawv6_recvmsg
-
-Uninit was stored to memory at:
- ip6mr_cache_report
- reg_vif_xmit
- packet_sendmsg
-
-Uninit was created at:
- __alloc_skb
- sock_alloc_send_pskb
- packet_sendmsg
-
-Bytes 8-23 of 41 are uninitialized
-
-Fixes: 14fb64e1f449 ("[IPV6] MROUTE: Support PIM-SM (SSM).")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/0545f0c83f5ee2f6696210f87268e811ef655715.1792476357.git.zhilinz%40nebusec.ai
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261025071729.34967-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: dd66df0053ef ("ceph: add support for encrypted snapshot names")
+Suggested-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ sashal: adjusted context for the struct fscrypt_str temporary buffer and %ld inode formatting ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c  | 6 ++++++
- net/ipv6/ip6mr.c | 2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ fs/ceph/crypto.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 6ebbd83b01306..8fadd5281c5e4 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -513,6 +513,12 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb, struct net_device *dev)
- 	};
- 	int err;
+diff --git a/fs/ceph/crypto.c b/fs/ceph/crypto.c
+index f955a37d6b17d..97fa6b821d5e8 100644
+--- a/fs/ceph/crypto.c
++++ b/fs/ceph/crypto.c
+@@ -389,6 +389,7 @@ int ceph_fname_to_usr(const struct ceph_fname *fname, struct fscrypt_str *tname,
+ 	struct fscrypt_str iname;
+ 	char *name = fname->name;
+ 	int name_len = fname->name_len;
++	int dst_len;
+ 	int ret;
  
-+	if (skb->protocol != htons(ETH_P_IP) || !pskb_inet_may_pull(skb)) {
-+		DEV_STATS_INC(dev, tx_errors);
-+		kfree_skb(skb);
-+		return NETDEV_TX_OK;
-+	}
+ 	if (WARN_ON_ONCE(tname && is_vmalloc_addr(tname->name)))
+@@ -464,6 +465,9 @@ int ceph_fname_to_usr(const struct ceph_fname *fname, struct fscrypt_str *tname,
+ 		iname.len = fname->ctext_len;
+ 	}
+ 
++	/* oname->len is overwritten by the decryption below */
++	dst_len = oname->len;
 +
- 	rcu_read_lock();
- 	err = ipmr_fib_lookup(net, &fl4, &mrt);
- 	if (err < 0) {
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index 9a1d04e197ff4..0ecb6af344fbc 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -616,7 +616,7 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb,
- 		.flowi6_mark	= skb->mark,
- 	};
+ 	_oname.name = unlikely(is_vmalloc_addr(oname->name)) ?
+ 			tname->name : oname->name;
+ 	_oname.len = oname->len;
+@@ -481,6 +485,10 @@ int ceph_fname_to_usr(const struct ceph_fname *fname, struct fscrypt_str *tname,
  
--	if (!pskb_inet_may_pull(skb))
-+	if (skb->protocol != htons(ETH_P_IPV6) || !pskb_inet_may_pull(skb))
- 		goto tx_err;
- 
- 	if (ip6mr_fib_lookup(net, &fl6, &mrt) < 0)
+ 		name_len = snprintf(tmp_buf, sizeof(tmp_buf), "_%.*s_%ld",
+ 				    oname->len, oname->name, dir->i_ino);
++		if (name_len > dst_len) {
++			ret = -ENAMETOOLONG;
++			goto out;
++		}
+ 		memcpy(oname->name, tmp_buf, name_len);
+ 		oname->len = name_len;
+ 	}
 -- 
 2.53.0
 
