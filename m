@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590237;
-	b=j4hhKXJNu/GBB//yM2Y1qj7qWZMzUs4UIscjF0eZNcgb1RCuZ0ILHaz1EytiNYoFsYGO
-	 XLf+neB+bQtpRj9EyzxLCnAzWhRHD18GM5M92aNZWNX4rcdY9ZYsk9Mc1HlEPYHEt+mAp
-	 9VaGQrosychkWCZI0ZG6rx0Qq6oQhoHDOFAETG6vchU7FGNcm2iyb6XEKnap326TxJPdK
-	 VVU0okxB1rLhYmFuAN/x1Wf+o+5e6tSLgaXs1FByDjaH4MgKWwPGehFn6/+r5VEjsg+dW
-	 jCaaZ57PElwVu12HdLNIL7sMcS4sP+riz8XS22OKf57OyM/ZIejK8Nn3iBBHvYGEp1A==
+	t=1794590238;
+	b=pnDVAz2uKq56Z3yrBGPsgIBYlJkUclGDSARqSNK8bD3hbIJahwUtbiGnxhAxD/JUI/fZ
+	 FLnjBk0ureeW7Z5Ui1IUXMkriJVjOp2sprrN6jNTcr0UuaRwGqPS3sM5/wIzWu00avD76
+	 LSHnax8ZRXyuDscQKibQ8pq9oi3OrXa14ev5dJnP7H2j81I+SSpItlWpZ8ZoWPENTxGGv
+	 9KZAOI+ywDKp8asd5h7P/2stq37trSOutYmDDwr7oKAdQheU/+4aK3pcYJ2Eb0Ih0315K
+	 mlO82ke5aaNT6uIFbEeTdSkCE/JEd2n4Lb66Bk+PjGhk0DtQ2tUd4K0z2x9RmHOnuaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590237;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P7pTqfz0VRAtFSvavtqhV94qZs3NgUsCzlbx6zIQmUI=;
-	b=NSJvhKk+fRmgA4xP6zkM5U8GrRLxTQNMut0OPC1xqFaBYUy7khj+nsOUWrkMQVwFb5h2
-	 PbtCTjif2sauHhhNLp7mkJ/cY4L3U3Auo1FU3Ffb7Obg3fnjYfRjgFJ993mqxQ/wrCskd
-	 X9fhamm63wwc+Bl9+by6uOj2GDWpYhfrigySvV1MTwFwoe/92GyPJnJK2XY4K5Cb/iil6
-	 aHzcJaKBONU7xf45XlBCTsM5tZ5ojqVcfsW0pNaEyAWQXB3Wl0TYll/kMu9khC/6fg3Ke
-	 NQu1fLYuSir2haKXFv/YCzPk3EkZTOVtvb6OON903y4emAbM5OZENiWFTcWRGSO41ag==
+	bh=vY9TIm/zOdhpTK1bQVKNfwRkTrUygiepos9ehMfGPN0=;
+	b=csbYdAgK+tNSRebB3pLVY/eXpnrSZ/9Fn89mDAlUGcHmbrn1SZK8fRV4TSY2zqMdqRWv
+	 OJAL+mLac5EaueXmT8tcJGFNFa3KfBwwdIBvjD9Ul6gi6AYe5BuDrSzofUY0QbEL3dnE4
+	 sFh1yhjIeHTzdy9KGzrA0+ED30E7Zy+4AkaRGF5fyWc4kZ4wBV/U0k15YkrFyTi+ou+2N
+	 8m6l66fjktrmNqRXYIZi93hy2Cqh18BW0NByW0WaDJSBisJ9XXDF7zNWbPuQLN8CqfdHd
+	 zo3MHIh3TQ8V3dDen/8CLBrvk1gh6qdT3kHeSlqHXPVViQdjlTAGs5F0dEBZyO86u7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PGMTGcm+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdRhCQ00;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48AA606C0BD;
-	Fri, 13 Nov 2026 17:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE1F6075E26;
+	Fri, 13 Nov 2026 17:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PGMTGcm+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9054D1F000C4;
-	Fri, 13 Nov 2026 17:17:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdRhCQ00
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6DC1F000C6;
+	Fri, 13 Nov 2026 17:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590236;
-	bh=P7pTqfz0VRAtFSvavtqhV94qZs3NgUsCzlbx6zIQmUI=;
+	s=korg; t=1794590238;
+	bh=vY9TIm/zOdhpTK1bQVKNfwRkTrUygiepos9ehMfGPN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PGMTGcm+g4PcsxXA3rJeWLANqFwZyVttrHeLjNAj+kgrochWz5M9x7K7PdA6CnWWh
-	 HCzzALwmPiR28ChSkTmcsQmlR/E77fsCEkYZ/8D8QEDxnmpfBCR0blR0Huu7lu7QfT
-	 gZslfi4bm7vKdE/uxDExeyVCBZtZr6SkF+JeIB4Y=
+	b=CdRhCQ00gECMoqRahAEhMB42npbqvts6+E5rfLfBSwt+wuCLxHVxv4C9L5cev/UVR
+	 8jmryL0hH4vL1nJ9RcKYIXPex7YgZ986Gm5KzPts7WyyK0mwGOcGbdvF1rcKdc2yrg
+	 Xfaj6nfXPfdDFoVTAXty2EC7lNAv6bHU9lC+SIsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifei Gao <gyf161023@gmail.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 183/686] 9p/xen: fix refcount leak in p9_xen_response() on wrong tag
-Date: Fri, 13 Nov 2026 10:45:16 -0500
-Message-ID: <20261113153827.208104543@linuxfoundation.org>
+Subject: [PATCH 6.18 229/686] ALSA: us122l: Add missing NULL check in usb_stream_hwdep_mmap()
+Date: Fri, 13 Nov 2026 10:46:02 -0500
+Message-ID: <20261113153828.778113968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,45 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Gao <gyf161023@gmail.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit 4d183e6f153245aca2534e372152583b868dd925 ]
+[ Upstream commit f5d3eb483fed59fc0f3b059b8b6a32cedc922360 ]
 
-p9_xen_response() looks up the request for an incoming reply with
-p9_tag_lookup(), which takes a reference on the returned p9_req_t. When
-the tag does not resolve to a request in REQ_STATUS_SENT, the function
-warns and continues the loop without dropping that reference, permanently
-leaking the p9_req_t and its msize buffers. The reply header, including
-the tag, is supplied by the backend, so a malicious or buggy 9P backend
-can leak kernel memory on every crafted response.
+usb_stream_hwdep_mmap() reads us122l->sk.s and dereferences it without
+checking for NULL.  The stream object is released by usb_stream_free(),
+which is reached through us122l_stop() both when the device is
+disconnected and when us122l_start() fails, and it leaves us122l->sk.s
+set to NULL.  The hwdep file stays usable after that, so a later mmap()
 
-Drop the reference before continuing.
+	KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+	RIP: 0010:usb_stream_hwdep_mmap+0x107/0x890 sound/usb/usx2y/us122l.c:182
 
-Fixes: 728356dedeff ("9p: Add refcount to p9_req_t")
+crashes while reading s->read_size, which sits at offset 0x10.
+
+That NULL is an expected state for this field: usb_stream_hwdep_vm_fault(),
+usb_stream_hwdep_poll(), usb_stream_hwdep_ioctl(), usb_stream_stop() and
+usb_stream_free() all test it before use.  Only the mmap callback misses
+the check, so let it return -ENODEV, matching what the other hwdep mapping
+in usx2yhwdeppcm.c does when its shared buffer has not been allocated.
+
+Fixes: 030a07e441296c372f946cd4065b5d831d8dc40c ("ALSA: Add USB US122L driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Yifei Gao <gyf161023@gmail.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Message-ID: <20260806144255.4167019-1-gyf161023@gmail.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261028042525.8737-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 2 ++
+ sound/usb/usx2y/us122l.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index 068d57515dd58..92701a16511d4 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -201,6 +201,8 @@ static void p9_xen_response(struct work_struct *work)
- 		req = p9_tag_lookup(priv->client, h.tag);
- 		if (!req || req->status != REQ_STATUS_SENT) {
- 			dev_warn(&priv->dev->dev, "Wrong req tag=%x\n", h.tag);
-+			if (req)
-+				p9_req_put(priv->client, req);
- 			cons += h.size;
- 			virt_mb();
- 			ring->intf->in_cons = cons;
+diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
+index aaeae099b5f2e..50975b7ef1b8b 100644
+--- a/sound/usb/usx2y/us122l.c
++++ b/sound/usb/usx2y/us122l.c
+@@ -179,6 +179,8 @@ static int usb_stream_hwdep_mmap(struct snd_hwdep *hw,
+ 	offset = area->vm_pgoff << PAGE_SHIFT;
+ 	guard(mutex)(&us122l->mutex);
+ 	s = us122l->sk.s;
++	if (!s)
++		return -ENODEV;
+ 	read = offset < s->read_size;
+ 	if (read) {
+ 		if (area->vm_flags & VM_WRITE)
 -- 
 2.53.0
 
