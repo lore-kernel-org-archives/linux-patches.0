@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590508;
-	b=MWxi0aWlp0o623mD2+qRMQq9SkZSnpDA6UvyCWMjUxcl7MDpG5quZDurFd7WGItWXHIn
-	 qtE0NB4O4igJLbQbUIINGEOPYsb6LCOczbxVfES2qZTF0S7juVkMiFazLtgL+0dkpHYez
-	 JpJxgTIxXcpO5VyTXB5Ew7J45ILN1jLq+nPheWSqeM4wHbjCUC2jkbSElfrvOZZ42utwM
-	 V3ENYtGvL/ocAhDEWHuJkn97B4Du1rATx0iHdVwbc7awEaMTMuNlWOWEHkvyamqemfux1
-	 j6HQ4EQ1zpNm8q4KEw5UggLoWVQSpwrKQ3NafqLglRbdbJ9x6i8GsQBVBcFbzg17TSw==
+	t=1794590510;
+	b=AH9YKXE8Jq13Xk2eoMvdXRpBg+nTmdwVp8qIU4qKiPYsa4vxadnaU1bWuZH863CMagWA
+	 PNUdHyXd4p1WqkO7PLi6H0QZpMbMpNWRt6CEORCUZAyvn6w4AloldnLmhMKc8hYgDdtui
+	 Cu69DGrJBDCXnaA/dVbPIzjD/87uLAj12YRX/F0P/XTOzcR6chUizVkcPjTlCJTEuy4CM
+	 wVCBH4N7DWIn9Uyjvt+c3jIle2rDzcIScteQZuxIUW0tb8N7YtCANhz3urijx5Wkn8FfK
+	 k/FY0KDny4zVA0QSO0uV6uGEKF0D76Shm07gnStroiWKtKeol2Re7SoMvbcRei07cmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590508;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590510;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gEYkn6bpzqzwllQbr03N1f0yoe5IX2dPzdziYDOGCts=;
-	b=33VC+TfhP0hFlA1uqv+CCJxTvHuJ+n0ZA85HmxyOMDtGWmv7Pz7K2VrCGWWEGx7LPhzX
-	 mQ9OQjpyJmsnkCam1JHclrvd/7blzJJXw6zUz2V2QYcnV03WmtLANr5/WpKcFzDVX1dKq
-	 tN8XUDGZb9/+qEREqNAZe3tCIoAa4PTTclc3AUb8uDJLgDfLAN2tHkPjCGkRMY33aN4LG
-	 jR+ZmEo5RrhDg4fEMHk5CINTlXyTVCofJ2MasumDV/WvrxvaY67+fKHGPz2SR0ReU2SV9
-	 L2IsGkFJSZ3hiczxQdH31d6Vwf7z+Gk2d9J8rblXqYBTwBlp9YoRZsLtkqvWo/4s2iQ==
+	bh=cF6UMq9iyOgHUqVIJJhdof58eFOa2c5yyR+qHXwABe4=;
+	b=pYzbpt7BUESJ2lo9ukrkWY+kGTGDcWIjjHsdu1a3Clrmgbaxm1GKubzmA2Y7CL7vPRiU
+	 bmLHA60Jom9auRRR2bXPKnBlh9c4otQo7JKb0+f0lGTqgfwD/5RZv+63iCq8mRh5aO/6t
+	 +jFEazDHfo9njX9d4BMy6ZjDVzHWtQDOMiTUS8rqsAe2RmMWOxKKoMPDfFLqFEL/yezoF
+	 EhZJsKBInU9+mxMXwKPG80AacEVBuP90ZUQUUxh5XzNBtogFOjUAgXru+ywob60ASROHF
+	 Js+ILlcsxkviP+YDdmJRpftWCpbJIf/gDmYgU0mINR3Kp6PX0WSUcLJg1L+UKWHh0TQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="D7/tdGPq";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kxbIhIin;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30616073208;
-	Fri, 13 Nov 2026 17:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099B3606B35B;
+	Fri, 13 Nov 2026 17:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D7/tdGPq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EEE61F000C4;
-	Fri, 13 Nov 2026 17:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kxbIhIin
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A902B1F000C4;
+	Fri, 13 Nov 2026 17:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590508;
-	bh=gEYkn6bpzqzwllQbr03N1f0yoe5IX2dPzdziYDOGCts=;
+	s=korg; t=1794590509;
+	bh=cF6UMq9iyOgHUqVIJJhdof58eFOa2c5yyR+qHXwABe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D7/tdGPqp+n4xSu3jimhnbey1w+eH9J+/WWWo2AoQqDMVCtgX74MrwSiYwW7RZJzC
-	 oNaqhhj3FrhnGr+S2qkGBq+Aqc6W3pP90C4JTKsy264yA685ZiPmrsoZpzKfLTRfof
-	 8B+6rtDN6vp/57e2wcUPM6zBASeSCW5mbtVlUEhE=
+	b=kxbIhIinbKhvhUHEf22vU/lTOoWi/27SGo6UEBc2z1fRzxTQ4zA7SFGCMyR67+eOO
+	 DNYjPs+AQ6IXMfQmX7cr2q+N6vE56uoGvgsgu7a9s0XV7GCJobpEB350GQKDsn5mBT
+	 1+tGtv+EAcpBOYkmPnigGi9jbgHYeUbRGFO3n8rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Erhan Bilgili <erhan.bilgili@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 453/686] perf/core: Dont send SIGTRAP after exec removed the event
-Date: Fri, 13 Nov 2026 10:49:46 -0500
-Message-ID: <20261113153836.222210708@linuxfoundation.org>
+Subject: [PATCH 6.18 413/686] drm/amdgpu: Report MES ring wait timeouts.
+Date: Fri, 13 Nov 2026 10:49:06 -0500
+Message-ID: <20261113153834.966359360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,72 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Erhan Bilgili <erhan.bilgili@gmail.com>
 
-[ Upstream commit 6f083fbccd5f06889bc08e1182bd02c0383b9121 ]
+[ Upstream commit 122e864861144150e905012b5fb52e63ad5de68d ]
 
-A sigtrap event must also set remove_on_exec, so that its SIGTRAP never
-reaches a program after exec. But the signal is sent from task work,
-which only runs on the way back to user space. If the event overflows
-shortly before execve(), the task work can still be pending when the
-task enters execve(), and then runs when execve() returns. By then
-perf_event_exec() has removed the event and the new program has default
-signal handlers, so the SIGTRAP kills it.
+Return -ETIMEDOUT when the fence wait before submission expires instead
+of reporting success without submitting the packet.
 
-The exec_stress test in the remove_on_exec selftest catches this and
-fails about half the time in a VM. A process that opens a sigtrap event
-on itself and then calls execve() is killed by SIGTRAP in 15% to 50% of
-runs, both on an AMD machine running v7.2 and in a VM, with or without
-close-on-exec on the event fd.
-
-Commit ffb684f2aa14 ("perf: Fix race between perf_event_exit_task() and
-perf_pending_task()") made perf_sigtrap() return once
-perf_event_exit_task() has set ctx->task to TASK_TOMBSTONE. Exec only
-calls perf_event_exit_task() when the new program is not dumpable, such
-as a setuid one. An ordinary exec keeps the context and only removes the
-remove_on_exec events, so the SIGTRAP is still sent.
-
-perf_event_exit_event() sets PERF_EVENT_STATE_EXIT when exec removes the
-event. If the event fd is close-on-exec and was the last reference to
-the file, exec also queues the file release as task work. Task work runs
-newest first, so perf_release() runs before the SIGTRAP work and moves
-the event on to PERF_EVENT_STATE_DEAD. So don't send the signal when the
-event state is PERF_EVENT_STATE_EXIT or lower, which means the event has
-been removed. That also covers PERF_EVENT_STATE_REVOKED, where the PMU
-is gone.
-
-Fixes: 97ba62b27867 ("perf: Add support for SIGTRAP on perf events")
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Fixes: 34e087e8920e ("drm/amdgpu/mes: fix mes ring buffer overflow")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Erhan Bilgili <erhan.bilgili@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 34341594a87b4a3f28be41e3e70a4787f02b3d9e)
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261015152013.106040-1-danishkhateeb03@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/mes_v11_0.c | 4 +++-
+ drivers/gpu/drm/amd/amdgpu/mes_v12_0.c | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 469f89cb92f11..ec2d21af68f63 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -7324,6 +7324,15 @@ static void perf_sigtrap(struct perf_event *event)
- 	if (event->ctx->task == TASK_TOMBSTONE)
- 		return;
+diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+index d5cc32fa78485..f73b41b4be7e3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+@@ -207,8 +207,10 @@ static int mes_v11_0_submit_pkt_and_poll_completion(struct amdgpu_mes *mes,
+ 	r = amdgpu_fence_wait_polling(ring,
+ 				      seq - ring->fence_drv.num_fences_mask,
+ 				      timeout);
+-	if (r < 1)
++	if (r < 1) {
++		r = -ETIMEDOUT;
+ 		goto error_undo;
++	}
  
-+	/*
-+	 * The event was removed after this signal was queued, e.g. by exec()
-+	 * (remove_on_exec), which may also have closed its fd (close-on-exec).
-+	 * The new program has default signal handlers, so a SIGTRAP would
-+	 * kill it.
-+	 */
-+	if (READ_ONCE(event->state) <= PERF_EVENT_STATE_EXIT)
-+		return;
-+
- 	/*
- 	 * We'd expect this to only occur if the irq_work is delayed and either
- 	 * ctx->task or current has changed in the meantime. This can be the
+ 	api_status = (struct MES_API_STATUS *)((char *)pkt + api_status_off);
+ 	api_status->api_completion_fence_addr = status_gpu_addr;
+diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
+index 7d7bcf1c69f27..5e438d5896df1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
+@@ -192,8 +192,10 @@ static int mes_v12_0_submit_pkt_and_poll_completion(struct amdgpu_mes *mes,
+ 	r = amdgpu_fence_wait_polling(ring,
+ 				      seq - ring->fence_drv.num_fences_mask,
+ 				      timeout);
+-	if (r < 1)
++	if (r < 1) {
++		r = -ETIMEDOUT;
+ 		goto error_undo;
++	}
+ 
+ 	api_status = (struct MES_API_STATUS *)((char *)pkt + api_status_off);
+ 	api_status->api_completion_fence_addr = status_gpu_addr;
 -- 
 2.53.0
 
