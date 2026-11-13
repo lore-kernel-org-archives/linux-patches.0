@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585390;
-	b=yzXkCMDWsfzI0LZatS4wbSF4lK3wZVFcwYO11N8JUp9W5uHjtEOzqt/6A7n8zBfjNLZa
-	 ZVhP3EeUgQKGoS8Lt/MDs7r59aVOqBtSvuPfzYtXng23FUBQkk3lotiG0mfrj64M2Jran
-	 WyHXX0Kn7Qc3J7w043VBtNVW3NNdMjojJ5SacwBG02sylcoy4xS29trSbpkagOzt0NgNi
-	 VM3wmh3RDxaKxNGJdJATK36PV6jA0gOsfsJr6zfOi31CjVxiJb3iHk+mBPNNG1nH/9hGe
-	 /yOGXwA2nwTHlPjjM7jciYlG9dNIus7+QT5Gnrt3KcPGBFKk8/sSuBt+6NpvzpgalCQ==
+	t=1794585391;
+	b=VIg/OoGqLfA4NIKFdDj3RuuNELXU2WuELXxcV056UNZzo9rMPSm7mNnwgV1HTrnRI3sH
+	 A/3STAPjtQ/3/D60m3HxGSlo6V3XVY3auA1KEQVXdZ1FQtQFWE46Yv15mJtzmkZEPn4lc
+	 7+i8QQVublV8phaliP+ksa/+XGP84aQTjxJMg9/w0AnngtN1dBvcCy9d8uKWSExQ1pJcu
+	 YKxs3xq7Dpdohf+zd+lZjQHufVPHSlTyQdF4RF8at+/Zkx53SaJ4JQ0TSC2H6fk3XH7v0
+	 oyQHU43HMs7d3d0ixx62NJgM46gIMOUjWkUAPGjC1ye9kaF8RQgHx3adFzp4TZ/3eyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585390;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585391;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=s4GISVEZiUHu1eOYOBsZeBlM3+azUzLb75ojadsZj0w=;
-	b=gRiqOlpMOoYd3aPKJhWU/1Qdh9i0HHJxisbSCVOYd9qhojWSNwT45+tuQGsem2a4WPjh
-	 opMsttc+XEJRpUx2c7sf1vlCMg0+WWcKpECpnEj5DtTr7XHKVluP6nFCYb8EpKZAAkmfr
-	 uo9LnPCaI/32QfZ1MG3wABkYRVt3Loya+GjrOOyvUSzgf9K0CPVeObBaK0/3aOZftgxqu
-	 PXMVtCr99mlbtuI1hJRUXsUjTVmNwoBHi2peHUYCb28poE2if8IF8hddEH6NzoTfdTro7
-	 yrT9JCTTP8kgajV53bzMcJJOISbfuyIvtoyI/lWvSUVrp/44Q6ibgGLMvwUQTgjQlwQ==
+	bh=Kzl4yyCCCZLtF5RG8NKIkrsOJvcvSgNZNGczoLeeSRY=;
+	b=nIfy5NCqwLH25YSe0eclOF4fs0m/GqJNjNCmlXbAyDn6T6Gw2PReIj4R84TPJusjbsS2
+	 s20196g1Hk/SyVvyqbIxIzyHx1gTD5BKnUBRF1EntCO43ufion79pFjAh6hDq/LVMDLkt
+	 vsthjum2qCfjzRv2ljzDlc90A/fIk3Zn/IOi94w94VZ/Cleoo8zeTx1JzbHI7l4yaaJO2
+	 MQecyWhcqc1VAZIScNIP1gXEBOUvmlTf/meYb17yvAocXvdee8LOGfMwBciU0sjBKz143
+	 5aXdACFVcDAn7XcLaPTAPjCzXOFMRtXb0jDw+KostFufgIPM+Z7XxD+6zftLVeUmiRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z41LHglW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DGi/5Cd7";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96F56070FC5;
-	Fri, 13 Nov 2026 15:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BC46070FDD;
+	Fri, 13 Nov 2026 15:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z41LHglW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954FB1F000C4;
-	Fri, 13 Nov 2026 15:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DGi/5Cd7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0351F000CE;
+	Fri, 13 Nov 2026 15:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585389;
-	bh=s4GISVEZiUHu1eOYOBsZeBlM3+azUzLb75ojadsZj0w=;
+	s=korg; t=1794585391;
+	bh=Kzl4yyCCCZLtF5RG8NKIkrsOJvcvSgNZNGczoLeeSRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z41LHglWUcMHm/KlytAgk8GmptDoiU/rv5EPS4bSHw2ad6HVALDLjeAVzlRhYhvYV
-	 nh78joiietVwfi7i2bleZiSJ4ED0fXm3EvsB+lyHfNc7sX6hULD6WTOxkeum+5DDMw
-	 cLFNatz4IDfb4zFi4ZrOPCE/yYujsawuuyf4BRGU=
+	b=DGi/5Cd73cFpzLPyDfenWKcFqXcKEo3RQVb8weuF5ujwg3Ekajp9CE8liS4LFm4Vu
+	 MfF5ahDQKikcqPBHRohzQvGYwUSDxvIAMRaLS3KUr1wDC0K5z277T7hfjbZOP1hStO
+	 3WHFZraXUNHQ15+6rvKsq4wTRfg35VPXgsfcW8is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Philipp Stanner <phasta@kernel.org>,
+	Yili Zhang <zhangyili01@baidu.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 062/507] drm/drm_crtc: fix race with dma_fence_signal() in ::get_driver_name()
-Date: Fri, 13 Nov 2026 10:46:06 -0500
-Message-ID: <20261113153755.654539977@linuxfoundation.org>
+Subject: [PATCH 7.3 063/507] dma-buf: Fix IOVA offset when linking phys vecs to sgt
+Date: Fri, 13 Nov 2026 10:46:07 -0500
+Message-ID: <20261113153755.684133436@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,87 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Yili Zhang <zhangyili01@baidu.com>
 
-[ Upstream commit cb104d395da48d965665fefe8502f71b6e7e3733 ]
+[ Upstream commit d57e3a7d880d783c64aa29457d78b0e3c5a40e3c ]
 
-Since commit 541c8f2468b9 ("dma-buf: detach fence ops on signal v3"),
-I'm seeing the BUG_ON() triggering in drm_crtc's fence_to_crtc() via
-drm_crtc_fence_get_driver_name() regularly:
+The dma_buf_phys_vec_to_sgt() routine links every physical range into
+the allocated IOVA space at offset zero instead of advancing the offset
+by the already mapped length. This breaks the THRU_HOST_BRIDGE flow
+whenever phys_vec contains more than one entry: the second and
+subsequent dma_iova_link() calls try to install mappings on top of
+PTEs that already exist, which fails and makes the whole conversion
+return an error.
 
-    Call trace:
-     panic+0x58/0x5c
-     die+0x160/0x178
-     bug_brk_handler+0x70/0xa4
-     call_el1_break_hook+0x3c/0x1a0
-     do_el1_brk64+0x24/0x74
-     el1_brk64+0x34/0x54
-     el1h_64_sync_handler+0x80/0xfc
-     el1h_64_sync+0x84/0x88
-     drm_crtc_fence_get_driver_name+0x60/0x68 (P)
-     sync_file_get_name+0x184/0x45c
-     sync_file_ioctl+0x404/0xf70
-     __arm64_sys_ioctl+0x124/0x1dc
+Fix it by passing the accumulated mapped_len as the IOVA offset. This
+matches the pattern used by all other dma_iova_link() callers and is
+consistent with the rest of the function: dma_iova_sync() and the
+error path in dma_iova_destroy() both operate on the [0, mapped_len)
+prefix of the IOVA space, which assumes that the ranges were linked
+contiguously starting at offset 0.
 
-This looks to be caused by a code flow similar to the following:
-
-+++ snip +++
-thread A                             thread B
-
-                                     ioctl(SYNC_IOC_FILE_INFO)
-                                     sync_file_ioctl()
-                                     sync_file_get_name()
-dma_fence_signal_timestamp_locked()  dma_fence_driver_name()
-                                       ops = rcu_dereference(fence->ops)
-                                       if (!dma_fence_test_signaled_flag())
-                                         ops->get_driver_name(fence) i.e.
-                                         drm_crtc_fence_get_driver_name()
-test_and_set_bit(SIGNALED)
-RCU_INIT_POINTER(fence->ops, NULL)
-                                     drm_crtc_fence_get_driver_name()
-                                       BUG_ON(rcu_access_pointer(fence->ops)
-                                              != &drm_crtc_fence_ops)
-+++ snap +++
-
-In other words, a fence's ops pointer can now change to NULL on signal,
-which wasn't the case before the culprit commit and hence the BUG_ON()
-triggers.
-
-Simply drop the BUG_ON() as it's usage of fence ops is invalid now, and
-because using BUG_ON() and friends to take down the system is an
-unacceptable way to handle a failure.
-
-Note that the adjacent drm_crtc_fence_get_timeline_name() has the same
-problem and is fixed by this patch as well.
-
-Fixes: 541c8f2468b9 ("dma-buf: detach fence ops on signal v3")
+Fixes: 3aa31a8bb11e ("dma-buf: provide phys_vec to scatter-gather mapping routine")
 Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Reviewed-by: Philipp Stanner <phasta@kernel.org>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Yili Zhang <zhangyili01@baidu.com>
+Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Leon Romanovsky <leon@kernel.org>
+Link: https://lore.kernel.org/r/20260924065508.27245-1-zhangyili01@baidu.com
 Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260721-linux-drm_crtc_fix2-v3-2-afa8c71506e6@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_crtc.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/dma-buf/dma-buf-mapping.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
-index e8e80c9368529..5295ec122e0d1 100644
---- a/drivers/gpu/drm/drm_crtc.c
-+++ b/drivers/gpu/drm/drm_crtc.c
-@@ -154,11 +154,8 @@ static void drm_crtc_crc_fini(struct drm_crtc *crtc)
- #endif
- }
- 
--static const struct dma_fence_ops drm_crtc_fence_ops;
--
- static struct drm_crtc *fence_to_crtc(struct dma_fence *fence)
- {
--	BUG_ON(rcu_access_pointer(fence->ops) != &drm_crtc_fence_ops);
- 	return container_of(fence->extern_lock, struct drm_crtc, fence_lock);
- }
- 
+diff --git a/drivers/dma-buf/dma-buf-mapping.c b/drivers/dma-buf/dma-buf-mapping.c
+index 833be519e1e6a..ef0f22854d018 100644
+--- a/drivers/dma-buf/dma-buf-mapping.c
++++ b/drivers/dma-buf/dma-buf-mapping.c
+@@ -156,7 +156,7 @@ struct sg_table *dma_buf_phys_vec_to_sgt(struct dma_buf_attachment *attach,
+ 						       phys_vec[i].paddr);
+ 		} else if (dma_use_iova(dma->state)) {
+ 			ret = dma_iova_link(attach->dev, dma->state,
+-					    phys_vec[i].paddr, 0,
++					    phys_vec[i].paddr, mapped_len,
+ 					    phys_vec[i].len, dir,
+ 					    DMA_ATTR_MMIO);
+ 			if (ret)
 -- 
 2.53.0
 
