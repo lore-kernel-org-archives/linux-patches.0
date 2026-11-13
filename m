@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585373;
-	b=qPKRvXSX31c757DVxOQiBdNTbgpS7/pduFgS9gVJtc/lFug0/Btzcsh+Qjps5ogH1AvW
-	 9oTsWfc59/cZNa9eNjJGCITZgYxCRVPRzyl3kgnftN3oNa6WZxwxma4Y6QY92pQom643t
-	 tAvH2atzJE/sx41CGbAuJABEvXlIwtWz4/2B+akOSeZ+oOvhkJcU12fggstnNYC1wkyvE
-	 JJklfaGEG3sSBHwKpdXfJ0nb5A4/MC4vEt7zqGHvBg/F9Ed59F2rK29Uv2Bmi3WUT8qT7
-	 /Cj6uOSCHSaQ6VN7AVmTptbiByAjgPGQWXKoOVDeJqUpwYn7OWI8jIKoHPAW3aUF4Ag==
+	t=1794585374;
+	b=YXoP/p6mpgwRhHTJJG5XR2/HOgB6Ri29FqPUCpbXA3jp8rxnrjzyClRPeRygf4dF0qyN
+	 RwGW/8snJvRWSiylvAgUzz8Jhb5kwP8W6rctWuEJzcDkau/WUkGxbiEMsBf+1upBRR5L7
+	 waQLrO4t7mRIA1wT8QkL7ZWAweuxf3fJ87wZjckk5562qY3xOROPWrAvhDUTYSWqwKi52
+	 yCkyZ+kKkXUo80CxkIb0O/vljfdoNv2hQ9pS5ALpXL9xSEyUSnh8KONWO4vEDyWk0Qoum
+	 fCYUGTD6aQwTkB33oozoVRqv+0YC9Jb/l7Fk90aUwx5hZcTSrXqp1R+ZPB426KjnzJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585374;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lROL/kCC2rh7hXZ3Xu1tWTod+u7aM9Xf8ISSZ0keH3Q=;
-	b=eLoNA6CIcrHuSbVVwViSHdZBABGSEUngZJ7Gm+qaTiJLi2SRGp/oLCsz6vFZaFhmK/ki
-	 Fqi04Q8699EiL1I08mhA5II7vRbIdlm6NRyQBArUzM4Y9S3NLxlieTIGeYbIVjufsq1ge
-	 01o3klvNFJIMsP94OFnxhJp1ogN8UCanmQD6heYNWGm2YGFG2j+Bc7e72eERW8fuDxMiy
-	 k7wvlpdnN0Fjyg64UPV7jxw4hyOJYBgle6bkFdoPt5mf2MDzMr0IiMoaX4WB/NhgYeODZ
-	 07C8Rr0gVcUQMyRXLVGi4VyNJtxOXZiLrOkeyC+7Fo0J498WQYKZx0w1iVdc5V6UoWg==
+	bh=kw0urNROBJflTXfLihC32oE4wucN9yb5E9C99pv1zME=;
+	b=jEmkmwO8JsO0I6FQsSsY9ECMmp3BYOcbNjeAxoxJC5vpfbgJk5iVN5TyJ6xIOiebLAUv
+	 bhfqvo8TA1hReI//ZiMRGfJgSo+jPsP23md2YxH+weyFkQXnyFJ1hgLA+lw/koicJTf/E
+	 SWAHdn3jNG9TTvT6MoD+dF5QkRbQ0K2RLuZnLypH5iMPgvgISJ7wt0GHOc4WeGAWION5R
+	 fu7A9LCX/sdubZpOfYa9IxyiFSWlSBQXSbMg1SCqpONqxvOM3EKv56LihfHQA5IEK0NDW
+	 Ic2783v0lDvjQGl6NwOh8amen2MN2oEiooWjZtV4LmhhyFWM0krKQT2gdwOyVkifadw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4eGoBU0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RbPHmSz6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468BD606AE26;
-	Fri, 13 Nov 2026 15:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA74606AE37;
+	Fri, 13 Nov 2026 15:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z4eGoBU0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F5B1F000CA;
-	Fri, 13 Nov 2026 15:56:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RbPHmSz6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0221F00929;
+	Fri, 13 Nov 2026 15:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585372;
-	bh=lROL/kCC2rh7hXZ3Xu1tWTod+u7aM9Xf8ISSZ0keH3Q=;
+	s=korg; t=1794585374;
+	bh=kw0urNROBJflTXfLihC32oE4wucN9yb5E9C99pv1zME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z4eGoBU00sQEXS2Z2Sm9B5bhf2ep/Kmq9QBfr8ZHG/EdDH/br9rpNRbNG+LAYs1r7
-	 N9mdKHwU2JJMNXqu9om97fniEj57S9Sy6gcEG6/8PT8J8nJeo14NOtKuxQOtDY3EER
-	 DPZPw/F/CNH228id8XNIwfhtVUqCCHR0pzkg2AbI=
+	b=RbPHmSz6OCHDVAONx6C3pfq5wWtYMjweDwR2DHHbtjdELBr2MLX8xT6VzsonH7VrV
+	 uQDWz/y/ZxS16d1ntS1F7ILoIqogOrRoS44kROO4bKTtZAays97JSDfdSW6tvI5Y7U
+	 rMd/Z+ysQWoyWdTeCE0+3JNZPmLyEeKz/Sca41x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifei Gao <gyf161023@gmail.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 048/507] 9p/xen: fix refcount leak in p9_xen_response() on wrong tag
-Date: Fri, 13 Nov 2026 10:45:52 -0500
-Message-ID: <20261113153755.181023211@linuxfoundation.org>
+Subject: [PATCH 7.3 013/507] NFSD: report listener creation failures through extack
+Date: Fri, 13 Nov 2026 10:45:17 -0500
+Message-ID: <20261113153753.835313521@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,45 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Gao <gyf161023@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 4d183e6f153245aca2534e372152583b868dd925 ]
+[ Upstream commit 8e590a16853fedd2697a3b0c32b3cbf1a444f7b2 ]
 
-p9_xen_response() looks up the request for an incoming reply with
-p9_tag_lookup(), which takes a reference on the returned p9_req_t. When
-the tag does not resolve to a request in REQ_STATUS_SENT, the function
-warns and continues the loop without dropping that reference, permanently
-leaking the p9_req_t and its msize buffers. The reply header, including
-the tag, is supplied by the backend, so a malicious or buggy 9P backend
-can leak kernel memory on every crafted response.
+nfsd_nl_listener_set_doit() returns the raw errno from
+svc_xprt_create_from_sa() and sets no extack. A failed LISTENER_SET
+therefore tells userland only "Address already in use", or whatever else
+the transport returned. It never tells userland which entry failed.
 
-Drop the reference before continuing.
+Record the attribute and the transport name of the entry whose errno the
+call returns, and report both after the loop. NL_SET_BAD_ATTR() names the
+entry, which the message alone cannot do: a request can carry several
+entries with the same transport name.
 
-Fixes: 728356dedeff ("9p: Add refcount to p9_req_t")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Yifei Gao <gyf161023@gmail.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Message-ID: <20260806144255.4167019-1-gyf161023@gmail.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+The rejections in nfsd_nl_validate_listeners() other than -E2BIG and the
+unsupported transport name still carry no extack. This patch does not
+change them.
+
+Assisted-by: LLM
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-5-a540d86668b0@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Stable-dep-of: bf0f3a37e6cc ("NFSD: stop registering with rpcbind after a failure in listener_set")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfsctl.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index f9fb2db7a0663..8eea0da8797f4 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -203,6 +203,8 @@ static void p9_xen_response(struct work_struct *work)
- 		req = p9_tag_lookup(priv->client, h.tag);
- 		if (!req || req->status != REQ_STATUS_SENT) {
- 			dev_warn(&priv->dev->dev, "Wrong req tag=%x\n", h.tag);
-+			if (req)
-+				p9_req_put(priv->client, req);
- 			cons += h.size;
- 			virt_mb();
- 			ring->intf->in_cons = cons;
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 86aa8d202b4b1..714c73ddd9dc1 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2086,7 +2086,9 @@ static int nfsd_nl_validate_listeners(struct genl_info *info)
+ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct net *net = genl_info_net(info);
++	const struct nlattr *bad_attr = NULL;
+ 	struct svc_xprt *xprt, *tmp;
++	const char *bad_xprt = NULL;
+ 	const struct nlattr *attr;
+ 	struct svc_serv *serv;
+ 	LIST_HEAD(permsocks);
+@@ -2205,8 +2207,22 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa, 0,
+ 					      current_cred());
+ 		/* always save the latest error */
+-		if (ret < 0)
++		if (ret < 0) {
++			bad_attr = attr;
++			bad_xprt = xcl_name;
+ 			err = ret;
++		}
++	}
++
++	/*
++	 * The ack carries the errno of the last entry that failed. Point at
++	 * that entry as well, since several entries can share a transport
++	 * name and the errno alone cannot tell them apart.
++	 */
++	if (err) {
++		NL_SET_BAD_ATTR(info->extack, bad_attr);
++		NL_SET_ERR_MSG_FMT(info->extack, "cannot create %s listener",
++				   bad_xprt);
+ 	}
+ 
+ 	if (!serv->sv_nrthreads && list_empty(&nn->nfsd_serv->sv_permsocks))
 -- 
 2.53.0
 
