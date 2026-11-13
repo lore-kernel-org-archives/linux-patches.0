@@ -1,55 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591467;
-	b=WZ1IOFe1JZ79rOftcjZ44qFPCiIlRa7OoMKkFNMA0HbINNt9R0LsjPAdKx69BOrDNjnL
-	 2rX3GzqFGRco5jwzR4RARewmpogy1hCFwxZS9vwjWOYdebpIW55to4UTrVYwR7WwHwm1l
-	 sI6geirLGnoDFiTYPqyVQf5wrEfH3flP4j8PZbko1HbcOROeEVTaTie+PH4htP5tj/EsM
-	 BX8MJZS5w2k9E84W3VJnW5CX+w+tkmut+3rXbTR7T4eqVyNxxsU5CfPZlfF4eaN18dEtA
-	 UkoPpisQKvyNBD/Va/9LgcfqJqpVV4sf95mnKBtYiD+0kU7wiOqcilzOtmFViD/8Nxw==
+	t=1794591468;
+	b=Wb1esptewaTYcgeAxzkT/heqsGcfJSM/I4mfqenPxPMmAi9d9WSjTsVoj4RTEo6nw7SF
+	 jyMAsFkb3iIdxuvFkb+OOiV9+y7lTCQXFJDKI05WBczODbdBf2PSCrB0feWnDxnSLexbJ
+	 GswDzJuDdLBE67h6bmhcXyHkIu60bqyaazxPW5fleyTO7XKnf4QhcYP7gbS56NwUH7Iec
+	 QImMnO09RAkyX8jL07/RwAkVjptLyk9k/2jGwAO3E+EXDjUWvSb/p11LXoo0qZH0ik6Gs
+	 rxhLdCDVcEgw9NZ+FzjOIf8G680QiXRQQEM5U6036lhGvIxCxFlzWajo0tUMESnHfoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q6veOhloNQ6o6Nn+jhflBlJrSqv5CdK9icqe6Udnclg=;
-	b=G4A0qEZ1UJaFWJEkQN5UBeCe7utCZMH30HedSdZtUq4JGu2S613hR0/q8J/r33ePjTPb
-	 wLTeyPLIdfcszhWpbsFzwShM9JWSRn28pPwj+PCVAPLiMdSBxKfu5Y39N1JZ/E0CCePZU
-	 uril+zPtEZ1+ezNiU6ziJu2rBQ30RRtv8SYFtlTgtb+KDtg1Pv538VKuE1h4+AWVraZPh
-	 Y66uENsnQoNsA1PXwzn1aOCOAgBMwYXpPOp7DCJTWPdi/nudl0zOo5yNsE04FvpS8mqgJ
-	 2hKrW9AbRaK6eBxfhOs1NwhddrCuG/mZ9B3730gSJWlbsc4N5d4Zcy9Z/dp0XD6QVyA==
+	bh=zEGExgT52X3ebdfQ10mT2Yy4b+w3quRNUvoOL5EBsFE=;
+	b=eyARyybqpV97juV5TB18xEXTFoP4mltvpqjzRfv5GQmkzhCrjkEy1Z25R7QpjpiHLccI
+	 gd0PHo0K9XG0/83MsXshpVZNgI26ZOzho6mYFtXAw9EsPKT8666cJ7Ev0XEk/F/pSTP2n
+	 4rG/YyZR+8krnvAs48HeXkJh/Jx6F+BnaUgOyINuQRjycrxypqkY2av0uFLy7GTcBGih5
+	 ToV3dePQfLLvOmaP1Fap76Kqi6k5868vj/a0MDmiSVgBoSrfKzYXU+kXn2LZjFrCkomcL
+	 fke8D3CN35nvvnU+SqWPHetqAbprJU3y/gp2uOGPur1myuXE6C4aOlqnRceXNPVZP+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Wr/395RT";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCtjz3Vy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45048607D2C3;
-	Fri, 13 Nov 2026 17:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6631F607D2C3;
+	Fri, 13 Nov 2026 17:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wr/395RT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3BD1F000C4;
-	Fri, 13 Nov 2026 17:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCtjz3Vy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181F91F000C4;
+	Fri, 13 Nov 2026 17:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591467;
-	bh=q6veOhloNQ6o6Nn+jhflBlJrSqv5CdK9icqe6Udnclg=;
+	s=korg; t=1794591468;
+	bh=zEGExgT52X3ebdfQ10mT2Yy4b+w3quRNUvoOL5EBsFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wr/395RT+lc0zhzf1wzVIUglyC0KZPIxf1MbQSkjRx02TY71A3SKtBvXnP8HNGMBf
-	 fuYBQ1C8BE0b5dJxdvCRGeUHMKaiMIiKwjo/vT3DFVaBILnAirDIbwAT0YENDiiZxJ
-	 xwn3HxkrTPSg7t5FAtbWMiu4LG1+yXS4pVb+3dBM=
+	b=CCtjz3VyvuznD5ZeJJFv8lXidv0duMpWtcSgFzDlUrHo+dJR/igJVIlYUww97YcJZ
+	 c4r/KQsvjX3O+5fvoXbhIFZ5p/Dorp1qYJxB2ScjgY6SbUe4iJwCbimYSFbKCHbK2H
+	 AXkcy3vUOYf6IGBhb6BN6WyF8Ig+MHJxBH/ZpiNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Vega <vega@nebusec.ai>,
-	Ye Liu <liuye@kylinos.cn>,
+	David Hildenbrand <david@kernel.org>,
+	Grazvydas Ignotas <notasas@gmail.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 551/670] mm/page_table_check: skip zero pages
-Date: Fri, 13 Nov 2026 10:51:55 -0500
-Message-ID: <20261113153830.554594495@linuxfoundation.org>
+Subject: [PATCH 6.12 552/670] mm/memory: constrain generic_access_phys() to page boundary
+Date: Fri, 13 Nov 2026 10:51:56 -0500
+Message-ID: <20261113153830.586955050@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,63 +78,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-[ Upstream commit 33afd07412a1efe5b750a3fd5eb0272ebdd12761 ]
+[ Upstream commit ae0298a5fbeff32951c0d31398ccec97ec6aa0ea ]
 
-page_table_check_set() accounts pages by whether they are PageAnon().  The
-shared zero page is a special page, not an ordinary file-backed page.
-Read faults on private anonymous mappings can install many read-only PTEs
-that point at the zero page, but page_table_check currently accounts them
-in file_map_count.
+This patch addresses an issue in generic_access_phys() where accessing
+memory across page boundaries in PFNMAP VMAs assumes physical pages are
+contiguous, which can lead to accessing unintended physical memory or
+exceeding VMA boundaries.
 
-That lets an unprivileged process populate enough zero-page mappings to
-overflow file_map_count and trip the BUG_ON() in page_table_check_set().
+generic_access_phys() improperly validates the memory access range: it
+only validates the start address using follow_pfnmap_start() and passes
+PAGE_ALIGN(len + offset) to ioremap_prot().
 
-Skip zero pages in page_table_check accounting.  They do not need the
-anonymous/file mapping conflict checks that page_table_check performs for
-ordinary pages, and this keeps the existing counter size and page_ext
-layout unchanged.
+This poses two problems:
+1. In PFNMAP VMAs, consecutive virtual pages are not guaranteed to be
+   physically contiguous, and individual PTEs may have different access
+   permissions or writability.
+2. The mapping may cross VMA boundaries if len extends beyond vma->vm_end.
 
-Link: https://lore.kernel.org/1f8848512d2e3ded944f8d595c29faee8fdaeab0.1784645969.git.roxy520tt@gmail.com
-Fixes: df4e817b7108 ("mm: page table check")
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Constrain the access in generic_access_phys() to at most the current page
+boundary (PAGE_SIZE - offset) and map only a single PAGE_SIZE via
+ioremap_prot().  Since the caller __access_remote_vm() already loops over
+the requested length and handles partial transfers, it will naturally
+iterate over the remaining pages.
+
+Also add a missing (resource_size_t) cast during PFN re-validation to
+avoid truncation on 32-bit PAE systems.
+
+Link: https://lore.kernel.org/e06e28a46c2a176238f03b5740df0913e57c2861.1788842306.git.rakukuip@gmail.com
+Fixes: 9cb12d7b4cca ("mm/memory.c: actually remap enough memory")
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Cc: Ye Liu <liuye@kylinos.cn>
+Suggested-by: David Hildenbrand <david@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: LLM
+Cc: Grazvydas Ignotas <notasas@gmail.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
-[ sashal: Replaced unavailable is_huge_zero_pfn(pfn) with is_huge_zero_folio(pfn_folio(pfn)). ]
+[ sashal: Adjusted context to retain prot != pgprot_val(args.pgprot) for the unsigned long protection API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_table_check.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/memory.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/mm/page_table_check.c b/mm/page_table_check.c
-index 2efa910eef23e..1076f8e055f31 100644
---- a/mm/page_table_check.c
-+++ b/mm/page_table_check.c
-@@ -67,7 +67,8 @@ static void page_table_check_clear(unsigned long pfn, unsigned long pgcnt)
- 	unsigned long i;
- 	bool anon;
+diff --git a/mm/memory.c b/mm/memory.c
+index 379ebbb834565..38019497d8d4f 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -6573,6 +6573,12 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 	bool writable;
+ 	struct follow_pfnmap_args args = { .vma = vma, .address = addr };
  
--	if (!pfn_valid(pfn))
-+	if (!pfn_valid(pfn) || is_zero_pfn(pfn) ||
-+	    is_huge_zero_folio(pfn_folio(pfn)))
- 		return;
++	/*
++	 * Limit access to one page at a time, as that's what follow_pfnmap_start()
++	 * guarantees; expect the caller to retry to read larger ranges.
++	 */
++	len = min_t(int, len, PAGE_SIZE - offset);
++
+ retry:
+ 	if (follow_pfnmap_start(&args))
+ 		return -EINVAL;
+@@ -6597,7 +6603,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 	if ((write & FOLL_WRITE) && !writable)
+ 		return -EINVAL;
  
- 	page = pfn_to_page(pfn);
-@@ -107,7 +108,8 @@ static void page_table_check_set(unsigned long pfn, unsigned long pgcnt,
- 	unsigned long i;
- 	bool anon;
+-	maddr = ioremap_prot(phys_addr, PAGE_ALIGN(len + offset), prot);
++	maddr = ioremap_prot(phys_addr, PAGE_SIZE, prot);
+ 	if (!maddr)
+ 		return -ENOMEM;
  
--	if (!pfn_valid(pfn))
-+	if (!pfn_valid(pfn) || is_zero_pfn(pfn) ||
-+	    is_huge_zero_folio(pfn_folio(pfn)))
- 		return;
+@@ -6605,7 +6611,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 		goto out_unmap;
  
- 	page = pfn_to_page(pfn);
+ 	if ((prot != pgprot_val(args.pgprot)) ||
+-	    (phys_addr != (args.pfn << PAGE_SHIFT)) ||
++	    (phys_addr != ((resource_size_t)args.pfn << PAGE_SHIFT)) ||
+ 	    (writable != args.writable)) {
+ 		follow_pfnmap_end(&args);
+ 		iounmap(maddr);
 -- 
 2.53.0
 
