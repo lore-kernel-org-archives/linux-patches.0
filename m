@@ -1,52 +1,67 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591433;
-	b=iOQpXBgqaTgQlsuyPF4nRRudegnmh2A8lYxPSszCfi4dbJCSxklssrvCnN54ylhbGv0u
-	 ZRLznS+mAUEPhB+69FVsx2P+XWbMidKORfYKPlTbpdl50SsWOeB20M18rbBfQcxnXHH1x
-	 YeDFV3fmwUBWK7oRb3qzh6q3dXo1ydYf+vJMTXI0j29ywJ6Vanp52nG4eNO3y7h1K9YGo
-	 S4xWwcIAGZVU0bdKkUv25uDld4tCzmrrWJCHXOgyvtYGRezbPPL9yZvW4IXG8SNqx+UKP
-	 2PxKGZj2QvVjk7K100z/8cwGdM0Ouej93FPM5sSAgQvIOFmUFNvAxtFBw7jDWUVMPmw==
+	t=1794591434;
+	b=aSNLiRShJI6NCppYyvv9ZqPUyQSCMGH2qyRlCOgy86xJwopOZfS3NZVqJ8o9f3VDOPyf
+	 DcIuM2/rxLvJ6rcpoXKT8jNFXyrc4RYsWaxX6/PRq9poOusQEFMwrsggNwsjv+jCmOplQ
+	 3/0uQJPmRby0ZXisXvOKJ6bZvMXaqhwua/Ko/nZ+Yrv6ZSaAUYLdQAfa4A1FAgWUb/FX+
+	 ZeBNAUWWB/n+0ylL0Mt6c6uH6WHhU20R0080usBZBOq9i/I1h8LZ60u+MKiScYS4zA5EO
+	 t/FpXY1K3xyr6PLkRut+V+MwxSAtpVSo2i6CbSzmmVarSKQCjsZazTGIRmMM2yeac4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591434;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zobJgRjGL4wA2hWSZPX6ErTqiRs/YEzEEWlh0okLIi8=;
-	b=Wo68CUgVaELnMRIe1/2KXgfpp1e3ZfHbyYRa/2FCKxp+tEZPJpXp4CbwnR+EedsCvAKX
-	 IyqhYjMB2jTqBdMZtVeqEmuTBhO4/4b9HXUt/ZYJUZmPEXLFDmNHeWnLWaMCQgIQv1q9i
-	 v1cjSzcPmGSg2P7OiE7+Ad6vMRoUnaFBzbZIWvJxg4MsBKKa22nU00vswu9Og8h4tGv+d
-	 69o5oYjMMmeyrA5Ez/m9zbKfIItX/Ikd4LJBaHf54/Z1VzATBvWPiBIT/+jmAOkr3wmdf
-	 CJLCpWcBZN29iRvLc9D1hKcwIum3LvajfjNh6AKQ5dH/F1RUuNsL7mN0kb3kc0byWAw==
+	bh=F5XNXotpAhq9CIFEWCDxu7+LwJ1nyE//gwaYVtp5aIA=;
+	b=WZ4+wJpwSxsIKIC5zSFxz3KUqblUtpW+Sr6U0UFAQeHfXjAincmYOpVe+46AnkQfwmAL
+	 DNUUi6pzyFfr/+ws1TvBvjpOV+NvdHsxIt3Vu5BKONh+dOymjAk6ZcXa4DmkQ1pONHlsa
+	 Qie14j23P+tdLGshZxSFl8oWvOc75yH46HG54D5qkmk/IMVgzM/VRvFaDiCniZhpe/w1X
+	 01RySkZ2lhs7StV56FPd0YAnPOhjzkc1dO2yE9Xo0vo9IE28OUJ4+CmIzyTJMMicwE1HJ
+	 IE9lY7ixZyDZsCpow50r52LKgDaiFtzZzs1g5Lm5635i2aNl+GZ+7turtudJ7AZMigA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cI8v0rh0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c3VYxUQp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF7A607B5AF;
-	Fri, 13 Nov 2026 17:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45E2607B5B1;
+	Fri, 13 Nov 2026 17:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cI8v0rh0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379161F000C4;
-	Fri, 13 Nov 2026 17:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c3VYxUQp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D25F1F000C4;
+	Fri, 13 Nov 2026 17:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591433;
-	bh=zobJgRjGL4wA2hWSZPX6ErTqiRs/YEzEEWlh0okLIi8=;
+	s=korg; t=1794591434;
+	bh=F5XNXotpAhq9CIFEWCDxu7+LwJ1nyE//gwaYVtp5aIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cI8v0rh0UbSF6mcmelasNnAKvhQbk0lyMRF8Qf79f97YhlgO3U66ggRrZnT3FTej5
-	 TObj5kKyytiIdg/nRXYcIo3MCJrFKL2G0ZcbeuAOzMaTc1iV85XngWs1mCNR+ovA1i
-	 NeELD/QeGnteEYg9Qfr5tPtvl47vYiZHyRt/CZy8=
+	b=c3VYxUQpiDleRQzI0eycnsx6GilAfwVzNZCLNWsWXGaLRG6qHiATXlMQNNLDkRvKH
+	 WWN421t+o4gA5z9Uud2B5dI1os4Q4IxoaW31iBMrVGEWp0d+ldfypZj+lLbQv3iXRA
+	 0sRbYT0x54+BiEWRVCHRibGehhmV67V9T0T6b3ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Ridong Chen <chenridong@xiaomi.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Barry Song <baohua@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Chris Down <chris@chrisdown.name>,
+	David Hildenbrand <david@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 526/670] f2fs: zone: fix to avoid bio split on sequential zone
-Date: Fri, 13 Nov 2026 10:51:30 -0500
-Message-ID: <20261113153829.752014943@linuxfoundation.org>
+Subject: [PATCH 6.12 527/670] mm/mglru: fix ineffective memory protection for non-kswapd reclaim
+Date: Fri, 13 Nov 2026 10:51:31 -0500
+Message-ID: <20261113153829.781689868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,115 +83,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Ridong Chen <chenridong@xiaomi.com>
 
-[ Upstream commit b9b036bd1e2cfbc189d5811d62d8711e216c40b3 ]
+[ Upstream commit 15da1e4978dd4ea8f5faa6e15ee967ba4ad9a30a ]
 
-In the block layer, bio_split_to_limits() splits a bio if it exceeds
-any underlying queue limits:
-1. queue_max_sectors: Splits bios larger than the transfer limit. This
-   limit is set by the device driver/DMA controller (max_hw_sectors) and
-   device-mapper targets. When flushing dirty pages (governed by VFS
-   writeback_chunk_size() and f2fs nr_pages_to_skip()), f2fs merges
-   contiguous pages into bios up to 512KB (1024 sectors) or more without
-   checking queue_max_sectors, which will be split if the device or DM
-   target enforces a smaller limit.
-2. queue_max_segments: Splits bios exceeding scatter-gather segment
-   limits. f2fs allocates bios with up to 256 pages, exceeding the
-   128-segment limit of DM targets (dm-default-key/dm-crypt) if pages
-   are discontiguous.
-3. chunk_sectors: Splits bios crossing chunk/zone boundaries. In f2fs,
-   section_size strictly matches zone_size, and block allocation never
-   spans across section boundaries, so bios never cross chunk_sectors.
+For MGLRU, memory.min/low is not honored during global proactive reclaim
+(writing to the root memory.reclaim) and global direct reclaim, because
+these paths shrink memcgs using stale protection (emin/elow).  It can be
+reproduced as follows:
 
-Crucially, when bio_split_to_limits() splits a bio, bio_submit_split()
-submits the tail half via submit_bio_noacct() before returning the head
-half to the caller. On a sequential zoned device, this causes the tail
-bio to arrive at the zone write plug before the head:
+  # echo 7 > /sys/kernel/mm/lru_gen/enabled
+  # cd /sys/fs/cgroup
+  # mkdir -p a/b
+  # echo 100M > a/memory.min
+  # echo +memory > a/cgroup.subtree_control
+  # echo 100M > a/b/memory.min
+  # echo $$ > a/b/cgroup.procs
+  # dd if=/dev/zero of=/tmp/testfile bs=1M count=200
+  # cat a/b/memory.current
+  222650368
+  # echo 500M > memory.reclaim
+  -bash: echo: write error: Resource temporarily unavailable
+  # cat a/b/memory.current
+  6070272
 
-  dm-3: zone 7: prepare_bio wp mismatch: bio sector 30720 offset 2048
-  != wp_offset 248, len 248
+memory.min is 100M, yet reclaim drops a/b down to 6M, breaking the
+protection.  The traditional LRU path is not affected because
+shrink_node() calls mem_cgroup_calculate_protection() for each memcg it
+visits during a top-down tree walk.
 
-The write plug rejects the out-of-order tail with BLK_STS_IOERR, causing
-f2fs_stop_checkpoint() and remounting the filesystem read-only:
+Commit 30d77b7eef01 ("mm/mglru: fix ineffective protection calculation")
+moved the protection computation into lru_gen_age_node(), which only runs
+for kswapd.  Non-kswapd global reclaim reaches shrink_one() through
+lru_gen_shrink_node() -> shrink_many() without any protection computation,
+so emin/elow are whatever a previous kswapd run left behind - or zero if
+kswapd never ran on this node.  Relying on a prior kswapd pass is not
+correct either: a memcg's emin/elow are derived from its ancestors'
+memory.min/low settings and from children_min_usage, both of which change
+over time, so emin/elow go stale even after kswapd has run and must be
+recomputed at the point of reclaim.
 
-2026-09-30T22:09:23.725678+08:00 localhost kernel: CPU: 9 UID: 0 PID: 243 Comm: kworker/9:1H Not tainted 6.12.81-gb3ef518fb26d #5
-2026-09-30T22:09:23.725750+08:00 localhost kernel: Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-2026-09-30T22:09:23.725753+08:00 localhost kernel: Workqueue: dm-3_zwplugs blk_zone_wplug_bio_work
-2026-09-30T22:09:23.725756+08:00 localhost kernel: Call Trace:
-2026-09-30T22:09:23.725758+08:00 localhost kernel:  <TASK>
-2026-09-30T22:09:23.725758+08:00 localhost kernel:  dump_stack_lvl+0x4d/0x70
-2026-09-30T22:09:23.725759+08:00 localhost kernel:  f2fs_stop_checkpoint+0x1df/0x5d0
-2026-09-30T22:09:23.725759+08:00 localhost kernel:  ? blk_zone_wplug_bio_work+0x4eb/0x740
-2026-09-30T22:09:23.725760+08:00 localhost kernel:  f2fs_cache_write_end_io+0x545/0x6e0
-2026-09-30T22:09:23.725761+08:00 localhost kernel:  blk_zone_wplug_bio_work+0x4eb/0x740
-2026-09-30T22:09:23.725762+08:00 localhost kernel:  process_one_work+0x5c6/0xde0
-2026-09-30T22:09:23.725764+08:00 localhost kernel:  ? assign_work+0x124/0x4e0
-2026-09-30T22:09:23.725765+08:00 localhost kernel:  worker_thread+0x403/0xb70
-2026-09-30T22:09:23.725765+08:00 localhost kernel:  ? __kthread_parkme+0x82/0x140
-2026-09-30T22:09:23.725766+08:00 localhost kernel:  ? __pfx_worker_thread+0x10/0x10
-2026-09-30T22:09:23.725766+08:00 localhost kernel:  kthread+0x235/0x2e0
-2026-09-30T22:09:23.725767+08:00 localhost kernel:  ? recalc_sigpending+0x128/0x1d0
-2026-09-30T22:09:23.725767+08:00 localhost kernel:  ? __pfx_kthread+0x10/0x10
-2026-09-30T22:09:23.725769+08:00 localhost kernel:  ret_from_fork+0x2f/0x70
-2026-09-30T22:09:23.725769+08:00 localhost kernel:  ? __pfx_kthread+0x10/0x10
-2026-09-30T22:09:23.725770+08:00 localhost kernel:  ret_from_fork_asm+0x1a/0x30
-2026-09-30T22:09:23.725771+08:00 localhost kernel:  </TASK>
-2026-09-30T22:09:23.725771+08:00 localhost kernel: F2FS-fs (dm-0): Stopped filesystem due to reason: 3
+Introduce mem_cgroup_calculate_protection_path() which computes emin/elow
+along the root-to-target path only, by iterating through the cgroup
+ancestors array top-down.  This avoids the full tree traversal that would
+be needed with mem_cgroup_calculate_protection(), limiting the cost to
+O(depth) per memcg - typically 3-5 levels.
 
-To prevent write bios destined for sequential zones from being split:
-1. In __bio_alloc(), bound npages to bdev_max_segments(bdev) for writes to
-   sequential zone areas.
-2. In page_is_mergeable(), check queue_max_segments() and queue_max_sectors()
-   for sequential zone areas, so f2fs will not merge beyond the queue limits.
+Call it from shrink_one() for the non-kswapd path so that each memcg about
+to be shrunk has correct protection values.
 
-Fixes: 52763a4b7a21 ("f2fs: detect host-managed SMR by feature flag")
-Fixes: 664ba972df9b ("f2fs: use BIO_MAX_PAGES for bio allocation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ sashal: Replaced F2FS_BLKSIZE(sbi) with the constant F2FS_BLKSIZE. ]
+Link: https://lore.kernel.org/20260907025445.1836238-3-ridong.chen@linux.dev
+Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
+Signed-off-by: Ridong Chen <chenridong@xiaomi.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Assisted-by: Claude:claude-opus-4-8
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Chris Down <chris@chrisdown.name>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: Replaced unavailable cgroup_css() with an explicit rcu_dereference() lookup of the memory controller pointer. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ include/linux/memcontrol.h | 10 +++++++++
+ mm/memcontrol.c            | 45 ++++++++++++++++++++++++++++++++++++++
+ mm/vmscan.c                |  8 ++++++-
+ 3 files changed, 62 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 47743a0bdede5..f0d77bcefcd31 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -460,6 +460,10 @@ static struct bio *__bio_alloc(struct f2fs_io_info *fio, int npages)
- 	struct bio *bio;
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index 8dab6c755e107..2aba72d1de3ab 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -1884,6 +1884,16 @@ static inline void count_objcg_events(struct obj_cgroup *objcg,
  
- 	bdev = f2fs_target_device(sbi, fio->new_blkaddr, &sector);
-+	/* avoid reversed IO if bio is split due to exceeding max_segments */
-+	if (npages > 1 && !is_read_io(fio->op) &&
-+	    f2fs_is_sequential_zone_area(sbi, fio->new_blkaddr))
-+		npages = min_t(int, npages, bdev_max_segments(bdev));
- 	bio = bio_alloc_bioset(bdev, npages,
- 				fio->op | fio->op_flags | f2fs_io_flags(fio),
- 				GFP_NOIO, &f2fs_bioset);
-@@ -738,7 +742,19 @@ static bool page_is_mergeable(struct f2fs_sb_info *sbi, struct bio *bio,
- 		return false;
- 	if (last_blkaddr + 1 != cur_blkaddr)
- 		return false;
--	return bio->bi_bdev == f2fs_target_device(sbi, cur_blkaddr, NULL);
-+	if (bio->bi_bdev != f2fs_target_device(sbi, cur_blkaddr, NULL))
-+		return false;
-+	/* avoid reversed IO if bio is split due to exceeding max_segments/sectors */
-+	if (f2fs_is_sequential_zone_area(sbi, cur_blkaddr)) {
-+		struct request_queue *q = bdev_get_queue(bio->bi_bdev);
+ #endif /* CONFIG_MEMCG */
+ 
++#if defined(CONFIG_MEMCG) && defined(CONFIG_LRU_GEN)
++void mem_cgroup_calculate_protection_path(struct mem_cgroup *root,
++					  struct mem_cgroup *memcg);
++#else
++static inline void mem_cgroup_calculate_protection_path(struct mem_cgroup *root,
++							struct mem_cgroup *memcg)
++{
++}
++#endif
 +
-+		if (bio->bi_vcnt >= queue_max_segments(q))
-+			return false;
-+		if (bio_sectors(bio) + (F2FS_BLKSIZE >> SECTOR_SHIFT) >
-+				queue_max_sectors(q))
-+			return false;
-+	}
-+	return true;
+ #if defined(CONFIG_MEMCG) && defined(CONFIG_ZSWAP)
+ bool obj_cgroup_may_zswap(struct obj_cgroup *objcg);
+ void obj_cgroup_charge_zswap(struct obj_cgroup *objcg, size_t size);
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 4d1caa4faf69f..b713cda2628a8 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -4503,6 +4503,51 @@ void mem_cgroup_calculate_protection(struct mem_cgroup *root,
+ 	page_counter_calculate_protection(&root->memory, &memcg->memory, recursive_protection);
  }
  
- static bool io_type_is_mergeable(struct f2fs_bio_info *io,
++#ifdef CONFIG_LRU_GEN
++/**
++ * mem_cgroup_calculate_protection_path - compute protection along a path
++ * @root: the top ancestor of the sub-tree being checked (NULL for root_mem_cgroup)
++ * @memcg: the target memory cgroup
++ *
++ * Walk the ancestor path from @root down to @memcg and compute the effective
++ * protection at each level.  This is safe for isolated queries because it
++ * ensures parents are computed before children.
++ */
++void mem_cgroup_calculate_protection_path(struct mem_cgroup *root,
++					  struct mem_cgroup *memcg)
++{
++	bool recursive_protection =
++		cgrp_dfl_root.flags & CGRP_ROOT_MEMORY_RECURSIVE_PROT;
++	struct cgroup *cg;
++	int root_level, i;
++
++	if (mem_cgroup_disabled())
++		return;
++
++	if (!root)
++		root = root_mem_cgroup;
++
++	if (memcg == root)
++		return;
++
++	root_level = root->css.cgroup->level;
++	cg = memcg->css.cgroup;
++
++	rcu_read_lock();
++	for (i = root_level + 1; i <= cg->level; i++) {
++		struct mem_cgroup *cur;
++
++		cur = mem_cgroup_from_css(rcu_dereference(
++				cg->ancestors[i]->subsys[memory_cgrp_id]));
++		if (cur)
++			page_counter_calculate_protection(&root->memory,
++							  &cur->memory,
++							  recursive_protection);
++	}
++	rcu_read_unlock();
++}
++#endif /* CONFIG_LRU_GEN */
++
+ static int charge_memcg(struct folio *folio, struct mem_cgroup *memcg,
+ 			gfp_t gfp)
+ {
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index ae6325a11d42f..b248dcb883697 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4835,7 +4835,13 @@ static int shrink_one(struct lruvec *lruvec, struct scan_control *sc)
+ 	struct mem_cgroup *memcg = lruvec_memcg(lruvec);
+ 	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
+ 
+-	/* lru_gen_age_node() called mem_cgroup_calculate_protection() */
++	/*
++	 * For kswapd, mem_cgroup_calculate_protection() has already
++	 * been called during the top-down cgroup traversal.
++	 */
++	if (!current_is_kswapd())
++		mem_cgroup_calculate_protection_path(NULL, memcg);
++
+ 	if (mem_cgroup_below_min(NULL, memcg))
+ 		return MEMCG_LRU_YOUNG;
+ 
 -- 
 2.53.0
 
