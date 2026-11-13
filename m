@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590233;
-	b=4J3yqEhlF3YAxi+v+q1on0gOWhxauF9casiW9Dm/52LXtJmFy0S85jSopv7G8TOpyQMH
-	 iOA3VtcAIk31vGi+4Q7OIo9QU8nCTeXdK29tnIRnWM64Y/SxdmYQHKIBecklvT6n29017
-	 Zb9U4Ux4wMmfY0HXJ/1sZYACWSwR2NjAQEMREjQ9cF5UtpjrEdo/d2BzXhU0rUyWm0hsS
-	 KH9+6jRie7087/0QaKodAi1PFc/bsW7Vl3gemxPuILFaW9cfZqDEdHOafMamYFqukxf0w
-	 ydRdf7VUNjCpw71FNlTh6hem9/3rZ4KUpA13RU/B/AJgCaZq/XX3gKxPWujICtmrYiA==
+	t=1794590234;
+	b=jXg2O/DmEsbTN84NnkEuWG2YrGuShoKCQ2aX0q2piBF2E4ClznZ5OE1BHwQATfFtDEqO
+	 4Lf7EzpT5uVm9qR430DWdEe/9h3jcbLkrmoIiqP4CXbXBQgwYDD3Vf/aTynHIZgROd12h
+	 N13AnWx/a1Ijv6dR7uRAZ7FFy3R/hiiuvQ13aMG44IpP0w7uLflaT12dTtP3jR3zGPv0p
+	 +LMe5r/05VvjAohLSgd5cF4uJ66B69jHlRdmKYf5jXYEGfjKHZFXeJ3cZy68uHKddLOPl
+	 ZKWwdlIm2+5scWyKW48n3AaQa/h8FbnWJs7qqcISICY0TONgyfjTP7QV5JTZsgaDaCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590234;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JPKxzb+SNFFVdmhL7ON19hoAhaG1YwRiSd4TNxhqPaI=;
-	b=cYL20c7D3h3uQdndkuu71tdQ0L/5jzTugq2SYKx9IeZfnwEKCm/LK/To6D8L3M7JdFbS
-	 jKUDFhiiCyDMY/+jvZEMMFirY7YD9s0RCF2CqtwHqhW0mpNyJ8sjP65RwBxobjkH9c9Mf
-	 UUQ4kNV2JHeJh0g+LOfGI0h4x+OrvoDK0g9RWzGjhLCAZeLIpJs7sPAyk50W+6UR9I33O
-	 +UoJhrK1ENzr8QSIfFRRJ/ycaJkAnBDUTeCWl4G1h7+gACYHC8HOeDdjW7A+8aam8nVJn
-	 lSM3DfcQyvmx7iuV8tcEfyosF0KZddTLxSVH6oAhbgL1XXBUTLadc2N0Sz+1uvps0Hg==
+	bh=zxlcqecer0jmHl577LmZuZEjVo0CPSyPkhGK76PSbhU=;
+	b=cOA92a5We06hua+UK5eClS+jG5tcuNV8MXQNg0Do0DJGrWSJkqlwZvJNC7fY7eP6bzdz
+	 JDhAKsKdpr7jOCeIgvmwDU/7dDf7Mx+PaSjt+HnIKcDl0HsqP5zl3pcix98qkVFn5994V
+	 YHxdF8HJ20np74gDoh7fCCSH7hUycCqGZezo5pegstUmVUhHa3Rd1R7Dnjrb2/kVUSyY7
+	 vI9XdnLxiXAI+1x8RnXd6fERXihvgrECbca1HXONOqi8oI9zR6L+NmUjjm2BBqqHXKvnu
+	 2rN2tOQtUN99Sx8NPCpQNAm1XfLllrM58bDIjYsMA2Xh23JmLJhOFkOc3wnrBzI9m0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dGyh3+lJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqCwlD1t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B016075E07;
-	Fri, 13 Nov 2026 17:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7332C6075E19;
+	Fri, 13 Nov 2026 17:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dGyh3+lJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50CD1F000C5;
-	Fri, 13 Nov 2026 17:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqCwlD1t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAF81F000C5;
+	Fri, 13 Nov 2026 17:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590233;
-	bh=JPKxzb+SNFFVdmhL7ON19hoAhaG1YwRiSd4TNxhqPaI=;
+	s=korg; t=1794590234;
+	bh=zxlcqecer0jmHl577LmZuZEjVo0CPSyPkhGK76PSbhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dGyh3+lJyjUCWwHCvT96lzJoMPu/THELUSLae5TKxOmiAybuySm4IT2AGQ4fwRHKz
-	 AbeMhTeyTQkOYM0GI9eePdbEjLbxx+NT6mvJ1mT86ZLy/85sDYZwXluXw5ZzCceoSP
-	 AcQa0upRRN/+tOo9tsR4SkKN3V3LMSq4u5T2oi+8=
+	b=rqCwlD1tbQHvmPu8mMSVZeNf4yrbm39ylnyJGNpwr21mXzeUSaOan2exkdCujtmkB
+	 mgK89tc2xExw+4RlEvhfgcDNLmND9QimjEq8vVgOY+wY5/QYrJgTA2WDt4bb0jGa1v
+	 Z6Him8EriqSXfHtuM9UjjNSCf/rxbK9bFaxZP9lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Grzeschik <mgr@kernel.org>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 190/686] net/9p/usbg: fix out_req buffer leak in disable_usb9pfs
-Date: Fri, 13 Nov 2026 10:45:23 -0500
-Message-ID: <20261113153827.443115923@linuxfoundation.org>
+Subject: [PATCH 6.18 191/686] net/9p/usbg: remove bogus context initialization in alloc_requests
+Date: Fri, 13 Nov 2026 10:45:24 -0500
+Message-ID: <20261113153827.532028696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,41 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Grzeschik <mgr@kernel.org>
 
-[ Upstream commit 5f9807270c7bda8f86b312ed1a8acd7716600555 ]
+[ Upstream commit bbdb38b2e543ffa72dca5450f2535cf998ef1cdd ]
 
-usb9pfs->out_req is allocated with alloc_ep_req(), which also
-allocates the request's data buffer (req->buf). disable_usb9pfs()
-frees it with plain usb_ep_free_request(), which only frees the
-usb_request structure itself and leaks req->buf on every close.
+alloc_requests() initializes usb9pfs->in_req->context to point at the
+struct f_usb9pfs instance itself. usb9pfs_queue_tx() later overwrites
+this with the real struct p9_req_t pointer before every transmit, and
+usb9pfs_tx_complete() clears it back to NULL after each completion, so
+in_req->context only ever holds a valid p9_req_t once a request has
+actually been queued.
 
-Use free_ep_req() instead, matching the allocator, as documented by
-its own comment ("Requests allocated via alloc_ep_req() *must* be
-freed by free_ep_req()").
+usb9pfs_clear_tx(), however, can run at any time (mount close, gadget
+disable) independent of whether a request was ever queued. If it runs
+before the first usb9pfs_transmit(), it reads the leftover sentinel
+value, type-confuses the struct f_usb9pfs pointer as a struct
+p9_req_t, and both writes through it (req->t_err = -ECONNRESET) and
+hands it to p9_client_cb(), which manipulates req->wq and req->refcount
+at bogus offsets inside f_usb9pfs. This reliably corrupts memory or
+panics whenever the transport is torn down before any 9p request has
+been transmitted, e.g. mounting and immediately unmounting, or a cable
+disconnect racing the very first request.
+
+usb9pfs->out_req->context is set the same way but is never read by
+this transport (usb9pfs_rx_complete() identifies the instance via
+ep->driver_data instead), so it serves no purpose either.
+
+Both endpoints' ->driver_data are already set to usb9pfs in
+enable_endpoint(), which is what the completion handlers actually use
+to recover the f_usb9pfs instance. Just drop the leftover
+->context assignments; usb_ep_alloc_request()/alloc_ep_req() already
+return zeroed requests, so in_req->context correctly starts out NULL.
 
 Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4.8
 Signed-off-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260922-usb9pfsfixes-v1-5-9d8dcc52904c@kernel.org>
+Message-ID: <20260922-usb9pfsfixes-v1-6-9d8dcc52904c@kernel.org>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/9p/trans_usbg.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index c58d57232369e..301123725a671 100644
+index 301123725a671..ed8f01ead839a 100644
 --- a/net/9p/trans_usbg.c
 +++ b/net/9p/trans_usbg.c
-@@ -286,7 +286,7 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
- 	}
+@@ -313,10 +313,6 @@ static int alloc_requests(struct usb_composite_dev *cdev,
+ 	usb9pfs->in_req->complete = usb9pfs_tx_complete;
+ 	usb9pfs->out_req->complete = usb9pfs_rx_complete;
  
- 	if (usb9pfs->out_req) {
--		usb_ep_free_request(usb9pfs->out_ep, usb9pfs->out_req);
-+		free_ep_req(usb9pfs->out_ep, usb9pfs->out_req);
- 		usb9pfs->out_req = NULL;
- 	}
- 	dev_dbg(&cdev->gadget->dev, "%s disabled\n",
+-	/* length will be set in complete routine */
+-	usb9pfs->in_req->context = usb9pfs;
+-	usb9pfs->out_req->context = usb9pfs;
+-
+ 	return 0;
+ 
+ fail_in:
 -- 
 2.53.0
 
