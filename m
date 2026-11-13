@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590105;
-	b=T2YV+x2Yyb0x6lUO18XTKdbj5fOTjGtg7rqaeuShWxTjxs5XIFpoa+m26T1OqmCFiQSY
-	 qY1ZXVmfe4N5qgcFHvcmxyCWiPctK8iTgdbTWoo1FRdripEOdEeZuKELoqyqwQPVx9pus
-	 NuMhdgpBx6uvmQTXx6ja0Poze4n8bNMqDtVzm/DEFLyJmIMxs+0Q31ycROD8c1zAYTWDh
-	 KvmbQKy2tOESMc4EomRcQLVZvN9Ixny2GbZh20muPQQq/SzrQ9z9Lw6dscSLJHy521oLt
-	 abPCOqJcbqYN60IPtWeuY8Kkf5gLUj5jcKrIX12GawAT760G8R8ieIMBNF5LaPXJkeQ==
+	t=1794590107;
+	b=PAFsDFDBr0pg10BXHg+IjZlHRAsfZSiivdsYcGDl4w3jg4sYUQR1HXDGwfvn54d3KW1r
+	 U6h8zw4S1c08aUR7eP/s89mZupkHcSqe9vcBiKOyePvCBm3OmlS45xrJlIbVeydFfFP6Q
+	 guOkCtC+17CHs0Hc0Ex/cFkG33XshvQF7atnH9F3oGBuYBZdpCtj2r4AP6YT9NuoyNq7Y
+	 /TMqxVTvnISzLBk08B1VsLwcCMmIvVF8rqtS/8t5ibql4TWZxeMlZrtEyWZrF4Q1xD4LO
+	 w9KUr+QCFRG49gV8PqpzJFh/fSvwkyJBPhXiWVPhwvIHmcZHGdf/+zWAwYmDUPjnVow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590105;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6TkqNB/btNATKvIr56JZBuqz0+p9okFPlC3q6wbXGWw=;
-	b=sN9QlXR09ZzgP3rRSslAwMQVnBL5hWFhC5X+YmQpEJ/sDIa13Gz8eHMGoyjQk4r/s1vB
-	 P+0fNSqRNJ2eAK2ZJ+ZiJv32eNP22HZYYGhIEJO7ugtNRysrdn2QU9fQkN8pMBEZRww8j
-	 wxin5mKKqhxmCAX3FKXwRV6kthnDWJK5z7w/euHuPQacz9iL4r8KP1Rkc2P7zNiIN6RfI
-	 DOjFccKJtK4N4tg8O77SeY00mWXzN9yoJdcM5v67gthJ+a0ZiM0XfN+hGXXY20ltuEErg
-	 A11wpYNv1PF+dSZJOuUJu+Qs7KUbBwL6S8RfCg8TVOp7gUCEFffaufz9DWdprN1whdQ==
+	bh=4PPp/2Qk8UFFAa9lZiLtvWl2ZXhfEbRxA639djIpRCw=;
+	b=A/4tmHsHpY4SBEFCRf04JgUXX1FgvE0eE7zl2rxaT9GVa2xIY+HDt5nUkByun9u+Gy0v
+	 gPPcxFw6RCxa7Ki75L/0/0F2W1E6kjTAg/7Y2NSxgYVKuUbhmjDkKQivn60yIIta7h/cv
+	 EoG8U68uSrZP0Pvl2TKdXMtyytEVPG/Hb+6+QzNnKaG8an9FZljGaSv5C1tFnrpiv25/G
+	 MFw7aSGRHQ4nFOPKoIxNFLFuzjZkfZCvGBnOf78DjgOcF6E19nNwdrvmQo3AMKvSHG7Ly
+	 1GDLIPtFhLv8RL6Pa0yzpptGR+GTlu905IXlU1NEWP0WgfsfH9ZOzLQIL6HDkvETkEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P5MfKSBv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QxPOEqOd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8DD60A3830;
-	Fri, 13 Nov 2026 17:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00091606C0B9;
+	Fri, 13 Nov 2026 17:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P5MfKSBv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6602E1F000C4;
-	Fri, 13 Nov 2026 17:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QxPOEqOd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03681F000C4;
+	Fri, 13 Nov 2026 17:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590105;
-	bh=6TkqNB/btNATKvIr56JZBuqz0+p9okFPlC3q6wbXGWw=;
+	s=korg; t=1794590106;
+	bh=4PPp/2Qk8UFFAa9lZiLtvWl2ZXhfEbRxA639djIpRCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P5MfKSBvAES1aXB7owWleP6dnVlwNVaUxn4rdKI1HJGnheAk79UfMu4468DIC2aje
-	 8OLRoVx+JBMhMG6aAcugfz01fsGBjFpD8IdsdJFY8fEk+//kJH1kAOm0aMnG78dZnU
-	 mwUJcKVJijTophvXWHdAlJuFFzd0GLU1UYh9fz0E=
+	b=QxPOEqOd066qVyG3RdS36ChrkqDTVDIRKYTkN6L67qPigaehGyiYy2ITAL426u7m8
+	 kotSdih+VTF5h/8zOEQ1+QTmBA9Mv3SGuXVsG3I2sdXHqNGrUIaRp/YPjzVyenUxMY
+	 wMDoz3QLXFUHDOajxATZl4bmc+G0vSMHen2M3NAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 128/686] netrom: dont leak frames in nr_route_frame()
-Date: Fri, 13 Nov 2026 10:44:21 -0500
-Message-ID: <20261113153825.157166693@linuxfoundation.org>
+Subject: [PATCH 6.18 093/686] net: bgmac: enable interrupts only after NAPI is ready
+Date: Fri, 13 Nov 2026 10:43:46 -0500
+Message-ID: <20261113153824.019334983@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -67,88 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-nr_route_frame() leaks a frame in two cases.
+[ Upstream commit ac1f6e58cb77bb66b8811f7d98703e0f076a8f65 ]
 
-When the frame comes from AX.25 and nr_add_node() fails, it returns the
-error. AX.25 calls it as a protocol function and takes any non-zero
-value as "frame consumed", so the frame is never freed. nr_add_node()
-fails with -EINVAL when the source of the frame is one of our own
-NET/ROM callsigns, which is what a node sees when its own frames come
-back through a routing loop, and with -ENOMEM.
+bgmac_open() calls bgmac_chip_init(), which unmasks the interrupts and
+enables the MAC receiver, before request_irq() and napi_enable().
+bgmac_enet_resume() also enables NAPI only after bgmac_chip_init().
 
-When the frame is forwarded, it is sent from a copy, nskb. If
-ax25_send_frame() returns NULL (device going down, no memory), it has
-not taken the copy, and nr_route_frame() only frees the original.
+When frames arrive in that window, the first RX interrupt masks all
+interrupts in bgmac_interrupt() and calls napi_schedule() on a NAPI
+instance that is still disabled, so nothing is scheduled. Nothing
+unmasks the interrupts again, the RX ring fills up and the interface
+stays deaf until it is brought down and up without traffic.
 
-Return 0 when nr_add_node() fails, so that AX.25 frees the frame, and
-free the copy when ax25_send_frame() returns NULL.
+On an Asus RT-N16 (BCM4716) a single "ip link set eth0 down/up" while
+a host sends UDP to the router left INT_MASK at 0, INT_STATUS with RX
+pending and the RX DMA idle on a full ring, with the RX packet and
+interrupt counters no longer moving. With this change, 10 of 10 such
+cycles recovered on their own.
 
-Tested on two QEMU guests (6.12.94, KASAN, lockdep) linked by KISS: A
-opens an AX.25 link to the NET/ROM callsign of B and sends 400 NET/ROM
-frames with A's callsign as source, then 400 with B's own callsign as
-source. Live skbs on B (skbuff_head_cache objects, KASAN quarantine
-shrunk), 20 s after the last frame:
+Request the IRQ and enable NAPI before the chip is initialized.
 
-                    normal source   B's own callsign
-  before the fix         12              412
-  after the fix          12               12
-
-No kernel report in either run. The second leak (ax25_send_frame()
-returning NULL) was checked by reading only.
-
-Fixes: 58bc57471514 ("[AX.25]: Fix unchecked nr_add_node uses.")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 51c59de17ab51364241f4b0bf4399b0f2c5dde5a)
+Fixes: dd4544f05469 ("bgmac: driver for GBit MAC core on BCMA bus")
+Fixes: f3537b3494c0 ("net: ethernet: bgmac: driver power manangement")
+Cc: stable@vger.kernel.org
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261010070011.60403-1-rosenp@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_route.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/bgmac.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index 288c4a91ea9b7..821697f222d6a 100644
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -774,11 +774,16 @@ int nr_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 	nr_dest = (ax25_address *)(skb->data + 7);
+diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
+index 3e9c57196a397..1835266fdd09f 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.c
++++ b/drivers/net/ethernet/broadcom/bgmac.c
+@@ -1183,9 +1183,6 @@ static int bgmac_open(struct net_device *net_dev)
+ 	if (err)
+ 		return err;
  
- 	if (ax25 != NULL) {
--		ret = nr_add_node(nr_src, "", &ax25->dest_addr, ax25->digipeat,
--				  ax25->ax25_dev->dev, 0,
--				  READ_ONCE(sysctl_netrom_obsolescence_count_initialiser));
--		if (ret)
--			return ret;
-+		/*
-+		 * A frame that cannot be noted here (it claims to come from
-+		 * one of our own callsigns, or memory is short) is dropped.
-+		 * Return 0, not the error: AX.25 takes any other value as
-+		 * "frame consumed" and would never free it.
-+		 */
-+		if (nr_add_node(nr_src, "", &ax25->dest_addr, ax25->digipeat,
-+				ax25->ax25_dev->dev, 0,
-+				READ_ONCE(sysctl_netrom_obsolescence_count_initialiser)))
-+			return 0;
+-	/* Specs say about reclaiming rings here, but we do that in DMA init */
+-	bgmac_chip_init(bgmac);
+-
+ 	err = request_irq(bgmac->irq, bgmac_interrupt, IRQF_SHARED,
+ 			  net_dev->name, net_dev);
+ 	if (err < 0) {
+@@ -1195,6 +1192,9 @@ static int bgmac_open(struct net_device *net_dev)
  	}
+ 	napi_enable(&bgmac->napi);
  
- 	if ((dev = nr_dev_get(nr_dest)) != NULL) {	/* Its for me */
-@@ -848,8 +853,14 @@ int nr_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 	spin_unlock_bh(&nr_route_lock);
- 	nr_node_put(nr_node);
++	/* Specs say about reclaiming rings here, but we do that in DMA init */
++	bgmac_chip_init(bgmac);
++
+ 	phy_start(net_dev->phydev);
  
-+	/*
-+	 * ax25_send_frame() only returns NULL before taking the frame:
-+	 * free our copy then; the caller frees the original.
-+	 */
- 	if (ret)
- 		kfree_skb(oskb);
-+	else
-+		kfree_skb(skb);
+ 	netif_start_queue(net_dev);
+@@ -1608,10 +1608,10 @@ int bgmac_enet_resume(struct bgmac *bgmac)
+ 	if (rc)
+ 		return rc;
  
- 	return ret;
- }
+-	bgmac_chip_init(bgmac);
+-
+ 	napi_enable(&bgmac->napi);
+ 
++	bgmac_chip_init(bgmac);
++
+ 	netif_tx_lock(bgmac->net_dev);
+ 	netif_device_attach(bgmac->net_dev);
+ 	netif_tx_unlock(bgmac->net_dev);
 -- 
 2.53.0
 
