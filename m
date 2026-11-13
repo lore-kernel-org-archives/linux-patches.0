@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590286;
-	b=1H4xCf5UoYqxNcZ6t/BeeiUuXCVxtTxjaFhQ3j8QzjLwRQhXAz6EMLvBEW2Jp01mloHi
-	 syT3zlJEnrfTOKlA+QN/PrfUknIzHAGR9SeEdw6tkd7KlnGOI92pz04eHG4PcsbKZMJU5
-	 JBaU+/5saSqu++ouuZdciCTOz1XiCRgz3RuSgdVarsy9nw5TgPz1iPm6tSSxquNRQGqLX
-	 mgFlcNNNBeNq4VFVPSRqGOJ5863c7iD9Z8Parish+anz+NLWeaTNcj6TabHyH7BCO7EY+
-	 LsFF1ASFsWObSnkAuReHCxs1wGHJVbxDmOno9arc5b4YanSgVoF4ABWEu3/VyeCxDbA==
+	t=1794590287;
+	b=x4sAN+Om3TTieDGVgkYx1fjRIDVawroe0kpLrcl8JoBCXUQ2HAcs+EMsaGTy0nT14Oyo
+	 Z0+5toLNesT1j1DrU0dk4SeUtQb0IgBhUwMwX4MCsKyXN5n/sNkpEn+0Xcqrqw7TqdhgW
+	 r3ACiUsY/R5h9VuEzKulH/2VZ06KjIbKNAULEgo/Qb/JAq7EdYPGd+D8i1FH9IKELQ9SJ
+	 ZDXHu6CUeRD6OouVFBHb6bqa/meG5noeWR3iFOE7G5ep4hdJh5oSqSGZImjpfi+uy7R4U
+	 WFxYDzuU6Et6mNi9uPnAQDAx7aqEB2RergKqiiL6WHj1LRISrebQdW+C7isN151s6tQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590287;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LFPzF3vc2rEghEszj0SHnzol4kWMtjVBNNHRwh0f1gE=;
-	b=wP8vg1RJRdbtaWc9DjdUBMGLXBrfWbaUFfWqgwKwRYimA90b1M1Qn5B5P4NZ04RTkuiA
-	 A6jHblK+lns7oFEPRVVy+N7gn7EnR8Cxwes0PqihtSUkqsMF2HcJFWdXhw3WumZd+7rpS
-	 KeBGJRZe6muHVIw34x9kLD4lIAyyoBkqIuK9o5m/izWJAmkKD7nGDm9kVeV3+8wq41Un6
-	 RABJ0ZCaEeOSfpDdzW2o5IdJfa6Y17NH0D5kFFsxTtqFHENuAiU6VbOGfe6CBFoVIVi5Q
-	 OtXxy0xKyVrWV1gnLjWk+Eqi3vVd/1tWNmyldc30Wx8teXXO5n+y0Uk5GDm3TkuQcTw==
+	bh=f2iYyh9mCmqHGIPeR5mS47V5b8lNbFHv2MVPms45Cr0=;
+	b=PB4f2mN7aq+xMJCaerjqb30fwHQX6n6hx2N32eFVLDaRSdNxwDZ5sklecKmY8X+EB98N
+	 bDoRYN8LpnIxN4ksS8+GvX/yFolq2N7CZcE/fr0QAccs3Fj7Qqv0oLHGUdW6Yt2aB9+Hb
+	 CbcjhzXtGgtJRttBx+VxzEG2t0l5+TVF0+tEJsty9lytZyZiL7IhF7UvJFTGEQ36Z4Vzn
+	 qQ1CCHzpu3pS7+00pessUddCfeuRvlJRNdkHyXx4fRi2JXiUf0PuK2aH7cwP7lSn9Vx60
+	 CwTOMh743ctEGj5D9/fSRnVLFC+ZxBZ8tAo3KdU/bx+An0Zwb/axBYqb9evYe0VBPIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2oquXrP8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FgUKSp6R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECDE606B236;
-	Fri, 13 Nov 2026 17:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95ECB607A5D9;
+	Fri, 13 Nov 2026 17:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2oquXrP8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A891F000C8;
-	Fri, 13 Nov 2026 17:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FgUKSp6R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B4D1F000C4;
+	Fri, 13 Nov 2026 17:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590286;
-	bh=LFPzF3vc2rEghEszj0SHnzol4kWMtjVBNNHRwh0f1gE=;
+	s=korg; t=1794590287;
+	bh=f2iYyh9mCmqHGIPeR5mS47V5b8lNbFHv2MVPms45Cr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2oquXrP8UTXxFcUGkXvOQNT4xpxyvygIhCss9iPXMvK5WZtxGko+hkKsdQCxxoKkg
-	 Qn7vc45Z3xOKvHywWJ0fcsLLSkx1s5LZwRGBBTBh4kkn+kQsQwb97jwd7S9+2TzBCt
-	 8Up1k2W5xm3ZgtuLnUu/ooT/jpw3WykwBeNBkbyQ=
+	b=FgUKSp6RJ3tPAnJdOWlr0/RNw5KNYRbrx9yVjfqqHupgy2BMfVMTDsOblfgsndNKQ
+	 pq/R6kCBCwRravaF3e7OH4+GaQseQALBTPno/cNDw3Hvli+09ylFU6Xt0kiZmQa4Zv
+	 HwmP4bn8UKoRpvvBzUek8Qg4GIK+5YV34rqzmZbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 234/686] ksmbd: require DELETE access for delete-on-close opens
-Date: Fri, 13 Nov 2026 10:46:07 -0500
-Message-ID: <20261113153828.971757225@linuxfoundation.org>
+Subject: [PATCH 6.18 235/686] rust: cpufreq: fix `undocumented_unsafe_blocks` in `PolicyCpu::from_cpu()`
+Date: Fri, 13 Nov 2026 10:46:08 -0500
+Message-ID: <20261113153829.005184078@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,83 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 1dd91081ba3c692565f9c1f884149178d5a06d1e ]
+[ Upstream commit 62a40c72905be262e9e10790008d505ed0be6c0f ]
 
-smb2_open() accepts FILE_DELETE_ON_CLOSE on an existing file without
-DELETE in DesiredAccess. When the request asks only for
-FILE_READ_ATTRIBUTES or READ_CONTROL, it also skips inode_permission()
-and the parent directory MAY_WRITE | MAY_EXEC check that delete-on-close
-is meant to get. The file is then marked for deletion by a caller who
-could not delete it.
+For Rust <= 1.86, Clippy triggers after commit 02c5d7bfa872 ("rust:
+cpufreq: reject NULL from cpufreq_cpu_get()"):
 
-The unlink happens later, in __ksmbd_inode_close(), when the last handle
-on the inode is closed, and it runs with the credentials of that handle.
-If the caller closes last, the unlink fails. If another user who can
-write the parent directory, such as the file's owner, still has the file
-open, the file is deleted when that user closes it. Until then new opens
-of the file fail with STATUS_DELETE_PENDING. So a user with only search
-permission on a directory can delete a file in it, or block opens of it,
-while the owner has it open.
+    warning: unsafe block missing a safety comment
+       --> rust/kernel/cpufreq.rs:700:26
+        |
+    700 |             NonNull::new(unsafe { bindings::cpufreq_cpu_get(u32::from(cpu)) }).ok_or(ENODEV)?;
+        |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        |
+        = help: consider adding a safety comment on the preceding line
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#undocumented_unsafe_blocks
+        = note: requested on the command line with `-W clippy::undocumented-unsafe-blocks`
 
-A MAXIMUM_ALLOWED open that also requests DELETE has the same problem.
-The requested access is replaced with the maximal access, which does not
-include DELETE when the caller cannot write the parent directory, and the
-later permission checks are skipped as already done.
+Thus clean it up.
 
-MS-FSA 2.1.5.1 requires an open with FILE_DELETE_ON_CLOSE and without
-DELETE in DesiredAccess to fail with STATUS_INVALID_PARAMETER, and Samba
-does the same. Add that check to the CreateOptions validation, using
-the generic-mapped DesiredAccess so that GENERIC_ALL still qualifies.
-This also refuses MAXIMUM_ALLOWED with FILE_DELETE_ON_CLOSE but no
-explicit DELETE, as MS-FSA and Samba do. When MAXIMUM_ALLOWED is
-requested with DELETE but the maximal access does not include DELETE,
-fail with STATUS_ACCESS_DENIED. With DELETE requested, delete-on-close
-opens go through the existing parent directory check.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 02c5d7bfa872 ("rust: cpufreq: reject NULL from cpufreq_cpu_get()")
+Assisted-by: LLM
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/20261018163719.81691-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ rust/kernel/cpufreq.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 40d86993dbe3d..ec4c54c9c6dc9 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3176,6 +3176,14 @@ int smb2_open(struct ksmbd_work *work)
- 				req->CreateOptions = ~(FILE_NO_COMPRESSION_LE);
- 			}
- 		}
-+
-+		/* MS-FSA 2.1.5.1: delete-on-close requires DELETE access */
-+		if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE &&
-+		    !(smb_map_generic_desired_access(req->DesiredAccess) &
-+		      FILE_DELETE_LE)) {
-+			rc = -EINVAL;
-+			goto err_out2;
-+		}
- 	}
+diff --git a/rust/kernel/cpufreq.rs b/rust/kernel/cpufreq.rs
+index be312f523ebec..dbd1ea1e9be79 100644
+--- a/rust/kernel/cpufreq.rs
++++ b/rust/kernel/cpufreq.rs
+@@ -695,8 +695,8 @@ fn clear_data<T: ForeignOwnable>(&mut self) -> Option<T> {
+ impl<'a> PolicyCpu<'a> {
+     fn from_cpu(cpu: CpuId) -> Result<Self> {
+         // SAFETY: It is safe to call `cpufreq_cpu_get` for any valid CPU.
+-        let ptr =
+-            NonNull::new(unsafe { bindings::cpufreq_cpu_get(u32::from(cpu)) }).ok_or(ENODEV)?;
++        let ptr = unsafe { bindings::cpufreq_cpu_get(u32::from(cpu)) };
++        let ptr = NonNull::new(ptr).ok_or(ENODEV)?;
  
- 	if (le32_to_cpu(req->CreateDisposition) >
-@@ -3355,6 +3363,13 @@ int smb2_open(struct ksmbd_work *work)
- 		maximal_access = daccess;
- 	}
- 
-+	/* MAXIMUM_ALLOWED may not have granted the requested DELETE */
-+	if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE &&
-+	    !(daccess & FILE_DELETE_LE)) {
-+		rc = -EACCES;
-+		goto err_out;
-+	}
-+
- 	open_flags = smb2_create_open_flags(file_present, daccess,
- 					    req->CreateDisposition,
- 					    &may_flags,
+         Ok(Self(
+             // SAFETY: `ptr` is non-NULL and `cpufreq_cpu_get()` took a reference on it, so it is
 -- 
 2.53.0
 
