@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590692;
-	b=V45o5xjR5Oo3sk4iFHcEbV67uYtpgusKqBdxLNkhSDxanWA+tHMcXHissbJ7sXAgcLrm
-	 RVID0FbsKa4GhlKVuhyNQOMyi2qBpWwnBTu/hps+W0E4i/8X4XH8kCdxUWwc8sDQ7qwV7
-	 r6zBum+8+XZvcOHq8KCKzRk/wSK9va+8biUqBXGfqq1ce0DDPnVBSXMFeqDHCKhW3npIQ
-	 Nv2qYyfbfhK2Wo6XqX2dwigM4+G1oUTFqrYp213M4yfa+EgoDap/hPS82QsuHy7NSCJq8
-	 QwdOAeaxZBCk7f39eh0zyXBofSCjtQMUwavgfesgATg6T98rfiLNAC0/A2do5pnE6Jg==
+	t=1794590693;
+	b=UJsSdszA2ghM+MwKw+oSra8R4BP6bR/7vx8KwSANJEPFHWGJk2E/cfzt28lCjiZt1bE3
+	 g0PcjQmPdPaR1hz3JQYCUq1lb0QNYSTAu8gedPBvnemHzpKhB29CNnMRYMqAIySljkVgl
+	 4r+/x2e2t6RsvHO9AjQJmtobvQWjQVX3Cs2WKyKKrT+2dAGsn4j67Je3Q/IV5nWSi+k10
+	 Z4L/5lpOpR9GeHd3km4kdjRPlTxHkb5hrit85KSudLhNro309ydAe0BcUt0CihaU8rn81
+	 vPRaVeWuX45S1g2UDjQNXPVg4LPXNUF+VDXuVMPkPIjMrDCX/X5r7BTLb7vYnAhIG4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fZuTTkONEZKNFGQC+p1u7KEzYZFs23ZL7k9P451k7Do=;
-	b=jjSEr7nvet12W5ELdQDy/2gvIlH27dEr0dbLLDI1U1c8+7XqPKJgMx6L/p9hAm0BF2tP
-	 597/bhzbRqweGp2oZKDZAwNYgN7qiKbhQkhjlx5I5/lA0iF16WZcIfPvnHU6mQZtnYbNd
-	 wdwq8G7ibU9gyXEw21Kzz0fCVXRYuBIdMBifBcRxnXGnJfao62+UqXgqUI2X2wCAl9pRh
-	 ipDvSYENZSZGna4RqWAWl0uQ6a28g2KpzkKS7/m0mmEM/ep21tcmUIsQvcupOGhp0fAmI
-	 shPC0+Mtu3UVppmlCFZtYCufGR5+JBqkTiJfM21Rdl0ny9EOhVZY4Q3ti1CZUD3gb6A==
+	bh=vrO09Hb9s0c1+a8CneuxDnpmPpyNrBgVRR5/x0ergw8=;
+	b=NGC6CoDuzNxvb0+1Jib9WMj5Lacg0kgH1LaCGRQ+egSOdoNuBeMkzNN7cELyqD1riWUU
+	 b4fap7ZrGD4FynIvKarv0JyCitK2Ci3R3ifRA6PGRzCjk384Rjzrn6RfrIO+ZUcm5+/WD
+	 600Sya04uBSoKFyCVoVRG/8R3ZjW4Fx/vTcAAaZn+ZBRAJKzTGIzDDYvjS6JgdWRwE+hX
+	 nJTHB442mDCbW8RRqCFYvHpbY4vx0wCayqNUWJiiODSxjDEl9+sIqrUcwymuyIPxRphlb
+	 OyuNLf9YKiwGmVT0nBjepu5tlUMeihdbkjn0P3nDhoZALE9ThkPo/XNBb4rF9TbKELQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OGnkVpYP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WOhV/5WE";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F889606CEE0;
-	Fri, 13 Nov 2026 17:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E81606CEF7;
+	Fri, 13 Nov 2026 17:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OGnkVpYP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC8D1F000C4;
-	Fri, 13 Nov 2026 17:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WOhV/5WE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833AB1F000C4;
+	Fri, 13 Nov 2026 17:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590692;
-	bh=fZuTTkONEZKNFGQC+p1u7KEzYZFs23ZL7k9P451k7Do=;
+	s=korg; t=1794590693;
+	bh=vrO09Hb9s0c1+a8CneuxDnpmPpyNrBgVRR5/x0ergw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OGnkVpYPFtMsRaUflAhB9XS5gY0feZWvyYGvhT/2il/gIlbl0gO4AsZL1pXOfeAMW
-	 KLBftDjbith716FnjtD8YZtc0WTSFasECh/r8nPKtDk4LnPfDwuJkyt0vAkegrOaIs
-	 /JhuEEeD91DW0nwISc8B27JDSNoHXb8+PNhF3N7g=
+	b=WOhV/5WEBPqA9wyM6QlLXINvg1VHeaE32jNEJX+56yaHR3I/A3k81U85BnoMJRBei
+	 EFLDexAod5aYFtTzzh6H2HuULXXIjByn3gWiFY+jgvETJ2GbNpUpuJU6r5kjp3TPp1
+	 COYC0PJTtRGI9Iu9m20yidqccuFbH/6JfHogqyP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matej Sochan <matej.sochan@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Robert Marko <robert.marko@sartura.hr>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 561/686] ALSA: hda/realtek: Fix silent speakers on Lenovo Legion S7 15IMH05
-Date: Fri, 13 Nov 2026 10:51:34 -0500
-Message-ID: <20261113153840.663763714@linuxfoundation.org>
+Subject: [PATCH 6.18 562/686] spi: atmel-quadspi: add controller init callback
+Date: Fri, 13 Nov 2026 10:51:35 -0500
+Message-ID: <20261113153840.689807068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,166 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matej Sochan <matej.sochan@gmail.com>
+From: Robert Marko <robert.marko@sartura.hr>
 
-[ Upstream commit 1c36207da79455402d981125fa09716991364e66 ]
+[ Upstream commit cbbd5a945e85e7835ac5792d855d85c20e40d1e3 ]
 
-The speakers on the Legion S7 15IMH05 (PCI SSID 17aa:3811, ALC287) stay
-silent after a cold boot with the current quirk, which applies
-ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS. They only start working after a
-suspend/resume cycle.
+Allow controller variants to provide a custom initialization callback
+through their capability data.
 
-The amplifier setup is sent through COEF 0x24/0x26 on NID 0x20. On this
-machine the first pass of that sequence appears to only wake the
-amplifiers. Sending the identical sequence a second time makes both
-speakers work, provided the second write comes a few milliseconds after
-the first: back-to-back writes leave the speakers silent, a 7 ms gap
-makes only the right speaker work, and 8 ms or more is reliable. A dump
-of all COEF registers of NID 0x20 taken before and after the second
-write shows no difference.
+This prepares the driver for variants which require a different hardware
+initialization sequence without adding SoC checks to the common path.
 
-Add a dedicated fixup that writes the sequence, waits 20 ms to keep a
-margin over the measured minimum, and writes it again on every codec
-init. It chains to the same AUTOMUTE fixup as before. To share the
-sequence, move the verbs of ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS into a
-named array; this has no functional change for the other users of that
-fixup.
-
-Fixes: 67f4c61a73e9 ("ALSA: hda/realtek: Add quirk for Legion S7 15IMH")
-Cc: stable@vger.kernel.org
-Link: https://github.com/CachyOS/linux-cachyos/issues/792
-Signed-off-by: Matej Sochan <matej.sochan@gmail.com>
-Link: https://patch.msgid.link/20261007-legion-s7-v1-1-8ea7fb7ee766@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Link: https://patch.msgid.link/20260709112006.390742-3-robert.marko@sartura.hr
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 717e45f97246 ("spi: atmel-quadspi: balance runtime PM and pclk across system sleep")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 92 +++++++++++++++++++------------
- 1 file changed, 56 insertions(+), 36 deletions(-)
+ drivers/spi/atmel-quadspi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index ed76281856b1c..68b5648d51119 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3937,6 +3937,7 @@ enum {
- 	ALC236_FIXUP_HP_LIMIT_INT_MIC_BOOST,
- 	ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS,
- 	ALC287_FIXUP_LEGION_15IMHG05_AUTOMUTE,
-+	ALC287_FIXUP_LEGION_S7_15IMH05_AMP,
- 	ALC287_FIXUP_YOGA7_14ITL_SPEAKERS,
- 	ALC298_FIXUP_LENOVO_C940_DUET7,
- 	ALC287_FIXUP_LENOVO_YOGA_BOOK_9I,
-@@ -4058,6 +4059,53 @@ static void alc700_fixup_intel_hades_canyon(struct hda_codec *codec,
- 		alc_update_coef_idx(codec, 0x1b, 0x0400, 0x0400);
+diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
+index d7a3d85d00c2f..6c2d3c00409bb 100644
+--- a/drivers/spi/atmel-quadspi.c
++++ b/drivers/spi/atmel-quadspi.c
+@@ -256,8 +256,11 @@ static const struct atmel_qspi_pcal pcal[ATMEL_QSPI_PCAL_ARRAY_SIZE] = {
+ 	{200000000, 7},
+ };
+ 
++struct atmel_qspi;
++
+ struct atmel_qspi_caps {
+ 	u32 max_speed_hz;
++	int (*init)(struct atmel_qspi *aq);
+ 	bool has_qspick;
+ 	bool has_gclk;
+ 	bool has_ricr;
+@@ -1156,6 +1159,9 @@ static int atmel_qspi_sama7g5_setup(struct spi_device *spi)
+ 	/* The controller can communicate with a single peripheral device (target). */
+ 	aq->target_max_speed_hz = spi->max_speed_hz;
+ 
++	if (aq->caps->init)
++		return aq->caps->init(aq);
++
+ 	return atmel_qspi_sama7g5_init(aq);
  }
  
-+static const struct hda_verb legion_amp_verbs[] = {
-+	/* left speaker */
-+	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x24 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x41 },
-+	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0xc },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x1a },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
-+	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x2 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
+@@ -1571,6 +1577,9 @@ static int __maybe_unused atmel_qspi_resume(struct device *dev)
+ 		return ret;
+ 	}
+ 
++	if (aq->caps->init)
++		return aq->caps->init(aq);
 +
-+	/* right speaker */
-+	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x24 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x42 },
-+	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0xc },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x2a },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
-+	{ 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x2 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
-+	{ 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
-+	{}
-+};
-+
-+static void alc287_fixup_legion_s7_amp(struct hda_codec *codec,
-+				       const struct hda_fixup *fix, int action)
-+{
-+	if (action != HDA_FIXUP_ACT_INIT)
-+		return;
-+
-+	snd_hda_sequence_write(codec, legion_amp_verbs);
-+	/*
-+	 * The amplifiers accept the setup only a few ms after the first
-+	 * write (8 ms is the measured minimum on the test machine), so
-+	 * keep a margin.
-+	 */
-+	msleep(20);
-+	snd_hda_sequence_write(codec, legion_amp_verbs);
-+}
-+
- static const struct hda_fixup alc269_fixups[] = {
- 	[ALC233_FIXUP_WUJIE_SPEAKERS] = {
- 		.type = HDA_FIXUP_PINS,
-@@ -6054,41 +6102,13 @@ static const struct hda_fixup alc269_fixups[] = {
- 	},
- 	[ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS] = {
- 		.type = HDA_FIXUP_VERBS,
--		//.v.verbs = legion_15imhg05_coefs,
--		.v.verbs = (const struct hda_verb[]) {
--			 // set left speaker Legion 7i.
--			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x24 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x41 },
--
--			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0xc },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x1a },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
--
--			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x2 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
--
--			 // set right speaker Legion 7i.
--			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x24 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x42 },
--
--			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0xc },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x2a },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
--
--			 { 0x20, AC_VERB_SET_COEF_INDEX, 0x26 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x2 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0x0 },
--			 { 0x20, AC_VERB_SET_PROC_COEF, 0xb020 },
--			 {}
--		},
-+		.v.verbs = legion_amp_verbs,
-+		.chained = true,
-+		.chain_id = ALC287_FIXUP_LEGION_15IMHG05_AUTOMUTE,
-+	},
-+	[ALC287_FIXUP_LEGION_S7_15IMH05_AMP] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc287_fixup_legion_s7_amp,
- 		.chained = true,
- 		.chain_id = ALC287_FIXUP_LEGION_15IMHG05_AUTOMUTE,
- 	},
-@@ -7549,7 +7569,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	 */
- 	HDA_CODEC_QUIRK(0x17aa, 0x38d6, "Lenovo Yoga Pro 9 16IMH9", ALC287_FIXUP_TAS2781_I2C),
- 	HDA_CODEC_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
--	SND_PCI_QUIRK(0x17aa, 0x3811, "Legion S7 15IMH05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
-+	SND_PCI_QUIRK(0x17aa, 0x3811, "Legion S7 15IMH05", ALC287_FIXUP_LEGION_S7_15IMH05_AMP),
- 	SND_PCI_QUIRK(0x17aa, 0x3813, "Legion 7i 15IMHG05", ALC287_FIXUP_LEGION_15IMHG05_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3818, "Lenovo C940 / Yoga Duet 7", ALC298_FIXUP_LENOVO_C940_DUET7),
- 	SND_PCI_QUIRK(0x17aa, 0x3819, "Lenovo 13s Gen2 ITL", ALC287_FIXUP_13S_GEN2_SPEAKERS),
+ 	if (aq->caps->has_gclk)
+ 		return atmel_qspi_sama7g5_init(aq);
+ 
 -- 
 2.53.0
 
