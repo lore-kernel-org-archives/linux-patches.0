@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585786;
-	b=aB5uHxZz3L3jLBu8dnhQBg61YzguttOWl836pqxhB9u21rx6yRwtocP13gKHEWp0Jgsv
-	 4TkIQSFtgx7cDDbizVVrc+On88GI89BFLqr4YiSJqIZOA+juB43X/N/8K6gtQeTmrWkvg
-	 Pua3DvoyE+DRJc6YZFKt41loCSwPAWfYn8bwIhzhBABC2VxSGcCpCBzoIiktA59htf2Bz
-	 ui8pcWw28uj1Q0J5vWAhrjNBSd/6sjvVCTUOj8k9gz6mKSHcxX8SuBbvzKkYGcYyF4KeM
-	 s3jLOz98XgeCOskzQ67E/tOk27H6VwFvhNXNMdlUHYRfm/OKBz5v250fWZGXjyz0T2w==
+	t=1794585788;
+	b=5keZPHc6o3VlgAnEBuzk1CDicTncwcEpWawmUZH/mzfETzRUtWGMycdAG5YXCqYI8Zbe
+	 AjUebLi7kiOGwaIEEOj4mWIHUWjDTWfTnbGlINlgR5EXJsrNxYiBjFwzUDmBEH72HswGi
+	 Ed+tkpm+h4qt0dshRAmCcnZJ4GSJ3PfsneCiL3THcaPhXiFMTFmu20f8ZVRF23R1/wuNF
+	 ZyUKcuBQe/xYVrgQ5lCE2rkfylIX9mqLk0p9Ef4BLpHiItD8/RfI5g9DNTU2zhGMauNYq
+	 cAG9eZdealcZ3t6KX5zbJBRpUe6KrL6pxSOgDy682aG3HEN4LjytOInuBOgduO0e+6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585786;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585788;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=L51M4UtrPxwrisczm0oYgVm03JbjzPfwq0sRujvvjjw=;
-	b=etVsWcUX+xYvVPSaTo9ovRICMOqPP6G8VfADnyGNgIbEgGXbzzajFVuiSh4+dQKpmrgy
-	 E582fV/OyweUeximflrVvUcw/WXKsM7LGIFH39bwjJJoGjX20+zP72pLBjjIIBf9/hlun
-	 teUtlFWE5s8jh+AVgRIfDjHTKF3qKOHl8U5gXRFel0s0BHPcj1ALhs1KB2mEf3Ykm+zSj
-	 aXgTDooBpGRlpfCeMnhJLPAQ9NI05YEOrP0lsyaHVYzP6/DdCGX3PH1YlZZEGon9VfzL6
-	 eIS3b8yMsFxhrcLwD3SR9gz+YnAtSOXHJlcGkMlY+c1Y2TUdG9Ju6bTrXgTU/DCf3mA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=4i3CRQ0M1DBXAGERss4Z1rp/uRxA0xqUjl9315scWpM=;
+	b=jzlvENvxtaHrmCkqqyJeqZMRHUNWkE5OS7BkncaPnsEmnmW/HNn9H6zuT4TMVxLYyvyq
+	 LsgVZBwite5mWsyExip/0TLfsA1X5R+mVTCKUOrDWWykABldvn3vr18JrBqVsSxDISHLB
+	 qm3lw15RdwcMHIFqRtEemqu5yF9RKuGg7Dcaeq3Ee00v0ntqbD9QP4bHmDKj4B73HSSNV
+	 Qe+t7fUTFDB373WV43RF3OEfqDbpWFs7d3vxJ1lbms6zRlOLe51D2hyfY91uTZBHFFW1v
+	 JeXYHtg9jGFVuSm8DL5BjwNW7E4C0af1rjOgcrZDdxnPFX+mbw2gBuFengVT+csrNGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UnwTFJ0q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2PaoaJYg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37AC606D479;
-	Fri, 13 Nov 2026 16:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E40D606D479;
+	Fri, 13 Nov 2026 16:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UnwTFJ0q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6B81F000C6;
-	Fri, 13 Nov 2026 16:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2PaoaJYg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989F21F000C4;
+	Fri, 13 Nov 2026 16:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585786;
-	bh=L51M4UtrPxwrisczm0oYgVm03JbjzPfwq0sRujvvjjw=;
+	s=korg; t=1794585787;
+	bh=4i3CRQ0M1DBXAGERss4Z1rp/uRxA0xqUjl9315scWpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UnwTFJ0qDY3Y2J+9NzqbY5Ea0uXvFsBB+0jZUMVDdfGlBQf5UvYfluFushFYF+0nn
-	 2fcsRN7yiYTG9IgAvslVNECzdmAMXmWHVXcjLn0otJlTR5uo/qLyu82d9tKiEZuu4A
-	 pxVxf4IQ5uJ0cufBqxku9bx6p3x1hhcr9twngKBA=
+	b=2PaoaJYgLFNR8ff+vU2x5eYABjNrqytTOeQEovvQ3PGBfBlrm5lj1obE07knjLh8s
+	 dXQzctf46hhu6mqab2uBZdJ7CZRKRMOUcf33yLO5RcOzVYwbKtvl8HCbBnt3tDft1l
+	 P0NhBZ9puDKNmnBXWub/XXjEdo0sAHHGxPPFX5Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 376/507] drm/amdgpu: unlock the VM and BO when attaching a KFD BO fails
-Date: Fri, 13 Nov 2026 10:51:20 -0500
-Message-ID: <20261113153808.935756048@linuxfoundation.org>
+Subject: [PATCH 7.3 377/507] drm/amdgpu: rewrite all PTEs of the BOs after a VM reset
+Date: Fri, 13 Nov 2026 10:51:21 -0500
+Message-ID: <20261113153809.002644507@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -63,6 +63,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -71,65 +72,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit e0a1404b34e0002f03f7979cdb791a9b5c3963f5 ]
+[ Upstream commit 71388e1ed836d7645b4807cead35edf24da00bcd ]
 
-kfd_mem_attach() locks the page directory and the BO with a drm_exec
-transaction on its stack, but leaves through the unwind label without
-drm_exec_fini() when locking fails, e.g. when MAP_MEMORY_TO_GPU gets a
-signal while the page directory or the BO is busy. Reservations already
-acquired then remain locked with their ww_acquire_ctx pointing into the
-expired stack frame.
+amdgpu_vm_bo_reset_state_machine() moves all idle vm_bos to needs_update
+so that their mappings are written again, e.g. after a GPU reset lost
+VRAM. Since commit 5be7f6720a0f ("drm/amdgpu: Only set bo->moved when
+the BO was actually moved") amdgpu_vm_bo_needs_update() no longer sets
+the moved flag, so amdgpu_vm_bo_update() writes nothing for the kernel
+and always valid BOs. The same applies to vm_bos already on a
+needs_update list, e.g. after an AMDGPU_VM_DELAY_UPDATE mapping, where
+only the new mapping gets written.
 
-With one thread doing GEM_VA map/unmap on the KFD VM and
-another one mapping KFD BOs while getting SIGUSR1 every 20 us:
+An SDMA write to an always valid BO after a VRAM-losing reset faults:
 
-  BUG: KASAN: stack-out-of-bounds in __ww_mutex_lock.constprop.0+0x34f5/0x3da0
-   ww_mutex_lock_interruptible+0x2f/0x150
-   drm_exec_lock_obj+0x107/0x2d0 [drm_exec]
-   kfd_mem_attach+0x4dd/0x1b60 [amdgpu]
+  amdgpu 0000:03:00.0: VRAM is lost due to GPU reset!
+  amdgpu 0000:03:00.0: [gfxhub] page fault (src_id:0 ring:40 vmid:7 pasid:9)
+  amdgpu 0000:03:00.0:   in page starting at address 0x0000000100000000 from client 10
 
-and the process ends up in D state.
+Set the moved flag for all vm_bos on the needs_update lists after moving
+the idle ones there; the root PD still goes back to idle.
 
-Finish the transaction before unwinding.
-
-Fixes: fd1fa48b935f ("drm/amdgpu: lock both VM and BO in amdgpu_gem_object_open")
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Fixes: 5be7f6720a0f ("drm/amdgpu: Only set bo->moved when the BO was actually moved")
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7b885fa27e4b9fa5cbdc64e66fc35872aee296f5)
+(cherry picked from commit d397f95f63cc0f711c3e8f2043edc59b575345ab)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 501b1a9f27070..6c657d6060d65 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -975,11 +975,11 @@ static int kfd_mem_attach(struct amdgpu_device *adev, struct kgd_mem *mem,
- 			ret = amdgpu_vm_lock_pd(vm, &exec, 0);
- 			drm_exec_retry_on_contention(&exec);
- 			if (unlikely(ret))
--				goto unwind;
-+				goto unlock;
- 			ret = drm_exec_lock_obj(&exec, &bo[i]->tbo.base);
- 			drm_exec_retry_on_contention(&exec);
- 			if (unlikely(ret))
--				goto unwind;
-+				goto unlock;
- 		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index fc3a8d38d5149..c07f1115f6543 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -269,19 +269,27 @@ static void amdgpu_vm_bo_reset_state_machine(struct amdgpu_vm *vm)
  
- 		bo_va = amdgpu_vm_bo_find(vm, bo[i]);
-@@ -1005,6 +1005,8 @@ static int kfd_mem_attach(struct amdgpu_device *adev, struct kgd_mem *mem,
+ 	/*
+ 	 * Don't use list splice here, we need the special handling for the root
+-	 * PD and set the moved flag appropriately.
++	 * PD. All mappings must be written again, also of the vm_bos which are
++	 * already waiting for an update of some of them, e.g. after a map with
++	 * a delayed update, so set the moved flag for everything that needs an
++	 * update.
+ 	 */
+ 	amdgpu_vm_assert_locked(vm);
+ 	list_for_each_entry_safe(vm_bo, tmp, &vm->kernel.idle, vm_status)
+ 		amdgpu_vm_bo_needs_update(vm_bo);
++	list_for_each_entry(vm_bo, &vm->kernel.needs_update, vm_status)
++		vm_bo->moved = true;
++
+ 	list_for_each_entry_safe(vm_bo, tmp, &vm->always_valid.idle, vm_status)
+ 		amdgpu_vm_bo_needs_update(vm_bo);
++	list_for_each_entry(vm_bo, &vm->always_valid.needs_update, vm_status)
++		vm_bo->moved = true;
  
- 	return 0;
+ 	spin_lock(&vm->individual_lock);
+-	list_for_each_entry_safe(vm_bo, tmp, &vm->individual.idle, vm_status) {
+-		vm_bo->moved = true;
++	list_for_each_entry_safe(vm_bo, tmp, &vm->individual.idle, vm_status)
+ 		list_move(&vm_bo->vm_status, &vm->individual.needs_update);
+-	}
++	list_for_each_entry(vm_bo, &vm->individual.needs_update, vm_status)
++		vm_bo->moved = true;
+ 	spin_unlock(&vm->individual_lock);
+ }
  
-+unlock:
-+	drm_exec_fini(&exec);
- unwind:
- 	for (; i >= 0; i--) {
- 		if (!attachment[i])
 -- 
 2.53.0
 
