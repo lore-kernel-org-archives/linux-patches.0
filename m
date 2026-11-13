@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590998;
-	b=CDcNvXR4TLvjVf0ge0LFwotz05P/FQhzwG2y8he4GSyOypS8AABV6q6NxgZ9yfO3Bx7w
-	 dUd8DIMNzqM4BY0XnDlvK8gy+5U0p85GuUgREtln5+sFjqPMdOAASjwL6l7rXnXszm/B2
-	 ZkK/3lbRTEdY3W8vetOEvKQfrjHz3omzpf3m7kXEcpww34wuwqgxtingI94P/gWjxrwgg
-	 PR5rqxmbsIsBCYCPAroVjrtNxogkjUOef8o7KdFlDev5VjGqKwcFVDBzPzCh1jwzj/nnk
-	 wrOLj0D11BnTrxmN20wi3u0/l+wFj3Ng/lJ1NLkNME3qaeM9rfnoTySwuS2E6Q5pOJg==
+	t=1794590999;
+	b=dVmNLzhCUFmX8ddMt5VsXdMJjElLKekhKUN9FZQv6j9COVWqmuXnGyubR6Xk4x4o3thx
+	 mCxNwz63As/MfcqDsXO3R38fZc9N5YCNdSB7bEIMVMfyu71XqLNru96rbFHdP4E3m4x7e
+	 eoiXE0nv4fN2uZZ0RN4ThU0LCjcNP+LG5vkIYfkHczFifkTRTwGWXdn8KBd80dnQXfYBF
+	 25yQTm0wdQjAbNWL7sS3fb/0h/EpvZrcARvlEK3c1KxGdqOge1PgOReeUDZQGEOlusKyz
+	 bbaD7IARieEmRKQj0vkF+eIU1Y/Qa/qShR9qDwi+Q4eoPA9HddE8tHspGL4ZisxFvrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590998;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590999;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r9F1RDKiMhJI6pYFDx2Lys0zG7cihroTLOqBRoUZmUQ=;
-	b=KXSyVSGcMU9qxHIzOetNYWg+ECPLK5+butv2TF/UodX3w/mUH0MiJrBVPIEFWQopRJ1K
-	 GYLkxorAUntEGvPsRhzNRJTr44F6tfm/7UoIgPpNH9LEM7g+43U6ymgieGCk/B6H9Scl+
-	 sK/4+h5Vdmnr/zY6aN9Pd2ZNIKtKVrNnzKnoyGQw7iY7FzBIYPQGFGPV55rb5PMdIuZMI
-	 udTEmH2h6HraH1k3CNPUK/Q90HDYC0aqiOE19Y7NvPIiSltggV9Bj4CtydV/8zWrkt8Fm
-	 dNxCspun8jkV0RcJ/hSILaySHeYVgWyVHlQ947jUzX8Yc5CN81EbPdI6e/VsQi5F3cw==
+	bh=y8b9+eqfsHfO4L4VaOOvL64FcxHquWzkzmdFPzvhnUg=;
+	b=w9AmQbWLWCF0CKhPsWSePpTi+haT+AL+hj5WWD5JAbZD+gdxaYiZBveamm3NDsPHiAzz
+	 OgBSnYh9Yo+ri1fu3LOzL4xHrFgVoWtElVNIYLANiE0Aue/69NaFXXLljCCGPsuLcF2TO
+	 76a3/44t6iRVhX1AzsvfeNc/UyYIv2fIkZ/8q7P8qDeRCOcVipvoU0geecwHi8KvbqNK5
+	 QMYOBRTmkH0UZwZoZJmBcJqxUej69O9EtohQPejJj+yGFg7SD4fSiQ7OXANT5y/+d48j5
+	 liI6q57qRQ6syAS56S2+FFT4SZ/rg91ZlPnmnJQOQZUBB5nHrUIFWFgoxbPqsyisyYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljSgpg9j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUUvoZeO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1BB608317D;
-	Fri, 13 Nov 2026 17:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC286070F08;
+	Fri, 13 Nov 2026 17:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljSgpg9j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E081F000C4;
-	Fri, 13 Nov 2026 17:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUUvoZeO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A701F000C4;
+	Fri, 13 Nov 2026 17:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590998;
-	bh=r9F1RDKiMhJI6pYFDx2Lys0zG7cihroTLOqBRoUZmUQ=;
+	s=korg; t=1794590999;
+	bh=y8b9+eqfsHfO4L4VaOOvL64FcxHquWzkzmdFPzvhnUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ljSgpg9jIV9vVDeOupPj+fiIAaEgr2wN6jq/PtwmOOor5wT7O6t7WJxmE9fOog2SG
-	 IOKVIrTO64cK/fDOaNDzIH5T8BTJd/B01pcgNycdRk3yJb1+GDod8ZEO1QVb4cdfEq
-	 4Ya29fPB1lCIyyypRt1RY/r0jxcJuRiSFrjfwEng=
+	b=vUUvoZeOR/o78V3GtEwYv6gL0BvuXMkss/aiVrSV9fawnNne+YkVcJBJDxSPQQ+sC
+	 yzgtNhge87x2mZn0J/HpC5B03CVUrT0jf/nJJ0WRRIvH0A3Gk5MGIf5YgCrBK3geec
+	 fmYYxkSyE7EWgqHBZ5hI8YRMgoDkKOjKY0LjHB74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Yifei Gao <gyf161023@gmail.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 171/670] 9p/trans_virtio: reject mount tags longer than NAME_MAX at probe
-Date: Fri, 13 Nov 2026 10:45:35 -0500
-Message-ID: <20261113153817.859992277@linuxfoundation.org>
+Subject: [PATCH 6.12 172/670] 9p/xen: fix refcount leak in p9_xen_response() on wrong tag
+Date: Fri, 13 Nov 2026 10:45:36 -0500
+Message-ID: <20261113153817.891602086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,53 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Yifei Gao <gyf161023@gmail.com>
 
-[ Upstream commit 5bfef2b6dafe83fe2d8d210d54093a8f48cfc97e ]
+[ Upstream commit 4d183e6f153245aca2534e372152583b868dd925 ]
 
-p9_virtio_probe() reads a 16-bit mount tag length (tag_len) from the
-device config and kzalloc()s tag_len + 1 bytes for chan->tag with no
-upper bound. A malicious or compromised host can present a tag of up to
-65535 bytes; that tag is later copied into the single-page sysfs buffer
-by p9_mount_tag_show() (memcpy(buf, chan->tag, tag_len + 1)), a
-host-controlled out-of-bounds write of up to ~64 KiB past the PAGE_SIZE
-attribute buffer.
+p9_xen_response() looks up the request for an incoming reply with
+p9_tag_lookup(), which takes a reference on the returned p9_req_t. When
+the tag does not resolve to a request in REQ_STATUS_SENT, the function
+warns and continues the loop without dropping that reference, permanently
+leaking the p9_req_t and its msize buffers. The reply header, including
+the tag, is supplied by the backend, so a malicious or buggy 9P backend
+can leak kernel memory on every crafted response.
 
-Reject an overlong tag at probe time. A 9p mount tag is a name-like
-identifier, so bound it by NAME_MAX (255): that limit is independent of
-the sysfs/seq_file page size and is far above any legitimate mount tag,
-which keeps p9_mount_tag_show() safe at the root without hard-coding a
-seq_file implementation detail.
+Drop the reference before continuing.
 
-Fixes: 179a5bc4b8cb ("net/9p: use memcpy() instead of snprintf() in p9_mount_tag_show()")
+Fixes: 728356dedeff ("9p: Add refcount to p9_req_t")
 Cc: stable@vger.kernel.org
-Suggested-by: Christian Schoenebeck <linux_oss@crudebyte.com>
 Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Message-ID: <20260627211012.4042372-1-michael.bommarito@gmail.com>
+Signed-off-by: Yifei Gao <gyf161023@gmail.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Message-ID: <20260806144255.4167019-1-gyf161023@gmail.com>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_virtio.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/9p/trans_xen.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/9p/trans_virtio.c b/net/9p/trans_virtio.c
-index 0b8086f58ad55..d1a680f699115 100644
---- a/net/9p/trans_virtio.c
-+++ b/net/9p/trans_virtio.c
-@@ -629,6 +629,11 @@ static int p9_virtio_probe(struct virtio_device *vdev)
- 		err = -EINVAL;
- 		goto out_free_vq;
- 	}
-+	if (tag_len > NAME_MAX) {
-+		dev_err(&vdev->dev, "mount tag too long (%u bytes)\n", tag_len);
-+		err = -EINVAL;
-+		goto out_free_vq;
-+	}
- 	tag = kzalloc(tag_len + 1, GFP_KERNEL);
- 	if (!tag) {
- 		err = -ENOMEM;
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index 068d57515dd58..92701a16511d4 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -201,6 +201,8 @@ static void p9_xen_response(struct work_struct *work)
+ 		req = p9_tag_lookup(priv->client, h.tag);
+ 		if (!req || req->status != REQ_STATUS_SENT) {
+ 			dev_warn(&priv->dev->dev, "Wrong req tag=%x\n", h.tag);
++			if (req)
++				p9_req_put(priv->client, req);
+ 			cons += h.size;
+ 			virt_mb();
+ 			ring->intf->in_cons = cons;
 -- 
 2.53.0
 
