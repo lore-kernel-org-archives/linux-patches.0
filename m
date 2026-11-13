@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590899;
-	b=wN9peeSiQI9pBCvSdEyHNggTZ25KpcqdBhGTNXq4CaKAMjirL0YMEWi23fdiN86ZUPRh
-	 0NKpw/mk4fhZjapIVYARGhKGTRuVBXIUn8wuhmppiQG0VnGaze2CLVOKSxu0y5FscMs8c
-	 2AuCz0+zo8bAxNdX5mgGzBvEZAlzfvOi3BVRQPdiz3Q0eIx6ixra2V7RtrQLgzuBLRLrG
-	 GsDm4ulOKka9CfgB80ltrhzNVRLebYbxGK6IjUQ1lOSQB/XsCypC2u2IyJfxUnKGOmRd1
-	 W1zna6UIfsvnn8PMh8T954+jnkQGYLuSlg2dXI82j6vAH44k7/yBId52U8j4VIVZHng==
+	t=1794590900;
+	b=rR0B0ARot3SPl0PJvUVC3y16FSi0QZZjIe5296BjDYaQOmipRCnKhi1H1uHxBMVWbs6T
+	 mTIvPdvvXxQFWWea0o2bnZgitvteBzVMtZtVqO67Dzp6B0PFc4KoyUZTbN3SKmy2b9+8s
+	 O8ZOYkTQ4yHGFh1dBTOGOg7H6PPvStK0XQQNDPnz4Sd2izHq7fPZob4bFHnRbmneEspM5
+	 wMHOG2cI+Eu+z7VctCoCj6kBdUxgM0qXGXkLlq+sbyLmgaXmXuyE40GesjIbQefDIUfRa
+	 SXI4RMALWUoVW32A1UJa47/1EjKhykBoAsLykI3YkNVK2FTOvSGClb/LSm+kz9i9WYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590900;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ec3avjnKbG4VFlO55MdyD9YtCYn0NSsMaLDS5oXnb4A=;
-	b=clCtrzWMMUfwDtNsKlyrjjf3CDBNvoz8psPryFdm1X0/0rE1+Cay43sZtiQcHIr9ZWUd
-	 fNFWbVryevqYQqRaLz2dq+Jn9kYfsqLEpKT1T97KMzyeK1kA0mEqg3ZTJvtNIU/+KtV4p
-	 EzQ4Gh84Nc5O2W91EiKApnz9AFMOVnJAXUIn6gMNGWCETh8tpGRY75mvz2TM99LYmczUU
-	 RZJMazDlQJ/HHNaLyzxVWic8l9GhO1SHkTPeP5Ot7MvjhLXLrZEm7QlZibotbk7Z9XfLJ
-	 ToS0Ok+Rf24jfJqIhyLTT1NxTsA+j/WGi+eXgfCsbGkkodBe219Mqi3HznnYKFhO4Tg==
+	bh=7TS1Z31ofE2J8LhOK+1XSdeYzRlHfS2OUiacgHd13cU=;
+	b=g811R/Lji41Ps1mKdRu2BmtHZA0uV4HzWKcidyly+UIj+r9ukFm+RE24RLWghvR9nRrn
+	 j64PTUck/gY6X4AwGCdGfUjZXYhnVC91BLKGLWI5ZhtCzltFSCtUGgfHtzdtCOxFaxYd8
+	 MYzbg5oJ08hikGnWJZLXtjjOtBIETo+qbu9Qyk819mpNQzFGHvjZe639k8tNGnHQsUiES
+	 IkiXdvtz04p7jJrbexyafFeL2ENoYg9Bfw8L1OsQUUShy5LkpqiSpQ+ZDi6EHmfwvDujy
+	 4ENpo+9vMit2JXPaC0OFuugeJyQvfqROuw0XrtiDJgAnosUTpHUhLUU3y3Hdgr9keNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yQQaoYFK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKHU68Sh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC230606E220;
-	Fri, 13 Nov 2026 17:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94AA606E223;
+	Fri, 13 Nov 2026 17:28:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yQQaoYFK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3941F000C5;
-	Fri, 13 Nov 2026 17:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKHU68Sh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AA11F000C4;
+	Fri, 13 Nov 2026 17:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590898;
-	bh=ec3avjnKbG4VFlO55MdyD9YtCYn0NSsMaLDS5oXnb4A=;
+	s=korg; t=1794590899;
+	bh=7TS1Z31ofE2J8LhOK+1XSdeYzRlHfS2OUiacgHd13cU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yQQaoYFK3OSoNLP8zLXYZZLtrEzOU1oyN7tHDXVYDa+kqavHTKeonApL/OxwDHbb5
-	 CRyFxKRDjN8JBC1rZKqqJYZMvxM2q9a6GuQBzWcmvFbpkqeGOcfGDOLrsmrpuuOV/6
-	 GtFcLRK6uoKtuDkesJgTvej9vjSRdsoVQ1GQrGos=
+	b=sKHU68ShDGmiH1O4cJZe3/LF70Pmbe1k+S+Ykl/Mp77/TcHL0PLHhh7ZH8Gcw4hWu
+	 x2x1VgfSl/EY0QzAHQVV0BgepT5V9lUIvWCDIA3J+OkF6kfK7SnyLOzkqo3r/X6r7F
+	 AYxdxx/VrqnF+pEp0U7ZwfF/DyS/109dDQkzWm8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/670] net: bgmac: enable interrupts only after NAPI is ready
-Date: Fri, 13 Nov 2026 10:44:13 -0500
-Message-ID: <20261113153814.930763235@linuxfoundation.org>
+Subject: [PATCH 6.12 090/670] nfsd: shorten extack string returned with dodgy listener
+Date: Fri, 13 Nov 2026 10:44:14 -0500
+Message-ID: <20261113153814.962661246@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,77 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit ac1f6e58cb77bb66b8811f7d98703e0f076a8f65 ]
+[ Upstream commit 8d7859d165dbdf6e8d77b76500fc990f26c8310d ]
 
-bgmac_open() calls bgmac_chip_init(), which unmasks the interrupts and
-enables the MAC receiver, before request_irq() and napi_enable().
-bgmac_enet_resume() also enables NAPI only after bgmac_chip_init().
+The kernel test robot reports:
 
-When frames arrive in that window, the first RX interrupt masks all
-interrupts in bgmac_interrupt() and calls napi_schedule() on a NAPI
-instance that is still disabled, so nothing is scheduled. Nothing
-unmasks the interrupts again, the RX ring fills up and the interface
-stays deaf until it is brought down and up without traffic.
+>> fs/nfsd/nfsctl.c:2253:4: warning: 'snprintf' will always be truncated; specified size is 80, but format string expands to at least 94 [-Wformat-truncation]
 
-On an Asus RT-N16 (BCM4716) a single "ip link set eth0 down/up" while
-a host sends UDP to the router left INT_MASK at 0, INT_STATUS with RX
-pending and the RX DMA idle on a full ring, with the RX packet and
-interrupt counters no longer moving. With this change, 10 of 10 such
-cycles recovered on their own.
+Shorten the extack string in this case so that it will fit in 80 chars.
 
-Request the IRQ and enable NAPI before the chip is initialized.
-
-Fixes: dd4544f05469 ("bgmac: driver for GBit MAC core on BCMA bus")
-Fixes: f3537b3494c0 ("net: ethernet: bgmac: driver power manangement")
-Cc: stable@vger.kernel.org
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261010070011.60403-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260904-nfsd-nl-hang-v1-1-8c8035b6294d@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/nfsd/nfsctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
-index 6ffdc42294074..258b3b5a1cdb7 100644
---- a/drivers/net/ethernet/broadcom/bgmac.c
-+++ b/drivers/net/ethernet/broadcom/bgmac.c
-@@ -1183,9 +1183,6 @@ static int bgmac_open(struct net_device *net_dev)
- 	if (err)
- 		return err;
- 
--	/* Specs say about reclaiming rings here, but we do that in DMA init */
--	bgmac_chip_init(bgmac);
--
- 	err = request_irq(bgmac->irq, bgmac_interrupt, IRQF_SHARED,
- 			  net_dev->name, net_dev);
- 	if (err < 0) {
-@@ -1195,6 +1192,9 @@ static int bgmac_open(struct net_device *net_dev)
- 	}
- 	napi_enable(&bgmac->napi);
- 
-+	/* Specs say about reclaiming rings here, but we do that in DMA init */
-+	bgmac_chip_init(bgmac);
-+
- 	phy_start(net_dev->phydev);
- 
- 	netif_start_queue(net_dev);
-@@ -1609,10 +1609,10 @@ int bgmac_enet_resume(struct bgmac *bgmac)
- 	if (rc)
- 		return rc;
- 
--	bgmac_chip_init(bgmac);
--
- 	napi_enable(&bgmac->napi);
- 
-+	bgmac_chip_init(bgmac);
-+
- 	netif_tx_lock(bgmac->net_dev);
- 	netif_device_attach(bgmac->net_dev);
- 	netif_tx_unlock(bgmac->net_dev);
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 6ca903922fe9b..f2e1079bd0437 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2269,7 +2269,7 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 					   bad_xprt);
+ 		else if (skipped_rpcb)
+ 			NL_SET_ERR_MSG_FMT(info->extack,
+-					   "cannot create %s listener; rpcbind did not answer earlier, so some listeners are not registered",
++					   "cannot create %s listener; rpcbind did not answer earlier",
+ 					   bad_xprt);
+ 		else
+ 			NL_SET_ERR_MSG_FMT(info->extack,
 -- 
 2.53.0
 
