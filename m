@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590653;
-	b=avu6QTXtKmJcc63ZdxXn27eFNU39a8D63Hx6n+NmqRTNXnJQ7uIL9GJWCYYnKenO9q87
-	 JPmHVsaY+ZBRBZ5lnQpM9WmK9gIPRIPo/71VOwYaf5Db46nCxuxXFAaqGyyV4RyydVYeW
-	 /7/B1lYWssuU1npRg5ZaHCl+5VfuwYJI45Y+BuuP7B++rwvub9tQf2cYjFEJkvlSoCfnT
-	 WiD7PnDLO+IjSYOuSqBp7VKbzzT+4LYouZ0TjBBxRpQvbQQ7XOcAxFJHwdJBEGn8JuGNk
-	 CF+4JLuWJdFcJBsQykSjzAFspXUVu1wQeFpxVzYrQkHIT6omhdfsN0acENZYtBNOBmQ==
+	t=1794590654;
+	b=Xk99LjVs6TMTY8siazeVV6EfYjMEfzMvH2/kjC+72JCJX2kxOWIPjZBIIqbYLbgLTVKG
+	 eRhz26VCjVJADtI4jnc8n9msl6Bk67ZDqHeIxiP8r0eoIVctFkslQsn2NNCM7fQXJB5AB
+	 Ed523pjlhFxhA0iIMqeumAVYyQZ8SVRdlWoK12g/96yP6ftfeg3MXg9kxJbYJVtuktpZX
+	 pTZ2EVeKE7oy3teC+IT2CglKv5pyoa1T2qxDCG85yfTmSvP9ra+k73a9A0qEorYWJpn34
+	 hs74cM/Ew+r9ilaJXDaOkSBcwLEQ1tzjlWnN52D2EaXbVlhg+BMgwf1bQ7CJFVf2rWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590653;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590654;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v3f344F680IN/o5EW56MqDI+9vBU1vbd33Ba+xxhmrw=;
-	b=5h0vY3sCEyxklC800578EsDsCeMePNSHDVpqmLB1PSZeCxcin7AFuws24UtIvMvbCxs7
-	 KCX2cdB9jwKyv4MEelUNLxdjzFKjEOTOf9Ek/7dJWwjKUI54d7aHKxYgn+3YU3r+kNlGX
-	 9oTcQ/zOrud/UQtmBkjIgm+PCgYVYbyJfp61atfToA1O1EEkfFR3RiWnsKFogn5unIY3p
-	 WDDBnjVFyN2U+K5uEdz0Pw/WOr51Z+lKsX0f6cq6zdK7kipEcW++tgjm5Fk6kAuGvhwkl
-	 gWnfWBQMiIyrFx+3USd9Ml03tOqkq6RFlVm1v/5zWJq3QLQHBMU5I2CBobRAuUVJ3CA==
+	bh=dutCXrvq9TkcuCNtm9+hXTm09phjldWXSm1bPYvTeKY=;
+	b=Vo3Gy2ww8MCBKLCjGMrvRWLTMKVZ8dazKyMNHSNdR/CI+fQxit30UTWp5tYP+TPqg/46
+	 v0G9KYCVFzlBedPDr6tjabx5lcZdxotAlwmEF+oFjr51E7pJGjRPeRWGYweOMvN3NGBty
+	 qOVj2FOo0iv/lGs63SHMm5y19H94d+r15zVlurrGf/Zrz+j06mfV0XyJy4IHbH5VtqwEU
+	 YBdiP+FU9K9JWfmP0xkREJm2LcIbiU794wY5hIz06G1LavTjPgQJEovakusmyAtj4os/P
+	 xGebIwIPt1xGIRrJWYAWaeNB/QIOYGmQBMMdOUSiU65wWrrreMRCAd3aWQf/j7NkV4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=va1fUFXb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jQ9NTVkt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529896077D7D;
-	Fri, 13 Nov 2026 17:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E04A606B211;
+	Fri, 13 Nov 2026 17:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=va1fUFXb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40581F000C6;
-	Fri, 13 Nov 2026 17:24:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jQ9NTVkt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398321F000C4;
+	Fri, 13 Nov 2026 17:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590653;
-	bh=v3f344F680IN/o5EW56MqDI+9vBU1vbd33Ba+xxhmrw=;
+	s=korg; t=1794590654;
+	bh=dutCXrvq9TkcuCNtm9+hXTm09phjldWXSm1bPYvTeKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=va1fUFXbBPI7HWBuu4ixO9U7PjqCvk92ruFVu1oTvKCK/6q89BaUDKea6V643tuQM
-	 nBWXA9BknwJO3wd3BBXT3F0RvBN3Nd8KOMq4d83+9vQX27iHRbnaSNu9Kk6GOb1pPn
-	 q0txCCBOUz8PIbiwBb52KOtF2HAw80IWpBOY4heM=
+	b=jQ9NTVktjjsfo3coSKsnsrL3mwEiXsi+h9mrEySEcbPe1v549kApelhjrnLQNAqii
+	 THQzHz1vqjN6yNHD5kMTrNcMR1geawktBWiIXhsVf202NCk0TlfMw39+FaxCwyLnq5
+	 mv9P7eh/y+jPrfAEODWP9+krFCbLpuY7t5BphmM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Lee Jones <lee@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 573/686] mfd: twl-core: Use i2c_check_functionality as boolean value
-Date: Fri, 13 Nov 2026 10:51:46 -0500
-Message-ID: <20261113153841.077255320@linuxfoundation.org>
+Subject: [PATCH 6.18 556/686] ASoC: stm: stm32_i2s: Drop redundant error messages
+Date: Fri, 13 Nov 2026 10:51:29 -0500
+Message-ID: <20261113153840.419960472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,35 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 7ee4fa2674e51a0d100b9240cd8a50355141362f ]
+[ Upstream commit a6cdfb6230944082e7be64f9166eed64656b1162 ]
 
-i2c_check_functionality() returns a boolean status rather than an error
-code - directly use it as a boolean value.
+Both devm_request_irq() and snd_dmaengine_pcm_register() already log
+failures internally. Drop the redundant error messages and return the
+original errors directly.
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://patch.msgid.link/20260505114543.159381-2-thorsten.blum@linux.dev
-Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 3c5c55d979dd ("mfd: twl-core: Unregister the auxiliary platform device on unbind")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260720074044.87528-3-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 1b207c85551f ("ASoC: stm: stm32_i2s: request IRQ after regmap initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/twl-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/stm/stm32_i2s.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mfd/twl-core.c b/drivers/mfd/twl-core.c
-index f89eda4a17fe4..c024a28b057e3 100644
---- a/drivers/mfd/twl-core.c
-+++ b/drivers/mfd/twl-core.c
-@@ -754,7 +754,7 @@ twl_probe(struct i2c_client *client)
- 		return status;
- 	}
+diff --git a/sound/soc/stm/stm32_i2s.c b/sound/soc/stm/stm32_i2s.c
+index 6ca21780f21d4..100a50a88d6d6 100644
+--- a/sound/soc/stm/stm32_i2s.c
++++ b/sound/soc/stm/stm32_i2s.c
+@@ -1245,10 +1245,8 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
  
--	if (i2c_check_functionality(client->adapter, I2C_FUNC_I2C) == 0) {
-+	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
- 		dev_dbg(&client->dev, "can't talk I2C?\n");
- 		status = -EIO;
- 		goto free;
+ 	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
+ 			       dev_name(&pdev->dev), i2s);
+-	if (ret) {
+-		dev_err(&pdev->dev, "irq request returned %d\n", ret);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	/* Reset */
+ 	rst = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
+@@ -1302,7 +1300,7 @@ static int stm32_i2s_probe(struct platform_device *pdev)
+ 
+ 	ret = snd_dmaengine_pcm_register(&pdev->dev, &stm32_i2s_pcm_config, 0);
+ 	if (ret)
+-		return dev_err_probe(&pdev->dev, ret, "PCM DMA register error\n");
++		return ret;
+ 
+ 	ret = snd_soc_register_component(&pdev->dev, &stm32_i2s_component,
+ 					 i2s->dai_drv, 1);
 -- 
 2.53.0
 
