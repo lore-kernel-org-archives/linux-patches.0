@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591489;
-	b=tRnv6Ff03d7PNR50ZhVFD0wRb2zkdMyzqjTKozwG19+Gu6Poha0ptsY4DjpLUGmaiVUH
-	 ioa1ikwOyPItcYtH1h/CPX0NFrGXjuVjB6Nf/BlGH/U9d53UVEm5/VN9RrkXa0FoYEHpx
-	 nkI1fie8QQAY6iG+L3SYUSq/3snCj9RYeAxwdSt3QYLhlzSWH+dXO3or5fP/tLrvngQea
-	 v+uHhJ9vG3jqXR8XbkPluBgAbIiUG+3/Dh8XkZHl544ezc5AU6/cRUODgeOKfZ9En1m7t
-	 i4ceiIpl/IoL3RRAnK4VzK1eVgpUmdiKE2Y0nP9ff2Xidp3zYgJZ+dJbRP3cLZbu1aw==
+	t=1794591490;
+	b=FMgLJJhVJR4RKjMkqgASC7fhaaJCxG49rn5pgzeq+iZQikZshjk8YDZcFliX46/baLeW
+	 k9bmjFSY2OMsYjDsIoj+AgGl1bRYgF3+VyjBcCiFuXfhJmJ3SE1zjPvz9uu9mds9svkwJ
+	 k7n48x+7dt/lJAGO7u+MZztKRIAo5Lf4uWdDj5n7Shh0Bq0hnno2LiXyBROLyFq32AgMY
+	 OrVihthof+O+cWanmZ9JWH4VIxcUj9lZzNvyIcA9PJn33rH2n8nSE+uirJo6hay0Xi6fw
+	 i/FseVsJ9zWLOgbAhfIrWJCTmPj13k0vxmHSeSmc+5ELOIEQp079T38Wc3I/usT+tQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591489;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591490;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ubuSMlgTeuUZmrz0Nm9BPB+67dw3C9e59AAbQo/XUog=;
-	b=HfyqwpIzAAERTZvRAdCYjDPRDGM6+mq8+BXEnTT9BPLvGeZ0PI70wGRdCC++o6kxNz6V
-	 6H4215CPYc2xSUAZtZ/c196hwiM8eUJwKpImhVlherCcZKWUvHa7YfAsZOMMRY05LU5GH
-	 tJsEc4qi+6gdKYkSuxknJD8zhbjc97tGftFIIp08u16NYOxUE+Yb93DTLeyhBau0c+dZO
-	 gNOAVRc68WRRN/c8DMu/aMo/4HyQjyPaUkxmKneahT/FHgOHMxhVTeVaUBhbqoYegYfZs
-	 SrIXISUJeAHEFHYBDSNWPF2u0lo3sxxEVZbR5UIwMNO70GDjPUY+w0iJ3b4d3lGWlrQ==
+	bh=E7YuEO+y4u+3Z+nkjzHCUVyua1cjBoypAwhvuOUSfB0=;
+	b=nwmrAUtbGtvNCFzsZaq7bvUlqHZmK8GYH/7pe88rk7TnAPxLmI8opTm6BBu6l9XFsz7D
+	 mky9oHd9bycPiRcKFKwQmOCgYMYwZF027QQKP5IF12+s2i3lzyTq1bowXxxn9dtHmyFEy
+	 nEY+BdXCo68k+bgXg0XuR9OMOzeWqe+wsSRyl8U05y+I4s2/Y38lJ8oxEifl5qUaZuIHp
+	 Ar2UrKRqsNayr7+bqeX4hWnweAFhdAhcw4nce9LJ+9jNkWCJBvnNHZXmH+WCfYZfYnFVo
+	 A/2s2T5NUnepo962cgF/k4RkOD08g0RgxKqUp0q1XGo1EscqByss3sOx8BpePnn97Zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pGAfxu9N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxDlbxcj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB49607E059;
-	Fri, 13 Nov 2026 17:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9152607E069;
+	Fri, 13 Nov 2026 17:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pGAfxu9N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211F71F000C6;
-	Fri, 13 Nov 2026 17:38:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxDlbxcj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EA91F000C6;
+	Fri, 13 Nov 2026 17:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591489;
-	bh=ubuSMlgTeuUZmrz0Nm9BPB+67dw3C9e59AAbQo/XUog=;
+	s=korg; t=1794591490;
+	bh=E7YuEO+y4u+3Z+nkjzHCUVyua1cjBoypAwhvuOUSfB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pGAfxu9N3mt42icP9B4tjs1VgJu2TWZ6Jgw6INePXqkZ8PJSbbuIco4jXGxh3yJsA
-	 VKCg1F7ATcLrHkjJGDwpZp+0PsDUcWSfgkWNhApS3rSScWJqCR4dvDqBYRTRuo/AsL
-	 GJMRp45RDUb5/6BW1M9YK9ngsbZFdOzBSTNyXo5Q=
+	b=oxDlbxcjJt4/aBVUhP7nJu6wrAlavB6KmJyOYFIs5dsK+F/Lt1NcDgy++QgZEVS9L
+	 pHaAddeg1r1W7R3UR78PWlBtxavtjs3GKXFb64AozgkPviFuL8GeQDd6TsWHrRdBMO
+	 MllA1HyWYp3JDOSe5Vx5o1ovGBDKyxJPQNqNRpIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	Tal Zussman <tz2294@columbia.edu>,
-	Jan Kara <jack@suse.cz>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 571/670] block: introduce bio_in_atomic()
-Date: Fri, 13 Nov 2026 10:52:15 -0500
-Message-ID: <20261113153831.211213261@linuxfoundation.org>
+Subject: [PATCH 6.12 572/670] f2fs: fix to use bio_in_atomic() in f2fs_read_end_io()
+Date: Fri, 13 Nov 2026 10:52:16 -0500
+Message-ID: <20261113153831.244252644@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,91 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tal Zussman <tz2294@columbia.edu>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 8ed0831b5263e1aa48d99063795a1f20e4e69b50 ]
+[ Upstream commit a605d5d71a6d280c43c7ede9778dda63fb5c3f22 ]
 
-Move the atomic context detection logic from erofs's z_erofs_in_atomic()
-into the block layer as bio_in_atomic(). This helper returns true when
-the current context is unsafe for sleeping bio completion handlers (e.g.,
-hard/soft IRQ, preempt-disabled).
+f2fs_read_end_io() uses "in_task() && !irqs_disabled()" to decide
+whether it is safe to sleep, the result is passed down as @in_task to:
+- f2fs_put_dic() -> f2fs_free_dic() -> f2fs_release_decomp_mem()
+  -> vm_unmap_ram(), which may sleep.
+- f2fs_end_read_compressed_page() -> f2fs_cache_compressed_page()
+  -> f2fs_grab_cache() -> f2fs_lock_cache(), which may sleep in
+  wait_on_bit_lock().
 
-The logic was originally added to erofs in commit c99fab6e80b7 ("erofs:
-fix atomic context detection when !CONFIG_DEBUG_LOCK_ALLOC"). A
-subsequent patch will use it in the block layer's bio completion
-infrastructure, so move it to include/linux/bio.h where both subsystems
-can share it.
+However, the check still treats below task contexts as sleepable:
+- with spinlock held via spin_lock(), i.e. preempt count != 0 while
+  irqs are enabled.
+- with BH disabled via local_bh_disable().
+- inside an RCU read lock on kernels with CONFIG_PREEMPTION.
+- with any spinlock held on kernels without CONFIG_PREEMPT_COUNT.
 
-Convert erofs to call the new bio_in_atomic() directly.
+So the "sleeping function called from invalid context" issue fixed by
+commit 08a7efc5b02a ("f2fs: vm_unmap_ram() may be called from an
+invalid context") can still be triggered.
 
-Suggested-by: Christoph Hellwig <hch@infradead.org>
-Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260730-blk-dontcache-v7-1-3e8e6850068d@columbia.edu
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: a605d5d71a6d ("f2fs: fix to use bio_in_atomic() in f2fs_read_end_io()")
+The block layer provides bio_in_atomic() for exactly this purpose, it
+checks rcu_preempt_depth() and preemptible(), and conservatively returns
+true if CONFIG_PREEMPT_COUNT is disabled, let's use it instead. The
+difference is as below:
+
+ old: intask = in_task() && !irqs_disabled()
+ new: intask = !bio_in_atomic()
+
+ Context                              | old intask     | new intask
+ -------------------------------------+----------------+----------------
+ Hard IRQ / softirq                   | false          | false
+ IRQs disabled                        | false          | false
+ spin_lock() held, IRQs enabled       | true (wrong)   | false
+ BH disabled by local_bh_disable()    | true (wrong)   | false
+ RCU read lock (CONFIG_PREEMPTION)    | true (wrong)   | false
+ Spinlock held, w/o PREEMPT_COUNT     | true (wrong)   | false
+
+Note that on kernels without CONFIG_PREEMPT_COUNT, bio_in_atomic()
+always returns true, so dic freeing will always be offloaded to sbi->wq,
+and compressed pages will not be cached in f2fs_read_end_io(); this is
+the price of correctness, since there is no way to tell whether the
+current context can sleep.
+
+Cc: stable@kernel.org
+Fixes: 08a7efc5b02a ("f2fs: vm_unmap_ram() may be called from an invalid context")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c    | 11 +----------
- include/linux/bio.h | 15 +++++++++++++++
- 2 files changed, 16 insertions(+), 10 deletions(-)
+ fs/f2fs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 08720efbb1a17..10b9aa2c28541 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1386,15 +1386,6 @@ static void z_erofs_decompressqueue_kthread_work(struct kthread_work *work)
- }
- #endif
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index f0d77bcefcd31..b56e6a98e7f4b 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -287,7 +287,7 @@ static void f2fs_read_end_io(struct bio *bio)
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_P_SB(bio_first_page_all(bio));
+ 	struct bio_post_read_ctx *ctx;
+-	bool intask = in_task() && !irqs_disabled();
++	bool intask = !bio_in_atomic();
  
--/* Use (kthread_)work in atomic contexts to minimize scheduling overhead */
--static inline bool z_erofs_in_atomic(void)
--{
--	if (IS_ENABLED(CONFIG_PREEMPTION) && rcu_preempt_depth())
--		return true;
--	if (!IS_ENABLED(CONFIG_PREEMPT_COUNT))
--		return true;
--	return !preemptible();
--}
- 
- static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
- 				       int bios)
-@@ -1411,7 +1402,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
- 
- 	if (atomic_add_return(bios, &io->pending_bios))
- 		return;
--	if (z_erofs_in_atomic()) {
-+	if (bio_in_atomic()) {
- 		/* See `sync_decompress` in sysfs-fs-erofs for more details */
- 		if (sbi->sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
- 			sbi->sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
-diff --git a/include/linux/bio.h b/include/linux/bio.h
-index d4f58a2d15b69..104a68749ab1e 100644
---- a/include/linux/bio.h
-+++ b/include/linux/bio.h
-@@ -377,6 +377,21 @@ static inline struct bio *bio_alloc(struct block_device *bdev,
- 
- void submit_bio(struct bio *bio);
- 
-+/**
-+ * bio_in_atomic - check if the current context is unsafe for bio completion
-+ *
-+ * Return: %true in atomic contexts (e.g. hard/soft IRQ, preempt-disabled);
-+ * %false when a bio can be safely completed in the current context.
-+ */
-+static inline bool bio_in_atomic(void)
-+{
-+	if (IS_ENABLED(CONFIG_PREEMPTION) && rcu_preempt_depth())
-+		return true;
-+	if (!IS_ENABLED(CONFIG_PREEMPT_COUNT))
-+		return true;
-+	return !preemptible();
-+}
-+
- extern void bio_endio(struct bio *);
- 
- static inline void bio_io_error(struct bio *bio)
+ 	iostat_update_and_unbind_ctx(bio);
+ 	ctx = bio->bi_private;
 -- 
 2.53.0
 
