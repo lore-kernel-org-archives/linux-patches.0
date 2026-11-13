@@ -1,61 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591016;
-	b=pfRnLWDkIwdwqjqvozmc1JFe6dWXQs3xDgVW6zK2W70DnNPn6Uc5s9eQnZSlhwSanu03
-	 Ijje6LJG+11LdY6r/LSbYPVKkkdbQDGIv4vcOVKSIOIY8aMiDP5B7L9HVW5geFnFXyPY/
-	 FMAOzhtiS/gStLGqTrW66I6Ti1aQvIhhIAIlTHJKKVZeGS7XXjVeX8z/yCNUy/NgKnrzO
-	 N3F2vac05zjlrgWKLCtnot/W/oiBqrC/w41Tm6+HdBT25fF93gnJFYvhoy8yyWvPVN+bI
-	 GSaliRCn55h1/ibw8ZB/DAvD6dDIfGWsZcjsx7EIia1iiXytCLPZvlC38SE18qNumfg==
+	t=1794591017;
+	b=esES+4QN+rsQpyV5w99qwGD2yew1nNgLX2LH4M5S9AYuLsQI4J/loaKIZF2auK4PZpeS
+	 DvrS6xESCtbu3PZ7nP5jJ/kDEp61Mv2aKoYEoISkKSFBSiCFfoRkigg1s0QrVVebgRxTJ
+	 gmY3caxJgC/2QgSGY02jeDkKjyyFP8M3Sfbttnx+U7Lj6c801qIXHWYg6M3dEGrOisb5I
+	 xwP8Q7ZtQ7ou7E6udHS9BqZKnZQlX8mwfmmBLEfWeiitTZMHx9rSuqm311I+4QDr94ybE
+	 6Hr8917vOkbhUTaSSJRsUFIy6Z15ZHAtKHy25aVQsE9HI9nAlHDh2rAvIZmVimS9YTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591016;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591017;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=my9aJgIetOEI8PLJj/5ASu98MCqNhRLvd4nQBA+V8Ic=;
-	b=TSnR1yrYqD6Ogf6hxbvnvvROXeZifi0IUf+X4Dlei8Vm7YK/9vsk7JBuwvNJWN9mqQ72
-	 L0S6WxHRCT/htUNyUasoxfkDLyWF8wHmuf1cVqaQhnvFh266oxvW1RvwBJg7EndecJmGb
-	 RXMjMnlWJRVcBjM4Xb+hY6lq+sHdbyrwX+FvPrEvB56zB6M6oYpK5KDUjYqSX5KAS1t1M
-	 HvBMMduZiXr9f0QpQuQT8cMqYsQ/j0wH6eqoHwS8jfsfQXyIl1saTprSmU/ljz3/F7hFD
-	 JAVwsTutA5teHAL4glq3F2Fa0O9ktSacb7ypQAEJ/ugpY1xniTuRmKZ5OFoMlDFV78A==
+	bh=X1FEbyJwtUsNw4NtHs6AD0dn5x/1qYR/NeNrjggJD4w=;
+	b=PI6sa3TiDTY8VNgWf8QjZY+6n2YZUwzRpDoYc7E8C1Tf7J3HJOPYCmtitdYUYlbEjZCT
+	 OK+KSXAObce+MooVgQYDcjOyYSr4OND997DrA/swY1ozYdTUb8QpLE2Gjj3VEm0pA3iJB
+	 S+9e83sOBfMkr9NMpj6iwiW3H6BkWOWE5BMdD8dQuRXH887k//Rjlj1jjF11TfT+PTgt3
+	 nSpEFGrmeOmbZ1ybnrWjqUfVIWke+yHTqA/aCOfurd3WPh8vfg5uimDMN5T9/5tFsybL5
+	 wT2qA9jWca9k88GfNoLgnt7VZGz2v9YWSUO9nsmxuFgIQtbu/O5Q+c4EF3PXKA/dCAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gYdNgJx4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fkJ3tuCl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE1E60703F3;
-	Fri, 13 Nov 2026 17:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7EB6070F26;
+	Fri, 13 Nov 2026 17:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gYdNgJx4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82191F000C4;
-	Fri, 13 Nov 2026 17:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fkJ3tuCl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C7C1F000C4;
+	Fri, 13 Nov 2026 17:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591016;
-	bh=my9aJgIetOEI8PLJj/5ASu98MCqNhRLvd4nQBA+V8Ic=;
+	s=korg; t=1794591017;
+	bh=X1FEbyJwtUsNw4NtHs6AD0dn5x/1qYR/NeNrjggJD4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gYdNgJx4Hs6e2DuSvCHL9fMQBelh4mHPcOc9BbKTSeqAWw/9fNXPR1oDpt/Fo2JCF
-	 Qu5M7gd5u+TQqh122Cyfe4SzalCcH/qtKJD4v53P4ugMCaEMysp1huqtvTN4AQJ2Oa
-	 +xPelWxMwLz3ff7KRXJW/E+Af7oXvvuid/u75qCg=
+	b=fkJ3tuClLKY95f/3WxIJQ+8I+t2TeXn73Ws5QmdOYLD9+mTbm5e2HJPqBPROlXbuo
+	 6Fi4qwip3PXWlrkFb+zmCa7KkvjvqyyiBJIUXoRazLrcl7aQ+vCb0NyCNrGxz5TB1r
+	 nV93tRcr8ExiYlYXAfEgqWhln2H3iXi7oW4RwFUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Peihan Liu <ronbogo@outlook.com>,
-	Yilin Zhu <zylzyl2333@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 183/670] xfrm: espintcp: reorder operations within espintcp_init_sk
-Date: Fri, 13 Nov 2026 10:45:47 -0500
-Message-ID: <20261113153818.228143109@linuxfoundation.org>
+Subject: [PATCH 6.12 184/670] drm/panic: Fix kmsg screen hang on a long log line
+Date: Fri, 13 Nov 2026 10:45:48 -0500
+Message-ID: <20261113153818.258241270@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -77,128 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit f9a11716c8445b496e9fafeec7e8412d384d02e2 ]
+[ Upstream commit 1ba6405638439a4214783965538b0196c8de8a5b ]
 
-When enabled on a socket, espintcp sets the socket callbacks to its
-own before it has finished setting up its context and published it as
-icsk_ulp_data. Any one of those callbacks that gets called before will
-dereference a NULL icsk_ulp_data.
+The kmsg panic screen reads the log back one chunk at a time. A record
+that does not fit in a chunk comes back empty without moving on, so the
+screen asks for it again forever and the panic never finishes. Every
+oops logs the list of loaded modules, and on my machine that list does
+not fit.
 
-Fix this by reording the operations, and add memory barriers to ensure
-callers will have a struct espintcp_ctx available. Add a few
-WRITE_ONCE/READ_ONCE too while we're there.
+Read into a buffer the size printk formats one record into, and stop if
+a read still comes back empty.
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Fixes: 54034bebb22f ("drm/panic: Add a kmsg panic screen")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reported-by: Peihan Liu <ronbogo@outlook.com>
-Reported-by: Yilin Zhu <zylzyl2333@gmail.com>
-Reported-by: Ren Wei <n05ec@lzu.edu.cn>
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/all/c30b645074a1b379e0f7fe297f917c66137d9964.1778464688.git.zylzyl2333@gmail.com/
-Link: https://lore.kernel.org/all/20260819155349.3555804-1-jjy600901@snu.ac.kr
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://patch.msgid.link/20261016052722.60051-1-lucid_duck@justthetip.ca
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/espintcp.h |  5 +++--
- net/xfrm/espintcp.c    | 43 +++++++++++++++++++++++++-----------------
- 2 files changed, 29 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/drm_panic.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/espintcp.h b/include/net/espintcp.h
-index c70efd704b6d5..7cad3c6822df9 100644
---- a/include/net/espintcp.h
-+++ b/include/net/espintcp.h
-@@ -34,7 +34,8 @@ static inline struct espintcp_ctx *espintcp_getctx(const struct sock *sk)
- {
- 	const struct inet_connection_sock *icsk = inet_csk(sk);
+diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
+index 0aa87eafdacd5..06f0aa1cb4f74 100644
+--- a/drivers/gpu/drm/drm_panic.c
++++ b/drivers/gpu/drm/drm_panic.c
+@@ -395,7 +395,8 @@ static void draw_panic_static_kmsg(struct drm_scanout_buffer *sb)
+ 	const struct font_desc *font = get_default_font(sb->width, sb->height, NULL, NULL);
+ 	struct drm_rect r_screen = DRM_RECT_INIT(0, 0, sb->width, sb->height);
+ 	struct kmsg_dump_iter iter;
+-	char kmsg_buf[512];
++	/* the size printk formats one record into, too big for the stack */
++	static char kmsg_buf[2048];
+ 	size_t kmsg_len;
+ 	struct drm_panic_line line;
+ 	int yoffset;
+@@ -413,6 +414,10 @@ static void draw_panic_static_kmsg(struct drm_scanout_buffer *sb)
+ 		char *start;
+ 		char *end;
  
--	/* RCU is only needed for diag */
--	return (__force void *)icsk->icsk_ulp_data;
-+	/* pairs with smp_wmb() in espintcp_init_sk() */
-+	smp_rmb();
-+	return (__force void *)READ_ONCE(icsk->icsk_ulp_data);
- }
- #endif
-diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
-index c4291ea86d1db..67254678180e8 100644
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -437,7 +437,9 @@ static void espintcp_destruct(struct sock *sk)
- 
- bool tcp_is_ulp_esp(struct sock *sk)
- {
--	return sk->sk_prot == &espintcp_prot || sk->sk_prot == &espintcp6_prot;
-+	const struct proto *prot = READ_ONCE(sk->sk_prot);
++		/* a record that does not fit comes back empty, every time */
++		if (!kmsg_len)
++			break;
 +
-+	return prot == &espintcp_prot || prot == &espintcp6_prot;
- }
- EXPORT_SYMBOL_GPL(tcp_is_ulp_esp);
- 
-@@ -469,34 +471,41 @@ static int espintcp_init_sk(struct sock *sk)
- 
- 	__sk_dst_reset(sk);
- 
--	strp_check_rcv(&ctx->strp);
- 	skb_queue_head_init(&ctx->ike_queue);
- 	skb_queue_head_init(&ctx->out_queue);
-+	INIT_WORK(&ctx->work, espintcp_tx_work);
-+
-+	ctx->saved_data_ready = sk->sk_data_ready;
-+	ctx->saved_write_space = sk->sk_write_space;
-+	ctx->saved_destruct = sk->sk_destruct;
-+
-+	/* avoid using task_frag */
-+	sk->sk_allocation = GFP_ATOMIC;
-+	sk->sk_use_task_frag = false;
-+
-+	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
-+
-+	/* pairs with smp_rmb() in espintcp_getctx() */
-+	smp_wmb();
-+
-+	WRITE_ONCE(sk->sk_data_ready, espintcp_data_ready);
-+	WRITE_ONCE(sk->sk_write_space, espintcp_write_space);
-+	sk->sk_destruct = espintcp_destruct;
- 
- 	if (sk->sk_family == AF_INET) {
--		sk->sk_prot = &espintcp_prot;
--		sk->sk_socket->ops = &espintcp_ops;
-+		WRITE_ONCE(sk->sk_prot, &espintcp_prot);
-+		WRITE_ONCE(sk->sk_socket->ops, &espintcp_ops);
- 	} else {
- 		mutex_lock(&tcpv6_prot_mutex);
- 		if (!espintcp6_prot.recvmsg)
- 			build_protos(&espintcp6_prot, &espintcp6_ops, sk->sk_prot, sk->sk_socket->ops);
- 		mutex_unlock(&tcpv6_prot_mutex);
- 
--		sk->sk_prot = &espintcp6_prot;
--		sk->sk_socket->ops = &espintcp6_ops;
-+		WRITE_ONCE(sk->sk_prot, &espintcp6_prot);
-+		WRITE_ONCE(sk->sk_socket->ops, &espintcp6_ops);
- 	}
--	ctx->saved_data_ready = sk->sk_data_ready;
--	ctx->saved_write_space = sk->sk_write_space;
--	ctx->saved_destruct = sk->sk_destruct;
--	sk->sk_data_ready = espintcp_data_ready;
--	sk->sk_write_space = espintcp_write_space;
--	sk->sk_destruct = espintcp_destruct;
--	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
--	INIT_WORK(&ctx->work, espintcp_tx_work);
- 
--	/* avoid using task_frag */
--	sk->sk_allocation = GFP_ATOMIC;
--	sk->sk_use_task_frag = false;
-+	strp_check_rcv(&ctx->strp);
- 
- 	return 0;
- 
+ 		/* ignore terminating NUL and newline */
+ 		start = kmsg_buf + kmsg_len - 2;
+ 		end = kmsg_buf + kmsg_len - 1;
 -- 
 2.53.0
 
