@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590321;
-	b=xGELbGLYGYoTEaRlbGtCXudE89Nf021SEh5kgxhgSoADr6MT1ixbkfMFaRPvnY0lnfCF
-	 LtShWJL1EOXiwVxBw1EUtXlg7yVKS4Xs/yOFakiTNYweQ7a4Uo5ior6mjB/k4s4PPAWib
-	 EdsEBQXiDZOpTz1wAnLa38Age+dPMmdnm90kHPy7PDRt9DzRrB0Vkm3D6QSGkR5oCuSaJ
-	 8YxRt8RFIvD2Ro1ym9rjR++Uk0Ihwp8o2WoP/O+SrcYPKIlWE0vEc6+To2pXLpZCO0faL
-	 52TfbvZf9zB2xcl9o7qzijVpv+4m/JjgLTVEAGZ3UB3RRh0NHmYvCHRF+2TfXcLYjtA==
+	t=1794590322;
+	b=qwlAP8l1uCoVTbgMhfmwN0a1vITWc0sF6+CdTfZgtA2p7LFn/JwH1krD3wPyDKkqXX42
+	 xibV+n72fHTIaYWJ4ekacjGRLX1o27RShTchUeST5Ha+0FB9VRhvK5bGeE02hjwq5Mz81
+	 1nM6a9ZOBi8WT0FjEC9TLZ1Te26kPr0CYM2E7xWIs6sD/V9RlrdYquHXr+e/Pd+rIOx7Z
+	 epNqrgGn1c6FSQwCgyqQewGvCVmUHzQXvG+FY4NgSEns1urfcrikyeCQdqgQzNkm8lqve
+	 VKKrmBVbhnjQUYLJcWHymxE+OV8YovHkLobGloK+iX7EIE6TZUCnIgVovww9YKbHQbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590321;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590322;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nflbDotpFSDiXr/g39mt5w1ghC2sctoZHgjQFjzNZc0=;
-	b=z5Xyh6dL8T2j5YB3/gQ6W6brvXQVDMIJOhv2lSPg50DkkP2kHYyEH2LFURo2VwWb1Xyx
-	 xTUIe7NiQV1nbIK0pidkO/WrnZS+ZkYQcjTYl5AZkigCdSDnvzXu6ZqiQNr/nbGo/Oxmz
-	 BjAkd6iSmoX5Ru9YnrHHlG3/essQagZIpBiYOK4gBLew8xSKz4z2NySRkkud+cKNi3QbX
-	 3lDqc2e//hgpZc2uVmyivjQ04sfpGDVq24AW98SU1sSk/trnxyeQD0c4aNinZFPxXOqdu
-	 3LPrJKItPZdB5Jo+JuRFv0EuxfHpr9XOyL9/4ZwlsV5XH046O+MgXhFInyMNbHWq5Qg==
+	bh=ulyTtV0Eu/tgP/JAnzHJEmQK5LBoES4EHMP2RbJ+7OA=;
+	b=QJjJV/Gzcmgmc66qVUEP/UUDrLKP9celi26hLnY5AMpMswjpnU2KU0dExVYT4/VXwaAL
+	 +j2ok33fCYHi93EsmxI/UC9/lbai78YJKCNdFf96ISjKVpiPafYwhG6eHV0LQKWvzNY2U
+	 yPHcQ5iyJAePYYNj9qt7ZlMcRrOBfbJ5OuCf9jKrMo41z4mUTr1UFqZBh26wW4mPY+3Pb
+	 f4GC12p+GayazSXxB1BWluF4jI5bD8j/W4/wIx6aXv3hyVoLpgV3ANTZs/5M3WDRYCgHX
+	 zefoe1F3vGebz5v3LasKC4/T+QoOxop8gJjnzLAfed33PQ/mA8LvhvzJEK2LAVg0z2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="onE/CaMB";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ERX3Wlnm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047A0607E04F;
-	Fri, 13 Nov 2026 17:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E46B607E07D;
+	Fri, 13 Nov 2026 17:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=onE/CaMB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BBB1F000C6;
-	Fri, 13 Nov 2026 17:18:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ERX3Wlnm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0201F000C6;
+	Fri, 13 Nov 2026 17:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590320;
-	bh=nflbDotpFSDiXr/g39mt5w1ghC2sctoZHgjQFjzNZc0=;
+	s=korg; t=1794590322;
+	bh=ulyTtV0Eu/tgP/JAnzHJEmQK5LBoES4EHMP2RbJ+7OA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=onE/CaMBUrMPj5tkmfx3ufGRwUCvt/OruOghzX14yB+I4f8pXSHQ5ipz71IJ5AZ9R
-	 innfwL4sA7q27HXRXWZCfpF8BobGpB9J2S28JW9Ta3tkp1mZp5c7jZa63ZekBfWVV5
-	 5AyVBJCjOv7xm0mMweyTVNxak75fguDPGBRz6PrI=
+	b=ERX3Wlnmr2+3gXBDAnnDFyO/S6fWGm0E6JvcybXVCNezmr2rI04Cq3oD7gUVLD9fq
+	 xpOybsa9Rx5O0A4bIVMfcBfO4dXNi/VUV62Zf8111hcftgyFCUspImgUI9dc3038BK
+	 15xxR4ORL+D5w3PhzfLbY2vs2BZdZMMW8T2FTSEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 302/686] Bluetooth: hci_sync: re-enable legacy advertising on resume
-Date: Fri, 13 Nov 2026 10:47:15 -0500
-Message-ID: <20261113153831.186890278@linuxfoundation.org>
+Subject: [PATCH 6.18 303/686] Bluetooth: hci_sync: pause advertising for the scan address update
+Date: Fri, 13 Nov 2026 10:47:16 -0500
+Message-ID: <20261113153831.218932694@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,89 +70,145 @@ Content-Transfer-Encoding: 8bit
 
 From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 
-[ Upstream commit 737139f4157d302292a6b937d96922879ecabfa3 ]
+[ Upstream commit 56ed6b127a27c418dc2daa3fd076539d8fe69c4c ]
 
-hci_resume_advertising_sync() never re-enables advertising on a
-controller without extended advertising.
+hci_active_scan_sync() programs a non-resolvable private address with LE
+Set Random Address on every active scan start.
 
-It restores HCI_ADVERTISING from advertising_old_state, then calls
-hci_schedule_adv_instance_sync(), which starts with:
+BLUETOOTH CORE SPECIFICATION Vol 4, Part E, 7.8.4 says the controller
+shall return Command Disallowed (0x0C) for that command while legacy
+advertising or scanning is enabled. hci_pause_addr_resolution(), called
+just above, only stops advertising when LL privacy is in use, so on a
+controller without it the command is issued while advertising is still
+on:
 
-  if (hci_dev_test_flag(hdev, HCI_ADVERTISING) && !ext_adv_capable(hdev))
-          return -EPERM;
+  Bluetooth: hci0: Opcode 0x2005 failed: -16
 
-The flag it tests was set a few lines earlier by the resume itself, so
-the call returns -EPERM without sending anything. The return value is
-discarded by every caller, so the failure is silent: advertising_paused
-is cleared, HCI_ADVERTISING is set, and the controller is not
-advertising.
+It does not converge either. hdev->random_addr is only set on a
+successful command complete, so it stays BDADDR_ANY, and the deferral
+added by commit c2994b008492 ("Bluetooth: hci_sync: Fix not setting
+Random Address when required") requires it to be set. Unlike the
+resolvable address a few lines above, which is reused while rpa_valid(),
+the non-resolvable one is regenerated and rewritten on every call, so a
+controller that refuses the write is asked again at the scan restart
+period of about 10 s, for as long as discovery keeps restarting.
+Observed on a BCM43455, which has no LL privacy and no extended
+advertising, 190 rejections in one capture, every one retrying the same
+address:
 
-Observed on a BCM43455 (no extended advertising) after an active scan:
-btmon shows the pause disabling advertising and no re-enable in the ten
-seconds that follow, the device does not appear in another controller's
-scan, and btmgmt info still reports "advertising" in current settings.
+  < LE Set Random Address  Address: 02:16:91:90:F1:D4 (Non-Resolvable)
+  > Command Complete       LE Set Random Address, Command Disallowed
+  < LE Set Random Address  Address: 26:90:57:96:9A:3E (Non-Resolvable)
+  > Command Complete       LE Set Random Address, Command Disallowed
 
-Enable instance 0x00 directly in that case, the way reenable_adv_sync()
-already does for the same situation. Instances continue to go through
-hci_schedule_adv_instance_sync() so the software rotation loop is
-rearmed.
+Pause advertising for the address update, and resume it once the update
+is done and before the scan is started. The pause does not outlive the
+function: it is taken only when nothing else holds it, and every exit
+resumes advertising, which also releases the pause taken by
+hci_pause_addr_resolution(). A failed pause returns before marking
+anything paused, so the error path is a no-op.
 
-This affects every caller of hci_resume_advertising_sync(), not only the
-scan path: address resolution changes, accept list updates, discovery
-stop, suspend/resume and the end of an LE connection attempt all leave
-advertising disabled on such a controller today.
+The resume in the error path is no longer guarded by ll_privacy_capable().
+That guard matched a pause taken only under LL privacy; the pause added
+here is unconditional, and hci_resume_advertising_sync() returns early
+when nothing was paused.
 
-The resume does nothing when the controller is already advertising, as
-it is after directed advertising was started for a peripheral
-connection, so it does not replace that advertising.
+One caveat this widens, raised on the previous posting. When
+HCI_ADVERTISING is set, hci_pause_advertising_sync() also clears
+HCI_DISCOVERABLE and HCI_LIMITED_DISCOVERABLE and zeroes discov_timeout,
+and hci_resume_advertising_sync() restores only HCI_ADVERTISING, so the
+discoverable state is lost. It reproduces today on an LL privacy
+controller through hci_pause_addr_resolution(); the unconditional pause
+makes it reachable without LL privacy as well. hci_suspend_sync() also
+pauses unconditionally, so a device that suspends loses the same state
+on any controller today. That asymmetry is pre-existing and is left
+alone here rather than folded into a scan path fix.
 
-err is initialised because the extended branch leaves it unset when
-adv_instances is empty and HCI_LE_ADV_0 is clear.
+Legacy controllers have one random address register, shared by the
+scanner and the advertiser. Restoring the advertiser here can reprogram
+it when the advertiser is non-connectable, so the scan then uses that
+address rather than the one generated for it. Both are non-resolvable
+and neither is linkable to the identity address. With privacy enabled
+both roles already share one resolvable address the same way.
 
-Fixes: ad383c2c65a5 ("Bluetooth: hci_sync: Enable advertising when LL privacy is enabled")
+With the patch, on the same hardware:
+
+  < LE Set Advertising Enable    Enable: 0x00              Success
+  < LE Set Random Address                                  Success
+  < LE Set Advertising Parameters                          Success
+  < LE Set Advertising Enable    Enable: 0x01              Success
+  < LE Set Scan Parameters                                 Success
+  < LE Set Scan Enable           Enable: 0x01              Success
+
+The address write is accepted, and advertising is restored before the
+scan is started.
+
+Over 119369 btmon records and about 12 minutes of the normal workload of
+that device, alternating active and passive scanning with ten outgoing
+connection attempts, every LE Set Random Address succeeded and there were
+no Command Disallowed responses of any opcode, against one per scan
+restart before.
+
+Patch 1 is required: without it the resume added here returns -EPERM on
+the controllers this fixes and leaves advertising disabled.
+
+Fixes: 3c44a431d62b ("Bluetooth: hci_sync: Resume adv with no RPA when active scan")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-5.5 btmon
 Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 8da58c61e9723..1bdaf7b2e01e1 100644
+index 1bdaf7b2e01e1..9cb1cdbff3fd2 100644
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -2708,7 +2708,7 @@ static int hci_pause_advertising_sync(struct hci_dev *hdev)
- static int hci_resume_advertising_sync(struct hci_dev *hdev)
- {
- 	struct adv_info *adv, *tmp;
--	int err;
-+	int err = 0;
+@@ -6146,6 +6146,7 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
+ 	u8 filter_policy = 0x00;
+ 	/* Default is to enable duplicates filter */
+ 	u8 filter_dup = LE_SCAN_FILTER_DUP_ENABLE;
++	bool paused;
+ 	int err;
  
- 	/* If advertising has not been paused there is nothing  to do. */
- 	if (!hdev->advertising_paused)
-@@ -2741,13 +2741,19 @@ static int hci_resume_advertising_sync(struct hci_dev *hdev)
- 		 */
- 		if (hci_dev_test_and_clear_flag(hdev, HCI_LE_ADV_0))
- 			err = hci_enable_ext_advertising_sync(hdev, 0x00);
--	} else {
-+	} else if (hdev->cur_adv_instance) {
- 		/* Schedule for most recent instance to be restarted and begin
- 		 * the software rotation loop
- 		 */
- 		err = hci_schedule_adv_instance_sync(hdev,
- 						     hdev->cur_adv_instance,
- 						     true);
-+	} else if (hci_dev_test_flag(hdev, HCI_ADVERTISING) &&
-+		   !hci_dev_test_flag(hdev, HCI_LE_ADV)) {
-+		/* hci_schedule_adv_instance_sync() rejects instance 0x00 while
-+		 * HCI_ADVERTISING is set, so enable it directly.
-+		 */
-+		err = hci_start_adv_sync(hdev, 0x00);
- 	}
+ 	bt_dev_dbg(hdev, "");
+@@ -6169,6 +6170,12 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
+ 	if (err)
+ 		goto failed;
  
- 	hdev->advertising_paused = false;
++	/* LE Set Random Address is disallowed while advertising is enabled. */
++	paused = !hdev->advertising_paused;
++	err = hci_pause_advertising_sync(hdev);
++	if (err)
++		goto failed;
++
+ 	/* All active scans will be done with either a resolvable private
+ 	 * address (when privacy feature has been enabled) or non-resolvable
+ 	 * private address.
+@@ -6178,6 +6185,9 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
+ 	if (err < 0)
+ 		own_addr_type = ADDR_LE_DEV_PUBLIC;
+ 
++	if (paused)
++		hci_resume_advertising_sync(hdev);
++
+ 	if (hci_is_adv_monitoring(hdev) ||
+ 	    (hci_test_quirk(hdev, HCI_QUIRK_STRICT_DUPLICATE_FILTER) &&
+ 	    hdev->discovery.result_filtering)) {
+@@ -6201,9 +6211,8 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
+ 		return err;
+ 
+ failed:
+-	/* Resume advertising if it was paused */
+-	if (ll_privacy_capable(hdev))
+-		hci_resume_advertising_sync(hdev);
++	/* No-op when advertising was not paused. */
++	hci_resume_advertising_sync(hdev);
+ 
+ 	/* Resume passive scanning */
+ 	hci_update_passive_scan_sync(hdev);
 -- 
 2.53.0
 
