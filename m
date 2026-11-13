@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585973;
-	b=iCg6PQnYI5VRoL8T0rZyRZv5lZKgqO30nJtaB4df75ji1s4Ceo5C5vNw1/MeTcLbpHNg
-	 de/C28d4WN4Ds65vkg4e+vBocD0AUWsRZ8vogMR1nGGwTPZRQx/Nj1mjcCUU0EbQDnesq
-	 dweIXt6xYVrevoq1Wha1rzXK85L2TnU+/2mNSTvjJu3jTToewdQMgAigm/s2ZtIppWDjt
-	 txNuLNrM1KKBqngzYBVvffos6EQKLSSSqFAj70M9Z2j+I69C/o3vziJb3ckadcg2omcFa
-	 JSOVvpWY38/S3x+KLjTYUW2IHKdEsRClEldwl6ibK42nr7N6sUwyvR/BMoixNnM06Ig==
+	t=1794585974;
+	b=4phMvTlEV+QjDxXJJMbis8me1vwuh2KXxJKA2XFb86AdVKS46WjKPKZjNCrRgYx+NyNY
+	 WpSXKKOj90gOwyqc/elLEAAlPUp/7tXItZpnP+AKWPZKwHR9SXGpx/00Uk6Xecw0RA2Cj
+	 dThJ/5J39zdxBhyAJKZompYwTcXmFYnSC9fDWxE+6HFz93TkJYC1DzftlyAl3q4B4+yfw
+	 uw9oBtnw7YD7nBUEevAXVnWBlvaoFs6A1sKcM9b6/b/n6WS/Xrtzq8/gBqh+pj3qEvYCM
+	 TblkiZhMD/Br7pKTiNvwnZRCaooiWlNk4E/XJ8xMwEJ4bu3C6oUwk6ce/SW9YsGPxXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585973;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zyqzKJ9NU/a0Y2d8X+F4zBLWnI/f/pU8WA0Gbm0ToGk=;
-	b=YQ5wsKyrFeSPNAWdZQW+l02KCoEfOeopYU085Mm8elUncrpGTpUmgAOeOoL5P3yZs2Z6
-	 ZSF6CittODBBOfyfGup95RJWa/kxwofBAmWAFDHKAG6wGYodOdD74RYurrBaLvjZcFUAq
-	 tqtZ3nNACj2COmq+JOQQ96buNIlu3CR5l221qqTbrPyuNg41BLCCeWzRSEdLYHBBJdHeu
-	 r8Irb09u2JsdNa8yTIEk7X45pZy1HjQ5vJYUEMqBlO4xnNB70lBYnRDZ/QmtAwKAr5JIY
-	 9Fmj5tG2WtKXnaUwLyZ1xEE9ibrabf0HULl1qN7r9rEd8j7gBkNH2xUWxj8DZ2Z+nuw==
+	bh=yDS7t5RLKkrKX8BJbVP7+stXOJiIlP8kPtOtx5OLqsI=;
+	b=Ojr2AZgKDaChzmEHNMeaKuryNqjL8Z3+rsntcD+m6BfnIsV5Mo6CNlFt/T4wD7mFHHEb
+	 pq5F2JgSUbV+WQ9VGJaK5pJlnH3qWJHmmkmo1J5mkDUZ8TFEjNTn4iP1J+hc7wSlMrRWy
+	 0WJ8RPURn7T1VWs4LkEp45742ctER0W7QdkNR2Fmaup3jOSnnkXkHQ731zTg5F3+AjUls
+	 y9+UgmCboj/4L22nuSMmdHtKWrITsY6DPjIPgAbH84SKa8yco7pxzROCrhdpX1elo6Q0I
+	 57rLf96/QB2qmYDNQZzQyOyOxg2xiSPrjN3dVYvcta8u398NgDhiVqABgL4ShV7KjHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bYMrrE/k";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v/0m2oKV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA186072306;
-	Fri, 13 Nov 2026 16:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBB36072306;
+	Fri, 13 Nov 2026 16:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bYMrrE/k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4011F000C6;
-	Fri, 13 Nov 2026 16:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v/0m2oKV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EBF1F000C4;
+	Fri, 13 Nov 2026 16:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585973;
-	bh=zyqzKJ9NU/a0Y2d8X+F4zBLWnI/f/pU8WA0Gbm0ToGk=;
+	s=korg; t=1794585974;
+	bh=yDS7t5RLKkrKX8BJbVP7+stXOJiIlP8kPtOtx5OLqsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bYMrrE/kiiPXvE9+mHSQJ4tU9C1e10Qcdec/JGLMLAcXYznpPLr4j0u3vrCVAzslv
-	 nXhZ1WShPiU+IkoC6EF+fUyeZxS+IYVWb3USp4AaCu0hQW5rJyp3lYlXjZTuXHqRL7
-	 UVX5o9Jlf/qwNVBS30UXjGx44M/OQssH+2JeIj3A=
+	b=v/0m2oKVE8Ti935k9A+Tvzc/og2IHNMfZPGdXQN5pBBRN2j3/QZGRxztPXIcD7Ktx
+	 R9OOIWVXGWEhjnSLnxaEnRbRjf7c9kDpuX5z31pX+fgEixaHkjrZWsJg84T+W7BKNy
+	 pkVjS1C0IoaFoVLD+n3wwvUILwp8Ttha0oWZx27c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diego Oliva <diego@bynar.io>,
-	David Howells <dhowells@redhat.com>,
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 021/686] smb: client: fix OOB read in the SMB_FIND_FILE_UNIX name scan
-Date: Fri, 13 Nov 2026 10:42:34 -0500
-Message-ID: <20261113153821.634407161@linuxfoundation.org>
+Subject: [PATCH 6.18 022/686] smb: client: reject short SESSION_SETUP responses
+Date: Fri, 13 Nov 2026 10:42:35 -0500
+Message-ID: <20261113153821.668612791@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,178 +69,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Oliva <diego@bynar.io>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-[ Upstream commit fa0c2f082946917c3f07d2475c8ce73a8c96d0e2 ]
+[ Upstream commit 4d8930afa3446041358a7db33e7b23a0bb9459b5 ]
 
-cifs_fill_dirent_unix() finds the length of an SMB_FIND_FILE_UNIX
-entry name by scanning for its terminating NUL, over up to PATH_MAX + 1
-UTF-16 units in cifs_unicode_bytelen() or PATH_MAX bytes in strnlen().
-Neither scan knows where the response ends. cifs_fill_dirent() only
-requires the fixed part of the entry to fit, so the name can start
-exactly at the end of the received data, and a name that holds no
-terminator is then scanned for 8194 bytes, or 4096 bytes without
-unicode, past the end of the received data. SendReceive() copies at
-most 16468 bytes into the 16588-byte cifs_request allocation, so for a
-response of that length up to 8074 of the bytes scanned lie past the
-end of the allocation. Before the preceding patches bounded where the
-entry starts, the entry itself could start up to 820 bytes past the
-end of the allocation at the default CIFSMaxBufSize, and its name 928
-bytes past it, so all 8194 scanned bytes would lie outside.
-cifs_fill_dirent() rejects the name afterwards because it extends past
-the end of the response, so nothing of what was read is used, but the
-out-of-bounds read itself remains.
+smb2_check_message() accepts frames shorter than struct smb2_pdu when
+the SMB2 status is non-zero, before the minimum-PDU check added by
+b4694f269e66d. A 64-byte STATUS_MORE_PROCESSING_REQUIRED SESSION_SETUP
+response is therefore accepted even though it cannot contain the
+SecurityBufferOffset and SecurityBufferLength fields.
 
-SMB_FIND_FILE_UNIX is only used with SMB1 servers that offer the Unix
-extensions; SMB1 is not negotiated by default and requires an explicit
-vers=1.0 mount.
+The parser then reads those fields from stale bytes left in the reused
+receive buffer by an earlier frame. With a long stale
+SecurityBufferLength, decode_ntlmssp_challenge() copies up to about
+64 KB from beyond the receive object and sends the data back to the
+server in the NTLMv2 AUTHENTICATE target info.
 
-Before the preceding patches, an entry placed past the buffer left the
-scan out of bounds from its first read. They bound where the entry
-starts, but nothing bounds the scan, so a name that holds no
-terminator still runs off the end of the allocation. Reproduced on
-the unpatched tree with KASAN enabled, for an entry that starts
-inside the response, which is the case the preceding patches leave
-open:
+Reject short MPR SESSION_SETUP responses before the short-error path,
+and validate SecurityBufferOffset + SecurityBufferLength against the
+received response length before decoding the challenge.
 
- ==================================================================
- BUG: KASAN: slab-out-of-bounds in cifs_save_resume_key.isra.0+0x75c/0x7f0
- Read of size 2 at addr ffff88807ee640cc by task ls/84
+The ordering bypass is not new: the short-error early return predates
+b4694f269e66d, and the unvalidated SecurityBufferLength read predates
+the 2016 raw NTLMSSP split in 166cea4dc3a4, so all supported stable
+trees are affected. Reproduced on 6.6.87.2; the path is unchanged on
+mainline.
 
- CPU: 0 UID: 0 PID: 84 Comm: ls Not tainted 7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
- Call Trace:
-  <TASK>
-  kasan_report+0xdf/0x1a0
-  cifs_save_resume_key.isra.0+0x75c/0x7f0
-  cifs_readdir+0x1ed6/0x29c0
-  iterate_dir+0x1c0/0x570
-  __x64_sys_getdents64+0x133/0x270
-  do_syscall_64+0x109/0x5d0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  </TASK>
-
- Allocated by task 84 on cpu 1 at 15.751078s:
-  cifs_buf_get+0x36/0x90
-  smb_init+0x4f/0x110
-  CIFSFindNext+0xf7/0x14c0
-  cifs_readdir+0xf51/0x29c0
-
- The buggy address belongs to the object at ffff88807ee60000
-  which belongs to the cache cifs_request of size 16588
- The buggy address is located 0 bytes to the right of
-  allocated 16588-byte region [ffff88807ee60000, ffff88807ee640cc)
- ==================================================================
-
-The two bytes read there are one UTF-16 unit of the scan, at the first
-byte past the end of the object. The scan carries on from there,
-reported again 2, 4 and 6 bytes to the right.
-
-Pass the number of bytes that follow the fixed part of the entry to
-cifs_fill_dirent_unix() and stop both scans there. A scan that reaches
-the end of the response without finding a terminator now fails: it
-returns a name that ends exactly at the end of the response and would
-otherwise pass the bound, so cifs_fill_dirent() requires the position
-of the terminator of an SMB_FIND_FILE_UNIX name to lie inside the
-response as well. Accepting such a name truncated at the end of the
-response would turn a malformed entry into a directory entry, or a
-resume name, that no server sent. A name longer than the PATH_MAX cap
-of the scans is still truncated there, as before, when the response
-extends past the cap. The message cifs_unicode_bytelen() logs when it
-finds no terminator now covers both limits.
-
-This patch depends on "smb: client: fix OOB read of the resume name
-sent in TRANS2_FIND_NEXT2", which adds the end argument of
-cifs_fill_dirent() and the length it derives from it; the backport
-note in that patch applies to this one as well.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 5478f9ba9a34 ("CIFS: Add session setup/logoff capability for SMB2")
 Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Diego Oliva <diego@bynar.io>
-Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: Replaced the unavailable smb2_min_pdu_len lookup with sizeof(struct smb2_sess_setup_rsp). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/readdir.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ fs/smb/client/smb2misc.c | 15 +++++++++++++++
+ fs/smb/client/smb2pdu.c  | 18 ++++++++++++------
+ 2 files changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index 69eb0feb7bed1..00c3b7a82f4c1 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -455,17 +455,20 @@ initiate_cifs_search(const unsigned int xid, struct file *file,
- }
- 
- /* return length of unicode string in bytes */
--static int cifs_unicode_bytelen(const char *str)
-+static size_t cifs_unicode_bytelen(const char *str, size_t maxlen)
- {
--	int len;
- 	const __le16 *ustr = (const __le16 *)str;
-+	size_t len;
- 
--	for (len = 0; len <= PATH_MAX; len++) {
-+	maxlen = umin(PATH_MAX + 1, maxlen / sizeof(__le16));
-+	for (len = 0; len < maxlen; len++) {
- 		if (ustr[len] == 0)
--			return len << 1;
-+			return len * sizeof(__le16);
- 	}
--	cifs_dbg(FYI, "Unicode string longer than PATH_MAX found\n");
--	return len << 1;
-+	len *= sizeof(__le16);
-+	cifs_dbg(FYI, "%s: Unicode string not terminated within %zu bytes\n",
-+		 __func__, len);
-+	return len;
- }
- 
- static char *nxt_dir_entry(char *old_entry, char *end_of_smb, int level)
-@@ -531,13 +534,13 @@ static void cifs_fill_dirent_posix(struct cifs_dirent *de,
- }
- 
- static void cifs_fill_dirent_unix(struct cifs_dirent *de,
--		const FILE_UNIX_INFO *info, bool is_unicode)
-+		const FILE_UNIX_INFO *info, bool is_unicode, size_t maxlen)
- {
- 	de->name = &info->FileName[0];
- 	if (is_unicode)
--		de->namelen = cifs_unicode_bytelen(de->name);
-+		de->namelen = cifs_unicode_bytelen(de->name, maxlen);
- 	else
--		de->namelen = strnlen(de->name, PATH_MAX);
-+		de->namelen = strnlen(de->name, min_t(size_t, maxlen, PATH_MAX));
- 	de->resume_key = info->ResumeKey;
- 	de->ino = le64_to_cpu(info->basic.UniqueId);
- }
-@@ -588,6 +591,7 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
- 			    const char *end, u16 level, bool is_unicode)
- {
- 	size_t len = end > (const char *)info ? end - (const char *)info : 0;
-+	size_t nul_len = 0;
- 
- 	memset(de, 0, sizeof(*de));
- 
-@@ -600,7 +604,9 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
- 	case SMB_FIND_FILE_UNIX:
- 		if (len < offsetof(FILE_UNIX_INFO, FileName))
- 			goto too_short;
--		cifs_fill_dirent_unix(de, info, is_unicode);
-+		cifs_fill_dirent_unix(de, info, is_unicode,
-+				      len - offsetof(FILE_UNIX_INFO, FileName));
-+		nul_len = is_unicode ? sizeof(__le16) : sizeof(__u8);
- 		break;
- 	case SMB_FIND_FILE_DIRECTORY_INFO:
- 		if (len < offsetof(FILE_DIRECTORY_INFO, FileName))
-@@ -633,7 +639,8 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
+diff --git a/fs/smb/client/smb2misc.c b/fs/smb/client/smb2misc.c
+index 34d2401c6c665..46c98d024f068 100644
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -194,6 +194,21 @@ smb2_check_message(char *buf, unsigned int len, struct TCP_Server_Info *server)
+ 		return 1;
  	}
  
- 	if (de->name &&
--	    (end < de->name || (size_t)(end - de->name) < de->namelen)) {
-+	    (end < de->name ||
-+	     (size_t)(end - de->name) < de->namelen + nul_len)) {
- 		cifs_dbg(VFS, "%s: search entry name extends past end of SMB\n",
- 			 __func__);
- 		return -EINVAL;
++	/*
++	 * A SESSION_SETUP response that asks for more processing carries a
++	 * security blob and is parsed as a normal reply. Do not let the
++	 * short-error path below accept a frame that cannot hold the fixed
++	 * response fields.
++	 */
++	if (command == SMB2_SESSION_SETUP_HE &&
++	    shdr->Status == STATUS_MORE_PROCESSING_REQUIRED &&
++	    len < sizeof(struct smb2_sess_setup_rsp)) {
++		cifs_server_dbg(VFS,
++				"%s: session setup response too short: %u < %zu\n",
++				__func__, len, sizeof(struct smb2_sess_setup_rsp));
++		return 1;
++	}
++
+ 	if (len < pdu_size) {
+ 		if ((len >= hdr_size)
+ 		    && (shdr->Status != 0)) {
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index d0c56caed1626..3302923f98893 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -1757,15 +1757,21 @@ SMB2_sess_auth_rawntlmssp_negotiate(struct SMB2_sess_data *sess_data)
+ 	if (rc)
+ 		goto out;
+ 
+-	if (offsetof(struct smb2_sess_setup_rsp, Buffer) !=
+-			le16_to_cpu(rsp->SecurityBufferOffset)) {
+-		cifs_dbg(VFS, "Invalid security buffer offset %d\n",
+-			le16_to_cpu(rsp->SecurityBufferOffset));
++	u16 boff = le16_to_cpu(rsp->SecurityBufferOffset);
++	u16 blen = le16_to_cpu(rsp->SecurityBufferLength);
++
++	if (offsetof(struct smb2_sess_setup_rsp, Buffer) != boff) {
++		cifs_dbg(VFS, "Invalid security buffer offset %d\n", boff);
+ 		rc = -EIO;
+ 		goto out;
+ 	}
+-	rc = decode_ntlmssp_challenge(rsp->Buffer,
+-			le16_to_cpu(rsp->SecurityBufferLength), ses);
++	if ((u32)boff + blen > sess_data->iov[0].iov_len) {
++		cifs_dbg(VFS, "%s: invalid security buffer length: %u\n",
++			 __func__, blen);
++		rc = -EINVAL;
++		goto out;
++	}
++	rc = decode_ntlmssp_challenge(rsp->Buffer, blen, ses);
+ 	if (rc)
+ 		goto out;
+ 
 -- 
 2.53.0
 
