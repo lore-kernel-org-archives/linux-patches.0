@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585378;
-	b=XUfeVB5adUaFmi4tH9tk6Sb4mii6n9PYTdAZ2JGcwzyJeOdgc6BX6liCO86vvABMGt7A
-	 /EYUlZomHqqF4VZtQRx9839wMgH3eL18H5KTxsUG4nee+ofVhFxLseo+c6Ghsl8VooyjC
-	 XWKjrWVPkeq5irB7pJ7EWX7BpulKoOdA2IhGa+4fT51b4ZrO8zSqzL69yKghBWbq7UpEF
-	 kqV9UwuJXM665PL4TAsW66Q2qOsmO2WwFyi091srxYeX5N8JxClFyR+16nU+GDGdfUtlB
-	 3ZBJd3aeFSrHrL+uSZ1QBdwkTA7uT7qEddC19JMkeJH4Y68u8bOjpqh4PNTh7GllTZg==
+	t=1794585379;
+	b=yRti+7WDv485I0JKX6vO9D0sHyTma2fFoR11oSTDSY+MOVyadgSfobjINVuro5mBs6/1
+	 xKRz9H68f232wbqn7TKAS7e9dVsiqjmn6CkpepzOkSa7x7j9Q69trxVGaTghq9zIP+7zk
+	 U8TL6uIKnGtM9vZJQnDughl5Gfek9nLfySs/sQ4nuAHqAPv5KHZ7L9Cj2rkoOSCeYF8Mu
+	 ti91fpaRU4zcRbDhGDHmJSKFjjmRHXhj50x+A52vCdTrQK/o6AoOrYdblu7tWIQoeWSaf
+	 bIRIk2mQQupzCq9l15lzTkKGaaPrYPCtM+FwJ6EYLnPi4nA2fa+NFmOa1SjxJoVhUEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585378;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585379;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6Kj/axL1pgjAt64Xe3jmcVpeuhPF7rVGfUiRCjWsNb8=;
-	b=ut6DmSTwdIQs4ikRRBkB+yegHLDORJ/kfwkvJl10OHQ7eBvmn/P2ch2wIaholeoMTY7i
-	 wmAv+sNBcLeUppGwhl8CcsUZm0Zp+rrDcuSYKV7nmd55bLrGwyXmOpC87Mh3QJPfwE5Dl
-	 F/oekKQ5oY6aei3IpJ4KHRo4FTkfsRZSrhwc4Fh75pUZBHG4z2of2SUUqPoxn9iaVxyP1
-	 TuRfDSa4vRGgxrN8v3eFKXyejJt98rOd4Amc+7dVs0Tcx5FnKOv9IMTJF27QG3ZrASfL5
-	 1Lf8J4llHld16/UPbzUU6nWHTzJdMzZhBKOzZ3pmyjnH54icQf0P1ghp6si6cpGiLzA==
+	bh=kp94G0rnmJjXe8eFFDBEjxapyTd/uX1gOMbFM2O0K2k=;
+	b=14CoKzL2YsI3D3f9MKtEDib3Ukoea7o+g/firAajeNAHZWGh7xHUuPZnIC7ZxdOnWrLp
+	 kkSztHGCF3wytVfWys/vgqd8+VCqjIt6oEZGhZF8gGSzkF+W55GzA4eReDUN/2wrsIEA/
+	 emcygbA39N2x15Bl18uq/aBPn74rwq9e7du546KiTZFekBhYIGWZ1jaOXWv6Rvwzs39WL
+	 +fSBWgyDcfAO5MJO/t3gwNPjBkMIIwE3PnAkudFg5jiKl4up2ctNfIolmERmeU+Z1LBjq
+	 AENEXfDg4LXidjHwPiKqnNa8Xk1KFs+48E+8gn/5Aek0SWe81Gbl0pznmz1xeZCfngw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CVC3Gnxx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FXMIr2cr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA2060A2620;
-	Fri, 13 Nov 2026 15:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34036606D462;
+	Fri, 13 Nov 2026 15:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CVC3Gnxx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2A41F000C6;
-	Fri, 13 Nov 2026 15:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FXMIr2cr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D460F1F000CB;
+	Fri, 13 Nov 2026 15:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585377;
-	bh=6Kj/axL1pgjAt64Xe3jmcVpeuhPF7rVGfUiRCjWsNb8=;
+	s=korg; t=1794585379;
+	bh=kp94G0rnmJjXe8eFFDBEjxapyTd/uX1gOMbFM2O0K2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CVC3Gnxxt3yWQAwJq7vR+N4L8k2ox0Hm0Fi2wWcOOcuBbNoEfmI+YOqlejgGuWRXq
-	 nXvoG0i7qvEGge/zsNAGWQ8jONKxblN/hyjU8aAV3WP1IDyTOrZvE8e4f870Ty775N
-	 hB1OqCn9AOQDkbDkLKuhS4cskggvACjDSRC8mE0w=
+	b=FXMIr2crKIyrTUqkv5u2oKrGcuS2+ffTwDeKN52sV1Tz7MvJva5T1vDkm/VWgMnAd
+	 cvP8hj2+B5z7bkY6bZRlHFiatH2eU2RK54uWnXbMaADBPc/t9PwvvaNEsN7GD6ud6+
+	 4tBUWO6uQtcM/xzm+UYJkaIkqjtt2AyYYBuviI3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 015/507] NFSD: stop registering with rpcbind after a failure in listener_set
-Date: Fri, 13 Nov 2026 10:45:19 -0500
-Message-ID: <20261113153753.916913288@linuxfoundation.org>
+Subject: [PATCH 7.3 016/507] NFSD: Send a meaningful CB_RECALL_ANY keep count
+Date: Fri, 13 Nov 2026 10:45:20 -0500
+Message-ID: <20261113153753.976483858@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,120 +68,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit bf0f3a37e6ccb78ae80cc6eb2edde4f033c7574c ]
+[ Upstream commit 9af39c0773ef956039e1ebe9c235532fe6ee1e50 ]
 
-nfsd_nl_listener_set_doit() calls svc_xprt_create_from_sa() once for each
-requested listener and passes flags of 0, so every listener registers with
-rpcbind on its own. A rpcbind that accepts the connection and never replies
-therefore costs one timeout for each entry. With the cap of 1024 entries
-the request can hold nfsd_mutex for about 34 minutes, which is roughly 17
-times the hung-task threshold.
+deleg_reaper() sets craa_objects_to_keep to zero on every
+CB_RECALL_ANY. RFC 8881 Section 20.6.3 defines that field as the
+number of objects the client may keep, leaving the client to choose
+which of the excess to return, because the server cannot read lack
+of recent use as lack of usefulness. Zero asks for every delegation
+the client holds, including the ones backing files an application
+still has open.
 
-One failure is enough to know that the next call will not fare better.
-Read svc_rpcb_failure_count() before the create loop, and pass
-SVC_SOCK_ANONYMOUS for the rest of the request once the count moves.
+There is also no reason NFSD has to reclaim the entire delegation
+working set on the first sign of memory pressure.
 
-Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
+Derive the keep count from cl_deleg_count so that each callback
+asks for one delegation. Both the shrinker and the laundromat re-arm
+while their condition lasts, so a client with more to give is asked
+again on the next pass.
+
+The Linux client ignores craa_objects_to_keep and returns unused
+delegations selected from the type mask alone, so the count changes
+nothing for it.
+
+Fixes: 44df6f439a17 ("NFSD: add delegation reaper to react to low memory condition")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Link: https://syzkaller.appspot.com/bug?extid=c7eae0eb80858a2dba0f
-Suggested-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-10-a540d86668b0@kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260817-recall-any-keep-count-v5-4-3b2cffce701e@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
+[ sashal: Added missing prerequisites for per-client delegation counting and the directory-delegation callback mask. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsctl.c | 42 ++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 38 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4state.c | 24 ++++++++++++++++++++----
+ fs/nfsd/state.h     |  2 ++
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index 714c73ddd9dc1..d5effeae4b792 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -2089,7 +2089,10 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
- 	const struct nlattr *bad_attr = NULL;
- 	struct svc_xprt *xprt, *tmp;
- 	const char *bad_xprt = NULL;
-+	unsigned int rpcb_failures;
- 	const struct nlattr *attr;
-+	bool skipped_rpcb = false;
-+	bool bad_rpcb = false;
- 	struct svc_serv *serv;
- 	LIST_HEAD(permsocks);
- 	struct nfsd_net *nn;
-@@ -2179,13 +2182,16 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
- 	if (delete)
- 		svc_xprt_destroy_all(serv, net, false);
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 3bdde4c1bb8eb..f0a7959401370 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1517,6 +1517,7 @@ hash_delegation_locked(struct nfs4_delegation *dp, struct nfs4_file *fp)
+ 	dp->dl_stid.sc_type = SC_TYPE_DELEG;
+ 	list_add(&dp->dl_perfile, &fp->fi_delegations);
+ 	list_add(&dp->dl_perclnt, &clp->cl_delegations);
++	clp->cl_deleg_count++;
+ 	return 0;
+ }
  
-+	rpcb_failures = svc_rpcb_failure_count(serv);
-+
- 	/* walk list of addrs again, open any that still don't exist */
- 	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
- 				 GENL_HDRLEN, rem) {
- 		struct nlattr *tb[NFSD_A_SOCK_MAX + 1];
- 		const char *xcl_name;
- 		struct sockaddr *sa;
--		int ret;
-+		bool hit_rpcb;
-+		int flags, ret;
+@@ -1548,6 +1549,7 @@ unhash_delegation_locked(struct nfs4_delegation *dp, unsigned short statusmask)
+ 	++dp->dl_time;
+ 	spin_lock(&fp->fi_lock);
+ 	list_del_init(&dp->dl_perclnt);
++	dp->dl_stid.sc_client->cl_deleg_count--;
+ 	list_del_init(&dp->dl_recall_lru);
+ 	list_del_init(&dp->dl_perfile);
+ 	spin_unlock(&fp->fi_lock);
+@@ -7938,6 +7940,7 @@ deleg_reaper(struct nfsd_net *nn)
+ {
+ 	struct list_head *pos, *next;
+ 	struct nfs4_client *clp;
++	unsigned int count;
  
- 		/* validated up front in nfsd_nl_validate_listeners() */
- 		if (nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
-@@ -2204,12 +2210,27 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 	spin_lock(&nn->client_lock);
+ 	list_for_each_safe(pos, next, &nn->client_lru) {
+@@ -7947,23 +7950,36 @@ deleg_reaper(struct nfsd_net *nn)
  			continue;
- 		}
+ 		if (clp->cl_state != NFSD4_ACTIVE)
+ 			continue;
+-		if (list_empty(&clp->cl_delegations))
+-			continue;
+ 		if (atomic_read(&clp->cl_delegs_in_recall))
+ 			continue;
+ 		if (ktime_get_boottime_seconds() - clp->cl_ra_time < 5)
+ 			continue;
+ 		if (clp->cl_cb_state != NFSD4_CB_UP)
+ 			continue;
++		/*
++		 * This read races with hash_delegation_locked() and
++		 * unhash_delegation_locked() on other CPUs. A stale
++		 * count only skews the keep value; the next
++		 * laundromat pass sees a more current one.
++		 */
++		count = data_race(READ_ONCE(clp->cl_deleg_count));
++		if (!count)
++			continue;
+ 		if (test_and_set_bit(NFSD4_CALLBACK_RUNNING, &clp->cl_ra->ra_cb.cb_flags))
+ 			continue;
  
--		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa, 0,
-+		flags = skipped_rpcb ? SVC_SOCK_ANONYMOUS : 0;
-+		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa, flags,
- 					      current_cred());
-+
-+		hit_rpcb = false;
-+		if (!skipped_rpcb &&
-+		    svc_rpcb_failure_count(serv) != rpcb_failures) {
-+			skipped_rpcb = true;
-+			hit_rpcb = true;
-+			if (ret < 0)
-+				ret = svc_xprt_create_from_sa(serv, xcl_name,
-+							      net, sa,
-+							      SVC_SOCK_ANONYMOUS,
-+							      current_cred());
-+		}
-+
- 		/* always save the latest error */
- 		if (ret < 0) {
- 			bad_attr = attr;
- 			bad_xprt = xcl_name;
-+			bad_rpcb = hit_rpcb;
- 			err = ret;
- 		}
+ 		/* release in nfsd4_cb_recall_any_release */
+ 		kref_get(&clp->cl_nfsdfs.cl_ref);
+ 		clp->cl_ra_time = ktime_get_boottime_seconds();
+-		clp->cl_ra->ra_keep = 0;
++		/*
++		 * Ask for a single delegation. Recalling one before it
++		 * is needed costs the client an OPEN when it next
++		 * touches the file.
++		 */
++		clp->cl_ra->ra_keep = count - 1;
+ 		clp->cl_ra->ra_bmval[0] = BIT(RCA4_TYPE_MASK_RDATA_DLG) |
+-						BIT(RCA4_TYPE_MASK_WDATA_DLG);
++						BIT(RCA4_TYPE_MASK_WDATA_DLG) |
++						BIT(RCA4_TYPE_MASK_DIR_DLG);
+ 		trace_nfsd_cb_recall_any(clp->cl_ra);
+ 		nfsd4_run_cb(&clp->cl_ra->ra_cb);
  	}
-@@ -2221,8 +2242,21 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
- 	 */
- 	if (err) {
- 		NL_SET_BAD_ATTR(info->extack, bad_attr);
--		NL_SET_ERR_MSG_FMT(info->extack, "cannot create %s listener",
--				   bad_xprt);
-+		if (bad_rpcb)
-+			NL_SET_ERR_MSG_FMT(info->extack,
-+					   "cannot create %s listener; rpcbind did not answer",
-+					   bad_xprt);
-+		else if (skipped_rpcb)
-+			NL_SET_ERR_MSG_FMT(info->extack,
-+					   "cannot create %s listener; rpcbind did not answer earlier, so some listeners are not registered",
-+					   bad_xprt);
-+		else
-+			NL_SET_ERR_MSG_FMT(info->extack,
-+					   "cannot create %s listener",
-+					   bad_xprt);
-+	} else if (skipped_rpcb) {
-+		NL_SET_ERR_MSG(info->extack,
-+			       "rpcbind did not answer, some listeners are not registered");
- 	}
+diff --git a/fs/nfsd/state.h b/fs/nfsd/state.h
+index 9661c08b879e8..df35c35890d48 100644
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -610,6 +610,8 @@ struct nfs4_client {
  
- 	if (!serv->sv_nrthreads && list_empty(&nn->nfsd_serv->sv_permsocks))
+ 	unsigned int		cl_state;
+ 	atomic_t		cl_delegs_in_recall;
++	/* Length of cl_delegations, updated under nn->deleg_lock */
++	unsigned int		cl_deleg_count;
+ 
+ 	struct nfsd4_cb_recall_any	*cl_ra;
+ 	time64_t		cl_ra_time;
 -- 
 2.53.0
 
