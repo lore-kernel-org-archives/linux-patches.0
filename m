@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585845;
-	b=5A0WM1E5b2l/U1C0o8O4mqWrfaFHmT76qdBzfXlhFfgaSTh9YnX32Q2tc4YWxujKOuiB
-	 aeOu3YgqrUocHJjcoFIKuJUM0WnJOKcqnldAenObOgpy+Un1zBLP/rZ20tjRXTLhc7XIv
-	 iagYMWE7mIbvRpzt3GaQQ5wVmJsmQBNTHxXEQkGlbrZyu6yj2KsvEivJ3ihEOCNY8frSW
-	 eIC5Cvxpoj93PjbZoE7VL4Do9hdi7fINzskTxJUPc42Irte6OtRFYoyHLnXteFYUuzCIo
-	 Wd2oJpd+xL450mwKnucQmTQcR/R61U1JjMPl0abN96nuRQqA4u2KCL5ycv03QgGNdPw==
+	t=1794585846;
+	b=p4zZ592/by7EO5/xmgAd62DmqWlq8JMf1imlnB1b67m5Kj+3DcKEhaCGFBlYaeeFUM77
+	 i0tZC6KTJFYDcTAmPqAlII+n1zQbQa5BwdTdXLdCV7G2IHNkRRjd56IHNeI2PjUOhEAfP
+	 xIy1MrgkWj97TGJ6m3R/WyyJOnCrZdGNyvcO6hPkMxpjb9i5knhJaJA2pCkxpwHaYVUZL
+	 7znHI/QswOeBY9xoAcjKVSiwACSAgmQlKu+vgj5aLsYSyksyYEdXZV1wwjkqhRK1dFzcf
+	 pdJDA8Meb7sZs6nga6O9OdvEDvqjESF1Y99WoHOhRh0WdxVn1hq1aLRZgd1V7G706Vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585845;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585846;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dcK9vuUGYKIQYIx3eWLY0fYFYayJSfEb3R4fNREl9Ps=;
-	b=Z8Q7kpYA/G+vVgBkXp5eqIRRs6ptFv6+WlZGWutjzzsc+l+LHGzO3kZn4RZrxNlR3SGi
-	 jkNDV1/pDF8uLJaU7x6CnRYq9GoAvftLC0pN9se6aiZB2lwjGdBgMF9eQZ33Boa15B5yM
-	 WORT22ijlcrob/gTRo5gp0sEtdCdM22DGp5vP0LJ6/2pcgUcSD3si0SB5io3u0LXZctUb
-	 XlH99jZdiUnkDmzLcoQbIcjHyprSdGqQHBXMCMDLVydvisDXaX7vRlWLq3DmqDm+Awpng
-	 9hQ1P4lKqfMDo77b9VkLECExCpCPbg2NKOzB6WzsNuotEiBIf7HXaEFrpwwSSZ4ZYoA==
+	bh=q9HZ+K1DwJkaox0TXpH2Cf8e4ua+HLKRQbtcmhriSKI=;
+	b=IpbQgDQoRSNHrSM8A4S/2qYGLomEmR3iRb/apBALOGT8AXI8MupQ3DmSjg8xnmyUEK3e
+	 8OlKmJbKCoN12Dr9ycaGwhlJJPT/2Z/OhnAJdK+3ICSgNB+wWIcwAVHHUrpjiQlEI0Ccu
+	 sp7xeFXAt11PaZtyxUrhJvA1LQ4EJyQGr13I/V4IetG18n0cTrKgzuQ8mfWv32r2iMH/4
+	 WvE1rLQb5vXVcI1Gh1IPDZHwclBH6erJ0wMByd24fBMkGah+6AmkhfL7drNLRed3ELGdF
+	 ohCiHm6yNTvyL5z8YWOIT9Fx119IDWsfwysuDBLmYww7i29+kjbsiokSSXLoPX+jfqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NmZwEPHu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypCzEyCL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356D5606BAB6;
-	Fri, 13 Nov 2026 16:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9B1606BAB5;
+	Fri, 13 Nov 2026 16:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NmZwEPHu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E081F000C4;
-	Fri, 13 Nov 2026 16:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypCzEyCL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD991F000C4;
+	Fri, 13 Nov 2026 16:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585845;
-	bh=dcK9vuUGYKIQYIx3eWLY0fYFYayJSfEb3R4fNREl9Ps=;
+	s=korg; t=1794585846;
+	bh=q9HZ+K1DwJkaox0TXpH2Cf8e4ua+HLKRQbtcmhriSKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NmZwEPHu97qVYroQAbl5g2ZEga4sOPXf+Zylkh248/5PPXvS4rEHdnEQKEfo2L7es
-	 0JAxcJvXp4F6odVV2xAGGgTZEY8NpAlpvDZMTLqlN9UK13Vag9W4Ot3ZtjO+R6bm1x
-	 Z4O0pntL55BHINTLgl3CkC2n5Ak1T8kK+BbTl4EY=
+	b=ypCzEyCLBMkLb1uOn6RvNrUYXpCAdiGG7oEVEajDI0mrjw4dgeGBTFe3p69qeaFnU
+	 G+okdV8CNLO2QSvSa4FXy7vyQiRZSuo0BuiNyp9XiCkCMJUeTlvhPYbDuODHwHOKo3
+	 6pSlSUcXpDs9YY1s+KQOCXQ/VKuDvlsMK1Mb+jeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
-	Aaron Lu <ziqianlu@bytedance.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 423/507] sched/fair: Clear throttle state when leaving the fair class
-Date: Fri, 13 Nov 2026 10:52:07 -0500
-Message-ID: <20261113153811.081586474@linuxfoundation.org>
+Subject: [PATCH 7.3 424/507] x86/nmi: Ignore negative NMI handler durations
+Date: Fri, 13 Nov 2026 10:52:08 -0500
+Message-ID: <20261113153811.112256042@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,70 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit c282051fc2cae2ea54770ebe435dbea090272c25 ]
+[ Upstream commit ade63af6cfb7b3ca19ced28730fd6461e8d1d410 ]
 
-Task-based CFS bandwidth throttling removes a task's fair sched_entity
-while the scheduler core still considers the task queued. p->throttled
-carries the fair-specific state across dequeue/enqueue operations.
+I am seeing NMI handlers in the Meta fleet reported as running for
+about 584 years. Over 30 days, 11 AMD and Intel machines logged 637
+such lines, for example:
 
-DEQUEUE_CLASS removes the task from cfs_rq->throttled_limbo_list
-but retains the bit. If the last finite CFS quota is disabled while
-the task runs in another class, it is absent from the unthrottle walk and
-the bit survives.
-Returning to fair while cfs_bandwidth_used() is false then performs a real
-fair enqueue with p->throttled still set.
+  AMD EPYC 9D25 (family 0x1a, model 0x11, stepping 0x0):
+  [ 1650.616627] INFO: NMI handler (nmi_cpu_backtrace_handler.llvm.9643156322683129580) took too long to run: 18446744073709.551 msecs
 
-After bandwidth is re-enabled, a class-change dequeue treats the
-stale bit as limbo state and skips __dequeue_task(). p->se.on_rq therefore
-remains set, and put_prev_task_fair() places the entity in the EEVDF tree
-while the task moves to RT. On exit, the fair picker can select the
-TASK_DEAD task. __schedule() then returns to do_task_dead(),
-which hits BUG().
+  Intel Xeon Platinum 8321HC (family 0x6, model 0x55, stepping 0xb):
+  [360448.230129] INFO: NMI handler (perf_event_nmi_handler) took too long to run: 18446744071018.936 msecs
 
-Keep p->throttled across migrations and group moves, but clear it on
-DEQUEUE_CLASS because fair-specific state must not outlive fair-class
-membership. A later return to fair uses the normal enqueue path. That path
-still respects a throttled cfs_rq.
+  Intel Xeon D-2191A (family 0x6, model 0x55, stepping 0x4):
+  [81787.188959] INFO: NMI handler (ghes_notify_nmi) took too long to run: 18446744073709.545 msecs
 
-A KASAN, LOCKDEP and DEBUG_LIST v7.3 kernel reproduced the do_task_dead()
-BUG in 3/3 root and 3/3 delegated uid-1000 runs with CapPrm=CapEff=0 and
-RLIMIT_RTPRIO=1. The fix passed both matrices plus a 3/3 class-switch
-control with bandwidth continuously enabled, without a scheduler warning,
-KASAN report, lockdep splat or crash.
+nmi_handle() times each handler with two sched_clock() reads. When the
+second read is lower than the first, the u64 subtraction wraps, and
+nmi_check_duration() treats the result as a duration. In the three
+examples, the clock went back by less than 1 us, by 2.7 s and by about
+6 us.
 
-An AI coding assistant analyzed the state mismatch and drafted the initial
-reproducer, fix candidate and this changelog. The source paths, trigger,
-controls and results were rechecked against the cited revisions.
+The wrapped value is also stored in action->max_duration. Every later
+real duration is smaller, so the handler is never reported again until
+the next boot.
 
-Fixes: e1fad12dcb66 ("sched/fair: Switch to task based throttle model")
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Whatever makes the clock read lower, a negative difference is not a
+duration, so return before it is stored or reported. A clock that steps
+forward is not covered, since that cannot be told from a real stall.
+
+A backwards clock is still worth knowing about, so print the size of
+the step once per boot. This uses pr_warn_once() rather than WARN, as a
+stack trace says nothing about the clock and panic_on_warn machines
+should not go down for it.
+
+Fixes: 2ab00456ea8a ("x86: Warn when NMI handlers take large amounts of time")
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Aaron Lu <ziqianlu@bytedance.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261022235234.150957-1-4ncienth@gmail.com
+Link: https://patch.msgid.link/20261027-nmi_negative-v1-1-b436a005eb8a@debian.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/nmi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index b35e23f93bcd2..913630c0b0590 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -7021,8 +7021,8 @@ static void dequeue_throttled_task(struct task_struct *p, int flags)
- 	WARN_ON_ONCE(p->se.on_rq);
- 	list_del_init(&p->throttle_node);
+diff --git a/arch/x86/kernel/nmi.c b/arch/x86/kernel/nmi.c
+index 3c9f60d6ca5a7..cb46da482c855 100644
+--- a/arch/x86/kernel/nmi.c
++++ b/arch/x86/kernel/nmi.c
+@@ -115,6 +115,14 @@ static void nmi_check_duration(struct nmiaction *action, u64 duration)
+ {
+ 	int remainder_ns, decimal_msecs;
  
--	/* task blocked after throttled */
--	if (flags & DEQUEUE_SLEEP) {
-+	/* Task blocked after throttling or is leaving the fair class: */
-+	if (flags & (DEQUEUE_SLEEP | DEQUEUE_CLASS)) {
- 		p->throttled = false;
++	/* sched_clock() went backwards? */
++	if ((s64)duration < 0) {
++		pr_warn_once("NMI handler (%ps): sched_clock() went backwards by %lld ns on CPU%d\n",
++			     action->handler, -(s64)duration,
++			     smp_processor_id());
++		return;
++	}
++
+ 	if (duration < nmi_longest_ns || duration < action->max_duration)
  		return;
- 	}
+ 
 -- 
 2.53.0
 
