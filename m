@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585532;
-	b=0x/tpy+v/SFrH4dpeht5GVemuSe51Km6kajR8yd5blxfOOHyJ3mPJcbC7iw3UwXdZiwk
-	 cNJjzvJ7r6rC6XAlA7I0ffg9ZuhSYqmt1nDWMVQ4walWnsrADpHWhEoEuTdx9eumopyQR
-	 caGfEgaQwH4ts7D4VHyvgW1pST9oAg5irmt761v5v8BoXjfCFZLaAO60zW+OMQo+Fj+I9
-	 UhPceOltv74jA/wyiFhoM+XTjQzM9SqnUq7oS0iY99wHgVQiGj9kvSfAJR7epJqPX/WiV
-	 /sFB7ZuYY40mTXmvLDcnWiposseEGNf3HXp6MdtiluL4YftUqsXpDMSUE/1Dv31EP2A==
+	t=1794585533;
+	b=ZZTVbkKPW9IesQqX1+rEaSjMmYeHTHpjnvwlCsj/c4AUyD+s1QibabEsCh39s6GThXwV
+	 CDTYawpqm+/haud/t8bi5VkPw/eNYnNOEYDSLNUqUyrtc+psj1s9k4LMgy16rQByLkXWL
+	 KN6aUEx32hzhCLV/EX6rc7NqHwYsC9X8ow6BdnJwjNswB5tZAYOdZIoBo3yMRbxY3Hj/O
+	 cdtNPqPKOeJxrko26aEhITK0g8pPS8o0WmBObTwVQyfxTighkjZ3q+oaC819Fq+mTsIhJ
+	 1VGwGaI5dr6Y629VlqCgxsz6l8JYJ7V4lSRO/IishqsLtLrqKegwZY2FlWqLEbcV2IA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585533;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ozXu6uAhi2vc2ap+ACI0TCEyOYjF8OmEaqiV+RCvRrU=;
-	b=MLuYk9b8lrREQSpLEVzw9MCENgR0tqeOrmF/Ot0nOq2Rk+Nk2JeIwGq9dR7rAC8XAFxk
-	 cJcAnEaJxaIbodMc4PajG3gIAY9sIP5IJRi9fQt2v+FwLICgzRwOu5cyjDZKrP2YJmjLO
-	 ydMCo+LUsWA5z1X0vOY7+amOlCQdShv/u92sZfPBoyp6igW3ErpYCzaJUfRz0kv7sphOY
-	 0TcuWlo+t84NQ50kAqC5dY7tQ6rdMPWOhFPXzWf/uqi0iE+d8iZTlhGXrrlNYQf//IdA0
-	 8Y1vzmOn+dC4iSeo2WQA94XZLCvAUZiv4rmqjHgV2vCAzw++Dho/PgNBJU/NAR2wIvA==
+	bh=9P7aLMHJniN6fTrVvUEiR/BWpnbbRMumoway5ZTQ61E=;
+	b=0n/m2vVuupFpYLDYAq/bRdKbgLXMi4r81/Ej066lXNvrIvMmCTM3a5pir+tC/0e+cU0k
+	 1+X3twrS6BNrlDHR+F5K2i77Ju5U2BWgJRPJIHusZIekHCK3eDeTbjsusCB9S0NVc6kEO
+	 qO0Azsu+TLe0sCyUCr23wPYZqCL/jMgOOFd8sX5DS1dcuDHgW0P8RRgEvWuhu1Ej3Yv2f
+	 ycO8yuoCYpSvlq8YS7PuSCADq8v7tGxlqisVYv2tnQgR7RBquN/ZieSt8yYBJ3d7y02Xq
+	 M8djAzC60qWO5/P8bQINM/lDNixdQ1mUb4xvgi7iSUSFUTJm/SvusM6aXDU8+DTk7HA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pjtg6Vk7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jImvu2up;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257D2606D450;
-	Fri, 13 Nov 2026 15:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D7F606AE39;
+	Fri, 13 Nov 2026 15:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pjtg6Vk7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51711F000C4;
-	Fri, 13 Nov 2026 15:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jImvu2up
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A871F000C5;
+	Fri, 13 Nov 2026 15:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585532;
-	bh=ozXu6uAhi2vc2ap+ACI0TCEyOYjF8OmEaqiV+RCvRrU=;
+	s=korg; t=1794585533;
+	bh=9P7aLMHJniN6fTrVvUEiR/BWpnbbRMumoway5ZTQ61E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pjtg6Vk75sZXSCMLkIlSz0QD2G4dl395/b0SQKIWW8PqXl/zXlbwmCQn/+p/ShutA
-	 elsOVxD6APAhjrnG67AZj/x3kCdnO/DnGdemswTYH/hdlKhhX9yktDloU9zFhktJEc
-	 e/h+yRHy434Mg9Is0GBkocKBubBkA0qruOugLJNQ=
+	b=jImvu2upOgcfUVD0d5vqjfER7L8Bj3Lmitipf+WUAT3Yj1CgGWQ4ApxG0F1MP9zKX
+	 RQp6lcCtvYAwzwqdsQ2EKLTjAstuXKFnymLE7XerXN5xURImvyqgQMc10ofAneBquq
+	 AiR2iBhvNJ0clGl9MNb6VS9Mlsc4lEAbU2vNgmKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Solcanu <alexei.solcanu@pm.me>,
-	Antheas Kapenekakis <lkml@antheas.dev>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 172/507] hwmon: (gpd-fan) Reset both fans to automatic on duo boards
-Date: Fri, 13 Nov 2026 10:47:56 -0500
-Message-ID: <20261113153800.310833846@linuxfoundation.org>
+Subject: [PATCH 7.3 173/507] hwmon: chipcap2: fix command error diagnostics
+Date: Fri, 13 Nov 2026 10:47:57 -0500
+Message-ID: <20261113153800.345560204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,45 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Solcanu <alexei.solcanu@pm.me>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit d1f60971fbf85c243ab6c78f6535fbc88fa640ce ]
+[ Upstream commit d0a03e1a2d9bd53b94fe6dff7a1a8058d25be82d ]
 
-On boards using gpd_duo_drvdata (GPD Duo, GPD Win 5), writing
-pwm1_enable=2 only returns the first fan to EC control. The second fan
-keeps its last manual duty cycle, e.g. full speed after pwm1=255, so a
-fan control tool that exits leaves it running at that speed.
+The command response field only contains bits 1:0, while the
+error flags are stored in bits 2:5. The existing diagnostic
+checks test the extracted response field, so they can never report
+an error flag.
 
-gpd_duo_write_pwm() writes both fan registers (pwm_write and
-pwm_write + 1), but switching to automatic only clears pwm_write.
-Also clear pwm_write + 1, so both fans return to EC control.
+Test the full status byte for the error flags, and check the
+configuration-load flag instead of RAM parity for the last diagnostic.
 
-Tested on a GPD Win 5 (G1618-05). Not tested on the GPD Duo.
-
-Fixes: 0ab88e239439 ("hwmon: add GPD devices sensor driver")
+Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexei Solcanu <alexei.solcanu@pm.me>
-Reviewed-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://patch.msgid.link/20260926-gpd-fan-duo-auto-v2-1-0a2ea41ee3b5@pm.me
-[groeck: Dropped obsolete 'Assisted-by: tag]
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-1-27ebfc2c5b9e@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/gpd-fan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/chipcap2.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/gpd-fan.c b/drivers/hwmon/gpd-fan.c
-index ed212615b2fe9..b3b75f99f5883 100644
---- a/drivers/hwmon/gpd-fan.c
-+++ b/drivers/hwmon/gpd-fan.c
-@@ -444,6 +444,7 @@ static void gpd_duo_set_pwm_enable(struct gpd_fan_data *data, enum FAN_PWM_ENABL
- 		break;
- 	case AUTOMATIC:
- 		gpd_ecram_write(data->drvdata, data->drvdata->pwm_write, 0);
-+		gpd_ecram_write(data->drvdata, data->drvdata->pwm_write + 1, 0);
- 		break;
- 	}
- }
+diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
+index 9bef767b589ee..8550578928523 100644
+--- a/drivers/hwmon/chipcap2.c
++++ b/drivers/hwmon/chipcap2.c
+@@ -167,13 +167,13 @@ static int cc2_cmd_response_diagnostic(struct device *dev, u8 status)
+ 	case CC2_RESPONSE_BUSY:
+ 		return -EBUSY;
+ 	case CC2_RESPONSE_NACK:
+-		if (resp & CC2_ERR_CORR_EEPROM)
++		if (status & CC2_ERR_CORR_EEPROM)
+ 			dev_dbg(dev, "Command failed: corrected EEPROM\n");
+-		if (resp & CC2_ERR_UNCORR_EEPROM)
++		if (status & CC2_ERR_UNCORR_EEPROM)
+ 			dev_dbg(dev, "Command failed: uncorrected EEPROM\n");
+-		if (resp & CC2_ERR_RAM_PARITY)
++		if (status & CC2_ERR_RAM_PARITY)
+ 			dev_dbg(dev, "Command failed: RAM parity\n");
+-		if (resp & CC2_ERR_RAM_PARITY)
++		if (status & CC2_ERR_CONFIG_LOAD)
+ 			dev_dbg(dev, "Command failed: configuration error\n");
+ 		return -ENODATA;
+ 	default:
 -- 
 2.53.0
 
