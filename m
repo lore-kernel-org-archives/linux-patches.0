@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590449;
-	b=wF0kbfoP8XKVs2Msx7xsg98u32k6fdoFcPsbLPnSal486Wzq7dvdiHtoUe60gulcRgT6
-	 HeTR5lYkZjScgjPRlZeyJJuE/EbLcIutMAmpS/BbdVnuDp0nf5oVIqcy0Gjvnc4t9vuv4
-	 QejbwAHtfZo9sYtVmEe4JfV3lNW+mreYjLwjBp5uFih12rNRagnG/DJWCLACTxIY9F5Bl
-	 pCYdI2XsS9gtoxjVWeBU+YHR2pjd4CMjE4EXBFk2t43AsfnGQal22iQlMT66eHjIgnAmc
-	 8Uc4nPwBlYUFdzVBvXFnfCzD9tJcheK5KjO9/vyf2eoMCqwnQqnShAcWfYHHWexY0/A==
+	t=1794590450;
+	b=j3hlXqnFz8kEEoSpHCikrsu6UP0aeHN8sF7Afl+eGAw+mq4DYXD84bhnbXVjTvF0gcrg
+	 KxqeP1Vl0KQz2RPW1Y9jOMCvvddDAHYllTDS91oPR/mcqcq3ae1E7E6PGjEV+pzjuFQsx
+	 gUfvmUA90kD+4U5zgWwM0O0aoDQOsUABogoQ9/mKU/gYqtIRtAuIlW9JXJBUOlhMbSgpk
+	 OtvPTCH2ny3vo9wwMi954pNVOASMLCWKnscovj/iphFN7GD9cQFeOAauQ7ZZ4J7x6Nvs0
+	 9yELibwpwe+r8pQoRW9hlGJ93cB4aSxl5vd3usD/qm9VmXK6aZuqkjaU3GEIXBbcyfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590449;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590450;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wtagBJ/uCQOCRsCvxQPx8n8ormtT+gagNhCaq8j3jcM=;
-	b=yE7cV3GsKbwpLye00zXI2B6V4sUmGdVUO0+ZYzkzxld46op1SSbQ1OP03LEt+9OqaXG+
-	 oOecbvQ2SkcGL3AlVBltf5/lADLSAeLb3xVWGt9NeUpOfQ893LeI45BgiAr7T/3JvCUFQ
-	 MpsOv6nWM7p/8aCblijnNzv3O0LYC0gRmODc2U4iosPWeeHVRNo6gq8jzl6wq+wU1KJ13
-	 gbieYvpSVcbe9QVful9wT2GVFpyKPli9zLpHDjXEKpn9xWGZNoZIV6cfGvZrQJS17vwQP
-	 1eOXBeVrSmWwTHN+JAyt5Qat/+gspUQ924FeqlJsuwIPGskObzUXZLJK29o6ykRThcg==
+	bh=kIjHyws6lmlNVMfwRaNnT4gPLGy0BspTYPVYNWWIy7Q=;
+	b=TdgPtmD2ZtvwbpbQw1gaxNq/o8HsdPCblLXnkL2OBJPQLUIwUvfGIluJlzgZbkLN+e+K
+	 Y8iiPmgPDafvqwyEGEWNfl8jQplX8o0czaWQ/JeIyu82IRFHtWDxqBy7cmru7AHg5ledo
+	 etGHYjKVVn+54nBa+KhrCYRGooq5xCfkRn65Pat8Aqm8Gc9h5CHIlCQLf/UC/V2CLZuwn
+	 eHVQPrtt6neMXAv3Yo7JsNBCMnKYLyvfE+UI5EhYRT8/YTIFllPwojvVHVx+bM7YA/EB0
+	 /+R6B38vFYKwTtLhJ1brPtg+t/mB9xXIh33EVxDcsWrinWPDmS5RyMKaQCevGGgRTMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UZ2wL8d9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TqSETXYD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C0E607141B;
-	Fri, 13 Nov 2026 17:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA386070F09;
+	Fri, 13 Nov 2026 17:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UZ2wL8d9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7241F000C4;
-	Fri, 13 Nov 2026 17:20:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TqSETXYD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B611F000CA;
+	Fri, 13 Nov 2026 17:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590448;
-	bh=wtagBJ/uCQOCRsCvxQPx8n8ormtT+gagNhCaq8j3jcM=;
+	s=korg; t=1794590450;
+	bh=kIjHyws6lmlNVMfwRaNnT4gPLGy0BspTYPVYNWWIy7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UZ2wL8d9tWw18K2hnD8z4VojWVhxldev/Y4L75NAULCx6md7XU04IQrXykNmZVeDZ
-	 tz8Z19WvEtCqlpjzbp69tA63g9Nyiz/eLAaSc1nsUVxFPzCwh5gtIWEjNHPs95qOJB
-	 86pz02nHQ7HyYw0zjXZP5hZpLalBJzFwHMqOZHUA=
+	b=TqSETXYDS0Ugm2LT9A/vcZZh4NQTQrt2XnYbtd8eV4NjrnQj8QX95fE54KmyOtAJO
+	 VWLTdZFNqiJ52TmH8Gk6YPMtoDronzZ1gPHnrEnrQEYL45uD9jYV5IKl69DeKeMIjD
+	 2QSp3sV72h5Yakwkuwc8vXZG4PyilKxvPyg7jHR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danijel Slivka <Danijel.Slivka@amd.com>,
-	Milan Milicevic <Milan.Milicevic@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 405/686] drm/amdgpu: publish IH enabled before PSP programs IH_RB_CNTL
-Date: Fri, 13 Nov 2026 10:48:58 -0500
-Message-ID: <20261113153834.704824627@linuxfoundation.org>
+Subject: [PATCH 6.18 406/686] drm/amd/display: Avoid closing unowned DDC pins
+Date: Fri, 13 Nov 2026 10:48:59 -0500
+Message-ID: <20261113153834.737723647@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,80 +72,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milan Milicevic <Milan.Milicevic@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 9d550dd1a3b4b96da49f3560a84b5c2413a88cd3 ]
+[ Upstream commit e7ba638b8116cb5f1a5690f543052371215f1626 ]
 
-On SR-IOV, programming IH_RB_CNTL through PSP is slow enough for the
-first MSI to arrive before ih->enabled is set. amdgpu_ih_process()
-then drops the interrupt, rptr stays at 0, and RPTR_REARM never
-generates another edge, so every ring hits the fence fallback timer.
+[WHY]
+dal_ddc_open() cleans up pins it acquires on later failures. If the
+data-pin open fails, this attempt acquired nothing. If opening the
+clock pin or configuring fails, dal_ddc_open() closes the pins it
+opened. An extra dal_ddc_close() is unnecessary and unsafe:
+GPIO_RESULT_ALREADY_OPENED can mean AUX owns the existing handles,
+and closing them here would disrupt AUX.
 
-Set ih->enabled before psp_reg_program() on the indirect IH path for
-Navi10 and IH v6.0, and clear it if programming fails.
+[HOW]
+Remove the extra dal_ddc_close() from the failed-open path.
 
-Signed-off-by: Danijel Slivka <Danijel.Slivka@amd.com>
-Signed-off-by: Milan Milicevic <Milan.Milicevic@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Jerry Zuo <jerry.zuo@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b2f9434f9d17c94798e8d8957af3adc4a9949016)
+(cherry picked from commit 175ae7772b68757b4932f34ff862923cab7abe21)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/ih_v6_0.c   | 13 ++++++++++++-
- drivers/gpu/drm/amd/amdgpu/navi10_ih.c | 13 ++++++++++++-
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ .../drm/amd/display/dc/link/protocols/link_dp_capability.c  | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c b/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
-index 333e9c30c091d..535c84e55558f 100644
---- a/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/ih_v6_0.c
-@@ -168,8 +168,19 @@ static int ih_v6_0_toggle_ring_interrupts(struct amdgpu_device *adev,
- 		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, ENABLE_INTR, (enable ? 1 : 0));
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+index eb262ce42e2dc..9154fea65f583 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+@@ -2483,12 +2483,8 @@ bool dp_is_sink_present(struct dc_link *link)
+ 	 * which indicates we need additional delay
+ 	 */
  
- 	if (amdgpu_sriov_vf(adev) && amdgpu_sriov_reg_indirect_ih(adev)) {
--		if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp))
-+		/*
-+		 * PSP programming of IH_RB_CNTL is slow enough for MSI to
-+		 * arrive before this call returns. Publish ih->enabled first
-+		 * so amdgpu_ih_process() consumes that IV and rearms.
-+		 */
-+		if (enable) {
-+			ih->enabled = true;
-+			smp_wmb();
-+		}
-+		if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp)) {
-+			ih->enabled = false;
- 			return -ETIMEDOUT;
-+		}
- 	} else {
- 		WREG32(ih_regs->ih_rb_cntl, tmp);
- 	}
-diff --git a/drivers/gpu/drm/amd/amdgpu/navi10_ih.c b/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
-index 1e23d123e7f77..bed0eb4b6ec3b 100644
---- a/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
-+++ b/drivers/gpu/drm/amd/amdgpu/navi10_ih.c
-@@ -194,8 +194,19 @@ static int navi10_ih_toggle_ring_interrupts(struct amdgpu_device *adev,
- 		tmp = REG_SET_FIELD(tmp, IH_RB_CNTL, ENABLE_INTR, (enable ? 1 : 0));
+-	if (dal_ddc_open(ddc, GPIO_MODE_INPUT,
+-			 GPIO_DDC_CONFIG_TYPE_MODE_I2C) != GPIO_RESULT_OK) {
+-		dal_ddc_close(ddc);
+-
++	if (dal_ddc_open(ddc, GPIO_MODE_INPUT, GPIO_DDC_CONFIG_TYPE_MODE_I2C) != GPIO_RESULT_OK)
+ 		return present;
+-	}
  
- 	if (amdgpu_sriov_vf(adev) && amdgpu_sriov_reg_indirect_ih(adev)) {
--		if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp))
-+		/*
-+		 * PSP programming of IH_RB_CNTL is slow enough for MSI to
-+		 * arrive before this call returns. Publish ih->enabled first
-+		 * so amdgpu_ih_process() consumes that IV and rearms.
-+		 */
-+		if (enable) {
-+			ih->enabled = true;
-+			smp_wmb();
-+		}
-+		if (psp_reg_program(&adev->psp, ih_regs->psp_reg_id, tmp)) {
-+			ih->enabled = false;
- 			return -ETIMEDOUT;
-+		}
- 	} else {
- 		WREG32(ih_regs->ih_rb_cntl, tmp);
- 	}
+ 	/*
+ 	 * Read GPIO: DP sink is present if both clock and data pins are zero
 -- 
 2.53.0
 
