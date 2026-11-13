@@ -1,61 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591195;
-	b=BAIaZdaxCcb3QBwaCl0ure1i4kshqExNQ53yVrS2F2ZkJa8sMZ70TV05170b6dY30sNH
-	 ca5ug/UV/vZQDvz88nqvR/na5jf0OwADpoNLZj2Gq+cbSN2qvpT+HxSLh6UWUlhy6GkwQ
-	 87Fxv7jJFL/bMR8tDpHSj0Sty9NBweXSSotymUU3761milN/14z/Rz9864xR8W30J/Jug
-	 oKWLwvj5oPHopWtuVYdLcrrc1eoVEeakZtrsff/VDr4aDsZNsPL74+B5xBESFSp9YHY3n
-	 eHO0XxMo5LY4/o3i/aUryg6ybYKkfRf3sw6jJh3vQlGRmAW/qgP2aVGstmKLL8lfdQQ==
+	t=1794591196;
+	b=BL0dk9f3dFc2z8R1tdw1lyVpl2m+urr+Vc3pmIeA4RtCzOAChfAghAf4MIOgovOddmBd
+	 6dcIW0TipB99lpxFqo8Z4CtTjB53uTTGgWaAKkP6DpHymavyvBzF69G5P3y7E/AFNatAO
+	 7y39hIXqPgM60eXvYlQIZyVLwJuf1cHU9f90Yr8sFAkesUvudWqzQeM+Hfk7gO44hBPqN
+	 xJRpzYP+A6+C5h4MmOYekIAOMROvKEMwiq+/OScdlEEcrlXhJVMDUbnvgOlGdCbp7cKBH
+	 ci1IsuXXVdwQ1Qg/iqrKZK74Q8xci+9TNGnlcMOS+fL5XCgPCQNrI9FEyS3zhCXNLRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vd6kU6Hgb9hy71NM9676//d9jxEz+uHjUH3jKyECGxo=;
-	b=MG1bcB98VFxOIQyINtAj/vL80Pq8aBlczcb8GZYv6/NLeM3wsYvBr9F703/VpI5SbDht
-	 uZmK4URi68t+YOIf/OVx5XbKeCTwcZTX7ZYpXKd5JhxxOmygfdJazl1tmZ4CfMOCN0R0E
-	 Inax9acbtrDJNBxXCb/061ISTQ7JepdQCAWVJauaUXSeiwiRAKJJHfWEeX0uWcg04vcmr
-	 aBs8xtzMhowjdL7W4MxvSDx4cvyXV47yvhmQrGnZjsJ9wyjgGDtTU/sObxdMrc3h6Ym7e
-	 sN9D1rX++UZ2ZpBXnysK2fGkpYWvuakL7bkYfQEiBAWdTKOyTGItLOhnR3HVNHdhecA==
+	bh=XYEfLIsHVrX9WmezlDyYAR2vnQm4JheiKC4cugyh0PQ=;
+	b=jUXSkPDVdf7SOZOUJOodWwVwGwzhha5AmksiM7wXkRAkzAEtthDISxdCGEvDheoEEzCs
+	 tJhTgT0divug9GEkaDHTIoTDY8VKaaE5vquS0tbGZqUp/HN8OyPUJk/eiJc6+XPmn42Xv
+	 mBtBf9/BHMHjYYpb+e6gkiHaHSK60KTXavY8z3EAeyy2qDzzYU8OS7GfR3Mc1bLiD4BlM
+	 uVmWvb8mgKGTsgzO95vd6cP0CH7x4TnjemCGNdydAWdec9bYJIeJCrtLWs031qM5PG1YS
+	 Y+2I6DNkWExU+JJVz5Dgj8aA7JFUnFBhSwGXZ2EGss+f6qBeRYeIIpgUC/fZAQKMZ9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KsR8wtW7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BliZjXo/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6616075847;
-	Fri, 13 Nov 2026 17:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAE96075846;
+	Fri, 13 Nov 2026 17:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KsR8wtW7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B6C1F000C5;
-	Fri, 13 Nov 2026 17:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BliZjXo/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B421F000C4;
+	Fri, 13 Nov 2026 17:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591195;
-	bh=vd6kU6Hgb9hy71NM9676//d9jxEz+uHjUH3jKyECGxo=;
+	s=korg; t=1794591196;
+	bh=XYEfLIsHVrX9WmezlDyYAR2vnQm4JheiKC4cugyh0PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KsR8wtW7eCvQFWS8HFXvB+cBytQB+cN3zDG1VG+9qThVAYHwBEbyMTz8ocTC20CON
-	 2KcHU72pgpG8pq0nILhgOi9MUxxlrf+bZtKrlKg+b5NROd7TeVLiV4NvqgxP7ce5Cq
-	 oso6dOW7YRzKPIOHZi+GVeKY6cKizRAk7juoJVFg=
+	b=BliZjXo/Sr2x88kszU1MJ6tbOVyy5ztINxqie0zCgWE+AnNPK47BXKTylWLxaKHsT
+	 krMbCqcx3fK5UJNp9V0LD3kQuwR/ibbfPYVQJbXITOU+rLrINXlnMjEL2Cgg/pwZal
+	 QWAJ3TaWa+JGrPiUTuTWBCyUdkTgd9gkxh+Rosus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Kees Cook <kees@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sunil Mushran <sunil.mushran@oracle.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Chris Mason <mason@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 294/670] ocfs2/cluster: unlink socket containers before releasing resources
-Date: Fri, 13 Nov 2026 10:47:38 -0500
-Message-ID: <20261113153821.897115816@linuxfoundation.org>
+Subject: [PATCH 6.12 330/670] mm/memory: reject remote COW faults on PFN mappings
+Date: Fri, 13 Nov 2026 10:48:14 -0500
+Message-ID: <20261113153823.058653979@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -77,165 +71,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 0988f0c0c7c908f0ff77fd8b90ce9918a1f41479 ]
+[ Upstream commit 8db6921cc07b74197a3866d62ed262b68aeadcf3 ]
 
-A socket container's node and socket must remain alive while the
-container is on sock_containers. The debugfs formatter reads sc_node
-and sc_sock under o2net_debug_lock without taking their references, but
-sc_kref_release() releases both before taking that lock to unlink the
-container.
+When handling a COW fault without a normal source page (PFN mappings),
+__wp_page_copy_user() copies from the faulting user address. For remote
+faults, this accesses the wrong address space, resulting in wrong data
+getting copied.
 
-With CONFIG_DEBUG_FS enabled, a synchronous sender can retain its last
-socket-container reference after o2net_disconnect_node() has detached
-the connection and flushed o2net_wq. The caller runs outside that
-workqueue. After the sender removes its configfs dependency, node
-removal can proceed without waiting for the sender's final sc_put():
+For example, user_events updates an enable bit in the registering
+process's memory. If that memory needs to be faulted in,
+user_event_enabler_fault_fixup() calls fixup_user_fault() from a work
+item. Placing the enable bit in a private PFN mapping can trigger this
+remote COW path.
 
-  Sender (final sc_put)    Configfs rmdir        Debugfs reader
-  --------------------    --------------        --------------
-  o2nm_undepend_item()
-                          Drop node item refs
-  o2nm_node_put()
-    [node can be freed]
-                                               sc_seq_show()
-                                                 Lock debug lock
-                                                 Read sc_node->nd_name
-                                                 Unlock debug lock
-  sc_node = NULL
-  o2net_debug_del_sc()
+Reject these faults with VM_FAULT_SIGBUS when the target mm differs from
+current->mm: remote faults. Ordinary (non-PFN) mappings are not affected.
 
-The earlier socket release has a similar window. The container is
-still selectable while its socket has been released and sc_sock has
-not yet been cleared:
+The user-address copy dates back to commit 6aab341e0a28 ("mm: re-architect
+the VM_UNPAGED logic"); likely, actual ways to get remote faults in
+there on COW PFN mappings appeared afterwards. But the fix is simple and
+straight forward.
 
-  Sender (final sc_put)                       Debugfs reader
-  --------------------                       --------------
-  sock_release(sc->sc_sock)
-    [socket can be freed]
-                                             sc_seq_show()
-                                               Lock debug lock
-                                               Read sc_sock->sk fields
-                                               Unlock debug lock
-  sc_sock = NULL
-  ...
-  o2net_debug_del_sc()
+Fix generated by an LLM and sent by Chris Mason in private.
 
-Move o2net_debug_del_sc() before releasing either resource. Unlinking
-under the existing debug lock waits for an active formatter to finish
-and prevents later readers from selecting the container. This covers
-both socket fields and node fields, including nd_num in the stats
-formatter.
-
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in string+0x42b/0x470
-    Read of size 1 at addr ffff88810f56fc90 by task python3/506
-
-    CPU: 0 UID: 0 PID: 506 Comm: python3 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     kasan_report+0xe0/0x110
-     string+0x42b/0x470
-     vsnprintf+0x330/0x1110
-     seq_printf+0x1a8/0x260
-     sc_seq_show+0x604/0x9f0
-     seq_read_iter+0x480/0x1110
-     seq_read+0x362/0x5a0
-     full_proxy_read+0x11f/0x180
-     vfs_read+0x1a0/0xc20
-     ksys_read+0x111/0x200
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-(User register dump omitted.)
-
-     </TASK>
-
-    Allocated by task 497:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x28d/0x610
-     o2nm_node_group_make_item+0xea/0x1a0
-     configfs_mkdir+0x762/0xca0
-     vfs_mkdir+0x399/0x7e0
-     filename_mkdirat+0x129/0x450
-     __x64_sys_mkdir+0x70/0xa0
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 505:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x308/0x580
-     config_item_cleanup+0x14b/0x230
-     config_item_put+0x79/0x90
-     sc_put+0x454/0x6e0
-     o2net_send_message_vec+0x63d/0x1560
-     o2net_send_message+0xa6/0xe0
-     validation_send_write+0x17f/0x1d0
-     full_proxy_write+0x11f/0x180
-     vfs_write+0x25a/0x1010
-     ksys_write+0x111/0x200
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff88810f56fc00
-     which belongs to the cache kmalloc-512 of size 512
-    The buggy address is located 144 bytes inside of
-     freed 512-byte region [ffff88810f56fc00, ffff88810f56fe00)
-
-(Page and shadow-memory dumps omitted.)
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0065-v6-3090153fd7cacb810214@gmail.com
-Fixes: 2309e9e040fe ("ocfs2/net: Add debug interface to o2net")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Sunil Mushran <sunil.mushran@oracle.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 6aab341e0a28 ("mm: re-architect the VM_UNPAGED logic")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+[ david: simplify comment and description ]
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-35-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/tcp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ mm/memory.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
-index dd4fb83d9cd8b..a53b2c47f55d4 100644
---- a/fs/ocfs2/cluster/tcp.c
-+++ b/fs/ocfs2/cluster/tcp.c
-@@ -391,6 +391,9 @@ static void sc_kref_release(struct kref *kref)
+diff --git a/mm/memory.c b/mm/memory.c
+index c493f18cfb3ab..81e5e9cadc35f 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3046,6 +3046,13 @@ static inline int __wp_page_copy_user(struct page *dst, struct page *src,
+ 		return 0;
+ 	}
  
- 	sclog(sc, "releasing\n");
- 
-+	/* Unlink before freeing anything the debugfs readers dereference. */
-+	o2net_debug_del_sc(sc);
++	/*
++	 * __copy_from_user_inatomic() only works as expected for local faults.
++	 * Reject remote faults.
++	 */
++	if (unlikely(mm != current->mm))
++		return -EFAULT;
 +
- 	if (sc->sc_sock) {
- 		sock_release(sc->sc_sock);
- 		sc->sc_sock = NULL;
-@@ -400,8 +403,6 @@ static void sc_kref_release(struct kref *kref)
- 	o2nm_node_put(sc->sc_node);
- 	sc->sc_node = NULL;
+ 	/*
+ 	 * If the source page was a PFN mapping, we don't have
+ 	 * a "struct page" for it. We do a best-effort copy by
+@@ -3371,6 +3378,8 @@ static vm_fault_t wp_page_copy(struct vm_fault *vmf)
+ 				folio_put(old_folio);
  
--	o2net_debug_del_sc(sc);
--
- 	if (sc->sc_page)
- 		__free_page(sc->sc_page);
- 	kfree(sc);
+ 			delayacct_wpcopy_end();
++			if (err == -EFAULT)
++				return VM_FAULT_SIGBUS;
+ 			return err == -EHWPOISON ? VM_FAULT_HWPOISON : 0;
+ 		}
+ 		kmsan_copy_page_meta(&new_folio->page, vmf->page);
 -- 
 2.53.0
 
