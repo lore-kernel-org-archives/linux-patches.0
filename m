@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591209;
-	b=RQatGqCMrQguo9o96QggZEgJx8gWclJTVVUwt7fL/zjrTq6r/h62gLiB7FYbBSKgT9Il
-	 4FRrVKMuI6yZK/UWZmv3vsiaNSfZhcJPF3cT9Vpn3Zp02fwQg7e4ZxbeLv8a9099sg1Wh
-	 GrwPJ1hNPRJ+mNP2zIo0nwmb03S6mBsZL3v3f921oqwzKSC/ReuLOsh8VCGE6RVPDk5WY
-	 /rNPzoVwQaSxzi8GZVBl+Ia32O1K+u8H9/1NyHyNSyLWXBnwepHWiOgV5fQ9TAIir3jwi
-	 wFnLAvaqSNQ/BOzLNAXgvjpkUO8PDB8zs9ZOOscj3GQnwUrEcsjEo7B8ROOGwryOjYA==
+	t=1794591211;
+	b=jdldYWS9amNFwlXeNg8x60MC3TSWdCSMnZ8RBtvGtaKmuSv7hGQzElyZuieLEtAunGiW
+	 TybxR0GAYJuO7Guioj/wjRp22IWMNTFsLqplM2XzPkeAa5wk6eJaz3QdIPQdao7cmhWGl
+	 HOTJys4nWRf5RI+LDSIGqMIlEvM0lUofkAwnt2FiZAIemQUqUmeb9EfZZkGznEERC1xOz
+	 UTJt4Z83VQJKoFkzJN4wokTHQR8s40N4cCoXRsL3eb67fHcaboFywmFoctahXrrEAzyAE
+	 BBYbP1pgPm4CbDmwu0pYZmx/okAbJa4C0bwk2BBbLiQT/zLozH5eksavXkHKkO54pJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591209;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591211;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AP4ZKc0AVaItApYDhikqe0MiKHVG7edmpz1/44jGvEg=;
-	b=vzkqMWTBcP/nriHhQbt0eNWPp9QpIqiQIN+x0c8j0dma/HbZIbSL1wbSx0QAMW7/9Xen
-	 FGIsrum160sEvl8yrD3WLxrd9vJB+3Uxj6c35iWLj+HbENwDOq3B7Q8X4+lPmMPURGzue
-	 8L3YhJ0GI7YPVyVPzZonybCqXk+KRsO6NGzaPU4jpR30dTTV3AK3OKSDH4EZczuzEAH5s
-	 KBVHz68fBt5ObdkDgp6KaIQaW5WJvX1UAzxNPDnqmbAZ2CUMi80xw+VG5q3vAvBfDA0Gg
-	 zfP16O4B/Qxu6U2WH4XWU9IpUVsb6tCGffj5R71E3sNpWcPJdLo4MOUeWqSLPGX/jWw==
+	bh=/wbfO6aEmCteYAQfib4Tlpew5yXuwjARPdyxKiT+wf8=;
+	b=aKOz26P6eqgFdySX5+d9rpF0+P6acJNwW8m2qzMQxxJXC5tYY9XPOQhY7kMmr5msNDNv
+	 L72QjRyK8y8U18lZ754maji/UTOuw8+On4xXoTijdeBhJSPgJEkx3qN0LKjM29QFiivFy
+	 G/KE+7/Dl4qh2BXdBlQIwCwI7oYzyuNJVo7RtZ0FW4aCoqKOBymqmtqeczCOw5MuOZLsR
+	 kyVomglpFhLnGuCaHaoOD+lkVzIP6HtRj4Bafk+A86P+59tIcNZ3rgeA3+u7TCEFVrIfO
+	 Tm3sfVYlCZohexJpKD+IyOi0Mf7nwcJORV3TNIgoppGQqBtGTkV7jD2xt5Ulhv3kA3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e8AMWGfU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XjUnVJmU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2A26075866;
-	Fri, 13 Nov 2026 17:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06496075854;
+	Fri, 13 Nov 2026 17:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e8AMWGfU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691A71F000C5;
-	Fri, 13 Nov 2026 17:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XjUnVJmU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A2E1F000C4;
+	Fri, 13 Nov 2026 17:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591209;
-	bh=AP4ZKc0AVaItApYDhikqe0MiKHVG7edmpz1/44jGvEg=;
+	s=korg; t=1794591210;
+	bh=/wbfO6aEmCteYAQfib4Tlpew5yXuwjARPdyxKiT+wf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e8AMWGfU4SHoTiSQ4Zmu5ekxDd+Yfm6dQQt5QdjWvZ/xTkPZo6Sk8YwuR5bVNgtiv
-	 oCV/sWZ3bSYuZykwYnueUKAWcaNA84LlSRGeAklQ1zPalU6SZX9XVNObPgCHUv2psM
-	 EzdHkF2yeOcJTLFSmUDivckjGi7Yt7rDJuzHkADU=
+	b=XjUnVJmUh2Ola22z2x97P/j7Zov92Cv5pCa43UOiO2cyPgPUentJw40tINZNOK+OT
+	 IaJJYbKbRRhSyxMhBuAbsoYaKQUCuhqAJIffvwNpcEcyZcGhTflzA9tr0eKuq7SCDx
+	 uqFLqGaybivz8GFrldxMYKMV0sRLmr5uFkE+fFMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Eric Dumazet <edumazet@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 336/670] net: reject a negative TCP header offset in qdisc_pkt_len_segs_init()
-Date: Fri, 13 Nov 2026 10:48:20 -0500
-Message-ID: <20261113153823.248385193@linuxfoundation.org>
+Subject: [PATCH 6.12 345/670] drm/amd/display: Avoid closing unowned DDC pins
+Date: Fri, 13 Nov 2026 10:48:29 -0500
+Message-ID: <20261113153823.530607470@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,54 +72,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 35d2d6e5ac0d22428b2a0216061f3330c095393c ]
+[ Upstream commit e7ba638b8116cb5f1a5690f543052371215f1626 ]
 
-qdisc_pkt_len_segs_init() stores skb_transport_offset(), or the inner
-offset, in the unsigned hdr_len. A header in front of skb->data gives a
-negative offset. For an offset a little below zero, pskb_may_pull() gets a
-small length and succeeds. Then a 64-bit kernel reads the TCP header far
-after the skb and can crash. Further below zero pskb_may_pull() fails.
+[WHY]
+dal_ddc_open() cleans up pins it acquires on later failures. If the
+data-pin open fails, this attempt acquired nothing. If opening the
+clock pin or configuring fails, dal_ddc_open() closes the pins it
+opened. An extra dal_ddc_close() is unnecessary and unsafe:
+GPIO_RESULT_ALREADY_OPENED can mean AUX owns the existing handles,
+and closing them here would disrupt AUX.
 
-Commit 28a57fb2c5df ("net: iptunnel: fix stale transport header during
-tunnel decapsulation") fixed one source of such offsets. Other code that
-removes bytes from the front of a packet can leave the same stale header.
+[HOW]
+Remove the extra dal_ddc_close() from the failed-open path.
 
-Return SKB_DROP_REASON_SKB_BAD_GSO for a negative offset in the TCP branch.
-SKB_GSO_UDP_L4 and the other GSO types read no header and still get a wrong
-qdisc_pkt_len(). On a 64-bit kernel only packets that cause the read after
-the skb today get a new result. Then __dev_queue_xmit() drops them and
-returns -EINVAL, but sch_handle_ingress() ignores the result. Their content
-can be valid. Thus the code that leaves the header stale needs its own fix.
-
-Fixes: 7fb4c1967011 ("net: pull headers in qdisc_pkt_len_segs_init()")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-CC: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261101194433.2637113-1-alexei.starovoitov@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Jerry Zuo <jerry.zuo@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 175ae7772b68757b4932f34ff862923cab7abe21)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../drm/amd/display/dc/link/protocols/link_dp_capability.c  | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 058965698004d..f42ec2837143e 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3890,7 +3890,9 @@ static enum skb_drop_reason qdisc_pkt_len_init(struct sk_buff *skb)
- 	if (likely(shinfo->gso_type & (SKB_GSO_TCPV4 | SKB_GSO_TCPV6))) {
- 		const struct tcphdr *th;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+index fa29eb177331b..896c693524821 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+@@ -2328,12 +2328,8 @@ bool dp_is_sink_present(struct dc_link *link)
+ 	 * which indicates we need additional delay
+ 	 */
  
--		if (!pskb_may_pull(skb, hdr_len + sizeof(struct tcphdr)))
-+		/* A header in front of skb->data gives a negative offset. */
-+		if ((int)hdr_len < 0 ||
-+		    !pskb_may_pull(skb, hdr_len + sizeof(struct tcphdr)))
- 			return SKB_DROP_REASON_SKB_BAD_GSO;
+-	if (dal_ddc_open(ddc, GPIO_MODE_INPUT,
+-			 GPIO_DDC_CONFIG_TYPE_MODE_I2C) != GPIO_RESULT_OK) {
+-		dal_ddc_close(ddc);
+-
++	if (dal_ddc_open(ddc, GPIO_MODE_INPUT, GPIO_DDC_CONFIG_TYPE_MODE_I2C) != GPIO_RESULT_OK)
+ 		return present;
+-	}
  
- 		th = (const struct tcphdr *)(skb->data + hdr_len);
+ 	/*
+ 	 * Read GPIO: DP sink is present if both clock and data pins are zero
 -- 
 2.53.0
 
