@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590092;
-	b=33bVnzjsWsJGa+VAEui+lbZVrHSPZ8ud/1IFzDgogdvaP1xwr5x+IpM42mbSvl8cQCic
-	 hNpzjvXUANMGSsprbm80t7gbvKb+FMuwkUrs9FqIRTOqTOYyGLcvZmKPPSHW9mK9ztWmy
-	 /chUARczRMe+9UA7GQDxbbpKiQR+Hdbxnhwr8UfLPHsBrivwUqTnyZ+HEUhuFACOu46YC
-	 TlO2X03PO4Ar531RaC/OKfz/5RZ+Qt0/saHDlCZgLnBYzgvsTWUCx8DjwbaoG8wJZSsYk
-	 Xy6xavU6sg7eet2d+zYgNRgM/2wH1uQxxcZdFYKbmCH35a+QUyh8+8aLPW+EGr0agBQ==
+	t=1794590093;
+	b=vUap/Ns0s8Lzva1vPnf0lxsseik7PjOTkvoFg116NljJl+p07FrXAicJT2cIN8KkirZk
+	 4XsWX2JDpr1Ts8+JBgCsaOHXvFssUNFIaN/N9r7yWZLSKKA79XA73/OylcxK3YmwzOc4D
+	 TAQZ8DDe86jAr0zCzhl/h4/dsr/smraFCKk+Gb1jHd0Wc/oX6DRYe+Moi2a+JsIgzIBJt
+	 dKm/QUAhRM/G/Haizzj5/boiLF6E1HtE/WxUWElJlIClLHJo1knSgxaCTkoJ7Fan2h0mG
+	 GG1qOGCzOi2OeWaznn2FWrU2FwzKwQSK9HaHWH7PXxPAGPi+ZHIBuxvSmOirpDMpkhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590092;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590093;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5tMZGlE585DLiKk8ZIcO0+Eg3/XpPXCvg3d+9lb22WQ=;
-	b=0WQ0vrzSWa1/vewAJfZPmZQOG9Yx71c1eZZl599CHhxXbJSfRumDYbRSdXpFt6zG0922
-	 ZJivmkVhbIrZ2WTEeRxs6DWziLCe/9EG/FKr3mRPMlzJZXh1YHqpHovgaZEk4vs2z9t61
-	 WulONmrcV9l3izOkyGfyFeIWfdsuTyytVd/VANtDwI9m/zbNhWL7KRJlikOHz9pOYzNjb
-	 YGMb9M7Rc8ijKIWWP2p/KqktsbFXWao5lulkLTHmiB28O4OzTzj/J7M+WfK9NwrxEZNB+
-	 hd4WHF/vNLRcd/D3hnG8+tzDKVoUp/lrTB4BQ7ycgv38m3HegHCfsC4/k/JahjsAGIQ==
+	bh=i0Hc/ozZWflxpOpfJ2tdtn3ks/348z2nZnnpSCsrACI=;
+	b=M3VXLOVVdWDmvXgMLFvoic/3FGWMcQTs3RKYoZmc3OsqQzQRZDc3tc4M+aqD4LwLZDf3
+	 VUl5JYzsGiUChcX+XzdEmTLSLZgoeJlcZCOkBTi8GTB7PiXpHX1s2mSasmZVE89zmTGXY
+	 c8UE79w2YGBU2VeV9wjhieHYeEoR14dtqntOBsOqTi2xMKkEtgQ+J6I6G54AhH6uE5ZBf
+	 H4DgxDJ/PpJjbZJGaqoPkQjx7xCwRoWDM0voaFhZ/XyH/l0pfSFICRi4TCqV/ERhYeMWS
+	 OSOx1VNf2jdTOqNyQWV3Ujzx1+tU1V8BCfhFU+K9CyTfc5bbcQlqq1lI3oMnR63tY9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4SlgyUX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ujo9PnXE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF17606C0BC;
-	Fri, 13 Nov 2026 17:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D851606A323;
+	Fri, 13 Nov 2026 17:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p4SlgyUX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB981F000C4;
-	Fri, 13 Nov 2026 17:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ujo9PnXE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2A41F000C4;
+	Fri, 13 Nov 2026 17:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590091;
-	bh=5tMZGlE585DLiKk8ZIcO0+Eg3/XpPXCvg3d+9lb22WQ=;
+	s=korg; t=1794590093;
+	bh=i0Hc/ozZWflxpOpfJ2tdtn3ks/348z2nZnnpSCsrACI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p4SlgyUXxAHBzrsqb7uDUCAz6f6yEUL9wwLfBmrM/Zkk1twschZ6sXfszMqUj22P8
-	 rBEd3YhksQe3Lpm4P0GB6L98+agErABpYL2oOfn6o3xVqY6TIvFQ6GAC7qMGt3320I
-	 2z4C1dTjfDuXYxd/uaOo7i6OOd/ejuNo1r8kVRp8=
+	b=Ujo9PnXEAP1H3khYcMvIUGJU6FVSpsjoivAzM3GGwgMM2zWdN2520ttwLJSWjtuPL
+	 8yh6io/sI1Moe54Zi1w56RJrztYA3vC4vSZBNf0LEj0oGZxdgf1BjdRgT5FNXUs8Ws
+	 g6voXf4zDy6alXy8FUnfeYsh6gAcsBKyGVTUOMD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 118/686] ax25: free the old digipeater path of a listed socket under ax25_list_lock
-Date: Fri, 13 Nov 2026 10:44:11 -0500
-Message-ID: <20261113153824.832635198@linuxfoundation.org>
+Subject: [PATCH 6.18 092/686] mtd: rawnand: ndfc: use devm_platform_ioremap_resource()
+Date: Fri, 13 Nov 2026 10:43:45 -0500
+Message-ID: <20261113153823.986786885@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -67,81 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-ax25_connect() frees the digipeater path left by a previous connect()
-with only the socket lock held. A bound socket is on ax25_list, where
-__ax25_find_cb() on the receive path and ax25_info_show() for
-/proc/net/ax25 read ax25->digipeat under ax25_list_lock, without the
-socket lock. The path can thus be freed while one of them walks it.
+[ Upstream commit 0d66f9895f286d2fab396a71e6efeb95c4a7e5a6 ]
 
-Take the old path off the socket under ax25_list_lock before freeing
-it, and set the new destination and path under the same lock, so that
-a reader on the list never sees a freed path, nor a destination with
-the path of another one.
+Replace the open-coded of_iomap()/iounmap() with the managed
+devm_platform_ioremap_resource() helper. This fixes a mapping leak on
+driver remove (the old code never called iounmap()) and simplifies the
+error path by dropping the manual cleanup in ndfc_probe().
 
-Tested on a QEMU bench (6.12.94 with KASAN and lockdep, ax0 on mkiss):
-a bound SOCK_SEQPACKET socket calls an absent station via 8
-digipeaters six times, each new non-blocking connect() freeing the path
-of the previous one, while a thread reads /proc/net/ax25 in a loop:
+There is no overlapping memory-region concern introduced by this
+change: each supported board DT describes a single ndfc node with a
+unique 0x2000 register region, and the EBC parent uses dcr-reg rather
+than a MEM reg resource, so the newly added request_mem_region() cannot
+conflict with an existing reservation. Distinct chip selects map to
+distinct 64-bit physical addresses, so CS instances do not overlap.
 
-  before: 18 reports such as
-          BUG: KASAN: slab-use-after-free in ax25_info_show
-          BUG: KASAN: slab-use-after-free in ax2asc
-          (90 with an mdelay(300) after the kfree())
-  after:  no report, five runs out of five, and none with the mdelay
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 5aa967bbd20401af3415cd4fe056fca6624698f2)
+Fixes: a808ad3b0d28 ("[MTD] [NAND] ndfc driver")
+Cc: stable@vger.kernel.org
+Assisted-by: opencode:hy3-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/af_ax25.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/ndfc.c | 21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 64a24543d7f42..e1a47489c601f 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -1247,7 +1247,7 @@ static int __must_check ax25_connect(struct socket *sock,
- 	struct sock *sk = sock->sk;
- 	ax25_cb *ax25 = sk_to_ax25(sk), *ax25t;
- 	struct full_sockaddr_ax25 *fsa = (struct full_sockaddr_ax25 *)uaddr;
--	ax25_digi *digi = NULL;
-+	ax25_digi *digi = NULL, *old_digi;
- 	int ct = 0, err = 0;
+diff --git a/drivers/mtd/nand/raw/ndfc.c b/drivers/mtd/nand/raw/ndfc.c
+index e1628d021a8b6..6f67bfe32a094 100644
+--- a/drivers/mtd/nand/raw/ndfc.c
++++ b/drivers/mtd/nand/raw/ndfc.c
+@@ -185,10 +185,15 @@ static int ndfc_chip_init(struct ndfc_controller *ndfc,
+ static int ndfc_probe(struct platform_device *ofdev)
+ {
+ 	struct ndfc_controller *ndfc;
++	void __iomem *ndfcbase;
+ 	const __be32 *reg;
+ 	u32 ccr;
+ 	u32 cs;
+-	int err, len = 0;
++	int len = 0;
++
++	ndfcbase = devm_platform_ioremap_resource(ofdev, 0);
++	if (IS_ERR(ndfcbase))
++		return PTR_ERR(ndfcbase);
  
- 	/*
-@@ -1299,8 +1299,16 @@ static int __must_check ax25_connect(struct socket *sock,
- 	sk->sk_state   = TCP_CLOSE;
- 	sock->state = SS_UNCONNECTED;
+ 	/* Read the reg property to get the chip select */
+ 	reg = of_get_property(ofdev->dev.of_node, "reg", &len);
+@@ -210,11 +215,7 @@ static int ndfc_probe(struct platform_device *ofdev)
+ 	ndfc->ofdev = ofdev;
+ 	dev_set_drvdata(&ofdev->dev, ndfc);
  
--	kfree(ax25->digipeat);
-+	/*
-+	 * A bound socket is on ax25_list, where the receive path and
-+	 * /proc/net/ax25 read its digipeater path under ax25_list_lock:
-+	 * take the old path off under that lock before freeing it.
-+	 */
-+	spin_lock_bh(&ax25_list_lock);
-+	old_digi = ax25->digipeat;
- 	ax25->digipeat = NULL;
-+	spin_unlock_bh(&ax25_list_lock);
-+	kfree(old_digi);
+-	ndfc->ndfcbase = of_iomap(ofdev->dev.of_node, 0);
+-	if (!ndfc->ndfcbase) {
+-		dev_err(&ofdev->dev, "failed to get memory\n");
+-		return -EIO;
+-	}
++	ndfc->ndfcbase = ndfcbase;
  
- 	/*
- 	 *	Handle digi-peaters to be used.
-@@ -1360,8 +1368,10 @@ static int __must_check ax25_connect(struct socket *sock,
- 		goto out_release;
+ 	ccr = NDFC_CCR_BS(ndfc->chip_select);
+ 
+@@ -232,13 +233,7 @@ static int ndfc_probe(struct platform_device *ofdev)
+ 		iowrite32be(be32_to_cpup(reg), ndfc->ndfcbase + offset);
  	}
  
-+	spin_lock_bh(&ax25_list_lock);
- 	ax25->dest_addr = fsa->fsa_ax25.sax25_call;
- 	ax25->digipeat  = digi;
-+	spin_unlock_bh(&ax25_list_lock);
+-	err = ndfc_chip_init(ndfc, ofdev->dev.of_node);
+-	if (err) {
+-		iounmap(ndfc->ndfcbase);
+-		return err;
+-	}
+-
+-	return 0;
++	return ndfc_chip_init(ndfc, ofdev->dev.of_node);
+ }
  
- 	/* First the easy one */
- 	if (sk->sk_type != SOCK_SEQPACKET) {
+ static void ndfc_remove(struct platform_device *ofdev)
 -- 
 2.53.0
 
