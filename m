@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591477;
-	b=Rh8MxDeHokpm/K4uOCJ87buYHS9+0CXjzI0brK7/GZcTRIGwkcKDBP4EdRUC2DX+5wRA
-	 vbyexZrr6DLq0izuSmGYMU1HPUDXSAvsFLa9lL8lSqN0NKt5tjCVTlQaDAPkxBzVDJuLu
-	 zuYLdvho1Cm6C0EwnhiXqgk0l3H0A1UcHW45IUFf0HDWjRmMQFwDtrRYltPiieipIGHm4
-	 Uy4xbMAJRD7ykY54NkJLinGBg6ZqTwwCPpgmWCX2V6DwUqCNWADEfD6B53jX3S6nrGGu+
-	 7n5E8eC/s+VUplTHLtbtmRfVndEMlcmVBU+69oXLNq/vtyOTtetg5VIMlC9I0C2T0Cg==
+	t=1794591478;
+	b=QwLm+FPj8FBTnAHt7iEaifSwOstYwIklcHlhZKxE4Dggp39St1XivKoFao93/tvthvRU
+	 tdBMeokuSZLbPkJKsSgQyf8dMIwjwmrV/6idD/U42MG4pGl6Ja7HJKl2zvV7NOTrJODQ9
+	 HREy94tw/+dCMPwvySP0m6g1l6To/jhFpcB3OdZimXkMQty9peb1wgBgVzRr0K3vGad9L
+	 gRr79W3GBe5tl6de3zs6F8jJ2MqAqlCctSeZcV//QyKLGc+kF5lE/mOHYCkBk51rFW3r2
+	 XbWWTYeNeTfbWbQvVXH+8NRUjPa4SgdId745bVoKsX+azaAYey1Fhcou0/e0rwYfotg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591477;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591478;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NOYrAHs7CtBVgc1kgmI9pF4/xb4lU45GNcTCIDPvexU=;
-	b=lsYXk/LMa83eFGgVIsXuSba9/NIQul8dI46HOJiXzpkgjpLTOnpkEzIB2ek2NwL1YYag
-	 EjXjP2KqT21CuiJUUUtoSgQT1IG/3bpky7qx+VRTxHhvxGVNJ1mWwsKcMS3HrQeSq0+db
-	 LH9P2QmaJ7DgJC+bMNbGiVzsnfPlvVwGTZk5EqIzljkrnqi6hJKRE7cxCCJ3eNoyNYp58
-	 7BWeixfxYFMdFRMrqBeKJZPVUHSaOnIlxFMxLIaffoMdT75MndIi+FbtcjPO6n67HEbLc
-	 mM3DZ1ZXrbYBTlQ8xO1PKVbZsOa7F7P6QCseYbH7XwAhWxEdCS13TLv5DvVjd/Lu8cw==
+	bh=UDrKYqHmUndpDwJg5vQwBKqrEubt2bAspWVXHgdgMII=;
+	b=ktGoA+oly6did30P+TsShLLMy1iEjQEskGzGi84DGYjMNV6TlrisU1GqtDl1ODxS5hlR
+	 RlDUOQoAglQKBH+yeeWHeWy82KU6q7d0mVWy40FZnROWbwJzJBnVf13jvxLHmcJbi8TdX
+	 puydcDI8XeOJEtrz34C+HpJLqTcjKBy/QytptxMxptYcyg87xdp8/iF3LzN2W+k8e3x0p
+	 hrrZuUKCE68EwesgPtgRpH94DdYC4TqRT89I2BirDL7SOpahepYPCUrOcdGAzCtD9F7hA
+	 ZaLBDYat/Ea7uVplgesQFU8WUoiVL71M3eRW+SMwil67ajyTW2wkBFgAutHzucHCq4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EfKNMjOj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qawxo0kP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B1E606E212;
-	Fri, 13 Nov 2026 17:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4F0607D2DF;
+	Fri, 13 Nov 2026 17:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EfKNMjOj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36C91F000C4;
-	Fri, 13 Nov 2026 17:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qawxo0kP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE491F000C4;
+	Fri, 13 Nov 2026 17:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591476;
-	bh=NOYrAHs7CtBVgc1kgmI9pF4/xb4lU45GNcTCIDPvexU=;
+	s=korg; t=1794591478;
+	bh=UDrKYqHmUndpDwJg5vQwBKqrEubt2bAspWVXHgdgMII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EfKNMjOje6hXyfLCL74J47UcAkq/q40op2ubnubLHPquS8xnGKlCArkc0LLP4EGbC
-	 NRbXzL+Syh0GCnvkqKWqNUiunu2+saR1lrVd35tICUdApnmoc2Lo98IDE2Ido/ti5U
-	 OrGAwe7Hr3KtgXnA+1IQkRYlGF9A4i8PlnBSWPKM=
+	b=Qawxo0kPpipCuVJavu5v/I95/QQ0OSKLkS5uIsxj3UnHTIR29OXTEJLkSJ7guLARK
+	 hJpM1/IqT6crpn/WjRnXFEOBsbtE7znD77HgasM7hrMmA8TYqJBZ3rVcGrsHKAd0uI
+	 yvGQyBKGFyVZp43SFnBFsJTLjxS2vjTJKokQAYaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 558/670] nilfs2: remove nilfs_writepage
-Date: Fri, 13 Nov 2026 10:52:02 -0500
-Message-ID: <20261113153830.791280812@linuxfoundation.org>
+Subject: [PATCH 6.12 559/670] nilfs2: convert nilfs_page_count_clean_buffers() to take a folio
+Date: Fri, 13 Nov 2026 10:52:03 -0500
+Message-ID: <20261113153830.826616192@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,82 +71,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 310293201ed242e466b0e9f10f53b4a4abccffec ]
+[ Upstream commit c1d73eb8d06003e7714cd3ce1d0d79832e59b1e9 ]
 
-Since nilfs2 has a ->writepages operation already, ->writepage is only
-called by the migration code.  If we add a ->migrate_folio operation, it
-won't even be used for that and so it can be deleted.
+Both callers have a folio, so pass it in and use it directly.
 
-[konishi.ryusuke@gmail.com: fixed panic by using buffer_migrate_folio_norefs]
-Link: https://lkml.kernel.org/r/20241002150036.1339475-2-willy@infradead.org
-Link: https://lkml.kernel.org/r/20241024092602.13395-10-konishi.ryusuke@gmail.com
+[konishi.ryusuke@gmail.com: fixed a checkpatch warning about function declaration]
+Link: https://lkml.kernel.org/r/20241002150036.1339475-3-willy@infradead.org
+Link: https://lkml.kernel.org/r/20241024092602.13395-11-konishi.ryusuke@gmail.com
 Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: cb6702e63e0a ("nilfs2: force clear dirty state when restoring from the shadow map")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/inode.c | 33 +--------------------------------
- 1 file changed, 1 insertion(+), 32 deletions(-)
+ fs/nilfs2/dir.c   | 2 +-
+ fs/nilfs2/inode.c | 2 +-
+ fs/nilfs2/page.c  | 4 ++--
+ fs/nilfs2/page.h  | 4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/fs/nilfs2/dir.c b/fs/nilfs2/dir.c
+index b0f182b1da8d0..287e7c8e5dccc 100644
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -95,7 +95,7 @@ static void nilfs_commit_chunk(struct folio *folio,
+ 	unsigned int nr_dirty;
+ 	int err;
+ 
+-	nr_dirty = nilfs_page_count_clean_buffers(&folio->page, from, to);
++	nr_dirty = nilfs_page_count_clean_buffers(folio, from, to);
+ 	copied = block_write_end(NULL, mapping, pos, len, len, folio, NULL);
+ 	if (pos + copied > dir->i_size)
+ 		i_size_write(dir, pos + copied);
 diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
-index ab1dd89de538f..52f783f90d9e1 100644
+index 52f783f90d9e1..d6ac7be5b2596 100644
 --- a/fs/nilfs2/inode.c
 +++ b/fs/nilfs2/inode.c
-@@ -170,37 +170,6 @@ static int nilfs_writepages(struct address_space *mapping,
- 	return err;
+@@ -242,7 +242,7 @@ static int nilfs_write_end(struct file *file, struct address_space *mapping,
+ 	unsigned int nr_dirty;
+ 	int err;
+ 
+-	nr_dirty = nilfs_page_count_clean_buffers(&folio->page, start,
++	nr_dirty = nilfs_page_count_clean_buffers(folio, start,
+ 						  start + copied);
+ 	copied = generic_write_end(file, mapping, pos, len, copied, folio,
+ 				   fsdata);
+diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
+index bc698bb66f790..012ade1714e60 100644
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -458,14 +458,14 @@ void nilfs_clear_folio_dirty(struct folio *folio)
+ 	__nilfs_clear_folio_dirty(folio);
  }
  
--static int nilfs_writepage(struct page *page, struct writeback_control *wbc)
--{
--	struct folio *folio = page_folio(page);
--	struct inode *inode = folio->mapping->host;
--	int err;
--
--	if (sb_rdonly(inode->i_sb)) {
--		/*
--		 * It means that filesystem was remounted in read-only
--		 * mode because of error or metadata corruption. But we
--		 * have dirty pages that try to be flushed in background.
--		 * So, here we simply discard this dirty page.
--		 */
--		nilfs_clear_folio_dirty(folio);
--		folio_unlock(folio);
--		return -EROFS;
--	}
--
--	folio_redirty_for_writepage(wbc, folio);
--	folio_unlock(folio);
--
--	if (wbc->sync_mode == WB_SYNC_ALL) {
--		err = nilfs_construct_segment(inode->i_sb);
--		if (unlikely(err))
--			return err;
--	} else if (wbc->for_reclaim)
--		nilfs_flush_segment(inode->i_sb, inode->i_ino);
--
--	return 0;
--}
--
- static bool nilfs_dirty_folio(struct address_space *mapping,
- 		struct folio *folio)
+-unsigned int nilfs_page_count_clean_buffers(struct page *page,
++unsigned int nilfs_page_count_clean_buffers(struct folio *folio,
+ 					    unsigned int from, unsigned int to)
  {
-@@ -295,7 +264,6 @@ nilfs_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
- }
+ 	unsigned int block_start, block_end;
+ 	struct buffer_head *bh, *head;
+ 	unsigned int nc = 0;
  
- const struct address_space_operations nilfs_aops = {
--	.writepage		= nilfs_writepage,
- 	.read_folio		= nilfs_read_folio,
- 	.writepages		= nilfs_writepages,
- 	.dirty_folio		= nilfs_dirty_folio,
-@@ -304,6 +272,7 @@ const struct address_space_operations nilfs_aops = {
- 	.write_end		= nilfs_write_end,
- 	.invalidate_folio	= block_invalidate_folio,
- 	.direct_IO		= nilfs_direct_IO,
-+	.migrate_folio		= buffer_migrate_folio_norefs,
- 	.is_partially_uptodate  = block_is_partially_uptodate,
- };
- 
+-	for (bh = head = page_buffers(page), block_start = 0;
++	for (bh = head = folio_buffers(folio), block_start = 0;
+ 	     bh != head || !block_start;
+ 	     block_start = block_end, bh = bh->b_this_page) {
+ 		block_end = block_start + bh->b_size;
+diff --git a/fs/nilfs2/page.h b/fs/nilfs2/page.h
+index 64521a03a19e0..136cd1c143c9c 100644
+--- a/fs/nilfs2/page.h
++++ b/fs/nilfs2/page.h
+@@ -43,8 +43,8 @@ int nilfs_copy_dirty_pages(struct address_space *, struct address_space *);
+ void nilfs_copy_back_pages(struct address_space *, struct address_space *);
+ void nilfs_clear_folio_dirty(struct folio *folio);
+ void nilfs_clear_dirty_pages(struct address_space *mapping);
+-unsigned int nilfs_page_count_clean_buffers(struct page *, unsigned int,
+-					    unsigned int);
++unsigned int nilfs_page_count_clean_buffers(struct folio *folio,
++		unsigned int from, unsigned int to);
+ unsigned long nilfs_find_uncommitted_extent(struct inode *inode,
+ 					    sector_t start_blk,
+ 					    sector_t *blkoff);
 -- 
 2.53.0
 
