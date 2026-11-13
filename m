@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590134;
-	b=ftX9EdRM/PE44Cp5kUpduo+7u2wgnZEMoOUQRRe2sRgpndoffFu3Y7Y0wYNVOA2UypPs
-	 5pdyxq0Xjza9lR7hcy1Q0cWjKdgZwzJHtTvzzxg7S4KBJojH0pyvVPhjtRJh5RXd66qHb
-	 P91v3mAlTfR8F7xBfY5wsYJEWBQZLpnTef6Yxbx3O7S1HOqVd9303wYvjKhhJy8e9g1yI
-	 byP7GJku1FN8rDUMWeqyzUTGdgTLnv5taNdjJI9C2mmEYm2jzdm9UMftVfhp8/QGNUGSZ
-	 fcc8IqyRarG6rtSvf59LeycXlRRfOOwFqeVIHdCF4CE0hdZfRE95YooeNnAuhHQFmPw==
+	t=1794590135;
+	b=pOJKS2wJK60zfUQ9am5L5n7dwhQbsZ2FViSr/MHulJaOPVvuDtcj//FnvNIqKSH/xVxY
+	 8IOuf3ZVuv+4IAZVGMfB9w/mGvQlbl5ZZtsGKWqZ7Zzwe4vjnBP0rcd6ytxvZtoLRAswd
+	 7a8SaCYJNF9gWVrRaeS30r+LXFClOTMXC8H88HK6++RInmGz1AHt1n2ck4INNHNuWrOY6
+	 QfLAhftuor62mB9EDfkGPd654KMOgVUzLO91JgJXU5A18QUD5tdKH7Lrr3c/trL9QZBCc
+	 RzUiydRDSmNRu6WC4OtVHJJSMqowfjLydfD+usYWpauxsYOA3hP6SNAjII0enbN6T0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590134;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4VI6vdiVE6K4SsnZS5llBBcs47jEtu5rUvTfXSN0i6Q=;
-	b=pQbCgtraZpGdCPQmfd2xBqoc1tqiiBYEe89NxrkRMZFEoTMmofcCMwdrHukBjEnlKS/I
-	 m/v1zQyS2gWtADCkYdF0H55DNvJ6LC7QR8CYp6gU+xRujEKOQTQd9eVHkf00bqQgsUSr3
-	 7vbUNumsCC3byt/ft1OV83/GSDj+0vGtcQN9/swP82c77kGGQLiU90pyO78HxLAHA3U0Z
-	 WnZqxxq/+1ABvBpKIn7nWizF4ce44KoHNWsgLLVIvFoOcWLCa9odrRT/3UVCuYJhw4ygI
-	 q48ZvdNjfuEZPSKZOfRqY6BXcV6KSyVF5b4vPFzaoFlqb/0xv+8bO2aKo7lPPrbvWcw==
+	bh=HBINVSFMs6wDbrnlqR6r8ms4l3mnSi9xaPfWStXQbgk=;
+	b=s5T9EjGOG3HpyajHVEyTnVQx9ys/W4ucOrB8MlUqrLOKICeQomN6fwHbR3t7h8H96IMk
+	 lm88bYsC5H4yuUHWymjhde2J8/LvmEtmIwQWzS+inYuZdqWn0+WMNjRwFa4LvIZeOAEPI
+	 QdPXKofWwv1vegB2SZ2bUsURNmEy8ALZUcd88JVxnzUXikeQwoQhwNhegZ/fqoDJv5PKl
+	 kbkS0CIZSGJCY70Zgf4y3doHRmxObVQj39UQx1C00IlpnxCOmidgeHp3oCgnowa4KffJl
+	 mBF1WlGl+gizu3eypLli+69NGjxluEH1n8RokVpOMP9QK4/cMXbEruRHLueDpXeJ3Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D75nkYog;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oMnlRl7r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7AD60A5BDC;
-	Fri, 13 Nov 2026 17:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB0E606E200;
+	Fri, 13 Nov 2026 17:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D75nkYog
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB4D1F000C9;
-	Fri, 13 Nov 2026 17:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oMnlRl7r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B3B1F000C7;
+	Fri, 13 Nov 2026 17:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590134;
-	bh=4VI6vdiVE6K4SsnZS5llBBcs47jEtu5rUvTfXSN0i6Q=;
+	s=korg; t=1794590135;
+	bh=HBINVSFMs6wDbrnlqR6r8ms4l3mnSi9xaPfWStXQbgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D75nkYog/SE2voLXomVElxVcnbjuKtMys0e0djZEV/5jrIR8jhC1DOPVj3GaytQUq
-	 4gdyts66XQHEwFGFIiHBHbEWYtRIFQd1beJAfFm31S0FnZZixWXnsha0tUxBkkSbh3
-	 jYJrwv5TT6KskFiTI/EYY3o8caN/d6FGTy3SKi1I=
+	b=oMnlRl7r2G+Yf6vYPXbqYmUEY/7j1CNgIQAwaEkO9l7S3q0pAS6zfrT8kUBgZqAlv
+	 2Ez2xzRch7zhQh1lelFCJJvXzr2vzoR52bd2ct+CSgnABHml7PWxiP+ui6aHY5aVvQ
+	 mt72pF3wEwi8OWp+w51ygsIeai8HkFMV0jr/ebZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rupesh Majhi <zoone.rupert@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Kazuki Hanai <hnkz.64@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 153/686] iio: pressure: dps310: fix CFG_REG bit definitions
-Date: Fri, 13 Nov 2026 10:44:46 -0500
-Message-ID: <20261113153825.980510372@linuxfoundation.org>
+Subject: [PATCH 6.18 154/686] media: mediatek: jpeg: Avoid context access after job finish
+Date: Fri, 13 Nov 2026 10:44:47 -0500
+Message-ID: <20261113153826.012498184@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,48 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rupesh Majhi <zoone.rupert@gmail.com>
+From: Kazuki Hanai <hnkz.64@gmail.com>
 
-[ Upstream commit 4334dc4092c271e6cd010c2ee70b7f4415c4c199 ]
+[ Upstream commit 7c7f31405b76acd95a628c834ee8a2d6da439782 ]
 
-Driver defines them as BIT(4), BIT(5) and BIT(6). Per datasheet P_SHIFT
-is bit 2, FIFO_EN is bit 1 and SPI_MODE is bit 0.
+v4l2_m2m_job_finish() publishes job completion and wakes waiters
+before it returns. A concurrent file release can therefore finish
+v4l2_m2m_ctx_release() and free the context while the single-core IRQ
+handler continues with its tail.
 
-Only P_SHIFT has a user. dps310_set_pres_precision() sets it at
-oversampling 16 or above, so with wrong bit the result register is never
-shifted and stops matching the scale factor compensation divides by.
-in_pressure_input returns -ERANGE at oversampling 16, 32 and 64.
+Both handlers only need the device for the matching runtime PM put.
+Use the IRQ-owned jpeg pointer instead of dereferencing ctx after
+completion has been published. This preserves the get/put pairing and
+removes the post-completion context access.
 
-FIFO_EN needed by FIFO support later in this series.
-
-Fixes: ba6ec48e76bc ("iio: Add driver for Infineon DPS310")
-Fixes: d711a3c7dc82 ("iio: dps310: Add pressure sensing capability")
+Fixes: 45f13a57d813 ("media: platform: Add jpeg enc feature")
+Fixes: 5827e4b14ee7 ("media: platform: Improve power on and power off flow")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Rupesh Majhi <zoone.rupert@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Assisted-by: Codex:gpt-5
+Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/dps310.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/pressure/dps310.c b/drivers/iio/pressure/dps310.c
-index 41b2d0b014e18..a617f26eeb300 100644
---- a/drivers/iio/pressure/dps310.c
-+++ b/drivers/iio/pressure/dps310.c
-@@ -50,9 +50,9 @@
- #define DPS310_CFG_REG		0x09
- #define  DPS310_INT_HL		BIT(7)
- #define  DPS310_TMP_SHIFT_EN	BIT(3)
--#define  DPS310_PRS_SHIFT_EN	BIT(4)
--#define  DPS310_FIFO_EN		BIT(5)
--#define  DPS310_SPI_EN		BIT(6)
-+#define  DPS310_PRS_SHIFT_EN	BIT(2)
-+#define  DPS310_FIFO_EN		BIT(1)
-+#define  DPS310_SPI_EN		BIT(0)
- #define DPS310_RESET		0x0c
- #define  DPS310_RESET_MAGIC	0x09
- #define DPS310_COEF_BASE	0x10
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+index 8e52b40e2423b..f4eebd7575493 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -1581,7 +1581,7 @@ static irqreturn_t mtk_jpeg_enc_done(struct mtk_jpeg_dev *jpeg)
+ 	v4l2_m2m_buf_done(src_buf, buf_state);
+ 	v4l2_m2m_buf_done(dst_buf, buf_state);
+ 	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
+-	pm_runtime_put(ctx->jpeg->dev);
++	pm_runtime_put(jpeg->dev);
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -1869,7 +1869,7 @@ static irqreturn_t mtk_jpeg_dec_irq(int irq, void *priv)
+ 	v4l2_m2m_buf_done(src_buf, buf_state);
+ 	v4l2_m2m_buf_done(dst_buf, buf_state);
+ 	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
+-	pm_runtime_put(ctx->jpeg->dev);
++	pm_runtime_put(jpeg->dev);
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
 2.53.0
 
