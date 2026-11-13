@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585678;
-	b=EZ7/lY6mUSfqiGNB6NivN8zQK8mO8zx2SneBATOgDBGVGA4S5gsAby99dUJYlbxdpZs7
-	 YAJtogaEEQqJK6yIHUD+5van7Y3S9uF7RMqZNdTySApsPN0YI9ZgDzLeAIHwmCBsF40N1
-	 0y7kAEwe3w6E6iah8TJURyS6UPWHU+aF434k9O4bRFoRGCdtj5IBQWdj8JpFim5xWz1O/
-	 giSvy7YlCcUBpqtBP1RfNFkaXWWmIxTLeaKoVBvZE9vbabBgS/1XeLJG3o4O+pZm1rw2K
-	 SZY/5gGzGpXkFSQNzRkCIUBr+/aR1/XBnwrHDYY4GGA2n093/HpzoRzCLw5pTX50GFg==
+	t=1794585679;
+	b=5Wk6J/nlTH0q8303kxhW9sZ9VNiAMiR7R9REy/ipnfr8C91UlG4VxQQcfcsz/LaUpTcZ
+	 6yfOmZSVvHFvMnAtB0U5CRBvNCjUVQxR4fwMxZZdYtFMnvRWt1vCeecznDW0l43n71QWb
+	 t9oCqFdiAvUZ5kWT+TIgJ+u/FBhHwfxzABg1lOMlATsHCDY+mDpsWwryVcVvRs37T9uxI
+	 0IfgRhZrVcImlvP/jWJ5+JKaCIBkagJDwVjEOdUvVjh9S+5uSQYf4UxoKojwxH64zw/pc
+	 SbcvZEcKuHZVi4GFK76oqWCaOmw62WbadfjCqcfqBpr4xd4jdRlKOmS3bN9aEVhrgrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585678;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585679;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jWTnN7J6moXnAEk0BdyttRhh1OAm40FAJokymRqkAd4=;
-	b=eG4hPS2ZgrMSoJj562XWmq4HXkefg76Qwb1+YpfC4X1vJjbaZUMFnuLPa3lnjLtizUom
-	 au94Gd0jdv0wtWEznntKnnRvt/CYbMPUQhS+2uB6aF5tbgZFWVrqc0IL1syAOSjIQRPGz
-	 gK7o2Cqonbs82At2Q07+aedpA0OUl/cWXGnxXA1s1ngzsunF35CojU/7jYaVLbjVprsOE
-	 XuTVAIIqBlVFzEYCHrbO5dSl6DHOKnSllEHOUJ0fJba+0bYlOG1G5E+Gau5p2zQsqjvXo
-	 BKuOJgKD2Q/HKI1uGMxji6Nu+hs73HaAqF+JueKkfDu8qZd/BzYoDmujaRT+tPna0Qw==
+	bh=4vloYLX7T/O584Lpc/SIxhjeGCWYo6l+dhv/CrPb3j0=;
+	b=dhlPxo+l1VGh7QL1W5WA776MehhPgYfMGGJWvcSQLiy0DE5GZo8/FdaJA9xUU/V1s/1f
+	 FgC3OCaItVbk+QB6n7HLDTZT/2RMctpC1S+Yze86zM6zVmmjN0bHJkL/rPkl+ziwXecSr
+	 REbEP4yk1j2uyx/0lWyZwBoavw8g98AOqSGRYgas8+SGUaJO5IsrDd6MvoAbv9kzzCox+
+	 6rHOEvmiFXMvYK59L9QOfPa3w5Ha9xJLWhzzmP8h+qK4p3ZcIbqVw7erQNduvo8AHtAXk
+	 4HVI0Jtf65PUiC3/688ssZ7DssoAyZqqpVzaZNI4q5ku0TUGKq68ZiZUNVAottjsDGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=afIaqaR2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oY12AgNy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21C560744DB;
-	Fri, 13 Nov 2026 16:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BD0606A88F;
+	Fri, 13 Nov 2026 16:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=afIaqaR2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9956D1F000C4;
-	Fri, 13 Nov 2026 16:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oY12AgNy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01FC1F000C4;
+	Fri, 13 Nov 2026 16:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585677;
-	bh=jWTnN7J6moXnAEk0BdyttRhh1OAm40FAJokymRqkAd4=;
+	s=korg; t=1794585679;
+	bh=4vloYLX7T/O584Lpc/SIxhjeGCWYo6l+dhv/CrPb3j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=afIaqaR2xQwvTx/yMLokTgw5c5WjGCV6kySkNZYZXQTF4ZhE8u/qZvE6poxKRXPWo
-	 gIUCow8zm+jqVDfLU2c0Ivld2iAkw4Z2nhXSzCZa9oOYAcy0Xtt93bRaTCxfJ5U6Rp
-	 HbLVnAlD41d44QTZ+QkqQhiM1Ew7fLOQMP0FfsyY=
+	b=oY12AgNy6Qcq2B+qcUcc3sldtTi3z9xvq/TSL59BPQnBqWgm8y3xffQcqIWrkEEh5
+	 L0nHd8UjXU9DxXSmEtGvXkxcg6iiU0GE7MtewMBac5CSwvGo42fhwHLqapNn+ODn0F
+	 WY1Zn+rEhbBtMM1erZLbb3vfWVepIlIeQ5e2+vHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
-	stable@kernel.org,
+	Kaixuan Li <kaixuanli0131@gmail.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Quchaosheng <quchaosheng000406@163.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 290/507] can: dev: can_dropped_invalid_skb: drop CAN XL frames on non-CAN XL devices
-Date: Fri, 13 Nov 2026 10:49:54 -0500
-Message-ID: <20261113153805.086829308@linuxfoundation.org>
+Subject: [PATCH 7.3 291/507] can: isotp: check the frame type, not just the length
+Date: Fri, 13 Nov 2026 10:49:55 -0500
+Message-ID: <20261113153805.118309292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,65 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol@kernel.org>
+From: Kaixuan Li <kaixuanli0131@gmail.com>
 
-[ Upstream commit 0fce44e29fce4b07642491b098afb41bd571e4f2 ]
+[ Upstream commit 933bf0fcb325e67b19c86c9c4da7f029878d5170 ]
 
-Sending a PF_PACKET bypasses the CAN framework logic and can directly
-reach a CAN driver's xmit() function. The PF_PACKET framework only
-checks that skb->len does not exceed the net_device MTU.
+isotp_rcv() separates Classic CAN from CAN FD by skb->len alone:
 
-For a CAN device that is not CAN XL capable, anything above CANFD_MTU
-(72 bytes) is therefore dropped before it reaches the driver. However,
-CAN XL frames are variable length. can_is_canxl_skb() accepts lengths in
-the range CANXL_HDR_SIZE + CANXL_MIN_DLEN up to CANXL_MTU, i.e. 13 to
-2060 bytes.
+	if (skb->len != so->ll.mtu)
+		return;
 
-As a result, an ETH_P_CANXL skb with a length between 13 and 72 bytes
-can pass both the MTU and the can_dropped_invalid_skb() checks.
+	cf = (struct canfd_frame *)skb->data;
 
-A driver that does not support CAN XL will interpret canxl_frame->flags
-as a length because of the overlap with can_frame->len. And because
-CANXL_XLF is set, the resulting length is between 128 and 255. For
-drivers that do not check can_frame->len before copying can_frame->data,
-as most drivers do, this results in a buffer overflow of up to 247
-bytes.
+A CAN XL frame with cxl->len 4 is CAN_MTU bytes, so it passes, and is then
+read as a canfd_frame whose len comes out of canxl_frame.flags: at least
+0x80.
 
-Drop ETH_P_CANXL skbs if the device does not have the CAN_CAP_XL
-capability. Keep can_is_canxl_skb() for the validation of CAN XL skbs.
+Of the paths that follow, only the flow control one uses that length
+without bounding it first, so check_pad() walks to 255 over a 16-byte
+frame and the caller reports EBADMSG on an unrelated socket.
 
-Closes: https://sashiko.dev/#/patchset/20260731-master-v5-0-5b27029dee20@qq.com?part=1
+bcm_rx_handler(), j1939_can_recv(), can_can_gw_rcv() and raw_rcv() check
+the frame type here, and can_dropped_invalid_skb() switches on
+skb->protocol on the transmit side. isotp_rcv() is the gap.
+
 Fixes: fb08cba12b52 ("can: canxl: update CAN infrastructure for CAN XL frames")
-Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20260731-drop_canxl_frames-v1-1-7387b70353b3@kernel.org
-Cc: stable@kernel.org
+Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
+Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Reviewed-by: Quchaosheng <quchaosheng000406@163.com>
+Link: https://patch.msgid.link/20260920035626.2581040-1-kaixuanli0131@gmail.com
+Cc: stable@vger.kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/skb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/can/isotp.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
-index 14edec5afb57e..bc0787535b524 100644
---- a/drivers/net/can/dev/skb.c
-+++ b/drivers/net/can/dev/skb.c
-@@ -4,6 +4,7 @@
-  * Copyright (C) 2008-2009 Wolfgang Grandegger <wg@grandegger.com>
-  */
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index f5dc9d04bd686..d3e43ab484258 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -755,6 +755,14 @@ static void isotp_rcv(struct sk_buff *skb, void *data)
+ 	if (skb->len != so->ll.mtu)
+ 		return;
  
-+#include <linux/can/can-ml.h>
- #include <linux/can/dev.h>
- #include <linux/module.h>
- #include <net/can.h>
-@@ -388,7 +389,7 @@ bool can_dropped_invalid_skb(struct net_device *dev, struct sk_buff *skb)
- 		break;
++	/* check for correct CAN CC/FD frame content */
++	if (so->ll.mtu == CAN_MTU) {
++		if (!can_is_can_skb(skb))
++			return;
++	} else if (!can_is_canfd_skb(skb)) {
++		return;
++	}
++
+ 	cf = (struct canfd_frame *)skb->data;
  
- 	case ETH_P_CANXL:
--		if (!can_is_canxl_skb(skb))
-+		if (!can_cap_enabled(dev, CAN_CAP_XL) || !can_is_canxl_skb(skb))
- 			goto inval_skb;
- 		break;
- 
+ 	/* if enabled: check reception of my configured extended address */
 -- 
 2.53.0
 
