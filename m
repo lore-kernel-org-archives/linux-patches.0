@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590031;
-	b=vrE+5Qu1TxvHqGErA6Zc+Z0degFzQfusP5l3DYpTfQ7bHGmTUcR52bhnhqqLRjX3c4nF
-	 j3ZmtwWQv2Z0LAD4NJUun94y2z4rfdKk5z6bh/lX8xV7Iroh7RRIXctqBlGX7TmGW8eRn
-	 hML4NBUQfV6ij5rIqDaq4M3DtKNr8fgSrOSDPM650gJzw0hOQNb+rla3hHeLOioVB8bNs
-	 x6gvxB1GO2sUd5A0pAhSLUxDGoZKgKd2buXMQhviX9uae/MQsolmKnwdSnMkFdSwFOFbc
-	 SgpclO7qSOQQqlfbkAmZeiKYaSnMfftBkfYuhNvOznaaIUNrjmfDO1nW2HgGBN6TOfw==
+	t=1794590033;
+	b=csocJT2SRa5AROYklpU7egpzJ+lE0ZoMZCsmOJYhxcSGHKbvphYn13J/VFI9Zx0uvfEw
+	 h/QCBslkceLADO6jntr/MeHfdOOrJSL9yksTaVndeeycw86DY9uWtK2/LTwnhnz3dgzEi
+	 RvL80+wwJKcZvBrm+abrS0XSsoJ3cEHKZaTjrHkKCgYrTKaRH4hU9sP1LBK88PWlhfm66
+	 +OjTR77ckTi0j+ddQ8Fx77TxpSUr7bHKEbW6E7q2Lnd/6/nKSNH1Y3Yi4ctP3l5YQJ529
+	 ysVsfyK2VX97chs3XnERNz4NuJfs5ioFDpoQW1XzCsD7XJxpwWOxi3QcUYb5z6zmYQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590031;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=44xsyDZpcvRPcoG6a5XzFPXjnacUo/NcpXdynDYNAgU=;
-	b=uje5e3GkXJWME8bz2K96eNJJZQXl3szG4ARA9m2AAec70i7GYVxzAQjF4sk1DyYOyBF/
-	 l5fdq09hS3SGx51EZe48etNaHkegp1qgWMuJM9unEK9v/nYVi54XLGBgboRU3s1GaxQKK
-	 uZ/2eLjjq9BB9QjPm4QNy2VvxCZbx4SnnxPkjrjA6iS5BuwlT6u4m7l9iLWNnmwQcGqYX
-	 fAqlY9c+5+vXpSJSaq5esjabF+6ELI1R20l1/0AJywBLl+SznytTy1B9hfs0X2kqVQMz7
-	 8Xo8vo3hBcKxO4Wnq+iv7LRsfjInFu60RsK1d+GA/FFnCutgU9tpJLaIAqbWJOhRy5w==
+	bh=bpPtVuqnBnhzLEJv+r5f8IYUnQWT/DQNtEZib4pBNQs=;
+	b=GQntF9HrG226AuuOdadiaNOLHeMvEU/8EI1ZBMm70XGH0+NivR4Y6TZgJ0ZOwPQ2+G6X
+	 0NOFvLq4rRZhkFWZEmDT3SlgV2HbU4UZz34nDeUcSCtb8oMjxXr+0SjpF0Ca9nUpTTAXs
+	 KHYICagd82B5v+fzDSk/KmrmqO+a7zpRElMAiO4fs074LqnQGjvZj+isM4MoMnjEST29b
+	 xoWNfsUI09OP8QScaRJEnFznd73sRTJ4050ZutePsHXms4nD2YA2oeLWTvuUONC9CGUm7
+	 XycGcmZexbG7ev1Kgcjz5erF3th7mOefxcbupytfo0cVliezv8L/KrTsp8zgyi5vnBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lNFnKD7k;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=evLt2YJ3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426B360A3826;
-	Fri, 13 Nov 2026 17:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CDE60A6F61;
+	Fri, 13 Nov 2026 17:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lNFnKD7k
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18AA1F000C5;
-	Fri, 13 Nov 2026 17:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=evLt2YJ3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5081F000C5;
+	Fri, 13 Nov 2026 17:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590031;
-	bh=44xsyDZpcvRPcoG6a5XzFPXjnacUo/NcpXdynDYNAgU=;
+	s=korg; t=1794590033;
+	bh=bpPtVuqnBnhzLEJv+r5f8IYUnQWT/DQNtEZib4pBNQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lNFnKD7k6cgAT0erQDGZi5d6TqIgu9SBlmZhxoaNtVVzUqi0mf7tLzAvu48OURpBK
-	 qPGy3Op4tA8gbBQQgXkxdSgVjmZwqzOLyMnAlti2dOzVotbU6dtZUthbNXFMC9/O2f
-	 8X4Fs5eXCs9FObWPpTkFxE5xiDnIxf6O2ubDPJXM=
+	b=evLt2YJ3A34EMqT5WCYxl04fZdDsmlZ7AsbzsjX+PZA8I7FOaNZLtefi91YHmrwp0
+	 iZe9WGS3/lSoSLhCFxC9UjEdD/kn6J1p+cK7b9kLbvns12dO7G8VG+VnAyqz0fRwPf
+	 g5e+2v2oR+eoxUHrBO3QZ9FAXl61YOjh1AVv5qRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Albershteyn <aalbersh@kernel.org>,
 	Eric Biggers <ebiggers@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 069/686] fsverity: Explicitly require FMODE_READ to retrieve hashes
-Date: Fri, 13 Nov 2026 10:43:22 -0500
-Message-ID: <20261113153823.256167534@linuxfoundation.org>
+Subject: [PATCH 6.18 071/686] raid6: add missing vzeroupper to AVX-512 code
+Date: Fri, 13 Nov 2026 10:43:24 -0500
+Message-ID: <20261113153823.317494859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,125 +71,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-commit 1acb4fd2d011c4bd6cc961095ae17361c71ff61a upstream.
+commit b82cf9e49c1be7cf1fd8e1bd806b0cdd25ab8127 upstream.
 
-The comment in fsverity_ioctl_read_metadata(), which justifies not
-checking for FMODE_READ, doesn't consider that the nonstandard access
-mode 3 (ioctl-only) exists.
+Since the AVX-512 optimized RAID6 code uses ZMM registers, execute
+vzeroupper before returning from it.  This is needed to avoid degrading
+the performance of any later SSE code that may happen to be executed.
 
-Opening an ioctl-only fd generally requires read (and write) permission.
-However, there are gaps with certain LSMs: an ioctl-only fd requests
-read (and write) permission via security_inode_permission, but not
-security_file_open.  With certain LSMs relying on the latter, such as
-Landlock and AppArmor, an ioctl-only fd can be opened without the LSM
-granting read (and write) permission.
-
-Since FS_IOC_READ_VERITY_METADATA returns hashes of file contents
-blocks, it should require read permission.  This also applies to
-FS_IOC_MEASURE_VERITY, which returns a hash for the whole file.
-
-Meanwhile, ioctl-only fds are a rarely-used feature, not known to be
-used with either ioctl.
-
-Therefore, just disallow these ioctls on ioctl-only file descriptors,
-similar to what was already done with FS_IOC_ENABLE_VERITY.
-
-More specifically, explicitly check for FMODE_READ.  This also covers
-write-only fds to non-verity files which otherwise would have failed
-with ENODATA.  This change in error code for write-only fds should be
-fine too, as these ioctls cannot be usefully used with write-only fds
-anyway, but it's worth noting as another technicality.
-
-Fixes: 4dd893d832cf ("fs-verity: implement FS_IOC_MEASURE_VERITY ioctl")
-Fixes: e17fe6579de0 ("fs-verity: add FS_IOC_READ_VERITY_METADATA ioctl")
-Cc: stable@vger.kernel.org
-Reviewed-by: Andrey Albershteyn <aalbersh@kernel.org>
-Link: https://patch.msgid.link/20261022211522.1489943-1-ebiggers@kernel.org
+Link: https://lore.kernel.org/20260831212316.213896-1-ebiggers@kernel.org
+Fixes: e0a491c12968 ("lib/raid6: Add AVX512 optimized gen_syndrome functions")
+Fixes: 13c520b2993c ("lib/raid6: Add AVX512 optimized recovery functions")
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/fsverity.rst |  3 +++
- fs/verity/measure.c                    | 10 ++++++++++
- fs/verity/read_metadata.c              | 14 ++++++++++----
- 3 files changed, 23 insertions(+), 4 deletions(-)
+ lib/raid6/avx512.c       | 6 ++++++
+ lib/raid6/recov_avx512.c | 2 ++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/Documentation/filesystems/fsverity.rst b/Documentation/filesystems/fsverity.rst
-index 412cf11e32985..fd17bbf5795c9 100644
---- a/Documentation/filesystems/fsverity.rst
-+++ b/Documentation/filesystems/fsverity.rst
-@@ -170,6 +170,7 @@ fatal signal), no changes are made to the file.
- FS_IOC_ENABLE_VERITY can fail with the following errors:
+diff --git a/lib/raid6/avx512.c b/lib/raid6/avx512.c
+index 009bd0adeebf0..d989ca64847a5 100644
+--- a/lib/raid6/avx512.c
++++ b/lib/raid6/avx512.c
+@@ -93,6 +93,7 @@ static void raid6_avx5121_gen_syndrome(int disks, size_t bytes, void **ptrs)
+ 	}
  
- - ``EACCES``: the process does not have write access to the file
-+- ``EBADF``: the file descriptor is not open for reading
- - ``EBADMSG``: the builtin signature is malformed
- - ``EBUSY``: this ioctl is already running on the file
- - ``EEXIST``: the file already has verity enabled
-@@ -232,6 +233,7 @@ regardless of the size of the file.
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
  
- FS_IOC_MEASURE_VERITY can fail with the following errors:
+@@ -152,6 +153,7 @@ static void raid6_avx5121_xor_syndrome(int disks, int start, int stop,
+ 	}
  
-+- ``EBADF``: the file descriptor is not open for reading
- - ``EFAULT``: the caller provided inaccessible memory
- - ``ENODATA``: the file is not a verity file
- - ``ENOTTY``: this type of filesystem does not implement fs-verity
-@@ -310,6 +312,7 @@ blocks from disk without actually verifying the path to the root node.
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
  
- FS_IOC_READ_VERITY_METADATA can fail with the following errors:
+@@ -225,6 +227,7 @@ static void raid6_avx5122_gen_syndrome(int disks, size_t bytes, void **ptrs)
+ 	}
  
-+- ``EBADF``: the file descriptor is not open for reading
- - ``EFAULT``: the caller provided inaccessible memory
- - ``EINTR``: the ioctl was interrupted before any data was read
- - ``EINVAL``: reserved fields were set, or ``offset + length``
-diff --git a/fs/verity/measure.c b/fs/verity/measure.c
-index 433d963edf3bb..5ec36d845008b 100644
---- a/fs/verity/measure.c
-+++ b/fs/verity/measure.c
-@@ -31,6 +31,16 @@ int fsverity_ioctl_measure(struct file *filp, void __user *_uarg)
- 	const struct fsverity_hash_alg *hash_alg;
- 	struct fsverity_digest arg;
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
  
-+	/*
-+	 * This ioctl returns a hash of the file contents, so it should require
-+	 * read permission.  Disallow it on ioctl-only (i.e., nonstandard access
-+	 * mode 3) fds, which can in some cases be acquired without passing all
-+	 * LSM read-permission checks.  Also disallow write-only fds, which can
-+	 * refer only to non-verity files which would fail with ENODATA anyway.
-+	 */
-+	if (!(filp->f_mode & FMODE_READ))
-+		return -EBADF;
-+
- 	vi = fsverity_get_info(inode);
- 	if (!vi)
- 		return -ENODATA; /* not a verity file */
-diff --git a/fs/verity/read_metadata.c b/fs/verity/read_metadata.c
-index cba5d6af4e04f..cfe9227a41c45 100644
---- a/fs/verity/read_metadata.c
-+++ b/fs/verity/read_metadata.c
-@@ -157,13 +157,19 @@ int fsverity_ioctl_read_metadata(struct file *filp, const void __user *uarg)
- 	int length;
- 	void __user *buf;
+@@ -309,6 +312,7 @@ static void raid6_avx5122_xor_syndrome(int disks, int start, int stop,
+ 	}
  
-+	/*
-+	 * This ioctl returns file contents block hashes, so it should require
-+	 * read permission.  Disallow it on ioctl-only (i.e., nonstandard access
-+	 * mode 3) fds, which can in some cases be acquired without passing all
-+	 * LSM read-permission checks.  Also disallow write-only fds, which can
-+	 * refer only to non-verity files which would fail with ENODATA anyway.
-+	 */
-+	if (!(filp->f_mode & FMODE_READ))
-+		return -EBADF;
-+
- 	vi = fsverity_get_info(inode);
- 	if (!vi)
- 		return -ENODATA; /* not a verity file */
--	/*
--	 * Note that we don't have to explicitly check that the file is open for
--	 * reading, since verity files can only be opened for reading.
--	 */
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
  
- 	if (copy_from_user(&arg, uarg, sizeof(arg)))
- 		return -EFAULT;
+@@ -415,6 +419,7 @@ static void raid6_avx5124_gen_syndrome(int disks, size_t bytes, void **ptrs)
+ 	}
+ 
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -548,6 +553,7 @@ static void raid6_avx5124_xor_syndrome(int disks, int start, int stop,
+ 			       "m" (q[d+128]), "m" (q[d+192]));
+ 	}
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ const struct raid6_calls raid6_avx512x4 = {
+diff --git a/lib/raid6/recov_avx512.c b/lib/raid6/recov_avx512.c
+index 7986120ca4442..32a9720be269d 100644
+--- a/lib/raid6/recov_avx512.c
++++ b/lib/raid6/recov_avx512.c
+@@ -219,6 +219,7 @@ static void raid6_2data_recov_avx512(int disks, size_t bytes, int faila,
+ #endif
+ 	}
+ 
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -361,6 +362,7 @@ static void raid6_datap_recov_avx512(int disks, size_t bytes, int faila,
+ #endif
+ 	}
+ 
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
 -- 
 2.53.0
 
