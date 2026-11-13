@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585871;
-	b=HT2s7YDbJEBWl/hgJbRoE3GYtyOo7goGElA+SIA3XpL45QT+AO6AThJtk4ks5YqAwgUG
-	 HZZ/eEUp7EsQErB4K5tXR4PL1Xim8w/514EyeY85yzN46gnaXcTVLxTXEubcv56HoOL1V
-	 WTJpiw2PL86esdeM8vydvujIslC8A/hgBs8S6J9fQhPgKLrZmbXfujxfrNuCJ+9xjQ0Vn
-	 wF6lvZBZS/lEoZd9/C1KkILq8EXCYyVzk1vMzzK6JdxVARdiYFZKqaAqo6cfJhwUXc7+x
-	 COvjaxSHrjzUeCjmlry9+1C8Y/Q+gu0kegVQyn2Esw803g9SzlDI6clJgv/AnDF9IGA==
+	t=1794585872;
+	b=cosl7r+peHMgD47ShUiUFWoHwvj9gP4haVeQa9ZSFT4CAIRR8d/sR+zudV9I6bfH3Goe
+	 OnxV3C8ljYWG7OCN3TpoAJD6/UAA+vqqUv9doxmIIAG4owcWyEu1qm8/Wsg0L1JJE7B3v
+	 nRJZLzVmtLAQR10WcndU5z1LfWf0DgHA8hpBr2me1kC99tfXteglHPKKmJw/kI3zVGQMl
+	 zF3UIfPEKWITjJHxfeUSvIsYr3zuoSt/e2zqsC9wpxxcrXQWALCkSy4+66c4ITjNUAy8C
+	 NFXNSYie52PkvurZjFSLkdVCZTDQkuEDam8Bz+dexx5gcZ3t/T34g/+THkoEYD3e4TA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585872;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=exzpxwTMtNfvZ/4UdY8cDpuZYxtjBtINzGCHuW8qMnY=;
-	b=Agd3hk4urb9o3ValhRC9fucmkdrQ9GSc9JTno8+5WTAWoUn3LwdO8+UUzFV+XRG3ZOae
-	 O/37bp4wBiEUjBB+FgbrZ7W4Wmi5gKI62Wb+GUl0sCh+YyIgGAre+b0Xbe8NAEn0Xc5Ao
-	 fdohMdKloiKTh3PtZVcJcgI20USPDZw3heiaVrRDCDfTNoTeyIdqcU/rjg267g2djyDdI
-	 Wb2S21XkrF34stmrIfDzITH3LUia7HoMEqC04GWh7PWz+Fo+aeOSH162G9t5Ebprd/Cb/
-	 0yB15xz5JlbdpncIzm7Tmn7EPrjjQcEEhdO+zy721r5MxYnq6jQhkhb76tkDe3YDHkA==
+	bh=nk+4udmTvBJj6MggHnIJ/1u4HaCdAJuUaEWnbiEHJ7M=;
+	b=vWCdHlch0yJfsOLzXBlap82fuGI6aaChtg7qNLHXV4LJd8Ju3/AmSnBWNRJpIx7MucwN
+	 7J5GpwxWucIXHgFzL6q8V4Imbe3x+xQXgW0xyDRwXmCUi5+BGPSgxTnq3ECFHEyn5FDEc
+	 OuppN9T5ymQCGs+DarQ/zyZgK2EJRg5KxRQltL3l5vYU6F8v+jEC4i/CiRLyQtkwnM7W6
+	 CGScSe8Tt/rqaKreQiJFWUKBtMGkCaagNy7R53Tv2pOdpVpH9kU2SRg80WisMEeYdEXX6
+	 SiwlllTQvTceUu43hfvmnkguf/wZIxWEmk32usKeursTCFlWMQcRpRoILj4Qo3NPL/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMMXoEQA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IG926vPK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55896606EA8D;
-	Fri, 13 Nov 2026 16:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C58606EA8D;
+	Fri, 13 Nov 2026 16:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMMXoEQA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25EE1F000C4;
-	Fri, 13 Nov 2026 16:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IG926vPK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430EE1F000C4;
+	Fri, 13 Nov 2026 16:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585871;
-	bh=exzpxwTMtNfvZ/4UdY8cDpuZYxtjBtINzGCHuW8qMnY=;
+	s=korg; t=1794585872;
+	bh=nk+4udmTvBJj6MggHnIJ/1u4HaCdAJuUaEWnbiEHJ7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LMMXoEQAKcH/CGx2tutEHWzBXRlNLz3WpKRKmCVdtwIh0rLYTdLTEbdBKtJlFCrFe
-	 6uwHDjI+JxViRaGUUR0UIGhMvLBPcdSd8QpwdJ9RsNXM0St5toCrFi/A7CBtJ9WjjF
-	 9RS5ZYXAmEF7sEKJEFgO6PolzRQTIgbva4VW3opY=
+	b=IG926vPKx9FHdQHn9p3m3/u1M8wjAegSx/bXdpGlx7qIaB69Ttid4bf35QwKEnZ4L
+	 5UPI3OqrC+vm67+JwNp+HnrJ83nroUOGL0fEadHHMkwwyoTFdT90lnREWWLzj0cWu/
+	 IkmYaQeTbHUn4Sxt9ecIk/9+F52oHUb147t18DF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ferenc Lengyel <leferi99@gmail.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sercan GOKMEN <gokmensercan@gmail.com>,
+	Cheng Ming Lin <chengminglin@mxic.com.tw>,
+	Michael Walle <mwalle@kernel.org>,
+	Russell Senior <russell@personaltelco.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 442/507] ASoC: cs35l56: Wait for firmware timer expiry before system suspend
-Date: Fri, 13 Nov 2026 10:52:26 -0500
-Message-ID: <20261113153811.716751146@linuxfoundation.org>
+Subject: [PATCH 7.3 443/507] mtd: spi-nor: macronix: Restore fallback parameters for MX25L12805D
+Date: Fri, 13 Nov 2026 10:52:27 -0500
+Message-ID: <20261113153811.755398082@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,239 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Cheng Ming Lin <chengminglin@mxic.com.tw>
 
-commit 6cc7db9fdd06c992ee38793b2d556524fc0cf574 upstream.
+[ Upstream commit 01739ccea21b69818dc071096a249e6f84a6b13d ]
 
-On CS35L5x firmware older than 3.13.7 (B0 silicon) and 4.7.16 (B2 silicon)
-a SoundWire bus reset is not allowed within 250ms of the last firmware
-timer start.
+In a previous effort to drop flash_info fields and rely on SFDP, the
+static size and no_sfdp_flags were removed from the MX25L12805D entry
+(JEDEC ID 0xc22018).
 
-This is already avoided during runtime suspend by the various idle
-timeouts. System suspend can happen at any time so needs special
-protection. The driver cannot cancel the firmware timer, so it must wait
-long enough for the timer to expire.
+At that time, the legacy MX25L12805D was already EOL and unavailable
+for physical testing. Verification was inadvertently performed using
+the newer MX25L12833F, which shares the same JEDEC ID but supports
+SFDP. As a result, the probe succeeded during testing, leading to
+the mistaken removal of the fallback parameters.
 
-The delay is placed in the suspend stage because typically this has less
-impact on end users than delays in resuming. The amp is in PS3 power
-state when suspending and no new timers will be started in this state.
-An extra 10ms is added to the delay to avoid a race on the exact instant
-the firmware timer expires.
+Since the actual MX25L12805D lacks SFDP support entirely, it strictly
+requires these static parameters.
 
-There is no need to have the delay for every driver instance. The timers
-on each amp will expire in parallel, so the delay is only needed once.
-A global flag is used so that the first instance to reach its suspend()
-callback will delay and then clear the flag. The cs35l56_fw_idle_wait_lock
-mutex is to ensure this is still safe if async_suspend was ever enabled
-for SoundWire devices.
+Restore .size = SZ_16M and .no_sfdp_flags = SECT_4K to this entry
+to fix the probe failure for the legacy part.
 
-Fixes: e496112529006 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
-Reported-by: Ferenc Lengyel <leferi99@gmail.com>
-Closes: https://github.com/thesofproject/linux/issues/5898
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20261020135706.3573260-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sercan GOKMEN <gokmensercan@gmail.com>
+Fixes: 947c86e481a0 ("mtd: spi-nor: macronix: Drop the redundant flash info fields")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cheng Ming Lin <chengminglin@mxic.com.tw>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Tested-by: Russell Senior <russell@personaltelco.net>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+[ sashal: Adjusted patch context to account for the absent mx25l12805d_4pp3b_fixups hook. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/cs35l56.h           |  4 ++++
- sound/soc/codecs/cs35l56-sdw.c    | 27 +++++++++++++++++++++-
- sound/soc/codecs/cs35l56-shared.c | 38 +++++++++++++++++++++++++++++++
- sound/soc/codecs/cs35l56.c        | 17 ++++++++++++++
- sound/soc/codecs/cs35l56.h        |  1 +
- 5 files changed, 86 insertions(+), 1 deletion(-)
+ drivers/mtd/spi-nor/macronix.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
-index 747e10ec1a274..ce6383c2c60cc 100644
---- a/include/sound/cs35l56.h
-+++ b/include/sound/cs35l56.h
-@@ -209,6 +209,9 @@ struct snd_ctl_elem_value;
- 
- #define CS35L56_GPIO_FN_GPIO				0x00000001
- 
-+/* DSP1_FW_VER */
-+#define CS35L56_FW_MAIN_VERSION_MASK			GENMASK(19, 0)
-+
- /* Mixer input sources */
- #define CS35L56_INPUT_SRC_NONE				0x00
- #define CS35L56_INPUT_SRC_ASP1RX1			0x08
-@@ -446,6 +449,7 @@ int cs35l56_cal_set_status_get(struct cs35l56_base *cs35l56_base,
- int cs35l56_read_prot_status(struct cs35l56_base *cs35l56_base,
- 			     bool *fw_missing, unsigned int *fw_version);
- void cs35l56_warn_if_firmware_missing(struct cs35l56_base *cs35l56_base);
-+bool cs35l56_needs_wait_for_firmware_timer_expiry(struct cs35l56_base *cs35l56_base);
- void cs35l56_log_tuning(struct cs35l56_base *cs35l56_base, struct cs_dsp *cs_dsp);
- int cs35l56_hw_init(struct cs35l56_base *cs35l56_base);
- int cs35l56_get_speaker_id(struct cs35l56_base *cs35l56_base);
-diff --git a/sound/soc/codecs/cs35l56-sdw.c b/sound/soc/codecs/cs35l56-sdw.c
-index e10f04d677f4d..a49ad69644b5a 100644
---- a/sound/soc/codecs/cs35l56-sdw.c
-+++ b/sound/soc/codecs/cs35l56-sdw.c
-@@ -9,6 +9,7 @@
- #include <linux/device.h>
- #include <linux/err.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- #include <linux/soundwire/sdw.h>
-@@ -36,6 +37,9 @@
- #define CS35L56_LATE_READ_POLL_US	10
- #define CS35L56_LATE_READ_TIMEOUT_US	1000
- 
-+static DEFINE_MUTEX(cs35l56_fw_idle_wait_lock);
-+static bool cs35l56_fw_idle_wait_pending;
-+
- static int cs35l56_sdw_poll_mem_status(struct sdw_slave *peripheral,
- 				       unsigned int mask,
- 				       unsigned int match)
-@@ -387,14 +391,34 @@ static int __maybe_unused cs35l56_sdw_runtime_resume(struct device *dev)
- 	return 0;
- }
- 
-+static int cs35l56_sdw_system_suspend_prepare(struct device *dev)
-+{
-+	cs35l56_fw_idle_wait_pending = true;
-+
-+	return 0;
-+}
-+
- static int __maybe_unused cs35l56_sdw_system_suspend(struct device *dev)
- {
- 	struct cs35l56_private *cs35l56 = dev_get_drvdata(dev);
-+	int ret;
- 
- 	if (cs35l56->sdw_attached)
- 		cs35l56_mask_soundwire_interrupts(cs35l56);
- 
--	return cs35l56_system_suspend(dev);
-+	ret = cs35l56_system_suspend(dev);
-+	if (ret < 0)
-+		return ret;
-+
-+	scoped_guard(mutex, &cs35l56_fw_idle_wait_lock) {
-+		if (cs35l56_fw_idle_wait_pending && cs35l56->needs_wait_for_fw_idle) {
-+			dev_dbg(cs35l56->base.dev, "Wait for FW timer expiry\n");
-+			msleep(CS35L56_FW_REQ_ACTIVE_TIMEOUT_MS + 10);
-+			cs35l56_fw_idle_wait_pending = false;
-+		}
-+	}
-+
-+	return 0;
- }
- 
- static int cs35l56_sdw_probe(struct sdw_slave *peripheral, const struct sdw_device_id *id)
-@@ -460,6 +484,7 @@ static void cs35l56_sdw_remove(struct sdw_slave *peripheral)
- }
- 
- static const struct dev_pm_ops cs35l56_sdw_pm = {
-+	.prepare = cs35l56_sdw_system_suspend_prepare,
- 	SET_RUNTIME_PM_OPS(cs35l56_sdw_runtime_suspend, cs35l56_sdw_runtime_resume, NULL)
- 	SYSTEM_SLEEP_PM_OPS(cs35l56_sdw_system_suspend, cs35l56_system_resume)
- 	LATE_SYSTEM_SLEEP_PM_OPS(cs35l56_system_suspend_late, cs35l56_system_resume_early)
-diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
-index 7b3e37d462d61..b37f65cd4d336 100644
---- a/sound/soc/codecs/cs35l56-shared.c
-+++ b/sound/soc/codecs/cs35l56-shared.c
-@@ -1379,6 +1379,44 @@ void cs35l56_warn_if_firmware_missing(struct cs35l56_base *cs35l56_base)
- }
- EXPORT_SYMBOL_NS_GPL(cs35l56_warn_if_firmware_missing, "SND_SOC_CS35L56_SHARED");
- 
-+bool cs35l56_needs_wait_for_firmware_timer_expiry(struct cs35l56_base *cs35l56_base)
-+{
-+	unsigned int fw_ver;
-+	bool prot_sts;
-+	int ret;
-+
-+	switch (cs35l56_base->type) {
-+	case 0x54:
-+	case 0x56:
-+	case 0x57:
-+		switch (cs35l56_base->rev) {
-+		case 0xb0:
-+			ret = cs35l56_read_prot_status(cs35l56_base, &prot_sts, &fw_ver);
-+			if (ret)
-+				return true;
-+
-+			if ((fw_ver & CS35L56_FW_MAIN_VERSION_MASK) < 0x30d07)
-+				return true;
-+
-+			return false;
-+		case 0xb2:
-+			ret = cs35l56_read_prot_status(cs35l56_base, &prot_sts, &fw_ver);
-+			if (ret)
-+				return true;
-+
-+			if ((fw_ver & CS35L56_FW_MAIN_VERSION_MASK) < 0x40710)
-+				return true;
-+
-+			return false;
-+		default:
-+			return false;
-+		}
-+	default:
-+		return false;
-+	}
-+}
-+EXPORT_SYMBOL_NS_GPL(cs35l56_needs_wait_for_firmware_timer_expiry, "SND_SOC_CS35L56_SHARED");
-+
- void cs35l56_log_tuning(struct cs35l56_base *cs35l56_base, struct cs_dsp *cs_dsp)
- {
- 	__be32 pid, sid, tid;
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 279db3f13f1e3..573cc71a1910d 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -1693,6 +1693,10 @@ int cs35l56_system_resume(struct device *dev)
- 
- 	dev_dbg(dev, "system_resume\n");
- 
-+	/* Assume the firmware reset to default until we can check it */
-+	if (cs35l56->base.init_done)
-+		cs35l56->needs_wait_for_fw_idle = true;
-+
- 	/*
- 	 * We might have done a hard reset or the CS35L56 was power-cycled
- 	 * so wait for control port to be ready.
-@@ -1707,6 +1711,16 @@ int cs35l56_system_resume(struct device *dev)
- 	if (ret)
- 		return ret;
- 
-+	if (cs35l56->sdw_peripheral && cs35l56->base.init_done) {
-+		ret = pm_runtime_resume_and_get(cs35l56->base.dev);
-+		if (ret < 0)
-+			return ret;
-+
-+		cs35l56->needs_wait_for_fw_idle =
-+			cs35l56_needs_wait_for_firmware_timer_expiry(&cs35l56->base);
-+		pm_runtime_put_autosuspend(cs35l56->base.dev);
-+	}
-+
- 	/* Firmware won't have been loaded if the component hasn't probed */
- 	if (!cs35l56->component)
- 		return 0;
-@@ -2231,6 +2245,9 @@ int cs35l56_init(struct cs35l56_private *cs35l56)
- 	if (ret)
- 		return dev_err_probe(cs35l56->base.dev, ret, "Failed to write ASP1_CONTROL3\n");
- 
-+	cs35l56->needs_wait_for_fw_idle =
-+		cs35l56_needs_wait_for_firmware_timer_expiry(&cs35l56->base);
-+
- 	cs35l56->base.init_done = true;
- 	complete_all(&cs35l56->init_completion);
- 
-diff --git a/sound/soc/codecs/cs35l56.h b/sound/soc/codecs/cs35l56.h
-index f7cf8aa653e28..b46f410f0e093 100644
---- a/sound/soc/codecs/cs35l56.h
-+++ b/sound/soc/codecs/cs35l56.h
-@@ -43,6 +43,7 @@ struct cs35l56_private {
- 	bool soft_resetting;
- 	bool sdw_attached;
- 	bool component_registered;
-+	bool needs_wait_for_fw_idle;
- 	struct completion init_completion;
- 
- 	int speaker_id;
+diff --git a/drivers/mtd/spi-nor/macronix.c b/drivers/mtd/spi-nor/macronix.c
+index e97f5cbd9aad2..c854a1163a475 100644
+--- a/drivers/mtd/spi-nor/macronix.c
++++ b/drivers/mtd/spi-nor/macronix.c
+@@ -132,7 +132,9 @@ static const struct flash_info macronix_nor_parts[] = {
+ 	}, {
+ 		/* MX25L12805D */
+ 		.id = SNOR_ID(0xc2, 0x20, 0x18),
++		.size = SZ_16M,
+ 		.flags = SPI_NOR_HAS_LOCK | SPI_NOR_4BIT_BP,
++		.no_sfdp_flags = SECT_4K,
+ 	}, {
+ 		/* MX25L25635E, MX25L25645G */
+ 		.id = SNOR_ID(0xc2, 0x20, 0x19),
 -- 
 2.53.0
 
