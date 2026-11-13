@@ -1,78 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590708;
-	b=IMasFPxuQM/V1E1d4GG9OihQkykbrpCvBMP2f8VsMR2UVPTwMxtbUUhTzg6XQm1fpbMt
-	 oht+1HksITnyErbRPJwmdLzslewg2EYsrNfQIhaaxhlHtQZiYHCOP2Ew4erZ9fx2S/qRl
-	 hRyuWhVRBjJTSJo9AgoGAVtGAsFrgQkFj5PHBxfs/bBoEnpzwz0q6ZGamJypQ0w6nd3oS
-	 3szkEA4fyu9boVvhevUOZLJUbhjVKMPaxEZqMya7/ahDCKsyRc0B5resvoXLreTJJ72NO
-	 IZE9dN20xXM6hwBzGa9B7dBqOBttzkQUogKo9t7+vyhymPRh3eycwwM/f1i2c3nPbhg==
+	t=1794590709;
+	b=uLoIuQpia0Z9COQg9LXe8PZ1b//KPoYD7sU1QWTuOkW/85ZTx00KMGwIAl8JmWb5pDrP
+	 GspOFLjebRYlIplSi0PfBK43nHlC91O4RA83wkgC3d+1RXzLIvX9HvL5RqivWXDXjH3KS
+	 4WosQMNVrnLT3fRFfN9uMd/2SOFDQGZX6sJC3unzRoXvhSmu+7J/B+gSD9Ac5OZvEwnbZ
+	 h8t38YTEtePWsPzr2aG77KbyKVfutYCVuTLFET9FOCjx+RvqMglj4mmIlqy3KhZsaFMkF
+	 aHTMKEefXADvOwDNZthIiTX41B3l+llEEtaWyoUtM/q6/PX9nSFtmAySKXNQqf8I3dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590708;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590709;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2m0ZEdk9tyqIU4f3VTkA8TKSiQMVZkViwFr+k0ZaPIE=;
-	b=k784wm3bpwrY/bCpCSl0yObjj6bWR5lCkTxWDWi5x1EXYZPXppqNjAdGXXqRft+c9Sek
-	 PziZCerw40oE/BDNjG/gUe8GAIKN6VX8w++iuhtM/RXBcYDaON0vXhyROydFDf7A5Xisg
-	 hdx8IaDfyJ3Cn4k8To5yRUhrgghqFN0SIN5N1Um9h6gtkT17N35tI9y7YdqCaqsNDnxmk
-	 wvh6bq7s+NFH8obOMnOBhNaOLJtHhY3q5G7EGWP7oYJ08HWzit+TZkKqoKN0Nw2eDDSTJ
-	 75029ln5758Y3QDM//0YoQma42IlDBX+EvgSOrD0uoBnU16ETMyBqHn1yIbIwyP/Viw==
+	bh=2/j0QuOKX5v1Ie0fqQH1P3af/ofzeKoFVBmcFJ2st6A=;
+	b=M+ObVK55HFfzHGeDuISJ614yM4Eko7w4lRF0F7MHaraQxUi3FFHpeXCgsPnuPSi1X/D/
+	 eMVuJ+10qZPaCxfKnPqjGCcK9b0af1OLI3svZpdBOUJIfl6L4tRXLqImy8p9X6BeYhIJA
+	 CrtIbVZ4QbaKmu4XyNMdJbu1NIpbc4BsAVSD48gogSab+wGmN5EeKdldgvVwl5UugSjVA
+	 3Y2SSrjBeltyZ8VwaO1DQ5jeF/nT52i6i3jZozcvMTfi5xQnKh8GkuLbxSzXBpB72mPQG
+	 QaLwDXgmAmFlLagvxVJrnLKzM9ocm2DvBvWdAeoxMym+w/X89p16Q3DRP8cEGES3jOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=suG9Z5mK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Cf/wiGLI";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918AE607A5DC;
-	Fri, 13 Nov 2026 17:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D831B607A5DE;
+	Fri, 13 Nov 2026 17:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=suG9Z5mK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BBA1F000C6;
-	Fri, 13 Nov 2026 17:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cf/wiGLI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A811F000C5;
+	Fri, 13 Nov 2026 17:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590708;
-	bh=2m0ZEdk9tyqIU4f3VTkA8TKSiQMVZkViwFr+k0ZaPIE=;
+	s=korg; t=1794590709;
+	bh=2/j0QuOKX5v1Ie0fqQH1P3af/ofzeKoFVBmcFJ2st6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=suG9Z5mKTE0ZUvrBiHOv+an21cZ+04iw63Vk2DjMTIyHt6HtRcOi0KwiI5cmnwema
-	 0tNCIff556KUtd0L60xZtGIauekNvKiQNEJUPIHqbr3nHLBvG3kyj2aNHv5GJ28iVa
-	 7tps0ohrOfvXwbOKX8RQK43SgUi7Iisdipg/AkTA=
+	b=Cf/wiGLILKe94fxSH52o4Y5kerJR2Z+hAidPY6acGFlFJvf/CcdGxyBk0YfW4IrBY
+	 6+jVBgQxZIv1N/9AsItrulmN31gJhuSKXkqlU5CGtYb87whX/StEusVcuSCtHXtYes
+	 vC6zVV1qLeceFGRpLn7HWFUHPWv5bQsuO/8qw/z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ackerley Tng <ackerleytng@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Alex Shi <alexs@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	David Rientjes <rientjes@google.com>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Frank van der Linden <fvdl@google.com>,
-	Hongxiang Lou <louhongxiang@huawei.com>,
-	James Houghton <jthoughton@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vishal Annapurve <vannapurve@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Yanteng Si <si.yanteng@linux.dev>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 618/686] mm: hugetlb: drop refcount before freeing on memcg charge failure
-Date: Fri, 13 Nov 2026 10:52:31 -0500
-Message-ID: <20261113153842.814684849@linuxfoundation.org>
+Subject: [PATCH 6.18 619/686] xen/gntdev: Fix gntdev_dmabuf ref leak in dmabuf_exp_wait_released()
+Date: Fri, 13 Nov 2026 10:52:32 -0500
+Message-ID: <20261113153842.844543741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -94,72 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ackerley Tng <ackerleytng@google.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit e95d29c5df84f19881cd30b491fc81aa98f44b45 ]
+[ Upstream commit 6f165abe2b40ede71c98956cd74cd17c18505e75 ]
 
-When mem_cgroup_charge_hugetlb(folio, gfp) returns -ENOMEM, the folio has
-its refcount set to 1 via folio_ref_unfreeze(folio, 1).
+dmabuf_exp_wait_released() takes a reference on the exported
+gntdev_dmabuf with dmabuf_exp_wait_obj_get_dmabuf() and passes it to
+dmabuf_exp_wait_obj_new(), which drops that reference after adding the
+wait object to the wait list.  When the wait object allocation fails,
+dmabuf_exp_wait_obj_new() returns ERR_PTR(-ENOMEM) early and the
+reference is never dropped, leaking a reference to the exported
+gntdev_dmabuf.
 
-The error path calls free_huge_folio(folio) directly, which expects a
-refcount of 0.  Hence, VM_BUG_ON_FOLIO(folio_ref_count(folio), folio) is
-triggered.
+Drop the reference on the allocation failure path so the reference is
+consumed whether the wait object is created or not.
 
-Even with CONFIG_DEBUG_VM disabled, returning a folio with refcount 1 to
-the freelist can corrupt allocator state later.
-
-Use folio_put(folio) instead of free_huge_folio(folio) to properly drop
-the reference before freeing it.
-
-Link: https://lore.kernel.org/20260909-hugetlb-alloc-folio-memcg-charge-error-handling-v2-2-4b4a8a19a7f7@google.com
-Fixes: 991135774c0e ("memcg/hugetlb: introduce mem_cgroup_charge_hugetlb")
-Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Alex Shi <alexs@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Dongliang Mu <dzm91@hust.edu.cn>
-Cc: Frank van der Linden <fvdl@google.com>
-Cc: Hongxiang Lou <louhongxiang@huawei.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Ma Wupeng <mawupeng1@huawei.com>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vishal Annapurve <vannapurve@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Yanteng Si <si.yanteng@linux.dev>
-Cc: <stable@vger.kernel.org>
+Fixes: 932d6562179e ("xen/gntdev: Add initial support for dma-buf UAPI")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260916170956.2086505-1-vulab@iscas.ac.cn>
+[ sashal: Retained kzalloc(sizeof(*obj), GFP_KERNEL) allocation context instead of kzalloc_obj(*obj). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/gntdev-dmabuf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 1bfeaecf9b4fa..225c04d583adc 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -3133,7 +3133,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 	lruvec_stat_mod_folio(folio, NR_HUGETLB, pages_per_huge_page(h));
+diff --git a/drivers/xen/gntdev-dmabuf.c b/drivers/xen/gntdev-dmabuf.c
+index 550980dd3b0bc..5d38506a14f44 100644
+--- a/drivers/xen/gntdev-dmabuf.c
++++ b/drivers/xen/gntdev-dmabuf.c
+@@ -96,8 +96,10 @@ dmabuf_exp_wait_obj_new(struct gntdev_dmabuf_priv *priv,
+ 	struct gntdev_dmabuf_wait_obj *obj;
  
- 	if (ret == -ENOMEM) {
--		free_huge_folio(folio);
-+		folio_put(folio);
- 		/*
- 		 * Return -ENOSPC, since retrying the fault is futile:
- 		 * the OOM killer is not triggered for HugeTLB.
+ 	obj = kzalloc(sizeof(*obj), GFP_KERNEL);
+-	if (!obj)
++	if (!obj) {
++		kref_put(&gntdev_dmabuf->u.exp.refcount, dmabuf_exp_release);
+ 		return ERR_PTR(-ENOMEM);
++	}
+ 
+ 	init_completion(&obj->completion);
+ 	obj->gntdev_dmabuf = gntdev_dmabuf;
 -- 
 2.53.0
 
