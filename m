@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585675;
-	b=oufd+IpGQDz/HeeX/lwi3Glq/9Xe2Goq9i00Yw915l56IBZLSUnplNQ4mCicPJtcdojl
-	 +ookZfVTz3BgWN9KVfUe/2buBQBWpvNUgFK/2BLmElWfLp65PQqN8QzOeAZrF90jQZdmY
-	 s38oWrsiutuyv1wyblv63GiBwc/BaYVQQtv5qK4rwcO8rRkzJExu7vJEc8gD0sONRUOI0
-	 tFPge16irnYaIYL3r6mZQrUObBvApMOdNFDFfeIL6JNrZb7wCW2mmWTfkk/sHvYONaap2
-	 9SDSINNiQtm4GQ+A5KFtnCj2iT+jNQYVWa+wCr9FGCN69+41NIVV5q1wjM+VWAQf9Ow==
+	t=1794585676;
+	b=KxcI0Cc3cU8ZBFcoCt8xjLMA4V1I5WiV6JRovMz8s65TD9WYZWBQ3YgWK+KeeCmorVcu
+	 8krAZHJZkVIA6vdk9pPcwd/IHPPBIHL++YGFRdgmtDhpK9Ont+j5fOzGGxmNUQOw1XKUY
+	 5u3m82/2aa2cXALp2rYOvG3t5F/fzhT3KlO7/cS/fz9YvkoxCw5OJ+SEofFlkUUxxPxpm
+	 y5VKhrlj/xU77/BTs+iO24RCMkQlFFfcpN0A2/5Af3h1Ra5zZp0vJeMeBkHQ7saUeJA3r
+	 OmV9E47mAaOe7cGF3ctr6EcXFumjwgcK8Yl8VChVPESwxs4HDGjtN7xTRGDKEorFygQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585675;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585676;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LWHZgKVm7hxCwSQabBhvzV1VApK+3FKX+vCqq7I1sYw=;
-	b=ZmXgBPFKBM0j1DJ2QPqslrsfTnZvR1OL5koZcKdQBRZQX60OyumOHECsKNAMyA5dvdOC
-	 1cv8EfMPa/R2WYkJIyNQFUT2uhyzMNelGbcS6316vJc6BVq8ynIyYwKrD9mqBmB0dOyIH
-	 cg/IaeFpAHvY3dJcADIP7ZawkAa8w8jsTQy/170xvTPHitW0FD7AZuOV72dzGrdUJpoJI
-	 OfAVXJoBHfWdEDZPJ8NSqS/S3CGLxAl9nCGeSFWVYTk57K9IdnHJQH8H2qGxIpPqfoq53
-	 5Nkywa5/cvBCdG1PInqkIdrUO+hUVEcv+lyAF0Y2jeoWXQvbqz1wfcVK8cRCAifKuMQ==
+	bh=8MhXjob2f763rEH340qt48He0rkZa7hOOIIt4QV+PqA=;
+	b=mghaq6tgcH7cvlYW5icZpepHXmq+7aM3/XOxYyMXXRaw91sbHkwOL5KkLteTlVqHY9ku
+	 JGIzkL2iLVto2YEGz093c/teU7wjlEuoIQ2uRsZ8WFV7JO/yfyNt8Mcxl9BPskp8HICXj
+	 19JuIWX8jHUqHbVNKI98ZEOyzbcYztxfwVr2COeCy3O4RA5F4dFhSCmGq1ZwKwNLCPbcy
+	 NtWN/yndNEVayclgwwBrB71ktM8mY+lVF8AUijUSV8rVYgpIOXXIE8xgmRpvw0lw2gxma
+	 ZSssXVG4dKCNZ4zsXHfcEx4mJ9SES/7FpsgITBpXTIgu0mjjSBTS/YL0uNxrWlrbAZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="x/n6EUZB";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jtk7xrlJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCF4606A8A0;
-	Fri, 13 Nov 2026 16:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8493606A8A0;
+	Fri, 13 Nov 2026 16:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x/n6EUZB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2641F000C4;
-	Fri, 13 Nov 2026 16:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jtk7xrlJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6439B1F000C4;
+	Fri, 13 Nov 2026 16:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585675;
-	bh=LWHZgKVm7hxCwSQabBhvzV1VApK+3FKX+vCqq7I1sYw=;
+	s=korg; t=1794585676;
+	bh=8MhXjob2f763rEH340qt48He0rkZa7hOOIIt4QV+PqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x/n6EUZBR0313iuvBxsP7NsSrEl5tCTwiRCm4Uf/Sow3PeS/T7uVAgiqoRCtGB67z
-	 HfTS+e8NCYrvnixI/WDlntAPvaNIs1oyHmmha4DSMAc4VOxl2OptZD/vmhKQS5foky
-	 u+rH1Vth86TFQz67bcXqHxrRqWDtEZRC3KRrK6tI=
+	b=jtk7xrlJqncnOe0PQo/KG/1OlhL3QnRywxyaB7SDXAbAh+gTCBZRyOl4nPTgj3OoO
+	 cg9ZL3VV0DvWKOJNX1v/R8IINthRYiR80+lsS9w46o/kI8akFgWzZioUOC5ki0NaWj
+	 Kql4Ixg3URXJmSR7Fot9F0BWvlNqH7aiKdSX1CYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Yingjie Wang <1075151112@qq.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 288/507] xfs: fix recovery of partial attr removals
-Date: Fri, 13 Nov 2026 10:49:52 -0500
-Message-ID: <20261113153805.028385900@linuxfoundation.org>
+Subject: [PATCH 7.3 289/507] nvmet: reject keep-alive timeouts that would overflow
+Date: Fri, 13 Nov 2026 10:49:53 -0500
+Message-ID: <20261113153805.056500694@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,56 +69,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Yingjie Wang <1075151112@qq.com>
 
-[ Upstream commit 30bb61651d2da5a502cf504bcdad16c093c1bb08 ]
+[ Upstream commit 96ae13f40ce5930cd58c43128e385131476f2a66 ]
 
-When running xfs/753 on parent pointer-enabled file systems with DEBUG
-enabled, log recovery will eventually crash after a few dozen iterations
-due to an ASSERT that XFS_ATTR_INCOMPLETE is not already set when
-xfs_attr3_leaf_setflag is called:
+nvmet_set_feat_kato() and nvmet_alloc_ctrl() convert the 32-bit
+millisecond KATO from the host to seconds with DIV_ROUND_UP(kato, 1000).
+The addition in DIV_ROUND_UP() is done in 32 bits, so any KATO above
+4294966296 ms wraps around and rounds to 0 seconds. A Set Features
+command with KATO 0xffffffff then succeeds but disables the keep-alive
+timer: Get Features returns 0 and Keep Alive fails with Keep Alive
+Timeout Invalid. A Connect command with such a KATO creates a controller
+without a keep-alive timer.
 
-XFS: Assertion failed: (entry->flags & XFS_ATTR_INCOMPLETE) == 0, file: fs/xfs/libxfs/xfs_attr_leaf.c, line: 3045
+The converted value has more consumers that can overflow. Get Features
+multiplies it by 1000, and the timer paths multiply it by HZ in 32 bits
+and arm a delay that must not exceed MAX_JIFFY_OFFSET.
 
-This is because parent pointer use logged attributes, and the attribute
-intents do not track the work that has been done as the transaction
-rolls, and the recovery mechanism is to run the operation from scratch.
-Because of this various places check for XFS_DA_OP_RECOVERY skip work
-already done.  But while recovery tolerates an attribute already fully
-removed, it currently trips the above assert for an attribute that
-already has the INCOMPLETE bit set, but still exists.  Fix this by
-handling the case like all the others.
+Reject a KATO whose rounded value does not fit all of these. Return Keep
+Alive Timeout Invalid from both Set Features and Connect. Validate Set
+Features before stopping the current timer so a failed update leaves its
+timeout unchanged. Round in 64 bits. A KATO of 0 keeps its current
+meaning.
 
-Fixes: 1d08e11d04d2 ("xfs: Implement attr logging and replay")
-Cc: stable@vger.kernel.org # v5.19
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_attr_leaf.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/nvme/target/admin-cmd.c | 7 ++++++-
+ drivers/nvme/target/core.c      | 8 +++++++-
+ drivers/nvme/target/nvmet.h     | 8 ++++++++
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/fs/xfs/libxfs/xfs_attr_leaf.c b/fs/xfs/libxfs/xfs_attr_leaf.c
-index 02ca50442b466..5b1fd62714205 100644
---- a/fs/xfs/libxfs/xfs_attr_leaf.c
-+++ b/fs/xfs/libxfs/xfs_attr_leaf.c
-@@ -3042,7 +3042,14 @@ xfs_attr3_leaf_setflag(
- #endif
- 	entry = &xfs_attr3_leaf_entryp(leaf)[args->index];
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 7764a3c0195c9..e76d4f7453004 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -1225,8 +1225,13 @@ u16 nvmet_set_feat_kato(struct nvmet_req *req)
+ {
+ 	u32 val32 = le32_to_cpu(req->cmd->common.cdw11);
  
--	ASSERT((entry->flags & XFS_ATTR_INCOMPLETE) == 0);
-+	if (entry->flags & XFS_ATTR_INCOMPLETE) {
-+		if (!(args->op_flags & XFS_DA_OP_RECOVERY)) {
-+			ASSERT(args->op_flags & XFS_DA_OP_RECOVERY);
-+			return -EFSCORRUPTED;
-+		}
-+		return 0;
++	if (val32 > NVMET_MAX_KATO * MSEC_PER_SEC) {
++		req->error_loc = offsetof(struct nvme_common_command, cdw11);
++		return NVME_SC_KA_TIMEOUT_INVALID | NVME_STATUS_DNR;
 +	}
 +
- 	entry->flags |= XFS_ATTR_INCOMPLETE;
- 	xfs_trans_log_buf(args->trans, bp,
- 			XFS_DA_LOGRANGE(leaf, entry, sizeof(*entry)));
+ 	nvmet_stop_keep_alive_timer(req->sq->ctrl);
+-	req->sq->ctrl->kato = DIV_ROUND_UP(val32, 1000);
++	req->sq->ctrl->kato = DIV_ROUND_UP_ULL(val32, MSEC_PER_SEC);
+ 	nvmet_start_keep_alive_timer(req->sq->ctrl);
+ 
+ 	nvmet_set_result(req, req->sq->ctrl->kato);
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 07a74c2e1f587..0f5e94bf12bdf 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1612,6 +1612,12 @@ struct nvmet_ctrl *nvmet_alloc_ctrl(struct nvmet_alloc_ctrl_args *args)
+ 	u8 dhchap_status;
+ 	int ret;
+ 
++	if (kato > NVMET_MAX_KATO * MSEC_PER_SEC) {
++		args->status = NVME_SC_KA_TIMEOUT_INVALID | NVME_STATUS_DNR;
++		args->error_loc = offsetof(struct nvmf_connect_command, kato);
++		return NULL;
++	}
++
+ 	args->status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
+ 	subsys = nvmet_find_get_subsys(args->port, args->subsysnqn);
+ 	if (!subsys) {
+@@ -1678,7 +1684,7 @@ struct nvmet_ctrl *nvmet_alloc_ctrl(struct nvmet_alloc_ctrl_args *args)
+ 		kato = NVMET_DISC_KATO_MS;
+ 
+ 	/* keep-alive timeout in seconds */
+-	ctrl->kato = DIV_ROUND_UP(kato, 1000);
++	ctrl->kato = DIV_ROUND_UP_ULL(kato, MSEC_PER_SEC);
+ 
+ 	ctrl->err_counter = 0;
+ 	spin_lock_init(&ctrl->error_lock);
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index 2032db380f99e..215315ebe42de 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -7,6 +7,7 @@
+ #define _NVMET_H
+ 
+ #include <linux/dma-mapping.h>
++#include <linux/jiffies.h>
+ #include <linux/types.h>
+ #include <linux/device.h>
+ #include <linux/kref.h>
+@@ -702,6 +703,13 @@ void nvmet_add_async_event(struct nvmet_ctrl *ctrl, u8 event_type,
+ #define NVMET_KAS		10
+ #define NVMET_DISC_KATO_MS		120000
+ 
++/*
++ * Largest keep-alive timeout in seconds that can be reported back in
++ * milliseconds and converted to jiffies without overflowing.
++ */
++#define NVMET_MAX_KATO	\
++	min3(U32_MAX / MSEC_PER_SEC, U32_MAX / HZ, MAX_JIFFY_OFFSET / HZ)
++
+ int __init nvmet_init_configfs(void);
+ void __exit nvmet_exit_configfs(void);
+ 
 -- 
 2.53.0
 
