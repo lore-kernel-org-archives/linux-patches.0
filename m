@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591123;
-	b=VekpmZC3URcs96JRjRCd0c+dBQecBjuZzmQ50fJjADgXMX6stJ2K0jdSHjSiitylSUTp
-	 W4MVNgzP063+k1hK4nP1ZZfloEOQgAwlltKGSUf3KKTqxRuD77r4dydvkStMTq3Kk756m
-	 YJRytF47JhDQNp9rtQLAUB3r5FIRhCKPRHuJaF//rBTvlX1YWmDRCeBuJ4RqS9Oeh1UE0
-	 9W1xpcsT1eBK4aX2/CAA07BwPl4kBIHBhDNA8sI4vj+QdH8Mx6K0JANFPEY4w7b6AFCYj
-	 GmcpzHOEHD+2d5DdcTNoHYDUbJ3/0bKp6cfPLzBfiHIQWVcRQhk0zzMgEOwr94+qPVw==
+	t=1794591124;
+	b=0MxIPPQpEY0ouMa6iBSm2J6BzGenGE/gwodye9UEorvabWmMB/znkBbVRhh8HN35sGVC
+	 81uMzNeA9cLzoBvyhP6Fg9hzRslTga0g4fAOVHClz+OPPGIhhyCc1wr3UlvVvHciVphPP
+	 ZZr4KFjKe+jwxxWHonukn+mzUc4B1RMFUEnDVFIKSz508Ya6Epm6RdVu51SlrQi2CN5DA
+	 yPeK3x7Vucy2P5FS9HYsdU7PTvbUjrh211b7N0t4b8KRAd8z5bW0H7sN50AYvRJwQzNPI
+	 Z/ZLVv5GJ4MUAKfq/0N0SXEzS2el/1BfJ/Ok32obbhRnm2w20IQ8jKwa/28wQQatTXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591123;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591124;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PA+AdlmXdhH0wcRElBTwATM4MJugHaP9c54r90ISuyk=;
-	b=TrUImwxMalsyieWkraSOoYWW9oJhY/BTvejF/3SgdVtM/GpOxQSYDOr4+xv+bSA9gUmj
-	 WJmixcZjFjMgN36O8jkYBDBJ0cNT11plszBgCTWHkaN2AY8HM/c7S/E+0tsjAtutnLwyT
-	 6eVkRsvWomvoPpge5MjL/4MKKw7CS1pJUlHPyEDvsvlC0L7Z9p832MPqD/fySoGwE4UQh
-	 lAc6ZrSmjEmhvp/bgZbAadsDgMdBXPVTa8EjZ2oIRTEW7ultq9AfCHv79A+Bj+yuncGsj
-	 Xpyr4AhxySixsW9252gTO4eQ0pidVbAR24O6ykpR8AqteCELXn65hObNDjDg9hM2mZA==
+	bh=LUcSaKn8ZKEVvvST9o8DAIYEs11+TVWnrzMzN5A67gM=;
+	b=1+RUMhims15X4X434EEWh2678gUHTb9z7xbTnIqtkF6QN7hOAjpUB0dLIDA5vFyBrLta
+	 Ejn3+pp+9yFCARRpuBBz8lhVF2fDXPjTC0xVizNJEYPW0AL3ip5/X1rTjp61sUBf3zFsn
+	 1JPAqf2FaOqFQiEbz7bV1SHa+0IpTgRkICa4iABxqPU8v+SpNU7gHxKAcicI5MkL8668c
+	 bztd6T5CfKt397EbSeCzTqeJAxVAGj2NviQJGHhYEdNgBgFLOr5pMziyTMCV4H0QgMP7j
+	 V+CySxJCNwRvqn02AjpWtvTPpG1Te7oxvIyHeq7BcGMn7vsqFeeF2vASl9WWgauTrMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSTfMdf5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WLoahYp8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61697606A88C;
-	Fri, 13 Nov 2026 17:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE1D606A88C;
+	Fri, 13 Nov 2026 17:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iSTfMdf5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3BA1F000C4;
-	Fri, 13 Nov 2026 17:32:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WLoahYp8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463AC1F000C4;
+	Fri, 13 Nov 2026 17:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591123;
-	bh=PA+AdlmXdhH0wcRElBTwATM4MJugHaP9c54r90ISuyk=;
+	s=korg; t=1794591124;
+	bh=LUcSaKn8ZKEVvvST9o8DAIYEs11+TVWnrzMzN5A67gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iSTfMdf5V1zLnZkgwojG1YyfEUxHvvJui7gInoH9DxuZATnszXAWygDx6254iYQSz
-	 L+PpPRxvGI1qEgr2J2jUx2aYIkk+5ddEk3AHz4PMhfPrWk3VEIGgWSKHMdB2uA9DUu
-	 xiuo984nvgVjk745q0do9MV4i5Lm79gtVP3eXVLI=
+	b=WLoahYp8dbF9ylnQS/vi/m94CJtdUGDMnDCCJkl+JFTsuj3OvW9kR9Fd2m/NTw/PC
+	 sE6NOFQzKiwgZtgT5txOQg3C76Ci/i+wDa/bWSf7F8mluIMYzBls6uZZCS57cZq4mX
+	 7L9riyz7xv7NEUYsDi/w1jlkq4yAdJ5zcTjSHstM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 272/670] x86/vmware: Fix i386 high-bandwidth hypercall arguments
-Date: Fri, 13 Nov 2026 10:47:16 -0500
-Message-ID: <20261113153821.115372957@linuxfoundation.org>
+Subject: [PATCH 6.12 273/670] Bluetooth: hci_sync: re-enable legacy advertising on resume
+Date: Fri, 13 Nov 2026 10:47:17 -0500
+Message-ID: <20261113153821.147349959@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,97 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
 
-[ Upstream commit e0e022004bbedc7caf1c18770980eb5372019189 ]
+[ Upstream commit 737139f4157d302292a6b937d96922879ecabfa3 ]
 
-The high-bandwidth hypercall helpers push %ebp before loading the in6
-operand into it. On i386 without frame pointers, both GCC and Clang can
-address the memory-constrained operand relative to %esp. The push then
-moves the stack and the helpers load the wrong value.
+hci_resume_advertising_sync() never re-enables advertising on a
+controller without extended advertising.
 
-Typical i386 configurations use the frame-pointer unwinder and happen to
-address the operand through %ebp. However, UNWINDER_GUESS is available
-with EXPERT and permits the affected frame-pointer-disabled configuration.
-vmwgfx is also available on i386 and calls both helpers.
+It restores HCI_ADVERTISING from advertising_old_state, then calls
+hci_schedule_adv_instance_sync(), which starts with:
 
-Stage in6 through %eax before changing either stack register, then save
-%ebp and copy the staged value into it. Load the VMware magic immediately
-before the string I/O instruction. Mark %eax early-clobber so it cannot
-also provide in6 or an address register for it. Use the same sequence on
-x86-64, where the full-width register preserves in6.
+  if (hci_dev_test_flag(hdev, HCI_ADVERTISING) && !ext_adv_capable(hdev))
+          return -EPERM;
 
-Fixes: 34bf25e820ae ("x86/vmware: Introduce VMware hypercall API")
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Cc: stable@vger.kernel.org # 6.11+
-Link: https://patch.msgid.link/4ab10678a8f50053934b62b56af81f881c1d3798.1788414669.git.zack.rusin@broadcom.com
+The flag it tests was set a few lines earlier by the resume itself, so
+the call returns -EPERM without sending anything. The return value is
+discarded by every caller, so the failure is silent: advertising_paused
+is cleared, HCI_ADVERTISING is set, and the controller is not
+advertising.
+
+Observed on a BCM43455 (no extended advertising) after an active scan:
+btmon shows the pause disabling advertising and no re-enable in the ten
+seconds that follow, the device does not appear in another controller's
+scan, and btmgmt info still reports "advertising" in current settings.
+
+Enable instance 0x00 directly in that case, the way reenable_adv_sync()
+already does for the same situation. Instances continue to go through
+hci_schedule_adv_instance_sync() so the software rotation loop is
+rearmed.
+
+This affects every caller of hci_resume_advertising_sync(), not only the
+scan path: address resolution changes, accept list updates, discovery
+stop, suspend/resume and the end of an LE connection attempt all leave
+advertising disabled on such a controller today.
+
+The resume does nothing when the controller is already advertising, as
+it is after directed advertising was started for a peripheral
+connection, so it does not replace that advertising.
+
+err is initialised because the extended branch leaves it unset when
+adv_instances is empty and HCI_LE_ADV_0 is clear.
+
+Fixes: ad383c2c65a5 ("Bluetooth: hci_sync: Enable advertising when LL privacy is enabled")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5.5 btmon
+Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/vmware.h | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ net/bluetooth/hci_sync.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/vmware.h b/arch/x86/include/asm/vmware.h
-index 4220dae14a2d9..fb011cef01e76 100644
---- a/arch/x86/include/asm/vmware.h
-+++ b/arch/x86/include/asm/vmware.h
-@@ -276,20 +276,22 @@ unsigned long vmware_hypercall_hb_out(unsigned long cmd, unsigned long in2,
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 654bb2454e20a..3856f29a301c0 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2732,7 +2732,7 @@ static int hci_pause_advertising_sync(struct hci_dev *hdev)
+ static int hci_resume_advertising_sync(struct hci_dev *hdev)
+ {
+ 	struct adv_info *adv, *tmp;
+-	int err;
++	int err = 0;
  
- 	asm_inline volatile (
- 		UNWIND_HINT_SAVE
-+		"mov %[in6], %%" _ASM_AX "\n\t"
- 		"push %%" _ASM_BP "\n\t"
- 		UNWIND_HINT_UNDEFINED
--		"mov %[in6], %%" _ASM_BP "\n\t"
-+		"mov %%" _ASM_AX ", %%" _ASM_BP "\n\t"
-+		"mov %[magic], %%eax\n\t"
- 		"rep outsb\n\t"
- 		"pop %%" _ASM_BP "\n\t"
- 		UNWIND_HINT_RESTORE
--		: "=a" (out0), "=b" (*out1)
--		: "a" (VMWARE_HYPERVISOR_MAGIC),
--		  "b" (cmd),
-+		: "=&a" (out0), "=b" (*out1)
-+		: "b" (cmd),
- 		  "c" (in2),
- 		  "d" (in3 | VMWARE_HYPERVISOR_PORT_HB),
- 		  "S" (in4),
- 		  "D" (in5),
--		  [in6] VMW_BP_CONSTRAINT (in6)
-+		  [in6] VMW_BP_CONSTRAINT(in6),
-+		  [magic] "i" (VMWARE_HYPERVISOR_MAGIC)
- 		: "cc", "memory");
- 	return out0;
- }
-@@ -304,20 +306,22 @@ unsigned long vmware_hypercall_hb_in(unsigned long cmd, unsigned long in2,
+ 	/* If advertising has not been paused there is nothing  to do. */
+ 	if (!hdev->advertising_paused)
+@@ -2765,13 +2765,19 @@ static int hci_resume_advertising_sync(struct hci_dev *hdev)
+ 		 */
+ 		if (hci_dev_test_and_clear_flag(hdev, HCI_LE_ADV_0))
+ 			err = hci_enable_ext_advertising_sync(hdev, 0x00);
+-	} else {
++	} else if (hdev->cur_adv_instance) {
+ 		/* Schedule for most recent instance to be restarted and begin
+ 		 * the software rotation loop
+ 		 */
+ 		err = hci_schedule_adv_instance_sync(hdev,
+ 						     hdev->cur_adv_instance,
+ 						     true);
++	} else if (hci_dev_test_flag(hdev, HCI_ADVERTISING) &&
++		   !hci_dev_test_flag(hdev, HCI_LE_ADV)) {
++		/* hci_schedule_adv_instance_sync() rejects instance 0x00 while
++		 * HCI_ADVERTISING is set, so enable it directly.
++		 */
++		err = hci_start_adv_sync(hdev, 0x00);
+ 	}
  
- 	asm_inline volatile (
- 		UNWIND_HINT_SAVE
-+		"mov %[in6], %%" _ASM_AX "\n\t"
- 		"push %%" _ASM_BP "\n\t"
- 		UNWIND_HINT_UNDEFINED
--		"mov %[in6], %%" _ASM_BP "\n\t"
-+		"mov %%" _ASM_AX ", %%" _ASM_BP "\n\t"
-+		"mov %[magic], %%eax\n\t"
- 		"rep insb\n\t"
- 		"pop %%" _ASM_BP "\n\t"
- 		UNWIND_HINT_RESTORE
--		: "=a" (out0), "=b" (*out1)
--		: "a" (VMWARE_HYPERVISOR_MAGIC),
--		  "b" (cmd),
-+		: "=&a" (out0), "=b" (*out1)
-+		: "b" (cmd),
- 		  "c" (in2),
- 		  "d" (in3 | VMWARE_HYPERVISOR_PORT_HB),
- 		  "S" (in4),
- 		  "D" (in5),
--		  [in6] VMW_BP_CONSTRAINT (in6)
-+		  [in6] VMW_BP_CONSTRAINT(in6),
-+		  [magic] "i" (VMWARE_HYPERVISOR_MAGIC)
- 		: "cc", "memory");
- 	return out0;
- }
+ 	hdev->advertising_paused = false;
 -- 
 2.53.0
 
