@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585820;
-	b=k8DLCsj56mcGXOb1ABjjthRlmAiKJRtYE0Gr5v2AC91IU74t4gVi+O2ow+WYGeTQqdNh
-	 4ymqTUBHE23nSZcI1XXzcTfzlV+n88AFUULXq5KcErqgjsXDk0IJl8Dl+lszK9x0/GXIr
-	 8lHPEw2roZTyAi57wtj1OuNLHVfgfVW3IFluagYWKrI6heVBcgd4KPxH6R0+Cfy/E8+Qb
-	 FiZHbWzZ7e2woTHIgll54+g0yc+0JyNPCRh6OaxarmIHDLYEagYuLinv5z1fyE/mKxSP4
-	 yWIXPi0WAPB1X34cvmT2GC6JVh64HWZiuDhGhTleJmsMmBZuRfwEZ0UcC7DX34YIiiw==
+	t=1794585821;
+	b=tOUGM4EERcam5Kvl29+zdaE91FbaIu4uwwQ9mQL5OyHeIFZsmR2+i0fILgsQWjqyVhw3
+	 CEMIAo2A3u5lKtudjnS60Q2obB1ksl/XrUuQFjCxmNJOessy8T8Z4RXkO+aci/wKHMg1R
+	 rMDcqhlyhxcB0aUGMvKQxPu9nj3noNksGGdswo9Q15AzY3B3wQLWlWr3FxwlK0mn1p0Wm
+	 ZPk/YLSDoVMw7UvhueLRINHcQFwIwbu7c8Nm/y5X2hgkyVf5l+OdENkqMLIUgoA9JUq3L
+	 87wklgbYkmyCE1p61Pc+Xp1VFChWn8+ThcvnIwRGtlsG6Ug17GoFSjsLEzyal5MRFtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585821;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dH0g07ZwWwO8qRw2CVdLuj2ArslDtAsjB+w0mCTznmA=;
-	b=D9H8mFw9SUZqU+Wsdh0M+Q0Na5XzLKvED/A3gGoiUIK0qOnj0yyisy+w9T3kBW0u/yAM
-	 ye2WQM/YoWc4USL3DVONNUgJeMdgEkn79xh761SMmTA0+4jiP+3Jq7Tq7L3raCHz8BE2C
-	 SN+du17b7BBa+UVcBHk2dJGw6k0iDsUAg45rgwboGy6gU7o6zCdKQHR0mM3mtni3CW6hg
-	 SERCqthjlr5t2bmZ3D6Da+HJCKZZKWd0MmrgdQAVrOJW4i4D061BMudeZ/Cb0nqAK2Nox
-	 ykl0ztSbq1Nfyg81G8dT1FOA+FIbPMPLINaSI7fMegsSMI3lZr/wyDngsHuhoK99vGg==
+	bh=B4i86b4K0iwn4qBRddpstOYGa1GPoftgMpWba0aF8lc=;
+	b=qazq/zPdKeuGRf88cvMykOhAgwPed63krj9BLUPJhoFFUZ46nN17moZW8SaTAokVBWww
+	 WXx2PcRbZyZOgJ5gAqe3oJ11AMJnr5Htil6fjB3d7faLk+WySI/+PvYY43H14AOQ98zoO
+	 +4QYMq0JTyPRkHloAkcFIX5CRDP4IZk+KkifSspFc4KCXlE6S1ptY6ykj89CQHYg8/7Cl
+	 shH4qEVwbxafwO6E2y4qzTExc+tmO+epgN4mP+l6SmzDXahOdL1bwtnECnacOVOH99bl4
+	 fEouWEEtrVLfhZn9EOKmSXPGlC8AIGoisYJ6aWN05gIeaiByxskR+Rm9fjtwoy8y/5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tmMBelcN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wyQccWMD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFFE606BAA9;
-	Fri, 13 Nov 2026 16:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99675606BAA9;
+	Fri, 13 Nov 2026 16:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tmMBelcN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A6B1F000C7;
-	Fri, 13 Nov 2026 16:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wyQccWMD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4547B1F000C6;
+	Fri, 13 Nov 2026 16:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585820;
-	bh=dH0g07ZwWwO8qRw2CVdLuj2ArslDtAsjB+w0mCTznmA=;
+	s=korg; t=1794585821;
+	bh=B4i86b4K0iwn4qBRddpstOYGa1GPoftgMpWba0aF8lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tmMBelcNoIOH3/CjmOIAs0s7KzA1X/beVHDdRY4nELjw+bFTOG/RcxA/PZMCH8/Hr
-	 zemSlLOFR4YrPKtFlNyS4swSSXU5X4mOAfizJPp4W+E1Nn1azDigOV3jUTAPPqF1uV
-	 Jqk65PcQbJHgWDXrlLYy3NPeNuvQGkiRqbZEg0xw=
+	b=wyQccWMDBm4gPFO9oulQ6fr3iSV6ZyhzQkY9RoM/tJD5JaP0lsPqRN11ysoIFsgc+
+	 TXo185LM3uApx5VplT2JQvFqP/L160p6LN8NwcjXaCDIcUkE+2yP8UR8TyikkMihwV
+	 hJ6aErUqzOYgkHaWGHn11qpLHhKKf6nr6+zkMCNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sinan Turunc <enscrpt@pm.me>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 401/507] ALSA: usx2y: Require a buffer of two URBs
-Date: Fri, 13 Nov 2026 10:51:45 -0500
-Message-ID: <20261113153810.334235541@linuxfoundation.org>
+Subject: [PATCH 7.3 402/507] ALSA: usx2y: Guard the playback copy
+Date: Fri, 13 Nov 2026 10:51:46 -0500
+Message-ID: <20261113153810.370057905@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,96 +70,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Sinan Turunc <enscrpt@pm.me>
 
-[ Upstream commit 4cbb826b3b36df6c275454287ba1df4564a5370b ]
+[ Upstream commit e2c6de52ffacb2c0f4076884ee3fdb744735a4cb ]
 
-usx2y_urb_capt_retire() wraps the ring buffer once per packet and
-usx2y_urb_play_prepare() once per URB of nr_of_packs() packets of up to
-50 frames. Both assume that the data fits in the buffer, and the hw
-constraints only require about two 1 ms periods, so a packet larger
-than the buffer on capture, or a URB larger than the buffer on playback,
-violates that assumption.
+usx2y_urb_play_prepare() sums the packet lengths of a whole URB, copies
+that many frames with a single wrap, and sizes each playback packet from
+the capture packet's actual_length. Three things are unchecked: that the
+URB fits in the ring buffer, that a packet fits in the playback
+endpoint's maxpacksize, from which tmpbuf is allocated, and that
+actual_length is a whole number of frames. The ISO descriptors take the
+raw actual_length while transfer_buffer_length and the copies take
+count * stride, so a packet that is not a multiple of the stride makes
+the descriptors add up to more than the buffer, by up to stride - 1
+bytes per packet.
 
-Constrain SNDRV_PCM_HW_PARAM_BUFFER_SIZE in snd_usx2y_pcm_open() to at
-least two URBs, 2 * nr_of_packs() * 50 frames, for both directions. The
-bound is in frames and derived from the driver's own packet limit, so it
-does not read the endpoint, whose altsetting is only selected in
-prepare. Two URBs rather than one, because the position advances by a
-URB on playback and only moves when a URB is less than the whole buffer.
-Keep a guard in usx2y_urb_capt_retire() that drops a packet larger than
-the buffer, for the case the constraint makes unreachable.
+Return -EPIPE, as the existing packet-size check does, when the URB is
+larger than the buffer or a packet is larger than maxpacksize, and size
+each descriptor from whole frames, so the descriptors add up to
+transfer_buffer_length and each stays within maxpacksize. The buffer
+case is prevented by the previous patch and this is the guard for it;
+the other two depend only on the device.
 
-With nrpacks above about 163 (S16_LE) or 109 (S24_3LE) the bound exceeds
-the 64 KiB buffer the substream preallocates (twice that with the
-preallocation raised to its 128 KiB maximum), so hw_params fails for
-those module settings. That is intended: the driver cannot be safe with
-a URB larger than half the largest buffer.
+The first case is reachable on the unpatched driver with ordinary
+packets: on 7.3-rc7, a USB/IP device presenting the US-122 interface
+layout and sending 48-frame packets, with a 100-frame playback buffer
+(two 50-frame periods, inside the stock constraints), KASAN reports:
 
-Reproduced on 7.3-rc7 with a USB/IP device presenting the US-122
-interface layout and 1024-byte packets into a 512-byte capture buffer:
+  BUG: KASAN: out-of-bounds in i_usx2y_urb_complete+0x79b/0x1ac0
+  Read of size 18446744073709551280 at addr ffff88800e6b02e0 by task vhci_rx/80
 
-  BUG: KASAN: out-of-bounds in i_usx2y_urb_complete+0x1285/0x1ac0
-  Read of size 18446744073709551104 at addr ffff88800e448800 by task vhci_rx/83
+With both patches, the same device and a 200-frame playback buffer is
+refused at hw_params with EINVAL, and a 400-frame buffer plays for 30 s
+with the position advancing inside the buffer, no KASAN report and
+neither guard message. The maxpacksize check is not exercised: the
+emulated device reports the same wMaxPacketSize on both endpoints.
 
-Tested on 7.3-rc7 with the same device, S16_LE at 44100 Hz, nrpacks 4,
-so the bound is 400 frames. A 128-frame capture buffer and a 200-frame
-playback buffer are refused at hw_params with EINVAL. A 400-frame buffer
-streams for 30 s in each direction with the position advancing inside
-the buffer and no KASAN report; the capture guard did not fire. The
-same 400-frame capture buffer with S24_3LE, which selects altsetting 2
-in prepare, streams for 30 s with the same result.
+The descriptor case is visible with capture packets of 195 bytes at
+stride 4 (48 frames and 3 bytes): without this change the four
+descriptors add up to 780 bytes for 768 bytes of data, and USB/IP's
+completion check refuses the URB ("total length of iso packets 780 not
+equal to actual length of buffer 768", -EPROTO), after which the driver
+stops the streams. With this patch every descriptor is 192 bytes, the
+descriptors add up to the data in every URB for 30 s, the position
+advances inside the buffer and KASAN reports nothing. The 48-frame
+playback run above is unchanged.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Sinan Turunc <enscrpt@pm.me>
-Link: https://patch.msgid.link/20261104122136.1518-2-enscrpt@pm.me
+Link: https://patch.msgid.link/20261104122136.1518-3-enscrpt@pm.me
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usbusx2yaudio.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ sound/usb/usx2y/usbusx2yaudio.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/sound/usb/usx2y/usbusx2yaudio.c b/sound/usb/usx2y/usbusx2yaudio.c
-index a3a0bc13632b8..1e1d0cfbd167c 100644
+index 1e1d0cfbd167c..798c9bb5386a2 100644
 --- a/sound/usb/usx2y/usbusx2yaudio.c
 +++ b/sound/usb/usx2y/usbusx2yaudio.c
-@@ -51,6 +51,18 @@ static int usx2y_urb_capt_retire(struct snd_usx2y_substream *subs)
- 			dev_dbg(&usx2y->dev->dev, "%s: 0 == len ERROR!\n", __func__);
- 			continue;
+@@ -118,14 +118,31 @@ static int usx2y_urb_play_prepare(struct snd_usx2y_substream *subs,
+ 				__func__, counts);
+ 			return -EPIPE;
  		}
-+		/*
-+		 * snd_usx2y_pcm_open() constrains the buffer to hold at least
-+		 * two URBs, so this cannot happen for a device that keeps its
-+		 * packets at 50 frames. Drop the packet rather than exceed the
-+		 * single wrap below.
-+		 */
-+		if (unlikely(len > runtime->buffer_size)) {
++		if (counts * usx2y->stride > subs->maxpacksize) {
 +			dev_err_ratelimited(&usx2y->dev->dev,
-+					    "%s: packet of %i frames exceeds %lu-frame buffer, dropping\n",
-+					    __func__, len, runtime->buffer_size);
-+			continue;
++					    "%s: packet of %i bytes exceeds maxpacksize %u\n",
++					    __func__, counts * usx2y->stride,
++					    subs->maxpacksize);
++			return -EPIPE;
 +		}
- 
- 		/* copy a data chunk */
- 		if ((hwptr_done + len) > runtime->buffer_size) {
-@@ -888,6 +900,18 @@ static int snd_usx2y_pcm_open(struct snd_pcm_substream *substream)
- 	runtime->private_data = subs;
- 	subs->pcm_substream = substream;
- 	snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_PERIOD_TIME, 1000, 200000);
-+	/*
-+	 * Capture wraps the ring buffer once per packet and playback once
-+	 * per URB of nr_of_packs() packets of at most 50 frames (see
-+	 * usx2y_urb_play_prepare()). Playback needs the buffer to hold more
-+	 * than one URB and capture more than one packet; use the URB bound
-+	 * for both, and two URBs rather than one, because the position only
-+	 * advances when a URB is less than the whole buffer. The bound is in
-+	 * frames and does not depend on the altsetting, which is selected
-+	 * in prepare.
-+	 */
-+	snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_BUFFER_SIZE,
-+				     2 * nr_of_packs() * 50, UINT_MAX);
- 	return 0;
- }
- 
+ 		/* set up descriptor */
+ 		urb->iso_frame_desc[pack].offset = pack ?
+ 			urb->iso_frame_desc[pack - 1].offset +
+ 			urb->iso_frame_desc[pack - 1].length :
+ 			0;
+-		urb->iso_frame_desc[pack].length = cap_urb->iso_frame_desc[pack].actual_length;
++		urb->iso_frame_desc[pack].length = counts * usx2y->stride;
+ 	}
+ 	if (atomic_read(&subs->state) >= STATE_PRERUNNING) {
++		/*
++		 * The copy below wraps once, which needs count <= buffer_size.
++		 * snd_usx2y_pcm_open() guarantees it; guard anyway.
++		 */
++		if (unlikely(count > runtime->buffer_size)) {
++			dev_err_ratelimited(&usx2y->dev->dev,
++					    "%s: URB of %i frames exceeds %lu-frame buffer, stopping\n",
++					    __func__, count, runtime->buffer_size);
++			return -EPIPE;
++		}
+ 		if (subs->hwptr + count > runtime->buffer_size) {
+ 			/* err, the transferred area goes over buffer boundary.
+ 			 * copy the data to the temp buffer.
 -- 
 2.53.0
 
