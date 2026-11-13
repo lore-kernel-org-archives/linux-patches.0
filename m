@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591154;
-	b=01yAsPvGaCXA5ro/vmLMOmAUverQEHtRTafZ0gq/bCkOTlb/3vTPpu65/PY4zSOauVvn
-	 sp1xgGAjz0zra+h2QeASZ6CiRYijMqoQldtd+VXBcfJN69ldQ+dRu0iKAgjV4qznnDSF5
-	 7QSvKSoakxPUBwVjQv4nMlLMXF29BMc8eY65A9sAjCBFFu0bLu6t8Bw+2V0ja3dK08lWS
-	 d83coRGn+Nzy6/j2lWlgF6HnVVCRy68L/LqhKXTeGIGC7ciSxhNJ+BpMNavpHwEaskwSn
-	 BDrIrdPeB4a/HO9lHsCfLCtI0ePlYW2UHsMoaLZz3Z3zo0z2cU167WIkG1WSyJdWi4A==
+	t=1794591156;
+	b=3cqXCbnzryE/EcqGsBshCt385oi2WkWdTcHv1+ng6NRA/oAJHH8tXuGLhRX0a4bJ/2fD
+	 GN5S/2e27ZJhsmmSWH5KVpHKxcDcVivuIhd99Le/67cdCZ8v5qXXI2JsrUfhzTWSG0rlc
+	 T13OLUJ/slwowdiAkFglvpkgtsyNL3XE8XQ2EGFi3g4T6zzCnOwjoCL7AaT3CR8xWoDgx
+	 sHONB38htuoBQ1ARXPncFbqKTDLKchQ9uJlTgR1OGrTAzn8PWePAmgY2Z2AzwEcLTTMXu
+	 yQTHugZfIZkdEJXc3JFIFev3F5SaUKFl3HzB52kzfFeryY90vefoBukQPcgrGnf6kjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591154;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591156;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YDZbK714OOwCDse2vuFFceTno3f3VzlrZlRSR0aIjDc=;
-	b=3oEuXOsQmvdcJCqiRuJCElq2Cd33F5BtJPxvvTVnvA3Bh1wPGZHcCNTi0NVjjuiF44AE
-	 ZU0C/FgcGVXnHUQLav3NbxLoJO1hyxCtPZnoeEsk55NOkU7rC/Bo7/MZzhCGZn4WHJvZO
-	 IWu5Py/9e+AcrdPBUd42RqKJ6t4VTVnKgA3nFgBTcGXiE+6AFAAlruf3Fcg5H5okZRX7X
-	 kyAhriNcCKQug8OovOCOd8mdN88AJvMCwVvCCjETF+CYuyFfTijS/r2Gv4Xxz3uSoTgY4
-	 BZxd+xJ5p8RyM8BQxKGIWB/rXrLUr1H7czJ6kL3kthmwhmj4Q0on2KYw/75qmZVd4Pw==
+	bh=i0RhY0L5oB8hF0myc0fqe7j9oyZuDnyOo6Z1oyq/5SI=;
+	b=U+GbhSpWs0Gt/ywsYCtq1Y744uBWg5LwsC696OqbxN9IswhO1b6DnSU7VgAq3sOPiyfQ
+	 wQLn8oqHnNihh74/xDLBj/CMWWBlktxMwW5ckh/iaCvq2RBzB/Jeuzo5YW14hJ8mkHVl8
+	 jXGug68cY6+CBXURISiJ0ltlagcMsrLJQg/uCI7A9RSKeg1xuKdT3BMoWX4FoW8uqDhoI
+	 Gv21L8b1XYrD9dJokdDOANGmRAM/0Tm2SraYM6ekFCL1Ggzg+g82ojnxX+Gj+1Tp3f870
+	 VGMppKJkVaolnFNGANz5wFw61mlmfRrF1xHpWat+TK1tLhe8WthZ1aOJlRPEcrx7V/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xiyluvI3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J9+9MT/p";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BE4606C092;
-	Fri, 13 Nov 2026 17:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DA5606BD27;
+	Fri, 13 Nov 2026 17:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xiyluvI3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874551F000C4;
-	Fri, 13 Nov 2026 17:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9+9MT/p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50051F000C6;
+	Fri, 13 Nov 2026 17:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591154;
-	bh=YDZbK714OOwCDse2vuFFceTno3f3VzlrZlRSR0aIjDc=;
+	s=korg; t=1794591155;
+	bh=i0RhY0L5oB8hF0myc0fqe7j9oyZuDnyOo6Z1oyq/5SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xiyluvI3ZlEp3JMVOy7rAytWTpPktYEd9bg2DdHMou0Cw8gc/ZFQfJXTT8gQqLiCG
-	 DkWQ3kWsnVGjUVOLgJSy9paLU1uFDaKk7K1W4CI4aC9QCXwxQEW+lzXgSJ1zXtX4mi
-	 ZPYqA2xbqiu31jlkskZyEda8sBwM+a7TA9XT2KV0=
+	b=J9+9MT/pDzUa63wGUL78dEMFYGL2I8x1xzRME/GrkvG1Un2sR2Vco4ukGakt5T+UR
+	 5PSvpOcmY702Ki6jHWT93qnR+0uxsZ+vzxaq7GoupTzVsOZKBlU9IHlnM3Mdm4hJuK
+	 aoev7ZIXAZjNVoynipk6sma0bJGVl+RvlT+ZpeEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Yuho Choi <oss.patchbox@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 291/670] ocfs2: keep locking_state within the cluster connection lifetime
-Date: Fri, 13 Nov 2026 10:47:35 -0500
-Message-ID: <20261113153821.741891910@linuxfoundation.org>
+Subject: [PATCH 6.12 300/670] iommu/virtio: Reset device before deleting virtqueues on probe failure
+Date: Fri, 13 Nov 2026 10:47:44 -0500
+Message-ID: <20261113153822.091368556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -74,129 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Yuho Choi <oss.patchbox@gmail.com>
 
-[ Upstream commit 5bdef466851e39ba752634cbea68e5ea24ccfb24 ]
+[ Upstream commit 1f8efac19a0870cdfdf8477e447e5a07ddce9623 ]
 
-The locking_state reader calls ocfs2_dlm_lvb() through the selected
-cluster stack.  Its debug-object reference keeps the tracking list alive,
-but does not keep that stack selected without a cluster connection.
+viommu_probe() marks the device DRIVER_OK before populating the event
+virtqueue and registering the IOMMU device in sysfs.  viommu_fill_evtq()
+hands the device a set of device-writable buffers through
+virtqueue_add_inbuf(), so from that point on the device may write into
+them and into the rings.
 
-DLM initialization publishes the file before establishing its connection,
-and DLM shutdown drops the connection while the file still exists.  Both
-the mount error unwind in ocfs2_mount_volume() and ocfs2_dismount_volume()
-remove the debugfs subtree only after ocfs2_dlm_shutdown() has returned.
-Whenever the disconnect releases the last stack reference, which is the
-case for a failed mount and for any unmount without a pending hangup, a
-concurrent reader dereferences a NULL active_stack:
+If either step fails, the error path deletes the virtqueues without
+resetting the device first.  The event buffers are allocated with
+devm_kmalloc_array() and are released as probe unwinds, so the device can
+go on writing to memory that has been freed.
 
-  Mount error unwind                  Debugfs reader
-  ------------------                  --------------
-  ocfs2_mount_volume(): out_dlm
-    ocfs2_dlm_shutdown()
-      disconnect last cluster
-        clear active_stack
-                                      read locking_state
-                                        ocfs2_dlm_seq_show()
-                                          ocfs2_dlm_lvb()
-                                            dereference active_stack
-  fill_super(): out_debugfs
-    remove debugfs subtree
+Reset the device before deleting the virtqueues, the way viommu_remove()
+already does.
 
-Publish the debug files only after the connection and the mount lock
-resources are initialized, so a failed DLM initialization has no debug
-reference to drop.  Remove them again in the common DLM shutdown helper
-before the connection is dropped: debugfs removal waits for readers that
-are inside the file operations, and the parent directory is still present
-at that point in every caller.  This covers the mount error unwind, the
-ocfs2_fill_super() failures after a successful mount that dismount with
-mnt_err set, and unmounts whose disconnect releases the stack directly.
-
-Only the relevant frames of the report are kept:
-
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-RIP: 0010:ocfs2_dlm_lvb+0x38/0xf0
-Call Trace:
- <TASK>
- ocfs2_dlm_seq_show+0x36a/0xb70
- seq_read_iter+0x480/0x1110
- seq_read+0x362/0x5a0
- full_proxy_read+0x11f/0x180
- vfs_read+0x1a0/0xc20
- ksys_read+0x111/0x200
- </TASK>
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0011-v7-61e3ef8b1ad44ac2e817@gmail.com
-Fixes: 286eaa95c5c5 ("ocfs2: Break out stackglue into modules.")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: edcd69ab9a32 ("iommu: Add virtio-iommu driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20261004182218.177343-1-oss.patchbox@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlmglue.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/iommu/virtio-iommu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index ec44ed33afdf4..757f9b91499bc 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -3336,6 +3336,14 @@ static void ocfs2_dlm_shutdown_debug(struct ocfs2_super *osb)
- {
- 	struct ocfs2_dlm_debug *dlm_debug = osb->osb_dlm_debug;
+diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
+index b85ce6310ddbd..f84a50596f4d1 100644
+--- a/drivers/iommu/virtio-iommu.c
++++ b/drivers/iommu/virtio-iommu.c
+@@ -1191,12 +1191,12 @@ static int viommu_probe(struct virtio_device *vdev)
+ 	/* Populate the event queue with buffers */
+ 	ret = viommu_fill_evtq(viommu);
+ 	if (ret)
+-		goto err_free_vqs;
++		goto err_reset_vdev;
  
-+	/*
-+	 * Drain the readers before the cluster stack goes away: the
-+	 * locking_state reader resolves ocfs2_dlm_lvb() through the
-+	 * stack. Every caller removes the parent directory later.
-+	 */
-+	debugfs_lookup_and_remove("locking_state", osb->osb_debug_root);
-+	debugfs_lookup_and_remove("locking_filter", osb->osb_debug_root);
-+
- 	if (dlm_debug)
- 		ocfs2_put_dlm_debug(dlm_debug);
- }
-@@ -3350,8 +3358,6 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
- 		goto local;
- 	}
+ 	ret = iommu_device_sysfs_add(&viommu->iommu, dev, NULL, "%s",
+ 				     virtio_bus_name(vdev));
+ 	if (ret)
+-		goto err_free_vqs;
++		goto err_reset_vdev;
  
--	ocfs2_dlm_init_debug(osb);
--
- 	/* launch downconvert thread */
- 	osb->dc_task = kthread_run(ocfs2_downconvert_thread, osb, "ocfs2dc-%s",
- 			osb->uuid_str);
-@@ -3391,9 +3397,10 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
- 	ocfs2_orphan_scan_lock_res_init(&osb->osb_orphan_scan.os_lockres, osb);
+ 	iommu_device_register(&viommu->iommu, &viommu_ops, parent_dev);
  
- 	osb->cconn = conn;
-+	if (conn)
-+		ocfs2_dlm_init_debug(osb);
- bail:
- 	if (status < 0) {
--		ocfs2_dlm_shutdown_debug(osb);
- 		if (osb->dc_task)
- 			kthread_stop(osb->dc_task);
- 	}
-@@ -3423,10 +3430,11 @@ void ocfs2_dlm_shutdown(struct ocfs2_super *osb,
- 	ocfs2_lock_res_free(&osb->osb_orphan_scan.os_lockres);
+@@ -1208,6 +1208,8 @@ static int viommu_probe(struct virtio_device *vdev)
  
- 	if (osb->cconn) {
-+		/* The disconnect below may release the selected stack. */
-+		ocfs2_dlm_shutdown_debug(osb);
-+
- 		ocfs2_cluster_disconnect(osb->cconn, hangup_pending);
- 		osb->cconn = NULL;
--
--		ocfs2_dlm_shutdown_debug(osb);
- 	}
- }
+ 	return 0;
+ 
++err_reset_vdev:
++	virtio_reset_device(vdev);
+ err_free_vqs:
+ 	vdev->config->del_vqs(vdev);
  
 -- 
 2.53.0
