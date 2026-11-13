@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585231;
-	b=1KTTlatQBnAlk/xL9BF32GmnuJFgZ0KukYq8Pci/tT3EmmGT7mgLBl4uxu4hU8/IOmo4
-	 J7hjzY4GvDv7IyuyIaB4+7NC5yEgbhMIiEubz5U4Q1v9/PfhXPP+MkUHJFhxGIKQL2Gm6
-	 ctYhwmgjO+0ZcIZfnp56la1IaqfopiLOG67M6w4QvajgdKLr80uZEYp6y99fBsRIwUo3/
-	 QkoSAWJay5V2QXVCPsb6PGtZNb9TWs5DuaEgnG4mMhbdfj+UWPoQ1lxNRVZIpPG1DqNZA
-	 Xb9hC40QaEsS1IpPc26aiztpHuhxe7YLzECWQbrQwI804NLW8fo7p6lKDLzkijLcSWw==
+	t=1794585232;
+	b=hs+L+vDZGqFr4cVOJYI6IuFhmmNppD1x/H+oAgCpwg069TgPRsxesn7JYm2awtZ4iSas
+	 p6vWzX1DpbVDmMkd8mZ///T7rxnbbl9HmiEbAf3Cb/RcC818XCqEz7dImMAk+i6+Vdmrs
+	 ckBd9e8pJmYHbpmdiScoGLEAlT/+G2LkXUjZtjl6OvugcbfhDFUjCNYYd9/gKAvRE2ojv
+	 A/AD5r8c118D+GFV+W1BPYWHP2f+kc8mZOba8EfDqofVZOSECkkc39keK3KES5x+jl8Vx
+	 PiAU58JAlVazb7oXWqVuGq8O8Zcmbj3sZDANYYqMVGyA92HPAuuwLWKkYBOcuz4ZqyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585232;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jWblw/WnCTbtslz4DkRvE9/RJe4PiruCdXlavHJ7tgs=;
-	b=ZEGppkZDX7NWPP2BUIjVPwEEK85g0aHgQfTHVE/bwWURuUufSU2AFYeY/SWsd4uZkG4F
-	 zjFGg8sTzIYKl/jwcsJSI9udQiiu4+K8Eciemb6FdNzJAyM4UGap+PEouxq+TlXFG/HFt
-	 uJPehVZUVF7ebuByImU8f2kb/mj0p4T+a/6Ciw+i0n8e1OfLVA4sGXkMKqB07dYLx6tkT
-	 OCeyrSz5I7Ul+uCFWRfd4kZC1wNrFvGqDchs6zZ32MIwYOVbGGCLZ/MU82Ew/d2FWaClb
-	 ykxo2gXNG9qaHqKKJpSzdyaQb4c6l4toiW0oA7oKnbzhKSbxvN85gX1bG2sOZ7HpveQ==
+	bh=C40+8pjaf0eSe3VK5vDO/6q5geGLdfvtsy/4VFlf2p4=;
+	b=F/hjVUwV3rtBnZfSWx/PVq5lur32IX0GsMwRgTqopFtEXwIE/iQUEDFdxHTHEPWTZdTA
+	 eDVcvdgUmgnqeNpGlRGli2MMnxRvhgDZ54of1cjWjVM4dx1hmQ+bOCX6N1QkyBgIsxI3U
+	 LYLs1B80edUQgM16lK0zXLQY02rgT43k4nNWH1VEpSIDx2YL+iCygprrVqSZxIVAQP1xB
+	 +59U1QURkXHo+G+nUoIoK8RD0RF94fJmII4DVVcLT3+vReBoeXQuKC9UL2c6Z12aFsZES
+	 rs5H/WMgaX5+fXIB1w4fCCH9EJxBYzPLBV7qu7HvDey6oCv2jVDSWzmZ7rPhOLkUVyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bHlUxHP4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jTe+GF+d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF43606A32E;
-	Fri, 13 Nov 2026 15:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F4C606A33A;
+	Fri, 13 Nov 2026 15:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bHlUxHP4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38BD1F000C4;
-	Fri, 13 Nov 2026 15:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jTe+GF+d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B27A1F000C4;
+	Fri, 13 Nov 2026 15:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585231;
-	bh=jWblw/WnCTbtslz4DkRvE9/RJe4PiruCdXlavHJ7tgs=;
+	s=korg; t=1794585232;
+	bh=C40+8pjaf0eSe3VK5vDO/6q5geGLdfvtsy/4VFlf2p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bHlUxHP4+k6BZ8JuJZJF/EN57jREp89D/GkR7IwyRV7EvRkhhBKSfA7eWcCFA6AOU
-	 TSRIOcLkOWP/970WY59nkf8eZH7trr4wDu9dDLLpwO8K3BzDrMeGnA4dbLGm8SWnMC
-	 qKoD+Is5Qs9zURceHfSz7YqzXetauGZnb7eDaPkU=
+	b=jTe+GF+dOsus+cpLnBPfuPOjZipKt6yltCYEgPrx0r1dcU5cJTzKYkFMFkkwe6Bnh
+	 UlFji90AcmbXyLXoO5YnrTCqvkxCOxqH5sBAHEzkZFiS69iuzCxMdZavsKRz6Jchs1
+	 db3Q/zXZcmqkwxRQpHhuTu4ZWaCIctWAyIoViXEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Siwei Zhang <oss@fourdim.xyz>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 003/507] Bluetooth: L2CAP: Only accept connection responses to outstanding requests
-Date: Fri, 13 Nov 2026 10:45:07 -0500
-Message-ID: <20261113153753.493475885@linuxfoundation.org>
+Subject: [PATCH 7.3 002/507] Bluetooth: L2CAP: Reject signalling responses in invalid states
+Date: Fri, 13 Nov 2026 10:45:06 -0500
+Message-ID: <20261113153753.457783287@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,30 +70,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Siwei Zhang <oss@fourdim.xyz>
 
-commit a518b9a9ef6ee3b18ecdf6ba5360c608aaf969e9 upstream.
+commit 6320736af7dcb90da6ee9fd651ecc11c564d45b7 upstream.
 
 Adjusted context as stable does not have the lockdep_assert_held()
-call and the __must_hold() context analysis annotations.
+calls, and l2cap_get_chan_by_scid() still returns the channel locked,
+so l2cap_config_rsp() does not lock it again.
 
-An outgoing channel waits in BT_CONNECT until security
-and the feature mask exchange complete, and only then
-sends its connection request. A peer can answer it
-before that with a connection response matching our
-source CID. The channel then moves to BT_CONFIG,
-completes configuration and becomes connected before
-security has completed. If security then fails,
-l2cap_security_cfm() leaves the connected channel
-alone, so it stays up on a link that did not reach
-the required security level.
+A peer can send configuration messages while an
+incoming channel is in BT_CONNECT2, before the
+security or deferred accept gate has completed. A
+configuration response can then promote the channel
+to BT_CONNECTED. Configuration responses can also
+act on channels that are closing, and a late connection
+response can move a disconnecting channel back to
+BT_CONFIG.
 
-A connection response with a zero source CID is
-matched by identifier. Another channel can hold the
-same identifier for a response it still has to send,
-so the lookup can pick the wrong channel.
-
-Only accept a connection response while our request
-is outstanding, and only look at such channels when
-matching by identifier.
+Accept connection responses only while waiting in
+BT_CONNECT. Answer configuration requests in
+BT_CONNECT2, but defer our own request until
+BT_CONFIG so configuration cannot complete before
+the gate. Ignore configuration responses outside
+BT_CONFIG and BT_CONNECTED, and only complete
+configuration in BT_CONFIG.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
@@ -102,65 +100,68 @@ Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 31 ++++++++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_core.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 3e57c605cf8be..01945c55e1b87 100644
+index b86999899f669..3e57c605cf8be 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -158,6 +158,28 @@ static struct l2cap_chan *__l2cap_get_chan_by_ident(struct l2cap_conn *conn,
- 	return NULL;
- }
- 
-+/* Our connection request has been sent and is still outstanding */
-+static bool l2cap_chan_connect_pending(struct l2cap_chan *chan)
-+{
-+	return chan->state == BT_CONNECT &&
-+	       test_bit(CONF_CONNECT_PEND, &chan->conf_state);
-+}
-+
-+/* Other channels may hold the same ident for a response they still have
-+ * to send, so only look at channels waiting for a connection response.
-+ */
-+static struct l2cap_chan *__l2cap_get_connect_chan_by_ident(struct l2cap_conn *conn,
-+							    u8 ident)
-+{
-+	struct l2cap_chan *c;
-+
-+	list_for_each_entry(c, &conn->chan_l, list) {
-+		if (c->ident == ident && l2cap_chan_connect_pending(c))
-+			return c;
-+	}
-+	return NULL;
-+}
-+
- static struct l2cap_chan *__l2cap_global_chan_by_addr(__le16 psm, bdaddr_t *src,
- 						      u8 src_type)
- {
-@@ -4298,7 +4320,7 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
- 		if (!chan)
- 			return -EBADSLT;
- 	} else {
--		chan = __l2cap_get_chan_by_ident(conn, cmd->ident);
-+		chan = __l2cap_get_connect_chan_by_ident(conn, cmd->ident);
- 		if (!chan)
- 			return -EBADSLT;
- 	}
-@@ -4311,8 +4333,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+@@ -4311,6 +4311,10 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
  
  	l2cap_chan_lock(chan);
  
--	/* Ignore a late response after the channel has left BT_CONNECT. */
--	if (chan->state != BT_CONNECT)
-+	/* Only accept a response to a connection request we sent and that
-+	 * is still outstanding. A channel waiting in BT_CONNECT for security
-+	 * or the feature mask has not sent one yet.
-+	 */
-+	if (!l2cap_chan_connect_pending(chan))
- 		goto done;
- 
++	/* Ignore a late response after the channel has left BT_CONNECT. */
++	if (chan->state != BT_CONNECT)
++		goto done;
++
  	switch (result) {
+ 	case L2CAP_CR_SUCCESS:
+ 		if (__l2cap_get_chan_by_dcid(conn, dcid)) {
+@@ -4340,6 +4344,7 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+ 		break;
+ 	}
+ 
++done:
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+@@ -4472,7 +4477,13 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
+ 		goto unlock;
+ 	}
+ 
+-	if (!test_and_set_bit(CONF_REQ_SENT, &chan->conf_state)) {
++	/* A channel in BT_CONNECT2 has not passed security or userspace
++	 * accept yet. Answer the peer's request, but hold our own until
++	 * the channel reaches BT_CONFIG: the CONNECT2 -> CONFIG sites send
++	 * it. Connected channels may also need to reconfigure.
++	 */
++	if ((chan->state == BT_CONFIG || chan->state == BT_CONNECTED) &&
++	    !test_and_set_bit(CONF_REQ_SENT, &chan->conf_state)) {
+ 		u8 buf[64];
+ 		l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
+ 			       l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
+@@ -4520,6 +4531,10 @@ static inline int l2cap_config_rsp(struct l2cap_conn *conn,
+ 	if (!chan)
+ 		return 0;
+ 
++	/* Connected channels may also receive reconfiguration responses. */
++	if (chan->state != BT_CONFIG && chan->state != BT_CONNECTED)
++		goto done;
++
+ 	switch (result) {
+ 	case L2CAP_CONF_SUCCESS:
+ 		l2cap_conf_rfc_get(chan, rsp->data, len);
+@@ -4587,6 +4602,9 @@ static inline int l2cap_config_rsp(struct l2cap_conn *conn,
+ 	if (test_bit(CONF_OUTPUT_DONE, &chan->conf_state)) {
+ 		set_default_fcs(chan);
+ 
++		if (chan->state != BT_CONFIG)
++			goto done;
++
+ 		if (chan->mode == L2CAP_MODE_ERTM ||
+ 		    chan->mode == L2CAP_MODE_STREAMING)
+ 			err = l2cap_ertm_init(chan);
 -- 
 2.53.0
 
