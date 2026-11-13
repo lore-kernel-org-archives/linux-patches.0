@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590064;
-	b=bjwvrOWniitxQpek1Dx46oj68kgrVTrzNAEVa88QGuSH0v6i1rQNGUnWK4jAc7P1xX4L
-	 3M62qfEGLZrRDG/f4v6pr7PWtzX/8ZEabiBP9W4Vq77OeHoaOdDCIkBz0Jkmnm9eAPfTu
-	 EKUSFjdFRdKmJUqrqX9dVglDEbZWbbUmnIHL7yT8OtL6TiNZFsu5gTwuXRv9qxSe7QlwS
-	 vgjJmJi0d6bzkpRY38INs2XGQ9Z+9I8439Cz0pyqUcTRrtUkDn52k7WXq7eeODMrZJA09
-	 DY/81lkqjffl3zV1N96Kx2wuMpOwx5W1qBxOBWeCt1FODGHGlrrU0P/WijioybDioEQ==
+	t=1794590065;
+	b=xN/yzvel7dYrUzD2G9wM/0b5yCmBd7J8nL6psnv09InyGdePx8eTuoNMKEK45mKy0hUu
+	 YSnzjSkNHpkG4nSNO0bHI3/XD/+EL9+THtMn+uDbiOoWktshJ09ccXAYC9ZsuQqhf7xKU
+	 9tNeI+SkpZEld8BfC8NIfJl92zbCSgdbkNxhZ7BTn98Wn0ONgMsWvK0jINasiYobpxX5b
+	 Dlf+nXxBc4csUKPYJ0HAekDAGUKZtDKh3OTgonPNAKxgV627jFL0awAxvOaUZEMmVkzh4
+	 qGkWRVzluFKJeQnEA88AaOrvuXmQvRaJZSVrN53Yspf0DyvcKVIJ84Z1juX6HOA4AKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590064;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590065;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kjf/LKPrR2g7QciogwIgV9knIhQSwijgBhAAlKht2bA=;
-	b=qneBIOm2t49/GR/LtAb8dzPCVDj/8GD33MvbOQO5XtlFY46dP5ksk6N+H+PR7WG/tFgA
-	 ROOXUsQSFnP5QUPUvkraxV8LklM0thMrkZMTg2KNB9FkQgwc81V6CWeaeeQ7hw8JpyD0U
-	 bGa8YBSEm6tL34lNJGcEZpN9Q2ggB/McvGVq7W2cQWArEGt8y99Lnl8zIOZhYu0SSFSvB
-	 vm51Z65ZYx+IHSNUVEMr4Tz07aPeGxzwzAwtUMb/C0t/NqYM/VI6obueBk9KtGyxQk+/h
-	 BWc8KtGxzcRSMukupM0Mrr8yzTEWHrzIQ54XP0qO4CRb5M0MLj9YJPc/ft5mAxoQe1Q==
+	bh=oz8m6H6ZCX7ulKsN+QUJ5JcmKzHQNzgr/Z55VrQFl24=;
+	b=CKV4O077mI4NOSGJN1SskPkaf01ucfBJan99+pBy9NjDUTcHTKRmmlqTEhh3pSdrjCVm
+	 UdpUnlADgJxfpFrvjFqsP/bgN+xoDISibT6FETt8VltIthPwm9QjgwYw8WlVVAQ7t4s1L
+	 4Uwh4DaSq8fZDo08N2B9qj6vtQKj97kD0A1p3UnP2ce1fZ1/tPXjcUCMgD/iX+7O+K9gp
+	 X+kmT8tdyfZ0XT+Hn0saCwzmBJFWKVTFWdw0rMOV05sbOigsF0fOp9SmzZQD0ddcZ6a6t
+	 UJrXIMgsHUDo2CHnHgIA6iAzf0ai/EtfQnlZKmYRItLPdwlAeFSATzsqUFvZ0upwNLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qF1SpBw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1WITkXoP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8299A606A890;
-	Fri, 13 Nov 2026 17:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0AA606A8AC;
+	Fri, 13 Nov 2026 17:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0qF1SpBw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF7B1F000C4;
-	Fri, 13 Nov 2026 17:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1WITkXoP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689721F000C7;
+	Fri, 13 Nov 2026 17:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590064;
-	bh=Kjf/LKPrR2g7QciogwIgV9knIhQSwijgBhAAlKht2bA=;
+	s=korg; t=1794590065;
+	bh=oz8m6H6ZCX7ulKsN+QUJ5JcmKzHQNzgr/Z55VrQFl24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0qF1SpBwtfG/3VM/dVKTSUbe2lCeIBiusnHdQ5VfL9Y5LT82TWRYW1cTFNaFjM2SG
-	 5NEEEDEkbGzXo4Os7ZKd5nvSTrY2g690hEwBFMdvO7DMC3ic0LLNh/ND5qjmGfRRi0
-	 j9qqmQtIZHzYRz4IO6SaQgFupM5u71CwUfSa951g=
+	b=1WITkXoPQhlr67LxTSXyNQKZX3oBkIRj4bD8C+1PuW0B4JHNUPKCCPnXy6aP6RmT5
+	 bhyDQYqvreqCPWikaEpcoHY6eIYbGCec2l4bqOY+CkDwrWn88HszWxW6DvePCbQSGh
+	 s4P1HHTAI6Agc9AoHl+CZeFub3gGSaCwV9nX99dI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Rosen Penev <rosenp@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/686] NFS/localio: detect a short read or write before the iterator has moved
-Date: Fri, 13 Nov 2026 10:42:57 -0500
-Message-ID: <20261113153822.458033574@linuxfoundation.org>
+Subject: [PATCH 6.18 090/686] mtd: rawnand: ndfc: add CONFIG_OF dependency
+Date: Fri, 13 Nov 2026 10:43:43 -0500
+Message-ID: <20261113153823.922534771@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,101 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit db3ca539c1142d2c5380c5dbd3154ab7bb1c7d77 ]
+[ Upstream commit 97f9e509d839f7e5b9a32105ae322e5223c86786 ]
 
-nfs_local_call_read() and nfs_local_call_write() issue a misaligned
-DIO as up to three segments and must stop at the first short one, or
-the next segment lands at the wrong file offset.  They test for that
-by comparing the bytes transferred against iov_iter_count() of the
-segment, read after read_iter() or write_iter() has advanced the
-iterator, when the count is the residual rather than the request:
+When compile-testing on x86 without CONFIG_OF, the ndfc driver produces
+a harmless warning:
 
-    before the call:  count == expected
-    after the call:   count == expected - status
+drivers/mtd/nand/raw/ndfc.c: In function 'ndfc_probe':
+include/linux/dev_printk.h:154:31: error: 'len' is used uninitialized [-Werror=uninitialized]
+  154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+      |                               ^
+drivers/mtd/nand/raw/ndfc.c:196:17: note: in expansion of macro 'dev_err'
+  196 |                 dev_err(&ofdev->dev, "unable read reg property (%d)\n", len);
 
-The test is therefore status < expected - status, and it fires only
-when less than half of the segment was transferred.  A short I/O that
-covers between 50% and 99% of a segment slips through: the loop moves
-on with ki_pos advanced by the short amount, the next segment is
-issued at the wrong offset, and the header's byte count is
-over-reported to the caller.  A write that slips through also never
-sets NFS_CONTEXT_WRITE_SYNC, which is what makes the writes that
-follow a short one synchronous.
+Limit compile-testing to configurations with CONFIG_OF to trivially
+avoid this. The driver will still be built in allmodconfig and many
+randconfig builds.
 
-Take the segment's count before issuing it and compare against that.
-
-This is the same defect that commit 250ec14932d5 ("nfsd: fix
-partial-write detection in nfsd_direct_write") fixed in NFSD's version
-of this loop.
-
-Fixes: c817248fc831 ("nfs/localio: add proper O_DIRECT support for READ and WRITE")
-Fixes: d0497dd27452 ("nfs/localio: backfill missing partial read support for misaligned DIO")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5-1
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
-[ sashal: adapted completion handling to the three-argument nfs_local_pgio_done() helper using force_done ]
+Fixes: 4f2692a5383e ("mtd: rawnand: ndfc: use ioread32be/iowrite32be and allow COMPILE_TEST")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/localio.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 3c5891d3ab897..3138439d19109 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -682,6 +682,8 @@ static void nfs_local_call_read(struct work_struct *work)
- 
- 	n_iters = atomic_read(&iocb->n_iters);
- 	for (int i = 0; i < n_iters ; i++) {
-+		size_t expected;
-+
- 		if (iocb->iter_is_dio_aligned[i]) {
- 			iocb->kiocb.ki_flags |= IOCB_DIRECT;
- 			/* Only use AIO completion if DIO-aligned segment is last */
-@@ -692,12 +694,14 @@ static void nfs_local_call_read(struct work_struct *work)
- 		} else
- 			iocb->kiocb.ki_flags &= ~IOCB_DIRECT;
- 
-+		/* read_iter() advances the iterator: measure it beforehand */
-+		expected = iov_iter_count(&iocb->iters[i]);
- 		save_cred = override_creds(filp->f_cred);
- 		status = filp->f_op->read_iter(&iocb->kiocb, &iocb->iters[i]);
- 		revert_creds(save_cred);
- 
- 		if (status != -EIOCBQUEUED) {
--			if (unlikely(status >= 0 && status < iocb->iters[i].count))
-+			if (unlikely(status >= 0 && (size_t)status < expected))
- 				force_done = true; /* Partial read */
- 			if (nfs_local_pgio_done(iocb, status, force_done)) {
- 				nfs_local_read_iocb_done(iocb);
-@@ -878,6 +882,8 @@ static void nfs_local_call_write(struct work_struct *work)
- 	file_start_write(filp);
- 	n_iters = atomic_read(&iocb->n_iters);
- 	for (int i = 0; i < n_iters ; i++) {
-+		size_t expected;
-+
- 		if (iocb->iter_is_dio_aligned[i]) {
- 			iocb->kiocb.ki_flags |= IOCB_DIRECT;
- 			/* Only use AIO completion if DIO-aligned segment is last */
-@@ -888,12 +894,14 @@ static void nfs_local_call_write(struct work_struct *work)
- 		} else
- 			iocb->kiocb.ki_flags &= ~IOCB_DIRECT;
- 
-+		/* write_iter() advances the iterator: measure it beforehand */
-+		expected = iov_iter_count(&iocb->iters[i]);
- 		save_cred = override_creds(filp->f_cred);
- 		status = filp->f_op->write_iter(&iocb->kiocb, &iocb->iters[i]);
- 		revert_creds(save_cred);
- 
- 		if (status != -EIOCBQUEUED) {
--			if (unlikely(status >= 0 && status < iocb->iters[i].count))
-+			if (unlikely(status >= 0 && (size_t)status < expected))
- 				force_done = true; /* Partial write */
- 			if (nfs_local_pgio_done(iocb, status, force_done)) {
- 				nfs_local_write_iocb_done(iocb);
+diff --git a/drivers/mtd/nand/raw/Kconfig b/drivers/mtd/nand/raw/Kconfig
+index ee01b845694de..2aba02ebe03e2 100644
+--- a/drivers/mtd/nand/raw/Kconfig
++++ b/drivers/mtd/nand/raw/Kconfig
+@@ -72,6 +72,7 @@ config MTD_NAND_AU1550
+ config MTD_NAND_NDFC
+ 	tristate "IBM/MCC 4xx NAND controller"
+ 	depends on 44x || COMPILE_TEST
++	depends on OF
+ 	select MTD_NAND_ECC_SW_HAMMING
+ 	select MTD_NAND_ECC_SW_HAMMING_SMC
+ 	help
 -- 
 2.53.0
 
