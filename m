@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591528;
-	b=HSSzvxYXlOS1umuFWktCxvuuYr4dHgCEMjziQwsuQAkGlKjftSvCMHxQGMumj0jiwptM
-	 iumWbB/ZrzqJRB1ElYctW385XkHkXqGXghFFO0dniDMk+ecVONLNM4qq35axMOMbcRHcZ
-	 HaV9myY6MWtL+FO4NSRbCiVwmzI6WLLTnYfU0vIz7ZmybsoKjxuBrEpXs7SFF14FkCCJV
-	 aWEdy3192WP6OOqmh7+wqjXp5mHDeuxP7Dp5WW5QJM2DDr6c3Cd6tVl7t+vhrAuabOaRM
-	 2AQ9KD5+ZZuUHT7kVtHwSJMfu2O4c4932OfYXY0olpq42VAHHTTkdcqeODEaMRQOj5A==
+	t=1794591529;
+	b=KLB6Yp50YXQTaYcnDT2H00p6ModSz6VnDbaLysttkecaFbqXB5qW5N2VGTdCCfZkyP7A
+	 tZjWoaeHL3g71577274OUpHuUSYcUyrpK6Pol/gZlxPwFCeQRSvAR6KGTh3ekSPWljCyf
+	 +NcEzUMCImMb+TIVTj6CQuYFgMz56H2SlENYsug6jKg4alR9483aT26FaQCFVx6rGEP/V
+	 czdTqOvOsj7EoMlbg08YjjH0N4gsADbrNxPG5Wy3+PDZtDBtrgin8vppWJZMZM27DXdPA
+	 mPvjVoQb29z9aaHBwlr+SNYfM8CPuxpx1icZeE+XQSW4BinH6NISr5BoiZ0Gjvn4IXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591528;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uzlUSq4gri8yxDDd5OQ57Vl3DIe/ejx7cbupMMbnnNA=;
-	b=F8K9JTKl+G1mYehvw/N/K9wQZgMLMO6BCNYaEsbtOr9IS0CmStHJPE2ljme9Ew48Y83W
-	 ovGRhbqGxftj/T+NUibWXq4JRrxXW88wEqF+cYxOpG9yxbW2cMOxa/fB9Sptlcp9O3BNg
-	 MOGMux53eDxWZu4EpPcewD4685doMO1df61759Zgq9YipaVugz9kpwifIVtO8cXV5dmiL
-	 DObxrtvCV3NgrtzbrtZSgUujEPLeFHtgV8ct1c/GNgAIbS5i/EJGe6lrGYMkoIHlTIS+D
-	 Wbk1A+WTn92Ny8hz3ZGyt5lP2iJlzVo9/dPVDRpabHRUAXxgThTaVc7YGULaAKEJS8g==
+	bh=WdyIJJiQWj1CwAsVsBPEvIQ1ykIHlWGTEQ9bKVK/cvg=;
+	b=com33G1k/p+uN2Ro9zP0/1o+yRT9uFzi/xEQYvHjYcfYvjW5oWqRq5Qm3M4m7d/htVmO
+	 FkIqiRN9ap5e2Qlx6Zd0hKWOHIZNmSQAKfLYbnjSaZuEBkrBuu+NAwdelBvn+L0rgcWUF
+	 7oWpmWhYf+cEmd7AjJjzuJ5uufCin8sZiyO8o4MdNYOIR/YoCffi3Ng4myFyq0EJPIQq9
+	 szaON5BB9k8xLNGCfIHisqSo9cFdmQIZa1vwwKPAV8Qw3AU3+OU8JPWeXralpOXJ6LOvK
+	 6Mavipy6jaet69byfIcNnx1g9G/GLzTGrlttyVCVN9hirLMx4Vyq8hzpz44dIXk3nxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjCKWX7f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZH49ffwN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11A6606D4B1;
-	Fri, 13 Nov 2026 17:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3396A606D857;
+	Fri, 13 Nov 2026 17:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjCKWX7f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA681F000C5;
-	Fri, 13 Nov 2026 17:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZH49ffwN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43351F000C6;
+	Fri, 13 Nov 2026 17:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591527;
-	bh=uzlUSq4gri8yxDDd5OQ57Vl3DIe/ejx7cbupMMbnnNA=;
+	s=korg; t=1794591529;
+	bh=WdyIJJiQWj1CwAsVsBPEvIQ1ykIHlWGTEQ9bKVK/cvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kjCKWX7fYuI2v8eUeHAARbP7HkIsI9UfJAh5hFFbaZSmr6WST/HMc/hGxhIyZlf1h
-	 tuvbCfFNnGSUbVlaowkplIGHGASkBW/H14D6/tEPDeFJtq6Wy7G6QiYyjfjIaUjydw
-	 eiYL01WFPZiaDqQp6ES8AhBO2JvbdJzkYGpJ+8+k=
+	b=ZH49ffwNcOnHaNpvWMGDgiGKnaZ+obu9J+sQ+uDzXDH0PDYPPWYvv7/A+WNEiFIAd
+	 Lmh9CK2QBN+PMdmPkFttImPV2nvLKDfpg1Vl/VjwIS4fLp5MBjfEXXzLOnvTUD/jQK
+	 XERGEL0lAPPpedwSYdJGKrKsa4t4gzmqhB1ogRJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Yao Yiqi <yaoyiqi3@huawei.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 585/670] KVM: arm64: vgic: Stop the target vcpu when disabling LPIs
-Date: Fri, 13 Nov 2026 10:52:29 -0500
-Message-ID: <20261113153831.663799787@linuxfoundation.org>
+Subject: [PATCH 6.12 586/670] fbcon: Retry rotated font allocation after failure
+Date: Fri, 13 Nov 2026 10:52:30 -0500
+Message-ID: <20261113153831.696297380@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,58 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Yao Yiqi <yaoyiqi3@huawei.com>
 
-[ Upstream commit a1b4bd2c2c262b8094c86afb99364d16ac08cb66 ]
+[ Upstream commit 7935db1a4a0f83a63590a222500e5016e2f6c85e ]
 
-Disabling LPIs is pretty nasty, as it directly messes with the AP list
-of the affected CPU, which could be running... This has the potential to
-lead to really bad behaviours, and we should not be doing that.
+fbcon_rotate_font() records the font, its geometry and the rotation in
+par->rotated before calling font_data_rotate(). If the allocation
+fails, the error path clears par->rotated.buf, but the recorded key
+already looks up to date, so the next call takes the early-out and
+never retries. The rotated putcs/cursor ops keep returning early on
+the NULL buffer, and the console stays blank even after memory is
+available again.
 
-Take example on the way the Active state is handled and simply pause the
-the vcpu so that we are sure it is in a quiescent state, and the state be
-safely manipulated.
+Also test par->rotated.buf in the early-out, so a failed allocation
+is retried on the next call: at the next fbcon_switch(),
+fbcon_modechanged() or font change.
 
-Nobody has any expectation of performance for this anyway.
-
-Fixes: 96085b949672d ("KVM: arm/arm64: vgic-v3: Retire pending interrupts on disabling LPIs")
-Co-developed-by: Oliver Upton <oupton@kernel.org>
-Signed-off-by: Oliver Upton <oupton@kernel.org>
+Fixes: e4ef723d8975 ("fbcon: Avoid OOB font access if console rotation fails")
 Cc: stable@vger.kernel.org
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261015100539.1011760-7-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: replaced missing kvm_pause_vcpu() and kvm_resume_vcpu() calls with VM-wide kvm_arm_halt_guest() and kvm_arm_resume_guest() ]
+Signed-off-by: Yao Yiqi <yaoyiqi3@huawei.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ sashal: used par->fontbuffer instead of par->rotated.buf in the existing font cache check ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/video/fbdev/core/fbcon_rotate.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-index 6e157b0b21adf..c62666adc2f8d 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -276,9 +276,19 @@ static void vgic_mmio_write_v3r_ctlr(struct kvm_vcpu *vcpu,
- 		if (ctlr != GICR_CTLR_ENABLE_LPIS)
- 			return;
+diff --git a/drivers/video/fbdev/core/fbcon_rotate.c b/drivers/video/fbdev/core/fbcon_rotate.c
+index a3f507825eed8..3105682075c87 100644
+--- a/drivers/video/fbdev/core/fbcon_rotate.c
++++ b/drivers/video/fbdev/core/fbcon_rotate.c
+@@ -27,7 +27,8 @@ static int fbcon_rotate_font(struct fb_info *info, struct vc_data *vc)
+ 	u8 *dst;
  
-+		/*
-+		 * Yes, disabling LPIs is painful, since it can be done from
-+		 * a *remote* vcpu! So let's not take any chance, and make
-+		 * sure that the target vCPU has written their LRs back to the
-+		 * irq structures, and release any reference they would have.
-+		 *
-+		 * If it hurts, don't do it.
-+		 */
-+		kvm_arm_halt_guest(vcpu->kvm);
- 		vgic_flush_pending_lpis(vcpu);
- 		vgic_its_invalidate_all_caches(vcpu->kvm);
- 		atomic_set_release(&vgic_cpu->ctlr, 0);
-+		kvm_arm_resume_guest(vcpu->kvm);
- 	} else {
- 		ctlr = atomic_cmpxchg_acquire(&vgic_cpu->ctlr, 0,
- 					      GICR_CTLR_ENABLE_LPIS);
+ 	if (vc->vc_font.data == par->fontdata &&
+-	    par->p->con_rotate == par->cur_rotate)
++	    par->p->con_rotate == par->cur_rotate &&
++	    par->fontbuffer)
+ 		goto finished;
+ 
+ 	src = par->fontdata = vc->vc_font.data;
 -- 
 2.53.0
 
