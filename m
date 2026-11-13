@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590859;
-	b=EwQ5D6tJiaLEOHEz80IddqVIyCgnSKJ4JFnPp0mN3Ssqp1OMoFbZq7LFC3lrnZzQh/jD
-	 Rd70AV1ug4n0x25IYLD5fCVMg11ywU2rAb4TQKucF00VPIfC+ogxGLCnp1fpvOG94noha
-	 dxjBScbcsHN2fKDazC6FkaexsM4fqkjDHizO8ZCqFFCGF9LCzlnX+FTwTrnIDiy7nYlaF
-	 mB3LkU5wX0fKCnIlqqWLYtQZudUTz5WySoWDFDkxeu0kSps2rTiFcTzf5iVXsOv7Y+yyv
-	 O+PRx8SNo555/F/M8BnosIRgVLw+CvkWh2ewVgrlqtXZRUHzFpBro/Wr9uNGzAtzMzw==
+	t=1794590860;
+	b=HZEQYXE5yWvwCs0MsgBjKWMua9acDJZEXPrwnDft6/0O8se57XKQ9kIf2CnnM9KINiXG
+	 r4gJR++9ZoFAsrIZIG63NCKH+bPfFlpky09Mj654rmZ7G5P2fKnoZQijRr0doiH+eQ6fl
+	 XzMkyLDpjLrdROQDeAKM/TRQiQCv4td/mWy8LxfFBHzLGcE+NNd1vqysvJIIDNxOzQL71
+	 Wk1fM95C+kPm3xRXhs7fKDK8rn7OanAHX4O17Rvza1Yc10f+oC8TDjS/YXpwPbNHKEtAt
+	 7m3lWurxYglBNvtJc+XVxHNOTEA//sGLSv02aV5mUCdUERQSek9xPdCtKymnL6SykmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590859;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590860;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ly9ccexSAr2Df40NZbBKNOKpxhhZ5d1FHZTFvHhHV1o=;
-	b=JcKorNSqwfxufMzF2X4jgAAQeWfLhKC5FpasQSXSAOvgzB52L8BTamu/2MQU9lp5Ua1s
-	 nmjbbIJ97KovHE8tEvZIHr/bk46pOa8oORd7PMkP4ORd6mCgqY/2EQK3qj6viQoVH6e8n
-	 aTeiQO837+l8L+Q+IIwhCAyNLVqLaq52M1vZYy8aQIsgK2EmmDDL/PKa90vquxXjechDl
-	 dCwACBKeuWWOQkZXreur0Os+IvLk3oh9PALtisxQYqJP6lo364QMxVkFR1OQUDlTGzGZ9
-	 NIMswMf7A12S6VnQFJo6q/SSi6yLlMvKc4c1ZKTLPLzJATHmgSeqN1rQIWMHKX1GCfQ==
+	bh=8pckH/QRSftu90mYsEeL7EcKQgC63OY/mCucXolY9iY=;
+	b=ytXu52+pHx2gxNqC4+zxD1p6Lcu/qsaxkTQD5ITCL2DrAHmK6SAUijOCCEG5Eqa6sclu
+	 /JAbpQqHeEmcc9J+7zD/IKwEXw/YcAoEdc494PLkd37CIIQnvG4HU/zzpeYbBkiKQWQ/5
+	 aJfj/zzGMh21CWbIkTXb2fpSue/WV96c5GbDVtw/N+UgSXYJysNbS284nfZo4vhPKnZ4d
+	 TrDM+E/UWEOi/rN7tkqigsYspvTpu4JbFhxEE4gRKUia6BvSQKRDJhU+P/QCuwM4x+uHO
+	 F5xYcu06FXv2rn4vZCzyhj6RQNQMwvDilX7SokfKZsXR1+r2xOdGh63kEn7jMVhPfDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="G/cep7MS";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KR+uEQjX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80D1606D4A0;
-	Fri, 13 Nov 2026 17:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA504606D49F;
+	Fri, 13 Nov 2026 17:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G/cep7MS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053EF1F000C4;
-	Fri, 13 Nov 2026 17:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KR+uEQjX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CAD31F000CD;
+	Fri, 13 Nov 2026 17:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590859;
-	bh=ly9ccexSAr2Df40NZbBKNOKpxhhZ5d1FHZTFvHhHV1o=;
+	s=korg; t=1794590860;
+	bh=8pckH/QRSftu90mYsEeL7EcKQgC63OY/mCucXolY9iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G/cep7MSMHFJj0+HY9UTuiAi7T20i4fU9UbClCCd0NhyvVek3OWWv9wBMkTbwIZx8
-	 VgYB8xCulwHjiJU26vuiHP4uFlj/v02Ci6RerwzQ7la0br7bd9+3puI+z9roWtwe7/
-	 yJzybygmwDrcUjCMu8P11UlwXjRRObWIdD+vhLiY=
+	b=KR+uEQjXcg/VgDJw4Ldn+Nt+uI26qKw5EnPTdy2bJkS/7dkrunyBjcvQFk0PHHkjt
+	 XKNO72QF4ykFbKpVK23k0NDj18GvbWq5uWTG5x/iTuCDq2acCiWIx2cPLfMaipO/6d
+	 ZCRuxvJPZOVaehjJFQCsZcr/zmx0o+tJ6PJeXLyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Fan Wu <wufan@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/670] smb: client: validate SMB1 EA list bounds before parsing
-Date: Fri, 13 Nov 2026 10:43:01 -0500
-Message-ID: <20261113153811.769483066@linuxfoundation.org>
+Subject: [PATCH 6.12 008/670] fsverity: Tell LSMs about signature only after verity is enabled
+Date: Fri, 13 Nov 2026 10:42:52 -0500
+Message-ID: <20261113153811.469526850@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,89 +68,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit ddc7a7e1eeb116ccaf010a6f1fb6ab927f3f888d ]
+commit 28d74059fddbd8ae83c7715056b303c402071f6f upstream.
 
-CIFSSMBQAllEAs() checks the server-provided EA list length by adding it
-to the response pointer. On 32-bit systems, a positive length can wrap
-the pointer and pass the comparison. The parser then walks outside the
-received response while reading the next FEA header.
+FS_IOC_ENABLE_VERITY calls security_inode_setintegrity() before verity
+has finished being enabled.  That's broken because enabling verity can
+still fail at that point, e.g. due to insufficient xattr space.
 
-A response with a list length of 0x40000000 reproduces this as a native
-i386 page fault and kernel panic from listxattr() against an SMB1
-server.
+Afterwards, arbitrary contents can be written to the file, which doesn't
+actually have verity enabled.  The in-core inode stays the same, so the
+LSM considers it to have verity enabled with a valid signature.  (Or
+rather, in the case of IPE, which is the only LSM that implements
+security_inode_setintegrity(), it also checks IS_VERITY(), which can be
+bypassed by enabling verity with no signature after the file writes.)
 
-Check that the EA list starts within the SMB byte area before reading
-its header. Keep its length unsigned and compare it with the bytes left
-in the response without pointer addition.
+Fix this by moving the call to security_inode_setintegrity() out of
+fsverity_verify_signature() and into a new function that is called from
+the appropriate places.
 
-SMB1 is not negotiated by default and requires an explicit vers=1.0
-mount.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 7c373e4f1445 ("fsverity: expose verified fsverity built-in signatures to LSMs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Replaced unavailable smb_EIO2() tracing calls with direct -EIO assignments. ]
+Reviewed-by: Fan Wu <wufan@kernel.org>
+Tested-by: Fan Wu <wufan@kernel.org>
+Link: https://patch.msgid.link/20261025204534.122506-1-ebiggers@kernel.org
+(6.12: resolved conflicts with this version storing the fsverity_info
+ pointer in the inode instead of using a hash table)
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ fs/verity/enable.c           |  8 ++++++
+ fs/verity/fsverity_private.h |  8 ++++++
+ fs/verity/open.c             |  9 ++++++
+ fs/verity/signature.c        | 55 ++++++++++++++++++++++++++----------
+ 4 files changed, 65 insertions(+), 15 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 45c6eb11356ba..1c2b73bdef6cb 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -5763,9 +5763,11 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
- 	int rc = 0;
- 	int bytes_returned;
- 	int list_len;
-+	u32 ea_list_len;
- 	struct fealist *ea_response_data;
- 	struct fea *temp_fea;
- 	char *temp_ptr;
-+	char *byte_area;
- 	char *end_of_smb;
- 	__u16 params, byte_count, data_offset;
- 	unsigned int ea_name_len = ea_name ? strlen(ea_name) : 0;
-@@ -5842,9 +5844,18 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
- 	ea_response_data = (struct fealist *)
- 				(((char *) &pSMBr->hdr.Protocol) + data_offset);
- 
--	list_len = le32_to_cpu(ea_response_data->list_len);
--	cifs_dbg(FYI, "ea length %d\n", list_len);
--	if (list_len <= 8) {
-+	byte_area = pByteArea(&pSMBr->hdr);
-+	end_of_smb = byte_area + get_bcc(&pSMBr->hdr);
-+	if ((char *)ea_response_data < byte_area ||
-+	    (char *)ea_response_data >
-+	    end_of_smb - sizeof(ea_response_data->list_len)) {
-+		rc = -EIO;
-+		goto QAllEAsOut;
-+	}
+diff --git a/fs/verity/enable.c b/fs/verity/enable.c
+index c284f46d1b535..197564ecd3ef6 100644
+--- a/fs/verity/enable.c
++++ b/fs/verity/enable.c
+@@ -292,6 +292,14 @@ static int enable_verity(struct file *filp,
+ 		 * after the filesystem has successfully enabled verity.
+ 		 */
+ 		fsverity_set_info(inode, vi);
 +
-+	ea_list_len = le32_to_cpu(ea_response_data->list_len);
-+	cifs_dbg(FYI, "%s: ea length: %u\n", __func__, ea_list_len);
-+	if (ea_list_len <= 8) {
- 		cifs_dbg(FYI, "empty EA list returned from server\n");
- 		/* didn't find the named attribute */
- 		if (ea_name)
-@@ -5853,12 +5864,12 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
++		/*
++		 * Now that verity is enabled, report the signature (if any) to
++		 * LSMs.  We tolerate that a process racing with this ioctl can
++		 * briefly see verity enabled with no signature reported yet.
++		 */
++		fsverity_report_valid_sig(inode, desc->signature,
++					  le32_to_cpu(desc->sig_size));
+ 	}
+ out:
+ 	kfree(params.hashstate);
+diff --git a/fs/verity/fsverity_private.h b/fs/verity/fsverity_private.h
+index b3506f56e180b..760f2674c816e 100644
+--- a/fs/verity/fsverity_private.h
++++ b/fs/verity/fsverity_private.h
+@@ -135,6 +135,8 @@ void __init fsverity_init_info_cache(void);
+ extern int fsverity_require_signatures;
+ int fsverity_verify_signature(const struct fsverity_info *vi,
+ 			      const u8 *signature, size_t sig_size);
++void fsverity_report_valid_sig(const struct inode *inode, const u8 *signature,
++			       size_t sig_size);
+ 
+ void __init fsverity_init_signature(void);
+ #else /* !CONFIG_FS_VERITY_BUILTIN_SIGNATURES */
+@@ -145,6 +147,12 @@ fsverity_verify_signature(const struct fsverity_info *vi,
+ 	return 0;
+ }
+ 
++static inline void fsverity_report_valid_sig(const struct inode *inode,
++					     const u8 *signature,
++					     size_t sig_size)
++{
++}
++
+ static inline void fsverity_init_signature(void)
+ {
+ }
+diff --git a/fs/verity/open.c b/fs/verity/open.c
+index 9c1b37a3b96a8..dba70c0ab5b64 100644
+--- a/fs/verity/open.c
++++ b/fs/verity/open.c
+@@ -377,6 +377,15 @@ static int ensure_verity_info(struct inode *inode)
+ 		goto out_free_desc;
  	}
  
- 	/* make sure list_len doesn't go past end of SMB */
--	end_of_smb = (char *)pByteArea(&pSMBr->hdr) + get_bcc(&pSMBr->hdr);
--	if ((char *)ea_response_data + list_len > end_of_smb) {
-+	if (ea_list_len > end_of_smb - (char *)ea_response_data) {
- 		cifs_dbg(FYI, "EA list appears to go beyond SMB\n");
- 		rc = -EIO;
- 		goto QAllEAsOut;
++	/*
++	 * Now that the signature (if any) has been verified, report it to LSMs.
++	 * Do this before setting the fsverity_info, so that anyone who
++	 * concurrently retrieves the fsverity_info for the same inode is
++	 * guaranteed to see the LSM's signature status populated.
++	 */
++	fsverity_report_valid_sig(inode, desc->signature,
++				  le32_to_cpu(desc->sig_size));
++
+ 	fsverity_set_info(inode, vi);
+ 	err = 0;
+ out_free_desc:
+diff --git a/fs/verity/signature.c b/fs/verity/signature.c
+index 0302a4e506ec4..212e873c84998 100644
+--- a/fs/verity/signature.c
++++ b/fs/verity/signature.c
+@@ -42,13 +42,16 @@ static struct key *fsverity_keyring;
+  * @sig_size: size of signature in bytes, or 0 if no signature
+  *
+  * If the file includes a signature of its fs-verity file digest, verify it
+- * against the certificates in the fs-verity keyring. Note that signatures
+- * are verified regardless of the state of the 'fsverity_require_signatures'
+- * variable and the LSM subsystem relies on this behavior to help enforce
+- * file integrity policies. Please discuss changes with the LSM list
+- * (thank you!).
++ * against the certificates in the fs-verity keyring.
+  *
+- * Return: 0 on success (signature valid or not required); -errno on failure
++ * Note that signatures are verified regardless of the state of the
++ * 'fsverity_require_signatures' variable, and the LSM subsystem relies on this
++ * behavior to help enforce file integrity policies.  (See
++ * fsverity_report_valid_sig(), which assumes that the signature, if present,
++ * was verified here.)  Please discuss changes with the LSM list (thank you!).
++ *
++ * Return: 0 if the signature is present and valid, or absent and not required;
++ *	   -errno on failure
+  */
+ int fsverity_verify_signature(const struct fsverity_info *vi,
+ 			      const u8 *signature, size_t sig_size)
+@@ -111,18 +114,40 @@ int fsverity_verify_signature(const struct fsverity_info *vi,
+ 		return err;
  	}
-+	list_len = ea_list_len;
  
- 	/* account for ea list len */
- 	list_len -= 4;
+-	err = security_inode_setintegrity(inode,
+-					  LSM_INT_FSVERITY_BUILTINSIG_VALID,
+-					  signature,
+-					  sig_size);
++	return 0;
++}
+ 
+-	if (err) {
++/*
++ * If the signature exists, this tells the LSM that it was verified.
++ *
++ * fsverity_verify_signature() must have already been called with the same
++ * signature, *and* the inode must have verity enabled with the signature
++ * matching it.  If called from FS_IOC_ENABLE_VERITY, the latter means that we
++ * must be past the point of no return, i.e. verity won't fail to be enabled at
++ * a later point.  This is critical, since LSMs must be told about the signature
++ * only when the verity status is permanent in the in-core inode.
++ */
++void fsverity_report_valid_sig(const struct inode *inode, const u8 *signature,
++			       size_t sig_size)
++{
++	int err;
++
++	if (WARN_ON_ONCE(!IS_VERITY(inode)))
++		return;
++
++	if (sig_size == 0)
++		return;
++
++	err = security_inode_setintegrity(
++		inode, LSM_INT_FSVERITY_BUILTINSIG_VALID, signature, sig_size);
++	if (err)
+ 		fsverity_err(inode, "Error %d exposing file signature to LSMs",
+ 			     err);
+-		return err;
+-	}
+-
+-	return 0;
++	/*
++	 * Besides the logging above, ignore errors here.  The LSM hook just
++	 * records the signature and doesn't perform access control.  And in the
++	 * case of FS_IOC_ENABLE_VERITY verity was already enabled.
++	 */
+ }
+ 
+ void __init fsverity_init_signature(void)
 -- 
 2.53.0
 
