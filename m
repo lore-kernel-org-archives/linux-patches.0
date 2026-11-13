@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590506;
-	b=yrdNCJjWUxFY7sFjS2kX8BdeitudD+z3EwspO19Q4UQ/t0v1Uz+WDUlHf8oTJao6RSGR
-	 n7HJgD/uP/DHuLt4HtjbnE3yOsSVqks8/bwNsJ/+m1csXV++gn6gPEBX5pLF/zuw4s64x
-	 NKF7XScn+YrEyjK+w36MAev/XqXeZmt39SjPdULBT8mgeD7+uFNaT56P/H89qYsouDPsD
-	 tUiFA/sYUZlh08g8/HWLiLAOWL6CfT0ToYtG9L0RH5OJtcxJ8Xo9JwKtCTpKbQyqvVBMC
-	 N5B4SVpG80dJP0GZN1UnvmyPEoP+tTuF1nG+cGTPhfnIqlrM6ZIX/hh3hupB9BLIVBA==
+	t=1794590507;
+	b=Lk4v8WxZaarZmiXU/gSrpjL4Wctzphc2kmQ80qa2iG21xAuf6FTX+VFJi1dl13J2Pj/q
+	 4OT2uvZcpadL0EzLWUVDcRVkNgQq/u8vTcoVfxtaeAiE8TBI9mtiGg5iw7ofvgleT8t8G
+	 dIUAXlOlaBr9VgspkGnp5whRQU2W8uRt/qhi64MoajYcFRGEpmTCFJ+qtcWV3aucB4jtu
+	 yxgnXxYm9/uNXRR+GuKTT/R6HzW3Gz2Jv88i5C7n9sfdsXZdeI4vRXDNn6ohtLQ+MaBNs
+	 OzRf8n1VtLxW4gmKAA9YB8zl38TYOUywJrBLTYv/4Hm/UTuUiFoweK8RKe6N7ShcOxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590506;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xfpOH3yyKmIqclCYObG12AhuMVJlm8FkdRWsaVqoXzo=;
-	b=b7gKeLUjavvxX/gAjsSRifd/EzPojTo9TwfznOQ4TF1NFNn20mpNgS0ZWEao/K/Ptw1A
-	 lgcEvQNjxB4dWG6lq98VnPA5IVKdpzya72F8+Q7bl0VDfOXgDkEn8JQwuQz2jiHYbja++
-	 wP3F6s+TCPj7VtUgoiY9AbITjYazS4d4pUPXd23FLFqQErApcnNWrjH48cb2IbDJioMek
-	 Ne+jX3oFUNBRW+MSCDzgWvid8ibx8Z+nofsQ9N8aMUVZ9CF48QRIz8KWfJFb8M/eva8U6
-	 9Xturm6UywJyEzPt47mXz9/pYGjzOhBsSSnrAodGvgm1dTQyZTzG8dtszKNW8/rSOMw==
+	bh=l/B0NvMZvR5JMR9qA1zMTZNVG5LVfYPyimskamLYcyM=;
+	b=kUVbH7ISEcU/6hZIIkkwlEFo2G0vexq32bRbQk1fjTg4diTL/cTFoRgQC7zevdtNZ6gU
+	 QSTB2JJedzZsf2TOnmy/MfngeNv2kf3+rgeFGmG5Lib/wTShPbJ9mtRbegJ5PKyxHLPNS
+	 JrfiGAdkSKPJlKe655v0/ESNOdsxUhf2cTCC1J1kJ7MSgxtpW935ap62bFKtyzUi8Sasb
+	 +TXFDCnHSJ8n7VNEbHKv3IK6/rjwf6zafW3BzG9JYcFcyqWfZaxaKNpvsj+pv5PKGAtR2
+	 poFSDZNREw2OD7SPzcwCcDedG18r//ZAHXyWKCPkhzi2by10cIi7Ha7ZZv5+dRidxdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0igAkFIV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0VyEvBl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45017607320D;
-	Fri, 13 Nov 2026 17:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A607607320E;
+	Fri, 13 Nov 2026 17:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0igAkFIV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B661F000C6;
-	Fri, 13 Nov 2026 17:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g0VyEvBl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2709C1F000C4;
+	Fri, 13 Nov 2026 17:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590506;
-	bh=xfpOH3yyKmIqclCYObG12AhuMVJlm8FkdRWsaVqoXzo=;
+	s=korg; t=1794590507;
+	bh=l/B0NvMZvR5JMR9qA1zMTZNVG5LVfYPyimskamLYcyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0igAkFIVIoAmrAVmTZ7xeLAgFA0c46RecLCz8Gzr6ZYxWYa9A6NgPHxa21g2PP+cW
-	 aCk3FP33Rb9OncgsmFiWgUdKJlKshofS/akBtWIAHZ49wyiaxg4BMRHKmFPxz+X5Ro
-	 2sN4N6Ym9XnVWOYLR17jrpxcvCtzso6taH2EDaro=
+	b=g0VyEvBl8hwchPn4456etbs7NZlWWKgdNufAU7Z2/EXvQfb92scUTF0teqFkmctCw
+	 73W8sl6BfH2CjinHE33zZKMsAHaAu77wVVVp9ZSgc0CCSbD10FgbXBfd+TFg2T4jdH
+	 U6cnENuKuA0N9OqBJZ1VH2XP6Lu64T7kONGgsHgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
+	Shao Mingyin <shao.mingyin@zte.com.cn>,
 	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 451/686] nvme: wait for SRCU readers before splicing the namespace list
-Date: Fri, 13 Nov 2026 10:49:44 -0500
-Message-ID: <20261113153836.157314768@linuxfoundation.org>
+Subject: [PATCH 6.18 452/686] nvmet: bound the traddr and trsvcid configfs writes
+Date: Fri, 13 Nov 2026 10:49:45 -0500
+Message-ID: <20261113153836.191790629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,64 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Shao Mingyin <shao.mingyin@zte.com.cn>
 
-[ Upstream commit 8a0449832b50cd4f99f2d2952cfc1476e5f26d0f ]
+[ Upstream commit cf399d4abbeddc317f8160a79fefb4016c469862 ]
 
-Readers walk ctrl->namespaces under ctrl->srcu, and some of them sleep
-there, e.g. nvme_wait_freeze() waiting for I/O to drain.
+nvmet_addr_traddr_store() and nvmet_addr_trsvcid_store() reject a write
+only when count is larger than NVMF_TRADDR_SIZE (256) respectively
+NVMF_TRSVCID_SIZE (32).  A write of exactly that many characters is
+accepted, and the following
 
-nvme_remove_namespaces() moves the list onto its on-stack ns_list with
-list_splice_init_rcu(), which only waits for RCU readers before
-relinking the entries. A reader still on the last namespace then follows
-its next pointer to ns_list instead of ctrl->namespaces and treats the
-stack as a namespace. Deleting a controller while a Format NVM
-passthrough waits for a delayed read on the last namespace gives:
+	sscanf(page, "%s\n", port->disc_addr.traddr)
 
-  BUG: KASAN: stack-out-of-bounds in nvme_wait_freeze+0x102/0x120
-  Read of size 8 at addr ff110001d2f3fc38 by task nvme/4413
-  Call Trace:
-   nvme_wait_freeze
-   nvme_passthru_start
-   nvme_submit_user_cmd
-   nvme_user_cmd
-   nvme_dev_ioctl
-  BUG: unable to handle page fault for address: ffffffff8af04850
+has no field width.  configfs terminates the buffer at page[count], so
+the scan writes 256 characters plus the trailing NUL, i.e. 257 bytes,
+into traddr[256].  The extra byte lands in the following tsas field of
+the discovery log entry, silently clearing the first TSAS byte (the
+RDMA queue type, or the TLS section type for TCP).  trsvcid has the
+same off-by-one with a 32-byte write; there the extra byte lands in
+the reserved bytes that follow trsvcid.
 
-Use list_splice_init_srcu() instead, which waits for the SRCU readers.
-This also takes the RCU grace period out of every controller deletion.
-Deleting 64 tcp controllers with one namespace each, median of 3 runs on
-each of two boots per kernel:
+Limit the scans to one byte less than the destination arrays.  The
+count checks can stay as they are so that a normal newline-terminated
+write is still accepted.
 
-                                      before        after
-  nvme disconnect-all (ms)            3491 / 3509   2996 / 3165
-  nvme_remove_namespaces() avg (ms)   39.0 / 40.5   31.9 / 34.7
-
-Fixes: be647e2c76b2 ("nvme: use srcu for iterating namespace list")
+Fixes: 9ba2a5cb8896 ("nvmet: filter newlines from user input")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Shao Mingyin <shao.mingyin@zte.com.cn>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/nvme/target/configfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 99a8e2953b02a..1ecf26f24b7fa 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4628,9 +4628,8 @@ void nvme_remove_namespaces(struct nvme_ctrl *ctrl)
- 	nvme_change_ctrl_state(ctrl, NVME_CTRL_DELETING_NOIO);
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index e2032b58191c5..61b4e90f4e34d 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -150,7 +150,7 @@ static ssize_t nvmet_addr_traddr_store(struct config_item *item,
+ 	if (nvmet_is_port_enabled(port, __func__))
+ 		return -EACCES;
  
- 	mutex_lock(&ctrl->namespaces_lock);
--	list_splice_init_rcu(&ctrl->namespaces, &ns_list, synchronize_rcu);
-+	list_splice_init_srcu(&ctrl->namespaces, &ns_list, &ctrl->srcu);
- 	mutex_unlock(&ctrl->namespaces_lock);
--	synchronize_srcu(&ctrl->srcu);
+-	if (sscanf(page, "%s\n", port->disc_addr.traddr) != 1)
++	if (sscanf(page, "%255s", port->disc_addr.traddr) != 1)
+ 		return -EINVAL;
+ 	return count;
+ }
+@@ -242,7 +242,7 @@ static ssize_t nvmet_addr_trsvcid_store(struct config_item *item,
+ 	if (nvmet_is_port_enabled(port, __func__))
+ 		return -EACCES;
  
- 	list_for_each_entry_safe(ns, next, &ns_list, list)
- 		nvme_ns_remove(ns);
+-	if (sscanf(page, "%s\n", port->disc_addr.trsvcid) != 1)
++	if (sscanf(page, "%31s", port->disc_addr.trsvcid) != 1)
+ 		return -EINVAL;
+ 	return count;
+ }
 -- 
 2.53.0
 
