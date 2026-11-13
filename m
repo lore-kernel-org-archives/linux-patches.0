@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591475;
-	b=mWbf6jHNuragZ6H+WwtBMZXY1BfbntG1xsgLA2VCvn1oyA3g0p2Ths/ePznGcfY94YGS
-	 ASaUoQ2w6C+1rA/5mxc4gTU/MGsFniTw2mYCkmxhRoCHHBcdTlw5J0tnYJ/1Ka737VyQD
-	 cG7pS5X6nTMK2L5qddzJltwghiLZFwgWSGD1B6kKpsnejK3FF3aWdFKYFhf2d6i3IgcNj
-	 Xbqyv5uvHOCioo5BlOCu1bDzrjupxiJj8UcNJFebvP5YywH5Dy140FyEws6CSB8ewRC7S
-	 1ItxIJP4m8wr//wDjDlB6mIb+fgFsrioz8oocE3b451tPh0NrZrVzrjagJbTyOBqEvA==
+	t=1794591477;
+	b=Rh8MxDeHokpm/K4uOCJ87buYHS9+0CXjzI0brK7/GZcTRIGwkcKDBP4EdRUC2DX+5wRA
+	 vbyexZrr6DLq0izuSmGYMU1HPUDXSAvsFLa9lL8lSqN0NKt5tjCVTlQaDAPkxBzVDJuLu
+	 zuYLdvho1Cm6C0EwnhiXqgk0l3H0A1UcHW45IUFf0HDWjRmMQFwDtrRYltPiieipIGHm4
+	 Uy4xbMAJRD7ykY54NkJLinGBg6ZqTwwCPpgmWCX2V6DwUqCNWADEfD6B53jX3S6nrGGu+
+	 7n5E8eC/s+VUplTHLtbtmRfVndEMlcmVBU+69oXLNq/vtyOTtetg5VIMlC9I0C2T0Cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591475;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591477;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h5MzLMSF+HPXTy1N2eixDpOBi0VoWWs8p+H88bCGHL8=;
-	b=mWwBvQVA5FxUg/HUMfYCqOBTvbW+kZ6DTY9s1ciqjYqRz+gHEzamcm+AnkubURYIX6fr
-	 h67XLlYrYR9U01nfHpchSUpRkdLFSFTzY7ld25Fs9p+P+dzWUYe3r/YNBa9S2iYkkV5/n
-	 qDqsBnXScSHfxbxteM3fUye+aGQYgg7vtgASZpoooDmfMhymgWdCz5L2BRFqR48Yzy7z/
-	 OQA2BrCPZgPPc1gZNWfBA/J7oTqn4NcwVeArMdsoVULDE7ytD9y49bM/NUQytCRRlAWLQ
-	 NV00aSzU36ChgbbYuomloqB7BAHwq98z0PQ1kL+Ar+zzMQSavUtRk0eetw5oZzYUAZg==
+	bh=NOYrAHs7CtBVgc1kgmI9pF4/xb4lU45GNcTCIDPvexU=;
+	b=lsYXk/LMa83eFGgVIsXuSba9/NIQul8dI46HOJiXzpkgjpLTOnpkEzIB2ek2NwL1YYag
+	 EjXjP2KqT21CuiJUUUtoSgQT1IG/3bpky7qx+VRTxHhvxGVNJ1mWwsKcMS3HrQeSq0+db
+	 LH9P2QmaJ7DgJC+bMNbGiVzsnfPlvVwGTZk5EqIzljkrnqi6hJKRE7cxCCJ3eNoyNYp58
+	 7BWeixfxYFMdFRMrqBeKJZPVUHSaOnIlxFMxLIaffoMdT75MndIi+FbtcjPO6n67HEbLc
+	 mM3DZ1ZXrbYBTlQ8xO1PKVbZsOa7F7P6QCseYbH7XwAhWxEdCS13TLv5DvVjd/Lu8cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xlYX6FJZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EfKNMjOj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB25606E212;
-	Fri, 13 Nov 2026 17:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B1E606E212;
+	Fri, 13 Nov 2026 17:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xlYX6FJZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5531F000C4;
-	Fri, 13 Nov 2026 17:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EfKNMjOj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36C91F000C4;
+	Fri, 13 Nov 2026 17:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591475;
-	bh=h5MzLMSF+HPXTy1N2eixDpOBi0VoWWs8p+H88bCGHL8=;
+	s=korg; t=1794591476;
+	bh=NOYrAHs7CtBVgc1kgmI9pF4/xb4lU45GNcTCIDPvexU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xlYX6FJZhR0dEtGrfec6X7u53sdwf2qrfcy3dqSktirla/XnVcZn/shqf4ghOCwe9
-	 T9kMci+1IP4yn8M6xUBOtsBpC6H2qodjUqLUShfJBVrb6SotjJpfv6dQhhtoZgtfrK
-	 wlSNQ7a00VjVDiwCURrTk8svuli3+jzpnSzxlx/0=
+	b=EfKNMjOje6hXyfLCL74J47UcAkq/q40op2ubnubLHPquS8xnGKlCArkc0LLP4EGbC
+	 NRbXzL+Syh0GCnvkqKWqNUiunu2+saR1lrVd35tICUdApnmoc2Lo98IDE2Ido/ti5U
+	 OrGAwe7Hr3KtgXnA+1IQkRYlGF9A4i8PlnBSWPKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladyslav Tymoshchuk <tvlad744@gmail.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 557/670] ASoC: qcom: q6apm-dai: wrap the position of a full ring to 0
-Date: Fri, 13 Nov 2026 10:52:01 -0500
-Message-ID: <20261113153830.761102639@linuxfoundation.org>
+Subject: [PATCH 6.12 558/670] nilfs2: remove nilfs_writepage
+Date: Fri, 13 Nov 2026 10:52:02 -0500
+Message-ID: <20261113153830.791280812@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,75 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladyslav Tymoshchuk <tvlad744@gmail.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 0ea3e0b196f9dcc17b40ac881a6efef06459975b ]
+[ Upstream commit 310293201ed242e466b0e9f10f53b4a4abccffec ]
 
-q6apm_dai_pointer() turns the number of period buffers the DSP has
-returned in the current lap, 1..periods, into a position and reports
-one frame less than that. Commit a93dad6f4e6a ("ASoC: q6apm-dai: make
-use of q6apm_get_hw_pointer") added the "- 1" so that the end of the
-ring is not reported as a position equal to the buffer size.
+Since nilfs2 has a ->writepages operation already, ->writepage is only
+called by the migration code.  If we add a ->migrate_folio operation, it
+won't even be used for that and so it can be deleted.
 
-One frame short has a cost once the application stops feeding the
-stream. The DSP returns the last queued buffer and the position stops
-at appl_ptr - 1, so avail stays at buffer_size - 1, below the default
-stop_threshold. The DSP sends nothing more as its queue is empty, so
-no period interrupt comes either: ALSA never detects the underrun and
-the stream stays RUNNING. A poll-driven application that missed its
-last wakeup waits forever, and drain only ends on its timeout, with
--EIO. On capture, the last frame of each period is held back until
-the next one.
-
-Before that commit the position wrapped to 0 at the end of the ring.
-Do that again. A full lap is the start of the ring, and
-snd_pcm_update_hw_ptr0() accounts for the wrap: the position cannot
-move by more than one lap between two updates, as each returned buffer
-calls snd_pcm_period_elapsed() and the DSP holds at most periods
-buffers.
-
-Seen on a OnePlus Pad 3 (SM8750) with PipeWire in interrupt-driven
-scheduling: after a stall the PCM sat at hw_ptr 78239, appl_ptr 78240
-(avail 3839 of 3840) for two hours.
-
-Fixes: a93dad6f4e6a ("ASoC: q6apm-dai: make use of q6apm_get_hw_pointer")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Vladyslav Tymoshchuk <tvlad744@gmail.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Tested-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261014162703.10172-2-tvlad744@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: adjusted context in q6apm_dai_pointer() because the preceding bytes_to_frames() branch is absent ]
+[konishi.ryusuke@gmail.com: fixed panic by using buffer_migrate_folio_norefs]
+Link: https://lkml.kernel.org/r/20241002150036.1339475-2-willy@infradead.org
+Link: https://lkml.kernel.org/r/20241024092602.13395-10-konishi.ryusuke@gmail.com
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: cb6702e63e0a ("nilfs2: force clear dirty state when restoring from the shadow map")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-dai.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/nilfs2/inode.c | 33 +--------------------------------
+ 1 file changed, 1 insertion(+), 32 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
-index 3b00c6d5174ab..fef69e4318908 100644
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -441,11 +441,15 @@ static snd_pcm_uframes_t q6apm_dai_pointer(struct snd_soc_component *component,
- 	struct q6apm_dai_rtd *prtd = runtime->private_data;
- 	snd_pcm_uframes_t ptr;
- 
--	ptr = q6apm_get_hw_pointer(prtd->graph, substream->stream) * runtime->period_size;
--	if (ptr)
--		return ptr - 1;
-+	/*
-+	 * The hw pointer counts the period buffers the DSP has returned in
-+	 * this lap, 1..periods. A full lap is the start of the ring again:
-+	 * report 0 rather than one frame less, so that the position of a
-+	 * drained buffer reaches appl_ptr and ALSA sees the underrun.
-+	 */
-+	ptr = q6apm_get_hw_pointer(prtd->graph, substream->stream) % runtime->periods;
- 
--	return 0;
-+	return ptr * runtime->period_size;
+diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
+index ab1dd89de538f..52f783f90d9e1 100644
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -170,37 +170,6 @@ static int nilfs_writepages(struct address_space *mapping,
+ 	return err;
  }
  
- static int q6apm_dai_hw_params(struct snd_soc_component *component,
+-static int nilfs_writepage(struct page *page, struct writeback_control *wbc)
+-{
+-	struct folio *folio = page_folio(page);
+-	struct inode *inode = folio->mapping->host;
+-	int err;
+-
+-	if (sb_rdonly(inode->i_sb)) {
+-		/*
+-		 * It means that filesystem was remounted in read-only
+-		 * mode because of error or metadata corruption. But we
+-		 * have dirty pages that try to be flushed in background.
+-		 * So, here we simply discard this dirty page.
+-		 */
+-		nilfs_clear_folio_dirty(folio);
+-		folio_unlock(folio);
+-		return -EROFS;
+-	}
+-
+-	folio_redirty_for_writepage(wbc, folio);
+-	folio_unlock(folio);
+-
+-	if (wbc->sync_mode == WB_SYNC_ALL) {
+-		err = nilfs_construct_segment(inode->i_sb);
+-		if (unlikely(err))
+-			return err;
+-	} else if (wbc->for_reclaim)
+-		nilfs_flush_segment(inode->i_sb, inode->i_ino);
+-
+-	return 0;
+-}
+-
+ static bool nilfs_dirty_folio(struct address_space *mapping,
+ 		struct folio *folio)
+ {
+@@ -295,7 +264,6 @@ nilfs_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
+ }
+ 
+ const struct address_space_operations nilfs_aops = {
+-	.writepage		= nilfs_writepage,
+ 	.read_folio		= nilfs_read_folio,
+ 	.writepages		= nilfs_writepages,
+ 	.dirty_folio		= nilfs_dirty_folio,
+@@ -304,6 +272,7 @@ const struct address_space_operations nilfs_aops = {
+ 	.write_end		= nilfs_write_end,
+ 	.invalidate_folio	= block_invalidate_folio,
+ 	.direct_IO		= nilfs_direct_IO,
++	.migrate_folio		= buffer_migrate_folio_norefs,
+ 	.is_partially_uptodate  = block_is_partially_uptodate,
+ };
+ 
 -- 
 2.53.0
 
