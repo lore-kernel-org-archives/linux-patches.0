@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591428;
-	b=r922GPsslE6zJw1Nub8oonYae4lp3226A4UeYL1QwoUe4+jYQZFoIvKL8R7OBnpRpOkJ
-	 KNj6tE4jLcjV6nw1pHLXlkAP3qLt1INHyK2zP31okaR6cbEcMmroguzSle9xjjPFrRLzi
-	 ozFqrY/DEF0Jz+pRVfb9dNTW1sX5oAlu7lBuBIu1eIOoUWQKkeTM9ZHFHkLl+F9+kYJ5d
-	 echY3qMdzaQzT4zC/4ape7xYsKv+1JRwGliEvy8oF18t6s8PVMnDZ9i3lWND/Z5WxR4HQ
-	 0JymZ+74Qm51LHAHwg93qsn+df1Avvbxg2dBkGA6kw5G3ptHPDqd9tXnpBo9xnBopAA==
+	t=1794591430;
+	b=R6c1xqOjjYd7w7rU6o+UB8JAC/k9vpiSE7sHa6vxJxAubQFgUHBL+KAWkVQ3fVp2jvIx
+	 YBLGJf6Iw33RZPOXA0lhJe6hogKhG64C7BojSzJYucQUjB0yUd+xLxIXdASPeOOt6x2Fv
+	 QSCoGGSaYZrNS/IdACrDYeXpU85ONIkJd9WtIM/eIMEymqUUC2JWR5eEyhlAxcwKOhXNY
+	 DDHf0zCcIrxTkVFjWItPDQDVYG/RzgcWTGeJTu/PquGH78Y9sjMvj3le/79/vGNLSg4XJ
+	 w/D+aFO06DVQOe4Chz3s2e6/xEAJoeZibYrTkrUCUewhEfV0xWRn8rBxeeEa8fZRpEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591428;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591430;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=78rIcqRibXqvvbKbJf1y/r8HNCLTDnX6WWSFTojL2Ek=;
-	b=CeJQLumsm/TfEKEwPRuU0ZMh0qRdcMC4rKFPpHVucZIoDsJUIjb1J0cOQhgQdqpJBYMK
-	 mioD4GkhV/UY3rS04FjrCdmQ0pI2JBlQMiCNvMLI6h32OVHOsvl1RRXCAOS2JX5foi1c2
-	 BKvgF30YZnQHLijFS84u+dIKGpRBCXv1uSdfXKC9dgBkPsGYlDsainJQnaYD72DOQW5WS
-	 dJDEJTAdlCs8PZDebPuQP4yRmj1Hwg85uhD/bfOaMtxvYbqmnwi8RdweiyoGTAoeZOztA
-	 9iPeV8l2cI+LtsxxcE54aafcbBJz/K7mgULsB8Waj30WOmb22lOgolrNKvOtDFnrsaA==
+	bh=LdG9FEko6quGNdiH4X7EPKPNq/mT8jOMQBMKAC2JSP4=;
+	b=5UJ5bPWcdZ2tqRPPZq3hfV+W7KTJ8c4AQOSxLRrxn8a7E+bzOiAqPoV0eA5E8NE7H0/F
+	 vXoKM8MBLXwgOcyac7IS6+ZTs0FyY3Hw0tbWZxmarLPrJu1wWAeZz/PQkIz6mBgfv0xsw
+	 6SYw33aI+U18QF9sx8cxHiTPHoe7eBq2Y76yhTg6b9802TEx3riNB5eJQ/OgXRhwOZd7k
+	 4+yu7IbSPLo0/iO0QxbWwDNJ/8QYxF15S5Mukk3koPzXdqGbFmg+QmNtPH3CBSgshBH9x
+	 X17KCOkp+jBH1pbnUHk91va7BGhOkpZ+ePu38Ghcr7YjGHoVzm/I7neWOqoIdD3LQ4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OWxl0ZsP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X5tV7dBP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF742607B5AB;
-	Fri, 13 Nov 2026 17:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2972606E204;
+	Fri, 13 Nov 2026 17:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OWxl0ZsP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C53B1F000C4;
-	Fri, 13 Nov 2026 17:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X5tV7dBP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A511F000C4;
+	Fri, 13 Nov 2026 17:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591428;
-	bh=78rIcqRibXqvvbKbJf1y/r8HNCLTDnX6WWSFTojL2Ek=;
+	s=korg; t=1794591429;
+	bh=LdG9FEko6quGNdiH4X7EPKPNq/mT8jOMQBMKAC2JSP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OWxl0ZsP3KCba4SFw26U+0+jQMQllG+Fzo/FJol5U9MqEPpOXAIpnnzSCEyq6Sk6Q
-	 OcraxNNoLU+Gjz8NL7RtFCYgdjXworkls77L92Yk9f3E05b0MDIfz6cwLJj582CNFv
-	 zYWLub9h1OlFijlNfjnCOuFF55RYa3AxBqtW5Jk8=
+	b=X5tV7dBPdLXexYoe+v4pr6pSdT2wrReTIXBG7XftRgHbKtyUQKEj9Gm5d10XqnKZi
+	 JmK7MMgfxNfPe2OVDf4qxxaMMxjJZ3J0rCmlKBWBLXLshYhCjOW44I15zYJn8IY60P
+	 JjzSr973ToHRxXTjUVbqxl95o2W9fVVo9k2CmbZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vaibhav Nagare <vnagare@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ge Yang <yangge1116@126.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Muchun Song <muchun.song@linux.dev>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <21cnbao@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 479/670] bnxt_en: dont leave an XDP program installed when the open fails
-Date: Fri, 13 Nov 2026 10:50:43 -0500
-Message-ID: <20261113153828.185846069@linuxfoundation.org>
+Subject: [PATCH 6.12 470/670] mm/hugetlb: remove unnecessary holding of hugetlb_lock
+Date: Fri, 13 Nov 2026 10:50:34 -0500
+Message-ID: <20261113153827.892907308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,145 +73,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vaibhav Nagare <vnagare@redhat.com>
+From: Ge Yang <yangge1116@126.com>
 
-[ Upstream commit 78731b46967e3e7102b5cd5062bef185f3404b5c ]
+[ Upstream commit 344ef45b03336e7f74658814f66483b5417c9cf1 ]
 
-bnxt_xdp_set() stores the new program and drops the reference on the old
-one before reopening the NIC.  If bnxt_open_nic() then fails, ndo_bpf()
-returns an error with the new program still in bp->xdp_prog.  The caller
-treats the error as "nothing was installed" and drops its own reference,
-so bp->xdp_prog is left pointing at a freed program and the next XDP
-update dereferences it:
+In isolate_or_dissolve_huge_folio(), after acquiring the hugetlb_lock, it
+is only for the purpose of obtaining the correct hstate, which is then
+passed to alloc_and_dissolve_hugetlb_folio().
 
-  BUG: unable to handle page fault for address: ff78ecc80ddd1038
-  RIP: 0010:__bpf_prog_put+0x5/0x80
-  Call Trace:
-   bnxt_xdp_set+0xad/0x1b0 [bnxt_en]
-   dev_xdp_propagate+0x36/0xa0
-   bond_xdp_set+0xeb/0x2d0 [bonding]
-   dev_xdp_install+0x1b1/0x350
-   bpf_xdp_link_update+0xc5/0x1b0
-   link_update+0x104/0x1e0
-   __sys_bpf+0x662/0xcf0
+alloc_and_dissolve_hugetlb_folio() itself also acquires the hugetlb_lock.
+We can have alloc_and_dissolve_hugetlb_folio() obtain the hstate by
+itself, so that isolate_or_dissolve_huge_folio() no longer needs to
+acquire the hugetlb_lock.  In addition, we keep the folio_test_hugetlb()
+check within isolate_or_dissolve_huge_folio().  By doing so, we can avoid
+disrupting the normal path by vainly holding the hugetlb_lock.
 
-Seen on a 6.12 based kernel after bnxt_alloc_mem() failed an order-4
-allocation on a fragmented host:
+replace_free_hugepage_folios() has the same issue, and we should address
+it as well.
 
-  bnxt_en 0000:a0:00.1 ens4f1np1: nic open fail (rc: fffffff4)
-  bond1: (slave ens4f1np1): Error -12 calling ndo_bpf
+Addresses a possible performance problem which was added by the hotfix
+113ed54ad276 ("mm/hugetlb: fix kernel NULL pointer dereference when
+replacing free hugetlb folios").
 
-Bonding is not required to hit this; a plain XDP attach on a bnxt
-interface takes the same path.
-
-Restore the previous program when an attach or a replace fails, and
-recompute the page-mode and XDP TX ring configuration from it.  The
-configuration matters because bnxt_init_one_rx_ring() only assigns
-rxr->xdp_prog in page mode, and __bnxt_set_rx_skb_mode() derives
-dev->max_mtu from the installed program.  Release the old program only
-once the change has been committed.
-
-A detach is not undone.  dev_xdp_detach_link() clears the core's record
-of the program even when the driver returns an error, so putting the
-program back would leave the driver running a program the core has
-already dropped.  If the reopen fails during a detach, bnxt_xdp_set()
-therefore returns 0 with the device closed; bnxt_open_nic() has already
-logged the failure.
-
-Found in a crash dump; the change was not tested on hardware.
-
-Fixes: c6d30e8391b8 ("bnxt_en: Add basic XDP support.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vaibhav Nagare <vnagare@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261012072802.2153706-1-vnagare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: adapted XDP configuration to existing redirect-target APIs and an inline completion-ring calculation under RTNL locking. ]
+Link: https://lkml.kernel.org/r/1748317010-16272-1-git-send-email-yangge1116@126.com
+Fixes: 113ed54ad276 ("mm/hugetlb: fix kernel NULL pointer dereference when replacing free hugetlb folios")
+Signed-off-by: Ge Yang <yangge1116@126.com>
+Suggested-by: Oscar Salvador <osalvador@suse.de>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <21cnbao@gmail.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ sashal: Dropped the struct hstate *h; declaration (kept page_folio()) because this tree still uses the page-based isolate_or_dissolve_huge_page() name and signature, which differ from upstream's folio version. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 54 ++++++++++++-------
- 1 file changed, 36 insertions(+), 18 deletions(-)
+ mm/hugetlb.c | 54 +++++++++++++++++-----------------------------------
+ 1 file changed, 17 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 2c16348d3b8cb..fcdffdc3ffa8c 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -380,12 +380,34 @@ int bnxt_xdp_xmit(struct net_device *dev, int num_frames,
- 	return nxmit;
- }
- 
-+static void bnxt_xdp_apply_cfg(struct bnxt *bp, int tx_xdp)
-+{
-+	struct net_device *dev = bp->dev;
-+	int tc = bp->num_tc ? : 1;
-+	int tx_cp;
-+
-+	if (bp->xdp_prog) {
-+		bnxt_set_rx_skb_mode(bp, true);
-+		xdp_features_set_redirect_target(dev, true);
-+	} else {
-+		xdp_features_clear_redirect_target(dev);
-+		bnxt_set_rx_skb_mode(bp, false);
-+	}
-+	bp->tx_nr_rings_xdp = tx_xdp;
-+	bp->tx_nr_rings = bp->tx_nr_rings_per_tc * tc + tx_xdp;
-+	tx_cp = bnxt_num_tx_to_cp(bp, bp->tx_nr_rings);
-+	bp->cp_nr_rings = max_t(int, tx_cp, bp->rx_nr_rings);
-+	bnxt_set_tpa_flags(bp);
-+	bnxt_set_ring_params(bp);
-+}
-+
- /* Under rtnl_lock */
- static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 0f72edd252250..01b81fdf86f68 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2866,20 +2866,24 @@ void restore_reserve_on_error(struct hstate *h, struct vm_area_struct *vma,
+ /*
+  * alloc_and_dissolve_hugetlb_folio - Allocate a new folio and dissolve
+  * the old one
+- * @h: struct hstate old page belongs to
+  * @old_folio: Old folio to dissolve
+  * @list: List to isolate the page in case we need to
+  * Returns 0 on success, otherwise negated error.
+  */
+-static int alloc_and_dissolve_hugetlb_folio(struct hstate *h,
+-			struct folio *old_folio, struct list_head *list)
++static int alloc_and_dissolve_hugetlb_folio(struct folio *old_folio,
++			struct list_head *list)
  {
- 	struct net_device *dev = bp->dev;
--	int tx_xdp = 0, tx_cp, rc, tc;
-+	int tx_xdp = 0, rc, tc;
- 	struct bpf_prog *old;
-+	int old_tx_xdp;
+-	gfp_t gfp_mask = htlb_alloc_mask(h) | __GFP_THISNODE;
++	gfp_t gfp_mask;
++	struct hstate *h;
+ 	int nid = folio_nid(old_folio);
+ 	struct folio *new_folio = NULL;
+ 	int ret = 0;
  
- 	if (prog && !prog->aux->xdp_has_frags &&
- 	    bp->dev->mtu > BNXT_MAX_PAGE_MODE_MTU) {
-@@ -412,26 +434,22 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
- 	if (netif_running(dev))
- 		bnxt_close_nic(bp, true, false);
+ retry:
++	/*
++	 * The old_folio might have been dissolved from under our feet, so make sure
++	 * to carefully check the state under the lock.
++	 */
+ 	spin_lock_irq(&hugetlb_lock);
+ 	if (!folio_test_hugetlb(old_folio)) {
+ 		/*
+@@ -2908,8 +2912,10 @@ static int alloc_and_dissolve_hugetlb_folio(struct hstate *h,
+ 		cond_resched();
+ 		goto retry;
+ 	} else {
++		h = folio_hstate(old_folio);
+ 		if (!new_folio) {
+ 			spin_unlock_irq(&hugetlb_lock);
++			gfp_mask = htlb_alloc_mask(h) | __GFP_THISNODE;
+ 			new_folio = alloc_buddy_hugetlb_folio(h, gfp_mask, nid,
+ 							      NULL, NULL);
+ 			if (!new_folio)
+@@ -2953,36 +2959,25 @@ static int alloc_and_dissolve_hugetlb_folio(struct hstate *h,
  
-+	old_tx_xdp = bp->tx_nr_rings_xdp;
- 	old = xchg(&bp->xdp_prog, prog);
--	if (old)
--		bpf_prog_put(old);
--
--	if (prog) {
--		bnxt_set_rx_skb_mode(bp, true);
--		xdp_features_set_redirect_target(dev, true);
+ int isolate_or_dissolve_huge_page(struct page *page, struct list_head *list)
+ {
+-	struct hstate *h;
+ 	struct folio *folio = page_folio(page);
+ 	int ret = -EBUSY;
+ 
+-	/*
+-	 * The page might have been dissolved from under our feet, so make sure
+-	 * to carefully check the state under the lock.
+-	 * Return success when racing as if we dissolved the page ourselves.
+-	 */
+-	spin_lock_irq(&hugetlb_lock);
+-	if (folio_test_hugetlb(folio)) {
+-		h = folio_hstate(folio);
 -	} else {
--		xdp_features_clear_redirect_target(dev);
--		bnxt_set_rx_skb_mode(bp, false);
-+	bnxt_xdp_apply_cfg(bp, tx_xdp);
-+
-+	if (netif_running(dev)) {
-+		rc = bnxt_open_nic(bp, true, false);
-+		/* a detach cannot be undone, only an attach */
-+		if (rc && prog) {
-+			WRITE_ONCE(bp->xdp_prog, old);
-+			bnxt_xdp_apply_cfg(bp, old_tx_xdp);
-+			return rc;
-+		}
- 	}
--	bp->tx_nr_rings_xdp = tx_xdp;
--	bp->tx_nr_rings = bp->tx_nr_rings_per_tc * tc + tx_xdp;
--	tx_cp = bnxt_num_tx_to_cp(bp, bp->tx_nr_rings);
--	bp->cp_nr_rings = max_t(int, tx_cp, bp->rx_nr_rings);
--	bnxt_set_tpa_flags(bp);
--	bnxt_set_ring_params(bp);
+-		spin_unlock_irq(&hugetlb_lock);
++	/* Not to disrupt normal path by vainly holding hugetlb_lock */
++	if (!folio_test_hugetlb(folio))
+ 		return 0;
+-	}
+-	spin_unlock_irq(&hugetlb_lock);
  
--	if (netif_running(dev))
--		return bnxt_open_nic(bp, true, false);
-+	if (old)
-+		bpf_prog_put(old);
+ 	/*
+ 	 * Fence off gigantic pages as there is a cyclic dependency between
+ 	 * alloc_contig_range and them. Return -ENOMEM as this has the effect
+ 	 * of bailing out right away without further retrying.
+ 	 */
+-	if (hstate_is_gigantic(h))
++	if (folio_order(folio) > MAX_PAGE_ORDER)
+ 		return -ENOMEM;
  
- 	return 0;
+ 	if (folio_ref_count(folio) && isolate_hugetlb(folio, list))
+ 		ret = 0;
+ 	else if (!folio_ref_count(folio))
+-		ret = alloc_and_dissolve_hugetlb_folio(h, folio, list);
++		ret = alloc_and_dissolve_hugetlb_folio(folio, list);
+ 
+ 	return ret;
  }
+@@ -3004,7 +2999,6 @@ void wait_for_freed_hugetlb_folios(void)
+  */
+ int replace_free_hugepage_folios(unsigned long start_pfn, unsigned long end_pfn)
+ {
+-	struct hstate *h;
+ 	struct folio *folio;
+ 	int ret = 0;
+ 
+@@ -3013,23 +3007,9 @@ int replace_free_hugepage_folios(unsigned long start_pfn, unsigned long end_pfn)
+ 	while (start_pfn < end_pfn) {
+ 		folio = pfn_folio(start_pfn);
+ 
+-		/*
+-		 * The folio might have been dissolved from under our feet, so make sure
+-		 * to carefully check the state under the lock.
+-		 */
+-		spin_lock_irq(&hugetlb_lock);
+-		if (folio_test_hugetlb(folio)) {
+-			h = folio_hstate(folio);
+-		} else {
+-			spin_unlock_irq(&hugetlb_lock);
+-			start_pfn++;
+-			continue;
+-		}
+-		spin_unlock_irq(&hugetlb_lock);
+-
+-		if (!folio_ref_count(folio)) {
+-			ret = alloc_and_dissolve_hugetlb_folio(h, folio,
+-							       &isolate_list);
++		/* Not to disrupt normal path by vainly holding hugetlb_lock */
++		if (folio_test_hugetlb(folio) && !folio_ref_count(folio)) {
++			ret = alloc_and_dissolve_hugetlb_folio(folio, &isolate_list);
+ 			if (ret)
+ 				break;
+ 
 -- 
 2.53.0
 
