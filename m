@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585467;
-	b=OrK/qiH/3WIhyrwFK1PkiYRY/fiMtVx7A9qSDPLiA4adZbNJomHZ/+Cv3m1habBgatog
-	 LuWw6tSfdwoQYuG5jHZS3XQZECl4lTQeHetx0tfhu23KdDt3vcrqVgGwu8GA9Oi9tKbdn
-	 XxL3H6fKBbwoz6uPunFbtH4ijnxYtj8HbYyK8SoMz6MXTX+O8/mb2InuvLLyR4Db/kCDp
-	 GzutX3nUYbGkeBVI+tNkMX7ob4lc3JlsN/bgMQ18ZYH2D2Bh9yTJdE+VZLTK4LqLSIKsr
-	 VhvaJEBG105KFzwRxi/I/u+DjnRDMExT+Y7PWLaWFn3PwVyHoWLU6qq3jfxwKOmco1A==
+	t=1794585468;
+	b=oy+ytgORYT4ZWSR+savXgxhjOVms0SHZQKdnaDRZfGpBBg3f1pF4MplDGSwYrGTqhqaS
+	 MjM4BBzT0nn2HhYtqSeoGuLx4Ba1GaG10ce0SSZ9AS5ky9I0C0MY7UYNuZyD/wV8mB5WD
+	 coiq8fkyRnpwRbMKEhnIlRQME10NQbaekrnt44eOvx9YFv7prqVhGQh16XBhcYV2OHcCA
+	 6+ZufHe1k6wEK17eMrkJvUemsfno2AVWa7gafHan3zCI3/FmrT+/VYI0Kgxygyrv86G5R
+	 hI+s7Wi4Fs8zaWMDLVyzlNLtzK7rLDYu6C3CU4IZB8Xr5/psYOMZYMnO0uVq3tcuKhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=gyZ7VCmtUmlpo1DLAfjnv0gzzBEmalpDFhesthQNCSA=;
-	b=oARwiO/DB/QXQWMjO7gc5VmCp12KO0fveA+M45Sco+fqwDDwy4a6c2pCrKfIw5FPR+6a
-	 ioEfN/e7F684tMlL8Mf44znLh5l6HuKwoiY92kvb/haJ67YA16USY7uisqDkYpobMf9Kf
-	 V+lbaIuf2mwdpNvzMrU3BgBPOwkCE6GUcYCbjnxvDINyWi+ToiuRGcKYjYLmn5C/VvvYn
-	 2uDJJRhy6RZEmfdt2r5VZNd62K/A4AOJUHX934q2MYjrVEBDxRVNwKpvukTbrd65dKUwY
-	 1nBdnN8P9psM+4m0fe9weuQ0Nx72QAvhZnH4AaZsoi2a9t7jX0EeDpC5ePZI7r8+7ew==
+	bh=ffCvv6YAfccIvE12ipXvilJpEfsLNxc867wBBBsdmwk=;
+	b=pmGoD5XHmXjPL8MjxnhjL8LlPYzPblP8vNPR2mvGGZo2kabx1eqkdeyqlCB6XgSx+jgo
+	 j5tBq4Ewy0QgdndPFcoTtv9dcMe0eKG5D1yuPNrlOViMIUcQqNLMP7lEiun50XTNot30V
+	 Mdcm7c+BwuUe4bVS21HbVWPAR1KmRHQDtiYfacByHEu69jnyUxMhu7ltt+9Q2/9wRJQvx
+	 mVmkpZndSHnj1fKR0lp0pLnRQ+FgK5PeuOlOWp4HE1HALPyWSUwDNetFfoBVD9Rjuhgjl
+	 JhUpR6ITRf1Mlt+HQxT+Qf8jEeXOLx3OZK9zZsV4Axp1Lla/luA6y0/50BZe9oF7WXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dk8ZLmXl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UVM4iJBY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D15606EB81;
-	Fri, 13 Nov 2026 15:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A10606EB88;
+	Fri, 13 Nov 2026 15:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dk8ZLmXl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75601F000C4;
-	Fri, 13 Nov 2026 15:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UVM4iJBY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12561F000C4;
+	Fri, 13 Nov 2026 15:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585466;
-	bh=gyZ7VCmtUmlpo1DLAfjnv0gzzBEmalpDFhesthQNCSA=;
+	s=korg; t=1794585468;
+	bh=ffCvv6YAfccIvE12ipXvilJpEfsLNxc867wBBBsdmwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dk8ZLmXloCcSmhgACKXPDml1bHo/d7vH1X4nwYu0YGAmbQad4I9moXKC8W/cDEhSq
-	 ABdmo/GYo4bpTPjuQb1uQIIAcyvYg6LmA21IncKa/rccS5wzaRdJKBqKNVa9kq8DBX
-	 n5PSsSO7++6rxoNtXyWTXR5DRuKfMw3QTy+UX2Ng=
+	b=UVM4iJBYHzqsFDnHXFCzmlsWdjC7zA/R53FYWFV23xTagrMZrFmIYJVdWh8B9nhfd
+	 a/uyEE5KdKbDJDixDSScLvc7dafEsarstXt/cSqEEWO0dIRvS0owHYPVR8RF33BLcC
+	 4ZRthOy2gg91eEc7NGgWMV/hS2iQ28vSR0nFLgk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mika Kahola <mika.kahola@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 122/507] drm/i915/psr: Fix SFF and CFF CTL register bit definitions
-Date: Fri, 13 Nov 2026 10:47:06 -0500
-Message-ID: <20261113153758.561640263@linuxfoundation.org>
+Subject: [PATCH 7.3 123/507] drm/i915/psr: Dont clip plane state destination rectangle
+Date: Fri, 13 Nov 2026 10:47:07 -0500
+Message-ID: <20261113153758.596581957@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -72,42 +72,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit 15b3187740291c4705b995bbf984da462e9f1e35 ]
+[ Upstream commit e30830d21860fbf030ad162c3db4d1219477dfb5 ]
 
-Single full frame bit in SFF_CTL and continuous full frame bit in CFF_CTL
-are bit 0. Fix the definitions accordingly.
+clip_area_update() uses drm_rect_intersect which modifies passed r1
+rectangle. Early transport alignment passes the cursor uapi.dst rectangle
+to clip_area_update, so the cursor uapi.dst is unintentionally modified by
+drm_rect_intersect.
 
-Fixes: 3b5bf853e309 ("drm/i915/psr: Add register definitions for SFF_CTL and CFF_CTL registers")
-Cc: <stable@vger.kernel.org> # v6.15+
+Fix this by using local copy in clip_area_update(). Also make the damage
+and the display area const.
+
+Fixes: 1bff93b8bc27 ("drm/i915/psr: Extend SU area to cover cursor fully if needed")
+Cc: <stable@vger.kernel.org> # v6.9+
+Assisted-by: GitHub-Copilot:claude-opus-5
 Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
 Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patch.msgid.link/20260929094434.77129-5-jouni.hogander@intel.com
-(cherry picked from commit 95ca8fab5232dfb7459989d54f09501704a8d7ad)
+Link: https://patch.msgid.link/20260929094434.77129-9-jouni.hogander@intel.com
+(cherry picked from commit 8621f3bcea6b0a790a954ddf2e6514c20a24ac1a)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr_regs.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr_regs.h b/drivers/gpu/drm/i915/display/intel_psr_regs.h
-index 16a9e3af198d0..428f3da045003 100644
---- a/drivers/gpu/drm/i915/display/intel_psr_regs.h
-+++ b/drivers/gpu/drm/i915/display/intel_psr_regs.h
-@@ -254,12 +254,12 @@
- #define _LNL_SFF_CTL_A				0x60918
- #define _LNL_SFF_CTL_B				0x61918
- #define LNL_SFF_CTL(tran)			_MMIO_TRANS(tran, _LNL_SFF_CTL_A, _LNL_SFF_CTL_B)
--#define  LNL_SFF_CTL_SF_SINGLE_FULL_FRAME	REG_BIT(1)
-+#define  LNL_SFF_CTL_SF_SINGLE_FULL_FRAME	REG_BIT(0)
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 1a9706d43b625..7aaf5b4d35035 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2702,23 +2702,25 @@ static u32 psr2_pipe_srcsz_early_tpt_calc(struct intel_crtc_state *crtc_state,
+ }
  
- #define _LNL_CFF_CTL_A				0x6091c
- #define _LNL_CFF_CTL_B				0x6191c
- #define LNL_CFF_CTL(tran)			_MMIO_TRANS(tran, _LNL_CFF_CTL_A, _LNL_CFF_CTL_B)
--#define  LNL_CFF_CTL_SF_CONTINUOUS_FULL_FRAME	REG_BIT(1)
-+#define  LNL_CFF_CTL_SF_CONTINUOUS_FULL_FRAME	REG_BIT(0)
+ static void clip_area_update(struct drm_rect *overlap_damage_area,
+-			     struct drm_rect *damage_area,
+-			     struct drm_rect *display_area)
++			     const struct drm_rect *damage_area,
++			     const struct drm_rect *display_area)
+ {
+-	if (!drm_rect_intersect(damage_area, display_area))
++	struct drm_rect inter = *damage_area;
++
++	if (!drm_rect_intersect(&inter, display_area))
+ 		return;
  
- /* PSR2 Early transport */
- #define _PIPE_SRCSZ_ERLY_TPT_A	0x70074
+ 	if (overlap_damage_area->y1 == -1) {
+-		overlap_damage_area->y1 = damage_area->y1;
+-		overlap_damage_area->y2 = damage_area->y2;
++		overlap_damage_area->y1 = inter.y1;
++		overlap_damage_area->y2 = inter.y2;
+ 		return;
+ 	}
+ 
+-	if (damage_area->y1 < overlap_damage_area->y1)
+-		overlap_damage_area->y1 = damage_area->y1;
++	if (inter.y1 < overlap_damage_area->y1)
++		overlap_damage_area->y1 = inter.y1;
+ 
+-	if (damage_area->y2 > overlap_damage_area->y2)
+-		overlap_damage_area->y2 = damage_area->y2;
++	if (inter.y2 > overlap_damage_area->y2)
++		overlap_damage_area->y2 = inter.y2;
+ }
+ 
+ static bool intel_psr2_sel_fetch_pipe_alignment(struct intel_crtc_state *crtc_state)
 -- 
 2.53.0
 
