@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590928;
-	b=2+h3x+5/2yvNyo7CXCueDjLUhVR4vO73dkt7Hn1r5TbwTKoZ+LU8YW2JhJoNLyMt5Fo4
-	 UfdIZshXhMdstuEtfYeJ089p+jkjcp5vhJoGS8C79AfOaFMIrYMH8JEFVyayG0AHA2I+H
-	 qbHx+RodFWQqFO7kxlHdfSuNxpiagYBBMfzbDHqP4ZZpT2DWJElwtTDSTN+panAAkaMt/
-	 T0XrGc0j6UjNFF2mSr3L6F0Lwi0EbEKFEvEj9kyMt7GmxmFixO7WSGnUPec84SBWHXdW5
-	 fEQMN6HLoLuVMozo4cZnudvI+c+WWeFFH0fOW23tEZ/M8kPdCD462iTRTGhyhhxMMYw==
+	t=1794590929;
+	b=pr5sYrpxFZu7FkXUN/42qW3tewlD9R654MwPRLeEC8vm6ZqwGo3k7upxY48OdD3x2i2I
+	 ggYFxRtvMSt3lw9zVJHrbq4DQfVvnwuegjBkPB2WyF18CpMNOwelUsbW3AvG8w1Vnpyni
+	 kN+wEe9Fk8fszn20Pw5AR0EmBFsobN3kDZ8ylecpJ68y5rSIoxzi/lf8mHoPEstsIBpUG
+	 7/ayT5TnK90m8ZXxiuKpmEFyZVslc4QH4pXVakNX0JZ5SrCAamUQZqfwriy+wW1pnSkVi
+	 75KXk33DqXOgAQrZ5aXghspRpdxtXv7Pr4YcdEcu8OwYDjQ8Oe17RYGPIhCrKSVHtuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590928;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590929;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9ZsiWhAQd2R4oyMZLzBIp6yqPJquD1PpUxIN3XVCrMU=;
-	b=oQSQ2i+7KbKWAH1ZgHr9LXUqL7dWU3jplDKWf42hU1wpf3gtpJBIn8rgvWwzkdME1eWF
-	 1XdiF1+QfyzdzKYtloOjpCoDV0OJiOxGocpTENjnFHmrMFLLg1r1HWedSW0PsMV2VOfLm
-	 APmuVAXnHM8RY16SzFZyNheKF35zLDkxlxhLH6ZGPRP6srKJ78kNSVaHX7Dwyvr8WfaS4
-	 oPTB3sxURsGf1mp+JHCyUjZ+JPAWi0hZ29Sx+FLndMHYhzVCVlDK3gL2PwKa6s2Rzzz/+
-	 //jhTz9H4tSPkiAJ9Ui7KabZkFSz7aiC+6zClDr2hxMcrxu0DMbc3YxFQxDS0UbJMGw==
+	bh=vXD1WUxLxilGnF1Dv5boO5AmKWD12N4FnQnYtqAZSN4=;
+	b=A7RWrTfULa8pDtxHqxy8PwvlhJui0ltLUOsqb74Xu9TFc2p74PW7dFhJN/k3+xvz1IzW
+	 2NFrGvTUwgbvJbCsF2gGnGrGQ3+N6ymnux+oUkG9+5VfkMgZu2hgtaH+jQX54YQRIH1pS
+	 Kg3fkFtX6nu43ml+9iBBytdLMsMt9HgOTGJ+HP8spzdJoxZgSWGbYYDWm5Iq2hQQQ6tTL
+	 96SdGIaiQNdYxD0KBZ/irDb61wSwkcANI/tHD9HD5ofCIlRk3dFqBcOEGp8bUc/PHwGZ8
+	 +wNXkjVt4nXUfkpoFb6Kwf9p1PEGd5tIWqGWi7rVUGfiOjOAHacDdgfS/Xz9VhWcDrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SbgSvM5E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="T/yFVmF+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DF3606E676;
-	Fri, 13 Nov 2026 17:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9169F606E676;
+	Fri, 13 Nov 2026 17:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SbgSvM5E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E161F000C5;
-	Fri, 13 Nov 2026 17:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T/yFVmF+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A051F000C5;
+	Fri, 13 Nov 2026 17:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590928;
-	bh=9ZsiWhAQd2R4oyMZLzBIp6yqPJquD1PpUxIN3XVCrMU=;
+	s=korg; t=1794590929;
+	bh=vXD1WUxLxilGnF1Dv5boO5AmKWD12N4FnQnYtqAZSN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SbgSvM5E9k7b/lxoPNrVCfcg5TFyM/6wJ/NYhDngH/4CioLyLdrLSTWzV5v55dY4F
-	 ns7p8uaq4cJhyva3djrqL9Uy95A74KlhzfPtItZYURPyGc53aOglT7QmeIH3v450v+
-	 yHXgimz7MKpTGr3Xx25F9bXTr4n7YZu8q8XRlMlY=
+	b=T/yFVmF+ngO5W5ZO955bcgoNUUttsA/2m/kz9F2cNvK0em9lpRM0BFNZVLj+1Hsvd
+	 qjCQODzfYomEbCm/7zy50nW8RiekqK+BJqay8EjVp3SLzewd5rNjuBJw80dp59n1NT
+	 Aj8y+22zq9Cc1gJVHvJLaVfczm6Rf2m/BVFv2IFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 115/670] ax25: free the old digipeater path of a listed socket under ax25_list_lock
-Date: Fri, 13 Nov 2026 10:44:39 -0500
-Message-ID: <20261113153815.726791901@linuxfoundation.org>
+Subject: [PATCH 6.12 116/670] ax25: put an incoming connection on the listeners queue once it is set up
+Date: Fri, 13 Nov 2026 10:44:40 -0500
+Message-ID: <20261113153815.761977827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,79 +69,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-ax25_connect() frees the digipeater path left by a previous connect()
-with only the socket lock held. A bound socket is on ax25_list, where
-__ax25_find_cb() on the receive path and ax25_info_show() for
-/proc/net/ax25 read ax25->digipeat under ax25_list_lock, without the
-socket lock. The path can thus be freed while one of them walks it.
+On a SABM for a listening socket, ax25_rcv() puts the skb on the
+listener's receive queue as soon as the new socket is made, then
+releases the listener and only afterwards fills in the connection:
+addresses, digipeater path, modulus and window (read from the skb),
+UA, state 3, ax25_cb_add() and the timers.
 
-Take the old path off the socket under ax25_list_lock before freeing
-it, and set the new destination and path under the same lock, so that
-a reader on the list never sees a freed path, nor a destination with
-the path of another one.
+accept() can take the socket in between. If its owner closes it at
+once, ax25_release() finds it in state 0 and frees it, and
+ax25_rcv() goes on writing to the freed control block, adds it to
+ax25_list and reads the freed skb.
 
-Tested on a QEMU bench (6.12.94 with KASAN and lockdep, ax0 on mkiss):
-a bound SOCK_SEQPACKET socket calls an absent station via 8
-digipeaters six times, each new non-blocking connect() freeing the path
-of the previous one, while a thread reads /proc/net/ax25 in a loop:
+Keep a place in the listener's backlog when the socket is made, and
+put the skb on its queue once the connection is complete. If the
+listener has been closed meanwhile, leave the connection to its
+heartbeat, as ax25_destroy_socket() does with the connections that
+were still waiting on its queue.
 
-  before: 18 reports such as
-          BUG: KASAN: slab-use-after-free in ax25_info_show
-          BUG: KASAN: slab-use-after-free in ax2asc
-          (90 with an mdelay(300) after the kfree())
-  after:  no report, five runs out of five, and none with the mdelay
+Tested on a QEMU bench (6.12.94 with KASAN and lockdep, two guests over
+a KISS serial link). A listens on TESTA-9 and a thread calls accept()
+in a loop on the non-blocking socket, closing each socket it gets at
+once; B calls TESTA-9 five times:
+
+  before: BUG: KASAN: slab-use-after-free in ax25_rcv (write of 7
+          bytes), refcount_t: addition on 0, and a stale entry left in
+          /proc/net/ax25, without any delay added
+  after:  no report, ax25 refcount back to its starting value,
+          /proc/net/ax25 empty, five runs out of five
+
+With an mdelay(300) after the listener is released in ax25_rcv() the
+results are the same. A third case closes the listener while
+ax25_rcv() is held just before queueing the skb: the connection is
+freed by its heartbeat, with no report and nothing left behind, three
+runs out of three.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 5aa967bbd20401af3415cd4fe056fca6624698f2)
+(cherry picked from commit d25d30927389f49e902185ef4647861f7654270e)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/af_ax25.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/ax25/ax25_in.c | 30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 3e0934531a600..08b196ddaba5e 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -1247,7 +1247,7 @@ static int __must_check ax25_connect(struct socket *sock,
- 	struct sock *sk = sock->sk;
- 	ax25_cb *ax25 = sk_to_ax25(sk), *ax25t;
- 	struct full_sockaddr_ax25 *fsa = (struct full_sockaddr_ax25 *)uaddr;
--	ax25_digi *digi = NULL;
-+	ax25_digi *digi = NULL, *old_digi;
- 	int ct = 0, err = 0;
+diff --git a/net/ax25/ax25_in.c b/net/ax25/ax25_in.c
+index cb48a479ba3cc..fd8669e5b7313 100644
+--- a/net/ax25/ax25_in.c
++++ b/net/ax25/ax25_in.c
+@@ -401,11 +401,12 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
+ 			}
+ 		}
  
- 	/*
-@@ -1299,8 +1299,16 @@ static int __must_check ax25_connect(struct socket *sock,
- 	sk->sk_state   = TCP_CLOSE;
- 	sock->state = SS_UNCONNECTED;
+-		skb_set_owner_r(skb, make);
+-		skb_queue_head(&sk->sk_receive_queue, skb);
+-
+-		make->sk_state = TCP_ESTABLISHED;
+-
++		/*
++		 * Keep a place in the backlog, but put the skb on the
++		 * listener's queue only once the connection is set up
++		 * below: accept() takes it from there, and close() on the
++		 * new socket frees the connection.
++		 */
+ 		sk_acceptq_added(sk);
+ 		bh_unlock_sock(sk);
+ 	} else {
+@@ -488,8 +489,25 @@ static int ax25_rcv(struct sk_buff *skb, struct net_device *dev,
+ 		ax25_kick(ax25);
  
--	kfree(ax25->digipeat);
-+	/*
-+	 * A bound socket is on ax25_list, where the receive path and
-+	 * /proc/net/ax25 read its digipeater path under ax25_list_lock:
-+	 * take the old path off under that lock before freeing it.
-+	 */
-+	spin_lock_bh(&ax25_list_lock);
-+	old_digi = ax25->digipeat;
- 	ax25->digipeat = NULL;
-+	spin_unlock_bh(&ax25_list_lock);
-+	kfree(old_digi);
- 
- 	/*
- 	 *	Handle digi-peaters to be used.
-@@ -1360,8 +1368,10 @@ static int __must_check ax25_connect(struct socket *sock,
- 		goto out_release;
- 	}
- 
-+	spin_lock_bh(&ax25_list_lock);
- 	ax25->dest_addr = fsa->fsa_ax25.sax25_call;
- 	ax25->digipeat  = digi;
-+	spin_unlock_bh(&ax25_list_lock);
- 
- 	/* First the easy one */
- 	if (sk->sk_type != SOCK_SEQPACKET) {
+ 	if (sk) {
+-		if (!sock_flag(sk, SOCK_DEAD))
++		bh_lock_sock(sk);
++		skb_set_owner_r(skb, make);
++		if (sk->sk_state == TCP_LISTEN && !sock_flag(sk, SOCK_DEAD)) {
++			skb_queue_head(&sk->sk_receive_queue, skb);
+ 			sk->sk_data_ready(sk);
++		} else {
++			/*
++			 * The listener was closed meanwhile: leave the
++			 * connection to its heartbeat, as
++			 * ax25_destroy_socket() does with the connections
++			 * that were still waiting on its queue.
++			 */
++			sk_acceptq_removed(sk);
++			kfree_skb(skb);
++			sock_orphan(make);
++			make->sk_state = TCP_LISTEN;
++			ax25->state = AX25_STATE_0;
++		}
++		bh_unlock_sock(sk);
+ 		sock_put(sk);
+ 	} else {
+ free:
 -- 
 2.53.0
 
