@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590395;
-	b=hxUea/13QJKLLh/WXyH4syAxKx2LqZRECxVzbYpljv+rs8Pnx1o3LJaYSybETTkM5qz8
-	 DgcKanzXJBBwQiFHuoCLhdMhiA/RkertvjEztPm+5dGU2UCK6PuZK/MRJ4mnKZU/KdcG9
-	 03XknZd2UNGOE6ZmJZOgTfZv6zk4QHvZ/bplfajpgbfa6jJkyw5RZazWG7z3NM7/2xyFa
-	 KThibOO0xyiUQa/4xOTOoT5dOl5vjmkq7qpqyBViai6tyMZEAyWJnTq8pusrN0XkkKvUc
-	 s7p/uxEhbo5Oazn3aN0yIoBSHeZ8gGiUyhFGvhL4m3fP8Fgq+zcdhg3/6aatRFpanhA==
+	t=1794590396;
+	b=pLOKDun3oMUJW+0izyi+RcIMZeBmYx4JBwGAX8JezFdliOY02NgM5IFhb2pNilxO5bQN
+	 s4DMNrywYOQnsWrLteO3tbG4BCorfXrM/D32TvhfYdE1UmlLwOOf+Fyup1tZz2iXyp1JF
+	 Ot+kJKpuxlSUtsxBdJTUw62CaWD0TuN1CY6xETOll1AQkScJTBdROlMoQVHpI+DoLsaEN
+	 n5GQypxfhnQoB4SKl8GEtQN6QZzrevewUlGISvRsiu/gaTEu/12D+fYVdh6hPKPB3eoit
+	 xPtF2f/CSG807dCBE3nXUo1CPGK95y1wlOGXlXhnQf6WB6LjgKg2ebB8CD0AxxY3+HQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OH88VHCq2o0ebpyZKWOIBOvujr6DgBenBnN9Qtx8ir4=;
-	b=M1r8yUOPegtlCnhtLIDJ+XJVjKOVRr19bMKjvLoMUvX4Y7wiLo++D2CMAlJLKEXWojJO
-	 lv8/uVt7ah8r0+7agJ+65eMJz2mq0CgJcWt1TRVbsEZi7mzNpT7+FSMIysctTdUWDhpxF
-	 wJfxYA9Qij6UwIRfdgosObpTbkOxbzaXHYSXbQHzo543o9nc/1aiYYNazkSIuBNKAH6wr
-	 NO3Q1OP66tOCBEOkbueZHfhDAe3m98B7jGXFI4zIHZx5RsRdp2VxAr4hhNNNxfupzl+ry
-	 yySCB1Q+hWNyGTx8naFP3mlkc6BXpVn5AmvhI4e1nMeFjCUHmf8FKFCBLRv817lHNrg==
+	bh=3K+7gmI8SBzwhqtO81aHNCcDiE7BmNGNZVgQ7EYNtOo=;
+	b=exP19/OAyIoW5Ugrcu9UcrtVLyiDhadQg8Y5hfCF8NKwnYKiyYmWnf8mMXj2Lv3cYvSG
+	 c1EjjNq6p5iTl49VIzZd6NyJaLYhnVuoLvL7WttfgZHqy/N7tLWbSKZ6lPjq97Jr4p9Fd
+	 yJ2+MQAnqqzsrRcpEStpvwSnoxaQxy6HOPVbAa4SLowqQAQ00Hz2z8bsvAPyfhVkJnLvo
+	 PGNOHqkLcL/OfKMA7PAwsRZmEEs4wh410U0G1uCCYRtlOOytTUcaHmfUHDIgCfJx9A6tV
+	 E2csgfWcHivjf1wxGu1ycbk8xQB1zxNUWvmBCmurHFQDosLvjgpgMt3h6kFm8AMxVzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T5qKxyD5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oD8xkfkp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6829606B347;
-	Fri, 13 Nov 2026 17:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AFC606B347;
+	Fri, 13 Nov 2026 17:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T5qKxyD5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50BAB1F000CA;
-	Fri, 13 Nov 2026 17:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oD8xkfkp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FEC1F000CC;
+	Fri, 13 Nov 2026 17:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590395;
-	bh=OH88VHCq2o0ebpyZKWOIBOvujr6DgBenBnN9Qtx8ir4=;
+	s=korg; t=1794590396;
+	bh=3K+7gmI8SBzwhqtO81aHNCcDiE7BmNGNZVgQ7EYNtOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T5qKxyD5RIYV2O1XOl69sRKyXxPj0pEz+7IPIXQbG0kW/b1jvkTDpPvrwaliKURV7
-	 yDmALYYdQWq9tMMb7fBPBPj88l3nKG18tMLbn1kBQyTGVtn11t2XgIZui4O8NPcgSb
-	 UoZLumTSYAe30YwFNCCxS529xzT2elPvJmZhfC8c=
+	b=oD8xkfkpSDaLPfaPqjHClXIis03B12A0jsie0R4F698hk4NYz/bNnhVQVEGALYNca
+	 aIQ18D80IPjRfHhTdMFeWJT+3PlxB10jCU15TtEgRdSABATjjlu+pbshpegY/EaTdp
+	 AMwhVsnywsEtFWrkmSfQstK3eYqmOgfme81l/ImM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixuan Li <kaixuanli0131@gmail.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Quchaosheng <quchaosheng000406@163.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Jonas Bonn <jonas@southpole.se>,
+	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+	Stafford Horne <shorne@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 362/686] can: isotp: check the frame type, not just the length
-Date: Fri, 13 Nov 2026 10:48:15 -0500
-Message-ID: <20261113153833.170228221@linuxfoundation.org>
+Subject: [PATCH 6.18 323/686] openrisc: export __mulsi3 for modules
+Date: Fri, 13 Nov 2026 10:47:36 -0500
+Message-ID: <20261113153831.874657085@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,61 +74,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixuan Li <kaixuanli0131@gmail.com>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-[ Upstream commit 933bf0fcb325e67b19c86c9c4da7f029878d5170 ]
+[ Upstream commit 8ff981aa283a0ce516c2dc65a48a185ed336c657 ]
 
-isotp_rcv() separates Classic CAN from CAN FD by skb->len alone:
+OpenRISC configurations without hardware multiplication fail to build
+modules which contain compiler-generated calls to __mulsi3.  The failure
+is widespread, affecting filesystems, drivers and KUnit tests at modpost.
 
-	if (skb->len != so->ll.mtu)
-		return;
+When CONFIG_OPENRISC_HAVE_INST_MUL is disabled, the architecture Makefile
+passes -msoft-mul to GCC.  The multiplication helper is supplied by the
+libgcc archive linked into vmlinux, but or32_ksyms.c does not export it.
+Built-in callers can therefore link while module callers cannot resolve
+the symbol.
 
-	cf = (struct canfd_frame *)skb->data;
+Export __mulsi3 alongside the other compiler-generated helpers.
 
-A CAN XL frame with cxl->len 4 is CAN_MTU bytes, so it passes, and is then
-read as a canfd_frame whose len comes out of canxl_frame.flags: at least
-0x80.
+The omission predates 7c3f4d699f34 ("resource, kunit: stop selecting
+GET_FREE_REGION"), which the robot identified when reporting an additional
+failing module.  It was already present in the initial OpenRISC export
+list.
 
-Of the paths that follow, only the flow control one uses that length
-without bounding it first, so check_pad() walks to 255 over a 16-byte
-frame and the caller reports EBADMSG on an unrelated socket.
-
-bcm_rx_handler(), j1939_can_recv(), can_can_gw_rcv() and raw_rcv() check
-the frame type here, and can_dropped_invalid_skb() switches on
-skb->protocol on the transmit side. isotp_rcv() is the gap.
-
-Fixes: fb08cba12b52 ("can: canxl: update CAN infrastructure for CAN XL frames")
-Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
-Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Reviewed-by: Quchaosheng <quchaosheng000406@163.com>
-Link: https://patch.msgid.link/20260920035626.2581040-1-kaixuanli0131@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 616257669e1a ("OpenRISC: Miscellaneous")
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202610290106.o8Fs3NvO-lkp@intel.com/
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Cc: Jonas Bonn <jonas@southpole.se>
+Cc: Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>
+Cc: Stafford Horne <shorne@gmail.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/openrisc/kernel/or32_ksyms.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index 6c88f7777965a..39cd943df19ec 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -750,6 +750,14 @@ static void isotp_rcv(struct sk_buff *skb, void *data)
- 	if (skb->len != so->ll.mtu)
- 		return;
- 
-+	/* check for correct CAN CC/FD frame content */
-+	if (so->ll.mtu == CAN_MTU) {
-+		if (!can_is_can_skb(skb))
-+			return;
-+	} else if (!can_is_canfd_skb(skb)) {
-+		return;
-+	}
-+
- 	cf = (struct canfd_frame *)skb->data;
- 
- 	/* if enabled: check reception of my configured extended address */
+diff --git a/arch/openrisc/kernel/or32_ksyms.c b/arch/openrisc/kernel/or32_ksyms.c
+index 212e5f85004cc..c63d7f25bc575 100644
+--- a/arch/openrisc/kernel/or32_ksyms.c
++++ b/arch/openrisc/kernel/or32_ksyms.c
+@@ -35,6 +35,7 @@ DECLARE_EXPORT(__divsi3);
+ DECLARE_EXPORT(__umodsi3);
+ DECLARE_EXPORT(__modsi3);
+ DECLARE_EXPORT(__muldi3);
++DECLARE_EXPORT(__mulsi3);
+ DECLARE_EXPORT(__ashrdi3);
+ DECLARE_EXPORT(__ashldi3);
+ DECLARE_EXPORT(__lshrdi3);
 -- 
 2.53.0
 
