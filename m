@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590599;
-	b=aXpfo0BsA6dNsm166DU5aJakFTIbcEvFKAiSwIttNpg1DvVZOb/jLqFIfRZBbnNHvQge
-	 p9qJkscm8R3pHTsxpxT00XKJ/V+b5qMt7wX/BMXnj+5wcTmx/rSN9NoWPnf/RbXvdBMwT
-	 Fp/ujxatLudfHecYdRa9+7OICxeN2ZGn3ekWyaQAokhxGkUIkgegPwBeUSxjAzwlMZJwu
-	 +hTA78epgBV4ZzCZJXATAxyDXwhFlR5oj+k/R5VwMtD9uhPCO8ZA/60RkRMiXAjukFLy9
-	 Ob48Ow2Dq4NsjzBmVbXcr4vC+5kSN9EnVSpAqrHxV0TlurucA2KagXc+snGcB8DaWKQ==
+	t=1794590600;
+	b=tv7oJe8GhEHmhmMyLiRZf7GgZJJjLFI6XxLH4DnzYk2Hxkx0eVxIZGm/s4yWm4iUHWiM
+	 wZA2KA6tRD8e5vblAPV6Ltm2FPS7TqXJKu94jbrGjNVW7nowOSbbFpOuefHyKIja6s+jR
+	 rlDqQAbGrWrdk1ASxaeRDjd9KEWIVyl1krrge5KmD2hGjaKjc44GvUUkFchaysClFtN1f
+	 xBsFv+3Cw9e8yzME28yiLB/0zT9zedWMdnS4RgnNamk1ewx+lNLKlZL4OEJMFC5uIreU1
+	 kcVRSm0rj70SRk7j8Rw+g4iXd4ozjrPOqhIrImXfILcxTFRsp/Bogze+M0Y+IgUxzIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590600;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZrCKa8ra1k7wCJ/ysMx3XGJvDYpIL0Gvs+XQEDm92ys=;
-	b=3EOfv7QIINurlAMjnpDx30U9eIEW6Y0UUCbVhqmF+x+PWLj4kTMqgBIkbxcQAy4iegaL
-	 k4S+OMtT7x9isTx6Xd5cre2SFrB7oE/FaqxqUn+11jHwz5q4novOgvhOKsXEHwUttHmEE
-	 HAPYaSewcuWU1VLwdJHRS8hQA9499mWKerPjkuLb9eWVnS3UxweirkFPkKfmJ2g0zmoHY
-	 CnXFVgTAl66w6ijqlhdeqnGjTjYXMoWyavwa2nETRA8gf1RUeIPd1UlB330WlaXVgfKF/
-	 GmCa7UCsfDJuBwUs8elvKIGN48cTWl/X9JEo0AD6Yc18uwyFOr6Vm3k3IZMApJNMvzw==
+	bh=HtK8jCeN1NH6O0Cf1XsNbcs4yETxmwJxVjEUKvyaSok=;
+	b=2X+zcWxizMvkHOk0sCkLy7Qd89SDtXuwcBvugZ/zUO9bkNn2qZgof4mO51sAzCv0J7a4
+	 ntim+ziXfuv6J+cNrRw+uoIfC/Ude0+7hQwQAC9f47zt7lrR+EKHfX3az/BG6/wxsOmLa
+	 U4hE8DRoJC0KQ2y0w6iA8uZzpy05srdF8xNq4qMttoe5W3cmrOt+whdcZKLMBGnAJvm73
+	 iFCWBYHE9+UcaejmoD25zE9LmcAqNIXQDmu3GteMEpoW9izTKDv54/t9JJ/QJdRzC/uWI
+	 JayX0ox8XpFLD6W/IEvnSKDt7/5QVKU+tMec+XO+X7ZhxrzG/JNRhLQy2y8U5HdUOOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F1LGml0m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jynIz9FW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3605F606A887;
-	Fri, 13 Nov 2026 17:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD416073FD8;
+	Fri, 13 Nov 2026 17:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F1LGml0m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AAE1F000C4;
-	Fri, 13 Nov 2026 17:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jynIz9FW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280EF1F000D1;
+	Fri, 13 Nov 2026 17:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590599;
-	bh=ZrCKa8ra1k7wCJ/ysMx3XGJvDYpIL0Gvs+XQEDm92ys=;
+	s=korg; t=1794590600;
+	bh=HtK8jCeN1NH6O0Cf1XsNbcs4yETxmwJxVjEUKvyaSok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F1LGml0mw6ab1Owtqhff/1rJNtFPvBJ/nHmQCLovB5HCsl69MEoA0oY+xVjnXaL37
-	 EjxNxyJmwUvs6XZkSuWHqKI+Z0QfMEMXHUELr1x1jjbPc2MTs19xKx/2PIYTkPvep4
-	 uvVJNQ2xH5H8tFtHr5wr43jU6CNXjpnLitI6/1Cc=
+	b=jynIz9FWAVzyOx5rYrc6TvOlxiil1GXy7Lf68vy7NMJW9qo/L3VGEcVs6YUyLjdKs
+	 g7Fba4c3fcnsAStfmXrLVTepUEMdWKztpWAcVL5aEApO0iEIKUqxLHWVnnDloi1DdM
+	 WP3fSafgLqeeS1srY9tjDz1w5JoGiBwMAZ7JdL1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 528/686] KVM: arm64: Pin the host vCPU before adjusting its PC under pKVM
-Date: Fri, 13 Nov 2026 10:51:01 -0500
-Message-ID: <20261113153839.024133474@linuxfoundation.org>
+Subject: [PATCH 6.18 529/686] sctp: hold shkey across socket migration
+Date: Fri, 13 Nov 2026 10:51:02 -0500
+Message-ID: <20261113153839.060933403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,74 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: David Lee <david.lee@trailofbits.com>
 
-[ Upstream commit a2bb5f5c67a95ac97fcd6859dab51be421cf26fe ]
+[ Upstream commit ad1320865b1826ffa2e81e37c49535751e81335c ]
 
-Under pKVM, a page the host shares with EL2 is mapped at EL2 only while
-it's pinned, and the host vCPU is pinned at its first KVM_RUN.
-KVM_SET_VCPU_EVENTS with ext_dabt_pending reaches __kvm_adjust_pc() at
-EL2 before that, and dereferencing the unmapped host vCPU panics the
-hypervisor. Any process holding /dev/kvm on a pKVM host can trigger it.
+sctp_sock_migrate() transfers queued DATA skbs from the old socket to the
+new one. skb_orphan() invokes sctp_wfree() during that transfer and drops
+the skb-owned shared-key reference.
 
-Pin the host vCPU around the adjustment when no hyp vCPU is loaded for
-it. A loaded hyp vCPU implies it's pinned. A pin fails only for memory
-the host isn't sharing, and the request is then dropped like any other
-bad host pointer.
+If userspace has removed that key from the association, this can be the
+final reference. The following sctp_set_owner_w() then dereferences the
+freed chunk->shkey while trying to take the new owner reference.
 
-Fixes: efa1368ba9f4b ("KVM: arm64: Commit exceptions from KVM_SET_VCPU_EVENTS immediately")
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Joey Gouly <joey.gouly@arm.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261001135711.1640520-4-fuad.tabba@linux.dev
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: Replaced the unavailable __get_host_hyp_vcpus() helper with equivalent inline checks in handle___kvm_adjust_pc(). ]
+Take a temporary shared-key reference before orphaning the skb and release
+it after the new owner has taken its reference. This preserves the selected
+authentication key throughout the ownership transfer.
+
+Bug found and triaged by OpenAI Security Research and
+validated by Trail of Bits.
+
+Fixes: 1b1e0bc99474 ("sctp: add refcnt support for sh_key")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261009074244.3718-2-juny24602@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 52ffeaa358d1 ("sctp: re-point retained control chunks on association migration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/hyp-main.c | 28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ net/sctp/socket.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index 6e7547b7ca432..1363758035bd1 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -385,8 +385,34 @@ static void handle___pkvm_host_mkyoung_guest(struct kvm_cpu_context *host_ctxt)
- static void handle___kvm_adjust_pc(struct kvm_cpu_context *host_ctxt)
- {
- 	DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
-+	struct pkvm_hyp_vcpu *hyp_vcpu;
-+	struct kvm_vcpu *host_vcpu;
-+
-+	host_vcpu = kern_hyp_va(vcpu);
-+	if (unlikely(is_protected_kvm_enabled())) {
-+		hyp_vcpu = pkvm_get_loaded_hyp_vcpu();
-+
-+		if (!hyp_vcpu || hyp_vcpu->host_vcpu != host_vcpu)
-+			host_vcpu = NULL;
-+	}
-+
-+	if (host_vcpu) {
-+		__kvm_adjust_pc(host_vcpu);
-+		return;
-+	}
-+
-+	/*
-+	 * With no hyp vCPU loaded for it, the host vCPU may be unpinned,
-+	 * and so unmapped at EL2: its first run pins it. A pin fails only
-+	 * for memory the host isn't sharing, a bad pointer, so the request
-+	 * is dropped.
-+	 */
-+	host_vcpu = kern_hyp_va(vcpu);
-+	if (hyp_pin_shared_mem(host_vcpu, host_vcpu + 1))
-+		return;
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 8c9970352952e..285cd8e0a1cfe 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -148,9 +148,19 @@ static inline void sctp_set_owner_w(struct sctp_chunk *chunk)
  
--	__kvm_adjust_pc(kern_hyp_va(vcpu));
-+	__kvm_adjust_pc(host_vcpu);
-+	hyp_unpin_shared_mem(host_vcpu, host_vcpu + 1);
+ static void sctp_clear_owner_w(struct sctp_chunk *chunk)
+ {
++	/* Keep the shkey alive until the new owner takes its reference. */
++	if (chunk->shkey)
++		sctp_auth_shkey_hold(chunk->shkey);
+ 	skb_orphan(chunk->skb);
  }
  
- static void handle___kvm_flush_vm_context(struct kvm_cpu_context *host_ctxt)
++static void sctp_set_owner_w_migrate(struct sctp_chunk *chunk)
++{
++	sctp_set_owner_w(chunk);
++	if (chunk->shkey)
++		sctp_auth_shkey_release(chunk->shkey);
++}
++
+ #define traverse_and_process()	\
+ do {				\
+ 	msg = chunk->msg;	\
+@@ -9669,7 +9679,7 @@ static int sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
+ 	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
+ 	sctp_for_each_tx_datachunk(assoc, true, sctp_clear_owner_w);
+ 	sctp_assoc_migrate(assoc, newsk);
+-	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w);
++	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w_migrate);
+ 
+ 	/* If the association on the newsk is already closed before accept()
+ 	 * is called, set RCV_SHUTDOWN flag.
 -- 
 2.53.0
 
