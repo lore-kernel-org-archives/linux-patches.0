@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591620;
-	b=SywXTfl0Hy7InK7egmuDbyqhlU7pOeVkiv7iV/Fz2G258xTVrWpCvREOfF2xBLzjnhCm
-	 VbwNT1BZnQMKw71JJ1QLTBJaNoDicW/rH06LLXhFWi2HLX85e5dV4SnzYru+3vSpz7QO6
-	 NcLDChBJuF6HeEseDzLX45VqM84fLFwBoG4KeM4Q5+q0vODUIm5/oAEvtWFS/vy7bsQda
-	 h6vu45daq+GVK2WfJ031ZNSKfiUbHyM/grvFZQJRJEtg6FvNVfy8kUWau9AwH6FRd828G
-	 a6CcfY6v02vxFftnPc6Tgmt9T7rHqHhXRhZIxJ95Vp/JzmFPhVYNi3wX3FAaQ6tpI/A==
+	t=1794591621;
+	b=I00GARrHdeYCIQy0hXpvQKjWj0poticM+7wJFOk3xr8gCW7rJQewqnnNytjt4Mdk9Iuu
+	 HRPNyxBDCDdfUHLlBm4XWGMT+9AkItP7xvKF9NsYQ/AD5itiTS0SZAPfVOGqAPOKbucsM
+	 7YpeFsjTVaxVGtHxlogZgwV+J+fztQShKer06rpsx7YQdyMYi/nD1FpJkboN7351Qg+wA
+	 2ffD+VYLY1+9iq4lYU5lrhVBZGY4YbxyyS5ek95FUpbuT3nNnnwGvs5I7X6zh3J8putj0
+	 qZIcL+m9zX8neV+1lw1TGBrfW4fjx+vjkkmYNBZQEk91Qm0L1Ivs19UXgvY3JhicE9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591620;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591621;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AaIicqzSEIiAbYE/T7H5vohYXf+hAPlAj8UkJEUp8b4=;
-	b=S79X0efLh5tWJiuwg/SIOaN6wezbWVbGO18g7D9mRVgh6SZOynPVItPNFARbmMY4AOrW
-	 L7oaa2pWLOglmTOa5H0b5xKsAtypOWHddkW60Rk9UJQZlIJEYlta2sukGN6wMgbu20gAw
-	 hMQulJkic5ZFe+w1U7XnM3FUnQVNwoYm0H1Dt174ZCkiSD1F+LdzYusntkzMGMJt05DsV
-	 NfPrT31wniHpCH8XXq6mq30Xv1ZUCQLg+nJxKnR+ptHHZgVGTm6p4F/JT3p40KS5fXxU3
-	 TNd9yrkRw3ca/pvV1jazRakH1SsbSHhP8m67MAKK7S6Moa6zE3defPnX2wYTQejHcUw==
+	bh=UMqFRg4okrVV+pN1xXDG2paMuhh0Hw/aeKPp6Jss5bc=;
+	b=n5Cntc2i0lymCw4tQiQvnrtflsSrdp9Z1HzbYcAmnD+jrKOY0LvLEvO4GsTpAqfnQh2L
+	 TsT71lcH0yuhue/IW7qZ/FeZCK3t4yAxXtGTR+Tm62jl3H/CeFirp9EOlDJpO6bhEedTF
+	 5elvTcDwDqaOtX5ULfI+kCxmJhj4Ipo6n8W2rEVd9ju7dw9tlzW2kHO2UstgrVlQRnChd
+	 CzK8Sj+tCXtXGTglb9etRNTx3yb0azXp0iGU+I4tfvPYhqdR74+CmkyUIm8xd+wJ6UO2l
+	 2AV5A6NZgZEqG7IRSYEYG4Tt8z3yqxtXw819g+wDOMc5ZPTLy+aa3UuyNWu6sFiSWqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h5Qu/7F+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q3fxQQ5t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD16607E83F;
-	Fri, 13 Nov 2026 17:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A3E606B460;
+	Fri, 13 Nov 2026 17:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5Qu/7F+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5EA1F000C4;
-	Fri, 13 Nov 2026 17:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q3fxQQ5t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533D81F000C4;
+	Fri, 13 Nov 2026 17:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591620;
-	bh=AaIicqzSEIiAbYE/T7H5vohYXf+hAPlAj8UkJEUp8b4=;
+	s=korg; t=1794591621;
+	bh=UMqFRg4okrVV+pN1xXDG2paMuhh0Hw/aeKPp6Jss5bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h5Qu/7F+VdvfaI+q7yjrPfpbSBQpiY0XuUCYdTOcFNKe6Sq95ghS2BhAU5QsQNMEi
-	 61rDmKAUy0txp63Kla1cWW1yX1AK/glPrHxiu1tcpvyq7YK8y0F95RAevHPhOXxenr
-	 YJoEWM1qbOY4cwVyAGqzVTaGhO4kXr5Ig01IreHM=
+	b=Q3fxQQ5tm4vuXp61guso/dVJB/Yby0gsjT5eXa5f2c9kCZTwONepZFMpfpyWAGzu8
+	 QkEsF+oW/BhwRFfp+++9bc8KfLgv21wlhaN9cc1FSZjmxDA01pYtugL2ac7kvZeDzw
+	 nT1tOwwSR6jDZ+qoglhnX3JtKUdO0NTB06aze+x0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Casciano <mauriziocasciano7@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Shixiong Ou <oushixiong@kylinos.cn>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 661/670] power: supply: core: Honor supplied-from with CONFIG_OF=y
-Date: Fri, 13 Nov 2026 10:53:45 -0500
-Message-ID: <20261113153834.300502905@linuxfoundation.org>
+Subject: [PATCH 6.12 662/670] fbdev: nvidia: Convert to managed PCI and ioremap API
+Date: Fri, 13 Nov 2026 10:53:46 -0500
+Message-ID: <20261113153834.330527499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,175 +68,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Casciano <mauriziocasciano7@gmail.com>
+From: Shixiong Ou <oushixiong@kylinos.cn>
 
-[ Upstream commit 6bd80f22c764fe8c56c62c118387f86a3ca98cff ]
+[ Upstream commit a41961f364bc7aee1611796e7ab5bd687708d770 ]
 
-The supplied-from device property is the name-based counterpart to
-firmware-node power-supplies references. It was added for non-DT platforms,
-but its parser is compiled only when CONFIG_OF is disabled. CONFIG_OF is
-a global kernel option, so x86 systems commonly enable it even when
-individual power supplies are described by software nodes.
+Fix missing pci_disable_device() in probe and remove.
 
-Consequently, these consumers never populate supplied_from and supplier
-notifications do not reach their external_power_changed() callbacks. On a
-Lenovo Yoga Book YB1-X91L, ftrace showed the Whiskey Cove supplier
-notification running without invoking the BQ25892 callback, leaving the
-input current limit at its boot-time value.
+Use pcim_enable_device(), pcim_request_all_regions(),
+devm_ioremap() and devm_ioremap_wc() to replace manual resource
+management. Remove all pci_release_regions() and iounmap() calls.
 
-Use a single power_supply_check_supplies() implementation for all
-configurations. Preserve firmware-node power-supplies references as the
-preferred firmware description and use the name-based supplied-from
-property only when no references are specified. Continue to honor an
-explicitly provided supplied_from list first and propagate errors from
-specified firmware references.
-
-With the fix, ftrace shows the BQ25892 callback on hotplug. A boot-offline
-test changes its input current limit from 500 mA to 2 A.
-
-Fixes: 58a36bb06891 ("power: supply: core: Add support for supplied-from device-property")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Maurizio Casciano <mauriziocasciano7@gmail.com>
-Link: https://patch.msgid.link/20260924225152.985489-1-mauriziocasciano7@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-[ sashal: adapted firmware-node supplier lookup to existing device-tree APIs using of_parse_phandle_with_fixed_args() ]
+Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: 8710af6a3520 ("fbdev: nvidia: Release write-combining handle on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 90 ++++++++++++------------
- 1 file changed, 45 insertions(+), 45 deletions(-)
+ drivers/video/fbdev/nvidia/nvidia.c | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index ae0e11146a1fb..9610ea1c341d9 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -188,7 +188,35 @@ static void power_supply_deferred_register_work(struct work_struct *work)
- 		mutex_unlock(&psy->dev.parent->mutex);
+diff --git a/drivers/video/fbdev/nvidia/nvidia.c b/drivers/video/fbdev/nvidia/nvidia.c
+index 5f61d953e4c76..d298ba71ee0e3 100644
+--- a/drivers/video/fbdev/nvidia/nvidia.c
++++ b/drivers/video/fbdev/nvidia/nvidia.c
+@@ -1288,7 +1288,7 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
+ 	NVTRACE_ENTER();
+ 	assert(pd != NULL);
+ 
+-	if (pci_enable_device(pd)) {
++	if (pcim_enable_device(pd)) {
+ 		printk(KERN_ERR PFX "cannot enable PCI device\n");
+ 		return -ENODEV;
+ 	}
+@@ -1301,7 +1301,7 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
+ 	nvidiafb_fix.mmio_start = pci_resource_start(pd, 0);
+ 	nvidiafb_fix.mmio_len = pci_resource_len(pd, 0);
+ 
+-	REGS = ioremap(nvidiafb_fix.mmio_start, nvidiafb_fix.mmio_len);
++	REGS = devm_ioremap(&pd->dev, nvidiafb_fix.mmio_start, nvidiafb_fix.mmio_len);
+ 	if (!REGS) {
+ 		printk(KERN_ERR PFX "cannot ioremap MMIO base\n");
+ 		return -ENODEV;
+@@ -1329,7 +1329,7 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
+ 	if (info->pixmap.addr == NULL)
+ 		goto err_out_kfree;
+ 
+-	if (pci_request_regions(pd, "nvidiafb")) {
++	if (pcim_request_all_regions(pd, "nvidiafb")) {
+ 		printk(KERN_ERR PFX "cannot request PCI regions\n");
+ 		goto err_out_enable;
+ 	}
+@@ -1354,7 +1354,7 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
+ 	sprintf(nvidiafb_fix.id, "NV%x", (pd->device & 0x0ff0) >> 4);
+ 
+ 	if (NVCommonSetup(info))
+-		goto err_out_free_base0;
++		goto err_out_enable;
+ 
+ 	par->FbAddress = nvidiafb_fix.smem_start;
+ 	par->FbMapSize = par->RamAmountKBytes * 1024;
+@@ -1374,8 +1374,8 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
+ 	par->ScratchBufferStart = par->FbUsableSize - par->ScratchBufferSize;
+ 	par->CursorStart = par->FbUsableSize + (32 * 1024);
+ 
+-	info->screen_base = ioremap_wc(nvidiafb_fix.smem_start,
+-				       par->FbMapSize);
++	info->screen_base = devm_ioremap_wc(&pd->dev, nvidiafb_fix.smem_start,
++					    par->FbMapSize);
+ 	info->screen_size = par->FbUsableSize;
+ 	nvidiafb_fix.smem_len = par->RamAmountKBytes * 1024;
+ 
+@@ -1419,19 +1419,15 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
+ 	return 0;
+ 
+ err_out_iounmap_fb:
+-	iounmap(info->screen_base);
+ 	fb_destroy_modelist(&info->modelist);
+ err_out_free_base1:
+ 	fb_destroy_modedb(info->monspecs.modedb);
+ 	nvidia_delete_i2c_busses(par);
+-err_out_free_base0:
+-	pci_release_regions(pd);
+ err_out_enable:
+ 	kfree(info->pixmap.addr);
+ err_out_kfree:
+ 	framebuffer_release(info);
+ err_out:
+-	iounmap(REGS);
+ 	return -ENODEV;
  }
  
--#ifdef CONFIG_OF
-+static int power_supply_check_supplies_by_name(struct power_supply *psy)
-+{
-+	struct device *parent = psy->dev.parent;
-+	int nval, ret;
-+
-+	if (!parent)
-+		return 0;
-+
-+	nval = device_property_string_array_count(parent, "supplied-from");
-+	if (nval <= 0)
-+		return 0;
-+
-+	psy->supplied_from = devm_kmalloc_array(&psy->dev, nval,
-+						sizeof(*psy->supplied_from),
-+						GFP_KERNEL);
-+	if (!psy->supplied_from)
-+		return -ENOMEM;
-+
-+	ret = device_property_read_string_array(parent, "supplied-from",
-+						(const char **)psy->supplied_from,
-+						nval);
-+	if (ret < 0)
-+		return ret;
-+
-+	psy->num_supplies = nval;
-+
-+	return 0;
-+}
-+
- static int __power_supply_populate_supplied_from(struct power_supply *epsy,
- 						 void *data)
- {
-@@ -259,73 +287,45 @@ static int power_supply_find_supply_from_node(struct device_node *supply_node)
+@@ -1446,11 +1442,8 @@ static void nvidiafb_remove(struct pci_dev *pd)
+ 	unregister_framebuffer(info);
  
- static int power_supply_check_supplies(struct power_supply *psy)
- {
--	struct device_node *np;
--	int cnt = 0;
-+	struct of_phandle_args args;
-+	int cnt, ret;
- 
- 	/* If there is already a list honor it */
- 	if (psy->supplied_from && psy->num_supplies > 0)
- 		return 0;
- 
--	/* No device node found, nothing to do */
--	if (!psy->dev.of_node)
--		return 0;
--
--	do {
--		int ret;
-+	for (cnt = 0; psy->dev.of_node; cnt++) {
-+		ret = of_parse_phandle_with_fixed_args(psy->dev.of_node,
-+						       "power-supplies", 0, cnt, &args);
-+		if (ret) {
-+			if (ret != -ENOENT)
-+				return ret;
- 
--		np = of_parse_phandle(psy->dev.of_node, "power-supplies", cnt++);
--		if (!np)
- 			break;
-+		}
- 
--		ret = power_supply_find_supply_from_node(np);
--		of_node_put(np);
-+		ret = power_supply_find_supply_from_node(args.np);
-+		of_node_put(args.np);
- 
- 		if (ret) {
- 			dev_dbg(&psy->dev, "Failed to find supply!\n");
- 			return ret;
- 		}
--	} while (np);
-+	}
- 
--	/* Missing valid "power-supplies" entries */
--	if (cnt == 1)
--		return 0;
-+	/* Fall back to the name-based property if no references were specified. */
-+	if (!cnt)
-+		return power_supply_check_supplies_by_name(psy);
- 
- 	/* All supplies found, allocate char * array for filling */
- 	psy->supplied_from = devm_kcalloc(&psy->dev,
--					  cnt - 1, sizeof(*psy->supplied_from),
-+					  cnt, sizeof(*psy->supplied_from),
- 					  GFP_KERNEL);
- 	if (!psy->supplied_from)
- 		return -ENOMEM;
- 
- 	return power_supply_populate_supplied_from(psy);
- }
--#else
--static int power_supply_check_supplies(struct power_supply *psy)
--{
--	int nval, ret;
--
--	if (!psy->dev.parent)
--		return 0;
--
--	nval = device_property_string_array_count(psy->dev.parent, "supplied-from");
--	if (nval <= 0)
--		return 0;
--
--	psy->supplied_from = devm_kmalloc_array(&psy->dev, nval,
--						sizeof(char *), GFP_KERNEL);
--	if (!psy->supplied_from)
--		return -ENOMEM;
--
--	ret = device_property_read_string_array(psy->dev.parent,
--		"supplied-from", (const char **)psy->supplied_from, nval);
--	if (ret < 0)
--		return ret;
--
--	psy->num_supplies = nval;
--
--	return 0;
--}
--#endif
- 
- struct psy_am_i_supplied_data {
- 	struct power_supply *psy;
+ 	arch_phys_wc_del(par->wc_cookie);
+-	iounmap(info->screen_base);
+ 	fb_destroy_modedb(info->monspecs.modedb);
+ 	nvidia_delete_i2c_busses(par);
+-	iounmap(par->REGS);
+-	pci_release_regions(pd);
+ 	kfree(info->pixmap.addr);
+ 	framebuffer_release(info);
+ 	NVTRACE_LEAVE();
 -- 
 2.53.0
 
