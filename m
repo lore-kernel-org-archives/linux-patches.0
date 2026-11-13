@@ -1,57 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585624;
-	b=Eet4F4RMHKTba7mLt3pDjBh3c1AMHiY2+NRphwjJGDZWnFYYTPD+LZfj7G4iXP/qTi+P
-	 hVuPgjQRoBjfKWk/qMMXlG6CvX7LFZmU4Vsqy8kKYbfsSK6qUrRIXjD1bpitPcQk8G0Ui
-	 kFQs2BzoviZMTJiHX15u999c/EDMCHRdAtCt26TFLn1NzfFV4lORJODG0s8T7yNm5pl6D
-	 yUSvneJivS1NuTYEEYSNX3EeNDQ8L4XcaUrUvB7qXi+LEnLXQA2PdyD/C0KsuKLPzHKTS
-	 RSZdYuqKIQmaZpmMk2s3K40FuZm7INj8LUiDjUy3bGiOReJ4EjoBNeX1iITcs6dgIew==
+	t=1794585625;
+	b=VjnSPlrO8eXI5ZAM3xaWwhlVMlKAe0O99rMQQn+sEinNtqsfcnYwbSO5FZevIPIx1XQB
+	 ThoxKg4g3pVpxXvc8j9i97nRjT+snebOorp9o4nD3L4mLVqLoGCdwnRtnbNX7wrKwbsOI
+	 3g0uJqFqqBcLOz6K29FlQXCB1sgYNc1YoMVAdaZSczVB+vRce/nP/BPsEm5T//wuGHl1U
+	 RhTuzOUz+gaex0dhx+RyPhQ7KbuH5iM1w6Ko2LnSZOxNX+VOBC7LBWokiHBTOthqnnNIg
+	 Mvx20+/0PpPAPiUozaVtID33d8JtdJzLntfbGKoYUJu64BbxoRKdVFfWb6jQx8dWTog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585624;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585625;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zCEXrmTH1TtYArcN+jIcaYtpUVRU7K+V4AxLl9h5Qro=;
-	b=MsUywsmzOtpyRmlquSue28NspV9h1EbLfNxPZnOLeA3x/6EqIbY19u+OzUJT1MJ27w5O
-	 7TtjZ5LmQczFuC4SeTJ+LogdUlikHu4y0cKz+V1gE/srCDzFy30MCs4iLl8IxADxKmZx7
-	 Q080Gxdkwu90QNI+BkSlWB5/s0tNm0tB6B/2yZ/5Kc2BOUQDqum/5fwq+AwTNwY/weHSD
-	 QmaKcpjq+Sjxg6Layfs1Lu4qA5Ps1JDnYpvb6c92P8yza9XLmKF84VNjE6BatpSTp6zZ7
-	 MJNc80YaZIZ/xHQtqQXo0QnTKM2CPms3a4jhY9fZZIzNjC6MfF3dnGfLSdwNfo1lfmw==
+	bh=ApbwrTU0eUOMa4r/Cwh8GIAkTtSESEcHx6DAP9pVCEM=;
+	b=R4hyj/uTsqBpwLo8j5P1EH7kAT8PzYIrIE7gz3P4iAViXDRfKms7zkh7Yjcbu1JN8s3u
+	 CKhO5PcazpVCbpGoIojhqNgpftXPD9hR2Yl7lSBbRbHhJ4Uz+o8aDzqUE9G6kH6Strb1N
+	 YvCQLsI2dxqzt2v0zkqDdKZAQTYXbaL5noZwHeIYE5jfwuy3bf9jjNIxN52tmmoo7Zqvn
+	 Jh6AgEORUB6PGGw7Jespig132B476H6ebeuxjCx4NilljBdBx4fcgPdHsmKNqSoPW/cWL
+	 HgcVl+6m4UQxoMkZVvOz4mCsRsnJ5hOsQ8zh2DLbgknO+INE2VheKvh1t2up2nWndpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nV4dAS9v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IBBOmrnV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63BD6070FC1;
-	Fri, 13 Nov 2026 16:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214FA6070FC6;
+	Fri, 13 Nov 2026 16:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nV4dAS9v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C0A1F000C5;
-	Fri, 13 Nov 2026 16:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IBBOmrnV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2661F000C4;
+	Fri, 13 Nov 2026 16:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585623;
-	bh=zCEXrmTH1TtYArcN+jIcaYtpUVRU7K+V4AxLl9h5Qro=;
+	s=korg; t=1794585625;
+	bh=ApbwrTU0eUOMa4r/Cwh8GIAkTtSESEcHx6DAP9pVCEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nV4dAS9vHxigFzxrgJDStSMUsDK4UNqOGy6Ug+wsDU+yKb1R5KusqL3CqmxLb/D0Q
-	 WvShPFxfEpGREySqzVOz02mN37X+BtoYw5mnBrDb5aUeR3CqPM1iuVvYOHT/0d/kvI
-	 n7BsLBhHYQ8ZDFIUa2rcMSYltfSxONVgYW65aS/E=
+	b=IBBOmrnVqG94me9fMfZlAdpVygO6+aDBlcS5mO1GPWRAqRP8Hn8lQIPoM0cx6YpiE
+	 hUZFzomcnmhwqqfoLLAglJKeOL4/MUJksOD/in381xIqO1Vthmlc2bjuvpBvyosUNb
+	 jNUIxIHg5Wcvd6nL9AJwnsFSr5u8RAboDxoMrMGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Guan-Chun Wu <409411716@gms.tku.edu.tw>,
+	kernel test robot <lkp@intel.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Jonas Bonn <jonas@southpole.se>,
+	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+	Stafford Horne <shorne@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 246/507] lib/base64: silence clang-24 -Wconstant-conversion with diag pragmas
-Date: Fri, 13 Nov 2026 10:49:10 -0500
-Message-ID: <20261113153802.914775190@linuxfoundation.org>
+Subject: [PATCH 7.3 247/507] openrisc: export __mulsi3 for modules
+Date: Fri, 13 Nov 2026 10:49:11 -0500
+Message-ID: <20261113153802.944093431@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -73,90 +74,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-[ Upstream commit 3af83c11cf5990fda0bfe3959aa6391ff903ffdd ]
+[ Upstream commit 8ff981aa283a0ce516c2dc65a48a185ed336c657 ]
 
-After a recent change in clang to warn on signed char conversions within
-array initializers [1], there are several instances of this warning from
-base64_rev_maps in lib/base64.c, which can break the build with W=e or
-CONFIG_WERROR=y:
+OpenRISC configurations without hardware multiplication fail to build
+modules which contain compiler-generated calls to __mulsi3.  The failure
+is widespread, affecting filesystems, drivers and KUnit tests at modpost.
 
-  lib/base64.c:58:18: error: implicit conversion from 'int' to 's8' (aka 'signed char') changes value from 131 to -125 [-Werror,-Wconstant-conversion]
-     58 |         [BASE64_IMAP] = BASE64_REV_INIT('+', ',')
-        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
-  lib/base64.c:52:2: note: expanded from macro 'BASE64_REV_INIT'
-     48 | #define BASE64_REV_INIT(ch_62, ch_63) { \
-        |                                       ~
-     49 |         [0 ... 0x1f] = -1, \
-     50 |         INIT_32(0x20, ch_62, ch_63), \
-     51 |         INIT_32(0x40, ch_62, ch_63), \
-     52 |         INIT_32(0x60, ch_62, ch_63), \
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ...
-  lib/base64.c:34:42: note: expanded from macro 'INIT_1'
-     34 |                 : (v) >= '0' && (v) <= '9' ? (v) - '0' + 52 \
-        |                                              ~~~~~~~~~~^~~~
-  lib/base64.c:58:18: error: implicit conversion from 'int' to 's8' (aka 'signed char') changes value from 130 to -126 [-Werror,-Wconstant-conversion]
-     58 |         [BASE64_IMAP] = BASE64_REV_INIT('+', ',')
-        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
-  lib/base64.c:52:2: note: expanded from macro 'BASE64_REV_INIT'
-     48 | #define BASE64_REV_INIT(ch_62, ch_63) { \
-        |                                       ~
-     49 |         [0 ... 0x1f] = -1, \
-     50 |         INIT_32(0x20, ch_62, ch_63), \
-     51 |         INIT_32(0x40, ch_62, ch_63), \
-     52 |         INIT_32(0x60, ch_62, ch_63), \
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ...
-  lib/base64.c:34:42: note: expanded from macro 'INIT_1'
-     34 |                 : (v) >= '0' && (v) <= '9' ? (v) - '0' + 52 \
-        |                                              ~~~~~~~~~~^~~~
-  ...
+When CONFIG_OPENRISC_HAVE_INST_MUL is disabled, the architecture Makefile
+passes -msoft-mul to GCC.  The multiplication helper is supplied by the
+libgcc archive linked into vmlinux, but or32_ksyms.c does not export it.
+Built-in callers can therefore link while module callers cannot resolve
+the symbol.
 
-These are false positives, as the branch where the wraparound could happen
-is unreachable with the values that clang reports.  This is not considered
-a bug by some clang folks [2][3], so silence the warnings using the __diag
-macros the kernel has to workaround compiler warnings when necessary.
+Export __mulsi3 alongside the other compiler-generated helpers.
 
-Link: https://lore.kernel.org/20261008-base64-silence-clang-24-constant-conversion-v1-1-0858b60b23c8@kernel.org
-Link: https://github.com/llvm/llvm-project/commit/a5ef934a8d295dc03be3960f2b3744ec2e53238e [1]
-Link: https://github.com/llvm/llvm-project/issues/223923#issuecomment-6056856245 [2]
-Link: https://github.com/llvm/llvm-project/pull/226775#pullrequestreview-5454407389 [3]
-Fixes: c4eb7ad32eab ("lib/base64: optimize base64_decode() with reverse lookup tables")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+The omission predates 7c3f4d699f34 ("resource, kunit: stop selecting
+GET_FREE_REGION"), which the robot identified when reporting an additional
+failing module.  It was already present in the initial OpenRISC export
+list.
+
+Fixes: 616257669e1a ("OpenRISC: Miscellaneous")
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2181
-Acked-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Guan-Chun Wu <409411716@gms.tku.edu.tw>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202610290106.o8Fs3NvO-lkp@intel.com/
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Cc: Jonas Bonn <jonas@southpole.se>
+Cc: Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>
+Cc: Stafford Horne <shorne@gmail.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/base64.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/openrisc/kernel/or32_ksyms.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/lib/base64.c b/lib/base64.c
-index 325c7332b0492..e46be3a55585c 100644
---- a/lib/base64.c
-+++ b/lib/base64.c
-@@ -52,11 +52,14 @@ static const char base64_tables[][65] = {
- 	INIT_32(0x60, ch_62, ch_63), \
- 	[0x80 ... 0xff] = -1 }
- 
-+__diag_push();
-+__diag_ignore(clang, all, "-Wconstant-conversion", "https://github.com/llvm/llvm-project/issues/223923");
- static const s8 base64_rev_maps[][256] = {
- 	[BASE64_STD] = BASE64_REV_INIT('+', '/'),
- 	[BASE64_URLSAFE] = BASE64_REV_INIT('-', '_'),
- 	[BASE64_IMAP] = BASE64_REV_INIT('+', ',')
- };
-+__diag_pop();
- 
- #undef BASE64_REV_INIT
- #undef INIT_32
+diff --git a/arch/openrisc/kernel/or32_ksyms.c b/arch/openrisc/kernel/or32_ksyms.c
+index 84a937a64e2a7..5aabef30ca09c 100644
+--- a/arch/openrisc/kernel/or32_ksyms.c
++++ b/arch/openrisc/kernel/or32_ksyms.c
+@@ -35,6 +35,7 @@ DECLARE_EXPORT(__divsi3);
+ DECLARE_EXPORT(__umodsi3);
+ DECLARE_EXPORT(__modsi3);
+ DECLARE_EXPORT(__muldi3);
++DECLARE_EXPORT(__mulsi3);
+ DECLARE_EXPORT(__ashrdi3);
+ DECLARE_EXPORT(__ashldi3);
+ DECLARE_EXPORT(__lshrdi3);
 -- 
 2.53.0
 
