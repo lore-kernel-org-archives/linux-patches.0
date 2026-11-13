@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590958;
-	b=A6bDlQUH44oJNZW0dH3SvoG70dhK5mHbb1tggsyRAEAsEy7iukBg5spbhARmjcV7kgGd
-	 g7Bs6ZbKJ7qIisqVVXomm8c0BpcApONjTjtf+QnOTDi3JOJAyBXC/EpJ3lEdZuArPcBVk
-	 AUHZlU9L0JhPI2a00l5eJIm7GIan2M4+SryEkHSAtDkMJ4woz/PLR2QaONkqegTKcIdBB
-	 itcd2d5MR8mYdEKyKYI2rGrD7cPEsMdO2jz/H59LgfyTOIdWrkiF8oF/hk0/6A/++peyG
-	 ch/SWFPQ2Yj0CugEXKqXQkk5YMmuPOSkDyX3b4PDM3JaAydKY7B6fIrcwnT2k/MJ23A==
+	t=1794590959;
+	b=uGFS9zVGI0md+aFSZQwgppYnJ9wCUsLvo0/DNmVQGMOgM5vyEaMysis4sYwwI7aEweZQ
+	 OqbjHteKgTRzFNBE/UInKxKrV47UvD6A5AjQ3M79pIpUXAypS40C2Y5Mk83OMjaAJUxhv
+	 FfP6SPu6jRA9F4zmJ7Ga3X+7nMPn5iVkTmEmlOLt16zBjd7LD8yqwCl0BKu1HqaE7Tpm6
+	 LzLvblAlel2AMUaDZtQ+snR9CTm5IZdE62ViCXVey9o34c9eRJzLaXAHa5gmqX54UJLMu
+	 XRfM4awBlP/jx6SO/WJ/7r3Y3GLKxvTHgkSmrC+sYVMOf/GskqXywu1w1YH1TrVPXew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590959;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T5tRI1biiDIbfoOlwe47weEW/xv9/dKw0n/dYaGk+sA=;
-	b=IH5OjRzk2S4uL56jYqsIzYVEhjaCJzS6eu9gCXAQDwBu9/WEq8q/Wq1fT/Yewvwvzhp8
-	 9eVHzxs+znT7cWSLTYU1VacjCY1VgZv9DU1zRzW0QXPa4Id0eTbcAOSvhJsbeKC03mCkH
-	 5YPlil2qgk+AxB+a3rk+CXYbsjVOa1LG3BehvHsgfQTDE8km3s/fdYn2O+GTH7pQisk6H
-	 FFnrMNCzuP1YcAlC6mTy6T6LNVqGUBLmEl+xhd99BTs7ryzs2m5kchU3l7nuCRTtNT4DI
-	 gdYMXeVIG4R1bOPobUJBQPQ88zA300AjiqCU/zwChEZXb3PQ1pxuSw7BV3yBGGoNqEQ==
+	bh=ttkzh6xf6x3TBhApU7HF3A3XbeYDfveQv5sIBsTa7mY=;
+	b=JbpnX8uV9g223Qe6yf1aWuY6NNUvJNfk3fafOZjOhrXL1xXg4hF4R1m6OYFWy/dt0jSX
+	 w0Re3/oGq5uqvgCiXUANGW/NdqptlwXotnN8LPr2OoHMYZK9xfrAeTUPK5fM4jMFpHEdz
+	 XVqMlEQB6dCd2TzB3sa0pV+xwZHD6hnU3f5szpd2hrEskGtQhllpGcEywImJzpeukCq+V
+	 ykkWCn8YFba+PCZdDQMQljmyGVeCAk0LlF8gvnU1NEWoaEs5wb6b77H6DSmi8J+gQFKeb
+	 KfHEBFNT3MSLLPNcVK6T7Ud7vXqPWeLDRcXn01ifm2/g5K+u4CH16JC56uBaAfJOTtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSidOyBu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QS2nf8x3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210FD606E654;
-	Fri, 13 Nov 2026 17:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B756083165;
+	Fri, 13 Nov 2026 17:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSidOyBu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D65C1F000C4;
-	Fri, 13 Nov 2026 17:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QS2nf8x3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B916C1F000C4;
+	Fri, 13 Nov 2026 17:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590957;
-	bh=T5tRI1biiDIbfoOlwe47weEW/xv9/dKw0n/dYaGk+sA=;
+	s=korg; t=1794590959;
+	bh=ttkzh6xf6x3TBhApU7HF3A3XbeYDfveQv5sIBsTa7mY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vSidOyBuxFiOiWmP1ObOSzdt6cJ82XVUbTMg22YnvqwYP/zk8w8JDSds5/q24wAq9
-	 xR+0HLfaCVpu1uPd9aHlDKETisyK/DJD3sCSo8TtpSJCafpp7wMN+smC7FrEN24sVH
-	 qPjWsoCQ5AQNa2H/+zEfZH4WzrdLNVGKwPT/+ZpU=
+	b=QS2nf8x3zaOFCDJAlgsQwuhWmCE26xnWFJKchjcDsU4pm+RoBLoplv9Zat14tah1P
+	 31Thwja6TAeIinWxQZAJFDB6UeppFZfNYO95aSkz3XBEDx5GiXsICG0aHb3yj6h6Ct
+	 fEcUTFXDF/vLMnHTMTp0gn1Nym+OmMi4j5AJ41KA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/670] mkiss: size the frame buffers for worst-case KISS escaping
-Date: Fri, 13 Nov 2026 10:44:25 -0500
-Message-ID: <20261113153815.316746407@linuxfoundation.org>
+Subject: [PATCH 6.12 137/670] rose: hold the socket a received frame is delivered to
+Date: Fri, 13 Nov 2026 10:45:01 -0500
+Message-ID: <20261113153816.482677184@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,148 +69,190 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-ax_encaps() accepts a frame for transmission as long as it is not
-longer than dev->mtu + 73 bytes, and KISS escaping can double every
-byte of it (END and ESC are each sent as two bytes). The transmit
-buffer, however, is only max(2 * dev->mtu, 1152) + 4 bytes long, so the
-73 bytes of header allowance are not covered once they are doubled.
+rose_route_frame() and rose_loopback_timer() find the socket a frame
+belongs to with rose_find_socket(), which returns it without a
+reference once rose_list_lock is dropped, then hand the frame to
+rose_rcv_frame(), which locks the socket and runs its state machine.
+The socket can be destroyed in between: by rose_release() on another
+CPU, or by its heartbeat, which reaps a dead socket in state 0 that
+nobody owns, such as an incoming call left on the queue of a listener
+that has been closed. Its LCI is not cleared then, so frames from the
+neighbour still find it until it is reaped, and the reaping frees it
+under the frame being delivered.
 
-With the default MTU of 236 the 1152 byte floor hides the problem. As
-soon as the MTU is raised above 502, a maximum length frame made of END
-or ESC bytes makes kiss_esc() or kiss_esc_crc() write up to 148 bytes
-past the end of xbuff. The content of the frame does not have to come
-from the local machine: it can be traffic forwarded for another
-station, a routed IP datagram for instance.
+Take a reference in rose_find_socket() and drop it in its callers once
+the frame has been handled. rose_new_lci() only needs to know whether
+an LCI is in use: let it walk the socket list under rose_list_lock
+itself instead of taking references.
 
-Reproduced under KASAN on 6.12.94 with the MTU set to 1024 and a
-1097 byte UI frame whose payload is all 0xC0:
+A Call Request that arrives on the LCI of an existing socket tears the
+old socket down. With the reference held, the socket may by then have
+been disconnected or reaped, its neighbour reference dropped and
+rose->neighbour cleared: lock the socket and only tear it down if it
+still holds that LCI on that neighbour.
 
-  BUG: KASAN: slab-out-of-bounds in kiss_esc+0x316/0x390 [mkiss]
-  Write of size 1 at addr ffff888001c9c804 by task init/1
-   kiss_esc+0x316/0x390 [mkiss]
-   ax_xmit+0x346/0xcd5 [mkiss]
-   dev_hard_start_xmit+0xf8/0x580
-   sch_direct_xmit+0x131/0xa10
-   __dev_queue_xmit+0x27f6/0x34b0
-   packet_sendmsg+0x30c5/0x4a10
-  The buggy address is located 0 bytes to the right of
-   allocated 2052-byte region [ffff888001c9c000, ffff888001c9c804)
-
-In addition the driver sets no upper bound on the MTU. An MTU of 2^30
-or more makes "dev->mtu * 2" negative, which leaves the buffers at
-their minimum size while the length check in ax_encaps() no longer
-rejects anything.
-
-Compute the buffer length in one place, from the largest frame that
-ax_encaps() accepts, and allocate six more bytes for the two END
-delimiters and the two CRC bytes, which may need escaping too. Set
-max_mtu so that the computation cannot overflow.
-
-With the change the same test produces no KASAN report, the frames
-found on the serial line are identical to those sent, with and without
-CRC (SMACK and FlexNet), and an MTU above 65535 is refused.
+On a QEMU bench with two 4-CPU guests (KASAN, lockdep), A places eight
+calls to B and sends a 100-byte message per second on each; B listens
+without ever accepting, closes the listener after 10 s, and the calls
+left on its queue are reaped 5 s later while A's messages keep coming.
+With frames for sockets in state 0 held 2 s after rose_find_socket(),
+before: KASAN reports a slab-use-after-free in rose_rcv_frame(), called
+from rose_route_frame(), on the socket freed by the heartbeat timer;
+after: no report in two runs, and no report without the delay either.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 1d80a1c3a4591b20182a8adb3bcb0427f85331a5)
+(cherry picked from commit 294cfbca864a2cf9d458fa1e8ee51f2cd8284b95)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hamradio/mkiss.c | 49 ++++++++++++++++++++++--------------
- 1 file changed, 30 insertions(+), 19 deletions(-)
+ net/rose/af_rose.c       | 42 ++++++++++++++++++++++++++++++----------
+ net/rose/rose_loopback.c |  1 +
+ net/rose/rose_route.c    | 37 +++++++++++++++++++++--------------
+ 3 files changed, 56 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
-index 5f38a002bd9e3..05c7a234de6ca 100644
---- a/drivers/net/hamradio/mkiss.c
-+++ b/drivers/net/hamradio/mkiss.c
-@@ -30,6 +30,7 @@
- #include <net/ax25.h>
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index f6f09590e86b5..93c43d42f1c20 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -312,20 +312,35 @@ static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
  
- #define AX_MTU		236
-+#define AX_MAX_MTU	65535
+ /*
+  *	Find a connected ROSE socket given my LCI and device.
++ *	The caller holds rose_list_lock.
+  */
+-struct sock *rose_find_socket(unsigned int lci, struct rose_neigh *neigh)
++static struct sock *__rose_find_socket(unsigned int lci, struct rose_neigh *neigh)
+ {
+ 	struct sock *s;
  
- /* some arch define END as assembly function ending, just undef it */
- #undef	END
-@@ -355,13 +356,19 @@ static int ax_set_mac_address(struct net_device *dev, void *addr)
+-	spin_lock_bh(&rose_list_lock);
+ 	sk_for_each(s, &rose_list) {
+ 		struct rose_sock *rose = rose_sk(s);
  
- /*---------------------------------------------------------------------------*/
- 
--static void ax_changedmtu(struct mkiss *ax)
--{
--	struct net_device *dev = ax->dev;
--	unsigned char *xbuff, *rbuff, *oxbuff, *orbuff;
--	int len;
-+/*
-+ * Length of the frame buffers for the current MTU.
-+ *
-+ * ax_encaps() accepts frames of up to dev->mtu + 73 bytes and KISS escaping
-+ * can double every one of them.  The buffers are allocated AX_BUF_SLACK bytes
-+ * larger than this, for the two END delimiters and the two CRC bytes, which
-+ * can need escaping as well.
-+ */
-+#define AX_BUF_SLACK	6
- 
--	len = dev->mtu * 2;
-+static int ax_buflen(const struct net_device *dev)
-+{
-+	int len = (dev->mtu + 73) * 2;
- 
- 	/*
- 	 * allow for arrival of larger UDP packets, even if we say not to
-@@ -371,8 +378,19 @@ static void ax_changedmtu(struct mkiss *ax)
- 	if (len < 576 * 2)
- 		len = 576 * 2;
- 
--	xbuff = kmalloc(len + 4, GFP_ATOMIC);
--	rbuff = kmalloc(len + 4, GFP_ATOMIC);
-+	return len;
+ 		if (rose->lci == lci && rose->neighbour == neigh)
+-			goto found;
++			return s;
+ 	}
+-	s = NULL;
+-found:
++
++	return NULL;
 +}
 +
-+static void ax_changedmtu(struct mkiss *ax)
++/*
++ *	Find a connected ROSE socket given my LCI and device. A reference is
++ *	taken on the socket found: it can be released and destroyed as soon
++ *	as rose_list_lock is dropped.
++ */
++struct sock *rose_find_socket(unsigned int lci, struct rose_neigh *neigh)
 +{
-+	struct net_device *dev = ax->dev;
-+	unsigned char *xbuff, *rbuff, *oxbuff, *orbuff;
-+	int len;
++	struct sock *s;
 +
-+	len = ax_buflen(dev);
-+
-+	xbuff = kmalloc(len + AX_BUF_SLACK, GFP_ATOMIC);
-+	rbuff = kmalloc(len + AX_BUF_SLACK, GFP_ATOMIC);
- 
- 	if (xbuff == NULL || rbuff == NULL)  {
- 		printk(KERN_ERR "mkiss: %s: unable to grow ax25 buffers, "
-@@ -581,20 +599,12 @@ static int ax_open(struct net_device *dev)
- 	 * rbuff	Receive buffer.
- 	 * xbuff	Transmit buffer.
- 	 */
--	len = dev->mtu * 2;
--
--	/*
--	 * allow for arrival of larger UDP packets, even if we say not to
--	 * also fixes a bug in which SunOS sends 512-byte packets even with
--	 * an MSS of 128
--	 */
--	if (len < 576 * 2)
--		len = 576 * 2;
-+	len = ax_buflen(dev);
- 
--	if ((ax->rbuff = kmalloc(len + 4, GFP_KERNEL)) == NULL)
-+	if ((ax->rbuff = kmalloc(len + AX_BUF_SLACK, GFP_KERNEL)) == NULL)
- 		goto norbuff;
- 
--	if ((ax->xbuff = kmalloc(len + 4, GFP_KERNEL)) == NULL)
-+	if ((ax->xbuff = kmalloc(len + AX_BUF_SLACK, GFP_KERNEL)) == NULL)
- 		goto noxbuff;
- 
- 	ax->mtu	     = dev->mtu + 73;
-@@ -640,6 +650,7 @@ static void ax_setup(struct net_device *dev)
++	spin_lock_bh(&rose_list_lock);
++	s = __rose_find_socket(lci, neigh);
++	if (s)
++		sock_hold(s);
+ 	spin_unlock_bh(&rose_list_lock);
+ 	return s;
+ }
+@@ -336,19 +351,26 @@ struct sock *rose_find_socket(unsigned int lci, struct rose_neigh *neigh)
+  */
+ unsigned int rose_new_lci(struct rose_neigh *neigh)
  {
- 	/* Finish setting up the DEVICE info. */
- 	dev->mtu             = AX_MTU;
-+	dev->max_mtu         = AX_MAX_MTU;
- 	dev->hard_header_len = AX25_MAX_HEADER_LEN;
- 	dev->addr_len        = AX25_ADDR_LEN;
- 	dev->type            = ARPHRD_AX25;
++	unsigned int res = 0;
+ 	int lci;
+ 
++	spin_lock_bh(&rose_list_lock);
+ 	if (neigh->dce_mode) {
+ 		for (lci = 1; lci <= sysctl_rose_maximum_vcs; lci++)
+-			if (rose_find_socket(lci, neigh) == NULL && rose_route_free_lci(lci, neigh) == NULL)
+-				return lci;
++			if (!__rose_find_socket(lci, neigh) && !rose_route_free_lci(lci, neigh)) {
++				res = lci;
++				break;
++			}
+ 	} else {
+ 		for (lci = sysctl_rose_maximum_vcs; lci > 0; lci--)
+-			if (rose_find_socket(lci, neigh) == NULL && rose_route_free_lci(lci, neigh) == NULL)
+-				return lci;
++			if (!__rose_find_socket(lci, neigh) && !rose_route_free_lci(lci, neigh)) {
++				res = lci;
++				break;
++			}
+ 	}
++	spin_unlock_bh(&rose_list_lock);
+ 
+-	return 0;
++	return res;
+ }
+ 
+ /*
+diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+index 4e4a473910cc8..6c5c35030e67b 100644
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -109,6 +109,7 @@ static void rose_loopback_timer(struct timer_list *unused)
+ 		if (sk) {
+ 			if (rose_rcv_frame(sk, skb) == 0)
+ 				kfree_skb(skb);
++			sock_put(sk);
+ 			continue;
+ 		}
+ 
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 87a33f5c65d8a..84d628a826b79 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -1054,25 +1054,34 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 		if (frametype == ROSE_CALL_REQUEST) {
+ 			struct rose_sock *rose = rose_sk(sk);
+ 
+-			/* Remove an existing unused socket */
+-			rose_clear_queues(sk);
+-			rose->cause	 = ROSE_NETWORK_CONGESTION;
+-			rose->diagnostic = 0;
+-			rose_neigh_put(rose->neighbour);
+-			rose->neighbour	 = NULL;
+-			rose->lci	 = 0;
+-			rose->state	 = ROSE_STATE_0;
+-			sk->sk_state	 = TCP_CLOSE;
+-			sk->sk_err	 = 0;
+-			sk->sk_shutdown	 |= SEND_SHUTDOWN;
+-			if (!sock_flag(sk, SOCK_DEAD)) {
+-				sk->sk_state_change(sk);
+-				sock_set_flag(sk, SOCK_DEAD);
++			/*
++			 * Remove an existing unused socket, unless it was
++			 * disconnected or reaped since it was found.
++			 */
++			bh_lock_sock(sk);
++			if (rose->lci == lci && rose->neighbour == rose_neigh) {
++				rose_clear_queues(sk);
++				rose->cause	 = ROSE_NETWORK_CONGESTION;
++				rose->diagnostic = 0;
++				rose_neigh_put(rose->neighbour);
++				rose->neighbour	 = NULL;
++				rose->lci	 = 0;
++				rose->state	 = ROSE_STATE_0;
++				sk->sk_state	 = TCP_CLOSE;
++				sk->sk_err	 = 0;
++				sk->sk_shutdown	 |= SEND_SHUTDOWN;
++				if (!sock_flag(sk, SOCK_DEAD)) {
++					sk->sk_state_change(sk);
++					sock_set_flag(sk, SOCK_DEAD);
++				}
+ 			}
++			bh_unlock_sock(sk);
++			sock_put(sk);
+ 		}
+ 		else {
+ 			skb_reset_transport_header(skb);
+ 			res = rose_rcv_frame(sk, skb);
++			sock_put(sk);
+ 			goto out;
+ 		}
+ 	}
 -- 
 2.53.0
 
