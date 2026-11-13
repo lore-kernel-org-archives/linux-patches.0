@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591404;
-	b=pRjtb6MLtZwvBuW9I0fLxY8DTcCE6w7oH8QfJs9XAmgu6AJyhrmECMFlBQYgo5GAdVEU
-	 KVy2ZWHgO8jbDmGkNQzfWvKIvxGvmqkKcQezx9b7ZQEzglPcjqMVUd446LUrYtIA3Qbrk
-	 a65ZvlvOuGMOgAyFJ+MTLslLxjL2stE7kLqYW3qO/TGHY1PGgg5Py9GHvEoMq2C8hVFsK
-	 Aq9yfgYEAlsVx9/g05TtUasUENxxrgbtkVuaFQSi84xHNK/6Ycjzn/MtTYMpA045CJ6wa
-	 kKyTEf8IBuUsLZRAKgmhdF+IwZhcBQZr5a9jispHY1VTrMKrzKtuQNFjHcMSPYRJIyA==
+	t=1794591405;
+	b=ZHhFaYPDWjoN5DxUEAv3/W89HCNJDM0d96kfvmbjXHfMYrELo3Nn9BbJ04Nkzamu8JoB
+	 N3MGT+4bd1Y3DXO/aCs69eXvZAIOIcFWlosa874kqthRCjOeFMLxLCKsBgmGWxkI14QKF
+	 Wgj3+R3ZiqiJ2FIfrbUP85AhAztmP+p/8xI1nj0HK1OOBjfV+7YId+PvtTHKYYAQNY+/4
+	 t/Z4/ZrjsAWt1q788tCgBpVH9LCgqk6+LT0BehW1asiqIaojncUdV7rv8LI3Ob+eoGvFh
+	 cCs2zHLljqOtZ5BUMbPIT06I1B+g4sLr2yFRB49uzANIzRGe2SZnMSwLJf/DZ8mzMyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591404;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591405;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V4V/yYauhakZHTtR42iCakV2crMqS607skJ1bJ+oGkw=;
-	b=ETgOc/f7nSamy4yRZPGW/PmdrQU9pO4boij6yf73Z1CxVfViNcAh9n9VbsdL2Q08wfhc
-	 iuQLCZl/CpNMxcslRsryeTtROJoNgxYRCwUsth7RZNRKGfJCzHZty+LVsuZzt3sfUnPgu
-	 rHtL33N/c81JGgpmLKJpvU1iXGC2ZqcFB3NfefWe/WdVhiy4LsEJmCS5i92tbjQDh03aZ
-	 8INrvOy6Ckjlu3xjo6adB4wU85qwLz47NancOL5uLgH3tqvw1GZO1W9PZ3gPmMZzPE2Nw
-	 9ObltoZrfLhd9AWTL8YXw7iy8Ur/AbcZEhyURTk9beSAUDZhFAdKno0XoGWMLP6KfAQ==
+	bh=u8dNhVPEdWjZ7bH3hYp7ikvyZsJVY3VPYksZjNVOmOk=;
+	b=A46MbIs+2H2s8MhuHvoyduNhRvHQ3A/340U5AHAW3gRqoxILqJ3fZYfxycpYrU+IhdjU
+	 FUWZxBYRSsQuOb+B4gvDkIHsbRBsY4DdaqowIIiKJH/nsbd2dSUpA9qSbji5gvd6M0S+7
+	 OXfKxUnaZ6dA/frrLDBQTf355frjFX+BWX8Bw9KewxIwblMxNRYn6YaYltA14/n9yOudB
+	 szdJMellNN13sHZoquzlCrUoDd6KkFmJhySsnj0PwdGbGTlm8Y2vhvOI9Txyz3iQCHQ+a
+	 uy8IEDnpMMzaUm/jEMf6uRAmC3LCIffORiz0CimK05o6s8bawIPNvanBruxJ+zerlaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5vPTr7g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsaFAG9K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D616079D4F;
-	Fri, 13 Nov 2026 17:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D516079D60;
+	Fri, 13 Nov 2026 17:36:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5vPTr7g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF57D1F000C4;
-	Fri, 13 Nov 2026 17:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsaFAG9K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CC41F000C4;
+	Fri, 13 Nov 2026 17:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591404;
-	bh=V4V/yYauhakZHTtR42iCakV2crMqS607skJ1bJ+oGkw=;
+	s=korg; t=1794591405;
+	bh=u8dNhVPEdWjZ7bH3hYp7ikvyZsJVY3VPYksZjNVOmOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F5vPTr7gHpQo70RG0PQIG2J+DvNbIcIBu+UivsDL2Ug0xF46USsESORj0j8/F6hps
-	 zk0FErOlAE8yhJIQ+8RKhyXCcmryPkPlwNiTWJsJVyy9+XlXN7i8BAD/of2DTaPxuA
-	 0oDygXSybKWxKcyFgWS5J21A6UA9val/qTVaKRjc=
+	b=IsaFAG9KsjmWbCF00j6+2e0ZQyMqvfx/eoRgt1abeYdw3t1jEw+Cru3/Q0APRAU7F
+	 ibgX9emyUuTmHJ1zwWi4zwT+rSMfkpb1SWNNf9nLi4yPm/ZC7AbkGCBhWnLvFVJjWe
+	 5JYw3zdkMN56ffJ45cdbvV0TbnJTpjwuYosoqFWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Martin Belanger <martin.belanger@dell.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Mehmet Fide <mehmet.fide@screeningeagle.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 500/670] nvme-tcp: skip TLS control records while waiting for the ICResp
-Date: Fri, 13 Nov 2026 10:51:04 -0500
-Message-ID: <20261113153828.903752209@linuxfoundation.org>
+Subject: [PATCH 6.12 501/670] wifi: rtw88: usb: route bmc frames via the high queue only for DTIM delivery
+Date: Fri, 13 Nov 2026 10:51:05 -0500
+Message-ID: <20261113153828.936164472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,235 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Belanger <martin.belanger@dell.com>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-commit 12c20e2903563acfb949342967adb900310a24d4 upstream.
+[ Upstream commit c710c7c2e0380d7c0eeb33b686262edcaef7cb07 ]
 
-A peer may send a NewSessionTicket as soon as the handshake completes,
-ahead of the ICResp. nvme_tcp_init_connection() fails the connection on
-any record that is not application data, so such a target cannot be
-reached at all. An OpenSSL-based target does this by default.
+In AP mode every broadcast and multicast data frame is routed to
+TX_DESC_QSEL_HIGH, the after-DTIM queue, whether or not anybody is
+asleep. The firmware drains that queue at beacon pace, a dozen or so
+frames per second measured on RTL8822BU, while one associated client's
+mDNS/SSDP chatter alone exceeds that. The excess accumulates inside
+the chip until the shared TX page pool is exhausted (measured: 14 of
+1803 pages left). From that point every host-sourced frame queues
+behind the backlog: authentication responses reach the air seconds
+after the client has given up, so no station can associate anymore,
+and the beacon reserved-page download fails the BCN_VALID poll
+("error beacon valid") because it needs pages from the same pool. The
+AP keeps beaconing, so the failure looks like a silent RX stall and
+only a reboot recovers.
 
-RFC 9846 section 4.7.1 requires a client that does not support session
-resumption to ignore a NewSessionTicket. Discard such a record and read
-again, up to a fixed number of records. Report an alert, and fail the
-connection for any other record type.
+mac80211 already decides when after-DTIM delivery is needed: it sets
+IEEE80211_TX_CTL_SEND_AFTER_DTIM on bmc frames only while at least one
+station is actually dozing. Honor that instead of routing
+unconditionally: flagged frames keep going through the high queue with
+the MORE_DATA and HGQMD handling introduced by commit 076f786a0ae1
+("wifi: rtw88: Fix AP mode incorrect DTIM behavior"), everything else
+leaves at line rate through the AC queues. This partially reverts the
+usb.c hunk of that commit, whose unconditional routing is what lets
+the backlog build up.
 
-The record type is now checked before the length. A control record
-shorter than the ICResp was reported as -ECONNRESET, which hid the real
-cause.
+On a bench AP (USB2, 20 MHz, WPA2, hostapd, a Windows client driven
+through disconnect/reconnect cycles): reconnects fail 0/5 on RTL8822BU
+and 0/3 on RTL8821CU before this change, and pass 10/10 and 5/5 with
+it, with the page pool staying healthy and no beacon errors logged.
 
-Fixes: 2837966ab2a8 ("nvme-tcp: control message handling for recvmsg()")
-Assisted-by: LLM
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Martin Belanger <martin.belanger@dell.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ Martin: resolved a context conflict next to nvme_tcp_cpu_queues ]
-Signed-off-by: Martin Belanger <martin.belanger@dell.com>
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260814053426.2473247-1-mehmet.fide@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 162 ++++++++++++++++++++++++++++++++++------
- 1 file changed, 140 insertions(+), 22 deletions(-)
+ drivers/net/wireless/realtek/rtw88/usb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 82cf9419a6be4..ab473626e62a0 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -54,6 +54,12 @@ MODULE_PARM_DESC(tls_handshake_timeout,
- 		 "nvme TLS handshake timeout in seconds (default 10)");
- #endif
- 
-+/* read a TLS control record in chunks of this size */
-+#define NVME_TCP_TLS_REC_CHUNK 256
-+
-+/* TLS records read while waiting for the ICResp, the ICResp included */
-+#define NVME_TCP_ICRESP_MAX_RECORDS 8
-+
- static atomic_t nvme_tcp_cpu_queues[NR_CPUS];
- 
- #ifdef CONFIG_DEBUG_LOCK_ALLOC
-@@ -1569,12 +1575,143 @@ static void nvme_tcp_free_queue(struct nvme_ctrl *nctrl, int qid)
- 	mutex_destroy(&queue->pf_cache_lock);
- }
- 
-+static int nvme_tcp_recv_tls_alert(struct nvme_tcp_queue *queue,
-+				   struct msghdr *msg, int len)
-+{
-+	struct sock *sk = queue->sock->sk;
-+	u8 level, description;
-+
-+	if (len < 2) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"queue %d: truncated TLS alert\n",
-+			nvme_tcp_queue_id(queue));
-+		return -ENOTCONN;
-+	}
-+
-+	/* tls_alert_recv() reads through the iterator */
-+	iov_iter_revert(&msg->msg_iter, len);
-+	tls_alert_recv(sk, msg, &level, &description);
-+
-+	if (level == TLS_ALERT_LEVEL_FATAL) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"queue %d: fatal TLS alert %u\n",
-+			nvme_tcp_queue_id(queue), description);
-+		return -ENOTCONN;
-+	}
-+
-+	/* a peer shutting down normally is not worth a warning */
-+	if (description == TLS_ALERT_DESC_CLOSE_NOTIFY)
-+		dev_dbg(queue->ctrl->ctrl.device,
-+			"queue %d: TLS close_notify\n",
-+			nvme_tcp_queue_id(queue));
-+	else
-+		dev_warn(queue->ctrl->ctrl.device,
-+			 "queue %d: TLS alert %u\n",
-+			 nvme_tcp_queue_id(queue), description);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Discard a TLS record that arrived in place of the ICResp. A peer may send
-+ * a NewSessionTicket as soon as the handshake completes.
-+ *
-+ * Returns 0 when the record was discarded and the ICResp can be read, or a
-+ * negative errno if the connection cannot continue.
-+ */
-+static int nvme_tcp_skip_tls_record(struct nvme_tcp_queue *queue,
-+				    struct msghdr *msg, u8 ctype, int len)
-+{
-+	u8 buf[NVME_TCP_TLS_REC_CHUNK];
-+	int ret;
-+
-+	switch (ctype) {
-+	case TLS_RECORD_TYPE_HANDSHAKE:
-+		break;
-+	case TLS_RECORD_TYPE_ALERT:
-+		ret = nvme_tcp_recv_tls_alert(queue, msg, len);
-+		return ret ? : -ENOTCONN;
-+	default:
-+		pr_err("queue %d: unhandled TLS record %u\n",
-+		       nvme_tcp_queue_id(queue), ctype);
-+		return -ENOTCONN;
-+	}
-+
-+	/* the ICResp is in a later record, drain this one first */
-+	while (!(msg->msg_flags & MSG_EOR)) {
-+		struct kvec iov = {
-+			.iov_base = buf,
-+			.iov_len = sizeof(buf),
-+		};
-+		char cbuf[CMSG_LEN(sizeof(char))] = {};
-+		/* kTLS fails a control record read without a cmsg buffer */
-+		struct msghdr drain = {
-+			.msg_control = cbuf,
-+			.msg_controllen = sizeof(cbuf),
-+		};
-+
-+		ret = kernel_recvmsg(queue->sock, &drain, &iov, 1, sizeof(buf),
-+				     0);
-+		if (ret <= 0) {
-+			pr_warn("queue %d: failed to drain TLS record: %d\n",
-+				nvme_tcp_queue_id(queue), ret);
-+			return ret ? : -ECONNRESET;
-+		}
-+		msg->msg_flags = drain.msg_flags;
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * Receive the ICResp. Over TLS, skip the records that a peer may send
-+ * ahead of it.
-+ *
-+ * Returns the length received, or a negative errno.
-+ */
-+static int nvme_tcp_recv_icresp(struct nvme_tcp_queue *queue,
-+				struct nvme_tcp_icresp_pdu *icresp)
-+{
-+	char cbuf[CMSG_LEN(sizeof(char))];
-+	struct msghdr msg;
-+	struct kvec iov;
-+	u8 ctype;
-+	int i, ret;
-+
-+	for (i = 0; i < NVME_TCP_ICRESP_MAX_RECORDS; i++) {
-+		memset(&msg, 0, sizeof(msg));
-+		memset(cbuf, 0, sizeof(cbuf));
-+		iov.iov_base = icresp;
-+		iov.iov_len = sizeof(*icresp);
-+		if (nvme_tcp_queue_tls(queue)) {
-+			msg.msg_control = cbuf;
-+			msg.msg_controllen = sizeof(cbuf);
-+		}
-+		msg.msg_flags = MSG_WAITALL;
-+		ret = kernel_recvmsg(queue->sock, &msg, &iov, 1,
-+				     iov.iov_len, msg.msg_flags);
-+		if (ret <= 0 || !nvme_tcp_queue_tls(queue))
-+			return ret;
-+
-+		ctype = tls_get_record_type(queue->sock->sk,
-+					    (struct cmsghdr *)cbuf);
-+		if (ctype == TLS_RECORD_TYPE_DATA)
-+			return ret;
-+
-+		ret = nvme_tcp_skip_tls_record(queue, &msg, ctype, ret);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
-+	pr_err("queue %d: too many TLS records before the ICResp\n",
-+	       nvme_tcp_queue_id(queue));
-+	return -EPROTO;
-+}
-+
- static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
+diff --git a/drivers/net/wireless/realtek/rtw88/usb.c b/drivers/net/wireless/realtek/rtw88/usb.c
+index b3e1e9a0fda69..006ad50ff24f8 100644
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -558,6 +558,7 @@ static int rtw_usb_write_data_h2c(struct rtw_dev *rtwdev, u8 *buf, u32 size)
+ static u8 rtw_usb_tx_queue_mapping_to_qsel(struct sk_buff *skb)
  {
- 	struct nvme_tcp_icreq_pdu *icreq;
- 	struct nvme_tcp_icresp_pdu *icresp;
--	char cbuf[CMSG_LEN(sizeof(char))] = {};
--	u8 ctype;
- 	struct msghdr msg = {};
- 	struct kvec iov;
- 	bool ctrl_hdgst, ctrl_ddgst;
-@@ -1612,16 +1749,7 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
- 		goto free_icresp;
- 	}
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+ 	__le16 fc = hdr->frame_control;
+ 	u8 qsel;
  
--	memset(&msg, 0, sizeof(msg));
--	iov.iov_base = icresp;
--	iov.iov_len = sizeof(*icresp);
--	if (nvme_tcp_queue_tls(queue)) {
--		msg.msg_control = cbuf;
--		msg.msg_controllen = sizeof(cbuf);
--	}
--	msg.msg_flags = MSG_WAITALL;
--	ret = kernel_recvmsg(queue->sock, &msg, &iov, 1,
--			iov.iov_len, msg.msg_flags);
-+	ret = nvme_tcp_recv_icresp(queue, icresp);
- 	if (ret >= 0 && ret < sizeof(*icresp))
- 		ret = -ECONNRESET;
- 	if (ret < 0) {
-@@ -1629,16 +1757,6 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
- 			nvme_tcp_queue_id(queue), ret);
- 		goto free_icresp;
- 	}
--	ret = -ENOTCONN;
--	if (nvme_tcp_queue_tls(queue)) {
--		ctype = tls_get_record_type(queue->sock->sk,
--					    (struct cmsghdr *)cbuf);
--		if (ctype != TLS_RECORD_TYPE_DATA) {
--			pr_err("queue %d: unhandled TLS record %d\n",
--			       nvme_tcp_queue_id(queue), ctype);
--			goto free_icresp;
--		}
--	}
- 	ret = -EINVAL;
- 	if (icresp->hdr.type != nvme_tcp_icresp) {
- 		pr_err("queue %d: bad type returned %d\n",
+@@ -565,7 +566,8 @@ static u8 rtw_usb_tx_queue_mapping_to_qsel(struct sk_buff *skb)
+ 		qsel = TX_DESC_QSEL_MGMT;
+ 	else if (is_broadcast_ether_addr(hdr->addr1) ||
+ 		 is_multicast_ether_addr(hdr->addr1))
+-		qsel = TX_DESC_QSEL_HIGH;
++		qsel = (info->flags & IEEE80211_TX_CTL_SEND_AFTER_DTIM) ?
++		       TX_DESC_QSEL_HIGH : skb->priority;
+ 	else if (skb_get_queue_mapping(skb) <= IEEE80211_AC_BK)
+ 		qsel = skb->priority;
+ 	else
 -- 
 2.53.0
 
