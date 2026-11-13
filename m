@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585945;
-	b=vb1hAVEO2gOjUjicdySrE9UtZMrMfyDhyksXMRlIc95C/hBDGukMvYIuz6hYiBGDFW6s
-	 kxc6KspYdrJvMzyPZf3Ow+6bOmiorxsSMJ6n9YKTDCSam5aUKsn1ckkPE8H4SU2qttI7i
-	 1PfE7DDaUzHXpXMXg8zqAPw0Na4oHWTaIIR2rExpTyQtcGh4AgMtyI1mJIDrRnKk8iHAL
-	 jfJVprVkV36/JOX1qSMou3HISzuA4131lFAzwsxEFwU2IWxOTzCL/hCkIlAChn0VhJx60
-	 TrjRBZMfyO9PPTwQ2C10irQNlKoKmKFbnR8kfa40dCttD1ozmlcXjwPJ+g0FOS3q8tQ==
+	t=1794585946;
+	b=WxrsgLoCDCuacm1aJ4NzCOV4YxfIhgTGt429XLsWfBVkKpUrSt5QkIuTaRK3XaNUNg5+
+	 UEv8XnNI2J3a7F/kGw+lJ7tGyqEdTsB4Nm9L6HUf0ZOSxcxL2vSeo9r0eCfj2LkXfgqYH
+	 +Ts6FOvLDSYpsrA3YkoEN5xrawqrvtG45Up0oj1we4DnWFKvvdIrgMFDvCBau4nsMmx0t
+	 bbowQZto7Jl4kl1JwmNl57oL+8fXI/C76ESeuA1uy0OgZ6GbIXxHSspsVPrYlAwY0ruco
+	 dKGSgf04gCfev4JOuMr/JbWi0mMegMKYABYP+0Pr04LbVXaH9b9bh6IjaZRTOjxQ7xA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=m+yN35mQo71jvOa3h7F8ESwxw8m1p3SIbO0LtaG5mtY=;
-	b=ZbbMOkwo825TlqF0+D+6L1G3u5uKQSbY3RaJ3fuDoB6PL3ymiv9aD9gcPy9+ZQbS19jg
-	 j5E0I1JM40iDBsRYAF7Ido9jyjDUrvsleyXUxH3MqLbdmOJ/HUi2/el0JZYsCtSm2yY8M
-	 FyawgMNCWXrkf06AryILgejyyFrxhwYu0qW5v0XldgbyUeouLGHiym0vjFJ22dp1l2Yqr
-	 cYZGWPZAOCdO0kX6C7kJtajlsGEjJRALM6Xsf7O7sz/kQVPsQjD+0ll7UKlAEzcLiag8U
-	 iuWlRw5L+VG24kl4u75NiN5KWAdNS3HJB2sdbTvrwNqau4qcQG8keGZqPBZcxFSxXaQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=4l3tadcGKbVwNmpUoe6WY9HJTE0qLueRDYd8IHY25Z8=;
+	b=EW3DLY3NlvzrCR56xAOuodnky0jNl4tKQHxuQ1C7nsBX9E8mBtjsy7zOuYddJEMSw3O8
+	 aWPBB1o9Qk8jwzYyG9AppQlAUu1ZYEUg47y4irsJl8z4qWbDiLdY04H4DGH8cX0/TMEb7
+	 +Zc/jEnXfJnRtdO5cn9+Y3zbvNbfPNjVywBO6vPib/nCwPBAobLugPHpnZiqkgV32ywtO
+	 Nog8tKGTFOG67Wdzmh35CqDaYPvrt7PbiMOeNCSliaXgGaRDL6592YtlT/oyT3if0g+qG
+	 5qdl6SgAIGjnUusRxZHTRMkse4e0ogCSkQBAfSX/NEc3JnFdpwsu14mYH+ZLoJEJtfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B9PuScRZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z5Yo+RRT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA556070FC7;
-	Fri, 13 Nov 2026 16:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DF86070FE4;
+	Fri, 13 Nov 2026 16:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B9PuScRZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490C81F000C4;
-	Fri, 13 Nov 2026 16:05:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z5Yo+RRT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BB01F000C4;
+	Fri, 13 Nov 2026 16:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585945;
-	bh=m+yN35mQo71jvOa3h7F8ESwxw8m1p3SIbO0LtaG5mtY=;
+	s=korg; t=1794585946;
+	bh=4l3tadcGKbVwNmpUoe6WY9HJTE0qLueRDYd8IHY25Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B9PuScRZ/kzhCpgZFvtVYGiOTPFHpeHozhayJNLYmv93qfPUd+fZQ39h/dHvKAFSv
-	 /2LjJ6O0zjtR/fo4pYLhPJqJQ981UKe+py5f5jQX3867fi0qi+hztz6ZHJ7n/wtnuM
-	 fdgENF9QaoKjYr+8iDK2+A6E89G0cWHiTeRku+EU=
+	b=Z5Yo+RRTumuwOVv9Djza2jrdDKQubv3hPrHf9oAddIi8Bff1avIDnMqVAcCOmWGYx
+	 AnwkvmARWXV3V6epitiCr1OO/XyfFMIPUgGTQnXhcGM8CIFzsbja/S6wAfwHkIdice
+	 bQVxk7uZUljBEfG0zz0OfuI7pE92MHqR37Oezj60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Charis Stratakis <c.stratakis@proton.me>,
+	=?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <aliamemis@disroot.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Rong Zhang <i@rong.moe>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 499/507] iommufd/iova_bitmap: Ensure that iova_bitmap_set() handles the full IOVA
-Date: Fri, 13 Nov 2026 10:53:23 -0500
-Message-ID: <20261113153814.012525885@linuxfoundation.org>
+Subject: [PATCH 7.3 500/507] thermal: intel: int340x: Evaluate _TMP exclusively
+Date: Fri, 13 Nov 2026 10:53:24 -0500
+Message-ID: <20261113153814.058577160@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -62,117 +65,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Ali Ahmet Memiş <aliamemis@disroot.org>
 
-[ Upstream commit e21952d72b4740f08a272d694cca223b6b0099ca ]
+[ Upstream commit c4aae727beb23a736c15b8d53e219da29d791065 ]
 
-Generally userspace is going to step the dirty bitmap through the IOVA
-space. However if the bitmap ends in the middle of a large PTE this is
-problematic. The first step will clear the dirty bit and report dirty to
-the end of its bitmap while the second step will see the clear'd dirty and
-report clean for the start of the bitmap. If it happens this ends up
-losing dirties.
+On ThinkPad P1 Gen2 and P53, INT3403 _TMP switches the EC page selector
+without taking the mutex the battery methods use, so it must not run
+interleaved with them.
 
-Further this function is missing bounds checking so if this does happen
-ther is a good chance it will write memory beyond what the userspace was
-expecting.
+Evaluate _TMP with acpi_evaluate_integer_exclusive(), also where int3403
+and processor_thermal probe for it.
 
-Return an error code if this illegal condition happens.
-
-Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20260925161142.189813-2-parri.andrea@gmail.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-[ sashal: Added missing prerequisite error storage and propagation from the bitmap through the iterator to the ioctl. ]
+Fixes: d33e89d12295 ("thermal: core: Suspend thermal zones later and resume them earlier")
+Reported-by: Charis Stratakis <c.stratakis@proton.me>
+Closes: https://lore.kernel.org/all/37N_jFulf7n-Z55NfKfE71C_wVPxYvZ0xD_iRUg2fXu7TypDiF5PStQ6siSfVBih6fThg5WoPes8U5ZQpfVm_teMFcUGXFxz2DdMbfSWuws=@proton.me/
+Cc: All applicable <stable@vger.kernel.org> # 80892972ff23 ACPI: utils: Add exclusive AML evaluation helpers
+Signed-off-by: Ali Ahmet Memiş <aliamemis@disroot.org>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Reviewed-by: Rong Zhang <i@rong.moe>
+Link: https://patch.msgid.link/20261018122220.678822-4-aliamemis@disroot.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/io_pagetable.c |  2 +-
- drivers/iommu/iommufd/iova_bitmap.c  | 19 ++++++++++++++++++-
- include/uapi/linux/iommufd.h         |  6 ++++++
- 3 files changed, 25 insertions(+), 2 deletions(-)
+ drivers/thermal/intel/int340x_thermal/int3403_thermal.c     | 3 +--
+ .../thermal/intel/int340x_thermal/int340x_thermal_zone.c    | 6 +++++-
+ .../intel/int340x_thermal/processor_thermal_device.c        | 2 +-
+ 3 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/io_pagetable.c b/drivers/iommu/iommufd/io_pagetable.c
-index 283ab372e8da8..5ac736cf5bb5a 100644
---- a/drivers/iommu/iommufd/io_pagetable.c
-+++ b/drivers/iommu/iommufd/io_pagetable.c
-@@ -589,7 +589,7 @@ iommu_read_and_clear_dirty(struct iommu_domain *domain,
- 	arg.iopt = iopt;
- 	arg.domain = domain;
- 	arg.dirty = &dirty;
--	iova_bitmap_for_each(iter, &arg, __iommu_read_and_clear_dirty);
-+	ret = iova_bitmap_for_each(iter, &arg, __iommu_read_and_clear_dirty);
+diff --git a/drivers/thermal/intel/int340x_thermal/int3403_thermal.c b/drivers/thermal/intel/int340x_thermal/int3403_thermal.c
+index 264c9bc8e6454..2262de1e14d95 100644
+--- a/drivers/thermal/intel/int340x_thermal/int3403_thermal.c
++++ b/drivers/thermal/intel/int340x_thermal/int3403_thermal.c
+@@ -217,8 +217,7 @@ static int int3403_add(struct platform_device *pdev)
+ 	}
  
- 	if (!(flags & IOMMU_DIRTY_NO_CLEAR))
- 		iommu_iotlb_sync(domain, &gather);
-diff --git a/drivers/iommu/iommufd/iova_bitmap.c b/drivers/iommu/iommufd/iova_bitmap.c
-index dac3e657d498d..908c70f5362e0 100644
---- a/drivers/iommu/iommufd/iova_bitmap.c
-+++ b/drivers/iommu/iommufd/iova_bitmap.c
-@@ -116,6 +116,9 @@ struct iova_bitmap {
  
- 	/* length of the IOVA range for the whole bitmap */
- 	size_t length;
-+
-+	/* first error from recording an IOVA range */
-+	int err;
- };
+-	status = acpi_evaluate_integer(priv->adev->handle, "_TMP",
+-				       NULL, &tmp);
++	status = acpi_evaluate_integer_exclusive(priv->adev->handle, "_TMP", NULL, &tmp);
+ 	if (ACPI_FAILURE(status)) {
+ 		status = acpi_evaluate_integer(priv->adev->handle, "PTYP",
+ 				       NULL, &priv->type);
+diff --git a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
+index 965700ee69626..9451fea1f65c7 100644
+--- a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
++++ b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
+@@ -18,7 +18,11 @@ static int int340x_thermal_get_zone_temp(struct thermal_zone_device *zone,
+ 	unsigned long long tmp;
+ 	acpi_status status;
  
- /*
-@@ -384,7 +387,9 @@ static int iova_bitmap_advance_to(struct iova_bitmap *bitmap,
- int iova_bitmap_for_each(struct iova_bitmap *bitmap, void *opaque,
- 			 iova_bitmap_fn_t fn)
- {
--	return fn(bitmap, bitmap->iova, bitmap->length, opaque);
-+	int ret = fn(bitmap, bitmap->iova, bitmap->length, opaque);
-+
-+	return ret ? ret : bitmap->err;
- }
- EXPORT_SYMBOL_NS_GPL(iova_bitmap_for_each, "IOMMUFD");
- 
-@@ -404,6 +409,18 @@ void iova_bitmap_set(struct iova_bitmap *bitmap,
- 	struct iova_bitmap_map *mapped = &bitmap->mapped;
- 	unsigned long cur_bit, last_bit, last_page_idx;
- 
+-	status = acpi_evaluate_integer(d->adev->handle, "_TMP", NULL, &tmp);
 +	/*
-+	 * If the range cannot be recorded then the system call returns failure.
-+	 * This is to prevent loosing dirties if userspace is expecting to step
-+	 * the bitmap through the IOVA space.
++	 * On some ThinkPads _TMP switches the EC page selector without
++	 * taking the mutex the battery methods use.
 +	 */
-+	if (!length || length > bitmap->length || iova < bitmap->iova ||
-+	    iova - bitmap->iova > bitmap->length - length) {
-+		if (!bitmap->err)
-+			bitmap->err = -EPROTO;
-+		return;
-+	}
-+
- update_indexes:
- 	if (unlikely(!iova_bitmap_mapped_range(mapped, iova, length))) {
- 		/*
-diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
-index 5d47d1421c1fc..63a86354e822f 100644
---- a/include/uapi/linux/iommufd.h
-+++ b/include/uapi/linux/iommufd.h
-@@ -871,6 +871,12 @@ enum iommufd_hwpt_get_dirty_bitmap_flags {
-  * Walk the IOMMU pagetables for a given IOVA range to return a bitmap
-  * with the dirty IOVAs. In doing so it will also by default clear any
-  * dirty bit metadata set in the IOPTE.
-+ *
-+ * The IOVA range given must fully enclose any IOPTE. If the range starts or
-+ * ends inside a dirty IOPTE then the ioctl will fail. This avoids partially
-+ * reporting a dirty range.
-+ *
-+ * On failure the dirty state becomes unknown and the userspace must restart.
-  */
- struct iommu_hwpt_get_dirty_bitmap {
- 	__u32 size;
++	status = acpi_evaluate_integer_exclusive(d->adev->handle, "_TMP", NULL, &tmp);
+ 	if (ACPI_FAILURE(status))
+ 		return -EIO;
+ 
+diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
+index b0284c2e2e74d..9bdb65f54b6ae 100644
+--- a/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
++++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_device.c
+@@ -287,7 +287,7 @@ int proc_thermal_add(struct device *dev, struct proc_thermal_device *proc_priv)
+ 	if (ret)
+ 		return ret;
+ 
+-	status = acpi_evaluate_integer(adev->handle, "_TMP", NULL, &tmp);
++	status = acpi_evaluate_integer_exclusive(adev->handle, "_TMP", NULL, &tmp);
+ 	if (ACPI_FAILURE(status)) {
+ 		/* there is no _TMP method, add local method */
+ 		if (intel_tcc_get_tjmax(-1) > 0)
 -- 
 2.53.0
 
