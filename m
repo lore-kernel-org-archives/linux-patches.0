@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591519;
-	b=S1jOWwyDkk3HDrPW8LCo3FqB0fw6rtiWtiNpRQe02DLMLQRrwoU5kBSWFwgl+lm8X0tB
-	 /MNjuEzNu1Pg9Am2qHaWM+Jvcnw24mlezfls6gqwhzfTEazJCOVMp7KpPayw5V8a6iqqa
-	 1CmMBRvsEBvx9o++kTfma93ccAlLvekt8ANM7D9HC24Oe4ny4i1AkrI+uMPuNgAtHDdUJ
-	 nhJ5tQIClUInaygTCQAAsL67Z1AWk68xLTQct46izHwyJWMR3C0Ejkh6BAUyQeRS/h9Hx
-	 Ywhw7mjIOPNP7ugAoRfPFAQHRSL9Na01OCz/et2R5Dvsuy4cqPHhTRmjkxi4vDwIWWg==
+	t=1794591520;
+	b=OdIDw4eGNaPS0KFxQYiXlTvZZEghmo4ahrxKf9i7vZvraO+52bT6unhZZ2eAcfD+qLgz
+	 ivKK0/19xn+hBgaLNQhR5A7xg0hC2t0xVXzboLwV2btF2xGygApnC0TpkjmU7BhJ5+rNH
+	 Y/yDeO505DSilJriwNoTinvHTCD0+sCeXA7SD1n4yt1ilGq0kvHnEZMXVc7ybbh1j1hD3
+	 Zngeoez1oqivRU1iY5/XkSmUXLZCw0zIKi032ukoy66QvBAeiTzCAZ+8zh2vutnvxLRkM
+	 9eS1lc6P578kUk4lK7BDyJhCYc1uBd6ftjKvMbT/Z5EVIgpSldJNX2J/4EcFxVfrIKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591520;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Uc62/WhLL4yApFF4uwaSKd9f62pSWf3/g6MQRICrDf4=;
-	b=mkZ5iDifBzFf17dzHbFdeL0xzG9V1VLX4ZRBoQFVV+iOv82b5fkPgJ//n6s67ZQL0M9I
-	 B8xItk3nfLyCOYbLJfFRR1AGQvII3HxIW+/inGh5XjPgR70z/YO/GKIzdte21zD5m3nVS
-	 lcW4v7ZwtJtYPT56TG/RSIC0Tv0Xeumi+fRN5xmuFLI4r6LfdK74pbKCFmFpF+xt5Nsyy
-	 pc+NsplNdmg9WOY0Xj68fitIbUcXfOxdI4op58+tFqjvu/Fmy0qsZAF2YA1O8ctsadr1I
-	 dUEsRDIuSMevggkLiPlt0kMLFN7y1k7Uwub99d+01xts5V7jlXzDPrr/ohe//3siR6Q==
+	bh=5PVZEqGYp/u7kCAoWzoiIIeW5GQcTM1tJorjyhbI8Q0=;
+	b=LJgh1dKqZZt8qy3Mc29i/z/PAWzkJYSNESzY1Ho/zu/aOx/JJH94ZfcZbSlIEIpFgRXu
+	 gCWoar70k/lb93/tYPGpQMBiM1g7gctU4yUrIZGjzDprQu96Ug2IuJPl0xhyHWn6nvcEj
+	 BPPVzPcl4irw3xlN/a+mRcOYgemGnsWumVNsKvRujiHzGm82xJfMFx+q/OQPadpxsB9aZ
+	 48nfcLiW442D1rbmHTQ0ULcXX6sEPKBwldgDVDs4fAz0FqfJlP1OhLo8JBKLCPdxtETCS
+	 Thzik+HN8LCL6T6zPlTNSNu/LfkMqz/xyPHBxTFPZWqPYq/JxXD1ehjtQLRZVMbNZlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPBV6J3a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msysu7Cp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA2F606D498;
-	Fri, 13 Nov 2026 17:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DF4606A899;
+	Fri, 13 Nov 2026 17:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPBV6J3a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130691F000C4;
-	Fri, 13 Nov 2026 17:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msysu7Cp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D771F000C4;
+	Fri, 13 Nov 2026 17:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591518;
-	bh=Uc62/WhLL4yApFF4uwaSKd9f62pSWf3/g6MQRICrDf4=;
+	s=korg; t=1794591520;
+	bh=5PVZEqGYp/u7kCAoWzoiIIeW5GQcTM1tJorjyhbI8Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPBV6J3ap0+cbWIkGovHimNCPVI5oSPjwqFsPk11hQBAtlDZAmySqN3NvjMU2T00M
-	 F2rtCzD6x4ctV0woee3DdAXH0FVj7VAsxjm5LLf5CjggFHjkedWmaNYHsycF+GVf22
-	 lu2kbbj8O1Y/RYlg8MOwfIT5VXg7T2cdjM9FF5qM=
+	b=msysu7Cpeq6Wt6qM7f1nMn7LDfsMJgGLbfJDG4Tip9cyDsUjXA7adBzcVRz6YG87J
+	 zFbonMXIbPS5IF0MaiDaKoBIiO6DPz+mCDwiBfPjaH9Qy0dgcFG7QXWUR07FYndYrF
+	 7qBsOqbCVxeeD/z27ZRZRpnrAe+PHrKmdeSDC4l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Art O Cathain <art.home@gmail.com>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Janne Grunau <j@jannau.net>,
+	Neal Gompa <neal@gompa.dev>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 579/670] ASoC: amd: acp-config: force SoundWire probe on Dell 14S DS14265
-Date: Fri, 13 Nov 2026 10:52:23 -0500
-Message-ID: <20261113153831.465997414@linuxfoundation.org>
+Subject: [PATCH 6.12 562/670] wifi: brcmfmac: cfg80211: Report port_authorized for 4-way HS offload
+Date: Fri, 13 Nov 2026 10:52:06 -0500
+Message-ID: <20261113153830.925739652@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,68 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Art O Cathain <art.home@gmail.com>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit 38cb2ef26b6411277826da54c6bcf94523541058 ]
+[ Upstream commit 6fff9de5c5b425817588eeed42bd56d665751c13 ]
 
-The BIOS on the Dell 14S DS14265 (ACP PCI revision 0x72) reports
-acp-audio-config-flag = FLAG_AMD_LEGACY_ONLY_DMIC. As a result
-snd_pci_ps returns early and the SoundWire links are never scanned,
-while the legacy snd_acp_pci driver probes the device, finds no
-matching machine driver ("No matching ASoC machine driver found") and
-no internal sound card is created. The CS42L45 headset codec on link 0
-and the two CS35L63 speaker amplifiers on link 1 never enumerate.
+Since commit 416386060 ("Mark authorization completed on driver
+indication during 4-way HS offload") [0] wpa_supplicant expects
+NL80211_CMD_PORT_AUTHORIZED to complete the authentication when the
+driver supports 4-way handshake offload.
+This was apparently never tested with the upstream brcmfmac driver as it
+does not report this. This broke authentication on Apple silicon devices
+(BRCM4378, BRMC4387, BRMC4388) and other devices when wpa_supplicant
+2.11 was released [1]. This was initially dealt with by reverting the
+commit in Fedora [2] and other Linux distributions.
+Instead of carrying the revert over to wpa_supplicant 2.12 add the
+expected NL80211_CMD_PORT_AUTHORIZED when the connection is established.
 
-Add a DMI entry for the model to the ACP70 ACPI flag override table so
-the firmware-provided flag is overridden and snd_pci_ps probes instead.
-Match on the product name rather than the board name, as the same
-symptom has been reported on several boards of this model (09PVND,
-0M0J65, 0C7F12).
+The "Fixes:" tag is not fully accurate as this has only became an issue
+after userspace changes years after the change. Since the change is
+expected to be required in all active stable branches for wpa_supplicant
+2.11 / 2.12 compatibility it is helpful even though
+BRCMF_PROFILE_FWSUP_SAE did not exists then.
 
-Tested on a DS14265 (board 09PVND, BIOS 1.5.3) with Debian's 7.2.6
-kernel, with and without this entry. With it, snd_pci_ps binds, both
-SoundWire links come up, the CS42L45 and both CS35L63 enumerate, the
-existing CS42L45 + 2x CS35L63 machine entry matches, the amplifiers
-load their firmware and calibration, and the amd-soundwire card plays
-through both the internal speakers and the headphone jack. Also
-build-tested on asoc-next with W=1.
-
-Developed with AI assistance. Claude read the ACP driver source,
-identified the BIOS flag as the cause and the override table as the
-fix, wrote the DMI entry and the out-of-tree test module, and drafted
-this changelog. All hardware testing was done by the submitter, who
-has reviewed the change, understands it and takes responsibility for
-it.
-
+Link: https://github.com/zephyrproject-rtos/hostap/commit/41638606054a09867fe3f9a2b5523aa4678cbfa5 [0]
+Link: https://lists.infradead.org/pipermail/hostap/2024-August/042893.html [1]
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2302577 [2]
+Link: https://lore.kernel.org/linux-wireless/20260911065656.1269623-5-Jason.Huang2@infineon.com/ [3]
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Art O Cathain <art.home@gmail.com>
-Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20261016-dell-14s-acp-v1-1-89b40d95720c@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b8a64f0e96c2 ("brcmfmac: support 4-way handshake offloading for WPA/WPA2-PSK")
+Signed-off-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260915-brcmfmac-4way-handshake-offload-authenticated-event-v2-1-fbb9cc7ac177@jannau.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ sashal: Inlined the PSK/SAE authorization check because the baseline lacks upstream roaming and PMKID authorization support. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp-config.c | 7 +++++++
+ .../net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c    | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/amd/acp-config.c b/sound/soc/amd/acp-config.c
-index d73059f400d57..7ed461c1d5192 100644
---- a/sound/soc/amd/acp-config.c
-+++ b/sound/soc/amd/acp-config.c
-@@ -51,6 +51,13 @@ static const struct dmi_system_id acp70_acpi_flag_override_table[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "8EA2"),
- 		},
- 	},
-+	{
-+		/* Dell 14S DS14265 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Dell 14S DS14265"),
-+		},
-+	},
- 	{}
- };
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index c3a3a08179109..a2a0cc43bc721 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -6424,6 +6424,7 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
+ 	struct brcmf_cfg80211_profile *profile = &ifp->vif->profile;
+ 	struct brcmf_cfg80211_connect_info *conn_info = cfg_to_conn(cfg);
+ 	struct cfg80211_connect_resp_params conn_params;
++	bool authorized;
  
+ 	brcmf_dbg(TRACE, "Enter\n");
+ 
+@@ -6448,7 +6449,13 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
+ 		conn_params.req_ie_len = conn_info->req_ie_len;
+ 		conn_params.resp_ie = conn_info->resp_ie;
+ 		conn_params.resp_ie_len = conn_info->resp_ie_len;
++		authorized = completed &&
++			     (profile->use_fwsup == BRCMF_PROFILE_FWSUP_SAE ||
++			      profile->use_fwsup == BRCMF_PROFILE_FWSUP_PSK);
+ 		cfg80211_connect_done(ndev, &conn_params, GFP_KERNEL);
++		if (authorized)
++			cfg80211_port_authorized(ndev, profile->bssid, NULL, 0,
++						 GFP_KERNEL);
+ 		brcmf_dbg(CONN, "Report connect result - connection %s\n",
+ 			  completed ? "succeeded" : "failed");
+ 	}
 -- 
 2.53.0
 
