@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590103;
-	b=biuyJmRhapfukM7qJLjVvF2HvxMAcTl6iDHvAAo+3iFEvM+PRKUWIzeMAuse6m6s8gmm
-	 3m7/6548my7V/aKfQZxAdqwr2TDqj7Gz9NjFE/uk7edn7ONCmVzpDw7naDsRM6p4Ggauh
-	 XmzxmdZ+mELoC2MZVgae3o9S/V3Q3yiiqRyHAabeIHa3dPswcuJk8Dy6fuvKeGWVdu885
-	 iQrq9csO7M9scFM5FymYFQReHMEbEkGVMoxujE2TwbzAfa1lsDYQd0LRpiU5pIsK4q640
-	 L7S/PRqGP5AaQgMgrLmTdQT+0QvqcYDeHwUTxVDOiJsqRaiZ0TzXsJDtIds1Rb5/Fjg==
+	t=1794590104;
+	b=sY3jT+uqgU0zPJn30/7Npr7oEMjdX4VK9EgLtUJvQ8FJVw0y+En3SOms2GRzZY73CnTU
+	 I7FcTYAGEKA0CJdSeBeIBlkvz+gBdAW0YpY3oS9VgawQcHPrFxxDgo+dEb/1QKZqIrA5L
+	 l1A0fOekZ0avmDVpLtyxCItGsnox9lMzsZrHpCrrwprAtxo4/IbMnmqCWsBdjCX2QFc8n
+	 aOtu9/a/t0zXRFnxxH6RtbZ5YdwVOIgDhWq4DZkgd1QAbEAiVCXn1XMKUfCOoEEKsRqM8
+	 /Vhhf4c7DvhD4tmLzkUYaYJXy9fTARPhhgqZC/b7LG4RuNun0t5Jb/b88AYclhUXnkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590103;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eDD4Gi0jSZJrlqj9PXt+23HwjKy94qpkw3jHE1W9mqY=;
-	b=Gv4N4WCzWqNJrfVjGPSTLjkZ9XQto61if/VrHiUUD24uAzoMxurw5yM0aoo1fiyVNSi8
-	 RKgnJN5BzSNS5K5v156zwxk76Nbe2aWtII5dPVtf8I2hgrkBG82wF174zUPBuHU+NDJPr
-	 Hfvm7UW6B+cV0i4GePllXEkbduatnTk5vqeDBaFdl3sPnlzEVr+qpIvlLMlOY3CS66aQi
-	 dorN/P25XTwlYsvJm7msL53zhRgVn3DJKqMDatq4RIx+TAE7PXd1iGoo6Ugpo2jbJlsgh
-	 HQedeWkY3zn1+iCihrFnO9SoqXhDgI/NMjSR/TUwZzKmkMcC+vFflbvRnuL22fJcn8A==
+	bh=RhrHNYwynZykTgqwhzMwROI167+ZYQW1qAhY9hXhpzU=;
+	b=l3Dwi54IcuESp3OSEXI9UhtLxAzjj0UUYz517GQyHsdpxIBN+VK14zkh05WUlM+CjKCC
+	 9MjNX9COe+9DF5KkodT5mvTYrmSXkee9azyaLP9pefmwNQBBYQkt2Hs9fRF9+M58zTHCt
+	 K4W/ngn1WyqLxmFD8EzpzzBdfL4hBZHqhRiWgJ+2r3NKNBfE+iww+T3BCNNMxnB+t1IT4
+	 rWbikS7qNngXoqEaUwWtFHD5qAC7hlOrbhCO9UANJYhiJeETrFkbANKQX7alumf0zK8e0
+	 sTO6wYzRxFxDmAzPMnC5EQHHSCN+1Pj1tq7PyF/urswaSjs/2rwjnag05V8givXmaEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u/c8er4b";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NutNBsbB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754DE60A3832;
-	Fri, 13 Nov 2026 17:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2B360A383C;
+	Fri, 13 Nov 2026 17:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u/c8er4b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97B61F000C4;
-	Fri, 13 Nov 2026 17:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NutNBsbB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250891F000C9;
+	Fri, 13 Nov 2026 17:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590103;
-	bh=eDD4Gi0jSZJrlqj9PXt+23HwjKy94qpkw3jHE1W9mqY=;
+	s=korg; t=1794590104;
+	bh=RhrHNYwynZykTgqwhzMwROI167+ZYQW1qAhY9hXhpzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u/c8er4bqJQxS3bA7nbsk1yOjJq+vYMXfAbbfcnK2tcitcdCvth2syl+VjhVGvinw
-	 ytjWEb1XvaY+u8+myhq+3GQlJ9HXCEFj3KlNN8Gm6+PfCv1ZbrM05QKkx50UUu3/es
-	 YAS/c8v4jeGJCnzomI+vcRquVGYSFzx2P7ME19i4=
+	b=NutNBsbB+csdr5nhYhdd1zVHapIXEwiQn5GG0N1lxA7d2m+7ERu/7c+QS77h2BqjE
+	 jXhyqOqN9fKLV1BkIhCU/xRKASsl5e0XyXbbwxZyZqP75KmFMXWJe3nDV+h4CRnAuh
+	 Ba/Gn1YN22ynr+Y9WhuXjiPqSO3zexcNJ8Mh58AI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 126/686] ax25: dont let connect() find its own socket when calling the same station
-Date: Fri, 13 Nov 2026 10:44:19 -0500
-Message-ID: <20261113153825.092707048@linuxfoundation.org>
+Subject: [PATCH 6.18 127/686] netrom: dont convert the maximum number of tries to jiffies
+Date: Fri, 13 Nov 2026 10:44:20 -0500
+Message-ID: <20261113153825.124040176@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,62 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-Before it starts a link, ax25_connect() looks on ax25_list for an
-existing connection with the same source, destination, digipeater path
-and device, and returns -EADDRINUSE if there is one. A bound socket is
-on that list itself, with the destination of its previous attempt, and
-its digipeater path was just freed. When a connect() failed or the
-connection ended, a new connect() to the same station without
-digipeaters thus finds the socket itself, and fails with -EADDRINUSE
-every time.
+nr_create() sets the number of transport retries of a new socket with
 
-Forget the previous destination before the lookup, under
-ax25_list_lock, where the list readers compare it.
+	nr->n2 = msecs_to_jiffies(sysctl_netrom_transport_maximum_tries);
 
-Tested on a QEMU bench (6.12.94 with KASAN and lockdep, two guests over
-a KISS serial link). A starts listening on TESTA-9 after 7 s. B calls
-TESTA-9 with one socket before that, which times out, then calls
-TESTA-9 again with the same socket, non-blocking, and checks 3 s later:
+but transport_maximum_tries is a count, not a time in milliseconds. The
+result depends on HZ: with the default of 3 tries, n2 is 3 with HZ=1000
+but 1 with HZ=250 or HZ=100, below the minimum of 2 that the sysctl
+itself enforces. Sockets accepted on a listener copy its n2, so every
+NET/ROM circuit of such a kernel gives up after a single retry.
 
-  before: -EADDRINUSE on the second call and on the check, A accepts
-          nothing
-  after:  -EINPROGRESS, then the check returns 0 and A accepts the
-          connection, three runs out of three
+Seen on our nodes in /proc/net/nr: n2 is 01 on the Raspberry Pi kernels
+(HZ=250 and HZ=100) and 03 on the x86 ones (HZ=1000), all with
+transport_maximum_tries set to 3.
 
-send() on the new connection still fails with -EPIPE unless "ax25: let
-a socket connect again after a failed or ended connection" is applied
-as well; with both, and with "ax25: free the old digipeater path of a
-listed socket under ax25_list_lock", A receives the message.
+Use the count as is. The other transport values are times and keep
+their conversion.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 4d8937d0b113 ("[NETROM]: Eleminate HZ from NET/ROM kernel interfaces")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit efd5dce53a6bc296186212d4a16961174fd3df83)
+(cherry picked from commit 16eb00a80bb05640ba628529fd258e4ddb100ecb)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/af_ax25.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/netrom/af_netrom.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 51a066ae4e89f..d0ac09cc46e74 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -1374,6 +1374,15 @@ static int __must_check ax25_connect(struct socket *sock,
- 		goto out_release;
- 	}
- 
-+	/*
-+	 * The socket is on ax25_list with the destination of its previous
-+	 * attempt, if any: forget it, or the lookup below finds the socket
-+	 * itself when the same station is called again.
-+	 */
-+	spin_lock_bh(&ax25_list_lock);
-+	ax25->dest_addr = null_ax25_address;
-+	spin_unlock_bh(&ax25_list_lock);
-+
- 	if (sk->sk_type == SOCK_SEQPACKET &&
- 	    (ax25t=ax25_find_cb(&ax25->source_addr, &fsa->fsa_ax25.sax25_call, digi,
- 			 ax25->ax25_dev->dev))) {
+diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
+index 6de086082f71b..e3daae77e43e5 100644
+--- a/net/netrom/af_netrom.c
++++ b/net/netrom/af_netrom.c
+@@ -459,8 +459,7 @@ static int nr_create(struct net *net, struct socket *sock, int protocol,
+ 		msecs_to_jiffies(READ_ONCE(sysctl_netrom_transport_timeout));
+ 	nr->t2     =
+ 		msecs_to_jiffies(READ_ONCE(sysctl_netrom_transport_acknowledge_delay));
+-	nr->n2     =
+-		msecs_to_jiffies(READ_ONCE(sysctl_netrom_transport_maximum_tries));
++	nr->n2     = READ_ONCE(sysctl_netrom_transport_maximum_tries);
+ 	nr->t4     =
+ 		msecs_to_jiffies(READ_ONCE(sysctl_netrom_transport_busy_delay));
+ 	nr->idle   =
 -- 
 2.53.0
 
