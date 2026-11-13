@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585561;
-	b=BQrWk1sTqmX6ySl7kGCJk6eZp710kl3afNoDHcjgimx1+ij8dL3U+8DyW2WykvNuizRV
-	 t04eB9nj0VPw3fMSREs4TvSLsgeqzagmuBDpFxfgWa665rOVUw4LcVlBEcX7Gq/PLRRZV
-	 gPxnmzDCSoMdLkgWhud6+URzdKUP6PwBAGe0Xnp4tOD1gvtLTGPqoBscDGCV0ALglg+Uy
-	 Zxt2BbogAhHsU4oXDBkSFAhLF/4wvgOH8BqpZmUl0rPjzUIBao7V2OTrFbBwpGFNgxnTH
-	 KQgLcMm75TR14ajS7rh+7t+xL7YqiVbuwEQjwA3ROw/YtLL4Dd6FgpTYD+v89yW3UNQ==
+	t=1794585563;
+	b=ogjznRIquQTh5+WJhyCGE+WSgv9wJpXFZHIt9oPqGsPkernQ/vB+AiXsYNQFsVwKU/gi
+	 PZohQBhskQaWB9589j0Iy+bWt+6NJWc/rURA8kJWJQ739v2oLEoM2cLhwb+KgXvaDT6GM
+	 CNg+y5v4kTBg7kn0oJ5sfFeHpUQjxDvpsK4h9FphMLRTnas+ESFH9b2Y8RzemMJseqFap
+	 8jYitnYc4U80gD3SfTpVFzNrA681pcWVb0B3ojv0lTlyqpD9i18oDQDQG8CXJLYiEKk7C
+	 XtAcaCeP9oKza7ZdoIeCFiw/H+p1s+aAMO+Z8g0/2ZD1UWKwrTb5FksrAK0B2MVuEKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585563;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=RYvTvsUi43c/wjYlf9vUgupOKpmFSVlw8mK28TWJlKE=;
-	b=rsI2lbZkPCSau6CjZJeTAZ7C029hTTBUp9njjelO6yVtALo3sjEoOtq/wl6srHJXNZeT
-	 E8fwEvXA4T5A2RFYiJkNIcEYnqrOtQlIsRnubaCpbkP2p0ZblwG10ODP7OSY/jaQ16bls
-	 LpsodAlFgTzzr3s9N+TkTBchfgkhv2yuhitqjykfVurW97fsAAs62rsM/iIv9XBvGFiJd
-	 WN+LpT8sRZeJas5oq5VRv1s3K2EKnmJU97eJsoBA3HDUQtt9TOwH2GIMMKSIXhQao5IEv
-	 GvKlpnd6CIF+GUd0bedFuKJIdyWoMIfvZA76ZjAsL+ZbM1QIsf8l7IVLkyRqkTvq/lg==
+	bh=uKq+hMWAyitZGqROou+1r0A09D5G0bY1S1E/rYqIDsM=;
+	b=uZ5tvNYbysJc2/MKQe/TaFz0sKsm+PbrdPVznLwy1SV1cTq33WQ1AsFzmtOw1nBiY5wI
+	 qCOm1sO8NX6wJZvvbRoP987oxjqshRdc8DgDBw1NPAgBd7l5oc5aK4HG+yfAoahRyJ/Gh
+	 nIle513QsEuJn8ANyfuts3giPKqpLcnsieZ9noHYwM0ZFC1osmF0y4r61BcKotDIbH3Qk
+	 iXVUnTYBIqpPFurCZYHiyV6THay7D9luPw3QbiCLt7B12DGBStxEtd5Ss/NP9MzMm7njT
+	 d4WPl7gZJjtgvVAJWHBt8OuzjeCbn4MiQcBiS4y994XprJzHxAWoOTby6f5Rhju3gRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h9lv//VQ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqjqsFTl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CCE60A2628;
-	Fri, 13 Nov 2026 15:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6C5606BAAA;
+	Fri, 13 Nov 2026 15:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h9lv//VQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C32D1F000C4;
-	Fri, 13 Nov 2026 15:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rqjqsFTl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8D11F000C4;
+	Fri, 13 Nov 2026 15:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585561;
-	bh=RYvTvsUi43c/wjYlf9vUgupOKpmFSVlw8mK28TWJlKE=;
+	s=korg; t=1794585563;
+	bh=uKq+hMWAyitZGqROou+1r0A09D5G0bY1S1E/rYqIDsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h9lv//VQC5mJ/hGZgOJOFv8pnJIWYVWXKzj06BW8fX5kN4SukzJV/VwkjHrAZ+/EH
-	 +caVL6mAPdmz+n2Vdy7+D59o83LKHbRgVETXZ0lPXwjSqnAeZpAe5wk6odmRjGhHAY
-	 SOzItMt2sh8N17t56PwjiK9mZKT6/We7dOM0VdxE=
+	b=rqjqsFTlLbDwqjAw0BlHD1e581MjtDsfYbXm/0VeK5TdE4xfy0sgpvRWKAYl9d5Qv
+	 MvtY3HvH52GUXGN/dyhlYjWYy+6wOhpjAsWSRCWw5JhofSGByf7paZeFIKiMMt3NOH
+	 7j/IIih10Piea7gQlDHUMV+RsKCTUqn3SBLVzH1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Asaf=20Nuri=20Bertizlio=C4=9Flu?= <ycistak@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 198/507] hwmon: (coretemp) Check for NULL platform device in hotplug callbacks
-Date: Fri, 13 Nov 2026 10:48:22 -0500
-Message-ID: <20261113153801.195118175@linuxfoundation.org>
+Subject: [PATCH 7.3 199/507] hwmon: (coretemp) Set nr_cores only after core_data allocation succeeds
+Date: Fri, 13 Nov 2026 10:48:23 -0500
+Message-ID: <20261113153801.234524089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -72,62 +72,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 0f9c7ed3b5009a037e5533eac03a0d4d45ecf1f0 ]
+[ Upstream commit 95638f1f05ced75a82e83f610cd01b636d2a21b1 ]
 
-coretemp_get_pdev() returns NULL when topology_logical_die_id(cpu) is
-negative (such as -ENODEV or -ERANGE from topology_get_logical_id() on a
-firmware/hardware APIC ID mismatch) or exceeds max_zones (for example,
-under asymmetric or anomalous ACPI die topologies where
-topology_max_packages() * topology_max_dies_per_package() is smaller
-than the logical die count).
+In init_temp_data(), pdata->nr_cores is populated from
+topology_num_cores_per_package() before allocating pdata->core_data. If
+that allocation fails, init_temp_data() returns NULL with
+pdata->core_data still NULL and pdata->nr_cores set to a positive value.
 
-Commit 6d03bbff456b ("hwmon: (coretemp) Simplify platform device
-handling") pre-allocated zone_devices[0 .. max_zones - 1] during module
-init and dropped the NULL checks on pdev in coretemp_cpu_online() and
-coretemp_cpu_offline(), passing pdev unconditionally to
-platform_get_drvdata(). When coretemp_get_pdev() returns NULL,
-platform_get_drvdata(pdev) dereferences &pdev->dev and triggers a kernel
-NULL pointer dereference.
+coretemp_add_core() logs the error without failing coretemp_cpu_online(),
+so the CPU still comes online with pdata->hwmon_dev registered. When the
+CPU is later taken offline (or the module is unloaded),
+coretemp_cpu_offline() calls get_temp_data(pd, cpu), which loops up to
+pdata->nr_cores and dereferences the NULL pdata->core_data pointer.
 
-Check for a NULL pdev and return 0 in both coretemp_cpu_online() and
-coretemp_cpu_offline() before calling platform_get_drvdata(). Returning
-0 in coretemp_cpu_online() ignores the unmapped CPU without blocking CPU
-bringup or tearing down valid thermal zones on other dies.
+Store the core count in a local variable and assign pdata->nr_cores only
+after pdata->core_data is allocated, preserving the invariant that
+pdata->nr_cores is zero whenever pdata->core_data is NULL.
 
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 6d03bbff456b ("hwmon: (coretemp) Simplify platform device handling")
+Fixes: 1a793caf6f69 ("hwmon: (coretemp) Use dynamic allocated memory for core temp_data")
 Cc: stable@vger.kernel.org
 Tested-by: Asaf Nuri Bertizlioğlu <ycistak@gmail.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hwmon/coretemp.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 9ed21c8c093a5..17b9b63440f81 100644
+index 17b9b63440f81..2d7487b2f80a1 100644
 --- a/drivers/hwmon/coretemp.c
 +++ b/drivers/hwmon/coretemp.c
-@@ -695,6 +695,9 @@ static int coretemp_cpu_online(unsigned int cpu)
- 	if (!housekeeping_cpu(cpu, HK_TYPE_MISC))
- 		return 0;
+@@ -491,11 +491,12 @@ init_temp_data(struct platform_data *pdata, unsigned int cpu, int pkg_flag)
+ 	struct temp_data *tdata;
  
-+	if (!pdev)
-+		return 0;
+ 	if (!pdata->core_data) {
+-		pdata->nr_cores = topology_num_cores_per_package();
+-		pdata->core_data = kzalloc_objs(struct temp_data *,
+-						pdata->nr_cores);
++		int nr_cores = topology_num_cores_per_package();
 +
- 	pdata = platform_get_drvdata(pdev);
- 	if (!pdata->hwmon_dev) {
- 		struct device *hwmon;
-@@ -746,6 +749,9 @@ static int coretemp_cpu_offline(unsigned int cpu)
- 		return 0;
++		pdata->core_data = kzalloc_objs(struct temp_data *, nr_cores);
+ 		if (!pdata->core_data)
+ 			return NULL;
++		pdata->nr_cores = nr_cores;
+ 	}
  
- 	/* If the physical CPU device does not exist, just return */
-+	if (!pdev)
-+		return 0;
-+
- 	pd = platform_get_drvdata(pdev);
- 	if (!pd->hwmon_dev)
- 		return 0;
+ 	tdata = kzalloc_obj(struct temp_data);
 -- 
 2.53.0
 
