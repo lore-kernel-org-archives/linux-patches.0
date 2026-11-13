@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590845;
-	b=xOMqoM2JOecgeEum3MzesE34Dr4CWXOLnjQXSBTHrQjBqOY9kzGVWPrUWqWaU6vvVHW4
-	 +1CKIXQpdnysTIgedzzyFoV+8+sHUfFO1S4Kloq9qZD0GuGaa2gZ4ld8NXlja7AWQQK34
-	 mN/up43KXFS+cDbxSp2wXuf+l/BeE6KroU2D9BcDS95GmPId4PAqWsV1HnQvk84TlBSca
-	 PydCG/gAOGTmqHfePGQTu1H4jW2jbZ1HftXES5DIuvjrRsF6fz93n+RH3aSiFZj5F+K8S
-	 FbsDJDaBa6+zjK/RQomuazbFZk/zx+7xzMKjJdyzjyp9w3y21MVx3IDodDX7i5EfWlQ==
+	t=1794590847;
+	b=urBVE9uZjsh2bxiE5MD8Kegib6O+tYesJcE7RjoU5U4AyYfkNNNH4Iya4SSQQwX+3cZr
+	 j3YZn/PxvT3PmNT5ha4HUsSHY7mTsLo7S4xp51XqnHUasq+NDnBg3hTL1whtkOrYvpJPw
+	 C8YBaVFBOt9RqwksMbofFvWYYY/KuzR1n1g/FtyNJ1/jSDhRO1l65u46ztGw3m/Xl5RbP
+	 yGDUHLSritaTdHBynVScBFPJ1kdMgNjNkeGWruNxOPBzQu+xpPif4qKR/AbZTApznLlnO
+	 XSNirTrVn3JM0D+huo9vYXH/W3GluPiom581nTzN/fZBV0sCic+me4FSMv/qUzdHaww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590845;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2ppshqaHpnO8hhswY+9dUUvb6xkfJlJBj/OuIMRsVVY=;
-	b=iCVLHdq5VMDyJA3/j82bcC53u0r8vZHXrF8yYKdXr2SevJGEcXgDzngGQtGxmUTo93dI
-	 RSveMLOR/7Ud5TrNSOszOF8cH1xGaR8yeUlcQ7MBrSM7YUMxKRd4U3ReME7++P1PMpdNH
-	 SWjXtEqndDhqccDVrFJMce1kJ105UavtTfoHyOsQt6elsACN+NdZLX0b5ccfjaq8++chj
-	 ZS5SnNtxIYKaXUrsazh6Ma2N/Fs8LjmdWG55gP57KDsKTOTgSK4Xs/i8NLWewXfgmAuBb
-	 n6ndSO+eQZWg0hqP2zMVcCbcIOnGNpkkRIwOPGqOUjNRdKXOMY932oo9db3SiWGOXXA==
+	bh=hpW/RKYW3iQvNj9/LrKo0DgS5EKlRA7hWl1stjPyzY0=;
+	b=1wYFGG3EXKkw84hTKTUWCFfOJGn1rn4iAqqDLysgZhSd4wGrO1FCJlWJJUuzUEegjWrx
+	 myp6gHR6z1Fx4eR5uJfzAQyOQ/DmAcLcdFMNK4G10Sb6kol3f7WNaslp38JSu71AjiSlQ
+	 uolxXZEmEcGIPe4RykdThioQC8Eedui+4qd2QExIQ+fJuwsoLrQrquL4jb22nePZIUjXC
+	 +GamIetnOzgrk6k9WZQ2a4kGIBaWPN3PWhaPgZlVaHFsL5VyVZWilUDeP0Pxu3ZbL/EMQ
+	 kxE8USWJIewej7Ex1rAOVxImQ7hgKU2vOobvpXGwWaouHVs2lEVuCXlOlpUo8XDtSiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TsWx+gbX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jTgtygni;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57F0606D492;
-	Fri, 13 Nov 2026 17:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1DC606D490;
+	Fri, 13 Nov 2026 17:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TsWx+gbX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626101F000C4;
-	Fri, 13 Nov 2026 17:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jTgtygni
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA1E1F000C4;
+	Fri, 13 Nov 2026 17:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590845;
-	bh=2ppshqaHpnO8hhswY+9dUUvb6xkfJlJBj/OuIMRsVVY=;
+	s=korg; t=1794590846;
+	bh=hpW/RKYW3iQvNj9/LrKo0DgS5EKlRA7hWl1stjPyzY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TsWx+gbX/o3y8h/Rm6iNEoh23eJQd3L8npqHZ2BlFKZBdzKaUlQNJMEnPlJ8xOdCG
-	 diJ/uwaxmJ778xdqLSg+nJNWnOxkh1i25ti0xZCdMNAYFLlBaAAy5xyxKBOpQ5u44j
-	 jB0Th/qQm6F8hQAuY15AfD3NvliHZ3n6g+HvIFlQ=
+	b=jTgtygniKbr2l9xiXUiD2zdit2pwRw5E3cVyp2OZ8uDnoGUyt9tZ1rPN8B/DS0Ie5
+	 0e+8Li9s1OxoCo1IZZuKUCfPi3MDaHQClVO5M5pZzP9Jh4JouFUhEqx03yq1IqKr0A
+	 IJtd5iByif+3hGbCvroob7CKA47inNXcr+cA/Fhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Nicolai Buchwitz <nb@tipi-net.de>,
+	Seiji Nishikawa <snishika@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/670] serial: amba-pl011: keep transmitter enabled when disabling RS485
-Date: Fri, 13 Nov 2026 10:43:30 -0500
-Message-ID: <20261113153812.845754394@linuxfoundation.org>
+Subject: [PATCH 6.12 047/670] nvme-tcp: fix io_work priority inversion when send_mutex is held
+Date: Fri, 13 Nov 2026 10:43:31 -0500
+Message-ID: <20261113153812.934167672@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,62 +68,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Seiji Nishikawa <snishika@redhat.com>
 
-commit 97f85204275ae4d7fb530e451f3acc65c1ec1155 upstream.
+[ Upstream commit 5db358f3a7f9c33717622c1597d15c4c91997b19 ]
 
-Disabling RS485 on an open port calls pl011_rs485_tx_stop(), which
-turns off the transmitter. Only the RS485 TX path turns it back on, so
-any later output stays queued and tcdrain() hangs until the port is
-closed.
+Commit f42d4796ee10 ("nvme-tcp: fix I/O stalls on congested sockets")
+added a check in nvme_tcp_io_work() that sets pending to true when the
+queue has pending requests and the socket is writeable. The check is
+placed after the mutex_trylock() block, so it also runs when
+mutex_trylock(&queue->send_mutex) failed and io_work did not send
+anything.
 
-pl011_rs485_tx_stop() also checks only the hardware FIFO. If a DMA
-transfer has started but has not filled the FIFO yet, the transmitter
-is turned off under the transfer and the DMA channel never recovers.
+When .queue_rq sends a request directly from its own context, it holds
+send_mutex and can give up the CPU in lock_sock_nested() when another
+task needs the CPU, for example the io_work kworker of the same queue,
+which runs on the same CPU. Then io_work cannot take send_mutex, but
+the requests are still on req_list and the socket is writeable, so
+pending is set to true. io_work loops until the deadline and queues
+itself again on io_cpu, without sleeping.
 
-When leaving RS485 mode, cancel pending deferred starts and stops, leave
-the transmitter enabled and start any TX that was still waiting for
-delay_rts_before_send.
+This is a priority inversion. io_work runs on the high priority
+nvme_tcp_wq and cannot make progress until send_mutex is released, but
+it keeps running. The task holding send_mutex runs at normal priority
+and needs the CPU to release it. The scheduler keeps giving the CPU to
+io_work, so the task holding send_mutex may not run again, and the
+requests on the queue are not sent and time out.
 
-Fixes: 8d479237727c ("serial: amba-pl011: add RS485 support")
-Cc: stable@kernel.org
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20261012-fix-pl011-rs485-txe-v2-1-e9bf7d218389@tipi-net.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[nb: Use rs485_tx_started and omit timer handling on older kernels.]
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+This is the same problem that commit 70f437fb4395 ("nvme-tcp: fix
+io_work priority inversion") fixed. That commit removed
+"pending = !llist_empty(&queue->req_list)" from the path where
+mutex_trylock() fails, and let the task holding send_mutex queue
+io_work again in nvme_tcp_queue_request() after it releases the mutex.
+The new check brings back the same behavior in a different form.
+
+Two things make this easier to hit. nvme_tcp_queue_request() sends
+directly only when it runs on io_cpu, so the task that takes send_mutex
+is on the same CPU as the io_work kworker of that queue when it takes
+the mutex. Also, when the tasks are in a cgroup with the cpu controller
+enabled, the whole group competes with the nice -20 kworker as one
+entity, so each task in the group gets even less CPU time.
+
+We hit this on a 6 CPU VM running a database on nvme-tcp storage. In
+the vmcore, 2 tasks held send_mutex of 2 queues and were runnable in
+lock_sock_nested() for 103 seconds, while the kworkers for those queues
+kept running io_work on their CPUs. All database tasks were in one
+cgroup, which got only about 0.3% of the CPU against the nice -20
+kworker. Requests timed out, and blk_mq_timeout_work() waited in
+synchronize_srcu() for the tasks still in .queue_rq.
+
+Only do the pending check if io_work could take send_mutex. If it could
+not, the task holding send_mutex sends what it can in
+nvme_tcp_send_all(), and queues io_work again after it releases the
+mutex if requests are still pending, so no request is left behind.
+
+Fixes: f42d4796ee10 ("nvme-tcp: fix I/O stalls on congested sockets")
+Cc: stable@vger.kernel.org # v6.16+
+Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index 3e1932a3bfbbd..a0e20bffefba8 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -2224,8 +2224,21 @@ static int pl011_rs485_config(struct uart_port *port, struct ktermios *termios,
- 	struct uart_amba_port *uap =
- 		container_of(port, struct uart_amba_port, port);
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 67d02cfb47ec7..82cf9419a6be4 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1446,9 +1446,11 @@ static void nvme_tcp_io_work(struct work_struct *w)
  
--	if (port->rs485.flags & SER_RS485_ENABLED)
-+	if ((port->rs485.flags & SER_RS485_ENABLED) &&
-+	    !(rs485->flags & SER_RS485_ENABLED)) {
-+		u32 cr = pl011_read(uap, REG_CR);
-+
+ 	do {
+ 		bool pending = false;
++		bool got_send_mutex = false;
+ 		int result;
+ 
+ 		if (mutex_trylock(&queue->send_mutex)) {
++			got_send_mutex = true;
+ 			result = nvme_tcp_try_send(queue);
+ 			mutex_unlock(&queue->send_mutex);
+ 			if (result > 0)
+@@ -1463,8 +1465,13 @@ static void nvme_tcp_io_work(struct work_struct *w)
+ 		else if (unlikely(result < 0))
+ 			return;
+ 
+-		/* did we get some space after spending time in recv? */
+-		if (nvme_tcp_queue_has_pending(queue) &&
 +		/*
-+		 * Leaving RS485 mode, which only enables the transmitter while
-+		 * sending. Don't stop it, as that stalls a DMA transfer still
-+		 * in flight. Keep the transmitter and receiver enabled.
++		 * did we get some space after spending time in recv?
++		 * Only check this if we could take send_mutex. Otherwise
++		 * the task holding it sends the requests and queues io_work
++		 * again after it releases the mutex.
 +		 */
-+		uap->rs485_tx_started = false;
-+		cr |= UART011_CR_TXE | UART011_CR_RXE;
-+		pl011_write(cr, uap, REG_CR);
-+	} else if (port->rs485.flags & SER_RS485_ENABLED) {
- 		pl011_rs485_tx_stop(uap);
-+	}
++		if (got_send_mutex && nvme_tcp_queue_has_pending(queue) &&
+ 		    sk_stream_is_writeable(queue->sock->sk))
+ 			pending = true;
  
- 	/* Make sure auto RTS is disabled */
- 	if (rs485->flags & SER_RS485_ENABLED) {
 -- 
 2.53.0
 
