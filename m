@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591256;
-	b=gf4ZWuIthlTcEc/N39mOTFtttGBFZOd5Q2Vt59h0SHze/fjaBpAaco7T69ZhrPFzFK0Z
-	 bkwNsYnlW0nePEAk3K5DZoipi5bYsIljOkd/v9oQHlA3z0dmZDGkaRAMh1T12WuDsJONR
-	 AACylfWI0+qZn8nts9d91L89TA12KczCz7HTcu3m4NAVN4FqPMYjJe6rNb2dROosQRZYM
-	 HMMsueVTLEfyQ2hF3XR5T+2Qy7f/n5dsz87eQhPoMeFURMWA9YWlPpx+GU1K1jH362nF8
-	 lDLYU3iK+9loRtkyFQQfBVtoqVmVSfx6Vho0ebtIPAa4fFH1h9fzOntiJ0C/LP3d0fw==
+	t=1794591258;
+	b=0oZs81i/ovLNq8QESnP4TgGdCUQy7hzQmbYHDlAWDhh4np/8lGLI38dHrFOSO4Ea7cEL
+	 u2WgMks3mx2qdhxPWQXjChDrknkux1LskyX3hJj+PTYUEvR+M9BCZMqPQuc793AUaGSBf
+	 WRfvWf+TfKGtoaXxj8Tj1pcm3tacvBDWKydqQWOggb/YCTiwK65GsRI/qCLFHh5TsarFN
+	 ENd/BAIJgMady10qDqdLel+BgU6eHx22aOZJDbR/HhXLLsW1me0RJ/xo9iEMWamNNuLyF
+	 MZD+Q8sDfriDomahcoOeYaqJ7+tqdJwjSM6xikmOIhxI8uPn4K4HcItPB3ddt6eAbjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591258;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gponNTkXNsWIb7LoZNSWqxLl4yb14dRWauypp8RADik=;
-	b=5i7U2zDYUeR/hCe6mI1qrhWkyQUHDtApqLo0iFcBzSvxTTeUCKSiNxXtkAODlkEf+zop
-	 jWl8bc2oXIgK08Af75Y9E/hoh7J1fLF74YYx9YeFUnnJpW63qnx9QzbGoZ31QNg9F7fOC
-	 1xYmx0RTOfZu9yGGlSfrKcQWOrJrcuHOJqb66qSPVvds/6ezQONpJcgjf75NVOgMVGAYX
-	 9BJ2ybWtam67Ipb9KjypgXm/xEQyje1Ptxig5Nh8FOGUetHIfvyIlTzEbOguac4kTB0L1
-	 nv5bdQ4QQZtJ+lBXzJ68JtEC77guGOT8eMKnmBHuN8Gbi3sTa6+1RlzdNRDPF+Zwdvg==
+	bh=tbEnoXWEHq7giVc/uNFJUZkMubPoMQkqwEye/I2lZx4=;
+	b=l6TJc4RVm/RYWDTHWDSYpNulqa4FF6Wi7HH6m/sz29kVaC0Ja5N+fIx6nK87j+hITIFz
+	 9cijiip7YF3vgT5TtiM0O9mHbCMOYu/x/aE/7h+e7wOsftA0Y/dBfrHW87ChqVSKDLeWB
+	 ytNaLLjMhgH3gd6tjErVvXpidWqA5/xDzgiBUY0gkfyXDW/ERMjU/yWWrHodAJpFFmX1T
+	 /RcQNnJCx3k9ThtpGnRntFifwz6Pr/ah7y6IFB8CS0Ut0kElHTQjRXUcaBxNJyrbGsfGP
+	 ag6SYQ2F1eq41fIn7wKY9SJm//gG5CLB6qJhXVmbkrWjYKjYFxH7e9/JRq1Ryi/YpbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nIPoOmCD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H4MMlvEM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE44D6076F82;
-	Fri, 13 Nov 2026 17:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240606076F84;
+	Fri, 13 Nov 2026 17:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nIPoOmCD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B69C1F000C4;
-	Fri, 13 Nov 2026 17:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H4MMlvEM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39CC1F000C4;
+	Fri, 13 Nov 2026 17:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591256;
-	bh=gponNTkXNsWIb7LoZNSWqxLl4yb14dRWauypp8RADik=;
+	s=korg; t=1794591258;
+	bh=tbEnoXWEHq7giVc/uNFJUZkMubPoMQkqwEye/I2lZx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nIPoOmCDynk5WlOrrJ6B3ZIUig82PHuD06D8Ke+KZQOaJsjw5pWK75Tmehk9k8jK+
-	 fK3Odav0W6PZj2Zkml7w+XSiXn1TH7o+fmWInBHPUXqeKBKkYFSUMqLcpJuuhDmhUK
-	 ce0n8X/jVQ88FR9iRwXmnsWs3TLyX9n1mlp9uELw=
+	b=H4MMlvEMweL7CCe4MTx32rHJc4lJ3hZF+6bKIFlI6MvLVkAqzrfjWXbtZ3967F+Zp
+	 h/zfs2Pdwg5W7msMlzB7Pej9FXK6hWa40yA5e2v/mBxT9Z0llAE94+Oen8v37zwa0g
+	 RnGR5PQk0J56ky8t9LufyCvpEpZXqq0LRJ9C0K84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Hannes Reinecke <hare@kernel.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 379/670] udf: check the unallocated space table when it is loaded
-Date: Fri, 13 Nov 2026 10:49:03 -0500
-Message-ID: <20261113153824.623858314@linuxfoundation.org>
+Subject: [PATCH 6.12 340/670] nvme-keyring: Add a missing key_put() call to nvme_tls_key_lookup()
+Date: Fri, 13 Nov 2026 10:48:24 -0500
+Message-ID: <20261113153823.374301997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,164 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit e614c3e35a6699ed691b4d17e1ec4230e34aa3eb ]
+[ Upstream commit 404a8f6caa63822c1d2a45adbf07fd9c0567a7ef ]
 
-udf_table_new_block() hands out the first block of the extent closest
-to its goal and trusts that the extent covers at least one whole block
-inside the partition.  Nothing checks that.  A zero-length extent makes
-it return the block the extent points at, which need not be free, and
-the subtraction of one block then underflows the length into the type
-bits, turning the entry into a bogus continuation.  An extent running
-past the end of the partition makes it return blocks behind the
-partition.
+Call key_put() before returning -EKEYREVOKED, as the reference count gets
+incremented by key_lookup().
 
-Such tables are not only found on crafted images: until the previous
-commit, udf_table_new_block() itself left zero-length extents behind
-in tables written by mkudffs, and then converted them into extents
-running past the partition.
-
-Check every extent once when the table is loaded, and refuse
-read-write access if one is empty, is not a whole number of blocks, or
-does not lie inside the partition, in the same way as for other
-allocation information the kernel cannot use.  Check first that the
-table is an Unallocated Space Entry at all: the walk starts at the
-offset of the allocation descriptors in one, and for a file entry that
-offset lies before the inode's in-memory copy of the descriptors.
-Treat a chain of allocation extent descriptors that leads back to
-itself the same way: the walk would otherwise return the same extents
-forever, and the mount would never finish.  Let a fatal signal
-interrupt the walk and fail the mount.
-
-Refusing read-write access to an empty extent is deliberate.  It shows
-that an old kernel took the last block but left the entry behind.  If
-consumed again, the entry returns an in-use block and turns into a huge
-bogus extent.  Refusing the table before that
-happens avoids this second allocation; the filesystem can still be
-mounted read-only.  The check cannot detect every overlap that may
-already exist in a damaged table.
-
-This patch should be backported together with the previous one: that
-patch stops creating new empty extents, and this one rejects existing
-ones before they are consumed again.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/81233decd91f4a48bf4d74e3d15b547c7711e39f.1793349907.git.matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Cc: stable@vger.kernel.org # v6.12+
+Fixes: 5bc46b49c828 ("nvme-tcp: check for invalidated or revoked key")
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/super.c | 80 +++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 79 insertions(+), 1 deletion(-)
+ drivers/nvme/common/keyring.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index 556540f2797ae..8d3d758714da2 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1105,6 +1105,73 @@ static int check_partition_desc(struct super_block *sb,
- 	return 0;
- }
- 
-+/*
-+ * Check the Unallocated Space Table once when it is loaded: the allocator
-+ * hands out blocks from the start of each extent and trusts that every
-+ * extent covers at least one whole block inside the partition.
-+ */
-+static int udf_check_unalloc_table(struct super_block *sb,
-+				   struct inode *table, u32 partition_len)
-+{
-+	struct extent_position epos = {
-+		.block = UDF_I(table)->i_location,
-+		.offset = sizeof(struct unallocSpaceEntry),
-+	};
-+	struct kernel_lb_addr eloc;
-+	uint32_t elen, blocks;
-+	struct kernel_lb_addr seen_block = {};
-+	uint32_t seen_offset = 0;
-+	u64 steps = 0, period = 1;
-+	int8_t etype;
-+	int ret;
-+
-+	/* The walk below assumes the layout of an Unallocated Space Entry */
-+	if (!UDF_I(table)->i_use) {
-+		udf_err(sb, "unallocated space table is not an unallocated space entry\n");
-+		return -EFSCORRUPTED;
-+	}
-+
-+	while ((ret = udf_next_aext(table, &epos, &eloc, &elen, &etype, 1)) > 0) {
-+		blocks = elen >> sb->s_blocksize_bits;
-+		if (!blocks || (elen & (sb->s_blocksize - 1)) ||
-+		    eloc.logicalBlockNum >= partition_len ||
-+		    blocks > partition_len - eloc.logicalBlockNum) {
-+			udf_err(sb, "invalid unallocated space table extent (block %u, length %u)\n",
-+				eloc.logicalBlockNum, elen);
-+			ret = -EFSCORRUPTED;
-+			break;
-+		}
-+		/*
-+		 * A chain of allocation extents can lead back to itself, and
-+		 * then the walk returns the same extents forever.  Remember a
-+		 * position at doubling intervals; a walk that comes back to it
-+		 * is in a loop.
-+		 */
-+		if (epos.block.logicalBlockNum == seen_block.logicalBlockNum &&
-+		    epos.block.partitionReferenceNum ==
-+				seen_block.partitionReferenceNum &&
-+		    epos.offset == seen_offset) {
-+			udf_err(sb, "unallocated space table loops back on itself\n");
-+			ret = -EFSCORRUPTED;
-+			break;
-+		}
-+		if (++steps == period) {
-+			seen_block = epos.block;
-+			seen_offset = epos.offset;
-+			steps = 0;
-+			period <<= 1;
-+		}
-+		if (fatal_signal_pending(current)) {
-+			udf_err(sb, "interrupted while checking the unallocated space table\n");
-+			ret = -EINTR;
-+			break;
-+		}
-+		cond_resched();
-+	}
-+	brelse(epos.bh);
-+	return ret;
-+}
-+
- static int udf_fill_partdesc_info(struct super_block *sb,
- 		struct partitionDesc *p, int p_index)
- {
-@@ -1165,6 +1232,16 @@ static int udf_fill_partdesc_info(struct super_block *sb,
- 				  p_index);
- 			return PTR_ERR(inode);
- 		}
-+		err = udf_check_unalloc_table(sb, inode, map->s_partition_len);
-+		if (err) {
-+			iput(inode);
-+			if (err == -EINTR)
-+				return err;
-+			if (!sb_rdonly(sb))
-+				return -EACCES;
-+			UDF_SET_FLAG(sb, UDF_FLAG_RW_INCOMPAT);
-+			return 0;
-+		}
- 		map->s_uspace.s_table = inode;
- 		map->s_partition_flags |= UDF_PART_FLAG_UNALLOC_TABLE;
- 		udf_debug("unallocSpaceTable (part %d) @ %lu\n",
-@@ -2228,8 +2305,9 @@ static int udf_fill_super(struct super_block *sb, struct fs_context *fc)
- 				/*
- 				 * EACCES is special - we want to propagate to
- 				 * upper layers that we cannot handle RW mount.
-+				 * EINTR means that a fatal signal is pending.
- 				 */
--				if (ret == -EACCES)
-+				if (ret == -EACCES || ret == -EINTR)
- 					break;
- 			} else
- 				break;
+diff --git a/drivers/nvme/common/keyring.c b/drivers/nvme/common/keyring.c
+index ed5167f942d89..9f8c72c7bba71 100644
+--- a/drivers/nvme/common/keyring.c
++++ b/drivers/nvme/common/keyring.c
+@@ -36,6 +36,7 @@ struct key *nvme_tls_key_lookup(key_serial_t key_id)
+ 	}
+ 	if (nvme_tls_psk_revoked(key)) {
+ 		pr_err("key id %08x revoked\n", key_id);
++		key_put(key);
+ 		return ERR_PTR(-EKEYREVOKED);
+ 	}
+ 	return key;
 -- 
 2.53.0
 
