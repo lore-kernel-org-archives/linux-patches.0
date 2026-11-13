@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591526;
-	b=WTxoyyKkAAvRETny5+R+Ku/RziOT3H6sGUWTNARiPVDNy6cRum1bF1sATulYfOq1wINQ
-	 v+7CWQqht3rN9tirVFrwpTTQvqN2G9tc3CzXCMyObIjgAoFB0cnz/F014LydF4uJB4jdC
-	 /qCy8is6PrTGz97QUgGD9swuUzH1freuh6JVfKakY+rEc6BPMQbXiTqgd2YoR9Y7scEo7
-	 dMGWbQdO5USZZebDnaW2Av39xoU9Mj95mOnKMg4Mzdug+RBhpdNVszYjtgLTAQ1fIIwgA
-	 tft3SPftTyNAwBBCbkM//pAr0DFtfBOujxpln9Q7O8IPagD2YwvKdmBc6lkcIn/J61w==
+	t=1794591528;
+	b=HSSzvxYXlOS1umuFWktCxvuuYr4dHgCEMjziQwsuQAkGlKjftSvCMHxQGMumj0jiwptM
+	 iumWbB/ZrzqJRB1ElYctW385XkHkXqGXghFFO0dniDMk+ecVONLNM4qq35axMOMbcRHcZ
+	 HaV9myY6MWtL+FO4NSRbCiVwmzI6WLLTnYfU0vIz7ZmybsoKjxuBrEpXs7SFF14FkCCJV
+	 aWEdy3192WP6OOqmh7+wqjXp5mHDeuxP7Dp5WW5QJM2DDr6c3Cd6tVl7t+vhrAuabOaRM
+	 2AQ9KD5+ZZuUHT7kVtHwSJMfu2O4c4932OfYXY0olpq42VAHHTTkdcqeODEaMRQOj5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591526;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591528;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OpYZKo/4h0fwhbJsQ6j38lauiqcmzXGk3eamgLncaEw=;
-	b=m3/dX8xSabZDglPeG49oh+Ej1+Ai4inkVVRrXHO5zQW0NmgzTJh6RXyJ+Kpz1SJxnNJr
-	 GV5gm1jY1EFOlnX17MRBsAGYkDKejahKYhsTZwXcRFtNxWIzwLPI2I3FcW+h47V5g6Hio
-	 2JzYa46blz1z9Q/nv+Quxc0ERbcRfBxtLXoopXskramfhdScbhGR0rlO0utHRaKWRy4go
-	 +JjRNuVUbBDojGWkSaZnSOKcXtqA7YWOAfsbZpZtUsCTresV64Hdmg00WPG/wtz0LozoJ
-	 5tFWo0A4NewVMKEl25jwMxSNta8dIRsEsAoXOJj6cDuLH8i2jo5oBb1PdJoFZ30QPug==
+	bh=uzlUSq4gri8yxDDd5OQ57Vl3DIe/ejx7cbupMMbnnNA=;
+	b=F8K9JTKl+G1mYehvw/N/K9wQZgMLMO6BCNYaEsbtOr9IS0CmStHJPE2ljme9Ew48Y83W
+	 ovGRhbqGxftj/T+NUibWXq4JRrxXW88wEqF+cYxOpG9yxbW2cMOxa/fB9Sptlcp9O3BNg
+	 MOGMux53eDxWZu4EpPcewD4685doMO1df61759Zgq9YipaVugz9kpwifIVtO8cXV5dmiL
+	 DObxrtvCV3NgrtzbrtZSgUujEPLeFHtgV8ct1c/GNgAIbS5i/EJGe6lrGYMkoIHlTIS+D
+	 Wbk1A+WTn92Ny8hz3ZGyt5lP2iJlzVo9/dPVDRpabHRUAXxgThTaVc7YGULaAKEJS8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UvSx1FMT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjCKWX7f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ED7606D4B1;
-	Fri, 13 Nov 2026 17:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11A6606D4B1;
+	Fri, 13 Nov 2026 17:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UvSx1FMT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663F81F000C4;
-	Fri, 13 Nov 2026 17:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjCKWX7f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA681F000C5;
+	Fri, 13 Nov 2026 17:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591526;
-	bh=OpYZKo/4h0fwhbJsQ6j38lauiqcmzXGk3eamgLncaEw=;
+	s=korg; t=1794591527;
+	bh=uzlUSq4gri8yxDDd5OQ57Vl3DIe/ejx7cbupMMbnnNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UvSx1FMTTIxQTQR8Cb/a9tkTpZMDFYmoWyTIgZdA+7gZccF1WghbrraLYwZQuqwBl
-	 x1DIePIqNhQk7Q4UgKB4ynC2VteBMrwDnE66A98R5hFCbCp1cl1AineRd8bBJeY/vg
-	 HUKi/uwokLotW3FYttN6Eo2u+EdeCiNBwcH40KRI=
+	b=kjCKWX7fYuI2v8eUeHAARbP7HkIsI9UfJAh5hFFbaZSmr6WST/HMc/hGxhIyZlf1h
+	 tuvbCfFNnGSUbVlaowkplIGHGASkBW/H14D6/tEPDeFJtq6Wy7G6QiYyjfjIaUjydw
+	 eiYL01WFPZiaDqQp6ES8AhBO2JvbdJzkYGpJ+8+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Oliver Upton <oupton@kernel.org>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 584/670] ALSA: hda/hdmi: clamp num_cvts against cvt_nids[] in hdmi_read_pin_conn
-Date: Fri, 13 Nov 2026 10:52:28 -0500
-Message-ID: <20261113153831.632125766@linuxfoundation.org>
+Subject: [PATCH 6.12 585/670] KVM: arm64: vgic: Stop the target vcpu when disabling LPIs
+Date: Fri, 13 Nov 2026 10:52:29 -0500
+Message-ID: <20261113153831.663799787@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,53 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 6cf3ab38b0d53d41f00fe594b2986849bdf994ae ]
+[ Upstream commit a1b4bd2c2c262b8094c86afb99364d16ac08cb66 ]
 
-hdmi_add_cvt() stores each converter's NID into the fixed-size
-spec->cvt_nids[] array (used only by the Intel Haswell pin-connection
-fixup), but only when spec->num_cvts is still within
-ARRAY_SIZE(cvt_nids); the num_cvts counter itself is incremented
-unconditionally regardless of whether the store happened. A codec
-that reports more converters than cvt_nids[] can hold therefore ends
-up with num_cvts > ARRAY_SIZE(cvt_nids).
+Disabling LPIs is pretty nasty, as it directly messes with the AP list
+of the affected CPU, which could be running... This has the potential to
+lead to really bad behaviours, and we should not be doing that.
 
-hdmi_read_pin_conn(), on the intel_hsw_fixup path, copies num_cvts
-elements from cvt_nids[] with memcpy(), so once num_cvts exceeds the
-array size this reads past cvt_nids[] and writes the resulting
-garbage NIDs into per_pin->mux_nids[].
+Take example on the way the Active state is handled and simply pause the
+the vcpu so that we are sure it is in a quiescent state, and the state be
+safely manipulated.
 
-Clamp the copy length to the actual size of cvt_nids[] instead of
-trusting num_cvts, which is also used unbounded as the size of the
-separate, dynamically-sized spec->cvts array and must not be
-truncated at the source.
+Nobody has any expectation of performance for this anyway.
 
-Fixes: bce0d2a80e42 ("ALSA: hda - Allow unlimited pins and converters in patch_hdmi.c")
+Fixes: 96085b949672d ("KVM: arm/arm64: vgic-v3: Retire pending interrupts on disabling LPIs")
+Co-developed-by: Oliver Upton <oupton@kernel.org>
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261008085122.9442-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Applied the unchanged upstream hunk at the HDMI driver's older source location. ]
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261015100539.1011760-7-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ sashal: replaced missing kvm_pause_vcpu() and kvm_resume_vcpu() calls with VM-wide kvm_arm_halt_guest() and kvm_arm_resume_guest() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_hdmi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index 8b68386e1ac94..c097fc844b18b 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1355,7 +1355,8 @@ static int hdmi_read_pin_conn(struct hda_codec *codec, int pin_idx)
- 	snd_hda_set_dev_select(codec, pin_nid, dev_id);
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+index 6e157b0b21adf..c62666adc2f8d 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -276,9 +276,19 @@ static void vgic_mmio_write_v3r_ctlr(struct kvm_vcpu *vcpu,
+ 		if (ctlr != GICR_CTLR_ENABLE_LPIS)
+ 			return;
  
- 	if (spec->intel_hsw_fixup) {
--		conns = spec->num_cvts;
-+		/* spec->cvt_nids[] only has ARRAY_SIZE(spec->cvt_nids) slots */
-+		conns = min_t(int, spec->num_cvts, ARRAY_SIZE(spec->cvt_nids));
- 		memcpy(per_pin->mux_nids, spec->cvt_nids,
- 		       sizeof(hda_nid_t) * conns);
++		/*
++		 * Yes, disabling LPIs is painful, since it can be done from
++		 * a *remote* vcpu! So let's not take any chance, and make
++		 * sure that the target vCPU has written their LRs back to the
++		 * irq structures, and release any reference they would have.
++		 *
++		 * If it hurts, don't do it.
++		 */
++		kvm_arm_halt_guest(vcpu->kvm);
+ 		vgic_flush_pending_lpis(vcpu);
+ 		vgic_its_invalidate_all_caches(vcpu->kvm);
+ 		atomic_set_release(&vgic_cpu->ctlr, 0);
++		kvm_arm_resume_guest(vcpu->kvm);
  	} else {
+ 		ctlr = atomic_cmpxchg_acquire(&vgic_cpu->ctlr, 0,
+ 					      GICR_CTLR_ENABLE_LPIS);
 -- 
 2.53.0
 
