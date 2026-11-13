@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590583;
-	b=wDH7YvGJHh/ZWVPvQkBF923RkLp+WIXWW96VXuWNObeYtjrbsemTTPXY3XAnt61j2FJ0
-	 b9wuQFcNxYx7saGi1HV9+Fiqy33AvzJdKVhAgHW13QpubTyk8ZBnTKmpt8CY1l5MxX5Vd
-	 VvZ1XMGYLVGfcbASVwrPAPOcgBXa02pScET/FULfsygY5wHc0c808ExEGuJCh0HNolVdL
-	 VadzfH68PF0gNxSOK0pyCaDuJ+VycmXSKBGeSWLibaopgH9RnH1pVPraBr5JiQ56o2emK
-	 ENdIa7JQg5vUtKI4vpfiFzzFV/xhr1i+3/5UFVsHJxIOsb1JU/BiOCjZiNEFo472ipg==
+	t=1794590584;
+	b=fzVLceNVvmFa/UoyH80Zo16gI7VnJa4jS9W5oXz19qn6i1PSM21hww06x2bM3SAtzcrE
+	 W6xVcNudcOZMuj0ZFkr1E2KAXX2cc9leonsFdO6NzqlcCeZl86ioFQn0oZocltmxMwA8U
+	 3sKpHWwLxK+YadocqcRDLdSNl93husFeKpGZa7ugPhtfZnyqwx2D8kQ3ma+L2kB25Hr5K
+	 6o8Mj7/AekayEFGufhocUN0fTZ2jQfO8bD1VMpvwBsrZFmwLbtO4zbNKf8jS8t58Z/x9I
+	 0YfkOJlAsEDK4QNmrNbUf/qM0CnGUwG2/KXiD3WW2aOQ5v2Zjo10sHs9WEp+eK4ZNXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590583;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JbeqD5kYuGMkXWfBtIsLcsQZ1hBppU3EwAErHhSsZnE=;
-	b=qhvZL+EZNg/lMyZ/cuPE3QzD4RYNAtAOetv8igP324GM1hBEK8OkqpNdmDQU0zdJMW1P
-	 03aZLCS7LfLwlLY7I6QyLqD+yXumsmu6Yi4tXgfFiyLK35qfprgGFz94emJPjSlX7nEby
-	 ZUxMPAl8RK2EmHaaLM7+RvLuDw1DjGPXSIUI8oIG0WESQnGUxyXSMdNnFK69p8bUKJqmE
-	 oQQLjhrr+YZplg1laHKD5xWESp4LUIg3XzommwU5Vd7BfJeO7j0sBSXG36/PrhsrNnz8t
-	 Kgr7ombOv7uCKYpY8PlSHc6eP0rn5begAZ+JRoZylS1QoxIFC64y56v4nBN433dJAVg==
+	bh=CM9xsoMfPUgyBB2XMegBAKPVttU7PGmZzOdZ62tplAo=;
+	b=XAGf2gZPWDP0nAgHOHVrii+4rkmoiGjuyj68UewjOVsuXIYIYpdLojgfzuKDElgFtvQp
+	 cD2aR/MD3GxGn8LcX/h49rv9epTURh43443BH2fO1NXr1iXKsHIK1wE6Hg3lfNXruFAdG
+	 EDQN9oXuo1epUeAZYTD3+hIFJUjSHK7cyvY6VUiv7L8SS4c5y2s2phhn7mYDuOqOM6ol6
+	 VLa8dpc8mNZi1NDm8K36IhmbskrLgROHGzdIA7YevUgu3HhHB+f+uhMQ2lqdDFauIaQkm
+	 1+AkDTpZZ8xOZeq9ILuQUd23gZn+ht9ABYKFlKLsKjJDi5cy4bqbguvm7ivv7jlyhmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M79CGFJZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BZLU0q8u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A73A606C081;
-	Fri, 13 Nov 2026 17:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7061F606BD38;
+	Fri, 13 Nov 2026 17:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M79CGFJZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2201F000C6;
-	Fri, 13 Nov 2026 17:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BZLU0q8u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5131F000C4;
+	Fri, 13 Nov 2026 17:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590583;
-	bh=JbeqD5kYuGMkXWfBtIsLcsQZ1hBppU3EwAErHhSsZnE=;
+	s=korg; t=1794590584;
+	bh=CM9xsoMfPUgyBB2XMegBAKPVttU7PGmZzOdZ62tplAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M79CGFJZLWhGcN+mTqWeXVQAMTpi5+zMePG8eXAEILItiBxYJ1kiMQ+LAlt9jF54t
-	 nMgCfkd6MoSFeetgDLWVN/5bkRyk1mBCVRdEmA/Dok55SinoaYoeHHjlBQwNHAkVu5
-	 TeZ5Dwgv6bt+q2zomBlWP0sXUDUHXUHQ1aHA9980=
+	b=BZLU0q8uCeMXECCUNWYFkQznUq2+q78BdsjP5ZTh8aXqYGECn4DV7M/wM5gJp1BZW
+	 tNE4+TLYzFIEBmUrlr3idNTBys33TIISkhlnID+nRyO8HGxKn1bjt6SpeegMxmM3IP
+	 q5gDCafys7kygM5KiUpgfu5Z6z3XYhpyUBKU1WRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 508/686] ALSA: usb-audio: Protect Roland control activation
-Date: Fri, 13 Nov 2026 10:50:41 -0500
-Message-ID: <20261113153838.106398236@linuxfoundation.org>
+Subject: [PATCH 6.18 517/686] f2fs: fix to check continuousness in f2fs_sync_meta_pages() correctly
+Date: Fri, 13 Nov 2026 10:50:50 -0500
+Message-ID: <20261113153838.686117131@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,107 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 19b42c1fff7f220a6346c614d79ce1bda6d95b40 ]
+[ Upstream commit 1383cff4ccf3c8833c6255edffa29eb67c6419bb ]
 
-The USB MIDI driver changes the Roland MIDI Input Mode control's access
-flags directly from the rawmidi open and close paths.  These changes are
-not protected by the ALSA control core and the corresponding notifications
-can race with control access.
+In f2fs_sync_meta_pages(), whenever i becomes zero inside while loop,
+below check may be skipped, it failed to check the continuousness:
 
-Use snd_ctl_activate_id() so that the control core updates the access flags
-and sends the notification under its lock.  Release the USB MIDI mutex
-before calling it because the control write path holds controls_rwsem while
-roland_load_put() takes the USB MIDI mutex.
+	if (nr_to_write != LONG_MAX && i != 0 &&
+		folio->index != prev +
+		folio_nr_pages(fbatch.folios[i-1])) {
 
-Keep the state transition and alternate-setting change under the USB MIDI
-mutex; rawmidi's open mutex serializes the enclosing open and close paths.
-
-Fixes: 96f61d9ade82 ("sound: usb-audio: allow switching altsetting on Roland USB MIDI devices")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260929141726.2166899-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@kernel.org
+Fixes: 580e7a492608 ("f2fs: convert f2fs_sync_meta_pages() to use filemap_get_folios_tag()")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: Adapted cached-block continuity tracking to the folio-based f2fs_sync_meta_pages() implementation. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/midi.c | 53 ++++++++++++++++++++++++------------------------
- 1 file changed, 27 insertions(+), 26 deletions(-)
+ fs/f2fs/checkpoint.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/sound/usb/midi.c b/sound/usb/midi.c
-index 30d0684920319..c404412ae53b9 100644
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -1146,41 +1146,42 @@ static int substream_open(struct snd_rawmidi_substream *substream, int dir,
- 			  int open)
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index 4c54d75c8981e..14db6b571bc28 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -411,7 +411,7 @@ long f2fs_sync_meta_pages(struct f2fs_sb_info *sbi, enum page_type type,
+ 				long nr_to_write, enum iostat_type io_type)
  {
- 	struct snd_usb_midi *umidi = substream->rmidi->private_data;
--	struct snd_kcontrol *ctl;
-+	struct snd_ctl_elem_id ctl_id;
-+	bool activate_ctl = false;
-+	bool active;
+ 	struct address_space *mapping = META_MAPPING(sbi);
+-	pgoff_t index = 0, prev = ULONG_MAX;
++	pgoff_t index = 0, next = ULONG_MAX;
+ 	struct folio_batch fbatch;
+ 	long nwritten = 0;
+ 	int nr_folios;
+@@ -430,9 +430,8 @@ long f2fs_sync_meta_pages(struct f2fs_sb_info *sbi, enum page_type type,
+ 		for (i = 0; i < nr_folios; i++) {
+ 			struct folio *folio = fbatch.folios[i];
  
- 	guard(rwsem_read)(&umidi->disc_rwsem);
- 	if (umidi->disconnected)
- 		return open ? -ENODEV : 0;
- 
--	guard(mutex)(&umidi->mutex);
--	if (open) {
--		if (!umidi->opened[0] && !umidi->opened[1]) {
--			if (umidi->roland_load_ctl) {
--				ctl = umidi->roland_load_ctl;
--				ctl->vd[0].access |=
--					SNDRV_CTL_ELEM_ACCESS_INACTIVE;
--				snd_ctl_notify(umidi->card,
--				       SNDRV_CTL_EVENT_MASK_INFO, &ctl->id);
--				update_roland_altsetting(umidi);
-+	scoped_guard(mutex, &umidi->mutex) {
-+		if (open) {
-+			if (!umidi->opened[0] && !umidi->opened[1]) {
-+				if (umidi->roland_load_ctl) {
-+					ctl_id = umidi->roland_load_ctl->id;
-+					activate_ctl = true;
-+					active = false;
-+					update_roland_altsetting(umidi);
-+				}
+-			if (nr_to_write != LONG_MAX && i != 0 &&
+-					folio->index != prev +
+-					folio_nr_pages(fbatch.folios[i-1])) {
++			if (nr_to_write != LONG_MAX && next != ULONG_MAX &&
++					folio->index != next) {
+ 				folio_batch_release(&fbatch);
+ 				goto stop;
  			}
--		}
--		umidi->opened[dir]++;
--		if (umidi->opened[1])
--			snd_usbmidi_input_start(&umidi->list);
--	} else {
--		umidi->opened[dir]--;
--		if (!umidi->opened[1] && !umidi->keep_input_running)
--			snd_usbmidi_input_stop(&umidi->list);
--		if (!umidi->opened[0] && !umidi->opened[1]) {
--			if (umidi->roland_load_ctl) {
--				ctl = umidi->roland_load_ctl;
--				ctl->vd[0].access &=
--					~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
--				snd_ctl_notify(umidi->card,
--				       SNDRV_CTL_EVENT_MASK_INFO, &ctl->id);
-+			umidi->opened[dir]++;
-+			if (umidi->opened[1])
-+				snd_usbmidi_input_start(&umidi->list);
-+		} else {
-+			umidi->opened[dir]--;
-+			if (!umidi->opened[1] && !umidi->keep_input_running)
-+				snd_usbmidi_input_stop(&umidi->list);
-+			if (!umidi->opened[0] && !umidi->opened[1]) {
-+				if (umidi->roland_load_ctl) {
-+					ctl_id = umidi->roland_load_ctl->id;
-+					activate_ctl = true;
-+					active = true;
-+				}
+@@ -460,7 +459,7 @@ long f2fs_sync_meta_pages(struct f2fs_sb_info *sbi, enum page_type type,
+ 				break;
  			}
+ 			nwritten += folio_nr_pages(folio);
+-			prev = folio->index;
++			next = folio->index + folio_nr_pages(folio);
+ 			if (unlikely(nwritten >= nr_to_write))
+ 				break;
  		}
- 	}
-+	if (activate_ctl)
-+		snd_ctl_activate_id(umidi->card, &ctl_id, active);
- 	return 0;
- }
- 
 -- 
 2.53.0
 
