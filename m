@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591188;
-	b=ND8oICGXRQWxDXVpqXmDgEQNlfrDJMBOKtiCCm3mv6OQYd88WoVIkqozGi/o8KANsrRJ
-	 PrrrX81tKUVDoc4lQEYfAsxbrXN0k/dLNvXu6eEaZELPurwdXoFANxCtMmJKkCdQIfi1v
-	 BzB3A7Z4BPeyjW0iQ99G6l3EF5Lv/ZiF1tbNIVpWOVXzBg3P4/pzs81F9WO2BNdBoFw41
-	 eBV8a42fvQoG23nWy/b/09EqIB3MsMxLvcz1sSmlIhtid0PRkDeVVjLTTNvex5jgh5VM7
-	 jPkXzalBxZq4VkVIIjJLeXWJgZWldzU1Wf7URnmNSPjLit/1Hz4BBJ/g3aKtIjV6O1g==
+	t=1794591189;
+	b=YmrQgneBBifPzch7lN/Mfn+UIJ97GdDTJ6i2uAZPcxdswKDwG4TU40qLI0FS/fb0m51x
+	 KSabiu4zb3O8CQ4X/z18vK31IPXbLmO6ySUVviOsLTWY9c5EMqVWXP1VyzJyT6Vr6xYeP
+	 E7MLrN4lSaghbCz0f/A94u26aCQgoucyN8ZRuCh5M/tb3ckxmg2OhO59Jt3BOsvaPiDBx
+	 j9HbVBTZOACWDpVxLVxZLt1j4DvoujkuLwNe8h0YBDvBwIyKbacH+zgc9lBPnXEIeMWFv
+	 A4aKBX2Pgkwr0rPAGgKD2px0Rkm+ZSzasPO3BSZsm/x1SYnqptncCwB/97UNKnpMTCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=epB/hAn//qTgzMnltx3Ft4g0CugDWMkKQ+jNij6DXVo=;
-	b=VHEzUkbuvqyPopxd1I200pxYp8ah2mWgcCWZSz9Hwkii9crxTz6e6PQnS7RvBbWpRrC4
-	 XG2J4naEaWHBUiiwUR4dcxzAac8qV/ab0d7P35Ls0oXfdunSDWWn6A9xPWFWLIcGMHq2J
-	 pmz2hx66GCAG53AluM4l+jkLs6y2fNX86Y8liTH9Kr2LHGvyDnWK7aKGDhJrguJlOoHVY
-	 bO2f+Q/FDhbo7PpcU0MFDcSFboNHOjLJ8WHvl3eNvOLz/4904fOqAYC1Ikv7A7Ced1sxm
-	 /WiFbHAhnzacuazWUi71P0kAqX8T3VH9+0ayBvXXQFBXsznP85YOLBfNFcV84F7ZXdg==
+	bh=kJDdb/Q+uDwkWTsreFdZLP0NTMcm3uA0ua6YO5OeaQg=;
+	b=dpCZPg3xzxw+btnOvldwexmTZxLdweQacCZM6X99o0eMLgY5MGvtcSRAFbsGq5I83EvJ
+	 UCkSWupQkhiwc5gC0CTxiqkQwGFjJJqgbijzd0uCnUcX72kQMlyLxfBJVrAzO2zYywcOP
+	 c6Ga+60BteiTPHosb/8cKWS2HKcFKC3WsSoUxDCHMz+z4aq0xT5FbM80tzPL0sjwtNeh0
+	 swzWNpHz5WbfoAu/uu96Ryn4/L1vUr4q6iw+/5NZ/Zv83syaWZXiCXvKAO7ozebCbNI/8
+	 bn/FJ0BISel12Htf6TXMDAbOIo0vtzcFUm1mKPhTDUIGc2kKfyKFRNgWB+OfuV9l9Sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ElNH4T71;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b9bSWin8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFBA606C0B1;
-	Fri, 13 Nov 2026 17:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410996075E09;
+	Fri, 13 Nov 2026 17:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ElNH4T71
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C131F000C6;
-	Fri, 13 Nov 2026 17:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b9bSWin8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F471F000C5;
+	Fri, 13 Nov 2026 17:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591187;
-	bh=epB/hAn//qTgzMnltx3Ft4g0CugDWMkKQ+jNij6DXVo=;
+	s=korg; t=1794591189;
+	bh=kJDdb/Q+uDwkWTsreFdZLP0NTMcm3uA0ua6YO5OeaQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ElNH4T71OJUNka2NbrWKuWBpwxKzgGCIcQSIFsewcbcJkjPgAoPZ7/Qbob13uI5nI
-	 3DbXsTKVPnZ+0otSQ/2X0NHXfupp8d/7ofl5JJRO4msu53BFsts2pFR4NLqdogbAos
-	 0qhxTtZ4vBIxb8/U4Sj3w1m83hqK1cAWjjXpL7Yg=
+	b=b9bSWin8A22tfCji/85Oi9ULnYDRvqaxyICOXC3txiBxdsoqJcg76dVxN+/dSmhsP
+	 fvmq8ClAK/LULyuSyJLVr4aHiD4wlk5bx0Hk7Oyiulq50dv2t/4qR18JdcqtLfEqcl
+	 leHjpxANA1J6knsGMe5yUNEJHaafltrL1MxfV6gE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Muchun Song <muchun.song@linux.dev>,
+	Barry Song <baohua@kernel.org>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 324/670] mm/gup: fix out-of-bounds write for nr_pages == 0 in GUP-fast
-Date: Fri, 13 Nov 2026 10:48:08 -0500
-Message-ID: <20261113153822.871238468@linuxfoundation.org>
+Subject: [PATCH 6.12 325/670] mm/gup: check for overflow when converting nr_pages to bytes in GUP-fast
+Date: Fri, 13 Nov 2026 10:48:09 -0500
+Message-ID: <20261113153822.900675755@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,48 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 1dfe4b276c23189394afb42d114ee8a54cc3aff2 ]
+[ Upstream commit 21a3888d3d2f87b7f15ccea1f0befd57346fe899 ]
 
-With nr_pages == 0, GUP-fast still enters its page table walk and can
-write past the caller's page array. The old end <= start check caught
-empty ranges, but was replaced with an overflow check.
+The overflow check in gup_fast_fallback() only covers the addition to
+start. The preceding nr_pages << PAGE_SHIFT can already have truncated
+the length on 32bit.
 
-Users such as OrangeFS can pass a zero page count derived from a
-userspace-supplied length. So let's return zero for nr_pages == 0 before
-starting the walk, just like GUP-slow.
+Users such as RapidIO's rio_dma_transfer() can derive such page counts
+from a 64-bit userspace length.
 
-Fix generated by an LLM and sent by Chris Mason in private.
+Let's just check_shl_overflow() to reject any such overflow with
+-EOVERFLOW early.
 
 Fixes: c28b1fc70390 ("mm/gup: reorganize internal_get_user_pages_fast()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: simplify description ]
 Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Barry Song <baohua@kernel.org>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-21-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-22-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/gup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/mm/gup.c b/mm/gup.c
-index b4746ab82dd15..c3df6f7d0bf2c 100644
+index c3df6f7d0bf2c..0e1a0c6c5f213 100644
 --- a/mm/gup.c
 +++ b/mm/gup.c
-@@ -3448,6 +3448,9 @@ static int gup_fast_fallback(unsigned long start, unsigned long nr_pages,
- 				       FOLL_PCI_P2PDMA | FOLL_HONOR_NUMA_FAULT)))
- 		return -EINVAL;
+@@ -3458,8 +3458,8 @@ static int gup_fast_fallback(unsigned long start, unsigned long nr_pages,
+ 		might_lock_read(&current->mm->mmap_lock);
  
-+	if (unlikely(!nr_pages))
-+		return 0;
-+
- 	if (gup_flags & FOLL_PIN)
- 		mm_set_has_pinned_flag(&current->mm->flags);
- 
+ 	start = untagged_addr(start) & PAGE_MASK;
+-	len = nr_pages << PAGE_SHIFT;
+-	if (check_add_overflow(start, len, &end))
++	if (check_shl_overflow(nr_pages, PAGE_SHIFT, &len) ||
++	    check_add_overflow(start, len, &end))
+ 		return -EOVERFLOW;
+ 	if (end > TASK_SIZE_MAX)
+ 		return -EFAULT;
 -- 
 2.53.0
 
