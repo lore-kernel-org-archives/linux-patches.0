@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585827;
-	b=f+pS6kVmUwQJKLrc21hSUQ/jIsBaf6vXBPPEXru8Ffr6yoovI/xDtqCewOhRu5Vy3Jyh
-	 4o/ogbW519KxZR58S/wgY7Hs4Z6KvhdATTgIkNsaTzLVKZW88TRIk59rr8ycm846lboRZ
-	 qIvizrC4RJ+eWaA7gADWkLjBgr9szYeUEc7LB/WPP3Vt/k7sMiLGE09MBQ5VyizRSZVoV
-	 QWIkn6WDrkD+dhC0aVdNxprG7fTiiJE2F6M+vCVKc6U0/A0xPlmgd67nNIO6ZG0McD1bA
-	 Z9zpsTeJIO32YfnNHfF6PjVuqx/ItZXIa5W73HPkFXxKaTTCwYaLXLoMXJd7LtkbINQ==
+	t=1794585829;
+	b=K43MXzA8Z16RJ3PRmgH7qAVccuKaZoCxERNa8UTiXmZ/WgHmxOKpptd/JtN10P1Gm8ir
+	 B0UwAX5enfBv7mEH/ofW6WqGymaTeWLVAMtIHXV/zA+8VZFCNx+N43irmx3H1n+lV0Q0R
+	 efjzxTns/CqwIl4U/oeF33B3uDB1o9R6Tz+eyOXFCutacDCOKnqhWcQQ0keQKLpGho2JX
+	 Mc8i9yhW9kX+tuw5tjwUd8DVYH4bCVR394Skus7hOvHJNTOpSzyfWRPfiZdeQj5cYCuat
+	 aayELRhZChMG5BSU+NVfng0pBAW6UaYYy7tzBLMackEckc+JYRk0vm/GK4atiO9gSXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CcJ7z9r+fYI/yYvuXT5sHQOEU2/afu9MthT+Z3CKxx8=;
-	b=4Fe063GYLOGbL6Zby94vQOE3JBlGCJxMOv4RqPcc3pDOmow8ndbvhSmvRGeQBKkd7GAa
-	 aCBFPkeWzPq1WdNXsfiKmBkmm8GUYDKhTv666eK0nm0TsIjwVSQ0zrJeycjNp9F/UDryi
-	 6R4Z3SFKm1wKVWfJTAr9bJ2iVgCFhyabZ4kCa8draHoAVAIDCS98DBwLC1Cga8YxlZ6Me
-	 Slhkp46qeQmztl5Yi/rY4spsc4tM6TqZCcxXH++wb4KzOxnLU732JRhtUz36+KgNNFbTW
-	 /zH8CM3kNzwAnlbvJw1T2HyYmQ64mHkTy+mCoMnL93cK5ghWzYYsKvZIyb+MIyvl05Q==
+	bh=c+gFPSyAYNJkYEgSvrOjlD7mzNV0HcJDaFQcNMGovhw=;
+	b=Gk/RZHGHf5AA13WKpcvUIXrhFyVuB5Cvu2kYOafD9YGyExqmA0i3rl3XzsAbLgbZlX8Q
+	 EcDOWjCPQIf1P2IFaU7HTizGniREdQhF9cbCqcEloRU0oySoI2VKf1J6awELD7xxJIh6X
+	 +q8h+DwpZj+UaKi8cmDMfOrGRJHbubid55rl8IlN0672dAZGTbp+27uGB2D5xsO+nAc1p
+	 eV4zRnFbH8WcFVLtbmXvoKKofEXwayoSoUpRw3o2VSLKxa7gC5lH2i5TJhHNzuO00sqds
+	 Ll0jebUUeucvw9NcyzYxTr+E8Vnx13GwGMhber8LFx6ADXgOmP3Nv+/xADTMfcNZSNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cjgR2ZHF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4t9S7ac;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75C560A5BE5;
-	Fri, 13 Nov 2026 16:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F0960A6F44;
+	Fri, 13 Nov 2026 16:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cjgR2ZHF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 731271F000C4;
-	Fri, 13 Nov 2026 16:03:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i4t9S7ac
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD27E1F000C4;
+	Fri, 13 Nov 2026 16:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585827;
-	bh=CcJ7z9r+fYI/yYvuXT5sHQOEU2/afu9MthT+Z3CKxx8=;
+	s=korg; t=1794585828;
+	bh=c+gFPSyAYNJkYEgSvrOjlD7mzNV0HcJDaFQcNMGovhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cjgR2ZHF7+8Y2qtlWkLLX4v2DGeaYm3AyyVvjutRiqgFAQnUEUVUmKogSqX1XI+3a
-	 h6Z6Vq1TskYk1F+8KGykBMkcyV1SlI10t9WqIt4kxg/0q8ZZfC0Yi/4hyoosOD1lLz
-	 wtbFRBAjdGr6HQ+UUuudNNXvNJa2U7Zc7DsSQTIc=
+	b=i4t9S7acNx43e2fK1SZw+rM6cJCmHcqqgkEjYlYSa2HE1f1dPGwkIli9MfCOYk89X
+	 3HpdZUhuIDtVEifHeRTq8dC5CoQ3sTA3pziQfyNYPXL0Q7bBBShLmjO3icr5O2DN3D
+	 8rkiVtfD1AaE2UmFkqabrsEcMERwzgrIZhSlRYso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <jjc@jclark.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Christian Gmeiner <cgmeiner@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 406/507] net: ethernet: ti: am65-cpsw-nuss: Enable timestamping of unicast PTP packets
-Date: Fri, 13 Nov 2026 10:51:50 -0500
-Message-ID: <20261113153810.499502251@linuxfoundation.org>
+Subject: [PATCH 7.3 407/507] drm/etnaviv: Fix NULL dereference on unbind without PPU flop reset
+Date: Fri, 13 Nov 2026 10:51:51 -0500
+Message-ID: <20261113153810.529089468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,61 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <jjc@jclark.com>
+From: Christian Gmeiner <cgmeiner@igalia.com>
 
-[ Upstream commit 6887a8f98244ba4c0fbe2d2461b9b8f8a300e326 ]
+[ Upstream commit a0560a12d8c1a03e925c5d9be8479da75663a40f ]
 
-On a BeagleY-AI (J722S), ptp4l as a unicast master (unicast_listen) logs
-"received DELAY_REQ without timestamp" for each unicast Delay_Req, and
-its port goes to FAULTY after "timed out while polling for tx timestamp"
-for the first unicast Sync.
+flop_reset_data_ppu is only allocated on GPUs that need the PPU flop
+reset. However, etnaviv_unbind(..) frees it unconditionally, and
+etnaviv_cmdbuf_free(..) dereferences cmdbuf->suballoc before checking
+whether cmdbuf is NULL.
 
-am65_cpsw_nuss_hwtstamp_set() does not set the TS_UNI_EN bit (bit 24) of
-the port's TS_CTL_LTYPE2 register. According to the TRM (J722S TRM
-SPRUJB3D, 12.2.1.4.7.13.5.1 Ethernet Port Receive Event and
-12.2.1.4.7.13.5.2 Ethernet Port Transmit Event), this bit must be set
-for the port to timestamp PTP event messages over UDP sent to a unicast
-address; without it, only messages sent to the PTP multicast addresses
-selected by the TS_107 and TS_129 to TS_132 bits are timestamped. TI's
-netcp_ethss driver for the Keystone 2 Ethernet switch, which has the
-same timestamping registers, always sets TS_UNI_EN.
+As a result, unloading the driver on GPUs that do not need the PPU
+flop reset causes a NULL pointer dereference at address 0.
 
-Set TS_UNI_EN along with the other bits. With this change, ptp4l in the
-same setup gets timestamps for the unicast Delay_Req and Sync messages.
-
-Fixes: b1f66a5bee07 ("net: ethernet: ti: am65-cpsw-nuss: enable packet timestamping support")
+Fixes: 85ba57ad88cf ("drm/etnaviv: Add PPU flop reset")
 Cc: stable@vger.kernel.org
-Signed-off-by: James Clark <jjc@jclark.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20261102135117.419539-1-jjc@jclark.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Link: https://patch.msgid.link/20261102-etnaviv-unbind-flop-fix-v1-1-588fd16f6768@igalia.com
+Signed-off-by: Christian Gmeiner <cgmeiner@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/etnaviv/etnaviv_drv.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 6330540979d70..f54cfcb7d1530 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -128,6 +128,7 @@
- #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319	BIT(21)
- #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320	BIT(22)
- #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO BIT(23)
-+#define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN	BIT(24)
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.c b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+index 08aca9035fc1a..ec1352c1b09fa 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+@@ -601,8 +601,10 @@ static void etnaviv_unbind(struct device *dev)
  
- /* The PTP event messages - Sync, Delay_Req, Pdelay_Req, and Pdelay_Resp. */
- #define AM65_CPSW_TS_EVENT_MSG_TYPE_BITS (BIT(0) | BIT(1) | BIT(2) | BIT(3))
-@@ -1857,7 +1858,8 @@ static int am65_cpsw_nuss_hwtstamp_set(struct net_device *ndev,
- 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_132 |
- 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319 |
- 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320 |
--			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO;
-+			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO |
-+			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN;
+ 	component_unbind_all(dev, drm);
  
- 	ts_ctrl = AM65_CPSW_TS_EVENT_MSG_TYPE_BITS <<
- 		  AM65_CPSW_PN_TS_CTL_MSG_TYPE_EN_SHIFT;
+-	etnaviv_cmdbuf_free(priv->flop_reset_data_ppu);
+-	kfree(priv->flop_reset_data_ppu);
++	if (priv->flop_reset_data_ppu) {
++		etnaviv_cmdbuf_free(priv->flop_reset_data_ppu);
++		kfree(priv->flop_reset_data_ppu);
++	}
+ 
+ 	etnaviv_cmdbuf_suballoc_destroy(priv->cmdbuf_suballoc);
+ 
 -- 
 2.53.0
 
