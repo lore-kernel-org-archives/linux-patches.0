@@ -1,62 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591133;
-	b=y2hURhiaq73qk+POJy1w7kInj4gdatIk9kA9/J41WWTYV2Pk6RtPZN8PmuR0mNqvPWi3
-	 tROkwgKCmr4Frj5zCWN3PV5NRTJoTbFf/l2vx/VdWz43fdpSajo4SQU4TslV8Gf8gnadX
-	 0P35mirN8aqsNuLXsWD7imECO3lXX44/kUo2EXsy9PWhUlh1nLoC0nNwwzt4r6NT82Auf
-	 3pT9r3kB6AxrMdhghlIL3pM8tAZ/ASCGTU3oezhk94Q5PihLv7QtBMJ6XYLY+vT1BN01u
-	 65qa0Gzev/90Ffj9UYUt3vmbWH7K5YRbJU3bGe5XIM5d4XSToNf4cr9Nwjzx1CU/moA==
+	t=1794591134;
+	b=XPcEknPVqCPTTA6w0P/p3xq3JFDgsFOaEURbSh/tBo89GL3L1jn8efEtSJ8Nsxi/CaP4
+	 O+Jwp3oHm82D/EmR0mpU5Eba+ldhPCVn1mGJk9A7S9xsyWJRZoEbTQhtEdG38PmTOBZGL
+	 NGUm7ceqfrk5PdVhnAeKmzFQt4yR94pOC+f6up1o9x1fSScMg8L3yEBaevBDzDk22EKJR
+	 U4e54OnxMBlCxY4bGMhDxIS/mDSaYHv+jjprZR85kvIVZ/QNwGEViY0stytjxOKt3gKmw
+	 vtIMP/99fI9rXPDhCc4cvmZDN+k81Fdeo7a59tsWn7uOdwJ0TJQ8Kaljf5tcWY1rSAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591133;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591134;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=rebx3nX0Xr640/114QzkM2H0N2uGZ31HnA/ISe0i4N4=;
-	b=ni/5tv2rddwB79hg/QS5KqSzwZ6TKQrwiDebq1viUY3Agc30os6hBvgWwCtRp+6pfViC
-	 6sgrEXjsyxWcTzfhRhxAg2x/y1iXYZlvuCtkajPKZ4ldAC7Ww5GjVcyH/ThAea3ZCOJ2i
-	 Grlp1mYf5bkCF1rPSjvHI4f3k2Wu2mqXwy2MRMXFxt1HpogLPq3xgJGk+bYduaXHDb5CH
-	 eqhrR9S3bTOXbJQ2BmRJK775ROYx3BzXJ3tOh7P6EvouYrjhDgUA0E4/Ya9E8RdHWMUse
-	 MjZE42DHgENt1wQfXvZnQ3ZFgPNCVQlyhij+tOigieU72sZu7xpJl1FXAfJoMSLnrOQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=mTgzxIPj/646kGw43pR3szHSxhN7AndqWCR5SD5Q+Ao=;
+	b=aJNfjEhd8S9BlzeDrhOHnyuW4L8PNDV4WEmLRUqJF46qsrsUlRh+SPcnBHc9DHpY1IdO
+	 +8yxTXr374HcFcIFReQbY7MpMnePMsW3x8s4wHc1c/GZqrAShTlIZ9vzesARDe+YwxLwj
+	 Z71p9Haf5DSyFipWFk0/vnn4VOUnWBoqwuDR/oObVtRqs2hijfP6Jjv2UPsBfYwTXhDpr
+	 hThPlGXshnLToDPHc+ziUDOE0zw9Og8A2+kjMmBx2NfPex/faO4i9p+wxumDU/nejb4JY
+	 1pzKacrOPNLtI2jiL/yRXHkLqaZQuhM+QWaj8An8B6NtqcKHfe1BOop7NDiuj6k2dfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IHkTZ+Fu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPNmz4Kj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13015606A88C;
-	Fri, 13 Nov 2026 17:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF85606A88C;
+	Fri, 13 Nov 2026 17:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IHkTZ+Fu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A0A1F000C7;
-	Fri, 13 Nov 2026 17:32:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPNmz4Kj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0431F000C6;
+	Fri, 13 Nov 2026 17:32:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591132;
-	bh=rebx3nX0Xr640/114QzkM2H0N2uGZ31HnA/ISe0i4N4=;
+	s=korg; t=1794591134;
+	bh=mTgzxIPj/646kGw43pR3szHSxhN7AndqWCR5SD5Q+Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IHkTZ+Fuimv1+/KPeNk0MV4ITZb+epN7MwqVTmpUicqv5QnObxar2VYgZqamILBCH
-	 3xJbbJkxj0mgaDESZmZ0L4SzbEVPfpTaKQPyhnTPgNaqxUmsiuTKQXWDvJ6d4g465i
-	 SqoeHKYddl6+XRj38Lq4fvXOYezEjMEhRA7QoX5c=
+	b=OPNmz4KjpQE+q8QRn6tNXE+5vHJiuzA3icaI0/3KM8UCIE+6wZJBg2zV45Z+7VRPq
+	 BkHi2K/bx3cDUreZVpECT8olSjC85ioUKx9YfKFih+3yVKk4vVRuhe/SwgHs/hyCmE
+	 DCAZfLzWELto6zgcU/PV/GvIET9Q75CX4eq3qPH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengyu Liang <hengyul@cs.unc.edu>,
+	Chris Down <chris@chrisdown.name>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Andrei Vagin <avagin@gmail.com>,
-	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
-	Arnd Bergmann <arnd@arndb.de>,
+	"Vineeth Pillai (Google)" <vineeth@bitbyteword.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Kairui Song <kasong@tencent.com>,
+	Hugh Dickins <hughd@google.com>,
+	Chris Li <chrisl@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Youngjun Park <youngjun.park@lge.com>,
+	Ying Huang <huang.ying.caritas@gmail.com>,
+	Kelley Nielsen <kelleynnn@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 279/670] fs/proc/task_mmu: return -ENOTTY for unknown pagemap ioctls
-Date: Fri, 13 Nov 2026 10:47:23 -0500
-Message-ID: <20261113153821.337308680@linuxfoundation.org>
+Subject: [PATCH 6.12 280/670] mm: make swapoff interruptible when unusing mms/shmem
+Date: Fri, 13 Nov 2026 10:47:24 -0500
+Message-ID: <20261113153821.373580863@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -72,88 +74,120 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hengyu Liang <hengyul@cs.unc.edu>
+From: Chris Down <chris@chrisdown.name>
 
-[ Upstream commit bfc1d9724c78aa7570dbeb17207a21089f2d1b1a ]
+[ Upstream commit 740128dd1a3f2bd81a80314d079b6b03c39ba3af ]
 
-Commit 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and
-optionally clear info about PTEs") made do_pagemap_cmd() the ioctl
-handler of /proc/<pid>/pagemap.
+try_to_unuse() only checks for a pending signal between mms, and
+shmem_unuse() doesn't check at all.  That means that once swapoff gets to
+a process or a shmem file with a lot swapped out, nothing can interrupt it
+until every last page of it has been read back in.
 
-However, do_pagemap_cmd() returns -EINVAL for every command other than
-PAGEMAP_SCAN. Before that commit, pagemap had no ioctl handler, and
-the VFS returned -ENOTTY for these commands. As of now, they fail with
-EINVAL, so tcgetattr() and isatty() on pagemap report EINVAL instead
-of ENOTTY.
+Just as one example of where this can concretely show up, freezing tasks
+for suspend or hibernation has to wait for swapoff to notice the freezer's
+fake signal, and gives up after freeze_timeout_msecs (20 seconds by
+default).
 
-The issue can be reproduced with a simple C program:
+Here's a facetious example where one swaps out 2GiB of one process to a
+swap file on ext4, starts swapoff, and half a second later tries to freeze
+with pm_test=freezer.  Writing to /sys/power/state then fails with EBUSY
+and this in dmesg:
 
-    #include <fcntl.h>
-    #include <stdio.h>
-    #include <termios.h>
+    Freezing user space processes failed after 20.003 seconds (1 tasks refusing to freeze, wq_busy=0):
+    task:swapoff         state:D stack:0     pid:3175  tgid:3175  ppid:2955   task_flags:0x400100 flags:0x00000419
+    Call trace:
+     [...]
+     io_schedule+0x44/0x70
+     folio_wait_bit_common+0x1ec/0x3d0
+     __folio_lock+0x24/0x40
+     unuse_pte_range+0x2d0/0x348
+     unuse_vma+0x158/0x248
+     unuse_mm+0xfc/0x150
+     try_to_unuse+0x104/0x3f8
+     __do_sys_swapoff+0x220/0x5d8
+     [...]
 
-    int main(void)
-    {
-            struct termios t;
-            int fd = open("/proc/self/pagemap", O_RDONLY);
+The same goes for anything else that wants swapoff to stop, like an admin
+hitting ^C in a panic, of course.
 
-            if (tcgetattr(fd, &t) < 0)
-                    perror("tcgetattr");
-            return 0;
-    }
+Prior to commit b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
+try_to_unuse() was driven by find_next_to_unuse() which checks for a
+signal before every entry, so let's restore that behaviour.
 
-Before that commit, the result is:
+Just as an example of the improvements, here's how long freezing takes
+in the same test while swapoff is happening on my computer:
 
-    tcgetattr: Inappropriate ioctl for device
+                      before                  after
+    400MiB anon       8.925s                  0.028s
+    400MiB shmem      1.639s                  0.003s
+    2GiB anon         failed after 20.003s    0.011s
 
-After that commit, the result is:
-
-    tcgetattr: Invalid argument
-
-This patch will return -ENOIOCTLCMD for unknown commands, as
-procfs_procmap_ioctl() in the same file does, so that the VFS turns it
-into -ENOTTY.
-
-Link: https://lore.kernel.org/20261023181300.3366487-1-hengyul@cs.unc.edu
-Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
-Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
+Link: https://lore.kernel.org/at9kJwdGkHPsWwgG@chrisdown.name
+Fixes: b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
+Signed-off-by: Chris Down <chris@chrisdown.name>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Muhammad Usama Anjum <usama.anjum@arm.com>
-Cc: Andrei Vagin <avagin@gmail.com>
-Cc: Michał Mirosław <mirq-linux@rere.qmqm.pl>
-Cc: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Youngjun Park <youngjun.park@lge.com>
+Cc: Ying Huang <huang.ying.caritas@gmail.com>
+Cc: Kelley Nielsen <kelleynnn@gmail.com>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/task_mmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/shmem.c    | 4 ++++
+ mm/swapfile.c | 4 +++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-index 0f45320caf720..bc38ba6aa37ea 100644
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -2943,7 +2943,7 @@ static long do_pagemap_cmd(struct file *file, unsigned int cmd,
- 		return do_pagemap_scan(mm, arg);
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 986d667a3bb92..881cbeaf3f747 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1455,6 +1455,10 @@ static int shmem_unuse_inode(struct inode *inode, unsigned int type)
+ 		if (ret < 0)
+ 			break;
  
- 	default:
--		return -EINVAL;
-+		return -ENOIOCTLCMD;
++		if (signal_pending(current)) {
++			ret = -ERESTARTSYS;
++			break;
++		}
+ 		start = indices[folio_batch_count(&fbatch) - 1];
+ 	} while (true);
+ 
+diff --git a/mm/swapfile.c b/mm/swapfile.c
+index 4ea0ebefe92d9..99eb5878f5acf 100644
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -2262,6 +2262,8 @@ static inline int unuse_pmd_range(struct vm_area_struct *vma, pud_t *pud,
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+ 		cond_resched();
++		if (signal_pending(current))
++			return -ERESTARTSYS;
+ 		next = pmd_addr_end(addr, end);
+ 		ret = unuse_pte_range(vma, pmd, addr, next, type);
+ 		if (ret)
+@@ -2475,7 +2477,7 @@ static int try_to_unuse(unsigned int type)
+ 	if (READ_ONCE(si->inuse_pages)) {
+ 		if (!signal_pending(current))
+ 			goto retry;
+-		return -EINTR;
++		return -ERESTARTSYS;
  	}
- }
  
+ success:
 -- 
 2.53.0
 
