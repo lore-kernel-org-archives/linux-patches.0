@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591050;
-	b=K44mUGypGx7nyhHC36/63qCD7uMMnDa6xZrA0F3lRSMBQ9Oa8HuEU0wczxzGIM0COjLG
-	 rlz5FJjMUerPVfRn3ppCDuChAB099YRxDVckJxcz+mohk8s174xOCKGwwk2Qdjp1LnPl+
-	 hDPaja7Q+nEbOoUtb8a/9QRf9OUl9FSLlQra68QIYKZQA5HxR5joI3QwrM0WeetdS9XuI
-	 +2cXsWPPBuP0j+bGtGu4RzN+1LsO5RSgzFpxQWQY9/gpPTRYWBIuItXITMGqeDgF2n6Zg
-	 LPVGftt40j6XzcZ1sahcXI8+YYz1l4AaWUHDHK0i5DZVcVIgeZxhtaOnaxTyu1J2nVA==
+	t=1794591051;
+	b=xvH7jD3Z9UiWal6BzwaNMhMInR53t8FRyDctAPug4SRapDs1HA0d+zHXEHFzeVJjaoxY
+	 vxQV2/1y62iL1euaex9yi358iFVOVwfZrX3nq2gF7ouw9KMLBPiFnS0FJNdIvezu0zt5K
+	 /bLzZAH2c/LrSUKkFCekfoyQHr8DgXVa8rfFF8G3JfO2tYjhPXA6a8h2hEl7tGc6XGGQ3
+	 4re3mc/9K5E5uvGgn2l1rKMx3uyRglj63kpAEtnNj1VTp6kzQ4pAJ5K5VDkzPTjFYPilC
+	 qR0Un1VGZafPeSUeLc7djLEtFO/EWYTh9bUCnTrC0TKSl3v50gDRF1dwvyNHLMV+xzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591050;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ypS1EiS3kSM1IMVgSYsZc65aoNUphSguqU4sqSl5rH8=;
-	b=IjDG+LLinj9ErWBvuNE/uN1CmS8NaoiEFrnLsfZtilGCyrhslaGFDeUDrBVxI8YXqruM
-	 JgAyQAaYVIEfqPVAG8RcnPOrVI+7JV3Xa1TAC1ZHVfXub5UsIhArRr1ZLptojmhENGK3N
-	 9m67tgJc2Kzos6nLTSpiPsFg3SCHSrdMiXlUooBJBPQiennT9qov2mPeqh5UmSPLO2i1d
-	 gl0+2WV5/7PhlAuOEhgYGdwor1LWPNLsLlrUuTu2wU8voNQLjA8jvL8ESpsgbQ940hZUu
-	 RUjg70Vauq+ma59kiqL56BEnlZriyOCnZuaJY1V+m3oyZLkWKjOGa/zkPzHrE7TaKSQ==
+	bh=bC+9hkK6Xq1sm1P1xK7YQwAIxsBWF/hq6ICZTq2DIc0=;
+	b=K4hxDybc1SoPNAAxnND9vd6rd8gLo6teE2kTU1ZkXT/WgHCH3AP7o8FqA+QfuTQdjbkr
+	 r5/ds2MGT+jiPlVDPW8nDfVy0YFW6N0XGOkTU1dJTuj+lTfIqUJTf8ldHaaBBJlg2D21g
+	 ZNg9LQZmsS7fJkdVFPbvRmAELalrScdrz1vG8p30Gat+Rok9UGnX5V7AFRiaDwD7ZboJH
+	 ExFUQKb+hlohCtraps+C3pxkqzwCs71FZuOxMHJbNx/CQg6WU6GBYM+lJ30osG/JYAMnT
+	 /wjdTsYwsTpyQ6k3pT6HVZmj7xJkUzJitbC+wJMkvFGvYmL/Lg92p01R1BTeqMT9uug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FMObmspe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OQMqJt33;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF55606B81B;
-	Fri, 13 Nov 2026 17:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C740C606B357;
+	Fri, 13 Nov 2026 17:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FMObmspe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4951F000C4;
-	Fri, 13 Nov 2026 17:30:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OQMqJt33
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743951F000C4;
+	Fri, 13 Nov 2026 17:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591050;
-	bh=ypS1EiS3kSM1IMVgSYsZc65aoNUphSguqU4sqSl5rH8=;
+	s=korg; t=1794591051;
+	bh=bC+9hkK6Xq1sm1P1xK7YQwAIxsBWF/hq6ICZTq2DIc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FMObmspe15A8XACt6gJXs/JikX16wy+EKkPmyI7Sb2e8THizoEQ4hk341WzUb0wjL
-	 M/91Vdh1ZM7ib7179ZjRM5DNzM12tqqi10ENLkxb1ZsbalyEu4v5TDVSWoedZIzkYT
-	 xDRfe5n2htR6CvZNHjyEcuafkDn2CvR2ZOpR/ulU=
+	b=OQMqJt33dBu2MWI3THtgle9P+lOQJcbKCajVbQemFXg+ubJ3QWzvFZsbxfGj7Afcj
+	 155Blux0+mOiCJ8UtsBLRjchZcOnz/ik7LlyoRKBEL1HdhQRPWdyLM5Mj1jQkJaUnn
+	 J0cECg2f+x6Lc44rFP6KqxlKTQHZovWlpkqm2Btg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/670] ALSA: us122l: Fix NULL dereference at hwdep open and release
-Date: Fri, 13 Nov 2026 10:46:17 -0500
-Message-ID: <20261113153819.142502845@linuxfoundation.org>
+Subject: [PATCH 6.12 214/670] ALSA: usx2y: Initialize idle URBs before submitting streams
+Date: Fri, 13 Nov 2026 10:46:18 -0500
+Message-ID: <20261113153819.169635509@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -72,92 +72,81 @@ Content-Transfer-Encoding: 8bit
 
 From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit 820e0050866942b5498488496462d12c6ce1c7a9 ]
+[ Upstream commit ceb0d8c22473933099b46cec70639d0f1f7c68ad ]
 
-usb_stream_hwdep_open() and usb_stream_hwdep_release() pass the result of
-usb_ifnum_to_if() straight to usb_autopm_get_interface() and
-usb_autopm_put_interface(), without checking it for NULL.
+usb_stream_start() submits the first two capture and playback URBs and
+only afterwards assigns sk->idle_inurb, sk->idle_outurb,
+sk->completed_inurb and sk->completed_outurb to the remaining two URBs
+of each direction.
 
-usb_ifnum_to_if() returns NULL once the device is gone, since
-usb_disable_device() clears udev->actconfig on disconnect.  The hwdep file
-can outlive the disconnect: the card is released with
-snd_card_free_when_closed(), so a process that keeps the character device
-open reaches the driver's release callback after the USB configuration has
-been dropped, and interface_to_usbdev() then dereferences the NULL
-interface at offsetof(struct device, parent).  The open callback has the
-same problem when it races with the disconnect.
+A transfer can complete as soon as usb_submit_urb() has been called, so
+the completion handler i_capture_start() or i_playback_start() may run
+before those pointers are set.  While the stream is still being
+synchronized (state below usb_stream_sync1), stream_start() then calls
+playback_prep_freqn(sk, sk->idle_outurb) with sk->idle_outurb still
+NULL, and the packet descriptors are written through that NULL pointer:
 
-Check both lookups and fail the open with -ENODEV; in release, skip the
-runtime PM put when the interface is already gone and still run the rest
-of the per-file cleanup.  Move the us122l->first bookkeeping after the
-checks so that a failed open no longer leaves a stale file pointer behind.
+  Oops: general protection fault, probably for non-canonical address
+  0xdffffc0000000018: 0000 [#1] SMP KASAN
+  KASAN: null-ptr-deref in range [0x00000000000000c0-0x00000000000000c7]
+  RIP: 0010:playback_prep_freqn+0x11c/0x4a0 sound/usb/usx2y/usb_stream.c:33
+  Call Trace:
+   <IRQ>
+   stream_start+0x5dc/0x8d0 sound/usb/usx2y/usb_stream.c:596
+   i_capture_start+0x3da/0x710 sound/usb/usx2y/usb_stream.c:654
+   __usb_hcd_giveback_urb+0x238/0x550 drivers/usb/core/hcd.c:1657
+   usb_giveback_urb_bh+0x20b/0x530 drivers/usb/core/hcd.c:1691
+   tasklet_hi_action+0xa/0x20 kernel/softirq.c:994
+   handle_softirqs+0x16f/0x440 kernel/softirq.c:645
+   </IRQ>
 
-Fixes: 030a07e44129 ("ALSA: Add USB US122L driver")
+The four URBs referenced by these pointers are allocated long before and
+do not depend on any transfer state, so assign them before the submit
+loop.  Keeping the assignment inside the retry path also restores a
+well-defined URB rotation when the start frame mismatch handling kills
+and resubmits the streams.
+
+Fixes: 030a07e441296c372f946cd4065b5d831d8dc40c ("ALSA: Add USB US122L driver")
 Cc: stable@vger.kernel.org
 Co-developed-by: Bin Yu <byu@xidian.edu.cn>
 Signed-off-by: Bin Yu <byu@xidian.edu.cn>
 Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
 Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
 Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261028074143.14440-1-25031212351@stu.xidian.edu.cn
+Link: https://patch.msgid.link/20261028103158.22996-1-25031212351@stu.xidian.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/us122l.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ sound/usb/usx2y/usb_stream.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
-index 1458dd16711fe..8880051927044 100644
---- a/sound/usb/usx2y/us122l.c
-+++ b/sound/usb/usx2y/us122l.c
-@@ -148,19 +148,26 @@ static const struct vm_operations_struct usb_stream_hwdep_vm_ops = {
- static int usb_stream_hwdep_open(struct snd_hwdep *hw, struct file *file)
- {
- 	struct us122l	*us122l = hw->private_data;
--	struct usb_interface *iface;
-+	struct usb_interface *iface, *iface0 = NULL;
+diff --git a/sound/usb/usx2y/usb_stream.c b/sound/usb/usx2y/usb_stream.c
+index 3122cf653273d..7d621280fba33 100644
+--- a/sound/usb/usx2y/usb_stream.c
++++ b/sound/usb/usx2y/usb_stream.c
+@@ -682,6 +682,10 @@ int usb_stream_start(struct usb_stream_kernel *sk)
+ 	s->sync_packet = -1;
+ 	s->inpacket_head = -1;
+ 	sk->iso_frame_balance = 0;
++	sk->idle_inurb = sk->inurb[USB_STREAM_NURBS - 2];
++	sk->idle_outurb = sk->outurb[USB_STREAM_NURBS - 2];
++	sk->completed_inurb = sk->inurb[USB_STREAM_NURBS - 1];
++	sk->completed_outurb = sk->outurb[USB_STREAM_NURBS - 1];
+ 	++try;
+ 	for (u = 0; u < 2; u++) {
+ 		struct urb *inurb = sk->inurb[u];
+@@ -739,11 +743,6 @@ int usb_stream_start(struct usb_stream_kernel *sk)
+ 		return -EFAULT;
+ 	}
  
- 	if (hw->used >= 2)
- 		return -EBUSY;
- 
--	if (!us122l->first)
--		us122l->first = file;
+-	sk->idle_inurb = sk->inurb[USB_STREAM_NURBS - 2];
+-	sk->idle_outurb = sk->outurb[USB_STREAM_NURBS - 2];
+-	sk->completed_inurb = sk->inurb[USB_STREAM_NURBS - 1];
+-	sk->completed_outurb = sk->outurb[USB_STREAM_NURBS - 1];
 -
- 	if (us122l->is_us144) {
--		iface = usb_ifnum_to_if(us122l->dev, 0);
--		usb_autopm_get_interface(iface);
-+		iface0 = usb_ifnum_to_if(us122l->dev, 0);
-+		if (!iface0)
-+			return -ENODEV;
- 	}
-+
- 	iface = usb_ifnum_to_if(us122l->dev, 1);
-+	if (!iface)
-+		return -ENODEV;
-+
-+	if (!us122l->first)
-+		us122l->first = file;
-+
-+	if (iface0)
-+		usb_autopm_get_interface(iface0);
- 	usb_autopm_get_interface(iface);
- 	return 0;
- }
-@@ -172,10 +179,12 @@ static int usb_stream_hwdep_release(struct snd_hwdep *hw, struct file *file)
- 
- 	if (us122l->is_us144) {
- 		iface = usb_ifnum_to_if(us122l->dev, 0);
--		usb_autopm_put_interface(iface);
-+		if (iface)
-+			usb_autopm_put_interface(iface);
- 	}
- 	iface = usb_ifnum_to_if(us122l->dev, 1);
--	usb_autopm_put_interface(iface);
-+	if (iface)
-+		usb_autopm_put_interface(iface);
- 	if (us122l->first == file)
- 		us122l->first = NULL;
- 	mutex_lock(&us122l->mutex);
+ /* wait, check */
+ 	{
+ 		int wait_ms = 3000;
 -- 
 2.53.0
 
