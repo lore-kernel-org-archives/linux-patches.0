@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591156;
-	b=3cqXCbnzryE/EcqGsBshCt385oi2WkWdTcHv1+ng6NRA/oAJHH8tXuGLhRX0a4bJ/2fD
-	 GN5S/2e27ZJhsmmSWH5KVpHKxcDcVivuIhd99Le/67cdCZ8v5qXXI2JsrUfhzTWSG0rlc
-	 T13OLUJ/slwowdiAkFglvpkgtsyNL3XE8XQ2EGFi3g4T6zzCnOwjoCL7AaT3CR8xWoDgx
-	 sHONB38htuoBQ1ARXPncFbqKTDLKchQ9uJlTgR1OGrTAzn8PWePAmgY2Z2AzwEcLTTMXu
-	 yQTHugZfIZkdEJXc3JFIFev3F5SaUKFl3HzB52kzfFeryY90vefoBukQPcgrGnf6kjQ==
+	t=1794591157;
+	b=Zu5wJGNIXQCxXHIrCG2gmCI7KibtuBcbC28zzYbl+AF+NMK5VSIgaS4/bMBfIsuaVhBa
+	 3st4ZTLH8JuPkj6qCx+NqN+05OgEvheSVcPeu/bqRQv4BH7OFGhW9YkK5dpTbR9JzQRQd
+	 4RbcG2FyJcXqF8pTO41jbN8sH4057f54+1P7hdyLpeB8B98q8uCVONd0k6eUoNvENm6Eg
+	 e3djfB/J/fRLDApHrSmgYnDzICwx723yCTYdJHEI49xY4qGTWPUz4b+3EOSIcBzRtqWiq
+	 nzMjxXDGdbRqKTzwWcQYRAfTSMHTLGo1CclSd5F5zzK8yB5voF2Gap6W7S2Y34wMj+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591157;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i0RhY0L5oB8hF0myc0fqe7j9oyZuDnyOo6Z1oyq/5SI=;
-	b=U+GbhSpWs0Gt/ywsYCtq1Y744uBWg5LwsC696OqbxN9IswhO1b6DnSU7VgAq3sOPiyfQ
-	 wQLn8oqHnNihh74/xDLBj/CMWWBlktxMwW5ckh/iaCvq2RBzB/Jeuzo5YW14hJ8mkHVl8
-	 jXGug68cY6+CBXURISiJ0ltlagcMsrLJQg/uCI7A9RSKeg1xuKdT3BMoWX4FoW8uqDhoI
-	 Gv21L8b1XYrD9dJokdDOANGmRAM/0Tm2SraYM6ekFCL1Ggzg+g82ojnxX+Gj+1Tp3f870
-	 VGMppKJkVaolnFNGANz5wFw61mlmfRrF1xHpWat+TK1tLhe8WthZ1aOJlRPEcrx7V/w==
+	bh=NqHo9vkkxYCKmbM0NSS5Za4aMHobVIfRaBnttcOLHYs=;
+	b=bUL2AghTjgXrrWatC+AlB7jGtfNP9VVI9zMVJBlh5O0vDLpcG1hZP6iY+qHWfk65LqDE
+	 mfnixStiyfUk+TQugQQBLBGhsAoeO+tZC63xYiGqQdFQJ0yQCnBsMcog87DQ+FF+k6I6b
+	 kEbRDs9yGDKsRowvye6qYc3JJL8MnSpdHzbNxYH0xCtBxJOgEtF+FTAmb5POctOURV3ey
+	 HhxNvEnSYDtPVPyFfW62TuHw7Sh/AUq+qvTSTCoiid684nyup+U6slxOHTTZFVR/tRv2S
+	 lqSQrctRANVoSE4Ur+MbdVEjfvsJUaRfsJ+9ix9Z8JgM8VlQz/Q3SWuG12PX1KUS8eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J9+9MT/p";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFXevXCt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13DA5606BD27;
-	Fri, 13 Nov 2026 17:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC01606BD27;
+	Fri, 13 Nov 2026 17:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9+9MT/p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50051F000C6;
-	Fri, 13 Nov 2026 17:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFXevXCt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6F71F000C6;
+	Fri, 13 Nov 2026 17:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591155;
-	bh=i0RhY0L5oB8hF0myc0fqe7j9oyZuDnyOo6Z1oyq/5SI=;
+	s=korg; t=1794591157;
+	bh=NqHo9vkkxYCKmbM0NSS5Za4aMHobVIfRaBnttcOLHYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J9+9MT/pDzUa63wGUL78dEMFYGL2I8x1xzRME/GrkvG1Un2sR2Vco4ukGakt5T+UR
-	 5PSvpOcmY702Ki6jHWT93qnR+0uxsZ+vzxaq7GoupTzVsOZKBlU9IHlnM3Mdm4hJuK
-	 aoev7ZIXAZjNVoynipk6sma0bJGVl+RvlT+ZpeEc=
+	b=IFXevXCtFLdUO8KGLzvaCuN9vFBB4atMS5HUbe+CbDIC18V6XPGoedfODkNhxqRFj
+	 Xa+hKICvA1IDj04bAUPlTsx8FRW606IkNBKUnqf28b2fSR5qukiay6d9+TMzpQrmKg
+	 UH1W9jonqsTSqH/4rhB28IOAchQ1YJGOKzMzodPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yuho Choi <oss.patchbox@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 300/670] iommu/virtio: Reset device before deleting virtqueues on probe failure
-Date: Fri, 13 Nov 2026 10:47:44 -0500
-Message-ID: <20261113153822.091368556@linuxfoundation.org>
+Subject: [PATCH 6.12 301/670] vdpa/snet: Dont discard the DPU error in snet_send_ctrl_msg()
+Date: Fri, 13 Nov 2026 10:47:45 -0500
+Message-ID: <20261113153822.121445438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,60 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuho Choi <oss.patchbox@gmail.com>
 
-[ Upstream commit 1f8efac19a0870cdfdf8477e447e5a07ddce9623 ]
+[ Upstream commit f41f153d49b4c18172ec61b69ba934c36e1be745 ]
 
-viommu_probe() marks the device DRIVER_OK before populating the event
-virtqueue and registering the IOMMU device in sysfs.  viommu_fill_evtq()
-hands the device a set of device-writable buffers through
-virtqueue_add_inbuf(), so from that point on the device may write into
-them and into the rings.
+snet_send_ctrl_msg() reads the error code the DPU reports when it ACKs
+a control message, but then overwrites it with the return value of
+snet_wait_for_dpu_completion(). As a result, a DESTROY, SUSPEND or
+RESUME that the DPU rejects is reported to the caller as a success as
+long as the DPU clears the opcode register in time.
 
-If either step fails, the error path deletes the virtqueues without
-resetting the device first.  The event buffers are allocated with
-devm_kmalloc_array() and are released as probe unwinds, so the device can
-go on writing to memory that has been freed.
+For SUSPEND this means vhost-vdpa marks the device as suspended and
+lets userspace reprogram the vrings while the DPU is still running
+them; for DESTROY, snet_reset_dev() never even sees that the device
+failed to stop.
 
-Reset the device before deleting the virtqueues, the way viommu_remove()
-already does.
+Return the error from the saved ACK value once the completion wait
+itself has succeeded.
 
-Fixes: edcd69ab9a32 ("iommu: Add virtio-iommu driver")
+Fixes: 3f3a1675b731 ("vdpa/snet: support getting and setting VQ state")
 Cc: stable@vger.kernel.org
 Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261004182218.177343-1-oss.patchbox@gmail.com>
+Message-ID: <20261005044915.264532-1-oss.patchbox@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/virtio-iommu.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/vdpa/solidrun/snet_ctrl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
-index b85ce6310ddbd..f84a50596f4d1 100644
---- a/drivers/iommu/virtio-iommu.c
-+++ b/drivers/iommu/virtio-iommu.c
-@@ -1191,12 +1191,12 @@ static int viommu_probe(struct virtio_device *vdev)
- 	/* Populate the event queue with buffers */
- 	ret = viommu_fill_evtq(viommu);
+diff --git a/drivers/vdpa/solidrun/snet_ctrl.c b/drivers/vdpa/solidrun/snet_ctrl.c
+index 3cef2571d15d3..1c3b5f2e44990 100644
+--- a/drivers/vdpa/solidrun/snet_ctrl.c
++++ b/drivers/vdpa/solidrun/snet_ctrl.c
+@@ -291,7 +291,6 @@ static int snet_send_ctrl_msg(struct snet *snet, u16 opcode, u16 vq_idx)
+ 
+ 	/* Check for errors */
+ 	val = snet_read_ctrl(regs);
+-	ret = SNET_VAL_TO_ERR(val);
+ 
+ 	/* Clear the chunk ready bit */
+ 	val &= ~SNET_CTRL_CHUNK_RDY_MASK;
+@@ -301,6 +300,8 @@ static int snet_send_ctrl_msg(struct snet *snet, u16 opcode, u16 vq_idx)
  	if (ret)
--		goto err_free_vqs;
-+		goto err_reset_vdev;
+ 		SNET_WARN(pdev, "Timeout waiting for DPU to complete a control command, err %d\n",
+ 			  ret);
++	else
++		ret = SNET_VAL_TO_ERR(val);
  
- 	ret = iommu_device_sysfs_add(&viommu->iommu, dev, NULL, "%s",
- 				     virtio_bus_name(vdev));
- 	if (ret)
--		goto err_free_vqs;
-+		goto err_reset_vdev;
- 
- 	iommu_device_register(&viommu->iommu, &viommu_ops, parent_dev);
- 
-@@ -1208,6 +1208,8 @@ static int viommu_probe(struct virtio_device *vdev)
- 
- 	return 0;
- 
-+err_reset_vdev:
-+	virtio_reset_device(vdev);
- err_free_vqs:
- 	vdev->config->del_vqs(vdev);
- 
+ exit:
+ 	mutex_unlock(&snet->ctrl_lock);
 -- 
 2.53.0
 
