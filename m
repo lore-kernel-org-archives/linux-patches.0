@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585492;
-	b=FR4pFBey7uN/i1P0nBpMOjj4QXoElvVxA18yZkfiR29cMe5tfqqDxlI9FNNU5Ff3NNWo
-	 kITasSERXGTQFViqC0PYg+XpAOjPzMbCpd6Oh5wo1dWYyILRna7wYidOxicyyf7Qplvxg
-	 sfYTLR4qzCEq90IpSzZYxfpC0FosKMwyShye3UGFknWx3IEdCjmnzpy+PLo5Oymm29XNG
-	 0CxqZNlCW5lp0BK7j3JL8Rp+fhUgDrACQrYnxBVqQIzGl+017GVwqtsprjSCrOW+iZk2U
-	 oZvpRmP6QUCaddhMj4KgiEHzZI6TB5lVtNlWfKeI7ciycBjlqsRmV//qEzlfsfg06Hg==
+	t=1794585493;
+	b=2b8YrSs1LCeCZ3KHLz2JZTNsHILCqAAil28W2ZSv2JGZ/NrjtiXw/J/pgve9IaTXF4xv
+	 YCYQQzQ8diqDr4tfppYlFkCJRrZn4BUiq/HYPZGSxO9caTCVJ4y7C8LGlImxQT1w221j5
+	 7aHvCrI4o+SQW657bvPTUCrNu4EQcLH52jmuCURUOVM2nEl917H5B1Obd5jj9SNQfgk+E
+	 e6rb/Gto85TyyfdevO6XBjn3WCYoH/fMi4RJcnVNIKRl7Jf+rhRwb75OggR4pCvIX4oQp
+	 rcJQ6EMKl9exgZMDR9vWK6XPZdEScyQn/RruBytAk2G4+D80x0UqOOObd3D0/s+lbxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rbJGLYzirkj7SN1dLGRTRc5LnW/Hku0Zq4oio0X2iAI=;
-	b=V02eL2vTSNu/Yi1q48MEasxbb9is/0YZAyP2g2dqKJsD7i7OD/F3fiIa39/aKISwIRGs
-	 fNwLAtpttDm+lwLCTHEmCE+1f7dslYtrcOufl+53nZPvWOlMsZunwhPWaOdaSW00NnYu8
-	 kDDs3bwSfHcSLOhYyvddVrEbqBNFM62kjVyl6X7QommrJv2Y2UfLuMXMlwlSSThYTzQy6
-	 qeJ2v9IDKDJgnAsaClzmRWI3+HsJSu+g8OWdIvsE+Z5hFJODQlm5ZSkunu50KDob4gsI3
-	 rCaDK00PFhttm/HKpqGNMSidGEzkMh9IIfUr1nTDBTtxSrYKOrjqSV+X3k0eMmWrb/g==
+	bh=n7/gmC/Slu/bEuB41G/26A90hVwvyEtLTE73th85RVY=;
+	b=tdOtpUlxpqRJZP+spye+gNbVC2Tpwcj1v8UGOFk2cgtcxp1OiYCfVEH3V25CWv4MM5XK
+	 H0jdD+nc3yj+6CXew4Ig8brcmzhHT0kPYzM9ioIakrB+zunYdPL56WFC+35zWbCIbNm8c
+	 uB0zxfsZ4QCUtETR5RvrhENXXKo53pRdodE95OArLvyOjtuMhwdwCIUdyOMKuUSMJUS1c
+	 9305tcxriBmEccWnGj3NGI17to4o28k65j43OqKOFx4tD7yI3jt5m4Y4n9e0MVfMlTo8p
+	 5tk130sgxIwswSD78NNTdAtCAWhYPsTKRJP1Ju886ZtABQGAqjLOqRgCBPUaHoAfD4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=13vIRI0W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=atOijVlo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D10606EBB9;
-	Fri, 13 Nov 2026 15:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5582606AE01;
+	Fri, 13 Nov 2026 15:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=13vIRI0W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445F31F000C5;
-	Fri, 13 Nov 2026 15:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=atOijVlo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D3D1F000C5;
+	Fri, 13 Nov 2026 15:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585492;
-	bh=rbJGLYzirkj7SN1dLGRTRc5LnW/Hku0Zq4oio0X2iAI=;
+	s=korg; t=1794585493;
+	bh=n7/gmC/Slu/bEuB41G/26A90hVwvyEtLTE73th85RVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=13vIRI0Waw3z9FtlR+EFld818YivP1mGDup+os0LyJND2zmQ7QVSN1X8rBt+RGkBD
-	 Cwj3+wBy53wWIpcBXn+V0gMQyzjXTtnC3bL4vn8TSvColKQ0ba+ZpISohC66zSuqUX
-	 BH+aEhVjthHo+fsnD+MCACamrh9dX07/t8jKZLZE=
+	b=atOijVlod4uBAHvZGvLdLaiMvL1QX9FE/AY1qXdtnBU4786pGsQVeIlxlWKplkdg7
+	 ZTjX3yMbU2KOCuzXtsEiHxVXf8+rdJQYYgnB4i87Bjf/fZarnWm2sfhuWKmWHap7qi
+	 IYkZJA1GCoNpUDFsNTiC/p0uY2AhbZRt1Yf7rEbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	kitta <kitta@linux.alibaba.com>,
+	sashiko AI review <sashiko-bot@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	John Garry <john.garry@linux.dev>,
+	Yuanhe Shu <xiangzao@linux.alibaba.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 140/507] mm/shmem: fix truncate hang in large swap entry
-Date: Fri, 13 Nov 2026 10:47:24 -0500
-Message-ID: <20261113153759.195187784@linuxfoundation.org>
+Subject: [PATCH 7.3 101/507] scsi: target: Verify the iSCSI ISID is null-terminated
+Date: Fri, 13 Nov 2026 10:46:45 -0500
+Message-ID: <20261113153757.750563841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -71,103 +72,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Yuanhe Shu <xiangzao@linux.alibaba.com>
 
-[ Upstream commit fa213b08f37f9dff78ce240a87579dc264fc7a5d ]
+[ Upstream commit cdf4b87a18cb6a0ee26865cb1b7b5660a491d302 ]
 
-Truncating a tmpfs file or memfd to a page-aligned size inside a large
-swap entry can loop indefinitely in shmem_undo_range(). The task holds
-the inode lock and cannot be killed.
+iscsi_parse_pr_out_transport_id() returns the ISID of a FORMAT CODE 01b
+TransportID as a pointer into the PERSISTENT RESERVE OUT parameter list,
+lowercased in place and never null-terminated.  spc4r37 Table 508 requires
+the field to be null-terminated, but a non-conforming initiator can omit
+the NULL; when the ISID ends at the end of the received buffer, the pointer
+is not a C string.
 
-A large swap entry represents a whole swapped-out folio. For example,
-truncate a file whose pages 0-7 share one swap entry to four pages:
+The registration code still consumes it as one: strcmp() in
+__core_scsi3_locate_pr_reg() and in the REGISTER AND MOVE path, and
+snprintf("%s") in __core_scsi3_do_alloc_registration(), which also reads
+its first 8 bytes unconditionally with get_unaligned_be64() - a NUL check
+does not bound that read.
 
-    [ 0  1  2  3 | 4  5  6  7 ]
-         keep    |   discard
-                 ^
-            new EOF, start = 4
+When the parameter list spans more than one page, transport_kmap_data_sg()
+maps it with vmap(), and the over-read walks off the end of the mapping
+into the vmalloc() guard page and oopses.  Reproduced with a PR OUT
+REGISTER + SPEC_I_PT parameter list of exactly 8192 bytes whose final
+TransportID carries a 12-byte ISID without a terminating NUL:
 
-i_size has already been updated when boundary handling asks
-shmem_get_partial_folio() for page 4. Since it is swapped out, the helper
-calls shmem_get_folio() with SGP_READ. That rejects page 4 with -EINVAL
-because its starting offset equals i_size. Nothing is read back.
+  BUG: unable to handle page fault for address: ffffc9000138c000
+  RIP: 0010:strcmp+0xc/0x30
+  Call Trace:
+   __core_scsi3_locate_pr_reg+0xd3/0x120 [target_core_mod]
+   core_scsi3_decode_spec_i_port+0x8fc/0x13a0 [target_core_mod]
+   core_scsi3_emulate_pro_register+0x73c/0x900 [target_core_mod]
+   ...
+   iscsi_target_rx_thread+0xef/0x1d0 [iscsi_target_mod]
 
-The final scan cannot free the entry without losing pages 0-3. It skips
-it, restarts from start = 4, and finds it again indefinitely. An unaligned
-truncate avoids this particular failure because the requested page starts
-below i_size. Folios already in the page-cache cannot trigger it as the
-direct lookup will return them beyond EOF.
+With a single-page parameter list the buffer is a kmap() direct mapping, so
+the over-read continues into the physically adjacent page instead of
+faulting.  snprintf("%s") then copies whatever follows the ISID in memory
+into pr_reg_isid, and PR IN READ FULL STATUS reports the registration back
+to any initiator, turning the over-read into an info leak of kernel heap
+contents.  Reproduced with a 4096-byte parameter list whose last
+TransportID ends at the end of the buffer with a 4-byte ISID and no NUL,
+interleaved with I/O to populate adjacent pages: the READ FULL STATUS
+response returned the ISID as "0xleak" followed by raw bytes that were not
+part of the parameter list.  The snprintf() into
+pr_reg_isid[PR_REG_ISID_LEN] caps the echoed ISID at 15 characters, so at
+most 11 bytes past the buffer are leaked per command, but the PR OUT
+command is not rate limited.
 
-Fix it by letting shmem_get_partial_folio() call shmem_swapin_folio()
-directly for swap entries. This bypasses the read path's i_size check,
-allowing the existing boundary handling to zero and split the folio. If
-swap-in returns a smaller folio, it also splits the swap entry so the
-final scan can free the entries beyond EOF. Retry the lookup if the entry
-changes during swap-in.
+Any initiator that can send PR OUT to an iSCSI-exported LUN can trigger
+either variant, including a guest via vhost-scsi.
 
-Handling swap-in allocation failures remains broken and is unchanged by
-this commit. Even when shmem_swapin_folio() correctly returns -ENOMEM
-instead of -EEXIST, shmem_get_partial_folio() returns NULL and
-shmem_undo_range() skips boundary handling. If the large swap entry
-remains intact, truncation can still loop in the final scan, while hole
-punching can return without zeroing the boundary.
+Require 8 bytes to remain after the ",i,0x" separator, and a NUL inside the
+rest of the descriptor, before the ISID pointer is returned.  REGISTER AND
+MOVE fails with TCM_INVALID_PARAMETER_LIST; on SPEC_I_PT no target port
+claims the malformed TransportID, and the command fails the same way.
 
-This may read an entire large folio back from swap while holding
-i_rwsem, only to discard part of it. Avoiding that I/O would require
-splitting both the swap entry and any large folio still in the swap
-cache. That, however, is much bigger work.
-
-Fixes: 8a1968bd997f ("mm/shmem, swap: fix race of truncate and swap entry split")
+Fixes: d04a179085c2 ("scsi: target: Bound PR-OUT TransportID parsing to the received buffer")
+Reported-by: kitta <kitta@linux.alibaba.com>
+Reported-by: sashiko AI review <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/r/sashiko-outbox-184760@kernel.org/
 Cc: stable@vger.kernel.org
-Reported-by: Chris Mason <mason@kernel.org>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-11-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Bryam Vargas <hexlabsecurity@proton.me>
+Cc: John Garry <john.garry@linux.dev>
+Assisted-by: LLM
+Signed-off-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
+Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
+Link: https://patch.msgid.link/20261026124138.2708365-1-xiangzao@linux.alibaba.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/target/target_core_fabric_lib.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 90fd180c924cc..fab3f1d24550a 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1089,12 +1089,10 @@ void shmem_unlock_mapping(struct address_space *mapping)
- 
- static struct folio *shmem_get_partial_folio(struct inode *inode, pgoff_t index)
- {
-+	const gfp_t gfp = mapping_gfp_mask(inode->i_mapping);
- 	struct folio *folio;
- 
--	/*
--	 * At first avoid shmem_get_folio(,,,SGP_READ): that fails
--	 * beyond i_size, and reports fallocated folios as holes.
--	 */
-+retry:
- 	folio = filemap_get_entry(inode->i_mapping, index);
- 	if (!folio)
- 		return folio;
-@@ -1105,13 +1103,14 @@ static struct folio *shmem_get_partial_folio(struct inode *inode, pgoff_t index)
- 		/* The folio has been swapped out */
- 		folio_unlock(folio);
- 		folio_put(folio);
-+		goto retry;
- 	}
- 	/*
--	 * But read a folio back from swap if any of it is within i_size
--	 * (although in some cases this is just a waste of time).
-+	 * Truncation can look up a large swap entry at or beyond i_size.
-+	 * Swap it in directly to bypass the size check in shmem_get_folio().
- 	 */
--	folio = NULL;
--	shmem_get_folio(inode, index, 0, &folio, SGP_READ);
-+	if (shmem_swapin_folio(inode, index, &folio, SGP_READ, gfp, NULL, NULL) == -EEXIST)
-+		goto retry;
- 	return folio;
- }
- 
+diff --git a/drivers/target/target_core_fabric_lib.c b/drivers/target/target_core_fabric_lib.c
+index 2853b95b2c597..ad024009df56b 100644
+--- a/drivers/target/target_core_fabric_lib.c
++++ b/drivers/target/target_core_fabric_lib.c
+@@ -371,6 +371,16 @@ static bool iscsi_parse_pr_out_transport_id(
+ 			pr_err("Missing ISID in iSCSI Initiator port TransportID\n");
+ 			return false;
+ 		}
++		/*
++		 * The registration code reads the ISID as a C string,
++		 * and its first 8 bytes with get_unaligned_be64(), so
++		 * require 8 bytes after the separator and a NUL inside
++		 * the rest of the descriptor.
++		 */
++		if (buf + tid_len - p < 8 || !memchr(p, '\0', buf + tid_len - p)) {
++			pr_err("Incomplete or unterminated ISID in iSCSI Initiator port TransportID\n");
++			return false;
++		}
+ 		*port_nexus_ptr = p;
+ 		/*
+ 		 * Go ahead and do the lower case conversion of the received
 -- 
 2.53.0
 
