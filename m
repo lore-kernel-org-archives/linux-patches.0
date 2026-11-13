@@ -1,52 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590338;
-	b=j1/eSOrgKbZE8bAeGiJH7XWYm5GeU0sUIyRZsc6whTwmgB9lx6tyuXf4yA0nbeKzPm/g
-	 +L3OthyQCOK8/ex+rqL6PJcON3r/cGZjqGaDvasV760H2hnJaRjeuFafvQJKZy/2XL6UD
-	 vG6Hn+Gz3zulmHF2JqZuNWYKZYKk2Zo+vbZRMicuQgse+g3M90c8clYr4pSe3eLphniA/
-	 j68s2yWYaHU0+gkPiDmkV5SpU5jlXQmBwo/GRYr83admbjqGRKX0bGi1JXxuqTYbjWGMv
-	 PMjEistZMwLIFh9IWwuLNUneXM9uX9KFqcI1DKH5+hL5eaLke+iI+vMBfcs2GA6KImA==
+	t=1794590339;
+	b=aUkVEH1M8a7dY4+ZxrXmviTeGSxfaXy7fOohOHvLIpWJDujBpkGXL1oIZAXtqiUPHsR0
+	 K0Txk8XE7vlC3vi4hqWjl4W4D6DZToJz1UgEj5X2Tia5EEbfgCLPGmAnuwpVbNp0Tq2d6
+	 zwoKIue2uNHfkCU8gnpnmt9i0K0IU3vOXyD0lKxpuF1vYpMp4uk/oGB5snEkDpEnvqFW6
+	 2f/DGIW93Bn7h2WK8eOzg1LUaDoq3m7QJp83IxoDBYVfM4bkM2ANxmbjnkJ8pycGJhdBv
+	 FwBOTOmYFA72ZHLO4IukoUC84FMoWWmO5p9r9wk4F7P0SdCpGyr3DDjJ9aYx3PHFWrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590339;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D7QgoK/xLXgpML7GJ2T3HGkR9MiiHHwYX7GbQJI6mNc=;
-	b=5gGUfIMX80Tf59CgbZnba3jtM1UqXhvY4HdO3GkV2S03/AsqLhU7ss6B6gRLpSlLJaV7
-	 NtwJ3xhwbhCL/TavdnKFqj57GPju9/59HSmz1EzWxqRXQ71THR48uiRCPP2o5hTw+eQuh
-	 rHHPCs4JRD64Ed5IqgqGwNFDJA7ZZy/neE5ph+KuaiqHhL0wlUTHTJibhHGtSh5w/Z3jI
-	 oAzHJDJInJaLePb3YvBlrRSXYGMh1cl+TMBkErhHCO2+wa4iTNilI783C/3iz4AdHRyb2
-	 r4aiLLVBn7h5WWwAKl1Cm5i277TGJcHv331uSMnki/WGO74o/Albi/DIa//C80asXgw==
+	bh=b8vISMcq+YC+s9bYg9/ffwTEHMrM+zXxfoxX12zwPn8=;
+	b=w8ht9/IhA/L6f8HLWcgnpO1UkZSs5lsOpMa/xgx2/ezcVvuwUdUrsWlxQzxx09YgCblC
+	 C78OSsOTHSnxjTPGXDRlhfj6F13g5WhNIZEhUvPTd2qTN+7FAak6RWkWVKpmC/nbQzcBI
+	 PGd8lJjYUC6CPmxMKgi3ILsIeonNdz4UxfZp3UffjworD9ecYuHOJ9KnTVAL2ORkVKnhd
+	 JHQtElM/V9Gllm7GpJRjVESelsC6QozPB8CWMCinRhTv0mgs0TmH7G8OO1HnyZ2X/YeHS
+	 Q+8TqC+Ogv1NAZoD/hqitgdWrGFqPWsSq9MS+olsUPnvvTSih/DPwGcd1BSbs3WZ38g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WSPb6oOf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLSQwRPs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF9A606D4A6;
-	Fri, 13 Nov 2026 17:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6EA606D4A6;
+	Fri, 13 Nov 2026 17:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WSPb6oOf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 942221F000C8;
-	Fri, 13 Nov 2026 17:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLSQwRPs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8B31F000C6;
+	Fri, 13 Nov 2026 17:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590337;
-	bh=D7QgoK/xLXgpML7GJ2T3HGkR9MiiHHwYX7GbQJI6mNc=;
+	s=korg; t=1794590339;
+	bh=b8vISMcq+YC+s9bYg9/ffwTEHMrM+zXxfoxX12zwPn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WSPb6oOfpqlGve+FfDRlQu3vQG1WiDv6oUAyfILAIAtQvsCuSjOB5ZsdEDDlixcO3
-	 HZUIy9nOkuGw/RKQMBHY+HMDssHeNN9Gj6FROHvTbmIB/67rmjtQ1RRm65laWQiqBr
-	 DuDcY5SkyjdHrX+Y9mu5PuZ/HzK/GlUMtO7PYZUY=
+	b=oLSQwRPs+BuGVazx7qR5ITv0bGB6ud2JCxha3Bz5jpjG4vJLFvja4sFXg4UG7Lv0n
+	 TnDdeDk04ssxtwg2b4W6rROrylMqgkbOasUtY2BLiWj0yYpAPuaMeC+G8d2i49ZU9l
+	 560qliRuEAR7yfX6jz/AC/VjMW8zLJKu3uNrnbPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
+	Chris Down <chris@chrisdown.name>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	"Vineeth Pillai (Google)" <vineeth@bitbyteword.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Kairui Song <kasong@tencent.com>,
+	Hugh Dickins <hughd@google.com>,
+	Chris Li <chrisl@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Youngjun Park <youngjun.park@lge.com>,
+	Ying Huang <huang.ying.caritas@gmail.com>,
+	Kelley Nielsen <kelleynnn@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 315/686] mm/damon/sysfs-schemes: hold damon_sysfs_lock in target_metric_store()
-Date: Fri, 13 Nov 2026 10:47:28 -0500
-Message-ID: <20261113153831.615379758@linuxfoundation.org>
+Subject: [PATCH 6.18 316/686] mm: make swapoff interruptible when unusing mms/shmem
+Date: Fri, 13 Nov 2026 10:47:29 -0500
+Message-ID: <20261113153831.649012079@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,85 +80,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Chris Down <chris@chrisdown.name>
 
-[ Upstream commit a76adcace3550b16e5735ba4a5e95a9c2664e113 ]
+[ Upstream commit 740128dd1a3f2bd81a80314d079b6b03c39ba3af ]
 
-Patch series "mm/damon: fix three race bugs in sysfs and core", v1.
+try_to_unuse() only checks for a pending signal between mms, and
+shmem_unuse() doesn't check at all.  That means that once swapoff gets to
+a process or a shmem file with a lot swapped out, nothing can interrupt it
+until every last page of it has been read back in.
 
-There are three race condition bugs in DAMON sysfs interface and the
-core layer.  User impacts are not critical but better to fix sooner than
-later.
+Just as one example of where this can concretely show up, freezing tasks
+for suspend or hibernation has to wait for swapoff to notice the freezer's
+fake signal, and gives up after freeze_timeout_msecs (20 seconds by
+default).
 
-Patch 1 fixes a toctou bug in DAMON sysfs interface that can mess up
-DAMOS auto-tuning.  Patches 2 and 3 move static variables that can be
-wrongly shared with multiple kdamonds and therefore make DAMON
-monitoring results be a little more indeterministic.
+Here's a facetious example where one swaps out 2GiB of one process to a
+swap file on ext4, starts swapoff, and half a second later tries to freeze
+with pm_test=freezer.  Writing to /sys/power/state then fails with EBUSY
+and this in dmesg:
 
-This patch (of 3):
+    Freezing user space processes failed after 20.003 seconds (1 tasks refusing to freeze, wq_busy=0):
+    task:swapoff         state:D stack:0     pid:3175  tgid:3175  ppid:2955   task_flags:0x400100 flags:0x00000419
+    Call trace:
+     [...]
+     io_schedule+0x44/0x70
+     folio_wait_bit_common+0x1ec/0x3d0
+     __folio_lock+0x24/0x40
+     unuse_pte_range+0x2d0/0x348
+     unuse_vma+0x158/0x248
+     unuse_mm+0xfc/0x150
+     try_to_unuse+0x104/0x3f8
+     __do_sys_swapoff+0x220/0x5d8
+     [...]
 
-damon_sysfs_add_quota_score() reads damos_sysfs_quota_goal->metric
-twice, once to set damos_quota_goal->metric to the value, and once again
-to set the metric-dependent damos_quota_goal unions based on the value.
+The same goes for anything else that wants swapoff to stop, like an admin
+hitting ^C in a panic, of course.
 
-target_metrics_score() can update damos_sysfs_quota_goal->metric between
-the two reads.  This time-of-check to time-of-use (toctou) race can make
-the union fields incorrectly set.  The incorrect damos_quota_goal will
-be passed to the core layer and make DAMOS incorrectly behave.
+Prior to commit b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
+try_to_unuse() was driven by find_next_to_unuse() which checks for a
+signal before every entry, so let's restore that behaviour.
 
-Users could reproduce the race by writing a new value to the
-target_metric sysfs file while DAMON is starting, or online parameters
-update is ongoing.  The issue will only rarely happen in the real use
-cases.  It requires sysfs write permission.  The race window is short.
-Sane users wouldn't do such writes while DAMON enablement and/or online
-parameters update is ongoing.
+Just as an example of the improvements, here's how long freezing takes
+in the same test while swapoff is happening on my computer:
 
-The user impact is not very critical.  The race is not easy to
-unintentionally trigger.  No leak or crash happens.  Nonetheless, DAMOS
-could be unexpectedly more or less aggressive and does not achieve the
-auto-tune goal.  Because of the nature of races, investigating will be
-difficult.  Users can control the impact from unexpected aggressiveness
-using additional quotas and resolve the issue in runtime by
-re-installing the quota goal, though.
+                      before                  after
+    400MiB anon       8.925s                  0.028s
+    400MiB shmem      1.639s                  0.003s
+    2GiB anon         failed after 20.003s    0.011s
 
-Avoid the race by protecting damos_sysfs_quota_goal->metric write in
-target_metric_store() with damon_sysfs_lock.  Because
-damon_sysfs_add_quota_score() is called while holding the same lock, the
-race is removed.
-
-The issue was discovered as a part of a bug report [1] from Sashiko,
-which is partially outdated.  In more detail, the Sashiko report [1] was
-mainly for an outdated bug [2].  But it was also mentioning the issue of
-this patch as a similar class bug.
-
-Link: https://lore.kernel.org/20261025164808.152048-1-sj@kernel.org
-Link: https://lore.kernel.org/20261025164808.152048-2-sj@kernel.org
-Link: https://sashiko.dev/#/bug/linux-7f814c9a-986f-4103-a55a-ef9537dcf62b [1]
-Link: https://lore.kernel.org/20261021005234.94107-1-sj@kernel.org [2]
-Fixes: 85fcf0ffc460 ("mm/damon/sysfs-schemes: connect damos_quota_goal nid with core layer")
-Signed-off-by: SJ Park <sj@kernel.org>
+Link: https://lore.kernel.org/at9kJwdGkHPsWwgG@chrisdown.name
+Fixes: b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
+Signed-off-by: Chris Down <chris@chrisdown.name>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: <stable@vger.kernel.org> # 6.16.x
+Acked-by: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Youngjun Park <youngjun.park@lge.com>
+Cc: Ying Huang <huang.ying.caritas@gmail.com>
+Cc: Kelley Nielsen <kelleynnn@gmail.com>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/shmem.c    | 4 ++++
+ mm/swapfile.c | 4 +++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 952e12fd6dbf7..f90d079dc9628 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1072,7 +1072,10 @@ static ssize_t target_metric_store(struct kobject *kobj,
+diff --git a/mm/shmem.c b/mm/shmem.c
+index da043ca0c2e22..5efde9fcc3057 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1519,6 +1519,10 @@ static int shmem_unuse_inode(struct inode *inode, unsigned int type)
+ 		if (ret < 0)
+ 			break;
  
- 		metric_name = &damos_sysfs_qgoal_metric_names[i];
- 		if (sysfs_streq(buf, metric_name->name)) {
-+			if (!mutex_trylock(&damon_sysfs_lock))
-+				return -EBUSY;
- 			goal->metric = metric_name->metric;
-+			mutex_unlock(&damon_sysfs_lock);
- 			return count;
- 		}
++		if (signal_pending(current)) {
++			ret = -ERESTARTSYS;
++			break;
++		}
+ 		start = indices[folio_batch_count(&fbatch) - 1];
+ 	} while (true);
+ 
+diff --git a/mm/swapfile.c b/mm/swapfile.c
+index 3ffa258de79ec..3a786446dacbe 100644
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -2349,6 +2349,8 @@ static inline int unuse_pmd_range(struct vm_area_struct *vma, pud_t *pud,
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+ 		cond_resched();
++		if (signal_pending(current))
++			return -ERESTARTSYS;
+ 		next = pmd_addr_end(addr, end);
+ 		ret = unuse_pte_range(vma, pmd, addr, next, type);
+ 		if (ret)
+@@ -2562,7 +2564,7 @@ static int try_to_unuse(unsigned int type)
+ 	if (swap_usage_in_pages(si)) {
+ 		if (!signal_pending(current))
+ 			goto retry;
+-		return -EINTR;
++		return -ERESTARTSYS;
  	}
+ 
+ success:
 -- 
 2.53.0
 
