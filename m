@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585680;
-	b=FTVSt41K7QTDvECoArQTgLCf5VCxjm6/N1e7RVY8JZVpPrLcKbBVoJOrBjvT3eE+IFHz
-	 pKM9XIH89oXl4XPujZZLrcG8TIfyREtVImsf4MWVKwBjadP5Lu88YIDMr6Tm7EAV2oewq
-	 rg0Z86Bu6QglCalJhzsBXc4UYl8sDFDGn4DLy2lT6Iql6hu2csI5xvVYZs76ahFZsNZeh
-	 j6DM7K0fbhUmGscXpLEHAzIntkJCTas8EKUEr7egqDFrumu3THg8BEc0xtqKVXwkjHK3P
-	 EGvOuomD3WL+CY1Hw+sBIIU8rZJilQgOo683vwXyfob21N94m43auai486hwugkS+YA==
+	t=1794585681;
+	b=LkPgzdgpVUtkhd6FGPEVKmlJ+WfVLA22j4ESaTlonT30pgWXJZ72ZJTqT1THgN7zm49F
+	 S6e76WdLmwNVaHsdTcvFSVzbadQ+8zF1B71UKrhhwU9biX8TwKqGUN0I1on4a+bK0jJxv
+	 jc9f9ZbWocHwTTFwNoMIA25ePVHS9OBY41lpNoCwX9S6BF3tfMSay0GSy5ATTMqpoCUF8
+	 KGhJRx4sD9TNwnkNFKLmTg17FxtjiGOIWep4wHNlIBnQszMC/6T1aFXpTCNn8QIv6w30p
+	 GccpbgwKTQuNxmaemu17aesUvstwIs9IYcgmeO95/oS5wk4fYmOtDEyg8ELhaHcB7wQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585680;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585681;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YRlO7cE2VvdCYBWJs9SkFrMzsC9aIb6qhSp+tf+ZpO4=;
-	b=RI9C7jxpjbzFnd55S+C/MI5UMmtWK9W9/Q8lsLkCvhUAVbK4g5WA0PZDD/oYUVIq6UUh
-	 jXqEfn5yR9H30RUnd1t5b9ZRu9aqdSB4AquXr+tGbv2MXzATGsi0VVsqXAYdrTLcoVia/
-	 2E64YYIvnd/Nkfo9faSHTEG31lYg9W/+EjjAlM/TYaWvrxVJ4enqWEM/iUQf3UQUcJZKs
-	 Sb/9U4qQnDxC5ieILdOXux3KuURQMQPo6jn5EC4vGaUHngj26LhxfaErjQmriQ/j7wOBf
-	 /FYqB3+R6yhXZCYmoviTP0riFe90uyEYaO1Mtj2ozLV/LZxKsQmiay3q93+vhaovWWg==
+	bh=r8GK3maxeJ2Cca66Mf050FEBp7FUEgXd2b/rBQJs0e4=;
+	b=RvgK3L/5gWAuM1SgNhwha+dkOG9IoSdzKIJeeC3Ik06vA+b/or/uXPqRJtL9nq0FullG
+	 J2GJ6XksCdMCFndCxNvcRv4TbF8M24aLof4rhRzSwLjt/cbliJhjof36M8/afHFEMWWZl
+	 cIuXKK3HydMYKumtB2d6cBj3h5AOYVWaEsPus9DpW7V1PPckGDcMNYq1/a8ab5b1kX5mN
+	 O3lRn1RSv39lXRwuYw8no2fmR4joZKLBetzIQmbMSb2P2HQsE2/GcpJWpzTxHy4oJwJ3L
+	 9iTOkmHu2Hiywe3Sy6PD3LKSmIrtenELsVy1GLIoWFGWy/RY8vLRPhBVkAfBu0EqntA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2leMcbT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYXbJgYr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E6B606A88F;
-	Fri, 13 Nov 2026 16:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5450606A335;
+	Fri, 13 Nov 2026 16:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2leMcbT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DE31F000C4;
-	Fri, 13 Nov 2026 16:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYXbJgYr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502221F000C4;
+	Fri, 13 Nov 2026 16:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585680;
-	bh=YRlO7cE2VvdCYBWJs9SkFrMzsC9aIb6qhSp+tf+ZpO4=;
+	s=korg; t=1794585681;
+	bh=r8GK3maxeJ2Cca66Mf050FEBp7FUEgXd2b/rBQJs0e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P2leMcbT+J6lL3NIRiYPBYiSMVgr7YUDL82F3omQkfDdPAgjsl43xfRoZFEVP4Lsp
-	 yscatVKvMMIOi0Bg83L4cUIaXniCWUNe1FfR0GB57C+3nCWtweu14STDPhp71QnShr
-	 ISqx72iK0qn7OIGcMhelLkU5oKriWWbaKLjSY/cQ=
+	b=cYXbJgYrtF/95MrP4wLVGJvFbW+UToI8MfyjvgP7HsHGIezfesLM/gX16CQ4fkqjf
+	 6yfwkSmihlY0UgbkSxAOAW4hlK3PA064655p1PoNzTrz/zt65fm0Z0e3E8FfzpqQcs
+	 1Lu71es7OAeGQdGkyRjDhJ1W/0sxbi9RXXgFjleE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Vincent Mailhol <mailhol@kernel.org>,
 	Cunhao Lu <1579567540@qq.com>,
-	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 292/507] can: skb: make echo skb freeing safe in any IRQ context
-Date: Fri, 13 Nov 2026 10:49:56 -0500
-Message-ID: <20261113153805.149696581@linuxfoundation.org>
+Subject: [PATCH 7.3 293/507] can: dev: can_put_echo_skb(): free skb on invalid echo index
+Date: Fri, 13 Nov 2026 10:49:57 -0500
+Message-ID: <20261113153805.180900955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -71,110 +71,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Cunhao Lu <1579567540@qq.com>
 
-[ Upstream commit d743071964920c92af598c87a9e6f4369263ee09 ]
+[ Upstream commit b4ebcbbf66ba6c5816dfe229effb4641c46e4b4c ]
 
-can_put_echo_skb() can be called with hardware interrupts disabled. Its
-direct drop paths use kfree_skb(), while can_create_echo_skb() uses
-kfree_skb() when cloning fails and consume_skb() after a successful clone.
-None of these helpers is safe in every IRQ context.
+can_put_echo_skb() consumes the skb on all paths except when the echo
+index is out of bounds. This leaves ownership with the caller on -EINVAL,
+unlike the other error paths, and can leak the skb if the caller expects
+consistent semantics.
 
-Use dev_kfree_skb_any() for all drop paths and dev_consume_skb_any() when
-consuming a successfully cloned skb. This preserves the respective skb drop
-and consumed semantics regardless of the caller IRQ context.
+Free the skb before returning -EINVAL so that all return paths consume it.
 
+Fixes: 6411959c10fe ("can: dev: can_put_echo_skb(): don't crash kernel if can_priv::echo_skb is accessed out of bounds")
+Cc: stable@vger.kernel.org
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
 Signed-off-by: Cunhao Lu <1579567540@qq.com>
-Link: https://patch.msgid.link/tencent_E84809CF236D0137885E7E4E4D58340B3208@qq.com
-Cc: stable@kernel.org
-Fixes: ae64438be192 ("can: dev: fix skb drop check")
-Fixes: 0ae89beb283a ("can: add destructor for self generated skbs")
-Fixes: 3ccd4c6167d3 ("can: Unify droping of invalid tx skbs and netdev stats")
-Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
-[mkl: also convert can_dropped_invalid_skb(), can_dev_dropped_skb()]
-[mkl: add stable on Cc + add Fixes tags]
+Link: https://patch.msgid.link/tencent_683AA16E643DE00211CD2FB62991264DC605@qq.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 
 ---
 
 FAQ:
 
-Q: What about the comment in drivers/net/can/virtio_can.c
-   virtio_can_start_xmit()? The error handling for virtqueue_add_sgs()
-   mentions that can_put_echo_skb() consumes the skb via consume_skb().
+Q: `can_skb_init_valid()` directly modifies `skb->data` without checking if
+   the SKB is cloned or shared. Is this violating SKB shared buffer rules and
+   causing data corruption?
 
-A: The comment in virtio_can.c will be updated in a separate series, to
-   ease backporting of this patch.
+A: The finding about can_skb_init_valid() modifying skb->data on a
+   potentially shared buffer is not relevant for this (correct) patch.
 
-[mkl: add FAQ section]
+   The FDF-flag write in can_skb_init_valid() only matters for PF_PACKET
+   use: PF_CAN allocators already set CANFD_FDF. The write exists to
+   normalize frames for PF_PACKET observers (tcpdump/Wireshark) so they can
+   distinguish classic CAN from CAN FD at the netdev level, and to
+   compensate for PF_PACKET senders that omit the bit. That normalization
+   is functionally required.
+
+   The shared-buffer concern only becomes realistic through a specific
+   chain: a PF_PACKET sender injects a CANFD-sized frame, the CAN driver's
+   loopback puts an echo skb back into can_rcv(), and cgw (without
+   modfuncs) clones it for forwarding to another interface. Only on that
+   second can_skb_init_valid() call is the skb cloned. By then the bit was
+   already set on the exclusive skb during the initial xmit path, so the
+   flags |= CANFD_FDF write is strictly idempotent for any parallel
+   consumer of the shared buffer - no memory-safety or
+   information-disclosure consequence. It's a formal violation of the skb
+   sharing rules without an observable effect, so the current code can stay
+   as-is.
+
+Link: https://lore.kernel.org/all/54a3cc01-abcf-4a33-b932-39bb1f68cdd5@hartkopp.net/
+[mkl: convert Oliver's mail to FAQ section]
 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/skb.c | 6 +++---
- include/linux/can/dev.h   | 2 +-
- include/linux/can/skb.h   | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/can/dev/skb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
-index bc0787535b524..46c151eece8f7 100644
+index 46c151eece8f7..9e274147ffe56 100644
 --- a/drivers/net/can/dev/skb.c
 +++ b/drivers/net/can/dev/skb.c
-@@ -63,7 +63,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
- 	    (skb->protocol != htons(ETH_P_CAN) &&
- 	     skb->protocol != htons(ETH_P_CANFD) &&
- 	     skb->protocol != htons(ETH_P_CANXL))) {
--		kfree_skb(skb);
+@@ -55,6 +55,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
+ 	if (idx >= priv->echo_skb_max) {
+ 		netdev_err(dev, "%s: BUG! Trying to access can_priv::echo_skb out of bounds (%u/max %u)\n",
+ 			   __func__, idx, priv->echo_skb_max);
 +		dev_kfree_skb_any(skb);
- 		return 0;
+ 		return -EINVAL;
  	}
- 
-@@ -91,7 +91,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
- 	} else {
- 		/* locking problem with netif_stop_queue() ?? */
- 		netdev_err(dev, "%s: BUG! echo_skb %d is occupied!\n", __func__, idx);
--		kfree_skb(skb);
-+		dev_kfree_skb_any(skb);
- 		return -EBUSY;
- 	}
- 
-@@ -403,7 +403,7 @@ bool can_dropped_invalid_skb(struct net_device *dev, struct sk_buff *skb)
- 	return false;
- 
- inval_skb:
--	kfree_skb(skb);
-+	dev_kfree_skb_any(skb);
- 	dev->stats.tx_dropped++;
- 	return true;
- }
-diff --git a/include/linux/can/dev.h b/include/linux/can/dev.h
-index 6d0710d6f571d..346faddee02eb 100644
---- a/include/linux/can/dev.h
-+++ b/include/linux/can/dev.h
-@@ -176,7 +176,7 @@ static inline bool can_dev_dropped_skb(struct net_device *dev, struct sk_buff *s
- 	return can_dropped_invalid_skb(dev, skb);
- 
- invalid_skb:
--	kfree_skb(skb);
-+	dev_kfree_skb_any(skb);
- 	dev->stats.tx_dropped++;
- 	return true;
- }
-diff --git a/include/linux/can/skb.h b/include/linux/can/skb.h
-index 5d27843862fca..87ace09c0d8bd 100644
---- a/include/linux/can/skb.h
-+++ b/include/linux/can/skb.h
-@@ -78,12 +78,12 @@ static inline struct sk_buff *can_create_echo_skb(struct sk_buff *skb)
- 
- 	nskb = skb_clone(skb, GFP_ATOMIC);
- 	if (unlikely(!nskb)) {
--		kfree_skb(skb);
-+		dev_kfree_skb_any(skb);
- 		return NULL;
- 	}
- 
- 	can_skb_set_owner(nskb, skb->sk);
--	consume_skb(skb);
-+	dev_consume_skb_any(skb);
- 	return nskb;
- }
  
 -- 
 2.53.0
