@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591206;
-	b=yLBP8XhI+WZobCrVityVvXpDRrjB5e6AbjcOHL51duWqG9XxEYMv2gElOcXfyp510pJJ
-	 E4f8a5PAZuBZ9VFN+n9G/EHtGQXh3sQ2RT1UhsGjW/h4oCglVEHscBqvk6eBwclOalPTm
-	 jlWr7ZbdsDCPbFcDJQleByg3bTssGSTP4+uNnPZUttiktw9LuxUQzEHhjGGAkAEhzHlni
-	 8g1W9jCszTFo2hUDbtmxfX2BD+DOodXLlzvyMsHWlFpfEVnf0IC8rck88xrZuQyEIFU3P
-	 6kDH6u4PlPsEWE3R0SPO7b0WsNrE9yeo2lSZJ0TH0Nz/5z3wFH216SaXn09Js/R++UA==
+	t=1794591207;
+	b=EYXN4OpZvk6Ryhc+rRwRp45iQkByJqSdnk+yeUdDCjFhPQkUGQquhL8FtbW8Ma9TXXZl
+	 OlHFsczH7o+boxLcQB9GCHceHEUQjFMoBsYoYaZSy8mqE4YhoFt1zMFRGuCOOsDW41Uki
+	 gfrlNBfv5DeXCljHPtoRhTSvstz3sW3dqeTQ6eSoVrYCXg668n3aSU3UZJDCh55QO5IdZ
+	 SS+A6+zXcx38HlMpsbLwbzV2yp5OvYxiujH0J7Iy/nKYUkC00rNPvaddSTn3iuVkrRNfz
+	 bxiaq4Fi6e6I0/nVsdA0xlQi6UFkFlKq9BuWSJzApx2v9dLDjGNTLZDYKTf17ZC7tIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591206;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591207;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d1lHjlDhVLZFZZuWMnQJUzdGRgidGkSD5knN9fZ0HgM=;
-	b=mg0DDT2eXkb43OukUaaRupwm83V2idhb4Q3eEZ2HUGSLnCDkl9cdgdvOdmfIzrMBqPAc
-	 Dm90v7JlZRCoglYNhFrvuISSbEr8AELs90Q8/cuQv56vDYDoMs8v0eu8DHqdy8wJv88lv
-	 pNNaRJFPQ7l8Vn4fD7pSTRYMPMI5OdW5tHCV0g/y9uFo0KIIDkZI2ZUKF31StO/3ENtzB
-	 nyB0CBVXxWh04tpqGsCJ134c/AzKOFiyGeUUaXCMEk8CRK/m6mntK3GrXssqZqA5Yfh0s
-	 xocuGdCfTwpkc4nJu+/JfOzKjH3ZLYGYFSrNSFdYQ07kZPqU4F8H1NluFf1gcikqWWg==
+	bh=b6/QS5fi6SbTkzREzAVwXMOyKfLvi9N91rGyXYPthDQ=;
+	b=Ilptcp5jObuon9GWaYbm0QiV85UN6pYYg4wcYx8I9gKsR87wCkxZHN/vl6KtG5vOfSK5
+	 lrRrjaGiZ+BgfxIemXeLz1gTJa27332urSua9XI+MM4/YIPpIEostdwS9NCatg5pkn5R8
+	 hzuWrmj/O2R0O2rC5c4f/9tlDXDMr1htTQbcoBaxL/7Kels+IYCU/+Tqf596o5VpoQUDU
+	 u3QzgzK80PJ32JWWoVL8FlGAR9VXA5TOnXQZVnNo+vICPTP9WR+bP/0nXWEptn4sjzU+8
+	 rRB0xLqin4jWNQtzzgCANk6fiYs0qeek23BFMFZ1khePVOOHUgZm8HXHrOpBXSJC2/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eodFAO4q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTRt7ew3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C896075854;
-	Fri, 13 Nov 2026 17:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9EF6075854;
+	Fri, 13 Nov 2026 17:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eodFAO4q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D781F000C4;
-	Fri, 13 Nov 2026 17:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uTRt7ew3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC2081F000C5;
+	Fri, 13 Nov 2026 17:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591205;
-	bh=d1lHjlDhVLZFZZuWMnQJUzdGRgidGkSD5knN9fZ0HgM=;
+	s=korg; t=1794591207;
+	bh=b6/QS5fi6SbTkzREzAVwXMOyKfLvi9N91rGyXYPthDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eodFAO4qVEPPA4kGcFNzmzFliY6R+T2MALlJVue1bogMo78MKtSQstko9rQVt4t/h
-	 /i4Nm9Vsu1v7KOfBJF9ThB4/36ZdEXocdRYStU1YWT7VSw4txuRx9Qb12bg6TBrr7+
-	 63tDUmYe1EF+ZgzqJjzzzNp61rc1C87JAQniaPzE=
+	b=uTRt7ew3zgy3DhjXePjbO5VpR9IhX59QNTnZsMLNeoWuwXCP+ix0NFbLHRx4vGs8o
+	 sC/iJvd9MXWHo0HsbFRQFzWfkFbcNmwq9tjxL6iEMXwFQ6WmGngMuR6AInolZtbqze
+	 zwjy4jCnJWTPVvIYkns1fYRZRhBaKir8cOGq3oAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianyun Gao <jianyungao89@gmail.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 298/670] xfs: fix temporary cursor leak in btree shift corruption paths
-Date: Fri, 13 Nov 2026 10:47:42 -0500
-Message-ID: <20261113153822.026520650@linuxfoundation.org>
+Subject: [PATCH 6.12 299/670] net/sched: sch_qfq: prevent aggregate self-replacement
+Date: Fri, 13 Nov 2026 10:47:43 -0500
+Message-ID: <20261113153822.060984366@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,51 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianyun Gao <jianyungao89@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 2bbca049deeb1699cafd966cb2793fee576ee409 ]
+[ Upstream commit 2e54b3e187300893688c2c7517894f5d96732e05 ]
 
-In xfs_btree_lshift and xfs_btree_rshift, when XFS_IS_CORRUPT detects
-an invalid firstrec/lastrec result after xfs_btree_dup_cursor has
-successfully allocated a temporary cursor, the error path jumps to
-error0 which returns without freeing tcur.  This leaks the cursor
-memory, the xfs_group reference, and the per-level buffer references
-held by the duplicated cursor.  Jump to error1 instead, which calls
-xfs_btree_del_cursor(tcur, XFS_BTREE_ERROR) to properly release all
-resources.
+qfq_change_class() snapshots the current aggregate settings while
+holding the qdisc tree lock, but drops the lock before selecting the
+destination aggregate. During that gap, qfq_enqueue() can move the
+class to an aggregate matching the requested settings.
 
+When qfq_change_class() resumes, qfq_find_agg() then returns cl->agg.
+If it is a singleton, qfq_deact_rm_from_agg() frees the aggregate
+before qfq_add_to_agg() immediately accesses the same pointer, causing
+a use-after-free.
+
+While holding the tree lock, skip the replacement when the destination
+is already the current aggregate. Any estimator replacement has already
+completed, so the class change can finish normally.
+
+Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
+Link: https://lore.kernel.org/netdev/20260731140533.566493-1-david.lee@trailofbits.com/
 Cc: stable@vger.kernel.org
-Fixes: 9eaead51bed95 ("[XFS] implement generic xfs_btree_rshift")
-Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Link: https://patch.msgid.link/20261029180957.43015-1-david.lee@trailofbits.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_btree.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/sch_qfq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/xfs/libxfs/xfs_btree.c b/fs/xfs/libxfs/xfs_btree.c
-index f0ddaa136a0bf..de09db78df1ad 100644
---- a/fs/xfs/libxfs/xfs_btree.c
-+++ b/fs/xfs/libxfs/xfs_btree.c
-@@ -2568,7 +2568,7 @@ xfs_btree_lshift(
- 		if (XFS_IS_CORRUPT(tcur->bc_mp, i != 1)) {
- 			xfs_btree_mark_sick(cur);
- 			error = -EFSCORRUPTED;
--			goto error0;
-+			goto error1;
- 		}
- 
- 		error = xfs_btree_decrement(tcur, level, &i);
-@@ -2738,7 +2738,7 @@ xfs_btree_rshift(
- 	if (XFS_IS_CORRUPT(tcur->bc_mp, i != 1)) {
- 		xfs_btree_mark_sick(cur);
- 		error = -EFSCORRUPTED;
--		goto error0;
-+		goto error1;
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 70a08f1950100..b0a9966cc6ab8 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -520,11 +520,14 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 		sch_tree_lock(sch);
+ 		qfq_init_agg(q, new_agg, lmax, weight);
  	}
++	if (existing && new_agg == cl->agg)
++		goto unlock;
+ 	if (existing)
+ 		qfq_deact_rm_from_agg(q, cl);
+ 	else
+ 		qdisc_class_hash_insert(&q->clhash, &cl->common);
+ 	qfq_add_to_agg(q, new_agg, cl);
++unlock:
+ 	sch_tree_unlock(sch);
+ 	qdisc_class_hash_grow(sch, &q->clhash);
  
- 	error = xfs_btree_increment(tcur, level, &i);
 -- 
 2.53.0
 
