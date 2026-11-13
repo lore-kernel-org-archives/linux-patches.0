@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591586;
-	b=i+WaVRUtBjsVxXRvceq7vtrHscWbcrFCvMImkrMuJo9wcSRPwvuyMOrzw2NpTvEXU2aw
-	 7uBZ2PiMWrCSe9oC7IoiJWyZwp8MvsVFXlRlQDg+nIVT0+St+cDcjPdLc0zOGaAFqC/1h
-	 auKLJyTdj3KIkdId2ynKqrWQlbc7nnx/j+DPwU9Ndyo/t+ussCgGXFyundUMH03Sy6C1C
-	 VU57u8m0WoOCmgzFq/GYxXljUEghNgAMxRJ/EKQG+yTyRukZ5Qj/7BxiVSKm3sCoo3923
-	 2e86rXdBdg/YTPWKmXZNYTl8AIlOLuaAUNXQm9SVAoTIHXXrypakCNN0Kb89zL0fe0Q==
+	t=1794591587;
+	b=mh0lQUl5Q+xgeTBcsRLFC7YJzLYOFSSACD5Sj6/FVb02G/Hq4lSePMOf9xg8wIFS6oMp
+	 /Lv2RZAPF8hA6QnxnATazu4VbV8ti1CJYfsRvTrKE8O6z6n3FQrZCCR60SqRai6ocH98M
+	 ZYkERxGWoQuqgMJOefznQkDJB/Qurqz9hUpS5KGr3sRh9sk9y1AijvoGLkcctIpSV0RS6
+	 3k6MRtN1FuWXDp8171E9iyxsm8eyXIr51rQSqEf8zDK3g6SVX2pLscfOBw1KpEwz6MRf+
+	 28VgcPqaQnjgr3/SCPXf9EclQPDjzY9HsKgdH+MkCuP+WK6brtO7t9igHM9EiCnVY4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591587;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mUWTcnQgi6aZZHr0iyglv0TH0hI4+dmpxJoPESKuXJw=;
-	b=DMbTioqJJs8XiBzUDhSn/MC5NPhSwTKA8BpY9YsGZ6Ja1kowrUVtW1sNMTqFOcRr50rd
-	 m6wsSirVi145N4L1GbVQeeqtsiic4RQfY8Q2x7i50GQZFCIZyZPNxtdRJRk99UvOeFl3n
-	 xVJmtaO7CtH3ioM3zKi/HsWzqO7uHUIlZgQlzvpJzeZi4baDKSmy6NntyPEt4jJMmB+dA
-	 1mXiXn+fvPViboTjETzCb7SpjzEWcIKB3c4OolFgwD/91N9aocpcRvBOlmeqkFoYjIy2o
-	 4NaIyev7KiDArWQm+VaR9kt4Jq/9IgPIPM3tEfwnH4r2wLdtfptKrFw8c3XCLkq0X0g==
+	bh=dxi6wHnjUKcCpxVps8x/zCuePkpTydY5eAqcNPo6T+k=;
+	b=Ben36p58oHg1HEVWj81THHyPx/NtABTopn5DTpFXUskEg7i14l/UtjIUpUL0AX5WsYAn
+	 gOnAZJbTnh/2V9viHkUd9iwdsaJfbNvyIhkedK2QC+BfPslLvCzcvJ1Po+qI4Tp+sNit6
+	 hXf9vZQA5l7MeHQyJjN31h3EgTE96Boic68osEsP33jU3TTRP3+G0vus9pGdbxRi6W412
+	 TduyrUztAQF30q+xmNp0Sc9tBx48C1tnviZ26iJYbaMyWjTnsx3PxTJSUbiCfSmk5jNla
+	 RkwyrIJIReO6gj55vy0eZW0MfQ8ruQ1lhmPa4ZuWEfIsEsmFoZXRsAsVSFeuOVylOdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jY3PBS2K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U03Jz5MX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE6D606E679;
-	Fri, 13 Nov 2026 17:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A78606E670;
+	Fri, 13 Nov 2026 17:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jY3PBS2K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13561F000C5;
-	Fri, 13 Nov 2026 17:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U03Jz5MX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46201F000C5;
+	Fri, 13 Nov 2026 17:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591585;
-	bh=mUWTcnQgi6aZZHr0iyglv0TH0hI4+dmpxJoPESKuXJw=;
+	s=korg; t=1794591587;
+	bh=dxi6wHnjUKcCpxVps8x/zCuePkpTydY5eAqcNPo6T+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jY3PBS2KTrVxIC03G1+i35eTjK6IGMRgRP5KsC5X+J3uS/AtWUJXQgcaQCoNAd5mo
-	 Rcnky/XVyAAsq3PtZFxukxj9kAVwGg/TOd2a5JGC8M+31WqKD5uwdhk1qBhR7li544
-	 Rq7fdfXfIf3f1mx2SVgd73DMWjQPeA8RNpfwkYVc=
+	b=U03Jz5MXFlJkFl4sFhDqFxBdUjDnHiH3F63dBAO0YA3jefeCs12yr2MbXcGtTtvaL
+	 /uoJ/HCP5f7OHDJkA3GKd5iSSsBl71xqul/duO2fQjxBl4MP+CIlCBlnqpkpuq/hr9
+	 AK+k8u/vbNizx3G6gzk8pob86RPyswp+x0C7wAbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bradley Morgan <brads@mainlining.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Guenetr Roeck <linux@roeck-us.net>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Wang Jinchao <wangjinchao600@gmail.com>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Breno Leitao <leitao@debian.org>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 632/670] panic: restore variable arguments to nmi_panic()
-Date: Fri, 13 Nov 2026 10:53:16 -0500
-Message-ID: <20261113153833.206544247@linuxfoundation.org>
+Subject: [PATCH 6.12 633/670] ACPI: APEI: accumulate the queued flag across error sections
+Date: Fri, 13 Nov 2026 10:53:17 -0500
+Message-ID: <20261113153833.239022404@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -73,101 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bradley Morgan <brads@mainlining.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit ed9e4c1ff15d5b935f467811541ca0aa6e49c5d0 ]
+[ Upstream commit f341307a14895e5da056fb419a31ef7fb534ab18 ]
 
-nmi_panic() used to accept variable arguments until commit ebc41f20d77f
-("panic: change nmi_panic from macro to function") flattened it to a final
-message string.  vpanic() did not exist back then, so the function had to
-format through panic("%s", msg).
+ghes_do_proc() walks every error section of a CPER record, and
+ghes_handle_arm_hw_error() walks every error-info entry of an ARM
+processor section.  Both assign to "queued" instead of OR-ing into it,
+so only the last iteration counts: a later section or entry that queues
+no memory-failure work clears the flag an earlier one set.
 
-Bring the variable arguments back and format with vpanic() directly.
-The next patch makes nmi_panic() try the panic_force_cpu= redirect
-before claiming panic_cpu.  panic_try_force_cpu() needs to print the
-message but it is used also by panic() which accepts variable argument
-list.  The string could be formatted only when a CPU gets assigned to
-process the redirection.  Otherwise, there might be a race when writing
-to the `panic_force_buf`.
+Instead of reassigning the variable at every time, just do an `OR`, so,
+if there was a single match, it will return "queued" as set.
 
-No current caller passes a string with format specifiers.  The closest one
-is hpwdt_pretimeout(), which builds panic_msg with hex_byte_pack() and has
-only two variants, both plain strings.  But the new __printf() annotation
-on nmi_panic() would warn with -Wformat-security there because the buffer
-is passed directly as the format argument, so switch it to nmi_panic(regs,
-"%s", panic_msg).
+The comment above the check says "If no memory failure
+work is queued", which is the semantics this patch implements. I.e, only
+SIGBUS if there are queue was not handled at all. If we want to SIGBUS
+if any event was not handled/queued at all, we will need something more
+sophisticated.
 
-[pmladek@suse.com: changelog fix]
-	Link: https://lore.kernel.org/arJxFybmtD7OBIcL@pathway.suse.cz
-Link: https://lore.kernel.org/20260916182957.7788-5-brads@mainlining.org
-Signed-off-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Petr Mladek <pmladek@suse.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Cc: Guenetr Roeck <linux@roeck-us.net>
-Cc: Sashiko <sashiko-bot@kernel.org>
-Cc: Wang Jinchao <wangjinchao600@gmail.com>
-Cc: Wim Van Sebroeck <wim@linux-watchdog.org>
-Cc: <stable@vger.kernel.org>
+Fixes: 7f17b4a121d0 ("ACPI: APEI: Kick the memory_failure() queue for synchronous errors")
+Fixes: ccb5ecdc2dde ("ACPI: APEI: fix synchronous external aborts in user-mode")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Link: https://patch.msgid.link/20260925-ghes-queued-accumulate-v1-1-df50553957d4@debian.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ sashal: Adjusted ARM handler context for missing adjacent CXL protocol error handling. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/hpwdt.c |  2 +-
- include/linux/panic.h    |  3 ++-
- kernel/panic.c           | 10 ++++++++--
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ drivers/acpi/apei/ghes.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/watchdog/hpwdt.c b/drivers/watchdog/hpwdt.c
-index ba08189937ec6..32e9ac24e0d5f 100644
---- a/drivers/watchdog/hpwdt.c
-+++ b/drivers/watchdog/hpwdt.c
-@@ -198,7 +198,7 @@ static int hpwdt_pretimeout(unsigned int ulReason, struct pt_regs *regs)
- 	}
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index 03cf3d63e609c..045acf13c1313 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -583,7 +583,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
+ 		 * and don't filter out 'corrected' error here.
+ 		 */
+ 		if (is_cache && has_pa) {
+-			queued = ghes_do_memory_failure(err_info->physical_fault_addr, flags);
++			queued |= ghes_do_memory_failure(err_info->physical_fault_addr, flags);
+ 			p += err_info->length;
+ 			continue;
+ 		}
+@@ -809,11 +809,11 @@ static bool ghes_do_proc(struct ghes *ghes,
+ 			atomic_notifier_call_chain(&ghes_report_chain, sev, mem_err);
  
- 	hex_byte_pack(panic_msg, nmistat);
--	nmi_panic(regs, panic_msg);
-+	nmi_panic(regs, "%s", panic_msg);
- 
- 	return NMI_HANDLED;
- }
-diff --git a/include/linux/panic.h b/include/linux/panic.h
-index baf7de33aa0e6..99c53d2792b1b 100644
---- a/include/linux/panic.h
-+++ b/include/linux/panic.h
-@@ -13,7 +13,8 @@ __printf(1, 2)
- void panic(const char *fmt, ...) __noreturn __cold;
- __printf(1, 0)
- void vpanic(const char *fmt, va_list args) __noreturn __cold;
--void nmi_panic(struct pt_regs *regs, const char *msg);
-+__printf(2, 3)
-+void nmi_panic(struct pt_regs *regs, const char *fmt, ...);
- void check_panic_on_warn(const char *origin);
- extern void oops_enter(void);
- extern void oops_exit(void);
-diff --git a/kernel/panic.c b/kernel/panic.c
-index dce6197233161..0bc445155035a 100644
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -246,13 +246,19 @@ EXPORT_SYMBOL(panic_on_other_cpu);
-  * nmi_panic_self_stop() which can provide architecture dependent code such
-  * as saving register state for crash dump.
-  */
--void nmi_panic(struct pt_regs *regs, const char *msg)
-+void nmi_panic(struct pt_regs *regs, const char *fmt, ...)
- {
-+	va_list args;
-+
-+	va_start(args, fmt);
-+
- 	if (panic_try_start())
--		panic("%s", msg);
-+		vpanic(fmt, args);
- 
- 	if (panic_on_other_cpu())
- 		nmi_panic_self_stop(regs);
-+
-+	va_end(args);
- }
- EXPORT_SYMBOL(nmi_panic);
+ 			arch_apei_report_mem_error(sev, mem_err);
+-			queued = ghes_handle_memory_failure(gdata, sev, sync);
++			queued |= ghes_handle_memory_failure(gdata, sev, sync);
+ 		} else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
+ 			ghes_handle_aer(gdata);
+ 		} else if (guid_equal(sec_type, &CPER_SEC_PROC_ARM)) {
+-			queued = ghes_handle_arm_hw_error(gdata, sev, sync);
++			queued |= ghes_handle_arm_hw_error(gdata, sev, sync);
+ 		} else if (guid_equal(sec_type, &CPER_SEC_CXL_GEN_MEDIA_GUID)) {
+ 			struct cxl_cper_event_rec *rec = acpi_hest_get_payload(gdata);
  
 -- 
 2.53.0
