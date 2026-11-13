@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591005;
-	b=0jMyR/jrB9C+nt2/myQgy4Y7p33REq3C6sieNIo2njrTayiFzCi06iLsB/mb7wHclfkf
-	 Yd0rkLVH2HuCksYQOlfbQdqQYdip1qpItAvyQTqb/xvNNTY+uS5MYar3iKnk3cxENF2LE
-	 kkG+M3nI7SmfQ6P6VMAWkMDWLlYs2GDCedq6azWE1J91xtgHmiSDmh6CxzQxJaztENqZZ
-	 ooFMkYjlfadH0HvSwacdlQvrVyHELPOisBYCGzNOz9+5hVhwaETxVOGtWQ1CQoAUSugDp
-	 x+rJ/hzbc7oZ/+l2X3CezpR3pUySSvJiZz2uECoooOYeyuX30fusqUIwKCkFKtzDMNA==
+	t=1794591006;
+	b=AXf71o/te5TlMDljEZgeioSQF5MLjtAOrlZ5jIkLbcPQ6G18Cpvp3KryCSQS6irkCJ27
+	 qDQhj3RP7kwTO0u/1afbDvsvKO6wKhw/X3iYvWH8zYlpjHvY9cuDs23/N1sUs6sSv8WHy
+	 ELDQ0xutUBI5/NACm/f/Dj2A7v6CLCfq2aMeVoVtbr76X3lVVLVlSHgP5lYIEN/fiUYum
+	 dUg+mr02QMZRxnjg8utchA0JaBV3cKUo1CujeiGqQhhrq4BDxPHY2gH/T+wWOY6hxUTgl
+	 MiIM+FLoA1ph7brxix78BXDJE4rBdKWBmfq4yKkA5Eqj/G49kUIDFvMuMYMN+pqJrQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591005;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zfmvpGPGH6wCVw91NKqHVfayyeyzBR+VcZcSC4KEyAw=;
-	b=XOPY23p9xCF6tG+lK9W/9kdlQ9mgynH7Nfk6gzryK88sqMWBdutAkdJ/N7/x4b152GL6
-	 P5m/X49bNGmKGRG8d2wzVoH5jWPl9sdTi0e9EJpyqgbt89NTbrCMDPGK0Ub84CIrbFcy7
-	 gEwQv6zvKKymGbHy9lhhL3N8bBZc4gocTAXJzoJZOHbo4A0+JuJU65gzL6LFPS5Hvf2S5
-	 o32mGbfJAGL/PtDRQ/9f+elAeBPhnSWDeYWpA62CG5tPf0UGWrTOScuGQIq60XluGh29Q
-	 jTDu266JEERcjMCD2H0UbpRZCiqxvh/MoHHWAMGbJZM3fQYnCpTj+aBs55P0IG11t1A==
+	bh=eo1XZWGw/JI+Ur/bKpLsEhFcad9brmx+AceQnbZqKrU=;
+	b=SFbq8IJMl3+HZq50JO0VkAitnk/OehePrxdBkjyUAf0jM8DOcbfl/0ARqLk75y/yCR1U
+	 Fw3KXz0O0kxORMWZ2GKWN347EA+6iIuijgKCipxtpZzDMtqRDQVxV6JwMQzn7yZHtbC4v
+	 rZkIsAhMZMm+DTXvHiCdiPml7cUav7i+mwAk1vT4JBPisFPYCFAoE6BBS1hxL0dCX/CHa
+	 dtC7//uK1iSnaVHAEc9PPRnLit3Nfu8E5iAgxZ6/6O9ij4GkjBzRd4EIs+XKPNZYZ9S2e
+	 e/qZoBOSrpDtGhZCzTsGV0vl/QeVfrw+WrYxGiSnjNpbMiNbCWegonutSFSFBO2sXoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BL0LpzDx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VZ3/aKup";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231B860703FC;
-	Fri, 13 Nov 2026 17:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F2860703FD;
+	Fri, 13 Nov 2026 17:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BL0LpzDx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38331F000C4;
-	Fri, 13 Nov 2026 17:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VZ3/aKup
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069411F000C4;
+	Fri, 13 Nov 2026 17:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591005;
-	bh=zfmvpGPGH6wCVw91NKqHVfayyeyzBR+VcZcSC4KEyAw=;
+	s=korg; t=1794591006;
+	bh=eo1XZWGw/JI+Ur/bKpLsEhFcad9brmx+AceQnbZqKrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BL0LpzDx6n8BsWu6V/bvoQo1iMKLwgVOdbgT2YZqY5Y0ol4FW802CNVVSMSgJA1YP
-	 u0/5RiioCsnh04aeKkyVuh7thcx8cc/MzI4WIICdnNuOjmXUWLL4YDCuMk/SKFqrEA
-	 M+yvzPMqYbVQvq3ZLhdGIJGJBnsbvR3QvY62Nkk8=
+	b=VZ3/aKupmZQieDVMKj/uLXjt2TjbYWRzmxcbe9ehaLBTT1XyTl0T5MdWnTo7oZ4mt
+	 4tHuuSt9c5zCAQ6v059dTFxtfjZTljT5yNVV8SGpY5VaD6hIOay8hvoJtK/M+xEv7T
+	 f+2AoSp8DHzAFhblh2MGsYjBxkp6Zsl28kJWzvjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Grzeschik <mgr@kernel.org>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 175/670] net/9p/usbg: also disable endpoints on p9_usbg_close
-Date: Fri, 13 Nov 2026 10:45:39 -0500
-Message-ID: <20261113153817.984255002@linuxfoundation.org>
+Subject: [PATCH 6.12 176/670] net/9p/usbg: set client to Disconnected on usb9pfs_disable
+Date: Fri, 13 Nov 2026 10:45:40 -0500
+Message-ID: <20261113153818.013620694@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,35 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Grzeschik <mgr@kernel.org>
 
-[ Upstream commit f81cdb9164806eb2df1e1c6df402e03bff7dde31 ]
+[ Upstream commit 795f8eeca01d1c9ca3d9a450385b7745ace4e53a ]
 
-The close function has to fully reverse the state change of 9p_create
-(mount) and the potential call of set_alt(1). This includes to ensure
-that the usage of the endpoints is not active any more.
+This patch is setting the client status to Disconnected, when the
+client is still in use. Otherwise a disconnected usb cable would run
+any use of the mount to faults.
 
 Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
 Cc: stable@vger.kernel.org
 Signed-off-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260922-usb9pfsfixes-v1-1-9d8dcc52904c@kernel.org>
+Message-ID: <20260922-usb9pfsfixes-v1-2-9d8dcc52904c@kernel.org>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/9p/trans_usbg.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index cd45d4a8597ad..ff787f5fb1631 100644
+index ff787f5fb1631..f1773749d9124 100644
 --- a/net/9p/trans_usbg.c
 +++ b/net/9p/trans_usbg.c
-@@ -465,6 +465,8 @@ static void p9_usbg_close(struct p9_client *client)
- 	mutex_lock(&usb9pfs_lock);
- 	dev->inuse = false;
- 	mutex_unlock(&usb9pfs_lock);
-+
-+	disable_usb9pfs(usb9pfs);
+@@ -748,7 +748,12 @@ static int usb9pfs_set_alt(struct usb_function *f,
+ static void usb9pfs_disable(struct usb_function *f)
+ {
+ 	struct f_usb9pfs *usb9pfs = func_to_usb9pfs(f);
++	unsigned long flags;
+ 
++	spin_lock_irqsave(&usb9pfs->lock, flags);
++	if (usb9pfs->client)
++		usb9pfs->client->status = Disconnected;
++	spin_unlock_irqrestore(&usb9pfs->lock, flags);
+ 	usb9pfs_clear_tx(usb9pfs);
  }
  
- static int p9_usbg_request(struct p9_client *client, struct p9_req_t *p9_req)
 -- 
 2.53.0
 
