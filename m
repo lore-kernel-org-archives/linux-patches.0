@@ -1,63 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591605;
-	b=VpcN66QHWKxhtJPMPyInwIIgH4Ppr/4Nx+qiYTAneCrTT22mXqZURpzOVE9ku72UUZUz
-	 lxxdRG2zqXyekmBSorhGAfNcgVYt8fGsEfCdd66i5x2Of19RhZ5W4rAhuCU3Oamv+TZfU
-	 imiByLLhKwWApVvO4feoMovEgH/tYlW6hHhN407/cGJxE71DX0j26s23PZnEsjo/nxKVK
-	 OtWKG1wSFelkJRs9XbkcYWCH1Ib8ixp0snszKNT958Prbhv9uWN/GFKKR21gsOJAhJixu
-	 Tf2j9oK4j6aq/RJu57VdUCbgwFrI4yHv+0fvoAwp1uIniOZobk8mVEEpjTum33Asy3w==
+	t=1794591607;
+	b=VOYRo+jgbG42Y7CXn6JJ6hAPBebwNdI7TGYoa6uQ1/LGhNNNKZ1Au9QqUvQ1cXHlw7aB
+	 jgFiCBXOGeze4Ow+f9Ahd2wQhWaNCPz811gTSJNmuAEex/x0EmYy6ee2S7CrxTIG0z8/Y
+	 s9HOx3bwz3pHqArIfSwPQG0w4/tPTGzoF3DBUv6Q55TRQtTasPKawtHLq/tSrXD6sAggz
+	 kZA/6tpVhlWvXK928CwYIMmdHfXLh0Fk+eGO7cEtWxiZ9YPAEFl5L7uYC9IVUqNHZtKqS
+	 RgNnrTMr1MI+mLv/g9I1PTBFKP/ZvPOsO+51hiAoVeak4Y4Zlc1X7A/JnyfzMvEgRWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BAF0wOrsVHmY8iZcmD7RronTrrvVb0jsp5zO/mrLX8Y=;
-	b=botEmNeobV4+Z722eYKKK08SNAwUFm9my6C85iGDEYLUpCKSu/KWI60CD8aZGBiIuDbi
-	 BHds8VTG5BhLX220QnkRjnCfqQOqlkEY65ixh72V9iZ8YDaX/KqFG+YbsA95v3f7eyo8i
-	 04wp1ioC2rlJ3Qu9DlyV4XCVJDmiLEZi5wW0qauhq+vCHgUuAU38x0j2hyfDcsGSMd0GD
-	 dkpu+qXh5UC74zBX48gY6fMcOMMO6gfHel4sHqkUQKkiSmFliOtloF/Sfc97q22wYOo9A
-	 aEFLArtvJ0iIcYwbouihmvPiOWyzhlk7X1Bs9w2dZabee9fJQUZDXvELI5TYGvBLniQ==
+	bh=g32LCZG4iSWyIYCqECvEHfWB8CxblXK0Sj9BkbFRx5w=;
+	b=gwOfB6JHb4umTe6TLiD3H/L0hmxJD8YK14uPsdaCkZU8fA0qE57jcC19VgtOmk2JHG1Q
+	 AaLPol1mJd3QSfEa7nFvXSeXbfl7Ojt31uRnEOMnEpdXwpd7S0ZfieinSbJykhOeCCmVf
+	 qE1bllWRKYxmCv3UuNzp96XLQGE6T/dhUE2l0adT/WpWhO3t+M4Y2jq42pTBkN7vNgXaN
+	 gX5fR40+mFxzPFQSLcLmGnYtm0TxT6MtaZfY32hd+jpA8mnvlGdvutmT8RCZ3a0ZDkBTi
+	 nFF8wVm4m2eII9NIxw2TOzy0T4G0Hn1lJqBxQlhgw7oO2HkqRLc3sINJwrQgf9oioEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ope2Y5v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gL9Je+0C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B698A606B452;
-	Fri, 13 Nov 2026 17:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F074B606B452;
+	Fri, 13 Nov 2026 17:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ope2Y5v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB781F000C4;
-	Fri, 13 Nov 2026 17:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gL9Je+0C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0A41F000C7;
+	Fri, 13 Nov 2026 17:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591605;
-	bh=BAF0wOrsVHmY8iZcmD7RronTrrvVb0jsp5zO/mrLX8Y=;
+	s=korg; t=1794591606;
+	bh=g32LCZG4iSWyIYCqECvEHfWB8CxblXK0Sj9BkbFRx5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ope2Y5vB+dJK1cMbCyg+Tj4fL48Jo2vYr+BOoywWlsgO6rSwGAjIqiunqt20/+Vo
-	 dq8S66L6maJ2y49HhEkgf/bzoy6m42eTEu/jBwvH2n9PKswHgZuBqcZyIgdcMArug3
-	 5i9zeH5x1WkMHGk5YX01bvlN9VP2e3acf6AB4P/o=
+	b=gL9Je+0CQ+Tu4HTOkRB1nYcTzbawoijlhlWqAXUXWJA4OhByOKqWeBPzNmbwIhuD9
+	 Zv06XYksakS3OsG7syHEGOmNQFhOjoclvNWtDi8MexeYten5NAB1ktna/toSBKpoBQ
+	 m9poO/VzY5OxV4GBhgiy+fqAhZzXxvch8SjD1wVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	shaos <shawnq1@163.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Xueyuan Chen <xueyuan.chen21@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 646/670] mm/vma: avoid broken uffd merge on mremap
-Date: Fri, 13 Nov 2026 10:53:30 -0500
-Message-ID: <20261113153833.696946559@linuxfoundation.org>
+Subject: [PATCH 6.12 647/670] ALSA: aloop: Use guard() for mutex locks
+Date: Fri, 13 Nov 2026 10:53:31 -0500
+Message-ID: <20261113153833.727715676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -79,91 +67,300 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 68cb098eadda190783f8f8bdf9fe764df59f7d32 ]
+[ Upstream commit ebd9b6c91d4e345b7ded4b56567c46267a45d961 ]
 
-Userfaultfd often causes unexpected interactions within mm, and does so at
-the intersection of uffd, mremap() and VMA merging.
+Replace the manual mutex lock/unlock pairs with guard() for code
+simplification.
 
-When an mremap of a VMA occurs, copy_vma_and_data() calls
-mremap_userfaultfd_prep() to notify uffd of this.
+Only code refactoring, and no behavior change.
 
-However, mremap_userfaultfd_prep() simply drops the UFFD context for the
-VMA if the user did not register it for remap, i.e. didn't specify the
-UFFD_FEATURE_EVENT_REMAP flag.
-
-This is OK for the VMA itself, as upon page table move, move_ptes() clears
-UFFD page table flags, using vma_has_uffd_without_event_remap() to
-determine whether to do so.
-
-However, this doesn't account for merging with adjacent VMAs, whose page
-tables won't have received this treatment, and thus latent UFFD markers
-will be left around.
-
-Worse, it'll break UFFD for any VMAs it is merged with. This is very
-surprising behaviour for a user, who will then simply not receive UFFD
-events for VMAs they ought to.
-
-Resolve the issue by explicitly checking for this case via
-vma_has_uffd_without_event_remap() in vma_merge_copied_range(), the merge
-function explicitly designated for mremap() operations.
-
-Also update the userland VMA tests accordingly.
-
-Link: https://lore.kernel.org/20261020-uffd-remap-fix-v1-1-0f34fc181f0a@kernel.org
-Fixes: 3cfd22be0ad6 ("userfaultfd: clear flag if remap event not enabled")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: shaos <shawnq1@163.com>
-Closes: https://lore.kernel.org/all/20261020110748.959870-1-shawnq1@163.com/
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Xueyuan Chen <xueyuan.chen21@gmail.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: moved the merge guard into copy_vma() because vma_merge_copied_range() is absent ]
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250829150026.6379-2-tiwai@suse.de
+Stable-dep-of: ded106036984 ("ALSA: aloop: Don't constrain playback params in notify mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vma.c                         | 5 ++++-
- tools/testing/vma/vma_internal.h | 2 ++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ sound/drivers/aloop.c | 83 +++++++++++++++++--------------------------
+ 1 file changed, 33 insertions(+), 50 deletions(-)
 
-diff --git a/mm/vma.c b/mm/vma.c
-index 66b0472b7d8a6..85660d67b7942 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -1694,7 +1694,10 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
- 		faulted_in_anon_vma = true;
- 	}
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index 50b8e7b3d8179..24ab1a7fd773d 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -532,13 +532,12 @@ static int loopback_prepare(struct snd_pcm_substream *substream)
+ 	dpcm->pcm_salign = salign;
+ 	dpcm->pcm_period_size = frames_to_bytes(runtime, runtime->period_size);
  
--	new_vma = vma_merge_new_range(&vmg);
-+	/* If not registered for remap, uffd context will be cleared. */
-+	new_vma = NULL;
-+	if (!vma_has_uffd_without_event_remap(vma))
-+		new_vma = vma_merge_new_range(&vmg);
+-	mutex_lock(&dpcm->loopback->cable_lock);
++	guard(mutex)(&dpcm->loopback->cable_lock);
+ 	if (!(cable->valid & ~(1 << substream->stream)) ||
+             (get_setup(dpcm)->notify &&
+ 	     substream->stream == SNDRV_PCM_STREAM_PLAYBACK))
+ 		params_change(substream);
+ 	cable->valid |= 1 << substream->stream;
+-	mutex_unlock(&dpcm->loopback->cable_lock);
  
- 	if (new_vma) {
- 		/*
-diff --git a/tools/testing/vma/vma_internal.h b/tools/testing/vma/vma_internal.h
-index 0a95dbb0346fb..213e40afa8ee3 100644
---- a/tools/testing/vma/vma_internal.h
-+++ b/tools/testing/vma/vma_internal.h
-@@ -605,6 +605,8 @@ static inline bool is_mergeable_vm_userfaultfd_ctx(struct vm_area_struct *vma,
- 	return true;
+ 	return 0;
+ }
+@@ -979,9 +978,8 @@ static int loopback_hw_free(struct snd_pcm_substream *substream)
+ 	struct loopback_pcm *dpcm = runtime->private_data;
+ 	struct loopback_cable *cable = dpcm->cable;
+ 
+-	mutex_lock(&dpcm->loopback->cable_lock);
++	guard(mutex)(&dpcm->loopback->cable_lock);
+ 	cable->valid &= ~(1 << substream->stream);
+-	mutex_unlock(&dpcm->loopback->cable_lock);
+ 	return 0;
  }
  
-+#define vma_has_uffd_without_event_remap(vma) false
-+
- static inline bool anon_vma_name_eq(struct anon_vma_name *anon_name1,
- 				    struct anon_vma_name *anon_name2)
+@@ -1001,10 +999,10 @@ static int rule_format(struct snd_pcm_hw_params *params,
+ 	struct snd_mask m;
+ 
+ 	snd_mask_none(&m);
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	m.bits[0] = (u_int32_t)cable->hw.formats;
+-	m.bits[1] = (u_int32_t)(cable->hw.formats >> 32);
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		m.bits[0] = (u_int32_t)cable->hw.formats;
++		m.bits[1] = (u_int32_t)(cable->hw.formats >> 32);
++	}
+ 	return snd_mask_refine(hw_param_mask(params, rule->var), &m);
+ }
+ 
+@@ -1015,10 +1013,10 @@ static int rule_rate(struct snd_pcm_hw_params *params,
+ 	struct loopback_cable *cable = dpcm->cable;
+ 	struct snd_interval t;
+ 
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	t.min = cable->hw.rate_min;
+-	t.max = cable->hw.rate_max;
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		t.min = cable->hw.rate_min;
++		t.max = cable->hw.rate_max;
++	}
+         t.openmin = t.openmax = 0;
+         t.integer = 0;
+ 	return snd_interval_refine(hw_param_interval(params, rule->var), &t);
+@@ -1031,10 +1029,10 @@ static int rule_channels(struct snd_pcm_hw_params *params,
+ 	struct loopback_cable *cable = dpcm->cable;
+ 	struct snd_interval t;
+ 
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	t.min = cable->hw.channels_min;
+-	t.max = cable->hw.channels_max;
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		t.min = cable->hw.channels_min;
++		t.max = cable->hw.channels_max;
++	}
+         t.openmin = t.openmax = 0;
+         t.integer = 0;
+ 	return snd_interval_refine(hw_param_interval(params, rule->var), &t);
+@@ -1047,10 +1045,10 @@ static int rule_period_bytes(struct snd_pcm_hw_params *params,
+ 	struct loopback_cable *cable = dpcm->cable;
+ 	struct snd_interval t;
+ 
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	t.min = cable->hw.period_bytes_min;
+-	t.max = cable->hw.period_bytes_max;
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		t.min = cable->hw.period_bytes_min;
++		t.max = cable->hw.period_bytes_max;
++	}
+ 	t.openmin = 0;
+ 	t.openmax = 0;
+ 	t.integer = 0;
+@@ -1264,12 +1262,10 @@ static int loopback_open(struct snd_pcm_substream *substream)
+ 	int err = 0;
+ 	int dev = get_cable_index(substream);
+ 
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	dpcm = kzalloc(sizeof(*dpcm), GFP_KERNEL);
+-	if (!dpcm) {
+-		err = -ENOMEM;
+-		goto unlock;
+-	}
++	if (!dpcm)
++		return -ENOMEM;
+ 	dpcm->loopback = loopback;
+ 	dpcm->substream = substream;
+ 
+@@ -1354,7 +1350,6 @@ static int loopback_open(struct snd_pcm_substream *substream)
+ 		free_cable(substream);
+ 		kfree(dpcm);
+ 	}
+-	mutex_unlock(&loopback->cable_lock);
+ 	return err;
+ }
+ 
+@@ -1366,9 +1361,8 @@ static int loopback_close(struct snd_pcm_substream *substream)
+ 
+ 	if (dpcm->cable->ops->close_substream)
+ 		err = dpcm->cable->ops->close_substream(dpcm);
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	free_cable(substream);
+-	mutex_unlock(&loopback->cable_lock);
+ 	return err;
+ }
+ 
+@@ -1419,11 +1413,10 @@ static int loopback_rate_shift_get(struct snd_kcontrol *kcontrol,
  {
+ 	struct loopback *loopback = snd_kcontrol_chip(kcontrol);
+ 	
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	ucontrol->value.integer.value[0] =
+ 		loopback->setup[kcontrol->id.subdevice]
+ 			       [kcontrol->id.device].rate_shift;
+-	mutex_unlock(&loopback->cable_lock);
+ 	return 0;
+ }
+ 
+@@ -1439,14 +1432,13 @@ static int loopback_rate_shift_put(struct snd_kcontrol *kcontrol,
+ 		val = 80000;
+ 	if (val > 120000)
+ 		val = 120000;	
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	if (val != loopback->setup[kcontrol->id.subdevice]
+ 				  [kcontrol->id.device].rate_shift) {
+ 		loopback->setup[kcontrol->id.subdevice]
+ 			       [kcontrol->id.device].rate_shift = val;
+ 		change = 1;
+ 	}
+-	mutex_unlock(&loopback->cable_lock);
+ 	return change;
+ }
+ 
+@@ -1455,11 +1447,10 @@ static int loopback_notify_get(struct snd_kcontrol *kcontrol,
+ {
+ 	struct loopback *loopback = snd_kcontrol_chip(kcontrol);
+ 	
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	ucontrol->value.integer.value[0] =
+ 		loopback->setup[kcontrol->id.subdevice]
+ 			       [kcontrol->id.device].notify;
+-	mutex_unlock(&loopback->cable_lock);
+ 	return 0;
+ }
+ 
+@@ -1471,14 +1462,13 @@ static int loopback_notify_put(struct snd_kcontrol *kcontrol,
+ 	int change = 0;
+ 
+ 	val = ucontrol->value.integer.value[0] ? 1 : 0;
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	if (val != loopback->setup[kcontrol->id.subdevice]
+ 				[kcontrol->id.device].notify) {
+ 		loopback->setup[kcontrol->id.subdevice]
+ 			[kcontrol->id.device].notify = val;
+ 		change = 1;
+ 	}
+-	mutex_unlock(&loopback->cable_lock);
+ 	return change;
+ }
+ 
+@@ -1490,14 +1480,13 @@ static int loopback_active_get(struct snd_kcontrol *kcontrol,
+ 
+ 	unsigned int val = 0;
+ 
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	cable = loopback->cables[kcontrol->id.subdevice][kcontrol->id.device ^ 1];
+ 	if (cable != NULL) {
+ 		unsigned int running = cable->running ^ cable->pause;
+ 
+ 		val = (running & (1 << SNDRV_PCM_STREAM_PLAYBACK)) ? 1 : 0;
+ 	}
+-	mutex_unlock(&loopback->cable_lock);
+ 	ucontrol->value.integer.value[0] = val;
+ 	return 0;
+ }
+@@ -1540,11 +1529,10 @@ static int loopback_rate_get(struct snd_kcontrol *kcontrol,
+ {
+ 	struct loopback *loopback = snd_kcontrol_chip(kcontrol);
+ 	
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	ucontrol->value.integer.value[0] =
+ 		loopback->setup[kcontrol->id.subdevice]
+ 			       [kcontrol->id.device].rate;
+-	mutex_unlock(&loopback->cable_lock);
+ 	return 0;
+ }
+ 
+@@ -1564,11 +1552,10 @@ static int loopback_channels_get(struct snd_kcontrol *kcontrol,
+ {
+ 	struct loopback *loopback = snd_kcontrol_chip(kcontrol);
+ 	
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	ucontrol->value.integer.value[0] =
+ 		loopback->setup[kcontrol->id.subdevice]
+ 			       [kcontrol->id.device].channels;
+-	mutex_unlock(&loopback->cable_lock);
+ 	return 0;
+ }
+ 
+@@ -1586,12 +1573,11 @@ static int loopback_access_get(struct snd_kcontrol *kcontrol,
+ 	struct loopback *loopback = snd_kcontrol_chip(kcontrol);
+ 	snd_pcm_access_t access;
+ 
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	access = loopback->setup[kcontrol->id.subdevice][kcontrol->id.device].access;
+ 
+ 	ucontrol->value.enumerated.item[0] = !is_access_interleaved(access);
+ 
+-	mutex_unlock(&loopback->cable_lock);
+ 	return 0;
+ }
+ 
+@@ -1759,12 +1745,11 @@ static void print_cable_info(struct snd_info_entry *entry,
+ 	struct loopback *loopback = entry->private_data;
+ 	int sub, num;
+ 
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	num = entry->name[strlen(entry->name)-1];
+ 	num = num == '0' ? 0 : 1;
+ 	for (sub = 0; sub < MAX_PCM_SUBSTREAMS; sub++)
+ 		print_substream_info(buffer, loopback, sub, num);
+-	mutex_unlock(&loopback->cable_lock);
+ }
+ 
+ static int loopback_cable_proc_new(struct loopback *loopback, int cidx)
+@@ -1793,10 +1778,9 @@ static void print_timer_source_info(struct snd_info_entry *entry,
+ {
+ 	struct loopback *loopback = entry->private_data;
+ 
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	snd_iprintf(buffer, "%s\n",
+ 		    loopback->timer_source ? loopback->timer_source : "");
+-	mutex_unlock(&loopback->cable_lock);
+ }
+ 
+ static void change_timer_source_info(struct snd_info_entry *entry,
+@@ -1805,10 +1789,9 @@ static void change_timer_source_info(struct snd_info_entry *entry,
+ 	struct loopback *loopback = entry->private_data;
+ 	char line[64];
+ 
+-	mutex_lock(&loopback->cable_lock);
++	guard(mutex)(&loopback->cable_lock);
+ 	if (!snd_info_get_line(buffer, line, sizeof(line)))
+ 		loopback_set_timer_source(loopback, strim(line));
+-	mutex_unlock(&loopback->cable_lock);
+ }
+ 
+ static int loopback_timer_source_proc_new(struct loopback *loopback)
 -- 
 2.53.0
 
