@@ -1,64 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590712;
-	b=plTNJ/hAiQVefEtish1bX15cWA89yiHrQR8mEovvK77So3jZ3nlQ4+tb0Na+8x5YpL5N
-	 EJEl54LNMuUFxbEMybWQ8Mo4EwoAjZsuPgIUSyYVbr29MfnuPRJUR6Puu+2DvxM0QMzWz
-	 LkEJm4Eo/WmNDsNZYSZ7Ow0eOVRT2PCpJ3KPlS/muC7Sh/bYu13tJZVT87awj1xEq8VNE
-	 2HyPyES05tt7+ehPHidKA7z0RKSKy+5znp3cJ8OX/CIOrO+XE9QG+oYa/9lILTDxm0LJ8
-	 1+J8jcgh8VjWOnA7g4QEYGXZQNYAXMtYEDS/MnDcaqL/nPkXli7o39BStr0D3PdPtGQ==
+	t=1794590713;
+	b=Ri8Rq+xCLtAL9yiFzzOEVHkk57Pvd2zVxjPAA0gb9pK6NuaLKVohPXsT+D4x4vuVB7dT
+	 TUp6+URzfOEHWLGOx73WzAUTp9ZjLc6l56jbKun9BIOrTvGnc9pd9c/6SeQbaOCz5h5yw
+	 2Zv/h11ZyC6j2F7TH4YBJcZXxwkaC/AA1geOvYHjm3oUG4pXR13LjjynTaTtayA7isTUQ
+	 dTjCNY3O86mFxQ5dPRbchdgk7iwKjDNjNn7p2HXbsbj4she9uRoPIgBjNMCNIJyVTybKk
+	 zphqLprsU/YvMeCL22DAOssbwqBYyzKSKHk0tw8Q+1fj7tnLykI/uUZAmUj0u/8gjEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590712;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590713;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=KQqhpKmX5EBj7gXvkBQt8LHwTnZl4Y/hXAvXy5zk5Gw=;
-	b=sACl8HRUM2xW0tuxxfe68ZyGMNvEToJ6O2Cxi+Ti3oliTCMXJdd7TN6DKas4M+tTYqNh
-	 mNLYYBIPe86NJcufPXWfw8mabM1z52n/WDO2rbRz8GQC+Q8builqKGsdaWiFJDvQus7EW
-	 2RTrUJwze4dCmOl3lhDwsuzbe/MFwSCyGrbG9glMJ6J1Y6/SmyOtIHYbArvYo3wFKPyVR
-	 NSISYEhVH45jtKeltB2j6W71h5zG+aBp55l8jINFb0mw80nY6tpS0CONR1OYyU06bGn/Q
-	 0PNOe45jnDtV/Jzfduvj2EV5HzCWodxuUuCeAzCWJPP9li/7cDnOTuuq3gtjb7FCpew==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Xn/4NpSv2rhBdB6cknsCbxshC3ldJ0WwshdUM+LmdIU=;
+	b=uHRcVzdbTE0psU/KL8g5oUtbsi2IgC6Wn21hBXwyqDChjjyCKRkOfruWz0Atd1X2s13X
+	 M3z2cmoYbTRjlCos9gXt5pM2Sv8Lghr0zIvocstQFYG/Xy93rSDLXbZc//+cnAFnGtLOt
+	 djMZXxrzush0VCFqLpo8SxeJlSNKW0Kk6RI7O8uxalFC4eCbwHCSO1Y0pOyi6k9vxiWDd
+	 93W+hg+WfXvgFNMd/DyIk3onnY9Tup0D5NUb4XPhvq/YIXEMZX1+bB3aP0QzQjj9UaLUe
+	 xYR6qiAg9JXY9/rW4keXn6tQI0NlgRv3H3Ily7IV2ELiCO0XHFmB4NYI8tg2kI3eMAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRY5R4nJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z/3PhclF";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0ED607A5DE;
-	Fri, 13 Nov 2026 17:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8580B607A5C9;
+	Fri, 13 Nov 2026 17:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRY5R4nJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92221F000C4;
-	Fri, 13 Nov 2026 17:25:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z/3PhclF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302791F000C4;
+	Fri, 13 Nov 2026 17:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590712;
-	bh=KQqhpKmX5EBj7gXvkBQt8LHwTnZl4Y/hXAvXy5zk5Gw=;
+	s=korg; t=1794590713;
+	bh=Xn/4NpSv2rhBdB6cknsCbxshC3ldJ0WwshdUM+LmdIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DRY5R4nJlWH+wM8YFrvoaSoICLK7HwTCIOvJcrDuQqzAkiRIYyUFXOVx+7SnAdbiO
-	 9UkBU/QbOx1m7g578PL7wPJDQmuh/TYYK9WqaN0qRVOE8uvlWBzIZlrSr+twe/Kl+9
-	 QV/ndL+8r0P68I+Sl6jdNopHyTgKFxg6oj2UHl+k=
+	b=z/3PhclFmgvAcqkBN99dxeckM577v1v/VDXV0O5YiER1L/xgDAVF62WWEkClq/rf4
+	 ru0d+lYG0c/2TTrqoU7jbOmfWNc6G/4NtyRiHeICJfMDSzuyJ19aqDbzawFjEjU7Ji
+	 6aB2/jScw36n01BB0c7X2xSzwx1wuGJAqtq2rsns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Peter Xu <peterx@redhat.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 620/686] mm/mempolicy: use vm_normal_folio_pmd() in queue_folios_pmd()
-Date: Fri, 13 Nov 2026 10:52:33 -0500
-Message-ID: <20261113153842.876445934@linuxfoundation.org>
+Subject: [PATCH 6.18 621/686] ublk: mark the io command cancelable before publishing it
+Date: Fri, 13 Nov 2026 10:52:34 -0500
+Message-ID: <20261113153842.906716231@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -74,187 +63,139 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Ming Lei <tom.leiming@gmail.com>
 
-[ Upstream commit 9057170a941f0c5f4058f6fb9ab5d5fc9fcc9e83 ]
+[ Upstream commit a261f0cacacc022e4fab5b8e38c59f74ce4942e8 ]
 
-Patch series "mm: stop calling pmd_folio() on special PMDs", v3.
+FETCH, COMMIT_AND_FETCH and NEED_GET_DATA publish the command in io->cmd
+before marking it cancelable. A cancel from the control path (STOP_DEV,
+QUIESCE_DEV) can complete it in between:
 
-Two page table walkers resolve the folio behind a PMD with pmd_folio(),
-which is only valid for a PMD mapping a refcounted struct page:
+  issue path                       control-path cancel
+  io->cmd = C
+                                   take C, io_uring_cmd_done(C):
+                                     C not marked, nothing to unlink
+  ublk_prep_cancel(C)
+    the completed C is linked on the cancelable list
+  ring exit: the cancel walk hits it → GPF (KASAN, with a delay added)
 
-  madvise_cold_or_pageout_pte_range() mm/madvise.c
-  queue_folios_pmd() mm/mempolicy.c
+Mark the command before ublk_fill_io_cmd() publishes it. The handlers
+run with uring_lock held, as io_uring's cancel walk does, so marking
+takes no lock and the walk can't see a marked command before it is
+published. smp_wmb() orders the mark before the io->cmd store; the
+cancel loads cmd with READ_ONCE(io->cmd) before reading cmd->flags.
 
-vmf_insert_pfn_pmd() installs special PMDs holding a raw pfn that need not
-have a memmap entry at all.  Both walkers can reach one and fault on the
-first folio field read.  The PTE halves of both already use
-vm_normal_folio(); these two patches make the PMD halves match.
+A marked command has to be completed by io_uring_cmd_done(), so a failed
+FETCH and the inline UBLK_IO_RES_OK of NEED_GET_DATA now do that. The CQE
+is the same.
 
-The four callers of vmf_insert_pfn_pmd(), and which walker each reaches:
-
-  drivers/vfio/pci/vfio_pci_core.c        VM_PFNMAP     mempolicy
-  drivers/gpu/drm/drm_gem_shmem_helper.c  VM_PFNMAP     mempolicy
-  drivers/gpu/drm/panthor/panthor_gem.c   VM_PFNMAP     mempolicy
-  drivers/hv/mshv_vtl_main.c              VM_MIXEDMAP   both
-
-can_madv_lru_vma() rejects VM_PFNMAP, so only mshv_vtl_low reaches the
-madvise walker, and that needs CAP_SYS_ADMIN.  queue_pages_walk_ops
-supplies its own ->test_walk, so walk_page_test()'s generic VM_PFNMAP skip
-never runs and vfio-pci is reachable by any process holding the device fd.
-Hence the different stable tags.
-
-One behaviour change: mbind(MPOL_MF_STRICT) over a PMD mapped VM_PFNMAP
-region now returns 0 rather than -EIO.  The PTE loop already returned 0
-there.  drm_gem_shmem and panthor are where this is observable, since they
-PMD map pages that do have a memmap entry and so never faulted.
-
-Reproducer
-==========
-
-No hardware needed.  An out of tree module stands in for the drivers
-above: three misc devices, each with a ->huge_fault calling
-vmf_insert_pfn_pmd(), plus VM_HUGEPAGE so the fault path takes the PMD
-branch.
-
-  /dev/pmdspec_mixed    VM_MIXEDMAP, pfn at the 1 TiB mark, no memmap
-  /dev/pmdspec_pfnmap   VM_PFNMAP,   pfn at the 1 TiB mark, no memmap
-  /dev/pmdspec_real     VM_PFNMAP,   real alloc_pages(PMD_ORDER) on node 0
-
-Userspace maps the device into a PMD aligned window, reads one byte to
-fault the PMD in, checks a module parameter to confirm it went in, then
-issues the operation.
-
-  vng --run <bzImage> --user root --memory 4G --verbose \
-      --append "numa=fake=2" \
-      --exec "insmod pmdspec.ko && ./pmdspec_test <subtest>"
-
-numa=fake=2 gives a node 1 to bind to; the module allocates its real page
-on node 0, which is what makes queue_folio_required() true.
-
-  subtest        operation                              parent   series
-  --------------------------------------------------------------------
-  madv_cold      madvise(MADV_COLD)                     oops     ret=0
-  madv_pageout   madvise(MADV_PAGEOUT)                  oops     ret=0
-  mbind_mixed    mbind(MPOL_BIND, n1, MPOL_MF_MOVE)     oops     ret=0
-  mbind_pfnmap   mbind(MPOL_BIND, n1, MPOL_MF_STRICT)   oops     ret=0
-  mbind_real     mbind(MPOL_BIND, n1, MPOL_MF_STRICT)   -EIO     ret=0
-
-Two things the table shows that are easy to miss in the code:
-
-  - mbind_mixed passes only MPOL_MF_MOVE.  MPOL_MF_STRICT is not needed for
-    a VM_MIXEDMAP vma: walk_page_test() only skips VM_PFNMAP, and
-    vma_migratable() is true for VM_MIXEDMAP.
-
-  - mbind_real demonstrates the user visible change (-EIO -> 0)
-
-This patch (of 2):
-
-mmap a VM_PFNMAP region whose ->huge_fault installs a PMD through
-vmf_insert_pfn_pmd() - a vfio-pci MMIO BAR does this - then
-
-	mbind(p, len, MPOL_BIND, &mask, maxnode, MPOL_MF_STRICT);
-
-With a stand-in module for the driver:
-
-  BUG: unable to handle page fault for address: fffff96dc0000008
-  RIP: 0010:queue_folios_pte_range+0xaf/0x440
-   walk_pgd_range+0x52b/0xaf0
-   __walk_page_range+0x6a/0x1d0
-   walk_page_range_mm_unsafe+0x193/0x230
-   queue_pages_range+0x64/0xa0
-   do_mbind+0x25e/0x640
-
-queue_folios_pmd(), inlined above, calls pmd_folio() on that PMD.  The pfn
-is raw MMIO with no memmap entry, so the folio lands in unpopulated
-vmemmap.  Neither guard stops the walk:
-
-  walk_page_test()         skips VM_PFNMAP, but queue_pages_walk_ops
-                           supplies ->test_walk, so it never runs
-  queue_pages_test_walk()  honours vma_migratable(), but only while
-                           MPOL_MF_STRICT is clear
-
-A VM_MIXEDMAP vma needs neither flag, being vma_migratable(), so plain
-mbind(MPOL_MF_MOVE) reaches this too - and there the bad folio carries on
-into migrate_folio_add() and folio_isolate_lru().  mshv_vtl_low is such a
-mapping.
-
-Use vm_normal_folio_pmd() and skip on NULL, as the PTE loop in
-queue_folios_pte_range() already does with vm_normal_folio().  This also
-filters the huge zero PMD, so its separate check is no longer needed.
-
-mbind(MPOL_MF_STRICT) over a PMD mapped VM_PFNMAP region now returns 0
-rather than -EIO.  The PTE loop already returned 0 there.
-
-Link: https://lore.kernel.org/20260926105110.2156652-1-gourry@gourry.net
-Link: https://lore.kernel.org/20260926105110.2156652-2-gourry@gourry.net
-Fixes: 3c8e44c9b369 ("mm: mark special bits for huge pfn mappings when inject")
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260817220810.1175596-1-gourry%40gourry.net
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Assisted-by: LLM
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ying Huang <ying.huang@linux.alibaba.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: <stable@vger.kernel.org>
-[ sashal: Passed *pmd to vm_normal_folio_pmd() instead of the upstream cached pmdval variable. ]
+Fixes: 216c8f5ef0f2 ("ublk: replace monitor with cancelable uring_cmd")
+Cc: stable@vger.kernel.org
+Tested-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20261011063555.1142277-3-tom.leiming@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ sashal: passed READ_ONCE(io->cmd) directly to io_uring_cmd_done() instead of storing it in a local variable ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/block/ublk_drv.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 3dfd20b55a9d7..5a9743c2c00f2 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -646,7 +646,8 @@ static inline bool queue_folio_required(struct folio *folio,
- 	return node_isset(nid, *qp->nmask) == !(flags & MPOL_MF_INVERT);
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index c0e4f94cc43b0..197825f44b1d0 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -2003,8 +2003,10 @@ static void ublk_cancel_cmd(struct ublk_queue *ubq, unsigned tag,
+ 		io->flags |= UBLK_IO_FLAG_CANCELED;
+ 	spin_unlock(&ubq->cancel_lock);
+ 
++	/* dependency ordered against smp_wmb() in ublk_prep_cancel() */
+ 	if (!done)
+-		io_uring_cmd_done(io->cmd, UBLK_IO_RES_ABORT, issue_flags);
++		io_uring_cmd_done(READ_ONCE(io->cmd), UBLK_IO_RES_ABORT,
++				  issue_flags);
  }
  
--static void queue_folios_pmd(pmd_t *pmd, struct mm_walk *walk)
-+static void queue_folios_pmd(pmd_t *pmd, unsigned long addr,
-+		struct mm_walk *walk)
- {
- 	struct folio *folio;
- 	struct queue_pages *qp = walk->private;
-@@ -655,11 +656,9 @@ static void queue_folios_pmd(pmd_t *pmd, struct mm_walk *walk)
- 		qp->nr_failed++;
- 		return;
- 	}
--	folio = pmd_folio(*pmd);
--	if (is_huge_zero_folio(folio)) {
--		walk->action = ACTION_CONTINUE;
-+	folio = vm_normal_folio_pmd(walk->vma, addr, *pmd);
-+	if (!folio || folio_is_zone_device(folio))
- 		return;
--	}
- 	if (!queue_folio_required(folio, qp))
- 		return;
- 	if (!(qp->flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) ||
-@@ -692,7 +691,7 @@ static int queue_folios_pte_range(pmd_t *pmd, unsigned long addr,
+ /*
+@@ -2274,6 +2276,12 @@ ublk_fill_io_cmd(struct ublk_io *io, struct io_uring_cmd *cmd)
+ 	return req;
+ }
  
- 	ptl = pmd_trans_huge_lock(pmd, vma);
- 	if (ptl) {
--		queue_folios_pmd(pmd, walk);
-+		queue_folios_pmd(pmd, addr, walk);
- 		spin_unlock(ptl);
++/*
++ * Call before ublk_fill_io_cmd() publishes @cmd in io->cmd: a control-path
++ * cancel may complete any command found there, and io_uring_cmd_done() only
++ * takes it off the cancelable list if it is marked already. The handlers
++ * hold uring_lock, so marking takes no lock.
++ */
+ static inline void ublk_prep_cancel(struct io_uring_cmd *cmd,
+ 				    unsigned int issue_flags,
+ 				    struct ublk_queue *ubq, unsigned int tag)
+@@ -2287,6 +2295,8 @@ static inline void ublk_prep_cancel(struct io_uring_cmd *cmd,
+ 	pdu->ubq = ubq;
+ 	pdu->tag = tag;
+ 	io_uring_cmd_mark_cancelable(cmd, issue_flags);
++	/* pairs with the cancel loading cmd from io->cmd, then cmd->flags */
++	smp_wmb();
+ }
+ 
+ static void ublk_io_release(void *priv)
+@@ -2527,11 +2537,11 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 		ret = ublk_check_fetch_buf(ub, addr);
+ 		if (ret)
+ 			goto out;
++		/* before ublk_fetch() publishes io->cmd, see ublk_prep_cancel() */
++		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
+ 		ret = ublk_fetch(cmd, ub, ubq, io, addr);
+ 		if (ret)
+-			goto out;
+-
+-		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
++			goto out_done;
+ 		return -EIOCBQUEUED;
+ 	}
+ 
+@@ -2575,6 +2585,7 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 		if (ret)
+ 			goto out;
+ 		io->res = result;
++		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
+ 		req = ublk_fill_io_cmd(io, cmd);
+ 		ublk_apply_io_buf(ub, io, cmd, addr, &auto_buf, &buf_idx);
+ 		if (buf_idx != UBLK_INVALID_BUF_IDX)
+@@ -2594,19 +2605,24 @@ static int ublk_ch_uring_cmd_local(struct io_uring_cmd *cmd,
+ 		 * uring_cmd active first and prepare for handling new requeued
+ 		 * request
+ 		 */
++		ublk_prep_cancel(cmd, issue_flags, ubq, tag);
+ 		req = ublk_fill_io_cmd(io, cmd);
+ 		io->buf.addr = addr;
+ 		if (likely(ublk_get_data(ubq, io, req))) {
+ 			__ublk_prep_compl_io_cmd(io, req);
+-			return UBLK_IO_RES_OK;
++			ret = UBLK_IO_RES_OK;
++			goto out_done;
+ 		}
+ 		break;
+ 	default:
  		goto out;
  	}
+-	ublk_prep_cancel(cmd, issue_flags, ubq, tag);
+ 	return -EIOCBQUEUED;
+ 
++ out_done:
++	/* marked cancelable: complete through io_uring_cmd_done() */
++	io_uring_cmd_done(cmd, ret, issue_flags);
++	return -EIOCBQUEUED;
+  out:
+ 	pr_devel("%s: complete: cmd op %d, tag %d ret %x io_flags %x\n",
+ 			__func__, cmd_op, tag, ret, io ? io->flags : 0);
 -- 
 2.53.0
 
