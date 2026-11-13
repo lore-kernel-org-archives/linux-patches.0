@@ -1,58 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585636;
-	b=LvpFR9+/WZVCXkRAq0Kl1HLvk8/AqnEuVSmJJPMAjgqpUufvpYcDypacG7U0JsN1JTXf
-	 VI6YuyBbT6Hj5tDEeRA20+t6HCsFDXSgDpd3iaZ9U3yijKV0gMFtwzutxopfjQ0xh8RQO
-	 eBMGDlIypZWgdMsF7cvgwAGwBXjQK7BKnEnyJr3G72pgGgieVhPWk8cJkHHmR3c1twfTC
-	 rGafBiefnFn+EYAx2iW1QWSO//+P/Ek1nGQbZ9JqvqGZgVVq/r/Nr5nhBhSIroazg9E3q
-	 Wl6HMa+qDQn0Usnsak+DXpolz+t/TmZbgjwZ+Zro/wT9k66KPjv9LhKHcTsochrJL5g==
+	t=1794585637;
+	b=Szg+Q6UMS93BdtDGn/3v+hCwfcd/3dlPQh9VfAoEnwVZZKjTp1Xt8xjgDXhpdTmfF9Rp
+	 F2H4SxnCfx7xJx/bHy2y0L0j5f9tn+d8Aq/WrATEAFDp9rYpmrbxgtZt7VCJmbKXTEWAn
+	 946fp4hrWI3NnTUHuxmgGxV0MXpy+heEi/wOhwL1CoHWik8EVhjBD7vUaikwHoV+ePM5U
+	 cl2LJRKdWP2LiOwvPSq6U/QDWwenxntZdZrBvFz2I3tqgej1qAKkrzxYD/fXj5CSw57wA
+	 JDksXVjwipFY28P1Fh4//PUR71LgxILDN+5JKAR06k4ucg0gpLYKUxJ4iatEafvDV0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585636;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585637;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kX03w4MPBriA+oncsedp1+ygnsk4c/hEmOxwg4oe2BE=;
-	b=094trQHw2AgYoQopiZTUOb1dpQwZ8/jjilfmEA4h+H7ksKceVcKg3ZCIgSnT4bs2t396
-	 XJxUJp3tVLMtk3ZKIrGwO4v1qXSDUadmhWv7AohUIUQJ8TEUksx77SLFJwflZUqnjY77p
-	 BgyBulbIFEEjpXxewIzMDPY5ALI6tKVQHEqNyWJMFDn2XJZM65jS7CDWqb01h+BVsLok1
-	 Smdi0U8RGutjSNb7gkptk1418ADEhgJKJNG2IAUbdiTpFFP+s75uAbq3c75+sn5HH1tN+
-	 4dsrbOWgcbu3vd6axjBN8xiU5FcQxApT/JapTZ2fI7v5kGGlDznaghCssATKlm3fczQ==
+	bh=6b/BZArax8QYmPC07I9KKkuoOYw81m7vdDmHAOYICHM=;
+	b=HUcuZ1Zg9PjOrz6ied9/HZq9a+vg+AHxU0RhesYsvp4//xEZiU/fyTh9KLQaJUk+4O9b
+	 2umMGxNMy9DZq1qm0zxzfHO0iy7vccquRm5WSBh75IESeWfEbLOST1rjblGAOjWvNQkQN
+	 hTcZvwlZsM6ONK8SxLsPn9KjzOAyvUWeXF1hRzI2PVbGpWT3v+cQMYU2kL1vlAByZWO5R
+	 UOoGB517v7wuroUkev7R0Ka9ulRwiGE/KfH3oSvmlDmL6XakDIZozW4UdNHuh7thpH9mp
+	 TBieYmvNgbIsqL8/xPwLLIktYmN17uRdpbgjzX7uUzPntSmk/CTSyk+GoLWwAT6m5eQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=REuWVVNL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=avIbB8tY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55404607231F;
-	Fri, 13 Nov 2026 16:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3A66072317;
+	Fri, 13 Nov 2026 16:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=REuWVVNL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74051F000C4;
-	Fri, 13 Nov 2026 16:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=avIbB8tY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51001F000C4;
+	Fri, 13 Nov 2026 16:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585635;
-	bh=kX03w4MPBriA+oncsedp1+ygnsk4c/hEmOxwg4oe2BE=;
+	s=korg; t=1794585637;
+	bh=6b/BZArax8QYmPC07I9KKkuoOYw81m7vdDmHAOYICHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=REuWVVNLhoGIHPc1A572dtErVxK1x658MG1jBm5E8eokl7M/zMVw+gC3wr/4+eqFW
-	 KAhzRnWMjnmCFOEKWHzBf0hqvl2n9rPojaN8UNM1QX2JnNpnBLKKiLsOLw1CM6JOu7
-	 mMrlfVBq+261ZG70v4Uajx45ZwNObzjJsrQGmg9A=
+	b=avIbB8tYR42sFcnxXXjfv3pDl5+hz1NBAxBixKRvzAZyWMo5Epj1/575/M7akjcbc
+	 3JmMkARVE9vdVKGoMvdC03cZVFyjJ+pRQrHeCKySfnxOZ9WhPHKMoBsy9javgT3K98
+	 iBFCxOttvDHjs2XGqH5FpjGJ92ymOoDxQidvkTkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Bradley Morgan <brads@mainlining.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Rio <rioo.tsukatsukii@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 255/507] ocfs2: keep locking_state within the cluster connection lifetime
-Date: Fri, 13 Nov 2026 10:49:19 -0500
-Message-ID: <20261113153803.195185697@linuxfoundation.org>
+Subject: [PATCH 7.3 256/507] panic: zero the dynamically allocated taint buffer
+Date: Fri, 13 Nov 2026 10:49:20 -0500
+Message-ID: <20261113153803.230823864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -74,130 +71,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 5bdef466851e39ba752634cbea68e5ea24ccfb24 ]
+[ Upstream commit 723982e7052e65c3b31e8e8c815ffaf2ecfeaa8f ]
 
-The locking_state reader calls ocfs2_dlm_lvb() through the selected
-cluster stack.  Its debug-object reference keeps the tracking list alive,
-but does not keep that stack selected without a cluster connection.
+A %s read of print_tainted()'s string can run past the end of the taint
+buffer while another CPU rebuilds a longer string in it, reading slab
+memory out of bounds into the kernel log (a KASAN slab-out-of-bounds
+report at taint_buf + size).  A warning or an unhandled-signal dump on
+another CPU reaches print_tainted() through dump_stack_print_info().
 
-DLM initialization publishes the file before establishing its connection,
-and DLM shutdown drops the connection while the file still exists.  Both
-the mount error unwind in ocfs2_mount_volume() and ocfs2_dismount_volume()
-remove the debugfs subtree only after ocfs2_dlm_shutdown() has returned.
-Whenever the disconnect releases the last stack reference, which is the
-case for a failed mount and for any unmount without a pending hangup, a
-concurrent reader dereferences a NULL active_stack:
+alloc_taint_buf() sizes the buffer for the longest taint string and
+allocates it with kmalloc(), so the bytes past that string are never
+written and the object holds no permanent NUL terminator.
+_print_tainted() rebuilds the string in place without locking and writes
+the terminator last, so a reader that overtakes a writer extending the
+string past the previous high-water mark finds no terminator inside the
+object and walks off its end.  print_tainted()'s kernel-doc promises the
+string is "always NULL terminated", a guarantee the previous zero-filled
+static buffer kept.
 
-  Mount error unwind                  Debugfs reader
-  ------------------                  --------------
-  ocfs2_mount_volume(): out_dlm
-    ocfs2_dlm_shutdown()
-      disconnect last cluster
-        clear active_stack
-                                      read locking_state
-                                        ocfs2_dlm_seq_show()
-                                          ocfs2_dlm_lvb()
-                                            dereference active_stack
-  fill_super(): out_debugfs
-    remove debugfs subtree
+Allocate the buffer with kzalloc() so its trailing bytes stay NUL and
+every reader stops inside the object.
 
-Publish the debug files only after the connection and the mount lock
-resources are initialized, so a failed DLM initialization has no debug
-reference to drop.  Remove them again in the common DLM shutdown helper
-before the connection is dropped: debugfs removal waits for readers that
-are inside the file operations, and the parent directory is still present
-at that point in every caller.  This covers the mount error unwind, the
-ocfs2_fill_super() failures after a successful mount that dismount with
-mnt_err set, and unmounts whose disconnect releases the stack directly.
+Reproduced on QEMU riscv64 under KASAN by growing the taint set while
+processes took unhandled-signal dumps on several CPUs: the unpatched
+kernel reports a slab-out-of-bounds read at taint_buf + size, the patched
+one is clean.
 
-Only the relevant frames of the report are kept:
-
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-RIP: 0010:ocfs2_dlm_lvb+0x38/0xf0
-Call Trace:
- <TASK>
- ocfs2_dlm_seq_show+0x36a/0xb70
- seq_read_iter+0x480/0x1110
- seq_read+0x362/0x5a0
- full_proxy_read+0x11f/0x180
- vfs_read+0x1a0/0xc20
- ksys_read+0x111/0x200
- </TASK>
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0011-v7-61e3ef8b1ad44ac2e817@gmail.com
-Fixes: 286eaa95c5c5 ("ocfs2: Break out stackglue into modules.")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://lore.kernel.org/20261024020153.830459-1-nickolai@csail.mit.edu
+Fixes: a9dff0d0d11c ("kernel/panic: allocate taint string buffer dynamically")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Cc: Rio <rioo.tsukatsukii@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlmglue.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ kernel/panic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index 1a83241b6d41f..a093c43336080 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -3335,6 +3335,14 @@ static void ocfs2_dlm_shutdown_debug(struct ocfs2_super *osb)
- {
- 	struct ocfs2_dlm_debug *dlm_debug = osb->osb_dlm_debug;
+diff --git a/kernel/panic.c b/kernel/panic.c
+index cec2716019355..f08453f0d8b4d 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -893,7 +893,7 @@ static __init int alloc_taint_buf(void)
  
-+	/*
-+	 * Drain the readers before the cluster stack goes away: the
-+	 * locking_state reader resolves ocfs2_dlm_lvb() through the
-+	 * stack. Every caller removes the parent directory later.
-+	 */
-+	debugfs_lookup_and_remove("locking_state", osb->osb_debug_root);
-+	debugfs_lookup_and_remove("locking_filter", osb->osb_debug_root);
-+
- 	if (dlm_debug)
- 		ocfs2_put_dlm_debug(dlm_debug);
- }
-@@ -3349,8 +3357,6 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
- 		goto local;
- 	}
+ 	size += 1; /* For NULL terminator */
  
--	ocfs2_dlm_init_debug(osb);
--
- 	/* launch downconvert thread */
- 	osb->dc_task = kthread_run(ocfs2_downconvert_thread, osb, "ocfs2dc-%s",
- 			osb->uuid_str);
-@@ -3390,9 +3396,10 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
- 	ocfs2_orphan_scan_lock_res_init(&osb->osb_orphan_scan.os_lockres, osb);
+-	buf = kmalloc(size, GFP_KERNEL);
++	buf = kzalloc(size, GFP_KERNEL);
  
- 	osb->cconn = conn;
-+	if (conn)
-+		ocfs2_dlm_init_debug(osb);
- bail:
- 	if (status < 0) {
--		ocfs2_dlm_shutdown_debug(osb);
- 		if (osb->dc_task)
- 			kthread_stop(osb->dc_task);
- 	}
-@@ -3422,10 +3429,11 @@ void ocfs2_dlm_shutdown(struct ocfs2_super *osb,
- 	ocfs2_lock_res_free(&osb->osb_orphan_scan.os_lockres);
- 
- 	if (osb->cconn) {
-+		/* The disconnect below may release the selected stack. */
-+		ocfs2_dlm_shutdown_debug(osb);
-+
- 		ocfs2_cluster_disconnect(osb->cconn, hangup_pending);
- 		osb->cconn = NULL;
--
--		ocfs2_dlm_shutdown_debug(osb);
- 	}
- }
- 
+ 	if (!buf) {
+ 		panic("Failed to allocate taint string buffer");
 -- 
 2.53.0
 
