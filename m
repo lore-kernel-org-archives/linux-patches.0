@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590582;
-	b=2ZKg6NeDKxTs3CsOChtmuNnu61dMtqB6GMPzJFTpTUUcJarNsAVYOTvNAMq7YdNxyExB
-	 r/iAjCe2VBNNRUlFzk/9jMf92YQlJA3aZC04nDEtVJfgG6KOh494wwCZrSasaRuQEEg2z
-	 Pa/BKzFmzGD/VJOG4Li7hjK4tWicgjwvJeKh54oojInppby/NTXVCsV6oaNHRWhvtOulc
-	 uSq8mGc5nKZAgb/EpEj7jYNsnPcdEQ5JVhE2BA9fK3cYiAasjJLeE0tyIeKmkdHiWw8UO
-	 9wsJIb3tLu9nGqGRDENkS8DeBEubN09egFQ8SirnwbuimnuNHRy6vBJD3tvrKRjX8KA==
+	t=1794590583;
+	b=wDH7YvGJHh/ZWVPvQkBF923RkLp+WIXWW96VXuWNObeYtjrbsemTTPXY3XAnt61j2FJ0
+	 b9wuQFcNxYx7saGi1HV9+Fiqy33AvzJdKVhAgHW13QpubTyk8ZBnTKmpt8CY1l5MxX5Vd
+	 VvZ1XMGYLVGfcbASVwrPAPOcgBXa02pScET/FULfsygY5wHc0c808ExEGuJCh0HNolVdL
+	 VadzfH68PF0gNxSOK0pyCaDuJ+VycmXSKBGeSWLibaopgH9RnH1pVPraBr5JiQ56o2emK
+	 ENdIa7JQg5vUtKI4vpfiFzzFV/xhr1i+3/5UFVsHJxIOsb1JU/BiOCjZiNEFo472ipg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590582;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590583;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kkjnJfRM5ablRvWEzriu5bCopK1W4qO5GQWtzHpsXuU=;
-	b=LZsL5Tke24ArE4MFoV9bCeXUiWw1IOi9zTvOcfmxA8WNfDQU8Fu3VSOg+cnXkNxYN4bS
-	 HK9WmwlRkyuldnGH/haI+P7HL1URie/dJZQtophyoHW3uNUm8Ju4TTMkhrkknMC/Urgq6
-	 pl0nqDVG1tAoHqWre18oWO9Fs/id/V/PlSfj+CN6DJtzwO4b4SLqRKA8ZGGPn7bv6DLxw
-	 5DOBO9iVFWZUqCSAfQ2wIekFhzV9RJ1Y2ctcNmJQNKhnDj9ot0RvykdZH+UBp7R7mQHDd
-	 TqjY1ETJaEGSgzu+0z35C6vJESt6q/k5YZCCaRJADxODeDDiXdB2352bX5t2Bd+lAgw==
+	bh=JbeqD5kYuGMkXWfBtIsLcsQZ1hBppU3EwAErHhSsZnE=;
+	b=qhvZL+EZNg/lMyZ/cuPE3QzD4RYNAtAOetv8igP324GM1hBEK8OkqpNdmDQU0zdJMW1P
+	 03aZLCS7LfLwlLY7I6QyLqD+yXumsmu6Yi4tXgfFiyLK35qfprgGFz94emJPjSlX7nEby
+	 ZUxMPAl8RK2EmHaaLM7+RvLuDw1DjGPXSIUI8oIG0WESQnGUxyXSMdNnFK69p8bUKJqmE
+	 oQQLjhrr+YZplg1laHKD5xWESp4LUIg3XzommwU5Vd7BfJeO7j0sBSXG36/PrhsrNnz8t
+	 Kgr7ombOv7uCKYpY8PlSHc6eP0rn5begAZ+JRoZylS1QoxIFC64y56v4nBN433dJAVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N5bl5es9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M79CGFJZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53117606C081;
-	Fri, 13 Nov 2026 17:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A73A606C081;
+	Fri, 13 Nov 2026 17:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N5bl5es9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04CA1F000C9;
-	Fri, 13 Nov 2026 17:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M79CGFJZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2201F000C6;
+	Fri, 13 Nov 2026 17:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590581;
-	bh=kkjnJfRM5ablRvWEzriu5bCopK1W4qO5GQWtzHpsXuU=;
+	s=korg; t=1794590583;
+	bh=JbeqD5kYuGMkXWfBtIsLcsQZ1hBppU3EwAErHhSsZnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N5bl5es9tKPa9CIDPMyJnlmTzIWlKyDCRc3c1XpbR92Dah6Cww5D0GDwYXHPa5nBF
-	 QJ5VCxzH+ElWcx3kwz+yPk8Jab2miLX9TQG2XvV8xpO/5OLy+5AesI2oa/RPYUi4Nb
-	 i35kHJRg3OMfMfNZ7pp7ODW17Ir2C8tomchKzak8=
+	b=M79CGFJZLWhGcN+mTqWeXVQAMTpi5+zMePG8eXAEILItiBxYJ1kiMQ+LAlt9jF54t
+	 nMgCfkd6MoSFeetgDLWVN/5bkRyk1mBCVRdEmA/Dok55SinoaYoeHHjlBQwNHAkVu5
+	 TeZ5Dwgv6bt+q2zomBlWP0sXUDUHXUHQ1aHA9980=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 454/686] x86/nmi: Ignore negative NMI handler durations
-Date: Fri, 13 Nov 2026 10:49:47 -0500
-Message-ID: <20261113153836.256759786@linuxfoundation.org>
+Subject: [PATCH 6.18 508/686] ALSA: usb-audio: Protect Roland control activation
+Date: Fri, 13 Nov 2026 10:50:41 -0500
+Message-ID: <20261113153838.106398236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,71 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit ade63af6cfb7b3ca19ced28730fd6461e8d1d410 ]
+[ Upstream commit 19b42c1fff7f220a6346c614d79ce1bda6d95b40 ]
 
-I am seeing NMI handlers in the Meta fleet reported as running for
-about 584 years. Over 30 days, 11 AMD and Intel machines logged 637
-such lines, for example:
+The USB MIDI driver changes the Roland MIDI Input Mode control's access
+flags directly from the rawmidi open and close paths.  These changes are
+not protected by the ALSA control core and the corresponding notifications
+can race with control access.
 
-  AMD EPYC 9D25 (family 0x1a, model 0x11, stepping 0x0):
-  [ 1650.616627] INFO: NMI handler (nmi_cpu_backtrace_handler.llvm.9643156322683129580) took too long to run: 18446744073709.551 msecs
+Use snd_ctl_activate_id() so that the control core updates the access flags
+and sends the notification under its lock.  Release the USB MIDI mutex
+before calling it because the control write path holds controls_rwsem while
+roland_load_put() takes the USB MIDI mutex.
 
-  Intel Xeon Platinum 8321HC (family 0x6, model 0x55, stepping 0xb):
-  [360448.230129] INFO: NMI handler (perf_event_nmi_handler) took too long to run: 18446744071018.936 msecs
+Keep the state transition and alternate-setting change under the USB MIDI
+mutex; rawmidi's open mutex serializes the enclosing open and close paths.
 
-  Intel Xeon D-2191A (family 0x6, model 0x55, stepping 0x4):
-  [81787.188959] INFO: NMI handler (ghes_notify_nmi) took too long to run: 18446744073709.545 msecs
-
-nmi_handle() times each handler with two sched_clock() reads. When the
-second read is lower than the first, the u64 subtraction wraps, and
-nmi_check_duration() treats the result as a duration. In the three
-examples, the clock went back by less than 1 us, by 2.7 s and by about
-6 us.
-
-The wrapped value is also stored in action->max_duration. Every later
-real duration is smaller, so the handler is never reported again until
-the next boot.
-
-Whatever makes the clock read lower, a negative difference is not a
-duration, so return before it is stored or reported. A clock that steps
-forward is not covered, since that cannot be told from a real stall.
-
-A backwards clock is still worth knowing about, so print the size of
-the step once per boot. This uses pr_warn_once() rather than WARN, as a
-stack trace says nothing about the clock and panic_on_warn machines
-should not go down for it.
-
-Fixes: 2ab00456ea8a ("x86: Warn when NMI handlers take large amounts of time")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Fixes: 96f61d9ade82 ("sound: usb-audio: allow switching altsetting on Roland USB MIDI devices")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261027-nmi_negative-v1-1-b436a005eb8a@debian.org
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260929141726.2166899-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/nmi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/usb/midi.c | 53 ++++++++++++++++++++++++------------------------
+ 1 file changed, 27 insertions(+), 26 deletions(-)
 
-diff --git a/arch/x86/kernel/nmi.c b/arch/x86/kernel/nmi.c
-index be93ec7255bfc..eece49c490e07 100644
---- a/arch/x86/kernel/nmi.c
-+++ b/arch/x86/kernel/nmi.c
-@@ -114,6 +114,14 @@ static void nmi_check_duration(struct nmiaction *action, u64 duration)
+diff --git a/sound/usb/midi.c b/sound/usb/midi.c
+index 30d0684920319..c404412ae53b9 100644
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -1146,41 +1146,42 @@ static int substream_open(struct snd_rawmidi_substream *substream, int dir,
+ 			  int open)
  {
- 	int remainder_ns, decimal_msecs;
+ 	struct snd_usb_midi *umidi = substream->rmidi->private_data;
+-	struct snd_kcontrol *ctl;
++	struct snd_ctl_elem_id ctl_id;
++	bool activate_ctl = false;
++	bool active;
  
-+	/* sched_clock() went backwards? */
-+	if ((s64)duration < 0) {
-+		pr_warn_once("NMI handler (%ps): sched_clock() went backwards by %lld ns on CPU%d\n",
-+			     action->handler, -(s64)duration,
-+			     smp_processor_id());
-+		return;
-+	}
-+
- 	if (duration < nmi_longest_ns || duration < action->max_duration)
- 		return;
+ 	guard(rwsem_read)(&umidi->disc_rwsem);
+ 	if (umidi->disconnected)
+ 		return open ? -ENODEV : 0;
+ 
+-	guard(mutex)(&umidi->mutex);
+-	if (open) {
+-		if (!umidi->opened[0] && !umidi->opened[1]) {
+-			if (umidi->roland_load_ctl) {
+-				ctl = umidi->roland_load_ctl;
+-				ctl->vd[0].access |=
+-					SNDRV_CTL_ELEM_ACCESS_INACTIVE;
+-				snd_ctl_notify(umidi->card,
+-				       SNDRV_CTL_EVENT_MASK_INFO, &ctl->id);
+-				update_roland_altsetting(umidi);
++	scoped_guard(mutex, &umidi->mutex) {
++		if (open) {
++			if (!umidi->opened[0] && !umidi->opened[1]) {
++				if (umidi->roland_load_ctl) {
++					ctl_id = umidi->roland_load_ctl->id;
++					activate_ctl = true;
++					active = false;
++					update_roland_altsetting(umidi);
++				}
+ 			}
+-		}
+-		umidi->opened[dir]++;
+-		if (umidi->opened[1])
+-			snd_usbmidi_input_start(&umidi->list);
+-	} else {
+-		umidi->opened[dir]--;
+-		if (!umidi->opened[1] && !umidi->keep_input_running)
+-			snd_usbmidi_input_stop(&umidi->list);
+-		if (!umidi->opened[0] && !umidi->opened[1]) {
+-			if (umidi->roland_load_ctl) {
+-				ctl = umidi->roland_load_ctl;
+-				ctl->vd[0].access &=
+-					~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
+-				snd_ctl_notify(umidi->card,
+-				       SNDRV_CTL_EVENT_MASK_INFO, &ctl->id);
++			umidi->opened[dir]++;
++			if (umidi->opened[1])
++				snd_usbmidi_input_start(&umidi->list);
++		} else {
++			umidi->opened[dir]--;
++			if (!umidi->opened[1] && !umidi->keep_input_running)
++				snd_usbmidi_input_stop(&umidi->list);
++			if (!umidi->opened[0] && !umidi->opened[1]) {
++				if (umidi->roland_load_ctl) {
++					ctl_id = umidi->roland_load_ctl->id;
++					activate_ctl = true;
++					active = true;
++				}
+ 			}
+ 		}
+ 	}
++	if (activate_ctl)
++		snd_ctl_activate_id(umidi->card, &ctl_id, active);
+ 	return 0;
+ }
  
 -- 
 2.53.0
