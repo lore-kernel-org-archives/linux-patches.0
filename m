@@ -1,70 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591576;
-	b=R7KWAGGuBq9+TJL2kI3R6pjAY1aLxyzwi5wXYolr41sgGxNVSiuKTbZc4FX05uP0AzYf
-	 INsm9RkzPdCVTBZrHKaZ4u5kxgGA8PILJah3Rjy2wywOEs0MiYXzfIBHN+al2DwTPgHxn
-	 X5SC6RfcVpASRr/kYFoCNfOVVK8iXJuNVOG+hoHbt6LmMt5Dvcdlwq/Y2z0QlxJNnf9lB
-	 YZW5FilETFy8MdFQu0Qf7CkxHmPGfa159eZTlAcXAJzQMDK9Afj4Ool/KDq2+dak37fhe
-	 kSlS2AlDxlQcWBjF2Xh+16ACMXMdkrHwirlRlltZ9XzGAwAJ9ofCz1jjhniOkL1eYZA==
+	t=1794591577;
+	b=pxLJsm5Es6LOl7SI2oP9CRQaZBOgfVJFdidxOw+YV7GUv/mJZcBTfW4stRaSB1YFGt6h
+	 gEYOtSyxPQ2mBuj+vvI2D7prsR6DjhHlnhOAay2bI8KryZf/eoJgq6S0jjJdbBDGAuJ66
+	 6sdp0/sgV5tVHtDzVCbn05Yn+5EnpyHmf1UtE3cEnrkOQDx9naE4y03HBDoXluDDsknom
+	 47UPNBd0JMfv4NQoEfPNPvUPhMP9HWIMKhc+snijAVXYQsvsAK2GdFxMnlgIJb6CK+PLt
+	 FhQUonW7uG668Zd3uEoN4dJqbIseLCtv9Gi2xJ3r6jfBtExo3Ib16VICfDz4gXSs64w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591576;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OEl7Mi3avismWvHUKbfpMKxAv1frIOTBZh+KFxr1Qj0=;
-	b=JB5Fo1lV4rSLsv2MNoRkyYc/ujhQ28UNrw6RQURTxDP7dIsDo3HCS3WaJM0jPd8W0YRO
-	 OKMqaTKVXVn86BJ+9DvuSBOizs/xDhl4gQHlvICQBjtr9RdBpoJx5QrSwSAj+C9aHajTL
-	 N3doGAYHsB6J6HWjKHsk6Gmnnz+xkTBaJtZakfJDw/yjfnERHBwePl1ASdq+RR5qUmuAc
-	 7SC01sWiMPwglsCvNE4rE16zf7s8wJz5UgamHDSpeQJpvnKqU/OM4uSL9PL6kP0i8aqI4
-	 fsrwaKpkbHppZPdHxeqSc+kIkNaqRB4E11iqvds4lQm2qxsuf25486VH4vmwlTV/Szw==
+	bh=aRE40G5NPeiUOu8dMXYZFmMneIVTz8ia9v1ns0q/WlA=;
+	b=BjMALcDrr+KYlLG+hbqLDYB/PTjqSeBfu/U7lyqH+8f8kUPyxNdZaemiSsQDJ31n46Ns
+	 lIttiDEKLp85kFOKxB6tfL9sxGoPA/wOUX//DODTi2pVnr+kjinJojvuAKBlEDemCcTZ7
+	 GBz+EVUjwpp45ZNRY3jDvzh5MsHNjFT0xAE4Z5WNVfABl4Fip/7B4phiumfOIUJXvWiea
+	 ArP6LuJ9WREUQQSuKCoeVvsFwu8/t85473SaL2L86MdZwJVANrVyRwEuDQUdvf/EdlRld
+	 0pzabRMrsObpnYbdTooMVCgp380qfnWNTptmLLjCw87v5JL3MFIh6wTPltYfe2FN4ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XahBX/L8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qy7oFsgI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452E2606E64C;
-	Fri, 13 Nov 2026 17:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB06606E234;
+	Fri, 13 Nov 2026 17:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XahBX/L8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12271F000C7;
-	Fri, 13 Nov 2026 17:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qy7oFsgI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292C71F000C9;
+	Fri, 13 Nov 2026 17:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591576;
-	bh=OEl7Mi3avismWvHUKbfpMKxAv1frIOTBZh+KFxr1Qj0=;
+	s=korg; t=1794591577;
+	bh=aRE40G5NPeiUOu8dMXYZFmMneIVTz8ia9v1ns0q/WlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XahBX/L8ub1WaEr0LtLSyipaGdQ37Gzh0ohYQ9hjmp69fV71KpXJDXDnHoB1DoL/I
-	 8J9Hd9cLrhKPcLOkDL6zq/hEdXhf4samLqEiM2eo5udQFv0h2dHNjRgsoyS8UIWTlm
-	 wWAqv25K2WN+gRPec/0RJ1WZbSMYNakN2gQ/DuuQ=
+	b=Qy7oFsgIA4GlrPX9AZoL374Mml57sbXTa4nPoOIYvS8khMkEGIbMRkCbFbFpk1xWx
+	 7VpwnNmS6/XbZueM1CDlroxJoQCv5Sv+yB2TQ93wFfIZo5zORZcRqbqngJka4LjV0z
+	 HYOKzc4vzmxJVY0+/xNg3MMd4j/uOnwVarX+wY1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Adam Litke <agl@us.ibm.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Rik van Riel <riel@surriel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Yingjie Wang <1075151112@qq.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 607/670] mm/vma: dont leak the commit charge on mmap failure
-Date: Fri, 13 Nov 2026 10:52:51 -0500
-Message-ID: <20261113153832.391590598@linuxfoundation.org>
+Subject: [PATCH 6.12 625/670] nvme-tcp: validate the TLS handshake timeout
+Date: Fri, 13 Nov 2026 10:53:09 -0500
+Message-ID: <20261113153832.976039163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -86,129 +70,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Yingjie Wang <1075151112@qq.com>
 
-[ Upstream commit aa09311c40f6d3aa6037065e17d257ffa48b9402 ]
+[ Upstream commit 799203afd298b1f8e9ee49815eb38f775f211299 ]
 
-Patch series "mm: various (urgent?) fixes", v1.
+tls_handshake_timeout is writable but stored as a signed int. Multiplying
+the value by MSEC_PER_SEC and HZ therefore uses signed arithmetic.
 
-Here are various MM fixes.  The majority was reported by Josef at
-Anthrophic, the remainder was found while reviewing/overhauling them.
+With HZ=1000, setting it to 2147484 overflows both multiplications. If
+the handshake request is accepted and its completion remains pending,
+schedule_timeout() reports a wrong timeout value with a stack dump and
+returns zero. The handshake then fails immediately with -ETIMEDOUT,
+while the handshake agent was given about 24.9 days. Negative values
+such as -1 have the same kernel-side effect.
 
-Two issues/fixes reported are not included, as we are discussing
-(better) alternatives on the list already.
+Store the parameter as an unsigned int and reject values that cannot be
+represented both by tls_handshake_args::ta_timeout_ms and by a safe
+jiffies delay. Take one snapshot so a concurrent parameter update cannot
+give the handshake agent and completion wait different timeouts.
+Document the accepted range for built-in use.
 
-I left most of the original commit messages as schloppy as they are: I
-don't particularly care as long as the code is in good shape and as long
-as they are not actively wrong.  But I (and Mike) could not be stopped
-from overhauling at least some of them.
+wait_for_completion_interruptible_timeout() returns the remaining
+jiffies as a long after a successful completion. Keep that result in a
+long because an accepted timeout can exceed INT_MAX jiffies on 64-bit
+systems.
 
-While I don't think there is anything too critical in here, I think this
-is a good opportunity to see how fast we can get pre-screened/pre-reviewed
-fixes upstream that might be security-related.
+Negative and oversized values now fail with -EINVAL. Keep zero valid,
+preserving the existing immediate-timeout behavior.
 
-The majority are hugetlb + uffd issues, that are not actually that
-relevant for most installations.  But all things that should just get
-fixed.  Some uffd fixes need proper follow ups to fix some more of the
-root causes of leftover UFFD PTE bits (or proof that there are none
-remaining).
-
-This patch (of 10):
-
-When an accountable mapping replaces existing mappings (MAP_FIXED),
-__mmap_setup() only charges the difference between the size of the new
-mapping and the VM_ACCOUNT pages it replaces. It then zeroes
-vms->nr_accounted so that unmapping the old VMAs does not return their
-charge, which now backs the new mapping.
-
-If the operation fails after that point, the error path returns
-map->charged, i.e. only the difference. By then vms_clean_up_area() has
-zapped the page tables and closed the old VMAs, so
-vms_abort_munmap_vmas() cannot reattach them. It leaves a gap and
-finishes the unmap with vms_complete_munmap_vmas(), which uncharges
-vms->nr_accounted == 0 pages. The old VMAs are gone, the new one was
-never created, and the charge of the old ones is never returned, not
-even when the process exits.
-
-No privilege is needed to hit this, only a file whose mmap hook fails,
-for example a socket (sock_no_mmap() returns -ENODEV):
-
-	p = mmap(NULL, len, PROT_READ | PROT_WRITE,
-		 MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-	mmap(p, len, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_FIXED,
-	     socket_fd, 0);
-
-Every iteration adds len to Committed_AS for good. With
-vm.overcommit_memory=2 this lets any user make all further accountable
-allocations in the system fail with -ENOMEM.
-
-Once the new mapping has taken over the charge of the mappings it
-replaces, it owns the charge for all of its pages. Record that in
-map->charged, so that the error path returns all of it.
-
-A failure in __mmap_setup() itself is not affected: it happens before
-the charge is taken over and the old VMAs are reattached with their
-charge intact.
-
-Original fix generated by an LLM and sent in private by Josef.
-
-[david@kernel.org: call variable "uncharged" and make it const, adjust/simplify comments]
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-0-42796911043b@kernel.org
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-1-42796911043b@kernel.org
-Fixes: 4f87153e82c4 ("mm: change failure of MAP_FIXED to restoring the gap on failure")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Adam Litke <agl@us.ibm.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted __mmap_setup() changes to use existing local variables in __mmap_region() ]
+Fixes: be8e82caa685 ("nvme-tcp: enable TLS handshake upcall")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ sashal: Adjusted documentation insertion context because the neighboring nvme.quirks and nvmet_tcp.tls_handshake_timeout entries are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mmap.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ .../admin-guide/kernel-parameters.txt         |  5 +++
+ drivers/nvme/host/tcp.c                       | 34 ++++++++++++++-----
+ 2 files changed, 31 insertions(+), 8 deletions(-)
 
-diff --git a/mm/mmap.c b/mm/mmap.c
-index 2d69552e6be38..c930e03bd7997 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -1415,14 +1415,17 @@ static unsigned long __mmap_region(struct file *file, unsigned long addr,
- 	 * Private writable mapping: check memory availability
- 	 */
- 	if (accountable_mapping(file, vm_flags)) {
--		charged = pglen;
--		charged -= vms.nr_accounted;
--		if (charged) {
--			error = security_vm_enough_memory_mm(mm, charged);
-+		const unsigned long uncharged = pglen - vms.nr_accounted;
-+
-+		/* Charge only what's not already charged by mappings we replace. */
-+		if (uncharged) {
-+			error = security_vm_enough_memory_mm(mm, uncharged);
- 			if (error)
- 				goto abort_munmap;
- 		}
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 82149bce3ddef..c0748a3c5aa6e 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -4214,6 +4214,11 @@
+ 			This can be set from sysctl after boot.
+ 			See Documentation/admin-guide/sysctl/vm.rst for details.
  
-+		/* Our new mapping owns the entire charge now. */
-+		charged = pglen;
- 		vms.nr_accounted = 0;
- 		vm_flags |= VM_ACCOUNT;
- 		vmg.flags = vm_flags;
++	nvme_tcp.tls_handshake_timeout=
++			[NVME] NVMe/TCP host TLS handshake timeout in seconds.
++			Valid values range from 0 to the smaller of
++			UINT_MAX / 1000 and MAX_JIFFY_OFFSET / HZ. Default: 10
++
+ 	ohci1394_dma=early	[HW,EARLY] enable debugging via the ohci1394 driver.
+ 			See Documentation/core-api/debugging-via-ohci1394.rst for more
+ 			info.
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index ab473626e62a0..951506216714d 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -6,6 +6,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ #include <linux/module.h>
+ #include <linux/init.h>
++#include <linux/jiffies.h>
+ #include <linux/slab.h>
+ #include <linux/err.h>
+ #include <linux/key.h>
+@@ -47,9 +48,24 @@ MODULE_PARM_DESC(wq_unbound, "Use unbound workqueue for nvme-tcp IO context (def
+ /*
+  * TLS handshake timeout
+  */
+-static int tls_handshake_timeout = 10;
++static unsigned int tls_handshake_timeout = 10;
+ #ifdef CONFIG_NVME_TCP_TLS
+-module_param(tls_handshake_timeout, int, 0644);
++static int tls_handshake_timeout_set(const char *val,
++				     const struct kernel_param *kp)
++{
++	return param_set_uint_minmax(val, kp, 0,
++		min_t(unsigned long, UINT_MAX / MSEC_PER_SEC,
++		      MAX_JIFFY_OFFSET / HZ));
++}
++
++static const struct kernel_param_ops tls_handshake_timeout_ops = {
++	.set = tls_handshake_timeout_set,
++	.get = param_get_uint,
++};
++
++module_param_cb(tls_handshake_timeout, &tls_handshake_timeout_ops,
++		&tls_handshake_timeout, 0644);
++__MODULE_PARM_TYPE(tls_handshake_timeout, "uint");
+ MODULE_PARM_DESC(tls_handshake_timeout,
+ 		 "nvme TLS handshake timeout in seconds (default 10)");
+ #endif
+@@ -1946,8 +1962,10 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
+ {
+ 	int qid = nvme_tcp_queue_id(queue);
+ 	int ret;
++	long wait_ret;
+ 	struct tls_handshake_args args;
+-	unsigned long tmo = tls_handshake_timeout * HZ;
++	unsigned int timeout = READ_ONCE(tls_handshake_timeout);
++	unsigned long tmo = (unsigned long)timeout * HZ;
+ 	key_serial_t keyring = nvme_keyring_id();
+ 
+ 	dev_dbg(nctrl->device, "queue %d: start TLS with key %x\n",
+@@ -1961,7 +1979,7 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
+ 	if (nctrl->opts->keyring)
+ 		keyring = key_serial(nctrl->opts->keyring);
+ 	args.ta_keyring = keyring;
+-	args.ta_timeout_ms = tls_handshake_timeout * 1000;
++	args.ta_timeout_ms = timeout * MSEC_PER_SEC;
+ 	queue->tls_err = -EOPNOTSUPP;
+ 	init_completion(&queue->tls_complete);
+ 	ret = tls_client_hello_psk(&args, GFP_KERNEL);
+@@ -1970,10 +1988,10 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
+ 			qid, ret);
+ 		return ret;
+ 	}
+-	ret = wait_for_completion_interruptible_timeout(&queue->tls_complete, tmo);
+-	if (ret <= 0) {
+-		if (ret == 0)
+-			ret = -ETIMEDOUT;
++	wait_ret = wait_for_completion_interruptible_timeout(&queue->tls_complete,
++							     tmo);
++	if (wait_ret <= 0) {
++		ret = wait_ret < 0 ? -ERESTARTSYS : -ETIMEDOUT;
+ 
+ 		dev_err(nctrl->device,
+ 			"queue %d: TLS handshake failed, error %d\n",
 -- 
 2.53.0
 
