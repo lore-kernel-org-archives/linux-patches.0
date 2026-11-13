@@ -1,51 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590138;
-	b=Oq+fAvMOIFD5bqJdYoa5HZg2RK/u3sJR3QORfgHiYsKwWTJNQue07YvFi2oD75K4rIn3
-	 5Zou3Oelrl51Bl5i7zI7laElCsrY2h2UkSjCkI+2mi8PFhu1/EZS9nhtQEMa550jSdHfZ
-	 A//oBG0IgrmCAFHGRZrBcNrABzLHSlp5n4cjTbTbc5aGtIADisAAK4Vppvxrwho4j3yjs
-	 F3PECvZLy4jj4POq/H5G5jNp/7WJuA2AqIHFdHLLSdNJEjJ3vSFWYCEb+nqaUJxV9uzku
-	 Z+njaBvSR+0z4B6QzLEzFZmqzSedHzroWz0CzTHobjq68k9D2T9HoA2FrtYQaz8gs+w==
+	t=1794590139;
+	b=0PsDNxWvhGK98YVBz2/1z4PWyrtut4ULuDVDJZCH/4R9eHH7h1HvZ7Aj4e7lalqGTmnh
+	 4iKJ7hM07CFQJdntyobgyc/szJgVplzxPtcHG3VOqqlRzBdwk7kLJHubLxCqdW8pfetES
+	 xoUmA/klQZqJcqfiaj1I+1mv0kEuk1Xky2v4Hz5y8FROseVU1CUEAMPYENg8Df6y68AHh
+	 xXYU6zcwZhPDpfB8chV72PzvGRTk140SqgqDfl6KYMXA7tnI/UEd19/stJAYr/uK6QjAJ
+	 YONiaEB7hejQZMJXGDEjJxq6pKCZQdbz1cJK16SfYW7lhalmvlMV92v/VbMNTud0jwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590139;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DAOo5Kx3yAXWl7oYt1fh5zFt74Z2C1DEwrqgVcuusGg=;
-	b=FCc9D6fz/PHZCoq0f8FpXePrjYy53BJL1LzE4sMGByEdSWgrhdFoAEyqc1wF2KySwLXT
-	 c1NuWXT0J0Jvn5Q683+Zo4iveSOXJZVlR7uE35YcrAakHQ3NgPvzx53RponiIl9Ooxt9y
-	 lSl0Zaoo2sxuZePM7O4M9nHAuxKZZ/00hc41349u3N9OVAnwfIfJ63P0TSHiYJjXQJmov
-	 AGR1Jodi6GVh+1MDmUNNJq4cR6UMuwHvQfF1iKKoKY3R2qXbL70csn4kZrhrhhkxfk4Oj
-	 TERzSqfYKJuGiGKrEmgAUqkMB82qHDRfSKrtjtMrnhLRQccXVqTNGN9ZZr2Mp/hcRlQ==
+	bh=Xn/8M+rtWplWl8Huhpv3bMuKqKcS5wsbpvpQm5ZgzDM=;
+	b=fRQKoeJgwE5J9Ss3PA63GJIWXtZiy1B2aO0jgabdCrDO2+yIa2e/tPB81VRpLbIpiGVg
+	 88T5wiJPPvODmLnP/MukpZTfEayRpe32AMqd2Ggn6Mnl8TrEZdmE+SAMoP1xUYaQBc28U
+	 NBk8yRGBcw0Uy51LoRn9fz3gK0nZJQ115iT4wT2yUvSBFf2trk9AeQkHMbLTvY8hXTrDY
+	 pj3puzRqsLUIVEszcW9XKT/XdLwIo44gdDBFt1UN3p0hHoCPB9REZZ9oUbUkAjqasgLR9
+	 7onmVGgH2qlxpllaPsK3VLPZzVe5IQ3lKopl2iNOsRyuRnF/D7K1+eGEpJ8oBw7vUZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UbjIqAI/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1NlEOFw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3021D60A5BE3;
-	Fri, 13 Nov 2026 17:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F2F606E20D;
+	Fri, 13 Nov 2026 17:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UbjIqAI/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D671F000C5;
-	Fri, 13 Nov 2026 17:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1NlEOFw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0458E1F000C5;
+	Fri, 13 Nov 2026 17:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590138;
-	bh=DAOo5Kx3yAXWl7oYt1fh5zFt74Z2C1DEwrqgVcuusGg=;
+	s=korg; t=1794590139;
+	bh=Xn/8M+rtWplWl8Huhpv3bMuKqKcS5wsbpvpQm5ZgzDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UbjIqAI/1wk+Pfrf0WbjO22PKkI5uwItvDy5Z9/JxB0yDcIi7VA4vyw+UVHg93HVa
-	 amwap3PSQptv2NwpydP1U5IMrnlaGoBM1qUWskNHuJZZMJm61qK/xto1HE7ibnXmmx
-	 axlLfSJZa8ugsMiSf+etDyfdLw9WZZr3pms91j60=
+	b=H1NlEOFwYB98C9HYVLhsQsjCjOf1KnnxKmVmwTfP2DDN7nSeJV6mcXk2ElhIVwQ/J
+	 aXENaDknGpERuWQLzLPf9yEQAx5X5ITRDsYY1YiLqDZHWe2eXL9Ta3H3YaSi2hdYxa
+	 2V3ojjgIOa1E9vvtFIxzp6LLyCXBqGw97P/yvt58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+ced4d9a8cadb5ef3adae@syzkaller.appspotmail.com,
+	Muchun Song <muchun.song@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Chris Li <chrisl@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 138/686] netrom: only update the BPQ extension flag on circuit set-up frames
-Date: Fri, 13 Nov 2026 10:44:31 -0500
-Message-ID: <20261113153825.480718453@linuxfoundation.org>
+Subject: [PATCH 6.18 156/686] mm/memcontrol: fix data-race on reading jiffies_64
+Date: Fri, 13 Nov 2026 10:44:49 -0500
+Message-ID: <20261113153826.078368387@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -67,64 +78,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-For a frame received on an existing circuit, nr_rx_frame() sets bpqext
-when the frame is a CONNACK of 22 bytes and clears it for any other
-frame. Yet only the set-up frames tell whether the peer uses the BPQ
-extension: a CONNACK of 22 bytes, or a CONNREQ of 37 bytes. The first
-INFO frame of an accepted circuit therefore clears the flag set from
-the peer's CONNREQ.
+[ Upstream commit c20cf1c3c8cdd98618d6fcc794003a0e003ae858 ]
 
-When a BPQ peer then repeats its CONNREQ, because our CONNACK was lost,
-nr_state3_machine() answers with a CONNACK built with bpqext clear,
-without the TTL byte that the first CONNACK had.
+KCSAN reported a data-race between tick_do_update_jiffies64() updating
+jiffies_64 and mem_cgroup_flush_stats_ratelimited() reading it directly.
 
-Only change bpqext on a CONNACK or a CONNREQ, from its length.
+Unlike jiffies, jiffies_64 is not volatile, so raw reads are plain
+accesses and can even be torn on 32-bit.  Use get_jiffies_64() instead,
+and fix the same pattern in mem_cgroup_flush_foreign().
 
-Tested on two QEMU guests (6.12.94, KASAN, lockdep) linked by KISS: A
-speaks NET/ROM itself, opens a circuit to a listening socket on B with a
-37-byte CONNREQ, sends an INFO frame on it, then repeats the CONNREQ.
-
-  before: first CONNACK 22 bytes, second one 21 bytes (no BPQ byte)
-  after:  both CONNACK 22 bytes
-
-No kernel report in either run.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit e0950e6b8432455e36dcdd4fcdcdf51b27e7404c)
+Link: https://lore.kernel.org/20260827025457.116191-1-jiayuan.chen@linux.dev
+Fixes: 508bed884767 ("mm: memcg: change flush_next_time to flush_last_time")
+Fixes: 97b27821b485 ("writeback, memcg: Implement foreign dirty flushing")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+ced4d9a8cadb5ef3adae@syzkaller.appspotmail.com
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/af_netrom.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ mm/memcontrol.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
-index d9b2d74d44c8d..86c0fca779051 100644
---- a/net/netrom/af_netrom.c
-+++ b/net/netrom/af_netrom.c
-@@ -961,10 +961,16 @@ int nr_rx_frame(struct sk_buff *skb, struct net_device *dev)
- 		bh_lock_sock(sk);
- 		skb_reset_transport_header(skb);
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 2aa741316b49f..eec89dcb7801b 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -604,7 +604,7 @@ static void __mem_cgroup_flush_stats(struct mem_cgroup *memcg, bool force)
+ 		return;
  
--		if (frametype == NR_CONNACK && skb->len == 22)
--			nr_sk(sk)->bpqext = 1;
--		else
--			nr_sk(sk)->bpqext = 0;
-+		/*
-+		 * Only the circuit set-up frames tell whether the peer uses
-+		 * the BPQ extension: a CONNACK of 22 bytes, or a CONNREQ of
-+		 * 37 bytes (repeated, for a circuit already accepted). The
-+		 * other frames say nothing about it.
-+		 */
-+		if (frametype == NR_CONNACK)
-+			nr_sk(sk)->bpqext = (skb->len == 22);
-+		else if (frametype == NR_CONNREQ)
-+			nr_sk(sk)->bpqext = (skb->len == 37);
+ 	if (mem_cgroup_is_root(memcg))
+-		WRITE_ONCE(flush_last_time, jiffies_64);
++		WRITE_ONCE(flush_last_time, get_jiffies_64());
  
- 		ret = nr_process_rx_frame(sk, skb);
- 		bh_unlock_sock(sk);
+ 	css_rstat_flush(&memcg->css);
+ }
+@@ -632,7 +632,7 @@ void mem_cgroup_flush_stats(struct mem_cgroup *memcg)
+ void mem_cgroup_flush_stats_ratelimited(struct mem_cgroup *memcg)
+ {
+ 	/* Only flush if the periodic flusher is one full cycle late */
+-	if (time_after64(jiffies_64, READ_ONCE(flush_last_time) + 2*FLUSH_TIME))
++	if (time_after64(get_jiffies_64(), READ_ONCE(flush_last_time) + 2 * FLUSH_TIME))
+ 		mem_cgroup_flush_stats(memcg);
+ }
+ 
+@@ -3512,7 +3512,7 @@ void mem_cgroup_flush_foreign(struct bdi_writeback *wb)
+ {
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(wb->memcg_css);
+ 	unsigned long intv = msecs_to_jiffies(dirty_expire_interval * 10);
+-	u64 now = jiffies_64;
++	u64 now = get_jiffies_64();
+ 	int i;
+ 
+ 	for (i = 0; i < MEMCG_CGWB_FRN_CNT; i++) {
 -- 
 2.53.0
 
