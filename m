@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794587898;
-	b=iUy43IO9CU7iJ+fkEl6Y5P/AKjbJ/6k8jeN6fPpqEAtJveMpj12uv5hKajk4wqlZCiDI
-	 9qOMeFHtqY5dumkNKKnuqbTGqFRy136OVrm8eHy6r4a2zBzlKLwc7YlBARe1WWoHkjSGG
-	 fs1739lp/ZxJiJrX+qd9H/NGULSR6s2NzbPGxUqIecqQX2FXn1eJxo8i7OVF4rkS9L3MU
-	 5fIZNexrnw0vZvxTgkHczgOIsDK75G6s14UAinPw2QjZV9hE7g7X4CLgcnGiMtW5qI+ul
-	 yWjxS7HHoCX1PvewfryidBPmuPEd9WCEkfeAIlQGzd0Q4IqlFPDMCmpoDVyoN9rzE3w==
+	t=1794589937;
+	b=3bXMEsuKRPWC73idnhE2sPx9PFH6egO+Uo9cBup5wnCOzru7o9I397SgC+ytmJeW8UTT
+	 8iaFNeghE1PGVPcxCwh9X11S5guHLpdQVbeOGRJX0THzJ0pY0wWngFwnT+OARhWmgibWF
+	 QOaInryskrUO87kx52TgV3GRZstlD6v2CMUFrfUvhhOt0eYCt80mJhFyBW4ERjB1l6Q/6
+	 Vi3///p5zdbxyJdUPz5cABvipAvk2C36oEk5sq/Bemf5SyWAmTzOVucemofEA4ogRPC5l
+	 rcdCBJG6v7NhszEH6oJdaibKMe9GyjiDOVNUDk/rQzMHAGYbEa9Jc7wK9DS4Hgbvs6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794587898;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794589937;
 	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
 	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=ECa4v0ymAEdrf36TMzDEI0AgHj/I0QXy3tVu9aZBtW4=;
-	b=ueqOeRtdb/5ye0aR0mC87y389TskUmtVekbrxCycpI49Fe3uX14qwaFOBP7aCKpjtg0e
-	 gQkKcpPHf4I2FpMYZ6k/xz9AhWZgkxuXugXCTBUXG1kfzFnuQQ56SAor9a3l5vzJevf3W
-	 PGX9TRpvttk6yR9aJhAeCNIxBherTVDprgnqzFPodz9KjlY5djPIToRYrIrsyY9tZsQfN
-	 tmosa1XmChtO3Rgweti/zXA7tIY1VZU0nunICq2QIcTEa4vrU6nC8s2K8+a+kGWJEyqLM
-	 IKptNrouy1HhWIynJMTWnx+8WFI5Xk2iQDxLzWq7vy11gSau6dvOMM10r5mDLEzQQjg==
+	bh=EghNJb/w9KWddSZy7Eooq4G2yL9GJh+Li1g9aAPh8jM=;
+	b=s1P+93bNYHhJo6wQdjiFvS7nYI8meRG+LZqjxmveETary8Brhcm88MYxmvrHFCj+c76L
+	 91u0aJgciEPh/hDqszXm0BL9E7WGnhhJtxiCHsL1zZVkoNVk0VxSEm+3PrliRn9yBikFG
+	 v/+NpzbXmncz/e1JZv9YIDkbPAMzCe/6CWIKnQjc2UA44gWuLJHRUw8SOS/kgywDUVQ+l
+	 vfJx6e/geBEPtpV+99p68ONQiQwHYh0JNxkeuOegqovnGpwtgH6JLCOzJ8Dvi+zUJb8kq
+	 SH/7+JOQ5ljfqE+76NC+CFmVgHAHqb25B1/DKvYgXuZ7FgyIhhVESAlpNyITAFpw0aA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="iX1d2mZ/";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="bc/Um4gm";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1BD606A330;
-	Fri, 13 Nov 2026 16:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65295606A32E;
+	Fri, 13 Nov 2026 17:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iX1d2mZ/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9676D1F000C4;
-	Fri, 13 Nov 2026 16:38:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bc/Um4gm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99DA1F000C4;
+	Fri, 13 Nov 2026 17:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794587898;
-	bh=ECa4v0ymAEdrf36TMzDEI0AgHj/I0QXy3tVu9aZBtW4=;
+	s=k20260515; t=1794589937;
+	bh=EghNJb/w9KWddSZy7Eooq4G2yL9GJh+Li1g9aAPh8jM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=iX1d2mZ/T9JW07gRBi0bTpYJ8ny9oV2nJWyeH963h9j69ap/dzU+NeIqvOaCYedLN
-	 5BQ41dZBFRz1xHpduw41bnWTcUiHT7Orm2jIT0cqqIamj8dOavABVdTKw+A3JAt5Md
-	 pbf/IJfJIMPCuuyxeHZNMQsON8HDW2+6gqxSkoN4zeckmDZRwzbWxN76UpiG4kk6/S
-	 m74W6qYKPIc0wn0W19SsFA3npGAfclNaOC9NtWS4mEfZy4puIs7Cv1hEHM9T9MaxK5
-	 4tM+wXqbHwdhubDy2mefcKnDT5dbe4Y4mIDVJ8aEtg6w44+wOA1zRj7qW+QRR9qXjD
-	 YZ7IKjSF87A1g==
+	b=bc/Um4gmQW17Efk2IOy6bhr5SWExvPOQT5E4rFqMTXlNzbhU60XOr12Oc3Ybx4EOF
+	 WUKTV++vluSqN7Wh43GwwSu5LJeYIRYT/kWVIDhW7zbyYb4OPtMPC/ir9bcY4WOEmP
+	 LuYa/bdu+VQoJhvhAIRpbHxVhvg71pUn0kRoXr9H1VGIGOoAMSBjqK0IQkmxDftqpx
+	 6Pnb+XZLK2fcQDlcwpL6tysHQ4zi4JLCqRTJRcClU0KXzLoqNQE49SrkS5lV2DU0Xt
+	 pEMIf+RbhrehHvdrGcc9kXN3yWNv52Qip62S2T8e1ZYCyQy7C4GZE008PRuPmaKXRU
+	 gYTRVA1iIy8jg==
 X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
 From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
 To: Jason Gunthorpe <jgg@nvidia.com>
@@ -76,8 +76,8 @@ References: <20261103151643.GI274202@nvidia.com>
  <20261106193018.GK770409@nvidia.com> <yq5a5wy2qtjs.fsf@kernel.org>
  <20261112145254.GL738765@nvidia.com> <yq5abj7tm7q4.fsf@kernel.org>
  <20261113145249.GA3706007@nvidia.com>
-Date: Fri, 13 Nov 2026 22:08:06 +0530
-Message-ID: <yq5a5wy0n0up.fsf@kernel.org>
+Date: Fri, 13 Nov 2026 22:42:06 +0530
+Message-ID: <yq5a33t4mza1.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -96,90 +96,110 @@ Jason Gunthorpe <jgg@nvidia.com> writes:
 >> 
 >> > On Thu, Nov 12, 2026 at 03:07:43PM +0530, Aneesh Kumar K.V wrote:
 
- [ ... 153 lines skipped ... ] 
+ [ ... 96 lines skipped ... ] 
 
-> IMHO, leave everything alone as is today. We can make it work well
-> enough as is.
+> We really want the certificates to be loaded at the start before doing
+> key_exchange. That is when they are most useful.
 >
-> Make a ECN for a 1.3 opt in broadly like the above that fits better
-> into how I sketched the kernel uAPI. Do this once we all agree to the
-> new uAPI. The kernel will always try to use this new mode if RMM
-> supports it and userspace gets a better 1.3 experiance.
+> So when we fix this for 1.3 the opt in should trigger a transcript'd
+> GET_DIGEST in plain text and certificate collection from all the slots
+> in plain text.
+>
+> 1.3 will sign GET_DIGESTS during KEY_EXCHANGE
+> 1.2 RMM could issue CHALLENGE if the device supports it right before
+>     KEY_EXCHANGE and transcript it
+> 1.2 RMM could issue GET_DIGESTS inside the session and fail if != to
+>     the plaintext
 >
 
-This would be the below sequence right?
 
+So the combined flow would be:
 
-Host                              RMM                              Device
+Host                             RMM                              Device
 |                                 |                                  |
-| RMI_PDEV_CREATE(No slot)        |                                  |
-| NEW: enable multikey flow       |                                  |
-|-------------------------------->|                                  |
-|                                 |                                  |
-| RMI_PDEV_COMMUNICATE loop       |                                  |
+| RMI_PDEV_CREATE(new-flow opt-in)|                                  |
 |-------------------------------->|                                  |
 |                                 | GET_VERSION / VERSION            |
-|                                 |<-------------------------------->|
 |                                 | GET_CAPABILITIES / CAPABILITIES  |
-|                                 |<-------------------------------->|
 |                                 | NEGOTIATE_ALGORITHMS / ALGORITHMS|
 |                                 |<-------------------------------->|
-| Cache VCA exported by RMM       |                                  |
+| Cache individual VCA messages   |                                  |
 |<--------------------------------|                                  |
 |                                 |                                  |
-|              Require MULTI_KEY_CONN_RSP = true                     |
-|                                 |                                  |
-|                                 | GET_DIGESTS / DIGESTS            |
+|                                 | GET_DIGESTS / DIGESTS [plaintext]|
 |                                 |<-------------------------------->|
-| NEW: cache complete discovery   | Retain DIGESTS in signing        |
-| messages exported by RMM        | transcript                       |
-|<--------------------------------|                                  |
+| Cache discovery transcript      | Retain original slot mask        |
+|<--------------------------------| and per-slot chain digests       |
 |                                 |                                  |
-| NEW: request certificate slot 0 |                                  |
-|-------------------------------->|                                  |
-| RMI_PDEV_COMMUNICATE loop       | GET_CERTIFICATE(slot 0) /        |
-|-------------------------------->| CERTIFICATE response chunks      |
+|                                 | For each populated slot:         |
+|                                 | GET_CERTIFICATE / CERTIFICATE    |
 |                                 |<-------------------------------->|
-| Cache chain exported by RMM     | Check against slot 0's digest    |
+| Cache complete chains by slot   |                                  |
 |<--------------------------------|                                  |
 |                                 |                                  |
-| NEW: request certificate slot 1 |                                  |
-|-------------------------------->|                                  |
-| RMI_PDEV_COMMUNICATE loop       | GET_CERTIFICATE(slot 1) /        |
-|-------------------------------->| CERTIFICATE response chunks      |
-|                                 |<-------------------------------->|
-| Cache chain exported by RMM     | Check against slot 1's digest    |
-|<--------------------------------|                                  |
+|                      Pause: PDEV_NEEDS_KEY                         |
 |                                 |                                  |
-|             Discovery complete; waiting for public key             |
-|             Chains and DIGESTS are good                            |
+| Validate candidate certificate  |                                  |
+| paths against userspace policy. |                                  |
+| Select slot S and extract key S.|                                  |
+| Discovery remains provisional.  |                                  |
 |                                 |                                  |
-| Extract slot S's leaf key       |                                  |
-| RMI_PDEV_SET_PUBKEY(key S)      |                                  |
+| RMI_PDEV_SET_PUBKEY             |                                  |
+| (slot S, key S, chain hash S)   |                                  |
 |-------------------------------->|                                  |
 |                                 |                                  |
-| RMI_PDEV_COMMUNICATE loop       | KEY_EXCHANGE(slot S)             |
-|-------------------------------->|--------------------------------->|
+|                    IF SPDM 1.2 AND CHALLENGE supported             |
+|                                 |                                  |
+|                                 | CHALLENGE(slot S, fresh nonce)   |
+|                                 |--------------------------------->|
+|                                 | CHALLENGE_AUTH                   |
+|                                 |<---------------------------------|
+|                                 | Verify signature using key S.    |
+|                                 | Authenticates earlier DIGESTS.   |
+| Cache challenge transcript      |                                  |
+|<--------------------------------|                                  |
+|                                 |                                  |
+|                    END IF                                          |
+|                                 |                                  |
+|                                 | KEY_EXCHANGE(slot S)             |
+|                                 |--------------------------------->|
 |                                 | KEY_EXCHANGE_RSP                 |
 |                                 |<---------------------------------|
-|                                 | Verify signature using key S     |
-|                                 | over:                            |
-|                                 |   VCA                            |
-|                                 |   DIGESTS                        |
-|                                 |   slot S's chain hash            |
-|                                 |   key-exchange messages          |
+|                                 | Verify signature using key S.    |
 |                                 |                                  |
-| NEW: cache complete             |                                  |
-| KEY_EXCHANGE request and        |                                  |
-| KEY_EXCHANGE_RSP, with signature|                                  |
+|                    IF SPDM 1.3 multikey negotiated                 |
+|                                 |                                  |
+|                                 | Signature covers earlier DIGESTS.|
+|                                 | Authenticate retained inventory. |
+|                                 |                                  |
+|                    END IF                                          |
+|                                 |                                  |
+| Cache key-exchange transcript   |                                  |
 |<--------------------------------|                                  |
-|                                 |                                  |
 |                                 | FINISH / FINISH_RSP              |
-| Relay                           |<-------------------------------->|
+|                                 |<-------------------------------->|
+|                                 | Session established.             |
 |                                 |                                  |
-|                         PDEV_READY                                 |
-|                  Secure session established                        |
+|                    IF SPDM 1.2 AND CHALLENGE unavailable           |
 |                                 |                                  |
+|                                 | GET_DIGESTS / DIGESTS [secure]   |
+| Relay ciphertext                |<-------------------------------->|
+|                                 | Compare authenticated slot mask  |
+|                                 | and every digest with original   |
+|                                 | plaintext discovery.             |
 |                                 |                                  |
+|                                 | Mismatch: fail setup.            |
+|                                 | Match: authenticate inventory.   |
+|                                 |                                  |
+|                    END IF                                          |
+|                                 |                                  |
+|                                 | Check collected chains against   |
+|                                 | authenticated per-slot digests.  |
+|                                 |                                  |
+|                            PDEV_READY                              |
+
+BTW, all these proposals require RMM changes. As I requested in my previous
+email, it would be useful to describe what this would look like without a
+firmware change.
 
 -aneesh
