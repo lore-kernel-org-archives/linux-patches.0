@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590150;
-	b=YOR+xrVzLv/U9UYW3X5DAlzMSU2yxH+TzNBNcUcbr8RT8GTQQ5DJeT5MG1ARfPIQOJrM
-	 R7e5bq9xiKLiDNfhhPeGbKs1oi1CVODSz66LqgfCOJ+iSRCjCop23XfhID5VPN+HWz8dm
-	 oQESgzRR7njGqapPhIzKficPNeLNJD1/JpvAeH+XzOTRgfMpCeLep13BOWEaCSImbuJHN
-	 LN/p+0p8GiajPor2+3pqfw7pmqzkc22eYlx3aTXxBhTd9EDGW2hDB55SdEPXdQ0kiECTo
-	 0VsPP4WYg8aF/HA8bsi7FukxKZRSW1QZeVL9wBe42ZOF4GxwUo/LYAU32/QAQZDnU3w==
+	t=1794590152;
+	b=QXHNDfLTO/03cHRlTspRgTjDcKTqxsyBtpd5R8IcPnSM5phe6OyunX/90c20SdCVR/iq
+	 b3V8lucGQUcoqAblrl/CFrTTUVa0M3x/fDBFOInkJX0QwFFO9ZNsN40e65lZPZi50yp/G
+	 +jXbt7jsqRlQNxw1Gseei2PxMgEzwzsBDN1MM97LlowjXty7FXmAs28rTgynYyKerb8bY
+	 tyCXz7+bUk07ZIsNuctaXiXZOadbZ5646Tm1iOWKn0Dgmuj85cQU2QWA8oldEb757IVn1
+	 XLIwyj1ctXUrg6LwARHR1nuR+gnUZbEYVSUvlcKMsGhUcfZoRaXEsTWMyNjDgyc/AaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590150;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590152;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R76Xl3z8sxJ7ff1gjj8Vy1iw2985m8fmU7JbdnfQB1g=;
-	b=1t0V/Mk3WQUt7Iw+TqZlE0iJm9bH1gIp1u+N6M0foLqZpEvA3IRe7/9ixyh314AAIE6S
-	 MKvb19Ho2oMZwibjfM8S2chiiXqbi3S/u/q/hEGElYF0mjIbTMftjbOHOOVGZZdKIYT0J
-	 KSRfgdqU3hBH5ECs7QwDjYpfmg+fukkvwCFoopuB5F6YGsNROw67Lc8rYy4rw6vPoJH/S
-	 etinQIi6b/pvcw6ORuoUZvHnkeGyA9jmRFWbmt5UKnLZqNab3H5sya68Yop8Xml0H5iqi
-	 QMMnRu7Z/wJYeFuoGIYv7/YCfJZB8pkkXAXNoD7lmUX6SO4SsgLXXY+3BMYnohQo1fg==
+	bh=LvjIeViM9FaGebNSw/EbmLRYqRP1X+fHWq8iUYNNuYs=;
+	b=A/J/+iFMdHWRQ1smpxGHPoiZqtkcZfguiY+r3S76RmzkhRisSuBwEu5+s0KnRDBUX9F/
+	 841hVAZhVgQNHHgU+nnfiOOU4DEMNJm/NEwG/FBbrmIWyF+j5+msF+u3JiTSrA27YKf10
+	 7Lpt2ue6RONBRmBWFUrvBc0fMNvPrykMQ10gMnfwZg0bXDuKztFHFNKS9m003M8BU7dfW
+	 ng07qnVVYLrCvzN/Nuo/D/itry3TGWxDVcP25cYgXVw7RCswFLKi9WojBfFTDzQwWJxEb
+	 2GCN7Pmgidge1nyHewPhjPLB6QcbQZt4Jn0KrWZ9VT9zcR3+e4sXRoUS9dyk/5o/3Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rroU5Qwv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pJ5YKhFe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78488606A899;
-	Fri, 13 Nov 2026 17:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00245606A8BC;
+	Fri, 13 Nov 2026 17:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rroU5Qwv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247421F000C4;
-	Fri, 13 Nov 2026 17:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pJ5YKhFe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5571F000C4;
+	Fri, 13 Nov 2026 17:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590150;
-	bh=R76Xl3z8sxJ7ff1gjj8Vy1iw2985m8fmU7JbdnfQB1g=;
+	s=korg; t=1794590151;
+	bh=LvjIeViM9FaGebNSw/EbmLRYqRP1X+fHWq8iUYNNuYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rroU5QwvchwW/giuNhU604uB+FiRkptFlHelhjd3WH/IM94aDaAgtUCQrR5pQQzRm
-	 dtiaPGx6bUxYWaK1SyokBh2fjTdOS/Nd5s0KrAyUNOvpKMosxbqSadaymn3LW/4vzM
-	 2ETCVg+aX4BD9JLD2ISQV4iatRASgqclK6pakizo=
+	b=pJ5YKhFeyYaoHnwyjBnK2V39mR/vuI+yCZ5tKgOAtTugVQVfMrb1PZAAjqeMz+7qX
+	 M+fNuPHseOCSOQrOspUUCSZaQCyRZorkSLrXdoIRMXAobC2Jh4+aO42MIHSACX1QHK
+	 kz0BKqv5YIlWPAYtbPYYo2VUl9k9C9sgsJmFJPFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 165/686] tracing: Add the bucket size to expr_field_str()
-Date: Fri, 13 Nov 2026 10:44:58 -0500
-Message-ID: <20261113153826.379079658@linuxfoundation.org>
+Subject: [PATCH 6.18 139/686] rose: hold the listener while a Call Request is queued on it
+Date: Fri, 13 Nov 2026 10:44:32 -0500
+Message-ID: <20261113153825.512208126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,47 +67,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-[ Upstream commit c027ed03bc03a0e82fc368eaad657584a4480c7a ]
+rose_rx_call_request() runs in softirq context for every Call Request
+addressed to us. It finds the listening socket with
+rose_find_listener(), which returns it without a reference once
+rose_list_lock is dropped, then creates the new socket, queues it on
+the listener's receive queue and wakes the listener up. Nothing stops
+the process owning the listener from closing it meanwhile:
+rose_release() destroys a listening socket at once, and the Call
+Request writes into freed memory. A node daemon that restarts while
+calls come in does exactly this.
 
-expr_field_str() renders a HIST_FIELD_FL_BUCKET field as "pid.buckets",
-dropping the count, and parse_field() rejects that spelling.
+Take a reference in rose_find_listener(), lock the listener in
+rose_rx_call_request() and refuse the call if it has been closed in the
+meantime. rose_release() marks the socket dead with sock_orphan()
+before rose_destroy_socket() empties its queue under the socket lock,
+so a listener found alive once locked will see the new socket on its
+queue, either in rose_accept() or when it is destroyed.
 
-get_hist_field_flags() returns the bare string "buckets" and keeps the
-count in hist_field->buckets. hist_field_print() appends it,
-expr_field_str() never did. Nothing reaches it today, since .buckets is
-refused on a value and no expression can carry one, but the next patch
-renders histogram keys with expr_field_str(), where a .buckets key is
-legal.
+On a QEMU bench with two 4-CPU guests (KASAN, lockdep), six threads on
+A calling B without a break while B opens a listening socket, keeps it
+0 to 30 ms and closes it, for 40 s: before, KASAN reports a
+slab-use-after-free in rose_rx_call_request() a few seconds in, the
+socket having been freed by close() on B; with a 20 ms delay after
+rose_find_listener() the corrupted socket list then panics B in
+rose_neigh_put(). After, no report in either case, with about 400
+calls connected as before.
 
-Append the count, as hist_field_print() does.
-
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260914053443.981201-3-donggeunyoo.kernel@gmail.com
-Fixes: de9a48a360b7 ("tracing: Add linear buckets to histogram logic")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+(cherry picked from commit 8bd85552e2ae1a606eda4b6c096a7e3bd0bcff62)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/rose/af_rose.c | 32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 882e10e776fe4..93afc706e4029 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1757,6 +1757,9 @@ static bool expr_field_str(struct hist_field *field, struct seq_buf *s)
- 			seq_buf_printf(s, ".%s", flags_str);
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 614d033410fa3..8d0878cf2b01c 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -278,7 +278,7 @@ static void rose_insert_socket(struct sock *sk)
+ 
+ /*
+  *	Find a socket that wants to accept the Call Request we just
+- *	received.
++ *	received. A reference is taken on the socket found.
+  */
+ static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
+ {
+@@ -304,6 +304,8 @@ static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
+ 	}
+ 	s = NULL;
+ found:
++	if (s)
++		sock_hold(s);
+ 	spin_unlock_bh(&rose_list_lock);
+ 	return s;
+ }
+@@ -1103,12 +1105,31 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
  	}
  
-+	if (field->buckets)
-+		seq_buf_printf(s, "=%lu", field->buckets);
+ 	sk = rose_find_listener(&facilities.source_addr, &facilities.source_call);
++	if (!sk) {
++		rose_transmit_clear_request(neigh, lci, ROSE_NETWORK_CONGESTION, 120);
++		return 0;
++	}
 +
- 	return !seq_buf_has_overflowed(s);
- }
++	/*
++	 * The listener may be closed by rose_release() at any time. It is
++	 * marked dead before rose_destroy_socket() empties its queue, so
++	 * once it is locked a listener that is not dead will see the new
++	 * socket on its queue, either in rose_accept() or when it is
++	 * destroyed.
++	 */
++	bh_lock_sock(sk);
  
+ 	/*
+ 	 * We can't accept the Call Request.
+ 	 */
+-	if (sk == NULL || sk_acceptq_is_full(sk) ||
+-	    (make = rose_make_new(sk)) == NULL) {
++	if (sock_flag(sk, SOCK_DEAD) || sk->sk_state != TCP_LISTEN ||
++	    sk_acceptq_is_full(sk))
++		make = NULL;
++	else
++		make = rose_make_new(sk);
++	if (!make) {
++		bh_unlock_sock(sk);
++		sock_put(sk);
+ 		rose_transmit_clear_request(neigh, lci, ROSE_NETWORK_CONGESTION, 120);
+ 		return 0;
+ 	}
+@@ -1164,8 +1185,9 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
+ 
+ 	rose_start_heartbeat(make);
+ 
+-	if (!sock_flag(sk, SOCK_DEAD))
+-		sk->sk_data_ready(sk);
++	sk->sk_data_ready(sk);
++	bh_unlock_sock(sk);
++	sock_put(sk);
+ 
+ 	return 1;
+ }
 -- 
 2.53.0
 
