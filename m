@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.56.13
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.195.56
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794598303;
-	b=cH124u3syLZPkf01kkkoVshVPk5ogCOASCFb1cICWSBKiAXb/kjVjF577b+E2sMNJ7st
-	 bRbnPhPjIM7AkaYY0tlWTIihL7Bl1oCdd3e7PYA9K5OZP63wQtGr9m5qd9a8YtjQ4tyWT
-	 L9P6183QROVUDefZgULoD/7dM7rHSCIyLgaVqfmGSGEYWlp96KMn59hmDJrVbAJLd/POE
-	 mjGtTQCkMx2CtY8ifvQqdyZ/f/+ZSEbE1pz2AMN6RPfeWp8DvaRq7TKG2ZCbNewGvdLIz
-	 958wlCeBtl7D0mEjiGxiU8kzbnWuy67i8ZqmYxPgGoC6eVjfAOiVN15EeXksJ04KBQw==
+	t=1794598502;
+	b=mDK15ZLlbLjmfN4JJBUFKAAUikpKeOPrnMteSVganoV5f96VvsfQWbEqBODCaEmh+Uxt
+	 BJcEq4/eJkKAkhubYMcFJQdR9OfuBMM2I+0p8EOgwVbFU4QKfbMsPnZZXJk6mfWVG7ras
+	 ynafeEU47YmkiUy5kTS+dw6GCNClVkmBoqXSP/6+44hsTBiJWXiqXhGU8cNgD26OrbsDn
+	 jKR3SyB/yToyLgiwhhYXxIui2tNZmhzpH43rNeysk8z2pb9Nkx4LVHS1GDtDpMLC5ywDh
+	 CCd4J5hxcivhYvP9FsuZfG3TsfRkGLUO6zqiBXJ0plOER42S+cehTNIJ+LF6v5rGfdw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794598303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794598502;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
 	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
@@ -24,55 +24,55 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=XEQ8716OiTb6LdwdY1JgBbs+xQjuuETIkD2FtAm+2gI=;
-	b=XdYKZvvKBPDKh6OdysiXF7VJJcfK6i+YfOUASxrL50nfgy7bE5H0LIihF1fcagcmFARw
-	 s7iwB4VxnHndDXEHXxylqxNa6TfdO9fP2hC2dgYcWUQh2Q8SDaBE7gR38pQQIJ1AdxLSA
-	 FlrTTUL54aZutyDoMlM/ESzfbge2f0xykVSDSES25B8N5umf3jN2LRwds18c3q/SbmhJZ
-	 DYcv2sSf/L9AOcG0bOy6r5/vfZcda6pDVn0x4i2zkAOB6V6CjyvPGXcHSC9SvWszxEnl8
-	 +fzlbxwKSpkni1W98Lw2qTtEJ3YNuYQiYwxfE0VPNOO4FRLl0vLt2QoYj3Q62WjWcvg==
+	bh=C7pr7JW6SzJ6PtRpY7OPilcAlIJ5Rq6klJj1l3CGAxw=;
+	b=EAd7/TJAVD3setDwp2SKaM9NF7Vx/ccajp4auv2vjhdx/rZg7GCn03RQx4EyM6ZnQYG6
+	 /H3mxuaNwRExYEsayvTJL5ZiRwCwNjQFo3aSE/OWa/6ykh6IhtQLN5eRQmbSMqpj2SXq/
+	 0pTMekAsUMrBtGeGnShj1LF66LVx/ZCkFBbq2eqWAuo6Fxvai+ULPffzRashIL16balYn
+	 nROEHbM1fil23YfasPpBoauUDPobwW1M7IXl9Zok9Esjds7jjICCfYRC/cSdNc3WGIjZK
+	 aauE/uFtwS7pJ1NZBykmnuHM81f76txXvpkFCFfPEF1Ark/cKNr9/YIEYMaWeddi7Hw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=nvidia.com;
 	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=rN6aXeYH;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.56.13
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010013.outbound.protection.outlook.com [52.101.56.13])
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Dn5ie4RF;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.195.56
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012056.outbound.protection.outlook.com [40.93.195.56])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B7F606A333;
-	Fri, 13 Nov 2026 19:31:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88B7F606A333
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C09606A323;
+	Fri, 13 Nov 2026 19:35:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92C09606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=rN6aXeYH
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Dn5ie4RF
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SyuvwJdKGQNCF3V1reO8/KorEGwjAWHK/HX9eh+TlllqRHP1ahbVBQTbw3tkukmAq4KdJUjeHPlO6ZHjNmaxcKpoGx0wH61E81adOeplelkLJdFUUHRf5itkplCZ2WdRwkWpd/wP9HF69bUaFIYLNQspmIoTiBxqeMNqF4l7XFkbG4qrQLfnmzVCu3nXOuEyd4895d/oNdhKL9SSDKZqRIq8QHuTnhhIeJe/QHRdb8i65RNTSYGZrKedNXJYD8R+2Gzux3gFv45E0kzxrUdVaMjAFRBt/41n927dVu6Z+AFsTvIV3BhTKiI+FaT7/wXwe4mfkptonueNqUZoEOG+JA==
+ b=yBufuDGgdCr8tNqyr0kWyzp7kUsQDufUR61u3dE73jeweaZyAqwB4RkgBDRnlGg18Sa1j04K0b0HpBwsWuyasqRdbJB5Rgjt5MWb/84Him/A2jfixFTgieQTdDMpQfXkzVmwEA4rA/+vxT1J+30lVj79LKWKFU4+FT2hytxrQudqNYSt8HGgZ0XhqK7FygDYf6Ypye1aAHI7kE0P4yiddnsVB8Em5CxIHIoYoXUuenfBF3wnAPo5OR8g+WBoNQiOT3QteP/d8mfaK3jOmg90FHsDGqcg8bCrgJo8XooC4M3cu/FAA4OD4tXMJm1MO1YLDMzQc4zKuPAddBoLDaNh0Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XEQ8716OiTb6LdwdY1JgBbs+xQjuuETIkD2FtAm+2gI=;
- b=NLNiDJVSfPvomHiHwRiG0EbWoXMcT2fYTY+ST4kwJjXllQuLG9Krv9yAc4XIELBVfHUiyMGYng4nui5yb3QvgHEWjXeH/EzRBh7SIdTI9EIUtNoddBEdcn6RA2q4Q2qrnYsY6aRj7sPLV+F9Gv+qZBcj2BSwmCR8+eDKQpAy90TcZtUS8Dlhh7RfvZR5+VdOvFsuuEI89PCzISLDNm3OYwf5UvIqvEvGhCJoVLPpcMOxhBGTKNSLa/C36c3jCNsZtCZtzV1ouT6gqEmxEhY3dviV2kFz1DF1DkPo5QkSI5mswBC2gjnOfgSeSf+TBpmUjpBWVsGoDsljfvV12Tu5tA==
+ bh=C7pr7JW6SzJ6PtRpY7OPilcAlIJ5Rq6klJj1l3CGAxw=;
+ b=YL9feHOLqw97injU+u7nezrEn9huzBLm6+3xkgsH4iKuNOsg3kmf32k3/MIyCvxC1sPqTJ/VQkEhIjVlQqGqC1qwCwUTY3cV9PyakjBoeX0QN8BQ8+D1Zl429Fd0a3OYVTUElTTKniwlR+nu1e8gDCShXrfCud0ySmQGESsfUD2h+UpELhVlgF7SgbwCGddYA+hiqrz3j+kooVKT1aaPSsHEdhNpmhfVuAmIom133KLvOWd5vDEuBwXRP8MGLJd7FZ06y9s4k9ACELrPD9Wmd9ZMDBvIYsQ9z8xwtr1f0439wAbmkH7XnqERvEaPXtdO+66fbpOPB3/GHd/SUAtFog==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XEQ8716OiTb6LdwdY1JgBbs+xQjuuETIkD2FtAm+2gI=;
- b=rN6aXeYHO2yv8lXP/+eYfkEWumM+DN/sNUGnTb3V9do5tYnXKKmfw2OM7Xi7q06N/ah4zt7Y4r/RqWNa0FAZ24WIiIE7rONV3D9waKfJTiFTvbzaW6AI2/dvQIvOdd0ad3g2ugDIyCIe02QJCb/tvSLnboaXTrLI7leOa4L0eNoR0X4aHCC3bb7tXkONUXg6Pp0q/R5X7sfCdia67xRg+HFePZjEamgrtIFE1dMBDdv+FW8IfskxGnBHr9fn79Gz7cXTRP3oHKGzzcLcNfDo1rOc5gA0vpqf8JBxFC7Mf9tka7G2hFufVH0FH4BMtzTtyT0tMoivopk10j8ivRQsNw==
+ bh=C7pr7JW6SzJ6PtRpY7OPilcAlIJ5Rq6klJj1l3CGAxw=;
+ b=Dn5ie4RFdw45es+V9HXTSLwbc90Fy6VT81ykf3ApT3uxK+ESqWilpfhLM/iHgoZgCtuDWdDJu6GgFHrdqqDUdkyNSnB4SZeIK0VQTQRnxKqPwChjcHjNLUc2/NLDo9IPAPGbi2HWLHGOJ6joRduLRf+169XpLDlC0LR1xkT3vVxgkJeOMPS7jgb9VKEUBZphYXdlz9av5mPek1oZb67IIQdoDQTLPZ+Sv95noQGC2mNLdA+AqvydxXW/nOCbBqdfW3qqicdV3K51JFlxPJeZsoY6JCah6jXhpJIPjwInbJIiLeAks+KG0npfNiyJlScjgFxpi+5oTGLnhV5cGkgAJg==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12) by DM6PR12MB4043.namprd12.prod.outlook.com
- (2603:10b6:5:216::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.10; Fri, 13 Nov
- 2026 19:12:22 +0000
+ (2603:10b6:610:33d::12) by CY5PR12MB6180.namprd12.prod.outlook.com
+ (2603:10b6:930:23::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.8; Fri, 13 Nov
+ 2026 19:34:52 +0000
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0615.009; Fri, 13 Nov 2026
- 19:12:22 +0000
-Date: Fri, 13 Nov 2026 15:12:20 -0400
+ 19:34:52 +0000
+Date: Fri, 13 Nov 2026 15:34:50 -0400
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
 Cc: Dave Jiang <dave.jiang@intel.com>,
@@ -97,7 +97,7 @@ Cc: Dave Jiang <dave.jiang@intel.com>,
 	Alistair <alistair23@gmail.com>
 Subject: Re: [RFC PATCH v1 10/11] virt: coco: arm-cca-host: Publish slot zero
  and establish streams after acceptance
-Message-ID: <20261113191220.GC3706007@nvidia.com>
+Message-ID: <20261113193450.GD3706007@nvidia.com>
 References: <DS4PPFA84FA90FCDC94900C2FC6CEF4D428E7682@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
  <20261104134119.GR274202@nvidia.com>
  <a3f95140-c49f-42fc-b92c-73c8cf98336d@intel.com>
@@ -107,12 +107,12 @@ References: <DS4PPFA84FA90FCDC94900C2FC6CEF4D428E7682@DS4PPFA84FA90FC.namprd11.p
  <20261112145254.GL738765@nvidia.com>
  <yq5abj7tm7q4.fsf@kernel.org>
  <20261113145249.GA3706007@nvidia.com>
- <yq5a5wy0n0up.fsf@kernel.org>
+ <yq5a33t4mza1.fsf@kernel.org>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <yq5a5wy0n0up.fsf@kernel.org>
-X-ClientProxiedBy: YT3PR01CA0032.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:82::31) To CHBPR12MB731189.namprd12.prod.outlook.com
+In-Reply-To: <yq5a33t4mza1.fsf@kernel.org>
+X-ClientProxiedBy: YT4PR01CA0337.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:fc::12) To CHBPR12MB731189.namprd12.prod.outlook.com
  (2603:10b6:610:33d::12)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -124,60 +124,60 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|DM6PR12MB4043:EE_
-X-MS-Office365-Filtering-Correlation-Id: c28a18aa-d82c-457e-c3e5-08df41ba0b34
+X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|CY5PR12MB6180:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5b8556e5-0517-49c7-d7c5-08df41bd2fe9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|23010399003|366016|1800799024|10067099003|4143699003|11063799006|56012099006|261022105027099003|261022075727099003|261026140227099003|261026121527099003|261021135927099003|261021121427099003|261028144727099003|261102123227099003|261102130727099003|261009223027099003|18002099003|22082099003|6133799003;
+	BCL:0;ARA:13230040|23010399003|7416014|376014|1800799024|366016|22082099003|18002099003|6133799003|4143699003|261022105027099003|11063799006|261022075727099003|261028144727099003|261021121427099003|261102123227099003|56012099006|261009223027099003|261022113327099003|261026121527099003|261026140227099003|10067099003;
 X-Microsoft-Antispam-Message-Info:
-	nmETY0s+iC4a8SvEUj77zusi710pdS6UWLjBvT+ycA+TZf4yFqRXSf9g27H376ONleG20qCr+SfGP25RK8tiejym1ucYe5cIFoOpsl3iZwVyXWVChuixuDNcROBLI6v2dcOBWsKFPlq0TUSymhsWy/CsioCdK8LHRm8kBp8aHx3/CTO6RlPJ6awKr/DjOIT5hCGnIv3A8DMJwBdjRGRho7kqfVrW15s5PVMaFNf8IijstF+p7eRPBaakCXDy7d8udxuWc21DG4Iv2/BjY9Yo2tNlbArgZR6pGB5Xj8P+YKh76Z/OpcyGOcPBTR8uAEHy19Bw/YfHC7gJjqyQtNFOAcpLaciAbceu2AcWt+PEh5F040j72U5yqb01srIrXJRrNdNNpzJZ7lNmHrVZXI6k6fy6WYv52pne/FWzEQ+/9JZDUbDAM69xc4sKz9V34oEKCvuz6ChZPwG7QYClopGN/d2YGUhLJ99bgnSINXSsQ+yBm9COXuUm1IuHI4Ke1+81JEbL69J3gdWg2Wf89lp41eaFErFc/4mHlva1GcBVU2SuYtjD11uRrGbw95EMyhdrvyXByPC5JFiUMNX0UySOTBFFK06Z1drp00/1zQkNDR2WQ3PfWptrvQG3fRko89iyYQqQfeGmpZKp04qKZ2VcNCHdmeI4HOYgIrbje8Rqx34=
+	YTtqUj2aQX4HQbQPuVEOpjXtG8o8KvTTobY/DOR2+0puHSgfxA/VMN0y1FKqDmUXUf+W+jf2pBH+hIsqVUJWO3gZqvieEmNyskloBAmSQJNFFhu0LT/+UpZydewhx+24Qa6FzpPgQZSeVJhEc0JuUaA32kC99BgFuZHnyANTJ4SyOL6unB59xT+IDPe2syIMWFy7ykMnp8a+9aDEgT083+uQ+Lt0OPYgM2NW7iXaEEoPd5DA9Agz91+awbCl0BhgfJj6SQEKkLps2c6+FgH8odqmtybsNsGcaKXlq0NaBVtdMb38yoqY/jNpfBtfdeGqtnpelAy43rQNCZ3WvTxz6NYmARpgPtLZ70osr3FYzr0qq6Yr3TnH069oNSwX2z62GPTvX8MDO3IcGj3GhUSvzX2zERxnNk1YiEsltuvnVCf7NaKgusdA8rkMci6PeYZ9spvpUMzrx+AJfevB7vOgVPRh8Qv46tMO8D9KvQ8UxeT5Kzu7d9tOqQLU0r1uUQcTiNH779iuJfmdjSuVz/3/+oUEMUbhgJ71ujiDysNbhqvhD1dx6pDeUtDJUMJFbwQ3gWxeKeCP1vl3xdJFm5ZV6tsy67EMTumSfl7t2GjBmfixOBCqtgT6/Kbv61EsDltMl7W79yfzf7BsrR+NP0KCaLlD77u3LBrBkiyphNvC/G4=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(366016)(1800799024)(10067099003)(4143699003)(11063799006)(56012099006)(261022105027099003)(261022075727099003)(261026140227099003)(261026121527099003)(261021135927099003)(261021121427099003)(261028144727099003)(261102123227099003)(261102130727099003)(261009223027099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(376014)(1800799024)(366016)(22082099003)(18002099003)(6133799003)(4143699003)(261022105027099003)(11063799006)(261022075727099003)(261028144727099003)(261021121427099003)(261102123227099003)(56012099006)(261009223027099003)(261022113327099003)(261026121527099003)(261026140227099003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?AQiVn2Aevc+cV0sbvJt59KajnY0rGfRf5wAkX9C1W6zgG46tmb0ZTmCEY/GL?=
- =?us-ascii?Q?B60RsCCZjxEirFQLyiReMM57GEBWGwh0Bvd67ygjiiIYsQjwQIu3Hhb8pXi/?=
- =?us-ascii?Q?2uPLhQzCMaFvJ55XSVTQe/QfOghYt6qt6+5FhzDwijW0pIXe7mbKylTfsN93?=
- =?us-ascii?Q?NpGCyzAb+4kyHH2ORrZZvHP4k2hBkLoyL8RgcIzoHKxbYaA4XdRxmrrzTJ8H?=
- =?us-ascii?Q?HypjRFDDi/hLiGnYBBGoSGDdoNFFDj9PIyVI1FTUfG0+xhKct8Rf9BMkbvbT?=
- =?us-ascii?Q?q5cBOx7oFZPUckUvha/ePfANftQXrpz1J6J52+2UcKZpaoWtI1hC3YPPNLH4?=
- =?us-ascii?Q?klYS6MjNMwkCidgLY2I71CpPp+bMEVrzCVdomJZGo8TGsi/pv0/AKuxEb7pu?=
- =?us-ascii?Q?uCe807d3r8yO47zFkOlaOmn8RHAch1KMgd0TyAd5BI6ee4szogqi53k4hoiO?=
- =?us-ascii?Q?56SNqd2mADfGALVE1bAtR5Ax5IyB01q5/qpTENNRI0nOWYYLjQHW9G5hX2Ul?=
- =?us-ascii?Q?IcgqHoPOFzjpl+750cDRUB8lTU115GKD4XkBBI5T4Kbj38pgAbC19WJqVAl8?=
- =?us-ascii?Q?2mfe/vc3KEogGJ0MRQ3ctBPl+ZkVUBMObm3jr5E39407Udt6vTiX5Ndzvn1v?=
- =?us-ascii?Q?S2t4dpR4wpg4rpBkbCPhmcvQqXg5ccZp9rIQWK/pgeOO2QnhIh3Xz/08hAzY?=
- =?us-ascii?Q?Zj2Floqn2y7hTXyzAw6np0YqWNZsez9z+WNxblIgKaC7FApvSrYmI4HoPVnW?=
- =?us-ascii?Q?Myd8hKNr/+Z5L5WocOjaEVnibgLXfEaRUOP0KwFzwMZPQqTqpRReq88SxCkw?=
- =?us-ascii?Q?8hp6/JfAKMwG8lOG27M5eXF4RFCMICW0yPk1wYD84+Rh2AdRtCxISoFH5PCV?=
- =?us-ascii?Q?B2V5Re2BK5emL/oqfCX3WT3VVNScQXsxMxtQFT7PQcol77uzrQBHxOS/j4Jn?=
- =?us-ascii?Q?WAUNCZST5K3gfUtsZvHMfU99gCrIe717bTeu1NNAUzudkHSO+wund7guY7T2?=
- =?us-ascii?Q?vXGvUDvcMSQ6ITEnk5+YKcv6cQhAa0L9+g0rI3YNrgDT0AzwOO2K7SUAqN0J?=
- =?us-ascii?Q?FwsLMVMn3NTgjFjphjgE+GbAlWN8Ftk8rRSYzYLSv+9xTfRH3Nn3q+7v5u1Q?=
- =?us-ascii?Q?y5dDhVjXZuy608sN59Hnyq9se8EDW4QY8ChsDS8F7kBAjLk1flC8UBTfIkSr?=
- =?us-ascii?Q?JF18PvYTjY9N84PEek2VuuH8wBqiRQ9pzTKf5AdCpniMl44MeePI/jStt9eO?=
- =?us-ascii?Q?GPRoEWo5mkzTg+ukS2WGiQJGlsWwbwBK7toGuy9WdGQX6CsVkijaj2zQiZXS?=
- =?us-ascii?Q?9CPNHMhuhXF78qCDdS2mMs8XtWQRaq4ObQrjVpWyRQldENgNczH1ypnI/BR0?=
- =?us-ascii?Q?sUrP1PHBY8zrgdYti/iaZHTogrh39nnE7UY9iDtQnFr6qGpLkCvyqLM4FNtC?=
- =?us-ascii?Q?IbED9Oe6bUOVmb3iACHLEGl94YlZPHmxWe/17DwwN93//5OG40WuGbivhhR8?=
- =?us-ascii?Q?xPIEz2T4qr5NSK1PweTjiUdQcbTzOBA79oPho/KPpDU2ZU5X+19XYm06jcXY?=
- =?us-ascii?Q?nF88amvrSbI26P5trPefOhvAUQ+fXn28I3mR3sqtuRx8paKpJVN/lSl/oopM?=
- =?us-ascii?Q?tLMIQGpJvk8wyeIypD+Z02nCFfetrzJ7qSjUXlHbZwj3AWOmBDUMFg4rObaD?=
- =?us-ascii?Q?iSsZ1VPnKOcfuDXBSe/V4TsZosDGhBV9jivvbTjTLV/YDIyH?=
+	=?us-ascii?Q?qe5D57eH8oRnHdtjcaQgw8absLGImxicPk8N0bqC/G6dzjvQWpL1n0fMJQ68?=
+ =?us-ascii?Q?AJhmzHW+frKkC0BtUbXwLtID/MZbUbnvEW7TmWImZ79+zQFTy1dRPEm9zN7F?=
+ =?us-ascii?Q?XSoHWMPHmqrIiKIhTq+Qk5DYhU+2VBwPxEqkfOQqLFvbVciqwiHm/b9Ggf7r?=
+ =?us-ascii?Q?vNs+tdqzfZgiOxFGW9oXxNoVON/D/TZOGV6S5zaMDQqeZLx26yEQjyjH9Xko?=
+ =?us-ascii?Q?mg1sKXR3PbuFs+irLKGLzzbeh629rjqVYHA7G7JX0tkSiKX4PHd+Ih/x+xH4?=
+ =?us-ascii?Q?IJ6NSfnsGU52IPIlWFhamPfQ8QbyUnj3dsYH4SMsrxYGRg9pM6OAyvLJ7lot?=
+ =?us-ascii?Q?78NODWm1B0FfN24/XyvL8kdrfM9ZXSOSD1TU8dDtlLsmmWkaYLGkdn7xT0RM?=
+ =?us-ascii?Q?KXL40Cmuy6IGfDLTRYiZXyrJHrT3+t37yPXZyuykZZErqPfm1DuYZ+NdsgNu?=
+ =?us-ascii?Q?JTRvy73FR6mVfI4uKnLWNN78hYQsEUFaikvV1WyUBeUTnfNd+FcNAx4Varc9?=
+ =?us-ascii?Q?FfhKtnqNPOVSvKWhhbDRiwLGkbYL8z1o/1/WrefLaib1jfZ+SOGrrT5g1wGO?=
+ =?us-ascii?Q?4pc+Q5eZOw/6CbIMoc0n0P74dXg/IyFVVqGVRidRkcb73qZZ+SlaiQcsiAaf?=
+ =?us-ascii?Q?DB0KWQ6d3/5FWe3RREz4Cr/BvTILVpJ0Z9hQXtARHIRUAs6SNFZucVWTwnOo?=
+ =?us-ascii?Q?AUSAs8qJfWCdkXtKPYFbeLCy+2jRIWjkd/HaCGMW5yCblPSn8QIpbtei9DBc?=
+ =?us-ascii?Q?zOp90LvVhuxZGBYMeYy16RIhLMIIdtJh8Jst+cuA4Pc4O6HXf3BTyZIYeqh5?=
+ =?us-ascii?Q?biw6BJ5/i5ahgyChilP5TOgnWllNlekdekOrNtXcoAIEEWPRjpKLBf0DyNoL?=
+ =?us-ascii?Q?QF9LdA2Aldu4a2V7luS/w7kQuN7m0gFPv6SmJnAvhppCneVwAqRK1K0U1bHV?=
+ =?us-ascii?Q?c21YQCKh3HwinBZnTOmeqBi6txrtGcebn9ZOPJrm8omJBXwDlPD25D7E2G3u?=
+ =?us-ascii?Q?N4s8L6PchgVd9PQQ3WiXyMtDmsMXh76q8An/BVgtN2SaAOVY6/tjsD45JdNU?=
+ =?us-ascii?Q?60GwypKNO8madbXjwQCvHKaVf2r2Mr12dYynA/C9tRGV55Y0851MeKu2Um00?=
+ =?us-ascii?Q?cSyZPDFdc49JwrpuXYiAKCLnyk8avPooSDUCmwOmj+fDm85Vj6vKBojvaDBx?=
+ =?us-ascii?Q?7WKcJbH7MDvhTj0rQAewp9XB8ryvyDl1EaS0U3rDRoPebOaEbY6HsbBGYycC?=
+ =?us-ascii?Q?bNc2jS2oc6yIDBBphdq5ulYK4NjCry+f6UTVeaGx332XKiHB6rW0wFHXcW5p?=
+ =?us-ascii?Q?rfBu+YthKcFtMg5CFG1a2Bk4yWa1uJr3vvwU2TnZcUgcRtjTG0vGAsMiMFdD?=
+ =?us-ascii?Q?QbQYvtHddIfI2gPldlePrShs7fOwaDXiTOewALPHuKb0raquw69Ppksh/fhS?=
+ =?us-ascii?Q?wnr+Ct6fT1u450jrF/hbduAyF5p+xZ0J0PSj86paXZAw5sxe0SVIU0DM3xe4?=
+ =?us-ascii?Q?Hr+Adpv0rO+M0OvOVZkAehuzQvHo3B0no/26q9Eam5vNuHoPU4UFATbWLEXZ?=
+ =?us-ascii?Q?od1lnLdf0eLQ/TfWogRMo+UJEFoV0I/aUp3Jlk7IkHa5LywJYafdU6gpeMPv?=
+ =?us-ascii?Q?ixFUCUMZnr4m2KrVFO0y9G5Kr7BxLhszSEv1S8bkAG6oTK6DVmdlJ9Y2F4u4?=
+ =?us-ascii?Q?cHcuJf9+/qlrbKfhZnyOykszT62VCa/0DTZpUoa9AlhyJe1d?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c28a18aa-d82c-457e-c3e5-08df41ba0b34
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5b8556e5-0517-49c7-d7c5-08df41bd2fe9
 X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 19:12:21.8865
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2026 19:34:51.9666
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wQTeL/FOf/TRyzxbSAwtbjCzmxodZGdZ9zmB1gR4l0shg6+kOyFoiNKancz1PScW
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4043
+X-MS-Exchange-CrossTenant-UserPrincipalName: gDRsMm9DqPTcHtWx7zTmUFOXsQj7NbFz0oeJ5ZqrXqS82/RmoBUThZbau/M7hQTc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6180
 
-On Fri, Nov 13, 2026 at 10:08:06PM +0530, Aneesh Kumar K.V wrote:
+On Fri, Nov 13, 2026 at 10:42:06PM +0530, Aneesh Kumar K.V wrote:
 > Jason Gunthorpe <jgg@nvidia.com> writes:
 > 
 > > On Fri, Nov 13, 2026 at 02:24:59PM +0530, Aneesh Kumar K.V wrote:
@@ -185,120 +185,124 @@ On Fri, Nov 13, 2026 at 10:08:06PM +0530, Aneesh Kumar K.V wrote:
 > >> 
 > >> > On Thu, Nov 12, 2026 at 03:07:43PM +0530, Aneesh Kumar K.V wrote:
 > 
->  [ ... 153 lines skipped ... ] 
+>  [ ... 96 lines skipped ... ] 
 > 
-> > IMHO, leave everything alone as is today. We can make it work well
-> > enough as is.
+> > We really want the certificates to be loaded at the start before doing
+> > key_exchange. That is when they are most useful.
 > >
-> > Make a ECN for a 1.3 opt in broadly like the above that fits better
-> > into how I sketched the kernel uAPI. Do this once we all agree to the
-> > new uAPI. The kernel will always try to use this new mode if RMM
-> > supports it and userspace gets a better 1.3 experiance.
+> > So when we fix this for 1.3 the opt in should trigger a transcript'd
+> > GET_DIGEST in plain text and certificate collection from all the slots
+> > in plain text.
+> >
+> > 1.3 will sign GET_DIGESTS during KEY_EXCHANGE
+> > 1.2 RMM could issue CHALLENGE if the device supports it right before
+> >     KEY_EXCHANGE and transcript it
+> > 1.2 RMM could issue GET_DIGESTS inside the session and fail if != to
+> >     the plaintext
 > >
 > 
-> This would be the below sequence right?
-
-Yes
-
-
-> Host                              RMM                              Device
+> 
+> So the combined flow would be:
+> 
+> Host                             RMM                              Device
 > |                                 |                                  |
-> | RMI_PDEV_CREATE(No slot)        |                                  |
-> | NEW: enable multikey flow       |                                  |
-> |-------------------------------->|                                  |
-> |                                 |                                  |
-> | RMI_PDEV_COMMUNICATE loop       |                                  |
+> | RMI_PDEV_CREATE(new-flow opt-in)|                                  |
 > |-------------------------------->|                                  |
 > |                                 | GET_VERSION / VERSION            |
-> |                                 |<-------------------------------->|
 > |                                 | GET_CAPABILITIES / CAPABILITIES  |
-> |                                 |<-------------------------------->|
 > |                                 | NEGOTIATE_ALGORITHMS / ALGORITHMS|
 > |                                 |<-------------------------------->|
-> | Cache VCA exported by RMM       |                                  |
-
-Again it should be individual messages get their own cache_object_id
-so we get a transcript not a VCA concatination we can't break up.
-
+> | Cache individual VCA messages   |                                  |
 > |<--------------------------------|                                  |
 > |                                 |                                  |
-> |              Require MULTI_KEY_CONN_RSP = true                     |
-> |                                 |                                  |
-> |                                 | GET_DIGESTS / DIGESTS            |
+> |                                 | GET_DIGESTS / DIGESTS [plaintext]|
 > |                                 |<-------------------------------->|
-> | NEW: cache complete discovery   | Retain DIGESTS in signing        |
-> | messages exported by RMM        | transcript                       |
-> |<--------------------------------|                                  |
-
-And this is just more cache_object_id's following the transcript
-pattern
-
+> | Cache discovery transcript      | Retain original slot mask        |
+> |<--------------------------------| and per-slot chain digests       |
 > |                                 |                                  |
-> | NEW: request certificate slot 0 |                                  |
-> |-------------------------------->|                                  |
-> | RMI_PDEV_COMMUNICATE loop       | GET_CERTIFICATE(slot 0) /        |
-> |-------------------------------->| CERTIFICATE response chunks      |
+> |                                 | For each populated slot:         |
+> |                                 | GET_CERTIFICATE / CERTIFICATE    |
 > |                                 |<-------------------------------->|
-> | Cache chain exported by RMM     | Check against slot 0's digest    |
+> | Cache complete chains by slot   |                                  |
+> |<--------------------------------|                                  |
+> |                                 |
+> |
+
+This should be identical to your prior email where the host requests
+each certificate. But yes.
+
+> |                      Pause: PDEV_NEEDS_KEY                         |
+> |                                 |                                  |
+> | Validate candidate certificate  |                                  |
+> | paths against userspace policy. |                                  |
+> | Select slot S and extract key S.|                                  |
+> | Discovery remains provisional.  |                                  |
+> |                                 |                                  |
+> | RMI_PDEV_SET_PUBKEY             |                                  |
+> | (slot S, key S, chain hash S)   |                                  |
+> |-------------------------------->|                                  |
+> |                                 |                                  |
+> |                    IF SPDM 1.2 AND CHALLENGE supported             |
+> |                                 |                                  |
+> |                                 | CHALLENGE(slot S, fresh nonce)   |
+> |                                 |--------------------------------->|
+> |                                 | CHALLENGE_AUTH                   |
+> |                                 |<---------------------------------|
+> |                                 | Verify signature using key S.    |
+> |                                 | Authenticates earlier DIGESTS.   |
+> | Cache challenge transcript      |                                  |
 > |<--------------------------------|                                  |
 > |                                 |                                  |
-
-Yes, ideally, but it would also be workable to just fetch them all
-without a request.
-
-> | NEW: request certificate slot 1 |                                  |
-> |-------------------------------->|                                  |
-> | RMI_PDEV_COMMUNICATE loop       | GET_CERTIFICATE(slot 1) /        |
-> |-------------------------------->| CERTIFICATE response chunks      |
-> |                                 |<-------------------------------->|
-> | Cache chain exported by RMM     | Check against slot 1's digest    |
-> |<--------------------------------|                                  |
+> |                    END IF                                          |
 > |                                 |                                  |
-> |             Discovery complete; waiting for public key             |
-> |             Chains and DIGESTS are good                            |
-> |                                 |                                  |
-> | Extract slot S's leaf key       |                                  |
-> | RMI_PDEV_SET_PUBKEY(key S)      |                                  |
-> |-------------------------------->|                                  |
-
-And here we need to to pass key, slot and certificate hash (I think).
-If we want to keep the design that RMM doesn't hold all the slots in
-memory.
-
-Most likely RMM would hash GET_DIGESTS and hold that. You'd change the
-RHI to also pass the transcript not the VCA so that that the guest can
-get the DIGESTS message and check it to that hash. Then the guest
-checks every certificate chain against that digest.
-
-> |                                 |                                  |
-> | RMI_PDEV_COMMUNICATE loop       | KEY_EXCHANGE(slot S)             |
-> |-------------------------------->|--------------------------------->|
+> |                                 | KEY_EXCHANGE(slot S)             |
+> |                                 |--------------------------------->|
 > |                                 | KEY_EXCHANGE_RSP                 |
 > |                                 |<---------------------------------|
-> |                                 | Verify signature using key S     |
-> |                                 | over:                            |
-> |                                 |   VCA                            |
-> |                                 |   DIGESTS                        |
-> |                                 |   slot S's chain hash            |
-> |                                 |   key-exchange messages          |
+> |                                 | Verify signature using key S.    |
 > |                                 |                                  |
-> | NEW: cache complete             |                                  |
-> | KEY_EXCHANGE request and        |                                  |
-> | KEY_EXCHANGE_RSP, with signature|                                  |
+> |                    IF SPDM 1.3 multikey negotiated                 |
+> |                                 |                                  |
+> |                                 | Signature covers earlier DIGESTS.|
+> |                                 | Authenticate retained inventory. |
+> |                                 |                                  |
+> |                    END IF                                          |
+> |                                 |                                  |
+> | Cache key-exchange transcript   |                                  |
 > |<--------------------------------|                                  |
-> |                                 |                                  |
 > |                                 | FINISH / FINISH_RSP              |
-> | Relay                           |<-------------------------------->|
+> |                                 |<-------------------------------->|
+> |                                 | Session established.             |
 > |                                 |                                  |
-> |                         PDEV_READY                                 |
-> |                  Secure session established                        |
+> |                    IF SPDM 1.2 AND CHALLENGE unavailable           |
+> |                                 |                                  |
+> |                                 | GET_DIGESTS / DIGESTS [secure]   |
+> | Relay ciphertext                |<-------------------------------->|
+> |                                 | Compare authenticated slot mask  |
+> |                                 | and every digest with original   |
+> |                                 | plaintext discovery.             |
+> |                                 |                                  |
+> |                                 | Mismatch: fail setup.            |
+> |                                 | Match: authenticate inventory.   |
+> |                                 |                                  |
+> |                    END IF
+> |
 
-Yes
+Yeah, I think this is probably the best we can do. You always end up
+with some kind of authenticated GET_DIGESTS recorded to the
+transcript. Authentication is either directly in the transcript with a
+CHALLENGE/KEY_EXCHANGE signature or indirectly via the symmetric
+session.
 
-So, it is not a very big change to RMM, but it makes a big improvement
-compared to what my previous email has for current RMM.
+I would incorporate this into the 1.3 ecn upgrade as the 'now this is
+how 1.2 works if you turn this on'.
 
-As a spec extension as part of a comprehensive upgrade to support 1.3
-multikey, a little down the road.
+But I don't see an urgency to stop the world, we should implement as
+spec'd. All three arches are similar and have the same issues with 1.3
+multikey.
+
+Hopefully these flow diagrams help the other vendors to understand
+what the ideal flow would look like. The ARM TSM directed "caching" is
+very smart, IMHO.
 
 Jason
