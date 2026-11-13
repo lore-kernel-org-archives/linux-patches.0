@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590638;
-	b=QVjz1prGjQp2T/poyD8cybVrU32/E1cDTzIQOt/dnEa6f46Ug/niy5pL+Ho6LgqSUe6T
-	 1KMQPmlgc6H4Zu5jpNJdSIZpIzLHWN7gwKCj52ZY06ZIhVRoKW8M9NZX+I/jjZHNWcN9t
-	 w/KOdyBaFu9JfRKFIzZk/U0XCm8VcUIjvslW6EUmNyffSK+0erPjE3sAMkOc2QUYqmJ4l
-	 J6oAfTHSEtlxlaCA1CPpm6NZLtUD+eO230dERt9mM1+u945cn0H/UNBotBIIKqb9iv3m4
-	 p4WH4EyTNWWbNOc9/+DMh6K2sFgpZ9pnTZDwaeDriMtb078BYSPO1EMmmecBIRoN+uQ==
+	t=1794590639;
+	b=C0C1pLc5krSBYiCjueCTNk57Flm27g4WiVl/d8IojyC+th9Tl5kcZtciiQUHczrARQic
+	 N6pKlEzAT1NmAarcU7Jo89eXLEKp1RRuDzyE+L6KNDZj+6bZijf1vv/+ScX1A4QDL/Q5A
+	 loxGr2jWkyFBN25/rRZisfgHRz5vvgUOgWx2Q9KeQOEL6L49IxUEE3MJpzC4T0utZKy+R
+	 DMVGPxzsONeXWZplenEjCeOj1EutzyGypSua6QlNeJIWvKx7HkwTBsJZPyZdT0RStgiT3
+	 6p80fx40lTWk5vzcHvsf+FBWZLiYA+lkT3EocP7F1Jt+B9aC7TnBdXstwa35cWq9b/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590639;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4GVTOmSikl8LEelBG4b9/C4dhdytOjVvZ30IJpUpI1o=;
-	b=i6IdtleTAqCkPtJiSlA7xSOSEiXePLpJo0EpDwboVW6q1iOPSITSuQmHGNQyZZd3+E8K
-	 LuWgVy7vbacMlEFewOZ0G6jy/mKVbtdNfXpoZh5dT+OGA8hF29t7RLvdYUPteFeGNLHFj
-	 CKv+Wxin1725bqnSTTJeW7X4oluU88i4btAO296bHXaSUTph0Fl+1kJ+lXf8dR4FeW63W
-	 aReIN98xuZNYjiUYhweFErAtS7Io60m3Oz4VVRRqlAWz9JgKWq65XGi1Ke1f0cC53t3vw
-	 dwEgoPQEFZadPqJh0fsdFmBZMM6Vk+Ape7HaDS7wXkMb8nNcR9wSN1m7UjIjME2W/4w==
+	bh=+naANbAYGLW47ioEuZDTthEO/2wZSo5fttrq3EsWNa0=;
+	b=TB9dXhOpPotKs0cY0gkM2tShF8smWhgEhNLviXY0f1LF126ncHzhe0kFreIhBKX8puoz
+	 0uuMJI71H+W3M63s+moFUeVuzf4wyfi/lh7l2+S6t2YchRwWNIA16MbfKvXNpoEEHOLLb
+	 zDaH/znNNbnD3PsJU0vfq0k3/S2Gbr2Z+1uZeGY3ihaC+/1OgMqBK6FbEkD7w1xqNoe+G
+	 N4U4OkoSnT+5uaTiLwyBViW/dE9ifB4sh7pQ5ZpmkW+Mxri0I3gk574/hLU7A92TaOKLM
+	 lw/SkqzgGxJsluBXF6AJx9QxVX8ov2AeMiywu9IqrUPxuFhC3gFIRS8YxIHvXlDeVdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UkR97SUs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQgN8Ztj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D5B60A3831;
-	Fri, 13 Nov 2026 17:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97146076F95;
+	Fri, 13 Nov 2026 17:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UkR97SUs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0171F000C7;
-	Fri, 13 Nov 2026 17:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQgN8Ztj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665231F000C4;
+	Fri, 13 Nov 2026 17:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590638;
-	bh=4GVTOmSikl8LEelBG4b9/C4dhdytOjVvZ30IJpUpI1o=;
+	s=korg; t=1794590639;
+	bh=+naANbAYGLW47ioEuZDTthEO/2wZSo5fttrq3EsWNa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UkR97SUs0DnPwg54LjKiO5JSp6YnnIpLx1+vrNj7Su97hesZoH9SO8pzoB4kNYt/1
-	 yNzGtmRKO8kCri47ZwqdCYhROFAIm4R1ZiStGjkHEJDTtDs2IoZGBRVpiifeZj9I66
-	 9/K+SB/XKzDHmiPZomEBQb3b7u75tf635cwcsy4w=
+	b=aQgN8Ztj7U6VGsSGBiSkZOzoBVZatGeVMKVNBQ83O581lfjzFCirmk2NMggyAyVtK
+	 ud5yOoZCMrGm9Q+JPV+OCnRZhsS7AQa5jvAz38hydEjWfmnxHfGeRgJRDIJBjs7I1r
+	 TV65XitUjbam3IK7BWpVTO+FiZEkNGiy1qG6lmAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Nicholas Hobson <nicholas.hobson@outlook.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 516/686] powerpc/pseries/iommu: Add TCEs for 16GB pages when RAM is pre-mapped
-Date: Fri, 13 Nov 2026 10:50:49 -0500
-Message-ID: <20261113153838.659462114@linuxfoundation.org>
+Subject: [PATCH 6.18 507/686] ALSA: usb-audio: keep MIDI input running for Roland TD-11
+Date: Fri, 13 Nov 2026 10:50:40 -0500
+Message-ID: <20261113153838.077603368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,217 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaurav Batra <gbatra@linux.ibm.com>
+From: Nicholas Hobson <nicholas.hobson@outlook.com>
 
-[ Upstream commit 0b8b0c17a8998709ecb2852d56442ea981102941 ]
+[ Upstream commit 2e4c9ab2574eeaa7b893c7d35b4a9f60fd681ddd ]
 
-In powerPC, if Dynamic DMA Window is big enough, RAM is pre-mapped. To
-determine the size of RAM, a PAPR+ property "ibm,lrdr-capacity" is used.
-This OF property dictates what is the max size of RAM an LPAR can have,
-including DR added memory.
+The TD-11 hands MIDI handling off to the host once connected via
+USB. If no MIDI input port is opened on the host, the device itself
+becomes unusable as a standalone instrument until its input is
+serviced, independent of anything happening on the computer.
 
-In PowerPC, 16GB pages can be allocated at machine level and then
-assigned to LPARs. These 16GB pages are added to LPAR memory at the time
-of boot. The address range for these 16GB pages is above MAX RAM an LPAR
-can have (ibm,lrdr-capacity). In the current implementation, these 16GB
-pages are being excluded from pre-mapped TCEs. A driver can have DMA
-buffers allocated from 16GB pages. This results in platform to raise an
-EEH when DMA is attempted on buffers in 16GB memory range.
+Add a per-device keep_input_running flag, set for the TD-11 in
+snd_usbmidi_detect_roland(), and check it alongside the existing
+opened[1] check in snd_usbmidi_input_start()/snd_usbmidi_input_stop()
+so that input is started at device creation and never stopped for
+these devices, regardless of whether a client has the input port
+open.
 
-commit 6aa989ab2bd0 ("powerpc/pseries/iommu: memory notifier incorrectly
-adds TCEs for pmemory")
-
-Prior to the above patch, memblock_end_of_DRAM() was being used to
-determine the MAX memory of an LPAR. This included 16GB pages as well.
-The issue with using memblock_end_of_DRAM() is that when pmemory is
-converted to RAM via daxctl command, the DDW engine will incorrectly try
-to add TCEs for pmemory as well.
-
-Below is the address distribution of RAM, 16GB pages and pmemory for an
-LPAR with max memory of 256GB, memory allocated 64GB, 2 16GB pages and
-assigned pmemory of 8GB.
-
-RANGE                                 SIZE  STATE REMOVABLE     BLOCK
-0x0000000000000000-0x0000000fffffffff  64G online       yes     0-255
-0x0000004000000000-0x00000047ffffffff  32G online       yes 1024-1151
-
-cat /sys/bus/nd/devices/region0/resource
-0x40100000000
-cat /sys/bus/nd/devices/region0/size
-8589934592
-
-The approach to fix this problem is to revert back the code changes
-introduced by the above patch and to stash away the MAX memory of an
-LPAR, including 16GB pages, at the LPAR boot time. This value is then
-used whenever TCEs are needed to be pre-mapped - enable_DDW() or,
-iommu_mem_notifier()
-
-Fixes: 6aa989ab2bd0 ("powerpc/pseries/iommu: memory notifier incorrectly adds TCEs for pmemory")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260806205027.86428-1-gbatra@linux.ibm.com
-[ sashal: retained the existing bus_dma_limit condition because the coherent-DMA bypass changes are absent ]
+Signed-off-by: Nicholas Hobson <nicholas.hobson@outlook.com>
+Link: https://patch.msgid.link/MN2PR15MB3472557AF39DC3A4CA9E753FF8BD2@MN2PR15MB3472.namprd15.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 19b42c1fff7f ("ALSA: usb-audio: Protect Roland control activation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/iommu.c | 67 +++++++++++++++++---------
- 1 file changed, 45 insertions(+), 22 deletions(-)
+ sound/usb/midi.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
-index 4bcb6f2220658..aad5200b7bc1c 100644
---- a/arch/powerpc/platforms/pseries/iommu.c
-+++ b/arch/powerpc/platforms/pseries/iommu.c
-@@ -69,6 +69,8 @@ static struct iommu_table *iommu_pseries_alloc_table(int node)
- 	return tbl;
- }
+diff --git a/sound/usb/midi.c b/sound/usb/midi.c
+index 787956252e800..30d0684920319 100644
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -113,6 +113,7 @@ struct snd_usb_midi {
+ 	unsigned int opened[2];
+ 	unsigned char disconnected;
+ 	unsigned char input_running;
++	unsigned char keep_input_running;
  
-+static phys_addr_t pseries_ddw_max_ram __ro_after_init;
+ 	struct snd_kcontrol *roland_load_ctl;
+ };
+@@ -1168,7 +1169,7 @@ static int substream_open(struct snd_rawmidi_substream *substream, int dir,
+ 			snd_usbmidi_input_start(&umidi->list);
+ 	} else {
+ 		umidi->opened[dir]--;
+-		if (!umidi->opened[1])
++		if (!umidi->opened[1] && !umidi->keep_input_running)
+ 			snd_usbmidi_input_stop(&umidi->list);
+ 		if (!umidi->opened[0] && !umidi->opened[1]) {
+ 			if (umidi->roland_load_ctl) {
+@@ -2258,6 +2259,10 @@ static int snd_usbmidi_detect_roland(struct snd_usb_midi *umidi,
+ 	struct usb_host_interface *hostif;
+ 	u8 *cs_desc;
+ 
++	/* TD-11 becomes unusable if input isn't serviced continuously */
++	if (umidi->usb_id == USB_ID(0x0582, 0x0151))
++		umidi->keep_input_running = 1;
 +
- #ifdef CONFIG_IOMMU_API
- static struct iommu_table_group_ops spapr_tce_table_group_ops;
- #endif
-@@ -1284,15 +1286,19 @@ struct failed_ddw_pdn {
+ 	intf = umidi->iface;
+ 	if (!intf)
+ 		return -ENOENT;
+@@ -2465,7 +2470,7 @@ void snd_usbmidi_input_start(struct list_head *p)
+ 	int i;
  
- static LIST_HEAD(failed_ddw_pdn_list);
+ 	umidi = list_entry(p, struct snd_usb_midi, list);
+-	if (umidi->input_running || !umidi->opened[1])
++	if (umidi->input_running || (!umidi->opened[1] && !umidi->keep_input_running))
+ 		return;
+ 	for (i = 0; i < MIDI_MAX_ENDPOINTS; ++i)
+ 		snd_usbmidi_input_start_ep(umidi, umidi->endpoints[i].in);
+@@ -2640,6 +2645,10 @@ int __snd_usbmidi_create(struct snd_card *card,
+ 	if (err < 0)
+ 		goto exit;
  
--static phys_addr_t ddw_memory_hotplug_max(void)
-+static phys_addr_t __init ddw_memory_hotplug_max(void)
- {
--	resource_size_t max_addr;
-+	resource_size_t max_addr = memory_hotplug_max();
-+	struct device_node *memory;
- 
--#if defined(CONFIG_NUMA) && defined(CONFIG_MEMORY_HOTPLUG)
--	max_addr = hot_add_drconf_memory_max();
--#else
--	max_addr = memblock_end_of_DRAM();
--#endif
-+	for_each_node_by_type(memory, "memory") {
-+		struct resource res;
++	/* start input for devices that need continuous servicing */
++	if (umidi->keep_input_running)
++		snd_usbmidi_input_start(&umidi->list);
 +
-+		if (of_address_to_resource(memory, 0, &res))
-+			continue;
-+
-+		max_addr = max_t(resource_size_t, max_addr, res.end + 1);
-+	}
+ 	usb_autopm_get_interface_no_resume(umidi->iface);
  
- 	return max_addr;
- }
-@@ -1447,7 +1453,7 @@ static struct property *ddw_property_create(const char *propname, u32 liobn, u64
- static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn, u64 dma_mask)
- {
- 	int len = 0, ret;
--	int max_ram_len = order_base_2(ddw_memory_hotplug_max());
-+	int max_ram_len = order_base_2(pseries_ddw_max_ram);
- 	struct ddw_query_response query;
- 	struct ddw_create_response create;
- 	int page_shift;
-@@ -1617,12 +1623,12 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn, u64 dma_mas
- 		if (default_win_removed && pmem_present && !direct_mapping) {
- 			/* DDW is big enough to be split */
- 			if ((1ULL << ddw_sz) >=
--			    MIN_DDW_VPMEM_DMA_WINDOW + (1ULL << max_ram_len)) {
-+			    MIN_DDW_VPMEM_DMA_WINDOW + pseries_ddw_max_ram) {
- 
- 				direct_mapping = true;
- 
- 				/* offset of the Dynamic part of DDW */
--				dynamic_offset = 1ULL << max_ram_len;
-+				dynamic_offset = pseries_ddw_max_ram;
- 			}
- 
- 			/* DDW will at least have dynamic allocation */
-@@ -1669,7 +1675,7 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn, u64 dma_mas
- 
- 	if (direct_mapping) {
- 		/* DDW maps the whole partition, so enable direct DMA mapping */
--		ret = walk_system_ram_range(0, ddw_memory_hotplug_max() >> PAGE_SHIFT,
-+		ret = walk_system_ram_range(0, pseries_ddw_max_ram >> PAGE_SHIFT,
- 					    win64->value, tce_setrange_multi_pSeriesLP_walk);
- 		if (ret) {
- 			dev_info(&dev->dev, "failed to map DMA window for %pOF: %d\n",
-@@ -1774,8 +1780,7 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn, u64 dma_mas
- 	 * to directly map both RAM and vPMEM, then we need to set DMA limit.
- 	 */
- 	if (pmem_present && direct_mapping && len != MAX_PHYSMEM_BITS)
--		dev->dev.bus_dma_limit = dev->dev.archdata.dma_offset +
--						(1ULL << max_ram_len);
-+		dev->dev.bus_dma_limit = dev->dev.archdata.dma_offset + pseries_ddw_max_ram;
- 
- 	dev_info(&dev->dev, "lsa_required: %x, lsa_enabled: %x, direct mapping: %x\n",
- 			limited_addr_req, limited_addr_enabled, direct_mapping);
-@@ -2422,23 +2427,35 @@ static int iommu_mem_notifier(struct notifier_block *nb, unsigned long action,
- {
- 	struct dma_win *window;
- 	struct memory_notify *arg = data;
-+	unsigned long limit = arg->nr_pages;
-+	unsigned long max_ram_pages = pseries_ddw_max_ram >> PAGE_SHIFT;
- 	int ret = 0;
- 
- 	/* This notifier can get called when onlining persistent memory as well.
- 	 * TCEs are not pre-mapped for persistent memory. Persistent memory will
--	 * always be above ddw_memory_hotplug_max()
-+	 * always be above pseries_ddw_max_ram
- 	 */
-+	if (arg->start_pfn >= max_ram_pages)
-+		return NOTIFY_OK;
-+
-+	/* RAM is being DLPAR'ed. The range should never exceed max ram.
-+	 * Just in case, clamp the range and throw a warning.
-+	 */
-+	if (arg->start_pfn + limit > max_ram_pages) {
-+		limit = max_ram_pages - arg->start_pfn;
-+		WARN_ONCE(1, "Limiting Page Range %lx - %lx to Max Mem Pages: %lx\n",
-+					arg->start_pfn, arg->start_pfn + arg->nr_pages,
-+					max_ram_pages);
-+	}
- 
- 	switch (action) {
- 	case MEM_GOING_ONLINE:
- 		spin_lock(&dma_win_list_lock);
- 		list_for_each_entry(window, &dma_win_list, list) {
--			if (window->direct && (arg->start_pfn << PAGE_SHIFT) <
--				ddw_memory_hotplug_max()) {
-+			if (window->direct) {
- 				ret |= tce_setrange_multi_pSeriesLP(arg->start_pfn,
--						arg->nr_pages, window->prop);
-+						limit, window->prop);
- 			}
--			/* XXX log error */
- 		}
- 		spin_unlock(&dma_win_list_lock);
- 		break;
-@@ -2446,12 +2463,10 @@ static int iommu_mem_notifier(struct notifier_block *nb, unsigned long action,
- 	case MEM_OFFLINE:
- 		spin_lock(&dma_win_list_lock);
- 		list_for_each_entry(window, &dma_win_list, list) {
--			if (window->direct && (arg->start_pfn << PAGE_SHIFT) <
--				ddw_memory_hotplug_max()) {
-+			if (window->direct) {
- 				ret |= tce_clearrange_multi_pSeriesLP(arg->start_pfn,
--						arg->nr_pages, window->prop);
-+						limit, window->prop);
- 			}
--			/* XXX log error */
- 		}
- 		spin_unlock(&dma_win_list_lock);
- 		break;
-@@ -2535,6 +2550,14 @@ void __init iommu_init_early_pSeries(void)
- 	register_memory_notifier(&iommu_mem_nb);
- 
- 	set_pci_dma_ops(&dma_iommu_ops);
-+
-+	/* During init determine the max memory an LPAR can have and set it. This
-+	 * will be used for pre-mapping RAM in DDW. memblock_end_of_DRAM() can
-+	 * change during the running of LPAR - daxctl can add pmemory as
-+	 * "system-ram". This memory range should not be pre-mapped in DDW since
-+	 * the address of pmemory can be much higher than the DDW size.
-+	 */
-+	pseries_ddw_max_ram = ddw_memory_hotplug_max();
- }
- 
- static int __init disable_multitce(char *str)
+ 	list_add_tail(&umidi->list, midi_list);
 -- 
 2.53.0
 
