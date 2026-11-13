@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585789;
-	b=GM7siypoB95QkmYv26CQB/kdpYKYue5fosVNZkaQR7YaPatk08uU9Fcg7sAGadE1ftlt
-	 aYiqEwcyjfckZ+FRaPwoL4eNoiy3bElhBTB14gb+3SFtvKnAK+smaLUbpYadKWXSH1s8r
-	 4KnD6DH4VvhPUXCnNyRtI6Bxc8s1sVABRTgQtlhZGiIcYVDN1JFcSooxa1wbDs31PjlBm
-	 APCGjgXi0wLKTi7rNc+NkjfzlI9DwPPBKJ2IQHTK33MjL+hgKkExneVsLfNsKsGp/cAeL
-	 lDKla1Ubm3NYB+Ndq7QEjN8AmBnWpvqfZJABOv9Fp5jklsSyP2TNpFzCAa7VDSW+gkw==
+	t=1794585790;
+	b=uY1NdjC00InoZngq2NgrBCYS0LEM33+u6BbKPj7k+2mATJJPLsYzjhgbg7yBN8SUWTHx
+	 jvZTDFymwIOnYQbsKwrpvWh9rTF3kMpb8MpBC/G5+HDRKJ4xok3eh++hGzPzCpAQn4yQl
+	 YgU5pdRcdAZ5MoSrmEXCnCZUvEWNYH3v/gj8G9FCAl/ZsyifDVVf13DNdPc9wEHSOdHnk
+	 3LMNrxs2B6c0afqs5+RXSm4Wr3/Bu/8UC9oHrZrqd1MuAKd2RFn6bYivvwdkUoV8RRlJk
+	 i6F0Zzhyod3uG5bpg3HB8yHUfkT5Tb01dJcGjDbhT9Bi6nWpu0EVqLcXnXQaWFLCmOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=JvwFgIgwTlnLsnZgV+zBVbrT0VajcnfFrkhakic+AF4=;
-	b=KI91UBosZ9rSzEz/yl4PBFq4PLJJxN9NY8J3navHqoIO02fgGFA7UA2UIzZKUC8Pzi8h
-	 0W5c6rKIbPq2NXobF6pMBgOrN7XBVOmM1aoVvRSP4AQ22Xi+GW5Jq2o735FAtOwXWAcmX
-	 uwqgLVVXjmhoVmZM/kU1rq2LUYfvLRxE7jPav+kyAtroHHsW0I8NJYed79lQrt6pGVIt+
-	 tWYEHTmjNyQzLbBw4DDOB2Rtiz91Or+ot44R2SNn4yHAGPqLDyqeP600BsGqR+0Yx+C/r
-	 cds8O7p6hX1aLhBFIYUJXnACDpSfNO3iZ5bhb0H+n60NotUDgdWvObzNqrS9p1YfQnQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=TbidLm3POldfwDcdmNAqdidlp8A9zZ9XZz5GRShYHL4=;
+	b=mjkqLX1jJP1CfVS9L41xhoUjpymxRm9cSTzqYPZ8n9BvLEs5fY0YDrdc+1p5Cgpyw5Yt
+	 4fnR4+iJ+cXtyXIhcwwnw9oDFWUx8g6piml+G93nYWVqMhi/77OzClV7lo7Sqdl/uEp/f
+	 OSih/Nhuiv3V869DBDUtHkoGItB8Ro9mqpc4JEDI1OYyyDKXPcv9yaTpfqAekV+rgkkU+
+	 S5glvL+8MJ+45a3iU621YxoyuG+a2C78eCk6NYu1M7SRys8lFYeIkToew7xqqUvPs5+cr
+	 E/ySWE6kk9Po7W5OprYImdMGDTZ+vJc1HH9P5jwllCa8QVN4si30RYAZNHmyd4/pqcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aFlYd0Ou;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZHw5fsO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421D9606D479;
-	Fri, 13 Nov 2026 16:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B450F606EBB6;
+	Fri, 13 Nov 2026 16:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aFlYd0Ou
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B441F000C7;
-	Fri, 13 Nov 2026 16:03:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jZHw5fsO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5D11F000C6;
+	Fri, 13 Nov 2026 16:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585789;
-	bh=JvwFgIgwTlnLsnZgV+zBVbrT0VajcnfFrkhakic+AF4=;
+	s=korg; t=1794585790;
+	bh=TbidLm3POldfwDcdmNAqdidlp8A9zZ9XZz5GRShYHL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aFlYd0OuTgOUw/8bwdas9Hv+Nd0fSVcnlmk/CG0nwrA7Y58aSoquSCZbYlPE28hmQ
-	 Dkh3xcFjCDY6U5WzkdJ3OuT5g2Y3NSsI07mesIcu488ufSo2aR2teV6Q2hc9EKRZTu
-	 n05Qyg0q1eu86pF2X4mtHAOWL9DJCmCzCIZq6y3M=
+	b=jZHw5fsOrpafyLytvvl7MSN+HL95+XK8jNPD8nVXE2KFzDFUTsVP6UOhYCLuZ/oqZ
+	 Zxl31RE+nRGyh46V+GBXR3TbERUcs4hYg/run+2lafUPB/EdCsQwTGnu6wl9L1h8rz
+	 DTXrqpZ+B2nzdSX8tFRf2DW2Ia/b2b8rW8MDhErc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	renpanpan <renpanpan@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 378/507] drm/amdgpu: dont walk the CS chunks when allocating them failed
-Date: Fri, 13 Nov 2026 10:51:22 -0500
-Message-ID: <20261113153809.111781154@linuxfoundation.org>
+Subject: [PATCH 7.3 379/507] drm/amdgpu: Only enable HDMI audio if display supports it
+Date: Fri, 13 Nov 2026 10:51:23 -0500
+Message-ID: <20261113153809.163655127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -63,61 +62,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: renpanpan <renpanpan@kylinos.cn>
 
-[ Upstream commit ade92d50aad6799a5a9d7e73cd1604fd0576e656 ]
+[ Upstream commit 0de95c96655c8a12df62e47871016f49e5cd8618 ]
 
-amdgpu_cs_pass1() sets p->nchunks before allocating p->chunks, and the
-allocation failure path skips resetting it. amdgpu_cs_parser_fini() then
-frees the kdata of nchunks chunks from a NULL array. On navi48 with the
-chunk array allocation failed through failslab:
+The amdgpu legacy DCE audio path (dce_v6/v8/v10) unconditionally calls
+audio_enable(pin, true) at the end of afmt_setmode(), regardless of
+whether the connected display advertises audio support in its EDID.
 
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:amdgpu_cs_parser_fini+0x35d/0x710 [amdgpu]
-   amdgpu_cs_ioctl+0xcae/0x7a20 [amdgpu]
-   drm_ioctl_kernel+0x180/0x320 [drm]
+This causes a phantom HDMI audio output to appear for displays that
+have no audio capability (no basic audio bit, no Audio Data Block in
+EDID), because the GPU sets the AUDIO_ENABLED register bit, which
+drives the HDA codec's ELDV pin sense, making the codec report the
+jack as audio-available.
 
-Set nchunks once the array exists.
+The radeon, nouveau, and dw-hdmi drivers all gate audio enablement on
+display_info.has_audio. Apply the same check to amdgpu's DCE
+afmt_setmode functions.
 
-Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: renpanpan <renpanpan@kylinos.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0c828445757b86aaa3ed2638832d76f450022bdf)
+(cherry picked from commit 842a45c68e0355eea47796551c8761c0c77e8ce0)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/dce_v10_0.c | 5 +++--
+ drivers/gpu/drm/amd/amdgpu/dce_v6_0.c  | 5 +++--
+ drivers/gpu/drm/amd/amdgpu/dce_v8_0.c  | 5 +++--
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index ba9c7dc084384..2739eab3e57ca 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -202,12 +202,13 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
- 	if (IS_ERR(chunk_array))
- 		return PTR_ERR(chunk_array);
+diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+index f2977fe6d8242..04b18056a9060 100644
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+@@ -1705,8 +1705,9 @@ static void dce_v10_0_afmt_setmode(struct drm_encoder *encoder,
+ 	WREG32(mmAFMT_RAMP_CONTROL2 + dig->afmt->offset, 0x00000001);
+ 	WREG32(mmAFMT_RAMP_CONTROL3 + dig->afmt->offset, 0x00000001);
  
--	p->nchunks = cs->in.num_chunks;
--	p->chunks = kvmalloc_objs(struct amdgpu_cs_chunk, p->nchunks);
-+	/* parser_fini() walks nchunks chunks, set it once they exist */
-+	p->chunks = kvmalloc_objs(struct amdgpu_cs_chunk, cs->in.num_chunks);
- 	if (!p->chunks) {
- 		ret = -ENOMEM;
- 		goto free_chunk;
+-	/* enable audio after to setting up hw */
+-	dce_v10_0_audio_enable(adev, dig->afmt->pin, true);
++	/* Only enable audio if the display supports it */
++	if (connector->display_info.has_audio)
++		dce_v10_0_audio_enable(adev, dig->afmt->pin, true);
+ }
+ 
+ static void dce_v10_0_afmt_enable(struct drm_encoder *encoder, bool enable)
+diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+index c68de0fe1d7d3..585b0a50279f9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+@@ -1748,8 +1748,9 @@ static void dce_v6_0_afmt_setmode(struct drm_encoder *encoder,
+ 		dce_v6_0_audio_dp_enable(encoder, 1);
  	}
-+	p->nchunks = cs->in.num_chunks;
  
- 	for (i = 0; i < p->nchunks; i++) {
- 		struct drm_amdgpu_cs_chunk __user *chunk_ptr = NULL;
+-	/* enable audio after setting up hw */
+-	dce_v6_0_audio_enable(adev, dig->afmt->pin, true);
++	/* Only enable audio if the display supports it */
++	if (connector->display_info.has_audio)
++		dce_v6_0_audio_enable(adev, dig->afmt->pin, true);
+ }
+ 
+ static void dce_v6_0_afmt_enable(struct drm_encoder *encoder, bool enable)
+diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+index c3906270f25ef..1390efa4ea515 100644
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+@@ -1653,8 +1653,9 @@ static void dce_v8_0_afmt_setmode(struct drm_encoder *encoder,
+ 	WREG32(mmAFMT_RAMP_CONTROL2 + offset, 0x00000001);
+ 	WREG32(mmAFMT_RAMP_CONTROL3 + offset, 0x00000001);
+ 
+-	/* enable audio after setting up hw */
+-	dce_v8_0_audio_enable(adev, dig->afmt->pin, true);
++	/* Only enable audio if the display supports it */
++	if (connector->display_info.has_audio)
++		dce_v8_0_audio_enable(adev, dig->afmt->pin, true);
+ }
+ 
+ static void dce_v8_0_afmt_enable(struct drm_encoder *encoder, bool enable)
 -- 
 2.53.0
 
