@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590920;
-	b=FHG08tnKU4dV4FOaMgSuSwAatqGgaIueRIUpXiPprlzj449ybXmOgkGzo9F+7aIuhiFi
-	 jaR8AItKyeNORjwgbB051LK4NGv0Sil/yBo7rdRFVOK4HyZnk+UeU8G4du5PVvzNLXDh/
-	 mXDJFBzf4vhhmllfHwz/A2IJjginGHsz1WNfAmpsm+QxpGRfTtcLFwoZKYMZCBSixs1ZQ
-	 VJr0hUH9d1Sm1xHmvlS88Tu/ZXLJ0OL+cJjlPG0QroFlQ2ZSPQJXExmesCLuzn53CMIqo
-	 VtR5PvEXGil+Beq17q5SEbeVuoZaMuJA2y095EjCcFlP31wrGbieCekc+DwjLRAN/Jg==
+	t=1794590922;
+	b=OnTRVFinfA3MtwEGc640AjWoahNmYqiHGNPnjw+hMIuR4BuNMIrVQYV4e15eEfHd3IJ1
+	 CXYXFVp/pnbb6aY2LElAOKltPc1v75OK6p4ve08FQ8zh0UEAFStiYHO7ggK+sQE9lkoVQ
+	 4mt4sr1G63XYkw0sDeGDX5f5hxWpFGC6lbj3oJCoF2mn1fwGtoDpY91LpVSEREWGpSQ27
+	 3dGIydrQMPonJ8ZXJSp1eqSY8dNJeS95jAj42tCVKz1Dgq50snAQ25pl9Padihxm4Om2F
+	 uMDFlay88PgGG0Z628R06oihLxOIUt+cpJT16TJOJ6A7ezYk1pwMvFsl4TP8bNvsL6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590920;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QOvdctAmrLQqie7Wr+3o24VZQu8S/B7XEG3SKfpg4es=;
-	b=aAxJWrcI4yKgAgZECCnqsnuJS8aeD4mMINaFR77lIdETl9GmAAGYowpSLj1S87X8LH+t
-	 Rgw2cvvZhlZHaDUJDGzyuDsoK5JvWBmm4FPvpTMT8ezuhwAVAqQpNVvrmb6lcj/WtZx78
-	 BvF5ekXlmlM/PWLl0z6k352q3ORngFW/p9W4gyy5I0V6f6H6FPUvQcZSM4ePWoEN6n93a
-	 uawxChbPGz2Ep7VtpkHe7Ry9eMcfh3j2oX+pMv44qvPY9bPQ/0M4+TVMkxeBlmvVukowe
-	 7PnzaiTalZIpW5qPJMF5XM4TlUBV0K8QASNZz+MXOIs+aRNgn70WnWnOu8LjBfthS7A==
+	bh=7Cz0vlahcXVP2FkjiXAX87uPoSEj20c5cC0XEbZvBqs=;
+	b=z5vfatzeR23G6rss7RSc5gma7mj4MQ6EyRwPzDMh0y8HNxflieAa7LUePk9SoSGfdb1r
+	 nbHJ6TAzeO1XZXWzeYobvi8rC9C03Muhg3jOawSCsUSIN8nP/F1ow93e2O4IpSA9JMvoH
+	 2pJr06fXTq61uoghhjvykn9jhnSZOgBnzX3cnIGbV+iYrpnjOIIwZWfjVfURqSxEtGSHp
+	 lqrJgPMPgEX2K8knn/dq1p92epdQNz0KjE9NCf1bFEDSy5eUILcpjOY98F9zVfcp4Xv9P
+	 OyYA7Ok9k+Wi7y7ouRl98AdHUKZ+1gL3EvYnAPCleHJOUUxHVHRPtmNwAnaX/eVxFVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRclXhtO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZnrKSOS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51B3606E234;
-	Fri, 13 Nov 2026 17:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F199606E663;
+	Fri, 13 Nov 2026 17:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRclXhtO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710781F000C5;
-	Fri, 13 Nov 2026 17:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZZnrKSOS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76A11F000C6;
+	Fri, 13 Nov 2026 17:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590920;
-	bh=QOvdctAmrLQqie7Wr+3o24VZQu8S/B7XEG3SKfpg4es=;
+	s=korg; t=1794590921;
+	bh=7Cz0vlahcXVP2FkjiXAX87uPoSEj20c5cC0XEbZvBqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRclXhtOtNkeuFHaS32YOEZtgwpqkltDo4VMXXs6qqgJ1CVf++TaJ4bZLvAhDwYeX
-	 aEx/sepXh5RxqzMcm0jKxbAXbKHGo+tSBOY2zoqlVF/0/iO44Dk9VGFTEqUUVelgtL
-	 xYduBjMhu9Kp7WpQ0CeUvMGzKGXW0/anvEDT8HlU=
+	b=ZZnrKSOSjnnVQtl/LSED8AXDl9gYSoZRGP+SxuRCMdfIhwCbnIXYFsB5QfRasWfCX
+	 5uxd+lfCHnavWZ+2oSDORqSsnttqtH012Irr2CSoBgEn/TH/6xX9sfm0tJIQ2xRny0
+	 TXz3Ww7bo8NJ+g0g04IHgxc0PL1nnYWSi58y9w7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/670] ax25: free a closed socket when its device goes down
-Date: Fri, 13 Nov 2026 10:44:33 -0500
-Message-ID: <20261113153815.551044014@linuxfoundation.org>
+Subject: [PATCH 6.12 110/670] mkiss: restart the transmit queue when the interface is opened
+Date: Fri, 13 Nov 2026 10:44:34 -0500
+Message-ID: <20261113153815.581487536@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,92 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-A SOCK_SEQPACKET socket closed by its owner is marked SOCK_DESTROY and
-left to its heartbeat, which calls ax25_destroy_socket() once the link
-is down. A connection that a listener never accepted gets the same
-treatment when the listener is closed (TCP_LISTEN and SOCK_DEAD).
-Neither socket has a struct socket left, so nothing else frees it.
+ax_close() stops the transmit queue, but ax_open_dev() never starts it
+again, and the core does not do it either. After "ip link set ax0 down"
+followed by "ip link set ax0 up" the queue stays stopped: the qdisc
+never calls ax_xmit() any more, so the 20 s transmit timeout recovery
+in ax_xmit() is never reached, and mkiss_write_wakeup() cannot wake the
+queue because ax_close() cleared TTY_DO_WRITE_WAKEUP. The interface is
+up but does not transmit a single frame until the line discipline is
+detached and attached again.
 
-If the device goes away during that time, ax25_kill_by_device() calls
-ax25_disconnect() with ENETUNREACH, which since commit fc6d01ff9ef0
-("ax25: Fix NULL pointer dereferences in ax25 timers") stops the
-heartbeat with timer_delete_sync() whatever the socket state, and then
-takes the control block off the list. The socket is never freed and
-keeps a reference on the ax25 module, so ax25 can no longer be unloaded.
+Start the queue in ax_open_dev(), as network drivers do in ndo_open.
 
-This shows up on a node that closes a connection and restarts
-kissattach, or unloads bpqether, within the few seconds the heartbeat
-needs: each such connection adds one to the ax25 module refcount for
-good.
-
-Free those sockets in ax25_kill_by_device() with ax25_destroy_socket(),
-under the same condition the heartbeat uses.
-
-Tested on a QEMU bench (6.12.94 with KASAN and lockdep, two guests over
-a KISS serial link): three client connections closed and ax0 removed
-one second later, then a connection left unaccepted by a closed
-listener and ax0 removed one second later. ax25 refcount after each:
-
-                        before   after
-  3 closed clients        +3       0
-  unaccepted connection   +1       0
-  control (ax0 removed     0       0
-  25 s after close)
-
-Same result over five runs, with no KASAN or lockdep report. Also seen
-on two live nodes over bpqether, where ax25 could no longer be
-reloaded until a reboot.
-
-Fixes: fc6d01ff9ef0 ("ax25: Fix NULL pointer dereferences in ax25 timers")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 2e9cb81885fefea3690a9b94b9ff5ebf761bea73)
+(cherry picked from commit 76c8761457861c18de2d32607e5c7b19c49326ca)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/af_ax25.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/net/hamradio/mkiss.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 95224600b5a13..a3bfc14a249ce 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -78,6 +78,7 @@ static void ax25_kill_by_device(struct net_device *dev)
- 	ax25_dev *ax25_dev;
- 	ax25_cb *s;
- 	struct sock *sk;
-+	bool orphan;
+diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
+index f11019d155764..8b0e2ca5d0ea3 100644
+--- a/drivers/net/hamradio/mkiss.c
++++ b/drivers/net/hamradio/mkiss.c
+@@ -589,6 +589,11 @@ static int ax_open_dev(struct net_device *dev)
+ 	if (ax->tty == NULL)
+ 		return -ENODEV;
  
- 	if ((ax25_dev = ax25_dev_ax25dev(dev)) == NULL)
- 		return;
-@@ -109,6 +110,16 @@ static void ax25_kill_by_device(struct net_device *dev)
- 			sock_hold(sk);
- 			spin_unlock_bh(&ax25_list_lock);
- 			lock_sock(sk);
-+			/*
-+			 * A socket closed by its owner, or a connection left
-+			 * unaccepted by a closed listener, is freed by its
-+			 * heartbeat once it is down. ax25_disconnect() below
-+			 * stops that heartbeat for good, so free the socket
-+			 * here, or it is never freed and pins the module.
-+			 */
-+			orphan = sock_flag(sk, SOCK_DESTROY) ||
-+				 (sk->sk_state == TCP_LISTEN &&
-+				  sock_flag(sk, SOCK_DEAD));
- 			ax25_disconnect(s, ENETUNREACH);
- 			WRITE_ONCE(s->ax25_dev, NULL);
- 			if (sk->sk_socket) {
-@@ -116,7 +127,10 @@ static void ax25_kill_by_device(struct net_device *dev)
- 					   &s->dev_tracker);
- 				ax25_dev_put(ax25_dev);
- 			}
--			ax25_cb_del(s);
-+			if (orphan)
-+				ax25_destroy_socket(s);
-+			else
-+				ax25_cb_del(s);
- 			release_sock(sk);
- 			spin_lock_bh(&ax25_list_lock);
- 			sock_put(sk);
++	/* ax_close() stopped the queue: restart it, or the interface
++	 * never transmits again after it is set down and up.
++	 */
++	netif_start_queue(dev);
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
