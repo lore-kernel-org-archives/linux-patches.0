@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590796;
-	b=a4Ea8rsZe5lhheymtDD6XWbtDfpW9i+n00dchnAt1NZAr4GvKlfp1eN+E1b4++tqo2RP
-	 PtsRUSWQMqeNVfKAqthnM6cdy97wbHRJASWPEYYB92i2kDu7U+Pi+QaKCxzt4Cbnpl6v5
-	 iMu4M0wcNAWw9qK4TNc3CHuZ/OVoF1IlCe4VqNLmrFSrmlDWzukaLMPGH8RxiVQNrcK2o
-	 HZAE+rmxL+JUCxmpngp6mjDdiXaqnpadXjWEMMLCax2bYt1vav0uXIcFCEgervzCYK1eu
-	 zTKkexd/DYguoUGMAuWqmXO4FndvJZSw8DkkkDf8nh2Un0M6iD6V4hE9q72HicDl0jQ==
+	t=1794590797;
+	b=rKsA1d91nzKA5bivYjKpu/m0Nz1ql/NDfqlUWvYUzG2jQvH9A4tIrGYejPOsTGw11WSd
+	 zTB0N9MYGs/A5AN4RcElr8k34AeuXhW3J5tTU5lwOOy/+h6R7zigSnrgJncyfSUgHiiX7
+	 xcaUfUVImqQ9IdbzKGSgAJiifsCCFxQLYks7ztvsf+LiAYES82c6qhtqb25UFzISmUq0q
+	 Lsn97nT++QiSG5xRO/CNGGx3EDm+yReky4Q6UpcbVLR/jjie0c60Exvixe90uQunWyYdE
+	 yyA86P3I924N4IMvZesmSBPQqkV7/IT5H4UDSEygKpfb8Jf6o6EIRfoANam3Nc11zcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=bIrMNDqJDRK/r9DIrB+F3Rc0sT3s0JVQfa9QS2nHZxE=;
-	b=j8SaerXjfle5V5Qdtra/kh4xD92sGkrdAYwwfim+jKn49cOsw2gYr4jETPP1ofsv1szA
-	 grTPc8S+7YDnzD04jZmpOsyI6kVr5iiY0oQ4/BqL0iX8H7EwspEqhBL6WeBfgE+wiNkJV
-	 FveckTJb76RZbvyPSG2+0WG+eZ01LwuGIDZ95cflQ+n1odA7QhEtQKjzYzlIuRHECP9Rn
-	 z2hhTtUF4W/CoT06UguspmXygkHyYKT7XDdkmewrYc1G6Rx4c8bM/SUMQI2c5fpwwr0ea
-	 MgYq6gBzEfoeW9pF5YMu/9A7vhPOjCYkQVdsd3Iwi51humnsuPAMCt/xvyFu3yiJU7A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=fKwAP50wuJXaV+fTLIWrJfWXl0DF+jpcR0f7GbXLiDI=;
+	b=VjRAdt9s3DxpY969oU8VehiXIAaX0l0uirK2ULigK4f42i56NIHkjHW49w+rGeMb9QHx
+	 hkcwx0ijsNgqNK6/CX5IG486Lv+OOW5bDX9JkP8nGy1yKsn9PZ2b93J+AGgB0fwNrCLu0
+	 Z1fV9j7lql+SgScejcTCvXEik7CERieOwisUfzEydctHfLjLr5MO/IQkwhGf1WkwKmUL8
+	 aSsbPSB/0KU5JLY2V9THPNorukTBhsUoA6w283TYx4LK0OT7kr/LGT9hREPlhKHpS35mW
+	 AgMY+Ij3E5Kr6lJWmitFVUOiAnbGDcAr+rF/ftyusv6YaCWeHhUAgGj8dyLpKQJxz4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=crj7+saD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DPd3uchO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C6A607D2E7;
-	Fri, 13 Nov 2026 17:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C68B607D2E1;
+	Fri, 13 Nov 2026 17:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=crj7+saD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A391F000C4;
-	Fri, 13 Nov 2026 17:26:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DPd3uchO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289721F000C5;
+	Fri, 13 Nov 2026 17:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590796;
-	bh=bIrMNDqJDRK/r9DIrB+F3Rc0sT3s0JVQfa9QS2nHZxE=;
+	s=korg; t=1794590797;
+	bh=fKwAP50wuJXaV+fTLIWrJfWXl0DF+jpcR0f7GbXLiDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=crj7+saDK1qq49yff1UlmTiljV4+ulzDzPhKwN+/sbWg17u48P+N1Cr9sEk5Lk7Dx
-	 w/CmseXRZl7ey9dknT82O1m0cL7YV58Y55UeahK9CS8QBUZKzLFn4XiuztuO+o20MO
-	 sIsEoHvL3l2KnQMHh+6rsRP43QvXBvoOqXDPsHGk=
+	b=DPd3uchO5rc+pWDBm9GBNio7tN0/yVqvjgaEoKJyO8/kXtgFkkQHTBKR/qaDSdAGY
+	 jQju4B9AYmaaUx6pgBCy8NKk7ECb2eaHmhTEVfm4dBDR00qIeuHDZ9/3E0SsyzHUvU
+	 QyCZ9yPywNFnprIwR6XSRu91X0J6kdSIGOefEidA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jos=C3=A9=20Miguel=20Castellanos=20Valladolid?= <josstamy@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Yingjie Wang <1075151112@qq.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 686/686] ALSA: hda/realtek: Enable mute LEDs on HP OmniBook X Flip 14-fm0xxx
-Date: Fri, 13 Nov 2026 10:53:39 -0500
-Message-ID: <20261113153844.862430939@linuxfoundation.org>
+Subject: [PATCH 6.18 650/686] nvmet-tcp: validate the TLS handshake timeout
+Date: Fri, 13 Nov 2026 10:53:03 -0500
+Message-ID: <20261113153843.793878514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -62,59 +64,145 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Miguel Castellanos Valladolid <josstamy@gmail.com>
+From: Yingjie Wang <1075151112@qq.com>
 
-[ Upstream commit c80286aaa4acd52f9bd0b0d4914d2069fe6ba3a8 ]
+[ Upstream commit e3e7a85730a4b17efa1e2ff4088443c4753be683 ]
 
-The HP OmniBook X Flip Laptop 14-fm0xxx (subsystem ID 0x103c8d9f, ALC245
-with two CS35L41 amplifiers over I2C) is currently handled by
-ALC287_FIXUP_CS35L41_I2C_2. That binds the amplifiers but does not set up
-the mute LEDs, so neither the speaker mute key LED nor the microphone mute
-key LED lights up under Linux. With that fixup the codec GPIOs stay
-disabled (IO[0..2] enable=0).
+tls_handshake_timeout is writable but stored as a signed int. Multiplying
+the value by MSEC_PER_SEC and HZ therefore uses signed arithmetic.
 
-Switch the entry to ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS, which chains
-cs35l41_fixup_i2c_two with ALC245_FIXUP_HP_X360_MUTE_LEDS. This keeps the
-amplifier setup and adds the speaker mute LED through the ALC245 COEF
-register and the mic mute LED through codec GPIO2. It is the same fixup
-already used for the 17 Turbine OmniBook 7 DIS (0x103c8d9c).
+With HZ=1000, setting it to 2147484 overflows both multiplications. If
+the handshake request is accepted and remains pending, the timer wheel
+treats the jiffies delay as already expired and queues the timeout work
+on its next advance, while the handshake agent was given about 24.9
+days. Negative values such as -1 cause the same immediate kernel-side
+timeout.
 
-Tested on the affected laptop with v7.2.11 using the equivalent
-ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX fixup, which has the identical
-cs35l41_fixup_i2c_two + ALC245_FIXUP_HP_X360_MUTE_LEDS chain: hda::mute
-and hda::micmute LED class devices appear and both key LEDs light up
-when muting.
+Store the parameter as an unsigned int and reject values that cannot be
+represented both by tls_handshake_args::ta_timeout_ms and by a safe
+jiffies delay. Take one snapshot so a concurrent parameter update cannot
+give the handshake agent and delayed work different timeouts. Document
+the accepted range for built-in use.
 
-Fixes: 29951021367f ("ALSA: hda/realtek: Add support for various HP Laptops using CS35L41 HDA")
+Negative and oversized values now fail with -EINVAL. Keep zero valid,
+preserving the existing immediate-timeout behavior.
+
+Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
 Cc: stable@vger.kernel.org
-Signed-off-by: José Miguel Castellanos Valladolid <josstamy@gmail.com>
-Link: https://patch.msgid.link/20261017050615.14481-1-josstamy@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yingjie Wang <1075151112@qq.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+
+Backport notes: Route timeout validation through the existing parameter
+setter, preserving the validation of the other parameters and avoiding a
+new function. Omit the unrelated dynamic-quirks documentation and retain
+its blank separator so the host timeout fix merges cleanly.
+
+Stable-dep-of: 799203afd298 ("nvme-tcp: validate the TLS handshake timeout")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../admin-guide/kernel-parameters.txt         |  6 +++++
+ drivers/nvme/target/tcp.c                     | 26 ++++++++++++++++---
+ 2 files changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index ebeb6297f4715..7c89b3796e1b9 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7153,7 +7153,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8d9c, "HP 17 Turbine OmniBook 7 DIS", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x8d9d, "HP 17 Turbine OmniBook X UMA", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8d9e, "HP 17 Turbine OmniBook X DIS", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x103c, 0x8d9f, "HP 14 Cadet (x360)", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8d9f, "HP 14 Cadet (x360)", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
- 	SND_PCI_QUIRK(0x103c, 0x8da0, "HP 16 Clipper OmniBook 7(X360)", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8da1, "HP 16 Clipper OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8da7, "HP 14 Enstrom OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 5bf1df91607eb..1b53bc0671249 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -4651,6 +4651,12 @@ Kernel parameters
+ 			This can be set from sysctl after boot.
+ 			See Documentation/admin-guide/sysctl/vm.rst for details.
+ 
++
++	nvmet_tcp.tls_handshake_timeout=
++			[NVME] NVMe/TCP target TLS handshake timeout in seconds.
++			Valid values range from 0 to the smaller of
++			UINT_MAX / 1000 and MAX_JIFFY_OFFSET / HZ. Default: 10
++
+ 	ohci1394_dma=early	[HW,EARLY] enable debugging via the ohci1394 driver.
+ 			See Documentation/core-api/debugging-via-ohci1394.rst for more
+ 			info.
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index b9a904f184892..f478f226e29fd 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -6,6 +6,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ #include <linux/module.h>
+ #include <linux/init.h>
++#include <linux/jiffies.h>
+ #include <linux/slab.h>
+ #include <linux/crc32c.h>
+ #include <linux/err.h>
+@@ -41,8 +42,18 @@ static int param_store_val(const char *str, int *val, int min, int max)
+ 	return 0;
+ }
+ 
++#ifdef CONFIG_NVME_TARGET_TCP_TLS
++static unsigned int tls_handshake_timeout = 10;
++#endif
++
+ static int set_params(const char *str, const struct kernel_param *kp)
+ {
++#ifdef CONFIG_NVME_TARGET_TCP_TLS
++	if (kp->arg == &tls_handshake_timeout)
++		return param_set_uint_minmax(str, kp, 0,
++			min_t(unsigned long, UINT_MAX / MSEC_PER_SEC,
++			      MAX_JIFFY_OFFSET / HZ));
++#endif
+ 	return param_store_val(str, kp->arg, 0, INT_MAX);
+ }
+ 
+@@ -76,8 +87,14 @@ MODULE_PARM_DESC(idle_poll_period_usecs,
+ /*
+  * TLS handshake timeout
+  */
+-static int tls_handshake_timeout = 10;
+-module_param(tls_handshake_timeout, int, 0644);
++static const struct kernel_param_ops tls_handshake_timeout_ops = {
++	.set = set_params,
++	.get = param_get_uint,
++};
++
++module_param_cb(tls_handshake_timeout, &tls_handshake_timeout_ops,
++		&tls_handshake_timeout, 0644);
++__MODULE_PARM_TYPE(tls_handshake_timeout, "uint");
+ MODULE_PARM_DESC(tls_handshake_timeout,
+ 		 "nvme TLS handshake timeout in seconds (default 10)");
+ #endif
+@@ -1926,6 +1943,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
+ {
+ 	int ret = -EOPNOTSUPP;
+ 	struct tls_handshake_args args;
++	unsigned int timeout = READ_ONCE(tls_handshake_timeout);
+ 
+ 	if (queue->state != NVMET_TCP_Q_TLS_HANDSHAKE) {
+ 		pr_warn("cannot start TLS in state %d\n", queue->state);
+@@ -1939,7 +1957,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
+ 	args.ta_done = nvmet_tcp_tls_handshake_done;
+ 	args.ta_data = queue;
+ 	args.ta_keyring = key_serial(queue->port->nport->keyring);
+-	args.ta_timeout_ms = tls_handshake_timeout * 1000;
++	args.ta_timeout_ms = timeout * MSEC_PER_SEC;
+ 
+ 	ret = tls_server_hello_psk(&args, GFP_KERNEL);
+ 	if (ret) {
+@@ -1947,7 +1965,7 @@ static int nvmet_tcp_tls_handshake(struct nvmet_tcp_queue *queue)
+ 		pr_err("failed to start TLS, err=%d\n", ret);
+ 	} else {
+ 		queue_delayed_work(nvmet_wq, &queue->tls_handshake_tmo_work,
+-				   tls_handshake_timeout * HZ);
++				   (unsigned long)timeout * HZ);
+ 	}
+ 	return ret;
+ }
 -- 
 2.53.0
 
