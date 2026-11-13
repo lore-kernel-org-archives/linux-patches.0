@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590622;
-	b=QjSPyLzLmmxWmr0y7QQHD283hYfgfD2BV35fdtPpiViNWlq1U/IaKAdANX5pberefgGV
-	 28jmbxPl+G3cAJ/hLydZh6R2sbO2qAQsrKsqFpaGxAVwlQU7ejfNMM9guh6mmePwgdUbu
-	 RLHq8LNxGfm1+lN22ly+uibNFsYSRVJE9WdtWrAVbyftRYAPRLoxGjiyQ1qx6spxSsAwM
-	 1qxQD6LB0hZC6+djAImsvqK3jTGj++kGEsdMr/DLj0FrnLMhoeoDURhtydbP8wLOdJGIM
-	 YbOhFj12VMzcOcIBVwv8DviVPwV/vOAf431n9ap77zkl+lB5G9ZaGJbt/HMl3XYtKYw==
+	t=1794590623;
+	b=As7OOlUlv37ELH2FmQb3vQxx7lgoolTqrirXhWfx2hQCCWEox1OA7B2xaR9B+NVMOfdX
+	 nj9J55+BzEtkqPaWfBbPZY6ouQJLCP2fIU7wv/tMQ3PXW/6zWWG2tXVQ3qBEMzYabpMTm
+	 WO9eq7aQazRkFd3dZd/yfVWcZiDbaEeNjYfy7diR2ATRPWXBP7rnLxLUtFcWresHj9Mv7
+	 ykTxwQGgnIk6RzjMMTeHAGqAKcf0VJhv2S0vQM0ZPpzb2cN89amPOu/78pUpMzlND9lra
+	 KfIacDdzNOBvJmp8qpcAJTp82CP9rxAMC/Ds3Dox0Fs+7Qos6dZJUVjtie72GQr0stA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590622;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590623;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sp+0cQXY4oVplhkpdyWmH/DeBFUej4eV2DZzCvHvrKU=;
-	b=PpO93BLWQR7YqPDRkG8G2Bi4PXGkb1qhWd8YdKM0ceaUeY7SaFnsSPI9Il2ojwn1Q7Gw
-	 uoU5oQCGmOMuOwHDJzj6WH0FHgmkr4wwDhI74RKbcvOfjQgozTy0MRRTeVVLlNuWSfI+E
-	 BWfw2SoRfgQi7uNGTX5pgz4JrsihNiooUnyLtC107v28BLDDIgnJmtkAi8nxwMHYYD6jt
-	 9VKxLoAuoCKSHzueMMaoY/a4WGZOdAEoqbsxwnrHh1+IaXZioEGkrMiRnfpoNIb+QA0rO
-	 9yag0zGlJWPMOF7i38VCxrTvBnpsLaubxaVygCn2NBJWtZ/qi5Fy19dPbou8r/M8qQw==
+	bh=PLqVaBS4clGnQTr2K/gHYCh3bZdugqi7mYgMLlmBQE0=;
+	b=ImkwMv33O5re3vAQ6L/xgzyX5VJwPqVTOkkiQt+4qgMYtdRNtIVNA2gQQKEV8U0Qn9ed
+	 jHq91ZOByRV2f8c2DRVjUYq9HoUgp8v1iythkisZiYULMjIuW12P05YRXsytFWKxY8VkG
+	 KqJt6FFozNjzyju11tTDhNGZYRIkBhFoCxd/Mqe7S9T+w5K48TuOD0prvDnLysF2uz1HE
+	 Xf2T7vqGIpHG5xkPDVvSVNLr/M7T3HPEi51JPOom2zyRMLD1RIHChNcGI+q+WVq+A+gIJ
+	 SfDuO/TnoiVnGRbaijhLSpn7sZLNwww4O07a13KUTLAy20HMsfNoUudAgjAMbCzN0Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omBYi5mH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=htKsycgk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777C6607587D;
-	Fri, 13 Nov 2026 17:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13DD607586F;
+	Fri, 13 Nov 2026 17:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omBYi5mH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234701F000C4;
-	Fri, 13 Nov 2026 17:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=htKsycgk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD491F000C4;
+	Fri, 13 Nov 2026 17:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590622;
-	bh=sp+0cQXY4oVplhkpdyWmH/DeBFUej4eV2DZzCvHvrKU=;
+	s=korg; t=1794590623;
+	bh=PLqVaBS4clGnQTr2K/gHYCh3bZdugqi7mYgMLlmBQE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=omBYi5mHaF+tUC8B/qOg2/UknNOq8l87DVNSUwt9GJtk7GfU9lK2FfFP6TPyYbH8o
-	 V/0wLLzdJ0+/d8gdZB6AYWimroY3jVpTEltgur5oVS1wGzcRuuZdeVB6KQhfdZwA3B
-	 Om6FvfNxVHjvAFGTI1cERi5Eeg6D0CSFM5ZSI5Bk=
+	b=htKsycgkjv8Dtpgxu2zegcIAm8Woi3ORhP/yn4C+3nZqYWZyEaK9eBTu6FXo1dddf
+	 EbPBIBo2G91VYlDUFPyLSMY1Poff0p5UTW0O0h6xUxFD8uImsPc9iJmkw/fNxCCADP
+	 mcwcRBOzombllGukVRvpoYOD52OCwSeujrci7BkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Martin Belanger <martin.belanger@dell.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 546/686] nvme-tcp: skip TLS control records while waiting for the ICResp
-Date: Fri, 13 Nov 2026 10:51:19 -0500
-Message-ID: <20261113153840.037322463@linuxfoundation.org>
+Subject: [PATCH 6.18 511/686] media: i2c: og01a1b: Switch from .s_stream to .enable_streams/.disable_streams
+Date: Fri, 13 Nov 2026 10:50:44 -0500
+Message-ID: <20261113153838.260868358@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,235 +69,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Belanger <martin.belanger@dell.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-commit 12c20e2903563acfb949342967adb900310a24d4 upstream.
+[ Upstream commit 3a594bb454ba1ecb005f753007fa1bb5c5e68bae ]
 
-A peer may send a NewSessionTicket as soon as the handshake completes,
-ahead of the ICResp. nvme_tcp_init_connection() fails the connection on
-any record that is not application data, so such a target cannot be
-reached at all. An OpenSSL-based target does this by default.
+The change allows to simplify the driver code, in particular the explicit
+locking scheme for stream on/off or format update serialization can be
+dropped in favour to the one provided by the V4L2 core internals.
 
-RFC 9846 section 4.7.1 requires a client that does not support session
-resumption to ignore a NewSessionTicket. Discard such a record and read
-again, up to a fixed number of records. Report an alert, and fail the
-connection for any other record type.
-
-The record type is now checked before the length. A control record
-shorter than the ICResp was reported as -ECONNRESET, which hid the real
-cause.
-
-Fixes: 2837966ab2a8 ("nvme-tcp: control message handling for recvmsg()")
-Assisted-by: LLM
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Martin Belanger <martin.belanger@dell.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ Martin: resolved a context conflict next to nvme_tcp_cpu_queues ]
-Signed-off-by: Martin Belanger <martin.belanger@dell.com>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+[Sakari Ailus: Fix error handling for enable_streams callback.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: a26c5ac46191 ("media: i2c: og01a1b: power off sensor on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 162 ++++++++++++++++++++++++++++++++++------
- 1 file changed, 140 insertions(+), 22 deletions(-)
+ drivers/media/i2c/og01a1b.c | 90 ++++++++++++++-----------------------
+ 1 file changed, 34 insertions(+), 56 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 94495b0228714..190eac661e7da 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -53,6 +53,12 @@ MODULE_PARM_DESC(tls_handshake_timeout,
- 		 "nvme TLS handshake timeout in seconds (default 10)");
- #endif
+diff --git a/drivers/media/i2c/og01a1b.c b/drivers/media/i2c/og01a1b.c
+index 7b892b26203c0..4b6b9ac24594b 100644
+--- a/drivers/media/i2c/og01a1b.c
++++ b/drivers/media/i2c/og01a1b.c
+@@ -442,9 +442,6 @@ struct og01a1b {
  
-+/* read a TLS control record in chunks of this size */
-+#define NVME_TCP_TLS_REC_CHUNK 256
-+
-+/* TLS records read while waiting for the ICResp, the ICResp included */
-+#define NVME_TCP_ICRESP_MAX_RECORDS 8
-+
- static atomic_t nvme_tcp_cpu_queues[NR_CPUS];
+ 	/* Current mode */
+ 	const struct og01a1b_mode *cur_mode;
+-
+-	/* To serialize asynchronus callbacks */
+-	struct mutex mutex;
+ };
  
- #ifdef CONFIG_DEBUG_LOCK_ALLOC
-@@ -1535,12 +1541,143 @@ static void nvme_tcp_free_queue(struct nvme_ctrl *nctrl, int qid)
- 	mutex_destroy(&queue->pf_cache_lock);
+ static u64 to_pixel_rate(u32 f_index)
+@@ -616,7 +613,6 @@ static int og01a1b_init_controls(struct og01a1b *og01a1b)
+ 	if (ret)
+ 		return ret;
+ 
+-	ctrl_hdlr->lock = &og01a1b->mutex;
+ 	og01a1b->link_freq = v4l2_ctrl_new_int_menu(ctrl_hdlr,
+ 						    &og01a1b_ctrl_ops,
+ 						    V4L2_CID_LINK_FREQ,
+@@ -686,74 +682,66 @@ static void og01a1b_update_pad_format(const struct og01a1b_mode *mode,
+ 	fmt->field = V4L2_FIELD_NONE;
  }
  
-+static int nvme_tcp_recv_tls_alert(struct nvme_tcp_queue *queue,
-+				   struct msghdr *msg, int len)
-+{
-+	struct sock *sk = queue->sock->sk;
-+	u8 level, description;
-+
-+	if (len < 2) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"queue %d: truncated TLS alert\n",
-+			nvme_tcp_queue_id(queue));
-+		return -ENOTCONN;
-+	}
-+
-+	/* tls_alert_recv() reads through the iterator */
-+	iov_iter_revert(&msg->msg_iter, len);
-+	tls_alert_recv(sk, msg, &level, &description);
-+
-+	if (level == TLS_ALERT_LEVEL_FATAL) {
-+		dev_err(queue->ctrl->ctrl.device,
-+			"queue %d: fatal TLS alert %u\n",
-+			nvme_tcp_queue_id(queue), description);
-+		return -ENOTCONN;
-+	}
-+
-+	/* a peer shutting down normally is not worth a warning */
-+	if (description == TLS_ALERT_DESC_CLOSE_NOTIFY)
-+		dev_dbg(queue->ctrl->ctrl.device,
-+			"queue %d: TLS close_notify\n",
-+			nvme_tcp_queue_id(queue));
-+	else
-+		dev_warn(queue->ctrl->ctrl.device,
-+			 "queue %d: TLS alert %u\n",
-+			 nvme_tcp_queue_id(queue), description);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Discard a TLS record that arrived in place of the ICResp. A peer may send
-+ * a NewSessionTicket as soon as the handshake completes.
-+ *
-+ * Returns 0 when the record was discarded and the ICResp can be read, or a
-+ * negative errno if the connection cannot continue.
-+ */
-+static int nvme_tcp_skip_tls_record(struct nvme_tcp_queue *queue,
-+				    struct msghdr *msg, u8 ctype, int len)
-+{
-+	u8 buf[NVME_TCP_TLS_REC_CHUNK];
-+	int ret;
-+
-+	switch (ctype) {
-+	case TLS_RECORD_TYPE_HANDSHAKE:
-+		break;
-+	case TLS_RECORD_TYPE_ALERT:
-+		ret = nvme_tcp_recv_tls_alert(queue, msg, len);
-+		return ret ? : -ENOTCONN;
-+	default:
-+		pr_err("queue %d: unhandled TLS record %u\n",
-+		       nvme_tcp_queue_id(queue), ctype);
-+		return -ENOTCONN;
-+	}
-+
-+	/* the ICResp is in a later record, drain this one first */
-+	while (!(msg->msg_flags & MSG_EOR)) {
-+		struct kvec iov = {
-+			.iov_base = buf,
-+			.iov_len = sizeof(buf),
-+		};
-+		char cbuf[CMSG_LEN(sizeof(char))] = {};
-+		/* kTLS fails a control record read without a cmsg buffer */
-+		struct msghdr drain = {
-+			.msg_control = cbuf,
-+			.msg_controllen = sizeof(cbuf),
-+		};
-+
-+		ret = kernel_recvmsg(queue->sock, &drain, &iov, 1, sizeof(buf),
-+				     0);
-+		if (ret <= 0) {
-+			pr_warn("queue %d: failed to drain TLS record: %d\n",
-+				nvme_tcp_queue_id(queue), ret);
-+			return ret ? : -ECONNRESET;
-+		}
-+		msg->msg_flags = drain.msg_flags;
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * Receive the ICResp. Over TLS, skip the records that a peer may send
-+ * ahead of it.
-+ *
-+ * Returns the length received, or a negative errno.
-+ */
-+static int nvme_tcp_recv_icresp(struct nvme_tcp_queue *queue,
-+				struct nvme_tcp_icresp_pdu *icresp)
-+{
-+	char cbuf[CMSG_LEN(sizeof(char))];
-+	struct msghdr msg;
-+	struct kvec iov;
-+	u8 ctype;
-+	int i, ret;
-+
-+	for (i = 0; i < NVME_TCP_ICRESP_MAX_RECORDS; i++) {
-+		memset(&msg, 0, sizeof(msg));
-+		memset(cbuf, 0, sizeof(cbuf));
-+		iov.iov_base = icresp;
-+		iov.iov_len = sizeof(*icresp);
-+		if (nvme_tcp_queue_tls(queue)) {
-+			msg.msg_control = cbuf;
-+			msg.msg_controllen = sizeof(cbuf);
-+		}
-+		msg.msg_flags = MSG_WAITALL;
-+		ret = kernel_recvmsg(queue->sock, &msg, &iov, 1,
-+				     iov.iov_len, msg.msg_flags);
-+		if (ret <= 0 || !nvme_tcp_queue_tls(queue))
-+			return ret;
-+
-+		ctype = tls_get_record_type(queue->sock->sk,
-+					    (struct cmsghdr *)cbuf);
-+		if (ctype == TLS_RECORD_TYPE_DATA)
-+			return ret;
-+
-+		ret = nvme_tcp_skip_tls_record(queue, &msg, ctype, ret);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
-+	pr_err("queue %d: too many TLS records before the ICResp\n",
-+	       nvme_tcp_queue_id(queue));
-+	return -EPROTO;
-+}
-+
- static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
+-static int og01a1b_start_streaming(struct og01a1b *og01a1b)
++static int og01a1b_enable_streams(struct v4l2_subdev *sd,
++				  struct v4l2_subdev_state *state, u32 pad,
++				  u64 streams_mask)
  {
- 	struct nvme_tcp_icreq_pdu *icreq;
- 	struct nvme_tcp_icresp_pdu *icresp;
--	char cbuf[CMSG_LEN(sizeof(char))] = {};
--	u8 ctype;
- 	struct msghdr msg = {};
- 	struct kvec iov;
- 	bool ctrl_hdgst, ctrl_ddgst;
-@@ -1578,16 +1715,7 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
- 		goto free_icresp;
++	struct og01a1b *og01a1b = to_og01a1b(sd);
++	unsigned int link_freq_index = og01a1b->cur_mode->link_freq_index;
+ 	const struct og01a1b_reg_list *reg_list;
+-	int link_freq_index, ret;
++	int ret;
+ 
+-	link_freq_index = og01a1b->cur_mode->link_freq_index;
+-	reg_list = &link_freq_configs[link_freq_index].reg_list;
++	ret = pm_runtime_resume_and_get(og01a1b->dev);
++	if (ret)
++		return ret;
+ 
++	reg_list = &link_freq_configs[link_freq_index].reg_list;
+ 	ret = og01a1b_write_reg_list(og01a1b, reg_list);
+ 	if (ret) {
+-		dev_err(og01a1b->dev, "failed to set plls");
+-		return ret;
++		dev_err(og01a1b->dev, "failed to set plls: %d\n", ret);
++		goto error;
  	}
  
--	memset(&msg, 0, sizeof(msg));
--	iov.iov_base = icresp;
--	iov.iov_len = sizeof(*icresp);
--	if (nvme_tcp_queue_tls(queue)) {
--		msg.msg_control = cbuf;
--		msg.msg_controllen = sizeof(cbuf);
--	}
--	msg.msg_flags = MSG_WAITALL;
--	ret = kernel_recvmsg(queue->sock, &msg, &iov, 1,
--			iov.iov_len, msg.msg_flags);
-+	ret = nvme_tcp_recv_icresp(queue, icresp);
- 	if (ret >= 0 && ret < sizeof(*icresp))
- 		ret = -ECONNRESET;
- 	if (ret < 0) {
-@@ -1595,16 +1723,6 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
- 			nvme_tcp_queue_id(queue), ret);
- 		goto free_icresp;
+ 	reg_list = &og01a1b->cur_mode->reg_list;
+ 	ret = og01a1b_write_reg_list(og01a1b, reg_list);
+ 	if (ret) {
+-		dev_err(og01a1b->dev, "failed to set mode");
+-		return ret;
++		dev_err(og01a1b->dev, "failed to set mode: %d\n", ret);
++		goto error;
  	}
--	ret = -ENOTCONN;
--	if (nvme_tcp_queue_tls(queue)) {
--		ctype = tls_get_record_type(queue->sock->sk,
--					    (struct cmsghdr *)cbuf);
--		if (ctype != TLS_RECORD_TYPE_DATA) {
--			pr_err("queue %d: unhandled TLS record %d\n",
--			       nvme_tcp_queue_id(queue), ctype);
--			goto free_icresp;
+ 
+ 	ret = __v4l2_ctrl_handler_setup(og01a1b->sd.ctrl_handler);
+ 	if (ret)
+-		return ret;
++		goto error;
+ 
+ 	ret = og01a1b_write_reg(og01a1b, OG01A1B_REG_MODE_SELECT,
+ 				OG01A1B_REG_VALUE_08BIT,
+ 				OG01A1B_MODE_STREAMING);
+ 	if (ret) {
+-		dev_err(og01a1b->dev, "failed to set stream");
+-		return ret;
++		dev_err(og01a1b->dev, "failed to start streaming: %d\n", ret);
++		goto error;
+ 	}
+ 
+ 	return 0;
+-}
+ 
+-static void og01a1b_stop_streaming(struct og01a1b *og01a1b)
+-{
+-	if (og01a1b_write_reg(og01a1b, OG01A1B_REG_MODE_SELECT,
+-			      OG01A1B_REG_VALUE_08BIT, OG01A1B_MODE_STANDBY))
+-		dev_err(og01a1b->dev, "failed to set stream");
++error:
++	pm_runtime_put_autosuspend(og01a1b->dev);
++
++	return ret;
+ }
+ 
+-static int og01a1b_set_stream(struct v4l2_subdev *sd, int enable)
++static int og01a1b_disable_streams(struct v4l2_subdev *sd,
++				   struct v4l2_subdev_state *state, u32 pad,
++				   u64 streams_mask)
+ {
+ 	struct og01a1b *og01a1b = to_og01a1b(sd);
+-	int ret = 0;
+-
+-	mutex_lock(&og01a1b->mutex);
+-	if (enable) {
+-		ret = pm_runtime_resume_and_get(og01a1b->dev);
+-		if (ret) {
+-			mutex_unlock(&og01a1b->mutex);
+-			return ret;
 -		}
++	int ret;
+ 
+-		ret = og01a1b_start_streaming(og01a1b);
+-		if (ret) {
+-			enable = 0;
+-			og01a1b_stop_streaming(og01a1b);
+-			pm_runtime_put(og01a1b->dev);
+-		}
+-	} else {
+-		og01a1b_stop_streaming(og01a1b);
+-		pm_runtime_put(og01a1b->dev);
 -	}
- 	ret = -EINVAL;
- 	if (icresp->hdr.type != nvme_tcp_icresp) {
- 		pr_err("queue %d: bad type returned %d\n",
++	ret = og01a1b_write_reg(og01a1b, OG01A1B_REG_MODE_SELECT,
++				OG01A1B_REG_VALUE_08BIT, OG01A1B_MODE_STANDBY);
++	if (ret)
++		dev_err(og01a1b->dev, "failed to stop streaming: %d\n", ret);
+ 
+-	mutex_unlock(&og01a1b->mutex);
++	pm_runtime_put_autosuspend(og01a1b->dev);
+ 
+ 	return ret;
+ }
+@@ -771,7 +759,6 @@ static int og01a1b_set_format(struct v4l2_subdev *sd,
+ 				      height, fmt->format.width,
+ 				      fmt->format.height);
+ 
+-	mutex_lock(&og01a1b->mutex);
+ 	og01a1b_update_pad_format(mode, &fmt->format);
+ 	if (fmt->which == V4L2_SUBDEV_FORMAT_TRY) {
+ 		*v4l2_subdev_state_get_format(sd_state, fmt->pad) = fmt->format;
+@@ -794,8 +781,6 @@ static int og01a1b_set_format(struct v4l2_subdev *sd,
+ 					 h_blank);
+ 	}
+ 
+-	mutex_unlock(&og01a1b->mutex);
+-
+ 	return 0;
+ }
+ 
+@@ -805,15 +790,12 @@ static int og01a1b_get_format(struct v4l2_subdev *sd,
+ {
+ 	struct og01a1b *og01a1b = to_og01a1b(sd);
+ 
+-	mutex_lock(&og01a1b->mutex);
+ 	if (fmt->which == V4L2_SUBDEV_FORMAT_TRY)
+ 		fmt->format = *v4l2_subdev_state_get_format(sd_state,
+ 							    fmt->pad);
+ 	else
+ 		og01a1b_update_pad_format(og01a1b->cur_mode, &fmt->format);
+ 
+-	mutex_unlock(&og01a1b->mutex);
+-
+ 	return 0;
+ }
+ 
+@@ -849,18 +831,14 @@ static int og01a1b_enum_frame_size(struct v4l2_subdev *sd,
+ 
+ static int og01a1b_open(struct v4l2_subdev *sd, struct v4l2_subdev_fh *fh)
+ {
+-	struct og01a1b *og01a1b = to_og01a1b(sd);
+-
+-	mutex_lock(&og01a1b->mutex);
+ 	og01a1b_update_pad_format(&supported_modes[0],
+ 				  v4l2_subdev_state_get_format(fh->state, 0));
+-	mutex_unlock(&og01a1b->mutex);
+ 
+ 	return 0;
+ }
+ 
+ static const struct v4l2_subdev_video_ops og01a1b_video_ops = {
+-	.s_stream = og01a1b_set_stream,
++	.s_stream = v4l2_subdev_s_stream_helper,
+ };
+ 
+ static const struct v4l2_subdev_pad_ops og01a1b_pad_ops = {
+@@ -868,6 +846,8 @@ static const struct v4l2_subdev_pad_ops og01a1b_pad_ops = {
+ 	.get_fmt = og01a1b_get_format,
+ 	.enum_mbus_code = og01a1b_enum_mbus_code,
+ 	.enum_frame_size = og01a1b_enum_frame_size,
++	.enable_streams = og01a1b_enable_streams,
++	.disable_streams = og01a1b_disable_streams,
+ };
+ 
+ static const struct v4l2_subdev_ops og01a1b_subdev_ops = {
+@@ -1046,7 +1026,6 @@ static void og01a1b_remove(struct i2c_client *client)
+ 	media_entity_cleanup(&sd->entity);
+ 	v4l2_ctrl_handler_free(sd->ctrl_handler);
+ 	pm_runtime_disable(og01a1b->dev);
+-	mutex_destroy(&og01a1b->mutex);
+ }
+ 
+ static int og01a1b_probe(struct i2c_client *client)
+@@ -1135,7 +1114,6 @@ static int og01a1b_probe(struct i2c_client *client)
+ 		goto power_off;
+ 	}
+ 
+-	mutex_init(&og01a1b->mutex);
+ 	og01a1b->cur_mode = &supported_modes[0];
+ 	ret = og01a1b_init_controls(og01a1b);
+ 	if (ret) {
+@@ -1143,6 +1121,7 @@ static int og01a1b_probe(struct i2c_client *client)
+ 		goto probe_error_v4l2_ctrl_handler_free;
+ 	}
+ 
++	og01a1b->sd.state_lock = og01a1b->ctrl_handler.lock;
+ 	og01a1b->sd.internal_ops = &og01a1b_internal_ops;
+ 	og01a1b->sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
+ 	og01a1b->sd.entity.ops = &og01a1b_subdev_entity_ops;
+@@ -1183,7 +1162,6 @@ static int og01a1b_probe(struct i2c_client *client)
+ 
+ probe_error_v4l2_ctrl_handler_free:
+ 	v4l2_ctrl_handler_free(og01a1b->sd.ctrl_handler);
+-	mutex_destroy(&og01a1b->mutex);
+ 
+ power_off:
+ 	og01a1b_power_off(og01a1b->dev);
 -- 
 2.53.0
 
