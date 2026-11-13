@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591621;
-	b=I00GARrHdeYCIQy0hXpvQKjWj0poticM+7wJFOk3xr8gCW7rJQewqnnNytjt4Mdk9Iuu
-	 HRPNyxBDCDdfUHLlBm4XWGMT+9AkItP7xvKF9NsYQ/AD5itiTS0SZAPfVOGqAPOKbucsM
-	 7YpeFsjTVaxVGtHxlogZgwV+J+fztQShKer06rpsx7YQdyMYi/nD1FpJkboN7351Qg+wA
-	 2ffD+VYLY1+9iq4lYU5lrhVBZGY4YbxyyS5ek95FUpbuT3nNnnwGvs5I7X6zh3J8putj0
-	 qZIcL+m9zX8neV+1lw1TGBrfW4fjx+vjkkmYNBZQEk91Qm0L1Ivs19UXgvY3JhicE9g==
+	t=1794591622;
+	b=1vNcL++zlbKhN97YxPJQgWFDIw80dSqzU4iAEOW2ogoPo04ogk1rl7CGcpd1iADK8VXn
+	 MHHCArSohQc9mR+7rhbdZvNVyhR7kvxbCIfBKaghuAdUJjb/4wSvLZ6y8qqlMMipRrt2y
+	 AVE3gWQFwnLm9lZeeWz2V95eYEDzzPUhLIBmP13r675uJlpHn/NmNDTv1U2+BtYWyawSL
+	 9YbtzrSwuM86Gqpepni97H6ftWjDEXUKm4ZiBJgo7ZYyI/Jxr2vFk0GRwv+pam7rF2WDO
+	 RcE1P4clS6qwqfnom7/PFOMuC3N3/9wG2C+d6Ejx+9ekROW3FDwcxaBsRZlDLKHL3/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591621;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591622;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UMqFRg4okrVV+pN1xXDG2paMuhh0Hw/aeKPp6Jss5bc=;
-	b=n5Cntc2i0lymCw4tQiQvnrtflsSrdp9Z1HzbYcAmnD+jrKOY0LvLEvO4GsTpAqfnQh2L
-	 TsT71lcH0yuhue/IW7qZ/FeZCK3t4yAxXtGTR+Tm62jl3H/CeFirp9EOlDJpO6bhEedTF
-	 5elvTcDwDqaOtX5ULfI+kCxmJhj4Ipo6n8W2rEVd9ju7dw9tlzW2kHO2UstgrVlQRnChd
-	 CzK8Sj+tCXtXGTglb9etRNTx3yb0azXp0iGU+I4tfvPYhqdR74+CmkyUIm8xd+wJ6UO2l
-	 2AV5A6NZgZEqG7IRSYEYG4Tt8z3yqxtXw819g+wDOMc5ZPTLy+aa3UuyNWu6sFiSWqw==
+	bh=TtfH7vn2JddYNAzvwOTm0VTkhokcmaMUfDm/wKE2GP0=;
+	b=QejAGAlTXzI8xpuN12NCRmCVB+Yzbe1CJozOlyqVZn8AZpprYCo2QDYpBqZBZrQXWOaB
+	 Z24P+thq3LzG+KElFyca7xln0AxkuxFqrpHKXYW+rB032cT+Z7Xc3GTsrNmJHeq9N3Pa5
+	 65+6aR+iXYyBU+snpNMM5Apf11OPwh2M/T2pWqJMDyy4Ea43MlE/ELEgalNo7TZkSPEgA
+	 nQy0Z6SnYpzC9lY/NRO4PQEkmqJUhSjb6P20FYXW8WE7y3qgTmcOQYY3XihCw6u8k71ug
+	 WnmSg41DAiDYYXjYrgHZ97Rph+hF3kAW3xbJoDH8ZTlm93LHaDjz+HSzaFPRagfkgdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q3fxQQ5t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmzoRjUv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A3E606B460;
-	Fri, 13 Nov 2026 17:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE15F607EE7E;
+	Fri, 13 Nov 2026 17:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q3fxQQ5t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533D81F000C4;
-	Fri, 13 Nov 2026 17:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmzoRjUv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DEC1F000C4;
+	Fri, 13 Nov 2026 17:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591621;
-	bh=UMqFRg4okrVV+pN1xXDG2paMuhh0Hw/aeKPp6Jss5bc=;
+	s=korg; t=1794591622;
+	bh=TtfH7vn2JddYNAzvwOTm0VTkhokcmaMUfDm/wKE2GP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q3fxQQ5tm4vuXp61guso/dVJB/Yby0gsjT5eXa5f2c9kCZTwONepZFMpfpyWAGzu8
-	 QkEsF+oW/BhwRFfp+++9bc8KfLgv21wlhaN9cc1FSZjmxDA01pYtugL2ac7kvZeDzw
-	 nT1tOwwSR6jDZ+qoglhnX3JtKUdO0NTB06aze+x0=
+	b=DmzoRjUvNEyaci4foVwMqGP3+G5AvVWFR+PVEVjxaC1ABHEi2tYknxPmntxxKe1lA
+	 JYDAL2/pQZ4v/UCOnSrv8nmtRZD08dNKiEokdqbR3FhXCVuFq4O2eR2jpsSBGcFeQT
+	 cOIJF7AYRd01xy+RxIE3viWMB3uEcsPAZwIvyB3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shixiong Ou <oushixiong@kylinos.cn>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 662/670] fbdev: nvidia: Convert to managed PCI and ioremap API
-Date: Fri, 13 Nov 2026 10:53:46 -0500
-Message-ID: <20261113153834.330527499@linuxfoundation.org>
+Subject: [PATCH 6.12 663/670] fbdev: nvidia: Release write-combining handle on probe failure
+Date: Fri, 13 Nov 2026 10:53:47 -0500
+Message-ID: <20261113153834.364688836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,107 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shixiong Ou <oushixiong@kylinos.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit a41961f364bc7aee1611796e7ab5bd687708d770 ]
+[ Upstream commit 8710af6a35201a6d01b5af8f7e4bad29cc40467f ]
 
-Fix missing pci_disable_device() in probe and remove.
+Failures in nvidia_set_fbinfo() or register_framebuffer() leave the handle
+from arch_phys_wc_add() allocated. Release it in the shared error path,
+as nvidiafb_remove() already does on normal removal.
 
-Use pcim_enable_device(), pcim_request_all_regions(),
-devm_ioremap() and devm_ioremap_wc() to replace manual resource
-management. Remove all pci_release_regions() and iounmap() calls.
+The missing cleanup was already present in the initial Git import,
+when the driver used mtrr_add() directly.
 
-Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Stable-dep-of: 8710af6a3520 ("fbdev: nvidia: Release write-combining handle on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/nvidia/nvidia.c | 19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ drivers/video/fbdev/nvidia/nvidia.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/video/fbdev/nvidia/nvidia.c b/drivers/video/fbdev/nvidia/nvidia.c
-index 5f61d953e4c76..d298ba71ee0e3 100644
+index d298ba71ee0e3..bd4a6dd573dd4 100644
 --- a/drivers/video/fbdev/nvidia/nvidia.c
 +++ b/drivers/video/fbdev/nvidia/nvidia.c
-@@ -1288,7 +1288,7 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
- 	NVTRACE_ENTER();
- 	assert(pd != NULL);
- 
--	if (pci_enable_device(pd)) {
-+	if (pcim_enable_device(pd)) {
- 		printk(KERN_ERR PFX "cannot enable PCI device\n");
- 		return -ENODEV;
- 	}
-@@ -1301,7 +1301,7 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
- 	nvidiafb_fix.mmio_start = pci_resource_start(pd, 0);
- 	nvidiafb_fix.mmio_len = pci_resource_len(pd, 0);
- 
--	REGS = ioremap(nvidiafb_fix.mmio_start, nvidiafb_fix.mmio_len);
-+	REGS = devm_ioremap(&pd->dev, nvidiafb_fix.mmio_start, nvidiafb_fix.mmio_len);
- 	if (!REGS) {
- 		printk(KERN_ERR PFX "cannot ioremap MMIO base\n");
- 		return -ENODEV;
-@@ -1329,7 +1329,7 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
- 	if (info->pixmap.addr == NULL)
- 		goto err_out_kfree;
- 
--	if (pci_request_regions(pd, "nvidiafb")) {
-+	if (pcim_request_all_regions(pd, "nvidiafb")) {
- 		printk(KERN_ERR PFX "cannot request PCI regions\n");
- 		goto err_out_enable;
- 	}
-@@ -1354,7 +1354,7 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
- 	sprintf(nvidiafb_fix.id, "NV%x", (pd->device & 0x0ff0) >> 4);
- 
- 	if (NVCommonSetup(info))
--		goto err_out_free_base0;
-+		goto err_out_enable;
- 
- 	par->FbAddress = nvidiafb_fix.smem_start;
- 	par->FbMapSize = par->RamAmountKBytes * 1024;
-@@ -1374,8 +1374,8 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
- 	par->ScratchBufferStart = par->FbUsableSize - par->ScratchBufferSize;
- 	par->CursorStart = par->FbUsableSize + (32 * 1024);
- 
--	info->screen_base = ioremap_wc(nvidiafb_fix.smem_start,
--				       par->FbMapSize);
-+	info->screen_base = devm_ioremap_wc(&pd->dev, nvidiafb_fix.smem_start,
-+					    par->FbMapSize);
- 	info->screen_size = par->FbUsableSize;
- 	nvidiafb_fix.smem_len = par->RamAmountKBytes * 1024;
- 
-@@ -1419,19 +1419,15 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
+@@ -1419,6 +1419,7 @@ static int nvidiafb_probe(struct pci_dev *pd, const struct pci_device_id *ent)
  	return 0;
  
  err_out_iounmap_fb:
--	iounmap(info->screen_base);
++	arch_phys_wc_del(par->wc_cookie);
  	fb_destroy_modelist(&info->modelist);
  err_out_free_base1:
  	fb_destroy_modedb(info->monspecs.modedb);
- 	nvidia_delete_i2c_busses(par);
--err_out_free_base0:
--	pci_release_regions(pd);
- err_out_enable:
- 	kfree(info->pixmap.addr);
- err_out_kfree:
- 	framebuffer_release(info);
- err_out:
--	iounmap(REGS);
- 	return -ENODEV;
- }
- 
-@@ -1446,11 +1442,8 @@ static void nvidiafb_remove(struct pci_dev *pd)
- 	unregister_framebuffer(info);
- 
- 	arch_phys_wc_del(par->wc_cookie);
--	iounmap(info->screen_base);
- 	fb_destroy_modedb(info->monspecs.modedb);
- 	nvidia_delete_i2c_busses(par);
--	iounmap(par->REGS);
--	pci_release_regions(pd);
- 	kfree(info->pixmap.addr);
- 	framebuffer_release(info);
- 	NVTRACE_LEAVE();
 -- 
 2.53.0
 
