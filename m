@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590849;
-	b=p1Kh4AM5Qvbu4N0h9GToAAELa0DP1/08LsCzj3O2zaH2Msp/4Fhm/ajsI/sOLCKpez0j
-	 gyCdu+jKc2FxZ4pVyhbNpACSt5fZPN7lIysnT7QuJFebVNhj0e1HMTxVUMu82MmjtGojQ
-	 YjPgZCtxe1Ur1mhREhpj10tcYwo3qHb+frGN34MRIFjBBsJZ7+E12AzmhlNYjPY/Uocwo
-	 DF8lYkHCzX5eWrzVlVHwuZaIbd5Rvk5WEq0Le7OzEW1ZPEVkI//5P9ofLmxXMczYvfT5n
-	 BqBb5msdjLT55VAdLSWotdA4mL1OTiTecG2ApLqTFFB+maf480DbUEfB/ZSxVzy4L/w==
+	t=1794590850;
+	b=PBjlM28JsHrQZY7ChWGre4tHBa2FY5xXi9MdvTULkWD0fzQj9jQxf3OZlvjM3lQGTWPo
+	 qEuunfHOIowgItPKSocwlVzHw/UHk3sXphWy3KIYWo6GXZ90Sk1ZCdsHfWMYBY1nO+XD+
+	 6N0JknZw8n9ad6P1yqHjhV1/nuEMwUKtFWUCxzshBc9R9woO057TPcpZPzf+r402X+fOr
+	 o+jO0d7MNOOoslwCnIFRtcQQg54gi3wXiD3b1h4OzRQdUiLu1/lrQdkmBLe+1NAUX4S5E
+	 32Uskbi0YEymZhFtIiRnUj/JHptl5dhuyvDPlCKneLS4nW4qQNEqKarHbliH6XQlOhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590849;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590850;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OnlaHB2qlHb/prHcvGd2qkVvk/rzkRbNLgUYBTwi8rU=;
-	b=avDLtVDEycP5rSXoP4gYYv2Q+QqlP3gIL9YfZYubBhJIDHUx60eYpWnev8vYsg+i6TLX
-	 t06XRTr3JiHqdZB9e8kC1lCQbKrFR4xA5V6RPnVaNLC2nrl4f3fWna7mUZUHZKDm3mvf2
-	 8OgxbBNAVtGR0/s3iv526cm1uOLkXWp1VGIxoatOH1KYCtOxEvlW8caHl74bC6c55UsC6
-	 vIGOt8FcciWGzDP4IqL8tkJZH2Fj/D/mLsEVTrNlkiITiRvOBkqhf5l5cQSALK46VLXcc
-	 y7tbk6SxYMGnPF2larSn2/ga1MGRHve+Wv+sx3gDsUzr3b35ucXv8Wo90pVs5QmcZBQ==
+	bh=TbL2/MJ4utAfxQSd9cSSKFbK2OXMibjUPh/uGiZfEtc=;
+	b=DfmvV4VJX/S22G6B2NgENzrW4ElOPlm7LG1Bs1fS0yjK19kKtxRwpYowYTbwhe189X0s
+	 ts0QgmFtRVDAu7wHkVJASkT6hVBuy5P2H7eXLqCulE+R0eLF86APxWxdo/xtRusFWviEV
+	 RoqsW0IHuHnuMRoII9Klzp5gKAwUwOIdGRSjadRVKR0nf4TNe2pB7au4k8oaoVbp/dpJc
+	 EIEXyRczCVZk3UNJNjuVoA9XVwBRwPfAKRAOnuiHO8pD6qzfwnK1DaxmUsLcWQF7wCBZD
+	 RT7lFwer0HXZ0qLYwfbBLeEamdJ3ejyR7E8sfJ65n9NNt0tx0L3p1zr2J6gfxfsmHQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXhSYRAL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NWDEyXub;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AC5606D48F;
-	Fri, 13 Nov 2026 17:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACC1606D482;
+	Fri, 13 Nov 2026 17:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXhSYRAL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A191F000C4;
-	Fri, 13 Nov 2026 17:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NWDEyXub
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8831F000C4;
+	Fri, 13 Nov 2026 17:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590849;
-	bh=OnlaHB2qlHb/prHcvGd2qkVvk/rzkRbNLgUYBTwi8rU=;
+	s=korg; t=1794590850;
+	bh=TbL2/MJ4utAfxQSd9cSSKFbK2OXMibjUPh/uGiZfEtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DXhSYRALeZEf0vamMDNwEX5KuYKsak7obiTVOT5A7giami02Bu3LQjTZWr8X6diY1
-	 fzqI45VbSIQI63i9hmz3sPI8omXaZkjbzbKCyTDNQuu97q+VYBNGeyJy9hpAayS6gd
-	 6eGgDmRKw480UyOaweTPOgoWsYorSz6bZRnDwwjA=
+	b=NWDEyXubqNagU9OLY2UOP2RhS/oVMuNikivleEM6U01T9vc3bv/oQ+ITGQHwJrKQy
+	 a5nNsgoAt0Si0HCUidEjICRB/Rn+iwglX8ywxfSS5bm5wMqnImgCFR6cAzBM6J2ZgT
+	 QS4UpPNUjwPndCGogK/tpOxWzxtatq0UDSKwWyoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Wild <andiwild@gmail.com>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Til Kaiser <mail@tk154.de>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/670] PCI: Skip Target Speed quirk on clamped ports with no link
-Date: Fri, 13 Nov 2026 10:43:32 -0500
-Message-ID: <20261113153812.972789671@linuxfoundation.org>
+Subject: [PATCH 6.12 049/670] mlxsw: Initialize register query payloads
+Date: Fri, 13 Nov 2026 10:43:33 -0500
+Message-ID: <20261113153813.025403157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,80 +69,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Til Kaiser <mail@tk154.de>
 
-[ Upstream commit ff8a969f7dc8e79ea6113abcfa983e070b2b585a ]
+[ Upstream commit 15b7a86a8888dc6a8fd19e181757e32389de9064 ]
 
-Since commit 72780f796468 ("PCI: Always lift 2.5GT/s restriction in PCIe
-failed link retraining") the Target Speed quirk lifts a firmware-imposed
-2.5GT/s restriction on any downstream port, without checking whether the
-link is up.  Where nothing is plugged in, the retraining that follows can
-never complete, so each attempt costs PCIE_LINK_RETRAIN_TIMEOUT_MS.  The
-quirk makes two of them -- the initial one and the restore on the error
-path -- adding a fixed 2 s to every boot.
+MFGD register queries can exhaust EMAD retries and leave Mellanox
+Spectrum switches stuck during boot or shutdown when running OpenWrt
+built with GCC 15.
 
-On an MSI PRO Z690-A WIFI DDR4 (Intel 600 Series PCH) with one empty x1
-slot, running v7.2-rc5:
+An example failure is shown below with the second line wrapped:
 
-  0.541 pci 0000:00:1c.0: removing 2.5GT/s downstream link speed restriction
-  1.541 pci 0000:00:1c.0: retraining failed
-  2.541 pci 0000:00:1c.2: [8086:7aba] type 01 class 0x060400
+  EMAD retries (5/5) (tid=9b544fc100001f35)
+  EMAD reg access failed (tid=9b544fc100001f35,reg_id=90f0(mfgd),
+                          type=query,status=0(operation performed))
 
-Where the Link Speed has already been clamped at 2.5GT/s and no link has
-been established there is nothing worth doing, which is what the kerneldoc
-for the quirk already describes: the restriction is to be lifted where
-firmware arranged it "and the port reports its link already being up".
-Bail out early in that case, before either the ASM2824 workaround or the
-removal of the restriction is considered.
+On an SN2100, the failure occurs during driver teardown on reboot.
+On an SN3420, it occurs while probing mlxsw_spectrum during boot.
 
-Ports whose link is up are unaffected, and so is the ASM2824 workaround,
-which is reached with the Target Link Speed not clamped.
+The register query API transmits the supplied payload to the device
+before replacing it with the response. Both MFGD callers pass an
+uninitialized stack buffer, so the request contains arbitrary register
+field values and reserved bits. This makes the request depend on stack
+contents and compiler code generation.
 
-With this applied the quirk returns without touching the port: both
-messages are gone, enumeration proceeds from 0000:00:1c.0 to 0000:00:1c.2
-in 1 ms rather than 2 s, and the systemd "kernel" boot phase goes from
-3.011 s to 1.036 s.
+Initialize both MFGD query buffers in the firmware fatal event
+configuration and reporter test paths. The initialization has been
+confirmed to eliminate the boot and shutdown hangs on both switches.
+The subsequent read-modify-write still preserves the other fields
+returned by the device.
 
-Fixes: 72780f796468 ("PCI: Always lift 2.5GT/s restriction in PCIe failed link retraining")
-Reported-by: Andreas Wild <andiwild@gmail.com>
-Closes: https://lore.kernel.org/lkml/20260801092152.5643-1-andiwild@gmail.com/
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221801
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Andreas Wild <andiwild@gmail.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Andreas Wild <andiwild@gmail.com>
+Also initialize the FORE fan fault query and the MOGCR mirroring policer
+base query, which pass entirely uninitialized payloads. Restore the MTMP
+query initialization in the temperature history reset path, where only
+the slot and sensor index fields are set before querying the register.
+
+This follows commit 5b0907407e7f ("mlxsw: core: Zero payload buffers for
+couple of registers"), which initialized other query payloads after a
+firmware field length bug caused firmware to consume uninitialized data.
+
+Tested with firmware 2020.1148 and with 2016.3900 from linux-firmware.
+
+Fixes: 7d83ee111008 ("mlxsw: core: Introduce fw_fatal health reporter")
+Fixes: 2c6a33cd334b ("mlxsw: core: Extend hwmon interface with fan fault attribute")
+Fixes: 4039504e6a0c ("mlxsw: spectrum_span: Allow setting policer on a SPAN agent")
+Fixes: b890ad418e1f ("mlxsw: core_hwmon: Extend internal structures to support multi hwmon objects")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260801201244.4421-1-andiwild@gmail.com
-[ Andreas: this tree predates pcie_lbms_seen() and pcie_set_target_speed()
-  and still tests LBMS and DLLLA in one expression, so the hunk did not
-  apply.  Split that test the same way as upstream and compare the
-  LNKCTL2 Target Link Speed field against PCI_EXP_LNKCTL2_TLS_2_5GT
-  directly, as the existing code further down already does. ]
-Signed-off-by: Andreas Wild <andiwild@gmail.com>
+Signed-off-by: Til Kaiser <mail@tk154.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261014173117.26305-1-mail@tk154.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit 15b7a86a8888dc6a8fd19e181757e32389de9064)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/core.c          | 4 ++--
+ drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c    | 4 ++--
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 8cfa7a3f55cb3..5b266583acb57 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -93,8 +93,12 @@ int pcie_failed_link_retrain(struct pci_dev *dev)
- 	pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &lnkctl2);
- 	pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
- 	oldlnkctl2 = lnkctl2;
--	if ((lnksta & (PCI_EXP_LNKSTA_LBMS | PCI_EXP_LNKSTA_DLLLA)) ==
--	    PCI_EXP_LNKSTA_LBMS) {
-+	if (lnksta & PCI_EXP_LNKSTA_DLLLA) {
-+		;
-+	} else if ((lnkctl2 & PCI_EXP_LNKCTL2_TLS) ==
-+		   PCI_EXP_LNKCTL2_TLS_2_5GT) {
-+		return ret;
-+	} else if (lnksta & PCI_EXP_LNKSTA_LBMS) {
- 		pci_info(dev, "broken device, retraining non-functional downstream link at 2.5GT/s\n");
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core.c b/drivers/net/ethernet/mellanox/mlxsw/core.c
+index 4a79c0d7e7ad8..feaeb4118f0bc 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core.c
+@@ -2002,7 +2002,7 @@ mlxsw_core_health_fw_fatal_test(struct devlink_health_reporter *reporter,
+ 				struct netlink_ext_ack *extack)
+ {
+ 	struct mlxsw_core *mlxsw_core = devlink_health_reporter_priv(reporter);
+-	char mfgd_pl[MLXSW_REG_MFGD_LEN];
++	char mfgd_pl[MLXSW_REG_MFGD_LEN] = {0};
+ 	int err;
  
- 		lnkctl2 &= ~PCI_EXP_LNKCTL2_TLS;
+ 	/* Read the register first to make sure no other bits are changed. */
+@@ -2023,7 +2023,7 @@ mlxsw_core_health_fw_fatal_ops = {
+ static int mlxsw_core_health_fw_fatal_config(struct mlxsw_core *mlxsw_core,
+ 					     bool enable)
+ {
+-	char mfgd_pl[MLXSW_REG_MFGD_LEN];
++	char mfgd_pl[MLXSW_REG_MFGD_LEN] = {0};
+ 	int err;
+ 
+ 	/* Read the register first to make sure no other bits are changed. */
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c b/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
+index 9c12e1feb6437..e39a8b0a57095 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
+@@ -120,7 +120,7 @@ static ssize_t mlxsw_hwmon_temp_rst_store(struct device *dev,
+ 			container_of(attr, struct mlxsw_hwmon_attr, dev_attr);
+ 	struct mlxsw_hwmon_dev *mlxsw_hwmon_dev = mlxsw_hwmon_attr->mlxsw_hwmon_dev;
+ 	struct mlxsw_hwmon *mlxsw_hwmon = mlxsw_hwmon_dev->hwmon;
+-	char mtmp_pl[MLXSW_REG_MTMP_LEN];
++	char mtmp_pl[MLXSW_REG_MTMP_LEN] = {0};
+ 	unsigned long val;
+ 	int index;
+ 	int err;
+@@ -177,7 +177,7 @@ static ssize_t mlxsw_hwmon_fan_fault_show(struct device *dev,
+ 			container_of(attr, struct mlxsw_hwmon_attr, dev_attr);
+ 	struct mlxsw_hwmon_dev *mlxsw_hwmon_dev = mlxsw_hwmon_attr->mlxsw_hwmon_dev;
+ 	struct mlxsw_hwmon *mlxsw_hwmon = mlxsw_hwmon_dev->hwmon;
+-	char fore_pl[MLXSW_REG_FORE_LEN];
++	char fore_pl[MLXSW_REG_FORE_LEN] = {0};
+ 	bool fault;
+ 	int err;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
+index 32d2e61f2b823..91fb77c8e20d6 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
+@@ -1720,7 +1720,7 @@ static int mlxsw_sp2_span_init(struct mlxsw_sp *mlxsw_sp)
+ static int mlxsw_sp2_span_policer_id_base_set(struct mlxsw_sp *mlxsw_sp,
+ 					      u16 policer_id_base)
+ {
+-	char mogcr_pl[MLXSW_REG_MOGCR_LEN];
++	char mogcr_pl[MLXSW_REG_MOGCR_LEN] = {0};
+ 	int err;
+ 
+ 	err = mlxsw_reg_query(mlxsw_sp->core, MLXSW_REG(mogcr), mogcr_pl);
 -- 
 2.53.0
 
