@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590175;
-	b=mxqFNfX1LoTJmHHH5OVGJJbJKuLHqUsERM7x+2h3pgENGuRr+ip66Jnutp1i4cAnX8Fy
-	 Dq+s+4uvnFrXpRuahobsSko80bzlV2xberdv4ZdgQ8DCq1X1RSIfSTdSckUd5rPfDQUya
-	 TucTHUOgOxefiRCK3SAxmRwopnLaEJGI2D1Xp9yjXflaxCDbMz2lOMVyf8UjUc2HLdcuf
-	 +N4BNNwMSkbO6gwWOhMN9UHBiIbjynA940quFXodisfNMyu5bBhamNFECeUbzVCF4LGnM
-	 ea3KXx1IVl/i6KdgILO2YHE8cIcJ3aiFUdEKKlfrbaLK5A5AmOt0XlHATmoSDym7JQg==
+	t=1794590176;
+	b=WtjL0gJPg+/lV21HbKDoejKrJ5KnipApJ920DPVTIYJKU9j/kRdUygJnUcakPGl+vIcf
+	 FU9znhfwoVH0p8lfJpeT5wl1pVoG+oDfW3bYd6wVuC19wADCKepg1vUtT+JGlEp5y0cl5
+	 j4q0WlpZ8AXv8II70Cmli9neGAX9ZTOG8/6mVr7Vm662CI60ryuqTG5L5JyVo59Myidqg
+	 Ad2AC6A6ID21kJgjwLLkEZCgle04lGEZeojEAGfjJWQlYG/E9AFKh+6JY/pmn9mczawlG
+	 K4Lm4hou4U3tztM/LKU8CQyZ4xkaqs1Lhk7j0EKaYwgIO2BJva+UFb+hvqOoXZoooTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590175;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590176;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/9awbat99N3wHnI9ZSDp6JBwYfpvKCNGM3yPdh9DBO4=;
-	b=LMYBoB9bKV1kDGMCQshFObvSpAJL/H/nTz40eMPnPG/cZpOA7jIqCy04jMoKpaYQJl9k
-	 8rzBGfcWTPGMoe4cp5lr6uPSmtQYeGSZvl5PlToXI2U7lwHPeFHioXlOD0LKHEwwcAabJ
-	 Ajhlngb8RG/B8eZTLNTZ/D1aDXtnVZzVEJP/i9ib/iZJLuiSTcqKQsg4QFBEvl/jCwP3d
-	 Ihc2dUAnFuM9BLY1aLvZclGXoYG97c0rV9pD4Owy9kRtkfPKkbC1nOwh79VabZBu/NnF5
-	 g9mleSqDcUe9FbCVY5P8sj8Yo5R3kMC42a7bFkkBWYrQL9Bk2xC3iTc8JonhDVAVtkA==
+	bh=/MrYShMj6VlRKU8blbEhJCR0PwYhbOjZKQZNuVn7/Dg=;
+	b=ZMJ8m9RG5ABztpUeq4UasZR/HI15u5SLaon0ASxhVOaA7wc1bzk+YIUgsWMtCKtvjWmL
+	 1LPC2D1WxERDBhASrQC2K4nZz704qv4YqzTlH3swmW6WDarcXTVutV48IbAJG512h3I+d
+	 2g15JmfkqS7LocgZ92nBCRVI/W33KT448nsx4ZII/Lo3WpZq39rkZpOKyIKDWRNwUYy9X
+	 ZvHdVBufeKooYIz/UwE+dFHkPEc0NENJcVL0vAC5aTw9yf/sKglhn4ZeFqsZiUUCEXnoi
+	 G6/9ozh1+8Tmz0rMCZ/BJEBwukJQitjnpKUFBBF84sJrl4L3dcfvHrY4n43tzTBlgHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q0eV1QiU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MG06aLwf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F410260703CA;
-	Fri, 13 Nov 2026 17:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68006606A8A5;
+	Fri, 13 Nov 2026 17:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q0eV1QiU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E43A1F000CB;
-	Fri, 13 Nov 2026 17:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MG06aLwf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FD91F000C9;
+	Fri, 13 Nov 2026 17:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590174;
-	bh=/9awbat99N3wHnI9ZSDp6JBwYfpvKCNGM3yPdh9DBO4=;
+	s=korg; t=1794590176;
+	bh=/MrYShMj6VlRKU8blbEhJCR0PwYhbOjZKQZNuVn7/Dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q0eV1QiUVXY0yuRkOfWwpdjUG1SUyPyHzLwNBRJZAoGOFzXX8nbs3wDpT9gNRunYX
-	 J6RwiTaF/+JDCWbHud70ZvS/DtYMFwohX3e0lT7OaRibCcvcS8r4OgpL47W86GP0DK
-	 pWsF6Hi69z1JE+qW60HizU+La+E54mEUA9u30ZUg=
+	b=MG06aLwf/9ie/OXsE1vauWpeQ5qBZoqh+h1f7KzwyIV29fwgqpgYWbbDrBU/kenLR
+	 lKjb5WnXtpffVcM12rQ0qWaUz4xO4A81um7tFvQpG14b+3foayJXQolD30f3a5mKV/
+	 MPdn/L8LIPyGxZuHQFH8mBEA+arkI4xfB0yvFAuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 141/686] rose: report a timed out call to connect()
-Date: Fri, 13 Nov 2026 10:44:34 -0500
-Message-ID: <20261113153825.582125364@linuxfoundation.org>
+Subject: [PATCH 6.18 142/686] rose: drop the neighbour reference once when a cleared socket is closed
+Date: Fri, 13 Nov 2026 10:44:35 -0500
+Message-ID: <20261113153825.615151161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,66 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-When the Call Request of a connecting socket gets no answer within T1,
-rose_timer_expiry() sends a Clear Request and moves the socket to
-state 2, leaving sk_state at TCP_SYN_SENT. The neighbour then confirms
-the clearing, or clears the call itself, and rose_state2_machine()
-calls rose_disconnect() with a reason of 0. sk_err stays 0, so a
-blocking connect() leaves its wait with sock_error() returning 0 and
-reports success on a call that never got through, and a non-blocking
-caller reads 0 from SO_ERROR. The first send() then fails with EPIPE.
+rose_release() of a socket in state 2, awaiting the Clear Confirmation
+of its call, drops the neighbour reference but leaves rose->neighbour
+set, then releases the socket lock before disconnecting the socket.
+release_sock() runs the frames put on the socket backlog while the
+lock was held: a Clear Confirmation among them goes through
+rose_state2_machine() with the socket still in state 2 and drops the
+same reference again. rose_kill_by_neigh(), which does not take the
+socket lock, can do the same if the link restarts or fails at that
+moment. The neighbour refcount then goes below the number of users,
+and the neighbour is freed while it is still in the tables.
 
-Report ETIMEDOUT when the socket is cleared from state 2 while it is
-still connecting, as rose_timer_expiry() already does when T3 runs
-out. A socket that was released or timed out while connected goes on
-being cleared without an error.
+Disconnect the socket before its lock is dropped, so that the frames
+on the backlog find it in state 0, and take the neighbour off the
+socket under rose_list_lock, as rose_kill_by_neigh() looks at it, so
+that only one of them drops the reference.
 
-On a QEMU bench with two guests, B listening with ROSE_DEFER and never
-accepting, A calling it with T1 set to 3 s, twice blocking and twice
-non-blocking: before, connect() or SO_ERROR returned 0 in all four
-calls; after, ETIMEDOUT in all four. A call to nobody still gets
-ECONNREFUSED at once.
+On a QEMU bench with two guests (KASAN, lockdep), A calls B with T1 set
+to 2 s, B never accepts, and A closes the socket 200 ms after T1
+expired, while the Clear Confirmation is on its way. With 1 s of delay
+in rose_release() and 500 ms before B sends the Clear Confirmation:
+before, the "use" count of the neighbour in /proc/net/rose_neigh goes
+to -1 on the first close, then KASAN reports a slab-use-after-free on
+the freed neighbour and A panics; after, it stays at 0 over five calls,
+with or without the delays.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit fc29d2c97f98f96d371e20d9b36b5ba08a914ff3)
+(cherry picked from commit bf135eb205f09dbb9581f9bf2c9c8cd62d4ea9f2)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_in.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/rose/af_rose.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/net/rose/rose_in.c b/net/rose/rose_in.c
-index 4eec54b24afb0..befb4c55e4597 100644
---- a/net/rose/rose_in.c
-+++ b/net/rose/rose_in.c
-@@ -75,17 +75,24 @@ static int rose_state1_machine(struct sock *sk, struct sk_buff *skb, int framety
- static int rose_state2_machine(struct sock *sk, struct sk_buff *skb, int frametype)
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 87e7d938e6db7..fbf0e27ce898b 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -698,6 +698,7 @@ static struct sock *rose_make_new(struct sock *osk)
+ static int rose_release(struct socket *sock)
  {
- 	struct rose_sock *rose = rose_sk(sk);
-+	/*
-+	 * A call whose Call Request timed out (T1) is cleared from state 2
-+	 * while connect() is still waiting for it: report the timeout, or
-+	 * connect() and SO_ERROR would find no error on a call that never
-+	 * got through.
-+	 */
-+	int reason = sk->sk_state == TCP_SYN_SENT ? ETIMEDOUT : 0;
+ 	struct sock *sk = sock->sk;
++	struct rose_neigh *neigh;
+ 	struct rose_sock *rose;
  
- 	switch (frametype) {
- 	case ROSE_CLEAR_REQUEST:
- 		rose_write_internal(sk, ROSE_CLEAR_CONFIRMATION);
--		rose_disconnect(sk, 0, skb->data[3], skb->data[4]);
-+		rose_disconnect(sk, reason, skb->data[3], skb->data[4]);
- 		rose_neigh_put(rose->neighbour);
- 		rose->neighbour = NULL;
+ 	if (sk == NULL) return 0;
+@@ -716,10 +717,21 @@ static int rose_release(struct socket *sock)
  		break;
  
- 	case ROSE_CLEAR_CONFIRMATION:
--		rose_disconnect(sk, 0, -1, -1);
-+		rose_disconnect(sk, reason, -1, -1);
- 		rose_neigh_put(rose->neighbour);
- 		rose->neighbour = NULL;
+ 	case ROSE_STATE_2:
+-		rose_neigh_put(rose->neighbour);
+-		release_sock(sk);
++		/*
++		 * Disconnect before the socket lock is dropped: frames put on
++		 * the backlog meanwhile, a Clear Confirmation for one, then
++		 * find it in state 0 instead of dropping the neighbour
++		 * reference a second time. rose_kill_by_neigh() does not take
++		 * the socket lock: take the neighbour under rose_list_lock, as
++		 * it does, so that only one of them drops the reference.
++		 */
+ 		rose_disconnect(sk, 0, -1, -1);
+-		lock_sock(sk);
++		spin_lock_bh(&rose_list_lock);
++		neigh = rose->neighbour;
++		rose->neighbour = NULL;
++		spin_unlock_bh(&rose_list_lock);
++		if (neigh)
++			rose_neigh_put(neigh);
+ 		rose_destroy_socket(sk);
  		break;
+ 
 -- 
 2.53.0
 
