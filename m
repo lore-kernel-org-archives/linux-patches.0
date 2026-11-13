@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590365;
-	b=MQkuLlf2kokasCFA/kQEFNt/jaDwLiw5eJ9dM7oMRQ2dJ+nXROtXQdHyoprTUUOaS2Nq
-	 c7k4EZITpimixOJ5XGiyW/GIHQEAwC7nGkXK7GggToEIdIkchrqEvE/zeGub13BjMJKAl
-	 6OH5q3QLrF2KmFOmIO4iR19NRJMq+kvFKABxIw/5BMok8o2hKQohlxAp0v33BDzEKgtFH
-	 1RQQoHhqP+SMCBZx2EuEfOayrDx2jF73uWIOB8+62IXv3PRwXdsz0xXiLyzu+U2nSjnGm
-	 LvtipZjonltVmi1RdZiIFGSqFzyk11ifesX6Pts6NLavk6uVZbTyCUNRYbzOm/71UCg==
+	t=1794590366;
+	b=fCSBXYrUbOYb1oFT2SWfp+27PBtJuDSE5NC5dwt4Y3lin/9timxZ/IEmWWsl2RFWpKRF
+	 FvJMTaop4zW21Ag+ktdLe1sC1GzvKNm31s+7GMkQh1f112EL8VAiAlp5hbTWLfIV5gHzQ
+	 BzhLe8xmzXm8gqoQWymW9RyLlNLiSzjGH3YocNctmproaJXfpaBGf6sr9AOyki4V7GFY3
+	 rrCseEyp+H0Zdm9PjROu0OCeoteMGfr7F/ULVj4SflscuvV9wtH7GII1aSom9dDwbywws
+	 KFMsIOkLLQiquwxOnA8hgNR+NlTZ3IqJb65OgyvETrmJrStkhVqRQFfu50+gFZPeLCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590365;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590366;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=aFyZBItxGSFSbjy8kEsjzvDDmpPfbr5RIz3r4tsyAa8=;
-	b=Th03vu8raf1F6EpP6BWEC4+NQvoQTS+LsLFYF4V5JXNl617g3P1t3cu28Md+e8u4XEuo
-	 SvJGNdK0t/re6aAUtq6NCU75Dla4fgfJwj5pndc9Pxs3VthgyXoJl3dtyPCx1+LlO98UZ
-	 wlx50/zLNTqLepulK2ZC0fDQ6MYUGr9ki2DdMxaMkupfZ8uvr8YWwq2DEVZcSolbezBll
-	 svrXV6zdNN8w5M6BKrMdgF5/nYroEyoWFb/s1Jn2F7iQGyMCNYZCLgS91wmQB2R6xIe5s
-	 otVYxksRknLLm2dPzSCUtddM9T+oyhK49snrd9/n1zDhgjxYv2SrDQnOqRR2UUsC15g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=+JRmkGhnTYsUfK+U9otDBCDtnV8yD2/0VtYqrzkRObo=;
+	b=ftVBzPAmw18RqAGEHrUyj7w+WnS53lwO7Comb9iB6KM1dWKN4/pt6HGhAtdJG4MPICMr
+	 dECD3qfUkfbpZNZoWRLiJmKnXgznZiivef4x53wemHzUBgTLsONSwpXrfkgwQ1csau8wr
+	 +XkxvuOhHMjSiOTBirkVLMsAD4hpUdBVJvPHbzpGh7YN5IKhfr8G4dnkCKsnwdg+oQAy9
+	 7O3Eljd/EgIOO3nw2dpWog04DOeUX71E9SSRoJOvbb6Zxn3xKF6z3loJSz57bjkxHdgJn
+	 PN/Xg3Iht6z1KYBa4UkK/tcTWCpDuZ2belQaOZTOCBUbG3FPmsSVbH8neuYd66Z4Ikw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4l9ngNm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TVByr5Xe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137B4606B340;
-	Fri, 13 Nov 2026 17:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1224D606B340;
+	Fri, 13 Nov 2026 17:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4l9ngNm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B89E1F000C4;
-	Fri, 13 Nov 2026 17:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TVByr5Xe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36D61F000C4;
+	Fri, 13 Nov 2026 17:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590364;
-	bh=aFyZBItxGSFSbjy8kEsjzvDDmpPfbr5RIz3r4tsyAa8=;
+	s=korg; t=1794590365;
+	bh=+JRmkGhnTYsUfK+U9otDBCDtnV8yD2/0VtYqrzkRObo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w4l9ngNm41d1hIf/MjVpEOM/DKPmk9yu7okHhT3gy7EZXZWHUMcUc70telPdjae+0
-	 Uz/oPoteiDTc3qY2vacqoaqpEQwXpz3TXBDZUDFwFii4p+5p7N8Hraw6jVx2yDCniC
-	 XGStP9cxq6RXKog0VqxN19cRDGX1X6NfUNUTydnQ=
+	b=TVByr5XePlCWhVeAMm7ooi0Hn/0MehHDcTtCTrAvGmnL0uxxFpeqawdf5mPpX+3ei
+	 07xXX8D/05vsJS+3b5v3aybWdUFn2tkhmEilc84ls61lCRPZJyF60GnD7bpr8B5GeB
+	 bD178iwymB8r61zt4Lc8fqtMNhL1JDiDszte7uCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubham Antil <shubham@octane.security>,
-	Mike Christie <michael.christie@oracle.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Fang Xieyan <fangxy@xiaopeng.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 339/686] vhost-scsi: zero misaligned I/O bounce pages
-Date: Fri, 13 Nov 2026 10:47:52 -0500
-Message-ID: <20261113153832.424539972@linuxfoundation.org>
+Subject: [PATCH 6.18 340/686] vhost: fix used ring index wrap in vhost_add_used_n_in_order
+Date: Fri, 13 Nov 2026 10:47:53 -0500
+Message-ID: <20261113153832.454860533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -63,57 +64,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shubham Antil <shubham@octane.security>
+From: Fang Xieyan <fangxy@xiaopeng.com>
 
-[ Upstream commit 01c3a5fa6d641c93c7cef4fb25c5f12938316e18 ]
+[ Upstream commit e244725e86be02cd85cb878b3ed8570eba2e4be1 ]
 
-The misaligned I/O fallback copies the full bounce scatterlist to the
-request buffer during completion.  If a data-in command transfers less
-than requested, part of a newly allocated bounce page can remain unwritten.
+vhost_add_used_n_in_order() advances start by nheads[i] but wraps it
+with a single subtraction.  If start + nheads[i] >= 2 * vq->num, start
+can remain outside the ring.
 
-Allocate bounce pages with __GFP_ZERO so all bytes copied during completion
-have a defined value.  This path is already the slow fallback for
-misaligned I/O, so the added initialization cost is acceptable.
+With used-ring logging enabled, start > vq->num makes (vq->num - start)
+underflow.  log_write() then sets bits beyond the dirty-log bitmap,
+potentially corrupting adjacent userspace memory.  This is reachable on
+the vhost-net TX path with VIRTIO_F_IN_ORDER: done_idx can reach
+VHOST_NET_BATCH (64), triggering the issue with a 32-entry ring.
 
-Found during an LLM-assisted source audit and validated with a QEMU/KVM
-vhost-scsi target using misaligned data-in commands.
+Wrap start with a mask to keep it within the ring.  VHOST_SET_VRING_NUM
+enforces a nonzero power-of-two ring size, allowing start to be wrapped
+using & (vq->num - 1).
 
-Fixes: 5ced58bfa132 ("vhost-scsi: Fix alignment handling with windows")
+Fixes: 67a873df0c41 ("vhost: basic in order support")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM (OpenAI Codex, gpt-5.6-sol)
-Signed-off-by: Shubham Antil <shubham@octane.security>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Weibin Liu <liuwb@xiaopeng.com>
+Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261020105503.75904-1-shubham@octane.security>
+Message-ID: <20261020232956.99970-1-fangxy@xiaopeng.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/vhost/vhost.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index deb4c8bfd3d57..fac400b25dad7 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -906,7 +906,12 @@ vhost_scsi_copy_iov_to_sgl(struct vhost_scsi_cmd *cmd, struct iov_iter *iter,
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index ebdbf1cf9143a..78cee55cedf85 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -3145,8 +3145,7 @@ static int vhost_add_used_n_in_order(struct vhost_virtqueue *vq,
+ 		}
+ 		start += nheads[i];
+ 		new += nheads[i];
+-		if (start >= vq->num)
+-			start -= vq->num;
++		start &= vq->num - 1;
  	}
  
- 	for_each_sgtable_sg(sg_table, sg, i) {
--		page = alloc_page(GFP_KERNEL);
-+		/*
-+		 * Completion copies the full bounce buffer, including bytes the
-+		 * target did not write. This is already the slow fallback for
-+		 * misaligned I/O, so zeroing is acceptable here.
-+		 */
-+		page = alloc_page(GFP_KERNEL | __GFP_ZERO);
- 		if (!page) {
- 			ret = -ENOMEM;
- 			goto err;
+ 	if (unlikely(vq->log_used)) {
 -- 
 2.53.0
 
