@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591535;
-	b=kJdTQouuoglHQ2H+qY8zbnDvoTmxyp2yTEUhXYHh7D24oo+QS5+rOBRHUMp5r/MaqQdD
-	 Lal2Do7kVSptSsvJ1qZ/22Ok5axUUSoblAVCsaAqAUYvp96nL5pehQCz2n1NIzIZzEYxr
-	 nDlg8YMWTR0lwNlAzawuT1ousYjIuRfJ6xCpz25IfyupcMOBys1SD3BLdmBUY1TncelSR
-	 at/c7yu0enUIhX2D4AQbWAuMUQuk48ljqnoszsXRemk2tTuF5ai4J+BR1GRICBfi72G0i
-	 hyG5TCm37KwHdfx/QlKkrHMQ+kHeGQ1jI9VHVN9c/A4Q5/ItLjYE/lLWNqWe+3phjdg==
+	t=1794591536;
+	b=IyQC9aqbA91AVDVHHwupvl2ZqN8bWE1ct8XDI3x8YR0c/keNjSjOS8XbL3Y7zAHnpKci
+	 TFjteNG33SxLFgGCuyBltDp4KVUmYDuYPInILT+wVGgXirudVgRKnnGPtNqol5dLQaMsh
+	 SlZrYSA2tfGvP8oEngA1eEnN2fAdQciUqA65evi920A9qfyydreIkui2CJ8fLiv6bip+c
+	 j3ZCBNVKmArpD9+RdlsToqMa3vctDShPCLdxVRSEDr9I/IUI2fhrkF0VQ4Eg3PqqZPeHx
+	 mJAdkwSzxSC9punqhesKcBgGBmaMVVNG2FVXKZ0LBJzB+DRQS4raFVDHWMI5ntq4LJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591536;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=8h2g+s0XDZfdWzUU7c8BFQD9eJ73T9ef3Gu8FH37uTg=;
-	b=gIoEZpQGvOaboMGPrvEk142ED/n9ia5IEqDuN3qy41MmMqDlL2S22X4Ie7tTPoEmXnCH
-	 u8QBWVSJmrangjP8vReYRF6kX6P1Sa4h0R6wfML3Eh1BS1zGnA4V5JGUM/sYWbBYq87em
-	 YV41yve2Vika5izukzLfxA0hwDrWw1CBPCTO+7byg1eXTx0JEioV6iXYqYQ9oIoTEDFQs
-	 f83cQhgLTQOC5NzNjfooh/KUXdB8/j8mbr4eL6DV6kQHMAKbe+qE/Ywx6fs1k2CdoygDV
-	 LYRN9oTDu4CaKDUJjKWxZtXERB6r9AJbU+qMl3crVJVOv+98oWiCvE7BRZCH4Ktrk2A==
+	bh=tVU+a0r9Rexikqcn5o5kHdwRFinv+lCDNNMoQYg1Jrk=;
+	b=bx+7AFQ2g/PgDQqD0w/SJV/7BSRI4bmhCMo3GQA8Uv0rU20ZfnrRc7/tG9xz0yFNAdRh
+	 liqvOyd+f58eYovcQ8t6XOujW2qMMhxhomTHKyi5VDGCKNIaCzYoxYPvV4H03e9reHgup
+	 lswCkyLDXBPW+YPu/ELs6sFGkSTj+6pTSdGE3b1zIE/zBkArU+RjAPQYq0YNxZO620n+K
+	 eVe8l9zzwGmoPVk++384c/tm50miqfQt0xM+293H6VvoOEvg9cMfLGzUL/aLtQnBX9tsU
+	 cUbrFz1uzNk7Q6J+ZAu6SnGw/1KfRGfy4wFC73lSLYynzeldyxNZFVfuAmkHxAxdSRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P3cd5Z1b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhWwFE5T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C49606D4B0;
-	Fri, 13 Nov 2026 17:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C3C606D87A;
+	Fri, 13 Nov 2026 17:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P3cd5Z1b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A031F000C4;
-	Fri, 13 Nov 2026 17:38:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhWwFE5T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F9C1F000C4;
+	Fri, 13 Nov 2026 17:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591535;
-	bh=8h2g+s0XDZfdWzUU7c8BFQD9eJ73T9ef3Gu8FH37uTg=;
+	s=korg; t=1794591536;
+	bh=tVU+a0r9Rexikqcn5o5kHdwRFinv+lCDNNMoQYg1Jrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P3cd5Z1bfi3eS1e+AHSVCeAYr0GVXQTjGxhb3Mo8x1lYZxNPNTI5Ddxc8R/FtrZ11
-	 A+jbj5jGEDXp8iArts/497NcNfezIQcDm3s19/eyh9GJjEDbJazR9JfA+n+e+ABhOr
-	 Y1ZcmaZU8SUJWBLcgxNjo+RmzvIpGPfIrmvYB4do=
+	b=UhWwFE5Tri99lXF7aCxYKLJ3ZlZR8LwSS7GD6Cw4r/Qc3eYSzI7GM+mam7+PJZAU1
+	 Ibabd2UZG0eNDUQg8WqmfXoZOaba+sg6ScKTu0FtEzajvDKyNnMDpHsdezGHsGg1+2
+	 DCZeOO6W/qkVGfiB8BFevSkPnAokA8/DS3uzXLQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andrew Pam <andrew@fastmailteam.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 590/670] drm/amdgpu: reject CS chunks too large for kvmalloc()
-Date: Fri, 13 Nov 2026 10:52:34 -0500
-Message-ID: <20261113153831.833436078@linuxfoundation.org>
+Subject: [PATCH 6.12 591/670] power: supply: cros_charge-control: restore EC state on resume
+Date: Fri, 13 Nov 2026 10:52:35 -0500
+Message-ID: <20261113153831.865992873@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,48 +71,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Andrew Pam <andrew@fastmailteam.com>
 
-[ Upstream commit ba4c3c202919405f461a393e823e4b72c8518494 ]
+[ Upstream commit 1f2a40f954c848dff9d8bb6d81e404f9e47f0e81 ]
 
-The CS ioctl copies every chunk with vmemdup_array_user() before it
-looks at it, for whatever length_dw userspace gives. kvmalloc() warns
-about allocations above INT_MAX when called without __GFP_NOWARN, so any
-process with the render node can trigger a warning. On navi31, a CS with
-a chunk of length_dw 0x20000000 returns -ENOMEM after:
+The EC resets its charge control configuration when the AP powers off,
+so configured sustainer thresholds and charge behaviour are lost across
+hibernation.
 
-  WARNING: mm/slub.c:6841 at __kvmalloc_node_noprof+0x5a5/0x7d0
+Nothing notices the reset. Commit 4fc88ba435da ("power: supply:
+cros_charge-control: adopt EC charge state on probe"), in the
+power-supply tree, made the driver adopt the EC's charge state, but only
+at probe, and a resume is not a probe. Sysfs therefore keeps reporting
+the configured values while the EC charges the battery to full. On a
+Framework Laptop 16 (Ryzen AI 300, charge control command version 3)
+with charge_control_end_threshold set to 80, a hibernate and resume
+cycle leaves the attribute still reading 80 while the battery charges
+past it to 100%.
 
-Reject such chunks with -EINVAL before trying to copy them.
+Add a system sleep resume hook that reprograms the EC from the cached
+state. The same EC behaviour and the same fix already exist for another
+driver, see commit 2643187ccb86 ("platform/x86: ayaneo-ec: Add suspend
+hook").
 
-Fixes: 2098105ec65c ("drm: drop drm_[cm]alloc* helpers")
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit dab5f5280406088591645f499f048dcfefab8d7d)
+Reprogramming the EC is only strictly required after hibernation, but it
+is cheap and idempotent, so hook every resume path rather than rely on
+the EC preserving its state across each kind of sleep transition.
+
+Note that re-reading the state from the EC on resume, by reusing
+cros_chctl_init_state() or otherwise, would be wrong even on the command
+versions that support GET: the EC has been reset to its defaults by the
+time the hook runs, so adopting that state would silently discard the
+configuration the user asked for. The driver's cached state is the only
+remaining record of it, which is why it is pushed to the EC rather than
+refreshed from it.
+
+Fixes: c6ed48ef5259 ("power: supply: add ChromeOS EC based charge control driver")
 Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Andrew Pam <andrew@fastmailteam.com>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Acked-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://patch.msgid.link/20261005043418.243937-1-andrew@fastmailteam.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+[ sashal: adjusted cros_chctl_probe() context for explicit sysfs registration instead of power-supply extensions ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/power/supply/cros_charge-control.c | 29 +++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index bb207ba59e752..c49aabb343a72 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -239,6 +239,12 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
+diff --git a/drivers/power/supply/cros_charge-control.c b/drivers/power/supply/cros_charge-control.c
+index 9b0a7500296b4..2c16ce4cf6b7f 100644
+--- a/drivers/power/supply/cros_charge-control.c
++++ b/drivers/power/supply/cros_charge-control.c
+@@ -14,6 +14,7 @@
+ #include <linux/platform_data/cros_ec_commands.h>
+ #include <linux/platform_data/cros_ec_proto.h>
+ #include <linux/platform_device.h>
++#include <linux/pm.h>
+ #include <linux/types.h>
  
- 		size = p->chunks[i].length_dw;
+ #define EC_CHARGE_CONTROL_BEHAVIOURS	(BIT(POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO)             | \
+@@ -322,6 +323,7 @@ static int cros_chctl_probe(struct platform_device *pdev)
+ 	dev_dbg(dev, "Command version: %u\n", (unsigned int)priv->cmd_version);
  
-+		if (size > INT_MAX / sizeof(uint32_t)) {
-+			ret = -EINVAL;
-+			i--;
-+			goto free_partial_kdata;
-+		}
+ 	priv->cros_ec = cros_ec;
++	dev_set_drvdata(dev, priv);
+ 	priv->device_attrs[CROS_CHCTL_ATTR_START_THRESHOLD] =
+ 		(struct device_attribute)__ATTR_RW(charge_control_start_threshold);
+ 	priv->device_attrs[CROS_CHCTL_ATTR_END_THRESHOLD] =
+@@ -352,13 +354,38 @@ static int cros_chctl_probe(struct platform_device *pdev)
+ 	return devm_battery_hook_register(dev, &priv->battery_hook);
+ }
+ 
++static int cros_chctl_resume(struct device *dev)
++{
++	struct cros_chctl_priv *priv = dev_get_drvdata(dev);
++	int ret;
 +
- 		p->chunks[i].kdata = vmemdup_array_user(u64_to_user_ptr(user_chunk.chunk_data),
- 							size,
- 							sizeof(uint32_t));
++	/*
++	 * The EC resets its charge control state when the AP powers off, so the
++	 * configuration is lost across hibernation, while the values exposed to
++	 * userspace still describe it. The cached state is the only remaining
++	 * record of that configuration: reprogram the EC from it rather than
++	 * re-reading the EC, which would adopt the reset defaults instead.
++	 */
++	guard(mutex)(&priv->lock);
++	ret = cros_chctl_configure_ec(priv);
++	if (ret)
++		dev_err(dev, "failed to restore charge control state: %d\n", ret);
++
++	return ret;
++}
++
++static DEFINE_SIMPLE_DEV_PM_OPS(cros_chctl_pm_ops, NULL, cros_chctl_resume);
++
+ static const struct platform_device_id cros_chctl_id[] = {
+ 	{ "cros-charge-control", 0 },
+ 	{}
+ };
+ 
+ static struct platform_driver cros_chctl_driver = {
+-	.driver.name	= "cros-charge-control",
++	.driver = {
++		.name	= "cros-charge-control",
++		.pm	= pm_sleep_ptr(&cros_chctl_pm_ops),
++	},
+ 	.probe		= cros_chctl_probe,
+ 	.id_table	= cros_chctl_id,
+ };
 -- 
 2.53.0
 
