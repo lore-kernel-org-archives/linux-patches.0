@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590346;
-	b=VHoWSOOuhuIMSTbzdM7sTcTpbCQN1vC1D/z+mX9iC0KGUaJj1bqjRbWbFofHyx9AMboT
-	 b5rsADLX3ohxt4KuSKqujZlkCTZ2+mkFq9ekltw0z669/7qAxd8tYnBRNyvXf1QYV7hmE
-	 pjvF4SY30yt1IkopSxWibbfWd7RGkHGHzLTc/QnamjIZDvTfV6KaJez4oRkmA0nwJLmph
-	 N8qTZBsroPgJRSJOcByB3iNreKSUrnu9CSZes0obiCe3CSdCOEhXt++sm7ucFWgsY3l4N
-	 KRnEQIq99Jjji3fFG77nRHkxqUR4UFFfET4l6+BKjIyDdvvQR4o5HnKl3FQIfOpG0cQ==
+	t=1794590348;
+	b=LRdYye8zu3fy8jOzYYtzrGpazqLLrp/mcUDTMxsVmmBYUNdMkgnabX8e1/2YVdsp/GIY
+	 P3bQcirY/00G9/68f0rccIs4BQqZ2QFykOWKtEAfn8Yv12hy1sJAwJYwQE0wpe45aGoED
+	 x9bTGZNGWq4WOCkxcffN12C2741pEBBai/VmXACWOn3jm8zuNSCR4cEA4G+whh+Ot/Fch
+	 MZuViCUpdzu7b8zgKB/6R1z82gx6cq2CCE9eHT2egCcXy043cCo+IQtzgh0TDQzAIbzUZ
+	 evWenNdIpUSRRLyCPPg2HMADtE4AQ/I9mtkA7Nz/QqUo+0inuOxok+T+pDssE6TPinA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590346;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590348;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uAndJ7A5hJsqGMhCAbncMzXyKbbE+j1xNg8p42mIjYk=;
-	b=cBLIwuikDFdQJNssykl0yfa3E7Yzz0JjlzDwJJWmEomsJhboAYNsvghoRow7JXMjcQJL
-	 cNkUzf/ajpckqrZHZfTXspua6sOntaNpBpLZsj9tH9Dt8C7lVQ9Tf4z6GAAs0mgAwI+TH
-	 vuwCnaLaePSNqWBksPL1hGJaZH+qvZkTGT1R8+23EuvpK2VpZN4unG9q8JLrVk4ei/NkQ
-	 EtLLwW3876qpwd/DJxv0Y3PuZu3oru5WvLzVeLHH1wAMllatExp2uYte/1K/TJaS0W8R+
-	 S38GJC28L3hnMx+3z7evTRLwrRjJbleLLIdjxNIQQndq95kDPO8ED+MnU+RrnjsGCkA==
+	bh=DM7QvS4EuM5U5loqB/ELfFfdHPSKSmzIse14bcF+rlQ=;
+	b=1emvhc0n1oMrGoRRFZsRZ+TaR1onWowmlo/rrB3Zsh4twjA6ChVtZCrzMSW/v0xyUtcc
+	 KtE7u+amPaL3SLN6nAKupeHR0kKz8KJBkU4aLNsXyroU7M9ls43zv9G48fBmUkvgnPvp9
+	 DvFccOwurtMTAsQsfr9lUD+L4L8fHGM5TJG0wIloD4mv4nCW21GomOmqNqrREh2GGCSkV
+	 3livEA14cuea1NcgvzlteqGnrcERcJY/eLKTiQrMKCltBuNnT3qcaXBGGSxZj/A1GYsFi
+	 qlBZIIqEuEA6wHxesNi1Ky4BlwEidhj2nAE6bGxOIA0C4+Iz0aLAtsqdBdPJFFx04nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KIXwUQa4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wve3ss3I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C769C606E21A;
-	Fri, 13 Nov 2026 17:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068DA6083163;
+	Fri, 13 Nov 2026 17:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KIXwUQa4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73DB71F000C4;
-	Fri, 13 Nov 2026 17:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wve3ss3I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85EE1F000C4;
+	Fri, 13 Nov 2026 17:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590346;
-	bh=uAndJ7A5hJsqGMhCAbncMzXyKbbE+j1xNg8p42mIjYk=;
+	s=korg; t=1794590347;
+	bh=DM7QvS4EuM5U5loqB/ELfFfdHPSKSmzIse14bcF+rlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KIXwUQa4auZN6QQ0GBbPhTA7gJY7CCPwBj06DH6PP6SNruWIPPNLKteWyAGG0lurx
-	 whcZupcV8EhCtVCLIo5lLZlBfhSJqd1l4tBADBq/EbISOBjBHEU1KOb0dvAbDb2pSc
-	 kYB3Gq50fpMEPcHQN+4PcxUZBsrcgbw87RxdxdBk=
+	b=Wve3ss3Iaqx0l5Zh45z3Zs+qT0Z5jtRAA3IqucjKJrzfHTEIdmY9MebCZd49OTxvW
+	 EJ9Ug+Zmqrd37oecy8YE6zOsg7gr60YC9ZWY6g3nzeAoRaHzZXlV8nARzbWg6rpHHJ
+	 IBGeTcAEJ4wAVTBHDZpi9cV0ApALqv7YRfQNLzHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Seo <james@equiv.tech>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 281/686] hwmon: (hp-wmi-sensors) Avoid global struct mutation
-Date: Fri, 13 Nov 2026 10:46:54 -0500
-Message-ID: <20261113153830.504940902@linuxfoundation.org>
+Subject: [PATCH 6.18 272/686] hwmon: chipcap2: fix command error diagnostics
+Date: Fri, 13 Nov 2026 10:46:45 -0500
+Message-ID: <20261113153830.224444380@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,83 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit dc992efeace99e479aec7a8f0c49a9493c729606 ]
+[ Upstream commit d0a03e1a2d9bd53b94fe6dff7a1a8058d25be82d ]
 
-In the HP WMI sensors driver, make_chip_info() assigns a device-managed
-memory allocation to a static global structure, resulting in a
-use-after-free when the device unbinds.
-During hp_wmi_sensors_probe(), make_chip_info() dynamically allocates a
-hwmon_channel_info array using devm_kcalloc() and assigns it to the
-static global hp_wmi_chip_info.info pointer.
+The command response field only contains bits 1:0, while the
+error flags are stored in bits 2:5. The existing diagnostic
+checks test the extracted response field, so they can never report
+an error flag.
 
-If multiple instances probe sequentially or concurrently, the shared
-global pointer is overwritten by each new device. When any device unbinds,
-its devm-managed memory is automatically freed, leaving the global
-hp_wmi_chip_info struct and any other active device instances with a
-dangling pointer. Subsequent accesses by the hwmon core (such as thermal
-zone reads) will dereference this freed memory, causing a use-after-free.
+Test the full status byte for the error flags, and check the
+configuration-load flag instead of RAM parity for the last diagnostic.
 
-While this is not supposed to happen in the real world (there should only
-be one instance of the driver in any system), modifying global structures
-is undesirable and should be avoided whenever possible. Allocate struct
-hwmon_chip_info as part of struct hp_wmi_sensors instead and initialize it
-in make_chip_info() to avoid mutating the global structure.
-
-Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
+Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
 Cc: stable@vger.kernel.org
-Cc: James Seo <james@equiv.tech>
-Acked-by: James Seo <james@equiv.tech
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-1-27ebfc2c5b9e@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/hp-wmi-sensors.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/hwmon/chipcap2.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/hp-wmi-sensors.c b/drivers/hwmon/hp-wmi-sensors.c
-index cfa0d6ad0fb3f..dd1fa48314a54 100644
---- a/drivers/hwmon/hp-wmi-sensors.c
-+++ b/drivers/hwmon/hp-wmi-sensors.c
-@@ -390,6 +390,7 @@ struct hp_wmi_info {
-  */
- struct hp_wmi_sensors {
- 	struct wmi_device *wdev;
-+	struct hwmon_chip_info chip_info;
- 	struct hp_wmi_info **info_map[hwmon_max];
- 	u8 channel_count[hwmon_max];
- 	bool has_intrusion;
-@@ -1531,11 +1532,6 @@ static const struct hwmon_ops hp_wmi_hwmon_ops = {
- 	.write	     = hp_wmi_hwmon_write,
- };
- 
--static struct hwmon_chip_info hp_wmi_chip_info = {
--	.ops         = &hp_wmi_hwmon_ops,
--	.info        = NULL,
--};
--
- static struct hp_wmi_info *match_fan_event(struct hp_wmi_sensors *state,
- 					   const char *event_description)
- {
-@@ -1962,7 +1958,8 @@ static int make_chip_info(struct hp_wmi_sensors *state, bool has_events)
- 	if (!ptr_channel_info)
- 		return -ENOMEM;
- 
--	hp_wmi_chip_info.info = ptr_channel_info;
-+	state->chip_info.ops = &hp_wmi_hwmon_ops;
-+	state->chip_info.info = ptr_channel_info;
- 
- 	for (type = hwmon_chip; type < hwmon_max; type++) {
- 		count = channel_count[type];
-@@ -2053,7 +2050,7 @@ static int hp_wmi_sensors_init(struct hp_wmi_sensors *state)
- 		return err;
- 
- 	hwdev = devm_hwmon_device_register_with_info(dev, "hp_wmi_sensors",
--						     state, &hp_wmi_chip_info,
-+						     state, &state->chip_info,
- 						     NULL);
- 	return PTR_ERR_OR_ZERO(hwdev);
- }
+diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
+index 0e182454779e0..b3d944852e73a 100644
+--- a/drivers/hwmon/chipcap2.c
++++ b/drivers/hwmon/chipcap2.c
+@@ -165,13 +165,13 @@ static int cc2_cmd_response_diagnostic(struct device *dev, u8 status)
+ 	case CC2_RESPONSE_BUSY:
+ 		return -EBUSY;
+ 	case CC2_RESPONSE_NACK:
+-		if (resp & CC2_ERR_CORR_EEPROM)
++		if (status & CC2_ERR_CORR_EEPROM)
+ 			dev_dbg(dev, "Command failed: corrected EEPROM\n");
+-		if (resp & CC2_ERR_UNCORR_EEPROM)
++		if (status & CC2_ERR_UNCORR_EEPROM)
+ 			dev_dbg(dev, "Command failed: uncorrected EEPROM\n");
+-		if (resp & CC2_ERR_RAM_PARITY)
++		if (status & CC2_ERR_RAM_PARITY)
+ 			dev_dbg(dev, "Command failed: RAM parity\n");
+-		if (resp & CC2_ERR_RAM_PARITY)
++		if (status & CC2_ERR_CONFIG_LOAD)
+ 			dev_dbg(dev, "Command failed: configuration error\n");
+ 		return -ENODATA;
+ 	default:
 -- 
 2.53.0
 
