@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590229;
-	b=TCnubl6SEA94NYZO5+zBOhizUBDodBXCE3L4k+NZnKM199yoIpeXBTB8t8RgLk1l+4AD
-	 YcgDRz6Qmbc0pbfkHcQC07GxyPVT1CQpLHq0uuw9brsirI2Sx7cVm0OK67QjNmhvaCrk9
-	 oj4QMd6/b2cRvnSrYGSH5WnReU7F9gjr28bpwWQVsuUM7tF6wK2vOujYxkbQRhVMFSUvy
-	 gF0TTut2zkiqRBdgeRD9xC37+YfeN90ek5XmifmYmBFzGC5YR5gLCWtHpdtfFcr8q2sGr
-	 CC2K1Hbq+ZPuMyj/gxPVg6LeNcPboSy5MLw/UMRFZDugEp4Uv1wAiZxSKJIzsPgxvRw==
+	t=1794590230;
+	b=ip90EI2CVL3Yi2/7J0a3LCFC0hkkunhc9egFuIDqUV6l6faz35zJILdUGVPQQVSwXvJ9
+	 ySndkl/qnZ/6HvpCT2/4KOYVJlbHdLxwdMMekdbX26/mbdHIQIAMGme/NcH/ckukKBsP/
+	 dqzqAVmDc+rQAP4/QtQK/APCLS3E47uCL25d6/XQ80HvRXtLADiH0kYK026lK3PyJ+h/U
+	 A6trpdFQHG+laedl61NtTHvSnFOn5So+WmHuZWOKdTkeyvGBCV1InQLS9SsJs0/Ia8BCH
+	 6JVoq4c9hWO4XZ2E+n/AxdfGSlkg3t7H+RffCVl0AH7Jg2wZVp9iThgunwjmGtV9org==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590229;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590230;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7uT+xuDihQiWpwk+wTA2Tpe1j9oq7tXMJcPDO16tiqo=;
-	b=4C2Chf1HkPPxxlCXtduhD9ruCATSJvi6q9JF1iItPirpmTZXAAWZS+wa/EMoTVyjdPUK
-	 AVhm1JLYn5AaGXe5JNWltZ6qjLpxMXp8InSXA7/EHLCDopPKN0VvAK8IbdEY1glj+m2KJ
-	 WB+ydngPjI892NQX2yFw9LrhpvboasMAjQk4N3MeMs0Pnjle/cfzCTgzgAng1ndYg+Cc7
-	 5JJxUGHpj8E84CluJqXarnH/vmB632sTqpy07abmjU5V/IuMGyvtYRXjJzgBmWivqCuZv
-	 sVMC/zmMSMmkC4cP6YFoFMMvU/vj+Wq2kRX5TTorg8Czn9gx4luZX4YkeDg1ZyZdOtg==
+	bh=p3KyQQBF6OkvUys9i2ePeOfFIaRnJxtuIX/4Y57xhIU=;
+	b=Xc/x3on6z2ZQLJxDppdprCMld2JCYtlFNNSiOyg2bUSfl/98JpkhJV3ExGNYzl+tbuPb
+	 O7kX/jVLwSyCgBubPhYXufVqLDQl1BOMt/1oNRASfok9fam9jr/yNU+5Vu3UyBCNP9pL5
+	 Te1KHSXiKtN4cuJlGn3hnBZOp9GRunRYrXSA1ESeUkuzBJJszzXKtdcpD1ZxOKbRFGTNv
+	 LnZ5hENFcHEjU4cvBH0lDCGXdoOz+jDuw8dZj8F/1QQ55vDPH4zPn+Z4ibgmO3gLFw+9o
+	 SWV6HoWY8LqGKHhiM7s+j/7vhwnJBLzfBpR+eZiYqDqfxRSeBAKSbxhfcEJK4YbrkKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zzcAfh8N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BfhL0AAQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805BA606A8BA;
-	Fri, 13 Nov 2026 17:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65E4606C0B6;
+	Fri, 13 Nov 2026 17:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zzcAfh8N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D52C1F000C4;
-	Fri, 13 Nov 2026 17:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BfhL0AAQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632741F000C4;
+	Fri, 13 Nov 2026 17:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590229;
-	bh=7uT+xuDihQiWpwk+wTA2Tpe1j9oq7tXMJcPDO16tiqo=;
+	s=korg; t=1794590230;
+	bh=p3KyQQBF6OkvUys9i2ePeOfFIaRnJxtuIX/4Y57xhIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zzcAfh8NVpgpUb3dFqT7C8t7rhPYqDkBDz2HLH9cKDHR0XSsgNx+p/gk+HFrpNiLb
-	 NiTi0gf0X6fhPvQlVF5OA5vpb7mWYCl1SkUI4gwsc4VhzcmnsJl5WrQmyen/OPv6jF
-	 i+Lrz5Y2zqza0+hAmaRAdwbNmVsNoOgTaXJxN+xs=
+	b=BfhL0AAQSBplGHhXfAthvkIx6SGthRyICpofaln/QveSfP80eLQkeVoXdMLg5NG1Y
+	 HGSKVWfoi92gnDeB9fpyBq+3XxOSZcMNHSFNroCu2RxW/uv7Rea3cCspTYkALYyvQ+
+	 nCZZRjL9IliWqmN5+WLqtj+0CXV+7hwn/dyPvibI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evanshenf <archwse@gmail.com>,
-	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
-	Qianhai Wu <wuqianhai@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Michael Grzeschik <mgr@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 227/686] drm/loongson: Fix double free on BO initialization failure
-Date: Fri, 13 Nov 2026 10:46:00 -0500
-Message-ID: <20261113153828.711920085@linuxfoundation.org>
+Subject: [PATCH 6.18 188/686] net/9p/usbg: always reset completion when disconnecting
+Date: Fri, 13 Nov 2026 10:45:21 -0500
+Message-ID: <20261113153827.371039027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,58 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evanshenf <archwse@gmail.com>
+From: Michael Grzeschik <mgr@kernel.org>
 
-[ Upstream commit f086dbdeb6e56510e158a853d752c6d8ed9e0674 ]
+[ Upstream commit 08c6b9f484a406d9d87c5b2580725d2e0597f3b9 ]
 
-If ttm_bo_init_validate() fails, it drops the buffer object's reference
-and cleans it up through the supplied destroy callback. lsdc_bo_destroy()
-releases the GEM object and frees the enclosing lsdc_bo, so freeing it
-again in lsdc_bo_create() causes a double free on a synchronous failure
-path.
+When some tx or rx transfers were pending while closing the connection,
+the completion handler could catch one pending completion call. To
+ensure a normal start when mounting again, we have to reset the
+completion and flush any pending completions.
 
-Let TTM own the cleanup after initialization has started and return the
-error directly. Keep the explicit free on drm_gem_object_init() failure,
-which occurs before ownership is passed to TTM.
-
-Tested on LS7A2000 by making drm_vma_offset_add() return -ENOSPC for one
-selected dumb-buffer creation. The error reached userspace, the destroy
-callback ran once, and no handle was published or tracked BO retained.
-Normal buffer creation, zeroing, mapping, readback and release passed.
-
-AI assistance was used for the ownership analysis, fix, fault-injection
-tools, build and test execution.
-
-Fixes: f39db26c5428 ("drm: Add kms driver for loongson display controller")
+Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Evanshenf <archwse@gmail.com>
-Reviewed-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Reviewed-by: Qianhai Wu <wuqianhai@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Link: https://patch.msgid.link/20261003093415.e64386de1e64-1-archwse@gmail.com
+Signed-off-by: Michael Grzeschik <mgr@kernel.org>
+Message-ID: <20260922-usb9pfsfixes-v1-3-9d8dcc52904c@kernel.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/loongson/lsdc_ttm.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/9p/trans_usbg.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/loongson/lsdc_ttm.c b/drivers/gpu/drm/loongson/lsdc_ttm.c
-index 2e42c6970c9fd..e8805a2a0db43 100644
---- a/drivers/gpu/drm/loongson/lsdc_ttm.c
-+++ b/drivers/gpu/drm/loongson/lsdc_ttm.c
-@@ -474,10 +474,8 @@ struct lsdc_bo *lsdc_bo_create(struct drm_device *ddev,
+diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
+index f1773749d9124..0b04363c39793 100644
+--- a/net/9p/trans_usbg.c
++++ b/net/9p/trans_usbg.c
+@@ -467,6 +467,7 @@ static void p9_usbg_close(struct p9_client *client)
+ 	mutex_unlock(&usb9pfs_lock);
  
- 	ret = ttm_bo_init_validate(bdev, tbo, bo_type, &lbo->placement, 0,
- 				   false, sg, resv, lsdc_bo_destroy);
--	if (ret) {
--		kfree(lbo);
-+	if (ret)
- 		return ERR_PTR(ret);
--	}
- 
- 	return lbo;
+ 	disable_usb9pfs(usb9pfs);
++	reinit_completion(&usb9pfs->send);
  }
+ 
+ static int p9_usbg_request(struct p9_client *client, struct p9_req_t *p9_req)
+@@ -755,6 +756,7 @@ static void usb9pfs_disable(struct usb_function *f)
+ 		usb9pfs->client->status = Disconnected;
+ 	spin_unlock_irqrestore(&usb9pfs->lock, flags);
+ 	usb9pfs_clear_tx(usb9pfs);
++	reinit_completion(&usb9pfs->send);
+ }
+ 
+ static struct usb_function *usb9pfs_alloc(struct usb_function_instance *fi)
 -- 
 2.53.0
 
