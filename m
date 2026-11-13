@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591144;
-	b=jHOGg6MD6agv9xB8+vVd+JwS4F0akeUaHHGnqt33MlFw4dZ/DeOZVnSZESt93yXGO57o
-	 +JQLk4GOJS25wOQQoRuDImnZT26YVhOE9kLRXmoEY/w0ViDSLh3nfgmAVBrFEsDAczg7Y
-	 to1TqtozjUVAB/6dktybJzJHZuyqvUVPKhwCYJUQclpyGc58X52/VcfOmksEurge4guuo
-	 4+Thcg+8dYYtCUfH2CEg8eW3AoX9aT4PMOoSXEBjyDa7GUZ7nnOmGU5/vjJJAZsYWYsve
-	 ReIhib0OgpGmQV4xLGNeOlBbCYP6Gk28OKPsUnUyQPDW7cmXmZMSkBNCN2kaRAshgHw==
+	t=1794591145;
+	b=cGtWV8KvRfuyjZtV6uP2TiGDaNfvVgMpUBA7JGO3/AeZlGOLQYN5eLzAQTTFygoXHLFt
+	 F8QX1vRj2mzYOlB6qaM3/AZlGMwoMNNJzeftcvGPx8Obb6KgORAZpKlW1Ip7wtTzlSSd0
+	 A5yJKETd0u56oATYfyuze8VH4X1wPMEWuRFNleRqy22PiEqCvOAj7K8l20At7hXF1hwN9
+	 mTRu0DNgxZT0v/QTxi766Nyc79CfvbFtJd1REjcGyMzWn4B3BGZR18VSyYDeQKnKOEWKe
+	 vUf7/mqTKqR+UAWgYDdxMQifs4XH2FXSqeCbw5dYUkalpM5WV7mGuQ2rsxTbCpio8tA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591144;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591145;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rRTOxqs2jqch4V0wPserC61Ta+jiARODpj6vng1rN94=;
-	b=DyQ68EsfgKUmoyoo9zyWla79AGygJ7UvfNaPXUFWCpnzzTwcmSueSQrd5C/LIDOIY/CQ
-	 5304dEjF0NxjSHE9dxOEpFDJ7UzAqMYXpBHISx/L3Bhb6/iJxr19MQrYsUBZPwGvCHM68
-	 W8AWd/7RHyrNyZqqDE84bLtwXRRVEvXrY7QwKIs+Rz1eOMF/h0O/y7RL1dyAm0kENuVaA
-	 knr7BpDIKWiIguOL/QPFAHgp5SjHczVtJQz+B2A8rEE9/t1JWg3+iRpPOfkOXVaAMGm2X
-	 vhxI091DZ/H7QbJo0EVVMXyVernHhwqsB7+So9Anes8jqCl7wCqj5qWSSnt4KUdd4Ug==
+	bh=wuZGmPCwdLtu/ai0xDkZA1K5OROTtFn5+qy+5EpKFpc=;
+	b=nHj/9HjkVcLdQNRB2uxKeKpjU4j2NXxkkAtwxs5LWKsOInSHoJfPyQV/t8neLuYIjZKR
+	 BvtQjOx5biE5pxqaIdFqQ2jOn4p6pa1KxbGDX+osFgvGGQ6OpYWyI+nBBzMbRNj7/PkT8
+	 8Es6RjKrcCfLVKaBMMVXULy5HUOzsA+IW3QJNDDa9zu7g5wmiedtJ/FBHYf+hpj9WOryM
+	 0OSUiORg1YoMSCaFyEqU/3B9qfI+/+jpRJUqyUAlZJsNIT/bb0nVNXCoUZ9Rn/8oj5thR
+	 UXcOI3inTEtjkw//gsj0zRmvEMcUH88367wGsOWeoly6+zzXQNS03vY2plNR0XT+kpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMejaFNR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SjDnGiEO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5949606BD34;
-	Fri, 13 Nov 2026 17:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2239F606BD32;
+	Fri, 13 Nov 2026 17:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMejaFNR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C0C1F000C5;
-	Fri, 13 Nov 2026 17:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SjDnGiEO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98561F000C6;
+	Fri, 13 Nov 2026 17:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591143;
-	bh=rRTOxqs2jqch4V0wPserC61Ta+jiARODpj6vng1rN94=;
+	s=korg; t=1794591145;
+	bh=wuZGmPCwdLtu/ai0xDkZA1K5OROTtFn5+qy+5EpKFpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RMejaFNRyo5XJ8sjLPclg6njT+kHFDBH5DuiMwsqurct1FiVmLnvMn703zFBfNQ7A
-	 8RjxuHSyqfsnmDNWU6kChjPkjv9OnAYSjjXiOQOQ5JrwPrll1178Yqbrok1LoIxU8l
-	 J9fse0CNyB/9/fz6fXJxHlRY2fSEBodGy1IqlNc0=
+	b=SjDnGiEOz5oHG9/EHWdOfe7IsZsA/k0Ft/jxcYAOQINHR6TB/n9RVtpMFoZdExyQW
+	 aRJfyr3MIR5CszpcNz5pHtMFVfWqFKEjt/GQh9ICKOhcrnLR8IdiEc5cUJtpDy/m/8
+	 nwIq20d+Coef2TIs/OfeVHnX+y9el9IT8Gqs0KFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 287/670] ocfs2: do not read the entry array of an empty xattr bucket
-Date: Fri, 13 Nov 2026 10:47:31 -0500
-Message-ID: <20261113153821.599029093@linuxfoundation.org>
+Subject: [PATCH 6.12 288/670] ocfs2: do not index before the entry array when dividing an empty bucket
+Date: Fri, 13 Nov 2026 10:47:32 -0500
+Message-ID: <20261113153821.633772175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -73,45 +73,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit e8de099f2958c84aa23186c5481e69f7ffd39355 ]
+[ Upstream commit 7133a0d0954c109f1764ebf8ab32d7e757a6c587 ]
 
-ocfs2_check_xattr_bucket_collision() decides whether splitting a bucket
-can make room by comparing the hash being inserted against the first and
-the last entry.  xh_count comes off disk and is never checked, and a
-bucket is allowed to hold no entries: ocfs2_xa_remove_entry() keeps the
-last slot when it removes the only one, so that an empty bucket still
-carries the hash it is keyed by.  xh_count then reads back as 0 while
-xh_entries[0] is still meaningful, and the second comparison indexes
-xh_entries[-1].
+ocfs2_divide_xattr_bucket() appends an empty bucket carrying a sentinel
+hash when the source bucket has no divide position, taking that hash
+from xh_entries[start - 1].  ocfs2_xattr_find_divide_pos() returns count
+when every entry shares one hash, and its loop does not run at all for
+count < 2, so an empty bucket comes back with start == count == 0 and
+the read is xh_entries[-1].
 
 That is outside the __counted_by_le(xh_count) bounds of xh_entries[] and
-lands on the header.  An entry is 16 bytes and xe_name_hash is its first
-field, so the value read is xh_count | xh_free_start << 16.  It stays
-inside the block, but the answer is arbitrary, and for an empty bucket
-it says there is no collision, so a new bucket gets added on the
-strength of it.
+lands on the header, so the value picked up is
+xh_count | xh_free_start << 16.  One above it is written into the new
+bucket's xh_entries[0] and committed, which leaves a bucket whose first
+hash does not follow the bucket before it.  ocfs2_xattr_bucket_find()
+binary searches on xh_entries[0], so the broken key hides the range the
+sentinel was meant to cover: getxattr() answers -ENODATA for an
+attribute that is stored, and an insert can go to the wrong bucket and
+leave two copies of a name.  The cross cluster divide hands the same
+value back as a tree record's e_cpos, which then claims a hash range it
+does not cover.
 
-An empty bucket holds no entries to collide with.  Return before reading
-the array.
+Read xh_entries[0] instead.  The branch is only reached when every entry
+shares one hash, so for a non-empty bucket it holds the same value, and
+for an empty one it is the slot that carries the bucket key.
 
-One way to reach the test with an empty bucket is a set that removes the
-bucket's only entry during cleanup and then fails for space again, since
-it is that second -ENOSPC which calls this.  Growing a value past
-OCFS2_XATTR_INLINE_SIZE is the easy route: the cluster allocation fails,
-the "!orig_clusters" arm of ocfs2_xa_cleanup_value_truncate() removes
-the entry, and although the "growing" caller does set ctxt->set_abort,
-only ocfs2_xattr_block_set() and __ocfs2_xattr_set_handle() look at it,
-so ocfs2_xattr_set_entry_index_block() goes straight on to the collision
-check.
+An empty bucket reaches the divide from
+ocfs2_check_xattr_bucket_collision(), which reports no collision for
+one, through ocfs2_add_new_xattr_bucket() and
+ocfs2_extend_xattr_bucket().  It does not take a failed set to get
+there: a divide that finds no position is itself what leaves an empty
+sentinel bucket behind, and a later extend can pick it as the target.
 
-This sits on commit a9ea8b397864 ("ocfs2: use the stored hash when
-checking xattr bucket collision"), which gave the collision check its two
-argument form and is marked for 6.2 and later.  The read fixed here is
-present in the three argument version too, but a tree without that
-commit needs the hunk adapted by hand.
-
-Link: https://lore.kernel.org/20261024151012.1059683-5-joseph.qi@linux.alibaba.com
-Fixes: 012255961c9e ("ocfs2: Enable xattr set in index btree")
+Link: https://lore.kernel.org/20261024151012.1059683-6-joseph.qi@linux.alibaba.com
+Fixes: 80bcaf3469b8 ("ocfs2/xattr: Proper hash collision handle in bucket division")
 Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Cc: Heming Zhao <heming.zhao@suse.com>
@@ -120,35 +115,30 @@ Cc: Joel Becker <jlbec@evilplan.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/ocfs2/xattr.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index a995b241bbc3d..f30cefdff16f7 100644
+index f30cefdff16f7..4704d96bce053 100644
 --- a/fs/ocfs2/xattr.c
 +++ b/fs/ocfs2/xattr.c
-@@ -5859,11 +5859,20 @@ static int ocfs2_check_xattr_bucket_collision(struct ocfs2_xattr_bucket *bucket,
- 					      u32 name_hash)
- {
- 	struct ocfs2_xattr_header *xh = bucket_xh(bucket);
-+	u16 count = le16_to_cpu(xh->xh_count);
-+
-+	/*
-+	 * An empty bucket keeps the hash of the entry that was removed in
-+	 * xh_entries[0] so that it can still be found, but it holds no
-+	 * entries to collide with.
-+	 */
-+	if (!count)
-+		return 0;
+@@ -5029,7 +5029,15 @@ static int ocfs2_divide_xattr_bucket(struct inode *inode,
+ 	start = ocfs2_xattr_find_divide_pos(xh);
  
- 	if (name_hash != le32_to_cpu(xh->xh_entries[0].xe_name_hash))
- 		return 0;
+ 	if (start == count) {
+-		xe = &xh->xh_entries[start-1];
++		/*
++		 * start == count means every entry shares one hash, so the
++		 * first of them carries it too.  An empty bucket has no
++		 * entries[start - 1], but its entries[0] still carries the
++		 * bucket key: either the hash ocfs2_xa_remove_entry()
++		 * deliberately leaves behind, or the sentinel a previous
++		 * divide wrote.
++		 */
++		xe = &xh->xh_entries[0];
  
--	if (xh->xh_entries[le16_to_cpu(xh->xh_count) - 1].xe_name_hash ==
-+	if (xh->xh_entries[count - 1].xe_name_hash ==
- 	    xh->xh_entries[0].xe_name_hash) {
- 		mlog(ML_ERROR, "Too much hash collision in xattr bucket %llu, "
- 		     "hash = %u\n",
+ 		/*
+ 		 * initialized a new empty bucket here.
 -- 
 2.53.0
 
