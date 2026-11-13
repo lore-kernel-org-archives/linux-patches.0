@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590802;
-	b=178H/STciNUWsZmKdnThAEUpFtT+cJiM+xrVFe/ptuvB5FJffNAu45EVT9NO2eir1PIv
-	 oT/padMVosQmNKGipVZEbsiUkMlauIZ8gJq4b8XFvn2yu1vkrIWAUfMlqFAQXgl9A71nj
-	 cPDDRRNS3F7T4T7LzDH2/pugczqSAO0/ApFtvo0leEnqP8Yi/w+AsN1yXq43DOh+036/g
-	 dIEuOGsUcUskmRzdeQHy98p4OBkpQ/J7S7No9c3cEQCJrU7P5eqlQQgjO+OIyr6HqkfLB
-	 Jzx8nxNC+b5r8ms8kwWhIM47Q4XzIDk/VdFCcFGjmAXDEechSLePNOv7VyDTGN6NE8A==
+	t=1794590803;
+	b=rMUgRGk4fF4EYfKZI2XutHp8Q1Sc7BmGW2TZXsUw+rQX1iW/tNiYJCkCwFjTTaciOmD1
+	 XhH+UTwjAeCdUUxrnASN1JCTUaswXqmxK3W0W5fY+1vb4InkrDruj/5XblrLXKq17btnf
+	 6rjP2sEWnVDjvKn6/EMj/HqufGzb5JfvQdpO/daWLRhB4VJ5tHj8j5wwwRev2O76uNSYW
+	 5ITGF/Lw99FcaCtD6wkxOpLXiSat0tHcbFITVt0nYhb186ieQCuXK0+NV5l8Hd8tUu2sz
+	 /IreV7/HJvlUwz6hn4cKSyoxhieSh3IabFa3UF3q+yCLC1qjgE04FcD1hZJCblTiftg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sKHDKfKAJFPrw7kg5HW2VWoboacYV3AiygJrzx87G8Q=;
-	b=Zi/4krsqlQR0nTgG1C7qTlavHkPjIPEtDBsv0I6YBHq+vndHljQiLgboDMr873W7B+VL
-	 fcC4YJevJzvt+qj3xXLkPm2uESl39t+axYBRWD/vjPrthKRpxr36JMGgQ7uh8uVACuUSJ
-	 hM9KIjCtHN6UU0LeXcK2CiyHjEuZG5LOMQAHhBZhnWyo0HZxqdccyyhddD7yM0S8zdPdg
-	 fMLzIC2navh7eoo5554pPyuWVvKBBz59qVOX44wA+oTF4ZpMZtSr6te+TOJdcniIRTvw+
-	 Cx8aav1LjYxMsT5m6VRxeJczMczFHC0cNuBxN/fiPmP/sfiwFFmZok10nUl0EZmU0jQ==
+	bh=HpACdLPYj9PuFPt/CcFz5OGPecuBQ9FkNnRS/NoV/hs=;
+	b=FrgmeJYkqNwkKrN172d85dIFxPNz9DlU6eMsLGa43v6muIzCrbz6+O738DaigHYga+c3
+	 g1cRv0jii7H9b2FcLVIBXHRYQAJzNr1oTrq2JcCUjmxUQYhgZuFyIb0Db09yhY2MVtBrw
+	 FoPeMVumlf3LDJYQYuaEQ369/y431hSjOiloAa7MvTY/PcDHMB0qnPMFNj6MC5p72JgSb
+	 ov4J6KkP/+esUfddg2V4X35Wog2xIxEBelKgGQtY0Tl1KXJWdfBuTbu/BPNxg4coeHFAB
+	 YCvYtbu4h3E/eW/73A7AwNpuub1OFPpidSHiu0kh6vfpGzsWPKT9eIhgQQh7c3mUKpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VA/GDKYG";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1P1V7rq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E251607D2E1;
-	Fri, 13 Nov 2026 17:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51FB607D2F6;
+	Fri, 13 Nov 2026 17:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VA/GDKYG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3DD1F000C4;
-	Fri, 13 Nov 2026 17:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1P1V7rq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EEE1F000C4;
+	Fri, 13 Nov 2026 17:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590802;
-	bh=sKHDKfKAJFPrw7kg5HW2VWoboacYV3AiygJrzx87G8Q=;
+	s=korg; t=1794590803;
+	bh=HpACdLPYj9PuFPt/CcFz5OGPecuBQ9FkNnRS/NoV/hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VA/GDKYG2a9u5tYXgAR/g4HxMmQ0qkj46ybUnz232gEHs1uiYK/gijLQKbyeCFt/I
-	 Dr7ge3a4jbiQ5K/ea5ev5uTsiWsU3fU9RdfLF3p8TkzAh27zm8V9+OFgnPkTv4G/8J
-	 fksxVc1k+eMfNH/SqR4ItLgfQMq+qkK/pRzGpC4A=
+	b=z1P1V7rqXHsBw/GTYM8FxQ1LYcGkb7FXYTozuiFyyZDrFGf79x86Potq2isAsRlcG
+	 TxwgsgzH7GLL6AQVyAiLa/5vMCVLWqnaxaTIXbFZiWrTyzcP8qTY7l/07wAGuwgv3r
+	 4Jic6u2ABu6hw4Haprc8HFIb9Aa91cFbBdTyRK94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evgeny Akhtimirov <evgeny@devduty.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 654/686] ALSA: hda/realtek: Enable all four speaker amps on Lenovo ThinkBook X G2 IAH
-Date: Fri, 13 Nov 2026 10:53:07 -0500
-Message-ID: <20261113153843.910979105@linuxfoundation.org>
+Subject: [PATCH 6.18 645/686] iomap: dont mark unwritten parts of a folio uptodate
+Date: Fri, 13 Nov 2026 10:52:58 -0500
+Message-ID: <20261113153843.637742220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,78 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evgeny Akhtimirov <evgeny@devduty.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit f2293e7b2ddd803b1461e0490f9b2f32089c1dd0 ]
+[ Upstream commit a4193b4af359db84b2cdf3a040752861984c636b ]
 
-The Lenovo ThinkBook X G2 IAH (MTM 21TU) has an ALC287 codec with four
-CS35L41 amplifiers on I2C (CSC3551). It reports codec SSID 17aa:3929,
-which it shares with the ThinkBook 13x Gen 5, and PCI SSID 17aa:3842.
+For a buffered write into a hole, an unwritten or new extent, or past
+EOF __iomap_write_begin() zeroes the parts of the blocks outside of the
+write and then marks the blocks uptodate. That includes the range of the
+write itself which still holds whatever was in the folio before. It only
+becomes valid once the copy from userspace has filled it in.
 
-Since PCI SSID 17aa:3842 has no quirk entry, the codec SSID matches
-ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD. That fixup binds only
-two amps (cs35l41-hda.0 and .1), while the CS35L41 configuration table
-describes four for 17AA3929. Amps .2 and .3 probe and load firmware,
-but they are never bound to the codec, so half of the speakers stay
-silent.
+But the copy can come up short and __iomap_write_end() only rejects a
+short copy if the folio isn't uptodate. If the zeroed blocks were all
+that was missing the folio is uptodate by then, the short copy is
+accepted, and the rest of the range is exposed to readers and can end up
+on disk. A source buffer that ends in an unmapped page is enough:
 
-Add a ThinkPad-style fixup chain that binds four I2C amps, and match the
-laptop by its PCI SSID so the ThinkBook 13x Gen 5 is not affected.
+        ftruncate(fd, 4096);
+        pwrite(fd, p, 3000, 100);    /* 16 bytes at p, then PROT_NONE */
+        pread(fd, buf, 4096, 0);
 
-Tested with hda_model=1028:0c4d (alias to ALC287_FIXUP_CS35L41_I2C_4):
-all four amps bind, apply their calibration and are runtime-active
-during playback.
+The write returns 16 and the read returns 2984 bytes of whatever was in
+that page before. If other blocks of the folio aren't uptodate the short
+copy is rejected but the zeroed blocks keep their uptodate bits and the
+retry with the copied length leaves the same bytes behind.
 
+Only mark blocks uptodate in __iomap_write_begin() after reading them.
+__iomap_write_end() marks the zeroed blocks uptodate once the copy has
+succeeded and rejects a short copy.
+
+Willy reported this back in 2024 (cf. [1]) and Zhang Yi posted the same
+fix (cf. [2]) but it never got merged.
+
+[1]: https://lore.kernel.org/all/ZqsN5ouQTEc1KAzV@casper.infradead.org
+[2]: https://lore.kernel.org/all/20240812121159.3775074-6-yi.zhang@huaweicloud.com
+
+Fixes: 9dc55f1389f9 ("iomap: add support for sub-pagesize buffered I/O without buffer heads")
+Reported-by: Josef Bacik <josef@toxicpanda.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Evgeny Akhtimirov <evgeny@devduty.com>
-Link: https://patch.msgid.link/20261009-thinkbook-x-g2-iah-v1-1-56012188aee0@devduty.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Replaced the unavailable alc287_fixup_tb_vmaster_led() callback with alc287_fixup_bind_dacs(). ]
+Link: https://patch.msgid.link/20261029-work-iomap-ai-fixes-v1-1-7eda63bc1b13@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: placed iomap_set_range_uptodate() after the read-error check because IOMAP_F_ZERO_TAIL handling is absent ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/iomap/buffered-io.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 68b5648d51119..fabe56399f015 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3979,6 +3979,8 @@ enum {
- 	ALC245_FIXUP_HP_X360_MUTE_LEDS,
- 	ALC287_FIXUP_THINKPAD_I2S_SPK,
- 	ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD,
-+	ALC287_FIXUP_CS35L41_I2C_4_THINKPAD_ACPI,
-+	ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_4_THINKPAD,
- 	ALC2XX_FIXUP_HEADSET_MIC,
- 	ALC289_FIXUP_DELL_CS35L41_SPI_2,
- 	ALC294_FIXUP_CS35L41_I2C_2,
-@@ -6441,6 +6443,18 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC287_FIXUP_CS35L41_I2C_2_THINKPAD_ACPI,
- 	},
-+	[ALC287_FIXUP_CS35L41_I2C_4_THINKPAD_ACPI] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cs35l41_fixup_i2c_four,
-+		.chained = true,
-+		.chain_id = ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK,
-+	},
-+	[ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_4_THINKPAD] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc287_fixup_bind_dacs,
-+		.chained = true,
-+		.chain_id = ALC287_FIXUP_CS35L41_I2C_4_THINKPAD_ACPI,
-+	},
- 	[ALC2XX_FIXUP_HEADSET_MIC] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc2xx_fixup_headset_mic,
-@@ -7579,6 +7593,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3827, "Ideapad S740", ALC285_FIXUP_IDEAPAD_S740_COEF),
- 	SND_PCI_QUIRK(0x17aa, 0x3834, "Lenovo IdeaPad Slim 9i 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x383d, "Legion Y9000X 2019", ALC285_FIXUP_LEGION_Y9000X_SPEAKERS),
-+	SND_PCI_QUIRK(0x17aa, 0x3842, "ThinkBook X G2 IAH", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_4_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x3843, "Lenovo Yoga 9i / Yoga Book 9i", ALC287_FIXUP_LENOVO_YOGA_BOOK_9I),
- 	/* Yoga Pro 7 14IMH9 shares PCI SSID 17aa:3847 with Legion 7 16ACHG6;
- 	 * use codec SSID to distinguish them
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index c9ece378687b9..cbd729ef50ab7 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -766,6 +766,7 @@ static int __iomap_write_begin(const struct iomap_iter *iter,
+ 		if (iomap_block_needs_zeroing(iter, block_start)) {
+ 			if (WARN_ON_ONCE(iter->flags & IOMAP_UNSHARE))
+ 				return -EIO;
++			/* uptodate once copied, see __iomap_write_end() */
+ 			folio_zero_segments(folio, poff, from, to, poff + plen);
+ 		} else {
+ 			int status;
+@@ -781,8 +782,8 @@ static int __iomap_write_begin(const struct iomap_iter *iter,
+ 						folio, block_start, plen);
+ 			if (status)
+ 				return status;
++			iomap_set_range_uptodate(folio, poff, plen);
+ 		}
+-		iomap_set_range_uptodate(folio, poff, plen);
+ 	} while ((block_start += plen) < block_end);
+ 
+ 	return 0;
 -- 
 2.53.0
 
