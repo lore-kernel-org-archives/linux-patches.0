@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590383;
-	b=DFwm8ZAkJwRuoW9xIR4YQaj1/q8OwT4rARYlPUhIQSFf0GVXWBGbmSNkbyMTFoJOESo1
-	 ZHRaZn2nSRdwKglabP8e2ZuzDWwAvE1kTOBeZBpzuPTVV67NW20594Jv0CTc4OMJXvRsy
-	 L94IEvPkM2p4LaOm2hoc5bBniTiHX/GKkaGqWZm/LdPYYxBEkhlarIXNwjz3yFbmhUiXw
-	 N+ZidVkRgIJwsX31xUkb9sEPoMhK6t1Wx0yKEC3dpAn2RIA4ne8gxIRjiwpMaS3wn0S5e
-	 /j1OkINn8m0PrCVGKYLLYMdUJN3GgJwZHUZoab0X3iXucpeNtXQKg2bAX3+ksdrk/ZA==
+	t=1794590384;
+	b=oftcIyv73wnFkkoeIhx2z3EWTmzmUiTSMbAbMxkYe+vmiDjzkBCAuZspoyZEsuO6iE32
+	 Fl0F+UrthH8IVaNs7X/fO+qzFQum5dTyqpMDuUwi4S04IOMw0YHBrRktKJ1bUyjsKSQcW
+	 kTg9le7tZdhb4Qg6TPg5kuMYSMqYPxEtxxy3TZf/d0oskfz0fVT8L5YZF6JgN5mfAH/Q8
+	 cKjwNKUiTCuj84KmRabxwV7dgF/lYv6Pcq71r64p7hvWfDhdyBwSmkLsqonjCdOg6aWei
+	 OrHJiS8OrmAcA70K/ZSafaCIy4naehLSCJe2JVymAi2sZRhWuDX3pEZeg/3vxpFEcKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590383;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590384;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zve0AzWwsy0HP0hriUTbO61n/KyD+wGajAoYakU3SXo=;
-	b=OS+JXtO+hs4fTX4RmqleiOC+X4hECcL+c6bCgq1dx/H6URCZGaX6PBTzxDYfvMqnx9eB
-	 /OFTP/53gm7Bi7+qM5cPyvtdhpl7v+YZ/iNvnS2tLF5HywlFrbdlcSH2fcfWmgILhOQFc
-	 QPEHGy1ikhWmQkb/CFM6dcVnySorgbgblghp02kXF5/X5Zlb++Tegs1+xRl7Jk6ZGXW8T
-	 GW9SD4KJnAwKn+Hgt50Ixaq+Lkx1rH0Mfi+JPQO9qV5Hj62hutZRjaiUBDBEcYr8r+ixi
-	 eD0zMl1+y+hkQVKDktD6mGs31Cg+Y1kegyJzMmamb2a7P/2VhhsfdNyvYnq5FKP0gkA==
+	bh=gorjbV6YWVYw9Z1Pffw0UsQIcWS2b0vGQdWkASRdLpk=;
+	b=BfUq8FaZrqP9jjlbZJh4S0hNnzq2Gt0pWvZCUhHjEEdKzV1H8CAMxEHAue0E/RC9zR5g
+	 WW6YEiRx8IYZ8YtLu4X5z2n3IR1aAp9i1s/uSFV8HSWGbN084TjL1gC+nAq+32EUSGh+4
+	 Z+A8DsDYIydKWarkicdg/STEs+ydIrmDOP0+AaUtMAGbllsSkVHZF+1qtTkL807pV+A+s
+	 HM5uKtDZk4CZAcHzDv5DnXF2183Loacs16A5a95+WnUGG7kE7byBaMNN3AV6EAKhS8BqO
+	 kG4zXT7Qm6WDl0VmnHB2iSy/Wd1atNW+qEBi2F6NQsPTCWavMDlO/kePTqhpdYC52rg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Lt5ebCQ/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MekjiUXj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38113606E677;
-	Fri, 13 Nov 2026 17:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C05460A2616;
+	Fri, 13 Nov 2026 17:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lt5ebCQ/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91F51F000C6;
-	Fri, 13 Nov 2026 17:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MekjiUXj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB7D1F000C6;
+	Fri, 13 Nov 2026 17:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590383;
-	bh=zve0AzWwsy0HP0hriUTbO61n/KyD+wGajAoYakU3SXo=;
+	s=korg; t=1794590384;
+	bh=gorjbV6YWVYw9Z1Pffw0UsQIcWS2b0vGQdWkASRdLpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lt5ebCQ/di5atzq9Y/53l7nJddcuQQDSnFgtxCVJwjKLnyHl07D0XfZCKDl+deGuH
-	 ozwSEQQgbYvEn7fymZeUt+FOztHLtGrncQpztoWOeAysU/eWzzgQ7NfOsaAhkq4ZhH
-	 1PijyXpx28o3XQreVxmIcsG4cNGrhg4Y5qXuA+b0=
+	b=MekjiUXj+Z3FUYjli3DxmUlJRaeJYPztIGH/JtV/yWX7XoEX3I/HNRlUtQUQmXCF2
+	 ZrG31c2HrLFHNXg6E0cgSNnbD5daVPa8EI1rH+AMQVcTdoMAoEiFsKLUS1DTqkruqC
+	 CWee/S52O1HrzVaVIq5qKUcpF8Lislo16uyHDtGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhe Liu <liuzhe1@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Chuck Lever <cel@kernel.org>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 353/686] blk-iocost: account flush sequence latency only once
-Date: Fri, 13 Nov 2026 10:48:06 -0500
-Message-ID: <20261113153832.878835058@linuxfoundation.org>
+Subject: [PATCH 6.18 354/686] xfs: mark the inode preallocated for pNFS write layouts past EOF
+Date: Fri, 13 Nov 2026 10:48:07 -0500
+Message-ID: <20261113153832.913123244@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,50 +71,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhe Liu <liuzhe1@kylinos.cn>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit e9804489e27dd6e33aec5511fe3780ff3009f57f ]
+[ Upstream commit 8b8e265991556d99b6d721697f148975a7c68767 ]
 
-A flush sequence with a DATA phase can complete its original request
-twice. Both completions invoke ioc_rqos_done(), causing the request to
-contribute two latency samples and adding the same queue wait time
-twice. This gives such requests disproportionate weight compared to
-ordinary writes, distorting the device-wide latency and queue wait
-feedback used to adjust iocost's virtual time rate.
+xfs_fs_map_blocks() marks the inode XFS_DIFLAG_PREALLOC only when it
+allocates blocks for a write layout. A write layout past EOF can also
+hand out allocated blocks, such as speculative preallocation. blockgc
+then frees them under the layout, and another file may get them.
 
-Skip requests marked RQF_FLUSH_SEQ in ioc_rqos_done(). The flag is set
-when the request enters the flush machinery and is still set when the
-data phase completes; blk_flush_restore_request() clears it before the
-final completion, so accounting happens only once, after the whole
-sequence finishes. The remaining sample covers the request's lifetime
-through any postflush, and its queue wait time is accumulated only
-once.
+Mark the inode whenever a write mapping ends past EOF.
 
-Fixes: 7caa47151ab2e ("blkcg: implement blk-iocost")
+Fixes: 527851124d10 ("xfs: implement pNFS export operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhe Liu <liuzhe1@kylinos.cn>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261102061802.408173-1-liuzhe1@kylinos.cn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Chuck Lever <cel@kernel.org>
+Link: https://lore.kernel.org/r/4de5356f-bc4d-4f1a-9c81-fce09b1b46fd@slotpi15m67
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/xfs/xfs_pnfs.c | 34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 5c7cdb493768c..8c0214d48e3e6 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -2818,6 +2818,9 @@ static void ioc_rqos_done(struct rq_qos *rqos, struct request *rq)
- 	if (!ioc->enabled || !rq->alloc_time_ns || !rq->start_time_ns)
- 		return;
+diff --git a/fs/xfs/xfs_pnfs.c b/fs/xfs/xfs_pnfs.c
+index 1b0b739571612..ef08f0f619f70 100644
+--- a/fs/xfs/xfs_pnfs.c
++++ b/fs/xfs/xfs_pnfs.c
+@@ -110,7 +110,15 @@ xfs_fs_map_update_inode(
+ 	ip->i_diflags |= XFS_DIFLAG_PREALLOC;
  
-+	if (unlikely(rq->rq_flags & RQF_FLUSH_SEQ))
-+		return;
+ 	xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
+-	return xfs_trans_commit(tp);
++	error = xfs_trans_commit(tp);
++	if (error)
++		return error;
 +
- 	switch (req_op(rq)) {
- 	case REQ_OP_READ:
- 		pidx = QOS_RLAT;
++	/*
++	 * Force the log so that the blocks handed out to the client are
++	 * guaranteed to be present even after a server crash.
++	 */
++	return xfs_log_force_inode(ip);
+ }
+ 
+ /*
+@@ -135,6 +143,7 @@ xfs_fs_map_blocks(
+ 	uint			lock_flags;
+ 	int			error = 0;
+ 	u64			seq;
++	bool			update_inode = false;
+ 
+ 	if (xfs_is_shutdown(mp))
+ 		return -EIO;
+@@ -203,20 +212,27 @@ xfs_fs_map_blocks(
+ 				end_fsb - offset_fsb, 0, &imap, &seq);
+ 		if (error)
+ 			goto out_unlock;
++		update_inode = true;
++	} else {
++		xfs_iunlock(ip, lock_flags);
+ 
+ 		/*
+-		 * Ensure the next transaction is committed synchronously so
+-		 * that the blocks allocated and handed out to the client are
+-		 * guaranteed to be present even after a server crash.
++		 * Blocks past EOF that were allocated for buffered writes, such
++		 * as speculative preallocation, can be freed by
++		 * xfs_free_eofblocks() without breaking the layout unless the
++		 * inode is marked as preallocated. Mark it before handing them
++		 * out for writing, as for blocks allocated above.
+ 		 */
++		if (write && !(ip->i_diflags & XFS_DIFLAG_PREALLOC) &&
++		    imap.br_startoff + imap.br_blockcount >
++		    XFS_B_TO_FSB(mp, XFS_ISIZE(ip)))
++			update_inode = true;
++	}
++
++	if (update_inode) {
+ 		error = xfs_fs_map_update_inode(ip);
+-		if (!error)
+-			error = xfs_log_force_inode(ip);
+ 		if (error)
+ 			goto out_unlock;
+-
+-	} else {
+-		xfs_iunlock(ip, lock_flags);
+ 	}
+ 	xfs_iunlock(ip, XFS_IOLOCK_EXCL);
+ 
 -- 
 2.53.0
 
