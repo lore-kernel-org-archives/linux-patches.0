@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590904;
-	b=gQxWieGCWinDRsHVrqXoWR5ZVStAx1t+gECwQaUHjjC/O757wKWt58alTSxOqtbOe5gW
-	 RLOmSZYMYqMN8ypM/owzcikbnMf5LOiOXx3stTBfgD/skh8XHkCnt1c14AhMuVp22R4Tq
-	 PxVNw9Cm50U2IN3Yq96eSIwO6FgdBm3J/M20eZ4uTum0XaskfNoHVmUKoQGkozHRRwP2Z
-	 kywoaBEGq04RnlKZ5AsSRBsBIU3r5oKlgw1Fba9+t6xGj6eSgYf1KB5mr+0AvZGiWhcu8
-	 EiP8w5c9GTmSbdg9KOVh+RvFWdIgCxs+tGkvYxlEjaBTZHHeeHzbrGd2VVyyPccpBBw==
+	t=1794590906;
+	b=Orh3fcy5OIVcaTfafesJ1Y08pjtsYWeKXHWqAZZCfA41GOpC4fWHHLhTf6zJd4+BNkDE
+	 9rqxKpALneQD/OO0ziKHOMvc4dG2hn1lLnhGXq5E6vN7TPHSeR0aRsmyMtKbQoNJsWuaT
+	 h20e2LHmyrdOWBNXogjWBSqO0J4+so3V+/A8UI+0b2JU4+ZR3/54jrn3ciyl3/NtrHKQV
+	 L9xBz7iZDsOTDuBOCb3o5NOFZybXkjFI4expWo40GxxnsnILBtPRva4PEGr0EB8T4mmub
+	 5J3x8YqOe7oKuzQrCGbqwPHUDwn6D0a1tehU25qnW/2Q2Aq+iZscm0LcVDQ1ldnsAFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590904;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QSN33idFEYyLzSOo0PUQf9Aqc0ZRRTAKbZ95XkbvVmQ=;
-	b=5lJYM4v78VgP2QSDRkovMtKPDlBYsSp5zFWSyW4k/hC5p9UB1F4NHMpR1SuHzzEG6s4V
-	 i1mTz3o/AIEjRJqltch8TW9MKGMD0xdYGRsjE73WUc8xUYRplvo4199xuenpDtcUuldRu
-	 h3NNn46ZtDFKUbqB0ZRZ+eXh7i+w/n32ho8j28Wqvs/z7R5LSWREVztJ2jn4dY/4FACf4
-	 lOjMLW06E/gb2raMuLCD2qdlgUEOJY3PK6sA99XqZ4l3D55OvqfKwt5XLD8P74/ltgArO
-	 tJjkL8JCmDnGtuGaAuz0yVTFJJRPzrdnPIorC1NSIVvLXGo1Tb7LoA+Z0pnWHK+l3lQ==
+	bh=TV/asRgHA8uzH+InN/CvWuTF7QMBJwzXnGD+M8mKX48=;
+	b=BNcuPkTkdTqboGik+BDX85xwiVu0tEaLLWxTgYzi/ItY/maaIulnd8s0/BGrT9dLQMmO
+	 5mlalRvo0jbaH8t/82sS6Fp1Kd2C7RfxYw6iNEtHgBJgFa3+5m2qPR77hctqNcsRynOdh
+	 Lx72018XH+dRAwhAHxqlZhew/LmBkj/A9kC/B37nJiMN53oh9x1PNyYNJhgtF+PIZEiMi
+	 B7Ig07t1toVy2JiC8DllIJ59hk4cdA/7F5+q7TA5Ob0DhnFI+K3oq+cvzvN/rcwYpVzzk
+	 1bnw5WRKcLGe2WSHovXm5upYWeAZRl6ZL5DGEaX3NxSKidNzE/fk00L7a/1Rgndl4bQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wgzArB9f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1oOsCvdO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9BC606E237;
-	Fri, 13 Nov 2026 17:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D077606E237;
+	Fri, 13 Nov 2026 17:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wgzArB9f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A73A1F000C4;
-	Fri, 13 Nov 2026 17:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1oOsCvdO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C384E1F000C4;
+	Fri, 13 Nov 2026 17:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590904;
-	bh=QSN33idFEYyLzSOo0PUQf9Aqc0ZRRTAKbZ95XkbvVmQ=;
+	s=korg; t=1794590906;
+	bh=TV/asRgHA8uzH+InN/CvWuTF7QMBJwzXnGD+M8mKX48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wgzArB9fr9b+PXvlwMVB9mrbUqh0jpeDwcm7A8Uhbp8F5aQDM7Oy1uuAut+fbrM8c
-	 PoY0dQAX3dwmEMoRxv26xgnkNZNZRG9+0izl/LzWIUrKqvUwAAnz2Q5nNyEGb+5/7I
-	 rEyErKLfzNyWm82PgmqavnJ5LdPRnZvCVnbhlbQo=
+	b=1oOsCvdOq7TArZGMvn5dIsEkLIe39TM3HhUwLyyPSB4n0vTdOwp1e1oPFmL+Uwnar
+	 OGtRtmW11lB2GJCaHTbEqmFcEMs3pwTPCSpmn9Q7EHZsP8NQvB21B17mzVokS36CG3
+	 zQI7RIyAMh7eSYN3VJwJoE08ZuVZsNEOpiPhrKkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 093/670] PCI: rcar-gen4: Limit Max_Read_Request_Size to 256 Bytes
-Date: Fri, 13 Nov 2026 10:44:17 -0500
-Message-ID: <20261113153815.056541384@linuxfoundation.org>
+Subject: [PATCH 6.12 094/670] mm/damon/core: handle uninitialized damos_quota_goal->last_psi_total
+Date: Fri, 13 Nov 2026 10:44:18 -0500
+Message-ID: <20261113153815.086316727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,150 +73,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit f0a5c6bd797c2b9900034983a1118d27eb2f2f16 ]
+[ Upstream commit 29c6084658af41b5b1fefd873d26d441830ced34 ]
 
-R-Car Gen4 PCIe controller has a hardware limitation of 256 Bytes
-Max_Payload_Size (MPS). PCIe specification indicates that the MPS must not
-exceed minimum MPS of any element along the packet path.  The PCI core
-already enforces this, but add a check to warn if MPS is ever set larger
-than 256.
+When DAMOS_QUOTA_SOME_MEM_PSI_US metric damos quota goal is set, the PSI
+delta for the feedback loop is calculated using
+damos_quota_goal->last_psi_total.  However, it is initialized only after
+the first feedback loop.  The first iteration of the loop uses the
+uninitialized value.  As a result, the feedback loop can change the
+effective quota in an unexpected way at the first iteration.
 
-R-Car Gen4 Reference Manual, chapter 104.4.8 Usage notes for MRRS (Max Read
-Request Size) states:
+The user impact of the issue is not big, because the issue impacts only
+the first iteration of the feedback loop.  The feedback loop also has an
+internal cap of the quota adjustment.  The wrong adjustment will soon be
+corrected over a few iterations.  For this reason, doing no initialization
+at commit time was intentional.  It is also explicitly commented.  That
+said, nobody likes behaviors that are unexpected or difficult to be
+expected.
 
-  Please set "Max Read Request Size" to 128 bytes or 256 bytes.
-  If "Max Read Request Size" is set to anything other than the
-  above, the transferred data will not match the expected value.
+Check last_psi_total initialization and skip the tuning round when it is
+not initialized.  For this, initialize last_psi_total with U64_MAX in the
+goal creation and the goal commit time.  U64_MAX means the field is not
+initialized.  The tuning round shows the value and adjusts it to guarantee
+the current quota is maintained for the round, and last_psi_total is
+correctly initialized on the next round.
 
-This limitation also seems to apply to devices doing DMA reads, i.e.,
-issuing MRd TLPs.  This limitation can be triggered by using non-HMB NVMe
-SSD with Max_Read_Request_Size 512 Bytes, for example Crucial P5 Plus.  Any
-write to the SSD (MRd TLP issued by the SSD controller) longer than 256
-Bytes wraps around at the 256 Byte boundary, and the same data are written
-to the SSD starting at offset 0 and at 256 Bytes.
+Before this change, committing a new PSI goal on an existing PSI goal with
+goal-only DAMON sysfs command (commit_schemes_quota_goals) just worked.
+After this change, the tuning round right after the commit will be
+unnecessarily skipped, because last_psi_total is unconditionally marked as
+not initialized in the damos_commit_quota_goal_union().  This is an
+intended tradeoff for simplicity.  Skipping just one round of tuning is no
+problem.  Meanwhile it makes both the code and the behavior simple to
+understand.
 
-Limit Max_Read_Request_Size to at most 256 Bytes for each device connected
-to this PCIe controller to avoid this behavior.
+Also update the quota goal commit unit test for changed last_psi_total
+setup behavior.
 
-A non-HMB (Host Memory Buffer) NVMe SSD can be identified using the
-following command. Affected SSD reports 'hmpre' field as 0:
+The issue was discovered [1] by Sashiko.
 
-  $ nvme id-ctrl /dev/nvme0 | grep hmpre
-  hmpre     : 0
-
-The symptom is a read from the SSD which wraps around at 256 Byte boundary.
-The test for this symptom can be implemented by writing 512 Byte of random
-data into the SSD and reading the data back. If the read back data repeat
-after 256 Bytes, the device is affected.
-
-  $ dd if=/dev/urandom of=/tmp/data.bin bs=256 count=2 ; \
-    dd if=/tmp/data.bin of=/dev/nvme0n1 bs=256 count=2 ; \
-    dd if=/dev/nvme0n1 bs=256 count=2 of=/tmp/readback.bin
-
-Expected data:
-  $ hexdump -vC /tmp/data.bin
-  00000000  97 81 b7 3b 0e 38 2b 4d  a7 d3 e0 47 ff c2 4b ca
-  00000010  c1 85 98 f0 4a ac 03 a0  3b ab f3 19 44 dd 06 8b
-  ...
-  00000100  7a ce 3c b2 e1 d5 d9 11  88 63 10 59 76 3c dc 32 <-- random
-  00000110  72 32 2a 7d a3 e1 aa 13  7c da 58 a1 7b 21 11 50 <-- data
-
-Faulty readback, collected without this change in place:
-  $ hexdump -vC /tmp/readback.bin
-  00000000  97 81 b7 3b 0e 38 2b 4d  a7 d3 e0 47 ff c2 4b ca <---.
-  00000010  c1 85 98 f0 4a ac 03 a0  3b ab f3 19 44 dd 06 8b <-. |
-  ...                                                          | |
-  00000100  97 81 b7 3b 0e 38 2b 4d  a7 d3 e0 47 ff c2 4b ca <-:-+- repeated
-  00000110  c1 85 98 f0 4a ac 03 a0  3b ab f3 19 44 dd 06 8b <-+--- data
-       ^^^
-        |
-        '--- Repeat starts at offset 0x100 = 256 Bytes
-
-Fixes: 0d0c551011df ("PCI: rcar-gen4: Add R-Car Gen4 PCIe controller support for host mode")
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260821020636.111719-1-marek.vasut+renesas@mailbox.org
+Link: https://lore.kernel.org/20260902002725.108635-3-sj@kernel.org
+Link: https://lore.kernel.org/20260718005316.89585-1-sj@kernel.org [1]
+Fixes: 2dbb60f789cb ("mm/damon/core: implement PSI metric DAMOS quota goal")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+Tested-by: Lian Wang <lianux.mm@gmail.com>
+Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@davidgow.net>
+Cc: Quanmin Yan <yanquanmin1@huawei.com>
+Cc: <stable@vger.kernel.org> # 6.9.x
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-rcar-gen4.c | 54 +++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ mm/damon/core.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-index 8dcb63f813beb..a5f750709e2ce 100644
---- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-+++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-@@ -305,6 +305,57 @@ static struct rcar_gen4_pcie *rcar_gen4_pcie_alloc(struct platform_device *pdev)
- 	return rcar;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index fc4f9aa0a3620..4952ca7ac00dc 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -324,6 +324,8 @@ struct damos_quota_goal *damos_new_quota_goal(
+ 		return NULL;
+ 	goal->metric = metric;
+ 	goal->target_value = target_value;
++	if (metric == DAMOS_QUOTA_SOME_MEM_PSI_US)
++		goal->last_psi_total = U64_MAX;
+ 	INIT_LIST_HEAD(&goal->list);
+ 	return goal;
+ }
+@@ -707,7 +709,8 @@ static int damos_commit_quota_goal(
+ 	dst->target_value = src->target_value;
+ 	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
+ 		dst->current_value = src->current_value;
+-	/* keep last_psi_total as is, since it will be updated in next cycle */
++	else if (dst->metric == DAMOS_QUOTA_SOME_MEM_PSI_US)
++		dst->last_psi_total = U64_MAX;
+ 	return 0;
  }
  
-+static int rcar_gen4_pcie_enable_device(struct pci_host_bridge *bridge,
-+					struct pci_dev *dev)
-+{
-+	/*
-+	 * R-Car Gen4 PCIe controller has a hardware limitation of 256 Bytes
-+	 * Max_Payload_Size (MPS). PCIe specification indicates that the MPS
-+	 * must not exceed minimum MPS of any element along the packet path.
-+	 * The controller reports Max_Payload_Size_Supported (MPSS) 256 Bytes
-+	 * for header type 0 and 128 Bytes for header type 1. The PCIe core
-+	 * will not allow MPS to be set higher than MPSS; warn here in case
-+	 * something went very wrong in the core.
-+	 *
-+	 * For details, refer to chapter "104.1.1 Features" in either of:
-+	 * R-Car S4 R19UH0161EJ0140 Rev.1.40 Jul. 31, 2026 or
-+	 * R-Car V4H R19UH0186EJ0140 Rev.1.40 Aug. 7, 2026 or
-+	 * R-Car V4M R19UH0217EJ0110 Rev.1.10 Jun. 30, 2026.
-+	 */
-+	WARN_ON(pcie_get_mps(dev) > 256);
-+
-+	/*
-+	 * R-Car Gen4 Reference Manual, chapter 104.4.8 Usage notes for
-+	 * MRRS (Max Read Request Size) states:
-+	 *
-+	 *   Please set "Max Read Request Size" to 128 bytes or 256 bytes.
-+	 *   If "Max Read Request Size" is set to anything other than the
-+	 *   above, the transferred data will not match the expected value.
-+	 *
-+	 * This limitation also seems to apply to devices issuing MRd TLPs.
-+	 * This limitation can be triggered by using non-HMB NVMe SSD with
-+	 * Max_Read_Request_Size 512 Bytes, for example Crucial P5 Plus.
-+	 * Any write into the SSD (MRd TLP issued by the SSD) longer than
-+	 * 256 Bytes wraps around at 256 Byte boundary, and the same data
-+	 * are written into the SSD starting at offset 0 and at 256 Bytes.
-+	 *
-+	 * Limit Max_Read_Request_Size to at most 256 Bytes for each
-+	 * device connected to this PCIe controller to avoid this behavior.
-+	 *
-+	 * For details, refer to aforementioned chapter in either of:
-+	 * R-Car S4 R19UH0161EJ0140 Rev.1.40 Jul. 31, 2026 or
-+	 * R-Car V4H R19UH0186EJ0140 Rev.1.40 Aug. 7, 2026 or
-+	 * R-Car V4M R19UH0217EJ0110 Rev.1.10 Jun. 30, 2026.
-+	 */
-+	bridge->no_inc_mrrs = 1;
-+	if (pcie_get_readrq(dev) > 256) {
-+		pci_info(dev, "Limiting MRRS to 256 bytes\n");
-+		pcie_set_readrq(dev, 256);
-+	}
-+
-+	return 0;
-+}
-+
- /* Host mode */
- static int rcar_gen4_pcie_host_init(struct dw_pcie_rp *pp)
- {
-@@ -313,6 +364,9 @@ static int rcar_gen4_pcie_host_init(struct dw_pcie_rp *pp)
- 	int ret;
- 	u32 val;
- 
-+	if (pp->bridge)
-+		pp->bridge->enable_device = rcar_gen4_pcie_enable_device;
-+
- 	gpiod_set_value_cansleep(dw->pe_rst, 1);
- 
- 	ret = rcar_gen4_pcie_common_init(rcar);
+@@ -1622,7 +1625,12 @@ static void damos_set_quota_goal_current_value(struct damos_quota_goal *goal)
+ 		break;
+ 	case DAMOS_QUOTA_SOME_MEM_PSI_US:
+ 		now_psi_total = damos_get_some_mem_psi_total();
+-		goal->current_value = now_psi_total - goal->last_psi_total;
++		/* uninitialized last_psi_total; make no effect this round */
++		if (goal->last_psi_total == U64_MAX)
++			goal->current_value = goal->target_value;
++		else
++			goal->current_value = now_psi_total -
++				goal->last_psi_total;
+ 		goal->last_psi_total = now_psi_total;
+ 		break;
+ 	default:
 -- 
 2.53.0
 
