@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585638;
-	b=iK98ntj6Toiq3/3q1fNrkRoHKpS5oMbMwREUbC29QTKe0kWfEOdKHV7WDThciXNVJzW8
-	 6nWMvZHwFtUbvXDfVTp9gdrDL3OnQInT7r5NHe8pdaWNMpNlpF99i9bCKRMfhH9GQZcUT
-	 25HrQBf+yauB5pE31uU22ZPb9f0wHAI6ERy6FqrmbVokkCuPb5mjjyhP5jt/gbxKBRLDm
-	 cS+G0HPpzaWImY4JrimABC+s1DqtP2YflsJZzcYJ+Z9wvhDNZ2Kg3sjKtJVbFrd0N6WBb
-	 7DOKefPNo8xUZpqRMUkvC+yIQRJQpNgvZ7hmubCk9fVhrV7hG3m97TZHQHyu9OYbz7A==
+	t=1794585639;
+	b=oKa5E+qnZMCF7YXq0FU4dF68a41R+8Pu29FoqRuJxliOANrDGAUhYSDDAmFKAgV7yDPh
+	 Sqp+xZaHvb5rypdcW6RLOzIRJJccNaYVmxGj3QOKFJEIp+S9yVKM24aHnipmIuJCVrBYp
+	 eo5qPBTgU8nBn0Y1hFCV6dEvOifDz/WOja8oznRwX7++GB1CZkC0d/EpHMeJT5lR6oFhv
+	 4LYxGn9YC5/Gq1u6I+fc92pievk0TpleilCVboTw4Od3xr6dUBabAECYMiRGDGshzNDAq
+	 Fq4UPFvMWZ41T8N997oM9AkBwNTF1GgFlnV7/8Xm3mGIsb633Bh7JmDecx+3GHVl9yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585639;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0CklTCvATmZudgRzqdm2swfB0CC+7tpQZUk13oz3/l4=;
-	b=eKF2bqvSQchCyDbbwb807KFDZaAMvAGMQXWLtSakkKskinkyOamyaY4Atz46jmSfATWL
-	 Bi9E2IRV/8dvJAEZ8Ai85HEUKrccnAp7lL7U8Q6BzhsGvqXnQ4mdb2Xlu2Os/Pd0i8REE
-	 Mv8xEM8XJKE+Hj0IlFO4TpGjTuuYqVUfiSSrP7G/7e5WpXJqVtalXJ2f071Y7v+ohakuf
-	 ptwfIYcIcDDvC6Sfiy5BP+R3KuRfcz9O8KGbUjsacou8gBCFAmrSBiI5KHCq6AgvpcqMD
-	 sAE/MkBDkIaTYULbclkp6Dfr3FhbgAHK2eh7JBGIPp2q6dNFWd7W+7gIBnyAUs0sRMw==
+	bh=nhAbKa294OgM1LdCLjupUui3Pl6P09ujalTm9aycR00=;
+	b=5CkHdCElR44ceAjYOlj+B9XALq8wI3zQvT/RM8L+4YGplOffpHbOUeo8CvhJgoY1SNXH
+	 ksC257UebCaecIu19LSULruqQjf9SWrrheXWNH2oSKmyFctVB6PxXBU2Z01+TFP3lTCiv
+	 VTfOhbhndb2woqorcRRWm/Z17rDpSWFhj+sEi0g2sJNW0Mi0XM8l7nCyvB6PenGZ/8rAv
+	 yISTLXBZyz6Pj0beb/DD02+KsyYFjPrOuswK3hEg6VTbfJjDLotrrq832cDinP7coKF0p
+	 +9BprAm+xSzBeM3vAlqxut5I7LAQgCKYa7IkMW9GOm3cyMpdtgKOvEXNVGIKq4Hsz9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ndTn2HmD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAFFfVF5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7017E6072317;
-	Fri, 13 Nov 2026 16:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9216072329;
+	Fri, 13 Nov 2026 16:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ndTn2HmD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232FA1F000C4;
-	Fri, 13 Nov 2026 16:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uAFFfVF5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537761F000C6;
+	Fri, 13 Nov 2026 16:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585638;
-	bh=0CklTCvATmZudgRzqdm2swfB0CC+7tpQZUk13oz3/l4=;
+	s=korg; t=1794585639;
+	bh=nhAbKa294OgM1LdCLjupUui3Pl6P09ujalTm9aycR00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ndTn2HmDcFgVZvoMNRsU5n2dJCVyplXikp3ELtAo6d1Vtg8nGRZAcAsT+4nkKTeby
-	 5GlpEo5cIe+3uqaFEcQP+46pQddk4hsNhLfm4e347IyoFujaKxjAcQ8cj+ulc37bAS
-	 9G2Q3VaxPziw30BM/nz5hQ9ER9MLHTs0VfD44tWo=
+	b=uAFFfVF5UNHl2o3urotxEnPICRfhc7w8S15PkIoWez82VC3Oft/WKjRIentcy61CK
+	 dsVyHObm3x2/0EMMJupz4Cs1UBJV3b84mASSxWei6iSnPlonECtXgKpphoHeq1iLYH
+	 SiJvPMmUXbMXGhWjEIkoicpUcEq9hdFP8vsdbiow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -50,9 +50,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jia-Ju Bai <baijiaju1990@gmail.com>,
 	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 257/507] ocfs2/dlm: serialize migration MLE cleanup on failure
-Date: Fri, 13 Nov 2026 10:49:21 -0500
-Message-ID: <20261113153803.269553234@linuxfoundation.org>
+Subject: [PATCH 7.3 258/507] ocfs2: stop recovery before shutting down local allocators
+Date: Fri, 13 Nov 2026 10:49:22 -0500
+Message-ID: <20261113153803.299638350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -76,117 +76,163 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 61469249aab03799b0d3294b7a0cd25dd303017a ]
+[ Upstream commit 126429e2f503ade63502978beb0c519066442250 ]
 
-A migration MLE has a base reference for the mastering answer and an
-in-use reference held by dlm_migrate_lockres(). The finishing assertion
-consumes the base reference, but migration failure drops it again
-without checking whether the assertion already consumed it.
+Recovery completion needs the local allocators until it has finished
+reclaiming a failed node's allocation window and truncate log.  During
+unmount, quota recovery is stopped first, but that leaves recovery_state
+at OCFS2_REC_QUOTA_DISABLED.  New non-quota recovery can still start.
 
-The target queues its migration worker before it acknowledges the
-ALL_DONE packet, so its finishing assertion can be handled while the
-sender still waits for the status. If the connection fails before the
-status arrives, dlm_send_one_lockres() returns an error for a migration
-that the target has already completed:
+ocfs2_truncate_log_shutdown() drains existing completion work and releases
+osb_tl_bh before ocfs2_recovery_exit() closes that publication path:
 
-  Old-master sender                  Finishing assertion
-  -----------------                  -------------------
-  publish MLE; take in-use reference
-  send ALL_DONE; wait for status
-                                     take lookup reference
-                                     unlink MLE
-                                     put lookup and base references
-  send returns a connection error
-  put base reference again; free MLE
-  put in-use reference; access freed MLE
+  Unmount                             Recovery
+  -------                             --------
+  stop quota recovery; disable quotas
+  truncate_log_shutdown()
+    flush existing completion work
+                                      recover another failed node
+                                        queue completion
+    flush local log; release buffer
+                                      complete_truncate_log_recovery()
+                                        use released osb_tl_bh
+  recovery_exit(): disable and drain
 
-dlm_assert_master_handler() holds dlm->spinlock from the MLE lookup to
-the final puts, and it takes dlm->master_lock around the unlink and the
-puts. Decide under the same locks: if the MLE is already unhashed, the
-assertion consumed the base reference, so drop only the sender's in-use
-reference. Otherwise unlink it before consuming the base reference so a
-later assertion no longer finds it.
+An extra buffer reference alone would still let completion append new
+records after the final truncate-log flush.
 
-An assertion that got there first has also made the target the owner
-and cleared DLM_LOCK_RES_MIGRATING. Treating the attempt as failed at
-that point would leave the lockres owned by the target while this node
-still holds the other nodes' locks and refmap bits, so it could neither
-be purged nor migrated again. Finish our side as a completed migration
-does instead: drop those locks under res->spinlock if the target still
-owns the lockres, and recalculate its usage.
+Split stopping and draining recovery from freeing its state. Stop all
+recovery producers and drain completion work before shutting down either
+local allocator. Keep recovery-state release at its existing later point,
+so its lifetime relative to other teardown users stays unchanged. The
+second stop at recovery_exit() is harmless once recovery is disabled.
 
-Use the same cleanup for the pre-send failure, the send failure and the
-target-death failure paths. The sender's in-use reference keeps the MLE
-alive until its final put outside the nested locks. Successful
-migration retains its existing in-use-only put.
+KASAN report as below:
 
-A target that has died cannot assert after the sender has seen its
-death. The o2net node-down callback runs before the DLM one; it
-disconnects the node and flushes the workqueue that runs the message
-handlers, so an assertion already received has been handled by the time
-the DLM removes the node from the domain map. A node that leaves the
-domain cleanly sends its exit message only after its assertions have
-been answered.
+    BUG: KASAN: slab-use-after-free in ocfs2_truncate_log_needs_flush+0x23d/0x360
+    Read of size 8 at addr ffff8881093711e8 by task kworker/u16:3/53
 
-Two windows of the hand-over itself are left as they are: the handler
-switches the owner and the sender drops the other nodes' locks moments
-later, and an assertion from a live target that arrives after the
-sender has given up still meets the owner check in the handler. Waiting
-for the target before giving up would only stretch the first window
-into the time in which recovery of the target can observe it.
+    CPU: 0 UID: 0 PID: 53 Comm: kworker/u16:3 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: ocfs2_wq ocfs2_complete_recovery
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? ocfs2_truncate_log_needs_flush+0x23d/0x360
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20e/0x420
+     ? ocfs2_truncate_log_needs_flush+0x23d/0x360
+     kasan_report+0xe0/0x110
+     ? ocfs2_truncate_log_needs_flush+0x23d/0x360
+     ocfs2_truncate_log_needs_flush+0x23d/0x360
+     ? __pfx_ocfs2_truncate_log_needs_flush+0x10/0x10
+     ? __pfx_down_write+0x10/0x10
+     ocfs2_complete_truncate_log_recovery+0x315/0x780
+     ? trace_hardirqs_on+0x18/0x160
+     ? __pfx_ocfs2_complete_truncate_log_recovery+0x10/0x10
+     ? ocfs2_complete_recovery+0x666/0x11b0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? kfree+0x308/0x580
+     ocfs2_complete_recovery+0x676/0x11b0
+     ? __pfx_ocfs2_complete_recovery+0x10/0x10
+     ? reacquire_held_locks+0xdd/0x200
+     ? process_one_work+0x7c8/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_acquire+0x190/0x300
+     ? __pfx_autoremove_wake_function+0x10/0x10
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
 
-KASAN report, only the relevant frames are kept:
+    Allocated by task 538:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_slab_alloc+0x89/0x90
+     kmem_cache_alloc_noprof+0x20b/0x5c0
+     alloc_buffer_head+0x26/0x120
+     folio_alloc_buffers+0x122/0x1d0
+     bdev_getblk+0x299/0x4f0
+     ocfs2_read_blocks_sync+0x513/0xbc0
+     ocfs2_iget+0x9cd/0x1a00
+     ocfs2_get_system_file_inode+0x25e/0x7a0
+     ocfs2_fill_super+0x1b05/0x3930
+     get_tree_bdev_flags+0x35d/0x5f0
+     vfs_get_tree+0x93/0x320
+     fc_mount+0x1d/0x200
+     path_mount+0x592/0x1e00
+     __x64_sys_mount+0x24b/0x2d0
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-BUG: KASAN: slab-use-after-free in dlm_put_mle_inuse+0xce/0xe0
-Read of size 8 at addr ffff8881190e3c20 by task umount/593
+    Freed by task 553:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kmem_cache_free+0x242/0x580
+     free_buffer_head+0x4b/0xc0
+     try_to_free_buffers+0x1dc/0x330
+     ocfs2_truncate_log_shutdown+0x789/0x1290
+     ocfs2_dismount_volume+0x1da/0x940
+     generic_shutdown_super+0x15f/0x490
+     kill_block_super+0x40/0xa0
+     deactivate_locked_super+0xae/0x120
+     deactivate_super+0xa2/0xc0
+     cleanup_mnt+0x217/0x450
+     task_work_run+0x144/0x230
+     exit_to_user_mode_loop+0x17d/0x570
+     do_syscall_64+0x4d1/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Call Trace:
- <TASK>
- dlm_put_mle_inuse+0xce/0xe0
- dlm_migrate_lockres+0x16af/0x20d0
- dlm_empty_lockres+0x60a/0xbd0
- dlm_unregister_domain+0x53b/0x11d0
- o2cb_cluster_disconnect+0xa5/0x110
- ocfs2_cluster_disconnect+0x73/0xc0
- ocfs2_dlm_shutdown+0x311/0x440
- ocfs2_dismount_volume+0x696/0x940
- generic_shutdown_super+0x15f/0x490
- kill_block_super+0x40/0xa0
- deactivate_locked_super+0xae/0x120
- deactivate_super+0xa2/0xc0
- cleanup_mnt+0x217/0x450
- task_work_run+0x144/0x230
- </TASK>
+    The buggy address belongs to the object at ffff8881093711c0
+     which belongs to the cache buffer_head of size 160
+    The buggy address is located 40 bytes inside of
+     freed 160-byte region [ffff8881093711c0, ffff888109371260)
 
-Allocated by task 593:
- kmem_cache_alloc_noprof+0x20b/0x5c0
- dlm_migrate_lockres+0x20e/0x20d0
- dlm_empty_lockres+0x60a/0xbd0
- dlm_unregister_domain+0x53b/0x11d0
- o2cb_cluster_disconnect+0xa5/0x110
- ocfs2_cluster_disconnect+0x73/0xc0
- ocfs2_dlm_shutdown+0x311/0x440
- ocfs2_dismount_volume+0x696/0x940
+    The buggy address belongs to the physical page:
+    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x109371
+    flags: 0x200000000000000(node=0|zone=2)
+    page_type: f5(slab)
+    raw: 0200000000000000 ffff8881008883c0 dead000000000100 dead000000000122
+    raw: 0000000000000000 0000000000120012 00000000f5000000 0000000000000000
+    page dumped because: kasan: bad access detected
 
-Freed by task 593:
- kmem_cache_free+0x242/0x580
- __dlm_put_mle+0x4b2/0x660
- dlm_migrate_lockres+0x1690/0x20d0
- dlm_empty_lockres+0x60a/0xbd0
- dlm_unregister_domain+0x53b/0x11d0
- o2cb_cluster_disconnect+0xa5/0x110
- ocfs2_cluster_disconnect+0x73/0xc0
- ocfs2_dlm_shutdown+0x311/0x440
+    Memory state around the buggy address:
+     ffff888109371080: 00 00 00 00 fc fc fc fc fc fc fc fc 00 00 00 00
+     ffff888109371100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+    >ffff888109371180: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+                                                              ^
+     ffff888109371200: fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+     ffff888109371280: fc fc fc fc 00 00 00 00 00 00 00 00 00 00 00 00
+    ==================================================================
 
-The buggy address belongs to the object at ffff8881190e3c00
- which belongs to the cache o2dlm_mle of size 480
-The buggy address is located 32 bytes inside of
- freed 480-byte region [ffff8881190e3c00, ffff8881190e3de0)
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0038-v9-659f247ea980d5f3fbeb@gmail.com
-Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0019-v8-574dd69fd3f47f56348b@gmail.com
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Assisted-by: LLM
 Cc: Mark Fasheh <mark@fasheh.com>
@@ -197,111 +243,67 @@ Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlm/dlmmaster.c | 70 ++++++++++++++++++++++++++++++++++------
- 1 file changed, 61 insertions(+), 9 deletions(-)
+ fs/ocfs2/journal.c | 15 ++++++++++++---
+ fs/ocfs2/journal.h |  1 +
+ fs/ocfs2/super.c   |  3 +++
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ocfs2/dlm/dlmmaster.c b/fs/ocfs2/dlm/dlmmaster.c
-index 612969867ff92..ea48c013f7fbb 100644
---- a/fs/ocfs2/dlm/dlmmaster.c
-+++ b/fs/ocfs2/dlm/dlmmaster.c
-@@ -2525,6 +2525,52 @@ static int dlm_is_lockres_migratable(struct dlm_ctxt *dlm,
-  */
+diff --git a/fs/ocfs2/journal.c b/fs/ocfs2/journal.c
+index a3938a03e93bf..674e70dfbb5cb 100644
+--- a/fs/ocfs2/journal.c
++++ b/fs/ocfs2/journal.c
+@@ -227,13 +227,22 @@ void ocfs2_recovery_disable_quota(struct ocfs2_super *osb)
+ 	ocfs2_recovery_disable(osb, OCFS2_REC_QUOTA_WANT_DISABLE);
+ }
  
- 
-+/*
-+ * Drop the sender's references on a migration MLE after the attempt has
-+ * failed. The finishing assert from the target may already have unlinked
-+ * the MLE and consumed its base reference; decide under the locks the
-+ * assert handler holds, and only drop the base reference while the MLE is
-+ * still hashed. Returns true when the assert got there first: the target
-+ * has become the master, so the caller must complete the migration.
-+ */
-+static bool dlm_put_migration_mle(struct dlm_ctxt *dlm,
-+				  struct dlm_master_list_entry *mle)
++/* Stop producers and drain completion work without freeing recovery state. */
++void ocfs2_recovery_stop(struct ocfs2_super *osb)
 +{
-+	bool asserted;
-+
-+	spin_lock(&dlm->spinlock);
-+	spin_lock(&dlm->master_lock);
-+	__dlm_mle_detach_hb_events(dlm, mle);
-+	asserted = hlist_unhashed(&mle->master_hash_node);
-+	if (!asserted) {
-+		__dlm_unlink_mle(dlm, mle);
-+		__dlm_put_mle(mle);
-+	}
-+	spin_unlock(&dlm->master_lock);
-+	spin_unlock(&dlm->spinlock);
-+
-+	dlm_put_mle_inuse(mle);
-+	return asserted;
++	ocfs2_recovery_disable(osb, OCFS2_REC_WANT_DISABLE);
 +}
 +
-+/*
-+ * The finishing assert got there first: it switched the owner to the
-+ * target and cleared DLM_LOCK_RES_MIGRATING. Drop the other nodes' locks
-+ * as a completed migration does, unless recovery has taken the lockres
-+ * over since, and let the usage be recalculated.
-+ */
-+static void dlm_migrate_lockres_asserted(struct dlm_ctxt *dlm,
-+					 struct dlm_lock_resource *res,
-+					 u8 target)
-+{
-+	spin_lock(&res->spinlock);
-+	if (res->owner == target)
-+		dlm_remove_nonlocal_locks(dlm, res);
-+	spin_unlock(&res->spinlock);
-+
-+	dlm_lockres_calc_usage(dlm, res);
-+}
-+
- static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
- 			       struct dlm_lock_resource *res, u8 target)
+ void ocfs2_recovery_exit(struct ocfs2_super *osb)
  {
-@@ -2609,9 +2655,10 @@ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
+ 	struct ocfs2_recovery_map *rm;
  
- 	if (ret < 0) {
- 		if (mle_added) {
--			dlm_mle_detach_hb_events(dlm, mle);
--			dlm_put_mle(mle);
--			dlm_put_mle_inuse(mle);
-+			if (dlm_put_migration_mle(dlm, mle)) {
-+				dlm_migrate_lockres_asserted(dlm, res, target);
-+				ret = 0;
-+			}
- 		} else if (mle) {
- 			kmem_cache_free(dlm_mle_cache, mle);
- 			mle = NULL;
-@@ -2640,9 +2687,11 @@ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
- 		mlog(0, "migration to node %u failed with %d\n",
- 		     target, ret);
- 		/* migration failed, detach and clean up mle */
--		dlm_mle_detach_hb_events(dlm, mle);
--		dlm_put_mle(mle);
--		dlm_put_mle_inuse(mle);
-+		if (dlm_put_migration_mle(dlm, mle)) {
-+			dlm_migrate_lockres_asserted(dlm, res, target);
-+			ret = 0;
-+			goto leave;
-+		}
- 		spin_lock(&res->spinlock);
- 		res->state &= ~DLM_LOCK_RES_MIGRATING;
- 		wake = 1;
-@@ -2686,9 +2735,12 @@ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
- 				     res->lockname.name, target);
- 				ret = -EINVAL;
- 				/* migration failed, detach and clean up mle */
--				dlm_mle_detach_hb_events(dlm, mle);
--				dlm_put_mle(mle);
--				dlm_put_mle_inuse(mle);
-+				if (dlm_put_migration_mle(dlm, mle)) {
-+					dlm_migrate_lockres_asserted(dlm, res,
-+								     target);
-+					ret = 0;
-+					goto leave;
-+				}
- 				spin_lock(&res->spinlock);
- 				res->state &= ~DLM_LOCK_RES_MIGRATING;
- 				wake = 1;
+-	/* disable any new recovery threads and wait for any currently
+-	 * running ones to exit. Do this before setting the vol_state. */
+-	ocfs2_recovery_disable(osb, OCFS2_REC_WANT_DISABLE);
++	/*
++	 * Disable producers and drain work before freeing recovery state.
++	 * Do this before setting vol_state to VOLUME_DISMOUNTED: completion
++	 * work may still be waiting in __ocfs2_wait_on_mount().
++	 */
++	ocfs2_recovery_stop(osb);
+ 
+ 	/*
+ 	 * Now that recovery is shut down, and the osb is about to be
+diff --git a/fs/ocfs2/journal.h b/fs/ocfs2/journal.h
+index 19fc920d26b1c..4b52bf7b0938e 100644
+--- a/fs/ocfs2/journal.h
++++ b/fs/ocfs2/journal.h
+@@ -147,6 +147,7 @@ void ocfs2_complete_recovery(struct work_struct *work);
+ void ocfs2_wait_for_recovery(struct ocfs2_super *osb);
+ 
+ int ocfs2_recovery_init(struct ocfs2_super *osb);
++void ocfs2_recovery_stop(struct ocfs2_super *osb);
+ void ocfs2_recovery_exit(struct ocfs2_super *osb);
+ void ocfs2_recovery_disable_quota(struct ocfs2_super *osb);
+ 
+diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
+index 169c576f06bf5..e5482c556552e 100644
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -1828,6 +1828,9 @@ static void ocfs2_dismount_volume(struct super_block *sb, int mnt_err)
+ 	/* Wait for worker to be done with the work structure in osb */
+ 	cancel_work_sync(&osb->dquot_drop_work);
+ 
++	/* Stop recovery producers before releasing their local allocators. */
++	ocfs2_recovery_stop(osb);
++
+ 	ocfs2_shutdown_local_alloc(osb);
+ 
+ 	ocfs2_truncate_log_shutdown(osb);
 -- 
 2.53.0
 
