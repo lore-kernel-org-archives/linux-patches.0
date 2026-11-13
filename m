@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1794585812;
-	b=qUTFFcWPg0A2LjejV/KmYgx04cOJX4YoT9okVwRGizf7UiSM5Nr8/5BQUiwSu9BxREPJ
-	 qHEc0R1Rz04DCOkxkE/+yNqh5EUapF/gUsKli2hh0+RAHKgZwluOed6KIXUCB+pTMgLWe
-	 VOeFhJiAPW7tSf7FxzoyukTXo8IpCpNL1QS0eE50qW4Pfxsrd9XhBT/hiTWograJaPIoJ
-	 dKRjb8K6DCRzH2Bv2N7l0IcDl1sBkFJcVT/j6u4L6RBqfzuBVU/uHxLeg8aXjmiea+QFh
-	 JjltzLiPLavlGk/uvu6Lski8G4u17CtOpSmpjOEptqX+OWVgzKxyYObID1F28xAUbQQ==
+	b=agT9J2+7qKm8RUjaxffcL+kkb4KbZiKIY4TBVaPJmQfNfgHCO4hzOA96mEsuzdMikSD9
+	 JqZLhhScdu1UaI+tyvjMEUPg3c8H10WaYnnT+BE3w5niIStXgpLSnUn1t530qpxKo92/J
+	 xTSI3AkaGVblXwKBSl1+q1oyw0Kqo0CpAJPhadYaoa3AwotF/T4+vriUbKRS3GztdxrQq
+	 tvrpgKu2Rvj9+M/dMFvep+NQCMvR2Bh8B8kHt5bHFaen2zwwxdWR576UEnK/vyRgjzm70
+	 XiHFnYq8xW6LzmniUfhDfWwyGRJlafs9QMM1JFLys4JEObb3OuFxNB13XfXXH46iRrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794585812;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9a81qBfQNvFt3BB4om6ioZav5b00/JrtcSkb2hgeVGs=;
-	b=AJRDyQZzLeNCApRdDCxsMt+GDn3BPfycP740fdYkHIdpprcA/OUmXinK+Sjvw4rCqzrt
-	 BjmXFYOxIzfOxGnx4uN5blnKsTvL6Loef4P5vvm9ClQygP36fl66w/ZDq3QiYL+U7R2VA
-	 xwcht2tvNk/ubLbIXOlARilgItY/rTePG6MhW6wXrS91d6yTCB6IlFjvIk174FZV5NF6x
-	 rEhx8CkqSf6v3Y5BF7viuFR5QP06FFJPPGkyMLSfMp2BLzjxHR7oG+B1+tB0IRU0xWIHP
-	 6qNwwQaiym04GMMTU/NN4tx/UKLLoC29fMAYcdDpI8cC6cz7kG1gU3bObcW0oJoNOHA==
+	bh=uPzME0KqL9XyVFJjtQ14rQUsfn7ppzXg5rSFnWCYEvw=;
+	b=YqkBbwRTFX5XpLJcEjNxcVUVKQDRjwRRgOTfFDwXRxRNf4riPOvpEtOsYP0Crwck0B3p
+	 LDVJctnhSBJggt5d69TQkzPGCvx1gu8cjdoDz09FaYYuWx2C4+dBQ+APku6DkTIhzP9NR
+	 rLELdm8IGMdf6lEWQU51EI9vT5z9TUcaUIwEUjHb/g3qcsaaY3bNktbrfEbSuiab8yhsa
+	 jzq8SK4a6+RIRs1dWIUOFQm0Houc8auboBaHMl3342KQeZVF/J+8tLgRhBd2nzaNPNP4j
+	 DAeRkM9BwH64H7oImJOm7866vUEI0qwb17Ick3PFaZkAtgHBegL81l++bEI13IXgCQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZUooWAY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcrAnhe+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51A4606BA98;
-	Fri, 13 Nov 2026 16:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B53606BA98;
+	Fri, 13 Nov 2026 16:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZUooWAY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E6F1F000C5;
-	Fri, 13 Nov 2026 16:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcrAnhe+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B871F000C5;
+	Fri, 13 Nov 2026 16:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585811;
-	bh=9a81qBfQNvFt3BB4om6ioZav5b00/JrtcSkb2hgeVGs=;
+	s=korg; t=1794585812;
+	bh=uPzME0KqL9XyVFJjtQ14rQUsfn7ppzXg5rSFnWCYEvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dZUooWAYTZa9X3qbHgn4b4SF8WvtC70EvjUi4mi4CAixPSza+Efb9MceylXym1n/d
-	 TqDkr0GncupoLu0TazerzmfiXvfo6O8zhsJLLiKZqQvGhwnOd1ejlqrXoWVtJp/ktl
-	 xlm34OulGXd9Pr84Kle3eVxjhXVtQBvVPViebRoE=
+	b=lcrAnhe+lHcj9c7Z2hD9yztWjRQtLcTkSV9JANoKcIWGiPdKTe6N6JDtEIYJ4qfv+
+	 Np/kWOWL/01LZLSH58kHp67r2fpGv9LahQw1iU7dc+mBqKgdkbHoN0dR5vIA8l+bwR
+	 4BIWWYn8/G3UfOSe3V9CHN3OkGEiXqafQXLHPg0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Josh Kasten <jkasten@gmail.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 395/507] ALSA: usx2y: Refuse a retried DSP load after a failure
-Date: Fri, 13 Nov 2026 10:51:39 -0500
-Message-ID: <20261113153810.135639625@linuxfoundation.org>
+Subject: [PATCH 7.3 369/507] drm/amd/display: set allow_freesync before validating a new stream
+Date: Fri, 13 Nov 2026 10:51:13 -0500
+Message-ID: <20261113153808.567800324@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,74 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-[ Upstream commit 1f8101b6adc87a3ddbd51fcb6609251591758026 ]
+[ Upstream commit ab18dd3061eb2d92e60c8bbf9a435c25962e449f ]
 
-snd_usx2y_hwdep_dsp_load() sets up the asynchronous sequence URBs and
-the interrupt URB when the FPGA firmware image with index 1 is loaded,
-and then creates the ALSA devices.  If usx2y_in04_init() or
-usx2y_create_alsa_devices() fails, the URBs that were already set up
-are left in place.
+After resume from S3, DC enables SubVP on a single FreeSync display at
+a high refresh rate, although dcn32_allow_subvp_high_refresh_rate() is
+meant to keep SubVP off that configuration ("For single display cases,
+freesync must be disabled").  On an RX 7900 XTX driving a FreeSync TV
+at 3840x2160@120, amdgpu_dm_capabilities reports sub-viewport disabled
+after boot and enabled after "rtcwake -m mem", and the memory clock
+starts switching.  It stays that way until a later commit re-validates
+the state; a CRTC gamma change (toggling Night Light) turns SubVP off
+again.
 
-The core keeps the index unloaded when the callback fails, so user
-space may issue the same request again.  The second attempt then enters
-usx2y_async_seq04_init() or usx2y_in04_init() with the URBs still
-allocated and trips WARN_ON(usx2y->as04.buffer) or
-WARN_ON(usx2y->in04_urb).
+The policy reads dc_stream_state::allow_freesync while the new state
+is validated, but amdgpu_dm sets that field only in
+amdgpu_dm_update_freesync_state_on_stream(), on the first flip after
+the commit.  A stream created by a modeset is therefore validated as
+if FreeSync were off.  On resume, dm_destroy_cached_state() drops the
+streams and forces a modeset, so the resumed state is validated
+without FreeSync.
 
-The URBs cannot be released at this point: the card may already have
-registered PCM devices that user space can still open, and the
-disconnect handler accesses the URBs without holding the DSP lock.
-Mark the chip as hung instead, so that a retried request is refused
-with -ENODEV and the assertions keep their meaning.  The URBs are
-released by snd_usx2y_card_private_free() when the card is freed.
+Set allow_freesync in amdgpu_dm_get_freesync_config_for_crtc(), which
+atomic check calls for every active CRTC and which already writes
+ignore_msa_timing_param to the stream.  It uses vrr_supported, the
+condition the flip-time value is derived from.  With this change the
+same TV keeps SubVP disabled across "rtcwake -m mem".
 
-A failing usx2y_async_seq04_init() still releases its own URBs, so that
-path remains retryable.
+On this machine SubVP is also what exposes the single-frame scanout
+corruption reported in the thread linked below, so the FreeSync
+setting stopped working as a workaround after every suspend.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 87f0c16e0eeb ("drm/amd/display: Enable SubVP for high refresh rate displays")
+Link: https://lore.kernel.org/all/20260829010525.29935-1-mikhail.v.gavrilov@gmail.com/
+Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/5714#note_3736349
+Tested-by: Josh Kasten <jkasten@gmail.com>
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 29793918b0eb63b6810b248a906f87dd79b70be5)
 Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261031191557.8460-1-25031212351@stu.xidian.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usX2Yhwdep.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c    | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/usb/usx2y/usX2Yhwdep.c b/sound/usb/usx2y/usX2Yhwdep.c
-index 7f153a2fcdd81..3800c5b5887c8 100644
---- a/sound/usb/usx2y/usX2Yhwdep.c
-+++ b/sound/usb/usx2y/usX2Yhwdep.c
-@@ -179,6 +179,9 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
- 	int lret, err;
- 	char *buf;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
+index 7e484adb4120f..f26dd206dffa0 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
+@@ -128,6 +128,14 @@ void amdgpu_dm_get_freesync_config_for_crtc(
+ 					vrefresh >= aconnector->min_vfreq &&
+ 					vrefresh <= aconnector->max_vfreq;
  
-+	if (priv->chip_status & USX2Y_STAT_CHIP_HUP)
-+		return -ENODEV;
++	/*
++	 * DC reads allow_freesync while validating the new state, for example
++	 * to keep SubVP off a single FreeSync display, but it is otherwise set
++	 * only on the first flip after the commit.  Set it here, so that a
++	 * stream created by this commit is not validated without it.
++	 */
++	new_crtc_state->stream->allow_freesync = new_crtc_state->vrr_supported;
 +
- 	buf = memdup_user(dsp->image, dsp->length);
- 	if (IS_ERR(buf))
- 		return PTR_ERR(buf);
-@@ -201,11 +204,13 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
- 		err = usx2y_in04_init(priv);
- 		if (err) {
- 			dev_err(&dev->dev, "usx2y_in04_init error\n");
-+			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
- 			return err;
- 		}
- 		err = usx2y_create_alsa_devices(hw->card);
- 		if (err) {
- 			dev_err(&dev->dev, "usx2y_create_alsa_devices error %i\n", err);
-+			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
- 			return err;
- 		}
- 		priv->chip_status |= USX2Y_STAT_CHIP_INIT;
+ 	if (new_crtc_state->vrr_supported) {
+ 		new_crtc_state->stream->ignore_msa_timing_param = true;
+ 		fs_vid_mode = new_crtc_state->freesync_config.state == VRR_STATE_ACTIVE_FIXED;
 -- 
 2.53.0
 
