@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591153;
-	b=zFyP57bVsYRQ3QfoSsDdxz5z5nNbSs+Fo+Dlwmu5me54eTHX2b8e+NrVUnymb0mVQjPf
-	 LDapuTryKFf/dCDrB8atI4mHbPYirOf5FnhRinA/znk0of++ZmGbsjXowgdnK/SuTuo3j
-	 NuEqv8vwewJPfozWAKDYJ/63gclSIZw1wdBfA3Br0GPnL2K3ywy+tIXEbi5orYy4zf5Xs
-	 BkTPbjvO7EbF+BcRtHs8G39nFhfCQrweFGbIhB7kGgO00ZdWMTX4OdSayrA6kR3TupYnF
-	 WcFJOL/kxsk6UD+pnKHTWcUFfC2HzMazd/9+nLDAei8n+Gp4qJAuUzP7q6lur7Mhq1A==
+	t=1794591154;
+	b=01yAsPvGaCXA5ro/vmLMOmAUverQEHtRTafZ0gq/bCkOTlb/3vTPpu65/PY4zSOauVvn
+	 sp1xgGAjz0zra+h2QeASZ6CiRYijMqoQldtd+VXBcfJN69ldQ+dRu0iKAgjV4qznnDSF5
+	 7QSvKSoakxPUBwVjQv4nMlLMXF29BMc8eY65A9sAjCBFFu0bLu6t8Bw+2V0ja3dK08lWS
+	 d83coRGn+Nzy6/j2lWlgF6HnVVCRy68L/LqhKXTeGIGC7ciSxhNJ+BpMNavpHwEaskwSn
+	 BDrIrdPeB4a/HO9lHsCfLCtI0ePlYW2UHsMoaLZz3Z3zo0z2cU167WIkG1WSyJdWi4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591153;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591154;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rcN30G/K84e6d4M2eat3xje1qUX6Em9mt8WeG1OeL50=;
-	b=aHE8b5w9M1NQtV+KTCaHiNRAv+Qf03L71swTUUX0opM4y1r2BpMxZTfQzBNqHgnoaVq0
-	 aVBSjraBBwmcvU6rPcc5RjmA4cXAMQfj79u09UcOMoTn6uxrtdVMWWBwfEKt8Jw4xCUYT
-	 Qc+H1i58AluFU5qkKEJEc2ZwIvvt4KnS/mVx1Oe7kZrrwzh6RipwdnrPV3TYqUZlL1/A7
-	 olFdA5dFnlt6sTofgUEsm9ZnfeOnF0y3gJJ5db+tq7xq0HAWbUAdMWnkzmwMWZgzFrlNL
-	 iKKxoFanoRp/KOS/MHwUnOUGDGTjbygB/OsvEbgJgjCTfVHFl08KM6/aur9HclXwZDw==
+	bh=YDZbK714OOwCDse2vuFFceTno3f3VzlrZlRSR0aIjDc=;
+	b=3oEuXOsQmvdcJCqiRuJCElq2Cd33F5BtJPxvvTVnvA3Bh1wPGZHcCNTi0NVjjuiF44AE
+	 ZU0C/FgcGVXnHUQLav3NbxLoJO1hyxCtPZnoeEsk55NOkU7rC/Bo7/MZzhCGZn4WHJvZO
+	 IWu5Py/9e+AcrdPBUd42RqKJ6t4VTVnKgA3nFgBTcGXiE+6AFAAlruf3Fcg5H5okZRX7X
+	 kyAhriNcCKQug8OovOCOd8mdN88AJvMCwVvCCjETF+CYuyFfTijS/r2Gv4Xxz3uSoTgY4
+	 BZxd+xJ5p8RyM8BQxKGIWB/rXrLUr1H7czJ6kL3kthmwhmj4Q0on2KYw/75qmZVd4Pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JfTGLYMB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xiyluvI3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED66606BD2A;
-	Fri, 13 Nov 2026 17:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BE4606C092;
+	Fri, 13 Nov 2026 17:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JfTGLYMB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACA21F000C4;
-	Fri, 13 Nov 2026 17:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xiyluvI3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874551F000C4;
+	Fri, 13 Nov 2026 17:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591153;
-	bh=rcN30G/K84e6d4M2eat3xje1qUX6Em9mt8WeG1OeL50=;
+	s=korg; t=1794591154;
+	bh=YDZbK714OOwCDse2vuFFceTno3f3VzlrZlRSR0aIjDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JfTGLYMBaP/Jqpq3IMegYuGPaPiQJOIY2AFTjlWIQUqEBtuoV7EABgSLy3JuE6m3Z
-	 FW64jUN4At3KVBjMl2XetNEdzkW07asEzFZdOh8gVSBCn3BgNww6QsnCN2G6CrnW1K
-	 jD18QDMaoZlFk3sQC+U4H2Tg8utukct2giR6TY8s=
+	b=xiyluvI3ZlEp3JMVOy7rAytWTpPktYEd9bg2DdHMou0Cw8gc/ZFQfJXTT8gQqLiCG
+	 DkWQ3kWsnVGjUVOLgJSy9paLU1uFDaKk7K1W4CI4aC9QCXwxQEW+lzXgSJ1zXtX4mi
+	 ZPYqA2xbqiu31jlkskZyEda8sBwM+a7TA9XT2KV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Jiale Yao <yaojiale02@163.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 245/670] hwmon: (aquacomputer_d5next) reject short status reports
-Date: Fri, 13 Nov 2026 10:46:49 -0500
-Message-ID: <20261113153820.145238593@linuxfoundation.org>
+Subject: [PATCH 6.12 291/670] ocfs2: keep locking_state within the cluster connection lifetime
+Date: Fri, 13 Nov 2026 10:47:35 -0500
+Message-ID: <20261113153821.741891910@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,219 +74,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit cf8f81babd2e96087dedbb74985bc1781c98f73d ]
+[ Upstream commit 5bdef466851e39ba752634cbea68e5ea24ccfb24 ]
 
-The HID raw_event callback runs before HID core validates the received
-report length. aqc_raw_event() reads device-specific status fields at fixed
-offsets, including multi-byte values, without first ensuring that the
-received buffer contains every field. A truncated report can therefore
-cause out-of-bounds reads and update hwmon state with unrelated data.
+The locking_state reader calls ocfs2_dlm_lvb() through the selected
+cluster stack.  Its debug-object reference keeps the tracking list alive,
+but does not keep that stack selected without a cluster connection.
 
-The required length differs between supported devices and cannot be
-derived from the HID report descriptor. Define the minimum length needed
-by each asynchronous status format, select it while configuring the
-device, and reject reports that do not contain the last field accessed by
-that format. Keep the published length zero until probe configuration is
-complete, which also excludes legacy devices whose status is retrieved
-through feature reports.
+DLM initialization publishes the file before establishing its connection,
+and DLM shutdown drops the connection while the file still exists.  Both
+the mount error unwind in ocfs2_mount_volume() and ocfs2_dismount_volume()
+remove the debugfs subtree only after ocfs2_dlm_shutdown() has returned.
+Whenever the disconnect releases the last stack reference, which is the
+case for a failed mount and for any unmount without a pending hangup, a
+concurrent reader dereferences a NULL active_stack:
 
-Suggested-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: 0e35f63f7f4e ("hwmon: add driver for Aquacomputer D5 Next")
-Fixes: 19692f17cd13 ("hwmon: (aquacomputer_d5next) Add support for Aquacomputer Aquastream XT")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20261021120408.48495-1-yaojiale02@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  Mount error unwind                  Debugfs reader
+  ------------------                  --------------
+  ocfs2_mount_volume(): out_dlm
+    ocfs2_dlm_shutdown()
+      disconnect last cluster
+        clear active_stack
+                                      read locking_state
+                                        ocfs2_dlm_seq_show()
+                                          ocfs2_dlm_lvb()
+                                            dereference active_stack
+  fill_super(): out_debugfs
+    remove debugfs subtree
+
+Publish the debug files only after the connection and the mount lock
+resources are initialized, so a failed DLM initialization has no debug
+reference to drop.  Remove them again in the common DLM shutdown helper
+before the connection is dropped: debugfs removal waits for readers that
+are inside the file operations, and the parent directory is still present
+at that point in every caller.  This covers the mount error unwind, the
+ocfs2_fill_super() failures after a successful mount that dismount with
+mnt_err set, and unmounts whose disconnect releases the stack directly.
+
+Only the relevant frames of the report are kept:
+
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:ocfs2_dlm_lvb+0x38/0xf0
+Call Trace:
+ <TASK>
+ ocfs2_dlm_seq_show+0x36a/0xb70
+ seq_read_iter+0x480/0x1110
+ seq_read+0x362/0x5a0
+ full_proxy_read+0x11f/0x180
+ vfs_read+0x1a0/0xc20
+ ksys_read+0x111/0x200
+ </TASK>
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0011-v7-61e3ef8b1ad44ac2e817@gmail.com
+Fixes: 286eaa95c5c5 ("ocfs2: Break out stackglue into modules.")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aquacomputer_d5next.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ fs/ocfs2/dlmglue.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
-index 0dcb8a3a691d6..1f0e71d3b52e4 100644
---- a/drivers/hwmon/aquacomputer_d5next.c
-+++ b/drivers/hwmon/aquacomputer_d5next.c
-@@ -133,6 +133,7 @@ static u8 aquaero_secondary_ctrl_report[] = {
- #define AQUAERO_FAN_CURRENT_OFFSET		0x06
- #define AQUAERO_FAN_POWER_OFFSET		0x08
- #define AQUAERO_FAN_SPEED_OFFSET		0x00
-+#define AQUAERO_MIN_STATUS_REPORT_SIZE		(0x18B + AQUAERO_FAN_POWER_OFFSET + sizeof(u16))
- static u16 aquaero_sensor_fan_offsets[] = { 0x167, 0x173, 0x17f, 0x18B };
- 
- /* Control report offsets for the Aquaero fan controllers */
-@@ -156,6 +157,8 @@ static u16 aquaero_ctrl_fan_offsets[] = { 0x20c, 0x220, 0x234, 0x248 };
- #define D5NEXT_5V_VOLTAGE		0x39
- #define D5NEXT_12V_VOLTAGE		0x37
- #define D5NEXT_VIRTUAL_SENSORS_START	0x3f
-+#define D5NEXT_MIN_STATUS_REPORT_SIZE	(D5NEXT_PUMP_OFFSET + AQC_FAN_SPEED_OFFSET + \
-+					 sizeof(u16))
- static u16 d5next_sensor_fan_offsets[] = { D5NEXT_PUMP_OFFSET, D5NEXT_FAN_OFFSET };
- 
- /* Control report offsets for the D5 Next pump */
-@@ -180,11 +183,14 @@ static u16 d5next_ctrl_fan_offsets[] = { 0x97, 0x42 };	/* Pump and fan speed (fr
- #define AQUASTREAMULT_FAN_CURRENT_OFFSET	0x00
- #define AQUASTREAMULT_FAN_POWER_OFFSET		0x04
- #define AQUASTREAMULT_FAN_SPEED_OFFSET		0x06
-+#define AQUASTREAMULT_MIN_STATUS_REPORT_SIZE	(AQUASTREAMULT_PRESSURE_OFFSET + sizeof(u16))
- static u16 aquastreamult_sensor_fan_offsets[] = { AQUASTREAMULT_FAN_OFFSET };
- 
- /* Spec and sensor report offset for the Farbwerk RGB controller */
- #define FARBWERK_NUM_SENSORS		4
- #define FARBWERK_SENSOR_START		0x2f
-+#define FARBWERK_MIN_STATUS_REPORT_SIZE	(FARBWERK_SENSOR_START + \
-+					 FARBWERK_NUM_SENSORS * AQC_SENSOR_SIZE)
- 
- /* Specs of the Farbwerk 360 RGB controller */
- #define FARBWERK360_NUM_SENSORS			4
-@@ -194,6 +200,8 @@ static u16 aquastreamult_sensor_fan_offsets[] = { AQUASTREAMULT_FAN_OFFSET };
- /* Sensor report offsets for the Farbwerk 360 */
- #define FARBWERK360_SENSOR_START		0x32
- #define FARBWERK360_VIRTUAL_SENSORS_START	0x3a
-+#define FARBWERK360_MIN_STATUS_REPORT_SIZE	(FARBWERK360_VIRTUAL_SENSORS_START + \
-+					 FARBWERK360_NUM_VIRTUAL_SENSORS * AQC_SENSOR_SIZE)
- 
- /* Control report offsets for the Farbwerk 360 */
- #define FARBWERK360_TEMP_CTRL_OFFSET		0x8
-@@ -210,6 +218,7 @@ static u16 aquastreamult_sensor_fan_offsets[] = { AQUASTREAMULT_FAN_OFFSET };
- #define OCTO_SENSOR_START		0x3D
- #define OCTO_VIRTUAL_SENSORS_START	0x45
- #define OCTO_FLOW_SENSOR_OFFSET		0x7B
-+#define OCTO_MIN_STATUS_REPORT_SIZE	(0xD8 + AQC_FAN_SPEED_OFFSET + sizeof(u16))
- static u16 octo_sensor_fan_offsets[] = { 0x7D, 0x8A, 0x97, 0xA4, 0xB1, 0xBE, 0xCB, 0xD8 };
- 
- /* Control report offsets for the Octo */
-@@ -230,6 +239,7 @@ static u16 octo_ctrl_fan_offsets[] = { 0x5B, 0xB0, 0x105, 0x15A, 0x1AF, 0x204, 0
- #define QUADRO_SENSOR_START		0x34
- #define QUADRO_VIRTUAL_SENSORS_START	0x3c
- #define QUADRO_FLOW_SENSOR_OFFSET	0x6e
-+#define QUADRO_MIN_STATUS_REPORT_SIZE	(0x97 + AQC_FAN_SPEED_OFFSET + sizeof(u16))
- static u16 quadro_sensor_fan_offsets[] = { 0x70, 0x7D, 0x8A, 0x97 };
- 
- /* Control report offsets for the Quadro */
-@@ -249,6 +259,7 @@ static u16 quadro_ctrl_fan_offsets[] = { 0x37, 0x8c, 0xe1, 0x136 }; /* Fan speed
- #define HIGHFLOWNEXT_CONDUCTIVITY	95
- #define HIGHFLOWNEXT_5V_VOLTAGE		97
- #define HIGHFLOWNEXT_5V_VOLTAGE_USB	99
-+#define HIGHFLOWNEXT_MIN_STATUS_REPORT_SIZE	(HIGHFLOWNEXT_5V_VOLTAGE_USB + sizeof(u16))
- 
- /* Specs of the Leakshield */
- #define LEAKSHIELD_NUM_SENSORS		2
-@@ -264,6 +275,7 @@ static u16 quadro_ctrl_fan_offsets[] = { 0x37, 0x8c, 0xe1, 0x136 }; /* Fan speed
- #define LEAKSHIELD_FLOW_IN		111
- #define LEAKSHIELD_RESERVOIR_VOLUME	313
- #define LEAKSHIELD_RESERVOIR_FILLED	311
-+#define LEAKSHIELD_MIN_STATUS_REPORT_SIZE	(LEAKSHIELD_RESERVOIR_VOLUME + sizeof(u16))
- 
- /* Specs of the Aquastream XT pump */
- #define AQUASTREAMXT_SERIAL_START		0x3a
-@@ -556,6 +568,7 @@ struct aqc_data {
- 	const char *name;
- 
- 	int status_report_id;	/* Used for legacy devices, report is stored in buffer */
-+	u16 min_report_size;
- 	int ctrl_report_id;
- 	int secondary_ctrl_report_id;
- 	int secondary_ctrl_report_size;
-@@ -1356,6 +1369,8 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 		return 0;
- 
- 	priv = hid_get_drvdata(hdev);
-+	if (!priv->min_report_size || size < priv->min_report_size)
-+		return 0;
- 
- 	/* Info provided with every report */
- 	priv->serial_number[0] = get_unaligned_be16(data + priv->serial_number_start_offset);
-@@ -1541,6 +1556,7 @@ static void aqc_debugfs_init(struct aqc_data *priv)
- static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index ec44ed33afdf4..757f9b91499bc 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3336,6 +3336,14 @@ static void ocfs2_dlm_shutdown_debug(struct ocfs2_super *osb)
  {
- 	struct aqc_data *priv;
-+	u16 min_report_size = 0;
- 	int ret;
+ 	struct ocfs2_dlm_debug *dlm_debug = osb->osb_dlm_debug;
  
- 	priv = devm_kzalloc(&hdev->dev, sizeof(*priv), GFP_KERNEL);
-@@ -1608,6 +1624,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		priv->power_label = label_fan_power;
- 		priv->voltage_label = label_fan_voltage;
- 		priv->current_label = label_fan_current;
-+		min_report_size = AQUAERO_MIN_STATUS_REPORT_SIZE;
- 		break;
- 	case USB_PRODUCT_ID_D5NEXT:
- 		priv->kind = d5next;
-@@ -1633,6 +1650,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		priv->power_label = label_d5next_power;
- 		priv->voltage_label = label_d5next_voltages;
- 		priv->current_label = label_d5next_current;
-+		min_report_size = D5NEXT_MIN_STATUS_REPORT_SIZE;
- 		break;
- 	case USB_PRODUCT_ID_FARBWERK:
- 		priv->kind = farbwerk;
-@@ -1643,6 +1661,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		priv->temp_sensor_start_offset = FARBWERK_SENSOR_START;
- 
- 		priv->temp_label = label_temp_sensors;
-+		min_report_size = FARBWERK_MIN_STATUS_REPORT_SIZE;
- 		break;
- 	case USB_PRODUCT_ID_FARBWERK360:
- 		priv->kind = farbwerk360;
-@@ -1659,6 +1678,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 
- 		priv->temp_label = label_temp_sensors;
- 		priv->virtual_temp_label = label_virtual_temp_sensors;
-+		min_report_size = FARBWERK360_MIN_STATUS_REPORT_SIZE;
- 		break;
- 	case USB_PRODUCT_ID_OCTO:
- 		priv->kind = octo;
-@@ -1688,6 +1708,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		priv->power_label = label_fan_power;
- 		priv->voltage_label = label_fan_voltage;
- 		priv->current_label = label_fan_current;
-+		min_report_size = OCTO_MIN_STATUS_REPORT_SIZE;
- 		break;
- 	case USB_PRODUCT_ID_QUADRO:
- 		priv->kind = quadro;
-@@ -1717,6 +1738,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		priv->power_label = label_fan_power;
- 		priv->voltage_label = label_fan_voltage;
- 		priv->current_label = label_fan_current;
-+		min_report_size = QUADRO_MIN_STATUS_REPORT_SIZE;
- 		break;
- 	case USB_PRODUCT_ID_HIGHFLOWNEXT:
- 		priv->kind = highflownext;
-@@ -1734,6 +1756,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		priv->speed_label = label_highflownext_fan_speed;
- 		priv->power_label = label_highflownext_power;
- 		priv->voltage_label = label_highflownext_voltage;
-+		min_report_size = HIGHFLOWNEXT_MIN_STATUS_REPORT_SIZE;
- 		break;
- 	case USB_PRODUCT_ID_LEAKSHIELD:
- 		/*
-@@ -1753,6 +1776,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 
- 		priv->temp_label = label_leakshield_temp_sensors;
- 		priv->speed_label = label_leakshield_fan_speed;
-+		min_report_size = LEAKSHIELD_MIN_STATUS_REPORT_SIZE;
- 		break;
- 	case USB_PRODUCT_ID_AQUASTREAMXT:
- 		priv->kind = aquastreamxt;
-@@ -1783,6 +1807,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		priv->power_label = label_aquastreamult_power;
- 		priv->voltage_label = label_aquastreamult_voltages;
- 		priv->current_label = label_aquastreamult_current;
-+		min_report_size = AQUASTREAMULT_MIN_STATUS_REPORT_SIZE;
- 		break;
- 	case USB_PRODUCT_ID_POWERADJUST3:
- 		priv->kind = poweradjust3;
-@@ -1856,6 +1881,8 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		break;
++	/*
++	 * Drain the readers before the cluster stack goes away: the
++	 * locking_state reader resolves ocfs2_dlm_lvb() through the
++	 * stack. Every caller removes the parent directory later.
++	 */
++	debugfs_lookup_and_remove("locking_state", osb->osb_debug_root);
++	debugfs_lookup_and_remove("locking_filter", osb->osb_debug_root);
++
+ 	if (dlm_debug)
+ 		ocfs2_put_dlm_debug(dlm_debug);
+ }
+@@ -3350,8 +3358,6 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
+ 		goto local;
  	}
  
-+	priv->min_report_size = min_report_size;
+-	ocfs2_dlm_init_debug(osb);
+-
+ 	/* launch downconvert thread */
+ 	osb->dc_task = kthread_run(ocfs2_downconvert_thread, osb, "ocfs2dc-%s",
+ 			osb->uuid_str);
+@@ -3391,9 +3397,10 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
+ 	ocfs2_orphan_scan_lock_res_init(&osb->osb_orphan_scan.os_lockres, osb);
+ 
+ 	osb->cconn = conn;
++	if (conn)
++		ocfs2_dlm_init_debug(osb);
+ bail:
+ 	if (status < 0) {
+-		ocfs2_dlm_shutdown_debug(osb);
+ 		if (osb->dc_task)
+ 			kthread_stop(osb->dc_task);
+ 	}
+@@ -3423,10 +3430,11 @@ void ocfs2_dlm_shutdown(struct ocfs2_super *osb,
+ 	ocfs2_lock_res_free(&osb->osb_orphan_scan.os_lockres);
+ 
+ 	if (osb->cconn) {
++		/* The disconnect below may release the selected stack. */
++		ocfs2_dlm_shutdown_debug(osb);
 +
- 	if (priv->buffer_size != 0) {
- 		priv->checksum_start = 0x01;
- 		priv->checksum_length = priv->buffer_size - 3;
+ 		ocfs2_cluster_disconnect(osb->cconn, hangup_pending);
+ 		osb->cconn = NULL;
+-
+-		ocfs2_dlm_shutdown_debug(osb);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
