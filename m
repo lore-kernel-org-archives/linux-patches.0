@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590158;
-	b=4yadOXK+T2ltVxjQPBxSIY0dA8+uvZbI+ZRBBvfZ4OBDsySBLityEEOOZxs2/zaMTNMn
-	 t7Cx7kvBBelk9c2j1aKdFVz/+VsOfr5pDPa5S1GngQJFhirKhkDK5MvE5OL5wxxELqtXN
-	 dCph5LaS5woYgMAtztPlbabTFJlrI/8Jm80J2E00FC39h27HYsbY41qH47Yn3s7pfgVbU
-	 X1v8wPmrOLSmmI0vPNj136tQqaTGYohLitoqgUWdTfB3jFsVkqVSMlDp6878QQlyG7d8O
-	 6SFS6YZ1cuYr7ifaLQKZ4SoCHSy0c+SIn58O3g9I7dBpNt0BoP3pvuQGw5YzPQxWrbQ==
+	t=1794590159;
+	b=hUKfihKJsDoNx1h74rZgOLC+O4w2j2gOlPS4STbwfjRzvTUxgiF3VYAJBT4LYFwhiyA0
+	 Rb4I2Ujjs91nHoUZgsZ3Udvbi+8R90pDGD7u6ocLilHEAn9vX3AfswhxHuW1VvUBk+GQR
+	 fLZFcbYhbI5dS/n4r6IrD00OjPFg6DG/QW7Dnof1l7qSJkBX2VOcl2p7uE6Mc796fv64B
+	 fVLbmylS6pp5rX5B4OPaoG+4bfNqqj4rsoTuWcE6vbk8SfqDf/vZTqDYbmkk8hBUC8w8a
+	 jC7EO/D8Poh6wRhX4QnojgiiIQX45VBv5oz21fUl4KWyr3RXeCwwYnPJbVaqODR14Hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590158;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590159;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+wHoouWeju+JR7JJeDcTKj4iU2raH6YoR5YIT8fTpkE=;
-	b=vwXe1LOxmWMNOZASL2+CInKI9rmRnN/1l1DGrrgQKIxLSoawIjlcUJQcq6f8H3bgT3zu
-	 ltjMfNGjVv8jArJSyPY2RqSFbmW8sFfGP0ZJGibHLf/W+jB0NIoarjmbGOnM1KYwXfLMe
-	 Mjz/wpYsjDsj7xcOZ1DpChA/5zlb/WejoieQDUFdTSUTbksywMnkPQLqBe5oDTntAy7v6
-	 uxqUJbSEDsGyNQjF5jt10vRQW2VP7CdwuxM0DGairoFslyu4Q62i5ZLvCDLr+Zjmf5IBh
-	 K+VvEzQTKRMPvuaG+lC0swbWlDIS5OdeQbhGKskzi8KkwL8jY1B0+RpsSczoJcSpJWQ==
+	bh=a4X7FNBEopkGcDPwJ+7AQaPq0r0bw5OsrLAn9VOXEnQ=;
+	b=t//tmJuBFzqQQOOpVBXY+NaOdIjkRxgkG5kuiNbtlI5H042Y+FbXnj5qZewnDWPgtnGM
+	 IpzXCCVkAHciyjKp4Ly9sCqPrv5FJCzFdNoYPuooKjJfvz/nsvs0HC5t7SHfGHPJjUfLK
+	 g36Q2pJ6N65Nqeykfc9YbITCTM6ny1m3vf4ceDR2nXKTAY8Qo7zpzb8cfGtpSzGhclJlQ
+	 uvJkHr+aOgX0+JIzJBYFqQJ8JBEzL3yhXVRzW3VoCbrTPY1u+G3jARtvL43k8Rawg2nMz
+	 6WnRejCjc8BORG2G6Dy33RHHP7So/JNV82kDZq2rdO35EslECpegGhj4qD3fqHjVuXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jWW8h5Xu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znTAmbt7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D0F606D4B5;
-	Fri, 13 Nov 2026 17:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12980606D4B2;
+	Fri, 13 Nov 2026 17:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jWW8h5Xu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872861F000C4;
-	Fri, 13 Nov 2026 17:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znTAmbt7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84181F000C4;
+	Fri, 13 Nov 2026 17:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590157;
-	bh=+wHoouWeju+JR7JJeDcTKj4iU2raH6YoR5YIT8fTpkE=;
+	s=korg; t=1794590158;
+	bh=a4X7FNBEopkGcDPwJ+7AQaPq0r0bw5OsrLAn9VOXEnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jWW8h5XuvD1cJLUaJwqJSDH1AQb5GAgXjZF2mACTFO6JCBiL29X6F/FP7Myk4H0uw
-	 Xnld2ZDw1vY07lEvoq0Il8hHobm1gYuI6IzKMS/c/42gCcX4gBG+nQU3FOVSh414ES
-	 O4RuOOmRKtbBM8HUDZIUZD7qsc+EtMeJgeUGCh/s=
+	b=znTAmbt7MHY2HSzmcAlFESBV/nYLjSiTOiRoV2v4q3dY/rfmWEuXCr/JepaNPB8Uc
+	 l+ShxUNsUOfvHMnP03wyStf9HZ1iBC7HhuHP5NOS+VKMRkdk6rpsablKY91b898raA
+	 8qwWYIR64XL2Vz3ogdly0uQE6RsMvWeunk+/a7mM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bean Huo <beanhuo@micron.com>,
 	Stanley Jhu <stanleyjhu@google.com>,
+	Bean Huo <beanhuo@micron.com>,
 	Peter Wang <peter.wang@mediatek.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 170/686] scsi: ufs: bsg: Validate request_len before accessing request
-Date: Fri, 13 Nov 2026 10:45:03 -0500
-Message-ID: <20261113153826.720361972@linuxfoundation.org>
+Subject: [PATCH 6.18 171/686] scsi: ufs: bsg: Reject UIC commands with a non-zero result byte
+Date: Fri, 13 Nov 2026 10:45:04 -0500
+Message-ID: <20261113153826.768512303@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -73,62 +73,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanley Jhu <stanleyjhu@google.com>
 
-[ Upstream commit 42aa443718104d10dbdb6f258810b425eb2451f8 ]
+[ Upstream commit 1ae42513205a38b811afedb6797f9f9c4de37b90 ]
 
-ufs_bsg_request() and ufs_bsg_exec_advanced_rpmb_req() read the request
-buffer without checking job->request_len, which userspace controls. A short
-request causes an out-of-bounds read. Found by syzkaller.
+ufs_bsg_request() passes the user-supplied UIC argument2 unchanged,
+including the result byte (bits 7:0) that only the host controller
+writes. A non-zero value triggers the WARN_ON_ONCE() in
+ufshcd_dispatch_uic_cmd() and corrupts the reported result. Found by
+syzkaller.
 
-Reject requests shorter than the structure each path reads.
+Reject UIC commands that have the result byte set with -EINVAL.
 
-Fixes: 64d4864714c2 ("scsi: ufs: bsg: Remove unnecessary length checkup")
-Fixes: 6ff265fc5ef6 ("scsi: ufs: core: bsg: Add advanced RPMB support in ufs_bsg")
+Fixes: e77044c5a842 ("scsi: ufs-bsg: Add support for uic commands in ufs_bsg_request()")
+Fixes: 9fb4c793223b ("scsi: ufs: core: Complain if UIC argument 2 is invalid")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bean Huo <beanhuo@micron.com>
 Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
 Reviewed-by: Peter Wang <peter.wang@mediatek.com>
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261015001855.3450573-4-stanleyjhu@google.com
+Link: https://patch.msgid.link/20261015001855.3450573-5-stanleyjhu@google.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs_bsg.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/ufs/core/ufs_bsg.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/drivers/ufs/core/ufs_bsg.c b/drivers/ufs/core/ufs_bsg.c
-index 0e0b08a3821c4..36def5ef24d62 100644
+index 36def5ef24d62..59a473261ae16 100644
 --- a/drivers/ufs/core/ufs_bsg.c
 +++ b/drivers/ufs/core/ufs_bsg.c
-@@ -79,6 +79,9 @@ static int ufs_bsg_exec_advanced_rpmb_req(struct ufs_hba *hba, struct bsg_job *j
- 	if (hba->ufs_version < ufshci_version(4, 0) || !hba->dev_info.b_advanced_rpmb_en)
- 		return -EINVAL;
- 
-+	if (job->request_len < sizeof(*rpmb_request))
-+		return -EINVAL;
-+
- 	if (rpmb_request->ehs_req.length != 2 || rpmb_request->ehs_req.ehs_type != 1)
- 		return -EINVAL;
- 
-@@ -144,6 +147,11 @@ static int ufs_bsg_request(struct bsg_job *job)
- 
- 	memset(job->reply, 0, job->reply_len);
- 
-+	if (job->request_len < sizeof(*bsg_request)) {
-+		ret = -EINVAL;
-+		goto out_complete;
-+	}
-+
- 	ufshcd_rpm_get_sync(hba);
- 
- 	msgcode = bsg_request->msgcode;
-@@ -193,6 +201,7 @@ static int ufs_bsg_request(struct bsg_job *job)
- out:
- 	ufshcd_rpm_put_sync(hba);
- 	kfree(buff);
-+out_complete:
- 	bsg_reply->result = ret;
- 	if (ret == 0)
- 		job->reply_len = rpmb ? sizeof(struct ufs_rpmb_reply) :
+@@ -178,6 +178,10 @@ static int ufs_bsg_request(struct bsg_job *job)
+ 		break;
+ 	case UPIU_TRANSACTION_UIC_CMD:
+ 		memcpy(&uc, &bsg_request->upiu_req.uc, UIC_CMD_SIZE);
++		if (uc.argument2 & MASK_UIC_COMMAND_RESULT) {
++			ret = -EINVAL;
++			break;
++		}
+ 		ret = ufshcd_send_bsg_uic_cmd(hba, &uc);
+ 		if (ret)
+ 			dev_err(hba->dev, "send uic cmd: error code %d\n", ret);
 -- 
 2.53.0
 
