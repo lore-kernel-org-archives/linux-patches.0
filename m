@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590595;
-	b=B+SSupEZh3Bm8b9q9zIu9nWpT69YAPWWS2dIyhXD9LICe5Pv67bmUhS2zSyyP0AF4+Z8
-	 nore3IMzIq3gVw8odTcN0kqGWQPsyRmFpMO7q2MNyYIphITn0Yw/o/kdtVEAv47hfNA9L
-	 RPvtAebVeOMoJwZoN13A1OMinIN8l7wcQfsOJeOGpcQcfktB7qpuhp9QLAf7jd+nNJK5v
-	 wZD0EylYd1noUQXTMu6t821IfdtpEZ6gFYX76jTZyy9qsoxVRWW2/RhiBQtE+xXkKE9JX
-	 fLj4Aw1XItj6o5F/jLsiw8bVyNla76Y+9cRjUAntFu0b+KhYdwPSfIhdG8w/wEhgfkA==
+	t=1794590596;
+	b=FG94NrQQfYyzM5/eaWQY9YUXDBq6zK5EoqMhreAT8RqGvxXGp2y930ZciVMp0t5t6lD5
+	 QtyFgcJgpED9A4OMVf3o//o5JK/oc5A1sSx+LCpFT1Pd7dVK52j/eyBK9T4qmiFtAe0hr
+	 E7WhwS+sxpBAFGTckEzNkJ59SniqG60rpoecabUjx2SYO5kBnFEuxdCsVbA/8BXyra6va
+	 /ZTBHM1zqnkQiPguRyu3TKfYfiPVd2UXZpk4n1X9NjjwCA6nI1RDGun8IjK0evhkoQnbU
+	 oq7YYB88ODAJMYqIQ7ya9vOncxEQi3744twh/WYEV9l7UqoQpUwmZRqxuKVcflv2z+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xBcklJGkpjqBEaVv02ncKAei7vFH+2Lr1hGO1tsEXXk=;
-	b=CcHYuXcHkEUEnuNMglSojeAsTWvemLqJp5Sg729LJkhtAD+JRb6l+Ysa2SP9q5wF35tm
-	 T/jfFPQWqZam4qd6gl24u5lXDK8mmvJah8kuiOea4zMWHzfvMwrppLQPG4AC9t18qnV68
-	 KtXiuJFGQlOireITo7kgUYd9uad0reXIk+aMNzw9mcK0phGxY9tmXc2wlNn15+pSzIcX9
-	 wFZG91goS7tgQdiGfcfnF59L0EPL74yBSEztCJmzQcqZ0HNdC6kRtlJTFKX1jfxw5SxBR
-	 Be+L7/i8qoxEwKIc/ZqR919Z2uhDr1OaAxV8g7RPOjP2zrHVV+GuTB4A2a8GyMCUXWA==
+	bh=YeETzSGPxn14ShkNoCo0G+RwzCVBzaTX2YR3Ehuxi2s=;
+	b=rUVaMj5OzdO/aFFzbRhRKEMUBEFpNhmiYjt1Yb0Kps9nUgbbysij0vql5pFDg9pwfBt3
+	 6imA7Sgb8eFoRSaCFCH0QcOWvlyBVOo0GbBj8IRJ/atbq6czyNHEeVmkW/ncRhloAj5RS
+	 ns+Vehz9sh3MoZibwou9/EibxVqtquhiZDzcuJjSZN28DbPHnNZKRaKOA6qrXIjU4nHl9
+	 AwpsSxun9cFqMH+kvGgwX3nwhuwi+YaUYg3A2jgExpq0uhSFUiBIdrND3zphipMjhDomN
+	 IayVdr3oqBqU0S4Z1qfaMIg6CocO0YXLYpuqEpVv10mp5FDx+oQIKuVoEdUuC0pdddg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hokHx0n4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pA4T39xL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F392606A887;
-	Fri, 13 Nov 2026 17:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A1A606A323;
+	Fri, 13 Nov 2026 17:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hokHx0n4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CADE1F000C8;
-	Fri, 13 Nov 2026 17:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pA4T39xL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E291F000C7;
+	Fri, 13 Nov 2026 17:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590595;
-	bh=xBcklJGkpjqBEaVv02ncKAei7vFH+2Lr1hGO1tsEXXk=;
+	s=korg; t=1794590596;
+	bh=YeETzSGPxn14ShkNoCo0G+RwzCVBzaTX2YR3Ehuxi2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hokHx0n4cP7dzzyDxK6P6yzn9v9nnPY576LvYIAMwMYBlZV0Kfs5cWl8MDJ3HN1PT
-	 zyxT1n73iW/GSGJur/Vr2XVZMinawFP+sOlkHgTyxFja8jxh/gMfhWOkrqhLRLPdsq
-	 f0/Z78xY6mATPbAiTe4FKuRxNZdLyAOijSvyxR5I=
+	b=pA4T39xLSRA5iRX1VJkl9iFKY4hsjR3hrz/lrF1EfmlKN8K1AR2ZL5qy5Jzg6ZWMm
+	 pT23qNGzaWkXSrFLA69bK7Cxu44zpgR0XnBSb40E+aBB7ZpgsDeb733HAXjx9gC0gK
+	 wTeKz1Ylzl/yCCm7ikfhxaPtABmwhJPHkBuJUTk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Terry Bowman <terry.bowman@amd.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Tom Verdonck <tom.verdonck@inspiral.be>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 526/686] cxl/port: Cleanup handling of the nr_dports 0 -> 1 transition
-Date: Fri, 13 Nov 2026 10:50:59 -0500
-Message-ID: <20261113153838.954520948@linuxfoundation.org>
+Subject: [PATCH 6.18 509/686] hwmon: (tmp102) Fix jiffies wraparound in conversion-ready check
+Date: Fri, 13 Nov 2026 10:50:42 -0500
+Message-ID: <20261113153838.143629758@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,114 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Tom Verdonck <tom.verdonck@inspiral.be>
 
-[ Upstream commit 47fec713d97fb6b823026f723435b58af541bd8d ]
+[ Upstream commit 56c1d32323e773b8b927316f8beeae9238576335 ]
 
-There are multiple setup actions that can occur for a switch port after it
-is known that it has at least one active downstream link. That work is
-currently split between __devm_cxl_add_dport(), the add_dport() helper, and
-cxl_port_add_dport() where decoder setup occurs.
+tmp102 records a one-shot deadline in ->ready_time at probe (and resume)
+and, on every temperature read, refuses the read with -EAGAIN while
+time_before(jiffies, ready_time) is true, in order to skip the first
+~35 ms conversion.
 
-Clean this up by moving all @dport object setup responsibilities into
-add_dport() and all port effects into cxl_port_add_dport().
+->ready_time is an unsigned long compared with time_before(), whose
+signed difference is only meaningful while the two values are within
+LONG_MAX jiffies of each other. Because ->ready_time is set once and
+never refreshed, jiffies keeps advancing away from it, and after 2^31
+jiffies the difference flips sign. On a 32-bit HZ=100 kernel that
+happens ~248.5 days after boot: time_before() then permanently reports
+"not ready" and the driver returns -EAGAIN on every read, without ever
+touching the sensor, until the next reboot.
 
-add_dport() handles taking a reference on @dport->dport_dev, and
-cxl_port_add_dport() grows the awareness to setup the port component
-registers. This removes an awkward open-coded xa_erase() from the middle of
-__devm_cxl_add_dport() and instead tasks cxl_port_add_dport() with calling
-the common @dport destruction path if anything goes wrong.
+Store the deadline as a 64-bit jiffies value and compare it with
+get_jiffies_64()/time_before64(), which does not wrap in any practical
+uptime.
 
-After this @port->nr_dports is always the count of @dports in the
-@port->dports xarray, and cxl_dport_remove() is symmetric with add_dport().
-With ->nr_dports now reliably tracking the number of dports the use of
-ida_is_empty() can be dropped. Recall that the ida is only cleared on
-"release" of decoder objects, and release can be arbitrarily delayed past
-unregistration.
-
-Lastly port->component_reg_phys is no longer reset to CXL_RESOURCE_NONE
-post setup, no reason is seen to carry that forward.
-
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Tested-by: Terry Bowman <terry.bowman@amd.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20260131000403.2135324-2-dan.j.williams@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Stable-dep-of: 019560d23450 ("cxl/port: Clear cached dport pointers when a dport is removed")
+Fixes: 3d8f7a89a197 ("hwmon: (tmp102) Improve handling of initial read delay")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tom Verdonck <tom.verdonck@inspiral.be>
+Link: https://patch.msgid.link/2952f070f82913aea96eec25d28008d3b9058656.1790358356.git.tom.verdonck@inspiral.be
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ sashal: Adjusted struct tmp102 context to account for the missing sample_time field. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 31 +++++++++++++++----------------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ drivers/hwmon/tmp102.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 599aa9d9eddca..a7d3497f82c05 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -1073,11 +1073,15 @@ static int add_dport(struct cxl_port *port, struct cxl_dport *dport)
- 		return -EBUSY;
- 	}
+diff --git a/drivers/hwmon/tmp102.c b/drivers/hwmon/tmp102.c
+index 376e0eac8cc1c..62a7bee9e4b95 100644
+--- a/drivers/hwmon/tmp102.c
++++ b/drivers/hwmon/tmp102.c
+@@ -56,7 +56,7 @@ struct tmp102 {
+ 	const char *label;
+ 	struct regmap *regmap;
+ 	u16 config_orig;
+-	unsigned long ready_time;
++	u64 ready_time;
+ };
  
-+	/* Arrange for dport_dev to be valid through remove_dport() */
-+	struct device *dev __free(put_device) = get_device(dport->dport_dev);
-+
- 	rc = xa_insert(&port->dports, (unsigned long)dport->dport_dev, dport,
- 		       GFP_KERNEL);
- 	if (rc)
- 		return rc;
+ /* convert left adjusted 13-bit TMP102 register value to milliCelsius */
+@@ -91,7 +91,7 @@ static int tmp102_read(struct device *dev, enum hwmon_sensor_types type,
+ 	switch (attr) {
+ 	case hwmon_temp_input:
+ 		/* Is it too early to return a conversion ? */
+-		if (time_before(jiffies, tmp102->ready_time)) {
++		if (time_before64(get_jiffies_64(), tmp102->ready_time)) {
+ 			dev_dbg(dev, "%s: Conversion not ready yet..\n", __func__);
+ 			return -EAGAIN;
+ 		}
+@@ -270,7 +270,7 @@ static int tmp102_probe(struct i2c_client *client)
+ 	 * Mark that we are not ready with data until the first
+ 	 * conversion is complete
+ 	 */
+-	tmp102->ready_time = jiffies + msecs_to_jiffies(CONVERSION_TIME_MS);
++	tmp102->ready_time = get_jiffies_64() + msecs_to_jiffies(CONVERSION_TIME_MS);
  
-+	retain_and_null_ptr(dev);
- 	port->nr_dports++;
- 	return 0;
+ 	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
+ 							 tmp102,
+@@ -303,7 +303,7 @@ static int tmp102_resume(struct device *dev)
+ 	err = regmap_update_bits(tmp102->regmap, TMP102_CONF_REG,
+ 				 TMP102_CONF_SD, 0);
+ 
+-	tmp102->ready_time = jiffies + msecs_to_jiffies(CONVERSION_TIME_MS);
++	tmp102->ready_time = get_jiffies_64() + msecs_to_jiffies(CONVERSION_TIME_MS);
+ 
+ 	return err;
  }
-@@ -1106,6 +1110,7 @@ static void cxl_dport_remove(void *data)
- 	struct cxl_dport *dport = data;
- 	struct cxl_port *port = dport->port;
- 
-+	port->nr_dports--;
- 	xa_erase(&port->dports, (unsigned long) dport->dport_dev);
- 	put_device(dport->dport_dev);
- }
-@@ -1188,21 +1193,6 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
- 	if (rc)
- 		return ERR_PTR(rc);
- 
--	/*
--	 * Setup port register if this is the first dport showed up. Having
--	 * a dport also means that there is at least 1 active link.
--	 */
--	if (port->nr_dports == 1 &&
--	    port->component_reg_phys != CXL_RESOURCE_NONE) {
--		rc = cxl_port_setup_regs(port, port->component_reg_phys);
--		if (rc) {
--			xa_erase(&port->dports, (unsigned long)dport->dport_dev);
--			return ERR_PTR(rc);
--		}
--		port->component_reg_phys = CXL_RESOURCE_NONE;
--	}
--
--	get_device(dport_dev);
- 	rc = devm_add_action_or_reset(host, cxl_dport_remove, dport);
- 	if (rc)
- 		return ERR_PTR(rc);
-@@ -1629,7 +1619,16 @@ static struct cxl_dport *cxl_port_add_dport(struct cxl_port *port,
- 
- 	cxl_switch_parse_cdat(new_dport);
- 
--	if (ida_is_empty(&port->decoder_ida)) {
-+	if (port->nr_dports == 1) {
-+		/*
-+		 * Some host bridges are known to not have component regsisters
-+		 * available until a root port has trained CXL. Perform that
-+		 * setup now.
-+		 */
-+		rc = cxl_port_setup_regs(port, port->component_reg_phys);
-+		if (rc)
-+			return ERR_PTR(rc);
-+
- 		rc = devm_cxl_switch_port_decoders_setup(port);
- 		if (rc)
- 			return ERR_PTR(rc);
 -- 
 2.53.0
 
