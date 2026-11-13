@@ -1,57 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585870;
-	b=YZh8D+Uv3le0TXj+7w01HevhZP3VoXkKqWfVVRYNbwwzIVthKn7pmXpq2JkIlJjz8j/M
-	 dbDB5NPYWeRid4Il03tngH6vaP29nekNRlb1btXPdnxZAUpLain3FG12x4swwuhw0Nc11
-	 GSvs3Nu6bU4IjeZqEFEln+1bk+FWbYbFs7hfjqnaNIa4dTqtMNfDUoWVCp4DXFVKsN9+r
-	 snB2xa60Qynv4As8Ei594vWafpY0jBWXoMOioy7D2AGOG/esOn0GN25uvCDg77YZDQjOR
-	 LyAXIawffSnkjTv839jwAtk5Upnx7wRnF9Dyij3K6tcUO7YUazsTMipDmGfY3Xygxhg==
+	t=1794585871;
+	b=HT2s7YDbJEBWl/hgJbRoE3GYtyOo7goGElA+SIA3XpL45QT+AO6AThJtk4ks5YqAwgUG
+	 HZZ/eEUp7EsQErB4K5tXR4PL1Xim8w/514EyeY85yzN46gnaXcTVLxTXEubcv56HoOL1V
+	 WTJpiw2PL86esdeM8vydvujIslC8A/hgBs8S6J9fQhPgKLrZmbXfujxfrNuCJ+9xjQ0Vn
+	 wF6lvZBZS/lEoZd9/C1KkILq8EXCYyVzk1vMzzK6JdxVARdiYFZKqaAqo6cfJhwUXc7+x
+	 COvjaxSHrjzUeCjmlry9+1C8Y/Q+gu0kegVQyn2Esw803g9SzlDI6clJgv/AnDF9IGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585870;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3pIcxj85eueluFftzYAemEXj8+47Vs1hQSaPegF2tWE=;
-	b=eLD5UrEwD4p+9aUMSy+EHEGPr79BY8PHNhwyzXicuBOL3TtqDzGidg2GUt1iW1KCvRg+
-	 k/pqyuVzwH7CysVf7GJmF+mkWOGUjaCvDcbDkPBvs6h5pRF/Kjo+yrHHRKRyfkbhnkSHs
-	 ob6ywgk7z27s4iVRmDaRVcaxAhV31xjjlCKWgJBdx9pqJsK9d7js+XuYtzY28HZdJeljg
-	 3UU+keRzCAoE/+O0gmqO4lH0CeToPoF3tlxyXkjh5ZVp5HRD+xsFrf8xM50rOyMlmQa3e
-	 hnyRTfDPGFH7gI75h4zyo5EpRXoGk1bOr0LSNA8XID3WVJ4vja6hxla3At49uHmN9tA==
+	bh=exzpxwTMtNfvZ/4UdY8cDpuZYxtjBtINzGCHuW8qMnY=;
+	b=Agd3hk4urb9o3ValhRC9fucmkdrQ9GSc9JTno8+5WTAWoUn3LwdO8+UUzFV+XRG3ZOae
+	 O/37bp4wBiEUjBB+FgbrZ7W4Wmi5gKI62Wb+GUl0sCh+YyIgGAre+b0Xbe8NAEn0Xc5Ao
+	 fdohMdKloiKTh3PtZVcJcgI20USPDZw3heiaVrRDCDfTNoTeyIdqcU/rjg267g2djyDdI
+	 Wb2S21XkrF34stmrIfDzITH3LUia7HoMEqC04GWh7PWz+Fo+aeOSH162G9t5Ebprd/Cb/
+	 0yB15xz5JlbdpncIzm7Tmn7EPrjjQcEEhdO+zy721r5MxYnq6jQhkhb76tkDe3YDHkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yagj0eGx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMMXoEQA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104A66070211;
-	Fri, 13 Nov 2026 16:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55896606EA8D;
+	Fri, 13 Nov 2026 16:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yagj0eGx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76BB1F000C4;
-	Fri, 13 Nov 2026 16:04:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LMMXoEQA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25EE1F000C4;
+	Fri, 13 Nov 2026 16:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585869;
-	bh=3pIcxj85eueluFftzYAemEXj8+47Vs1hQSaPegF2tWE=;
+	s=korg; t=1794585871;
+	bh=exzpxwTMtNfvZ/4UdY8cDpuZYxtjBtINzGCHuW8qMnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yagj0eGxUePMjhOy4wx57zBejiSKyox1z4ycuTnUccm4TCOCu0q5Okg7CdJxhudIr
-	 O7pCpfY5GSpobLGvztoWMPrSh7AiDmVjDGI39wRqg2odWtP/ZN5yhWVmxKLy6JNI1P
-	 IJgdbtrygnG8HdGK1Qu6Ydl1nPhKreXmXn61yxuE=
+	b=LMMXoEQAKcH/CGx2tutEHWzBXRlNLz3WpKRKmCVdtwIh0rLYTdLTEbdBKtJlFCrFe
+	 6uwHDjI+JxViRaGUUR0UIGhMvLBPcdSd8QpwdJ9RsNXM0St5toCrFi/A7CBtJ9WjjF
+	 9RS5ZYXAmEF7sEKJEFgO6PolzRQTIgbva4VW3opY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Pranjal Shrivastava <peaan@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Ferenc Lengyel <leferi99@gmail.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sercan GOKMEN <gokmensercan@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 441/507] iommu/arm-smmu-v3: Handle ARM erratum for CONT under invalidation with SVA
-Date: Fri, 13 Nov 2026 10:52:25 -0500
-Message-ID: <20261113153811.682409992@linuxfoundation.org>
+Subject: [PATCH 7.3 442/507] ASoC: cs35l56: Wait for firmware timer expiry before system suspend
+Date: Fri, 13 Nov 2026 10:52:26 -0500
+Message-ID: <20261113153811.716751146@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -73,271 +70,239 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 84c6089a365ff5547f9ea30cb407dc5fe3124fd3 ]
+commit 6cc7db9fdd06c992ee38793b2d556524fc0cf574 upstream.
 
-The erratum (MMU-700: #3777127, S3: #3673557) deals with under
-invalidation of a CONT PTE grouping in the SMMU. The recommended work
-around is to use a range invalidation that spans the entire CONT. The only
-user of CONT in the kernel right now is through SVA sharing a CPU page
-table that contains a CONT created by the mm.
+On CS35L5x firmware older than 3.13.7 (B0 silicon) and 4.7.16 (B2 silicon)
+a SoundWire bus reset is not allowed within 250ms of the last firmware
+timer start.
 
-Previously it was thought that this errata was dealt with because the
-driver always uses range invalidation. However, there is a subtle detail
-in the errata that the invalidation range must fully enclose the entire
-CONT for it to work.
+This is already avoided during runtime suspend by the various idle
+timeouts. System suspend can happen at any time so needs special
+protection. The driver cannot cancel the firmware timer, so it must wait
+long enough for the timer to expire.
 
-It seems that two sequential range invalidations, with a split point
-falling inside a CONT grouping, will not prevent the errata.
+The delay is placed in the suspend stage because typically this has less
+impact on end users than delays in resuming. The amp is in PS3 power
+state when suspending and no new timers will be started in this state.
+An extra 10ms is added to the delay to avoid a race on the exact instant
+the firmware timer expires.
 
-The SMMU's range invalidation generation algorithm does not produce a
-single invalidation for a single SVA invalidation request, nor does the mm
-carefully align the SVA invalidation ranges to accommodate the splitting
-of the invalidation into several ranges.
+There is no need to have the delay for every driver instance. The timers
+on each amp will expire in parallel, so the delay is only needed once.
+A global flag is used so that the first instance to reach its suspend()
+callback will delay and then clear the flag. The cs35l56_fw_idle_wait_lock
+mutex is to ensure this is still safe if async_suspend was ever enabled
+for SoundWire devices.
 
-Thus, when processing a SVA invalidation, the range invalidation splitting
-routine can generate a range invalidation that is split in the middle of
-the CONT and risk under invalidation from this errata. This condition
-could be triggered by a malicious userspace manipulating the TLB gathers
-via mmap/mprotect/munmap.
-
-Update the errata list to the include the S3 variation, detect the IOMMUs
-that have it, and then have SVA invalidations use a simplified version of
-the over invalidation algorithm from the tlbi rework series. This ensures
-that a single range invalidation is issued for a single MMU notifier
-callback and now the range invalidation is guarenteed to cover any posible
-CONT.
-
-Future work to add CONT to iommu_domain page tables should either use this
-one-invalidate/one-range invalidation algorithm or disable CONT support in
-the iommu_domain.
-
-Cc: stable@vger.kernel.org
-Cc: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
-Fixes: 3f1ce8e85ee0 ("iommu/arm-smmu-v3: Share process page tables")
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Pranjal Shrivastava <peaan@google.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Pranjal Shrivastava <praan@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-[ sashal: Adjusted header context to account for the missing ARM_SMMU_OPT_OVR_INSTCFG_DATA definition. ]
+Fixes: e496112529006 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
+Reported-by: Ferenc Lengyel <leferi99@gmail.com>
+Closes: https://github.com/thesofproject/linux/issues/5898
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20261020135706.3573260-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sercan GOKMEN <gokmensercan@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arch/arm64/silicon-errata.rst   |  3 +-
- .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   |  7 ++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 89 +++++++++++++++----
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  5 ++
- 4 files changed, 87 insertions(+), 17 deletions(-)
+ include/sound/cs35l56.h           |  4 ++++
+ sound/soc/codecs/cs35l56-sdw.c    | 27 +++++++++++++++++++++-
+ sound/soc/codecs/cs35l56-shared.c | 38 +++++++++++++++++++++++++++++++
+ sound/soc/codecs/cs35l56.c        | 17 ++++++++++++++
+ sound/soc/codecs/cs35l56.h        |  1 +
+ 5 files changed, 86 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/arch/arm64/silicon-errata.rst b/Documentation/arch/arm64/silicon-errata.rst
-index 99a1eb4b833dd..95faec78b7f70 100644
---- a/Documentation/arch/arm64/silicon-errata.rst
-+++ b/Documentation/arch/arm64/silicon-errata.rst
-@@ -273,7 +273,8 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | MMU L1          | #3878312        | N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
--| ARM            | MMU S3          | #3995052        | N/A                         |
-+| ARM            | MMU S3          | #3995052,       | N/A                         |
-+|                |                 | #3673557        |                             |
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | GIC-700         | #2941627        | ARM64_ERRATUM_2941627       |
- +----------------+-----------------+-----------------+-----------------------------+
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-index 0a429c64fbf3e..3f50298a1c14c 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-@@ -215,6 +215,13 @@ bool arm_smmu_sva_supported(struct arm_smmu_device *smmu)
- 	if (system_supports_haft())
- 		feat_mask |= ARM_SMMU_FEAT_HAFT;
+diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
+index 747e10ec1a274..ce6383c2c60cc 100644
+--- a/include/sound/cs35l56.h
++++ b/include/sound/cs35l56.h
+@@ -209,6 +209,9 @@ struct snd_ctl_elem_value;
  
-+	/*
-+	 * The workaround for ARM_SMMU_OPT_FULL_CONT_RANGE_INV requires range
-+	 * invalidation support.
-+	 */
-+	if (smmu->options & ARM_SMMU_OPT_FULL_CONT_RANGE_INV)
-+		feat_mask |= ARM_SMMU_FEAT_RANGE_INV;
+ #define CS35L56_GPIO_FN_GPIO				0x00000001
+ 
++/* DSP1_FW_VER */
++#define CS35L56_FW_MAIN_VERSION_MASK			GENMASK(19, 0)
 +
- 	if ((smmu->features & feat_mask) != feat_mask)
- 		return false;
+ /* Mixer input sources */
+ #define CS35L56_INPUT_SRC_NONE				0x00
+ #define CS35L56_INPUT_SRC_ASP1RX1			0x08
+@@ -446,6 +449,7 @@ int cs35l56_cal_set_status_get(struct cs35l56_base *cs35l56_base,
+ int cs35l56_read_prot_status(struct cs35l56_base *cs35l56_base,
+ 			     bool *fw_missing, unsigned int *fw_version);
+ void cs35l56_warn_if_firmware_missing(struct cs35l56_base *cs35l56_base);
++bool cs35l56_needs_wait_for_firmware_timer_expiry(struct cs35l56_base *cs35l56_base);
+ void cs35l56_log_tuning(struct cs35l56_base *cs35l56_base, struct cs_dsp *cs_dsp);
+ int cs35l56_hw_init(struct cs35l56_base *cs35l56_base);
+ int cs35l56_get_speaker_id(struct cs35l56_base *cs35l56_base);
+diff --git a/sound/soc/codecs/cs35l56-sdw.c b/sound/soc/codecs/cs35l56-sdw.c
+index e10f04d677f4d..a49ad69644b5a 100644
+--- a/sound/soc/codecs/cs35l56-sdw.c
++++ b/sound/soc/codecs/cs35l56-sdw.c
+@@ -9,6 +9,7 @@
+ #include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ #include <linux/soundwire/sdw.h>
+@@ -36,6 +37,9 @@
+ #define CS35L56_LATE_READ_POLL_US	10
+ #define CS35L56_LATE_READ_TIMEOUT_US	1000
  
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 81baafaffc410..b510dd47f2315 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2538,6 +2538,37 @@ static void arm_smmu_cmdq_batch_add_range(struct arm_smmu_device *smmu,
- 	}
++static DEFINE_MUTEX(cs35l56_fw_idle_wait_lock);
++static bool cs35l56_fw_idle_wait_pending;
++
+ static int cs35l56_sdw_poll_mem_status(struct sdw_slave *peripheral,
+ 				       unsigned int mask,
+ 				       unsigned int match)
+@@ -387,14 +391,34 @@ static int __maybe_unused cs35l56_sdw_runtime_resume(struct device *dev)
+ 	return 0;
  }
  
-+/*
-+ * Generate a range invalidation for ARM_SMMU_OPT_FULL_CONT_RANGE_INV by
-+ * ensuring the entire SVA requested range is covered with a single range
-+ * invalidation command. The scale is adjusted so that the range invalidation
-+ * may extend past the end of the requested range. This ensures that any CONT
-+ * the MM is invalidating is covered by a single range invalidation. TTL and
-+ * LEAF are always 0 because this is only used by SVA.
-+ */
-+static bool arm_smmu_cmdq_batch_add_range_inv(struct arm_smmu_device *smmu,
-+					      struct arm_smmu_cmdq_batch *cmds,
-+					      struct arm_smmu_cmd *cmd,
-+					      unsigned long iova, size_t size,
-+					      u8 tgsz_lg2)
++static int cs35l56_sdw_system_suspend_prepare(struct device *dev)
 +{
-+	u64 cur_tg = iova >> tgsz_lg2;
-+	u64 num_tg = ((iova + size - 1) >> tgsz_lg2) - cur_tg + 1;
-+	unsigned int scale = fls64((num_tg - 1) / 32);
++	cs35l56_fw_idle_wait_pending = true;
 +
-+	if (scale > 31)
-+		return false;
-+
-+	cmd->data[0] |=
-+		FIELD_PREP(CMDQ_TLBI_0_NUM,
-+			   DIV_ROUND_UP_ULL(num_tg, 1ULL << scale) - 1) |
-+		FIELD_PREP(CMDQ_TLBI_0_SCALE, scale);
-+	cmd->data[1] = FIELD_PREP(CMDQ_TLBI_1_TG, (tgsz_lg2 - 10) / 2) |
-+		       (cur_tg << tgsz_lg2);
-+	arm_smmu_cmdq_batch_add_cmd_p(smmu, cmds, cmd);
-+	return true;
++	return 0;
 +}
 +
- static bool arm_smmu_inv_size_too_big(struct arm_smmu_device *smmu, size_t size,
- 				      size_t granule)
+ static int __maybe_unused cs35l56_sdw_system_suspend(struct device *dev)
  {
-@@ -2565,21 +2596,30 @@ static bool arm_smmu_inv_size_too_big(struct arm_smmu_device *smmu, size_t size,
- static void arm_smmu_inv_to_cmdq_batch(struct arm_smmu_inv *inv,
- 				       struct arm_smmu_cmdq_batch *cmds,
- 				       struct arm_smmu_cmd *cmd,
--				       bool leaf,
-+				       bool single_range_inv, bool leaf,
- 				       unsigned long iova, size_t size,
- 				       unsigned int granule)
- {
--	if (arm_smmu_inv_size_too_big(inv->smmu, size, granule)) {
--		struct arm_smmu_cmd nsize_cmd = *cmd;
-+	struct arm_smmu_cmd nsize_cmd;
-+
-+	if (arm_smmu_inv_size_too_big(inv->smmu, size, granule))
-+		goto full_inv;
+ 	struct cs35l56_private *cs35l56 = dev_get_drvdata(dev);
++	int ret;
  
--		u64p_replace_bits(&nsize_cmd.data[0], inv->nsize_opcode,
--				  CMDQ_0_OP);
--		arm_smmu_cmdq_batch_add_cmd_p(inv->smmu, cmds, &nsize_cmd);
-+	if (single_range_inv && size > granule) {
-+		if (!arm_smmu_cmdq_batch_add_range_inv(inv->smmu, cmds, cmd,
-+						       iova, size, inv->pgsize))
-+			goto full_inv;
- 		return;
- 	}
+ 	if (cs35l56->sdw_attached)
+ 		cs35l56_mask_soundwire_interrupts(cs35l56);
  
--	arm_smmu_cmdq_batch_add_range(inv->smmu, cmds, cmd, leaf,
--				      iova, size, granule, inv->pgsize);
-+	arm_smmu_cmdq_batch_add_range(inv->smmu, cmds, cmd, leaf, iova, size,
-+				      granule, inv->pgsize);
-+	return;
+-	return cs35l56_system_suspend(dev);
++	ret = cs35l56_system_suspend(dev);
++	if (ret < 0)
++		return ret;
 +
-+full_inv:
-+	nsize_cmd = *cmd;
-+	u64p_replace_bits(&nsize_cmd.data[0], inv->nsize_opcode, CMDQ_0_OP);
-+	arm_smmu_cmdq_batch_add_cmd_p(inv->smmu, cmds, &nsize_cmd);
++	scoped_guard(mutex, &cs35l56_fw_idle_wait_lock) {
++		if (cs35l56_fw_idle_wait_pending && cs35l56->needs_wait_for_fw_idle) {
++			dev_dbg(cs35l56->base.dev, "Wait for FW timer expiry\n");
++			msleep(CS35L56_FW_REQ_ACTIVE_TIMEOUT_MS + 10);
++			cs35l56_fw_idle_wait_pending = false;
++		}
++	}
++
++	return 0;
  }
  
- static inline bool arm_smmu_invs_end_batch(struct arm_smmu_inv *cur,
-@@ -2600,7 +2640,8 @@ static inline bool arm_smmu_invs_end_batch(struct arm_smmu_inv *cur,
+ static int cs35l56_sdw_probe(struct sdw_slave *peripheral, const struct sdw_device_id *id)
+@@ -460,6 +484,7 @@ static void cs35l56_sdw_remove(struct sdw_slave *peripheral)
+ }
  
- static void __arm_smmu_domain_inv_range(struct arm_smmu_invs *invs,
- 					unsigned long iova, size_t size,
--					unsigned int granule, bool leaf)
-+					unsigned int granule,
-+					bool single_range_inv, bool leaf)
- {
- 	struct arm_smmu_cmdq_batch cmds = {};
- 	struct arm_smmu_inv *cur;
-@@ -2630,14 +2671,16 @@ static void __arm_smmu_domain_inv_range(struct arm_smmu_invs *invs,
- 		case INV_TYPE_S1_ASID:
- 			cmd = arm_smmu_make_cmd_tlbi(cur->size_opcode,
- 						     cur->id, 0);
--			arm_smmu_inv_to_cmdq_batch(cur, &cmds, &cmd, leaf,
--						   iova, size, granule);
-+			arm_smmu_inv_to_cmdq_batch(cur, &cmds, &cmd,
-+						   single_range_inv, leaf, iova,
-+						   size, granule);
- 			break;
- 		case INV_TYPE_S2_VMID:
- 			cmd = arm_smmu_make_cmd_tlbi(cur->size_opcode,
- 						     0, cur->id);
--			arm_smmu_inv_to_cmdq_batch(cur, &cmds, &cmd, leaf,
--						   iova, size, granule);
-+			arm_smmu_inv_to_cmdq_batch(cur, &cmds, &cmd,
-+						   single_range_inv, leaf, iova,
-+						   size, granule);
- 			break;
- 		case INV_TYPE_S2_VMID_S1_CLEAR:
- 			/* CMDQ_OP_TLBI_S12_VMALL already flushed S1 entries */
-@@ -2684,6 +2727,9 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
- 			       unsigned int granule, bool leaf)
- {
- 	struct arm_smmu_invs *invs;
-+	bool single_range_inv =
-+		smmu_domain->stage == ARM_SMMU_DOMAIN_SVA &&
-+		(smmu_domain->smmu->options & ARM_SMMU_OPT_FULL_CONT_RANGE_INV);
+ static const struct dev_pm_ops cs35l56_sdw_pm = {
++	.prepare = cs35l56_sdw_system_suspend_prepare,
+ 	SET_RUNTIME_PM_OPS(cs35l56_sdw_runtime_suspend, cs35l56_sdw_runtime_resume, NULL)
+ 	SYSTEM_SLEEP_PM_OPS(cs35l56_sdw_system_suspend, cs35l56_system_resume)
+ 	LATE_SYSTEM_SLEEP_PM_OPS(cs35l56_system_suspend_late, cs35l56_system_resume_early)
+diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
+index 7b3e37d462d61..b37f65cd4d336 100644
+--- a/sound/soc/codecs/cs35l56-shared.c
++++ b/sound/soc/codecs/cs35l56-shared.c
+@@ -1379,6 +1379,44 @@ void cs35l56_warn_if_firmware_missing(struct cs35l56_base *cs35l56_base)
+ }
+ EXPORT_SYMBOL_NS_GPL(cs35l56_warn_if_firmware_missing, "SND_SOC_CS35L56_SHARED");
  
++bool cs35l56_needs_wait_for_firmware_timer_expiry(struct cs35l56_base *cs35l56_base)
++{
++	unsigned int fw_ver;
++	bool prot_sts;
++	int ret;
++
++	switch (cs35l56_base->type) {
++	case 0x54:
++	case 0x56:
++	case 0x57:
++		switch (cs35l56_base->rev) {
++		case 0xb0:
++			ret = cs35l56_read_prot_status(cs35l56_base, &prot_sts, &fw_ver);
++			if (ret)
++				return true;
++
++			if ((fw_ver & CS35L56_FW_MAIN_VERSION_MASK) < 0x30d07)
++				return true;
++
++			return false;
++		case 0xb2:
++			ret = cs35l56_read_prot_status(cs35l56_base, &prot_sts, &fw_ver);
++			if (ret)
++				return true;
++
++			if ((fw_ver & CS35L56_FW_MAIN_VERSION_MASK) < 0x40710)
++				return true;
++
++			return false;
++		default:
++			return false;
++		}
++	default:
++		return false;
++	}
++}
++EXPORT_SYMBOL_NS_GPL(cs35l56_needs_wait_for_firmware_timer_expiry, "SND_SOC_CS35L56_SHARED");
++
+ void cs35l56_log_tuning(struct cs35l56_base *cs35l56_base, struct cs_dsp *cs_dsp)
+ {
+ 	__be32 pid, sid, tid;
+diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
+index 279db3f13f1e3..573cc71a1910d 100644
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -1693,6 +1693,10 @@ int cs35l56_system_resume(struct device *dev)
+ 
+ 	dev_dbg(dev, "system_resume\n");
+ 
++	/* Assume the firmware reset to default until we can check it */
++	if (cs35l56->base.init_done)
++		cs35l56->needs_wait_for_fw_idle = true;
++
  	/*
- 	 * An invalidation request must follow some IOPTE change and then load
-@@ -2723,10 +2769,12 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
- 		unsigned long flags;
+ 	 * We might have done a hard reset or the CS35L56 was power-cycled
+ 	 * so wait for control port to be ready.
+@@ -1707,6 +1711,16 @@ int cs35l56_system_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
  
- 		read_lock_irqsave(&invs->rwlock, flags);
--		__arm_smmu_domain_inv_range(invs, iova, size, granule, leaf);
-+		__arm_smmu_domain_inv_range(invs, iova, size, granule,
-+					    single_range_inv, leaf);
- 		read_unlock_irqrestore(&invs->rwlock, flags);
- 	} else {
--		__arm_smmu_domain_inv_range(invs, iova, size, granule, leaf);
-+		__arm_smmu_domain_inv_range(invs, iova, size, granule,
-+					    single_range_inv, leaf);
- 	}
++	if (cs35l56->sdw_peripheral && cs35l56->base.init_done) {
++		ret = pm_runtime_resume_and_get(cs35l56->base.dev);
++		if (ret < 0)
++			return ret;
++
++		cs35l56->needs_wait_for_fw_idle =
++			cs35l56_needs_wait_for_firmware_timer_expiry(&cs35l56->base);
++		pm_runtime_put_autosuspend(cs35l56->base.dev);
++	}
++
+ 	/* Firmware won't have been loaded if the component hasn't probed */
+ 	if (!cs35l56->component)
+ 		return 0;
+@@ -2231,6 +2245,9 @@ int cs35l56_init(struct cs35l56_private *cs35l56)
+ 	if (ret)
+ 		return dev_err_probe(cs35l56->base.dev, ret, "Failed to write ASP1_CONTROL3\n");
  
- 	rcu_read_unlock();
-@@ -5009,11 +5057,20 @@ static void arm_smmu_device_iidr_probe(struct arm_smmu_device *smmu)
- 				/* Arm errata 2268618, 2812531 */
- 				smmu->features &= ~ARM_SMMU_FEAT_NESTING;
- 			}
-+			/* Arm errata 3777127 */
-+			smmu->options |= ARM_SMMU_OPT_FULL_CONT_RANGE_INV;
- 			break;
- 		case IIDR_PRODUCTID_ARM_MMU_L1:
-+			/* Arm errata 3878312 */
-+			smmu->features &= ~ARM_SMMU_FEAT_BTM;
-+			break;
- 		case IIDR_PRODUCTID_ARM_MMU_S3:
--			/* Arm errata 3878312/3995052 */
-+			/* Arm errata 3995052 */
- 			smmu->features &= ~ARM_SMMU_FEAT_BTM;
-+			/* Arm errata 3673557 */
-+			if (variant < 1 || (variant == 1 && revision < 1))
-+				smmu->options |=
-+					ARM_SMMU_OPT_FULL_CONT_RANGE_INV;
- 			break;
- 		}
- 		break;
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index dd2fee2f560e6..094ce28c862f5 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -934,6 +934,11 @@ struct arm_smmu_device {
- #define ARM_SMMU_OPT_MSIPOLL		(1 << 2)
- #define ARM_SMMU_OPT_CMDQ_FORCE_SYNC	(1 << 3)
- #define ARM_SMMU_OPT_TEGRA241_CMDQV	(1 << 4)
-+/*
-+ * Range invalidation is mandatory and one range invalidation must fully span an
-+ * invalidated CONT
-+ */
-+#define ARM_SMMU_OPT_FULL_CONT_RANGE_INV (1 << 6)
- 	u32				options;
++	cs35l56->needs_wait_for_fw_idle =
++		cs35l56_needs_wait_for_firmware_timer_expiry(&cs35l56->base);
++
+ 	cs35l56->base.init_done = true;
+ 	complete_all(&cs35l56->init_completion);
  
- 	struct arm_smmu_cmdq		cmdq;
+diff --git a/sound/soc/codecs/cs35l56.h b/sound/soc/codecs/cs35l56.h
+index f7cf8aa653e28..b46f410f0e093 100644
+--- a/sound/soc/codecs/cs35l56.h
++++ b/sound/soc/codecs/cs35l56.h
+@@ -43,6 +43,7 @@ struct cs35l56_private {
+ 	bool soft_resetting;
+ 	bool sdw_attached;
+ 	bool component_registered;
++	bool needs_wait_for_fw_idle;
+ 	struct completion init_completion;
+ 
+ 	int speaker_id;
 -- 
 2.53.0
 
