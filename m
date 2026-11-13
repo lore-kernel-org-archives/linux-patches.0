@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591309;
-	b=KMjvwzrbTDkTIHS0cTnhCuBHYHyEjc5OJUyQg8nfRbNnhggZemuHPLRomwPi4B+AbJY+
-	 YfucnOYF4qL8szvTz5O5rCct7pbgGmPX7N4hkEma1jlmjRTfiCQ7pP5tQerMP+4yr+eDI
-	 /j1YhWwwX+nkGRX86MzW9op+vqqY1/OdXeDko/xiOlMwp7/zI0lPArsbpNHheu0E5SF1t
-	 be9NePWhwRml7+nCwvswuadYaBnGSeipgyqxCBWaGX3j3p9VF1yOf3kaB3M05me2kjKx4
-	 THC4QaSCiLXvz1cLMSe3B+jafSAv7W8QtPDJnfi7Va6D5QmyoOCwlDWQm6cxcxJ07cQ==
+	t=1794591311;
+	b=R8N9omGUOTIgqwW9eP0N3MUwX3Pk7k/oeQBBDnMyD5+Ndlpru4Y9LAxkdytz+0/4tu/6
+	 eYH/Z1EtkPbJ5tawMusyDcQNEwKeRGF7oCXLpIlyqAPL36dOLWtXFWM58GZWV9M5uz9sT
+	 TYjW+U6V6fp2cr1wILKbT9KLAngz6dHbLPGoa77N3Bu+d5cmj4pNmkYuhAjuF3Usq6yLK
+	 85ruzkpJKiiusFbI8zm/vKE6w9I5KxBBE3klWrxAqN1GhHtnS9Tnc7M1UBMytOhhY3Oxz
+	 0kysSoqC/mewMk73K1+O80QCG8LF/rqcofF1NXRWVkicPVjX7nozTu058OQKN8opS0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591309;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591311;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nsrvd9Ielw6Vj6MsC4xoKU4/6I3HrRm2EWgRnA8MwlY=;
-	b=zbnHpv/Z0nSQ3yAMkNfj1GLmi9CF0COcmZLYDWfRtF3ixB88N1hGs7D05VtodRGnghnI
-	 eysyDVrmef5v+hSUzDMf+RJAjCNNZU7F2knLxR/nxgtJwQuE+z3Je1hHQoMV27jiOi4+K
-	 Q8gkKtp3KfxSppyXWp1IZHjPqmnm7j2JyeTZ+hVtJIaLVWWJbl0BvW/CsqFYOQEtxhB5a
-	 7mnuExgUyq/fAVg5IPh2kH4thGj0BKSkPSF/p8AykAUgnU6gph1v4Um7iF279QamYY+03
-	 QgiBg5H6vn5s04A0kopGvFAQh0sjq3N+E8IMt4zzfxeb/lnpSEWOI93i/rlENAqCOmA==
+	bh=OfZwTNkUbS1twRQNkkg3rGWowgs0afq5m4bi65ReSDE=;
+	b=C8NeJ9A8FDZrWuFYCbooAFm97Hj4UXKnS2S4MJJXJmBwP6ZSHNaJmLnhxux6VgjyqkgS
+	 tIVfTXa4cshsQh4qxde0nw7Oo4all+jNo7L3y9IGx3BNVGqtEg1cx8Er+hRN3FzcyYNCb
+	 tIf9QCHbtJXNRTZxqNmI5LGSRzzOZYTphGL/eY5c4+TvJierDxqT7KaotE+coiyAXpGla
+	 4F+bDdeTZpyXfbUBcCv72aU5x7GjRqhM86T3TYMYf6ETn5cUD1eP3tcb7gYn7yxGdb2y6
+	 62ONojwMmSN2gHWGaIPS68aJE3RURyNPFECU43RRVIowULunaGJeSIYLQfJYXnPSUMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nn6Db+Vf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eKBtSePu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED19606B218;
-	Fri, 13 Nov 2026 17:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B17B606B213;
+	Fri, 13 Nov 2026 17:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nn6Db+Vf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 582C21F000C5;
-	Fri, 13 Nov 2026 17:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eKBtSePu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE1A1F000C5;
+	Fri, 13 Nov 2026 17:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591309;
-	bh=nsrvd9Ielw6Vj6MsC4xoKU4/6I3HrRm2EWgRnA8MwlY=;
+	s=korg; t=1794591310;
+	bh=OfZwTNkUbS1twRQNkkg3rGWowgs0afq5m4bi65ReSDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nn6Db+Vfufa1rFlKpAJhgVokPHmBidTEl6GmMq+i23iey7fn65WnDMXDY7kFJ+211
-	 NJuS10TbZPtGXJ5WBIdxn6U9F6FyR8pLYdu/LhkVSBItPqSjsIqBGJxOXxvD2Coc3/
-	 AXkgYQz6BI3EBQYHxDGzet4Nqv1rMojaSrHOjHEs=
+	b=eKBtSePuP7VYPhLmw6hn613Z+cp68DHU+apxf/T6DP92BywZ9TRnqluafJ3I4r0Yz
+	 pbGkg6+lCy6pbEuJgt6v3oDGDV+Mcou86QkpOkB5xheMXOG70EfHRy1P8+61IbZHFc
+	 mE/5YVUEZfjqCdpP5shI7Rp4jFNkA++UZoSK+7tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jakub Szczudlo <jakubszczudlo40@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 422/670] Bluetooth: hci_sync: pause advertising for the scan address update
-Date: Fri, 13 Nov 2026 10:49:46 -0500
-Message-ID: <20261113153826.040754336@linuxfoundation.org>
+Subject: [PATCH 6.12 423/670] iio: adc: ti-ads1100: Fix incorrect reading when datarate changed in single mode
+Date: Fri, 13 Nov 2026 10:49:47 -0500
+Message-ID: <20261113153826.072351802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,154 +70,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+From: Jakub Szczudlo <jakubszczudlo40@gmail.com>
 
-[ Upstream commit 56ed6b127a27c418dc2daa3fd076539d8fe69c4c ]
+[ Upstream commit 38dbf24dfbd0a73b89fa2871a7148429aef05531 ]
 
-hci_active_scan_sync() programs a non-resolvable private address with LE
-Set Random Address on every active scan start.
+When device is suspended and it is in single mode then changing
+datarate doesn't make it actually wait for new measurement, so to
+be sure that read after change is correct, functions that changes
+datarate and gain will wait for a new data.
 
-BLUETOOTH CORE SPECIFICATION Vol 4, Part E, 7.8.4 says the controller
-shall return Command Disallowed (0x0C) for that command while legacy
-advertising or scanning is enabled. hci_pause_addr_resolution(), called
-just above, only stops advertising when LL privacy is in use, so on a
-controller without it the command is issued while advertising is still
-on:
-
-  Bluetooth: hci0: Opcode 0x2005 failed: -16
-
-It does not converge either. hdev->random_addr is only set on a
-successful command complete, so it stays BDADDR_ANY, and the deferral
-added by commit c2994b008492 ("Bluetooth: hci_sync: Fix not setting
-Random Address when required") requires it to be set. Unlike the
-resolvable address a few lines above, which is reused while rpa_valid(),
-the non-resolvable one is regenerated and rewritten on every call, so a
-controller that refuses the write is asked again at the scan restart
-period of about 10 s, for as long as discovery keeps restarting.
-Observed on a BCM43455, which has no LL privacy and no extended
-advertising, 190 rejections in one capture, every one retrying the same
-address:
-
-  < LE Set Random Address  Address: 02:16:91:90:F1:D4 (Non-Resolvable)
-  > Command Complete       LE Set Random Address, Command Disallowed
-  < LE Set Random Address  Address: 26:90:57:96:9A:3E (Non-Resolvable)
-  > Command Complete       LE Set Random Address, Command Disallowed
-
-Pause advertising for the address update, and resume it once the update
-is done and before the scan is started. The pause does not outlive the
-function: it is taken only when nothing else holds it, and every exit
-resumes advertising, which also releases the pause taken by
-hci_pause_addr_resolution(). A failed pause returns before marking
-anything paused, so the error path is a no-op.
-
-The resume in the error path is no longer guarded by ll_privacy_capable().
-That guard matched a pause taken only under LL privacy; the pause added
-here is unconditional, and hci_resume_advertising_sync() returns early
-when nothing was paused.
-
-One caveat this widens, raised on the previous posting. When
-HCI_ADVERTISING is set, hci_pause_advertising_sync() also clears
-HCI_DISCOVERABLE and HCI_LIMITED_DISCOVERABLE and zeroes discov_timeout,
-and hci_resume_advertising_sync() restores only HCI_ADVERTISING, so the
-discoverable state is lost. It reproduces today on an LL privacy
-controller through hci_pause_addr_resolution(); the unconditional pause
-makes it reachable without LL privacy as well. hci_suspend_sync() also
-pauses unconditionally, so a device that suspends loses the same state
-on any controller today. That asymmetry is pre-existing and is left
-alone here rather than folded into a scan path fix.
-
-Legacy controllers have one random address register, shared by the
-scanner and the advertiser. Restoring the advertiser here can reprogram
-it when the advertiser is non-connectable, so the scan then uses that
-address rather than the one generated for it. Both are non-resolvable
-and neither is linkable to the identity address. With privacy enabled
-both roles already share one resolvable address the same way.
-
-With the patch, on the same hardware:
-
-  < LE Set Advertising Enable    Enable: 0x00              Success
-  < LE Set Random Address                                  Success
-  < LE Set Advertising Parameters                          Success
-  < LE Set Advertising Enable    Enable: 0x01              Success
-  < LE Set Scan Parameters                                 Success
-  < LE Set Scan Enable           Enable: 0x01              Success
-
-The address write is accepted, and advertising is restored before the
-scan is started.
-
-Over 119369 btmon records and about 12 minutes of the normal workload of
-that device, alternating active and passive scanning with ten outgoing
-connection attempts, every LE Set Random Address succeeded and there were
-no Command Disallowed responses of any opcode, against one per scan
-restart before.
-
-Patch 1 is required: without it the resume added here returns -EPERM on
-the controllers this fixes and leaves advertising disabled.
-
-Fixes: 3c44a431d62b ("Bluetooth: hci_sync: Resume adv with no RPA when active scan")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5.5 btmon
-Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ Valentin: Adjusted for 6.12.y: the privacy guard removed in the failed: label
-  reads use_ll_privacy(hdev) in this tree, and the context uses
-  test_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks) instead of
-  hci_test_quirk(). The added lines are unchanged. Requires commit
-  737139f4157d ("Bluetooth: hci_sync: re-enable legacy advertising on
-  resume"). ]
-Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+Fixes: 541880542f2b ("iio: adc: Add TI ADS1100 and ADS1000")
+Signed-off-by: Jakub Szczudlo <jakubszczudlo40@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+[ sashal: replaced scoped PM guards with pm_runtime_resume_and_get() and explicit cleanup using pm_runtime_mark_last_busy() before pm_runtime_put_autosuspend() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/iio/adc/ti-ads1100.c | 121 +++++++++++++++++++++++++++++++++--
+ 1 file changed, 115 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 3856f29a301c0..e0bcb000107c5 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6154,6 +6154,7 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
- 	u8 filter_policy = 0x00;
- 	/* Default is to enable duplicates filter */
- 	u8 filter_dup = LE_SCAN_FILTER_DUP_ENABLE;
-+	bool paused;
- 	int err;
+diff --git a/drivers/iio/adc/ti-ads1100.c b/drivers/iio/adc/ti-ads1100.c
+index 1e46f07a9ca6a..bea727ff9d6ee 100644
+--- a/drivers/iio/adc/ti-ads1100.c
++++ b/drivers/iio/adc/ti-ads1100.c
+@@ -14,10 +14,12 @@
+ #include <linux/module.h>
+ #include <linux/init.h>
+ #include <linux/i2c.h>
++#include <linux/iopoll.h>
+ #include <linux/mutex.h>
+ #include <linux/property.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/regulator/consumer.h>
++#include <linux/time.h>
+ #include <linux/units.h>
  
- 	bt_dev_dbg(hdev, "");
-@@ -6177,6 +6178,12 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
- 	if (err)
- 		goto failed;
+ #include <linux/iio/iio.h>
+@@ -42,6 +44,9 @@
+ static const int ads1100_data_rate[] = { 128, 32, 16, 8 };
+ static const int ads1100_data_rate_bits[] = { 12, 14, 15, 16 };
  
-+	/* LE Set Random Address is disallowed while advertising is enabled. */
-+	paused = !hdev->advertising_paused;
-+	err = hci_pause_advertising_sync(hdev);
-+	if (err)
-+		goto failed;
++/* Timeout based on the minimum sample rate of 8 SPS (7500ms) */
++#define ADS1100_MAX_DRDY_TIMEOUT_US	(7500 * USEC_PER_MSEC)
 +
- 	/* All active scans will be done with either a resolvable private
- 	 * address (when privacy feature has been enabled) or non-resolvable
- 	 * private address.
-@@ -6186,6 +6193,9 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
- 	if (err < 0)
- 		own_addr_type = ADDR_LE_DEV_PUBLIC;
+ struct ads1100_data {
+ 	struct i2c_client *client;
+ 	struct regulator *reg_vdd;
+@@ -123,10 +128,86 @@ static int ads1100_get_adc_result(struct ads1100_data *data, int chan, int *val)
+ 	return 0;
+ }
  
-+	if (paused)
-+		hci_resume_advertising_sync(hdev);
++static int ads1100_conversion_busy(struct ads1100_data *data)
++{
++	u8 buffer[3];
++	int ret;
 +
- 	if (hci_is_adv_monitoring(hdev) ||
- 	    (test_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks) &&
- 	    hdev->discovery.result_filtering)) {
-@@ -6209,9 +6219,8 @@ static int hci_active_scan_sync(struct hci_dev *hdev, uint16_t interval)
- 		return err;
++	ret = i2c_master_recv(data->client, (char *)&buffer, sizeof(buffer));
++	if (ret < 0) {
++		dev_err(&data->client->dev, "I2C read fail: %d\n", ret);
++		return ret;
++	}
++
++	return FIELD_GET(ADS1100_CFG_ST_BSY, buffer[2]);
++}
++
++static int ads1100_wait_single_conversion(struct ads1100_data *data)
++{
++	int data_rate_index = FIELD_GET(ADS1100_DR_MASK, data->config);
++	int data_rate_Hz = ads1100_data_rate[data_rate_index];
++	unsigned long poll_us = DIV_ROUND_CLOSEST(USEC_PER_SEC, data_rate_Hz) / 4;
++	int busy;
++	int ret;
++
++	ret = readx_poll_timeout(ads1100_conversion_busy, data,
++				 busy, busy <= 0,
++				 poll_us, ADS1100_MAX_DRDY_TIMEOUT_US);
++	if (busy < 0)
++		return busy;
++
++	return ret;
++}
++
++static int ads1100_start_single_conversion(struct ads1100_data *data)
++{
++	u8 config = data->config | ADS1100_CFG_SC;
++	int ret;
++
++	ret = i2c_master_send(data->client, &config, sizeof(config));
++	if (ret < 0) {
++		dev_err(&data->client->dev, "I2C write fail: %d\n", ret);
++		return ret;
++	}
++	/* Need to wait because of change from continuous to single mode */
++	ret = ads1100_wait_single_conversion(data);
++	if (ret)
++		return ret;
++
++	config |= ADS1100_CFG_ST_BSY;
++
++	ret = i2c_master_send(data->client, &config, sizeof(config));
++	if (ret < 0) {
++		dev_err(&data->client->dev, "I2C write fail: %d\n", ret);
++		return ret;
++	}
++
++	/* No need to cache it, it's status bit */
++	data->config = config & ~ADS1100_CFG_ST_BSY;
++
++	return 0;
++}
++
++static int ads1100_poll_data_ready(struct ads1100_data *data)
++{
++	int ret;
++
++	ret = ads1100_start_single_conversion(data);
++	if (ret)
++		return ret;
++
++	ret = ads1100_wait_single_conversion(data);
++	if (ret)
++		return ret;
++
++	return ads1100_set_config_bits(data, ADS1100_CFG_SC, ADS1100_CONTINUOUS);
++}
++
+ static int ads1100_set_scale(struct ads1100_data *data, int val, int val2)
+ {
+ 	int microvolts;
+ 	int gain;
++	int ret;
  
- failed:
--	/* Resume advertising if it was paused */
--	if (use_ll_privacy(hdev))
--		hci_resume_advertising_sync(hdev);
-+	/* No-op when advertising was not paused. */
-+	hci_resume_advertising_sync(hdev);
+ 	/* With Vdd between 2.7 and 5V, the scale is always below 1 */
+ 	if (val)
+@@ -135,6 +216,10 @@ static int ads1100_set_scale(struct ads1100_data *data, int val, int val2)
+ 	if (!val2)
+ 		return -EINVAL;
  
- 	/* Resume passive scanning */
- 	hci_update_passive_scan_sync(hdev);
++	ret = pm_runtime_resume_and_get(&data->client->dev);
++	if (ret)
++		return ret;
++
+ 	microvolts = regulator_get_voltage(data->reg_vdd);
+ 	/*
+ 	 * val2 is in 'micro' units, n = val2 / 1000000
+@@ -144,27 +229,51 @@ static int ads1100_set_scale(struct ads1100_data *data, int val, int val2)
+ 	 * bitshift so everything fits in 32-bits yields this formula.
+ 	 */
+ 	gain = DIV_ROUND_CLOSEST(microvolts, BIT(15)) * MILLI / val2;
+-	if (gain < BIT(0) || gain > BIT(3))
+-		return -EINVAL;
++	if (gain < BIT(0) || gain > BIT(3)) {
++		ret = -EINVAL;
++		goto out;
++	}
+ 
+ 	ads1100_set_config_bits(data, ADS1100_PGA_MASK, ffs(gain) - 1);
+ 
+-	return 0;
++	ret = ads1100_poll_data_ready(data);
++out:
++	pm_runtime_mark_last_busy(&data->client->dev);
++	pm_runtime_put_autosuspend(&data->client->dev);
++
++	return ret;
+ }
+ 
+ static int ads1100_set_data_rate(struct ads1100_data *data, int chan, int rate)
+ {
+ 	unsigned int i;
+ 	unsigned int size;
++	int ret;
+ 
+ 	size = data->supports_data_rate ? ARRAY_SIZE(ads1100_data_rate) : 1;
+ 	for (i = 0; i < size; i++) {
+ 		if (ads1100_data_rate[i] == rate)
+-			return ads1100_set_config_bits(data, ADS1100_DR_MASK,
+-						       FIELD_PREP(ADS1100_DR_MASK, i));
++			break;
+ 	}
+ 
+-	return -EINVAL;
++	if (i == size)
++		return -EINVAL;
++
++	ret = pm_runtime_resume_and_get(&data->client->dev);
++	if (ret)
++		return ret;
++
++	ret = ads1100_set_config_bits(data, ADS1100_DR_MASK,
++				      FIELD_PREP(ADS1100_DR_MASK, i));
++	if (ret)
++		goto out;
++
++	ret = ads1100_poll_data_ready(data);
++out:
++	pm_runtime_mark_last_busy(&data->client->dev);
++	pm_runtime_put_autosuspend(&data->client->dev);
++
++	return ret;
+ }
+ 
+ static int ads1100_get_vdd_millivolts(struct ads1100_data *data)
 -- 
 2.53.0
 
