@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590596;
-	b=FG94NrQQfYyzM5/eaWQY9YUXDBq6zK5EoqMhreAT8RqGvxXGp2y930ZciVMp0t5t6lD5
-	 QtyFgcJgpED9A4OMVf3o//o5JK/oc5A1sSx+LCpFT1Pd7dVK52j/eyBK9T4qmiFtAe0hr
-	 E7WhwS+sxpBAFGTckEzNkJ59SniqG60rpoecabUjx2SYO5kBnFEuxdCsVbA/8BXyra6va
-	 /ZTBHM1zqnkQiPguRyu3TKfYfiPVd2UXZpk4n1X9NjjwCA6nI1RDGun8IjK0evhkoQnbU
-	 oq7YYB88ODAJMYqIQ7ya9vOncxEQi3744twh/WYEV9l7UqoQpUwmZRqxuKVcflv2z+A==
+	t=1794590598;
+	b=wE/E58fuDQp7Ol/puiVOvP6dwIQ2KyQQi7RajaEvaLz63SrxA2a5ozAfVuspLIklF/el
+	 4OiSSpb72UC04PinLaWhEFSbUx5NJF3sUlX3v+Kc+ZImkq6Ukh9Cy+xP67rl1R9FsyQjI
+	 EhdDyJ6jwH8J0di7lA4fjCM4lAQv1HsCrfiE/K1UmVaMEjZ5Gz+e3LkO9xuL7fM/WJahc
+	 lW3pe1gGalx15EkcpZStDwjl5TecT8i4C7hHZV4CNyCKDsxz7Rq5vdzepcbXX/4kB7UIS
+	 01wTarwA2svLWQ36c1Do9j2DP8sg4Nt3J9EJdmiCcmVivfE0gCTrLqqv4OEoggS3/KA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590596;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YeETzSGPxn14ShkNoCo0G+RwzCVBzaTX2YR3Ehuxi2s=;
-	b=rUVaMj5OzdO/aFFzbRhRKEMUBEFpNhmiYjt1Yb0Kps9nUgbbysij0vql5pFDg9pwfBt3
-	 6imA7Sgb8eFoRSaCFCH0QcOWvlyBVOo0GbBj8IRJ/atbq6czyNHEeVmkW/ncRhloAj5RS
-	 ns+Vehz9sh3MoZibwou9/EibxVqtquhiZDzcuJjSZN28DbPHnNZKRaKOA6qrXIjU4nHl9
-	 AwpsSxun9cFqMH+kvGgwX3nwhuwi+YaUYg3A2jgExpq0uhSFUiBIdrND3zphipMjhDomN
-	 IayVdr3oqBqU0S4Z1qfaMIg6CocO0YXLYpuqEpVv10mp5FDx+oQIKuVoEdUuC0pdddg==
+	bh=DDNl/h/1zqXpMXX8wEeTAz3UU3x3Ki1ydUhDwBi2quY=;
+	b=oO3dw8YWX8WboizfK3O25w5ptqCCS+YNsnghH3nwjii/oI77dSm+wbJeGcZQoqSZB3hb
+	 yB/XN8HmJu242cpC01M4jBKO6MJ9fK8oaHW09vqmNCo9BUq+xN6BtBb5lmei7ouVWo2q3
+	 E+ug0udXRYotJiRAJw4uGMYBeJEh4uqLS4e9HH1XBbVcjk9Kclc/q0Iyvl9l4H5jGNQ+V
+	 DoD3INa2vfk5c0YoBxHAIi6fNQpKjGU09exOji5OuK3582uaMQ9yznFq2i55VlgCocuvA
+	 XtyFHoV+282GTc5PkTaKkbKy2plZPpPs8JiQWNzr8KA9OGaDZ+9KqUkF5jZ/xp9i2cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pA4T39xL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EoYplgzU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A1A606A323;
-	Fri, 13 Nov 2026 17:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F396C606A330;
+	Fri, 13 Nov 2026 17:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pA4T39xL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E291F000C7;
-	Fri, 13 Nov 2026 17:23:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EoYplgzU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D1D1F000C7;
+	Fri, 13 Nov 2026 17:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590596;
-	bh=YeETzSGPxn14ShkNoCo0G+RwzCVBzaTX2YR3Ehuxi2s=;
+	s=korg; t=1794590597;
+	bh=DDNl/h/1zqXpMXX8wEeTAz3UU3x3Ki1ydUhDwBi2quY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pA4T39xLSRA5iRX1VJkl9iFKY4hsjR3hrz/lrF1EfmlKN8K1AR2ZL5qy5Jzg6ZWMm
-	 pT23qNGzaWkXSrFLA69bK7Cxu44zpgR0XnBSb40E+aBB7ZpgsDeb733HAXjx9gC0gK
-	 wTeKz1Ylzl/yCCm7ikfhxaPtABmwhJPHkBuJUTk4=
+	b=EoYplgzUQ1/Cmk/7HCfkWKFQeoqyS1EuYsNyC7bWKBzixOod41ycrgDWe6ttuoNBJ
+	 BQaBuHy7D+jQZh6tavSRALirbwifD1iFGBf+MLwDyKZ2XTTtlhRlHotWpMUC+6KVfX
+	 t/uyl2ABhfl5lCZShdrF6P9bYd78LM8QIQb4g6pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Verdonck <tom.verdonck@inspiral.be>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Li Ming <ming.li@zohomail.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 509/686] hwmon: (tmp102) Fix jiffies wraparound in conversion-ready check
-Date: Fri, 13 Nov 2026 10:50:42 -0500
-Message-ID: <20261113153838.143629758@linuxfoundation.org>
+Subject: [PATCH 6.18 527/686] cxl/port: Clear cached dport pointers when a dport is removed
+Date: Fri, 13 Nov 2026 10:51:00 -0500
+Message-ID: <20261113153838.985725605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,79 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Verdonck <tom.verdonck@inspiral.be>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 56c1d32323e773b8b927316f8beeae9238576335 ]
+[ Upstream commit 019560d23450a320f4060ff235563a5277ea8033 ]
 
-tmp102 records a one-shot deadline in ->ready_time at probe (and resume)
-and, on every temperature read, refuses the read with -EAGAIN while
-time_before(jiffies, ready_time) is true, in order to skip the first
-~35 ms conversion.
+Switch decoders cache dport pointers in cxlsd->target[], and nothing
+clears them when a dport is freed. Readers then dereference freed memory.
 
-->ready_time is an unsigned long compared with time_before(), whose
-signed difference is only meaningful while the two values are within
-LONG_MAX jiffies of each other. Because ->ready_time is set once and
-never refreshed, jiffies keeps advancing away from it, and after 2^31
-jiffies the difference flips sign. On a 32-bit HZ=100 kernel that
-happens ~248.5 days after boot: time_before() then permanently reports
-"not ready" and the driver returns -EAGAIN on every read, without ever
-touching the sensor, until the next reboot.
+KASAN caught it under a cxl_test load/unload loop with concurrent sysfs
+reads (abbreviated).
 
-Store the deadline as a 64-bit jiffies value and compare it with
-get_jiffies_64()/time_before64(), which does not wrap in any practical
-uptime.
+Clear the matching slots from cxl_dport_remove(), walking the port's
+decoders the way cxl_port_update_decoder_targets() does on the add side.
+Scan all nr_targets slots, the target[] allocation size, and clear every
+hit.
 
-Fixes: 3d8f7a89a197 ("hwmon: (tmp102) Improve handling of initial read delay")
+Fixes: 8330671c57c7 ("cxl: Add helper to delete dport")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tom Verdonck <tom.verdonck@inspiral.be>
-Link: https://patch.msgid.link/2952f070f82913aea96eec25d28008d3b9058656.1790358356.git.tom.verdonck@inspiral.be
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: Adjusted struct tmp102 context to account for the missing sample_time field. ]
+Assisted-by: LLM
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20261001154744.1095902-2-dave.jiang@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp102.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/cxl/core/port.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/hwmon/tmp102.c b/drivers/hwmon/tmp102.c
-index 376e0eac8cc1c..62a7bee9e4b95 100644
---- a/drivers/hwmon/tmp102.c
-+++ b/drivers/hwmon/tmp102.c
-@@ -56,7 +56,7 @@ struct tmp102 {
- 	const char *label;
- 	struct regmap *regmap;
- 	u16 config_orig;
--	unsigned long ready_time;
-+	u64 ready_time;
- };
- 
- /* convert left adjusted 13-bit TMP102 register value to milliCelsius */
-@@ -91,7 +91,7 @@ static int tmp102_read(struct device *dev, enum hwmon_sensor_types type,
- 	switch (attr) {
- 	case hwmon_temp_input:
- 		/* Is it too early to return a conversion ? */
--		if (time_before(jiffies, tmp102->ready_time)) {
-+		if (time_before64(get_jiffies_64(), tmp102->ready_time)) {
- 			dev_dbg(dev, "%s: Conversion not ready yet..\n", __func__);
- 			return -EAGAIN;
- 		}
-@@ -270,7 +270,7 @@ static int tmp102_probe(struct i2c_client *client)
- 	 * Mark that we are not ready with data until the first
- 	 * conversion is complete
- 	 */
--	tmp102->ready_time = jiffies + msecs_to_jiffies(CONVERSION_TIME_MS);
-+	tmp102->ready_time = get_jiffies_64() + msecs_to_jiffies(CONVERSION_TIME_MS);
- 
- 	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
- 							 tmp102,
-@@ -303,7 +303,7 @@ static int tmp102_resume(struct device *dev)
- 	err = regmap_update_bits(tmp102->regmap, TMP102_CONF_REG,
- 				 TMP102_CONF_SD, 0);
- 
--	tmp102->ready_time = jiffies + msecs_to_jiffies(CONVERSION_TIME_MS);
-+	tmp102->ready_time = get_jiffies_64() + msecs_to_jiffies(CONVERSION_TIME_MS);
- 
- 	return err;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index a7d3497f82c05..01655eeb43a8f 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1105,11 +1105,40 @@ static void cond_cxl_root_unlock(struct cxl_port *port)
+ 		device_unlock(&port->dev);
  }
+ 
++static int clear_decoder_target(struct device *dev, void *data)
++{
++	struct cxl_dport *dport = data;
++	struct cxl_switch_decoder *cxlsd;
++
++	if (!is_switch_decoder(dev))
++		return 0;
++
++	cxlsd = to_cxl_switch_decoder(dev);
++	guard(rwsem_write)(&cxl_rwsem.region);
++
++	/*
++	 * A dport can occupy more than one position of an interleave, so
++	 * scan the whole target list rather than stopping at the first hit.
++	 */
++	for (int i = 0; i < cxlsd->nr_targets; i++) {
++		if (cxlsd->target[i] != dport)
++			continue;
++		cxlsd->target[i] = NULL;
++		dev_dbg(dev, "dport%d removed from target list, index %d\n",
++			dport->port_id, i);
++	}
++
++	return 0;
++}
++
+ static void cxl_dport_remove(void *data)
+ {
+ 	struct cxl_dport *dport = data;
+ 	struct cxl_port *port = dport->port;
+ 
++	/* counterpart of cxl_port_update_decoder_targets() */
++	device_for_each_child(&port->dev, dport, clear_decoder_target);
++
+ 	port->nr_dports--;
+ 	xa_erase(&port->dports, (unsigned long) dport->dport_dev);
+ 	put_device(dport->dport_dev);
 -- 
 2.53.0
 
