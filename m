@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591250;
-	b=jbZ9aPVpXk5y6bYbJT/fBDxLqdtPljRV7xx/tPpoRzkQ/zqcDuEm+rsy8Xm07KwLcrlc
-	 AeHXOceBzJh+Ci/o5zM2uzS0cj+qcMXO9vzJpB1R6UY1au2+NEKnxXUUAE0uu+AkmlrdT
-	 tVoj+VAszNLy5/aEjxQVmFQQk0D89b+MmW+/whlcPTpkoXgNFZ4cejf2Tkfk9aTrQXUne
-	 7qGStwJMr0LsxGvzp9tFzjsteBbrL2fHW9504aVKL6xLMCV8H4IimiR5hGSMfQPx1Mwnm
-	 w1dQ7t076gpTzbadA3LPvAXXOYqpZdjJx/RSsVUuGVRAYkS1PGm2vTxEGMG3DgzyRiA==
+	t=1794591252;
+	b=fZizjVmnHITe8MBlxw67CeoIAAPd11p686q+PJZ4AB2Y9NBNEiSljz+GoMVlq2P0WarJ
+	 VD7EDV5Zn3QI0inxJcwNDONmTRpyKITItg3FhLyX9YH2EACb5a4y4Ji+0gxf5zUbND6tP
+	 paRWm3L6WHDBfyd5irvzkoSd2Mp9+PtGlnMLhpCHUgkX6OATK5Vi+cG/PvC+PJNE6851D
+	 nPwATqJ6X+SpiitgFkINAbJqB//z/w8s2uAIZr4Zt5ihpfebNJUG+cQXghPRtkzt8OC2k
+	 qF1D8lSLumqXZOf9VQTd9uA8h2uDpvd0Ro+UtimCeZrJ25A03hXQWrmc/FclfMTuYSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eI/pDu2LpE/r+6Fpqko1ENXlN1ZR6h4DW5OJkbaDm+U=;
-	b=oVoUz6gmaQ6VdIHlJbNpCJY1NdCO4fAN1R3SKxZt+MLYN2EEr3y639HzgKpAAP+oy2Aq
-	 5gQF5TjDgU0IbWmDt3THh3/5uLOeFadNYpsJZRBmmR4RHxJTJTSNm2bL9GZVN9o5/TCZ+
-	 3epsgdOt9kCp8ckRy92Hse5xHNp2aGudC+5EMfF6FS0mufZYpUKi0hYwNNIKxEQo9mkKS
-	 i6advb2xQJvd3T/1v8hOPuQc0JuxMo+f2jyQAc274mxPSwCZ7wb/81C44Ro/sdWTYBJFU
-	 z+8A/prIMCdwDMNKu6vTNZDf6tkUZL0uMncLk3yvRKebRIS7vKluNZEUBXLEfXcXIDg==
+	bh=kOmqEE0v6mnvDJJp9Lm6sQOowQR+oy2eig9JaZ9G3hA=;
+	b=w4gRim39atjJ+8ZOgvYseukJjNf2F1EfgDBP+YVjI2eSfe6djvC6cStiMwTWUPHs33F/
+	 7+BeM0wFA38rEtB4gv9UMbgYjdmVPBUWsEJME1AAWyL4MvHeYOrjIAeOa4XFX2dN8E0RU
+	 zOrbI+rblbiVHQ1+1p2GyhcEKGOiFWzr1lecYGPXc5lrPfWdxZoyb8m0IZPyCPt1uBQx+
+	 57VjsbGPBZ/awP3uC7IAEQRqFPDRKYlpIquzeAxC2LV0bjDBOgikeQdOisaSSxcIinLXt
+	 2z+4oKRaHiNR0t/QYXWoZ3JYFq97DRTysHe5jsWian2YjMwdKtgrq3GsZtMjUBuMHVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b1SH4WG+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXQ8dXb6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC90660A262A;
-	Fri, 13 Nov 2026 17:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E551560A380F;
+	Fri, 13 Nov 2026 17:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b1SH4WG+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FAA1F000C4;
-	Fri, 13 Nov 2026 17:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXQ8dXb6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B431F000C4;
+	Fri, 13 Nov 2026 17:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591250;
-	bh=eI/pDu2LpE/r+6Fpqko1ENXlN1ZR6h4DW5OJkbaDm+U=;
+	s=korg; t=1794591251;
+	bh=kOmqEE0v6mnvDJJp9Lm6sQOowQR+oy2eig9JaZ9G3hA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b1SH4WG+/IVl/5Rx4F5/KD6cmY14AaCsvv1v3KGqxWDWzViRQol8WaLJndEOIEcR3
-	 HhlHrQXfG/x7SRArUoN1IM1mS+MBwFU8UUKOm57iC7EOGE1nU3etcBCbNn4kePxwNY
-	 ASc+xvbhO6j70PfJ/PByTGwRgAdBmnuhRIceJIb0=
+	b=eXQ8dXb6vPBzWOVnB4azZXjZVV+2QEDbfPzfb/BL/BFyCUVN1S1SRmY88IWuyOgK8
+	 QyL19WTfsqYzR46WgTq3uBHMaaDMJqvch63/7PI6yU96LJJNTNxcl0mm2q19ahi0uH
+	 Kw1Yiz4jqNI2RbCFAus3FMftnVl2TcRaSiCimSY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yitang Yang <yi1tang.yang@gmail.com>,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	James Clark <jjc@jclark.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 339/670] ublk: add missing DEL_DEV_ASYNC to unprivileged permission check
-Date: Fri, 13 Nov 2026 10:48:23 -0500
-Message-ID: <20261113153823.341394433@linuxfoundation.org>
+Subject: [PATCH 6.12 375/670] net: ethernet: ti: am65-cpsw-nuss: Enable timestamping of unicast PTP packets
+Date: Fri, 13 Nov 2026 10:48:59 -0500
+Message-ID: <20261113153824.497041003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,37 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yitang Yang <yi1tang.yang@gmail.com>
+From: James Clark <jjc@jclark.com>
 
-[ Upstream commit e6ac1da6a53c5f670bf09e60a2500d15be68d2fc ]
+[ Upstream commit 6887a8f98244ba4c0fbe2d2461b9b8f8a300e326 ]
 
-ublk_ctrl_uring_cmd_permission() is missing the UBLK_CMD_DEL_DEV_ASYNC
-case, causing the command to always return -EINVAL for unprivileged
-ublk devices. Fix it by adding the missing case.
+On a BeagleY-AI (J722S), ptp4l as a unicast master (unicast_listen) logs
+"received DELAY_REQ without timestamp" for each unicast Delay_Req, and
+its port goes to FAULTY after "timed out while polling for tx timestamp"
+for the first unicast Sync.
 
-Fixes: 13fe8e6825e4 ("ublk: add UBLK_CMD_DEL_DEV_ASYNC")
+am65_cpsw_nuss_hwtstamp_set() does not set the TS_UNI_EN bit (bit 24) of
+the port's TS_CTL_LTYPE2 register. According to the TRM (J722S TRM
+SPRUJB3D, 12.2.1.4.7.13.5.1 Ethernet Port Receive Event and
+12.2.1.4.7.13.5.2 Ethernet Port Transmit Event), this bit must be set
+for the port to timestamp PTP event messages over UDP sent to a unicast
+address; without it, only messages sent to the PTP multicast addresses
+selected by the TS_107 and TS_129 to TS_132 bits are timestamped. TI's
+netcp_ethss driver for the Keystone 2 Ethernet switch, which has the
+same timestamping registers, always sets TS_UNI_EN.
+
+Set TS_UNI_EN along with the other bits. With this change, ptp4l in the
+same setup gets timestamps for the unicast Delay_Req and Sync messages.
+
+Fixes: b1f66a5bee07 ("net: ethernet: ti: am65-cpsw-nuss: enable packet timestamping support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yitang Yang <yi1tang.yang@gmail.com>
-Reviewed-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20260901142438.237586-1-yi1tang.yang@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: James Clark <jjc@jclark.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20261102135117.419539-1-jjc@jclark.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 085a4d624659f..3e7c3b1f0b8a1 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -3037,6 +3037,7 @@ static int ublk_ctrl_uring_cmd_permission(struct ublk_device *ub,
- 	case UBLK_CMD_STOP_DEV:
- 	case UBLK_CMD_ADD_DEV:
- 	case UBLK_CMD_DEL_DEV:
-+	case UBLK_CMD_DEL_DEV_ASYNC:
- 	case UBLK_CMD_SET_PARAMS:
- 	case UBLK_CMD_START_USER_RECOVERY:
- 	case UBLK_CMD_END_USER_RECOVERY:
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index e9d9d69e2ba9d..12860cf2fb932 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -121,6 +121,7 @@
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319	BIT(21)
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320	BIT(22)
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO BIT(23)
++#define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN	BIT(24)
+ 
+ /* The PTP event messages - Sync, Delay_Req, Pdelay_Req, and Pdelay_Resp. */
+ #define AM65_CPSW_TS_EVENT_MSG_TYPE_BITS (BIT(0) | BIT(1) | BIT(2) | BIT(3))
+@@ -1830,7 +1831,8 @@ static int am65_cpsw_nuss_hwtstamp_set(struct net_device *ndev,
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_132 |
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319 |
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320 |
+-			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO;
++			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO |
++			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN;
+ 
+ 	ts_ctrl = AM65_CPSW_TS_EVENT_MSG_TYPE_BITS <<
+ 		  AM65_CPSW_PN_TS_CTL_MSG_TYPE_EN_SHIFT;
 -- 
 2.53.0
 
