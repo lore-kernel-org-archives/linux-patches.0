@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585719;
-	b=Mjm0JNEo6++BjH9uignKl59lhXg2OX9SF2Lcyz/tNSmgz5ZxVEL1qEWrMfUIyReMa+ob
-	 Gp9S0wD3wVihjWgDg1TtZsBZefHBHMMDTgEXKThRODRatRlgwbaeHjfKpoaPx/06sOSSQ
-	 kCkWJMsYK3LJuiIhms7xu6CVhZqUkC+YoXVr0tsS/rWWkfoOPWa8JyCsE8K/LFKBOlQ5X
-	 BZgBRuqcDLgAnXPQ+vc9tGTwLaSUlZbCpWUlPIrksMEnTQwS9G6gwIPAV+ftct0WHgTcq
-	 lovGAOm6uazE6zFqApY7XTU0tejE5viQbRbIZK4gS4BQUtyjELUsGCXXSdp3xD+72zA==
+	t=1794585720;
+	b=bS8vqUANhcwDAbNz1kSG8hePO0CFrtGHWgzhOf1Li/sAoq/E3dIpFGUz9zAJoQowN8qU
+	 e6OlrvSmZOrdr5bZuq8M9fUID6zdl7ESoqZC1uEvfoVIujBCQhi8SSOWhCAoJaIk9P9zm
+	 dg3oF3lFf8URUdlRyjawVDiE6mr8XMd7HvtJL+zdXS8piAhZ1UNRcRx3gOW4RWx1eaTAM
+	 ED0juUD+DTKvdSm8r3OsXZPfZUWmeGs6gJDA6K8yi8ke363c55TxQDKT7W2K0SXZoKCjI
+	 P0M5JAv12LmT9Hobdjx9BqrcqRefIpVHBfiMFyC+1SdBd/3jTv8QOwtddBeK7faTIDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585719;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A2qxZ1DZYQnyiu/XbIbcceVduLBzbCsx5yKrUD1fz+g=;
-	b=CaDMvWluqCngtmXQgJY3/KRb5hu+fUYwLi1xFD7DWGVSqF2VRf7Q7KeRJ19huzpJgeb8
-	 aDEG6x//gKzRVOMor8H0EYmO0WrRBAJEffQiVNORVWTlt6C7i4qoG6VGyur4n9Z0KC2of
-	 PShhchqzTn6oUTWNhOwxYqJjkcHm9URB6EaJmJesGKOBAfMioFfoblGVUkon3Rhiolo5x
-	 EfAlVA8TmIq2QE1W6xTMXf3/ycV0OSTSlfnT8Nhyy2Y/pbdci87k/5nNmTkVm2HzXtMq/
-	 uA2/3lh4PlHNqZ3OQ/bCYD7T9W1zkyvprYB6hHZMbjhvpi/WjRdMrg30JZ7oSkTY4TQ==
+	bh=Qigot3Ky1q3ZoRHdUEpTqgxGay6GoOPNlO7D/QY7jJw=;
+	b=kZnhfHoDw5pW7jHvA3Lvo3gDsUgolrCqFobAffUwfvxG//1rOBpc5eGShFAqkgLH3wzc
+	 tceUZpc88MI5sVhnnPrUE3OFOiZhp+aHkdQJDku7eY1Lxyw3YcWWs4LnAvIsT9ekgNI5T
+	 X68+uQEFoiumr3fDQiA9pEdXlZjPWKjy9mmApDkEOoglR7qO0oTAvbuFU586fiFJggwxO
+	 3VelaY1XAkil2VcJl5x9UMWYYvr1NuqRf903XnNue+HwpM5FlMG97GIfCG8zvJ3zC1T6C
+	 o5EkC/T6byxtMP/4yLTOoPLgBfhoOBaYDfgwaojx5Htv0PXBxS6Z9M0Ur7Z03USU+zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w0O9+UeH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="T/mUL9KL";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8F8606A8A9;
-	Fri, 13 Nov 2026 16:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31462606A8A9;
+	Fri, 13 Nov 2026 16:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w0O9+UeH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3F51F000C4;
-	Fri, 13 Nov 2026 16:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T/mUL9KL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C8C1F000C4;
+	Fri, 13 Nov 2026 16:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585718;
-	bh=A2qxZ1DZYQnyiu/XbIbcceVduLBzbCsx5yKrUD1fz+g=;
+	s=korg; t=1794585720;
+	bh=Qigot3Ky1q3ZoRHdUEpTqgxGay6GoOPNlO7D/QY7jJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w0O9+UeH0fqWkmwGGv99lHJ+PQeM6nPdOCrgGiSL7ljA2TH3qhTy62GjJE1H4jTKL
-	 nC7ugnTf5+ojC/TLZjtOyMgi6M22wc3sHaWptPeV2lXdfKujr7AfBtWeKO/s7PMxE7
-	 ZGLzI8L2qQzlNVzraUpHp8+Wje5XiJq5y9+Mh92Y=
+	b=T/mUL9KL+pYU9i04W//fH8vUQcXutCK8sFnclDegBB5tOqoCMS69DrRZZbIB6g8M+
+	 +5d0/eD8ngTkGNVB9Hm/iKhVQJYfE3BDJyL0Ofl3/Ez35Q5+tDQpBDl8wS3drB/xSF
+	 +TqkkrnQSw3LlWBCeJteV2ty281sC60LSm5TwClc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Zhe Liu <liuzhe1@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 320/507] mm/memory: reject remote COW faults on PFN mappings
-Date: Fri, 13 Nov 2026 10:50:24 -0500
-Message-ID: <20261113153806.249602000@linuxfoundation.org>
+Subject: [PATCH 7.3 280/507] blk-iocost: account flush sequence latency only once
+Date: Fri, 13 Nov 2026 10:49:44 -0500
+Message-ID: <20261113153804.626419851@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -71,72 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Zhe Liu <liuzhe1@kylinos.cn>
 
-[ Upstream commit 8db6921cc07b74197a3866d62ed262b68aeadcf3 ]
+[ Upstream commit e9804489e27dd6e33aec5511fe3780ff3009f57f ]
 
-When handling a COW fault without a normal source page (PFN mappings),
-__wp_page_copy_user() copies from the faulting user address. For remote
-faults, this accesses the wrong address space, resulting in wrong data
-getting copied.
+A flush sequence with a DATA phase can complete its original request
+twice. Both completions invoke ioc_rqos_done(), causing the request to
+contribute two latency samples and adding the same queue wait time
+twice. This gives such requests disproportionate weight compared to
+ordinary writes, distorting the device-wide latency and queue wait
+feedback used to adjust iocost's virtual time rate.
 
-For example, user_events updates an enable bit in the registering
-process's memory. If that memory needs to be faulted in,
-user_event_enabler_fault_fixup() calls fixup_user_fault() from a work
-item. Placing the enable bit in a private PFN mapping can trigger this
-remote COW path.
+Skip requests marked RQF_FLUSH_SEQ in ioc_rqos_done(). The flag is set
+when the request enters the flush machinery and is still set when the
+data phase completes; blk_flush_restore_request() clears it before the
+final completion, so accounting happens only once, after the whole
+sequence finishes. The remaining sample covers the request's lifetime
+through any postflush, and its queue wait time is accumulated only
+once.
 
-Reject these faults with VM_FAULT_SIGBUS when the target mm differs from
-current->mm: remote faults. Ordinary (non-PFN) mappings are not affected.
-
-The user-address copy dates back to commit 6aab341e0a28 ("mm: re-architect
-the VM_UNPAGED logic"); likely, actual ways to get remote faults in
-there on COW PFN mappings appeared afterwards. But the fix is simple and
-straight forward.
-
-Fix generated by an LLM and sent by Chris Mason in private.
-
-Fixes: 6aab341e0a28 ("mm: re-architect the VM_UNPAGED logic")
+Fixes: 7caa47151ab2e ("blkcg: implement blk-iocost")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-[ david: simplify comment and description ]
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-35-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Zhe Liu <liuzhe1@kylinos.cn>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261102061802.408173-1-liuzhe1@kylinos.cn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ block/blk-iocost.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index 88f7953afbabc..c2d3d8d94346d 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -3703,6 +3703,13 @@ static inline int __wp_page_copy_user(struct page *dst, struct page *src,
- 		return 0;
- 	}
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 7b8af094ab370..23445d7014334 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -2851,6 +2851,9 @@ static void ioc_rqos_done(struct rq_qos *rqos, struct request *rq)
+ 	if (!ioc->enabled || !rq->alloc_time_ns || !rq->start_time_ns)
+ 		return;
  
-+	/*
-+	 * __copy_from_user_inatomic() only works as expected for local faults.
-+	 * Reject remote faults.
-+	 */
-+	if (unlikely(mm != current->mm))
-+		return -EFAULT;
++	if (unlikely(rq->rq_flags & RQF_FLUSH_SEQ))
++		return;
 +
- 	/*
- 	 * If the source page was a PFN mapping, we don't have
- 	 * a "struct page" for it. We do a best-effort copy by
-@@ -4028,6 +4035,8 @@ static vm_fault_t wp_page_copy(struct vm_fault *vmf)
- 				folio_put(old_folio);
- 
- 			delayacct_wpcopy_end();
-+			if (err == -EFAULT)
-+				return VM_FAULT_SIGBUS;
- 			return err == -EHWPOISON ? VM_FAULT_HWPOISON : 0;
- 		}
- 		kmsan_copy_page_meta(&new_folio->page, vmf->page);
+ 	switch (req_op(rq)) {
+ 	case REQ_OP_READ:
+ 		pidx = QOS_RLAT;
 -- 
 2.53.0
 
