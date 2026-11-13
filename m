@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590428;
-	b=d9Wt+fpJ31nQ1DGETLtNB8KVKjvesj8aPtMgQ5UAOErY997gL3ysdyayEuQ+4dxP+kBp
-	 3FR3BhjyRxZtqnIxPfJh3Rh2dybTt/va3bvmObj+V6/dk4if/TO7nEhB0B4aUB/dxUnGw
-	 xBl8toZEdKg3OPMlGQ21+Qtt+F5PguCI7wfb88K5YawNUmzb6T9YYk0Ty25IDyfGFJYcS
-	 8cDUGATbi+TMiHAMVEWXPob2Lxv+IYsNKSOegG44EFesk1GsEt1s/RZgpZ41WALeaZV9C
-	 TWOFE3xOW7JTGPrK5aV25d2w252m+46QHWt/My977HCeNDRxWxkl/bo/kycc3ybrtQg==
+	t=1794590429;
+	b=t4mVNU3BgAlgwmykW9A/6hlyd2TQY15Fv1YM+u/KP5mlkyLIN2Ae+KCkqfStC8FxvnZ1
+	 vWzxWklHPIslENc6qNMNLxkktJt1YfqeAuz3SNy7AFxIEC9RscLLYNL7kUqdNgpeSChhC
+	 7Av9QXMOZLq0EtUXTmlDFlxWTy4gH87905jLaXFQOBM0zE/o51VyJfT9GgVOgxAVmtl6D
+	 laSdi4sktd0IMNtnQiVmgWXSHZ/T4EysLsVdh9pH9SnD5yXmdWPQNWLuSFVxsdJExbfan
+	 BCtoZ/uRWTwXnO3JOGDb3ZVKG/Z25TlBbPiOwTMLnHi8ivDC12KfwtEWw2ouoZ49tvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590428;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590429;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rdP7EnrArV3jIcvY34aC6ocSNCg5lV1HByrzwuHVAnA=;
-	b=Xb/UrPbc7NOcGpH/oMVIElYxeF3puD+EZYWuhZGKnZ/UTlDqZ2KothsJu4PQzVxOXmfI
-	 bdyBSs8pv3QoUS8s7YRzn9aYoQRU4LTEx67McpLKSjtNmzurHewA1RZQnPoEM4Y+tLQ23
-	 fFUqqT53mOdEzFdPePvyYVkskcuDs3GOYvHVaiBswxrdlgcXMnmTvy/rOoXqmppkB4/Z7
-	 P5dHBk7jhIYBJ8n5SsCUDoGFIzCvE0/MILm0rHgPqfKlM4WbYGGwBgGEPrYQzcH77oneG
-	 2dUft4jcPNn//NfW6iaLpNncR7Mekt0Ggrj6r1lVdeeXGPIJo9PeU5HjMmW0Q/CKP2w==
+	bh=eCvneVdH/OsEblOhFJglHGypfF8CwGey++B1YfhCbbk=;
+	b=HOg9qT0+g3KXM+6LpYGFQEg32nEqb2tLghf0dHNVBC/Bpjw7gTYm1TGsVt/TOLgmg6a0
+	 8u4HO0jscb0cdk0DBGNJzx89teje3UID0EsekqM9613vkzdWt2LkvzLfrBItt9TgaRqBi
+	 WMJAoUUcz9K5Ucirv8QwfrUVxn/zc7ax0YNdRMk2ZtcL1ni9P7puRTpYzv93mu6PRupja
+	 vRXkBgr1lr+IV3M2xA7Z3r2HKsMpvAoIohRc3CSnON0gML4Hy/UC/2QJ4NwcqnmAPffik
+	 f+O8TNSOfIs86FBdTA3kNGGcO3jnSE1CiAnz6u1+k2bDBgGtS3T9FhV8VM74HQeFk4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Zwnb0+/m";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YlZ7YmE8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F69606F734;
-	Fri, 13 Nov 2026 17:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31180606A884;
+	Fri, 13 Nov 2026 17:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zwnb0+/m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996201F000C6;
-	Fri, 13 Nov 2026 17:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YlZ7YmE8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D168B1F000C6;
+	Fri, 13 Nov 2026 17:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590427;
-	bh=rdP7EnrArV3jIcvY34aC6ocSNCg5lV1HByrzwuHVAnA=;
+	s=korg; t=1794590429;
+	bh=eCvneVdH/OsEblOhFJglHGypfF8CwGey++B1YfhCbbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zwnb0+/mGCncWKodAAgw4sKmg5L+/in4u7SauSrC5g6YZNb+CMF6kAIBj3tQrlNGX
-	 ZmZlRD5lgYq2Eo9IERVU3W9MVvsnMw/zf4UILQ7i4cSNAd99sWltCX9PHWw+Oj96qW
-	 88YwxKYDM2dY08WOQzbA64yeuLqsJtq+RW5Yjiiw=
+	b=YlZ7YmE8IJmzgSicBocx1UjKwwLdV0IU0h1UYcuinjhhUk5FhezVujzXJ5O5f3471
+	 ljx3iuiJNnBKQB+b/r8eY0och2fPgNRbGNXJSNU2sRRv0k5l6LKkCUppinjHl8VR0G
+	 QkenF9VzamW4xUxtwy3zAXytNMPwJnBi//S2DeBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Lutomirski <luto@amacapital.net>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Xia Yan <yanxia@cmss.chinamobile.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 390/686] mm/gup: check folio->mapping under folio lock in memfd_pin_folios()
-Date: Fri, 13 Nov 2026 10:48:43 -0500
-Message-ID: <20261113153834.222748121@linuxfoundation.org>
+Subject: [PATCH 6.18 391/686] ipv6: fix device binding after failed datagram connect
+Date: Fri, 13 Nov 2026 10:48:44 -0500
+Message-ID: <20261113153834.254129420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,104 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samiullah Khawaja <skhawaja@google.com>
+From: Xia Yan <yanxia@cmss.chinamobile.com>
 
-[ Upstream commit 71555ae8c7572fd99158013ca2e29187c5d2508d ]
+[ Upstream commit bc53aab4881adc134f495092034e9e7c0791d84c ]
 
-memfd_pin_folios() pins folios from the page cache without taking the
-folio lock. khugepaged or MADV_COLLAPSE can therefore replace a folio
-after checking its refcount while memfd_pin_folios() still pins the old
-folio. The caller then receives a folio which is no longer part of the
-memfd.
+__ip6_datagram_connect() can change sk_bound_dev_if when connecting to
+an address that needs a scope ID. If ip6_datagram_dst_update() fails,
+the old peer address and port are restored, but the new device binding
+is left behind.
 
-For udmabuf and iommufd, this can cause data corruption: DMA accesses
-the detached folio rather than the live memfd contents. DMA reads can
-return stale data, while DMA writes update the detached copy and are
-lost from the live memfd. The detached folio remains pinned, so these
-accesses do not constitute a use-after-free or target another
-application's memory. For memfd live update, the stale contents can
-reappear in the memfd after handover.
+A UDP socket can then keep reporting its original peer while sends and
+attempts to reconnect to that peer fail with ENETUNREACH. Replies to the
+socket are also dropped by the device match. The same problem occurs
+when a scoped multicast destination picks up np->mcast_oif.
 
-Lock the folio and recheck folio->mapping before pinning it, like other
-page cache users do. If the folio was removed, retry the folio lookup
-from the index that was removed.
+Save the original binding before processing the scope and restore it
+along with the peer information on failure. This completes the rollback
+in commit 2f987a76a977 ("net: ipv6: keep sk status consistent after
+datagram connect failure") and preserves the new binding on success.
 
-Fixes: 89c1905d9c14 ("mm/gup: introduce memfd_pin_folios() for pinning memfd folios")
-Reported-by: Andy Lutomirski <luto@amacapital.net>
-Closes: https://lore.kernel.org/all/CALCETrV5eqg6d9=+BQhCpRwBNe3aCQiut8vxPBs8b7PToqjaHg@mail.gmail.com/
+Found while reviewing scope-ID handling in __ip6_datagram_connect().
+
+Confirmed by exchanging UDP traffic over ::1, then attempting a link-local
+connect with a nonexistent scope ifindex or a down interface. After that
+connect fails, the original peer is still reported but communication and
+reconnecting to it fail.
+
+Tested before and after the fix in UML for three rounds, covering explicit
+scopes, multicast interface fallback, initially unconnected sockets and
+existing bindings. With the fix, the old binding and peer are retained,
+and traffic and reconnection to the original peer work. Also built on
+x86_64 with W=1 using adjusted allmodconfig and allyesconfig
+configurations, with no new warnings.
+
+Fixes: 2f987a76a977 ("net: ipv6: keep sk status consistent after datagram connect failure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Andy Lutomirski <luto@amacapital.net>
-Link: https://patch.msgid.link/20261031203540.2282507-1-skhawaja@google.com
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Xia Yan <yanxia@cmss.chinamobile.com>
+Link: https://patch.msgid.link/20261029135822.448299-1-yanxia@cmss.chinamobile.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ net/ipv6/datagram.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/mm/gup.c b/mm/gup.c
-index 9ce5c8ef72fad..c345bca01e3af 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -3463,7 +3463,7 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- {
- 	unsigned int flags, nr_folios, nr_found;
- 	unsigned int i, pgshift = PAGE_SHIFT;
--	pgoff_t start_idx, end_idx;
-+	pgoff_t start_idx, end_idx, retry_idx;
- 	struct folio *folio = NULL;
- 	struct folio_batch fbatch;
- 	struct hstate *h;
-@@ -3504,6 +3504,7 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- 			 * reason, we try to allocate them and add them to the
- 			 * page cache.
- 			 */
-+			retry_idx = start_idx;
- 			nr_found = filemap_get_folios_contig(memfd->f_mapping,
- 							     &start_idx,
- 							     end_idx,
-@@ -3516,7 +3517,21 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- 			for (i = 0; i < nr_found; i++) {
- 				folio = fbatch.folios[i];
+diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
+index 97c655c260568..7edf30d8098de 100644
+--- a/net/ipv6/datagram.c
++++ b/net/ipv6/datagram.c
+@@ -148,6 +148,7 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr,
+ 	__be32			fl6_flowlabel = 0;
+ 	__be32			old_fl6_flowlabel;
+ 	__be16			old_dport;
++	int			old_bound_dev_if;
+ 	int			addr_type;
+ 	int			err;
  
-+				/*
-+				 * The folio might have been removed from the
-+				 * page cache (e.g., truncated or collapsed)
-+				 * after the lookup. Recheck under the folio
-+				 * lock.
-+				 */
-+				folio_lock(folio);
-+				if (unlikely(folio->mapping != memfd->f_mapping)) {
-+					folio_unlock(folio);
-+					start_idx = retry_idx;
-+					break;
-+				}
+@@ -218,6 +219,8 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr,
+ 		goto out;
+ 	}
+ 
++	old_bound_dev_if = sk->sk_bound_dev_if;
 +
- 				if (try_grab_folio(folio, 1, FOLL_PIN)) {
-+					folio_unlock(folio);
- 					folio_batch_release(&fbatch);
- 					ret = -EINVAL;
- 					goto err;
-@@ -3527,14 +3542,12 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- 				 * page cache that were never cleared.
- 				 */
- 				if (!folio_test_uptodate(folio)) {
--					folio_lock(folio);
--					if (!folio_test_uptodate(folio)) {
--						folio_zero_range(folio, 0, folio_size(folio));
--						flush_dcache_folio(folio);
--						folio_mark_uptodate(folio);
--					}
--					folio_unlock(folio);
-+					folio_zero_range(folio, 0, folio_size(folio));
-+					flush_dcache_folio(folio);
-+					folio_mark_uptodate(folio);
- 				}
-+				retry_idx = folio_next_index(folio);
-+				folio_unlock(folio);
+ 	if (__ipv6_addr_needs_scope_id(addr_type)) {
+ 		if (addr_len >= sizeof(struct sockaddr_in6) &&
+ 		    usin->sin6_scope_id) {
+@@ -260,6 +263,7 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr *uaddr,
+ 		sk->sk_v6_daddr = old_daddr;
+ 		np->flow_label = old_fl6_flowlabel;
+ 		inet->inet_dport = old_dport;
++		WRITE_ONCE(sk->sk_bound_dev_if, old_bound_dev_if);
+ 		goto out;
+ 	}
  
- 				if (nr_folios == 0)
- 					*offset = offset_in_folio(folio, start);
 -- 
 2.53.0
 
