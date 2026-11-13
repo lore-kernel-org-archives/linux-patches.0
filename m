@@ -1,60 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591564;
-	b=cDb1Wl8WUJZpzJ+Yc1vyQ8CXwQcpA1C7+JlnW5Gmv7hjjXK6B/8EEUjG6BzERJ8lzJFr
-	 I+v80qpv9ghOoe7XeKM1LGvNLqTNrHhHnDdDg2vYjb38DVPpJzBw6IqBaJBWpKCneM5nq
-	 YfV9kkD50LbLmtvgC53Mpnf5Kmuid67qKrX2zDY6bTTLtDcMr545y34JbOAjhWfx3toq6
-	 lf86jO6cbS9DmgxEI8MOytlQv09YD65tHn+19+MSKcaA0pJWbZVcl1fpeFrymXbPBYA5t
-	 6Dj4T91YZVUggxqxRdHvI00jczZ7FcoqOJ9AtnxBPFtJbsyU2/CrdjPnx6bXJ7FM4dQ==
+	t=1794591565;
+	b=tKa7YPJenX4z5d5/CnKAKnoVN+bcpzKf0LeEy6iLVn6rx0OahLDZiE6tsSRJeqbXn4qW
+	 +fxe7JUk+kbj7WUzw5JQaBGg6oECIzc19BxByM1L6xip/RXk4StW5ewEN5tWqh38DDf4k
+	 o6ev5H+ZV5wm9ORkC6IMBER0F6rhj5QkzCtrPI4gfd1/GF1HRS2ilVxOestc0lq5XLOTj
+	 fpuG/1+A5QPYs97AqXImXVOeZk+jZnqBzladtLCIv9ejnj8/Q7SLhUl96y/JwNTmoV6bd
+	 xAYF+xUj7exEqSMui5Uvabt6DrTiaatbU7nzup8VuoX/CN06SilDZc1/G+odK7QXa3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591564;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591565;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4WTkY+kvIKQFE4eGlCyHLvW8tkMTV5bnfG09P6DmPvU=;
-	b=OQ1nJ2qGFemXd3Fa46f4GpDJZzjbOwGKieF11Jn1rujKKpqoMMvmnEWjSUc6wx8isRcc
-	 j2yDM3sFGUNaoP+dB+LvTPJpGIJWec80ZdN7U9o53EXoEWIAyJucpfTFb2KjdEupRcy8i
-	 D1tEEwZlM58NdmSNLJFuF6im5gGgxA398wbAb7VYu9910Ojy3LYvq86Xg5Hr6VFEc0BEv
-	 fgpED92QmZcyvKHb+zlIMHWJkj3iMJKF9XTBzzMo1K2UW5Uctfb2jdNO6DfBVPRsLt9ZR
-	 f8RSXB9tEBcf59KIGNluJ0/gkwPQE3aB26eQu7S65IBdXrVM4wNTcPibVGZgbi4Ka7g==
+	bh=QzH9Qtru7ygcKoUDf7lGc9F7pF29ogSwlCblgGIGW0A=;
+	b=mwKcr80uKU/fcuVMVthVD7O1gM6vgJ3k+f1ZTZ+278C7oK5qvVwt5l2LZup4DM+ta9W4
+	 UL8O0zJvyJK/O58N2SnMAnwxV+KKzz2NKWvNv8HEXBMpkNC0AAP7HR14TZn7J/pCTztKm
+	 dzK68BPY0bwAaWv33EamDrIzvsZg9BCBP8qVj03GXiWxszw5z8e0s7cOrt1LUxrwohHQ4
+	 04Giy4+As6lfsR8vAyrthpqyd3PPM78SYhPcwAkCAb/o7JlvDEJJGvR8X1MJB7aMCH/3T
+	 WanTRDz72kqX+eVh7YBDsDwXOsULDJEZWgcvLyc01EzKAt5U8xs4jRL/MReP+RYvC3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAq+oIBW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E7hOajvZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0133860A5BC8;
-	Fri, 13 Nov 2026 17:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261C560A5BD3;
+	Fri, 13 Nov 2026 17:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BAq+oIBW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85841F000C4;
-	Fri, 13 Nov 2026 17:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E7hOajvZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3A01F000C4;
+	Fri, 13 Nov 2026 17:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591563;
-	bh=4WTkY+kvIKQFE4eGlCyHLvW8tkMTV5bnfG09P6DmPvU=;
+	s=korg; t=1794591565;
+	bh=QzH9Qtru7ygcKoUDf7lGc9F7pF29ogSwlCblgGIGW0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BAq+oIBWoqVJ67CPfxrBY78T8Woh6uO0Rbyl6G5s34fFCXJ8i9EgfRk/FrhRa2Yqc
-	 6GfWZssJgXrGK2Jfs3nkMJjaO5bHLgct0BQ/d88pWngdO6+jzrAmKKX67xqsbc46mN
-	 5ZHoUyl5oxhAi6wcIaKlZg6X7ZhulD/Xl1JaepOw=
+	b=E7hOajvZUv6Ou7egg1yLfb4noVg9B6rm+BEEnLa2HXyx/CcOcP6cwwcbAcdcphWrV
+	 or0EhJTLpSqxAt2DJPyH0r4KaCxvOZUHxDFGOCN0Ka3nrCcG8b7Q+NWHmYLRTbaGaT
+	 V9zxog+rFz5B4qi39TWemJ8IvyR63KWQhNCUuJf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Kan <ckan@cloudflare.com>,
-	Matt Fleming <mfleming@cloudflare.com>,
+	Edward Adam Davis <eadavis@qq.com>,
+	syzbot+151afab124dfbc5f15e6@syzkaller.appspotmail.com,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Marco Elver <elver@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Caleb Kan <calebkan1106@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 615/670] stackdepot: stop preallocating after the final pool
-Date: Fri, 13 Nov 2026 10:52:59 -0500
-Message-ID: <20261113153832.651546424@linuxfoundation.org>
+Subject: [PATCH 6.12 616/670] ocfs2: fix oob in __ocfs2_find_path
+Date: Fri, 13 Nov 2026 10:53:00 -0500
+Message-ID: <20261113153832.687016487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -76,59 +76,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Kan <ckan@cloudflare.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 8f56ea8e0706d92774603260779c7032f03ef3ac ]
+[ Upstream commit e0b0f2834c9bec51b1068de5cf5e10c7519143eb ]
 
-depot_init_pool() decides whether another pool is needed before it
-increments pools_num. When it registers the last allowed pool, pools_num
-is still one below stack_max_pools, so the existing comparison clears
-new_pool.
+syzbot constructed a corrupted image, which resulted in el->l_count from
+the b-tree extent block being 0.  Since the length of the l_recs array
+depends on l_count, reading its member e_blkno triggered the out-of-bounds
+access reported by syzbot in [1].
 
-With new_pool cleared, stack_depot_save_flags() can allocate another
-order-2 pool after a lookup miss. depot_keep_new_pool() retains its pointer
-in the global new_pool, so the allocation is not lost. However, pools_num
-has already reached stack_max_pools, and depot_init_pool() rejects every
-attempt to register the pool. It remains allocated and unusable until
-reboot. The non-NULL pointer prevents later saves from allocating more
-spare pools.
+The loop terminates when l_count is 0, similar to when next_free is 0.
 
-Account for the pool being registered in the limit check so registering
-the final pool installs STACK_DEPOT_POISON and prevents the extra
-allocation.
+[1]
+UBSAN: array-index-out-of-bounds in fs/ocfs2/alloc.c:1838:11
+index 0 is out of range for type 'struct ocfs2_extent_rec[] __counted_by(l_count)' (aka 'struct ocfs2_extent_rec[]')
+Call Trace:
+ __ocfs2_find_path+0x606/0xa40 fs/ocfs2/alloc.c:1838
+ ocfs2_find_leaf+0xab/0x1c0 fs/ocfs2/alloc.c:1946
+ ocfs2_get_clusters_nocache+0x172/0xc60 fs/ocfs2/extent_map.c:418
+ ocfs2_get_clusters+0x505/0xa70 fs/ocfs2/extent_map.c:631
+ ocfs2_extent_map_get_blocks+0x202/0x6a0 fs/ocfs2/extent_map.c:678
+ ocfs2_read_virt_blocks+0x286/0x930 fs/ocfs2/extent_map.c:1001
+ ocfs2_read_dir_block fs/ocfs2/dir.c:521 [inline]
+ ocfs2_find_entry_el fs/ocfs2/dir.c:728 [inline]
+ ocfs2_find_entry+0x3e4/0x2090 fs/ocfs2/dir.c:1120
+ ocfs2_find_files_on_disk+0xdf/0x310 fs/ocfs2/dir.c:2023
+ ocfs2_lookup_ino_from_name+0x52/0x100 fs/ocfs2/dir.c:2045
+ _ocfs2_get_system_file_inode fs/ocfs2/sysfile.c:136 [inline]
+ ocfs2_get_system_file_inode+0x326/0x770 fs/ocfs2/sysfile.c:112
+ ocfs2_init_global_system_inodes+0x319/0x660 fs/ocfs2/super.c:461
+ ocfs2_initialize_super fs/ocfs2/super.c:2196 [inline]
+ ocfs2_fill_super+0x4432/0x65b0 fs/ocfs2/super.c:993
+ get_tree_bdev_flags+0x40e/0x4d0 fs/super.c:1691
+ vfs_get_tree+0x92/0x2a0 fs/super.c:1751
+ fc_mount fs/namespace.c:1199 [inline]
 
-Link: https://lore.kernel.org/20261022083330.3159793-1-matt@readmodwrite.com
-Fixes: 31639fd6cebd ("stackdepot: use variable size records for non-evictable entries")
-Signed-off-by: Caleb Kan <ckan@cloudflare.com>
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Link: https://lkml.kernel.org/r/tencent_4D99464FA28D9225BE0DBA923F5DF6DD8C07@qq.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Reported-by: syzbot+151afab124dfbc5f15e6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=151afab124dfbc5f15e6
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Cc: Caleb Kan <calebkan1106@gmail.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: Used the existing DEPOT_MAX_POOLS constant instead of upstream's stack_max_pools variable. ]
+Stable-dep-of: 6193ce7896af ("ocfs2: fix array out of bound access in __ocfs2_find_path()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/stackdepot.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/alloc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/lib/stackdepot.c b/lib/stackdepot.c
-index 245d5b4166999..1f1d63d21f26b 100644
---- a/lib/stackdepot.c
-+++ b/lib/stackdepot.c
-@@ -273,7 +273,7 @@ static bool depot_init_pool(void **prealloc)
- 	 * NULL; do not reset to NULL if we have reached the maximum number of
- 	 * pools.
- 	 */
--	if (pools_num < DEPOT_MAX_POOLS)
-+	if (pools_num + 1 < DEPOT_MAX_POOLS)
- 		WRITE_ONCE(new_pool, NULL);
- 	else
- 		WRITE_ONCE(new_pool, STACK_DEPOT_POISON);
+diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
+index eb6adb785e455..0a377ec4ed8ff 100644
+--- a/fs/ocfs2/alloc.c
++++ b/fs/ocfs2/alloc.c
+@@ -1811,14 +1811,15 @@ static int __ocfs2_find_path(struct ocfs2_caching_info *ci,
+ 			ret = -EROFS;
+ 			goto out;
+ 		}
+-		if (le16_to_cpu(el->l_next_free_rec) == 0) {
++		if (!el->l_next_free_rec || !el->l_count) {
+ 			ocfs2_error(ocfs2_metadata_cache_get_super(ci),
+-				    "Owner %llu has empty extent list at depth %u\n",
++				    "Owner %llu has empty extent list at depth %u\n"
++				    "(next free=%u count=%u)\n",
+ 				    (unsigned long long)ocfs2_metadata_cache_owner(ci),
+-				    le16_to_cpu(el->l_tree_depth));
++				    le16_to_cpu(el->l_tree_depth),
++				    le16_to_cpu(el->l_next_free_rec), le16_to_cpu(el->l_count));
+ 			ret = -EROFS;
+ 			goto out;
+-
+ 		}
+ 
+ 		for(i = 0; i < le16_to_cpu(el->l_next_free_rec) - 1; i++) {
 -- 
 2.53.0
 
