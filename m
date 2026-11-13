@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591157;
-	b=Zu5wJGNIXQCxXHIrCG2gmCI7KibtuBcbC28zzYbl+AF+NMK5VSIgaS4/bMBfIsuaVhBa
-	 3st4ZTLH8JuPkj6qCx+NqN+05OgEvheSVcPeu/bqRQv4BH7OFGhW9YkK5dpTbR9JzQRQd
-	 4RbcG2FyJcXqF8pTO41jbN8sH4057f54+1P7hdyLpeB8B98q8uCVONd0k6eUoNvENm6Eg
-	 e3djfB/J/fRLDApHrSmgYnDzICwx723yCTYdJHEI49xY4qGTWPUz4b+3EOSIcBzRtqWiq
-	 nzMjxXDGdbRqKTzwWcQYRAfTSMHTLGo1CclSd5F5zzK8yB5voF2Gap6W7S2Y34wMj+g==
+	t=1794591158;
+	b=DE2zCuNu09ZVEAPHvVddnKENY9sLyC3GEIE3XAffx4ksa/lgETZvVyU/v+DhhRdmAajC
+	 EVdwuU6dSomchChY6g2VSCcAUOg/V+bj7pc7PRd2Lh5OyaSD4qgCVR5QUlnA+1Edl2ekA
+	 lGHpdR5R/BUXKyLeJtmRfC5v4LiBtVxiOn53hsn4f1wTHjRMst9Oy2lVKdFioa58KRICm
+	 1tdg7ZDqwgLYvpd82QqJPGUHARW5oBIeFwtl+9e3RGVOm9YQwyS1AvCvR4UuxCSbBz+pu
+	 yKgHFY4HWhc8D0PncMcvDQt08gvyR8ipbfj22SrSu0HUdEKzBQMCakTRy4P5rra5/Tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591157;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591158;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NqHo9vkkxYCKmbM0NSS5Za4aMHobVIfRaBnttcOLHYs=;
-	b=bUL2AghTjgXrrWatC+AlB7jGtfNP9VVI9zMVJBlh5O0vDLpcG1hZP6iY+qHWfk65LqDE
-	 mfnixStiyfUk+TQugQQBLBGhsAoeO+tZC63xYiGqQdFQJ0yQCnBsMcog87DQ+FF+k6I6b
-	 kEbRDs9yGDKsRowvye6qYc3JJL8MnSpdHzbNxYH0xCtBxJOgEtF+FTAmb5POctOURV3ey
-	 HhxNvEnSYDtPVPyFfW62TuHw7Sh/AUq+qvTSTCoiid684nyup+U6slxOHTTZFVR/tRv2S
-	 lqSQrctRANVoSE4Ur+MbdVEjfvsJUaRfsJ+9ix9Z8JgM8VlQz/Q3SWuG12PX1KUS8eg==
+	bh=JVebGlnwQMjLSuR3sZcmJp7LhnNAE3UpoCJKmADsqSY=;
+	b=P4XdBamlGA5c4lgGspYqfWtQ1p0xYAEGYm6QtUJ6jTk6yMRvUXADa/CXIgroDEjFYDH3
+	 TFJcNxb3lecxsYBuIjtSHFqE7eNCTs7V7rYvfim3Z8KbobrDuQboMuDzcWFAE/vK1AItH
+	 v63xXqDbZ+X6RzjjnYR8GYxNF71t1LZhkwYWMukv3+tJ2R28sJq8c+hJzLk9/lWKI+u25
+	 cZjNMKoDDRsdJQVrJGQ2ddbHDwf3uZnC/74+c9KebVm1sPMIWm2hGxdF1Xs6ItpOsPztg
+	 jBv4/7W6D4u76/56uVmWB/UC/yaDRwPoa/GmWZZZ1XP7YQmLF58MnYhxGL/LCX4MZsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFXevXCt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g9Judy4W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC01606BD27;
-	Fri, 13 Nov 2026 17:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF199606BD2A;
+	Fri, 13 Nov 2026 17:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFXevXCt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6F71F000C6;
-	Fri, 13 Nov 2026 17:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g9Judy4W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315111F000C6;
+	Fri, 13 Nov 2026 17:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591157;
-	bh=NqHo9vkkxYCKmbM0NSS5Za4aMHobVIfRaBnttcOLHYs=;
+	s=korg; t=1794591158;
+	bh=JVebGlnwQMjLSuR3sZcmJp7LhnNAE3UpoCJKmADsqSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IFXevXCtFLdUO8KGLzvaCuN9vFBB4atMS5HUbe+CbDIC18V6XPGoedfODkNhxqRFj
-	 Xa+hKICvA1IDj04bAUPlTsx8FRW606IkNBKUnqf28b2fSR5qukiay6d9+TMzpQrmKg
-	 UH1W9jonqsTSqH/4rhB28IOAchQ1YJGOKzMzodPA=
+	b=g9Judy4WBV3imSnx6Ger+8ZFlQ2u2jzHvwtgPfcsn6/oRC7uxrpkbpejTQaPV0r+4
+	 yCxk8OmZSahGwGLyMisZvOaPhMxZ2eS30mVBeCWTVHPigin+77bxPoWxgrlNa52D/2
+	 /dzkILvy7oDXcOT319ijYwx02eeZt5wlIwZI9pPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Esben Haabendal <esben@geanix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 301/670] vdpa/snet: Dont discard the DPU error in snet_send_ctrl_msg()
-Date: Fri, 13 Nov 2026 10:47:45 -0500
-Message-ID: <20261113153822.121445438@linuxfoundation.org>
+Subject: [PATCH 6.12 302/670] drm/bridge: nwl-dsi: Cleanup endpoint mux control selection
+Date: Fri, 13 Nov 2026 10:47:46 -0500
+Message-ID: <20261113153822.154506401@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,55 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Esben Haabendal <esben@geanix.com>
 
-[ Upstream commit f41f153d49b4c18172ec61b69ba934c36e1be745 ]
+[ Upstream commit 8dad0ebd822f54102aadc6ca4f0f8777112d175d ]
 
-snet_send_ctrl_msg() reads the error code the DPU reports when it ACKs
-a control message, but then overwrites it with the return value of
-snet_wait_for_dpu_completion(). As a result, a DESTROY, SUSPEND or
-RESUME that the DPU rejects is reported to the caller as a success as
-long as the DPU clears the opcode register in time.
+Using the endpoint define values makes it more clear that the argument to
+mux_control_try_select() must be valid state integers, and not something
+that looks like a boolean.
 
-For SUSPEND this means vhost-vdpa marks the device as suspended and
-lets userspace reprogram the vrings while the DPU is still running
-them; for DESTROY, snet_reset_dev() never even sees that the device
-failed to stop.
+The endpoint value is kept, as it will be used in a following patch that
+changes behavior slightly based on which endpoint is selected.
 
-Return the error from the saved ACK value once the completion wait
-itself has succeeded.
-
-Fixes: 3f3a1675b731 ("vdpa/snet: support getting and setting VQ state")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261005044915.264532-1-oss.patchbox@gmail.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Link: https://patch.msgid.link/20261027-nwl-dsi-fixes-v5-1-b6d1d3d2d356@geanix.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/solidrun/snet_ctrl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/nwl-dsi.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/vdpa/solidrun/snet_ctrl.c b/drivers/vdpa/solidrun/snet_ctrl.c
-index 3cef2571d15d3..1c3b5f2e44990 100644
---- a/drivers/vdpa/solidrun/snet_ctrl.c
-+++ b/drivers/vdpa/solidrun/snet_ctrl.c
-@@ -291,7 +291,6 @@ static int snet_send_ctrl_msg(struct snet *snet, u16 opcode, u16 vq_idx)
+diff --git a/drivers/gpu/drm/bridge/nwl-dsi.c b/drivers/gpu/drm/bridge/nwl-dsi.c
+index 5f05647a3beab..ffe738e93deb7 100644
+--- a/drivers/gpu/drm/bridge/nwl-dsi.c
++++ b/drivers/gpu/drm/bridge/nwl-dsi.c
+@@ -110,6 +110,8 @@ struct nwl_dsi {
+ 	int error;
  
- 	/* Check for errors */
- 	val = snet_read_ctrl(regs);
--	ret = SNET_VAL_TO_ERR(val);
+ 	struct nwl_dsi_transfer *xfer;
++
++	unsigned int endpoint;
+ };
  
- 	/* Clear the chunk ready bit */
- 	val &= ~SNET_CTRL_CHUNK_RDY_MASK;
-@@ -301,6 +300,8 @@ static int snet_send_ctrl_msg(struct snet *snet, u16 opcode, u16 vq_idx)
- 	if (ret)
- 		SNET_WARN(pdev, "Timeout waiting for DPU to complete a control command, err %d\n",
- 			  ret);
-+	else
-+		ret = SNET_VAL_TO_ERR(val);
+ static const struct regmap_config nwl_dsi_regmap_config = {
+@@ -1089,13 +1091,12 @@ static int nwl_dsi_parse_dt(struct nwl_dsi *dsi)
+ static int nwl_dsi_select_input(struct nwl_dsi *dsi)
+ {
+ 	struct device_node *remote;
+-	u32 use_dcss = 1;
+ 	int ret;
  
- exit:
- 	mutex_unlock(&snet->ctrl_lock);
+ 	remote = of_graph_get_remote_node(dsi->dev->of_node, 0,
+ 					  NWL_DSI_ENDPOINT_LCDIF);
+ 	if (remote) {
+-		use_dcss = 0;
++		dsi->endpoint = NWL_DSI_ENDPOINT_LCDIF;
+ 	} else {
+ 		remote = of_graph_get_remote_node(dsi->dev->of_node, 0,
+ 						  NWL_DSI_ENDPOINT_DCSS);
+@@ -1104,11 +1105,12 @@ static int nwl_dsi_select_input(struct nwl_dsi *dsi)
+ 				      "No valid input endpoint found\n");
+ 			return -EINVAL;
+ 		}
++		dsi->endpoint = NWL_DSI_ENDPOINT_DCSS;
+ 	}
+ 
+ 	DRM_DEV_INFO(dsi->dev, "Using %s as input source\n",
+-		     (use_dcss) ? "DCSS" : "LCDIF");
+-	ret = mux_control_try_select(dsi->mux, use_dcss);
++		     (dsi->endpoint == NWL_DSI_ENDPOINT_DCSS) ? "DCSS" : "LCDIF");
++	ret = mux_control_try_select(dsi->mux, dsi->endpoint);
+ 	if (ret < 0)
+ 		DRM_DEV_ERROR(dsi->dev, "Failed to select input: %d\n", ret);
+ 
 -- 
 2.53.0
 
