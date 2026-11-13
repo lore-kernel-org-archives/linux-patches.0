@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585256;
-	b=XxIgONDUH25AWWgSktxHeL+XzE+JZfJ0QCrzdG7Cstw9gzDelbXAu3I9HjYhFjrmPje1
-	 S4l0UhQBVxS8h5Zrq//tm48R1r8XoPwZNoucpayeEIQxkzJQq1q+3yv2Y1wgrEFaF1WgI
-	 5SurZ9SjYTM0QFhFb7fEgXahnafSKRiR3KVaYdxu0a59nUb7wqE+zHKpmi1+MI2d7Gk3X
-	 H8mC3NAYdGuGgFjQTSRGR05vNNlNFlM8qkMWUxtreB+70V/tMnMEKkPdBpK6P43aFxvcu
-	 AfvOAD/oYVKmylkDMQyi6lPt+TMbwrEjtFVDK7leyM/RvgckNlcnLvJ70acDwvC1aOw==
+	t=1794585257;
+	b=U4mks5BeZW6ADXQPnj8Q/xaukLqVsT/9t1rZGEJCDRnV0f6xmX/rg+1As9n96TBzg8Ak
+	 MgTviO/jf5T6UD9XQF3rKhuVDiRVq846CdBAkduuMXwz137Ctdq3TfCrY7MzMSAf9F+dq
+	 IW0slBHVW4uJR+BipeYhYZIDciCkgWz2xqtCdo93o6QpjY4uzl30uiKHcMQoAWTxpSW6E
+	 lLJnvaFPbXT7OXbbNmPTIlFdl0/fp2Cg6/MhiKCcv4eRbZPJ/8v0Y1zwrjaxiL3lWGNAT
+	 kvZ2l4vshogda6SrdRXejbh/AjGPKfPfKDh2l9K3dBhAYc4MTLmSDGrWV6GFAjnKXUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585257;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YKCoKJsIZyuzOnNcNqOXjKQ++zSblsWucwHPwzZrm9o=;
-	b=PxI2OnBt+e0tczI1aI8D2lRQbD7FUwM1nmlC+l/RsJemBCfVBKWdxYt/zRgB+462LAW7
-	 0F/3M8ZizCILLZr1vOXXbHeKvqA/2ykRViU5EJFP4Vc42SMRk3HP7q0Tawe4hjTgAifqs
-	 lNmvBhDk1PoyMPyF66sNyDjzzEpfMSCYHCsePIebH5qv8NP1BGX6X8Vaf38r9mZpIeC33
-	 pNu/4UVEp1y/JmyUiJcsFUZ34pcOQRR89V80Y5665j2Gep+3giYmQEgnLmIdEt+C6dWES
-	 6J/5xV3vRF2wUeeN5cjKQI6/42rtgOA7/IYCS9arEbka4AO6Fv6T7VKTc7paFyOTb5g==
+	bh=eV4CmRS54FtiUQOeoOh9wgLvhW4QDSuO+lHDouHuKRg=;
+	b=zb/XdQ4bF8yuBCM6UrDErC5jEo4oQ1XalNDy3rHvRSnj98E3kTjU6qJNtrTnrOCZXcff
+	 YFsKXSMUhG4aTlFktJnw/OfSBeJpxZ5jvZXvP0+/8u5acPu6cjPdJCMD2LcNZzej93Hrs
+	 dkcG9dLegh5coAC9izh2PtrIVdQ1ecLS5/+lDsrQn3cpcz6fhDOOL055U6fouo7J/W/4H
+	 /8yCzhQ1dxxjDK1PXWkrMTyvuqWmpyoZ5z9fiViQBlBdBoQIW8ajIIwlIPrlzMIe3qKzP
+	 Nxo2FJxz7vxdT7OU4ME8NoNazsUi63Ijk2Yd6dYDmHI6yraj4juiIf2hP2w/MR1j29A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDzvKWDS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UP+yabVl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E84606A330;
-	Fri, 13 Nov 2026 15:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91E2606A330;
+	Fri, 13 Nov 2026 15:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDzvKWDS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D14C1F000C4;
-	Fri, 13 Nov 2026 15:54:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UP+yabVl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5517A1F000C4;
+	Fri, 13 Nov 2026 15:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585256;
-	bh=YKCoKJsIZyuzOnNcNqOXjKQ++zSblsWucwHPwzZrm9o=;
+	s=korg; t=1794585257;
+	bh=eV4CmRS54FtiUQOeoOh9wgLvhW4QDSuO+lHDouHuKRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QDzvKWDSioKoCDOicQRXNKpwujKXju/6jIhCRHdPuGYvvRdEgwXhKQRsolTsS+UBi
-	 mXO4OGGXbFQG0of9mDq77gq+dK4ciwfa9cq6h8M9YYUuIf4WuZcMLT8nqYm+VOGjhq
-	 8XxTBhI/IToWSDr3VaW1CWMIplOguCWD1ZLONM5k=
+	b=UP+yabVljZa+iC4AeME0ve1Bkac2IKsCdVYNWSAjo05rJfYjJ3+bS12A3qJtUSVuo
+	 c3k1EukVfG+57AZYo3eGZpqjAojkZHblbnG8xZHjIFwl/XYlHP+nthX9FcLEWH2CRh
+	 jpoaP+D1CoeQxXLdFSgapWjXFjejR7BxRwYZ06Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Keith Busch <kbusch@kernel.org>,
-	Andrew Stellman <astellman@stellman-greene.com>,
+	Chris Mason <mason@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 005/686] nvmet-rdma: fix out-of-bounds write in nvmet_rdma_map_sgl_inline()
-Date: Fri, 13 Nov 2026 10:42:18 -0500
-Message-ID: <20261113153821.115586329@linuxfoundation.org>
+Subject: [PATCH 6.18 004/686] backing-file: always end a queued write
+Date: Fri, 13 Nov 2026 10:42:17 -0500
+Message-ID: <20261113153821.079418643@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,66 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Stellman <astellman@stellman-greene.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit d1512773a0d539669440bd9f6d050b8e12923b5f ]
+commit 627cdcbc2a2eceb0452078a0c14370f9f1f17a91 upstream.
 
-nvmet_rdma_map_sgl_inline() bounds the host-supplied in-capsule SGL
-offset with "off + len > inline_data_size", evaluated in 64-bit
-arithmetic. off is taken straight from the host SGL descriptor
-(le64_to_cpu(sgl->addr)) and len is promoted to 64-bit, so the sum
-wraps: an off within len of 2^64 makes it small and the check passes.
-off is then used as page_idx = off / PAGE_SIZE to index the fixed-size
-rsp->cmd->inline_sg[] array (NVMET_RDMA_MAX_INLINE_SGE entries), so a
-crafted offset yields an out-of-bounds scatterlist index that is written
-through in nvmet_rdma_use_inline_sg().
+Writes to a loop device with direct I/O on an overlay file make the
+next freeze of the upper filesystem hang for ever.
 
-The mapping runs while handling a received capsule, before the command
-executes, so a remote RDMA peer can reach it (the Connect capsule is a
-write and takes this path on a queue that has no controller yet). The
-host controls only the low bits of the resulting displacement, so the
-expected impact is an out-of-bounds write that faults the target
-(remote denial of service).
+Every kiocb_start_write() needs a kiocb_end_write(). For a write that
+is queued, vfs_iocb_iter_write() leaves the end to the completion, and
+backing_aio_rw_complete() only calls kiocb_end_write() when IOCB_WRITE
+is set in the flags copied from the submitter. In-kernel submitters
+such as loop do not set that flag, so each queued write keeps the
+freeze protection of the backing filesystem.
 
-This wrap was reported, with a KASAN reproduction, on linux-nvme in May,
-and the check below was suggested in that thread. The fix that was
-applied, 48c0162f647b, reworked how the offset is mapped but kept the
-original check, and its page index turns a wrapped offset into an
-out-of-bounds index into inline_sg[].
+Direct writes to a loop device with direct I/O backed by an overlay
+file left fsfreeze of the ext4 upper filesystem, and a later touch
+there, blocked in D state. It takes write access to the node of the
+loop device, which root has by default, to attach the file and to write.
 
-Reject the offset before it can wrap.
+The fix used here is to mark a write in struct backing_aio and to call
+kiocb_end_write() on completion of every marked write.
 
-Found independently by static analysis with AI assistance, not
-reproduced at runtime.
+Reproduced under qemu without KVM, on v7.3-rc6-21-g602042bf29f6 with
+earlier fixes of this series applied, with and without this change,
+once each. The kernel was not changed for the run. With this change
+fsfreeze finished in about a second. Not run: the nvmet and LIO file
+backends, which do not set IOCB_WRITE either, FUSE passthrough, and an
+xfs upper filesystem.
 
-Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
-Fixes: 48c0162f647b ("nvmet-rdma: handle inline data with a nonzero offset")
-Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
-Closes: https://lore.kernel.org/all/LM21QIR-1-qJb7PViyJKCnGBnUzizeiNJVWQ3wb7ZwGezodjgKg3f-iobqOyequ-sT1jFCKJImfqNO_BKU3KO80xFITnaI5GTV_GxLUNDDc=@proton.me/
-Suggested-by: Keith Busch <kbusch@kernel.org>
+Fixes: 2406a307ac7d ("ovl: implement async IO routines")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Chris Mason <mason@kernel.org>
+[amir: use aio->is_write to explicitly mark a write aio]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20261029180319.2852090-1-amir73il@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/backing-file.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index a0ba6641c7ffb..ae44a0ff34d74 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -864,7 +864,8 @@ static u16 nvmet_rdma_map_sgl_inline(struct nvmet_rdma_rsp *rsp)
- 		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
- 	}
+diff --git a/fs/backing-file.c b/fs/backing-file.c
+index bf526fa2e29df..ed8e793564c36 100644
+--- a/fs/backing-file.c
++++ b/fs/backing-file.c
+@@ -106,6 +106,7 @@ struct backing_aio {
+ 	refcount_t ref;
+ 	struct kiocb *orig_iocb;
+ 	/* used for aio completion */
++	bool is_write;
+ 	void (*end_write)(struct kiocb *iocb, ssize_t);
+ 	struct work_struct work;
+ 	long res;
+@@ -146,7 +147,8 @@ static void backing_aio_rw_complete(struct kiocb *iocb, long res)
+ 	struct backing_aio *aio = container_of(iocb, struct backing_aio, iocb);
+ 	struct kiocb *orig_iocb = aio->orig_iocb;
  
--	if (off + len > rsp->queue->dev->inline_data_size) {
-+	if (off > (u64)rsp->queue->dev->inline_data_size ||
-+	    len > (u64)rsp->queue->dev->inline_data_size - off) {
- 		pr_err("invalid inline data offset!\n");
- 		return NVME_SC_SGL_INVALID_OFFSET | NVME_STATUS_DNR;
- 	}
+-	if (iocb->ki_flags & IOCB_WRITE)
++	/* Pairs with kiocb_start_write() in vfs_iocb_iter_write() */
++	if (aio->is_write)
+ 		kiocb_end_write(iocb);
+ 
+ 	backing_aio_cleanup(aio, res);
+@@ -287,6 +289,7 @@ ssize_t backing_file_write_iter(struct file *file, struct iov_iter *iter,
+ 			goto out;
+ 
+ 		aio->orig_iocb = iocb;
++		aio->is_write = true;
+ 		aio->end_write = ctx->end_write;
+ 		kiocb_clone(&aio->iocb, iocb, get_file(file));
+ 		aio->iocb.ki_flags = flags;
 -- 
 2.53.0
 
