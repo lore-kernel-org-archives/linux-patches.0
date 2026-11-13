@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590976;
-	b=fBMmsmhJoxrP/eO5k1ueXp2n8AkE4m+lkyWXvXyDd3NQDEK7l18EDwsjfZfeCRo9cP8E
-	 0377bAR8bNxVtVgEiA0QjRBfv2VTe6mqz3kY9z1uzKSEBYT1e+zz8jse/ByOqZ2INdfZn
-	 GBFfdBd4OlaXS5Ot9ml5HjG0VFBZbOXRyEds4P+D72EV5mzjv2iqZw4AHfQxR4cOrux28
-	 0MyhKI0web9A0cKS/urRQ4w3t+89u0nwR0fztXc7YAHlkXgYUOv0Ka1JCXsBFVWMK6GkY
-	 9tWFV3C4/MhgTBsNJ73k53vVWRO5dQ0myot9aHLfpwvnozaqaqtCRnrJcRKRFj0IbUw==
+	t=1794590977;
+	b=HIWZXXnEgZxKB4m+b0M31P2aarfgqb2huPI0bnHN8BxQlJQ+Wp+pwWxTy3PgR2/Ypxxe
+	 e/YkkPkvxSq8nlkL/RnF1PZ6Q0QYh+vPB8os66+yYnJV31iWa+gI6j/AwWURQabBEDAFr
+	 Azq72MyNUbAHKLk/GXNTFq9yVkJflm3tDTKnueCdddBg1fIOOJ4KkvAg00vJUfFHLg9fr
+	 FsA+Q026BnGXHA9whoS8mvafhdnqRz/OY4LNFkT3sMdsZghWJs/HIjVxxQBZdXhKpswsJ
+	 uU15Qh8xaglzxn6C7xDmOA5ZePiJwnpkjfwnVkfoTGvjtldKgnx/42E2edSdP5uB/CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x6ogscHC/tu+J/9bFR4rA4uom6vqIOEFk+mMDPjqpVc=;
-	b=RCyF3K5aDuVjLgCYPGgVniHm8r24JSAWMeRdP+Qp3jsKErUFYyI9iMtKGBc/51C0JBEb
-	 v7CseQU/p5qtSiNoC5t2cQZeI/p+beFMscSFx2Ejb4PWTbYkWU1NnyzNr+jKKNLnnhi8L
-	 3p9+VSF4TFD3kSSghA4RDj73kscWoHVu8EhB8AGc4MdPPxehCBv0BOEduEL6x+PTXSpwz
-	 t2BjPG2vK1YcJTmLUsxyvkx2hJs0bGR2DfbgEsO3oAFRlcToB9aMrnZx3PPpcCXE4fFqY
-	 fooXOzKfT5NOePiYNkkRh3yi0yVjN4B4W6MSrhZGjGwEjCgft6sNVQIgkUPbR1FnwnQ==
+	bh=y8JJmPfTrOpoVWY7g7TPjrqFAFN9eFfoF4R6Rrl2fYA=;
+	b=zC6aIh7RSGZwllw5wow1x903yTXTBVCgwRMLQGhegMXPGYZd4xDRGHxIJH4C2GUlLp2I
+	 NbhmXXTauzsgk+WVb/iq7v1KIprhJrE93HABP/WVYfpRN4vC2ZJnYqeB8hrjdwL4YK0Vu
+	 lty/3AFdMjhL1htHl3mVl6piupZFSuknxq5REuB0KLVjSrzYL1v+tNQSQjY5pz8yqZ82E
+	 JgRs2L4gj6p/cxuTjWkTn71V3BCEOY4v60Wg3EGeGO1oT0Cxs/UdWgFpwfYsjkBq+eA/L
+	 MuK9T9yY9NLnCOjMB6E2kVLYMRXbJKgRxkvkmhuHkugnpmXM3wOVezNIKH9hC26e5Dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z+/KAnDX";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBJpj8AV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703F4606F737;
-	Fri, 13 Nov 2026 17:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84E060703C4;
+	Fri, 13 Nov 2026 17:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+/KAnDX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1FE1F000C5;
-	Fri, 13 Nov 2026 17:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DBJpj8AV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549CF1F000C4;
+	Fri, 13 Nov 2026 17:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590976;
-	bh=x6ogscHC/tu+J/9bFR4rA4uom6vqIOEFk+mMDPjqpVc=;
+	s=korg; t=1794590977;
+	bh=y8JJmPfTrOpoVWY7g7TPjrqFAFN9eFfoF4R6Rrl2fYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z+/KAnDXopOsar4S5YOy2S60/oksXeqXUGPGbFYnA++7C8giHdJ4mR5QIAV/+sj3U
-	 aeKwwLCF05f8xBrjkawqTmxL0CyoZux3elOoko9RvHm1qumXyjXyF0R+6q62qwitJv
-	 C4G2rzypsJwCgPrnxS+O0axCMaJ1dyMmF49XuXBM=
+	b=DBJpj8AVyZhPvzPJWGwJahl0ibAfNdePo9EqsWDTiQtRozQW2/K2MH+TTF7R+wwWy
+	 2sr3/t4rWhjdE1DmH8rT1B1KXpsAJxffTvSduhm+foyFb6G8Y89O/ShvBBmjViXQbq
+	 a25L0Ci3P7sJIHtQYIQMJAxdIe4LcEe3kT/UkWho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bui Viet Dung <dungvn2345@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 154/670] Bluetooth: selftest: Pin module for selftest debugfs file operations
-Date: Fri, 13 Nov 2026 10:45:18 -0500
-Message-ID: <20261113153817.360225547@linuxfoundation.org>
+Subject: [PATCH 6.12 155/670] tracing: Add the bucket size to expr_field_str()
+Date: Fri, 13 Nov 2026 10:45:19 -0500
+Message-ID: <20261113153817.401522445@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,80 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bui Viet Dung <dungvn2345@gmail.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 64aabf94ecccb1120a63b4ee5a6761871a181a41 ]
+[ Upstream commit c027ed03bc03a0e82fc368eaad657584a4480c7a ]
 
-An open debugfs file retains its file_operations pointer in the
-debugfs proxy state. However, test_smp_fops in net/bluetooth/smp.c and
-test_ecdh_fops in net/bluetooth/selftest.c have no .owner set to
-THIS_MODULE.
+expr_field_str() renders a HIST_FIELD_FL_BUCKET field as "pid.buckets",
+dropping the count, and parse_field() rejects that spelling.
 
-As a result, full_proxy_open_regular() calls fops_get() which succeeds
-without taking a reference to the bluetooth module. When CONFIG_BT=m
-and selftests are enabled, a userspace process can open either
-/sys/kernel/debug/bluetooth/selftest_smp or
-/sys/kernel/debug/bluetooth/selftest_ecdh and keep the file descriptor
-open while the module is unloaded (rmmod bluetooth).
+get_hist_field_flags() returns the bare string "buckets" and keeps the
+count in hist_field->buckets. hist_field_print() appends it,
+expr_field_str() never did. Nothing reaches it today, since .buckets is
+refused on a value and no expression can carry one, but the next patch
+renders histogram keys with expr_field_str(), where a .buckets key is
+legal.
 
-When the userspace process subsequently closes the descriptor,
-full_proxy_release() accesses the already unmapped file_operations
-structure, triggering a kernel oops in full_proxy_release():
+Append the count, as hist_field_print() does.
 
-  BUG: unable to handle page fault for address: fffffbfff8056f03
-  #PF: supervisor read access in kernel mode
-  Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:full_proxy_release+0x8e/0x140
-  Call Trace:
-   <TASK>
-   __fput+0x39f/0xa60
-   fput_close_sync+0xff/0x200
-   __x64_sys_close+0x8c/0xf0
-   do_syscall_64+0x115/0x6a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-
-The issue was discovered via manual code audit of net/bluetooth/smp.c
-and net/bluetooth/selftest.c.
-
-Set .owner = THIS_MODULE on test_smp_fops and test_ecdh_fops so that
-debugfs keeps the module pinned until the file descriptors are closed.
-
-Fixes: 64dd374eac15 ("Bluetooth: Export SMP selftest result in debugfs")
-Fixes: 6de50f9fdb60 ("Bluetooth: Export ECDH selftest result in debugfs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://patch.msgid.link/20260914053443.981201-3-donggeunyoo.kernel@gmail.com
+Fixes: de9a48a360b7 ("tracing: Add linear buckets to histogram logic")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/selftest.c | 1 +
- net/bluetooth/smp.c      | 1 +
- 2 files changed, 2 insertions(+)
+ kernel/trace/trace_events_hist.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/selftest.c b/net/bluetooth/selftest.c
-index f49604d44b877..6abf70c14f598 100644
---- a/net/bluetooth/selftest.c
-+++ b/net/bluetooth/selftest.c
-@@ -191,6 +191,7 @@ static ssize_t test_ecdh_read(struct file *file, char __user *user_buf,
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 171f3a13cd6b0..aa9aca76e76e0 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1747,6 +1747,9 @@ static bool expr_field_str(struct hist_field *field, struct seq_buf *s)
+ 			seq_buf_printf(s, ".%s", flags_str);
+ 	}
+ 
++	if (field->buckets)
++		seq_buf_printf(s, "=%lu", field->buckets);
++
+ 	return !seq_buf_has_overflowed(s);
  }
  
- static const struct file_operations test_ecdh_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= test_ecdh_read,
- 	.llseek		= default_llseek,
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index c093797962266..be1bde5b8ed63 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -3735,6 +3735,7 @@ static ssize_t test_smp_read(struct file *file, char __user *user_buf,
- }
- 
- static const struct file_operations test_smp_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= simple_open,
- 	.read		= test_smp_read,
- 	.llseek		= default_llseek,
 -- 
 2.53.0
 
