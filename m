@@ -1,61 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590732;
-	b=XX0gMCNpYn2Q8Nzy5ZCj3sobH46rLo9eEYUC74BJ7wd5/O6VBomWKY5x2eIVty/+d0ux
-	 wOnX1V6i2NxYw0sT5Dp8DeVRDScYnm5DILAfRElOYX5o1dgbDgReXqVTMo3IDpfThWkxn
-	 y7fLnHWWxCIDLBLMqNOSudVI0haLSjfyzX8yD/USufs1VeDEORnFkF2GgfQwIElbyIMTA
-	 0g8bt9xEKt1wBeiMBWTFliHG8miHLkjcDMvw2hejQ765VZiiq5/QIvHa+x4hUGUk6L89K
-	 CKnKxJESmW3bHfDQvUW8rF66LwQQ5JdyV6HNf47Ly/oBA2n4mZM4HwLrmVpzXbsD7TA==
+	t=1794590733;
+	b=K/bS5xdQ2eNavG6I/0QeMlhfwten5YBsdhAj8HMakEsff1d03x1b7B6S/UQa5biUbkKY
+	 Cjvi/8E20zj1YaU9DBzVjjHbxls1DkzinSWboTE4FDFXRoOme+QgQOUWThG6jgQaFyVFA
+	 mOQi8pkkzhykBFTT/qsN35ljoptIwMKVERMk39eB5eGLdYUZrqdJQQyMHZmQeqbIvDCdc
+	 +Xxo7xEnPENZWIvOv73zLhwrJ00S3zn8bWZgA0gdKn1ATZ/dgjQzztJuKOFACxJYCrxox
+	 6qen9SZSoJkh0l7Q4WIdhC7RlyjIuG5N0iFU1SEla93GtWGwCu4z1zFmQHjznXwYS9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590733;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IVDs7es/3i4Jz1J76pqZ6EdRRj2UGGTgqnU6mKmC64E=;
-	b=cCKO+HEmTNeSiChVp6SwBG8Oh0H28DHvdMStou9Ov7qH/gee7J5+0iCrMV5vigK886az
-	 lRcLyDLnZvMPws4nvMGNLuyefM0mB5aDOPFS1FniXo35VBveZlFtwgUECwSzFcTzXYOAC
-	 C2wgR9WmYFrF9dIlj7VfLR2peOqmBpIju0lpV41S2f/dOtwLrX0MBPVscYtqGKjcmHKHe
-	 sKOnZ5FWzRqhoLLdLrzCtzLY7kbQ0Gh+Dpeqht3eNLkMOUDOTnB0j284hxTMOdrXmecd/
-	 rBSZd3sIuIafwV01wMoBjDiLPVB4QFzWsKsGYosF8c9Kd3M0/pIqbuMT9V82kbOJ/jQ==
+	bh=ucomWbRW708BHlfWkhOhuDa/GLZ9bIU0KxC+XUcveSU=;
+	b=o5ZLiGLPSxfZdmlLNEsK4z+cISJdZF5Or7gV2is3x1zpb1jtbeco8VE9UszOW4DKwpsI
+	 oP5sYq4rVTW24yoQSMbNCRWJxmP8VpvlKub6noIsnch1bGRARDEnwlGyu0J8sK8rE3Oym
+	 K7m8QCVLgz3wcWHbujuqQojDIftgbmky9P4TJiw2gBAwgywiKQ1V6eds6ET6wv5rz7/TO
+	 SGEXRF/2u4CX9tNf/E2LsZBlC8u4DJNENzN2WkbF8TTnEcWvW5a/OGU8PqTYBZdtmrw2V
+	 ACR8EhtYDT9+Io3q91q1iQhW0MpM6CBWyIpvz55IC8tr5/ez9lDhkLKdtloOHmOzTDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XU5Qi7qV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcpOSWOK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D346079D6C;
-	Fri, 13 Nov 2026 17:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6788B6079D7B;
+	Fri, 13 Nov 2026 17:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XU5Qi7qV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D8D1F000C5;
-	Fri, 13 Nov 2026 17:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcpOSWOK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C602E1F000C4;
+	Fri, 13 Nov 2026 17:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590731;
-	bh=IVDs7es/3i4Jz1J76pqZ6EdRRj2UGGTgqnU6mKmC64E=;
+	s=korg; t=1794590733;
+	bh=ucomWbRW708BHlfWkhOhuDa/GLZ9bIU0KxC+XUcveSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XU5Qi7qVvo3ucSoCAHPoorHEjP5r0/cHJypsQyOBgcLy8q/sDwK+d52wlq/ENBkbW
-	 RZ70FfCCN8v0Gt6SMs41bnsASSBpj3aaem776H29rLFeZHDxe/ZyneKjpm1sVRKmgy
-	 dEYNbyHRr33jl9Z1mrT29eiDRrEQOBvt0jgH2faU=
+	b=UcpOSWOK5KgFeWeRJB71t6+yxPdUdLQp4nCTYhf3tcMcUnAGqx8IJzLhuu60SqRCp
+	 T6ebOOnFB6vTR8fzJcoRHTt/VnIxZBrTIkbG73un7q9mqAw0wnH08UAvhp7dp4nm+o
+	 sbk+PjNmnbMfDWcTCrCTN56AA468vsqOI+RPOws0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinmeng Zhou <zhoujinmeng@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Muchun Song <muchun.song@linux.dev>,
 	Hongfu Li <lihongfu@kylinos.cn>,
-	David Hildenbrand <david@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Hugh Dickins <hughd@google.com>,
+	Muchun Song <muchun.song@linux.dev>,
 	Oscar Salvador <osalvador@suse.de>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 635/686] mm/hugetlb: charge folios to the target mms memcg
-Date: Fri, 13 Nov 2026 10:52:48 -0500
-Message-ID: <20261113153843.333694047@linuxfoundation.org>
+Subject: [PATCH 6.18 636/686] mm/memfd: fix hugetlb reservation accounting in error paths
+Date: Fri, 13 Nov 2026 10:52:49 -0500
+Message-ID: <20261113153843.366233531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -77,117 +74,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinmeng Zhou <jinmengzhou22@gmail.com>
+From: Hongfu Li <lihongfu@kylinos.cn>
 
-[ Upstream commit c2deb1356d82c9d54bd2fcf1241cc97eb66fd81f ]
+[ Upstream commit 50ee565c1e900e247e439e4139839b060c968343 ]
 
-HugeTLB folios are currently charged to the memcg of the allocating task.
-This gives the wrong result when a userfaultfd handler populates a HugeTLB
-VMA that belongs to another process.  The UFFDIO_COPY ioctl operates on
-the userfaultfd context's mm, but get_mem_cgroup_from_current() charges
-the folio to the handler's memcg instead.
+If hugetlb_add_to_page_cache() in memfd_alloc_folio() fails with -EEXIST,
+a concurrent fault has already instantiated the folio in the page cache,
+and the reservation now belongs to that folio.  Calling
+hugetlb_unreserve_pages() in that case incorrectly removes the region
+backing the cached folio and releases one reservation more than it should,
+leaving that folio in the page cache with no region recording it.
 
-This can be reproduced by placing the faulting process and its userfaultfd
-handler in different memory cgroups.  Have the target process register a
-HugeTLB mapping with userfaultfd, trigger a missing fault, and let the
-handler resolve it with UFFDIO_COPY.  The hugepage usage is then reported
-in the handler's memory.current instead of the target's.
+That leaves resv_huge_pages one page short until that folio is removed
+from the page cache, so available_huge_pages() reports a page that is not
+actually free and the pool can grant one reservation more than it can
+back.  Applications using hugetlb memfds can then fail to allocate or
+fault in a page they already reserved.  They see -ENOMEM or -ENOSPC from
+the allocation or fault path even though the reservation and
+HugePages_Free still look healthy.
 
-The generic userfaultfd population path avoids this problem by charging
-folios to dst_vma->vm_mm.
+So hold the hugetlb fault mutex from hugetlb_reserve_pages() until the
+error-path unreserve completes to make the reserve, allocate and
+instantiate steps atomic against concurrent faults.  With the mutex held
+from the start, a concurrent fault can no longer consume the reservation
+between reserve and allocate/instantiate.  If a fault completed before the
+mutex was taken, it has already added the region for that index, so
+hugetlb_reserve_pages() returns 0 and the error path leaves the region in
+place.
 
-Pass the target mm through hugetlb_alloc_folio() and charge the folio by
-using get_mem_cgroup_from_mm().  This preserves the existing charge timing
-and error handling while making HugeTLB userfaultfd population consistent
-with the generic path.
-
-Link: https://lore.kernel.org/20260903075048.3316-1-zhoujinmeng@bytedance.com
-Fixes: 8cba9576df60 ("hugetlb: memcg: account hugetlb-backed memory in memory controller")
-Signed-off-by: Jinmeng Zhou <zhoujinmeng@bytedance.com>
+Link: https://lore.kernel.org/20260927094757.31665-1-hongfu.li@linux.dev
+Link: https://lore.kernel.org/20260903030134.7407-1-hongfu.li@linux.dev
+Fixes: 717cf9357325 ("mm/memfd: reserve hugetlb folios before allocation")
+Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Hongfu Li <lihongfu@kylinos.cn>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Muchun Song <muchun.song@linux.dev>
 Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
 Cc: <stable@vger.kernel.org>
-[ sashal: Passed vma->vm_mm directly to mem_cgroup_charge_hugetlb() in alloc_hugetlb_folio() because hugetlb_alloc_folio() is absent. ]
+[ sashal: Used 0 instead of EMPTY_VMA_FLAGS in hugetlb_reserve_pages() to match the vm_flags_t API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memcontrol.h | 8 +++++---
- mm/hugetlb.c               | 2 +-
- mm/memcontrol.c            | 6 ++++--
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ mm/memfd.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index 2df30cce143de..fc13c85ea903e 100644
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -662,7 +662,8 @@ static inline int mem_cgroup_charge(struct folio *folio, struct mm_struct *mm,
- 	return __mem_cgroup_charge(folio, mm, gfp);
- }
+diff --git a/mm/memfd.c b/mm/memfd.c
+index aa3c948e55738..d09157cd486a2 100644
+--- a/mm/memfd.c
++++ b/mm/memfd.c
+@@ -82,22 +82,31 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
+ 		struct hstate *h = hstate_file(memfd);
+ 		int err = -ENOMEM;
+ 		long nr_resv;
++		u32 hash;
  
--int mem_cgroup_charge_hugetlb(struct folio* folio, gfp_t gfp);
-+int mem_cgroup_charge_hugetlb(struct folio *folio, struct mm_struct *mm,
-+			      gfp_t gfp);
+ 		gfp_mask = htlb_alloc_mask(h);
+ 		gfp_mask &= ~(__GFP_HIGHMEM | __GFP_MOVABLE);
+ 		idx >>= huge_page_order(h);
  
- int mem_cgroup_swapin_charge_folio(struct folio *folio, struct mm_struct *mm,
- 				  gfp_t gfp, swp_entry_t entry);
-@@ -1175,9 +1176,10 @@ static inline int mem_cgroup_charge(struct folio *folio,
- 	return 0;
- }
++		/*
++		 * Serialize hugepage allocation and instantiation to prevent
++		 * races with concurrent allocations, as required by all other
++		 * callers of hugetlb_add_to_page_cache().
++		 */
++		hash = hugetlb_fault_mutex_hash(memfd->f_mapping, idx);
++		mutex_lock(&hugetlb_fault_mutex_table[hash]);
++
+ 		nr_resv = hugetlb_reserve_pages(inode, idx, idx + 1, NULL, 0);
+-		if (nr_resv < 0)
+-			return ERR_PTR(nr_resv);
++		if (nr_resv < 0) {
++			err = nr_resv;
++			goto out_unlock;
++		}
  
--static inline int mem_cgroup_charge_hugetlb(struct folio* folio, gfp_t gfp)
-+static inline int mem_cgroup_charge_hugetlb(struct folio *folio,
-+					    struct mm_struct *mm, gfp_t gfp)
- {
--        return 0;
-+	return 0;
- }
+ 		folio = alloc_hugetlb_folio_reserve(h,
+ 						    numa_node_id(),
+ 						    NULL,
+ 						    gfp_mask);
+ 		if (folio) {
+-			u32 hash;
+-
+ 			/*
+ 			 * Zero the folio to prevent information leaks to userspace.
+ 			 * Use folio_zero_user() which is optimized for huge/gigantic
+@@ -112,20 +121,9 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
+ 			 */
+ 			__folio_mark_uptodate(folio);
  
- static inline int mem_cgroup_swapin_charge_folio(struct folio *folio,
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index fad8c38ab4da6..a8da4cb7ad10f 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -3125,7 +3125,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+-			/*
+-			 * Serialize hugepage allocation and instantiation to prevent
+-			 * races with concurrent allocations, as required by all other
+-			 * callers of hugetlb_add_to_page_cache().
+-			 */
+-			hash = hugetlb_fault_mutex_hash(memfd->f_mapping, idx);
+-			mutex_lock(&hugetlb_fault_mutex_table[hash]);
+-
+ 			err = hugetlb_add_to_page_cache(folio,
+ 							memfd->f_mapping,
+ 							idx);
+-
+-			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
+-
+ 			if (err) {
+ 				folio_put(folio);
+ 				goto err_unresv;
+@@ -133,11 +131,14 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
+ 
+ 			hugetlb_set_folio_subpool(folio, subpool_inode(inode));
+ 			folio_unlock(folio);
++			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
+ 			return folio;
  		}
+ err_unresv:
+ 		if (nr_resv > 0)
+ 			hugetlb_unreserve_pages(inode, idx, idx + 1, 0);
++out_unlock:
++		mutex_unlock(&hugetlb_fault_mutex_table[hash]);
+ 		return ERR_PTR(err);
  	}
- 
--	ret = mem_cgroup_charge_hugetlb(folio, gfp);
-+	ret = mem_cgroup_charge_hugetlb(folio, vma->vm_mm, gfp);
- 	/*
- 	 * Unconditionally increment NR_HUGETLB here. If it turns out that
- 	 * mem_cgroup_charge_hugetlb failed, then immediately free the page and
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 61092a05f108e..3ce613dab616e 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -4824,6 +4824,7 @@ int __mem_cgroup_charge(struct folio *folio, struct mm_struct *mm, gfp_t gfp)
- /**
-  * mem_cgroup_charge_hugetlb - charge the memcg for a hugetlb folio
-  * @folio: folio being charged
-+ * @mm: mm context of the allocation target
-  * @gfp: reclaim mode
-  *
-  * This function is called when allocating a huge page folio, after the page has
-@@ -4833,9 +4834,10 @@ int __mem_cgroup_charge(struct folio *folio, struct mm_struct *mm, gfp_t gfp)
-  * Returns ENOMEM if the memcg is already full.
-  * Returns 0 if either the charge was successful, or if we skip the charging.
-  */
--int mem_cgroup_charge_hugetlb(struct folio *folio, gfp_t gfp)
-+int mem_cgroup_charge_hugetlb(struct folio *folio, struct mm_struct *mm,
-+			      gfp_t gfp)
- {
--	struct mem_cgroup *memcg = get_mem_cgroup_from_current();
-+	struct mem_cgroup *memcg = get_mem_cgroup_from_mm(mm);
- 	int ret = 0;
- 
- 	/*
+ #endif
 -- 
 2.53.0
 
