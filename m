@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591546;
-	b=VTRZW6+HlObAEyGhATVrsXTNumz2bXUOAtYaEG+3BzG6EGvd5buBNyD0VYAAfj9v7nz9
-	 Q2KZ930gk+wiX9D9UNyxjaUxBi9CP/Vw2fl6/mzU19vjeGPvscP2Mxu1yoBpmTRr2szSM
-	 FYClAAYGBB0thNRq0S49FrtC5+GOdj9oZXXBMwC55EDgopCEA+g2V0DesLkrgIRU8/hY7
-	 UYMn4RmPRgX3xVyalDuBLq0n0woOK/Me3BXiFSnLSF2NrtQPExpC1rLLF3iC4FVFOahqV
-	 FbGtc3l5EGWOjXdl3UWMDKaXxDG5dg8zlaDit6t3pMwmDKS6XCXXpRQq+xbPAjIy01Q==
+	t=1794591548;
+	b=EJNjUbzGfQG+3nya+O4Bn2PdJvJG1ptFaXKnv/nafNB9AvaUzNGl4Oi8EYf+qa5F2n8c
+	 at/lTWf5vv4bOJsK9dV3ZecGSRL0WT6xS8uVv6Hux1xggxQhU+bT5nT0ABNKXE5CFOR+e
+	 ndegQ1A+zGXCTcCr6BGzAv/Mj+RTQ1LvEkj6c2pDkkTrWJ7vkcXF2YwFb3j9F0QhtCLgm
+	 gTDLS/hyCBBM9irrq5xw/YmgxFZLwlydsQf8bbH8p2sWRwLj2oda+gByX0JrUzrdk+neG
+	 pWLJbe74sL66R3av7la5/kr7ibYw0kXq31FoC+Ym1l/QN2wmg0qoQUrOKXtg2cA1BuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591548;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=HpCTUGaw+GUnuhfFFxkzekzvs+yCTlZ1KcgbG0B0ckI=;
-	b=H9UyffprXtJTYfI1PtvTTmRgSjL5dg0m1BE873JNnr884eVM3WIH/Rko+MY2UWc2uYB5
-	 nfoTctitYeg04L9Tpt3Rws68mvV2w66HjBycjZ/h6E7D0Tu61Nt9yxyHxSSM0tkUV7u8B
-	 bVcfBn/Um7PafxDp+qrv+pqdq90wGg+T/DHu4Qi83801djt9gVBBdftl15oUtbwxPurtS
-	 uI0rVWI9T5PZyW9E2jLyyGMCw+U6tEoacv4GENbJL3pyFy0Isziq38wnWY7ikfdIlg+hQ
-	 iIHZZ5hxSWWu8031QNaEo25gUTh7l4w7Jnt2H2lgpJApN9krmaIEFuJrw3+1jmMLfhQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=m6Ne42nz2LyRkWPDw5G6I4AvQ8mAnSNeKMqktFdxqpo=;
+	b=QmKqp1g+ZL9yMKLugtEtxsrWRaMPZOAC4lzdrbVZwOHCQtOltnuCRg6iKS5IYuHadNmf
+	 2fgOld5z7ypLjFTw4r9HRtwwLBpka/Ol1Yucyv1SzVmfdF6G2OtDURq1i/s8gamweF2Nw
+	 us+nBA7kAhGzCwbqF1pKCYHwsP2+5CASh62+4wkMC21wbPRqpnpH0ILuI8H+lTR0xCUZk
+	 VkbBEP51tPkU3opt3C8CACnH133IwHjyJI4p4Y4+JEpgtB85S0I1zJP2ziSXjuHtgNNaH
+	 6kzt2afPjB7WHCUt+N2qYJ2TCNvEldrgqJjkRyxVUkTsZDdianOPU7OMe0bjeSgsbqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdao9OBC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R2t5PezU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8530606D4BF;
-	Fri, 13 Nov 2026 17:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254E4606D4B3;
+	Fri, 13 Nov 2026 17:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdao9OBC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B061F000C4;
-	Fri, 13 Nov 2026 17:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R2t5PezU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59201F000C4;
+	Fri, 13 Nov 2026 17:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591546;
-	bh=HpCTUGaw+GUnuhfFFxkzekzvs+yCTlZ1KcgbG0B0ckI=;
+	s=korg; t=1794591548;
+	bh=m6Ne42nz2LyRkWPDw5G6I4AvQ8mAnSNeKMqktFdxqpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sdao9OBCxR0Z7ehvrjiFXz5ZBPciQc034XV/H6fWPI0jxbyHgU1CrKot2UTfnGVr8
-	 OoYKoIAN8AWxmyuumEC6qJKbe7q1hBVmt4gBCYP0JoSlCFLJm/RHNTVfa3JBid3WZ8
-	 XpjtFw0unmCMErisTadvIML2Xbeoj9r9wpq0R/v8=
+	b=R2t5PezUcM8cOp2a4d6rhhpAianCDv2FsXU1VkRvlIQPU6lmMVJXRjk9Vw6fzJaoH
+	 dPRd5p2Hs99XUWzifmeK2YUEc6kITvpaoImPGD319tXf0lfJK3OR/8lFjalL9r3i+i
+	 wcMmYn8wUNwTYRBQ9x23J05hJK86sQGQFVJbYDLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Alex Sierra <alex.sierra@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 599/670] power: supply: bq27xxx_battery: register power supply with power_supply_register()
-Date: Fri, 13 Nov 2026 10:52:43 -0500
-Message-ID: <20261113153832.118232182@linuxfoundation.org>
+Subject: [PATCH 6.12 564/670] drm/amd: define gc ip version local variable
+Date: Fri, 13 Nov 2026 10:52:08 -0500
+Message-ID: <20261113153830.990088770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -63,51 +64,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Alex Sierra <alex.sierra@amd.com>
 
-[ Upstream commit 1011646d4bd6c2eedb68d131ba7ddaf9ecd2aa9e ]
+[ Upstream commit 9bfe4caa4e57ba343d81e837911242f058688200 ]
 
-devm_power_supply_register_no_ws() is going to be removed.
-Switch to the general registration API.
+For better readability. Also leftover orphaned code.
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20241005-power-supply-no-wakeup-source-v1-4-1d62bf9bcb1d@weissschuh.net
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: db560f4b1c52 ("power: supply: bq27xxx: Ensure poll work is cancelled on remove")
+Signed-off-by: Alex Sierra <alex.sierra@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 232213c9bd7f ("drm/amdgpu/gmc9: add extra type-2 TLB flush for gfx942/gfx950")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c | 8 +++-----
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c  | 5 +++--
+ 2 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 19c73aad769a5..fc76fd9e2b96f 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -2163,6 +2163,7 @@ int bq27xxx_battery_setup(struct bq27xxx_device_info *di)
- 	struct power_supply_config psy_cfg = {
- 		.of_node = di->dev->of_node,
- 		.drv_data = di,
-+		.no_wakeup_source = true,
- 	};
- 	int ret;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+index d82f90f480240..fba9d8c6fd2b1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -1139,12 +1139,13 @@ static void gmc_v9_0_get_coherence_flags(struct amdgpu_device *adev,
+ 	bool uncached = bo->flags & AMDGPU_GEM_CREATE_UNCACHED;
+ 	struct amdgpu_vm *vm = mapping->bo_va->base.vm;
+ 	unsigned int mtype_local, mtype;
++	uint32_t gc_ip_version = amdgpu_ip_version(adev, GC_HWIP, 0);
+ 	bool snoop = false;
+ 	bool is_local;
  
-@@ -2189,7 +2190,7 @@ int bq27xxx_battery_setup(struct bq27xxx_device_info *di)
- 	psy_desc->get_property = bq27xxx_battery_get_property;
- 	psy_desc->external_power_changed = bq27xxx_external_power_changed;
+ 	dma_resv_assert_held(bo->tbo.base.resv);
  
--	di->bat = devm_power_supply_register_no_ws(di->dev, psy_desc, &psy_cfg);
-+	di->bat = devm_power_supply_register(di->dev, psy_desc, &psy_cfg);
- 	if (IS_ERR(di->bat))
- 		return dev_err_probe(di->dev, PTR_ERR(di->bat),
- 				     "failed to register battery\n");
+-	switch (amdgpu_ip_version(adev, GC_HWIP, 0)) {
++	switch (gc_ip_version) {
+ 	case IP_VERSION(9, 4, 1):
+ 	case IP_VERSION(9, 4, 2):
+ 		if (is_vram) {
+@@ -1158,10 +1159,7 @@ static void gmc_v9_0_get_coherence_flags(struct amdgpu_device *adev,
+ 				/* FIXME: is this still needed? Or does
+ 				 * amdgpu_ttm_tt_pde_flags already handle this?
+ 				 */
+-				if ((amdgpu_ip_version(adev, GC_HWIP, 0) ==
+-					     IP_VERSION(9, 4, 2) ||
+-				     amdgpu_ip_version(adev, GC_HWIP, 0) ==
+-					     IP_VERSION(9, 4, 3)) &&
++				if (gc_ip_version == IP_VERSION(9, 4, 2) &&
+ 				    adev->gmc.xgmi.connected_to_cpu)
+ 					snoop = true;
+ 			} else {
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 7bbeb9768a56f..a62c94894a274 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -1224,6 +1224,7 @@ svm_range_get_pte_flags(struct kfd_node *node,
+ 	struct kfd_node *bo_node;
+ 	uint32_t flags = prange->flags;
+ 	uint32_t mapping_flags = 0;
++	uint32_t gc_ip_version = KFD_GC_VERSION(node);
+ 	uint64_t pte_flags;
+ 	bool snoop = (domain != SVM_RANGE_VRAM_DOMAIN);
+ 	bool coherent = flags & (KFD_IOCTL_SVM_FLAG_COHERENT | KFD_IOCTL_SVM_FLAG_EXT_COHERENT);
+@@ -1233,7 +1234,7 @@ svm_range_get_pte_flags(struct kfd_node *node,
+ 	if (domain == SVM_RANGE_VRAM_DOMAIN)
+ 		bo_node = prange->svm_bo->node;
+ 
+-	switch (amdgpu_ip_version(node->adev, GC_HWIP, 0)) {
++	switch (gc_ip_version) {
+ 	case IP_VERSION(9, 4, 1):
+ 		if (domain == SVM_RANGE_VRAM_DOMAIN) {
+ 			if (bo_node == node) {
+@@ -1322,7 +1323,7 @@ svm_range_get_pte_flags(struct kfd_node *node,
+ 	pte_flags = AMDGPU_PTE_VALID;
+ 	pte_flags |= (domain == SVM_RANGE_VRAM_DOMAIN) ? 0 : AMDGPU_PTE_SYSTEM;
+ 	pte_flags |= snoop ? AMDGPU_PTE_SNOOPED : 0;
+-	if (KFD_GC_VERSION(node) >= IP_VERSION(12, 0, 0))
++	if (gc_ip_version >= IP_VERSION(12, 0, 0))
+ 		pte_flags |= AMDGPU_PTE_IS_PTE;
+ 
+ 	pte_flags |= amdgpu_gem_va_map_flags(node->adev, mapping_flags);
 -- 
 2.53.0
 
