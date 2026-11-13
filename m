@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590526;
-	b=KFLhQD17waXh5heSf4gIyW8y70EbmCX/k5ogjCguGsi0sDU0rCCTcpDmGWUhgDyPdOKY
-	 t8MhdzUwfhonz6FgvB87eGBuiJboqltpEoEQXZdHHaSUN30XlQz0Rdn3lreTJltfdgg0i
-	 LgHXP5fQOWC6mNr20NieScEwmkyA73eG+WkHRgDcnxO4dult036au4NCFUeMZFoVXRdX5
-	 wDcNTSWmhMJvS+EmHkvaSJgPqlhCdOInd6esP1bZRG37tVD73bNj5NdsBLl9uNqyU0Rws
-	 viaZwAsYHTOQtHK1zzSyTRtA5T6ghoAljc6fB2ozrvs0ILkQmivF/u4cb4mCDd47u9A==
+	t=1794590527;
+	b=cB9BbInBNnQNfpJhjp5h1Kt9Gg4kDwhj++CDOODij2fWaaC+t78Qwd6wYCcfRGUpXS11
+	 b4zbfowOVKHGR0ocoUPL8jw5G1AhvEd7ZV7nVAzEmEmhla7csEgHRB54CaXyA121CH8sa
+	 X6Ru7wh7VTiwyTFCJEU0OnLQ4qpk+hLqRlu+n2t002yEd/nmDj4GrditDnBfSYHwZLKim
+	 Vos2i88+RcHJ6lhPcQUKsyTHnXKXgdq7HlB+Cjzarbw2/ZM/SUM2tuOUp77OGezP8v6c0
+	 RAecEyGNEKLfo9XKOBuK/bz4YxPLoj9XQJV5Ia1A8ShiyIz+15F1cUKMbhpw2lsVLzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590526;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590527;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=33nSFuSKMTKs4kM339oOVkWTZy0i48/rR5LL5ZiUUBc=;
-	b=AtfL8rrEgdd8zp+x70d/kqDqrJ9IY1fEFNdeYLo7wxaplH0KxeawaT2WtzVkkikV0wt8
-	 FcYLqw+UOb/EgzAWikxlvErDYjfqzuMD8yO5WNDvHqXDc7PD4tgAc55Uq24pC5lOh0mbV
-	 02UPhqkm/G1GR502X5caIorZyqOAEoVJwTeNeNKlWtLdpMF3jj87jFnEtxqQ72L/Bd1Cg
-	 GlHzZhfbohgSYn6WWISyV++4EREQ1LOc96qAxtBbgolB6yF+J0weZPTiJyRU47eowu74m
-	 tQQAo0xKGOAtVOpIzrKMp6YbMTMG3X8/5ASCvmgeZ9D2SvCCtTXXWTyYDYKWqK19CZQ==
+	bh=3sLwRGzDb/25eVchsbAbEa+twkbhIT9NntPS/IyNzyk=;
+	b=5kzYUArFuKSzfGepvQVOh4Kp6WxoYuf6i7v0dgxD25Q3+dj9s97QMsDMnQNX5XQzK0Hc
+	 v5CeKo0gi+IB9Zg66Au+kBl2vfGtKOOnnbhE870DG4PhoVx52hf0NKPkO3WpIbeJ7Ny9L
+	 6zArNuBgBLmFkac37uytp1qstD8FgQ+o97twbxcDRvF6AAtnaY2a7s9rrq/bcW4ZuAusL
+	 Ndm0vsY2gJlr7QmJyhMy7x+e5mLhhJBuDobEj+E3F2pKr8S1TO40S1rWdF0JEgBf3YNHz
+	 jpVqxQemA+hK9AaeniT2xlRYsAttHNCbyLlxHILLXLioHDXES5BVH0qj24jq8C1hSzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CNDkqc3z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oY4H5sTq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558B0606B362;
-	Fri, 13 Nov 2026 17:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBA1607323A;
+	Fri, 13 Nov 2026 17:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CNDkqc3z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2351F000C4;
-	Fri, 13 Nov 2026 17:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oY4H5sTq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A68A1F000C4;
+	Fri, 13 Nov 2026 17:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590526;
-	bh=33nSFuSKMTKs4kM339oOVkWTZy0i48/rR5LL5ZiUUBc=;
+	s=korg; t=1794590527;
+	bh=3sLwRGzDb/25eVchsbAbEa+twkbhIT9NntPS/IyNzyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CNDkqc3z4brHhgwuuWjSmueZHnVE5BLn2yC4dycnn7DYC5TWR8ipqaXuuge8J6t1/
-	 tZ5uiWkeyAdCXql0utdn5IChwdAKyFJhP8FnKMSa0J2pMZ/qjmvEy0bHaduYlhJHwq
-	 p4Y9wxFxTQPeYvH3zpknehaugcxupjG8ZRjGcXOo=
+	b=oY4H5sTqFhvLC+rUigbPTY8eWfMN2s+3qWQs8NAwhid/Hm8Ze0fhqFaFSWHuGKfMo
+	 dWv0Fb0iIOAg+rQHTfLhrTcjrF0auMNNOljv3U0cao6m8yMUYBWtFe2G8N3zMHBjvV
+	 /uBaERa8cyqHBD2h1DxKk3dpnbg/9UMocIqK+8lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	SeongJae Park <sjpark@amazon.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 470/686] mm/damon/core: move static variable last_nr_regions to damon_ctx
-Date: Fri, 13 Nov 2026 10:50:03 -0500
-Message-ID: <20261113153836.829548482@linuxfoundation.org>
+Subject: [PATCH 6.18 471/686] batman-adv: tpmeter: fix u32 truncation of reported bytes
+Date: Fri, 13 Nov 2026 10:50:04 -0500
+Message-ID: <20261113153836.895752356@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,85 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c ]
+commit 1025b76d13288a311e8259a0eefde0854fa63c41 upstream.
 
-kdamond_split_regions() uses a static variable last_nr_regions, to infer
-if the region boundaries are too stable.  If it looks too stable, it
-does a more aggressive region split because it might be a fake stability
-coming from non-aggressive split.  Because the variable is static, the
-inference can be racy and wrong when multiple kdamonds are running in
-parallel.
+When more than 4 GB are transferred by the throughput meter,
+batadv_tp_batctl_notify() will cut of the upper 32 bit of the u64 counter
+and thus under-report the actual transferred bytes.
 
-The user impact is not critical.  No crash, no leak.  DAMON's
-best-effort monitoring accuracy can be degraded when multiple kdamonds
-are used in parallel and the workload has certain access patterns. Still
-it is a bug that is better to fix.
+The data type of the temporary storage variable must therefore still
+continue to use u64.
 
-Move the variable into the damon_ctx struct to fix the problem.
-
-Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
-Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a47f2
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: SeongJae Park <sjpark@amazon.de>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: SJ Park <sj@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-08bb3be4-6c6a-452d-b4e4-606940c6cfa5
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/damon.h | 6 ++++++
- mm/damon/core.c       | 5 ++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ net/batman-adv/tp_meter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 656a314ad2159..125fbe1c73a9d 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -804,6 +804,12 @@ struct damon_ctx {
- 
- 	struct list_head adaptive_targets;
- 	struct list_head schemes;
-+/* private: */
-+	/*
-+	 * number of regions after last merge.  Read kdamond_split_regions()
-+	 * for more details.
-+	 */
-+	unsigned long last_nr_regions;
- };
- 
- static inline struct damon_region *damon_next_region(struct damon_region *r)
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 54a29d21d0dd1..ec44433200c63 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2568,7 +2568,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
+index 02af19aaaff29..aa297e551cd07 100644
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -226,9 +226,9 @@ static void batadv_tp_batctl_notify(enum batadv_tp_meter_reason reason,
+ 				    unsigned long start_time, u64 total_sent,
+ 				    u32 cookie)
  {
- 	struct damon_target *t;
- 	unsigned int nr_regions = 0;
--	static unsigned int last_nr_regions;
- 	int nr_subregions = 2;
++	u64 total_bytes;
+ 	u32 test_time;
+ 	u8 result;
+-	u32 total_bytes;
  
- 	damon_for_each_target(t, ctx)
-@@ -2578,14 +2577,14 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- 		return;
- 
- 	/* Maybe the middle of the region has different access frequency */
--	if (last_nr_regions == nr_regions &&
-+	if (ctx->last_nr_regions == nr_regions &&
- 			nr_regions < ctx->attrs.max_nr_regions / 3)
- 		nr_subregions = 3;
- 
- 	damon_for_each_target(t, ctx)
- 		damon_split_regions_of(t, nr_subregions, ctx->min_sz_region);
- 
--	last_nr_regions = nr_regions;
-+	ctx->last_nr_regions = nr_regions;
- }
- 
- /*
+ 	if (!batadv_tp_is_error(reason)) {
+ 		result = BATADV_TP_REASON_COMPLETE;
 -- 
 2.53.0
 
