@@ -1,59 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585669;
-	b=Rez374J6+kn1xJTgoBsZbsGF+wM9gpPl14BaIboeltkPYfi9p5k0mLoBZx3LqOZv58jE
-	 2Tcghthig6yHRZFsCJ2zMpo3uC+S9B5jcQAEIC5SuSucaOzUJEiCmZqA1kieBw2m4i0lX
-	 7n5Qt6WaU5LCv648vovL3RrsHzHULrExJ9jczGth69x6sO8uPM3OJKnodn0GAeTnZN4G1
-	 epcHIJ8yrClVtuyHceO8c2H5/P0KFdAfl6IXhm71CL2KTPK1d4K28P/Zfga3BUnGEZ3Cu
-	 xWcqIx4TCTovYapMWmCalOP4V4tHrEyx1pnYHwzplSqJ4d2wGeZpu2FxSgacyh865uQ==
+	t=1794585670;
+	b=p+rgWsLVyX81o03JBs5p3kwTVF3UJXmYnMx0uPEx3Wg7AOgqt+IR5gsaNuv4FpdapFtP
+	 nZnBdD+HwOkt8Gt2EW4lgl9OnzsoFgEJ7lBIEZ3429VAB9BiYQQMcMPXpsSDPVPdUFxkT
+	 OLumux5u8cCDPRzgMXuvCbUtNuFzGB59EpBoHg18KsbgpYADrBV0BoqI1TvKkPF9SW3uF
+	 sY4tq2ySkFZ2Smi0hoTzop5BhwiZ9+VCCUr3tA3mIZsyh3sS+fSg00QFawj3UJa12G7DT
+	 SZPeu/ykvCxDELfawgRQc6BjM8RPmvUcLv4sGitlx7sg/L4CZYAWL0qgk5dDUcEYN1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4HvcEf3jn2+1iz5K0uGWg/RynuxiPaiAbCy47u3PV/4=;
-	b=i1SyDcTR7okaooD5bOHEPXASb5nTwEqlS5RKlrT8WZmdF3tjJ1M9jLj1IepxQYE5gggm
-	 IxszzFpCcpJQoqI2t1DuRoDJmuXEgV1lgbNWogbalTF/bjArNJ3yImMnDnH5rOvwbspJu
-	 JrZtNHOKNrgMyssdomzrtyPjTCGJjJQKoQXyVMsuhGiWUuxEHlmlP7fWTqZ/1/PwWKZrt
-	 bE+jIrPtW5J+97HXWe83BlVcPzV68q70Pv2hg4dFIo5LHZjDZyqQu+pjdTrOSsugnii4q
-	 G3f++jbEyv3bEgZXXR2ROchQgm6pSpazjPEwKfwCvAyYv1efPLGRI/P5ACIHNi1Lveg==
+	bh=9r8iMV7TjLrAMxdOtjBYzc9A1LFrOyYhlJNaBsWV7Qk=;
+	b=rtEf0Lfq311b4oohIlz0dgUaxI6EbUZwB3BsxxJTvOP88D+ZlXweoSMC6chUp3nvvAz9
+	 nMdW/7FAprtxFZLpplIGpQ7nw/P6BAWE6SREVb3hljWZj3M4eiyW0jIMTgbWpiC7x5+r5
+	 pxjpaybuicl9tyoq7i2w001tx8z3nSammTlJWgCHJr/6rHGsnqM55Abv+MehnHEK8rqNc
+	 pILM+X6GCwKE4zqJfkDF71gXgNpya3ckR8by5vI6iHmpk+Arft37KexprFObZ9bJ+LMbP
+	 fQRAPVHFVA/XdyLGFo0LKdHUBPAU6YIQG8TIf3UPYElRWF/RVkwi0cQ/IfeVbGzs6wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dEhme36s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b609y93+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D64E606B2DB;
-	Fri, 13 Nov 2026 16:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9770D606B2DB;
+	Fri, 13 Nov 2026 16:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dEhme36s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E14A1F000C4;
-	Fri, 13 Nov 2026 16:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b609y93+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437471F000C4;
+	Fri, 13 Nov 2026 16:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585669;
-	bh=4HvcEf3jn2+1iz5K0uGWg/RynuxiPaiAbCy47u3PV/4=;
+	s=korg; t=1794585670;
+	bh=9r8iMV7TjLrAMxdOtjBYzc9A1LFrOyYhlJNaBsWV7Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dEhme36sok4nAkQQmKqPUSVgCuVNmbAvcvP9Wh/M2dXbfruoqTOwBY/c39sBZfxcF
-	 0lV7i4OWVE3TDIFnNZkhn3NjS2e22wdXv9BynvIPjZgMh8GVYBN9I6MEC1kNUdABRu
-	 sOGszjSVvCD1IMzZ/ZTfhiSYlmxjeqnTT9U3XIyQ=
+	b=b609y93+RHL5R4gs2RwgAx4gtqYj03UfYLLn6cg23JoJVxfYX/0O86YKZVuOoEs0O
+	 scf10/1YnW+/Z/I9BS+piMGCKQdksHFnaptvP46arSSQ2D3sqFKvn+8Ey2GKTeBj14
+	 KxkPYkSddUMvK1rzrbJxSrZMPPiB/anrjvt0zllY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samarth Narang <samarth.colleges@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Xu Xin <xu.xin@linux.dev>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	Peter Xu <peterx@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 230/507] mm/ksm: keep soft-dirty when merging a page
-Date: Fri, 13 Nov 2026 10:48:54 -0500
-Message-ID: <20261113153802.293545327@linuxfoundation.org>
+Subject: [PATCH 7.3 276/507] block: Return the soft block size for compat BLKBSZGET
+Date: Fri, 13 Nov 2026 10:49:40 -0500
+Message-ID: <20261113153804.209564613@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -75,50 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samarth Narang <samarth.colleges@gmail.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 2efc6332f18bfd848f74f3d5ba45b31450601faa ]
+[ Upstream commit 57cd1a08717690e5ea01d7ac7a96bb33a2dca117 ]
 
-replace_page() maps the KSM page with a PTE built from scratch, so the
-soft-dirty bit of the PTE it replaces is lost.  A page written since
-"clear_refs 4" then no longer shows as soft-dirty once it is merged, and a
-soft-dirty based dumper treats it as unchanged.
+BLKBSZGET returns the block device's soft block size, while BLKSSZGET
+returns its logical sector size. The compat BLKBSZGET_32 handler uses
+bdev_logical_block_size(), so it returns the wrong value when these
+sizes differ.
 
-Copy the soft-dirty bit from the original PTE to the new PTE.
+For example, on an x86_64 kernel a native query of a RAM or loop device
+with 512-byte logical sectors returns the initial soft block size of
+4096 bytes, but an i386 process gets 512 bytes. This makes 32-bit
+blockdev --getbsz and the BSZ column of --report disagree with native
+queries, even without a preceding BLKBSZSET.
 
-Link: https://lore.kernel.org/20261021182157.1873726-1-samarth.colleges@gmail.com
-Fixes: 0f8975ec4db2 ("mm: soft-dirty bits for user memory changes tracking")
-Signed-off-by: Samarth Narang <samarth.colleges@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Assisted-by: LLM
-Cc: Xu Xin <xu.xin@linux.dev>
-Cc: Chengming Zhou <chengming.zhou@linux.dev>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: <stable@vger.kernel.org>
+Use block_size() as the native handler and the pre-regression compat
+handler do, and correct the case comment to describe the soft size.
+
+Fixes: 9b81648cb5e3 ("compat_ioctl: simplify up block/ioctl.c")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20261023153645.37546-1-dennylin0707@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/ksm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ block/ioctl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/ksm.c b/mm/ksm.c
-index fe42c17490b89..b1f361983e553 100644
---- a/mm/ksm.c
-+++ b/mm/ksm.c
-@@ -1462,6 +1462,10 @@ static int replace_page(struct vm_area_struct *vma, struct page *page,
- 		dec_mm_counter(mm, MM_ANONPAGES);
- 	}
+diff --git a/block/ioctl.c b/block/ioctl.c
+index 64b4e6c0f6965..fb2f4b4d2505e 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -835,8 +835,8 @@ long compat_blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg)
+ 		return compat_put_ulong(argp, bdev_nr_sectors(bdev));
  
-+	/* Preserve soft-dirty when replacing the page. */
-+	if (pte_soft_dirty(orig_pte))
-+		newpte = pte_mksoft_dirty(newpte);
-+
- 	flush_cache_page(vma, addr, pte_pfn(ptep_get(ptep)));
- 	/*
- 	 * No need to notify as we are replacing a read only page with another
+ 	/* The data is compatible, but the command number is different */
+-	case BLKBSZGET_32: /* get the logical block size (cf. BLKSSZGET) */
+-		return put_int(argp, bdev_logical_block_size(bdev));
++	case BLKBSZGET_32: /* get the soft block size (cf. BLKSSZGET) */
++		return put_int(argp, block_size(bdev));
+ 	case BLKBSZSET_32:
+ 		return blkdev_bszset(file, mode, argp);
+ 	case BLKGETSIZE64_32:
 -- 
 2.53.0
 
