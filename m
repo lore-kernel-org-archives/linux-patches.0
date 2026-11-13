@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591148;
-	b=Q4h0hCC6CmAlQE1Ec2mjjPxbkAKwYrrVbPrMqTO5xkyBPYp8vhL0rT/qy2+LzCsd/XnM
-	 8w9QwyCgnFk4BhL6vNK5IA5ibvhRCQt7PeJA3caEGSN9a2EFrLt/8ecj5fQ0ZuD2HxTDE
-	 7ArECiyEFIvIF3mfEnk/Ut9a5P9QTEmOJ9gEx8dG08qFr7gVUpEvb7++lfbIiwraKvUK4
-	 uX/QIizApkbwtevzkhHExD0Q4LrMvo2MI/V/5ko56gakfP6tXSwxNCTu3PmLTTreyJ+Gu
-	 2Ht5nM1d2JnUKSl2RPhYHdUmxD6jmAKeKJTUkusCWBE6C0RsX1ezpjyT6xCo452iSfA==
+	t=1794591150;
+	b=XT62d48WyARF6LR7kY12JpNvnxrF+a6x+A6yL96psKDYKt3ot2ju0lbNO7CiYEvQCZjZ
+	 Oiak8SZ6v8CuI6gH1Yx+H0am5NZW3quBHtx8SIARNrZDxEQr0z9CjbmfEg6XatjkTEH+P
+	 JXIAXCy6p3besi+GSFNk3+tOXUmGJvxiKfG4IVfItsK9VLBB16DXW2qWHD0s5oQO2PT4J
+	 OpiHyDh5RjETzm5dA2a18+yjWFHQESFaMk4IIZ09nX+RXzR+a4j2HYLF6haDlm8tw1xYn
+	 AmmUljppVzIRsp/FD2vNSjY2aptTgFiBXq6ectqJaMEiCy5xB93Wu+RORqCwTNVeC7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591148;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591150;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ithLnEXMtoGgi7ey8QE2MhynH1iFLJwsoqGmkLivt4A=;
-	b=b8Ym4ninUbv/r3Llk79SWEMEF40eYjnqbH9hPAkc/zBxj5N/ExdZoNetans9llLyNr8U
-	 NJYvBrEAmdAeuzb69wSlx3CZEkgH+2MUABWcRgSFLhHaheJmLnK17eLY5e3KXVSvzMyfK
-	 WfsegUkEWjvlO+DolMMRXoYcesJNrWraQY85N2OMLlRaICcLaGPi/5y7szXTQY/E9kKGW
-	 pPqRw5WQDezMMmVQRPVeYlgrhlr8bNOKDPD/HCY+WEmJ4k9wafA2kPqhhkCicPRsDFF+a
-	 vup+18g+0nUMPHDwY3VTvq/Oj50lpRdG9BTGGQKP2nK/2GkBL4lJDQNnGfdeY/otUGw==
+	bh=lpJagE+STtNkFRtRTmRdfCD5586akGsqrakz+JJV7Sg=;
+	b=pzQETkl+YBfUGiEkVHjm1WzMp9dTWD3cCYIuWTVE2gC3BWk36rnvjB3lDSZCr5aPCvTn
+	 ni2f+NfUvls3+GIstcMp1K4j8pr733Q6u0gbRNzwUA1MblD+Nn1W4d8q7zF6HdZQnoM4r
+	 CpNjgl/lhwisKu/DPgmL2GvGRQlgYD+nQRZNxp7n5NmN3i0/cs3hIoRberchrrICFB+eK
+	 PxVQFJwlNwveoo/cuFn7wBs0pi5lrLsgQHRptR/A2A62Ca9vgeGmYyrCXjx46ldj6z0lQ
+	 wvwbq/nXpSbtxAGb2SkzKyp+8Q9j2jBwq6Jz5G34oEOyKrr8g4CGas7SeX1XEouxU7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ltdHds3c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0EquBrK1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37FF6084366;
-	Fri, 13 Nov 2026 17:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07ADE6073FCE;
+	Fri, 13 Nov 2026 17:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ltdHds3c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705021F000C4;
-	Fri, 13 Nov 2026 17:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0EquBrK1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89F41F000C4;
+	Fri, 13 Nov 2026 17:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591148;
-	bh=ithLnEXMtoGgi7ey8QE2MhynH1iFLJwsoqGmkLivt4A=;
+	s=korg; t=1794591149;
+	bh=lpJagE+STtNkFRtRTmRdfCD5586akGsqrakz+JJV7Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ltdHds3c0jujxizaZBX57E5VSofR14FQaF41jdL7psAnArw6efjEGgQi3LqEGRwqO
-	 F6wFAEAUb93RDCJGsFKOO+QEIkHoNAM2ah9EwRWa3f/NuL9oHeKuJv/eVyyaNkTnTF
-	 wxCggbz0VLh/IvSE1Sur8QQyg+lVyQaTwzMsYYOg=
+	b=0EquBrK1hq70LTJhrS0/JPP1X2tgbpf8g3pan6AIud0sGbvOjxH5KDdHDJmxgECHG
+	 FHu7DohqqK7/8PzgFqk1mMwVMFk3i/7CjuiauZqCA5IcNPvkLm/HAGw8LxiFMNU1Xf
+	 g+QUywh5Je6y+vUY39nYckXI/sUOa/OOrJZPPSrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 251/670] hwmon: chipcap2: balance regulator state
-Date: Fri, 13 Nov 2026 10:46:55 -0500
-Message-ID: <20261113153820.341142314@linuxfoundation.org>
+Subject: [PATCH 6.12 252/670] hwmon: chipcap2: do not discard pending alarms on disable
+Date: Fri, 13 Nov 2026 10:46:56 -0500
+Message-ID: <20261113153820.371492370@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,77 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit 378add65fd7d352de9fe440d167fde5bf511b090 ]
+[ Upstream commit 22aecf164e1c0c849808c342c65322d14f45176f ]
 
-The current implementation does not guarantee that the calls to
-regulator_enable() and regulator_disable() are balanced.
-regulator_is_enabled() might return a negative value, and an always-on
-attribute in the DT might break the symmetry anyway.
+cc2_disable() stops processing interrupts before the device is powered
+down to ignore the alarms caused by voltage toggling. The handler of an
+alarm raised by the last measurement might not have run at that point,
+and the alarm is discarded when it finally does.
 
-Add a regulator_enabled flag to keep balance within this regulator
-consumer.
+The sysfs read that triggered the measurement can then report no alarm
+although the device raised one.
+
+Wait for the alarm handlers that have already been raised before the
+interrupt processing is stopped. This covers the case where the handler
+thread has not been scheduled yet; an alarm that has not reached the
+interrupt core at that point is discarded.
 
 Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-8-27ebfc2c5b9e@gmail.com
+Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-9-27ebfc2c5b9e@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/chipcap2.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/hwmon/chipcap2.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
-index cabafbe7ad4ab..aecd320e93d1a 100644
+index aecd320e93d1a..46a3e22f43ade 100644
 --- a/drivers/hwmon/chipcap2.c
 +++ b/drivers/hwmon/chipcap2.c
-@@ -88,6 +88,7 @@ struct cc2_data {
- 	int irq_low;
- 	int irq_high;
- 	bool process_irqs;
-+	bool regulator_enabled;
- };
+@@ -143,6 +143,13 @@ static void cc2_disable(struct cc2_data *data)
+ {
+ 	int err;
  
- /* %RH as a per cent mille from a register value */
-@@ -117,7 +118,7 @@ static int cc2_enable(struct cc2_data *data)
- 	int ret;
- 
- 	/* exclusive regulator, check in case a disable failed */
--	if (regulator_is_enabled(data->regulator)) {
-+	if (data->regulator_enabled) {
- 		data->process_irqs = true;
- 		return 0;
- 	}
-@@ -129,6 +130,8 @@ static int cc2_enable(struct cc2_data *data)
- 	if (ret < 0)
- 		return ret;
- 
-+	data->regulator_enabled = true;
++	/* let the alarms already raised by the last measurement be processed */
++	if (data->irq_low > 0)
++		synchronize_irq(data->irq_low);
 +
- 	usleep_range(CC2_STARTUP_TIME_US, CC2_STARTUP_TIME_US + 125);
- 
- 	data->process_irqs = true;
-@@ -144,11 +147,16 @@ static void cc2_disable(struct cc2_data *data)
++	if (data->irq_high > 0)
++		synchronize_irq(data->irq_high);
++
+ 	/* ignore alarms triggered by voltage toggling when powering up */
  	data->process_irqs = false;
  
- 	/* exclusive regulator, check in case an enable failed */
--	if (regulator_is_enabled(data->regulator)) {
--		err = regulator_disable(data->regulator);
--		if (err)
--			dev_dbg(&data->client->dev, "Failed to disable device");
-+	if (!data->regulator_enabled)
-+		return;
-+
-+	err = regulator_disable(data->regulator);
-+	if (err) {
-+		dev_dbg(&data->client->dev, "Failed to disable device");
-+		return;
- 	}
-+
-+	data->regulator_enabled = false;
- }
- 
- static int cc2_cmd_response_diagnostic(struct device *dev, u8 status)
 -- 
 2.53.0
 
