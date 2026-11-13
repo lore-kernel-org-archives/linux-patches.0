@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591312;
-	b=RVoxuM/MXRYG1T8uVe54F4jajdgcUij1WrZT2rGFfbejOTNCcgLFsk5GphE1OwNyOY7U
-	 h+3UuLXGaGu0BdQrg5KRIvv5wk66+9oAF9IaOxpLwYnLPYeCrdVvlzw6bmWFKd3NGyrge
-	 8aLE7FzgGCi9VqCZZtOjvgKRDWV3RcbSOnaLFB6gbhx7cDanXdjCuG27MJXOYXCgGF3Wc
-	 emoqtEP3cjZvk3qJyaBnQ/Df7nNPDt0MofB6lOliv6kFMuy+e3y69gtBYhneMw9OI7ufD
-	 ZIXKyQ07SErRKnnLwF/qeVVNCmK0y4FHynwfl9zhADkj1G4X8bAE7VmG6JVoxnp52qA==
+	t=1794591313;
+	b=GePp24hhTpb/RVJBXfrsTKrOP2ljQdhQRrvOwXDL4x+hjYa9UD7j0aJudlGTFe9FJ9Qs
+	 0PihIJrA7NuuQjmLnoj6DHg2RcXtbpW2JzNJWbp26y0QLOHqZT2aGZDiZObcGKr0l13Rf
+	 FRq6GU62UTvM8HTGeQQ189J/MZzmuPbbmdxSMjkRLvY7SV6nR7RWE+pQlO9bh9YwcGLsT
+	 Fyuq8y8bmZhQlwU0Up+vNyxr8vzMSQGWQLpCSsDmmnq4/DvZU7I7dDhGNPbd2EvErVhQp
+	 6fEF5pyRV5Oh5Y+9rKAVtgBM1MJDgAaNQWYrnjy9xhgtR8hMRFfyA/Rmhj0ujLCDe4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591312;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uDBH4/oyl3W++/w5Q6gfBfAin816jSyTKfCB9QmYRE0=;
-	b=ofAShuWTv43/jw/ccY+rSQnM9SMr2A5+JNnBGNy8JbE6LogrAYuUurLuSAa6WfhUvmH0
-	 /GYOo5w8lSYKnK9tyEQCmHo+vqH8lCJKtCYDj7g+XxwJuwpKrKeNEIrp7E5uvCOJHZ9fG
-	 ZMDT3+XrPnDrI532TS3aJciXjYrmmWBk8LlAEu/8k2Qnf2kSp0laZs+TrNzDfBrSt/WMp
-	 Zkn1J9ukWia1f/NHUVUnX7UtLfDMzXZ6E+X+d1UKbZ/i+DRnBM5QkiTj8wW2fW3Nda04A
-	 XexpPtwo9bpyORaM9waEyxoK8QG4ucrbt4LuICOxVHm7l4Fce4IXQBDvl+M9cgxp+AQ==
+	bh=FFIe0GSto6aeWXGqQuYGZJVoNm5DaD4mpVI8o+uJBjE=;
+	b=A1IXKKEWRw3+8gsvNjipiNp/TZdIwlnmNLSi1+NOuqtM1iHjr7BI5C9EtCpDCjslRhmS
+	 bSCCZML7JEo66i0+vQfi8AnYpIhtCO52IlLk0+At2zKB8/AM+LvrLPtRV1tJ2tYbTfhxo
+	 PgTbDXe9pJDimgh4Tx6fJaLTH+c75hJjl/lu2UYiS4ZQiNW+0hpiRfmJFSPmFPekj/BLI
+	 eKo9nAA0GImfNrkC2JSvXW/pUPl5+MR1GptfapuHsjkuCEvF9cx+lKu+wbFmY/w+5w3L6
+	 DtTn0TxIb991qwO2I5hLwOvmnUt+VbuDXn8swldygH/txeHad5mhTWcWoFQxeBczRDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hd68oIus;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CP+uwHSn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367B6606B213;
-	Fri, 13 Nov 2026 17:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F627606B213;
+	Fri, 13 Nov 2026 17:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hd68oIus
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E0D1F000C4;
-	Fri, 13 Nov 2026 17:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CP+uwHSn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B44A1F000C4;
+	Fri, 13 Nov 2026 17:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591312;
-	bh=uDBH4/oyl3W++/w5Q6gfBfAin816jSyTKfCB9QmYRE0=;
+	s=korg; t=1794591313;
+	bh=FFIe0GSto6aeWXGqQuYGZJVoNm5DaD4mpVI8o+uJBjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hd68oIus25zufiocueVCeWa2tqdX3CQmkzr69hCkKGe88V1QImX42jQAapXPoT677
-	 c18helM5lf+KQ31Rm/02LvznGyirTXwkT4nWIiC/jMdBtywjF4NpDmhBoYOv7+SiOb
-	 g1+/QCrZjqj5tLd0LQdFOUukv3+KvXgTckqWvWBc=
+	b=CP+uwHSnoQLvAdC0az7aSuRfhziEGnIIba+Kx3POc+McpKgNxrUW/pC8xlUQCMcEf
+	 nIhCS1dk6ygcYsnVHiaIrItYl7vLMz8iI19s011gBQYPT9eG43O4Rt5otTyaM9XRBW
+	 s5pM5SqE2dueMewL3R6tqNb9LomYmg743Rhj2u78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
 	Qiliang Yuan <odys.yuan@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 385/670] srcu: Add list_splice_init_srcu()
-Date: Fri, 13 Nov 2026 10:49:09 -0500
-Message-ID: <20261113153824.814409543@linuxfoundation.org>
+Subject: [PATCH 6.12 386/670] nvme: wait for SRCU readers before splicing the namespace list
+Date: Fri, 13 Nov 2026 10:49:10 -0500
+Message-ID: <20261113153824.846434224@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -72,85 +71,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit d06917d0ba226206dbd606330d73a8eb1e3029c1 ]
+[ Upstream commit 8a0449832b50cd4f99f2d2952cfc1476e5f26d0f ]
 
-list_splice_init_rcu() makes a list look empty to new readers, waits for
-the current ones with the given sync function, and only then links the
-entries into the new list. The sync function takes no argument, so it
-can wait for RCU readers but not for the readers of an srcu_struct.
+Readers walk ctrl->namespaces under ctrl->srcu, and some of them sleep
+there, e.g. nvme_wait_freeze() waiting for I/O to drain.
 
-Passing synchronize_rcu() for a list read under SRCU still builds, but
-leaves SRCU readers on the entries while the last one's next pointer is
-moved onto the new list head. nvme_remove_namespaces() does this today.
+nvme_remove_namespaces() moves the list onto its on-stack ns_list with
+list_splice_init_rcu(), which only waits for RCU readers before
+relinking the entries. A reader still on the last namespace then follows
+its next pointer to ns_list instead of ctrl->namespaces and treats the
+stack as a namespace. Deleting a controller while a Format NVM
+passthrough waits for a delayed read on the last namespace gives:
 
-Add list_splice_init_srcu(), which waits for the readers of the given
-srcu_struct instead.
+  BUG: KASAN: stack-out-of-bounds in nvme_wait_freeze+0x102/0x120
+  Read of size 8 at addr ff110001d2f3fc38 by task nvme/4413
+  Call Trace:
+   nvme_wait_freeze
+   nvme_passthru_start
+   nvme_submit_user_cmd
+   nvme_user_cmd
+   nvme_dev_ioctl
+  BUG: unable to handle page fault for address: ffffffff8af04850
 
+Use list_splice_init_srcu() instead, which waits for the SRCU readers.
+This also takes the RCU grace period out of every controller deletion.
+Deleting 64 tcp controllers with one namespace each, median of 3 runs on
+each of two boots per kernel:
+
+                                      before        after
+  nvme disconnect-all (ms)            3491 / 3509   2996 / 3165
+  nvme_remove_namespaces() avg (ms)   39.0 / 40.5   31.9 / 34.7
+
+Fixes: be647e2c76b2 ("nvme: use srcu for iterating namespace list")
 Cc: stable@vger.kernel.org
-Suggested-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/srcu.h | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/nvme/host/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/linux/srcu.h b/include/linux/srcu.h
-index 835bbb2d1f88a..4958b16d187e2 100644
---- a/include/linux/srcu.h
-+++ b/include/linux/srcu.h
-@@ -18,6 +18,7 @@
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index cf79a6c45ccd3..37dc942af0d20 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4375,9 +4375,8 @@ void nvme_remove_namespaces(struct nvme_ctrl *ctrl)
+ 	nvme_change_ctrl_state(ctrl, NVME_CTRL_DELETING_NOIO);
  
- #include <linux/mutex.h>
- #include <linux/rcupdate.h>
-+#include <linux/rculist.h>
- #include <linux/workqueue.h>
- #include <linux/rcu_segcblist.h>
+ 	mutex_lock(&ctrl->namespaces_lock);
+-	list_splice_init_rcu(&ctrl->namespaces, &ns_list, synchronize_rcu);
++	list_splice_init_srcu(&ctrl->namespaces, &ns_list, &ctrl->srcu);
+ 	mutex_unlock(&ctrl->namespaces_lock);
+-	synchronize_srcu(&ctrl->srcu);
  
-@@ -58,6 +59,41 @@ int __srcu_read_lock(struct srcu_struct *ssp) __acquires(ssp);
- void __srcu_read_unlock(struct srcu_struct *ssp, int idx) __releases(ssp);
- void synchronize_srcu(struct srcu_struct *ssp);
- 
-+/**
-+ * list_splice_init_srcu - splice an SRCU-protected list into an existing list
-+ * @list:	the SRCU-protected list to splice
-+ * @head:	the place in the existing list to splice the first list into
-+ * @ssp:	the srcu_struct that readers of @list use
-+ *
-+ * Like list_splice_init_rcu(), but wait for the SRCU readers of @list
-+ * instead of RCU ones, so that none of them can follow a next pointer
-+ * onto @head.
-+ *
-+ * Note that this function blocks, and that the caller must prevent any
-+ * other updates to @list.
-+ */
-+static inline void list_splice_init_srcu(struct list_head *list,
-+					 struct list_head *head,
-+					 struct srcu_struct *ssp)
-+{
-+	struct list_head *first = list->next;
-+	struct list_head *last = list->prev;
-+	struct list_head *next = head->next;
-+
-+	if (list_empty(list))
-+		return;
-+
-+	INIT_LIST_HEAD_RCU(list);
-+	synchronize_srcu(ssp);
-+	ASSERT_EXCLUSIVE_ACCESS(*first);
-+	ASSERT_EXCLUSIVE_ACCESS(*last);
-+
-+	last->next = next;
-+	rcu_assign_pointer(list_next_rcu(head), first);
-+	first->prev = head;
-+	next->prev = last;
-+}
-+
- #define SRCU_GET_STATE_COMPLETED 0x1
- 
- /**
+ 	list_for_each_entry_safe(ns, next, &ns_list, list)
+ 		nvme_ns_remove(ns);
 -- 
 2.53.0
 
