@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590612;
-	b=yp7lBod2yEH+Q7nUdLlyj22SyVUwQ4uqFUJkmlxZPxve6Xlt8UUFOwfAN5FBdsq2m/bt
-	 BxvFTZnHv3RrgflHXC1qV9t0fAt6ZUY5glr+QpvG3mInIPpuaURbEzmYf1h6fbT2rqBbk
-	 6KfkexYpwIxn+v3jLeOn3pH6Q+8zQAlFLoz79IAxpwqx4gSPx7vtNxSBY1/ImiiKwY0+m
-	 4mtAE8Dz1G0+c3KXyYNgFPp1f80dedg2faxkf3I6j2iGLpEP/iKMIAAkZsk96SVFuluoh
-	 v7JQvhsY/RvuQYPWhkb0WNk71+Alm/+S+OxWia/3c/XQsElLcWoZK6faAyBleXA4S1A==
+	t=1794590614;
+	b=JPDetCp4h2SaVWJHdKe1IMd7DGYGN1GchZBbjVhgGd11XBGlGOHXkMpUFG9hl1N8xlz9
+	 t2gu9OvoEVm24aYj/26JlGhLnVOj5ghxqtg6TRRhzrOizE6cjo9vj7UkW+FJ71zGibr5v
+	 Nh2XsIcEAN39KrurJKY5HOVrM3MJnNMGDoNzEutnMC/jDH1KOYZK97Jgl4MDc1fThRJfN
+	 r+cZPa/xI0uZQ3teXdTFg2ROXq/MEW3RrVnDTnyjXrotV8LpwFix2iKqffCruTzB+ZWCs
+	 N4K/s3EpkA3zmGeO9bkUtwvXDwnxaMwtyBKFL/kOnR1nc0pNw3Bk4ItPjeayYSDbW7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590612;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590614;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JYGqic5Hq8w9r+VjkQnFFDZDmOgepekyndxpw9jbj2I=;
-	b=IGw4BN7+31cq8Gr6SdNiUdHQ0RVAepw2aKfu+2R+doU2HwEEEuAv01Fvd6AE4IoF8i65
-	 Hu/N1Hl5ZETuYxYe9oFR/ZyR4PSrbjLlRZk4u1G6xbtkf83LOhYBl9YMaEhqcp7GKOw2U
-	 qqVCBr8v9ie2h47QnhKpezewhOliUsoeIqmleJTnM8sS0L6WsWoTkOsUXYgiBy2SlwV5Z
-	 OOXFsMpTDcZ7TEF20VAUdWqwmsX151PEys7Tzb45X682osWd8VVURzpzFWXeTaMZQeUGw
-	 yZAIhRTifdaK7sCQjTKba0HORvG9eb9N/JxUDI9iodNw87QAVqCp7gKV/rnBUml586g==
+	bh=ObJ9CRloDJM+9Qh3zzc9Wk2bENpvykjUgPF4mDKH6Fg=;
+	b=wFZB0MKbulhdopTtIJiBSDk00wZuOl+9X5iCzJCI/YA1qxVE9ZcWYyDDDfU2uXB/74XS
+	 OEVV3u68G+0/iddarrO0CiUwnfsZ2j6YI7A4Bx+jv+5OFQnQ0FZrgdu0+KTb3gnJSe21l
+	 MS6BYUtLMBN7zZfcoBPzj6XkCjJPX/m7If9zaBXHLOwoRJTtLan6I2WstwttVQ+dCNplN
+	 EyYbaJdeq+ZdO+SOVjY0t+FjfikfBKMTmGIyV/ZNO2h1rC+2vTle9bxMYrXm3JJFC5IRp
+	 d9v/sJ4o3pGMoe7JCg5e2FUMVwmTjP9hBqaeTsH0p8T1eaozRgd1grXyCGwQyWgeU3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iM2/7ZSw";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0elOjCSe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6A66075862;
-	Fri, 13 Nov 2026 17:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFC3606C0B5;
+	Fri, 13 Nov 2026 17:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iM2/7ZSw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F64A1F000C4;
-	Fri, 13 Nov 2026 17:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0elOjCSe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741B21F000C5;
+	Fri, 13 Nov 2026 17:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590612;
-	bh=JYGqic5Hq8w9r+VjkQnFFDZDmOgepekyndxpw9jbj2I=;
+	s=korg; t=1794590613;
+	bh=ObJ9CRloDJM+9Qh3zzc9Wk2bENpvykjUgPF4mDKH6Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iM2/7ZSwhP8o1+M9kWbcVYc8IsVc0gAUpZq1EbUoPzj5jD2/k/msszcLWrgSzVTQT
-	 yB/h2s21PX4/5NSQ2AJ7wpjIErjhen4xJzylumKqwEmbJFp5pe+ctwBFTT3YqWGq7K
-	 HIK7fOACqiU85HR6NdJY5Yq6aH71BNMrlxPQ/f0Y=
+	b=0elOjCSexMXkDc506Ti4SVxFidbC1w1sNpO+B7p0A1fttw+14RqIqSDPIgNdaJRKO
+	 Q3L+NOmi1zzRbp6Rq0POxT2u7ZflB65UnGjLzrKcHsFxPqxpDtEQ4PH+TTjS1cqX+5
+	 WFfKE1juIM9q6lrskYTb6GdBi/WzWd7NOIOL0ufg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 538/686] mm/shmem: honour F_SEAL_EXEC when an ACL is set
-Date: Fri, 13 Nov 2026 10:51:11 -0500
-Message-ID: <20261113153839.489534031@linuxfoundation.org>
+Subject: [PATCH 6.18 539/686] spi: cadence-xspi: Replace ACPI specifics by agnostic APIs
+Date: Fri, 13 Nov 2026 10:51:12 -0500
+Message-ID: <20261113153839.531826057@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -74,128 +68,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 0237c47ca17005ea41b510c6116f0257dbf84eab ]
+[ Upstream commit 6f9e4740e8591176eb90bb1dae95bbbb5c7d789e ]
 
-The owner of a memfd sealed with F_SEAL_EXEC can still change its
-execute bits by setting a POSIX access ACL. With CONFIG_TMPFS_POSIX_ACL,
-this lets an unprivileged owner make a non-executable memfd executable,
-bypassing vm.memfd_noexec=2.
+Replace ACPI specific calls to get device property with the agnostic one.
+The code looses the direct dependency to the ACPI APIs and get cleaner.
+This doesn't change functionality.
 
-simple_set_acl() updates i_mode directly, bypassing the seal check in
-shmem_setattr(). Add shmem_set_acl() to check the resulting mode. Share
-the F_SEAL_EXEC check with shmem_setattr() using memfd_check_seals_mode()
-in include/linux/memfd.h.
+While at it, drop now unneeded acpi.h.
 
-Fix generated by an LLM and sent by Chris Mason in private.
-
-Fixes: 6fd7353829ca ("mm/memfd: add F_SEAL_EXEC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: use common helper; simplify description ]
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-4-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: removed const from shmem_set_acl()'s mnt_idmap parameter to match the existing callback and simple_set_acl() interfaces ]
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20251129151739.3998668-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: ea9854a169e9 ("spi: cadence-xspi: reject SDMA transfers larger than the requested length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memfd.h |  9 +++++++++
- mm/shmem.c            | 35 ++++++++++++++++++++++++++++++-----
- 2 files changed, 39 insertions(+), 5 deletions(-)
+ drivers/spi/spi-cadence-xspi.c | 36 +++++++++++-----------------------
+ 1 file changed, 11 insertions(+), 25 deletions(-)
 
-diff --git a/include/linux/memfd.h b/include/linux/memfd.h
-index 6f606d9573c38..97b8a94cd0b31 100644
---- a/include/linux/memfd.h
-+++ b/include/linux/memfd.h
-@@ -2,8 +2,17 @@
- #ifndef __LINUX_MEMFD_H
- #define __LINUX_MEMFD_H
+diff --git a/drivers/spi/spi-cadence-xspi.c b/drivers/spi/spi-cadence-xspi.c
+index c3676b21e8167..b6b42daae1bce 100644
+--- a/drivers/spi/spi-cadence-xspi.c
++++ b/drivers/spi/spi-cadence-xspi.c
+@@ -2,7 +2,6 @@
+ // Cadence XSPI flash controller driver
+ // Copyright (C) 2020-21 Cadence
  
-+#include <linux/fcntl.h>
- #include <linux/file.h>
+-#include <linux/acpi.h>
+ #include <linux/completion.h>
+ #include <linux/delay.h>
+ #include <linux/err.h>
+@@ -21,6 +20,7 @@
+ #include <linux/limits.h>
+ #include <linux/log2.h>
+ #include <linux/bitrev.h>
++#include <linux/util_macros.h>
  
-+static inline int memfd_check_seals_mode(unsigned int seals, umode_t old_mode,
-+		umode_t new_mode)
-+{
-+	if ((seals & F_SEAL_EXEC) && ((old_mode ^ new_mode) & 0111))
-+		return -EPERM;
-+	return 0;
-+}
-+
- #ifdef CONFIG_MEMFD_CREATE
- extern long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg);
- struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx);
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 5efde9fcc3057..6f4c85a3f6410 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -76,6 +76,7 @@ static struct vfsmount *shm_mnt __ro_after_init;
- #include <linux/magic.h>
- #include <linux/syscalls.h>
- #include <linux/fcntl.h>
-+#include <linux/memfd.h>
- #include <uapi/linux/memfd.h>
- #include <linux/rmap.h>
- #include <linux/uuid.h>
-@@ -1321,10 +1322,11 @@ static int shmem_setattr(struct mnt_idmap *idmap,
- 	if (error)
- 		return error;
+ #define CDNS_XSPI_MAGIC_NUM_VALUE	0x6522
+ #define CDNS_XSPI_MAX_BANKS		8
+@@ -775,19 +775,15 @@ static int marvell_xspi_mem_op_execute(struct spi_mem *mem,
+ 	return ret;
+ }
  
--	if ((info->seals & F_SEAL_EXEC) && (attr->ia_valid & ATTR_MODE)) {
--		if ((inode->i_mode ^ attr->ia_mode) & 0111) {
--			return -EPERM;
--		}
-+	if (attr->ia_valid & ATTR_MODE) {
-+		error = memfd_check_seals_mode(info->seals, inode->i_mode,
-+					       attr->ia_mode);
-+		if (error)
-+			return error;
+-#ifdef CONFIG_ACPI
+ static bool cdns_xspi_supports_op(struct spi_mem *mem,
+ 				  const struct spi_mem_op *op)
+ {
+ 	struct spi_device *spi = mem->spi;
+-	const union acpi_object *obj;
+-	struct acpi_device *adev;
++	struct device *dev = &spi->dev;
++	u32 value;
+ 
+-	adev = ACPI_COMPANION(&spi->dev);
+-
+-	if (!acpi_dev_get_property(adev, "spi-tx-bus-width", ACPI_TYPE_INTEGER,
+-				   &obj)) {
+-		switch (obj->integer.value) {
++	if (!device_property_read_u32(dev, "spi-tx-bus-width", &value)) {
++		switch (value) {
+ 		case 1:
+ 			break;
+ 		case 2:
+@@ -800,16 +796,13 @@ static bool cdns_xspi_supports_op(struct spi_mem *mem,
+ 			spi->mode |= SPI_TX_OCTAL;
+ 			break;
+ 		default:
+-			dev_warn(&spi->dev,
+-				 "spi-tx-bus-width %lld not supported\n",
+-				 obj->integer.value);
++			dev_warn(dev, "spi-tx-bus-width %u not supported\n", value);
+ 			break;
+ 		}
  	}
  
- 	if (S_ISREG(inode->i_mode) && (attr->ia_valid & ATTR_SIZE)) {
-@@ -5295,12 +5297,35 @@ static const struct file_operations shmem_file_operations = {
- #endif
+-	if (!acpi_dev_get_property(adev, "spi-rx-bus-width", ACPI_TYPE_INTEGER,
+-				   &obj)) {
+-		switch (obj->integer.value) {
++	if (!device_property_read_u32(dev, "spi-rx-bus-width", &value)) {
++		switch (value) {
+ 		case 1:
+ 			break;
+ 		case 2:
+@@ -822,9 +815,7 @@ static bool cdns_xspi_supports_op(struct spi_mem *mem,
+ 			spi->mode |= SPI_RX_OCTAL;
+ 			break;
+ 		default:
+-			dev_warn(&spi->dev,
+-				 "spi-rx-bus-width %lld not supported\n",
+-				 obj->integer.value);
++			dev_warn(dev, "spi-rx-bus-width %u not supported\n", value);
+ 			break;
+ 		}
+ 	}
+@@ -834,7 +825,6 @@ static bool cdns_xspi_supports_op(struct spi_mem *mem,
+ 
+ 	return true;
+ }
+-#endif
+ 
+ static int cdns_xspi_adjust_mem_op_size(struct spi_mem *mem, struct spi_mem_op *op)
+ {
+@@ -847,17 +837,13 @@ static int cdns_xspi_adjust_mem_op_size(struct spi_mem *mem, struct spi_mem_op *
+ }
+ 
+ static const struct spi_controller_mem_ops cadence_xspi_mem_ops = {
+-#ifdef CONFIG_ACPI
+-	.supports_op = cdns_xspi_supports_op,
+-#endif
++	.supports_op = PTR_IF(IS_ENABLED(CONFIG_ACPI), cdns_xspi_supports_op),
+ 	.exec_op = cdns_xspi_mem_op_execute,
+ 	.adjust_op_size = cdns_xspi_adjust_mem_op_size,
  };
  
-+#ifdef CONFIG_TMPFS_POSIX_ACL
-+static int shmem_set_acl(struct mnt_idmap *idmap, struct dentry *dentry,
-+		struct posix_acl *acl, int type)
-+{
-+	struct inode *inode = d_inode(dentry);
-+	umode_t mode = inode->i_mode;
-+	int error;
-+
-+	if (type == ACL_TYPE_ACCESS) {
-+		error = posix_acl_equiv_mode(acl, &mode);
-+		if (error < 0)
-+			return error;
-+		error = memfd_check_seals_mode(SHMEM_I(inode)->seals,
-+					       inode->i_mode, mode);
-+		if (error)
-+			return error;
-+	}
-+	return simple_set_acl(idmap, dentry, acl, type);
-+}
-+#else
-+#define shmem_set_acl simple_set_acl
-+#endif
-+
- static const struct inode_operations shmem_inode_operations = {
- 	.getattr	= shmem_getattr,
- 	.setattr	= shmem_setattr,
- #ifdef CONFIG_TMPFS_XATTR
- 	.listxattr	= shmem_listxattr,
--	.set_acl	= simple_set_acl,
-+	.set_acl	= shmem_set_acl,
- 	.fileattr_get	= shmem_fileattr_get,
- 	.fileattr_set	= shmem_fileattr_set,
- #endif
+ static const struct spi_controller_mem_ops marvell_xspi_mem_ops = {
+-#ifdef CONFIG_ACPI
+-	.supports_op = cdns_xspi_supports_op,
+-#endif
++	.supports_op = PTR_IF(IS_ENABLED(CONFIG_ACPI), cdns_xspi_supports_op),
+ 	.exec_op = marvell_xspi_mem_op_execute,
+ 	.adjust_op_size = cdns_xspi_adjust_mem_op_size,
+ };
 -- 
 2.53.0
 
