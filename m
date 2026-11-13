@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590277;
-	b=J79w+eNnnC0ZhsPNDHBOcJm+SJwvOgCb1j14V4UwwVQIQFrCV2hw4Jdns5RUhaFiRS9b
-	 /mnC9YhAyoWKlCwA2MuJsdAOXxNF4b3nN0LsXrUkWWNed2tSmtRanbAK/yMf9jzknvJn6
-	 Eer/eil2/xRX92TZsQiYHmOjBiQ+xS20MIN4vxSvTtNJB1/OwmZFAuAhrYzIBb5kjfIX0
-	 S6CJ6RxtPx+4VVSeZ6ARRBf768AQLNHDwg9ovmhc0qG70jZG12ljE8XZKybuM/MhNoMXS
-	 LWUko1Na6L2z6R05xhHj7SGG8fE362nC8EBpfDq4WczjuEr7j6pDPvtOUeAhiamP5hA==
+	t=1794590279;
+	b=azYlFArxizESBRPcERfMNYHioumi2vT1q6HK3fu2Ic5J/MkCwlRbTBxGGFnyq/UpK0A2
+	 +2jeJChj1ft5W7vXI+nM2fEc/iA9sbIc6xiCfcuGbEbVQxmupJ9UeaiYRqkkM+UNyeShS
+	 m7FQdcjYvi+eECS6Zdx9AeC5vs9sriSDlVzqPzLgaCTjPRo0xxyKEapMSmOILlxtaMqKL
+	 GVrqAYmoGdiOiTyemyV7fuSLrg3fUvC9ktH9vqFUESDtSOfJP5f5dQJdzqbq26RRfT48f
+	 MHi+wnQWZ0bonXS3UN3XLN3aOC5ELGLPZlJQ+ev5UYE3EW7YH2oZXuJCGeLNiOhuofA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590279;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vzx3Ge9EkzZ84eDW4xagOA2b9ivTyi+wIB0Etqk3gcg=;
-	b=WbiSoF9Dvwny5I3Nbz3CZHqqnynmrQ/xdGP5w7Ng4JaVijNwYEJ9h0VtyOtsEhjAmDzy
-	 l/HVlamhnYP0Oic9elh5ugQgj/wb9UOdkNDuA08spqWKq8Z8m935EgL4jygqrfezjE4CP
-	 IWPtPOWtWvhE3GzTMR+Ba7lYcNMH8Y9BkCw5LF6wWqECSw68BDVG0gtVgv8T5JuUKjROw
-	 obRqhbt6fYhN8W4jloi2ZkWVF6HqWwJ9s0oQZT2yLjDU3rjEJMhJi0JW8zMd5ypYbLOpd
-	 aPvZzyTZElMSMryN/UYEEYLXXuCsK6WHweFECNHnBly8NFcLP74Gq1eNup5Ix1Ut1Tg==
+	bh=BdDLnnsjj9tbapFqa3KAWFjesj76bnT4ykKxFRzpLQY=;
+	b=VsnrxiHeJxJmpzuDKRw8+T0s9Pm+Fo309/G24YNn4ooZ26gy9fmiGIG8ZR+a23irzyVP
+	 Fa/IfoAVfC1PZYA0EhcyVgggowSHqde1iwYMj4Ilbsej7qfDq7ZuuLG6AXMp7Eo4cvOBO
+	 3OqTfaymgTCK+Ec/eg5iw4wF/s4di90GU8yXInkgreeA4qRmGhni0TuAnircRNFe1Nroy
+	 JoEVXFJ3mcaglw7SFKppdIoJh1bRC/kyrUnjEEQoP0/kAckwctoJJ1jI+eNfybtf4rpU8
+	 4d9D05m7AcxZq95MerSxJLv6JuNwiWRe4yoEPovCIFtb0HC3vzqi8lopRN1UncoLNOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ywqg/ydm";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ToHS2yD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB02E60776DD;
-	Fri, 13 Nov 2026 17:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3383460776EA;
+	Fri, 13 Nov 2026 17:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ywqg/ydm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AE71F000C4;
-	Fri, 13 Nov 2026 17:17:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ToHS2yD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944A71F000CA;
+	Fri, 13 Nov 2026 17:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590277;
-	bh=vzx3Ge9EkzZ84eDW4xagOA2b9ivTyi+wIB0Etqk3gcg=;
+	s=korg; t=1794590278;
+	bh=BdDLnnsjj9tbapFqa3KAWFjesj76bnT4ykKxFRzpLQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ywqg/ydmkkIuPqVWP2DdhGs5kzHURdJXKnWfBb1wS61HZc6maKSAjRzoEQ47ukfYb
-	 4Je5Fxb8jeFRhAh954b53FTkzUYoac7vdb3Kka5J3XO5Q4qLY7KCu/2MADaSRyGO3N
-	 4ZHa4jae1NKiuZ+P/RnEryaJr2K3RTB9LYI5GULo=
+	b=0ToHS2yDm4Vyqeq4K5BzkUZ2XJJ2Am+51uNfeWRvt/IA+4o85TMsN1z1c1rp7V/Tn
+	 iFH20oUnumYFvV4bjblg7nLuz3ubM/jJP5g7jy2+OkKdAt5ULj2RHkg5FQBB2vSyMf
+	 l7WLfAbCChcDYaW02SmwBsUbrnYX6pDxDl7Rzxv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Yongji <xieyongji@bytedance.com>,
-	Fang Xieyan <fangxy@xiaopeng.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 267/686] vringh: bound top-level re-entry into indirect tables
-Date: Fri, 13 Nov 2026 10:46:40 -0500
-Message-ID: <20261113153830.066789942@linuxfoundation.org>
+Subject: [PATCH 6.18 232/686] ALSA: hwdep: Serialize DSP load requests
+Date: Fri, 13 Nov 2026 10:46:05 -0500
+Message-ID: <20261113153828.905103836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,84 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fang Xieyan <fangxy@xiaopeng.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit f898439ace7f89922e853b43bcbfcd26ea2e0a98 ]
+[ Upstream commit aee83c204f80d56b4d55f53acdb8594308ddcd4a ]
 
-In __vringh_iov(), the F_INDIRECT branch descends into the indirect
-table and continues before the descriptor accounting runs. A top-level
-indirect descriptor is therefore never charged to count. If such a
-descriptor sets NEXT to point back at itself, returning from the
-indirect table resumes at the same top-level descriptor, which is again
-not counted, so the walk never makes forward progress.
+The check of the loaded DSP indices and the call of the driver's
+dsp_load callback in snd_hwdep_dsp_load() are not serialized.  A hwdep
+file descriptor can be shared among threads, or inherited across fork,
+so two SNDRV_HWDEP_IOCTL_DSP_LOAD requests for the same index can both
+observe the index as unloaded and enter the driver's callback
+concurrently, even though the device itself is opened exclusively.
 
-Because count stays flat and indirect_count is reset to 0 on every
-return to the top-level table, neither bound in the loop check trips.
-A guest can spin the vringh worker at 100% CPU inside __vringh_iov(),
-an uninterruptible host DoS.
+This breaks the assumption behind hw->dsp_loaded that a firmware index
+is loaded only once.  For example, snd-usb-usx2y hits
+WARN_ON(usx2y->as04.buffer) in usx2y_async_seq04_init() and may
+allocate the US-428 sequence URBs twice.
 
-Move the descriptor accounting above the indirect switch so that a
-top-level indirect descriptor is charged one top-level traversal step
-before the walk descends into its table, bringing this re-entry under
-the existing vrh->vring.num bound. Each top-level descriptor is still
-charged at most one step and indirect_count still bounds a single
-table, so legitimate chains (including the multiple-indirect case in
-tools/virtio/vringh_test.c) stay within vring.num, while a cyclic
-indirect descriptor is now rejected with -ELOOP.
+Serialize the check, the callback invocation and the bookkeeping with a
+per-hwdep mutex, so that the second request returns -EBUSY.
 
-Fixes: dbd29e075228 ("vringh: Fix loop descriptors check in the indirect cases")
-Cc: Xie Yongji <xieyongji@bytedance.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Hawkeye:GLM-5.3-flash
-Assisted-by: Qoder:Qwen3.8-Max
-Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260922122955.69433-2-fangxy@xiaopeng.com>
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261029084810.21910-2-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vringh.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ include/sound/hwdep.h | 1 +
+ sound/core/hwdep.c    | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
-index 925858cc60964..c753a0cee240d 100644
---- a/drivers/vhost/vringh.c
-+++ b/drivers/vhost/vringh.c
-@@ -333,6 +333,17 @@ __vringh_iov(struct vringh *vrh, u16 i,
- 		if (unlikely(err))
- 			goto fail;
+diff --git a/include/sound/hwdep.h b/include/sound/hwdep.h
+index b0da633184cde..7357727f06603 100644
+--- a/include/sound/hwdep.h
++++ b/include/sound/hwdep.h
+@@ -57,6 +57,7 @@ struct snd_hwdep {
  
-+		if (up_next == -1)
-+			count++;
-+		else
-+			indirect_count++;
-+
-+		if (count > vrh->vring.num || indirect_count > desc_max) {
-+			vringh_bad("Descriptor loop in %p", descs);
-+			err = -ELOOP;
-+			goto fail;
-+		}
-+
- 		if (unlikely(desc.flags &
- 			     cpu_to_vringh16(vrh, VRING_DESC_F_INDIRECT))) {
- 			u64 a = vringh64_to_cpu(vrh, desc.addr);
-@@ -358,17 +369,6 @@ __vringh_iov(struct vringh *vrh, u16 i,
- 			continue;
- 		}
+ 	struct mutex open_mutex;
+ 	int used;			/* reference counter */
++	struct mutex dsp_mutex;		/* serializes DSP load requests */
+ 	unsigned int dsp_loaded;	/* bit fields of loaded dsp indices */
+ 	unsigned int exclusive:1;	/* exclusive access mode */
+ };
+diff --git a/sound/core/hwdep.c b/sound/core/hwdep.c
+index 09200df2932c7..10a32004398ff 100644
+--- a/sound/core/hwdep.c
++++ b/sound/core/hwdep.c
+@@ -212,6 +212,7 @@ static int snd_hwdep_dsp_load(struct snd_hwdep *hw,
+ 		return -ENXIO;
+ 	if (info->index >= 32)
+ 		return -EINVAL;
++	guard(mutex)(&hw->dsp_mutex);
+ 	/* check whether the dsp was already loaded */
+ 	if (hw->dsp_loaded & (1u << info->index))
+ 		return -EBUSY;
+@@ -381,6 +382,7 @@ int snd_hwdep_new(struct snd_card *card, char *id, int device,
  
--		if (up_next == -1)
--			count++;
--		else
--			indirect_count++;
--
--		if (count > vrh->vring.num || indirect_count > desc_max) {
--			vringh_bad("Descriptor loop in %p", descs);
--			err = -ELOOP;
--			goto fail;
--		}
--
- 		if (desc.flags & cpu_to_vringh16(vrh, VRING_DESC_F_WRITE))
- 			iov = wiov;
- 		else {
+ 	init_waitqueue_head(&hwdep->open_wait);
+ 	mutex_init(&hwdep->open_mutex);
++	mutex_init(&hwdep->dsp_mutex);
+ 	hwdep->card = card;
+ 	hwdep->device = device;
+ 	if (id)
 -- 
 2.53.0
 
