@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591417;
-	b=kNaRVMMT0rfWlEkQiWGi5sSIDZwk+zUbFnbTcWKwR6zxF7NpsNi4eJcdOPV0thMokufp
-	 b1LRv1pLkRJ8n02f+4LWy58t0AaphcVJXhgbCLPHL9yX2ma83UhvlulripJMxbopNYlWH
-	 +X61ioH/4e3MLoxMwNcW/YFvwVwYpTOgmBf+kSvCldUcGXe4f/jeWJFul3LhhGE9bnuuT
-	 RH7cESTcA8EZs+fvoyVWHHcaf0I/1OosudultBWMUs3nKItEskjGFWqJK11tOmt9JWHOJ
-	 8qHWsFghtpbYth8ysqYwWzxMaW9qsd6spJ2c/Zd7xAAiZg7pD9npG2Rwx3FSAgAI7Hw==
+	t=1794591418;
+	b=rGnxm1pzo9aSqiBOA1CIFF0MZZiqoemQHOPy1p55frzv1ixasphsVPGNfdrdDWqlHk10
+	 1oAEwd0V8CYpYGTeRYg+IqsJ6JcFpc+Mx9YGnDhqOHrGCrI9dMWja6i08Ml5yL4J3+M+d
+	 xUMRpztjoi1//MDvWhiS9kKUILx7NVISoWJNTGYp9fudZrR3LgLkp9R8WUAErD1g9jKUt
+	 HKipvVa3J3j0jeZvj3KZKGEfzlmoOf6LDfahvEMf/hNJLkpm8ca1aCHFpFAwxRbPb1MAf
+	 fwz/GiFHexRn0YPc9ZzxQT5WQxC1xxvRnZtOxKjRq52pLD9VUohmnjs1jyLL6hrDqcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nj0VQShWN13ta83NmLABkwjbMOM8TLoTBY5clBuLUoM=;
-	b=W3MPzel3yu1YehY5mo0nAUtG456MahCV2YzXMmKEAbZ24dmqj0s54zsQg8UdlXaZ2T8w
-	 Kp5Xv+X2OVrNtFMK8WPit6WTl3tb3FkB6OOp4i3xMQxHkXpICgonOkNfuep5qb3v8kweB
-	 ugo7aZmbQzhnFt76N2mw3f3VQaNG1KMBRQV+DZ+tLQo8OkpmNEBAh2VxcibU6YNHan/x/
-	 sVSuDw+VGcD4U1C7xDPSeu0tYXYG15PFnl7gkK9+NNdn5Kkhey00VgJeXypJU441VKQIg
-	 2qm/ZYuk32Cax4UAo9ei6dME64DtZkyJSIj0aP8ULpLwcba+EnRztOk1BKY8eY0JRSA==
+	bh=eInzu/vOdpVrYC295Lw/A+E7+JF9mhcTOK8qiqxdUlY=;
+	b=aKwAagwiYeKrEvtiPm0WyA5enwPiJUdxXBfwT29+Miolw+OkcfhbjorEqWBh9An4Lm4a
+	 GAEdJcbI+8bqJ/uJZuJcnxzblUXk8BiQ/2Mc4ddSVKm0hun7oHTdUu/u4TSRjaaIST+Dl
+	 16Rr0K00suU7Qh6qXGb6mdRFXxC8/n+JGevV91Pmn4IQGMKmxdvL7aSEdu75LZAe5FR8B
+	 2GPk3ffCgtJWRT4E8WRaysAacQjW0umAMfSIyHdzlZVYpMrlizESUkQsJ+ORtvRwJcF+q
+	 ZOSSfF1i0u3qPHn+0ezVFQjG3U9n2whKeNdan6BIX1ZQ+jqa0KxhbBmvT04q6Y6D2Bw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apfvsM0h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VBs4TISg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87EA607A5F2;
-	Fri, 13 Nov 2026 17:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0D7607A5FA;
+	Fri, 13 Nov 2026 17:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=apfvsM0h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5486B1F000C4;
-	Fri, 13 Nov 2026 17:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VBs4TISg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6FD1F000C4;
+	Fri, 13 Nov 2026 17:36:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591417;
-	bh=Nj0VQShWN13ta83NmLABkwjbMOM8TLoTBY5clBuLUoM=;
+	s=korg; t=1794591418;
+	bh=eInzu/vOdpVrYC295Lw/A+E7+JF9mhcTOK8qiqxdUlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=apfvsM0hwoGb0Ch+nPW8AOebk8QsEKpj7uDBcTG2I7VyxY4AhmOZi4YJYIA0n0C8I
-	 ln1z7nsbQ5pUUNAPUoGn3ueRIi35n/+eyWf1ANslUNlznu77wtKGuHZckqSKkCRhxj
-	 R3QFxj0/BC4pB07glG5C/ylTp9P67cZQRVNgsNBw=
+	b=VBs4TISgO7eBBEgCOWMOdGcMbo+pTrXhcqp9SLL3dnduBlTjbBHBQBoXMCWPjlhdP
+	 R1zaY7ZjgZ3qx/QuIqKu+tLgWgOMl79maC/2SfH/Hooc7jq+kIrJNqrh/UvBy/pBSt
+	 wzzPZqH/lnvuKVXt/iXj/jO+7TsPoKVt2wRYuySk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	"Brian G ." <gissf1@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 510/670] dmaengine: qcom: bam_dma: free interrupt before the clock in error path
-Date: Fri, 13 Nov 2026 10:51:14 -0500
-Message-ID: <20261113153829.232249079@linuxfoundation.org>
+Subject: [PATCH 6.12 511/670] nilfs2: correct return value kernel-doc descriptions for the rest
+Date: Fri, 13 Nov 2026 10:51:15 -0500
+Message-ID: <20261113153829.265177734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,74 +69,298 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 82eed160cfa7a296ae4eb5acb8dd8f493323eea7 ]
+[ Upstream commit 343d4a33f26d048fde4b02cfc3681f766b3f1b12 ]
 
-The BAM interrupt is requested with a devres helper and so on error it's
-freed after probe() returns. We disable the clock before freeing or
-masking it so it may still fire and we may end up reading BAM registers
-with clock disabled.
+Similar to the previous changes to fix return value descriptions, this
+fixes the format of the return value descriptions of functions for the
+rest.
 
-Stop using devres for interrupts as we free it in remove() manually
-anyway. Add an appropriate label and free the interrupt before disabling
-the clock in error path and in remove().
-
-Cc: stable@vger.kernel.org
-Fixes: e7c0fe2a5c84 ("dmaengine: add Qualcomm BAM dma driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260427-qcom-qce-cmd-descr-v16-0-945fd1cafbbc%40oss.qualcomm.com?part=2
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261008-bam-dma-free-irq-v28-1-5e5b10de441e@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lkml.kernel.org/r/20250110010530.21872-6-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: "Brian G ." <gissf1@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 7131aaa74bcc ("nilfs2: ignore non-fatal signals during synchronous log write wait")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/bam_dma.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ fs/nilfs2/gcinode.c   | 24 +++++++++-------------
+ fs/nilfs2/inode.c     | 12 +++--------
+ fs/nilfs2/recovery.c  | 32 +++++++++++------------------
+ fs/nilfs2/segbuf.c    | 12 ++---------
+ fs/nilfs2/segment.c   | 48 ++++++++++++++++---------------------------
+ fs/nilfs2/the_nilfs.c | 12 +++++------
+ 6 files changed, 50 insertions(+), 90 deletions(-)
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 9f712e7c7e07f..d06f95f7868c1 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -1322,8 +1322,8 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	for (i = 0; i < bdev->num_channels; i++)
- 		bam_channel_init(bdev, &bdev->channels[i], i);
- 
--	ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
--			IRQF_TRIGGER_NONE, "bam_dma", bdev);
-+	ret = request_irq(bdev->irq, bam_dma_irq, IRQF_TRIGGER_NONE,
-+			  "bam_dma", bdev);
- 	if (ret)
- 		goto err_bam_channel_exit;
- 
-@@ -1356,7 +1356,7 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	ret = dma_async_device_register(&bdev->common);
- 	if (ret) {
- 		dev_err(bdev->dev, "failed to register dma async device\n");
--		goto err_bam_channel_exit;
-+		goto err_free_irq;
- 	}
- 
- 	ret = of_dma_controller_register(pdev->dev.of_node, bam_dma_xlate,
-@@ -1375,6 +1375,8 @@ static int bam_dma_probe(struct platform_device *pdev)
- 
- err_unregister_dma:
- 	dma_async_device_unregister(&bdev->common);
-+err_free_irq:
-+	free_irq(bdev->irq, bdev);
- err_bam_channel_exit:
- 	for (i = 0; i < bdev->num_channels; i++)
- 		tasklet_kill(&bdev->channels[i].vc.task);
-@@ -1400,7 +1402,7 @@ static void bam_dma_remove(struct platform_device *pdev)
- 	/* mask all interrupts for this execution environment */
- 	writel_relaxed(0, bam_addr(bdev, 0,  BAM_IRQ_SRCS_MSK_EE));
- 
--	devm_free_irq(bdev->dev, bdev->irq, bdev);
-+	free_irq(bdev->irq, bdev);
- 
- 	for (i = 0; i < bdev->num_channels; i++) {
- 		bam_dma_terminate_all(&bdev->channels[i].vc.chan);
+diff --git a/fs/nilfs2/gcinode.c b/fs/nilfs2/gcinode.c
+index 2dbb15767df16..561c220799c7a 100644
+--- a/fs/nilfs2/gcinode.c
++++ b/fs/nilfs2/gcinode.c
+@@ -46,14 +46,11 @@
+  * specified by @pbn to the GC pagecache with the key @blkoff.
+  * This function sets @vbn (@pbn if @vbn is zero) in b_blocknr of the buffer.
+  *
+- * Return Value: On success, 0 is returned. On Error, one of the following
+- * negative error code is returned.
+- *
+- * %-EIO - I/O error.
+- *
+- * %-ENOMEM - Insufficient amount of memory available.
+- *
+- * %-ENOENT - The block specified with @pbn does not exist.
++ * Return: 0 on success, or one of the following negative error codes on
++ * failure:
++ * * %-EIO	- I/O error (including metadata corruption).
++ * * %-ENOENT	- The block specified with @pbn does not exist.
++ * * %-ENOMEM	- Insufficient memory available.
+  */
+ int nilfs_gccache_submit_read_data(struct inode *inode, sector_t blkoff,
+ 				   sector_t pbn, __u64 vbn,
+@@ -114,12 +111,11 @@ int nilfs_gccache_submit_read_data(struct inode *inode, sector_t blkoff,
+  * specified by @vbn to the GC pagecache.  @pbn can be supplied by the
+  * caller to avoid translation of the disk block address.
+  *
+- * Return Value: On success, 0 is returned. On Error, one of the following
+- * negative error code is returned.
+- *
+- * %-EIO - I/O error.
+- *
+- * %-ENOMEM - Insufficient amount of memory available.
++ * Return: 0 on success, or one of the following negative error codes on
++ * failure:
++ * * %-EIO	- I/O error (including metadata corruption).
++ * * %-ENOENT	- Invalid virtual block address.
++ * * %-ENOMEM	- Insufficient memory available.
+  */
+ int nilfs_gccache_submit_read_node(struct inode *inode, sector_t pbn,
+ 				   __u64 vbn, struct buffer_head **out_bh)
+diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
+index 6932f8daf7d93..ab1dd89de538f 100644
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -636,10 +636,7 @@ struct inode *nilfs_iget_for_gc(struct super_block *sb, unsigned long ino,
+  * or does nothing if the inode already has it.  This function allocates
+  * an additional inode to maintain page cache of B-tree nodes one-on-one.
+  *
+- * Return Value: On success, 0 is returned. On errors, one of the following
+- * negative error code is returned.
+- *
+- * %-ENOMEM - Insufficient memory available.
++ * Return: 0 on success, or %-ENOMEM if memory is insufficient.
+  */
+ int nilfs_attach_btree_node_cache(struct inode *inode)
+ {
+@@ -698,11 +695,8 @@ void nilfs_detach_btree_node_cache(struct inode *inode)
+  * in one inode and the one for b-tree node pages is set up in the
+  * other inode, which is attached to the former inode.
+  *
+- * Return Value: On success, a pointer to the inode for data pages is
+- * returned. On errors, one of the following negative error code is returned
+- * in a pointer type.
+- *
+- * %-ENOMEM - Insufficient memory available.
++ * Return: a pointer to the inode for data pages on success, or %-ENOMEM
++ * if memory is insufficient.
+  */
+ struct inode *nilfs_iget_for_shadow(struct inode *inode)
+ {
+diff --git a/fs/nilfs2/recovery.c b/fs/nilfs2/recovery.c
+index 21d81097a89f8..fe98424ac465f 100644
+--- a/fs/nilfs2/recovery.c
++++ b/fs/nilfs2/recovery.c
+@@ -757,18 +757,13 @@ static void nilfs_abort_roll_forward(struct the_nilfs *nilfs)
+  * @sb: super block instance
+  * @ri: pointer to a nilfs_recovery_info struct to store search results.
+  *
+- * Return Value: On success, 0 is returned.  On error, one of the following
+- * negative error code is returned.
+- *
+- * %-EINVAL - Inconsistent filesystem state.
+- *
+- * %-EIO - I/O error
+- *
+- * %-ENOSPC - No space left on device (only in a panic state).
+- *
+- * %-ERESTARTSYS - Interrupted.
+- *
+- * %-ENOMEM - Insufficient memory available.
++ * Return: 0 on success, or one of the following negative error codes on
++ * failure:
++ * * %-EINVAL		- Inconsistent filesystem state.
++ * * %-EIO		- I/O error.
++ * * %-ENOMEM		- Insufficient memory available.
++ * * %-ENOSPC		- No space left on device (only in a panic state).
++ * * %-ERESTARTSYS	- Interrupted.
+  */
+ int nilfs_salvage_orphan_logs(struct the_nilfs *nilfs,
+ 			      struct super_block *sb,
+@@ -833,14 +828,11 @@ int nilfs_salvage_orphan_logs(struct the_nilfs *nilfs,
+  * segment pointed by the superblock.  It sets up struct the_nilfs through
+  * this search. It fills nilfs_recovery_info (ri) required for recovery.
+  *
+- * Return Value: On success, 0 is returned.  On error, one of the following
+- * negative error code is returned.
+- *
+- * %-EINVAL - No valid segment found
+- *
+- * %-EIO - I/O error
+- *
+- * %-ENOMEM - Insufficient memory available.
++ * Return: 0 on success, or one of the following negative error codes on
++ * failure:
++ * * %-EINVAL	- No valid segment found.
++ * * %-EIO	- I/O error.
++ * * %-ENOMEM	- Insufficient memory available.
+  */
+ int nilfs_search_super_root(struct the_nilfs *nilfs,
+ 			    struct nilfs_recovery_info *ri)
+diff --git a/fs/nilfs2/segbuf.c b/fs/nilfs2/segbuf.c
+index dc431b4c34c96..8b62234d5dd52 100644
+--- a/fs/nilfs2/segbuf.c
++++ b/fs/nilfs2/segbuf.c
+@@ -403,12 +403,7 @@ static int nilfs_segbuf_submit_bh(struct nilfs_segment_buffer *segbuf,
+  * @segbuf: buffer storing a log to be written
+  * @nilfs: nilfs object
+  *
+- * Return Value: On Success, 0 is returned. On Error, one of the following
+- * negative error code is returned.
+- *
+- * %-EIO - I/O error
+- *
+- * %-ENOMEM - Insufficient memory available.
++ * Return: Always 0.
+  */
+ static int nilfs_segbuf_write(struct nilfs_segment_buffer *segbuf,
+ 			      struct the_nilfs *nilfs)
+@@ -449,10 +444,7 @@ static int nilfs_segbuf_write(struct nilfs_segment_buffer *segbuf,
+  * nilfs_segbuf_wait - wait for completion of requested BIOs
+  * @segbuf: segment buffer
+  *
+- * Return Value: On Success, 0 is returned. On Error, one of the following
+- * negative error code is returned.
+- *
+- * %-EIO - I/O error
++ * Return: 0 on success, or %-EIO if I/O error is detected.
+  */
+ static int nilfs_segbuf_wait(struct nilfs_segment_buffer *segbuf)
+ {
+diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
+index 063400f8a73c2..c5ddbdbb2f427 100644
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -191,12 +191,10 @@ static int nilfs_prepare_segment_lock(struct super_block *sb,
+  * When @vacancy_check flag is set, this function will check the amount of
+  * free space, and will wait for the GC to reclaim disk space if low capacity.
+  *
+- * Return Value: On success, 0 is returned. On error, one of the following
+- * negative error code is returned.
+- *
+- * %-ENOMEM - Insufficient memory available.
+- *
+- * %-ENOSPC - No space left on device
++ * Return: 0 on success, or one of the following negative error codes on
++ * failure:
++ * * %-ENOMEM	- Insufficient memory available.
++ * * %-ENOSPC	- No space left on device (if checking free space).
+  */
+ int nilfs_transaction_begin(struct super_block *sb,
+ 			    struct nilfs_transaction_info *ti,
+@@ -2316,18 +2314,13 @@ static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
+  * nilfs_construct_segment - construct a logical segment
+  * @sb: super block
+  *
+- * Return Value: On success, 0 is returned. On errors, one of the following
+- * negative error code is returned.
+- *
+- * %-EROFS - Read only filesystem.
+- *
+- * %-EIO - I/O error
+- *
+- * %-ENOSPC - No space left on device (only in a panic state).
+- *
+- * %-ERESTARTSYS - Interrupted.
+- *
+- * %-ENOMEM - Insufficient memory available.
++ * Return: 0 on success, or one of the following negative error codes on
++ * failure:
++ * * %-EIO		- I/O error (including metadata corruption).
++ * * %-ENOMEM		- Insufficient memory available.
++ * * %-ENOSPC		- No space left on device (only in a panic state).
++ * * %-ERESTARTSYS	- Interrupted.
++ * * %-EROFS		- Read only filesystem.
+  */
+ int nilfs_construct_segment(struct super_block *sb)
+ {
+@@ -2351,18 +2344,13 @@ int nilfs_construct_segment(struct super_block *sb)
+  * @start: start byte offset
+  * @end: end byte offset (inclusive)
+  *
+- * Return Value: On success, 0 is returned. On errors, one of the following
+- * negative error code is returned.
+- *
+- * %-EROFS - Read only filesystem.
+- *
+- * %-EIO - I/O error
+- *
+- * %-ENOSPC - No space left on device (only in a panic state).
+- *
+- * %-ERESTARTSYS - Interrupted.
+- *
+- * %-ENOMEM - Insufficient memory available.
++ * Return: 0 on success, or one of the following negative error codes on
++ * failure:
++ * * %-EIO		- I/O error (including metadata corruption).
++ * * %-ENOMEM		- Insufficient memory available.
++ * * %-ENOSPC		- No space left on device (only in a panic state).
++ * * %-ERESTARTSYS	- Interrupted.
++ * * %-EROFS		- Read only filesystem.
+  */
+ int nilfs_construct_dsync_segment(struct super_block *sb, struct inode *inode,
+ 				  loff_t start, loff_t end)
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index 575a543ee7369..a0f14c1b3ef88 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -49,8 +49,8 @@ void nilfs_set_last_segment(struct the_nilfs *nilfs,
+  * alloc_nilfs - allocate a nilfs object
+  * @sb: super block instance
+  *
+- * Return Value: On success, pointer to the_nilfs is returned.
+- * On error, NULL is returned.
++ * Return: a pointer to the allocated nilfs object on success, or NULL on
++ * failure.
+  */
+ struct the_nilfs *alloc_nilfs(struct super_block *sb)
+ {
+@@ -200,8 +200,7 @@ static int nilfs_store_log_cursor(struct the_nilfs *nilfs,
+  * exponent information written in @sbp and stores it in @blocksize,
+  * or aborts with an error message if it's too large.
+  *
+- * Return Value: On success, 0 is returned. If the block size is too
+- * large, -EINVAL is returned.
++ * Return: 0 on success, or %-EINVAL if the block size is too large.
+  */
+ static int nilfs_get_blocksize(struct super_block *sb,
+ 			       struct nilfs_super_block *sbp, int *blocksize)
+@@ -544,7 +543,7 @@ static int nilfs_valid_sb(struct nilfs_super_block *sbp)
+  * area, or if the parameters themselves are not normal, it is
+  * determined to be invalid.
+  *
+- * Return Value: true if invalid, false if valid.
++ * Return: true if invalid, false if valid.
+  */
+ static bool nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
+ {
+@@ -690,8 +689,7 @@ static int nilfs_load_super_block(struct the_nilfs *nilfs,
+  * reading the super block, getting disk layout information, initializing
+  * shared fields in the_nilfs).
+  *
+- * Return Value: On success, 0 is returned. On error, a negative error
+- * code is returned.
++ * Return: 0 on success, or a negative error code on failure.
+  */
+ int init_nilfs(struct the_nilfs *nilfs, struct super_block *sb)
+ {
 -- 
 2.53.0
 
