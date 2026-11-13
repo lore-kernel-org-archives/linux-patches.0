@@ -1,55 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585637;
-	b=Szg+Q6UMS93BdtDGn/3v+hCwfcd/3dlPQh9VfAoEnwVZZKjTp1Xt8xjgDXhpdTmfF9Rp
-	 F2H4SxnCfx7xJx/bHy2y0L0j5f9tn+d8Aq/WrATEAFDp9rYpmrbxgtZt7VCJmbKXTEWAn
-	 946fp4hrWI3NnTUHuxmgGxV0MXpy+heEi/wOhwL1CoHWik8EVhjBD7vUaikwHoV+ePM5U
-	 cl2LJRKdWP2LiOwvPSq6U/QDWwenxntZdZrBvFz2I3tqgej1qAKkrzxYD/fXj5CSw57wA
-	 JDksXVjwipFY28P1Fh4//PUR71LgxILDN+5JKAR06k4ucg0gpLYKUxJ4iatEafvDV0g==
+	t=1794585638;
+	b=iK98ntj6Toiq3/3q1fNrkRoHKpS5oMbMwREUbC29QTKe0kWfEOdKHV7WDThciXNVJzW8
+	 6nWMvZHwFtUbvXDfVTp9gdrDL3OnQInT7r5NHe8pdaWNMpNlpF99i9bCKRMfhH9GQZcUT
+	 25HrQBf+yauB5pE31uU22ZPb9f0wHAI6ERy6FqrmbVokkCuPb5mjjyhP5jt/gbxKBRLDm
+	 cS+G0HPpzaWImY4JrimABC+s1DqtP2YflsJZzcYJ+Z9wvhDNZ2Kg3sjKtJVbFrd0N6WBb
+	 7DOKefPNo8xUZpqRMUkvC+yIQRJQpNgvZ7hmubCk9fVhrV7hG3m97TZHQHyu9OYbz7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585637;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585638;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6b/BZArax8QYmPC07I9KKkuoOYw81m7vdDmHAOYICHM=;
-	b=HUcuZ1Zg9PjOrz6ied9/HZq9a+vg+AHxU0RhesYsvp4//xEZiU/fyTh9KLQaJUk+4O9b
-	 2umMGxNMy9DZq1qm0zxzfHO0iy7vccquRm5WSBh75IESeWfEbLOST1rjblGAOjWvNQkQN
-	 hTcZvwlZsM6ONK8SxLsPn9KjzOAyvUWeXF1hRzI2PVbGpWT3v+cQMYU2kL1vlAByZWO5R
-	 UOoGB517v7wuroUkev7R0Ka9ulRwiGE/KfH3oSvmlDmL6XakDIZozW4UdNHuh7thpH9mp
-	 TBieYmvNgbIsqL8/xPwLLIktYmN17uRdpbgjzX7uUzPntSmk/CTSyk+GoLWwAT6m5eQ==
+	bh=0CklTCvATmZudgRzqdm2swfB0CC+7tpQZUk13oz3/l4=;
+	b=eKF2bqvSQchCyDbbwb807KFDZaAMvAGMQXWLtSakkKskinkyOamyaY4Atz46jmSfATWL
+	 Bi9E2IRV/8dvJAEZ8Ai85HEUKrccnAp7lL7U8Q6BzhsGvqXnQ4mdb2Xlu2Os/Pd0i8REE
+	 Mv8xEM8XJKE+Hj0IlFO4TpGjTuuYqVUfiSSrP7G/7e5WpXJqVtalXJ2f071Y7v+ohakuf
+	 ptwfIYcIcDDvC6Sfiy5BP+R3KuRfcz9O8KGbUjsacou8gBCFAmrSBiI5KHCq6AgvpcqMD
+	 sAE/MkBDkIaTYULbclkp6Dfr3FhbgAHK2eh7JBGIPp2q6dNFWd7W+7gIBnyAUs0sRMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=avIbB8tY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ndTn2HmD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3A66072317;
-	Fri, 13 Nov 2026 16:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7017E6072317;
+	Fri, 13 Nov 2026 16:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=avIbB8tY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51001F000C4;
-	Fri, 13 Nov 2026 16:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ndTn2HmD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232FA1F000C4;
+	Fri, 13 Nov 2026 16:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585637;
-	bh=6b/BZArax8QYmPC07I9KKkuoOYw81m7vdDmHAOYICHM=;
+	s=korg; t=1794585638;
+	bh=0CklTCvATmZudgRzqdm2swfB0CC+7tpQZUk13oz3/l4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=avIbB8tYR42sFcnxXXjfv3pDl5+hz1NBAxBixKRvzAZyWMo5Epj1/575/M7akjcbc
-	 3JmMkARVE9vdVKGoMvdC03cZVFyjJ+pRQrHeCKySfnxOZ9WhPHKMoBsy9javgT3K98
-	 iBFCxOttvDHjs2XGqH5FpjGJ92ymOoDxQidvkTkY=
+	b=ndTn2HmDcFgVZvoMNRsU5n2dJCVyplXikp3ELtAo6d1Vtg8nGRZAcAsT+4nkKTeby
+	 5GlpEo5cIe+3uqaFEcQP+46pQddk4hsNhLfm4e347IyoFujaKxjAcQ8cj+ulc37bAS
+	 9G2Q3VaxPziw30BM/nz5hQ9ER9MLHTs0VfD44tWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Bradley Morgan <brads@mainlining.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Rio <rioo.tsukatsukii@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 256/507] panic: zero the dynamically allocated taint buffer
-Date: Fri, 13 Nov 2026 10:49:20 -0500
-Message-ID: <20261113153803.230823864@linuxfoundation.org>
+Subject: [PATCH 7.3 257/507] ocfs2/dlm: serialize migration MLE cleanup on failure
+Date: Fri, 13 Nov 2026 10:49:21 -0500
+Message-ID: <20261113153803.269553234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -71,60 +74,234 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 723982e7052e65c3b31e8e8c815ffaf2ecfeaa8f ]
+[ Upstream commit 61469249aab03799b0d3294b7a0cd25dd303017a ]
 
-A %s read of print_tainted()'s string can run past the end of the taint
-buffer while another CPU rebuilds a longer string in it, reading slab
-memory out of bounds into the kernel log (a KASAN slab-out-of-bounds
-report at taint_buf + size).  A warning or an unhandled-signal dump on
-another CPU reaches print_tainted() through dump_stack_print_info().
+A migration MLE has a base reference for the mastering answer and an
+in-use reference held by dlm_migrate_lockres(). The finishing assertion
+consumes the base reference, but migration failure drops it again
+without checking whether the assertion already consumed it.
 
-alloc_taint_buf() sizes the buffer for the longest taint string and
-allocates it with kmalloc(), so the bytes past that string are never
-written and the object holds no permanent NUL terminator.
-_print_tainted() rebuilds the string in place without locking and writes
-the terminator last, so a reader that overtakes a writer extending the
-string past the previous high-water mark finds no terminator inside the
-object and walks off its end.  print_tainted()'s kernel-doc promises the
-string is "always NULL terminated", a guarantee the previous zero-filled
-static buffer kept.
+The target queues its migration worker before it acknowledges the
+ALL_DONE packet, so its finishing assertion can be handled while the
+sender still waits for the status. If the connection fails before the
+status arrives, dlm_send_one_lockres() returns an error for a migration
+that the target has already completed:
 
-Allocate the buffer with kzalloc() so its trailing bytes stay NUL and
-every reader stops inside the object.
+  Old-master sender                  Finishing assertion
+  -----------------                  -------------------
+  publish MLE; take in-use reference
+  send ALL_DONE; wait for status
+                                     take lookup reference
+                                     unlink MLE
+                                     put lookup and base references
+  send returns a connection error
+  put base reference again; free MLE
+  put in-use reference; access freed MLE
 
-Reproduced on QEMU riscv64 under KASAN by growing the taint set while
-processes took unhandled-signal dumps on several CPUs: the unpatched
-kernel reports a slab-out-of-bounds read at taint_buf + size, the patched
-one is clean.
+dlm_assert_master_handler() holds dlm->spinlock from the MLE lookup to
+the final puts, and it takes dlm->master_lock around the unlink and the
+puts. Decide under the same locks: if the MLE is already unhashed, the
+assertion consumed the base reference, so drop only the sender's in-use
+reference. Otherwise unlink it before consuming the base reference so a
+later assertion no longer finds it.
 
-Link: https://lore.kernel.org/20261024020153.830459-1-nickolai@csail.mit.edu
-Fixes: a9dff0d0d11c ("kernel/panic: allocate taint string buffer dynamically")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+An assertion that got there first has also made the target the owner
+and cleared DLM_LOCK_RES_MIGRATING. Treating the attempt as failed at
+that point would leave the lockres owned by the target while this node
+still holds the other nodes' locks and refmap bits, so it could neither
+be purged nor migrated again. Finish our side as a completed migration
+does instead: drop those locks under res->spinlock if the target still
+owns the lockres, and recalculate its usage.
+
+Use the same cleanup for the pre-send failure, the send failure and the
+target-death failure paths. The sender's in-use reference keeps the MLE
+alive until its final put outside the nested locks. Successful
+migration retains its existing in-use-only put.
+
+A target that has died cannot assert after the sender has seen its
+death. The o2net node-down callback runs before the DLM one; it
+disconnects the node and flushes the workqueue that runs the message
+handlers, so an assertion already received has been handled by the time
+the DLM removes the node from the domain map. A node that leaves the
+domain cleanly sends its exit message only after its assertions have
+been answered.
+
+Two windows of the hand-over itself are left as they are: the handler
+switches the owner and the sender drops the other nodes' locks moments
+later, and an assertion from a live target that arrives after the
+sender has given up still meets the owner check in the handler. Waiting
+for the target before giving up would only stretch the first window
+into the time in which recovery of the target can observe it.
+
+KASAN report, only the relevant frames are kept:
+
+BUG: KASAN: slab-use-after-free in dlm_put_mle_inuse+0xce/0xe0
+Read of size 8 at addr ffff8881190e3c20 by task umount/593
+
+Call Trace:
+ <TASK>
+ dlm_put_mle_inuse+0xce/0xe0
+ dlm_migrate_lockres+0x16af/0x20d0
+ dlm_empty_lockres+0x60a/0xbd0
+ dlm_unregister_domain+0x53b/0x11d0
+ o2cb_cluster_disconnect+0xa5/0x110
+ ocfs2_cluster_disconnect+0x73/0xc0
+ ocfs2_dlm_shutdown+0x311/0x440
+ ocfs2_dismount_volume+0x696/0x940
+ generic_shutdown_super+0x15f/0x490
+ kill_block_super+0x40/0xa0
+ deactivate_locked_super+0xae/0x120
+ deactivate_super+0xa2/0xc0
+ cleanup_mnt+0x217/0x450
+ task_work_run+0x144/0x230
+ </TASK>
+
+Allocated by task 593:
+ kmem_cache_alloc_noprof+0x20b/0x5c0
+ dlm_migrate_lockres+0x20e/0x20d0
+ dlm_empty_lockres+0x60a/0xbd0
+ dlm_unregister_domain+0x53b/0x11d0
+ o2cb_cluster_disconnect+0xa5/0x110
+ ocfs2_cluster_disconnect+0x73/0xc0
+ ocfs2_dlm_shutdown+0x311/0x440
+ ocfs2_dismount_volume+0x696/0x940
+
+Freed by task 593:
+ kmem_cache_free+0x242/0x580
+ __dlm_put_mle+0x4b2/0x660
+ dlm_migrate_lockres+0x1690/0x20d0
+ dlm_empty_lockres+0x60a/0xbd0
+ dlm_unregister_domain+0x53b/0x11d0
+ o2cb_cluster_disconnect+0xa5/0x110
+ ocfs2_cluster_disconnect+0x73/0xc0
+ ocfs2_dlm_shutdown+0x311/0x440
+
+The buggy address belongs to the object at ffff8881190e3c00
+ which belongs to the cache o2dlm_mle of size 480
+The buggy address is located 32 bytes inside of
+ freed 480-byte region [ffff8881190e3c00, ffff8881190e3de0)
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0038-v9-659f247ea980d5f3fbeb@gmail.com
+Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Cc: Rio <rioo.tsukatsukii@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/panic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/dlm/dlmmaster.c | 70 ++++++++++++++++++++++++++++++++++------
+ 1 file changed, 61 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/panic.c b/kernel/panic.c
-index cec2716019355..f08453f0d8b4d 100644
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -893,7 +893,7 @@ static __init int alloc_taint_buf(void)
+diff --git a/fs/ocfs2/dlm/dlmmaster.c b/fs/ocfs2/dlm/dlmmaster.c
+index 612969867ff92..ea48c013f7fbb 100644
+--- a/fs/ocfs2/dlm/dlmmaster.c
++++ b/fs/ocfs2/dlm/dlmmaster.c
+@@ -2525,6 +2525,52 @@ static int dlm_is_lockres_migratable(struct dlm_ctxt *dlm,
+  */
  
- 	size += 1; /* For NULL terminator */
  
--	buf = kmalloc(size, GFP_KERNEL);
-+	buf = kzalloc(size, GFP_KERNEL);
++/*
++ * Drop the sender's references on a migration MLE after the attempt has
++ * failed. The finishing assert from the target may already have unlinked
++ * the MLE and consumed its base reference; decide under the locks the
++ * assert handler holds, and only drop the base reference while the MLE is
++ * still hashed. Returns true when the assert got there first: the target
++ * has become the master, so the caller must complete the migration.
++ */
++static bool dlm_put_migration_mle(struct dlm_ctxt *dlm,
++				  struct dlm_master_list_entry *mle)
++{
++	bool asserted;
++
++	spin_lock(&dlm->spinlock);
++	spin_lock(&dlm->master_lock);
++	__dlm_mle_detach_hb_events(dlm, mle);
++	asserted = hlist_unhashed(&mle->master_hash_node);
++	if (!asserted) {
++		__dlm_unlink_mle(dlm, mle);
++		__dlm_put_mle(mle);
++	}
++	spin_unlock(&dlm->master_lock);
++	spin_unlock(&dlm->spinlock);
++
++	dlm_put_mle_inuse(mle);
++	return asserted;
++}
++
++/*
++ * The finishing assert got there first: it switched the owner to the
++ * target and cleared DLM_LOCK_RES_MIGRATING. Drop the other nodes' locks
++ * as a completed migration does, unless recovery has taken the lockres
++ * over since, and let the usage be recalculated.
++ */
++static void dlm_migrate_lockres_asserted(struct dlm_ctxt *dlm,
++					 struct dlm_lock_resource *res,
++					 u8 target)
++{
++	spin_lock(&res->spinlock);
++	if (res->owner == target)
++		dlm_remove_nonlocal_locks(dlm, res);
++	spin_unlock(&res->spinlock);
++
++	dlm_lockres_calc_usage(dlm, res);
++}
++
+ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
+ 			       struct dlm_lock_resource *res, u8 target)
+ {
+@@ -2609,9 +2655,10 @@ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
  
- 	if (!buf) {
- 		panic("Failed to allocate taint string buffer");
+ 	if (ret < 0) {
+ 		if (mle_added) {
+-			dlm_mle_detach_hb_events(dlm, mle);
+-			dlm_put_mle(mle);
+-			dlm_put_mle_inuse(mle);
++			if (dlm_put_migration_mle(dlm, mle)) {
++				dlm_migrate_lockres_asserted(dlm, res, target);
++				ret = 0;
++			}
+ 		} else if (mle) {
+ 			kmem_cache_free(dlm_mle_cache, mle);
+ 			mle = NULL;
+@@ -2640,9 +2687,11 @@ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
+ 		mlog(0, "migration to node %u failed with %d\n",
+ 		     target, ret);
+ 		/* migration failed, detach and clean up mle */
+-		dlm_mle_detach_hb_events(dlm, mle);
+-		dlm_put_mle(mle);
+-		dlm_put_mle_inuse(mle);
++		if (dlm_put_migration_mle(dlm, mle)) {
++			dlm_migrate_lockres_asserted(dlm, res, target);
++			ret = 0;
++			goto leave;
++		}
+ 		spin_lock(&res->spinlock);
+ 		res->state &= ~DLM_LOCK_RES_MIGRATING;
+ 		wake = 1;
+@@ -2686,9 +2735,12 @@ static int dlm_migrate_lockres(struct dlm_ctxt *dlm,
+ 				     res->lockname.name, target);
+ 				ret = -EINVAL;
+ 				/* migration failed, detach and clean up mle */
+-				dlm_mle_detach_hb_events(dlm, mle);
+-				dlm_put_mle(mle);
+-				dlm_put_mle_inuse(mle);
++				if (dlm_put_migration_mle(dlm, mle)) {
++					dlm_migrate_lockres_asserted(dlm, res,
++								     target);
++					ret = 0;
++					goto leave;
++				}
+ 				spin_lock(&res->spinlock);
+ 				res->state &= ~DLM_LOCK_RES_MIGRATING;
+ 				wake = 1;
 -- 
 2.53.0
 
