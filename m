@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590674;
-	b=j/VcN0z4abDGd56iRjpIABIcqHEnv3HGQgmp58dxp8xyRyZNm+Iz7k2oACvBUf/9neAC
-	 7tXZEBDK8lQMDwgeDJYG8fcZX4u/mxx8zUuKidtxft82LfMoW8cqPpi9kAQYxl8QAtvGU
-	 B3XRLCFkPLa1oeqsudSF4sut8s7fvJhFgDeFHLhmkg27xgWNYJ9V+PAkzw1duCim8nZIR
-	 I1y/FzT2IcGjD0EczQhJAXOZ2pUeCpzb/BipW5M5gVmRbCb9l/kdYEe8lN9y/bfAuv/BQ
-	 bYoEvE/tLa9/eaF6PVlEkQ+sPazw/MwrfUCNNozdxqoJGUfoaIOEKCBrShz1WRyBAVg==
+	t=1794590675;
+	b=OdzTT0nZtU6uWXDNNQKYmT8vj0xPT9qwv0ZeGzu/jjoIjcue8oCCjnReLoIKyoUnbPJw
+	 M/zMQ9Y6Xtq6XWPOFgWayqYuGGsTfwXawkcMQycoOeTr41iC8/HN83fJeDO6VdJCjlUDH
+	 TMclab3WwN68RvqxaAyZgfPWWn0bpOz1V10yvKJ+a2dgMatoAQa6MncCtqTSaY8zffTFr
+	 YUBZsUQ1qqAwbUXF4hajKG5fA9q8X8CRZKn/2w65sesfelqE8zQgo3YSoh9fdT813plKo
+	 sYAD6xbE1/urWlhHjPiqXp2WQCsPnbaZFbODyW2xeG9EWjdd3buvOzrZ+NfBPYIskUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590674;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590675;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DskPNIRZ2ciIgNFu1atw5tCEm9BjI6JeU6DzkiEP+QE=;
-	b=dTfq91sTj1QIgVNvj6q33QD4CKiHAY8WHHo/gjkBzY14TkeHOa0TKXYPspu9PoppY8XE
-	 MYbBt9G5caZKqsOdWht2o+n7W7hKU84oyiAZ3u7Ih6JoZgge/oqNrZPUKTHd7qpPs4FkT
-	 lrhnKy13612XrX6Pa+ccSN5SQZC+oB7lDPOTF29zYhPMPwjzEoqK16k3uGWyX+fI4QJC9
-	 5NjqjfllNc6ijossm4UN7A1blpRQSjC9X9WKVsF4UqRlkyp3shG0LjOhU7tbgUx2ixEeg
-	 ClvV2yeswyTK6q0aS+Vnk9xcF2Ol+dn8lBLNA5+xB3ah6zplgVXjpLuQRE42jYEe0Cw==
+	bh=adavp3ZOB7hy+FC5oWoRL4yQ8NjAonvH1oiuBwtHqDA=;
+	b=A6E+QlT6MQ8uIKoMWrqLGYZsnDbP6ncFT9+jYEHkQ4IQAeNaIJbEOaxD0O7jfkhgThGL
+	 k2Et7XBDvkbGqHpI75aFPP7QQ1+wgpZ2rXzH9mlcJpxo+yxODiPwLgXHW+KyIcj5jHww/
+	 sEYYykyNu03rGVUNhrOOHVYy5XjuPoXrAj/AdtCoYkMuwuaTqxhldVxRbXR+5DOypAk1V
+	 q7CuZLttj/o9IVBM7llVW1Ta3fN8Kv/ugFtQj0Y7AYVtFhUS5K324kvoW+qy1R8VldxX/
+	 OoJ1r0SIi8TiYqiT9Wew31w+soyUcIgjBsBZsW3LpWNIrUC6dMVp/aI9rJz5UL7I0mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QfNazaLe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pKeS/igT";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33167606B223;
-	Fri, 13 Nov 2026 17:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC8E606B223;
+	Fri, 13 Nov 2026 17:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QfNazaLe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41A21F000C4;
-	Fri, 13 Nov 2026 17:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKeS/igT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168FC1F000C4;
+	Fri, 13 Nov 2026 17:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590674;
-	bh=DskPNIRZ2ciIgNFu1atw5tCEm9BjI6JeU6DzkiEP+QE=;
+	s=korg; t=1794590675;
+	bh=adavp3ZOB7hy+FC5oWoRL4yQ8NjAonvH1oiuBwtHqDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QfNazaLeHwIsqDcZuwcVp6RM94n9MhcAe3avixWMI/JTlZPvG/3eOHlZ05GrADAYN
-	 GQweMdHxFQdaE0tYjp6K5Ilo5lZBoXLyQbqKc+/WGZs01lKksoejEM4HuBXAIUogNX
-	 oOfFWWaaEqvFR+97ChMW9RHWQgJ9a+ezrtSvZgZg=
+	b=pKeS/igTHl8DvcAKZt/IqyRve/jyCtLXUxiluzHtmsRwMFp8/RGwmMg7UiAHXmxTk
+	 NHXlUAM80CnMFIPRnS1BFDI2Sna99T3OlpNjIK5Zy81Ab+672A9sX2DiQRnOxNkRTI
+	 jnL88wvScpNsHPbMyMBbxLyDWygIXcK5sktWl54E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuto Ohnuki <ytohnuki@amazon.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 588/686] virtiofs: add FUSE protocol validation
-Date: Fri, 13 Nov 2026 10:52:01 -0500
-Message-ID: <20261113153841.739867657@linuxfoundation.org>
+Subject: [PATCH 6.18 589/686] virtiofs: validate fixed-output response length
+Date: Fri, 13 Nov 2026 10:52:02 -0500
+Message-ID: <20261113153841.821305411@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,85 +68,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuto Ohnuki <ytohnuki@amazon.com>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit 68b69fa0edb241a946cd4c850110990f30705164 ]
+[ Upstream commit 5364d081125a34e90851fbb46ecc93f79339ce78 ]
 
-Add virtio_fs_verify_response() to validate that the server properly
-follows the FUSE protocol by checking:
+A short successful virtiofs response can leave the fixed-output portion of
+the request argument buffer unwritten.  The completion path nevertheless
+copies the full declared output to the request destination, allowing stale
+allocator contents to reach callers such as fuse_statfs().
 
-- Response length is at least sizeof(struct fuse_out_header).
-- oh.len matches the actual response length.
-- oh.unique matches the request's unique identifier.
+Require successful fixed-output responses to contain their complete
+declared output.  Continue to permit a shorter final argument only for
+out_argvar requests.  Reject positive and internal restart error values
+and require valid error replies to be header-only.  The error already
+stored in the FUSE output header is returned by fuse_request_end(), so do
+not copy output arguments from an error reply.
 
-On validation failure, set error to -EIO and normalize oh.len to prevent
-underflow in copy_args_from_argbuf().
+This was found by source review with AI assistance.  A header-only
+successful FUSE_STATFS reply returned stale fields in nine of nine calls
+across three boots.  The fixed kernel rejected the short response and
+preserved complete replies, valid negative-error replies, and
+variable-output replies.
 
-Addresses the TODO comment in virtio_fs_request_complete().
-
-Signed-off-by: Yuto Ohnuki <ytohnuki@amazon.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Stable-dep-of: 5364d081125a ("virtiofs: validate fixed-output response length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/virtio_fs.c | 29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ fs/fuse/virtio_fs.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
 diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index e475f7f9e83d4..33962e1ad8c12 100644
+index 33962e1ad8c12..7075984a89aad 100644
 --- a/fs/fuse/virtio_fs.c
 +++ b/fs/fuse/virtio_fs.c
-@@ -755,6 +755,27 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
+@@ -726,6 +726,10 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
+ 	unsigned int num_out;
+ 	unsigned int i;
+ 
++	/* fuse_request_end() returns this error; there are no args to copy. */
++	if (req->out.h.error)
++		goto out;
++
+ 	remaining = req->out.h.len - sizeof(req->out.h);
+ 	num_in = args->in_numargs - args->in_pages;
+ 	num_out = args->out_numargs - args->out_pages;
+@@ -751,6 +755,7 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
+ 	if (args->out_argvar)
+ 		args->out_args[args->out_numargs - 1].size = remaining;
+ 
++out:
+ 	kfree(req->argbuf);
  	req->argbuf = NULL;
  }
+@@ -758,7 +763,9 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
+ /* Verify that the server properly follows the FUSE protocol */
+ static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
+ {
++	struct fuse_args *args = req->args;
+ 	struct fuse_out_header *oh = &req->out.h;
++	unsigned int expected;
  
-+/* Verify that the server properly follows the FUSE protocol */
-+static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
-+{
-+	struct fuse_out_header *oh = &req->out.h;
+ 	if (len < sizeof(*oh)) {
+ 		pr_warn("virtio-fs: response too short (%u)\n", len);
+@@ -773,6 +780,29 @@ static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
+ 			oh->unique, req->in.h.unique);
+ 		return false;
+ 	}
++	if (oh->error <= -ERESTARTSYS || oh->error > 0) {
++		pr_warn("virtio-fs: invalid error value (%d)\n", oh->error);
++		return false;
++	}
 +
-+	if (len < sizeof(*oh)) {
-+		pr_warn("virtio-fs: response too short (%u)\n", len);
-+		return false;
++	if (oh->error) {
++		if (len != sizeof(*oh)) {
++			pr_warn("virtio-fs: error response too long (%u)\n", len);
++			return false;
++		}
++		return true;
 +	}
-+	if (oh->len != len) {
-+		pr_warn("virtio-fs: oh.len mismatch (%u != %u)\n", oh->len, len);
-+		return false;
-+	}
-+	if (oh->unique != req->in.h.unique) {
-+		pr_warn("virtio-fs: oh.unique mismatch (%llu != %llu)\n",
-+			oh->unique, req->in.h.unique);
-+		return false;
-+	}
-+	return true;
-+}
 +
- /* Work function for request completion */
- static void virtio_fs_request_complete(struct fuse_req *req,
- 				       struct virtio_fs_vq *fsvq)
-@@ -764,10 +785,6 @@ static void virtio_fs_request_complete(struct fuse_req *req,
- 	unsigned int len, i, thislen;
- 	struct folio *folio;
++	expected = sizeof(*oh) +
++		   fuse_len_args(args->out_numargs, args->out_args);
++	if (len > expected ||
++	    (len < expected &&
++	     (!args->out_argvar ||
++	      expected - len > args->out_args[args->out_numargs - 1].size))) {
++		pr_warn("virtio-fs: invalid response length (%u, expected %u)\n",
++			len, expected);
++		return false;
++	}
+ 	return true;
+ }
  
--	/*
--	 * TODO verify that server properly follows FUSE protocol
--	 * (oh.uniq, oh.len)
--	 */
- 	args = req->args;
- 	copy_args_from_argbuf(args, req);
- 
-@@ -821,6 +838,10 @@ static void virtio_fs_requests_done_work(struct work_struct *work)
- 		virtqueue_disable_cb(vq);
- 
- 		while ((req = virtqueue_get_buf(vq, &len)) != NULL) {
-+			if (!virtio_fs_verify_response(req, len)) {
-+				req->out.h.error = -EIO;
-+				req->out.h.len = sizeof(struct fuse_out_header);
-+			}
- 			spin_lock(&fpq->lock);
- 			list_move_tail(&req->list, &reqs);
- 			spin_unlock(&fpq->lock);
 -- 
 2.53.0
 
