@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585518;
-	b=mpa6ZSyfEI6G+nx60asqbcMfSWpBjgBcmHFPkTsyT42/1eWxOkG6NOJYUz4Z4ED7mF4O
-	 56S5JnAPYGdGv3TDfxUKTLFfvA2uFQNkFzUodri3pPeDO5EWilwZqyU5XAHykMCrUvr0O
-	 rYwd0zDAkPtahpzx6eds1/BMU2PNtZwAQVH6fUJRxcMpSNKJzDGHBF5Xe2SMSIKWpWndW
-	 vxHdh7TgKD193F8UVDOfcadeczdYG5GZ2UP704SFIN7KnSXCI2kBh+6v2GJBPc2uHAnlS
-	 d3eE2UJOvHDd5Cdv7rGNPwCohYMDsXSEIGuQVCEsaNpr5tC3T4xhOIokf0KmIjMGqxg==
+	t=1794585519;
+	b=0JTdutd8jHTocZw1LJJ4x7ENXTTxwc/la/hkrmAzhZphEaumt4JKDIn2YgwXhjTGDuqv
+	 zrvwN6aFFFyLcT1D099HUvS1T9qt5YyMx7/Ltq52AZC2BBPFOH1GYO4OVf9GHUu+MKl8G
+	 bj7AzDFQ7gTYCMYTSMDdV25IGmtCjApiFg2C5MFVnlX4Btl5UAvnbofAnuh+XNTjKXbTT
+	 wvDhDn1uJOpkLx7Hr3ecXNs1U4VVAHhUyw2jx5d9DmzKlop0YVaGM5SNh7oxlSSM3beUA
+	 97xVjLJzZtTeXHboMudJ2Z194Y1VZxbHP83DMDa2Jt/AetiuPhtX/BuMrW4Gv+8e7vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585519;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4cHQwQebnIkZV02MIZ/5c56vcigaeLakX79DysD2nfg=;
-	b=DTrdM7CFHYdtzsKkjqVi3i5CWkq+44p/ToKmseqS1T4S8F9CEVRz1pISayGT8nNgcDbq
-	 byOj9CTDleAkg3uCaNNI58JsxFDRtf5TCJjPnw0IQs6yyqVzXcFtfSy7jqo37fAE0PyCe
-	 QKyf6HOgGNQi7rarc9mmNue/SJR7FUojZCXqSFb0ybwMcTreAQu2cncaE3YrfojwQQTlp
-	 1/o6BYjKpamQ2tcXByjEub2liPZuwmN/Go6pJWmkbBpKYabkhp17L7UMreOZh2kfFVraJ
-	 mfdU2JDzSYRrhbuMdvyQQbs5jlhHAYnXBSRYCQwsBifkiI15eqURhGGIm60dSk6QNsw==
+	bh=LCEpHRqKhNiNBwxdc0erX5rDPhcRj7xmMC77u4vW88E=;
+	b=VQv67DrtEhFM0yXEPNYI3OEEhHKLQKiTpvLPQ0rK1xVEnQtWfXBol+1xNDvlc97jIPSj
+	 F8A+Y5TJWohCp5szLkZwlDUjXwbd8uF1wpTF8ij0Y7V14LZYuoZWvmdMEvtd0Cy7vdtuR
+	 0GR+2dW8EqPnNQe/TPG1p/8yS6Khip/7xoa4+q0ztpc4IZs+JdZtRLa7HNvhJQ/rOJ9ar
+	 zbFHdHY/ivof0NsHVzCxFboUjmHMs+PlQi9kp3eBAklhNayXoT41Tkpi1TdhZNndlVy/O
+	 xGj0873LzwhCDW/7YL4BMF+VafmTFRd975UBiOkhsxV13iR7VFWCl046hW5wW3MpmPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4ll3AQL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x0JFSdQm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC59606AE3F;
-	Fri, 13 Nov 2026 15:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2254606AE3F;
+	Fri, 13 Nov 2026 15:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t4ll3AQL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1787B1F000CA;
-	Fri, 13 Nov 2026 15:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x0JFSdQm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7851F000C5;
+	Fri, 13 Nov 2026 15:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585518;
-	bh=4cHQwQebnIkZV02MIZ/5c56vcigaeLakX79DysD2nfg=;
+	s=korg; t=1794585519;
+	bh=LCEpHRqKhNiNBwxdc0erX5rDPhcRj7xmMC77u4vW88E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t4ll3AQLv3ZFGn+tftzDVo2EbOPcOQJubMcVGH+kM9GFlxcsh2hZOBGF59jK3f/Jk
-	 Tx0xt8zvdsZ6gVv03TcOoUaHQ2A8lRuHn2WBT3pZBNZxtesx4WHhfySpoBaSDBVPaR
-	 m5vYGGWqNkpnaz56BW+mvN0pqRXKx2v3E7bYpX8s=
+	b=x0JFSdQmVzUDE0Mz3Cl1RipjhzB+xWfqvArELmBnKGgvDRpHFwOjFYj/5kMFZj97K
+	 qwxhswATf/83UQMOBzAESl4iMTMJoRb8YvaoS9B3d55HPcg79Npt9FEc/8sM0+sRcM
+	 4eQHVQTN7FsgDvpYJ42CLfjMzytD1XpO3fxR3yx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qihang <q.h.hack.winter@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 162/507] cipso: fix optlen corruption in cipso_v4_delopt()
-Date: Fri, 13 Nov 2026 10:47:46 -0500
-Message-ID: <20261113153759.988155846@linuxfoundation.org>
+Subject: [PATCH 7.3 163/507] ntfs: dont allow compression on volumes with clusters larger than 4K
+Date: Fri, 13 Nov 2026 10:47:47 -0500
+Message-ID: <20261113153800.020587542@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,64 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang <q.h.hack.winter@gmail.com>
+From: Zhan Xusheng <zhanxusheng@xiaomi.com>
 
-[ Upstream commit 1f1f8e8c5176234fa31858cd25f2e9b88aac0a45 ]
+[ Upstream commit c77ab4eeeb3ed471bcc99a94673f0e0142c4b84a ]
 
-cipso_v4_delopt() recomputes the option length by walking the option
-buffer after the CIPSO option has been moved out.  The walk then reads
-the stale bytes at the tail of the buffer as option data, and a crafted
-setsockopt(IP_OPTIONS) buffer can make it treat one of them as an option
-length, increasing opt->opt.optlen beyond the valid option data.
+On a volume made with "mkntfs -c 8192", a user can set
+FILE_ATTR_COMPRESSED on an empty file through system.ntfs_attrib.
+Writing to the file and reading it back after dropping the page cache
+then crashes:
 
-The corrupted length stays on the socket and is later used as the copy
-length by getsockopt(IP_OPTIONS) and by the udp/raw/ping sendmsg paths,
-where it exceeds the size of the buffers they copy into.
+  BUG: KASAN: slab-out-of-bounds in ntfs_read_compressed_block+0xa2c/0x2040
+  Read of size 8192 at addr ffff88804355a000 by task dd/106
 
-Compute the new length from the intact options before the move and
-subtract the CIPSO length, and fill the padding with IPOPT_END.
+The read path only handles clusters up to 4K. It copies each cluster
+out of a single page, and a compression block of 16 8K clusters does
+not fit in the 64K ntfs_compression_buffer. Loading an inode already
+rejects compressed data on such volumes.
 
-Assisted-by: LLM
-Fixes: 014ab19a69c32 ("selinux: Set socket NetLabel based on connection endpoint")
+Reject the flag change the same way.
+
+Fixes: fc053f05ca28 ("ntfs: add reparse and ea operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/cipso_ipv4.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/ntfs/ea.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv4/cipso_ipv4.c b/net/ipv4/cipso_ipv4.c
-index 1aacbbeffbc64..e65a3f29d2caf 100644
---- a/net/ipv4/cipso_ipv4.c
-+++ b/net/ipv4/cipso_ipv4.c
-@@ -2013,6 +2013,10 @@ static int cipso_v4_delopt(struct ip_options_rcu __rcu **opt_ptr)
- 		cipso_ptr = &opt->opt.__data[cipso_off];
- 		cipso_len = cipso_ptr[1];
+diff --git a/fs/ntfs/ea.c b/fs/ntfs/ea.c
+index 6ac551fe8ea64..9e00588ff9b5c 100644
+--- a/fs/ntfs/ea.c
++++ b/fs/ntfs/ea.c
+@@ -699,6 +699,11 @@ static int ntfs_new_attr_flags(struct ntfs_inode *ni, __le32 fattr)
+ 		goto err_out;
+ 	}
  
-+		optlen_new = cipso_v4_get_actual_opt_len(opt->opt.__data,
-+							 opt->opt.optlen);
-+		optlen_new -= cipso_len;
++	if ((new_aflags & ATTR_IS_COMPRESSED) && ni->vol->cluster_size > 4096) {
++		err = -EOPNOTSUPP;
++		goto err_out;
++	}
 +
- 		if (opt->opt.srr > opt->opt.cipso)
- 			opt->opt.srr -= cipso_len;
- 		if (opt->opt.rr > opt->opt.cipso)
-@@ -2026,11 +2030,12 @@ static int cipso_v4_delopt(struct ip_options_rcu __rcu **opt_ptr)
- 		memmove(cipso_ptr, cipso_ptr + cipso_len,
- 			opt->opt.optlen - cipso_off - cipso_len);
- 
--		optlen_new = cipso_v4_get_actual_opt_len(opt->opt.__data,
--							 opt->opt.optlen);
- 		hdr_delta = opt->opt.optlen;
- 		opt->opt.optlen = (optlen_new + 3) & ~3;
- 		hdr_delta -= opt->opt.optlen;
-+
-+		memset(&opt->opt.__data[optlen_new], IPOPT_END,
-+		       opt->opt.optlen - optlen_new);
- 	} else {
- 		/* only the cipso option was present on the socket so we can
- 		 * remove the entire option struct */
+ 	if (!a->non_resident) {
+ 		if (!(new_aflags & (ATTR_IS_SPARSE | ATTR_IS_COMPRESSED))) {
+ 			err = 0;
 -- 
 2.53.0
 
