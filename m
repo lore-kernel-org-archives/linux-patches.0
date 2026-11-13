@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590681;
-	b=FxbB5pOw5uc8mKI7tfAnEAI6vJIJ7erucSqc+Ph7ZnAUCcHkAZyPakbc8YdvljgIcbEg
-	 ZR+w0sxoJaorg1GUAVagd6UrRHUxaxPm9jYd7gTtWLy9ugMfeh4u0dFOVIfk/w5H0QCJW
-	 VV8MgPqLuwT9zmpu+XYla4gOFWguYQKkGw8yTAVOVmX0jeZcQyM07+y4SgbOSJkRiYNr3
-	 +KdJ9NEvmJQTLlVNCpdqYugFJWPuSdQbxUEoqyDoW6/1T1YpLi++2O2XW36AgJ/UUXuX/
-	 xl2I2ujpWVNKznoSQBLYQfwckaurThH/OYEw+k/aCBybvhtbTRsKAeIZu1OALOaq4tw==
+	t=1794590682;
+	b=nLayYRBYSQNSYbaj6lQFcwJGVX2TFMK9NjpKxCEV99yYj59cBpuFjqNAoNv2gUEE+7/p
+	 Fry2piufBhpCZLRtZNN7r5vmE7kNumy8dOfuYzY557ze2KeKPJcFp5H1z2vm+t1D43L4Y
+	 33PIGPYv4N52g+t8jqIR4JPwBBZbH04RRoWIGRFovLIt6Imroe256/p3kdLL+pR0HVfny
+	 YoRwDlUB7CyZKB1RiJphC4Ty8cYDUnUCN1BY1hrkDgsClGuIpES9ugQMxnVHkHVDRUVQ8
+	 YyRPF+6FDtHrIk6g8ZC0KbOzHaBqI5cXwTGL+dp6FerODUKROBisnHUXnLBmAiOnMiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590681;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590682;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1jHyIbjohvo18CUf4izLLrS1t6aUg57gJZoL/mNiAMs=;
-	b=E84C6IuF+2yO3gen9JjBhBcmXs/idscAEsKTGUP4OMOPM9K47DkZ7qhQ9B4LCLNpYT68
-	 +QV5C8qrjPa7JRkt4UgZeoopOBuSyjwadYrLiU0yNOwoOOFE70vG7A3bdlYxU2Og34s66
-	 2Cwt38xq7TkIo4Sem5QkQ3i1B7DdCnzlEf+bL8zdiXZN9xzCX4+lUYEZEk+jw+P3bEDm1
-	 OaB+VpyoDFNpO5XYaTFScwvL2KP7yC58Ro9YRu6YeVYW5jMztAP7zGp6Aj0xchaWbVY15
-	 tgbuY8/Z9nQgAH6fXMpZYwTUnO38r/c8iXiHdN2IaSkDWeg9y6UJjru91o11SuokeZQ==
+	bh=NZt58ZLMurAg97KXRueZ3TS1D34vwQx7Pcs6Ick4Xcg=;
+	b=ZuMm49f4U4tWIK/77ALdi4jQ/SdBlAlH87APxrj9GnNqsMtxxMAuwjEKJ9f55LSi3cel
+	 gCYpeeBYF7wUtfzRTIOFSISg5MDndEYdQfPlhuvq7fSAXuf/8GLct/8fQNrzLcKIedRb+
+	 A3EUtkes1gG7bBIVzn9718JLx9zT5oiY8FpoNLBA07z2m/6EqwjGWH9fZwMMjYl001Qv5
+	 Iv03c1xEQl9OB2wEHDJcE0FO6Ad7PnExKjB3ugkMPsu7Vl2x3nWxsJuMn5Xl8Rk27qdwy
+	 GVM29eFD4wuURZ1boIq7zVl7T/+snGHisk5oGbRgtIPCCBc8Bg1BbZL3qrGpCaiEGHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1jsLvjA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIjVgODg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792EA606B21A;
-	Fri, 13 Nov 2026 17:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B39606CED3;
+	Fri, 13 Nov 2026 17:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1jsLvjA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250A41F000C5;
-	Fri, 13 Nov 2026 17:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIjVgODg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFDA1F000C4;
+	Fri, 13 Nov 2026 17:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590681;
-	bh=1jHyIbjohvo18CUf4izLLrS1t6aUg57gJZoL/mNiAMs=;
+	s=korg; t=1794590682;
+	bh=NZt58ZLMurAg97KXRueZ3TS1D34vwQx7Pcs6Ick4Xcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e1jsLvjAoN7p1F0d/+k20iFn6xVRP+nEIoqvToVFy/mMwys/hjPr8hAYtHrU4YbbG
-	 fCh8KND/Sk3VJm1LZIwr8zVzMuGlu/hLo19ladmkrvnDSJw9nbJl8DOP/kjTTttFAq
-	 PgaUj6rbkTiDRu5kAmtW4nnzr+ZtK8tA81TlB0ps=
+	b=qIjVgODgrZqLA8o6tHV/wDkcX1qRwgUDl0XBots9iJpZTbroS8k7kN1bGQX1Rm1aV
+	 JnfhhZD441kVjMkpGn9Cg0FUYp0Vze9bXmh0c8R0NW1hiljvtpOzUZ3aj3FYE7eJ2S
+	 3YYXPnfVWCrhLSZ2Z1rWk5q4R/D2bQebT1SbhFt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 558/686] iio: dac: mcp4821: reject devices without match data
-Date: Fri, 13 Nov 2026 10:51:31 -0500
-Message-ID: <20261113153840.490119788@linuxfoundation.org>
+Subject: [PATCH 6.18 594/686] media: iris: Fix power-off ordering to disable power domain after clocks
+Date: Fri, 13 Nov 2026 10:52:07 -0500
+Message-ID: <20261113153842.076244003@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,54 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 
-[ Upstream commit 6ac1faf4de61dcf27ffe8f2c25d96fe5f4b2886d ]
+[ Upstream commit 9cfae7726a9a9f526e8905dbddde355be2674e3d ]
 
-A device bound through driver_override need not match an entry in the
-driver tables. In that case spi_get_device_match_data() returns NULL,
-but mcp4821_probe() dereferences the result while configuring the IIO
-device.
+In iris_vpu_power_off_hw(), iris_disable_power_domains() was called
+before the associated clocks (IRIS_BSE_HW_CLK, IRIS_HW_AHB_CLK,
+IRIS_HW_CLK) were disabled and unprepared. This reverses the correct
+power-down sequence: with the power domain already removed, the
+subsequent clk_disable_unprepare() calls end up operating on
+clock-controller hardware that is no longer powered, which can hang
+or behave unpredictably.
 
-Reject devices without match data before using the chip information.
+Reorder the calls so iris_disable_power_domains() runs after all
+three clocks are disabled, ensuring clocks are always turned off
+while their power domain is still active, and mirroring the reverse
+of the power-on sequence.
 
-Fixes: cdf3ecb0d8d0 ("iio: dac: driver for MCP4821")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Fixes: bb8a95aa038e ("media: iris: implement power management")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ sashal: adjusted context due to missing configurable-gain initialization ]
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+[ sashal: Adjusted context to account for absent IRIS_HW_AHB_CLK and IRIS_BSE_HW_CLK clock-disable calls. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/mcp4821.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/iris/iris_vpu_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/dac/mcp4821.c b/drivers/iio/dac/mcp4821.c
-index 748bdca9a964d..daaebf175fedb 100644
---- a/drivers/iio/dac/mcp4821.c
-+++ b/drivers/iio/dac/mcp4821.c
-@@ -172,9 +172,13 @@ static const struct iio_info mcp4821_info = {
- 
- static int mcp4821_probe(struct spi_device *spi)
+diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+index 6839e293d9b50..a20565abef6a6 100644
+--- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
++++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+@@ -260,8 +260,8 @@ int iris_vpu_power_off_controller(struct iris_core *core)
+ void iris_vpu_power_off_hw(struct iris_core *core)
  {
-+	const struct mcp4821_chip_info *info;
- 	struct iio_dev *indio_dev;
- 	struct mcp4821_state *state;
--	const struct mcp4821_chip_info *info;
-+
-+	info = spi_get_device_match_data(spi);
-+	if (!info)
-+		return -ENODATA;
+ 	dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], false);
+-	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
+ 	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
++	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
+ }
  
- 	indio_dev = devm_iio_device_alloc(&spi->dev, sizeof(*state));
- 	if (indio_dev == NULL)
-@@ -183,7 +187,6 @@ static int mcp4821_probe(struct spi_device *spi)
- 	state = iio_priv(indio_dev);
- 	state->spi = spi;
- 
--	info = spi_get_device_match_data(spi);
- 	indio_dev->name = info->name;
- 	indio_dev->info = &mcp4821_info;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
+ void iris_vpu_power_off(struct iris_core *core)
 -- 
 2.53.0
 
