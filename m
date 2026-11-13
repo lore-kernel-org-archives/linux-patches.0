@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591523;
-	b=QFmNfOPPH+2CaRW5652lqimnVyfkji12B3FUNXr1bq/sOnO8oFgooSCIZf58vtlpjIbQ
-	 2uE918+Peeg1SEbvNRiChCjrnHmZPwRpcFDKevNu6iuyJGYjlLEBJNGLBkUrc26pZSULV
-	 uOzUBoTQc+z2SPA4nUaFXVgbqhJgfnHlG+00mmNlmNz2flXCYjlK9t0uPgIVOJhWTGYo7
-	 UCby2zWr7PuvSPYYEqFGsKi0AauqRYOsf2uRH2AteYiS0tArHZHvuIvcen96A8DpYnkSh
-	 XKS8pj0EncrmcyS3jPxxMDwuX9ota7TcRRQMnA5BgeNNNo1jCTFymHIwPBLGnzhl1zQ==
+	t=1794591524;
+	b=fOhlUzmZv5JhtKPgQCI9Yo+9z/mq6j76zIBs1KOYRWT4GxzWMr6JUR+oXQxG8HG9fjVc
+	 mXNASJIOdJnPWOU/FiHAMAeMiZujW5eJ/ySgwLoreF/nrZyahlGGObFkpM/McLzu1Bsf5
+	 QayBIsddmyiLmuBQhHNUQQrNy9EJc+iTzVW2Go/pZKaHnygxr2HOHY8Fkb9jpNgtLhNge
+	 idIF8V8ReFv7pKgjPIsU8fh698J6bZd1vEoLx8oLhww1RqIDtIZTDLYgRgTYKBCFwKsGd
+	 jwVZtMRgdS9tvp44g0xbmWQhKvGyQyt+U7N090I3dS3mDsU0VZDUjNk4770ju9+Hrhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591523;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KGqqjCq9149QWk24UrliPenmbgDv663DxtS0P8uk9ug=;
-	b=UIZHLiGiKRdHth6wTu2BLsUxbsJyyFReZXr8eizDvBEzIGGDFE5/W23zCTJJVX/9rQpH
-	 +UOuZjp8YETMnngvf7U22p3OTe51sEbjB1Gon3l8V45Fz4L6PV6Bm6vLIxjsJTmeE2tgy
-	 mMmY299gVnSbPbYd2AXlCjE/kZDiEwNpAw+9BDxHdgnFedhy2XVokbPe1JbK++ZOHERhQ
-	 lZiiDXE8ob9p36FImNGjk2AVKctjwAnuDBAyFvJsyuKCPAx8c1aK+rt3xv+XW6wzUkKKZ
-	 YpwvRji0eZAyZ4eMDI5ZVJoLVNaCc0mLq5KTaP7Y/HfY1pSBYWDuNYSWgqcN5WX/0hg==
+	bh=tosRFct9PCu4ghfDiPOcK3Mw+j0D+T4wz00AQYvW92k=;
+	b=2RegakNKrzYXVdCmttbSVbIsVo4i80i5AL9asb1aDn4gRHUu+Z36cvaEIct13JbqImc3
+	 JnkTkYN0MKAAezhlcNy1gYigBvWGBtvWjQ20ZnGgfhqaw9c96b19xvOU5h44RQZHf3vya
+	 VplkDyao/Xd5hhddhHvlnrs1UFfSBOcTkYjmURmj8EPfQc+yt6ZKDoOlvsv1TCswbSjM0
+	 K7uInEfmFhZipjJl8by84W6dDnNAXpYhgTr3N6nLdixhXLgFf6JcCPNBxJ/Yrwuh4dGXW
+	 gmRTi9SoKXpu7SegFLR3eNav6cV604f6ki9bi2cmc2yFTDkUhrfEdLwBuIIY9vADMiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s6iWfw4z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4v+xFPv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543EA606D49D;
-	Fri, 13 Nov 2026 17:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E7A606D49D;
+	Fri, 13 Nov 2026 17:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s6iWfw4z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989D41F000C4;
-	Fri, 13 Nov 2026 17:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4v+xFPv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77D21F000C4;
+	Fri, 13 Nov 2026 17:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591522;
-	bh=KGqqjCq9149QWk24UrliPenmbgDv663DxtS0P8uk9ug=;
+	s=korg; t=1794591524;
+	bh=tosRFct9PCu4ghfDiPOcK3Mw+j0D+T4wz00AQYvW92k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s6iWfw4zY0KSNgPjUSMQClvIlUJvit3SNgG275M5uCM/8obR9gvI537OLHETt9Zc8
-	 ZKlejI0XIjJkQOJcHd+1GL63FldqMuuQ/cCR1ZbYEEmHFy6oC7PcEWP5s9+GK9JSZE
-	 bDmRW0Aq7NJgDP9owmGFFeAlUWWU+RQx3ec1pGtw=
+	b=N4v+xFPv3uFETBbrI7qvyctSkN9T3PIkn/hgnHdE+j2LQqLW9IxhxJjaI6cxULiCp
+	 IlCFKNFjpWhCNafq4E/lt0q7/CGqUy5DQVC3AUtj5tGYhSkKhPukVbfEDHHiVEV+BG
+	 em3eXXq0tGec2XmbHBkcznl2PloVObPG+d2gQ7Oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Jens Axboe <axboe@kernel.dk>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 581/670] block: amiflop: synchronize flush timer before track flush
-Date: Fri, 13 Nov 2026 10:52:25 -0500
-Message-ID: <20261113153831.531457796@linuxfoundation.org>
+Subject: [PATCH 6.12 582/670] ALSA: synth: Use guard() for spin locks
+Date: Fri, 13 Nov 2026 10:52:26 -0500
+Message-ID: <20261113153831.564492040@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,184 +67,501 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 9690943353cec1690a715e000ba6a74e5139f530 ]
+[ Upstream commit 59ede7178d402b3bfa0266cbd9ad348d5612c295 ]
 
-The amiflop track buffer is shared with the timer callback. timer_delete()
-does not wait for an in-flight callback, and that callback can rearm itself
-when it cannot acquire the floppy controller. A synchronous track flush can
-therefore race with the callback.
+Clean up the code using guard() for spin locks.
 
-Stop the timer before synchronous track writes and use timer_delete_sync()
-to wait for any callback already running. Keep callback rearming disabled
-until the write is complete. Apply this to the FDFMTTRK path as well.
+Merely code refactoring, and no behavior change.
 
-FDFLUSH, FDFMTTRK and close-time flushes run outside the blk-mq
-request callback. Freeze their queues so an in-flight request cannot
-change the shared track buffer while it is encoded and written. Restart
-the timer if a track remains dirty after a failed flush.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260930065951.2932739-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ sashal: adapted queue freezing to the older API by removing memflags handling and using single-argument blk_mq_unfreeze_queue() ]
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250829151335.7342-5-tiwai@suse.de
+Stable-dep-of: 34e3e04b8a17 ("ALSA: emux: Fix UAF of soundfont zones at note-on")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/amiflop.c | 69 ++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 61 insertions(+), 8 deletions(-)
+ sound/synth/emux/emux_effect.c | 29 ++++++++--------
+ sound/synth/emux/emux_synth.c  | 54 +++++++----------------------
+ sound/synth/emux/soundfont.c   | 63 ++++++++++++----------------------
+ 3 files changed, 49 insertions(+), 97 deletions(-)
 
-diff --git a/drivers/block/amiflop.c b/drivers/block/amiflop.c
-index 49ced65bef4c8..7a53ee1d18d84 100644
---- a/drivers/block/amiflop.c
-+++ b/drivers/block/amiflop.c
-@@ -265,6 +265,8 @@ static struct fd_data_type data_types[] = {
- static struct amiga_floppy_struct unit[FD_MAX_UNITS];
+diff --git a/sound/synth/emux/emux_effect.c b/sound/synth/emux/emux_effect.c
+index 3c7314f5fb19c..bfe383fa90ba1 100644
+--- a/sound/synth/emux/emux_effect.c
++++ b/sound/synth/emux/emux_effect.c
+@@ -168,7 +168,6 @@ snd_emux_send_effect(struct snd_emux_port *port, struct snd_midi_channel *chan,
+ 	unsigned char *srcp, *origp;
+ 	struct snd_emux *emu;
+ 	struct snd_emux_effect_table *fx;
+-	unsigned long flags;
  
- static struct timer_list flush_track_timer[FD_MAX_UNITS];
-+static DEFINE_SPINLOCK(flush_track_timer_lock);
-+static bool flush_track_timer_stopped[FD_MAX_UNITS];
- static struct timer_list post_write_timer;
- static unsigned long post_write_timer_drive;
- static struct timer_list motor_on_timer;
-@@ -1370,11 +1372,22 @@ static void flush_track_callback(struct timer_list *timer)
- 					sizeof(flush_track_timer[0]);
- 
- 	nr&=3;
-+	spin_lock(&flush_track_timer_lock);
-+	if (flush_track_timer_stopped[nr]) {
-+		spin_unlock(&flush_track_timer_lock);
-+		return;
-+	}
-+	spin_unlock(&flush_track_timer_lock);
-+
- 	writefromint = 1;
- 	if (!try_fdc(nr)) {
- 		/* we might block in an interrupt, so try again later */
--		flush_track_timer[nr].expires = jiffies + 1;
--		add_timer(flush_track_timer + nr);
-+		spin_lock(&flush_track_timer_lock);
-+		if (!flush_track_timer_stopped[nr]) {
-+			flush_track_timer[nr].expires = jiffies + 1;
-+			add_timer(flush_track_timer + nr);
-+		}
-+		spin_unlock(&flush_track_timer_lock);
- 		return;
+ 	emu = port->emu;
+ 	fx = chan->private;
+@@ -195,22 +194,22 @@ snd_emux_send_effect(struct snd_emux_port *port, struct snd_midi_channel *chan,
+ 		offset++;
+ #endif
+ 	/* modify the register values */
+-	spin_lock_irqsave(&emu->voice_lock, flags);
+-	for (i = 0; i < emu->max_voices; i++) {
+-		struct snd_emux_voice *vp = &emu->voices[i];
+-		if (!STATE_IS_PLAYING(vp->state) || vp->chan != chan)
+-			continue;
+-		srcp = (unsigned char*)&vp->reg.parm + offset;
+-		origp = (unsigned char*)&vp->zone->v.parm + offset;
+-		if (parm_defs[i].type & PARM_IS_BYTE) {
+-			*srcp = *origp;
+-			effect_set_byte(srcp, chan, type);
+-		} else {
+-			*(unsigned short*)srcp = *(unsigned short*)origp;
+-			effect_set_word((unsigned short*)srcp, chan, type);
++	scoped_guard(spinlock_irqsave, &emu->voice_lock) {
++		for (i = 0; i < emu->max_voices; i++) {
++			struct snd_emux_voice *vp = &emu->voices[i];
++			if (!STATE_IS_PLAYING(vp->state) || vp->chan != chan)
++				continue;
++			srcp = (unsigned char *)&vp->reg.parm + offset;
++			origp = (unsigned char *)&vp->zone->v.parm + offset;
++			if (parm_defs[i].type & PARM_IS_BYTE) {
++				*srcp = *origp;
++				effect_set_byte(srcp, chan, type);
++			} else {
++				*(unsigned short *)srcp = *(unsigned short *)origp;
++				effect_set_word((unsigned short *)srcp, chan, type);
++			}
+ 		}
  	}
- 	get_fdc(nr);
-@@ -1421,6 +1434,35 @@ static int non_int_flush_track (unsigned long nr)
- 	return 1;
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ 
+ 	/* activate them */
+ 	snd_emux_update_channel(port, chan, parm_defs[type].update);
+diff --git a/sound/synth/emux/emux_synth.c b/sound/synth/emux/emux_synth.c
+index 02e2c69d7f18e..b3c8296840a56 100644
+--- a/sound/synth/emux/emux_synth.c
++++ b/sound/synth/emux/emux_synth.c
+@@ -49,7 +49,6 @@ snd_emux_note_on(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 	int i, key, nvoices;
+ 	struct snd_emux_voice *vp;
+ 	struct snd_sf_zone *table[SNDRV_EMUX_MAX_MULTI_VOICES];
+-	unsigned long flags;
+ 	struct snd_emux_port *port;
+ 
+ 	port = p;
+@@ -77,7 +76,7 @@ snd_emux_note_on(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 	terminate_note1(emu, key, chan, 0);
+ #endif
+ 
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (i = 0; i < nvoices; i++) {
+ 
+ 		/* set up each voice parameter */
+@@ -124,7 +123,6 @@ snd_emux_note_on(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 			vp->ontime = jiffies; /* remember the trigger timing */
+ 		}
+ 	}
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ 
+ #ifdef SNDRV_EMUX_USE_RAW_EFFECT
+ 	if (port->port_mode == SNDRV_EMUX_PORT_MODE_OSS_SYNTH) {
+@@ -147,7 +145,6 @@ snd_emux_note_off(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 	int ch;
+ 	struct snd_emux *emu;
+ 	struct snd_emux_voice *vp;
+-	unsigned long flags;
+ 	struct snd_emux_port *port;
+ 
+ 	port = p;
+@@ -158,7 +155,7 @@ snd_emux_note_off(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 	if (snd_BUG_ON(!emu || !emu->ops.release))
+ 		return;
+ 
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (ch = 0; ch < emu->max_voices; ch++) {
+ 		vp = &emu->voices[ch];
+ 		if (STATE_IS_PLAYING(vp->state) &&
+@@ -180,7 +177,6 @@ snd_emux_note_off(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 				emu->ops.release(vp);
+ 		}
+ 	}
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
  }
  
-+static void flush_track_timer_stop(unsigned int drive)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&flush_track_timer_lock, flags);
-+	flush_track_timer_stopped[drive] = true;
-+	spin_unlock_irqrestore(&flush_track_timer_lock, flags);
-+
-+	timer_delete_sync(flush_track_timer + drive);
-+}
-+
-+static void flush_track_timer_start(unsigned int drive)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&flush_track_timer_lock, flags);
-+	flush_track_timer_stopped[drive] = false;
-+	if (unit[drive].dirty)
-+		mod_timer(flush_track_timer + drive, jiffies + 1);
-+	spin_unlock_irqrestore(&flush_track_timer_lock, flags);
-+}
-+
-+static void flush_track_timer_sync(unsigned int drive)
-+{
-+	flush_track_timer_stop(drive);
-+	non_int_flush_track(drive);
-+	flush_track_timer_start(drive);
-+}
-+
- static int get_track(int drive, int track)
+ /*
+@@ -192,10 +188,9 @@ void snd_emux_timer_callback(struct timer_list *t)
  {
- 	int error, errcnt;
-@@ -1435,8 +1477,7 @@ static int get_track(int drive, int track)
- 	}
+ 	struct snd_emux *emu = from_timer(emu, t, tlist);
+ 	struct snd_emux_voice *vp;
+-	unsigned long flags;
+ 	int ch, do_again = 0;
  
- 	if (unit[drive].dirty == 1) {
--		del_timer (flush_track_timer + drive);
--		non_int_flush_track (drive);
-+		flush_track_timer_sync(drive);
- 	}
- 	errcnt = 0;
- 	while (errcnt < MAX_ERRORS) {
-@@ -1562,6 +1603,12 @@ static int fd_locked_ioctl(struct block_device *bdev, blk_mode_t mode,
- 	case FDFMTTRK:
- 		if (param < p->type->tracks * p->type->heads)
- 		{
-+			flush_track_timer_stop(drive);
-+			if (unit[drive].dirty == 1 &&
-+			    !non_int_flush_track(drive)) {
-+				flush_track_timer_start(drive);
-+				return -EIO;
-+			}
- 			get_fdc(drive);
- 			if (fd_seek(drive,param) != 0){
- 				memset(p->trackbuf, FD_FILL_BYTE,
-@@ -1570,6 +1617,7 @@ static int fd_locked_ioctl(struct block_device *bdev, blk_mode_t mode,
- 			}
- 			floppy_off(drive);
- 			rel_fdc();
-+			flush_track_timer_start(drive);
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (ch = 0; ch < emu->max_voices; ch++) {
+ 		vp = &emu->voices[ch];
+ 		if (vp->state == SNDRV_EMUX_ST_PENDING) {
+@@ -212,7 +207,6 @@ void snd_emux_timer_callback(struct timer_list *t)
+ 		emu->timer_active = 1;
+ 	} else
+ 		emu->timer_active = 0;
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ /*
+@@ -224,7 +218,6 @@ snd_emux_key_press(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 	int ch;
+ 	struct snd_emux *emu;
+ 	struct snd_emux_voice *vp;
+-	unsigned long flags;
+ 	struct snd_emux_port *port;
+ 
+ 	port = p;
+@@ -235,7 +228,7 @@ snd_emux_key_press(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 	if (snd_BUG_ON(!emu || !emu->ops.update))
+ 		return;
+ 
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (ch = 0; ch < emu->max_voices; ch++) {
+ 		vp = &emu->voices[ch];
+ 		if (vp->state == SNDRV_EMUX_ST_ON &&
+@@ -244,7 +237,6 @@ snd_emux_key_press(void *p, int note, int vel, struct snd_midi_channel *chan)
+ 			update_voice(emu, vp, SNDRV_EMUX_UPDATE_VOLUME);
  		}
- 		else
- 			return -EINVAL;
-@@ -1591,8 +1639,7 @@ static int fd_locked_ioctl(struct block_device *bdev, blk_mode_t mode,
- 	case FDDEFPRM:
- 		return -EINVAL;
- 	case FDFLUSH: /* unconditionally, even if not needed */
--		del_timer (flush_track_timer + drive);
--		non_int_flush_track(drive);
-+		flush_track_timer_sync(drive);
- 		break;
- #ifdef RAW_IOCTL
- 	case IOCTL_RAW_TRACK:
-@@ -1611,9 +1658,14 @@ static int fd_ioctl(struct block_device *bdev, blk_mode_t mode,
- 			     unsigned int cmd, unsigned long param)
- {
- 	int ret;
-+	bool freeze_queue = cmd == FDFMTTRK || cmd == FDFLUSH;
- 
- 	mutex_lock(&amiflop_mutex);
-+	if (freeze_queue)
-+		blk_mq_freeze_queue(bdev->bd_disk->queue);
- 	ret = fd_locked_ioctl(bdev, mode, cmd, param);
-+	if (freeze_queue)
-+		blk_mq_unfreeze_queue(bdev->bd_disk->queue);
- 	mutex_unlock(&amiflop_mutex);
- 
- 	return ret;
-@@ -1713,9 +1765,9 @@ static void floppy_release(struct gendisk *disk)
- 	int drive = p - unit;
- 
- 	mutex_lock(&amiflop_mutex);
-+	blk_mq_freeze_queue(disk->queue);
- 	if (unit[drive].dirty == 1) {
--		del_timer (flush_track_timer + drive);
--		non_int_flush_track (drive);
-+		flush_track_timer_sync(drive);
  	}
-   
- 	if (!fd_ref[drive]--) {
-@@ -1725,6 +1777,7 @@ static void floppy_release(struct gendisk *disk)
- #ifdef MODULE
- 	floppy_off (drive);
- #endif
-+	blk_mq_unfreeze_queue(disk->queue);
- 	mutex_unlock(&amiflop_mutex);
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ 
+@@ -257,7 +249,6 @@ snd_emux_update_channel(struct snd_emux_port *port, struct snd_midi_channel *cha
+ 	struct snd_emux *emu;
+ 	struct snd_emux_voice *vp;
+ 	int i;
+-	unsigned long flags;
+ 
+ 	if (! update)
+ 		return;
+@@ -266,13 +257,12 @@ snd_emux_update_channel(struct snd_emux_port *port, struct snd_midi_channel *cha
+ 	if (snd_BUG_ON(!emu || !emu->ops.update))
+ 		return;
+ 
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (i = 0; i < emu->max_voices; i++) {
+ 		vp = &emu->voices[i];
+ 		if (vp->chan == chan)
+ 			update_voice(emu, vp, update);
+ 	}
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ /*
+@@ -284,7 +274,6 @@ snd_emux_update_port(struct snd_emux_port *port, int update)
+ 	struct snd_emux *emu; 
+ 	struct snd_emux_voice *vp;
+ 	int i;
+-	unsigned long flags;
+ 
+ 	if (! update)
+ 		return;
+@@ -293,13 +282,12 @@ snd_emux_update_port(struct snd_emux_port *port, int update)
+ 	if (snd_BUG_ON(!emu || !emu->ops.update))
+ 		return;
+ 
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (i = 0; i < emu->max_voices; i++) {
+ 		vp = &emu->voices[i];
+ 		if (vp->port == port)
+ 			update_voice(emu, vp, update);
+ 	}
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ 
+@@ -365,16 +353,14 @@ terminate_note1(struct snd_emux *emu, int note, struct snd_midi_channel *chan, i
+ {
+ 	int  i;
+ 	struct snd_emux_voice *vp;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (i = 0; i < emu->max_voices; i++) {
+ 		vp = &emu->voices[i];
+ 		if (STATE_IS_PLAYING(vp->state) && vp->chan == chan &&
+ 		    vp->key == note)
+ 			terminate_voice(emu, vp, free);
+ 	}
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ 
+@@ -407,9 +393,8 @@ snd_emux_terminate_all(struct snd_emux *emu)
+ {
+ 	int i;
+ 	struct snd_emux_voice *vp;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (i = 0; i < emu->max_voices; i++) {
+ 		vp = &emu->voices[i];
+ 		if (STATE_IS_PLAYING(vp->state))
+@@ -424,7 +409,6 @@ snd_emux_terminate_all(struct snd_emux *emu)
+ 	}
+ 	/* initialize allocation time */
+ 	emu->use_time = 0;
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ EXPORT_SYMBOL(snd_emux_terminate_all);
+@@ -438,7 +422,6 @@ snd_emux_sounds_off_all(struct snd_emux_port *port)
+ 	int i;
+ 	struct snd_emux *emu;
+ 	struct snd_emux_voice *vp;
+-	unsigned long flags;
+ 
+ 	if (snd_BUG_ON(!port))
+ 		return;
+@@ -446,7 +429,7 @@ snd_emux_sounds_off_all(struct snd_emux_port *port)
+ 	if (snd_BUG_ON(!emu || !emu->ops.terminate))
+ 		return;
+ 
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (i = 0; i < emu->max_voices; i++) {
+ 		vp = &emu->voices[i];
+ 		if (STATE_IS_PLAYING(vp->state) &&
+@@ -459,7 +442,6 @@ snd_emux_sounds_off_all(struct snd_emux_port *port)
+ 				emu->ops.reset(emu, i);
+ 		}
+ 	}
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ 
+@@ -472,9 +454,8 @@ exclusive_note_off(struct snd_emux *emu, struct snd_emux_port *port, int exclass
+ {
+ 	struct snd_emux_voice *vp;
+ 	int  i;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (i = 0; i < emu->max_voices; i++) {
+ 		vp = &emu->voices[i];
+ 		if (STATE_IS_PLAYING(vp->state) && vp->port == port &&
+@@ -482,7 +463,6 @@ exclusive_note_off(struct snd_emux *emu, struct snd_emux_port *port, int exclass
+ 			terminate_voice(emu, vp, 0);
+ 		}
+ 	}
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ /*
+@@ -916,9 +896,8 @@ snd_emux_init_voices(struct snd_emux *emu)
+ {
+ 	struct snd_emux_voice *vp;
+ 	int i;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	for (i = 0; i < emu->max_voices; i++) {
+ 		vp = &emu->voices[i];
+ 		vp->ch = -1; /* not used */
+@@ -929,23 +908,19 @@ snd_emux_init_voices(struct snd_emux *emu)
+ 		vp->emu = emu;
+ 		vp->hw = emu->hw;
+ 	}
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ /*
+  */
+ void snd_emux_lock_voice(struct snd_emux *emu, int voice)
+ {
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	if (emu->voices[voice].state == SNDRV_EMUX_ST_OFF)
+ 		emu->voices[voice].state = SNDRV_EMUX_ST_LOCKED;
+ 	else
+ 		dev_warn(emu->card->dev,
+ 			 "invalid voice for lock %d (state = %x)\n",
+ 			 voice, emu->voices[voice].state);
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ EXPORT_SYMBOL(snd_emux_lock_voice);
+@@ -954,16 +929,13 @@ EXPORT_SYMBOL(snd_emux_lock_voice);
+  */
+ void snd_emux_unlock_voice(struct snd_emux *emu, int voice)
+ {
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&emu->voice_lock, flags);
++	guard(spinlock_irqsave)(&emu->voice_lock);
+ 	if (emu->voices[voice].state == SNDRV_EMUX_ST_LOCKED)
+ 		emu->voices[voice].state = SNDRV_EMUX_ST_OFF;
+ 	else
+ 		dev_warn(emu->card->dev,
+ 			 "invalid voice for unlock %d (state = %x)\n",
+ 			 voice, emu->voices[voice].state);
+-	spin_unlock_irqrestore(&emu->voice_lock, flags);
+ }
+ 
+ EXPORT_SYMBOL(snd_emux_unlock_voice);
+diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
+index 47137cca50b8c..18a919d1cdb64 100644
+--- a/sound/synth/emux/soundfont.c
++++ b/sound/synth/emux/soundfont.c
+@@ -66,11 +66,9 @@ static void snd_sf_clear(struct snd_sf_list *sflist);
+ static void
+ lock_preset(struct snd_sf_list *sflist)
+ {
+-	unsigned long flags;
+ 	mutex_lock(&sflist->presets_mutex);
+-	spin_lock_irqsave(&sflist->lock, flags);
++	guard(spinlock_irqsave)(&sflist->lock);
+ 	sflist->presets_locked = 1;
+-	spin_unlock_irqrestore(&sflist->lock, flags);
+ }
+ 
+ 
+@@ -80,10 +78,8 @@ lock_preset(struct snd_sf_list *sflist)
+ static void
+ unlock_preset(struct snd_sf_list *sflist)
+ {
+-	unsigned long flags;
+-	spin_lock_irqsave(&sflist->lock, flags);
++	guard(spinlock_irqsave)(&sflist->lock);
+ 	sflist->presets_locked = 0;
+-	spin_unlock_irqrestore(&sflist->lock, flags);
+ 	mutex_unlock(&sflist->presets_mutex);
+ }
+ 
+@@ -94,14 +90,11 @@ unlock_preset(struct snd_sf_list *sflist)
+ int
+ snd_soundfont_close_check(struct snd_sf_list *sflist, int client)
+ {
+-	unsigned long flags;
+-	spin_lock_irqsave(&sflist->lock, flags);
+-	if (sflist->open_client == client)  {
+-		spin_unlock_irqrestore(&sflist->lock, flags);
+-		return close_patch(sflist);
++	scoped_guard(spinlock_irqsave, &sflist->lock) {
++		if (sflist->open_client != client)
++			return 0;
+ 	}
+-	spin_unlock_irqrestore(&sflist->lock, flags);
+-	return 0;
++	return close_patch(sflist);
+ }
+ 
+ 
+@@ -119,7 +112,6 @@ snd_soundfont_load(struct snd_card *card,
+ 		   long count, int client)
+ {
+ 	struct soundfont_patch_info patch;
+-	unsigned long flags;
+ 	int  rc;
+ 
+ 	if (count < (long)sizeof(patch)) {
+@@ -155,12 +147,10 @@ snd_soundfont_load(struct snd_card *card,
+ 	}
+ 
+ 	/* check if other client already opened patch */
+-	spin_lock_irqsave(&sflist->lock, flags);
+-	if (sflist->open_client != client) {
+-		spin_unlock_irqrestore(&sflist->lock, flags);
+-		return -EBUSY;
++	scoped_guard(spinlock_irqsave, &sflist->lock) {
++		if (sflist->open_client != client)
++			return -EBUSY;
+ 	}
+-	spin_unlock_irqrestore(&sflist->lock, flags);
+ 
+ 	lock_preset(sflist);
+ 	rc = -EINVAL;
+@@ -223,14 +213,11 @@ open_patch(struct snd_sf_list *sflist, const char __user *data,
+ {
+ 	struct soundfont_open_parm parm;
+ 	struct snd_soundfont *sf;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&sflist->lock, flags);
+-	if (sflist->open_client >= 0 || sflist->currsf) {
+-		spin_unlock_irqrestore(&sflist->lock, flags);
+-		return -EBUSY;
++	scoped_guard(spinlock_irqsave, &sflist->lock) {
++		if (sflist->open_client >= 0 || sflist->currsf)
++			return -EBUSY;
+ 	}
+-	spin_unlock_irqrestore(&sflist->lock, flags);
+ 
+ 	if (copy_from_user(&parm, data, sizeof(parm)))
+ 		return -EFAULT;
+@@ -244,10 +231,10 @@ open_patch(struct snd_sf_list *sflist, const char __user *data,
+ 		return -ENOMEM;
+ 	}
+ 
+-	spin_lock_irqsave(&sflist->lock, flags);
+-	sflist->open_client = client;
+-	sflist->currsf = sf;
+-	spin_unlock_irqrestore(&sflist->lock, flags);
++	scoped_guard(spinlock_irqsave, &sflist->lock) {
++		sflist->open_client = client;
++		sflist->currsf = sf;
++	}
+ 
+ 	return 0;
+ }
+@@ -305,12 +292,10 @@ is_identical_font(struct snd_soundfont *sf, int type, unsigned char *name)
+ static int
+ close_patch(struct snd_sf_list *sflist)
+ {
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&sflist->lock, flags);
+-	sflist->currsf = NULL;
+-	sflist->open_client = -1;
+-	spin_unlock_irqrestore(&sflist->lock, flags);
++	scoped_guard(spinlock_irqsave, &sflist->lock) {
++		sflist->currsf = NULL;
++		sflist->open_client = -1;
++	}
+ 
+ 	rebuild_presets(sflist);
+ 
+@@ -1287,17 +1272,14 @@ snd_soundfont_search_zone(struct snd_sf_list *sflist, int *notep, int vel,
+ 			  struct snd_sf_zone **table, int max_layers)
+ {
+ 	int nvoices;
+-	unsigned long flags;
+ 
+ 	/* this function is supposed to be called atomically,
+ 	 * so we check the lock.  if it's busy, just returns 0 to
+ 	 * tell the caller the busy state
+ 	 */
+-	spin_lock_irqsave(&sflist->lock, flags);
+-	if (sflist->presets_locked) {
+-		spin_unlock_irqrestore(&sflist->lock, flags);
++	guard(spinlock_irqsave)(&sflist->lock);
++	if (sflist->presets_locked)
+ 		return 0;
+-	}
+ 	nvoices = search_zones(sflist, notep, vel, preset, bank,
+ 			       table, max_layers, 0);
+ 	if (! nvoices) {
+@@ -1306,7 +1288,6 @@ snd_soundfont_search_zone(struct snd_sf_list *sflist, int *notep, int vel,
+ 					       def_preset, def_bank,
+ 					       table, max_layers, 0);
+ 	}
+-	spin_unlock_irqrestore(&sflist->lock, flags);
+ 	return nvoices;
  }
  
 -- 
