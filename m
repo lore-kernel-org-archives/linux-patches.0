@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585892;
-	b=LcSSTvqKTXuQzkLugpi6zU5N7IqVDAelzXcigs9kz75DkQiEuijWKolNyLlYIbMYbE0B
-	 +RbxNwkNuMnkIiCl+KCkeKW+6njxb9DcDugPsNWAuMx/pShFhys3X1W5l30nXgb83wtdh
-	 L6Ve5IEV2MrzI9/xOZlz7Ua7d6zVZzGBdWToeuAnkNlZFnkM0WLQp2PaMT1qGJwdoJEOz
-	 plh2BlYFBohP0dyHsWtJ2422LlRciCchCQc6JB1A7jk1WiIbsK6MBrqdKiUcb9dJKmTYW
-	 +XvyRD89Yw+ptH2tz2s69m3CsRLlld0yPQhb2FV5lSkluB4anMxIvzKocWj2l+zQ7gw==
+	t=1794585893;
+	b=NATs1TZJizsrOlLI07l2dujATaKo4FtHFA9HiXxfrbeng0zgJ+7TM+Uq75PeVgyVr5pg
+	 wibe87P0+WoqWACqqjfB0lP7du4kU3jyr+fpYp0q0/vCpWli874Y3JBvM/aJuFvtpjDDp
+	 g3WT+BZpGiyNwN/vZ2L6RthjbvGxUAAuAEY0iVKg13dersUCwu2zNgdldNgA+9r4sf7/R
+	 cQYbMp7pDsodZqoFEXr/hwjY04HD2yopGNYtLpCa8iO8qfK6ji6GnOJIBBdJ6Yvu+CM2j
+	 /XijQxaV9Nrj6imX796TyIYw0Gg/JkHbAB5Mgvgow8xzeiokylnZm6O/kmqwzjzNt2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585892;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585893;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+KDvlflUF9bgK0V4kfVdiL8mieikO+v6BSt5cIZwdNM=;
-	b=hwvUfv/fcULhmYA5FwDPnQ+tp87QmKlVHkp8gEiXgqrMOwUseTrg7UihZCvQf20X0Jbf
-	 4T8dGRDW0Ebbeb/VI06M5Xg98cEFQVleTNtd3K3E197HfUNoz2lMdozKjn/b9diUaSX4p
-	 wQhviFihUjpzTySAGuc1OHnATgFSyiLJzsZbcPHu8k3ImIpae29UKcS1A4/m6y2zP1LtX
-	 RI2qTcCU8RQe9mY8CuV/NA238NDD7YcBmpVKrTi+/FhJEi72uA8tLACTnXKzGEwSzDImk
-	 /E4X6uwTBTWyPWrw+RRItuBjbjeovpAqVA4F/kLfmpDDeQDe1oAgrtHkiKxYx8S1DXw==
+	bh=MHiau04f8pvVgDiIxAyKEwyHMf4SpCy1aVz48KGTtpo=;
+	b=czVetJ6cqRMK8CxeS+EpH+46fP99RA8srKlLBpCgKe1cu3/A/UCyOiN2MHWEhO/tvXph
+	 ug8PRG/3bMBLHJQ+GJWa76PfRYtuH3yo8wTZGLinAS6+r0OYQ9kh+Rw/CUf606b1vopVD
+	 sjKp6qHiZeralTtUdTJX/jGELI2DTNG2vPJCIXGLTny1qyDOug/tQJFDwBj0Vybrnn6P6
+	 6X/zGEpIagyx9sRVt/vkr8VtpcO/fE2716aNNoY+2HIk8mONAm/nJlT58Tl40rE68kqWm
+	 apJGTAgexALiU7oKxUwU4FIpotOwdqNkMtWqp6y3yKep5Ur0D2nBAinHoQhsIRatrQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbmQ2GB6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DZPzm8X1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BA6606EABB;
-	Fri, 13 Nov 2026 16:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B33606EABB;
+	Fri, 13 Nov 2026 16:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbmQ2GB6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141E61F000C4;
-	Fri, 13 Nov 2026 16:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DZPzm8X1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1B21F000C4;
+	Fri, 13 Nov 2026 16:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585892;
-	bh=+KDvlflUF9bgK0V4kfVdiL8mieikO+v6BSt5cIZwdNM=;
+	s=korg; t=1794585893;
+	bh=MHiau04f8pvVgDiIxAyKEwyHMf4SpCy1aVz48KGTtpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BbmQ2GB6Kdn2XIj1gZ1KDb3xb85fNRRug2yS/vwPoD9+reoRBeYOzTFK/jsUAlMfQ
-	 d60aUpBQ9BoNHCxikzfrsfeFhepn7Nbs1GS07I1KG64sjfIR/5iIhHXeJrth+6t2aj
-	 sM/ExLJACrE7UAufMdsTSZnUcnXDfIBle4BLlypU=
+	b=DZPzm8X1jIFbRobKtuQeppsUm+0g7K48fRLVCIpP3TViFBtqWuyN8jBFyo8MW7rzd
+	 7bDAW6zLzDFBh0EotFrlSbPQxZa/2lF+U0Xt/mkG/b2zpAvEe8YlO+IaAIzvvMP2ow
+	 8U4JEOm4bB5+FPlWWxSpiFuaYmvGW7fB012cq9gM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Imre Kaloz <kaloz@kernel.org>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 416/507] MIPS: mm: Fix the cache error vector jump for XKPHYS kernels
-Date: Fri, 13 Nov 2026 10:52:00 -0500
-Message-ID: <20261113153810.828229686@linuxfoundation.org>
+Subject: [PATCH 7.3 417/507] MIPS: sgi-ip32: Mask MACE PCI interrupts in CRIME only
+Date: Fri, 13 Nov 2026 10:52:01 -0500
+Message-ID: <20261113153810.862966295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,57 +70,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 30b76362f80d39d80f1197c88b284d9fa7952356 ]
+[ Upstream commit 4e65c502b8975e7c3c3d84aba59cd04af1dd6b8a ]
 
-except_vec2_generic jumps to cache_parity_error with a j, which cannot
-leave the vector's 256MB region. An XKPHYS kernel such as IP30's, linked
-at 512MB, is outside it, so the j targets an unbacked address and its
-speculative fetch raises bus errors on unrelated fetches. Jump to the
-handler's uncached XKPHYS address instead.
+Masking PCI interrupts in the MACE PCI control register overwrites the
+error and arbitration enables set at init, and a read-modify-write can
+hang CRIME 1.1 machines under DMA load. Enable the slot interrupts once
+and mask them in CRIME.
 
-Fixes: 7505576d1c1a ("MIPS: add support for SGI Octane (IP30)")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Imre Kaloz <kaloz@kernel.org>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/cex-gen.S | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/mips/pci/pci-ip32.c      |  7 ++++--
+ arch/mips/sgi-ip32/ip32-irq.c | 45 +++--------------------------------
+ 2 files changed, 8 insertions(+), 44 deletions(-)
 
-diff --git a/arch/mips/mm/cex-gen.S b/arch/mips/mm/cex-gen.S
-index e528583d13311..6989fe274aab8 100644
---- a/arch/mips/mm/cex-gen.S
-+++ b/arch/mips/mm/cex-gen.S
-@@ -8,6 +8,7 @@
-  *
-  * Cache error handler
-  */
-+#include <asm/addrspace.h>
- #include <asm/asm.h>
- #include <asm/regdef.h>
- #include <asm/mipsregs.h>
-@@ -37,6 +38,21 @@
- 	nop
- 	nop
+diff --git a/arch/mips/pci/pci-ip32.c b/arch/mips/pci/pci-ip32.c
+index 7ae89d0c70990..30aca6f76563d 100644
+--- a/arch/mips/pci/pci-ip32.c
++++ b/arch/mips/pci/pci-ip32.c
+@@ -125,10 +125,13 @@ static int __init mace_init(void)
+ {
+ 	PCIBIOS_MIN_IO = 0x1000;
  
-+#if defined(CONFIG_64BIT) && VMLINUX_LOAD_ADDRESS >= XKPHYS && \
-+    VMLINUX_LOAD_ADDRESS < XKSEG
+-	/* Clear any outstanding errors and enable interrupts */
 +	/*
-+	 * An XKPHYS kernel may lie outside the 256MB region a j from the
-+	 * vector reaches, so jump to the handler's uncached XKPHYS address.
++	 * Clear any outstanding errors and enable interrupts.  PCI interrupts
++	 * are masked in CRIME, so the per-slot enables stay on.
 +	 */
-+	PTR_LA	k0, cache_parity_error
-+	PTR_LI	k1, TO_PHYS_MASK
-+	and	k0, k0, k1
-+	PTR_LI	k1, UNCAC_BASE
-+	or	k0, k0, k1
-+	jr	k0
-+	nop
-+#else
- 	j	cache_parity_error
- 	nop
-+#endif
- 	END(except_vec2_generic)
+ 	mace->pci.error_addr = 0;
+ 	mace->pci.error = 0;
+-	mace->pci.control = 0xff008500;
++	mace->pci.control = 0xff0085ff;
+ 
+ 	printk("MACE PCI rev %d\n", mace->pci.rev);
+ 
+diff --git a/arch/mips/sgi-ip32/ip32-irq.c b/arch/mips/sgi-ip32/ip32-irq.c
+index 29d04468a06b8..b9c72af481edb 100644
+--- a/arch/mips/sgi-ip32/ip32-irq.c
++++ b/arch/mips/sgi-ip32/ip32-irq.c
+@@ -160,38 +160,6 @@ static struct irq_chip crime_edge_interrupt = {
+ 	.irq_unmask	= crime_enable_irq,
+ };
+ 
+-/*
+- * This is for MACE PCI interrupts.  We can decrease bus traffic by masking
+- * as close to the source as possible.	This also means we can take the
+- * next chunk of the CRIME register in one piece.
+- */
+-
+-static unsigned long macepci_mask;
+-
+-static void enable_macepci_irq(struct irq_data *d)
+-{
+-	macepci_mask |= MACEPCI_CONTROL_INT(d->irq - MACEPCI_SCSI0_IRQ);
+-	mace->pci.control = macepci_mask;
+-	crime_mask |= 1 << (d->irq - CRIME_IRQ_BASE);
+-	crime->imask = crime_mask;
+-}
+-
+-static void disable_macepci_irq(struct irq_data *d)
+-{
+-	crime_mask &= ~(1 << (d->irq - CRIME_IRQ_BASE));
+-	crime->imask = crime_mask;
+-	flush_crime_bus();
+-	macepci_mask &= ~MACEPCI_CONTROL_INT(d->irq - MACEPCI_SCSI0_IRQ);
+-	mace->pci.control = macepci_mask;
+-	flush_mace_bus();
+-}
+-
+-static struct irq_chip ip32_macepci_interrupt = {
+-	.name = "IP32 MACE PCI",
+-	.irq_mask = disable_macepci_irq,
+-	.irq_unmask = enable_macepci_irq,
+-};
+-
+ /* This is used for MACE ISA interrupts.  That means bits 4-6 in the
+  * CRIME register.
+  */
+@@ -299,8 +267,8 @@ static struct irq_chip ip32_maceisa_edge_interrupt = {
+ 	.irq_unmask	= enable_maceisa_irq,
+ };
+ 
+-/* This is used for regular non-ISA, non-PCI MACE interrupts.  That means
+- * bits 0-3 and 7 in the CRIME register.
++/* This is used for regular non-ISA MACE interrupts.  That means bits 0-3
++ * and 7-15 in the CRIME register.
+  */
+ 
+ static void enable_mace_irq(struct irq_data *d)
+@@ -436,20 +404,13 @@ void __init arch_init_irq(void)
+ 	mips_cpu_irq_init();
+ 	for (irq = CRIME_IRQ_BASE; irq <= IP32_IRQ_MAX; irq++) {
+ 		switch (irq) {
+-		case MACE_VID_IN1_IRQ ... MACE_PCI_BRIDGE_IRQ:
++		case MACE_VID_IN1_IRQ ... MACEPCI_SHARED2_IRQ:
+ 			irq_set_chip_and_handler_name(irq,
+ 						      &ip32_mace_interrupt,
+ 						      handle_level_irq,
+ 						      "level");
+ 			break;
+ 
+-		case MACEPCI_SCSI0_IRQ ...  MACEPCI_SHARED2_IRQ:
+-			irq_set_chip_and_handler_name(irq,
+-						      &ip32_macepci_interrupt,
+-						      handle_level_irq,
+-						      "level");
+-			break;
+-
+ 		case CRIME_CPUERR_IRQ:
+ 		case CRIME_MEMERR_IRQ:
+ 			irq_set_chip_and_handler_name(irq,
 -- 
 2.53.0
 
