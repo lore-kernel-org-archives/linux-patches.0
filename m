@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590235;
-	b=cS14aEIYcP/3XP8UrmXztLMK6rxTRxFu1KsCM9FvwZxgIiUSo0yqLAMh6X0i37h1TAHr
-	 TE3MXH9W6NwlYDxNd6KrYFHRzPPOEAFeXQ9o9gojpWXGzTg6PBJClCWBwlzqkeZZ+Kjfk
-	 IPjki0R1+lDsF+hEwdqjHogicmISAgbLeDukAeMA3XIshzdx9H1e3I9q+xn5K2fVsVEws
-	 /3oCGs2+4pgUeto4SjDIpHrC4plJA27YusTu12gfkrJlh0Ld41ZfUvMQ+HxLnbkfQLjeU
-	 98q3B7VfwsHPAhRTelOEv/vpdezdbQE8C0RhCcS+kXnufQ1RvAlcSC3qtT37PR7UgEA==
+	t=1794590237;
+	b=j4hhKXJNu/GBB//yM2Y1qj7qWZMzUs4UIscjF0eZNcgb1RCuZ0ILHaz1EytiNYoFsYGO
+	 XLf+neB+bQtpRj9EyzxLCnAzWhRHD18GM5M92aNZWNX4rcdY9ZYsk9Mc1HlEPYHEt+mAp
+	 9VaGQrosychkWCZI0ZG6rx0Qq6oQhoHDOFAETG6vchU7FGNcm2iyb6XEKnap326TxJPdK
+	 VVU0okxB1rLhYmFuAN/x1Wf+o+5e6tSLgaXs1FByDjaH4MgKWwPGehFn6/+r5VEjsg+dW
+	 jCaaZ57PElwVu12HdLNIL7sMcS4sP+riz8XS22OKf57OyM/ZIejK8Nn3iBBHvYGEp1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590237;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cIc8mGcO00u/3nja+Ou8wQXRJUoflazEN4DmvWWyw3A=;
-	b=1QC/1JgICQVEnrFTQTtmVe2nC/I98yPIMWPe9U8nWZNrpiPnEEyYFdtu0BHssfottii1
-	 VViKsdKoKgn3Vn4zTYhjtJ43Fbmfmlugx7ULxXxvsCrX8YjRaXfapEXw2ivmgbvyolGLY
-	 ICp9HOopXt6PWKfy5tguZFVPmWT1yuaV6zItAKxitrXa+SxbYwxAitYO8mzLJECZrUP+h
-	 byANRMf0s8JjAhu+npkjgieug6bU477n0w6bns8VM76f4JAGP5SentGYQY4rFvcJps6u3
-	 XXG7vL00OXcmFyXogKMv9txPJhdunYdskSAg2CFtwMS04LQfoJf6z2KYsQDikd94HVw==
+	bh=P7pTqfz0VRAtFSvavtqhV94qZs3NgUsCzlbx6zIQmUI=;
+	b=NSJvhKk+fRmgA4xP6zkM5U8GrRLxTQNMut0OPC1xqFaBYUy7khj+nsOUWrkMQVwFb5h2
+	 PbtCTjif2sauHhhNLp7mkJ/cY4L3U3Auo1FU3Ffb7Obg3fnjYfRjgFJ993mqxQ/wrCskd
+	 X9fhamm63wwc+Bl9+by6uOj2GDWpYhfrigySvV1MTwFwoe/92GyPJnJK2XY4K5Cb/iil6
+	 aHzcJaKBONU7xf45XlBCTsM5tZ5ojqVcfsW0pNaEyAWQXB3Wl0TYll/kMu9khC/6fg3Ke
+	 NQu1fLYuSir2haKXFv/YCzPk3EkZTOVtvb6OON903y4emAbM5OZENiWFTcWRGSO41ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZyNdFYCO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PGMTGcm+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9776075E1D;
-	Fri, 13 Nov 2026 17:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48AA606C0BD;
+	Fri, 13 Nov 2026 17:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZyNdFYCO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DA01F000C5;
-	Fri, 13 Nov 2026 17:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PGMTGcm+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9054D1F000C4;
+	Fri, 13 Nov 2026 17:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590235;
-	bh=cIc8mGcO00u/3nja+Ou8wQXRJUoflazEN4DmvWWyw3A=;
+	s=korg; t=1794590236;
+	bh=P7pTqfz0VRAtFSvavtqhV94qZs3NgUsCzlbx6zIQmUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZyNdFYCOLsynslNCaq7E/XQkBRhqXVDL9OVa8RuGYfVMsP7GTYvaqNQhyOK3kQblv
-	 7A+pwtwygyccszN5sqqNJcGsTO4eSQ2vlWjRmHOGmpltNTS8W9wrrc4miwTnJe3TWE
-	 5lGqS1rU+mvIe3gRtAswLKwbLn8rCs5bGsZIB7L8=
+	b=PGMTGcm+g4PcsxXA3rJeWLANqFwZyVttrHeLjNAj+kgrochWz5M9x7K7PdA6CnWWh
+	 HCzzALwmPiR28ChSkTmcsQmlR/E77fsCEkYZ/8D8QEDxnmpfBCR0blR0Huu7lu7QfT
+	 gZslfi4bm7vKdE/uxDExeyVCBZtZr6SkF+JeIB4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyungjung Joo <jhj140711@gmail.com>,
-	Michael Grzeschik <mgr@kernel.org>,
+	Yifei Gao <gyf161023@gmail.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 192/686] net/9p/usbg: clear stale client pointer on close
-Date: Fri, 13 Nov 2026 10:45:25 -0500
-Message-ID: <20261113153827.556056853@linuxfoundation.org>
+Subject: [PATCH 6.18 183/686] 9p/xen: fix refcount leak in p9_xen_response() on wrong tag
+Date: Fri, 13 Nov 2026 10:45:16 -0500
+Message-ID: <20261113153827.208104543@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,186 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyungjung Joo <jhj140711@gmail.com>
+From: Yifei Gao <gyf161023@gmail.com>
 
-[ Upstream commit a478958f4c1181ff3362f8857b489c2d069f9c7d ]
+[ Upstream commit 4d183e6f153245aca2534e372152583b868dd925 ]
 
-p9_usbg_close() tears down the client transport, but usb9pfs keeps
-using usb9pfs->client from asynchronous TX and RX completion handlers.
-A late completion can therefore dereference a client that has already
-been freed during mount teardown.
+p9_xen_response() looks up the request for an incoming reply with
+p9_tag_lookup(), which takes a reference on the returned p9_req_t. When
+the tag does not resolve to a request in REQ_STATUS_SENT, the function
+warns and continues the loop without dropping that reference, permanently
+leaking the p9_req_t and its msize buffers. The reply header, including
+the tag, is supplied by the backend, so a malicious or buggy 9P backend
+can leak kernel memory on every crafted response.
 
-Clear usb9pfs->client under usb9pfs->lock when closing the transport,
-detach any pending TX request from in_req->context, and make the TX/RX
-completion handlers bail out once the transport has been detached. This
-keeps late completions from touching a freed or rebound p9_client.
+Drop the reference before continuing.
 
-Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
+Fixes: 728356dedeff ("9p: Add refcount to p9_req_t")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyungjung Joo <jhj140711@gmail.com>
-Signed-off-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260922-usb9pfsfixes-v1-7-9d8dcc52904c@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Yifei Gao <gyf161023@gmail.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Message-ID: <20260806144255.4167019-1-gyf161023@gmail.com>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 61 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 45 insertions(+), 16 deletions(-)
+ net/9p/trans_xen.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index ed8f01ead839a..938e3130ab81a 100644
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -148,7 +148,8 @@ static void usb9pfs_tx_complete(struct usb_ep *ep, struct usb_request *req)
- {
- 	struct f_usb9pfs *usb9pfs = ep->driver_data;
- 	struct usb_composite_dev *cdev = usb9pfs->function.config->cdev;
--	struct p9_req_t *p9_tx_req = req->context;
-+	struct p9_client *client;
-+	struct p9_req_t *p9_tx_req;
- 	unsigned long flags;
- 
- 	/* reset zero packages */
-@@ -164,18 +165,25 @@ static void usb9pfs_tx_complete(struct usb_ep *ep, struct usb_request *req)
- 		ep->name, req->status, req->actual, req->length);
- 
- 	spin_lock_irqsave(&usb9pfs->lock, flags);
--	WRITE_ONCE(p9_tx_req->status, REQ_STATUS_SENT);
-+	client = usb9pfs->client;
-+	p9_tx_req = req->context;
-+	req->context = NULL;
- 
--	p9_req_put(usb9pfs->client, p9_tx_req);
-+	if (!client || !p9_tx_req)
-+		goto unlock_complete;
- 
--	req->context = NULL;
-+	WRITE_ONCE(p9_tx_req->status, REQ_STATUS_SENT);
- 
-+	p9_req_put(client, p9_tx_req);
-+
-+unlock_complete:
- 	spin_unlock_irqrestore(&usb9pfs->lock, flags);
- 
- 	complete(&usb9pfs->send);
- }
- 
--static struct p9_req_t *usb9pfs_rx_header(struct f_usb9pfs *usb9pfs, void *buf)
-+static struct p9_req_t *usb9pfs_rx_header(struct f_usb9pfs *usb9pfs,
-+					  struct p9_client *client, void *buf)
- {
- 	struct p9_req_t *p9_rx_req;
- 	struct p9_fcall	rc;
-@@ -201,7 +209,7 @@ static struct p9_req_t *usb9pfs_rx_header(struct f_usb9pfs *usb9pfs, void *buf)
- 		 "mux %p pkt: size: %d bytes tag: %d\n",
- 		 usb9pfs, rc.size, rc.tag);
- 
--	p9_rx_req = p9_tag_lookup(usb9pfs->client, rc.tag);
-+	p9_rx_req = p9_tag_lookup(client, rc.tag);
- 	if (!p9_rx_req || p9_rx_req->status != REQ_STATUS_SENT) {
- 		p9_debug(P9_DEBUG_ERROR, "Unexpected packet tag %d\n", rc.tag);
- 		return NULL;
-@@ -211,7 +219,7 @@ static struct p9_req_t *usb9pfs_rx_header(struct f_usb9pfs *usb9pfs, void *buf)
- 		p9_debug(P9_DEBUG_ERROR,
- 			 "requested packet size too big: %d for tag %d with capacity %zd\n",
- 			 rc.size, rc.tag, p9_rx_req->rc.capacity);
--		p9_req_put(usb9pfs->client, p9_rx_req);
-+		p9_req_put(client, p9_rx_req);
- 		return NULL;
- 	}
- 
-@@ -219,7 +227,7 @@ static struct p9_req_t *usb9pfs_rx_header(struct f_usb9pfs *usb9pfs, void *buf)
- 		p9_debug(P9_DEBUG_ERROR,
- 			 "No recv fcall for tag %d (req %p), disconnecting!\n",
- 			 rc.tag, p9_rx_req);
--		p9_req_put(usb9pfs->client, p9_rx_req);
-+		p9_req_put(client, p9_rx_req);
- 		return NULL;
- 	}
- 
-@@ -230,8 +238,10 @@ static void usb9pfs_rx_complete(struct usb_ep *ep, struct usb_request *req)
- {
- 	struct f_usb9pfs *usb9pfs = ep->driver_data;
- 	struct usb_composite_dev *cdev = usb9pfs->function.config->cdev;
-+	struct p9_client *client;
- 	struct p9_req_t *p9_rx_req;
- 	unsigned int req_size = req->actual;
-+	unsigned long flags;
- 	int status = REQ_STATUS_RCVD;
- 
- 	if (req->status) {
-@@ -240,9 +250,16 @@ static void usb9pfs_rx_complete(struct usb_ep *ep, struct usb_request *req)
- 		return;
- 	}
- 
--	p9_rx_req = usb9pfs_rx_header(usb9pfs, req->buf);
--	if (!p9_rx_req)
-+	spin_lock_irqsave(&usb9pfs->lock, flags);
-+	client = usb9pfs->client;
-+	if (!client) {
-+		spin_unlock_irqrestore(&usb9pfs->lock, flags);
- 		return;
-+	}
-+
-+	p9_rx_req = usb9pfs_rx_header(usb9pfs, client, req->buf);
-+	if (!p9_rx_req)
-+		goto out_unlock;
- 
- 	if (req_size > p9_rx_req->rc.capacity) {
- 		dev_err(&cdev->gadget->dev,
-@@ -256,8 +273,11 @@ static void usb9pfs_rx_complete(struct usb_ep *ep, struct usb_request *req)
- 
- 	p9_rx_req->rc.size = req_size;
- 
--	p9_client_cb(usb9pfs->client, p9_rx_req, status);
--	p9_req_put(usb9pfs->client, p9_rx_req);
-+	p9_client_cb(client, p9_rx_req, status);
-+	p9_req_put(client, p9_rx_req);
-+
-+out_unlock:
-+	spin_unlock_irqrestore(&usb9pfs->lock, flags);
- 
- 	complete(&usb9pfs->received);
- }
-@@ -410,7 +430,9 @@ static int p9_usbg_create(struct p9_client *client, const char *devname, char *a
- 		client->status = Disconnected;
- 	else
- 		client->status = Connected;
-+	spin_lock_irq(&usb9pfs->lock);
- 	usb9pfs->client = client;
-+	spin_unlock_irq(&usb9pfs->lock);
- 
- 	client->trans_mod->maxsize = usb9pfs->buflen;
- 
-@@ -421,18 +443,25 @@ static int p9_usbg_create(struct p9_client *client, const char *devname, char *a
- 
- static void usb9pfs_clear_tx(struct f_usb9pfs *usb9pfs)
- {
-+	struct p9_client *client;
- 	struct p9_req_t *req;
-+	unsigned long flags;
- 
--	guard(spinlock_irqsave)(&usb9pfs->lock);
-+	spin_lock_irqsave(&usb9pfs->lock, flags);
-+	client = usb9pfs->client;
-+	usb9pfs->client = NULL;
-+	req = usb9pfs->in_req ? usb9pfs->in_req->context : NULL;
-+	if (usb9pfs->in_req)
-+		usb9pfs->in_req->context = NULL;
-+	spin_unlock_irqrestore(&usb9pfs->lock, flags);
- 
--	req = usb9pfs->in_req->context;
--	if (!req)
-+	if (!req || !client)
- 		return;
- 
- 	if (!req->t_err)
- 		req->t_err = -ECONNRESET;
- 
--	p9_client_cb(usb9pfs->client, req, REQ_STATUS_ERROR);
-+	p9_client_cb(client, req, REQ_STATUS_ERROR);
- 	usb9pfs->in_req->context = NULL;
- }
- 
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index 068d57515dd58..92701a16511d4 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -201,6 +201,8 @@ static void p9_xen_response(struct work_struct *work)
+ 		req = p9_tag_lookup(priv->client, h.tag);
+ 		if (!req || req->status != REQ_STATUS_SENT) {
+ 			dev_warn(&priv->dev->dev, "Wrong req tag=%x\n", h.tag);
++			if (req)
++				p9_req_put(priv->client, req);
+ 			cons += h.size;
+ 			virt_mb();
+ 			ring->intf->in_cons = cons;
 -- 
 2.53.0
 
