@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591326;
-	b=DayoHuXgc1wfDS+uiRGCIJZuCW5wauw8lRQcYf0faiRClLsS0ZajYgrrMntz4JUaElp9
-	 II3xHyMlVo6hN+3QG1lNHvX0q4AHnY2jdVP+zYVRjznYYTMq3pVdK0yUy2+4FGM+Iein8
-	 ITBW7HDieR60rMveY26M1UmoU5ay6z+GUPDdbjVRRuFIn3ewgsWFSAgjryWmpz3HQSyWq
-	 uxVN00J1/jGx1qAI7NyPVlpSEoujvIeF0pyqwNsAwwPECUhFsqPqZK9maKqSapMXVptrW
-	 oToIkyackUZPEBGJ+uwrC4v1CgwPz7kWWUrgyN/pku0UVhoAJn7DQWtNjRltFfWlTpQ==
+	t=1794591328;
+	b=Dc9xhgYkY6TNTh7uiw8gqtSE7LfIsh7vhP3G0LLwEhaUVu3H/nbuFrepHt1UNGYobv62
+	 C0/jQH1RClt1ZkRkM/7kwkLKWVygYkXXQFYNaVh9gXq0+v2J4X5JKSIu5XsHrHz/OwCpO
+	 zLv9FFihZjzzx+0/1KcT+qjbS+7D1TJioZhRaPYXG/J/qhhbb/jpUkyKlpEjgHinYWCGk
+	 p5yQdfYnQBMhasybBmiEU6tvfd1ivjHJItWIE3YegunMqbMSHVcM5maYIiQ5c08svkzv9
+	 P5qbyMJCreH+r7gG039qCrTWJa5HXPo23NlKHbWgCapkXWn/kNfw6CBefeif7qsnbNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591326;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591328;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wt0chKe99+cSFHcXaN6Xbzgrd9slXnWLVG7UqTpqvDA=;
-	b=3k8Ft5TfxXaQfP0BBYwhZB4F9X50O6P4frdfCkv4swZ8mDhE2eGcBx9L3aUPYglmp6nt
-	 N2PxOdxjkQuxI1lzJzUuS5DDc+ztEL2CUJVS6CqrzFwmfKJT6nyPpTjCMVg0gJ97Y8lhX
-	 BZZjjWLjOdSMrFkdBvuSQdeoxET7TtF1kKvJN7wIg6pdcSBp8+lpC7QKZ68zB/MBZ/n/C
-	 9KH1WVM45XffsesrGk+lBn6zy4m7FU2HTh5G35cBWqzjd+xGM+R317JB/GRb8csw+n7Cd
-	 n9EY5UUVn538kQHkxDoTXTivEK/Lo3VtayHQN62rjYyn9l8LsMOICQagNH5syNS6U8w==
+	bh=99igN95M7B6KBHxvwjxfmZD5h9FnAO4UvInzPlijUys=;
+	b=Rz4CeaiH8e5yOlqnl7+23LQAnqPcEb/ErJT/6r+VRPgWVNEU3pfGK0/Wx5BDg/IlIwKu
+	 nDxH+seX42sPp9/DBXedPWW5GfY8Fx/PDabDTBJFhiKWHNzNbGDsvxzrM7MNNvzfmhfx6
+	 GxG50oRUhEjYffI0n1fg5nudtX6ewD4/GMTaOcGGGs/2j16OvZ97K1p2qU3if77886ufX
+	 O2tXf52Llu2er+A1yI5bdOI1QDcJlrr7Mzfngq/5UXXl2L9lAsrDljxplvAiyb0ir7iPC
+	 8Uwk/x28W5VKDMLYxi7puB4m4orZFiTj0Huo37g65PSprtChY+0Y4rJ+wY8aY6xgXig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PXXI5m1N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="OjGeSN/N";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA67C6077D7D;
-	Fri, 13 Nov 2026 17:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0D4606B212;
+	Fri, 13 Nov 2026 17:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PXXI5m1N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871621F000C9;
-	Fri, 13 Nov 2026 17:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjGeSN/N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAE81F000C4;
+	Fri, 13 Nov 2026 17:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591326;
-	bh=Wt0chKe99+cSFHcXaN6Xbzgrd9slXnWLVG7UqTpqvDA=;
+	s=korg; t=1794591328;
+	bh=99igN95M7B6KBHxvwjxfmZD5h9FnAO4UvInzPlijUys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PXXI5m1N5uvu/dCX/wCiM6+m+nakjE+SUsm/lgFIhXxLagSbLgUg6ToMYiUAxSz/u
-	 YgGQb8YTZYPR6AuCCBMroRYrYpqNs5GhBVdDIMN9DZf7RJg1js9AV/RyDdl7In5s2j
-	 qKQXEqWcj1j+P2dsdRm7zQfwqJKuO4cge01bdWoQ=
+	b=OjGeSN/NxkBCiU5q43KRq/Q+PGIxrAnWYTf7gGMiwCwdRLHTa3GPYdE9cSISd7Z/S
+	 jBdjgrUQPzeh0uf/YHBQS/zWn/wLz/ITWYWUOqLw0AAwuP4MH6bJiiYVgFKc5k5voF
+	 doIutV0stNSGn0b/nsWlsY1AqUJN7H9R0Y26ArbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 439/670] crypto: omap-des - fix crypto engine cleanup
-Date: Fri, 13 Nov 2026 10:50:03 -0500
-Message-ID: <20261113153826.772786955@linuxfoundation.org>
+Subject: [PATCH 6.12 440/670] iio: adc: ad7192: Revert "properly check spi_get_device_match_data()"
+Date: Fri, 13 Nov 2026 10:50:04 -0500
+Message-ID: <20261113153826.805690693@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,46 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 5d69ed4cd4f9c68ff9a6ebb2e8a1079223a4ec6e ]
+[ Upstream commit 0309e66abea141f3ec339b064b8f8b8003d2a634 ]
 
-omap_des_probe() allocates and starts a crypto engine, but the remove
-path does not call the matching crypto_engine_exit(). The probe failure
-path already performs this cleanup.
+This reverts commit b7f99fa1b64af2f696b13cec581cb4cd7d3982b8.
 
-crypto_engine_alloc_init() creates a kthread worker for processing
-requests. Without crypto_engine_exit() during driver removal, the
-worker is left running after the device is removed.
+The added code is currently a dead code. Moreover, the driver is not
+designed to have any defaults effectively making driver data a mandatory
+information to work with. Taking all together, revert unneeded change.
 
-Call crypto_engine_exit() after unregistering the algorithms and before
-tearing down the remaining request handling resources. This stops the
-engine and destroys its worker.
+Discussion at #1 concluded in agreeing a new policy on this for IIO.
 
-This issue was found by manual code inspection.
-
-Fixes: f1b77aaca85a ("crypto: omap-des - Integrate with the crypto engine framework")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Link: https://lore.kernel.org/linux-iio/20260217080514.1288115-1-andriy.shevchenko@linux.intel.com/ #1
+Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 7f7a119a370e ("iio: adc: ad7192: reject devices without match data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/omap-des.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/ad7192.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/crypto/omap-des.c b/drivers/crypto/omap-des.c
-index 096df577fe127..cccd275ace675 100644
---- a/drivers/crypto/omap-des.c
-+++ b/drivers/crypto/omap-des.c
-@@ -1093,6 +1093,8 @@ static void omap_des_remove(struct platform_device *pdev)
+diff --git a/drivers/iio/adc/ad7192.c b/drivers/iio/adc/ad7192.c
+index 6fe32f866765b..02328b9115756 100644
+--- a/drivers/iio/adc/ad7192.c
++++ b/drivers/iio/adc/ad7192.c
+@@ -1394,9 +1394,6 @@ static int ad7192_probe(struct spi_device *spi)
+ 	st->int_vref_mv = ret == -ENODEV ? avdd_mv : ret / MILLI;
  
- 	omap_des_unregister_algs(dd->pdata);
- 
-+	crypto_engine_exit(dd->engine);
-+
- 	cancel_work_sync(&dd->done_task);
- 	omap_des_dma_cleanup(dd);
- 	pm_runtime_disable(dd->dev);
+ 	st->chip_info = spi_get_device_match_data(spi);
+-	if (!st->chip_info)
+-		return -ENODEV;
+-
+ 	indio_dev->name = st->chip_info->name;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 	indio_dev->info = st->chip_info->info;
 -- 
 2.53.0
 
