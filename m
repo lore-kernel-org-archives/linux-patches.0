@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590643;
-	b=GCG1tuU1BpSYY6hmw36aNhHZtnaYROPCjaoYm4SfnUEZmLPvYEUuoyneyUs3aBcUgYCZ
-	 fHZDW9pZnfkzKWER+1ycGM76MVbCiRSOAEi2jEKhPlpsKo5MrT6ualaBWQGKr2AlbxvUU
-	 hYOtcwXOEpsS22sdxKoIUPL8zQgOGbpruw02QCdL8WAAucqTUNQEWKLmtivKnOSV8R/5X
-	 A5mOvPxmz2LEc3bYs55NVt9XEbsX4LgyXDubYFqttas0I9aIpJjvLdWbEKHGA4mUP+cTN
-	 HkgAIhOKpIvMTOjXc4e1u/ZIelB2ZHWeTSmZDnYYmS9zDlTTta9L0ko4CNTBg4WAH8g==
+	t=1794590644;
+	b=RHj5v2pJ4vDVppAU5IHTVeg7Htv/PMihU+bxNNEVIvlQ5Td7HXT3N/sa0i/+cDciF1sg
+	 DWMBoYogE2v5PBgPR7jLt2z7Y08YgcCp+EVgE5g3TLAHUBs/f9FIWvrU0P16nUteOpBn3
+	 eY1CPERmrKc0wtaZ4wFrmcW0suhbXJ2YOaOrt1rkI9S8Vsm6xC2N5+w+6qSYFOW6sHcGP
+	 bYJ3qvu8IPQ0ZFVO156rqvkioTaLdj62TPm3mBFPaUnOoBp+mVL4v8FupLpzan8nJ23CW
+	 L2F88Ci8xGG4BEiyF0sjpGsOXCMRjEEFrBI626kQeKyWuK/tZUMFj3M3Y8jzXruyCaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590643;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590644;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sWpZ2cBU7bAXRfpnEKVG6i+3kEEvWDElMjHvi9vo/xM=;
-	b=A58UGaK/W1awj1Wipuz5H0n6Hwq9bj26FRL+RuT9fQC+aF8Ki5S4+d9V4u+yKrRZvsV9
-	 07u8NiXotautG/O1AVPKwgIZjfKDA2mZfo4o3pBHj0NtPVGokk/o20YUu0Z+MKQrJN5Ig
-	 /5YHhAIT/8cZFvYVE/NSWaJt46cN1+FKZb4TFVG7dt5DZpHioRPR7s8Q9lzYEi0755BwI
-	 XwQSWkzfk27WVqYLETdDYVF2ZpZjIgYhhYmoinA627/UfEsvaGFRw70qQ1yFk7svJXsTI
-	 h3FFDQ774cBroDGoeSxAGRkwvjmXf6bpxJas5evM9et77GndwLprVuGre3EcFUX4gzA==
+	bh=ugZrU7VZ56z/9MgWdV0Rb02pkGMSvS/nJDlc/PC0DZ0=;
+	b=i2xtL2r42mt7tnq+T8yy9AUt06iVuUxhIrzCQIF50vogpCZr3zpCpcBtMnUeCEB0vKOG
+	 TeGVXRJG9c1QFS73QApOPGVmeQzQmjfXGMPoo/ma70PIBez2RmvocaP+X/hguYsttCR6F
+	 /fsuXJeZA6kMDTX3MjoK5O2BmYCG75ldZ9ZpTzPqMQ0ghwLWuLLlIJ/TCP1Jo2g1HvE9Z
+	 Q3zWJaLiUBqpUP/t+YA+VTXt/ABs2pe9BYk2+0oBVimo/101CiG4SxcF0vtiODJoV4KcY
+	 8X4W0MTyqWspQX6OB5toF9GwNZ4nhurdr7FP4O+qChcxSotnrHAjjNGV1giIuuC7YUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Px2BkI0J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jltagqx4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7A66077D40;
-	Fri, 13 Nov 2026 17:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8C46077D54;
+	Fri, 13 Nov 2026 17:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Px2BkI0J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2618D1F000C4;
-	Fri, 13 Nov 2026 17:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jltagqx4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9C01F000C4;
+	Fri, 13 Nov 2026 17:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590643;
-	bh=sWpZ2cBU7bAXRfpnEKVG6i+3kEEvWDElMjHvi9vo/xM=;
+	s=korg; t=1794590644;
+	bh=ugZrU7VZ56z/9MgWdV0Rb02pkGMSvS/nJDlc/PC0DZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Px2BkI0J8RM7RBuOlefiy2+hps0er+093KoWcAcj75UM16C+MHxiVwZiHpxgstsTn
-	 Lu8riFTwQG04M7hqCHWnYqjpHE6nBXDSSWi9Sb1QASyqPVUY7yJg4+JG9k/+fzzSX1
-	 GAZelIbCrBCR2BH25nSliQ9rj0l1g+RrfPVW/bXM=
+	b=jltagqx4Y0o9/q6oTmCF4KcjzoEFBSlLRyPH+Tiec93yE15GELcJV837RFrLewD0G
+	 mdyme0aVcNBAUnf1Z8n6Arq87f7qhH7C2I27eI3ZCzJ/CMtQRa559wGT74TUGa8yhv
+	 sHY8CHXKGKj/OC1dSzkecJ0lzoJ/CpVb+C8jCJcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Alex Williamson <alex@shazbot.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 565/686] vfio/pci: Restore 8-byte ioeventfd support
-Date: Fri, 13 Nov 2026 10:51:38 -0500
-Message-ID: <20261113153840.810735651@linuxfoundation.org>
+Subject: [PATCH 6.18 566/686] ata: libata: Add an argument to ata_eh_reset()
+Date: Fri, 13 Nov 2026 10:51:39 -0500
+Message-ID: <20261113153840.847741548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,49 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit b30b52c2fb82e6d38ee2845a4d85e8254b44f3d8 ]
+[ Upstream commit 4b3c2ca268b0a66093793466e02d8566d642f19c ]
 
-Commit b44a06bd28f2 ("vfio/pci: Remove #ifdef iowrite64 and #ifdef
-ioread64") inadvertently converted a conditional 8-byte rejection
-into an unconditional one.
+Pass the ATA port pointer as first argument to ata_eh_reset(). No
+functionality has been changed. This patch prepares for enabling lock
+context analysis. Without this patch, lockdep_assert_held() statements
+would have to be added before each ata_eh_reset() call because the
+compiler doesn't know that ap->link.p == ap. See also ata_link_init().
 
-Originally, 'count == 8' was rejected only if iowrite64 was undefined
-(#ifndef iowrite64). When iowrite64 became globally available via generic
-fallbacks, this rejection became dead code, allowing 8-byte ioeventfds.
-However, b44a06bd28f2 removed the #ifndef wrappers but left the nested
-'if (count == 8) return -EINVAL;' intact, breaking all 8-byte
-registrations.
-
-Drop the unconditional check to restore 8-byte ioeventfd support,
-matching the original intent.
-
-Fixes: b44a06bd28f2 ("vfio/pci: Remove #ifdef iowrite64 and #ifdef ioread64")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://lore.kernel.org/r/20260922040013.2188-1-lirongqing@baidu.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
-[ sashal: Adjusted context to retain vfio_pci_core_setup_barmap() instead of vfio_pci_core_get_iomap(). ]
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Stable-dep-of: 96fdeb7e3fd8 ("ata: sata_inic162x: remove dangerous broken driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/vfio_pci_rdwr.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/ata/libata-eh.c  | 6 +++---
+ drivers/ata/libata-pmp.c | 2 +-
+ drivers/ata/libata.h     | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/vfio/pci/vfio_pci_rdwr.c b/drivers/vfio/pci/vfio_pci_rdwr.c
-index 25380b7dfe18a..8338708b99c1e 100644
---- a/drivers/vfio/pci/vfio_pci_rdwr.c
-+++ b/drivers/vfio/pci/vfio_pci_rdwr.c
-@@ -449,9 +449,6 @@ int vfio_pci_ioeventfd(struct vfio_pci_core_device *vdev, loff_t offset,
- 	      pos >= vdev->msix_offset + vdev->msix_size))
- 		return -EINVAL;
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index f21efb0f6419f..9d35b4f8d3929 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -2812,10 +2812,9 @@ static bool ata_eh_followup_srst_needed(struct ata_link *link, int rc)
+ 	return false;
+ }
  
--	if (count == 8)
--		return -EINVAL;
--
- 	ret = vfio_pci_core_setup_barmap(vdev, bar);
- 	if (ret)
- 		return ret;
+-int ata_eh_reset(struct ata_link *link, int classify,
++int ata_eh_reset(struct ata_port *ap, struct ata_link *link, int classify,
+ 		 struct ata_reset_operations *reset_ops)
+ {
+-	struct ata_port *ap = link->ap;
+ 	struct ata_link *slave = ap->slave_link;
+ 	struct ata_eh_context *ehc = &link->eh_context;
+ 	struct ata_eh_context *sehc = slave ? &slave->eh_context : NULL;
+@@ -3863,7 +3862,8 @@ int ata_eh_recover(struct ata_port *ap, struct ata_reset_operations *reset_ops,
+ 		if (!(ehc->i.action & ATA_EH_RESET))
+ 			continue;
+ 
+-		rc = ata_eh_reset(link, ata_link_nr_vacant(link), reset_ops);
++		rc = ata_eh_reset(ap, link, ata_link_nr_vacant(link),
++				  reset_ops);
+ 		if (rc) {
+ 			ata_link_err(link, "reset failed, giving up\n");
+ 			goto out;
+diff --git a/drivers/ata/libata-pmp.c b/drivers/ata/libata-pmp.c
+index 99c67dbfb7536..c3b3af28d17c9 100644
+--- a/drivers/ata/libata-pmp.c
++++ b/drivers/ata/libata-pmp.c
+@@ -796,7 +796,7 @@ static int sata_pmp_eh_recover_pmp(struct ata_port *ap,
+ 		struct ata_link *tlink;
+ 
+ 		/* reset */
+-		rc = ata_eh_reset(link, 0, reset_ops);
++		rc = ata_eh_reset(ap, link, 0, reset_ops);
+ 		if (rc) {
+ 			ata_link_err(link, "failed to reset PMP, giving up\n");
+ 			goto fail;
+diff --git a/drivers/ata/libata.h b/drivers/ata/libata.h
+index 9f96ca2acfd90..506a649b73d58 100644
+--- a/drivers/ata/libata.h
++++ b/drivers/ata/libata.h
+@@ -192,8 +192,8 @@ extern void ata_eh_done(struct ata_link *link, struct ata_device *dev,
+ extern void ata_eh_autopsy(struct ata_port *ap);
+ const char *ata_get_cmd_name(u8 command);
+ extern void ata_eh_report(struct ata_port *ap);
+-extern int ata_eh_reset(struct ata_link *link, int classify,
+-			struct ata_reset_operations *reset_ops);
++extern int ata_eh_reset(struct ata_port *ap, struct ata_link *link,
++			int classify, struct ata_reset_operations *reset_ops);
+ extern int ata_eh_recover(struct ata_port *ap,
+ 			  struct ata_reset_operations *reset_ops,
+ 			  struct ata_link **r_failed_disk);
 -- 
 2.53.0
 
