@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585247;
-	b=1r5i85hr3IxSGkWEKf0+A9lfEnKJQqsQdtWKRsoA6qOqLpTvkYlYACm1D8f3olO0ZHII
-	 38sFFklyAVhGnwD7N4kpjPigicxncda6iX4l/JuZHAocSjAD+2iMg/C1xBoVXJj+kE93M
-	 Cj8hy3+V5UA4TJoJUydlUimmNphHMVVSNEnROzoW1/F/zaYruLf4rlBceUxM4kZvmmKqF
-	 jXIElGOUNGWkpMyxRnSlyjpcynylsqd3xvsSkD6BWSinyT5ci2fEmxM/DEJkEaD0nITTl
-	 dm7IA6MES27eQWT+PpICk7h4bRWJsFR0XqL1lgJBDLio8zXTuX85M5sHte/5MfBA1mQ==
+	t=1794585248;
+	b=WteRjYcwzI5Ef6FeQVWu9OWcOWz6OXE89YT2ANLe5bOXxtci97o0c0wdN5fs+h5S9ji5
+	 N9PJD6rUoc8sIWOdy/62a7JSGyRq1XpqJ3zuWv/C/vekbNKTnmN575sk0x/WDQQYKJSWW
+	 0mr/9eqUFYmsLL/rTspcvP+IAXlWd/dCuTUoFB9+uQs+7rXFqXHQGyE2mwuMTsvjrf00x
+	 zQ3I1txzgatM1x0NES/6ZQhbVYR4dB2tEyqUD37ZdO44hfvrQB0sdJpctjUPzCxiA8m/o
+	 kOb9Kp5GjNWW0ol1L5Xw9uooCv/B0qAqUXE9H/SeLzQWQMkRbw8Bk3ICmQXVzD9sSKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585247;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585248;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j2U5IjJES7uyOeRUiD843nN4TdmDLvWzm5wl6po7O3Y=;
-	b=pW26lRl5P3WZhE6589jjSFE4WGTNhTB0RkOwixWF3njxQyCVZam0HIbVaLXTekc/rnWd
-	 zkZWL0i5LsED04p+WhgKMp6TpGNH9LmKgiX7eVRxKuvM2YtH9oOhl+LJ42ch6CCXpQo94
-	 UrI2Mazw6u+F/itZG7TUXyiwZ+JGeTayuF/WjkuvX+KDwDyy+PcU4urHD2DAgR+qKIJ7x
-	 ZQr0amoytYP9SK4S6LXYCZ1x8lozdceg0CI7d5CERCVQKIVRwICRHeucXt5L5Lxnhreii
-	 UiOlg4Opap4nX34J0XV5aexgphUyYSYoe9+0LD1I08AlZgdglrXRPGNqhwe3h2EjgKQ==
+	bh=lC8fxfBbQ6TOjPUiMiGVTWCg3WYLqwIYRCzbFyAee9Q=;
+	b=ycK5cSOMNb84Yj+vqDJUqHoURKzDEHElgkES/ijM3w3Hq5xFxOuOgxI1pWsdQS0Sk6Mb
+	 ow6agvA+mOcFj9d1TU//QeZPxySF6NseIL3CvpcnB/5L9FO1MP3rolm0CLdfxBWx0qitF
+	 49Ko3Vus4ajEbb8FE/WxMSSB/uC0NaT2NHWdRsigzVE6gpRPYWZIokne2V/ugzYQ8E2g6
+	 lB51kw27N38j5J4FwPx6H5j4MX+UTkF5jNCQaNTpID4FObyTdPc5AZsBsTJ6Ygqxxk7I4
+	 XQOfLdG0G8tjzkSf1hZfCnpytGb6kkw7LwpoF762PzLhQrMFBN+HUwuNbXwmu7TcKGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XAfGD0Fc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="f7bs/Pvg";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1653B606A32D;
-	Fri, 13 Nov 2026 15:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C7E606A32D;
+	Fri, 13 Nov 2026 15:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XAfGD0Fc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783771F000C4;
-	Fri, 13 Nov 2026 15:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f7bs/Pvg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E5A1F000C4;
+	Fri, 13 Nov 2026 15:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585246;
-	bh=j2U5IjJES7uyOeRUiD843nN4TdmDLvWzm5wl6po7O3Y=;
+	s=korg; t=1794585247;
+	bh=lC8fxfBbQ6TOjPUiMiGVTWCg3WYLqwIYRCzbFyAee9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XAfGD0Fcu/ZaFGicwlnQWg7gWbrabSicSg6wjEl+9YtahgHW1cEvqmv1EgycChF3p
-	 4OehXkQVF4qU1QI7wkVfLg8TShwv7QpFFWWsfd0uMt6pJnFBf3/u/54mbqYXZhayXp
-	 yFCPXFhtuQs5ZIzS9gzGU7OcDau7o3s/ALjPTMe8=
+	b=f7bs/Pvg/up5VPBy25f61lnCkDbSUoPd4Yerfq3mdveV20ooMN6gvOwTi8G0yaNRH
+	 Ev9FLXiHWdWu0+u2wr0Zoy3ADF8Qe+uW1LGJVw+1xnWi7m0ioGAt6Fx1wmOosAbgQz
+	 +Ik/C8MS2trmYcFteYgje4QEzohVR7++OwY8Ssng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdifatah Suruur <suruurism@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 001/686] smb: client: validate the data area in SMB2_read()
-Date: Fri, 13 Nov 2026 10:42:14 -0500
-Message-ID: <20261113153820.980815627@linuxfoundation.org>
+Subject: [PATCH 6.18 002/686] ALSA: x86: hdmi: fix chmap array missing terminator entry
+Date: Fri, 13 Nov 2026 10:42:15 -0500
+Message-ID: <20261113153821.013423887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,82 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdifatah Suruur <suruurism@gmail.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 2ec9cdf469dd32bcf33073aeb30c08e9356e0ca1 ]
+[ Upstream commit f5e1a9a3fddab8421416b68bb132ae9626d07156 ]
 
-SMB2_read() copies le32_to_cpu(rsp->DataLength) bytes from
-(char *)rsp + rsp->DataOffset without checking that the range lies
-within the response actually received. A READ response with
-DataOffset == 0 makes smb2_get_data_area_len() zero the data length, so
-smb2_check_message() accepts a frame as short as the fixed response,
-while SMB2_read() still uses the server-supplied DataLength, capped only
-by CIFS_MAX_MSGSIZE and the caller's length.
+had_build_channel_allocation_map() allocates a single struct
+snd_pcm_chmap_elem via kzalloc() and stores it as
+intelhaddata->chmap->chmap. struct snd_pcm_chmap.chmap is expected to
+be a zero-terminated array (see snd_pcm_std_chmaps[]), but
+had_register_chmap_ctls() never overrides the TLV callback installed
+by snd_pcm_add_chmap_ctls(), so the generic pcm_chmap_ctl_tlv() from
+ALSA core is left in place.
 
-A malicious server can answer the synchronous read used by the
-mfsymlinks (or SFU) symlink parser with an 81-byte READ response
-carrying DataOffset 0 and DataLength 1067, making the client copy 1067
-bytes from a 448-byte receive object (KASAN slab-out-of-bounds; up to
-16 KiB in the general case).
+pcm_chmap_ctl_tlv() is reachable by any local user via
+SNDRV_CTL_IOCTL_TLV_READ on the "Playback Channel Map" control and
+walks the array with "for (map = info->chmap; map->channels; map++)".
+Since the driver's single element is never terminated, this walks
+past the allocation. The same pointer is also freed on hot-unplug and
+rebuilt on hot-plug under intelhaddata->mutex, while the TLV callback
+runs under card->controls_rwsem without that mutex, so the walk can
+also race a concurrent free of the array.
 
-Clamp a zero (or header-overlapping) DataOffset to read_rsp_size, as
-handle_read_data() does for the asynchronous path, and reject the
-response unless DataOffset + DataLength fits within rsp_iov.iov_len.
-The SMB1 helper was fixed the same way in 5be5bdda5863.
+Fix this by allocating a second, zeroed element so the array is
+properly terminated, and by dropping the inherited TLV callback
+entirely at registration time, since the driver never implements one
+of its own.
 
-Fixes: d8e050398d23 ("CIFS: Add readpage support for SMB2")
+Fixes: 5dab11d89777 ("ALSA: x86: hdmi: Add audio support for BYT and CHT")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Replaced the smb_EIO2() call with -EIO because smb_eio_trace_read_bad_offset is unavailable. ]
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261008085411.13742-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: Adapted the allocation hunk to replace kzalloc(sizeof(*chmap), GFP_KERNEL) instead of kzalloc_obj(*chmap). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ sound/x86/intel_hdmi_audio.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 6d610f136f43e..5185f8cc8bcc8 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -4839,6 +4839,7 @@ SMB2_read(const unsigned int xid, struct cifs_io_parms *io_parms,
- 	struct kvec iov[1];
- 	struct kvec rsp_iov;
- 	unsigned int total_len;
-+	u16 data_offset;
- 	int flags = CIFS_LOG_ERROR;
- 	struct cifs_ses *ses = io_parms->tcon->ses;
+diff --git a/sound/x86/intel_hdmi_audio.c b/sound/x86/intel_hdmi_audio.c
+index 8e2a007311d36..21ee9c9154804 100644
+--- a/sound/x86/intel_hdmi_audio.c
++++ b/sound/x86/intel_hdmi_audio.c
+@@ -475,7 +475,8 @@ static void had_build_channel_allocation_map(struct snd_intelhad *intelhaddata)
+ 	kfree(intelhaddata->chmap->chmap);
+ 	intelhaddata->chmap->chmap = NULL;
  
-@@ -4897,8 +4898,28 @@ SMB2_read(const unsigned int xid, struct cifs_io_parms *io_parms,
- 		*nbytes = 0;
- 	}
+-	chmap = kzalloc(sizeof(*chmap), GFP_KERNEL);
++	/* info->chmap must be zero-terminated; allocate a spare terminator entry */
++	chmap = kzalloc_objs(*chmap, 2);
+ 	if (!chmap)
+ 		return;
  
-+	data_offset = rsp->DataOffset;
-+	if (data_offset < io_parms->server->vals->read_rsp_size) {
-+		/*
-+		 * win2k8 sometimes sends an offset of 0 when the read is beyond
-+		 * the EOF.  Treat it as if the data starts just after the header,
-+		 * as handle_read_data() does.
-+		 */
-+		cifs_dbg(FYI, "data offset %u inside read response header\n",
-+			 data_offset);
-+		data_offset = io_parms->server->vals->read_rsp_size;
-+	}
+@@ -575,6 +576,12 @@ static int had_register_chmap_ctls(struct snd_intelhad *intelhaddata,
+ 	intelhaddata->chmap->kctl->info = had_chmap_ctl_info;
+ 	intelhaddata->chmap->kctl->get = had_chmap_ctl_get;
+ 	intelhaddata->chmap->chmap = NULL;
 +
-+	/* The data area must lie within the response actually received */
-+	if (*nbytes && (size_t)data_offset + *nbytes > rsp_iov.iov_len) {
-+		cifs_dbg(FYI, "bad data offset %u length %u for response of %zu\n",
-+			 data_offset, *nbytes, rsp_iov.iov_len);
-+		rc = -EIO;
-+		*nbytes = 0;
-+	}
++	/* drop the inherited TLV read: it walks chmap without our mutex */
++	intelhaddata->chmap->kctl->tlv.c = NULL;
++	intelhaddata->chmap->kctl->vd[0].access &=
++		~(SNDRV_CTL_ELEM_ACCESS_TLV_READ | SNDRV_CTL_ELEM_ACCESS_TLV_CALLBACK);
 +
- 	if (*buf) {
--		memcpy(*buf, (char *)rsp + rsp->DataOffset, *nbytes);
-+		memcpy(*buf, (char *)rsp + data_offset, *nbytes);
- 		free_rsp_buf(resp_buftype, rsp_iov.iov_base);
- 	} else if (resp_buftype != CIFS_NO_BUFFER) {
- 		*buf = rsp_iov.iov_base;
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
