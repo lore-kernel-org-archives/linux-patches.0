@@ -1,60 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590362;
-	b=3KwAFpgc/pKSU6AfC2a9pdJ+PCVYC57Ya6nqqcQtt0CP9ZRi+zIUvJMwhScX/APWf3/s
-	 XG49n9U64juPuV268W8bOD1TL1RwVCALJWA//7k4YH17NMAoJH06/q/enJVitb5sRI0qG
-	 qFDu6IarekCSt5EnLDUbSdS7S0erxAledi1i9RHkAtJ1GhNsmIx7zY/mM9jbjiyZitIdX
-	 ClQKuN6zFjejlyQ5eZKbLZ2OCPhFQqvomG1d5rvxxCEl0xiGwUm8a8MhaIcl1j4jTax2l
-	 6WxnXJknygf2lFNdBevTgfx7ujKF6criemKHmBWxvwddqHs8/qT1hOj2HI7T5fTcB1g==
+	t=1794590363;
+	b=mEGCR+gtkhUxxel3bOlYs4BP8snDenLrPLNmL1ZjH4wmfz3NPdOaIqYQnZzz368/BVxW
+	 uKqLzAxakKz6uHnyArfTlOKO6rkjJPJzbMhL5HMOCgcMbj73lLQa8Tol8ab1vI0Mvl+Rl
+	 01jiAVtGaeCjzmopCmyjy0IkVXGy5m7UaR4S8GpgqxE0McUdAwTK7oHgnBMgZfLGqmg7T
+	 tJNUodLnMWwp9+8ATh9QS3etvhSFAITeX/uINj2rBS0Ot2BC4uSiirD7Uw/nY/2IpD6sJ
+	 LvzrLhYtHkoOBBjLciYvB1bwBYY6xlLgDuSkRfKj86KEwSGXt7366eitbzixTrajuzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5Wc0OqCJenM4HLv6hQUAXTS4BPDczhDEuyOSpOlash8=;
-	b=T+dcPnn0PBw+zxMbPBAwkmgx/hxHhCV6mSMX4pDLa/ntBqCqWgLQvh3itcRkgKNaDDyB
-	 nxCAPFx/dhdeMm2C8crH82OH0q5AH3ZIo+GyGgr4LGWm0xaOqj8yHGAFXFn2XiLYhJDra
-	 GqBEcKF9eEsKwG0F/xfGHkWq2vt96VjbaK4PxibsLSP1R3cmhSm5Bni0mWhbnG029AQ4L
-	 /E1HHj7V0KK0cO09YedoCmPa9wi87dphFD6utaYb04/NFceeJgi+VFHBfzJ7ciECohI41
-	 oMrMnBfr6OM0lc1g8xI172vsQZP8zyzXLTVsjX9LFgZux1+J+z8ZYZ8K2NCjLQe6M6w==
+	bh=JPDXCXRwAxz3ChTmH5c+XxWdfIhFtRlJofGmwzt9zDE=;
+	b=VXxOdyHxQQ80ir3xx5Vi6HaoruisG1oF6hwbPclygLeCXqNZPvM9PPjR2V4gcCzaEFUD
+	 Lym5qeZ4y62Be5iTzWq+3OsLqs3BHECEuzvnYXjv9mpLRzq1SERcmAYpbA/j6+Izoh1vW
+	 onUxSZsrz97Fcq0iPnfHw+H3IY8SgFr4zef73s+p3IGueiV0PpKYvOR3ZwpU83fHP48eu
+	 uOwHrkpjeZcm2XGbU3jh9UQt+2C6lFvM7jpN7CtUg66g5I2nsHuJAaxz/UUrhNQvrWwnc
+	 uX6HlDyaH0dx2a/LqvXTMZ4/6fc3toWLp2UokIpAsMULmi9ejfFjJvAWLoouIurc8Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5vhCbM8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jqEW5RgX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A92608316B;
-	Fri, 13 Nov 2026 17:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96976608316B;
+	Fri, 13 Nov 2026 17:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5vhCbM8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BE71F000C7;
-	Fri, 13 Nov 2026 17:19:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jqEW5RgX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427D71F000C7;
+	Fri, 13 Nov 2026 17:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590362;
-	bh=5Wc0OqCJenM4HLv6hQUAXTS4BPDczhDEuyOSpOlash8=;
+	s=korg; t=1794590363;
+	bh=JPDXCXRwAxz3ChTmH5c+XxWdfIhFtRlJofGmwzt9zDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F5vhCbM8Dzdadh4XR0LD00phMR+E9sl1X2+8MYnj0m/FlT2HqJ5lxz1aB/ufQq+81
-	 FqcOai7dnMaBzzBk6/w3FJj4Q/03CIuAIJ5zrvDemOJxOdtvzPEM9/uvhtY4BDR6mB
-	 n5xeYwaqh9kU4HUUh+pJOKJ/VerYM/xryw+AMxm0=
+	b=jqEW5RgX7f/mjripSu+1wd+6ksQOpoAX30ak7HqrQYUe7oNAnwQxiNaKU8M1RDwtd
+	 ILtQJg9+o9XKIsSUJSfCFiOYhmaxi6DyKZIGFd0Zh3XUCoKUd4OWxjtiGP9MI/nqXx
+	 1Kk93ohZi8k84YAOxzm8aoAwfdpvhwbFLRpr/EUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	David Hildenbrand <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 320/686] mm/cma: accept memory of multi-range CMA areas
-Date: Fri, 13 Nov 2026 10:47:33 -0500
-Message-ID: <20261113153831.776866065@linuxfoundation.org>
+Subject: [PATCH 6.18 338/686] net/sched: sch_qfq: prevent aggregate self-replacement
+Date: Fri, 13 Nov 2026 10:47:51 -0500
+Message-ID: <20261113153832.391428011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -76,77 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 5d002001601a163b6c3500cdc098ff66c34f62d8 ]
+[ Upstream commit 2e54b3e187300893688c2c7517894f5d96732e05 ]
 
-Patch series "mm/cma: accept memory of CMA areas reserved with
-memblock_reserve()", v1.
+qfq_change_class() snapshots the current aggregate settings while
+holding the qdisc tree lock, but drops the lock before selecting the
+destination aggregate. During that gap, qfq_enqueue() can move the
+class to an aggregate matching the requested settings.
 
-Pages of allocated CMA areas are released to the buddy allocator with
-__free_pages(), which does not check for unaccepted memory.
+When qfq_change_class() resumes, qfq_find_agg() then returns cl->agg.
+If it is a singleton, qfq_deact_rm_from_agg() frees the aggregate
+before qfq_add_to_agg() immediately accesses the same pointer, causing
+a use-after-free.
 
-This usually works because memblock accepts the memory it allocates.
+While holding the tree lock, skip the replacement when the destination
+is already the current aggregate. Any estimator replacement has already
+completed, so the class change can finish normally.
 
-However, multi-range CMA areas, used by hugetlb_cma, and fixed CMA areas
-requested with cma=<size>@<base> are reserved with memblock_reserve() and
-their memory is never accepted.
-
-On TDX and SEV-SNP guests the first access to such a page is fatal.
-
-To ease the backporting, each case is addressed by a separate patch:
-- patch 1 accepts the memory of multi-range CMA areas
-- patch 2 does the same for the fixed CMA areas
-
-The second patch won't apply cleanly to 6.6 and 6.12, but I believe the
-stable team LLMs will take care of that :)
-
-This patch (of 2):
-
-On systems with unaccepted memory, memblock allocations accept the
-allocated range, but when cma_declare_contiguous_multi() uses open coded
-allocation of multiple ranges, it reserves them with memblock_reserve()
-and they are never accepted.
-
-These pages are released to the buddy allocator by cma_activate_area()
-with __free_pages() that does not check for unaccepted memory, so the
-first access to such a page in a TDX or SEV-SNP guest is fatal.
-
-Accept the memory of each range when it is reserved.
-
-Link: https://lore.kernel.org/20261029-cma-multi-v1-0-2cbced8b5cb7@kernel.org
-Link: https://lore.kernel.org/20261029-cma-multi-v1-1-2cbced8b5cb7@kernel.org
-Fixes: c009da4258f9 ("mm, cma: support multiple contiguous ranges, if requested")
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Tested-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
+Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
+Link: https://lore.kernel.org/netdev/20260731140533.566493-1-david.lee@trailofbits.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Link: https://patch.msgid.link/20261029180957.43015-1-david.lee@trailofbits.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/cma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sched/sch_qfq.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/cma.c b/mm/cma.c
-index 90d3ab262dae0..d829726319d81 100644
---- a/mm/cma.c
-+++ b/mm/cma.c
-@@ -674,6 +674,8 @@ int __init cma_declare_contiguous_multi(phys_addr_t total_size,
- 			break;
- 		}
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 7d93690cb4360..d82b04827c2c4 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -517,11 +517,14 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 		sch_tree_lock(sch);
+ 		qfq_init_agg(q, new_agg, lmax, weight);
+ 	}
++	if (existing && new_agg == cl->agg)
++		goto unlock;
+ 	if (existing)
+ 		qfq_deact_rm_from_agg(q, cl);
+ 	else
+ 		qdisc_class_hash_insert(&q->clhash, &cl->common);
+ 	qfq_add_to_agg(q, new_agg, cl);
++unlock:
+ 	sch_tree_unlock(sch);
+ 	qdisc_class_hash_grow(sch, &q->clhash);
  
-+		accept_memory(mlp->base, size);
-+
- 		pr_debug("created region %d: %016llx - %016llx\n",
- 		    nr, (u64)mlp->base, (u64)mlp->base + size);
- 		cmrp = &cma->ranges[nr++];
 -- 
 2.53.0
 
