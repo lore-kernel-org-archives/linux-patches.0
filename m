@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585642;
-	b=FjrDAixLtO7mjSg750vJmsJ58ni9TT0Dir76h6voxqtbCAJoAzhxqO8778tur8mjwt94
-	 WeRhLb7QUKsj9lwK57g6wFPgxuuYL5xQGLRIZ3R+d3apaHjNvqa20ErDZtgIC6JSUeHuJ
-	 wycLTlfm31GTrOHduxHSlld0EDLK8YT6536UhD2nAblD6VkNG7nWXQ86tfzOB2N7gISUl
-	 304GCWztXyWmvOLsNpO0WIrA0RJqvtfS9s0tLh4A0Pf8PB2K40IFaX9R1gExC/wLLaWGQ
-	 W0SDyavZzXCoK/ksR3sPnCtF8qqHO/hU8AVUQQxl0JGCH/tR/Tdtipkn8GcvDp7aN6A==
+	t=1794585643;
+	b=BOqZQLFiS1hYEuRfgkUerGDaWdQGrM7+8J0366bKTNDYuLRgCi/iLKQzFNkiddjvyLQR
+	 5T+2ypogZLmpzGq36YNcEYngY2HM6gxLrE9MLtoAgzTbwa6N0EXC0cC9no45jMX8JWD/L
+	 5W1YLYXHBZiOpCul6IiFarQjjizt3Y1CHxxJI0vkDf+9GDp5TkYOZcVXW0ZJP5zXjY0x4
+	 DK8xbWYBnxHLErfHGKRiJGxp7ZNxSp0fitvd/dVvO3R4SonWc60L1yeL2c1Xj2SU73/oI
+	 WTfIoBWFxta1j1jw7sWt7bskSiOjw2QA2YBT0OXDfUNxFrPhVAXBiO8rSVbR+BG7pBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ttDnx6c6H63ubxUftv099r2iwX44353q/gC8rbrz5Bs=;
-	b=1EielmG24y4g6Z+crpVS9mye/MvxxH1xkucwnEz56mJApeYUrVaZoDGqUQwKp5Bi6zBM
-	 h2Y4OIe4SBQFDSWoyKBizXZIHILgd84lNVujfrx8YMOFjih4Qv7BVMf2c7Do4lq0/y79p
-	 GTqR4c2IW04tbxCn3lAJQK/g8S3i2yW+WQaBg+kQE4WNIN3XDzKrqv331OUAC2SMlt7uX
-	 NCQN5Cz/Irv29tVKMDqQ8dxGnYJF8tBl9wwi1kj+LtrSup/46nKiMbECZR7GqFiT6sUyS
-	 AzsKwiqhUc/1H2IJjcSjFUIxqq7pXSRY9qNLFxtsQmHG+VaV0IJrTyD5GLsDm2Dzd4w==
+	bh=BAI9TKxqwIk3FPvJlBr1EBS7tYBHlH8ngaCVLlE/wyE=;
+	b=asjzN+A/l+OhXoSDUM50u0328RdpWQQk88V7PnC/1eR73CbuZXBZNTi88ipeHIqmd4BK
+	 2X7BEczHOlKPYK9M0gm4D4t7vb788alkkQQEoQirHNPdQIrLRH6N+pmg5005NBhqOSs2D
+	 M1YPNovMEgGpOC+0PV6Gvd8b1cjjPxNNmfqUMPFSDuTBAIakehVN2a30ZsNsQ8M+VaxhO
+	 oCrtA1LXx3QIsiTI2lgTT/lfdWvAWiYvEtq5cEOSRszrJRMiHHydZ5dfhCeIKbtLZUII3
+	 ySEHOdjaW5+TZ4ebzsqK2EwjfYBypysQVNOmJ37uX8DPVXhovKr1TwpGNSMik3jBCQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SzBXPeEc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mVpFLL3S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008E460A3817;
-	Fri, 13 Nov 2026 16:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D97260A2631;
+	Fri, 13 Nov 2026 16:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SzBXPeEc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C5B1F000C8;
-	Fri, 13 Nov 2026 16:00:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mVpFLL3S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0771F000C6;
+	Fri, 13 Nov 2026 16:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585641;
-	bh=ttDnx6c6H63ubxUftv099r2iwX44353q/gC8rbrz5Bs=;
+	s=korg; t=1794585643;
+	bh=BAI9TKxqwIk3FPvJlBr1EBS7tYBHlH8ngaCVLlE/wyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SzBXPeEcmvKpBBirLLcbHt/mzrjPOx9lqtG1kmAJeEpOcAdqapwOe2OAydodHDAto
-	 B2Xh8AZtrchzrhFythe0VkdMLPjzzIyPKl4OsdKgeajCPNGbpjQcP8BzOWqUxCYc0I
-	 wMUblZGnZfRwlWTI0vqzRW4C9xgUGtoGowPxcNww=
+	b=mVpFLL3S7X9+fJQCjp/JXZFuUdZDzDAGvyqESbBErZJfrh7G0VzeVHi2HTQHOEdHE
+	 d1wM8BxflPFNw3tnnEcFv5rMIycOq3KjnizY14tVrLlumHV2Ugmvv/caUGGjad6TcK
+	 zLpXYD18PdO1WyOufKVolItw732o/ox/Baa7vviI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	SeongJae Park <sjpark@amazon.de>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 233/507] mm/damon/core: move static variable last_nr_regions to damon_ctx
-Date: Fri, 13 Nov 2026 10:48:57 -0500
-Message-ID: <20261113153802.388070837@linuxfoundation.org>
+Subject: [PATCH 7.3 260/507] ocfs2: wait for filecheck kobject release after a failed add
+Date: Fri, 13 Nov 2026 10:49:24 -0500
+Message-ID: <20261113153803.363652762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,84 +74,224 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c ]
+[ Upstream commit a25c02af29c3e95128e4343fceb4bdace8e480a0 ]
 
-kdamond_split_regions() uses a static variable last_nr_regions, to infer
-if the region boundaries are too stable.  If it looks too stable, it
-does a more aggressive region split because it might be a fake stability
-coming from non-aggressive split.  Because the variable is static, the
-inference can be racy and wrong when multiple kdamonds are running in
-parallel.
+The filecheck kobject and its release completion are embedded in
+ocfs2_super, so the osb must outlive the kobject. On a failed
+kobject_init_and_add(), creation clears fs_fcheck and calls
+kobject_put(), but returns without waiting for the release callback.
 
-The user impact is not critical.  No crash, no leak.  DAMON's
-best-effort monitoring accuracy can be degraded when multiple kdamonds
-are used in parallel and the workload has certain access patterns. Still
-it is a bug that is better to fix.
+With CONFIG_DEBUG_KOBJECT_RELEASE, the last put queues delayed cleanup.
+Mount failure can then free the containing osb before the embedded
+release timer expires:
 
-Move the variable into the damon_ctx struct to fix the problem.
+  Mount failure                     Delayed cleanup
+  -------------                     ---------------
+  ocfs2_filecheck_create_sysfs()
+    kobject_init_and_add() fails
+    fs_fcheck = NULL
+    kobject_put()
+      queue delayed release
+  return to mount error cleanup
+  ocfs2_dismount_volume()
+    remove_sysfs() skips the wait
+    kfree(osb)
+                                    expire embedded release timer
+                                      access freed osb
 
-Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
-Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
-Signed-off-by: SJ Park <sj@kernel.org>
+The normal removal path waits for fs_kobj_unregister, but it returns
+early when fs_fcheck is NULL. The failed-add path therefore leaves the
+delayed work and its completion in freed storage.
+
+Wait for the existing release completion after the failed-add
+kobject_put(), before returning to mount error cleanup. This keeps the
+enclosing osb alive until the kobject has finished releasing, matching
+the normal teardown path.
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in __run_timers+0xa6d/0xa90
+    Write of size 8 at addr ffff8881178a5658 by task swapper/0/0
+
+    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Call Trace:
+     <IRQ>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? __run_timers+0xa6d/0xa90
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20e/0x420
+     ? __run_timers+0xa6d/0xa90
+     kasan_report+0xe0/0x110
+     ? __run_timers+0xa6d/0xa90
+     __run_timers+0xa6d/0xa90
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx___run_timers+0x10/0x10
+     ? __lock_acquire+0x5a3/0x2140
+     ? __pfx_do_raw_spin_lock+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     timer_expire_remote+0xfa/0x160
+     ? __pfx_timer_expire_remote+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on+0x18/0x160
+     tmigr_handle_remote_up+0x4ba/0x9d0
+     ? __pfx_tmigr_handle_remote_up+0x10/0x10
+     ? tmigr_handle_remote+0x21a/0x340
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? __pfx_tmigr_handle_remote_up+0x10/0x10
+     __walk_groups_from+0x5a/0x160
+     tmigr_handle_remote+0x24f/0x340
+     ? __pfx_tmigr_handle_remote+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     run_timer_softirq+0x222/0x270
+     ? __pfx_run_timer_softirq+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lockdep_hardirqs_on_prepare+0xb8/0x1a0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     handle_softirqs+0x1fa/0x8d0
+     ? __pfx_handle_softirqs+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? _raw_spin_unlock+0x23/0x40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __hrtimer_rearm_deferred+0x1fb/0x5d0
+     __irq_exit_rcu+0x113/0x1e0
+     irq_exit_rcu+0xe/0x20
+     sysvec_apic_timer_interrupt+0x6c/0x80
+     </IRQ>
+     <TASK>
+     asm_sysvec_apic_timer_interrupt+0x1a/0x20
+    RIP: 0010:pv_native_safe_halt+0xf/0x20
+    Code: fa 18 01 e9 ee 37 ff fa 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa eb 07 0f 00 2d 23 c7 14 00 fb f4 <e9> c7 37 ff fa 66 2e 0f 1f 84 00 00 00 00 00 66 90 90 90 90 90 90
+    RSP: 0018:ffffffff87c07cf8 EFLAGS: 00000206
+    RAX: 0000000000045d0f RBX: ffffffff87c2d4c0 RCX: ffffffff86111e95
+    RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff815b508e
+    RBP: fffffbfff0f85a98 R08: 0000000000000001 R09: ffffed10310c68ba
+    R10: ffff8881886345d3 R11: 0000000000000000 R12: 0000000000000001
+    R13: 0000000000000000 R14: 1ffffffff0f80fa4 R15: dffffc0000000000
+     ? ct_kernel_exit.constprop.0+0xc5/0xf0
+     ? do_idle+0x3ae/0x650
+     default_idle+0x9/0x10
+     default_idle_call+0x6c/0xb0
+     do_idle+0x3ae/0x650
+     ? __pfx___schedule+0x10/0x10
+     ? __pfx_do_idle+0x10/0x10
+     ? rest_init+0x1cd/0x330
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     cpu_startup_entry+0x54/0x60
+     rest_init+0x1e1/0x330
+     ? __pfx_acpi_read_bit_register+0x10/0x10
+     ? __pfx_rest_init+0x10/0x10
+     ? acpi_os_write_port+0x23/0xb0
+     ? __pfx_kernel_init+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? acpi_ut_status_exit+0xd6/0x180
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? acpi_ut_status_exit+0xd6/0x180
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? acpi_enable_subsystem+0x2b0/0x4e0
+     ? __pfx_x86_late_time_init+0x10/0x10
+     start_kernel+0x417/0x4b0
+     x86_64_start_reservations+0x18/0x30
+     x86_64_start_kernel+0x111/0x120
+     common_startup_64+0x13e/0x158
+     </TASK>
+
+    Allocated by task 494:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x28d/0x610
+     ocfs2_initialize_super.isra.0+0xab/0x3070
+     ocfs2_fill_super+0x801/0x3920
+     get_tree_bdev_flags+0x35d/0x5f0
+     vfs_get_tree+0x93/0x320
+     fc_mount+0x1d/0x200
+     path_mount+0x592/0x1e00
+     __x64_sys_mount+0x24b/0x2d0
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 494:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x308/0x580
+     ocfs2_dismount_volume+0x43c/0x9b0
+     ocfs2_fill_super+0x258f/0x3920
+     get_tree_bdev_flags+0x35d/0x5f0
+     vfs_get_tree+0x93/0x320
+     fc_mount+0x1d/0x200
+     path_mount+0x592/0x1e00
+     __x64_sys_mount+0x24b/0x2d0
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    The buggy address belongs to the object at ffff8881178a4000
+     which belongs to the cache kmalloc-8k of size 8192
+    The buggy address is located 5720 bytes inside of
+     freed 8192-byte region [ffff8881178a4000, ffff8881178a6000)
+
+    The buggy address belongs to the physical page:
+    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1178a0
+    head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+    flags: 0x200000000000040(head|node=0|zone=2)
+    page_type: f5(slab)
+    raw: 0200000000000040 ffff888100043880 dead000000000122 0000000000000000
+    raw: 0000000000000000 0000000000020002 00000000f5000000 0000000000000000
+    head: 0200000000000040 ffff888100043880 dead000000000122 0000000000000000
+    head: 0000000000000000 0000000000020002 00000000f5000000 0000000000000000
+    head: 0200000000000003 fffffffffffffe01 00000000ffffffff 00000000ffffffff
+    head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+    page dumped because: kasan: bad access detected
+
+    Memory state around the buggy address:
+     ffff8881178a5500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+     ffff8881178a5580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+    >ffff8881178a5600: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                        ^
+     ffff8881178a5680: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+     ffff8881178a5700: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+    ==================================================================
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0087-v6-78f3c3d6d70887d6e0cc@gmail.com
+Fixes: b9fba67b3806 ("ocfs2: fix error path kobject memory leak")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a47f2
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: SeongJae Park <sjpark@amazon.de>
-Cc: <stable@vger.kernel.org> # 5.15.x
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/damon.h | 5 +++++
- mm/damon/core.c       | 5 ++---
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ fs/ocfs2/filecheck.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 0c8b7ddef9abb..c6de3ac2f4453 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -914,6 +914,11 @@ struct damon_ctx {
- 
- 	/* @rnd_state:	Per-ctx PRNG state for damon_rand(). */
- 	struct rnd_state rnd_state;
-+	/*
-+	 * number of regions after last merge.  Read kdamond_split_regions()
-+	 * for more details.
-+	 */
-+	unsigned long last_nr_regions;
- };
- 
- /* Get a random number in [@l, @r) using @ctx's lockless PRNG. */
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 229ab1674b4c1..6db6d2a80e812 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3610,7 +3610,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- 	struct damon_target *t;
- 	unsigned long nr_regions = 0;
- 	unsigned long max_nr_regions = ctx->attrs.max_nr_regions;
--	static unsigned long last_nr_regions;
- 	int nr_subregions = 2;
- 
- 	damon_for_each_target(t, ctx)
-@@ -3626,7 +3625,7 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+diff --git a/fs/ocfs2/filecheck.c b/fs/ocfs2/filecheck.c
+index 75334e4bd0823..e3b79bc749f56 100644
+--- a/fs/ocfs2/filecheck.c
++++ b/fs/ocfs2/filecheck.c
+@@ -189,6 +189,8 @@ int ocfs2_filecheck_create_sysfs(struct ocfs2_super *osb)
+ 		/* Mount failure still calls ocfs2_filecheck_remove_sysfs(). */
+ 		entry->fs_fcheck = NULL;
+ 		kobject_put(&entry->fs_kobj);
++		/* Keep ocfs2_super alive until the kobject is released. */
++		wait_for_completion(&entry->fs_kobj_unregister);
+ 		kfree(fcheck);
+ 		return ret;
  	}
- 
- 	/* Maybe the middle of the region has different access frequency */
--	if (last_nr_regions == nr_regions &&
-+	if (ctx->last_nr_regions == nr_regions &&
- 			nr_regions < max_nr_regions / 3)
- 		nr_subregions = 3;
- 
-@@ -3635,7 +3634,7 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- 				       ctx->min_region_sz);
- 
- done:
--	last_nr_regions = nr_regions;
-+	ctx->last_nr_regions = nr_regions;
- }
- 
- /*
 -- 
 2.53.0
 
