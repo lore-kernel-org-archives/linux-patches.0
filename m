@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591124;
-	b=0MxIPPQpEY0ouMa6iBSm2J6BzGenGE/gwodye9UEorvabWmMB/znkBbVRhh8HN35sGVC
-	 81uMzNeA9cLzoBvyhP6Fg9hzRslTga0g4fAOVHClz+OPPGIhhyCc1wr3UlvVvHciVphPP
-	 ZZr4KFjKe+jwxxWHonukn+mzUc4B1RMFUEnDVFIKSz508Ya6Epm6RdVu51SlrQi2CN5DA
-	 yPeK3x7Vucy2P5FS9HYsdU7PTvbUjrh211b7N0t4b8KRAd8z5bW0H7sN50AYvRJwQzNPI
-	 Z/ZLVv5GJ4MUAKfq/0N0SXEzS2el/1BfJ/Ok32obbhRnm2w20IQ8jKwa/28wQQatTXg==
+	t=1794591125;
+	b=uDnf8hW59Z9mPa0Pa4hQJw9UJxTsIwi4/sdFgb99ucG7lY4TCL9b4Dft+f6o0fDJE+M0
+	 oPf8BDH4aUx9IAggfOnBF9MVRXDIMeSEfeFx5i9H1dXPTJMMJKVkX4tJsNerX2JPaTtPF
+	 eGAMtsutyi8a5ERBG7dW/GGrfOwKTebzS6/druBjrJ7RRiRtyCh8gmo+Alaq5jAPnn2UU
+	 nXCXtbGOPB+cA6ONsPDf1BEM9uZKOcH2dLzADD1LzCrGNWUCqJe2jNWKR+jdwI1TJ99+r
+	 0mqYZu78u/wfBvUUssfONCWjeK2agvesbwHWYi/0+7FNCRAyFCx49GU10D1XL2zsZ6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591125;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LUcSaKn8ZKEVvvST9o8DAIYEs11+TVWnrzMzN5A67gM=;
-	b=1+RUMhims15X4X434EEWh2678gUHTb9z7xbTnIqtkF6QN7hOAjpUB0dLIDA5vFyBrLta
-	 Ejn3+pp+9yFCARRpuBBz8lhVF2fDXPjTC0xVizNJEYPW0AL3ip5/X1rTjp61sUBf3zFsn
-	 1JPAqf2FaOqFQiEbz7bV1SHa+0IpTgRkICa4iABxqPU8v+SpNU7gHxKAcicI5MkL8668c
-	 bztd6T5CfKt397EbSeCzTqeJAxVAGj2NviQJGHhYEdNgBgFLOr5pMziyTMCV4H0QgMP7j
-	 V+CySxJCNwRvqn02AjpWtvTPpG1Te7oxvIyHeq7BcGMn7vsqFeeF2vASl9WWgauTrMw==
+	bh=r54NnGbigODRLhY00745ZHK+EA1+f41uQyUAaTwsq+M=;
+	b=pOOCjhZR48E6HlfW0LLC46HlVt4vjGw3CpbQ8wj/gs+gFU1oT9Paxq3AeZYR5bdWvqiu
+	 +w77MKANUQOXv1HU/lOLQKh9Wmy0MlMtNWc9KvYeWPf6B/Vx8UqYgDCWu2CKcx8VE4vIO
+	 j0cg1Y+0Y8Qj3NF/AAAYhJUIBzgCBexhMopSxduoz14wzQNHR7g+VM8saokKALw8yCgnr
+	 h8J6UqlzTQb6mnsT/Ieof+nRhpubHcJTa6eabtsbwAdvex+MzzDyLVPZBfBG/fOEk83Wj
+	 o6priVr9g5jcXhMjWevccdNta4geUozekgM8RSz/VK5DOKD/Q5R5xO4o5ZDTlFaB8GA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WLoahYp8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rIAJEaQ9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE1D606A88C;
-	Fri, 13 Nov 2026 17:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D92606B379;
+	Fri, 13 Nov 2026 17:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WLoahYp8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463AC1F000C4;
-	Fri, 13 Nov 2026 17:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rIAJEaQ9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DCBE1F000C7;
+	Fri, 13 Nov 2026 17:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591124;
-	bh=LUcSaKn8ZKEVvvST9o8DAIYEs11+TVWnrzMzN5A67gM=;
+	s=korg; t=1794591125;
+	bh=r54NnGbigODRLhY00745ZHK+EA1+f41uQyUAaTwsq+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WLoahYp8dbF9ylnQS/vi/m94CJtdUGDMnDCCJkl+JFTsuj3OvW9kR9Fd2m/NTw/PC
-	 sE6NOFQzKiwgZtgT5txOQg3C76Ci/i+wDa/bWSf7F8mluIMYzBls6uZZCS57cZq4mX
-	 7L9riyz7xv7NEUYsDi/w1jlkq4yAdJ5zcTjSHstM=
+	b=rIAJEaQ9aslDpXHNRgT64nKXZ9WJk82T/42+a2C2Yfp+8mDK9+ECsS5T1DC+51CP8
+	 d9gCKvL5Szq8P9mcQK2RnE6uL0RJAeWACAwPQS+/R1S9PV2NO4LJJLSTadyNp1I+E0
+	 QfX1O+ZJQa1vkntz82SS1e0LpNdDot405MXdJHos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valentin Kindschi <valentin.kindschi@fiveco.ch>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
+	Mohit Sharma <mohit.sharma@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 273/670] Bluetooth: hci_sync: re-enable legacy advertising on resume
-Date: Fri, 13 Nov 2026 10:47:17 -0500
-Message-ID: <20261113153821.147349959@linuxfoundation.org>
+Subject: [PATCH 6.12 274/670] ASoC: qcom: q6apm: Guard callbacks until probe data is ready
+Date: Fri, 13 Nov 2026 10:47:18 -0500
+Message-ID: <20261113153821.177536226@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,91 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Kindschi <valentin.kindschi@fiveco.ch>
+From: Mohit Sharma <mohit.sharma@oss.qualcomm.com>
 
-[ Upstream commit 737139f4157d302292a6b937d96922879ecabfa3 ]
+[ Upstream commit ef7062864c0511bba52775d0eb3aa72d886b5f3a ]
 
-hci_resume_advertising_sync() never re-enables advertising on a
-controller without extended advertising.
+The GPR bus needs to make response callbacks available before invoking a
+client probe because clients can issue synchronous commands from probe.
+This creates a short interval where a callback can run before the client
+has published its private data.
 
-It restores HCI_ADVERTISING from advertising_old_state, then calls
-hci_schedule_adv_instance_sync(), which starts with:
+Make q6apm publish its driver data only after all callback-visible state
+has been initialized. Have the q6apm and q6prm callbacks ignore packets
+received before driver data is available.
 
-  if (hci_dev_test_flag(hdev, HCI_ADVERTISING) && !ext_adv_capable(hdev))
-          return -EPERM;
-
-The flag it tests was set a few lines earlier by the resume itself, so
-the call returns -EPERM without sending anything. The return value is
-discarded by every caller, so the failure is silent: advertising_paused
-is cleared, HCI_ADVERTISING is set, and the controller is not
-advertising.
-
-Observed on a BCM43455 (no extended advertising) after an active scan:
-btmon shows the pause disabling advertising and no re-enable in the ten
-seconds that follow, the device does not appear in another controller's
-scan, and btmgmt info still reports "advertising" in current settings.
-
-Enable instance 0x00 directly in that case, the way reenable_adv_sync()
-already does for the same situation. Instances continue to go through
-hci_schedule_adv_instance_sync() so the software rotation loop is
-rearmed.
-
-This affects every caller of hci_resume_advertising_sync(), not only the
-scan path: address resolution changes, accept list updates, discovery
-stop, suspend/resume and the end of an LE connection attempt all leave
-advertising disabled on such a controller today.
-
-The resume does nothing when the controller is already advertising, as
-it is after directed advertising was started for a peripheral
-connection, so it does not replace that advertising.
-
-err is initialised because the extended branch leaves it unset when
-adv_instances is empty and HCI_LE_ADV_0 is clear.
-
-Fixes: ad383c2c65a5 ("Bluetooth: hci_sync: Enable advertising when LL privacy is enabled")
+Fixes: ec1471a898cc ("soc: qcom: apr: Add GPR support")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5.5 btmon
-Signed-off-by: Valentin Kindschi <valentin.kindschi@fiveco.ch>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Co-developed-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Signed-off-by: Mohit Sharma <mohit.sharma@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261022144130.2443667-2-mohit.sharma@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/soc/qcom/qdsp6/q6apm.c | 6 ++++--
+ sound/soc/qcom/qdsp6/q6prm.c | 3 +++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 654bb2454e20a..3856f29a301c0 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2732,7 +2732,7 @@ static int hci_pause_advertising_sync(struct hci_dev *hdev)
- static int hci_resume_advertising_sync(struct hci_dev *hdev)
- {
- 	struct adv_info *adv, *tmp;
--	int err;
-+	int err = 0;
+diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
+index 426c1429d01be..1025ddde9e316 100644
+--- a/sound/soc/qcom/qdsp6/q6apm.c
++++ b/sound/soc/qcom/qdsp6/q6apm.c
+@@ -762,8 +762,6 @@ static int apm_probe(gpr_device_t *gdev)
+ 	if (!apm)
+ 		return -ENOMEM;
  
- 	/* If advertising has not been paused there is nothing  to do. */
- 	if (!hdev->advertising_paused)
-@@ -2765,13 +2765,19 @@ static int hci_resume_advertising_sync(struct hci_dev *hdev)
- 		 */
- 		if (hci_dev_test_and_clear_flag(hdev, HCI_LE_ADV_0))
- 			err = hci_enable_ext_advertising_sync(hdev, 0x00);
--	} else {
-+	} else if (hdev->cur_adv_instance) {
- 		/* Schedule for most recent instance to be restarted and begin
- 		 * the software rotation loop
- 		 */
- 		err = hci_schedule_adv_instance_sync(hdev,
- 						     hdev->cur_adv_instance,
- 						     true);
-+	} else if (hci_dev_test_flag(hdev, HCI_ADVERTISING) &&
-+		   !hci_dev_test_flag(hdev, HCI_LE_ADV)) {
-+		/* hci_schedule_adv_instance_sync() rejects instance 0x00 while
-+		 * HCI_ADVERTISING is set, so enable it directly.
-+		 */
-+		err = hci_start_adv_sync(hdev, 0x00);
- 	}
+-	dev_set_drvdata(dev, apm);
+-
+ 	mutex_init(&apm->lock);
+ 	apm->dev = dev;
+ 	apm->gdev = gdev;
+@@ -777,6 +775,7 @@ static int apm_probe(gpr_device_t *gdev)
  
- 	hdev->advertising_paused = false;
+ 	idr_init(&apm->modules_idr);
+ 
++	dev_set_drvdata(dev, apm);
+ 	g_apm = apm;
+ 
+ 	q6apm_get_apm_state(apm);
+@@ -817,6 +816,9 @@ static int apm_callback(struct gpr_resp_pkt *data, void *priv, int op)
+ 	struct gpr_ibasic_rsp_result_t *result;
+ 	struct gpr_hdr *hdr = &data->hdr;
+ 
++	if (!apm)
++		return 0;
++
+ 	result = data->payload;
+ 
+ 	switch (hdr->opcode) {
+diff --git a/sound/soc/qcom/qdsp6/q6prm.c b/sound/soc/qcom/qdsp6/q6prm.c
+index 81554d2026589..22e2a174a3871 100644
+--- a/sound/soc/qcom/qdsp6/q6prm.c
++++ b/sound/soc/qcom/qdsp6/q6prm.c
+@@ -197,6 +197,9 @@ static int prm_callback(struct gpr_resp_pkt *data, void *priv, int op)
+ 	struct gpr_ibasic_rsp_result_t *result;
+ 	struct gpr_hdr *hdr = &data->hdr;
+ 
++	if (!prm)
++		return 0;
++
+ 	switch (hdr->opcode) {
+ 	case PRM_CMD_RSP_REQUEST_HW_RSC:
+ 	case PRM_CMD_RSP_RELEASE_HW_RSC:
 -- 
 2.53.0
 
