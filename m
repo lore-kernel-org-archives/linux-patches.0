@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585993;
-	b=hY7/oxy5fq2smDBL4+xx7bfdsIqtduBiOpn9fN7s90rSQL+o34NPVK8iTIEgt6/dkhwj
-	 vvEak1x3dAAgbPYrn6VP5r88zyQXHfBakXEV162VD5l/RXMZh0SughCUAgH9y/3iAQye4
-	 ncaa73gtrZgamOVx4kz5AHRLaqcTn3VwFYoeMiLvyqftDTxx3lacqygiRpKHHZD9oT+i/
-	 82lmk+WwuFrDDWteLyGGX6KVaYa/Lh7mPQvUXRFQoKTX6aTcXaba1FSeBD2gcQ72ktMxq
-	 OUEA4Kt+UKe6p+MtfQgpt0n40MH7JdzpJm6hBmYvqg4O28EO1yiC11F5+CaNmNE9jsQ==
+	t=1794585994;
+	b=y4iBVGHk8+jeZNhxss6ODIWpEincvE5q11A/f1FYv9X1W59wn1QSgJrcqlxsD19NU3oG
+	 2ASZkQFVG1QHR7y5xqqpMJYch5cusa7xQRHmtX8H9FpLRWxJl6Q11U7WV2KWmwSu16FmD
+	 ZvyMWqEwAzVXGqseFkPCm2M6fFwPMiglR2HbrQ2UumknQSqA4PLlqhlatEIf5fWG3sMKi
+	 FtJ9/fPfrOwNqxEraFdn1U8JbCG+Vd/y6nuJ0FBRaRlxzIJpC14rnEBP+aYYgxva4WgLe
+	 rn6UPYgbgLa7354AzBltavEJaWFkDBiavow4kCKkNIMUZx6CUCiA2mpZIBz5ngcyX3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585993;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585994;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q2uvyFKGSRfgETdcID2/kSJYLfiMt/QIugoTvvoa1I4=;
-	b=pxNyzf34ppluv4KqdZQyDkdYNuU0wrGSEWRcR6P8Jq6Y1i3qCT5X56R+uviD+JykurDm
-	 sDh9UU0jQ3hjGZmJHOSv7+QEVyQ36tJnO6psyQjqBS8zDz41P/GKs5RppddP8mgos448s
-	 28JrfBzAYzEfiOuwOBfkRzGBbJoh2t/offfL02EPYKS45LWY92bZIlyHPxFA6/rxv07nw
-	 u6uaal5cpfLx89dUAHm8g8vd95boKvAPVXcwDtydMJYAFmjG5btc49VnxEetnhYuLsIzu
-	 leXUCMpQXGa/kWlZp6en3IKBN9RYDpOeDppjUjeIjuKYfCkdBXRzGfJUtt+cchHFmtw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=3DmcOtxntMt3VwrynuKSD/uTcxfN1ry2qepI3bSbGrc=;
+	b=paz2fadomrQGzY4eRnj+NgFhudDdaLj3JUv+RM3y/vkNDG63cJeRk9fFRhPANa66spRL
+	 yRU4xAqWAzw1C0ZFV4SXQ9g+yoL0Rgs4I+/4J1H3y+m9PZeyXj1CWEsG+mtrvuT4+K6lm
+	 A4JRQ7SyFVCRy7J91NkGMqHIr58rvqyRytfvtZ5hSV8Itayun8ddm79WC61yIJf7wj4+c
+	 m4sYAY5ovdmFc5b4lRfh36bpBhEQLA6LSyv5guEdkMAhSFf7ERI+IIKaV5UIHqbh0Tqo4
+	 PYAt9qzWS3R7PQHmEbbrBdUVbQnDWIZrb/BLiRr/KM5ZtZypxet0Sge8RG//jGqNUtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ogK6gqbr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uyJ7FGz6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD0C6076E32;
-	Fri, 13 Nov 2026 16:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23376076E30;
+	Fri, 13 Nov 2026 16:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ogK6gqbr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB67C1F000C4;
-	Fri, 13 Nov 2026 16:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uyJ7FGz6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5641F000C9;
+	Fri, 13 Nov 2026 16:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585993;
-	bh=Q2uvyFKGSRfgETdcID2/kSJYLfiMt/QIugoTvvoa1I4=;
+	s=korg; t=1794585994;
+	bh=3DmcOtxntMt3VwrynuKSD/uTcxfN1ry2qepI3bSbGrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ogK6gqbrw/dnupJZZAWP9OFa5GAIBI1hkfOyfB4k0m6RzBLa93qo+JSsVIWrR7k/v
-	 ccnRLEjQtbs45bG5pRi3cV/nvH44LqKQoCzlDpdBnwSiOgV22hzJvKg9tgY3m/fdtf
-	 3XkpPtveUO75tmfGZhAZBWny0bZPrixSxc5qlBAo=
+	b=uyJ7FGz6/1MCZKj8VXDG4MEi2/weIFHZRNLx7RL9bC0qSAxSV/M8WzNdCtgL0NG38
+	 XJn+tMvKvM+UoyrsTPsJaKQ4uLRpO8qfaChMJfTi5+hJctHsh7w/lEtrObNdIhraX5
+	 xUjelOA1kjddSYdE3BrHCXU+bmYos9v2SWQ6K1vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Bashirov <sergeybashirov@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/686] NFSD/blocklayout: Extract extent mapping from proc_layoutget
-Date: Fri, 13 Nov 2026 10:42:49 -0500
-Message-ID: <20261113153822.202071539@linuxfoundation.org>
+Subject: [PATCH 6.18 037/686] exportfs: Complete kernel-doc for struct export_operations
+Date: Fri, 13 Nov 2026 10:42:50 -0500
+Message-ID: <20261113153822.232787705@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -63,205 +63,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Bashirov <sergeybashirov@gmail.com>
+From: André Almeida <andrealmeid@igalia.com>
 
-[ Upstream commit a1dce715c64d4376321b5534366ae48fd7d14bcc ]
+[ Upstream commit 7a6f811e2c06d656996776771f0498df129a0cc2 ]
 
-No changes in functionality. Split the proc_layoutget function to
-create a helper function that maps single extent to the requested
-range. This helper function is then used to implement support for
-multiple extents per LAYOUTGET.
+Write down the missing members definitions for struct export_operations,
+using as a reference the commit messages that created the members.
 
-Signed-off-by: Sergey Bashirov <sergeybashirov@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: André Almeida <andrealmeid@igalia.com>
+Link: https://patch.msgid.link/20260112-tonyk-fs_uuid-v1-3-acc1889de772@igalia.com
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: 5d28b2c920d9 ("nfsd: don't offer flexfiles layouts when NFSv3 isn't being served")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/blocklayout.c | 115 ++++++++++++++++++++++++------------------
- 1 file changed, 66 insertions(+), 49 deletions(-)
+ include/linux/exportfs.h | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/blocklayout.c b/fs/nfsd/blocklayout.c
-index e9512c34c9dcf..8f6478d88ea22 100644
---- a/fs/nfsd/blocklayout.c
-+++ b/fs/nfsd/blocklayout.c
-@@ -17,68 +17,44 @@
- #define NFSDDBG_FACILITY	NFSDDBG_PNFS
- 
- 
-+/*
-+ * Get an extent from the file system that starts at offset or below
-+ * and may be shorter than the requested length.
-+ */
- static __be32
--nfsd4_block_proc_layoutget(struct svc_rqst *rqstp, struct inode *inode,
--		const struct svc_fh *fhp, struct nfsd4_layoutget *args)
-+nfsd4_block_map_extent(struct inode *inode, const struct svc_fh *fhp,
-+		u64 offset, u64 length, u32 iomode, u64 minlength,
-+		struct pnfs_block_extent *bex)
- {
--	struct nfsd4_layout_seg *seg = &args->lg_seg;
- 	struct super_block *sb = inode->i_sb;
--	u64 length;
--	u32 block_size = i_blocksize(inode);
--	struct pnfs_block_extent *bex;
- 	struct iomap iomap;
- 	u32 device_generation = 0;
- 	int error;
- 
--	if (locks_in_grace(SVC_NET(rqstp)))
--		return nfserr_grace;
--
--	if (seg->offset & (block_size - 1)) {
--		dprintk("pnfsd: I/O misaligned\n");
--		goto out_layoutunavailable;
--	}
--
--	/*
--	 * Some clients barf on non-zero block numbers for NONE or INVALID
--	 * layouts, so make sure to zero the whole structure.
--	 */
--	error = -ENOMEM;
--	bex = kzalloc(sizeof(*bex), GFP_KERNEL);
--	if (!bex)
--		goto out_error;
--	args->lg_content = bex;
--
--	error = sb->s_export_op->map_blocks(inode, seg->offset, seg->length,
--					    &iomap, seg->iomode != IOMODE_READ,
--					    &device_generation);
-+	error = sb->s_export_op->map_blocks(inode, offset, length, &iomap,
-+			iomode != IOMODE_READ, &device_generation);
- 	if (error) {
- 		if (error == -ENXIO)
--			goto out_layoutunavailable;
--		goto out_error;
--	}
--
--	length = iomap.offset + iomap.length - seg->offset;
--	if (length < args->lg_minlength) {
--		dprintk("pnfsd: extent smaller than minlength\n");
--		goto out_layoutunavailable;
-+			return nfserr_layoutunavailable;
-+		return nfserrno(error);
- 	}
- 
- 	switch (iomap.type) {
- 	case IOMAP_MAPPED:
--		if (seg->iomode == IOMODE_READ)
-+		if (iomode == IOMODE_READ)
- 			bex->es = PNFS_BLOCK_READ_DATA;
- 		else
- 			bex->es = PNFS_BLOCK_READWRITE_DATA;
- 		bex->soff = iomap.addr;
- 		break;
- 	case IOMAP_UNWRITTEN:
--		if (seg->iomode & IOMODE_RW) {
-+		if (iomode & IOMODE_RW) {
- 			/*
- 			 * Crack monkey special case from section 2.3.1.
- 			 */
--			if (args->lg_minlength == 0) {
-+			if (minlength == 0) {
- 				dprintk("pnfsd: no soup for you!\n");
--				goto out_layoutunavailable;
-+				return nfserr_layoutunavailable;
- 			}
- 
- 			bex->es = PNFS_BLOCK_INVALID_DATA;
-@@ -87,7 +63,7 @@ nfsd4_block_proc_layoutget(struct svc_rqst *rqstp, struct inode *inode,
- 		}
- 		fallthrough;
- 	case IOMAP_HOLE:
--		if (seg->iomode == IOMODE_READ) {
-+		if (iomode == IOMODE_READ) {
- 			bex->es = PNFS_BLOCK_NONE_DATA;
- 			break;
- 		}
-@@ -95,27 +71,68 @@ nfsd4_block_proc_layoutget(struct svc_rqst *rqstp, struct inode *inode,
- 	case IOMAP_DELALLOC:
- 	default:
- 		WARN(1, "pnfsd: filesystem returned %d extent\n", iomap.type);
--		goto out_layoutunavailable;
-+		return nfserr_layoutunavailable;
- 	}
- 
- 	error = nfsd4_set_deviceid(&bex->vol_id, fhp, device_generation);
- 	if (error)
--		goto out_error;
-+		return nfserrno(error);
-+
- 	bex->foff = iomap.offset;
- 	bex->len = iomap.length;
-+	return nfs_ok;
-+}
-+
-+static __be32
-+nfsd4_block_proc_layoutget(struct svc_rqst *rqstp, struct inode *inode,
-+		const struct svc_fh *fhp, struct nfsd4_layoutget *args)
-+{
-+	struct nfsd4_layout_seg *seg = &args->lg_seg;
-+	struct pnfs_block_extent *bex;
-+	u64 length;
-+	u32 block_size = i_blocksize(inode);
-+	__be32 nfserr;
-+
-+	if (locks_in_grace(SVC_NET(rqstp)))
-+		return nfserr_grace;
- 
--	seg->offset = iomap.offset;
--	seg->length = iomap.length;
-+	nfserr = nfserr_layoutunavailable;
-+	if (seg->offset & (block_size - 1)) {
-+		dprintk("pnfsd: I/O misaligned\n");
-+		goto out_error;
-+	}
-+
-+	/*
-+	 * Some clients barf on non-zero block numbers for NONE or INVALID
-+	 * layouts, so make sure to zero the whole structure.
-+	 */
-+	nfserr = nfserrno(-ENOMEM);
-+	bex = kzalloc(sizeof(*bex), GFP_KERNEL);
-+	if (!bex)
-+		goto out_error;
-+	args->lg_content = bex;
-+
-+	nfserr = nfsd4_block_map_extent(inode, fhp, seg->offset, seg->length,
-+			seg->iomode, args->lg_minlength, bex);
-+	if (nfserr != nfs_ok)
-+		goto out_error;
-+
-+	nfserr = nfserr_layoutunavailable;
-+	length = bex->foff + bex->len - seg->offset;
-+	if (length < args->lg_minlength) {
-+		dprintk("pnfsd: extent smaller than minlength\n");
-+		goto out_error;
-+	}
-+
-+	seg->offset = bex->foff;
-+	seg->length = bex->len;
- 
- 	dprintk("GET: 0x%llx:0x%llx %d\n", bex->foff, bex->len, bex->es);
--	return 0;
-+	return nfs_ok;
- 
- out_error:
- 	seg->length = 0;
--	return nfserrno(error);
--out_layoutunavailable:
--	seg->length = 0;
--	return nfserr_layoutunavailable;
-+	return nfserr;
- }
- 
- static __be32
+diff --git a/include/linux/exportfs.h b/include/linux/exportfs.h
+index f0cf2714ec52d..0dc1bae9e1654 100644
+--- a/include/linux/exportfs.h
++++ b/include/linux/exportfs.h
+@@ -201,7 +201,7 @@ struct handle_to_path_ctx {
+  * @commit_metadata: commit metadata changes to stable storage
+  *
+  * See Documentation/filesystems/nfs/exporting.rst for details on how to use
+- * this interface correctly.
++ * this interface correctly and the definition of the flags.
+  *
+  * encode_fh:
+  *    @encode_fh should store in the file handle fragment @fh (using at most
+@@ -252,6 +252,19 @@ struct handle_to_path_ctx {
+  * commit_metadata:
+  *    @commit_metadata should commit metadata changes to stable storage.
+  *
++ * @get_uuid:
++ *    Get a filesystem unique signature exposed to clients.
++ *
++ * @map_blocks:
++ *    Map and, if necessary, allocate blocks for a layout.
++ *
++ * @commit_blocks:
++ *    Commit blocks in a layout once the client is done with them.
++ *
++ * @flags:
++ *    Allows the filesystem to communicate to nfsd that it may want to do things
++ *    differently when dealing with it.
++ *
+  * Locking rules:
+  *    get_parent is called with child->d_inode->i_rwsem down
+  *    get_name is not (which is possibly inconsistent)
 -- 
 2.53.0
 
