@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590404;
-	b=O9Q4RlM6SLvNetE1/IMhJ45FwlhxWUeS0HNhvdqUvFRiDyMHWN2IcXdGUuWb3JSvkHJX
-	 sFR9jglPdfMvu340J1OYLCY3PZuID8FID/8yOc/wCpS3y8AzADl1Hnr5K1bXEN84XWO4V
-	 ZcRhV8DNYoF+5ii4z3pL904rmWNKZ6HHg8rQ6FlANj/WLHWuW10T3cNgBeuayRZcaYSO3
-	 VnmGyLYGwyW83dQ2GhaKyRAkXfS+OLwo9ZIdjd99daVsxUF5RvHirBOhHK4teK9XR6vr0
-	 ZjURxxPa9NeBFpmTquyRl2A1W6pp/KYffwkdw1IcbjfIVJ3ef3HIq1bbWnRIVjmMUNw==
+	t=1794590406;
+	b=zkm0L9RWLabBte2CAG6xMvbPsTyM1kE11m1qQ6DYS5ayQu981B23S+/JV0o7jpvB70mH
+	 q75nZUT2lcMnsUjCQBoeOF6zsyVvrBd/x0OeHpj2sX3cySvEZsT89VZV9C4gziLhxVbmn
+	 5ky57auJjdJjPC0LRdsBCk3ZBmgUJ3iNsD2H2hYdUZleZDEIKBcnSAtcXgeH6SGMGjTjc
+	 FIwO7ZY3xHXHzVAgldQsPvA1k7no+he3R2XgyhAoxNYOUawyYRLkpN9LSj1dxvY5RdxCp
+	 mQUTF2LaWU/Ll0SHe3O/+rMIn9qHmZbfYGyfOQqBsLlcIsDnSfZRtN8FFBCXRupPKdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590404;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590406;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QzNgujxxnG5Al5XKIktM+ySdrUzQnC6yRqLZAOQj2Rw=;
-	b=SlCOfoXnqFoSR7H01O/ttRHIDFKLJCRSccSue9k94D+QA5cm0coILAz8aBJPfGj1rihW
-	 dXD9Y7ysR//EJ87ZEglHooBpVihGv/wkiUw7WYoDA7pZJelpAey05VjRxDrJ/ZFfkjlzU
-	 2qf0+34FSsyjkNnNYFPG7DIvOjZO6M3HXYiYlszTNeMFI6/ss9VLZK7/Ra0kZC68D+I/G
-	 QdTW3AnDUeS4yjuJAnO0ineFtJjrc3ZvzRJNJBmYLHtCz0JKOGVr4OEsoQaMZimo+m9A5
-	 4JXJ4miYYarVguAyNLvu+CUTIpIbB5AjjFgiS/ic1eMaQPxPUeUKjTFDaU7A1Sy+AOw==
+	bh=LSyEWyjPs4t3MEG08rwgSe7G+8rVc/yqd8HN/ziItSI=;
+	b=4DHvb9ZhhSJYn2QFTIMYSBxSUoZ/e+E7zgiQY52mJeDNmdLNCtMK994AHzej3Y+GhLYt
+	 qrqs9NtV9HC74jGg9F1WQ3+oNlgMiXsZ0wLg9nm/sKMd1dnCbba3sf9XOxJf5AMKHOGFy
+	 mJIdNWl0/WuHAgPMFClobDt5kuf+l98h3qpKGTdWCjq1cswaTTo9k8xZmX61sb8tqTXBW
+	 WdkixuUKyi7d8iZMr4o0/o0H7nUzW6WjHOVy6dO0uEiBARil/exF8PPrp/M2kRbZhBzIV
+	 UeadyaT1KtyXxh1FuQRkNm3G6ks/geCyTu2JctnWIXIy7+gCEu5Mzby1HQ8mYA/9J6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tdMjUKoD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSxXTmCo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC19F606B451;
-	Fri, 13 Nov 2026 17:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF63B606B451;
+	Fri, 13 Nov 2026 17:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tdMjUKoD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592731F000C7;
-	Fri, 13 Nov 2026 17:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSxXTmCo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0C61F000C4;
+	Fri, 13 Nov 2026 17:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590404;
-	bh=QzNgujxxnG5Al5XKIktM+ySdrUzQnC6yRqLZAOQj2Rw=;
+	s=korg; t=1794590405;
+	bh=LSyEWyjPs4t3MEG08rwgSe7G+8rVc/yqd8HN/ziItSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tdMjUKoDHnzubagsv6epwcMDqJQkcaPNlGCmIHyLF9IEbOZ5Uzo6o+4yi5CF3CaB9
-	 FWIyxwuj6RxC6Hb7dTVXZQzi0uimo+rAXoEHsDPB80UcUoixpCxiiTCTwmYQqMxnJs
-	 rANSXWv+Kh0G6Te57pn1Gxl+L9VMYGb3zW8lrlmk=
+	b=cSxXTmCoKdoqk0NRYaRo7MqGMvMWYJDMLBmpTc7kLTuybTVUEc3q28v5dScK8EzNk
+	 kM3Cp95D1IUQJUjLY0+ukT//GKBPJ3pbAapzLawy02a0iDOydek0mB4dUMjopCCxaL
+	 rfUQotUDyFyQ1BPYkvyMX73GwPQGLZegnCXMSVK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Chris Mason <mason@kernel.org>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 364/686] can: isotp: check the return values of can_rx_register() in isotp_bind()
-Date: Fri, 13 Nov 2026 10:48:17 -0500
-Message-ID: <20261113153833.236874478@linuxfoundation.org>
+Subject: [PATCH 6.18 373/686] mm/gup: fix clearing folios in memfd_pin_folios()
+Date: Fri, 13 Nov 2026 10:48:26 -0500
+Message-ID: <20261113153833.560952536@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,120 +72,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 874f5f14cf626f72477071eff381c8485554250d ]
+[ Upstream commit c83ee2fa5a94edb2e04102b9dd4f1ee0eeb2b932 ]
 
-isotp_bind() ignores the return values of can_rx_register() for the RX
-and the echo receiver and binds the socket anyway. When a receiver can
-not be allocated, bind() succeeds without this receiver, so the socket
-does not receive frames or its transmissions time out. isotp_release()
-and isotp_notify() later try to remove the missing receiver, which
-triggers the "receive list entry not found" warning in
-can_rx_unregister().
+memfd_pin_folios() pins folios obtained directly from the page cache
+without checking whether they are uptodate. However, shmem fallocate()
+can leave newly allocated folios uncleared and not uptodate. Callers
+such as udmabuf can then expose uninitialized memory to userspace.
 
-As the device has been checked before and RTNL prevents a namespace
-change during bind(), only -ENOMEM can be returned here.
+Clear non-uptodate folios and mark them uptodate under the folio lock
+before returning them to the caller.
 
-Check the return values and register the RX receiver as the last step.
-The echo receiver is registered first, as it only handles the socket's
-own echo frames and does nothing while no transmission is in progress.
-So a failed RX registration only needs to remove the echo receiver, and
-isotp_rcv() has never processed a frame for this socket.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-Set so->ifindex before the registrations, so that a First Frame received
-before so->bound is set can be answered with a Flow Control frame and
-the RX timeout is started as usual. As the RX receiver is registered
-last, this can only happen for a bind() that succeeds. Reset so->ifindex
-when bind() fails.
-
-Check IFF_UP only after the receivers have been registered, so that a
-bind() that fails on a down device does not report ENETDOWN. As bind()
-holds RTNL, the device state can not change in between.
-
-Fixes: e057dd3fc20f ("can: add ISO 15765-2:2016 transport protocol")
+Fixes: 89c1905d9c14 ("mm/gup: introduce memfd_pin_folios() for pinning memfd folios")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20261027-can-rx-lock-v12-2-eb5afc2d8b9b@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Chris Mason <mason@kernel.org>
+[ david: simplify description and comment ]
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Tested-by: Samiullah Khawaja <skhawaja@google.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-20-d6437171ecc3@kernel.org
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 42 +++++++++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 15 deletions(-)
+ mm/gup.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index 39cd943df19ec..e3261fb4663af 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1527,7 +1527,6 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 	struct sock *sk = sock->sk;
- 	struct isotp_sock *so = isotp_sk(sk);
- 	struct net *net = sock_net(sk);
--	int ifindex;
- 	struct net_device *dev;
- 	canid_t tx_id = addr->can_addr.tp.tx_id;
- 	canid_t rx_id = addr->can_addr.tp.rx_id;
-@@ -1604,26 +1603,36 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 		err = -EINVAL;
- 		goto out_put_dev;
- 	}
--	if (!(dev->flags & IFF_UP))
--		notify_enetdown = 1;
+diff --git a/mm/gup.c b/mm/gup.c
+index 50ff90775cbb8..6ea400b5b8c5e 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -3519,6 +3519,20 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
+ 					goto err;
+ 				}
  
--	ifindex = dev->ifindex;
--
--	if (isotp_register_rxid(so))
--		can_rx_register(net, dev, rx_id, SINGLE_MASK(rx_id),
--				isotp_rcv, sk, "isotp", sk);
-+	/* switch to new settings */
-+	so->ifindex = dev->ifindex;
-+	so->rxid = rx_id;
-+	so->txid = tx_id;
- 
- 	/* no consecutive frame echo skb in flight */
- 	WRITE_ONCE(so->cfecho, 0);
- 
--	/* register for echo skb's */
--	can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
--			isotp_rcv_echo, sk, "isotpe", sk);
-+	/* register for echo skb's first (no echo traffic at this point) */
-+	err = can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
-+			      isotp_rcv_echo, sk, "isotpe", sk);
-+	if (err)
-+		goto out_put_dev;
++				/*
++				 * fallocate() can leave folios in the
++				 * page cache that were never cleared.
++				 */
++				if (!folio_test_uptodate(folio)) {
++					folio_lock(folio);
++					if (!folio_test_uptodate(folio)) {
++						folio_zero_range(folio, 0, folio_size(folio));
++						flush_dcache_folio(folio);
++						folio_mark_uptodate(folio);
++					}
++					folio_unlock(folio);
++				}
 +
-+	if (isotp_register_rxid(so)) {
-+		err = can_rx_register(net, dev, rx_id, SINGLE_MASK(rx_id),
-+				      isotp_rcv, sk, "isotp", sk);
-+		if (err) {
-+			/* unregister echo skb subscription */
-+			can_rx_unregister(net, dev, tx_id, SINGLE_MASK(tx_id),
-+					  isotp_rcv_echo, sk);
-+			goto out_put_dev;
-+		}
-+	}
-+
-+	/* report a down device only for a successful bind() */
-+	if (!(dev->flags & IFF_UP))
-+		notify_enetdown = 1;
+ 				if (nr_folios == 0)
+ 					*offset = offset_in_folio(folio, start);
  
--	/* switch to new settings */
--	so->ifindex = ifindex;
--	so->rxid = rx_id;
--	so->txid = tx_id;
- 	so->bound = 1;
- 
- 	/* bind() ok -> hold a reference for so->dev so that isotp_release()
-@@ -1634,6 +1643,9 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
- 	netdev_hold(so->dev, &so->dev_tracker, GFP_KERNEL);
- 
- out_put_dev:
-+	if (err)
-+		so->ifindex = 0; /* reset on failed bind() */
-+
- 	/* remove potential reference from dev_get_by_index() */
- 	dev_put(dev);
- out:
 -- 
 2.53.0
 
