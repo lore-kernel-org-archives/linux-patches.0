@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590444;
-	b=uiCSyhNnvM+/9a1W+aUlZFOZcj5C5cs5G2GwWMBnrEdMvt5xDZ586EqI8hbEZ8IxnUDc
-	 zTX7k+Dgzn5u3i0YwDWpOSHWII3bNrPpRR9pRbCdOzZBkKTjXuk7DduTF45Q4X5RnCR64
-	 Pp7/84kqlSRAzear7/u5ECF+C8VIwIpVIYDf3AfoUYoPC/0UGMRyg27G54cvqhxw0iEwv
-	 /oR7H7Kvje82pCWaOmnFcdqfWOKSEiKX6p05qck09ouKuansLabrl61AA/rG7I4LvcSWd
-	 1YyWSino7T5VABxyyM6TTeXOTpM0CQPIPZL3a8hSiF7mrQAIaKdRPFp92JkxCd0NkSw==
+	t=1794590445;
+	b=HSHw/2n7WT61CuFnZg6jevDOtlLuHRHTr8NpGfVnvFEWQSMJoONQl80tuvvksehiqQ2s
+	 4ka18HRIj85SOKmaGKZOZ4sY9cchjlHRHX9bkcwPTR2Nr37NYVsH2FbBd7MLvXI3FGuZP
+	 wMCwvQZmtLTkYQMi4wgLW4WS/SZFY7DcJWEsflutgkP6R/KLWKgr49jw6/fycWuuMHqJp
+	 IrDczaHuh4FnJ0WR//eBwhPj/WmyPOthXbPGcmc5rCFPfE1Wy2EiO293MvzhNkMYkNSWG
+	 vntM8Jetvk409oE8LO6lvhP9bTrHxUQlI2obrWqFWxSpPgUTgs9AoXKnIof7lvrCFVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590444;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0Br6sZmJpyaviRSGyS30qFD70q+te0FlRR4oQYUUkr8=;
-	b=BmaNnw3VembxCbArBbw8dS4u4CwygzLX4CAkxtPll/nzfVu7BZl2sT2ztPr/hZgGZoUe
-	 2PzBi8TMSpIohIsGi3IVGR/ubFaLeJUNMm9J7onG/fsX4kDe56vOhDv6LwdfQl/Mdlii7
-	 /6D93mSUhOj9RfFqTQt6tkxvHeNOFLjtVaJo40YoatUu1zd/NrYQLRk8xUPG0MnLijg2J
-	 HRwo3j75B3aflkfWqHrsJNous+/NkoONq4WPItLFuwFO3fVKgGpf09wRyzsc1r5Ch51VG
-	 6dFN2nj0V874pon49HZt/5vDv+A0jDl+fQR6Uu+rHO6rNm8cr09Wqj89wq7nGhMgsew==
+	bh=dJzcubjOdBUsxBYr2yHZSpZh2IB2DpzeCBTpWIccjVk=;
+	b=NoSNss0CwN8KnCYwZZjPjPa8RWvxozgr4DlplszBZkOIYtF/0iz4nlyU5MDia2v2UOKB
+	 Amy4EPE4ecvzH6FatDDoIWM90f88TcLvsAoj/0tw/TIZ6LTx4xj13IzrT3DtMHEiCrzIL
+	 FD0Ll3JmG3OFpVB3vNRVmKpER5bmm+XLrqcvl1hqugym2dUalosFyJZ7AZ/6DJFzzt5eB
+	 WmpKcJyFjEEwWy7Ur3S56M7dE3Ap6wW+/ExKFRPdiU+BdDYDaDErgUecUAZVO0T0cbCq7
+	 EJuKJAVLq1L/3yqHH/G17vHjdArrilZUlIGmHO27NEhAuITWe+foAxJJ0pFuFVxo/ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqXaPJxq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BgJKsHqs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14790606E675;
-	Fri, 13 Nov 2026 17:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F97160703D0;
+	Fri, 13 Nov 2026 17:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqXaPJxq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CE61F000C6;
-	Fri, 13 Nov 2026 17:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BgJKsHqs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7751F000C6;
+	Fri, 13 Nov 2026 17:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590443;
-	bh=0Br6sZmJpyaviRSGyS30qFD70q+te0FlRR4oQYUUkr8=;
+	s=korg; t=1794590445;
+	bh=dJzcubjOdBUsxBYr2yHZSpZh2IB2DpzeCBTpWIccjVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gqXaPJxqzosyXLPgekPqgtio37gSPZjJ9WHS8q0yyDhCnIspYDOGtibx8iBoMfWRO
-	 rqhyowuv2G9APejRIMnxFkdEMm92m9p/EWNVKVr74fhajT/MlWpr+vXMzg2PTw0ZcU
-	 Oxi8r+3Hx3m7Lj/FfwEpfsHCFWZgV5jxJ/JxtVeU=
+	b=BgJKsHqssUMEeXekjo2ONvzz/qvI77OTm4kKam1Amd25JkkZeI0Dw1d00EB5Ac1uo
+	 qeN5Ik2AxAYv3+sNs+nMnuunLNOIUZoi+TrHIErSvgLLHcD+mfxCmk1tdUpWu2Lkpf
+	 ueLUqDsYeOTy87c4bF0TcieJi8z4E0gJCLEeuMVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Dariusz Marcinkiewicz <darekm@google.com>,
+	ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 402/686] drm/amdgpu: check amdgpu_vm_ready() in dma-buf move notify
-Date: Fri, 13 Nov 2026 10:48:55 -0500
-Message-ID: <20261113153834.611228619@linuxfoundation.org>
+Subject: [PATCH 6.18 367/686] can: dev: can_fill_info(): dont wake up controller if interface is down
+Date: Fri, 13 Nov 2026 10:48:20 -0500
+Message-ID: <20261113153833.358527182@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,56 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dariusz Marcinkiewicz <darekm@google.com>
+From: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
 
-[ Upstream commit 920ca822f527e45ce084b36f3c420b625eb7c62a ]
+[ Upstream commit 75332c410c8190d61499001c5516af977ca426c3 ]
 
-amdgpu_dma_buf_move_notify() touches the page tables without first
-calling amdgpu_vm_ready(). When a process is SIGKILLed, its VM entities
-are stopped. Teardown of an imported dma-buf then tries to clear PTEs by
-submitting to one of those stopped entities. That eventually hangs the
-task.
+If the interface is down, the CAN controller might be powered down and
+its clocks gated. Don't call do_get_berr_counter() to read the bus error
+counters if the interface is down, and adjust can_get_size() to match.
 
-Commit aa5fc4362fac ("drm/amdgpu: fix task hang from failed job
-submission during process kill") added the stopped entity check in
-amdgpu_vm_ready() and used it in amdgpu_cs_vm_handling(). That did not
-cover a call in amdgpu_dma_buf_move_notify(), what was already mentioned
-in:
-https://lists.freedesktop.org/archives/amd-gfx/2025-October/133076.html
+This removes one trigger for a synchronous external abort seen on
+i.MX8QXP when "ip link show" is run on a flexcan interface that was
+never brought up. The underlying cause is platform-specific: on i.MX8QXP
+the CAN clocks are gated through the SCU LPCG and the subsystem shares
+the IMX_SC_R_CAN_0 power domain, and there is a window after
+pm_runtime_resume_and_get() returns where the clock has not reached the
+module yet. This patch avoids the netlink query path while the interface
+is down, but does not root-cause the LPCG window itself.
 
-Tested by SIGKILLing a GPU workload holding imported dma-bufs. Without
-the patch "Trying to push to a killed entity" errors are logged, then a
-task hangs. With the patch there are no hung tasks. This was tested on a
-6.18 kernel.
+As a result, IFLA_CAN_BERR_COUNTER is no longer reported for down
+interfaces. Userspace must treat the attribute as optional.
 
-Fixes: aa5fc4362fac ("drm/amdgpu: fix task hang from failed job submission during process kill")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Dariusz Marcinkiewicz <darekm@google.com>
-Assisted-by: LLM
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit bee5c9d7a34cb1b510ad3b4c18c30f9d38b0ab7d)
+The issue was triggered on an i.MX8QXP board by running "ip link show"
+without ever bringing the interface up:
+
+    Internal error: synchronous external abort: 0000000096000210
+
+    pc : flexcan_read_le+0x0/0x18
+    lr : flexcan_get_berr_counter+0x4c/0x8c
+    Call trace:
+     flexcan_read_le+0x0/0x18
+     flexcan_get_berr_counter+0x4c/0x8c
+     can_fill_info+0x1f8/0x434
+     rtnl_fill_ifinfo+0x8fc/0xbb4
+     rtnl_dump_ifinfo+0x364/0x448
+
+This is the same class of problem fixed for m_can in
+commit 91a55c72a821 ("can: m_can: m_can_get_berr_counter(): don't
+wake up controller if interface is down").
+
+Fixes: ec56acfef2af1 ("can: flexcan: flexcan_get_berr_counter(): switch on clocks before accessing ecr register")
 Cc: stable@vger.kernel.org
+Signed-off-by: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20261027065012.191348-1-chunyuzhiqiang@yinhe.ht
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/can/dev/netlink.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-index efa6214eee315..640f627342916 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-@@ -533,6 +533,11 @@ amdgpu_dma_buf_move_notify(struct dma_buf_attachment *attach)
- 				continue;
- 		}
+diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
+index fcfff221d1cc2..f4ab494b91518 100644
+--- a/drivers/net/can/dev/netlink.c
++++ b/drivers/net/can/dev/netlink.c
+@@ -586,7 +586,7 @@ static size_t can_get_size(const struct net_device *dev)
+ 	size += nla_total_size(sizeof(u32));			/* IFLA_CAN_STATE */
+ 	size += nla_total_size(sizeof(struct can_ctrlmode));	/* IFLA_CAN_CTRLMODE */
+ 	size += nla_total_size(sizeof(u32));			/* IFLA_CAN_RESTART_MS */
+-	if (priv->do_get_berr_counter)				/* IFLA_CAN_BERR_COUNTER */
++	if (priv->do_get_berr_counter && netif_running(dev))	/* IFLA_CAN_BERR_COUNTER */
+ 		size += nla_total_size(sizeof(struct can_berr_counter));
+ 	if (priv->termination_const) {
+ 		size += nla_total_size(sizeof(priv->termination));		/* IFLA_CAN_TERMINATION */
+@@ -737,7 +737,7 @@ static int can_fill_info(struct sk_buff *skb, const struct net_device *dev)
+ 	    nla_put(skb, IFLA_CAN_CTRLMODE, sizeof(cm), &cm) ||
+ 	    nla_put_u32(skb, IFLA_CAN_RESTART_MS, priv->restart_ms) ||
  
-+		if (!amdgpu_vm_ready(vm)) {
-+			dma_resv_unlock(resv);
-+			continue;
-+		}
-+
- 		/* Reserve fences for two SDMA page table updates */
- 		r = dma_resv_reserve_fences(resv, 2);
- 		if (!r)
+-	    (priv->do_get_berr_counter &&
++	    (priv->do_get_berr_counter && netif_running(dev) &&
+ 	     !priv->do_get_berr_counter(dev, &bec) &&
+ 	     nla_put(skb, IFLA_CAN_BERR_COUNTER, sizeof(bec), &bec)) ||
+ 
 -- 
 2.53.0
 
