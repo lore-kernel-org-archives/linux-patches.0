@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590793;
-	b=miFp0uijb5vhuh/uagSrYk49TCkIFr7EMN+tWj/8TSIcfYjw1ea8YB6GBrpU4LUfN2GJ
-	 O8r/nDCeTiDLhCuA7p4+ipEnnD7eib7CeJgDxmKKL4+S79F57bdwwSfIK0BzBqhsgIk3I
-	 28IeZTFXikve4W5C4sDrjWghcMoaKz8QY18cTKT1xA8VvWn0xfKKQ5AUhwz6sk23AK7A7
-	 ofPBnhCrvBbUR0Txeu2B1LfMRDi7wMBVb9zepHGni6xCIl7TOKLymqHfun1bEX1ZOWk8m
-	 Twog3i6F2ld+tmt5OL/UeAa8RPFtMQsKfn3cQyRZsi/KBHqeNqeztvjfozUIBq18BUQ==
+	t=1794590795;
+	b=3Af5IsNUuLvJLehUuxg8DT6vT/Oi3h5VTh7LzzbUeHS/VMKvrklFtTtBXH2HsicwIwbq
+	 PhNpliMGb6jZgltR77gYxZlfzicDK1OybpiWVU0NgQgmQz5ja+kJFq5AAaGpxNXA4I6KG
+	 Z4om0SsBk6KU8w13CF1iOCHqHPYuJpwfib7ba8XL4tvZBE/QRby60HLs3VufkEhWFt5mW
+	 k5H67/f6aBNJT4X/dW1X2tTt/9Q/zgt7/7Yb0bDtbDDHALrybnh8nYwypSBAfJCTrKuH/
+	 ENviHpt8sZizKXeSj2nfYGdk4uF2ePZF0SUtU2A0bgUksbMkKF5v7sP8iWyFsiTO5Gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590793;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590795;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X4TqxWE+Uv3hx6kARlMmJHBefVjz12MT9y+EiYVIqTA=;
-	b=yj6fldzUtBIoHbOxBmFnbC3MqeiHXdzAY2zemOU6KbvVfhOGFYVUZA1Mm+sfZUhZ6rkG
-	 ozonM1xCmuB4fPGYk2d6Cqk79BmsroLtvV5qn4TzLwhUJTsMogedqP6iNe4/SqmydrkpT
-	 Z62vig1oxFRyOPuAN6UNfQgJlXriDL/Ylcnw+UMmkkQOIMrM92HfxS03sdGBqySphBai6
-	 FLB3gTl2dq0mw6HSEx4uj5kFBDmHY/Sh+MOX71rV7gx38mYySv1efQGjcDnvJ2C5DARxE
-	 bbTRmyVyE9Y1v85UJPwv2JES3BxOhSujO1S978leJNE422EuiPg3Wy2qd+UG0l3IN4A==
+	bh=+kU8oHFm34uLqGc1lR3Bq8P9VvpBCAoxR+oU565Uwdw=;
+	b=kuavPvEmv6BtRNMUGS5igCeV4GKdwvtcX7cIRt0WldIHr+t4afWYnKzWCBF+FVsrg01E
+	 mgjm4a3M0WkozlBU8aYF7v+rjB80fyOsg07vN+0lnbBCzeAwDX5D4m6BNdO4VyLt8kLoE
+	 1lyI0EzNCokjt7U2JjdiI8Es6XtP41lqskVbLHn64Rpwb/Faeqm3nngF2TgBACbUbIk9l
+	 /Mtagh/Rc3LB3L2ihgKPs0Er6EmfPhfOCb62urR9sZ3g5oXWdLvtiaj665g9SfPIN4j8X
+	 Nf3f0G1pZPwMjPD1gqU1Q6UTH0ySURYF+TckwQCwvQ85fOYLdMG+dPDcQ6SeaTtYyyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="TwcXliL/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JqU3IcvD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E52607D2CD;
-	Fri, 13 Nov 2026 17:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7B6607D2CD;
+	Fri, 13 Nov 2026 17:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwcXliL/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7483B1F000C6;
-	Fri, 13 Nov 2026 17:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JqU3IcvD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABFD61F000C6;
+	Fri, 13 Nov 2026 17:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590793;
-	bh=X4TqxWE+Uv3hx6kARlMmJHBefVjz12MT9y+EiYVIqTA=;
+	s=korg; t=1794590794;
+	bh=+kU8oHFm34uLqGc1lR3Bq8P9VvpBCAoxR+oU565Uwdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TwcXliL/Y7blAndok8HxqJKdU5PbY4O6x7ZxaSPHdfHeWt856zHEpoFtBtDbobJPV
-	 CaXArvB2FXk1c0y1gindMgOx4c0l2DpbV5m0uebXs7HWbOXYxx5ScUKgiP55U5GG7/
-	 l/MIwi4Kj7iY8BtukoV3KdX9xh7XN2TVeqO4g2jo=
+	b=JqU3IcvDtaNgkAB6T2iNjZqiVKzYVn1gegdeMceFOjlunx/zWwGR0Jekz/f7NDSsi
+	 a26o5HdLJ5+4MpqfarDHG+S8qA+SdKT5C9GRm0wbgphdg5kdqyoFQX5dRLey6gc22f
+	 Xd0VtNUCh/KukL0dBjTcKSzxRH/vquUY7qQN3plg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Jaeho Cho <jaeho2025@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 649/686] Documentation/kernel-parameters: Move the kernel build options
-Date: Fri, 13 Nov 2026 10:53:02 -0500
-Message-ID: <20261113153843.764696135@linuxfoundation.org>
+Subject: [PATCH 6.18 685/686] ALSA: hda/realtek: Enable mute LEDs on HP OmniBook 7 17-dc0xxx
+Date: Fri, 13 Nov 2026 10:53:38 -0500
+Message-ID: <20261113153844.832044052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,243 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Jaeho Cho <jaeho2025@gmail.com>
 
-[ Upstream commit f690e07859e67505e7106ef5b4fae5e8b71b2109 ]
+[ Upstream commit 1c4f6202876a74e752a8cfd3696955f761671c7a ]
 
-Move the kernel build options abbreviations to the .txt file so that
-they are together instead of one having to go hunt them in the .rst
-file.
+The HP OmniBook 7 Laptop 17-dc0xxx (SSID 103c:8d9c) has mute and
+mic-mute LEDs on its F6 and F9 keys, but neither lights up. Its quirk
+entry only sets up the two CS35L41 amplifiers, so no LED control is
+registered for either key.
 
-Tweak the formatting so that the inclusion of kernel-parameters.txt
-still keeps the whole thing somewhat presentable in the html output too.
+Writing to the ALC245 by hand with hda-verb, the mute LED responds to
+COEF 0x0b bits 2-3 and the mic-mute LED to GPIO 0x04, lit when the pin
+is low. That appears to match what ALC245_FIXUP_HP_X360_MUTE_LEDS
+already does, so add a fixup that chains the two-amp I2C setup to it
+and use it for this model.
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20251112114641.8230-1-bp@kernel.org>
-Stable-dep-of: 799203afd298 ("nvme-tcp: validate the TLS handshake timeout")
+Tested on 7.2.4 with the patched module: hda::mute and hda::micmute
+are registered, and both LEDs follow the speaker and microphone mute
+state, including from the F6 and F9 keys.
+
+Signed-off-by: Jaeho Cho <jaeho2025@gmail.com>
+Link: https://patch.msgid.link/20260914142445.3476212-1-jaeho2025@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: c80286aaa4ac ("ALSA: hda/realtek: Enable mute LEDs on HP OmniBook X Flip 14-fm0xxx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/kernel-parameters.rst         | 97 +-----------------
- .../admin-guide/kernel-parameters.txt         | 98 +++++++++++++++++++
- 2 files changed, 99 insertions(+), 96 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.rst b/Documentation/admin-guide/kernel-parameters.rst
-index 7bf8cc7df6b54..02a725536cc50 100644
---- a/Documentation/admin-guide/kernel-parameters.rst
-+++ b/Documentation/admin-guide/kernel-parameters.rst
-@@ -110,102 +110,7 @@ The parameters listed below are only valid if certain kernel build options
- were enabled and if respective hardware is present. This list should be kept
- in alphabetical order. The text in square brackets at the beginning
- of each description states the restrictions within which a parameter
--is applicable::
--
--	ACPI	ACPI support is enabled.
--	AGP	AGP (Accelerated Graphics Port) is enabled.
--	ALSA	ALSA sound support is enabled.
--	APIC	APIC support is enabled.
--	APM	Advanced Power Management support is enabled.
--	APPARMOR AppArmor support is enabled.
--	ARM	ARM architecture is enabled.
--	ARM64	ARM64 architecture is enabled.
--	AX25	Appropriate AX.25 support is enabled.
--	CLK	Common clock infrastructure is enabled.
--	CMA	Contiguous Memory Area support is enabled.
--	DRM	Direct Rendering Management support is enabled.
--	DYNAMIC_DEBUG Build in debug messages and enable them at runtime
--	EARLY	Parameter processed too early to be embedded in initrd.
--	EDD	BIOS Enhanced Disk Drive Services (EDD) is enabled
--	EFI	EFI Partitioning (GPT) is enabled
--	EVM	Extended Verification Module
--	FB	The frame buffer device is enabled.
--	FTRACE	Function tracing enabled.
--	GCOV	GCOV profiling is enabled.
--	HIBERNATION HIBERNATION is enabled.
--	HW	Appropriate hardware is enabled.
--	HYPER_V HYPERV support is enabled.
--	IMA     Integrity measurement architecture is enabled.
--	IP_PNP	IP DHCP, BOOTP, or RARP is enabled.
--	IPV6	IPv6 support is enabled.
--	ISAPNP	ISA PnP code is enabled.
--	ISDN	Appropriate ISDN support is enabled.
--	ISOL	CPU Isolation is enabled.
--	JOY	Appropriate joystick support is enabled.
--	KGDB	Kernel debugger support is enabled.
--	KVM	Kernel Virtual Machine support is enabled.
--	LIBATA  Libata driver is enabled
--	LOONGARCH LoongArch architecture is enabled.
--	LOOP	Loopback device support is enabled.
--	LP	Printer support is enabled.
--	M68k	M68k architecture is enabled.
--			These options have more detailed description inside of
--			Documentation/arch/m68k/kernel-options.rst.
--	MDA	MDA console support is enabled.
--	MIPS	MIPS architecture is enabled.
--	MOUSE	Appropriate mouse support is enabled.
--	MSI	Message Signaled Interrupts (PCI).
--	MTD	MTD (Memory Technology Device) support is enabled.
--	NET	Appropriate network support is enabled.
--	NFS	Appropriate NFS support is enabled.
--	NUMA	NUMA support is enabled.
--	OF	Devicetree is enabled.
--	PARISC	The PA-RISC architecture is enabled.
--	PCI	PCI bus support is enabled.
--	PCIE	PCI Express support is enabled.
--	PCMCIA	The PCMCIA subsystem is enabled.
--	PNP	Plug & Play support is enabled.
--	PPC	PowerPC architecture is enabled.
--	PPT	Parallel port support is enabled.
--	PS2	Appropriate PS/2 support is enabled.
--	PV_OPS	A paravirtualized kernel is enabled.
--	RAM	RAM disk support is enabled.
--	RDT	Intel Resource Director Technology.
--	RISCV	RISCV architecture is enabled.
--	S390	S390 architecture is enabled.
--	SCSI	Appropriate SCSI support is enabled.
--			A lot of drivers have their options described inside
--			the Documentation/scsi/ sub-directory.
--        SDW     SoundWire support is enabled.
--	SECURITY Different security models are enabled.
--	SELINUX SELinux support is enabled.
--	SERIAL	Serial support is enabled.
--	SH	SuperH architecture is enabled.
--	SMP	The kernel is an SMP kernel.
--	SPARC	Sparc architecture is enabled.
--	SUSPEND	System suspend states are enabled.
--	SWSUSP	Software suspend (hibernation) is enabled.
--	TPM	TPM drivers are enabled.
--	UMS	USB Mass Storage support is enabled.
--	USB	USB support is enabled.
--	USBHID	USB Human Interface Device support is enabled.
--	V4L	Video For Linux support is enabled.
--	VGA	The VGA console has been enabled.
--	VMMIO   Driver for memory mapped virtio devices is enabled.
--	VT	Virtual terminal support is enabled.
--	WDT	Watchdog support is enabled.
--	X86-32	X86-32, aka i386 architecture is enabled.
--	X86-64	X86-64 architecture is enabled.
--	X86	Either 32-bit or 64-bit x86 (same as X86-32+X86-64)
--	X86_UV	SGI UV support is enabled.
--	XEN	Xen support is enabled
--	XTENSA	xtensa architecture is enabled.
--
--In addition, the following text indicates that the option::
--
--	BOOT	Is a boot loader parameter.
--	BUGS=	Relates to possible processor bugs on the said processor.
--	KNL	Is a kernel start-up parameter.
-+is applicable.
- 
- Parameters denoted with BOOT are actually interpreted by the boot
- loader, and have no meaning to the kernel directly.
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 362ff32252209..5bf1df91607eb 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -1,3 +1,101 @@
-+	ACPI	ACPI support is enabled.
-+	AGP	AGP (Accelerated Graphics Port) is enabled.
-+	ALSA	ALSA sound support is enabled.
-+	APIC	APIC support is enabled.
-+	APM	Advanced Power Management support is enabled.
-+	APPARMOR AppArmor support is enabled.
-+	ARM	ARM architecture is enabled.
-+	ARM64	ARM64 architecture is enabled.
-+	AX25	Appropriate AX.25 support is enabled.
-+	CLK	Common clock infrastructure is enabled.
-+	CMA	Contiguous Memory Area support is enabled.
-+	DRM	Direct Rendering Management support is enabled.
-+	DYNAMIC_DEBUG Build in debug messages and enable them at runtime
-+	EARLY	Parameter processed too early to be embedded in initrd.
-+	EDD	BIOS Enhanced Disk Drive Services (EDD) is enabled
-+	EFI	EFI Partitioning (GPT) is enabled
-+	EVM	Extended Verification Module
-+	FB	The frame buffer device is enabled.
-+	FTRACE	Function tracing enabled.
-+	GCOV	GCOV profiling is enabled.
-+	HIBERNATION HIBERNATION is enabled.
-+	HW	Appropriate hardware is enabled.
-+	HYPER_V HYPERV support is enabled.
-+	IMA     Integrity measurement architecture is enabled.
-+	IP_PNP	IP DHCP, BOOTP, or RARP is enabled.
-+	IPV6	IPv6 support is enabled.
-+	ISAPNP	ISA PnP code is enabled.
-+	ISDN	Appropriate ISDN support is enabled.
-+	ISOL	CPU Isolation is enabled.
-+	JOY	Appropriate joystick support is enabled.
-+	KGDB	Kernel debugger support is enabled.
-+	KVM	Kernel Virtual Machine support is enabled.
-+	LIBATA  Libata driver is enabled
-+	LOONGARCH LoongArch architecture is enabled.
-+	LOOP	Loopback device support is enabled.
-+	LP	Printer support is enabled.
-+	M68k	M68k architecture is enabled.
-+			These options have more detailed description inside of
-+			Documentation/arch/m68k/kernel-options.rst.
-+	MDA	MDA console support is enabled.
-+	MIPS	MIPS architecture is enabled.
-+	MOUSE	Appropriate mouse support is enabled.
-+	MSI	Message Signaled Interrupts (PCI).
-+	MTD	MTD (Memory Technology Device) support is enabled.
-+	NET	Appropriate network support is enabled.
-+	NFS	Appropriate NFS support is enabled.
-+	NUMA	NUMA support is enabled.
-+	OF	Devicetree is enabled.
-+	PARISC	The PA-RISC architecture is enabled.
-+	PCI	PCI bus support is enabled.
-+	PCIE	PCI Express support is enabled.
-+	PCMCIA	The PCMCIA subsystem is enabled.
-+	PNP	Plug & Play support is enabled.
-+	PPC	PowerPC architecture is enabled.
-+	PPT	Parallel port support is enabled.
-+	PS2	Appropriate PS/2 support is enabled.
-+	PV_OPS	A paravirtualized kernel is enabled.
-+	RAM	RAM disk support is enabled.
-+	RDT	Intel Resource Director Technology.
-+	RISCV	RISCV architecture is enabled.
-+	S390	S390 architecture is enabled.
-+	SCSI	Appropriate SCSI support is enabled.
-+			A lot of drivers have their options described inside
-+			the Documentation/scsi/ sub-directory.
-+        SDW     SoundWire support is enabled.
-+	SECURITY Different security models are enabled.
-+	SELINUX SELinux support is enabled.
-+	SERIAL	Serial support is enabled.
-+	SH	SuperH architecture is enabled.
-+	SMP	The kernel is an SMP kernel.
-+	SPARC	Sparc architecture is enabled.
-+	SUSPEND	System suspend states are enabled.
-+	SWSUSP	Software suspend (hibernation) is enabled.
-+	TPM	TPM drivers are enabled.
-+	UMS	USB Mass Storage support is enabled.
-+	USB	USB support is enabled.
-+	USBHID	USB Human Interface Device support is enabled.
-+	V4L	Video For Linux support is enabled.
-+	VGA	The VGA console has been enabled.
-+	VMMIO   Driver for memory mapped virtio devices is enabled.
-+	VT	Virtual terminal support is enabled.
-+	WDT	Watchdog support is enabled.
-+	X86-32	X86-32, aka i386 architecture is enabled.
-+	X86-64	X86-64 architecture is enabled.
-+	X86	Either 32-bit or 64-bit x86 (same as X86-32+X86-64)
-+	X86_UV	SGI UV support is enabled.
-+	XEN	Xen support is enabled
-+	XTENSA	xtensa architecture is enabled.
-+
-+In addition, the following text indicates that the option
-+
-+	BOOT	Is a boot loader parameter.
-+	BUGS=	Relates to possible processor bugs on the said processor.
-+	KNL	Is a kernel start-up parameter.
-+
-+
-+Kernel parameters
-+
- 	accept_memory=  [MM]
- 			Format: { eager | lazy }
- 			default: lazy
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index fabe56399f015..ebeb6297f4715 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3952,6 +3952,7 @@ enum {
+ 	ALC287_FIXUP_LEGION_16ACHG6,
+ 	ALC287_FIXUP_CS35L41_I2C_2,
+ 	ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED,
++	ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS,
+ 	ALC287_FIXUP_CS35L41_I2C_4,
+ 	ALC245_FIXUP_CS35L41_SPI_1,
+ 	ALC245_FIXUP_CS35L41_SPI_2,
+@@ -6234,6 +6235,12 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC285_FIXUP_HP_MUTE_LED,
+ 	},
++	[ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = cs35l41_fixup_i2c_two,
++		.chained = true,
++		.chain_id = ALC245_FIXUP_HP_X360_MUTE_LEDS,
++	},
+ 	[ALC287_FIXUP_CS35L41_I2C_4] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cs35l41_fixup_i2c_four,
+@@ -7143,7 +7150,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8d92, "HP ZBook Firefly 16 G12", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8dcd, "HP Victus 15-fa2xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8d9b, "HP 17 Turbine OmniBook 7 UMA", ALC287_FIXUP_CS35L41_I2C_2),
+-	SND_PCI_QUIRK(0x103c, 0x8d9c, "HP 17 Turbine OmniBook 7 DIS", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8d9c, "HP 17 Turbine OmniBook 7 DIS", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8d9d, "HP 17 Turbine OmniBook X UMA", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8d9e, "HP 17 Turbine OmniBook X DIS", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8d9f, "HP 14 Cadet (x360)", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.53.0
 
