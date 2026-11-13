@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585379;
-	b=yRti+7WDv485I0JKX6vO9D0sHyTma2fFoR11oSTDSY+MOVyadgSfobjINVuro5mBs6/1
-	 xKRz9H68f232wbqn7TKAS7e9dVsiqjmn6CkpepzOkSa7x7j9Q69trxVGaTghq9zIP+7zk
-	 U8TL6uIKnGtM9vZJQnDughl5Gfek9nLfySs/sQ4nuAHqAPv5KHZ7L9Cj2rkoOSCeYF8Mu
-	 ti91fpaRU4zcRbDhGDHmJSKFjjmRHXhj50x+A52vCdTrQK/o6AoOrYdblu7tWIQoeWSaf
-	 bIRIk2mQQupzCq9l15lzTkKGaaPrYPCtM+FwJ6EYLnPi4nA2fa+NFmOa1SjxJoVhUEw==
+	t=1794585382;
+	b=E20ei6+lxtZO5L8aVwluGW7CyprVKaZbpq4vD9KYyRZsyr4GxBQ/hs/4xQJLPsnHMni7
+	 Yh6qleqroCOiVASg1oMho68oLUsa/6kVydM0GjhuRFO5gJo9wZBjaxmVev9ubyXaN4G9f
+	 736JrQuUqwUxMrKXuGqXaWAr62lb3FjBCO1WghecolEKiLtnHbur+d8WU52uTnebLVpRV
+	 yaGQhAC/EdD9uJakO8KPHa3dy2pdbSLiaq8v//DzP1SimyHZQoJiHyvAp04jtXy2Pe8Me
+	 t6RU/19CZtla7Os76pSVOZTsRSgEs2R2JcrqQns01/KQ1PUomxFzr42FnjlGilpAShA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585379;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585382;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kp94G0rnmJjXe8eFFDBEjxapyTd/uX1gOMbFM2O0K2k=;
-	b=14CoKzL2YsI3D3f9MKtEDib3Ukoea7o+g/firAajeNAHZWGh7xHUuPZnIC7ZxdOnWrLp
-	 kkSztHGCF3wytVfWys/vgqd8+VCqjIt6oEZGhZF8gGSzkF+W55GzA4eReDUN/2wrsIEA/
-	 emcygbA39N2x15Bl18uq/aBPn74rwq9e7du546KiTZFekBhYIGWZ1jaOXWv6Rvwzs39WL
-	 +fSBWgyDcfAO5MJO/t3gwNPjBkMIIwE3PnAkudFg5jiKl4up2ctNfIolmERmeU+Z1LBjq
-	 AENEXfDg4LXidjHwPiKqnNa8Xk1KFs+48E+8gn/5Aek0SWe81Gbl0pznmz1xeZCfngw==
+	bh=1Dq4RLf55jxHV5YlBCaCbM/ko2rMABpRmz0TRhBxnlQ=;
+	b=Y8lmkka+jBI5o+ikjMfzy3nXeGFpBd5+SHQl+OUJ2W/1fss7ljpLawvsy9k6ciwgEGgI
+	 qeGyj50FCa8d080EDyvFqSVQuoD9SZikuhLi/41VRSVAugaVl1SybXu1x4KE6C781h6hJ
+	 Q+V/JDAEzl5pFcjiosL+0QRGojqfg39xuzhVWcPJjo2vkbPJOFdjXEtxiJJBqqmWejhh7
+	 nc1Gd16QPOOxK5jSOKZ2hSCF06uJMhkCnoGvtsjqYk6T4tQU/00/NmUifiLUBnv972Ukz
+	 w8lGj3yuA8lfH2qjR91/NqecEb/6lUZv19oUQ1j7F+Pq866+1SbS3CPPFz35lCqY6/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FXMIr2cr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=So7Jo3d9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34036606D462;
-	Fri, 13 Nov 2026 15:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E27606BAB3;
+	Fri, 13 Nov 2026 15:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FXMIr2cr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D460F1F000CB;
-	Fri, 13 Nov 2026 15:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=So7Jo3d9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242501F000D3;
+	Fri, 13 Nov 2026 15:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585379;
-	bh=kp94G0rnmJjXe8eFFDBEjxapyTd/uX1gOMbFM2O0K2k=;
+	s=korg; t=1794585382;
+	bh=1Dq4RLf55jxHV5YlBCaCbM/ko2rMABpRmz0TRhBxnlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FXMIr2crKIyrTUqkv5u2oKrGcuS2+ffTwDeKN52sV1Tz7MvJva5T1vDkm/VWgMnAd
-	 cvP8hj2+B5z7bkY6bZRlHFiatH2eU2RK54uWnXbMaADBPc/t9PwvvaNEsN7GD6ud6+
-	 4tBUWO6uQtcM/xzm+UYJkaIkqjtt2AyYYBuviI3w=
+	b=So7Jo3d9URzbVdGXQIsbKyyL5X1CnIuRkEp4xCQz8yAGEn5N3w/01KAhZDf8CplAr
+	 SU+mSImZaW6BVeu2lfqOULJnYX6occe1FOCk98X6l2YroBJ2GaBmXyLDxGqHgpOKQ+
+	 1SzriB9yn6vFV2IbuO6URNwmxVyJvUA73hl95GM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
+	syzbot+d5c77cabf7a3492aa650@syzkaller.appspotmail.com,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 016/507] NFSD: Send a meaningful CB_RECALL_ANY keep count
-Date: Fri, 13 Nov 2026 10:45:20 -0500
-Message-ID: <20261113153753.976483858@linuxfoundation.org>
+Subject: [PATCH 7.3 017/507] NFSD: Move the cld upcall message out of the callers stack frame
+Date: Fri, 13 Nov 2026 10:45:21 -0500
+Message-ID: <20261113153754.003406425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,122 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 9af39c0773ef956039e1ebe9c235532fe6ee1e50 ]
+[ Upstream commit c559b05610557fa3c6c30259261f6dae523b3f23 ]
 
-deleg_reaper() sets craa_objects_to_keep to zero on every
-CB_RECALL_ANY. RFC 8881 Section 20.6.3 defines that field as the
-number of objects the client may keep, leaving the client to choose
-which of the excess to return, because the server cannot read lack
-of recent use as lack of usefulness. Zero asks for every delegation
-the client holds, including the ones backing files an application
-still has open.
+__cld_pipe_upcall() builds its struct rpc_pipe_msg on the stack and
+hands it to rpc_queue_upcall(), which links it into a list the pipe
+owns until the message is released. Only the completion rules keep that
+frame alive for as long as the pipe refers to it, and the peer that
+drives those rules is an untrusted userspace daemon. The gss and idmap
+upcalls do not take that on: each keeps the message in the object it
+already allocates.
 
-There is also no reason NFSD has to reclaim the entire delegation
-working set on the first sign of memory pressure.
+Do the same here and put the message in struct cld_upcall, beside the
+reply buffer it carries. cld_pipe_destroy_msg() then reaches the upcall
+from the message directly rather than through msg->data.
 
-Derive the keep count from cl_deleg_count so that each callback
-asks for one delegation. Both the shrinker and the laundromat re-arm
-while their condition lasts, so a client with more to give is asked
-again on the next pass.
-
-The Linux client ignores craa_objects_to_keep and returns unused
-delegations selected from the type mask alone, so the count changes
-nothing for it.
-
-Fixes: 44df6f439a17 ("NFSD: add delegation reaper to react to low memory condition")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260817-recall-any-keep-count-v5-4-3b2cffce701e@kernel.org
+Reported-by: syzbot+d5c77cabf7a3492aa650@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d5c77cabf7a3492aa650
+Link: https://patch.msgid.link/20260901-alemi-v2-2-e163f94a3a6e@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
-[ sashal: Added missing prerequisites for per-client delegation counting and the directory-delegation callback mask. ]
+Stable-dep-of: 2a83fcb50f3c ("NFSD: Complete a cld upcall when the daemon closes the pipe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 24 ++++++++++++++++++++----
- fs/nfsd/state.h     |  2 ++
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4recover.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 3bdde4c1bb8eb..f0a7959401370 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1517,6 +1517,7 @@ hash_delegation_locked(struct nfs4_delegation *dp, struct nfs4_file *fp)
- 	dp->dl_stid.sc_type = SC_TYPE_DELEG;
- 	list_add(&dp->dl_perfile, &fp->fi_delegations);
- 	list_add(&dp->dl_perclnt, &clp->cl_delegations);
-+	clp->cl_deleg_count++;
- 	return 0;
- }
- 
-@@ -1548,6 +1549,7 @@ unhash_delegation_locked(struct nfs4_delegation *dp, unsigned short statusmask)
- 	++dp->dl_time;
- 	spin_lock(&fp->fi_lock);
- 	list_del_init(&dp->dl_perclnt);
-+	dp->dl_stid.sc_client->cl_deleg_count--;
- 	list_del_init(&dp->dl_recall_lru);
- 	list_del_init(&dp->dl_perfile);
- 	spin_unlock(&fp->fi_lock);
-@@ -7938,6 +7940,7 @@ deleg_reaper(struct nfsd_net *nn)
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index 6441e54283a35..6b0c51b8938b5 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -649,6 +649,7 @@ struct cld_upcall {
+ 	struct completion	 cu_done;
+ 	/* daemon has read the whole upcall; protected by cn_lock */
+ 	bool			 cu_inflight;
++	struct rpc_pipe_msg	 cu_pipe_msg;
+ 	union {
+ 		struct cld_msg_hdr	 cu_hdr;
+ 		struct cld_msg		 cu_msg;
+@@ -660,22 +661,22 @@ static int
+ __cld_pipe_upcall(struct rpc_pipe *pipe, void *cmsg, struct nfsd_net *nn)
  {
- 	struct list_head *pos, *next;
- 	struct nfs4_client *clp;
-+	unsigned int count;
+ 	int ret;
+-	struct rpc_pipe_msg msg;
+ 	struct cld_upcall *cup = container_of(cmsg, struct cld_upcall, cu_u);
++	struct rpc_pipe_msg *msg = &cup->cu_pipe_msg;
  
- 	spin_lock(&nn->client_lock);
- 	list_for_each_safe(pos, next, &nn->client_lru) {
-@@ -7947,23 +7950,36 @@ deleg_reaper(struct nfsd_net *nn)
- 			continue;
- 		if (clp->cl_state != NFSD4_ACTIVE)
- 			continue;
--		if (list_empty(&clp->cl_delegations))
--			continue;
- 		if (atomic_read(&clp->cl_delegs_in_recall))
- 			continue;
- 		if (ktime_get_boottime_seconds() - clp->cl_ra_time < 5)
- 			continue;
- 		if (clp->cl_cb_state != NFSD4_CB_UP)
- 			continue;
-+		/*
-+		 * This read races with hash_delegation_locked() and
-+		 * unhash_delegation_locked() on other CPUs. A stale
-+		 * count only skews the keep value; the next
-+		 * laundromat pass sees a more current one.
-+		 */
-+		count = data_race(READ_ONCE(clp->cl_deleg_count));
-+		if (!count)
-+			continue;
- 		if (test_and_set_bit(NFSD4_CALLBACK_RUNNING, &clp->cl_ra->ra_cb.cb_flags))
- 			continue;
+-	memset(&msg, 0, sizeof(msg));
+-	msg.data = cmsg;
+-	msg.len = nn->client_tracking_ops->msglen;
++	memset(msg, 0, sizeof(*msg));
++	msg->data = cmsg;
++	msg->len = nn->client_tracking_ops->msglen;
  
- 		/* release in nfsd4_cb_recall_any_release */
- 		kref_get(&clp->cl_nfsdfs.cl_ref);
- 		clp->cl_ra_time = ktime_get_boottime_seconds();
--		clp->cl_ra->ra_keep = 0;
-+		/*
-+		 * Ask for a single delegation. Recalling one before it
-+		 * is needed costs the client an OPEN when it next
-+		 * touches the file.
-+		 */
-+		clp->cl_ra->ra_keep = count - 1;
- 		clp->cl_ra->ra_bmval[0] = BIT(RCA4_TYPE_MASK_RDATA_DLG) |
--						BIT(RCA4_TYPE_MASK_WDATA_DLG);
-+						BIT(RCA4_TYPE_MASK_WDATA_DLG) |
-+						BIT(RCA4_TYPE_MASK_DIR_DLG);
- 		trace_nfsd_cb_recall_any(clp->cl_ra);
- 		nfsd4_run_cb(&clp->cl_ra->ra_cb);
+-	ret = rpc_queue_upcall(pipe, &msg);
++	ret = rpc_queue_upcall(pipe, msg);
+ 	if (ret < 0) {
+ 		goto out;
  	}
-diff --git a/fs/nfsd/state.h b/fs/nfsd/state.h
-index 9661c08b879e8..df35c35890d48 100644
---- a/fs/nfsd/state.h
-+++ b/fs/nfsd/state.h
-@@ -610,6 +610,8 @@ struct nfs4_client {
  
- 	unsigned int		cl_state;
- 	atomic_t		cl_delegs_in_recall;
-+	/* Length of cl_delegations, updated under nn->deleg_lock */
-+	unsigned int		cl_deleg_count;
+ 	wait_for_completion(&cup->cu_done);
  
- 	struct nfsd4_cb_recall_any	*cl_ra;
- 	time64_t		cl_ra_time;
+-	if (msg.errno < 0)
+-		ret = msg.errno;
++	if (msg->errno < 0)
++		ret = msg->errno;
+ out:
+ 	return ret;
+ }
+@@ -848,9 +849,8 @@ cld_pipe_downcall(struct file *filp, const char __user *src, size_t mlen)
+ static void
+ cld_pipe_destroy_msg(struct rpc_pipe_msg *msg)
+ {
+-	struct cld_msg *cmsg = msg->data;
+-	struct cld_upcall *cup = container_of(cmsg, struct cld_upcall,
+-						 cu_u.cu_msg);
++	struct cld_upcall *cup = container_of(msg, struct cld_upcall,
++						 cu_pipe_msg);
+ 	struct cld_net *cn = cup->cu_net;
+ 
+ 	/*
 -- 
 2.53.0
 
