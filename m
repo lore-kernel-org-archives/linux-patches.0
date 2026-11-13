@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585970;
-	b=byTU7O8sLyonggvoDj9rGes5Y2Pl4B8eqICOAlKXXUzF7Ddnqr00mW+B0orh0BNi42xG
-	 ZfiD6wDoCccLcs6wM1oQKvqGpesNfmIcE+yoS2ORicXrqKvSEf50Xk3iSA0LWvg9goDlM
-	 rjRe+LbCyYlr4FHhV0Xy3E64hmhC6ngVjWnAaKvRo4FJ36E6VXajAWZX8dYWSK+OK/elV
-	 fZUmZCD+tPGsGEn/0G3jJv4bGIq/Uh3dqQyAbwuTJ7sTGC6vYkYZYXXNA0fheSER33F+Z
-	 h8z6RsK7OvbQENhgp/aan7Pg6nEDKXJPs8smXwQP/LAidW2TGjR2ducaA3JTfJtA7pg==
+	t=1794585972;
+	b=DWh/hUch6VSxwkH2wctU3DresQeNOx95f/qEycOCofFp8lg2HhAO9C2ARfUkHFU66NOy
+	 0mWLR+PQOtSBFdQeQArJOOHEZaE/OFQZG0mfP8VKxEp4Lj1TwRu3u9AUawQ8KutQTkcSQ
+	 +YqvWcmGtl8p9Qx64lHKGWY2IC4IRT3MWw185HTzDEikASEn1EQJSHzayjzE4kIggIwe/
+	 m1mVWQ/JmBDElMb+sIk5OtqQQn3KipfKKMJo9QXGaTnko+1V6MPj7sD04CrTYwPqoSM1r
+	 0LnzwhVecNNL3ICFgXER4CBnYT4ug1TpmAV2V9GBWVCapcqwx5Tj97dQ7awCFIRSjfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585970;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CFuh9oEHB2ff+kaEt5u5M/16UMue9SOKlnJmWJflg3Q=;
-	b=mlTPCFEKldrMS8YUPeb7/mW3SbLTABtlh+RlUOU1HK0w3MJLCn3Rpga1beUSLRLOyrdN
-	 Emp8V0Xin2QQL1UYlTOOlYPg1hKD9LOygA8QJcNyZXGYkAsV9mnCzUJGZJLg4B/zYcBl0
-	 /dkonBjbx+yNU00nh6zyiiXHz/PDLdktfvNqfbH5dU93FH+hrYYYBRfyXtOCtkbmQp8aa
-	 AVnSpApRQk1ugxY70+g2zzYEAGgb6Pk42mQXGR+R4o0+h16eeF2ll2UkGrEvDkoMNbKwN
-	 7hG6NhMN7bQzOEXWTwXKi9BIUPxrtq/XBtgyFHTXsb2ZIfkIvSl9vhU2xfR7NugtAgQ==
+	bh=xVofmpHvyx4Ggj4HuESMvMQkCGqzQUSge6tw11eS2cg=;
+	b=pQ0keM0hPixHIDIFUNnuPCaoqJ+tIhJJUdsuOjEHm1Zy6TAXd0hZ1N4ut5K4Xb/h04Or
+	 cwi4KHwzXvrf9o2/yDjg5xq9As4fVV3ORtD9Z0WPOQqVdr7JwBohZITONGhqtV79JmMHW
+	 2S4nRdEuM0QFqRoKODHmA58XiYogZVTbit5Tc/HpbiXkyhWjjhrFVaM1YIiZQJV+4P1fq
+	 XIuONJz8xV2phD2p8+mnoluTE7gK+FXAu739CBQk8pBQKuvywI0QJ6WMyELblxtS3iV4u
+	 xVIvNl+o9syKGedLEcmFk0FMhWSQrpJHwHP64ud5wo6FBZ/jrwsrhYjAQkxNhUWkDdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZYimZYLY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="G/2PW6wV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4646072306;
-	Fri, 13 Nov 2026 16:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2406B6072306;
+	Fri, 13 Nov 2026 16:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZYimZYLY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE411F000C6;
-	Fri, 13 Nov 2026 16:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G/2PW6wV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EA91F000C6;
+	Fri, 13 Nov 2026 16:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585970;
-	bh=CFuh9oEHB2ff+kaEt5u5M/16UMue9SOKlnJmWJflg3Q=;
+	s=korg; t=1794585972;
+	bh=xVofmpHvyx4Ggj4HuESMvMQkCGqzQUSge6tw11eS2cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZYimZYLYqZ9lsdWhVYJNe3pfAflGGVtGySJ3S+B6SWYWytW3XvNKbt/Ov5CDo3rpN
-	 IpwwsKN9qT2Vxn8dfK4aylx3vcvSh5I8lTx4TaYu2yxQPZUZo1xF4z8YyFuqFopBLl
-	 BvXT8rCUNGUqx3djvQQlrecLGYoR5H65yV4qF4vw=
+	b=G/2PW6wV/oH1YT5Jan91s9nVpjU/oWH1Cehqtf10/1yHUsbx/On+AE6b9R9xTHm8Z
+	 QffZzaJAVjLDiRO9jbhVPAE6G1lmBtzr7X6D7gZGq7D1hpwEUU/0alv5P4OKx0R4Av
+	 SEK9PGRsUK1pbY3JNWwGXS4twBqFEUkipqs3ails=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Diego Oliva <diego@bynar.io>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 019/686] smb: move some duplicate struct definitions to common/fscc.h
-Date: Fri, 13 Nov 2026 10:42:32 -0500
-Message-ID: <20261113153821.568979222@linuxfoundation.org>
+Subject: [PATCH 6.18 020/686] smb: client: fix OOB read of the resume name sent in TRANS2_FIND_NEXT2
+Date: Fri, 13 Nov 2026 10:42:33 -0500
+Message-ID: <20261113153821.598680476@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,752 +69,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: Diego Oliva <diego@bynar.io>
 
-[ Upstream commit d7edd3892d97e6746e30f36f4f13f887ec4d80ed ]
+[ Upstream commit f8171804a39ee89a11cd462f67862899de9c6b10 ]
 
-Modify the following places:
+cifs_fill_dirent() reads the fixed part of a directory entry and the
+name length it holds, or for SMB_FIND_FILE_UNIX scans the name for its
+terminating NUL, without knowing where the response ends.
+cifs_save_resume_key() calls it for the entry at the LastNameOffset the
+server chose, after every FindNext and after the FindFirst of a search
+rewind, and records the name it returns as the resume name of the
+search without bounding it; the next CIFSFindNext() copies up to
+PATH_MAX - 1 bytes from that name into its request and sends them to
+the server. cifs_filldir() bounds
+the name against the end of the response since
+commit f8cf09a53a0d ("smb: client: bound dirent name against end of
+SMB response in cifs_filldir"), but only after cifs_fill_dirent() has
+read the entry, and nxt_dir_entry() checks the entries it walks only
+against sizeof(FILE_DIRECTORY_INFO), for every level but
+SMB_FIND_FILE_INFO_STANDARD, and never sees the first entry of a
+response.
 
-  - smb2_file_ntwrk_info -> smb2_file_network_open_info
-  - struct filesystem_device_info -> FILE_SYSTEM_DEVICE_INFO
-  - struct file_directory_info -> FILE_DIRECTORY_INFO
-  - struct file_full_directory_info -> FILE_FULL_DIRECTORY_INFO
-  - struct file_both_directory_info -> FILE_BOTH_DIRECTORY_INFO
-  - struct file_id_full_dir_info -> FILE_ID_FULL_DIR_INFO
-  - struct filesystem_posix_info -> FILE_SYSTEM_POSIX_INFO
+Bounding where last_entry starts, as the preceding patch does, does
+not bound the read. A last entry that starts within the final bytes of
+the response still has its fixed part read past the end of the
+received data, and the name length it declares, a __le32 for every
+level but SMB_FIND_FILE_INFO_STANDARD and SMB_FIND_FILE_UNIX, is
+recorded without being checked against anything. CIFSFindNext()
+rejects only a length of PATH_MAX or more, then copies the name, up to
+4095 bytes, into its request and sends it, and as the report below
+shows that copy can run past the end of the cifs_request allocation
+that holds the response. For SMB_FIND_FILE_UNIX the name is in
+addition scanned for its terminating NUL over up to PATH_MAX + 1
+UTF-16 units, or PATH_MAX bytes, before any check. The FindNext that
+carries the name is only sent by the SMB1 dialect, which is not
+negotiated by default; reaching it requires an explicit vers=1.0
+mount.
 
-The fields of these structures are exactly the same on both client and
-server, so move duplicate definitions to common header file.
+With KASAN enabled, a response whose last entry declares a name
+longer than the bytes that follow it gives:
 
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: f8171804a39e ("smb: client: fix OOB read of the resume name sent in TRANS2_FIND_NEXT2")
+ ==================================================================
+ BUG: KASAN: slab-out-of-bounds in CIFSFindNext+0x8ca/0x14c0
+ Read of size 4080 at addr ffff88807c823f98 by task ls/83
+
+ CPU: 0 UID: 0 PID: 83 Comm: ls Not tainted 7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
+ Call Trace:
+  <TASK>
+  kasan_report+0xdf/0x1a0
+  kasan_check_range+0x10f/0x1e0
+  __asan_memcpy+0x23/0x60
+  CIFSFindNext+0x8ca/0x14c0
+  cifs_readdir+0xf51/0x29c0
+  iterate_dir+0x1c0/0x570
+  __x64_sys_getdents64+0x133/0x270
+  do_syscall_64+0x109/0x5d0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  </TASK>
+
+ Allocated by task 83 on cpu 1 at 13.497119s:
+  cifs_buf_get+0x36/0x90
+  smb_init+0x4f/0x110
+  CIFSFindNext+0xf7/0x14c0
+  cifs_readdir+0xf51/0x29c0
+
+ The buggy address belongs to the object at ffff88807c820000
+  which belongs to the cache cifs_request of size 16588
+ The buggy address is located 16280 bytes inside of
+  allocated 16588-byte region [ffff88807c820000, ffff88807c8240cc)
+ ==================================================================
+
+The read is the memcpy() that copies the recorded name into the next
+request, so those bytes go to the server.
+
+Pass the end of the response to cifs_fill_dirent() and have it reject
+an entry whose fixed part does not fit or whose name extends past the
+end, before either is used, so that both callers are covered;
+cifs_save_resume_key() computes the end the same way cifs_readdir()
+does. The name bound compares the bytes left between the name and the
+end with the name length rather than adding the length to the name
+pointer, since the length is a 32-bit value taken from the entry and
+the sum could wrap on 32-bit systems. cifs_fill_dirent() is also used
+on the SMB2 readdir path; there smb2_parse_query_directory() has
+already checked every entry against the end of the response, so a
+valid SMB2 response is not rejected by the new checks. The check
+cifs_filldir() applies after the parse is left in place. The NUL scan
+for SMB_FIND_FILE_UNIX names is capped by a separate patch.
+
+An entry and its name lie inside the data area of the response, so a
+server that points LastNameOffset at the entry is not affected. One
+that points it at the file name, as MS-CIFS 2.2.6.2.2 describes, has
+its last entry rejected here; the listing is unaffected, because
+cifs_readdir() records the resume name from an entry it emitted, and
+before this series such a response could instead end the listing early,
+since a name length read from the wrong place is usually PATH_MAX or
+more, which CIFSFindNext() rejects with -EINVAL.
+
+On trees before v6.19 the type for the level 0x105 fixed part is
+spelled SEARCH_ID_FULL_DIR_INFO; adjust when backporting.
+
+Fixes: 0752f1522a91 ("[CIFS] make sure we have the right resume info before calling CIFSFindNext")
+Cc: stable@vger.kernel.org # 6.1.x: f8cf09a53a0d: smb: client: bound dirent name against end of SMB response in cifs_filldir
+Assisted-by: Bynario AI
+Signed-off-by: Diego Oliva <diego@bynar.io>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifspdu.h    |  91 -----------------------------
- fs/smb/client/inode.c      |   4 +-
- fs/smb/client/readdir.c    |   2 +-
- fs/smb/client/smb2pdu.c    |   2 +-
- fs/smb/client/smb2pdu.h    |  13 -----
- fs/smb/common/fscc.h       | 115 +++++++++++++++++++++++++++++++++++++
- fs/smb/server/smb2pdu.c    |  72 +++++++++++------------
- fs/smb/server/smb2pdu.h    |  11 ----
- fs/smb/server/smb_common.h |  92 -----------------------------
- fs/smb/server/vfs.c        |   2 +-
- 10 files changed, 156 insertions(+), 248 deletions(-)
+ fs/smb/client/readdir.c | 39 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 36 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/client/cifspdu.h b/fs/smb/client/cifspdu.h
-index 3ea8aa2a8d2db..c5c890cf3605a 100644
---- a/fs/smb/client/cifspdu.h
-+++ b/fs/smb/client/cifspdu.h
-@@ -2036,28 +2036,6 @@ typedef struct {
- 
- #define CIFS_POSIX_EXTENSIONS           0x00000010 /* support for new QFSInfo */
- 
--typedef struct {
--	/* For undefined recommended transfer size return -1 in that field */
--	__le32 OptimalTransferSize;  /* bsize on some os, iosize on other os */
--	__le32 BlockSize;
--    /* The next three fields are in terms of the block size.
--	(above). If block size is unknown, 4096 would be a
--	reasonable block size for a server to report.
--	Note that returning the blocks/blocksavail removes need
--	to make a second call (to QFSInfo level 0x103 to get this info.
--	UserBlockAvail is typically less than or equal to BlocksAvail,
--	if no distinction is made return the same value in each */
--	__le64 TotalBlocks;
--	__le64 BlocksAvail;       /* bfree */
--	__le64 UserBlocksAvail;   /* bavail */
--    /* For undefined Node fields or FSID return -1 */
--	__le64 TotalFileNodes;
--	__le64 FreeFileNodes;
--	__le64 FileSysIdentifier;   /* fsid */
--	/* NB Namelen comes from FILE_SYSTEM_ATTRIBUTE_INFO call */
--	/* NB flags can come from FILE_SYSTEM_DEVICE_INFO call   */
--} __attribute__((packed)) FILE_SYSTEM_POSIX_INFO;
--
- /* DeviceType Flags */
- #define FILE_DEVICE_CD_ROM              0x00000002
- #define FILE_DEVICE_CD_ROM_FILE_SYSTEM  0x00000003
-@@ -2092,11 +2070,6 @@ typedef struct {
- #define FILE_PORTABLE_DEVICE			0x00004000
- #define FILE_DEVICE_ALLOW_APPCONTAINER_TRAVERSAL 0x00020000
- 
--typedef struct {
--	__le32 DeviceType;
--	__le32 DeviceCharacteristics;
--} __attribute__((packed)) FILE_SYSTEM_DEVICE_INFO; /* device info level 0x104 */
--
- /* minimum includes first three fields, and empty FS Name */
- #define MIN_FS_ATTR_INFO_SIZE 12
- 
-@@ -2332,70 +2305,6 @@ typedef struct {
- 	};
- } __attribute__((packed)) FILE_UNIX_INFO; /* level 0x202 */
- 
--typedef struct {
--	__le32 NextEntryOffset;
--	__u32 FileIndex;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 EndOfFile;
--	__le64 AllocationSize;
--	__le32 ExtFileAttributes;
--	__le32 FileNameLength;
--	char FileName[];
--} __attribute__((packed)) FILE_DIRECTORY_INFO;   /* level 0x101 FF resp data */
--
--typedef struct {
--	__le32 NextEntryOffset;
--	__u32 FileIndex;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 EndOfFile;
--	__le64 AllocationSize;
--	__le32 ExtFileAttributes;
--	__le32 FileNameLength;
--	__le32 EaSize; /* length of the xattrs */
--	char FileName[];
--} __attribute__((packed)) FILE_FULL_DIRECTORY_INFO; /* level 0x102 rsp data */
--
--typedef struct {
--	__le32 NextEntryOffset;
--	__u32 FileIndex;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 EndOfFile;
--	__le64 AllocationSize;
--	__le32 ExtFileAttributes;
--	__le32 FileNameLength;
--	__le32 EaSize; /* EA size */
--	__le32 Reserved;
--	__le64 UniqueId; /* inode num - le since Samba puts ino in low 32 bit*/
--	char FileName[];
--} __attribute__((packed)) SEARCH_ID_FULL_DIR_INFO; /* level 0x105 FF rsp data */
--
--typedef struct {
--	__le32 NextEntryOffset;
--	__u32 FileIndex;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 EndOfFile;
--	__le64 AllocationSize;
--	__le32 ExtFileAttributes;
--	__le32 FileNameLength;
--	__le32 EaSize; /* length of the xattrs */
--	__u8   ShortNameLength;
--	__u8   Reserved;
--	__u8   ShortName[24];
--	char FileName[];
--} __attribute__((packed)) FILE_BOTH_DIRECTORY_INFO; /* level 0x104 FFrsp data */
--
- typedef struct {
- 	__u32  ResumeKey;
- 	__le16 CreationDate; /* SMB Date */
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index 7c638b8d5490f..d9c502efe84bc 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -1348,7 +1348,7 @@ static int cifs_get_fattr(struct cifs_open_info_data *data,
- 			/* for easier reading */
- 			FILE_ALL_INFO *fi;
- 			FILE_DIRECTORY_INFO *fdi;
--			SEARCH_ID_FULL_DIR_INFO *si;
-+			FILE_ID_FULL_DIR_INFO *si;
- 
- 			rc = cifs_backup_query_path_info(xid, tcon, sb,
- 							 full_path,
-@@ -1359,7 +1359,7 @@ static int cifs_get_fattr(struct cifs_open_info_data *data,
- 
- 			move_cifs_info_to_smb2(&data->fi, fi);
- 			fdi = (FILE_DIRECTORY_INFO *)fi;
--			si = (SEARCH_ID_FULL_DIR_INFO *)fi;
-+			si = (FILE_ID_FULL_DIR_INFO *)fi;
- 
- 			cifs_dir_info_to_fattr(fattr, fdi, cifs_sb);
- 			fattr->cf_uniqueid = le64_to_cpu(si->UniqueId);
 diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index b19c36f6a78b4..cf6b440f757b6 100644
+index cf6b440f757b6..69eb0feb7bed1 100644
 --- a/fs/smb/client/readdir.c
 +++ b/fs/smb/client/readdir.c
-@@ -559,7 +559,7 @@ static void cifs_fill_dirent_full(struct cifs_dirent *de,
+@@ -585,30 +585,46 @@ static void cifs_fill_dirent_std(struct cifs_dirent *de,
  }
  
- static void cifs_fill_dirent_search(struct cifs_dirent *de,
--		const SEARCH_ID_FULL_DIR_INFO *info)
-+		const FILE_ID_FULL_DIR_INFO *info)
+ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
+-		u16 level, bool is_unicode)
++			    const char *end, u16 level, bool is_unicode)
  {
- 	de->name = &info->FileName[0];
- 	de->namelen = le32_to_cpu(info->FileNameLength);
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index d8c97c1c63b5f..d0c56caed1626 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -5576,7 +5576,7 @@ smb2_parse_query_directory(struct cifs_tcon *tcon,
- 		info_buf_size = sizeof(FILE_DIRECTORY_INFO);
++	size_t len = end > (const char *)info ? end - (const char *)info : 0;
++
+ 	memset(de, 0, sizeof(*de));
+ 
+ 	switch (level) {
+ 	case SMB_FIND_FILE_POSIX_INFO:
++		if (len < sizeof(struct smb2_posix_info))
++			goto too_short;
+ 		cifs_fill_dirent_posix(de, info);
+ 		break;
+ 	case SMB_FIND_FILE_UNIX:
++		if (len < offsetof(FILE_UNIX_INFO, FileName))
++			goto too_short;
+ 		cifs_fill_dirent_unix(de, info, is_unicode);
+ 		break;
+ 	case SMB_FIND_FILE_DIRECTORY_INFO:
++		if (len < offsetof(FILE_DIRECTORY_INFO, FileName))
++			goto too_short;
+ 		cifs_fill_dirent_dir(de, info);
+ 		break;
+ 	case SMB_FIND_FILE_FULL_DIRECTORY_INFO:
++		if (len < offsetof(FILE_FULL_DIRECTORY_INFO, FileName))
++			goto too_short;
+ 		cifs_fill_dirent_full(de, info);
  		break;
  	case SMB_FIND_FILE_ID_FULL_DIR_INFO:
--		info_buf_size = sizeof(SEARCH_ID_FULL_DIR_INFO);
-+		info_buf_size = sizeof(FILE_ID_FULL_DIR_INFO);
++		if (len < offsetof(FILE_ID_FULL_DIR_INFO, FileName))
++			goto too_short;
+ 		cifs_fill_dirent_search(de, info);
  		break;
- 	case SMB_FIND_FILE_POSIX_INFO:
- 		/* note that posix payload are variable size */
-diff --git a/fs/smb/client/smb2pdu.h b/fs/smb/client/smb2pdu.h
-index 311758398b436..2a2f52be7d6f1 100644
---- a/fs/smb/client/smb2pdu.h
-+++ b/fs/smb/client/smb2pdu.h
-@@ -230,19 +230,6 @@ struct smb2_file_reparse_point_info {
- 	__le32 Tag;
- } __packed;
+ 	case SMB_FIND_FILE_BOTH_DIRECTORY_INFO:
++		if (len < offsetof(FILE_BOTH_DIRECTORY_INFO, FileName))
++			goto too_short;
+ 		cifs_fill_dirent_both(de, info);
+ 		break;
+ 	case SMB_FIND_FILE_INFO_STANDARD:
++		if (len < offsetof(FIND_FILE_STANDARD_INFO, FileName))
++			goto too_short;
+ 		cifs_fill_dirent_std(de, info);
+ 		break;
+ 	default:
+@@ -616,7 +632,19 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
+ 		return -EINVAL;
+ 	}
  
--struct smb2_file_network_open_info {
--	struct_group_attr(network_open_info, __packed,
--		__le64 CreationTime;
--		__le64 LastAccessTime;
--		__le64 LastWriteTime;
--		__le64 ChangeTime;
--		__le64 AllocationSize;
--		__le64 EndOfFile;
--		__le32 Attributes;
--	);
--	__le32 Reserved;
--} __packed; /* level 34 Query also similar returned in close rsp and open rsp */
--
- /* See MS-FSCC 2.4.21 */
- struct smb2_file_id_information {
- 	__le64	VolumeSerialNumber;
-diff --git a/fs/smb/common/fscc.h b/fs/smb/common/fscc.h
-index c8bfb87232ac0..6fa7c65d304b5 100644
---- a/fs/smb/common/fscc.h
-+++ b/fs/smb/common/fscc.h
-@@ -12,6 +12,88 @@
- #ifndef _COMMON_SMB_FSCC_H
- #define _COMMON_SMB_FSCC_H
- 
-+/* See MS-FSCC 2.4.8 */
-+typedef struct {
-+	__le32 NextEntryOffset;
-+	__u32 FileIndex;
-+	__le64 CreationTime;
-+	__le64 LastAccessTime;
-+	__le64 LastWriteTime;
-+	__le64 ChangeTime;
-+	__le64 EndOfFile;
-+	__le64 AllocationSize;
-+	__le32 ExtFileAttributes;
-+	__le32 FileNameLength;
-+	__le32 EaSize; /* length of the xattrs */
-+	__u8   ShortNameLength;
-+	__u8   Reserved;
-+	__u8   ShortName[24];
-+	char FileName[];
-+} __packed FILE_BOTH_DIRECTORY_INFO; /* level 0x104 FFrsp data */
++	if (de->name &&
++	    (end < de->name || (size_t)(end - de->name) < de->namelen)) {
++		cifs_dbg(VFS, "%s: search entry name extends past end of SMB\n",
++			 __func__);
++		return -EINVAL;
++	}
 +
-+/* See MS-FSCC 2.4.10 */
-+typedef struct {
-+	__le32 NextEntryOffset;
-+	__u32 FileIndex;
-+	__le64 CreationTime;
-+	__le64 LastAccessTime;
-+	__le64 LastWriteTime;
-+	__le64 ChangeTime;
-+	__le64 EndOfFile;
-+	__le64 AllocationSize;
-+	__le32 ExtFileAttributes;
-+	__le32 FileNameLength;
-+	char FileName[];
-+} __packed FILE_DIRECTORY_INFO;   /* level 0x101 FF resp data */
-+
-+/* See MS-FSCC 2.4.14 */
-+typedef struct {
-+	__le32 NextEntryOffset;
-+	__u32 FileIndex;
-+	__le64 CreationTime;
-+	__le64 LastAccessTime;
-+	__le64 LastWriteTime;
-+	__le64 ChangeTime;
-+	__le64 EndOfFile;
-+	__le64 AllocationSize;
-+	__le32 ExtFileAttributes;
-+	__le32 FileNameLength;
-+	__le32 EaSize; /* length of the xattrs */
-+	char FileName[];
-+} __packed FILE_FULL_DIRECTORY_INFO; /* level 0x102 rsp data */
-+
-+/* See MS-FSCC 2.4.24 */
-+typedef struct {
-+	__le32 NextEntryOffset;
-+	__u32 FileIndex;
-+	__le64 CreationTime;
-+	__le64 LastAccessTime;
-+	__le64 LastWriteTime;
-+	__le64 ChangeTime;
-+	__le64 EndOfFile;
-+	__le64 AllocationSize;
-+	__le32 ExtFileAttributes;
-+	__le32 FileNameLength;
-+	__le32 EaSize; /* EA size */
-+	__le32 Reserved;
-+	__le64 UniqueId; /* inode num - le since Samba puts ino in low 32 bit*/
-+	char FileName[];
-+} __packed FILE_ID_FULL_DIR_INFO; /* level 0x105 FF rsp data */
-+
-+/* See MS-FSCC 2.4.34 */
-+struct smb2_file_network_open_info {
-+	struct_group_attr(network_open_info, __packed,
-+		__le64 CreationTime;
-+		__le64 LastAccessTime;
-+		__le64 LastWriteTime;
-+		__le64 ChangeTime;
-+		__le64 AllocationSize;
-+		__le64 EndOfFile;
-+		__le32 Attributes;
-+	);
-+	__le32 Reserved;
-+} __packed; /* level 34 Query also similar returned in close rsp and open rsp */
-+
- /* List of FileSystemAttributes - see MS-FSCC 2.5.1 */
- #define FILE_SUPPORTS_SPARSE_VDL	0x10000000 /* faster nonsparse extend */
- #define FILE_SUPPORTS_BLOCK_REFCOUNTING	0x08000000 /* allow ioctl dup extents */
-@@ -39,4 +121,37 @@
- #define FILE_CASE_PRESERVED_NAMES	0x00000002
- #define FILE_CASE_SENSITIVE_SEARCH	0x00000001
- 
-+/* See MS-FSCC 2.5.10 */
-+typedef struct {
-+	__le32 DeviceType;
-+	__le32 DeviceCharacteristics;
-+} __packed FILE_SYSTEM_DEVICE_INFO; /* device info level 0x104 */
-+
-+/*
-+ * See POSIX Extensions to MS-FSCC 2.3.2.1
-+ * Link: https://gitlab.com/samba-team/smb3-posix-spec/-/blob/master/fscc_posix_extensions.md
-+ */
-+typedef struct {
-+	/* For undefined recommended transfer size return -1 in that field */
-+	__le32 OptimalTransferSize;  /* bsize on some os, iosize on other os */
-+	__le32 BlockSize;
-+	/* The next three fields are in terms of the block size.
-+	 * (above). If block size is unknown, 4096 would be a
-+	 * reasonable block size for a server to report.
-+	 * Note that returning the blocks/blocksavail removes need
-+	 * to make a second call (to QFSInfo level 0x103 to get this info.
-+	 * UserBlockAvail is typically less than or equal to BlocksAvail,
-+	 * if no distinction is made return the same value in each
-+	 */
-+	__le64 TotalBlocks;
-+	__le64 BlocksAvail;       /* bfree */
-+	__le64 UserBlocksAvail;   /* bavail */
-+	/* For undefined Node fields or FSID return -1 */
-+	__le64 TotalFileNodes;
-+	__le64 FreeFileNodes;
-+	__le64 FileSysIdentifier;   /* fsid */
-+	/* NB Namelen comes from FILE_SYSTEM_ATTRIBUTE_INFO call */
-+	/* NB flags can come from FILE_SYSTEM_DEVICE_INFO call   */
-+} __packed FILE_SYSTEM_POSIX_INFO;
-+
- #endif /* _COMMON_SMB_FSCC_H */
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 33b4708cc214c..c784aa6d9b6ad 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3965,15 +3965,15 @@ static int readdir_info_level_struct_sz(int info_level)
- {
- 	switch (info_level) {
- 	case FILE_FULL_DIRECTORY_INFORMATION:
--		return sizeof(struct file_full_directory_info);
-+		return sizeof(FILE_FULL_DIRECTORY_INFO);
- 	case FILE_BOTH_DIRECTORY_INFORMATION:
--		return sizeof(struct file_both_directory_info);
-+		return sizeof(FILE_BOTH_DIRECTORY_INFO);
- 	case FILE_DIRECTORY_INFORMATION:
--		return sizeof(struct file_directory_info);
-+		return sizeof(FILE_DIRECTORY_INFO);
- 	case FILE_NAMES_INFORMATION:
- 		return sizeof(struct file_names_info);
- 	case FILEID_FULL_DIRECTORY_INFORMATION:
--		return sizeof(struct file_id_full_dir_info);
-+		return sizeof(FILE_ID_FULL_DIR_INFO);
- 	case FILEID_BOTH_DIRECTORY_INFORMATION:
- 		return sizeof(struct file_id_both_directory_info);
- 	case SMB_FIND_FILE_POSIX_INFO:
-@@ -3988,9 +3988,9 @@ static int dentry_name(struct ksmbd_dir_info *d_info, int info_level)
- 	switch (info_level) {
- 	case FILE_FULL_DIRECTORY_INFORMATION:
- 	{
--		struct file_full_directory_info *ffdinfo;
-+		FILE_FULL_DIRECTORY_INFO *ffdinfo;
- 
--		ffdinfo = (struct file_full_directory_info *)d_info->rptr;
-+		ffdinfo = (FILE_FULL_DIRECTORY_INFO *)d_info->rptr;
- 		d_info->rptr += le32_to_cpu(ffdinfo->NextEntryOffset);
- 		d_info->name = ffdinfo->FileName;
- 		d_info->name_len = le32_to_cpu(ffdinfo->FileNameLength);
-@@ -3998,9 +3998,9 @@ static int dentry_name(struct ksmbd_dir_info *d_info, int info_level)
- 	}
- 	case FILE_BOTH_DIRECTORY_INFORMATION:
- 	{
--		struct file_both_directory_info *fbdinfo;
-+		FILE_BOTH_DIRECTORY_INFO *fbdinfo;
- 
--		fbdinfo = (struct file_both_directory_info *)d_info->rptr;
-+		fbdinfo = (FILE_BOTH_DIRECTORY_INFO *)d_info->rptr;
- 		d_info->rptr += le32_to_cpu(fbdinfo->NextEntryOffset);
- 		d_info->name = fbdinfo->FileName;
- 		d_info->name_len = le32_to_cpu(fbdinfo->FileNameLength);
-@@ -4008,9 +4008,9 @@ static int dentry_name(struct ksmbd_dir_info *d_info, int info_level)
- 	}
- 	case FILE_DIRECTORY_INFORMATION:
- 	{
--		struct file_directory_info *fdinfo;
-+		FILE_DIRECTORY_INFO *fdinfo;
- 
--		fdinfo = (struct file_directory_info *)d_info->rptr;
-+		fdinfo = (FILE_DIRECTORY_INFO *)d_info->rptr;
- 		d_info->rptr += le32_to_cpu(fdinfo->NextEntryOffset);
- 		d_info->name = fdinfo->FileName;
- 		d_info->name_len = le32_to_cpu(fdinfo->FileNameLength);
-@@ -4028,9 +4028,9 @@ static int dentry_name(struct ksmbd_dir_info *d_info, int info_level)
- 	}
- 	case FILEID_FULL_DIRECTORY_INFORMATION:
- 	{
--		struct file_id_full_dir_info *dinfo;
-+		FILE_ID_FULL_DIR_INFO *dinfo;
- 
--		dinfo = (struct file_id_full_dir_info *)d_info->rptr;
-+		dinfo = (FILE_ID_FULL_DIR_INFO *)d_info->rptr;
- 		d_info->rptr += le32_to_cpu(dinfo->NextEntryOffset);
- 		d_info->name = dinfo->FileName;
- 		d_info->name_len = le32_to_cpu(dinfo->FileNameLength);
-@@ -4113,9 +4113,9 @@ static int smb2_populate_readdir_entry(struct ksmbd_conn *conn, int info_level,
- 	switch (info_level) {
- 	case FILE_FULL_DIRECTORY_INFORMATION:
- 	{
--		struct file_full_directory_info *ffdinfo;
-+		FILE_FULL_DIRECTORY_INFO *ffdinfo;
- 
--		ffdinfo = (struct file_full_directory_info *)kstat;
-+		ffdinfo = (FILE_FULL_DIRECTORY_INFO *)kstat;
- 		ffdinfo->FileNameLength = cpu_to_le32(conv_len);
- 		ffdinfo->EaSize =
- 			smb2_get_reparse_tag_special_file(ksmbd_kstat->kstat->mode);
-@@ -4129,9 +4129,9 @@ static int smb2_populate_readdir_entry(struct ksmbd_conn *conn, int info_level,
- 	}
- 	case FILE_BOTH_DIRECTORY_INFORMATION:
- 	{
--		struct file_both_directory_info *fbdinfo;
-+		FILE_BOTH_DIRECTORY_INFO *fbdinfo;
- 
--		fbdinfo = (struct file_both_directory_info *)kstat;
-+		fbdinfo = (FILE_BOTH_DIRECTORY_INFO *)kstat;
- 		fbdinfo->FileNameLength = cpu_to_le32(conv_len);
- 		fbdinfo->EaSize =
- 			smb2_get_reparse_tag_special_file(ksmbd_kstat->kstat->mode);
-@@ -4147,9 +4147,9 @@ static int smb2_populate_readdir_entry(struct ksmbd_conn *conn, int info_level,
- 	}
- 	case FILE_DIRECTORY_INFORMATION:
- 	{
--		struct file_directory_info *fdinfo;
-+		FILE_DIRECTORY_INFO *fdinfo;
- 
--		fdinfo = (struct file_directory_info *)kstat;
-+		fdinfo = (FILE_DIRECTORY_INFO *)kstat;
- 		fdinfo->FileNameLength = cpu_to_le32(conv_len);
- 		if (d_info->hide_dot_file && d_info->name[0] == '.')
- 			fdinfo->ExtFileAttributes |= FILE_ATTRIBUTE_HIDDEN_LE;
-@@ -4169,9 +4169,9 @@ static int smb2_populate_readdir_entry(struct ksmbd_conn *conn, int info_level,
- 	}
- 	case FILEID_FULL_DIRECTORY_INFORMATION:
- 	{
--		struct file_id_full_dir_info *dinfo;
-+		FILE_ID_FULL_DIR_INFO *dinfo;
- 
--		dinfo = (struct file_id_full_dir_info *)kstat;
-+		dinfo = (FILE_ID_FULL_DIR_INFO *)kstat;
- 		dinfo->FileNameLength = cpu_to_le32(conv_len);
- 		dinfo->EaSize =
- 			smb2_get_reparse_tag_special_file(ksmbd_kstat->kstat->mode);
-@@ -4375,9 +4375,9 @@ static int reserve_populate_dentry(struct ksmbd_dir_info *d_info,
- 	switch (info_level) {
- 	case FILE_FULL_DIRECTORY_INFORMATION:
- 	{
--		struct file_full_directory_info *ffdinfo;
-+		FILE_FULL_DIRECTORY_INFO *ffdinfo;
- 
--		ffdinfo = (struct file_full_directory_info *)d_info->wptr;
-+		ffdinfo = (FILE_FULL_DIRECTORY_INFO *)d_info->wptr;
- 		memcpy(ffdinfo->FileName, d_info->name, d_info->name_len);
- 		ffdinfo->FileName[d_info->name_len] = 0x00;
- 		ffdinfo->FileNameLength = cpu_to_le32(d_info->name_len);
-@@ -4386,9 +4386,9 @@ static int reserve_populate_dentry(struct ksmbd_dir_info *d_info,
- 	}
- 	case FILE_BOTH_DIRECTORY_INFORMATION:
- 	{
--		struct file_both_directory_info *fbdinfo;
-+		FILE_BOTH_DIRECTORY_INFO *fbdinfo;
- 
--		fbdinfo = (struct file_both_directory_info *)d_info->wptr;
-+		fbdinfo = (FILE_BOTH_DIRECTORY_INFO *)d_info->wptr;
- 		memcpy(fbdinfo->FileName, d_info->name, d_info->name_len);
- 		fbdinfo->FileName[d_info->name_len] = 0x00;
- 		fbdinfo->FileNameLength = cpu_to_le32(d_info->name_len);
-@@ -4397,9 +4397,9 @@ static int reserve_populate_dentry(struct ksmbd_dir_info *d_info,
- 	}
- 	case FILE_DIRECTORY_INFORMATION:
- 	{
--		struct file_directory_info *fdinfo;
-+		FILE_DIRECTORY_INFO *fdinfo;
- 
--		fdinfo = (struct file_directory_info *)d_info->wptr;
-+		fdinfo = (FILE_DIRECTORY_INFO *)d_info->wptr;
- 		memcpy(fdinfo->FileName, d_info->name, d_info->name_len);
- 		fdinfo->FileName[d_info->name_len] = 0x00;
- 		fdinfo->FileNameLength = cpu_to_le32(d_info->name_len);
-@@ -4419,9 +4419,9 @@ static int reserve_populate_dentry(struct ksmbd_dir_info *d_info,
- 	}
- 	case FILEID_FULL_DIRECTORY_INFORMATION:
- 	{
--		struct file_id_full_dir_info *dinfo;
-+		FILE_ID_FULL_DIR_INFO *dinfo;
- 
--		dinfo = (struct file_id_full_dir_info *)d_info->wptr;
-+		dinfo = (FILE_ID_FULL_DIR_INFO *)d_info->wptr;
- 		memcpy(dinfo->FileName, d_info->name, d_info->name_len);
- 		dinfo->FileName[d_info->name_len] = 0x00;
- 		dinfo->FileNameLength = cpu_to_le32(d_info->name_len);
-@@ -4686,7 +4686,7 @@ int smb2_query_dir(struct ksmbd_work *work)
- 			goto err_out;
- 	} else {
- no_buf_len:
--		((struct file_directory_info *)
-+		((FILE_DIRECTORY_INFO *)
- 		((char *)rsp->Buffer + d_info.last_entry_offset))
- 		->NextEntryOffset = 0;
- 		if (d_info.data_count >= d_info.last_entry_off_align)
-@@ -5341,7 +5341,7 @@ static int get_file_internal_info(struct smb2_query_info_rsp *rsp,
- static int get_file_network_open_info(struct smb2_query_info_rsp *rsp,
- 				      struct ksmbd_file *fp, void *rsp_org)
- {
--	struct smb2_file_ntwrk_info *file_info;
-+	struct smb2_file_network_open_info *file_info;
- 	struct kstat stat;
- 	u64 time;
- 	int ret;
-@@ -5357,7 +5357,7 @@ static int get_file_network_open_info(struct smb2_query_info_rsp *rsp,
- 	if (ret)
- 		return ret;
- 
--	file_info = (struct smb2_file_ntwrk_info *)rsp->Buffer;
-+	file_info = (struct smb2_file_network_open_info *)rsp->Buffer;
- 
- 	file_info->CreationTime = cpu_to_le64(fp->create_time);
- 	time = ksmbd_UnixTimeToNT(stat.atime);
-@@ -5376,7 +5376,7 @@ static int get_file_network_open_info(struct smb2_query_info_rsp *rsp,
- 	}
- 	file_info->Reserved = cpu_to_le32(0);
- 	rsp->OutputBufferLength =
--		cpu_to_le32(sizeof(struct smb2_file_ntwrk_info));
-+		cpu_to_le32(sizeof(struct smb2_file_network_open_info));
  	return 0;
++
++too_short:
++	cifs_dbg(VFS, "%s: search entry extends past end of SMB\n",
++		 __func__);
++	return -EINVAL;
  }
  
-@@ -5714,9 +5714,9 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 	switch (fsinfoclass) {
- 	case FS_DEVICE_INFORMATION:
- 	{
--		struct filesystem_device_info *info;
-+		FILE_SYSTEM_DEVICE_INFO *info;
- 
--		info = (struct filesystem_device_info *)rsp->Buffer;
-+		info = (FILE_SYSTEM_DEVICE_INFO *)rsp->Buffer;
- 
- 		info->DeviceType = cpu_to_le32(FILE_DEVICE_DISK);
- 		info->DeviceCharacteristics =
-@@ -5882,14 +5882,14 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 	}
- 	case FS_POSIX_INFORMATION:
- 	{
--		struct filesystem_posix_info *info;
-+		FILE_SYSTEM_POSIX_INFO *info;
- 
- 		if (!work->tcon->posix_extensions) {
- 			pr_err("client doesn't negotiate with SMB3.1.1 POSIX Extensions\n");
- 			path_put(&path);
- 			return -EOPNOTSUPP;
- 		} else {
--			info = (struct filesystem_posix_info *)(rsp->Buffer);
-+			info = (FILE_SYSTEM_POSIX_INFO *)(rsp->Buffer);
- 			info->OptimalTransferSize = cpu_to_le32(stfs.f_bsize);
- 			info->BlockSize = cpu_to_le32(stfs.f_bsize);
- 			info->TotalBlocks = cpu_to_le64(stfs.f_blocks);
-diff --git a/fs/smb/server/smb2pdu.h b/fs/smb/server/smb2pdu.h
-index 0a294378c73d3..ea07c5552f41e 100644
---- a/fs/smb/server/smb2pdu.h
-+++ b/fs/smb/server/smb2pdu.h
-@@ -224,17 +224,6 @@ struct smb2_file_stream_info {
- 	char   StreamName[];
- } __packed;
- 
--struct smb2_file_ntwrk_info {
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 AllocationSize;
--	__le64 EndOfFile;
--	__le32 Attributes;
--	__le32 Reserved;
--} __packed;
--
- struct smb2_file_standard_info {
- 	__le64 AllocationSize;
- 	__le64 EndOfFile;
-diff --git a/fs/smb/server/smb_common.h b/fs/smb/server/smb_common.h
-index bea0a250169c3..d6f72195482f9 100644
---- a/fs/smb/server/smb_common.h
-+++ b/fs/smb/server/smb_common.h
-@@ -112,11 +112,6 @@ struct filesystem_attribute_info {
- 	__le16 FileSystemName[]; /* do not have to save this - get subset? */
- } __packed;
- 
--struct filesystem_device_info {
--	__le32 DeviceType;
--	__le32 DeviceCharacteristics;
--} __packed; /* device info level 0x104 */
--
- struct filesystem_vol_info {
- 	__le64 VolumeCreationTime;
- 	__le32 SerialNumber;
-@@ -148,20 +143,6 @@ struct object_id_info {
- 	struct fs_extended_info extended_info;
- } __packed;
- 
--struct file_directory_info {
--	__le32 NextEntryOffset;
--	__u32 FileIndex;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 EndOfFile;
--	__le64 AllocationSize;
--	__le32 ExtFileAttributes;
--	__le32 FileNameLength;
--	char FileName[];
--} __packed;   /* level 0x101 FF resp data */
--
- struct file_names_info {
- 	__le32 NextEntryOffset;
- 	__u32 FileIndex;
-@@ -169,39 +150,6 @@ struct file_names_info {
- 	char FileName[];
- } __packed;   /* level 0xc FF resp data */
- 
--struct file_full_directory_info {
--	__le32 NextEntryOffset;
--	__u32 FileIndex;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 EndOfFile;
--	__le64 AllocationSize;
--	__le32 ExtFileAttributes;
--	__le32 FileNameLength;
--	__le32 EaSize;
--	char FileName[];
--} __packed; /* level 0x102 FF resp */
--
--struct file_both_directory_info {
--	__le32 NextEntryOffset;
--	__u32 FileIndex;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 EndOfFile;
--	__le64 AllocationSize;
--	__le32 ExtFileAttributes;
--	__le32 FileNameLength;
--	__le32 EaSize; /* length of the xattrs */
--	__u8   ShortNameLength;
--	__u8   Reserved;
--	__u8   ShortName[24];
--	char FileName[];
--} __packed; /* level 0x104 FFrsp data */
--
- struct file_id_both_directory_info {
- 	__le32 NextEntryOffset;
- 	__u32 FileIndex;
-@@ -222,46 +170,6 @@ struct file_id_both_directory_info {
- 	char FileName[];
- } __packed;
- 
--struct file_id_full_dir_info {
--	__le32 NextEntryOffset;
--	__u32 FileIndex;
--	__le64 CreationTime;
--	__le64 LastAccessTime;
--	__le64 LastWriteTime;
--	__le64 ChangeTime;
--	__le64 EndOfFile;
--	__le64 AllocationSize;
--	__le32 ExtFileAttributes;
--	__le32 FileNameLength;
--	__le32 EaSize; /* EA size */
--	__le32 Reserved;
--	__le64 UniqueId; /* inode num - le since Samba puts ino in low 32 bit*/
--	char FileName[];
--} __packed; /* level 0x105 FF rsp data */
--
--struct filesystem_posix_info {
--	/* For undefined recommended transfer size return -1 in that field */
--	__le32 OptimalTransferSize;  /* bsize on some os, iosize on other os */
--	__le32 BlockSize;
--	/* The next three fields are in terms of the block size.
--	 * (above). If block size is unknown, 4096 would be a
--	 * reasonable block size for a server to report.
--	 * Note that returning the blocks/blocksavail removes need
--	 * to make a second call (to QFSInfo level 0x103 to get this info.
--	 * UserBlockAvail is typically less than or equal to BlocksAvail,
--	 * if no distinction is made return the same value in each
--	 */
--	__le64 TotalBlocks;
--	__le64 BlocksAvail;       /* bfree */
--	__le64 UserBlocksAvail;   /* bavail */
--	/* For undefined Node fields or FSID return -1 */
--	__le64 TotalFileNodes;
--	__le64 FreeFileNodes;
--	__le64 FileSysIdentifier;   /* fsid */
--	/* NB Namelen comes from FILE_SYSTEM_ATTRIBUTE_INFO call */
--	/* NB flags can come from FILE_SYSTEM_DEVICE_INFO call   */
--} __packed;
--
- struct smb_version_ops {
- 	u16 (*get_cmd_val)(struct ksmbd_work *swork);
- 	int (*init_rsp_hdr)(struct ksmbd_work *swork);
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 130dd0a4001f2..c470d419e7ce8 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1798,7 +1798,7 @@ int ksmbd_vfs_get_dos_attrib_xattr(struct mnt_idmap *idmap,
-  */
- void *ksmbd_vfs_init_kstat(char **p, struct ksmbd_kstat *ksmbd_kstat)
+ #define UNICODE_DOT cpu_to_le16(0x2e)
+@@ -671,10 +699,14 @@ static int is_dir_changed(struct file *file)
+ static int cifs_save_resume_key(const char *current_entry,
+ 	struct cifsFileInfo *file_info)
  {
--	struct file_directory_info *info = (struct file_directory_info *)(*p);
-+	FILE_DIRECTORY_INFO *info = (FILE_DIRECTORY_INFO *)(*p);
- 	struct kstat *kstat = ksmbd_kstat->kstat;
- 	u64 time;
++	struct TCP_Server_Info *server = tlink_tcon(file_info->tlink)->ses->server;
++	char *buf = file_info->srch_inf.ntwrk_buf_start;
++	const char *end = buf + server->ops->calc_smb_size(buf);
+ 	struct cifs_dirent de;
+ 	int rc;
  
+-	rc = cifs_fill_dirent(&de, current_entry, file_info->srch_inf.info_level,
++	rc = cifs_fill_dirent(&de, current_entry, end,
++			      file_info->srch_inf.info_level,
+ 			      file_info->srch_inf.unicode);
+ 	if (!rc) {
+ 		file_info->srch_inf.presume_name = de.name;
+@@ -973,7 +1005,8 @@ static int cifs_filldir(char *find_entry, struct file *file,
+ 	struct qstr name;
+ 	int rc = 0;
+ 
+-	rc = cifs_fill_dirent(&de, find_entry, file_info->srch_inf.info_level,
++	rc = cifs_fill_dirent(&de, find_entry, end_of_smb,
++			      file_info->srch_inf.info_level,
+ 			      file_info->srch_inf.unicode);
+ 	if (rc)
+ 		return rc;
 -- 
 2.53.0
 
