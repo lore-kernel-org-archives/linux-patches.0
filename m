@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591618;
-	b=MQKayPfq1xAl1LIZU1Aekx0DnKR/cqZ7CSSIvoJ6/gxaJoLGnOBko9TBKQiHI3vVPhlV
-	 MEPcBCnGcKnFPQ+BdVRHb7WP3W4AwN4MVDsbEh26JEcJALUqE7GUAOx1187I9nToWmbYp
-	 iWGKfupE+MiXVlyfmyEUmrYEiwwTFA01/IeSrQf+ROTHi9i2B0BU3TkpiNpofnStCzcb5
-	 JHMdAIejAgg+qU62+RcYiqprTvqZR8OlGAmjjB3dbbykfmuajjFIIhSho2J0N1PVLZwYh
-	 WzPrxVloGTwAAtd4/ObxeI/pZ3+lT3lh0CgldSJUqQoY8ldBqqxTvGSe3Mb+b/kD3Iw==
+	t=1794591619;
+	b=bWrPsNfjp9Q+DjUjbSuVD0892+wqJHteq3kkMT3FpZWxGEZ/YELqtM/OEzYUr36a0Y8U
+	 4aPDE6TroAKcUPQfAYmoIbz1+WdHNsQ7FPVEHONs1NoIPPKdxripybk78gnnaJsGlo//d
+	 MGTGKQsuJpmZN4OsrJZ/hozuCWkGcJ5DndvyiuCYXBf1GP+Zm8ItScQWAhORrbOzlA4Jo
+	 MDaK7m+tme8ALmH9VSDxoJxdY2c3j2evVhy79Qi2bNmkoX+w5qK1HOjxY0z+tGRhfWuuB
+	 FSbvMCDm+vKQscQmXUxLc14/eBbSvcz8ONoy6+HYnqc2jcZXx4K+CsaZFpHL0e01JQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591618;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591619;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wH5Rg5oiUex5TpMlkwDRMHbbAlQx1Ox38+vVIqN/fXM=;
-	b=tPbzevswOczvYXl8FMqpOmGG5yJpO+BlHY8OdjsoS8LAvfLXZg24/IUheB+2MvlN5b1j
-	 0j+3subeLDj9feYezXik8nOCRDeDJEKgeZqUrxO+7llMzTTa1UXaeKglPWadqIoqC/y1y
-	 xae5lAz2OuV5G9UQvxD4Vy1ouqOjtYyRKcxYtcGZKBccUyUVuW9yIQhbXt0+USIrZzuCp
-	 /jLcHLaTHD9BUl82vwcDgXak4k7jTaqd3qWhqLnzxY8/WRJpH/V3IC7tppulZL0mrB/Gr
-	 fjM03e/nOeFlU15pMaPlDT0gSjKCtjBwIa/4q1RNH+HNb6KrJL5StP2CJDeRhv300UQ==
+	bh=kKIiK8/WdIgK2Tj4UgbENII763D3xKguVs3Bt97VvI4=;
+	b=qHKjImQymMclJE5WCrxmwc5rSTOmJr0C+OmQJ530eyD54ZVR7FxQuHS/oe27kLUVJi0w
+	 xhQlvR2uDv9lfIPfd+V7ffuihi3GfqIYebqaWojAuK6TbJyxriAve4y4+5ceHY4OA1gEN
+	 0iKsdHFS5uOId+GOTaSbJK8fmL22pYHPFpEKTnt4DXt6j/drYE1pQ/yjyikhQRklzJVCh
+	 PZpMLhT8dZ9CjkGHlohnF8FepuVnaU3sAgBL2ptVASjcS2gnb3Et/Okoo7Hl0Et45eR+y
+	 NCI4zNIBPL25nGUjGHrFDHUv6wkU5Ji977f/SjDy3Jsz5dsmFr+sp7wTUQoe+D79hxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h1uhBMyR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G1ZbCmnr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01474606B47A;
-	Fri, 13 Nov 2026 17:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3897E607E835;
+	Fri, 13 Nov 2026 17:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h1uhBMyR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A177B1F000C4;
-	Fri, 13 Nov 2026 17:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G1ZbCmnr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82301F000C4;
+	Fri, 13 Nov 2026 17:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591617;
-	bh=wH5Rg5oiUex5TpMlkwDRMHbbAlQx1Ox38+vVIqN/fXM=;
+	s=korg; t=1794591619;
+	bh=kKIiK8/WdIgK2Tj4UgbENII763D3xKguVs3Bt97VvI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h1uhBMyR8+gcsmEpFB+ZmzKfvlbYmhvevGNPhOyuV7VNKtUt4242s0Usz5Fferw0l
-	 wYSa7oJdgWWMsExNTEjw7mKfkX1dd4QK5Wnl5ONJOkPgql+UBTNGCmvblQnrBHJBzD
-	 KBof4io/cMzRVmj9xwBg3XPYFc4WkOPjlR5hhkuY=
+	b=G1ZbCmnrWs0oq4pRZvg0idJWYFa/s2WZBUisUbBWksmYMT9nVYtHPTFIyV5GN9hD2
+	 XdOYoNXYQkGKwuYFQFlO8OfAWIORZX4t9Yf7yqJBRsKVx6hgwV54gRPedTCcxqw0+b
+	 b99PlQXMt0f7lSeYyZ01yEIZjH6KYNp3AK5aifNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 651/670] crypto: omap - add omap_sham_unregister_algs helper
-Date: Fri, 13 Nov 2026 10:53:35 -0500
-Message-ID: <20261113153833.930605274@linuxfoundation.org>
+Subject: [PATCH 6.12 660/670] power: supply: core: get rid of of_node
+Date: Fri, 13 Nov 2026 10:53:44 -0500
+Message-ID: <20261113153834.269695466@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,80 +68,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit c3494e6fbb35579a131de11369b658a59b1323e5 ]
+[ Upstream commit 134254038739a6c6ecb7548a2f895d89a0dc9d2a ]
 
-Add a new helper omap_sham_unregister_algs() and replace two for loops
-in omap_sham_probe() and omap_sham_remove(), which also ensure
-->registered is reset to 0.
+This removes .of_node from 'struct power_supply', since there
+is already a copy in .dev.of_node and there is no need to have
+two copies.
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: be51ea091c65 ("crypto: omap-sham - fix crypto engine cleanup")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20250225-psy-core-convert-to-fwnode-v1-1-d5e4369936bb@collabora.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: 6bd80f22c764 ("power: supply: core: Honor supplied-from with CONFIG_OF=y")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/omap-sham.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/power/supply/power_supply_core.c | 17 ++++++++---------
+ include/linux/power_supply.h             |  1 -
+ 2 files changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/crypto/omap-sham.c b/drivers/crypto/omap-sham.c
-index d17654c0410f6..51842cf61995a 100644
---- a/drivers/crypto/omap-sham.c
-+++ b/drivers/crypto/omap-sham.c
-@@ -2045,6 +2045,20 @@ static const struct attribute_group omap_sham_attr_group = {
- 	.attrs = omap_sham_attrs,
- };
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index 515772e2ab51e..ae0e11146a1fb 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -197,11 +197,11 @@ static int __power_supply_populate_supplied_from(struct power_supply *epsy,
+ 	int i = 0;
  
-+static void omap_sham_unregister_algs(const struct omap_sham_pdata *pdata)
-+{
-+	struct omap_sham_algs_info *alg_info;
-+	int i;
-+
-+	for (i = pdata->algs_info_size - 1; i >= 0; i--) {
-+		alg_info = &pdata->algs_info[i];
-+
-+		crypto_engine_unregister_ahashes(alg_info->algs_list,
-+						 alg_info->registered);
-+		alg_info->registered = 0;
-+	}
-+}
-+
- static int omap_sham_probe(struct platform_device *pdev)
- {
- 	struct omap_sham_dev *dd;
-@@ -2168,10 +2182,7 @@ static int omap_sham_probe(struct platform_device *pdev)
+ 	do {
+-		np = of_parse_phandle(psy->of_node, "power-supplies", i++);
++		np = of_parse_phandle(psy->dev.of_node, "power-supplies", i++);
+ 		if (!np)
+ 			break;
+ 
+-		if (np == epsy->of_node) {
++		if (np == epsy->dev.of_node) {
+ 			dev_dbg(&psy->dev, "%s: Found supply : %s\n",
+ 				psy->desc->name, epsy->desc->name);
+ 			psy->supplied_from[i-1] = (char *)epsy->desc->name;
+@@ -232,7 +232,7 @@ static int  __power_supply_find_supply_from_node(struct power_supply *epsy,
+ 	struct device_node *np = data;
+ 
+ 	/* returning non-zero breaks out of power_supply_for_each_psy loop */
+-	if (epsy->of_node == np)
++	if (epsy->dev.of_node == np)
+ 		return 1;
+ 
  	return 0;
+@@ -267,13 +267,13 @@ static int power_supply_check_supplies(struct power_supply *psy)
+ 		return 0;
  
- err_algs:
--	for (i = dd->pdata->algs_info_size - 1; i >= 0; i--)
--		for (j = dd->pdata->algs_info[i].registered - 1; j >= 0; j--)
--			crypto_engine_unregister_ahash(
--					&dd->pdata->algs_info[i].algs_list[j]);
-+	omap_sham_unregister_algs(dd->pdata);
- err_engine_start:
- 	crypto_engine_exit(dd->engine);
- err_engine:
-@@ -2192,19 +2203,13 @@ static int omap_sham_probe(struct platform_device *pdev)
- static void omap_sham_remove(struct platform_device *pdev)
- {
- 	struct omap_sham_dev *dd;
--	int i, j;
+ 	/* No device node found, nothing to do */
+-	if (!psy->of_node)
++	if (!psy->dev.of_node)
+ 		return 0;
  
- 	dd = platform_get_drvdata(pdev);
+ 	do {
+ 		int ret;
  
- 	spin_lock_bh(&sham.lock);
- 	list_del(&dd->list);
- 	spin_unlock_bh(&sham.lock);
--	for (i = dd->pdata->algs_info_size - 1; i >= 0; i--)
--		for (j = dd->pdata->algs_info[i].registered - 1; j >= 0; j--) {
--			crypto_engine_unregister_ahash(
--					&dd->pdata->algs_info[i].algs_list[j]);
--			dd->pdata->algs_info[i].registered--;
--		}
-+	omap_sham_unregister_algs(dd->pdata);
- 	cancel_work_sync(&dd->done_task);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+-		np = of_parse_phandle(psy->of_node, "power-supplies", cnt++);
++		np = of_parse_phandle(psy->dev.of_node, "power-supplies", cnt++);
+ 		if (!np)
+ 			break;
+ 
+@@ -598,8 +598,8 @@ int power_supply_get_battery_info(struct power_supply *psy,
+ 	const __be32 *list;
+ 	u32 min_max[2];
+ 
+-	if (psy->of_node) {
+-		battery_np = of_parse_phandle(psy->of_node, "monitored-battery", 0);
++	if (psy->dev.of_node) {
++		battery_np = of_parse_phandle(psy->dev.of_node, "monitored-battery", 0);
+ 		if (!battery_np)
+ 			return -ENODEV;
+ 
+@@ -1384,9 +1384,8 @@ __power_supply_register(struct device *parent,
+ 	if (cfg) {
+ 		dev->groups = cfg->attr_grp;
+ 		psy->drv_data = cfg->drv_data;
+-		psy->of_node =
++		dev->of_node =
+ 			cfg->fwnode ? to_of_node(cfg->fwnode) : cfg->of_node;
+-		dev->of_node = psy->of_node;
+ 		psy->supplied_to = cfg->supplied_to;
+ 		psy->num_supplicants = cfg->num_supplicants;
+ 	}
+diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
+index ee6e89c9c301a..1e059ff7a9712 100644
+--- a/include/linux/power_supply.h
++++ b/include/linux/power_supply.h
+@@ -289,7 +289,6 @@ struct power_supply {
+ 
+ 	char **supplied_from;
+ 	size_t num_supplies;
+-	struct device_node *of_node;
+ 
+ 	/* Driver private data */
+ 	void *drv_data;
 -- 
 2.53.0
 
