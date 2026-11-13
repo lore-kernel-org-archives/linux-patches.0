@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1794590742;
-	b=imzFrS4cEfLTylpwvK33rHNLmc1Lk6ZxWZkNmm9PF03sPVGkcEp0yzd0D04YeHattGwO
-	 ulqKxSnOikfQ0PpE1Q6uLrMUd60OTCSWuu46PeHWOw/Wfxz7hdnXM3NybiD8GO8NC87KU
-	 aBEd6R937ddsdeLJSInqM6cXjamsF29ZtzSM42YpvLR8ezZFQbwFkokN5Woog5q9zKVL8
-	 LaqZWm6KNEy98Ha2RVHDl+JDM5c8vrgychPsHK3dSECVxL8cbcatKc5p6C9qEm4aL729v
-	 YTiRx/1AhQAFFPNigqFFxAYMJuRykFcdOwt0hBuTK5u8ORNbvm4LbcHF/my9kYHJbig==
+	b=sNOqbaNA9gSlxCDHw6kC6uiEbL8yHFTSr/4TBw1ZW2yDkoCkiLuBwZTI7sW8qZjuNsBq
+	 PZwtRL2fYWcuLu7t/IM6cUjoSAzHUUZUpHe97e3XgotzkJx4sTi1VZQdeNmxpPTo+Vs8c
+	 qBvhpfAXxMPJfbwPDKraCw30eZpGezTf/PNGGFLl3EIlHh4l/2NijvoJf/lJVrW0GYxmM
+	 to3D0PibYLlefM7Pl4RVZ7Y9aOcTFVGDBtGqp/A9jC+dQWJ14FeC5gAnjjYXhryqUelw2
+	 EWIJzBdoKJmt899jridYn5Q23Ye53U4Sgfkb4z2Kh6KUvBDYFOHyB6UWogPyyYMV+UA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794590742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=IT5+sge8Krbl+u2LdvojjZb25ozA7U+guPL8sD9rnvo=;
-	b=yxlEugAQJ6wkY6mO6Oh3kYeL4oqmz0NtAp0X+xkEe0eAlrIwHtADsIqWQnxG2yaBN7w/
-	 x37tNCw2yusgwWIz7otI4Wk9y8MCm5rpQ95D5fI6F9GxDFRUhz/m4wYpIbZXVnVIP8UZ/
-	 QGvuTNk7hAM+aJVj0oMub2iRl7JvCL/ynOk462/Hwd7UfGxX33mIFX8Fq/qEBSLwjwX3l
-	 9HitDV3kRCVV1cpvckEwcycW56ekERz0Agl46iWmK3s7qB154MtvMrY6C0wUGnu7lL3kM
-	 1g7OeYeyCxFMS5v9smIBjS9waPevtlJUBUN8SP65kQMPRsWugh8lQyTgE3ESKtEVEww==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=CRnEI0JvMNKmzoMBSGHLPWku9dIL5axSbFnuGAb0T6g=;
+	b=RsVExFeeOiBqiXz6ZN7j0tsHN4ZMWPoEV8pb3br4e0XrryoMX56b95vaT614I+gCyMFh
+	 rOeJNANzlL9jYsntK0/cvSa2NRQho2CL5E+x7ZvyY0uVz5RVrKEX3d3uSuAYk7zX8XGeY
+	 MrisoB5YQ47h1pTJfjsH1FMUmHJ4C4dyzrCZnmEegvOWPvbCAS9SBQwCbqUIT6Mn8Dqxd
+	 S6NgY31K1YctqqVy93oHPNsIEKQd9+yLg2ubOl78cU5rXzaZ6ifXsOGWEMWrm5y63/I81
+	 DkkHV13I57kvm0R0oxyVhFwS0J6gFLQqrOmukUmUbF8TGvp+cTjCzCz24LnuHpMgSfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NnYfD3FE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzbQfTcP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07400607B5A3;
-	Fri, 13 Nov 2026 17:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0823607B5A3;
+	Fri, 13 Nov 2026 17:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NnYfD3FE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC8C1F000C6;
-	Fri, 13 Nov 2026 17:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzbQfTcP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8321F000CB;
+	Fri, 13 Nov 2026 17:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590741;
-	bh=IT5+sge8Krbl+u2LdvojjZb25ozA7U+guPL8sD9rnvo=;
+	s=korg; t=1794590742;
+	bh=CRnEI0JvMNKmzoMBSGHLPWku9dIL5axSbFnuGAb0T6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NnYfD3FEY1W/RD/CnFwU+8nVnwK8SZmp87xAeU5JVIbipxHQdMGAkpOKqPY85DEZH
-	 vVjNUWzJQ82VC7bge2MmGadO5qys8fac7n02ZcSjOyGZq3wzmn8aERMlrxD8vafwQa
-	 RVfsHKXO+1gGnms5zKPCJmJm5o1EURS4mj76jfZk=
+	b=YzbQfTcPtlCwrWuKpvOaKviYnvSGUCtSi0COzaWxNUe4bBtwtIwkvSZYx21M7Mt8f
+	 i8B3Be4AqauX9UZiC/n5T5s8TWEk7JbdoFXqLUojt1EZnV4OlqtD5XnL6wHCk14SUQ
+	 BFrrLA88mx1ygAeOVcJ/45QBpORSa1Nrtu5sdF2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giorgi Kobakhia <gkobakhi@asu.edu>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Xiang Mei <xmei5@asu.edu>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Iv=C3=A1n=20Ezequiel=20Rodriguez?= <ivanrwcm25@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 642/686] ocfs2: fix array out of bound access in __ocfs2_find_path()
-Date: Fri, 13 Nov 2026 10:52:55 -0500
-Message-ID: <20261113153843.544281123@linuxfoundation.org>
+Subject: [PATCH 6.18 643/686] arm64/gcs: release GCS on failed fork
+Date: Fri, 13 Nov 2026 10:52:56 -0500
+Message-ID: <20261113153843.577088251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -66,94 +63,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Giorgi Kobakhia <gkobakhi@asu.edu>
+From: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
 
-[ Upstream commit 6193ce7896afb52a321a0063c8b6a45e477a84e2 ]
+[ Upstream commit 078e122f3bf000dd45965997b66deac10ee580fa ]
 
-__ocfs2_find_path() walks down the extent tree and records path by calling
-find_path_ins(), which appends entry to path->p_node[].  It only has 5
-spots.
+copy_thread() can map a CLONE_VM GCS and still return 0. A later
+copy_process() failure calls exit_thread(), but arm64 did not
+implement it, so the VMA stayed in the parent's mm. Wire
+HAVE_EXIT_THREAD to gcs_free().
 
-A corrupted ocfs2 image whose extent block is pointing to itself causes
-__ocfs2_find_path() descent endlessly, writing past the end of
-path->p_node[] array.
+Kernel threads created with CLONE_VM (io_uring and vhost workers)
+inherit the parent's gcs_base/gcs_size from arch_dup_task_struct()
+without allocating their own GCS. When such a thread exits,
+exit_mm() -> mm_release() -> deactivate_mm() -> gcs_free() unmaps the
+parent's GCS. With the new exit_thread(), a failed copy_process() for
+one of these threads would do the same. Clear these fields in
+copy_thread().
 
- UBSAN: array-index-out-of-bounds in fs/ocfs2/alloc.c:677:14
- index 5 is out of range for type 'ocfs2_path_item [5]'
- Call Trace:
-  <TASK>
-  find_path_ins (fs/ocfs2/alloc.c:677 fs/ocfs2/alloc.c:1914)
-  __ocfs2_find_path.constprop.0 (fs/ocfs2/alloc.c:1882)
-  ocfs2_commit_truncate (fs/ocfs2/alloc.c:1924 fs/ocfs2/alloc.c:7286)
-  ocfs2_truncate_file (fs/ocfs2/file.c:515)
-  ocfs2_setattr (fs/ocfs2/file.c:1224)
-  notify_change (fs/attr.c:556)
-  do_truncate (fs/open.c:68)
-  do_ftruncate (fs/open.c:194 (discriminator 1))
-  ksys_ftruncate (fs/open.c:206)
-  __x64_sys_ftruncate (fs/open.c:211 fs/open.c:209 fs/open.c:209)
-
-Commit a406aff8c051 ("ocfs2: validate l_tree_depth to avoid out-of-bounds
-access") already restricts el->l_tree_depth to be less than
-OCFS2_MAX_PATH_DEPTH, which is equal to 5.  However, does not handle the
-infinite descent case.
-
-Check if the el->l_tree_depth decreases on each descent.  Maximum descents
-are restricted to 4 and the path->p_node[] array does not overflow.
-
-Link: https://lore.kernel.org/20260922202159.2421642-1-gkobakhi@asu.edu
-Fixes: dcd0538ff4e8 ("ocfs2: sparse b-tree support")
-Signed-off-by: Giorgi Kobakhia <gkobakhi@asu.edu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Tested-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Fixes: 506496bcbb42 ("arm64/gcs: Ensure that new threads have a GCS")
+Cc: stable@vger.kernel.org
+Cc: Mark Brown <broonie@kernel.org>
 Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org>
+Signed-off-by: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Tested-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ sashal: Placed exit_thread() before the existing erratum helper conditional block. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/alloc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/arm64/Kconfig          |  1 +
+ arch/arm64/kernel/process.c | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
-index 58f92a02ed68a..c12154014b892 100644
---- a/fs/ocfs2/alloc.c
-+++ b/fs/ocfs2/alloc.c
-@@ -1796,6 +1796,7 @@ static int __ocfs2_find_path(struct ocfs2_caching_info *ci,
- 	int i, ret = 0;
- 	u32 range;
- 	u64 blkno;
-+	u32 prev_depth = OCFS2_MAX_PATH_DEPTH;
- 	struct buffer_head *bh = NULL;
- 	struct ocfs2_extent_block *eb;
- 	struct ocfs2_extent_list *el;
-@@ -1803,14 +1804,16 @@ static int __ocfs2_find_path(struct ocfs2_caching_info *ci,
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 2e567a7d89c9b..66b7284ce751d 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -222,6 +222,7 @@ config ARM64
+ 	select HAVE_SAMPLE_FTRACE_DIRECT_MULTI
+ 	select HAVE_BUILDTIME_MCOUNT_SORT
+ 	select HAVE_EFFICIENT_UNALIGNED_ACCESS
++	select HAVE_EXIT_THREAD
+ 	select HAVE_GUP_FAST
+ 	select HAVE_FTRACE_GRAPH_FUNC
+ 	select HAVE_FUNCTION_TRACER
+diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
+index 4c328b7c79ba3..b3cde5f60b00f 100644
+--- a/arch/arm64/kernel/process.c
++++ b/arch/arm64/kernel/process.c
+@@ -319,9 +319,18 @@ static int copy_thread_gcs(struct task_struct *p,
+ 	return 0;
+ }
  
- 	el = root_el;
- 	while (el->l_tree_depth) {
--		if (unlikely(le16_to_cpu(el->l_tree_depth) >= OCFS2_MAX_PATH_DEPTH)) {
-+		if (unlikely(le16_to_cpu(el->l_tree_depth) >= prev_depth)) {
- 			ocfs2_error(ocfs2_metadata_cache_get_super(ci),
--				    "Owner %llu has invalid tree depth %u in extent list\n",
-+				    "Owner %llu has invalid tree depth %u in extent list (max %u)\n",
- 				    (unsigned long long)ocfs2_metadata_cache_owner(ci),
--				    le16_to_cpu(el->l_tree_depth));
-+				    le16_to_cpu(el->l_tree_depth), prev_depth - 1);
- 			ret = -EROFS;
- 			goto out;
- 		}
-+		prev_depth = le16_to_cpu(el->l_tree_depth);
++static void gcs_reset_thread(struct task_struct *task)
++{
++	task->thread.gcs_base = 0;
++	task->thread.gcs_size = 0;
++	task->thread.gcspr_el0 = 0;
++}
 +
- 		if (!el->l_next_free_rec || !el->l_count) {
- 			ocfs2_error(ocfs2_metadata_cache_get_super(ci),
- 				    "Owner %llu has empty extent list at depth %u\n"
+ #else
+ 
+ static void flush_gcs(void) { }
++static void gcs_reset_thread(struct task_struct *task) { }
++
+ static int copy_thread_gcs(struct task_struct *p,
+ 			   const struct kernel_clone_args *args)
+ {
+@@ -340,6 +349,12 @@ void flush_thread(void)
+ 	flush_gcs();
+ }
+ 
++void exit_thread(struct task_struct *tsk)
++{
++	/* Failed fork after copy_thread(); deactivate_mm() does not run. */
++	gcs_free(tsk);
++}
++
+ #ifdef CONFIG_ARM64_ERRATUM_4193714
+ 
+ static void arch_dup_tlbbatch_mask(struct task_struct *dst)
+@@ -537,6 +552,8 @@ int copy_thread(struct task_struct *p, const struct kernel_clone_args *args)
+ 
+ 		p->thread.cpu_context.x19 = (unsigned long)args->fn;
+ 		p->thread.cpu_context.x20 = (unsigned long)args->fn_arg;
++		/* Kernel threads sharing the parent's mm must not free its GCS. */
++		gcs_reset_thread(p);
+ 
+ 		if (system_supports_poe())
+ 			p->thread.por_el0 = POR_EL0_INIT;
 -- 
 2.53.0
 
