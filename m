@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591431;
-	b=e2IiSSMF5ehzbn8SPNViq63Logp/3ejeiXqwdY9vgJRehjx40pmCptKII6tfsGjUnlu4
-	 ZXo8xz6Oa+B/KBWkG492Ubi5Xf5ZvWT2qMZh4SgixlGBwEVRGH2kqLe63+wzzkzuZ5R35
-	 9VqK+0OGcCmP06LutXOHYqL0zVK1r6ydCp9Nm4B0+hIe9ttIjaWPhLniLJft4+eWm5GZd
-	 Jnu0+EdrS1F0KtMJBi5m1s8P/QIVpgVYp3A7jn3dk7C1AhKZC4izrxcuEZDorXUGgID0j
-	 Dc5TN3JxUlytYmz8OzAE8St8K8gyh/54yhUcjlkH4mcI3EwbG7MC7zJiSrXb3imLt5Q==
+	t=1794591432;
+	b=H8fFJcEuVZ+mxB9wvpQlSJGfCZ0pPOLGKFVGOGSS68/+zjwbaQ37tM6svhFeT2k86KNq
+	 ZOvcpcjT+5uG1+nEcKYKMFtZAmttwbD8eGSqdGQDJBeufmFEUA4nfXF/ni44wlu4DRSPk
+	 QxT1JapyIftFHiqVij6NmYSQDCBzryhX8eoQCkyDsRGNxAcfsvVg0HeMJ/iL2xxBJFWVd
+	 IMt+ESDmgIBpOEClcl0fBektcInPjtaKfQq4bW7imXMcam6uaLHBo5EM3vwxIhaTH+nMU
+	 PfHBPrEgkrv7s6ovyhLPr8vXXn40T6eM3a8+/4GsM9WbwMC9QQ6JbL03zhu6YBocLNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591432;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t7GZABJ2VPgMXlXi0NDqmeAeM+mehhWcmERUXkGJcyM=;
-	b=Qxg6V6bRQJlUG2NlaIfzuMWxSsY9brEyzvYHRd206e2dJN58yHXboOZ/W2nZc5Lt6mix
-	 p36zpCcuy0FpVjm+QNsIyIqXR15DJP3cT/nwVLwECp4BGd9dIGFQBIdhOGNHGDjXdRNYo
-	 9I2u6XkkVUvxiaYMTSMxHWXHqdKsysx6O/UxY8WB6Y5+fAlJHRTc7zexHF+0DxJ01EGsz
-	 daNO3Qy5BR41FRUgBOSvdT1qCEt9VVpUUeyJ2J7vz/GpgrkGGYHIcAkvPxbl7FnR78/2E
-	 gsGnqODyoDvkZ5NrQNTCCFojUTdOLpy4aP4bx1IqflTGC8JtXuUnfB8uxZGUpmzaadg==
+	bh=Olug+5X6qR/7qH7f3C06Xhz7MvY89elpUe65+8wf+CQ=;
+	b=SbCyWu/MJ6vJRmvFE04+v8i/QXYX8aRZ4s8agCbIxRKSHhyNGSheLZGWnEBqzpu7Zgln
+	 VtEXjVet/i7NsVAlM1lDbniOQiVS+A6zgsMRaqfFim54085E17/iPnAP0LFc/iEZ53/+w
+	 O9apubn0GFoFkswOtEgxdOBohO22IxHIkAOlbW0MrwsY35wSNxUUhtH3ARUrpqq8A/I2v
+	 zo4APpZRxIBH2y+RObzwfaTuE91HA4X2+bSrOPICFgTsGDaK4VpYPdmZPn8dyK+CI8uaQ
+	 HUC77mOGuQ3nm0aX1I/bKb9yoObqEdzr1oa03BRD2fDVFZ0AB6f73hbMBfV5OhbHDaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XWGDcydp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+MEpQaZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259F7607B589;
-	Fri, 13 Nov 2026 17:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B48607B589;
+	Fri, 13 Nov 2026 17:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XWGDcydp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DE51F000C4;
-	Fri, 13 Nov 2026 17:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+MEpQaZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112161F000C4;
+	Fri, 13 Nov 2026 17:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591431;
-	bh=t7GZABJ2VPgMXlXi0NDqmeAeM+mehhWcmERUXkGJcyM=;
+	s=korg; t=1794591432;
+	bh=Olug+5X6qR/7qH7f3C06Xhz7MvY89elpUe65+8wf+CQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XWGDcydpas1jwVyDHpuoolVN9oit/stTl8TVXZ5dhtKY4/XJ7tTQHhb2p5wPfNlxT
-	 UY1ZIlBKcrvRwg2dcPLRF3IZPVINHCAg+YEdgt4OU3bbnUm7Y6VpAZQ9BDRAXT2gKi
-	 /NEqnxl0CqPtG2jvntBVXm6NXtdGNPL1dXhGevJQ=
+	b=M+MEpQaZQop4dF8HdPU3hll+q4BOketboa3rPYrEJZg7Fcs+Ef3AdXdnr5NiTycuG
+	 uwipjM74LuzvRoOh3Jo+1fHYtAr/EpV38g3X8ns9/hQU9skoJoEbXbRLTsMTtqjSdM
+	 tnATHYVXFp87CEt98Ae+YrjqcxntGuATCSR/ParY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 516/670] iio: dac: mcp4821: reject devices without match data
-Date: Fri, 13 Nov 2026 10:51:20 -0500
-Message-ID: <20261113153829.423950017@linuxfoundation.org>
+Subject: [PATCH 6.12 525/670] ALSA: line6: Handle period elapsed calls outside the locks
+Date: Fri, 13 Nov 2026 10:51:29 -0500
+Message-ID: <20261113153829.717892108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,54 +68,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 6ac1faf4de61dcf27ffe8f2c25d96fe5f4b2886d ]
+[ Upstream commit 443ed4edc2678cc51c5a01e7dffc4c890be40051 ]
 
-A device bound through driver_override need not match an entry in the
-driver tables. In that case spi_get_device_match_data() returns NULL,
-but mcp4821_probe() dereferences the result while configuring the IIO
-device.
+LINE6 driver may call snd_pcm_period_elapsed() for both playback and
+capture substreams at processing the playback substream, and this may
+lead to a ABBA deadlock.
 
-Reject devices without match data before using the chip information.
+Move the actual calls of snd_pcm_period_elapsed() outside the locks
+for avoiding it.  The capture period notification at submitting the
+initial playback URBs (only with the impulse mode) is simply skipped,
+as it's done in the lock context; it'll be caught up at the next
+period.
 
-Fixes: cdf3ecb0d8d0 ("iio: dac: driver for MCP4821")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ sashal: adjusted context due to missing default gain initialization ]
+Fixes: f56742cc4189 ("ALSA: line6: Add LINE6_CAP_IN_NEEDS_OUT, a void playback stream during capture")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-5a9de389-e6ea-410d-8322-e74e14152603
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20261020113118.234689-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/mcp4821.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/usb/line6/capture.c  | 25 ++++++++++++++++---------
+ sound/usb/line6/capture.h  |  2 +-
+ sound/usb/line6/playback.c | 31 +++++++++++++++++++++----------
+ 3 files changed, 38 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/iio/dac/mcp4821.c b/drivers/iio/dac/mcp4821.c
-index c1a59bbbba3cc..9e4a3cb2a7120 100644
---- a/drivers/iio/dac/mcp4821.c
-+++ b/drivers/iio/dac/mcp4821.c
-@@ -172,9 +172,13 @@ static const struct iio_info mcp4821_info = {
+diff --git a/sound/usb/line6/capture.c b/sound/usb/line6/capture.c
+index dde52454ec65e..f59ec9c4a1a52 100644
+--- a/sound/usb/line6/capture.c
++++ b/sound/usb/line6/capture.c
+@@ -137,24 +137,21 @@ void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf, int fsize)
+ 		line6pcm->in.pos_done -= runtime->buffer_size;
+ }
  
- static int mcp4821_probe(struct spi_device *spi)
+-void line6_capture_check_period(struct snd_line6_pcm *line6pcm, int length)
++/* update the capture position and check whether we need period_elapsed call */
++bool line6_capture_check_period(struct snd_line6_pcm *line6pcm, int length)
  {
-+	const struct mcp4821_chip_info *info;
- 	struct iio_dev *indio_dev;
- 	struct mcp4821_state *state;
--	const struct mcp4821_chip_info *info;
+-	struct snd_pcm_substream *substream =
+-	    get_substream(line6pcm, SNDRV_PCM_STREAM_CAPTURE);
+-
+ 	line6pcm->in.bytes += length;
+ 	if (line6pcm->in.bytes >= line6pcm->in.period) {
+ 		line6pcm->in.bytes %= line6pcm->in.period;
+-		spin_unlock(&line6pcm->in.lock);
+-		snd_pcm_period_elapsed(substream);
+-		spin_lock(&line6pcm->in.lock);
++		return true;
+ 	}
++	return false;
+ }
+ 
+ /*
+  * Callback for completed capture URB.
+  */
+-static void audio_in_callback(struct urb *urb)
++static bool handle_audio_in(struct urb *urb)
+ {
+ 	int i, index, length = 0, shutdown = 0;
+ 	struct snd_line6_pcm *line6pcm = (struct snd_line6_pcm *)urb->context;
+@@ -219,8 +216,18 @@ static void audio_in_callback(struct urb *urb)
+ 
+ 		if (!test_bit(LINE6_STREAM_IMPULSE, &line6pcm->in.running) &&
+ 		    test_bit(LINE6_STREAM_PCM, &line6pcm->in.running))
+-			line6_capture_check_period(line6pcm, length);
++			return line6_capture_check_period(line6pcm, length);
+ 	}
 +
-+	info = spi_get_device_match_data(spi);
-+	if (!info)
-+		return -ENODATA;
++	return false;
++}
++
++static void audio_in_callback(struct urb *urb)
++{
++	struct snd_line6_pcm *line6pcm = (struct snd_line6_pcm *)urb->context;
++
++	if (handle_audio_in(urb))
++		snd_pcm_period_elapsed(get_substream(line6pcm, SNDRV_PCM_STREAM_CAPTURE));
+ }
  
- 	indio_dev = devm_iio_device_alloc(&spi->dev, sizeof(*state));
- 	if (indio_dev == NULL)
-@@ -183,7 +187,6 @@ static int mcp4821_probe(struct spi_device *spi)
- 	state = iio_priv(indio_dev);
- 	state->spi = spi;
+ /* open capture callback */
+diff --git a/sound/usb/line6/capture.h b/sound/usb/line6/capture.h
+index 90572dae134ee..628315389efcf 100644
+--- a/sound/usb/line6/capture.h
++++ b/sound/usb/line6/capture.h
+@@ -17,7 +17,7 @@ extern const struct snd_pcm_ops snd_line6_capture_ops;
  
--	info = spi_get_device_match_data(spi);
- 	indio_dev->name = info->name;
- 	indio_dev->info = &mcp4821_info;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
+ extern void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf,
+ 			       int fsize);
+-extern void line6_capture_check_period(struct snd_line6_pcm *line6pcm,
++extern bool line6_capture_check_period(struct snd_line6_pcm *line6pcm,
+ 				       int length);
+ extern int line6_create_audio_in_urbs(struct snd_line6_pcm *line6pcm);
+ extern int line6_submit_audio_in_all_urbs(struct snd_line6_pcm *line6pcm);
+diff --git a/sound/usb/line6/playback.c b/sound/usb/line6/playback.c
+index 2e70ca5456c5a..495a983a0c51f 100644
+--- a/sound/usb/line6/playback.c
++++ b/sound/usb/line6/playback.c
+@@ -136,6 +136,8 @@ static void add_monitor_signal(struct urb *urb_out, unsigned char *signal,
+ /*
+ 	Find a free URB, prepare audio data, and submit URB.
+ 	must be called in line6pcm->out.lock context
++	Returns 1 if snd_pcm_period_elapsed() needs to be called for the
++	capture stream after releasing the lock, 0 if not, or a negative error
+ */
+ static int submit_audio_out_urb(struct snd_line6_pcm *line6pcm)
+ {
+@@ -151,6 +153,7 @@ static int submit_audio_out_urb(struct snd_line6_pcm *line6pcm)
+ 		line6pcm->properties->rates.rats[0].den *
+ 		(line6pcm->line6->intervals_per_second / LINE6_ISO_INTERVAL);
+ 	struct urb *urb_out;
++	bool capture_period_elapsed = false;
+ 
+ 	index = find_first_zero_bit(&line6pcm->out.active_urbs,
+ 				    line6pcm->line6->iso_buffers);
+@@ -260,8 +263,9 @@ static int submit_audio_out_urb(struct snd_line6_pcm *line6pcm)
+ 						   urb_out->transfer_buffer,
+ 						   urb_out->
+ 						   transfer_buffer_length);
+-				line6_capture_check_period(line6pcm,
+-					urb_out->transfer_buffer_length);
++				capture_period_elapsed =
++					line6_capture_check_period(line6pcm,
++								   urb_out->transfer_buffer_length);
+ 			}
+ 		} else {
+ 			if (!(line6pcm->line6->properties->capabilities & LINE6_CAP_HWMON)
+@@ -283,24 +287,26 @@ static int submit_audio_out_urb(struct snd_line6_pcm *line6pcm)
+ 		dev_err(line6pcm->line6->ifcdev,
+ 			"URB out #%d submission failed (%d)\n", index, ret);
+ 
+-	return 0;
++	return capture_period_elapsed;
+ }
+ 
+ /*
+ 	Submit all currently available playback URBs.
+ 	must be called in line6pcm->out.lock context
++	The capture period notification is skipped here since we can't call
++	snd_pcm_period_elapsed() in the lock; it'll be caught up at the next one.
+  */
+ int line6_submit_audio_out_all_urbs(struct snd_line6_pcm *line6pcm)
+ {
+-	int ret = 0, i;
++	int ret, i;
+ 
+ 	for (i = 0; i < line6pcm->line6->iso_buffers; ++i) {
+ 		ret = submit_audio_out_urb(line6pcm);
+ 		if (ret < 0)
+-			break;
++			return ret;
+ 	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ /*
+@@ -316,6 +322,8 @@ static void audio_out_callback(struct urb *urb)
+ 	const int bytes_per_frame =
+ 		line6pcm->properties->bytes_per_channel *
+ 		line6pcm->properties->playback_hw.channels_max;
++	bool capture_period_elapsed = false;
++	bool playback_period_elapsed = false;
+ 
+ #if USE_CLEAR_BUFFER_WORKAROUND
+ 	memset(urb->transfer_buffer, 0, urb->transfer_buffer_length);
+@@ -358,19 +366,22 @@ static void audio_out_callback(struct urb *urb)
+ 		shutdown = 1;
+ 
+ 	if (!shutdown) {
+-		submit_audio_out_urb(line6pcm);
++		capture_period_elapsed = submit_audio_out_urb(line6pcm) > 0;
+ 
+ 		if (test_bit(LINE6_STREAM_PCM, &line6pcm->out.running)) {
+ 			line6pcm->out.bytes += length;
+ 			if (line6pcm->out.bytes >= line6pcm->out.period) {
+ 				line6pcm->out.bytes %= line6pcm->out.period;
+-				spin_unlock(&line6pcm->out.lock);
+-				snd_pcm_period_elapsed(substream);
+-				spin_lock(&line6pcm->out.lock);
++				playback_period_elapsed = true;
+ 			}
+ 		}
+ 	}
+ 	spin_unlock_irqrestore(&line6pcm->out.lock, flags);
++
++	if (capture_period_elapsed)
++		snd_pcm_period_elapsed(get_substream(line6pcm, SNDRV_PCM_STREAM_CAPTURE));
++	if (playback_period_elapsed)
++		snd_pcm_period_elapsed(substream);
+ }
+ 
+ /* open playback callback */
 -- 
 2.53.0
 
