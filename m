@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585427;
-	b=bez5e09eZIBuKcyAvNyVyHvFSOtQDXJCEOlRNAXjT5zAmN3Zt5CQNBcbJomWjqh/14oZ
-	 BhQoEI+pZrUM5qMU5PVHWiXmNoZ5A9JOElrCJ3sILk7SM0/j3mjana1TVcBrQRJB1CdCJ
-	 zUrXyNLamyJZ00aYBQkO8rA1kdK48QMNtKT20RJ7HZQSI5JlRyc61XQzNqojpNacVIRJW
-	 C32/ctG38PZaBcoj3p0bmiQpoRU5MlBz92TsJ9c3Iri1IuUOfF29hab39fSmN35SgFguh
-	 FTCCjG/Ky1KaNU19izB1E4ihsI/MDJ5+9OtOSvF7D6qlUQjLnijl6/4sy6FDEG1mFlg==
+	t=1794585429;
+	b=XIHYBtObfVjIJBFKxtfLDuAlrMhr0sjJV8aKH5jRQpWwfX7hSeAnRrKstWWkQiNKJZFY
+	 m3y4gSI7RMo/Pc22RdK2r5FlYjKumiOGVHRSJ8PiaxOSi7mj18mQj/MEMsbV293TeG7JK
+	 nT8k0MbAvNfmch/+wLsWEoV09g5NRmXsou9LJT0TM9RzgP3IK0PdBX6pcFg6Ttfspa8nN
+	 2AJVXKr1Dc9bKlM+YBoOLADQ+iZoE0b8lk7Esv6F7yadbb5WTF5E4W+ChCL3URHG/HZl/
+	 DU/XIlOIbKBqOlzz076SFT2uf3YWgdV/fkJ21zcAxsCL8lNG03agN257jx1EwlrMjLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585427;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585429;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/TB6StBU5PXPCJG539I9Kk3Xu86fr9UXaB0wRYqDYGc=;
-	b=quRczws1KoNTwPI1EIrAHitkFIr7JAPWCwVod5htZkG0d/R2kpZ9INp4/ItE29fTVRyM
-	 jkOqYSYU3R8QJno1ykiea0gEMykzBX5pFrzt4ZnWWRql44K7kiKlB7TfsT7SImeeRGRMp
-	 qlBfZsuItb9uVQ5mJTx1xCSIJ/WBSOka/EK/I0jR+2ffy2ScElFmkr301GFFCQ6F3WHhx
-	 fTdSPrPnH1r1l0l9D2BfS+YFfDjD2dsnWtLy+jlXRgddR0MJTkrWTlgSdq9rc1xsC5W4E
-	 bc1uFjM/n1HjgWT7NXU/lzpJQ9Lw0UVSIFgrz79VeGvwzsrTAiWY+wwbrlgUYbhP2GA==
+	bh=NIMOP0D3ufWVHTckAtuiUBgDavaSkuwm5+r7jwCWVkI=;
+	b=zU3TjWerbmYW8KbCWcEaDUM1GBA3GOfWdNlZYAdiNBVjtV63SGgIIe2WSreleBnpWBPf
+	 iqOyB1hQ9ObfMRYlD8SJOygEEBQiquVcjOIacFYt13FowKLv9wA8H1QVBdKfOCmHxLnBh
+	 9x8WPBDNDYUaRZ5JAbFh7MrWXh6e9ZEem7PuJxuaDDTmOZPohXz8tQlr1Fb4ztOLjiV6G
+	 0A1S19j+1Js7mhiKomLMWMpj8Con0ZrgrGOaFHWw/h3bBNRTLzIA9sgQeZg8YT/VW/cIv
+	 JMBlmVIxtpilmbLLv/bEYda85lV2uR4/6oNY38DOMZ1QoVAMbzwtW1zvcsifJOunCDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pLGIs0V/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owiW9KpL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAE560A3839;
-	Fri, 13 Nov 2026 15:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC6560A3839;
+	Fri, 13 Nov 2026 15:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pLGIs0V/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FE11F000C8;
-	Fri, 13 Nov 2026 15:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owiW9KpL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2F81F000C5;
+	Fri, 13 Nov 2026 15:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585427;
-	bh=/TB6StBU5PXPCJG539I9Kk3Xu86fr9UXaB0wRYqDYGc=;
+	s=korg; t=1794585428;
+	bh=NIMOP0D3ufWVHTckAtuiUBgDavaSkuwm5+r7jwCWVkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pLGIs0V/2aYZXAoOvNTWVAAisLfwmF1w+GHg7ne7myAooPiW/bVnEe+fKvJnk537q
-	 I6FP5dEIcLzmhnOXieVCUu6NK+W6V3pYtmt2EhiBnkNa4jjwmc5VQk0+i1MZ8BAD7n
-	 T8LpEu7Oo623Mx9GEG2hjrEThRiIW8YHx6pwjlfE=
+	b=owiW9KpLj2CN4py83UmuhdT4RmbqDtRaqfedYptRIkaHgyIQta5gm3LDPYs8yiVb6
+	 hvL2FFUH0jeVz6WBVb2BCwb9bZy3dN49ioroO25W6POXuOk/AdK7Es5LcAesfFBELW
+	 XQL9L9AWw43BU71tqF8ObaXzLFGZ9sWIKtV2RPvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Grzeschik <mgr@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Zhou Qiuyue <n0ps1edzz@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 054/507] net/9p/usbg: call disable_usb9pfs() from usb9pfs_disable()
-Date: Fri, 13 Nov 2026 10:45:58 -0500
-Message-ID: <20261113153755.390792857@linuxfoundation.org>
+Subject: [PATCH 7.3 090/507] ipv6: raw: fix use-after-free in rawv6_send_hdrinc()
+Date: Fri, 13 Nov 2026 10:46:34 -0500
+Message-ID: <20261113153757.065217743@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,57 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Grzeschik <mgr@kernel.org>
+From: Zhou Qiuyue <n0ps1edzz@gmail.com>
 
-[ Upstream commit cd1988cf723c2eae87112b198bf90b0aebfeaf31 ]
+[ Upstream commit 66dfb2cacda7faae614d688943d85e75abf7f586 ]
 
-usb9pfs_disable() is the usb_function ->disable callback, invoked by
-the composite gadget core whenever the host resets or unconfigures
-the gadget. The gadget function API requires this callback to disable
-its endpoints; every other in-tree function driver does so from its
-->disable hook.
+rawv6_send_hdrinc() caches the route before handing the skb to
+l3mdev_ip6_out(). The VRF output path may replace skb->dst and release
+the original route, leaving the cached pointer stale.
 
-usb9pfs_disable() never called disable_usb9pfs(), so the IN/OUT
-endpoints and their usb_request objects were left active and
-allocated across a host-driven disable. When the host later
-reconfigures the device, enable_usb9pfs() calls alloc_requests() again
-and unconditionally overwrites usb9pfs->in_req/out_req, permanently
-leaking the previous allocations, while the endpoints themselves are
-left enabled underneath the function's own idea of being disabled.
+The function later dereferences that pointer for statistics accounting
+and as the output device passed to NF_HOOK(). Its RCU read-side critical
+section starts after l3mdev_ip6_out(), so it cannot prevent the old route
+from being reclaimed in between.
 
-Call disable_usb9pfs() before reinit_completion(&usb9pfs->send),
-mirroring the same sequence already used in p9_usbg_close(). Placing
-it before the reinit_completion() also ensures usb_ep_disable() has
-synchronously flushed any requests still queued in hardware before the
-completion is reset, closing the same race that motivated resetting
-the completion here in the first place.
+Reload the route from the current skb destination after
+l3mdev_ip6_out() returns.
 
-Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
-Assisted-by: Claude:claude-opus-4.8
+KASAN reports a slab-use-after-free in rawv6_sendmsg(), with the route
+allocated by ip6_dst_alloc(), freed by dst_destroy() from rcu_core(), and
+the related RCU callback queued from vrf_l3_out().
+
+Fixes: 4c1feac58e06 ("net: vrf: Flip IPv6 output path from FIB lookup hook to out hook")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260922-usb9pfsfixes-v1-4-9d8dcc52904c@kernel.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Zhou Qiuyue <n0ps1edzz@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv6/raw.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index ce952a5de4260..e215d047de16c 100644
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -759,6 +759,10 @@ static void usb9pfs_disable(struct usb_function *f)
- 		usb9pfs->client->status = Disconnected;
- 	spin_unlock_irqrestore(&usb9pfs->lock, flags);
- 	usb9pfs_clear_tx(usb9pfs);
-+
-+	if (usb9pfs->in_ep->enabled)
-+		disable_usb9pfs(usb9pfs);
-+
- 	reinit_completion(&usb9pfs->send);
- }
+diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
+index b965258cf9e5f..bdea825434ea7 100644
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -654,6 +654,9 @@ static int rawv6_send_hdrinc(struct sock *sk, struct msghdr *msg, int length,
+ 	if (unlikely(!skb))
+ 		return 0;
  
++	/* l3mdev_ip6_out() may have replaced the skb dst. */
++	rt = dst_rt6_info(skb_dst(skb));
++
+ 	/* Acquire rcu_read_lock() in case we need to use rt->rt6i_idev
+ 	 * in the error path. Since skb has been freed, the dst could
+ 	 * have been queued for deletion.
 -- 
 2.53.0
 
