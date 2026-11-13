@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585987;
-	b=Ku9DC6rnRfwY3DjjFVKnRbaqo4SEHEniYQisEifeLXUxjF4yjyim8ahWF6oz3QNbDUE/
-	 U0Dz8fRGDGTDV0ACW/S47C1sUx1ZsTQdWshUwIu2jNBWP3m9YZDTElCmshxi3Q9g/RXLW
-	 siUlGmRCkUA4Fcxmagx3vA+B/+b5zWePkuJiJzdCgbrPeuVhJCT7Ds+pu0Vt4uJLXqluf
-	 BU8zMo4clWXgaEE0LkXQOocEWoS223BpZW8OePcLuED74ZCAptmGRYdExID4IhKAiSLCN
-	 ZlwfrIriG/aCiL/uwDGszsbJRRRhyb4l4Ut7kM5/mgP9El2sVfXpEYJ3FC1vzXSXxtg==
+	t=1794585988;
+	b=Jfwkt2uw9fw5bi/zrhC21dB8eSO88yvq/P2TyZ/O7HoaDU+oJAkxJADiXHDEdkCLGz1g
+	 Ff4e7BqKIdckwEmklIcg3IOyBeh39j2ZEwlaBEyEKLNqulPi51iui6dbFIz3gAsejtEJO
+	 i91M4wdtO8t95OV4xVouv6XeBfNVS7qC/ZNXdkJlhVaFBvZNxp8ktqa1tYUNOV3ZEK/m4
+	 zHO1sRkXIizywVSElNqULHV9DatsBCJLUq9CyO0F2h2Wblrt/eo/DBlYgxZpneGMetVG+
+	 tag1sMBke6D3UVXqa6cYWPRQOFAWRzl/JFchxdTUTjqx/ZDhzplLiLh14VBJoY8PlGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585987;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585988;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Sst7vM9loLHHujXcsBA6kPveb2z49Ro5jyD/nWGn4DI=;
-	b=qwAEqppgL3iGQOoRIhUKls7f0We8TXn3dqv28TiFCzFQzox+ZodvMpjxDWU6R7LlyGDX
-	 UAKFIMfMV+++tYZpSQWeCtCLV6WdK6Y5pxq5Z1GRWms9K3F5qbP4zN/rPlVke0l2L3gx3
-	 XOd3dabZKTs1qtYKA6d6yRfjr8MSlI8S6gfFoHK5Ssfc6bzkq693eMN2H18KHJ11GLlD2
-	 kA3A+iGnu6IGQz3b9g9LIamXpxfykKaV4Z7NCp8mC9FYi6e4QNmLN+m8NFB13S2TMTZvr
-	 aVNra15GavxNAaj0sCiTqXGVWeCqPcM4L8uHj+f7aCyGeeEwFubOr/EuA4wBlT8hvLw==
+	bh=sYAVJadcBk1guYOilI3PrmEyMHo9hCVOWd6Ef65FqLc=;
+	b=lkfBOpmHJ0YqJj3KoS9v2YQXPoOvH1LQLIEAGEdrZHaBrjllvQi3ziXfL2rPy1Tm2j5N
+	 +lItojH7qGc7/HCl4ACZ648QJeRPwCZFxVRuBevJ2+qNAb6YvR4YmuOZJ46YeUf3efIvt
+	 0C3sfFHMQFRSek9BUZHiTAPBx3LdfxFsX1OKjfWPYkiLpma7JOxBy6eSvTqERXja1aW+T
+	 W2o5rtByIjj7ooGXx7VD+KOQolObPbtcHJUXHXCc7d+GGVvAzVpherVF1GPTOx4qlRpq3
+	 j227is4jWB8HLpwGJ+i9EQFJDChvvqTiJInJF0mjWHh1CxF/4J8l1uZNDSgncdVLByQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JafsCkyc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HcB1ScZ2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120DB6072338;
-	Fri, 13 Nov 2026 16:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA9C6072336;
+	Fri, 13 Nov 2026 16:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JafsCkyc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B217C1F000C5;
-	Fri, 13 Nov 2026 16:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HcB1ScZ2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE06B1F000C6;
+	Fri, 13 Nov 2026 16:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585986;
-	bh=Sst7vM9loLHHujXcsBA6kPveb2z49Ro5jyD/nWGn4DI=;
+	s=korg; t=1794585988;
+	bh=sYAVJadcBk1guYOilI3PrmEyMHo9hCVOWd6Ef65FqLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JafsCkycPgCNkdt8M/TLsu67Dvg4TsY8Ozv7CNWnGVLzi5DLpyCsbIYBSBDPCaAvW
-	 NGPhgUtQ67Uhbtxiw56Hjume2DgivH8Zs4mXg5S4KEaCnUo2At4Kx7hzBVAuvDtNT9
-	 oPy1RJejp2d2eGZjPjOtf/j2KYPWUsz6zE0wyNd8=
+	b=HcB1ScZ2jXR4WJ8qgBQaknv9qAi2b06iDm5LXpXyuumKdFiou5lwPn0esKfVCOyxb
+	 WaEiHiuPchusTGgTtnT/GvzUv/x8jhYkd8LVBfBPcYwLDZ7bu4KXSzPjtgCL2XPfB/
+	 1Otv6Q7ZZ52jI3UtTwTYh77BLXVDMPDDEu+nF/mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Bharath SM <bharathsm@microsoft.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 031/686] smb: client: bound POSIX lock data area by response length
-Date: Fri, 13 Nov 2026 10:42:44 -0500
-Message-ID: <20261113153822.040975702@linuxfoundation.org>
+Subject: [PATCH 6.18 032/686] smb: align durable reconnect v2 context to 8 byte boundary
+Date: Fri, 13 Nov 2026 10:42:45 -0500
+Message-ID: <20261113153822.072618554@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,74 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+From: Bharath SM <bharathsm@microsoft.com>
 
-[ Upstream commit 8fc9af68c57156ff64769f30e831553cd03b3000 ]
+[ Upstream commit 05f5e355cf783b30bd6eb3dec17ed1a8b3cfa95c ]
 
-CIFSSMBPosixLock() receives a TRANS2 response whose server-provided
-DataOffset and DataCount are not required by validate_t2() to describe an
-interval inside the response. A server can therefore make the client read a
-cifs_posix_lock beyond the response buffer and return those kernel bytes
-through F_GETLK.
+Add a 4-byte Pad to create_durable_handle_reconnect_v2 so the DH2C
+create context is 8 byte aligned.
+This avoids malformed CREATE contexts on reconnect.
+Recent change removed this Padding, adding it back.
 
-Use smbCalcSize() to obtain the full response length after any multipart
-TRANS2 reassembly, then reject data areas that extend past it before
-dereferencing them.
+Fixes: 81a45de432c6 ("smb: move create_durable_handle_reconnect_v2 to common/smb2pdu.h")
 
-Fixes: fc94cdb94462 ("[CIFS] Fix new POSIX Locking for setting lock_type correctly on unlock")
-Reported-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 8 ++++++++
- fs/smb/client/trace.h   | 1 +
- 2 files changed, 9 insertions(+)
+ fs/smb/common/smb2pdu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 14d5c1924ae2b..1049a64241bc0 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -2338,6 +2338,7 @@ CIFSSMBPosixLock(const unsigned int xid, struct cifs_tcon *tcon,
- 		cifs_dbg(FYI, "Send error in Posix Lock = %d\n", rc);
- 	} else if (pLockData) {
- 		/* lock structure can be returned on get */
-+		unsigned int rsp_len;
- 		__u16 data_offset;
- 		__u16 data_count;
- 		rc = validate_t2((struct smb_t2_rsp *)pSMBr);
-@@ -2348,10 +2349,17 @@ CIFSSMBPosixLock(const unsigned int xid, struct cifs_tcon *tcon,
- 		}
- 		data_offset = le16_to_cpu(pSMBr->t2.DataOffset);
- 		data_count  = le16_to_cpu(pSMBr->t2.DataCount);
-+		rsp_len = smbCalcSize(&pSMBr->hdr);
- 		if (data_count < sizeof(struct cifs_posix_lock)) {
- 			rc = -EIO;
- 			goto plk_err_exit;
- 		}
-+		if (data_offset > rsp_len ||
-+		    data_count > rsp_len - data_offset) {
-+			rc = smb_EIO2(smb_eio_trace_lock_data_area,
-+				      data_offset, data_count);
-+			goto plk_err_exit;
-+		}
- 		parm_data = (struct cifs_posix_lock *)
- 			((char *)&pSMBr->hdr.Protocol + data_offset);
- 		if (parm_data->lock_type == cpu_to_le16(CIFS_UNLCK))
-diff --git a/fs/smb/client/trace.h b/fs/smb/client/trace.h
-index a56fbacf28d14..670612d1a4497 100644
---- a/fs/smb/client/trace.h
-+++ b/fs/smb/client/trace.h
-@@ -42,6 +42,7 @@
- 	EM(smb_eio_trace_ioctl_no_rsp,			"ioctl_no_rsp") \
- 	EM(smb_eio_trace_ioctl_out_off,			"ioctl_out_off") \
- 	EM(smb_eio_trace_lock_bcc_too_small,		"lock_bcc_too_small") \
-+	EM(smb_eio_trace_lock_data_area,		"lock_data_area") \
- 	EM(smb_eio_trace_lock_data_too_small,		"lock_data_too_small") \
- 	EM(smb_eio_trace_malformed_ksid_key,		"malformed_ksid_key") \
- 	EM(smb_eio_trace_malformed_sid_key,		"malformed_sid_key") \
+diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
+index 7377b5a9f8a55..4b8ed28a72c61 100644
+--- a/fs/smb/common/smb2pdu.h
++++ b/fs/smb/common/smb2pdu.h
+@@ -1320,6 +1320,7 @@ struct create_durable_handle_reconnect_v2 {
+ 	struct create_context_hdr ccontext;
+ 	__u8   Name[8];
+ 	struct durable_reconnect_context_v2 dcontext;
++	__u8 Pad[4];
+ } __packed;
+ 
+ /* See MS-SMB2 2.2.14.2.12 */
 -- 
 2.53.0
 
