@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590824;
-	b=colvNOuUXyIBaUYOKWvhjgY5lK2tqqZooUAZgeREnmhfVF9BBxtXGjZTNUvdMIhll5ye
-	 Lel3Q8//Jas/S+/Vmj1jQok8d2/SOnZ0zW5ffHJ4jTjqZVjErH7XyOtDUlz7jm9RJtKvX
-	 BBYcj25tAMdN6+xCqv6c3ozVN0wtzzNVe2W7v1W0Xfo8UtTO2eC4PHdChGkAVqVjTht4V
-	 9U9ON98PNgUPllLVJN1RaHy6oNMZ75vCBqfGhNl+R283xihkF/MfaxHO13uwNi8uV7eQ2
-	 NNs1UOkr5K4kbPzPJsx0W0mkcNcd6oIRGCloj1+FuoHL62pstdHn296NcT16Wjmr85Q==
+	t=1794590826;
+	b=xRuelUxdMYbuj82XL7pon871Sb6kubfimAmlwfufC/855nrNry3ZW6xRDwd/LdaH4mVp
+	 Cn3cJ40zFmE5ByOxf0tjFrODeiH7F0ItV9k0NUaKEv2sqLXlVqlPfr9Ozmaje/cAvnOWF
+	 Uw4vIsaMZc982pwKbK7n2ATb+fvS1QJr8CAF21L1tnGv9s5NRLQ2lpjiGgBWO2wLgJRwJ
+	 Nl14/+S0FKd5ffbnGjVG3AX4V2+5vw9h5qFvstSKVQRI+t4Lg/NE+PJGfXfjE2IHjqpwN
+	 vMJpVc2r0iCkFXWNV2Dv/10PGAtv+OSfp2P2ZQktlt8Q/LhZVEcNReN/iuJ3iqkGaYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590826;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CAlmhyW/OtXufw3u3wHxxj63LdaY64JAxkqkRhjAzhI=;
-	b=KXt4rNnXBQeMvF9PRa4oyMXRH+7ckeF7W0sNL77LLIwjPP7kO5bLyiDSisgQ7fXAZO/z
-	 0LcNwAks3+P0s+hTd450RD+k+fpI0t5Pq+cmjTn4daHFuJR/wezbKEiwwt2SkakVPFaKm
-	 3ojZo1BS2IDY3eINvUyBWuxpqARO1X85tcQ+G9PUdHGI6cqGOLw/+3Rq9RRGttKm7/a+M
-	 95H2JBSbKqyNBgHcUKbQw+p14punbnOPhpbzfv0llBw6W+o6XPXkpde6Nb/uW2PBZpCnJ
-	 E/gINufLH4Vgu1/YLWR8YDl+ZgyUre6Iql2+RAGcK41SSPl4JsposLzBKceWvBiHs3g==
+	bh=co5Q5vOaF5rE9c+weAvOqHSJtvnzMjm0bKCuzkNM64A=;
+	b=Qc3ImWrZChlZYCLDN5pqZZ5uzYtxls6m1ggVILPcXYJ67llZDElUaypHC4W2nwsIh4Hx
+	 rh694fRpwBD1sN19pzQkvboUpE00DP8t2EGsPkr2dGKYfhuZaPAIM886c4S1LJMg9DY8H
+	 8+3GMc92h2FMdcJG9GHnVCsv0elCD/1nbDosVc8mfaSf7fYQpoBGSUhb6SPwSnhHD99Dn
+	 HpQ9MCXHyacOFWPCm/dCcJTKdCtcxfsup5YSnFWXwqJT9S39lXpa73szexSjy8HsYK9K6
+	 M6vuoErA8uMTwXo6YHWfXK9ypqxhJiIEf4pQelM97611aqiXGyUktWpyA9L/j+zscEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mdlSLcb7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d4hgZmau;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47C2607E063;
-	Fri, 13 Nov 2026 17:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04310607E066;
+	Fri, 13 Nov 2026 17:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mdlSLcb7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7117C1F000C4;
-	Fri, 13 Nov 2026 17:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d4hgZmau
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60131F000C4;
+	Fri, 13 Nov 2026 17:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590824;
-	bh=CAlmhyW/OtXufw3u3wHxxj63LdaY64JAxkqkRhjAzhI=;
+	s=korg; t=1794590825;
+	bh=co5Q5vOaF5rE9c+weAvOqHSJtvnzMjm0bKCuzkNM64A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mdlSLcb7WWmhKTcllYLFPJYfbu3KU8RS0K79p43oJlMh8clwdcfnAMdE99M/LbxAY
-	 ZUFMv9CN7jS/vkytYOED/5HpEHNNhMDB2NYhWTRZNwRBRqEhh15ZndD/D3NVFb0fOb
-	 FzHrYTbc3jqk7THZTiksNquzPsaZnpVcMTi+gCEM=
+	b=d4hgZmauc2QDgDgh6CYamEr9S0kGLjdNILZsnWGj501z0dlOkQ2KxStwuAUysUFmx
+	 0oX28acdRKgfLGJk3j7lqCkTbZP6moP69NNpVAiqdAMCynafRAW8vmFC1AGL528WSD
+	 wXdNP9Rm4WfiTmFLVbdpcev7Q87g3w2RM06Zyhuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/670] nfsd: eliminate cl_ra_cblist and NFSD4_CLIENT_CB_RECALL_ANY
-Date: Fri, 13 Nov 2026 10:43:14 -0500
-Message-ID: <20261113153812.193610904@linuxfoundation.org>
+Subject: [PATCH 6.12 031/670] nfsd: defer setting NFSD4_CALLBACK_RUNNING in deleg_reaper
+Date: Fri, 13 Nov 2026 10:43:15 -0500
+Message-ID: <20261113153812.225852954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,104 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 424dd3df1f991b14a70f044a68c8a595abbdf1ad ]
+[ Upstream commit 108969960dc54de673869814c5f37c22f6cf404a ]
 
-deleg_reaper() will walk the client_lru list and put any suitable
-entries onto "cblist" using the cl_ra_cblist pointer. It then walks the
-objects outside the spinlock and queues callbacks for them.
+deleg_reaper() sets NFSD4_CALLBACK_RUNNING before checking the
+5-second rate limit and cl_cb_state gates.  When either gate fires
+the loop continues without queuing callback work, so the bit's only
+clear site in nfsd41_destroy_cb() is never reached and RECALL_ANY
+dispatch is permanently disabled for the affected client.
 
-None of the operations that deleg_reaper() does outside the
-nn->client_lock are blocking operations. Just queue their workqueue jobs
-under the nn->client_lock instead.
+Move the test_and_set_bit() below both non-queueing gates so the
+bit is taken only when nfsd4_run_cb() will be called.
 
-Also, the NFSD4_CLIENT_CB_RECALL_ANY and NFSD4_CALLBACK_RUNNING flags
-serve an identical purpose now. Drop the NFSD4_CLIENT_CB_RECALL_ANY flag
-and just use the one in the callback.
-
+Fixes: 424dd3df1f99 ("nfsd: eliminate cl_ra_cblist and NFSD4_CLIENT_CB_RECALL_ANY")
+Cc: stable@vger.kernel.org
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260526-cb_recall_any_callback_running_stuck-v1-1-310011a028f3@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Stable-dep-of: 9af39c0773ef ("NFSD: Send a meaningful CB_RECALL_ANY keep count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 16 +++-------------
- fs/nfsd/state.h     |  2 --
- 2 files changed, 3 insertions(+), 15 deletions(-)
+ fs/nfsd/nfs4state.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 2188c15d3ec6c..b9d3e134dc1b4 100644
+index b9d3e134dc1b4..d2878bf1e7181 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -3246,7 +3246,6 @@ nfsd4_cb_recall_any_release(struct nfsd4_callback *cb)
- {
- 	struct nfs4_client *clp = cb->cb_clp;
- 
--	clear_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags);
- 	drop_client(clp);
- }
- 
-@@ -7005,7 +7004,6 @@ deleg_reaper(struct nfsd_net *nn)
- {
- 	struct list_head *pos, *next;
- 	struct nfs4_client *clp;
--	LIST_HEAD(cblist);
- 
- 	spin_lock(&nn->client_lock);
- 	list_for_each_safe(pos, next, &nn->client_lru) {
-@@ -7019,31 +7017,23 @@ deleg_reaper(struct nfsd_net *nn)
+@@ -7017,12 +7017,12 @@ deleg_reaper(struct nfsd_net *nn)
  			continue;
  		if (atomic_read(&clp->cl_delegs_in_recall))
  			continue;
--		if (test_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags))
-+		if (test_and_set_bit(NFSD4_CALLBACK_RUNNING, &clp->cl_ra->ra_cb.cb_flags))
- 			continue;
+-		if (test_and_set_bit(NFSD4_CALLBACK_RUNNING, &clp->cl_ra->ra_cb.cb_flags))
+-			continue;
  		if (ktime_get_boottime_seconds() - clp->cl_ra_time < 5)
  			continue;
  		if (clp->cl_cb_state != NFSD4_CB_UP)
  			continue;
--		list_add(&clp->cl_ra_cblist, &cblist);
++		if (test_and_set_bit(NFSD4_CALLBACK_RUNNING, &clp->cl_ra->ra_cb.cb_flags))
++			continue;
  
  		/* release in nfsd4_cb_recall_any_release */
  		kref_get(&clp->cl_nfsdfs.cl_ref);
--		set_bit(NFSD4_CLIENT_CB_RECALL_ANY, &clp->cl_flags);
- 		clp->cl_ra_time = ktime_get_boottime_seconds();
--	}
--	spin_unlock(&nn->client_lock);
--
--	while (!list_empty(&cblist)) {
--		clp = list_first_entry(&cblist, struct nfs4_client,
--					cl_ra_cblist);
--		list_del_init(&clp->cl_ra_cblist);
- 		clp->cl_ra->ra_keep = 0;
- 		clp->cl_ra->ra_bmval[0] = BIT(RCA4_TYPE_MASK_RDATA_DLG) |
- 						BIT(RCA4_TYPE_MASK_WDATA_DLG);
- 		trace_nfsd_cb_recall_any(clp->cl_ra);
--		nfsd4_try_run_cb(&clp->cl_ra->ra_cb);
-+		nfsd4_run_cb(&clp->cl_ra->ra_cb);
- 	}
-+	spin_unlock(&nn->client_lock);
- }
- 
- static void
-diff --git a/fs/nfsd/state.h b/fs/nfsd/state.h
-index e4c3e5907db15..4e0e36b81b203 100644
---- a/fs/nfsd/state.h
-+++ b/fs/nfsd/state.h
-@@ -412,7 +412,6 @@ struct nfs4_client {
- #define NFSD4_CLIENT_UPCALL_LOCK	(5)	/* upcall serialization */
- #define NFSD4_CLIENT_CB_FLAG_MASK	(1 << NFSD4_CLIENT_CB_UPDATE | \
- 					 1 << NFSD4_CLIENT_CB_KILL)
--#define NFSD4_CLIENT_CB_RECALL_ANY	(6)
- 	unsigned long		cl_flags;
- 
- 	struct workqueue_struct *cl_callback_wq;
-@@ -461,7 +460,6 @@ struct nfs4_client {
- 
- 	struct nfsd4_cb_recall_any	*cl_ra;
- 	time64_t		cl_ra_time;
--	struct list_head	cl_ra_cblist;
- };
- 
- /* struct nfs4_client_reset
 -- 
 2.53.0
 
