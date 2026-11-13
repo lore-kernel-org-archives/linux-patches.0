@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591001;
-	b=H0f1GcRl8E3R2RkPmjVfRWvNyQcvRxnKfI4D9EfldbYy1QmuCRMlR+jaeXpU4Brq/yE3
-	 XczLAI3zAvlIw/RghCUHs26DrodtWMv91Cht+ezW3kgSWS98MVFAtiO0RKKNh/bkMtzzT
-	 PrBdiZ2rbI64Gl6ceev47ZDeRKIsJQki8Xs6AmKnWByS5Og4W5q+xTGx9a55ewDmIXGZp
-	 WV0KUZeQkgHCkaqI7R405FpU5BxWkJJt4MZLPphZZMZ/JS9SMXa0LA61pAJFDcAPZS9+F
-	 ikgZ4KglxJJOLpYw68cCY2oIP5b/5EsbQR7DKRb+HSh8G0FTanYe9n2NA6olFwMPJgQ==
+	t=1794591002;
+	b=xNZ9qPMQ3tZk/gEQZBwy3aQndXcqo1tJK/sifnfsAXo5zjblGaTHS9Sk1ju2gmZBurj8
+	 PFOeNyTHu1fcosGS5MI7BXwxrpToFHanWUrjhKHcY0irtvKz7kWB1LiKRMtoOdSXFrpxs
+	 qf2BcN1bNsC8vC3b3vt9nq5V/VglS9NMQPiuQtkqGGRmtN+ytcNk6Y0XU7QqDkiMIDtD6
+	 JYQd/BN8UMkxXv2+kkeNlTaE4eHcjVkkQeDqx+zatVpRpqVP1rMmxLqzYDPIuZfG+07qk
+	 /DH/XV901uFefIcX1Py128Z7tA+ajlluBid9s09yOc7XGXem5KhRPMAet/4BSk8HYZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591001;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591002;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UwPyAr7s19nJKB8ruvWMMeEZbwAhogbW/jwCvMrHzXs=;
-	b=dkMm7sLl8EGAWpqyigFfKFUmJUcpfdftohEPJ+ci/ok272hlLVg1Gobj38Y1Jdro/Df0
-	 k03bED9C76Ny94I+8PduKFQiAfj/E+erDujqBwHO3o63kspcfTYC9HpkXiBnb6By2a321
-	 X8bY8LkWduujfZfUAB3m2uuAwmdDuwK3JUBzlIoQVFTzNTGqiM6t/4v/cufvRMr10bzhI
-	 Ml+h6ZIJpLRK/04fiel9z5z6TGx7/IjBISFjVPm2EuHiILXMjSATge03QQx+xOUOhdgbQ
-	 ix8xaVP8IC2OW3tkBYj7GIzOu6xSUQiewe+7mwfleOKV0pPw5MtilaaB5esgMYRYOLQ==
+	bh=34vKvq9MsmvV9w1dP4IoELgwoje1kswDFVhBLrsPwlA=;
+	b=T6eZ/1/9pwf0lKUuO9aToZA0i6MWdgh4Y5BRrZz9P3HEZc9L99kYe1RzG6p2c1Hat3lv
+	 tN+nE48bnC9pmn9Bdyqt80gmE3m1mBDWJhnVOtCOgggzs+eiVdmV389SFOsGIBizFP3dY
+	 5IrtUKad4vncmea5M3AO/5srmq+cJDXL5Ljiu5/7QfStIw3ZiVRUbtPA3a+TlEdHO5i+x
+	 NQ9g4EjD0WPr1mC/iLAJLBv4zgvDsl6L1YuISVZLeF3PJZ6trnWZg9/xHlULcPWYwSpRB
+	 igj1cCfHCQAmKNtDAbdDOy9TN7p9hc9g2pcsctw54VMMqFBpsnnM2CsmsK2McXZ+NzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wNOhAIEk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iOqpIaQG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AEE6070F0D;
-	Fri, 13 Nov 2026 17:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D416070F08;
+	Fri, 13 Nov 2026 17:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wNOhAIEk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F4C1F000C4;
-	Fri, 13 Nov 2026 17:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iOqpIaQG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC621F000C4;
+	Fri, 13 Nov 2026 17:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591000;
-	bh=UwPyAr7s19nJKB8ruvWMMeEZbwAhogbW/jwCvMrHzXs=;
+	s=korg; t=1794591002;
+	bh=34vKvq9MsmvV9w1dP4IoELgwoje1kswDFVhBLrsPwlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wNOhAIEk69uQox3IR09AwNErL9temO+8xlwdkKShIaXynhhIglomJzOgkRXTdv0a0
-	 Df4PMFDmyc1JlkQeA77wubVMLqQsfaO9vR2dcoyGd+YCO+ef3efD99zQFb3XAt5/uR
-	 ScHP5DLvJCPp8HEv7dc6G3vcs5OnTTrCQbknPKUk=
+	b=iOqpIaQGXjO/+ZmLxjYfscrrru0bCOHMpdcSiVsdcJ+WLhaL/Mi6dTaJX5ATZge0+
+	 s30ePvOIr4Yc03ZBLRmF81Il5X5QOtH4gPE6KdOGBh23f7ZY3VoknqttgdsxFU5t+F
+	 kEdk/eT00MYXaAOPiUB9tyjdMSU9rDxXmfqqHkhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhao Zhang <zzhan461@ucr.edu>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 146/670] hwmon: (lm70) Fix rounding of negative temperatures
-Date: Fri, 13 Nov 2026 10:45:10 -0500
-Message-ID: <20261113153816.883611905@linuxfoundation.org>
+Subject: [PATCH 6.12 173/670] 9p: fix caches_show() out-of-bounds write
+Date: Fri, 13 Nov 2026 10:45:37 -0500
+Message-ID: <20261113153817.922793036@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,66 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Zhao Zhang <zzhan461@ucr.edu>
 
-[ Upstream commit eddb0aaacce4baa9d8176eb2f4bd9e99e867f8fc ]
+[ Upstream commit 2acd800de8827b7cdce8cb5c2c63b8e8608ec8e3 ]
 
-temp1_input_show() drops the low bits of the temperature register by
-dividing the raw value (raw / 32 on the LM70). These bits are not part
-of the temperature: the LM70, LM71, LM74 and TMP122/TMP124 always
-return some of them as 1, and the TMP125 fills them with copies of the
-temperature LSB. Division rounds toward zero, so a negative temperature
-with any of these bits set is reported one LSB too high.
+The sysfs show handler for /sys/fs/9p/caches appends cache tags with
+snprintf(buf + count, limit, ...) and then advances count and limit by
+the return value. This is incorrect for truncation because snprintf()
+returns the full would-have-been length, not the number of bytes stored.
 
-For example, the TMP122 returns 0xffff for -0.0625 degrees C, which the
-driver reports as 0. The LM70 returns 0xf39f for -25 degrees C, which
-the driver reports as -24750.
+Once the accumulated output exceeds PAGE_SIZE, count can advance past
+the sysfs buffer and limit can become negative. A later iteration then
+passes an out-of-bounds destination pointer and an oversized size_t
+into snprintf(), leading to an out-of-bounds write.
 
-Use an arithmetic right shift instead, which drops the low bits and
-rounds down.
+Use sysfs_emit_at() for the append instead. It follows the sysfs buffer
+contract and returns the number of bytes actually stored, so the offset
+remains bounded even when the output is truncated.
 
-Fixes: e1a8e913f97e ("[PATCH] lm70: New hardware monitoring driver")
-Fixes: a86e94dc946d ("hwmon: (lm70) Add support for LM71 and LM74")
-Fixes: cd929672a9ef ("hwmon: (lm70) Add ti,tmp125 support")
+Fixes: 86db0c32f16c ("9p: fix /sys/fs/9p/caches overwriting itself")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260924205326.1739229-1-khurana.ridham222@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
+Co-authored-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Message-ID: <abfb65f4800634dafb08238bba20cb48797e796f.1781908090.git.zzhan461@ucr.edu>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm70.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/9p/v9fs.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hwmon/lm70.c b/drivers/hwmon/lm70.c
-index 0d5a250cb6722..ee06c5641870a 100644
---- a/drivers/hwmon/lm70.c
-+++ b/drivers/hwmon/lm70.c
-@@ -97,21 +97,21 @@ static ssize_t temp1_input_show(struct device *dev,
- 	 */
- 	switch (p_lm70->chip) {
- 	case LM70_CHIP_LM70:
--		val = ((int)raw / 32) * 250;
-+		val = ((int)raw >> 5) * 250;
- 		break;
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index bc879d32cfcf5..66b072152745a 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -16,6 +16,7 @@
+ #include <linux/parser.h>
+ #include <linux/slab.h>
+ #include <linux/seq_file.h>
++#include <linux/sysfs.h>
+ #include <net/9p/9p.h>
+ #include <net/9p/client.h>
+ #include <net/9p/transport.h>
+@@ -555,21 +556,14 @@ static ssize_t caches_show(struct kobject *kobj,
+ 			   struct kobj_attribute *attr,
+ 			   char *buf)
+ {
+-	ssize_t n = 0, count = 0, limit = PAGE_SIZE;
++	ssize_t count = 0;
+ 	struct v9fs_session_info *v9ses;
  
- 	case LM70_CHIP_TMP121:
- 	case LM70_CHIP_TMP122:
- 	case LM70_CHIP_LM74:
--		val = ((int)raw / 8) * 625 / 10;
-+		val = ((int)raw >> 3) * 625 / 10;
- 		break;
- 
- 	case LM70_CHIP_LM71:
--		val = ((int)raw / 4) * 3125 / 100;
-+		val = ((int)raw >> 2) * 3125 / 100;
- 		break;
- 
- 	case LM70_CHIP_TMP125:
--		val = (sign_extend32(raw, 14) / 32) * 250;
-+		val = (sign_extend32(raw, 14) >> 5) * 250;
- 		break;
+ 	spin_lock(&v9fs_sessionlist_lock);
+ 	list_for_each_entry(v9ses, &v9fs_sessionlist, slist) {
+-		if (v9ses->cachetag) {
+-			n = snprintf(buf + count, limit, "%s\n", v9ses->cachetag);
+-			if (n < 0) {
+-				count = n;
+-				break;
+-			}
+-
+-			count += n;
+-			limit -= n;
+-		}
++		if (v9ses->cachetag)
++			count += sysfs_emit_at(buf, count, "%s\n",
++					       v9ses->cachetag);
  	}
  
+ 	spin_unlock(&v9fs_sessionlist_lock);
 -- 
 2.53.0
 
