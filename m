@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585589;
-	b=lXhLEu85/gLGSoSTjeuhOhLpB+fGbBVZ+z+PWvb7O+oEv2yiPXXbMulz47Dkq9jN9D9l
-	 WORHsHZT3V+0KPb5MP7ko4S0+H2PYA7olBchjDcVgFXC0vlyP96rxhtduyo0s/gYfzhwX
-	 6oc18e1SvRzaYBNqbIk45WMXuGzOMGd5f5cvzJltORj+k6qzft0JGZDND4R7ExJV8/k40
-	 Mej5tAEDoaQTYmaQ/KftFpVhTqH1r4x4WgCfpjC0XaTuxA+fE9TYZ4B7lHekeM4qY8T3s
-	 xq4jrK/wZeIhi+Rew75WgKFaVI+uAhIMxGViihMRQDBicethVKFyKt6CRWBKYJMQFJQ==
+	t=1794585590;
+	b=JQXWND5dNmlfl8OZkrL2Ld/CWnZ/Rthgt6mpnd18+MeLshRdPOAtAkFUTwVGCI3F5ueK
+	 TsJM6xde/lgkEQZvSz6iI+GNfXDyBQznPPt3jChCr9YCHMVBaFb+uTu0p553FaMC+3EYE
+	 vbVNMg0W/u1UzA1I/Z3BOIJoibK0LOSAziwIcOJ/ze+gAnWETx045kqRBlIxCX3jURxLL
+	 PVowKFhC0yt3wxd1+erTIDQjJ9I0Q5aE/gBQhg4ljrM5Q8pmIROWW+WFQ1UvBK5pRg99K
+	 tvuqIqjMdlla4+SDjmFtsUxjNAMrkyzLMjsl2bCjM5Ry866BriRWZVVh/1uo0Q0FpXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585589;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585590;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZfUzA9cheh4XH1FnEPhSEh1ZZey7cU8/ypgkWG2MgO4=;
-	b=JRlHctAFkPMHlpXMKjpF/lsTCJBAzTYYLGHm8kHF7ZmSUoq6Vf1VzM3yCmKQYVoh8OeQ
-	 YnzGFnrtWb4PMiHoi5iRUirbLGg+M7Oa4sh61xk6XBo5j3uXBSEAAlEAotduJXmDDby33
-	 pqzr0JoSnUp1Fq4qNPtlwOCZmM8P9jneI9izzr0hhhtKuAJF9wIfKtJY3sIapBX6mnlhR
-	 bljAh84s8k1FxYPhrx0GEiNDJFXdUeqC+VBMbs0xVXhasD4/g6+Mv03dJjMLHdhjhjwNk
-	 /eBMhhiYja96agKmWB+RadgohIZyLBjkxJJce0S8lnO2y+sxJqJerxhohBsEgmvz4dw==
+	bh=rp8QJdiDqh7KQxPKVGk0Lg6k8rkQ2g0GtxC2QQHk0kw=;
+	b=vaC8ygFGZnpKS+UHJ7EtcwVcvLSoKrB3oUOY9yE7iWS7Ph/ClbRTQke4QWWc85pmVrq8
+	 kvVk8O/vkLyZ6JdPcTzrpeR9RgQMB+NAUDmHkSZcQmtkEdUwXo909fXdhMFz35pfJJf7a
+	 aH9rSQkUXslifEzyHrfQf8taIc3s1F4DdrQC5pJedy5vEvJH6iUAEMLFllcfqoQgm5Npi
+	 1jEZ0sEn3X2FJ7lcJeHnpr7cym5NsroIIc4AB+LNE2sejrG+HPBJkfjf4bezAofDPEIXE
+	 GNbPy0LtnHl0VeS+f9ja5ssn+456QnmU0am+5nLb2wqSnmGXuT6WMJbvkknVdDXNPxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xcz4fRyf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jH+mtI5/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAD4606FFE9;
-	Fri, 13 Nov 2026 15:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A752606FFEC;
+	Fri, 13 Nov 2026 15:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xcz4fRyf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD80F1F000C4;
-	Fri, 13 Nov 2026 15:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jH+mtI5/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BFB1F000C4;
+	Fri, 13 Nov 2026 15:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585589;
-	bh=ZfUzA9cheh4XH1FnEPhSEh1ZZey7cU8/ypgkWG2MgO4=;
+	s=korg; t=1794585590;
+	bh=rp8QJdiDqh7KQxPKVGk0Lg6k8rkQ2g0GtxC2QQHk0kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xcz4fRyfA1uS++6I+SOYiPtA1GneEouNIt0oLB7r0wN4WcDWeQDnk45O9lohv0YpF
-	 Z6k0JXgYtRpc4AhzK7TKXIopogpKU/7XO7gCi4e3fDtIConaQo7TWmrqjBv0cIs0xm
-	 OK2ncvmURF8Z3SB7zyoCtwpIqoK2t2CLOs9vIxpY=
+	b=jH+mtI5/xHVcm5gZqwuYMXRp0RrAuuT9fNMbMCOu2BTOfkHABZoR4yhZxjU663IRb
+	 mkeslckMue0bGB2uOHftoFtfr/e0/1A6yeSHi8cPFEs+St5crhGor8nqatDEOeOdt5
+	 umMqpQx7YvQMn6+4aX+2tDiPZMjR2vn773NcJXQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
-	Mohit Sharma <mohit.sharma@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Babu Moger <babu.moger@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 218/507] ASoC: qcom: q6apm: Guard callbacks until probe data is ready
-Date: Fri, 13 Nov 2026 10:48:42 -0500
-Message-ID: <20261113153801.877386764@linuxfoundation.org>
+Subject: [PATCH 7.3 219/507] x86/resctrl: Correct ABMC counter ID field width
+Date: Fri, 13 Nov 2026 10:48:43 -0500
+Message-ID: <20261113153801.910778768@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,77 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohit Sharma <mohit.sharma@oss.qualcomm.com>
+From: Babu Moger <babu.moger@amd.com>
 
-[ Upstream commit ef7062864c0511bba52775d0eb3aa72d886b5f3a ]
+[ Upstream commit 84b4b620af7d24916add5d45104023bc5d804f53 ]
 
-The GPR bus needs to make response callbacks available before invoking a
-client probe because clients can issue synchronous commands from probe.
-This creates a short interval where a callback can run before the client
-has published its private data.
+AMD's Assignable Bandwidth Monitoring Counters (ABMC) are configured via
+MSR_IA32_L3_QOS_ABMC_CFG. The cntr_id field selects the counter the
+configuration applies to. The number of counters a platform supports (the
+number of possible values written into that field) is enumerated separately
+via CPUID.
 
-Make q6apm publish its driver data only after all callback-visible state
-has been initialized. Have the q6apm and q6prm callbacks ignore packets
-received before driver data is available.
+On platforms that enumerate more than 32 counters, the current 5-bit encoding
+truncates the counter ID and misprograms ABMC.
 
-Fixes: ec1471a898cc ("soc: qcom: apr: Add GPR support")
+The section "Assignable Bandwidth Monitoring (ABMC)" in the APM has been
+updated to widen MSR_IA32_L3_QOS_ABMC_CFG.cntr_id from 5 bits to 12 bits.
+
+The CPUID enumeration reports the maximum counter ID in a 16-bit field and may
+therefore report more counters than a 12-bit MSR_IA32_L3_QOS_ABMC_CFG.cntr_id
+can address.
+
+Widen MSR_IA32_L3_QOS_ABMC_CFG.cntr_id to 12 bits to match the architecture.
+Cap the enumerated counter count at BIT(12) so every counter ID used by
+resctrl can be written to MSR_IA32_L3_QOS_ABMC_CFG.cntr_id without truncation.
+
+  [ bp: Massage and simplify commit message. ]
+
+Fixes: 84ecefb76674 ("x86/resctrl: Add data structures and definitions for ABMC assignment")
+Signed-off-by: Babu Moger <babu.moger@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 Cc: stable@vger.kernel.org
-Co-developed-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Signed-off-by: Mohit Sharma <mohit.sharma@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261022144130.2443667-2-mohit.sharma@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/3a5e99300f1309ae279beb058ef0438516b2bdcd.1793392128.git.babu.moger@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 6 ++++--
- sound/soc/qcom/qdsp6/q6prm.c | 3 +++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/resctrl/internal.h | 4 ++--
+ arch/x86/kernel/cpu/resctrl/monitor.c  | 3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index a79bbb34c777e..8a756249e5884 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -884,8 +884,6 @@ static int apm_probe(gpr_device_t *gdev)
- 	if (!apm)
- 		return -ENOMEM;
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index e3cfa0c10e92d..ffd74a68671b0 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -214,8 +214,8 @@ union l3_qos_abmc_cfg {
+ 			      bw_src   :12,
+ 			      reserved1: 3,
+ 			      is_clos  : 1,
+-			      cntr_id  : 5,
+-			      reserved : 9,
++			      cntr_id  :12,
++			      reserved : 2,
+ 			      cntr_en  : 1,
+ 			      cfg_en   : 1;
+ 	} split;
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 3838e0a13d36f..5d0d3b18f9b82 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -470,7 +470,8 @@ int __init rdt_get_l3_mon_config(struct rdt_resource *r)
+ 		r->mon.mbm_cntr_assignable = true;
+ 		r->mon.mbm_cntr_configurable = true;
+ 		cpuid_count(0x80000020, 5, &eax, &ebx, &ecx, &edx);
+-		r->mon.num_mbm_cntrs = (ebx & GENMASK(15, 0)) + 1;
++		/* cntr_id is 12 bits and can only encode 4096 counters. */
++		r->mon.num_mbm_cntrs = min((ebx & GENMASK(15, 0)) + 1, BIT(12));
+ 		hw_res->mbm_cntr_assign_enabled = true;
+ 	}
  
--	dev_set_drvdata(dev, apm);
--
- 	mutex_init(&apm->lock);
- 	apm->dev = dev;
- 	apm->gdev = gdev;
-@@ -899,6 +897,7 @@ static int apm_probe(gpr_device_t *gdev)
- 
- 	idr_init(&apm->modules_idr);
- 
-+	dev_set_drvdata(dev, apm);
- 	g_apm = apm;
- 
- 	q6apm_get_apm_state(apm);
-@@ -942,6 +941,9 @@ static int apm_callback(const struct gpr_resp_pkt *data, void *priv, int op)
- 	const struct gpr_hdr *hdr = &data->hdr;
- 	int graph_id, is_pos_buf;
- 
-+	if (!apm)
-+		return 0;
-+
- 	result = data->payload;
- 
- 	switch (hdr->opcode) {
-diff --git a/sound/soc/qcom/qdsp6/q6prm.c b/sound/soc/qcom/qdsp6/q6prm.c
-index 1f3ce4cc08370..bcc73127d54db 100644
---- a/sound/soc/qcom/qdsp6/q6prm.c
-+++ b/sound/soc/qcom/qdsp6/q6prm.c
-@@ -192,6 +192,9 @@ static int prm_callback(const struct gpr_resp_pkt *data, void *priv, int op)
- 	const struct gpr_ibasic_rsp_result_t *result;
- 	const struct gpr_hdr *hdr = &data->hdr;
- 
-+	if (!prm)
-+		return 0;
-+
- 	switch (hdr->opcode) {
- 	case PRM_CMD_RSP_REQUEST_HW_RSC:
- 	case PRM_CMD_RSP_RELEASE_HW_RSC:
 -- 
 2.53.0
 
