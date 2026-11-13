@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794586009;
-	b=NOTE2PrJ9tI42xssZp0sxhkdD8wvcSocEJYiiVi1d8ie2faVP5uBlKj5pRI6s/57m5ec
-	 ZhjWCmJpuBYbNmkqkJPmjaoeTXFQTA/i+OfkP6WmbCIR6Z0KdSZyC3LhQfpEM7d7BRBuf
-	 qghpvXCab5DaURFbAzY1SWq4o8ndSeWBbs0A2AgumTHBXMrgODFtwx4JCGsgQfUPV8Ic1
-	 FOureBTcyhnG+gVZeymzy/I4+sz/23qXqvCP+Se7NFZ4Ftly39jSI7qAWnacDPm3a3ANr
-	 82h8z71jsI6h4mEz5zefY+TojgHGlCOGdpmT2Ekq4h66dVCmRTVnout1K+w+cN15XNA==
+	t=1794586011;
+	b=m+1FouLE6IJRY7uZl8o3XnjDGQcyVIJ8Uvnr2UuBOgD3j1iIjD9eyTWOcGf8ROH3U/5S
+	 zZTn90+2UypHGqkErEoyIRySSygvInwXSNm6Y2KWBHLsFmdieVj3lXTGwByLkIIdl1gMc
+	 vdCD/XZPef78jwjzexOEKc9yzt0pt1oTKY5zmicseEHI3Hl3/oVBIkG7gzyHdIZW7isyp
+	 myLdBsQ1Jyp10SvLty0/F/STuqWVH9OyAgDSVkh840wPj9eUld6xnA+Bhd9L6M3EqIvzz
+	 zE5nI6vjiIX7HAiFfY4Nm2iIBUs0JoLdhx8WNhPwaxIhAauPblZOjyGomTYmaFxXkPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794586009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794586011;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4NJepoU+FMppMm51jUMyFk4PJHWDUfb3xh4cI3qnxHg=;
-	b=WwdbRAT3c86XOhRTRyT2dQ22SRW3EnzzvKI5fpbAhjXbo94Ec/Z21ldMeWMsFhckLUdn
-	 ALkMYWlGzw0Q6zKn2CJZ0wWTt4U+ecUkdkuhR+Zj55ONGTOk3to9aMe09TGlh4aNsXZ+z
-	 6PEoFX+bsNede67A61KoixWJz+q3xlojQ5a5fShBxO63hsu2CLMeqg9aBA+J1/isZtf1f
-	 Af3qB3omuf9zZxBEmo9iKRPPLNIAptJVV9vq+KVrUuoXQsvzu36pCV445wFHrM/i8Ob1Q
-	 cvGHUFoOHVM91DSp1OETtOiRrzfRlJE+D/+KChCB1GDAzL3uc2AS2G7UnyOEbrXbZMA==
+	bh=phCKXMs/aoQ26U62Q9uoTte3OV5g5xwr+YHki4n5gqU=;
+	b=3IAiGpLn1+xaarlMn+M1w4ziQBj5TtqjKdYp3K0deDPzKXGPxppt5EsxrLpg/N1oclzp
+	 kw1Xt58gQkroZW0ECxEy2o3wrQvKdxAsgTgyXRG7J88/gTqe8VLWWNALGy5N21oHtZnyn
+	 LzITepx7vwJciaw3kq3doo2CMYfIadt5cf8FXi3Baq4x+ApgKktUUeF/oplJGyvsqPFfO
+	 iJL0gth/q5d4k8rq39ntC0F7XFMrvfcZ3VOHDkMJ7ZE3CPCqP5pPtb8BJF5XOeujUyr2E
+	 iZaQ/OyNlKMVH++VIAfJE3rIPuwUQU4fZuqk6h4UlEamGddj1bgbDcI2RekEq6OyizQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQ6naZ6Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kJUKIYhq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A71606B2CB;
-	Fri, 13 Nov 2026 16:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E910606B2C2;
+	Fri, 13 Nov 2026 16:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQ6naZ6Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E4D1F000C4;
-	Fri, 13 Nov 2026 16:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kJUKIYhq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2BD1F000C4;
+	Fri, 13 Nov 2026 16:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794586009;
-	bh=4NJepoU+FMppMm51jUMyFk4PJHWDUfb3xh4cI3qnxHg=;
+	s=korg; t=1794586011;
+	bh=phCKXMs/aoQ26U62Q9uoTte3OV5g5xwr+YHki4n5gqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XQ6naZ6YHbqENX9Sl/D7AfinT4+wBB+PWkFq2/WLk636VzdtiytqS6HML3yIA4htB
-	 58fOHsU+1G7aM+K2wJQzITZcLrFP+97VJBRtSleQG5PB+rrMgQVV/k+qfpWsAxuuiX
-	 18Eo6FxQhCUmMEFta2B4fJ2Q8TlCEE43PnHVE11k=
+	b=kJUKIYhqAQGZvEhb19vhtq6I3WdBbdUulT30c/f4rdNu1MsyySi8d6/o8TfBEzyOw
+	 v6xDDpgM1N/MxuffqRHaozLsftAhYbnWMVeseurah4u9Boig62COleVm5uXYBrcMPl
+	 Ah/HQA6EdSfOZfoFAINdRHcHpA72StoyK1FuSnUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 016/686] smb: move create_durable_rsp_v2 to common/smb2pdu.h
-Date: Fri, 13 Nov 2026 10:42:29 -0500
-Message-ID: <20261113153821.472472915@linuxfoundation.org>
+Subject: [PATCH 6.18 017/686] smb: move some duplicate definitions to common/smb2pdu.h
+Date: Fri, 13 Nov 2026 10:42:30 -0500
+Message-ID: <20261113153821.503527849@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,148 +70,630 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit 96721fd292264d712b7b9a51752ab87de5035db4 ]
+[ Upstream commit 1172d8598499a006d172bb24bebaa3fdc99064a8 ]
 
-Modify the following places:
+In order to maintain the code more easily, move duplicate definitions to
+common header file.
 
-  - some fields in "struct create_durable_v2_rsp" ->
-                       struct durable_context_v2_rsp
-  - durable_reconnect_context_v2_rsp -> durable_context_v2_rsp
-  - create_durable_v2_rsp -> create_durable_rsp_v2
+There are only 4 different definitions, the client uses cpu_to_le16()
+but the server does not:
 
-Then move them to common header file.
+  - RSS_CAPABLE
+  - RDMA_CAPABLE
+  - INTERNETWORK
+  - INTERNETWORKV6
 
+The other definitions are exactly the same on both client and server.
+
+The struct smb_hdr is defined in MS-CIFS and MS-SMB, but it's also used by
+SMB2 and SMB3, so move it to the common smb2pdu.h.
+
+Co-developed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: f8171804a39e ("smb: client: fix OOB read of the resume name sent in TRANS2_FIND_NEXT2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.h |  6 ------
- fs/smb/common/smb2pdu.h | 12 ++++++++++++
- fs/smb/server/oplock.c  |  8 ++++----
- fs/smb/server/smb2ops.c |  6 +++---
- fs/smb/server/smb2pdu.h |  6 ------
- 5 files changed, 19 insertions(+), 19 deletions(-)
+ fs/smb/client/cifspdu.h    | 135 +----------------------------
+ fs/smb/client/smb2pdu.h    |  21 -----
+ fs/smb/common/smb2pdu.h    | 172 +++++++++++++++++++++++++++++++++++--
+ fs/smb/server/smb2pdu.c    |   8 +-
+ fs/smb/server/smb2pdu.h    |  19 ----
+ fs/smb/server/smb_common.h |  75 +---------------
+ 6 files changed, 173 insertions(+), 257 deletions(-)
 
+diff --git a/fs/smb/client/cifspdu.h b/fs/smb/client/cifspdu.h
+index c86a329e58221..212cd57357ce2 100644
+--- a/fs/smb/client/cifspdu.h
++++ b/fs/smb/client/cifspdu.h
+@@ -12,6 +12,7 @@
+ #include <net/sock.h>
+ #include <linux/unaligned.h>
+ #include "../common/smbfsctl.h"
++#include "../common/smb2pdu.h"
+ 
+ #define CIFS_PROT   0
+ #define POSIX_PROT  (CIFS_PROT+1)
+@@ -180,98 +181,7 @@
+ #define SMBFLG2_ERR_STATUS cpu_to_le16(0x4000)
+ #define SMBFLG2_UNICODE cpu_to_le16(0x8000)
+ 
+-/*
+- * These are the file access permission bits defined in CIFS for the
+- * NTCreateAndX as well as the level 0x107
+- * TRANS2_QUERY_PATH_INFORMATION API.  The level 0x107, SMB_QUERY_FILE_ALL_INFO
+- * responds with the AccessFlags.
+- * The AccessFlags specifies the access permissions a caller has to the
+- * file and can have any suitable combination of the following values:
+- */
+-
+-#define FILE_READ_DATA        0x00000001  /* Data can be read from the file   */
+-					  /* or directory child entries can   */
+-					  /* be listed together with the      */
+-					  /* associated child attributes      */
+-					  /* (so the FILE_READ_ATTRIBUTES on  */
+-					  /* the child entry is not needed)   */
+-#define FILE_WRITE_DATA       0x00000002  /* Data can be written to the file  */
+-					  /* or new file can be created in    */
+-					  /* the directory                    */
+-#define FILE_APPEND_DATA      0x00000004  /* Data can be appended to the file */
+-					  /* (for non-local files over SMB it */
+-					  /* is same as FILE_WRITE_DATA)      */
+-					  /* or new subdirectory can be       */
+-					  /* created in the directory         */
+-#define FILE_READ_EA          0x00000008  /* Extended attributes associated   */
+-					  /* with the file can be read        */
+-#define FILE_WRITE_EA         0x00000010  /* Extended attributes associated   */
+-					  /* with the file can be written     */
+-#define FILE_EXECUTE          0x00000020  /*Data can be read into memory from */
+-					  /* the file using system paging I/O */
+-					  /* for executing the file / script  */
+-					  /* or right to traverse directory   */
+-					  /* (but by default all users have   */
+-					  /* directory bypass traverse        */
+-					  /* privilege and do not need this   */
+-					  /* permission on directories at all)*/
+-#define FILE_DELETE_CHILD     0x00000040  /* Child entry can be deleted from  */
+-					  /* the directory (so the DELETE on  */
+-					  /* the child entry is not needed)   */
+-#define FILE_READ_ATTRIBUTES  0x00000080  /* Attributes associated with the   */
+-					  /* file or directory can be read    */
+-#define FILE_WRITE_ATTRIBUTES 0x00000100  /* Attributes associated with the   */
+-					  /* file or directory can be written */
+-#define DELETE                0x00010000  /* The file or dir can be deleted   */
+-#define READ_CONTROL          0x00020000  /* The discretionary access control */
+-					  /* list and ownership associated    */
+-					  /* with the file or dir can be read */
+-#define WRITE_DAC             0x00040000  /* The discretionary access control */
+-					  /* list associated with the file or */
+-					  /* directory can be written         */
+-#define WRITE_OWNER           0x00080000  /* Ownership information associated */
+-					  /* with the file/dir can be written */
+-#define SYNCHRONIZE           0x00100000  /* The file handle can waited on to */
+-					  /* synchronize with the completion  */
+-					  /* of an input/output request       */
+-#define SYSTEM_SECURITY       0x01000000  /* The system access control list   */
+-					  /* associated with the file or      */
+-					  /* directory can be read or written */
+-					  /* (cannot be in DACL, can in SACL) */
+-#define MAXIMUM_ALLOWED       0x02000000  /* Maximal subset of GENERIC_ALL    */
+-					  /* permissions which can be granted */
+-					  /* (cannot be in DACL nor SACL)     */
+-#define GENERIC_ALL           0x10000000  /* Same as: GENERIC_EXECUTE |       */
+-					  /*          GENERIC_WRITE |         */
+-					  /*          GENERIC_READ |          */
+-					  /*          FILE_DELETE_CHILD |     */
+-					  /*          DELETE |                */
+-					  /*          WRITE_DAC |             */
+-					  /*          WRITE_OWNER             */
+-					  /* So GENERIC_ALL contains all bits */
+-					  /* mentioned above except these two */
+-					  /* SYSTEM_SECURITY  MAXIMUM_ALLOWED */
+-#define GENERIC_EXECUTE       0x20000000  /* Same as: FILE_EXECUTE |          */
+-					  /*          FILE_READ_ATTRIBUTES |  */
+-					  /*          READ_CONTROL |          */
+-					  /*          SYNCHRONIZE             */
+-#define GENERIC_WRITE         0x40000000  /* Same as: FILE_WRITE_DATA |       */
+-					  /*          FILE_APPEND_DATA |      */
+-					  /*          FILE_WRITE_EA |         */
+-					  /*          FILE_WRITE_ATTRIBUTES | */
+-					  /*          READ_CONTROL |          */
+-					  /*          SYNCHRONIZE             */
+-#define GENERIC_READ          0x80000000  /* Same as: FILE_READ_DATA |        */
+-					  /*          FILE_READ_EA |          */
+-					  /*          FILE_READ_ATTRIBUTES |  */
+-					  /*          READ_CONTROL |          */
+-					  /*          SYNCHRONIZE             */
+-
+-#define FILE_READ_RIGHTS (FILE_READ_DATA | FILE_READ_EA | FILE_READ_ATTRIBUTES)
+-#define FILE_WRITE_RIGHTS (FILE_WRITE_DATA | FILE_APPEND_DATA \
+-				| FILE_WRITE_EA | FILE_WRITE_ATTRIBUTES)
+-#define FILE_EXEC_RIGHTS (FILE_EXECUTE)
+-
++/* Combinations of file access permission bits */
+ #define SET_FILE_READ_RIGHTS (FILE_READ_DATA | FILE_READ_EA | FILE_WRITE_EA \
+ 				| FILE_READ_ATTRIBUTES \
+ 				| FILE_WRITE_ATTRIBUTES \
+@@ -283,15 +193,6 @@
+ 				| FILE_WRITE_ATTRIBUTES \
+ 				| DELETE | READ_CONTROL | WRITE_DAC \
+ 				| WRITE_OWNER | SYNCHRONIZE)
+-#define SET_FILE_EXEC_RIGHTS (FILE_READ_EA | FILE_WRITE_EA | FILE_EXECUTE \
+-				| FILE_READ_ATTRIBUTES \
+-				| FILE_WRITE_ATTRIBUTES \
+-				| DELETE | READ_CONTROL | WRITE_DAC \
+-				| WRITE_OWNER | SYNCHRONIZE)
+-
+-#define SET_MINIMUM_RIGHTS (FILE_READ_EA | FILE_READ_ATTRIBUTES \
+-				| READ_CONTROL | SYNCHRONIZE)
+-
+ 
+ /*
+  * Invalid readdir handle
+@@ -417,38 +318,6 @@
+ #define GETU16(var)  (*((__u16 *)var))	/* BB check for endian issues */
+ #define GETU32(var)  (*((__u32 *)var))	/* BB check for endian issues */
+ 
+-struct smb_hdr {
+-	__be32 smb_buf_length;	/* BB length is only two (rarely three) bytes,
+-		with one or two byte "type" preceding it that will be
+-		zero - we could mask the type byte off */
+-	__u8 Protocol[4];
+-	__u8 Command;
+-	union {
+-		struct {
+-			__u8 ErrorClass;
+-			__u8 Reserved;
+-			__le16 Error;
+-		} __attribute__((packed)) DosError;
+-		__le32 CifsError;
+-	} __attribute__((packed)) Status;
+-	__u8 Flags;
+-	__le16 Flags2;		/* note: le */
+-	__le16 PidHigh;
+-	union {
+-		struct {
+-			__le32 SequenceNumber;  /* le */
+-			__u32 Reserved; /* zero */
+-		} __attribute__((packed)) Sequence;
+-		__u8 SecuritySignature[8];	/* le */
+-	} __attribute__((packed)) Signature;
+-	__u8 pad[2];
+-	__u16 Tid;
+-	__le16 Pid;
+-	__u16 Uid;
+-	__le16 Mid;
+-	__u8 WordCount;
+-} __attribute__((packed));
+-
+ /* given a pointer to an smb_hdr, retrieve a void pointer to the ByteCount */
+ static inline void *
+ BCC(struct smb_hdr *smb)
 diff --git a/fs/smb/client/smb2pdu.h b/fs/smb/client/smb2pdu.h
-index a75cde061a67d..be0a4f5b26c2e 100644
+index be0a4f5b26c2e..311758398b436 100644
 --- a/fs/smb/client/smb2pdu.h
 +++ b/fs/smb/client/smb2pdu.h
-@@ -138,12 +138,6 @@ struct share_redirect_error_context_rsp {
- /* Flags */
- #define SMB2_DHANDLE_FLAG_PERSISTENT	0x00000002
+@@ -133,11 +133,6 @@ struct share_redirect_error_context_rsp {
+ #define SMB2_LEASE_HANDLE_CACHING_HE	0x02
+ #define SMB2_LEASE_WRITE_CACHING_HE	0x04
  
--/* See MS-SMB2 2.2.14.2.12 */
--struct durable_reconnect_context_v2_rsp {
--	__le32 Timeout;
--	__le32 Flags; /* see above DHANDLE_FLAG_PERSISTENT */
--} __packed;
+-
+-/* See MS-SMB2 2.2.13.2.11 */
+-/* Flags */
+-#define SMB2_DHANDLE_FLAG_PERSISTENT	0x00000002
 -
  /* See MS-SMB2 2.2.13.2.5 */
  struct crt_twarp_ctxt {
  	struct create_context_hdr ccontext;
+@@ -204,22 +199,6 @@ struct network_resiliency_req {
+ } __packed;
+ /* There is no buffer for the response ie no struct network_resiliency_rsp */
+ 
+-#define RSS_CAPABLE	cpu_to_le32(0x00000001)
+-#define RDMA_CAPABLE	cpu_to_le32(0x00000002)
+-
+-#define INTERNETWORK	cpu_to_le16(0x0002)
+-#define INTERNETWORKV6	cpu_to_le16(0x0017)
+-
+-struct network_interface_info_ioctl_rsp {
+-	__le32 Next; /* next interface. zero if this is last one */
+-	__le32 IfIndex;
+-	__le32 Capability; /* RSS or RDMA Capable */
+-	__le32 Reserved;
+-	__le64 LinkSpeed;
+-	__le16 Family;
+-	__u8 Buffer[126];
+-} __packed;
+-
+ #define NO_FILE_ID 0xFFFFFFFFFFFFFFFFULL /* general ioctls to srv not to file */
+ 
+ struct compress_ioctl {
 diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
-index 7899e7706318f..52250409efc8e 100644
+index 52250409efc8e..7377b5a9f8a55 100644
 --- a/fs/smb/common/smb2pdu.h
 +++ b/fs/smb/common/smb2pdu.h
-@@ -1320,6 +1320,18 @@ struct create_durable_handle_reconnect_v2 {
- 	struct durable_reconnect_context_v2 dcontext;
+@@ -1149,12 +1149,6 @@ struct smb2_server_client_notification {
+ #define FILE_OVERWRITE_IF_LE		cpu_to_le32(0x00000005)
+ #define FILE_CREATE_MASK_LE             cpu_to_le32(0x00000007)
+ 
+-#define FILE_READ_RIGHTS (FILE_READ_DATA | FILE_READ_EA \
+-			| FILE_READ_ATTRIBUTES)
+-#define FILE_WRITE_RIGHTS (FILE_WRITE_DATA | FILE_APPEND_DATA \
+-			| FILE_WRITE_EA | FILE_WRITE_ATTRIBUTES)
+-#define FILE_EXEC_RIGHTS (FILE_EXECUTE)
+-
+ /* CreateOptions Flags */
+ #define FILE_DIRECTORY_FILE_LE		cpu_to_le32(0x00000001)
+ /* same as #define CREATE_NOT_FILE_LE	cpu_to_le32(0x00000001) */
+@@ -1290,6 +1284,14 @@ struct create_mxac_req {
+ 	__le64 Timestamp;
  } __packed;
  
-+/* See MS-SMB2 2.2.14.2.12 */
-+struct durable_context_v2_rsp {
-+	__le32 Timeout;
-+	__le32 Flags; /* see SMB2_DHANDLE_FLAG_PERSISTENT */
++/*
++ * Flags
++ * See MS-SMB2 2.2.13.2.11
++ *     MS-SMB2 2.2.13.2.12
++ *     MS-SMB2 2.2.14.2.12
++ */
++#define SMB2_DHANDLE_FLAG_PERSISTENT	0x00000002
++
+ /* See MS-SMB2 2.2.13.2.11 */
+ struct durable_context_v2_req {
+ 	__le32 Timeout;
+@@ -1490,6 +1492,26 @@ struct smb_sockaddr_in6 {
+ 	__be32 ScopeId;
+ } __packed;
+ 
++/* See MS-SMB2 2.2.32.5 and MS-SMB2 2.2.32.5.1 */
++#define RSS_CAPABLE	cpu_to_le32(0x00000001)
++#define RDMA_CAPABLE	cpu_to_le32(0x00000002)
++#define INTERNETWORK	cpu_to_le16(0x0002)
++#define INTERNETWORKV6	cpu_to_le16(0x0017)
++struct network_interface_info_ioctl_rsp {
++	__le32 Next; /* next interface. zero if this is last one */
++	__le32 IfIndex;
++	__le32 Capability; /* RSS or RDMA Capable */
++	__le32 Reserved;
++	__le64 LinkSpeed;
++	union {
++		char	SockAddr_Storage[128];
++		struct {
++			__le16 Family;
++			__u8 Buffer[126];
++		};
++	};
 +} __packed;
 +
-+struct create_durable_rsp_v2 {
-+	struct create_context_hdr ccontext;
-+	__u8   Name[8];
-+	struct durable_context_v2_rsp dcontext;
+ /* this goes in the ioctl buffer when doing FSCTL_SET_ZERO_DATA */
+ struct file_zero_data_information {
+ 	__le64	FileOffset;
+@@ -1979,6 +2001,144 @@ struct smb2_lease_ack {
+ 	__le64 LeaseDuration;
+ } __packed;
+ 
++/*
++ * See MS-CIFS 2.2.3.1
++ *     MS-SMB 2.2.3.1
++ */
++struct smb_hdr {
++	__be32 smb_buf_length;	/* BB length is only two (rarely three) bytes,
++		with one or two byte "type" preceding it that will be
++		zero - we could mask the type byte off */
++	__u8 Protocol[4];
++	__u8 Command;
++	union {
++		struct {
++			__u8 ErrorClass;
++			__u8 Reserved;
++			__le16 Error;
++		} __packed DosError;
++		__le32 CifsError;
++	} __packed Status;
++	__u8 Flags;
++	__le16 Flags2;		/* note: le */
++	__le16 PidHigh;
++	union {
++		struct {
++			__le32 SequenceNumber;  /* le */
++			__u32 Reserved; /* zero */
++		} __packed Sequence;
++		__u8 SecuritySignature[8];	/* le */
++	} __packed Signature;
++	__u8 pad[2];
++	__u16 Tid;
++	__le16 Pid;
++	__u16 Uid;
++	__le16 Mid;
++	__u8 WordCount;
 +} __packed;
 +
- /* See MS-SMB2 2.2.14.2.5 */
- struct create_mxac_rsp {
- 	struct create_context_hdr ccontext;
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 90cd8c962f785..c6a6c1181be66 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1858,9 +1858,9 @@ void create_durable_rsp_buf(char *cc)
-  */
- void create_durable_v2_rsp_buf(char *cc, struct ksmbd_file *fp)
- {
--	struct create_durable_v2_rsp *buf;
-+	struct create_durable_rsp_v2 *buf;
+ #define OP_BREAK_STRUCT_SIZE_20		24
+ #define OP_BREAK_STRUCT_SIZE_21		36
++
++/*
++ * See MS-SMB2 2.2.13.1.1
++ *     MS-SMB 2.2.1.4.1
++ * These are the file access permission bits defined in CIFS for the
++ * NTCreateAndX as well as the level 0x107
++ * TRANS2_QUERY_PATH_INFORMATION API.  The level 0x107, SMB_QUERY_FILE_ALL_INFO
++ * responds with the AccessFlags.
++ * The AccessFlags specifies the access permissions a caller has to the
++ * file and can have any suitable combination of the following values:
++ */
++#define FILE_READ_DATA        0x00000001  /* Data can be read from the file   */
++					  /* or directory child entries can   */
++					  /* be listed together with the      */
++					  /* associated child attributes      */
++					  /* (so the FILE_READ_ATTRIBUTES on  */
++					  /* the child entry is not needed)   */
++#define FILE_WRITE_DATA       0x00000002  /* Data can be written to the file  */
++					  /* or new file can be created in    */
++					  /* the directory                    */
++#define FILE_APPEND_DATA      0x00000004  /* Data can be appended to the file */
++					  /* (for non-local files over SMB it */
++					  /* is same as FILE_WRITE_DATA)      */
++					  /* or new subdirectory can be       */
++					  /* created in the directory         */
++#define FILE_READ_EA          0x00000008  /* Extended attributes associated   */
++					  /* with the file can be read        */
++#define FILE_WRITE_EA         0x00000010  /* Extended attributes associated   */
++					  /* with the file can be written     */
++#define FILE_EXECUTE          0x00000020  /*Data can be read into memory from */
++					  /* the file using system paging I/O */
++					  /* for executing the file / script  */
++					  /* or right to traverse directory   */
++					  /* (but by default all users have   */
++					  /* directory bypass traverse        */
++					  /* privilege and do not need this   */
++					  /* permission on directories at all)*/
++#define FILE_DELETE_CHILD     0x00000040  /* Child entry can be deleted from  */
++					  /* the directory (so the DELETE on  */
++					  /* the child entry is not needed)   */
++#define FILE_READ_ATTRIBUTES  0x00000080  /* Attributes associated with the   */
++					  /* file or directory can be read    */
++#define FILE_WRITE_ATTRIBUTES 0x00000100  /* Attributes associated with the   */
++					  /* file or directory can be written */
++#define DELETE                0x00010000  /* The file or dir can be deleted   */
++#define READ_CONTROL          0x00020000  /* The discretionary access control */
++					  /* list and ownership associated    */
++					  /* with the file or dir can be read */
++#define WRITE_DAC             0x00040000  /* The discretionary access control */
++					  /* list associated with the file or */
++					  /* directory can be written         */
++#define WRITE_OWNER           0x00080000  /* Ownership information associated */
++					  /* with the file/dir can be written */
++#define SYNCHRONIZE           0x00100000  /* The file handle can waited on to */
++					  /* synchronize with the completion  */
++					  /* of an input/output request       */
++#define SYSTEM_SECURITY       0x01000000  /* The system access control list   */
++					  /* associated with the file or      */
++					  /* directory can be read or written */
++					  /* (cannot be in DACL, can in SACL) */
++#define MAXIMUM_ALLOWED       0x02000000  /* Maximal subset of GENERIC_ALL    */
++					  /* permissions which can be granted */
++					  /* (cannot be in DACL nor SACL)     */
++#define GENERIC_ALL           0x10000000  /* Same as: GENERIC_EXECUTE |       */
++					  /*          GENERIC_WRITE |         */
++					  /*          GENERIC_READ |          */
++					  /*          FILE_DELETE_CHILD |     */
++					  /*          DELETE |                */
++					  /*          WRITE_DAC |             */
++					  /*          WRITE_OWNER             */
++					  /* So GENERIC_ALL contains all bits */
++					  /* mentioned above except these two */
++					  /* SYSTEM_SECURITY  MAXIMUM_ALLOWED */
++#define GENERIC_EXECUTE       0x20000000  /* Same as: FILE_EXECUTE |          */
++					  /*          FILE_READ_ATTRIBUTES |  */
++					  /*          READ_CONTROL |          */
++					  /*          SYNCHRONIZE             */
++#define GENERIC_WRITE         0x40000000  /* Same as: FILE_WRITE_DATA |       */
++					  /*          FILE_APPEND_DATA |      */
++					  /*          FILE_WRITE_EA |         */
++					  /*          FILE_WRITE_ATTRIBUTES | */
++					  /*          READ_CONTROL |          */
++					  /*          SYNCHRONIZE             */
++#define GENERIC_READ          0x80000000  /* Same as: FILE_READ_DATA |        */
++					  /*          FILE_READ_EA |          */
++					  /*          FILE_READ_ATTRIBUTES |  */
++					  /*          READ_CONTROL |          */
++					  /*          SYNCHRONIZE             */
++
++/* Combinations of file access permission bits */
++#define FILE_READ_RIGHTS (FILE_READ_DATA | FILE_READ_EA | FILE_READ_ATTRIBUTES)
++#define FILE_WRITE_RIGHTS (FILE_WRITE_DATA | FILE_APPEND_DATA \
++			| FILE_WRITE_EA | FILE_WRITE_ATTRIBUTES)
++#define FILE_EXEC_RIGHTS (FILE_EXECUTE)
++#define SET_FILE_EXEC_RIGHTS (FILE_READ_EA | FILE_WRITE_EA | FILE_EXECUTE \
++				| FILE_READ_ATTRIBUTES \
++				| FILE_WRITE_ATTRIBUTES \
++				| DELETE | READ_CONTROL | WRITE_DAC \
++				| WRITE_OWNER | SYNCHRONIZE)
++#define SET_MINIMUM_RIGHTS (FILE_READ_EA | FILE_READ_ATTRIBUTES \
++				| READ_CONTROL | SYNCHRONIZE)
++
+ #endif				/* _COMMON_SMB2PDU_H */
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index d16df43f7c772..33b4708cc214c 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8263,9 +8263,9 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
  
--	buf = (struct create_durable_v2_rsp *)cc;
-+	buf = (struct create_durable_rsp_v2 *)cc;
- 	memset(buf, 0, sizeof(struct create_durable_rsp));
- 	buf->ccontext.DataOffset = cpu_to_le16(offsetof
- 			(struct create_durable_rsp, Data));
-@@ -1874,9 +1874,9 @@ void create_durable_v2_rsp_buf(char *cc, struct ksmbd_file *fp)
- 	buf->Name[2] = '2';
- 	buf->Name[3] = 'Q';
+ 		nii_rsp->Capability = 0;
+ 		if (netdev->real_num_tx_queues > 1)
+-			nii_rsp->Capability |= cpu_to_le32(RSS_CAPABLE);
++			nii_rsp->Capability |= RSS_CAPABLE;
+ 		if (ksmbd_rdma_capable_netdev(netdev))
+-			nii_rsp->Capability |= cpu_to_le32(RDMA_CAPABLE);
++			nii_rsp->Capability |= RDMA_CAPABLE;
  
--	buf->Timeout = cpu_to_le32(fp->durable_timeout);
-+	buf->dcontext.Timeout = cpu_to_le32(fp->durable_timeout);
- 	if (fp->is_persistent)
--		buf->Flags = cpu_to_le32(SMB2_DHANDLE_FLAG_PERSISTENT);
-+		buf->dcontext.Flags = cpu_to_le32(SMB2_DHANDLE_FLAG_PERSISTENT);
- }
+ 		nii_rsp->Next = cpu_to_le32(152);
+ 		nii_rsp->Reserved = 0;
+@@ -8291,7 +8291,7 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
+ 		if (!ipv4_set) {
+ 			struct in_device *idev;
  
- /**
-diff --git a/fs/smb/server/smb2ops.c b/fs/smb/server/smb2ops.c
-index 4c50b7f57f763..5aa8e63f31902 100644
---- a/fs/smb/server/smb2ops.c
-+++ b/fs/smb/server/smb2ops.c
-@@ -59,7 +59,7 @@ static struct smb_version_values smb30_server_values = {
- 	.cap_large_files = SMB2_LARGE_FILES,
- 	.create_lease_size = sizeof(struct create_lease_v2),
- 	.create_durable_size = sizeof(struct create_durable_rsp),
--	.create_durable_v2_size = sizeof(struct create_durable_v2_rsp),
-+	.create_durable_v2_size = sizeof(struct create_durable_rsp_v2),
- 	.create_mxac_size = sizeof(struct create_mxac_rsp),
- 	.create_disk_id_size = sizeof(struct create_disk_id_rsp),
- 	.create_posix_size = sizeof(struct create_posix_rsp),
-@@ -86,7 +86,7 @@ static struct smb_version_values smb302_server_values = {
- 	.cap_large_files = SMB2_LARGE_FILES,
- 	.create_lease_size = sizeof(struct create_lease_v2),
- 	.create_durable_size = sizeof(struct create_durable_rsp),
--	.create_durable_v2_size = sizeof(struct create_durable_v2_rsp),
-+	.create_durable_v2_size = sizeof(struct create_durable_rsp_v2),
- 	.create_mxac_size = sizeof(struct create_mxac_rsp),
- 	.create_disk_id_size = sizeof(struct create_disk_id_rsp),
- 	.create_posix_size = sizeof(struct create_posix_rsp),
-@@ -113,7 +113,7 @@ static struct smb_version_values smb311_server_values = {
- 	.cap_large_files = SMB2_LARGE_FILES,
- 	.create_lease_size = sizeof(struct create_lease_v2),
- 	.create_durable_size = sizeof(struct create_durable_rsp),
--	.create_durable_v2_size = sizeof(struct create_durable_v2_rsp),
-+	.create_durable_v2_size = sizeof(struct create_durable_rsp_v2),
- 	.create_mxac_size = sizeof(struct create_mxac_rsp),
- 	.create_disk_id_size = sizeof(struct create_disk_id_rsp),
- 	.create_posix_size = sizeof(struct create_posix_rsp),
+-			sockaddr_storage->Family = cpu_to_le16(INTERNETWORK);
++			sockaddr_storage->Family = INTERNETWORK;
+ 			sockaddr_storage->addr4.Port = 0;
+ 
+ 			idev = __in_dev_get_rtnl(netdev);
+@@ -8307,7 +8307,7 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
+ 			struct inet6_ifaddr *ifa;
+ 			__u8 *ipv6_addr = sockaddr_storage->addr6.IPv6Address;
+ 
+-			sockaddr_storage->Family = cpu_to_le16(INTERNETWORKV6);
++			sockaddr_storage->Family = INTERNETWORKV6;
+ 			sockaddr_storage->addr6.Port = 0;
+ 			sockaddr_storage->addr6.FlowInfo = 0;
+ 
 diff --git a/fs/smb/server/smb2pdu.h b/fs/smb/server/smb2pdu.h
-index 8ef681f7075ad..02fbae7531cfd 100644
+index 02fbae7531cfd..0a294378c73d3 100644
 --- a/fs/smb/server/smb2pdu.h
 +++ b/fs/smb/server/smb2pdu.h
-@@ -98,12 +98,6 @@ struct create_durable_rsp {
- /* See MS-SMB2 2.2.13.2.11 */
- /* Flags */
- #define SMB2_DHANDLE_FLAG_PERSISTENT	0x00000002
--struct create_durable_v2_rsp {
--	struct create_context_hdr ccontext;
--	__u8   Name[8];
--	__le32 Timeout;
--	__le32 Flags;
--} __packed;
+@@ -95,10 +95,6 @@ struct create_durable_rsp {
+ 	} Data;
+ } __packed;
  
+-/* See MS-SMB2 2.2.13.2.11 */
+-/* Flags */
+-#define SMB2_DHANDLE_FLAG_PERSISTENT	0x00000002
+-
  /* equivalent of the contents of SMB3.1.1 POSIX open context response */
  struct create_posix_rsp {
+ 	struct create_context_hdr ccontext;
+@@ -112,9 +108,6 @@ struct create_posix_rsp {
+ 
+ #define SMB2_0_IOCTL_IS_FSCTL 0x00000001
+ 
+-#define INTERNETWORK	0x0002
+-#define INTERNETWORKV6	0x0017
+-
+ struct sockaddr_storage_rsp {
+ 	__le16 Family;
+ 	union {
+@@ -123,18 +116,6 @@ struct sockaddr_storage_rsp {
+ 	};
+ } __packed;
+ 
+-#define RSS_CAPABLE	0x00000001
+-#define RDMA_CAPABLE	0x00000002
+-
+-struct network_interface_info_ioctl_rsp {
+-	__le32 Next; /* next interface. zero if this is last one */
+-	__le32 IfIndex;
+-	__le32 Capability; /* RSS or RDMA Capable */
+-	__le32 Reserved;
+-	__le64 LinkSpeed;
+-	char	SockAddr_Storage[128];
+-} __packed;
+-
+ struct file_object_buf_type1_ioctl_rsp {
+ 	__u8 ObjectId[16];
+ 	__u8 BirthVolumeId[16];
+diff --git a/fs/smb/server/smb_common.h b/fs/smb/server/smb_common.h
+index 95062e922de93..4568896273bec 100644
+--- a/fs/smb/server/smb_common.h
++++ b/fs/smb/server/smb_common.h
+@@ -77,42 +77,7 @@
+ #define FILE_CASE_PRESERVED_NAMES	0x00000002
+ #define FILE_CASE_SENSITIVE_SEARCH	0x00000001
+ 
+-#define FILE_READ_DATA        0x00000001  /* Data can be read from the file   */
+-#define FILE_WRITE_DATA       0x00000002  /* Data can be written to the file  */
+-#define FILE_APPEND_DATA      0x00000004  /* Data can be appended to the file */
+-#define FILE_READ_EA          0x00000008  /* Extended attributes associated   */
+-/* with the file can be read        */
+-#define FILE_WRITE_EA         0x00000010  /* Extended attributes associated   */
+-/* with the file can be written     */
+-#define FILE_EXECUTE          0x00000020  /*Data can be read into memory from */
+-/* the file using system paging I/O */
+-#define FILE_DELETE_CHILD     0x00000040
+-#define FILE_READ_ATTRIBUTES  0x00000080  /* Attributes associated with the   */
+-/* file can be read                 */
+-#define FILE_WRITE_ATTRIBUTES 0x00000100  /* Attributes associated with the   */
+-/* file can be written              */
+-#define DELETE                0x00010000  /* The file can be deleted          */
+-#define READ_CONTROL          0x00020000  /* The access control list and      */
+-/* ownership associated with the    */
+-/* file can be read                 */
+-#define WRITE_DAC             0x00040000  /* The access control list and      */
+-/* ownership associated with the    */
+-/* file can be written.             */
+-#define WRITE_OWNER           0x00080000  /* Ownership information associated */
+-/* with the file can be written     */
+-#define SYNCHRONIZE           0x00100000  /* The file handle can waited on to */
+-/* synchronize with the completion  */
+-/* of an input/output request       */
+-#define GENERIC_ALL           0x10000000
+-#define GENERIC_EXECUTE       0x20000000
+-#define GENERIC_WRITE         0x40000000
+-#define GENERIC_READ          0x80000000
+-/* In summary - Relevant file       */
+-/* access flags from CIFS are       */
+-/* file_read_data, file_write_data  */
+-/* file_execute, file_read_attributes*/
+-/* write_dac, and delete.           */
+-
++/* Combinations of file access permission bits */
+ #define SET_FILE_READ_RIGHTS (FILE_READ_DATA | FILE_READ_EA \
+ 		| FILE_READ_ATTRIBUTES \
+ 		| DELETE | READ_CONTROL | WRITE_DAC \
+@@ -123,14 +88,6 @@
+ 		| FILE_WRITE_ATTRIBUTES \
+ 		| DELETE | READ_CONTROL | WRITE_DAC \
+ 		| WRITE_OWNER | SYNCHRONIZE)
+-#define SET_FILE_EXEC_RIGHTS (FILE_READ_EA | FILE_WRITE_EA | FILE_EXECUTE \
+-		| FILE_READ_ATTRIBUTES \
+-		| FILE_WRITE_ATTRIBUTES \
+-		| DELETE | READ_CONTROL | WRITE_DAC \
+-		| WRITE_OWNER | SYNCHRONIZE)
+-
+-#define SET_MINIMUM_RIGHTS (FILE_READ_EA | FILE_READ_ATTRIBUTES \
+-		| READ_CONTROL | SYNCHRONIZE)
+ 
+ /* generic flags for file open */
+ #define GENERIC_READ_FLAGS	(READ_CONTROL | FILE_READ_DATA | \
+@@ -162,36 +119,6 @@
+ #define SMBFLG2_ERR_STATUS	cpu_to_le16(0x4000)
+ #define SMBFLG2_UNICODE		cpu_to_le16(0x8000)
+ 
+-struct smb_hdr {
+-	__be32 smb_buf_length;
+-	__u8 Protocol[4];
+-	__u8 Command;
+-	union {
+-		struct {
+-			__u8 ErrorClass;
+-			__u8 Reserved;
+-			__le16 Error;
+-		} __packed DosError;
+-		__le32 CifsError;
+-	} __packed Status;
+-	__u8 Flags;
+-	__le16 Flags2;          /* note: le */
+-	__le16 PidHigh;
+-	union {
+-		struct {
+-			__le32 SequenceNumber;  /* le */
+-			__u32 Reserved; /* zero */
+-		} __packed Sequence;
+-		__u8 SecuritySignature[8];      /* le */
+-	} __packed Signature;
+-	__u8 pad[2];
+-	__le16 Tid;
+-	__le16 Pid;
+-	__le16 Uid;
+-	__le16 Mid;
+-	__u8 WordCount;
+-} __packed;
+-
+ struct smb_negotiate_req {
+ 	struct smb_hdr hdr;     /* wct = 0 */
+ 	__le16 ByteCount;
 -- 
 2.53.0
 
