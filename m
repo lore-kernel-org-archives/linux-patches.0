@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590464;
-	b=aPl+WWFHPV92yMAWWu3qu/O0k30ZsspwHT8oN+Lri7RX/BfbzGxZZKh7L17/oT1CQ656
-	 R9AJtIHrCfpkrxkY9jVbz7w9Gr7yiFi2bBpp4P8whGFzDuaXR+EOUVCSFKrRh1SsHlZON
-	 afmK82XzwW7hQE8dYDEdZnDCTgTjpig4ybSAUUWS6nzqF6pZwIV81v/puJtu/HqLLNQMv
-	 Pz7x98Lxgt4Y4njlGI/plIwLzhusaQVgZlA1hHMQHi5Im4+gF7XTLS111frBKlbHFetdJ
-	 OGrmAsVcRM0QVxDKfv8e3fqzFdFKbCTKiWgbFN3YqvzVSB7ddnsCiaZJc3GnZo9vf3g==
+	t=1794590465;
+	b=pP76fMRK6H+NpCkTSOMYILTeOlFgfPAEVb9S/5qDeuSY9beTh7vFZBysBmSATx/d5hGb
+	 tegZ8dZL9xuP/YbTOQh0Xj9SghArEmj4g4F5GUk67C7Nq7IbDENFizHYkTFjzcXAXCTCv
+	 bJTLrUlKOWzAkD2XDr21WLc6szhAWCx2LhdPnmCB6UfrAIc/hGMgz+eMYVFW7tgFGjFVG
+	 YUKmjVTOtaRpKHPRNWzmBfsttgcMRGQlhfou7jlLNzbl0bJd0KA3u699P3swQLUjkq+KP
+	 6892bqebT1L4mB4CzmEB1fJ7/zy9cxYr58Yol0aPFh4ehpfHLYDnryYIPVn7sI/snTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590464;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590465;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d3ag0IXAxMYLRDwNnRjAtUO+89XBTeRSsTP9WyX33cg=;
-	b=TyqRZgm9PdlFTZBnvBz2qx/CLhN3ZII49sVTqsa0kTXtRqJDz0QJfj0eiNJ808rOKVGh
-	 RzrAmFp6F4a+V/jIeO7CMHAGKmkvERUHNeBNCdohAwRU1isFUE2BG3slUJn5Vvx7BqXjH
-	 NfyqYodUBMiHJGFaMryBZ5dEy0YWgWXJH/iUUWH5iJj62iMQpJCwTqGHVUb6aiKMdkHct
-	 N2u7m4i5hYYWDHN6dV5KMQWuWGMU57T+vHDHx5gpBcQwckDTkzssjg0aTFF5RY6z/fSql
-	 XKkCbNJybzf5RfhjYDoeFG/aHp3iCsUK4H7HhT7uTgHgw+r8tVI8lgygGzQuuZvZfIQ==
+	bh=Z/TC7axv2cwe8koqwfsC5KH2NC+35jXK13t/q9BPCqk=;
+	b=4FPr9MEj1noUnaf4+2nTA1cK/MnRBXPzOEZary3kIpQXb+/M1pHOHl5R8kdVNcqZHkBu
+	 Tb5Xl6aqv/pG64zDjL1OW1LK5Ti8XFnZUS49Q7yFsc45NYyvJrumVk6QCR9BfLIsP/aIG
+	 MgHKisfjy9EWBBIkw7OMlqNXEJN4eHa5fJs6PS9y+eNsVGD11q3UJEPSL9++l3MMBRSnO
+	 7a17NP1DcLqMosxRDQZKm2VjIaNn/uy1kz6EA8hCECUtB9Baai300VkSc4adrJGbcLva/
+	 /sHIxPvpNePJ79JYQuc+KRX0Hzu1bucthWeNIdT77o0wASKuuvfQxYjIppDe3aO5fbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yaMIpGJy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ec/1107V";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757A2606B34F;
-	Fri, 13 Nov 2026 17:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED78606B803;
+	Fri, 13 Nov 2026 17:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yaMIpGJy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88EB1F000CD;
-	Fri, 13 Nov 2026 17:21:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ec/1107V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AABC1F000CF;
+	Fri, 13 Nov 2026 17:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590464;
-	bh=d3ag0IXAxMYLRDwNnRjAtUO+89XBTeRSsTP9WyX33cg=;
+	s=korg; t=1794590465;
+	bh=Z/TC7axv2cwe8koqwfsC5KH2NC+35jXK13t/q9BPCqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yaMIpGJyXVwMsKfBs4eCfgTUgh+gTK6803l7iEIdIjfvs2VmM6VbVzYb+RDjSFte/
-	 CdzjIi8JQyC+0ZbZkehSwPKO2SokjGVFbwW3R4z35/7sQLX7Lq3hza6NW3gykM1QBv
-	 L31NyuJ6Arrfh0Izy5KNvMsBPWMYoz93EM386WmE=
+	b=Ec/1107VgT5+Xwb7OY8jmLl9/2Bv3u9h/q4Xg8UL64NnOtUR2kNtaMFqLwXweDaJA
+	 zBlADOLU1jyQUyD8er+TKPLHUoLxSfTMZo7gEZa0dy0Hx9D5M0noDD3SM6LTEGJC9K
+	 zZmRHdnM8O5B9QCtMPmi9CVfZ0ETWWNS9+nPwo1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@bytedance.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 420/686] arm64: mm: validate /dev/mem mmap ranges without overflow
-Date: Fri, 13 Nov 2026 10:49:13 -0500
-Message-ID: <20261113153835.184417286@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.18 421/686] nvme-pci: add NVME_QUIRK_DMAPOOL_ALIGN_512 for KIOXIA XG10d
+Date: Fri, 13 Nov 2026 10:49:14 -0500
+Message-ID: <20261113153835.216338143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,53 +67,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@bytedance.com>
+[ Upstream commit c64d9b2c1f4fd1d8fa52dab37b48428a99c4d58d ]
 
-[ Upstream commit b0958b1397fb5ffdb995c0ccc74349841929c08d ]
+The KIOXIA XG10d reads past the end of a PRP list that completely fills
+a 256 byte small pool block. When that block is the last one in its
+dmapool page, the read lands on the next page, which usually isn't
+mapped. The IOMMU faults it and the controller craps itself:
 
-An arm64 syzkaller reproducer creates a FUSE character device with
-major:minor 1:1, so opening it uses the /dev/mem file operations. It
-maps one page from offset 0xfffffffffffff000 at user address zero.
-The next openat() with a NULL pathname triggers a synchronous external
-abort (SEA, ESR 0x96000010) in strncpy_from_user() via do_getname(),
-panicking the kernel.
+  arm-smmu-v3 arm-smmu-v3.0.auto: event: F_TRANSLATION client: 0001:09:00.0 sid: 0x20900 ssid: 0x0 iova: 0xff7fe000 ipa: 0x0
+  nvme nvme0: controller is down; will reset: CSTS=0xffffffff, PCI_STATUS=0xffff
 
-valid_mmap_phys_addr_range() checks the exclusive end by adding the
-mapping size to the starting address. For this offset, the sum wraps
-to zero and passes the PHYS_MASK test, allowing an out-of-range PFN to
-reach remap_pfn_range(). The inclusive-end overflow check in
-mmap_mem_prepare() does not catch it because the end is ULONG_MAX.
+Filling the block requires a slightly larger write, and those became common
+with commit 2e8e30b3cf9f ("Revert "nvme-pci: clamp max_hw_sectors based on
+DMA optimized limitation"").
 
-Reject starting PFNs outside PHYS_MASK and compare the inclusive length
-against the remaining physical range without overflowing. This also
-allows mappings that end exactly at PHYS_MASK, which the old check
-incorrectly rejects.
+Do what we do for other disks and use 512 byte aligned small pool blocks
+for this controller.
 
-Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
-[catalin.marinas@arm.com: changed the check to look more like __access_ok()]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: stable@vger.kernel.org # 6.4.x
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/mmap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/mm/mmap.c b/arch/arm64/mm/mmap.c
-index 92b2f5097a96c..dabc61000ecc4 100644
---- a/arch/arm64/mm/mmap.c
-+++ b/arch/arm64/mm/mmap.c
-@@ -61,7 +61,9 @@ int valid_phys_addr_range(phys_addr_t addr, size_t size)
-  */
- int valid_mmap_phys_addr_range(unsigned long pfn, size_t size)
- {
--	return !(((pfn << PAGE_SHIFT) + size) & ~PHYS_MASK);
-+	const phys_addr_t limit = PHYS_MASK + 1;
-+
-+	return size <= limit && pfn <= (limit - size) >> PAGE_SHIFT;
- }
- 
- static int __init adjust_protection_map(void)
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 6e4261b0a0821..9245fae713210 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3939,6 +3939,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		 .driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1344, 0x6004),	/* Micron 4100AT */
+ 		.driver_data = NVME_QUIRK_DMAPOOL_ALIGN_512, },
++	{ PCI_DEVICE(0x1e0f, 0x0032),	/* KIOXIA XG10d */
++		.driver_data = NVME_QUIRK_DMAPOOL_ALIGN_512, },
+ 	{ PCI_DEVICE(0x1c5c, 0x1504),   /* SK Hynix PC400 */
+ 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
+ 	{ PCI_DEVICE(0x1c5c, 0x174a),   /* SK Hynix P31 SSD */
 -- 
 2.53.0
 
