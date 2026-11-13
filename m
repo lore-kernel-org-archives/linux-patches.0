@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590911;
-	b=q4ak1nMZVxVPDXNB1wh9WhYnZNcQrk81JeTr3z4LaGEnai/SFGaoH16ZomOvjq6j7xLG
-	 fsw2pPurmbpI/FHId/PE034dda2bgwusAz3Wi3d+Szcr/bu6+v9uyLiaBiBMKRicw5u+g
-	 /eLxjzrwzJdnzXQUdPbVPZ0fuZeauq6MyeVExXY4294i4nDiQxwsbhrroWU92/fVJ46s9
-	 hYu09OvxdZBlK19QzsjlkaQVIQkdR76TH2skXDq1kHN2CtTJLR02+xn+Z9/sk19E5jzSl
-	 QnwYcJzpdjypsy+YaxRh7QTJ3EF2Vh4p7iSTERU05zMfATVqadHevkVLqEpjSJF7oBw==
+	t=1794590912;
+	b=igmV/kOtgsUad/04kA1OE0EAdFmGcwY5KQUOsWGycziAo13M6HRJhSODWdIGQu3DRRff
+	 Epwc1wc/3QpYfmYahT0KXaDUijzWEQZLuJhZfIUJ47Tg8nH59mUFBy9lt9bM7a1MS3GD6
+	 Vzem+4p+LF8ohmwFGmS6iWlh1rpRlYJ8MMJmOqOYnwXA0Z8lXiI6g1j6Ss4Qfut/8u7MN
+	 tkVP8LM1AZt4tierX7BEHtaLET/xj0wQIMUwhiTvk8KJdHhA7pv/5tTqX00PeBPwlEptl
+	 i2Q8j7+9QEOcvDf3qLWS6+VRGuLgooK+ciroiiNEjtcAvqUA6k23futaeTnZYiQDAgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590911;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590912;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gbH1V/YR8qX2ot7CvgYPxtVBJnStstkuoAlou3ATJYg=;
-	b=3oO0nN3+xyTr4vAjTccOOOUDK+jECMWnojuTGLKY495oasy3x5ezjIwvb9djj+XZ+/L5
-	 oNR/rRpIE8tZj3yDfDgL0ALHchU/ATYiuhGeVcXiIzJG0B3Bi5aUOZmWKmYJiEbX7dC8u
-	 xav4YMKRhkfGL5/pgsAK/Lc1eMBjgvVXCO4vlCSiCrT/ubFFWlEmN+T/nEhr+BLuLD0IH
-	 HmL/Vi/KzTRFU3bZlk92EQDcJdoUCg66uCoXtAFaS4QpEskq5eLOBlTERVDXbVzwifn/z
-	 y2QxnBQZgqe8/+xwbkt73fsnT9rXPNIAbosoZzPr3+2Wfnyu0/XqROprf0Iwt/6bcng==
+	bh=F1ynQ5JTGBc9FrLeBs6SUzPoRX++Y2vNptwPRy9lD78=;
+	b=oNErwRtbdV1TynW92k7+pBnOIxY21qkpu5O4SOhl/wLH/b7bZVcGKYdnIQCUQ/9bDJsz
+	 mQDu6D5/lWof39WclqcitXQ+R1XcLnATnE/+7lI8WtquvTDVTky4BeqNZopiPvygg7T3z
+	 HGTEbyUY00u6G+kz1FwG29S2aI124CYVVrPdJlVClpFs7zZQsgFe+BIN5zNpYNgoabflJ
+	 Iyg/5ENDupoTO5rPDyl54NnBVP6U0bQSnwOHFiQd0XRGBwYfOVfFKYc7dctHMAU6pczww
+	 2f2b3CQeUyEV1CH1aRyvSr1j9OLiJ7qdGVdb1gV3bJ4IyINGPbDdgkoYBjErOJpupCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mIX6ikOH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UjjdKEk5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073D1606E237;
-	Fri, 13 Nov 2026 17:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405CB606E234;
+	Fri, 13 Nov 2026 17:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mIX6ikOH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8AA81F000C4;
-	Fri, 13 Nov 2026 17:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UjjdKEk5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00071F000C4;
+	Fri, 13 Nov 2026 17:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590910;
-	bh=gbH1V/YR8qX2ot7CvgYPxtVBJnStstkuoAlou3ATJYg=;
+	s=korg; t=1794590912;
+	bh=F1ynQ5JTGBc9FrLeBs6SUzPoRX++Y2vNptwPRy9lD78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mIX6ikOHEoonChpxGPkehlCpsLquaaJZSXcnCCIwSi2fJZbxkLoyURdOea4PS5TRc
-	 W7OG+3ipdNW6IOeTCxtUF/BBvz4zjMS34o6MdTqs1okKsHWdUZSycfNTVz8VKDn9WD
-	 zyP3iCrelyMXLzENCJyzASnvp9pePQDuq4wfj7fw=
+	b=UjjdKEk5mZz4o8KALeYsIjYcc2CvclCC/cTZEO5I61tbMeuD1s3R65DKhSi2dJVGn
+	 lMMJatWBsqbsqfUgd38OKc7xDz9DEemcxOjx9qYcdNCFcm1upMZXYjEHBec426eyNw
+	 eVBnQiku3J24sBQVjWY9VWOZSjPyCUZFTx//UCCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuansheng Yang <0xbeac@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Andrey Albershteyn <aalbersh@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/670] io_uring/rsrc: hold uring_lock across index-alloc put_user
-Date: Fri, 13 Nov 2026 10:43:42 -0500
-Message-ID: <20261113153813.486949018@linuxfoundation.org>
+Subject: [PATCH 6.12 059/670] fsverity: Explicitly require FMODE_READ to retrieve hashes
+Date: Fri, 13 Nov 2026 10:43:43 -0500
+Message-ID: <20261113153813.518621175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,90 +68,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuansheng Yang <0xbeac@gmail.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-Commit d7c7037253f6935af243570635d71b4920b5a4ea upstream.
+commit 1acb4fd2d011c4bd6cc961095ae17361c71ff61a upstream.
 
-io_files_update_with_index_alloc() installs a fixed file via
-io_fixed_fd_install(), which drops ->uring_lock when the request runs on
-io-wq, then put_user()s the allocated slot back to userspace. If that
-faults, the error path calls __io_close_fixed() by slot index after
-re-taking the lock.
+The comment in fsverity_ioctl_read_metadata(), which justifies not
+checking for FMODE_READ, doesn't consider that the nonstandard access
+mode 3 (ioctl-only) exists.
 
-The slot can be closed and reused between the install and that cleanup:
-another fixed CLOSE plus open/accept/pipe/socket, or a FILES_UPDATE, can
-put an unrelated file into the same slot. The error path then removes
-that file instead of the one this request installed, ending an unrelated
-file's fixed-table reference early. This is a correctness/DoS issue, not
-a use-after-free: fixed-file requests hold an io_rsrc_node reference, so
-the node and file stay alive until they are done.
+Opening an ioctl-only fd generally requires read (and write) permission.
+However, there are gaps with certain LSMs: an ioctl-only fd requests
+read (and write) permission via security_inode_permission, but not
+security_file_open.  With certain LSMs relying on the latter, such as
+Landlock and AppArmor, an ioctl-only fd can be opened without the LSM
+granting read (and write) permission.
 
-Hold ->uring_lock across __io_fixed_fd_install() and put_user(), and do
-the failure cleanup with io_fixed_fd_remove() under the same lock. This
-is the same class as the io_pipe_fixed() fix in a3d7ee11289f. Faulting
-while holding ->uring_lock is fine, the registration paths already do
-it.
+Since FS_IOC_READ_VERITY_METADATA returns hashes of file contents
+blocks, it should require read permission.  This also applies to
+FS_IOC_MEASURE_VERITY, which returns a hash for the whole file.
 
-Fixes: a7c41b4687f5 ("io_uring: let IORING_OP_FILES_UPDATE support choosing fixed file slots")
-Signed-off-by: Yuansheng Yang <0xbeac@gmail.com>
-Link: https://patch.msgid.link/20261104154655.81876-1-0xbeac@gmail.com
-[axboe: various touch-ups]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[axboe: 6.12 uses copy_to_user() for the slot rather than put_user(),
-and ->file_data for the table check]
+Meanwhile, ioctl-only fds are a rarely-used feature, not known to be
+used with either ioctl.
+
+Therefore, just disallow these ioctls on ioctl-only file descriptors,
+similar to what was already done with FS_IOC_ENABLE_VERITY.
+
+More specifically, explicitly check for FMODE_READ.  This also covers
+write-only fds to non-verity files which otherwise would have failed
+with ENODATA.  This change in error code for write-only fds should be
+fine too, as these ioctls cannot be usefully used with write-only fds
+anyway, but it's worth noting as another technicality.
+
+Fixes: 4dd893d832cf ("fs-verity: implement FS_IOC_MEASURE_VERITY ioctl")
+Fixes: e17fe6579de0 ("fs-verity: add FS_IOC_READ_VERITY_METADATA ioctl")
+Cc: stable@vger.kernel.org
+Reviewed-by: Andrey Albershteyn <aalbersh@kernel.org>
+Link: https://patch.msgid.link/20261022211522.1489943-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rsrc.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ Documentation/filesystems/fsverity.rst |  3 +++
+ fs/verity/measure.c                    | 10 ++++++++++
+ fs/verity/read_metadata.c              | 14 ++++++++++----
+ 3 files changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
-index ad7ad35545d6c..168c6987435ed 100644
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -562,11 +562,12 @@ static int io_files_update_with_index_alloc(struct io_kiocb *req,
- {
- 	struct io_rsrc_update *up = io_kiocb_to_cmd(req, struct io_rsrc_update);
- 	__s32 __user *fds = u64_to_user_ptr(up->arg);
-+	struct io_ring_ctx *ctx = req->ctx;
- 	unsigned int done;
- 	struct file *file;
- 	int ret, fd;
+diff --git a/Documentation/filesystems/fsverity.rst b/Documentation/filesystems/fsverity.rst
+index 0e2fac7a16da1..f879e052d4ecc 100644
+--- a/Documentation/filesystems/fsverity.rst
++++ b/Documentation/filesystems/fsverity.rst
+@@ -170,6 +170,7 @@ fatal signal), no changes are made to the file.
+ FS_IOC_ENABLE_VERITY can fail with the following errors:
  
--	if (!req->ctx->file_data)
-+	if (!ctx->file_data)
- 		return -ENXIO;
+ - ``EACCES``: the process does not have write access to the file
++- ``EBADF``: the file descriptor is not open for reading
+ - ``EBADMSG``: the builtin signature is malformed
+ - ``EBUSY``: this ioctl is already running on the file
+ - ``EEXIST``: the file already has verity enabled
+@@ -233,6 +234,7 @@ regardless of the size of the file.
  
- 	for (done = 0; done < up->nr_args; done++) {
-@@ -580,15 +581,25 @@ static int io_files_update_with_index_alloc(struct io_kiocb *req,
- 			ret = -EBADF;
- 			break;
- 		}
--		ret = io_fixed_fd_install(req, issue_flags, file,
--					  IORING_FILE_INDEX_ALLOC);
--		if (ret < 0)
-+		/*
-+		 * Hold the lock across the copy_to_user(), if it's dropped the
-+		 * slot can be closed and reused before the error path runs.
-+		 */
-+		io_ring_submit_lock(ctx, issue_flags);
-+		ret = __io_fixed_fd_install(ctx, file,
-+					    IORING_FILE_INDEX_ALLOC);
-+		if (ret < 0) {
-+			io_ring_submit_unlock(ctx, issue_flags);
-+			fput(file);
- 			break;
-+		}
- 		if (copy_to_user(&fds[done], &ret, sizeof(ret))) {
--			__io_close_fixed(req->ctx, issue_flags, ret);
-+			io_fixed_fd_remove(ctx, ret);
-+			io_ring_submit_unlock(ctx, issue_flags);
- 			ret = -EFAULT;
- 			break;
- 		}
-+		io_ring_submit_unlock(ctx, issue_flags);
- 	}
+ FS_IOC_MEASURE_VERITY can fail with the following errors:
  
- 	if (done)
++- ``EBADF``: the file descriptor is not open for reading
+ - ``EFAULT``: the caller provided inaccessible memory
+ - ``ENODATA``: the file is not a verity file
+ - ``ENOTTY``: this type of filesystem does not implement fs-verity
+@@ -305,6 +307,7 @@ blocks from disk without actually verifying the path to the root node.
+ 
+ FS_IOC_READ_VERITY_METADATA can fail with the following errors:
+ 
++- ``EBADF``: the file descriptor is not open for reading
+ - ``EFAULT``: the caller provided inaccessible memory
+ - ``EINTR``: the ioctl was interrupted before any data was read
+ - ``EINVAL``: reserved fields were set, or ``offset + length``
+diff --git a/fs/verity/measure.c b/fs/verity/measure.c
+index 91ce39ced77b8..b5af400c725e8 100644
+--- a/fs/verity/measure.c
++++ b/fs/verity/measure.c
+@@ -30,6 +30,16 @@ int fsverity_ioctl_measure(struct file *filp, void __user *_uarg)
+ 	const struct fsverity_hash_alg *hash_alg;
+ 	struct fsverity_digest arg;
+ 
++	/*
++	 * This ioctl returns a hash of the file contents, so it should require
++	 * read permission.  Disallow it on ioctl-only (i.e., nonstandard access
++	 * mode 3) fds, which can in some cases be acquired without passing all
++	 * LSM read-permission checks.  Also disallow write-only fds, which can
++	 * refer only to non-verity files which would fail with ENODATA anyway.
++	 */
++	if (!(filp->f_mode & FMODE_READ))
++		return -EBADF;
++
+ 	vi = fsverity_get_info(inode);
+ 	if (!vi)
+ 		return -ENODATA; /* not a verity file */
+diff --git a/fs/verity/read_metadata.c b/fs/verity/read_metadata.c
+index f58432772d9ea..680792701ba29 100644
+--- a/fs/verity/read_metadata.c
++++ b/fs/verity/read_metadata.c
+@@ -156,13 +156,19 @@ int fsverity_ioctl_read_metadata(struct file *filp, const void __user *uarg)
+ 	int length;
+ 	void __user *buf;
+ 
++	/*
++	 * This ioctl returns file contents block hashes, so it should require
++	 * read permission.  Disallow it on ioctl-only (i.e., nonstandard access
++	 * mode 3) fds, which can in some cases be acquired without passing all
++	 * LSM read-permission checks.  Also disallow write-only fds, which can
++	 * refer only to non-verity files which would fail with ENODATA anyway.
++	 */
++	if (!(filp->f_mode & FMODE_READ))
++		return -EBADF;
++
+ 	vi = fsverity_get_info(inode);
+ 	if (!vi)
+ 		return -ENODATA; /* not a verity file */
+-	/*
+-	 * Note that we don't have to explicitly check that the file is open for
+-	 * reading, since verity files can only be opened for reading.
+-	 */
+ 
+ 	if (copy_from_user(&arg, uarg, sizeof(arg)))
+ 		return -EFAULT;
 -- 
 2.53.0
 
