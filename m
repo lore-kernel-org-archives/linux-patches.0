@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590722;
-	b=W6m9iH97HrJGg0+c3SW4sC0trfUmmNPIV183mjdstZwkyfcigEXRlHpmlVpxGT4H5Ca6
-	 qQvaAJ92euKK38jm+1m8+mY9MIKaqT4Wf0C3Vey0cblw/HLHVfRvapEOS8V/elCK7O3lp
-	 K0+1bVN0szfAOuudg845aqPZkrdVKIJUJp/oWRaj9C6OQFE8dXIRrC0V4/gm7ivgz42aX
-	 f//tMFadoorxp7713K4L1Xl6KITx5yJfin/DuJgrr1uLL54oiqPNEt6wS4iOZapukRQoA
-	 yImMrFT3bXbIuvwzBRvqCrSiD5UDbyQWp/3PwAXMniJN3Uy27HYpOaxuWhwH2zIQjLA==
+	t=1794590723;
+	b=1Jv3EqcUabTfKWps5QHPrKUxF9tOdLrZnkd3ZFsCRSfhXtpVdQcZp/Zqg0FT8/YpdrHU
+	 wgUu68g/zIPHhG+ttnfgyzj+IBEyYtwcDwN3DLo1AJ/s1s92OBcOm/M4AOqY4asVIxeyi
+	 bdTBJnli33VHOVV+B/j6qvpbRg+3q8HczSwsRrkHc5pZsxhneqm/G5jKAL+pKaPe4AHcf
+	 3BXD7qGQQ9qp7XGgEO8kUIIkG7Cea1JTNX/V8QrNGA1rVVEDjvhcJVHOQ5uyNJ7rll3wa
+	 +FXyx3Z4BIk5lgu+mVWA4OpNKOlN/fc08ZQWQJXh5WfRqGJWQDr2Poi5ziVQ5A2KLnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590722;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590723;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qMAlxh/9rVKztju8R63Ik4mr2bMf8OnV3Z9CuTnnOZ8=;
-	b=DIs1nlmsfFfdc+joENHSwLgtmFyRc2quhcoMLJw5CasYYAUzHfItBp9VziDPdWz7e8dp
-	 wx0lDfdFNtcDa18gTaNeygl1tcXjpp8dM+HOpc8gIaXJ3NUdF6FgXxyJGrZF5DYfi5mOO
-	 rbHekYN95aypI3qWVvUqJ0wv3o/MpaRrQvGGP9SdGYgUlI0kGqA8luQnffY8a5dP+Ruop
-	 irWmIt6D3iTABvWRjC86RWIXhw/7wceHCZGsTkQlVlUpwqyTCCN4oZtUdogjON6RDCI/k
-	 qnFnfF2S1L6OM8/gfKzms4ZZlzEMhhbkXsMDJ30Lw6krzRVlyMrkg1faNvnLHzRp3dA==
+	bh=Fw9k7WBt7cohfyTybSBLTFeSa2XoZ25bBZkVdMsyU2g=;
+	b=zfMVjLbpfc3Wgv2EhGKkPtkRL57EJ5BCbV8cFVtH93tAHX8ICYScHLTbJaia2rfcKMS+
+	 ruuuAbJkAZIgnumSnh3uNg+44Gou+rAVtzfPDclE5CTHyJUq96J3o2sNy6vkX6GyjebFA
+	 a6Q5hqi55FdpRAv+vvsfU/K7sM/GLowP5dnRfUFEGxR5ihcmFOa3b3borfxktJElT/PU0
+	 8529U3WalaiHryWmulJemnvLjucPtfJDzFgDHiUo3ziilCW8wsE0oIKsI2Mdw8rNJ0pMp
+	 v6XKftnPbvyr4sLcAsWT8Biv0bDJ9ZS8rVj7ssLksNu/TqqMBytKHfGo4q/pAJoz4HQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LNcWiO+U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zil5ZOI5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20012607A5F1;
-	Fri, 13 Nov 2026 17:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E179607A5E8;
+	Fri, 13 Nov 2026 17:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LNcWiO+U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEB21F000C5;
-	Fri, 13 Nov 2026 17:25:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zil5ZOI5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC7F1F000C4;
+	Fri, 13 Nov 2026 17:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590722;
-	bh=qMAlxh/9rVKztju8R63Ik4mr2bMf8OnV3Z9CuTnnOZ8=;
+	s=korg; t=1794590723;
+	bh=Fw9k7WBt7cohfyTybSBLTFeSa2XoZ25bBZkVdMsyU2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LNcWiO+UJwb2e89cnxJiOYhp9j1EsWabeNMdxKb9EyM3BZsrZXBvtkl/hBjIWe0Xx
-	 tOeBhsCTU96BHCIRUnUmKXcC2KTLfbQJNaryxCae5bTtlHqXUe4YTxrZPpq7CECx0v
-	 DEfQe62Tj3HKRBNsFnuTP8ad9Tyrs2Ho9S5yyhfM=
+	b=Zil5ZOI5aSD2O6R0V0zmBGycWsT0xIhHsoLhhyrpS/ViBcgZj99snMjKmaxiu3EMs
+	 mYTQSpdTaksBJBCrYgk32fNqy3gDj7gzqLAILhl6GTNLzDu+9uZbcepTMVx4K9g/VI
+	 g29blkSrySxzBezGyNa2ZhCEQ17fCwLmXEHrpMGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Guzik <mjguzik@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	syzbot@syzkaller.appspotmail.com,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 628/686] fs: provide accessors for ->i_state
-Date: Fri, 13 Nov 2026 10:52:41 -0500
-Message-ID: <20261113153843.122929697@linuxfoundation.org>
+Subject: [PATCH 6.18 629/686] fs: Ignore inode metadata buffers in inode_lru_isolate()
+Date: Fri, 13 Nov 2026 10:52:42 -0500
+Message-ID: <20261113153843.154965210@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,163 +69,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Guzik <mjguzik@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit d8753f788ab4916341d9fab81795be9f2f49c264 ]
+[ Upstream commit 972b9dd4e4180fbb2352bf2f0e015b7b63f5cca0 ]
 
-Open-coded accesses prevent asserting they are done correctly. One
-obvious aspect is locking, but significantly more can checked. For
-example it can be detected when the code is clearing flags which are
-already missing, or is setting flags when it is illegal (e.g., I_FREEING
-when ->i_count > 0).
+There are only a few filesystems that use generic tracking of inode
+metadata buffer heads. As such the logic to reclaim tracked metadata
+buffer heads in inode_lru_isolate() doesn't bring a benefit big enough
+to justify intertwining of inode reclaim and metadata buffer head
+tracking. Just treat tracked metadata buffer heads as any other metadata
+filesystem has to properly clean up on inode eviction and stop handling
+it in inode_lru_isolate(). As a result filesystems using generic
+tracking of metadata buffer heads may now see dirty metadata buffers in
+their .evict methods more often which can slow down inode reclaim but
+given these filesystems aren't used in performance demanding setups we
+should be fine.
 
-In order to keep things manageable this patchset merely gets the thing
-off the ground with only lockdep checks baked in.
-
-Current consumers can be trivially converted.
-
-Suppose flags I_A and I_B are to be handled.
-
-If ->i_lock is held, then:
-
-state = inode->i_state  	=> state = inode_state_read(inode)
-inode->i_state |= (I_A | I_B) 	=> inode_state_set(inode, I_A | I_B)
-inode->i_state &= ~(I_A | I_B) 	=> inode_state_clear(inode, I_A | I_B)
-inode->i_state = I_A | I_B	=> inode_state_assign(inode, I_A | I_B)
-
-If ->i_lock is not held or only held conditionally:
-
-state = inode->i_state  	=> state = inode_state_read_once(inode)
-inode->i_state |= (I_A | I_B) 	=> inode_state_set_raw(inode, I_A | I_B)
-inode->i_state &= ~(I_A | I_B) 	=> inode_state_clear_raw(inode, I_A | I_B)
-inode->i_state = I_A | I_B	=> inode_state_assign_raw(inode, I_A | I_B)
-
-The "_once" vs "_raw" discrepancy stems from the read variant differing
-by READ_ONCE as opposed to just lockdep checks.
-
-Finally, if you want to atomically clear flags and set new ones, the
-following:
-
-state = inode->i_state;
-state &= ~I_A;
-state |= I_B;
-inode->i_state = state;
-
-turns into:
-
-inode_state_replace(inode, I_A, I_B);
-
-Signed-off-by: Mateusz Guzik <mjguzik@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260326095354.16340-64-jack@suse.cz
+Tested-by: syzbot@syzkaller.appspotmail.com
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: 8ee09f597763 ("fs: rotate inodes whose page cache could not be dropped")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fs.h | 78 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 76 insertions(+), 2 deletions(-)
+ fs/buffer.c                 | 29 -----------------------------
+ fs/inode.c                  | 21 +++++++++------------
+ include/linux/buffer_head.h |  3 ---
+ 3 files changed, 9 insertions(+), 44 deletions(-)
 
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 349b7fc57db36..09cbcfbf295f6 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -759,7 +759,7 @@ enum inode_state_bits {
- 	/* reserved wait address bit 3 */
- };
+diff --git a/fs/buffer.c b/fs/buffer.c
+index 261f521dbc583..b5a1ff2d559fb 100644
+--- a/fs/buffer.c
++++ b/fs/buffer.c
+@@ -880,35 +880,6 @@ void invalidate_inode_buffers(struct inode *inode)
+ }
+ EXPORT_SYMBOL(invalidate_inode_buffers);
  
--enum inode_state_flags_t {
-+enum inode_state_flags_enum {
- 	I_NEW			= (1U << __I_NEW),
- 	I_SYNC			= (1U << __I_SYNC),
- 	I_LRU_ISOLATING         = (1U << __I_LRU_ISOLATING),
-@@ -843,7 +843,7 @@ struct inode {
- #endif
+-/*
+- * Remove any clean buffers from the inode's buffer list.  This is called
+- * when we're trying to free the inode itself.  Those buffers can pin it.
+- *
+- * Returns true if all buffers were removed.
+- */
+-int remove_inode_buffers(struct inode *inode)
+-{
+-	int ret = 1;
+-
+-	if (inode_has_buffers(inode)) {
+-		struct address_space *mapping = &inode->i_data;
+-		struct list_head *list = &mapping->i_private_list;
+-		struct address_space *buffer_mapping = mapping->i_private_data;
+-
+-		spin_lock(&buffer_mapping->i_private_lock);
+-		while (!list_empty(list)) {
+-			struct buffer_head *bh = BH_ENTRY(list->next);
+-			if (buffer_dirty(bh)) {
+-				ret = 0;
+-				break;
+-			}
+-			__remove_assoc_queue(bh);
+-		}
+-		spin_unlock(&buffer_mapping->i_private_lock);
+-	}
+-	return ret;
+-}
+-
+ /*
+  * Create the appropriate buffers when given a folio for data area and
+  * the size of each buffer.. Use the bh->b_this_page linked list to
+diff --git a/fs/inode.c b/fs/inode.c
+index 7adfc787e934a..ec58d248a7ed9 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -16,7 +16,6 @@
+ #include <linux/fsnotify.h>
+ #include <linux/mount.h>
+ #include <linux/posix_acl.h>
+-#include <linux/buffer_head.h> /* for inode_has_buffers */
+ #include <linux/ratelimit.h>
+ #include <linux/list_lru.h>
+ #include <linux/iversion.h>
+@@ -366,7 +365,6 @@ struct inode *alloc_inode(struct super_block *sb)
  
- 	/* Misc */
--	enum inode_state_flags_t	i_state;
-+	enum inode_state_flags_enum i_state;
- 	/* 32-bit hole */
- 	struct rw_semaphore	i_rwsem;
- 
-@@ -904,6 +904,80 @@ struct inode {
- 	void			*i_private; /* fs or device private pointer */
- } __randomize_layout;
- 
-+/*
-+ * i_state handling
-+ *
-+ * We hide all of it behind helpers so that we can validate consumers.
-+ */
-+static inline enum inode_state_flags_enum inode_state_read_once(struct inode *inode)
-+{
-+	return READ_ONCE(inode->i_state);
-+}
-+
-+static inline enum inode_state_flags_enum inode_state_read(struct inode *inode)
-+{
-+	lockdep_assert_held(&inode->i_lock);
-+	return inode->i_state;
-+}
-+
-+static inline void inode_state_set_raw(struct inode *inode,
-+				       enum inode_state_flags_enum flags)
-+{
-+	WRITE_ONCE(inode->i_state, inode->i_state | flags);
-+}
-+
-+static inline void inode_state_set(struct inode *inode,
-+				   enum inode_state_flags_enum flags)
-+{
-+	lockdep_assert_held(&inode->i_lock);
-+	inode_state_set_raw(inode, flags);
-+}
-+
-+static inline void inode_state_clear_raw(struct inode *inode,
-+					 enum inode_state_flags_enum flags)
-+{
-+	WRITE_ONCE(inode->i_state, inode->i_state & ~flags);
-+}
-+
-+static inline void inode_state_clear(struct inode *inode,
-+				     enum inode_state_flags_enum flags)
-+{
-+	lockdep_assert_held(&inode->i_lock);
-+	inode_state_clear_raw(inode, flags);
-+}
-+
-+static inline void inode_state_assign_raw(struct inode *inode,
-+					  enum inode_state_flags_enum flags)
-+{
-+	WRITE_ONCE(inode->i_state, flags);
-+}
-+
-+static inline void inode_state_assign(struct inode *inode,
-+				      enum inode_state_flags_enum flags)
-+{
-+	lockdep_assert_held(&inode->i_lock);
-+	inode_state_assign_raw(inode, flags);
-+}
-+
-+static inline void inode_state_replace_raw(struct inode *inode,
-+					   enum inode_state_flags_enum clearflags,
-+					   enum inode_state_flags_enum setflags)
-+{
-+	enum inode_state_flags_enum flags;
-+	flags = inode->i_state;
-+	flags &= ~clearflags;
-+	flags |= setflags;
-+	inode_state_assign_raw(inode, flags);
-+}
-+
-+static inline void inode_state_replace(struct inode *inode,
-+				       enum inode_state_flags_enum clearflags,
-+				       enum inode_state_flags_enum setflags)
-+{
-+	lockdep_assert_held(&inode->i_lock);
-+	inode_state_replace_raw(inode, clearflags, setflags);
-+}
-+
- static inline void inode_set_cached_link(struct inode *inode, char *link, int linklen)
+ void __destroy_inode(struct inode *inode)
  {
- 	VFS_WARN_ON_INODE(strlen(link) != linklen, inode);
+-	BUG_ON(inode_has_buffers(inode));
+ 	inode_detach_wb(inode);
+ 	security_inode_free(inode);
+ 	fsnotify_inode_delete(inode);
+@@ -954,19 +952,18 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
+ 	 * page cache in order to free up struct inodes: lowmem might
+ 	 * be under pressure before the cache inside the highmem zone.
+ 	 */
+-	if (inode_has_buffers(inode) || !mapping_empty(&inode->i_data)) {
++	if (!mapping_empty(&inode->i_data)) {
++		unsigned long reap;
++
+ 		inode_pin_lru_isolating(inode);
+ 		spin_unlock(&inode->i_lock);
+ 		spin_unlock(&lru->lock);
+-		if (remove_inode_buffers(inode)) {
+-			unsigned long reap;
+-			reap = invalidate_mapping_pages(&inode->i_data, 0, -1);
+-			if (current_is_kswapd())
+-				__count_vm_events(KSWAPD_INODESTEAL, reap);
+-			else
+-				__count_vm_events(PGINODESTEAL, reap);
+-			mm_account_reclaimed_pages(reap);
+-		}
++		reap = invalidate_mapping_pages(&inode->i_data, 0, -1);
++		if (current_is_kswapd())
++			__count_vm_events(KSWAPD_INODESTEAL, reap);
++		else
++			__count_vm_events(PGINODESTEAL, reap);
++		mm_account_reclaimed_pages(reap);
+ 		inode_unpin_lru_isolating(inode);
+ 		return LRU_RETRY;
+ 	}
+diff --git a/include/linux/buffer_head.h b/include/linux/buffer_head.h
+index b16b88bfbc3e7..631bf971efc04 100644
+--- a/include/linux/buffer_head.h
++++ b/include/linux/buffer_head.h
+@@ -517,7 +517,6 @@ void buffer_init(void);
+ bool try_to_free_buffers(struct folio *folio);
+ int inode_has_buffers(struct inode *inode);
+ void invalidate_inode_buffers(struct inode *inode);
+-int remove_inode_buffers(struct inode *inode);
+ int sync_mapping_buffers(struct address_space *mapping);
+ void invalidate_bh_lrus(void);
+ void invalidate_bh_lrus_cpu(void);
+@@ -528,9 +527,7 @@ extern int buffer_heads_over_limit;
+ 
+ static inline void buffer_init(void) {}
+ static inline bool try_to_free_buffers(struct folio *folio) { return true; }
+-static inline int inode_has_buffers(struct inode *inode) { return 0; }
+ static inline void invalidate_inode_buffers(struct inode *inode) {}
+-static inline int remove_inode_buffers(struct inode *inode) { return 1; }
+ static inline int sync_mapping_buffers(struct address_space *mapping) { return 0; }
+ static inline void invalidate_bh_lrus(void) {}
+ static inline void invalidate_bh_lrus_cpu(void) {}
 -- 
 2.53.0
 
