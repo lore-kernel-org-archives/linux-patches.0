@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585348;
-	b=bysZfMT6pUszNidHaohJUoZ77p0Qxi4PDGt1t8WgbL95Y58W2UzUuIUFPQRfzso2VYH0
-	 FNOHI9dI/F1VdGChEkUtXDmwz8XmpZL2lGhlR+TfbSIb6rnMP65+wvAD0i2XKySIrVbeK
-	 IAA7P22V0HkX+F8x91CslJDZBI2vspuiRdx3Kei886nq8TAhbZz95i4WiOQO6mUzmtWC4
-	 fOblT31YdJNmbbZUYXybPK/97JMiGz8I4B3vRx8LsFJfoSOXc4w29kk8FL+T0BmYY3fo1
-	 QfM/EGJCkbwRWJ5cFUtG5wm+Ut8bz03sDkrHyA4EeraFYAJL7kaNvFzdCZnM51KuJkg==
+	t=1794585350;
+	b=bQ2p5pm3IPYVftYXMhB/zPWij4YU8Vruxuim2K9qvRQW9TGqxmaKmdCzjKacZqTAT5M3
+	 r0zSn+khzkO6S9Pd5VgaDdZrL6iud3c0AriC5YCu6LMqJG8WeKcNaNlEUaOQsdh7F7u77
+	 yAhPSR0q7z3UWigS6vaSq1dyNCyHjVyl6cDmKGqjcw/q34u9DG3DYuXZ0vko3I/Rq5U6f
+	 hWDXzjS4wZNGj3Z7QAH7C2jOZu00qes+aJECihLl0keKH63JqpActd/LA7Y9h2Lr4h7NG
+	 DLwQkjBI8phB2iV9SlJ23wbAeGQONd5rRMgTBql1jPVYY3NWvUfKlf15ZOz6ZZFovSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585350;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kvdhz5V6bPppatGqbZ060sqXptY+ZMCYvaIWlix7/0A=;
-	b=h6HJnhGWmXJ1rmhcgasK05U1ALTNjPdH1m4EFHR6WQUdPJphlRVQ+hRxpxBM2VWkAqoS
-	 O2bR7Fq2ravfh7Tome0mJwjJwqwsNxVtBxy9RST4AtgN8n3cqyLQ9iz3L8QylN0j6Wkbi
-	 TLT37YiCYS1yAUK1aqieHhKmXZpFGg/515QAANrcd9IWNZjSNm4BlWmvGX7LJA9eQYIJk
-	 KwnbfAuitqHQxleaWCXPOfSOI+LwU+iAImEQzZHK/0nx06f3tl/4xNm+Hki6/YQh9c05o
-	 O31FTlR0q85A5V5MfJ09JNGu2AW/K/JQHAF38ESbKzjBSl9SCGcCkiPW0lVf+uckxMA==
+	bh=1Xr3g6JplAfEAcs3cPyh2xrpTV778hnXbtSBieGBxtI=;
+	b=FBsAznU17KeCnc+7KrLpmDMurKhJrYux+nPNJxuQIQOVvnTC1gPG6PaRYbAH5jOkbqna
+	 7+tSlqPAOqRBaLtfogatSIPcTLWX3Mq+PfdU+11NrWKdDhMB8k7bnJ/esNjj1RUhyxrVa
+	 3ojGsbQyo2STUna0JWzgzcscWewSJ86FTIRJJMlyohOfZ02+5/XtkyHLp4gDsGjmRRl6o
+	 YB+fFJjTiYkLC/pmNk7o+roufhD0H9JZh2MJ7bJNidZEQK1NSmRDcAdI4vsxFC7VTEDPc
+	 r2PNIpfSRcs7La0BXK+STkdOHYBglr+R4pTzFW/M9M+FjG/pHRjTNFPWMhrO5XZQ1EQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFk2VKvH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RACEo2dB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA7060A380B;
-	Fri, 13 Nov 2026 15:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414FA606A8A2;
+	Fri, 13 Nov 2026 15:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IFk2VKvH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA1F1F000C5;
-	Fri, 13 Nov 2026 15:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RACEo2dB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B6A1F000CB;
+	Fri, 13 Nov 2026 15:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585348;
-	bh=kvdhz5V6bPppatGqbZ060sqXptY+ZMCYvaIWlix7/0A=;
+	s=korg; t=1794585349;
+	bh=1Xr3g6JplAfEAcs3cPyh2xrpTV778hnXbtSBieGBxtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IFk2VKvHeEeK4xMJRhdKP6LOkYOS1wCYVloiOTDbfmcGA5gj9/g4MEYtJs07p+gGb
-	 BeXk3T8GWTJzegW3ymxsWoqj1fyUpJ9gjSw1+G4ZRVgdZpb0wQOCCtUidt/mx3Or8U
-	 ku+xhS4gDJsfhDlKw9Y3zM9+e59UP3ey9CxB1Ivk=
+	b=RACEo2dBrI6NG+uTSFmd6Ai9a211dKcLYkriILkGK19VGHaU24SM49kWXMECaHpWU
+	 UrOB2zNsCOel95wB5gKOIyVecX15bJV7ehD349TXQrxOx/HGwJtSO3ka1l0HosWWr6
+	 90y70gyiTjD9IuDWSwZPaGw5KTWfmfdj0mJZY6wA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuansheng Yang <0xbeac@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 030/507] io_uring/rsrc: hold uring_lock across index-alloc put_user
-Date: Fri, 13 Nov 2026 10:45:34 -0500
-Message-ID: <20261113153754.399160751@linuxfoundation.org>
+Subject: [PATCH 7.3 031/507] mm/damon/core: remove unreachable damos charge_{target,addr}_from
+Date: Fri, 13 Nov 2026 10:45:35 -0500
+Message-ID: <20261113153754.437820308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,88 +68,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuansheng Yang <0xbeac@gmail.com>
+From: SJ Park <sj@kernel.org>
 
-Commit d7c7037253f6935af243570635d71b4920b5a4ea upstream.
+[ Upstream commit 5695abc4e742b947f586bfb6a080a80ad9957e5d ]
 
-io_files_update_with_index_alloc() installs a fixed file via
-io_fixed_fd_install(), which drops ->uring_lock when the request runs on
-io-wq, then put_user()s the allocated slot back to userspace. If that
-faults, the error path calls __io_close_fixed() by slot index after
-re-taking the lock.
+damos_quota->charge_{target,addr}_from saves the target and region the
+scheme's quota limit is reached.  damos_skip_charged_region() skips the
+target and regions before the point.  The target that was assigned to
+charge_target_from could be dynamically removed from the context by the
+runtime parameters update (aka commit) feature.  In this case,
+damos_skip_charged_region() cannot find if the point is passed or not,
+so the scheme is effectively disabled.
 
-The slot can be closed and reused between the install and that cleanup:
-another fixed CLOSE plus open/accept/pipe/socket, or a FILES_UPDATE, can
-put an unrelated file into the same slot. The error path then removes
-that file instead of the one this request installed, ending an unrelated
-file's fixed-table reference early. This is a correctness/DoS issue, not
-a use-after-free: fixed-file requests hold an io_rsrc_node reference, so
-the node and file stay alive until they are done.
+Similarly, the user could also remove all the regions of the target
+using the runtime parameters update feature.  It would be uncommon to do
+that, but it is a supported feature.  Because the skip pointer detection
+logic (damos_skip_charged_region()) works for each region of targets,
+this result in the logic is entirely skipped and the scheme is
+effectively disabled again.
 
-Hold ->uring_lock across __io_fixed_fd_install() and put_user(), and do
-the failure cleanup with io_fixed_fd_remove() under the same lock. This
-is the same class as the io_pipe_fixed() fix in a3d7ee11289f. Faulting
-while holding ->uring_lock is fine, the registration paths already do
-it.
+The user impact is that the DAMOS scheme could suddenly stop working
+under certain uses of the runtime parameters update feature.  It could
+surprise users. No crash or leak happens though.  Users could also
+simply work around by re-installing the scheme.
 
-Fixes: a7c41b4687f5 ("io_uring: let IORING_OP_FILES_UPDATE support choosing fixed file slots")
-Signed-off-by: Yuansheng Yang <0xbeac@gmail.com>
-Link: https://patch.msgid.link/20261104154655.81876-1-0xbeac@gmail.com
-[axboe: various touch-ups]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Catch the corner cases in damos_adjust_quota() and reset the pointers.
+
+Link: https://lore.kernel.org/20261020023958.108276-1-sj@kernel.org
+Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c49b8
+Cc: <stable@vger.kernel.org> # 5.19.x
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rsrc.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ mm/damon/core.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
-index d69baa47c7e75..c1ab760c4591c 100644
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -521,11 +521,12 @@ static int io_files_update_with_index_alloc(struct io_kiocb *req,
- {
- 	struct io_rsrc_update *up = io_kiocb_to_cmd(req, struct io_rsrc_update);
- 	__s32 __user *fds = u64_to_user_ptr(up->arg);
-+	struct io_ring_ctx *ctx = req->ctx;
- 	unsigned int done;
- 	struct file *file;
- 	int ret, fd;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index e018635774be5..229ab1674b4c1 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3200,6 +3200,26 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
+ 	trace_damos_esz(cidx, sidx, quota->esz);
+ }
  
--	if (!req->ctx->file_table.data.nr)
-+	if (!ctx->file_table.data.nr)
- 		return -ENXIO;
- 
- 	for (done = 0; done < up->nr_args; done++) {
-@@ -539,15 +540,25 @@ static int io_files_update_with_index_alloc(struct io_kiocb *req,
- 			ret = -EBADF;
- 			break;
- 		}
--		ret = io_fixed_fd_install(req, issue_flags, file,
--					  IORING_FILE_INDEX_ALLOC);
--		if (ret < 0)
-+		/*
-+		 * Hold the lock across the put_user(), if it's dropped the
-+		 * slot can be closed and reused before the error path runs.
-+		 */
-+		io_ring_submit_lock(ctx, issue_flags);
-+		ret = __io_fixed_fd_install(ctx, file,
-+					    IORING_FILE_INDEX_ALLOC);
-+		if (ret < 0) {
-+			io_ring_submit_unlock(ctx, issue_flags);
-+			fput(file);
- 			break;
++static void damos_fix_stale_charge_pointers(struct damon_ctx *c,
++		struct damos *s)
++{
++	struct damos_quota *quota;
++	struct damon_target *t;
++
++	quota = &s->quota;
++	if (!quota->charge_target_from)
++		return;
++	damon_for_each_target(t, c) {
++		if (t == quota->charge_target_from) {
++			if (damon_nr_regions(t) > 0)
++				return;
++			break;
 +		}
- 		if (put_user(ret, &fds[done])) {
--			__io_close_fixed(req->ctx, issue_flags, ret);
-+			io_fixed_fd_remove(ctx, ret);
-+			io_ring_submit_unlock(ctx, issue_flags);
- 			ret = -EFAULT;
- 			break;
- 		}
-+		io_ring_submit_unlock(ctx, issue_flags);
++	}
++	quota->charge_target_from = NULL;
++	quota->charge_addr_from = 0;
++}
++
+ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ {
+ 	struct damos_quota *quota = &s->quota;
+@@ -3235,6 +3255,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 			damos_trace_esz(c, s, quota);
  	}
  
- 	if (done)
++	damos_fix_stale_charge_pointers(c, s);
++
+ 	if (!c->ops.get_scheme_score)
+ 		return;
+ 
 -- 
 2.53.0
 
