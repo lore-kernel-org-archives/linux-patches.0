@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590844;
-	b=ohEQYwi2aUlENensuq7cZMLEtCWUaU8liLm9cX7MvasxnhzAf0M75Sh+e6sSQ9Q88sgO
-	 tjD82g1nV3M19tSPC5eT0iRGwAqfJcM6s9w2JEJ/FfxtsN2AqNzmzjzMg2Tcd30mifpcK
-	 gQAr9d43FgVydd8QiMu8cT9TAtl0nCqxCpx4UwCEQU3FE8uTxYc1Xe1YgUpwhgTmOQr5K
-	 y7qUdHFIetoH3M62Rf4PeITP/ZKEkeHEIKPY9qEBVlym0bFK15n3JShcdiPOVdIxIbDaA
-	 3ZVSvZ01pT1PRyVmvvgOckQTTScKX0x54Lij39b4LhPnUxkxVW9gEZmN2WrNr1TH2sw==
+	t=1794590845;
+	b=xOMqoM2JOecgeEum3MzesE34Dr4CWXOLnjQXSBTHrQjBqOY9kzGVWPrUWqWaU6vvVHW4
+	 +1CKIXQpdnysTIgedzzyFoV+8+sHUfFO1S4Kloq9qZD0GuGaa2gZ4ld8NXlja7AWQQK34
+	 mN/up43KXFS+cDbxSp2wXuf+l/BeE6KroU2D9BcDS95GmPId4PAqWsV1HnQvk84TlBSca
+	 PydCG/gAOGTmqHfePGQTu1H4jW2jbZ1HftXES5DIuvjrRsF6fz93n+RH3aSiFZj5F+K8S
+	 FbsDJDaBa6+zjK/RQomuazbFZk/zx+7xzMKjJdyzjyp9w3y21MVx3IDodDX7i5EfWlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590845;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3ehmp69jLea8+Fs+wrLFaNnE2wuUH0Yjxav5n6GVBeE=;
-	b=YNKOlIF9dXjHcc8lUfRu3gNBMqFksexbTkK59rQW9I9WO2WNRc+gDvJSNYvABE+cdX2M
-	 VB1jbeGuZDPwni2Bt9WK8juhk1ILuw9aTvjsRAM2GUQhFN/9eG//EeJ2NQniBoB82R1VY
-	 LPyu5C8MP6BoBqWNpONdx6PclF+69F7zt3Zdv/n2upibrkT3areFCoS4SSPhfHu6Kwb/M
-	 gTY1ihanUzk7vJqy7PtHJLXkx038asBBRYfGB4pkxk4XvCNX38LJFS16dYNItPnC5Jvhq
-	 k2PH+R1MJwim56zjKmWfTxV42KfCv2sqSxHxau0YqiN4+PHSUgsXtzXbvfgPHiRsGOQ==
+	bh=2ppshqaHpnO8hhswY+9dUUvb6xkfJlJBj/OuIMRsVVY=;
+	b=iCVLHdq5VMDyJA3/j82bcC53u0r8vZHXrF8yYKdXr2SevJGEcXgDzngGQtGxmUTo93dI
+	 RSveMLOR/7Ud5TrNSOszOF8cH1xGaR8yeUlcQ7MBrSM7YUMxKRd4U3ReME7++P1PMpdNH
+	 SWjXtEqndDhqccDVrFJMce1kJ105UavtTfoHyOsQt6elsACN+NdZLX0b5ccfjaq8++chj
+	 ZS5SnNtxIYKaXUrsazh6Ma2N/Fs8LjmdWG55gP57KDsKTOTgSK4Xs/i8NLWewXfgmAuBb
+	 n6ndSO+eQZWg0hqP2zMVcCbcIOnGNpkkRIwOPGqOUjNRdKXOMY932oo9db3SiWGOXXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5joQsWp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TsWx+gbX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE61606D48E;
-	Fri, 13 Nov 2026 17:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57F0606D492;
+	Fri, 13 Nov 2026 17:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5joQsWp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFD81F000C4;
-	Fri, 13 Nov 2026 17:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TsWx+gbX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626101F000C4;
+	Fri, 13 Nov 2026 17:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590844;
-	bh=3ehmp69jLea8+Fs+wrLFaNnE2wuUH0Yjxav5n6GVBeE=;
+	s=korg; t=1794590845;
+	bh=2ppshqaHpnO8hhswY+9dUUvb6xkfJlJBj/OuIMRsVVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A5joQsWpG+nXtVeRPsPesnk+LJ+lEWufUDxWZOLdszfqM+IPDxszd3dVc+6+Dw7pe
-	 dx9gwJQPOgUtbIIFbCaJQAjGX1VSRhnJhhDx2ruSWZiCBdrzBEm+RS3y+dICbuwibE
-	 gCP0XeBidMuRsp2hd3B1RYIlFp9dG6HNqsMLcJF8=
+	b=TsWx+gbX/o3y8h/Rm6iNEoh23eJQd3L8npqHZ2BlFKZBdzKaUlQNJMEnPlJ8xOdCG
+	 diJ/uwaxmJ778xdqLSg+nJNWnOxkh1i25ti0xZCdMNAYFLlBaAAy5xyxKBOpQ5u44j
+	 jB0Th/qQm6F8hQAuY15AfD3NvliHZ3n6g+HvIFlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gael Blivet <gael.blivet@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	stable@kernel.org,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/670] ksmbd: look up stream size by exact xattr name
-Date: Fri, 13 Nov 2026 10:43:29 -0500
-Message-ID: <20261113153812.752952237@linuxfoundation.org>
+Subject: [PATCH 6.12 046/670] serial: amba-pl011: keep transmitter enabled when disabling RS485
+Date: Fri, 13 Nov 2026 10:43:30 -0500
+Message-ID: <20261113153812.845754394@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,90 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gael Blivet <gael.blivet@gmail.com>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit 10ea20d6584ecdaf2f7505855412a856a88d8934 ]
+commit 97f85204275ae4d7fb530e451f3acc65c1ec1155 upstream.
 
-get_file_stream_info() walks the xattr list from a single
-ksmbd_vfs_listxattr() and sizes each stream it finds with
-ksmbd_vfs_casexattr_len(), which matches with strncasecmp(). Linux
-xattr names are case-sensitive, so two streams differing only in case
-report each other's size.
+Disabling RS485 on an open port calls pl011_rs485_tx_stop(), which
+turns off the transmitter. Only the RS485 TX path turns it back on, so
+any later output stays queued and tcdrain() hangs until the port is
+closed.
 
-The loop already holds the exact name, so query it directly with
-ksmbd_vfs_xattr_len(), which is what casexattr_len() calls once its
-search succeeds. Make it non-static and declare it in vfs.h, and drop
-the comment above it, which describes a different bug and no longer
-matches the code.
+pl011_rs485_tx_stop() also checks only the hardware FIFO. If a DMA
+transfer has started but has not filled the FIFO yet, the transmitter
+is turned off under the transfer and the DMA channel never recovers.
 
-This also drops a full listing per stream: casexattr_len() runs its own
-listxattr on every call, so enumerating a file with N xattrs cost N
-listings instead of one.
+When leaving RS485 mode, cancel pending deferred starts and stops, leave
+the transmitter enabled and start any TX that was still waiting for
+delay_rts_before_send.
 
-Fixes: 689f1eb3719d ("ksmbd: report actual xattr value length in stream enumeration")
-Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: adapted ksmbd_vfs_xattr_len() to accept a non-const struct mnt_idmap pointer ]
+Fixes: 8d479237727c ("serial: amba-pl011: add RS485 support")
+Cc: stable@kernel.org
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20261012-fix-pl011-rs485-txe-v2-1-e9bf7d218389@tipi-net.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[nb: Use rs485_tx_started and omit timer handling on older kernels.]
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 13 ++-----------
- fs/smb/server/vfs.c     |  4 ++--
- fs/smb/server/vfs.h     |  2 ++
- 3 files changed, 6 insertions(+), 13 deletions(-)
+ drivers/tty/serial/amba-pl011.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 4e0f43051d9e0..1ed32310c73a5 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5275,17 +5275,8 @@ static int get_file_stream_info(struct ksmbd_work *work,
- 		streamlen *= 2;
- 		kfree(stream_buf);
- 		file_info->StreamNameLength = cpu_to_le32(streamlen);
--		/*
--		 * stream_name_len is the byte length of the xattr's *name*,
--		 * not its value -- same class of bug ksmbd_stream_eof()
--		 * (smb2pdu.c) already fixes for EndOfFile/AllocationSize on
--		 * a stream handle; this enumeration path needs the same
--		 * real xattr value length, not the name length reused as a
--		 * size.
--		 */
--		slen = ksmbd_vfs_casexattr_len(file_mnt_idmap(fp->filp),
--						path->dentry, stream_name,
--						strlen(stream_name) + 1, NULL);
-+		slen = ksmbd_vfs_xattr_len(file_mnt_idmap(fp->filp),
-+					   path->dentry, stream_name);
- 		ssize = slen < 0 ? 0 : (loff_t)slen;
- 		file_info->StreamSize = cpu_to_le64(ssize);
- 		file_info->StreamAllocationSize = cpu_to_le64(ssize);
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index dafb92aa39a6c..9aee0214e8fdc 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -943,8 +943,8 @@ ssize_t ksmbd_vfs_listxattr(struct dentry *dentry, char **list)
- 	return size;
- }
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 3e1932a3bfbbd..a0e20bffefba8 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -2224,8 +2224,21 @@ static int pl011_rs485_config(struct uart_port *port, struct ktermios *termios,
+ 	struct uart_amba_port *uap =
+ 		container_of(port, struct uart_amba_port, port);
  
--static ssize_t ksmbd_vfs_xattr_len(struct mnt_idmap *idmap,
--				   struct dentry *dentry, char *xattr_name)
-+ssize_t ksmbd_vfs_xattr_len(struct mnt_idmap *idmap,
-+			    struct dentry *dentry, char *xattr_name)
- {
- 	return vfs_getxattr(idmap, dentry, xattr_name, NULL, 0);
- }
-diff --git a/fs/smb/server/vfs.h b/fs/smb/server/vfs.h
-index 397dd2dd09886..1ca170dfb349d 100644
---- a/fs/smb/server/vfs.h
-+++ b/fs/smb/server/vfs.h
-@@ -106,6 +106,8 @@ ssize_t ksmbd_vfs_getxattr(struct mnt_idmap *idmap,
- 			   struct dentry *dentry,
- 			   char *xattr_name,
- 			   char **xattr_buf);
-+ssize_t ksmbd_vfs_xattr_len(struct mnt_idmap *idmap,
-+			    struct dentry *dentry, char *xattr_name);
- ssize_t ksmbd_vfs_casexattr_len(struct mnt_idmap *idmap,
- 				struct dentry *dentry, char *attr_name,
- 				int attr_name_len, char *actual_name);
+-	if (port->rs485.flags & SER_RS485_ENABLED)
++	if ((port->rs485.flags & SER_RS485_ENABLED) &&
++	    !(rs485->flags & SER_RS485_ENABLED)) {
++		u32 cr = pl011_read(uap, REG_CR);
++
++		/*
++		 * Leaving RS485 mode, which only enables the transmitter while
++		 * sending. Don't stop it, as that stalls a DMA transfer still
++		 * in flight. Keep the transmitter and receiver enabled.
++		 */
++		uap->rs485_tx_started = false;
++		cr |= UART011_CR_TXE | UART011_CR_RXE;
++		pl011_write(cr, uap, REG_CR);
++	} else if (port->rs485.flags & SER_RS485_ENABLED) {
+ 		pl011_rs485_tx_stop(uap);
++	}
+ 
+ 	/* Make sure auto RTS is disabled */
+ 	if (rs485->flags & SER_RS485_ENABLED) {
 -- 
 2.53.0
 
