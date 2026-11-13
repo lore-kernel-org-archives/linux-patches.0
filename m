@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585734;
-	b=qN9FYTnwv+vJIuURvizEsPNNRyv61KptDWVoEYbTUszPsHt3fazELa1Dcs6aZqmIK6uF
-	 9BYhIMGaRIbfwDPg+C3SK7quC/1zBnEHqjKGP22guq5sr30FaXtzA0s2ypVV5TtL0pu01
-	 tAlFjhKTa2WCV9GCvhqqSQLjwp86wrn8oWL6tmppeuDvneHm35DkarMujMpmWF1nEDxl2
-	 86Nqy9d/65e8IrMxTbZUIP2Vdp+ZswI97VDLmY+mIPDLmijasPIhVuYUbByGITBUiSIG/
-	 4VDzOXkVGTnNxHPgDbi9vmoJl2fmlFDndDL5Rf1E1qPK/0a5gYbtZDjV8HwCKU/t9aA==
+	t=1794585735;
+	b=QbXH2in+5qYDqkXElts64vcPMxjBSIrAyoi8H70bOPQWZg1rzqVjbhsMGd5XKHGOZ4lA
+	 ABD9+Jl+z+qryT+FKgARdR9pV20eY6DTVE/dLwHz11VbbnGaJCnE/PDOE5JQD9ugDZ9Hn
+	 1E1ANTJ5CJD4sCPyrqkQms3r4mJoTl2Jx4P4K6S6naQZNWUlkR8DVS54q4gUqmv2GhTK0
+	 OyZoUM//x55gEKEEssxmbycsTYH3ttc5JkVuSUJpxFloAVWAqOAGJ9ceXFcRKWUtx3Rln
+	 f2SkLGuzTpsscxOwsAjPyqlpcPgiyMfr3Dj+wgJpJXWlACOxaceROLjyRH1t8RSFWng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585734;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585735;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aO/Sgiq2kHVgTFIQMrLCVb9rginsFMqOOok7A49DA2g=;
-	b=q26r5d7ybd6io/DhoGDhrbemnCDpV0KudTr5z/NOINeKq3NerLbYdbRuywhny0t/IwFk
-	 yvGzYe91xh8JWLcT03ZSHDsA3NmTat6En+ddoufua6KjiQwi42HNgk2tN05Gx8YQTpTGf
-	 X7HKkRme3YXmhtRRV9quQnSQGh26JyjNmSsg7EjYAlUbUoUWtSSppigv3aaiNPSmzECGe
-	 aQOMyOkdWYgbV/QlzC0M/PanF7CFcUTbYGIXQG45Xl392TJC9Eme6iIyi+oPBVFg5y+Op
-	 bUsStM6Oy/y0WxKyDkDTD/h9t5C2E4SLPoPJ+NBhrU4tESc9vLAJJn+EE42TJkwhIrA==
+	bh=D7k8J1AqLoY4OYyfMhdMZ4HiV2S1XRLdKTNyGBggGMs=;
+	b=GbrFnxRyLE04q/Sc9WFaRFBo7d974AqP1LJ0PTDrEQVgvyU2SDy16Cblqj24xfzyhu7G
+	 WPrwZrcYpFO4j6JALjO/+yMbwpt/DexBBE229NFz+XZHMe6JYC5w8I4CxiUg3aJMUzqT1
+	 /NgPl7JqT18z3wNZ1kmny0vBqvxosCOOVkt9VSDNPilGnt/Xe7SDvETqlx5RF+2rRa1IP
+	 IyXllMZkUNHJsSchF/1CdRq/OYe75Md3hKCm+vz+AynxJ0AQM5XE0wyz6S3tsGP6Swc0U
+	 WmxTRvSciJ23NZ9wuqF4dJAPtx0DalVyvtkAB1NEqGcoTXnf3gRL6uB33Ww+n3cZIKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLYQwDT6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dj+3joac;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045F4606EB82;
-	Fri, 13 Nov 2026 16:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF2E606A338;
+	Fri, 13 Nov 2026 16:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLYQwDT6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39971F000C4;
-	Fri, 13 Nov 2026 16:02:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dj+3joac
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02351F000C4;
+	Fri, 13 Nov 2026 16:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585733;
-	bh=aO/Sgiq2kHVgTFIQMrLCVb9rginsFMqOOok7A49DA2g=;
+	s=korg; t=1794585735;
+	bh=D7k8J1AqLoY4OYyfMhdMZ4HiV2S1XRLdKTNyGBggGMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yLYQwDT687X8/pnaTbln5EOa1iqcy/IaJ+PXiYVEvxkC1+6KwWkebsQF6G/WbSeRQ
-	 6bTKxJK/7Q2lUAHzKjCF5TjvpzayrWcjdepmuk7dNNf5uwRg8pjcqeGNsZik6p5+Zl
-	 ldXFtY+WhjU09RX1asYMrr5Wnr0SE30YsdDdcGg4=
+	b=dj+3joacX6oZIwAF/6dfWeVZR70wYtSTu51JWNGxs7y+prh/3Ywy3Rm3Av4f0rYAb
+	 keDe6vQ6iw4w6EIOi2diGs3C1En8zOjV7/eKa5Oierpr7iEj0nnotLkX77jEgPxYwU
+	 vwDTfjaLuscPvRs8NIGlx5L7UzUDDE3LLpqK41mY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Lutomirski <luto@amacapital.net>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 334/507] mm/gup: check folio->mapping under folio lock in memfd_pin_folios()
-Date: Fri, 13 Nov 2026 10:50:38 -0500
-Message-ID: <20261113153806.746281948@linuxfoundation.org>
+Subject: [PATCH 7.3 335/507] x86/entry: Fix ptrace regression
+Date: Fri, 13 Nov 2026 10:50:39 -0500
+Message-ID: <20261113153806.776943160@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,104 +68,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samiullah Khawaja <skhawaja@google.com>
+From: Thomas Gleixner <tglx@kernel.org>
 
-[ Upstream commit 71555ae8c7572fd99158013ca2e29187c5d2508d ]
+[ Upstream commit b697faab2c92653ee13bd950c8de13551a78971d ]
 
-memfd_pin_folios() pins folios from the page cache without taking the
-folio lock. khugepaged or MADV_COLLAPSE can therefore replace a folio
-after checking its refcount while memfd_pin_folios() still pins the old
-folio. The caller then receives a folio which is no longer part of the
-memfd.
+The recent rework of the syscall entry code missed the historical detail of
+the abuse of syscall number -1L to abort a syscall and keep modifications
+by tracers to the return value, while a rewrite of the syscall number to an
+invalid value undoes eventual tracer modification to the return value and
+overwrite it with -ENOSYS.
 
-For udmabuf and iommufd, this can cause data corruption: DMA accesses
-the detached folio rather than the live memfd contents. DMA reads can
-return stale data, while DMA writes update the detached copy and are
-lost from the live memfd. The detached folio remains pinned, so these
-accesses do not constitute a use-after-free or target another
-application's memory. For memfd live update, the stale contents can
-reappear in the memfd after handover.
+Restore the original behaviour.
 
-Lock the folio and recheck folio->mapping before pinning it, like other
-page cache users do. If the folio was removed, retry the folio lookup
-from the index that was removed.
-
-Fixes: 89c1905d9c14 ("mm/gup: introduce memfd_pin_folios() for pinning memfd folios")
-Reported-by: Andy Lutomirski <luto@amacapital.net>
-Closes: https://lore.kernel.org/all/CALCETrV5eqg6d9=+BQhCpRwBNe3aCQiut8vxPBs8b7PToqjaHg@mail.gmail.com/
+Fixes: 1b1f3b3e1b39 ("x86/entry: Get rid of the sys_ni_syscall() indirection")
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Andy Lutomirski <luto@amacapital.net>
-Link: https://patch.msgid.link/20261031203540.2282507-1-skhawaja@google.com
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://patch.msgid.link/87ecd4xwlr.ffs@fw13
+Closes: https://lore.kernel.org/all/20261022142425.3Wx-RrU5@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ arch/x86/entry/syscall_32.c |  4 ++++
+ arch/x86/entry/syscall_64.c | 26 ++++++++++++++++++++++----
+ 2 files changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/mm/gup.c b/mm/gup.c
-index b3937aff3ad44..4f58ad22a756b 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -3446,7 +3446,7 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
+diff --git a/arch/x86/entry/syscall_32.c b/arch/x86/entry/syscall_32.c
+index 91123a90710c4..4c36e8db0e341 100644
+--- a/arch/x86/entry/syscall_32.c
++++ b/arch/x86/entry/syscall_32.c
+@@ -77,6 +77,10 @@ static __always_inline void do_syscall_32_irqs_on(struct pt_regs *regs, unsigned
+ 	if (likely(nr < IA32_NR_syscalls)) {
+ 		nr = array_index_nospec(nr, IA32_NR_syscalls);
+ 		regs->ax = ia32_sys_call(regs, (unsigned int)nr);
++	} else {
++		/* See comment in do_syscall_64() */
++		if (nr != -1UL)
++			regs->ax = -ENOSYS;
+ 	}
+ }
+ 
+diff --git a/arch/x86/entry/syscall_64.c b/arch/x86/entry/syscall_64.c
+index 966d3d1b75868..bb95ad0ab7862 100644
+--- a/arch/x86/entry/syscall_64.c
++++ b/arch/x86/entry/syscall_64.c
+@@ -64,15 +64,20 @@ static __always_inline bool do_syscall_x64(struct pt_regs *regs, unsigned long n
+ 	return false;
+ }
+ 
+-static __always_inline void do_syscall_x32(struct pt_regs *regs, unsigned long nr)
++static __always_inline bool do_syscall_x32(struct pt_regs *regs, unsigned long nr)
  {
- 	unsigned int flags, nr_folios, nr_found;
- 	unsigned int i, pgshift = PAGE_SHIFT;
--	pgoff_t start_idx, end_idx;
-+	pgoff_t start_idx, end_idx, retry_idx;
- 	struct folio *folio = NULL;
- 	struct folio_batch fbatch;
- 	struct hstate *h;
-@@ -3487,6 +3487,7 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- 			 * reason, we try to allocate them and add them to the
- 			 * page cache.
- 			 */
-+			retry_idx = start_idx;
- 			nr_found = filemap_get_folios_contig(memfd->f_mapping,
- 							     &start_idx,
- 							     end_idx,
-@@ -3499,7 +3500,21 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- 			for (i = 0; i < nr_found; i++) {
- 				folio = fbatch.folios[i];
- 
-+				/*
-+				 * The folio might have been removed from the
-+				 * page cache (e.g., truncated or collapsed)
-+				 * after the lookup. Recheck under the folio
-+				 * lock.
-+				 */
-+				folio_lock(folio);
-+				if (unlikely(folio->mapping != memfd->f_mapping)) {
-+					folio_unlock(folio);
-+					start_idx = retry_idx;
-+					break;
-+				}
++	if (!IS_ENABLED(CONFIG_X86_X32_ABI))
++		return false;
 +
- 				if (try_grab_folio(folio, 1, FOLL_PIN)) {
-+					folio_unlock(folio);
- 					folio_batch_release(&fbatch);
- 					ret = -EINVAL;
- 					goto err;
-@@ -3510,14 +3525,12 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- 				 * page cache that were never cleared.
- 				 */
- 				if (!folio_test_uptodate(folio)) {
--					folio_lock(folio);
--					if (!folio_test_uptodate(folio)) {
--						folio_zero_range(folio, 0, folio_size(folio));
--						flush_dcache_folio(folio);
--						folio_mark_uptodate(folio);
--					}
--					folio_unlock(folio);
-+					folio_zero_range(folio, 0, folio_size(folio));
-+					flush_dcache_folio(folio);
-+					folio_mark_uptodate(folio);
- 				}
-+				retry_idx = folio_next_index(folio);
-+				folio_unlock(folio);
+ 	/* Adjust the starting offset of the table */
+ 	nr -= __X32_SYSCALL_BIT;
  
- 				if (nr_folios == 0)
- 					*offset = offset_in_folio(folio, start);
+-	if (IS_ENABLED(CONFIG_X86_X32_ABI) && likely(nr < X32_NR_syscalls)) {
++	if (likely(nr < X32_NR_syscalls)) {
+ 		nr = array_index_nospec(nr, X32_NR_syscalls);
+ 		regs->ax = x32_sys_call(regs, (unsigned int)nr);
++		return true;
+ 	}
++	return false;
+ }
+ 
+ /* Returns true to return using SYSRET, or false to use IRET */
+@@ -81,8 +86,21 @@ __visible noinstr bool do_syscall_64(struct pt_regs *regs, long nr)
+ 	if (likely(syscall_enter_from_user_mode_randomize_stack(regs, &nr))) {
+ 		instrumentation_begin();
+ 
+-		if (!do_syscall_x64(regs, nr))
+-			do_syscall_x32(regs, nr);
++		if (unlikely(!do_syscall_x64(regs, nr))) {
++			/*
++			 * The special treatment of syscall number -1 is a
++			 * historical bogosity as the original code used -1 to
++			 * indicate syscall abort, which is not distinguishable
++			 * from a syscall which is invoked with syscall number
++			 * -1. The historic behavior is to keep the return value
++			 * in regs->ax unmodified in that case, which means it's
++			 * either the preset value -ENOSYS or a value which was
++			 * written by a tracer. If the syscall number is invalid
++			 * but not -1 then overwrite any tracer modification.
++			 */
++			if (!do_syscall_x32(regs, nr) && nr != -1L)
++				regs->ax = -ENOSYS;
++		}
+ 
+ 		instrumentation_end();
+ 	}
 -- 
 2.53.0
 
