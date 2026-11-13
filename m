@@ -1,62 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591468;
-	b=Wb1esptewaTYcgeAxzkT/heqsGcfJSM/I4mfqenPxPMmAi9d9WSjTsVoj4RTEo6nw7SF
-	 jyMAsFkb3iIdxuvFkb+OOiV9+y7lTCQXFJDKI05WBczODbdBf2PSCrB0feWnDxnSLexbJ
-	 GswDzJuDdLBE67h6bmhcXyHkIu60bqyaazxPW5fleyTO7XKnf4QhcYP7gbS56NwUH7Iec
-	 QImMnO09RAkyX8jL07/RwAkVjptLyk9k/2jGwAO3E+EXDjUWvSb/p11LXoo0qZH0ik6Gs
-	 rxhLdCDVcEgw9NZ+FzjOIf8G680QiXRQQEM5U6036lhGvIxCxFlzWajo0tUMESnHfoA==
+	t=1794591469;
+	b=Cv/lwW0ISfZDbixT4/s75FPjqgef7qvEoyp+8oUd8rnti9YUSNVbl3vRrcMuEsIeGAN0
+	 GxBP1lFViopptMmU9s9yQ2KYK4yXV3YCTW6pcJ7w0hCq813SuQSA8B6BxP+E4VQ5YCqWA
+	 BSmCuLHUambti9pLmNvzt8RKaBjz+ju0SFgzuyuqpZIkOIFivFkaK+ayoID0Wb8gMzLjw
+	 SuuXMAGoWGVWLYWjApvlpJoX84hZY9aJItsPrlNcApfoA8YgqQUb8NKOOo/gQ4zBiseOD
+	 taTYgnucNHWJ5ShTSRlgt1ozwcF7Qsi7SVHvFT1Mn0jISikQIGSzX2LgFZGY7wmqXxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591468;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591469;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zEGExgT52X3ebdfQ10mT2Yy4b+w3quRNUvoOL5EBsFE=;
-	b=eyARyybqpV97juV5TB18xEXTFoP4mltvpqjzRfv5GQmkzhCrjkEy1Z25R7QpjpiHLccI
-	 gd0PHo0K9XG0/83MsXshpVZNgI26ZOzho6mYFtXAw9EsPKT8666cJ7Ev0XEk/F/pSTP2n
-	 4rG/YyZR+8krnvAs48HeXkJh/Jx6F+BnaUgOyINuQRjycrxypqkY2av0uFLy7GTcBGih5
-	 ToV3dePQfLLvOmaP1Fap76Kqi6k5868vj/a0MDmiSVgBoSrfKzYXU+kXn2LZjFrCkomcL
-	 fke8D3CN35nvvnU+SqWPHetqAbprJU3y/gp2uOGPur1myuXE6C4aOlqnRceXNPVZP+g==
+	bh=VrAUbbrPaoXKLQARwtFFwF0qMbpX49c52JIedbC/z0o=;
+	b=iCpkfR8xVpMUoAPWtL3dok44mhtq06fpyDxu9Rv6Ecgw8OxSJJQ2Vo88+0OWN65szkYu
+	 f0KvKBxPDmleEFN4coGpcLAG+HZJLYkrnhAZnQrU699VI1XXkjfSW1jAnHK/JqfNWFSob
+	 O0Sm4+yDAFmjDY6UlhrQHhWPZ3CvI2pPTuhzirtbzDqVsBN8jFAj6RazjLJD2vnATJ1qz
+	 IkAudDLOGxtPIynYdctcuyfqVSZfRv9WJnSEoCXgX1H6K9pth6ltpvyeTYM5UjndCbfrO
+	 qnNucqp2haRAMQX77DcNfPJDAJnJ8CHf7Bv8hxvsmFPAmbunaeGcfm08hOylVbA0qgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCtjz3Vy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BtLjzH6X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6631F607D2C3;
-	Fri, 13 Nov 2026 17:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF59A607D2D1;
+	Fri, 13 Nov 2026 17:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCtjz3Vy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181F91F000C4;
-	Fri, 13 Nov 2026 17:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BtLjzH6X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499971F000C4;
+	Fri, 13 Nov 2026 17:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591468;
-	bh=zEGExgT52X3ebdfQ10mT2Yy4b+w3quRNUvoOL5EBsFE=;
+	s=korg; t=1794591469;
+	bh=VrAUbbrPaoXKLQARwtFFwF0qMbpX49c52JIedbC/z0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CCtjz3VyvuznD5ZeJJFv8lXidv0duMpWtcSgFzDlUrHo+dJR/igJVIlYUww97YcJZ
-	 c4r/KQsvjX3O+5fvoXbhIFZ5p/Dorp1qYJxB2ScjgY6SbUe4iJwCbimYSFbKCHbK2H
-	 AXkcy3vUOYf6IGBhb6BN6WyF8Ig+MHJxBH/ZpiNg=
+	b=BtLjzH6XTsx22OUQmAtBDQN3lnIiup0t5PetIiepyossf9WFBoqVpz0i9JwiQ2WaJ
+	 nHmniC/nZeaV9U+gMVmNpeAmvNF3tt0wSjY3TPzyxnyDbUWLrl5nk16pKB0K5kpmhG
+	 ZI99ZkdUOQxCVmK0P+d47JHgGNetJkx+Z9FeBBt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Vega <vega@nebusec.ai>,
-	David Hildenbrand <david@kernel.org>,
-	Grazvydas Ignotas <notasas@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 552/670] mm/memory: constrain generic_access_phys() to page boundary
-Date: Fri, 13 Nov 2026 10:51:56 -0500
-Message-ID: <20261113153830.586955050@linuxfoundation.org>
+Subject: [PATCH 6.12 553/670] irqchip/atmel-aic[5]: Disable interrupts in the irq_pm_shutdown() callbacks
+Date: Fri, 13 Nov 2026 10:51:57 -0500
+Message-ID: <20261113153830.622290048@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -78,92 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit ae0298a5fbeff32951c0d31398ccec97ec6aa0ea ]
+[ Upstream commit 0ca21fe111457c843624a835641bb490e704bb2f ]
 
-This patch addresses an issue in generic_access_phys() where accessing
-memory across page boundaries in PFNMAP VMAs assumes physical pages are
-contiguous, which can lead to accessing unintended physical memory or
-exceeding VMA boundaries.
+irq_gc_shutdown() calls the irq_pm_shutdown() callbacks from
+syscore_shutdown() with interrupts enabled. aic_pm_shutdown() and
+aic5_pm_shutdown() take the generic chip lock with raw_spin_lock(), and
+irq_gc_eoi() takes the same lock from the interrupt handler. An
+interrupt from the chip while the lock is held spins in irq_gc_eoi()
+and hangs the reboot.
 
-generic_access_phys() improperly validates the memory access range: it
-only validates the start address using follow_pfnmap_start() and passes
-PAGE_ALIGN(len + offset) to ioremap_prot().
+Lockdep reports this on every reboot of a SAM9X75 Curiosity board:
 
-This poses two problems:
-1. In PFNMAP VMAs, consecutive virtual pages are not guaranteed to be
-   physically contiguous, and individual PTEs may have different access
-   permissions or writability.
-2. The mapping may cross VMA boundaries if len extends beyond vma->vm_end.
+  WARNING: inconsistent lock state
+  inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage.
+  busybox/101 [HC0[0]:SC0[0]:HE1:SE1] takes:
+  c1c2b434 (&gc->lock){?.-.}-{2:2}, at: aic5_pm_shutdown+0x34/0xd8
+  {IN-HARDIRQ-W} state was registered at:
+    ...
+    irq_gc_eoi+0x28/0x60
+    handle_fasteoi_irq+0x120/0x214
+  ...
+   aic5_pm_shutdown from irq_gc_shutdown+0x4c/0x58
+   irq_gc_shutdown from syscore_shutdown+0x5c/0x9c
+   syscore_shutdown from kernel_restart+0x34/0x78
+   kernel_restart from sys_reboot+0x180/0x25c
 
-Constrain the access in generic_access_phys() to at most the current page
-boundary (PAGE_SIZE - offset) and map only a single PAGE_SIZE via
-ioremap_prot().  Since the caller __access_remote_vm() already loops over
-the requested length and handles partial transfers, it will naturally
-iterate over the remaining pages.
+Use the irqsave guard, as
+commit 33517881ede7 ("irqchip/brcmstb-l2: Use _irqsave locking variants in non-interrupt code")
+did for brcmstb-l2.
 
-Also add a missing (resource_size_t) cast during PFN re-validation to
-avoid truncation on 32-bit PAE systems.
-
-Link: https://lore.kernel.org/e06e28a46c2a176238f03b5740df0913e57c2861.1788842306.git.rakukuip@gmail.com
-Fixes: 9cb12d7b4cca ("mm/memory.c: actually remap enough memory")
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: David Hildenbrand <david@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Fixes: b1479ebb7720 ("irqchip: atmel-aic: Add atmel AIC/AIC5 drivers")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Assisted-by: LLM
-Cc: Grazvydas Ignotas <notasas@gmail.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: Adjusted context to retain prot != pgprot_val(args.pgprot) for the unsigned long protection API. ]
+Reviewed-by: Radu Rendec <radu@rendec.net>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260926004124.88221-1-kmehltretter@gmail.com
+[ sashal: Replaced scoped irqsave guards with explicit irq_gc_lock_irqsave()/irq_gc_unlock_irqrestore() pairs using local flags. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-atmel-aic.c  | 5 +++--
+ drivers/irqchip/irq-atmel-aic5.c | 5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index 379ebbb834565..38019497d8d4f 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -6573,6 +6573,12 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	bool writable;
- 	struct follow_pfnmap_args args = { .vma = vma, .address = addr };
+diff --git a/drivers/irqchip/irq-atmel-aic.c b/drivers/irqchip/irq-atmel-aic.c
+index 3839ad79ad31d..46c1b380c6040 100644
+--- a/drivers/irqchip/irq-atmel-aic.c
++++ b/drivers/irqchip/irq-atmel-aic.c
+@@ -125,11 +125,12 @@ static void aic_resume(struct irq_data *d)
+ static void aic_pm_shutdown(struct irq_data *d)
+ {
+ 	struct irq_chip_generic *gc = irq_data_get_irq_chip_data(d);
++	unsigned long flags;
  
-+	/*
-+	 * Limit access to one page at a time, as that's what follow_pfnmap_start()
-+	 * guarantees; expect the caller to retry to read larger ranges.
-+	 */
-+	len = min_t(int, len, PAGE_SIZE - offset);
-+
- retry:
- 	if (follow_pfnmap_start(&args))
- 		return -EINVAL;
-@@ -6597,7 +6603,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	if ((write & FOLL_WRITE) && !writable)
- 		return -EINVAL;
+-	irq_gc_lock(gc);
++	irq_gc_lock_irqsave(gc, flags);
+ 	irq_reg_writel(gc, 0xffffffff, AT91_AIC_IDCR);
+ 	irq_reg_writel(gc, 0xffffffff, AT91_AIC_ICCR);
+-	irq_gc_unlock(gc);
++	irq_gc_unlock_irqrestore(gc, flags);
+ }
+ #else
+ #define aic_suspend		NULL
+diff --git a/drivers/irqchip/irq-atmel-aic5.c b/drivers/irqchip/irq-atmel-aic5.c
+index c0f55dc7b050d..28dd53df0d7eb 100644
+--- a/drivers/irqchip/irq-atmel-aic5.c
++++ b/drivers/irqchip/irq-atmel-aic5.c
+@@ -223,15 +223,16 @@ static void aic5_pm_shutdown(struct irq_data *d)
+ 	struct irq_domain_chip_generic *dgc = domain->gc;
+ 	struct irq_chip_generic *bgc = irq_get_domain_generic_chip(domain, 0);
+ 	struct irq_chip_generic *gc = irq_data_get_irq_chip_data(d);
++	unsigned long flags;
+ 	int i;
  
--	maddr = ioremap_prot(phys_addr, PAGE_ALIGN(len + offset), prot);
-+	maddr = ioremap_prot(phys_addr, PAGE_SIZE, prot);
- 	if (!maddr)
- 		return -ENOMEM;
- 
-@@ -6605,7 +6611,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 		goto out_unmap;
- 
- 	if ((prot != pgprot_val(args.pgprot)) ||
--	    (phys_addr != (args.pfn << PAGE_SHIFT)) ||
-+	    (phys_addr != ((resource_size_t)args.pfn << PAGE_SHIFT)) ||
- 	    (writable != args.writable)) {
- 		follow_pfnmap_end(&args);
- 		iounmap(maddr);
+-	irq_gc_lock(bgc);
++	irq_gc_lock_irqsave(bgc, flags);
+ 	for (i = 0; i < dgc->irqs_per_chip; i++) {
+ 		irq_reg_writel(bgc, i + gc->irq_base, AT91_AIC5_SSR);
+ 		irq_reg_writel(bgc, 1, AT91_AIC5_IDCR);
+ 		irq_reg_writel(bgc, 1, AT91_AIC5_ICCR);
+ 	}
+-	irq_gc_unlock(bgc);
++	irq_gc_unlock_irqrestore(bgc, flags);
+ }
+ #else
+ #define aic5_suspend		NULL
 -- 
 2.53.0
 
