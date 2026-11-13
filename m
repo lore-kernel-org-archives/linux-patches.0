@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591577;
-	b=pxLJsm5Es6LOl7SI2oP9CRQaZBOgfVJFdidxOw+YV7GUv/mJZcBTfW4stRaSB1YFGt6h
-	 gEYOtSyxPQ2mBuj+vvI2D7prsR6DjhHlnhOAay2bI8KryZf/eoJgq6S0jjJdbBDGAuJ66
-	 6sdp0/sgV5tVHtDzVCbn05Yn+5EnpyHmf1UtE3cEnrkOQDx9naE4y03HBDoXluDDsknom
-	 47UPNBd0JMfv4NQoEfPNPvUPhMP9HWIMKhc+snijAVXYQsvsAK2GdFxMnlgIJb6CK+PLt
-	 FhQUonW7uG668Zd3uEoN4dJqbIseLCtv9Gi2xJ3r6jfBtExo3Ib16VICfDz4gXSs64w==
+	t=1794591578;
+	b=jXvFR9IbOKr51xn0f5ugabQ3igp6is6mHxwk+dTwmE7ftY8NvYwSM3TM143qoGfbV3Uq
+	 GIerVY+NDKXeldZkxxVTxH8PQDjR5lJfI/0GHWoPcU7TSj+aDOfttqUx6bmz9v1w+8dRa
+	 WEae9HHJawOE1OgnyoBlF17vYDbjnZrRSQBhlJO072bPemdJihxZ690PPgT23XznN73jR
+	 VXI+7VNalt27m+vFARkVzny5M+iOXykocNYilVuh1THC6Yr0YH2wEwW5FzhhQhowZGvvF
+	 M8mbB4G62uraakOJzQyEEk009vy+4ZAL6lCymaKbL8eS3YOEMTvIdq4a9sa8dSdh1jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591577;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591578;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aRE40G5NPeiUOu8dMXYZFmMneIVTz8ia9v1ns0q/WlA=;
-	b=BjMALcDrr+KYlLG+hbqLDYB/PTjqSeBfu/U7lyqH+8f8kUPyxNdZaemiSsQDJ31n46Ns
-	 lIttiDEKLp85kFOKxB6tfL9sxGoPA/wOUX//DODTi2pVnr+kjinJojvuAKBlEDemCcTZ7
-	 GBz+EVUjwpp45ZNRY3jDvzh5MsHNjFT0xAE4Z5WNVfABl4Fip/7B4phiumfOIUJXvWiea
-	 ArP6LuJ9WREUQQSuKCoeVvsFwu8/t85473SaL2L86MdZwJVANrVyRwEuDQUdvf/EdlRld
-	 0pzabRMrsObpnYbdTooMVCgp380qfnWNTptmLLjCw87v5JL3MFIh6wTPltYfe2FN4ig==
+	bh=VGH6B3xl1M9V+6SOfpo+g5wKwI28bOkb5I9ytjDDKhw=;
+	b=s0uu1ySnogk/z5/NkBV2t6OBBQDvUOJkPFNZUVvFOgzRpqqMrYIX+q4BvENuWYnqo6K6
+	 C+7p97wd3NNNA+Ix0MXLT9j/mFk/2I9BUB2unWPJuZyU74QEAJAPmtmeLfeAgiXRxwu87
+	 vG7FaxEyLuin7Er7YlP82mGxYKJtIeBIEnWnsfspk5NPdJZf+2hgx72heY2Ld7NKXxrtG
+	 zA7LYgsqjsivBC5dB1Y/f/0eeiUSOOSdN4WAOjWuGdC01EDqw+8ay2LqeyiSpvUtlFS43
+	 Z/6y1R6p3e+gB1f+h8djIpaGczEB0TsBRZugfVdOryWXFdwh67AA3s/aD4XpAbFy0Dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qy7oFsgI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vj3nFk9H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB06606E234;
-	Fri, 13 Nov 2026 17:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44A0606E234;
+	Fri, 13 Nov 2026 17:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qy7oFsgI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292C71F000C9;
-	Fri, 13 Nov 2026 17:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vj3nFk9H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604351F000C9;
+	Fri, 13 Nov 2026 17:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591577;
-	bh=aRE40G5NPeiUOu8dMXYZFmMneIVTz8ia9v1ns0q/WlA=;
+	s=korg; t=1794591578;
+	bh=VGH6B3xl1M9V+6SOfpo+g5wKwI28bOkb5I9ytjDDKhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qy7oFsgIA4GlrPX9AZoL374Mml57sbXTa4nPoOIYvS8khMkEGIbMRkCbFbFpk1xWx
-	 7VpwnNmS6/XbZueM1CDlroxJoQCv5Sv+yB2TQ93wFfIZo5zORZcRqbqngJka4LjV0z
-	 HYOKzc4vzmxJVY0+/xNg3MMd4j/uOnwVarX+wY1Y=
+	b=vj3nFk9HRt3F7dBn/QqL1uLSCM4OIDhAXiNPhKByWUd2DG+zEHgjAGV2IbLydwAlP
+	 Lr36JVUQkdXHLHh3bYz+SnTI4wmsxFFYufkX/n3pKPHC02Pjq0PoiwECDcSlXupi6a
+	 d/d7IszlYgcWg9afi8TzTNASUWuQvhMfPblGyjPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Yingjie Wang <1075151112@qq.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 625/670] nvme-tcp: validate the TLS handshake timeout
-Date: Fri, 13 Nov 2026 10:53:09 -0500
-Message-ID: <20261113153832.976039163@linuxfoundation.org>
+Subject: [PATCH 6.12 626/670] gpiolib: cdev: dont set GPIOD_FLAG_IS_OUT
+Date: Fri, 13 Nov 2026 10:53:10 -0500
+Message-ID: <20261113153833.006905022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,138 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
 
-[ Upstream commit 799203afd298b1f8e9ee49815eb38f775f211299 ]
+[ Upstream commit 974d2712cb15014019595799b3ed68fef5fe9695 ]
 
-tls_handshake_timeout is writable but stored as a signed int. Multiplying
-the value by MSEC_PER_SEC and HZ therefore uses signed arithmetic.
+When a line is requested or reconfigured through the v2 uAPI,
+gpio_v2_line_config_flags_to_desc_flags() copies the requested
+configuration into the descriptor flags, GPIOD_FLAG_IS_OUT included,
+before gpiod_direction_input_nonotify() or
+gpiod_direction_output_nonotify() asks the driver for the direction.
+If the driver refuses, for instance with -EOPNOTSUPP from
+.direction_input() for a line that can only be an output, the ioctl
+fails but the flag keeps the refused direction. gpiod_free_commit()
+does not touch GPIOD_FLAG_IS_OUT, so this outlives the failed request,
+and GPIO_V2_GET_LINEINFO_IOCTL reports the line as an input while the
+hardware still drives it, until a request without direction flags
+makes gpiod_request_commit() read the direction back from the driver:
 
-With HZ=1000, setting it to 2147484 overflows both multiplications. If
-the handshake request is accepted and its completion remains pending,
-schedule_timeout() reports a wrong timeout value with a stack dump and
-returns zero. The handshake then fails immediately with -ETIMEDOUT,
-while the handshake agent was given about 24.9 days. Negative values
-such as -1 have the same kernel-side effect.
+  GPIO_V2_GET_LINE_IOCTL, line 0, input:         -EOPNOTSUPP
+  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            input
+  GPIO_V2_GET_LINE_IOCTL, line 0, no direction:  ok
+  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            output
 
-Store the parameter as an unsigned int and reject values that cannot be
-represented both by tls_handshake_args::ta_timeout_ms and by a safe
-jiffies delay. Take one snapshot so a concurrent parameter update cannot
-give the handshake agent and completion wait different timeouts.
-Document the accepted range for built-in use.
+GPIO_V2_LINE_SET_CONFIG_IOCTL updates the flags in the same order.
+There the line stays requested, and since commit 92ac7de3175e
+("gpiolib: don't allow setting values on input lines")
+GPIO_V2_LINE_SET_VALUES_IOCTL on it then fails with -EPERM, though the
+line is still an output. A line whose driver refuses to make it an
+output is likewise reported as one.
 
-wait_for_completion_interruptible_timeout() returns the remaining
-jiffies as a long after a successful completion. Keep that result in a
-long because an accepted timeout can exceed INT_MAX jiffies on 64-bit
-systems.
+gpiod_direction_input_nonotify() and gpiod_direction_output_nonotify()
+set or clear GPIOD_FLAG_IS_OUT themselves once the driver has accepted
+the direction, emulated open drain and open source included, and
+nothing between the copy and those calls reads the flag. Leave it to
+them, as the v1 uAPI already does.
 
-Negative and oversized values now fail with -EINVAL. Keep zero valid,
-preserving the existing immediate-timeout behavior.
+The other flags that the helper copies stay as they are. Active low,
+drive and bias are what gpiod_direction_*() applies, drive and bias
+possibly before the driver refuses the direction; edges and event
+clock are the character device's own. None of them is read back from
+the driver, so there is no earlier state that is more accurate to go
+back to. A failed request releases the line, which clears them, and a
+failed reconfiguration leaves the line, like the lines before it, with
+what was applied up to the failure.
 
-Fixes: be8e82caa685 ("nvme-tcp: enable TLS handshake upcall")
+Reproduced under QEMU with a test GPIO chip whose line 0 refuses input
+and line 1 refuses output: both refused requests and both refused
+reconfigurations leave the line info with the refused direction, and
+setting the value of the reconfigured output fails with -EPERM. With
+this change the line info shows the direction of the hardware in all
+four cases and setting the value works. First seen on real hardware
+with v6.12.
+
+Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ sashal: Adjusted documentation insertion context because the neighboring nvme.quirks and nvmet_tcp.tls_handshake_timeout entries are absent. ]
+Assisted-by: LLM
+Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+Reviewed-by: Kent Gibson <warthog618@gmail.com>
+Link: https://patch.msgid.link/20261016-gpiolib-cdev-direction-v2-1-aambrozewicz@nvidia.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+[ sashal: adapted the deleted block to FLAG_IS_OUT and direct flagsp access instead of GPIOD_FLAG_IS_OUT and a local flags snapshot ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/kernel-parameters.txt         |  5 +++
- drivers/nvme/host/tcp.c                       | 34 ++++++++++++++-----
- 2 files changed, 31 insertions(+), 8 deletions(-)
+ drivers/gpio/gpiolib-cdev.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 82149bce3ddef..c0748a3c5aa6e 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4214,6 +4214,11 @@
- 			This can be set from sysctl after boot.
- 			See Documentation/admin-guide/sysctl/vm.rst for details.
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index b85ba9989b143..e7416a018a548 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -1367,11 +1367,6 @@ static void gpio_v2_line_config_flags_to_desc_flags(u64 flags,
+ 	assign_bit(FLAG_ACTIVE_LOW, flagsp,
+ 		   flags & GPIO_V2_LINE_FLAG_ACTIVE_LOW);
  
-+	nvme_tcp.tls_handshake_timeout=
-+			[NVME] NVMe/TCP host TLS handshake timeout in seconds.
-+			Valid values range from 0 to the smaller of
-+			UINT_MAX / 1000 and MAX_JIFFY_OFFSET / HZ. Default: 10
-+
- 	ohci1394_dma=early	[HW,EARLY] enable debugging via the ohci1394 driver.
- 			See Documentation/core-api/debugging-via-ohci1394.rst for more
- 			info.
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index ab473626e62a0..951506216714d 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -6,6 +6,7 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- #include <linux/module.h>
- #include <linux/init.h>
-+#include <linux/jiffies.h>
- #include <linux/slab.h>
- #include <linux/err.h>
- #include <linux/key.h>
-@@ -47,9 +48,24 @@ MODULE_PARM_DESC(wq_unbound, "Use unbound workqueue for nvme-tcp IO context (def
- /*
-  * TLS handshake timeout
-  */
--static int tls_handshake_timeout = 10;
-+static unsigned int tls_handshake_timeout = 10;
- #ifdef CONFIG_NVME_TCP_TLS
--module_param(tls_handshake_timeout, int, 0644);
-+static int tls_handshake_timeout_set(const char *val,
-+				     const struct kernel_param *kp)
-+{
-+	return param_set_uint_minmax(val, kp, 0,
-+		min_t(unsigned long, UINT_MAX / MSEC_PER_SEC,
-+		      MAX_JIFFY_OFFSET / HZ));
-+}
-+
-+static const struct kernel_param_ops tls_handshake_timeout_ops = {
-+	.set = tls_handshake_timeout_set,
-+	.get = param_get_uint,
-+};
-+
-+module_param_cb(tls_handshake_timeout, &tls_handshake_timeout_ops,
-+		&tls_handshake_timeout, 0644);
-+__MODULE_PARM_TYPE(tls_handshake_timeout, "uint");
- MODULE_PARM_DESC(tls_handshake_timeout,
- 		 "nvme TLS handshake timeout in seconds (default 10)");
- #endif
-@@ -1946,8 +1962,10 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
- {
- 	int qid = nvme_tcp_queue_id(queue);
- 	int ret;
-+	long wait_ret;
- 	struct tls_handshake_args args;
--	unsigned long tmo = tls_handshake_timeout * HZ;
-+	unsigned int timeout = READ_ONCE(tls_handshake_timeout);
-+	unsigned long tmo = (unsigned long)timeout * HZ;
- 	key_serial_t keyring = nvme_keyring_id();
- 
- 	dev_dbg(nctrl->device, "queue %d: start TLS with key %x\n",
-@@ -1961,7 +1979,7 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
- 	if (nctrl->opts->keyring)
- 		keyring = key_serial(nctrl->opts->keyring);
- 	args.ta_keyring = keyring;
--	args.ta_timeout_ms = tls_handshake_timeout * 1000;
-+	args.ta_timeout_ms = timeout * MSEC_PER_SEC;
- 	queue->tls_err = -EOPNOTSUPP;
- 	init_completion(&queue->tls_complete);
- 	ret = tls_client_hello_psk(&args, GFP_KERNEL);
-@@ -1970,10 +1988,10 @@ static int nvme_tcp_start_tls(struct nvme_ctrl *nctrl,
- 			qid, ret);
- 		return ret;
- 	}
--	ret = wait_for_completion_interruptible_timeout(&queue->tls_complete, tmo);
--	if (ret <= 0) {
--		if (ret == 0)
--			ret = -ETIMEDOUT;
-+	wait_ret = wait_for_completion_interruptible_timeout(&queue->tls_complete,
-+							     tmo);
-+	if (wait_ret <= 0) {
-+		ret = wait_ret < 0 ? -ERESTARTSYS : -ETIMEDOUT;
- 
- 		dev_err(nctrl->device,
- 			"queue %d: TLS handshake failed, error %d\n",
+-	if (flags & GPIO_V2_LINE_FLAG_OUTPUT)
+-		set_bit(FLAG_IS_OUT, flagsp);
+-	else if (flags & GPIO_V2_LINE_FLAG_INPUT)
+-		clear_bit(FLAG_IS_OUT, flagsp);
+-
+ 	assign_bit(FLAG_EDGE_RISING, flagsp,
+ 		   flags & GPIO_V2_LINE_FLAG_EDGE_RISING);
+ 	assign_bit(FLAG_EDGE_FALLING, flagsp,
 -- 
 2.53.0
 
