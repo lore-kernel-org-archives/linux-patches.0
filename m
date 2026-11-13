@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591472;
-	b=Doe1Xa0vszjuy5zU/B2rDVlyqBa0QPTkODy+aP+cQTjCv4hfChuULxkqdRxy8vv8jC/e
-	 89lOX+oeWw6lqUmnJO/vRUKOF7RAPgd8ANxM/ib4k5XKjWIA4XIXW8HOkn9EKaS46fokc
-	 nTDCCTm4Cf4kZhNLPk0onLvPY1IdGrCbIuvRIQ49wqk7i51HA3w/D3rJPG5l/3wTxUiyb
-	 VG2fBxbPghrxXG6mKGMzHwVyWL4HI6FtIkVL21R95kB46R4nXeSqcMuhgGh8E/pCkwhmU
-	 yVmPWiTBojFPLKecsRMLAe8a8/anB80QGfpAryfmyH8aTwDxDUF+QZjxWhOd0rdYRrg==
+	t=1794591473;
+	b=LcFAsVts0fDVVGrPawNLU75k0nqnVCPP+wYAambwgULTxgF/PzVPQ9kRCvcAx9Wi5S1L
+	 8aj/48heABEp+wcYFsGQ7Y397hpUP4Nj7FPNFRcpqVRo3k8hnCJhYt0R9E3ERORMCDubS
+	 5qEO8pN11y+fYrEHcY/tHBR+SafMumk8nPOaw7bP1tPfHnAmZ4kCDfz+2lcLKazsG0Zc9
+	 1WKyNUNvpkaL//59OIMceJieP+YIyCAopyjp0vh2BxW3yFwpccyPYfcbNZIuppi6xcb/h
+	 dYUL0JE+QTonIob1BVFKibP2TQXuzFPDZ8ZFWAcK6LC3waIhnwMLpYGBY/Kvl6fnKng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591472;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591473;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=29SEUTKuPmPl0k19Jkhug/1XkvRmPYtp2Za/uSSpPn8=;
-	b=avBADc9tPs2NdQfiF1dPZoWsrUc+e0qqKqyn8YyYOOD3ML4iMR7VipYoYeh+cDZKT/Yc
-	 VXe6ja0nmcLHS7u/DgYY9lhViCzF+eq8CMWQUEM7bKF2gQUR7bVHHNdUcTRP6x7M0HD6a
-	 l04ZZFHrKKCvbm+51RyO6CAWE5hwBfXOhfvdqTx7/4MSgc1QuzxzHD3AjkM2Fjcb2wxRD
-	 p0sTZXdvXqju/S7cYf95n4WHY+JfAC4x9dBcHnvwkebzoGUys2VveiW3BnJccGbUjZunH
-	 39d6IAg/DlVxiWFEoprSrTlA/IfZBPdw6YIp7PORJfNfw48Clp/2hwyuwyvWv61n1Wg==
+	bh=jbgtnClixA9kcfyjo1t19URLChwiPCiUQXlMYCTHa00=;
+	b=a3y2YUqDr5kk29xCmz3LHVqiquEdh5qrUVkZRTMAN42+Zi4LgmpUEqpPmvabM/qk6QJL
+	 m4/ljcqLCOjD41v3pS+qv1mzkyR2OymIqLKk2P9Rf7PHgaXAItmY+PXxX9s1y4//IWvFO
+	 WJseBIcKLb2CEGuI3s5Px47UsrxVzXEm2JD6BCJFL048Z9gLaQfzTo11cNSA8sXXjk7mm
+	 PEhgleBTEx1MdDGLemjEGvenr/UYGO1KV30/0RvLWcdgVlJS8nQRRHvKI4GpKG+cgYAIe
+	 XlJMHsohGubpEnBAO18wgjRr7LRx2RRHwX+iWEtySqxdgSt3Nwm0H+FEgV/5P+LVH3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ohl6Tkbr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WLFiY2EF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6782F606A88E;
-	Fri, 13 Nov 2026 17:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F61C607D2D5;
+	Fri, 13 Nov 2026 17:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ohl6Tkbr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68E11F000C4;
-	Fri, 13 Nov 2026 17:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WLFiY2EF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0749B1F000C5;
+	Fri, 13 Nov 2026 17:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591472;
-	bh=29SEUTKuPmPl0k19Jkhug/1XkvRmPYtp2Za/uSSpPn8=;
+	s=korg; t=1794591473;
+	bh=jbgtnClixA9kcfyjo1t19URLChwiPCiUQXlMYCTHa00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ohl6Tkbr/5tuVemg3qp1n2tRdnzSnhK6VT52hxoSxw5AuKgnXopzmz3FAPIrpcbTn
-	 WMj8l9RO/MOqVZMK7vtahR9N/bJpqcdiq6W8BxuFCCKPerA9U+o2qopAhqbxD85nUj
-	 0+eBBPedii4lBej4/jO19jVX0EkCuArJAUxX5guE=
+	b=WLFiY2EFGlViK8xt+T9MFox/QdLQctjtE2hd0PsAdWEYGdq4PSUhquzVZhAc1navZ
+	 41pcZvl5GDMANei0wkHVzroiXptIXkOx4ge2Bh1sKzi73+LVx5C8zvxxuNiqKSzggS
+	 on7LkTagLreljqsqOR/6naHUQlodBsDuk8cJJI/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 519/670] ata: libata-eh: Rename and make ata_set_mode() static
-Date: Fri, 13 Nov 2026 10:51:23 -0500
-Message-ID: <20261113153829.521148831@linuxfoundation.org>
+Subject: [PATCH 6.12 555/670] PCI: rockchip: Drive at 2.5 GT/s, error other speeds
+Date: Fri, 13 Nov 2026 10:51:59 -0500
+Message-ID: <20261113153830.692680267@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,77 +71,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Geraldo Nascimento <geraldogabriel@gmail.com>
 
-[ Upstream commit 6ba4d05c1425fe220d95395b4485443ce895bb95 ]
+[ Upstream commit 84d08ff902f1ec01177fef1a21a38934927f5aee ]
 
-The function ata_set_mode() is defined and used only in libata-eh.c.
-Make this function static and rename it ata_eh_set_mode() to make it
-clear where its definition is.
+Configure the core to be driven at 2.5 GT/s Link Speed and ignore any other
+speed with a warning. Also drop the 5.0 GT/s Link Speed defines from
+Rockchip PCIe header.
 
-No functional changes.
+The reason is that Shawn Lin from Rockchip has reiterated that there may be
+danger of "catastrophic failure" in using their PCIe with 5.0 GT/s speeds.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://lore.kernel.org/r/20250703103622.291272-4-dlemoal@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Stable-dep-of: 96fdeb7e3fd8 ("ata: sata_inic162x: remove dangerous broken driver")
+While Rockchip has done so informally without issuing a proper errata, and
+the particulars are thus unknown, this may cause data loss or worse.
+
+This change is corroborated by RK3399 official datasheet [1], which states
+maximum link speed for this platform is 2.5 GT/s.
+
+[1] https://opensource.rock-chips.com/images/d/d7/Rockchip_RK3399_Datasheet_V2.1-20200323.pdf
+
+Fixes: 956cd99b35a8 ("PCI: rockchip: Separate common code from RC driver")
+Reported-by: Dragan Simic <dsimic@manjaro.org>
+Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://lore.kernel.org/all/ffd05070-9879-4468-94e3-b88968b4c21b@rock-chips.com/
+Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/7421df7a7b7778ee99363cccfdfabbfa8aa6ab5e.1781622998.git.geraldogabriel@gmail.com
+[ sashal: Adjusted context to preserve existing HIWORD_UPDATE macros instead of upstream HWORD macros. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-eh.c | 9 +++++----
- drivers/ata/libata.h    | 1 -
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/pci/controller/pcie-rockchip.c | 14 ++++++--------
+ drivers/pci/controller/pcie-rockchip.h |  3 ---
+ 2 files changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
-index 32ec1cfd648e3..1cf737f17d0a3 100644
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -3248,12 +3248,12 @@ static int ata_eh_revalidate_and_attach(struct ata_link *link,
- }
+diff --git a/drivers/pci/controller/pcie-rockchip.c b/drivers/pci/controller/pcie-rockchip.c
+index c07d7129f1c7c..6a970dc766d4d 100644
+--- a/drivers/pci/controller/pcie-rockchip.c
++++ b/drivers/pci/controller/pcie-rockchip.c
+@@ -66,8 +66,10 @@ int rockchip_pcie_parse_dt(struct rockchip_pcie *rockchip)
+ 	}
  
- /**
-- *	ata_set_mode - Program timings and issue SET FEATURES - XFER
-+ *	ata_eh_set_mode - Program timings and issue SET FEATURES - XFER
-  *	@link: link on which timings will be programmed
-  *	@r_failed_dev: out parameter for failed device
-  *
-  *	Set ATA device disk transfer mode (PIO3, UDMA6, etc.).  If
-- *	ata_set_mode() fails, pointer to the failing device is
-+ *	ata_eh_set_mode() fails, pointer to the failing device is
-  *	returned in @r_failed_dev.
-  *
-  *	LOCKING:
-@@ -3262,7 +3262,8 @@ static int ata_eh_revalidate_and_attach(struct ata_link *link,
-  *	RETURNS:
-  *	0 on success, negative errno otherwise
-  */
--int ata_set_mode(struct ata_link *link, struct ata_device **r_failed_dev)
-+static int ata_eh_set_mode(struct ata_link *link,
-+			   struct ata_device **r_failed_dev)
- {
- 	struct ata_port *ap = link->ap;
- 	struct ata_device *dev;
-@@ -3900,7 +3901,7 @@ int ata_eh_recover(struct ata_port *ap, ata_prereset_fn_t prereset,
+ 	rockchip->link_gen = of_pci_get_max_link_speed(node);
+-	if (rockchip->link_gen < 0 || rockchip->link_gen > 2)
+-		rockchip->link_gen = 2;
++	if (rockchip->link_gen < 0 || rockchip->link_gen >= 2) {
++		rockchip->link_gen = 1;
++		dev_warn(dev, "invalid max-link-speed, limited to 2.5 GT/s\n");
++	}
  
- 		/* configure transfer mode if necessary */
- 		if (ehc->i.flags & ATA_EHI_SETMODE) {
--			rc = ata_set_mode(link, &dev);
-+			rc = ata_eh_set_mode(link, &dev);
- 			if (rc)
- 				goto rest_fail;
- 			ehc->i.flags &= ~ATA_EHI_SETMODE;
-diff --git a/drivers/ata/libata.h b/drivers/ata/libata.h
-index 4b3e246227e68..898d5b368d82f 100644
---- a/drivers/ata/libata.h
-+++ b/drivers/ata/libata.h
-@@ -199,7 +199,6 @@ extern void ata_eh_report(struct ata_port *ap);
- extern int ata_eh_reset(struct ata_link *link, int classify,
- 			ata_prereset_fn_t prereset, ata_reset_fn_t softreset,
- 			ata_reset_fn_t hardreset, ata_postreset_fn_t postreset);
--extern int ata_set_mode(struct ata_link *link, struct ata_device **r_failed_dev);
- extern int ata_eh_recover(struct ata_port *ap, ata_prereset_fn_t prereset,
- 			  ata_reset_fn_t softreset, ata_reset_fn_t hardreset,
- 			  ata_postreset_fn_t postreset,
+ 	rockchip->core_rst = devm_reset_control_get_exclusive(dev, "core");
+ 	if (IS_ERR(rockchip->core_rst)) {
+@@ -237,12 +239,8 @@ int rockchip_pcie_init_port(struct rockchip_pcie *rockchip)
+ 		goto err_exit_phy;
+ 	}
+ 
+-	if (rockchip->link_gen == 2)
+-		rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_2,
+-				    PCIE_CLIENT_CONFIG);
+-	else
+-		rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_1,
+-				    PCIE_CLIENT_CONFIG);
++	rockchip_pcie_write(rockchip, PCIE_CLIENT_GEN_SEL_1,
++			    PCIE_CLIENT_CONFIG);
+ 
+ 	regs = PCIE_CLIENT_LINK_TRAIN_ENABLE | PCIE_CLIENT_ARI_ENABLE |
+ 	       PCIE_CLIENT_CONF_LANE_NUM(rockchip->lanes);
+diff --git a/drivers/pci/controller/pcie-rockchip.h b/drivers/pci/controller/pcie-rockchip.h
+index d916fcc8badb8..5629ac4a7439b 100644
+--- a/drivers/pci/controller/pcie-rockchip.h
++++ b/drivers/pci/controller/pcie-rockchip.h
+@@ -37,7 +37,6 @@
+ #define   PCIE_CLIENT_MODE_RC		  HIWORD_UPDATE_BIT(0x0040)
+ #define   PCIE_CLIENT_MODE_EP            HIWORD_UPDATE(0x0040, 0)
+ #define   PCIE_CLIENT_GEN_SEL_1		  HIWORD_UPDATE(0x0080, 0)
+-#define   PCIE_CLIENT_GEN_SEL_2		  HIWORD_UPDATE_BIT(0x0080)
+ #define PCIE_CLIENT_LEGACY_INT_CTRL	(PCIE_CLIENT_BASE + 0x0c)
+ #define   PCIE_CLIENT_INT_IN_ASSERT		HIWORD_UPDATE_BIT(0x0002)
+ #define   PCIE_CLIENT_INT_IN_DEASSERT		HIWORD_UPDATE(0x0002, 0)
+@@ -183,8 +182,6 @@
+ 	(((x) & PCIE_CLIENT_DEBUG_LTSSM_MASK) == PCIE_CLIENT_DEBUG_LTSSM_L2)
+ #define PCIE_LINK_UP(x) \
+ 	(((x) & PCIE_CLIENT_LINK_STATUS_MASK) == PCIE_CLIENT_LINK_STATUS_UP)
+-#define PCIE_LINK_IS_GEN2(x) \
+-	(((x) & PCIE_CORE_PL_CONF_SPEED_MASK) == PCIE_CORE_PL_CONF_SPEED_5G)
+ 
+ #define RC_REGION_0_ADDR_TRANS_H		0x00000000
+ #define RC_REGION_0_ADDR_TRANS_L		0x00000000
 -- 
 2.53.0
 
