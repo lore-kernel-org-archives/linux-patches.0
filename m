@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590486;
-	b=tqeZf5fM/bWYeKM99Dzq64aPp7bcDjJvxlbl+EKWH0vGvr/xbz8I529iq1lcH9lORnNL
-	 ieStHS3DnssyAA5y0fQs+KqIq+rofXP2Cq8kMkDII0yEHvHvBRHizUV2yNrulZ+IZQ6tc
-	 myY4QXqy1k7M8icN5trKqkCJ5otLdhhFMSmjAm3H1HAX03BJr5hyWaMPn+PzIZCWzkgYr
-	 vtNWnfmUn1TajPrstSosevQ142F1KF7+tc0EyfJ5msfMyI00oXWjZvg/eejbpNC2THrdQ
-	 mCOG8Z5J374gk+9bZnvNJopfMDhVL+5nlu4bApatvkP/t2732ctVVetz7yDXAzckCyw==
+	t=1794590487;
+	b=MYpoPse6PVYnx7v/wHGXhaiKedc4VVfw7DcJBQFKa+W7vNkmI0KNvYctHq4VnkIfengd
+	 FH08x0eM6xvoY5HzqCQgWtoyiPaBi61ckybPtVNUR/2ZIPasYtQxqG0Z1JXBNJ1kj/sVc
+	 kedOjGDTfTiuJyrHt4Oj6AxPpR58RPbV/+Pcmhrx3/4XHWMjFQChxKQAaQGLiUioOGZgc
+	 oiwkuI5vRYP14XjxoUdn34FXMR4rqZHjqcAijHNt+q4pZfmB1b7p/R4DxhsuKRbvfW/YV
+	 kiXYGNObGWUgXG8xPJAgXl+I8SXcZ0YAgPBeHrSjqHHwzvuI+aVIHF6sS0sM1p33vrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590487;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UfRT/f43VberrS9x9VukWvFCFynfMEEGxpeIQQKzaLM=;
-	b=MoA0iS6WQiW2WAdLY2uQUWdRGb3xGFNti9tLx2ojfHS7L8cBJsbZNOaLsQIPcqET27hq
-	 uuskaeQli0Mu0griCTwwXsTEIVLPb0+LUCYoyy+gEnH1F9iWFj21kSsen4oyssSvEszUc
-	 9zHruB3kw0cmbeVsGzNGa8HqTUBpy+L3HBATSRBxNKXp/AMZPAdCTL7JmQn6w18alwU9J
-	 qV9fUJrtFMYNKSsyp6y6KJrQG00Idc6PR8LJdfVHCyJH4OLwTweCiwXRSBbvd6HKOfPA7
-	 s7mJGTN5D8hOLjQA+8TRr7kwrTZrKDeUkj1LqEP3CqBU2fA6h16zDeuj2wwMXFqMjbQ==
+	bh=t0eBzkaPyKmLIUHwlMHOVf4Ep9DLMD1OGS/0tP3GQ8U=;
+	b=mkmK2fnvJapf1JNhNAcW9qwVcTIfqbnKvP+K1W1d4OotIRg0sdc3+ytPDYWT4LRE76Ou
+	 hXu85WnEd7r3Ho4EN7ZCh4LAZ4e8KNz0/Y6cQjD9RG9SmUcLNjeSq29syADY3MGYQfVTk
+	 VmxlfiyVXc3fW5PG1VtZfw7cesCp2Mb3yIyPXgGsrTg3WJ0KD4qP3ww+nk3ou4OLcpXUB
+	 60io4qKUwUj+5lr7sJVfzJC7aV1xMn7dN0RX8Np9G8dda7URc4TH4xSlHOeoCkliYSrR5
+	 qsAgjieGvX22VwUkZZYbgDeg2C9BEXzjp7liYnZdM46X80TwJ1zWIYzVgpMCfRyHcJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POhavuUb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nB1pfXr5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B4C606B819;
-	Fri, 13 Nov 2026 17:21:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87AD606B82D;
+	Fri, 13 Nov 2026 17:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=POhavuUb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4269C1F000C4;
-	Fri, 13 Nov 2026 17:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nB1pfXr5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753891F000C4;
+	Fri, 13 Nov 2026 17:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590486;
-	bh=UfRT/f43VberrS9x9VukWvFCFynfMEEGxpeIQQKzaLM=;
+	s=korg; t=1794590487;
+	bh=t0eBzkaPyKmLIUHwlMHOVf4Ep9DLMD1OGS/0tP3GQ8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=POhavuUbUb4uUM6LXRY1C5lhj3xGrcTu0itazcw/z3liMBwV3vT1aa/eBXAZoFNN/
-	 GwC/FrprzwXyQT2fpskSNotS+40uNqAg5E8DeiUuMyCHXa7CIHJ4erbIUr7V9ZExGU
-	 JuR2ZnhSYt5dyuOWmMM52AVVe5PknQLrNQbsGm5w=
+	b=nB1pfXr5eXSLf3FE+mu73cRUQ9d1DW4DjRdFB10zndkSLB2ozwsSghNb4uddw675a
+	 KvjvOP3RxwuYwdsyv0ubAh2PUtzHfNXcZGnAkBVz9q3QO8uVUQ17RvDPew1rD5dTb4
+	 YG3PTs2yz4+LIJ/NBt6aNnm3w3EV5WDJ3n6ovPJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Kylie C <kyliepc@proton.me>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 437/686] ext2: preserve IOMAP_F_DIRTY for extending direct writes
-Date: Fri, 13 Nov 2026 10:49:30 -0500
-Message-ID: <20261113153835.707490009@linuxfoundation.org>
+Subject: [PATCH 6.18 411/686] drm/amd/display: Dont select zero V_TOTAL_MIN/MAX on seamless boot
+Date: Fri, 13 Nov 2026 10:49:04 -0500
+Message-ID: <20261113153834.902794599@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,66 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Kylie C <kyliepc@proton.me>
 
-[ Upstream commit 4f91b042af212ca0b610e43f9a975ddc7f0d0923 ]
+[ Upstream commit d13f36e4e055cce03761de590bc8dc6346b1d5c8 ]
 
-ext2_iomap_begin() sets IOMAP_F_DIRTY for writes that may extend i_size,
-but clears the flag after ext2_get_blocks(). When the write uses an
-existing mapped block, iomap can then use FUA and skip
-generic_write_sync(), even though ext2_dio_write_end_io() updates the
-inode size. An O_DSYNC write can therefore return without persisting
-the new size.
+Initialize V_TOTAL_MIN/MAX to V_TOTAL before enabling the selectors if
+they are still 0, as optc1_program_timing() does without seamless boot.
 
-For example, on a FUA-capable device, a 512-byte O_DIRECT|O_DSYNC write
-at offset 512 into a fsynced one-byte file returns successfully and
-extends the in-memory size to 1024, while an immediate read of the
-on-disk inode still shows size 1. An explicit fsync persists the new
-size.
+Tested on Renoir (DCN 2.1) eDP with amdgpu.seamless=1.
 
-Move setting of IOMAP_F_DIRTY after the initialization.
+This removes the flash between the bios logo & plymouth on my laptop.
 
-Fixes: fb5de4358e1a ("ext2: Move direct-io to use iomap")
+Signed-off-by: Kylie C <kyliepc@proton.me>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1ad7473e82b9242c4ee7eea82ab16d3f82f01651)
 Cc: stable@vger.kernel.org
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261029013616.97194-1-dennylin0707@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/inode.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/ext2/inode.c b/fs/ext2/inode.c
-index 50d431949fd4b..12f9b1b36e056 100644
---- a/fs/ext2/inode.c
-+++ b/fs/ext2/inode.c
-@@ -824,6 +824,12 @@ static int ext2_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
- 	    (first_block << blkbits) < i_size_read(inode))
- 		create = 0;
- 
-+	ret = ext2_get_blocks(inode, first_block, max_blocks,
-+			&bno, &new, &boundary, create);
-+	if (ret < 0)
-+		return ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c b/drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c
+index e7a90a437fffb..06edf66136597 100644
+--- a/drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c
+@@ -452,6 +452,13 @@ void optc2_lock_doublebuffer_disable(struct timing_generator *optc)
+ void optc2_setup_manual_trigger(struct timing_generator *optc)
+ {
+ 	struct optc *optc1 = DCN10TG_FROM_TG(optc);
++	uint32_t v_total, v_total_max;
 +
-+	iomap->flags = 0;
- 	/*
- 	 * Writes that span EOF might trigger an IO size update on completion,
- 	 * so consider them to be dirty for the purposes of O_DSYNC even if
-@@ -831,13 +837,6 @@ static int ext2_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
- 	 */
- 	if ((flags & IOMAP_WRITE) && offset + length > i_size_read(inode))
- 		iomap->flags |= IOMAP_F_DIRTY;
--
--	ret = ext2_get_blocks(inode, first_block, max_blocks,
--			&bno, &new, &boundary, create);
--	if (ret < 0)
--		return ret;
--
--	iomap->flags = 0;
- 	iomap->offset = (u64)first_block << blkbits;
- 	if (flags & IOMAP_DAX)
- 		iomap->dax_dev = sbi->s_daxdev;
++	REG_GET(OTG_V_TOTAL_MAX, OTG_V_TOTAL_MAX, &v_total_max);
++	if (!v_total_max) {
++		REG_GET(OTG_V_TOTAL, OTG_V_TOTAL, &v_total);
++		optc->funcs->set_vtotal_min_max(optc, v_total, v_total);
++	}
+ 
+ 	/* Set the min/max selectors unconditionally so that
+ 	 * DMCUB fw may change OTG timings when necessary
 -- 
 2.53.0
 
