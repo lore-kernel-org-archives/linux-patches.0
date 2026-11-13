@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590614;
-	b=JPDetCp4h2SaVWJHdKe1IMd7DGYGN1GchZBbjVhgGd11XBGlGOHXkMpUFG9hl1N8xlz9
-	 t2gu9OvoEVm24aYj/26JlGhLnVOj5ghxqtg6TRRhzrOizE6cjo9vj7UkW+FJ71zGibr5v
-	 Nh2XsIcEAN39KrurJKY5HOVrM3MJnNMGDoNzEutnMC/jDH1KOYZK97Jgl4MDc1fThRJfN
-	 r+cZPa/xI0uZQ3teXdTFg2ROXq/MEW3RrVnDTnyjXrotV8LpwFix2iKqffCruTzB+ZWCs
-	 N4K/s3EpkA3zmGeO9bkUtwvXDwnxaMwtyBKFL/kOnR1nc0pNw3Bk4ItPjeayYSDbW7g==
+	t=1794590615;
+	b=04vTrfO4dvnBVn1z/tr+j1SneZxWk+qIXsGayqpMlpQz43gfP1M4p4K6afpD60yccX9G
+	 cqBn/yM2i6cznwiVc5QW8uUassKnDTy/ZRn+oI4vJg0mrzugkKcbwSwtDdUTk6qF/stzQ
+	 Z5SBbd0aqEjyVuv9B7VEAyTZ0+sEDJSpgwGlslrFuKcXY58gIW7EE2Liy70jcYMwRNKaU
+	 bNOUBECkOtHOw6MLvKzFWaNxlGEY9k1lgcfQ336THULWnnDWk6SastiPWiG6iiVbjVR5J
+	 x6uaGaruGsDPAleCbW/D1+zBOcTn3llbE3V5yzJsQpvFGRxMV0GxQOABK/BM/T+g4TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590614;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590615;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ObJ9CRloDJM+9Qh3zzc9Wk2bENpvykjUgPF4mDKH6Fg=;
-	b=wFZB0MKbulhdopTtIJiBSDk00wZuOl+9X5iCzJCI/YA1qxVE9ZcWYyDDDfU2uXB/74XS
-	 OEVV3u68G+0/iddarrO0CiUwnfsZ2j6YI7A4Bx+jv+5OFQnQ0FZrgdu0+KTb3gnJSe21l
-	 MS6BYUtLMBN7zZfcoBPzj6XkCjJPX/m7If9zaBXHLOwoRJTtLan6I2WstwttVQ+dCNplN
-	 EyYbaJdeq+ZdO+SOVjY0t+FjfikfBKMTmGIyV/ZNO2h1rC+2vTle9bxMYrXm3JJFC5IRp
-	 d9v/sJ4o3pGMoe7JCg5e2FUMVwmTjP9hBqaeTsH0p8T1eaozRgd1grXyCGwQyWgeU3w==
+	bh=/vK4m5z5HgBz4kT8lfCgfqDgIUe13QyZNIKg982jOZo=;
+	b=HWKTmL1LmltB0owbXVGciOdFaEmiMGRjKXwe2fYgYLlMLHzevCjsPIcCNaMgVvPCXH3d
+	 9eKyFIgc5HqCI4xpekGbft76peFq+z0yEIm3efeQ61gjJxQUbnUnLpUgEmtAeAbgExYdR
+	 rs7xxVc8zhqY+BA57ngUr4en8xA8uz7uIYVLrXubiVkEHpudDG2EOIS+BOCSUBqpVKvBd
+	 fDmBTp+gp5Y+LHeCHruiiDTSUuCTyj8OTiKT5Wp1cytrjCkJQQz28bgcNSxo329laMNY5
+	 agKGsosfql28hdqeFFCxq+zhRaW206AGht3ABB+fvelHYQj1+d5rDjEKWMGoYty1FPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0elOjCSe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fBCPtbkq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFC3606C0B5;
-	Fri, 13 Nov 2026 17:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEF5607586B;
+	Fri, 13 Nov 2026 17:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0elOjCSe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741B21F000C5;
-	Fri, 13 Nov 2026 17:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fBCPtbkq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0881F000C4;
+	Fri, 13 Nov 2026 17:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590613;
-	bh=ObJ9CRloDJM+9Qh3zzc9Wk2bENpvykjUgPF4mDKH6Fg=;
+	s=korg; t=1794590614;
+	bh=/vK4m5z5HgBz4kT8lfCgfqDgIUe13QyZNIKg982jOZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0elOjCSexMXkDc506Ti4SVxFidbC1w1sNpO+B7p0A1fttw+14RqIqSDPIgNdaJRKO
-	 Q3L+NOmi1zzRbp6Rq0POxT2u7ZflB65UnGjLzrKcHsFxPqxpDtEQ4PH+TTjS1cqX+5
-	 WFfKE1juIM9q6lrskYTb6GdBi/WzWd7NOIOL0ufg=
+	b=fBCPtbkqRJ93SQ0Frtk/HNheB1ZL3mjdJJpRh30Mm7AU7d+HQug2szziZk+jdVnbH
+	 fgS0kKsNZOlSIUioxOhRGU3FZ9CPhRvsWHs/wWhWT38mwUQps5t3BdtlJe+RNIXriK
+	 ufyw+YoLhZxKOZvzOcNmTN5Cx2joT+VxINPxxedQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Hans Zhang <18255117159@163.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 539/686] spi: cadence-xspi: Replace ACPI specifics by agnostic APIs
-Date: Fri, 13 Nov 2026 10:51:12 -0500
-Message-ID: <20261113153839.531826057@linuxfoundation.org>
+Subject: [PATCH 6.18 540/686] spi: cadence-xspi: Use FIELD_MODIFY()
+Date: Fri, 13 Nov 2026 10:51:13 -0500
+Message-ID: <20261113153839.572246877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,128 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit 6f9e4740e8591176eb90bb1dae95bbbb5c7d789e ]
+[ Upstream commit 6fa473f4c5dcc20db9799f90da48b977730e05f1 ]
 
-Replace ACPI specific calls to get device property with the agnostic one.
-The code looses the direct dependency to the ACPI APIs and get cleaner.
-This doesn't change functionality.
+Use FIELD_MODIFY() to remove open-coded bit manipulation.
+No functional change intended.
 
-While at it, drop now unneeded acpi.h.
-
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20251129151739.3998668-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Hans Zhang <18255117159@163.com>
+Link: https://patch.msgid.link/20260430155456.36998-4-18255117159@163.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: ea9854a169e9 ("spi: cadence-xspi: reject SDMA transfers larger than the requested length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-xspi.c | 36 +++++++++++-----------------------
- 1 file changed, 11 insertions(+), 25 deletions(-)
+ drivers/spi/spi-cadence-xspi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/spi/spi-cadence-xspi.c b/drivers/spi/spi-cadence-xspi.c
-index c3676b21e8167..b6b42daae1bce 100644
+index b6b42daae1bce..90c6d9fa4dbb9 100644
 --- a/drivers/spi/spi-cadence-xspi.c
 +++ b/drivers/spi/spi-cadence-xspi.c
-@@ -2,7 +2,6 @@
- // Cadence XSPI flash controller driver
- // Copyright (C) 2020-21 Cadence
- 
--#include <linux/acpi.h>
- #include <linux/completion.h>
- #include <linux/delay.h>
- #include <linux/err.h>
-@@ -21,6 +20,7 @@
- #include <linux/limits.h>
- #include <linux/log2.h>
- #include <linux/bitrev.h>
-+#include <linux/util_macros.h>
- 
- #define CDNS_XSPI_MAGIC_NUM_VALUE	0x6522
- #define CDNS_XSPI_MAX_BANKS		8
-@@ -775,19 +775,15 @@ static int marvell_xspi_mem_op_execute(struct spi_mem *mem,
- 	return ret;
- }
- 
--#ifdef CONFIG_ACPI
- static bool cdns_xspi_supports_op(struct spi_mem *mem,
- 				  const struct spi_mem_op *op)
- {
- 	struct spi_device *spi = mem->spi;
--	const union acpi_object *obj;
--	struct acpi_device *adev;
-+	struct device *dev = &spi->dev;
-+	u32 value;
- 
--	adev = ACPI_COMPANION(&spi->dev);
--
--	if (!acpi_dev_get_property(adev, "spi-tx-bus-width", ACPI_TYPE_INTEGER,
--				   &obj)) {
--		switch (obj->integer.value) {
-+	if (!device_property_read_u32(dev, "spi-tx-bus-width", &value)) {
-+		switch (value) {
- 		case 1:
- 			break;
- 		case 2:
-@@ -800,16 +796,13 @@ static bool cdns_xspi_supports_op(struct spi_mem *mem,
- 			spi->mode |= SPI_TX_OCTAL;
- 			break;
- 		default:
--			dev_warn(&spi->dev,
--				 "spi-tx-bus-width %lld not supported\n",
--				 obj->integer.value);
-+			dev_warn(dev, "spi-tx-bus-width %u not supported\n", value);
- 			break;
- 		}
- 	}
- 
--	if (!acpi_dev_get_property(adev, "spi-rx-bus-width", ACPI_TYPE_INTEGER,
--				   &obj)) {
--		switch (obj->integer.value) {
-+	if (!device_property_read_u32(dev, "spi-rx-bus-width", &value)) {
-+		switch (value) {
- 		case 1:
- 			break;
- 		case 2:
-@@ -822,9 +815,7 @@ static bool cdns_xspi_supports_op(struct spi_mem *mem,
- 			spi->mode |= SPI_RX_OCTAL;
- 			break;
- 		default:
--			dev_warn(&spi->dev,
--				 "spi-rx-bus-width %lld not supported\n",
--				 obj->integer.value);
-+			dev_warn(dev, "spi-rx-bus-width %u not supported\n", value);
- 			break;
- 		}
- 	}
-@@ -834,7 +825,6 @@ static bool cdns_xspi_supports_op(struct spi_mem *mem,
- 
- 	return true;
- }
--#endif
- 
- static int cdns_xspi_adjust_mem_op_size(struct spi_mem *mem, struct spi_mem_op *op)
- {
-@@ -847,17 +837,13 @@ static int cdns_xspi_adjust_mem_op_size(struct spi_mem *mem, struct spi_mem_op *
- }
- 
- static const struct spi_controller_mem_ops cadence_xspi_mem_ops = {
--#ifdef CONFIG_ACPI
--	.supports_op = cdns_xspi_supports_op,
--#endif
-+	.supports_op = PTR_IF(IS_ENABLED(CONFIG_ACPI), cdns_xspi_supports_op),
- 	.exec_op = cdns_xspi_mem_op_execute,
- 	.adjust_op_size = cdns_xspi_adjust_mem_op_size,
- };
- 
- static const struct spi_controller_mem_ops marvell_xspi_mem_ops = {
--#ifdef CONFIG_ACPI
--	.supports_op = cdns_xspi_supports_op,
--#endif
-+	.supports_op = PTR_IF(IS_ENABLED(CONFIG_ACPI), cdns_xspi_supports_op),
- 	.exec_op = marvell_xspi_mem_op_execute,
- 	.adjust_op_size = cdns_xspi_adjust_mem_op_size,
- };
+@@ -453,8 +453,7 @@ static bool cdns_mrvl_xspi_setup_clock(struct cdns_xspi_dev *cdns_xspi,
+ 		writel(clk_reg,
+ 		       cdns_xspi->auxbase + MRVL_XSPI_CLK_CTRL_AUX_REG);
+ 		clk_reg = FIELD_PREP(MRVL_XSPI_CLK_DIV, i);
+-		clk_reg &= ~MRVL_XSPI_CLK_DIV;
+-		clk_reg |= FIELD_PREP(MRVL_XSPI_CLK_DIV, i);
++		FIELD_MODIFY(MRVL_XSPI_CLK_DIV, &clk_reg, i);
+ 		clk_reg |= MRVL_XSPI_CLK_ENABLE;
+ 		clk_reg |= MRVL_XSPI_IRQ_ENABLE;
+ 		update_clk = true;
 -- 
 2.53.0
 
