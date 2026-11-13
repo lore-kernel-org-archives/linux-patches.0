@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585800;
-	b=sS1yL3WzkVV+e44RBzd9Bez5EfeTrUumSyr9tRgHnoG5kOUTTzKmTLtbqVVnmOkn+54S
-	 h3xmijE2oru+K0VIHWncAGjmns7qq86/Q1YbB0MdPRYUPn1FW3XQWBwiKIDj2ly3WSV36
-	 e45UwUSMAJ64+zrEdEFz06qBkgRqXeeDcbD+Ot4Y15800eFqIDt8GHjmriv5v0zwHBIZF
-	 bRPbHXB0EB9teZVr62yvN0IND2AAKheYmGMqV51Cffk3b6pcdbPVwIlBPm9erxbYWtSA8
-	 YVUF7mR4P40Twd49gDGhY4Fla8bbQy+JO+teQkGU8oXxusLgdPEDBd/cRt1nwvTF9nw==
+	t=1794585801;
+	b=EkXOaYXeWt/yaQsSybyzsx+iagKhCZxGnQNg5rJdeJ4zyAS3grdzxEbG4ogCLu5JKr/f
+	 h9QrGQu2t6+KygS8OX65fC/C1yfIUpJg88nZaCygCi0AWxtUJ0cziMUus3YTc1cR0bqGT
+	 Essc40GHj5GIc6HXE4UAe9J2gEIa0VA9lchdSFg4dAuIuUQbOREPk5KKMN2Es3Ksd2C1q
+	 GSw/tpB9b0z4vU9XNpSzCDx3rVCCfE09qq4amiWJowsHrvmZk7F3F8+JtD20Bw740L6EJ
+	 7Si6pLegN1ok6rHmcBvvsX1fkvy2pmbpuy262muQf1xbm70jlqjDOrKRmJ/8qlDd9rA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585801;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wtUX1lX1tDKQLf771mQhwQOLXJxflJsvFO1Ga4ZJmFE=;
-	b=42Oef7u94JXonKbyQhXCSQ6jxoG5yBGZhg4GoSZ55ZlgCLL9FD9qtedEUIy4xEvW05Zj
-	 yryBpBDpvjK6VOkO1DQhuJfMpzN5H5LFnEGoyeTu68fS+BRpkN0gKc3wME99SoS3KPtd2
-	 MV1mlacL/sZD0jWKgMz6xOsCGvl1/tGGwA45Pner36ugL413XUzk9SaW78oK9qVAkB2+L
-	 i2u71S71UAeWNFpgcjdNCA9JVYzc2tKUfB7GgnhwUDavUXajGTSAFRI3UP8V/jGOmj3Ys
-	 FN5A5W7uboNgjpEWn2Lx1F+Hqm6LseZKf9u57PZWM2VEs0dggFN4SD9/x1BBhvi1roQ==
+	bh=iqnrHKovENJ7cpPm/6ys7o7Ozw27AdwiRkJxT21kDRw=;
+	b=cCKSLSV3QDn0d2godk4YwrybzDI96koDiID7rYigK52tbMHNFsB9M/kCDXq853DszAYq
+	 gOc1WuH9axFAxTQRXXS2YxYmxkjeLTgLhslM5xNWe605pw45U5sAWIk6jVi29ooRjkDh6
+	 H69VKzb9i0AzfZ9y1TI89ciUK7aa4wVUFrdjXnR77akUH4jl4CkVy+0pSjktRwtPJBG06
+	 lFz7Vz2fTpDoLat2a7HVOerRl2R/SDRTVkVGgJ5Dz5aRkNCdKkaEnMQ3PxGH4a5fOsGGZ
+	 xIThrtjdlovtt3NOlPlRUnh2u4+cB1esoLdCESaJ+VdphNuFcPFxp01e8t4JULY7Xeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iBnu9HzU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9roTzOz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EB0606BA99;
-	Fri, 13 Nov 2026 16:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03F3606BA9A;
+	Fri, 13 Nov 2026 16:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iBnu9HzU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2223E1F000C4;
-	Fri, 13 Nov 2026 16:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9roTzOz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA011F000C4;
+	Fri, 13 Nov 2026 16:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585800;
-	bh=wtUX1lX1tDKQLf771mQhwQOLXJxflJsvFO1Ga4ZJmFE=;
+	s=korg; t=1794585801;
+	bh=iqnrHKovENJ7cpPm/6ys7o7Ozw27AdwiRkJxT21kDRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iBnu9HzUCKSsOdgXXna1MUa5D05I76SBsSB6BL3jARmLe7MyUqZjsTFRE7EGRdgGw
-	 MVE57YXf6e+8Ys81KYa254dyuH9+ewMPu9knTlmjEofg4maG4qwPcPEXvO4CKgWZdK
-	 qqZWsoxUodrzJJcRnnI0XyzY7Bb0AJez5orNhxZE=
+	b=v9roTzOzNQJMCqE0v8NQbA8nUUlMWm1/0/3rh6r9kD7P6zGR7jYsskNyKFxqWViPf
+	 bj1Ou/1XC7sLVux9i1gao3zEwEsGGQKbUgkAEOdJ4D9zyU4ZYa2+yRrP6AfJ86zKVp
+	 QZ2gE2hRbG8ISLONIto87/lC/37tGeqEVe0LwSOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <yi1.lai@intel.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Hengyu Liang <hengyul@cs.unc.edu>,
+	Guillaume Nault <gnault@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 386/507] selftests/fscontext_ns: expect EINVAL for overlay descendant userns create
-Date: Fri, 13 Nov 2026 10:51:30 -0500
-Message-ID: <20261113153809.562534207@linuxfoundation.org>
+Subject: [PATCH 7.3 387/507] l2tp: only return sessions of the given tunnel in l2tp_session_get()
+Date: Fri, 13 Nov 2026 10:51:31 -0500
+Message-ID: <20261113153809.631883070@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,38 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Hengyu Liang <hengyul@cs.unc.edu>
 
-[ Upstream commit db1c5da238dc80a61ab429a7b71b0e2835766c45 ]
+[ Upstream commit a75facf4bb3e866103ddca4f47a6f3ca4b090d8b ]
 
-Commit a518e63c3775 ("ovl: return EINVAL instead of EIO in case of
-mismatched user_ns") changed the errno for completing an overlay
-fscontext from another user namespace. Update the overlay test variant
-to match binfmt_misc.
+Commit 5f77c18ea556 ("l2tp: use IDR for all session lookups") made
+pppol2tp_connect() and the netlink session commands find sessions with
+l2tp_session_get(), passing the socket of the tunnel they name.
 
-Reported-by: kernel test robot <yi1.lai@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202611020115.2281e158-lkp@intel.com
-Fixes: a518e63c3775 ("ovl: return EINVAL instead of EIO in case of mismatched user_ns")
+L2TPv3 session IDs are unique per network namespace, except that
+sessions carried over UDP are only unique per UDP socket, the socket of
+their tunnel. However, l2tp_v3_session_get() only checks the socket when
+another session has the same session ID. Otherwise it returns the
+session, whichever tunnel it belongs to. As of now, a session command
+that names the wrong tunnel acts on a session of another tunnel, and a
+PPPoL2TP socket for a second L2TPv3 tunnel fails with EEXIST, because it
+finds session 0 of the first tunnel.
+
+The issue can be reproduced with:
+
+    ip l2tp add tunnel tunnel_id 3 peer_tunnel_id 3 encap udp \
+        local 127.0.0.1 remote 127.0.0.1 udp_sport 5003 udp_dport 6003
+    ip l2tp add tunnel tunnel_id 4 peer_tunnel_id 4 encap udp \
+        local 127.0.0.1 remote 127.0.0.1 udp_sport 5004 udp_dport 6004
+    ip l2tp add session tunnel_id 3 session_id 7 peer_session_id 7
+    ip l2tp del session tunnel_id 4 session_id 7
+    ip l2tp show session
+
+Before that commit, the delete fails with "No such device", and session
+7 of tunnel 3 is still listed. After that commit, the delete succeeds,
+and session 7 of tunnel 3 is gone.
+
+This patch will make l2tp_session_get() return NULL when the L2TPv3
+session it finds does not belong to the given socket. The receive path
+calls l2tp_v3_session_get() directly and is not changed.
+
+Fixes: 5f77c18ea556 ("l2tp: use IDR for all session lookups")
 Cc: stable@vger.kernel.org
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
+Acked-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/20261030032617.4065353-1-hengyul@cs.unc.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/filesystems/fscontext_ns/fscontext_ns_test.c      | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/l2tp/l2tp_core.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/filesystems/fscontext_ns/fscontext_ns_test.c b/tools/testing/selftests/filesystems/fscontext_ns/fscontext_ns_test.c
-index 0f30a3e6e197d..535bf1f4e1a30 100644
---- a/tools/testing/selftests/filesystems/fscontext_ns/fscontext_ns_test.c
-+++ b/tools/testing/selftests/filesystems/fscontext_ns/fscontext_ns_test.c
-@@ -193,7 +193,7 @@ FIXTURE_VARIANT_ADD(fscontext_ns, binfmt_misc) {
+diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
+index 7e042a3e648ce..0cd3e38bf662f 100644
+--- a/net/l2tp/l2tp_core.c
++++ b/net/l2tp/l2tp_core.c
+@@ -315,10 +315,19 @@ EXPORT_SYMBOL_GPL(l2tp_v2_session_get);
+ struct l2tp_session *l2tp_session_get(const struct net *net, struct sock *sk, int pver,
+ 				      u32 tunnel_id, u32 session_id)
+ {
++	struct l2tp_session *session;
++
+ 	if (pver == L2TP_HDR_VER_2)
+ 		return l2tp_v2_session_get(net, tunnel_id, session_id);
+-	else
+-		return l2tp_v3_session_get(net, sk, session_id);
++
++	/* l2tp_v3_session_get() doesn't check sk if the ID hasn't collided */
++	session = l2tp_v3_session_get(net, sk, session_id);
++	if (session && session->tunnel->sock != sk) {
++		l2tp_session_put(session);
++		return NULL;
++	}
++
++	return session;
+ }
+ EXPORT_SYMBOL_GPL(l2tp_session_get);
  
- FIXTURE_VARIANT_ADD(fscontext_ns, overlay) {
- 	.fsname = "overlay",
--	.expected_errno = EIO,
-+	.expected_errno = EINVAL,
- };
- 
- TEST_F(fscontext_ns, create_from_descendant_userns)
 -- 
 2.53.0
 
