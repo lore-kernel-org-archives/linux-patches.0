@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591280;
-	b=24bMjLpp34Gy4WpkcVAmFJDvMIY3nhevfASonhnmhJgbDwLMmyN0gBOFxVmEYz1xec4h
-	 enYKo6htqZG1NhH7cCGtSQDdD3VzUgcFIpArwsuPY763atK7btXiOPt+GUXFSifwpgmlE
-	 tBBmAsiId8YnRhLnisd+/TpZWrkki0Om3+JJGyvLqwfx6MEOi9nqQbRZRfXYEJoh9NC0k
-	 mpAFMC/HqmP+G1uj7h9Ww/Q1JZ7VN0h22AFdl5IO58X8OaeZ8ze5H5s032q10eHISpced
-	 mW33OPfewT1nHOneFjj3KU22K6KK7kWjhWO8BbQU0UiVq2jNl95YTbDhF8CzpNg93nA==
+	t=1794591281;
+	b=lLZ0nt7oFxcPpdr7n2lLqk+TOKB7cQFaxXmL00G1d4EqhvwY469bgn0MxAHUSClJ3h9n
+	 is+d7diFk+bj3O7b5KjXhdyma1hiZGghO1Ja72DaSYznNgItaFDBAr/RfnDu4Qeo+aVIA
+	 2GgEtPCJIFNw4pUjXyYl1vhhAI99ZrrhwFrQhP2TQn04ZklkpaLn6+Rwn46xLo7z1h6mr
+	 bYfKr/kwodBM4TdZQ2sv5+X8A5oY1WrALzKwPFW1X1f2vMulMr9mBUtlMdcB1dzh/4GPE
+	 g2UvgXuKP+fGZSxmAiAMYrNEEq9M/vxGoxGHGG5LfI0b/X+jYl6Rerp6zWMjtxAfy6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nAy6uqhK3CF6rB9m4S7qDhm7QbEfNASt701/nLK4w1U=;
-	b=FmKKzVJzCpkxdovjedXtBvIM0qv4rbD8oXGKudVSpoDaxEKpEbKpfRMpMBZuSVo/lsfM
-	 Uzg6+XcKqM/DMRGsuQWHmpXNe5vb0LXH0lZQ5ysBCx71hxeGEtQgYPHTm5ge9CCzsHO+T
-	 Sy9yxwUodpBXtcmAu3Kzq/xh/oFi+mJEZJOo1E5uaTco0PigjuN7BAPp8EefyM1PWnfR8
-	 HrSGBJAkQodLOckjHv2px9OD+rc1fVcCx76cHoaZYRTrAiAVXkQ7UK5r1oeSvZq9KPZ2w
-	 +EejcjvnirCTqftK0WOfMMOPYH5rH69DtOndEDnylrNmlwF48J1N7jYjJTLNzQvBXDg==
+	bh=Uo5KQn5vSi6v14jsjE6lAiPjoraJTYiOGpaQiptdFXE=;
+	b=BnzfzxD9B2fif7iCgx3NTGSCbDZUSfLZkinehS/+Y9Qr4UvrgCPE62j82BV6BIvUEOnS
+	 MQPIgpjfi8fCR6o7DCg66CwfG240a5YtdRXtTmgNRROBbQR59ng6MLhLCHWKHvZzx5Btg
+	 qcb5OX6PSmSpsiVIYuMry45q9FHyKVp82jUGvx9wFeX4vj8z3/5DkwG9hKTEmFlTc6Mur
+	 oiVyPYnU9qDuks0j3svdP7Ne0FpDqg0HJnjbrb5MpPje9GEjmKV2/tqewPFrEMNVJAZ+u
+	 vKmKJVVSOdSDkwgR1TbUY2d7JE3sTIhvQPtKUdoyK/IJYO35HUIPibwI6B4s17RFyPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSasAJ+8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LszVw/h6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776316076F9F;
-	Fri, 13 Nov 2026 17:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DE06076FA1;
+	Fri, 13 Nov 2026 17:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSasAJ+8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8021F000C4;
-	Fri, 13 Nov 2026 17:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LszVw/h6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFB91F000C4;
+	Fri, 13 Nov 2026 17:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591280;
-	bh=nAy6uqhK3CF6rB9m4S7qDhm7QbEfNASt701/nLK4w1U=;
+	s=korg; t=1794591281;
+	bh=Uo5KQn5vSi6v14jsjE6lAiPjoraJTYiOGpaQiptdFXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TSasAJ+8kIz8I+UXgNP1adSJbR+gtqvyu/z1+u9oxLJz6+7cAH+cP8wcebFGwGWh5
-	 EANnPcpv26St/1QgXXba/EGJ0tcoZTLP3aTID37z3A2OP3ro0AQpP+Z+cogSQeTAHw
-	 RAJNp90YmICMyyhUK7yDfgWd9e6DuPOTP0++CBqI=
+	b=LszVw/h6WpgXyq2LKslv2Pbp0xbYkhersmICyvt/c1Kbx7gXCJFgHMWQZU+tZx746
+	 4FxPdTcj/HggdYMaiqg2LJ8Ff+exo6VWDuQ6bcfxaRyIFe9NDiGSVNNw4/zVtfmKFp
+	 5FtZUJNBfsZrjNH2nU8yKsTgPEa+HM1ob/E4Fyks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramin Moussavi <ramin.moussavi@yacoub.de>,
-	Waldemar Brodkorb <wbx@openadk.org>,
-	Michal Simek <michal.simek@amd.com>,
+	Sascha Frey <sf@techfak.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 400/670] microblaze: restore the ABI argument home area below pt_regs (PTO)
-Date: Fri, 13 Nov 2026 10:49:24 -0500
-Message-ID: <20261113153825.307009322@linuxfoundation.org>
+Subject: [PATCH 6.12 401/670] vxlan: Stop rejecting dynamic FDB entries with a nexthop ID
+Date: Fri, 13 Nov 2026 10:49:25 -0500
+Message-ID: <20261113153825.342387471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,869 +70,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramin Moussavi <ramin.moussavi@yacoub.de>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit c35d40a3efd2e575ef51a761e983f2bf7113be6c upstream.
+[ Upstream commit 7308ef8b4a6779a39f68d053c19b53a5c584a663 ]
 
-The MicroBlaze ABI has the caller reserve stack space for the arguments
-it passes in registers: REG_PARM_STACK_SPACE is 24 and
-OUTGOING_REG_PARM_STACK_SPACE is 1 in the gcc backend, so a callee may
-write to [caller_sp + 4, caller_sp + 28).  The kernel calls C functions
-from entry.S with r1 pointing at pt_regs, handing the callee license to
-spill its incoming arguments over the saved registers -- the syscall
-dispatch is the worst case, where the first argument slot is PT_R1, the
-saved user stack pointer.
+Commit 98fc57d16744 ("vxlan: reject dynamic fdb entries that reference a
+nexthop id") started rejecting FDB entries that point to FDB nexthops
+unless they are configured as "permanent" or "static". The intent was to
+prevent such entries from being aged out by vxlan_cleanup(), which runs
+without RTNL and can therefore race with other VXLAN devices that modify
+the same per-nexthop FDB list.
 
-This was latent until GCC 15: since 3b9b8d6cfdf5 ("ira: Scale
-save/restore costs of callee save registers with block frequency") the
-allocator prefers spilling incoming arguments over copying them into
-callee-saved registers, and a kernel built with gcc >= 15 (without the
-TARGET_CALLEE_SAVE_COST workaround some distributions carry) corrupts
-PT_R1 on the first syscall: init takes SIGSEGV and the kernel panics.
+However, FRR installs remote MACs that are behind a multihomed Ethernet
+Segment (EVPN-MH) as dynamic FDB entries that point to an FDB nexthop
+group. Since the above commit, these entries are rejected and traffic
+towards the corresponding MACs is flooded to all the remote VTEPs.
 
-The kernel had exactly this reservation until 2011:
-commit 6e83557c38b4 ("microblaze: Remove r0_ram pointer and PTO alignment")
-removed STATE_SAVE_ARG_SPACE and with it the PTO offset, as part of
-cleaning up what was thought to be copied-from-v850 leftovers.  Restore
-it: the frame is STATE_SAVE_SIZE = PT_SIZE + PTO, r1 stays at the frame
-base through every asm-to-C call, and the saved registers are reached
-at r1 + PTO + PT_*.  PTO is 28 rather than the historic 24, which was
-one word short: FIRST_PARM_OFFSET is 4 and REG_PARM_STACK_SPACE is 24,
-so the area spans [sp+4, sp+28) and needs 28 bytes.  With 24 the last
-argument slot overlapped pt_regs' r0 -- harmless only because r0 is the
-constant-zero register.  STACK_BOUNDARY is 32 bits, so 28 needs no
-further rounding.
+These entries are also marked as externally learned ("extern_learn")
+and are therefore skipped by vxlan_cleanup(), but exempting externally
+learned entries from the checks is not enough: vxlan_cleanup() reads
+the state and flags of an entry without the hash lock, so an entry that
+is concurrently changed from dynamic and externally learned to static
+can still be aged out.
 
-Two places deliberately keep their mainline addressing.
-hw_exception_handler.S needs no offset change: its real-mode handler
-saves into the standalone pt_pool_space buffer rather than a stack
-frame, and _unaligned_data_exception works through a pointer to pt_regs
-in r7, where plain PT_* offsets are already right.  And the user-SP
-reload after popping the frame keeps PT_R1 - PT_SIZE because PTO
-cancels there: (PTO + PT_R1) - (PT_SIZE + PTO) = PT_R1 - PT_SIZE.  Both
-are exactly as the pre-2011 code had them.
+Instead, remove the checks added by the above commit and make
+vxlan_cleanup() skip FDB entries that point to FDB nexthops. Such
+entries can only be configured from user space, cannot be learned and
+cannot roam, so there is no reason to age them out. The nexthop pointer
+of an FDB entry is set before the entry is linked and is only cleared
+after it was unlinked and an RCU grace period has passed, so it can be
+checked without the hash lock.
 
-The instruction count is unchanged -- the same instructions with
-different immediates, no per-call reservation and no trampolines.  The
-cost is 28 bytes more kernel stack per saved frame.
+Adjust the test cases added by the above commit and add a test case
+that checks that dynamic FDB entries that point to FDB nexthops are not
+aged out. Without the fix:
 
-Fixes: 6e83557c38b4 ("microblaze: Remove r0_ram pointer and PTO alignment")
+ # ./fib_nexthops.sh -t "ipv4_fdb_grp_fcnal ipv6_fdb_grp_fcnal"
+
+ IPv4 fdb groups functional
+ --------------------------
+ [...]
+ TEST: Fdb mac add with nexthop group and dynamic state              [FAIL]
+ TEST: Fdb mac add with nexthop group and extern_learn               [FAIL]
+ TEST: Fdb mac without nexthop group aged out                        [ OK ]
+ TEST: Fdb mac with nexthop group not aged out                       [FAIL]
+ [...]
+
+ IPv6 fdb groups functional
+ --------------------------
+ [...]
+ TEST: Fdb mac add with nexthop group and dynamic state              [FAIL]
+ TEST: Fdb mac add with nexthop group and extern_learn               [FAIL]
+ TEST: Fdb mac without nexthop group aged out                        [ OK ]
+ TEST: Fdb mac with nexthop group not aged out                       [FAIL]
+ [...]
+
+ Tests passed:  44
+ Tests failed:   6
+ Tests skipped:  0
+
+With the fix:
+
+ # ./fib_nexthops.sh -t "ipv4_fdb_grp_fcnal ipv6_fdb_grp_fcnal"
+
+ IPv4 fdb groups functional
+ --------------------------
+ [...]
+ TEST: Fdb mac add with nexthop group and dynamic state              [ OK ]
+ TEST: Fdb mac add with nexthop group and extern_learn               [ OK ]
+ TEST: Fdb mac without nexthop group aged out                        [ OK ]
+ TEST: Fdb mac with nexthop group not aged out                       [ OK ]
+ [...]
+
+ IPv6 fdb groups functional
+ --------------------------
+ [...]
+ TEST: Fdb mac add with nexthop group and dynamic state              [ OK ]
+ TEST: Fdb mac add with nexthop group and extern_learn               [ OK ]
+ TEST: Fdb mac without nexthop group aged out                        [ OK ]
+ TEST: Fdb mac with nexthop group not aged out                       [ OK ]
+ [...]
+
+ Tests passed:  50
+ Tests failed:   0
+ Tests skipped:  0
+
+Fixes: 1274e1cc4226 ("vxlan: ecmp support for mac fdb entries")
+Fixes: 98fc57d16744 ("vxlan: reject dynamic fdb entries that reference a nexthop id")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
-Tested-by: Waldemar Brodkorb <wbx@openadk.org>
-Link: https://patch.msgid.link/20260821151809.1233057-5-ramin.moussavi@yacoub.de
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Reported-by: Sascha Frey <sf@techfak.net>
+Closes: https://lore.kernel.org/netdev/20261028142928.GA8406@techfak.de/
+Tested-by: Sascha Frey <sf@techfak.net>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20261030133750.28668-1-idosch@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ idosch: fixed a small conflict in vxlan_fdb_add() and adjusted the
+  vxlan_cleanup() hunk to the per-bucket FDB iteration in this tree ]
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/include/asm/entry.h           |  13 +
- arch/microblaze/include/asm/processor.h       |   2 +-
- arch/microblaze/kernel/entry.S                | 329 +++++++++---------
- arch/microblaze/kernel/hw_exception_handler.S |   5 +
- arch/microblaze/kernel/process.c              |   5 +-
- 5 files changed, 189 insertions(+), 165 deletions(-)
+ drivers/net/vxlan/vxlan_core.c              | 14 ++------
+ tools/testing/selftests/net/fib_nexthops.sh | 40 ++++++++++++++-------
+ 2 files changed, 31 insertions(+), 23 deletions(-)
 
-diff --git a/arch/microblaze/include/asm/entry.h b/arch/microblaze/include/asm/entry.h
-index 6c42bed411662..74c5a99a37f8c 100644
---- a/arch/microblaze/include/asm/entry.h
-+++ b/arch/microblaze/include/asm/entry.h
-@@ -21,6 +21,19 @@
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index e70a0b6575709..caba78398d92f 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1006,12 +1006,6 @@ static int vxlan_fdb_update_existing(struct vxlan_dev *vxlan,
+ 		return -EOPNOTSUPP;
+ 	}
  
- #define PER_CPU(var) var
+-	if (rcu_access_pointer(f->nh) &&
+-	    !(state & (NUD_PERMANENT | NUD_NOARP))) {
+-		NL_SET_ERR_MSG(extack, "Cannot make a nexthop fdb dynamic");
+-		return -EOPNOTSUPP;
+-	}
+-
+ 	/* Do not allow an externally learned entry to take over an entry added
+ 	 * by the user.
+ 	 */
+@@ -1279,11 +1273,6 @@ static int vxlan_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
+ 	if (err)
+ 		return err;
  
-+/*
-+ * The MicroBlaze ABI has the caller reserve an argument home area:
-+ * REG_PARM_STACK_SPACE is 24 and OUTGOING_REG_PARM_STACK_SPACE is 1, so a
-+ * callee may write to [caller_sp + 4, caller_sp + 28).  The kernel calls C
-+ * with r1 at the frame base, so reserve that area below pt_regs and reach
-+ * the saved registers through PTO.  This restores what 6e83557c38b4
-+ * ("microblaze: Remove r0_ram pointer and PTO alignment") removed; the old
-+ * value of 24 was one word short and left the last argument slot
-+ * overlapping pt_regs' r0.
-+ */
-+#define PTO			28
-+#define STATE_SAVE_SIZE		(PT_SIZE + PTO)
+-	if (nhid && !(ndm->ndm_state & (NUD_PERMANENT | NUD_NOARP))) {
+-		NL_SET_ERR_MSG(extack, "A nexthop fdb cannot be dynamic");
+-		return -EINVAL;
+-	}
+-
+ 	if (vxlan->default_dst.remote_ip.sa.sa_family != ip.sa.sa_family)
+ 		return -EAFNOSUPPORT;
+ 
+@@ -2896,6 +2885,9 @@ static void vxlan_cleanup(struct timer_list *t)
+ 			if (f->flags & NTF_EXT_LEARNED)
+ 				continue;
+ 
++			if (rcu_access_pointer(f->nh))
++				continue;
 +
- # ifndef __ASSEMBLY__
- DECLARE_PER_CPU(unsigned int, KSP); /* Saved kernel stack pointer */
- DECLARE_PER_CPU(unsigned int, KM); /* Kernel/user mode */
-diff --git a/arch/microblaze/include/asm/processor.h b/arch/microblaze/include/asm/processor.h
-index 4e193c7550dfa..fe82fdb49f27b 100644
---- a/arch/microblaze/include/asm/processor.h
-+++ b/arch/microblaze/include/asm/processor.h
-@@ -73,7 +73,7 @@ unsigned long __get_wchan(struct task_struct *p);
- #  define task_regs(task) ((struct pt_regs *)task_tos(task) - 1)
+ 			timeout = READ_ONCE(f->used) + vxlan->cfg.age_interval * HZ;
+ 			if (time_before_eq(timeout, jiffies)) {
+ 				netdev_dbg(vxlan->dev,
+diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
+index 25a4ad02ac16f..3a9d3d8419d42 100755
+--- a/tools/testing/selftests/net/fib_nexthops.sh
++++ b/tools/testing/selftests/net/fib_nexthops.sh
+@@ -421,6 +421,14 @@ stop_ip_monitor()
+ 	return $rc
+ }
  
- #  define task_pt_regs_plus_args(tsk) \
--	((void *)task_pt_regs(tsk))
-+	(((void *)task_pt_regs(tsk)) - PTO)
- 
- #  define task_sp(task)	(task_regs(task)->r1)
- #  define task_pc(task)	(task_regs(task)->pc)
-diff --git a/arch/microblaze/kernel/entry.S b/arch/microblaze/kernel/entry.S
-index efa4ab056fb5f..ebc8bcb98c522 100644
---- a/arch/microblaze/kernel/entry.S
-+++ b/arch/microblaze/kernel/entry.S
-@@ -177,78 +177,78 @@ syscall_debug_table:
- 1:
- 
- #define SAVE_REGS \
--	swi	r2, r1, PT_R2;	/* Save SDA */			\
--	swi	r3, r1, PT_R3;					\
--	swi	r4, r1, PT_R4;					\
--	swi	r5, r1, PT_R5;					\
--	swi	r6, r1, PT_R6;					\
--	swi	r7, r1, PT_R7;					\
--	swi	r8, r1, PT_R8;					\
--	swi	r9, r1, PT_R9;					\
--	swi	r10, r1, PT_R10;					\
--	swi	r11, r1, PT_R11;	/* save clobbered regs after rval */\
--	swi	r12, r1, PT_R12;					\
--	swi	r13, r1, PT_R13;	/* Save SDA2 */			\
--	swi	r14, r1, PT_PC;	/* PC, before IRQ/trap */	\
--	swi	r15, r1, PT_R15;	/* Save LP */			\
--	swi	r16, r1, PT_R16;					\
--	swi	r17, r1, PT_R17;					\
--	swi	r18, r1, PT_R18;	/* Save asm scratch reg */	\
--	swi	r19, r1, PT_R19;					\
--	swi	r20, r1, PT_R20;					\
--	swi	r21, r1, PT_R21;					\
--	swi	r22, r1, PT_R22;					\
--	swi	r23, r1, PT_R23;					\
--	swi	r24, r1, PT_R24;					\
--	swi	r25, r1, PT_R25;					\
--	swi	r26, r1, PT_R26;					\
--	swi	r27, r1, PT_R27;					\
--	swi	r28, r1, PT_R28;					\
--	swi	r29, r1, PT_R29;					\
--	swi	r30, r1, PT_R30;					\
--	swi	r31, r1, PT_R31;	/* Save current task reg */	\
-+	swi	r2, r1, PTO+PT_R2;	/* Save SDA */			\
-+	swi	r3, r1, PTO+PT_R3;					\
-+	swi	r4, r1, PTO+PT_R4;					\
-+	swi	r5, r1, PTO+PT_R5;					\
-+	swi	r6, r1, PTO+PT_R6;					\
-+	swi	r7, r1, PTO+PT_R7;					\
-+	swi	r8, r1, PTO+PT_R8;					\
-+	swi	r9, r1, PTO+PT_R9;					\
-+	swi	r10, r1, PTO+PT_R10;					\
-+	swi	r11, r1, PTO+PT_R11;	/* save clobbered regs after rval */\
-+	swi	r12, r1, PTO+PT_R12;					\
-+	swi	r13, r1, PTO+PT_R13;	/* Save SDA2 */			\
-+	swi	r14, r1, PTO+PT_PC;	/* PC, before IRQ/trap */	\
-+	swi	r15, r1, PTO+PT_R15;	/* Save LP */			\
-+	swi	r16, r1, PTO+PT_R16;					\
-+	swi	r17, r1, PTO+PT_R17;					\
-+	swi	r18, r1, PTO+PT_R18;	/* Save asm scratch reg */	\
-+	swi	r19, r1, PTO+PT_R19;					\
-+	swi	r20, r1, PTO+PT_R20;					\
-+	swi	r21, r1, PTO+PT_R21;					\
-+	swi	r22, r1, PTO+PT_R22;					\
-+	swi	r23, r1, PTO+PT_R23;					\
-+	swi	r24, r1, PTO+PT_R24;					\
-+	swi	r25, r1, PTO+PT_R25;					\
-+	swi	r26, r1, PTO+PT_R26;					\
-+	swi	r27, r1, PTO+PT_R27;					\
-+	swi	r28, r1, PTO+PT_R28;					\
-+	swi	r29, r1, PTO+PT_R29;					\
-+	swi	r30, r1, PTO+PT_R30;					\
-+	swi	r31, r1, PTO+PT_R31;	/* Save current task reg */	\
- 	mfs	r11, rmsr;		/* save MSR */			\
--	swi	r11, r1, PT_MSR;
-+	swi	r11, r1, PTO+PT_MSR;
- 
- #define RESTORE_REGS_GP \
--	lwi	r2, r1, PT_R2;	/* restore SDA */		\
--	lwi	r3, r1, PT_R3;					\
--	lwi	r4, r1, PT_R4;					\
--	lwi	r5, r1, PT_R5;					\
--	lwi	r6, r1, PT_R6;					\
--	lwi	r7, r1, PT_R7;					\
--	lwi	r8, r1, PT_R8;					\
--	lwi	r9, r1, PT_R9;					\
--	lwi	r10, r1, PT_R10;					\
--	lwi	r11, r1, PT_R11;	/* restore clobbered regs after rval */\
--	lwi	r12, r1, PT_R12;					\
--	lwi	r13, r1, PT_R13;	/* restore SDA2 */		\
--	lwi	r14, r1, PT_PC;	/* RESTORE_LINK PC, before IRQ/trap */\
--	lwi	r15, r1, PT_R15;	/* restore LP */		\
--	lwi	r16, r1, PT_R16;					\
--	lwi	r17, r1, PT_R17;					\
--	lwi	r18, r1, PT_R18;	/* restore asm scratch reg */	\
--	lwi	r19, r1, PT_R19;					\
--	lwi	r20, r1, PT_R20;					\
--	lwi	r21, r1, PT_R21;					\
--	lwi	r22, r1, PT_R22;					\
--	lwi	r23, r1, PT_R23;					\
--	lwi	r24, r1, PT_R24;					\
--	lwi	r25, r1, PT_R25;					\
--	lwi	r26, r1, PT_R26;					\
--	lwi	r27, r1, PT_R27;					\
--	lwi	r28, r1, PT_R28;					\
--	lwi	r29, r1, PT_R29;					\
--	lwi	r30, r1, PT_R30;					\
--	lwi	r31, r1, PT_R31;	/* Restore cur task reg */
-+	lwi	r2, r1, PTO+PT_R2;	/* restore SDA */		\
-+	lwi	r3, r1, PTO+PT_R3;					\
-+	lwi	r4, r1, PTO+PT_R4;					\
-+	lwi	r5, r1, PTO+PT_R5;					\
-+	lwi	r6, r1, PTO+PT_R6;					\
-+	lwi	r7, r1, PTO+PT_R7;					\
-+	lwi	r8, r1, PTO+PT_R8;					\
-+	lwi	r9, r1, PTO+PT_R9;					\
-+	lwi	r10, r1, PTO+PT_R10;					\
-+	lwi	r11, r1, PTO+PT_R11;	/* restore clobbered regs after rval */\
-+	lwi	r12, r1, PTO+PT_R12;					\
-+	lwi	r13, r1, PTO+PT_R13;	/* restore SDA2 */		\
-+	lwi	r14, r1, PTO+PT_PC;	/* RESTORE_LINK PC, before IRQ/trap */\
-+	lwi	r15, r1, PTO+PT_R15;	/* restore LP */		\
-+	lwi	r16, r1, PTO+PT_R16;					\
-+	lwi	r17, r1, PTO+PT_R17;					\
-+	lwi	r18, r1, PTO+PT_R18;	/* restore asm scratch reg */	\
-+	lwi	r19, r1, PTO+PT_R19;					\
-+	lwi	r20, r1, PTO+PT_R20;					\
-+	lwi	r21, r1, PTO+PT_R21;					\
-+	lwi	r22, r1, PTO+PT_R22;					\
-+	lwi	r23, r1, PTO+PT_R23;					\
-+	lwi	r24, r1, PTO+PT_R24;					\
-+	lwi	r25, r1, PTO+PT_R25;					\
-+	lwi	r26, r1, PTO+PT_R26;					\
-+	lwi	r27, r1, PTO+PT_R27;					\
-+	lwi	r28, r1, PTO+PT_R28;					\
-+	lwi	r29, r1, PTO+PT_R29;					\
-+	lwi	r30, r1, PTO+PT_R30;					\
-+	lwi	r31, r1, PTO+PT_R31;	/* Restore cur task reg */
- 
- #define RESTORE_REGS \
--	lwi	r11, r1, PT_MSR;					\
-+	lwi	r11, r1, PTO+PT_MSR;					\
- 	mts	rmsr , r11;						\
- 	RESTORE_REGS_GP
- 
- #define RESTORE_REGS_RTBD \
--	lwi	r11, r1, PT_MSR;					\
-+	lwi	r11, r1, PTO+PT_MSR;					\
- 	andni	r11, r11, MSR_EIP;          /* clear EIP */             \
- 	ori	r11, r11, MSR_EE | MSR_BIP; /* set EE and BIP */        \
- 	mts	rmsr , r11;						\
-@@ -265,11 +265,11 @@ syscall_debug_table:
- 	lwi	r1, r0, TOPHYS(PER_CPU(ENTRY_SP));			\
- 	/* FIXME: I can add these two lines to one */			\
- 	/* tophys(r1,r1); */						\
--	/* addik	r1, r1, -PT_SIZE; */				\
--	addik	r1, r1, CONFIG_KERNEL_BASE_ADDR - CONFIG_KERNEL_START - PT_SIZE; \
-+	/* addik	r1, r1, -STATE_SAVE_SIZE; */				\
-+	addik	r1, r1, CONFIG_KERNEL_BASE_ADDR - CONFIG_KERNEL_START - STATE_SAVE_SIZE; \
- 	SAVE_REGS							\
- 	brid	2f;							\
--	swi	r1, r1, PT_MODE; 	 				\
-+	swi	r1, r1, PTO+PT_MODE; 	 				\
- 1:	/* User-mode state save.  */					\
- 	lwi	r1, r0, TOPHYS(PER_CPU(CURRENT_SAVE)); /* get saved current */\
- 	tophys(r1,r1);							\
-@@ -277,12 +277,13 @@ syscall_debug_table:
- 	/* MS these three instructions can be added to one */		\
- 	/* addik	r1, r1, THREAD_SIZE; */				\
- 	/* tophys(r1,r1); */						\
--	/* addik	r1, r1, -PT_SIZE; */			\
--	addik r1, r1, THREAD_SIZE + CONFIG_KERNEL_BASE_ADDR - CONFIG_KERNEL_START - PT_SIZE; \
-+	/* addik	r1, r1, -STATE_SAVE_SIZE; */			\
-+	addik r1, r1, THREAD_SIZE + CONFIG_KERNEL_BASE_ADDR		\
-+		- CONFIG_KERNEL_START - STATE_SAVE_SIZE;		\
- 	SAVE_REGS							\
- 	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));			\
--	swi	r11, r1, PT_R1; /* Store user SP.  */		\
--	swi	r0, r1, PT_MODE; /* Was in user-mode.  */		\
-+	swi	r11, r1, PTO+PT_R1; /* Store user SP.  */		\
-+	swi	r0, r1, PTO+PT_MODE; /* Was in user-mode.  */		\
- 	/* MS: I am clearing UMS even in case when I come from kernel space */ \
- 	clear_ums; 							\
- 2:	lwi	CURRENT_TASK, r0, TOPHYS(PER_CPU(CURRENT_SAVE));
-@@ -292,7 +293,7 @@ syscall_debug_table:
- .extern cpuinfo
- 
- C_ENTRY(mb_flush_dcache):
--	addik	r1, r1, -PT_SIZE
-+	addik	r1, r1, -STATE_SAVE_SIZE
- 	SAVE_REGS
- 
- 	addik	r3, r0, cpuinfo
-@@ -305,12 +306,12 @@ C_ENTRY(mb_flush_dcache):
- 	addk	r9, r9, r8
- 
- 	RESTORE_REGS
--	addik	r1, r1, PT_SIZE
-+	addik	r1, r1, STATE_SAVE_SIZE
- 	rtsd	r15, 8
- 	nop
- 
- C_ENTRY(mb_invalidate_icache):
--	addik	r1, r1, -PT_SIZE
-+	addik	r1, r1, -STATE_SAVE_SIZE
- 	SAVE_REGS
- 
- 	addik	r3, r0, cpuinfo
-@@ -323,7 +324,7 @@ C_ENTRY(mb_invalidate_icache):
- 	addk	r9, r9, r8
- 
- 	RESTORE_REGS
--	addik	r1, r1, PT_SIZE
-+	addik	r1, r1, STATE_SAVE_SIZE
- 	rtsd	r15, 8
- 	nop
- 
-@@ -350,18 +351,18 @@ C_ENTRY(_user_exception):
- 	addik	r1, r1, THREAD_SIZE;
- 	tophys(r1,r1);
- 
--	addik	r1, r1, -PT_SIZE; /* Make room on the stack.  */
-+	addik	r1, r1, -STATE_SAVE_SIZE; /* Make room on the stack.  */
- 	SAVE_REGS
--	swi	r0, r1, PT_R3
--	swi	r0, r1, PT_R4
-+	swi	r0, r1, PTO+PT_R3
-+	swi	r0, r1, PTO+PT_R4
- 
--	swi	r0, r1, PT_MODE;			/* Was in user-mode. */
-+	swi	r0, r1, PTO+PT_MODE;			/* Was in user-mode. */
- 	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));
--	swi	r11, r1, PT_R1;		/* Store user SP.  */
-+	swi	r11, r1, PTO+PT_R1;		/* Store user SP.  */
- 	clear_ums;
- 2:	lwi	CURRENT_TASK, r0, TOPHYS(PER_CPU(CURRENT_SAVE));
- 	/* Save away the syscall number.  */
--	swi	r12, r1, PT_R0;
-+	swi	r12, r1, PTO+PT_R0;
- 	tovirt(r1,r1)
- 
- /* where the trap should return need -8 to adjust for rtsd r15, 8*/
-@@ -380,18 +381,18 @@ C_ENTRY(_user_exception):
- 	beqi	r11, 4f
- 
- 	addik	r3, r0, -ENOSYS
--	swi	r3, r1, PT_R3
-+	swi	r3, r1, PTO+PT_R3
- 	brlid	r15, do_syscall_trace_enter
--	addik	r5, r1, PT_R0
-+	addik	r5, r1, PTO+PT_R0
- 
- 	# do_syscall_trace_enter returns the new syscall nr.
- 	addk	r12, r0, r3
--	lwi	r5, r1, PT_R5;
--	lwi	r6, r1, PT_R6;
--	lwi	r7, r1, PT_R7;
--	lwi	r8, r1, PT_R8;
--	lwi	r9, r1, PT_R9;
--	lwi	r10, r1, PT_R10;
-+	lwi	r5, r1, PTO+PT_R5;
-+	lwi	r6, r1, PTO+PT_R6;
-+	lwi	r7, r1, PTO+PT_R7;
-+	lwi	r8, r1, PTO+PT_R8;
-+	lwi	r9, r1, PTO+PT_R9;
-+	lwi	r10, r1, PTO+PT_R10;
- 4:
- /* Jump to the appropriate function for the system call number in r12
-  * (r12 is not preserved), or return an error if r12 is not valid.
-@@ -432,8 +433,8 @@ C_ENTRY(_user_exception):
- /* Entry point used to return from a syscall/trap */
- /* We re-enable BIP bit before state restore */
- C_ENTRY(ret_from_trap):
--	swi	r3, r1, PT_R3
--	swi	r4, r1, PT_R4
-+	swi	r3, r1, PTO+PT_R3
-+	swi	r4, r1, PTO+PT_R4
- /*
-  * Entry point for returns that must not store r3/r4 back into pt_regs,
-  * i.e. rt_sigreturn, which has already restored them from the signal
-@@ -441,7 +442,7 @@ C_ENTRY(ret_from_trap):
-  * so it stays correct if the number of stores above ever changes.
-  */
- ret_from_trap_no_rval:
--	lwi	r11, r1, PT_MODE;
-+	lwi	r11, r1, PTO+PT_MODE;
- /* See if returning to kernel mode, if so, skip resched &c.  */
- 	bnei	r11, 2f;
- 	/* We're returning to user mode, so check for various conditions that
-@@ -453,7 +454,7 @@ ret_from_trap_no_rval:
- 	beqi	r11, 1f
- 
- 	brlid	r15, do_syscall_trace_leave
--	addik	r5, r1, PT_R0
-+	addik	r5, r1, PTO+PT_R0
- 1:
- 	/* We're returning to user mode, so check for various conditions that
- 	 * trigger rescheduling. */
-@@ -472,7 +473,7 @@ ret_from_trap_no_rval:
- 	andi	r11, r19, _TIF_SIGPENDING | _TIF_NOTIFY_RESUME;
- 	beqi	r11, 4f;		/* Signals to handle, handle them */
- 
--	addik	r5, r1, 0;		/* Arg 1: struct pt_regs *regs */
-+	addik	r5, r1, PTO;		/* Arg 1: struct pt_regs *regs */
- 	bralid	r15, do_notify_resume;	/* Handle any signals */
- 	add	r6, r30, r0;		/* Arg 2: int in_syscall */
- 	add	r30, r0, r0		/* no more restarts */
-@@ -484,7 +485,11 @@ ret_from_trap_no_rval:
- 	VM_OFF;
- 	tophys(r1,r1);
- 	RESTORE_REGS_RTBD;
--	addik	r1, r1, PT_SIZE		/* Clean up stack space.  */
-+	addik	r1, r1, STATE_SAVE_SIZE		/* Clean up stack space.  */
-+	/*
-+	 * Deliberately PT_SIZE, not STATE_SAVE_SIZE: r1 is back at the stack
-+	 * top, so PTO cancels and the saved SP sits at PT_R1 - PT_SIZE.
-+	 */
- 	lwi	r1, r1, PT_R1 - PT_SIZE;/* Restore user stack pointer. */
- 	bri	6f;
- 
-@@ -493,7 +498,7 @@ ret_from_trap_no_rval:
- 	VM_OFF;
- 	tophys(r1,r1);
- 	RESTORE_REGS_RTBD;
--	addik	r1, r1, PT_SIZE		/* Clean up stack space.  */
-+	addik	r1, r1, STATE_SAVE_SIZE		/* Clean up stack space.  */
- 	tovirt(r1,r1);
- 6:
- TRAP_return:		/* Make global symbol for debugging */
-@@ -534,7 +539,7 @@ C_ENTRY(sys_rt_sigreturn_wrapper):
- 	 */
- 	addik	r15, r0, ret_from_trap_no_rval - 8
- 	brid	sys_rt_sigreturn	/* Do real work */
--	addik	r5, r1, 0;		/* add user context as 1st arg */
-+	addik	r5, r1, PTO;		/* add user context as 1st arg */
- 
- /*
-  * HW EXCEPTION rutine start
-@@ -545,7 +550,7 @@ C_ENTRY(full_exception_trap):
- 	addik	r17, r17, -4
- 	SAVE_STATE /* Save registers */
- 	/* PC, before IRQ/trap - this is one instruction above */
--	swi	r17, r1, PT_PC;
-+	swi	r17, r1, PTO+PT_PC;
- 	tovirt(r1,r1)
- 	/* FIXME this can be store directly in PT_ESR reg.
- 	 * I tested it but there is a fault */
-@@ -555,7 +560,7 @@ C_ENTRY(full_exception_trap):
- 	mfs	r7, rfsr;		/* save FSR */
- 	mts	rfsr, r0;	/* Clear sticky fsr */
- 	rted	r0, full_exception
--	addik	r5, r1, 0		 /* parameter struct pt_regs * regs */
-+	addik	r5, r1, PTO		 /* parameter struct pt_regs * regs */
- 
- /*
-  * Unaligned data trap.
-@@ -581,14 +586,14 @@ C_ENTRY(unaligned_data_trap):
- 	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));
- 	SAVE_STATE		/* Save registers.*/
- 	/* PC, before IRQ/trap - this is one instruction above */
--	swi	r17, r1, PT_PC;
-+	swi	r17, r1, PTO+PT_PC;
- 	tovirt(r1,r1)
- 	/* where the trap should return need -8 to adjust for rtsd r15, 8 */
- 	addik	r15, r0, ret_from_exc-8
- 	mfs	r3, resr		/* ESR */
- 	mfs	r4, rear		/* EAR */
- 	rtbd	r0, _unaligned_data_exception
--	addik	r7, r1, 0		/* parameter struct pt_regs * regs */
-+	addik	r7, r1, PTO		/* parameter struct pt_regs * regs */
- 
- /*
-  * Page fault traps.
-@@ -611,30 +616,30 @@ C_ENTRY(unaligned_data_trap):
- C_ENTRY(page_fault_data_trap):
- 	SAVE_STATE		/* Save registers.*/
- 	/* PC, before IRQ/trap - this is one instruction above */
--	swi	r17, r1, PT_PC;
-+	swi	r17, r1, PTO+PT_PC;
- 	tovirt(r1,r1)
- 	/* where the trap should return need -8 to adjust for rtsd r15, 8 */
- 	addik	r15, r0, ret_from_exc-8
- 	mfs	r6, rear		/* parameter unsigned long address */
- 	mfs	r7, resr		/* parameter unsigned long error_code */
- 	rted	r0, do_page_fault
--	addik	r5, r1, 0		/* parameter struct pt_regs * regs */
-+	addik	r5, r1, PTO		/* parameter struct pt_regs * regs */
- 
- C_ENTRY(page_fault_instr_trap):
- 	SAVE_STATE		/* Save registers.*/
- 	/* PC, before IRQ/trap - this is one instruction above */
--	swi	r17, r1, PT_PC;
-+	swi	r17, r1, PTO+PT_PC;
- 	tovirt(r1,r1)
- 	/* where the trap should return need -8 to adjust for rtsd r15, 8 */
- 	addik	r15, r0, ret_from_exc-8
- 	mfs	r6, rear		/* parameter unsigned long address */
- 	ori	r7, r0, 0		/* parameter unsigned long error_code */
- 	rted	r0, do_page_fault
--	addik	r5, r1, 0		/* parameter struct pt_regs * regs */
-+	addik	r5, r1, PTO		/* parameter struct pt_regs * regs */
- 
- /* Entry point used to return from an exception.  */
- C_ENTRY(ret_from_exc):
--	lwi	r11, r1, PT_MODE;
-+	lwi	r11, r1, PTO+PT_MODE;
- 	bnei	r11, 2f;		/* See if returning to kernel mode, */
- 					/* ... if so, skip resched &c.  */
- 
-@@ -666,7 +671,7 @@ C_ENTRY(ret_from_exc):
- 	 * complete register state.  Here we save anything not saved by
- 	 * the normal entry sequence, so that it may be safely restored
- 	 * (in a possibly modified form) after do_notify_resume returns. */
--	addik	r5, r1, 0;		/* Arg 1: struct pt_regs *regs */
-+	addik	r5, r1, PTO;		/* Arg 1: struct pt_regs *regs */
- 	bralid	r15, do_notify_resume;	/* Handle any signals */
- 	addi	r6, r0, 0;		/* Arg 2: int in_syscall */
- 	bri	1b
-@@ -678,7 +683,7 @@ C_ENTRY(ret_from_exc):
- 	tophys(r1,r1);
- 
- 	RESTORE_REGS_RTBD;
--	addik	r1, r1, PT_SIZE		/* Clean up stack space.  */
-+	addik	r1, r1, STATE_SAVE_SIZE		/* Clean up stack space.  */
- 
- 	lwi	r1, r1, PT_R1 - PT_SIZE; /* Restore user stack pointer. */
- 	bri	6f;
-@@ -687,7 +692,7 @@ C_ENTRY(ret_from_exc):
- 	VM_OFF;
- 	tophys(r1,r1);
- 	RESTORE_REGS_RTBD;
--	addik	r1, r1, PT_SIZE		/* Clean up stack space.  */
-+	addik	r1, r1, STATE_SAVE_SIZE		/* Clean up stack space.  */
- 
- 	tovirt(r1,r1);
- 6:
-@@ -720,10 +725,10 @@ C_ENTRY(_interrupt):
- 	tophys(r1,r1); /* MS: I have in r1 physical address where stack is */
- 	/* save registers */
- /* MS: Make room on the stack -> activation record */
--	addik	r1, r1, -PT_SIZE;
-+	addik	r1, r1, -STATE_SAVE_SIZE;
- 	SAVE_REGS
- 	brid	2f;
--	swi	r1, r1, PT_MODE; /* 0 - user mode, 1 - kernel mode */
-+	swi	r1, r1, PTO+PT_MODE; /* 0 - user mode, 1 - kernel mode */
- 1:
- /* User-mode state save. */
-  /* MS: get the saved current */
-@@ -733,23 +738,23 @@ C_ENTRY(_interrupt):
- 	addik	r1, r1, THREAD_SIZE;
- 	tophys(r1,r1);
- 	/* save registers */
--	addik	r1, r1, -PT_SIZE;
-+	addik	r1, r1, -STATE_SAVE_SIZE;
- 	SAVE_REGS
- 	/* calculate mode */
--	swi	r0, r1, PT_MODE;
-+	swi	r0, r1, PTO+PT_MODE;
- 	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));
--	swi	r11, r1, PT_R1;
-+	swi	r11, r1, PTO+PT_R1;
- 	clear_ums;
- 2:
- 	lwi	CURRENT_TASK, r0, TOPHYS(PER_CPU(CURRENT_SAVE));
- 	tovirt(r1,r1)
- 	addik	r15, r0, irq_call;
- irq_call:rtbd	r0, do_IRQ;
--	addik	r5, r1, 0;
-+	addik	r5, r1, PTO;
- 
- /* MS: we are in virtual mode */
- ret_from_irq:
--	lwi	r11, r1, PT_MODE;
-+	lwi	r11, r1, PTO+PT_MODE;
- 	bnei	r11, 2f;
- 
- 1:
-@@ -765,7 +770,7 @@ ret_from_irq:
- 5:	andi	r11, r19, _TIF_SIGPENDING | _TIF_NOTIFY_RESUME;
- 	beqid	r11, no_intr_resched
- /* Handle a signal return; Pending signals should be in r18. */
--	addik	r5, r1, 0; /* Arg 1: struct pt_regs *regs */
-+	addik	r5, r1, PTO; /* Arg 1: struct pt_regs *regs */
- 	bralid	r15, do_notify_resume;	/* Handle any signals */
- 	addi	r6, r0, 0; /* Arg 2: int in_syscall */
- 	bri	1b
-@@ -778,7 +783,7 @@ no_intr_resched:
- 	VM_OFF;
- 	tophys(r1,r1);
- 	RESTORE_REGS
--	addik	r1, r1, PT_SIZE /* MS: Clean up stack space. */
-+	addik	r1, r1, STATE_SAVE_SIZE /* MS: Clean up stack space. */
- 	lwi	r1, r1, PT_R1 - PT_SIZE;
- 	bri	6f;
- /* MS: Return to kernel state. */
-@@ -801,7 +806,7 @@ restore:
- 	VM_OFF /* MS: turn off MMU */
- 	tophys(r1,r1)
- 	RESTORE_REGS
--	addik	r1, r1, PT_SIZE	/* MS: Clean up stack space. */
-+	addik	r1, r1, STATE_SAVE_SIZE	/* MS: Clean up stack space. */
- 	tovirt(r1,r1);
- 6:
- IRQ_return: /* MS: Make global symbol for debugging */
-@@ -820,29 +825,29 @@ C_ENTRY(_xtmr_manager_reset):
- 	lwi	r1, r0, xmb_manager_stackpointer
- 
- 	/* Restore MSR */
--	lwi	r2, r1, PT_MSR
-+	lwi	r2, r1, PTO+PT_MSR
- 	mts	rmsr, r2
- 	bri	4
- 
- 	/* restore Special purpose registers */
--	lwi	r2, r1, PT_PID
-+	lwi	r2, r1, PTO+PT_PID
- 	mts	rpid, r2
- 
--	lwi	r2, r1, PT_TLBI
-+	lwi	r2, r1, PTO+PT_TLBI
- 	mts	rtlbx, r2
- 
--	lwi	r2, r1, PT_ZPR
-+	lwi	r2, r1, PTO+PT_ZPR
- 	mts	rzpr, r2
- 
- #if CONFIG_XILINX_MICROBLAZE0_USE_FPU
--	lwi	r2, r1, PT_FSR
-+	lwi	r2, r1, PTO+PT_FSR
- 	mts	rfsr, r2
- #endif
- 
- 	/* restore all the tlb's */
- 	addik	r3, r0, TOPHYS(tlb_skip)
--	addik	r6, r0, PT_TLBL0
--	addik	r7, r0, PT_TLBH0
-+	addik	r6, r0, PTO+PT_TLBL0
-+	addik	r7, r0, PTO+PT_TLBH0
- restore_tlb:
- 	add	r6, r6, r1
- 	add	r7, r7, r1
-@@ -868,9 +873,9 @@ ret_from_reset:
- 	VM_OFF
- 	/* MS: Restore all regs */
- 	RESTORE_REGS
--	lwi	r14, r1, PT_R14
--	lwi	r16, r1, PT_PC
--	addik	r1, r1, PT_SIZE + 36
-+	lwi	r14, r1, PTO+PT_R14
-+	lwi	r16, r1, PTO+PT_PC
-+	addik	r1, r1, STATE_SAVE_SIZE + 36
- 	rtbd	r16, 0
- 	nop
- 
-@@ -885,11 +890,11 @@ C_ENTRY(_xmb_manager_break):
- 	 * Reserve memory in the stack for context store/restore
- 	 * (which includes memory for storing tlbs (max two tlbs))
- 	 */
--	addik	r1, r1, -PT_SIZE - 36
-+	addik	r1, r1, -STATE_SAVE_SIZE - 36
- 	swi	r1, r0, xmb_manager_stackpointer
- 	SAVE_REGS
--	swi	r14, r1, PT_R14	/* rewrite saved R14 value */
--	swi	r16, r1, PT_PC; /* PC and r16 are the same */
-+	swi	r14, r1, PTO+PT_R14	/* rewrite saved R14 value */
-+	swi	r16, r1, PTO+PT_PC; /* PC and r16 are the same */
- 
- 	lwi	r6, r0, TOPHYS(xmb_manager_baseaddr)
- 	lwi	r7, r0, TOPHYS(xmb_manager_crval)
-@@ -903,25 +908,25 @@ C_ENTRY(_xmb_manager_break):
- 
- 	/* Save the special purpose registers  */
- 	mfs	r2, rpid
--	swi	r2, r1, PT_PID
-+	swi	r2, r1, PTO+PT_PID
- 
- 	mfs	r2, rtlbx
--	swi	r2, r1, PT_TLBI
-+	swi	r2, r1, PTO+PT_TLBI
- 
- 	mfs	r2, rzpr
--	swi	r2, r1, PT_ZPR
-+	swi	r2, r1, PTO+PT_ZPR
- 
- #if CONFIG_XILINX_MICROBLAZE0_USE_FPU
- 	mfs	r2, rfsr
--	swi	r2, r1, PT_FSR
-+	swi	r2, r1, PTO+PT_FSR
- #endif
- 	mfs	r2, rmsr
--	swi	r2, r1, PT_MSR
-+	swi	r2, r1, PTO+PT_MSR
- 
- 	/* Save all the tlb's */
- 	addik	r3, r0, TOPHYS(tlb_skip)
--	addik	r6, r0, PT_TLBL0
--	addik	r7, r0, PT_TLBH0
-+	addik	r6, r0, PTO+PT_TLBL0
-+	addik	r7, r0, PTO+PT_TLBH0
- save_tlb:
- 	add	r6, r6, r1
- 	add	r7, r7, r1
-@@ -978,28 +983,28 @@ C_ENTRY(_debug_exception):
- 	lwi	r1, r0, TOPHYS(PER_CPU(ENTRY_SP)); /* Reload kernel stack-ptr*/
- 
- 	/* BIP bit is set on entry, no interrupts can occur */
--	addik   r1, r1, CONFIG_KERNEL_BASE_ADDR - CONFIG_KERNEL_START - PT_SIZE;
-+	addik   r1, r1, CONFIG_KERNEL_BASE_ADDR - CONFIG_KERNEL_START - STATE_SAVE_SIZE;
- 	SAVE_REGS;
- 	/* save all regs to pt_reg structure */
--	swi	r0, r1, PT_R0;	/* R0 must be saved too */
--	swi	r14, r1, PT_R14	/* rewrite saved R14 value */
--	swi	r16, r1, PT_PC; /* PC and r16 are the same */
-+	swi	r0, r1, PTO+PT_R0;	/* R0 must be saved too */
-+	swi	r14, r1, PTO+PT_R14	/* rewrite saved R14 value */
-+	swi	r16, r1, PTO+PT_PC; /* PC and r16 are the same */
- 	/* save special purpose registers to pt_regs */
- 	mfs	r11, rear;
--	swi	r11, r1, PT_EAR;
-+	swi	r11, r1, PTO+PT_EAR;
- 	mfs	r11, resr;
--	swi	r11, r1, PT_ESR;
-+	swi	r11, r1, PTO+PT_ESR;
- 	mfs	r11, rfsr;
--	swi	r11, r1, PT_FSR;
-+	swi	r11, r1, PTO+PT_FSR;
- 
- 	/* stack pointer is in physical address at it is decrease
--	 * by PT_SIZE but we need to get correct R1 value */
--	addik   r11, r1, CONFIG_KERNEL_START - CONFIG_KERNEL_BASE_ADDR + PT_SIZE;
--	swi	r11, r1, PT_R1
-+	 * by STATE_SAVE_SIZE but we need to get correct R1 value */
-+	addik   r11, r1, CONFIG_KERNEL_START - CONFIG_KERNEL_BASE_ADDR + STATE_SAVE_SIZE;
-+	swi	r11, r1, PTO+PT_R1
- 	/* MS: r31 - current pointer isn't changed */
- 	tovirt(r1,r1)
- #ifdef CONFIG_KGDB
--	addi	r5, r1, 0 /* pass pt_reg address as the first arg */
-+	addi	r5, r1, PTO /* pass pt_reg address as the first arg */
- 	addik	r15, r0, dbtrap_call; /* return address */
- 	rtbd	r0, microblaze_kgdb_break
- 	nop;
-@@ -1015,16 +1020,16 @@ C_ENTRY(_debug_exception):
- 	addik	r1, r1, THREAD_SIZE;	/* calculate kernel stack pointer */
- 	tophys(r1,r1);
- 
--	addik	r1, r1, -PT_SIZE; /* Make room on the stack.  */
-+	addik	r1, r1, -STATE_SAVE_SIZE; /* Make room on the stack.  */
- 	SAVE_REGS;
--	swi	r16, r1, PT_PC;	/* Save LP */
--	swi	r0, r1, PT_MODE; /* Was in user-mode.  */
-+	swi	r16, r1, PTO+PT_PC;	/* Save LP */
-+	swi	r0, r1, PTO+PT_MODE; /* Was in user-mode.  */
- 	lwi	r11, r0, TOPHYS(PER_CPU(ENTRY_SP));
--	swi	r11, r1, PT_R1; /* Store user SP.  */
-+	swi	r11, r1, PTO+PT_R1; /* Store user SP.  */
- 	lwi	CURRENT_TASK, r0, TOPHYS(PER_CPU(CURRENT_SAVE));
- 	tovirt(r1,r1)
- 	set_vms;
--	addik	r5, r1, 0;
-+	addik	r5, r1, PTO;
- 	addik	r15, r0, dbtrap_call;
- dbtrap_call: /* Return point for kernel/user entry + 8 because of rtsd r15, 8 */
- 	rtbd	r0, sw_exception
-@@ -1032,7 +1037,7 @@ dbtrap_call: /* Return point for kernel/user entry + 8 because of rtsd r15, 8 */
- 
- 	/* MS: The first instruction for the second part of the gdb/kgdb */
- 	set_bip; /* Ints masked for state restore */
--	lwi	r11, r1, PT_MODE;
-+	lwi	r11, r1, PTO+PT_MODE;
- 	bnei	r11, 2f;
- /* MS: Return to user space - gdb */
- 1:
-@@ -1051,7 +1056,7 @@ dbtrap_call: /* Return point for kernel/user entry + 8 because of rtsd r15, 8 */
- 5:	andi	r11, r19, _TIF_SIGPENDING | _TIF_NOTIFY_RESUME;
- 	beqi	r11, 4f;		/* Signals to handle, handle them */
- 
--	addik	r5, r1, 0;		/* Arg 1: struct pt_regs *regs */
-+	addik	r5, r1, PTO;		/* Arg 1: struct pt_regs *regs */
- 	bralid	r15, do_notify_resume;	/* Handle any signals */
- 	addi  r6, r0, 0;	/* Arg 2: int in_syscall */
- 	bri	1b
-@@ -1062,7 +1067,7 @@ dbtrap_call: /* Return point for kernel/user entry + 8 because of rtsd r15, 8 */
- 	tophys(r1,r1);
- 	/* MS: Restore all regs */
- 	RESTORE_REGS_RTBD
--	addik	r1, r1, PT_SIZE	 /* Clean up stack space */
-+	addik	r1, r1, STATE_SAVE_SIZE	 /* Clean up stack space */
- 	lwi	r1, r1, PT_R1 - PT_SIZE; /* Restore user stack pointer */
- DBTRAP_return_user: /* MS: Make global symbol for debugging */
- 	rtbd	r16, 0; /* MS: Instructions to return from a debug trap */
-@@ -1073,9 +1078,9 @@ DBTRAP_return_user: /* MS: Make global symbol for debugging */
- 	tophys(r1,r1);
- 	/* MS: Restore all regs */
- 	RESTORE_REGS_RTBD
--	lwi	r14, r1, PT_R14;
--	lwi	r16, r1, PT_PC;
--	addik	r1, r1, PT_SIZE; /* MS: Clean up stack space */
-+	lwi	r14, r1, PTO+PT_R14;
-+	lwi	r16, r1, PTO+PT_PC;
-+	addik	r1, r1, STATE_SAVE_SIZE; /* MS: Clean up stack space */
- 	tovirt(r1,r1);
- DBTRAP_return_kernel: /* MS: Make global symbol for debugging */
- 	rtbd	r16, 0; /* MS: Instructions to return from a debug trap */
-@@ -1173,7 +1178,7 @@ ENTRY(_switch_to)
- .ent xmb_inject_err
- .type xmb_inject_err, @function
- xmb_inject_err:
--	addik	r1, r1, -PT_SIZE
-+	addik	r1, r1, -STATE_SAVE_SIZE
- 	SAVE_REGS
- 
- 	/* Switch to real mode */
-@@ -1197,7 +1202,7 @@ xmb_inject_err:
- 	nop;
- 1:
- 	RESTORE_REGS
--	addik	r1, r1, PT_SIZE
-+	addik	r1, r1, STATE_SAVE_SIZE
- 	rtsd	r15, 8;
- 	nop;
- .end xmb_inject_err
-diff --git a/arch/microblaze/kernel/hw_exception_handler.S b/arch/microblaze/kernel/hw_exception_handler.S
-index 07ea23965f817..4693916be5267 100644
---- a/arch/microblaze/kernel/hw_exception_handler.S
-+++ b/arch/microblaze/kernel/hw_exception_handler.S
-@@ -313,6 +313,11 @@ _MB_HW_ExceptionVectorTable:
- .align 4
- .ent _hw_exception_handler
- _hw_exception_handler:
-+	/*
-+	 * This handler saves into the static pt_pool_space buffer, not into a
-+	 * stack frame, so the plain PT_* offsets are right here -- do not add
-+	 * the PTO of entry.S's frames.
-+	 */
- 	swi	r1, r0, TOPHYS(pt_pool_space + PT_R1); /* GET_SP */
- 	/* Save date to kernel memory. Here is the problem
- 	 * when you came from user space */
-diff --git a/arch/microblaze/kernel/process.c b/arch/microblaze/kernel/process.c
-index 56342e11442d2..504e73854bc2f 100644
---- a/arch/microblaze/kernel/process.c
-+++ b/arch/microblaze/kernel/process.c
-@@ -19,6 +19,7 @@
- #include <linux/bitops.h>
- #include <linux/ptrace.h>
- #include <asm/cacheflush.h>
-+#include <asm/entry.h>
- 
- void show_regs(struct pt_regs *regs)
++fdb_entry_aged()
++{
++	local mac=$1
++	local dev=$2
++
++	! $BRIDGE fdb get to $mac dev $dev self &> /dev/null
++}
++
+ check_nexthop_fdb_support()
  {
-@@ -65,7 +66,7 @@ int copy_thread(struct task_struct *p, const struct kernel_clone_args *args)
- 		 * the registers. That's OK for a brand new thread.*/
- 		memset(childregs, 0, sizeof(struct pt_regs));
- 		memset(&ti->cpu_context, 0, sizeof(struct cpu_context));
--		ti->cpu_context.r1  = (unsigned long)childregs;
-+		ti->cpu_context.r1  = (unsigned long)childregs - PTO;
- 		ti->cpu_context.r20 = (unsigned long)args->fn;
- 		ti->cpu_context.r19 = (unsigned long)args->fn_arg;
- 		childregs->pt_mode = 1;
-@@ -79,7 +80,7 @@ int copy_thread(struct task_struct *p, const struct kernel_clone_args *args)
- 		childregs->r1 = usp;
+ 	$IP nexthop help 2>&1 | grep -q fdb
+@@ -505,14 +513,18 @@ ipv6_fdb_grp_fcnal()
+ 	log_test $? 0 "Fdb mac add with nexthop group and static state"
  
- 	memset(&ti->cpu_context, 0, sizeof(struct cpu_context));
--	ti->cpu_context.r1 = (unsigned long)childregs;
-+	ti->cpu_context.r1 = (unsigned long)childregs - PTO;
- 	childregs->msr |= MSR_UMS;
+ 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
+-	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
++	log_test $? 0 "Fdb mac add with nexthop group and dynamic state"
++
++	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self dynamic extern_learn"
++	log_test $? 0 "Fdb mac add with nexthop group and extern_learn"
  
- 	/* we should consider the fact that childregs is a copy of the parent
+-	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
+-	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
+-	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
++	run_cmd "$IP link set dev vx10 up type vxlan ageing 1"
++	run_cmd "$BRIDGE fdb add 02:02:00:00:00:18 dev vx10 dst 2001:db8:91::11 self dynamic"
++	slowwait 20 fdb_entry_aged 02:02:00:00:00:18 vx10
++	log_test $? 0 "Fdb mac without nexthop group aged out"
+ 
+-	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
+-	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
++	run_cmd "$BRIDGE fdb get to 02:02:00:00:00:16 dev vx10 self"
++	log_test $? 0 "Fdb mac with nexthop group not aged out"
+ 
+ 	run_cmd "$IP -6 ro add 2001:db8:101::1/128 nhid 66"
+ 	log_test $? 2 "Route add with fdb nexthop"
+@@ -599,14 +611,18 @@ ipv4_fdb_grp_fcnal()
+ 	log_test $? 0 "Fdb mac add with nexthop group and static state"
+ 
+ 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
+-	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
++	log_test $? 0 "Fdb mac add with nexthop group and dynamic state"
++
++	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self dynamic extern_learn"
++	log_test $? 0 "Fdb mac add with nexthop group and extern_learn"
+ 
+-	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
+-	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
+-	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
++	run_cmd "$IP link set dev vx10 up type vxlan ageing 1"
++	run_cmd "$BRIDGE fdb add 02:02:00:00:00:18 dev vx10 dst 10.0.0.3 self dynamic"
++	slowwait 20 fdb_entry_aged 02:02:00:00:00:18 vx10
++	log_test $? 0 "Fdb mac without nexthop group aged out"
+ 
+-	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
+-	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
++	run_cmd "$BRIDGE fdb get to 02:02:00:00:00:16 dev vx10 self"
++	log_test $? 0 "Fdb mac with nexthop group not aged out"
+ 
+ 	run_cmd "$IP ro add 172.16.0.0/22 nhid 16"
+ 	log_test $? 2 "Route add with fdb nexthop"
 -- 
 2.53.0
 
