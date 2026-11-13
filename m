@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591252;
-	b=fZizjVmnHITe8MBlxw67CeoIAAPd11p686q+PJZ4AB2Y9NBNEiSljz+GoMVlq2P0WarJ
-	 VD7EDV5Zn3QI0inxJcwNDONmTRpyKITItg3FhLyX9YH2EACb5a4y4Ji+0gxf5zUbND6tP
-	 paRWm3L6WHDBfyd5irvzkoSd2Mp9+PtGlnMLhpCHUgkX6OATK5Vi+cG/PvC+PJNE6851D
-	 nPwATqJ6X+SpiitgFkINAbJqB//z/w8s2uAIZr4Zt5ihpfebNJUG+cQXghPRtkzt8OC2k
-	 qF1D8lSLumqXZOf9VQTd9uA8h2uDpvd0Ro+UtimCeZrJ25A03hXQWrmc/FclfMTuYSw==
+	t=1794591253;
+	b=Jn3Zszuoq1MwSc+S+t1iHCwnzVZb/Sdz14dOBtnfeECAmlqpMdsz9l0L8nW95siIy9qS
+	 fep3YM3M5yujDs3O81/rWWaCQCuOhN3EQ2e5CPT1WoRhB+OilqHYTUd0MRvndlDNuwij/
+	 J3vtjQFte2VT1HicFK6U28RYnIGhD4sPgIKHtQtuFOWFiE8+iuEcRkdCaZSyTyN3qjYrJ
+	 2VmHRlYQVR2Ywh49xPXWStU20vSuTzoIZ/7lsVdOfEE40KKHSd5oyYLfS/Iq4wTIm15EL
+	 WNsrFN3hiPlKnJZrAiOIrifwiPMbnsMkudyFrn6P83JAELE0F/Lq/iN8drXgRnY39Fg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591252;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591253;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kOmqEE0v6mnvDJJp9Lm6sQOowQR+oy2eig9JaZ9G3hA=;
-	b=w4gRim39atjJ+8ZOgvYseukJjNf2F1EfgDBP+YVjI2eSfe6djvC6cStiMwTWUPHs33F/
-	 7+BeM0wFA38rEtB4gv9UMbgYjdmVPBUWsEJME1AAWyL4MvHeYOrjIAeOa4XFX2dN8E0RU
-	 zOrbI+rblbiVHQ1+1p2GyhcEKGOiFWzr1lecYGPXc5lrPfWdxZoyb8m0IZPyCPt1uBQx+
-	 57VjsbGPBZ/awP3uC7IAEQRqFPDRKYlpIquzeAxC2LV0bjDBOgikeQdOisaSSxcIinLXt
-	 2z+4oKRaHiNR0t/QYXWoZ3JYFq97DRTysHe5jsWian2YjMwdKtgrq3GsZtMjUBuMHVQ==
+	bh=jTbnHswRK7V7RKhZ9avPzEI58FwP3+/rVEd31wvZzWw=;
+	b=e+mWrBiNjcM+bQhy704lKzJRpm+Fovn/WF0dR3hOXH+7AJFYbqmyJef9a1HHTSItXu/R
+	 lG2/BqqxdQyWiuSnXi39Ro3GsfAdnh8uN2BBDU9xOepAEFDgKN5CqIimLz+wLPK34k4cT
+	 tPqDKWDXg/h5DXuhrd4p0GUS7Y4Ew+gdK/YafrJauyKgKsZ49I+wKMrigCZSddfEp5ko4
+	 5lL328P3biMqnMmtmqrWZJWNRRbMwVI21Mn7jbmNTT+LJz8/R78nOI9URoqRjPpiYcHkp
+	 CwAE9lnHtqjgmlk2jNT6/zBZDLgMHLgSl2O6DFyOMGNNJvezWJ9ni2Kxqpnb2cHVlaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXQ8dXb6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b6Bmsy77;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E551560A380F;
-	Fri, 13 Nov 2026 17:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A85E6076F81;
+	Fri, 13 Nov 2026 17:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXQ8dXb6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B431F000C4;
-	Fri, 13 Nov 2026 17:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b6Bmsy77
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8531F000C4;
+	Fri, 13 Nov 2026 17:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591251;
-	bh=kOmqEE0v6mnvDJJp9Lm6sQOowQR+oy2eig9JaZ9G3hA=;
+	s=korg; t=1794591253;
+	bh=jTbnHswRK7V7RKhZ9avPzEI58FwP3+/rVEd31wvZzWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eXQ8dXb6vPBzWOVnB4azZXjZVV+2QEDbfPzfb/BL/BFyCUVN1S1SRmY88IWuyOgK8
-	 QyL19WTfsqYzR46WgTq3uBHMaaDMJqvch63/7PI6yU96LJJNTNxcl0mm2q19ahi0uH
-	 Kw1Yiz4jqNI2RbCFAus3FMftnVl2TcRaSiCimSY0=
+	b=b6Bmsy77OjRVWH6ayivUrOClnmvIyqHIiTiAqZUjxH+veKBfF0lhQ5hz41kHz8RO9
+	 E0YfdPXy66MfaiQKCj8I0xRxwzhXnumIQHwCVfbDoSxvOa0WEEavjNxH+8FnqAsHvA
+	 LbfIgFbMxZIrYao1u2OhA8Ooa2fY6WHb9nb72QP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <jjc@jclark.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Christian Gmeiner <cgmeiner@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 375/670] net: ethernet: ti: am65-cpsw-nuss: Enable timestamping of unicast PTP packets
-Date: Fri, 13 Nov 2026 10:48:59 -0500
-Message-ID: <20261113153824.497041003@linuxfoundation.org>
+Subject: [PATCH 6.12 376/670] drm/etnaviv: Flush the tile status cache through both the PE and BLT
+Date: Fri, 13 Nov 2026 10:49:00 -0500
+Message-ID: <20261113153824.526468741@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,61 +68,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <jjc@jclark.com>
+From: Christian Gmeiner <cgmeiner@igalia.com>
 
-[ Upstream commit 6887a8f98244ba4c0fbe2d2461b9b8f8a300e326 ]
+[ Upstream commit c1a757f8df1363032623fa9b1baaba0dcf34de6d ]
 
-On a BeagleY-AI (J722S), ptp4l as a unicast master (unicast_listen) logs
-"received DELAY_REQ without timestamp" for each unicast Delay_Req, and
-its port goes to FAULTY after "timed out while polling for tx timestamp"
-for the first unicast Sync.
+Since commit f232d9ec029c ("drm/etnaviv: fix TS cache flushing on GPUs
+with BLT engine"), jobs on GPUs with a BLT engine use a BLT command to
+flush the tile status cache instead of TS_FLUSH_CACHE, which is broken
+on most of these GPUs.
 
-am65_cpsw_nuss_hwtstamp_set() does not set the TS_UNI_EN bit (bit 24) of
-the port's TS_CTL_LTYPE2 register. According to the TRM (J722S TRM
-SPRUJB3D, 12.2.1.4.7.13.5.1 Ethernet Port Receive Event and
-12.2.1.4.7.13.5.2 Ethernet Port Transmit Event), this bit must be set
-for the port to timestamp PTP event messages over UDP sent to a unicast
-address; without it, only messages sent to the PTP multicast addresses
-selected by the TS_107 and TS_129 to TS_132 bits are timestamped. TI's
-netcp_ethss driver for the Keystone 2 Ethernet switch, which has the
-same timestamping registers, always sets TS_UNI_EN.
+GC7000 r6008/r6009 and GC8200 r6401 are the other way around:
+TS_FLUSH_CACHE works, but the BLT command does not flush the cache.
+The vendor driver handles these GPUs using TS_FLUSH_CACHE, but the
+etnaviv kernel driver has no way to identify them.
 
-Set TS_UNI_EN along with the other bits. With this change, ptp4l in the
-same setup gets timestamps for the unicast Delay_Req and Sync messages.
+As a result, dirty tile status cache lines survive the end of a job.
+They are written back by the next cache flush, using the page table of
+the job issuing it. If that job belongs to another process, the write
+goes to the wrong address space.
 
-Fixes: b1f66a5bee07 ("net: ethernet: ti: am65-cpsw-nuss: enable packet timestamping support")
+On GC7000 r6009 this causes MMU faults and GPU recoveries blamed on an
+innocent process. I see around 1100 per run of a multisample
+depth/stencil test running alongside two other GPU clients.
+
+Emit both flushes at the end of every job on GPUs with a BLT engine.
+Whichever does not work on a given GPU is a no-op. Since dirty lines
+are only written back once, this costs one additional state load per
+job.
+
+Fixes: f232d9ec029c ("drm/etnaviv: fix TS cache flushing on GPUs with BLT engine")
 Cc: stable@vger.kernel.org
-Signed-off-by: James Clark <jjc@jclark.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20261102135117.419539-1-jjc@jclark.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Link: https://patch.msgid.link/20261102-etna-pe-ts-flush-v1-1-e4454ed86f85@igalia.com
+Signed-off-by: Christian Gmeiner <cgmeiner@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/etnaviv/etnaviv_buffer.c | 40 +++++++++++-------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index e9d9d69e2ba9d..12860cf2fb932 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -121,6 +121,7 @@
- #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319	BIT(21)
- #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320	BIT(22)
- #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO BIT(23)
-+#define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN	BIT(24)
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
+index 88385dc3b30d8..4f22e373ed346 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
+@@ -230,6 +230,17 @@ u16 etnaviv_buffer_config_pta(struct etnaviv_gpu *gpu, unsigned short id)
+ 	return buffer->user_size / 8;
+ }
  
- /* The PTP event messages - Sync, Delay_Req, Pdelay_Req, and Pdelay_Resp. */
- #define AM65_CPSW_TS_EVENT_MSG_TYPE_BITS (BIT(0) | BIT(1) | BIT(2) | BIT(3))
-@@ -1830,7 +1831,8 @@ static int am65_cpsw_nuss_hwtstamp_set(struct net_device *ndev,
- 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_132 |
- 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319 |
- 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320 |
--			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO;
-+			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO |
-+			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN;
++static void etnaviv_cmd_flush_ts(struct etnaviv_cmdbuf *buffer, bool has_blt)
++{
++	CMD_LOAD_STATE(buffer, VIVS_TS_FLUSH_CACHE, VIVS_TS_FLUSH_CACHE_FLUSH);
++
++	if (has_blt) {
++		CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x1);
++		CMD_LOAD_STATE(buffer, VIVS_BLT_SET_COMMAND, 0x1);
++		CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x0);
++	}
++}
++
+ void etnaviv_buffer_end(struct etnaviv_gpu *gpu)
+ {
+ 	struct etnaviv_cmdbuf *buffer = &gpu->buffer;
+@@ -253,7 +264,7 @@ void etnaviv_buffer_end(struct etnaviv_gpu *gpu)
+ 		unsigned int dwords = 7;
  
- 	ts_ctrl = AM65_CPSW_TS_EVENT_MSG_TYPE_BITS <<
- 		  AM65_CPSW_PN_TS_CTL_MSG_TYPE_EN_SHIFT;
+ 		if (has_blt)
+-			dwords += 10;
++			dwords += 11;
+ 
+ 		link_target = etnaviv_buffer_reserve(gpu, buffer, dwords);
+ 
+@@ -266,16 +277,8 @@ void etnaviv_buffer_end(struct etnaviv_gpu *gpu)
+ 			CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x0);
+ 		}
+ 		CMD_LOAD_STATE(buffer, VIVS_GL_FLUSH_CACHE, flush);
+-		if (gpu->exec_state == ETNA_PIPE_3D) {
+-			if (has_blt) {
+-				CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x1);
+-				CMD_LOAD_STATE(buffer, VIVS_BLT_SET_COMMAND, 0x1);
+-				CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x0);
+-			} else {
+-				CMD_LOAD_STATE(buffer, VIVS_TS_FLUSH_CACHE,
+-					       VIVS_TS_FLUSH_CACHE_FLUSH);
+-			}
+-		}
++		if (gpu->exec_state == ETNA_PIPE_3D)
++			etnaviv_cmd_flush_ts(buffer, has_blt);
+ 		CMD_SEM(buffer, SYNC_RECIPIENT_FE, SYNC_RECIPIENT_PE);
+ 		CMD_STALL(buffer, SYNC_RECIPIENT_FE, SYNC_RECIPIENT_PE);
+ 		if (has_blt) {
+@@ -462,12 +465,12 @@ void etnaviv_buffer_queue(struct etnaviv_gpu *gpu, u32 exec_state,
+ 	return_dwords = 7;
+ 
+ 	/*
+-	 * When the BLT engine is present we need 6 more dwords in the return
++	 * When the BLT engine is present we need 7 more dwords in the return
+ 	 * target: 3 enable/flush/disable + 4 enable/semaphore stall/disable,
+-	 * but we don't need the normal TS flush state.
++	 * on top of the normal TS flush state.
+ 	 */
+ 	if (has_blt)
+-		return_dwords += 6;
++		return_dwords += 7;
+ 
+ 	return_target = etnaviv_buffer_reserve(gpu, buffer, return_dwords);
+ 	CMD_LINK(cmdbuf, return_dwords, return_target);
+@@ -484,14 +487,7 @@ void etnaviv_buffer_queue(struct etnaviv_gpu *gpu, u32 exec_state,
+ 				       VIVS_GL_FLUSH_CACHE_DEPTH |
+ 				       VIVS_GL_FLUSH_CACHE_COLOR |
+ 				       VIVS_GL_FLUSH_CACHE_SHADER_L1);
+-		if (has_blt) {
+-			CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x1);
+-			CMD_LOAD_STATE(buffer, VIVS_BLT_SET_COMMAND, 0x1);
+-			CMD_LOAD_STATE(buffer, VIVS_BLT_ENABLE, 0x0);
+-		} else {
+-			CMD_LOAD_STATE(buffer, VIVS_TS_FLUSH_CACHE,
+-					       VIVS_TS_FLUSH_CACHE_FLUSH);
+-		}
++		etnaviv_cmd_flush_ts(buffer, has_blt);
+ 	}
+ 	CMD_SEM(buffer, SYNC_RECIPIENT_FE, SYNC_RECIPIENT_PE);
+ 	CMD_STALL(buffer, SYNC_RECIPIENT_FE, SYNC_RECIPIENT_PE);
 -- 
 2.53.0
 
