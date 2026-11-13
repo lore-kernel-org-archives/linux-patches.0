@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590850;
-	b=PBjlM28JsHrQZY7ChWGre4tHBa2FY5xXi9MdvTULkWD0fzQj9jQxf3OZlvjM3lQGTWPo
-	 qEuunfHOIowgItPKSocwlVzHw/UHk3sXphWy3KIYWo6GXZ90Sk1ZCdsHfWMYBY1nO+XD+
-	 6N0JknZw8n9ad6P1yqHjhV1/nuEMwUKtFWUCxzshBc9R9woO057TPcpZPzf+r402X+fOr
-	 o+jO0d7MNOOoslwCnIFRtcQQg54gi3wXiD3b1h4OzRQdUiLu1/lrQdkmBLe+1NAUX4S5E
-	 32Uskbi0YEymZhFtIiRnUj/JHptl5dhuyvDPlCKneLS4nW4qQNEqKarHbliH6XQlOhQ==
+	t=1794590852;
+	b=5Nf3N86HjfW3aySM1dvfuAhXmWg4HrcAHSUG5w+y5wcSSNQFbhKwr6gTIYhwlrN4LxZ0
+	 h04c+rIItNI279OVdDvEbVOQqkZAGsU1ULJxEkH942b7y/UaV+X1NjKNIqyp497AtWD1Y
+	 Z/zCqCDghLgWczZhVVCq3f3Sdye96CfY1AHbudQ5fpw9gPX7YOx+JG4iApLzV0rvQZU6h
+	 MtN78Nop5ElOZVmyAcJ8xwODfUw3vdzBFirE/R0hNguIQU5/BxQ/4GCGCCRh/NeB91qrq
+	 DGM+BuLqUF2yW0qgCXuyltNWA56/kL/MKL+kbWMFBFGwJYVEQ/sg5c87Plg9xhsI05Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590850;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590852;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TbL2/MJ4utAfxQSd9cSSKFbK2OXMibjUPh/uGiZfEtc=;
-	b=DfmvV4VJX/S22G6B2NgENzrW4ElOPlm7LG1Bs1fS0yjK19kKtxRwpYowYTbwhe189X0s
-	 ts0QgmFtRVDAu7wHkVJASkT6hVBuy5P2H7eXLqCulE+R0eLF86APxWxdo/xtRusFWviEV
-	 RoqsW0IHuHnuMRoII9Klzp5gKAwUwOIdGRSjadRVKR0nf4TNe2pB7au4k8oaoVbp/dpJc
-	 EIEXyRczCVZk3UNJNjuVoA9XVwBRwPfAKRAOnuiHO8pD6qzfwnK1DaxmUsLcWQF7wCBZD
-	 RT7lFwer0HXZ0qLYwfbBLeEamdJ3ejyR7E8sfJ65n9NNt0tx0L3p1zr2J6gfxfsmHQA==
+	bh=UG/TIcuSgnwWH+6kmhb7wJfZe6rqQLL6phuCI++aNvM=;
+	b=PPy1+lkEdopjAk4f3vVVgFJmYUwLawC9tzLMlSbVXm96rDiHPu1bhgsCiuKZ6nKvrhQn
+	 AqqECD8ZPCnVCAncogrz/U9AwFhIgeSd2lrDHMH+K8sY1Wj+a0JzF4fH5e/3jN+Xp085D
+	 1mkNrGWxLCn+cPNhfwpnvVhmC4Z1b/4mLJsysqi3JweXCj1eCk3KoPaklLfHz8FZL8zpP
+	 VJSeyZaqEANnDM9i5NcsPzEyfFLY0yQ5GX1X+onXe5MIE+qs1JJ49vTEt+Ah1wijaGDjI
+	 Ar0jO0H1EOq6e/5RK8gFIkgh3g3BcTT6yjxXhe4PD33XGtybqZ3JyO9MYKpY9dL3a2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NWDEyXub;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LE/l5j+i";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACC1606D482;
-	Fri, 13 Nov 2026 17:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A11606D482;
+	Fri, 13 Nov 2026 17:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NWDEyXub
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8831F000C4;
-	Fri, 13 Nov 2026 17:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LE/l5j+i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A06FC1F000C4;
+	Fri, 13 Nov 2026 17:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590850;
-	bh=TbL2/MJ4utAfxQSd9cSSKFbK2OXMibjUPh/uGiZfEtc=;
+	s=korg; t=1794590851;
+	bh=UG/TIcuSgnwWH+6kmhb7wJfZe6rqQLL6phuCI++aNvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NWDEyXubqNagU9OLY2UOP2RhS/oVMuNikivleEM6U01T9vc3bv/oQ+ITGQHwJrKQy
-	 a5nNsgoAt0Si0HCUidEjICRB/Rn+iwglX8ywxfSS5bm5wMqnImgCFR6cAzBM6J2ZgT
-	 QS4UpPNUjwPndCGogK/tpOxWzxtatq0UDSKwWyoc=
+	b=LE/l5j+il5PR1zSJa9rkpnDHurncibAWYpwCaxBEm15cxO3cU/qjilAQMVSt6+kK3
+	 83VU10bcm/BneWihj0QWNKfywdT7q0xRgti2NK8dqKPhFAsWbT09u6qk1bqViJHtGJ
+	 vJPShokNqVwGHhA/IqYaR1b/QuCrbM0HEIB/ummA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Til Kaiser <mail@tk154.de>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chris Mason <mason@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 049/670] mlxsw: Initialize register query payloads
-Date: Fri, 13 Nov 2026 10:43:33 -0500
-Message-ID: <20261113153813.025403157@linuxfoundation.org>
+Subject: [PATCH 6.12 050/670] io_uring/cancel: drop sqd->lock while SQPOLL waits
+Date: Fri, 13 Nov 2026 10:43:34 -0500
+Message-ID: <20261113153813.101034947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,120 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Til Kaiser <mail@tk154.de>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 15b7a86a8888dc6a8fd19e181757e32389de9064 ]
+Commit cb0306c52ffae083a86fb283de67875ae7a9500e upstream.
 
-MFGD register queries can exhaust EMAD retries and leave Mellanox
-Spectrum switches stuck during boot or shutdown when running OpenWrt
-built with GCC 15.
+An exiting SQPOLL thread calls io_uring_cancel_generic() with sqd->lock
+held, and keeps it across cond_resched() and the sleep until nothing is
+in flight anymore. A zero-copy send notification can't be canceled and
+stays pending as long as the peer doesn't read, so the lock is held for
+as long as a user cares to. io_ring_exit_work() needs it to park the
+thread, and so do IORING_REGISTER_IOWQ_AFF and IOWQ_MAX_WORKERS. With
+64 such rings sharing the thread, every iou_exit slot sleeps on the lock
+and no ring gets freed for anyone.
 
-An example failure is shown below with the second line wrapped:
+Drop the lock around cond_resched() and the sleep, like the main loop of
+the thread does. Each walk of ctx_list is still under one hold, and
+nothing is kept across the unlock. The thread drops its io-wq, frees its
+tctx and clears sqd->thread under one hold after the loop, so whoever
+holds the lock and finds sqd->thread set can still use them.
 
-  EMAD retries (5/5) (tid=9b544fc100001f35)
-  EMAD reg access failed (tid=9b544fc100001f35,reg_id=90f0(mfgd),
-                          type=query,status=0(operation performed))
-
-On an SN2100, the failure occurs during driver teardown on reboot.
-On an SN3420, it occurs while probing mlxsw_spectrum during boot.
-
-The register query API transmits the supplied payload to the device
-before replacing it with the response. Both MFGD callers pass an
-uninitialized stack buffer, so the request contains arbitrary register
-field values and reserved bits. This makes the request depend on stack
-contents and compiler code generation.
-
-Initialize both MFGD query buffers in the firmware fatal event
-configuration and reporter test paths. The initialization has been
-confirmed to eliminate the boot and shutdown hangs on both switches.
-The subsequent read-modify-write still preserves the other fields
-returned by the device.
-
-Also initialize the FORE fan fault query and the MOGCR mirroring policer
-base query, which pass entirely uninitialized payloads. Restore the MTMP
-query initialization in the temperature history reset path, where only
-the slot and sensor index fields are set before querying the register.
-
-This follows commit 5b0907407e7f ("mlxsw: core: Zero payload buffers for
-couple of registers"), which initialized other query payloads after a
-firmware field length bug caused firmware to consume uninitialized data.
-
-Tested with firmware 2020.1148 and with 2016.3900 from linux-firmware.
-
-Fixes: 7d83ee111008 ("mlxsw: core: Introduce fw_fatal health reporter")
-Fixes: 2c6a33cd334b ("mlxsw: core: Extend hwmon interface with fan fault attribute")
-Fixes: 4039504e6a0c ("mlxsw: spectrum_span: Allow setting policer on a SPAN agent")
-Fixes: b890ad418e1f ("mlxsw: core_hwmon: Extend internal structures to support multi hwmon objects")
-Cc: stable@vger.kernel.org
-Signed-off-by: Til Kaiser <mail@tk154.de>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261014173117.26305-1-mail@tk154.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-(cherry picked from commit 15b7a86a8888dc6a8fd19e181757e32389de9064)
+Fixes: 63809137ebb5 ("io_uring: flush notifiers after sendzc")
+Signed-off-by: Chris Mason <mason@kernel.org>
+[axboe: adapted to the schedule_timeout() based loop]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[axboe: io_uring_cancel_generic() is in io_uring.c in 6.12, and uses a
+schedule() based wait loop]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/core.c          | 4 ++--
- drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c    | 4 ++--
- drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ io_uring/io_uring.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core.c b/drivers/net/ethernet/mellanox/mlxsw/core.c
-index 4a79c0d7e7ad8..feaeb4118f0bc 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core.c
-@@ -2002,7 +2002,7 @@ mlxsw_core_health_fw_fatal_test(struct devlink_health_reporter *reporter,
- 				struct netlink_ext_ack *extack)
- {
- 	struct mlxsw_core *mlxsw_core = devlink_health_reporter_priv(reporter);
--	char mfgd_pl[MLXSW_REG_MFGD_LEN];
-+	char mfgd_pl[MLXSW_REG_MFGD_LEN] = {0};
- 	int err;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 52759ee3bd6c9..09551e3907f91 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3282,7 +3282,16 @@ __cold void io_uring_cancel_generic(bool cancel_all, struct io_sq_data *sqd)
+ 		}
  
- 	/* Read the register first to make sure no other bits are changed. */
-@@ -2023,7 +2023,7 @@ mlxsw_core_health_fw_fatal_ops = {
- static int mlxsw_core_health_fw_fatal_config(struct mlxsw_core *mlxsw_core,
- 					     bool enable)
- {
--	char mfgd_pl[MLXSW_REG_MFGD_LEN];
-+	char mfgd_pl[MLXSW_REG_MFGD_LEN] = {0};
- 	int err;
+ 		if (loop) {
++			/*
++			 * A request that runs in io-wq and doesn't end makes
++			 * each round come here. Don't hold sqd->lock for that
++			 * long either.
++			 */
++			if (sqd)
++				mutex_unlock(&sqd->lock);
+ 			cond_resched();
++			if (sqd)
++				mutex_lock(&sqd->lock);
+ 			continue;
+ 		}
  
- 	/* Read the register first to make sure no other bits are changed. */
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c b/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
-index 9c12e1feb6437..e39a8b0a57095 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/core_hwmon.c
-@@ -120,7 +120,7 @@ static ssize_t mlxsw_hwmon_temp_rst_store(struct device *dev,
- 			container_of(attr, struct mlxsw_hwmon_attr, dev_attr);
- 	struct mlxsw_hwmon_dev *mlxsw_hwmon_dev = mlxsw_hwmon_attr->mlxsw_hwmon_dev;
- 	struct mlxsw_hwmon *mlxsw_hwmon = mlxsw_hwmon_dev->hwmon;
--	char mtmp_pl[MLXSW_REG_MTMP_LEN];
-+	char mtmp_pl[MLXSW_REG_MTMP_LEN] = {0};
- 	unsigned long val;
- 	int index;
- 	int err;
-@@ -177,7 +177,7 @@ static ssize_t mlxsw_hwmon_fan_fault_show(struct device *dev,
- 			container_of(attr, struct mlxsw_hwmon_attr, dev_attr);
- 	struct mlxsw_hwmon_dev *mlxsw_hwmon_dev = mlxsw_hwmon_attr->mlxsw_hwmon_dev;
- 	struct mlxsw_hwmon *mlxsw_hwmon = mlxsw_hwmon_dev->hwmon;
--	char fore_pl[MLXSW_REG_FORE_LEN];
-+	char fore_pl[MLXSW_REG_FORE_LEN] = {0};
- 	bool fault;
- 	int err;
- 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
-index 32d2e61f2b823..91fb77c8e20d6 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
-@@ -1720,7 +1720,7 @@ static int mlxsw_sp2_span_init(struct mlxsw_sp *mlxsw_sp)
- static int mlxsw_sp2_span_policer_id_base_set(struct mlxsw_sp *mlxsw_sp,
- 					      u16 policer_id_base)
- {
--	char mogcr_pl[MLXSW_REG_MOGCR_LEN];
-+	char mogcr_pl[MLXSW_REG_MOGCR_LEN] = {0};
- 	int err;
- 
- 	err = mlxsw_reg_query(mlxsw_sp->core, MLXSW_REG(mogcr), mogcr_pl);
+@@ -3300,8 +3309,20 @@ __cold void io_uring_cancel_generic(bool cancel_all, struct io_sq_data *sqd)
+ 		 * avoids a race where a completion comes in before we did
+ 		 * prepare_to_wait().
+ 		 */
+-		if (inflight == tctx_inflight(tctx, !cancel_all))
++		if (inflight == tctx_inflight(tctx, !cancel_all)) {
++			/*
++			 * A zero-copy notification can't be canceled, and a
++			 * peer that doesn't read keeps it pending. Don't hold
++			 * sqd->lock while waiting for it, or whoever wants the
++			 * lock sleeps as long. No ring is used across this,
++			 * the next round walks ->ctx_list anew.
++			 */
++			if (sqd)
++				mutex_unlock(&sqd->lock);
+ 			schedule();
++			if (sqd)
++				mutex_lock(&sqd->lock);
++		}
+ end_wait:
+ 		finish_wait(&tctx->wait, &wait);
+ 	} while (1);
 -- 
 2.53.0
 
