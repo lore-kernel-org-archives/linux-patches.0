@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585357;
-	b=l3R4l/pDevtWgbUSnfGWmIdwoJ8mPV6JjYlCgKMA6Hvi2By7H3yZ2Mmf26DQ6wvMSuhC
-	 haw9m92WCm2fxj00lP7+GfGzhG6wuCCeHUgCgZLNpgNz+6QQ1cL2ERp7HWjuABJg0AgTV
-	 RC4tHIW9L92Zs/zw+O6kr2BxOK3RYbwEUnjXX2rLrtBNPaXmDs75JmUTK1pYqaITu1iCf
-	 ptArvSRdFQDCnBQidMNsyi+IT9laFHW8+2fSUdsqUUVL7usk6tzlOhBpjX07a+Eta942Z
-	 egzUZ5mFozSaSzkYT0n41DqJ7Hm48vVCpv307ymKuOa9/pDWg0liiA4ZdNgQW5/OqRA==
+	t=1794585359;
+	b=XWUFiWYDCxgNXpNnZtp8N0fvPvTDnCh8fDLbrd7XQVkZfhc9bO2vcyvb9UFwQDUrpbxn
+	 SPwZ5DDc3D5NwdXZ+lhCziyu9YRR8XRbZGcJ9154vcxJZYLGsZIz+dsSRvFdI3MmEfD1f
+	 qJl5e1kCdNaUwwLz/Zy7xOlQGQO1pxfSCkAFy4lJFtFUdgOurQWdSm0NXCvv91pFe/KgW
+	 FqsbCNTK0uKFYYjDDwAttPOSAaoslChZQZ/AldNWO+bGipIxbJQAFZPq2QwOOvzV1wcLs
+	 VHj2mNXwmLlYxPlEUVelTzUdQYjUjHlUW3ulwtLuuzawfwMSL/TOcIBrFjm/5EROVnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585357;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TjT8dCqX6MYHskeW71gtAvKqddabJt+JgHI4mkLrCwI=;
-	b=olyUQH9FcjAv4y3W1K2i1S2wMXNnNqW92nOXpDPN89OFSLUyPF3+6P0mRxF7YwYOXk5M
-	 w7F+1InItBNSnZUFSXOLsdcBPwlSHedJ6e5zG14ovK8pvcsCxALmaQD9aCd30HqeSkQJy
-	 UJonn6TRhNw1iK7kfQa6rUYlB8U7cTZCkTrZvo2fHaPbA+CI4q39lKSC1hFRyBHV4yzWP
-	 /zEflLgBFFQwXImZ5xorY/7msw7k/R0ttIbWgxReI99eYkfn9Ir+Qz/9ogk5HUAn2Xspo
-	 Fc7dG4q9pxUq8J2hAoHWGl1BehsYw4s+Mswh8/ySzDMaXu/p0cvL3bOw2PSSiB/HI/Q==
+	bh=qvYR8J7rPBRAN2ft75Cz2B1XomIr0075+1wJFMK1uNQ=;
+	b=XFJtBM+KK2mmHPP7S42n4ndrhTbIab4ERzojogG8VFvCU3s1pI9kZ2r21bhGX1Nlzv5O
+	 r2A9W29MwVmnFaLcU4vkTSju5sGgOQzaZiNz+4HMYBvL7TC2hlNM0IIDPkxkZsNHOyGyV
+	 QuA6+X51GcF4i90n6poutD3Kx0j4vM23IGhn76EnW74/Xkouw4oXo1hi6UBwpjzCssM2P
+	 SwsuzFND4xNnsewKnsW97yUv+axjorvOn4YtNzEI3LZtLyzCQ3Yg8hIsPctMHtzQjZIct
+	 exBDU8LwNExWADc/3jmJgpu6/cDrk6Jg8d+hC1B/QHt03m85fzJ2uonRdYwbAnZYNXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m0hfaG4+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jcZm61w6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC649606A8A8;
-	Fri, 13 Nov 2026 15:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3650560A5BFC;
+	Fri, 13 Nov 2026 15:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m0hfaG4+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7623E1F00925;
-	Fri, 13 Nov 2026 15:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jcZm61w6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57A31F00925;
+	Fri, 13 Nov 2026 15:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585357;
-	bh=TjT8dCqX6MYHskeW71gtAvKqddabJt+JgHI4mkLrCwI=;
+	s=korg; t=1794585359;
+	bh=qvYR8J7rPBRAN2ft75Cz2B1XomIr0075+1wJFMK1uNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m0hfaG4+1jSvdBt1aMVfQ3+hugiO3m/9GHKI6hGDZrktauZkglKsTM5S+7x99M2vH
-	 ILy16Pl2z5xwFNxdNjkNfP6b14vUhDACnlMC8SlT4SPy8OzNsrSwrYTBBsWX0qQAhH
-	 5IRNEjBO6+nqSvL0KRGpJTW9g8GdyQSOmgSxakTE=
+	b=jcZm61w6AkDikbg/uvbGnmFoqBoIgGKIDaPOnvmDAaTZiMgmrya9fiXSqKvpzREGe
+	 ZJbEuWtAtJmgqT0dS4njjSRNfIp+ubW9AFIP9++2/bJzz9HXLJQifID7eUs9PruYIO
+	 xHNaZh87FiV5LtPFXqPQSSEsPJ/wnYHVDsHn8buM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 037/507] xfs: forcibly reset quota timers when upgrading to bigtime during repair
-Date: Fri, 13 Nov 2026 10:45:41 -0500
-Message-ID: <20261113153754.801155682@linuxfoundation.org>
+Subject: [PATCH 7.3 038/507] nfsd: shorten extack string returned with dodgy listener
+Date: Fri, 13 Nov 2026 10:45:42 -0500
+Message-ID: <20261113153754.840634262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,62 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 780212c8d8105eadb5f56b4c7aafb94937755582 ]
+[ Upstream commit 8d7859d165dbdf6e8d77b76500fc990f26c8310d ]
 
-If we decide to upgrade a dquot to BIGTIME as part of repairing it, we
-should zero out the timer fields so that they are re-evaluated and reset
-in bigtime format instead of letting through whatever was in there
-before.
+The kernel test robot reports:
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: a5b91555403e3a ("xfs: repair quotas")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+>> fs/nfsd/nfsctl.c:2253:4: warning: 'snprintf' will always be truncated; specified size is 80, but format string expands to at least 94 [-Wformat-truncation]
+
+Shorten the extack string in this case so that it will fit in 80 chars.
+
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260904-nfsd-nl-hang-v1-1-8c8035b6294d@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/quota_repair.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ fs/nfsd/nfsctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/xfs/scrub/quota_repair.c b/fs/xfs/scrub/quota_repair.c
-index b6a270010b8b6..3be56d73dd665 100644
---- a/fs/xfs/scrub/quota_repair.c
-+++ b/fs/xfs/scrub/quota_repair.c
-@@ -346,6 +346,8 @@ xrep_quota_block(
- 	bp->b_ops = &xfs_dquot_buf_ops;
- 	for (i = 0; i < qi->qi_dqperchunk; i++, dqblk++) {
- 		struct xfs_disk_dquot	*ddq = &dqblk->dd_diskdq;
-+		bool			was_bigtime =
-+				!!(ddq->d_type & XFS_DQTYPE_BIGTIME);
- 
- 		trace_xrep_disk_dquot(sc->mp, dqtype, id + i);
- 
-@@ -354,8 +356,21 @@ xrep_quota_block(
- 		ddq->d_type = dqtype;
- 		ddq->d_id = cpu_to_be32(id + i);
- 
--		if (xfs_has_bigtime(sc->mp) && ddq->d_id)
-+		if (xfs_has_bigtime(sc->mp) && ddq->d_id) {
-+			/*
-+			 * If something was broken with this dquot and it was a
-+			 * non-bigtime dquot, we'll grant everyone a fresh
-+			 * grace period by zeroing the timer field rather than
-+			 * try to interpret what might be garbage.
-+			 */
-+			if (!was_bigtime) {
-+				ddq->d_btimer = 0;
-+				ddq->d_itimer = 0;
-+				ddq->d_rtbtimer = 0;
-+			}
-+
- 			ddq->d_type |= XFS_DQTYPE_BIGTIME;
-+		}
- 
- 		xrep_quota_fix_timer(sc->mp, ddq, ddq->d_blk_softlimit,
- 				ddq->d_bcount, &ddq->d_btimer,
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index d5effeae4b792..3a5d0f5cc0fc9 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2248,7 +2248,7 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 					   bad_xprt);
+ 		else if (skipped_rpcb)
+ 			NL_SET_ERR_MSG_FMT(info->extack,
+-					   "cannot create %s listener; rpcbind did not answer earlier, so some listeners are not registered",
++					   "cannot create %s listener; rpcbind did not answer earlier",
+ 					   bad_xprt);
+ 		else
+ 			NL_SET_ERR_MSG_FMT(info->extack,
 -- 
 2.53.0
 
