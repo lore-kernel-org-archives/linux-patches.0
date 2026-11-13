@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590363;
-	b=mEGCR+gtkhUxxel3bOlYs4BP8snDenLrPLNmL1ZjH4wmfz3NPdOaIqYQnZzz368/BVxW
-	 uKqLzAxakKz6uHnyArfTlOKO6rkjJPJzbMhL5HMOCgcMbj73lLQa8Tol8ab1vI0Mvl+Rl
-	 01jiAVtGaeCjzmopCmyjy0IkVXGy5m7UaR4S8GpgqxE0McUdAwTK7oHgnBMgZfLGqmg7T
-	 tJNUodLnMWwp9+8ATh9QS3etvhSFAITeX/uINj2rBS0Ot2BC4uSiirD7Uw/nY/2IpD6sJ
-	 LvzrLhYtHkoOBBjLciYvB1bwBYY6xlLgDuSkRfKj86KEwSGXt7366eitbzixTrajuzw==
+	t=1794590365;
+	b=MQkuLlf2kokasCFA/kQEFNt/jaDwLiw5eJ9dM7oMRQ2dJ+nXROtXQdHyoprTUUOaS2Nq
+	 c7k4EZITpimixOJ5XGiyW/GIHQEAwC7nGkXK7GggToEIdIkchrqEvE/zeGub13BjMJKAl
+	 6OH5q3QLrF2KmFOmIO4iR19NRJMq+kvFKABxIw/5BMok8o2hKQohlxAp0v33BDzEKgtFH
+	 1RQQoHhqP+SMCBZx2EuEfOayrDx2jF73uWIOB8+62IXv3PRwXdsz0xXiLyzu+U2nSjnGm
+	 LvtipZjonltVmi1RdZiIFGSqFzyk11ifesX6Pts6NLavk6uVZbTyCUNRYbzOm/71UCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590363;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590365;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JPDXCXRwAxz3ChTmH5c+XxWdfIhFtRlJofGmwzt9zDE=;
-	b=VXxOdyHxQQ80ir3xx5Vi6HaoruisG1oF6hwbPclygLeCXqNZPvM9PPjR2V4gcCzaEFUD
-	 Lym5qeZ4y62Be5iTzWq+3OsLqs3BHECEuzvnYXjv9mpLRzq1SERcmAYpbA/j6+Izoh1vW
-	 onUxSZsrz97Fcq0iPnfHw+H3IY8SgFr4zef73s+p3IGueiV0PpKYvOR3ZwpU83fHP48eu
-	 uOwHrkpjeZcm2XGbU3jh9UQt+2C6lFvM7jpN7CtUg66g5I2nsHuJAaxz/UUrhNQvrWwnc
-	 uX6HlDyaH0dx2a/LqvXTMZ4/6fc3toWLp2UokIpAsMULmi9ejfFjJvAWLoouIurc8Qg==
+	bh=aFyZBItxGSFSbjy8kEsjzvDDmpPfbr5RIz3r4tsyAa8=;
+	b=Th03vu8raf1F6EpP6BWEC4+NQvoQTS+LsLFYF4V5JXNl617g3P1t3cu28Md+e8u4XEuo
+	 SvJGNdK0t/re6aAUtq6NCU75Dla4fgfJwj5pndc9Pxs3VthgyXoJl3dtyPCx1+LlO98UZ
+	 wlx50/zLNTqLepulK2ZC0fDQ6MYUGr9ki2DdMxaMkupfZ8uvr8YWwq2DEVZcSolbezBll
+	 svrXV6zdNN8w5M6BKrMdgF5/nYroEyoWFb/s1Jn2F7iQGyMCNYZCLgS91wmQB2R6xIe5s
+	 otVYxksRknLLm2dPzSCUtddM9T+oyhK49snrd9/n1zDhgjxYv2SrDQnOqRR2UUsC15g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jqEW5RgX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4l9ngNm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96976608316B;
-	Fri, 13 Nov 2026 17:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137B4606B340;
+	Fri, 13 Nov 2026 17:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jqEW5RgX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427D71F000C7;
-	Fri, 13 Nov 2026 17:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4l9ngNm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B89E1F000C4;
+	Fri, 13 Nov 2026 17:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590363;
-	bh=JPDXCXRwAxz3ChTmH5c+XxWdfIhFtRlJofGmwzt9zDE=;
+	s=korg; t=1794590364;
+	bh=aFyZBItxGSFSbjy8kEsjzvDDmpPfbr5RIz3r4tsyAa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jqEW5RgX7f/mjripSu+1wd+6ksQOpoAX30ak7HqrQYUe7oNAnwQxiNaKU8M1RDwtd
-	 ILtQJg9+o9XKIsSUJSfCFiOYhmaxi6DyKZIGFd0Zh3XUCoKUd4OWxjtiGP9MI/nqXx
-	 1Kk93ohZi8k84YAOxzm8aoAwfdpvhwbFLRpr/EUo=
+	b=w4l9ngNm41d1hIf/MjVpEOM/DKPmk9yu7okHhT3gy7EZXZWHUMcUc70telPdjae+0
+	 Uz/oPoteiDTc3qY2vacqoaqpEQwXpz3TXBDZUDFwFii4p+5p7N8Hraw6jVx2yDCniC
+	 XGStP9cxq6RXKog0VqxN19cRDGX1X6NfUNUTydnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shubham Antil <shubham@octane.security>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 338/686] net/sched: sch_qfq: prevent aggregate self-replacement
-Date: Fri, 13 Nov 2026 10:47:51 -0500
-Message-ID: <20261113153832.391428011@linuxfoundation.org>
+Subject: [PATCH 6.18 339/686] vhost-scsi: zero misaligned I/O bounce pages
+Date: Fri, 13 Nov 2026 10:47:52 -0500
+Message-ID: <20261113153832.424539972@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,56 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Shubham Antil <shubham@octane.security>
 
-[ Upstream commit 2e54b3e187300893688c2c7517894f5d96732e05 ]
+[ Upstream commit 01c3a5fa6d641c93c7cef4fb25c5f12938316e18 ]
 
-qfq_change_class() snapshots the current aggregate settings while
-holding the qdisc tree lock, but drops the lock before selecting the
-destination aggregate. During that gap, qfq_enqueue() can move the
-class to an aggregate matching the requested settings.
+The misaligned I/O fallback copies the full bounce scatterlist to the
+request buffer during completion.  If a data-in command transfers less
+than requested, part of a newly allocated bounce page can remain unwritten.
 
-When qfq_change_class() resumes, qfq_find_agg() then returns cl->agg.
-If it is a singleton, qfq_deact_rm_from_agg() frees the aggregate
-before qfq_add_to_agg() immediately accesses the same pointer, causing
-a use-after-free.
+Allocate bounce pages with __GFP_ZERO so all bytes copied during completion
+have a defined value.  This path is already the slow fallback for
+misaligned I/O, so the added initialization cost is acceptable.
 
-While holding the tree lock, skip the replacement when the destination
-is already the current aggregate. Any estimator replacement has already
-completed, so the class change can finish normally.
+Found during an LLM-assisted source audit and validated with a QEMU/KVM
+vhost-scsi target using misaligned data-in commands.
 
-Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
-Link: https://lore.kernel.org/netdev/20260731140533.566493-1-david.lee@trailofbits.com/
+Fixes: 5ced58bfa132 ("vhost-scsi: Fix alignment handling with windows")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Link: https://patch.msgid.link/20261029180957.43015-1-david.lee@trailofbits.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: LLM (OpenAI Codex, gpt-5.6-sol)
+Signed-off-by: Shubham Antil <shubham@octane.security>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20261020105503.75904-1-shubham@octane.security>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_qfq.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/vhost/scsi.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
-index 7d93690cb4360..d82b04827c2c4 100644
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -517,11 +517,14 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
- 		sch_tree_lock(sch);
- 		qfq_init_agg(q, new_agg, lmax, weight);
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index deb4c8bfd3d57..fac400b25dad7 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -906,7 +906,12 @@ vhost_scsi_copy_iov_to_sgl(struct vhost_scsi_cmd *cmd, struct iov_iter *iter,
  	}
-+	if (existing && new_agg == cl->agg)
-+		goto unlock;
- 	if (existing)
- 		qfq_deact_rm_from_agg(q, cl);
- 	else
- 		qdisc_class_hash_insert(&q->clhash, &cl->common);
- 	qfq_add_to_agg(q, new_agg, cl);
-+unlock:
- 	sch_tree_unlock(sch);
- 	qdisc_class_hash_grow(sch, &q->clhash);
  
+ 	for_each_sgtable_sg(sg_table, sg, i) {
+-		page = alloc_page(GFP_KERNEL);
++		/*
++		 * Completion copies the full bounce buffer, including bytes the
++		 * target did not write. This is already the slow fallback for
++		 * misaligned I/O, so zeroing is acceptable here.
++		 */
++		page = alloc_page(GFP_KERNEL | __GFP_ZERO);
+ 		if (!page) {
+ 			ret = -ENOMEM;
+ 			goto err;
 -- 
 2.53.0
 
