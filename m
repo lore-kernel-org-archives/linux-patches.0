@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590344;
-	b=gYoZR/dnpqtSATu0XiTcIfgOY2ZO8vpFUmOkjBeF2EUuUCqzdeIh7VQkEpghkbJmI2KD
-	 gQFQTd5RyUjgmK41yGd/aAOyGAAPHUdeOu1TgZlknTd7gh2Y+4j/7T1/1oNu2+CdpMAT3
-	 zB7LQN/R0QPhwSslZYq4TWYojP/PK59aPpl5FSapdkndHwwfxtzrNzo5OJXqMnK0yqz1S
-	 2/P1FbARGRiLWnNusgIvGmpyFbtLQ+MIt93ksuwsmkA1NFi59SHNB7k/aGzsSfeyUOzEl
-	 b0GJ99AiF/FkmvYuISDRB3xLReu/t0JmjXIabQ/VrPN4Tq9fdaGDjfRq6Wk1JSzkHrg==
+	t=1794590345;
+	b=jHxT+xkSyREYVUN1pJ/QTZyiZ1ugR71CIi3uPXsg/meCgp8l+PxgfceW6brDyQPf0xRa
+	 eA4dSXdpohcwUkEXeHR0P+Av18iyfBHatvDm8GS4okFts6y51VMkaAQponqbe7OJZEpTH
+	 ze+HeQ1Wo8oZ8aCUd10EthSArc0yUlplG+eAJ7WKq+VEKCZnD/cCe7bj2JE0hiPuh2+is
+	 fHtFRX0ybcD/HZ+VI/+u0N5RXGyqwtHHFIIPcFPh5T3JNeGGmSkMe/cEUlLsGuQruqb4c
+	 gL/cEimqK7M/MrWUkZRpYGZOubY39O12IMNom+xYsvLgqJ5nNyoyfxyXbX73wFLU7jw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590345;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wlmxAKc42sa1+Ow8xwWE6erWAcwu7RyC3TeZaLflITk=;
-	b=jC/PalCZtYHQ80GlTTRcb8RvF7o2YBwAqpMXSwa+eLtC8ln/vUwGAB+nCSHoJOrWtcB3
-	 89PaqynzkhnGmFPPHF+ZGKNF7Bh9aLBkSLF98s3zApDDm+a+wwUkg88sbOG4de9dvT6wm
-	 OxpCmddAdDYuqbd21+0sUpVMHp9MnXTS4A1KJUn/I0J7EMB43fAPMON1nNTZ3xx6Eazkh
-	 vMIwrgRYX2S2WdNG9uyPFQgKcWr4as8E6jXxCuB3owpwJ7yPmZzPIpgR+2IAmTI50eISY
-	 mhOx5/7C70TuNaJQxxOOOVAzRF/3NQuPr8/ayurfpAzVNrUxS2ryOOEtqkc5Rr64kzw==
+	bh=XuWM+Bj97H2kpWasuw0Ax5hi0zGS6oHsS+pOFAtrork=;
+	b=m5lULcm/e53l0smDbc3XyJGVnEIM7BM9+Ol2h8Ndc+74VArnAHbBMu45ZNU2kc/X6ZCQ
+	 9lTg5cmxmqjom2Uh8YfEzmpEADSpgdHMIOeRK0BDqEhd2HvaBUWaeq+OwnjaaOCU1oc6Y
+	 2PAFvyLxASJY11SrZE+YPjhltcPwI41yOxD43QKN63YQ6MezvGWeLXGeF2iTYUa8YhKUm
+	 M/GBe5Z4Lkp6VfN/ebWf06gF8wJZ+heLaSIE7qF0weptU7FxsxSBVfs9JM/7FTlIAVb3H
+	 ieFHsgt+jOMztwCysPMJveArWi1JJoHCjbAjphrhi4Qveh8QwJSj/xwcrfh+ixvq1+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SvJVBz5r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2EeuvhO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C603606D871;
-	Fri, 13 Nov 2026 17:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909BC608315C;
+	Fri, 13 Nov 2026 17:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SvJVBz5r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BEC1F000C6;
-	Fri, 13 Nov 2026 17:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M2EeuvhO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE281F000C4;
+	Fri, 13 Nov 2026 17:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590344;
-	bh=wlmxAKc42sa1+Ow8xwWE6erWAcwu7RyC3TeZaLflITk=;
+	s=korg; t=1794590345;
+	bh=XuWM+Bj97H2kpWasuw0Ax5hi0zGS6oHsS+pOFAtrork=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SvJVBz5rGME/CzAIE92Pbb+m3UNdg/lU1aTumLplfknYbmKTOMwdEHtkB6OqTV10y
-	 T3RIq/Ds2WW3FY2jAebOdz7/8ghjWpkBZPyGfASjNJHcHoqHYraohibpeobytWYcBE
-	 l3V/A9PloceXUYMszo51PDjAGJEGDYgmMXXbAyPs=
+	b=M2EeuvhO/pcZEernWhSi1Oy+SD3l92gXfQhyTonh0k0XUrBCJxbMJKtMB/L1aO6ZX
+	 OLyelVyzmXILA3GwFPDCC7X46uaj4+GVYuC/RiAO4NnaUD44YZqFqerw+yQ0sG0HI3
+	 sAaLetIEJOp4x7HzB9aLDYN4tzckGy76+Lo3cESw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Savic <savicaleksa83@gmail.com>,
-	Jack Doan <me@jackdoan.com>,
+	Ed Brindley <kernel@maidavale.org>,
+	Denis Pauk <pauk.denis@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 279/686] hwmon: (aquacomputer_d5next) Check maxcollection when probing AQUAERO devices
-Date: Fri, 13 Nov 2026 10:46:52 -0500
-Message-ID: <20261113153830.444387154@linuxfoundation.org>
+Subject: [PATCH 6.18 280/686] hwmon: (asus_wmi_sensors) Avoid global struct mutation
+Date: Fri, 13 Nov 2026 10:46:53 -0500
+Message-ID: <20261113153830.475345597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -71,46 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit b7743c6dbe3ab94045164ef298f65cfb9b0b450a ]
+[ Upstream commit 59d586c9e47d1205563bc9b5a5d443adc3ba5bc5 ]
 
-When a USB HID device matching USB_PRODUCT_ID_AQUAERO presents a
-malformed report descriptor, an out-of-bounds array access occurs in
-aqc_probe() due to an unchecked index into the parsed collections array.
-During device initialization, the driver distinguishes between the
-multiple logical interfaces exposed by the Aquaero device by evaluating
-the type of the second element in the collection array. The driver
-unconditionally accesses hdev->collection[1] without verifying that
-hdev->maxcollection is greater than 1. Because the collection array is
-dynamically allocated by the HID core based on the number of collections
-found in the report descriptor, a crafted device exposing fewer than two
-collections causes an immediate heap out-of-bounds read or NULL pointer
-dereference. This leads to a kernel panic during the device probe phase.
+In the asus_wmi_sensors driver, device-managed memory allocated in
+asus_wmi_configure_sensor_setup() is assigned to a global static structure,
+leading to a potential use-after-free when the device is unbound.
+The driver defines a single global asus_wmi_chip_info structure to register
+with the hwmon core. During probe, it dynamically allocates the .info
+channel array using devm_kcalloc() and assigns it directly to this global
+structure. When a device is unbound, its device-managed memory is
+automatically freed, leaving asus_wmi_chip_info.info as a dangling pointer.
+Furthermore, if multiple WMI devices are probed sequentially, each probe
+overwrites the same global pointer, forcing all registered hwmon instances
+to reference the channel information of the most recently probed device.
 
-Add the missing check to fix the problem.
+While it is unlikely if not impossible that multiple WMI devices of the same
+kind exist, modifying a global static data structure is undesirable. Remove
+the static data structure and allocate it as part of struct asus_wmi_sensors
+to avoid the potential problem.
 
-Fixes: 2c55211104b4 ("hwmon: (aquacomputer_d5next) Support sensors for Aquacomputer Aquaero")
+Fixes: 548820e21ce1 ("hwmon: (asus_wmi_sensors) Support X370 Asus WMI.")
 Cc: stable@vger.kernel.org
-Cc: Aleksa Savic <savicaleksa83@gmail.com>
-Cc: Jack Doan <me@jackdoan.com>
+Cc: Ed Brindley <kernel@maidavale.org>
+Cc: Denis Pauk <pauk.denis@gmail.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aquacomputer_d5next.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/asus_wmi_sensors.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
-index 1f0e71d3b52e4..e0052ba4702c6 100644
---- a/drivers/hwmon/aquacomputer_d5next.c
-+++ b/drivers/hwmon/aquacomputer_d5next.c
-@@ -1593,7 +1593,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		 * they present. The two other devices have the type of the second element in
- 		 * their respective collections set to 1, while the real device has it set to 0.
- 		 */
--		if (hdev->collection[1].type != 0) {
-+		if (hdev->maxcollection < 2 || hdev->collection[1].type != 0) {
- 			ret = -ENODEV;
- 			goto fail_and_close;
- 		}
+diff --git a/drivers/hwmon/asus_wmi_sensors.c b/drivers/hwmon/asus_wmi_sensors.c
+index c2dd7ff882f24..502996e97cf14 100644
+--- a/drivers/hwmon/asus_wmi_sensors.c
++++ b/drivers/hwmon/asus_wmi_sensors.c
+@@ -164,6 +164,7 @@ struct asus_wmi_wmi_info {
+ 
+ struct asus_wmi_sensors {
+ 	struct asus_wmi_wmi_info wmi;
++	struct hwmon_chip_info chip_info;
+ 	/* lock access to internal cache */
+ 	struct mutex lock;
+ };
+@@ -496,11 +497,6 @@ static const struct hwmon_ops asus_wmi_hwmon_ops = {
+ 	.read_string = asus_wmi_hwmon_read_string,
+ };
+ 
+-static struct hwmon_chip_info asus_wmi_chip_info = {
+-	.ops = &asus_wmi_hwmon_ops,
+-	.info = NULL,
+-};
+-
+ static int asus_wmi_configure_sensor_setup(struct device *dev,
+ 					   struct asus_wmi_sensors *sensor_data)
+ {
+@@ -508,7 +504,7 @@ static int asus_wmi_configure_sensor_setup(struct device *dev,
+ 	struct hwmon_channel_info *asus_wmi_hwmon_chan;
+ 	int nr_count[hwmon_max] = {}, nr_types = 0;
+ 	struct asus_wmi_sensor_info *temp_sensor;
+-	const struct hwmon_chip_info *chip_info;
++	struct hwmon_chip_info *chip_info;
+ 	enum hwmon_sensor_types type;
+ 	struct device *hwdev;
+ 	int i, idx;
+@@ -549,8 +545,9 @@ static int asus_wmi_configure_sensor_setup(struct device *dev,
+ 	if (!ptr_asus_wmi_ci)
+ 		return -ENOMEM;
+ 
+-	asus_wmi_chip_info.info = ptr_asus_wmi_ci;
+-	chip_info = &asus_wmi_chip_info;
++	chip_info = &sensor_data->chip_info;
++	chip_info->ops = &asus_wmi_hwmon_ops;
++	chip_info->info = ptr_asus_wmi_ci;
+ 
+ 	sensor_data->wmi.info_by_id = devm_kcalloc(dev, sensor_data->wmi.sensor_count,
+ 						   sizeof(*sensor_data->wmi.info_by_id),
 -- 
 2.53.0
 
