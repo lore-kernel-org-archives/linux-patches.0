@@ -1,70 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590730;
-	b=d3mh05Icg/vxFxRl86r2da4svvYB+N+Mv3FOCaEtpotS8NmgvvgabTV+Qb1hyuqM2krl
-	 35en5NwxPuwivLoaM4mUot3C9HIrpV+5YMut5qv4B9d7np7k7VcIZSoPDlFNms/qyV0I6
-	 gUVY6EfnzwXbbPKFXb0I8HL/3rgCKWSb1MVCIGtnUdYHywBqDGi0cAeL0iMuZEbvj4q49
-	 rDDlv5ddVTxpdbtrjLUBRz6PqOodWIrym+iJYmOvrirEgkt7XE+BHA02d3/+vbmgMGZC6
-	 ymjj8oWgXG6qFhX1xEneNdM1r26QrdHUJmYVuiXH/ZQKOAu6rHEFwb8Aopf3Df8qcoQ==
+	t=1794590732;
+	b=XX0gMCNpYn2Q8Nzy5ZCj3sobH46rLo9eEYUC74BJ7wd5/O6VBomWKY5x2eIVty/+d0ux
+	 wOnX1V6i2NxYw0sT5Dp8DeVRDScYnm5DILAfRElOYX5o1dgbDgReXqVTMo3IDpfThWkxn
+	 y7fLnHWWxCIDLBLMqNOSudVI0haLSjfyzX8yD/USufs1VeDEORnFkF2GgfQwIElbyIMTA
+	 0g8bt9xEKt1wBeiMBWTFliHG8miHLkjcDMvw2hejQ765VZiiq5/QIvHa+x4hUGUk6L89K
+	 CKnKxJESmW3bHfDQvUW8rF66LwQQ5JdyV6HNf47Ly/oBA2n4mZM4HwLrmVpzXbsD7TA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590732;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qH/QjOLkpyiKREQHOl2AtHKoLn7lJQI266HMLOS7o0M=;
-	b=KIe0Jx6muobrZIHzlyN9nY6s/moPoDB6m390cHknBlHg4eP4QUWpnXtIsftofREXnxOx
-	 hqd9IUhWjYg8sNNZyoKCVKPNvi1RBRfxjSrjKXOt7+lIIAiBvpy4J7jGnUGiRvipJtIoR
-	 o2n/30DkVISEV0zZfIBqv7oVvJkSwu6mfBUf6yl6luXgd129uxCH2GfWjsPoOHA5VZpW4
-	 NgBFFchPT5Nsq4GrCyFHawobz6YQYhkMMi5cXvlxIyML9IhKnFFkXRy3JyAw6Hfwkbiut
-	 w//aAnvoFrxq6f0lpbwHHfvH3rC7B09ZlmqxKdZmd16LOqJhYim/tWurZ4NWaULc1HA==
+	bh=IVDs7es/3i4Jz1J76pqZ6EdRRj2UGGTgqnU6mKmC64E=;
+	b=cCKO+HEmTNeSiChVp6SwBG8Oh0H28DHvdMStou9Ov7qH/gee7J5+0iCrMV5vigK886az
+	 lRcLyDLnZvMPws4nvMGNLuyefM0mB5aDOPFS1FniXo35VBveZlFtwgUECwSzFcTzXYOAC
+	 C2wgR9WmYFrF9dIlj7VfLR2peOqmBpIju0lpV41S2f/dOtwLrX0MBPVscYtqGKjcmHKHe
+	 sKOnZ5FWzRqhoLLdLrzCtzLY7kbQ0Gh+Dpeqht3eNLkMOUDOTnB0j284hxTMOdrXmecd/
+	 rBSZd3sIuIafwV01wMoBjDiLPVB4QFzWsKsGYosF8c9Kd3M0/pIqbuMT9V82kbOJ/jQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k/67nTjD";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XU5Qi7qV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54456079D5B;
-	Fri, 13 Nov 2026 17:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D346079D6C;
+	Fri, 13 Nov 2026 17:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k/67nTjD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0651F000C5;
-	Fri, 13 Nov 2026 17:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XU5Qi7qV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D8D1F000C5;
+	Fri, 13 Nov 2026 17:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590730;
-	bh=qH/QjOLkpyiKREQHOl2AtHKoLn7lJQI266HMLOS7o0M=;
+	s=korg; t=1794590731;
+	bh=IVDs7es/3i4Jz1J76pqZ6EdRRj2UGGTgqnU6mKmC64E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/67nTjDrdc9YVao7neI2JpaZI8CsjKeolgp/UeEnRtaY/mzl+aTUF5+wHZJUKx96
-	 lOfuGChJdRtLuPIDi8vrWqRybT/6dEaybYFVyKVeCFlNu+p/JPA5cqWV5wnxB43jti
-	 /cXEaH5ps4ASZrnvYwGD0CufxEPcO5uuLZY3iffg=
+	b=XU5Qi7qVvo3ucSoCAHPoorHEjP5r0/cHJypsQyOBgcLy8q/sDwK+d52wlq/ENBkbW
+	 RZ70FfCCN8v0Gt6SMs41bnsASSBpj3aaem776H29rLFeZHDxe/ZyneKjpm1sVRKmgy
+	 dEYNbyHRr33jl9Z1mrT29eiDRrEQOBvt0jgH2faU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Jinmeng Zhou <zhoujinmeng@bytedance.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
 	Muchun Song <muchun.song@linux.dev>,
+	Hongfu Li <lihongfu@kylinos.cn>,
+	David Hildenbrand <david@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
 	Oscar Salvador <osalvador@suse.de>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Adam Litke <agl@us.ibm.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Rik van Riel <riel@surriel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 634/686] mm/vma: dont leak the commit charge on mmap failure
-Date: Fri, 13 Nov 2026 10:52:47 -0500
-Message-ID: <20261113153843.302012390@linuxfoundation.org>
+Subject: [PATCH 6.18 635/686] mm/hugetlb: charge folios to the target mms memcg
+Date: Fri, 13 Nov 2026 10:52:48 -0500
+Message-ID: <20261113153843.333694047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -86,129 +77,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jinmeng Zhou <jinmengzhou22@gmail.com>
 
-[ Upstream commit aa09311c40f6d3aa6037065e17d257ffa48b9402 ]
+[ Upstream commit c2deb1356d82c9d54bd2fcf1241cc97eb66fd81f ]
 
-Patch series "mm: various (urgent?) fixes", v1.
+HugeTLB folios are currently charged to the memcg of the allocating task.
+This gives the wrong result when a userfaultfd handler populates a HugeTLB
+VMA that belongs to another process.  The UFFDIO_COPY ioctl operates on
+the userfaultfd context's mm, but get_mem_cgroup_from_current() charges
+the folio to the handler's memcg instead.
 
-Here are various MM fixes.  The majority was reported by Josef at
-Anthrophic, the remainder was found while reviewing/overhauling them.
+This can be reproduced by placing the faulting process and its userfaultfd
+handler in different memory cgroups.  Have the target process register a
+HugeTLB mapping with userfaultfd, trigger a missing fault, and let the
+handler resolve it with UFFDIO_COPY.  The hugepage usage is then reported
+in the handler's memory.current instead of the target's.
 
-Two issues/fixes reported are not included, as we are discussing
-(better) alternatives on the list already.
+The generic userfaultfd population path avoids this problem by charging
+folios to dst_vma->vm_mm.
 
-I left most of the original commit messages as schloppy as they are: I
-don't particularly care as long as the code is in good shape and as long
-as they are not actively wrong.  But I (and Mike) could not be stopped
-from overhauling at least some of them.
+Pass the target mm through hugetlb_alloc_folio() and charge the folio by
+using get_mem_cgroup_from_mm().  This preserves the existing charge timing
+and error handling while making HugeTLB userfaultfd population consistent
+with the generic path.
 
-While I don't think there is anything too critical in here, I think this
-is a good opportunity to see how fast we can get pre-screened/pre-reviewed
-fixes upstream that might be security-related.
-
-The majority are hugetlb + uffd issues, that are not actually that
-relevant for most installations.  But all things that should just get
-fixed.  Some uffd fixes need proper follow ups to fix some more of the
-root causes of leftover UFFD PTE bits (or proof that there are none
-remaining).
-
-This patch (of 10):
-
-When an accountable mapping replaces existing mappings (MAP_FIXED),
-__mmap_setup() only charges the difference between the size of the new
-mapping and the VM_ACCOUNT pages it replaces. It then zeroes
-vms->nr_accounted so that unmapping the old VMAs does not return their
-charge, which now backs the new mapping.
-
-If the operation fails after that point, the error path returns
-map->charged, i.e. only the difference. By then vms_clean_up_area() has
-zapped the page tables and closed the old VMAs, so
-vms_abort_munmap_vmas() cannot reattach them. It leaves a gap and
-finishes the unmap with vms_complete_munmap_vmas(), which uncharges
-vms->nr_accounted == 0 pages. The old VMAs are gone, the new one was
-never created, and the charge of the old ones is never returned, not
-even when the process exits.
-
-No privilege is needed to hit this, only a file whose mmap hook fails,
-for example a socket (sock_no_mmap() returns -ENODEV):
-
-	p = mmap(NULL, len, PROT_READ | PROT_WRITE,
-		 MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-	mmap(p, len, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_FIXED,
-	     socket_fd, 0);
-
-Every iteration adds len to Committed_AS for good. With
-vm.overcommit_memory=2 this lets any user make all further accountable
-allocations in the system fail with -ENOMEM.
-
-Once the new mapping has taken over the charge of the mappings it
-replaces, it owns the charge for all of its pages. Record that in
-map->charged, so that the error path returns all of it.
-
-A failure in __mmap_setup() itself is not affected: it happens before
-the charge is taken over and the old VMAs are reattached with their
-charge intact.
-
-Original fix generated by an LLM and sent in private by Josef.
-
-[david@kernel.org: call variable "uncharged" and make it const, adjust/simplify comments]
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-0-42796911043b@kernel.org
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-1-42796911043b@kernel.org
-Fixes: 4f87153e82c4 ("mm: change failure of MAP_FIXED to restoring the gap on failure")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://lore.kernel.org/20260903075048.3316-1-zhoujinmeng@bytedance.com
+Fixes: 8cba9576df60 ("hugetlb: memcg: account hugetlb-backed memory in memory controller")
+Signed-off-by: Jinmeng Zhou <zhoujinmeng@bytedance.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Hongfu Li <lihongfu@kylinos.cn>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
 Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Adam Litke <agl@us.ibm.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
 Cc: <stable@vger.kernel.org>
-[ sashal: Adapted accountable_mapping(map) to the existing accountable_mapping(map->file, map->vm_flags) signature. ]
+[ sashal: Passed vma->vm_mm directly to mem_cgroup_charge_hugetlb() in alloc_hugetlb_folio() because hugetlb_alloc_folio() is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vma.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ include/linux/memcontrol.h | 8 +++++---
+ mm/hugetlb.c               | 2 +-
+ mm/memcontrol.c            | 6 ++++--
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/mm/vma.c b/mm/vma.c
-index 8669da66edc5c..3710cb70ca682 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -2462,14 +2462,17 @@ static int __mmap_setup(struct mmap_state *map, struct list_head *uf)
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index 2df30cce143de..fc13c85ea903e 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -662,7 +662,8 @@ static inline int mem_cgroup_charge(struct folio *folio, struct mm_struct *mm,
+ 	return __mem_cgroup_charge(folio, mm, gfp);
+ }
  
- 	/* Private writable mapping: check memory availability. */
- 	if (accountable_mapping(map->file, map->vm_flags)) {
--		map->charged = map->pglen;
--		map->charged -= vms->nr_accounted;
--		if (map->charged) {
--			error = security_vm_enough_memory_mm(map->mm, map->charged);
-+		const unsigned long uncharged = map->pglen - vms->nr_accounted;
-+
-+		/* Charge only what's not already charged by mappings we replace. */
-+		if (uncharged) {
-+			error = security_vm_enough_memory_mm(map->mm, uncharged);
- 			if (error)
- 				return error;
+-int mem_cgroup_charge_hugetlb(struct folio* folio, gfp_t gfp);
++int mem_cgroup_charge_hugetlb(struct folio *folio, struct mm_struct *mm,
++			      gfp_t gfp);
+ 
+ int mem_cgroup_swapin_charge_folio(struct folio *folio, struct mm_struct *mm,
+ 				  gfp_t gfp, swp_entry_t entry);
+@@ -1175,9 +1176,10 @@ static inline int mem_cgroup_charge(struct folio *folio,
+ 	return 0;
+ }
+ 
+-static inline int mem_cgroup_charge_hugetlb(struct folio* folio, gfp_t gfp)
++static inline int mem_cgroup_charge_hugetlb(struct folio *folio,
++					    struct mm_struct *mm, gfp_t gfp)
+ {
+-        return 0;
++	return 0;
+ }
+ 
+ static inline int mem_cgroup_swapin_charge_folio(struct folio *folio,
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index fad8c38ab4da6..a8da4cb7ad10f 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -3125,7 +3125,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
  		}
- 
-+		/* Our new mapping owns the entire charge now. */
-+		map->charged = map->pglen;
- 		vms->nr_accounted = 0;
- 		map->vm_flags |= VM_ACCOUNT;
  	}
+ 
+-	ret = mem_cgroup_charge_hugetlb(folio, gfp);
++	ret = mem_cgroup_charge_hugetlb(folio, vma->vm_mm, gfp);
+ 	/*
+ 	 * Unconditionally increment NR_HUGETLB here. If it turns out that
+ 	 * mem_cgroup_charge_hugetlb failed, then immediately free the page and
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 61092a05f108e..3ce613dab616e 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -4824,6 +4824,7 @@ int __mem_cgroup_charge(struct folio *folio, struct mm_struct *mm, gfp_t gfp)
+ /**
+  * mem_cgroup_charge_hugetlb - charge the memcg for a hugetlb folio
+  * @folio: folio being charged
++ * @mm: mm context of the allocation target
+  * @gfp: reclaim mode
+  *
+  * This function is called when allocating a huge page folio, after the page has
+@@ -4833,9 +4834,10 @@ int __mem_cgroup_charge(struct folio *folio, struct mm_struct *mm, gfp_t gfp)
+  * Returns ENOMEM if the memcg is already full.
+  * Returns 0 if either the charge was successful, or if we skip the charging.
+  */
+-int mem_cgroup_charge_hugetlb(struct folio *folio, gfp_t gfp)
++int mem_cgroup_charge_hugetlb(struct folio *folio, struct mm_struct *mm,
++			      gfp_t gfp)
+ {
+-	struct mem_cgroup *memcg = get_mem_cgroup_from_current();
++	struct mem_cgroup *memcg = get_mem_cgroup_from_mm(mm);
+ 	int ret = 0;
+ 
+ 	/*
 -- 
 2.53.0
 
