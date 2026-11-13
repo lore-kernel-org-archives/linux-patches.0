@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590965;
-	b=aT62MnDcADMQFf4AP9jFbgY6M8SqW+hnk2KNa2R7FnImxZgYQ6aBjVm2fxv6dFJsLcYy
-	 G/b2bvsb78QbsmolsMR4ieyVhCWhUo3gjwvi58Iqy7Qs2j9+B4Kw0dNZWpMUb4Drx+EpS
-	 QzTRwCuoHfXlubEmKsgeiTrDbn6ZlHJHPKkRcRenwsxxV9LdNxFQ4RiKDrwjF2qlhZdTd
-	 RjfrpdWNqyIgg3coEf9L7nR/ldjU9U/nzkf5HpNG157FG/Pkx++IZWl00ryGxTptBDOB5
-	 JhbxUCz+cs5CK+90QC3eRQw20UAshykF2eWKWOPnCATTsDko/oRykMWEEX9M1gYpltw==
+	t=1794590966;
+	b=gJepLcj4Rl35Nrm3NJXJ55/aiftp/bNvY7ixsuN8XXzYqPYXqQMGY3PsisDhOD/zWcCd
+	 7l3vLKHOe1daC3iTNI6el3hJoCi4w+w7m7rCpvvSyrVMCOaCXfRzz/9j500I522zpJLj1
+	 HzIW/WA4YsxmiD1rOF2uSP/R+8AqKTbBiRAYasVP0b78FHjALNtS1z4lJ/cd8gBy/rv8M
+	 tfUdg2F22GRQ+PE8SNP+0sZ0g2BkQtjhDX1OwnwFKZ1PkoFaA58x1SZrBd992GNs06KLC
+	 vocCJE95qkhilcKlGyu56V0KPylmU+xgAkf4iXYYPL2H4dBxWZQzO8btbtqEYNXIfwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590965;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590966;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gVspNbKtMe6x6WHYdzyndZrxQlOmX7fz7IGu/aJ5ZV0=;
-	b=BZtyLjQ+XpY6xJq1vdwH3Smr+opFmQSj6az7vOEIU+i6zJT1LRnWjhA8exCkitkY6/ai
-	 U0GGUI/bFR8uB1AAVC46SxI7IG9Or0LjqjHDZQS/vaOK0+Wt6WC7mPS3Rx3YohrpFHLTI
-	 TVxp6y92boE9XD+94CRQVMedXYlN1gwUl7uCPGIHCHqe1kbkLLD31ZbjjQQceW3DvP2Z5
-	 NPYIKsCBwYt50ihsm/pXAap+p2COYSn1kHe/kvp144PtD76DFKUm2DiqNybvkPgHBXfIa
-	 ejRHtHOEAlcYEY1s02yVhQ5vJ122gZPo32e+DX7FlJHawUUKV8ub+yExq7Dz3xh1TyQ==
+	bh=+6kbScr/Y0zu50gwWkIqgt8CmCmj2I92Lr+Q/YAoDIg=;
+	b=FhAKqCM6Q3f/sxrdCVTLfjugcraYnrq4brqbZghTMM2Lk2yPQxXRDfu5OwQTVCK9DrG/
+	 18f66IPUs7T6HkCKcNsvbO0Ihb8NOlAC9CJt0fBX+D+g5E/6omnQZ4pv2qkbdY5Im57Bj
+	 Ll9x1RBpNCmPqWuqT+LnAKSkYjD4Q0EYVaLNdL4CH2iyeCI8dO+QvoiYM2kVu2IgosJLE
+	 QKTJAZUwb4sGRBxytb5FPMP8wmsUhNarNQ9ATZm4goBMW8emdN19SHCcZ/yfAHETRSZHR
+	 i3SiwbmKe3eXMFXo3Q1pOqs5eYQMqTf3iWOFaSZgru1cH614BEPOukdwblyXZUJC1LA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p6lM4MRP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfxGRLe5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C54D606B45C;
-	Fri, 13 Nov 2026 17:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C5C606B45C;
+	Fri, 13 Nov 2026 17:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p6lM4MRP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF961F000C4;
-	Fri, 13 Nov 2026 17:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfxGRLe5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2065E1F000C4;
+	Fri, 13 Nov 2026 17:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590965;
-	bh=gVspNbKtMe6x6WHYdzyndZrxQlOmX7fz7IGu/aJ5ZV0=;
+	s=korg; t=1794590966;
+	bh=+6kbScr/Y0zu50gwWkIqgt8CmCmj2I92Lr+Q/YAoDIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p6lM4MRP+ehwGmau6nwpRd78uTxmOHkqPw13AhZEBun0mo1865+rjZrksVf5e5QDi
-	 EN+oLoUMDgSPynew0gJKum79AxhzBJPEhh8cIMU3eBbYOs8VwDdAuPtZ37Kem2MqCp
-	 laIB8NdIVOLNnW7Mp/ZsJIeg4xUDS/vcBoCEybcE=
+	b=gfxGRLe5wazwB3bthH4zSOCMf+47uFkvIcEbsziBEiZ+7zeNGSM2x2xeztKPL9I/3
+	 7ZM+zgR4GhLNNF3wJLKXcSH5bd6Xdw0BOSe6NM1NylH0owDlwEcIE3HnLxqZSiHCFl
+	 JKUfeKyP2D2AKyS1lox+OtGYFca+Lt5uwojGtfzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 142/670] efi/libstub: arm64: Dont use the platform register x18
-Date: Fri, 13 Nov 2026 10:45:06 -0500
-Message-ID: <20261113153816.650894394@linuxfoundation.org>
+Subject: [PATCH 6.12 102/670] mkiss: dont use a tty write error as a byte count
+Date: Fri, 13 Nov 2026 10:44:26 -0500
+Message-ID: <20261113153815.344763859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -67,45 +67,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit 4c86b5f3fa78347fa9cbc9e8ec06615b2f80e397 upstream
+ax_encaps() and mkiss_write_wakeup() take whatever tty->ops->write()
+returns as the number of bytes accepted by the tty. Some tty drivers
+return a negative errno instead, USB serial adapters for instance when
+the device is gone or the URB cannot be submitted.
 
-The UEFI specification designates x18, the platform register, as "do not
-use" on AArch64, so that UEFI code is compatible both with an OS that
-assigns a fixed role to x18, and with one that uses it as a temporary
-register.
+A negative value moves ax->xhead to before the start of xbuff and
+makes ax->xleft larger than the frame, so the next write wakeup sends
+memory that does not belong to the transmit buffer down the line. It is
+also added to the tx_bytes counter.
 
-The arm64 EFI stub and the EFI zboot decompressor only avoid x18 if the
-kernel is built with shadow call stacks, as that is the only case where
--ffixed-x18 is added to KBUILD_CFLAGS, which the stub inherits.
-Otherwise, the compiler is free to use x18 as a temporary register, and
-it does so.
+Treat a negative return as a transmit error: count it in tx_errors,
+drop what is left of the frame and restart the queue, as is already
+done for an oversized frame.
 
-So pass -ffixed-x18 unconditionally when building the stub for arm64,
-so that the image can be run by loaders that rely on x18 being left
-alone, such as a kernel that uses it for its shadow call stack.
+This path could not be exercised on the test bench, where neither the
+8250 driver nor a pty ever returns an error from write(). The change
+was compile tested and checked for regressions only: 46 frames out of
+46 are still sent unchanged.
 
-Cc: <stable@vger.kernel.org> # 6.12.y and older
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+(cherry picked from commit eb6e59f373ad5fa6646a3e836a887830addd0687)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/hamradio/mkiss.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
-index 1141cd06011ff..d33c02e587174 100644
---- a/drivers/firmware/efi/libstub/Makefile
-+++ b/drivers/firmware/efi/libstub/Makefile
-@@ -22,7 +22,7 @@ cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -std=gnu11 \
+diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
+index 05c7a234de6ca..f11019d155764 100644
+--- a/drivers/net/hamradio/mkiss.c
++++ b/drivers/net/hamradio/mkiss.c
+@@ -526,6 +526,14 @@ static void ax_encaps(struct net_device *dev, unsigned char *icp, int len)
  
- # arm64 uses the full KBUILD_CFLAGS so it's necessary to explicitly
- # disable the stackleak plugin
--cflags-$(CONFIG_ARM64)		+= -fpie $(DISABLE_STACKLEAK_PLUGIN) \
-+cflags-$(CONFIG_ARM64)		+= -fpie $(DISABLE_STACKLEAK_PLUGIN) -ffixed-x18 \
- 				   -fno-unwind-tables -fno-asynchronous-unwind-tables
- cflags-$(CONFIG_ARM)		+= -DEFI_HAVE_STRLEN -DEFI_HAVE_STRNLEN \
- 				   -DEFI_HAVE_MEMCHR -DEFI_HAVE_STRRCHR \
+ 	set_bit(TTY_DO_WRITE_WAKEUP, &ax->tty->flags);
+ 	actual = ax->tty->ops->write(ax->tty, ax->xbuff, count);
++	if (actual < 0) {
++		/* The tty refused the frame: drop it. */
++		clear_bit(TTY_DO_WRITE_WAKEUP, &ax->tty->flags);
++		dev->stats.tx_errors++;
++		ax->xleft = 0;
++		netif_start_queue(dev);
++		return;
++	}
+ 	dev->stats.tx_packets++;
+ 	dev->stats.tx_bytes += actual;
+ 
+@@ -939,6 +947,14 @@ static void mkiss_write_wakeup(struct tty_struct *tty)
+ 	}
+ 
+ 	actual = tty->ops->write(tty, ax->xhead, ax->xleft);
++	if (actual < 0) {
++		/* Give up on the rest of this frame. */
++		clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
++		ax->dev->stats.tx_errors++;
++		ax->xleft = 0;
++		netif_wake_queue(ax->dev);
++		goto out;
++	}
+ 	ax->xleft -= actual;
+ 	ax->xhead += actual;
+ 
 -- 
 2.53.0
 
