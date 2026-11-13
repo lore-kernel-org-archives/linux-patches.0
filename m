@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585985;
-	b=V+/i73p6fmvm36YZ6OIx8cu0QLTZKiqCRRYtk0/E33z2Uz21tlONjrfZKettIAzN57+a
-	 H0RuBlc3cK0lx++lqNP69CIREOYD7OBJCOfMB4isOSvOhSybFurPeEJbgDabQ5htDMfKR
-	 o9l18Cp7Pz/9q4tNJ8k7Dz+GTySVvDoLeb3kBMwS0WITvHsN2OyqdN7psXvVW74Egm2NL
-	 P9oyJBHXjL6ZFJmcDYl5xzhlBRLK79O18tdBPVPPg6kk1nK7yA2SXupk97xVlJOC/H0Dj
-	 uRZYzSQpBTaw6ghlvWPiX8DZ0++SyWTeGpq+36fimNHVBwZqSjFjQJkfYVVkUxhAxCA==
+	t=1794585987;
+	b=Ku9DC6rnRfwY3DjjFVKnRbaqo4SEHEniYQisEifeLXUxjF4yjyim8ahWF6oz3QNbDUE/
+	 U0Dz8fRGDGTDV0ACW/S47C1sUx1ZsTQdWshUwIu2jNBWP3m9YZDTElCmshxi3Q9g/RXLW
+	 siUlGmRCkUA4Fcxmagx3vA+B/+b5zWePkuJiJzdCgbrPeuVhJCT7Ds+pu0Vt4uJLXqluf
+	 BU8zMo4clWXgaEE0LkXQOocEWoS223BpZW8OePcLuED74ZCAptmGRYdExID4IhKAiSLCN
+	 ZlwfrIriG/aCiL/uwDGszsbJRRRhyb4l4Ut7kM5/mgP9El2sVfXpEYJ3FC1vzXSXxtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585985;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585987;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xEtLKOs1x7+eqRbdKdULa0f6eoUmbEPdaUzd6fuCjIk=;
-	b=BNzhw/TteVlQKV3A+pLdD5XxXsJULpE8YNiVzwmpy7l7jjNIz+scBNjpaULtFp12pl6s
-	 lXDK2VXjMWWOieOc4q+WMI+vAohTY/ePfBVqV+kXlEpBO8yQvL5GgVeV1fO4qkpuS/tfB
-	 FNiSK26GfqpAsCAeibVEFUafxIRRG5B+49qZnj/TdDXYE+MBBAVvCeIDXYadM10M0/yXw
-	 0dKrSzaFuLFOAtJrfodZrTwcaufuJfIjBKLYgx+QLLiazavQ2BBu17+mJhqQgfUTSjtHE
-	 VH+Awbwk6OoaPdrlHGjwswbBtjN/080BF1yXq3bZDqYdiE2K8DJCYQpevPQrnl4BjpQ==
+	bh=Sst7vM9loLHHujXcsBA6kPveb2z49Ro5jyD/nWGn4DI=;
+	b=qwAEqppgL3iGQOoRIhUKls7f0We8TXn3dqv28TiFCzFQzox+ZodvMpjxDWU6R7LlyGDX
+	 UAKFIMfMV+++tYZpSQWeCtCLV6WdK6Y5pxq5Z1GRWms9K3F5qbP4zN/rPlVke0l2L3gx3
+	 XOd3dabZKTs1qtYKA6d6yRfjr8MSlI8S6gfFoHK5Ssfc6bzkq693eMN2H18KHJ11GLlD2
+	 kA3A+iGnu6IGQz3b9g9LIamXpxfykKaV4Z7NCp8mC9FYi6e4QNmLN+m8NFB13S2TMTZvr
+	 aVNra15GavxNAaj0sCiTqXGVWeCqPcM4L8uHj+f7aCyGeeEwFubOr/EuA4wBlT8hvLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MMIBkAxh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JafsCkyc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6A96072317;
-	Fri, 13 Nov 2026 16:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120DB6072338;
+	Fri, 13 Nov 2026 16:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MMIBkAxh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788801F000C4;
-	Fri, 13 Nov 2026 16:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JafsCkyc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B217C1F000C5;
+	Fri, 13 Nov 2026 16:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585985;
-	bh=xEtLKOs1x7+eqRbdKdULa0f6eoUmbEPdaUzd6fuCjIk=;
+	s=korg; t=1794585986;
+	bh=Sst7vM9loLHHujXcsBA6kPveb2z49Ro5jyD/nWGn4DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MMIBkAxhGsJaZfx1gXcsFHlNQI/6os/wMQZYA1lhMXC+8LB7rJ060M+ytAOA82LAe
-	 ElS1fxmxwhWrJCTZFgZ96uWg4ChN0Bc5mSFDEhweqY+OluzjmvrsXzkycnDKjkL+Pb
-	 ZE6CWOlGZRJ2F+dbgc3en8rWBDbJ05d2uB9kyRY8=
+	b=JafsCkycPgCNkdt8M/TLsu67Dvg4TsY8Ozv7CNWnGVLzi5DLpyCsbIYBSBDPCaAvW
+	 NGPhgUtQ67Uhbtxiw56Hjume2DgivH8Zs4mXg5S4KEaCnUo2At4Kx7hzBVAuvDtNT9
+	 oPy1RJejp2d2eGZjPjOtf/j2KYPWUsz6zE0wyNd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/686] NFSv4/pnfs: bound the CB_NOTIFY_DEVICEID array count before allocating
-Date: Fri, 13 Nov 2026 10:42:43 -0500
-Message-ID: <20261113153822.007465071@linuxfoundation.org>
+Subject: [PATCH 6.18 031/686] smb: client: bound POSIX lock data area by response length
+Date: Fri, 13 Nov 2026 10:42:44 -0500
+Message-ID: <20261113153822.040975702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,44 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <ben.coddington@hammerspace.com>
+From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 
-[ Upstream commit 32f0967ea296d447925465c98e7eec71d4e2f755 ]
+[ Upstream commit 8fc9af68c57156ff64769f30e831553cd03b3000 ]
 
-decode_devicenotify_args() hands the server's notification count
-straight to kmalloc_objs() as the array length, without checking it
-against the message that carried it.  Bound it the way nfs4xdr.c bounds
-an attribute length, against xdr_stream_remaining().
+CIFSSMBPosixLock() receives a TRANS2 response whose server-provided
+DataOffset and DataCount are not required by validate_t2() to describe an
+interval inside the response. A server can therefore make the client read a
+cifs_posix_lock beyond the response buffer and return those kernel bytes
+through F_GETLK.
 
-Fixes: 1be5683b03a7 ("pnfs: CB_NOTIFY_DEVICEID")
+Use smbCalcSize() to obtain the full response length after any multipart
+TRANS2 reassembly, then reject data areas that extend past it before
+dereferencing them.
+
+Fixes: fc94cdb94462 ("[CIFS] Fix new POSIX Locking for setting lock_type correctly on unlock")
+Reported-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
-[ sashal: Adjusted context to retain the existing kmalloc_array() allocation instead of kmalloc_objs(). ]
+Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/callback_xdr.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/smb/client/cifssmb.c | 8 ++++++++
+ fs/smb/client/trace.h   | 1 +
+ 2 files changed, 9 insertions(+)
 
-diff --git a/fs/nfs/callback_xdr.c b/fs/nfs/callback_xdr.c
-index 1aa6a6e14b057..34fa00f1a1c20 100644
---- a/fs/nfs/callback_xdr.c
-+++ b/fs/nfs/callback_xdr.c
-@@ -275,6 +275,13 @@ __be32 decode_devicenotify_args(struct svc_rqst *rqstp,
- 	if (n == 0)
- 		goto out;
- 
-+	/* sanity check the count against the remaining stream */
-+	if (n > xdr_stream_remaining(xdr) /
-+		((4 * sizeof(uint32_t)) + NFS4_DEVICEID4_SIZE)) {
-+		status = htonl(NFS4ERR_BADXDR);
-+		goto out;
-+	}
-+
- 	args->devs = kmalloc_array(n, sizeof(*args->devs), GFP_KERNEL);
- 	if (!args->devs) {
- 		status = htonl(NFS4ERR_DELAY);
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index 14d5c1924ae2b..1049a64241bc0 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -2338,6 +2338,7 @@ CIFSSMBPosixLock(const unsigned int xid, struct cifs_tcon *tcon,
+ 		cifs_dbg(FYI, "Send error in Posix Lock = %d\n", rc);
+ 	} else if (pLockData) {
+ 		/* lock structure can be returned on get */
++		unsigned int rsp_len;
+ 		__u16 data_offset;
+ 		__u16 data_count;
+ 		rc = validate_t2((struct smb_t2_rsp *)pSMBr);
+@@ -2348,10 +2349,17 @@ CIFSSMBPosixLock(const unsigned int xid, struct cifs_tcon *tcon,
+ 		}
+ 		data_offset = le16_to_cpu(pSMBr->t2.DataOffset);
+ 		data_count  = le16_to_cpu(pSMBr->t2.DataCount);
++		rsp_len = smbCalcSize(&pSMBr->hdr);
+ 		if (data_count < sizeof(struct cifs_posix_lock)) {
+ 			rc = -EIO;
+ 			goto plk_err_exit;
+ 		}
++		if (data_offset > rsp_len ||
++		    data_count > rsp_len - data_offset) {
++			rc = smb_EIO2(smb_eio_trace_lock_data_area,
++				      data_offset, data_count);
++			goto plk_err_exit;
++		}
+ 		parm_data = (struct cifs_posix_lock *)
+ 			((char *)&pSMBr->hdr.Protocol + data_offset);
+ 		if (parm_data->lock_type == cpu_to_le16(CIFS_UNLCK))
+diff --git a/fs/smb/client/trace.h b/fs/smb/client/trace.h
+index a56fbacf28d14..670612d1a4497 100644
+--- a/fs/smb/client/trace.h
++++ b/fs/smb/client/trace.h
+@@ -42,6 +42,7 @@
+ 	EM(smb_eio_trace_ioctl_no_rsp,			"ioctl_no_rsp") \
+ 	EM(smb_eio_trace_ioctl_out_off,			"ioctl_out_off") \
+ 	EM(smb_eio_trace_lock_bcc_too_small,		"lock_bcc_too_small") \
++	EM(smb_eio_trace_lock_data_area,		"lock_data_area") \
+ 	EM(smb_eio_trace_lock_data_too_small,		"lock_data_too_small") \
+ 	EM(smb_eio_trace_malformed_ksid_key,		"malformed_ksid_key") \
+ 	EM(smb_eio_trace_malformed_sid_key,		"malformed_sid_key") \
 -- 
 2.53.0
 
