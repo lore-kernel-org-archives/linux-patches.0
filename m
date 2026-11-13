@@ -1,55 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590803;
-	b=rMUgRGk4fF4EYfKZI2XutHp8Q1Sc7BmGW2TZXsUw+rQX1iW/tNiYJCkCwFjTTaciOmD1
-	 XhH+UTwjAeCdUUxrnASN1JCTUaswXqmxK3W0W5fY+1vb4InkrDruj/5XblrLXKq17btnf
-	 6rjP2sEWnVDjvKn6/EMj/HqufGzb5JfvQdpO/daWLRhB4VJ5tHj8j5wwwRev2O76uNSYW
-	 5ITGF/Lw99FcaCtD6wkxOpLXiSat0tHcbFITVt0nYhb186ieQCuXK0+NV5l8Hd8tUu2sz
-	 /IreV7/HJvlUwz6hn4cKSyoxhieSh3IabFa3UF3q+yCLC1qjgE04FcD1hZJCblTiftg==
+	t=1794590804;
+	b=ujAeMsD9xPDtP20nW5X5rwyeB/kAvLZn2IvbYndKfvbJN5qcZtOxZoK6a5dAfMM3jwzz
+	 LjKL2zM8YHxy6vsRv5rq4lyOUbu5ujkb7uYXJxCAgXS4SWLYyBOBYHMS+eYIbG9rJaL7U
+	 ePsV2UzCEmnKjNkSCF2rIVnNrXe6kR0l6gdjdpstn88dsWR6NVQD1zutX6EeM5xFuQp2C
+	 0gf3WRHWJFJgtbv13a8i3LEBFQDSY+NmdcgqVLLcaPpWjwcfeYMYZ08E/QEhJLdcYMS+M
+	 cXaEuUYosnv1sM1nTlvXaBATJS9kiAw6L0+2KntRwHqRLxC4OAW7hgXzop5u65JzBkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590803;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590804;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HpACdLPYj9PuFPt/CcFz5OGPecuBQ9FkNnRS/NoV/hs=;
-	b=FrgmeJYkqNwkKrN172d85dIFxPNz9DlU6eMsLGa43v6muIzCrbz6+O738DaigHYga+c3
-	 g1cRv0jii7H9b2FcLVIBXHRYQAJzNr1oTrq2JcCUjmxUQYhgZuFyIb0Db09yhY2MVtBrw
-	 FoPeMVumlf3LDJYQYuaEQ369/y431hSjOiloAa7MvTY/PcDHMB0qnPMFNj6MC5p72JgSb
-	 ov4J6KkP/+esUfddg2V4X35Wog2xIxEBelKgGQtY0Tl1KXJWdfBuTbu/BPNxg4coeHFAB
-	 YCvYtbu4h3E/eW/73A7AwNpuub1OFPpidSHiu0kh6vfpGzsWPKT9eIhgQQh7c3mUKpQ==
+	bh=49p0ZE1wJ3lebpL/VzsGVw0TlH0i+fw0n/7E92awvPE=;
+	b=V5EjxoH6177uPXBAkQcvM+TTjJ8eKYJLeggoSIyqPgCRRrht47PNVWw93ehyQVn69X5n
+	 /9Sba0x9UHQ0ivK9TyWyqqzhlYgJ8g2sc/d2fya/fc93MRbWGfcDk+fK6EstGX6KizgPi
+	 7OPs1iL6mPkWCawYf6yjoH+vcEEcXhJj1l3C90oe+mrJMQyWaF1rvs0v04H2eY89zbLBu
+	 f2LEYKfQ/8ErbIts18fpdyd1gJTfyn8yr6GoyuBJ/sgeNxmSw7wI1Fe5g8KlvuRJIRlS5
+	 98yYH1Nr9rxl+3MeFEg87ivR0BGSHoaZOFPbS52ASbjgPWIdD/l+b2idWi4k0CtakxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1P1V7rq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XV1jxnRw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51FB607D2F6;
-	Fri, 13 Nov 2026 17:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD58607D2E1;
+	Fri, 13 Nov 2026 17:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1P1V7rq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EEE1F000C4;
-	Fri, 13 Nov 2026 17:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XV1jxnRw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874151F000C4;
+	Fri, 13 Nov 2026 17:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590803;
-	bh=HpACdLPYj9PuFPt/CcFz5OGPecuBQ9FkNnRS/NoV/hs=;
+	s=korg; t=1794590804;
+	bh=49p0ZE1wJ3lebpL/VzsGVw0TlH0i+fw0n/7E92awvPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z1P1V7rqXHsBw/GTYM8FxQ1LYcGkb7FXYTozuiFyyZDrFGf79x86Potq2isAsRlcG
-	 TxwgsgzH7GLL6AQVyAiLa/5vMCVLWqnaxaTIXbFZiWrTyzcP8qTY7l/07wAGuwgv3r
-	 4Jic6u2ABu6hw4Haprc8HFIb9Aa91cFbBdTyRK94=
+	b=XV1jxnRwEvkRW13dS1U815dnSm7KIKlgQJqRBC9SIjY6t5p3x/bgQ/jOTDDD9q5hW
+	 xASk/0pAbIXmkhRVWwUH3NWVVctlSlNFjfcJFcKHc492Mkv+P9cFmRvJsZRuJ9uMon
+	 dO7hjFZBUumeYqWkEi10MTRPIylbWAFNs6Y30720=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Yongjian Wang <echoowall@gmail.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 645/686] iomap: dont mark unwritten parts of a folio uptodate
-Date: Fri, 13 Nov 2026 10:52:58 -0500
-Message-ID: <20261113153843.637742220@linuxfoundation.org>
+Subject: [PATCH 6.12 007/670] Revert "net: advertise TCP MSS from the configured MTU, not the learned PMTU"
+Date: Fri, 13 Nov 2026 10:42:51 -0500
+Message-ID: <20261113153811.436889776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
-References: <20261113153820.902362109@linuxfoundation.org>
+In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
+References: <20261113153811.177190860@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -64,78 +66,194 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Yongjian Wang <echoowall@gmail.com>
 
-[ Upstream commit a4193b4af359db84b2cdf3a040752861984c636b ]
+[ Upstream commit 564313447e545eea13038f74ada9272ab129b3cb ]
 
-For a buffered write into a hole, an unwritten or new extent, or past
-EOF __iomap_write_begin() zeroes the parts of the blocks outside of the
-write and then marks the blocks uptodate. That includes the range of the
-write itself which still holds whatever was in the folio before. It only
-becomes valid once the copy from userspace has filled it in.
+This reverts commit 2640e6419594 ("net: advertise TCP MSS from the
+configured MTU, not the learned PMTU").
 
-But the copy can come up short and __iomap_write_end() only rejects a
-short copy if the folio isn't uptodate. If the zeroed blocks were all
-that was missing the folio is uptodate by then, the short copy is
-accepted, and the rest of the range is exposed to readers and can end up
-on disk. A source buffer that ends in an unmapped page is enough:
+That commit stopped the learned PMTU from lowering the MSS we advertise
+in SYN and SYN-ACK. For symmetric paths it argued that "the peer runs
+its own PMTU discovery and usually already knows the real path MTU".
+That only holds if ICMP "fragmentation needed" can reach the peer. When
+the peer sits behind a firewall that drops inbound ICMP, its PMTU
+discovery is a black hole (RFC 2923, section 2.1), and the smaller MSS
+we advertised was the only thing keeping its full-size segments off the
+narrow hop.
 
-        ftruncate(fd, 4096);
-        pwrite(fd, p, 3000, 100);    /* 16 bytes at p, then PROT_NONE */
-        pread(fd, buf, 4096, 0);
+Inbound ICMP filtering is very common in enterprise and carrier
+networks, and it is pervasive in mainland China. We hit this in
+production after the commit was backported to 6.12.111: TCP connections
+that reach a server through a relay with a smaller-MTU hop complete the
+handshake, then stall as soon as the client sends full-size segments.
+Clients on networks that let ICMP through, and connections that bypass
+the relay, are unaffected, which made it hard to trace back to the
+kernel.
 
-The write returns 16 and the read returns 2984 bytes of whatever was in
-that page before. If other blocks of the folio aren't uptodate the short
-copy is rejected but the zeroed blocks keep their uptodate bits and the
-retry with the copied length leaves the same bytes behind.
+Reproducer, network namespaces on a single host:
 
-Only mark blocks uptodate in __iomap_write_begin() after reading them.
-__iomap_write_end() marks the zeroed blocks uptodate once the copy has
-succeeded and rejects a short copy.
+  cli --(1500)-- r1 --(1456)-- r2 --(1500)-- srv
 
-Willy reported this back in 2024 (cf. [1]) and Zhang Yi posted the same
-fix (cf. [2]) but it never got merged.
+r1 drops ICMP frag-needed towards cli. srv has already learned PMTU
+1456 towards cli, then cli uploads 1 MB to srv:
 
-[1]: https://lore.kernel.org/all/ZqsN5ouQTEc1KAzV@casper.infradead.org
-[2]: https://lore.kernel.org/all/20240812121159.3775074-6-yi.zhang@huaweicloud.com
+  kernel                     SYN-ACK MSS   1 MB upload
+  6.12.107                   1416          OK
+  6.12.111                   1460          stalls, times out
+  7.3-rc7                    1460          stalls, times out
+  7.3-rc7 + this revert      1416          OK
 
-Fixes: 9dc55f1389f9 ("iomap: add support for sub-pagesize buffered I/O without buffer heads")
-Reported-by: Josef Bacik <josef@toxicpanda.com>
+The asymmetric case the commit was written for does not need a new
+default: the advertised MSS can already be set per route with the
+advmss metric, which takes precedence over default_advmss(). With this
+revert applied, on an asymmetric path where srv learned PMTU 1456
+towards cli while cli->srv is 1500 end to end:
+
+  srv route to cli           SYN-ACK MSS   largest cli->srv segment
+  default                    1416          1404
+  advmss 1460                1460          1448
+
+So DSR-style setups can opt in with "ip route ... advmss <mss>", while
+hosts whose peers cannot complete PMTU discovery keep working by
+default.
+
+[ 6.12.y: reverse commit 7f84f07f54fa, the stable backport of
+  2640e6419594. Keep the local dst_dev() lookup and surrounding
+  context in ip6_default_advmss(). ]
+
+Fixes: 2640e6419594 ("net: advertise TCP MSS from the configured MTU, not the learned PMTU")
+Closes: https://lore.kernel.org/regressions/4F0FAEB6-A13B-47F3-BFF1-C706686C6F64@gmail.com/
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261029-work-iomap-ai-fixes-v1-1-7eda63bc1b13@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: placed iomap_set_range_uptodate() after the read-error check because IOMAP_F_ZERO_TAIL handling is absent ]
+Signed-off-by: Yongjian Wang <echoowall@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261026-advmss-revert-v1-2-272fa4b7ecb6@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/ip.h        | 25 -------------------------
+ include/net/ip6_route.h | 37 -------------------------------------
+ net/ipv4/route.c        |  4 ++--
+ net/ipv6/route.c        |  2 +-
+ 4 files changed, 3 insertions(+), 65 deletions(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index c9ece378687b9..cbd729ef50ab7 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -766,6 +766,7 @@ static int __iomap_write_begin(const struct iomap_iter *iter,
- 		if (iomap_block_needs_zeroing(iter, block_start)) {
- 			if (WARN_ON_ONCE(iter->flags & IOMAP_UNSHARE))
- 				return -EIO;
-+			/* uptodate once copied, see __iomap_write_end() */
- 			folio_zero_segments(folio, poff, from, to, poff + plen);
- 		} else {
- 			int status;
-@@ -781,8 +782,8 @@ static int __iomap_write_begin(const struct iomap_iter *iter,
- 						folio, block_start, plen);
- 			if (status)
- 				return status;
-+			iomap_set_range_uptodate(folio, poff, plen);
- 		}
--		iomap_set_range_uptodate(folio, poff, plen);
- 	} while ((block_start += plen) < block_end);
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 97c60b3002702..f00719e1863f7 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -515,31 +515,6 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
+ 	return res;
+ }
  
- 	return 0;
+-/* Configured/administrative MTU of a route, for advertising the TCP MSS.
+- *
+- * Unlike ip_dst_mtu_maybe_forward(), this deliberately ignores the
+- * ICMP-learned path MTU (rt->rt_pmtu).  The advertised MSS bounds what the
+- * peer may send to us and must reflect our receive capability (the device or
+- * route-configured MTU), not a path MTU learned on the reverse (send)
+- * direction, which may not apply to the peer->us path and outlives the fnhe
+- * for the whole connection.  See RFC 2923 section 2.3 and the comment above
+- * tcp_advertise_mss().
+- */
+-static inline unsigned int ip_dst_mtu_configured(const struct dst_entry *dst)
+-{
+-	unsigned int mtu, res;
+-
+-	rcu_read_lock();
+-	mtu = dst_metric_raw(dst, RTAX_MTU);
+-	if (!mtu)
+-		mtu = READ_ONCE(dst_dev_rcu(dst)->mtu);
+-	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
+-	res = mtu - lwtunnel_headroom(dst->lwtstate, mtu);
+-	rcu_read_unlock();
+-
+-	return res;
+-}
+-
+ static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
+ 					  const struct sk_buff *skb)
+ {
+diff --git a/include/net/ip6_route.h b/include/net/ip6_route.h
+index 8be44dc5b5b71..ad35c7512f120 100644
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -354,43 +354,6 @@ static inline unsigned int ip6_dst_mtu_maybe_forward(const struct dst_entry *dst
+ 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
+ }
+ 
+-/* Configured/administrative MTU of a route, for advertising the TCP MSS.
+- *
+- * Unlike ip6_dst_mtu_maybe_forward(), this ignores any ICMPv6-learned path
+- * MTU (which is kept on the RTF_CACHE exception route) and returns the MTU of
+- * the underlying route (fib6_pmtu) or the egress device.  The advertised MSS
+- * bounds what the peer may send to us and must reflect our receive
+- * capability, not a path MTU learned on the reverse (send) direction.  See
+- * RFC 2923 section 2.3 and the comment above tcp_advertise_mss().
+- */
+-static inline unsigned int ip6_dst_mtu_configured(const struct dst_entry *dst)
+-{
+-	const struct rt6_info *rt = dst_rt6_info(dst);
+-	const struct fib6_info *from;
+-	struct inet6_dev *idev;
+-	unsigned int mtu = 0;
+-
+-	rcu_read_lock();
+-	/* IPv6 keeps the learned PMTU and the configured MTU in the same
+-	 * RTAX_MTU slot: the learned value sits on this (possibly RTF_CACHE)
+-	 * dst, the configured one on the underlying route.  Reach the latter
+-	 * via ->from (fib6_pmtu), populated by ip6_route_info_create().
+-	 */
+-	from = rcu_dereference(rt->from);
+-	if (from)
+-		mtu = from->fib6_pmtu;
+-	if (!mtu) {
+-		mtu = IPV6_MIN_MTU;
+-		idev = __in6_dev_get(dst_dev_rcu(dst));
+-		if (idev)
+-			mtu = max_t(unsigned int, mtu, READ_ONCE(idev->cnf.mtu6));
+-	}
+-	rcu_read_unlock();
+-
+-	mtu = min_t(unsigned int, mtu, IP6_MAX_MTU);
+-	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
+-}
+-
+ u32 ip6_mtu_from_fib6(const struct fib6_result *res,
+ 		      const struct in6_addr *daddr,
+ 		      const struct in6_addr *saddr);
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 596c84fd5ab42..f1b0ab77b443b 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1358,8 +1358,8 @@ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
+ 
+ 	rcu_read_lock();
+ 	net = dst_dev_net_rcu(dst);
+-	advmss = max_t(unsigned int, ip_dst_mtu_configured(dst) - header_size,
+-		       net->ipv4.ip_rt_min_advmss);
++	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
++				   net->ipv4.ip_rt_min_advmss);
+ 	rcu_read_unlock();
+ 
+ 	return min(advmss, IPV4_MAX_PMTU - header_size);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 94fa1b34be5c3..e6c2db89860c8 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3252,7 +3252,7 @@ EXPORT_SYMBOL_GPL(ip6_sk_redirect);
+ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+ {
+ 	struct net_device *dev = dst_dev(dst);
+-	unsigned int mtu = ip6_dst_mtu_configured(dst);
++	unsigned int mtu = dst6_mtu(dst);
+ 	struct net *net;
+ 
+ 	mtu -= sizeof(struct ipv6hdr) + sizeof(struct tcphdr);
 -- 
 2.53.0
 
