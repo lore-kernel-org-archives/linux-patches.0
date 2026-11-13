@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591108;
-	b=4tiFRC+hZmlM0AJvAMwqTu+fCPYV/BVg5KYVhxWB8l8EhWOXENfZ9MqgYJjGaagDhdPu
-	 gjUTUxyxpCUO8eeHQBAMHG/TTrckHb2k6BE/qYy6tcM/0MxyjrUpLTh9E6u6UWBfv3Fnu
-	 tFX2cIgL/GmuEQWKOLv+AkEAkY9z7qcyM9Vb5BvqvB8DHyCzFquZt2KdnI1Lj45S+WHgy
-	 XVoL5c4lGP1WPhGy+9vQvHeiIjLWEcTui8VeqxLXwSUucqqv3MazAwreouu+11zJACnDv
-	 8LMtDGEng8qB8ly0bTPAZemcbUN8F+8UzXZP9vpSJ2YQCFyg+vmKakUCh6ibCmfOlGQ==
+	t=1794591109;
+	b=1w0BVdC3TtRroXtIBrjrwZugZ7alBhWN/iosSvx96MPVsoIfc1tgfFSERw9vDYu8ZhXE
+	 rupHarPXzLzYLKq6CNkl/7DkFW9S7ru+1undBRtfmg3lXkW82GRB92pJa/oilSYFGkGiW
+	 RGKKXDfiVW6B3uo7eUqIX33JBDvkg6WAmCmPCXhVg8eG7RTGJGZEylnCbMAxOPMiyfHI7
+	 Zmosi47+XsQ0llaQrW4PIutQgxE/nZGPd1el1c1qdNoILAFDF94dwse2qi5NLsZ+1XLUG
+	 KE0YnPCZ8twJsZr+yiQi/hQWamji+D1XK+roRjFendvtstAZy2PrncDJmr1z57fiAPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591108;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591109;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YN9AH6mDTzapPxYw307xGropm04DDYznyT6cu8J0nDo=;
-	b=ZvxwhiwCeC2KrTgkW8l0rlBvbXsCHVbCVWYFKZC3f48tM3OOEM4WzL9VqUVFsBXWYRPk
-	 lPEzxAIhZsPhJ05h4uFsPETEjntas49AYauNrDFLYK9w9STkz0PU5WCfJHGoRkvpXNUbD
-	 HrRiT3FJcELPTaG0VqhubGIvIeXPyJqHAQvowC5T6vp0bmQI9YjSDkOVtVBGdS9K1AzzJ
-	 lOiZ7ligIjD6isZKSH3huy9st2V4MEiBu2T7N7B6kVBOL2uPq8cBUcZ4FSpOn7XGri04j
-	 7oZadjE0WmZunFl5Fi+mSLYJaPwIonffRml0smJQy6nD4+XaavUyg7Pnv1mIrhHUqHQ==
+	bh=Hu4CSkp4CXuJm0/BfJaED2yxIf4+S10FkN9uZIVRsrI=;
+	b=cKBCrbzMRRAzniFTSDHrHHprZGvKhhfhG5Alm4bs16PFufLTo81yZm5gGihCjJ1n8IVA
+	 dfqKqW2j80cfAMn7dF0Vzvo6PmTORQM57SoMBSi7om2tia9dtgiDokCB0D905UVWXPjdm
+	 jZC8kcv8bjqYLYBkYN6QRE+KODEnGPokTQhJI4TTaHpyje4YQvdCqjwQlZ/PhCg+TvHqM
+	 DowVmqWO2JIczfT7FscuyynSD0zVLHABkTYFzS6+UF//NZmG5dmgfAOMnkvyRDhBp3tIL
+	 yqv5DRE6hwykVc/ai3UOQUx9DJUI5tmX9o5Cct4UqXbgsRKlLGzQ8cTbsWwBM1WIJgw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C8ZeSGrJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SQR1dfit;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A015D6074B26;
-	Fri, 13 Nov 2026 17:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D819A606B36D;
+	Fri, 13 Nov 2026 17:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C8ZeSGrJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1471F000C4;
-	Fri, 13 Nov 2026 17:31:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SQR1dfit
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8400F1F000C4;
+	Fri, 13 Nov 2026 17:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591108;
-	bh=YN9AH6mDTzapPxYw307xGropm04DDYznyT6cu8J0nDo=;
+	s=korg; t=1794591109;
+	bh=Hu4CSkp4CXuJm0/BfJaED2yxIf4+S10FkN9uZIVRsrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C8ZeSGrJaCrwgr4uT1EERimviRpY6tvlv3eHdwhbZDeT/4tyB9yu2RueMEkLKwK5P
-	 AKAiefdqKuxW1hNorm7v/2Kp+avQO6Yzzzi6lThPy4sNfVQtDWIbJUiWUCuRVo+KUI
-	 DoqyE1MH9AbNudoHS/xjmYoIM+2A31JT8amvEawY=
+	b=SQR1dfitQkqybfKKFDw7Pm9JTjq1iz5Owv5o2dNvqduFM6oXJWMiOSFcsOH8Su7mR
+	 gb/zp9CgqVjLMQtIsBhiFJ9pAF4lRD5mMjtRQtm+giJV92SyDV+mdjxl5NL4NBsUTw
+	 9MoX8wVU+tXP6Kw1WVFGNoEp37iAtl9Zx1aaZQs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 261/670] hwmon: (pmbus) Check return value from pmbus_thermal_add_sensor()
-Date: Fri, 13 Nov 2026 10:47:05 -0500
-Message-ID: <20261113153820.678921101@linuxfoundation.org>
+Subject: [PATCH 6.12 262/670] hwmon: (pmbus) Release devres allocated memory after devm_thermal_of_zone_register error
+Date: Fri, 13 Nov 2026 10:47:06 -0500
+Message-ID: <20261113153820.713155535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,152 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 11dfbd835b17b75f7cc7a4a969f33ff702b1b081 ]
+[ Upstream commit 9aa6cc563e881c3cad96ea36926cadceee151f32 ]
 
-During PMBus device probe, if registering a temperature sensor with the
-thermal subsystem fails, pmbus_add_sensor() silently ignores the error and
-returns success.
-When a valid temperature sensor is detected (class PSC_TEMPERATURE and type
-"input"), pmbus_add_sensor() invokes pmbus_thermal_add_sensor() to hook it
-into the kernel's thermal framework. However, the return value of this call
-is completely discarded. If thermal registration fails, such as from an
--ENOMEM allocation failure or an invalid device tree configuration like a
-malformed #thermal-sensor-cells property, no error is propagated.
+In pmbus_thermal_add_sensor(), a devres memory leak occurs when a PMBus
+temperature sensor is initialized but no thermal zone is configured for
+it.
+The function allocates a pmbus_thermal_data structure using
+devm_kzalloc(). It then attempts to register the sensor with the thermal
+subsystem via devm_thermal_of_zone_register(). If this registration
+returns -ENODEV (e.g., when no thermal zone is mapped in the Device Tree
+or CONFIG_THERMAL_OF is disabled), the function intentionally catches the
+error and returns 0 to allow device probing to continue.
 
-Because the hardware monitor probe falsely succeeds despite the failure to
-register the thermal zone, the system is left without thermal mitigation
-for the affected PMBus device. This silently blinds the system to actual
-PMIC temperatures, preventing the execution of necessary cooling mechanisms
-or emergency shutdowns and risking localized overheating.
+Because devm_kfree() is not called on the -ENODEV path, the unused tdata
+structure remains allocated on the device's managed resource list. Since
+most PMBus temperature sensors are not attached to thermal zones, this
+results in an accumulation of unused objects that needlessly consume kernel
+memory for the lifetime of the PMBus device.
 
-Pass the return value from pmbus_thermal_add_sensor() to the calling code
-to fix the problem. To enable passing the actual error, change the error
-return from pmbus_add_sensor() from NULL to ERR_PTR() and extract the error
-from in the calling code.
+Add the missing call to devm_kfree() to fix the problem.
 
 Fixes: 3aa74796cfd0 ("hwmon: (pmbus) Register with thermal for PSC_TEMPERATURE")
 Cc: stable@vger.kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 42 ++++++++++++++++++--------------
- 1 file changed, 24 insertions(+), 18 deletions(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index ea79cff0e8d0d..989e861aaad65 100644
+index 989e861aaad65..d56173c00ada9 100644
 --- a/drivers/hwmon/pmbus/pmbus_core.c
 +++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -1439,10 +1439,11 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
- {
- 	struct sensor_device_attribute *a;
- 	struct pmbus_sensor *sensor;
-+	int err;
- 
- 	sensor = devm_kzalloc(data->dev, sizeof(*sensor), GFP_KERNEL);
- 	if (!sensor)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 	a = &sensor->attribute;
- 
- 	if (type)
-@@ -1467,14 +1468,17 @@ static struct pmbus_sensor *pmbus_add_sensor(struct pmbus_data *data,
- 			pmbus_set_sensor, -1);
- 
- 	if (pmbus_add_attribute(data, &a->dev_attr.attr))
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	sensor->next = data->sensors;
- 	data->sensors = sensor;
- 
- 	/* temperature sensors with _input values are registered with thermal */
--	if (class == PSC_TEMPERATURE && strcmp(type, "input") == 0)
--		pmbus_thermal_add_sensor(data, sensor, seq);
-+	if (class == PSC_TEMPERATURE && strcmp(type, "input") == 0) {
-+		err = pmbus_thermal_add_sensor(data, sensor, seq);
-+		if (err)
-+			return ERR_PTR(err);
+@@ -1423,8 +1423,10 @@ static int pmbus_thermal_add_sensor(struct pmbus_data *pmbus_data,
+ 	 * If CONFIG_THERMAL_OF is disabled, this returns -ENODEV,
+ 	 * so ignore that error but forward any other error.
+ 	 */
+-	if (IS_ERR(tzd) && (PTR_ERR(tzd) != -ENODEV))
++	if (IS_ERR(tzd) && (PTR_ERR(tzd) != -ENODEV)) {
++		devm_kfree(dev, tdata);
+ 		return PTR_ERR(tzd);
 +	}
- 
- 	return sensor;
- }
-@@ -1576,8 +1580,8 @@ static int pmbus_add_limit_attrs(struct i2c_client *client,
- 						page, 0xff, l->reg, attr->class,
- 						attr->update || l->update,
- 						l->readonly, l->writeonly, true);
--			if (!curr)
--				return -ENOMEM;
-+			if (IS_ERR(curr))
-+				return PTR_ERR(curr);
- 			if (l->sbit && (info->func[page] & attr->sfunc)) {
- 				ret = pmbus_add_boolean(data, name,
- 					l->alarm, index,
-@@ -1616,8 +1620,8 @@ static int pmbus_add_sensor_attrs_one(struct i2c_client *client,
- 	}
- 	base = pmbus_add_sensor(data, name, "input", index, page, phase,
- 				attr->reg, attr->class, true, true, false, true);
--	if (!base)
--		return -ENOMEM;
-+	if (IS_ERR(base))
-+		return PTR_ERR(base);
- 	/* No limit and alarm attributes for phase specific sensors */
- 	if (attr->sfunc && phase == 0xff) {
- 		ret = pmbus_add_limit_attrs(client, data, info, name,
-@@ -2290,8 +2294,8 @@ static int pmbus_add_fan_ctrl(struct i2c_client *client,
- 				  0xff, PMBUS_VIRT_FAN_TARGET_1 + id, PSC_FAN,
- 				  false, false, false, true);
- 
--	if (!sensor)
--		return -ENOMEM;
-+	if (IS_ERR(sensor))
-+		return PTR_ERR(sensor);
- 
- 	if (!((data->info->func[page] & PMBUS_HAVE_PWM12) ||
- 	      (data->info->func[page] & PMBUS_HAVE_PWM34)))
-@@ -2301,15 +2305,15 @@ static int pmbus_add_fan_ctrl(struct i2c_client *client,
- 				  0xff, PMBUS_VIRT_PWM_1 + id, PSC_PWM,
- 				  false, false, false, true);
- 
--	if (!sensor)
--		return -ENOMEM;
-+	if (IS_ERR(sensor))
-+		return PTR_ERR(sensor);
- 
- 	sensor = pmbus_add_sensor(data, "pwm", "enable", index, page,
- 				  0xff, PMBUS_VIRT_PWM_ENABLE_1 + id, PSC_PWM,
- 				  true, false, false, false);
- 
--	if (!sensor)
--		return -ENOMEM;
-+	if (IS_ERR(sensor))
-+		return PTR_ERR(sensor);
  
  	return 0;
  }
-@@ -2326,6 +2330,7 @@ static int pmbus_add_fan_attributes(struct i2c_client *client,
- 		int f;
- 
- 		for (f = 0; f < ARRAY_SIZE(pmbus_fan_registers); f++) {
-+			struct pmbus_sensor *sensor;
- 			int regval;
- 
- 			if (!(info->func[page] & pmbus_fan_flags[f]))
-@@ -2346,10 +2351,11 @@ static int pmbus_add_fan_attributes(struct i2c_client *client,
- 			    (!(regval & (PB_FAN_1_INSTALLED >> ((f & 1) * 4)))))
- 				continue;
- 
--			if (pmbus_add_sensor(data, "fan", "input", index,
--					     page, 0xff, pmbus_fan_registers[f],
--					     PSC_FAN, true, true, false, true) == NULL)
--				return -ENOMEM;
-+			sensor = pmbus_add_sensor(data, "fan", "input", index,
-+						  page, 0xff, pmbus_fan_registers[f],
-+						  PSC_FAN, true, true, false, true);
-+			if (IS_ERR(sensor))
-+				return PTR_ERR(sensor);
- 
- 			/* Fan control */
- 			if (pmbus_check_word_register(client, page,
 -- 
 2.53.0
 
