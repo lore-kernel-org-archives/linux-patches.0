@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590837;
-	b=zlFHDc5OykjsMeerxgVtHmBVeJnUvRO1bZgd4n4AAkaLrH8KTKT4e6dCxUkzhUHmjd5f
-	 G65GqAU6CtuDKatbMdjGI0V7UYOIuf6A/SsYRT6XA3xCCTK8cMvSsmCmvHzbbSVjUC66O
-	 nDbE4+nHjHky+Sg4CScc70PpMrTXfoSQl94s7gktXfiZ1mnqKatWx1Ney8cJad/LjMg5R
-	 /1Ye8hW0ItDwYoVZxixPXPlFPhmqy8Vh5gQ5HeEK1CqsolIX4gHajhAcoxqL+5/PUC5HM
-	 qKYFjVx+3/wfYj+TKaRtjBhoZhTlH0irAQHInYojua+xqUeSqJH/57CzFgTNnpT8TrQ==
+	t=1794590838;
+	b=anVj+IMPDXkUkpW3bTGfXnVFMVr2BFuaOXFav9Dg9pQnhJ9v5Udbtqe379iNUEIw4Qt+
+	 wDEbqjixaSt7Uvv8pnV1qnC6B1VL5xs2tEOwQbFEXlxpZswBqFvnlwO/MeMUyWyU1WSZU
+	 Gn3WW4lE8Odeuk3cyLCCEsYF4D/BG4sB9J/NFnPZA6X9bsrqulJXJip/HexYTDUrdaAqK
+	 w/uCeRzvzdh5rCaJFKSoroHn6Pu8dV0WEcKG24yr1YZz9S1Efl6jRu0lvqGBBPBoy72LA
+	 Wh42l9dzYvPJXDfIG1qS0zx++08AMD9vKnI9GH3U0iSWsRke5wf9MuLZkC0mkvcJo5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590837;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590838;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sMpqanQu2l58k/bVmk6gB35+m7MlFTntAe2K62tIbcg=;
-	b=IDquRQ6nGzTjEpfqZFNbtd9cuRXluMFU+MCEC8awT5SoAI6BTFa629eBD9s8O/c8dFqC
-	 6Gq5pdXXdRiHCQx8kzW9+P1hYkAJF3r9ZHxarHU8UoOc/VI2J4vnmTlDNi088msR0LpJm
-	 PBAIJx7LRqJ71hF+quSuK1yopW++YyihcsqZ5hc0dnyS1AcMegN6anyOMb0yvgnAty224
-	 JtjfMTspaLLYXMN4uzlobAqQi++++Gqe4GNZ7WzWrBavxPlsMDdDiKCeLxeLmfwnzQLbI
-	 hzkc3vdM5Dzu0GpmBA093zUdL56nvWviE4co7z+/Q9kwDML7pEjpHZAJojb0jkmQnKw==
+	bh=o2rY3ydppTlkix1aLK8id4B+lFdbeHPh4x7pxM/n/cw=;
+	b=sbEaxDYrJiNRdfeiFS6TmgqD/IzxAeYHSiu+O9Lp4vsXWMCbSme78lTXT0oM4u0DJGt3
+	 WuK1UvXB3eM794q8ZLfrBt7lf/s2SY8WPZuzZBFESShvRD4gLJizPenURRCSOg6TiUw/2
+	 sRmPgI5Kxht5HmuVexLfDdlpJqvwk+t9kOjLI+Sd+LLVipQa5K5kQwgUMefrXPmp5LOQn
+	 v01iTJ+kVF7k+EsMfBeZ9WuD0TV8yZYubayjeIsqJxywuH1xPqP9S6HVs1HwtWVAvBuM0
+	 OVVyG4Ha34/03EWRLlnqDCipJ6/i35EGuY0Y1mFQMu6xbWUYM/zwHNX2iiCr0nVTD2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WPOYTymd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u7bg1bzv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD61607E07B;
-	Fri, 13 Nov 2026 17:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5963C606D48C;
+	Fri, 13 Nov 2026 17:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WPOYTymd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B8C1F000C5;
-	Fri, 13 Nov 2026 17:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u7bg1bzv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0568E1F000C4;
+	Fri, 13 Nov 2026 17:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590837;
-	bh=sMpqanQu2l58k/bVmk6gB35+m7MlFTntAe2K62tIbcg=;
+	s=korg; t=1794590838;
+	bh=o2rY3ydppTlkix1aLK8id4B+lFdbeHPh4x7pxM/n/cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WPOYTymd0Xh8pjsAoc3RIBaZPlkeryu9g7W/C5lKJM2TnK7/O1ZdGpea/Oqt0N+bL
-	 D51mBIz7ERikEy7c5yM5SplZggwf0gV0wDSlCqrxVgtjTwtM3pVc8FpkYNSxtxBjLX
-	 mb/vi43Ys9lobLd3P1kA39oU85rtJKvo3joRETR4=
+	b=u7bg1bzvn8THz2MjZYeyS+3My9q/pHnCHhtt+UHbjc+Z2K2hFDiiTk1rsXe4PR6P7
+	 sCOfb4kUuq3B4jJpweKq6rawmoCAWsLlMYww/SeV7LtlYMTiW2jzYOBm+Xm0CKPAgq
+	 +LAuIl7RNHvG+fZ8dipZqsE+80GrE5qGZmiGYcro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
+	Yosry Ahmed <yosry@kernel.org>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/670] afs: Fix afs to abort the rxrpc call on send error
-Date: Fri, 13 Nov 2026 10:43:23 -0500
-Message-ID: <20261113153812.481546465@linuxfoundation.org>
+Subject: [PATCH 6.12 040/670] KVM: nSVM: Reject KVM_SET_NESTED_STATE if L1 has EFER.LMA=1 && EFER.LME=0
+Date: Fri, 13 Nov 2026 10:43:24 -0500
+Message-ID: <20261113153812.514463757@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -74,145 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 3e6af08a571fe2943a006acf3e890f36322602bc ]
+[ Upstream commit 5dc500a354cc8e109df678076ae3488094649468 ]
 
-Fix afs_send_empty_reply() and afs_send_simple_reply() to always try to
-abort the rxrpc call rather than just aborting on -ENOMEM and otherwise
-abandoning it.  If the call is already complete due to network failure or a
-received abort, this will do nothing.
+Reject KVM_SET_NESTED_STATE if the incoming L1 host state has what is
+effectively an impossible EFER combination of LMA=1 but LME=0, i.e. if the
+state says long mode is active but not enabled.  Unlike VMX, SVM doesn't
+have an explicit consistent check for the illegal combination; presumably
+hardware simply ignores EFER.LMA if EFER.LME=0.
 
-Also make afs_make_call() always abort on send error; again, it does
-nothing if the rxrpc call is already dead.
+Unfortunately, KVM doesn't ignore EFER.LMA in this case and consumes the
+illegal state when constructing the shadow MMU for L2.  E.g. if userspace
+also clears CR4.PAE, then kvm_calc_cpu_role() will compute a role with 4 or
+5 levels of paging, but shadow_mmu_init_context() will wire up the MMU to
+use the paging32 template, which maxes out its levels at 2.
 
-Fixes: 08e0e7c82eea ("[AF_RXRPC]: Make the in-kernel AFS filesystem use AF_RXRPC.")
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260824091645.415423-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261006133011.531806-6-dhowells@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: Retained explicit length arguments in rxrpc_kernel_send_data() calls to match the older API. ]
+Note, the "real badness" is effectively the same as what happened with the
+nVMX bug fixed by commit 112e66017bff ("KVM: nVMX: add missing consistency
+checks for CR0 and CR4").  Unfortunately, the sanity check added by commit
+72e2fb24a0b0 ("KVM: x86/mmu: Bug the VM if a vCPU ends up in long mode
+without PAE enabled") doesn't work for this case, since L2 state is active
+at the time of the page fault, but it's L1 that has the bad state.
+
+Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
+Cc: stable@vger.kernel.org
+Cc: Yosry Ahmed <yosry@kernel.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Link: https://patch.msgid.link/20260902232028.2767071-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ sashal: adjusted context for __nested_vmcb_check_save() without the third argument ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/rxrpc.c               | 49 +++++++++++++-----------------------
- include/trace/events/rxrpc.h |  2 +-
- 2 files changed, 18 insertions(+), 33 deletions(-)
+ arch/x86/kvm/svm/nested.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
-index 55449c8791426..934667e547dc2 100644
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -442,10 +442,8 @@ void afs_make_call(struct afs_call *call, gfp_t gfp)
- 	return;
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index e2e9ab0858858..3c9c20d7855fe 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1763,6 +1763,7 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
+ 	if (!(save->cr0 & X86_CR0_PG) ||
+ 	    !(save->cr0 & X86_CR0_PE) ||
+ 	    (save->rflags & X86_EFLAGS_VM) ||
++	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)) ||
+ 	    !__nested_vmcb_check_save(vcpu, &save_cached))
+ 		goto out_free;
  
- error_do_abort:
--	if (ret != -ECONNABORTED)
--		rxrpc_kernel_abort_call(call->net->socket, rxcall,
--					RX_USER_ABORT, ret,
--					afs_abort_send_data_error);
-+	rxrpc_kernel_abort_call(call->net->socket, rxcall,
-+				RX_USER_ABORT, ret, afs_abort_send_data_error);
- 	if (call->async) {
- 		afs_see_call(call, afs_call_trace_async_abort);
- 		return;
-@@ -853,6 +851,7 @@ void afs_send_empty_reply(struct afs_call *call)
- {
- 	struct afs_net *net = call->net;
- 	struct msghdr msg;
-+	int ret;
- 
- 	_enter("");
- 
-@@ -865,21 +864,13 @@ void afs_send_empty_reply(struct afs_call *call)
- 	msg.msg_controllen	= 0;
- 	msg.msg_flags		= 0;
- 
--	switch (rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
--				       afs_notify_end_reply_tx)) {
--	case 0:
--		_leave(" [replied]");
--		return;
--
--	case -ENOMEM:
--		_debug("oom");
-+	ret = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
-+				     afs_notify_end_reply_tx);
-+	if (ret < 0) {
- 		rxrpc_kernel_abort_call(net->socket, call->rxcall,
--					RXGEN_SS_MARSHAL, -ENOMEM,
--					afs_abort_oom);
--		fallthrough;
--	default:
--		_leave(" [error]");
--		return;
-+					RXGEN_SS_MARSHAL, ret,
-+					afs_abort_send_error);
-+		afs_set_call_complete(call, ret, RXGEN_SS_MARSHAL);
- 	}
- }
- 
-@@ -891,7 +882,7 @@ void afs_send_simple_reply(struct afs_call *call, const void *buf, size_t len)
- 	struct afs_net *net = call->net;
- 	struct msghdr msg;
- 	struct kvec iov[1];
--	int n;
-+	int ret;
- 
- 	_enter("");
- 
-@@ -906,21 +897,15 @@ void afs_send_simple_reply(struct afs_call *call, const void *buf, size_t len)
- 	msg.msg_controllen	= 0;
- 	msg.msg_flags		= 0;
- 
--	n = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, len,
--				   afs_notify_end_reply_tx);
--	if (n >= 0) {
--		/* Success */
--		_leave(" [replied]");
--		return;
--	}
--
--	if (n == -ENOMEM) {
--		_debug("oom");
-+	ret = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, len,
-+				     afs_notify_end_reply_tx);
-+	if (ret < 0) {
- 		rxrpc_kernel_abort_call(net->socket, call->rxcall,
--					RXGEN_SS_MARSHAL, -ENOMEM,
--					afs_abort_oom);
-+					RXGEN_SS_MARSHAL, ret,
-+					afs_abort_send_error);
-+		afs_set_call_complete(call, ret, RXGEN_SS_MARSHAL);
-+		_leave(" [error]");
- 	}
--	_leave(" [error]");
- }
- 
- /*
-diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
-index 8c4d791507f18..5e29744e45037 100644
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -20,10 +20,10 @@
- 	/* AFS errors */						\
- 	EM(afs_abort_general_error,		"afs-error")		\
- 	EM(afs_abort_interrupted,		"afs-intr")		\
--	EM(afs_abort_oom,			"afs-oom")		\
- 	EM(afs_abort_op_not_supported,		"afs-op-notsupp")	\
- 	EM(afs_abort_probeuuid_negative,	"afs-probeuuid-neg")	\
- 	EM(afs_abort_send_data_error,		"afs-send-data")	\
-+	EM(afs_abort_send_error,		"afs-send-error")	\
- 	EM(afs_abort_unmarshal_error,		"afs-unmarshal")	\
- 	/* rxperf errors */						\
- 	EM(rxperf_abort_general_error,		"rxperf-error")		\
 -- 
 2.53.0
 
