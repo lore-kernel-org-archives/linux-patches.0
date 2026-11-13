@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590515;
-	b=ijQH0QMg3bd+voTUd/jfstLMyQPxe7E79IQzaVhf4J5aFTZjSQ6XDBaA3MVoqk0WOwt4
-	 hDih6wyIPjFKTjBXvhYNblvuB8b/9aw9eqiltPP7qAZw3Sb3fNE/3JfQxlmLXlDZue6kN
-	 dCuWywcJDgpc1dGWWpqjjrhweY6Zrd5FfH6lyTecT4ZEFr15xcwxa82jbCyRzME/YdnN/
-	 +j06anFg0wEWQrNZH6Kic5T68getLa2bDmvWubDigCY0VRwl4fntCmaJkOrfOqIMDnYCU
-	 buaEsLx41nIB+0ZtMn6mUI2rRnB8oVstFOjHkqYLaErO2LbQxa5caWa1f6UHOPHljNA==
+	t=1794590516;
+	b=VYO7ked0Lw4Qt986Aal78tvsfAQaP924AvHOma6FaoZAzTyNoRxLOsRqL4UgjXbx262z
+	 Dyni5Zl8xWw3XZMDGC4jiyESGLSqwqFq1hJCfUx3JuGoJywisRbMY7rIM8i15YWX4W3GR
+	 aVDe6ZHDHudkTUgKww6kLC5iSUhziG+kpRCF/IklddIcdRMmKCCzjwGCE+j3NrW8u19CF
+	 j7wiobMJYD9YmaqnqEJGInBJRZaYILn1VPoLi33hmgzE7qwEmHpG3L8wG7N817w6V9beB
+	 y33aiY/QmpGwKV7zIJE1nQsBR9rmOxX8o7bAuBVigxEPdnXGuYFBMYJp79Hrq9dO9Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590515;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590516;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fd2jJwCF8TTy6FIWm9dQf114T3fqF49bcsgkhHXaBwU=;
-	b=Zz3vYAYcrJkuEz+WrbIMTY59bgiBQiCppvAWp2nr+FzYevON7IXAJiPXpPgzEK/mfDSX
-	 DaflNjB0lOpQiZpxIObdvfOUoeMpjxBhWEVmWs9ypqtpFgTihHEy8vZPcIHFac2b9GCdR
-	 i6fznWH/U+LISRKN1c2gjkoFcads1XoxeU3/+J39CG5iRNR6WY1605WEVSF61LNfrw4K4
-	 aXx5CQ2w98aWEDcBhthtcJn6qupgjSYULVL5OaxtUL0fGKU+t3Ra2njHUBrkcWfVHKbQX
-	 bEtY7lolELsZjLsRF5kKdJ+PS8ZHGHk0BODjLWYiAT/8tIhx9AGn9mikWVOU2PC4X+w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CEtCfOtQEJ4evPz5H4kvkCsu5gQTUVv78QPROoKI4lg=;
+	b=1NoZ0fDDgSND4S4U0QESXoOUodseZGDY2bUzApnqTPLGc2IUlutaDPafiIooZd4/PG2m
+	 Oqh7LiRHUHqTqJx6a0EiYGUGW401xQWQs33W6b+l1HQHnny/m2w+/gioZjS+lUmZkMm9d
+	 ZP4Xsccwi6Y5YPIprUCjicmxf2cNSyrmNYiUWkdw2iEItxPBET7O5pxnZV1A6m5bQcOWb
+	 NCWolNXNPXUj34Nce7FZhe0qiGSUZCcCdMYf7Y0ETpEW5LGdpnUTth6NbAPTaySZ1E8b8
+	 4LfQnynIk+A96BhYxE3q5FFph0hB4FVXG9TG+DtO3JSVQEAsQfjHdjrTdh3oz+HGrnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CFfLVsro;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RV9CMVaR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7950606A8A7;
-	Fri, 13 Nov 2026 17:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FAE606A8A7;
+	Fri, 13 Nov 2026 17:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CFfLVsro
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9615C1F000C4;
-	Fri, 13 Nov 2026 17:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RV9CMVaR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0625F1F000C6;
+	Fri, 13 Nov 2026 17:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590514;
-	bh=fd2jJwCF8TTy6FIWm9dQf114T3fqF49bcsgkhHXaBwU=;
+	s=korg; t=1794590516;
+	bh=CEtCfOtQEJ4evPz5H4kvkCsu5gQTUVv78QPROoKI4lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CFfLVsroVBeq88nuXvxEyByVneBsOXQhY6ZJpRkuq6xt6hH4QQZ0el1i6cP1wW8ko
-	 3E4Gc9LA3eQ0H/szW+1GE/ZYBfrvzYCJ96O/JU4q6YqWmBRorGeSMqYQ1VUdkrHgg1
-	 UYQJ1xEowLENg7MVz69sQI+svCg/uZG/vHY1uSYY=
+	b=RV9CMVaRwhfCLAzpG1dxSLytn/TS6pnX+pTBltlB49qQ/vJPnbkE2khgFfIL7fqwq
+	 S+zbX8X5FnXLnGEu9SZNxg5QzKlQZQN/GPYq2fSHB+9OdlhQyFtEMKuFD+Qc0idGpL
+	 JZXdTmJASV+OwhGuswkG3+5JtQI1o5JHGv8Uc+nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Roman Demidov <roman.demidov.nn@gmail.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 417/686] drm/amdgpu: dont drop the gang dependency fence twice
-Date: Fri, 13 Nov 2026 10:49:10 -0500
-Message-ID: <20261113153835.095040857@linuxfoundation.org>
+Subject: [PATCH 6.18 408/686] drm/amd/display: Fix NULL deref in dcn401_update_clocks_update_dtb_dto
+Date: Fri, 13 Nov 2026 10:49:01 -0500
+Message-ID: <20261113153834.806270064@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -63,61 +63,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Roman Demidov <roman.demidov.nn@gmail.com>
 
-[ Upstream commit 6d1f901a83603a7d314e4a756b416b11d8dc7e35 ]
+[ Upstream commit 7fac15d009cf236677a8cddf6bc0e8c85666ac3b ]
 
-drm_sched_job_add_dependency() drops the fence reference when it fails,
-but amdgpu_cs_submit() drops it again, so the scheduled fence of a gang
-member loses a reference it still needs.
+[Why]
+resource_get_otg_master_for_stream() can return NULL if no OTG master pipe
+is found for a given stream. The current code dereferences this pointer
+without a NULL check. This may lead to a possible NULL pointer
+dereference.
 
-A GFX+COMPUTE gang waiting for another context, with the
-xarray node allocation for the leader's dependency failed through
-failslab:
+[How]
+Add an explicit NULL check and skip the stream if the OTG master is not
+found. This is similar to dcn60_update_clocks_update_dtb_dto().
 
-  WARNING: drivers/dma-buf/dma-fence.c:589 at dma_fence_release+0x34d/0x730, CPU#1: amd_uapi_regres/2993
-   drm_sched_job_cleanup+0x2c2/0x340 [gpu_sched]
-   amdgpu_job_free+0xcb/0x3e0 [amdgpu]
-   amdgpu_cs_parser_fini+0x435/0x710 [amdgpu]
-   amdgpu_cs_ioctl+0xcd2/0x7a60 [amdgpu]
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-  RIP: 0010:dma_fence_signal_timestamp_locked+0x1b8/0x610
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: ed21f6c3fe42 ("drm/amdgpu: fix another missing fence reference in the CS code")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Fixes: b6d508533fa1 ("drm/amd/display: fix a crash when clock source is reference for non otg master pipe")
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5aa070a83c8378810b906cc8bfc650ce69822a7c)
+(cherry picked from commit ffde3d74c1faeeb645b66d02d02fdae3e073941b)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 946c6bfe1f7f4..0f6505d4c958b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1333,10 +1333,8 @@ static int amdgpu_cs_submit(struct amdgpu_cs_parser *p,
- 		fence = &p->jobs[i]->base.s_fence->scheduled;
- 		dma_fence_get(fence);
- 		r = drm_sched_job_add_dependency(&leader->base, fence);
--		if (r) {
--			dma_fence_put(fence);
-+		if (r)
- 			return r;
--		}
- 	}
- 
- 	if (p->gang_size > 1) {
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c
+index 306016c1f109c..8f53a1f228f59 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c
+@@ -535,6 +535,9 @@ static void dcn401_update_clocks_update_dtb_dto(struct clk_mgr_internal *clk_mgr
+ 		otg_master = resource_get_otg_master_for_stream(
+ 				&context->res_ctx, context->streams[i]);
+ 		ASSERT(otg_master);
++		if (!otg_master)
++			continue;
++
+ 		ASSERT(otg_master->clock_source);
+ 		ASSERT(otg_master->clock_source->funcs->program_pix_clk);
+ 		ASSERT(otg_master->stream_res.pix_clk_params.controller_id >= CONTROLLER_ID_D0);
 -- 
 2.53.0
 
