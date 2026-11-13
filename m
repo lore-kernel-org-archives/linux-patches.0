@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585732;
-	b=V8kmBcu0nb3ngM1hhnLXme3AcHOM43cDEl63ihuEFetP6b3JjQzlDNoXJrw8+LZZFnOY
-	 fdxFq3OOkSVHh1+C4pe7IMGVF2oIbkgRbt5VnijwR606QZ/7KDHhBOnL4+eLKxg0Ycrkz
-	 stnKAv/vBt254V+yM2gnZbT5LBf5m9PlnKUhVfCf9S5foM2jlUk92LrJaebSUxAxb+//1
-	 uNBJ4ue9b65ijFCz1F1uJfBjggIy2/nbviCoizYJSJ/Y3wXoLirUzLeSyM2c3KjsaFmEB
-	 X0XNKzZmf/IhAhWzhyNEWqAJ5RuuejbXtB/cZg7lJ+MutNtJkq24RUZeJqQFIkUM4vQ==
+	t=1794585734;
+	b=qN9FYTnwv+vJIuURvizEsPNNRyv61KptDWVoEYbTUszPsHt3fazELa1Dcs6aZqmIK6uF
+	 9BYhIMGaRIbfwDPg+C3SK7quC/1zBnEHqjKGP22guq5sr30FaXtzA0s2ypVV5TtL0pu01
+	 tAlFjhKTa2WCV9GCvhqqSQLjwp86wrn8oWL6tmppeuDvneHm35DkarMujMpmWF1nEDxl2
+	 86Nqy9d/65e8IrMxTbZUIP2Vdp+ZswI97VDLmY+mIPDLmijasPIhVuYUbByGITBUiSIG/
+	 4VDzOXkVGTnNxHPgDbi9vmoJl2fmlFDndDL5Rf1E1qPK/0a5gYbtZDjV8HwCKU/t9aA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585732;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585734;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UjNM5MYfwED24p91YB41wWFFllQmijMqPUXAEIuXVDo=;
-	b=qSJSFq4A+rTtkYiIbgfrMkGvB2OOLyRyhbR7WZGOvyWi5BjTI59JcX5HpEyb+8miX8JX
-	 /JukpdTP32mIUWFB1US7n8ekMcHMTJs0BDL4FmJbPzflJBoKqRdaYuQUAeb555r6DBCdK
-	 DE2GcdzJ8tIfgbhQ5nctTuuOfaA+LLTiQ7wVxQCa7rwhyvfBYcb2sDRo/z7cY9MHfy+Sj
-	 un4iC6M/+Kx4dDmMmcJDVV4DbnlU3+HN/e/8O0Kht1h85FXqvG9J8E27Tg/w/8NTb574L
-	 +gXLzDUcKEE7CMPOdpjTqFRl4PZkYg6AcoMjsyBqUWNA1oRUQzuv7SXejmfDwNEsh3Q==
+	bh=aO/Sgiq2kHVgTFIQMrLCVb9rginsFMqOOok7A49DA2g=;
+	b=q26r5d7ybd6io/DhoGDhrbemnCDpV0KudTr5z/NOINeKq3NerLbYdbRuywhny0t/IwFk
+	 yvGzYe91xh8JWLcT03ZSHDsA3NmTat6En+ddoufua6KjiQwi42HNgk2tN05Gx8YQTpTGf
+	 X7HKkRme3YXmhtRRV9quQnSQGh26JyjNmSsg7EjYAlUbUoUWtSSppigv3aaiNPSmzECGe
+	 aQOMyOkdWYgbV/QlzC0M/PanF7CFcUTbYGIXQG45Xl392TJC9Eme6iIyi+oPBVFg5y+Op
+	 bUsStM6Oy/y0WxKyDkDTD/h9t5C2E4SLPoPJ+NBhrU4tESc9vLAJJn+EE42TJkwhIrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Dn/Gmy9F";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLYQwDT6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1D3606EB82;
-	Fri, 13 Nov 2026 16:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045F4606EB82;
+	Fri, 13 Nov 2026 16:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dn/Gmy9F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEAE1F000C4;
-	Fri, 13 Nov 2026 16:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLYQwDT6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39971F000C4;
+	Fri, 13 Nov 2026 16:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585732;
-	bh=UjNM5MYfwED24p91YB41wWFFllQmijMqPUXAEIuXVDo=;
+	s=korg; t=1794585733;
+	bh=aO/Sgiq2kHVgTFIQMrLCVb9rginsFMqOOok7A49DA2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dn/Gmy9Fm7SvxgA3T8dOt2qHcOudqP8RCXS6h9guA6G1a5ayk+ydcBqfXKnEIA/EA
-	 rSIUNpI5qwrV/muKR6yQ4JSIXOsRhwb6NkRvHacoUIMD8KSBxYHgFq/F/oDt+AB9nB
-	 vuCkeAOPItjp9Sz40nRjym4EWfA9CHFaJNMgqkio=
+	b=yLYQwDT687X8/pnaTbln5EOa1iqcy/IaJ+PXiYVEvxkC1+6KwWkebsQF6G/WbSeRQ
+	 6bTKxJK/7Q2lUAHzKjCF5TjvpzayrWcjdepmuk7dNNf5uwRg8pjcqeGNsZik6p5+Zl
+	 ldXFtY+WhjU09RX1asYMrr5Wnr0SE30YsdDdcGg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+16bf7cd0ebeb1de93aa5@syzkaller.appspotmail.com,
-	Lance Yang <lance.yang@linux.dev>,
-	Pedro Falcato <pfalcato@suse.de>,
+	Andy Lutomirski <luto@amacapital.net>,
+	Samiullah Khawaja <skhawaja@google.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 333/507] khugepaged: fix readahead lock inversion in collapse_file()
-Date: Fri, 13 Nov 2026 10:50:37 -0500
-Message-ID: <20261113153806.718914082@linuxfoundation.org>
+Subject: [PATCH 7.3 334/507] mm/gup: check folio->mapping under folio lock in memfd_pin_folios()
+Date: Fri, 13 Nov 2026 10:50:38 -0500
+Message-ID: <20261113153806.746281948@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -72,120 +69,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Samiullah Khawaja <skhawaja@google.com>
 
-[ Upstream commit eadce52a9ef657d561b3e76c9b5f178bd99735f5 ]
+[ Upstream commit 71555ae8c7572fd99158013ca2e29187c5d2508d ]
 
-collapse_file() can call page_cache_sync_readahead() while still holding
-source folios locked. If truncate holds mapping->invalidate_lock
-exclusively and waits for one of those folios, readahead waits for
-invalidate_lock and neither side can make progress.
+memfd_pin_folios() pins folios from the page cache without taking the
+folio lock. khugepaged or MADV_COLLAPSE can therefore replace a folio
+after checking its refcount while memfd_pin_folios() still pins the old
+folio. The caller then receives a folio which is no longer part of the
+memfd.
 
-We need to release those folio locks before starting readahead. On a page
-cache miss, roll back first, populate the collapse range, and retry once.
-Doing readahead after rollback avoids an extra pass when all folios are
-already present. If another miss occurs on retry, give up rather than keep
-retrying while truncate or reclaim removes folios.
+For udmabuf and iommufd, this can cause data corruption: DMA accesses
+the detached folio rather than the live memfd contents. DMA reads can
+return stale data, while DMA writes update the detached copy and are
+lost from the live memfd. The detached folio remains pinned, so these
+accesses do not constitute a use-after-free or target another
+application's memory. For memfd live update, the stale contents can
+reappear in the memfd after handover.
 
-Keep page_cache_sync_readahead() and wait for read I/O with
-filemap_lock_folio(), releasing each folio before moving to the next. The
-existing uptodate check during collapse still handles read errors.
+Lock the folio and recheck folio->mapping before pinning it, like other
+page cache users do. If the folio was removed, retry the folio lookup
+from the index that was removed.
 
-Shmem uses shmem_get_folio() for swapin and fallocated folios without
-taking mapping->invalidate_lock, so it is unaffected.
-
-Reported-by: syzbot+16bf7cd0ebeb1de93aa5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=16bf7cd0ebeb1de93aa5
-Fixes: 730633f0b7f9 ("mm: Protect operations adding pages to page cache with invalidate_lock")
+Fixes: 89c1905d9c14 ("mm/gup: introduce memfd_pin_folios() for pinning memfd folios")
+Reported-by: Andy Lutomirski <luto@amacapital.net>
+Closes: https://lore.kernel.org/all/CALCETrV5eqg6d9=+BQhCpRwBNe3aCQiut8vxPBs8b7PToqjaHg@mail.gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/20261026152013.10511-1-lance.yang@linux.dev
+Signed-off-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Andy Lutomirski <luto@amacapital.net>
+Link: https://patch.msgid.link/20261031203540.2282507-1-skhawaja@google.com
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/khugepaged.c | 44 +++++++++++++++++++++++++++++++++-----------
- 1 file changed, 33 insertions(+), 11 deletions(-)
+ mm/gup.c | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 8fc8f79641ea5..47ed64f51748f 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2261,6 +2261,8 @@ static enum scan_result collapse_file(struct mm_struct *mm, unsigned long addr,
- 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
- 	enum scan_result result = SCAN_SUCCEED;
- 	int nr_none = 0;
-+	bool do_readahead = false;
-+	bool readahead_done = false;
+diff --git a/mm/gup.c b/mm/gup.c
+index b3937aff3ad44..4f58ad22a756b 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -3446,7 +3446,7 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
+ {
+ 	unsigned int flags, nr_folios, nr_found;
+ 	unsigned int i, pgshift = PAGE_SHIFT;
+-	pgoff_t start_idx, end_idx;
++	pgoff_t start_idx, end_idx, retry_idx;
+ 	struct folio *folio = NULL;
+ 	struct folio_batch fbatch;
+ 	struct hstate *h;
+@@ -3487,6 +3487,7 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
+ 			 * reason, we try to allocate them and add them to the
+ 			 * page cache.
+ 			 */
++			retry_idx = start_idx;
+ 			nr_found = filemap_get_folios_contig(memfd->f_mapping,
+ 							     &start_idx,
+ 							     end_idx,
+@@ -3499,7 +3500,21 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
+ 			for (i = 0; i < nr_found; i++) {
+ 				folio = fbatch.folios[i];
  
- 	/*
- 	 * MADV_COLLAPSE ignores shmem huge config, so do not check shmem
-@@ -2278,6 +2280,10 @@ static enum scan_result collapse_file(struct mm_struct *mm, unsigned long addr,
- 
- 	mapping_set_update(&xas, mapping);
- 
-+retry:
-+	result = SCAN_SUCCEED;
-+	do_readahead = false;
-+	xas_set_order(&xas, start, HPAGE_PMD_ORDER);
- 	__folio_set_locked(new_folio);
- 	if (is_shmem)
- 		__folio_set_swapbacked(new_folio);
-@@ -2342,17 +2348,9 @@ static enum scan_result collapse_file(struct mm_struct *mm, unsigned long addr,
- 			}
- 		} else {	/* !is_shmem */
- 			if (!folio || xa_is_value(folio)) {
--				xas_unlock_irq(&xas);
--				page_cache_sync_readahead(mapping, &file->f_ra,
--							  file, index,
--							  end - index);
--				/* drain lru cache to help folio_isolate_lru() */
--				lru_add_drain();
--				folio = filemap_lock_folio(mapping, index);
--				if (IS_ERR(folio)) {
--					result = SCAN_FAIL;
--					goto xa_unlocked;
--				}
-+				do_readahead = !readahead_done;
-+				result = SCAN_FAIL;
-+				goto xa_locked;
- 			} else if (folio_test_dirty(folio)) {
- 				/*
- 				 * This page is dirty because it hasn't
-@@ -2679,6 +2677,30 @@ static enum scan_result collapse_file(struct mm_struct *mm, unsigned long addr,
- 	new_folio->mapping = NULL;
- 
- 	folio_unlock(new_folio);
-+
-+	/* Readahead may take invalidate_lock; source folios are unlocked. */
-+	if (do_readahead) {
-+		for (index = start; index < end;) {
-+			folio = filemap_lock_folio(mapping, index);
-+			if (IS_ERR(folio)) {
-+				page_cache_sync_readahead(mapping, &file->f_ra,
-+							  file, index, end - index);
-+				folio = filemap_lock_folio(mapping, index);
-+				if (IS_ERR(folio)) {
-+					result = SCAN_FAIL;
-+					goto out_put;
++				/*
++				 * The folio might have been removed from the
++				 * page cache (e.g., truncated or collapsed)
++				 * after the lookup. Recheck under the folio
++				 * lock.
++				 */
++				folio_lock(folio);
++				if (unlikely(folio->mapping != memfd->f_mapping)) {
++					folio_unlock(folio);
++					start_idx = retry_idx;
++					break;
 +				}
-+			}
-+			index = folio_next_index(folio);
-+			folio_unlock(folio);
-+			folio_put(folio);
-+		}
-+		/* Drain the local LRU batch before retrying isolation. */
-+		lru_add_drain();
-+		readahead_done = true;
-+		goto retry;
-+	}
-+out_put:
- 	folio_put(new_folio);
- out:
- 	VM_BUG_ON(!list_empty(&pagelist));
++
+ 				if (try_grab_folio(folio, 1, FOLL_PIN)) {
++					folio_unlock(folio);
+ 					folio_batch_release(&fbatch);
+ 					ret = -EINVAL;
+ 					goto err;
+@@ -3510,14 +3525,12 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
+ 				 * page cache that were never cleared.
+ 				 */
+ 				if (!folio_test_uptodate(folio)) {
+-					folio_lock(folio);
+-					if (!folio_test_uptodate(folio)) {
+-						folio_zero_range(folio, 0, folio_size(folio));
+-						flush_dcache_folio(folio);
+-						folio_mark_uptodate(folio);
+-					}
+-					folio_unlock(folio);
++					folio_zero_range(folio, 0, folio_size(folio));
++					flush_dcache_folio(folio);
++					folio_mark_uptodate(folio);
+ 				}
++				retry_idx = folio_next_index(folio);
++				folio_unlock(folio);
+ 
+ 				if (nr_folios == 0)
+ 					*offset = offset_in_folio(folio, start);
 -- 
 2.53.0
 
