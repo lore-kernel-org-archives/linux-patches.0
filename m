@@ -1,52 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585592;
-	b=shUqgvCvY2+fGo2OVcdGm1+z51f9BluoYbpBMZizSogBAdtn+GZ03GmWZ2pdccB6yebK
-	 rPpVHHlzjdgyQYfpG6JfaPlUWioDH2nkZ7rJ3/7PuwsbPulLBehKWO52clinmSkccwhtt
-	 tDcetT1yJ5eHnAN/NJ+czJEKHXBpLdajsQIpkTbkAUKHpV+eaFImdSWh9f0vYi7632JnH
-	 sRtp5UNwTg1SDd1JbIEK4EC3wJF5d4iblyPfp0LvMeVBvYJw/8/lZddIX2nFB4vkKjZOO
-	 MyL4NbCZ9q/RUziToe42XRv+VHqQbe/wtnKf2SKu7/k05LLb3NZm0qICuq+WpRtaamg==
+	t=1794585593;
+	b=REPcUcPR6uPf/Afmwj3nboKxHHUUCmtKGcXx7IQvG1e/7+gmuKNfb9APw+x1hLrOHIya
+	 yH9JVhuoxNnYrUt7bi2W7+xlDZx5JhTwxdQQxr5SjHytm9Ij8wBru88RPgX1nNDqjh9sk
+	 B5ZNgMpgEuiXGGJb+n8BWC8uqrWVKcm9lBEl3mDskSPZ145VnoDlZGqWmCEY43lV9aU+R
+	 j3kOtSQKqBqS7FZXWK61U7hs73HZAxOWw6pMk+ZlH9pojnVe+ZY2+XqAMdkE0oIvAH2gy
+	 WnoRYHslFMS778qCL0LEbaarTk4E4gZSBSoRRlz5d/HVzmyO0nKDwO1Do0GPMDtU0LQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585593;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=PZ+iWMQVbwnA3jqpl48NrY3SvQkeg71FxsxO4e6TrNQ=;
-	b=kXpQEE28eKgqGHzQ2H/cW6b9FzdCNTh4MtfX+gk64KBBWa/x2DFaqjbUVEjmE4gpIr8k
-	 VKLZqDOsdac11sSJsaSTSDfPiHEoOfY/UH8LdczpKOEUz+6bXptFUph/gx0vEm83+t58V
-	 lnaOzMR7vThW/mVYs+raqzopXPbzrCmGemgcB96+kmOBnYPB8cWDmROyfV3FQwxEHAXqh
-	 17HTfl/qL7wkDnpdnZSbfQUk3TVslvwF5RrYbkX2yk61SYWoxsBxHiG4+sRMNe2nL8T+C
-	 lMh1GTOuweuBOCyXfqDK2htdCVDyWuc0p3VU6EqA+yrcLYfUxk/seIqHY2+5W4UCfgw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=pR17OCh99UMVpwxowEXDeVvELHO59Agytc/j28JIZUM=;
+	b=VUCGQ5+oMa3LgxrZI2wwnhD6rEW1+tMzZQgfR6qeY0/7mZ7wqBW1Ia4smQtrpI4WON2+
+	 bppY2lkZ7Bp7V7CYsz4D/Rv0ZkrqOhnYqONDwwlyYSi4zH0IkZ1YF3TCEJZ0ad6YkBM9r
+	 pJQOTeihQ+gT0e/mJp1Tt1gwx3cMr7W1ArBw5fPxjRCudb3o67ZlL0bb/QS/uaf7T5fgP
+	 Zsz819uqxpo6H3KGtHDJqbC8heffNh03OhBr/QATcsYIp2VXtV+GIyLreDFYpzOa8sjJG
+	 LcFzphYdUaHiE3d3bjWp5tYlryishWVN74pkqIyIJmpxxqWuibZLCgAFoEBK60KLYuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vTpsEhIU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6hfK6fD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED195606FFEC;
-	Fri, 13 Nov 2026 15:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E403E606FFDF;
+	Fri, 13 Nov 2026 15:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vTpsEhIU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E1D1F000C4;
-	Fri, 13 Nov 2026 15:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6hfK6fD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C86A1F000C4;
+	Fri, 13 Nov 2026 15:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585591;
-	bh=PZ+iWMQVbwnA3jqpl48NrY3SvQkeg71FxsxO4e6TrNQ=;
+	s=korg; t=1794585592;
+	bh=pR17OCh99UMVpwxowEXDeVvELHO59Agytc/j28JIZUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vTpsEhIU88+zEODH8TN6XxfZMY/TTKnY6r3TNAQcKRqPurTif3yi0NsXVwaV3pIFf
-	 cVflwpcweMgaLe0DOIQkrKVdeF40jSfqIbel1tWYi3adXx4fg08dh6fMq6UUW1wkQs
-	 h7NEC6c/8LfNPhe9epHmzKluF0Ns/2BcRppFJJ2w=
+	b=I6hfK6fDVpGpJgDadDUurHQ+8QY3dYVB6uLvlPD1FpwHRKnOjDiiOwknuUyjvXo7N
+	 tv5/YxwWmi3n5R952OvPSIjb4uo+PYzVOPF0hzR5bczH1/jd9Z75wglwAUovoOgRWw
+	 XDGoRyImaByHZcYYgZtqZdfK+SVHwcHmBjIp5S2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babu Moger <babu.moger@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Kyle Zeng <kylebot@openai.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Hugh Dickins <hughd@google.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <nico.pache@linux.dev>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Usama Arif <usama.arif@linux.dev>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 220/507] x86,fs/resctrl: Keep mbm_assign_mode in default mode at boot
-Date: Fri, 13 Nov 2026 10:48:44 -0500
-Message-ID: <20261113153801.948752414@linuxfoundation.org>
+Subject: [PATCH 7.3 221/507] mm/khugepaged: flush deferred unmaps before dropping a failed folio
+Date: Fri, 13 Nov 2026 10:48:45 -0500
+Message-ID: <20261113153801.983045197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -62,263 +75,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Babu Moger <babu.moger@amd.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 7782a6a8dfc05f5622fdf616e5cf3df7d16eaef5 ]
+[ Upstream commit 854e5ff8b3ce2a776586cabebaeae645c992345b ]
 
-The mbm_event mode assigns hardware MBM counters to RMID/event pairs.  It is
-intended for deployments that need to manage counter assignment on platforms
-where the number of monitoring groups exceeds the available hardware counters.
-Hardware counters are scarce on these platforms, so mbm_event mode suits
-workflows that monitor a subset of groups at a time and rotate assignments as
-needed.
+collapse_file() can fail its reference-count or dirty-folio check after
+unmapping with TTU_BATCH_FLUSH.  Both paths put back the isolated folio,
+then unlock it and drop the lookup reference before reaching the common
+try_to_unmap_flush().
 
-x86 resctrl enables the mbm_event mode by default on hardware that supports
-it. This breaks the pqos tool¹, which assumes the historical default mode.
-It creates 16 or more monitoring groups and uses two counters per group. On
-a platform with 32 counters per domain, that exhausts the mbm_event counters
-pool, causing additional groups to read "Unassigned".  pqos interprets
-a non-numeric event read as zero bandwidth and reports 0 MB/s for those
-groups:
+The page-cache reference does not keep the folio stable once the lock is
+released.  Another collapse can replace and free it.  With its PTEs
+already gone, that collapse cannot flush the first task's per-task TLB
+batch, and retract_page_tables() skips short or unaligned VMAs.  A CPU can
+therefore retain a user translation to the freed folio.  This has been
+reproduced with unprivileged MADV_COLLAPSE on a memfd.
 
-  $ sudo pqos -m all:0-4
-  CORE         IPC      MISSES     LLC[KB]   MBL[MB/s]   MBR[MB/s]
-     0        0.69         16k       192.0         0.0         0.0
-     1        0.40          3k         0.0         0.0         0.0
-     2        0.44          1k        64.0         0.0         0.0
-     3        0.39          1k        64.0         0.0         0.0
-     4        0.43          1k         0.0         0.0         0.0
+Flush at out_unlock while the lookup reference and folio lock are still
+held.  The common flush continues to cover the accumulated pagelist on
+both success and rollback, preserving batching on successful collapses.
 
-Leave mbm_assign_mode in default mode during initialization as decided in the
-thread at the Link tag. Default mode uses one counter per monitoring group. On
-existing AMD platforms, the default active counters pool is 64 and may be
-larger on newer hardware.  The active counters pool is the number of counters
-that the hardware can actively track in default mode.
-
-Deployments within the active counters pool receive accurate bandwidth
-measurements in the default mode. Users can create more monitoring groups (for
-example, 4096 on current hardware) than there are active counters in the pool.
-Beyond that pool, readings may be misleading or report as "Unavailable", with
-no user-visible indication.
-
-Default mode is still limited once the number of monitoring groups exceeds
-that active counters pool. After hardware re-allocates a counter, a read
-may return "Unavailable". pqos still treats "Unavailable" as zero.
-Successive reads can be a count, "Unavailable", then another count. pqos
-treats those jumps as wraparound and can report an inconsistent rate:
-
-  $ sudo pqos -m all:0-4
-  CORE     IPC      MISSES     LLC[KB]   MBL[MB/s]   MBR[MB/s]
-  0        0.76         60k        32.0         0.0         0.0
-  1        0.45          1k        32.0         0.0         0.0
-  2        1.57        107k        64.0         0.0 17592186044184.9
-  3        1.62        276k      4928.0         3.2         0.5
-
-Users that need stable measurements beyond the active counters pool should
-use mbm_event mode and rotate assignments as needed. Enable it with:
-
-  # echo mbm_event > /sys/fs/resctrl/info/L3_MON/mbm_assign_mode
-
-¹https://github.com/intel/intel-cmt-cat
-
-  [ bp: Massage commit message. ]
-
-Fixes: 0f1576e43adc ("x86/resctrl: Configure mbm_event mode if supported")
-Closes: https://github.com/intel/intel-cmt-cat/issues/311
-Signed-off-by: Babu Moger <babu.moger@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20260804191608.GDanI6eK2Q07w6pNcb@fat_crate.local
+Link: https://lore.kernel.org/20261007041001.43181-1-kylebot@openai.com
+Fixes: 6d9df8a5889c ("mm/thp: collapse_file() do try_to_unmap(TTU_BATCH_FLUSH)")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Acked-by: Hugh Dickins <hughd@google.com>
+Assisted-by: LLM
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: "Liam R. Howlett" <liam@infradead.org>
+Cc: Nico Pache <nico.pache@linux.dev>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Usama Arif <usama.arif@linux.dev>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/resctrl.rst | 87 ++++++++++++++++-----------
- arch/x86/kernel/cpu/resctrl/monitor.c |  1 -
- 2 files changed, 51 insertions(+), 37 deletions(-)
+ mm/khugepaged.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/filesystems/resctrl.rst b/Documentation/filesystems/resctrl.rst
-index e4b66af55ffba..6b641c3cee644 100644
---- a/Documentation/filesystems/resctrl.rst
-+++ b/Documentation/filesystems/resctrl.rst
-@@ -351,12 +351,12 @@ with the following files:
- "mbm_assign_mode":
- 	The supported counter assignment modes. The enclosed brackets indicate which mode
- 	is enabled. The MBM events associated with counters may reset when "mbm_assign_mode"
--	is changed.
-+	is changed. See architecture specific notes below.
- 	::
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index b717de08e3c8b..16444bd7f1c0a 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -2488,6 +2488,11 @@ static enum scan_result collapse_file(struct mm_struct *mm, unsigned long addr,
+ 		index += folio_nr_pages(folio);
+ 		continue;
+ out_unlock:
++		/*
++		 * The folio may have been unmapped with TTU_BATCH_FLUSH.
++		 * Flush before releasing the lock and our last reference.
++		 */
++		try_to_unmap_flush();
+ 		folio_unlock(folio);
+ 		folio_put(folio);
+ 		goto xa_unlocked;
+@@ -2498,9 +2503,8 @@ static enum scan_result collapse_file(struct mm_struct *mm, unsigned long addr,
+ xa_unlocked:
  
- 	  # cat /sys/fs/resctrl/info/L3_MON/mbm_assign_mode
--	  [mbm_event]
--	  default
-+	  [default]
-+	  mbm_event
+ 	/*
+-	 * If collapse is successful, flush must be done now before copying.
+-	 * If collapse is unsuccessful, does flush actually need to be done?
+-	 * Do it anyway, to clear the state.
++	 * Flush before copying the folios, or releasing them in rollback.
++	 * This is a no-op if out_unlock already flushed the batch.
+ 	 */
+ 	try_to_unmap_flush();
  
- 	"mbm_event":
- 
-@@ -374,20 +374,17 @@ with the following files:
- 	Moving to mbm_event counter assignment mode requires users to assign the counters
- 	to the events. Otherwise, the MBM event counters will return 'Unassigned' when read.
- 
--	The mode is beneficial for AMD platforms that support more CTRL_MON
--	and MON groups than available hardware counters. By default, this
--	feature is enabled on AMD platforms with the ABMC (Assignable Bandwidth
--	Monitoring Counters) capability, ensuring counters remain assigned even
--	when the corresponding RMID is not actively used by any processor.
-+	It is intended for deployments that need to manage counter assignment on
-+	platforms where the number of monitoring groups exceeds the available
-+	hardware counters. Hardware counters are scarce on these platforms, so
-+	mbm_event mode suits workflows that monitor a subset of groups at a time and
-+	rotate assignments as needed. The mbm_event mode ensures counters remain
-+	assigned even when the corresponding RMID is not actively used.
- 
- 	"default":
- 
- 	In default mode, resctrl assumes there is a hardware counter for each
--	event within every CTRL_MON and MON group. On AMD platforms, it is
--	recommended to use the mbm_event mode, if supported, to prevent reset of MBM
--	events between reads resulting from hardware re-allocating counters. This can
--	result in misleading values or display "Unavailable" if no counter is assigned
--	to the event.
-+	event within every CTRL_MON and MON group.
- 
- 	* To enable "mbm_event" counter assignment mode:
- 	  ::
-@@ -399,6 +396,24 @@ with the following files:
- 
- 	    # echo "default" > /sys/fs/resctrl/info/L3_MON/mbm_assign_mode
- 
-+	In default mode on AMD platforms that support more CTRL_MON and MON groups
-+	than hardware counters, hardware dynamically shares a smaller pool of
-+	counters among RMIDs. One counter from this pool is used per monitoring
-+	group and counts every MBM event of that group's RMID. The size of the pool
-+	is not enumerated to software (unlike "num_mbm_cntrs"), and "num_rmids" may
-+	be much larger. For example, 64 counters in this pool monitor 64 groups.
-+	Newer hardware may provide a larger pool.
-+
-+	On such platforms, while the number of monitoring groups does not exceed
-+	that pool, a counter stays attached to each RMID and readings remain
-+	accurate. Creating more groups than the pool can cause hardware to
-+	re-allocate those counters between successive reads of an event. Bandwidth
-+	values may then be misleading, or a read may return "Unavailable" if no
-+	counter is allocated to the RMID. There is no user-visible indication when
-+	this begins. Users who need stable readings beyond that pool should switch
-+	to mbm_event mode, if supported, and assign counters to the groups of
-+	interest (rotating assignments as needed).
-+
- "num_mbm_cntrs":
- 	The maximum number of counters (total of available and assigned counters) in
- 	each domain when the system supports mbm_event mode.
-@@ -1783,17 +1798,19 @@ View the llc occupancy snapshot::
- Examples on working with mbm_assign_mode
- ========================================
- 
--a. Check if MBM counter assignment mode is supported.
-+a. Check if MBM counter assignment mode is supported. Enable "mbm_event"
-+mode. Switching the mbm_assign_mode may reset all the MBM counters (and
-+thus all MBM events) of all the resctrl groups.
- ::
- 
--  # mount -t resctrl resctrl /sys/fs/resctrl/
--
-+  # cat /sys/fs/resctrl/info/L3_MON/mbm_assign_mode
-+  [default]
-+  mbm_event
-+  # echo "mbm_event" > /sys/fs/resctrl/info/L3_MON/mbm_assign_mode
-   # cat /sys/fs/resctrl/info/L3_MON/mbm_assign_mode
-   [mbm_event]
-   default
- 
--The "mbm_event" mode is detected and enabled.
--
- b. Check how many assignable counters are supported.
- ::
- 
-@@ -1804,36 +1821,39 @@ c. Check how many assignable counters are available for assignment in each domai
- ::
- 
-   # cat /sys/fs/resctrl/info/L3_MON/available_mbm_cntrs
--  0=30;1=30
-+  0=32;1=32
- 
--d. To list the default group's assign states.
-+d. To list the default group's assign states. Counters are unassigned when the mode
-+is switched to "mbm_event".
- ::
- 
-   # cat /sys/fs/resctrl/mbm_L3_assignments
--  mbm_total_bytes:0=e;1=e
--  mbm_local_bytes:0=e;1=e
-+  mbm_total_bytes:0=_;1=_
-+  mbm_local_bytes:0=_;1=_
- 
--e.  To unassign the counter associated with the mbm_total_bytes event on domain 0.
-+e. To assign the counter associated with the mbm_total_bytes event on domain 0
-+in exclusive mode.
- ::
- 
--  # echo "mbm_total_bytes:0=_" > /sys/fs/resctrl/mbm_L3_assignments
-+  # echo "mbm_total_bytes:0=e" > /sys/fs/resctrl/mbm_L3_assignments
-   # cat /sys/fs/resctrl/mbm_L3_assignments
--  mbm_total_bytes:0=_;1=e
--  mbm_local_bytes:0=e;1=e
-+  mbm_total_bytes:0=e;1=_
-+  mbm_local_bytes:0=_;1=_
- 
- f. To unassign the counter associated with the mbm_total_bytes event on all domains.
- ::
- 
-   # echo "mbm_total_bytes:*=_" > /sys/fs/resctrl/mbm_L3_assignments
--  # cat /sys/fs/resctrl/mbm_L3_assignment
-+  # cat /sys/fs/resctrl/mbm_L3_assignments
-   mbm_total_bytes:0=_;1=_
--  mbm_local_bytes:0=e;1=e
-+  mbm_local_bytes:0=_;1=_
- 
--g. To assign a counter associated with the mbm_total_bytes event on all domains in
--exclusive mode.
-+g. To assign a counter associated with the mbm_total_bytes and mbm_local_bytes
-+events on all domains in exclusive mode.
- ::
- 
-   # echo "mbm_total_bytes:*=e" > /sys/fs/resctrl/mbm_L3_assignments
-+  # echo "mbm_local_bytes:*=e" > /sys/fs/resctrl/mbm_L3_assignments
-   # cat /sys/fs/resctrl/mbm_L3_assignments
-   mbm_total_bytes:0=e;1=e
-   mbm_local_bytes:0=e;1=e
-@@ -1890,13 +1910,8 @@ the MBM counters (and thus all MBM events) of all the resctrl groups.
- 
-   # echo "default" > /sys/fs/resctrl/info/L3_MON/mbm_assign_mode
-   # cat /sys/fs/resctrl/info/L3_MON/mbm_assign_mode
--  mbm_event
-   [default]
--
--m. Unmount the resctrl filesystem.
--::
--
--  # umount /sys/fs/resctrl/
-+  mbm_event
- 
- Intel RDT Errata
- ================
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 5d0d3b18f9b82..a6a9090c4808c 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -472,7 +472,6 @@ int __init rdt_get_l3_mon_config(struct rdt_resource *r)
- 		cpuid_count(0x80000020, 5, &eax, &ebx, &ecx, &edx);
- 		/* cntr_id is 12 bits and can only encode 4096 counters. */
- 		r->mon.num_mbm_cntrs = min((ebx & GENMASK(15, 0)) + 1, BIT(12));
--		hw_res->mbm_cntr_assign_enabled = true;
- 	}
- 
- 	r->mon_capable = true;
 -- 
 2.53.0
 
